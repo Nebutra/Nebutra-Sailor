@@ -99,10 +99,26 @@ const ENTRIES: Record<string, string> = {
   "shared/animation/css/index": "src/shared/animation/css/index.ts",
   "shared/animation/motion/index": "src/shared/animation/motion/index.ts",
   "utils/index": "src/utils/index.ts",
+  // Pure string contracts — must stay server-importable for AuthSplitLayout (RSC).
+  // See SERVER_ONLY_ENTRIES: utils/* must never ship a "use client" stamp.
+  "utils/auth-surfaces": "src/utils/auth-surfaces.ts",
   "tailwind.preset": "src/tailwind.preset.ts",
 };
 
-const SERVER_ONLY_ENTRIES = new Set<string>(["agent/index", "tailwind.preset"]);
+// Entries that must NOT get a "use client" banner.
+//
+// utils/index re-exports pure helpers (cn, AUTH_FORM_*, brand color readers).
+// It lives next to slot.tsx (client), and the directory walk used to stamp the
+// whole utils barrel "use client" even though slot is NOT re-exported. That
+// made AUTH_FORM_* client references — RSC AuthSplitLayout then rendered an
+// error digression instead of className, leaving login form unstyled/wide.
+// agent + tailwind.preset are Node/server build surfaces.
+const SERVER_ONLY_ENTRIES = new Set<string>([
+  "agent/index",
+  "tailwind.preset",
+  "utils/index",
+  "utils/auth-surfaces",
+]);
 
 export default defineConfig({
   entry: ENTRIES,

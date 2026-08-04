@@ -49,10 +49,25 @@ describe("auth surface layout contracts", () => {
       const source = readFileSync(join(REPO_ROOT, rel), "utf8");
       expect(source, rel).toContain("AUTH_FORM_COLUMN_CLASS");
       expect(source, rel).toContain("AUTH_FORM_CARD_CLASS");
-      expect(source, rel).toContain('from "@nebutra/ui/utils"');
+      // Server-safe path only — @nebutra/ui/utils was once client-stamped and
+      // RSC treated AUTH_FORM_* as client proxies (login card className empty).
+      expect(source, rel).toContain('from "@nebutra/ui/utils/auth-surfaces"');
+      // Forbid bare barrel import of AUTH_FORM_* (cn from @nebutra/ui/utils is fine).
+      expect(source, rel).not.toMatch(
+        /import\s*\{[^}]*AUTH_FORM_(COLUMN|CARD)_CLASS[^}]*\}\s*from\s*["']@nebutra\/ui\/utils["']/,
+      );
       expect(source, rel).not.toMatch(/max-w-sm(?![\w-])/);
       expect(source, rel).not.toMatch(/max-w-xs(?![\w-])/);
     }
+  });
+
+  it("utils barrel + auth-surfaces entry stay free of use client (RSC-safe)", () => {
+    const tsup = readFileSync(join(REPO_ROOT, "packages/design/ui/tsup.config.ts"), "utf8");
+    expect(tsup).toMatch(/SERVER_ONLY_ENTRIES[\s\S]*utils\/index/);
+    expect(tsup).toMatch(/SERVER_ONLY_ENTRIES[\s\S]*utils\/auth-surfaces/);
+    expect(tsup).toContain('"utils/auth-surfaces"');
+    const pkg = readFileSync(join(REPO_ROOT, "packages/design/ui/package.json"), "utf8");
+    expect(pkg).toContain("./utils/auth-surfaces");
   });
 
   it("auth primary CTAs do not fight btn-brand-default with foreground fills", () => {

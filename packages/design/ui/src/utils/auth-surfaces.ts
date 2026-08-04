@@ -1,5 +1,10 @@
 /**
- * Auth surface layout contracts.
+ * Auth surface layout contracts — **server-safe pure strings**.
+ *
+ * Consumed by RSC AuthSplitLayout. Built as `utils/auth-surfaces` without a
+ * `"use client"` stamp (see packages/design/ui/tsup.config.ts SERVER_ONLY).
+ * Prefer `import { … } from "@nebutra/ui/utils/auth-surfaces"` in server
+ * layouts so a future utils barrel regression cannot client-proxy these again.
  *
  * ## Width (root cause)
  * Do NOT use `w-full max-w-sm|xs` alone inside a flex/grid shell. Percentage

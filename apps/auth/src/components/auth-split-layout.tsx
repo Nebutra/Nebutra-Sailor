@@ -1,6 +1,6 @@
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { ArrowLeft } from "@nebutra/icons";
-import { AUTH_FORM_CARD_CLASS, AUTH_FORM_COLUMN_CLASS } from "@nebutra/ui/utils";
+import { AUTH_FORM_CARD_CLASS, AUTH_FORM_COLUMN_CLASS } from "@nebutra/ui/utils/auth-surfaces";
 import { getTranslations } from "next-intl/server";
 import { cn } from "@/lib/cn";
 import { AuthBanner } from "./auth-banner";
@@ -10,8 +10,9 @@ import { LocaleSwitcher } from "./locale-switcher";
  * Same split shell as apps/web AuthSplitLayout (Agent OS login) —
  * including top-right locale switcher.
  *
- * Form column width is SSOT via AUTH_FORM_COLUMN_CLASS (@nebutra/ui/utils) —
- * do not reintroduce a magic pixel max-width on this shell.
+ * Form column width is SSOT via AUTH_FORM_COLUMN_CLASS
+ * (@nebutra/ui/utils/auth-surfaces — RSC-safe) — do not reintroduce a magic
+ * pixel max-width on this shell.
  */
 export async function AuthSplitLayout({
   children,

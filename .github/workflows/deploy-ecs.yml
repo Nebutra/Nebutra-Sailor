@@ -344,19 +344,11 @@ jobs:
   build-next:
     name: Build ${{ matrix.app }} VM artifact
     needs: detect-changes
-    # Skip the entire matrix when only api (or nothing Next-related) is selected.
-    # Previously `any=true` spun 6 runners that each no-op'd — wasted minutes.
-    if: |
-      needs.detect-changes.outputs.landing == 'true' ||
-      needs.detect-changes.outputs.web == 'true' ||
-      needs.detect-changes.outputs.idp == 'true' ||
-      needs.detect-changes.outputs.auth == 'true' ||
-      needs.detect-changes.outputs['design-docs'] == 'true' ||
-      needs.detect-changes.outputs.pebble == 'true' ||
-      needs.detect-changes.outputs['sailor-docs'] == 'true' ||
-      needs.detect-changes.outputs.router == 'true' ||
-      needs.detect-changes.outputs.forge == 'true' ||
-      needs.detect-changes.outputs.admin == 'true'
+    # Per-matrix gate: only *selected* apps run. Unselected combinations are
+    # **skipped** (grey), never a 4-second green "Skip if not needed" success —
+    # that false-green hid "auth never built" for hours.
+    # Parent needs.detect-changes still supplies matrix.condition values.
+    if: matrix.condition == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     strategy:
@@ -437,20 +429,13 @@ jobs:
             condition: ${{ needs.detect-changes.outputs.admin }}
             site_url: "https://admin.nebutra.com"
     steps:
-      - name: Skip if not needed
-        if: matrix.condition != 'true'
-        run: echo "Skipping ${{ matrix.app }} — not selected / no relevant changes."
-
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-        if: matrix.condition == 'true'
 
       - uses: ./.github/actions/setup-node-pnpm
-        if: matrix.condition == 'true'
         with:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Cache Turborepo local artifacts
-        if: matrix.condition == 'true'
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           path: .turbo/cache
@@ -461,7 +446,6 @@ jobs:
             turbo-ecs-next-${{ runner.os }}-
 
       - name: Cache Next.js build artifacts
-        if: matrix.condition == 'true'
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           path: ${{ matrix.workspace }}/.next/cache
@@ -471,7 +455,6 @@ jobs:
             next-ecs-${{ runner.os }}-${{ matrix.app }}-
 
       - name: Build workspace dependencies of ${{ matrix.package }}
-        if: matrix.condition == 'true'
         # Build all transitive workspace deps first (the `^...` filter means
         # "dependencies only, not the package itself"). Mirrors the pattern in
         # .github/workflows/ci.yml — required so that workspace packages like
@@ -482,7 +465,6 @@ jobs:
         run: pnpm turbo build --filter="${{ matrix.package }}^..."
 
       - name: Typecheck ${{ matrix.package }}
-        if: matrix.condition == 'true'
         # Keep the VM fallback from packaging stale docs/design-system bundles
         # when Next type generation, Fumadocs MDX, or downstream UI contracts
         # fail before `next build` starts.
@@ -491,7 +473,6 @@ jobs:
         run: pnpm --filter "${{ matrix.package }}" typecheck
 
       - name: Build ${{ matrix.package }}
-        if: matrix.condition == 'true'
         # NEXT_PUBLIC_* vars are baked into the client bundle at build time.
         # Without them, layout.tsx falls back to http://localhost:3000 for
         # metadataBase, and middleware self-fetches break with EPROTO when
@@ -529,7 +510,6 @@ jobs:
       # handlers are part of this server artifact, which is why apps/web cannot
       # be assembled from a static Vite dist/ bundle for VM fallback.
       - name: Assemble VM bundle
-        if: matrix.condition == 'true'
         run: |
           set -euo pipefail
           WS="${{ matrix.workspace }}"
@@ -590,7 +570,6 @@ jobs:
           tar -czf "$RUNNER_TEMP/nebutra-${{ matrix.app }}-${{ github.sha }}.tar.gz" -C "$STAGE" .
 
       - name: Upload artifact
-        if: matrix.condition == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: bundle-${{ matrix.app }}
@@ -1441,8 +1420,15 @@ jobs:
               exit 1
             fi
             echo "✅ auth-sign-in https://auth.nebutra.com/sign-in -> $code"
+            # RSC client-proxy regression: AUTH_FORM_* imported from a "use client"
+            # utils barrel rendered as digression instead of className.
+            if grep -qF 'AUTH_FORM_CARD_CLASS is on the client' "$html_file" \
+              || grep -qF 'AUTH_FORM_COLUMN_CLASS is on the client' "$html_file"; then
+              echo "::error::auth-sign-in HTML contains RSC client-proxy digression for AUTH_FORM_*. @nebutra/ui/utils must not stamp use client on auth-surfaces."
+              exit 1
+            fi
             if ! grep -qF 'min(100%,360px)' "$html_file"; then
-              echo "::error::auth-sign-in HTML missing login-card width SSOT (expected w-[min(100%,360px)]). Bundle is stale or not the auth app we just deployed."
+              echo "::error::auth-sign-in HTML missing login-card width SSOT (expected w-[min(100%,360px)]). Bundle is stale, not deployed, or AUTH_FORM_* failed to render."
               grep -oE 'class="[^"]*(max-w-|min\(100%|w-\[min)[^"]*"' "$html_file" | head -20 || true
               exit 1
             fi
@@ -1582,9 +1568,12 @@ jobs:
             echo "## Cloud VM deploy summary"
             echo "- Commit: \`${{ github.sha }}\`"
             echo "- Provider: ${VM_PROVIDER:-unknown}"
-            echo "- Apps: landing=${{ needs.detect-changes.outputs.landing }} / web=${{ needs.detect-changes.outputs.web }} / api=${{ needs.detect-changes.outputs.api }} / design-docs=${{ needs.detect-changes.outputs['design-docs'] }} / sailor-docs=${{ needs.detect-changes.outputs['sailor-docs'] }}"
+            echo "- **AUTH_DEPLOYED=${{ needs.detect-changes.outputs.auth }}** (true = this run built+uploaded auth; false = auth bundle untouched)"
+            echo "- Apps: landing=${{ needs.detect-changes.outputs.landing }} / web=${{ needs.detect-changes.outputs.web }} / api=${{ needs.detect-changes.outputs.api }} / auth=${{ needs.detect-changes.outputs.auth }} / idp=${{ needs.detect-changes.outputs.idp }} / forge=${{ needs.detect-changes.outputs.forge }} / router=${{ needs.detect-changes.outputs.router }} / design-docs=${{ needs.detect-changes.outputs['design-docs'] }} / sailor-docs=${{ needs.detect-changes.outputs['sailor-docs'] }} / pebble=${{ needs.detect-changes.outputs.pebble }} / admin=${{ needs.detect-changes.outputs.admin }}"
             echo "- Triggered by: ${{ github.actor }} via ${{ github.event_name }}"
             if [ -n "${{ github.event.inputs.reason }}" ]; then
               echo "- Reason: ${{ github.event.inputs.reason }}"
             fi
+            echo ""
+            echo "Unselected matrix apps are **skipped** (not green). Green Build auth = real build."
           } >> "$GITHUB_STEP_SUMMARY"

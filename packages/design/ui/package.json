@@ -77,6 +77,10 @@
       "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils/index.js"
     },
+    "./utils/auth-surfaces": {
+      "types": "./dist/utils/auth-surfaces.d.ts",
+      "import": "./dist/utils/auth-surfaces.js"
+    },
     "./tailwind.preset": {
       "types": "./dist/tailwind.preset.d.ts",
       "import": "./dist/tailwind.preset.js"
