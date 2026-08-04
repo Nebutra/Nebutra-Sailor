@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
   // Hard-correct: md-to-pdf dynamically imports Playwright. Keep it external so
   // the Node runtime can resolve the package from standalone node_modules
   // (and so browser binaries are installable next to the release).
-  serverExternalPackages: ["playwright", "playwright-core"],
+  serverExternalPackages: ["playwright", "playwright-core", "sharp"],
   transpilePackages: [
     "@nebutra/fonts",
     "@nebutra/auth",
