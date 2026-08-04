@@ -29,7 +29,11 @@ TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
 echo "Downloading $URL"
-curl -fsSL "$URL" -o "$TMP/$ASSET"
+# Hard timeouts — GH Actions SSH session must not hang forever on a bad release CDN.
+if ! curl -fsSL --connect-timeout 20 --max-time 180 --retry 2 --retry-delay 3     "$URL" -o "$TMP/$ASSET"; then
+  echo "ERROR: failed to download $URL" >&2
+  exit 1
+fi
 tar -xzf "$TMP/$ASSET" -C "$TMP"
 
 # tarball layout may nest binaries; find carina-daemon
