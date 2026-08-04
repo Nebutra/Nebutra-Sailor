@@ -1112,7 +1112,7 @@ install_forge_chromium() {
 }
 
 wait_for_local_http() {
-  local label="$1" pm2_name="$2" url="$3" ok_regex="${4:-^(200|301|302|307)$}" host_header="${5:-}"
+  local label="$1" pm2_name="$2" url="$3" ok_regex="${4:-^(200|301|302|307)$}" host_header="${5:-}" edge_token="${6:-}"
   local code="000"
   local curl_host_args=()
 
@@ -1121,10 +1121,16 @@ wait_for_local_http() {
   # real hostname; local health must do the same or deploys abort after a healthy
   # process start (seen on landing /get-license → 421).
   if [ -n "$host_header" ]; then
-    curl_host_args=(-H "Host: ${host_header}")
+    curl_host_args+=(-H "Host: ${host_header}")
+  fi
+  # Landing proxy (apps/landing/src/proxy.ts) rejects hops missing
+  # x-nebutra-edge-token when ORIGIN_EDGE_TOKEN is set on the host — nginx
+  # injects it; loopback health curls must too.
+  if [ -n "$edge_token" ]; then
+    curl_host_args+=(-H "x-nebutra-edge-token: ${edge_token}")
   fi
 
-  log "wait for $label local health: $url${host_header:+ (Host: $host_header)}"
+  log "wait for $label local health: $url${host_header:+ (Host: $host_header)}${edge_token:+ (+edge-token)}"
   for attempt in 1 2 3 4 5 6 7 8 9 10; do
     code="$(curl -sS -o /dev/null -w "%{http_code}" --max-time 8 "${curl_host_args[@]}" "$url" 2>/dev/null || true)"
     [ -n "$code" ] || code="000"
@@ -1398,7 +1404,16 @@ ensure_carina_codeploy() {
       ensure_carina_codeploy
       ;;
     landing)
-      wait_for_local_http "landing" "$pm2_name" "http://127.0.0.1:3001/get-license" "^(200|301|302|307)$" "nebutra.com"
+      # ORIGIN_EDGE_TOKEN is host-local (landing/.env); never hardcode.
+      local landing_edge_token=""
+      if [ -f "$app_root/.env" ]; then
+        landing_edge_token="$(
+          sed -n 's/^ORIGIN_EDGE_TOKEN=//p' "$app_root/.env" 2>/dev/null \
+            | head -1 \
+            | sed -e 's/^"//' -e 's/"$//' -e "s/^'//" -e "s/'$//"
+        )"
+      fi
+      wait_for_local_http "landing" "$pm2_name" "http://127.0.0.1:3001/get-license" "^(200|301|302|307)$" "nebutra.com" "$landing_edge_token"
       ;;
     web)
       wait_for_local_http "web" "$pm2_name" "http://127.0.0.1:3000/" "^(200|301|302|307)$" "app.nebutra.com"
