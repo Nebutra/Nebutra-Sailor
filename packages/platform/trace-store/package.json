@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/trace-store",
-  "version": "0.1.3",
+  "version": "0.1.2",
   "description": "Async trace emit layer for agent, tool, and LLM spans",
   "private": false,
   "license": "MIT",
