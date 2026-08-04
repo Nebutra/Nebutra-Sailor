@@ -1,0 +1,116 @@
+name: Bootstrap forge-dns-leak on ECS
+
+# SSH to the Cloud VM, ensure ecosystem is current, setcap for :53, start PM2
+# process forge-dns-leak, smoke localhost control API.
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Why (shown in summary)"
+        required: false
+        default: "bootstrap dns leak authority"
+
+permissions:
+  contents: read
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Resolve SSH secrets
+        id: ssh
+        env:
+          ECS_SSH_PRIVATE_KEY: ${{ secrets.ECS_SSH_PRIVATE_KEY || secrets.VM_SSH_PRIVATE_KEY || secrets.CLOUD_VM_SSH_PRIVATE_KEY }}
+          ECS_SSH_KNOWN_HOSTS: ${{ secrets.ECS_SSH_KNOWN_HOSTS || secrets.VM_SSH_KNOWN_HOSTS || secrets.CLOUD_VM_SSH_KNOWN_HOSTS }}
+          ECS_HOST: ${{ vars.ECS_HOST || vars.VM_HOST || '106.15.4.31' }}
+          ECS_USER: ${{ vars.ECS_USER || vars.VM_USER || 'root' }}
+          ECS_DEPLOY_ROOT: ${{ vars.ECS_DEPLOY_ROOT || vars.VM_DEPLOY_ROOT || '/var/www/nebutra' }}
+        run: |
+          set -euo pipefail
+          test -n "${ECS_SSH_PRIVATE_KEY:-}" || { echo "::error::ECS_SSH_PRIVATE_KEY missing"; exit 1; }
+          test -n "${ECS_SSH_KNOWN_HOSTS:-}" || { echo "::error::ECS_SSH_KNOWN_HOSTS missing"; exit 1; }
+          mkdir -p ~/.ssh
+          printf '%s\n' "$ECS_SSH_PRIVATE_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          printf '%s\n' "$ECS_SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+          echo "host=$ECS_HOST" >> "$GITHUB_OUTPUT"
+          echo "user=$ECS_USER" >> "$GITHUB_OUTPUT"
+          echo "root=$ECS_DEPLOY_ROOT" >> "$GITHUB_OUTPUT"
+
+      - name: Sync ecosystem + start forge-dns-leak
+        env:
+          HOST: ${{ steps.ssh.outputs.host }}
+          USER: ${{ steps.ssh.outputs.user }}
+          ROOT: ${{ steps.ssh.outputs.root }}
+        run: |
+          set -euo pipefail
+          # Push current ecosystem to the VM (so forge-dns-leak app exists)
+          scp -i ~/.ssh/id_deploy -o IdentitiesOnly=yes \
+            infra/iac/ecs/ecosystem.config.cjs \
+            "${USER}@${HOST}:${ROOT}/ecosystem.config.cjs"
+
+          ssh -i ~/.ssh/id_deploy -o IdentitiesOnly=yes "${USER}@${HOST}" bash -s <<REMOTE
+          set -euo pipefail
+          ROOT="${ROOT}"
+          cd "\$ROOT"
+
+          # Prefer forge/current monorepo layout after deploy-ecs
+          FORGE_CUR="\$ROOT/forge/current"
+          if [ ! -d "\$FORGE_CUR/packages/ai/forge-dns-leak" ]; then
+            echo "WARN: \$FORGE_CUR/packages/ai/forge-dns-leak missing — last forge deploy may predate the package."
+            echo "Will still try PM2 start; full path needs a successful forge deploy-ecs."
+          fi
+
+          NODE_BIN=\$(command -v node)
+          echo "node=\$NODE_BIN"
+          # Allow non-root bind to 53 when possible
+          if command -v setcap >/dev/null 2>&1; then
+            setcap 'cap_net_bind_service=+ep' "\$NODE_BIN" 2>/dev/null || true
+            getcap "\$NODE_BIN" 2>/dev/null || true
+          fi
+
+          # Ensure forge env has control URL
+          mkdir -p "\$ROOT/forge"
+          touch "\$ROOT/forge/.env"
+          if ! grep -q '^FORGE_DNS_LEAK_URL=' "\$ROOT/forge/.env" 2>/dev/null; then
+            echo 'FORGE_DNS_LEAK_URL=http://127.0.0.1:3953' >> "\$ROOT/forge/.env"
+          fi
+
+          # Firewall: open 53 if ufw present (ignore if managed externally)
+          if command -v ufw >/dev/null 2>&1; then
+            ufw allow 53/udp || true
+            ufw allow 53/tcp || true
+          fi
+
+          # Start or recreate from ecosystem
+          if pm2 describe forge-dns-leak >/dev/null 2>&1; then
+            pm2 delete forge-dns-leak || true
+          fi
+          pm2 start "\$ROOT/ecosystem.config.cjs" --only forge-dns-leak
+          pm2 save || true
+          sleep 2
+          pm2 describe forge-dns-leak | head -40 || true
+
+          echo "=== health ==="
+          curl -fsS --max-time 5 http://127.0.0.1:3953/health || {
+            echo "control API not up yet"
+            pm2 logs forge-dns-leak --lines 40 --nostream || true
+            exit 1
+          }
+          echo
+          echo "=== ss :53 ==="
+          ss -ulnp | grep ':53 ' || ss -ulnp | head -20 || true
+          ss -tlnp | grep ':53 ' || true
+          REMOTE
+
+      - name: Public DNS probe from runner
+        run: |
+          set -euo pipefail
+          ORIGIN="${{ steps.ssh.outputs.host }}"
+          dig @"$ORIGIN" SOA leak.nebutra.com +norecurse +time=5 || true
+          dig @"$ORIGIN" A 1.test.s.leak.nebutra.com +norecurse +time=5 || true
