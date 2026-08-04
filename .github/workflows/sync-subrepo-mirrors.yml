@@ -33,15 +33,15 @@ permissions:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
     steps:
       - name: Checkout source
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           fetch-depth: 1
 
-      - name: Setup Node.js
-        uses: ./.github/actions/setup-node
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
         with:
           node-version: 22
 
@@ -50,6 +50,35 @@ jobs:
 
       - name: Verify mirror READMEs
         run: node scripts/verify-subrepo-readmes.mjs --cohort=first-wave
+
+      # Vendor step needs monorepo dist/ for workspace file: deps. Without this,
+      # standalone typecheck falls back to npm packages that still publish src.
+      - name: Build workspace packages for vendor
+        run: |
+          set -euo pipefail
+          pnpm turbo run build \
+            --filter=@nebutra/errors \
+            --filter=@nebutra/logger \
+            --filter=@nebutra/capability-kit \
+            --filter=@nebutra/event-log \
+            --filter=@nebutra/trace-store \
+            --filter=@nebutra/content-store \
+            --filter=@nebutra/local-embedding \
+            --filter=@nebutra/sandbox-runtime \
+            --filter=@nebutra/execution-policy \
+            --filter=@nebutra/ui \
+            --filter=@nebutra/icons \
+            --filter=@nebutra/brand \
+            --filter=@nebutra/graph-model \
+            --filter=@nebutra/agents \
+            --filter=@nebutra/mcp \
+            --filter=@nebutra/tool-registry \
+            --filter=@nebutra/code-execution \
+            --filter=@nebutra/cache \
+            --filter=@nebutra/email \
+            --filter=@nebutra/webhooks \
+            --filter=@nebutra/provider-factory \
+            --continue
 
       - name: Create missing mirror repositories
         if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
