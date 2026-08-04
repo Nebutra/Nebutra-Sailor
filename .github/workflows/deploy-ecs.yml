@@ -149,11 +149,21 @@ jobs:
               - 'pnpm-lock.yaml'
               - 'infra/iac/ecs/**'
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/ops/carina.pin'
+              - 'infra/ops/scripts/carina-*.sh'
+              - 'infra/ops/scripts/install-carina-daemon.sh'
+              - 'infra/ops/scripts/configure-api-carina-env.sh'
               - 'infra/runtime/nginx/**'
               - '.github/workflows/deploy-ecs.yml'
             # Tighter filter for main-push auto-CI (avoids packages/** fan-out).
+            # Include Carina pin/ops so upstream version bumps redeploy api-gateway
+            # and refresh /var/carina/bin (co-deploy only runs after api start).
             api-core:
               - 'backends/gateway/**'
+              - 'infra/ops/carina.pin'
+              - 'infra/ops/scripts/carina-*.sh'
+              - 'infra/ops/scripts/install-carina-daemon.sh'
+              - 'infra/ops/scripts/configure-api-carina-env.sh'
             idp:
               - 'apps/idp/**'
               - 'packages/iam/oauth-server/**'

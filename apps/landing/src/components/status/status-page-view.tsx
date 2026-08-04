@@ -11,6 +11,7 @@ import {
   formatUtcMedium,
   overallBannerClass,
   overallCopy,
+  overallDetail,
   stateFillClass,
   stateSurfaceClass,
 } from "./status-vocabulary";
@@ -33,10 +34,9 @@ const impactLabel: Record<IncidentImpact, string> = {
 
 export function StatusPageView({ snapshot }: { snapshot: StatusSnapshot }) {
   const overall = overallCopy[snapshot.overall];
+  const detail = overallDetail(snapshot.overall, snapshot.services);
   const pastDays = buildPastIncidentDays();
   const healthy = snapshot.services.filter((s) => s.state === "operational").length;
-  const issues = snapshot.services.length - healthy;
-  const issueSummary = issues > 0 ? ` · ${issues} ${issues === 1 ? "issue" : "issues"}` : "";
   const incidentsByDay = groupByCreatedDay(snapshot.incidents);
 
   return (
@@ -49,30 +49,40 @@ export function StatusPageView({ snapshot }: { snapshot: StatusSnapshot }) {
             aria-live="polite"
             aria-atomic="true"
             className={cn(
-              "rounded-[var(--radius-2xl)] border px-5 py-5 sm:px-6 sm:py-6",
+              "rounded-xl border border-l-4 px-4 py-4 sm:px-5 sm:py-4",
               overallBannerClass[snapshot.overall],
             )}
           >
-            <div className="flex items-start gap-3">
-              <span
-                aria-hidden="true"
-                className={cn(
-                  "mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full",
-                  stateFillClass[snapshot.overall],
-                  snapshot.overall === "operational" && "motion-safe:animate-pulse",
-                )}
-              />
-              <div className="min-w-0">
-                <h1 className="text-lg font-semibold tracking-tight sm:text-xl">{overall.label}</h1>
-                <p className="mt-1 text-sm leading-6 opacity-90">{overall.description}</p>
-                <p className="mt-3 text-xs tabular-nums opacity-70">
-                  Updated {formatUtcMedium(snapshot.checkedAt)}
-                  <span className="mx-1.5">·</span>
-                  {healthy}/{snapshot.services.length} operational
-                  {issueSummary}
-                </p>
+            <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+              <div className="min-w-0 space-y-1.5">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span
+                    className={cn(
+                      "inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset",
+                      stateSurfaceClass[snapshot.overall],
+                    )}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={cn(
+                        "h-1.5 w-1.5 shrink-0 rounded-full",
+                        stateFillClass[snapshot.overall],
+                        snapshot.overall === "operational" && "motion-safe:animate-pulse",
+                      )}
+                    />
+                    {overall.label}
+                  </span>
+                </div>
+                <h1 className="sr-only">{overall.label}</h1>
+                <p className="text-sm leading-6 text-muted-foreground">{detail}</p>
               </div>
+              <p className="shrink-0 text-xs tabular-nums text-muted-foreground">
+                {healthy}/{snapshot.services.length} operational
+              </p>
             </div>
+            <p className="mt-2.5 text-xs tabular-nums text-muted-foreground">
+              Updated {formatUtcMedium(snapshot.checkedAt)}
+            </p>
           </section>
 
           {snapshot.activeIncidents.length > 0 ? (
@@ -323,7 +333,7 @@ export function StatusPageSkeleton() {
         <div className="mx-auto h-14 max-w-[720px] px-4" />
       </div>
       <div className="mx-auto max-w-[720px] px-4 pt-8 sm:px-6">
-        <div className="h-24 animate-pulse rounded-[var(--radius-2xl)] bg-muted" />
+        <div className="h-16 animate-pulse rounded-xl border border-border bg-muted/60" />
         <div className="mt-8 h-72 animate-pulse rounded-[var(--radius-2xl)] bg-muted" />
         <div className="mt-10 h-48 animate-pulse rounded-[var(--radius-2xl)] bg-muted" />
       </div>

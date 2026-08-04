@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   buildPastIncidentDays,
   buildUptimeSeries,
+  overallDetail,
   PAST_INCIDENT_DAYS,
   UPTIME_WINDOW_DAYS,
 } from "./status-vocabulary";
@@ -52,5 +53,36 @@ describe("buildPastIncidentDays", () => {
     expect(days).toHaveLength(PAST_INCIDENT_DAYS);
     expect(days[0]).toBe("2026-07-31");
     expect(days[13]).toBe("2026-07-18");
+  });
+});
+
+describe("overallDetail", () => {
+  it("names a single degraded surface instead of a hollow generic line", () => {
+    const detail = overallDetail("degraded", [
+      { name: "Marketing site", state: "operational" },
+      { name: "Documentation", state: "degraded" },
+    ]);
+    expect(detail).toBe("Documentation is degraded. See components below.");
+  });
+
+  it("names a single outage surface", () => {
+    const detail = overallDetail("outage", [
+      { name: "API gateway", state: "outage" },
+      { name: "Console", state: "operational" },
+    ]);
+    expect(detail).toBe("API gateway is unavailable.");
+  });
+
+  it("lists two affected names", () => {
+    const detail = overallDetail("degraded", [
+      { name: "Console", state: "degraded" },
+      { name: "Documentation", state: "degraded" },
+    ]);
+    expect(detail).toBe("Console and Documentation need attention. See components below.");
+  });
+
+  it("falls back to the operational description when everything is green", () => {
+    const detail = overallDetail("operational", [{ name: "Marketing site", state: "operational" }]);
+    expect(detail).toMatch(/responding normally/i);
   });
 });
