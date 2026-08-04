@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { BrandLanguagePicker } from "@/components/brand-language-switcher";
+import { LiveSpecimen } from "@/components/live-specimen";
 import { coveredNames, GROUPS } from "@/lib/components/registry";
 import { componentExports } from "@/lib/components/ui-source";
 import switchability from "@/lib/generated/switchability.json";
@@ -6,10 +8,11 @@ import { SITE_NAME } from "@/lib/site";
 import { aliases, failures, scales, semanticRoles, tokenSet } from "@/lib/tokens";
 
 /**
- * Everything on this page is counted at build time from the same sources the
- * rest of the site reads. Nothing is typed in, which is the one property that
- * makes the numbers worth showing at all: a figure a person maintains by hand
- * is wrong within a week, and this site's argument is that it cannot drift.
+ * Everything counted on this page is measured at build time from the same
+ * sources the rest of the site reads. Nothing is typed in, which is the one
+ * property that makes the numbers worth showing at all: a figure a person
+ * maintains by hand is wrong within a week, and this site's argument is that it
+ * cannot drift.
  */
 function measure() {
   const light = tokenSet("light");
@@ -89,7 +92,7 @@ const SECTIONS: ReadonlyArray<{
 export default function HomePage() {
   const m = measure();
 
-  const masthead = [
+  const proof = [
     { key: "Tokens", value: String(m.tokens), note: "per mode, generated" },
     { key: "Components", value: `${m.covered}/${m.exports}`, note: "exports with a page" },
     { key: "Dimensions", value: `${m.live}/${m.dimensions}`, note: "a brand switch moves" },
@@ -101,39 +104,57 @@ export default function HomePage() {
   ];
 
   return (
-    <div>
-      <header className="max-w-3xl">
-        <h1 className="font-semibold text-3xl text-foreground tracking-tight sm:text-4xl">
-          {SITE_NAME}
-        </h1>
-        <p className="mt-5 text-[15px] text-muted-foreground leading-relaxed">
-          A verification surface, not a documentation site. It imports the real packages and renders
-          them, so a token that breaks a component breaks this page.
-        </p>
-      </header>
+    <div className="flex flex-col gap-14">
+      {/* The first screen is the system running, not a description of it. The
+          picker sits directly above the surface it rewrites, so the causal link
+          is visible in one glance instead of requiring a trip to the header. */}
+      <section className="flex flex-col gap-8">
+        <header className="max-w-3xl">
+          <h1 className="font-semibold text-4xl text-foreground tracking-tight sm:text-[52px] sm:leading-[1.05]">
+            One switch, <span className="text-primary">the whole language</span>.
+          </h1>
+          <p className="mt-5 text-[16px] text-muted-foreground leading-relaxed">
+            {SITE_NAME} is a verification surface, not a documentation site. It imports the real
+            packages and renders them — so a token that breaks a component breaks this page, and
+            changing the design language below changes an actual product screen rather than a
+            picture of one.
+          </p>
+        </header>
 
-      {/* The masthead is the argument, stated before the site asks to be
-          trusted: four numbers, all counted from source at build time. The
-          gap-px over a tinted backdrop draws the cell divisions as seams in the
-          background rather than as borders. */}
-      <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-panel bg-border/40 sm:grid-cols-4">
-        {masthead.map((cell) => (
-          <div className="bg-card px-5 py-4" key={cell.key}>
-            <dt className="text-[11px] text-muted-foreground uppercase tracking-wide">
-              {cell.key}
-            </dt>
-            <dd className="mt-2 font-semibold text-2xl text-foreground tabular-nums tracking-tight">
-              {cell.value}
-            </dd>
-            <p className="mt-1 text-[12px] text-muted-foreground leading-snug">{cell.note}</p>
-          </div>
-        ))}
-      </dl>
+        <BrandLanguagePicker />
+
+        <LiveSpecimen />
+      </section>
+
+      {/* Four numbers, all counted from source at build time. They sit after
+          the demonstration rather than before it: the panel above is the claim,
+          and these are the receipts. The gap-px over a tinted backdrop draws
+          the cell divisions as seams in the background, not as borders. */}
+      <section className="flex flex-col gap-4">
+        <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-panel bg-border/40 sm:grid-cols-4">
+          {proof.map((cell) => (
+            <div className="bg-card px-5 py-4" key={cell.key}>
+              <dt className="text-[11px] text-muted-foreground uppercase tracking-wide">
+                {cell.key}
+              </dt>
+              <dd className="mt-2 font-semibold text-2xl text-foreground tabular-nums tracking-tight">
+                {cell.value}
+              </dd>
+              <p className="mt-1 text-[12px] text-muted-foreground leading-snug">{cell.note}</p>
+            </div>
+          ))}
+        </dl>
+        <p className="max-w-3xl text-[13px] text-muted-foreground leading-relaxed">
+          {m.readers.toLocaleString()} files across the product read the dimensions that switch
+          moves. None of the figures above is typed in — each is counted from the token source and
+          the component barrels at build time.
+        </p>
+      </section>
 
       {/* Five entries in a two-column grid leave the last one beside a hole.
           The odd card takes the full row instead, which reads as a closing band
           rather than a gap where a sixth thing was meant to go. */}
-      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+      <section className="grid gap-4 sm:grid-cols-2">
         {SECTIONS.map((section, index) => (
           <Link
             className={`flex flex-col rounded-panel bg-card p-5 shadow-ambient-sm transition-shadow duration-flow ease-out hover:shadow-ambient-md${
@@ -151,13 +172,7 @@ export default function HomePage() {
             <p className="mt-2 text-[13px] text-muted-foreground leading-relaxed">{section.body}</p>
           </Link>
         ))}
-      </div>
-
-      <p className="mt-10 max-w-3xl text-[13px] text-muted-foreground leading-relaxed">
-        The language row above swaps a whole Brand Package — colour roles, shape, elevation, type
-        and motion together, not a palette. {m.readers.toLocaleString()} files across the product
-        read the dimensions it moves.
-      </p>
+      </section>
     </div>
   );
 }

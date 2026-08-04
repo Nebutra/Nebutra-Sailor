@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-03T04:50:51.992Z",
+  "generatedAt": "2026-08-04T12:46:50.491Z",
   "source": "scripts/lint-inert-dimensions.mjs",
   "knownInert": [],
   "dimensions": [
@@ -12,13 +12,13 @@
     {
       "id": "radius",
       "declared": true,
-      "consumers": 584,
+      "consumers": 592,
       "status": "live"
     },
     {
       "id": "elevation",
       "declared": true,
-      "consumers": 204,
+      "consumers": 205,
       "status": "live"
     },
     {
@@ -30,7 +30,7 @@
     {
       "id": "motion",
       "declared": true,
-      "consumers": 55,
+      "consumers": 57,
       "status": "live"
     },
     {
