@@ -7,7 +7,8 @@
  * (enable with FEATURE_FLAG_AGENT_RUNTIME_DEMO=true or KILL_SWITCH_…).
  *
  * Track B (Carina):
- *  - `createGatewayCarinaBundle({ tenantId, threadId })` when CARINA_JSONRPC_URL
+ *  - `createGatewayCarinaBundle({ tenantId, threadId })` for socket co-deploy
+ *    (default) or CARINA_JSONRPC_URL
  *  - `GET  /carina/status`     connectivity probe (auth; no demo flag)
  *  - `POST /carina/approvals`  governance.approval.resolve bridge (auth)
  */
@@ -31,10 +32,7 @@ import { getTenantDb } from "@nebutra/db";
 import { FLAGS, featureFlagMiddleware } from "@nebutra/feature-flags";
 import { streamSSE } from "hono/streaming";
 import { getGatewayOrchestrator } from "../../agents/orchestrator-singleton.js";
-import {
-  createGatewayCarinaBundle,
-  getCarinaSandbox,
-} from "../../lib/carina-sandbox.js";
+import { createGatewayCarinaBundle, getCarinaSandbox } from "../../lib/carina-sandbox.js";
 import { requireAuth } from "../../middlewares/tenantContext.js";
 
 export const agentRuntimeRoutes = new OpenAPIHono();
@@ -121,7 +119,10 @@ const carinaStatusRoute = createRoute({
 
 agentRuntimeRoutes.openapi(carinaStatusRoute, async (c) => {
   const env = process.env;
-  const enabled = Boolean(env.CARINA_JSONRPC_URL?.trim());
+  // Co-deploy (unix socket) is the product default; HTTP URL is optional.
+  // Do not gate on CARINA_JSONRPC_URL alone — that leaves socket hosts as enabled:false.
+  const sandbox = getCarinaSandbox(env);
+  const enabled = Boolean(sandbox);
   const workspaceConfigured = Boolean(
     env.CARINA_WORKSPACE_ROOT?.trim() ||
       env.CARINA_WORKSPACE_TEMPLATE?.trim() ||
@@ -129,18 +130,8 @@ agentRuntimeRoutes.openapi(carinaStatusRoute, async (c) => {
   );
   const autoApprove = env.CARINA_AUTO_APPROVE === "1" || env.CARINA_AUTO_APPROVE === "true";
 
-  if (!enabled) {
-    return c.json({ enabled: false, workspaceConfigured, autoApprove });
-  }
-
-  const sandbox = getCarinaSandbox(env);
   if (!sandbox) {
-    return c.json({
-      enabled: false,
-      workspaceConfigured,
-      autoApprove,
-      error: "url set but sandbox resolve failed",
-    });
+    return c.json({ enabled: false, workspaceConfigured, autoApprove });
   }
 
   try {
@@ -201,7 +192,13 @@ const carinaApprovalRoute = createRoute({
 agentRuntimeRoutes.openapi(carinaApprovalRoute, async (c) => {
   const sandbox = getCarinaSandbox();
   if (!sandbox) {
-    return c.json({ ok: false, error: "Carina not configured (CARINA_JSONRPC_URL)" }, 503);
+    return c.json(
+      {
+        ok: false,
+        error: "Carina not configured (set co-deploy socket or CARINA_JSONRPC_URL)",
+      },
+      503,
+    );
   }
   const tenant = tenantFrom(c);
   const body = c.req.valid("json");
