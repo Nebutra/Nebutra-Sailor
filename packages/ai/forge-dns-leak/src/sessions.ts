@@ -1,5 +1,5 @@
 import { randomBytes } from "node:crypto";
-import type { CreateSessionOptions, LeakSession, LeakSessionPublic, ResolverHit } from "./types";
+import type { CreateSessionOptions, LeakSession, LeakSessionPublic, ResolverHit } from "./types.ts";
 
 function nowIso() {
   return new Date().toISOString();

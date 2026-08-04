@@ -3,7 +3,7 @@
  * Bind 127.0.0.1 only in production — never expose publicly without auth.
  */
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from "node:http";
-import type { SessionStore } from "./sessions";
+import type { SessionStore } from "./sessions.ts";
 
 function readJson(req: IncomingMessage): Promise<unknown> {
   return new Promise((resolve, reject) => {

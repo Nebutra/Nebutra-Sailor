@@ -4,7 +4,7 @@
  */
 import { createSocket, type Socket as UdpSocket } from "node:dgram";
 import { createServer as createNetServer, type Server as NetServer } from "node:net";
-import type { SessionStore } from "./sessions";
+import type { SessionStore } from "./sessions.ts";
 
 export type AuthorityServer = {
   udp: UdpSocket;

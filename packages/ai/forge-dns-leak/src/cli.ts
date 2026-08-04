@@ -11,9 +11,9 @@
  *   FORGE_DNS_LEAK_API_HOST   default 127.0.0.1
  *   FORGE_DNS_LEAK_API_PORT   default 3953
  */
-import { startAuthority } from "./authority";
-import { startControlApi } from "./control-api";
-import { SessionStore } from "./sessions";
+import { startAuthority } from "./authority.ts";
+import { startControlApi } from "./control-api.ts";
+import { SessionStore } from "./sessions.ts";
 
 const zone = (process.env.FORGE_DNS_LEAK_ZONE ?? "leak.nebutra.com").toLowerCase();
 const nsHostname = (process.env.FORGE_DNS_LEAK_NS ?? `ns1.${zone}`).toLowerCase();
