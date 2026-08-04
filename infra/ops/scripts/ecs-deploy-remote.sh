@@ -26,7 +26,7 @@ DEPLOY_ROOT="${DEPLOY_ROOT:-/var/www/nebutra}"
 # invocation deploys, and the control plane should move only when someone names
 # it — it reads across every tenant, so an accidental redeploy is not the same
 # kind of event as one for a product app.
-APPS="${APPS:-landing web api idp auth design-docs pebble sailor-docs router forge}"
+APPS="${APPS:-landing web api idp auth design design-docs pebble sailor-docs router forge}"
 # Keep 2 releases per app for one-step rollback. Pre/post prune only touch
 # THAT app's releases/ dir (never other apps). Override with VM_KEEP_RELEASES
 # / ECS_KEEP_RELEASES on small disks if needed.
@@ -1784,6 +1784,7 @@ for app in api landing web idp auth design design-docs pebble sailor-docs router
     api)          deploy_one api         api-gateway  ;;
     idp)          deploy_one idp         idp          ;;
     auth)         deploy_one auth        auth-center  ;;
+    design)       deploy_one design      design       ;;
     design-docs)  deploy_one design-docs design-docs  ;;
     pebble)       deploy_one pebble      pebble       ;;
     sailor-docs)  deploy_one sailor-docs sailor-docs  ;;
