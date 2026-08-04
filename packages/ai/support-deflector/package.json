@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/support-deflector",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Confidence-gated customer support Play package for founder-owned support automation",
   "private": false,
   "license": "MIT",
@@ -23,10 +23,14 @@
     "category": "ai",
     "summary": "Support Play product that triages tickets into auto-answer, suggest, or escalate decisions"
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   },
   "scripts": {
     "build": "tsup",
@@ -59,5 +63,11 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
 }

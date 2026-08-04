@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/time-machine",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Chronos product surface for timeline browsing, branching, comparison, and rollback previews",
   "private": false,
   "license": "MIT",
@@ -23,10 +23,14 @@
     "category": "ai",
     "summary": "Founder-facing view over event-log history without owning event truth"
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   },
   "scripts": {
     "build": "tsup",
@@ -58,5 +62,11 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
 }

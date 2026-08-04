@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/knowledge-base",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Tenant-scoped company knowledge product layer over content-store, document-pipeline, and knowledge-rag",
   "private": false,
   "license": "MIT",
@@ -25,10 +25,14 @@
     "category": "ai",
     "summary": "Product cognition layer for connector sync, memory classes, entity graph, citations, and explainable tenant-scoped search"
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   },
   "scripts": {
     "build": "tsup",
@@ -61,5 +65,11 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
 }
