@@ -1,17 +1,45 @@
-name: Point auth DNS to ECS
+name: Point auth DNS
+
+# Flip auth.nebutra.com between ECS (China origin) and Vercel (iad1, Google-reachable).
+# Default target for production cutover: vercel (OAuth token exchange needs Google).
 
 on:
   workflow_dispatch:
+    inputs:
+      target:
+        description: "DNS target for auth.nebutra.com"
+        required: true
+        default: "vercel"
+        type: choice
+        options:
+          - vercel
+          - ecs
 
 permissions:
   contents: read
+
+concurrency:
+  group: point-auth-dns
+  cancel-in-progress: false
 
 jobs:
   dns:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-      - name: Upsert auth.nebutra.com → ECS
+
+      - name: Point auth.nebutra.com → Vercel
+        if: inputs.target == 'vercel'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::CLOUDFLARE_API_TOKEN secret missing"; exit 1; }
+          bash infra/ops/scripts/point-auth-dns-vercel.sh
+
+      - name: Point auth.nebutra.com → ECS
+        if: inputs.target == 'ecs'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
@@ -20,15 +48,52 @@ jobs:
           set -euo pipefail
           test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::CLOUDFLARE_API_TOKEN secret missing"; exit 1; }
           bash infra/ops/scripts/point-auth-dns-ecs.sh
-      - name: Smoke auth health
+
+      - name: Smoke auth health (+ Google pairing when on Vercel path)
         run: |
           set -euo pipefail
-          for i in 1 2 3 4 5 6; do
-            code=$(curl -sS -o /tmp/ah.json -w '%{http_code}' --max-time 20 https://auth.nebutra.com/health || echo 000)
-            echo "try $i -> $code"
-            if [ "$code" = "200" ]; then head -c 300 /tmp/ah.json; echo; exit 0; fi
-            sleep 10
+          for i in 1 2 3 4 5 6 7 8; do
+            code=$(curl -sS -o /tmp/ah.json -w '%{http_code}' --max-time 25 https://auth.nebutra.com/health || echo 000)
+            echo "try $i health -> $code"
+            if [ "$code" = "200" ]; then
+              head -c 500 /tmp/ah.json; echo
+              break
+            fi
+            sleep 12
           done
-          echo "::warning::DNS may be set but TLS/origin not ready yet"
-          curl -sSI --max-time 15 https://auth.nebutra.com/health || true
+          if [ "${{ inputs.target }}" != "vercel" ]; then
+            curl -sSI --max-time 15 https://auth.nebutra.com/health || true
+            exit 0
+          fi
+          echo "=== Google pairing probe (expect pair_ok when origin is Vercel iad1) ==="
+          for i in 1 2 3 4 5 6; do
+            code=$(curl -sS -o /tmp/ag.json -w '%{http_code}' --max-time 40 \
+              'https://auth.nebutra.com/health?probe=google' || echo 000)
+            echo "try $i probe -> $code"
+            if [ "$code" != "200" ]; then
+              sleep 12
+              continue
+            fi
+            status=$(python3 -c 'import json; d=json.load(open("/tmp/ag.json")); print(((d.get("oauth") or {}).get("googlePairing") or {}).get("status") or "")')
+            python3 -c 'import json; d=json.load(open("/tmp/ag.json")); print(json.dumps((d.get("oauth") or {}).get("googlePairing"), indent=2))'
+            case "$status" in
+              pair_ok)
+                echo "google pairing OK on auth.nebutra.com"
+                exit 0
+                ;;
+              network_error)
+                echo "still network_error — DNS may not have reached Vercel yet"
+                sleep 12
+                ;;
+              invalid_client)
+                echo "::error::invalid_client — set GOOGLE_CLIENT_SECRET on Vercel nebutra-auth env"
+                exit 1
+                ;;
+              *)
+                echo "status=$status (continuing)"
+                sleep 8
+                ;;
+            esac
+          done
+          echo "::warning::health ok but google probe not pair_ok yet — re-run smoke after DNS TTL"
           exit 0
