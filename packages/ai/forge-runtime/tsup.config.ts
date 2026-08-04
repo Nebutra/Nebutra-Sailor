@@ -15,4 +15,6 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   target: "es2022",
+  // Native image pipeline — must stay external for Next/Turbopack hosts.
+  external: ["sharp"],
 });
