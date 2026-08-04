@@ -146,16 +146,18 @@ module.exports = {
     },
     {
       // Carina Track-B kernel — same host as api-gateway (local-first co-deploy).
-      // Install binary: infra/ops/scripts/install-carina-daemon.sh
+      // Install binaries: infra/ops/scripts/install-carina-daemon.sh
+      //   (carina-daemon + carina-kernel-service; docker fallback when glibc is old)
       // Socket: /var/carina/run/daemon.sock → CARINA_DAEMON_SOCK on api-gateway.
       name: "carina-daemon",
       cwd: "/var/carina",
       script: "/var/carina/bin/carina-daemon",
-      args: "-socket /var/carina/run/daemon.sock -state /var/carina/state -approval-mode always-approve",
+      args: "-socket /var/carina/run/daemon.sock -state /var/carina/state -kernel /var/carina/bin/carina-kernel-service -tools /var/carina/bin -approval-mode always-approve",
       interpreter: "none",
       env: {
-        HOME: "/var/carina",
+        HOME: "/var/carina/home",
         CARINA_HOME: "/var/carina",
+        CARINA_KERNEL_BIN: "/var/carina/bin/carina-kernel-service",
       },
       max_memory_restart: "512M",
       instances: 1,
