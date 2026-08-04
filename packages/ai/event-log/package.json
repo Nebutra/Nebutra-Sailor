@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/event-log",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "Append-only event log with content-addressed snapshots",
   "private": false,
   "license": "MIT",
