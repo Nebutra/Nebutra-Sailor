@@ -5,7 +5,12 @@ import {
   type UsageLedgerSourceContract,
   type UsageTypeContract,
 } from "@nebutra/contracts";
-import { getTenantDb, Prisma, type PrismaClient } from "@nebutra/db";
+import {
+  type BillingTenantDb,
+  type InputJsonValue,
+  isPrismaUniqueViolation,
+  requireTenantDb,
+} from "../db";
 
 const DEFAULT_TAKE = 100;
 const MAX_TAKE = 500;
@@ -24,8 +29,8 @@ export interface ListUsageLedgerEntriesInput {
   take?: number;
 }
 
-function getClient(organizationId: string, client?: PrismaClient): PrismaClient {
-  return client ?? getTenantDb(organizationId);
+function getClient(organizationId: string, client?: BillingTenantDb): BillingTenantDb {
+  return client ?? requireTenantDb(organizationId);
 }
 
 export function buildUsageLedgerIdempotencyKey(input: {
@@ -48,11 +53,11 @@ export function buildUsageLedgerIdempotencyKey(input: {
 
 export async function appendUsageLedgerEntry(
   input: UsageLedgerEntryInput,
-  options: { client?: PrismaClient } = {},
+  options: { client?: BillingTenantDb } = {},
 ): Promise<AppendUsageLedgerEntryResult> {
   const payload = UsageLedgerEntryInputSchema.parse(input);
   const db = getClient(payload.organizationId, options.client);
-  const metadata = payload.metadata as Prisma.InputJsonValue;
+  const metadata = payload.metadata as InputJsonValue;
 
   const existing = await db.usageLedgerEntry.findUnique({
     where: {
@@ -93,7 +98,7 @@ export async function appendUsageLedgerEntry(
 
     return { created: true, entryId: created.id };
   } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
+    if (isPrismaUniqueViolation(error)) {
       const duplicate = await db.usageLedgerEntry.findUnique({
         where: {
           tenantId_idempotencyKey: {
@@ -115,7 +120,7 @@ export async function appendUsageLedgerEntry(
 
 export async function listUsageLedgerEntries(
   input: ListUsageLedgerEntriesInput,
-  options: { client?: PrismaClient } = {},
+  options: { client?: BillingTenantDb } = {},
 ) {
   const db = getClient(input.organizationId, options.client);
   const take = Math.min(Math.max(input.take ?? DEFAULT_TAKE, 1), MAX_TAKE);

@@ -1,4 +1,4 @@
-import { getTenantDb, type Prisma, type PrismaClient } from "@nebutra/db";
+import { type BillingTenantDb, type InputJsonValue, requireTenantDb } from "../db";
 import { dollarsToCents } from "../money";
 import type { CreditTransactionType, Plan } from "../types";
 import { BillingError } from "../types";
@@ -51,7 +51,8 @@ export interface DeductCreditsInput {
   metadata?: Record<string, unknown>;
 }
 
-type CreditLedgerClient = Pick<PrismaClient, "creditBalance" | "creditTransaction">;
+// Host-injected transaction client (same structural surface as BillingTenantDb).
+type CreditLedgerClient = BillingTenantDb;
 
 // ============================================
 // Database & Cache Layer
@@ -86,8 +87,8 @@ export function invalidateCreditCache(organizationId: string) {
   balanceCache.delete(organizationId);
 }
 
-function toJsonInput(metadata: Record<string, unknown> | undefined): Prisma.InputJsonValue {
-  return (metadata ?? {}) as Prisma.InputJsonValue;
+function toJsonInput(metadata: Record<string, unknown> | undefined): InputJsonValue {
+  return (metadata ?? {}) as InputJsonValue;
 }
 
 /**
@@ -101,7 +102,7 @@ export async function getCreditBalance(organizationId: string): Promise<CreditBa
     return cached.data;
   }
 
-  const db = getTenantDb(organizationId);
+  const db = requireTenantDb(organizationId);
   let dbBalance = await db.creditBalance.findUnique({
     where: { tenantId: organizationId },
   });
@@ -138,7 +139,7 @@ export async function addCredits(input: AddCreditsInput): Promise<CreditTransact
     throw new BillingError("Credit amount must be positive", "INVALID_CREDIT_AMOUNT", 400);
   }
 
-  const db = getTenantDb(input.organizationId);
+  const db = requireTenantDb(input.organizationId);
   const transactionData = await db.$transaction(async (tx: CreditLedgerClient) => {
     const balance = await tx.creditBalance.upsert({
       where: { tenantId: input.organizationId },
@@ -207,7 +208,7 @@ export async function deductCredits(input: DeductCreditsInput): Promise<CreditTr
     throw new BillingError("Credit amount must be positive", "INVALID_CREDIT_AMOUNT", 400);
   }
 
-  const db = getTenantDb(input.organizationId);
+  const db = requireTenantDb(input.organizationId);
   const transactionData = await db.$transaction(async (tx: CreditLedgerClient) => {
     const balance = await tx.creditBalance.findUnique({
       where: { tenantId: input.organizationId },
@@ -298,7 +299,7 @@ export async function getCreditTransactions(
     type?: CreditTransactionType;
   },
 ): Promise<CreditTransaction[]> {
-  const db = getTenantDb(organizationId);
+  const db = requireTenantDb(organizationId);
   const balance = await db.creditBalance.findUnique({
     where: { tenantId: organizationId },
     select: { id: true },
@@ -316,17 +317,17 @@ export async function getCreditTransactions(
     skip: options?.offset || 0,
   });
 
-  return raw.map((tx) => ({
-    id: tx.id,
+  return (raw as Array<Record<string, unknown>>).map((tx) => ({
+    id: String(tx.id),
     organizationId,
     type: tx.type as CreditTransactionType,
     amount: Number(tx.amount),
     balanceAfter: Number(tx.balanceAfter),
-    description: tx.description || undefined,
-    expiresAt: tx.expiresAt || undefined,
-    relatedId: tx.relatedId || undefined,
+    description: (tx.description as string | null | undefined) || undefined,
+    expiresAt: (tx.expiresAt as Date | null | undefined) || undefined,
+    relatedId: (tx.relatedId as string | null | undefined) || undefined,
     metadata: (tx.metadata as Record<string, unknown>) || undefined,
-    createdAt: tx.createdAt,
+    createdAt: tx.createdAt as Date,
   }));
 }
 

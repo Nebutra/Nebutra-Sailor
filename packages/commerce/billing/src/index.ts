@@ -99,6 +99,12 @@ export {
   hasEnoughCredits,
   refundCredits,
 } from "./credits/index";
+// Host DB wiring (no private @nebutra/db import)
+export {
+  type BillingTenantDb,
+  configureBillingTenantDb,
+  type InputJsonValue,
+} from "./db";
 // Entitlements
 export {
   checkEntitlement,

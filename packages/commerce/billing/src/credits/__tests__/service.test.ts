@@ -1,4 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { configureBillingTenantDb } from "../../db";
+import { addCredits, deductCredits, getCreditAllowanceForPlan, getCreditBalance } from "../service";
 
 const db = vi.hoisted(() => ({
   creditBalance: {
@@ -7,17 +9,15 @@ const db = vi.hoisted(() => ({
   },
 }));
 
-vi.mock("@nebutra/db", () => ({
-  getTenantDb: vi.fn(() => db),
-}));
-
-import { addCredits, deductCredits, getCreditAllowanceForPlan, getCreditBalance } from "../service";
+const tenantDb = vi.hoisted(() => vi.fn(() => db));
 
 describe("credits service", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    configureBillingTenantDb((orgId) => tenantDb(orgId));
     db.creditBalance.create.mockReset();
     db.creditBalance.findUnique.mockReset();
+    tenantDb.mockImplementation(() => db);
   });
 
   it("creates a zero balance row scoped by tenantId when the organization has no balance", async () => {
@@ -63,8 +63,7 @@ describe("credits service", () => {
         callback(tx),
       ),
     };
-    const { getTenantDb } = await import("@nebutra/db");
-    vi.mocked(getTenantDb).mockReturnValueOnce(transactionalDb as never);
+    tenantDb.mockReturnValueOnce(transactionalDb as never);
 
     tx.creditBalance.upsert.mockResolvedValueOnce({ id: "bal_1", tenantId: "org_1" });
     tx.creditBalance.update.mockResolvedValueOnce({
@@ -113,7 +112,7 @@ describe("credits service", () => {
       data: { balance: { increment: 50 } },
     });
 
-    vi.mocked(getTenantDb).mockReturnValueOnce(transactionalDb as never);
+    tenantDb.mockReturnValueOnce(transactionalDb as never);
     tx.creditBalance.findUnique.mockResolvedValueOnce({
       id: "bal_1",
       tenantId: "org_1",
@@ -192,8 +191,7 @@ describe("credits service", () => {
         callback(tx),
       ),
     };
-    const { getTenantDb } = await import("@nebutra/db");
-    vi.mocked(getTenantDb).mockReturnValueOnce(transactionalDb as never);
+    tenantDb.mockReturnValueOnce(transactionalDb as never);
 
     await expect(
       deductCredits({

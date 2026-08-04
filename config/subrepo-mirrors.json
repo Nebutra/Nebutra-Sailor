@@ -592,6 +592,105 @@
       "category": "ai-runtime",
       "description": "Cofounder matching play surface for startup agent OS.",
       "topics": ["nebutra", "cofounder-match", "matching", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/billing",
+      "repoName": "billing",
+      "sourceDir": "packages/commerce/billing",
+      "cohort": "sixth-wave",
+      "category": "commerce",
+      "description": "Multi-provider billing, subscriptions, credits, and usage with host-injected tenant DB.",
+      "topics": ["nebutra", "billing", "stripe", "subscriptions", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/3d-pipeline",
+      "repoName": "3d-pipeline",
+      "sourceDir": "packages/ai/3d-pipeline",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "BrandContext-first mesh generation, export manifests, and previews.",
+      "topics": ["nebutra", "3d-pipeline", "mesh", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/atelier-canvas",
+      "repoName": "atelier-canvas",
+      "sourceDir": "packages/ai/atelier-canvas",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "Server-authoritative creative canvas engine with non-overlap layout.",
+      "topics": ["nebutra", "atelier-canvas", "canvas", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/brand-genesis",
+      "repoName": "brand-genesis",
+      "sourceDir": "packages/ai/brand-genesis",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "BrandContext-first flagship play for complete brand package generation.",
+      "topics": ["nebutra", "brand-genesis", "brand", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/cinema",
+      "repoName": "cinema",
+      "sourceDir": "packages/ai/cinema",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "Agentic film-production IP with camera-continuity tree contracts.",
+      "topics": ["nebutra", "cinema", "film", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/founder-cemetery",
+      "repoName": "founder-cemetery",
+      "sourceDir": "packages/ai/founder-cemetery",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "Founder failure-case knowledge surface for startup agent OS.",
+      "topics": ["nebutra", "founder-cemetery", "startup", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/idea-plaza",
+      "repoName": "idea-plaza",
+      "sourceDir": "packages/ai/idea-plaza",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "Idea marketplace and plaza play surface for startup agents.",
+      "topics": ["nebutra", "idea-plaza", "marketplace", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/landing-builder",
+      "repoName": "landing-builder",
+      "sourceDir": "packages/ai/landing-builder",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "Landing page generation play surface for marketing agents.",
+      "topics": ["nebutra", "landing-builder", "marketing", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/outreach-engine",
+      "repoName": "outreach-engine",
+      "sourceDir": "packages/ai/outreach-engine",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "Outbound outreach sequencing and personalization engine.",
+      "topics": ["nebutra", "outreach-engine", "sales", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/play-marketplace",
+      "repoName": "play-marketplace",
+      "sourceDir": "packages/ai/play-marketplace",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "Play catalog and marketplace surface for agent skill packs.",
+      "topics": ["nebutra", "play-marketplace", "skills", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/reel",
+      "repoName": "reel",
+      "sourceDir": "packages/ai/reel",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "Short-form reel composition and generation contracts.",
+      "topics": ["nebutra", "reel", "video", "ai", "typescript"]
     }
   ]
 }

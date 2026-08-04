@@ -9,7 +9,7 @@
  * - Multi-tenant caching
  */
 
-import type { PrismaClient } from "@nebutra/db";
+import type { BillingTenantDb } from "../db";
 
 // ============================================
 // Types
@@ -102,7 +102,7 @@ class InMemoryCache implements CacheAdapter {
 // ============================================
 
 export class PlanConfigService {
-  private prisma: PrismaClient;
+  private prisma: BillingTenantDb;
   private cache: CacheAdapter;
   private cacheTTL: number;
   private cachePrefix: string;
@@ -111,7 +111,7 @@ export class PlanConfigService {
   private static instance: PlanConfigService | null = null;
 
   constructor(options: {
-    prisma: PrismaClient;
+    prisma: BillingTenantDb;
     cache?: CacheAdapter;
     cacheTTL?: number;
     cachePrefix?: string;
@@ -126,7 +126,7 @@ export class PlanConfigService {
    * Initialize singleton instance
    */
   static init(options: {
-    prisma: PrismaClient;
+    prisma: BillingTenantDb;
     cache?: CacheAdapter;
     cacheTTL?: number;
   }): PlanConfigService {

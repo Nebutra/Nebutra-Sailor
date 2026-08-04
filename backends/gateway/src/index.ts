@@ -6,14 +6,15 @@ import { swaggerUI } from "@hono/swagger-ui";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { initializeFromEnv, setAlertErrorHandler } from "@nebutra/alerting";
 import { configureAuditSystemDb } from "@nebutra/audit";
-import { deductCredits, dollarsToCredits } from "@nebutra/billing";
-import { getSystemDb } from "@nebutra/db";
+import { configureBillingTenantDb, deductCredits, dollarsToCredits } from "@nebutra/billing";
+import { getSystemDb, getTenantDb } from "@nebutra/db";
 import { getStatusCode, toApiError } from "@nebutra/errors";
 import { configureLicenseSystemDb } from "@nebutra/license";
 
-// Host injects durable audit + license storage — packages stay free of private @nebutra/db.
+// Host injects durable audit + license + billing storage — packages stay free of private @nebutra/db.
 configureAuditSystemDb(getSystemDb);
 configureLicenseSystemDb(getSystemDb);
+configureBillingTenantDb(getTenantDb);
 
 import {
   calculateCost,

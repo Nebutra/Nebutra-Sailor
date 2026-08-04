@@ -39,14 +39,16 @@ export async function register() {
       );
     }
 
-    // ── Durable audit storage (host injects private @nebutra/db) ────────────
+    // ── Durable audit + billing storage (host injects private @nebutra/db) ──
     try {
       const { configureAuditSystemDb } = await import("@nebutra/audit");
-      const { getSystemDb } = await import("@nebutra/db");
+      const { configureBillingTenantDb } = await import("@nebutra/billing");
+      const { getSystemDb, getTenantDb } = await import("@nebutra/db");
       configureAuditSystemDb(getSystemDb);
+      configureBillingTenantDb(getTenantDb);
     } catch (err) {
       process.stderr.write(
-        `[web] Audit storage init failed (falling back to in-memory): ${err instanceof Error ? err.message : String(err)}\n`,
+        `[web] Audit/billing storage init failed (falling back to package defaults): ${err instanceof Error ? err.message : String(err)}\n`,
       );
     }
   }
