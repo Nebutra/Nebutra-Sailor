@@ -268,10 +268,7 @@ function StatusChrome({ checkedAt }: { checkedAt: string }) {
           className="group flex min-w-0 items-center gap-2 rounded-md outline-offset-2"
           aria-label="Nebutra Status"
         >
-          <LogomarkSVG
-            className="h-5 w-5 shrink-0 text-foreground sm:h-[1.375rem] sm:w-[1.375rem]"
-            aria-hidden
-          />
+          <LogomarkSVG className="h-5 w-5 shrink-0 text-foreground sm:h-[1.375rem] sm:w-[1.375rem]" />
           <span className="flex min-w-0 items-baseline gap-1.5">
             <span className="truncate text-[13px] font-semibold tracking-tight text-foreground sm:text-sm">
               Nebutra
