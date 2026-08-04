@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/audit",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Audit logging for sensitive operations",
   "private": false,
   "license": "MIT",
@@ -9,8 +9,8 @@
     "status": "wip",
     "productionReady": false,
     "requires": [
-      "@nebutra/db",
-      "@nebutra/logger"
+      "@nebutra/logger",
+      "Host-injected getSystemDb via configureAuditSystemDb for durable Prisma storage (optional)"
     ],
     "gaps": [
       "No production app integrations",
@@ -54,16 +54,7 @@
     "@nebutra/logger": "workspace:*",
     "zod": "catalog:"
   },
-  "peerDependencies": {
-    "@nebutra/db": "workspace:*"
-  },
-  "peerDependenciesMeta": {
-    "@nebutra/db": {
-      "optional": true
-    }
-  },
   "devDependencies": {
-    "@nebutra/db": "workspace:*",
     "@types/node": "^22.19.15",
     "typescript": "catalog:",
     "vitest": "^4.0.18"

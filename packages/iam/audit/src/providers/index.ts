@@ -63,26 +63,13 @@ export async function createAuditProvider(config: AuditFactoryConfig = {}): Prom
       return new MemoryAuditProvider();
 
     case "postgres": {
-      let delegate = config.prisma;
+      // Host must pass `config.prisma` (e.g. getSystemDb()). Never import
+      // private `@nebutra/db` from this package.
+      const delegate = config.prisma;
       if (!delegate) {
-        try {
-          // Lazy import — keeps the package usable in test environments
-          // that mock @nebutra/db.
-          const dbModule = (await import("@nebutra/db")) as {
-            getSystemDb?: () => unknown;
-          };
-          if (typeof dbModule.getSystemDb === "function") {
-            delegate = dbModule.getSystemDb() as PrismaAuditDelegate;
-          }
-        } catch (error) {
-          logger.warn("[audit] Could not load @nebutra/db — falling back to memory provider", {
-            error: error instanceof Error ? error.message : String(error),
-          });
-          return new MemoryAuditProvider();
-        }
-      }
-      if (!delegate) {
-        logger.warn("[audit] Postgres provider requested but no Prisma client available");
+        logger.warn(
+          "[audit] Postgres provider requested but no Prisma client provided — pass config.prisma or use memory",
+        );
         return new MemoryAuditProvider();
       }
       return new PostgresAuditProvider(delegate);

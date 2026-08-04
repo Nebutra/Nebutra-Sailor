@@ -38,6 +38,17 @@ export async function register() {
         `[web] Sentry server init failed: ${err instanceof Error ? err.message : String(err)}\n`,
       );
     }
+
+    // ── Durable audit storage (host injects private @nebutra/db) ────────────
+    try {
+      const { configureAuditSystemDb } = await import("@nebutra/audit");
+      const { getSystemDb } = await import("@nebutra/db");
+      configureAuditSystemDb(getSystemDb);
+    } catch (err) {
+      process.stderr.write(
+        `[web] Audit storage init failed (falling back to in-memory): ${err instanceof Error ? err.message : String(err)}\n`,
+      );
+    }
   }
 
   if (process.env.NEXT_RUNTIME === "edge") {

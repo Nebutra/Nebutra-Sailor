@@ -5,8 +5,14 @@ import "./instrumentation.js";
 import { swaggerUI } from "@hono/swagger-ui";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { initializeFromEnv, setAlertErrorHandler } from "@nebutra/alerting";
+import { configureAuditSystemDb } from "@nebutra/audit";
 import { deductCredits, dollarsToCredits } from "@nebutra/billing";
+import { getSystemDb } from "@nebutra/db";
 import { getStatusCode, toApiError } from "@nebutra/errors";
+
+// Host injects durable audit storage — @nebutra/audit stays free of private @nebutra/db.
+configureAuditSystemDb(getSystemDb);
+
 import {
   calculateCost,
   getModelPricing,

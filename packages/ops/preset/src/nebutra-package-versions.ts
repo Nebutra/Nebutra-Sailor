@@ -37,7 +37,7 @@ export const NEBUTRA_PACKAGE_VERSIONS: Record<string, string> = {
   "@nebutra/tenant": "^0.1.3",
   "@nebutra/permissions": "^0.1.3",
   "@nebutra/vault": "^0.1.2",
-  "@nebutra/audit": "^0.1.2",
+  "@nebutra/audit": "^0.1.3",
 
   // Commerce
   "@nebutra/billing": "^0.1.3",

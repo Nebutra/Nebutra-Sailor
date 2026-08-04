@@ -1,11 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@nebutra/db", () => ({
-  getSystemDb: () => {
-    throw new Error("no db in unit tests");
-  },
-}));
-
 vi.mock("@nebutra/logger", () => ({
   logger: {
     warn: vi.fn(),

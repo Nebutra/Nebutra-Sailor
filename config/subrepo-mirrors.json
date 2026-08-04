@@ -367,6 +367,123 @@
       "category": "ai-runtime",
       "description": "Multi-tenant agent-runtime grammar with thread, turn, and approval model.",
       "topics": ["nebutra", "agent-runtime", "agents", "multi-tenant", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/audit",
+      "repoName": "audit",
+      "sourceDir": "packages/iam/audit",
+      "cohort": "fourth-wave",
+      "category": "iam",
+      "description": "SOC 2-grade audit logging with pluggable memory, Postgres, and ClickHouse providers.",
+      "topics": ["nebutra", "audit", "compliance", "soc2", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/collab",
+      "repoName": "collab",
+      "sourceDir": "packages/integrations/collab",
+      "cohort": "fourth-wave",
+      "category": "integrations",
+      "description": "Multi-tenant real-time collaborative sync layer with transport-agnostic CRDT contracts.",
+      "topics": ["nebutra", "collab", "crdt", "realtime", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/prepaid-wallet",
+      "repoName": "prepaid-wallet",
+      "sourceDir": "packages/platform/prepaid-wallet",
+      "cohort": "fourth-wave",
+      "category": "platform",
+      "description": "Prepaid wallet, API key product helpers, and dual-ledger usage envelope.",
+      "topics": ["nebutra", "prepaid-wallet", "billing", "platform", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/router-supply",
+      "repoName": "router-supply",
+      "sourceDir": "packages/platform/router-supply",
+      "cohort": "fourth-wave",
+      "category": "platform",
+      "description": "Router supply orchestration for model aliases and engine endpoints.",
+      "topics": ["nebutra", "router-supply", "ai-router", "platform", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/tts",
+      "repoName": "tts",
+      "sourceDir": "packages/integrations/tts",
+      "cohort": "fourth-wave",
+      "category": "integrations",
+      "description": "Provider-agnostic text-to-speech and narration synthesis.",
+      "topics": ["nebutra", "tts", "speech", "audio", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/typelens-catalog",
+      "repoName": "typelens-catalog",
+      "sourceDir": "packages/design/typelens-catalog",
+      "cohort": "fourth-wave",
+      "category": "design-system",
+      "description": "Type Lens works, pairings, and agent extract packs for design systems.",
+      "topics": ["nebutra", "typelens", "design-system", "typography", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/video-compose",
+      "repoName": "video-compose",
+      "sourceDir": "packages/integrations/video-compose",
+      "cohort": "fourth-wave",
+      "category": "integrations",
+      "description": "Timeline and edit-decision-list builder with provider-agnostic video compose.",
+      "topics": ["nebutra", "video-compose", "timeline", "video", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/forge-dns-leak",
+      "repoName": "forge-dns-leak",
+      "sourceDir": "packages/ai/forge-dns-leak",
+      "cohort": "fourth-wave",
+      "category": "ai-runtime",
+      "description": "Authoritative DNS leak zone and session API for Nebutra Forge.",
+      "topics": ["nebutra", "dns", "forge", "security", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/ecosystem-safety",
+      "repoName": "ecosystem-safety",
+      "sourceDir": "packages/ai/ecosystem-safety",
+      "cohort": "fourth-wave",
+      "category": "ai-runtime",
+      "description": "Public-disclosure safety primitives for ecosystem publishing surfaces.",
+      "topics": ["nebutra", "ecosystem-safety", "safety", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/generation-context",
+      "repoName": "generation-context",
+      "sourceDir": "packages/ai/generation-context",
+      "cohort": "fourth-wave",
+      "category": "ai-runtime",
+      "description": "Shared BrandContext and generated-asset metadata contracts for multimodal pipelines.",
+      "topics": ["nebutra", "generation-context", "brand", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/knowledge-graph",
+      "repoName": "knowledge-graph",
+      "sourceDir": "packages/ai/knowledge-graph",
+      "cohort": "fourth-wave",
+      "category": "ai-runtime",
+      "description": "Multi-tenant knowledge-graph substrate with typed entities and edges.",
+      "topics": ["nebutra", "knowledge-graph", "graph", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/play-loader",
+      "repoName": "play-loader",
+      "sourceDir": "packages/ai/play-loader",
+      "cohort": "fourth-wave",
+      "category": "ai-runtime",
+      "description": "Declarative SKILL.md play loader and dependency planner.",
+      "topics": ["nebutra", "play-loader", "skills", "agents", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/code-index",
+      "repoName": "code-index",
+      "sourceDir": "packages/ai/code-index",
+      "cohort": "fourth-wave",
+      "category": "ai-runtime",
+      "description": "Multi-tenant codebase semantic-index grammar with content-hash identity.",
+      "topics": ["nebutra", "code-index", "search", "ai", "typescript"]
     }
   ]
 }
