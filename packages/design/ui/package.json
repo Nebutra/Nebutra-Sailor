@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/ui",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Nebutra design-system UI primitives, patterns, layouts, and token-integrated components",
   "private": false,
   "license": "MIT",
@@ -203,5 +203,7 @@
   "optionalDependencies": {
     "@react-three/fiber": "^9.5.0",
     "three": "^0.183.2"
-  }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/forge-runtime",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Nebutra Forge capability registry, invoke pipeline, pure tools, and human page models",
   "private": false,
   "license": "MIT",
@@ -18,21 +18,50 @@
       "md-to-pdf requires Playwright Chromium on product hosts (fail-closed without it)"
     ]
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./pdf": "./src/tools/md-to-pdf.ts",
-    "./vin": "./src/tools/w3-vin.ts",
-    "./secret-scan": "./src/tools/w3-secret-scan.ts",
-    "./yaml-diff": "./src/tools/w3-yaml-diff.ts",
-    "./env-diff": "./src/tools/w3-env-diff.ts",
-    "./list-set-compare": "./src/tools/w3-list-set-compare.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./pdf": {
+      "types": "./dist/tools/md-to-pdf.d.ts",
+      "import": "./dist/tools/md-to-pdf.js",
+      "default": "./dist/tools/md-to-pdf.js"
+    },
+    "./vin": {
+      "types": "./dist/tools/w3-vin.d.ts",
+      "import": "./dist/tools/w3-vin.js",
+      "default": "./dist/tools/w3-vin.js"
+    },
+    "./secret-scan": {
+      "types": "./dist/tools/w3-secret-scan.d.ts",
+      "import": "./dist/tools/w3-secret-scan.js",
+      "default": "./dist/tools/w3-secret-scan.js"
+    },
+    "./yaml-diff": {
+      "types": "./dist/tools/w3-yaml-diff.d.ts",
+      "import": "./dist/tools/w3-yaml-diff.js",
+      "default": "./dist/tools/w3-yaml-diff.js"
+    },
+    "./env-diff": {
+      "types": "./dist/tools/w3-env-diff.d.ts",
+      "import": "./dist/tools/w3-env-diff.js",
+      "default": "./dist/tools/w3-env-diff.js"
+    },
+    "./list-set-compare": {
+      "types": "./dist/tools/w3-list-set-compare.d.ts",
+      "import": "./dist/tools/w3-list-set-compare.js",
+      "default": "./dist/tools/w3-list-set-compare.js"
+    }
   },
   "scripts": {
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "skills:generate": "vitest run src/generate-core-skills.test.ts"
+    "skills:generate": "vitest run src/generate-core-skills.test.ts",
+    "build": "tsup"
   },
   "dependencies": {
     "@dbml/core": "^9.1.1",
@@ -96,7 +125,8 @@
     "@types/papaparse": "^5.5.2",
     "@types/qrcode": "^1.5.6",
     "typescript": "catalog:",
-    "vitest": "catalog:"
+    "vitest": "catalog:",
+    "tsup": "catalog:"
   },
   "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/forge-runtime#readme",
   "repository": {
@@ -109,5 +139,11 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
 }

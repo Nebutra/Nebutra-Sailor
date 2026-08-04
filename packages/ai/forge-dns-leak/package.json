@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/forge-dns-leak",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Authoritative DNS leak zone + session API for Nebutra Forge (dnsleaktest-style recursive resolver capture)",
   "private": false,
   "license": "MIT",
@@ -13,27 +13,42 @@
     "category": "ai",
     "summary": "UDP/TCP53 authority that logs recursive resolvers for unique leak probes; localhost control API for Forge"
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "bin": {
     "forge-dns-leak": "./src/cli.ts"
   },
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   },
   "scripts": {
     "start": "tsx src/cli.ts",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build": "tsup"
   },
   "dependencies": {},
   "devDependencies": {
     "@types/node": "catalog:",
     "tsx": "catalog:",
     "typescript": "catalog:",
-    "vitest": "catalog:"
+    "vitest": "catalog:",
+    "tsup": "catalog:"
   },
   "engines": {
     "node": ">=22"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/prepaid-wallet",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Prepaid wallet, API key product helpers, and dual-ledger usage envelopes for Nebutra Router & Forge",
   "private": false,
   "license": "MIT",
@@ -18,14 +18,19 @@
       "Billing UI surfaces for top-up/refund still app-owned"
     ]
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   },
   "scripts": {
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build": "tsup"
   },
   "dependencies": {
     "zod": "catalog:"
@@ -33,7 +38,8 @@
   "devDependencies": {
     "@types/node": "catalog:",
     "typescript": "catalog:",
-    "vitest": "catalog:"
+    "vitest": "catalog:",
+    "tsup": "catalog:"
   },
   "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/platform/prepaid-wallet#readme",
   "repository": {
@@ -46,5 +52,11 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
 }

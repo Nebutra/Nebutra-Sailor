@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/router-supply",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Nebutra Router supply orchestration: model aliases, engine endpoints, upstream resolution for New-API/Sub2API sidecars",
   "private": false,
   "license": "MIT",
@@ -18,14 +18,19 @@
       "Multi-tenant engine credentials store is host-injected only"
     ]
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   },
   "scripts": {
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build": "tsup"
   },
   "dependencies": {
     "@nebutra/prepaid-wallet": "workspace:*"
@@ -33,7 +38,8 @@
   "devDependencies": {
     "@types/node": "catalog:",
     "typescript": "catalog:",
-    "vitest": "catalog:"
+    "vitest": "catalog:",
+    "tsup": "catalog:"
   },
   "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/platform/router-supply#readme",
   "repository": {
@@ -43,5 +49,11 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
 }
