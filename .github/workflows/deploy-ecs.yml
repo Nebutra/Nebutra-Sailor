@@ -68,6 +68,8 @@ on:
       - "infra/ops/scripts/carina-codeploy.sh"
       - "infra/ops/scripts/install-carina-daemon.sh"
       - "infra/ops/scripts/configure-api-carina-env.sh"
+      - "infra/ops/scripts/carina-version.sh"
+      - "infra/ops/carina.pin"
       - ".github/workflows/deploy-ecs.yml"
 
 permissions:
@@ -876,14 +878,21 @@ jobs:
             infra/ops/scripts/carina-codeploy.sh \
             infra/ops/scripts/install-carina-daemon.sh \
             infra/ops/scripts/configure-api-carina-env.sh \
+            infra/ops/scripts/carina-version.sh \
+            infra/ops/carina.pin \
             "${ECS_USER}@${ECS_HOST}:/tmp/carina-ops/"
           # Pre-stage carina-daemon on the GH runner (US) then scp — ECS cannot
           # reliably pull GitHub Releases in reasonable time from CN.
-          CARINA_VERSION="${CARINA_VERSION:-0.8.5}"
+          # Version comes from infra/ops/carina.pin unless CARINA_VERSION is set.
+          if [ -z "${CARINA_VERSION:-}" ]; then
+            # shellcheck source=infra/ops/scripts/carina-version.sh
+            source infra/ops/scripts/carina-version.sh
+            CARINA_VERSION="$(carina_version_from_pin)"
+          fi
           ARCH_TAG="linux_amd64"
           ASSET="carina_${CARINA_VERSION}_${ARCH_TAG}.tar.gz"
           URL="https://github.com/Nebutra/carina/releases/download/v${CARINA_VERSION}/${ASSET}"
-          echo "Pre-staging carina-daemon from $URL"
+          echo "Pre-staging carina-daemon v${CARINA_VERSION} from $URL"
           mkdir -p /tmp/carina-stage
           # Prefer origin on GH runners; fall back to CN proxies if origin flakes.
           ok=0

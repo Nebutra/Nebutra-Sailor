@@ -18,19 +18,33 @@
 #   sudo bash install-carina-daemon.sh
 #   CARINA_VERSION=0.8.5 bash install-carina-daemon.sh
 #   CARINA_RELEASE_MIRRORS="https://ghfast.top/ https://ghproxy.net/" bash install-carina-daemon.sh
+#
+# Version resolution (first hit wins):
+#   1) CARINA_VERSION env
+#   2) staged /tmp/carina-ops/VERSION (CI)
+#   3) infra/ops/carina.pin (repo single source of truth)
+#   4) hard fallback (last known good in script; prefer pin)
 set -euo pipefail
 
-# Default tracks latest published Carina release pin for co-deploy.
-# Override with CARINA_VERSION=… when you need to hold a known-good.
-# CI may stage /tmp/carina-ops/VERSION so refresh installs report the true pin.
+SCRIPTS_DIR="$(cd "$(dirname "$0")" && pwd)"
 CARINA_ROOT="${CARINA_ROOT:-/var/carina}"
 STAGED_DIR="${CARINA_STAGED_DIR:-/tmp/carina-ops}"
 STAGED_DAEMON="${CARINA_STAGED_BIN:-$STAGED_DIR/carina-daemon}"
 STAGED_KERNEL="${CARINA_STAGED_KERNEL:-$STAGED_DIR/carina-kernel-service}"
+
 if [ -z "${CARINA_VERSION:-}" ] && [ -f "$STAGED_DIR/VERSION" ]; then
   CARINA_VERSION="$(tr -d '[:space:]' <"$STAGED_DIR/VERSION")"
 fi
-CARINA_VERSION="${CARINA_VERSION:-0.8.5}"
+if [ -z "${CARINA_VERSION:-}" ] && [ -f "$SCRIPTS_DIR/carina-version.sh" ]; then
+  # shellcheck source=carina-version.sh
+  source "$SCRIPTS_DIR/carina-version.sh"
+  CARINA_VERSION="$(carina_version_from_pin 2>/dev/null || true)"
+fi
+# staged carina.pin may be uploaded next to install scripts
+if [ -z "${CARINA_VERSION:-}" ] && [ -f "$STAGED_DIR/carina.pin" ]; then
+  CARINA_VERSION="$(grep -E '^version=' "$STAGED_DIR/carina.pin" | head -1 | cut -d= -f2- | tr -d '[:space:]')"
+fi
+CARINA_VERSION="${CARINA_VERSION:-0.8.6}"
 ARCH="$(uname -m)"
 case "$ARCH" in
   x86_64|amd64) ARCH_TAG="linux_amd64" ;;

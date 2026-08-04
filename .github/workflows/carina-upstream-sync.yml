@@ -1,0 +1,104 @@
+name: Carina upstream sync
+
+# Keep infra/ops/carina.pin aligned with Nebutra/carina releases.
+# Renovate also manages the pin (regex manager); this workflow is the
+# belt-and-suspenders path that runs on a schedule and can force-update.
+
+on:
+  schedule:
+    # Twice daily — Carina 0.8.x can ship multiple patches in a day.
+    - cron: "17 2,14 * * *"
+  workflow_dispatch:
+    inputs:
+      write:
+        description: "If true, open a PR that bumps carina.pin to latest"
+        required: false
+        default: "true"
+        type: choice
+        options: ["true", "false"]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: carina-upstream-sync
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Check / bump carina.pin
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Resolve pin vs latest
+        id: resolve
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          chmod +x infra/ops/scripts/carina-version.sh infra/ops/scripts/carina-upstream-check.sh
+          set +e
+          out="$(bash infra/ops/scripts/carina-upstream-check.sh --print 2>&1)"
+          code=$?
+          set -e
+          echo "$out"
+          pinned="$(echo "$out" | awk -F': *' '/^pinned:/{print $2}')"
+          latest="$(echo "$out" | awk -F': *' '/^latest:/{print $2}')"
+          status="$(echo "$out" | awk -F': *' '/^status:/{print $2}')"
+          echo "pinned=$pinned" >>"$GITHUB_OUTPUT"
+          echo "latest=$latest" >>"$GITHUB_OUTPUT"
+          echo "status=$status" >>"$GITHUB_OUTPUT"
+          if [ -z "$latest" ]; then
+            echo "::error::failed to resolve latest Carina release"
+            exit 1
+          fi
+          # print-only always exits 0; recompute behind
+          if [ "$pinned" != "$latest" ]; then
+            echo "behind=true" >>"$GITHUB_OUTPUT"
+          else
+            echo "behind=false" >>"$GITHUB_OUTPUT"
+          fi
+
+      - name: Bump pin file
+        if: steps.resolve.outputs.behind == 'true' && (github.event_name == 'schedule' || inputs.write == 'true')
+        run: |
+          set -euo pipefail
+          bash infra/ops/scripts/carina-upstream-check.sh --write || true
+          # --write exits 2 when it rewrote; 0 if somehow current
+          grep -E '^version=' infra/ops/carina.pin
+          # Keep install script default comment in sync for human readers (optional)
+          # Prefer a single source of truth — scripts already source carina.pin.
+
+      - name: Open or update PR
+        if: steps.resolve.outputs.behind == 'true' && (github.event_name == 'schedule' || inputs.write == 'true')
+        uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore(ops): bump Carina co-deploy pin to ${{ steps.resolve.outputs.latest }}"
+          branch: chore/carina-pin-${{ steps.resolve.outputs.latest }}
+          delete-branch: true
+          title: "chore(ops): bump Carina co-deploy pin to ${{ steps.resolve.outputs.latest }}"
+          labels: |
+            dependencies
+            ops
+          body: |
+            ## Summary
+            Automated bump of `infra/ops/carina.pin` from **${{ steps.resolve.outputs.pinned }}** → **${{ steps.resolve.outputs.latest }}**
+            (source: [Nebutra/carina](https://github.com/Nebutra/carina/releases)).
+
+            ## What happens next
+            - Merging this PR updates the co-deploy binary pin.
+            - `deploy-ecs` path filter includes `infra/ops/carina.pin` → next api co-deploy stages **${{ steps.resolve.outputs.latest }}**.
+            - `carina-codeploy.sh` always refreshes `/var/carina/bin` from staged binaries.
+
+            ## Checklist
+            - [ ] Release notes look non-breaking for Track-B (`protocol_version` still ≥ 1)
+            - [ ] After merge, confirm `/var/carina/VERSION` and `GET …/carina/status`
+
+            _Opened by `carina-upstream-sync` workflow._
