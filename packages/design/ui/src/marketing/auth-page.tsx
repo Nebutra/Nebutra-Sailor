@@ -13,6 +13,7 @@ import React from "react";
 import { Button } from "../primitives/button";
 import { Input } from "../primitives/input";
 import { motion, useReducedMotion } from "../shared/animation/motion";
+import { AUTH_FORM_COLUMN_CLASS } from "../utils/auth-surfaces";
 import { cn } from "../utils/cn";
 
 // Google Icon SVG component
@@ -294,8 +295,8 @@ export function AuthPage({
           </a>
         </Button>
 
-        {/* Auth Form Container */}
-        <div className="mx-auto space-y-4 w-full max-w-sm">
+        {/* Auth Form Container — width SSOT: AUTH_FORM_COLUMN_CLASS */}
+        <div className={cn("mx-auto space-y-4", AUTH_FORM_COLUMN_CLASS)}>
           {/* Mobile Brand (hidden on desktop) */}
           <div className="flex items-center gap-2 lg:hidden">
             {brandIcon}

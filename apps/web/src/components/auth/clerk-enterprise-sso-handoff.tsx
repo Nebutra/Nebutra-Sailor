@@ -6,6 +6,7 @@ import {
 } from "@nebutra/auth/react/clerk-enterprise-sso";
 import { Key } from "@nebutra/icons";
 import { Button } from "@nebutra/ui/primitives";
+import { AUTH_PRIMARY_CTA_CLASS } from "@nebutra/ui/utils";
 import { useTranslations } from "next-intl";
 
 interface ClerkEnterpriseSsoHandoffProps {
@@ -57,11 +58,7 @@ export function ClerkEnterpriseSsoHandoff({
           >
             {errorMessage}
           </p>
-          <Button
-            type="button"
-            className="h-11 w-full bg-[hsl(var(--foreground))] text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))]"
-            onClick={retry}
-          >
+          <Button type="button" variant="ink" className={AUTH_PRIMARY_CTA_CLASS} onClick={retry}>
             {t("ssoRetry")}
           </Button>
         </div>

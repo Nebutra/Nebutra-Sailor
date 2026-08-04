@@ -4,6 +4,7 @@ import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { Warning as AlertTriangle, Eye, EyeOff, Key, Envelope as Mail } from "@nebutra/icons";
 import { Button, Input } from "@nebutra/ui/primitives";
+import { AUTH_PRIMARY_CTA_CLASS } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -328,11 +329,7 @@ export function CredentialsForm({
           </p>
         ) : null}
 
-        <Button
-          type="submit"
-          disabled={loading}
-          className="h-11 w-full bg-[hsl(var(--foreground))] text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))] disabled:cursor-not-allowed disabled:opacity-70"
-        >
+        <Button type="submit" disabled={loading} variant="ink" className={AUTH_PRIMARY_CTA_CLASS}>
           {mode === "sign-in"
             ? loading
               ? tSignIn("submitLoading")

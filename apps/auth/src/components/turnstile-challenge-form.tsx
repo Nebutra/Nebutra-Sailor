@@ -2,6 +2,7 @@
 
 import { Turnstile } from "@marsidev/react-turnstile";
 import { Button } from "@nebutra/ui/primitives";
+import { AUTH_PRIMARY_CTA_CLASS } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -134,12 +135,9 @@ export function TurnstileChallengeForm({
           </h1>
           <p className="mt-4 text-sm leading-6 text-muted-foreground">{tForgot("success")}</p>
         </div>
-        <Link
-          href={cancelTo}
-          className="inline-flex h-11 w-full items-center justify-center rounded-[var(--radius-md)] bg-[hsl(var(--foreground))] text-sm font-medium text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))]"
-        >
-          {t("submit")}
-        </Link>
+        <Button asChild variant="ink" className={AUTH_PRIMARY_CTA_CLASS}>
+          <Link href={cancelTo}>{t("submit")}</Link>
+        </Button>
       </div>
     );
   }

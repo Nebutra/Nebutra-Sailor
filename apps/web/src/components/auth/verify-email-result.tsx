@@ -1,3 +1,4 @@
+import { Button } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { AuthErrorKey } from "@/lib/auth/error-keys";
@@ -30,12 +31,9 @@ export function VerifyEmailResult({ success, errorKey = "unknown" }: VerifyEmail
         <h3 className="mt-4 text-base font-semibold text-foreground">{t("successTitle")}</h3>
         <p className="mt-2 text-sm text-muted-foreground">{t("successDescription")}</p>
         <div className="mt-5">
-          <Link
-            href="/"
-            className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[hsl(var(--foreground))] px-4 py-2 text-sm font-medium text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))]"
-          >
-            {t("continueCta")}
-          </Link>
+          <Button asChild variant="ink">
+            <Link href="/">{t("continueCta")}</Link>
+          </Button>
         </div>
       </section>
     );

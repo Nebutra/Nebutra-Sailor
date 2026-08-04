@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Input } from "@nebutra/ui/primitives";
+import { AUTH_PRIMARY_CTA_CLASS } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -82,12 +83,9 @@ export function ForgotPasswordForm({ returnTo, turnstileSiteKey }: ForgotPasswor
           </h1>
           <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("success")}</p>
         </div>
-        <Link
-          href={signInHref}
-          className="inline-flex h-11 w-full items-center justify-center rounded-[var(--radius-md)] bg-[hsl(var(--foreground))] text-sm font-medium text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))]"
-        >
-          {tSignIn("submit")}
-        </Link>
+        <Button asChild variant="ink" className={AUTH_PRIMARY_CTA_CLASS}>
+          <Link href={signInHref}>{tSignIn("submit")}</Link>
+        </Button>
       </div>
     );
   }
@@ -126,11 +124,7 @@ export function ForgotPasswordForm({ returnTo, turnstileSiteKey }: ForgotPasswor
           </p>
         ) : null}
 
-        <Button
-          type="submit"
-          disabled={loading}
-          className="h-11 w-full bg-[hsl(var(--foreground))] text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))] disabled:cursor-not-allowed disabled:opacity-70"
-        >
+        <Button type="submit" disabled={loading} variant="ink" className={AUTH_PRIMARY_CTA_CLASS}>
           {loading ? tSignIn("providerLoading") : t("submit")}
         </Button>
       </form>

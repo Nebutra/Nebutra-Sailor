@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Input } from "@nebutra/ui/primitives";
+import { AUTH_PRIMARY_CTA_CLASS } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -112,11 +113,7 @@ export function MagicLinkForm({ returnTo, turnstileSiteKey }: MagicLinkFormProps
           </p>
         ) : null}
 
-        <Button
-          type="submit"
-          disabled={loading}
-          className="h-11 w-full bg-[hsl(var(--foreground))] text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))] disabled:cursor-not-allowed disabled:opacity-70"
-        >
+        <Button type="submit" disabled={loading} variant="ink" className={AUTH_PRIMARY_CTA_CLASS}>
           {loading ? tSignIn("providerLoading") : t("send")}
         </Button>
       </form>

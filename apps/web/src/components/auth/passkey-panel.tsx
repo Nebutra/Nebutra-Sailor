@@ -2,6 +2,7 @@
 
 import { Key } from "@nebutra/icons";
 import { Button, Input, Label } from "@nebutra/ui/primitives";
+import { AUTH_PRIMARY_CTA_CLASS } from "@nebutra/ui/utils";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
@@ -95,7 +96,8 @@ export function PasskeyPanel({ returnUrl }: PasskeyPanelProps) {
 
         <Button
           type="button"
-          className="h-11 w-full bg-[hsl(var(--foreground))] text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))] disabled:cursor-not-allowed disabled:opacity-70"
+          variant="ink"
+          className={AUTH_PRIMARY_CTA_CLASS}
           onClick={handleSignIn}
           disabled={loading || !supported}
         >
