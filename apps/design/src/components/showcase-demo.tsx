@@ -29,12 +29,22 @@ const Fallback = () => (
  * The template literal keeps the whole set derived: there is no map of imports
  * to maintain, and a demo added to docs-shared is reachable here without an
  * edit. Next needs the static prefix to know which directory to split.
+ *
+ * `webpackInclude` is load-bearing rather than tidy. Without it the context
+ * takes every file in that directory whatever it is named, and three
+ * extension-less fragments sitting there — `Pro`, `Title`, `Payment Method`,
+ * untracked debris from a bad split in May — fail the parse and take the whole
+ * build down with them.
  */
 function loader(id: string) {
-  return dynamic(() => import(`@nebutra/docs-shared/components/previews/${id}`), {
-    ssr: false,
-    loading: Fallback,
-  });
+  return dynamic(
+    () =>
+      import(
+        /* webpackInclude: /\.tsx$/ */
+        `@nebutra/docs-shared/components/previews/${id}`
+      ),
+    { ssr: false, loading: Fallback },
+  );
 }
 
 function useOnApproach<T extends HTMLElement>(): [React.RefObject<T | null>, boolean] {
