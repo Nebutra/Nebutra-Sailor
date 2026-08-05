@@ -6,8 +6,16 @@
   "description": "Shared UI/docs components for design-docs and sailor-docs (byte-identical SSOT)",
   "license": "MIT",
   "exports": {
-    "./components/*": "./src/components/*",
-    "./*": "./src/*"
+    "./components/*": [
+      "./src/components/*.tsx",
+      "./src/components/*.ts",
+      "./src/components/*"
+    ],
+    "./*": [
+      "./src/*.tsx",
+      "./src/*.ts",
+      "./src/*"
+    ]
   },
   "peerDependencies": {
     "react": "^19",

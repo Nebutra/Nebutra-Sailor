@@ -7,8 +7,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { BrandLanguageSwitcher } from "@/components/brand-language-switcher";
+import { CommandPalette } from "@/components/command-palette";
 import { SiteNav, SiteNavCompact } from "@/components/site-nav";
-import { navSections } from "@/lib/nav";
+import { commandEntries, navSections } from "@/lib/nav";
 import { SITE_NAME } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -21,6 +22,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const sections = navSections();
+  const entries = commandEntries();
 
   return (
     <html
@@ -38,7 +40,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <Link className="font-semibold text-[15px] tracking-tight" href="/">
                 {SITE_NAME}
               </Link>
-              <BrandLanguageSwitcher />
+              <div className="flex items-center gap-3">
+                <CommandPalette entries={entries} />
+                <BrandLanguageSwitcher />
+              </div>
             </div>
             <SiteNavCompact sections={sections} />
           </div>

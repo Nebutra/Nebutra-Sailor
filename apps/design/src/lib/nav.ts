@@ -1,6 +1,8 @@
+import type { CommandEntry } from "@/components/command-palette";
 import type { NavSection } from "@/components/site-nav";
 import { componentsInGroup, GROUPS } from "@/lib/components/registry";
 import { PATTERNS } from "@/lib/pattern-data";
+import { showcaseDemos } from "@/lib/showcase";
 
 /**
  * The sidebar tree, derived rather than typed out.
@@ -25,6 +27,7 @@ const FOUNDATIONS: NavSection = {
     { href: "/tokens/layers", label: "Layers" },
     { href: "/tokens/switchability", label: "Switchability" },
     { href: "/tokens/traps", label: "Traps" },
+    { href: "/icons", label: "Icons" },
   ],
 };
 
@@ -74,4 +77,31 @@ export function navSections(): NavSection[] {
     },
     ...groups,
   ];
+}
+
+/**
+ * The palette index: every sidebar entry, plus the showcase demos.
+ *
+ * Derived from the same call the sidebar renders, so the two cannot disagree —
+ * nothing is searchable that is not reachable, and nothing reachable is missing.
+ * The showcase demos are added separately because they live on one page rather
+ * than one page each, and a hundred and sixty of them in the sidebar would bury
+ * everything else.
+ */
+export function commandEntries(): CommandEntry[] {
+  const fromNav = navSections().flatMap((section) =>
+    section.items.map((item) => ({
+      href: item.href,
+      label: item.label,
+      group: section.label,
+    })),
+  );
+
+  const fromShowcase = showcaseDemos().map((demo) => ({
+    href: "/showcase",
+    label: demo.label,
+    group: "Showcase",
+  }));
+
+  return [...fromNav, ...fromShowcase];
 }
