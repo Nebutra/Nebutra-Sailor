@@ -36,13 +36,32 @@ const Fallback = () => (
  * untracked debris from a bad split in May — fail the parse and take the whole
  * build down with them.
  */
+/** `globe-demo` → `GlobeDemo`, which is the convention every file follows. */
+function pascal(id: string): string {
+  return id
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join("");
+}
+
 function loader(id: string) {
   return dynamic(
-    () =>
-      import(
+    async () => {
+      const mod: Record<string, unknown> = await import(
         /* webpackInclude: /\.tsx$/ */
         `@nebutra/docs-shared/components/previews/${id}`
-      ),
+      );
+      // Only eight of the ~190 files have a default export; the rest name the
+      // component after the file. Resolving by rule rather than by a lookup
+      // table keeps the section derived — and the last fallback means a file
+      // that follows neither convention still renders instead of throwing
+      // "element type is invalid" and taking the page down with it.
+      const resolved =
+        mod.default ??
+        mod[pascal(id)] ??
+        Object.values(mod).find((value) => typeof value === "function");
+      return resolved as React.ComponentType;
+    },
     { ssr: false, loading: Fallback },
   );
 }
