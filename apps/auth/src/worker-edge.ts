@@ -140,13 +140,20 @@ function getAuth(env: AuthEdgeEnv): AuthInstance {
     throw new Error("HYPERDRIVE or DATABASE_URL is required on the auth edge Worker");
   }
 
+  // One Pool per isolate — never pool.end() on the request path (races → 1101).
   const key = `${secret.slice(0, 8)}:${dbUrl.slice(0, 48)}`;
   if (authSingleton && authKey === key && pool) {
     return authSingleton;
   }
 
-  pool?.end().catch(() => undefined);
-  pool = new Pool({ connectionString: dbUrl, max: 5 });
+  pool = new Pool({
+    connectionString: dbUrl,
+    // Workers: tiny pool; Hyperdrive handles real pooling.
+    max: 1,
+    idleTimeoutMillis: 0,
+    connectionTimeoutMillis: 8_000,
+    allowExitOnIdle: false,
+  });
   authKey = key;
 
   const socialProviders: Record<string, { clientId: string; clientSecret: string }> = {};
@@ -505,8 +512,28 @@ async function forwardToOrigin(request: Request, env: AuthEdgeEnv): Promise<Resp
 
   const incoming = new URL(request.url);
   const target = new URL(incoming.pathname + incoming.search, base);
-  const headers = new Headers(request.headers);
-  headers.set("host", base.host);
+  // Build a clean header set — never mutate/copy hop-by-hop or forbidden names
+  // (setting Host on Workers can throw → Error 1101).
+  const headers = new Headers();
+  request.headers.forEach((value, key) => {
+    const k = key.toLowerCase();
+    if (
+      k === "host" ||
+      k === "connection" ||
+      k === "content-length" ||
+      k === "transfer-encoding" ||
+      k === "cf-connecting-ip" ||
+      k === "cf-ray" ||
+      k === "cf-visitor" ||
+      k === "cf-ipcountry" ||
+      k === "x-forwarded-proto" ||
+      k === "x-forwarded-for" ||
+      k === "x-real-ip"
+    ) {
+      return;
+    }
+    headers.set(key, value);
+  });
   headers.set("x-forwarded-host", "auth.nebutra.com");
   headers.set("x-forwarded-proto", "https");
   headers.set("x-nebutra-edge-auth", "1");
@@ -514,14 +541,19 @@ async function forwardToOrigin(request: Request, env: AuthEdgeEnv): Promise<Resp
   if (clientIp) headers.set("x-forwarded-for", clientIp);
 
   try {
-    return await fetch(target.toString(), {
+    const init: RequestInit = {
       method: request.method,
       headers,
-      body: request.method === "GET" || request.method === "HEAD" ? undefined : request.body,
       redirect: "manual",
-      ...(timeoutSignal(15_000) ? { signal: timeoutSignal(15_000) } : {}),
-      ...(request.body ? { duplex: "half" } : {}),
-    } as RequestInit);
+    };
+    const signal = timeoutSignal(15_000);
+    if (signal) init.signal = signal;
+    if (request.method !== "GET" && request.method !== "HEAD" && request.body) {
+      init.body = request.body;
+      // Required by workerd when forwarding a stream.
+      (init as RequestInit & { duplex?: string }).duplex = "half";
+    }
+    return await fetch(target.toString(), init);
   } catch (error) {
     return json(
       {
