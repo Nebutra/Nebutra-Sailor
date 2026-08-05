@@ -1,5 +1,6 @@
 import type { NavSection } from "@/components/site-nav";
 import { componentsInGroup, GROUPS } from "@/lib/components/registry";
+import { PATTERNS } from "@/lib/pattern-data";
 
 /**
  * The sidebar tree, derived rather than typed out.
@@ -28,10 +29,14 @@ const FOUNDATIONS: NavSection = {
 };
 
 /** Composition decisions — hand-written, with the cast verified at build time. */
-const PATTERNS: NavSection = {
+const PATTERN_NAV: NavSection = {
   id: "patterns-nav",
   label: "Patterns",
-  items: [{ href: "/patterns/modality", label: "Modality" }],
+  meta: String(PATTERNS.length),
+  items: PATTERNS.map((pattern) => ({
+    href: `/patterns/${pattern.slug}`,
+    label: pattern.title,
+  })),
 };
 
 /** The identity, rendered from the @nebutra/brand SSOT rather than described. */
@@ -58,7 +63,7 @@ export function navSections(): NavSection[] {
   return [
     BRAND,
     FOUNDATIONS,
-    PATTERNS,
+    PATTERN_NAV,
     {
       id: "components-index",
       label: "Components",
