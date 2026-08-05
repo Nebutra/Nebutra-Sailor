@@ -54,7 +54,10 @@ export function navSections(): NavSection[] {
     {
       id: "components-index",
       label: "Components",
-      items: [{ href: "/components", label: "All components" }],
+      items: [
+        { href: "/components", label: "All components" },
+        { href: "/showcase", label: "Showcase" },
+      ],
     },
     ...groups,
   ];
