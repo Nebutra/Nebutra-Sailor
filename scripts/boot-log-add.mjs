@@ -122,7 +122,10 @@ function insertByYear(source, entry) {
 const args = process.argv.slice(2);
 const auditAt = args.indexOf("--audit");
 const auditPath = auditAt === -1 ? null : args[auditAt + 1];
-const clusterPaths = args.filter((a, i) => !a.startsWith("--") && i !== auditAt + 1);
+// Without --audit, auditAt is -1 and auditAt + 1 is 0 — which would silently
+// swallow the first cluster path. Skip nothing unless the flag is present.
+const auditValueAt = auditAt === -1 ? -1 : auditAt + 1;
+const clusterPaths = args.filter((a, i) => !a.startsWith("--") && i !== auditValueAt);
 const checkOnly = args.includes("--check");
 
 const dropped = new Set();

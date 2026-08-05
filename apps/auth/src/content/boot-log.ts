@@ -2570,6 +2570,16 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     ],
   },
   {
+    id: "unitree-left-dji",
+    stamp: "2016.08",
+    sources: [
+      {
+        label: "宇樹科技,中文維基百科",
+        url: "https://zh.wikipedia.org/wiki/%E5%AE%87%E6%A0%91%E7%A7%91%E6%8A%80",
+      },
+    ],
+  },
+  {
     id: "aws-s3-2017-typo",
     stamp: "2017.02.28",
     sources: [
