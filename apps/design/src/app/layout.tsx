@@ -7,6 +7,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { BrandLanguageSwitcher } from "@/components/brand-language-switcher";
+import { SiteNav, SiteNavCompact } from "@/components/site-nav";
+import { navSections } from "@/lib/nav";
 import { SITE_NAME } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -17,44 +19,35 @@ export const metadata: Metadata = {
   description: `The ${brand.name} design system as a product surface — live tokens, live components, generated from the source.`,
 };
 
-const NAV = [
-  { href: "/tokens", label: "Tokens" },
-  { href: "/components", label: "Components" },
-  { href: "/tokens/layers", label: "Layers" },
-  { href: "/tokens/traps", label: "Traps" },
-  { href: "/tokens/switchability", label: "Switchability" },
-];
-
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const sections = navSections();
+
   return (
     <html
-      lang="en"
       className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}
+      lang="en"
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
-        <header className="border-b border-border/60 bg-background/85 backdrop-blur">
-          <div className="mx-auto flex max-w-[1400px] flex-col gap-3 px-6 py-4 md:px-10">
-            <div className="flex flex-wrap items-baseline gap-8">
+        {/* The header carries identity and the language switch only. Navigation
+            moved into the sidebar, where the whole inventory is visible at once
+            rather than five representatives of it. */}
+        <header className="sticky top-0 z-20 bg-background/85 backdrop-blur">
+          <div className="mx-auto flex max-w-[1400px] flex-col gap-3 px-6 py-3 md:px-10">
+            <div className="flex flex-wrap items-center justify-between gap-4">
               <Link className="font-semibold text-[15px] tracking-tight" href="/">
                 {SITE_NAME}
               </Link>
-              <nav className="flex flex-wrap items-baseline gap-5 text-[13px] text-muted-foreground">
-                {NAV.map((item) => (
-                  <Link
-                    className="transition-colors hover:text-foreground"
-                    href={item.href}
-                    key={item.href}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </nav>
+              <BrandLanguageSwitcher />
             </div>
-            <BrandLanguageSwitcher />
+            <SiteNavCompact sections={sections} />
           </div>
         </header>
-        <main className="mx-auto max-w-[1400px] px-6 py-10 md:px-10">{children}</main>
+
+        <div className="mx-auto grid max-w-[1400px] gap-8 px-6 pb-16 md:px-10 lg:grid-cols-[224px_minmax(0,1fr)]">
+          <SiteNav sections={sections} />
+          <main className="min-w-0 py-8">{children}</main>
+        </div>
       </body>
     </html>
   );

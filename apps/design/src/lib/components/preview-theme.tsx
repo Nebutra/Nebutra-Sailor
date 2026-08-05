@@ -96,8 +96,13 @@ export function PreviewTheme({ children }: { children: React.ReactNode }) {
 
 function Pane({ children, dark }: { children: React.ReactNode; dark: boolean }) {
   return (
-    <div className={cn("rounded-xl bg-background p-1", dark && "dark")}>
-      <div className="mb-1 px-3 pt-2 font-mono text-[11px] text-muted-foreground uppercase tracking-wide">
+    /* The pane insets its content, not just its own label. It carried p-1 with
+       px-3 on the label alone, so every heading and specimen inside sat flush
+       against the pane edge — most visibly on the dark island, where the text
+       ran straight into the boundary. A container that pads its chrome and not
+       what it contains is the bug; matching the two is the fix. */
+    <div className={cn("rounded-xl bg-background p-4", dark && "dark")}>
+      <div className="mb-3 font-mono text-[11px] text-muted-foreground uppercase tracking-wide">
         {dark ? "dark" : "light"}
       </div>
       {children}

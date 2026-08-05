@@ -9,26 +9,64 @@ export const metadata: Metadata = {
     "The four duration rails and four easing curves, generated from the source, each rail animated at its own value.",
 };
 
+/** Shared cycle for the duration rails, in ms. Long enough that the slowest
+ *  rail finishes with room to spare, short enough to watch twice. */
+const RAIL_CYCLE_MS = 1400;
+
+function msOf(duration: string): number {
+  const value = Number.parseFloat(duration);
+  if (Number.isNaN(value)) return RAIL_CYCLE_MS;
+  return duration.trim().endsWith("ms") ? value : value * 1000;
+}
+
 /**
- * A bar that traverses once, on load, at the token's own duration and easing.
+ * Keyframes for the duration rails, generated from the token values.
  *
- * CSS animation only — no client component, no JavaScript, and it honours
- * `prefers-reduced-motion` by not animating at all under that query. A page about
- * motion tokens that ignored the reduced-motion preference would be making the
- * same category of error as one that hardcoded a colour.
+ * The rails used to run `infinite alternate` at their own duration, each on its
+ * own clock. At 100ms that is five round trips a second — it reads as a flicker
+ * rather than as a duration, and because the four rails drifted out of phase
+ * immediately there was nothing to compare them against. The numbers were right
+ * and the demonstration was worthless.
+ *
+ * So every rail now shares one period and moves for exactly its own duration
+ * inside it, then holds. All four leave together; the fast one arrives first and
+ * waits while the slow one is still travelling. The gap between arrivals *is*
+ * the difference between the tokens, shown at full speed with nothing slowed
+ * down or exaggerated.
+ *
+ * Still pure CSS, still no client component, and still silent under
+ * `prefers-reduced-motion` — a page about motion tokens that ignored that
+ * preference would be making the same category of error as one that hardcoded a
+ * colour.
  */
-function DurationBar({ duration }: { duration: string }) {
+function railKeyframes(values: string[]): string {
+  return values
+    .map((duration) => {
+      const ms = msOf(duration);
+      const stop = Math.min(100, (ms / RAIL_CYCLE_MS) * 100);
+      return `@keyframes rail-${ms} { 0% { transform: translateX(-100%); } ${stop.toFixed(3)}% { transform: translateX(300%); } 100% { transform: translateX(300%); } }`;
+    })
+    .join("\n");
+}
+
+function DurationBar({ duration, easing }: { duration: string; easing: string }) {
   return (
     <div className="h-2 overflow-hidden rounded-full bg-muted">
       <div
-        className="h-full w-1/3 rounded-full bg-primary motion-safe:animate-[token-sweep_var(--sweep)_var(--ease-in-out)_infinite_alternate]"
-        style={{ ["--sweep" as string]: duration }}
+        className="h-full w-1/4 rounded-full bg-primary motion-safe:animate-[var(--rail)_var(--cycle)_var(--rail-ease)_infinite]"
+        style={{
+          ["--rail" as string]: `rail-${msOf(duration)}`,
+          ["--cycle" as string]: `${RAIL_CYCLE_MS}ms`,
+          ["--rail-ease" as string]: easing,
+        }}
       />
     </div>
   );
 }
 
 export default function MotionPage() {
+  const rails = durations("light");
+
   return (
     <div>
       <PageHeader eyebrow="tokens / motion" title="Motion">
@@ -39,14 +77,23 @@ export default function MotionPage() {
           different points on a fast-to-slow slider.
         </p>
         <p>
-          The bars animate at each token's real value. They stop entirely under{" "}
+          Every bar below leaves at the same instant and moves for exactly its own duration, at full
+          speed — the fast rail arrives first and waits while the slow one is still travelling, so
+          the gap between arrivals is the difference between the tokens. They stop entirely under{" "}
           <Mono>prefers-reduced-motion</Mono>.
         </p>
       </PageHeader>
 
       <Section title="Duration rails">
+        {/* Keyframes derived from the same token values the rows below print,
+            so a duration that changes in the source changes the motion here on
+            the next build rather than drifting away from its own label. */}
+        {/* biome-ignore lint/security/noDangerouslySetInnerHtml: generated from token values, no user input */}
+        <style
+          dangerouslySetInnerHTML={{ __html: railKeyframes(rails.map((r) => r.token.resolved)) }}
+        />
         <div className="mb-8 space-y-5">
-          {durations("light").map((rail) => (
+          {rails.map((rail) => (
             <div key={rail.token.cssVar}>
               <div className="mb-2 flex items-baseline gap-3">
                 <Mono>--{rail.token.cssVar}</Mono>
@@ -54,14 +101,14 @@ export default function MotionPage() {
                   {rail.token.resolved}
                 </span>
               </div>
-              <DurationBar duration={rail.token.resolved} />
+              <DurationBar duration={rail.token.resolved} easing="var(--ease-out)" />
             </div>
           ))}
         </div>
         <Table>
           <SimpleTableHead />
           <tbody>
-            {durations("light").map((item, index) => (
+            {rails.map((item, index) => (
               <SimpleRow key={item.token.cssVar} item={item} index={index} />
             ))}
           </tbody>

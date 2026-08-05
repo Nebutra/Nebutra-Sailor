@@ -83,7 +83,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
   const Demo = mod.default;
 
   return (
-    <div className="mx-auto flex max-w-[1400px] flex-col gap-10 px-4 py-12 md:px-6">
+    <div className="flex flex-col gap-10">
       <header className="flex flex-col gap-4">
         <Link
           className="text-muted-foreground text-sm no-underline hover:underline"

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ComponentPreview } from "@/lib/components/previews";
 import {
   COMPONENTS,
   CONSUMER_COUNT_MEASURED,
@@ -82,7 +83,7 @@ export default function ComponentsIndexPage() {
   const totalCovered = groups.reduce((sum, g) => sum + g.covered.length, 0);
 
   return (
-    <div className="mx-auto flex max-w-[1400px] flex-col gap-12 px-4 py-12 md:px-6">
+    <div className="flex flex-col gap-12">
       <header className="flex max-w-3xl flex-col gap-4">
         <h1 className="font-semibold text-3xl text-foreground tracking-tight">Components</h1>
         <p className="text-muted-foreground">
@@ -157,20 +158,35 @@ function GroupSection({ group }: { group: GroupView }) {
       </div>
 
       {covered.length > 0 ? (
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {covered.map((entry) => (
             <li key={entry.slug}>
               <Link
-                className="flex h-full flex-col gap-2 rounded-xl bg-muted/40 p-4 no-underline transition-colors hover:bg-muted/70"
+                className="flex h-full flex-col overflow-hidden rounded-xl bg-muted/40 no-underline shadow-ambient-sm transition-shadow duration-flow ease-out hover:shadow-ambient-md"
                 href={`/components/${entry.slug}`}
               >
-                <div className="flex items-baseline justify-between gap-2">
-                  <span className="font-medium text-foreground text-sm">{entry.name}</span>
-                  <span className="font-mono text-muted-foreground text-[11px]">
-                    {entry.consumers} uses
+                {/* The specimen sits on the card surface rather than the page
+                    surface, so you see the component against a real background
+                    instead of floating on the index's own colour. w-full, not
+                    w-fit: a control with no intrinsic width — Progress,
+                    Separator — collapses to nothing under w-fit and renders an
+                    empty card. */}
+                <div className="flex min-h-[104px] items-center justify-center bg-card px-4 py-5">
+                  <div className="pointer-events-none w-full [&>*]:justify-center">
+                    <ComponentPreview name={entry.name} slug={entry.slug} />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-1 p-4">
+                  <div className="flex items-baseline justify-between gap-2">
+                    <span className="font-medium text-foreground text-sm">{entry.name}</span>
+                    <span className="font-mono text-muted-foreground text-[11px]">
+                      {entry.consumers} uses
+                    </span>
+                  </div>
+                  <span className="text-muted-foreground text-xs leading-relaxed">
+                    {entry.blurb}
                   </span>
                 </div>
-                <span className="text-muted-foreground text-xs leading-relaxed">{entry.blurb}</span>
               </Link>
             </li>
           ))}
