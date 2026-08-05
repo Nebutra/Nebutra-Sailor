@@ -29,6 +29,16 @@
       ]
     },
     {
+      "source": "/updater/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
+        },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    },
+    {
       "source": "/media/(.*)",
       "headers": [
         {
