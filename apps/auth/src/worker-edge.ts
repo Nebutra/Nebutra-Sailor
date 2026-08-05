@@ -25,8 +25,10 @@ interface HyperdriveBinding {
 
 export interface AuthEdgeEnv {
   HYPERDRIVE?: HyperdriveBinding;
-  /** Grey-cloud origin IP (ECS). Required for UI pass-through. */
+  /** ECS origin IP for UI pass-through (HTTP). */
   ORIGIN_IP?: string;
+  /** Optional full origin base, e.g. http://106.15.4.31 — preferred over ORIGIN_IP alone. */
+  ORIGIN_URL?: string;
   BETTER_AUTH_SECRET?: string;
   BETTER_AUTH_URL?: string;
   AUTH_COOKIE_DOMAIN?: string;
@@ -430,38 +432,77 @@ async function handleAuthApi(request: Request, env: AuthEdgeEnv): Promise<Respon
   }
 }
 
+/**
+ * UI pass-through to ECS.
+ *
+ * Never self-fetch https://auth.nebutra.com (loops into this Worker → CF 522).
+ * CF terminates TLS; origin is HTTP to ECS (same as Flexible SSL), with Host +
+ * X-Forwarded-Proto so nginx can serve without 301→https bounce.
+ *
+ * ORIGIN_URL optional (e.g. http://106.15.4.31). Defaults to http://ORIGIN_IP.
+ */
 async function forwardToOrigin(request: Request, env: AuthEdgeEnv): Promise<Response> {
   const originIp = env.ORIGIN_IP?.trim();
-  if (!originIp) {
+  const originBase = env.ORIGIN_URL?.trim() || (originIp ? `http://${originIp}` : "");
+  if (!originBase) {
     return json(
       {
-        error:
-          "Auth edge has no ORIGIN_IP — UI pass-through disabled. Set ORIGIN_IP to the ECS host.",
+        error: "Auth edge has no ORIGIN_IP/ORIGIN_URL — UI pass-through disabled.",
       },
       502,
     );
   }
 
   const incoming = new URL(request.url);
+  let base: URL;
+  try {
+    base = new URL(originBase);
+  } catch {
+    return json({ error: "ORIGIN_URL is invalid" }, 502);
+  }
+
+  const target = new URL(incoming.pathname + incoming.search, base);
   const headers = new Headers(request.headers);
+  // nginx server_name auth.nebutra.com
+  headers.set("host", "auth.nebutra.com");
   headers.set("x-forwarded-host", incoming.host);
-  headers.set("x-forwarded-proto", incoming.protocol.replace(":", ""));
+  headers.set("x-forwarded-proto", "https");
   const clientIp = request.headers.get("cf-connecting-ip");
   if (clientIp) headers.set("x-forwarded-for", clientIp);
 
-  // Keep Host=auth.nebutra.com (TLS SNI + nginx server_name) but resolve to ECS.
   try {
-    return await fetch(incoming.toString(), {
+    const res = await fetch(target.toString(), {
       method: request.method,
       headers,
       body: request.method === "GET" || request.method === "HEAD" ? undefined : request.body,
       redirect: "manual",
-      // workerd streaming body
+      signal: AbortSignal.timeout(12_000),
       ...(request.body ? { duplex: "half" } : {}),
-      cf: { resolveOverride: originIp },
     } as RequestInit);
-  } catch {
-    return json({ error: "Auth origin unreachable" }, 502);
+
+    // If origin still 301s to https://auth…, surface a clear 502 instead of CF 522.
+    if (res.status >= 300 && res.status < 400) {
+      const loc = res.headers.get("location") || "";
+      if (loc.includes("auth.nebutra.com") || loc.startsWith("https://")) {
+        return json(
+          {
+            error:
+              "Auth origin redirected to HTTPS (edge loop). Nginx must proxy HTTP for Host auth.nebutra.com when X-Forwarded-Proto=https.",
+            location: loc,
+          },
+          502,
+        );
+      }
+    }
+    return res;
+  } catch (error) {
+    return json(
+      {
+        error: "Auth origin unreachable from edge",
+        detail: error instanceof Error ? error.message : String(error),
+      },
+      502,
+    );
   }
 }
 
