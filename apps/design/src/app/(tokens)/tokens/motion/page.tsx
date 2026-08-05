@@ -89,7 +89,6 @@ export default function MotionPage() {
         {/* Keyframes derived from the same token values the rows below print,
             so a duration that changes in the source changes the motion here on
             the next build rather than drifting away from its own label. */}
-        {/* biome-ignore lint/security/noDangerouslySetInnerHtml: generated from token values, no user input */}
         <style
           dangerouslySetInnerHTML={{ __html: railKeyframes(rails.map((r) => r.token.resolved)) }}
         />
