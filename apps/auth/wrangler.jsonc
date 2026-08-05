@@ -42,5 +42,6 @@
       "zone_name": "nebutra.com"
     }
   ],
-  "workers_dev": true
+  // Auth production is wrangler.edge.jsonc (custom domain only). Keep off.
+  "workers_dev": false
 }

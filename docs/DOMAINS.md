@@ -91,7 +91,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | `nebutra.com` / `www` | Vercel anycast / CNAME | **Vercel** landing | Marketing |
 | `docs.nebutra.com` | CNAME → Worker `nebutra-sailor-docs` **proxied** (or Vercel grey-cloud fallback) | **Cloudflare Worker** (OpenNext) preferred | Vercel Hobby daily cap; CF path: `deploy-sailor-docs.yml` |
 | `app.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `web` | Target: Vercel (`nebutra-web`) when builds are green |
-| `auth.nebutra.com` | **Worker custom domain** (product host only) | **Auth edge**: `/api/auth/*` + Hyperdrive on CF; UI → ECS. Free-plan ~227 KiB gzip. **Do not publish** `*.workers.dev` as product URLs. | Rollback: `point-auth-dns.yml` target=ecs; emergency Vercel only |
+| `auth.nebutra.com` | Worker **custom domain** only (`workers_dev: false`) | **Auth edge**: `/api/auth/*` + Hyperdrive; UI → ECS. No `*.workers.dev` test URL. | Rollback: `point-auth-dns.yml` target=ecs; emergency Vercel only |
 | `api.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `api-gateway` | Stay on ECS origin |
 | `sso.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `idp` | **Permanent OIDC issuer** — do not move lightly |
 | `router.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `router` | Product edge :3106; Vercel project `nebutra-router` exists for future cutover |

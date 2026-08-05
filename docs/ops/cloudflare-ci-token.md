@@ -52,11 +52,8 @@ Dashboard → **My Profile** → **API Tokens** → **Create Token** → **Creat
 ### Account resources
 
 - Include account id `a4248a5738df319996a70092fe598d37` (**Nebutra** production CF account).
-  Dashboard may still show a legacy personal label until renamed — that label is
-  **not** a product brand. Rename: Dashboard → account name → **Nebutra**;
-  Workers → Account details → **workers.dev subdomain** → prefer `nebutra`
-  (if free) so internal smoke hosts look like `nebutra-auth.nebutra.workers.dev`.
-  End-users only ever hit branded hosts (`auth.nebutra.com`, `api.nebutra.com`, …).
+  Dashboard may still show a legacy personal label — rename the account to **Nebutra**.
+  Auth Worker has `workers_dev: false`: only `auth.nebutra.com` is public (no test URL).
 
 ### Zone resources
 

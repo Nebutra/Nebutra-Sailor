@@ -31,14 +31,12 @@
   },
   // Secrets: BETTER_AUTH_SECRET, GOOGLE_*, GITHUB_*, optional DATABASE_URL fallback.
   //
-  // Product hostname only. custom_domain attaches auth.nebutra.com in the zone —
-  // operators and end-users never need *.<personal>.workers.dev in the topology.
-  // workers_dev stays on for CI smoke under the account subdomain (internal).
+  // Only product host. No workers.dev test URL (workers_dev: false).
   "routes": [
     {
       "pattern": "auth.nebutra.com",
       "custom_domain": true
     }
   ],
-  "workers_dev": true
+  "workers_dev": false
 }
