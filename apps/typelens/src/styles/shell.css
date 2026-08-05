@@ -79,8 +79,13 @@ body {
 }
 
 /**
- * FOUC guard for GSAP (gsap-performance): paint-time hide, then
- * useGSAP reveals via autoAlpha/transform. Reduced-motion stays visible.
+ * FOUC guard for GSAP — **masthead only**.
+ *
+ * Never hide gallery cards / page sections here. Hiding `[data-tl-card]` until
+ * JS runs (then again via gsap.set autoAlpha:0 + ScrollTrigger) made the whole
+ * collection look "empty" whenever motion failed or ST did not fire — data was
+ * still in the HTML, just invisible. Cards may still animate, but they start
+ * visible so content is never lost without JS.
  */
 [data-tl-motion-root]:not([data-tl-motion-ready]) [data-tl-mark],
 [data-tl-motion-root]:not([data-tl-motion-ready]) [data-tl-kicker],
@@ -88,8 +93,6 @@ body {
 [data-tl-motion-root]:not([data-tl-motion-ready]) [data-tl-nav] a,
 [data-tl-motion-root]:not([data-tl-motion-ready]) [data-tl-search],
 [data-tl-motion-root]:not([data-tl-motion-ready]) [data-tl-filter],
-[data-tl-motion-root]:not([data-tl-motion-ready]) [data-tl-card],
-[data-tl-motion-root]:not([data-tl-motion-ready]) [data-tl-section],
 [data-tl-motion-root]:not([data-tl-motion-ready]) [data-tl-footer] {
   opacity: 0;
 }

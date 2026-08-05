@@ -46,29 +46,30 @@ export function TypeLensMotion({ children }: { children: ReactNode }) {
       const cards = qAll(root, TL_SELECTORS.card);
       const sections = qAll(root, TL_SELECTORS.section);
 
-      const chrome = [
-        mark,
-        kicker,
-        tagline,
-        search,
-        filter,
-        footer,
-        ...navLinks,
-        ...cards,
-        ...sections,
-      ].filter((el): el is HTMLElement => el != null);
+      const chrome = [mark, kicker, tagline, search, filter, footer, ...navLinks].filter(
+        (el): el is HTMLElement => el != null,
+      );
+
+      const revealAll = () => {
+        if (chrome.length > 0) {
+          gsap.set(chrome, { autoAlpha: 1, y: 0, clearProps: "transform" });
+        }
+        if (cards.length > 0) {
+          gsap.set(cards, { autoAlpha: 1, y: 0, clearProps: "transform" });
+        }
+        if (sections.length > 0) {
+          gsap.set(sections, { autoAlpha: 1, y: 0, clearProps: "transform" });
+        }
+      };
 
       if (reduced) {
-        if (chrome.length > 0) {
-          gsap.set(chrome, { autoAlpha: 1, clearProps: "transform" });
-        }
-        // Drop CSS FOUC hide once JS owns opacity (see shell.css)
+        revealAll();
         root.setAttribute("data-tl-motion-ready", "");
         return;
       }
 
-      // --- Initial states (performance: autoAlpha + y, not layout props)
-      // Set GSAP opacity before releasing CSS FOUC guard.
+      // Masthead only starts hidden. Gallery content stays painted so a
+      // ScrollTrigger miss can never blank the collection.
       if (mark) gsap.set(mark, { autoAlpha: 0, y: 28 });
       if (kicker) gsap.set(kicker, { autoAlpha: 0, y: 16 });
       if (tagline) gsap.set(tagline, { autoAlpha: 0, y: 16 });
@@ -76,9 +77,17 @@ export function TypeLensMotion({ children }: { children: ReactNode }) {
       if (search) gsap.set(search, { autoAlpha: 0, y: 10 });
       if (filter) gsap.set(filter, { autoAlpha: 0, y: 8 });
       if (footer) gsap.set(footer, { autoAlpha: 0, y: 20 });
-      if (cards.length > 0) gsap.set(cards, { autoAlpha: 0, y: 40 });
-      if (sections.length > 0) gsap.set(sections, { autoAlpha: 0, y: 24 });
+      // Soft rise only — never start cards/sections at autoAlpha 0.
+      if (cards.length > 0) gsap.set(cards, { y: 28 });
+      if (sections.length > 0) gsap.set(sections, { y: 16 });
       root.setAttribute("data-tl-motion-ready", "");
+
+      // Failsafe: if ST never fires, content is already visible; clear residual y.
+      const failsafe = window.setTimeout(() => {
+        if (cards.length > 0) gsap.set(cards, { y: 0, clearProps: "transform" });
+        if (sections.length > 0) gsap.set(sections, { y: 0, clearProps: "transform" });
+        if (chrome.length > 0) gsap.set(chrome, { autoAlpha: 1, y: 0, clearProps: "transform" });
+      }, 1800);
 
       // --- Masthead timeline (gsap-timeline: defaults + position param)
       const intro = gsap.timeline({
@@ -116,14 +125,13 @@ export function TypeLensMotion({ children }: { children: ReactNode }) {
         intro.to(filter, { autoAlpha: 1, y: 0, duration: TL_MOTION.duration.quick }, 0.38);
       }
 
-      // --- Gallery cards: ScrollTrigger.batch (gsap-scrolltrigger skill)
+      // --- Gallery cards: rise into place (content already opaque)
       if (cards.length > 0) {
         ScrollTrigger.batch(cards, {
           start: TL_MOTION.scroll.reveal,
           once: true,
           onEnter: (batch) => {
             gsap.to(batch, {
-              autoAlpha: 1,
               y: 0,
               duration: TL_MOTION.duration.standard,
               ease: TL_MOTION.ease.entrance,
@@ -137,10 +145,9 @@ export function TypeLensMotion({ children }: { children: ReactNode }) {
         });
       }
 
-      // --- Page sections (pairings header, typeface list, about, etc.)
+      // --- Page sections
       for (const el of sections) {
         gsap.to(el, {
-          autoAlpha: 1,
           y: 0,
           duration: TL_MOTION.duration.standard,
           ease: TL_MOTION.ease.entrance,
@@ -166,8 +173,11 @@ export function TypeLensMotion({ children }: { children: ReactNode }) {
         });
       }
 
-      // Layout settled → refresh (gsap-scrolltrigger)
       requestAnimationFrame(() => refreshTypeLensScroll());
+
+      return () => {
+        window.clearTimeout(failsafe);
+      };
     },
     {
       scope: rootRef,
