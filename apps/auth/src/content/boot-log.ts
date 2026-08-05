@@ -66,6 +66,11 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     ],
   },
   {
+    id: "hp-garage-palo-alto",
+    stamp: "1938",
+    sources: [{ label: "Wikipedia, HP Garage", url: "https://en.wikipedia.org/wiki/HP_Garage" }],
+  },
+  {
     id: "transistor-name-off-patent-1947",
     stamp: "1947.12",
     sources: [
@@ -370,6 +375,17 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     ],
   },
   {
+    id: "apple-crist-drive-garage",
+    stamp: "1976.04",
+    sources: [
+      { label: "Wikipedia, Steve Wozniak", url: "https://en.wikipedia.org/wiki/Steve_Wozniak" },
+      {
+        label: "Wikipedia, Los Altos, California",
+        url: "https://en.wikipedia.org/wiki/Los_Altos,_California",
+      },
+    ],
+  },
+  {
     id: "vi-adm3a-keys",
     stamp: "1977",
     sources: [
@@ -464,6 +480,13 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     id: "gif-lzw-unisys",
     stamp: "1987 · 1994",
     sources: [{ label: "Wikipedia, GIF", url: "https://en.wikipedia.org/wiki/GIF" }],
+  },
+  {
+    id: "huawei-nanyou-flat",
+    stamp: "1987.09",
+    sources: [
+      { label: "Wikipedia, 华为", url: "https://zh.wikipedia.org/wiki/%E5%8D%8E%E4%B8%BA" },
+    ],
   },
   {
     id: "morris",
@@ -629,6 +652,20 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     sources: [
       { label: "Wikipedia, Netscape", url: "https://en.wikipedia.org/wiki/Netscape" },
       { label: "Wikipedia, Mozilla", url: "https://en.wikipedia.org/wiki/Mozilla" },
+    ],
+  },
+  {
+    id: "wojcicki-garage-menlo-park",
+    stamp: "1998.09",
+    sources: [
+      { label: "Wikipedia, Susan Wojcicki", url: "https://en.wikipedia.org/wiki/Susan_Wojcicki" },
+    ],
+  },
+  {
+    id: "tencent-seg-403",
+    stamp: "1998.11",
+    sources: [
+      { label: "Wikipedia, 腾讯", url: "https://zh.wikipedia.org/wiki/%E8%85%BE%E8%AE%AF" },
     ],
   },
   {
