@@ -9,9 +9,10 @@ export const metadata: Metadata = {
     "The four duration rails and four easing curves, generated from the source, each rail animated at its own value.",
 };
 
-/** Shared cycle for the duration rails, in ms. Long enough that the slowest
- *  rail finishes with room to spare, short enough to watch twice. */
-const RAIL_CYCLE_MS = 1400;
+/** Shared cycle for the duration rails, in ms. Just past the slowest rail, so
+ *  the pause after the last arrival reads as a beat before the next pass rather
+ *  than as dead time with four identical bars parked at the end. */
+const RAIL_CYCLE_MS = 900;
 
 function msOf(duration: string): number {
   const value = Number.parseFloat(duration);
