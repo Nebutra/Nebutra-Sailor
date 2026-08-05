@@ -1422,6 +1422,18 @@
       "title": "Out of DJI",
       "body": "During his master's, Wang Xingxing built an all-electric quadruped robot on his own and called it XDog. After graduating he took a job at DJI, and left it soon after.",
       "coda": "Unitree was registered in the Binjiang district of Hangzhou in August 2016."
+    },
+    "unitree-one-yuan-option": {
+      "tag": "Options",
+      "title": "One yuan a share",
+      "body": "In September 2017 Unitree signed option agreements with seventeen employees at one yuan per share. Further grants followed, held through a single employee vehicle.",
+      "coda": "Eight years later the company opened the book on its IPO."
+    },
+    "unitree-g1-price": {
+      "tag": "Pricing",
+      "title": "Ninety-nine thousand",
+      "body": "Humanoid robots had been priced as laboratory equipment. Unitree put the G1 on sale at 99,000 yuan, roughly the price of an entry-level car.",
+      "coda": "By 2025 humanoids were 51.78 percent of its revenue, on 5,500 units shipped."
     }
   }
 }

@@ -2611,6 +2611,17 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     ],
   },
   {
+    id: "unitree-one-yuan-option",
+    stamp: "2017.09",
+    sources: [
+      { label: "投资界 PEdaily,杨继云:宇树工位,盛产千万富豪", url: "https://news.pedaily.cn/" },
+      {
+        label: "宇樹科技招股書(经该报道引述)",
+        url: "https://zh.wikipedia.org/wiki/%E5%AE%87%E6%A0%91%E7%A7%91%E6%8A%80",
+      },
+    ],
+  },
+  {
     id: "cloudflare-2019-regex",
     stamp: "2019.07.02",
     sources: [
@@ -2658,6 +2669,13 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
         url: "https://github.com/zloirock/core-js/blob/master/docs/2023-02-14-so-whats-next.md",
       },
       { label: "GitHub, zloirock/core-js", url: "https://github.com/zloirock/core-js" },
+    ],
+  },
+  {
+    id: "unitree-g1-price",
+    stamp: "2024",
+    sources: [
+      { label: "投资界 PEdaily,杨继云:宇树工位,盛产千万富豪", url: "https://news.pedaily.cn/" },
     ],
   },
 ];
