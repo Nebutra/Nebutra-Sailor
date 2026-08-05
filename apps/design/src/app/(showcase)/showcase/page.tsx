@@ -57,7 +57,7 @@ export default function ShowcasePage() {
               {/* Demos size themselves very differently — a globe wants room, a
                   badge wants none. The card gives every one the same frame and
                   clips what overflows, so the grid stays a grid. */}
-              <div className="flex min-h-[200px] items-center justify-center overflow-hidden bg-card p-5">
+              <div className="flex max-h-[260px] min-h-[200px] items-center justify-center overflow-hidden bg-card p-5">
                 <ShowcaseDemo id={demo.id} />
               </div>
               <div className="flex items-baseline justify-between gap-2 p-4">
