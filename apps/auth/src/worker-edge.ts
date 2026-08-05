@@ -330,6 +330,45 @@ async function handleHealth(request: Request, env: AuthEdgeEnv): Promise<Respons
 }
 
 /**
+ * Better Auth social start often returns **200 + JSON** `{ url, redirect: true }`
+ * with a `Location` header and state cookie. Top-level browser navigation only
+ * follows 3xx — a 200 body is rendered as raw JSON (what users saw). Convert
+ * to 302 while preserving every Set-Cookie (state cookie is required).
+ */
+async function asBrowserOAuthRedirect(res: Response): Promise<Response> {
+  let location = res.headers.get("location");
+  if (!location) {
+    try {
+      const data = (await res.clone().json()) as { url?: string; redirect?: boolean };
+      if (typeof data?.url === "string" && data.url.startsWith("http")) {
+        location = data.url;
+      }
+    } catch {
+      // not JSON
+    }
+  }
+  if (!location) return res;
+
+  // Already a real redirect status — keep as-is.
+  if (res.status >= 300 && res.status < 400) return res;
+
+  const headers = new Headers();
+  headers.set("Location", location);
+  const getSetCookie = (
+    res.headers as Headers & { getSetCookie?: () => string[] }
+  ).getSetCookie?.bind(res.headers);
+  if (typeof getSetCookie === "function") {
+    for (const cookie of getSetCookie()) {
+      if (cookie) headers.append("Set-Cookie", cookie);
+    }
+  } else {
+    const single = res.headers.get("set-cookie");
+    if (single) headers.append("Set-Cookie", single);
+  }
+  return new Response(null, { status: 302, headers });
+}
+
+/**
  * GET /api/auth/oauth/:provider?callbackURL=… — same contract as the Next route.
  * BA's native social start is POST /sign-in/social; product links use this GET.
  */
@@ -375,13 +414,12 @@ async function handleOAuthStart(
 
   try {
     const auth = getAuth(env);
-    // better-auth social start returns a redirect Response when asResponse.
     const result = await auth.api.signInSocial({
       body: { provider, callbackURL },
       headers: request.headers,
       asResponse: true,
     });
-    return result;
+    return asBrowserOAuthRedirect(result);
   } catch (error) {
     return json(
       {
@@ -420,7 +458,17 @@ async function handleAuthApi(request: Request, env: AuthEdgeEnv): Promise<Respon
 
   try {
     const auth = getAuth(env);
-    return await auth.handler(request);
+    const res = await auth.handler(request);
+    // Top-level social start must 302 (see asBrowserOAuthRedirect).
+    const path = new URL(request.url).pathname;
+    if (
+      path.includes("/sign-in/social") ||
+      path.includes("/signin/social") ||
+      path.includes("/oauth/")
+    ) {
+      return asBrowserOAuthRedirect(res);
+    }
+    return res;
   } catch (error) {
     return json(
       {
