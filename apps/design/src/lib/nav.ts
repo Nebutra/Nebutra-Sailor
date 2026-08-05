@@ -27,6 +27,13 @@ const FOUNDATIONS: NavSection = {
   ],
 };
 
+/** Composition decisions — hand-written, with the cast verified at build time. */
+const PATTERNS: NavSection = {
+  id: "patterns-nav",
+  label: "Patterns",
+  items: [{ href: "/patterns/modality", label: "Modality" }],
+};
+
 /** The identity, rendered from the @nebutra/brand SSOT rather than described. */
 const BRAND: NavSection = {
   id: "brand",
@@ -51,6 +58,7 @@ export function navSections(): NavSection[] {
   return [
     BRAND,
     FOUNDATIONS,
+    PATTERNS,
     {
       id: "components-index",
       label: "Components",
