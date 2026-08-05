@@ -5,13 +5,13 @@ import {
   brandGradient,
   colorProhibitedUses,
   colors,
-  Logo,
-  Logomark,
+  LogoEnColorSVG,
+  LogomarkSVG,
   logoMinSize,
   logoProhibitedUses,
   logoSafetyZone,
   logoVariants,
-  Wordmark,
+  WordmarkEnSVG,
 } from "@nebutra/brand";
 import type { Metadata } from "next";
 import { Mono, PageHeader, Section } from "../../(tokens)/tokens/_components/primitives";
@@ -96,17 +96,28 @@ export default function BrandPage() {
       <Section
         note={
           <p>
-            The three lockups, rendered live. These are React components, not exported PNGs — a logo
+            The three lockups, rendered live — inline SVG components, not exported PNGs, so a logo
             that breaks under a token change breaks here first.
           </p>
         }
         title="Logo"
       >
+        {/* Worth stating on the page rather than only in a commit message: the
+            asset-backed variants fail silently, which is exactly the class of
+            defect this site exists to surface. */}
+        <p className="mb-6 max-w-2xl text-[13px] text-muted-foreground leading-relaxed">
+          These are the <Mono>*SVG</Mono> exports. Their siblings <Mono>Logo</Mono>,{" "}
+          <Mono>Logomark</Mono> and <Mono>Wordmark</Mono> render an <Mono>img</Mono> pointing at{" "}
+          <Mono>/logos/…</Mono>, so they need the asset files copied into the consuming app&apos;s{" "}
+          <Mono>public/</Mono> — and where they are not, they degrade to a broken-image icon with no
+          error raised anywhere. This page used them first and rendered three torn images. Prefer
+          the SVG exports unless you specifically need a cacheable asset URL.
+        </p>
         <div className="mb-8 grid gap-3 sm:grid-cols-3">
           {[
-            { label: "Logo", node: <Logo size={40} /> },
-            { label: "Logomark", node: <Logomark size={40} /> },
-            { label: "Wordmark", node: <Wordmark size={28} /> },
+            { label: "LogoEnColorSVG", node: <LogoEnColorSVG width={180} /> },
+            { label: "LogomarkSVG", node: <LogomarkSVG height={44} width={44} /> },
+            { label: "WordmarkEnSVG", node: <WordmarkEnSVG width={150} /> },
           ].map((item) => (
             <div
               className="flex min-h-[120px] flex-col items-center justify-center gap-4 rounded-[var(--radius-lg)] bg-card p-6 shadow-ambient-sm"
@@ -133,7 +144,7 @@ export default function BrandPage() {
               className="flex items-center justify-center rounded-[var(--radius-lg)] bg-card"
               style={{ padding: zone.margin }}
             >
-              <Logo size={SAFETY_DEMO_HEIGHT} />
+              <LogomarkSVG height={SAFETY_DEMO_HEIGHT} width={SAFETY_DEMO_HEIGHT} />
             </div>
           </div>
         </div>
