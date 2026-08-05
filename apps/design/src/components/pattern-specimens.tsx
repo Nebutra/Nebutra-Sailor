@@ -293,32 +293,34 @@ export function NavigationSpecimens() {
  * thing that decides which one a section wants, and that only shows up when
  * they sit on top of each other.
  */
+/** One multiplier for all three bars, so the ratio between them stays exact. */
+const RAIL_SCALE = 0.66;
+
 export function LayoutSpecimens() {
   return (
     <div className="rounded-[var(--radius-lg)] bg-card p-6 shadow-ambient-sm">
-      {/* The track is the widest container at its real width, and it scrolls.
-          Drawn inside the article column instead, all three bars overran the
-          card and clipped to the same length — the opposite of the point, since
-          the ratio between them is the whole reason to choose one. */}
-      <div className="overflow-x-auto pb-2">
-        <div className="flex w-[var(--container-wide)] flex-col gap-3">
-          {[
-            { token: "--container-text", width: "var(--container-text)" },
-            { token: "--container-content", width: "var(--container-content)" },
-            { token: "--container-wide", width: "var(--container-wide)" },
-          ].map((row) => (
-            <div className="flex flex-col gap-1" key={row.token}>
-              <code className="font-mono text-[11px] text-muted-foreground">{row.token}</code>
-              <div
-                className="h-6 rounded-[var(--radius-sm)] bg-primary/15"
-                style={{ width: row.width }}
-              />
-            </div>
-          ))}
-        </div>
+      {/* Drawn to scale rather than at full size. At their real widths the two
+          larger containers both overran the article column and clipped at the
+          same place, so they looked identical — the exact opposite of the
+          point, since the ratio between them is the reason to choose one. A
+          single multiplier fits all three while keeping that ratio exact. */}
+      <div className="flex flex-col gap-3">
+        {[
+          { token: "--container-text", width: "var(--container-text)" },
+          { token: "--container-content", width: "var(--container-content)" },
+          { token: "--container-wide", width: "var(--container-wide)" },
+        ].map((row) => (
+          <div className="flex flex-col gap-1" key={row.token}>
+            <code className="font-mono text-[11px] text-muted-foreground">{row.token}</code>
+            <div
+              className="h-6 rounded-[var(--radius-sm)] bg-primary/15"
+              style={{ width: `calc(${row.width} * ${RAIL_SCALE})` }}
+            />
+          </div>
+        ))}
       </div>
       <p className="mt-3 text-[12px] text-muted-foreground">
-        Drawn at their real widths, so they run wider than this column — scroll to compare.
+        Shown at {Math.round(RAIL_SCALE * 100)}% so all three fit — the proportions are exact.
       </p>
     </div>
   );

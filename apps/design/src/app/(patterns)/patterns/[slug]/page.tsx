@@ -52,7 +52,15 @@ export default async function PatternPage({ params }: { params: Promise<{ slug: 
 
       <Section title="Which one">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[680px] text-left text-[14px]">
+          {/* Fixed columns, capped. Left to itself the table spread across the
+              whole article width, putting half a screen between a control and
+              the reason to avoid it — the two cells a reader compares. */}
+          <table className="w-full max-w-3xl min-w-[640px] table-fixed text-left text-[14px]">
+            <colgroup>
+              <col className="w-[24%]" />
+              <col className="w-[40%]" />
+              <col className="w-[36%]" />
+            </colgroup>
             <thead>
               <tr className="text-[11px] text-muted-foreground uppercase tracking-wide">
                 {pattern.columns.map((column) => (
