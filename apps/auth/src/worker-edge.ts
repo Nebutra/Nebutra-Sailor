@@ -441,19 +441,13 @@ async function handleAuthApi(request: Request, env: AuthEdgeEnv): Promise<Respon
  *
  * ORIGIN_URL optional (e.g. http://106.15.4.31). Defaults to http://ORIGIN_IP.
  */
+/**
+ * UI → ECS via grey-cloud origin.nebutra.com (gateway-edge pattern).
+ * Never Host=auth.nebutra.com on fetch (CF 1003). Never self-fetch (522 loop).
+ * Nginx routes X-Nebutra-Edge-Auth: 1 → nebutra_auth.
+ */
 async function forwardToOrigin(request: Request, env: AuthEdgeEnv): Promise<Response> {
-  const originIp = env.ORIGIN_IP?.trim();
-  const originBase = env.ORIGIN_URL?.trim() || (originIp ? `http://${originIp}` : "");
-  if (!originBase) {
-    return json(
-      {
-        error: "Auth edge has no ORIGIN_IP/ORIGIN_URL — UI pass-through disabled.",
-      },
-      502,
-    );
-  }
-
-  const incoming = new URL(request.url);
+  const originBase = env.ORIGIN_URL?.trim() || "https://origin.nebutra.com";
   let base: URL;
   try {
     base = new URL(originBase);
@@ -461,40 +455,25 @@ async function forwardToOrigin(request: Request, env: AuthEdgeEnv): Promise<Resp
     return json({ error: "ORIGIN_URL is invalid" }, 502);
   }
 
+  const incoming = new URL(request.url);
   const target = new URL(incoming.pathname + incoming.search, base);
   const headers = new Headers(request.headers);
-  // nginx server_name auth.nebutra.com
-  headers.set("host", "auth.nebutra.com");
-  headers.set("x-forwarded-host", incoming.host);
+  headers.set("host", base.host);
+  headers.set("x-forwarded-host", "auth.nebutra.com");
   headers.set("x-forwarded-proto", "https");
+  headers.set("x-nebutra-edge-auth", "1");
   const clientIp = request.headers.get("cf-connecting-ip");
   if (clientIp) headers.set("x-forwarded-for", clientIp);
 
   try {
-    const res = await fetch(target.toString(), {
+    return await fetch(target.toString(), {
       method: request.method,
       headers,
       body: request.method === "GET" || request.method === "HEAD" ? undefined : request.body,
       redirect: "manual",
-      signal: AbortSignal.timeout(12_000),
+      signal: AbortSignal.timeout(15_000),
       ...(request.body ? { duplex: "half" } : {}),
     } as RequestInit);
-
-    // If origin still 301s to https://auth…, surface a clear 502 instead of CF 522.
-    if (res.status >= 300 && res.status < 400) {
-      const loc = res.headers.get("location") || "";
-      if (loc.includes("auth.nebutra.com") || loc.startsWith("https://")) {
-        return json(
-          {
-            error:
-              "Auth origin redirected to HTTPS (edge loop). Nginx must proxy HTTP for Host auth.nebutra.com when X-Forwarded-Proto=https.",
-            location: loc,
-          },
-          502,
-        );
-      }
-    }
-    return res;
   } catch (error) {
     return json(
       {

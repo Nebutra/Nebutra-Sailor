@@ -25,10 +25,10 @@
     "NEXT_PUBLIC_APP_URL": "https://app.nebutra.com",
     "NEXT_PUBLIC_SITE_URL": "https://nebutra.com",
     "AUTH_COOKIE_DOMAIN": ".nebutra.com",
-    // ECS UI origin: HTTP (CF edge terminates TLS). Nginx must proxy Host
-    // auth.nebutra.com on :80 without 301→https (see nginx auth :80 block).
+    // Grey-cloud origin (same host gateway-edge uses). Nginx routes
+    // X-Nebutra-Edge-Auth: 1 → auth app. Never Host=auth.nebutra.com on fetch.
     "ORIGIN_IP": "106.15.4.31",
-    "ORIGIN_URL": "http://106.15.4.31",
+    "ORIGIN_URL": "https://origin.nebutra.com",
     "DEPLOY_TARGET_AUTH": "cloudflare-workers"
   },
   // Secrets: BETTER_AUTH_SECRET, GOOGLE_*, GITHUB_*, optional DATABASE_URL fallback.
