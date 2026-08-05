@@ -295,20 +295,31 @@ export function NavigationSpecimens() {
  */
 export function LayoutSpecimens() {
   return (
-    <div className="flex flex-col gap-2 rounded-[var(--radius-lg)] bg-card p-6 shadow-ambient-sm">
-      {[
-        { token: "--container-text", width: "var(--container-text)" },
-        { token: "--container-content", width: "var(--container-content)" },
-        { token: "--container-wide", width: "var(--container-wide)" },
-      ].map((row) => (
-        <div className="flex flex-col gap-1" key={row.token}>
-          <code className="font-mono text-[11px] text-muted-foreground">{row.token}</code>
-          <div
-            className="h-6 rounded-[var(--radius-sm)] bg-primary/15"
-            style={{ maxWidth: row.width, width: "100%" }}
-          />
+    <div className="rounded-[var(--radius-lg)] bg-card p-6 shadow-ambient-sm">
+      {/* The track is the widest container at its real width, and it scrolls.
+          Drawn inside the article column instead, all three bars overran the
+          card and clipped to the same length — the opposite of the point, since
+          the ratio between them is the whole reason to choose one. */}
+      <div className="overflow-x-auto pb-2">
+        <div className="flex w-[var(--container-wide)] flex-col gap-3">
+          {[
+            { token: "--container-text", width: "var(--container-text)" },
+            { token: "--container-content", width: "var(--container-content)" },
+            { token: "--container-wide", width: "var(--container-wide)" },
+          ].map((row) => (
+            <div className="flex flex-col gap-1" key={row.token}>
+              <code className="font-mono text-[11px] text-muted-foreground">{row.token}</code>
+              <div
+                className="h-6 rounded-[var(--radius-sm)] bg-primary/15"
+                style={{ width: row.width }}
+              />
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
+      <p className="mt-3 text-[12px] text-muted-foreground">
+        Drawn at their real widths, so they run wider than this column — scroll to compare.
+      </p>
     </div>
   );
 }
