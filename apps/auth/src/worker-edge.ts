@@ -519,7 +519,7 @@ async function forwardToOrigin(request: Request, env: AuthEdgeEnv): Promise<Resp
       headers,
       body: request.method === "GET" || request.method === "HEAD" ? undefined : request.body,
       redirect: "manual",
-      signal: AbortSignal.timeout(15_000),
+      ...(timeoutSignal(15_000) ? { signal: timeoutSignal(15_000) } : {}),
       ...(request.body ? { duplex: "half" } : {}),
     } as RequestInit);
   } catch (error) {
@@ -533,24 +533,59 @@ async function forwardToOrigin(request: Request, env: AuthEdgeEnv): Promise<Resp
   }
 }
 
+/** Prefer AbortSignal.timeout; fall back so older runtimes never throw on construct. */
+function timeoutSignal(ms: number): AbortSignal | undefined {
+  try {
+    if (typeof AbortSignal !== "undefined" && typeof AbortSignal.timeout === "function") {
+      return AbortSignal.timeout(ms);
+    }
+  } catch {
+    // ignore
+  }
+  try {
+    const c = new AbortController();
+    setTimeout(() => c.abort(), ms);
+    return c.signal;
+  } catch {
+    return undefined;
+  }
+}
+
 export default {
   async fetch(request: Request, env: AuthEdgeEnv): Promise<Response> {
-    const url = new URL(request.url);
+    // Never surface Error 1101 to browsers — always return a Response.
+    try {
+      const url = new URL(request.url);
 
-    if (url.pathname === "/__edge/health") {
-      return json({ status: "ok", layer: "auth-edge" }, 200, { "cache-control": "no-store" });
+      if (url.pathname === "/__edge/health") {
+        return json({ status: "ok", layer: "auth-edge" }, 200, { "cache-control": "no-store" });
+      }
+
+      // Health (incl. Google probe) answers on the edge so operators see overseas
+      // egress, not a false-green from a China origin that cannot reach Google.
+      if (url.pathname === "/health") {
+        return await handleHealth(request, env);
+      }
+
+      if (url.pathname === "/api/auth" || url.pathname.startsWith("/api/auth/")) {
+        return await handleAuthApi(request, env);
+      }
+
+      return await forwardToOrigin(request, env);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      const stack = error instanceof Error ? error.stack : undefined;
+      // Log for wrangler tail / Workers Observability
+      console.error("[nebutra-auth]", message, stack ?? "");
+      return json(
+        {
+          error: "Auth edge exception",
+          message,
+          layer: "auth-edge",
+        },
+        500,
+        { "cache-control": "no-store" },
+      );
     }
-
-    // Health (incl. Google probe) answers on the edge so operators see overseas
-    // egress, not a false-green from a China origin that cannot reach Google.
-    if (url.pathname === "/health") {
-      return handleHealth(request, env);
-    }
-
-    if (url.pathname === "/api/auth" || url.pathname.startsWith("/api/auth/")) {
-      return handleAuthApi(request, env);
-    }
-
-    return forwardToOrigin(request, env);
   },
 };
