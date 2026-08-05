@@ -27,6 +27,13 @@ const FOUNDATIONS: NavSection = {
   ],
 };
 
+/** The identity, rendered from the @nebutra/brand SSOT rather than described. */
+const BRAND: NavSection = {
+  id: "brand",
+  label: "Brand",
+  items: [{ href: "/brand", label: "Visual identity" }],
+};
+
 export function navSections(): NavSection[] {
   const groups = GROUPS.map(
     (group) =>
@@ -42,6 +49,7 @@ export function navSections(): NavSection[] {
   ).filter((section) => section.items.length > 0);
 
   return [
+    BRAND,
     FOUNDATIONS,
     {
       id: "components-index",
