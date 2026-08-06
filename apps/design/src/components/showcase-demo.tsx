@@ -90,13 +90,52 @@ function useOnApproach<T extends HTMLElement>(): [React.RefObject<T | null>, boo
   return [ref, near];
 }
 
+/**
+ * One demo failing must not take the page with it.
+ *
+ * It did: several WebGL demos mounted together exhaust the browser's live
+ * context limit, the one that loses its context throws from inside a render,
+ * and React unmounts the whole tree — so scrolling a third of the way down the
+ * showcase replaced the entire page with "This page couldn't load". The demos
+ * that caused it are gone now, but the reason it was fatal rather than ugly was
+ * the missing boundary, and that is the part worth fixing: the next demo to
+ * throw should cost one card.
+ */
+class DemoBoundary extends React.Component<
+  { children: React.ReactNode; id: string },
+  { failed: boolean }
+> {
+  state = { failed: false };
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  render() {
+    if (this.state.failed) {
+      return (
+        <p className="px-3 text-center font-mono text-[11px] text-muted-foreground">
+          {this.props.id} failed to render
+        </p>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export function ShowcaseDemo({ id }: { id: string }) {
   const [ref, near] = useOnApproach<HTMLDivElement>();
   const Demo = React.useMemo(() => (near ? loader(id) : null), [near, id]);
 
   return (
     <div className="flex min-h-[180px] w-full items-center justify-center" ref={ref}>
-      {Demo ? <Demo /> : <Fallback />}
+      {Demo ? (
+        <DemoBoundary id={id}>
+          <Demo />
+        </DemoBoundary>
+      ) : (
+        <Fallback />
+      )}
     </div>
   );
 }
