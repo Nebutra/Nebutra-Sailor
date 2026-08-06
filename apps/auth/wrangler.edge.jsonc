@@ -33,12 +33,14 @@
   },
   // Secrets: BETTER_AUTH_SECRET, GOOGLE_*, GITHUB_*, optional DATABASE_URL fallback.
   //
-  // Only product host. No workers.dev test URL (workers_dev: false).
-  "routes": [
-    {
-      "pattern": "auth.nebutra.com",
-      "custom_domain": true
-    }
-  ],
+  // Custom domain is bound once in the Cloudflare dashboard:
+  //   auth.nebutra.com → Worker nebutra-auth
+  // Do NOT re-declare `routes`/`custom_domain` here. CI tokens typically have
+  // Account Workers:Edit but lack Zone → Workers Routes:Edit; wrangler then
+  // fails with API 10000 on /zones/.../workers/routes after upload, so the
+  // production script never updates (seen as intermittent Error 1101 while
+  // harden builds sat undeployed on main).
+  //
+  // Only product host. No workers.dev test URL.
   "workers_dev": false
 }

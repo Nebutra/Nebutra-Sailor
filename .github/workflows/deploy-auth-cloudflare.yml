@@ -51,6 +51,9 @@ jobs:
           set -euo pipefail
           test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::CLOUDFLARE_WORKERS_API_TOKEN missing"; exit 1; }
           set +e
+          # Script-only deploy: wrangler.edge.jsonc omits routes so tokens without
+          # Zone Workers Routes:Edit still update the Worker body. Custom domain
+          # stays attached from the initial bind.
           out=$(pnpm exec wrangler deploy --config wrangler.edge.jsonc 2>&1)
           code=$?
           set -e
@@ -58,6 +61,9 @@ jobs:
           if [ "$code" -ne 0 ]; then
             if echo "$out" | grep -qiE 'size limit of 3 MiB|code: 10027'; then
               echo "::error::Worker still exceeds Free 3 MiB — investigate edge bundle (should be ~200 KiB gzip)."
+            fi
+            if echo "$out" | grep -qiE 'code: 10000|Authentication error'; then
+              echo "::error::Cloudflare API auth failed (10000). Token needs Account → Workers Scripts:Edit. Do not re-add zone routes to wrangler.edge.jsonc."
             fi
             exit "$code"
           fi
