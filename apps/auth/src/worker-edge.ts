@@ -309,9 +309,12 @@ async function handleHealth(request: Request, env: AuthEdgeEnv): Promise<Respons
     origin,
     role: "login-center-edge",
     deploy: "cloudflare-workers-edge",
+    // Bump when shipping edge fixes so /health proves the new script is live.
+    edgeBuild: "2026-08-06-no-route-redeploy",
     features: {
       authApi: true,
-      uiPassThrough: Boolean(env.ORIGIN_IP),
+      // ORIGIN_URL is the preferred pass-through; ORIGIN_IP alone is legacy.
+      uiPassThrough: Boolean(env.ORIGIN_URL?.trim() || env.ORIGIN_IP?.trim()),
       hyperdrive: Boolean(env.HYPERDRIVE?.connectionString),
     },
     oauth: {
