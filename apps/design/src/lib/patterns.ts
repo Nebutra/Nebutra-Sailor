@@ -39,3 +39,33 @@ export function verifyCast(names: readonly string[]): CastCheck[] {
   const known = allExports();
   return names.map((name) => ({ name, exists: known.has(name) }));
 }
+
+/**
+ * Components design-docs documents that this library does not export.
+ *
+ * The fragment-components section over there is eighteen pages, and thirteen of
+ * the names in it were never built here — the list is Supabase's, adopted
+ * wholesale when that site was scaffolded, and the pages describe an API nobody
+ * can import. Nothing in an MDX site checks that, which is how it stayed true
+ * for a year.
+ *
+ * Migrating them would mean writing thirteen pages about fiction, so they are
+ * reported instead. This list is the evidence for retiring that app rather than
+ * porting it, and it is verified on every build: a name that does get built
+ * disappears from the report on its own.
+ */
+export const CLAIMED_ELSEWHERE: readonly string[] = [
+  "Admonition",
+  "AssistantChat",
+  "ConfirmationModal",
+  "DataInput",
+  "FilterBar",
+  "FormItemLayout",
+  "InfoTooltip",
+  "InnerSideMenu",
+  "LogsBarChart",
+  "PageContainer",
+  "PageSection",
+  "TableOfContents",
+  "TextConfirmDialog",
+];

@@ -8,6 +8,7 @@ import {
   GROUPS,
 } from "@/lib/components/registry";
 import { componentExports, storyFor, type UiExport } from "@/lib/components/ui-source";
+import { CLAIMED_ELSEWHERE, verifyCast } from "@/lib/patterns";
 import { SITE_NAME } from "@/lib/site";
 
 /**
@@ -128,6 +129,8 @@ export default function ComponentsIndexPage() {
         <GroupSection group={group} key={group.id} />
       ))}
 
+      <LegacyClaims />
+
       <footer className="max-w-3xl text-muted-foreground text-sm">
         <p>
           Consumer counts are import-site counts across <code className="font-mono">apps/**</code>,
@@ -227,5 +230,45 @@ function Gaps({ gaps, groupId }: { gaps: UiExport[]; groupId: string }) {
         ))}
       </div>
     </details>
+  );
+}
+
+/**
+ * What the app being retired says exists, that does not.
+ *
+ * Reported rather than migrated: writing pages for these would mean documenting
+ * an API nobody can import. Verified every build, so a name that does get built
+ * leaves this list on its own.
+ */
+function LegacyClaims() {
+  const claims = verifyCast(CLAIMED_ELSEWHERE);
+  const missing = claims.filter((claim) => !claim.exists);
+  if (missing.length === 0) return null;
+
+  return (
+    <section aria-labelledby="legacy-heading" className="flex flex-col gap-4">
+      <div className="flex flex-col gap-1">
+        <h2 className="font-medium text-foreground text-xl" id="legacy-heading">
+          Claimed by design-docs, never built
+        </h2>
+        <p className="max-w-prose text-muted-foreground text-sm">
+          The fragment-components section of design-docs is eighteen pages, and {missing.length} of
+          the names in it are not exported by anything here. The list came from another design
+          system when that site was scaffolded, and the pages describe an API nobody can import —
+          nothing in an MDX site checks that, which is how it survived. They are reported here
+          rather than migrated, and a name that does get built will leave this list on its own.
+        </p>
+      </div>
+      <div className="flex flex-wrap gap-1.5">
+        {missing.map((claim) => (
+          <code
+            className="rounded bg-muted/60 px-1.5 py-0.5 font-mono text-[11px] text-muted-foreground line-through"
+            key={claim.name}
+          >
+            {claim.name}
+          </code>
+        ))}
+      </div>
+    </section>
   );
 }
