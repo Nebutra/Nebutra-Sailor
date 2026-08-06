@@ -29,6 +29,7 @@ const FOUNDATIONS: NavSection = {
     { href: "/tokens/traps", label: "Traps" },
     { href: "/icons", label: "Icons" },
     { href: "/accessibility", label: "Accessibility" },
+    { href: "/copywriting", label: "Copywriting" },
   ],
 };
 
