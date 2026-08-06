@@ -137,6 +137,18 @@ export const CATALOGS = [
     // would overwrite the authored Chinese with a machine pass.
     criticalNamespaces: [],
     advisoryNamespaces: [],
+    // Editorial prose, not UI copy — and the default prompt says "product UI
+    // translator", which is why it behaved like one: a first pass mixed
+    // Japanese 敬体 and 常体 inside a single archive and carried an inline
+    // citation the English should never have had. Declared here so every
+    // future pass inherits it without anyone remembering to.
+    styleGuide: [
+      "This is an archive of historical records, not UI copy. Register: a dry archivist stating facts. Never encouraging, never explanatory.",
+      "Translate what is written. Do NOT add sources, attributions, hedges, connectives, or any clause explaining why the record matters.",
+      "The last sentence of each entry is a deliberate flat statement of outcome. Do not soften it, do not add a concluding connective, do not turn it into a lesson.",
+      "Use ONE register consistently across every string. For Japanese use 常体 (だ・である), never 敬体 (です・ます). For Korean use 해라체/평서형, not 해요체.",
+      "Keep proper nouns, product names and quoted machine text exactly as they appear in the English.",
+    ],
   },
   {
     id: "router",

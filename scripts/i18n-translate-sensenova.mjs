@@ -174,7 +174,7 @@ function parseArgs(argv) {
   return { force, dryRun, locales, catalogs };
 }
 
-function buildTranslateBody(model, targetLocale, entries) {
+function buildTranslateBody(model, targetLocale, entries, styleGuide) {
   const targetName = LOCALE_NAMES[targetLocale] || targetLocale;
   const payload = Object.fromEntries(entries);
   const nsLine = namespaceContextLine(entries);
@@ -192,6 +192,10 @@ function buildTranslateBody(model, targetLocale, entries) {
           nsLine,
           `Rules:`,
           `- Natural product UI tone — concise, native, not literal machine-translationese.`,
+          // A catalog may declare its own voice. Editorial prose is not UI copy:
+          // left to the default the model politely rewrites it, mixes register,
+          // and adds attributions the source never made.
+          ...(styleGuide ?? []).map((rule) => `- ${rule}`),
           `- Do NOT translate glossary tokens (keep exact spelling/casing): ${formatGlossaryForPrompt()}.`,
           `- Preserve EVERY placeholder EXACTLY as in the source (same spelling, braces, order):`,
           `  ICU {name}, {count, plural, …}, mustache {{var}}, and printf %s/%d.`,
@@ -215,7 +219,7 @@ function buildTranslateBody(model, targetLocale, entries) {
  * Returns raw accepted map after placeholder/glossary validation.
  * Throws if nothing usable after model pool retries.
  */
-async function translateBatchOnce(targetLocale, entries) {
+async function translateBatchOnce(targetLocale, entries, styleGuide) {
   let lastErr;
   const maxAttempts = Math.max(MAX_RETRIES, MODELS.length * 2);
 
@@ -239,7 +243,7 @@ async function translateBatchOnce(targetLocale, entries) {
       }
     }
 
-    const body = buildTranslateBody(model, targetLocale, entries);
+    const body = buildTranslateBody(model, targetLocale, entries, styleGuide);
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
     try {
@@ -324,11 +328,11 @@ async function translateBatchOnce(targetLocale, entries) {
  * Translate a batch with quality gates + auto-shrink on failure / partial reject.
  * @returns {Promise<{ accepted: Map<string,string>, failed: Array<[string,string]> }>}
  */
-async function translateBatchWithShrink(targetLocale, entries, depth = 0) {
+async function translateBatchWithShrink(targetLocale, entries, styleGuide, depth = 0) {
   if (!entries.length) return { accepted: new Map(), failed: [] };
 
   try {
-    const { accepted, rejected } = await translateBatchOnce(targetLocale, entries);
+    const { accepted, rejected } = await translateBatchOnce(targetLocale, entries, styleGuide);
 
     // Full success
     if (rejected.length === 0) {
@@ -351,7 +355,7 @@ async function translateBatchWithShrink(targetLocale, entries, depth = 0) {
       const merged = new Map(accepted);
       const failed = [];
       for (const half of halves) {
-        const sub = await translateBatchWithShrink(targetLocale, half, depth + 1);
+        const sub = await translateBatchWithShrink(targetLocale, half, styleGuide, depth + 1);
         for (const [k, v] of sub.accepted) merged.set(k, v);
         failed.push(...sub.failed);
       }
@@ -359,7 +363,7 @@ async function translateBatchWithShrink(targetLocale, entries, depth = 0) {
     }
 
     // Partial reject → retry only rejects (as one smaller batch, then shrink)
-    const sub = await translateBatchWithShrink(targetLocale, retryEntries, depth + 1);
+    const sub = await translateBatchWithShrink(targetLocale, retryEntries, styleGuide, depth + 1);
     const merged = new Map(accepted);
     for (const [k, v] of sub.accepted) merged.set(k, v);
     return { accepted: merged, failed: sub.failed };
@@ -377,7 +381,7 @@ async function translateBatchWithShrink(targetLocale, entries, depth = 0) {
     const merged = new Map();
     const failed = [];
     for (const half of halves) {
-      const sub = await translateBatchWithShrink(targetLocale, half, depth + 1);
+      const sub = await translateBatchWithShrink(targetLocale, half, styleGuide, depth + 1);
       for (const [k, v] of sub.accepted) merged.set(k, v);
       failed.push(...sub.failed);
     }
@@ -386,8 +390,8 @@ async function translateBatchWithShrink(targetLocale, entries, depth = 0) {
 }
 
 /** Smoke / simple batch helper used by main smoke check. */
-async function translateBatch(targetLocale, entries) {
-  const { accepted } = await translateBatchWithShrink(targetLocale, entries);
+async function translateBatch(targetLocale, entries, styleGuide) {
+  const { accepted } = await translateBatchWithShrink(targetLocale, entries, styleGuide);
   return accepted;
 }
 
@@ -476,6 +480,7 @@ async function translateLocale(catalog, targetLocale, sourceMap, { force, dryRun
         const { accepted, failed: failedEntries } = await translateBatchWithShrink(
           targetLocale,
           batch,
+          catalog.styleGuide,
         );
         for (const [k, v] of accepted) {
           updates.set(k, v);
