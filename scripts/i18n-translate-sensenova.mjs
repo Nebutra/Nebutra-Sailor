@@ -164,14 +164,16 @@ function sleep(ms) {
 
 function parseArgs(argv) {
   const force = argv.includes("--force");
+  let maxBatches = Number.POSITIVE_INFINITY;
   const dryRun = argv.includes("--dry-run");
   const locales = [];
   const catalogs = [];
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === "--locale" && argv[i + 1]) locales.push(argv[++i]);
     if (argv[i] === "--catalog" && argv[i + 1]) catalogs.push(argv[++i]);
+    if (argv[i] === "--max-batches" && argv[i + 1]) maxBatches = Number(argv[++i]);
   }
-  return { force, dryRun, locales, catalogs };
+  return { force, dryRun, locales, catalogs, maxBatches };
 }
 
 function buildTranslateBody(model, targetLocale, entries, styleGuide) {
@@ -432,7 +434,12 @@ function saveConfirmed(store) {
   writeFileSync(CONFIRMED_PATH, `${JSON.stringify(body, null, 2)}\n`, "utf8");
 }
 
-async function translateLocale(catalog, targetLocale, sourceMap, { force, dryRun, confirmed }) {
+async function translateLocale(
+  catalog,
+  targetLocale,
+  sourceMap,
+  { force, dryRun, confirmed, maxBatches = Number.POSITIVE_INFINITY },
+) {
   const dir = join(REPO_ROOT, catalog.messagesDir);
   mkdirSync(dir, { recursive: true });
   const path = join(dir, `${targetLocale}.json`);
@@ -454,9 +461,16 @@ async function translateLocale(catalog, targetLocale, sourceMap, { force, dryRun
     return { catalog: catalog.id, locale: targetLocale, translated: 0, failed: 0 };
   }
 
-  const batches = chunkByNamespace(work, BATCH_SIZE);
+  const allBatches = chunkByNamespace(work, BATCH_SIZE);
+  // A locale is written once, at the end. Before --max-batches that made an
+  // interrupted run worth nothing: kill it at minute nine of ten and every
+  // translated string went with it. Capping the batches lets a slow locale be
+  // finished across several runs — collectWork already skips what is filled,
+  // so the next run picks up exactly where this one stopped.
+  const batches = Number.isFinite(maxBatches) ? allBatches.slice(0, maxBatches) : allBatches;
+  const capped = batches.length < allBatches.length;
   process.stdout.write(
-    `[${catalog.id}/${targetLocale}] ${work.length} strings → ${batches.length} ns-batches (≤${BATCH_SIZE}) @ concurrency=${CONCURRENCY}\n`,
+    `[${catalog.id}/${targetLocale}] ${work.length} strings → ${allBatches.length} ns-batches (≤${BATCH_SIZE}) @ concurrency=${CONCURRENCY}${capped ? ` — running ${batches.length}, ${allBatches.length - batches.length} left for the next run` : ""}\n`,
   );
 
   if (dryRun) {
