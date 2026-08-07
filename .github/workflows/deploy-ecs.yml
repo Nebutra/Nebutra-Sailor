@@ -44,7 +44,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated subset of: landing web api idp auth design design-docs pebble sailor-docs router forge admin). Empty = auto-detect."
+        description: "Apps to deploy (space-separated subset of: landing web api idp auth design pebble sailor-docs router forge admin). Empty = auto-detect."
         required: false
         default: ""
       reason:
@@ -206,14 +206,21 @@ jobs:
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
               - 'infra/runtime/nginx/**'
               - '.github/workflows/deploy-ecs.yml'
+            # Retired 2026-08-07. Its content is now on design.nebutra.com,
+            # rendered from source rather than described in MDX: the brand VI,
+            # the showcase, the seven patterns, icons, accessibility and
+            # copywriting. The thirteen components it documents that were never
+            # built are reported on /components as the evidence for this.
+            #
+            # A path nothing matches rather than deletion of the twenty-two
+            # enumerations that name this app. Those include positional
+            # arguments to emit_next_matrix, and renumbering them by hand is how
+            # this workflow has previously reported success while deploying
+            # nothing. With the filter dead, `design-docs` is always false and
+            # every branch downstream short-circuits on its own — same outcome,
+            # none of that risk. The enumerations can go in a focused change.
             design-docs:
-              - 'apps/design-docs/**'
-              - 'packages/**'
-              - 'pnpm-lock.yaml'
-              - 'infra/iac/ecs/**'
-              - 'infra/ops/scripts/ecs-deploy-remote.sh'
-              - 'infra/runtime/nginx/**'
-              - '.github/workflows/deploy-ecs.yml'
+              - 'apps/design-docs/RETIRED-never-matches'
             pebble:
               - 'apps/pebble/**'
               - 'infra/runtime/nginx/**'
@@ -369,13 +376,13 @@ jobs:
             unknown_apps=""
             for app in $normalized_apps; do
               case "$app" in
-                landing|web|api|idp|auth|design|design-docs|pebble|sailor-docs|router|forge|admin) ;;
+                landing|web|api|idp|auth|design|pebble|sailor-docs|router|forge|admin) ;;
                 *) unknown_apps="$unknown_apps $app" ;;
               esac
             done
 
             if [ -n "$unknown_apps" ]; then
-              echo "::error::Unsupported apps: $(echo "$unknown_apps" | xargs). Allowed: landing web api idp auth design design-docs pebble sailor-docs router forge admin"
+              echo "::error::Unsupported apps: $(echo "$unknown_apps" | xargs). Allowed: landing web api idp auth design pebble sailor-docs router forge admin"
               exit 1
             fi
           fi
