@@ -1,5 +1,5 @@
 {
-  "panelLabel": "Boot log",
+  "panelLabel": "Журнал завантаження",
   "entries": {
     "transistor-name-off-patent-1947": {
       "tag": "Патент",
@@ -753,687 +753,687 @@
     },
     "china-1987-first-email": {
       "tag": "Запис",
-      "title": "Beyond the Wall",
-      "body": "Retellings credit Qian Tianbai alone with China's first email, 'Across the Great Wall we can reach every corner of the world.' Qian was studying in the US that month; it was typed by Li Chengjiong and Karlsruhe's Werner Zorn, and left China six days later, on September 20.",
-      "coda": "His obituaries still list him as the sender."
+      "title": "За стіною",
+      "body": "Перекази приписують Цянь Тяньбаю авторство першого китайського електронного листа, «Через Велику стіну ми можемо дістатися до кожного кута світу». Цянь у той місяць навчався у США; текст ввів Лі Чженцзюн разом із Вернером Цорном з Карлсруе, а лист вийшов із Китаю шість днів потому, 20 вересня.",
+      "coda": "У його некрологах досі вказано його як відправника."
     },
     "barbara-liskov-substitution-property": {
-      "tag": "Principle",
-      "title": "The Law She Never Named",
-      "body": "In a 1987 OOPSLA keynote, Barbara Liskov proposed that if substituting an object of type S for type T left every program's behavior unchanged, S was a subtype of T. She called it a substitution property. Years later, Robert Martin folded it into SOLID and named it after her.",
-      "coda": "The word 'principle' was someone else's addition."
+      "tag": "Принцип",
+      "title": "Закон, якого вона ніколи не назвала",
+      "body": "У виступі на OOPSLA 1987 року Барбара Лісков запропонувала, що якщо заміна об'єкта типу S на тип T не змінює поведінки жодної програми, то S є підтипом T. Вона назвала це властивістю підстановки. Згодом Роберт Мартін включив її до SOLID і назвав на її честь.",
+      "coda": "Слово «принцип» було додано кимось іншим."
     },
     "go-corporation-pen-computing": {
-      "tag": "Pen computing",
-      "title": "The Tablet Nobody Bought",
-      "body": "In 1987 Jerry Kaplan started GO Corporation to build the pen-based PenPoint operating system, raising $75 million. AT&T acquired GO in January 1994, cancelled its supporting chip line two weeks later, and GO closed that July. Kaplan later said the company had \"no meaningful sales.\"",
-      "coda": "In 2010 Apple released the iPad, a capacitive multitouch tablet."
+      "tag": "Пен-комп'ютеринг",
+      "title": "Планшет, який ніхто не купив",
+      "body": "У 1987 році Джеррі Каплан заснував GO Corporation для розробки пен-орієнтованої операційної системи PenPoint, залучивши 75 мільйонів доларів. AT&T придбала GO у січні 1994 року, через два тижні скасувала лінійку підтримуючих чіпів, а GO закрилася того липня. Каплан згодом сказав, що компанія мала «незначні продажі».",
+      "coda": "У 2010 році Apple випустила iPad, ємнісний мультитач-планшет."
     },
     "iso8601-unify-then-fork": {
-      "tag": "Standard",
-      "title": "ISO 8601's Narrower Stand-in",
-      "body": "ISO 8601 was first published in 1988, unifying five earlier, conflicting ISO date-and-time standards into one. But the format most internet software validates against is RFC 3339 (1997), a narrower profile that, after ISO 8601's later revision, is not even a strict subset of it.",
-      "coda": "The standard everyone cites and the dialect everyone's code checks against are not the same document."
+      "tag": "Стандарт",
+      "title": "Вужчий заступник ISO 8601",
+      "body": "ISO 8601 вперше опубліковано у 1988 році, об'єднавши п'ять попередніх конфліктуючих стандартів ISO для дат і часу в один. Але формат, який перевіряє більшість інтернет-програм, — це RFC 3339 (1997), вужчий профіль, який після пізнішої ревізії ISO 8601 навіть не є його суворим підмножиною.",
+      "coda": "Стандарт, на який усі посилаються, і діалект, який перевіряє код усіх, — це не один і той самий документ."
     },
     "python-christmas-project": {
-      "tag": "Scripting",
-      "title": "A Christmas Hobby",
-      "body": "During the Christmas holidays of 1989, with his office closed for the week, a researcher in Amsterdam looked for a hobby programming project. He began writing an interpreter for a new scripting language and named it after a comedy troupe, not the snake.",
-      "coda": "In July 2026 it ranked first on the TIOBE index of programming language popularity."
+      "tag": "Скриптинг",
+      "title": "Різдвяне хобі",
+      "body": "Під час різдвяних свят 1989 року, коли його офіс був закритий на тиждень, дослідник з Амстердаму шукав хобі-проект для програмування. Він почав писати інтерпретатор нової скриптової мови і назвав її на честь комедійного гурту, а не змії.",
+      "coda": "У липні 2026 року вона посіла перше місце в індексі популярності мов програмування TIOBE."
     },
     "worse-is-better": {
-      "tag": "Debate",
-      "title": "Worse Is Better",
-      "body": "In 1989 Richard Gabriel coined 'worse is better': a simple, half-right implementation survives better than a complete, correct one, which is why he thought C and Unix beat Lisp. In 1991 he published a rebuttal under the pseudonym Nickieben Bourbaki, posing as an old friend.",
-      "coda": "Decades later he still said he could not decide whether his own argument was right."
+      "tag": "Дебати",
+      "title": "Гірше — краще",
+      "body": "У 1989 році Річард Габріель ввів термін «гірше — краще»: проста, наполовину правильна реалізація виживає краще, ніж повна й правильна, тому він вважав, що C та Unix обійшли Lisp. У 1991 році він опублікував спростування під псевдонімом Nickieben Bourbaki, видаючи себе за старого друга.",
+      "coda": "Десятиліттями по тому він досі казав, що не може вирішити, чи його власний аргумент правильний."
     },
     "rfc1149-avian-carriers-test": {
-      "tag": "Incident",
-      "title": "The Protocol Someone Actually Flew",
-      "body": "David Waitzman published RFC 1149 on April Fools' Day, 1990: a spec for carrying IP datagrams by pigeon. On April 28, 2001, the Bergen Linux User Group actually built it, launching nine ping packets over roughly 5 km. Four came back — a 55% loss rate, round trips running 53 to 106 minutes.",
-      "coda": "The joke RFC has a real packet-loss figure on record: 55 percent."
+      "tag": "Інцидент",
+      "title": "Протокол, який хтось справді випробував",
+      "body": "Девід Вейтцман опублікував RFC 1149 у День жартів, 1990 року: специфікацію для передачі IP-датаграм голубами. 28 квітня 2001 року Бергенська група користувачів Linux справді побудувала це, запустивши дев'ять пакетів ping на відстань близько 5 км. Чотири повернулися — втрата 55%, час подорожі 53–106 хвилин.",
+      "coda": "У жартівливому RFC є реальний показник втрати пакетів: 55 відсотків."
     },
     "att-1990-break-statement": {
-      "tag": "Incident",
-      "title": "The Misplaced Break",
-      "body": "A recovery routine on a New York 4ESS switch held a break statement nested one level too shallow, a defect testing never exercised. A restart's routine \"ready\" signal was then misread by neighboring switches as an error, and the false alarm cascaded through the network for nine hours.",
-      "coda": "AT&T later put the lost revenue at sixty million dollars."
+      "tag": "Інцидент",
+      "title": "Неправильно розміщений break",
+      "body": "Процедура відновлення на комутаторі 4ESS у Нью-Йорку мала оператор break, вкладений на рівень занадто поверхнево, дефект, який тестування ніколи не виявило. Сигнал «готово» від перезавантаження сусідні комутатори сприйняли як помилку, і хибна тривога поширилася мережею протягом дев'яти годин.",
+      "coda": "AT&T пізніше оцінила втрачений дохід у шістдесят мільйонів доларів."
     },
     "aspec-vs-musicam": {
-      "tag": "Audio",
-      "title": "Losing to the Simpler One",
-      "body": "In 1991, MPEG tested two rival audio codecs. ASPEC, built by Fraunhofer, AT&T and France's CNET, won the quality tests but was ruled too complex. MUSICAM, from Matsushita and Philips, won on simplicity. The finished MP3 folded ASPEC's filter design back in anyway.",
-      "coda": "The format everyone calls MP3 carries the losing proposal's engineering inside the winning one's name."
+      "tag": "Аудіо",
+      "title": "Поразка від простішого",
+      "body": "У 1991 році MPEG тестував два конкуруючі аудіокодеки. ASPEC, створений Fraunhofer, AT&T та французьким CNET, виграв тести якості, але був визнаний занадто складним. MUSICAM від Matsushita та Philips виграв за простоту. У фінальний MP3 все ж повернули фільтр ASPEC.",
+      "coda": "Формат, який усі називають MP3, містить інженерію програми-переможця під назвою програми-переможця."
     },
     "linux-minix-post": {
-      "tag": "Kernel",
-      "title": "A Post to comp.os.minix",
-      "body": "On August 25, 1991, a Helsinki university student posted to the comp.os.minix newsgroup that he was writing a free operating system, calling it \"just a hobby, won't be big and professional like gnu,\" and asked what features people wanted.",
-      "coda": "Since November 2017, all 500 of the world's fastest supercomputers have run an OS built on it."
+      "tag": "Ядро",
+      "title": "Повідомлення на comp.os.minix",
+      "body": "25 серпня 1991 року студент університету в Гельсінкі розмістив повідомлення на новинній групі comp.os.minix, що пише безкоштовну операційну систему, назвавши це «просто хобі, не буде великим і професійним, як gnu», і запитав, які функції потрібні людям.",
+      "coda": "З листопада 2017 року всі 500 найшвидших суперкомп'ютерів світу працюють на ОС, побудованій на ньому."
     },
     "web-vs-gopher-1991": {
       "tag": "Web",
-      "title": "Free Beat Priced",
-      "body": "In 1991, Tim Berners-Lee released the World Wide Web from CERN. That same year, the University of Minnesota released Gopher, for a time the more popular system. In February 1993, Minnesota announced licensing fees for Gopher servers. That April, CERN made the web protocol free.",
-      "coda": "Gopher had the bigger following before the fee announcement, and never had it again afterward."
+      "title": "Безкоштовний Біт",
+      "body": "У 1991 році Тім Бернерс-Лі випустив World Wide Web з CERN. Того ж року Університет Мінесоти випустив Gopher, який на той час був більш популярною системою. У лютому 1993 року Мінесота оголосила про ліцензійні збори за сервери Gopher. У квітні того ж року CERN зробив протокол вебу безкоштовним.",
+      "coda": "Gopher мав більшу аудиторію до оголошення про збори і більше ніколи не мав її після цього."
     },
     "rough-consensus-running-code": {
-      "tag": "Governance",
-      "title": "Rough Consensus, Running Code",
-      "body": "At the July 1992 IETF meeting, MIT's Dave Clark put up a slide: 'We reject kings, presidents and voting. We believe in rough consensus and running code.' The phrase now anchors internet-governance folklore. It began as a jab at OSI's formal committee voting process.",
-      "coda": "The joke slide about OSI's voting rules became internet governance's founding creed."
+      "tag": "Управління",
+      "title": "Приблизний Консенсус, Працюючий Код",
+      "body": "На зустрічі IETF у липні 1992 року Дейв Кларк з MIT вивів слайд: 'Ми відкидаємо королів, президентів та голосування. Ми віримо в приблизний консенсус та працюючий код.' Ця фраза тепер є основою інтернет-фольклору про управління. Вона почалася як жарт на адресу формального процесу голосування комітетів OSI.",
+      "coda": "Жартівливий слайд про правила голосування OSI став засновницьким кредом інтернет-управління."
     },
     "han-unification-japanese-delegate": {
-      "tag": "Standard",
-      "title": "Han Unification's Unlikely Author",
-      "body": "In 1992 the CJK Joint Research Group merged tens of thousands of Chinese, Japanese and Korean characters into shared Unicode code points. Popular retellings cast Japan as the objector. Unicode's own history credits the verification rules to Japanese delegate Miyazawa Akira.",
-      "coda": "The delegation cast as the victim helped write the rules it is remembered for opposing."
+      "tag": "Стандарт",
+      "title": "Неймовірний Автор Уніфікації Хань",
+      "body": "У 1992 році Спільна дослідницька група CJK об'єднала десятки тисяч китайських, японських та корейських символів у спільні коди Unicode. Популярні перекази зображують Японія як об'єкта заперечень. Історія Unicode приписує правила верифікації японському делегату Міядзаві Акірі.",
+      "coda": "Делегація, яка виступала як жертва, допомогла написати правила, проти яких її пам'ятають."
     },
     "china-first-internet-line": {
-      "tag": "Record",
-      "title": "The Line a Year Early",
-      "body": "China marks April 20, 1994 as the day it joined the global internet — a 64K line, full-function access. Thirteen months earlier, physicists at IHEP had already leased a line to Stanford's SLAC, exchanging email with dozens of institutions. It just wasn't the kind of line anyone counted.",
-      "coda": "Two lines exist; only one gets an anniversary."
+      "tag": "Запис",
+      "title": "Лінія на рік раніше",
+      "body": "Китай відзначає 20 квітня 1994 року як день свого приєднання до глобального інтернету — лінія 64К, повний доступ. Тринадцять місяців раніше фізики з IHEP вже орендували лінію до SLAC Стенфордського університету, обмінюючись електронною поштою з десятками установ. Просто це була не та лінія, яку хтось враховував.",
+      "coda": "Існують дві лінії; річницю відзначає лише одна."
     },
     "wiki-the-airport-shuttle": {
-      "tag": "Etymology",
-      "title": "Named After a Shuttle Bus",
-      "body": "\"Wiki\" is Hawaiian for \"quick.\" In 1995, Ward Cunningham needed a name for the first editable web system he built and reached not for any technical term but for his memory of the Wiki Wiki Shuttle, the free bus between terminals at Honolulu's airport.",
-      "coda": "The word's first home was painted on the side of an airport bus."
+      "tag": "Етимологія",
+      "title": "Названий на честь шаттла",
+      "body": "\"Wiki\" — це гавайське слово, що означає \"швидко\". У 1995 році Ворд Каннінгем шукав назву для першої редагуваної веб-системи, яку він створив, і звернувся не до технічного терміна, а до спогаду про Wiki Wiki Shuttle — безкоштовний автобус між терміналами в аеропорту Гонолулу.",
+      "coda": "Першим домом слова була бічна сторона аеропортного автобуса."
     },
     "robots-exclusion-rfc9309": {
-      "tag": "Standard",
-      "title": "robots.txt: 28 Years Unratified",
-      "body": "Martijn Koster proposed robots.txt in 1994; crawlers followed it voluntarily, with no formal standard and nothing to enforce it. Google proposed standardization in 2019, and the IETF finally published RFC 9309 in September 2022, closing a 28-year gap.",
-      "coda": "The web's most-obeyed gentleman's agreement took twenty-eight years to become a real standard."
+      "tag": "Стандарт",
+      "title": "robots.txt: 28 років без ратифікації",
+      "body": "Martijn Koster запропонував robots.txt у 1994 році; краулери дотримувалися його добровільно, без формального стандарту та без механізму примусу. Google запропонував стандартизацію у 2019 році, а IETF нарешті опублікував RFC 9309 у вересні 2022 року, заклавши 28-річну прогалину.",
+      "coda": "Найбільш дотримувана джентльменська угода в мережі двадцять вісім років потребувала часу, щоб стати справжнім стандартом."
     },
     "pentium-fdiv-writeoff": {
-      "tag": "Incident",
-      "title": "The Missing Table Entries",
-      "body": "Mathematician Thomas Nicely noticed his new Pentium returning slightly wrong results while summing reciprocals of primes, and traced the fault to the chip itself. Intel first offered replacements only to customers who complained, and reversed into a full recall only under public pressure.",
-      "coda": "Intel booked a $475 million pretax charge for the recall."
+      "tag": "Інцидент",
+      "title": "Відсутні записи таблиці",
+      "body": "Математик Thomas Nicely помітив, що його новий Pentium повертає трохи неправильні результати під час підсумовування обернених величин простих чисел, і відстежив ваду до самого чіпа. Intel спочатку пропонував заміну лише клієнтам, які скаржилися, і перейшов на повний відклик лише під тиском громадськості.",
+      "coda": "Intel відобразив доподатковий збиток у розмірі 475 мільйонів доларів за відклик."
     },
     "general-magic-private-network": {
-      "tag": "Networks",
-      "title": "General Magic's Private Wire",
-      "body": "In 1990 ex-Apple engineers Bill Atkinson, Andy Hertzfeld and Marc Porat founded General Magic. Sony's Magic Link shipped in 1994 for $800, sending email and running apps. Leadership built a proprietary AT&T network instead of using the internet, calling the web \"passive.\"",
-      "coda": "Employee Tony Fadell later led hardware development on the iPod and iPhone at Apple."
+      "tag": "Мережі",
+      "title": "Приватний провід General Magic",
+      "body": "У 1990 році колишні інженери Apple Bill Atkinson, Andy Hertzfeld та Marc Porat заснували General Magic. Magic Link від Sony вийшов у 1994 році за 800 доларів, надсилаючи електронну пошту та запускаючи додатки. Керівництво побудувало власну мережу AT&T замість використання інтернету, називаючи мережу \"пасивною\".",
+      "coda": "Співробітник Тоні Фаделл пізніше керував розробкою апаратного забезпечення iPod та iPhone в Apple."
     },
     "ibm-simon-first-touchscreen": {
-      "tag": "Touchscreen",
-      "title": "Simon's Fax Machine",
-      "body": "On August 16, 1994, IBM and BellSouth launched the Simon Personal Communicator: a 4.5-inch touchscreen that sent email and fax, priced at $899. Battery life ran about an hour. It was discontinued six months later, having sold roughly 50,000 units.",
-      "coda": "In 2007 Apple shipped the iPhone, a capacitive touchscreen phone with no physical keyboard."
+      "tag": "Сенсорний екран",
+      "title": "Факс Саймона",
+      "body": "16 серпня 1994 року IBM та BellSouth запустили Simon Personal Communicator: 4,5-дюймовий сенсорний екран, який надсилав електронну пошту та факси, ціною 899 доларів. Час автономної роботи становив приблизно годину. Його зняли з виробництва через шість місяців, продавши приблизно 50 000 одиниць.",
+      "coda": "У 2007 році Apple випустила iPhone, ємнісний сенсорний телефон без фізичної клавіатури."
     },
     "cors-same-origin-orphaned": {
-      "tag": "Standard",
-      "title": "CORS: A Recommendation in Retirement",
-      "body": "Netscape bolted the same-origin policy onto Navigator in 1995, alongside JavaScript, with no standards process at all. CORS, meant to formally relax that policy, only became a W3C Recommendation in 2014 — and by 2020 the W3C had retired it, handing the spec to WHATWG's Fetch document.",
-      "coda": "The standards body retired its own security recommendation six years after publishing it."
+      "tag": "Стандарт",
+      "title": "CORS: Рекомендація на пенсії",
+      "body": "Netscape вбудував політику того самого походження в Navigator у 1995 році, разом із JavaScript, без жодного процесу стандартизації. CORS, призначений для формального послаблення цієї політики, став рекомендацією W3C лише у 2014 році — а до 2020 року W3C відкликав її, передавши специфікацію до документу Fetch від WHATWG.",
+      "coda": "Орган стандартизації відкликав власну рекомендацію з безпеки через шість років після її публікації."
     },
     "php-resume-counter": {
-      "tag": "Web",
-      "title": "A Résumé Hit Counter",
-      "body": "In 1994, a programmer wrote a handful of small CGI programs in C for no larger reason than wanting to know how many people were looking at his online résumé. He called the toolkit \"Personal Home Page Tools\" and released the source in June 1995.",
-      "coda": "Three decades on, over 70% of websites with a known server-side language still run its descendant."
+      "tag": "Веб",
+      "title": "Лічильник переглядів резюме",
+      "body": "У 1994 році програміст написав кілька невеликих CGI-програм на C, щоб дізнатися, скільки людей переглядають його онлайн-резюме. Він назвав набір інструментів \"Personal Home Page Tools\" і випустив вихідний код у червні 1995 року.",
+      "coda": "Три десятиліття потому понад 70% веб-сайтів із відомою серверною мовою досі використовують його нащадка."
     },
     "craigslist-email-list": {
-      "tag": "Classifieds",
-      "title": "A Mailing List of Events",
-      "body": "In 1995, a software engineer in San Francisco started compiling the local gatherings and events he knew about into an email and sending it to a few friends, mainly so people could get to know one another a little better.",
-      "coda": "The list now reaches 570 cities in 70 countries and draws over 140 million visits a month."
+      "tag": "Довідники",
+      "title": "Розсилка подій",
+      "body": "У 1995 році інженер програмного забезпечення з Сан-Франциско почав збирати відомі йому місцеві зустрічі та події в електронному листі і надсилати його кільком друзям, щоб люди могли краще познайомитися.",
+      "coda": "Список тепер охоплює 570 міст у 70 країнах і привертає понад 140 мільйонів відвідувань на місяць."
     },
     "wirths-law-misattributed": {
-      "tag": "Correction",
-      "title": "The Law He Credited Away",
-      "body": "In 1995 Niklaus Wirth published 'A Plea for Lean Software,' writing that software is getting slower more rapidly than hardware is getting faster. The line later christened Wirth's Law was, by his own footnote, a quotation of his colleague Martin Reiser.",
-      "coda": "The eponym cited the source; posterity kept only the eponym."
+      "tag": "Виправлення",
+      "title": "Закон, який він відписав іншому",
+      "body": "У 1995 році Ніклаус Вірт опублікував статтю 'A Plea for Lean Software', де зазначив, що програмне забезпечення стає повільнішим швидше, ніж апаратне забезпечення стає швидшим. Рядок, який пізніше назвали законом Вірта, був, за його власною приміткою, цитатою його колеги Мартіна Райзера.",
+      "coda": "Автор, на честь якого назвали закон, навів джерело; нащадки зберегли лише ім'я."
     },
     "general-magic-weekend-site": {
-      "tag": "Side project",
-      "title": "The Site He Wasn't Serious About",
-      "body": "In the mid-1990s, at a Silicon Valley startup expected to reinvent handheld computing, one programmer spent his spare time writing a scrappy little site for selling secondhand junk. It went up on a weekend. He wasn't taking it seriously.",
-      "coda": "The startup was General Magic. The site was later renamed eBay."
+      "tag": "Побічний проєкт",
+      "title": "Сайт, до якого він не ставився серйозно",
+      "body": "У середині 1990-х у стартапі Кремнієвої долини, який мав переосмислити кишенькові комп'ютери, один програміст у вільний час писав простенький сайт для продажу б/в речей. Він запустив його вихідного дня. Він не ставився до цього серйозно.",
+      "coda": "Стартап називався General Magic. Сайт пізніше перейменували на eBay."
     },
     "gettickcount-776-day-bug": {
-      "tag": "Overflow",
-      "title": "A 776-Day Debt",
-      "body": "Windows 95's GetTickCount rolls to zero every 49.7 days, documented behavior, never treated as a bug. But on Windows 8 through Server 2019, the same function could roll over early, near 776 days, a genuine defect. Microsoft fixed it only in Windows 11, version 24H2.",
-      "coda": "The fix landed three decades after the counter it patches first shipped."
+      "tag": "Переповнення",
+      "title": "Борг у 776 днів",
+      "body": "GetTickCount у Windows 95 скидається до нуля кожні 49,7 днів — задокументована поведінка, ніколи не вважалася помилкою. Але у Windows 8 — Server 2019 та сама функція могла скидатися раніше, близько 776 днів, що було справжнім дефектом. Microsoft виправила це лише у Windows 11, версія 24H2.",
+      "coda": "Виправлення з'явилося через три десятиліття після виходу лічильника, який воно виправляє."
     },
     "bluetooth-the-placeholder": {
-      "tag": "Etymology",
-      "title": "The Codename That Stuck",
-      "body": "In 1996, Intel's Jim Kardach proposed \"Bluetooth\" — after Harald Bluetooth, the Viking king who united Scandinavia — as a throwaway codename during Ericsson-Nokia talks. The intended replacement, RadioWire, could not clear trademark search before launch.",
-      "coda": "No replacement name ever made it to market."
+      "tag": "Етимологія",
+      "title": "Кодова назва, що прижилася",
+      "body": "У 1996 році Джим Кардач з Intel запропонував «Bluetooth» — на честь Гаральда Синьозубого, короля вікінгів, який об'єднав Скандинавію — як тимчасову кодову назву під час переговорів Ericsson і Nokia. Запланована заміна, RadioWire, не змогла пройти перевірку торгової марки до запуску.",
+      "coda": "Жодна назва-замінник так і не вийшла на ринок."
     },
     "chinaren-detour": {
-      "tag": "Small world",
-      "title": "The Off-Roster Coder",
-      "body": "In 1996 a Chinese student won gold at the Informatics Olympiad and was admitted straight into Tsinghua's computer science program. As a student he moonlighted building a content system for an alumnus's website. Sohu bought it the next year; he stayed on and kept working there.",
-      "coda": "The student was Wang Xiaochuan. In 2004, inside Sohu, he built Sogou."
+      "tag": "Тісний світ",
+      "title": "Програміст поза списком",
+      "body": "У 1996 році китайський студент здобув золото на Олімпіаді з інформатики та був прийнятий одразу на програму комп'ютерних наук у Цінхуа. Будучи студентом, він підробляв, створюючи систему контенту для сайту випускника. Sohu купила її наступного року; він залишився і продовжив там працювати.",
+      "coda": "Студентом був Ван Сяочуань. У 2004 році, всередині Sohu, він створив Sogou."
     },
     "google-a-typo": {
-      "tag": "Etymology",
-      "title": "A Misspelled Domain Search",
-      "body": "During a September 1997 brainstorm, Sean Anderson suggested \"googolplex\"; Larry Page shortened it to \"googol.\" Checking the domain registry on the spot, Anderson typed \"google\" by mistake and found it unclaimed. Page registered google.com that same day.",
-      "coda": "The registration record still carries the misspelling, dated September 15, 1997."
+      "tag": "Етимологія",
+      "title": "Пошук домену з помилкою",
+      "body": "Під час мозкового штурму у вересні 1997 року Шон Андерсон запропонував «googolplex»; Ларрі Пейдж скоротив його до «googol». Перевіряючи реєстр доменів на місці, Андерсон помилково набрав «google» і виявив, що він вільний. Пейдж зареєстрував google.com того ж дня.",
+      "coda": "Запис про реєстрацію досі містить помилку, датовану 15 вересня 1997 року."
     },
     "rfc2119-must-should": {
-      "tag": "Standard",
-      "title": "MUST vs must: A Twenty-Year Gap",
-      "body": "RFC 2119 (March 1997) defined MUST, SHOULD, MAY and their negatives as binding requirement levels for IETF documents. But it only said these words 'are often capitalized' — lowercase must and should were never excluded. RFC 8174 patched the loophole in 2017: only all-caps counts.",
-      "coda": "For twenty years, a lowercase must carried the same legal weight as a shrug."
+      "tag": "Стандарт",
+      "title": "MUST проти must: двадцятирічний розрив",
+      "body": "RFC 2119 (березень 1997) визначив MUST, SHOULD, MAY та їхні заперечення як обов'язкові рівні вимог для документів IETF. Але в ньому лише зазначалося, що ці слова «часто пишуться великими літерами» — малі must і should ніколи не виключалися. RFC 8174 закрив цю прогалину у 2017 році: враховуються лише великі літери.",
+      "coda": "Протягом двадцяти років must малими літерами мав таку ж юридичну силу, як і знизування плечима."
     },
     "netease-license-mail-1997": {
-      "tag": "Licensing",
-      "title": "Sell the license first",
-      "body": "On June 11, 1997, William Ding registered NetEase in Guangzhou. The company's first business was not free webmail. It licensed a piece of email server software it had built to other websites for a fee.",
-      "coda": "NetEase did not launch its own free email, under 163.com, until 1998."
+      "tag": "Ліцензування",
+      "title": "Спочатку продайте ліцензію",
+      "body": "11 червня 1997 року Вільям Дін зареєстрував NetEase у Гуанчжоу. Першим бізнесом компанії була не безкоштовна веб-пошта. Вона ліцензувала створене нею програмне забезпечення для поштового сервера іншим веб-сайтам за плату.",
+      "coda": "NetEase запустила власну безкоштовну електронну пошту на 163.com лише у 1998 році."
     },
     "lixiang-graphics-card-home": {
-      "tag": "Review site",
-      "title": "Graphics Card Home",
-      "body": "In 1998, a high school student in Hebei started a personal website called Graphics Card Home in his spare time, posting reviews of computer graphics cards. Two years later he renamed it PCPop and kept updating it through the rest of school.",
-      "coda": "In 2005 the same person founded Autohome."
+      "tag": "Оглядовий сайт",
+      "title": "Домашня сторінка відеокарт",
+      "body": "У 1998 році учень старших класів із Хебей у вільний час створив особистий сайт під назвою Домашня сторінка відеокарт, де публікував огляди комп'ютерних відеокарт. Через два роки він перейменував його на PCPop і продовжував оновлювати його протягом усього навчання.",
+      "coda": "У 2005 році ця ж людина заснувала Autohome."
     },
     "china-oicq-to-qq": {
-      "tag": "Rebrand",
-      "title": "From OICQ to QQ",
-      "body": "Tencent launched OICQ in February 1999 — the O stood for 'Open,' a nod to ICQ. That October, AOL, ICQ's owner, sent a cease-and-desist over trademark infringement. In November 2000, Ma Huateng renamed it QQ, chosen because the letter reads as 'cute' in Chinese.",
-      "coda": "Open was the first word to go once AOL's lawyers arrived."
+      "tag": "Ребрендинг",
+      "title": "Від OICQ до QQ",
+      "body": "Tencent запустила OICQ у лютому 1999 року — літера O означала 'Open', як посилання на ICQ. У жовтні того ж року AOL, власник ICQ, надіслав вимогу припинити порушення торговельної марки. У листопаді 2000 року Ма Хуатен перейменував його на QQ, обравши цю назву тому, що літера читається як 'милий' китайською.",
+      "coda": "Open був першим словом, яке зникло, коли прийшли юристи AOL."
     },
     "excite-google-1999": {
-      "tag": "Misjudgment",
-      "title": "Excite Turns Down Google",
-      "body": "In 1999 Google offered to sell itself to Excite for $750,000 plus roughly 1% equity. CEO George Bell judged the search gap too small to justify tearing out Excite's technology. The reasoning held up. Google was worth over a billion within a year.",
-      "coda": "Bell has said since that he would make the same call again."
+      "tag": "Помилка",
+      "title": "Excite відмовляє Google",
+      "body": "У 1999 році Google запропонувала продати себе Excite за 750 000 доларів плюс приблизно 1% акцій. Генеральний директор Джордж Белл вважав різницю в пошуку занадто малою, щоб виправдовувати заміну технології Excite. Ця логіка трималася. Google коштувала понад мільярд протягом року.",
+      "coda": "Белл згодом заявив, що зробив би той самий дзвінок знову."
     },
     "mars-climate-orbiter-units": {
-      "tag": "Incident",
-      "title": "Pound-Force, Newton",
-      "body": "Mars Climate Orbiter went silent during orbital insertion. The board found that the contractor's thruster software output impulse in pound-force seconds while navigation software expected newton-seconds, off by a factor of 4.45. The craft was steered to within roughly 57 km of the surface.",
-      "coda": "The $327.6 million mission never transmitted again."
+      "tag": "Інцидент",
+      "title": "Фунт-сила, Ньютон",
+      "body": "Mars Climate Orbiter замовкла під час виходу на орбіту. Комісія встановила, що програмне забезпечення підрядника видавало імпульс тяги у фунт-сила-секундах, тоді як навігаційне програмне забезпечення очікувало ньютон-секунди, що давало похибку в 4,45 рази. Апарат було спрямовано на відстань приблизно 57 км від поверхні.",
+      "coda": "Місія вартістю $327,6 мільйона більше ніколи не передавала сигналів."
     },
     "paypal-palm-beaming": {
-      "tag": "Pivot",
-      "title": "The Beam That Never Came",
-      "body": "In 1999 Confinity launched infrared cash transfers between Palm Pilots, demoed live at a funding event. Weeks after launch it had roughly 13,000 users, a number that barely moved over the following year. What actually took off was email payments, built only as a fallback option.",
-      "coda": "The company renamed itself PayPal and quietly dropped the beam."
+      "tag": "Розворот",
+      "title": "Промінь, який так і не з'явився",
+      "body": "У 1999 році Confinity запустила інфрачервоні грошові перекази між Palm Pilot, продемонструвавши це наживо на заході з фінансування. Через кілька тижнів після запуску сервіс мав приблизно 13 000 користувачів, і ця кількість майже не змінювалася протягом наступного року. Насправді успішними стали платежі електронною поштою, створені лише як запасний варіант.",
+      "coda": "Компанія перейменувала себе на PayPal і тихо відмовилася від променя."
     },
     "cai-500-yuan": {
-      "tag": "Small world",
-      "title": "The 500-Yuan Salary",
-      "body": "In 1999 a Hong Kong investment executive traveled to Hangzhou to assess a small website as a possible investment. He found a dozen-odd people coding in one crowded apartment. He didn't invest — he quit his $700,000 salary and joined instead, for 500 yuan a month.",
-      "coda": "His name was Joe Tsai. He later became Alibaba's executive vice chairman."
+      "tag": "Тісний світ",
+      "title": "Зарплата в 500 юанів",
+      "body": "У 1999 році інвестиційний керівник з Гонконгу поїхав до Ханчжоу, щоб оцінити невеликий вебсайт як потенційний інвестиційний об'єкт. Він знайшов близько дюжини людей, які писали код у одному переповненому житловому приміщенні. Він не інвестував — він звільнився з посади з зарплатою 700 000 доларів і приєднався до них, отримуючи 500 юанів на місяць.",
+      "coda": "Його звали Джо Цай. Пізніше він став виконавчим віце-головою Alibaba."
     },
     "gps-week-rollover": {
-      "tag": "Mechanism",
-      "title": "GPS Week 1024",
-      "body": "GPS counts weeks in 10 bits, a field that maxes at 1,023 and rolls to zero roughly every 19.7 years. The first rollover hit in August 1999. The second landed on 6 April 2019, breaking receivers built as if the first had been a one-off.",
-      "coda": "The same overflow is on a schedule and due to recur again in 2038."
+      "tag": "Механізм",
+      "title": "GPS-тиждень 1024",
+      "body": "GPS рахує тижні в 10 бітах, поле, яке досягає максимуму 1023 і скидається до нуля приблизно кожні 19,7 року. Перший скид стався в серпні 1999 року. Другий припав на 6 квітня 2019 року, зламавши приймачі, побудовані так, ніби перший був разовим випадком.",
+      "coda": "Те саме переповнення заплановано і має повторитися знову у 2038 році."
     },
     "foxmail-resold": {
-      "tag": "Small world",
-      "title": "Sold With the Software",
-      "body": "In 1994 a programmer in Guangzhou wrote a free email client in his spare time. In 2000, as the dot-com bubble burst, he sold it to a company and stayed on as tech director. Five years later that company folded and sold the software — and him with it — to Tencent.",
-      "coda": "The programmer was Zhang Xiaolong. Five years after that, inside Tencent, he built WeChat."
+      "tag": "Малий світ",
+      "title": "Продано разом із програмним забезпеченням",
+      "body": "У 1994 році програміст у Гуанчжоу написав безкоштовний поштовий клієнт у вільний час. У 2000 році, коли лопнув інтернет-бульбашка, він продав його компанії і залишився технічним директором. П'ять років потому ця компанія розпалася і продала програмне забезпечення — і його разом із ним — Tencent.",
+      "coda": "Програмістом був Чжан Сяолун. П'ять років потому, всередині Tencent, він створив WeChat."
     },
     "danger-duarte-android-reunion": {
-      "tag": "Reunion",
-      "title": "Design Director, Failed Startup",
-      "body": "In 2000 a designer joined a handheld-device startup founded by Andy Rubin, working on its interface. The company was sold to Microsoft and the team scattered. The designer went on to two other companies over the next decade.",
-      "coda": "The designer was Matias Duarte. Ten years later Rubin hired him onto Android."
+      "tag": "Зустріч",
+      "title": "Директор з дизайну, невдалого стартапу",
+      "body": "У 2000 році дизайнер приєднався до стартапу з виробництва кишенькових пристроїв, заснованого Енді Рубіном, працюючи над його інтерфейсом. Компанію купила Microsoft і команда розпалася. Дизайнер протягом наступного десятиліття працював ще в двох інших компаніях.",
+      "coda": "Дизайнером був Матіас Дуарте. Десять років потому Рубін найняв його в Android."
     },
     "slashdot-ipod-2001": {
-      "tag": "Dismissal",
-      "title": "No Wireless, Less Space",
-      "body": "When Apple unveiled the first iPod on October 23, 2001, Slashdot founder Rob \"CmdrTaco\" Malda wrote in his editor's note: \"No wireless. Less space than a nomad. Lame.\" Against the spec sheets of rival MP3 players at the time, the line was not factually wrong.",
-      "coda": "The comment is now cited routinely as the counterexample it produced."
+      "tag": "Відкидання",
+      "title": "Без бездротового зв'язку, менше місця",
+      "body": "Коли Apple представила перший iPod 23 жовтня 2001 року, засновник Slashdot Роб \"CmdrTaco\" Малда написав у своїй редакційній ноті: \"Без бездротового зв'язку. Менше місця, ніж у nomad. Глупо.\" Відповідно до специфікацій конкуруючих MP3-плеєрів того часу, ця фраза не була фактично неправильною.",
+      "coda": "Цей коментар тепер регулярно цитується як контрприклад, який він породив."
     },
     "discuz-shenyang-dorm": {
-      "tag": "Forum",
-      "title": "CDB, a dorm build",
-      "body": "In 2001, a university student living in a dormitory in Shenyang wrote a piece of forum software and named it Crossday Bulletin, working on it alongside his coursework. The following October he renamed it Discuz.",
-      "coda": "On August 23, 2010, Tencent acquired the company he had built around it."
+      "tag": "Форум",
+      "title": "CDB, гуртожиток",
+      "body": "У 2001 році студент університету, який жив у гуртожитку в Шеньяні, написав форумне програмне забезпечення та назвав його Crossday Bulletin, працюючи над ним паралельно з навчанням. Наступного жовтня він перейменував його на Discuz.",
+      "coda": "23 серпня 2010 року Tencent придбала компанію, яку він навколо нього побудував."
     },
     "wikipedia-side-wiki": {
-      "tag": "Wiki",
-      "title": "A Side Project Next to Nupedia",
-      "body": "On January 10, 2001, the founder of a peer-reviewed online encyclopedia installed wiki software on the project's own server, mainly so volunteers could try drafting entries loosely on the side while the reviewed encyclopedia moved slowly ahead.",
-      "coda": "By July 2026 its English edition alone held over 7.2 million articles."
+      "tag": "Вікі",
+      "title": "Побічний проєкт поруч із Nupedia",
+      "body": "10 січня 2001 року засновник рецензованої онлайн-енциклопедії встановив вікі-програмне забезпечення на власний сервер проєкту, головним чином щоб волонтери могли вільно пробувати створювати чернетки статей, поки рецензована енциклопедія повільно просувалася вперед.",
+      "coda": "До липня 2026 року лише її англійська версія налічувала понад 7,2 мільйона статей."
     },
     "bittorrent-mailing-list": {
-      "tag": "Protocol",
-      "title": "A New P2P App",
-      "body": "On July 2, 2001, a programmer posted a message to a Yahoo eGroups mailing list titled \"BitTorrent -- a new P2P app,\" describing a file-distribution protocol he had just finished designing, one that pulled pieces of a file from many sources at once.",
-      "coda": "Three years later it accounted for a third of all internet traffic, per a 2004 CacheLogic study."
+      "tag": "Протокол",
+      "title": "Новий P2P-додаток",
+      "body": "2 липня 2001 року програміст опублікував у списку розсилки Yahoo eGroups повідомлення під назвою «BitTorrent — новий P2P-додаток», у якому описав щойно завершений протокол розповсюдження файлів, що завантажував частини файлу з багатьох джерел одночасно.",
+      "coda": "Через три роки, згідно з дослідженням CacheLogic 2004 року, на нього припадала третина всього інтернет-трафіку."
     },
     "webvan-thirty-minute-window": {
-      "tag": "Groceries",
-      "title": "The Thirty-Minute Window",
-      "body": "In 1996 Borders bookstore co-founder Louis Borders started Webvan, promising 30-minute delivery on warehouses built from scratch. It IPO'd in November 1999 for $375 million at a valuation over $4.8 billion, then filed for bankruptcy in July 2001, having lost more than $800 million.",
-      "coda": "Some Webvan executives went on to Amazon; Amazon Fresh and Instacart later filled the same order."
+      "tag": "Продукти",
+      "title": "Тридцятихвилинне вікно",
+      "body": "У 1996 році співзасновник Borders bookstore Луїс Бордерс заснував Webvan, обіцяючи доставку за 30 хвилин зі складів, побудованих з нуля. Компанія провела IPO в листопаді 1999 року на суму 375 мільйонів доларів за оцінки понад 4,8 мільярда доларів, а потім подала заяву про банкрутство в липні 2001 року, втративши понад 800 мільйонів доларів.",
+      "coda": "Деякі керівники Webvan перейшли до Amazon; Amazon Fresh та Instacart пізніше заповнили те саме замовлення."
     },
     "kozmo-free-hour-delivery": {
-      "tag": "Delivery",
-      "title": "The Free-Hour Promise",
-      "body": "In 1998 Joseph Park and Yong Kang founded Kozmo.com, promising free one-hour delivery with couriers dispatched by pager. It raised roughly $250 million but earned $3.5 million against a $26.3 million loss in 1999. In April 2001, staff learned of the shutdown by finding closed offices.",
-      "coda": "DoorDash, founded in 2013, dispatches couriers by smartphone GPS and charges a delivery fee."
+      "tag": "Доставка",
+      "title": "Обіцянка безкоштовної години",
+      "body": "У 1998 році Джозеф Парк та Йон Канг заснували Kozmo.com, обіцяючи безкоштовну доставку за годину кур'єрами, яких викликали пейджером. Компанія залучила приблизно 250 мільйонів доларів, але заробила 3,5 мільйона доларів при збитку в 26,3 мільйона доларів у 1999 році. У квітні 2001 року співробітники дізналися про закриття, знайшовши зачинені офіси.",
+      "coda": "DoorDash, заснований у 2013 році, відправляє кур'єрів за допомогою GPS смартфона та стягує плату за доставку."
     },
     "flooz-digital-currency": {
-      "tag": "Currency",
-      "title": "Money With No Store",
-      "body": "In February 1999, iVillage co-founder Robert Levitan launched Flooz.com, a digital currency users could buy and spend at partner merchants. A crime ring used stolen cards to mint $300,000 in fraudulent credits, and by 2001 fraud reached 19% of volume. The company folded that August.",
-      "coda": "In January 2009, Satoshi Nakamoto mined bitcoin's genesis block."
+      "tag": "Валюта",
+      "title": "Гроші без магазину",
+      "body": "У лютому 1999 року співзасновник iVillage Роберт Левітан запустив Flooz.com — цифрову валюту, яку користувачі могли купувати та витрачати у партнерських магазинах. Злочинне угруповання використовувало викрадені картки для випуску 300 000 доларів шахрайських кредитів, і до 2001 року обсяг шахрайства досяг 19% від загального обсягу. Компанія припинила діяльність у серпні того ж року.",
+      "coda": "У січні 2009 року Сатоші Накамото видобув генезис-блок біткоїна."
     },
     "yahoo-google-2002": {
-      "tag": "Miss",
-      "title": "Yahoo Passes on Google",
-      "body": "In 2002 Yahoo CEO Terry Semel offered $3 billion for Google; Page and Brin held out for $5 billion. Semel's read was that Yahoo's own market cap, near $5 billion after the crash, could not absorb that bet. Google went public two years later at $23 billion.",
-      "coda": "Yahoo sold its core business to Verizon in 2017 for $4.48 billion."
+      "tag": "Пропущено",
+      "title": "Yahoo відмовляється від Google",
+      "body": "У 2002 році генеральний директор Yahoo Террі Семел запропонував 3 мільярди доларів за Google; Пейдж і Брін вимагали 5 мільярдів доларів. Семел оцінив, що ринкова капіталізація Yahoo, близько 5 мільярдів доларів після краху, не змогла б поглинути таку ставку. Google вийшов на біржу два роки потому за 23 мільярди доларів.",
+      "coda": "Yahoo продав свій основний бізнес Verizon у 2017 році за 4,48 мільярда доларів."
     },
     "pplive-dorm-2002": {
-      "tag": "Dorm room",
-      "title": "Building 26, Yunyuan",
-      "body": "During the 2002 World Cup, Yao Xin's dorm at Huazhong University of Science and Technology had no television, so he watched matches over the campus network, which kept crashing. In his room in Building 26 he started working out how to combine peer-to-peer transfer with streaming video.",
-      "coda": "PPLive launched in 2005 and, at its peak, counted over a hundred million users."
+      "tag": "Гуртожиток",
+      "title": "Будівля 26, Юньюань",
+      "body": "Під час Чемпіонату світу 2002 року в гуртожитку Яо Сіна в Університеті науки та технологій Хуазьонгу не було телевізора, тому він дивився матчі через кампусну мережу, яка постійно лагалася. У своїй кімнаті в будівлі 26 він почав розробляти спосіб поєднання передачі даних між користувачами з потоковим відео.",
+      "coda": "PPLive було запущено у 2005 році і на піку популярності нараховувало понад сто мільйонів користувачів."
     },
     "china-alipay-escrow": {
-      "tag": "Trust",
-      "title": "The Escrow Workaround",
-      "body": "In 2003, with Taobao buyers and sellers unwilling to trust each other first, finance built an escrow workaround: payment sat frozen until goods were confirmed. The first trade closed that October — a student in Xi'an paying a seller in Japan. The name puns 'pay' and 'guarantee.'",
-      "coda": "The pun became the company's permanent, official name."
+      "tag": "Довіра",
+      "title": "Обхідний шлях через ескроу",
+      "body": "У 2003 році, коли покупці та продавці Taobao не хотіли довіряти один одному, фінансовий відділ створив обхідний шлях через ескроу: оплата залишалася замороженою до підтвердження товару. Перша угода була завершена у жовтні того ж року — студент із Сіаня заплатив продавцю в Японії. Назва грає словами «платити» та «гарантувати».",
+      "coda": "Гра слів стала офіційною назвою компанії."
     },
     "china-taobao-free-vs-ebay": {
-      "tag": "Competition",
-      "title": "Three Years Free",
-      "body": "In 2003, eBay's Eachnet held over 70 percent of China's C2C market, charging listing and transaction fees. Taobao launched that May to a near-empty site; Alibaba's answer was three years of free listings. By 2006, Taobao held 70 percent and eBay withdrew from Chinese C2C.",
-      "coda": "The side still charging listing fees ran out of runway first."
+      "tag": "Конкуренція",
+      "title": "Три роки безкоштовно",
+      "body": "У 2003 році Eachnet від eBay контролював понад 70% ринку C2C у Китаї, стягуючи комісію за розміщення та угоди. Taobao було запущено у травні того ж року на майже порожньому сайті; відповіддю Alibaba стали три роки безкоштовного розміщення. До 2006 року Taobao контролював 70% ринку, а eBay вийшов із китайського C2C.",
+      "coda": "Сторона, яка продовжувала стягувати комісію за розміщення, вичерпала ресурси першою."
     },
     "dianping-zagat-notes": {
-      "tag": "Review guide",
-      "title": "A Zagat notebook",
-      "body": "In 2002, Zhang Tao came back to China from the United States carrying an idea he had picked up there: the Zagat Survey, a restaurant guide built from readers' own ratings. He registered the domain zsurvey.com and set out to build a Chinese version in Shanghai.",
-      "coda": "Dianping, the site that grew from it, went live on April 12, 2003."
+      "tag": "Гід відгуків",
+      "title": "Щоденник Zagat",
+      "body": "У 2002 році Чжан Тао повернувся до Китаю зі Сполучених Штатів із ідеєю, яку він підхопив там: Zagat Survey, ресторанний довідник, побудований на основі оцінок самих читачів. Він зареєстрував домен zsurvey.com і взявся за створення китайської версії в Шанхаї.",
+      "coda": "Dianping, сайт, що виріс із цього проекту, запрацював 12 квітня 2003 року."
     },
     "wordpress-b2-post": {
-      "tag": "Blogging",
-      "title": "The Blogging Software Dilemma",
-      "body": "On January 24, 2003, a university student wrote on his own blog that b2, the blogging software he used daily, had gone unmaintained for months since its lead developer disappeared. He said he wanted to fork it and asked only for a name.",
-      "coda": "The company that grew out of that fork was valued at $7.5 billion by 2021."
+      "tag": "Блогінг",
+      "title": "Дилема програмного забезпечення для блогів",
+      "body": "24 січня 2003 року студент університету написав у своєму блозі, що b2, програмне забезпечення для блогів, яким він щодня користувався, кілька місяців не підтримується після того, як його головний розробник зник. Він сказав, що хоче зробити форк, і попросив лише назву.",
+      "coda": "Компанія, що вирісла з цього форку, у 2021 році була оцінена в 7,5 мільярда доларів."
     },
     "2003-blackout-race-condition": {
-      "tag": "Incident",
-      "title": "The Alarm That Didn't Ring",
-      "body": "The alarm process at an Ohio control room silently jammed: a coding error let two processes gain write access to the same data structure at once, looping forever. Operators never saw the overload warnings and failed to shed load in time. The cascade left 55 million people without power.",
-      "coda": "Engineers needed eight weeks to reproduce the race condition."
+      "tag": "Інцидент",
+      "title": "Сигнал, який не спрацював",
+      "body": "Процес сигналізації в контрольному приміщенні в Огайо мовчки завис: помилка в коді дозволила двом процесам одночасно отримати доступ на запис до однієї й тієї ж структури даних, і вони застрягли в нескінченному циклі. Оператори так і не побачили попереджень про перевантаження і не встигли скинути навантаження. Ланцюгова реакція залишила без електроенергії 55 мільйонів людей.",
+      "coda": "Інженерам знадобилося вісім тижнів, щоб відтворити гонку умов."
     },
     "aws-not-leftover-servers": {
-      "tag": "Correction",
-      "title": "Not the Leftover Servers",
-      "body": "The common version says AWS began by reselling Amazon's idle holiday-season server capacity. Benjamin Black calls that flatly false: in 2003 he and Chris Pinkham wrote a memo proposing standardized, automated infrastructure, purpose-built from the start to be sold externally as a service.",
-      "coda": "S3 and EC2 launched in 2006, following that memo."
+      "tag": "Виправлення",
+      "title": "Не залишкові сервери",
+      "body": "За поширеною версією, AWS почав із перепродажу вільних потужностей серверів Amazon у святковий сезон. Бенджамін Блек називає це відверто хибним: у 2003 році він і Кріс Пінкхем написали меморандум із пропозицією стандартизованої автоматизованої інфраструктури, створеної з самого початку спеціально для зовнішньої продажу як послуги.",
+      "coda": "S3 і EC2 запустилися в 2006 році, після цього меморандуму."
     },
     "maps-intern-friendfeed": {
-      "tag": "Internship",
-      "title": "The Maps Team Intern",
-      "body": "In 2003 a Google product manager hired an intern onto the team building local search, the project that grew into Google Maps. Four years later that intern and an engineer who had built Gmail left Google together to start a company.",
-      "coda": "The intern was Bret Taylor. The company he left to start was bought by Facebook."
+      "tag": "Стажування",
+      "title": "Стажер команди Maps",
+      "body": "У 2003 році менеджер продукту в Google найняв стажера в команду, яка будувала локальний пошук, проєкт, що переріс у Google Maps. Чотири роки потому цей стажер і інженер, який розробляв Gmail, разом залишили Google, щоб заснувати компанію.",
+      "coda": "Стажером був Брет Тейлор. Компанію, яку він заснував, купив Facebook."
     },
     "friendster-forty-second-load": {
-      "tag": "Scaling",
-      "title": "The Forty-Second Load",
-      "body": "Friendster launched in 2002 and reached over 100 million registered accounts, but its servers buckled under the load of computing degrees of connection between friends; a single page could take forty seconds to load. Support emails show users threatening to defect to the newer MySpace.",
-      "coda": "Facebook launched in 2004 on the same social-graph idea and held under the traffic."
+      "tag": "Масштабування",
+      "title": "Сорок друге завантаження",
+      "body": "Friendster запустився у 2002 році та досяг понад 100 мільйонів зареєстрованих акаунтів, але його сервери не витримували навантаження обчислення ступенів зв'язку між друзями; одна сторінка могла завантажуватися сорок секунд. Листи підтримки показують, що користувачі погрожували перейти на новіший MySpace.",
+      "coda": "Facebook запустився у 2004 році на тій самій ідеї соціального графа та витримав трафік."
     },
     "shopify-snowdevil-software": {
-      "tag": "Pivot",
-      "title": "The Store Software Outgrew the Store",
-      "body": "In 2004, programmer Tobias Lutke found the e-commerce software of the day too clunky, so he wrote his own to sell snowboard gear online as Snowdevil. Snowdevil itself stayed a small shop, but other merchants started asking to license the software behind it.",
-      "coda": "Shopify listed on the New York Stock Exchange in 2015."
+      "tag": "Розворот",
+      "title": "Програмне забезпечення магазину переросло сам магазин",
+      "body": "У 2004 році програміст Тобіас Лютке визнав тогочасне програмне забезпечення для електронної комерції надто громіздким, тому написав власне, щоб продавати сноубордичне спорядження онлайн під назвою Snowdevil. Snowdevil залишився невеликим магазином, але інші продавці почали запитувати ліцензію на програмне забезпечення, що стояло за ним.",
+      "coda": "Shopify вийшов на Нью-Йоркську фондову біржу у 2015 році."
     },
     "twitter-odeo-podcast-pivot": {
-      "tag": "Pivot",
-      "title": "The Podcast Company's Side Project",
-      "body": "On June 28, 2005, Apple built podcast subscriptions into iTunes; within two days subscriptions passed one million, and Odeo's entire podcasting business went obsolete overnight. The next March, an internal hackathon produced Jack Dorsey's SMS status-update pitch: Twitter.",
-      "coda": "Odeo, the company Twitter was built inside, was sold off in 2007."
+      "tag": "Розворот",
+      "title": "Побічний проект компанії подкастів",
+      "body": "28 червня 2005 року Apple вбудувала підписки на подкасти в iTunes; протягом двох днів підписки перевищили один мільйон, і весь подкастинговий бізнес Odeo застарів за одну ніч. Наступного березня внутрішній хакатон породив пропозицію Джека Дорсі щодо статус-оновлень через SMS: Twitter.",
+      "coda": "Odeo, компанія, всередині якої було створено Twitter, була продана у 2007 році."
     },
     "youtube-tune-in-hook-up": {
-      "tag": "Legend",
-      "title": "The Domain Registered on Valentine's Day",
-      "body": "youtube.com was registered on February 14, 2005, and its founders later told of a dating-site concept modeled on Hot or Not. Jawed Karim denied attending the dinner party the story hinges on, and Steve Chen conceded it reads like a marketing narrative.",
-      "coda": "What Karim cited instead was trouble finding tsunami footage online."
+      "tag": "Легенда",
+      "title": "Домен, зареєстрований у День святого Валентина",
+      "body": "youtube.com було зареєстровано 14 лютого 2005 року, і його засновники пізніше розповідали про концепцію сайту знайомств за моделлю Hot or Not. Джавед Карім заперечував, що був присутній на вечері, на якій базується ця історія, а Стів Чен визнав, що це виглядає як маркетингова розповідь.",
+      "coda": "Натомість Карім посилався на труднощі з пошуком відео цунамі в інтернеті."
     },
     "duan-buffett-lunch": {
-      "tag": "Small world",
-      "title": "The Buffett Lunch",
-      "body": "In 2006 a Guangdong electronics manufacturer won the annual charity auction for lunch with Warren Buffett, paying $620,100. He brought along a 26-year-old who had just quit an American company and had no clear plan yet.",
-      "coda": "The manufacturer was Duan Yongping. The young man was Colin Huang, who later founded Pinduoduo."
+      "tag": "Тісний світ",
+      "title": "Обід із Баффетом",
+      "body": "У 2006 році виробник електроніки з Гуандуну виграв щорічний благодійний аукціон на обід з Уорреном Баффетом, заплативши $620 100. Він привів із собою 26-річного хлопця, який щойно звільнився з американської компанії і ще не мав чіткого плану.",
+      "coda": "Виробником був Дуань Юнпін. Молодим чоловіком був Колін Хуан, який пізніше заснував Pinduoduo."
     },
     "blackberry-iphone-2007": {
-      "tag": "Misread",
-      "title": "BlackBerry Saw the Flaws",
-      "body": "In January 2007, BlackBerry co-CEO Jim Balsillie and chairman Mike Lazaridis watched the iPhone unveiling. Lazaridis's list of flaws was accurate: no physical keyboard, weak security, poor battery, glass typing. Every item was real. Balsillie's reply was, \"It's OK, we'll be fine.\"",
-      "coda": "BlackBerry's market share eroded to the iPhone in the years that followed."
+      "tag": "Неправильне прочитання",
+      "title": "BlackBerry побачив вади",
+      "body": "У січні 2007 року співголова BlackBerry Джим Балсіллі та голова Майк Лазарідіс спостерігали за презентацією iPhone. Список вад Лазарідіса був точним: немає фізичної клавіатури, слабка безпека, погана батарея, скляне друкування. Кожен пункт був реальним. Відповідь Балсіллі була: \"Все гаразд, у нас все буде добре.\"",
+      "coda": "Частка ринку BlackBerry поступово перейшла до iPhone у наступні роки."
     },
     "dvorak-iphone-2007": {
-      "tag": "Prediction",
-      "title": "Dvorak Says Pull the Plug",
-      "body": "On March 28, 2007, columnist John C. Dvorak wrote that phone margins were thin and Nokia and Motorola already dominant, so Apple should hand the iPhone design to some \"suckers\" and walk away. Given Apple's history in that market, the reasoning was not unreasonable.",
-      "coda": "He later said that once he actually held the phone, he regretted the call."
+      "tag": "Прогноз",
+      "title": "Дворак каже: вимикай",
+      "body": "28 березня 2007 року колумніст Джон С. Дворак написав, що маржі на телефони були тонкими, а Nokia та Motorola вже домінували, тому Apple слід передати дизайн iPhone якимось \"дурням\" і піти. Враховуючи історію Apple на цьому ринку, міркування не були необґрунтованими.",
+      "coda": "Пізніше він сказав, що коли він нарешті тримав телефон у руках, він каявся у своєму висловлюванні."
     },
     "auctomatic-taggar-yc": {
-      "tag": "Merger",
-      "title": "The One Who Had to Learn to Code",
-      "body": "In 2007 two Irish teenage brothers brought a homemade e-commerce tool into Y Combinator and merged their company with one run by two Oxford graduates. Neither of the Oxford pair could program. One of them was told to learn, fast.",
-      "coda": "That one was Harj Taggar, later Y Combinator's first non-founder partner."
+      "tag": "Злиття",
+      "title": "Той, хто мав навчитися кодити",
+      "body": "У 2007 році двоє ірландських підлітків-братів принесли саморобний інструмент для електронної комерції в Y Combinator і злилися з компанією, яку вели двоє випускників Оксфорда. Жоден із пари з Оксфорда не вмів програмувати. Одного з них попросили навчитися швидко.",
+      "coda": "Це був Хардж Таггар, пізніше перший партнер Y Combinator, який не був засновником."
     },
     "justintv-backpack-cruise": {
-      "tag": "The backpack",
-      "title": "The Livestreaming Backpack",
-      "body": "In March 2007 a man strapped a webcam to a baseball cap and began livestreaming his life around San Francisco, twenty-four hours a day, wearing a homemade laptop-backpack rig built by a friend who had dropped out of MIT.",
-      "coda": "The friend who built it was Kyle Vogt, who later founded Cruise, acquired by GM for over $1 billion."
+      "tag": "Рюкзак",
+      "title": "Рюкзак для прямих трансляцій",
+      "body": "У березні 2007 року чоловік прикріпив веб-камеру до бейсбольної кепки і почав транслювати своє життя в Сан-Франциско цілодобово, використовуючи саморобну конструкцію з ноутбуком у рюкзаку, яку зробив його друг, який залишив MIT.",
+      "coda": "Друг, який зібрав цю конструкцію, був Кайл Вогт, який пізніше заснував Cruise, придбану GM за понад 1 мільярд доларів."
     },
     "stackoverflow-blog-post": {
-      "tag": "Q&A",
-      "title": "The Anti-Experts-Exchange",
-      "body": "On April 16, 2008, a programmer posted on his own blog that he wanted to build an \"anti-Experts-Exchange\" question-and-answer site for programmers, without the paywalls and search-engine gaming he found nauseating about the incumbent.",
-      "coda": "In 2021 the site was sold to Prosus for 1.8 billion dollars."
+      "tag": "Питання та відповіді",
+      "title": "Анти-Experts-Exchange",
+      "body": "16 квітня 2008 року програміст написав у своєму блозі, що хоче створити сайт питань і відповідей для програмістів як «анти-Experts-Exchange», без платних стін і маніпуляцій із пошуковими системами, які він вважав огидними у діючого лідера ринку.",
+      "coda": "У 2021 році сайт був проданий Prosus за 1,8 мільярда доларів."
     },
     "zune-leap-year-freeze": {
-      "tag": "Incident",
-      "title": "Day 366",
-      "body": "Near midnight Pacific time on 31 December 2008, every Zune 30 froze solid, nicknamed Z2K9. The cause was an infinite loop in a power-chip driver that could only trigger on a leap year's 366th day. No patch existed; the only fix was letting the battery die.",
-      "coda": "The remedy shipped by Microsoft was to wait for the device to run out of power."
+      "tag": "Інцидент",
+      "title": "День 366",
+      "body": "Близько півночі тихоокеанського часу 31 грудня 2008 року кожен Zune 30 вмер намертво, отримавши прізвисько Z2K9. Причиною був нескінченний цикл у драйвері чіпа живлення, який міг спрацювати лише 366-го дня високосного року. Патча не існувало; єдиний спосіб виправити це — дозволити батареї розрядитися.",
+      "coda": "Ліки, які випустила Microsoft, полягали в тому, щоб чекати, поки пристрій розрядиться."
     },
     "china-wang-jian-alibaba-cloud": {
-      "tag": "Doubt",
-      "title": "The Liar Who Built the Cloud",
-      "body": "Around 2012, with Alibaba Cloud years into heavy investment and no visible product, staff told Jack Ma directly that Wang Jian was a fraud. Close to eighty percent of the engineering team quit. Ma's reply: fund it a billion yuan a year for ten years, then judge it.",
-      "coda": "Ten years later, the fraud's project turned a profit."
+      "tag": "Сумнів",
+      "title": "Брехун, який побудував хмару",
+      "body": "Близько 2012 року, коли Alibaba Cloud вже кілька років отримувала великі інвестиції без видимого продукту, співробітники прямо сказали Джеку Ма, що Ван Цзянь — шахрай. Майже вісімдесят відсотків інженерної команди пішли. Відповідь Ма: фінансувати це на мільярд юанів на рік протягом десяти років, а потім судити.",
+      "coda": "Через десять років проект шахрая став прибутковим."
     },
     "taobao-double11-2009": {
-      "tag": "Discount",
-      "title": "27 merchants",
-      "body": "On November 11, 2009, Taobao Mall rounded up twenty-seven brands to fill a slow sales week; the plan had called for over thirty, but merchants kept dropping out. A civil servant named Yan Jun in Shanxi placed the day's first order, 150 yuan of phone credit, at 00:00:03.",
-      "coda": "Sales that day reached 52 million yuan, ten times an ordinary day."
+      "tag": "Знижка",
+      "title": "27 торговців",
+      "body": "11 листопада 2009 року Taobao Mall зібрала двадцять сім брендів, щоб заповнити повільний торговий тиждень; план передбачав понад тридцять, але торговці постійно відмовлялися. Службовець на ім'я Янь Цзюнь у Шаньсі зробив перше замовлення того дня — 150 юанів мобільного балансу — о 00:00:03.",
+      "coda": "Продажі того дня сягнули 52 мільйонів юанів, у десять разів більше, ніж у звичайний день."
     },
     "cloudflare-hbs-elective": {
-      "tag": "Classmate",
-      "title": "An Elective at HBS",
-      "body": "In 2009 a programmer took a leave of absence to study for an MBA at Harvard Business School. He had spent years running an anti-spam volunteer project on the side. He mentioned it in class one day. A classmate said it should be a real product.",
-      "coda": "That classmate was Michelle Zatlyn, later Cloudflare's co-founder and COO."
+      "tag": "Однокласник",
+      "title": "Виборочний курс у HBS",
+      "body": "У 2009 році програміст взяв академічну відпустку, щоб вчитися на MBA в Гарвардській школі бізнесу. Він роками займався волонтерським анти-спам-проектом у вільний час. Він згадав про це одного дня на уроці. Однокласник сказав, що це має стати справжнім продуктом.",
+      "coda": "Цей однокласник була Мішель Затлін, пізніше співзасновниця та COO Cloudflare."
     },
     "china-3q-war": {
-      "tag": "Incident",
-      "title": "Choose One",
-      "body": "On November 3, 2010, Tencent forced a pop-up choice: uninstall 360 or QQ would stop running. Ma Huateng warned users might be wiped out within three days. Days later the Ministry of Industry and Information Technology ordered both sides to restore compatibility.",
-      "coda": "The regulator ended it, not the market or either company."
+      "tag": "Подія",
+      "title": "Обери одного",
+      "body": "3 листопада 2010 року Tencent примусила вибрати через спливаюче вікно: видалити 360 або QQ перестане працювати. Ма Хуатенг попередив користувачів, що їх можуть знищити протягом трьох днів. Через кілька днів Міністерство промисловості та інформаційних технологій наказало обом сторонам відновити сумісність.",
+      "coda": "Регулятор закінчив це, а не ринок чи жодна з компаній."
     },
     "china-thousand-groupon-war": {
-      "tag": "Bubble",
-      "title": "The Thousand-Groupon War",
-      "body": "China's first group-buying site launched in 2010; portals and social networks piled in within months. By August 2011, more than 5,000 group-buying companies were competing — the 'Thousand-Groupon War.' By mid-2014, only 176 sites remained standing.",
-      "coda": "Fewer than two hundred of five thousand survived."
+      "tag": "Бульбашка",
+      "title": "Війна тисячі групонів",
+      "body": "Перший китайський сайт групових покупок запустився у 2010 році; портали та соціальні мережі масово увійшли на ринок протягом кількох місяців. До серпня 2011 року конкурувало понад 5000 компаній групових покупок — так звана «Війна тисячі групонів». До середини 2014 року залишилося лише 176 сайтів.",
+      "coda": "З п'яти тисяч вижило менше двохсот."
     },
     "semver-dependency-hell": {
-      "tag": "Standard",
-      "title": "SemVer's Own Exemption",
-      "body": "In 2010 GitHub cofounder Tom Preston-Werner published semver.org, proposing MAJOR.MINOR.PATCH to end 'dependency hell.' The spec itself carves out an exception: during the 0.y.z 'initial development' phase, anything may change at any time — a stage most packages never actually leave.",
-      "coda": "Most published packages never leave the version range the rule does not bind."
+      "tag": "Стандарт",
+      "title": "Власне звільнення SemVer",
+      "body": "У 2010 році співзасновник GitHub Том Престон-Ворнер опублікував semver.org, запропонувавши схему MAJOR.MINOR.PATCH для подолання «пекла залежностей». Сама специфікація містить виняток: під час етапу «початкової розробки» 0.y.z будь-що може змінюватися в будь-який час — стадія, яку більшість пакетів фактично ніколи не залишають.",
+      "coda": "Більшість опублікованих пакетів ніколи не залишають діапазон версій, на який правило не поширюється."
     },
     "instagram-burbn-cut": {
-      "tag": "Pivot",
-      "title": "What Got Cut From Burbn",
-      "body": "Kevin Systrom and Mike Krieger spent nearly a year building a full-featured check-in app called Burbn, then judged their own finished iPhone build cluttered. They stripped it down to photos, comments, and likes, and shipped the result eight weeks later as Instagram.",
-      "coda": "Within a week of launch it had 100,000 users."
+      "tag": "Піво",
+      "title": "Що вирізали з Burbn",
+      "body": "Кевін Систром і Майк Крігер майже рік будували повнофункціональний додаток для че-інів під назвою Burbn, а потім визнали свій власний готовий iPhone-збірний варіант перевантаженим. Вони зрізали його до фотографій, коментарів та лайків і випустили результат вісім тижнів потому як Instagram.",
+      "coda": "Протягом тижня після запуску він мав 100 000 користувачів."
     },
     "tz-database-lawsuit": {
-      "tag": "Incident",
-      "title": "The Lawsuit Over the Time Zone Database",
-      "body": "In October 2011 astrology-software maker Astrolabe sued the tz database's maintainers, claiming its zone data infringed an atlas it published. The mailing list and FTP server went dark. ICANN stepped in to host the database; Astrolabe withdrew the suit in February 2012.",
-      "coda": "An astrology company's copyright claim over sunrise tables was withdrawn without payment."
+      "tag": "Інцидент",
+      "title": "Судовий позов щодо бази даних часових поясів",
+      "body": "У жовтні 2011 року виробник астрологічного програмного забезпечення Astrolabe подав до суду на супровідників бази даних tz, стверджуючи, що її дані про часові пояси порушують авторські права на опублікований ним атлас. Список розсилки та FTP-сервер припинили роботу. ICANN втрутилася, щоб розмістити базу даних; Astrolabe відкликав позов у лютому 2012 року.",
+      "coda": "Претензія астрологічної компанії щодо авторських прав на таблиці сходу сонця була відкликана без виплати."
     },
     "instagram-facebook-2012": {
-      "tag": "Ridicule",
-      "title": "A Billion for a Filter",
-      "body": "In April 2012 Facebook announced it was paying $1 billion for Instagram, a 13-person team with no revenue. On The Daily Show, Jon Stewart asked, \"A billion dollars of money? For a thing that kind of ruins your pictures?\" Measured against team size and revenue, the question was not unfair.",
-      "coda": "The deal is now cited routinely as one of the best acquisitions in tech history."
+      "tag": "Глузування",
+      "title": "Мільярд за фільтр",
+      "body": "У квітні 2012 року Facebook оголосив, що платить 1 мільярд доларів за Instagram, команду з 13 осіб без доходу. У шоу The Daily Show Джон Стюарт запитав: «Мільярд доларів грошей? За річ, яка псує ваші фотографії?» Виміряний відносно розміру команди та доходу, це запитання не було несправедливим.",
+      "coda": "Зараз цю угоду регулярно наводять як одну з найкращих у технологічній історії."
     },
     "didi-alibaba-resignation": {
-      "tag": "Resignation",
-      "title": "From Alibaba to taxis",
-      "body": "Cheng Wei spent eight years at Alibaba, working up to deputy general manager of Alipay's consumer business. In June 2012 he quit and, with Wu Rui and Li Xiang, started a taxi-hailing app. When it launched on September 9, only sixteen drivers were online at once.",
-      "coda": "Two months later, more than a hundred drivers were online at the same time."
+      "tag": "Відставка",
+      "title": "Від Alibaba до таксі",
+      "body": "Чень Вей провів вісім років у Alibaba, досягнувши посади заступника генерального директора споживчого бізнесу Alipay. У червні 2012 року він звільнився і разом із У Руєм та Лі Сяном запустив додаток для виклику таксі. Коли він вийшов у продаж 9 вересня, одночасно було онлайн лише шістнадцять водіїв.",
+      "coda": "Два місяці потому одночасно було онлайн понад сто водіїв."
     },
     "knight-capital-power-peg": {
-      "tag": "Incident",
-      "title": "The Eighth Server",
-      "body": "Knight Capital pushed new trading code to eight servers; only seven took it. The eighth still ran dead Power Peg code, retired years earlier, which live orders woke up. In 45 minutes Knight built $3.5B long and $3.15B short. The SEC's finding: nobody reviewed the incomplete deploy.",
-      "coda": "Knight was acquired by a rival within a week of the loss."
+      "tag": "Інцидент",
+      "title": "Восьмий сервер",
+      "body": "Knight Capital завантажив новий торговий код на вісім серверів; сім із них його прийняли. Восьмий досі виконував застарілий код Power Peg, знятий з експлуатації роками раніше, який активували живі ордери. За 45 хвилин Knight сформував довгу позицію на $3.5 млрд і коротку на $3.15 млрд. Висновок SEC: ніхто не перевіряв неповне розгортання.",
+      "coda": "Knight був придбаний конкурентом протягом тижня після втрат."
     },
     "dnnresearch-week-of-bidding": {
-      "tag": "Auction",
-      "title": "A Week of Bidding",
-      "body": "In 2012 a University of Toronto professor and his two graduate students crushed the field in an image-recognition contest, then incorporated a shell company to sell themselves. Google, Microsoft, Baidu, and DeepMind spent a week bidding against each other for it.",
-      "coda": "Hinton chose Google. One of the two students was Ilya Sutskever."
+      "tag": "Аукціон",
+      "title": "Тиждень торгів",
+      "body": "У 2012 році професор Університету Торонто та його двоє аспірантів розгромили поле в змаганні з розпізнавання зображень, а потім зареєстрували фіктивну компанію, щоб продати себе. Google, Microsoft, Baidu та DeepMind провели тиждень, торгуючись один проти одного за неї.",
+      "coda": "Хінтон обрав Google. Одним із двох студентів був Ілля Сутскевер."
     },
     "xiaohongshu-name": {
-      "tag": "Etymology",
-      "title": "Not that little red book",
-      "body": "Most people assume the name points at the other red book. The founder's own account is duller: Bain & Company and the Stanford Graduate School of Business, the firm he worked at and the school he attended, both run on red.",
-      "coda": "Translated into English, the name comes out identical to the other one anyway."
+      "tag": "Етимологія",
+      "title": "Не та маленька червона книжка",
+      "body": "Більшість припускає, що назва вказує на іншу червону книжку. Версія засновника нудніша: Bain & Company та Школа бізнесу Стенфордського університету, компанія, де він працював, і школа, яку він закінчив, — обидві працюють на червоному.",
+      "coda": "Перекладена англійською, назва виявляється ідентичною іншій."
     },
     "china-wechat-red-envelope-pearl-harbor": {
-      "tag": "Payments",
-      "title": "Pearl Harbor, Digital",
-      "body": "Around Chinese New Year 2014, WeChat's red-envelope feature went live; users grabbed over 40 million red packets within days. On the app Laiwang, Jack Ma called it a 'Pearl Harbor sneak attack' — effective short-term, he wrote, but healthy long-term growth mattered more.",
-      "coda": "The red envelope became a payments funnel."
+      "tag": "Платежі",
+      "title": "Перл-Харбор, цифровий",
+      "body": "Навесні 2014 року, під час китайського Нового року, функція червоних конвертів у WeChat запрацювала; користувачі забрали понад 40 мільйонів червоних пакетів за кілька днів. У додатку Laiwang Джек Ма назвав це «таємною атакою на Перл-Харбор» — ефективним у короткостроковій перспективі, писав він, але довгострокове здорове зростання важливіше.",
+      "coda": "Червоний конверт став платіжним функтором."
     },
     "heartbleed-two-person-team": {
-      "tag": "Incident",
-      "title": "A Team of Four",
-      "body": "Heartbleed's missing bounds check entered OpenSSL's heartbeat extension in December 2011 and sat unnoticed for two years until independent researchers found it in April 2014. At the time, the codebase behind most of the web's HTTPS traffic was maintained by four volunteers, one full-time.",
-      "coda": "The fix shipped the same day the bug was disclosed."
+      "tag": "Інцидент",
+      "title": "Команда з чотирьох осіб",
+      "body": "Відсутня перевірка меж у Heartbleed потрапила до розширення heartbeat OpenSSL у грудні 2011 року і залишалася непоміченою протягом двох років, доки незалежні дослідники не виявили її у квітні 2014 року. На той час кодову базу, що стояла за більшістю HTTPS-трафіку в мережі, підтримували четверо волонтерів, один із яких працював повний робочий день.",
+      "coda": "Виправлення було випущено того ж дня, коли про вразливість стало відомо."
     },
     "goto-fail-duplicate": {
-      "tag": "Security",
-      "title": "The Duplicate Jump",
-      "body": "Inside Apple's SSLVerifySignedServerKeyExchange, a goto fail; line was duplicated. The second copy sat outside any if, so the function always jumped past the signature check and returned success regardless.",
-      "coda": "The duplicate line ran unchanged on the affected systems for months."
+      "tag": "Безпека",
+      "title": "Дубльований перехід",
+      "body": "У функції Apple SSLVerifySignedServerKeyExchange рядок goto fail; був продубльований. Друга копія опинилася поза будь-яким if, тому функція завжди переходила повз перевірку підпису і повертала успіх незалежно від результату.",
+      "coda": "Дубльований рядок виконувався без змін на уражених системах протягом кількох місяців."
     },
     "ntp-harlan-stenn": {
-      "tag": "Time",
-      "title": "Who Sets the Clock",
-      "body": "Banks, exchanges and satellite systems synchronize against NTP. David Mills designed the protocol; the reference implementation is now led, largely alone, by Harlan Stenn. In March 2015 trade press ran the headline 'NTP Needs Money: Is A Foundation The Answer?'",
-      "coda": "The foundation is still fundraising toward its budget."
+      "tag": "Час",
+      "title": "Хто встановлює годинник",
+      "body": "Банки, біржі та супутникові системи синхронізуються за NTP. Протокол розробив Дейвід Міллз; референтну реалізацію зараз, переважно в одиночку, веде Гарлан Стенн. У березні 2015 року торговельна преса надала заголовок «NTP Needs Money: Is A Foundation The Answer?»",
+      "coda": "Фонд досі збирає кошти на свій бюджет."
     },
     "alphago-lee-sedol-2016": {
-      "tag": "Go",
-      "title": "Stone One Hundred and Two",
-      "body": "AlphaGo beat Lee Sedol four games to one in Seoul in March 2016; Lee's only win came in game four. Afterward he said he had made a critical error early in game one, calling the computer's play there excellent and one move unlike anything a human player would choose.",
-      "coda": "The move he singled out kept only a stone number, no name."
+      "tag": "Го",
+      "title": "Камень сто другий",
+      "body": "AlphaGo переміг Лі Седола чотири партії до однієї в Сеулі у березні 2016 року; єдина перемога Лі відбулася в четвертій партії. Після цього він сказав, що зробив критичну помилку на початку першої партії, назвавши хід комп'ютера там чудовим і таким, якого ніколи не обрав би жоден людяний гравець.",
+      "coda": "Хід, який він виділив, мав лише номер каменя, без назви."
     },
     "aws-s3-2017-typo": {
-      "tag": "Incident",
-      "title": "One Wide Argument",
-      "body": "An S3 engineer ran an authorized command meant to take a small number of billing servers offline, but one input covered a wider range than intended. The removed servers also backed the index subsystem, which had not been fully restarted in years and came back far slower than expected.",
-      "coda": "The outage ran roughly four hours; AWS's own status page depended on the same systems."
+      "tag": "Інцидент",
+      "title": "Один широкий аргумент",
+      "body": "Інженер S3 виконав авторизовану команду, призначену для вимкнення невеликої кількості серверів обліку, але один вхідний параметр охопив ширший діапазон, ніж планувалося. Вимкнені сервери також підтримували підсистему індексації, яка не перезпускалася повністю протягом кількох років і повернулася значно повільніше, ніж очікувалося.",
+      "coda": "Перебої тривали приблизно чотири години; власна сторінка статусу AWS залежала від тих самих систем."
     },
     "gitlab-2017-rm-rf": {
-      "tag": "Incident",
-      "title": "Five Backups, Zero",
-      "body": "An engineer meant to clear a lagging replica but deleted the PostgreSQL data directory on the primary instead, stopping seconds too late; roughly 300GB was already gone. GitLab found that of five backup and replication methods it had running, none could actually restore the data.",
-      "coda": "Recovery relied on a snapshot someone happened to take six hours earlier."
+      "tag": "Інцидент",
+      "title": "П'ять резервних копій, нуль",
+      "body": "Інженер мав намір очистити відстаючу репліку, але натомість видалив каталог даних PostgreSQL на первинному сервері, зупинившись на кілька секунд пізно; приблизно 300 ГБ вже було втрачено. GitLab виявив, що з п'яти методів резервного копіювання та реплікації, які він використовував, жоден не міг фактично відновити дані.",
+      "coda": "Відновлення покладалося на знімок, який хтось випадково зробив шістьма годинами раніше."
     },
     "attention-title-beatles-2017": {
-      "tag": "Paper",
-      "title": "A Title Borrowed From the Beatles",
-      "body": "Eight Google researchers published \"Attention Is All You Need\" in June 2017; the title nods to the Beatles song \"All You Need Is Love.\" The paper's stated aim was a sequence model for machine translation that dropped recurrent networks in favor of attention alone.",
-      "coda": "All eight authors have since left Google."
+      "tag": "Стаття",
+      "title": "Назва, запозичена у The Beatles",
+      "body": "Вісім дослідників Google опублікували «Attention Is All You Need» у червні 2017 року; назва відсилає до пісні The Beatles «All You Need Is Love». Заявленою метою статті була модель послідовності для машинного перекладу, яка відмовилася від рекурентних мереж на користь лише уваги.",
+      "coda": "Усі вісім авторів відтоді покинули Google."
     },
     "cloudflare-2019-regex": {
-      "tag": "Incident",
-      "title": "The Fuse That Was Removed",
-      "body": "A new WAF rule with a catastrophically backtracking regex pushed CPU on Cloudflare's global network to near 100 percent within seconds of deployment. The rule itself was ordinary; what let it detonate was a CPU-usage safeguard on regex rules quietly deleted weeks earlier in a refactor.",
-      "coda": "The outage lasted 27 minutes and ended when the WAF was disabled globally."
+      "tag": "Інцидент",
+      "title": "Запобіжник, який видалили",
+      "body": "Нове правило WAF із катастрофічно зворотним регулярним виразом підняло завантаження ЦП на глобальній мережі Cloudflare майже до 100 відсотків за лічені секунди після розгортання. Саме правило було звичайним; те, що дозволило йому спрацювати, — це захист від завантаження ЦП для правил регулярних виразів, який був тихо видалений тижнями раніше під час рефакторингу.",
+      "coda": "Збій тривав 27 хвилин і закінчився, коли WAF було вимкнено глобально."
     },
     "requests-kenneth-reitz": {
-      "tag": "Handoff",
-      "title": "Handing Over the Keys",
-      "body": "Requests logs over 30 million downloads a month and became the standard HTTP client for Python. Kenneth Reitz released it on February 14, 2011. In 2019, after health problems, he handed control of the project to the Python Software Foundation.",
-      "coda": "He has not returned to lead the project since stepping down."
+      "tag": "Передача",
+      "title": "Передача ключів",
+      "body": "Requests має понад 30 мільйонів завантажень на місяць і став стандартним HTTP-клієнтом для Python. Кеннет Рейц випустив його 14 лютого 2011 року. У 2019 році, після проблем зі здоров'ям, він передав контроль над проєктом Python Software Foundation.",
+      "coda": "Він не повертався до керівництва проєктом після відходу."
     },
     "linux-y2038-kernel-fix": {
-      "tag": "Fix",
-      "title": "Eighteen Years Early",
-      "body": "32-bit Unix systems will overflow their time_t counter on 19 January 2038. Linux 5.6, released in 2020, was the first kernel able to keep a 32-bit system running past that date. Applications still need a rebuild against a 64-bit time_t to actually benefit.",
-      "coda": "The kernel was patched years before most 32-bit userspace caught up."
+      "tag": "Виправлення",
+      "title": "На вісімнадцять років раніше",
+      "body": "32-бітні системи Unix переповнять свій лічильник time_t 19 січня 2038 року. Ядро Linux 5.6, випущене у 2020 році, було першим ядром, здатним підтримувати роботу 32-бітної системи після цієї дати. Додаткам все ще потрібна перезбірка з 64-бітним time_t, щоб фактично скористатися цим.",
+      "coda": "Ядро було виправлено за роки до того, як більшість 32-бітного простору користувача наздогнало."
     },
     "log4shell-eight-years": {
-      "tag": "Vulnerability",
-      "title": "Eight Years Unread",
-      "body": "Log4j sits inside most enterprise Java software; Wiz and EY found 93 percent of cloud environments exposed to Log4Shell. The flaw existed in the code since 2013. It was reported November 24, 2021 and disclosed publicly on December 10, rated CVSS 10.",
-      "coda": "A handful of volunteers wrote the fix that reached millions of servers."
+      "tag": "Вразливість",
+      "title": "Вісім років без читання",
+      "body": "Log4j вбудований у більшість корпоративного програмного забезпечення Java; Wiz та EY виявили, що 93 відсотки хмарних середовищ були вразливі до Log4Shell. Вразливість існувала в коді з 2013 року. Її повідомили 24 листопада 2021 року та розкрили публічно 10 грудня, оцінивши CVSS 10.",
+      "coda": "Невелика група волонтерів написала виправлення, яке потрапило на мільйони серверів."
     },
     "core-js-denis-pushkarev": {
-      "tag": "Maintainer",
-      "title": "The Patch Nobody Replaced",
-      "body": "core-js ships inside WhatsApp, Netflix, Apple and PayPal, logging roughly 250 million downloads a month. Its author, Denis Pushkarev, was in a fatal 2019 car accident, served about ten months in prison starting January 2020, and kept maintaining the library throughout.",
-      "coda": "Monthly donations fell from about 2,500 dollars to 400."
+      "tag": "Супроводжувач",
+      "title": "Патч, якого ніхто не замінив",
+      "body": "core-js вбудований у WhatsApp, Netflix, Apple та PayPal, реєструючи приблизно 250 мільйонів завантажень на місяць. Його автор, Denis Pushkarev, потрапив у смертельну автомобільну аварію 2019 року, відбував близько десяти місяців ув'язнення з січня 2020 року та продовжував супроводжувати бібліотеку протягом усього цього часу.",
+      "coda": "Щомісячні пожертви впали з приблизно 2500 доларів до 400."
     },
     "tesla-westinghouse-royalty": {
-      "tag": "Patents",
-      "title": "The Royalty Tesla Waived",
-      "body": "Westinghouse's contract paid Tesla $2.50 per horsepower in royalties. In early 1891, with the company close to failure, Tesla released it from the royalty clause.",
-      "coda": "In 1897 Westinghouse bought his patents outright for $216,000."
+      "tag": "Патенти",
+      "title": "Роялті, яке Tesla скасувала",
+      "body": "За контрактом Westinghouse виплачувала Tesla 2,50 долара за кінську силу як роялті. На початку 1891 року, коли компанія була на межі краху, Tesla звільнила її від умови про роялті.",
+      "coda": "У 1897 році Westinghouse викупила його патенти повністю за 216 000 доларів."
     },
     "salk-polio-patent": {
-      "tag": "Patents",
-      "title": "The Sun Has No Patent",
-      "body": "Edward Murrow asked who owned the polio vaccine patent. Salk answered there was none, could you patent the sun. Foundation lawyers had already examined the question and found the vaccine lacked patentable novelty because of prior art.",
-      "coda": "The unpatented vaccine was later valued at seven billion dollars."
+      "tag": "Патенти",
+      "title": "Сонце не має патенту",
+      "body": "Edward Murrow запитав, хто володіє патентом на вакцину від поліомієліту. Salk відповів, що його немає, чи можна запатентувати сонце. Юристи фонду вже розглянули це питання і виявили, що вакцина не мала патентоспроможної новизни через наявність попередніх розробок.",
+      "coda": "Ця не запатентована вакцина пізніше була оцінена в сім мільярдів доларів."
     },
     "cobol-two-hundred-billion-lines": {
-      "tag": "Legacy",
-      "title": "Two Hundred Billion Lines",
-      "body": "By 1997 Gartner estimated 200 billion lines of COBOL running eighty percent of business programs worldwide. In 2020, as COVID-era unemployment claims surged, several US state governments publicly appealed for COBOL programmers to keep their decades-old benefits systems running.",
-      "coda": "Six years have passed since that appeal."
+      "tag": "Легасі",
+      "title": "Двісті мільярдів рядків",
+      "body": "До 1997 року Gartner оцінив 200 мільярдів рядків COBOL, що працювали у вісімдесяти відсотках бізнес-програм у всьому світі. У 2020 році, коли під час пандемії COVID попит на виплати по безробіттю різко зріс, кілька державних урядів США публічно звернулися до програмістів COBOL із проханням підтримувати роботу їхніх десятилітніх систем виплат.",
+      "coda": "З того звернення минуло шість років."
     },
     "sabre-sage-to-booking": {
-      "tag": "Booking",
-      "title": "From Radar to Reservations",
-      "body": "American Airlines and IBM signed their partnership in 1957, adapting the Air Force's Cold War SAGE air-defense architecture into a booking system. SABRE ran its first online test in 1960 and launched fully in 1964, becoming the world's first online transaction processing system.",
-      "coda": "The parent company still operates, more than sixty years later."
+      "tag": "Бронювання",
+      "title": "Від радару до бронювання",
+      "body": "American Airlines та IBM підписали партнерство 1957 року, адаптувавши архітектуру повітряної оборони SAGE ВПС часів холодної війни під систему бронювання. SABRE провів перше онлайн-тестування 1960 року та повністю вийшов у 1964 році, ставши першою в світі системою обробки онлайн-транзакцій.",
+      "coda": "Материнська компанія досі працює, більше ніж через шістдесят років."
     },
     "kay-objects-messaging": {
-      "tag": "Naming",
-      "title": "Objects, Not the Point",
-      "body": "By 1967 Alan Kay was using \"object-oriented\" for a design built on cells or network nodes talking only through messages. He later wrote he was sorry he ever coined the term \"objects,\" because it draws attention to the lesser idea and buries the one he meant: messaging.",
-      "coda": "The word he regretted outlived the idea he meant it to carry."
+      "tag": "Найменування",
+      "title": "Об'єкти, а не суть",
+      "body": "До 1967 року Алан Кей використовував термін «об'єктно-орієнтований» для дизайну, побудованого на клітинках або вузлах мережі, що спілкуються лише через повідомлення. Пізніше він писав, що шкодує про те, що вигадав слово «об'єкти», бо воно привертає увагу до менш важливої ідеї та ховає ту, яку він мав на увазі: повідомлення.",
+      "coda": "Слово, яке він вважав помилковим, пережило ідею, яку мало нести."
     },
     "voyager-68-kilobits": {
-      "tag": "Deep Space",
-      "title": "Around the broken chip",
-      "body": "Voyager 1 launched in September 1977. Forty-seven years out, a memory chip in its flight data subsystem failed, three percent of it corrupted beyond repair. On 20 April 2024 engineers rearranged the code around the damaged area and the signal came back.",
-      "coda": "Its generators may supply enough power to return engineering data until 2036."
+      "tag": "Глибокий космос",
+      "title": "Навколо зламаної мікросхеми",
+      "body": "Voyager 1 стартував у вересні 1977 року. Через сорок сім років мікросхема пам'яті в його підсистемі польотних даних вийшла з ладу, три відсотки її було пошкоджено безповоротно. 20 квітня 2024 року інженери перестроїли код навколо пошкодженої ділянки, і сигнал повернувся.",
+      "coda": "Його генератори можуть забезпечувати достатньо енергії для передачі інженерних даних до 2036 року."
     },
     "gif-lzw-unisys": {
-      "tag": "Patents",
-      "title": "The Free Format That Wasn't",
-      "body": "CompuServe shipped GIF in June 1987 using LZW compression without realizing Sperry Corporation already held the patent on it. In December 1994 Unisys, formed from Sperry's merger, announced it would collect licensing fees, prompting developers to build PNG as a replacement.",
-      "coda": "The patents ran out worldwide in 2004, and only then was GIF free."
+      "tag": "Патенти",
+      "title": "Безкоштовний формат, яким він не був",
+      "body": "CompuServe випустила GIF у червні 1987 року з використанням стиснення LZW, не усвідомлюючи, що Sperry Corporation вже мала на нього патент. У грудні 1994 року Unisys, утворена внаслідок злиття Sperry, оголосила про збір ліцензійних відрахувань, що спонукало розробників створити PNG як заміну.",
+      "coda": "Патенти закінчилися у всьому світі 2004 року, і лише тоді GIF став вільним."
     },
     "zimmermann-pgp-release": {
-      "tag": "Crypto",
-      "title": "PGP Given Away, Then Investigated",
-      "body": "Phil Zimmermann released PGP with its source code on public FTP in 1991, the first widely available public-key encryption program. US Customs opened a criminal investigation for export-control violations. It ran three years and was dropped without indictment in early 1996.",
-      "coda": "Three years under investigation, no charges filed, no royalties ever collected."
+      "tag": "Криптографія",
+      "title": "PGP роздали, потім розслідували",
+      "body": "Філ Циммерман випустив PGP разом із вихідним кодом у відкритому FTP 1991 року — це була перша широко доступна програма шифрування з відкритим ключем. Митна служба США відкрила кримінальне розслідування за порушення експортного контролю. Воно тривало три роки і було закрито без обвинувачення на початку 1996 року.",
+      "coda": "Три роки під розслідуванням, жодних звинувачень, жодних роялті ніколи не зібрано."
     },
     "json-good-not-evil": {
-      "tag": "License",
-      "title": "For Good, Not Evil",
-      "body": "Douglas Crockford's 2002 license for the JSON libraries adds one clause: the software shall be used for Good, not Evil. JSON itself spread free and unpatented into nearly every API on the internet, but that single sentence made the license incompatible with standard open-source terms.",
-      "coda": "The format became universal; the joke clause it shipped with did not survive contact with corporate legal."
+      "tag": "Ліцензія",
+      "title": "Для добра, а не зла",
+      "body": "Ліцензія Дугласа Крокфорда 2002 року для бібліотек JSON додає одну умову: програмне забезпечення має використовуватися для добра, а не зла. Сам JSON поширився безкоштовно та без патентів майже в кожен API в інтернеті, але саме це речення зробило ліцензію несумісною зі стандартними умовами відкритого вихідного коду.",
+      "coda": "Формат став універсальним; жартівлива умова, яку він мав, не вижила після зіткнення з корпоративним юридичним відділом."
     },
     "sogou-movie-line": {
-      "tag": "Naming",
-      "title": "Sogou's Line Was a Joke First",
-      "body": "The 2001 comedy Big Shot's Funeral has a wordplay line about search engines: \"They search Sohu, we search Sogou, everyone searches their own way.\" Three years later, in 2004, Sohu's team took the joke and launched it as a real search engine, Sogou.",
-      "coda": "The punchline became the product name, unedited."
+      "tag": "Найменування",
+      "title": "Лайна Sogou спочатку була жартівливою",
+      "body": "У комедії 2001 року «Похорон великої шишки» є гра слів про пошукові системи: «Вони шукають у Sohu, ми шукаємо в Sogou, кожен шукає по-своєму». Через три роки, у 2004 році, команда Sohu взяла цей жарт і запустила його як справжню пошукову систему Sogou.",
+      "coda": "Панчлайн став назвою продукту, без редагувань."
     },
     "tbl-double-slash": {
-      "tag": "Design",
-      "title": "The Extra Slashes",
-      "body": "Tim Berners-Lee put \"//\" in front of the domain name when he designed the URL. In October 2009 he admitted, given the colon already there, the two slashes were not needed at all — \"it seemed like a good idea at the time,\" he said.",
-      "coda": "Every URL since has still typed both of them."
+      "tag": "Дизайн",
+      "title": "Додаткові слеші",
+      "body": "Тім Бернерс-Лі поставив «//» перед доменним ім'ям, коли проектував URL. У жовтні 2009 року він визнав, що з урахуванням вже наявної двокрапки, два слеші взагалі не були потрібні — «здавалося, це гарна ідея на той час», сказав він.",
+      "coda": "Кожен URL з того часу досі вводить обидва."
     },
     "bilibili-mikufans": {
-      "tag": "Naming",
-      "title": "Bilibili's First Name Was Mikufans",
-      "body": "The site launched in June 2009 as Mikufans, built for fans of the vocaloid Hatsune Miku. In January 2010 it was renamed Bilibili, after a nickname the protagonist of a light novel series gives Misaka Mikoto — an onomatopoeia for electric discharge.",
-      "coda": "The renamed site kept the name through every subsequent redesign."
+      "tag": "Найменування",
+      "title": "Перша назва Bilibili була Mikufans",
+      "body": "Сайт запустився у червні 2009 року як Mikufans, створений для фанатів вокалоїда Hatsune Miku. У січні 2010 року його перейменували на Bilibili, на честь прізвиська, яке головний герой серії лайт-новел дає Місака Мікото — це онімапопея електричного розряду.",
+      "coda": "Перейменованый сайт зберіг назву через кожну наступну редизайну."
     },
     "kuaishou-gif-app": {
-      "tag": "Naming",
-      "title": "Kuaishou Began as a GIF App",
-      "body": "Kuaishou launched in March 2011 as GIF Kuaishou, a phone app for making and sharing GIF images. In 2012 it pivoted to short video, and in 2014 the GIF prefix was dropped, leaving the name it carries as a video platform today.",
-      "coda": "The GIF prefix is gone; the underlying company name never changed."
+      "tag": "Найменування",
+      "title": "Kuaishou почався як додаток для GIF",
+      "body": "Kuaishou запустився у березні 2011 року як GIF Kuaishou, мобільний додаток для створення та поширення GIF-зображень. У 2012 році він змінив напрямок на короткі відео, а у 2014 році префікс GIF було видалено, залишивши назву, яку він носить як відеоплатформа сьогодні.",
+      "coda": "Префікс GIF зник; назва материнської компанії так і не змінилася."
     },
     "zhihu-invite-only": {
-      "tag": "Naming",
-      "title": "Zhihu Needed an Invitation",
-      "body": "Zhihu went live on January 26, 2011, and for its first two years registration required an invitation code. Open sign-up did not arrive until March 2013. The name itself is classical Chinese for \"do you know\" — a question, not a slogan.",
-      "coda": "Registration has required no invitation since March 2013."
+      "tag": "Найменування",
+      "title": "Для Zhihu потрібне було запрошення",
+      "body": "Zhihu запустився 26 січня 2011 року, і протягом перших двох років для реєстрації потрібен був код запрошення. Відкрита реєстрація з'явилася лише у березні 2013 року. Сама назва — це класична китайська фраза «чи знаєте ви» — питання, а не гасло.",
+      "coda": "З березня 2013 року запрошення для реєстрації більше не потрібне."
     },
     "hp-garage-palo-alto": {
-      "tag": "The garage",
-      "title": "The Garage on Addison Avenue",
-      "body": "In 1938 David Packard and his wife rented the ground-floor apartment of a 1905 house at 367 Addison Avenue in Palo Alto. He and Bill Hewlett put 538 dollars into the one-car garage behind it and built their first product, an audio oscillator.",
-      "coda": "The property is now on the National Register of Historic Places and is not open to visitors."
+      "tag": "Гараж",
+      "title": "Гараж на вулиці Аддісон",
+      "body": "У 1938 році Дейвід Пакард із дружиною орендували квартиру на першому поверсі будинку 1905 року побудови за адресою 367 Addison Avenue у Пало-Альто. Він і Білл Гевлет вклали 538 доларів у гараж на одну машину позаду будинку і збудували свій перший продукт — аудіоосцилятор.",
+      "coda": "Ця нерухомість зараз внесена до Національного реєстру історичних місць і не відкрита для відвідувачів."
     },
     "apple-crist-drive-garage": {
-      "tag": "The myth",
-      "title": "When the bedroom ran out",
-      "body": "In 1976 Steve Jobs and Steve Wozniak assembled the first Apple boards at the house Jobs's parents owned in Los Altos, California.",
-      "coda": "In his bedroom first. The garage only later, when there was no space left."
+      "tag": "Міф",
+      "title": "Коли спальні стало замало",
+      "body": "У 1976 році Стів Джобс і Стів Возняк збирали перші плати Apple у будинку, яким володіли батьки Джобса у Лос-Альтосі, Каліфорнія.",
+      "coda": "Спочатку у його спальні. Гараж лише пізніше, коли не залишилося місця."
     },
     "huawei-nanyou-flat": {
-      "tag": "The flat",
-      "title": "A Flat in Nanyou Xincun",
-      "body": "In September 1987 Huawei was registered in a residential block in Nanyou Xincun, Shenzhen, with 21,000 yuan of capital, fourteen employees, and six shareholders splitting the equity evenly.",
-      "coda": "The company moved its headquarters out in 1989; the flat's tenancy as HQ ended there."
+      "tag": "Квартира",
+      "title": "Квартира у Наньйові Сінцунь",
+      "body": "У вересні 1987 року Huawei зареєстрували у житловому блоці Наньйові Сінцунь у Шеньчжені зі статутним капіталом 21 000 юанів, чотирнадцятьма співробітниками та шістьма акціонерами, які розділили акції порівну.",
+      "coda": "У 1989 році компанія перенісла штаб-квартиру; оренда квартири як штаб-квартири завершилася там."
     },
     "wojcicki-garage-menlo-park": {
-      "tag": "The landlord",
-      "title": "The Garage She Rented Out",
-      "body": "In September 1998 Page and Brin rented a garage in Menlo Park from Susan Wojcicki for $1,700 a month. Google was incorporated there.",
-      "coda": "She later became YouTube's chief executive."
+      "tag": "Орендодавець",
+      "title": "Гараж, який вона здавала в оренду",
+      "body": "У вересні 1998 року Пейдж і Брін орендували гараж у Менло-Парку у Сьюзан Войсіцької за 1 700 доларів на місяць. Google було зареєстровано там.",
+      "coda": "Вона пізніше стала генеральним директором YouTube."
     },
     "tencent-seg-403": {
-      "tag": "Room 403",
-      "title": "Building 2, Room 403",
-      "body": "In November 1998 Tencent registered at room 403, building two, of the Saige technology park in Huaqiangbei, Shenzhen. The building was full of startups like it, and the door was no different from any other.",
-      "coda": "The room is kept open only to Tencent employees now, under the name Tencent Origin."
+      "tag": "Кімната 403",
+      "title": "Будівля 2, кімната 403",
+      "body": "У листопаді 1998 року Tencent зареєструвалася у кімнаті 403 будівлі два технологічного парку Saige у районі Huaqiangbei, Шеньчжень. Будівля була повна стартапів, подібних до неї, і двері не відрізнялися від будь-яких інших.",
+      "coda": "Кімната тепер відкрита лише для співробітників Tencent під назвою Tencent Origin."
     },
     "unitree-left-dji": {
-      "tag": "Resignation",
-      "title": "Out of DJI",
-      "body": "During his master's, Wang Xingxing built an all-electric quadruped robot on his own and called it XDog. After graduating he took a job at DJI, and left it soon after.",
-      "coda": "Unitree was registered in the Binjiang district of Hangzhou in August 2016."
+      "tag": "Звільнення",
+      "title": "Поза DJI",
+      "body": "Під час магістратури Ван Сінсин самостійно зібрав повністю електричного чотиринога робота і назвав його XDog. Після закінчення навчання він влаштувався на роботу в DJI і незабаром звільнився.",
+      "coda": "Unitree зареєструвалася у районі Binjiang міста Ханчжоу у серпні 2016 року."
     },
     "unitree-one-yuan-option": {
-      "tag": "Options",
-      "title": "One yuan a share",
-      "body": "In September 2017 Unitree signed option agreements with seventeen employees at one yuan per share. Further grants followed, held through a single employee vehicle.",
-      "coda": "Eight years later the company opened the book on its IPO."
+      "tag": "Опціони",
+      "title": "Один юань за акцію",
+      "body": "У вересні 2017 року Unitree підписала опціонні угоди з сімнадцятьма співробітниками за один юань за акцію. Наступні виплати відбувалися через єдиний інструмент для співробітників.",
+      "coda": "Вісім років потому компанія відкрила книгу щодо свого IPO."
     },
     "unitree-g1-price": {
-      "tag": "Pricing",
-      "title": "Ninety-nine thousand",
-      "body": "Humanoid robots had been priced as laboratory equipment. Unitree put the G1 on sale at 99,000 yuan, roughly the price of an entry-level car.",
-      "coda": "By 2025 humanoids were 51.78 percent of its revenue, on 5,500 units shipped."
+      "tag": "Ціноутворення",
+      "title": "Дев'яносто дев'ять тисяч",
+      "body": "Гуманоїдні роботи раніше цінувалися як лабораторне обладнання. Unitree вивела G1 на ринок за 99 000 юанів, приблизно за ціною автомобіля початкового рівня.",
+      "coda": "До 2025 року гуманоїди становили 51,78 відсотка її доходу на 5 500 відвантажених одиниць."
     }
   }
 }
