@@ -1,1439 +1,1439 @@
 {
-  "panelLabel": "Boot log",
+  "panelLabel": "啟動日誌",
   "entries": {
     "transistor-name-off-patent-1947": {
-      "tag": "Patent",
-      "title": "The Name Left Off the Patent",
-      "body": "On December 23, 1947, Bardeen and Brattain demonstrated a germanium point-contact transistor at Bell Labs. Shockley was not in the room. Lawyers found his own design too close to a 1925 patent by Julius Lilienfeld and dropped his name from this one.",
-      "coda": "In 1956 all three shared the Nobel Prize in Physics."
+      "tag": "專利",
+      "title": "被從專利上拿掉的名字",
+      "body": "1947 年 12 月 23 日，Bardeen 與 Brattain 在 Bell Labs 示範了鍺點接觸式電晶體。Shockley 不在場。律師認為他自己的設計與 Julius Lilienfeld 1925 年的專利過於接近，便將他的名字從這份專利中移除。",
+      "coda": "1956 年三人共同獲得諾貝爾物理學獎。"
     },
     "dartmouth-two-month-study-1956": {
-      "tag": "Proposal",
-      "title": "A Two-Month Study",
-      "body": "The 1955 proposal by McCarthy, Minsky, Rochester and Shannon asked for a two-month, ten-man study, on the premise that intelligence could be described precisely enough for a machine to simulate it. The 1956 workshop ran six to eight weeks; only three attendees stayed the whole time.",
-      "coda": "The name they picked for the field, artificial intelligence, is the one that stuck."
+      "tag": "提案",
+      "title": "為期兩個月的研究",
+      "body": "McCarthy、Minsky、Rochester 與 Shannon 於 1955 年提出提案，要求進行為期兩個月、十人的研究，前提是智能可以被描述得足夠精確，讓機器得以模擬。1956 年的研討會實際舉辦六至八週；只有三位與會者全程參與。",
+      "coda": "他們為這個領域選定的名稱 artificial intelligence，是沿用至今的那一個。"
     },
     "traitorous-eight-lie-detector-1957": {
-      "tag": "Split",
-      "title": "The Lie Detector Memo",
-      "body": "In May 1957, eight engineers at Shockley Semiconductor demanded William Shockley be replaced as manager. He had recorded phone calls, blocked staff from sharing results, and required lie-detector tests. On September 18, 1957, the eight founded Fairchild Semiconductor instead.",
-      "coda": "Wikipedia counts Intel and AMD among the dozens of companies traced back to that spinoff."
+      "tag": "分裂",
+      "title": "測謊儀備忘錄",
+      "body": "1957 年 5 月，Shockley Semiconductor 的八名工程師要求撤換 William Shockley 的管理職位。他曾錄音電話、阻止員工分享成果，並要求進行測謊測試。1957 年 9 月 18 日，這八人轉而創辦 Fairchild Semiconductor。",
+      "coda": "Wikipedia 將 Intel 與 AMD 列為可追溯至該衍生公司的數十家企業之一。"
     },
     "kilby-noyce-six-months-1958-1959": {
-      "tag": "Parallel",
-      "title": "Six Months, One Medal",
-      "body": "Kilby demonstrated a working integrated circuit at Texas Instruments in September 1958, its parts joined by external wires. Noyce filed a monolithic silicon version at Fairchild in July 1959, mass-producible. Neither man rejected the other's claim to co-inventor.",
-      "coda": "Kilby accepted the 2000 Nobel Prize alone. Noyce had died in 1990."
+      "tag": "並行",
+      "title": "六個月，一枚獎章",
+      "body": "Kilby 於 1958 年 9 月在 Texas Instruments 示範了可運作的積體電路，其零件以外部導線連接。Noyce 於 1959 年 7 月在 Fairchild 申請了單晶矽版本，可大量生產。兩人皆未否認對方對共同發明權的主張。",
+      "coda": "Kilby 單獨接受了 2000 年的諾貝爾獎。Noyce 已於 1990 年去世。"
     },
     "perceptron-conscious-machine-1958": {
-      "tag": "Neural Nets",
-      "title": "The Machine That Would Wake Up",
-      "body": "In 1958 the New York Times reported that Frank Rosenblatt's perceptron was the embryo of a computer the Navy expected to walk, talk, see, write, reproduce itself and be conscious of its existence. In 1969 Minsky and Papert's book proved a single-layer perceptron could not compute XOR.",
-      "coda": "Funding for neural network research dried up and did not return until the 1980s."
+      "tag": "神經網路",
+      "title": "那台會醒來的機器",
+      "body": "1958 年《紐約時報》報導稱，Frank Rosenblatt 的 perceptron 是一台電腦的胚胎，海軍預期它將能行走、說話、看見、書寫、自我複製並意識到自身的存在。1969 年 Minsky 與 Papert 的著作證明單層 perceptron 無法計算 XOR。",
+      "coda": "神經網路研究的資金枯竭，直到 1980 年代才恢復。"
     },
     "hamilton-software-engineering": {
-      "tag": "Naming",
-      "title": "An Ongoing Joke",
-      "body": "During the Apollo program, Margaret Hamilton began calling her work \"software engineering\" to distinguish it from hardware engineering. She said no one had heard the term before and it became an ongoing joke, until a respected hardware engineer stood up in a meeting and agreed.",
-      "coda": "The joke ran for years, then nobody told it anymore."
+      "tag": "命名",
+      "title": "一個持續的笑話",
+      "body": "在阿波羅計畫期間，瑪格麗特·漢密爾頓開始將她的工作稱為「軟體工程」，以區別於硬體工程。她說沒人聽過這個詞，這成了個持續的笑話，直到一位受尊敬的硬體工程師在會議上站起來表示同意。",
+      "coda": "這個笑話持續了多年，後來再沒人提起。"
     },
     "macau-seventeen-thousand": {
-      "tag": "Tender",
-      "title": "Seventeen thousand",
-      "body": "In October 1961 a syndicate formed by Stanley Ho, Henry Fok, Yip Hon and Teddy Yip bid for the Macau gaming monopoly. They offered 3,167,000 patacas, seventeen thousand more than the rival bid.",
-      "coda": "The monopoly that margin bought them held for more than forty years."
+      "tag": "標書",
+      "title": "一萬七千",
+      "body": "1961年10月，由何鴻燊、霍英東、葉漢和葉德利組成的財團競標澳門博彩專營權。他們出價3,167,000澳門元，比競爭對手高出17,000元。",
+      "coda": "這筆差價買下的專營權維持了四十多年。"
     },
     "moores-law-ten-year-bet-1965": {
-      "tag": "Prediction",
-      "title": "A Ten-Year Bet",
-      "body": "Moore's 1965 article predicted the component count on a chip would double every year for the next decade, reaching roughly 65,000 by 1975. In 1975 he revised the doubling period to two years. The curve later called a law was his own forecast, already amended once.",
-      "coda": "By 1995 Moore said the term had come to mean almost anything in the chip industry."
+      "tag": "預測",
+      "title": "十年之賭",
+      "body": "摩爾1965年的文章預測，晶片的元件數量在接下來十年將每年翻倍，到1975年約達65,000個。1975年他將翻倍週期修正為兩年。後來被稱為定律的曲線是他自己的預測，且已修正過一次。",
+      "coda": "到1995年，摩爾表示這個詞在晶片產業已幾乎可指任何事。"
     },
     "eliza-secretary-1966": {
-      "tag": "Chatbot",
-      "title": "The Secretary and DOCTOR",
-      "body": "In 1966 Joseph Weizenbaum released ELIZA's DOCTOR script at MIT, a program that mostly reflected users' own sentences back as questions. His own secretary reportedly asked him to leave the room so she could talk to it alone.",
-      "coda": "The pattern he had not expected was later named the ELIZA effect."
+      "tag": "聊天機器人",
+      "title": "秘書與DOCTOR",
+      "body": "1966年，約瑟夫·魏澤鮑姆在MIT發布了ELIZA的DOCTOR腳本，這是一個主要將使用者自己的句子以問句形式反射回來的程式。據說他本人的秘書曾要求他離開房間，以便單獨與它對話。",
+      "coda": "他未曾預期的模式後來被命名為ELIZA效應。"
     },
     "engelbart-royalties": {
-      "tag": "Patent",
-      "title": "Forty thousand dollars",
-      "body": "SRI patented the mouse after the demo and, by its own account, had no real idea of its value. Some years later it emerged that they had licensed it to Apple for something like $40,000.",
-      "coda": "Engelbart never received any royalties for inventing it."
+      "tag": "專利",
+      "title": "四萬美元",
+      "body": "SRI在示範後為滑鼠申請了專利，據其自述，他們對其價值並無實際概念。數年後才揭露，他們以約40,000美元的價格授權給蘋果。",
+      "coda": "英格巴特從未因發明它而收到任何版稅。"
     },
     "lo": {
-      "tag": "First contact",
+      "tag": "首次接觸",
       "title": "LO",
-      "body": "Charley Kline set out to log in to a machine at SRI from UCLA. The L arrived. The O arrived. On the G the far end crashed.",
-      "coda": "The first thing ever said on the internet was two letters: LO."
+      "body": "Charley Kline 從 UCLA 嘗試登入 SRI 的一台機器。L 傳到了。O 也傳到了。輸入 G 時，遠端當機了。",
+      "coda": "網際網路上說出的第一句話是兩個字母：LO。"
     },
     "multics": {
-      "tag": "Blueprint",
-      "title": "Computing as a utility",
-      "body": "Multics was not designed as a computer but as a computing utility: always on, the way power is, with the tenants of one machine sealed off from each other. It shipped late and expensive, and Bell Labs walked away.",
-      "coda": "Fifty years later the idea was renamed cloud computing."
+      "tag": "藍圖",
+      "title": "運算即公用事業",
+      "body": "Multics 並非設計為一台電腦，而是設計為一項運算公用事業：永遠在線，如同電力一般，同一台機器上的租戶彼此隔離。它延遲上市且價格昂貴，貝爾實驗室退出了。",
+      "coda": "五十年後，這個概念被重新命名為雲端運算。"
     },
     "rfc1": {
-      "tag": "Governance",
-      "title": "Request for Comments",
-      "body": "Steve Crocker had to write the first rules for a few networked hosts. Nobody had given him the authority, and he feared it would read as pulling rank — so he called the genre a Request for Comments.",
-      "coda": "Every rule the internet has agreed on since is still called an RFC."
+      "tag": "治理",
+      "title": "意見徵求",
+      "body": "Steve Crocker 必須為少數幾台網路主機撰寫第一套規則。沒有人授予他權威，他擔心這會被解讀為越權——因此他將此類文件稱為「意見徵求」。",
+      "coda": "自此之後，網際網路所同意的每一項規則仍被稱為 RFC。"
     },
     "pdp7": {
-      "tag": "Origin",
-      "title": "The machine nobody wanted",
-      "body": "After Bell Labs quit Multics, Ken Thompson had a cast-off PDP-7 and a month alone while his wife and son were in San Diego. He gave himself a week per piece: kernel, shell, editor, assembler.",
-      "coda": "Four weeks later the machine nobody wanted was running Unix."
+      "tag": "起源",
+      "title": "沒人要的機器",
+      "body": "貝爾實驗室退出 Multics 後，Ken Thompson 得到一台廢棄的 PDP-7，並在妻子與兒子前往聖地牙哥期間獨自擁有一個月的時間。他給自己每項元件一週：核心、Shell、編輯器、組譯器。",
+      "coda": "四週後，那台沒人要的機器開始執行 Unix。"
     },
     "alarm-1202": {
-      "tag": "Incident",
-      "title": "Program alarm 1202",
-      "body": "Four minutes from the surface the guidance computer raised five alarms: a rendezvous radar switch left in the wrong position was eating its cycles. It did not hang. It shed the low-priority jobs, restarted, and kept the landing.",
-      "coda": "Knowing what to drop under load is the expensive lesson."
+      "tag": "事件",
+      "title": "程式警報 1202",
+      "body": "距離月球表面四分鐘時，導航電腦觸發了五次警報：一個會合雷達開關留在錯誤位置，耗盡了它的運算週期。它沒有當機。它捨棄了低優先級任務，重新啟動，並維持了登陸。",
+      "coda": "知道在負載下該捨棄什麼，是昂貴的一課。"
     },
     "mariner-1": {
-      "tag": "Incident",
-      "title": "One missing overbar",
-      "body": "Mariner 1 was destroyed 293 seconds after launch. An onboard beacon had failed, and when the guidance equations were copied into the program an overbar was dropped from R. The bar meant take the average.",
-      "coda": "The press found overbar hard to explain and wrote hyphen. The hyphen stuck."
+      "tag": "事故",
+      "title": "一個遺漏的長橫線",
+      "body": "Mariner 1 在發射後 293 秒被摧毀。機載信標失效，當導航方程式被複製進程式時，R 上的長橫線被遺漏。長橫線表示取平均值。",
+      "coda": "媒體難以解釋長橫線，寫成了連字符。連字符被保留下來。"
     },
     "mother-of-all-demos": {
-      "tag": "Demo",
-      "title": "The Mother of All Demos",
-      "body": "Engelbart was given ninety minutes. His terminal ran over telephone lines to a machine thirty miles away, and he demonstrated the mouse, hyperlinks, windows, screen sharing, and two people editing one document at once.",
-      "coda": "A thousand people watched, then went back to punch cards for another decade."
+      "tag": "示範",
+      "title": "萬演之母",
+      "body": "Engelbart 獲得了九十分鐘。他的終端透過電話線連接到三十英里外的一台機器，他示範了滑鼠、超連結、視窗、螢幕共享，以及兩人同時編輯一份文件。",
+      "coda": "一千人觀看，然後又回到打孔卡十年。"
     },
     "conway": {
-      "tag": "Law",
-      "title": "The paper that was turned down",
-      "body": "Melvin Conway wrote up the observation that a system's structure ends up mirroring the communication structure of the organisation that built it, and sent \"How Do Committees Invent?\" to Harvard Business Review. They rejected it on the grounds that he had not proved his thesis. Datamation ran it in 1968.",
-      "coda": "Fred Brooks later cited the unproven thesis and named it Conway's law."
+      "tag": "定律",
+      "title": "被拒的論文",
+      "body": "Melvin Conway 寫下了一個觀察：系統的結構最終會反映建構它的組織的溝通結構，並將「How Do Committees Invent?」寄給 Harvard Business Review。他們以他未證明其論點為由拒絕。Datamation 於 1968 年刊登。",
+      "coda": "Fred Brooks 後來引用了這個未證明的論點，並將其命名為 Conway 定律。"
     },
     "apollo-burn-baby-burn": {
-      "tag": "Comment",
+      "tag": "註解",
       "title": "Burn, Baby, Burn",
-      "body": "The lunar module's master ignition routine is labelled BURN_BABY_BURN in the source. The name is not about the thrust; it was borrowed from a soul radio DJ's catchphrase of the day.",
-      "coda": "The line still sits unedited in the public repository."
+      "body": "登月艙的主點火常式在原始碼中被標記為 BURN_BABY_BURN。這個名稱與推力無關；它借自當時一位靈魂樂電台 DJ 的口頭禪。",
+      "coda": "這行字仍原封不動地留在公開倉庫中。"
     },
     "waterfall": {
-      "tag": "Misreading",
-      "title": "The diagram was the counterexample",
-      "body": "In \"Managing the Development of Large Software Systems\" Winston Royce drew the chart the industry would come to call the waterfall model, then wrote: \"I believe in this concept, but the implementation described above is risky and invites failure.\" The rest of the paper is about making it iterative.",
-      "coda": "The industry kept the diagram and dropped the sentence."
+      "tag": "誤讀",
+      "title": "圖表就是反例",
+      "body": "在「Managing the Development of Large Software Systems」中，Winston Royce 畫出了業界後來稱為瀑布模型的圖表，然後寫道：「我相信這個概念，但上述的實作方式風險高且容易失敗。」論文其餘部分都在談如何使其迭代化。",
+      "coda": "業界保留了圖表，丟掉了這句話。"
     },
     "moth": {
-      "tag": "Etymology",
-      "title": "The first actual bug",
-      "body": "A moth was pulled from a relay of the Harvard Mark II and taped into the logbook. The line beside it is cited as the origin of the word, but what it says is: first actual case of bug being found.",
-      "coda": "Engineers had said bug since Edison. The museum doubts the page is even in Hopper's hand."
+      "tag": "詞源",
+      "title": "第一個真正的蟲",
+      "body": "一隻飛蛾從哈佛 Mark II 的繼電器中被取出，貼進日誌。旁邊那行字被引為該詞的起源，但上面寫的是：發現蟲的第一個實際案例。",
+      "coda": "工程師自愛迪生時代起就說 bug。博物館懷疑那頁甚至不是霍珀親筆。"
     },
     "intel-4004-busicom-rights-1971": {
-      "tag": "Rights",
-      "title": "A Chip Owned by a Calculator Company",
-      "body": "In 1969 Japan's Busicom commissioned Intel to design a calculator chipset, under a contract assigning the design rights to Busicom despite the work being done entirely inside Intel. In 1971 engineer Federico Faggin traded a lower price for release from that exclusivity.",
-      "coda": "General sales of the Intel 4004 began that July."
+      "tag": "權利",
+      "title": "歸計算機公司所有的晶片",
+      "body": "1969 年，日本的 Busicom 委託 Intel 設計一套計算機晶片組，合約規定設計權歸 Busicom，儘管工作完全在 Intel 內部完成。1971 年，工程師 Federico Faggin 以較低價格換取解除該排他性。",
+      "coda": "Intel 4004 於同年七月開始一般銷售。"
     },
     "pong-coin-overflow": {
-      "tag": "Feedback",
-      "title": "The Coin Box Overflowed",
-      "body": "In August 1972, Atari placed the Pong prototype in a bar in Sunnyvale. A few days later the owner reported it broken. Engineer Al Alcorn drove out to fix it and found the fault was not electrical: the coin mechanism had jammed because it was overflowing with quarters.",
-      "coda": "The malfunction was not a wiring fault; it was too many coins."
+      "tag": "回饋",
+      "title": "硬幣箱溢出了",
+      "body": "1972 年八月，Atari 將 Pong 原型機放在 Sunnyvale 的一家酒吧。幾天後，老闆報告它壞了。工程師 Al Alcorn 趕去修理，發現故障並非電氣問題：投幣機構因硬幣過多而卡住。",
+      "coda": "故障不是接線問題；是硬幣太多。"
     },
     "wozniak-breakout-bonus": {
-      "tag": "Bonus",
-      "title": "The Split",
-      "body": "In 1973 Atari asked Steve Jobs to shrink the Breakout circuit board, paying $100 per chip removed. Jobs asked Wozniak to help, promising half. Wozniak cut 50 chips. Jobs said the total came to $700, so Wozniak's share was $350. Ten years later Wozniak learned the real bonus was $5,000.",
-      "coda": "Wozniak said he would have given Jobs the money if asked."
+      "tag": "獎金",
+      "title": "分帳",
+      "body": "1973 年，Atari 請 Steve Jobs 縮小 Breakout 電路板，每移除一顆晶片支付 100 美元。Jobs 請 Wozniak 幫忙，承諾分他一半。Wozniak 減少了 50 顆晶片。Jobs 說總額是 700 美元，所以 Wozniak 的份是 350 美元。十年後，Wozniak 得知真正的獎金是 5,000 美元。",
+      "coda": "Wozniak 說如果有人問，他會把錢給 Jobs。"
     },
     "unix-not-expected-to-understand": {
-      "tag": "Kernel",
-      "title": "Not Expected to Understand",
-      "body": "Sixth Edition Unix's slp.c contains the line 'You are not expected to understand this,' attached to process-swap stack-restoration code built on PDP-11 compiler quirks. Dennis Ritchie later said he meant it the way a teacher says this won't be on the exam.",
-      "coda": "The routine was rewritten for Seventh Edition Unix."
+      "tag": "核心",
+      "title": "不期望你理解",
+      "body": "第六版 Unix 的 slp.c 包含一行『你不期望理解這個』，附在基於 PDP-11 編譯器怪癖的進程交換堆疊恢復程式碼上。Dennis Ritchie 後來說他的意思就像老師說這不會考。",
+      "coda": "該常式為第七版 Unix 重寫。"
     },
     "vi-adm3a-keys": {
-      "tag": "Keybinds",
-      "title": "Arrows Inscribed on Letter Keys",
-      "body": "Bill Joy wrote vi at Berkeley in 1977 on a Lear Siegler ADM-3A terminal that had no arrow keys; h, j, k and l were inscribed with arrows and became the movement keys. The terse one-letter commands came from typing ahead of a 300-baud modem too slow to keep up.",
-      "coda": "The keys later credited to design philosophy began as a workaround for a terminal with no arrow keys."
+      "tag": "按鍵綁定",
+      "title": "字母鍵上的箭頭",
+      "body": "比爾·喬伊於1977年在柏克萊使用 Lear Siegler ADM-3A 終端機撰寫 vi，該終端機沒有方向鍵；h、j、k 和 l 鍵上刻有箭頭，成為移動鍵。簡短單字母指令源於在300波特的數據機前打字，速度太慢跟不上。",
+      "coda": "這些後來被歸功於設計哲學的按鍵，起初只是為了應付沒有方向鍵的終端機。"
     },
     "kildall-flying": {
-      "tag": "Testimony",
-      "title": "The Flight That Wasn't Confirmed",
-      "body": "In 1980 IBM came to license CP/M. Gary Kildall was flying software to a client; his wife Dorothy handled the opening talks. Bill Gates later told reporters Kildall had \"capriciously gone flying.\" IBM's lead negotiator, Jack Sams, said he never met Kildall at all.",
-      "coda": "The two accounts of that meeting have never been reconciled."
+      "tag": "證詞",
+      "title": "未被證實的飛行",
+      "body": "1980年，IBM 前來授權 CP/M。蓋瑞·基爾多正飛往客戶處交付軟體；他的妻子桃樂絲負責開場談判。比爾·蓋茲後來告訴記者，基爾多「任性地去飛行了」。IBM 的首席談判代表傑克·薩姆斯表示他從未見過基爾多。",
+      "coda": "關於那次會面的兩種說法從未得到調和。"
     },
     "trusting-trust": {
-      "tag": "Trust",
-      "title": "Reflections on Trusting Trust",
-      "body": "Thompson's Turing lecture described a compiler that plants a backdoor in the login program, and reinstalls the entire trick whenever it compiles a compiler. Rebuild from clean source and the backdoor survives.",
-      "coda": "You cannot trust code you did not totally create yourself."
+      "tag": "信任",
+      "title": "對信任的反思",
+      "body": "湯普森的圖靈講座描述了一個在登入程式中植入後門的編譯器，並且每當它編譯編譯器時，就會重新安裝整個把戲。從乾淨的原始碼重建，後門依然存在。",
+      "coda": "你無法信任不是你完全自己創建的程式碼。"
     },
     "arm-one-person-company-1985": {
-      "tag": "Origin",
-      "title": "A One-Person Chip Company",
-      "body": "Acorn, which had made its name on education computers, began RISC research in 1983. A visit to a rival chip designer showed them that updates to the 6502 came out of what was effectively a one-person company, and they concluded they needed nothing more.",
-      "coda": "ARM1 arrived on 26 April 1985 and worked on first power-up."
+      "tag": "起源",
+      "title": "一人晶片公司",
+      "body": "以教育電腦聞名的 Acorn，於1983年開始 RISC 研究。拜訪一家競爭晶片設計商後，他們發現 6502 的更新來自於一個實際上只有一人的公司，於是他們認為自己不需要更多。",
+      "coda": "ARM1 於1985年4月26日問世，首次通電即正常運作。"
     },
     "copyleft-all-rights-reversed": {
-      "tag": "Copyright",
-      "title": "All Rights Reversed",
-      "body": "Someone mailed Richard Stallman a letter marked \"Copyleft — all rights reversed,\" a pun on the standard notice. After Symbolics enhanced his Lisp interpreter and declined to share the improvements back, he used copyright law itself to write a license demanding the opposite obligation.",
-      "coda": "The General Public License followed in February 1989."
+      "tag": "版權",
+      "title": "所有權利反轉",
+      "body": "有人寄給理查·史托曼一封標有「Copyleft — 所有權利反轉」的信，這是對標準聲明的雙關。在 Symbolics 增強了他的 Lisp 直譯器卻拒絕回饋改進後，他利用版權法本身撰寫了一份要求相反義務的授權。",
+      "coda": "通用公共授權於1989年2月隨之而來。"
     },
     "tetris-unpaid-decade": {
-      "tag": "Rights",
-      "title": "The Block With No Royalties",
-      "body": "In 1985 Pajitnov wrote Tetris as a state employee of the USSR Academy of Sciences; the rights belonged to the Computing Center, not him. Western licenses passed through several hands before reaching Nintendo, and the game sold tens of millions of copies.",
-      "coda": "The rights reverted to him in 1996, eleven years after he wrote it."
+      "tag": "權利",
+      "title": "沒有版稅的方塊",
+      "body": "1985 年，Pajitnov 作為蘇聯科學院的國家員工撰寫了 Tetris；權利歸屬於計算中心，而非他本人。西方授權經過多手轉讓才到達 Nintendo，該遊戲銷量達數千萬份。",
+      "coda": "權利於 1996 年歸還給他，距他撰寫該遊戲已過十一年。"
     },
     "euv-twenty-three-hours-2018": {
-      "tag": "Lithography",
-      "title": "Twenty-Three Hours for One Wafer",
-      "body": "Hiroo Kinoshita at NTT first demonstrated extreme ultraviolet lithography images in 1986. ASML's 2006 prototype took twenty-three hours to expose one wafer. Not until 2018 did EUV reach production, in a machine MIT Technology Review called the one that saved Moore's law.",
-      "coda": "By 2022 a production EUV scanner processed roughly two hundred wafers an hour."
+      "tag": "光刻",
+      "title": "一片晶圓耗時二十三小時",
+      "body": "NTT 的 Hiroo Kinoshita 於 1986 年首次展示極紫外光刻影像。ASML 的 2006 年原型機曝光一片晶圓耗時二十三小時。直到 2018 年，EUV 才進入量產，被 MIT Technology Review 稱為拯救摩爾定律的機器。",
+      "coda": "到 2022 年，量產 EUV 掃描機每小時處理約兩百片晶圓。"
     },
     "tsmc-foundry-fifty-six-1987": {
-      "tag": "Foundry",
-      "title": "A Foundry at Fifty-Six",
-      "body": "Morris Chang, born 1931, rose to group vice president of worldwide semiconductor operations at Texas Instruments, then served as president and COO of General Instrument, then headed Taiwan's ITRI. In 1987, at fifty-six, he founded TSMC, which designs none of the chips it makes.",
-      "coda": "It was the first foundry in the world to do nothing but manufacture."
+      "tag": "晶圓代工",
+      "title": "五十六歲創辦晶圓代工廠",
+      "body": "Morris Chang 生於 1931 年，晉升為 Texas Instruments 全球半導體業務集團副總裁，隨後擔任 General Instrument 總裁兼 COO，之後領導台灣 ITRI。1987 年，他五十六歲時創辦 TSMC，該公司不設計其所製造的任何晶片。",
+      "coda": "它是世界上第一家僅從事製造的晶圓代工廠。"
     },
     "huawei-diet-pills": {
-      "tag": "Reseller",
-      "title": "Huawei's First Business Wasn't Tech",
-      "body": "Huawei registered with 21,000 yuan of capital on September 15, 1987, calling itself a technology company. It began by trading goods, including diet pills, then resold Hong Kong-made HAX switches for the margin. Its own switch, the BH01, was hand-assembled only in 1989.",
-      "coda": "Four years in, the company drew its own circuit board for the first time."
+      "tag": "經銷商",
+      "title": "華為的首項業務並非科技",
+      "body": "華為於 1987 年 9 月 15 日以 21,000 元資本註冊，自稱科技公司。它從貿易商品開始，包括減肥藥，隨後轉售香港製造的 HAX 交換機以賺取利潤。其自有交換機 BH01 直到 1989 年才手工組裝。",
+      "coda": "四年後，公司首次自行繪製電路板。"
     },
     "morris": {
-      "tag": "Incident",
-      "title": "A measurement",
-      "body": "Morris wanted to know how big the internet was, so he wrote a program that copied itself. To stop hosts faking an already-infected reply, he gave it a one-in-seven chance of reinfecting anyway.",
-      "coda": "That one-in-seven took down about 6,000 of the 60,000 hosts then online."
+      "tag": "事件",
+      "title": "一次測量",
+      "body": "Morris 想知道網際網路有多大，因此他撰寫了一個會複製自身的程式。為了阻止主機偽造已感染的回覆，他讓該程式有七分之一機率無論如何都會重新感染。",
+      "coda": "這七分之一機率導致當時在線的 60,000 台主機中約 6,000 台當機。"
     },
     "naur": {
-      "tag": "Philosophy",
-      "title": "The program is not the artifact",
-      "body": "Naur argued that a program does not live in its source but as a theory, held by the people who wrote it, of why the problem is solved this way. The source is a lossy projection of it.",
-      "coda": "He called the moment the last theory-holder leaves the death of the program."
+      "tag": "哲學",
+      "title": "程式並非成品",
+      "body": "Naur 主張，程式並非存在於原始碼中，而是作為一種理論，由撰寫者持有，說明為何問題以這種方式解決。原始碼只是它的一種有損投影。",
+      "coda": "他稱最後一位理論持有者離開的那一刻為程式之死。"
     },
     "mit-license-171-words": {
-      "tag": "Terms",
-      "title": "171 Words",
-      "body": "A group at MIT writing a TCP/IP implementation wanted to avoid legal negotiation, so they gave the software away under a notice of roughly 171 words. That short text now covers close to a third of all licensed projects on GitHub, more than any other license.",
-      "coda": "The wording has stayed essentially unchanged since it was written."
+      "tag": "條款",
+      "title": "171 字",
+      "body": "MIT 一組撰寫 TCP/IP 實作的團隊希望避免法律談判，因此以約 171 字的聲明將軟體免費提供。這段短文如今涵蓋 GitHub 上近三分之一的授權專案，超過任何其他授權條款。",
+      "coda": "自撰寫以來，措辭基本未變。"
     },
     "photoshop-display-origin": {
-      "tag": "Origin",
-      "title": "It Was Called Display First",
-      "body": "In 1988, Thomas Knoll, a graduate student at the University of Michigan, wrote a small program to view grayscale images on a monochrome Mac screen. He named it Display, then ImagePro, then Photoshop, before his brother John showed it to Adobe, which licensed it that year.",
-      "coda": "Adobe bought full rights outright in 1995, for $34.5 million."
+      "tag": "起源",
+      "title": "最初名為 Display",
+      "body": "1988 年，密西根大學研究生 Thomas Knoll 撰寫了一個小程式，用於在單色 Mac 螢幕上查看灰階影像。他先將其命名為 Display，後改為 ImagePro，再改為 Photoshop，之後他的哥哥 John 將其展示給 Adobe，Adobe 於當年取得授權。",
+      "coda": "Adobe 於 1995 年以 3450 萬美元 outright 買斷全部權利。"
     },
     "sosumi-so-sue-me": {
-      "tag": "Naming",
+      "tag": "命名",
       "title": "So Sue Me",
-      "body": "In 1991, Apple's legal department rejected the alert-sound name \"Let It Beep\" as too musical, under a settlement barring Apple Computer from music-related trademarks. Sound designer Jim Reekes wrote back \"so sue me,\" then filed it as \"sosumi.\"",
-      "coda": "The sound shipped in Mac OS for nearly three decades before Big Sur replaced it in 2020."
+      "body": "1991 年，Apple 法律部門以和解協議禁止 Apple Computer 使用與音樂相關的商標為由，拒絕了警示音效名稱「Let It Beep」，認為其過於音樂化。音效設計師 Jim Reekes 回覆「so sue me」，隨後將其註冊為「sosumi」。",
+      "coda": "該音效在 Mac OS 中隨附近三十年，直至 2020 年被 Big Sur 取代。"
     },
     "www-royalty-free": {
-      "tag": "Given away",
-      "title": "The day it stopped costing",
-      "body": "On 30 April 1993 CERN made the protocol and the code of the World Wide Web available royalty-free. Anyone could take it, without paying and without asking.",
-      "coda": "Nobody has paid a royalty to use it since."
+      "tag": "免費提供",
+      "title": "不再收費的那一天",
+      "body": "1993 年 4 月 30 日，CERN 將 World Wide Web 的協定與程式碼以免授權費方式公開。任何人都可取用，無需付費，亦無需申請。",
+      "coda": "自那時起，無人為使用它支付過授權費。"
     },
     "doom-ftp-crash": {
-      "tag": "Shareware",
-      "title": "The Server They Couldn't Reach",
-      "body": "On 10 December 1993, id Software gave away Doom's first episode as shareware, betting on sales of the rest. Uploading it to a University of Wisconsin FTP server, they found so many people already waiting that the team itself could not connect.",
-      "coda": "The upload finished near midnight; ten thousand downloads at once crashed the university's network."
+      "tag": "共享軟體",
+      "title": "無法連上的伺服器",
+      "body": "1993年12月10日，id Software 將《毀滅戰士》第一章作為共享軟體免費釋出，寄望於其餘章節的銷售。他們將檔案上傳至威斯康辛大學的 FTP 伺服器，卻發現已有太多人在等待，連團隊自己都無法連上。",
+      "coda": "上傳在午夜前完成；一萬次同時下載癱瘓了大學的網路。"
     },
     "zlib-two-authors": {
-      "tag": "Foundation",
-      "title": "The Compression Layer of Two",
-      "body": "zlib sits inside Linux, macOS, iOS and successive generations of game consoles; Git and OpenSSH both lean on it to compress. Two people wrote its first public release in 1995.",
-      "coda": "The authorship line has never grown a third name."
+      "tag": "基礎",
+      "title": "兩人的壓縮層",
+      "body": "zlib 存在於 Linux、macOS、iOS 及歷代遊戲主機中；Git 和 OpenSSH 都依賴它進行壓縮。1995年，兩人寫出了它的首個公開版本。",
+      "coda": "作者名單從未增加第三個名字。"
     },
     "byd-battery-to-car": {
-      "tag": "Acquisition",
-      "title": "The Battery Company Bought a Carmaker",
-      "body": "BYD was founded in Shenzhen's Longgang district on February 10, 1995, making nickel-cadmium and nickel-metal hydride batteries, then entering lithium-ion cells in 1996. In 2003 the battery maker acquired Xi'an Qinchuan Automobile, renaming it BYD Auto.",
-      "coda": "Two years later, its first in-house sedan, the F3, went on sale."
+      "tag": "收購",
+      "title": "電池公司買下車廠",
+      "body": "比亞迪於1995年2月10日在深圳龍崗區創立，生產鎳鎘及鎳氫電池，1996年進入鋰離子電池領域。2003年，這家電池製造商收購了西安秦川汽車，更名為比亞迪汽車。",
+      "coda": "兩年後，其首款自研轎車 F3 上市。"
     },
     "ariane-501": {
-      "tag": "Incident",
-      "title": "Thirty-seven seconds",
-      "body": "Thirty-seven seconds in, the inertial reference system converted a 64-bit float to a 16-bit integer and overflowed; at about forty seconds the vehicle broke up. The routine came unchanged from Ariane 4 and had no reason to be running after liftoff.",
-      "coda": "Roughly $370 million, spent on code that should have been switched off."
+      "tag": "事件",
+      "title": "三十七秒",
+      "body": "三十七秒時，慣性參考系統將64位元浮點數轉換為16位元整數而溢位；約四十秒時，飛行器解體。該程式碼沿用自亞利安四號，升空後本不應執行。",
+      "coda": "約3.7億美元，花在理應關閉的程式碼上。"
     },
     "deep-blue-move-44-1997": {
-      "tag": "Chess",
-      "title": "Move Forty-Four's Glitch",
-      "body": "In game one of the 1997 rematch Kasparov beat Deep Blue in forty-five moves. Deep Blue's forty-fourth move was allegedly the result of a bug: unable to settle on a preferred move inside its search, the engine fell back to a fail-safe.",
-      "coda": "After losing game two, Kasparov accused IBM of cheating."
+      "tag": "西洋棋",
+      "title": "第四十四步的故障",
+      "body": "在1997年重賽的第一局中，卡斯帕洛夫以四十五步擊敗深藍。深藍的第四十四步據稱是錯誤的結果：在搜尋中無法決定偏好走法，引擎退回了安全機制。",
+      "coda": "輸掉第二局後，卡斯帕洛夫指控 IBM 作弊。"
     },
     "curl-one-maintainer": {
-      "tag": "Foundation",
-      "title": "One Man's Protocol Stack",
-      "body": "curl's own docs put libcurl on roughly ten billion devices, running on 110 operating systems and 28 CPU architectures. The project has carried Daniel Stenberg's name as lead maintainer since it was renamed curl in 1998.",
-      "coda": "No named successor has ever been listed."
+      "tag": "基礎",
+      "title": "一人之協定堆疊",
+      "body": "curl 官方文件指出 libcurl 部署於約一百億台裝置，涵蓋 110 種作業系統與 28 種 CPU 架構。自 1998 年更名為 curl 以來，Daniel Stenberg 一直擔任專案的主要維護者。",
+      "coda": "從未列出任何具名接班人。"
     },
     "book-of-mozilla-verses": {
-      "tag": "Easter Egg",
-      "title": "The Book of Mozilla",
-      "body": "Typing about:mozilla into the address bar reveals the Book of Mozilla, an apocalyptic verse pitting 'the beast' against 'Mammon' that each browser generation updates. The verse numbers are not chapter markers: they are release dates.",
-      "coda": "The newest verse, 6:27, first shipped in a Firefox Nightly build in 2020."
+      "tag": "彩蛋",
+      "title": "Mozilla 書",
+      "body": "在網址列輸入 about:mozilla 會顯示 Mozilla 書，這是一則將「獸」與「瑪門」對立的末日詩篇，每一代瀏覽器都會更新。詩篇編號並非章節標記：它們是發佈日期。",
+      "coda": "最新詩篇 6:27 於 2020 年首次隨 Firefox Nightly 版本發佈。"
     },
     "http-418-teapot": {
-      "tag": "Protocol",
-      "title": "I'm a Teapot",
-      "body": "RFC 2324, published April 1, 1998, defines status 418 as \"I'm a teapot\" and files itself as Informational, not a standard. On April 1, 2014, RFC 7168 extended it to cover tea brewing. The code still never became a real standard.",
-      "coda": "Both documents remain Informational; the status code shipped in real servers anyway."
+      "tag": "協定",
+      "title": "我是一壺茶",
+      "body": "1998 年 4 月 1 日發佈的 RFC 2324 將狀態碼 418 定義為「我是一壺茶」，並將自身歸類為資訊性文件，而非標準。2014 年 4 月 1 日，RFC 7168 將其擴展至涵蓋泡茶。該代碼始終未成為真正的標準。",
+      "coda": "兩份文件均為資訊性；該狀態碼仍被實際伺服器採用。"
     },
     "open-source-coined-1998": {
-      "tag": "Naming",
-      "title": "The Coining of Open Source",
-      "body": "In February 1998, Christine Peterson proposed \"open source\" because newcomers kept hearing \"free software\" as a price, not a freedom. At a VA Research meeting on February 5, Todd Anderson slipped the term into conversation rather than formally proposing it, letting it spread on its own.",
-      "coda": "The group later tried to trademark the phrase and failed."
+      "tag": "命名",
+      "title": "開源的誕生",
+      "body": "1998 年 2 月，Christine Peterson 提出「開源」一詞，因為新接觸者總將「自由軟體」聽成價格而非自由。在 2 月 5 日的 VA Research 會議上，Todd Anderson 將該詞帶入對話而非正式提出，任其自然傳播。",
+      "coda": "該團體後來嘗試註冊該詞組的商標，但未成功。"
     },
     "netscape-source-1998": {
-      "tag": "Release",
-      "title": "Not Quite Open",
-      "body": "On 22 January 1998 Netscape announced that its browser source would be released, and the employee Jamie Zawinski registered mozilla.org. But the licence they wrote kept one door open: Netscape itself could go on folding the same code into proprietary products.",
-      "coda": "Netscape was acquired by AOL roughly a year later."
+      "tag": "發佈",
+      "title": "並非完全開放",
+      "body": "1998 年 1 月 22 日，Netscape 宣布將釋出其瀏覽器原始碼，員工 Jamie Zawinski 註冊了 mozilla.org。但他們撰寫的授權條款保留了一扇門：Netscape 本身仍可將相同程式碼納入專有產品。",
+      "coda": "Netscape 約一年後被 AOL 收購。"
     },
     "bsd-75-acknowledgments": {
-      "tag": "License",
-      "title": "Seventy-Five Acknowledgments",
-      "body": "The original BSD license required every advertisement to credit each contributing author by name. By 1997 a single NetBSD build carried seventy-five such acknowledgments, incompatible with the GPL. Berkeley's licensing director deleted the clause on July 22, 1999.",
-      "coda": "One office's signature retired a clause that had multiplied for a decade."
+      "tag": "授權條款",
+      "title": "七十五則鳴謝",
+      "body": "原始 BSD 授權條款要求每一則廣告皆須逐一列名鳴謝每位貢獻作者。至 1997 年，單一 NetBSD 建置已累積七十五則此類鳴謝，與 GPL 不相容。柏克萊授權主管於 1999 年 7 月 22 日刪除此條款。",
+      "coda": "一個辦公室的簽名，讓一條累積十年的條款退出歷史。"
     },
     "red-hat-ipo-1999": {
-      "tag": "IPO",
-      "title": "The Price of Free Software",
-      "body": "Red Hat gave away the source code of its core product and charged instead for support, training and integration. On August 11, 1999 the company went public. Its first-day gain ranked eighth-largest in Wall Street history at the time.",
-      "coda": "Founder Bob Young was replaced as CEO four months later."
+      "tag": "首次公開募股",
+      "title": "免費軟體的代價",
+      "body": "Red Hat 免費提供核心產品的原始碼，改以支援、訓練與整合服務收費。1999 年 8 月 11 日公司上市。首日漲幅當時為華爾街歷史上第八大。",
+      "coda": "創辦人 Bob Young 於四個月後被取代 CEO 職位。"
     },
     "multics-shutdown": {
-      "tag": "Shutdown",
-      "title": "The last one",
-      "body": "On 30 October 2000 the last known Multics installation running natively on Honeywell hardware was shut down at the Canadian Department of National Defence in Halifax, Nova Scotia.",
-      "coda": "Thirty-five years after the project began."
+      "tag": "關閉",
+      "title": "最後一台",
+      "body": "2000 年 10 月 30 日，最後一組已知於 Honeywell 硬體上原生運行的 Multics 系統，於加拿大國防部哈利法克斯分部關閉。",
+      "coda": "距專案啟動已三十五年。"
     },
     "sqlite-no-license": {
-      "tag": "Foundation",
-      "title": "The Database With No License",
-      "body": "SQLite's own page estimates over a trillion active database files worldwide, since every smartphone alone carries hundreds, ranking it second only to zlib among deployed software. There is no license, because the authors gave every line to the public domain.",
-      "coda": "Companies wanting legal cover buy a separate warranty of title."
+      "tag": "基礎",
+      "title": "沒有授權的資料庫",
+      "body": "SQLite 官方頁面估計全球活躍資料庫檔案超過一兆個，僅每支智慧型手機即載有數百個，使其在已部署軟體中僅次於 zlib。沒有授權條款，因為作者將每一行程式碼都捐給公眾領域。",
+      "coda": "需要法律保障的公司另行購買權利保證。"
     },
     "smic-tsmc-lawsuit": {
-      "tag": "Lawsuit",
-      "title": "SMIC's Two Lawsuits",
-      "body": "SMIC was founded in 2000 by Richard Chang, a former TSMC engineer, among others. TSMC sued twice for trade-secret theft; in the 2009 case a jury found SMIC liable on 61 of the 65 counts brought against it.",
-      "coda": "In November 2010 SMIC settled with TSMC for $200 million and roughly 8 percent of its shares."
+      "tag": "訴訟",
+      "title": "SMIC 的兩起訴訟",
+      "body": "SMIC 於 2000 年由前 TSMC 工程師 Richard Chang 等人創立。TSMC 兩次以商業機密竊取提告；2009 年案件中，陪審團認定 SMIC 於 65 項指控中的 61 項成立。",
+      "coda": "2010 年 11 月 SMIC 以 2 億美元及約 8% 股權與 TSMC 和解。"
     },
     "api-mandate": {
-      "tag": "Governance",
-      "title": "The memo",
-      "body": "According to the post that went public by accident in 2011, Bezos ordered in 2002 that teams expose everything through service interfaces: no direct linking, no reading another team's store, no back doors.",
-      "coda": "The author of that post had meant it for his colleagues only."
+      "tag": "治理",
+      "title": "那則備忘錄",
+      "body": "根據 2011 年意外公開的貼文，貝佐斯於 2002 年下令各團隊必須透過服務介面暴露一切：禁止直接連結，禁止讀取其他團隊的儲存，禁止後門。",
+      "coda": "該貼文的作者本意僅供同事閱覽。"
     },
     "hupu-rumours": {
-      "tag": "Forum",
-      "title": "The one translating rumours",
-      "body": "In January 2004 a Chinese student working on a mechanical engineering doctorate in Chicago started a basketball forum in his spare time. The work was mostly translating NBA news and rumours into Chinese and tidying them up.",
-      "coda": "Eight years later the forum opened an online store of its own."
+      "tag": "論壇",
+      "title": "翻譯謠言的人",
+      "body": "2004 年 1 月，一名在芝加哥攻讀機械工程博士的中國學生在業餘時間創立了一個籃球論壇。工作內容主要是將 NBA 新聞與謠言翻譯成中文並加以整理。",
+      "coda": "八年後該論壇開設了自己的線上商店。"
     },
     "jd-the-other-name": {
-      "tag": "Etymology",
-      "title": "The other half of the name",
-      "body": "The retail platform that went online in 2004 took its name from two people: its founder, Liu Qiangdong, and Gong Xiaojing, the woman he had dated first. One character from each.",
-      "coda": "The Jing is hers."
+      "tag": "詞源",
+      "title": "名字的另一半",
+      "body": "2004 年上線的零售平台取自兩個人的名字：創始人劉強東，以及他最初交往過的女性龔小京。各取一字。",
+      "coda": "京字屬於她。"
     },
     "douban-hutong": {
-      "tag": "Etymology",
-      "title": "Named after the alley",
-      "body": "The site that went live on 6 March 2005 is not named after a metaphor. Yang Bo wrote its source in a cafe near Douban Hutong in Beijing, and took the name of the alley.",
-      "coda": "Twenty-one years on, the site still carries it."
+      "tag": "詞源",
+      "title": "以胡同命名",
+      "body": "2005 年 3 月 6 日上線的網站並非以隱喻命名。楊勃在北京豆瓣胡同附近的一家咖啡廳寫下其原始程式碼，並採用了該胡同的名稱。",
+      "coda": "二十一年後該網站仍沿用此名。"
     },
     "git-information-manager-hell": {
       "tag": "Git",
-      "title": "Information Manager from Hell",
-      "body": "On 7 April 2005 Linus Torvalds committed git's first revision. The message reads: Initial revision of \"git\", the information manager from hell. The author address on it is torvalds@ppc970.osdl.org.",
-      "coda": "That address points to a PowerPC 970 test machine at OSDL."
+      "title": "地獄資訊管理器",
+      "body": "2005 年 4 月 7 日，林納斯·托瓦茲提交了 git 的首個版本。訊息內容為：「git」的首個版本，地獄資訊管理器。其作者地址為 torvalds@ppc970.osdl.org。",
+      "coda": "該地址指向 OSDL 的一台 PowerPC 970 測試機。"
     },
     "knuth-reward-check": {
-      "tag": "Reward",
-      "title": "Bank of San Serriffe",
-      "body": "Donald Knuth pays $2.56 for each error found in his books, drawn on the fictional Bank of San Serriffe. By March 2005 the checks he had signed totaled over $20,000.",
-      "coda": "Most recipients frame the check rather than deposit it."
+      "tag": "獎金",
+      "title": "San Serriffe 銀行",
+      "body": "Donald Knuth 為其著作中發現的每個錯誤支付 2.56 美元，支票開自虛構的 San Serriffe 銀行。截至 2005 年 3 月，他所簽發的支票總額已超過 20,000 美元。",
+      "coda": "大多數收件人將支票裱框而非存入。"
     },
     "dji-helicopter-first": {
-      "tag": "Pivot",
-      "title": "DJI Started With a Helicopter",
-      "body": "Frank Wang graduated from Hong Kong University of Science and Technology in 2006 and co-founded DJI in Shenzhen with classmates. Its first product was a helicopter flight-control system; the first mature version, XP3.1, shipped in 2008.",
-      "coda": "The team later found most gimbal buyers were mounting them on multirotors, not helicopters."
+      "tag": "轉折",
+      "title": "DJI 從直升機起步",
+      "body": "Frank Wang 於 2006 年畢業於香港科技大學，並與同學在深圳共同創立 DJI。其首款產品為直升機飛行控制系統；首個成熟版本 XP3.1 於 2008 年出貨。",
+      "coda": "團隊後來發現大多數雲台買家將其安裝在多旋翼上，而非直升機。"
     },
     "dropbox-hn": {
-      "tag": "Counterintuitive",
-      "title": "That reply",
-      "body": "Houston posted the Dropbox demo to Hacker News. The famous reply explained that you could do it yourself with an FTP account, curlftpfs and SVN, and that it did not look like it would make money.",
-      "coda": "Eleven years later, at the IPO, Houston called it his favourite thread on the site."
+      "tag": "反直覺",
+      "title": "那則回覆",
+      "body": "Houston 將 Dropbox 示範發布至 Hacker News。那則著名的回覆解釋說，你可以用 FTP 帳戶、curlftpfs 和 SVN 自行完成，而且看起來不會賺錢。",
+      "coda": "十一年後，在 IPO 時，Houston 稱那是他在該網站上最喜歡的討論串。"
     },
     "butterfield": {
-      "tag": "Pivot",
-      "title": "Twice from the wreckage",
-      "body": "Butterfield's game, Game Neverending, stalled, and the team spun the photo-sharing piece out as Flickr. Eight years later his second game, Glitch, shut down, and the team spun out the chat tool they had built for themselves: Slack.",
-      "coda": "Both times the by-product only became visible once the main thing closed."
+      "tag": "轉折",
+      "title": "兩次從殘骸中重生",
+      "body": "Butterfield 的遊戲 Game Neverending 停滯不前，團隊將照片分享部分拆分出來成為 Flickr。八年後他的第二款遊戲 Glitch 關閉，團隊將他們為自己建構的聊天工具拆分出來：Slack。",
+      "coda": "兩次都是主體關閉後，副產品才變得可見。"
     },
     "blockbuster": {
-      "tag": "The pass",
-      "title": "Fifty million",
-      "body": "Hastings and Randolph flew to Dallas to sell Netflix to Blockbuster for fifty million, and to run the online side for them. By Randolph's account the CEO across the table spent the meeting suppressing a laugh.",
-      "coda": "Blockbuster filed for bankruptcy ten years later."
+      "tag": "錯失",
+      "title": "五千萬",
+      "body": "Hastings 與 Randolph 飛往達拉斯，以五千萬美元將 Netflix 賣給 Blockbuster，並為其營運線上業務。據 Randolph 所述，對面的 CEO 在整個會議中都在壓制笑意。",
+      "coda": "Blockbuster 於十年後申請破產。"
     },
     "y2k": {
-      "tag": "Governance",
-      "title": "Nothing happened",
-      "body": "Gartner put the worldwide cost of Y2K at three to six hundred billion dollars, and hundreds of thousands of people changed two-digit years line by line. On the night, the grid held, the banks held, the planes flew.",
-      "coda": "Four years later an economist published a paper arguing most of the money had been wasted."
+      "tag": "治理",
+      "title": "什麼都沒發生",
+      "body": "Gartner 將全球 Y2K 的損失估計為三千到六千億美元，數十萬人逐行修改兩位數年份。當晚，電網沒垮，銀行沒停，飛機照常飛行。",
+      "coda": "四年後，一位經濟學家發表論文，認為大部分錢都白花了。"
     },
     "unsourced": {
-      "tag": "Unsourced",
-      "title": "Attributed to nobody",
-      "body": "\"640K ought to be enough for anybody\" — Gates's own answer is that there is never a citation, that the quotation just floats like a rumour and gets repeated. \"A world market for maybe five computers\" — Thomas Watson did say five, in 1953, about the orders he expected for one machine, the IBM 701.",
-      "coda": "The 701 went on to sell eighteen."
+      "tag": "無出處",
+      "title": "無人署名",
+      "body": "「640K 對任何人來說都夠了」—— Gates 本人的回答是，這句話從來沒有引文，它就像謠言一樣飄著，被人反覆引用。「全球市場大概只需要五台電腦」——Thomas Watson 確實在 1953 年說過五台，指的是他預期某款機器 IBM 701 的訂單量。",
+      "coda": "701 後來賣出了十八台。"
     },
     "homebrew-volunteer-team": {
-      "tag": "Foundation",
-      "title": "The Repository With No Employer",
-      "body": "Homebrew is the default package manager on most Mac developer machines; in 2013 it led all of GitHub in contributors. Max Howell wrote its first release in 2009. It is maintained today by a team of 34 people, all unpaid.",
-      "coda": "Its funding history is one Kickstarter and an Open Source Collective account."
+      "tag": "基礎設施",
+      "title": "沒有僱主的程式庫",
+      "body": "Homebrew 是大多數 Mac 開發者機器上的預設套件管理器；2013 年它在 GitHub 上的貢獻者人數排名第一。Max Howell 於 2009 年寫出第一個版本。如今由 34 人團隊維護，全部無薪。",
+      "coda": "其資金來源僅有一個 Kickstarter 和一個 Open Source Collective 帳戶。"
     },
     "xiaomi-software-first": {
-      "tag": "Software",
-      "title": "Xiaomi's First Product Wasn't a Phone",
-      "body": "Xiaomi was founded on April 6, 2010. That August and December it released beta versions of the MIUI operating system and the Miliao chat app, both software.",
-      "coda": "The company's first phone did not ship until August of the following year."
+      "tag": "軟體",
+      "title": "小米的第一款產品不是手機",
+      "body": "小米成立於 2010 年 4 月 6 日。同年 8 月和 12 月，它分別釋出了 MIUI 作業系統與米聊聊天程式的測試版，兩者皆為軟體。",
+      "coda": "該公司的第一款手機直到次年 8 月才出貨。"
     },
     "ritchie-same-week": {
-      "tag": "Obituary",
-      "title": "Same Week",
-      "body": "Dennis Ritchie, with Ken Thompson, created Unix and the C programming language. He was found dead at his New Jersey home on October 12, 2011, at 70. Steve Jobs had died a week earlier, on October 5. Commentators later noted Ritchie's work underlay technology Apple built its fortune on.",
-      "coda": "The two obituaries ran in the same week."
+      "tag": "訃聞",
+      "title": "同一週",
+      "body": "Dennis Ritchie 與 Ken Thompson 共同創造了 Unix 與 C 程式語言。他於 2011 年 10 月 12 日在新澤西州家中被發現身亡，享年 70 歲。Steve Jobs 於 10 月 5 日，即一週前去世。評論者後來指出，Ritchie 的工作是 Apple 建立其財富的技術基礎。",
+      "coda": "兩則訃聞在同一週刊出。"
     },
     "leap-second": {
-      "tag": "Incident",
-      "title": "The extra second",
-      "body": "A leap second was inserted to keep atomic clocks in step with the earth's rotation. The kernel never told its timer subsystem, high-resolution timers fired early, and processors spun. Reddit, Mozilla and LinkedIn seized up; an airline boarded passengers by hand.",
-      "coda": "Time does not increase monotonically. Code assumes it does."
+      "tag": "事件",
+      "title": "多出的一秒",
+      "body": "為使原子鐘與地球自轉保持一致，插入了一個閏秒。核心從未告知其計時子系統，高解析度計時器提前觸發，處理器空轉。Reddit、Mozilla 與 LinkedIn 癱瘓；一家航空公司改以人工登機。",
+      "coda": "時間並非單調遞增。程式碼假定它是。"
     },
     "gregorian-1752-eleven-days": {
-      "tag": "Myth",
-      "title": "The Eleven Missing Days",
-      "body": "On 2 September 1752, the British calendar jumped to 14 September, deleting eleven days. Popular history says mobs rioted over it. No contemporary record of any riot survives. The story traces to a banner in a 1755 satirical election painting.",
-      "coda": "A prop from a painting became the record of an event with no other trace."
+      "tag": "迷思",
+      "title": "消失的十一天",
+      "body": "1752年9月2日，英國曆法跳至9月14日，刪除了十一天。民間歷史稱民眾因此暴動。現存當時紀錄中無任何暴動記載。此說法源自1755年一幅諷刺選舉畫作中的橫幅。",
+      "coda": "畫作中的道具成了無其他痕跡事件的紀錄。"
     },
     "bootstrap-the-impossible-joke": {
-      "tag": "Etymology",
-      "title": "Borrowed From an Impossible Feat",
-      "body": "\"Pulling oneself up by one's bootstraps\" traces to Baron Munchausen's 1785 tall tale and was used through the 19th century as the standard example of a physical impossibility. In 1953, computing borrowed it for the instruction chain that gets a machine to start itself.",
-      "coda": "The word for the trick was, on its first use, a punchline about the trick failing."
+      "tag": "詞源",
+      "title": "借自不可能的壯舉",
+      "body": "「憑藉自己的鞋帶將自己拉起」源自1785年閔希豪森男爵的吹牛故事，並在19世紀被用作物理上不可能之事的標準例子。1953年，計算領域借用此詞，指稱讓機器自行啟動的指令鏈。",
+      "coda": "這個詞首次使用時，本身就是關於該技巧失敗的笑點。"
     },
     "french-revolutionary-decimal-time": {
-      "tag": "Experiment",
-      "title": "The Ten-Hour Day",
-      "body": "In 1793 France divided the day into ten hours of a hundred decimal minutes each. Mandatory use began in September 1794 and was suspended just seven months later. The decimal face on the Tuileries Palace clock kept running at least through 1801.",
-      "coda": "The abolished system stayed mounted on a palace wall for years afterward."
+      "tag": "實驗",
+      "title": "十小時制的一天",
+      "body": "1793年，法國將一天分為十小時，每小時一百個十進制分鐘。強制使用始於1794年9月，僅七個月後即被暫停。杜樂麗宮鐘樓上的十進制鐘面至少運行至1801年。",
+      "coda": "被廢除的制度在宮殿牆上持續掛了數年。"
     },
     "railway-time-gwr": {
-      "tag": "Standard",
-      "title": "The Time the Trains Kept",
-      "body": "In November 1840, the Great Western Railway adopted Greenwich time across its network, replacing each town's own local time. By 1855, about 98 percent of British towns had followed. Parliament did not make it the legal national standard until 1880.",
-      "coda": "The clocks agreed on the time forty years before the law did."
+      "tag": "標準",
+      "title": "火車所守的時間",
+      "body": "1840年11月，大西部鐵路在其全網絡採用格林威治時間，取代各城鎮的當地時間。至1855年，約98%的英國城鎮已跟進。國會直到1880年才將其定為法定國家標準。",
+      "coda": "時鐘在法律之前四十年已達成一致。"
     },
     "western-union-telephone-memo-1876": {
-      "tag": "Debunked",
-      "title": "The Memo Western Union Never Wrote",
-      "body": "A widely quoted 1876 Western Union memo calls the telephone \"idiotic\" next to sending a messenger to the telegraph office. Researchers combing period newspapers found no trace of it, and the executive it names did not hold that post at the company that year. The text was fabricated later.",
-      "coda": "Western Union did decline Bell's patent that year; it just never wrote this memo."
+      "tag": "已闢謠",
+      "title": "西方聯盟從未寫下的備忘錄",
+      "body": "一份廣被引用的 1876 年西方聯盟備忘錄稱，相對於派人到電報局送信，電話是「愚蠢的」。研究人員翻查當時報紙，未發現任何痕跡，且該備忘錄所指的高管當年並未擔任該職。該文本係後人偽造。",
+      "coda": "西方聯盟當年確實拒絕了貝爾的專利；它只是從未寫下這份備忘錄。"
     },
     "nintendo-hanafuda-detours": {
-      "tag": "Pivot",
-      "title": "The Detours After the Flower Cards",
-      "body": "Fusajiro Yamauchi opened a shop in Kyoto in 1889 hand-making hanafuda playing cards. The company later tried a taxi service and instant rice, both abandoned; the widely repeated love-hotel chain claim has no record in securities filings researched back to 1962.",
-      "coda": "In 1966 a toy called the Ultra Hand sold hundreds of thousands of units."
+      "tag": "轉折",
+      "title": "花札之後的轉折",
+      "body": "山內房治郎於 1889 年在京都開設店鋪，手工製作花札紙牌。該公司後來嘗試過計程車服務與即食米，兩者皆遭放棄；廣為流傳的愛情旅館連鎖說法，在可追溯至 1962 年的證券申報紀錄中並無依據。",
+      "coda": "1966 年，一款名為 Ultra Hand 的玩具售出數十萬件。"
     },
     "wrigley-premiums-premium": {
-      "tag": "Pivot",
-      "title": "The Premium's Premium",
-      "body": "In 1891 William Wrigley Jr. sold soap in Chicago and threw in baking powder as a bonus. Customers wanted the baking powder more than the soap, so he switched to selling that instead, and added chewing gum as baking powder's own bonus. Customers wanted the gum more.",
-      "coda": "By 1892 he had dropped both soap and baking powder to sell only gum."
+      "tag": "轉折",
+      "title": "贈品的贈品",
+      "body": "1891 年，威廉·瑞格利二世在芝加哥銷售肥皂，並附贈烘焙粉作為贈品。顧客對烘焙粉的需求超過肥皂，因此他改賣烘焙粉，並將口香糖作為烘焙粉的附贈品。顧客對口香糖的需求更高。",
+      "coda": "到 1892 年，他已放棄肥皂與烘焙粉，僅銷售口香糖。"
     },
     "robot-labor-not-brother": {
-      "tag": "Etymology",
-      "title": "Robot's Uncredited Coiner",
-      "body": "Karel Čapek drafted his 1920 play with a Latinate word, \"laboři,\" and thought it too bookish. In a newspaper column he named the actual source: his brother Josef, tossed off in passing. \"Robot\" comes from robota — a serf's compulsory labor, not machinery.",
-      "coda": "The play kept one brother's name on the title page."
+      "tag": "詞源",
+      "title": "機器人一詞的未署名創造者",
+      "body": "卡雷爾·恰佩克在起草 1920 年的劇本時，曾使用一個源自拉丁語的詞「laboři」，但認為過於書面化。他在報紙專欄中指出真正的來源：他的弟弟約瑟夫，只是隨口一提。「Robot」源自 robota——農奴的強制勞動，而非機械。",
+      "coda": "該劇的扉頁保留了其中一位弟弟的名字。"
     },
     "play-doh-wallpaper-cleaner": {
-      "tag": "Pivot",
-      "title": "It Was Meant to Clean Wallpaper",
-      "body": "In the 1930s, Kutol formulated a soft dough to scrub coal soot off wallpaper. Once homes switched to cleaner heating fuel, demand vanished. A teacher suggested selling it as modeling clay; it was renamed Play-Doh in 1956.",
-      "coda": "By 2005 it was selling 95 million cans a year across 75 countries."
+      "tag": "轉折",
+      "title": "它原本是用來清潔壁紙的",
+      "body": "1930 年代，Kutol 調製出一種軟質麵團，用於刷除壁紙上的煤煙。一旦家庭改用更清潔的取暖燃料，需求便消失。一位教師建議將其作為造型黏土銷售；1956 年它被改名為 Play-Doh。",
+      "coda": "到 2005 年，它在 75 個國家每年銷售 9500 萬罐。"
     },
     "hedy-lamarr-frequency-hopping-patent": {
-      "tag": "Patent",
-      "title": "The Patent They Shelved",
-      "body": "In 1942, Lamarr and composer George Antheil patented a frequency-hopping system to keep torpedo radio from being jammed. The Navy classified it, shelved it, and suggested Lamarr sell war bonds instead. The patent expired in 1959, before any ship carried it.",
-      "coda": "Lamarr never received payment for the patent in her lifetime."
+      "tag": "專利",
+      "title": "被擱置的專利",
+      "body": "1942 年，Lamarr 與作曲家 George Antheil 為一種跳頻系統申請專利，以防止魚雷無線電被干擾。海軍將其列為機密、擱置，並建議 Lamarr 改賣戰爭債券。該專利於 1959 年到期，當時尚無任何艦艇搭載此系統。",
+      "coda": "Lamarr 在生前從未因該專利獲得任何報酬。"
     },
     "bush-1945-memex": {
-      "tag": "Origin",
-      "title": "The Desk Never Built",
-      "body": "In July 1945, Vannevar Bush published \"As We May Think\" in The Atlantic, describing a desk-sized microfilm machine called the Memex that let a user build associative trails through stored knowledge. It ran again in an abridged reprint that September. No prototype was ever built.",
-      "coda": "Engelbart and Nelson both later credited the essay as the reason they started."
+      "tag": "起源",
+      "title": "從未建造的書桌",
+      "body": "1945 年 7 月，Vannevar Bush 在 The Atlantic 發表〈As We May Think〉，描述一台名為 Memex 的桌面微縮膠片機器，讓使用者能在儲存的知識中建立關聯路徑。同年 9 月該文以精簡版再版。從未有人製造出原型機。",
+      "coda": "Engelbart 與 Nelson 後來皆將該論文列為他們開始研究的緣由。"
     },
     "jean-bartik-eniac-dinner": {
-      "tag": "Record",
-      "title": "The Dinner They Weren't Invited To",
-      "body": "At ENIAC's public unveiling on February 14, 1946, the trajectory program that impressed the room had been written by Jean Bartik and Betty Holberton. The press introduced only Eckert and Mauchly. None of the six women programmers were invited to the dinner after.",
-      "coda": "Their names were pulled back out of the event photographs decades later."
+      "tag": "紀錄",
+      "title": "未被邀請的晚宴",
+      "body": "1946 年 2 月 14 日 ENIAC 公開揭幕時，令全場印象深刻的軌跡程式由 Jean Bartik 與 Betty Holberton 撰寫。媒體僅介紹 Eckert 與 Mauchly。六位女性程式設計師無一受邀參加之後的晚宴。",
+      "coda": "她們的名字在數十年後才被從活動照片中重新找回。"
     },
     "claude-shannon-juggling-theorem": {
-      "tag": "Paper",
-      "title": "The Juggling Theorem",
-      "body": "In 1948, Shannon published 'A Mathematical Theory of Communication,' founding information theory. Decades later he turned the same rigor on his hobby, deriving a formal relationship between a ball's flight time, its dwell time, and the count of balls and hands.",
-      "coda": "It was collected in the same volume as the 1948 paper."
+      "tag": "論文",
+      "title": "雜耍定理",
+      "body": "1948 年，Shannon 發表〈A Mathematical Theory of Communication〉，奠定資訊論基礎。數十年後他將同樣的嚴謹性應用於自己的嗜好，推導出球的飛行時間、停留時間與球數及手數之間的正式關係。",
+      "coda": "該定理被收錄於與 1948 年論文相同的卷冊中。"
     },
     "mccarthy-1960-eval": {
-      "tag": "Origin",
-      "title": "The Interpreter in the Footnote",
-      "body": "In his 1960 paper, John McCarthy wrote an eval function as mathematical notation, to show that symbolic expressions could describe themselves. His student Steve Russell translated the derivation into IBM 704 machine code. The proof device became the first working Lisp interpreter.",
-      "coda": "McCarthy later said he had not intended anyone to actually run it."
+      "tag": "起源",
+      "title": "腳註中的直譯器",
+      "body": "在 1960 年的論文中，John McCarthy 以數學符號寫出一個 eval 函數，用以證明符號表達式可以描述自身。他的學生 Steve Russell 將該推導翻譯為 IBM 704 機器碼。該證明工具成為第一個可運作的 Lisp 直譯器。",
+      "coda": "McCarthy 後來表示他並未打算讓任何人實際執行它。"
     },
     "licklider-1960-symbiosis": {
-      "tag": "Origin",
-      "title": "Libraries Wired Together",
-      "body": "In his 1960 paper \"Man-Computer Symbiosis,\" J.C.R. Licklider proposed \"thinking centers\" holding library functions, linked into a network for real-time, conversational use of computers. Most machines of the day ran on punch cards in batches; interactive terminals barely existed.",
-      "coda": "Two years later he ran a new Pentagon office and funded the project that became ARPANET."
+      "tag": "起源",
+      "title": "圖書館互聯",
+      "body": "J.C.R. Licklider 於 1960 年的論文《Man-Computer Symbiosis》中提出「思考中心」，這些中心承載圖書館功能，並連結成網路，供電腦進行即時、對話式使用。當時大多數機器以打孔卡批次運行；互動終端幾乎不存在。",
+      "coda": "兩年後他掌管五角大廈的新辦公室，並資助了後來成為 ARPANET 的計畫。"
     },
     "ctss-1962-password-leak": {
-      "tag": "Origin",
-      "title": "The Password File, Printed",
-      "body": "In 1962, MIT PhD student Allan Scherr was frustrated with his four hours a week on CTSS. He found the offline print command could pull any account's files, so he printed UACCNT.SECRET, the file holding every password, and shared it to borrow accounts and keep running his simulations.",
-      "coda": "Scherr did not admit it to the lab's director until nearly thirty years later."
+      "tag": "起源",
+      "title": "密碼檔案，列印出來",
+      "body": "1962 年，MIT 博士生 Allan Scherr 對每週在 CTSS 上耗費四小時感到沮喪。他發現離線列印指令可提取任何帳戶的檔案，因此列印了 UACCNT.SECRET，即存放所有密碼的檔案，並分享給他人，以便借用帳戶並持續運行他的模擬。",
+      "coda": "Scherr 直到近三十年後才向實驗室主任承認此事。"
     },
     "katherine-johnson-check-the-numbers": {
-      "tag": "Record",
-      "title": "Have the Girl Check It",
-      "body": "Before his 1962 orbital flight, John Glenn had engineers ask Katherine Johnson to hand-recompute the trajectory an IBM 7090 had already calculated. 'If she says they're good,' he said, 'I'm ready to go.' Her numbers matched the computer's exactly.",
-      "coda": "Friendship 7 launched on schedule, February 20, 1962."
+      "tag": "紀錄",
+      "title": "讓那個女孩核對一下",
+      "body": "在 1962 年軌道飛行前，John Glenn 讓工程師請 Katherine Johnson 手動重新計算 IBM 7090 已算出的軌道。他說：「如果她說沒問題，我就準備好了。」她的數字與電腦的完全一致。",
+      "coda": "Friendship 7 於 1962 年 2 月 20 日如期發射。"
     },
     "daemon-backronym": {
-      "tag": "Etymology",
-      "title": "The Daemon's Retrofitted Acronym",
-      "body": "In 1963, MIT's Project MAC programmers named a background tape-backup process after Maxwell's demon, an 1867 thought-experiment agent that sorts molecules tirelessly and invisibly — the Greek daimon, a neutral spirit, not the Judeo-Christian devil.",
-      "coda": "\"Disk And Execution MONitor\" was fitted onto the word afterward."
+      "tag": "詞源",
+      "title": "守護程序的後設首字母縮寫",
+      "body": "1963 年，MIT 的 Project MAC 程式員將一個背景磁帶備份程序命名為 Maxwell's demon，這是 1867 年一個思想實驗中的代理，不知疲倦且隱形地對分子進行分類——即希臘語的 daimon，一種中性精靈，而非猶太-基督教的惡魔。",
+      "coda": "「Disk And Execution MONitor」是事後套用在該詞上的。"
     },
     "sketchpad-1963": {
-      "tag": "Origin",
-      "title": "A Light Pen and an Oscilloscope",
-      "body": "In January 1963, Ivan Sutherland submitted his MIT thesis on Sketchpad, drawing constrained geometry with a light pen on the TX-2's screen at Lincoln Laboratory. The machine cost roughly a million dollars and only a handful existed; his drawing board could not be handed to anyone else.",
-      "coda": "Commercial CAD software took close to two decades to match what the thesis had shown."
+      "tag": "起源",
+      "title": "一支光筆與一台示波器",
+      "body": "1963 年 1 月，Ivan Sutherland 提交了他在 MIT 關於 Sketchpad 的論文，在 Lincoln Laboratory 的 TX-2 螢幕上以光筆繪製受約束的幾何圖形。該機器成本約一百萬美元，僅存寥寥數台；他的繪圖板無法交給任何人使用。",
+      "coda": "商業 CAD 軟體花了近二十年才追平該論文所展示的內容。"
     },
     "douglas-mcilroy-garden-hose-pipe": {
-      "tag": "Memo",
-      "title": "The Garden Hose Memo",
-      "body": "In October 1964, McIlroy wrote a Bell Labs memo proposing programs connect like garden hoses — screw in another segment to massage data differently. It circulated, was admired, and went unbuilt. Nine years later, Ken Thompson added one character, |, to the Unix shell overnight.",
-      "coda": "By morning, programs that had never spoken to each other did."
+      "tag": "備忘錄",
+      "title": "水管備忘錄",
+      "body": "1964 年 10 月，McIlroy 寫下一份 Bell Labs 備忘錄，提出程式應像水管般串接——接上一段，資料的處理方式就不同。這份備忘錄流傳開來，被人稱讚，卻始終未被實現。九年後，Ken Thompson 在一夜之間為 Unix shell 加上一個字元：|。",
+      "coda": "到了早上，從未互相溝通的程式開始互通了。"
     },
     "berkshire-hathaway-spite-buy": {
-      "tag": "Spite",
-      "title": "The Mill Bought Out of Anger",
-      "body": "In 1964 Warren Buffett verbally agreed to sell his shares back to Berkshire's president, Seabury Stanton, at $11.50 each. The written tender offer came in at $11.375. Buffett was angry enough over the missing eighth that he bought control of the company instead and fired Stanton.",
-      "coda": "In 1985 he shut down the textile mills he had fought to keep."
+      "tag": "氣憤",
+      "title": "出於憤怒買下的工廠",
+      "body": "1964 年，Warren Buffett 口頭同意以每股 11.50 美元將股份賣回給 Berkshire 的總裁 Seabury Stanton。書面要約價卻為 11.375 美元。Buffett 對那差掉的八分之一美元憤怒到轉而買下公司控制權，並解僱了 Stanton。",
+      "coda": "1985 年，他關閉了那些他曾力爭保留的紡織廠。"
     },
     "nelson-1965-hypertext": {
-      "tag": "Origin",
-      "title": "The Link Before the Page",
-      "body": "In a 1965 ACM paper, Ted Nelson coined \"hypertext\" for documents that link and quote each other non-sequentially, building on a project he had started in 1960 and later named Xanadu. His version paid original authors per link followed. A partial implementation did not ship until 2014.",
-      "coda": "The Web adopted his vocabulary and left the payment mechanism behind."
+      "tag": "起源",
+      "title": "頁面之前的連結",
+      "body": "在 1965 年的一篇 ACM 論文中，Ted Nelson 為彼此非順序連結與引用的文件創造了「hypertext」一詞，這建立在他 1960 年開始、後命名為 Xanadu 的計畫之上。他的版本按被追蹤的連結向原作者付費。部分實作直到 2014 年才發布。",
+      "coda": "Web 採用了他的詞彙，卻把付費機制留了下來。"
     },
     "mary-allen-wilkes-linc": {
-      "tag": "Record",
-      "title": "The LINC in the Living Room",
-      "body": "In 1965, Wilkes moved a 250-pound LINC computer into her parents' Baltimore living room and wrote LAP6, an interactive operating system, alone — twelve years before the Apple II reached any home. Asked if she was first, she said only: 'I guess I might have been.'",
-      "coda": "She never claimed the title outright herself."
+      "tag": "紀錄",
+      "title": "客廳裡的 LINC",
+      "body": "1965 年，Wilkes 將一台 250 磅重的 LINC 電腦搬進父母在 Baltimore 的客廳，獨自寫出 LAP6，一個互動式作業系統——比 Apple II 進入任何家庭早了十二年。被問及是否為第一人時，她只說：「我想我可能是。」",
+      "coda": "她從未自己直接聲稱這個頭銜。"
     },
     "hoares-billion-dollar-mistake": {
-      "tag": "Confession",
-      "title": "The Reference He Added Anyway",
-      "body": "In 1965 Tony Hoare was building the first type system meant to make ALGOL W references provably safe at compile time. He added a null reference anyway, because it was easy to implement. In 2009 he called it his billion-dollar mistake.",
-      "coda": "The safety goal was explicit; the failure was that ease won anyway."
+      "tag": "懺悔",
+      "title": "他還是加上的引用",
+      "body": "1965 年，Tony Hoare 正在建構第一個旨在讓 ALGOL W 引用在編譯期即可證明安全的類型系統。他還是加上了 null 引用，因為實作起來容易。2009 年，他稱之為他的十億美元錯誤。",
+      "coda": "安全目標是明確的；失敗在於容易還是勝出了。"
     },
     "johnson-vs-cern-touchscreen": {
-      "tag": "Touchscreen",
-      "title": "Who Actually Was First",
-      "body": "CERN credits Bent Stumpe with building the world's first capacitive touchscreen in 1972, for its accelerator control room. Eric Johnson of Britain's Royal Radar Establishment had already published a paper on finger-driven capacitive touch technology in 1965, seven years earlier.",
-      "coda": "CERN's claim to have built the first touchscreen still stands on its own website."
+      "tag": "觸控螢幕",
+      "title": "究竟誰先",
+      "body": "CERN 將 1972 年為其加速器控制室建造全球首台電容式觸控螢幕的功績歸於 Bent Stumpe。英國皇家雷達研究所的 Eric Johnson 早在 1965 年便已發表關於手指驅動電容觸控技術的論文，比前者早七年。",
+      "coda": "CERN 關於建造首台觸控螢幕的說法仍立於其官方網站。"
     },
     "second-redefined-1967": {
-      "tag": "Metrology",
-      "title": "9,192,631,770 Cycles",
-      "body": "Until 1960, the second was a fraction of the 1900 tropical year, fixed by astronomical observation. In 1967 the General Conference on Weights and Measures redefined it as 9,192,631,770 cycles of a caesium-133 transition.",
-      "coda": "The length of a second stopped being set by the sun and started being set by an atom."
+      "tag": "度量衡",
+      "title": "9,192,631,770 個週期",
+      "body": "1960 年之前，秒是 1900 年回歸年的分數，由天文觀測固定。1967 年，國際度量衡大會將其重新定義為鈦-133 躍遷的 9,192,631,770 個週期。",
+      "coda": "一秒的長度不再由太陽決定，改由原子決定。"
     },
     "goto-statement-considered-harmful": {
-      "tag": "Correction",
-      "title": "The Title He Did Not Write",
-      "body": "Dijkstra submitted a paper titled A Case against the GO TO Statement to CACM. Editor Niklaus Wirth, rushing it into print as a letter, gave it the title that made it famous: Go To Statement Considered Harmful.",
-      "coda": "The phrase outran the letter, spawning decades of 'X Considered Harmful' titles nobody read past."
+      "tag": "更正",
+      "title": "他沒寫的標題",
+      "body": "Dijkstra 向 CACM 提交了一篇題為 A Case against the GO TO Statement 的論文。編輯 Niklaus Wirth 為趕著將其以信件形式付梓，賦予了使其聞名的標題：Go To Statement Considered Harmful。",
+      "coda": "這句標題超越了信件本身，衍生出數十年來無人讀完的『X Considered Harmful』標題。"
     },
     "rollkugel-vs-mouse": {
-      "tag": "Mouse",
-      "title": "Two Mice, One Year",
-      "body": "In October 1968, Telefunken listed the Rollkugel mouse in a sales brochure, a rolling-ball device its engineers had built since 1966. Two months later, on December 9, Douglas Engelbart demonstrated the wooden mouse his SRI team had built since 1963. Neither team knew of the other.",
-      "coda": "Telefunken reached the market first and was forgotten; Engelbart came second and is what people mean by mouse."
+      "tag": "滑鼠",
+      "title": "兩隻滑鼠，同一年",
+      "body": "1968 年 10 月，Telefunken 在銷售手冊中列出 Rollkugel 滑鼠，這是其工程師自 1966 年起建造的滾球裝置。兩個月後，12 月 9 日，Douglas Engelbart 展示了其 SRI 團隊自 1963 年起建造的木製滑鼠。兩組團隊互不知情。",
+      "coda": "Telefunken 率先進入市場卻被遺忘；Engelbart 居次，卻成為人們所指的滑鼠。"
     },
     "peter-principle-verified": {
-      "tag": "Study",
-      "title": "Promoted to Incompetence",
-      "body": "In 1969, Laurence Peter and Raymond Hull half-joked in a bestseller that every employee rises to the level where they become incompetent, meant as satire. In 2019 a study of sales-force promotion data at 214 real firms found the joke held: top sellers made worse managers.",
-      "coda": "The punchline turned out to be a measurable, published regression coefficient."
+      "tag": "研究",
+      "title": "晉升至無能",
+      "body": "1969 年，Laurence Peter 與 Raymond Hull 在一本暢銷書中半開玩笑地指出，每位員工都會晉升至其無法勝任的層級，本意為諷刺。2019 年一項針對 214 家真實企業銷售團隊晉升資料的研究發現，這個玩笑成立：頂尖銷售員成為更差的經理。",
+      "coda": "笑點最終成為一個可測量、已發表的迴歸係數。"
     },
     "lanpar-vs-visicalc": {
-      "tag": "Spreadsheet",
-      "title": "The Spreadsheet Nobody Named",
-      "body": "In summer 1969, Harvard graduates Rene Pardo and Remy Landau wrote LANPAR, a spreadsheet language that let users enter formulas in any order and still calculated correctly. Bell Canada and General Motors ran on it. In 1979, Dan Bricklin built VisiCalc without knowing LANPAR existed.",
-      "coda": "LANPAR's patent survived a court challenge through 1983; the magazines had already named VisiCalc first."
+      "tag": "試算表",
+      "title": "無人命名的試算表",
+      "body": "1969 年夏，哈佛畢業生 Rene Pardo 與 Remy Landau 撰寫了 LANPAR，一種試算表語言，允許使用者以任何順序輸入公式並仍能正確計算。Bell Canada 與 General Motors 皆運行於其上。1979 年，Dan Bricklin 在不知 LANPAR 存在的情況下開發了 VisiCalc。",
+      "coda": "LANPAR 的專利在 1983 年前經受住法庭挑戰；雜誌早已將 VisiCalc 列為第一。"
     },
     "spam-vikings-not-marketers": {
-      "tag": "Etymology",
-      "title": "Spam, Before Marketing",
-      "body": "In a 1970 sketch, Monty Python's Vikings chant \"spam\" over a diner's dialogue, mocking a glut of canned meat on the menu. The joke migrated into MUD chatrooms by the late 1980s for chat flooding, then onto email by the early 1990s.",
-      "coda": "The word reached inboxes by way of a comedy sketch about lunch."
+      "tag": "詞源",
+      "title": "Spam，行銷之前",
+      "body": "1970 年的一個短劇中，Monty Python 的維京人對餐廳顧客的對話高喊「spam」，嘲諷菜單上罐頭肉的過剩。這個笑話在 1980 年代末遷移至 MUD 聊天室用於聊天淹沒，隨後在 1990 年代初進入電子郵件。",
+      "coda": "這個詞透過一段關於午餐的喜劇短劇進入了收件箱。"
     },
     "codd-1970-relational-model": {
-      "tag": "Origin",
-      "title": "The Paper Its Employer Ignored",
-      "body": "In 1970, IBM researcher Edgar Codd published the relational model. IBM's flagship product was hierarchical, and the company was in no hurry to adopt his idea. Larry Ellison read Codd's paper and IBM's own System R reports, then shipped a commercial relational database first, in 1979.",
-      "coda": "IBM's own relational product, DB2, did not ship until 1983."
+      "tag": "起源",
+      "title": "雇主忽略的論文",
+      "body": "1970 年，IBM 研究員 Edgar Codd 發表了關係模型。IBM 的旗艦產品是階層式的，公司並無急於採用他的想法。Larry Ellison 閱讀了 Codd 的論文與 IBM 自身的 System R 報告，隨後於 1979 年率先推出商業關係資料庫。",
+      "coda": "IBM 自身的關係產品 DB2 直到 1983 年才推出。"
     },
     "linnainmaa-backpropagation": {
-      "tag": "Algorithm",
-      "title": "The Missing Citation",
-      "body": "In 1970, Finnish student Seppo Linnainmaa published the complete algorithm for reverse-mode automatic differentiation, with working code, in his master's thesis. In 1986, Rumelhart, Hinton and Williams published the same method in Nature to train neural networks. They did not cite him.",
-      "coda": "Linnainmaa's thesis sat uncited for sixteen years before historians of the field dug it back up."
+      "tag": "演算法",
+      "title": "遺漏的引用",
+      "body": "1970 年，芬蘭學生 Seppo Linnainmaa 在其碩士論文中發表了反向模式自動微分的完整演算法，並附有可運作程式碼。1986 年，Rumelhart、Hinton 與 Williams 在 Nature 發表了相同方法以訓練神經網路。他們未引用他。",
+      "coda": "Linnainmaa 的論文在十六年間未被引用，直到該領域歷史學家將其重新挖掘。"
     },
     "at-sign-arbitrary-pick": {
-      "tag": "Etymology",
-      "title": "The Only Unused Key",
-      "body": "In 1971, BBN engineer Ray Tomlinson needed a separator between username and host that could never appear in an actual person's name. Scanning his Model 33 Teletype keyboard, he picked @ — a character then used almost exclusively by grocers and bookkeepers.",
-      "coda": "Every email address since has carried that one constraint forward."
+      "tag": "詞源",
+      "title": "唯一未使用的鍵",
+      "body": "1971 年，BBN 工程師 Ray Tomlinson 需要一個分隔使用者名稱與主機的字元，該字元絕不會出現在真實人名中。掃描他的 Model 33 電傳打字機鍵盤，他選了 @——一個當時幾乎僅由雜貨商與記帳員使用的字元。",
+      "coda": "此後每個電子郵件地址都承載了此一限制。"
     },
     "parnas-module-decomposition": {
-      "tag": "Method",
-      "title": "Where to Cut a Module",
-      "body": "In 1972 David Parnas split the same KWIC-index system into modules two ways: one by processing step, one by the design decisions most likely to change, each hidden behind an interface. Only the second let a change touch one module without anyone reading the rest.",
-      "coda": "The module boundary turned out to encode a guess about what a future maintainer would need to know."
+      "tag": "方法",
+      "title": "模組該切在哪裡",
+      "body": "1972 年，David Parnas 將同一個 KWIC 索引系統以兩種方式拆成模組：一種依處理步驟，另一種依最可能變動的設計決策，且皆隱藏於介面之後。唯有第二種做法，讓一次變動僅觸及一個模組，而無需任何人閱讀其餘部分。",
+      "coda": "模組邊界最終編碼了對未來維護者需要知道什麼的猜測。"
     },
     "karen-sparck-jones-idf": {
-      "tag": "Record",
-      "title": "The Formula Nobody Thanks",
-      "body": "In 1972, Spärck Jones published a paper proposing that a word's rarity across a document collection measures its importance — inverse document frequency, now under the ranking logic of nearly every search engine. She got no permanent post at Cambridge until 1993.",
-      "coda": "Until then she had worked a run of short-term, soft-money contracts."
+      "tag": "紀錄",
+      "title": "無人道謝的公式",
+      "body": "1972 年，Spärck Jones 發表一篇論文，提出詞彙在文件集合中的稀有度可衡量其重要性——逆向文件頻率，如今幾乎所有搜尋引擎的排序邏輯皆基於此。她直到 1993 年才在劍橋大學獲得永久職位。",
+      "coda": "在此之前，她一直從事一系列短期、軟性資金合約。"
     },
     "cyclades-pouzin-tcpip": {
-      "tag": "Internet",
-      "title": "The Internet's Fifth Man",
-      "body": "In 1972, Louis Pouzin built the CYCLADES network in France, the first to make end hosts, not the network, responsible for reliable delivery. In 1974, Cerf and Kahn's TCP paper thanked him by name. In 2004, Cerf and Kahn won the Turing Award. Pouzin's name was not on it.",
-      "coda": "The Economist later called him the internet's fifth man."
+      "tag": "網際網路",
+      "title": "網際網路的第五人",
+      "body": "1972 年，Louis Pouzin 在法國建構 CYCLADES 網路，這是第一個讓端點主機而非網路負責可靠傳輸的系統。1974 年，Cerf 與 Kahn 的 TCP 論文指名感謝他。2004 年，Cerf 與 Kahn 獲得圖靈獎。Pouzin 的名字不在其上。",
+      "coda": "《經濟學人》後來稱他為網際網路的第五人。"
     },
     "ethernet-1973-memo": {
-      "tag": "Origin",
-      "title": "The Ether Memo",
-      "body": "On May 22, 1973, Robert Metcalfe wrote a Xerox PARC memo titled \"Ether Acquisition,\" with a hand-drawn diagram of a shared cable linking Alto computers. The technology is usually dated to the 1976 journal paper. The actual sketch is three years older, and hand-drawn.",
-      "coda": "By the time the paper was published, Ethernet had already run inside PARC for three years."
+      "tag": "起源",
+      "title": "以太網備忘錄",
+      "body": "1973 年 5 月 22 日，Robert Metcalfe 撰寫一份標題為「Ether Acquisition」的 Xerox PARC 備忘錄，附有一張手繪圖，展示一條共享電纜連接 Alto 電腦。該技術通常被追溯至 1976 年的期刊論文。實際草圖早三年，且為手繪。",
+      "coda": "論文發表時，Ethernet 已在 PARC 內部運行三年。"
     },
     "vint-cerf-envelope-sketch": {
-      "tag": "Anecdote",
-      "title": "The Back of an Envelope",
-      "body": "The internet's founding legend says Cerf sketched the gateway architecture on a napkin. He has corrected this: 'It wasn't a napkin, actually, it was the back of an envelope.' In 1973, waiting in a hotel lobby, he sketched what became TCP/IP's gateway design.",
-      "coda": "The following year, the sketch became a paper in IEEE Transactions on Communications."
+      "tag": "軼事",
+      "title": "信封背面",
+      "body": "網際網路的創始傳說稱 Cerf 在餐巾紙上畫出閘道架構。他已更正此事：「實際上不是餐巾紙，而是信封背面。」1973 年，他在飯店大廳等待時，畫出了後來成為 TCP/IP 閘道設計的草圖。",
+      "coda": "隔年，該草圖成為 IEEE Transactions on Communications 的一篇論文。"
     },
     "gchq-nonsecret-encryption": {
-      "tag": "Cryptography",
-      "title": "The Unpublished Key",
-      "body": "In September 1973, 22-year-old Clifford Cocks, newly arrived at GCHQ, worked out a shared-key-free encryption scheme in half an hour. Three years later, Diffie, Hellman and Merkle published the same idea in the US and were credited as its inventors. GCHQ files stayed classified until 1997.",
-      "coda": "James Ellis died in 1997, a few months after the declassification that put his name on the record."
+      "tag": "密碼學",
+      "title": "未發表的密鑰",
+      "body": "1973 年 9 月，22 歲的 Clifford Cocks 剛到 GCHQ，在半小時內推導出一種無需共享密鑰的加密方案。三年後，Diffie、Hellman 與 Merkle 在美國發表了相同構想，並被認定為發明人。GCHQ 檔案直到 1997 年才解密。",
+      "coda": "James Ellis 於 1997 年去世，距解密將其名字載入紀錄僅數月。"
     },
     "kodak-digital-camera-1975": {
-      "tag": "Shelved",
-      "title": "Kodak's Buried Camera",
-      "body": "In 1975, 24-year-old engineer Steven Sasson built the first digital camera: 8 pounds, 23 seconds per shot. Executives reasoned that no one would want to view pictures on a television when print was cheap and had worked for a century. They patented the camera and shelved it.",
-      "coda": "Kodak filed for bankruptcy protection in 2012."
+      "tag": "擱置",
+      "title": "柯達被埋沒的相機",
+      "body": "1975 年，24 歲的工程師 Steven Sasson 造出第一台數位相機：重 8 磅，每張拍攝需 23 秒。高層認為，當印刷便宜且已運作一個世紀時，沒人會想在電視上看照片。他們為相機申請專利並將其擱置。",
+      "coda": "柯達於 2012 年申請破產保護。"
     },
     "galls-law-origin": {
-      "tag": "Origin",
-      "title": "A Book About Bureaucracies",
-      "body": "In 1975, after 30 publishers rejected it, pediatrician John Gall self-published Systemantics: a working complex system invariably evolves from a working simple system, and a complex system built from scratch never works. He was writing about hospitals and government agencies.",
-      "coda": "Software architects kept the line and quietly dropped the bureaucracies it was written about."
+      "tag": "起源",
+      "title": "一本關於官僚機構的書",
+      "body": "1975 年，在被 30 家出版社拒絕後，小兒科醫生 John Gall 自費出版《Systemantics》：一個運作的複雜系統必然由一個運作的簡單系統演化而來，而從頭建構的複雜系統永遠無法運作。他寫的是醫院與政府機構。",
+      "coda": "軟體架構師保留了這句話，並悄悄丟棄了它所描述的官僚機構。"
     },
     "ken-olsen-home-computer-1977": {
-      "tag": "Misquote",
-      "title": "Olsen's Home Computer",
-      "body": "In 1977, DEC founder Ken Olsen said there was no reason for an individual to have a computer in the home. He meant one central machine running the lights, heat and entertainment for a household, accurate for the thing he described. Coverage kept only the first half of the sentence.",
-      "coda": "Olsen himself owned a computer at home at the time."
+      "tag": "誤引",
+      "title": "Olsen 的家用電腦",
+      "body": "1977 年，DEC 創辦人 Ken Olsen 表示個人沒有理由在家中擁有一台電腦。他指的是控制家庭燈光、暖氣與娛樂的一台中央機器，就他所描述的事物而言是準確的。報導只保留了這句話的前半段。",
+      "coda": "Olsen 本人當時家中就有一台電腦。"
     },
     "kernighans-debugging-law": {
-      "tag": "Maxim",
-      "title": "Twice as Hard as Writing It",
-      "body": "In the 1978 Elements of Programming Style, Kernighan and Plauger wrote that debugging is twice as hard as writing a program, so writing it as cleverly as you can leaves you, by definition, not smart enough to debug it. A style rule stated as a limit on meeting your own work twice.",
-      "coda": "The adversary was never someone else, it was you a few weeks later."
+      "tag": "格言",
+      "title": "比撰寫它難兩倍",
+      "body": "在 1978 年的《Elements of Programming Style》中，Kernighan 與 Plauger 寫道，除錯比撰寫程式難兩倍，因此盡可能聰明地撰寫程式，按定義就意味著你不夠聰明到能除錯它。一條以限制你再次面對自己作品為表述的風格規則。",
+      "coda": "對手從來不是別人，而是幾週後的你自己。"
     },
     "xerox-parc-1979-visit": {
-      "tag": "Origin",
-      "title": "Xerox's Own Deal",
-      "body": "December 1979: Apple toured Xerox PARC after Xerox agreed to buy 100,000 pre-IPO Apple shares at $10 each for the access. Jobs saw the Alto's graphical interface and called it the best thing he'd ever seen. The popular story is theft; the record is a trade Xerox negotiated.",
-      "coda": "Xerox got its shares. The Alto was never sold as a commercial product."
+      "tag": "起源",
+      "title": "施樂自己的交易",
+      "body": "1979 年 12 月：在施樂同意以每股 10 美元購買 10 萬股蘋果上市前股份以換取參觀權後，蘋果參觀了施樂 PARC。喬布斯看到 Alto 的圖形介面，稱之為他見過最好的東西。流行的說法是竊取；紀錄是一筆施樂談判的交易。",
+      "coda": "施樂拿到了它的股份。Alto 從未作為商業產品出售。"
     },
     "visicalc-1979-no-patent": {
-      "tag": "Origin",
-      "title": "The Patent They Skipped",
-      "body": "Before VisiCalc's 1979 release, Dan Bricklin consulted a patent attorney, who put the odds of success at about one in ten under the era's rules. They filed for copyright and trademark instead. In 1983, Lotus 1-2-3 shipped a compatible interface that could read VisiCalc's own files.",
-      "coda": "The spreadsheet survived as a category. The company that built it did not."
+      "tag": "起源",
+      "title": "他們跳過的專利",
+      "body": "在 VisiCalc 1979 年發布之前，Dan Bricklin 諮詢了一位專利律師，律師根據當時的規則將成功機率定為大約十分之一。他們改為申請版權和商標。1983 年，Lotus 1-2-3 發布了一個相容介面，可以讀取 VisiCalc 自己的檔案。",
+      "coda": "試算表作為一個類別存活下來。建立它的公司沒有。"
     },
     "ibm-microsoft-dos-1980": {
-      "tag": "Clause",
-      "title": "IBM Leaves a Door Open",
-      "body": "IBM signed with Microsoft on the PC's operating system on November 6, 1980. Deep in a decade-plus antitrust case, IBM chose not to control its suppliers, and let Microsoft resell DOS to anyone else. As a hedge against another lawsuit, it made sense at the time.",
-      "coda": "Clone makers followed within years, and IBM never regained control of the platform."
+      "tag": "條款",
+      "title": "IBM 留了一扇門",
+      "body": "IBM 於 1980 年 11 月 6 日與微軟就 PC 的作業系統簽約。在一個持續十多年的反壟斷案件深處，IBM 選擇不控制其供應商，並讓微軟向任何人轉售 DOS。作為對另一場訴訟的對沖，當時這是有道理的。",
+      "coda": "複製製造商在幾年內跟隨，IBM 從未重新控制該平台。"
     },
     "postel-law-robustness-reversal": {
-      "tag": "Governance",
-      "title": "The Robustness Principle, Reversed",
-      "body": "RFC 761 (1980) urged implementers to be liberal in what they accept, conservative in what they send. In 2023 the IETF's own architecture board reversed that guidance in RFC 9413: leniency lets bugs calcify into de facto standards, leaving systems less robust, not more.",
-      "coda": "The standard that told the internet to be lenient was rescinded by its own custodians."
+      "tag": "治理",
+      "title": "穩健性原則，被顛覆",
+      "body": "RFC 761（1980）敦促實施者在接收時寬容，在發送時保守。2023 年，IETF 自己的架構委員會在 RFC 9413 中顛覆了該指引：寬容讓錯誤固化為事實標準，使系統更不穩健，而非更穩健。",
+      "coda": "告訴網際網路要寬容的標準被其自己的保管者廢止。"
     },
     "end-to-end-argument": {
-      "tag": "Paper",
-      "title": "An Argument for a Dumb Network",
-      "body": "In 1981 Saltzer, Reed, and Clark argued that checking a transferred file for errors can only be done correctly at the two endpoints; the network can help but never fully substitute. A paper about where to put a checksum became the founding case for keeping networks simple.",
-      "coda": "A note on error-checking placement grew into the case for net neutrality."
+      "tag": "論文",
+      "title": "為笨網路辯護",
+      "body": "1981 年，Saltzer、Reed 和 Clark 論證，檢查傳輸檔案的錯誤只能在兩個端點正確完成；網路可以協助但永遠無法完全取代。一篇關於在哪裡放置校驗和的論文成為保持網路簡單的奠基案例。",
+      "coda": "一篇關於錯誤檢查放置的註記成長為網路中立性的案例。"
     },
     "excel-1900-leap-year": {
-      "tag": "Legacy",
-      "title": "The Leap Year That Wasn't",
-      "body": "Lotus 1-2-3 treated 1900 as a leap year, a harmless shortcut. Microsoft copied the same false date to stay compatible. Lotus is gone; the false leap day remains, now written into the Office Open XML specification.",
-      "coda": "A compatibility hack for a discontinued rival is now a written standard."
+      "tag": "遺留",
+      "title": "未曾存在的閏年",
+      "body": "Lotus 1-2-3 將 1900 年視為閏年，這是一個無害的捷徑。Microsoft 為了相容性複製了同樣的錯誤日期。Lotus 已消失；錯誤的閏日仍然存在，如今已寫入 Office Open XML 規範。",
+      "coda": "針對已停產競爭對手的相容性權宜之計，如今已成書面標準。"
     },
     "avatar-before-snow-crash": {
-      "tag": "Etymology",
-      "title": "An Avatar Before the Novel",
-      "body": "Neal Stephenson's 1992 novel Snow Crash is usually credited with the online sense of \"avatar.\" But Lucasfilm's Habitat, running on Commodore 64s since 1985, already wrote: \"players are represented by animated figures that we call Avatars,\" from Sanskrit for incarnation.",
-      "coda": "The term was live on a commercial service seven years before the book."
+      "tag": "詞源",
+      "title": "小說之前的化身",
+      "body": "Neal Stephenson 1992 年的小說 Snow Crash 通常被認為賦予了「avatar」的線上含義。但 Lucasfilm 的 Habitat 自 1985 年起在 Commodore 64 上運行，早已寫道：「玩家由我們稱為 Avatars 的動畫圖像代表」，源自梵語的化身之意。",
+      "coda": "該詞在書籍出版前七年已於商業服務中啟用。"
     },
     "radia-perlman-algorhyme": {
-      "tag": "Anecdote",
-      "title": "Algorhyme",
-      "body": "In 1985, Perlman's manager at DEC assigned the loop-free bridging problem on a Friday, then vanished for a week. She had the spanning-tree algorithm finished by Wednesday — and spent the rest writing Algorhyme, a poem that became the paper's abstract.",
-      "coda": "The poem took longer to write than the algorithm."
+      "tag": "軼事",
+      "title": "演算法詩",
+      "body": "1985 年，Perlman 在 DEC 的經理於星期五指派了無環橋接問題，隨後消失了一週。她在星期三前完成了生成樹演算法——並將剩餘時間用來撰寫 Algorhyme，一首後來成為論文摘要的詩。",
+      "coda": "寫詩所花時間比寫演算法更長。"
     },
     "brooks-no-silver-bullet": {
-      "tag": "Essay",
-      "title": "No Silver Bullet",
-      "body": "At the 1986 IFIP congress, Fred Brooks split software difficulty into essential and accidental complexity. Accidental difficulty had fallen sharply, he said, but no single technique would deliver a tenfold productivity gain within a decade.",
-      "coda": "Four decades on, each new paradigm still gets sold as the bullet he said did not exist."
+      "tag": "論文",
+      "title": "沒有銀彈",
+      "body": "在 1986 年 IFIP 大會上，Fred Brooks 將軟體難度分為本質複雜度與偶然複雜度。他表示，偶然難度已大幅下降，但沒有任何單一技術能在十年內帶來十倍生產力提升。",
+      "coda": "四十年後，每個新範式仍被宣稱為他稱不存在的銀彈。"
     },
     "tz-olson-database": {
-      "tag": "Naming",
-      "title": "The Olson Database",
-      "body": "Most devices resolve timezones against one volunteer-run file set, informally called the Olson database after founder Arthur David Olson. Its naming scheme is credited to Paul Eggert, who has actually edited the database since 2005.",
-      "coda": "The eponym and the person who has maintained it since are different people."
+      "tag": "命名",
+      "title": "Olson 資料庫",
+      "body": "大多數裝置根據一套志工維護的檔案集來解析時區，非正式地稱為 Olson 資料庫，以創始人 Arthur David Olson 命名。其命名方案歸功於 Paul Eggert，他自 2005 年起實際編輯該資料庫。",
+      "coda": "冠名者與自那時起維護它的人是不同的人。"
     },
     "china-1987-first-email": {
-      "tag": "Record",
-      "title": "Beyond the Wall",
-      "body": "Retellings credit Qian Tianbai alone with China's first email, 'Across the Great Wall we can reach every corner of the world.' Qian was studying in the US that month; it was typed by Li Chengjiong and Karlsruhe's Werner Zorn, and left China six days later, on September 20.",
-      "coda": "His obituaries still list him as the sender."
+      "tag": "紀錄",
+      "title": "越過長城",
+      "body": "各種說法將中國第一封電子郵件「越過長城，我們能到達世界的每個角落」歸功於錢天白一人。錢天白當月在美國留學；郵件由李成俊與卡爾斯魯厄的 Werner Zorn 輸入，並於九月二十日離開中國。",
+      "coda": "他的訃告仍將他列為發送者。"
     },
     "barbara-liskov-substitution-property": {
-      "tag": "Principle",
-      "title": "The Law She Never Named",
-      "body": "In a 1987 OOPSLA keynote, Barbara Liskov proposed that if substituting an object of type S for type T left every program's behavior unchanged, S was a subtype of T. She called it a substitution property. Years later, Robert Martin folded it into SOLID and named it after her.",
-      "coda": "The word 'principle' was someone else's addition."
+      "tag": "原則",
+      "title": "她從未命名的法則",
+      "body": "在一九八七年的 OOPSLA 主題演講中，Barbara Liskov 提出，若以類型 S 的物件取代類型 T 的物件而所有程式行為不變，則 S 是 T 的子類型。她稱之為取代性質。多年後，Robert Martin 將其納入 SOLID 並以她的名字命名。",
+      "coda": "「原則」一詞是他人添加的。"
     },
     "go-corporation-pen-computing": {
-      "tag": "Pen computing",
-      "title": "The Tablet Nobody Bought",
-      "body": "In 1987 Jerry Kaplan started GO Corporation to build the pen-based PenPoint operating system, raising $75 million. AT&T acquired GO in January 1994, cancelled its supporting chip line two weeks later, and GO closed that July. Kaplan later said the company had \"no meaningful sales.\"",
-      "coda": "In 2010 Apple released the iPad, a capacitive multitouch tablet."
+      "tag": "筆式計算",
+      "title": "無人購買的平板",
+      "body": "一九八七年 Jerry Kaplan 創立 GO Corporation，開發基於筆的 PenPoint 作業系統，募得七千五百萬美元。AT&T 於一九九四年一月收購 GO，兩週後取消其支援晶片線，GO 同年七月關閉。Kaplan 後稱公司「無實質銷售」。",
+      "coda": "二〇一〇年 Apple 發布 iPad，一款電容式多點觸控平板。"
     },
     "iso8601-unify-then-fork": {
-      "tag": "Standard",
-      "title": "ISO 8601's Narrower Stand-in",
-      "body": "ISO 8601 was first published in 1988, unifying five earlier, conflicting ISO date-and-time standards into one. But the format most internet software validates against is RFC 3339 (1997), a narrower profile that, after ISO 8601's later revision, is not even a strict subset of it.",
-      "coda": "The standard everyone cites and the dialect everyone's code checks against are not the same document."
+      "tag": "標準",
+      "title": "ISO 8601 的狹窄替代品",
+      "body": "ISO 8601 於一九八八年首次發布，將五個先前相互衝突的 ISO 日期與時間標準統一為一個。但大多數網路軟體驗證的格式是 RFC 3339（一九九七年），一個更狹窄的輪廓，在 ISO 8601 後續修訂後，甚至不是其嚴格子集。",
+      "coda": "人人引用的標準與人人程式碼檢查的方言並非同一份文件。"
     },
     "python-christmas-project": {
-      "tag": "Scripting",
-      "title": "A Christmas Hobby",
-      "body": "During the Christmas holidays of 1989, with his office closed for the week, a researcher in Amsterdam looked for a hobby programming project. He began writing an interpreter for a new scripting language and named it after a comedy troupe, not the snake.",
-      "coda": "In July 2026 it ranked first on the TIOBE index of programming language popularity."
+      "tag": "腳本",
+      "title": "一個聖誕節的業餘項目",
+      "body": "一九八九年聖誕假期，辦公室關閉一週，阿姆斯特丹的一名研究人員尋找一個業餘程式設計項目。他開始撰寫一種新腳本語言的直譯器，並以一個喜劇團體命名，而非蛇。",
+      "coda": "二〇二六年七月它在 TIOBE 程式語言流行度指數中排名第一。"
     },
     "worse-is-better": {
-      "tag": "Debate",
+      "tag": "辯論",
       "title": "Worse Is Better",
-      "body": "In 1989 Richard Gabriel coined 'worse is better': a simple, half-right implementation survives better than a complete, correct one, which is why he thought C and Unix beat Lisp. In 1991 he published a rebuttal under the pseudonym Nickieben Bourbaki, posing as an old friend.",
-      "coda": "Decades later he still said he could not decide whether his own argument was right."
+      "body": "1989 年 Richard Gabriel 提出「worse is better」：簡單、半對的實作比完整、正確的實作更能存活，這也是他認為 C 與 Unix 勝過 Lisp 的原因。1991 年他以 Nickieben Bourbaki 的假名發表反駁，偽裝成一位老朋友。",
+      "coda": "數十年後他仍表示無法判斷自己的論點是否正確。"
     },
     "rfc1149-avian-carriers-test": {
       "tag": "Incident",
       "title": "The Protocol Someone Actually Flew",
-      "body": "David Waitzman published RFC 1149 on April Fools' Day, 1990: a spec for carrying IP datagrams by pigeon. On April 28, 2001, the Bergen Linux User Group actually built it, launching nine ping packets over roughly 5 km. Four came back — a 55% loss rate, round trips running 53 to 106 minutes.",
-      "coda": "The joke RFC has a real packet-loss figure on record: 55 percent."
+      "body": "David Waitzman 於 1990 年愚人節發布 RFC 1149：一份以鴿子承載 IP 數據報的規格。2001 年 4 月 28 日，Bergen Linux User Group 實際建造了它，在約 5 公里距離上發射九個 ping 封包。四個返回——55% 的封包遺失率，往返時間介於 53 至 106 分鐘。",
+      "coda": "這份玩笑 RFC 在紀錄上有一個真實的封包遺失數字：55 百分比。"
     },
     "att-1990-break-statement": {
       "tag": "Incident",
       "title": "The Misplaced Break",
-      "body": "A recovery routine on a New York 4ESS switch held a break statement nested one level too shallow, a defect testing never exercised. A restart's routine \"ready\" signal was then misread by neighboring switches as an error, and the false alarm cascaded through the network for nine hours.",
-      "coda": "AT&T later put the lost revenue at sixty million dollars."
+      "body": "紐約 4ESS 交換機上的一條復原常式將 break 語句嵌套得過淺一層，這是一個測試從未觸發的缺陷。重啟常式的「ready」訊號隨後被鄰近交換機誤讀為錯誤，虛假警報在網絡中級聯了九小時。",
+      "coda": "AT&T 後來將損失的營收定為六千萬美元。"
     },
     "aspec-vs-musicam": {
       "tag": "Audio",
       "title": "Losing to the Simpler One",
-      "body": "In 1991, MPEG tested two rival audio codecs. ASPEC, built by Fraunhofer, AT&T and France's CNET, won the quality tests but was ruled too complex. MUSICAM, from Matsushita and Philips, won on simplicity. The finished MP3 folded ASPEC's filter design back in anyway.",
-      "coda": "The format everyone calls MP3 carries the losing proposal's engineering inside the winning one's name."
+      "body": "1991 年，MPEG 測試了兩個競爭的音頻編碼器。由 Fraunhofer、AT&T 與法國 CNET 建構的 ASPEC 在品質測試中獲勝，但被判定過於複雜。來自 Matsushita 與 Philips 的 MUSICAM 憑藉簡潔性獲勝。最終的 MP3 仍將 ASPEC 的濾波器設計重新納入。",
+      "coda": "所有人稱為 MP3 的格式，在獲勝者的名稱內承載了落敗提案的工程。"
     },
     "linux-minix-post": {
       "tag": "Kernel",
       "title": "A Post to comp.os.minix",
-      "body": "On August 25, 1991, a Helsinki university student posted to the comp.os.minix newsgroup that he was writing a free operating system, calling it \"just a hobby, won't be big and professional like gnu,\" and asked what features people wanted.",
-      "coda": "Since November 2017, all 500 of the world's fastest supercomputers have run an OS built on it."
+      "body": "1991 年 8 月 25 日，一名赫爾辛基大學學生在 comp.os.minix 新聞組發文，表示他正在撰寫一個免費作業系統，稱其「只是一個興趣，不會像 gnu 那樣龐大且專業」，並詢問人們想要什麼功能。",
+      "coda": "自 2017 年 11 月起，全球最快的 500 台超級電腦皆運行基於它的作業系統。"
     },
     "web-vs-gopher-1991": {
       "tag": "Web",
-      "title": "Free Beat Priced",
-      "body": "In 1991, Tim Berners-Lee released the World Wide Web from CERN. That same year, the University of Minnesota released Gopher, for a time the more popular system. In February 1993, Minnesota announced licensing fees for Gopher servers. That April, CERN made the web protocol free.",
-      "coda": "Gopher had the bigger following before the fee announcement, and never had it again afterward."
+      "title": "免費的 Beat 定價",
+      "body": "1991 年，Tim Berners-Lee 從 CERN 發布了 World Wide Web。同年，明尼蘇達大學發布了 Gopher，一度成為更受歡迎的系統。1993 年 2 月，明尼蘇達大學宣布對 Gopher 伺服器收取授權費。同年 4 月，CERN 將網頁協定改為免費。",
+      "coda": "在收費公告之前，Gopher 擁有更大的追隨者群體，此後再未恢復。"
     },
     "rough-consensus-running-code": {
-      "tag": "Governance",
-      "title": "Rough Consensus, Running Code",
-      "body": "At the July 1992 IETF meeting, MIT's Dave Clark put up a slide: 'We reject kings, presidents and voting. We believe in rough consensus and running code.' The phrase now anchors internet-governance folklore. It began as a jab at OSI's formal committee voting process.",
-      "coda": "The joke slide about OSI's voting rules became internet governance's founding creed."
+      "tag": "治理",
+      "title": "粗略共識，運行代碼",
+      "body": "在 1992 年 7 月的 IETF 會議上，MIT 的 Dave Clark 展示了一張投影片：「我們拒絕國王、總統和投票。我們相信粗略共識和運行代碼。」這句話如今成為互聯網治理民間傳說的基石。它最初是對 OSI 正式委員會投票程序的一次諷刺。",
+      "coda": "關於 OSI 投票規則的玩笑投影片，成為互聯網治理的創始信條。"
     },
     "han-unification-japanese-delegate": {
-      "tag": "Standard",
-      "title": "Han Unification's Unlikely Author",
-      "body": "In 1992 the CJK Joint Research Group merged tens of thousands of Chinese, Japanese and Korean characters into shared Unicode code points. Popular retellings cast Japan as the objector. Unicode's own history credits the verification rules to Japanese delegate Miyazawa Akira.",
-      "coda": "The delegation cast as the victim helped write the rules it is remembered for opposing."
+      "tag": "標準",
+      "title": "漢字統一的非同尋常作者",
+      "body": "1992 年，CJK 聯合研究小組將數萬個中、日、韓字元合併至共享的 Unicode 碼點。流傳的說法將日本描繪為反對者。Unicode 自身的歷史則將驗證規則歸功於日本代表宮澤明。",
+      "coda": "被描繪為受害者的代表團，協助撰寫了它被記住為反對的規則。"
     },
     "china-first-internet-line": {
-      "tag": "Record",
-      "title": "The Line a Year Early",
-      "body": "China marks April 20, 1994 as the day it joined the global internet — a 64K line, full-function access. Thirteen months earlier, physicists at IHEP had already leased a line to Stanford's SLAC, exchanging email with dozens of institutions. It just wasn't the kind of line anyone counted.",
-      "coda": "Two lines exist; only one gets an anniversary."
+      "tag": "紀錄",
+      "title": "早一年的線路",
+      "body": "中國將 1994 年 4 月 20 日標記為其接入全球互聯網的日子——一條 64K 線路，具備完整功能。十三個月前，高能物理研究所的物理學家已租用一條線路連接史丹福的 SLAC，與數十個機構交換電子郵件。那只是一條無人計入的線路。",
+      "coda": "兩條線路存在；僅有一條獲得週年紀念。"
     },
     "wiki-the-airport-shuttle": {
-      "tag": "Etymology",
-      "title": "Named After a Shuttle Bus",
-      "body": "\"Wiki\" is Hawaiian for \"quick.\" In 1995, Ward Cunningham needed a name for the first editable web system he built and reached not for any technical term but for his memory of the Wiki Wiki Shuttle, the free bus between terminals at Honolulu's airport.",
-      "coda": "The word's first home was painted on the side of an airport bus."
+      "tag": "詞源",
+      "title": "以接駁車命名",
+      "body": "「Wiki」是夏威夷語，意為「快速」。1995 年，Ward Cunningham 需要為他建構的第一個可編輯網頁系統命名，他未選用任何技術術語，而是想起了威基威基接駁車，即檀香山機場各航廈之間的免費巴士。",
+      "coda": "該詞的首個出處，繪於機場巴士的側面。"
     },
     "robots-exclusion-rfc9309": {
-      "tag": "Standard",
-      "title": "robots.txt: 28 Years Unratified",
-      "body": "Martijn Koster proposed robots.txt in 1994; crawlers followed it voluntarily, with no formal standard and nothing to enforce it. Google proposed standardization in 2019, and the IETF finally published RFC 9309 in September 2022, closing a 28-year gap.",
-      "coda": "The web's most-obeyed gentleman's agreement took twenty-eight years to become a real standard."
+      "tag": "標準",
+      "title": "robots.txt：28 年未定稿",
+      "body": "Martijn Koster 於 1994 年提出 robots.txt；爬蟲自願遵循，無正式標準，亦無強制機制。Google 於 2019 年提出標準化，IETF 於 2022 年 9 月發布 RFC 9309，結束 28 年的空白。",
+      "coda": "網路最被遵守的君子協議，花了 28 年才成為真正的標準。"
     },
     "pentium-fdiv-writeoff": {
-      "tag": "Incident",
-      "title": "The Missing Table Entries",
-      "body": "Mathematician Thomas Nicely noticed his new Pentium returning slightly wrong results while summing reciprocals of primes, and traced the fault to the chip itself. Intel first offered replacements only to customers who complained, and reversed into a full recall only under public pressure.",
-      "coda": "Intel booked a $475 million pretax charge for the recall."
+      "tag": "事件",
+      "title": "遺失的表格項目",
+      "body": "數學家 Thomas Nicely 發現他的新 Pentium 在對質數倒數求和時返回略為錯誤的結果，並將故障追溯到晶片本身。Intel 最初僅向投訴的客戶提供更換，在公眾壓力下才改為全面召回。",
+      "coda": "Intel 為此次召回計提 4.75 億美元的稅前費用。"
     },
     "general-magic-private-network": {
-      "tag": "Networks",
-      "title": "General Magic's Private Wire",
-      "body": "In 1990 ex-Apple engineers Bill Atkinson, Andy Hertzfeld and Marc Porat founded General Magic. Sony's Magic Link shipped in 1994 for $800, sending email and running apps. Leadership built a proprietary AT&T network instead of using the internet, calling the web \"passive.\"",
-      "coda": "Employee Tony Fadell later led hardware development on the iPod and iPhone at Apple."
+      "tag": "網路",
+      "title": "General Magic 的私有線路",
+      "body": "1990 年，前 Apple 工程師 Bill Atkinson、Andy Hertzfeld 與 Marc Porat 創立 General Magic。Sony 的 Magic Link 於 1994 年以 800 美元上市，可發送電子郵件並執行應用程式。領導層選擇建構專有的 AT&T 網路而非使用網際網路，稱網路為「被動的」。",
+      "coda": "員工 Tony Fadell 後來在 Apple 主導 iPod 與 iPhone 的硬體開發。"
     },
     "ibm-simon-first-touchscreen": {
-      "tag": "Touchscreen",
-      "title": "Simon's Fax Machine",
-      "body": "On August 16, 1994, IBM and BellSouth launched the Simon Personal Communicator: a 4.5-inch touchscreen that sent email and fax, priced at $899. Battery life ran about an hour. It was discontinued six months later, having sold roughly 50,000 units.",
-      "coda": "In 2007 Apple shipped the iPhone, a capacitive touchscreen phone with no physical keyboard."
+      "tag": "觸控螢幕",
+      "title": "Simon 的傳真機",
+      "body": "1994 年 8 月 16 日，IBM 與 BellSouth 推出 Simon Personal Communicator：一款 4.5 吋觸控螢幕裝置，可發送電子郵件與傳真，售價 899 美元。電池續航約一小時。上市六個月後停產，銷量約 50,000 台。",
+      "coda": "2007 年 Apple 推出 iPhone，一款無實體鍵盤的電容式觸控螢幕手機。"
     },
     "cors-same-origin-orphaned": {
-      "tag": "Standard",
-      "title": "CORS: A Recommendation in Retirement",
-      "body": "Netscape bolted the same-origin policy onto Navigator in 1995, alongside JavaScript, with no standards process at all. CORS, meant to formally relax that policy, only became a W3C Recommendation in 2014 — and by 2020 the W3C had retired it, handing the spec to WHATWG's Fetch document.",
-      "coda": "The standards body retired its own security recommendation six years after publishing it."
+      "tag": "標準",
+      "title": "CORS：退休中的建議",
+      "body": "Netscape 於 1995 年將同源政策附加至 Navigator，與 JavaScript 一同推出，完全沒有標準化流程。CORS 旨在正式放寬該政策，直到 2014 年才成為 W3C 建議——而到 2020 年，W3C 已將其退休，將規格移交給 WHATWG 的 Fetch 文件。",
+      "coda": "標準機構在發布其安全建議六年後將其退休。"
     },
     "php-resume-counter": {
-      "tag": "Web",
-      "title": "A Résumé Hit Counter",
-      "body": "In 1994, a programmer wrote a handful of small CGI programs in C for no larger reason than wanting to know how many people were looking at his online résumé. He called the toolkit \"Personal Home Page Tools\" and released the source in June 1995.",
-      "coda": "Three decades on, over 70% of websites with a known server-side language still run its descendant."
+      "tag": "網路",
+      "title": "簡歷計數器",
+      "body": "1994 年，一名程式員用 C 語言寫了幾個小型 CGI 程式，唯一的目的就是想知道有多少人瀏覽他的線上簡歷。他將這套工具包命名為「Personal Home Page Tools」，並於 1995 年 6 月釋出了原始碼。",
+      "coda": "三十年後，超過 70% 已知使用伺服器端語言的網站仍在運行其後代。"
     },
     "craigslist-email-list": {
-      "tag": "Classifieds",
-      "title": "A Mailing List of Events",
-      "body": "In 1995, a software engineer in San Francisco started compiling the local gatherings and events he knew about into an email and sending it to a few friends, mainly so people could get to know one another a little better.",
-      "coda": "The list now reaches 570 cities in 70 countries and draws over 140 million visits a month."
+      "tag": "分類廣告",
+      "title": "活動郵件列表",
+      "body": "1995 年，一名舊金山的軟體工程師開始將他所知的本地聚會和活動整理成郵件，發送給幾位朋友，主要是為了讓人們彼此更熟悉一些。",
+      "coda": "該列表現已覆蓋 70 個國家的 570 個城市，每月訪問量超過 1.4 億次。"
     },
     "wirths-law-misattributed": {
-      "tag": "Correction",
-      "title": "The Law He Credited Away",
-      "body": "In 1995 Niklaus Wirth published 'A Plea for Lean Software,' writing that software is getting slower more rapidly than hardware is getting faster. The line later christened Wirth's Law was, by his own footnote, a quotation of his colleague Martin Reiser.",
-      "coda": "The eponym cited the source; posterity kept only the eponym."
+      "tag": "更正",
+      "title": "他讓出的定律",
+      "body": "1995 年，Niklaus Wirth 發表了《A Plea for Lean Software》，指出軟體變慢的速度比硬體變快的速度更快。後來被稱為 Wirth 定律的這句話，根據他自己的腳註，是引用自他的同事 Martin Reiser。",
+      "coda": "命名者引用了來源；後世只保留了命名。"
     },
     "general-magic-weekend-site": {
-      "tag": "Side project",
-      "title": "The Site He Wasn't Serious About",
-      "body": "In the mid-1990s, at a Silicon Valley startup expected to reinvent handheld computing, one programmer spent his spare time writing a scrappy little site for selling secondhand junk. It went up on a weekend. He wasn't taking it seriously.",
-      "coda": "The startup was General Magic. The site was later renamed eBay."
+      "tag": "副項目",
+      "title": "他沒當真做的網站",
+      "body": "1990 年代中期，在一家被期望重新定義手持計算的矽谷新創公司裡，一名程式員利用業餘時間寫了一個粗糙的小網站，用來賣二手雜貨。網站在週末上線。他並沒有把它當回事。",
+      "coda": "那家新創公司是 General Magic。那個網站後來被改名為 eBay。"
     },
     "gettickcount-776-day-bug": {
-      "tag": "Overflow",
-      "title": "A 776-Day Debt",
-      "body": "Windows 95's GetTickCount rolls to zero every 49.7 days, documented behavior, never treated as a bug. But on Windows 8 through Server 2019, the same function could roll over early, near 776 days, a genuine defect. Microsoft fixed it only in Windows 11, version 24H2.",
-      "coda": "The fix landed three decades after the counter it patches first shipped."
+      "tag": "溢出",
+      "title": "776 天的債",
+      "body": "Windows 95 的 GetTickCount 每 49.7 天歸零一次，這是文件記錄的行為，從未被视为錯誤。但在 Windows 8 到 Server 2019 中，同一函數可能會提前溢出，接近 776 天，這是一個真正的缺陷。Microsoft 直到 Windows 11 24H2 版本才修復了它。",
+      "coda": "修復在該計數器首次發布三十年後才落地。"
     },
     "bluetooth-the-placeholder": {
-      "tag": "Etymology",
-      "title": "The Codename That Stuck",
-      "body": "In 1996, Intel's Jim Kardach proposed \"Bluetooth\" — after Harald Bluetooth, the Viking king who united Scandinavia — as a throwaway codename during Ericsson-Nokia talks. The intended replacement, RadioWire, could not clear trademark search before launch.",
-      "coda": "No replacement name ever made it to market."
+      "tag": "詞源",
+      "title": "流傳至今的代號",
+      "body": "1996年，英特爾的吉姆·卡達赫在易利信與諾基亞的會談中，提出以「Bluetooth」——取自統一斯堪地那維亞的維京國王哈拉爾·藍牙——作為臨時代號。原本預定的名稱RadioWire，在上市前未能通過商標檢索。",
+      "coda": "沒有任何替代名稱真正上市。"
     },
     "chinaren-detour": {
-      "tag": "Small world",
-      "title": "The Off-Roster Coder",
-      "body": "In 1996 a Chinese student won gold at the Informatics Olympiad and was admitted straight into Tsinghua's computer science program. As a student he moonlighted building a content system for an alumnus's website. Sohu bought it the next year; he stayed on and kept working there.",
-      "coda": "The student was Wang Xiaochuan. In 2004, inside Sohu, he built Sogou."
+      "tag": "世界真小",
+      "title": "名單之外的程式設計師",
+      "body": "1996年，一名中國學生在資訊奧林匹亞競賽中獲得金牌，直接保送清華大學電腦科學系。就學期間，他為一位校友的網站兼職開發內容系統。隔年搜狐收購了該網站；他留下來繼續工作。",
+      "coda": "這名學生是王小川。2004年，他在搜狐內部打造了搜狗。"
     },
     "google-a-typo": {
-      "tag": "Etymology",
-      "title": "A Misspelled Domain Search",
-      "body": "During a September 1997 brainstorm, Sean Anderson suggested \"googolplex\"; Larry Page shortened it to \"googol.\" Checking the domain registry on the spot, Anderson typed \"google\" by mistake and found it unclaimed. Page registered google.com that same day.",
-      "coda": "The registration record still carries the misspelling, dated September 15, 1997."
+      "tag": "詞源",
+      "title": "拼錯的網域搜尋",
+      "body": "1997年9月的一次腦力激盪中，西恩·安德森提議「googolplex」；賴瑞·佩吉將其縮短為「googol」。當場查詢網域註冊時，安德森誤打成「google」，發現無人註冊。佩吉當天就註冊了google.com。",
+      "coda": "註冊紀錄至今仍保留著這個拼寫錯誤，日期為1997年9月15日。"
     },
     "rfc2119-must-should": {
-      "tag": "Standard",
-      "title": "MUST vs must: A Twenty-Year Gap",
-      "body": "RFC 2119 (March 1997) defined MUST, SHOULD, MAY and their negatives as binding requirement levels for IETF documents. But it only said these words 'are often capitalized' — lowercase must and should were never excluded. RFC 8174 patched the loophole in 2017: only all-caps counts.",
-      "coda": "For twenty years, a lowercase must carried the same legal weight as a shrug."
+      "tag": "標準",
+      "title": "MUST與must：二十年的差距",
+      "body": "RFC 2119（1997年3月）定義了MUST、SHOULD、MAY及其否定形式，作為IETF文件的強制性要求等級。但文件中僅說這些詞「通常以大寫呈現」——小寫的must和should從未被排除。RFC 8174在2017年修補了這個漏洞：只有全大寫才算數。",
+      "coda": "二十年來，小寫的must與聳肩具有相同的法律效力。"
     },
     "netease-license-mail-1997": {
-      "tag": "Licensing",
-      "title": "Sell the license first",
-      "body": "On June 11, 1997, William Ding registered NetEase in Guangzhou. The company's first business was not free webmail. It licensed a piece of email server software it had built to other websites for a fee.",
-      "coda": "NetEase did not launch its own free email, under 163.com, until 1998."
+      "tag": "授權",
+      "title": "先賣授權",
+      "body": "1997年6月11日，丁磊在廣州註冊了網易。公司的第一項業務並非免費電子郵件。它將自建的郵件伺服器軟體授權給其他網站，收取費用。",
+      "coda": "網易直到1998年才在163.com推出自己的免費郵件。"
     },
     "lixiang-graphics-card-home": {
-      "tag": "Review site",
-      "title": "Graphics Card Home",
-      "body": "In 1998, a high school student in Hebei started a personal website called Graphics Card Home in his spare time, posting reviews of computer graphics cards. Two years later he renamed it PCPop and kept updating it through the rest of school.",
-      "coda": "In 2005 the same person founded Autohome."
+      "tag": "評測網站",
+      "title": "顯卡之家",
+      "body": "1998 年，河北一名高中生在課餘時間建立個人網站「顯卡之家」，發布電腦顯卡評測。兩年後他將其改名為 PCPop，並在求學期間持續更新。",
+      "coda": "2005 年，同一人創立了 Autohome。"
     },
     "china-oicq-to-qq": {
-      "tag": "Rebrand",
-      "title": "From OICQ to QQ",
-      "body": "Tencent launched OICQ in February 1999 — the O stood for 'Open,' a nod to ICQ. That October, AOL, ICQ's owner, sent a cease-and-desist over trademark infringement. In November 2000, Ma Huateng renamed it QQ, chosen because the letter reads as 'cute' in Chinese.",
-      "coda": "Open was the first word to go once AOL's lawyers arrived."
+      "tag": "品牌重塑",
+      "title": "從 OICQ 到 QQ",
+      "body": "騰訊於 1999 年 2 月推出 OICQ，其中 O 代表「Open」，向 ICQ 致敬。同年 10 月，ICQ 的擁有者 AOL 以商標侵權為由發出停止侵害通知。2000 年 11 月，馬化騰將其改名為 QQ，因該字母在中文中讀作「可愛」。",
+      "coda": "AOL 的律師一到，「Open」就是第一個被拿掉的詞。"
     },
     "excite-google-1999": {
-      "tag": "Misjudgment",
-      "title": "Excite Turns Down Google",
-      "body": "In 1999 Google offered to sell itself to Excite for $750,000 plus roughly 1% equity. CEO George Bell judged the search gap too small to justify tearing out Excite's technology. The reasoning held up. Google was worth over a billion within a year.",
-      "coda": "Bell has said since that he would make the same call again."
+      "tag": "誤判",
+      "title": "Excite 拒絕 Google",
+      "body": "1999 年，Google 提出以 75 萬美元加約 1% 股權出售給 Excite。CEO George Bell 認為搜尋技術差距太小，不值得替換 Excite 的技術。該判斷站住了腳。Google 在一年內估值超過十億美元。",
+      "coda": "Bell 此後表示，他會再次做出同樣的決定。"
     },
     "mars-climate-orbiter-units": {
-      "tag": "Incident",
-      "title": "Pound-Force, Newton",
-      "body": "Mars Climate Orbiter went silent during orbital insertion. The board found that the contractor's thruster software output impulse in pound-force seconds while navigation software expected newton-seconds, off by a factor of 4.45. The craft was steered to within roughly 57 km of the surface.",
-      "coda": "The $327.6 million mission never transmitted again."
+      "tag": "事故",
+      "title": "磅力，牛頓",
+      "body": "火星氣候軌道器在入軌過程中失去聯繫。調查發現，承包商推進器軟體以磅力秒輸出衝量，而導航軟體預期為牛頓秒，相差 4.45 倍。航天器被導航至距離地表約 57 公里處。",
+      "coda": "這項耗資 3.276 億美元的任務再未傳回訊號。"
     },
     "paypal-palm-beaming": {
-      "tag": "Pivot",
-      "title": "The Beam That Never Came",
-      "body": "In 1999 Confinity launched infrared cash transfers between Palm Pilots, demoed live at a funding event. Weeks after launch it had roughly 13,000 users, a number that barely moved over the following year. What actually took off was email payments, built only as a fallback option.",
-      "coda": "The company renamed itself PayPal and quietly dropped the beam."
+      "tag": "轉型",
+      "title": "從未實現的傳輸",
+      "body": "1999 年，Confinity 推出 Palm Pilot 之間的紅外線現金傳輸，並在融資活動中現場示範。上線數週後約有 13,000 名使用者，此後一年該數字幾乎沒有變動。真正起飛的是電子郵件支付，該功能僅作為備用選項開發。",
+      "coda": "公司改名為 PayPal，並悄悄放棄了傳輸功能。"
     },
     "cai-500-yuan": {
-      "tag": "Small world",
-      "title": "The 500-Yuan Salary",
-      "body": "In 1999 a Hong Kong investment executive traveled to Hangzhou to assess a small website as a possible investment. He found a dozen-odd people coding in one crowded apartment. He didn't invest — he quit his $700,000 salary and joined instead, for 500 yuan a month.",
-      "coda": "His name was Joe Tsai. He later became Alibaba's executive vice chairman."
+      "tag": "小世界",
+      "title": "五百元月薪",
+      "body": "1999 年，一位香港投資主管前往杭州，評估一個小型網站是否值得投資。他發現十幾個人擠在一間公寓裡寫程式。他沒有投資——他辭去了年薪 70 萬美元的職位，轉而加入，月薪 500 元。",
+      "coda": "他的名字是蔡崇信。他後來成為阿里巴巴的執行副主席。"
     },
     "gps-week-rollover": {
-      "tag": "Mechanism",
-      "title": "GPS Week 1024",
-      "body": "GPS counts weeks in 10 bits, a field that maxes at 1,023 and rolls to zero roughly every 19.7 years. The first rollover hit in August 1999. The second landed on 6 April 2019, breaking receivers built as if the first had been a one-off.",
-      "coda": "The same overflow is on a schedule and due to recur again in 2038."
+      "tag": "機制",
+      "title": "GPS 第 1024 週",
+      "body": "GPS 以 10 位元計數週數，該欄位最大值為 1,023，大約每 19.7 年歸零一次。第一次歸零發生在 1999 年 8 月。第二次發生在 2019 年 4 月 6 日，破壞了那些假設第一次歸零只是偶發事件的接收器。",
+      "coda": "相同的溢位已排入日程，預計將在 2038 年再次發生。"
     },
     "foxmail-resold": {
-      "tag": "Small world",
-      "title": "Sold With the Software",
-      "body": "In 1994 a programmer in Guangzhou wrote a free email client in his spare time. In 2000, as the dot-com bubble burst, he sold it to a company and stayed on as tech director. Five years later that company folded and sold the software — and him with it — to Tencent.",
-      "coda": "The programmer was Zhang Xiaolong. Five years after that, inside Tencent, he built WeChat."
+      "tag": "小世界",
+      "title": "隨軟體售出",
+      "body": "1994 年，一位廣州程式員在業餘時間寫了一個免費郵件客戶端。2000 年，隨著網際網路泡沫破裂，他將其賣給一家公司，並留任技術總監。五年後，該公司倒閉，將軟體——連同他本人——賣給了騰訊。",
+      "coda": "那位程式員是張小龍。五年後，在騰訊內部，他打造了微信。"
     },
     "danger-duarte-android-reunion": {
-      "tag": "Reunion",
-      "title": "Design Director, Failed Startup",
-      "body": "In 2000 a designer joined a handheld-device startup founded by Andy Rubin, working on its interface. The company was sold to Microsoft and the team scattered. The designer went on to two other companies over the next decade.",
-      "coda": "The designer was Matias Duarte. Ten years later Rubin hired him onto Android."
+      "tag": "重逢",
+      "title": "設計總監，失敗的初創公司",
+      "body": "2000 年，一位設計師加入由 Andy Rubin 創立的行動裝置初創公司，負責介面設計。該公司被微軟收購，團隊解散。該設計師在接下來的十年裡又去了兩家公司。",
+      "coda": "那位設計師是 Matias Duarte。十年後，Rubin 將他招入 Android。"
     },
     "slashdot-ipod-2001": {
-      "tag": "Dismissal",
-      "title": "No Wireless, Less Space",
-      "body": "When Apple unveiled the first iPod on October 23, 2001, Slashdot founder Rob \"CmdrTaco\" Malda wrote in his editor's note: \"No wireless. Less space than a nomad. Lame.\" Against the spec sheets of rival MP3 players at the time, the line was not factually wrong.",
-      "coda": "The comment is now cited routinely as the counterexample it produced."
+      "tag": "輕視",
+      "title": "無無線，空間更小",
+      "body": "當 Apple 於 2001 年 10 月 23 日揭曉第一代 iPod 時，Slashdot 創始人 Rob \"CmdrTaco\" Malda 在其編輯按語中寫道：「無無線。空間比 nomad 還小。遜。」相對於當時競爭對手 MP3 播放器的規格表，這句話在事實上並無錯誤。",
+      "coda": "該評論如今常被引用為其所產生的反例。"
     },
     "discuz-shenyang-dorm": {
-      "tag": "Forum",
-      "title": "CDB, a dorm build",
-      "body": "In 2001, a university student living in a dormitory in Shenyang wrote a piece of forum software and named it Crossday Bulletin, working on it alongside his coursework. The following October he renamed it Discuz.",
-      "coda": "On August 23, 2010, Tencent acquired the company he had built around it."
+      "tag": "論壇",
+      "title": "CDB，一個宿舍專案",
+      "body": "2001 年，一名住在瀋陽宿舍的大學生寫了一套論壇軟體，命名為 Crossday Bulletin，並與課業並行開發。同年十月，他將其改名為 Discuz。",
+      "coda": "2010 年 8 月 23 日，Tencent 收購了他圍繞該軟體建立的公司。"
     },
     "wikipedia-side-wiki": {
       "tag": "Wiki",
-      "title": "A Side Project Next to Nupedia",
-      "body": "On January 10, 2001, the founder of a peer-reviewed online encyclopedia installed wiki software on the project's own server, mainly so volunteers could try drafting entries loosely on the side while the reviewed encyclopedia moved slowly ahead.",
-      "coda": "By July 2026 its English edition alone held over 7.2 million articles."
+      "title": "Nupedia 旁的副專案",
+      "body": "2001 年 1 月 10 日，一位同儕審查線上百科全書的創辦人，在專案自有伺服器上安裝了 wiki 軟體，主要讓志工在受審查百科緩慢推進的同時，能於旁側隨意嘗試撰寫條目。",
+      "coda": "至 2026 年 7 月，其英文版單單就擁有超過 720 萬篇文章。"
     },
     "bittorrent-mailing-list": {
       "tag": "Protocol",
-      "title": "A New P2P App",
-      "body": "On July 2, 2001, a programmer posted a message to a Yahoo eGroups mailing list titled \"BitTorrent -- a new P2P app,\" describing a file-distribution protocol he had just finished designing, one that pulled pieces of a file from many sources at once.",
-      "coda": "Three years later it accounted for a third of all internet traffic, per a 2004 CacheLogic study."
+      "title": "一款新的 P2P 應用",
+      "body": "2001 年 7 月 2 日，一名程式設計師在 Yahoo eGroups 郵件列表上發布了一則標題為「BitTorrent -- a new P2P app」的訊息，描述了他剛完成設計的一種檔案分發協定，該協定能同時從多個來源拉取檔案片段。",
+      "coda": "三年後，根據 2004 年 CacheLogic 的研究，它佔據了所有網際網路流量的三分之一。"
     },
     "webvan-thirty-minute-window": {
       "tag": "Groceries",
-      "title": "The Thirty-Minute Window",
-      "body": "In 1996 Borders bookstore co-founder Louis Borders started Webvan, promising 30-minute delivery on warehouses built from scratch. It IPO'd in November 1999 for $375 million at a valuation over $4.8 billion, then filed for bankruptcy in July 2001, having lost more than $800 million.",
-      "coda": "Some Webvan executives went on to Amazon; Amazon Fresh and Instacart later filled the same order."
+      "title": "三十分鐘窗口",
+      "body": "1996 年，Borders 書店共同創辦人 Louis Borders 創立了 Webvan，承諾在從零建成的倉庫基礎上提供 30 分鐘送貨。它於 1999 年 11 月以超過 48 億美元的估值 IPO，募資 3.75 億美元，隨後於 2001 年 7 月申請破產，虧損超過 8 億美元。",
+      "coda": "部分 Webvan 高階主管後來轉投 Amazon；Amazon Fresh 和 Instacart 後來填補了相同的訂單需求。"
     },
     "kozmo-free-hour-delivery": {
       "tag": "Delivery",
-      "title": "The Free-Hour Promise",
-      "body": "In 1998 Joseph Park and Yong Kang founded Kozmo.com, promising free one-hour delivery with couriers dispatched by pager. It raised roughly $250 million but earned $3.5 million against a $26.3 million loss in 1999. In April 2001, staff learned of the shutdown by finding closed offices.",
-      "coda": "DoorDash, founded in 2013, dispatches couriers by smartphone GPS and charges a delivery fee."
+      "title": "免費一小時承諾",
+      "body": "1998 年，Joseph Park 與 Yong Kang 創立了 Kozmo.com，承諾透過傳呼機調度快遞員提供免費一小時送貨。它募資約 2.5 億美元，但在 1999 年賺得 350 萬美元，卻面臨 2630 萬美元的虧損。2001 年 4 月，員工透過發現辦公室關閉而得知關門消息。",
+      "coda": "2013 年創立的 DoorDash，透過智慧型手機 GPS 調度快遞員，並收取送貨費。"
     },
     "flooz-digital-currency": {
       "tag": "Currency",
-      "title": "Money With No Store",
-      "body": "In February 1999, iVillage co-founder Robert Levitan launched Flooz.com, a digital currency users could buy and spend at partner merchants. A crime ring used stolen cards to mint $300,000 in fraudulent credits, and by 2001 fraud reached 19% of volume. The company folded that August.",
-      "coda": "In January 2009, Satoshi Nakamoto mined bitcoin's genesis block."
+      "title": "無店鋪的貨幣",
+      "body": "1999 年 2 月，iVillage 聯合創辦人 Robert Levitan 推出 Flooz.com，一種用戶可向合作商家購買並消費的數位貨幣。一個犯罪集團使用盜用信用卡鑄造了 30 萬美元的詐欺信用額度，到 2001 年詐欺佔交易量達 19%。該公司於同年 8 月倒閉。",
+      "coda": "2009 年 1 月，Satoshi Nakamoto 挖出了比特幣的創世區塊。"
     },
     "yahoo-google-2002": {
-      "tag": "Miss",
-      "title": "Yahoo Passes on Google",
-      "body": "In 2002 Yahoo CEO Terry Semel offered $3 billion for Google; Page and Brin held out for $5 billion. Semel's read was that Yahoo's own market cap, near $5 billion after the crash, could not absorb that bet. Google went public two years later at $23 billion.",
-      "coda": "Yahoo sold its core business to Verizon in 2017 for $4.48 billion."
+      "tag": "錯失",
+      "title": "Yahoo 錯過 Google",
+      "body": "2002 年，Yahoo 執行長 Terry Semel 出價 30 億美元收購 Google；Page 與 Brin 堅持要價 50 億美元。Semel 的判斷是 Yahoo 自身市值在崩盤後接近 50 億美元，無法承擔此賭注。Google 兩年後以 230 億美元市值上市。",
+      "coda": "Yahoo 於 2017 年以 44.8 億美元將核心業務出售給 Verizon。"
     },
     "pplive-dorm-2002": {
-      "tag": "Dorm room",
-      "title": "Building 26, Yunyuan",
-      "body": "During the 2002 World Cup, Yao Xin's dorm at Huazhong University of Science and Technology had no television, so he watched matches over the campus network, which kept crashing. In his room in Building 26 he started working out how to combine peer-to-peer transfer with streaming video.",
-      "coda": "PPLive launched in 2005 and, at its peak, counted over a hundred million users."
+      "tag": "宿舍",
+      "title": "雲園 26 棟",
+      "body": "2002 年世界盃期間，姚欣在華中科技大學的宿舍沒有電視，他透過校園網路觀看比賽，但網路頻繁當機。他在 26 棟的房間裡開始研究如何將 P2P 傳輸與串流影片結合。",
+      "coda": "PPLive 於 2005 年推出，鼎盛時期用戶超過一億。"
     },
     "china-alipay-escrow": {
-      "tag": "Trust",
-      "title": "The Escrow Workaround",
-      "body": "In 2003, with Taobao buyers and sellers unwilling to trust each other first, finance built an escrow workaround: payment sat frozen until goods were confirmed. The first trade closed that October — a student in Xi'an paying a seller in Japan. The name puns 'pay' and 'guarantee.'",
-      "coda": "The pun became the company's permanent, official name."
+      "tag": "信任",
+      "title": "擔保交易變通法",
+      "body": "2003 年，由於淘寶買賣雙方不願先信任對方，財務部門建立了一套擔保交易變通法：款項在確認收貨前保持凍結。首筆交易於同年 10 月完成——一名西安學生向日本賣家付款。名稱取「支付」與「擔保」的諧音。",
+      "coda": "該諧音成為公司的永久正式名稱。"
     },
     "china-taobao-free-vs-ebay": {
-      "tag": "Competition",
-      "title": "Three Years Free",
-      "body": "In 2003, eBay's Eachnet held over 70 percent of China's C2C market, charging listing and transaction fees. Taobao launched that May to a near-empty site; Alibaba's answer was three years of free listings. By 2006, Taobao held 70 percent and eBay withdrew from Chinese C2C.",
-      "coda": "The side still charging listing fees ran out of runway first."
+      "tag": "競爭",
+      "title": "三年免費",
+      "body": "2003 年，eBay 的易趣佔據中國 C2C 市場超過 70%，並收取刊登與交易費用。淘寶於同年 5 月推出，初期網站幾乎空無一人；阿里的應對是提供三年免費刊登。到 2006 年，淘寶佔據 70% 市場，eBay 退出中國 C2C 市場。",
+      "coda": "仍收取刊登費的一方先耗盡資金。"
     },
     "dianping-zagat-notes": {
-      "tag": "Review guide",
-      "title": "A Zagat notebook",
-      "body": "In 2002, Zhang Tao came back to China from the United States carrying an idea he had picked up there: the Zagat Survey, a restaurant guide built from readers' own ratings. He registered the domain zsurvey.com and set out to build a Chinese version in Shanghai.",
-      "coda": "Dianping, the site that grew from it, went live on April 12, 2003."
+      "tag": "評論指南",
+      "title": "一本 Zagat 筆記本",
+      "body": "2002 年，張濤從美國回到中國，帶回他在當地接觸到的一個構想：Zagat Survey，一本由讀者評分構成的餐廳指南。他註冊了 zsurvey.com 域名，在上海開始打造中文版。",
+      "coda": "由此發展出的大衆點評於 2003 年 4 月 12 日上線。"
     },
     "wordpress-b2-post": {
-      "tag": "Blogging",
-      "title": "The Blogging Software Dilemma",
-      "body": "On January 24, 2003, a university student wrote on his own blog that b2, the blogging software he used daily, had gone unmaintained for months since its lead developer disappeared. He said he wanted to fork it and asked only for a name.",
-      "coda": "The company that grew out of that fork was valued at $7.5 billion by 2021."
+      "tag": "部落格",
+      "title": "部落格軟體的困境",
+      "body": "2003 年 1 月 24 日，一名大學生在自己的部落格上寫道，他每天使用的部落格軟體 b2 已因主要開發者失蹤而停更數月。他表示想 fork 它，只請求一個名字。",
+      "coda": "由該 fork 發展出的公司在 2021 年估值達 75 億美元。"
     },
     "2003-blackout-race-condition": {
-      "tag": "Incident",
-      "title": "The Alarm That Didn't Ring",
-      "body": "The alarm process at an Ohio control room silently jammed: a coding error let two processes gain write access to the same data structure at once, looping forever. Operators never saw the overload warnings and failed to shed load in time. The cascade left 55 million people without power.",
-      "coda": "Engineers needed eight weeks to reproduce the race condition."
+      "tag": "事故",
+      "title": "沒有響起的警報",
+      "body": "俄亥俄州一間控制室的警報程序靜默卡死：一個編碼錯誤讓兩個程序同時取得同一資料結構的寫入權限，陷入無限迴圈。操作員從未看到超載警告，也未能及時卸載負荷。連鎖反應使 5500 萬人斷電。",
+      "coda": "工程師花了八週才重現該競爭條件。"
     },
     "aws-not-leftover-servers": {
-      "tag": "Correction",
-      "title": "Not the Leftover Servers",
-      "body": "The common version says AWS began by reselling Amazon's idle holiday-season server capacity. Benjamin Black calls that flatly false: in 2003 he and Chris Pinkham wrote a memo proposing standardized, automated infrastructure, purpose-built from the start to be sold externally as a service.",
-      "coda": "S3 and EC2 launched in 2006, following that memo."
+      "tag": "更正",
+      "title": "並非閒置伺服器",
+      "body": "常見說法是 AWS 起步於轉售亞馬遜節假日閒置的伺服器容量。Benjamin Black 明確稱此說法錯誤：2003 年他與 Chris Pinkham 撰寫了一份備忘錄，提出標準化、自動化的基礎設施，從一開始就為對外銷售服務而設計。",
+      "coda": "S3 與 EC2 於 2006 年依該備忘錄推出。"
     },
     "maps-intern-friendfeed": {
-      "tag": "Internship",
-      "title": "The Maps Team Intern",
-      "body": "In 2003 a Google product manager hired an intern onto the team building local search, the project that grew into Google Maps. Four years later that intern and an engineer who had built Gmail left Google together to start a company.",
-      "coda": "The intern was Bret Taylor. The company he left to start was bought by Facebook."
+      "tag": "實習",
+      "title": "地圖團隊的實習生",
+      "body": "2003 年，一名 Google 產品經理將一名實習生招入建構本地搜尋的團隊，該項目後來發展為 Google Maps。四年後，該實習生與一名曾建構 Gmail 的工程師一同離開 Google 創業。",
+      "coda": "該實習生是 Bret Taylor。他離開後創立的公司在被 Facebook 收購。"
     },
     "friendster-forty-second-load": {
-      "tag": "Scaling",
-      "title": "The Forty-Second Load",
-      "body": "Friendster launched in 2002 and reached over 100 million registered accounts, but its servers buckled under the load of computing degrees of connection between friends; a single page could take forty seconds to load. Support emails show users threatening to defect to the newer MySpace.",
-      "coda": "Facebook launched in 2004 on the same social-graph idea and held under the traffic."
+      "tag": "擴展",
+      "title": "第四十二次載入",
+      "body": "Friendster 於 2002 年上線，註冊帳戶超過一億，但伺服器在計算朋友之間的關聯度時不堪負荷；單一頁面可能需要四十秒才能載入。客服郵件顯示使用者威脅要轉投較新的 MySpace。",
+      "coda": "Facebook 於 2004 年以相同的社交圖概念上線，並在流量下維持穩定。"
     },
     "shopify-snowdevil-software": {
-      "tag": "Pivot",
-      "title": "The Store Software Outgrew the Store",
-      "body": "In 2004, programmer Tobias Lutke found the e-commerce software of the day too clunky, so he wrote his own to sell snowboard gear online as Snowdevil. Snowdevil itself stayed a small shop, but other merchants started asking to license the software behind it.",
-      "coda": "Shopify listed on the New York Stock Exchange in 2015."
+      "tag": "轉型",
+      "title": "商店軟體超越了商店",
+      "body": "2004 年，程式設計師 Tobias Lutke 認為當時的電子商務軟體過於笨重，因此自行撰寫軟體，以 Snowdevil 之名線上銷售滑雪板裝備。Snowdevil 本身始終是一家小店，但其他商家開始要求授權其背後的軟體。",
+      "coda": "Shopify 於 2015 年在紐約證券交易所上市。"
     },
     "twitter-odeo-podcast-pivot": {
-      "tag": "Pivot",
-      "title": "The Podcast Company's Side Project",
-      "body": "On June 28, 2005, Apple built podcast subscriptions into iTunes; within two days subscriptions passed one million, and Odeo's entire podcasting business went obsolete overnight. The next March, an internal hackathon produced Jack Dorsey's SMS status-update pitch: Twitter.",
-      "coda": "Odeo, the company Twitter was built inside, was sold off in 2007."
+      "tag": "轉型",
+      "title": "播客公司的副項目",
+      "body": "2005 年 6 月 28 日，Apple 將播客訂閱功能納入 iTunes；兩天內訂閱量突破一百萬，Odeo 的整個播客業務一夜之間過時。次年三月，一場內部黑客松產生了 Jack Dorsey 的 SMS 狀態更新提案：Twitter。",
+      "coda": "Odeo，Twitter 誕生於此的公司，於 2007 年被出售。"
     },
     "youtube-tune-in-hook-up": {
-      "tag": "Legend",
-      "title": "The Domain Registered on Valentine's Day",
-      "body": "youtube.com was registered on February 14, 2005, and its founders later told of a dating-site concept modeled on Hot or Not. Jawed Karim denied attending the dinner party the story hinges on, and Steve Chen conceded it reads like a marketing narrative.",
-      "coda": "What Karim cited instead was trouble finding tsunami footage online."
+      "tag": "傳奇",
+      "title": "情人節註冊的網域",
+      "body": "youtube.com 於 2005 年 2 月 14 日註冊，其創辦人後來提到一個模仿 Hot or Not 的約會網站概念。Jawed Karim 否認出席故事關鍵的晚宴，Steve Chen 則承認這讀起來像行銷敘事。",
+      "coda": "Karim 實際提到的是難以在網上找到海嘯影片。"
     },
     "duan-buffett-lunch": {
-      "tag": "Small world",
-      "title": "The Buffett Lunch",
-      "body": "In 2006 a Guangdong electronics manufacturer won the annual charity auction for lunch with Warren Buffett, paying $620,100. He brought along a 26-year-old who had just quit an American company and had no clear plan yet.",
-      "coda": "The manufacturer was Duan Yongping. The young man was Colin Huang, who later founded Pinduoduo."
+      "tag": "世界真小",
+      "title": "巴菲特午餐",
+      "body": "2006 年，一位廣東電子製造商以 620,100 美元贏得與 Warren Buffett 共進午餐的年度慈善拍賣。他帶了一位剛辭去美國公司職位、尚無明確計劃的 26 歲年輕人。",
+      "coda": "該製造商是段永平。年輕人則是後來創立拼多多的黃崢。"
     },
     "blackberry-iphone-2007": {
-      "tag": "Misread",
-      "title": "BlackBerry Saw the Flaws",
-      "body": "In January 2007, BlackBerry co-CEO Jim Balsillie and chairman Mike Lazaridis watched the iPhone unveiling. Lazaridis's list of flaws was accurate: no physical keyboard, weak security, poor battery, glass typing. Every item was real. Balsillie's reply was, \"It's OK, we'll be fine.\"",
-      "coda": "BlackBerry's market share eroded to the iPhone in the years that followed."
+      "tag": "誤判",
+      "title": "BlackBerry 察覺了缺陷",
+      "body": "2007 年 1 月，BlackBerry 共同執行長 Jim Balsillie 與董事長 Mike Lazaridis 觀看 iPhone 發表會。Lazaridis 列出的缺陷準確無誤：無實體鍵盤、安全性弱、電池續航差、玻璃螢幕打字體驗不佳。每一項皆屬實。Balsillie 的回應是：「沒關係，我們會沒事。」",
+      "coda": "隨後數年，BlackBerry 的市場佔有率被 iPhone 侵蝕。"
     },
     "dvorak-iphone-2007": {
-      "tag": "Prediction",
-      "title": "Dvorak Says Pull the Plug",
-      "body": "On March 28, 2007, columnist John C. Dvorak wrote that phone margins were thin and Nokia and Motorola already dominant, so Apple should hand the iPhone design to some \"suckers\" and walk away. Given Apple's history in that market, the reasoning was not unreasonable.",
-      "coda": "He later said that once he actually held the phone, he regretted the call."
+      "tag": "預測",
+      "title": "Dvorak 說拔掉插頭",
+      "body": "2007 年 3 月 28 日，專欄作家 John C. Dvorak 撰文指出手機利潤微薄，Nokia 與 Motorola 已佔據主導地位，因此 Apple 應將 iPhone 設計交給某些「冤大頭」後抽身。鑒於 Apple 在該市場的歷史，此推論並非不合理。",
+      "coda": "他後來表示，一旦實際握持該手機後，便後悔了該論斷。"
     },
     "auctomatic-taggar-yc": {
-      "tag": "Merger",
-      "title": "The One Who Had to Learn to Code",
-      "body": "In 2007 two Irish teenage brothers brought a homemade e-commerce tool into Y Combinator and merged their company with one run by two Oxford graduates. Neither of the Oxford pair could program. One of them was told to learn, fast.",
-      "coda": "That one was Harj Taggar, later Y Combinator's first non-founder partner."
+      "tag": "合併",
+      "title": "那個必須學會寫程式的人",
+      "body": "2007 年，兩名愛爾蘭青少年兄弟將自製的電子商務工具帶入 Y Combinator，並將他們的公司與一家由兩名牛津大學畢業生營運的公司合併。牛津的兩人皆無法寫程式。其中一人被要求快速學會。",
+      "coda": "那人便是 Harj Taggar，後來成為 Y Combinator 首位非創始人合夥人。"
     },
     "justintv-backpack-cruise": {
-      "tag": "The backpack",
-      "title": "The Livestreaming Backpack",
-      "body": "In March 2007 a man strapped a webcam to a baseball cap and began livestreaming his life around San Francisco, twenty-four hours a day, wearing a homemade laptop-backpack rig built by a friend who had dropped out of MIT.",
-      "coda": "The friend who built it was Kyle Vogt, who later founded Cruise, acquired by GM for over $1 billion."
+      "tag": "背包",
+      "title": "直播背包",
+      "body": "2007 年 3 月，一名男子將網路攝影機綁在棒球帽上，開始在舊金山周圍全天候直播他的生活，他背著一名從 MIT 輟學的朋友所製作的自製筆記型電腦背包裝置。",
+      "coda": "製作該裝置的朋友是 Kyle Vogt，他後來創立了 Cruise，被 GM 以超過 10 億美元收購。"
     },
     "stackoverflow-blog-post": {
-      "tag": "Q&A",
-      "title": "The Anti-Experts-Exchange",
-      "body": "On April 16, 2008, a programmer posted on his own blog that he wanted to build an \"anti-Experts-Exchange\" question-and-answer site for programmers, without the paywalls and search-engine gaming he found nauseating about the incumbent.",
-      "coda": "In 2021 the site was sold to Prosus for 1.8 billion dollars."
+      "tag": "問答",
+      "title": "反 Experts-Exchange",
+      "body": "2008 年 4 月 16 日，一名程式設計師在自己的部落格上發文，表示他想為程式設計師建立一個「反 Experts-Exchange」問答網站，沒有他覺得令人作嘔的既有平台的付費牆與搜尋引擎操弄。",
+      "coda": "2021 年，該網站以 18 億美元出售給 Prosus。"
     },
     "zune-leap-year-freeze": {
-      "tag": "Incident",
-      "title": "Day 366",
-      "body": "Near midnight Pacific time on 31 December 2008, every Zune 30 froze solid, nicknamed Z2K9. The cause was an infinite loop in a power-chip driver that could only trigger on a leap year's 366th day. No patch existed; the only fix was letting the battery die.",
-      "coda": "The remedy shipped by Microsoft was to wait for the device to run out of power."
+      "tag": "事件",
+      "title": "第 366 天",
+      "body": "2008 年 12 月 31 日太平洋時間接近午夜時，所有 Zune 30 全部凍結，被稱為 Z2K9。原因是電源晶片驅動程式中存在一個無限迴圈，僅能在閏年的第 366 天觸發。當時沒有補丁；唯一的修復方法是讓電池耗盡。",
+      "coda": "Microsoft 提供的解決方案是等待裝置電力耗盡。"
     },
     "china-wang-jian-alibaba-cloud": {
-      "tag": "Doubt",
-      "title": "The Liar Who Built the Cloud",
-      "body": "Around 2012, with Alibaba Cloud years into heavy investment and no visible product, staff told Jack Ma directly that Wang Jian was a fraud. Close to eighty percent of the engineering team quit. Ma's reply: fund it a billion yuan a year for ten years, then judge it.",
-      "coda": "Ten years later, the fraud's project turned a profit."
+      "tag": "懷疑",
+      "title": "打造雲端的那個騙子",
+      "body": "約 2012 年，阿里巴巴雲端已投入大量資金多年卻無可見產品，員工直接向馬雲指出王堅是騙子。近百分之八十的工程團隊離職。馬雲的回應是：每年投入十億元資金，持續十年，再作評判。",
+      "coda": "十年後，那個騙子的專案開始獲利。"
     },
     "taobao-double11-2009": {
-      "tag": "Discount",
-      "title": "27 merchants",
-      "body": "On November 11, 2009, Taobao Mall rounded up twenty-seven brands to fill a slow sales week; the plan had called for over thirty, but merchants kept dropping out. A civil servant named Yan Jun in Shanxi placed the day's first order, 150 yuan of phone credit, at 00:00:03.",
-      "coda": "Sales that day reached 52 million yuan, ten times an ordinary day."
+      "tag": "折扣",
+      "title": "27 家商家",
+      "body": "2009 年 11 月 11 日，淘寶商城召集了二十七個品牌來填補銷售低迷的一週；原計畫超過三十個，但商家不斷退出。山西一名叫嚴俊的公務員在 00:00:03 下了當天第一單，150 元話費。",
+      "coda": "當天銷售額達到 5200 萬元，是普通日子的十倍。"
     },
     "cloudflare-hbs-elective": {
-      "tag": "Classmate",
-      "title": "An Elective at HBS",
-      "body": "In 2009 a programmer took a leave of absence to study for an MBA at Harvard Business School. He had spent years running an anti-spam volunteer project on the side. He mentioned it in class one day. A classmate said it should be a real product.",
-      "coda": "That classmate was Michelle Zatlyn, later Cloudflare's co-founder and COO."
+      "tag": "同學",
+      "title": "哈佛商學院的一門選修課",
+      "body": "2009 年，一名程式設計師請假去哈佛商學院攻讀 MBA。他多年來在業餘時間經營一個反垃圾郵件志工專案。有一天他在課堂上提到了這件事。一位同學說這應該成為一個真正的產品。",
+      "coda": "那位同學是 Michelle Zatlyn，後來成為 Cloudflare 的聯合創始人兼 COO。"
     },
     "china-3q-war": {
-      "tag": "Incident",
-      "title": "Choose One",
-      "body": "On November 3, 2010, Tencent forced a pop-up choice: uninstall 360 or QQ would stop running. Ma Huateng warned users might be wiped out within three days. Days later the Ministry of Industry and Information Technology ordered both sides to restore compatibility.",
-      "coda": "The regulator ended it, not the market or either company."
+      "tag": "事件",
+      "title": "二選一",
+      "body": "2010 年 11 月 3 日，騰訊強制彈出選擇：卸載 360 或 QQ 將停止運行。馬化騰警告用戶可能在三天內被清除。幾天後，工業和信息化部命令雙方恢復相容性。",
+      "coda": "監管機構終止了這場爭端，而非市場或任何一方公司。"
     },
     "china-thousand-groupon-war": {
-      "tag": "Bubble",
-      "title": "The Thousand-Groupon War",
-      "body": "China's first group-buying site launched in 2010; portals and social networks piled in within months. By August 2011, more than 5,000 group-buying companies were competing — the 'Thousand-Groupon War.' By mid-2014, only 176 sites remained standing.",
-      "coda": "Fewer than two hundred of five thousand survived."
+      "tag": "泡沫",
+      "title": "千團大戰",
+      "body": "中國第一個團購網站於 2010 年上線；門戶與社交網絡在數月內蜂擁而入。至 2011 年 8 月，超過 5,000 家團購公司相互競爭——即「千團大戰」。至 2014 年中，僅剩 176 個網站仍在營運。",
+      "coda": "五千家中不到兩百家存活。"
     },
     "semver-dependency-hell": {
-      "tag": "Standard",
-      "title": "SemVer's Own Exemption",
-      "body": "In 2010 GitHub cofounder Tom Preston-Werner published semver.org, proposing MAJOR.MINOR.PATCH to end 'dependency hell.' The spec itself carves out an exception: during the 0.y.z 'initial development' phase, anything may change at any time — a stage most packages never actually leave.",
-      "coda": "Most published packages never leave the version range the rule does not bind."
+      "tag": "標準",
+      "title": "SemVer 自身的豁免",
+      "body": "2010 年 GitHub 聯合創始人 Tom Preston-Werner 發布 semver.org，提出 MAJOR.MINOR.PATCH 以終結「依賴地獄」。該規範本身卻開了一個例外：在 0.y.z「初始開發」階段，任何內容皆可隨時變更——而大多數套件從未真正離開這一階段。",
+      "coda": "大多數已發布的套件從未離開該規則不具約束力的版本範圍。"
     },
     "instagram-burbn-cut": {
-      "tag": "Pivot",
-      "title": "What Got Cut From Burbn",
-      "body": "Kevin Systrom and Mike Krieger spent nearly a year building a full-featured check-in app called Burbn, then judged their own finished iPhone build cluttered. They stripped it down to photos, comments, and likes, and shipped the result eight weeks later as Instagram.",
-      "coda": "Within a week of launch it had 100,000 users."
+      "tag": "轉型",
+      "title": "Burbn 被砍掉的部分",
+      "body": "Kevin Systrom 與 Mike Krieger 花了近一年時間打造一款功能齊全的簽到應用 Burbn，隨後認為自己完成的 iPhone 版本過於雜亂。他們將其精簡為照片、評論與按讚，並在八週後以 Instagram 之名發布。",
+      "coda": "上線一週內便吸引了十萬名用戶。"
     },
     "tz-database-lawsuit": {
-      "tag": "Incident",
-      "title": "The Lawsuit Over the Time Zone Database",
-      "body": "In October 2011 astrology-software maker Astrolabe sued the tz database's maintainers, claiming its zone data infringed an atlas it published. The mailing list and FTP server went dark. ICANN stepped in to host the database; Astrolabe withdrew the suit in February 2012.",
-      "coda": "An astrology company's copyright claim over sunrise tables was withdrawn without payment."
+      "tag": "事件",
+      "title": "時區資料庫訴訟案",
+      "body": "2011年10月，占星軟體製造商 Astrolabe 起訴 tz 資料庫的維護者，聲稱其時區資料侵犯了該公司出版的地圖集。郵件列表與 FTP 伺服器隨即關閉。ICANN 介入並代管該資料庫；Astrolabe 於2012年2月撤回訴訟。",
+      "coda": "一家占星公司對日出時間表的版權主張，在未支付任何賠償下被撤回。"
     },
     "instagram-facebook-2012": {
-      "tag": "Ridicule",
-      "title": "A Billion for a Filter",
-      "body": "In April 2012 Facebook announced it was paying $1 billion for Instagram, a 13-person team with no revenue. On The Daily Show, Jon Stewart asked, \"A billion dollars of money? For a thing that kind of ruins your pictures?\" Measured against team size and revenue, the question was not unfair.",
-      "coda": "The deal is now cited routinely as one of the best acquisitions in tech history."
+      "tag": "嘲諷",
+      "title": "十億買一個濾鏡",
+      "body": "2012年4月，Facebook 宣布以10億美元收購 Instagram，一個僅有13名成員且無營收的團隊。在《每日秀》中，Jon Stewart 問道：「十億美元？就為了那個會毀掉你照片的東西？」以團隊規模和營收衡量，這個問題並非不公允。",
+      "coda": "如今這筆交易常被引用為科技史上最成功的收購之一。"
     },
     "didi-alibaba-resignation": {
-      "tag": "Resignation",
-      "title": "From Alibaba to taxis",
-      "body": "Cheng Wei spent eight years at Alibaba, working up to deputy general manager of Alipay's consumer business. In June 2012 he quit and, with Wu Rui and Li Xiang, started a taxi-hailing app. When it launched on September 9, only sixteen drivers were online at once.",
-      "coda": "Two months later, more than a hundred drivers were online at the same time."
+      "tag": "辭職",
+      "title": "從阿里巴巴到計程車",
+      "body": "程維在阿里巴巴工作八年，升至支付寶消費業務副總經理。2012 年 6 月他辭職，與吳睿、李想共同創立了一款叫車應用。9 月 9 日推出時，同時在線司機僅十六人。",
+      "coda": "兩個月後，同時在線司機超過百人。"
     },
     "knight-capital-power-peg": {
-      "tag": "Incident",
-      "title": "The Eighth Server",
-      "body": "Knight Capital pushed new trading code to eight servers; only seven took it. The eighth still ran dead Power Peg code, retired years earlier, which live orders woke up. In 45 minutes Knight built $3.5B long and $3.15B short. The SEC's finding: nobody reviewed the incomplete deploy.",
-      "coda": "Knight was acquired by a rival within a week of the loss."
+      "tag": "事件",
+      "title": "第八台伺服器",
+      "body": "Knight Capital 將新交易程式碼推送到八台伺服器，僅七台接收成功。第八台仍執行多年前已退役的 Power Peg 程式碼，被即時訂單喚醒。45 分鐘內 Knight 建立 $3.5B 多頭與 $3.15B 空頭。SEC 的結論：無人審查此次不完整部署。",
+      "coda": "Knight 在損失發生一周內被競爭對手收購。"
     },
     "dnnresearch-week-of-bidding": {
-      "tag": "Auction",
-      "title": "A Week of Bidding",
-      "body": "In 2012 a University of Toronto professor and his two graduate students crushed the field in an image-recognition contest, then incorporated a shell company to sell themselves. Google, Microsoft, Baidu, and DeepMind spent a week bidding against each other for it.",
-      "coda": "Hinton chose Google. One of the two students was Ilya Sutskever."
+      "tag": "拍賣",
+      "title": "競標的一週",
+      "body": "2012 年，一名多倫多大學教授與兩名研究生在圖像辨識競賽中壓倒群雄，隨後註冊一家空殼公司以出售自身。Google、Microsoft、Baidu 與 DeepMind 花了一週時間互相競標。",
+      "coda": "Hinton 選擇了 Google。兩名學生之一為 Ilya Sutskever。"
     },
     "xiaohongshu-name": {
-      "tag": "Etymology",
-      "title": "Not that little red book",
-      "body": "Most people assume the name points at the other red book. The founder's own account is duller: Bain & Company and the Stanford Graduate School of Business, the firm he worked at and the school he attended, both run on red.",
-      "coda": "Translated into English, the name comes out identical to the other one anyway."
+      "tag": "詞源",
+      "title": "不是那本紅寶書",
+      "body": "多數人以為這個名字指向另一本紅寶書。創始人自己的說法更平淡：Bain & Company 與 Stanford Graduate School of Business，他任職的公司與就讀的學校，皆以紅色為主。",
+      "coda": "譯成英文後，這個名字與另一個完全相同。"
     },
     "china-wechat-red-envelope-pearl-harbor": {
-      "tag": "Payments",
-      "title": "Pearl Harbor, Digital",
-      "body": "Around Chinese New Year 2014, WeChat's red-envelope feature went live; users grabbed over 40 million red packets within days. On the app Laiwang, Jack Ma called it a 'Pearl Harbor sneak attack' — effective short-term, he wrote, but healthy long-term growth mattered more.",
-      "coda": "The red envelope became a payments funnel."
+      "tag": "支付",
+      "title": "數位珍珠港",
+      "body": "2014 年農曆新年期間，WeChat 的紅包功能上線；用戶在數天內搶領超過 4000 萬個紅包。在 Laiwang 上，馬雲稱之為「珍珠港偷襲」——他寫道，短期有效，但長期健康成長更為重要。",
+      "coda": "紅包成為支付漏斗。"
     },
     "heartbleed-two-person-team": {
-      "tag": "Incident",
-      "title": "A Team of Four",
-      "body": "Heartbleed's missing bounds check entered OpenSSL's heartbeat extension in December 2011 and sat unnoticed for two years until independent researchers found it in April 2014. At the time, the codebase behind most of the web's HTTPS traffic was maintained by four volunteers, one full-time.",
-      "coda": "The fix shipped the same day the bug was disclosed."
+      "tag": "事件",
+      "title": "四人團隊",
+      "body": "Heartbleed 的邊界檢查遺漏於 2011 年 12 月進入 OpenSSL 的心跳擴展，靜置兩年未被察覺，直到 2014 年 4 月由獨立研究人員發現。當時，承載網際網路大部分 HTTPS 流量的程式碼庫由四名志工維護，其中一人為全職。",
+      "coda": "修復於漏洞揭露當日發布。"
     },
     "goto-fail-duplicate": {
-      "tag": "Security",
-      "title": "The Duplicate Jump",
-      "body": "Inside Apple's SSLVerifySignedServerKeyExchange, a goto fail; line was duplicated. The second copy sat outside any if, so the function always jumped past the signature check and returned success regardless.",
-      "coda": "The duplicate line ran unchanged on the affected systems for months."
+      "tag": "安全",
+      "title": "重複的跳躍",
+      "body": "在 Apple 的 SSLVerifySignedServerKeyExchange 中，goto fail; 這一行被重複。第二份副本位於任何 if 之外，因此函數總是跳過簽名檢查並返回成功。",
+      "coda": "重複的這一行在受影響系統上無變動運行數月。"
     },
     "ntp-harlan-stenn": {
-      "tag": "Time",
-      "title": "Who Sets the Clock",
-      "body": "Banks, exchanges and satellite systems synchronize against NTP. David Mills designed the protocol; the reference implementation is now led, largely alone, by Harlan Stenn. In March 2015 trade press ran the headline 'NTP Needs Money: Is A Foundation The Answer?'",
-      "coda": "The foundation is still fundraising toward its budget."
+      "tag": "時間",
+      "title": "誰設定時鐘",
+      "body": "銀行、交易所與衛星系統皆對 NTP 進行同步。David Mills 設計了該協定；參考實作現由 Harlan Stenn 幾乎獨自領導。2015 年 3 月，商業媒體刊出標題『NTP Needs Money: Is A Foundation The Answer?』",
+      "coda": "該基金會仍在為其預算募款。"
     },
     "alphago-lee-sedol-2016": {
-      "tag": "Go",
-      "title": "Stone One Hundred and Two",
-      "body": "AlphaGo beat Lee Sedol four games to one in Seoul in March 2016; Lee's only win came in game four. Afterward he said he had made a critical error early in game one, calling the computer's play there excellent and one move unlike anything a human player would choose.",
-      "coda": "The move he singled out kept only a stone number, no name."
+      "tag": "圍棋",
+      "title": "第一百零二子",
+      "body": "AlphaGo 於 2016 年 3 月在首爾以四比一擊敗李世乭；李世乭唯一的勝利出現在第四局。賽後他表示自己在第一局早期犯下關鍵錯誤，稱電腦在那裡的著法出色，且有一手是人類棋手不會選擇的。",
+      "coda": "他特別點出的那一手只保留了一顆棋子的編號，沒有名字。"
     },
     "aws-s3-2017-typo": {
-      "tag": "Incident",
-      "title": "One Wide Argument",
-      "body": "An S3 engineer ran an authorized command meant to take a small number of billing servers offline, but one input covered a wider range than intended. The removed servers also backed the index subsystem, which had not been fully restarted in years and came back far slower than expected.",
-      "coda": "The outage ran roughly four hours; AWS's own status page depended on the same systems."
+      "tag": "事故",
+      "title": "一個過寬的參數",
+      "body": "一名 S3 工程師執行了一條授權命令，意圖將少量計費伺服器離線，但其中一個輸入涵蓋了比預期更寬的範圍。被移除的伺服器同時支援索引子系統，該子系統數年未完全重啟，恢復速度遠慢於預期。",
+      "coda": "停機持續約四小時；AWS 自身的狀態頁面依賴同一批系統。"
     },
     "gitlab-2017-rm-rf": {
-      "tag": "Incident",
-      "title": "Five Backups, Zero",
-      "body": "An engineer meant to clear a lagging replica but deleted the PostgreSQL data directory on the primary instead, stopping seconds too late; roughly 300GB was already gone. GitLab found that of five backup and replication methods it had running, none could actually restore the data.",
-      "coda": "Recovery relied on a snapshot someone happened to take six hours earlier."
+      "tag": "事故",
+      "title": "五份備份，零份可用",
+      "body": "一名工程師本意是清除滯後的副本，卻誤刪了主庫上的 PostgreSQL 資料目錄，停止操作時已為時過晚；約 300GB 資料已經消失。GitLab 發現其運行的五種備份與複製方法中，沒有一種能真正恢復資料。",
+      "coda": "恢復依賴於某人六小時前碰巧拍下的一個快照。"
     },
     "attention-title-beatles-2017": {
-      "tag": "Paper",
-      "title": "A Title Borrowed From the Beatles",
-      "body": "Eight Google researchers published \"Attention Is All You Need\" in June 2017; the title nods to the Beatles song \"All You Need Is Love.\" The paper's stated aim was a sequence model for machine translation that dropped recurrent networks in favor of attention alone.",
-      "coda": "All eight authors have since left Google."
+      "tag": "論文",
+      "title": "一個借用自披頭四的標題",
+      "body": "八位 Google 研究人員於 2017 年 6 月發表了「Attention Is All You Need」；標題向披頭四的歌曲「All You Need Is Love」致意。該論文明確的目標是建構一種用於機器翻譯的序列模型，捨棄循環網路，僅依賴注意力機制。",
+      "coda": "八位作者此後均已離開 Google。"
     },
     "cloudflare-2019-regex": {
-      "tag": "Incident",
-      "title": "The Fuse That Was Removed",
-      "body": "A new WAF rule with a catastrophically backtracking regex pushed CPU on Cloudflare's global network to near 100 percent within seconds of deployment. The rule itself was ordinary; what let it detonate was a CPU-usage safeguard on regex rules quietly deleted weeks earlier in a refactor.",
-      "coda": "The outage lasted 27 minutes and ended when the WAF was disabled globally."
+      "tag": "事故",
+      "title": "被移除的保險絲",
+      "body": "一條帶有災難性回溯的正則表達式的新 WAF 規則，在部署後數秒內將 Cloudflare 全球網路的 CPU 推至接近 100%。規則本身平平無奇；讓它引爆的，是數週前在一次重構中被悄悄刪除的正則規則 CPU 用量防護。",
+      "coda": "中斷持續 27 分鐘，於 WAF 全球停用後結束。"
     },
     "requests-kenneth-reitz": {
-      "tag": "Handoff",
-      "title": "Handing Over the Keys",
-      "body": "Requests logs over 30 million downloads a month and became the standard HTTP client for Python. Kenneth Reitz released it on February 14, 2011. In 2019, after health problems, he handed control of the project to the Python Software Foundation.",
-      "coda": "He has not returned to lead the project since stepping down."
+      "tag": "移交",
+      "title": "移交鑰匙",
+      "body": "Requests 每月下載量超過 3000 萬次，成為 Python 的標準 HTTP 用戶端。Kenneth Reitz 於 2011 年 2 月 14 日發布。2019 年，因健康問題，他將專案控制權移交給 Python Software Foundation。",
+      "coda": "自卸任後，他未再回歸領導該專案。"
     },
     "linux-y2038-kernel-fix": {
-      "tag": "Fix",
-      "title": "Eighteen Years Early",
-      "body": "32-bit Unix systems will overflow their time_t counter on 19 January 2038. Linux 5.6, released in 2020, was the first kernel able to keep a 32-bit system running past that date. Applications still need a rebuild against a 64-bit time_t to actually benefit.",
-      "coda": "The kernel was patched years before most 32-bit userspace caught up."
+      "tag": "修復",
+      "title": "提早十八年",
+      "body": "32 位元 Unix 系統將於 2038 年 1 月 19 日溢出 time_t 計數器。2020 年發布的 Linux 5.6 是第一個能讓 32 位元系統在那個日期後繼續運作的核心。應用程式仍需針對 64 位元 time_t 重新編譯才能真正受惠。",
+      "coda": "核心在大多數 32 位元使用者空間趕上之前數年即已補丁。"
     },
     "log4shell-eight-years": {
-      "tag": "Vulnerability",
-      "title": "Eight Years Unread",
-      "body": "Log4j sits inside most enterprise Java software; Wiz and EY found 93 percent of cloud environments exposed to Log4Shell. The flaw existed in the code since 2013. It was reported November 24, 2021 and disclosed publicly on December 10, rated CVSS 10.",
-      "coda": "A handful of volunteers wrote the fix that reached millions of servers."
+      "tag": "漏洞",
+      "title": "八年未讀",
+      "body": "Log4j 內嵌於大多數企業 Java 軟體中；Wiz 與 EY 發現 93 百分比的雲端環境暴露於 Log4Shell。該缺陷自 2013 年起即存在於程式碼中。2021 年 11 月 24 日提出報告，12 月 10 日公開披露，CVSS 評級為 10。",
+      "coda": "少數志工撰寫了修復程式，該修復程式已部署至數百萬台伺服器。"
     },
     "core-js-denis-pushkarev": {
-      "tag": "Maintainer",
-      "title": "The Patch Nobody Replaced",
-      "body": "core-js ships inside WhatsApp, Netflix, Apple and PayPal, logging roughly 250 million downloads a month. Its author, Denis Pushkarev, was in a fatal 2019 car accident, served about ten months in prison starting January 2020, and kept maintaining the library throughout.",
-      "coda": "Monthly donations fell from about 2,500 dollars to 400."
+      "tag": "維護者",
+      "title": "無人取代的修補程式",
+      "body": "core-js 內嵌於 WhatsApp、Netflix、Apple 與 PayPal，每月下載量約 2.5 億次。其作者 Denis Pushkarev 於 2019 年遭遇致命車禍，自 2020 年 1 月起服刑約十個月，期間持續維護該函式庫。",
+      "coda": "每月捐款從約 2,500 美元降至 400 美元。"
     },
     "tesla-westinghouse-royalty": {
       "tag": "Patents",
-      "title": "The Royalty Tesla Waived",
-      "body": "Westinghouse's contract paid Tesla $2.50 per horsepower in royalties. In early 1891, with the company close to failure, Tesla released it from the royalty clause.",
-      "coda": "In 1897 Westinghouse bought his patents outright for $216,000."
+      "title": "Tesla 放棄的版稅",
+      "body": "Westinghouse 的合約按每馬力 2.50 美元支付 Tesla 版稅。1891 年初，在公司濒临失敗之際，Tesla 免除其版稅條款。",
+      "coda": "1897 年 Westinghouse 以 216,000 美元 outright 買斷其專利。"
     },
     "salk-polio-patent": {
       "tag": "Patents",
-      "title": "The Sun Has No Patent",
-      "body": "Edward Murrow asked who owned the polio vaccine patent. Salk answered there was none, could you patent the sun. Foundation lawyers had already examined the question and found the vaccine lacked patentable novelty because of prior art.",
-      "coda": "The unpatented vaccine was later valued at seven billion dollars."
+      "title": "太陽沒有專利",
+      "body": "Edward Murrow 詢問誰擁有小兒麻痺疫苗專利。Salk 回答沒有，難道能為太陽申請專利嗎。基金會律師早已審查該問題，並發現因先前技術存在，該疫苗缺乏可專利的新穎性。",
+      "coda": "該未申請專利的疫苗後被估值為 70 億美元。"
     },
     "cobol-two-hundred-billion-lines": {
       "tag": "Legacy",
-      "title": "Two Hundred Billion Lines",
-      "body": "By 1997 Gartner estimated 200 billion lines of COBOL running eighty percent of business programs worldwide. In 2020, as COVID-era unemployment claims surged, several US state governments publicly appealed for COBOL programmers to keep their decades-old benefits systems running.",
-      "coda": "Six years have passed since that appeal."
+      "title": "兩千億行",
+      "body": "至 1997 年，Gartner 估計有 2000 億行 COBOL 程式碼運行全球 80 百分比的商業程式。2020 年，隨著 COVID 時期失業申請激增，數個美國州政府公開呼籲招募 COBOL 程式員，以維持其數十年歷史的福利系統運行。",
+      "coda": "自該呼籲以來已過去六年。"
     },
     "sabre-sage-to-booking": {
       "tag": "Booking",
-      "title": "From Radar to Reservations",
-      "body": "American Airlines and IBM signed their partnership in 1957, adapting the Air Force's Cold War SAGE air-defense architecture into a booking system. SABRE ran its first online test in 1960 and launched fully in 1964, becoming the world's first online transaction processing system.",
-      "coda": "The parent company still operates, more than sixty years later."
+      "title": "從雷達到預訂",
+      "body": "美國航空與 IBM 於 1957 年簽署合作協議，將美國空軍冷戰時期的 SAGE 防空架構改造成預訂系統。SABRE 於 1960 年進行首次線上測試，1964 年全面上線，成為全球首個線上交易處理系統。",
+      "coda": "母公司至今仍在營運，已逾六十年。"
     },
     "kay-objects-messaging": {
-      "tag": "Naming",
-      "title": "Objects, Not the Point",
-      "body": "By 1967 Alan Kay was using \"object-oriented\" for a design built on cells or network nodes talking only through messages. He later wrote he was sorry he ever coined the term \"objects,\" because it draws attention to the lesser idea and buries the one he meant: messaging.",
-      "coda": "The word he regretted outlived the idea he meant it to carry."
+      "tag": "命名",
+      "title": "物件，並非重點",
+      "body": "至 1967 年，Alan Kay 已使用「物件導向」一詞，指稱一種建立在僅透過訊息溝通的單元或網路節點之上的設計。他後來表示，後悔自己創造了「物件」這個詞，因為它將注意力引向較次要的概念，掩蓋了他真正想表達的重點：訊息傳遞。",
+      "coda": "他後悔造出的詞，比他想傳達的概念存活得更久。"
     },
     "voyager-68-kilobits": {
-      "tag": "Deep Space",
-      "title": "Around the broken chip",
-      "body": "Voyager 1 launched in September 1977. Forty-seven years out, a memory chip in its flight data subsystem failed, three percent of it corrupted beyond repair. On 20 April 2024 engineers rearranged the code around the damaged area and the signal came back.",
-      "coda": "Its generators may supply enough power to return engineering data until 2036."
+      "tag": "深空",
+      "title": "繞過損壞的晶片",
+      "body": "Voyager 1 於 1977 年 9 月發射。飛行四十七年後，其飛行資料子系統中的一顆記憶體晶片失效，其中百分之三已損壞無法修復。2024 年 4 月 20 日，工程師將程式碼重新排列，繞過損壞區域，訊號得以恢復。",
+      "coda": "其發電機可能持續供應足夠電力，以回傳工程資料至 2036 年。"
     },
     "gif-lzw-unisys": {
-      "tag": "Patents",
-      "title": "The Free Format That Wasn't",
-      "body": "CompuServe shipped GIF in June 1987 using LZW compression without realizing Sperry Corporation already held the patent on it. In December 1994 Unisys, formed from Sperry's merger, announced it would collect licensing fees, prompting developers to build PNG as a replacement.",
-      "coda": "The patents ran out worldwide in 2004, and only then was GIF free."
+      "tag": "專利",
+      "title": "並非免費的格式",
+      "body": "CompuServe 於 1987 年 6 月推出 GIF，採用 LZW 壓縮，卻未意識到 Sperry Corporation 早已持有該技術專利。1994 年 12 月，由 Sperry 合併而成的 Unisys 宣布將收取授權費用，促使開發者建立 PNG 作為替代方案。",
+      "coda": "專利於 2004 年在全球範圍內失效，GIF 自此才真正免費。"
     },
     "zimmermann-pgp-release": {
-      "tag": "Crypto",
-      "title": "PGP Given Away, Then Investigated",
-      "body": "Phil Zimmermann released PGP with its source code on public FTP in 1991, the first widely available public-key encryption program. US Customs opened a criminal investigation for export-control violations. It ran three years and was dropped without indictment in early 1996.",
-      "coda": "Three years under investigation, no charges filed, no royalties ever collected."
+      "tag": "密碼學",
+      "title": "PGP 免費釋出，隨後遭調查",
+      "body": "Phil Zimmermann 於 1991 年在公開 FTP 上釋出了 PGP 及其原始碼，這是首款廣泛可用的公開金鑰加密程式。美國海關以違反出口管制為由展開刑事調查。調查持續三年，於 1996 年初無罪撤銷，未提起控訴。",
+      "coda": "調查三年，未起訴，從未收取任何版稅。"
     },
     "json-good-not-evil": {
-      "tag": "License",
-      "title": "For Good, Not Evil",
-      "body": "Douglas Crockford's 2002 license for the JSON libraries adds one clause: the software shall be used for Good, not Evil. JSON itself spread free and unpatented into nearly every API on the internet, but that single sentence made the license incompatible with standard open-source terms.",
-      "coda": "The format became universal; the joke clause it shipped with did not survive contact with corporate legal."
+      "tag": "授權條款",
+      "title": "為善，非為惡",
+      "body": "Douglas Crockford 於 2002 年為 JSON 函式庫制定的授權條款增加了一項條款：該軟體應用於善，而非惡。JSON 本身免費且無專利地傳播至網際網路上幾乎所有 API，但該單一句子使該授權條款與標準開源條款不相容。",
+      "coda": "該格式成為通用標準；隨之附帶的玩笑條款在接觸企業法律後未能存活。"
     },
     "sogou-movie-line": {
-      "tag": "Naming",
-      "title": "Sogou's Line Was a Joke First",
-      "body": "The 2001 comedy Big Shot's Funeral has a wordplay line about search engines: \"They search Sohu, we search Sogou, everyone searches their own way.\" Three years later, in 2004, Sohu's team took the joke and launched it as a real search engine, Sogou.",
-      "coda": "The punchline became the product name, unedited."
+      "tag": "命名",
+      "title": "搜狗的線索最初是個玩笑",
+      "body": "2001 年的喜劇《大腕》中有一句關於搜尋引擎的雙關語：「他們搜尋搜狐，我們搜尋搜狗，人人各搜各的。」三年後，即 2004 年，搜狐團隊將該玩笑採納並推出為真正的搜尋引擎，即搜狗。",
+      "coda": "該笑點成為產品名稱，未經修改。"
     },
     "tbl-double-slash": {
-      "tag": "Design",
-      "title": "The Extra Slashes",
-      "body": "Tim Berners-Lee put \"//\" in front of the domain name when he designed the URL. In October 2009 he admitted, given the colon already there, the two slashes were not needed at all — \"it seemed like a good idea at the time,\" he said.",
-      "coda": "Every URL since has still typed both of them."
+      "tag": "設計",
+      "title": "多餘的斜線",
+      "body": "Tim Berners-Lee 在設計 URL 時在域名前加上了「//」。2009 年 10 月他承認，鑒於冒號已經存在，這兩條斜線根本不需要——「當時覺得是個好主意」，他說。",
+      "coda": "此後每個網址仍會鍵入兩者。"
     },
     "bilibili-mikufans": {
-      "tag": "Naming",
-      "title": "Bilibili's First Name Was Mikufans",
-      "body": "The site launched in June 2009 as Mikufans, built for fans of the vocaloid Hatsune Miku. In January 2010 it was renamed Bilibili, after a nickname the protagonist of a light novel series gives Misaka Mikoto — an onomatopoeia for electric discharge.",
-      "coda": "The renamed site kept the name through every subsequent redesign."
+      "tag": "命名",
+      "title": "Bilibili 最初名為 Mikufans",
+      "body": "該網站於 2009 年 6 月以 Mikufans 之名上線，專為初音未來（Vocaloid）的粉絲而建。2010 年 1 月更名為 Bilibili，此名源自輕小說系列主角對御坂美琴的暱稱——一個模擬放電聲的擬聲詞。",
+      "coda": "更名後的網站歷經後續所有改版，始終沿用此名。"
     },
     "kuaishou-gif-app": {
-      "tag": "Naming",
-      "title": "Kuaishou Began as a GIF App",
-      "body": "Kuaishou launched in March 2011 as GIF Kuaishou, a phone app for making and sharing GIF images. In 2012 it pivoted to short video, and in 2014 the GIF prefix was dropped, leaving the name it carries as a video platform today.",
-      "coda": "The GIF prefix is gone; the underlying company name never changed."
+      "tag": "命名",
+      "title": "快手最初是一款 GIF 應用",
+      "body": "快手於 2011 年 3 月以「GIF 快手」之名推出，是一款製作與分享 GIF 圖片的手機應用。2012 年轉型為短影音平台，2014 年移除「GIF」前綴，留下今日作為影音平台所使用的名稱。",
+      "coda": "「GIF」前綴已消失；底層公司名稱從未改變。"
     },
     "zhihu-invite-only": {
-      "tag": "Naming",
-      "title": "Zhihu Needed an Invitation",
-      "body": "Zhihu went live on January 26, 2011, and for its first two years registration required an invitation code. Open sign-up did not arrive until March 2013. The name itself is classical Chinese for \"do you know\" — a question, not a slogan.",
-      "coda": "Registration has required no invitation since March 2013."
+      "tag": "命名",
+      "title": "知乎需要邀請碼",
+      "body": "知乎於 2011 年 1 月 26 日上線，前兩年註冊需邀請碼。公開註冊直到 2013 年 3 月才開放。其名稱取自文言「知乎」，意為「你知道嗎」——是一個問句，不是口號。",
+      "coda": "自 2013 年 3 月起，註冊不再需要邀請碼。"
     },
     "hp-garage-palo-alto": {
-      "tag": "The garage",
-      "title": "The Garage on Addison Avenue",
-      "body": "In 1938 David Packard and his wife rented the ground-floor apartment of a 1905 house at 367 Addison Avenue in Palo Alto. He and Bill Hewlett put 538 dollars into the one-car garage behind it and built their first product, an audio oscillator.",
-      "coda": "The property is now on the National Register of Historic Places and is not open to visitors."
+      "tag": "車庫",
+      "title": "艾迪生大道上的車庫",
+      "body": "1938 年，大衛·帕卡德與妻子租下帕洛阿爾托艾迪生大道 367 號一棟 1905 年房屋的一樓公寓。他與比爾·休利特投入 538 美元，在後面的單車位車庫裡製作出第一款產品——音頻振盪器。",
+      "coda": "該處現已列入國家歷史名勝名錄，不對遊客開放。"
     },
     "apple-crist-drive-garage": {
-      "tag": "The myth",
-      "title": "When the bedroom ran out",
-      "body": "In 1976 Steve Jobs and Steve Wozniak assembled the first Apple boards at the house Jobs's parents owned in Los Altos, California.",
-      "coda": "In his bedroom first. The garage only later, when there was no space left."
+      "tag": "傳說",
+      "title": "當臥室不夠用時",
+      "body": "1976 年，史蒂夫·喬布斯與史蒂夫·沃茲尼亞克在加利福尼亞州洛斯阿爾托斯喬布斯父母所有的房屋裡組裝了第一批 Apple 電路板。",
+      "coda": "先在臥室。車庫是後來臥室沒空間了才搬過去的。"
     },
     "huawei-nanyou-flat": {
-      "tag": "The flat",
-      "title": "A Flat in Nanyou Xincun",
-      "body": "In September 1987 Huawei was registered in a residential block in Nanyou Xincun, Shenzhen, with 21,000 yuan of capital, fourteen employees, and six shareholders splitting the equity evenly.",
-      "coda": "The company moved its headquarters out in 1989; the flat's tenancy as HQ ended there."
+      "tag": "公寓",
+      "title": "南油新村的一套公寓",
+      "body": "1987 年 9 月，華為在深圳南油新村的一棟住宅樓註冊成立，註冊資本 21,000 元，十四名員工，六名股東均分股權。",
+      "coda": "公司於 1989 年將總部遷出；該公寓作為總部的租期到此結束。"
     },
     "wojcicki-garage-menlo-park": {
-      "tag": "The landlord",
-      "title": "The Garage She Rented Out",
-      "body": "In September 1998 Page and Brin rented a garage in Menlo Park from Susan Wojcicki for $1,700 a month. Google was incorporated there.",
-      "coda": "She later became YouTube's chief executive."
+      "tag": "房東",
+      "title": "她出租的那間車庫",
+      "body": "1998 年 9 月，佩奇與布林向蘇珊·沃西基租下門洛帕克的一間車庫，月租 1,700 美元。Google 在那裡完成註冊。",
+      "coda": "她後來成為 YouTube 的首席執行官。"
     },
     "tencent-seg-403": {
-      "tag": "Room 403",
-      "title": "Building 2, Room 403",
-      "body": "In November 1998 Tencent registered at room 403, building two, of the Saige technology park in Huaqiangbei, Shenzhen. The building was full of startups like it, and the door was no different from any other.",
-      "coda": "The room is kept open only to Tencent employees now, under the name Tencent Origin."
+      "tag": "403 室",
+      "title": "二棟403室",
+      "body": "1998年11月，騰訊於深圳華強北賽格科技園二棟403室註冊。該樓內充斥著類似的新創公司，門面與其餘無異。",
+      "coda": "該室現僅對騰訊員工開放，名為騰訊源點。"
     },
     "unitree-left-dji": {
-      "tag": "Resignation",
-      "title": "Out of DJI",
-      "body": "During his master's, Wang Xingxing built an all-electric quadruped robot on his own and called it XDog. After graduating he took a job at DJI, and left it soon after.",
-      "coda": "Unitree was registered in the Binjiang district of Hangzhou in August 2016."
+      "tag": "離職",
+      "title": "離開大疆",
+      "body": "王興興在碩士期間自行打造了一台全電動四足機器人，命名為XDog。畢業後進入大疆任職，不久後離職。",
+      "coda": "宇樹於2016年8月在杭州濱江區註冊。"
     },
     "unitree-one-yuan-option": {
-      "tag": "Options",
-      "title": "One yuan a share",
-      "body": "In September 2017 Unitree signed option agreements with seventeen employees at one yuan per share. Further grants followed, held through a single employee vehicle.",
-      "coda": "Eight years later the company opened the book on its IPO."
+      "tag": "期權",
+      "title": "一股一元",
+      "body": "2017年9月，宇樹與十七名員工簽署期權協議，每股一元。後續持續授予，透過單一員工持股平台持有。",
+      "coda": "八年後公司開啟IPO招股。"
     },
     "unitree-g1-price": {
-      "tag": "Pricing",
-      "title": "Ninety-nine thousand",
-      "body": "Humanoid robots had been priced as laboratory equipment. Unitree put the G1 on sale at 99,000 yuan, roughly the price of an entry-level car.",
-      "coda": "By 2025 humanoids were 51.78 percent of its revenue, on 5,500 units shipped."
+      "tag": "定價",
+      "title": "九萬九",
+      "body": "人形機器人以往按實驗室設備定價。宇樹將G1定價為99,000元，約相當於入門級轎車價格。",
+      "coda": "至2025年，人形機器人佔其營收的51.78%，出貨量為5,500台。"
     }
   }
 }

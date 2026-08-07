@@ -1,5 +1,5 @@
 {
-  "panelLabel": "Boot log",
+  "panelLabel": "Journal de démarrage",
   "entries": {
     "transistor-name-off-patent-1947": {
       "tag": "Brevet",
@@ -17,12 +17,12 @@
       "tag": "Séparation",
       "title": "Le mémorandum du détecteur de mensonges",
       "body": "En mai 1957, huit ingénieurs de Shockley Semiconductor ont exigé le remplacement de William Shockley en tant que manager. Il avait enregistré des appels téléphoniques, empêché les employés de partager leurs résultats et imposé des tests de détection de mensonges. Le 18 septembre 1957, les huit ont fondé Fairchild Semiconductor.",
-      "coda": "Wikipedia counts Intel and AMD among the dozens of companies traced back to that spinoff."
+      "coda": "Wikipedia compte Intel et AMD parmi les dizaines d'entreprises issues de cette scission."
     },
     "kilby-noyce-six-months-1958-1959": {
       "tag": "Parallèle",
       "title": "Six mois, une médaille",
-      "body": "Kilby demonstrated a working integrated circuit at Texas Instruments in September 1958, its parts joined by external wires. Noyce filed a monolithic silicon version at Fairchild in July 1959, mass-producible. Neither man rejected the other's claim to co-inventor.",
+      "body": "Kilby a présenté un circuit intégré fonctionnel chez Texas Instruments en septembre 1958, ses composants reliés par des fils externes. Noyce a déposé une version monolithique en silicium chez Fairchild en juillet 1959, industrialisable. Aucun des deux n'a rejeté la revendication de l'autre comme co-inventeur.",
       "coda": "Kilby a accepté seul le prix Nobel 2000. Noyce était décédé en 1990."
     },
     "perceptron-conscious-machine-1958": {
@@ -77,10 +77,10 @@
       "tag": "Gouvernance",
       "title": "Request for Comments",
       "body": "Steve Crocker a dû rédiger les premières règles pour quelques hôtes en réseau. Personne ne lui avait donné l'autorité, et il craignait que cela ne paraisse comme un abus de pouvoir — il a donc appelé ce genre de document une Request for Comments.",
-      "coda": "Every rule the internet has agreed on since is still called an RFC."
+      "coda": "Toute règle sur laquelle internet s'est mis d'accord depuis est toujours appelée RFC."
     },
     "pdp7": {
-      "tag": "Origin",
+      "tag": "Origine",
       "title": "La machine que personne ne voulait",
       "body": "Après que Bell Labs a abandonné Multics, Ken Thompson s'est retrouvé avec un PDP-7 de rebut et un mois seul pendant que sa femme et son fils étaient à San Diego. Il s'est donné une semaine par pièce : noyau, shell, éditeur, assembleur.",
       "coda": "Quatre semaines plus tard, la machine que personne ne voulait faisait tourner Unix."
@@ -118,14 +118,14 @@
     "waterfall": {
       "tag": "Mauvaise lecture",
       "title": "Le diagramme était le contre-exemple",
-      "body": "In \"Managing the Development of Large Software Systems\" Winston Royce drew the chart the industry would come to call the waterfall model, then wrote: \"I believe in this concept, but the implementation described above is risky and invites failure.\" The rest of the paper is about making it iterative.",
-      "coda": "The industry kept the diagram and dropped the sentence."
+      "body": "Dans « Managing the Development of Large Software Systems », Winston Royce a dessiné le diagramme que l'industrie appellerait le modèle en cascade, puis a écrit : « Je crois en ce concept, mais l'implémentation décrite ci-dessus est risquée et invite à l'échec. » Le reste de l'article traite de le rendre itératif.",
+      "coda": "L'industrie a gardé le diagramme et supprimé la phrase."
     },
     "moth": {
       "tag": "Étymologie",
       "title": "Le premier véritable bug",
-      "body": "A moth was pulled from a relay of the Harvard Mark II and taped into the logbook. The line beside it is cited as the origin of the word, but what it says is: first actual case of bug being found.",
-      "coda": "Engineers had said bug since Edison. The museum doubts the page is even in Hopper's hand."
+      "body": "Un papillon de nuit a été retiré d'un relais du Harvard Mark II et collé dans le journal de bord. La ligne à côté est citée comme l'origine du mot, mais ce qu'elle dit est : premier cas réel de bogue trouvé.",
+      "coda": "Les ingénieurs disaient bug depuis Edison. Le musée doute que la page soit même de la main de Hopper."
     },
     "intel-4004-busicom-rights-1971": {
       "tag": "Droits",
@@ -160,20 +160,20 @@
     "kildall-flying": {
       "tag": "Testimony",
       "title": "Le vol qui n'a pas été confirmé",
-      "body": "In 1980 IBM came to license CP/M. Gary Kildall was flying software to a client; his wife Dorothy handled the opening talks. Bill Gates later told reporters Kildall had \"capriciously gone flying.\" IBM's lead negotiator, Jack Sams, said he never met Kildall at all.",
+      "body": "En 1980, IBM est venu licencier CP/M. Gary Kildall pilotait un logiciel chez un client ; sa femme Dorothy a mené les discussions préliminaires. Bill Gates a plus tard dit aux journalistes que Kildall était « parti voler capricieusement ». Le négociateur en chef d'IBM, Jack Sams, a déclaré n'avoir jamais rencontré Kildall.",
       "coda": "Les deux versions de cette réunion n'ont jamais été conciliées."
     },
     "trusting-trust": {
-      "tag": "Trust",
+      "tag": "Confiance",
       "title": "Réflexions sur la confiance en la confiance",
       "body": "La conférence Turing de Thompson décrivait un compilateur qui insérait une porte dérobée dans le programme de connexion, et réinstallait l'astuce entière à chaque compilation d'un compilateur. Reconstruire à partir de sources propres ne suffit pas : la porte dérobée survit.",
       "coda": "Vous ne pouvez pas faire confiance à un code que vous n'avez pas entièrement créé vous-même."
     },
     "arm-one-person-company-1985": {
       "tag": "Origine",
-      "title": "A One-Person Chip Company",
-      "body": "Acorn, which had made its name on education computers, began RISC research in 1983. A visit to a rival chip designer showed them that updates to the 6502 came out of what was effectively a one-person company, and they concluded they needed nothing more.",
-      "coda": "ARM1 arrived on 26 April 1985 and worked on first power-up."
+      "title": "Une société de puces à une personne",
+      "body": "Acorn, qui s'était fait un nom sur les ordinateurs éducatifs, a commencé la recherche RISC en 1983. Une visite chez un concepteur de puces concurrent leur a montré que les mises à jour du 6502 provenaient de ce qui était effectivement une société d'une seule personne, et ils ont conclu qu'ils n'avaient besoin de rien de plus.",
+      "coda": "L'ARM1 est arrivée le 26 avril 1985 et a fonctionné dès la première mise sous tension."
     },
     "copyleft-all-rights-reversed": {
       "tag": "Copyright",
@@ -209,11 +209,11 @@
       "tag": "Incident",
       "title": "Une mesure",
       "body": "Morris voulait savoir quelle était la taille d'Internet, alors il a écrit un programme qui se copiait lui-même. Pour empêcher les hôtes de simuler une réponse déjà infectée, il lui a donné une chance sur sept de réinfecter quand même.",
-      "coda": "That one-in-seven took down about 6,000 of the 60,000 hosts then online."
+      "coda": "Ce un sur sept a mis hors service environ 6 000 des 60 000 hôtes alors en ligne."
     },
     "naur": {
-      "tag": "Philosophy",
-      "title": "The program is not the artifact",
+      "tag": "Philosophie",
+      "title": "Le programme n'est pas l'artefact",
       "body": "Naur soutenait qu'un programme ne vit pas dans son code source, mais en tant que théorie, détenue par ceux qui l'ont écrit, expliquant pourquoi le problème est résolu de cette façon. Le code source n'en est qu'une projection avec perte.",
       "coda": "Il appelait le moment où le dernier détenteur de la théorie quitte la mort du programme."
     },
@@ -243,32 +243,32 @@
     },
     "doom-ftp-crash": {
       "tag": "Shareware",
-      "title": "The Server They Couldn't Reach",
-      "body": "On 10 December 1993, id Software gave away Doom's first episode as shareware, betting on sales of the rest. Uploading it to a University of Wisconsin FTP server, they found so many people already waiting that the team itself could not connect.",
+      "title": "Le serveur qu'ils ne pouvaient pas atteindre",
+      "body": "Le 10 décembre 1993, id Software a offert le premier épisode de Doom en shareware, misant sur la vente du reste. En le téléchargeant sur un serveur FTP de l'Université du Wisconsin, ils ont trouvé tant de personnes déjà en attente que l'équipe elle-même ne pouvait pas se connecter.",
       "coda": "Le téléchargement s'est terminé vers minuit ; dix mille téléchargements simultanés ont fait planter le réseau de l'université."
     },
     "zlib-two-authors": {
       "tag": "Fondation",
       "title": "La couche de compression à deux",
       "body": "zlib est intégré dans Linux, macOS, iOS et les générations successives de consoles de jeu ; Git et OpenSSH s’appuient tous deux sur lui pour la compression. Deux personnes ont écrit sa première version publique en 1995.",
-      "coda": "The authorship line has never grown a third name."
+      "coda": "La ligne d'auteurs n'a jamais eu de troisième nom."
     },
     "byd-battery-to-car": {
       "tag": "Acquisition",
-      "title": "The Battery Company Bought a Carmaker",
+      "title": "Le fabricant de batteries a acheté un constructeur automobile",
       "body": "BYD a été fondée dans le district de Longgang à Shenzhen le 10 février 1995, fabriquant des batteries nickel-cadmium et nickel-hydrure métallique, avant d'entrer dans les cellules lithium-ion en 1996. En 2003, le fabricant de batteries a acquis Xi'an Qinchuan Automobile, renommée BYD Auto.",
       "coda": "Deux ans plus tard, sa première berline conçue en interne, la F3, a été mise en vente."
     },
     "ariane-501": {
       "tag": "Incident",
       "title": "Trente-sept secondes",
-      "body": "Thirty-seven seconds in, the inertial reference system converted a 64-bit float to a 16-bit integer and overflowed; at about forty seconds the vehicle broke up. The routine came unchanged from Ariane 4 and had no reason to be running after liftoff.",
+      "body": "Trente-sept secondes après le décollage, le système de référence inertiel a converti un flottant 64 bits en entier 16 bits et a débordé ; vers quarante secondes, le véhicule s'est désintégré. La routine provenait inchangée d'Ariane 4 et n'avait aucune raison de s'exécuter après le décollage.",
       "coda": "Environ 370 millions de dollars, dépensés pour du code qui aurait dû être désactivé."
     },
     "deep-blue-move-44-1997": {
       "tag": "Échecs",
-      "title": "Move Forty-Four's Glitch",
-      "body": "In game one of the 1997 rematch Kasparov beat Deep Blue in forty-five moves. Deep Blue's forty-fourth move was allegedly the result of a bug: unable to settle on a preferred move inside its search, the engine fell back to a fail-safe.",
+      "title": "Le bug du quarante-quatrième coup",
+      "body": "Dans la première partie du rematch de 1997, Kasparov a battu Deep Blue en quarante-cinq coups. Le quarante-quatrième coup de Deep Blue aurait été le résultat d'un bug : incapable de se décider sur un coup préféré dans sa recherche, le moteur a reculé sur une solution de secours.",
       "coda": "Après avoir perdu la deuxième partie, Kasparov a accusé IBM de tricherie."
     },
     "curl-one-maintainer": {
@@ -286,7 +286,7 @@
     "http-418-teapot": {
       "tag": "Protocole",
       "title": "Je suis une théière",
-      "body": "RFC 2324, published April 1, 1998, defines status 418 as \"I'm a teapot\" and files itself as Informational, not a standard. On April 1, 2014, RFC 7168 extended it to cover tea brewing. The code still never became a real standard.",
+      "body": "La RFC 2324, publiée le 1er avril 1998, définit le statut 418 comme \"I'm a teapot\" et se classe comme Informational, pas comme standard. Le 1er avril 2014, la RFC 7168 l'a étendue pour couvrir la préparation du thé. Le code n'est jamais devenu un véritable standard.",
       "coda": "Les deux documents restent d'ordre informatif ; le code de statut est quand même implémenté dans les serveurs réels."
     },
     "open-source-coined-1998": {
@@ -303,21 +303,21 @@
     },
     "bsd-75-acknowledgments": {
       "tag": "Licence",
-      "title": "Seventy-Five Acknowledgments",
-      "body": "The original BSD license required every advertisement to credit each contributing author by name. By 1997 a single NetBSD build carried seventy-five such acknowledgments, incompatible with the GPL. Berkeley's licensing director deleted the clause on July 22, 1999.",
+      "title": "Soixante-quinze remerciements",
+      "body": "La licence BSD originale exigeait que chaque publicité crédite chaque auteur contributeur par son nom. En 1997, une seule compilation NetBSD portait soixante-quinze tels remerciements, incompatibles avec la GPL. Le directeur de la licence de Berkeley a supprimé la clause le 22 juillet 1999.",
       "coda": "La signature d'un bureau a retiré une clause qui s'était multipliée pendant une décennie."
     },
     "red-hat-ipo-1999": {
       "tag": "IPO",
-      "title": "The Price of Free Software",
-      "body": "Red Hat gave away the source code of its core product and charged instead for support, training and integration. On August 11, 1999 the company went public. Its first-day gain ranked eighth-largest in Wall Street history at the time.",
+      "title": "Le prix du logiciel libre",
+      "body": "Red Hat distribuait gratuitement le code source de son produit principal et facturait à la place le support, la formation et l'intégration. Le 11 août 1999, l'entreprise a fait son entrée en bourse. Sa hausse du premier jour s'est classée huitième plus importante de l'histoire de Wall Street à l'époque.",
       "coda": "Le fondateur Bob Young a été remplacé à la tête de l'entreprise quatre mois plus tard."
     },
     "multics-shutdown": {
       "tag": "Fermeture",
       "title": "Le dernier",
       "body": "Le 30 octobre 2000, la dernière installation Multics connue fonctionnant nativement sur du matériel Honeywell a été arrêtée au ministère canadien de la Défense nationale à Halifax, en Nouvelle-Écosse.",
-      "coda": "Thirty-five years after the project began."
+      "coda": "Trente-cinq ans après le début du projet."
     },
     "sqlite-no-license": {
       "tag": "Fondation",
@@ -352,13 +352,13 @@
     "douban-hutong": {
       "tag": "Étymologie",
       "title": "Nommé d'après la ruelle",
-      "body": "The site that went live on 6 March 2005 is not named after a metaphor. Yang Bo wrote its source in a cafe near Douban Hutong in Beijing, and took the name of the alley.",
+      "body": "Le site lancé le 6 mars 2005 ne tire pas son nom d'une métaphore. Yang Bo a écrit sa source dans un café près de Douban Hutong à Beijing et a pris le nom de la ruelle.",
       "coda": "Vingt-et-un ans plus tard, le site en porte encore la marque."
     },
     "git-information-manager-hell": {
       "tag": "Git",
-      "title": "Information Manager from Hell",
-      "body": "On 7 April 2005 Linus Torvalds committed git's first revision. The message reads: Initial revision of \"git\", the information manager from hell. The author address on it is torvalds@ppc970.osdl.org.",
+      "title": "Le gestionnaire d'information de l'enfer",
+      "body": "Le 7 avril 2005, Linus Torvalds a validé la première révision de git. Le message indique : Initial revision of \"git\", the information manager from hell. L'adresse auteur dessus est torvalds@ppc970.osdl.org.",
       "coda": "Cette adresse pointe vers une machine de test PowerPC 970 chez OSDL."
     },
     "knuth-reward-check": {
@@ -374,7 +374,7 @@
       "coda": "L'équipe a ensuite découvert que la plupart des acheteurs de cardans les montaient sur des multicoptères, et non sur des hélicoptères."
     },
     "dropbox-hn": {
-      "tag": "Counterintuitive",
+      "tag": "Contre-intuitif",
       "title": "Cette réponse",
       "body": "Houston a publié la démo de Dropbox sur Hacker News. La réponse célèbre expliquait qu'on pouvait le faire soi-même avec un compte FTP, curlftpfs et SVN, et que cela ne semblait pas destiné à rapporter de l'argent.",
       "coda": "Onze ans plus tard, lors de l'IPO, Houston l'a qualifiée de son fil préféré sur le site."
@@ -405,14 +405,14 @@
     },
     "homebrew-volunteer-team": {
       "tag": "Fondation",
-      "title": "The Repository With No Employer",
+      "title": "Le dépôt sans employeur",
       "body": "Homebrew est le gestionnaire de paquets par défaut sur la plupart des machines Mac des développeurs ; en 2013, il était en tête de tous les contributeurs sur GitHub. Max Howell a écrit sa première version en 2009. Il est aujourd'hui maintenu par une équipe de 34 personnes, toutes bénévoles.",
       "coda": "Son historique de financement comprend un Kickstarter et un compte Open Source Collective."
     },
     "xiaomi-software-first": {
-      "tag": "Software",
+      "tag": "Logiciel",
       "title": "Le premier produit de Xiaomi n'était pas un téléphone",
-      "body": "Xiaomi was founded on April 6, 2010. That August and December it released beta versions of the MIUI operating system and the Miliao chat app, both software.",
+      "body": "Xiaomi a été fondée le 6 avril 2010. En août et décembre de cette année-là, elle a publié des versions bêta du système d'exploitation MIUI et de l'application de chat Miliao, tous deux logiciels.",
       "coda": "Le premier téléphone de l'entreprise n'a été livré qu'en août de l'année suivante."
     },
     "ritchie-same-week": {
@@ -429,7 +429,7 @@
     },
     "gregorian-1752-eleven-days": {
       "tag": "Mythe",
-      "title": "The Eleven Missing Days",
+      "title": "Les onze jours manquants",
       "body": "Le 2 septembre 1752, le calendrier britannique a sauté au 14 septembre, supprimant onze jours. L'histoire populaire raconte que des émeutes ont éclaté à cause de cela. Aucun témoignage contemporain de ces émeutes n'a survécu. L'histoire provient d'une banderole dans un tableau satirique électoral de 1755.",
       "coda": "Un accessoire de tableau est devenu la trace d'un événement dont il ne reste aucune autre preuve."
     },
@@ -452,16 +452,16 @@
       "coda": "Les horloges se sont mises d'accord sur l'heure quarante ans avant la loi."
     },
     "western-union-telephone-memo-1876": {
-      "tag": "Debunked",
+      "tag": "Démenti",
       "title": "La note que Western Union n'a jamais écrite",
       "body": "Une note de Western Union de 1876, largement citée, qualifie le téléphone d'« idiot » comparé à l'envoi d'un messager au bureau télégraphique. Des chercheurs ayant fouillé les journaux de l'époque n'en ont trouvé aucune trace, et le dirigeant qu'elle nomme n'occupait pas ce poste dans l'entreprise cette année-là. Le texte a été fabriqué plus tard.",
-      "coda": "Western Union did decline Bell's patent that year; it just never wrote this memo."
+      "coda": "Western Union a bien refusé le brevet de Bell cette année-là ; il n'a simplement jamais écrit ce mémo."
     },
     "nintendo-hanafuda-detours": {
       "tag": "Pivot",
       "title": "Les Détours Après les Cartes de Fleurs",
-      "body": "Fusajiro Yamauchi opened a shop in Kyoto in 1889 hand-making hanafuda playing cards. The company later tried a taxi service and instant rice, both abandoned; the widely repeated love-hotel chain claim has no record in securities filings researched back to 1962.",
-      "coda": "In 1966 a toy called the Ultra Hand sold hundreds of thousands of units."
+      "body": "Fusajiro Yamauchi a ouvert une boutique à Kyoto en 1889 pour fabriquer à la main des cartes de jeu hanafuda. L'entreprise a ensuite essayé un service de taxi et du riz instantané, tous deux abandonnés ; l'affirmation largement répétée sur une chaîne d'hôtels d'amour n'a aucun enregistrement dans les déclarations de titres remontant à 1962.",
+      "coda": "En 1966, un jouet appelé Ultra Hand s'est vendu à des centaines de milliers d'exemplaires."
     },
     "wrigley-premiums-premium": {
       "tag": "Pivot",
@@ -477,7 +477,7 @@
     },
     "play-doh-wallpaper-cleaner": {
       "tag": "Pivot",
-      "title": "It Was Meant to Clean Wallpaper",
+      "title": "Il était destiné à nettoyer le papier peint",
       "body": "Dans les années 1930, Kutol a formulé une pâte molle pour nettoyer la suie de charbon des papiers peints. Lorsque les foyers sont passés à un combustible de chauffage plus propre, la demande a disparu. Un enseignant a suggéré de la vendre comme pâte à modeler ; elle a été renommée Play-Doh en 1956.",
       "coda": "En 2005, elle se vendait à 95 millions de boîtes par an dans 75 pays."
     },
@@ -497,17 +497,17 @@
       "tag": "Record",
       "title": "Le dîner auquel elles n’ont pas été invitées",
       "body": "Lors de la présentation publique de l'ENIAC le 14 février 1946, le programme de trajectoire qui avait impressionné l'assistance avait été écrit par Jean Bartik et Betty Holberton. La presse n'a présenté que Eckert et Mauchly. Aucune des six programmeuses n'a été invitée au dîner qui a suivi.",
-      "coda": "Their names were pulled back out of the event photographs decades later."
+      "coda": "Leurs noms ont été extraits des photos de l'événement des décennies plus tard."
     },
     "claude-shannon-juggling-theorem": {
-      "tag": "Paper",
+      "tag": "Article",
       "title": "Le théorème du jonglage",
       "body": "En 1948, Shannon publie « A Mathematical Theory of Communication », fondant la théorie de l'information. Des décennies plus tard, il applique la même rigueur à son hobby, établissant une relation formelle entre le temps de vol d'une balle, son temps de séjour et le nombre de balles et de mains.",
       "coda": "Il a été publié dans le même volume que l'article de 1948."
     },
     "mccarthy-1960-eval": {
       "tag": "Origine",
-      "title": "The Interpreter in the Footnote",
+      "title": "L'interprète dans la note de bas de page",
       "body": "Dans son article de 1960, John McCarthy a écrit une fonction eval sous forme de notation mathématique, pour montrer que les expressions symboliques pouvaient se décrire elles-mêmes. Son étudiant Steve Russell a traduit la dérivation en code machine IBM 704. Cet outil de preuve est devenu le premier interpréteur Lisp fonctionnel.",
       "coda": "McCarthy a plus tard déclaré qu'il n'avait pas prévu que quelqu'un l'exécute réellement."
     },
@@ -557,11 +557,11 @@
       "tag": "Origine",
       "title": "Le lien avant la page",
       "body": "Dans un article ACM de 1965, Ted Nelson inventa le terme « hypertexte » pour désigner des documents qui se lient et se citent non séquentiellement, prolongeant un projet commencé en 1960 et plus tard nommé Xanadu. Sa version rémunérait les auteurs originaux à chaque lien suivi. Une implémentation partielle ne vit le jour qu'en 2014.",
-      "coda": "The Web adopted his vocabulary and left the payment mechanism behind."
+      "coda": "Le Web a adopté son vocabulaire et a laissé de côté le mécanisme de paiement."
     },
     "mary-allen-wilkes-linc": {
       "tag": "Enregistrement",
-      "title": "The LINC in the Living Room",
+      "title": "Le LINC dans le salon",
       "body": "En 1965, Wilkes a installé un ordinateur LINC de 113 kg dans le salon de ses parents à Baltimore et a écrit LAP6, un système d'exploitation interactif, seule — douze ans avant que l'Apple II n'arrive dans les foyers. Quand on lui a demandé si elle était la première, elle a simplement répondu : « Je suppose que peut-être oui. »",
       "coda": "Elle n'a jamais revendiqué ce titre elle-même."
     },
@@ -572,7 +572,7 @@
       "coda": "L’objectif de sécurité était explicite ; l’échec a été que la facilité a gagné quand même."
     },
     "johnson-vs-cern-touchscreen": {
-      "tag": "Touchscreen",
+      "tag": "Écran tactile",
       "title": "Qui a été le premier",
       "body": "Le CERN crédite Bent Stumpe de la construction du premier écran tactile capacitif au monde en 1972, pour sa salle de contrôle d'accélérateur. Eric Johnson de la Royal Radar Establishment britannique avait déjà publié un article sur la technologie tactile capacitif pilotée par le doigt en 1965, sept ans plus tôt.",
       "coda": "La revendication du CERN d'avoir construit le premier écran tactile tient toujours sur son propre site web."
@@ -647,25 +647,25 @@
       "tag": "Internet",
       "title": "Le cinquième homme d'Internet",
       "body": "En 1972, Louis Pouzin a construit le réseau CYCLADES en France, le premier à rendre les hôtes finaux, et non le réseau, responsables de la livraison fiable. En 1974, l'article TCP de Cerf et Kahn lui a rendu hommage par son nom. En 2004, Cerf et Kahn ont reçu le prix Turing. Le nom de Pouzin n'y figurait pas.",
-      "coda": "The Economist later called him the internet's fifth man."
+      "coda": "The Economist l'a plus tard appelé le cinquième homme de l'internet."
     },
     "ethernet-1973-memo": {
       "tag": "Origine",
       "title": "La note Ether",
-      "body": "On May 22, 1973, Robert Metcalfe wrote a Xerox PARC memo titled \"Ether Acquisition,\" with a hand-drawn diagram of a shared cable linking Alto computers. The technology is usually dated to the 1976 journal paper. The actual sketch is three years older, and hand-drawn.",
+      "body": "Le 22 mai 1973, Robert Metcalfe a rédigé une note interne Xerox PARC intitulée « Ether Acquisition », avec un diagramme dessiné à la main d'un câble partagé reliant des ordinateurs Alto. La technologie est généralement datée de l'article de journal de 1976. Le croquis réel est trois ans plus vieux, et dessiné à la main.",
       "coda": "Au moment où le papier a été publié, Ethernet fonctionnait déjà au sein de PARC depuis trois ans."
     },
     "vint-cerf-envelope-sketch": {
       "tag": "Anecdote",
-      "title": "The Back of an Envelope",
+      "title": "Le dos d'une enveloppe",
       "body": "Selon la légende fondatrice d'Internet, Cerf aurait esquissé l'architecture des passerelles sur un mouchoir en papier. Il a rectifié : « Ce n'était pas un mouchoir, en fait, c'était le dos d'une enveloppe. » En 1973, en attendant dans un hall d'hôtel, il a esquissé ce qui allait devenir la conception des passerelles TCP/IP.",
-      "coda": "The following year, the sketch became a paper in IEEE Transactions on Communications."
+      "coda": "L'année suivante, le croquis est devenu un article dans IEEE Transactions on Communications."
     },
     "gchq-nonsecret-encryption": {
       "tag": "Cryptographie",
       "title": "La clé non publiée",
       "body": "En septembre 1973, Clifford Cocks, âgé de 22 ans et nouvellement arrivé au GCHQ, a conçu un schéma de chiffrement sans clé partagée en une demi-heure. Trois ans plus tard, Diffie, Hellman et Merkle ont publié la même idée aux États-Unis et ont été crédités comme ses inventeurs. Les archives du GCHQ sont restées classifiées jusqu'en 1997.",
-      "coda": "James Ellis died in 1997, a few months after the declassification that put his name on the record."
+      "coda": "James Ellis est mort en 1997, quelques mois après la déclassification qui a inscrit son nom dans les archives."
     },
     "kodak-digital-camera-1975": {
       "tag": "Archivé",
@@ -683,16 +683,16 @@
       "tag": "Citation erronée",
       "title": "L'ordinateur domestique d'Olsen",
       "body": "En 1977, le fondateur de DEC, Ken Olsen, a déclaré qu'il n'y avait aucune raison pour qu'un individu ait un ordinateur chez lui. Il faisait référence à une machine centrale gérant l'éclairage, le chauffage et le divertissement d'un foyer, ce qui était exact pour la chose qu'il décrivait. Les médias n'ont retenu que la première moitié de la phrase.",
-      "coda": "Olsen himself owned a computer at home at the time."
+      "coda": "Olsen lui-même possédait un ordinateur chez lui à l'époque."
     },
     "kernighans-debugging-law": {
       "tag": "Maxim",
-      "title": "Twice as Hard as Writing It",
+      "title": "Deux fois plus dur que de l'écrire",
       "body": "Dans Elements of Programming Style (1978), Kernighan et Plauger écrivaient que déboguer est deux fois plus difficile que programmer, si bien que coder de la manière la plus astucieuse possible vous laisse, par définition, pas assez intelligent pour déboguer. Une règle de style formulée comme une limite à rencontrer deux fois son propre travail.",
       "coda": "L'adversaire n'était jamais quelqu'un d'autre, c'était vous quelques semaines plus tard."
     },
     "xerox-parc-1979-visit": {
-      "tag": "Origin",
+      "tag": "Origine",
       "title": "L'affaire de Xerox",
       "body": "Décembre 1979 : Apple visite Xerox PARC après que Xerox a accepté d'acheter 100 000 actions Apple pré-IPO à 10 $ chacune en échange de l'accès. Jobs voit l'interface graphique de l'Alto et la qualifie de la meilleure chose qu'il ait jamais vue. L'histoire populaire parle de vol ; les faits montrent un échange négocié par Xerox.",
       "coda": "Xerox a obtenu ses actions. L'Alto n'a jamais été vendu comme produit commercial."
@@ -777,7 +777,7 @@
     },
     "python-christmas-project": {
       "tag": "Scripting",
-      "title": "A Christmas Hobby",
+      "title": "Un passe-temps de Noël",
       "body": "Pendant les vacances de Noël 1989, son bureau étant fermé pour la semaine, un chercheur à Amsterdam cherchait un projet de programmation amateur. Il a commencé à écrire un interpréteur pour un nouveau langage de script et l'a nommé d'après une troupe de comédie, pas le serpent.",
       "coda": "En juillet 2026, il occupait la première place de l'indice TIOBE de popularité des langages de programmation."
     },
@@ -790,8 +790,8 @@
     "rfc1149-avian-carriers-test": {
       "tag": "Incident",
       "title": "Le protocole que quelqu'un a vraiment fait voler",
-      "body": "David Waitzman published RFC 1149 on April Fools' Day, 1990: a spec for carrying IP datagrams by pigeon. On April 28, 2001, the Bergen Linux User Group actually built it, launching nine ping packets over roughly 5 km. Four came back — a 55% loss rate, round trips running 53 to 106 minutes.",
-      "coda": "The joke RFC has a real packet-loss figure on record: 55 percent."
+      "body": "David Waitzman a publié la RFC 1149 le jour du poisson d'avril 1990 : une spécification pour transporter des datagrammes IP par pigeon. Le 28 avril 2001, le Bergen Linux User Group l'a réellement construite, lançant neuf paquets ping sur environ 5 km. Quatre sont revenus — un taux de perte de 55 %, des allers-retours allant de 53 à 106 minutes.",
+      "coda": "La RFC humoristique a un taux de perte de paquets réel dans les archives : 55 pour cent."
     },
     "att-1990-break-statement": {
       "tag": "Incident",
@@ -831,7 +831,7 @@
     },
     "china-first-internet-line": {
       "tag": "Record",
-      "title": "The Line a Year Early",
+      "title": "La ligne un an en avance",
       "body": "La Chine considère le 20 avril 1994 comme la date de son entrée sur l'internet mondial — une liaison de 64 K, accès complet. Treize mois plus tôt, des physiciens de l'IHEP avaient déjà loué une liaison vers le SLAC de Stanford, échangeant des courriels avec des dizaines d'institutions. Ce n'était simplement pas le genre de liaison que l'on comptait.",
       "coda": "Deux liaisons existent ; seule l'une reçoit un anniversaire."
     },
@@ -855,13 +855,13 @@
     },
     "general-magic-private-network": {
       "tag": "Réseaux",
-      "title": "General Magic's Private Wire",
+      "title": "Le réseau privé de General Magic",
       "body": "En 1990, d'anciens ingénieurs d'Apple, Bill Atkinson, Andy Hertzfeld et Marc Porat, ont fondé General Magic. Le Magic Link de Sony a été lancé en 1994 à 800 $, permettant d'envoyer des e-mails et d'exécuter des applications. La direction a construit un réseau propriétaire AT&T plutôt que d'utiliser Internet, qualifiant le web de « passif ».",
       "coda": "L'employé Tony Fadell a ensuite dirigé le développement matériel de l'iPod et de l'iPhone chez Apple."
     },
     "ibm-simon-first-touchscreen": {
-      "tag": "Touchscreen",
-      "title": "Simon's Fax Machine",
+      "tag": "Écran tactile",
+      "title": "La machine à fax de Simon",
       "body": "Le 16 août 1994, IBM et BellSouth ont lancé le Simon Personal Communicator : un écran tactile de 4,5 pouces capable d'envoyer des e-mails et des fax, vendu 899 $. Son autonomie était d'environ une heure. Il a été arrêté six mois plus tard, après avoir vendu environ 50 000 unités.",
       "coda": "En 2007, Apple a lancé l'iPhone, un téléphone à écran tactile capacitif sans clavier physique."
     },
@@ -892,14 +892,14 @@
     "general-magic-weekend-site": {
       "tag": "Projet secondaire",
       "title": "Le site qu'il ne prenait pas au sérieux",
-      "body": "In the mid-1990s, at a Silicon Valley startup expected to reinvent handheld computing, one programmer spent his spare time writing a scrappy little site for selling secondhand junk. It went up on a weekend. He wasn't taking it seriously.",
+      "body": "Au milieu des années 1990, dans une startup de la Silicon Valley censée réinventer l'informatique portable, un programmeur consacrait son temps libre à écrire un petit site bricolé pour vendre des objets d'occasion. Il le lança un week-end. Il ne le prenait pas au sérieux.",
       "coda": "La startup s'appelait General Magic. Le site a ensuite été renommé eBay."
     },
     "gettickcount-776-day-bug": {
-      "tag": "Overflow",
+      "tag": "Dépassement",
       "title": "Une dette de 776 jours",
       "body": "GetTickCount de Windows 95 revient à zéro tous les 49,7 jours, un comportement documenté, jamais considéré comme un bug. Mais sous Windows 8 jusqu'à Server 2019, la même fonction pouvait déborder prématurément, vers 776 jours, un véritable défaut. Microsoft ne l'a corrigé que dans Windows 11, version 24H2.",
-      "coda": "The fix landed three decades after the counter it patches first shipped."
+      "coda": "La correction est arrivée trente ans après la première mise en service du compteur qu'elle corrige."
     },
     "bluetooth-the-placeholder": {
       "tag": "Étymologie",
@@ -910,14 +910,14 @@
     "chinaren-detour": {
       "tag": "Petit monde",
       "title": "Le Codeur Hors-Liste",
-      "body": "In 1996 a Chinese student won gold at the Informatics Olympiad and was admitted straight into Tsinghua's computer science program. As a student he moonlighted building a content system for an alumnus's website. Sohu bought it the next year; he stayed on and kept working there.",
+      "body": "En 1996, un étudiant chinois remporta la médaille d'or à l'Olympiade d'informatique et fut admis directement dans le programme d'informatique de Tsinghua. En tant qu'étudiant, il travaillait en parallèle sur un système de contenu pour le site web d'un ancien élève. Sohu l'acheta l'année suivante ; il resta et continua d'y travailler.",
       "coda": "L'étudiant était Wang Xiaochuan. En 2004, au sein de Sohu, il a créé Sogou."
     },
     "google-a-typo": {
       "tag": "Étymologie",
       "title": "Une recherche de domaine mal orthographié",
       "body": "Lors d'un brainstorming en septembre 1997, Sean Anderson a suggéré « googolplex » ; Larry Page l'a raccourci en « googol ». En vérifiant le registre de domaines sur le moment, Anderson a tapé « google » par erreur et a découvert qu'il était libre. Page a enregistré google.com ce même jour.",
-      "coda": "The registration record still carries the misspelling, dated September 15, 1997."
+      "coda": "L'enregistrement d'inscription porte encore la faute d'orthographe, daté du 15 septembre 1997."
     },
     "rfc2119-must-should": {
       "tag": "Standard",
@@ -926,7 +926,7 @@
       "coda": "Pendant vingt ans, un must en minuscules avait le même poids juridique qu'un haussement d'épaules."
     },
     "netease-license-mail-1997": {
-      "tag": "Licensing",
+      "tag": "Licenciement",
       "title": "Vendez d'abord la licence",
       "body": "Le 11 juin 1997, William Ding a enregistré NetEase à Guangzhou. La première activité de l'entreprise n'était pas le webmail gratuit. Elle a concédé sous licence un logiciel de serveur de messagerie qu'elle avait développé à d'autres sites web moyennant des frais.",
       "coda": "NetEase n'a lancé son propre service de messagerie gratuite, sous 163.com, qu'en 1998."
@@ -947,19 +947,19 @@
       "tag": "Erreur de jugement",
       "title": "Excite refuse Google",
       "body": "En 1999, Google a proposé de se vendre à Excite pour 750 000 $ plus environ 1 % de participation. Le PDG George Bell a jugé l'écart de recherche trop faible pour justifier le remplacement de la technologie d'Excite. Le raisonnement tenait la route. Google valait plus d'un milliard en l'espace d'un an.",
-      "coda": "Bell has said since that he would make the same call again."
+      "coda": "Bell a déclaré depuis qu'il ferait le même choix à nouveau."
     },
     "mars-climate-orbiter-units": {
       "tag": "Incident",
-      "title": "Pound-Force, Newton",
+      "title": "Pound-force, Newton",
       "body": "Le Mars Climate Orbiter a cessé d'émettre lors de son insertion orbitale. La commission d'enquête a constaté que le logiciel de propulsion du sous-traitant délivrait l'impulsion en livres-force-secondes alors que le logiciel de navigation attendait des newton-secondes, soit un facteur d'erreur de 4,45. L'engin a été dirigé à environ 57 km de la surface.",
       "coda": "La mission de 327,6 millions de dollars n'a plus jamais transmis."
     },
     "paypal-palm-beaming": {
       "tag": "Pivot",
       "title": "Le faisceau qui n'est jamais venu",
-      "body": "In 1999 Confinity launched infrared cash transfers between Palm Pilots, demoed live at a funding event. Weeks after launch it had roughly 13,000 users, a number that barely moved over the following year. What actually took off was email payments, built only as a fallback option.",
-      "coda": "The company renamed itself PayPal and quietly dropped the beam."
+      "body": "En 1999, Confinity lança des transferts d'argent infrarouges entre Palm Pilots, démontrés en direct lors d'un événement de financement. Quelques semaines après le lancement, il comptait environ 13 000 utilisateurs, un chiffre qui ne bougea guère au cours de l'année suivante. Ce qui prit réellement de l'ampleur, ce furent les paiements par e-mail, construits uniquement comme option de repli.",
+      "coda": "L'entreprise changea de nom pour PayPal et abandonna discrètement le faisceau."
     },
     "cai-500-yuan": {
       "tag": "Petit monde",
@@ -981,14 +981,14 @@
     },
     "danger-duarte-android-reunion": {
       "tag": "Réunion",
-      "title": "Design Director, Failed Startup",
+      "title": "Directeur artistique, startup échouée",
       "body": "En 2000, un designer a rejoint une startup de dispositifs portables fondée par Andy Rubin, où il a travaillé sur son interface. L'entreprise a été vendue à Microsoft et l'équipe s'est dispersée. Le designer a ensuite travaillé pour deux autres entreprises au cours de la décennie suivante.",
       "coda": "Le designer était Matias Duarte. Dix ans plus tard, Rubin l'a embauché pour Android."
     },
     "slashdot-ipod-2001": {
       "tag": "Licenciement",
       "title": "Sans sans-fil, moins d'espace",
-      "body": "When Apple unveiled the first iPod on October 23, 2001, Slashdot founder Rob \"CmdrTaco\" Malda wrote in his editor's note: \"No wireless. Less space than a nomad. Lame.\" Against the spec sheets of rival MP3 players at the time, the line was not factually wrong.",
+      "body": "Lorsque Apple dévoila le premier iPod le 23 octobre 2001, le fondateur de Slashdot, Rob \"CmdrTaco\" Malda, écrivit dans sa note d'éditeur : \"Pas de sans fil. Moins d'espace qu'un nomad. Lame.\" Face aux fiches techniques des lecteurs MP3 concurrents de l'époque, la phrase n'était pas factuellement fausse.",
       "coda": "Ce commentaire est désormais régulièrement cité comme le contre-exemple qu'il a produit."
     },
     "discuz-shenyang-dorm": {
@@ -1006,8 +1006,8 @@
     "bittorrent-mailing-list": {
       "tag": "Protocole",
       "title": "Une nouvelle application P2P",
-      "body": "On July 2, 2001, a programmer posted a message to a Yahoo eGroups mailing list titled \"BitTorrent -- a new P2P app,\" describing a file-distribution protocol he had just finished designing, one that pulled pieces of a file from many sources at once.",
-      "coda": "Three years later it accounted for a third of all internet traffic, per a 2004 CacheLogic study."
+      "body": "Le 2 juillet 2001, un programmeur publia un message sur une liste de diffusion Yahoo eGroups intitulé \"BitTorrent -- a new P2P app\", décrivant un protocole de distribution de fichiers qu'il venait de terminer de concevoir, qui récupérait des morceaux d'un fichier à partir de nombreuses sources simultanément.",
+      "coda": "Trois ans plus tard, il représentait un tiers de tout le trafic internet, selon une étude CacheLogic de 2004."
     },
     "webvan-thirty-minute-window": {
       "tag": "Épicerie",
@@ -1028,8 +1028,8 @@
       "coda": "En janvier 2009, Satoshi Nakamoto a miné le bloc genesis de bitcoin."
     },
     "yahoo-google-2002": {
-      "tag": "Miss",
-      "title": "Yahoo Passes on Google",
+      "tag": "Raté",
+      "title": "Yahoo passe sur Google",
       "body": "En 2002, le PDG de Yahoo, Terry Semel, a proposé 3 milliards de dollars pour Google ; Page et Brin ont tenu bon pour 5 milliards. Semel estimait que la capitalisation boursière de Yahoo, proche de 5 milliards après le krach, ne pouvait pas absorber ce pari. Google a fait son entrée en bourse deux ans plus tard à 23 milliards de dollars.",
       "coda": "Yahoo a vendu son activité principale à Verizon en 2017 pour 4,48 milliards de dollars."
     },
@@ -1037,7 +1037,7 @@
       "tag": "Chambre d'étudiant",
       "title": "Bâtiment 26, Yunyuan",
       "body": "Lors de la Coupe du monde 2002, le dortoir de Yao Xin à l'Université des sciences et technologies de Huazhong n'avait pas de télévision. Il regardait donc les matchs via le réseau du campus, qui ne cessait de planter. Dans sa chambre du bâtiment 26, il a commencé à réfléchir à la manière de combiner le transfert peer-to-peer avec la vidéo en streaming.",
-      "coda": "PPLive launched in 2005 and, at its peak, counted over a hundred million users."
+      "coda": "PPLive a été lancé en 2005 et, à son apogée, comptait plus de cent millions d'utilisateurs."
     },
     "china-alipay-escrow": {
       "tag": "Confiance",
@@ -1103,7 +1103,7 @@
       "tag": "Légende",
       "title": "Le nom de domaine enregistré le jour de la Saint-Valentin",
       "body": "youtube.com a été enregistré le 14 février 2005, et ses fondateurs ont ensuite évoqué un concept de site de rencontres inspiré de Hot or Not. Jawed Karim a nié avoir assisté à la soirée autour de laquelle tourne l'histoire, et Steve Chen a reconnu qu'elle ressemble à un récit marketing.",
-      "coda": "What Karim cited instead was trouble finding tsunami footage online."
+      "coda": "Ce que Karim a cité à la place était la difficulté à trouver des images du tsunami en ligne."
     },
     "duan-buffett-lunch": {
       "tag": "Petit monde",
@@ -1118,7 +1118,7 @@
       "coda": "Dans les années qui ont suivi, la part de marché de BlackBerry a cédé du terrain à l’iPhone."
     },
     "dvorak-iphone-2007": {
-      "tag": "Prediction",
+      "tag": "Prédiction",
       "title": "Dvorak dit de débrancher",
       "body": "Le 28 mars 2007, le chroniqueur John C. Dvorak affirmait que les marges sur les téléphones étaient maigres et que Nokia et Motorola dominaient déjà le marché, si bien qu'Apple aurait dû confier la conception de l'iPhone à quelques « imbéciles » et s'éloigner. Au vu de l'historique d'Apple dans ce secteur, ce raisonnement n'était pas dénué de sens.",
       "coda": "Il a ensuite reconnu qu'une fois qu'il eut tenu l'appareil en main, il regretta d'avoir tenu ce discours."
@@ -1127,11 +1127,11 @@
       "tag": "Fusion",
       "title": "Celui qui dut apprendre à coder",
       "body": "En 2007, deux frères adolescents irlandais ont présenté un outil de commerce électronique fait maison à Y Combinator et ont fusionné leur entreprise avec celle de deux diplômés d'Oxford. Aucun des deux Oxfordiens ne savait programmer. L'un d'eux a reçu l'ordre d'apprendre, vite.",
-      "coda": "That one was Harj Taggar, later Y Combinator's first non-founder partner."
+      "coda": "Celui-là était Harj Taggar, plus tard premier associé non fondateur de Y Combinator."
     },
     "justintv-backpack-cruise": {
       "tag": "Le sac à dos",
-      "title": "The Livestreaming Backpack",
+      "title": "Le Sac à Dos de Diffusion en Direct",
       "body": "En mars 2007, un homme a fixé une webcam sur une casquette de baseball et a commencé à diffuser en direct sa vie à San Francisco, vingt-quatre heures sur vingt, en portant un sac à dos laptop fait maison construit par un ami qui avait abandonné ses études au MIT.",
       "coda": "L'ami qui l'a construit était Kyle Vogt, qui a ensuite fondé Cruise, acquise par GM pour plus d'un milliard de dollars."
     },
@@ -1181,7 +1181,7 @@
       "tag": "Standard",
       "title": "L'exemption de SemVer",
       "body": "En 2010, Tom Preston-Werner, cofondateur de GitHub, a publié semver.org, proposant MAJOR.MINOR.PATCH pour mettre fin à l'enfer des dépendances. La spécification elle-même prévoit une exception : pendant la phase de « développement initial » 0.y.z, tout peut changer à tout moment — une étape que la plupart des packages ne quittent jamais réellement.",
-      "coda": "Most published packages never leave the version range the rule does not bind."
+      "coda": "La plupart des packages publiés ne quittent jamais la plage de versions que la règle ne lie pas."
     },
     "instagram-burbn-cut": {
       "tag": "Pivot",
@@ -1210,7 +1210,7 @@
     "knight-capital-power-peg": {
       "tag": "Incident",
       "title": "Le Huitième Serveur",
-      "body": "Knight Capital pushed new trading code to eight servers; only seven took it. The eighth still ran dead Power Peg code, retired years earlier, which live orders woke up. In 45 minutes Knight built $3.5B long and $3.15B short. The SEC's finding: nobody reviewed the incomplete deploy.",
+      "body": "Knight Capital a poussé du nouveau code de trading sur huit serveurs ; sept seulement l'ont pris. Le huitième exécutait encore le code Power Peg mort, retiré des années plus tôt, que des ordres en direct ont réveillé. En 45 minutes, Knight a construit 3,5 milliards de dollars long et 3,15 milliards de dollars court. La conclusion de la SEC : personne n'a examiné le déploiement incomplet.",
       "coda": "Knight a été racheté par un concurrent une semaine après la perte."
     },
     "dnnresearch-week-of-bidding": {
@@ -1220,7 +1220,7 @@
       "coda": "Hinton a choisi Google. L'un des deux étudiants était Ilya Sutskever."
     },
     "xiaohongshu-name": {
-      "tag": "Etymology",
+      "tag": "Étymologie",
       "title": "Pas ce petit livre rouge",
       "body": "La plupart des gens pensent que le nom fait référence à l’autre livre rouge. L’explication du fondateur est plus terne : Bain & Company et la Stanford Graduate School of Business, l’entreprise où il travaillait et l’école qu’il fréquentait, fonctionnent toutes deux sur le rouge.",
       "coda": "Traduit en anglais, le nom devient identique à l’autre de toute façon."
@@ -1241,10 +1241,10 @@
       "tag": "Sécurité",
       "title": "Le saut dupliqué",
       "body": "Dans Apple SSLVerifySignedServerKeyExchange, une ligne goto fail; a été dupliquée. La seconde copie se trouvait en dehors de tout if, donc la fonction sautait toujours au-delà de la vérification de signature et retournait un succès quoi qu'il arrive.",
-      "coda": "The duplicate line ran unchanged on the affected systems for months."
+      "coda": "La ligne en double s'est exécutée inchangée sur les systèmes affectés pendant des mois."
     },
     "ntp-harlan-stenn": {
-      "tag": "Time",
+      "tag": "Temps",
       "title": "Qui règle l'horloge",
       "body": "Les banques, les bourses et les systèmes satellitaires se synchronisent sur NTP. David Mills a conçu le protocole ; l'implémentation de référence est désormais dirigée, en grande partie seul, par Harlan Stenn. En mars 2015, la presse spécialisée a publié le titre « NTP Needs Money: Is A Foundation The Answer? »",
       "coda": "La fondation continue de collecter des fonds pour atteindre son budget."
@@ -1259,7 +1259,7 @@
       "tag": "Incident",
       "title": "Un argument trop large",
       "body": "Un ingénieur S3 a exécuté une commande autorisée destinée à mettre hors ligne un petit nombre de serveurs de facturation, mais un paramètre couvrait une plage plus large que prévu. Les serveurs retirés soutenaient également le sous-système d'indexation, qui n'avait pas été redémarré depuis des années et est revenu bien plus lentement que prévu.",
-      "coda": "The outage ran roughly four hours; AWS's own status page depended on the same systems."
+      "coda": "La panne a duré environ quatre heures ; la propre page de statut d'AWS dépendait des mêmes systèmes."
     },
     "gitlab-2017-rm-rf": {
       "tag": "Incident",
@@ -1270,7 +1270,7 @@
     "attention-title-beatles-2017": {
       "tag": "Papier",
       "title": "Un titre emprunté aux Beatles",
-      "body": "Eight Google researchers published \"Attention Is All You Need\" in June 2017; the title nods to the Beatles song \"All You Need Is Love.\" The paper's stated aim was a sequence model for machine translation that dropped recurrent networks in favor of attention alone.",
+      "body": "Huit chercheurs de Google ont publié « Attention Is All You Need » en juin 2017 ; le titre fait référence à la chanson des Beatles « All You Need Is Love ». L'objectif déclaré du papier était un modèle de séquence pour la traduction automatique qui abandonnait les réseaux récurrents au profit de l'attention seule.",
       "coda": "Les huit auteurs ont depuis quitté Google."
     },
     "cloudflare-2019-regex": {
@@ -1300,7 +1300,7 @@
     "core-js-denis-pushkarev": {
       "tag": "Mainteneur",
       "title": "Le correctif que personne n’a remplacé",
-      "body": "core-js ships inside WhatsApp, Netflix, Apple and PayPal, logging roughly 250 million downloads a month. Its author, Denis Pushkarev, was in a fatal 2019 car accident, served about ten months in prison starting January 2020, and kept maintaining the library throughout.",
+      "body": "core-js est livré dans WhatsApp, Netflix, Apple et PayPal, enregistrant environ 250 millions de téléchargements par mois. Son auteur, Denis Pushkarev, a été victime d'un accident de voiture mortel en 2019, a purgé environ dix mois de prison à partir de janvier 2020, et a continué à maintenir la bibliothèque tout au long.",
       "coda": "Les dons mensuels sont passés d'environ 2 500 dollars à 400."
     },
     "tesla-westinghouse-royalty": {
@@ -1336,7 +1336,7 @@
     "voyager-68-kilobits": {
       "tag": "Espace profond",
       "title": "Autour de la puce brisée",
-      "body": "Voyager 1 launched in September 1977. Forty-seven years out, a memory chip in its flight data subsystem failed, three percent of it corrupted beyond repair. On 20 April 2024 engineers rearranged the code around the damaged area and the signal came back.",
+      "body": "Voyager 1 a été lancé en septembre 1977. Quarante-sept ans plus tard, une puce mémoire de son sous-système de données de vol a échoué, trois pour cent d'elle corrompus au-delà de toute réparation. Le 20 avril 2024, les ingénieurs ont réorganisé le code autour de la zone endommagée et le signal est revenu.",
       "coda": "Ses générateurs peuvent fournir suffisamment d'énergie pour renvoyer des données techniques jusqu'en 2036."
     },
     "gif-lzw-unisys": {
@@ -1407,7 +1407,7 @@
     },
     "wojcicki-garage-menlo-park": {
       "tag": "Le propriétaire",
-      "title": "The Garage She Rented Out",
+      "title": "Le Garage Qu'elle a Loué",
       "body": "En septembre 1998, Page et Brin ont loué un garage à Menlo Park auprès de Susan Wojcicki pour 1 700 $ par mois. Google y a été constitué.",
       "coda": "Elle est ensuite devenue directrice générale de YouTube."
     },
@@ -1418,7 +1418,7 @@
       "coda": "Le bureau est désormais réservé aux employés de Tencent, sous le nom de Tencent Origin."
     },
     "unitree-left-dji": {
-      "tag": "Resignation",
+      "tag": "Démission",
       "title": "Hors DJI",
       "body": "Pendant son master, Wang Xingxing a construit seul un robot quadrupède tout électrique qu'il a appelé XDog. Après avoir obtenu son diplôme, il a travaillé chez DJI, puis l'a quittée peu après.",
       "coda": "Unitree a été enregistrée dans le district de Binjiang à Hangzhou en août 2016."

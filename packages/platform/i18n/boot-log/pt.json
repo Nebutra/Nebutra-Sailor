@@ -110,7 +110,7 @@
       "coda": "Fred Brooks posteriormente citou a tese não comprovada e deu-lhe o nome de lei de Conway."
     },
     "apollo-burn-baby-burn": {
-      "tag": "Comment",
+      "tag": "Comentário",
       "title": "Burn, Baby, Burn",
       "body": "A rotina de ignição principal do módulo lunar é rotulada como BURN_BABY_BURN na origem. O nome não se refere ao empuxo; foi emprestado de uma frase de efeito de um DJ de rádio soul da época.",
       "coda": "A linha ainda permanece sem edição no repositório público."
@@ -221,7 +221,7 @@
       "tag": "Termos",
       "title": "171 Palavras",
       "body": "Um grupo no MIT que escrevia uma implementação TCP/IP queria evitar negociações legais, então eles cederam o software sob um aviso de aproximadamente 171 palavras. Esse texto curto agora abrange quase um terço de todos os projetos licenciados no GitHub, mais do que qualquer outra licença.",
-      "coda": "The wording has stayed essentially unchanged since it was written."
+      "coda": "A redação permaneceu essencialmente inalterada desde que foi escrita."
     },
     "photoshop-display-origin": {
       "tag": "Origem",
@@ -299,7 +299,7 @@
       "tag": "Lançamento",
       "title": "Quase Aberto",
       "body": "Em 22 de janeiro de 1998, a Netscape anunciou que o código-fonte do navegador seria liberado e o funcionário Jamie Zawinski registrou mozilla.org. Mas a licença que escreveram manteve uma porta aberta: a Netscape podia continuar incorporando o mesmo código em produtos proprietários.",
-      "coda": "Netscape was acquired by AOL roughly a year later."
+      "coda": "A Netscape foi adquirida pela AOL cerca de um ano depois."
     },
     "bsd-75-acknowledgments": {
       "tag": "Licença",
@@ -316,7 +316,7 @@
     "multics-shutdown": {
       "tag": "Desligamento",
       "title": "O último",
-      "body": "On 30 October 2000 the last known Multics installation running natively on Honeywell hardware was shut down at the Canadian Department of National Defence in Halifax, Nova Scotia.",
+      "body": "Em 30 de outubro de 2000, a última instalação conhecida do Multics rodando nativamente em hardware da Honeywell foi desativada no Departamento de Defesa Nacional do Canadá, em Halifax, Nova Escócia.",
       "coda": "Trinta e cinco anos após o início do projeto."
     },
     "sqlite-no-license": {
@@ -470,9 +470,9 @@
       "coda": "Até 1892, ele havia abandonado tanto o sabão quanto o pó de fermento para vender apenas chiclete."
     },
     "robot-labor-not-brother": {
-      "tag": "Etymology",
+      "tag": "Etimologia",
       "title": "O Cunhador Não Creditado de Robot",
-      "body": "Karel Čapek drafted his 1920 play with a Latinate word, \"laboři,\" and thought it too bookish. In a newspaper column he named the actual source: his brother Josef, tossed off in passing. \"Robot\" comes from robota — a serf's compulsory labor, not machinery.",
+      "body": "Karel Čapek redigiu sua peça de 1920 com uma palavra do latim, \"laboři,\" e achou-a por demais erudita. Em uma coluna de jornal, ele indicou a verdadeira origem: seu irmão Josef, que a sugeriu de passagem. \"Robot\" vem de robota — o trabalho compulsório de um servo, não maquinário.",
       "coda": "A peça manteve o nome de um irmão na página de título."
     },
     "play-doh-wallpaper-cleaner": {
@@ -491,10 +491,10 @@
       "tag": "Origem",
       "title": "A Mesa Nunca Construída",
       "body": "Em julho de 1945, Vannevar Bush publicou \"As We May Think\" na The Atlantic, descrevendo uma máquina de microfilme do tamanho de uma mesa chamada Memex que permitia ao usuário construir trilhas associativas através do conhecimento armazenado. Foi republicada novamente em uma reimpressão resumida em setembro daquele ano. Nenhum protótipo foi jamais construído.",
-      "coda": "Engelbart and Nelson both later credited the essay as the reason they started."
+      "coda": "Engelbart e Nelson ambos creditaram posteriormente o ensaio como o motivo pelo qual começaram."
     },
     "jean-bartik-eniac-dinner": {
-      "tag": "Record",
+      "tag": "Registro",
       "title": "O Jantar para o Qual Não Foram Convidadas",
       "body": "Na revelação pública do ENIAC em 14 de fevereiro de 1946, o programa de trajetória que impressionou a sala havia sido escrito por Jean Bartik e Betty Holberton. A imprensa apresentou apenas Eckert e Mauchly. Nenhuma das seis programadoras foi convidada para o jantar depois.",
       "coda": "Os nomes foram recuperados das fotografias do evento décadas depois."
@@ -526,14 +526,14 @@
     "katherine-johnson-check-the-numbers": {
       "tag": "Registro",
       "title": "Peça à garota para verificar",
-      "body": "Before his 1962 orbital flight, John Glenn had engineers ask Katherine Johnson to hand-recompute the trajectory an IBM 7090 had already calculated. 'If she says they're good,' he said, 'I'm ready to go.' Her numbers matched the computer's exactly.",
+      "body": "Antes de seu voo orbital de 1962, John Glenn pediu que engenheiros solicitassem a Katherine Johnson que recalculasse manualmente a trajetória que um IBM 7090 já havia calculado. 'Se ela disser que os números estão bons', disse ele, 'estou pronto para ir.' Seus números corresponderam aos do computador exatamente.",
       "coda": "Friendship 7 decolou no prazo, em 20 de fevereiro de 1962."
     },
     "daemon-backronym": {
       "tag": "Etimologia",
       "title": "O Acrônimo Adaptado do Daemon",
       "body": "Em 1963, programadores do Project MAC do MIT nomearam um processo de backup em fita em segundo plano em homenagem ao demônio de Maxwell, um agente de experimento mental de 1867 que classifica moléculas incansavelmente e de forma invisível — o daimon grego, um espírito neutro, não o diabo judaico-cristão.",
-      "coda": "\"Disk And Execution MONitor\" was fitted onto the word afterward."
+      "coda": "\"Disk And Execution MONitor\" foi ajustado à palavra posteriormente."
     },
     "sketchpad-1963": {
       "tag": "Origem",
@@ -551,7 +551,7 @@
       "tag": "Rancor",
       "title": "O Moinho Comprado por Raiva",
       "body": "Em 1964, Warren Buffett concordou verbalmente vender suas ações de volta ao presidente da Berkshire, Seabury Stanton, por US$ 11,50 cada. A oferta pública escrita veio a US$ 11,375. Buffett ficou furioso com a diferença de um oitavo e comprou o controle da empresa em vez disso, demitindo Stanton.",
-      "coda": "In 1985 he shut down the textile mills he had fought to keep."
+      "coda": "Em 1985, ele fechou as fábricas têxteis que havia lutado para manter."
     },
     "nelson-1965-hypertext": {
       "tag": "Origem",
@@ -575,11 +575,11 @@
       "tag": "Touchscreen",
       "title": "Quem realmente foi o primeiro",
       "body": "O CERN atribui a Bent Stumpe a construção do primeiro ecrã tátil capacitivo do mundo em 1972, para a sua sala de controlo do acelerador. Eric Johnson, do Royal Radar Establishment britânico, já havia publicado um artigo sobre tecnologia tátil capacitiva acionada por dedo em 1965, sete anos antes.",
-      "coda": "CERN's claim to have built the first touchscreen still stands on its own website."
+      "coda": "A alegação da CERN de ter construído o primeiro touchscreen ainda consta em seu próprio site."
     },
     "second-redefined-1967": {
       "tag": "Metrologia",
-      "title": "9,192,631,770 Cycles",
+      "title": "9.192.631.770 Ciclos",
       "body": "Até 1960, o segundo era uma fração do ano trópico de 1900, fixado por observação astronômica. Em 1967, a Conferência Geral de Pesos e Medidas o redefiniu como 9,192,631,770 ciclos de uma transição do césio-133.",
       "coda": "A duração de um segundo deixou de ser definida pelo sol e passou a ser definida por um átomo."
     },
@@ -671,7 +671,7 @@
       "tag": "Arquivado",
       "title": "A Câmera Enterrada da Kodak",
       "body": "Em 1975, o engenheiro de 24 anos Steven Sasson construiu a primeira câmera digital: 3,6 kg, 23 segundos por foto. Os executivos concluíram que ninguém desejaria ver imagens em uma televisão quando a impressão era barata e funcionava há um século. Eles patentearam a câmera e a arquivaram.",
-      "coda": "Kodak filed for bankruptcy protection in 2012."
+      "coda": "A Kodak pediu proteção contra falência em 2012."
     },
     "galls-law-origin": {
       "tag": "Origem",
@@ -723,8 +723,8 @@
     },
     "excel-1900-leap-year": {
       "tag": "Legado",
-      "title": "The Leap Year That Wasn't",
-      "body": "Lotus 1-2-3 treated 1900 as a leap year, a harmless shortcut. Microsoft copied the same false date to stay compatible. Lotus is gone; the false leap day remains, now written into the Office Open XML specification.",
+      "title": "O Ano Bissexto Que Não Era",
+      "body": "O Lotus 1-2-3 tratou 1900 como ano bissexto, um atalho inofensivo. A Microsoft copiou a mesma data falsa para manter a compatibilidade. O Lotus desapareceu; o dia bissexto falso permanece, agora escrito na especificação Office Open XML.",
       "coda": "Um hack de compatibilidade para um rival descontinuado agora é um padrão escrito."
     },
     "avatar-before-snow-crash": {
@@ -771,7 +771,7 @@
     },
     "iso8601-unify-then-fork": {
       "tag": "Padrão",
-      "title": "ISO 8601's Narrower Stand-in",
+      "title": "O Substituto Mais Restrito do ISO 8601",
       "body": "A ISO 8601 foi publicada pela primeira vez em 1988, unificando cinco padrões anteriores e conflitantes de data e hora ISO em um só. Mas o formato que a maioria dos softwares da internet valida é o RFC 3339 (1997), um perfil mais restrito que, após a revisão posterior da ISO 8601, nem sequer é um subconjunto estrito dela.",
       "coda": "O padrão que todos citam e o dialeto que o código de todos verifica não são o mesmo documento."
     },
@@ -791,7 +791,7 @@
       "tag": "Incidente",
       "title": "O Protocolo Que Alguém Realmente Voou",
       "body": "David Waitzman publicou o RFC 1149 no Dia dos Bobos de 1990: uma especificação para transportar datagramas IP por pombos. Em 28 de abril de 2001, o Grupo de Usuários Linux de Bergen realmente o construiu, lançando nove pacotes ping por cerca de 5 km. Quatro voltaram — uma taxa de perda de 55%, com idas e voltas de 53 a 106 minutos.",
-      "coda": "The joke RFC has a real packet-loss figure on record: 55 percent."
+      "coda": "A RFC de brincadeira tem uma figura real de perda de pacotes registrada: 55 por cento."
     },
     "att-1990-break-statement": {
       "tag": "Incidente",
@@ -827,10 +827,10 @@
       "tag": "Padrão",
       "title": "O Improvável Autor da Unificação Han",
       "body": "Em 1992, o CJK Joint Research Group fundiu dezenas de milhares de caracteres chineses, japoneses e coreanos em pontos de código Unicode compartilhados. Relatos populares retratam o Japão como o objeto da objeção. A própria história do Unicode atribui as regras de verificação ao delegado japonês Miyazawa Akira.",
-      "coda": "The delegation cast as the victim helped write the rules it is remembered for opposing."
+      "coda": "A delegação retratada como vítima ajudou a escrever as regras pelas quais é lembrada por se opor."
     },
     "china-first-internet-line": {
-      "tag": "Record",
+      "tag": "Registro",
       "title": "A Linha um Ano Antes",
       "body": "A China marca 20 de abril de 1994 como o dia em que se juntou à internet global — uma linha de 64K, acesso completo. Treze meses antes, físicos do IHEP já haviam alugado uma linha para o SLAC de Stanford, trocando e-mails com dezenas de instituições. Só não era o tipo de linha que alguém contava.",
       "coda": "Duas linhas existem; apenas uma ganha um aniversário."
@@ -850,8 +850,8 @@
     "pentium-fdiv-writeoff": {
       "tag": "Incidente",
       "title": "As Entradas Ausentes da Tabela",
-      "body": "Mathematician Thomas Nicely noticed his new Pentium returning slightly wrong results while summing reciprocals of primes, and traced the fault to the chip itself. Intel first offered replacements only to customers who complained, and reversed into a full recall only under public pressure.",
-      "coda": "Intel booked a $475 million pretax charge for the recall."
+      "body": "O matemático Thomas Nicely percebeu que seu novo Pentium retornava resultados ligeiramente errados ao somar os inversos de primos e rastreou a falha até o próprio chip. A Intel ofereceu substituições apenas aos clientes que reclamaram e só procedeu a uma retirada total sob pressão pública.",
+      "coda": "A Intel registrou uma provisão pré-imposto de US$ 475 milhões para a retirada."
     },
     "general-magic-private-network": {
       "tag": "Redes",
@@ -897,8 +897,8 @@
     },
     "gettickcount-776-day-bug": {
       "tag": "Overflow",
-      "title": "A 776-Day Debt",
-      "body": "Windows 95's GetTickCount rolls to zero every 49.7 days, documented behavior, never treated as a bug. But on Windows 8 through Server 2019, the same function could roll over early, near 776 days, a genuine defect. Microsoft fixed it only in Windows 11, version 24H2.",
+      "title": "Uma Dívida de 776 Dias",
+      "body": "O GetTickCount do Windows 95 zera a cada 49,7 dias, comportamento documentado, nunca tratado como bug. Mas no Windows 8 até o Server 2019, a mesma função podia zerar antes do prazo, perto de 776 dias, um defeito genuíno. A Microsoft corrigiu isso apenas no Windows 11, versão 24H2.",
       "coda": "A correção foi aplicada três décadas depois que o contador que ela corrige foi lançado."
     },
     "bluetooth-the-placeholder": {
@@ -927,7 +927,7 @@
     },
     "netease-license-mail-1997": {
       "tag": "Licenciamento",
-      "title": "Sell the license first",
+      "title": "Vender a licença primeiro",
       "body": "Em 11 de junho de 1997, William Ding registrou a NetEase em Guangzhou. O primeiro negócio da empresa não foi webmail gratuito. Ela licenciava um software de servidor de e-mail que havia desenvolvido para outros sites mediante pagamento.",
       "coda": "A NetEase não lançou seu próprio e-mail gratuito, sob 163.com, até 1998."
     },
@@ -935,12 +935,12 @@
       "tag": "Site de avaliações",
       "title": "Graphics Card Home",
       "body": "Em 1998, um estudante do ensino médio em Hebei criou um site pessoal chamado Graphics Card Home em seu tempo livre, publicando análises de placas de vídeo. Dois anos depois, ele renomeou o site para PCPop e continuou atualizando-o durante o restante da escola.",
-      "coda": "In 2005 the same person founded Autohome."
+      "coda": "Em 2005, a mesma pessoa fundou a Autohome."
     },
     "china-oicq-to-qq": {
       "tag": "Rebranding",
       "title": "De OICQ para QQ",
-      "body": "Tencent launched OICQ in February 1999 — the O stood for 'Open,' a nod to ICQ. That October, AOL, ICQ's owner, sent a cease-and-desist over trademark infringement. In November 2000, Ma Huateng renamed it QQ, chosen because the letter reads as 'cute' in Chinese.",
+      "body": "A Tencent lançou o OICQ em fevereiro de 1999 — o O significava 'Open', uma referência ao ICQ. Em outubro daquele ano, a AOL, dona do ICQ, enviou uma notificação de cessação por violação de marca. Em novembro de 2000, Ma Huateng renomeou o serviço para QQ, escolhido porque a letra soa como 'fofo' em chinês.",
       "coda": "Open foi a primeira palavra a sair assim que os advogados da AOL chegaram."
     },
     "excite-google-1999": {
@@ -995,7 +995,7 @@
       "tag": "Fórum",
       "title": "CDB, um dormitório construído",
       "body": "Em 2001, um estudante universitário morando em um dormitório em Shenyang escreveu um software de fórum e o nomeou Crossday Bulletin, trabalhando nele junto com seus estudos. Em outubro seguinte, ele o renomeou para Discuz.",
-      "coda": "On August 23, 2010, Tencent acquired the company he had built around it."
+      "coda": "Em 23 de agosto de 2010, a Tencent adquiriu a empresa que ele havia construído em torno disso."
     },
     "wikipedia-side-wiki": {
       "tag": "Wiki",
@@ -1013,11 +1013,11 @@
       "tag": "Mercadorias",
       "title": "A Janela de Trinta Minutos",
       "body": "Em 1996, Louis Borders, cofundador da livraria Borders, iniciou a Webvan, prometendo entrega em 30 minutos em armazéns construídos do zero. Realizou IPO em novembro de 1999 por US$ 375 milhões, com avaliação superior a US$ 4,8 bilhões, e depois pediu falência em julho de 2001, tendo perdido mais de US$ 800 milhões.",
-      "coda": "Some Webvan executives went on to Amazon; Amazon Fresh and Instacart later filled the same order."
+      "coda": "Alguns executivos da Webvan seguiram para a Amazon; Amazon Fresh e Instacart depois preencheram o mesmo pedido."
     },
     "kozmo-free-hour-delivery": {
       "tag": "Entrega",
-      "title": "The Free-Hour Promise",
+      "title": "A Promessa da Hora Grátis",
       "body": "Em 1998, Joseph Park e Yong Kang fundaram a Kozmo.com, prometendo entrega gratuita em uma hora com couriers despachados por pager. A empresa captou aproximadamente 250 milhões de dólares, mas obteve uma receita de 3,5 milhões contra um prejuízo de 26,3 milhões em 1999. Em abril de 2001, os funcionários souberam do encerramento ao encontrar os escritórios fechados.",
       "coda": "A DoorDash, fundada em 2013, despacha couriers por GPS de smartphone e cobra uma taxa de entrega."
     },
@@ -1035,7 +1035,7 @@
     },
     "pplive-dorm-2002": {
       "tag": "Quarto de dormitório",
-      "title": "Building 26, Yunyuan",
+      "title": "Prédio 26, Yunyuan",
       "body": "Durante a Copa do Mundo de 2002, o dormitório de Yao Xin na Universidade de Ciência e Tecnologia de Huazhong não tinha televisão, então ele assistia às partidas pela rede do campus, que ficava caindo. No seu quarto no Prédio 26, ele começou a calcular como combinar transferência peer-to-peer com vídeo em streaming.",
       "coda": "O PPLive foi lançado em 2005 e, no seu auge, contava com mais de cem milhões de usuários."
     },
@@ -1071,7 +1071,7 @@
     },
     "aws-not-leftover-servers": {
       "tag": "Correção",
-      "title": "Not the Leftover Servers",
+      "title": "Não os Servidores Sobrantes",
       "body": "A versão comum afirma que a AWS começou revendendo a capacidade ociosa de servidores da Amazon durante a temporada de férias. Benjamin Black considera isso simplesmente falso: em 2003, ele e Chris Pinkham escreveram um memorando propondo uma infraestrutura padronizada e automatizada, projetada desde o início para ser vendida externamente como serviço.",
       "coda": "O S3 e o EC2 foram lançados em 2006, após esse memorando."
     },
@@ -1107,7 +1107,7 @@
     },
     "duan-buffett-lunch": {
       "tag": "Mundo pequeno",
-      "title": "The Buffett Lunch",
+      "title": "O Almoço com Buffett",
       "body": "Em 2006, um fabricante de eletrônicos de Guangdong venceu o leilão beneficente anual por um almoço com Warren Buffett, pagando $620,100. Ele levou consigo um jovem de 26 anos que acabara de sair de uma empresa americana e ainda não tinha um plano claro.",
       "coda": "O fabricante era Duan Yongping. O jovem era Colin Huang, que mais tarde fundou a Pinduoduo."
     },
@@ -1149,9 +1149,9 @@
     },
     "china-wang-jian-alibaba-cloud": {
       "tag": "Dúvida",
-      "title": "The Liar Who Built the Cloud",
+      "title": "O Mentiroso que Construiu a Nuvem",
       "body": "Por volta de 2012, com a Alibaba Cloud anos em pesado investimento e sem produto visível, a equipe disse a Jack Ma que Wang Jian era um fraudador. Quase oitenta por cento da equipe de engenharia saiu. A resposta de Ma: financiar um bilhão de yuans por ano por dez anos, depois julgar.",
-      "coda": "Ten years later, the fraud's project turned a profit."
+      "coda": "Dez anos depois, o projeto da fraude virou lucro."
     },
     "taobao-double11-2009": {
       "tag": "Desconto",
@@ -1167,7 +1167,7 @@
     },
     "china-3q-war": {
       "tag": "Incidente",
-      "title": "Choose One",
+      "title": "Escolha Um",
       "body": "Em 3 de novembro de 2010, a Tencent impôs uma escolha em pop-up: desinstalar o 360 ou o QQ deixaria de funcionar. Ma Huateng alertou que os usuários poderiam ser eliminados em três dias. Dias depois, o Ministério da Indústria e Tecnologia da Informação ordenou que ambos os lados restaurassem a compatibilidade.",
       "coda": "O regulador encerrou o conflito, não o mercado nem nenhuma das empresas."
     },
