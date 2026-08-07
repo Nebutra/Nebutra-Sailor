@@ -5,15 +5,15 @@ import {
   brandGradient,
   colorProhibitedUses,
   colors,
-  LogoEnColorSVG,
-  LogomarkSVG,
+  logoColorUsage,
+  logoEditions,
   logoMinSize,
   logoProhibitedUses,
   logoSafetyZone,
   logoVariants,
-  WordmarkEnSVG,
 } from "@nebutra/brand";
 import type { Metadata } from "next";
+import { type LogoAsset, logoMarkup } from "@/lib/brand-assets";
 import { Mono, PageHeader, Section } from "../../(tokens)/tokens/_components/primitives";
 
 export const metadata: Metadata = {
@@ -41,6 +41,19 @@ export const metadata: Metadata = {
  */
 
 const SAFETY_DEMO_HEIGHT = 64;
+
+/**
+ * One logo file, inlined. Missing files show as a gap rather than failing the
+ * build — reporting what is absent is this site's job.
+ */
+function Asset({ asset, height }: { asset: LogoAsset; height: number }) {
+  const markup = logoMarkup(asset, height);
+  if (!markup) {
+    return <span className="font-mono text-[11px] text-muted-foreground">{asset}.svg missing</span>;
+  }
+  // biome-ignore lint/security/noDangerouslySetInnerHtml: brand asset read from disk at build time
+  return <span dangerouslySetInnerHTML={{ __html: markup }} />;
+}
 
 function Swatches({ scale, name }: { scale: Record<string, string>; name: string }) {
   const steps = Object.entries(scale);
@@ -96,42 +109,54 @@ export default function BrandPage() {
       <Section
         note={
           <p>
-            The three lockups, rendered live — inline SVG components, not exported PNGs, so a logo
-            that breaks under a token change breaks here first.
+            <Mono>logoColorUsage.preferred</Mono> is <Mono>{logoColorUsage.preferred}</Mono>, and
+            this is that: the 正标, a multi-path export with real facet geometry and true gradients.
+            There is no component form of it because there is nothing to parameterise — it is
+            artwork, inlined here from the file the manual ships.
           </p>
         }
         title="Logo"
       >
-        {/* Worth stating on the page rather than only in a commit message: the
-            asset-backed variants fail silently, which is exactly the class of
-            defect this site exists to surface. */}
-        <p className="mb-6 max-w-2xl text-[13px] text-muted-foreground leading-relaxed">
-          These are the <Mono>*SVG</Mono> exports. Their siblings <Mono>Logo</Mono>,{" "}
-          <Mono>Logomark</Mono> and <Mono>Wordmark</Mono> render an <Mono>img</Mono> pointing at{" "}
-          <Mono>/logos/…</Mono>, so they need the asset files copied into the consuming app&apos;s{" "}
-          <Mono>public/</Mono> — and where they are not, they degrade to a broken-image icon with no
-          error raised anywhere. This page used them first and rendered three torn images. Prefer
-          the SVG exports unless you specifically need a cacheable asset URL.
-        </p>
-        <div className="mb-8 grid gap-3 sm:grid-cols-3">
-          {[
-            { label: "LogoEnColorSVG", node: <LogoEnColorSVG width={180} /> },
-            { label: "LogomarkSVG", node: <LogomarkSVG height={44} width={44} /> },
-            { label: "WordmarkEnSVG", node: <WordmarkEnSVG width={150} /> },
-          ].map((item) => (
-            <div
-              className="flex min-h-[120px] flex-col items-center justify-center gap-4 rounded-[var(--radius-lg)] bg-card p-6 shadow-ambient-sm"
-              key={item.label}
-            >
-              {item.node}
-              <Mono>{item.label}</Mono>
-            </div>
-          ))}
+        <div className="mb-8 flex min-h-[160px] items-center justify-center rounded-[var(--radius-lg)] bg-card p-10 shadow-ambient-sm">
+          <Asset asset="logo-horizontal-en" height={64} />
         </div>
 
-        {/* The clearance is drawn, not stated. The inset below is
-            logoSafetyZone.calculate(64).margin — the same call the guideline
-            exposes to anything that needs to lay a logo out. */}
+        {/* The trap, stated where it was fallen into. */}
+        <p className="mb-8 max-w-2xl rounded-[var(--radius-md)] bg-muted/60 p-4 text-[13px] text-muted-foreground leading-relaxed">
+          Not to be confused with <Mono>LogoEnColorSVG</Mono>, which is the mono path painted with a
+          synthetic gradient and a baked wordmark. Its own source calls it “not VI 正标”. This page
+          shipped it as the primary mark at first, which is how an identity page ends up showing
+          everything except the identity.
+        </p>
+
+        <div className="mb-8 grid gap-3 sm:grid-cols-2">
+          <div className="flex min-h-[150px] flex-col items-center justify-center gap-4 rounded-[var(--radius-lg)] bg-card p-6 shadow-ambient-sm">
+            <span className="text-[hsl(var(--foreground))]">
+              <Asset asset="logo-mono" height={52} />
+            </span>
+            <div className="text-center">
+              <Mono>logo-mono</Mono>
+              <p className="mt-1 text-[12px] text-muted-foreground">{logoColorUsage.rules.print}</p>
+            </div>
+          </div>
+          <div className="flex min-h-[150px] flex-col items-center justify-center gap-4 rounded-[var(--radius-lg)] bg-foreground p-6">
+            <span className="text-[hsl(var(--background))]">
+              <Asset asset="logo-inverse" height={52} />
+            </span>
+            <div className="text-center">
+              <code className="font-mono text-[12px] text-background/70">logo-inverse</code>
+              <p className="mt-1 text-[12px] text-background/70">
+                {logoColorUsage.rules.darkBackground}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <p className="mb-8 max-w-2xl text-[13px] text-muted-foreground leading-relaxed">
+          {logoColorUsage.rules.complexBackground}
+        </p>
+
+        {/* Clearance drawn on the 正标, not on a stand-in. */}
         <div className="mb-8">
           <div className="mb-2 flex flex-wrap items-baseline gap-3">
             <Mono>logoSafetyZone.ratio</Mono>
@@ -139,17 +164,17 @@ export default function BrandPage() {
               {logoSafetyZone.ratio} × logo height = {zone.margin}px at {SAFETY_DEMO_HEIGHT}px
             </span>
           </div>
-          <div className="inline-block rounded-[var(--radius-lg)] bg-muted p-0">
+          <div className="inline-block rounded-[var(--radius-lg)] bg-muted">
             <div
               className="flex items-center justify-center rounded-[var(--radius-lg)] bg-card"
               style={{ padding: zone.margin }}
             >
-              <LogomarkSVG height={SAFETY_DEMO_HEIGHT} width={SAFETY_DEMO_HEIGHT} />
+              <Asset asset="logo-color" height={SAFETY_DEMO_HEIGHT} />
             </div>
           </div>
         </div>
 
-        <dl className="grid max-w-2xl grid-cols-[10rem_minmax(0,1fr)] gap-y-2 text-[14px]">
+        <dl className="mb-8 grid max-w-2xl grid-cols-[10rem_minmax(0,1fr)] gap-y-2 text-[14px]">
           <dt className="text-muted-foreground">Digital minimum</dt>
           <dd className="text-foreground tabular-nums">
             {logoMinSize.digital.minHeightPx}px height
@@ -159,6 +184,31 @@ export default function BrandPage() {
           <dt className="text-muted-foreground">Lockups</dt>
           <dd className="text-foreground">{Object.keys(logoVariants).join(" · ")}</dd>
         </dl>
+
+        {/* Two editions is a fact about the trademark, and it decides which file
+            a document may use. It has no business being discoverable only by
+            reading the directory listing. */}
+        <div className="grid gap-3 sm:grid-cols-2">
+          {Object.values(logoEditions).map((edition) => (
+            <div
+              className="rounded-[var(--radius-lg)] bg-card p-5 shadow-ambient-sm"
+              key={edition.version}
+            >
+              <p className="font-medium text-[15px] text-foreground">
+                {edition.name} · {edition.nameEn} v{edition.version}
+              </p>
+              <p className="mt-1 text-[13px] text-muted-foreground leading-relaxed">
+                {edition.description}
+              </p>
+              <p className="mt-3 text-[12px] text-muted-foreground">
+                {edition.useCases.join(" · ")}
+              </p>
+              <p className="mt-2">
+                <Mono>{edition.directory}/</Mono>
+              </p>
+            </div>
+          ))}
+        </div>
       </Section>
 
       <Section

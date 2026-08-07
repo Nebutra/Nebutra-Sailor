@@ -34,6 +34,22 @@ export function PageHeader({
   );
 }
 
+/**
+ * Slug for a section heading, so it can be linked to and listed.
+ *
+ * Derived from the title rather than passed in: an id nobody has to supply is
+ * an id nobody forgets, and the on-this-page rail reads these back out of the
+ * DOM. A heading that changes wording changes its anchor with it, which is the
+ * right trade — a stale anchor that silently scrolls nowhere is worse than one
+ * that visibly 404s in the rail.
+ */
+export function sectionId(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
 export function Section({
   title,
   note,
@@ -43,9 +59,15 @@ export function Section({
   note?: ReactNode;
   children: ReactNode;
 }) {
+  const id = sectionId(title);
   return (
-    <section className="mb-16">
-      <h2 className="mb-2 font-semibold text-foreground text-xl tracking-tight">{title}</h2>
+    <section className="mb-16 scroll-mt-24" id={id}>
+      <h2
+        className="mb-2 font-semibold text-foreground text-xl tracking-tight"
+        id={`${id}-heading`}
+      >
+        {title}
+      </h2>
       {note ? (
         <div className="mb-6 max-w-3xl space-y-3 text-[14px] text-muted-foreground leading-relaxed">
           {note}

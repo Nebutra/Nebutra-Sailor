@@ -53,6 +53,8 @@ export const TypefaceSchema = z.object({
   sourceUrl: z.string().url().optional(),
   cssStack: z.string().min(1),
   category: z.enum(["sans", "serif", "display", "mono", "handwriting", "other"]),
+  /** Specimen image, where a face has one. Read by the pairings surface. */
+  sampleImageUrl: z.string().url().optional(),
   notes: z.string().optional(),
 });
 export type Typeface = z.infer<typeof TypefaceSchema>;

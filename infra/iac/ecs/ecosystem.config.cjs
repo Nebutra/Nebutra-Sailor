@@ -73,26 +73,6 @@ module.exports = {
       listen_timeout: 10000,
     },
     {
-      // Legacy. 442 MDX pages the live surface above supersedes; kept
-      // deployable so nothing is lost while its content is triaged, but no
-      // vhost points at it any more.
-      name: "design-docs",
-      cwd: "/var/www/nebutra/design-docs/current",
-      script: "apps/design-docs/server.js",
-      env: {
-        NODE_ENV: "production",
-        PORT: 3004,
-        HOSTNAME: "127.0.0.1",
-      },
-      max_memory_restart: "400M",
-      instances: 1,
-      exec_mode: "fork",
-      autorestart: true,
-      max_restarts: 10,
-      kill_timeout: 8000,
-      listen_timeout: 10000,
-    },
-    {
       // Pebble brand front — marketing / download / whats-new feeds.
       // Fronted by nginx conf.d/pebble.nebutra.com.conf (A → ECS, CF proxied).
       name: "pebble",
