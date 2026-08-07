@@ -790,7 +790,7 @@
     "rfc1149-avian-carriers-test": {
       "tag": "ঘটনা",
       "title": "যে প্রোটোকল কেউ আসলে উড়িয়েছিল",
-      "body": "David Waitzman published RFC 1149 on April Fools' Day, 1990: a spec for carrying IP datagrams by pigeon. On April 28, 2001, the Bergen Linux User Group actually built it, launching nine ping packets over roughly 5 km. Four came back — a 55% loss rate, round trips running 53 to 106 minutes.",
+      "body": "ডেভিড ওয়েটজম্যান ১৯৯০ সালের এপ্রিল ফুল দিবসে RFC 1149 প্রকাশ করেন: পায়রা দ্বারা IP ডেটাগ্রাম বহনের একটি স্পেসিফিকেশন। ২০০১ সালের ২৮ এপ্রিল, বার্গেন লিনাক্স ইউজার গ্রুপ এটি বাস্তবে তৈরি করে, প্রায় ৫ কিমি জুড়ে নয়টি পিং প্যাকেট উৎক্ষেপণ করে। চারটি ফিরে আসে — ৫৫% হার, রাউন্ড ট্রিপ ৫৩ থেকে ১০৬ মিনিট পর্যন্ত চলে।",
       "coda": "মজার এই RFC-এর রেকর্ডে একটি বাস্তব প্যাকেট-লস সংখ্যা আছে: ৫৫ শতাংশ।"
     },
     "att-1990-break-statement": {
@@ -970,7 +970,7 @@
     "gps-week-rollover": {
       "tag": "যান্ত্রিকতা",
       "title": "GPS সপ্তাহ 1024",
-      "body": "GPS counts weeks in 10 bits, a field that maxes at 1,023 and rolls to zero roughly every 19.7 years. The first rollover hit in August 1999. The second landed on 6 April 2019, breaking receivers built as if the first had been a one-off.",
+      "body": "GPS ১০ বিটে সপ্তাহ গণনা করে, একটি ক্ষেত্র যা সর্বোচ্চ ১,০২৩-এ পৌঁছে এবং প্রায় প্রতি ১৯.৭ বছরে শূন্যে ফিরে যায়। প্রথম রোলওভার ১৯৯৯ সালের আগস্টে ঘটে। দ্বিতীয়টি ২০১৯ সালের ৬ এপ্রিল ঘটে, যা সেই রিসিভারগুলিকে ভেঙে দেয় যেগুলি প্রথমটিকে একবারের ঘটনা মনে করে তৈরি করা হয়েছিল।",
       "coda": "একই ওভারফ্লো একটি সময়সূচিতে আছে এবং 2038 সালে আবার ঘটবে।"
     },
     "foxmail-resold": {
@@ -1018,7 +1018,7 @@
     "kozmo-free-hour-delivery": {
       "tag": "Delivery",
       "title": "ফ্রি-আওয়ার প্রমিস",
-      "body": "In 1998 Joseph Park and Yong Kang founded Kozmo.com, promising free one-hour delivery with couriers dispatched by pager. It raised roughly $250 million but earned $3.5 million against a $26.3 million loss in 1999. In April 2001, staff learned of the shutdown by finding closed offices.",
+      "body": "১৯৯৮ সালে জোসেফ পার্ক এবং ইয়ং ক্যাং Kozmo.com প্রতিষ্ঠা করেন, পেজারের মাধ্যমে কুরিয়ার পাঠিয়ে বিনামূল্যে এক ঘন্টার ডেলিভারির প্রতিশ্রুতি দিয়ে। এটি প্রায় $২৫০ মিলিয়ন সংগ্রহ করে কিন্তু ১৯৯৯ সালে $২৬.৩ মিলিয়ন লোকসানের বিপরীতে $৩.৫ মিলিয়ন আয় করে। ২০০১ সালের এপ্রিলে, কর্মীরা বন্ধ অফিস খুঁজে পেয়ে শাটডাউনের খবর জানতে পারেন।",
       "coda": "২০১৩ সালে প্রতিষ্ঠিত DoorDash স্মার্টফোন GPS দিয়ে কোরিয়র পাঠায় এবং ডেলিভারি ফি আদায় করে।"
     },
     "flooz-digital-currency": {
@@ -1078,7 +1078,7 @@
     "maps-intern-friendfeed": {
       "tag": "ইন্টার্নশিপ",
       "title": "ম্যাপস টিমের ইন্টার্ন",
-      "body": "In 2003 a Google product manager hired an intern onto the team building local search, the project that grew into Google Maps. Four years later that intern and an engineer who had built Gmail left Google together to start a company.",
+      "body": "২০০৩ সালে একজন গুগল প্রোডাক্ট ম্যানেজার স্থানীয় সার্চ তৈরির দলে একজন ইন্টার্ন নিয়োগ করেন, যে প্রকল্পটি পরে গুগল ম্যাপস-এ পরিণত হয়। চার বছর পরে সেই ইন্টার্ন এবং একজন ইঞ্জিনিয়ার যিনি জিমেইল তৈরি করেছিলেন, তারা একসাথে গুগল ছেড়ে একটি কোম্পানি শুরু করেন।",
       "coda": "ইন্টার্নটি ছিল Bret Taylor। যে কোম্পানিটি তিনি শুরু করতে বের হন তা Facebook কিনে নেয়।"
     },
     "friendster-forty-second-load": {
@@ -1336,7 +1336,7 @@
     "voyager-68-kilobits": {
       "tag": "গভীর মহাকাশ",
       "title": "ভাঙা চিপের চারপাশে",
-      "body": "Voyager 1 launched in September 1977. Forty-seven years out, a memory chip in its flight data subsystem failed, three percent of it corrupted beyond repair. On 20 April 2024 engineers rearranged the code around the damaged area and the signal came back.",
+      "body": "ভয়েজার ১ ১৯৭৭ সালের সেপ্টেম্বরে উৎক্ষেপিত হয়। সাতচল্লিশ বছর পরে, এর ফ্লাইট ডেটা সাবসিস্টেমের একটি মেমরি চিপ ব্যর্থ হয়, এর তিন শতাংশ মেরামতের অযোগ্যভাবে নষ্ট হয়ে যায়। ২০২৪ সালের ২০ এপ্রিল ইঞ্জিনিয়াররা ক্ষতিগ্রস্ত এলাকার চারপাশে কোড পুনর্বিন্যাস করেন এবং সংকেত ফিরে আসে।",
       "coda": "এর জেনারেটরগুলি ২০৩৬ সাল পর্যন্ত ইঞ্জিনিয়ারিং ডেটা ফেরত পাঠানোর জন্য যথেষ্ট শক্তি সরবরাহ করতে পারে।"
     },
     "gif-lzw-unisys": {

@@ -1,5 +1,5 @@
 {
-  "panelLabel": "Boot log",
+  "panelLabel": "Önyükleme günlüğü",
   "entries": {
     "transistor-name-off-patent-1947": {
       "tag": "Patent",
@@ -658,7 +658,7 @@
     "vint-cerf-envelope-sketch": {
       "tag": "Anekdot",
       "title": "Bir Zarfın Arka Yüzü",
-      "body": "The internet's founding legend says Cerf sketched the gateway architecture on a napkin. He has corrected this: 'It wasn't a napkin, actually, it was the back of an envelope.' In 1973, waiting in a hotel lobby, he sketched what became TCP/IP's gateway design.",
+      "body": "İnternetin kuruluş efsanesine göre Cerf, ağ geçidi mimarisini bir peçeteye çizmişti. Bunu düzeltti: 'Aslında bir peçete değildi, bir zarfın arkasıydı.' 1973'te bir otel lobisinde beklerken, TCP/IP'nin ağ geçidi tasarımı haline gelecek şeyi çizdi.",
       "coda": "Ertesi yıl, eskiz IEEE Transactions on Communications dergisinde bir makaleye dönüştü."
     },
     "gchq-nonsecret-encryption": {
@@ -748,7 +748,7 @@
     "tz-olson-database": {
       "tag": "Adlandırma",
       "title": "Olson Veritabanı",
-      "body": "Most devices resolve timezones against one volunteer-run file set, informally called the Olson database after founder Arthur David Olson. Its naming scheme is credited to Paul Eggert, who has actually edited the database since 2005.",
+      "body": "Çoğu cihaz, saat dilimlerini kurucu Arthur David Olson'dan sonra gayriresmî olarak Olson veritabanı adı verilen, gönüllülerce yönetilen tek bir dosya kümesine göre çözer. Adlandırma şeması, 2005'ten beri veritabanını fiilen düzenleyen Paul Eggert'e atfedilir.",
       "coda": "Adını taşıyan kişi ile onu o tarihten bu yana sürdüren kişi farklı kişilerdir."
     },
     "china-1987-first-email": {
@@ -808,7 +808,7 @@
     "linux-minix-post": {
       "tag": "Çekirdek",
       "title": "comp.os.minix'e Bir Gönderi",
-      "body": "On August 25, 1991, a Helsinki university student posted to the comp.os.minix newsgroup that he was writing a free operating system, calling it \"just a hobby, won't be big and professional like gnu,\" and asked what features people wanted.",
+      "body": "25 Ağustos 1991'de Helsinki Üniversitesi'nden bir öğrenci, comp.os.minix haber grubuna ücretsiz bir işletim sistemi yazdığını, buna \"sadece bir hobi, gnu gibi büyük ve profesyonel olmayacak\" dediğini duyurdu ve insanların hangi özellikleri istediğini sordu.",
       "coda": "Kasım 2017'den bu yana dünyanın en hızlı 500 süperbilgisayarının tamamı, üzerine inşa edilmiş bir işletim sistemi çalıştırmaktadır."
     },
     "web-vs-gopher-1991": {
@@ -923,7 +923,7 @@
       "tag": "Standart",
       "title": "MUST ve must: Yirmi Yıllık Bir Boşluk",
       "body": "RFC 2119 (Mart 1997), MUST, SHOULD, MAY ve olumsuzlarını IETF belgeleri için bağlayıcı gereksinim seviyeleri olarak tanımladı. Ancak bu kelimelerin 'genellikle büyük harfle yazıldığı' belirtildi; küçük harf must ve should hiçbir zaman dışlanmadı. RFC 8174, 2017'de bu boşluğu kapattı: yalnızca tümü büyük harf geçerli sayılır.",
-      "coda": "For twenty years, a lowercase must carried the same legal weight as a shrug."
+      "coda": "Yirmi yıl boyunca, küçük harfli bir must, bir omuz silkme ile aynı yasal ağırlığı taşıdı."
     },
     "netease-license-mail-1997": {
       "tag": "Lisanslama",
@@ -1013,7 +1013,7 @@
       "tag": "Bakkal",
       "title": "Otuz Dakikalık Pencereler",
       "body": "1996 yılında Borders kitap dükkanı ortak kurucusu Louis Borders, sıfırdan inşa edilen depolardan 30 dakikada teslimat vaat ederek Webvan'ı kurdu. Şirket Kasım 1999'da 375 milyon dolara halka arz oldu ve 4,8 milyar doların üzerinde bir değerlemeye ulaştı; ardından Temmuz 2001'de 800 milyon dolardan fazla zarar ederek iflas başvurusunda bulundu.",
-      "coda": "Some Webvan executives went on to Amazon; Amazon Fresh and Instacart later filled the same order."
+      "coda": "Bazı Webvan yöneticileri Amazon'a geçti; Amazon Fresh ve Instacart daha sonra aynı siparişi doldurdu."
     },
     "kozmo-free-hour-delivery": {
       "tag": "Teslimat",
@@ -1035,7 +1035,7 @@
     },
     "pplive-dorm-2002": {
       "tag": "Derslik",
-      "title": "Building 26, Yunyuan",
+      "title": "Bina 26, Yunyuan",
       "body": "2002 Dünya Kupası sırasında Huazhong Bilim ve Teknoloji Üniversitesi'ndeki Yao Xin'in dersliğinde televizyon yoktu, bu yüzden maçları sürekli çöken kampüs ağı üzerinden izledi. 26. Bina'daki odasında eşler arası aktarımı akış video ile nasıl birleştireceğini çalışmaya başladı.",
       "coda": "PPLive 2005'te piyasaya sürüldü ve zirve döneminde yüz milyonun üzerinde kullanıcıya ulaştı."
     },
@@ -1172,7 +1172,7 @@
       "coda": "Bunu piyasa veya şirketlerden biri değil, düzenleyici sonlandırdı."
     },
     "china-thousand-groupon-war": {
-      "tag": "Bubble",
+      "tag": "Balon",
       "title": "Bin Grupon Savaşı",
       "body": "Çin'in ilk toplu alışveriş sitesi 2010'da açıldı; portallar ve sosyal ağlar aylar içinde katıldı. Ağustos 2011'e gelindiğinde 5.000'den fazla toplu alışveriş şirketi rekabet ediyordu — 'Bin Grupon Savaşı.' 2014 ortalarında yalnızca 176 site ayakta kalmıştı.",
       "coda": "Beş binden azı iki yüzden azı hayatta kaldı."
@@ -1202,7 +1202,7 @@
       "coda": "Bu anlaşma, teknoloji tarihinde yapılan en iyi satın almalar arasında düzenli olarak anılmaktadır."
     },
     "didi-alibaba-resignation": {
-      "tag": "Resignation",
+      "tag": "İstifa",
       "title": "Alibaba'dan taksilere",
       "body": "Cheng Wei, Alipay'in tüketici işleri genel müdür yardımcılığına yükselerek Alibaba'da sekiz yıl geçirdi. Haziran 2012'de istifa etti ve Wu Rui ve Li Xiang ile birlikte bir taksi çağırma uygulaması başlattı. 9 Eylül'de piyasaya sürüldüğünde aynı anda yalnızca on altı sürücü çevrimiçiydi.",
       "coda": "İki ay sonra aynı anda yüzden fazla sürücü çevrimiçiydi."
@@ -1232,7 +1232,7 @@
       "coda": "Kırmızı zarf bir ödeme hunisi haline geldi."
     },
     "heartbleed-two-person-team": {
-      "tag": "Incident",
+      "tag": "Olay",
       "title": "Dört Kişilik Bir Ekip",
       "body": "Heartbleed'in eksik sınır kontrolü, OpenSSL'in heartbeat eklentisine Aralık 2011'de girdi ve bağımsız araştırmacılar Nisan 2014'te bulana dek iki yıl fark edilmedi. O sırada, web'in HTTPS trafiğinin büyük bir kısmını oluşturan kod tabanı dört gönüllü, biri tam zamanlı, tarafından sürdürülüyordu.",
       "coda": "Düzeltme, hatanın açıklandığı gün yayınlandı."
@@ -1262,7 +1262,7 @@
       "coda": "Kesinti yaklaşık dört saat sürdü; AWS'nin kendi durum sayfası aynı sistemlere bağlıydı."
     },
     "gitlab-2017-rm-rf": {
-      "tag": "Incident",
+      "tag": "Olay",
       "title": "Beş Yedekleme, Sıfır",
       "body": "Bir mühendis geri kalmış bir replikayı temizlemek istedi, bunun yerine birincil sunucudaki PostgreSQL veri dizinini sildi; durdurma saniyeler geç kaldı; yaklaşık 300GB zaten kaybolmuştu. GitLab, çalıştırdığı beş yedekleme ve replikasyon yönteminin hiçbirinin veriyi gerçekten geri yükleyemeyeceğini buldu.",
       "coda": "Kurtarma, altı saat önce birinin tesadüfen aldığı bir anlık görüntüye dayandı."

@@ -117,7 +117,7 @@
     },
     "waterfall": {
       "tag": "Lettura errata",
-      "title": "The diagram was the counterexample",
+      "title": "Il diagramma era il controesempio",
       "body": "In \"Managing the Development of Large Software Systems\" Winston Royce tracciò il diagramma che l'industria avrebbe poi chiamato modello a cascata, e scrisse: \"I believe in this concept, but the implementation described above is risky and invites failure.\" Il resto del documento riguarda il renderlo iterativo.",
       "coda": "L'industria ha conservato il diagramma e scartato la frase."
     },
@@ -292,7 +292,7 @@
     "open-source-coined-1998": {
       "tag": "Denominazione",
       "title": "La Coniazione di Open Source",
-      "body": "In February 1998, Christine Peterson proposed \"open source\" because newcomers kept hearing \"free software\" as a price, not a freedom. At a VA Research meeting on February 5, Todd Anderson slipped the term into conversation rather than formally proposing it, letting it spread on its own.",
+      "body": "Nel febbraio 1998, Christine Peterson propose \"open source\" perché i nuovi arrivati continuavano a intendere \"free software\" come prezzo, non come libertà. In un incontro alla VA Research il 5 febbraio, Todd Anderson fece scivolare il termine nella conversazione invece di proporlo formalmente, lasciandolo diffondere da solo.",
       "coda": "Il gruppo tentò poi di registrare la frase come marchio e fallì."
     },
     "netscape-source-1998": {
@@ -362,7 +362,7 @@
       "coda": "Quell'indirizzo punta a una macchina di test PowerPC 970 presso OSDL."
     },
     "knuth-reward-check": {
-      "tag": "Reward",
+      "tag": "Ricompensa",
       "title": "Bank of San Serriffe",
       "body": "Donald Knuth paga 2,56 dollari per ogni errore trovato nei suoi libri, con assegni emessi sulla fittizia Bank of San Serriffe. A marzo 2005 gli assegni firmati superavano i 20.000 dollari.",
       "coda": "La maggior parte dei destinatari incassa l'assegno invece di versarlo."
@@ -436,7 +436,7 @@
     "bootstrap-the-impossible-joke": {
       "tag": "Etimologia",
       "title": "Mutuatario da un'impresa impossibile",
-      "body": "\"Pulling oneself up by one's bootstraps\" traces to Baron Munchausen's 1785 tall tale and was used through the 19th century as the standard example of a physical impossibility. In 1953, computing borrowed it for the instruction chain that gets a machine to start itself.",
+      "body": "\"Sollevarsi da soli tirando le stringhe degli stivali\" risale al racconto esagerato del barone di Münchhausen del 1785 e fu usato per tutto il XIX secolo come esempio standard di impossibilità fisica. Nel 1953, l'informatica lo riprese per la catena di istruzioni che permette a una macchina di avviarsi da sola.",
       "coda": "La parola per il trucco fu, al suo primo uso, una battuta sul fallimento del trucco."
     },
     "french-revolutionary-decimal-time": {
@@ -455,7 +455,7 @@
       "tag": "Smentito",
       "title": "Il memo che Western Union non ha mai scritto",
       "body": "Un memo del 1876 di Western Union, ampiamente citato, definisce il telefono \"idiota\" rispetto all'invio di un corriere all'ufficio telegrafico. I ricercatori che hanno esaminato i giornali dell'epoca non hanno trovato alcuna traccia del documento, e l'esecutivo citato non ricopriva quella carica in azienda quell'anno. Il testo è stato fabbricato in seguito.",
-      "coda": "Western Union did decline Bell's patent that year; it just never wrote this memo."
+      "coda": "Western Union rifiutò effettivamente il brevetto di Bell quell'anno; non scrisse mai questo memo."
     },
     "nintendo-hanafuda-detours": {
       "tag": "Pivot",
@@ -632,7 +632,7 @@
       "coda": "Ogni indirizzo email da allora ha portato avanti quella singola limitazione."
     },
     "parnas-module-decomposition": {
-      "tag": "Method",
+      "tag": "Metodo",
       "title": "Dove Tagliare un Modulo",
       "body": "Nel 1972 David Parnas divise lo stesso sistema di indicizzazione KWIC in moduli in due modi: uno per fase di elaborazione, uno per le decisioni di progetto più soggette a cambiamenti, ciascuna nascosta dietro un'interfaccia. Solo il secondo permetteva a una modifica di toccare un modulo senza che nessuno leggesse il resto.",
       "coda": "Il confine del modulo si rivelò codificare un'ipotesi su ciò che un futuro manutentore avrebbe dovuto sapere."
@@ -749,7 +749,7 @@
       "tag": "Denominazione",
       "title": "Il database Olson",
       "body": "La maggior parte dei dispositivi risolve i fusi orari rispetto a un insieme di file gestito da volontari, informalmente chiamato database Olson in onore del fondatore Arthur David Olson. Il suo schema di denominazione è attribuito a Paul Eggert, che ha effettivamente curato il database dal 2005.",
-      "coda": "The eponym and the person who has maintained it since are different people."
+      "coda": "L'eponimo e la persona che lo ha mantenuto da allora sono persone diverse."
     },
     "china-1987-first-email": {
       "tag": "Record",
@@ -782,7 +782,7 @@
       "coda": "Nel luglio 2026 si è classificata al primo posto nell'indice TIOBE di popolarità dei linguaggi di programmazione."
     },
     "worse-is-better": {
-      "tag": "Debate",
+      "tag": "Dibattito",
       "title": "Worse Is Better",
       "body": "Nel 1989 Richard Gabriel coniò 'worse is better': un'implementazione semplice e parzialmente corretta sopravvive meglio di una completa e corretta, motivo per cui riteneva che C e Unix avessero superato Lisp. Nel 1991 pubblicò una confutazione sotto lo pseudonimo Nickieben Bourbaki, fingendosi un vecchio amico.",
       "coda": "Decenni dopo affermava ancora di non poter decidere se il suo stesso argomento fosse corretto."
@@ -833,7 +833,7 @@
       "tag": "Registro",
       "title": "La Linea un Anno Prima",
       "body": "La Cina indica il 20 aprile 1994 come la data in cui si è unita a internet globale — una linea da 64K, accesso completo. Tredici mesi prima, i fisici dell'IHEP avevano già affittato una linea allo SLAC di Stanford, scambiando email con decine di istituzioni. Non era semplicemente il tipo di linea che qualcuno contava.",
-      "coda": "Two lines exist; only one gets an anniversary."
+      "coda": "Esistono due linee; solo una ottiene un anniversario."
     },
     "wiki-the-airport-shuttle": {
       "tag": "Etimologia",
@@ -856,7 +856,7 @@
     "general-magic-private-network": {
       "tag": "Reti",
       "title": "La rete privata di General Magic",
-      "body": "In 1990 ex-Apple engineers Bill Atkinson, Andy Hertzfeld and Marc Porat founded General Magic. Sony's Magic Link shipped in 1994 for $800, sending email and running apps. Leadership built a proprietary AT&T network instead of using the internet, calling the web \"passive.\"",
+      "body": "Nel 1990 gli ex ingegneri Apple Bill Atkinson, Andy Hertzfeld e Marc Porat fondarono General Magic. Il Magic Link di Sony uscì nel 1994 a 800 dollari, inviando email ed eseguendo app. La dirigenza costruì una rete proprietaria AT&T invece di usare internet, definendo il web \"passivo\".",
       "coda": "Il dipendente Tony Fadell ha poi guidato lo sviluppo hardware dell'iPod e dell'iPhone in Apple."
     },
     "ibm-simon-first-touchscreen": {
@@ -891,7 +891,7 @@
     },
     "general-magic-weekend-site": {
       "tag": "Progetto secondario",
-      "title": "The Site He Wasn't Serious About",
+      "title": "Il sito che non prendeva sul serio",
       "body": "A metà degli anni '90, in una startup della Silicon Valley che avrebbe dovuto reinventare il computer palmare, un programmatore passò il suo tempo libero a scrivere un sito improvvisato per vendere cianfrusaglie di seconda mano. Andò online in un fine settimana. Non lo prendeva sul serio.",
       "coda": "L'azienda era General Magic. Il sito fu in seguito rinominato eBay."
     },
@@ -932,7 +932,7 @@
       "coda": "NetEase non lanciò la propria posta elettronica gratuita, sotto 163.com, fino al 1998."
     },
     "lixiang-graphics-card-home": {
-      "tag": "Review site",
+      "tag": "Sito di recensioni",
       "title": "Home delle schede grafiche",
       "body": "Nel 1998, uno studente delle superiori nello Hebei avviò nel tempo libero un sito personale chiamato Graphics Card Home, pubblicando recensioni di schede grafiche per computer. Due anni dopo lo rinominò PCPop e continuò ad aggiornarlo per tutto il resto del periodo scolastico.",
       "coda": "Nel 2005 la stessa persona fondò Autohome."
@@ -946,7 +946,7 @@
     "excite-google-1999": {
       "tag": "Giudizio errato",
       "title": "Excite rifiuta Google",
-      "body": "In 1999 Google offered to sell itself to Excite for $750,000 plus roughly 1% equity. CEO George Bell judged the search gap too small to justify tearing out Excite's technology. The reasoning held up. Google was worth over a billion within a year.",
+      "body": "Nel 1999 Google si offrì di vendersi a Excite per 750.000 dollari più circa l'1% di quote. L'amministratore delegato George Bell giudicò il divario di ricerca troppo piccolo per giustificare la sostituzione della tecnologia di Excite. Il ragionamento si è rivelato fondato. Google valeva oltre un miliardo entro un anno.",
       "coda": "Bell ha dichiarato da allora che avrebbe preso la stessa decisione di nuovo."
     },
     "mars-climate-orbiter-units": {
@@ -1022,7 +1022,7 @@
       "coda": "DoorDash, fondata nel 2013, invia corrieri tramite GPS dello smartphone e addebita una tariffa di consegna."
     },
     "flooz-digital-currency": {
-      "tag": "Currency",
+      "tag": "Valuta",
       "title": "Denaro Senza Negozio",
       "body": "Nel febbraio 1999, Robert Levitan, co-fondatore di iVillage, lanciò Flooz.com, una valuta digitale che gli utenti potevano acquistare e spendere presso i commercianti partner. Un'organizzazione criminale utilizzò carte rubate per creare $300.000 in crediti fraudolenti, e nel 2001 la frode raggiunse il 19% del volume. L'azienda chiuse nell'agosto di quell'anno.",
       "coda": "Nel gennaio 2009, Satoshi Nakamoto estrasse il blocco genesis di bitcoin."
@@ -1049,7 +1049,7 @@
       "tag": "Concorrenza",
       "title": "Tre anni gratis",
       "body": "Nel 2003, eBay's Eachnet deteneva oltre il 70% del mercato C2C cinese, applicando commissioni di inserzione e transazione. Taobao fu lanciato a maggio su un sito quasi vuoto; la risposta di Alibaba fu tre anni di inserzioni gratuite. Entro il 2006, Taobao deteneva il 70% e eBay si ritirò dal C2C cinese.",
-      "coda": "The side still charging listing fees ran out of runway first."
+      "coda": "La parte che continuava a far pagare le commissioni di inserzione esaurì i fondi per prima."
     },
     "dianping-zagat-notes": {
       "tag": "Guida alle recensioni",
@@ -1077,7 +1077,7 @@
     },
     "maps-intern-friendfeed": {
       "tag": "Stage",
-      "title": "The Maps Team Intern",
+      "title": "Il tirocinante del team Maps",
       "body": "Nel 2003 un product manager di Google assunse uno stagista nel team che sviluppava la ricerca locale, il progetto che sarebbe diventato Google Maps. Quattro anni dopo quello stagista e un ingegnere che aveva sviluppato Gmail lasciarono Google insieme per fondare una società.",
       "coda": "L'assistente era Bret Taylor. L'azienda che lasciò per fondare fu acquistata da Facebook."
     },
@@ -1089,7 +1089,7 @@
     },
     "shopify-snowdevil-software": {
       "tag": "Pivot",
-      "title": "The Store Software Outgrew the Store",
+      "title": "Il software del negozio superò il negozio",
       "body": "Nel 2004, il programmatore Tobias Lutke trovò il software e-commerce dell'epoca troppo ingombrante, quindi scrisse il proprio per vendere attrezzatura da snowboard online come Snowdevil. Snowdevil rimase un piccolo negozio, ma altri commercianti iniziarono a richiedere la licenza del software alla base.",
       "coda": "Shopify è quotato alla Borsa di New York dal 2015."
     },
@@ -1125,7 +1125,7 @@
     },
     "auctomatic-taggar-yc": {
       "tag": "Fusione",
-      "title": "The One Who Had to Learn to Code",
+      "title": "Chi doveva imparare a programmare",
       "body": "Nel 2007 due fratelli irlandesi adolescenti portarono uno strumento di e-commerce fatto in casa in Y Combinator e fusero la loro azienda con una gestita da due laureati di Oxford. Nessuno dei due di Oxford sapeva programmare. A uno di loro fu detto di imparare, in fretta.",
       "coda": "Quello era Harj Taggar, in seguito il primo partner non fondatore di Y Combinator."
     },
@@ -1169,7 +1169,7 @@
       "tag": "Incidente",
       "title": "Scegli uno",
       "body": "Il 3 novembre 2010, Tencent impose una scelta tramite pop-up: disinstallare 360 o QQ avrebbe smesso di funzionare. Ma Huateng avvertì che gli utenti avrebbero potuto essere eliminati entro tre giorni. Giorni dopo, il Ministero dell'Industria e delle Tecnologie dell'Informazione ordinò a entrambe le parti di ripristinare la compatibilità.",
-      "coda": "The regulator ended it, not the market or either company."
+      "coda": "A porlo fine fu il regolatore, non il mercato né nessuna delle due aziende."
     },
     "china-thousand-groupon-war": {
       "tag": "Bolla",
@@ -1191,7 +1191,7 @@
     },
     "tz-database-lawsuit": {
       "tag": "Incidente",
-      "title": "The Lawsuit Over the Time Zone Database",
+      "title": "La causa sul database dei fusi orari",
       "body": "Nel ottobre 2011 il produttore di software astrologico Astrolabe citò in giudizio i manutentori del database tz, sostenendo che i suoi dati di fuso orario violavano un atlante da esso pubblicato. La mailing list e il server FTP furono disattivati. ICANN intervenne per ospitare il database; Astrolabe ritirò la causa nel febbraio 2012.",
       "coda": "La rivendicazione di copyright di un'azienda di astrologia sulle tabelle dell'alba è stata ritirata senza alcun pagamento."
     },
@@ -1229,7 +1229,7 @@
       "tag": "Pagamenti",
       "title": "Pearl Harbor, Digital",
       "body": "Intorno al Capodanno cinese del 2014, la funzione degli inviluppi rossi di WeChat è stata attivata; gli utenti hanno prelevato oltre 40 milioni di pacchetti rossi in pochi giorni. Nell'app Laiwang, Jack Ma l'ha definita un 'attacco a sorpresa di Pearl Harbor' — efficace a breve termine, scrisse, ma la crescita sana a lungo termine contava di più.",
-      "coda": "The red envelope became a payments funnel."
+      "coda": "Il pacchetto rosso divenne un imbuto di pagamenti."
     },
     "heartbleed-two-person-team": {
       "tag": "Incidente",
@@ -1276,7 +1276,7 @@
     "cloudflare-2019-regex": {
       "tag": "Incidente",
       "title": "La miccia che fu rimossa",
-      "body": "A new WAF rule with a catastrophically backtracking regex pushed CPU on Cloudflare's global network to near 100 percent within seconds of deployment. The rule itself was ordinary; what let it detonate was a CPU-usage safeguard on regex rules quietly deleted weeks earlier in a refactor.",
+      "body": "Una nuova regola WAF con una regex che faceva backtracking in modo catastrofico portò la CPU della rete globale di Cloudflare a quasi il 100 percento entro pochi secondi dal deployment. La regola in sé era ordinaria; a farla detonare fu una salvaguardia sull'uso della CPU per le regole regex, cancellata in silenzio settimane prima in un refactoring.",
       "coda": "L'interruzione è durata 27 minuti e si è conclusa quando il WAF è stato disattivato a livello globale."
     },
     "requests-kenneth-reitz": {

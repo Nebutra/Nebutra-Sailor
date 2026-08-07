@@ -1,5 +1,5 @@
 {
-  "panelLabel": "Boot log",
+  "panelLabel": "Log boot",
   "entries": {
     "transistor-name-off-patent-1947": {
       "tag": "Patent",
@@ -749,7 +749,7 @@
       "tag": "Penamaan",
       "title": "Basis Data Olson",
       "body": "Sebagian besar perangkat menyelesaikan zona waktu berdasarkan satu kumpulan file yang dijalankan oleh sukarelawan, secara informal disebut basis data Olson sesuai nama pendirinya Arthur David Olson. Skema penamaannya dikreditkan kepada Paul Eggert, yang sebenarnya telah mengedit basis data tersebut sejak 2005.",
-      "coda": "The eponym and the person who has maintained it since are different people."
+      "coda": "Orang yang namanya disandarkan dan orang yang merawatnya sejak itu adalah orang yang berbeda."
     },
     "china-1987-first-email": {
       "tag": "Catatan",
@@ -782,7 +782,7 @@
       "coda": "Pada Juli 2026, bahasa ini menempati peringkat pertama pada indeks popularitas bahasa pemrograman TIOBE."
     },
     "worse-is-better": {
-      "tag": "Debate",
+      "tag": "Debat",
       "title": "Worse Is Better",
       "body": "Pada 1989 Richard Gabriel mempopulerkan istilah 'worse is better': implementasi sederhana yang setengah benar bertahan lebih baik daripada implementasi lengkap dan benar, itulah sebabnya ia berpendapat C dan Unix mengalahkan Lisp. Pada 1991 ia menerbitkan sanggahan dengan nama samaran Nickieben Bourbaki, berpura-pura menjadi teman lama.",
       "coda": "Berkelanjutan hingga puluhan tahun kemudian ia masih menyatakan tidak dapat memutuskan apakah argumennya sendiri benar."
@@ -833,7 +833,7 @@
       "tag": "Rekaman",
       "title": "Garis Satu Tahun Lebih Awal",
       "body": "China menandai 20 April 1994 sebagai hari ia bergabung dengan internet global — jalur 64K, akses fungsi penuh. Tiga belas bulan sebelumnya, fisikawan di IHEP telah menyewa jalur ke SLAC Stanford, bertukar email dengan puluhan institusi. Jalur itu hanya tidak dihitung oleh siapa pun.",
-      "coda": "Two lines exist; only one gets an anniversary."
+      "coda": "Ada dua jalur; hanya satu yang mendapat peringatan."
     },
     "wiki-the-airport-shuttle": {
       "tag": "Etimologi",
@@ -862,7 +862,7 @@
     "ibm-simon-first-touchscreen": {
       "tag": "Layar Sentuh",
       "title": "Mesin Faks Simon",
-      "body": "On August 16, 1994, IBM and BellSouth launched the Simon Personal Communicator: a 4.5-inch touchscreen that sent email and fax, priced at $899. Battery life ran about an hour. It was discontinued six months later, having sold roughly 50,000 units.",
+      "body": "Pada 16 Agustus 1994, IBM dan BellSouth meluncurkan Simon Personal Communicator: layar sentuh 4,5 inci yang mengirim email dan faks, dihargai $899. Daya tahan baterai sekitar satu jam. Produk ini dihentikan enam bulan kemudian, dengan penjualan kira-kira 50.000 unit.",
       "coda": "Pada tahun 2007, Apple merilis iPhone, ponsel layar sentuh kapasitif tanpa papan ketik fisik."
     },
     "cors-same-origin-orphaned": {
@@ -932,7 +932,7 @@
       "coda": "NetEase tidak meluncurkan email gratisnya sendiri, di bawah 163.com, hingga 1998."
     },
     "lixiang-graphics-card-home": {
-      "tag": "Review site",
+      "tag": "Situs ulasan",
       "title": "Beranda Kartu Grafis",
       "body": "Pada tahun 1998, seorang siswa SMA di Hebei memulai situs web pribadi bernama Beranda Kartu Grafis di waktu luangnya, memposting ulasan tentang kartu grafis komputer. Dua tahun kemudian ia mengubah namanya menjadi PCPop dan terus memperbaruinya hingga masa sekolah berakhir.",
       "coda": "Pada tahun 2005 orang yang sama mendirikan Autohome."
@@ -946,7 +946,7 @@
     "excite-google-1999": {
       "tag": "Kesalahan Penilaian",
       "title": "Excite Menolak Google",
-      "body": "In 1999 Google offered to sell itself to Excite for $750,000 plus roughly 1% equity. CEO George Bell judged the search gap too small to justify tearing out Excite's technology. The reasoning held up. Google was worth over a billion within a year.",
+      "body": "Pada 1999 Google menawarkan diri untuk dijual kepada Excite seharga $750.000 plus kira-kira 1% ekuitas. CEO George Bell menilai kesenjangan pencarian terlalu kecil untuk membenarkan pembongkaran teknologi Excite. Alasan tersebut bertahan. Google bernilai lebih dari satu miliar dalam waktu setahun.",
       "coda": "Bell menyatakan sejak saat itu bahwa ia akan membuat keputusan yang sama lagi."
     },
     "mars-climate-orbiter-units": {
@@ -1022,7 +1022,7 @@
       "coda": "DoorDash, didirikan pada 2013, mengirimkan kurir melalui GPS smartphone dan membebankan biaya pengiriman."
     },
     "flooz-digital-currency": {
-      "tag": "Currency",
+      "tag": "Mata uang",
       "title": "Uang Tanpa Toko",
       "body": "Pada Februari 1999, pendiri bersama iVillage Robert Levitan meluncurkan Flooz.com, mata uang digital yang dapat dibeli dan dibelanjakan pengguna di pedagang mitra. Sebuah jaringan kriminal menggunakan kartu curian untuk mencetak kredit palsu senilai $300.000, dan pada 2001 penipuan mencapai 19% dari volume. Perusahaan ini bubar pada Agustus tahun itu.",
       "coda": "Pada Januari 2009, Satoshi Nakamoto menambang blok genesis bitcoin."
@@ -1052,7 +1052,7 @@
       "coda": "Sisi yang masih membebankan biaya listing kehabisan dana terlebih dahulu."
     },
     "dianping-zagat-notes": {
-      "tag": "Review guide",
+      "tag": "Panduan ulasan",
       "title": "Buku catatan Zagat",
       "body": "Pada tahun 2002, Zhang Tao kembali ke China dari Amerika Serikat dengan membawa ide yang ia peroleh di sana: Zagat Survey, sebuah panduan restoran yang disusun dari penilaian para pembaca. Ia mendaftarkan domain zsurvey.com dan mulai membangun versi China-nya di Shanghai.",
       "coda": "Dianping, situs yang tumbuh dari ide tersebut, mulai beroperasi pada 12 April 2003."
@@ -1082,7 +1082,7 @@
       "coda": "Magang itu adalah Bret Taylor. Perusahaan yang ia tinggalkan untuk memulai dibeli oleh Facebook."
     },
     "friendster-forty-second-load": {
-      "tag": "Scaling",
+      "tag": "Penskalaan",
       "title": "Muatan Keempat Puluh Dua",
       "body": "Friendster diluncurkan pada 2002 dan mencapai lebih dari 100 juta akun terdaftar, namun servernya ambruk di bawah beban komputasi derajat koneksi antar teman; satu halaman bisa memakan waktu empat puluh detik untuk dimuat. Email dukungan menunjukkan pengguna mengancam akan pindah ke MySpace yang lebih baru.",
       "coda": "Facebook diluncurkan pada 2004 dengan gagasan grafik sosial yang sama dan bertahan di bawah lalu lintas."
@@ -1103,7 +1103,7 @@
       "tag": "Legenda",
       "title": "Domain yang Didaftarkan pada Hari Valentine",
       "body": "youtube.com terdaftar pada 14 Februari 2005, dan para pendirinya kemudian menceritakan konsep situs kencan yang dimodelkan dari Hot or Not. Jawed Karim membantah menghadiri pesta makan malam yang menjadi inti cerita tersebut, dan Steve Chen mengakui bahwa cerita itu terdengar seperti narasi pemasaran.",
-      "coda": "What Karim cited instead was trouble finding tsunami footage online."
+      "coda": "Yang dikutip Karim sebagai gantinya adalah kesulitan menemukan rekaman tsunami secara online."
     },
     "duan-buffett-lunch": {
       "tag": "Dunia kecil",
@@ -1126,7 +1126,7 @@
     "auctomatic-taggar-yc": {
       "tag": "Merger",
       "title": "Orang yang Harus Belajar Coding",
-      "body": "In 2007 two Irish teenage brothers brought a homemade e-commerce tool into Y Combinator and merged their company with one run by two Oxford graduates. Neither of the Oxford pair could program. One of them was told to learn, fast.",
+      "body": "Pada 2007 dua saudara laki-laki asal Irlandia membawa alat e-commerce buatan sendiri ke Y Combinator dan menggabungkan perusahaan mereka dengan satu perusahaan yang dijalankan oleh dua lulusan Oxford. Sepasang lulusan Oxford itu tidak bisa memprogram. Salah satu dari mereka disuruh belajar, dengan cepat.",
       "coda": "Orang itu adalah Harj Taggar, yang kemudian menjadi mitra non-pendiri pertama Y Combinator."
     },
     "justintv-backpack-cruise": {
@@ -1168,7 +1168,7 @@
     "china-3q-war": {
       "tag": "Insiden",
       "title": "Pilih Satu",
-      "body": "On November 3, 2010, Tencent forced a pop-up choice: uninstall 360 or QQ would stop running. Ma Huateng warned users might be wiped out within three days. Days later the Ministry of Industry and Information Technology ordered both sides to restore compatibility.",
+      "body": "Pada 3 November 2010, Tencent memaksa pilihan pop-up: hapus 360 atau QQ akan berhenti berjalan. Ma Huateng memperingatkan pengguna mungkin akan dilenyapkan dalam tiga hari. Beberapa hari kemudian Kementerian Industri dan Teknologi Informasi memerintahkan kedua belah pihak untuk memulihkan kompatibilitas.",
       "coda": "Regulator yang mengakhirinya, bukan pasar atau salah satu perusahaan."
     },
     "china-thousand-groupon-war": {
@@ -1232,7 +1232,7 @@
       "coda": "Lampiran merah menjadi corong pembayaran."
     },
     "heartbleed-two-person-team": {
-      "tag": "Incident",
+      "tag": "Insiden",
       "title": "Tim Berempat",
       "body": "Pengecekan batas yang hilang pada Heartbleed masuk ke ekstensi heartbeat OpenSSL pada Desember 2011 dan tidak terdeteksi selama dua tahun hingga ditemukan oleh peneliti independen pada April 2014. Saat itu, basis kode di balik sebagian besar lalu lintas HTTPS web dipelihara oleh empat sukarelawan, satu di antaranya penuh waktu.",
       "coda": "Perbaikan dirilis pada hari yang sama saat bug diungkapkan."
@@ -1262,7 +1262,7 @@
       "coda": "Pemadaman berlangsung sekitar empat jam; halaman status AWS sendiri bergantung pada sistem yang sama."
     },
     "gitlab-2017-rm-rf": {
-      "tag": "Incident",
+      "tag": "Insiden",
       "title": "Lima Cadangan, Nol",
       "body": "Seorang insinyur bermaksud menghapus replika yang tertinggal, namun malah menghapus direktori data PostgreSQL pada primer; proses dihentikan beberapa detik terlambat; sekitar 300GB sudah hilang. GitLab menemukan bahwa dari lima metode cadangan dan replikasi yang dijalankan, tidak ada satu pun yang dapat memulihkan data.",
       "coda": "Pemulihan bergantung pada snapshot yang kebetulan diambil enam jam sebelumnya."
@@ -1292,7 +1292,7 @@
       "coda": "Kernel telah di-patch bertahun-tahun sebelum sebagian besar userspace 32-bit menyusul."
     },
     "log4shell-eight-years": {
-      "tag": "Vulnerability",
+      "tag": "Kerentanan",
       "title": "Delapan Tahun Tak Dibaca",
       "body": "Log4j berada di dalam sebagian besar perangkat lunak Java perusahaan; Wiz dan EY menemukan 93 persen lingkungan cloud terpapar Log4Shell. Kerentanannya ada di kode sejak 2013. Dilaporkan pada 24 November 2021 dan diungkapkan secara publik pada 10 Desember, dinilai CVSS 10.",
       "coda": "Segelintir sukarelawan menulis perbaikan yang mencapai jutaan server."
@@ -1352,7 +1352,7 @@
       "coda": "Tiga tahun di bawah penyelidikan, tidak ada tuduhan diajukan, tidak ada royalti pernah dikumpulkan."
     },
     "json-good-not-evil": {
-      "tag": "License",
+      "tag": "Lisensi",
       "title": "Untuk Kebaikan, Bukan Kejahatan",
       "body": "Lisensi Douglas Crockford tahun 2002 untuk pustaka JSON menambahkan satu klausul: perangkat lunak ini harus digunakan untuk Kebaikan, bukan Kejahatan. JSON sendiri menyebar bebas dan tanpa paten ke hampir setiap API di internet, tetapi satu kalimat itu membuat lisensi tersebut tidak kompatibel dengan ketentuan sumber terbuka standar.",
       "coda": "Formatnya menjadi universal; klausul lelucon yang menyertainya tidak bertahan saat berhadapan dengan hukum perusahaan."

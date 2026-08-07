@@ -1,5 +1,5 @@
 {
-  "panelLabel": "Boot log",
+  "panelLabel": "لاگ راه‌اندازی",
   "entries": {
     "transistor-name-off-patent-1947": {
       "tag": "پتنت",
@@ -778,7 +778,7 @@
     "python-christmas-project": {
       "tag": "اسکریپت‌نویسی",
       "title": "سرگرمی کریسمس",
-      "body": "During the Christmas holidays of 1989, with his office closed for the week, a researcher in Amsterdam looked for a hobby programming project. He began writing an interpreter for a new scripting language and named it after a comedy troupe, not the snake.",
+      "body": "در تعطیلات کریسمس ۱۹۸۹، با بسته بودن دفترش در طول هفته، پژوهشگری در آمستردام به دنبال پروژه‌ای برای برنامه‌نویسی سرگرمی گشت. او نوشتن مفسر برای یک زبان اسکریپت‌نویسی جدید را آغاز کرد و آن را به نام یک گروه کمدی نامید، نه مار.",
       "coda": "در ژوئیه 2026 در فهرست محبوبیت زبان‌های برنامه‌نویسی TIOBE رتبه اول را کسب کرد."
     },
     "worse-is-better": {
@@ -916,7 +916,7 @@
     "google-a-typo": {
       "tag": "ریشه‌شناسی",
       "title": "جستجوی دامنه‌ای غلط‌نویسی‌شده",
-      "body": "During a September 1997 brainstorm, Sean Anderson suggested \"googolplex\"; Larry Page shortened it to \"googol.\" Checking the domain registry on the spot, Anderson typed \"google\" by mistake and found it unclaimed. Page registered google.com that same day.",
+      "body": "در یک طوفان فکری سپتامبر ۱۹۹۷، شان اندرسون «googolplex» را پیشنهاد کرد؛ لری پیج آن را به «googol» کوتاه کرد. هنگام بررسی رجیستری دامنه در همان لحظه، اندرسون به اشتباه «google» را تایپ کرد و متوجه شد که ثبت نشده است. پیج همان روز google.com را ثبت کرد.",
       "coda": "سوابق ثبت هنوز غلط‌نویسی را با تاریخ ۱۵ سپتامبر ۱۹۹۷ حمل می‌کند."
     },
     "rfc2119-must-should": {
@@ -938,7 +938,7 @@
       "coda": "در سال 2005 همان شخص شرکت Autohome را تأسیس کرد."
     },
     "china-oicq-to-qq": {
-      "tag": "Rebrand",
+      "tag": "تغییر نام",
       "title": "از OICQ به QQ",
       "body": "تencent در فوریه 1999 محصول OICQ را راه‌اندازی کرد — حرف O مخفف «Open» بود و اشاره‌ای به ICQ داشت. در اکتبر همان سال، AOL، مالک ICQ، به دلیل نقض علامت تجاری اخطار توقف ارسال کرد. در نوامبر 2000، ما هوا‌تنگ نام آن را به QQ تغییر داد، زیرا این حرف در چینی به معنی «بامزه» خوانده می‌شود.",
       "coda": "Open اولین کلمه‌ای بود که با رسیدن وکلای AOL حذف شد."
@@ -1150,7 +1150,7 @@
     "china-wang-jian-alibaba-cloud": {
       "tag": "شک",
       "title": "دروغگوی که ابر را ساخت",
-      "body": "Around 2012, with Alibaba Cloud years into heavy investment and no visible product, staff told Jack Ma directly that Wang Jian was a fraud. Close to eighty percent of the engineering team quit. Ma's reply: fund it a billion yuan a year for ten years, then judge it.",
+      "body": "حدود سال ۲۰۱۲، با گذشت چند سال از سرمایه‌گذاری سنگین Alibaba Cloud و نبود محصولی قابل مشاهده، کارکنان مستقیماً به جک ما گفتند که وانگ جیان یک کلاهبردار است. نزدیک به هشتاد درصد تیم مهندسی استعفا داد. پاسخ ما: سالی یک میلیارد یوآن به مدت ده سال به آن بودجه بدهید، سپس قضاوتش کنید.",
       "coda": "ده سال بعد، پروژه کلاهبردار به سود رسید."
     },
     "taobao-double11-2009": {
@@ -1264,7 +1264,7 @@
     "gitlab-2017-rm-rf": {
       "tag": "حادثه",
       "title": "پنج پشتیبان، صفر",
-      "body": "An engineer meant to clear a lagging replica but deleted the PostgreSQL data directory on the primary instead, stopping seconds too late; roughly 300GB was already gone. GitLab found that of five backup and replication methods it had running, none could actually restore the data.",
+      "body": "یک مهندس قصد داشت یک نسخه تکراری کند را پاک کند اما به جای آن دایرکتوری داده PostgreSQL روی سرور اصلی را حذف کرد و چند ثانیه دیرتر متوقف شد؛ نزدیک به ۳۰۰ گیگابایت از قبل از بین رفته بود. GitLab دریافت که از پنج روش پشتیبان‌گیری و نسخه‌برداری که در حال اجرا داشت، هیچ‌کدام در واقع نمی‌توانست داده‌ها را بازیابی کند.",
       "coda": "بازیابی به یک عکس فوری وابسته بود که کسی شش ساعت قبل تصادفاً گرفته بود."
     },
     "attention-title-beatles-2017": {
