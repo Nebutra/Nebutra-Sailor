@@ -4,6 +4,8 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { Suspense } from "react";
+import { ScrollToTopOnNav } from "@/components/scroll-to-top";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { TypeLensMotion } from "@/components/type-lens-motion";
@@ -26,6 +28,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     >
       <body className="min-h-screen font-sans antialiased" suppressHydrationWarning>
         <TypeLensMotion>
+          {/* Suspense: useSearchParams requires a boundary during static render */}
+          <Suspense fallback={null}>
+            <ScrollToTopOnNav />
+          </Suspense>
           <SiteHeader />
           <main className="flex-1">{children}</main>
           <SiteFooter />

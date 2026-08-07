@@ -9,4 +9,4 @@
  * See packages/design/ARCHITECTURE.md §2.1
  */
 export const TL_CONTAINER =
-  "tl-container mx-auto box-border w-full max-w-[1480px] px-5 sm:px-6 md:px-8 lg:px-10";
+  "tl-container mx-auto box-border w-full max-w-[1400px] px-5 sm:px-6 md:px-8 lg:px-10";

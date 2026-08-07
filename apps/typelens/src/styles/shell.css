@@ -1,19 +1,23 @@
 /**
- * Type Lens shell — imported AFTER preset so Turbopack/Tailwind v4
- * does not drop these rules (same pattern as router market-shell.css).
+ * Type Lens shell — quiet editorial, collection-first.
  */
 
 :root {
-  --tl-ink: #0a0a0a;
-  --tl-ink-soft: #1c1c1c;
-  --tl-muted: #5c5c5c;
-  --tl-line: #0a0a0a;
-  --tl-line-soft: #e8e8e8;
-  --tl-paper: #faf9f7;
-  --tl-paper-deep: #f3f1ec;
-  --tl-max: 1480px;
-  /* Page gutter — never rely on this alone; also use Tailwind px-* on .tl-container */
-  --tl-pad: clamp(1.25rem, 4vw, 2.75rem);
+  --tl-ink: #14120f;
+  --tl-ink-soft: #2f2b26;
+  --tl-muted: #6f6a63;
+  --tl-muted-soft: #9a948c;
+  --tl-line: #e6e1d8;
+  --tl-line-soft: #efebe4;
+  --tl-line-strong: #cfc8bb;
+  --tl-paper: #f6f3ee;
+  --tl-paper-deep: #ebe6dc;
+  --tl-surface: #fffcf8;
+  --tl-max: 1400px;
+  --tl-pad: clamp(1.25rem, 3.5vw, 2.5rem);
+  --tl-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --tl-shadow-sm: 0 1px 0 rgb(20 18 15 / 4%), 0 8px 24px -16px rgb(20 18 15 / 18%);
+  --tl-shadow-lift: 0 2px 0 rgb(20 18 15 / 4%), 0 28px 56px -28px rgb(20 18 15 / 32%);
 }
 
 html {
@@ -41,18 +45,15 @@ body {
   color: var(--tl-ink);
   font-feature-settings:
     "ss01" on,
-    "kern" on;
-  letter-spacing: -0.01em;
+    "kern" on,
+    "liga" on;
+  letter-spacing: -0.011em;
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--tl-ink) 16%, transparent);
+  background: color-mix(in srgb, var(--tl-ink) 14%, transparent);
 }
 
-/**
- * Content column — explicit padding + max-width.
- * Also mirrored as Tailwind classes on JSX for belt-and-suspenders.
- */
 .tl-container {
   box-sizing: border-box;
   width: 100%;
@@ -64,28 +65,22 @@ body {
 }
 
 .tl-display {
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 0.92;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
   text-wrap: balance;
 }
 
 .tl-kicker {
-  font-size: 0.7rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--tl-muted);
 }
 
 /**
- * FOUC guard for GSAP — **masthead only**.
- *
- * Never hide gallery cards / page sections here. Hiding `[data-tl-card]` until
- * JS runs (then again via gsap.set autoAlpha:0 + ScrollTrigger) made the whole
- * collection look "empty" whenever motion failed or ST did not fire — data was
- * still in the HTML, just invisible. Cards may still animate, but they start
- * visible so content is never lost without JS.
+ * FOUC guard — masthead only. Never hide gallery cards.
  */
 [data-tl-motion-root]:not([data-tl-motion-ready]) [data-tl-mark],
 [data-tl-motion-root]:not([data-tl-motion-ready]) [data-tl-kicker],
@@ -112,11 +107,10 @@ body {
   }
 }
 
-/* Hover lift (CSS) coexists with GSAP entrance (transform/autoAlpha). */
 .tl-card {
   transition:
-    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    transform 0.5s var(--tl-ease),
+    box-shadow 0.5s var(--tl-ease);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -131,14 +125,15 @@ body {
 }
 
 .tl-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 28px 60px -28px rgb(0 0 0 / 28%);
+  transform: translateY(-3px);
+  box-shadow: var(--tl-shadow-lift);
 }
 
 .tl-stage {
   position: relative;
   overflow: hidden;
   isolation: isolate;
+  background: var(--tl-paper-deep);
 }
 
 .tl-stage::after {
@@ -146,11 +141,33 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(180deg, rgb(0 0 0 / 0%) 40%, rgb(0 0 0 / 8%) 100%);
+  background: linear-gradient(180deg, rgb(20 18 15 / 0%) 55%, rgb(20 18 15 / 10%) 100%);
   opacity: 0;
-  transition: opacity 0.45s ease;
+  transition: opacity 0.45s var(--tl-ease);
 }
 
 .tl-card:hover .tl-stage::after {
   opacity: 1;
+}
+
+.tl-input {
+  width: 100%;
+  border: 1px solid var(--tl-line);
+  background: var(--tl-surface);
+  color: var(--tl-ink);
+  padding: 0.7rem 1rem;
+  font-size: 0.875rem;
+  outline: none;
+  transition:
+    border-color 0.2s var(--tl-ease),
+    box-shadow 0.2s var(--tl-ease);
+}
+
+.tl-input::placeholder {
+  color: var(--tl-muted-soft);
+}
+
+.tl-input:focus {
+  border-color: color-mix(in srgb, var(--tl-ink) 40%, var(--tl-line));
+  box-shadow: 0 0 0 3px rgb(20 18 15 / 6%);
 }

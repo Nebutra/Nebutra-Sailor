@@ -1,5 +1,4 @@
 import Link from "next/link";
-import type { CSSProperties } from "react";
 import type { Specimen, Typeface, Work } from "@/lib/catalog";
 
 export type WorkCardProps = {
@@ -8,115 +7,117 @@ export type WorkCardProps = {
   specimen?: Specimen;
 };
 
-/** Art-directed specimen stage per medium — larger, more cinematic. */
-function stageStyle(medium: Work["medium"]): CSSProperties {
-  switch (medium) {
-    case "poster":
-      return {
-        background: "radial-gradient(120% 90% at 10% 0%, #2a2a2a 0%, #0a0a0a 55%, #111 100%)",
-        color: "#f5f5f4",
-      };
-    case "website":
-      return {
-        background: "linear-gradient(165deg, #f7f6f3 0%, #ebe8e1 48%, #ddd8ce 100%)",
-        color: "#0a0a0a",
-      };
-    case "app-ui":
-      return {
-        background: "linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%)",
-        color: "#0a0a0a",
-      };
-    case "editorial":
-      return {
-        background: "linear-gradient(145deg, #1a1814 0%, #3d3428 50%, #c4b8a5 50.2%, #e8e0d4 100%)",
-        color: "#faf8f5",
-      };
-    default:
-      return {
-        background: "linear-gradient(160deg, #f5f5f5, #e8e8e8)",
-        color: "#0a0a0a",
-      };
-  }
+function isImageUrl(url: string): boolean {
+  return /^https?:\/\//i.test(url) && !/\.(js|css|svg)(\?|$)/i.test(url);
 }
 
+/** Cover photo vs FiU nameplate/sample PNG. */
+function splitAssets(assets: string[]): { cover?: string; nameplates: string[] } {
+  const good = assets.filter(isImageUrl);
+  if (!good.length) return { nameplates: [] };
+  const cover = good.find((u) => /use-media|thumb|upto-/i.test(u)) ?? good[0];
+  const nameplates = good.filter(
+    (u) => u !== cover && (/\/samples\/|\/renders\//i.test(u) || /\.png(\?|$)/i.test(u)),
+  );
+  const out: { cover?: string; nameplates: string[] } = {
+    nameplates: nameplates.length
+      ? nameplates.slice(0, 3)
+      : good.filter((u) => u !== cover).slice(0, 3),
+  };
+  if (cover) out.cover = cover;
+  return out;
+}
+
+/**
+ * Real collection tile: photography + nameplate PNGs (not CSS mock stages).
+ */
 export function WorkCard({ work, typefaces, specimen }: WorkCardProps) {
   const byId = new Map(typefaces.map((t) => [t.id, t]));
   const faces =
-    specimen?.typefaces.map((ref) => ({
-      ref,
-      face: byId.get(ref.typefaceId),
-    })) ?? [];
-  const primary = faces[0]?.face;
-  const verified = specimen?.verifiedBy === "human" || specimen?.verifiedBy === "hybrid";
+    specimen?.typefaces
+      .map((ref) => byId.get(ref.typefaceId))
+      .filter((f): f is Typeface => Boolean(f)) ?? [];
+  const seen = new Set<string>();
+  const faceList: Typeface[] = [];
+  for (const f of faces) {
+    if (seen.has(f.id)) continue;
+    seen.add(f.id);
+    faceList.push(f);
+  }
+
+  const { cover, nameplates } = splitAssets(work.imageAssets ?? []);
+
+  // Prefer work nameplates; fall back to typeface sample URLs
+  const plates =
+    nameplates.length > 0
+      ? nameplates
+      : faceList
+          .map((f) => f.sampleImageUrl)
+          .filter((u): u is string => Boolean(u))
+          .slice(0, 3);
 
   return (
-    <article data-tl-card className="tl-card group flex flex-col gap-4 will-change-transform">
+    <article data-tl-card className="tl-card group flex flex-col gap-2.5 will-change-transform">
       <Link
         href={`/works/${work.slug}`}
-        className="tl-stage relative block aspect-[3/4] overflow-hidden border border-[var(--tl-ink)]/10 no-underline"
+        className="tl-stage relative block overflow-hidden ring-1 ring-[var(--tl-line)] no-underline"
       >
-        <div
-          className="flex h-full flex-col justify-between p-6 md:p-7"
-          style={stageStyle(work.medium)}
-        >
-          <div className="flex items-start justify-between gap-3">
-            <span className="text-[0.65rem] font-semibold tracking-[0.2em] uppercase opacity-70">
-              {work.medium.replace("-", " ")}
+        {cover ? (
+          // biome-ignore lint/a11y/useAltText: title on detail
+          <img
+            src={cover}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            referrerPolicy="no-referrer"
+            className="aspect-[4/5] w-full object-cover transition-[transform,opacity] duration-500 group-hover:scale-[1.02] group-hover:opacity-95"
+          />
+        ) : (
+          <div className="flex aspect-[4/5] w-full items-end bg-gradient-to-br from-[var(--tl-paper-deep)] to-[var(--tl-line)] p-4">
+            <span className="text-sm font-medium tracking-tight text-[var(--tl-muted)]">
+              {work.title}
             </span>
-            {verified ? (
-              <span className="border border-current/40 bg-white/10 px-2 py-0.5 text-[0.6rem] font-bold tracking-[0.16em] uppercase backdrop-blur-sm">
-                Verified
-              </span>
-            ) : null}
           </div>
-
-          <div className="space-y-4">
-            <div
-              className="text-[clamp(1.75rem,2.4vw,2.35rem)] leading-[0.95] font-semibold tracking-[-0.03em]"
-              style={{
-                fontFamily: primary?.cssStack ?? "system-ui, sans-serif",
-              }}
-            >
-              {work.titleZh ?? work.title}
-            </div>
-            <div className="space-y-1 border-t border-current/15 pt-3 text-[0.8rem] opacity-80">
-              {faces.slice(0, 2).map(({ face, ref }) =>
-                face ? (
-                  <p key={`${ref.typefaceId}-${ref.role}`} style={{ fontFamily: face.cssStack }}>
-                    <span className="tracking-wide opacity-60">{ref.role}</span>
-                    {"  "}
-                    {face.family}
-                  </p>
-                ) : null,
-              )}
-            </div>
-          </div>
-        </div>
+        )}
       </Link>
 
-      <div className="space-y-2 px-0.5">
-        <Link
-          href={`/works/${work.slug}`}
-          className="block text-[1.15rem] leading-snug font-semibold tracking-[-0.02em] text-[var(--tl-ink)] no-underline transition-opacity group-hover:opacity-70"
-        >
-          {work.title}
-        </Link>
-        {work.titleZh ? <p className="text-sm text-[var(--tl-muted)]">{work.titleZh}</p> : null}
-        <ul className="space-y-1 text-[0.9rem]">
-          {faces.slice(0, 3).map(({ face, ref }) =>
-            face ? (
-              <li key={`${ref.typefaceId}-${ref.role}`}>
-                <Link
-                  href={`/typefaces/${face.id}`}
-                  className="text-[var(--tl-ink-soft)] underline-offset-4 hover:underline"
-                >
-                  {face.family}
-                </Link>
-                <span className="text-[var(--tl-muted)]"> · {ref.role}</span>
-              </li>
-            ) : null,
-          )}
-        </ul>
+      <div className="flex min-h-[2.25rem] flex-col gap-1 px-0.5">
+        {plates.length > 0 ? (
+          plates.map((src, i) => {
+            const face = faceList[i];
+            const href = face ? `/typefaces/${face.id}` : `/works/${work.slug}`;
+            return (
+              <Link key={`${src}-${i}`} href={href} className="block no-underline">
+                {/* biome-ignore lint/a11y/useAltText: decorative nameplate */}
+                <img
+                  src={src}
+                  alt={face?.family ?? ""}
+                  loading="lazy"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                  className="h-6 w-auto max-w-full object-contain object-left opacity-85 transition-opacity hover:opacity-100 sm:h-7"
+                />
+              </Link>
+            );
+          })
+        ) : faceList.length > 0 ? (
+          faceList.slice(0, 3).map((face) => (
+            <Link
+              key={face.id}
+              href={`/typefaces/${face.id}`}
+              className="block text-[0.8125rem] leading-snug font-medium tracking-tight text-[var(--tl-ink-soft)] no-underline hover:text-[var(--tl-ink)]"
+            >
+              {face.family}
+            </Link>
+          ))
+        ) : (
+          <Link
+            href={`/works/${work.slug}`}
+            className="block text-[0.8125rem] font-medium tracking-tight text-[var(--tl-ink-soft)] no-underline hover:text-[var(--tl-ink)]"
+          >
+            {work.title}
+          </Link>
+        )}
       </div>
     </article>
   );
