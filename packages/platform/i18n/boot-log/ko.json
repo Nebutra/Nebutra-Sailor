@@ -4,18 +4,18 @@
     "transistor-name-off-patent-1947": {
       "tag": "특허",
       "title": "특허에서 빠진 이름",
-      "body": "On December 23, 1947, Bardeen and Brattain demonstrated a germanium point-contact transistor at Bell Labs. Shockley was not in the room. Lawyers found his own design too close to a 1925 patent by Julius Lilienfeld and dropped his name from this one.",
+      "body": "1947년 12월 23일, 바딘과 브래테인은 벨 연구소에서 게르마늄 접점 트랜지스터를 시연했다. 쇼클리当时는 그 방에 없었다. 변호사들은 그의 설계가 율리우스 릴리엔펠트의 1925년 특허와 너무 유사하다고 판단해 이 특허에서 그의 이름을 뺐다.",
       "coda": "1956년, 세 사람 모두 노벨 물리학상을 공동 수상했다."
     },
     "dartmouth-two-month-study-1956": {
-      "tag": "Proposal",
+      "tag": "제안",
       "title": "2개월 연구",
       "body": "McCarthy, Minsky, Rochester, Shannon이 1955년에 제안한 2개월, 10인 연구는 지능이 기계가 모의할 수 있을 정도로 정밀하게 기술될 수 있다는 전제에 기반했다. 1956년 워크숍은 6주에서 8주 동안 진행되었으며, 전체 기간 동안 참석한 사람은 세 명뿐이었다.",
       "coda": "그들이 이 분야에 붙인 이름, 인공지능이 그대로 굳어졌다."
     },
     "traitorous-eight-lie-detector-1957": {
       "tag": "분할",
-      "title": "The Lie Detector Memo",
+      "title": "거짓말 탐지기 메모",
       "body": "1957년 5월, 쇼클리 반도체의 엔지니어 8명이 윌리엄 쇼클리를 관리자에서 해임할 것을 요구했다. 쇼클리는 전화 통화를 녹음하고, 직원들이 결과를 공유하지 못하게 막았으며, 거짓말 탐지기 테스트를 요구했다. 1957년 9월 18일, 여덟 명은 대신 페어차일드 반도체를 설립했다.",
       "coda": "위키피디아는 인텔과 AMD를 그 분사로 거슬러 올라가는 수십 개의 회사 중 하나로 꼽는다."
     },
@@ -95,25 +95,25 @@
       "tag": "사건",
       "title": "누락된 오버바 하나",
       "body": "Mariner 1는 발사 후 293초에 파괴되었다. 탑재 비콘이 고장 났고, 유도 방정식을 프로그램에 복사할 때 R에서 윗줄이 누락되었다. 그 줄은 평균을 취하라는 의미였다.",
-      "coda": "The press found overbar hard to explain and wrote hyphen. The hyphen stuck."
+      "coda": "언론은 오버바를 설명하기 어렵다고 판단해 하이픈으로 보도했다. 하이픈이 정착했다."
     },
     "mother-of-all-demos": {
       "tag": "데모",
       "title": "모든 데모의 어머니",
       "body": "엔겔바르트는 90분의 시간을 받았다. 그의 터미널은 전화선을 통해 30마일 떨어진 기계로 연결되었고, 그는 마우스, 하이퍼링크, 창, 화면 공유, 그리고 두 사람이 한 문서를 동시에 편집하는 것을 시연했다.",
-      "coda": "A thousand people watched, then went back to punch cards for another decade."
+      "coda": "천 명이 지켜봤고, 이후 한 세기 동안 펀치 카드로 돌아갔다."
     },
     "conway": {
-      "tag": "Law",
+      "tag": "법",
       "title": "거절당한 논문",
       "body": "Melvin Conway는 시스템의 구조가 그것을 구축한 조직의 의사소통 구조를 반영하게 된다는 관찰을 정리하고 \"How Do Committees Invent?\"를 Harvard Business Review에 보냈다. 그들은 그의 주장을 증명하지 않았다는 이유로 이를 거부했다. Datamation이 1968년에 이를 게재했다.",
-      "coda": "Fred Brooks later cited the unproven thesis and named it Conway's law."
+      "coda": "프레드 브룩스는 나중에 검증되지 않은 이 명제를 인용해 컨웨이의 법칙이라고 명명했다."
     },
     "apollo-burn-baby-burn": {
       "tag": "Comment",
       "title": "Burn, Baby, Burn",
       "body": "월면 착륙선의 마스터 점화 루틴은 소스에서 BURN_BABY_BURN으로 라벨링되어 있다. 이 이름은 추력과 무관하며, 당시 소울 라디오 DJ의 캐치프레이즈에서 차용한 것이다.",
-      "coda": "The line still sits unedited in the public repository."
+      "coda": "그 문장은 여전히 공개 저장소에 수정되지 않은 채 남아 있다."
     },
     "waterfall": {
       "tag": "오독",
@@ -182,7 +182,7 @@
       "coda": "일반 공중 라이선스는 1989년 2월에 뒤따랐다."
     },
     "tetris-unpaid-decade": {
-      "tag": "Rights",
+      "tag": "권리",
       "title": "로열티 없는 블록",
       "body": "1985년, 파지트노프는 소련 과학 아카데미의 국가 공무원으로서 테트리스를 작성했다. 저작권은 그가 아닌 컴퓨팅 센터에 속했다. 서구 라이선스는 여러 손을 거쳐 닌텐도에 도달했고, 게임은 수천만 장이 판매되었다.",
       "coda": "저작권은 그가 게임을 작성한 지 11년 후인 1996년에야 그에게 반환되었다."
@@ -190,7 +190,7 @@
     "euv-twenty-three-hours-2018": {
       "tag": "리소그래피",
       "title": "웨이퍼 한 장에 23시간",
-      "body": "Hiroo Kinoshita at NTT first demonstrated extreme ultraviolet lithography images in 1986. ASML's 2006 prototype took twenty-three hours to expose one wafer. Not until 2018 did EUV reach production, in a machine MIT Technology Review called the one that saved Moore's law.",
+      "body": "1986년 NTT의 키노시타 히로오는 극자외선 리소그래피 이미지를 처음 시연했다. ASML의 2006년 프로토타입은 웨이퍼 한 장을 노광하는 데 23시간이 걸렸다. EUV가 2018년이 돼서야 양산에 도달했고, MIT Technology Review는 이를 무어의 법칙을 구한 기계라고 불렀다.",
       "coda": "2022년까지 양산용 EUV 스캐너는 시간당 약 200장의 웨이퍼를 처리했다."
     },
     "tsmc-foundry-fifty-six-1987": {
@@ -206,7 +206,7 @@
       "coda": "4년 차에 회사는 처음으로 자체 회로 기판을 설계했다."
     },
     "morris": {
-      "tag": "Incident",
+      "tag": "사건",
       "title": "측정",
       "body": "Morris는 인터넷의 크기를 알고 싶어 스스로를 복제하는 프로그램을 작성했다. 호스트가 이미 감염되었음을 속여 답하는 것을 막기 위해 그는 일곱 분의 일 확률로 무조건 재감염하도록 했다.",
       "coda": "그 일곱 분의 일 확률이 당시 온라인에 있던 60,000개 호스트 중 약 6,000개를 마비시켰다."
@@ -243,7 +243,7 @@
     },
     "doom-ftp-crash": {
       "tag": "쉐어웨어",
-      "title": "The Server They Couldn't Reach",
+      "title": "도달할 수 없었던 서버",
       "body": "1993년 12월 10일, id Software는 Doom의 첫 번째 에피소드를 셰어웨어로 무료 배포하고 나머지 판매에 베팅했다. 위스콘신 대학교 FTP 서버에 업로드하자, 이미 너무 많은 사람들이 기다리고 있어 팀 자체도 접속할 수 없었다.",
       "coda": "업로드는 자정 무렵에 끝났다. 만 건의 동시 다운로드가 대학 네트워크를 마비시켰다."
     },
@@ -269,10 +269,10 @@
       "tag": "체스",
       "title": "44번째 수의 결함",
       "body": "1997년 재대결 1국에서 카스파로프는 45수 만에 딥 블루를 이겼다. 딥 블루의 44번째 수는 버그로 인한 것으로 추정된다. 엔진이 탐색 중 선호 수를 결정하지 못해 안전 장치로 회귀한 것이다.",
-      "coda": "After losing game two, Kasparov accused IBM of cheating."
+      "coda": "두 번째 게임을 진 후, 카스파로프는 IBM을 부정행위로 고발했다."
     },
     "curl-one-maintainer": {
-      "tag": "Foundation",
+      "tag": "기초",
       "title": "한 사람의 프로토콜 스택",
       "body": "curl 자체 문서에 따르면 libcurl은 약 100억 대의 기기에 탑재되어 있으며 110개의 운영 체제와 28개의 CPU 아키텍처에서 실행된다. 이 프로젝트는 1998년 curl로 이름이 변경된 이후로 Daniel Stenberg의 이름을 수석 유지 관리자로 계속 사용해 왔다.",
       "coda": "명명된 후임자는 한 번도 명시된 적이 없다."
@@ -280,7 +280,7 @@
     "book-of-mozilla-verses": {
       "tag": "Easter Egg",
       "title": "모질라 서",
-      "body": "Typing about:mozilla into the address bar reveals the Book of Mozilla, an apocalyptic verse pitting 'the beast' against 'Mammon' that each browser generation updates. The verse numbers are not chapter markers: they are release dates.",
+      "body": "주소창에 about:mozilla를 입력하면 모질라의 책이 나타난다. '짐승'과 '맘몬'을 대립시키는 종말론적 시로, 각 브라우저 세대가 갱신한다. 시 번호는 장 마커가 아니다: 출시 날짜다.",
       "coda": "최신 절인 6:27은 2020년 Firefox Nightly 빌드에서 처음 출시되었다."
     },
     "http-418-teapot": {
@@ -290,7 +290,7 @@
       "coda": "두 문서 모두 Informational 상태로 유지됨; 상태 코드는 실제 서버에서 어쨌든 출시됨."
     },
     "open-source-coined-1998": {
-      "tag": "Naming",
+      "tag": "명명",
       "title": "오픈 소스라는 용어의 창조",
       "body": "1998년 2월, Christine Peterson은 신규 사용자들이 \"free software\"를 자유가 아닌 가격으로 계속 받아들이고 있었기에 \"open source\"를 제안했다. 2월 5일 VA Research 회의에서 Todd Anderson은 공식적으로 제안하는 대신 대화 속에 해당 용어를 슬쩍 넣었고, 스스로 퍼져나가도록 두었다.",
       "coda": "이 그룹은 이후 해당 문구의 상표 등록을 시도했으나 실패했다."
@@ -309,7 +309,7 @@
     },
     "red-hat-ipo-1999": {
       "tag": "IPO",
-      "title": "The Price of Free Software",
+      "title": "무료 소프트웨어의 가격",
       "body": "Red Hat은 핵심 제품의 소스 코드를 무료로 제공하고 대신 지원, 교육, 통합에 대한 비용을 청구했다. 1999년 8월 11일 회사는 상장했다. 첫날 상승률은 당시 월가 역사상 여덟 번째로 컸다.",
       "coda": "창립자 Bob Young은 4개월 후 CEO 자리에서 교체되었다."
     },
@@ -405,7 +405,7 @@
     },
     "homebrew-volunteer-team": {
       "tag": "기초",
-      "title": "The Repository With No Employer",
+      "title": "고용주가 없는 저장소",
       "body": "Homebrew는 대부분의 맥 개발자 머신에서 기본 패키지 관리자이다. 2013년에는 GitHub 전체 기여자 수에서 1위를 차지했다. 맥스 하웰이 2009년에 첫 릴리스를 작성했다. 현재는 34명으로 구성된 팀이 유지 관리하고 있으며, 모두 무보수이다.",
       "coda": "자금 조달 이력은 Kickstarter 한 번과 Open Source Collective 계정 하나이다."
     },
@@ -494,7 +494,7 @@
       "coda": "Engelbart와 Nelson은 모두 나중에 이 에세이를 그들이 시작하게 된 이유로 꼽았다."
     },
     "jean-bartik-eniac-dinner": {
-      "tag": "Record",
+      "tag": "기록",
       "title": "초대받지 못한 저녁",
       "body": "1946년 2월 14일 ENIAC 공개 행사에서 청중을 감동시킨 궤도 프로그램은 Jean Bartik와 Betty Holberton이 작성한 것이었다. 언론은 Eckert와 Mauchly만 소개했다. 여섯 명의 여성 프로그래머는 행사 후 저녁 식사에 초대되지 않았다.",
       "coda": "그들의 이름은 수십 년 후 행사 사진에서 다시 확인되었다."
@@ -544,7 +544,7 @@
     "douglas-mcilroy-garden-hose-pipe": {
       "tag": "메모",
       "title": "가든 호스 메모",
-      "body": "In October 1964, McIlroy wrote a Bell Labs memo proposing programs connect like garden hoses — screw in another segment to massage data differently. It circulated, was admired, and went unbuilt. Nine years later, Ken Thompson added one character, |, to the Unix shell overnight.",
+      "body": "1964년 10월, 맥일로이는 벨 연구소 메모에서 프로그램을 정원 호스처럼 연결하라고 제안했다 — 다른 세그먼트를 나사로 연결해 데이터를 다르게 가공하자는 내용이었다. 이 메모는 유통되었고, 찬사를 받았지만, 구현되지 않았다. 9년 후, 켄 톰슨은 유닉스 셸에 한 문자, |,를 밤새 추가했다.",
       "coda": "아침이 되자, 서로 말한 적 없는 프로그램들이 서로 말을 걸었다."
     },
     "berkshire-hathaway-spite-buy": {
@@ -555,20 +555,20 @@
     },
     "nelson-1965-hypertext": {
       "tag": "기원",
-      "title": "The Link Before the Page",
+      "title": "페이지 이전의 링크",
       "body": "1965년 ACM 논문에서 테드 넬슨은 1960년에 시작하여 후일 Xanadu라 명명한 프로젝트를 기반으로, 서로 비순차적으로 연결하고 인용하는 문서를 지칭하는 \"hypertext\"라는 용어를 창제했다. 그의 버전에서는 링크를 따라간 원저작자에게 건당 보상이 지급되었다. 부분적 구현은 2014년이 되어서야 출시되지 않았다.",
       "coda": "웹은 그의 어휘를 채택하고 결제 메커니즘은 버렸다."
     },
     "mary-allen-wilkes-linc": {
-      "tag": "Record",
+      "tag": "기록",
       "title": "거실의 LINC",
       "body": "1965년 Wilkes는 250파운드 LINC 컴퓨터를 부모의 볼티모어 거실로 옮기고 LAP6이라는 인터랙티브 운영 체제를 혼자 작성했다. Apple II가 어느 가정에도 도달하기 12년 전이었다. 그녀가 먼저였는지 물었을 때 그녀는 이렇게만 말했다. '나는 아마 그랬을 것이다.'",
       "coda": "그녀는 스스로 그 칭호를 공식적으로 주장한 적이 없다."
     },
     "hoares-billion-dollar-mistake": {
       "tag": "고백",
-      "title": "The Reference He Added Anyway",
-      "body": "In 1965 Tony Hoare was building the first type system meant to make ALGOL W references provably safe at compile time. He added a null reference anyway, because it was easy to implement. In 2009 he called it his billion-dollar mistake.",
+      "title": "어쩔 수 없이 추가한 참조",
+      "body": "1965년 토니 호어는 ALGOL W의 참조를 컴파일 시에 증명 가능한 안전으로 만들려는 최초의 타입 시스템을 구축하고 있었다. 그는 구현이 쉽다는 이유로 어쩔 수 없이 null 참조를 추가했다. 2009년 그는 그것을 자신의 백억 달러 실수라고 불렀다.",
       "coda": "안전 목표는 명시적이었다. 실패는 편의성이 결국 이겼다는 것이다."
     },
     "johnson-vs-cern-touchscreen": {
@@ -628,14 +628,14 @@
     "at-sign-arbitrary-pick": {
       "tag": "어원",
       "title": "유일하게 사용되지 않은 키",
-      "body": "In 1971, BBN engineer Ray Tomlinson needed a separator between username and host that could never appear in an actual person's name. Scanning his Model 33 Teletype keyboard, he picked @ — a character then used almost exclusively by grocers and bookkeepers.",
-      "coda": "Every email address since has carried that one constraint forward."
+      "body": "1971년 BBN 엔지니어 레이 톰린슨은 실제 사람의 이름에는 절대 나타나지 않을 사용자 이름과 호스트 사이의 구분자가 필요했다. 그는 Model 33 Teletype 키보드를 훑어보다 @를 선택했다. 당시 그 문자는 거의 독점적으로 식료품 상인과 회계사들에 의해 사용되고 있었다.",
+      "coda": "그 이후 모든 이메일 주소는 그 하나의 제약 조건을 이어받았다."
     },
     "parnas-module-decomposition": {
       "tag": "방법",
       "title": "모듈을 자르는 위치",
       "body": "1972년 David Parnas는 동일한 KWIC-index 시스템을 두 가지 방식으로 모듈화했다. 하나는 처리 단계에 따라, 다른 하나는 변경 가능성이 높은 설계 결정을 인터페이스 뒤로 숨기는 방식이었다. 두 번째 방식만이 변경이 단일 모듈에만 영향을 미치게 했고, 나머지 코드를 읽지 않아도 되었다.",
-      "coda": "The module boundary turned out to encode a guess about what a future maintainer would need to know."
+      "coda": "모듈 경계는 결국 미래 유지보수자가 알아야 할 것에 대한 추측을 인코딩하게 되었다."
     },
     "karen-sparck-jones-idf": {
       "tag": "기록",
@@ -645,7 +645,7 @@
     },
     "cyclades-pouzin-tcpip": {
       "tag": "인터넷",
-      "title": "The Internet's Fifth Man",
+      "title": "인터넷의 다섯 번째 사람",
       "body": "1972년 루이 푸쟁은 프랑스에서 CYCLADES 네트워크를 구축했다. 이 네트워크는 신뢰성 있는 전송의 책임을 네트워크가 아닌 종단 호스트에게 맡긴 최초의 네트워크였다. 1974년 서프와 칸의 TCP 논문은 그를 이름으로 감사했다. 2004년 서프와 칸은 튜링상을 수상했다. 푸쟁의 이름은 그 위에 없었다.",
       "coda": "이코노미스트는 나중에 그를 인터넷의 다섯 번째 사람이라고 불렀다."
     },
@@ -711,15 +711,15 @@
     },
     "postel-law-robustness-reversal": {
       "tag": "거버넌스",
-      "title": "The Robustness Principle, Reversed",
+      "title": "역전된 견고성 원칙",
       "body": "RFC 761(1980)은 구현자가 수신 시 관대하게, 송신 시 보수적으로 행동할 것을 권고했다. 2023년 IETF의 아키텍처 보드는 RFC 9413에서 이 지침을 뒤집었다. 관용은 버그를 사실상 표준으로 굳히며, 시스템을 더 강건하게 만들지 않고 오히려 약하게 만든다.",
-      "coda": "The standard that told the internet to be lenient was rescinded by its own custodians."
+      "coda": "인터넷에 관대하라고 지시했던 표준은 그 자신의 수호자들에 의해 철회되었다."
     },
     "end-to-end-argument": {
       "tag": "논문",
       "title": "멍청한 네트워크를 위한 논증",
-      "body": "In 1981 Saltzer, Reed, and Clark argued that checking a transferred file for errors can only be done correctly at the two endpoints; the network can help but never fully substitute. A paper about where to put a checksum became the founding case for keeping networks simple.",
-      "coda": "A note on error-checking placement grew into the case for net neutrality."
+      "body": "1981년 솔처, 리드, 클라크는 전송된 파일의 오류를 두 단말점에서만 올바르게 확인할 수 있다고 주장했고, 네트워크는 도움을 줄 수 있지만 결코 완전히 대체할 수 없다고 했다. 체크섬을 어디에 둘 것인가에 대한 논문은 네트워크를 단순하게 유지해야 한다는 창립 사례가 되었다.",
+      "coda": "오류 검사 배치에 대한 메모는 네트워크 중립성에 대한 사례로 성장했다."
     },
     "excel-1900-leap-year": {
       "tag": "레거시",
@@ -741,14 +741,14 @@
     },
     "brooks-no-silver-bullet": {
       "tag": "에세이",
-      "title": "No Silver Bullet",
+      "title": "은총의 총알은 없다",
       "body": "1986년 IFIP 대회에서 Fred Brooks는 소프트웨어 난이도를 필수적 복잡성과 우연적 복잡성으로 분리했다. 우연적 난이도는 급격히 하락했지만, 단일 기법으로 10년 안에 10배의 생산성 향상을 달성할 수는 없었다.",
       "coda": "40년이 지났어도 새로운 패러다임마다 여전히 그가 존재하지 않는다고 말한 은탄환으로 팔린다."
     },
     "tz-olson-database": {
-      "tag": "Naming",
-      "title": "The Olson Database",
-      "body": "Most devices resolve timezones against one volunteer-run file set, informally called the Olson database after founder Arthur David Olson. Its naming scheme is credited to Paul Eggert, who has actually edited the database since 2005.",
+      "tag": "명명",
+      "title": "올슨 데이터베이스",
+      "body": "대부분의 장치는 창립자 아서 데이비드 올슨의 이름을 따서 비공식적으로 올슨 데이터베이스라고 불리는 한 명의 자원봉사자가 운영하는 파일 세트를 기준으로 시간대를 해석한다. 그 명명 체계는 2005년부터 실제로 데이터베이스를 편집해 온 폴 에거트를 기원으로 한다.",
       "coda": "동명의 인물과 이후 이를 유지해 온 인물은 다르다."
     },
     "china-1987-first-email": {
@@ -785,7 +785,7 @@
       "tag": "논쟁",
       "title": "Worse Is Better",
       "body": "1989년 Richard Gabriel은 'worse is better'를 제창했다. 완전하고 정확한 구현보다 단순하고 절반만 맞는 구현이 더 오래 살아남는다는 것이다. 그는 이를 근거로 C와 Unix가 Lisp를 이겼다고 보았다. 1991년 그는 Nickieben Bourbaki라는 가명을 사용해 옛 친구를 사칭하며 반박문을 발표했다.",
-      "coda": "Decades later he still said he could not decide whether his own argument was right."
+      "coda": "수십 년이 지난 후에도 그는 여전히 자신의 주장이 옳았는지 결정할 수 없다고 말했다."
     },
     "rfc1149-avian-carriers-test": {
       "tag": "인시던트",
@@ -795,8 +795,8 @@
     },
     "att-1990-break-statement": {
       "tag": "사건",
-      "title": "The Misplaced Break",
-      "body": "A recovery routine on a New York 4ESS switch held a break statement nested one level too shallow, a defect testing never exercised. A restart's routine \"ready\" signal was then misread by neighboring switches as an error, and the false alarm cascaded through the network for nine hours.",
+      "title": "잘못 배치된 break",
+      "body": "뉴욕 4ESS 스위치의 복구 루틴에는 break 문이 한 단계 너무 얕게 중첩되어 있었고, 테스트는 결코 그 결함을 실행하지 않았다. 재시작 루틴의 \"ready\" 신호는 이웃 스위치들에 의해 오류로 잘못 해석되었고, 그 거짓 경보는 9시간 동안 네트워크 전체로 확산되었다.",
       "coda": "AT&T는 이후 손실액을 6천만 달러로 집계했다."
     },
     "aspec-vs-musicam": {
@@ -826,7 +826,7 @@
     "han-unification-japanese-delegate": {
       "tag": "표준",
       "title": "한자 통합의 뜻밖의 저자",
-      "body": "In 1992 the CJK Joint Research Group merged tens of thousands of Chinese, Japanese and Korean characters into shared Unicode code points. Popular retellings cast Japan as the objector. Unicode's own history credits the verification rules to Japanese delegate Miyazawa Akira.",
+      "body": "1992년 CJK 공동 연구 그룹은 수만 개의 한자, 일본어, 한국어 문자를 공유 Unicode 코드 포인트로 병합했다. 대중적인 재해석은 일본을 반대자로 묘사한다. 유니코드의 공식 역사는 검증 규칙을 일본 대표 미야자와 아키라에게 기원한다.",
       "coda": "희생자로 지목된 대표단이 반대한 것으로 기억되는 규칙을 직접 작성하는 데 기여했다."
     },
     "china-first-internet-line": {
@@ -856,7 +856,7 @@
     "general-magic-private-network": {
       "tag": "네트워크",
       "title": "제너럴 매직의 사설 전선",
-      "body": "In 1990 ex-Apple engineers Bill Atkinson, Andy Hertzfeld and Marc Porat founded General Magic. Sony's Magic Link shipped in 1994 for $800, sending email and running apps. Leadership built a proprietary AT&T network instead of using the internet, calling the web \"passive.\"",
+      "body": "1990년 전 애플 엔지니어 빌 앳킨슨, 앤디 허츠펠드, 마크 포라트는 제너럴 매직을 설립했다. 소니의 매직 링크는 1994년 800달러에 출시되어 이메일 전송과 앱 실행을 지원했다. 리더십은 인터넷 대신 독점 AT&T 네트워크를 구축했고 웹을 '수동적'이라고 불렀다.",
       "coda": "직원 Tony Fadell은 이후 Apple에서 iPod와 iPhone의 하드웨어 개발을 이끌었다."
     },
     "ibm-simon-first-touchscreen": {
@@ -884,7 +884,7 @@
       "coda": "이 목록은 현재 70개국 570개 도시로 확장되었으며, 월 1억 4천만 회 이상의 방문을 기록한다."
     },
     "wirths-law-misattributed": {
-      "tag": "Correction",
+      "tag": "교정",
       "title": "그가 양도한 법칙",
       "body": "1995년 니클라우스 위르트는 'A Plea for Lean Software'를 발표하고 소프트웨어가 하드웨어가 빨라지는 속도보다 더 빠르게 느려지고 있다고 기술했다. 위르트의 법칙이라 명명된 이 문장은 그의 각주에 따르면 동료 마틴 라이저의 인용문이었다.",
       "coda": "동명자는 출처를 인용했다. 후세는 동명자만 남겼다."
@@ -915,7 +915,7 @@
     },
     "google-a-typo": {
       "tag": "어원",
-      "title": "A Misspelled Domain Search",
+      "title": "오타 도메인 검색",
       "body": "1997년 9월 브레인스토밍 중 Sean Anderson이 \"googolplex\"를 제안했고, Larry Page가 이를 \"googol\"로 줄였다. 그 자리에서 도메인 등록부를 확인하던 중 Anderson이 실수로 \"google\"이라고 입력했고, 미등록 상태임을 확인했다. Page는 그날 google.com을 등록했다.",
       "coda": "등록 기록은 여전히 철자 오류를 그대로 담고 있으며, 날짜는 1997년 9월 15일이다."
     },
@@ -941,12 +941,12 @@
       "tag": "리브랜딩",
       "title": "OICQ에서 QQ로",
       "body": "텐센트는 1999년 2월 OICQ를 출시했다. O는 ICQ에 대한 경의를 담은 'Open'의 약자였다. 그해 10월 ICQ 소유주 AOL은 상표 침해로 cease-and-desist를 발송했다. 2000년 11월 마화텅은 이를 QQ로 개명했다. QQ는 중국어에서 '귀여움'으로 읽히기 때문에 선택된 이름이다.",
-      "coda": "Open was the first word to go once AOL's lawyers arrived."
+      "coda": "AOL의 변호사들이 도착하자 가장 먼저 사라진 단어는 오픈이었다."
     },
     "excite-google-1999": {
-      "tag": "Misjudgment",
+      "tag": "오산",
       "title": "Excite, Google 인수 제안을 거절하다",
-      "body": "In 1999 Google offered to sell itself to Excite for $750,000 plus roughly 1% equity. CEO George Bell judged the search gap too small to justify tearing out Excite's technology. The reasoning held up. Google was worth over a billion within a year.",
+      "body": "1999년 구글은 엑사이트에 75만 달러와 약 1% 지분을 받고 매각을 제안했다. 조지 벨 CEO는 검색 격차가 엑사이트 기술을 교체할 만큼 크지 않다고 판단했다. 그 판단은 맞았다. 구글은 1년 만에 10억 달러 이상 가치를 지녔다.",
       "coda": "Bell은 이후에도 같은 결정을 내렸을 것이라고 말했다."
     },
     "mars-climate-orbiter-units": {
@@ -958,11 +958,11 @@
     "paypal-palm-beaming": {
       "tag": "전환",
       "title": "도래하지 않은 빔",
-      "body": "In 1999 Confinity launched infrared cash transfers between Palm Pilots, demoed live at a funding event. Weeks after launch it had roughly 13,000 users, a number that barely moved over the following year. What actually took off was email payments, built only as a fallback option.",
+      "body": "1999년 컨피니티는 팜 파일럿 간 적외선 현금 이체를 출시하고 자금 조달 행사에서 실연했다. 출시 후 몇 주 만에 약 13,000명의 사용자가 있었지만 그 수는 이후 1년 동안 거의 움직이지 않았다. 실제로 성공한 것은 이메일 결제로, 이는 대체 옵션으로만 구축된 것이었다.",
       "coda": "회사는 이름을 PayPal로 변경하고 조용히 빔을 폐기했다."
     },
     "cai-500-yuan": {
-      "tag": "Small world",
+      "tag": "작은 세상",
       "title": "월급 500위안",
       "body": "1999년 홍콩 투자 임원이 한 작은 웹사이트를 투자 대상으로 평가하기 위해 항저우를 방문했다. 그는 한 좁은 아파트에서 코딩하는 열두 명 남짓한 사람들을 발견했다. 그는 투자하지 않았다. 그는 70만 달러의 연봉을 버리고 대신 합류했다. 월급은 500위안이었다.",
       "coda": "그의 이름은 Joe Tsai였다. 그는 나중에 Alibaba의 부회장이 되었다."
@@ -994,8 +994,8 @@
     "discuz-shenyang-dorm": {
       "tag": "포럼",
       "title": "CDB, 기숙사 빌드",
-      "body": "In 2001, a university student living in a dormitory in Shenyang wrote a piece of forum software and named it Crossday Bulletin, working on it alongside his coursework. The following October he renamed it Discuz.",
-      "coda": "On August 23, 2010, Tencent acquired the company he had built around it."
+      "body": "2001년 선양 기숙사에 살던 대학생이 포럼 소프트웨어를 작성하고 크로스데이 버리틴이라고 명명했으며 학업과 병행했다. 다음해 10월 그는 이를 디스커즈로 개명했다.",
+      "coda": "2010년 8월 23일 텐센트는 그가 구축한 회사를 인수했다."
     },
     "wikipedia-side-wiki": {
       "tag": "Wiki",
@@ -1005,7 +1005,7 @@
     },
     "bittorrent-mailing-list": {
       "tag": "프로토콜",
-      "title": "A New P2P App",
+      "title": "새로운 P2P 앱",
       "body": "2001년 7월 2일, 한 프로그래머가 Yahoo eGroups 메일링 리스트에 \"BitTorrent -- a new P2P app\"이라는 제목의 메시지를 게시했다. 그는 방금 설계한 파일 분배 프로토콜을 설명했으며, 이 프로토콜은 파일 조각을 여러 소스에서 동시에 가져왔다.",
       "coda": "3년 후, 2004년 CacheLogic 연구에 따르면 인터넷 트래픽의 3분의 1을 차지했다."
     },
@@ -1013,16 +1013,16 @@
       "tag": "식료품",
       "title": "30분 창",
       "body": "1996년 Borders 서점 공동 창립자 Louis Borders는 Webvan을 설립하고, 처음부터 구축한 창고에서 30분 배송을 약속했다. 1999년 11월 48억 달러 이상의 기업가치로 3억 7,500만 달러에 IPO를 진행했고, 2001년 7월 8억 달러 이상의 손실을 기록한 후 파산 신청을 했다.",
-      "coda": "Some Webvan executives went on to Amazon; Amazon Fresh and Instacart later filled the same order."
+      "coda": "일부 웹반 임원들은 아마존으로 갔다. 아마존 프레시와 인스타카트는 나중에 같은 주문을 채웠다."
     },
     "kozmo-free-hour-delivery": {
       "tag": "배송",
       "title": "무료 1시간 배송의 약속",
       "body": "1998년 조셉 파크와 용 캉은 Kozmo.com을 설립하고 페이저로 급배달원을 파견하는 무료 1시간 배송을 약속했다. 약 2억 5000만 달러를 조달했지만 1999년에는 350만 달러의 수익에 2630만 달러의 손실을 기록했다. 2001년 4월 직원들은 폐쇄된 사무실을 발견하면서 폐업을 알게 되었다.",
-      "coda": "DoorDash, founded in 2013, dispatches couriers by smartphone GPS and charges a delivery fee."
+      "coda": "2013년 설립된 도어대시는 스마트폰 GPS로 퀵서비스를 배차하고 배달료를 청구한다."
     },
     "flooz-digital-currency": {
-      "tag": "Currency",
+      "tag": "통화",
       "title": "저장소 없는 돈",
       "body": "1999년 2월 iVillage 공동 창립자 Robert Levitan은 제휴 상점에서 구매하고 사용할 수 있는 디지털 화폐 Flooz.com을 출시했다. 범죄 조직이 도난당한 카드로 30만 달러 상당의 위조 크레딧을 발행했고, 2001년까지 사기 거래가 거래량의 19%에 달했다. 회사는 그해 8월에 문을 닫았다.",
       "coda": "2009년 1월 Satoshi Nakamoto는 비트코인 제네시스 블록을 채굴했다."
@@ -1064,7 +1064,7 @@
       "coda": "그 포크에서 비롯된 회사는 2021년까지 75억 달러의 가치를 지니게 되었다."
     },
     "2003-blackout-race-condition": {
-      "tag": "Incident",
+      "tag": "사건",
       "title": "울리지 않은 경보",
       "body": "오하이오 제어실의 경보 프로세스가 조용히 멈췄다. 코딩 오류로 두 프로세스가 동시에 동일한 데이터 구조에 쓰기 접근하여 무한 루프에 빠졌다. 운영자는 과부하 경고를 전혀 보지 못했고, 제때 부하를 차단하지 못했다. 연쇄 정전으로 5,500만 명이 전력을 잃었다.",
       "coda": "엔지니어는 레이스 컨디션 재현에 8주가 걸렸다."
@@ -1091,7 +1091,7 @@
       "tag": "Pivot",
       "title": "스토어 소프트웨어가 스토어를 넘어서다",
       "body": "2004년 프로그래머 토비아스 룽케는 당시 전자상거래 소프트웨어가 너무 어색해 스노보드 장비를 온라인으로 판매하기 위해 직접 소프트웨어를 작성했고 이를 Snowdevil로 명명했다. Snowdevil 자체는 작은 상점으로 남았지만 다른 상인들은 그 뒤에 있는 소프트웨어의 라이선스를 요청하기 시작했다.",
-      "coda": "Shopify listed on the New York Stock Exchange in 2015."
+      "coda": "쇼피파이는 2015년 뉴욕 증권거래소에 상장했다."
     },
     "twitter-odeo-podcast-pivot": {
       "tag": "전환",
@@ -1118,7 +1118,7 @@
       "coda": "BlackBerry의 시장 점유율은 이후 몇 년 동안 iPhone에게 잠식되었다."
     },
     "dvorak-iphone-2007": {
-      "tag": "Prediction",
+      "tag": "예측",
       "title": "Dvorak, 플러그를 뽑아라",
       "body": "2007년 3월 28일, 칼럼니스트 존 C. 드보락은 휴대폰 마진이 얇고 노키아와 모토로라가 이미 시장을 장악하고 있으므로, 애플은 아이폰 설계를 \"호구\"들에게 넘기고 손을 떼야 한다고 썼다. 당시 애플의 해당 시장에서의 역사를 고려하면, 그 추론은 무리가 아니었다.",
       "coda": "그는 나중에 실제로 그 전화기를 직접 만져보고 나서 그 예측을 후회했다고 말했다."
@@ -1126,7 +1126,7 @@
     "auctomatic-taggar-yc": {
       "tag": "합병",
       "title": "코딩을 배워야 했던 자",
-      "body": "In 2007 two Irish teenage brothers brought a homemade e-commerce tool into Y Combinator and merged their company with one run by two Oxford graduates. Neither of the Oxford pair could program. One of them was told to learn, fast.",
+      "body": "2007년 두 아일랜드 십대 형제는 자작 전자상거래 도구를 Y 콤비네이터에 가져왔고 옥스퍼드 졸업생 두 명이 운영하는 회사와 합병했다. 옥스퍼드 출신 두 명 모두 프로그래밍을 할 수 없었다. 그중 한 명은 빨리 배우라고被告知했다.",
       "coda": "그 사람은 Harj Taggar로, 이후 Y Combinator의 첫 비창업자 파트너가 되었다."
     },
     "justintv-backpack-cruise": {
@@ -1139,7 +1139,7 @@
       "tag": "Q&A",
       "title": "반 전문가 교환",
       "body": "2008년 4월 16일, 한 프로그래머가 자신의 블로그에 기존 서비스의 유료 장벽과 검색 엔진 조작을 혐오스럽게 여겨 프로그래머를 위한 '반 전문가 교환' 질문-답변 사이트를 구축하고 싶다고 게시했다.",
-      "coda": "In 2021 the site was sold to Prosus for 1.8 billion dollars."
+      "coda": "2021년 이 사이트는 프로서스에 18억 달러에 매각되었다."
     },
     "zune-leap-year-freeze": {
       "tag": "사건",
@@ -1163,7 +1163,7 @@
       "tag": "동료",
       "title": "HBS의 선택과목",
       "body": "2009년 한 프로그래머가 휴학을 하고 하버드 비즈니스 스쿨에서 MBA를 공부했다. 그는 그동안 반스팸 자원봉사 프로젝트를 운영해 왔다. 어느 날 수업에서 그 프로젝트를 언급했다. 한 동료는 그것이 실제 제품이 되어야 한다고 말했다.",
-      "coda": "That classmate was Michelle Zatlyn, later Cloudflare's co-founder and COO."
+      "coda": "그 동창은 나중에 Cloudflare 공동 창업자이자 COO가 된 Michelle Zatlyn이었다."
     },
     "china-3q-war": {
       "tag": "사건",
@@ -1172,7 +1172,7 @@
       "coda": "규제 당국이 종식시켰다. 시장이나 어느 회사도 아니다."
     },
     "china-thousand-groupon-war": {
-      "tag": "Bubble",
+      "tag": "버블",
       "title": "천대투전",
       "body": "2010년 중국 최초의 그룹 구매 사이트가 출시되었고, 몇 달 만에 포털과 소셜 네트워크가 몰려들었다. 2011년 8월까지 5,000개 이상의 그룹 구매 회사가 경쟁했다. 이것이 '천구론 전쟁'이다. 2014년 중반까지 176개 사이트만 남았다.",
       "coda": "5,000개 중 200개 미만만 살아남았다."
@@ -1193,7 +1193,7 @@
       "tag": "사건",
       "title": "시간대 데이터베이스에 대한 소송",
       "body": "2011년 10월 점성술 소프트웨어 제작사 Astrolabe가 tz 데이터베이스 관리자를 소송했으며, 해당 존 데이터가 자사가 출판한 지도집의 저작권을 침해했다고 주장했다. 메일링 리스트와 FTP 서버가 폐쇄되었다. ICANN이 데이터베이스 호스팅을 맡았고, Astrolabe는 2012년 2월 소송을 취하했다.",
-      "coda": "An astrology company's copyright claim over sunrise tables was withdrawn without payment."
+      "coda": "점성술 회사의 일출 표 저작권 청구는 보상 없이 철회되었다."
     },
     "instagram-facebook-2012": {
       "tag": "조롱",
@@ -1203,7 +1203,7 @@
     },
     "didi-alibaba-resignation": {
       "tag": "사직",
-      "title": "From Alibaba to taxis",
+      "title": "알리바바에서 택시로",
       "body": "Cheng Wei는 Alibaba에서 8년을 보냈고, Alipay 소비자 사업 부총괄까지 올랐다. 2012년 6월 그는 사직하고 Wu Rui, Li Xiang와 함께 택시 호출 앱을 시작했다. 9월 9일 출시 당시 동시에 온라인에 있던 기사 수는 16명이었다.",
       "coda": "두 달 후 동시에 온라인에 있던 기사 수는 100명을 넘었다."
     },
@@ -1228,7 +1228,7 @@
     "china-wechat-red-envelope-pearl-harbor": {
       "tag": "결제",
       "title": "진주만, 디지털",
-      "body": "Around Chinese New Year 2014, WeChat's red-envelope feature went live; users grabbed over 40 million red packets within days. On the app Laiwang, Jack Ma called it a 'Pearl Harbor sneak attack' — effective short-term, he wrote, but healthy long-term growth mattered more.",
+      "body": "2014년 중국 새해 무렵 위챗의 적색 봉투 기능이 출시되었고, 사용자들이 며칠 만에 4000만 개 이상의 적색 봉투를 수집했다. 앱 라이완에서 잭 마는 이를 '진주만 기습'이라고 불렀다. 그는 단기적으로는 효과적이지만 장기적으로는 건강한 성장이 더 중요하다고 썼다.",
       "coda": "적색 봉투는 결제 채널이 되었다."
     },
     "heartbleed-two-person-team": {
@@ -1253,7 +1253,7 @@
       "tag": "바둑",
       "title": "백이십팔수",
       "body": "AlphaGo는 2016년 3월 서울에서 이세돌을 4대 1로 이겼다. 이세돌의 유일한 승리는 4국에서 나왔다. 이후 그는 1국 초반에 치명적인 실수를 저질렀으며, 컴퓨터의 그 수는 훌륭했고 인간이 선택하지 않을 한 수였다고 말했다.",
-      "coda": "The move he singled out kept only a stone number, no name."
+      "coda": "그가 특기했던 수수는 돌 번호만 남기고 이름은 없었다."
     },
     "aws-s3-2017-typo": {
       "tag": "사건",
@@ -1262,7 +1262,7 @@
       "coda": "장애는 약 4시간 동안 지속되었고, AWS의 자체 상태 페이지도 동일한 시스템에 의존했다."
     },
     "gitlab-2017-rm-rf": {
-      "tag": "Incident",
+      "tag": "사건",
       "title": "다섯 개의 백업, 영점",
       "body": "엔지니어는 지연된 리플리카를 정리하려 했지만 대신 프라이머리에서 PostgreSQL 데이터 디렉토리를 삭제했고, 멈춘 시점은 이미 너무 늦었다. 약 300GB가 이미 사라진 상태였다. GitLab은 실행 중이던 5개의 백업 및 복제 방법 중 어느 것도 데이터를 실제로 복원할 수 없다는 사실을 확인했다.",
       "coda": "복구는 누군가가 6시간 전에 우연히 찍어둔 스냅샷에 의존했다."
@@ -1316,7 +1316,7 @@
       "coda": "특허되지 않은 백신은 나중에 70억 달러의 가치를 인정받았다."
     },
     "cobol-two-hundred-billion-lines": {
-      "tag": "Legacy",
+      "tag": "레거시",
       "title": "2000억 줄",
       "body": "1997년 가트너는 전 세계 비즈니스 프로그램의 80%를 구동하는 COBOL 코드가 2000억 줄에 달한다고 추정했다. 2020년 코로나19 시기에 실업급여 신청이 폭증하자 미국 여러 주 정부는 수십 년 된 복지 시스템을 가동하기 위해 COBOL 프로그래머를 공개적으로 요청했다.",
       "coda": "그 요청 이후 6년이 지났다."
@@ -1358,7 +1358,7 @@
       "coda": "포맷은 보편화되었지만, 함께 배포된 농담 조항은 기업 법무의 접촉에서 살아남지 못했다."
     },
     "sogou-movie-line": {
-      "tag": "Naming",
+      "tag": "네이밍",
       "title": "搜狗의 슬로건은 처음에 농담이었다",
       "body": "2001년 코미디 영화 《대인물 장례식》에는 검색 엔진에 대한 말장난 대사가 나온다: \"그들은搜狐를 검색하고, 우리는搜狗를 검색하고, 모두 각자의 방식으로 검색한다.\" 3년 후인 2004년,搜狐 팀은 이 농담을 실제 검색 엔진搜狗로 출시했다.",
       "coda": "펀치라인이 제품명이 되었다, 수정 없이."
@@ -1390,7 +1390,7 @@
     "hp-garage-palo-alto": {
       "tag": "차고",
       "title": "애디슨 애비뉴의 차고",
-      "body": "In 1938 David Packard and his wife rented the ground-floor apartment of a 1905 house at 367 Addison Avenue in Palo Alto. He and Bill Hewlett put 538 dollars into the one-car garage behind it and built their first product, an audio oscillator.",
+      "body": "1938년 데이비드 팩커드와 그의 부인은 팔로알토 애디슨 애비뉴 367번지 1905년 지어진 집의 1층 아파트를 임대했다. 그는 빌 휴렛과 함께 538달러를 그 집 뒤의 한 대용 차고에 투입하고 첫 제품인 오디오 진동기를 만들었다.",
       "coda": "이 건물은 국립역사기념물명부에 등재되어 있으며 방문객의 출입이 금지된다."
     },
     "apple-crist-drive-garage": {
