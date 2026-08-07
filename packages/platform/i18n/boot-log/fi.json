@@ -2,907 +2,907 @@
   "panelLabel": "Boot log",
   "entries": {
     "transistor-name-off-patent-1947": {
-      "tag": "Patent",
-      "title": "The Name Left Off the Patent",
-      "body": "On December 23, 1947, Bardeen and Brattain demonstrated a germanium point-contact transistor at Bell Labs. Shockley was not in the room. Lawyers found his own design too close to a 1925 patent by Julius Lilienfeld and dropped his name from this one.",
-      "coda": "In 1956 all three shared the Nobel Prize in Physics."
+      "tag": "Patentti",
+      "title": "Patentista pois jätetty nimi",
+      "body": "23. joulukuuta 1947 Bardeen ja Brattain esittelivät Bell Labsissa germaniumin pisteyhteispäätransistorin. Shockley ei ollut huoneessa. Lakimiehet löysivät hänen oman suunnitelmansa liian lähelle Julius Lilienfeldin vuoden 1925 patenttia ja pudottivat hänen nimensä tästä.",
+      "coda": "Vuonna 1956 kaikki kolme jakoivat fysiikan Nobelin palkinnon."
     },
     "dartmouth-two-month-study-1956": {
-      "tag": "Proposal",
-      "title": "A Two-Month Study",
-      "body": "The 1955 proposal by McCarthy, Minsky, Rochester and Shannon asked for a two-month, ten-man study, on the premise that intelligence could be described precisely enough for a machine to simulate it. The 1956 workshop ran six to eight weeks; only three attendees stayed the whole time.",
-      "coda": "The name they picked for the field, artificial intelligence, is the one that stuck."
+      "tag": "Ehdotus",
+      "title": "Kahden kuukauden tutkimus",
+      "body": "McCarthy, Minsky, Rochester ja Shannonin vuoden 1955 ehdotus pyysi kahden kuukauden, kymmenen miehen tutkimusta oletuksella, että älykkyyttä voidaan kuvata tarpeeksi tarkasti koneen simuloimiseksi. Vuoden 1956 työpaja kesti kuudesta kahdeksaan viikkoon; vain kolme osallistujaa jäi koko ajan.",
+      "coda": "Alueelle valitsemaansa nimi, tekoäly, on se, joka jäi."
     },
     "traitorous-eight-lie-detector-1957": {
-      "tag": "Split",
-      "title": "The Lie Detector Memo",
-      "body": "In May 1957, eight engineers at Shockley Semiconductor demanded William Shockley be replaced as manager. He had recorded phone calls, blocked staff from sharing results, and required lie-detector tests. On September 18, 1957, the eight founded Fairchild Semiconductor instead.",
-      "coda": "Wikipedia counts Intel and AMD among the dozens of companies traced back to that spinoff."
+      "tag": "Jako",
+      "title": "Valheenkarkottajan muistio",
+      "body": "Toukokuussa 1957 kahdeksan insinööriä Shockley Semiconductorissa vaati William Shockleyn korvaamista johtajana. Hän oli tallentanut puheluita, estänyt henkilöstön jakamasta tuloksia ja vaatinut valheenkarkotustestejä. 18. syyskuuta 1957 kahdeksan perusti Fairchild Semiconductorin sen sijaan.",
+      "coda": "Wikipedia laskee Intelin ja AMD:n satojen yritysten joukkoon, jotka johtavat takaisin siihen spinoffiin."
     },
     "kilby-noyce-six-months-1958-1959": {
-      "tag": "Parallel",
-      "title": "Six Months, One Medal",
-      "body": "Kilby demonstrated a working integrated circuit at Texas Instruments in September 1958, its parts joined by external wires. Noyce filed a monolithic silicon version at Fairchild in July 1959, mass-producible. Neither man rejected the other's claim to co-inventor.",
-      "coda": "Kilby accepted the 2000 Nobel Prize alone. Noyce had died in 1990."
+      "tag": "Samaa aikaa",
+      "title": "Kuusi kuukautta, yksi mitali",
+      "body": "Kilby esitteli toimivan integroidun piirin Texas Instrumentsissa syyskuussa 1958, sen osat yhdistettyinä ulkoisilla johtimilla. Noyce haki monoliittisen piisipohjaisen version Fairchildissa heinäkuussa 1959, massatuotantokelpoisen. Kumpikaan mies ei hylännyt toisen väitettä yhteiskeksijyydestä.",
+      "coda": "Kilby hyväksyi vuoden 2000 Nobelin palkinnon yksin. Noyce oli kuollut vuonna 1990."
     },
     "perceptron-conscious-machine-1958": {
-      "tag": "Neural Nets",
-      "title": "The Machine That Would Wake Up",
-      "body": "In 1958 the New York Times reported that Frank Rosenblatt's perceptron was the embryo of a computer the Navy expected to walk, talk, see, write, reproduce itself and be conscious of its existence. In 1969 Minsky and Papert's book proved a single-layer perceptron could not compute XOR.",
-      "coda": "Funding for neural network research dried up and did not return until the 1980s."
+      "tag": "Neuroverkot",
+      "title": "Kone, joka heräisi",
+      "body": "Vuonna 1958 New York Times raportoi, että Frank Rosenblattin perceptron oli laivaston odottaman tietokoneen sikiö, joka kävelisi, puhuisi, näkisi, kirjoittaisi, lisääntyisi ja olisi tietoinen olemassaolostaan. Vuonna 1969 Minsky ja Papertin kirja osoitti, että yksikerroksinen perceptron ei voinut laskea XORia.",
+      "coda": "Neuroverkkojen tutkimuksen rahoitus kuivui ja ei palannut ennen 1980-lukua."
     },
     "hamilton-software-engineering": {
-      "tag": "Naming",
-      "title": "An Ongoing Joke",
-      "body": "During the Apollo program, Margaret Hamilton began calling her work \"software engineering\" to distinguish it from hardware engineering. She said no one had heard the term before and it became an ongoing joke, until a respected hardware engineer stood up in a meeting and agreed.",
-      "coda": "The joke ran for years, then nobody told it anymore."
+      "tag": "Nimeäminen",
+      "title": "Jatkuva vitsi",
+      "body": "Apollo-ohjelman aikana Margaret Hamilton alkoi kutsua työtään \"ohjelmistoinstituutiksi\" erottaakseen sen laitteistoinstituutista. Hän sanoi, että kukaan ei ollut aiemmin kuullut termiä, ja siitä tuli jatkuva vitsi, kunnes arvostettu laitteistoinstituutti nousi kokouksessa ja oli samaa mieltä.",
+      "coda": "Vitsi kesti vuosia, sitten kukaan ei enää kertonut sitä."
     },
     "macau-seventeen-thousand": {
-      "tag": "Tender",
-      "title": "Seventeen thousand",
-      "body": "In October 1961 a syndicate formed by Stanley Ho, Henry Fok, Yip Hon and Teddy Yip bid for the Macau gaming monopoly. They offered 3,167,000 patacas, seventeen thousand more than the rival bid.",
-      "coda": "The monopoly that margin bought them held for more than forty years."
+      "tag": "Tarjous",
+      "title": "Seitsemäntuhat",
+      "body": "Lokakuussa 1961 Stanley Hon, Henry Fokin, Yip Honin ja Teddy Yipin muodostama syndikaatti tarjoutui Macaon pelimonopolista. He tarjosivat 3 167 000 patacaa, seitsemäntuhat enemmän kuin kilpailijan tarjous.",
+      "coda": "Tuo marginaali osti heille monopolin, joka kesti yli neljäkymmentä vuotta."
     },
     "moores-law-ten-year-bet-1965": {
-      "tag": "Prediction",
-      "title": "A Ten-Year Bet",
-      "body": "Moore's 1965 article predicted the component count on a chip would double every year for the next decade, reaching roughly 65,000 by 1975. In 1975 he revised the doubling period to two years. The curve later called a law was his own forecast, already amended once.",
-      "coda": "By 1995 Moore said the term had come to mean almost anything in the chip industry."
+      "tag": "Ennuste",
+      "title": "Kymmenen vuoden veto",
+      "body": "Mooren vuoden 1965 artikkeli ennusti, että sirun komponenttien määrä kaksinkertaistuisi joka vuosi seuraavan vuosikymmenen ajan ja saavuttaisi noin 65 000 vuoteen 1975 mennessä. Vuonna 1975 hän tarkisti kaksinkertaistumisjakson kahteen vuoteen. Myöhemmin laiksi kutsuttu käyrä oli hänen oma ennusteensa, jota oli jo kerran muutettu.",
+      "coda": "Vuoteen 1995 mennessä Moore sanoi termin tarkoittavan lähes mitä tahansa siruteollisuudessa."
     },
     "eliza-secretary-1966": {
-      "tag": "Chatbot",
-      "title": "The Secretary and DOCTOR",
-      "body": "In 1966 Joseph Weizenbaum released ELIZA's DOCTOR script at MIT, a program that mostly reflected users' own sentences back as questions. His own secretary reportedly asked him to leave the room so she could talk to it alone.",
-      "coda": "The pattern he had not expected was later named the ELIZA effect."
+      "tag": "Keskusteluroboti",
+      "title": "Sihteeri ja DOCTOR",
+      "body": "Vuonna 1966 Joseph Weizenbaum julkaisi MIT:ssä ELIZAn DOCTOR-skriptin, ohjelman, joka heijasti käyttäjien omia lauseita takaisin kysymyksinä. Hänen oma sihteerinsä pyysi häntä lähtemään huoneesta, jotta hän voisi puhua sen kanssa yksin.",
+      "coda": "Kuvio, jota hän ei ollut odottanut, sai myöhemmin nimeksi ELIZA-ilmiö."
     },
     "engelbart-royalties": {
-      "tag": "Patent",
-      "title": "Forty thousand dollars",
-      "body": "SRI patented the mouse after the demo and, by its own account, had no real idea of its value. Some years later it emerged that they had licensed it to Apple for something like $40,000.",
-      "coda": "Engelbart never received any royalties for inventing it."
+      "tag": "Patentti",
+      "title": "Neljäntuhatta dollaria",
+      "body": "SRI patentoi hiiren demon jälkeen ja, omien tietojensa mukaan, ei todellakaan tiennyt sen arvoa. Muutama vuosi myöhemmin selvisi, että he olivat lisenssöineet sen Applen käyttöön noin 40 000 dollarilla.",
+      "coda": "Engelbart ei koskaan saanut mitään rojalteja sen keksimisestä."
     },
     "lo": {
-      "tag": "First contact",
+      "tag": "Ensimmäinen yhteys",
       "title": "LO",
-      "body": "Charley Kline set out to log in to a machine at SRI from UCLA. The L arrived. The O arrived. On the G the far end crashed.",
-      "coda": "The first thing ever said on the internet was two letters: LO."
+      "body": "Charley Kline aikoi kirjautua UCLA:sta SRI:n koneeseen. L saapui. O saapui. G:n kohdalla kaukopää kaatui.",
+      "coda": "Internetissä koskaan sanottuna ensimmäinen asia oli kaksi kirjainta: LO."
     },
     "multics": {
-      "tag": "Blueprint",
-      "title": "Computing as a utility",
-      "body": "Multics was not designed as a computer but as a computing utility: always on, the way power is, with the tenants of one machine sealed off from each other. It shipped late and expensive, and Bell Labs walked away.",
-      "coda": "Fifty years later the idea was renamed cloud computing."
+      "tag": "Piirustus",
+      "title": "Laskenta hyötynä",
+      "body": "Multics ei suunniteltu tietokoneeksi vaan laskentahyödykkeeksi: aina päällä, kuten sähkö, ja yhden koneen vuokralaiset eristetty toisistaan. Se julkaistiin myöhässä ja kalliina, ja Bell Labs lähti pois.",
+      "coda": "Viidenkymmenen vuoden kuluttua idea sai nimeksi pilvilaskenta."
     },
     "rfc1": {
-      "tag": "Governance",
+      "tag": "Hallinto",
       "title": "Request for Comments",
-      "body": "Steve Crocker had to write the first rules for a few networked hosts. Nobody had given him the authority, and he feared it would read as pulling rank — so he called the genre a Request for Comments.",
-      "coda": "Every rule the internet has agreed on since is still called an RFC."
+      "body": "Steve Crockerin piti kirjoittaa ensimmäiset säännöt muutamalle verkkoon yhdistetylle isäntäkoneelle. Häntä ei ollut valtuutettu tehtävään, ja hän pelkäsi, että se tulisi vastaan viranomaisasenteena — joten hän kutsui genren nimellä Request for Comments.",
+      "coda": "Kaikki internetin siitä lähtien hyväksymät säännöt tunnetaan edelleen nimellä RFC."
     },
     "pdp7": {
-      "tag": "Origin",
-      "title": "The machine nobody wanted",
-      "body": "After Bell Labs quit Multics, Ken Thompson had a cast-off PDP-7 and a month alone while his wife and son were in San Diego. He gave himself a week per piece: kernel, shell, editor, assembler.",
-      "coda": "Four weeks later the machine nobody wanted was running Unix."
+      "tag": "Alkuperä",
+      "title": "Kone, jota kukaan ei halunnut",
+      "body": "Kun Bell Labs lopetti Multicsin, Ken Thompsonilla oli hylätty PDP-7 ja kuukausi yksinään, kun hänen vaimonsa ja poikansa olivat San Diegossa. Hän antoi itselleen viikon per pala: ydin, kuori, editori, assembleri.",
+      "coda": "Neljän viikon kuluttua kone, jota kukaan ei halunnut, ajoi Unixiä."
     },
     "alarm-1202": {
       "tag": "Incident",
-      "title": "Program alarm 1202",
-      "body": "Four minutes from the surface the guidance computer raised five alarms: a rendezvous radar switch left in the wrong position was eating its cycles. It did not hang. It shed the low-priority jobs, restarted, and kept the landing.",
-      "coda": "Knowing what to drop under load is the expensive lesson."
+      "title": "Ohjelmaalarmi 1202",
+      "body": "Neljä minuuttia pinnan edessä ohjauskompuutteri laukaisi viisi alarmia: kohtaamisradarin kytkin oli jäänyt väärään asentoon ja söi sen syklejä. Se ei jäädytynyt. Se hylkäsi matalan prioriteetin tehtävät, käynnisti uudelleen ja jatkoi laskeutumista.",
+      "coda": "Tietää, mitä hylätä kuormituksessa, on kallis oppi."
     },
     "mariner-1": {
-      "tag": "Incident",
-      "title": "One missing overbar",
-      "body": "Mariner 1 was destroyed 293 seconds after launch. An onboard beacon had failed, and when the guidance equations were copied into the program an overbar was dropped from R. The bar meant take the average.",
-      "coda": "The press found overbar hard to explain and wrote hyphen. The hyphen stuck."
+      "tag": "Incidentti",
+      "title": "Yksi puuttuva ylin viiva",
+      "body": "Mariner 1 tuhoutui 293 sekuntia laukaisun jälkeen. Laitteessa ollut majakka oli viallinen, ja ohjausyhtälöitä kopioidessaan ohjelmaan R:n ylin viiva jäi pois. Viiva tarkoitti keskiarvon ottamista.",
+      "coda": "Lehdet pitivät ylintä viivaa vaikeana selittää ja kirjoittivat yhdysmerkin. Yhdysmerkki jäi."
     },
     "mother-of-all-demos": {
       "tag": "Demo",
-      "title": "The Mother of All Demos",
-      "body": "Engelbart was given ninety minutes. His terminal ran over telephone lines to a machine thirty miles away, and he demonstrated the mouse, hyperlinks, windows, screen sharing, and two people editing one document at once.",
-      "coda": "A thousand people watched, then went back to punch cards for another decade."
+      "title": "Kaikkien demojen emo",
+      "body": "Engelbartille annettiin yhdeksänkymmentä minuuttia. Hänen päätelaiteensa toimi puhelinyhteyden yli kolmekymmentä mailia päässä olevaan koneeseen, ja hän esitteli hiiren, hyperlinkit, ikkunat, näytön jakamisen ja kahden henkilön muokkaavan yhden asiakirjan samanaikaisesti.",
+      "coda": "Tuhat ihmistä katsoi ja palasi sitten reikäkortteihin seuraavaksi vuosikymmeneksi."
     },
     "conway": {
-      "tag": "Law",
-      "title": "The paper that was turned down",
-      "body": "Melvin Conway wrote up the observation that a system's structure ends up mirroring the communication structure of the organisation that built it, and sent \"How Do Committees Invent?\" to Harvard Business Review. They rejected it on the grounds that he had not proved his thesis. Datamation ran it in 1968.",
-      "coda": "Fred Brooks later cited the unproven thesis and named it Conway's law."
+      "tag": "Laki",
+      "title": "Artikkeli, joka hylättiin",
+      "body": "Melvin Conway kirjoitti havainnon, jonka mukaan järjestelmän rakenne päätyy peilaamaan sitä organisaatiota, joka sen rakensi, ja lähetti \"How Do Committees Invent?\" Harvard Business Review -lehteen. He hylkäsivät sen sillä perusteella, ettei hän ollut todistanut teesiään. Datamation julkaisi sen vuonna 1968.",
+      "coda": "Fred Brooks sitoi myöhemmin todistamattoman teesin ja nimesi sen Conwayn laiksi."
     },
     "apollo-burn-baby-burn": {
-      "tag": "Comment",
+      "tag": "Kommentti",
       "title": "Burn, Baby, Burn",
-      "body": "The lunar module's master ignition routine is labelled BURN_BABY_BURN in the source. The name is not about the thrust; it was borrowed from a soul radio DJ's catchphrase of the day.",
-      "coda": "The line still sits unedited in the public repository."
+      "body": "Kuukerrosmoduulin pääsytytysrutiini on merkitty lähdekoodissa nimellä BURN_BABY_BURN. Nimi ei liity työntövoimaan; se lainattiin soul-radio-DJ:n päivän sanahelinästä.",
+      "coda": "Rivi on edelleen muokkaamattomana julkisessa arkistossa."
     },
     "waterfall": {
-      "tag": "Misreading",
-      "title": "The diagram was the counterexample",
-      "body": "In \"Managing the Development of Large Software Systems\" Winston Royce drew the chart the industry would come to call the waterfall model, then wrote: \"I believe in this concept, but the implementation described above is risky and invites failure.\" The rest of the paper is about making it iterative.",
-      "coda": "The industry kept the diagram and dropped the sentence."
+      "tag": "Väärinlukeminen",
+      "title": "Kaavio oli vastaesimerkki",
+      "body": "Artikkelissaan \"Managing the Development of Large Software Systems\" Winston Royce piirsi kaavion, jonka teollisuus alkoi kutsua vesiputkimalliksi, ja kirjoitti sitten: \"Uskon tähän käsitteeseen, mutta yllä kuvattu toteutus on riskialtis ja kutsuu epäonnistumista.\" Artikkelin lopuissa puhutaan sen iteratiivisesta toteutuksesta.",
+      "coda": "Teollisuus säilytti kaavion ja hylkäsi lauseen."
     },
     "moth": {
-      "tag": "Etymology",
-      "title": "The first actual bug",
-      "body": "A moth was pulled from a relay of the Harvard Mark II and taped into the logbook. The line beside it is cited as the origin of the word, but what it says is: first actual case of bug being found.",
-      "coda": "Engineers had said bug since Edison. The museum doubts the page is even in Hopper's hand."
+      "tag": "Etymologia",
+      "title": "Ensimmäinen todellinen virhe",
+      "body": "Perhonen poimittiin Harvard Mark II -releen ja teipattiin lokikirjaan. Sen viereinen rivi on sitattu sanan alkuperäksi, mutta siinä lukee: ensimmäinen todellinen tapaus virheen löytymisestä.",
+      "coda": "Insinöörit olivat käyttäneet sanaa bug Edisonin ajoista lähtien. Museo epäilee sivun olevan edes Hopperin käsialaa."
     },
     "intel-4004-busicom-rights-1971": {
-      "tag": "Rights",
-      "title": "A Chip Owned by a Calculator Company",
-      "body": "In 1969 Japan's Busicom commissioned Intel to design a calculator chipset, under a contract assigning the design rights to Busicom despite the work being done entirely inside Intel. In 1971 engineer Federico Faggin traded a lower price for release from that exclusivity.",
-      "coda": "General sales of the Intel 4004 began that July."
+      "tag": "Oikeudet",
+      "title": "Laskimayhtiön omistama siru",
+      "body": "Vuonna 1969 Japanin Busicom tilasi Inteliltä laskinsirujen suunnittelun sopimuksella, joka siirsi suunnittelu-oikeudet Busicomille, vaikka työ tehtiin kokonaan Intelin sisällä. Vuonna 1971 insinööri Federico Faggin vaihtoi alhaisemman hinnan erikoisoikeuden luopumiseen.",
+      "coda": "Intel 4004:n yleiset myynnit alkoivat samana heinäkuuna."
     },
     "pong-coin-overflow": {
-      "tag": "Feedback",
-      "title": "The Coin Box Overflowed",
-      "body": "In August 1972, Atari placed the Pong prototype in a bar in Sunnyvale. A few days later the owner reported it broken. Engineer Al Alcorn drove out to fix it and found the fault was not electrical: the coin mechanism had jammed because it was overflowing with quarters.",
-      "coda": "The malfunction was not a wiring fault; it was too many coins."
+      "tag": "Palaute",
+      "title": "Kolikkolaatikko täyttyi",
+      "body": "Elokuussa 1972 Atari sijoitti Pong-prototyypin Sunnyvalen baariin. Muutaman päivän kuluttua omistaja ilmoitti sen rikkoutuneeksi. Insinööri Al Alcorn ajoi paikalle korjaamaan ja havaitsi vian olevan sähköinen: kolikkomekanismi oli jumittunut, koska se oli täynnä kolikkoja.",
+      "coda": "Vika ei ollut johdotusvirhe; kolikkoja oli liian monta."
     },
     "wozniak-breakout-bonus": {
-      "tag": "Bonus",
-      "title": "The Split",
-      "body": "In 1973 Atari asked Steve Jobs to shrink the Breakout circuit board, paying $100 per chip removed. Jobs asked Wozniak to help, promising half. Wozniak cut 50 chips. Jobs said the total came to $700, so Wozniak's share was $350. Ten years later Wozniak learned the real bonus was $5,000.",
-      "coda": "Wozniak said he would have given Jobs the money if asked."
+      "tag": "Bonusta",
+      "title": "Jaotus",
+      "body": "Vuonna 1973 Atari pyysi Stevea Jobsia pienentämään Breakout-piirilevyä ja maksoi 100 dollaria poistettua sirua kohti. Jobs pyysi Wozniakin apuun ja lupasi puolet. Wozniak leikkasi pois 50 sirua. Jobs sanoi kokonaissumman olevan 700 dollaria, joten Wozniakin osuus oli 350 dollaria. Kymmenen vuotta myöhemmin Wozniak sai tietää todellisen bonuksen olleen 5 000 dollaria.",
+      "coda": "Wozniak sanoi, että olisi antanut rahaa Jobsille, jos olisi pyydetty."
     },
     "unix-not-expected-to-understand": {
-      "tag": "Kernel",
-      "title": "Not Expected to Understand",
-      "body": "Sixth Edition Unix's slp.c contains the line 'You are not expected to understand this,' attached to process-swap stack-restoration code built on PDP-11 compiler quirks. Dennis Ritchie later said he meant it the way a teacher says this won't be on the exam.",
-      "coda": "The routine was rewritten for Seventh Edition Unix."
+      "tag": "Ydin",
+      "title": "Ymmärtämistä ei odoteta",
+      "body": "Unixin kuudennen version slp.c sisältää rivin 'You are not expected to understand this', joka liittyy prosessinvaihtoon ja pinojen palautukseen perustuvaan koodiin, joka rakentuu PDP-11-kääntäjän erityispiirteille. Dennis Ritchie sanoi myöhemmin tarkoittaneensa sitä niin kuin opettaja sanoo tämän tulevan kokeeseen.",
+      "coda": "Rutiini kirjoitettiin uudelleen Unixin seitsemänteen versioon."
     },
     "vi-adm3a-keys": {
-      "tag": "Keybinds",
-      "title": "Arrows Inscribed on Letter Keys",
-      "body": "Bill Joy wrote vi at Berkeley in 1977 on a Lear Siegler ADM-3A terminal that had no arrow keys; h, j, k and l were inscribed with arrows and became the movement keys. The terse one-letter commands came from typing ahead of a 300-baud modem too slow to keep up.",
-      "coda": "The keys later credited to design philosophy began as a workaround for a terminal with no arrow keys."
+      "tag": "Näppäinkomennot",
+      "title": "Nuolimerkinnät kirjainnäppäimissä",
+      "body": "Bill Joy kirjoitti vin Berkeleyssä vuonna 1977 Lear Siegler ADM-3A -päätteellä, jossa ei ollut nuolinäppäimiä; h, j, k ja l -näppäimiin oli kaiverrettu nuolet, ja niistä tuli liikkumisnäppäimet. Lyhyet yhden kirjaimen komennot syntyivät, kun kirjoitettiin nopeammin kuin 300 baudin modeemi ehti vastaanottaa.",
+      "coda": "Näppäimiä, joita myöhemmin pidettiin suunnittelufilosofian ansiona, alettiin käyttää, koska päätteessä ei ollut nuolinäppäimiä."
     },
     "kildall-flying": {
-      "tag": "Testimony",
-      "title": "The Flight That Wasn't Confirmed",
-      "body": "In 1980 IBM came to license CP/M. Gary Kildall was flying software to a client; his wife Dorothy handled the opening talks. Bill Gates later told reporters Kildall had \"capriciously gone flying.\" IBM's lead negotiator, Jack Sams, said he never met Kildall at all.",
-      "coda": "The two accounts of that meeting have never been reconciled."
+      "tag": "Todistus",
+      "title": "Lento, jota ei vahvistettu",
+      "body": "Vuonna 1980 IBM tuli lisensoimaan CP/M:ää. Gary Kildall lensi ohjelmistoa asiakkaalle; hänen vaimonsa Dorothy hoiti alustavat neuvottelut. Bill Gates kertoi myöhemmin toimittajille Kildallin \"menneen oikukkaasti lentämään.\" IBM:n pääneuvottelija Jack Sams sanoi, ettei koskaan tavannut Kildallia.",
+      "coda": "Näitä kahta kertomusta tapaamisesta ei ole koskaan sovitettu yhteen."
     },
     "trusting-trust": {
-      "tag": "Trust",
-      "title": "Reflections on Trusting Trust",
-      "body": "Thompson's Turing lecture described a compiler that plants a backdoor in the login program, and reinstalls the entire trick whenever it compiles a compiler. Rebuild from clean source and the backdoor survives.",
-      "coda": "You cannot trust code you did not totally create yourself."
+      "tag": "Luottamus",
+      "title": "Pohdintoja luottamuksesta luottamukseen",
+      "body": "Thompsonin Turing-luennossa kuvattiin kääntäjä, joka istuttaa takaoven kirjautumisohjelmaan ja asentaa koko tempun uudelleen aina, kun se kääntää kääntäjän. Vaikka lähdekoodi rakennettaisiin puhtaasta alusta, takaovi säilyy.",
+      "coda": "Et voi luottaa koodiin, jota et ole täysin itse luonut."
     },
     "arm-one-person-company-1985": {
-      "tag": "Origin",
-      "title": "A One-Person Chip Company",
-      "body": "Acorn, which had made its name on education computers, began RISC research in 1983. A visit to a rival chip designer showed them that updates to the 6502 came out of what was effectively a one-person company, and they concluded they needed nothing more.",
-      "coda": "ARM1 arrived on 26 April 1985 and worked on first power-up."
+      "tag": "Alkuperä",
+      "title": "Yhden hengen piiriyhtiö",
+      "body": "Acorn, joka oli tehnyt nimensä koulutustietokoneilla, aloitti RISC-tutkimuksen vuonna 1983. Vierailu kilpailevan piirisuunnittelijan luona osoitti, että 6502-päivitykset tulivat käytännössä yhden hengen yritykseltä, ja he päättelivät, etteivät tarvitse enempää.",
+      "coda": "ARM1 saapui 26. huhtikuuta 1985 ja toimi heti ensimmäisellä käynnistyksellä."
     },
     "copyleft-all-rights-reversed": {
-      "tag": "Copyright",
-      "title": "All Rights Reversed",
-      "body": "Someone mailed Richard Stallman a letter marked \"Copyleft — all rights reversed,\" a pun on the standard notice. After Symbolics enhanced his Lisp interpreter and declined to share the improvements back, he used copyright law itself to write a license demanding the opposite obligation.",
-      "coda": "The General Public License followed in February 1989."
+      "tag": "Tekijänoikeus",
+      "title": "Kaikki oikeudet kumottu",
+      "body": "Joku lähetti Richard Stallmanille kirjeen, jossa luki \"Copyleft — all rights reversed,\" parodia tavallisesta ilmoituksesta. Kun Symbolics paransi hänen Lisp-tulkkiaan eikä suostunut jakamaan parannuksia takaisin, hän käytti tekijänoikeuslakia itseään kirjoittaakseen lisenssin, joka vaati päinvastaista velvoitetta.",
+      "coda": "General Public License seurasi helmikuussa 1989."
     },
     "tetris-unpaid-decade": {
-      "tag": "Rights",
-      "title": "The Block With No Royalties",
-      "body": "In 1985 Pajitnov wrote Tetris as a state employee of the USSR Academy of Sciences; the rights belonged to the Computing Center, not him. Western licenses passed through several hands before reaching Nintendo, and the game sold tens of millions of copies.",
-      "coda": "The rights reverted to him in 1996, eleven years after he wrote it."
+      "tag": "Oikeudet",
+      "title": "Lohko ilman rojalteja",
+      "body": "Vuonna 1985 Pajitnov kirjoitti Tetriksen Neuvostoliiton tiedeakatemian valtion työntekijänä; oikeudet kuuluivat laskentakeskukselle, eivät hänelle. Länsimaiset lisenssit kulkivat useiden käsien kautta ennen kuin ne saavuttivat Nintendon, ja peli myi kymmeniä miljoonia kopioita.",
+      "coda": "Oikeudet palautuivat hänelle vuonna 1996, yksitoista vuotta sen jälkeen kun hän kirjoitti sen."
     },
     "euv-twenty-three-hours-2018": {
-      "tag": "Lithography",
-      "title": "Twenty-Three Hours for One Wafer",
-      "body": "Hiroo Kinoshita at NTT first demonstrated extreme ultraviolet lithography images in 1986. ASML's 2006 prototype took twenty-three hours to expose one wafer. Not until 2018 did EUV reach production, in a machine MIT Technology Review called the one that saved Moore's law.",
-      "coda": "By 2022 a production EUV scanner processed roughly two hundred wafers an hour."
+      "tag": "Litografia",
+      "title": "Kaksikymmentäkolme tuntia yhdelle kiekolle",
+      "body": "Hiroo Kinoshita NTT:llä osoitti ensimmäisen kerran äärimmäisen ultraviolettilitografian kuvia vuonna 1986. ASML:n vuoden 2006 prototyyppi vei kaksikymmentäkolme tuntia yhden kiekon valottamiseen. Vasta vuonna 2018 EUV saavutti tuotantovaiheen, koneessa, jota MIT Technology Review kutsui koneeksi, joka pelasti Mooren lain.",
+      "coda": "Vuoteen 2022 mennessä tuotannon EUV-skanneri käsitteli noin kaksisataa kiekkoa tunnissa."
     },
     "tsmc-foundry-fifty-six-1987": {
-      "tag": "Foundry",
-      "title": "A Foundry at Fifty-Six",
-      "body": "Morris Chang, born 1931, rose to group vice president of worldwide semiconductor operations at Texas Instruments, then served as president and COO of General Instrument, then headed Taiwan's ITRI. In 1987, at fifty-six, he founded TSMC, which designs none of the chips it makes.",
-      "coda": "It was the first foundry in the world to do nothing but manufacture."
+      "tag": "Valimo",
+      "title": "Valimo viidenkymmenenkuuden",
+      "body": "Morris Chang, syntynyt 1931, nousi Texas Instrumentsin maailmanlaajuisten puolijohdeoperaatioiden ryhmävarapuheenjohtajaksi, toimi sitten General Instrumentin puheenjohtajana ja toimitusjohtajana ja johti Taiwanin ITRI:tä. Vuonna 1987, kuusikymmentäkuusivuotiaana, hän perusti TSMC:n, joka ei suunnittele yhtään valmistamistaan siruista.",
+      "coda": "Se oli maailman ensimmäinen foundry, joka teki vain valmistusta."
     },
     "huawei-diet-pills": {
-      "tag": "Reseller",
-      "title": "Huawei's First Business Wasn't Tech",
-      "body": "Huawei registered with 21,000 yuan of capital on September 15, 1987, calling itself a technology company. It began by trading goods, including diet pills, then resold Hong Kong-made HAX switches for the margin. Its own switch, the BH01, was hand-assembled only in 1989.",
-      "coda": "Four years in, the company drew its own circuit board for the first time."
+      "tag": "Välittäjä",
+      "title": "Huawein ensimmäinen liiketoiminta ei ollut teknologiaa",
+      "body": "Huawei rekisteröityi 21 000 yuanin pääomalla 15. syyskuuta 1987 ja kutsui itseään teknologiayhtiöksi. Se aloitti tavarakaupalla, mukaan lukien dieettitabletit, ja myi sitten Hongkongissa valmistettuja HAX-kytkimiä voitolla. Oma kytkimensä, BH01, koottiin käsin vasta vuonna 1989.",
+      "coda": "Neljän vuoden kuluttua yhtiö piirsi ensimmäisen kerran oman piirilevynsä."
     },
     "morris": {
       "tag": "Incident",
-      "title": "A measurement",
-      "body": "Morris wanted to know how big the internet was, so he wrote a program that copied itself. To stop hosts faking an already-infected reply, he gave it a one-in-seven chance of reinfecting anyway.",
-      "coda": "That one-in-seven took down about 6,000 of the 60,000 hosts then online."
+      "title": "Mittaus",
+      "body": "Morris halusi tietää, kuinka suuri internet oli, joten hän kirjoitti ohjelman, joka kopioi itseään. Jotta isäntien ei olisi mahdollista väärentää jo infektoidun vastauksen näyttämistä, hän antoi sille yhden seitsemästä mahdollisuuden infektoida uudelleen silti.",
+      "coda": "Se yksi seitsemästä kaatoi noin 6 000 silloin verkossa olleesta 60 000 isännästä."
     },
     "naur": {
-      "tag": "Philosophy",
-      "title": "The program is not the artifact",
-      "body": "Naur argued that a program does not live in its source but as a theory, held by the people who wrote it, of why the problem is solved this way. The source is a lossy projection of it.",
-      "coda": "He called the moment the last theory-holder leaves the death of the program."
+      "tag": "Filosofia",
+      "title": "Ohjelma ei ole artefakti",
+      "body": "Naur väitti, että ohjelma ei elä lähdekoodissaan vaan teoriassa, jota sen kirjoittaneet ihmiset pitävät siitä, miksi ongelma ratkaistaan juuri näin. Lähdekoodi on siitä häviöllinen projekti.",
+      "coda": "Hän kutsui hetkeä, jolloin viimeinen teorian haltija lähtee, ohjelman kuolemaksi."
     },
     "mit-license-171-words": {
-      "tag": "Terms",
-      "title": "171 Words",
-      "body": "A group at MIT writing a TCP/IP implementation wanted to avoid legal negotiation, so they gave the software away under a notice of roughly 171 words. That short text now covers close to a third of all licensed projects on GitHub, more than any other license.",
-      "coda": "The wording has stayed essentially unchanged since it was written."
+      "tag": "Ehdot",
+      "title": "171 sanaa",
+      "body": "MIT:n ryhmä, joka kirjoitti TCP/IP-toteutusta, halusi välttää oikeudelliset neuvottelut, joten se antoi ohjelmiston pois noin 171 sanan ilmoituksella. Tämä lyhyt teksti kattaa nyt lähes kolmasosan kaikista GitHubissa lisensoituista projekteista, enemmän kuin mikään muu lisenssi.",
+      "coda": "Sanamuoto on pysynyt olennaisesti muuttumattomana siitä lähtien, kun se kirjoitettiin."
     },
     "photoshop-display-origin": {
-      "tag": "Origin",
-      "title": "It Was Called Display First",
-      "body": "In 1988, Thomas Knoll, a graduate student at the University of Michigan, wrote a small program to view grayscale images on a monochrome Mac screen. He named it Display, then ImagePro, then Photoshop, before his brother John showed it to Adobe, which licensed it that year.",
-      "coda": "Adobe bought full rights outright in 1995, for $34.5 million."
+      "tag": "Alkuperä",
+      "title": "Sitä kutsuttiin ensin Displayksi",
+      "body": "Vuonna 1988 Thomas Knoll, Michiganin yliopiston jatko-opiskelija, kirjoitti pienen ohjelman harmaasävykuvien näyttämiseen yksivärisellä Mac-näytöllä. Hän nimesi sen Displayksi, sitten ImageProksi ja sitten Photoshopiksi, ennen kuin hänen veljensä John näytti sen Adobelle, joka lisensoi sen samana vuonna.",
+      "coda": "Adobe osti täydet oikeudet kokonaan vuonna 1995, 34,5 miljoonalla dollarilla."
     },
     "sosumi-so-sue-me": {
-      "tag": "Naming",
+      "tag": "Nimeäminen",
       "title": "So Sue Me",
-      "body": "In 1991, Apple's legal department rejected the alert-sound name \"Let It Beep\" as too musical, under a settlement barring Apple Computer from music-related trademarks. Sound designer Jim Reekes wrote back \"so sue me,\" then filed it as \"sosumi.\"",
-      "coda": "The sound shipped in Mac OS for nearly three decades before Big Sur replaced it in 2020."
+      "body": "Vuonna 1991 Applen oikeusosasto hylkäsi hälytysäänen nimen \"Let It Beep\" liian musiikillisena, sovinnon nojalla, joka esti Apple Computerin käyttämästä musiikkiin liittyviä tavaramerkkejä. Äänisuunnittelija Jim Reekes kirjoitti takaisin \"so sue me\" ja rekisteröi sen nimellä \"sosumi\".",
+      "coda": "Ääni oli mukana Mac OS:ssä lähes kolme vuosikymmentä, ennen kuin Big Sur korvasi sen vuonna 2020."
     },
     "www-royalty-free": {
-      "tag": "Given away",
-      "title": "The day it stopped costing",
-      "body": "On 30 April 1993 CERN made the protocol and the code of the World Wide Web available royalty-free. Anyone could take it, without paying and without asking.",
-      "coda": "Nobody has paid a royalty to use it since."
+      "tag": "Luovutettu",
+      "title": "Päivä, jolloin se lopetti maksamisen",
+      "body": "30. huhtikuuta 1993 CERN teki World Wide Webin protokollan ja koodin saataville palkkiottomasti. Kuka tahansa voiti ottaa sen, ilman maksua ja kysymättä.",
+      "coda": "Kukaan ei ole maksanut palkkiota sen käytöstä siitä lähtien."
     },
     "doom-ftp-crash": {
       "tag": "Shareware",
-      "title": "The Server They Couldn't Reach",
-      "body": "On 10 December 1993, id Software gave away Doom's first episode as shareware, betting on sales of the rest. Uploading it to a University of Wisconsin FTP server, they found so many people already waiting that the team itself could not connect.",
-      "coda": "The upload finished near midnight; ten thousand downloads at once crashed the university's network."
+      "title": "Palvelin, johon he eivät päässeet",
+      "body": "10. joulukuuta 1993 id Software antoi Doomin ensimmäisen episodin sharewarena, lyöden vetoa loppujen myynnistä. Lähettäessään sen Wisconsinin yliopiston FTP-palvelimelle he huomasivat, että niin monet odottivat jo, ettei tiimi itse päässyt yhteyteen.",
+      "coda": "Lähetys valmistui lähellä keskiyötä; kymmenen tuhatta latausta kerralla kaatoi yliopiston verkon."
     },
     "zlib-two-authors": {
-      "tag": "Foundation",
-      "title": "The Compression Layer of Two",
-      "body": "zlib sits inside Linux, macOS, iOS and successive generations of game consoles; Git and OpenSSH both lean on it to compress. Two people wrote its first public release in 1995.",
-      "coda": "The authorship line has never grown a third name."
+      "tag": "Perusta",
+      "title": "Kahden pakkauskerros",
+      "body": "zlib sijaitsee Linuxissa, macOS:ssä, iOS:ssä ja peräkkäisissä pelikonsolisukupolvissa; Git ja OpenSSH molemmat nojaavat siihen pakkaamisessa. Kaksi ihmistä kirjoitti sen ensimmäisen julkisen julkaisun vuonna 1995.",
+      "coda": "Tekijärivi ei ole koskaan kasvanut kolmannella nimellä."
     },
     "byd-battery-to-car": {
-      "tag": "Acquisition",
-      "title": "The Battery Company Bought a Carmaker",
-      "body": "BYD was founded in Shenzhen's Longgang district on February 10, 1995, making nickel-cadmium and nickel-metal hydride batteries, then entering lithium-ion cells in 1996. In 2003 the battery maker acquired Xi'an Qinchuan Automobile, renaming it BYD Auto.",
-      "coda": "Two years later, its first in-house sedan, the F3, went on sale."
+      "tag": "Hankinta",
+      "title": "Akkuyhtiö Osti Autonvalmistajan",
+      "body": "BYD perustettiin Shenzhenin Longgangin alueella 10. helmikuuta 1995, valmistaen nikkeli-kadmium- ja nikkeli-metallihydridiakkuihin, sitten siirtyen litiumioniakkuihin vuonna 1996. Vuonna 2003 akkuvalmistaja hankki Xi'an Qinchuan Automobilen, nimeten sen BYD Autoksi.",
+      "coda": "Kaksi vuotta myöhemmin sen ensimmäinen oma sedan, F3, tuli myyntiin."
     },
     "ariane-501": {
-      "tag": "Incident",
-      "title": "Thirty-seven seconds",
-      "body": "Thirty-seven seconds in, the inertial reference system converted a 64-bit float to a 16-bit integer and overflowed; at about forty seconds the vehicle broke up. The routine came unchanged from Ariane 4 and had no reason to be running after liftoff.",
-      "coda": "Roughly $370 million, spent on code that should have been switched off."
+      "tag": "Tapaus",
+      "title": "Kolmekymmentäseitsemän sekuntia",
+      "body": "Kolmekymmentäseitsemän sekunnin kohdalla inertiaalinen viitejärjestelmä muunsi 64-bittisen liukuluvun 16-bittiseksi kokonaisluvuksi ja ylivuoto tapahtui; noin neljänkymmenen sekunnin kohdalla ajoneuvo hajosi. Rutiini tuli muuttumattomana Ariane 4:stä, eikä sillä ollut syytä olla käynnissä nousun jälkeen.",
+      "coda": "Noin 370 miljoonaa dollaria, käytettynä koodiin, joka olisi pitänyt kytkeä pois päältä."
     },
     "deep-blue-move-44-1997": {
-      "tag": "Chess",
-      "title": "Move Forty-Four's Glitch",
-      "body": "In game one of the 1997 rematch Kasparov beat Deep Blue in forty-five moves. Deep Blue's forty-fourth move was allegedly the result of a bug: unable to settle on a preferred move inside its search, the engine fell back to a fail-safe.",
-      "coda": "After losing game two, Kasparov accused IBM of cheating."
+      "tag": "Shakki",
+      "title": "Siirron Neljäkymmentäneljä Häiriö",
+      "body": "Vuoden 1997 uusintaottelun ensimmäisessä pelissä Kasparov voitti Deep Bluen neljässäkymmenessäviidessä siirrossa. Deep Bluen neljäskymmenesneljäs siirto oli väitetysti bugin tulos: kykenemättä päättämään suosikkisiirrosta haussa, moottori putosi varajärjestelmään.",
+      "coda": "Hävittyään toisen pelin Kasparov syytti IBM:ää huijaamisesta."
     },
     "curl-one-maintainer": {
-      "tag": "Foundation",
-      "title": "One Man's Protocol Stack",
-      "body": "curl's own docs put libcurl on roughly ten billion devices, running on 110 operating systems and 28 CPU architectures. The project has carried Daniel Stenberg's name as lead maintainer since it was renamed curl in 1998.",
-      "coda": "No named successor has ever been listed."
+      "tag": "Perusta",
+      "title": "Yhden miehen protokollapino",
+      "body": "curlin omien dokumentaatioiden mukaan libcurl on noin kymmenellä miljardilla laitteella, jotka toimivat 110 käyttöjärjestelmällä ja 28 suorittimen arkkitehtuurilla. Projekti on kantanut Daniel Stenbergin nimeä pääylläpitäjänä siitä lähtien, kun se nimettiin uudelleen curliksi vuonna 1998.",
+      "coda": "Nimeämätön seuraaja ei ole koskaan ollut listattuna."
     },
     "book-of-mozilla-verses": {
-      "tag": "Easter Egg",
-      "title": "The Book of Mozilla",
-      "body": "Typing about:mozilla into the address bar reveals the Book of Mozilla, an apocalyptic verse pitting 'the beast' against 'Mammon' that each browser generation updates. The verse numbers are not chapter markers: they are release dates.",
-      "coda": "The newest verse, 6:27, first shipped in a Firefox Nightly build in 2020."
+      "tag": "Pääsiäismuna",
+      "title": "Mozilla-kirja",
+      "body": "Osoitepalkkiin kirjoittamalla about:mozilla paljastuu Mozilla-kirja, apokalyptinen säkeistö, jossa 'peto' kohtaa 'Mammonin' ja joka jokainen selaimen sukupolvi päivittää. Säkeistön numerot eivät ole luvun merkkejä: ne ovat julkaisupäiviä.",
+      "coda": "Uusin säkeistö, 6:27, julkaistiin ensimmäisen kerran Firefox Nightly -rakennuksessa vuonna 2020."
     },
     "http-418-teapot": {
-      "tag": "Protocol",
-      "title": "I'm a Teapot",
-      "body": "RFC 2324, published April 1, 1998, defines status 418 as \"I'm a teapot\" and files itself as Informational, not a standard. On April 1, 2014, RFC 7168 extended it to cover tea brewing. The code still never became a real standard.",
-      "coda": "Both documents remain Informational; the status code shipped in real servers anyway."
+      "tag": "Protokolla",
+      "title": "Olen teekannu",
+      "body": "RFC 2324, julkaistu 1. huhtikuuta 1998, määrittelee tilan 418 muodossa \"I'm a teapot\" ja luokittelee itsensä tiedolliseksi, ei standardiksi. 1. huhtikuuta 2014 RFC 7168 laajensi sitä kattamaan teetön. Koodi ei koskaan tullut todelliseksi standardiksi.",
+      "coda": "Molemmat asiakirjat ovat edelleen tiedollisia; tilakoodi päätyi kuitenkin oikeisiin palvelimiin."
     },
     "open-source-coined-1998": {
-      "tag": "Naming",
-      "title": "The Coining of Open Source",
-      "body": "In February 1998, Christine Peterson proposed \"open source\" because newcomers kept hearing \"free software\" as a price, not a freedom. At a VA Research meeting on February 5, Todd Anderson slipped the term into conversation rather than formally proposing it, letting it spread on its own.",
-      "coda": "The group later tried to trademark the phrase and failed."
+      "tag": "Nimeäminen",
+      "title": "Avoin lähdekoodi -termin syntymä",
+      "body": "Helmikuussa 1998 Christine Peterson ehdotti termiä \"open source\", koska uudet tulijat kuulsivat \"free software\" -ilmaisuun hinnan, ei vapautta. VA Researchin kokouksessa 5. helmikuuta Todd Anderson liukui termi keskusteluun ilman virallista ehdotusta, jolloin se levisi itsestään.",
+      "coda": "Ryhmä yritti myöhemmin rekisteröidä lauseen tavaramerkiksi ja epäonnistui."
     },
     "netscape-source-1998": {
-      "tag": "Release",
-      "title": "Not Quite Open",
-      "body": "On 22 January 1998 Netscape announced that its browser source would be released, and the employee Jamie Zawinski registered mozilla.org. But the licence they wrote kept one door open: Netscape itself could go on folding the same code into proprietary products.",
-      "coda": "Netscape was acquired by AOL roughly a year later."
+      "tag": "Julkaisu",
+      "title": "Ei aivan avoin",
+      "body": "22. tammikuuta 1998 Netscape ilmoitti, että sen selaimen lähdekoodi julkaistaan, ja työntekijä Jamie Zawinski rekisteröi mozilla.org. Mutta heidän kirjoittamansa lisenssi jätti yhden oven auki: Netscape itse voisi jatkaa saman koodin sisällyttämistä omaisuudellisiin tuotteisiin.",
+      "coda": "Netscape ostettiin AOL:lle noin vuoden kuluttua."
     },
     "bsd-75-acknowledgments": {
-      "tag": "License",
-      "title": "Seventy-Five Acknowledgments",
-      "body": "The original BSD license required every advertisement to credit each contributing author by name. By 1997 a single NetBSD build carried seventy-five such acknowledgments, incompatible with the GPL. Berkeley's licensing director deleted the clause on July 22, 1999.",
-      "coda": "One office's signature retired a clause that had multiplied for a decade."
+      "tag": "Lisenssi",
+      "title": "Seitsemänkymmentäviisi tunnustusta",
+      "body": "Alkuperäinen BSD-lisenssi vaati, että jokaisessa mainoksessa mainittiin nimeltä jokainen osallistunut tekijä. Vuoteen 1997 mennessä yksi NetBSD-rakennus sisälsi seitsemänkymmentäviisi tällaista tunnustusta, mikä oli yhteensopimaton GPL:n kanssa. Berkeleyn lisenssijohtaja poisti lausekkeen 22. heinäkuuta 1999.",
+      "coda": "Yhden toimiston allekirjoitus poisti käytöstä lausekkeen, joka oli lisääntynyt vuosikymmenen ajan."
     },
     "red-hat-ipo-1999": {
       "tag": "IPO",
-      "title": "The Price of Free Software",
-      "body": "Red Hat gave away the source code of its core product and charged instead for support, training and integration. On August 11, 1999 the company went public. Its first-day gain ranked eighth-largest in Wall Street history at the time.",
-      "coda": "Founder Bob Young was replaced as CEO four months later."
+      "title": "Ilmaisen ohjelmiston hinta",
+      "body": "Red Hat jakoi ydinohjelmistonsa lähdekoodin ilmaiseksi ja peri sen sijaan tuen, koulutuksen ja integraation. Yhtiö listautui pörssiin 11. elokuuta 1999. Sen ensimmäisen päivän voitto oli tuolloin Wall Streetin historian kahdeksanneksi suurin.",
+      "coda": "Perustaja Bob Young korvattiin toimitusjohtajana neljä kuukautta myöhemmin."
     },
     "multics-shutdown": {
-      "tag": "Shutdown",
-      "title": "The last one",
-      "body": "On 30 October 2000 the last known Multics installation running natively on Honeywell hardware was shut down at the Canadian Department of National Defence in Halifax, Nova Scotia.",
-      "coda": "Thirty-five years after the project began."
+      "tag": "Sammutus",
+      "title": "Viimeinen",
+      "body": "30. lokakuuta 2000 viimeinen tunnettu Multics-asennus, joka toimi natiivisti Honeywell-laitteistolla, sammutettiin Halifaxissa Nova Scotiassa Kanadan kansallispuolustusministeriössä.",
+      "coda": "Kolmekymmentäviisi vuotta projektin alkamisesta."
     },
     "sqlite-no-license": {
-      "tag": "Foundation",
-      "title": "The Database With No License",
-      "body": "SQLite's own page estimates over a trillion active database files worldwide, since every smartphone alone carries hundreds, ranking it second only to zlib among deployed software. There is no license, because the authors gave every line to the public domain.",
-      "coda": "Companies wanting legal cover buy a separate warranty of title."
+      "tag": "Säätiö",
+      "title": "Tietokanta ilman lisenssiä",
+      "body": "SQLite:n oma sivu arvioi maailmassa olevan yli biljoona aktiivista tietokantatiedostoa, sillä jokainen älypuhelin sisältää satoja, mikä sijoittaa sen toiseksi zlib:n jälkeen käytössä olevien ohjelmistojen joukossa. Lisenssiä ei ole, koska tekijät lahjoittivat jokaisen rivin julkiseen omaisuuteen.",
+      "coda": "Yritykset, jotka haluavat oikeudellisen suojan, ostavat erillisen omistusoikeuden takuun."
     },
     "smic-tsmc-lawsuit": {
-      "tag": "Lawsuit",
-      "title": "SMIC's Two Lawsuits",
-      "body": "SMIC was founded in 2000 by Richard Chang, a former TSMC engineer, among others. TSMC sued twice for trade-secret theft; in the 2009 case a jury found SMIC liable on 61 of the 65 counts brought against it.",
-      "coda": "In November 2010 SMIC settled with TSMC for $200 million and roughly 8 percent of its shares."
+      "tag": "Oikeusjuttu",
+      "title": "SMIC:n kaksi oikeusjuttua",
+      "body": "SMIC perustettiin vuonna 2000 Richard Changin, entisen TSMC-insinöörin, ja muiden toimesta. TSMC haastoi sen kahdesti kaupallisen salaisuuden varastamisesta; vuoden 2009 jutussa tuomijaneuvosto katsoi SMIC:n syylliseksi 61:stä 65:stä syytteestä.",
+      "coda": "Marraskuussa 2010 SMIC sovitti asian TSMC:n kanssa 200 miljoonalla dollarilla ja noin 8 prosentin osuudella omista osakkeistaan."
     },
     "api-mandate": {
-      "tag": "Governance",
-      "title": "The memo",
-      "body": "According to the post that went public by accident in 2011, Bezos ordered in 2002 that teams expose everything through service interfaces: no direct linking, no reading another team's store, no back doors.",
-      "coda": "The author of that post had meant it for his colleagues only."
+      "tag": "Hallinto",
+      "title": "Muistio",
+      "body": "Vuonna 2011 vahingossa julkiseksi tulleen kirjoituksen mukaan Bezos määräsi vuonna 2002, että tiimien on paljastettava kaikki palvelurajapintojen kautta: ei suoraa linkitystä, ei toisen tiimin tietokannan lukemista, ei takaovia.",
+      "coda": "Kirjoituksen tekijä oli tarkoittanut sen vain kollegoilleen."
     },
     "hupu-rumours": {
-      "tag": "Forum",
-      "title": "The one translating rumours",
-      "body": "In January 2004 a Chinese student working on a mechanical engineering doctorate in Chicago started a basketball forum in his spare time. The work was mostly translating NBA news and rumours into Chinese and tidying them up.",
-      "coda": "Eight years later the forum opened an online store of its own."
+      "tag": "Foorumi",
+      "title": "Huhujen kääntäjä",
+      "body": "Tammikuussa 2004 kiinalainen opiskelija, joka työskenteli konetekniikan tohtorintutkinnon parissa Chicagossa, perusti vapaa-ajallaan koripallofoorumin. Työ koostui lähinnä NBA-uutisten ja -huhujen kääntämisestä kiinaksi ja niiden järjestelystä.",
+      "coda": "Kahdeksan vuotta myöhemmin foorumi avasi oman verkkokaupan."
     },
     "jd-the-other-name": {
-      "tag": "Etymology",
-      "title": "The other half of the name",
-      "body": "The retail platform that went online in 2004 took its name from two people: its founder, Liu Qiangdong, and Gong Xiaojing, the woman he had dated first. One character from each.",
-      "coda": "The Jing is hers."
+      "tag": "Etymologia",
+      "title": "Nimen toinen puoli",
+      "body": "Verkkokauppa-alusta, joka avattiin vuonna 2004, sai nimensä kahdelta ihmiseltä: perustajaltaan Liu Qiangdongilta ja Gong Xiaojingilta, naiselta, jonka kanssa hän oli ensin seurustellut. Yksi merkki kummaltakin.",
+      "coda": "Jing on hänen."
     },
     "douban-hutong": {
-      "tag": "Etymology",
-      "title": "Named after the alley",
-      "body": "The site that went live on 6 March 2005 is not named after a metaphor. Yang Bo wrote its source in a cafe near Douban Hutong in Beijing, and took the name of the alley.",
-      "coda": "Twenty-one years on, the site still carries it."
+      "tag": "Etymologia",
+      "title": "Kujan mukaan nimetty",
+      "body": "Sivusto, joka avattiin 6. maaliskuuta 2005, ei ole nimetty metaforan mukaan. Yang Bo kirjoitti sen lähdekoodin kahvilassa lähellä Douban Hutonia Pekingissä ja otti kujan nimen.",
+      "coda": "Kaksikymmentäyksi vuotta myöhemmin sivusto kantaa sitä yhä."
     },
     "git-information-manager-hell": {
       "tag": "Git",
       "title": "Information Manager from Hell",
-      "body": "On 7 April 2005 Linus Torvalds committed git's first revision. The message reads: Initial revision of \"git\", the information manager from hell. The author address on it is torvalds@ppc970.osdl.org.",
-      "coda": "That address points to a PowerPC 970 test machine at OSDL."
+      "body": "7. huhtikuuta 2005 Linus Torvalds teki gitin ensimmäisen versiohallintasitoumuksen. Viestissä lukee: Initial revision of \"git\", the information manager from hell. Tekijän osoite on torvalds@ppc970.osdl.org.",
+      "coda": "Tuo osoite viittaa PowerPC 970 -testikoneeseen OSDL:ssä."
     },
     "knuth-reward-check": {
-      "tag": "Reward",
+      "tag": "Palkinto",
       "title": "Bank of San Serriffe",
-      "body": "Donald Knuth pays $2.56 for each error found in his books, drawn on the fictional Bank of San Serriffe. By March 2005 the checks he had signed totaled over $20,000.",
-      "coda": "Most recipients frame the check rather than deposit it."
+      "body": "Donald Knuth maksaa 2,56 dollaria jokaisesta hänen kirjoissaan löydetystä virheestä, ja maksu peritään kuvitteelliselta Bank of San Serriffe -pankilta. Maaliskuuhun 2005 mennessä hänen allekirjoittamansa shekit ylittivät 20 000 dollaria.",
+      "coda": "Useimmat saajat kehystävät shekin eikä sitä talleteta."
     },
     "dji-helicopter-first": {
       "tag": "Pivot",
-      "title": "DJI Started With a Helicopter",
-      "body": "Frank Wang graduated from Hong Kong University of Science and Technology in 2006 and co-founded DJI in Shenzhen with classmates. Its first product was a helicopter flight-control system; the first mature version, XP3.1, shipped in 2008.",
-      "coda": "The team later found most gimbal buyers were mounting them on multirotors, not helicopters."
+      "title": "DJI aloitti helikopterilla",
+      "body": "Frank Wang valmistui Hong Kong University of Science and Technologysta vuonna 2006 ja perusti DJI:n Shenzhenissä luokkatovereidensa kanssa. Sen ensimmäinen tuote oli helikopterin lentäjäjärjestelmä; ensimmäinen kypsä versio, XP3.1, toimitettiin vuonna 2008.",
+      "coda": "Tiimi havaitsi myöhemmin, että useimmat gimbal-ostajat kiinnittivät ne moniroottoreihin, ei helikoptereihin."
     },
     "dropbox-hn": {
       "tag": "Counterintuitive",
-      "title": "That reply",
-      "body": "Houston posted the Dropbox demo to Hacker News. The famous reply explained that you could do it yourself with an FTP account, curlftpfs and SVN, and that it did not look like it would make money.",
-      "coda": "Eleven years later, at the IPO, Houston called it his favourite thread on the site."
+      "title": "Se vastaus",
+      "body": "Houston julkaisi Dropbox-demon Hacker Newsissa. Kuuluisa vastaus selitti, että sen voi tehdä itse FTP-tilillä, curlftpfs:llä ja SVN:llä, ja että se ei näyttänyt tuottavan rahaa.",
+      "coda": "Yhdeksän vuoden kuluttua, IPO:n yhteydessä, Houston kutsui sitä suosikkiviestikokonaan sivustolla."
     },
     "butterfield": {
-      "tag": "Pivot",
-      "title": "Twice from the wreckage",
-      "body": "Butterfield's game, Game Neverending, stalled, and the team spun the photo-sharing piece out as Flickr. Eight years later his second game, Glitch, shut down, and the team spun out the chat tool they had built for themselves: Slack.",
-      "coda": "Both times the by-product only became visible once the main thing closed."
+      "tag": "Käännös",
+      "title": "Kaksi kertaa raunioista",
+      "body": "Butterfieldin peli, Game Neverending, jumitti, ja tiimi erotti valokuvien jakamisen osan Flickriksi. Kahdeksan vuotta myöhemmin hänen toinen pelinsä, Glitch, suljettiin, ja tiimi erotti itseensä rakentamansa keskustelutyökalun: Slack.",
+      "coda": "Hastings ja Randolph lensivät Dallasissa myymään Netflixin Blockbusterille viidelläkymmenellä miljoonalla ja hoitamaan heidän verkkosivuaan. Randolphin mukaan vastakkaisella puolella istunut toimitusjohtaja pyrki koko kokouksen ajan tukahduttamaan naurun."
     },
     "blockbuster": {
-      "tag": "The pass",
-      "title": "Fifty million",
-      "body": "Hastings and Randolph flew to Dallas to sell Netflix to Blockbuster for fifty million, and to run the online side for them. By Randolph's account the CEO across the table spent the meeting suppressing a laugh.",
-      "coda": "Blockbuster filed for bankruptcy ten years later."
+      "tag": "Läpäisy",
+      "title": "Viisikymmentä miljoonaa",
+      "body": "Hastings ja Randolph lensivät Dallasin myymään Netflixin Blockbusterille viidelläkymmenellä miljoonalla ja hoitamaan sen verkkosivustoja. Randolphin mukaan vastapäätä istunut toimitusjohtaja pyrki koko kokouksen ajan tukahduttamaan naurun.",
+      "coda": "Blockbuster haki konkurssia kymmenen vuotta myöhemmin."
     },
     "y2k": {
-      "tag": "Governance",
-      "title": "Nothing happened",
-      "body": "Gartner put the worldwide cost of Y2K at three to six hundred billion dollars, and hundreds of thousands of people changed two-digit years line by line. On the night, the grid held, the banks held, the planes flew.",
-      "coda": "Four years later an economist published a paper arguing most of the money had been wasted."
+      "tag": "Hallinto",
+      "title": "Mitään ei tapahtunut",
+      "body": "Gartner arvioi Y2K:n maailmanlaajuiset kustannukset kolmeen kuuteen sataan miljardiin dollariin, ja satojatuhansia ihmisiä muutti kahden numeron vuosia rivi kerrallaan. Yön aikana sähköverkko pysyi pystyssä, pankit pysyivät pystyssä, lentokoneet lensivät.",
+      "coda": "Neljä vuotta myöhemmin taloustieteilijä julkaisi artikkelin, jossa väitettiin useimman rahasta käytetyn turhaan."
     },
     "unsourced": {
-      "tag": "Unsourced",
-      "title": "Attributed to nobody",
-      "body": "\"640K ought to be enough for anybody\" — Gates's own answer is that there is never a citation, that the quotation just floats like a rumour and gets repeated. \"A world market for maybe five computers\" — Thomas Watson did say five, in 1953, about the orders he expected for one machine, the IBM 701.",
-      "coda": "The 701 went on to sell eighteen."
+      "tag": "Lähdettä ei",
+      "title": "Kenenkään nimiin ei laitettu",
+      "body": "\"640K ought to be enough for anybody\" — Gatesin oma vastaus on, että lainausta ei koskaan siteeroida, vaan se leijuu kuin huhu ja toistuu. \"A world market for maybe five computers\" — Thomas Watson sanoi viisi vuonna 1953 puhuessaan yhdestä koneesta, IBM 701:stä, odottamistaan tilauksista.",
+      "coda": "701 myi lopulta kahdeksantoista kappaletta."
     },
     "homebrew-volunteer-team": {
-      "tag": "Foundation",
-      "title": "The Repository With No Employer",
-      "body": "Homebrew is the default package manager on most Mac developer machines; in 2013 it led all of GitHub in contributors. Max Howell wrote its first release in 2009. It is maintained today by a team of 34 people, all unpaid.",
-      "coda": "Its funding history is one Kickstarter and an Open Source Collective account."
+      "tag": "Säätiö",
+      "title": "Varasto ilman työnantajaa",
+      "body": "Homebrew on useimpien Mac-kehittäjien koneiden oletuspakettienhallinta; vuonna 2013 se johti kaikkea GitHubia osallistujien määrässä. Max Howell kirjoitti sen ensimmäisen julkaisun vuonna 2009. Sitä ylläpidetään nykyään 34 hengen tiimin voimin, kaikki palkatta.",
+      "coda": "Sen rahoitushistoria on yksi Kickstarter ja Open Source Collective -tili."
     },
     "xiaomi-software-first": {
-      "tag": "Software",
-      "title": "Xiaomi's First Product Wasn't a Phone",
-      "body": "Xiaomi was founded on April 6, 2010. That August and December it released beta versions of the MIUI operating system and the Miliao chat app, both software.",
-      "coda": "The company's first phone did not ship until August of the following year."
+      "tag": "Ohjelmisto",
+      "title": "Xiaomin ensimmäinen tuote ei ollut puhelin",
+      "body": "Xiaomi perustettiin 6. huhtikuuta 2010. Saman vuoden elokuussa ja joulukuussa se julkaisi MIUI-käyttöjärjestelmän ja Miliao-keskustelu-sovelluksen beta-versiot, molemmat ohjelmistoja.",
+      "coda": "Yhtiön ensimmäinen puhelin ei lähetetty ennen seuraavan vuoden elokuuta."
     },
     "ritchie-same-week": {
-      "tag": "Obituary",
-      "title": "Same Week",
-      "body": "Dennis Ritchie, with Ken Thompson, created Unix and the C programming language. He was found dead at his New Jersey home on October 12, 2011, at 70. Steve Jobs had died a week earlier, on October 5. Commentators later noted Ritchie's work underlay technology Apple built its fortune on.",
-      "coda": "The two obituaries ran in the same week."
+      "tag": "Kuolinilmoitus",
+      "title": "Sama viikko",
+      "body": "Dennis Ritchie loi Ken Thompsonin kanssa Unixin ja C-ohjelmointikielen. Hänet löydettiin kuolleena New Jerseyn kodistaan 12. lokakuuta 2011, 70-vuotiaana. Steve Jobs oli kuollut viikkoa aiemmin, 5. lokakuuta. Kommentaattorit huomauttivat myöhemmin Ritchien työn muodostaneen pohjan teknologialle, jolle Apple rakensi varallisuutensa.",
+      "coda": "Kaksi kuolinilmoitusta julkaistiin samalla viikolla."
     },
     "leap-second": {
       "tag": "Incident",
-      "title": "The extra second",
-      "body": "A leap second was inserted to keep atomic clocks in step with the earth's rotation. The kernel never told its timer subsystem, high-resolution timers fired early, and processors spun. Reddit, Mozilla and LinkedIn seized up; an airline boarded passengers by hand.",
-      "coda": "Time does not increase monotonically. Code assumes it does."
+      "title": "Lisäsekunti",
+      "body": "Lisäsekunti lisättiin pitääkseen atomikellot synkronoituna Maan pyörimisen kanssa. Ydinjärjestelmä ei ilmoittanut asiaa ajastinmoduulilleen, korkean tarkkuuden ajastimet laukeaisivat liian aikaisin ja prosessorit pyöriivät tyhjän päällä. Reddit, Mozilla ja LinkedIn jumittuivat; lentoyhtiö laivasi matkustajat käsin.",
+      "coda": "Aika ei kasva monotonisesti. Koodi olettaa sen kasvavan."
     },
     "gregorian-1752-eleven-days": {
-      "tag": "Myth",
-      "title": "The Eleven Missing Days",
-      "body": "On 2 September 1752, the British calendar jumped to 14 September, deleting eleven days. Popular history says mobs rioted over it. No contemporary record of any riot survives. The story traces to a banner in a 1755 satirical election painting.",
-      "coda": "A prop from a painting became the record of an event with no other trace."
+      "tag": "Myytti",
+      "title": "Kymmenen kadonnutta päivää",
+      "body": "2. syyskuuta 1752 brittiläinen kalenteri hyppäsi 14. syyskuuta, poistaen kymmenen päivää. Suosittu historia väittää väkiväen mellastaneen asiasta. Nykyajan mellakasta ei ole säilynyt yhtään aikalaistaista lähdettä. Tarina juontuu 1755 satirisessa vaalimaalauksessa olleesta lippuista.",
+      "coda": "Maalauksen rekvisiitta muuttui tapahtuman ainoaksi jäljeksi."
     },
     "bootstrap-the-impossible-joke": {
-      "tag": "Etymology",
-      "title": "Borrowed From an Impossible Feat",
-      "body": "\"Pulling oneself up by one's bootstraps\" traces to Baron Munchausen's 1785 tall tale and was used through the 19th century as the standard example of a physical impossibility. In 1953, computing borrowed it for the instruction chain that gets a machine to start itself.",
-      "coda": "The word for the trick was, on its first use, a punchline about the trick failing."
+      "tag": "Etymologia",
+      "title": "Lainattu mahdottomasta teosta",
+      "body": "\"Nostaa itseään saappaidensa nilkkojen varassa\" juontuu baronin Munchausenin 1785 jättiläiseltävästä ja sitä käytettiin koko 1800-luvulla fyysisen mahdottomuuden standardiesimerkkinä. Vuonna 1953 laskentateknologia lainasi sen ohjeiden ketjuksi, joka saa koneen käynnistämään itsensä.",
+      "coda": "Temppuun käytetty sana oli ensimmäisellä käyttökerrallaan vitsi temppun epäonnistumisesta."
     },
     "french-revolutionary-decimal-time": {
-      "tag": "Experiment",
-      "title": "The Ten-Hour Day",
-      "body": "In 1793 France divided the day into ten hours of a hundred decimal minutes each. Mandatory use began in September 1794 and was suspended just seven months later. The decimal face on the Tuileries Palace clock kept running at least through 1801.",
-      "coda": "The abolished system stayed mounted on a palace wall for years afterward."
+      "tag": "Kokeilu",
+      "title": "Kymmenen tunnin vuorokausi",
+      "body": "Vuonna 1793 Ranska jakoi vuorokauden kymmeneen tuntiin, joissa kussakin oli sata desimaaliminuuttia. Pakollinen käyttö alkoi syyskuussa 1794 ja keskeytettiin vain seitsemän kuukautta myöhemmin. Tuileries-palatsin kellon desimaalinen numerotaulu kävi vielä vähintään vuoteen 1801 asti.",
+      "coda": "Lakkautettu järjestelmä pysyi palatsin seinällä vuosia sen jälkeen."
     },
     "railway-time-gwr": {
-      "tag": "Standard",
-      "title": "The Time the Trains Kept",
-      "body": "In November 1840, the Great Western Railway adopted Greenwich time across its network, replacing each town's own local time. By 1855, about 98 percent of British towns had followed. Parliament did not make it the legal national standard until 1880.",
-      "coda": "The clocks agreed on the time forty years before the law did."
+      "tag": "Standardi",
+      "title": "Aika, jonka junat pitivät",
+      "body": "Marraskuussa 1840 Great Western Railway otti käyttöön Greenwichin ajan koko verkostossaan, korvaten jokaisen kaupungin oman paikallisen ajan. Vuoteen 1855 mennessä noin 98 prosenttia brittiläisistä kaupungeista oli seurannut esimerkkiä. Parlamentti ei tehnyt siitä laillista kansallista standardia ennen vuotta 1880.",
+      "coda": "Kellot sopivat ajasta neljäkymmentä vuotta ennen lakia."
     },
     "western-union-telephone-memo-1876": {
-      "tag": "Debunked",
-      "title": "The Memo Western Union Never Wrote",
-      "body": "A widely quoted 1876 Western Union memo calls the telephone \"idiotic\" next to sending a messenger to the telegraph office. Researchers combing period newspapers found no trace of it, and the executive it names did not hold that post at the company that year. The text was fabricated later.",
-      "coda": "Western Union did decline Bell's patent that year; it just never wrote this memo."
+      "tag": "Kumottu",
+      "title": "Muistio, jonka Western Union ei koskaan kirjoittanut",
+      "body": "Laajasti lainattua 1876:n Western Unionin muistiota pidetään puhelinta \"idioottina\" telegrafiavirastoon lähetetyn sanansaattajan rinnalla. Aikakauslehtiä tutkineet tutkijat eivät löytäneet siitä jälkeäkään, eikä nimetty johtaja ollut tuolloin kyseisessä tehtävässä yrityksessä. Teksti keksittiin myöhemmin.",
+      "coda": "Western Union hylkäsi Bellin patentin kyseisenä vuonna; se ei vain koskaan kirjoittanut tätä muistiota."
     },
     "nintendo-hanafuda-detours": {
-      "tag": "Pivot",
-      "title": "The Detours After the Flower Cards",
-      "body": "Fusajiro Yamauchi opened a shop in Kyoto in 1889 hand-making hanafuda playing cards. The company later tried a taxi service and instant rice, both abandoned; the widely repeated love-hotel chain claim has no record in securities filings researched back to 1962.",
-      "coda": "In 1966 a toy called the Ultra Hand sold hundreds of thousands of units."
+      "tag": "Käännös",
+      "title": "Kiertoteitä kukkakorttien jälkeen",
+      "body": "Fusajiro Yamauchi avasi kaupan Kiotoon vuonna 1889 ja valmisti siellä käsin hanafuda-pelikortteja. Yritys kokeili myöhemmin taksipalvelua ja pikariceä, joista molemmat hylättiin; laajasti toistettu rakastajien hotelliketjun väite ei löydy arvopaperitiedotuksista, jotka on tutkittu aina vuoteen 1962 asti.",
+      "coda": "Vuonna 1966 lelunimellä Ultra Hand myytiin satojatuhansia yksiköitä."
     },
     "wrigley-premiums-premium": {
-      "tag": "Pivot",
-      "title": "The Premium's Premium",
-      "body": "In 1891 William Wrigley Jr. sold soap in Chicago and threw in baking powder as a bonus. Customers wanted the baking powder more than the soap, so he switched to selling that instead, and added chewing gum as baking powder's own bonus. Customers wanted the gum more.",
-      "coda": "By 1892 he had dropped both soap and baking powder to sell only gum."
+      "tag": "Käännös",
+      "title": "Palkinnon palkinto",
+      "body": "Vuonna 1891 William Wrigley Jr. myi saippuaa Chicagossa ja antoi lisäpalkinnoksi leivinjauhetta. Asiakkaat halusivat leivinjauhetta enemmän kuin saippuaa, joten hän siirtyi myymään sitä ja lisäsi purukumin leivinjauheen omaksi lisäpalkinnokseen. Asiakkaat halusivat purukumin enemmän.",
+      "coda": "Vuoteen 1892 mennessä hän oli lopettanut sekä saippuan että leivinjauheen myynnin ja myi vain purukumia."
     },
     "robot-labor-not-brother": {
-      "tag": "Etymology",
-      "title": "Robot's Uncredited Coiner",
-      "body": "Karel Čapek drafted his 1920 play with a Latinate word, \"laboři,\" and thought it too bookish. In a newspaper column he named the actual source: his brother Josef, tossed off in passing. \"Robot\" comes from robota — a serf's compulsory labor, not machinery.",
-      "coda": "The play kept one brother's name on the title page."
+      "tag": "Etymologia",
+      "title": "Robotin tunnustamaton keksijä",
+      "body": "Karel Čapek laati vuonna 1920 näytelmänsä latinankielisellä sanalla \"laboři\" ja piti sitä liian kirjallisena. Sanomalehden palstalla hän nimesi todellisen lähteen: hänen veljensä Josef, joka heitti sen ohimennen. \"Robot\" tulee sanasta robota — orjuuden pakollinen työ, ei koneisto.",
+      "coda": "Näytelmän otsikkosivulla oli edelleen yhden veljen nimi."
     },
     "play-doh-wallpaper-cleaner": {
-      "tag": "Pivot",
-      "title": "It Was Meant to Clean Wallpaper",
-      "body": "In the 1930s, Kutol formulated a soft dough to scrub coal soot off wallpaper. Once homes switched to cleaner heating fuel, demand vanished. A teacher suggested selling it as modeling clay; it was renamed Play-Doh in 1956.",
-      "coda": "By 2005 it was selling 95 million cans a year across 75 countries."
+      "tag": "Käännös",
+      "title": "Se oli tarkoitettu tapetin puhdistamiseen",
+      "body": "1930-luvulla Kutol kehitti pehmeän taikinan hiilensäien puhdistamiseen tapeteista. Kun kodit siirtyivät puhtaampaan lämmityispolttoaineeseen, kysyntä katosi. Opettaja ehdotti sen myyntiä mallintamissauna; se nimettiin uudelleen Play-Dohiksi vuonna 1956.",
+      "coda": "Vuoteen 2005 mennessä sitä myytiin 95 miljoonaa tölkkiä vuodessa 75 maassa."
     },
     "hedy-lamarr-frequency-hopping-patent": {
-      "tag": "Patent",
-      "title": "The Patent They Shelved",
-      "body": "In 1942, Lamarr and composer George Antheil patented a frequency-hopping system to keep torpedo radio from being jammed. The Navy classified it, shelved it, and suggested Lamarr sell war bonds instead. The patent expired in 1959, before any ship carried it.",
-      "coda": "Lamarr never received payment for the patent in her lifetime."
+      "tag": "Patentti",
+      "title": "Patentti, joka hyllytettiin",
+      "body": "Vuonna 1942 Lamarr ja säveltäjä George Antheil patentoivat taajuushyppelyjärjestelmän torpedon radio-ohjauksen häirinnän estämiseksi. Laivasto luokitteli sen salaiseksi, hyllytti sen ja ehdotti Lamarrille sotavelkakirjojen myyntiä. Patentti vanheni vuonna 1959, ennen kuin yksikään alus käytti sitä.",
+      "coda": "Lamarr ei koskaan saanut korvausta patentista elinaikanaan."
     },
     "bush-1945-memex": {
-      "tag": "Origin",
-      "title": "The Desk Never Built",
-      "body": "In July 1945, Vannevar Bush published \"As We May Think\" in The Atlantic, describing a desk-sized microfilm machine called the Memex that let a user build associative trails through stored knowledge. It ran again in an abridged reprint that September. No prototype was ever built.",
-      "coda": "Engelbart and Nelson both later credited the essay as the reason they started."
+      "tag": "Alkuperä",
+      "title": "Pöytä, jota ei koskaan rakennettu",
+      "body": "Heinäkuussa 1945 Vannevar Bush julkaisi The Atlanticissa artikkelin \"As We May Think\", jossa kuvattiin pöytäkokoinen mikrofilmilaite nimeltä Memex, jonka avulla käyttäjä pystyi rakentamaan assosiatiivisia polkuja tallennetun tiedon läpi. Se julkaistiin uudelleen lyhennettynä uusintapainoksena saman vuoden syyskuussa. Yhtään prototyyppiä ei koskaan rakennettu.",
+      "coda": "Sekä Engelbart että Nelson mainitsivat myöhemmin esseen syyksi, miksi he aloittivat."
     },
     "jean-bartik-eniac-dinner": {
-      "tag": "Record",
-      "title": "The Dinner They Weren't Invited To",
-      "body": "At ENIAC's public unveiling on February 14, 1946, the trajectory program that impressed the room had been written by Jean Bartik and Betty Holberton. The press introduced only Eckert and Mauchly. None of the six women programmers were invited to the dinner after.",
-      "coda": "Their names were pulled back out of the event photographs decades later."
+      "tag": "Tietue",
+      "title": "Illallinen, johon heitä ei kutsuttu",
+      "body": "ENIACin julkisessa esittelyssä 14. helmikuuta 1946 liikerataohjelman, joka teki vaikutuksen yleisöön, olivat kirjoittaneet Jean Bartik ja Betty Holberton. Lehdistö esitteli vain Eckertin ja Mauchlyn. Yhtäkään kuudesta naisohjelmoijasta ei kutsuttu illalliselle sen jälkeen.",
+      "coda": "Heidän nimensä kaivettiin esiin tapahtuman valokuvista vuosikymmeniä myöhemmin."
     },
     "claude-shannon-juggling-theorem": {
-      "tag": "Paper",
-      "title": "The Juggling Theorem",
-      "body": "In 1948, Shannon published 'A Mathematical Theory of Communication,' founding information theory. Decades later he turned the same rigor on his hobby, deriving a formal relationship between a ball's flight time, its dwell time, and the count of balls and hands.",
-      "coda": "It was collected in the same volume as the 1948 paper."
+      "tag": "Paperi",
+      "title": "Jongleerauslause",
+      "body": "Vuonna 1948 Shannon julkaisi teoksen 'A Mathematical Theory of Communication', joka loi informaatioteorian perustan. Vuosikymmeniä myöhemmin hän kohdisti saman tarkkuuden harrastukseensa ja johti muodollisen suhteen pallon lentoaikaan, sen pitoaikaan sekä pallojen ja käsien määrään.",
+      "coda": "Se koottiin samaan niteeseen kuin vuoden 1948 paperi."
     },
     "mccarthy-1960-eval": {
-      "tag": "Origin",
-      "title": "The Interpreter in the Footnote",
-      "body": "In his 1960 paper, John McCarthy wrote an eval function as mathematical notation, to show that symbolic expressions could describe themselves. His student Steve Russell translated the derivation into IBM 704 machine code. The proof device became the first working Lisp interpreter.",
-      "coda": "McCarthy later said he had not intended anyone to actually run it."
+      "tag": "Alkuperä",
+      "title": "Tulkki alaviitteessä",
+      "body": "Vuoden 1960 paperissaan John McCarthy kirjoitti eval-funktion matemaattisena merkintänä osoittaakseen, että symboliset lausekkeet voisivat kuvata itseään. Hänen oppilaansa Steve Russell käänsi johdannoksen IBM 704 -konekoodiksi. Todistuslaitteesta tuli ensimmäinen toimiva Lisp-tulkki.",
+      "coda": "McCarthy sanoi myöhemmin, ettei ollut tarkoittanut kenenkään todella suorittavan sitä."
     },
     "licklider-1960-symbiosis": {
-      "tag": "Origin",
-      "title": "Libraries Wired Together",
-      "body": "In his 1960 paper \"Man-Computer Symbiosis,\" J.C.R. Licklider proposed \"thinking centers\" holding library functions, linked into a network for real-time, conversational use of computers. Most machines of the day ran on punch cards in batches; interactive terminals barely existed.",
-      "coda": "Two years later he ran a new Pentagon office and funded the project that became ARPANET."
+      "tag": "Alkuperä",
+      "title": "Kirjastot kytketty toisiinsa",
+      "body": "Vuoden 1960 artikkelissaan \"Man-Computer Symbiosis\" J.C.R. Licklider ehdotti \"ajattelukeskuksia\", jotka sisältäisivät kirjastotoimintoja ja jotka olisi linkitetty verkkoon tietokoneiden reaaliaikaista, keskustelevaa käyttöä varten. Useimmat sen ajan koneet toimivat erissä reikäkorteilla; interaktiivisia päätteitä tuskin oli olemassa.",
+      "coda": "Kaksi vuotta myöhemmin hän johti uutta Pentagonin toimistoa ja rahoitti projektia, josta tuli ARPANET."
     },
     "ctss-1962-password-leak": {
-      "tag": "Origin",
-      "title": "The Password File, Printed",
-      "body": "In 1962, MIT PhD student Allan Scherr was frustrated with his four hours a week on CTSS. He found the offline print command could pull any account's files, so he printed UACCNT.SECRET, the file holding every password, and shared it to borrow accounts and keep running his simulations.",
-      "coda": "Scherr did not admit it to the lab's director until nearly thirty years later."
+      "tag": "Alkuperä",
+      "title": "Salasanatiedosto tulostettuna",
+      "body": "Vuonna 1962 MIT:n tohtoriopiskelija Allan Scherr turhautui neljään viikkotuntiinsa CTSS:llä. Hän huomasi, että offline-tulostuskomennolla pystyi hakemaan minkä tahansa tilin tiedostot, joten hän tulosti UACCNT.SECRET-tiedoston, joka sisälsi kaikki salasanat, ja jakoi sen lainatakseen tilejä ja jatkaakseen simulaatioitaan.",
+      "coda": "Scherr ei myöntänyt sitä laboratorion johtajalle ennen kuin lähes kolmekymmentä vuotta myöhemmin."
     },
     "katherine-johnson-check-the-numbers": {
-      "tag": "Record",
-      "title": "Have the Girl Check It",
-      "body": "Before his 1962 orbital flight, John Glenn had engineers ask Katherine Johnson to hand-recompute the trajectory an IBM 7090 had already calculated. 'If she says they're good,' he said, 'I'm ready to go.' Her numbers matched the computer's exactly.",
-      "coda": "Friendship 7 launched on schedule, February 20, 1962."
+      "tag": "Tietue",
+      "title": "Anna tytön tarkistaa se",
+      "body": "Ennen vuoden 1962 kiertoratalentoaan John Glenn pyysi insinöörejä käskemään Katherine Johnsonia laskemaan käsin uudelleen liikeradan, jonka IBM 7090 oli jo laskenut. 'Jos hän sanoo niiden olevan hyviä', Glenn sanoi, 'olen valmis lähtemään.' Hänen luvut vastasivat täsmälleen tietokoneen lukuja.",
+      "coda": "Friendship 7 laukaistiin aikataulussa 20. helmikuuta 1962."
     },
     "daemon-backronym": {
-      "tag": "Etymology",
-      "title": "The Daemon's Retrofitted Acronym",
-      "body": "In 1963, MIT's Project MAC programmers named a background tape-backup process after Maxwell's demon, an 1867 thought-experiment agent that sorts molecules tirelessly and invisibly — the Greek daimon, a neutral spirit, not the Judeo-Christian devil.",
-      "coda": "\"Disk And Execution MONitor\" was fitted onto the word afterward."
+      "tag": "Etymologia",
+      "title": "Daemonin jälkikäteen rakennettu akronyymi",
+      "body": "Vuonna 1963 MIT:n Project MACin ohjelmoijat nimesivät taustalla toimivan nauhavarmenteen prosessin Maxwellin demonin mukaan, 1867:n ajatuskokeen agentin, joka lajittelee molekyylejä väsymättä ja näkymättömästi — kreikan daimonin, neutraalin henkiolennon, ei juudaattis-kristillisen pahan.",
+      "coda": "\"Disk And Execution MONitor\" sovittiin sanaan jälkikäteen."
     },
     "sketchpad-1963": {
-      "tag": "Origin",
-      "title": "A Light Pen and an Oscilloscope",
-      "body": "In January 1963, Ivan Sutherland submitted his MIT thesis on Sketchpad, drawing constrained geometry with a light pen on the TX-2's screen at Lincoln Laboratory. The machine cost roughly a million dollars and only a handful existed; his drawing board could not be handed to anyone else.",
-      "coda": "Commercial CAD software took close to two decades to match what the thesis had shown."
+      "tag": "Alkuperä",
+      "title": "Valosulatin ja oskilloskoopin aika",
+      "body": "Tammikuussa 1963 Ivan Sutherland jätti MIT:lle väitöskirjansa Sketchpadista, jossa hän piirsi rajoitettua geometriaa valosulattimella TX-2:n ruudulla Lincoln Laboratoryssa. Kone maksoi noin miljoona dollaria ja niitä oli vain muutama; hänen piirustuslaudansa ei voinut antaa kellekään muulle.",
+      "coda": "Kaupallinen CAD-ohjelmisto tarvitsi lähes kaksi vuosikymmentä väitöskirjan osoittaman saavuttamiseksi."
     },
     "douglas-mcilroy-garden-hose-pipe": {
-      "tag": "Memo",
-      "title": "The Garden Hose Memo",
-      "body": "In October 1964, McIlroy wrote a Bell Labs memo proposing programs connect like garden hoses — screw in another segment to massage data differently. It circulated, was admired, and went unbuilt. Nine years later, Ken Thompson added one character, |, to the Unix shell overnight.",
-      "coda": "By morning, programs that had never spoken to each other did."
+      "tag": "Muistio",
+      "title": "Pihaletkun muistio",
+      "body": "Lokakuussa 1964 McIlroy kirjoitti Bell Labsin muistion, jossa hän ehdotti ohjelmien yhdistämistä pihaletkujen tapaan — kierrä toinen segmentti päälle, jotta dataa voidaan muokata eri tavalla. Se levisi, sitä ihailltiin, ja sitä ei toteutettu. Yhdeksän vuotta myöhemmin Ken Thompson lisäsi Unixin komentotulkkiin yhden merkin, |, yhdessä yössä.",
+      "coda": "Aamulla ohjelmat, jotka eivät olleet koskaan puhuneet toisilleen, tekivät sen."
     },
     "berkshire-hathaway-spite-buy": {
-      "tag": "Spite",
-      "title": "The Mill Bought Out of Anger",
-      "body": "In 1964 Warren Buffett verbally agreed to sell his shares back to Berkshire's president, Seabury Stanton, at $11.50 each. The written tender offer came in at $11.375. Buffett was angry enough over the missing eighth that he bought control of the company instead and fired Stanton.",
-      "coda": "In 1985 he shut down the textile mills he had fought to keep."
+      "tag": "Kostollisuus",
+      "title": "Tehtaasta, joka ostettiin vihasta",
+      "body": "Vuonna 1964 Warren Buffett suostui suullisesti myymään osuutensa takaisin Berkshire'n puheenjohtajalle Seabury Stantonille 11,50 dollarilla kappaleelta. Kirjallinen ostotarjous tuli 11,375 dollarin tasolle. Buffett oli niin vihainen puuttuvasta kahdeksasosasta, että hän osti yrityksen hallinnan ja irtisanoi Stantonin.",
+      "coda": "Vuonna 1985 hän sulkoi tekstiilitehtaat, joiden säilyttämiseksi hän oli taistellut."
     },
     "nelson-1965-hypertext": {
-      "tag": "Origin",
-      "title": "The Link Before the Page",
-      "body": "In a 1965 ACM paper, Ted Nelson coined \"hypertext\" for documents that link and quote each other non-sequentially, building on a project he had started in 1960 and later named Xanadu. His version paid original authors per link followed. A partial implementation did not ship until 2014.",
-      "coda": "The Web adopted his vocabulary and left the payment mechanism behind."
+      "tag": "Alkuperä",
+      "title": "Linkki ennen sivua",
+      "body": "Vuoden 1965 ACM-julkaisussa Ted Nelson loi termin \"hypertext\" dokumenteille, jotka linkittävät ja lainaavat toisiaan ei-järjestyksessä, rakentaen projektin varaan, jonka hän oli aloittanut vuonna 1960 ja myöhemmin nimennyt Xanaduksi. Hänen versiossaan alkuperäisille tekijöille maksettiin jokaisesta seuratuista linkistä. Osittainen toteutus julkaistiin vasta vuonna 2014.",
+      "coda": "Web omaksui hänen sanastonsa ja jätti maksujärjestelmän taakseen."
     },
     "mary-allen-wilkes-linc": {
-      "tag": "Record",
-      "title": "The LINC in the Living Room",
-      "body": "In 1965, Wilkes moved a 250-pound LINC computer into her parents' Baltimore living room and wrote LAP6, an interactive operating system, alone — twelve years before the Apple II reached any home. Asked if she was first, she said only: 'I guess I might have been.'",
-      "coda": "She never claimed the title outright herself."
+      "tag": "Merkintä",
+      "title": "LINC olohuoneessa",
+      "body": "Vuonna 1965 Wilkes siirsi 113-kiloisen LINC-tietokoneen vanhempiensa Baltimoren olohuoneeseen ja kirjoitti yksin LAP6:n, interaktiivisen käyttöjärjestelmän — kaksitoista vuotta ennen kuin Apple II saapui mihinkään kotiin. Kun häntä kysyttiin, oliko hän ensimmäinen, hän sanoi vain: 'Luulisin, että ehkä olin.'",
+      "coda": "Hän ei itse koskaan väittänyt olevansa ensimmäinen."
     },
     "hoares-billion-dollar-mistake": {
-      "tag": "Confession",
-      "title": "The Reference He Added Anyway",
-      "body": "In 1965 Tony Hoare was building the first type system meant to make ALGOL W references provably safe at compile time. He added a null reference anyway, because it was easy to implement. In 2009 he called it his billion-dollar mistake.",
-      "coda": "The safety goal was explicit; the failure was that ease won anyway."
+      "tag": "Tunnustus",
+      "title": "Viite, jonka hän lisäsi silti",
+      "body": "Vuonna 1965 Tony Hoare rakensi ensimmäistä tyypijärjestelmää, jonka tarkoitus oli tehdä ALGOL W:n viitteistä todistettavasti turvallisia käännösaikana. Hän lisäsi silti nollaviitteen, koska se oli helppo toteuttaa. Vuonna 2009 hän kutsui sitä miljardin dollarin virheekseen.",
+      "coda": "Turvallisuus tavoitteena oli selvä; epäonnistuminen oli, että helppous voitti silti."
     },
     "johnson-vs-cern-touchscreen": {
-      "tag": "Touchscreen",
-      "title": "Who Actually Was First",
-      "body": "CERN credits Bent Stumpe with building the world's first capacitive touchscreen in 1972, for its accelerator control room. Eric Johnson of Britain's Royal Radar Establishment had already published a paper on finger-driven capacitive touch technology in 1965, seven years earlier.",
-      "coda": "CERN's claim to have built the first touchscreen still stands on its own website."
+      "tag": "Kosketusnäyttö",
+      "title": "Kuka oli todella ensimmäinen",
+      "body": "CERN antaa Bent Stumpen krediitit maailman ensimmäisen kapasitiivisen kosketusnäytön rakentamisesta vuonna 1972 kiihdyttimen ohjaushuoneeseen. Britannian Royal Radar Establishmentin Eric Johnson oli jo julkaissut artikkelin sormella ohjattavasta kapasitiivisesta kosketusteknologiasta vuonna 1965, seitsemän vuotta aiemmin.",
+      "coda": "CERNin väite ensimmäisen kosketusnäytön rakentamisesta on edelleen voimassa sen omalla verkkosivustolla."
     },
     "second-redefined-1967": {
-      "tag": "Metrology",
-      "title": "9,192,631,770 Cycles",
-      "body": "Until 1960, the second was a fraction of the 1900 tropical year, fixed by astronomical observation. In 1967 the General Conference on Weights and Measures redefined it as 9,192,631,770 cycles of a caesium-133 transition.",
-      "coda": "The length of a second stopped being set by the sun and started being set by an atom."
+      "tag": "Metrologia",
+      "title": "9 192 631 770 sykliä",
+      "body": "Vuoteen 1960 asti sekunti oli määritelty 1900-luvun tropiikkavuoden murto-osaksi tähtitieteellisten havaintojen perusteella. Vuonna 1967 painojen ja mittausten yleiskokous määriteli sen uudelleen 9 192 631 770 sykliksi cesium-133 siirtymästä.",
+      "coda": "Sekunnin pituutta ei enää määritellyt aurinko vaan atomi."
     },
     "goto-statement-considered-harmful": {
-      "tag": "Correction",
-      "title": "The Title He Did Not Write",
-      "body": "Dijkstra submitted a paper titled A Case against the GO TO Statement to CACM. Editor Niklaus Wirth, rushing it into print as a letter, gave it the title that made it famous: Go To Statement Considered Harmful.",
-      "coda": "The phrase outran the letter, spawning decades of 'X Considered Harmful' titles nobody read past."
+      "tag": "Oikaisu",
+      "title": "Otsikko, jonka hän ei kirjoittanut",
+      "body": "Dijkstra lähetti CACM-lehteen artikkelin nimeltä A Case against the GO TO Statement. Toimitusjohtaja Niklaus Wirth, joka kiirehti sen painoon kirjeenä, antoi sille otsikon, joka teki siitä kuuluisan: Go To Statement Considered Harmful.",
+      "coda": "Lauseke ylitti kirjeen ja loi vuosikymmenet kestäneen 'X Considered Harmful' -otsikoiden perinteen, joita kukaan ei lukenut loppuun."
     },
     "rollkugel-vs-mouse": {
-      "tag": "Mouse",
-      "title": "Two Mice, One Year",
-      "body": "In October 1968, Telefunken listed the Rollkugel mouse in a sales brochure, a rolling-ball device its engineers had built since 1966. Two months later, on December 9, Douglas Engelbart demonstrated the wooden mouse his SRI team had built since 1963. Neither team knew of the other.",
-      "coda": "Telefunken reached the market first and was forgotten; Engelbart came second and is what people mean by mouse."
+      "tag": "Hiiri",
+      "title": "Kaksi hiirtä, yksi vuosi",
+      "body": "Lokakuussa 1968 Telefunken listasi Rollkugel-hiiren myyntiesitteessä, pyörivän pallon laitteen, jonka sen insinöörit olivat rakentaneet vuodesta 1966 lähtien. Kaksi kuukautta myöhemmin, 9. joulukuuta, Douglas Engelbart esitteli puuhiiren, jonka hänen SRI-tiiminsä oli rakentanut vuodesta 1963 lähtien. Kumpikaan tiimi ei tiennyt toisesta.",
+      "coda": "Telefunken saapui markkinoille ensimmäisenä ja unohtui; Engelbart tuli toiseksi ja on se, mitä ihmiset tarkoittavat sanalla hiiri."
     },
     "peter-principle-verified": {
-      "tag": "Study",
-      "title": "Promoted to Incompetence",
-      "body": "In 1969, Laurence Peter and Raymond Hull half-joked in a bestseller that every employee rises to the level where they become incompetent, meant as satire. In 2019 a study of sales-force promotion data at 214 real firms found the joke held: top sellers made worse managers.",
-      "coda": "The punchline turned out to be a measurable, published regression coefficient."
+      "tag": "Tutkimus",
+      "title": "Edistynyt epäpätevyyteen",
+      "body": "Vuonna 1969 Laurence Peter ja Raymond Hull vitsailivät puoliksi bestsellerissä, että jokainen työntekijä nousee tasolle, jossa hänestä tulee epäpätevä, tarkoitettuna satiirina. Vuonna 2019 tutkimus myyntijoukon ylitysmenetelmistä 214:ssä todellisessa yrityksessä löysi vitsin pitävän paikkansa: parhaat myyjät olivat huonompia johtajia.",
+      "coda": "Vitsin kärki osoittautui mitattavaksi, julkaistuksi regressiokerroksi."
     },
     "lanpar-vs-visicalc": {
-      "tag": "Spreadsheet",
-      "title": "The Spreadsheet Nobody Named",
-      "body": "In summer 1969, Harvard graduates Rene Pardo and Remy Landau wrote LANPAR, a spreadsheet language that let users enter formulas in any order and still calculated correctly. Bell Canada and General Motors ran on it. In 1979, Dan Bricklin built VisiCalc without knowing LANPAR existed.",
-      "coda": "LANPAR's patent survived a court challenge through 1983; the magazines had already named VisiCalc first."
+      "tag": "Laskentataulukko",
+      "title": "Taulukkolaskenta, jota kukaan ei nimennyt",
+      "body": "Kesällä 1969 Harvardin valmistuneet Rene Pardo ja Remy Landau kirjoittivat LANPARin, taulukkolaskentakielen, joka antoi käyttäjien syöttää kaavoja missä tahansa järjestyksessä ja laski silti oikein. Bell Canada ja General Motors käyttivät sitä. Vuonna 1979 Dan Bricklin rakensi VisiCalcin tietämättä LANPARin olemassaolosta.",
+      "coda": "LANPARin patentti kesti oikeushaasteen vuoteen 1983 asti; lehdet olivat jo nimenneet VisiCalcin ensimmäiseksi."
     },
     "spam-vikings-not-marketers": {
-      "tag": "Etymology",
-      "title": "Spam, Before Marketing",
-      "body": "In a 1970 sketch, Monty Python's Vikings chant \"spam\" over a diner's dialogue, mocking a glut of canned meat on the menu. The joke migrated into MUD chatrooms by the late 1980s for chat flooding, then onto email by the early 1990s.",
-      "coda": "The word reached inboxes by way of a comedy sketch about lunch."
+      "tag": "Etymologia",
+      "title": "Spam, ennen markkinointia",
+      "body": "Vuoden 1970 sketsissä Monty Pythonin viikingit huutavat \"spamia\" ruokailijan dialogin päälle, pilkaten säilykelihan ylitarjontaa ruokalistalla. Vitsi siirtyi MUD-keskusteluhuoneisiin 1980-luvun lopulla tarkoittaen keskustelun tulvimista, ja sitten sähköpostiin 1990-luvun alussa.",
+      "coda": "Sana saapui sähköpostilaatikoihin lounasaiheisen komediasketsin kautta."
     },
     "codd-1970-relational-model": {
-      "tag": "Origin",
-      "title": "The Paper Its Employer Ignored",
-      "body": "In 1970, IBM researcher Edgar Codd published the relational model. IBM's flagship product was hierarchical, and the company was in no hurry to adopt his idea. Larry Ellison read Codd's paper and IBM's own System R reports, then shipped a commercial relational database first, in 1979.",
-      "coda": "IBM's own relational product, DB2, did not ship until 1983."
+      "tag": "Alkuperä",
+      "title": "Paperi, jonka työnantaja jätti huomiotta",
+      "body": "Vuonna 1970 IBM:n tutkija Edgar Codd julkaisi relaatiomallin. IBM:n lippulaivatuote oli hierarkkinen, eikä yritys ollut kiirehtimässä omaksumaan hänen ideaansa. Larry Ellison luki Codin paperin ja IBM:n omat System R -raportit, ja toimitti ensimmäisenä kaupallisen relaatiotietokannan vuonna 1979.",
+      "coda": "IBM:n oma relaatiotuote DB2 ei ilmestynyt ennen vuotta 1983."
     },
     "linnainmaa-backpropagation": {
-      "tag": "Algorithm",
-      "title": "The Missing Citation",
-      "body": "In 1970, Finnish student Seppo Linnainmaa published the complete algorithm for reverse-mode automatic differentiation, with working code, in his master's thesis. In 1986, Rumelhart, Hinton and Williams published the same method in Nature to train neural networks. They did not cite him.",
-      "coda": "Linnainmaa's thesis sat uncited for sixteen years before historians of the field dug it back up."
+      "tag": "Algoritmi",
+      "title": "Puuttuva viittaus",
+      "body": "Vuonna 1970 suomalainen opiskelija Seppo Linnainmaa julkaisi täydellisen algoritmin käänteismoodin automaattiseen differentiointiin toimivan koodin kera pro gradu -työssään. Vuonna 1986 Rumelhart, Hinton ja Williams julkaisivat saman menetelmän Nature-lehdessä neuroverkkojen kouluttamiseksi. He eivät viitanneet häneen.",
+      "coda": "Linnainmaan opinnäytetyö oli viittaamatta kuusitoista vuotta, ennen kuin alan historioitsijat kaivoivat sen esiin."
     },
     "at-sign-arbitrary-pick": {
-      "tag": "Etymology",
-      "title": "The Only Unused Key",
-      "body": "In 1971, BBN engineer Ray Tomlinson needed a separator between username and host that could never appear in an actual person's name. Scanning his Model 33 Teletype keyboard, he picked @ — a character then used almost exclusively by grocers and bookkeepers.",
-      "coda": "Every email address since has carried that one constraint forward."
+      "tag": "Etymologia",
+      "title": "Ainoa käyttämätön näppäin",
+      "body": "Vuonna 1971 BBN:n insinööri Ray Tomlinson tarvitsi erottimen käyttäjänimen ja isännän välille, joka ei voisi koskaan esiintyä oikeassa henkilönnimessä. Selatessaan Model 33 -teletype-näppäimistöään hän valitsi @-merkin — merkin, jota käyttivät silloin lähes yksinomaan kauppiaat ja kirjanpitäjät.",
+      "coda": "Jokainen sähköpostiosoite sen jälkeen on kantanut tuota yhtä rajoitusta eteenpäin."
     },
     "parnas-module-decomposition": {
-      "tag": "Method",
-      "title": "Where to Cut a Module",
-      "body": "In 1972 David Parnas split the same KWIC-index system into modules two ways: one by processing step, one by the design decisions most likely to change, each hidden behind an interface. Only the second let a change touch one module without anyone reading the rest.",
-      "coda": "The module boundary turned out to encode a guess about what a future maintainer would need to know."
+      "tag": "Menetelmä",
+      "title": "Missä leikata moduli",
+      "body": "Vuonna 1972 David Parnas jakoi saman KWIC-indeksijärjestelmän moduuleihin kahdella tavalla: toinen käsittelyvaiheen mukaan, toinen niiden suunnittelupäätösten mukaan, jotka todennäköisimmin muuttuvat, kumpikin piilossa rajapinnan takana. Vain toinen mahdollisti muutoksen, joka kosketti yhtä modulia ilman, että kenenkään tarvitsi lukea loppua.",
+      "coda": "Modulin raja osoittautui koodaavan arvausta siitä, mitä tulevan ylläpitäjän olisi tiedettävä."
     },
     "karen-sparck-jones-idf": {
-      "tag": "Record",
-      "title": "The Formula Nobody Thanks",
-      "body": "In 1972, Spärck Jones published a paper proposing that a word's rarity across a document collection measures its importance — inverse document frequency, now under the ranking logic of nearly every search engine. She got no permanent post at Cambridge until 1993.",
-      "coda": "Until then she had worked a run of short-term, soft-money contracts."
+      "tag": "Merkintä",
+      "title": "Kaavaa, jota kukaan ei kiitä",
+      "body": "Vuonna 1972 Spärck Jones julkaisi artikkelin, jossa hän ehdotti, että sanan harvinaisuus asiakirjakokoelmassa mittaa sen tärkeyttä — käänteinen asiakirjatiheys, joka on nyt lähes kaikkien hakukoneiden ranking-logiikan alla. Hän ei saanut pysyvää virkaa Cambridgessa ennen vuotta 1993.",
+      "coda": "Siihen asti hän oli työskennellyt sarjan lyhytaikaisissa, pehmeän rahan sopimuksissa."
     },
     "cyclades-pouzin-tcpip": {
       "tag": "Internet",
-      "title": "The Internet's Fifth Man",
-      "body": "In 1972, Louis Pouzin built the CYCLADES network in France, the first to make end hosts, not the network, responsible for reliable delivery. In 1974, Cerf and Kahn's TCP paper thanked him by name. In 2004, Cerf and Kahn won the Turing Award. Pouzin's name was not on it.",
-      "coda": "The Economist later called him the internet's fifth man."
+      "title": "Internetin viides mies",
+      "body": "Vuonna 1972 Louis Pouzin rakensi CYCLADES-verkon Ranskassa, ensimmäisen, jossa päätepisteet, ei verkko, olivat vastuussa luotettavasta toimituksesta. Vuonna 1974 Cerfin ja Kahnin TCP-artikkeli kiitti häntä nimeltä. Vuonna 2004 Cerf ja Kahn saivat Turing-palkinnon. Pouzinin nimi ei ollut siinä.",
+      "coda": "The Economist kutsui häntä myöhemmin internetin viidenneksi mieheksi."
     },
     "ethernet-1973-memo": {
-      "tag": "Origin",
-      "title": "The Ether Memo",
-      "body": "On May 22, 1973, Robert Metcalfe wrote a Xerox PARC memo titled \"Ether Acquisition,\" with a hand-drawn diagram of a shared cable linking Alto computers. The technology is usually dated to the 1976 journal paper. The actual sketch is three years older, and hand-drawn.",
-      "coda": "By the time the paper was published, Ethernet had already run inside PARC for three years."
+      "tag": "Alkuperä",
+      "title": "Ether-memo",
+      "body": "22. toukokuuta 1973 Robert Metcalfe kirjoitti Xerox PARC:n memon otsikolla \"Ether Acquisition\", jossa oli käsin piirretty kaavio yhteisestä kaapelista, joka yhdisti Alto-tietokoneita. Teknologia ajoitetaan yleensä vuoden 1976 lehtiartikkeliin. Itse piirros on kolme vuotta vanhempi ja käsin piirretty.",
+      "coda": "Kun artikkeli julkaistiin, Ethernet oli jo toiminut PARC:n sisällä kolme vuotta."
     },
     "vint-cerf-envelope-sketch": {
-      "tag": "Anecdote",
-      "title": "The Back of an Envelope",
-      "body": "The internet's founding legend says Cerf sketched the gateway architecture on a napkin. He has corrected this: 'It wasn't a napkin, actually, it was the back of an envelope.' In 1973, waiting in a hotel lobby, he sketched what became TCP/IP's gateway design.",
-      "coda": "The following year, the sketch became a paper in IEEE Transactions on Communications."
+      "tag": "Anekdootti",
+      "title": "Kirjekuoren takapuoli",
+      "body": "Internetin perustamiselämäkerta kertoo, että Cerf piirsi porttiteknologian arkkitehtuurin lautasliinaan. Hän on korjannut tämän: 'Itse asiassa se ei ollut lautasliina, vaan kirjekuoren takapuoli.' Vuonna 1973, odottaessaan hotellin aulassa, hän piirsi sen, mikä tuli TCP/IP:n porttisuunnitelmaksi.",
+      "coda": "Seuraavana vuonna piirroksista tuli artikkeli IEEE Transactions on Communications -lehdessä."
     },
     "gchq-nonsecret-encryption": {
-      "tag": "Cryptography",
-      "title": "The Unpublished Key",
-      "body": "In September 1973, 22-year-old Clifford Cocks, newly arrived at GCHQ, worked out a shared-key-free encryption scheme in half an hour. Three years later, Diffie, Hellman and Merkle published the same idea in the US and were credited as its inventors. GCHQ files stayed classified until 1997.",
-      "coda": "James Ellis died in 1997, a few months after the declassification that put his name on the record."
+      "tag": "Kryptografia",
+      "title": "Julkaisematon avain",
+      "body": "Syyskuussa 1973 22-vuotias Clifford Cocks, joka oli juuri saapunut GCHQ:han, keksi yhteisavaimettoman salausmenetelmän puolessa tunnissa. Kolme vuotta myöhemmin Diffie, Hellman ja Merkle julkaisivat saman idean Yhdysvalloissa ja heidät tunnustettiin sen keksijöiksi. GCHQ:n tiedostot pysyivät salassa pidettävinä vuoteen 1997 asti.",
+      "coda": "James Ellis kuoli vuonna 1997, muutama kuukausi sen jälkeen kun hänen nimensä päättyi viralliseen tietoon salassapidon purkua seuranneena."
     },
     "kodak-digital-camera-1975": {
-      "tag": "Shelved",
-      "title": "Kodak's Buried Camera",
-      "body": "In 1975, 24-year-old engineer Steven Sasson built the first digital camera: 8 pounds, 23 seconds per shot. Executives reasoned that no one would want to view pictures on a television when print was cheap and had worked for a century. They patented the camera and shelved it.",
-      "coda": "Kodak filed for bankruptcy protection in 2012."
+      "tag": "Hyllytetty",
+      "title": "Kodakin hautautunut kamera",
+      "body": "Vuonna 1975 24-vuotias insinööri Steven Sasson rakensi ensimmäisen digitaalisen kameran: 8 puntaa, 23 sekuntia kuvaa kohti. Johtajat päättelivät, että kukaan ei haluaisi katsoa kuvia televisiossa, kun painettu kuva oli edullista ja oli toiminut vuosisadan ajan. He patenttoivat kameran ja hyllyttivät sen.",
+      "coda": "Kodak haki konkurssisuojaa vuonna 2012."
     },
     "galls-law-origin": {
-      "tag": "Origin",
-      "title": "A Book About Bureaucracies",
-      "body": "In 1975, after 30 publishers rejected it, pediatrician John Gall self-published Systemantics: a working complex system invariably evolves from a working simple system, and a complex system built from scratch never works. He was writing about hospitals and government agencies.",
-      "coda": "Software architects kept the line and quietly dropped the bureaucracies it was written about."
+      "tag": "Alkuperä",
+      "title": "Kirja byrokraatioista",
+      "body": "Vuonna 1975, sen jälkeen kun 30 kustantajaa oli hylännyt sen, lastenlääkäri John Gall julkaisi itse teoksen Systemantics: toimiva monimutkainen järjestelmä kehittyy väistämättä toimivasta yksinkertaisesta järjestelmästä, ja alusta alkaen rakennettu monimutkainen järjestelmä ei koskaan toimi. Hän kirjoitti sairaaloista ja hallintovirastoista.",
+      "coda": "Ohjelmistoarkkitehdit säilyttivät lauseen ja hylkäsivät hiljaa sen byrokraatiat, joista se oli kirjoitettu."
     },
     "ken-olsen-home-computer-1977": {
-      "tag": "Misquote",
-      "title": "Olsen's Home Computer",
-      "body": "In 1977, DEC founder Ken Olsen said there was no reason for an individual to have a computer in the home. He meant one central machine running the lights, heat and entertainment for a household, accurate for the thing he described. Coverage kept only the first half of the sentence.",
-      "coda": "Olsen himself owned a computer at home at the time."
+      "tag": "Väärin lainaus",
+      "title": "Olsenin kotitietokone",
+      "body": "Vuonna 1977 DEC:n perustaja Ken Olsen sanoi, ettei yksilöllä ollut syytä omistaa tietokonetta kotiin. Hän tarkoitti yhtä keskitettyä konetta, joka hoitaa kodin valot, lämmön ja viihteen, mikä oli tarkaa hänen kuvailemaansa asiaa. Juttu säilytti vain lauseen ensimmäisen puoliskon.",
+      "coda": "Olsenilla itsellään oli tietokone kotona tuolloin."
     },
     "kernighans-debugging-law": {
-      "tag": "Maxim",
-      "title": "Twice as Hard as Writing It",
-      "body": "In the 1978 Elements of Programming Style, Kernighan and Plauger wrote that debugging is twice as hard as writing a program, so writing it as cleverly as you can leaves you, by definition, not smart enough to debug it. A style rule stated as a limit on meeting your own work twice.",
-      "coda": "The adversary was never someone else, it was you a few weeks later."
+      "tag": "Aforismi",
+      "title": "Kaksi kertaa vaikeampaa kuin kirjoittaa se",
+      "body": "Vuoden 1978 Elements of Programming Style -teoksessa Kernighan ja Plauger kirjoittivat, että virheiden etsiminen on kaksi kertaa vaikeampaa kuin ohjelman kirjoittaminen, joten sen kirjoittaminen niin kekseliäästi kuin mahdollista jättää sinut määritelmän mukaan riittämättömän älykkääksi sen virheiden etsimiseen. Tyylisääntö, joka on esitetty rajoituksena kohtaamassa omaa työtäsi kahdesti.",
+      "coda": "Vastustaja ei koskaan ollut joku muu, se olit sinä muutama viikko myöhemmin."
     },
     "xerox-parc-1979-visit": {
-      "tag": "Origin",
-      "title": "Xerox's Own Deal",
-      "body": "December 1979: Apple toured Xerox PARC after Xerox agreed to buy 100,000 pre-IPO Apple shares at $10 each for the access. Jobs saw the Alto's graphical interface and called it the best thing he'd ever seen. The popular story is theft; the record is a trade Xerox negotiated.",
-      "coda": "Xerox got its shares. The Alto was never sold as a commercial product."
+      "tag": "Alkuperä",
+      "title": "Xeroxin oma kauppa",
+      "body": "Joulukuu 1979: Apple vieraili Xerox PARC:ssa sen jälkeen, kun Xerox suostui ostamaan 100 000 Apple-osaketta ennen IPO:ta 10 dollarin kappalehintaan pääsyn vuoksi. Jobs näki Alton graafisen käyttöliittymän ja kutsui sitä parhaaksi asiaksi, mitä hän oli koskaan nähnyt. Suosittu tarina on varkaus; asiakirja kertoo kaupasta, jonka Xerox neuvotteli.",
+      "coda": "Xerox sai osakkeensa. Altoa ei koskaan myyty kaupallisena tuotteena."
     },
     "visicalc-1979-no-patent": {
-      "tag": "Origin",
-      "title": "The Patent They Skipped",
-      "body": "Before VisiCalc's 1979 release, Dan Bricklin consulted a patent attorney, who put the odds of success at about one in ten under the era's rules. They filed for copyright and trademark instead. In 1983, Lotus 1-2-3 shipped a compatible interface that could read VisiCalc's own files.",
-      "coda": "The spreadsheet survived as a category. The company that built it did not."
+      "tag": "Alkuperä",
+      "title": "Patentti, jonka he ohittivat",
+      "body": "Ennen VisiCalcin julkaisua vuonna 1979 Dan Bricklin konsultoi patenttiasiamiestä, joka arvioi onnistumisen todennäköisyyden olevan noin yksi kymmenestä tuon ajan sääntöjen mukaan. He hakivat sen sijaan tekijänoikeutta ja tavaramerkkiä. Vuonna 1983 Lotus 1-2-3 julkaisi yhteensopivan käyttöliittymän, joka pystyi lukemaan VisiCalcin omia tiedostoja.",
+      "coda": "Laskentataulukko säilyi kategoriana. Yhtiö, joka rakensi sen, ei säilynyt."
     },
     "ibm-microsoft-dos-1980": {
-      "tag": "Clause",
-      "title": "IBM Leaves a Door Open",
-      "body": "IBM signed with Microsoft on the PC's operating system on November 6, 1980. Deep in a decade-plus antitrust case, IBM chose not to control its suppliers, and let Microsoft resell DOS to anyone else. As a hedge against another lawsuit, it made sense at the time.",
-      "coda": "Clone makers followed within years, and IBM never regained control of the platform."
+      "tag": "Lauseke",
+      "title": "IBM jättää oven auki",
+      "body": "IBM allekirjoitti sopimuksen Microsoftin kanssa PC:n käyttöjärjestelmästä 6. marraskuuta 1980. Syvällä yli vuosikymmenen kestäneessä kilpailulakia koskevassa oikeudenkäynnissä IBM päätti olla kontrolloimatta toimittajiaan ja antoi Microsoftin myydä DOS:n kenelle tahansa muulle. Toisen oikeudenkäynnin varalta se tuntui järkevältä tuolloin.",
+      "coda": "Kloonivalmistajat tulivat perään muutamassa vuodessa, ja IBM ei koskaan saanut hallintaa alustasta takaisin."
     },
     "postel-law-robustness-reversal": {
-      "tag": "Governance",
-      "title": "The Robustness Principle, Reversed",
-      "body": "RFC 761 (1980) urged implementers to be liberal in what they accept, conservative in what they send. In 2023 the IETF's own architecture board reversed that guidance in RFC 9413: leniency lets bugs calcify into de facto standards, leaving systems less robust, not more.",
-      "coda": "The standard that told the internet to be lenient was rescinded by its own custodians."
+      "tag": "Hallinto",
+      "title": "Robustiusperiaate, käänteisesti",
+      "body": "RFC 761 (1980) kehotti toteuttajia olemaan liberaaleja vastaanottamisessa ja konservatiivisia lähettämisessä. Vuonna 2023 IETF:n oma arkkitehtuurilautakunta kumosi ohjeen RFC 9413:ssa: suvaitsevaisuus antaa virheiden kivistyä de facto -standardeiksi, jättäen järjestelmät vähemmän robustiksi, ei enemmän.",
+      "coda": "Standardi, joka kehotti internetiä olemaan suvaitseva, kumottiin sen omien hoitajien toimesta."
     },
     "end-to-end-argument": {
-      "tag": "Paper",
-      "title": "An Argument for a Dumb Network",
-      "body": "In 1981 Saltzer, Reed, and Clark argued that checking a transferred file for errors can only be done correctly at the two endpoints; the network can help but never fully substitute. A paper about where to put a checksum became the founding case for keeping networks simple.",
-      "coda": "A note on error-checking placement grew into the case for net neutrality."
+      "tag": "Artikkeli",
+      "title": "Väittämä tyhmästä verkosta",
+      "body": "Vuonna 1981 Saltzer, Reed ja Clark väittivät, että siirretyn tiedoston virheiden tarkistus voidaan tehdä oikein vain kahdessa päätepisteessä; verkko voi auttaa mutta ei koskaan korvata täysin. Tiedoston tarkistuskoodin sijoittelusta käsitellyt artikkeli tuli perustavaksi tapaukseksi verkkojen yksinkertaisuuden säilyttämiseksi.",
+      "coda": "Huomautus virhetarkistuksen sijoittelusta kasvoi verkkoneutraalisuuden puolesta esitetyksi väitteeksi."
     },
     "excel-1900-leap-year": {
-      "tag": "Legacy",
-      "title": "The Leap Year That Wasn't",
-      "body": "Lotus 1-2-3 treated 1900 as a leap year, a harmless shortcut. Microsoft copied the same false date to stay compatible. Lotus is gone; the false leap day remains, now written into the Office Open XML specification.",
-      "coda": "A compatibility hack for a discontinued rival is now a written standard."
+      "tag": "Perintö",
+      "title": "Karkausvuosi, joka ei ollut",
+      "body": "Lotus 1-2-3 käsitteli vuotta 1900 karkausvuotena, harmittomana oikotienä. Microsoft kopioi saman virheellisen päivämäärän pysyäkseen yhteensopivana. Lotus on poissa; väärä karkauspäivä on jäljellä, nyt kirjattuna Office Open XML -spesifikaatioon.",
+      "coda": "Yhteensopivuushakkerointi lakkautetulle kilpailijalle on nyt kirjattu standardi."
     },
     "avatar-before-snow-crash": {
-      "tag": "Etymology",
-      "title": "An Avatar Before the Novel",
-      "body": "Neal Stephenson's 1992 novel Snow Crash is usually credited with the online sense of \"avatar.\" But Lucasfilm's Habitat, running on Commodore 64s since 1985, already wrote: \"players are represented by animated figures that we call Avatars,\" from Sanskrit for incarnation.",
-      "coda": "The term was live on a commercial service seven years before the book."
+      "tag": "Etymologia",
+      "title": "Avatar ennen romaania",
+      "body": "Neal Stephensonin vuoden 1992 romaanin Snow Crash ansioksi luetaan yleensä sanan \"avatar\" verkkokäyttö. Mutta Lucasfilmin Habitat, joka oli toiminut Commodore 64:llä vuodesta 1985, kirjoitti jo: \"pelaajia edustavat animoidut hahmot, joita kutsumme avatareiksi\", sanskritin kielen inkarnaatiota tarkoittavasta sanasta.",
+      "coda": "Termi oli käytössä kaupallisessa palvelussa seitsemän vuotta ennen kirjaa."
     },
     "radia-perlman-algorhyme": {
-      "tag": "Anecdote",
+      "tag": "Kasku",
       "title": "Algorhyme",
-      "body": "In 1985, Perlman's manager at DEC assigned the loop-free bridging problem on a Friday, then vanished for a week. She had the spanning-tree algorithm finished by Wednesday — and spent the rest writing Algorhyme, a poem that became the paper's abstract.",
-      "coda": "The poem took longer to write than the algorithm."
+      "body": "Vuonna 1985 Perlmanin esimies DEC:llä antoi silmukattoman siltausongelman perjantaina ja katosi sitten viikoksi. Hän sai spanning-tree-algoritmin valmiiksi keskiviikkoon mennessä — ja käytti loppuajan kirjoittaen Algorhyme-runon, josta tuli paperin abstrakti.",
+      "coda": "Runon laatiessaan kului enemmän aikaa kuin algoritmia."
     },
     "brooks-no-silver-bullet": {
-      "tag": "Essay",
-      "title": "No Silver Bullet",
-      "body": "At the 1986 IFIP congress, Fred Brooks split software difficulty into essential and accidental complexity. Accidental difficulty had fallen sharply, he said, but no single technique would deliver a tenfold productivity gain within a decade.",
-      "coda": "Four decades on, each new paradigm still gets sold as the bullet he said did not exist."
+      "tag": "Eseki",
+      "title": "Ei hopeakärpästä",
+      "body": "Vuoden 1986 IFIP-kongressissa Fred Brooks jakoi ohjelmistojen vaikeuden oleelliseen ja sattumaiseen monimutkaisuuteen. Sattumainen vaikeus oli laskenut jyrkästi, hän sanoi, mutta yksikään tekniikka ei tuottaisi kymmenkertaisen tuottavuuden kasvun kymmenen vuoden sisällä.",
+      "coda": "Neljä vuosikymmentä myöhemmin jokainen uusi paradigma myydään edelleen kärpäkseksi, jota hänen mukaansa ei ole olemassa."
     },
     "tz-olson-database": {
-      "tag": "Naming",
-      "title": "The Olson Database",
-      "body": "Most devices resolve timezones against one volunteer-run file set, informally called the Olson database after founder Arthur David Olson. Its naming scheme is credited to Paul Eggert, who has actually edited the database since 2005.",
-      "coda": "The eponym and the person who has maintained it since are different people."
+      "tag": "Nimeäminen",
+      "title": "Olsonin tietokanta",
+      "body": "Useimmat laitteet ratkaisevat aikavyöhykkeet yhden vapaaehtoisten ylläpitämän tiedostojoukon perusteella, jota epävirallisesti kutsutaan Olsonin tietokannaksi perustajan Arthur David Olsonin mukaan. Nimeämiskäytäntöön luetaan Paul Eggert, joka on itse muokannut tietokantaa vuodesta 2005 lähtien.",
+      "coda": "Nimikkö ja henkilö, joka on ylläpitänyt sitä siitä lähtien, ovat eri henkilöitä."
     },
     "china-1987-first-email": {
-      "tag": "Record",
-      "title": "Beyond the Wall",
-      "body": "Retellings credit Qian Tianbai alone with China's first email, 'Across the Great Wall we can reach every corner of the world.' Qian was studying in the US that month; it was typed by Li Chengjiong and Karlsruhe's Werner Zorn, and left China six days later, on September 20.",
-      "coda": "His obituaries still list him as the sender."
+      "tag": "Merkintä",
+      "title": "Muurin yli",
+      "body": "Kertomuksissa Kiinan ensimmäinen sähköposti, 'Across the Great Wall we can reach every corner of the world.', luetaan yksin Qian Tianbain nimiin. Qian opiskeli Yhdysvalloissa kyseisenä kuukautena; viestin kirjoittivat Li Chengjiong ja Karlsruhen Werner Zorn, ja se lähti Kiinasta kuusi päivää myöhemmin, 20. syyskuuta.",
+      "coda": "Hänen kuolleetuutensa listaa hänet edelleen lähettäjäksi."
     },
     "barbara-liskov-substitution-property": {
-      "tag": "Principle",
-      "title": "The Law She Never Named",
-      "body": "In a 1987 OOPSLA keynote, Barbara Liskov proposed that if substituting an object of type S for type T left every program's behavior unchanged, S was a subtype of T. She called it a substitution property. Years later, Robert Martin folded it into SOLID and named it after her.",
-      "coda": "The word 'principle' was someone else's addition."
+      "tag": "Periaate",
+      "title": "Laki, jota hän ei koskaan nimennyt",
+      "body": "Vuoden 1987 OOPSLA-avajaispuheessa Barbara Liskov ehdotti, että jos tyypin S objektin korvaaminen tyypillä T jättää jokaisen ohjelman käytöksen muuttumattomaksi, S on T:n alityyppi. Hän kutsui sitä korvaamisominaisuudeksi. Vuosia myöhemmin Robert Martin sisällytti sen SOLID:iin ja nimitti sen hänen mukaansa.",
+      "coda": "Sana 'periaate' oli jonkun muun lisäys."
     },
     "go-corporation-pen-computing": {
-      "tag": "Pen computing",
-      "title": "The Tablet Nobody Bought",
-      "body": "In 1987 Jerry Kaplan started GO Corporation to build the pen-based PenPoint operating system, raising $75 million. AT&T acquired GO in January 1994, cancelled its supporting chip line two weeks later, and GO closed that July. Kaplan later said the company had \"no meaningful sales.\"",
-      "coda": "In 2010 Apple released the iPad, a capacitive multitouch tablet."
+      "tag": "Kynälaskenta",
+      "title": "Tabletti, jota kukaan ei ostanut",
+      "body": "Vuonna 1987 Jerry Kaplan perusti GO Corporationin kynäpohjaisen PenPoint-käyttöjärjestelmän rakentamiseksi ja keräsi 75 miljoonaa dollaria. AT&T osti GO:n tammikuussa 1994, peruutti sen tukemaa sirulinjaa kaksi viikkoa myöhemmin ja GO suljettiin samana vuonna heinäkuussa. Kaplan sanoi myöhemmin, että yrityksellä ei ollut \"merkittäviä myyntiä\".",
+      "coda": "Vuonna 2010 Apple julkaisi iPadin, kapasitiivisen monikosketus-tabletin."
     },
     "iso8601-unify-then-fork": {
-      "tag": "Standard",
-      "title": "ISO 8601's Narrower Stand-in",
-      "body": "ISO 8601 was first published in 1988, unifying five earlier, conflicting ISO date-and-time standards into one. But the format most internet software validates against is RFC 3339 (1997), a narrower profile that, after ISO 8601's later revision, is not even a strict subset of it.",
-      "coda": "The standard everyone cites and the dialect everyone's code checks against are not the same document."
+      "tag": "Standardi",
+      "title": "ISO 8601:n kapeampi vastine",
+      "body": "ISO 8601 julkaistiin ensimmäisen kerran vuonna 1988 yhdistäen viisi aiempaa, ristiriitaisempaa ISO-päivämäärä- ja aikastandardia yhteen. Mutta muoto, jota useimmat internet-sovellukset validoi, on RFC 3339 (1997), kapeampi profiili, joka ei ISO 8601:n myöhemmän tarkistuksen jälkeen ole edes sen tiukka osajoukko.",
+      "coda": "Standardi, jota kaikki siteeraavat, ja murre, jota kaikkien koodi tarkistaa vastaan, eivät ole sama asiakirja."
     },
     "python-christmas-project": {
-      "tag": "Scripting",
-      "title": "A Christmas Hobby",
-      "body": "During the Christmas holidays of 1989, with his office closed for the week, a researcher in Amsterdam looked for a hobby programming project. He began writing an interpreter for a new scripting language and named it after a comedy troupe, not the snake.",
-      "coda": "In July 2026 it ranked first on the TIOBE index of programming language popularity."
+      "tag": "Skriptaus",
+      "title": "Jouluharrastus",
+      "body": "Vuoden 1989 joululomien aikana, kun hänen toimistonsa oli suljettu viikon ajaksi, Amsterdamin tutkija etsi harrastusohjelmointiprojektia. Hän alkoi kirjoittaa tulkki uutta skriptikieltä varten ja nimesi sen komediaryhmän mukaan, ei käärmeen.",
+      "coda": "Heinäkuussa 2026 se sijoittui ensimmäiseksi TIOBE:n ohjelmointikielten suosion indeksissä."
     },
     "worse-is-better": {
       "tag": "Debate",
-      "title": "Worse Is Better",
-      "body": "In 1989 Richard Gabriel coined 'worse is better': a simple, half-right implementation survives better than a complete, correct one, which is why he thought C and Unix beat Lisp. In 1991 he published a rebuttal under the pseudonym Nickieben Bourbaki, posing as an old friend.",
-      "coda": "Decades later he still said he could not decide whether his own argument was right."
+      "title": "Huonompi on parempi",
+      "body": "Vuonna 1989 Richard Gabriel loi termin 'worse is better': yksinkertainen, puoliksi oikea toteutus selviää paremmin kuin täydellinen ja oikea toteutus, minkä vuoksi hänen mielestään C ja Unix voittivat Lispin. Vuonna 1991 hän julkaisi vastaväitteen nimellä Nickieben Bourbaki, esittäen itsensä vanhana ystävänä.",
+      "coda": "Kymmenien vuosien kuluttua hän sanoi edelleen, ettei hän osannut päättää, oliko hänen oma väitöksensä oikea."
     },
     "rfc1149-avian-carriers-test": {
       "tag": "Incident",
-      "title": "The Protocol Someone Actually Flew",
-      "body": "David Waitzman published RFC 1149 on April Fools' Day, 1990: a spec for carrying IP datagrams by pigeon. On April 28, 2001, the Bergen Linux User Group actually built it, launching nine ping packets over roughly 5 km. Four came back — a 55% loss rate, round trips running 53 to 106 minutes.",
-      "coda": "The joke RFC has a real packet-loss figure on record: 55 percent."
+      "title": "Pöytäkirja, jonka joku todella lensi",
+      "body": "David Waitzman julkaisi RFC 1149:n huippuäitienpäivänä vuonna 1990: eritelmän IP-datagrammien kuljettamisesta kyyhkysellä. 28. huhtikuuta 2001 Bergenin Linux-käyttäjäryhmä rakensi sen todellisuudessa ja laukaisi yhdeksän ping-pakettia noin 5 km:n matkalle. Neljä palasi — 55 prosentin häviöaste, edestakaiset matkat kestivät 53–106 minuuttia.",
+      "coda": "Vitsa-RFC:llä on kirjattuna todellinen paketinhäviö: 55 prosenttia."
     },
     "att-1990-break-statement": {
       "tag": "Incident",
-      "title": "The Misplaced Break",
-      "body": "A recovery routine on a New York 4ESS switch held a break statement nested one level too shallow, a defect testing never exercised. A restart's routine \"ready\" signal was then misread by neighboring switches as an error, and the false alarm cascaded through the network for nine hours.",
-      "coda": "AT&T later put the lost revenue at sixty million dollars."
+      "title": "Väärässä paikassa oleva break",
+      "body": "New Yorkin 4ESS-kytkimen palautusrutiinissa oli break-lauseke, joka oli sisäistetty yhden tason liian matalalle, vika, jota testaus ei koskaan käyttänyt. Uudelleenkäynnistyksen rutiinin \"valmis\"-signaali luettiin sitten väärin naapurikytkimissä virheeksi, ja vääriä hälytyksiä kaskadoitui verkossa yhdeksän tuntia.",
+      "coda": "AT&T myöhemmin arvioi menetetyt tulot 60 miljoonaksi dollariksi."
     },
     "aspec-vs-musicam": {
       "tag": "Audio",
-      "title": "Losing to the Simpler One",
-      "body": "In 1991, MPEG tested two rival audio codecs. ASPEC, built by Fraunhofer, AT&T and France's CNET, won the quality tests but was ruled too complex. MUSICAM, from Matsushita and Philips, won on simplicity. The finished MP3 folded ASPEC's filter design back in anyway.",
-      "coda": "The format everyone calls MP3 carries the losing proposal's engineering inside the winning one's name."
+      "title": "Häviö yksinkertaisemmalle",
+      "body": "Vuonna 1991 MPEG testasi kahta kilpailevaa äänikoodikkia. Fraunhoferin, AT&T:n ja Ranskan CNET:n kehittämä ASPEC voitti laadun testit, mutta se hylättiin liian monimutkaisena. Matsushitan ja Philipsin MUSICAM voitti yksinkertaisuudellaan. Valmis MP3 sisällytti lopulta ASPEC:n suodatinrakenteen silti.",
+      "coda": "Kaikkien MP3:ksi kutsuman muodoston sisällä on hävinneen ehdotuksen insinööritöitä voittaneen nimen alla."
     },
     "linux-minix-post": {
       "tag": "Kernel",
-      "title": "A Post to comp.os.minix",
-      "body": "On August 25, 1991, a Helsinki university student posted to the comp.os.minix newsgroup that he was writing a free operating system, calling it \"just a hobby, won't be big and professional like gnu,\" and asked what features people wanted.",
-      "coda": "Since November 2017, all 500 of the world's fastest supercomputers have run an OS built on it."
+      "title": "Viesti comp.os.minixiin",
+      "body": "25. elokuuta 1991 helsinkiläinen ylioppilas kirjoitti comp.os.minix-uutisryhmään, että hän kirjoittaa vapaan käyttöjärjestelmän, kutsuen sitä \"vain harrastukseksi, ei tule olemaan iso ja ammattimainen kuten gnu\", ja kysyi, mitä ominaisuuksia ihmiset halusivat.",
+      "coda": "Marraskuusta 2017 lähtien kaikki maailman 500 nopeinta supertietokonetta ovat käyttäneet sen varaan rakennettua käyttöjärjestelmää."
     },
     "web-vs-gopher-1991": {
       "tag": "Web",
-      "title": "Free Beat Priced",
-      "body": "In 1991, Tim Berners-Lee released the World Wide Web from CERN. That same year, the University of Minnesota released Gopher, for a time the more popular system. In February 1993, Minnesota announced licensing fees for Gopher servers. That April, CERN made the web protocol free.",
-      "coda": "Gopher had the bigger following before the fee announcement, and never had it again afterward."
+      "title": "Ilmainen biitti hinnoiteltu",
+      "body": "Vuonna 1991 Tim Berners-Lee julkaisi World Wide Webin CERNistä. Samana vuonna Minnesotan yliopisto julkaisi Gopherin, joka oli jonkin aikaa suositumpi järjestelmä. Helmikuussa 1993 Minnesota ilmoitti lisenssimaksuista Gopher-palvelimille. Saman vuoden huhtikuussa CERN teki verkkoprotokollasta ilmaisen.",
+      "coda": "Gopherilla oli suurempi kannatus ennen maksuilmoitusta, eikä koskaan sen jälkeen."
     },
     "rough-consensus-running-code": {
-      "tag": "Governance",
-      "title": "Rough Consensus, Running Code",
-      "body": "At the July 1992 IETF meeting, MIT's Dave Clark put up a slide: 'We reject kings, presidents and voting. We believe in rough consensus and running code.' The phrase now anchors internet-governance folklore. It began as a jab at OSI's formal committee voting process.",
-      "coda": "The joke slide about OSI's voting rules became internet governance's founding creed."
+      "tag": "Hallinto",
+      "title": "Karkea konsensus, toimiva koodi",
+      "body": "Heinäkuun 1992 IETF-kokouksessa MIT:n Dave Clark esitti dian: 'Hylkäämme kuninkaat, presidentit ja äänestyksen. Uskomme karkeaan konsensukseen ja toimivaan koodiin.' Lause ankkuroi nyt internet-hallinnon kansanperinnettä. Se alkoi pistona OSI:n muodollista komiteaäänestysprosessia kohtaan.",
+      "coda": "Vitsidiasta OSI:n äänestyssäännöistä tuli internet-hallinnon perustava uskontunnustus."
     },
     "han-unification-japanese-delegate": {
-      "tag": "Standard",
-      "title": "Han Unification's Unlikely Author",
-      "body": "In 1992 the CJK Joint Research Group merged tens of thousands of Chinese, Japanese and Korean characters into shared Unicode code points. Popular retellings cast Japan as the objector. Unicode's own history credits the verification rules to Japanese delegate Miyazawa Akira.",
-      "coda": "The delegation cast as the victim helped write the rules it is remembered for opposing."
+      "tag": "Standardi",
+      "title": "Han-unifikaation epätodennäköinen tekijä",
+      "body": "Vuonna 1992 CJK-yhteistutkimusryhmä yhdisti kymmeniätuhansia kiinalaisia, japanilaisia ja korealaisia merkkejä yhteisiin Unicode-koodipisteisiin. Suosituissa kertomuksissa Japani esitetään vastustajana. Unicoden oma historia antaa vahvistussäännöistä kunnian japanilaiselle edustajalle Miyazawa Akiralle.",
+      "coda": "Välikäsityksen uhriksi asettunut delegaatio auttoi kirjoittamaan säännöt, joiden vastustajaksi se on jäänyt muistiin."
     },
     "china-first-internet-line": {
-      "tag": "Record",
-      "title": "The Line a Year Early",
-      "body": "China marks April 20, 1994 as the day it joined the global internet — a 64K line, full-function access. Thirteen months earlier, physicists at IHEP had already leased a line to Stanford's SLAC, exchanging email with dozens of institutions. It just wasn't the kind of line anyone counted.",
-      "coda": "Two lines exist; only one gets an anniversary."
+      "tag": "Merkintä",
+      "title": "Viiva Vuotta Aiemmin",
+      "body": "Kiina merkitsee 20. huhtikuuta 1994 päivänä, jona se liittyi maailmanlaajuiseen internetiin — 64K:n viiva, täysitoiminen pääsy. Kolmetoista kuukautta aiemmin IHEP:n fyysikot olivat jo vuokraneet viivan Stanfordin SLACiin ja vaihtaneet sähköposteja kymmenien laitosten kanssa. Se ei ollut vain sellainen viiva, jota kukaan laski.",
+      "coda": "Kaksi viivaa on olemassa; vain yhdelle on vuosipäivä."
     },
     "wiki-the-airport-shuttle": {
-      "tag": "Etymology",
-      "title": "Named After a Shuttle Bus",
-      "body": "\"Wiki\" is Hawaiian for \"quick.\" In 1995, Ward Cunningham needed a name for the first editable web system he built and reached not for any technical term but for his memory of the Wiki Wiki Shuttle, the free bus between terminals at Honolulu's airport.",
-      "coda": "The word's first home was painted on the side of an airport bus."
+      "tag": "Etymologia",
+      "title": "Nimetty Laiteliikenteen Perusteella",
+      "body": "\"Wiki\" on hawaijia ja tarkoittaa \"nopea\". Vuonna 1995 Ward Cunningham tarvitsi nimen ensimmäiselle muokattavalle verkkosysteemille, jonka hän rakensi, ja hän ei hakenut teknistä termiä vaan muistoa Wiki Wiki Shuttlesta, ilmaiskäytössä olleesta bussista, joka kulki Honolulun lentoaseman terminaalien välillä.",
+      "coda": "Sanan ensimmäinen koti oli maalattu lentoaseman bussin sivuun."
     },
     "robots-exclusion-rfc9309": {
-      "tag": "Standard",
-      "title": "robots.txt: 28 Years Unratified",
-      "body": "Martijn Koster proposed robots.txt in 1994; crawlers followed it voluntarily, with no formal standard and nothing to enforce it. Google proposed standardization in 2019, and the IETF finally published RFC 9309 in September 2022, closing a 28-year gap.",
-      "coda": "The web's most-obeyed gentleman's agreement took twenty-eight years to become a real standard."
+      "tag": "Standardi",
+      "title": "robots.txt: 28 vuotta vahvistamatta",
+      "body": "Martijn Koster ehdotti robots.txt:tä vuonna 1994; hakukonebotit noudattivat sitä vapaaehtoisesti ilman virallista standardia ja ilman täytäntöönpanomekanismia. Google ehdotti standardointia vuonna 2019, ja IETF julkaisi lopulta RFC 9309:n syyskuussa 2022, sulkiessaan 28 vuoden aukon.",
+      "coda": "Verkon eniten noudatettu herrasmiessovinto kesti 28 vuotta ennen kuin siitä tuli todellinen standardi."
     },
     "pentium-fdiv-writeoff": {
       "tag": "Incident",
-      "title": "The Missing Table Entries",
-      "body": "Mathematician Thomas Nicely noticed his new Pentium returning slightly wrong results while summing reciprocals of primes, and traced the fault to the chip itself. Intel first offered replacements only to customers who complained, and reversed into a full recall only under public pressure.",
-      "coda": "Intel booked a $475 million pretax charge for the recall."
+      "title": "Puuttuvat taulukkorivit",
+      "body": "Matematiikko Thomas Nicely huomasi uuden Pentiuminsa tuottavan hieman väärän tuloksen laskiessaan alkulukujen käänteislukujen summaa ja jäljitti vian siruun itse. Intel tarjosi aluksi vaihtosiruja vain valittaneille asiakkaille ja kääntyi täysimittaiseen takaisinkutsuun vasta julkisen paineen alla.",
+      "coda": "Intel kirjasi takaisinkutsusta 475 miljoonan dollarin veron edellisen kustannuksen."
     },
     "general-magic-private-network": {
       "tag": "Networks",
-      "title": "General Magic's Private Wire",
-      "body": "In 1990 ex-Apple engineers Bill Atkinson, Andy Hertzfeld and Marc Porat founded General Magic. Sony's Magic Link shipped in 1994 for $800, sending email and running apps. Leadership built a proprietary AT&T network instead of using the internet, calling the web \"passive.\"",
-      "coda": "Employee Tony Fadell later led hardware development on the iPod and iPhone at Apple."
+      "title": "General Magicin yksityinen johto",
+      "body": "Vuonna 1990 entiset Applen insinöörit Bill Atkinson, Andy Hertzfeld ja Marc Porat perustivat General Magicin. Sonyn Magic Link julkaistiin vuonna 1994 hintaan 800 dollaria, lähettämään sähköposteja ja ajamaan sovelluksia. Johto rakensi oman AT&T-verkkonsa internetin sijaan kutsuen webiä \"passiiviseksi\".",
+      "coda": "Työntekijä Tony Fadell johti myöhemmin iPodin ja iPhonen laitteistokehitystä Applen palveluksessa."
     },
     "ibm-simon-first-touchscreen": {
-      "tag": "Touchscreen",
-      "title": "Simon's Fax Machine",
-      "body": "On August 16, 1994, IBM and BellSouth launched the Simon Personal Communicator: a 4.5-inch touchscreen that sent email and fax, priced at $899. Battery life ran about an hour. It was discontinued six months later, having sold roughly 50,000 units.",
-      "coda": "In 2007 Apple shipped the iPhone, a capacitive touchscreen phone with no physical keyboard."
+      "tag": "Kosketusnäyttö",
+      "title": "Simonin faksikone",
+      "body": "IBM ja BellSouth lanseerasivat Simon Personal Communicatorin 16. elokuuta 1994: 4,5 tuuman kosketusnäyttö, joka lähetti sähköposteja ja fakseja, hinta 899 dollaria. Akun kesto oli noin tunti. Se poistettiin myynnistä kuusi kuukautta myöhemmin, ja siitä oli myyty noin 50 000 kappaletta.",
+      "coda": "Vuonna 2007 Apple julkaisi iPhonen, kapasitiivisen kosketusnäytön puhelimen ilman fyysistä näppäimistöä."
     },
     "cors-same-origin-orphaned": {
-      "tag": "Standard",
-      "title": "CORS: A Recommendation in Retirement",
-      "body": "Netscape bolted the same-origin policy onto Navigator in 1995, alongside JavaScript, with no standards process at all. CORS, meant to formally relax that policy, only became a W3C Recommendation in 2014 — and by 2020 the W3C had retired it, handing the spec to WHATWG's Fetch document.",
-      "coda": "The standards body retired its own security recommendation six years after publishing it."
+      "tag": "Standardi",
+      "title": "CORS: Eläkkeelle jäänyt suositus",
+      "body": "Netscape lisäsi saman alkuperän politiikan Navigatoriin vuonna 1995 yhdessä JavaScriptin kanssa ilman mitään standardointiprosessia. CORS, jonka tarkoitus oli virallisesti löysätä kyseistä politiikkaa, tuli W3C:n suositukseksi vasta vuonna 2014 — ja vuoteen 2020 mennessä W3C oli jäädyttänyt sen ja luovuttanut spesifikaation WHATWG:n Fetch-asiakirjalle.",
+      "coda": "Standardointielin jäädytti oman tietosuosituksensa kuusi vuotta sen julkaisun jälkeen."
     },
     "php-resume-counter": {
       "tag": "Web",
-      "title": "A Résumé Hit Counter",
-      "body": "In 1994, a programmer wrote a handful of small CGI programs in C for no larger reason than wanting to know how many people were looking at his online résumé. He called the toolkit \"Personal Home Page Tools\" and released the source in June 1995.",
-      "coda": "Three decades on, over 70% of websites with a known server-side language still run its descendant."
+      "title": "CV:n katselukertojen laskuri",
+      "body": "Vuonna 1994 ohjelmoija kirjoitti muutamia pieniä C-kielellä tehtyjä CGI-ohjelmia ainoastaan siksi, että hän halusi tietää, kuinka monta ihmistä katsoi hänen verkkosivuillaan olevaa CV:tään. Hän kutsui työkalupakettia nimellä \"Personal Home Page Tools\" ja julkaisi lähdekoodin kesäkuussa 1995.",
+      "coda": "Kolme vuosikymmentä myöhemmin yli 70 % verkkosivustoista, joiden palvelinpohjainen kieli on tunnettu, käyttää edelleen sen jälkeläistä."
     },
     "craigslist-email-list": {
-      "tag": "Classifieds",
-      "title": "A Mailing List of Events",
-      "body": "In 1995, a software engineer in San Francisco started compiling the local gatherings and events he knew about into an email and sending it to a few friends, mainly so people could get to know one another a little better.",
-      "coda": "The list now reaches 570 cities in 70 countries and draws over 140 million visits a month."
+      "tag": "Luokitellut ilmoitukset",
+      "title": "Tapahtumien sähköpostilista",
+      "body": "Vuonna 1995 San Franciscossa työskennellyt ohjelmistoinenööri alkoi koota paikalliset kokoukset ja tapahtumat, joista hän tiesi, sähköpostiviestiksi ja lähetti sen muutamille ystäville pääasiassa siksi, että ihmiset pääsisivät hieman paremmin tuntemaan toisiaan.",
+      "coda": "Lista ulottuu nyt 570 kaupunkiin 70 maassa ja saa yli 140 miljoonaa käyntiä kuukaudessa."
     },
     "wirths-law-misattributed": {
-      "tag": "Correction",
-      "title": "The Law He Credited Away",
-      "body": "In 1995 Niklaus Wirth published 'A Plea for Lean Software,' writing that software is getting slower more rapidly than hardware is getting faster. The line later christened Wirth's Law was, by his own footnote, a quotation of his colleague Martin Reiser.",
-      "coda": "The eponym cited the source; posterity kept only the eponym."
+      "tag": "Oikaisu",
+      "title": "Laki, jonka hän luovutti pois",
+      "body": "Vuonna 1995 Niklaus Wirth julkaisi teoksen 'A Plea for Lean Software', jossa hän kirjoitti, että ohjelmisto hidastuu nopeammin kuin laitteisto nopeutuu. Myöhemmin Wirthin laiksi nimetty lause oli hänen oman jalkamerkinsä mukaan lainaus hänen kollegansa Martin Reiserin sanoista.",
+      "coda": "Nimismies viittasi lähteeseen; jälkipolvet säilyttivät vain nimismiehen."
     },
     "general-magic-weekend-site": {
-      "tag": "Side project",
-      "title": "The Site He Wasn't Serious About",
-      "body": "In the mid-1990s, at a Silicon Valley startup expected to reinvent handheld computing, one programmer spent his spare time writing a scrappy little site for selling secondhand junk. It went up on a weekend. He wasn't taking it seriously.",
-      "coda": "The startup was General Magic. The site was later renamed eBay."
+      "tag": "Sivuprojekti",
+      "title": "Sivusto, jota hän ei ottanut vakavasti",
+      "body": "1990-luvun puolivälissä Silicon Valleyn startupissa, jossa odotettiin kannettavan tietokoneen uudelleenkeksimistä, yksi ohjelmoija käytti vapaa-aikaansa kirjoittaakseen kömpelön pienen sivuston käytettyjen tavaroiden myyntiä varten. Se julkaistiin viikonloppuna. Hän ei ottanut sitä vakavasti.",
+      "coda": "Startup oli General Magic. Sivusto nimettiin myöhemmin uudelleen eBayksi."
     },
     "gettickcount-776-day-bug": {
-      "tag": "Overflow",
-      "title": "A 776-Day Debt",
-      "body": "Windows 95's GetTickCount rolls to zero every 49.7 days, documented behavior, never treated as a bug. But on Windows 8 through Server 2019, the same function could roll over early, near 776 days, a genuine defect. Microsoft fixed it only in Windows 11, version 24H2.",
-      "coda": "The fix landed three decades after the counter it patches first shipped."
+      "tag": "Ylivuoto",
+      "title": "776 päivän velka",
+      "body": "Windows 95:n GetTickCount nollautuu joka 49,7 päivän välein, dokumentoitu toiminta, jota ei koskaan pidetty virheenä. Mutta Windows 8:sta Server 2019:ään sama funktio voiti ylivuotaa ennenaikaisesti, noin 776 päivän kohdalla, todellinen vika. Microsoft korjasi sen vasta Windows 11:ssä, versiossa 24H2.",
+      "coda": "Korjaus julkaistiin kolme vuosikymmentä sen jälkeen, kun korjattava laskuri julkaistiin ensimmäisen kerran."
     },
     "bluetooth-the-placeholder": {
-      "tag": "Etymology",
+      "tag": "Etymologia",
       "title": "The Codename That Stuck",
       "body": "In 1996, Intel's Jim Kardach proposed \"Bluetooth\" — after Harald Bluetooth, the Viking king who united Scandinavia — as a throwaway codename during Ericsson-Nokia talks. The intended replacement, RadioWire, could not clear trademark search before launch.",
       "coda": "No replacement name ever made it to market."
