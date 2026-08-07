@@ -2,757 +2,757 @@
   "panelLabel": "Boot log",
   "entries": {
     "transistor-name-off-patent-1947": {
-      "tag": "Patent",
-      "title": "The Name Left Off the Patent",
-      "body": "On December 23, 1947, Bardeen and Brattain demonstrated a germanium point-contact transistor at Bell Labs. Shockley was not in the room. Lawyers found his own design too close to a 1925 patent by Julius Lilienfeld and dropped his name from this one.",
-      "coda": "In 1956 all three shared the Nobel Prize in Physics."
+      "tag": "פטנט",
+      "title": "השם שנמחק מהפטנט",
+      "body": "ב-23 בדצמבר 1947 הדגינו ברדין וברטיין טרנזיסטור מגע נקודתי מגרמניום במעבדות בל. שוקלי לא היה בחדר. עורכי הדין מצאו את התכנון שלו קרוב מדי לפטנט מ-1925 של יוליוס לילנפלד והסירו את שמו מהפטנט הזה.",
+      "coda": "ב-1956 שלושתם חלקו את פרס נובל לפיזיקה."
     },
     "dartmouth-two-month-study-1956": {
-      "tag": "Proposal",
-      "title": "A Two-Month Study",
-      "body": "The 1955 proposal by McCarthy, Minsky, Rochester and Shannon asked for a two-month, ten-man study, on the premise that intelligence could be described precisely enough for a machine to simulate it. The 1956 workshop ran six to eight weeks; only three attendees stayed the whole time.",
-      "coda": "The name they picked for the field, artificial intelligence, is the one that stuck."
+      "tag": "הצעה",
+      "title": "מחקר של חודשיים",
+      "body": "ההצעה מ-1955 של מקארתי, מינסקי, רוצ'סטר ושינון ביקשה מחקר של חודשיים עם עשרה אנשים, מתוך הנחה שהאינטליגנציה ניתנת לתיאור מדויק מספיק כדי שמוכּה תוכל לדמות אותה. סדנת 1956 ארכה שישה עד שמונה שבועות; רק שלושה משתתפים נשארו לאורך כל הזמן.",
+      "coda": "השם שבחרו לתחום, אינטליגנציה מלאכותית, הוא זה שהתקבע."
     },
     "traitorous-eight-lie-detector-1957": {
-      "tag": "Split",
-      "title": "The Lie Detector Memo",
-      "body": "In May 1957, eight engineers at Shockley Semiconductor demanded William Shockley be replaced as manager. He had recorded phone calls, blocked staff from sharing results, and required lie-detector tests. On September 18, 1957, the eight founded Fairchild Semiconductor instead.",
-      "coda": "Wikipedia counts Intel and AMD among the dozens of companies traced back to that spinoff."
+      "tag": "פילוג",
+      "title": "מכתב גילוי השקר",
+      "body": "במאי 1957 דרשו שמונה מהנדסים ב-Shockley Semiconductor להחליף את ויליאם שוקלי בתפקיד המנהל. הוא הקליט שיחות טלפון, מנע מעובדים לשתף תוצאות, ודרש מבחני גילוי שקר. ב-18 בספטמבר 1957 הקימו השמונה במקום זאת את Fairchild Semiconductor.",
+      "coda": "ויקיפדיה סופרת את אינטל ו-AMD בין עשרות החברות שמוצאן נובע מהספין-אוף הזה."
     },
     "kilby-noyce-six-months-1958-1959": {
-      "tag": "Parallel",
-      "title": "Six Months, One Medal",
-      "body": "Kilby demonstrated a working integrated circuit at Texas Instruments in September 1958, its parts joined by external wires. Noyce filed a monolithic silicon version at Fairchild in July 1959, mass-producible. Neither man rejected the other's claim to co-inventor.",
-      "coda": "Kilby accepted the 2000 Nobel Prize alone. Noyce had died in 1990."
+      "tag": "מקבילות",
+      "title": "שישה חודשים, מדליה אחת",
+      "body": "קילבי הדגין מעגל משולב עובד ב-Texas Instruments בספטמבר 1958, עם חלקים מחוברים בחוטים חיצוניים. נויס הגיש גרסה מונוליטית מסיליקון ב-Fairchild ביולי 1959, מתאימה לייצור המוני. אף אחד מהם לא דחה את טענת השותפות של האחר.",
+      "coda": "קילבי קיבל את פרס נובל לשנת 2000 לבדו. נויס מת ב-1990."
     },
     "perceptron-conscious-machine-1958": {
-      "tag": "Neural Nets",
-      "title": "The Machine That Would Wake Up",
-      "body": "In 1958 the New York Times reported that Frank Rosenblatt's perceptron was the embryo of a computer the Navy expected to walk, talk, see, write, reproduce itself and be conscious of its existence. In 1969 Minsky and Papert's book proved a single-layer perceptron could not compute XOR.",
-      "coda": "Funding for neural network research dried up and did not return until the 1980s."
+      "tag": "רשתות נוירונים",
+      "title": "המוכּה שהייתה אמורה להתעורר",
+      "body": "ב-1958 דיווח הניו יורק טיימס שהפרספטורון של פרנק רוזנבלט הוא העובר של מוכּה שהצי ייחל שתיצא להליכה, דיבור, ראייה, כתיבה, שכפול עצמי והכרה בקיומה. ב-1969 ספרם של מינסקי ופפרט הוכיח שפרספטורון בשכבה אחת אינו יכול לחשב XOR.",
+      "coda": "המימון למחקר רשתות נוירונים נגמר ולא חזר עד שנות ה-80."
     },
     "hamilton-software-engineering": {
-      "tag": "Naming",
-      "title": "An Ongoing Joke",
-      "body": "During the Apollo program, Margaret Hamilton began calling her work \"software engineering\" to distinguish it from hardware engineering. She said no one had heard the term before and it became an ongoing joke, until a respected hardware engineer stood up in a meeting and agreed.",
-      "coda": "The joke ran for years, then nobody told it anymore."
+      "tag": "שמות",
+      "title": "בדיחה מתמשכת",
+      "body": "במהלך תוכנית אפולו, מרגרט המילטון החלה לכנות את עבודתה \"הנדסת תוכנה\" כדי להבדיל אותה מהנדסת חומרה. היא אמרה שאיש לא שמע על המונח קודם לכן והוא הפך לבדיחה מתמשכת, עד שהנדסאי חומרה מוערך קם בשיחה והסכים.",
+      "coda": "הבדיחה נמשכה שנים, ואז איש כבר לא סיפר אותה."
     },
     "macau-seventeen-thousand": {
-      "tag": "Tender",
-      "title": "Seventeen thousand",
-      "body": "In October 1961 a syndicate formed by Stanley Ho, Henry Fok, Yip Hon and Teddy Yip bid for the Macau gaming monopoly. They offered 3,167,000 patacas, seventeen thousand more than the rival bid.",
-      "coda": "The monopoly that margin bought them held for more than forty years."
+      "tag": "הצעה",
+      "title": "שבעה-עשר אלף",
+      "body": "באוקטובר 1961 הגישה קבוצה שכללה את סטנלי הו, הנרי פוק, ייפ הונ וטידי ייפ הצעה למונופול ההימורים במקאו. הם הציעו 3,167,000 פטאקס, שבעה-עשר אלף יותר מההצעה המתחרה.",
+      "coda": "המונופול שרכשו בהפרש זה החזיק מעמד למעלה מארבעים שנה."
     },
     "moores-law-ten-year-bet-1965": {
-      "tag": "Prediction",
-      "title": "A Ten-Year Bet",
-      "body": "Moore's 1965 article predicted the component count on a chip would double every year for the next decade, reaching roughly 65,000 by 1975. In 1975 he revised the doubling period to two years. The curve later called a law was his own forecast, already amended once.",
-      "coda": "By 1995 Moore said the term had come to mean almost anything in the chip industry."
+      "tag": "תחזית",
+      "title": "מאמר עשר שנים",
+      "body": "מאמרו של מור מ-1965 תיחזא שספירת הרכיבים על שבב תכפיל את עצמה כל שנה במשך העשור הבא, ותגיע לכ-65,000 עד 1975. ב-1975 הוא תיקן את תקופת הכפילה לשנתיים. העקומה שכונתה מאוחר יותר חוק הייתה תחזיתו שלו, שכבר תוקנה פעם אחת.",
+      "coda": "נכון ל-1995 אמר מור שהמונח כבר הפך למשמעות כמעט כל דבר בתעשיית השבבים."
     },
     "eliza-secretary-1966": {
-      "tag": "Chatbot",
-      "title": "The Secretary and DOCTOR",
-      "body": "In 1966 Joseph Weizenbaum released ELIZA's DOCTOR script at MIT, a program that mostly reflected users' own sentences back as questions. His own secretary reportedly asked him to leave the room so she could talk to it alone.",
-      "coda": "The pattern he had not expected was later named the ELIZA effect."
+      "tag": "צ'אטבוט",
+      "title": "המזכירה ו-DOCTOR",
+      "body": "ב-1966 שחרר ג'וזף ויצנבאום את סקריפט ה-DOCTOR של ELIZA במכון הטכנולוגי של מסצ'וסטס, תוכנית שבעיקרה החזירה משפטים של המשתמשים כשאלות. המזכירה שלו דיווחה שביקשה ממנו לצאת מהחדר כדי שתוכל לדבר איתו לבד.",
+      "coda": "התבנית שלא ציפה לה נקראה מאוחר יותר אפקט ELIZA."
     },
     "engelbart-royalties": {
-      "tag": "Patent",
-      "title": "Forty thousand dollars",
-      "body": "SRI patented the mouse after the demo and, by its own account, had no real idea of its value. Some years later it emerged that they had licensed it to Apple for something like $40,000.",
-      "coda": "Engelbart never received any royalties for inventing it."
+      "tag": "פטנט",
+      "title": "ארבעים אלף דולר",
+      "body": "SRI רשמה פטנט על העכבר אחרי ההדגמה, ולפי דיווחיה לא הייתה לה מושג אמיתי על ערכו. שנים מספר מאוחר יותר התברר שריכשה אותו לאפל בסביבות 40,000 דולר.",
+      "coda": "אנגלברט מעולם לא קיבל תמלוגים על המצאתו."
     },
     "lo": {
-      "tag": "First contact",
+      "tag": "מגע ראשון",
       "title": "LO",
-      "body": "Charley Kline set out to log in to a machine at SRI from UCLA. The L arrived. The O arrived. On the G the far end crashed.",
-      "coda": "The first thing ever said on the internet was two letters: LO."
+      "body": "צ'ארלי קליין יצא להתחבר למכונה ב-SRI מ-UCLA. ה-L הגיעה. ה-O הגיעה. על ה-G הצד השני קרס.",
+      "coda": "הדבר הראשון שנאמר אי פעם באינטרנט היה שתי אותיות: LO."
     },
     "multics": {
-      "tag": "Blueprint",
-      "title": "Computing as a utility",
-      "body": "Multics was not designed as a computer but as a computing utility: always on, the way power is, with the tenants of one machine sealed off from each other. It shipped late and expensive, and Bell Labs walked away.",
-      "coda": "Fifty years later the idea was renamed cloud computing."
+      "tag": "תוכנית אב",
+      "title": "מחשוב כשירות",
+      "body": "Multics לא תוכנן כמחשב אלא כשירות מחשוב: תמיד פעיל, כמו חשמל, כשהדיירים של מכונה אחת מופרדים זה מזה. הוא הושק באיחור ובמחיר גבוה, ו-Bell Labs עזבו.",
+      "coda": "חמישים שנה אחר כך הרעיון שונה לשם מחשוב ענן."
     },
     "rfc1": {
-      "tag": "Governance",
-      "title": "Request for Comments",
-      "body": "Steve Crocker had to write the first rules for a few networked hosts. Nobody had given him the authority, and he feared it would read as pulling rank — so he called the genre a Request for Comments.",
-      "coda": "Every rule the internet has agreed on since is still called an RFC."
+      "tag": "ממשל",
+      "title": "בקשה להערות",
+      "body": "סטיב קרוקר נאלץ לכתוב את הכללים הראשונים לכמה מארחים מחוברים. איש לא נתן לו סמכות, והוא חשש שזה ייראה כניצול מעמד — אז הוא קרא לז'אנר 'בקשה להערות'.",
+      "coda": "כל כלל שהאינטרנט הסכים עליו מאז עדיין נקרא RFC."
     },
     "pdp7": {
-      "tag": "Origin",
-      "title": "The machine nobody wanted",
-      "body": "After Bell Labs quit Multics, Ken Thompson had a cast-off PDP-7 and a month alone while his wife and son were in San Diego. He gave himself a week per piece: kernel, shell, editor, assembler.",
-      "coda": "Four weeks later the machine nobody wanted was running Unix."
+      "tag": "מקור",
+      "title": "המכונה שאיש לא רצה",
+      "body": "אחרי ש-Bell Labs עזבו את Multics, קן תומפסון היה עם PDP-7 שנזרקה וחודש לבדו בעוד אשתו ובנו בסן דייגו. הוא נתן לעצמו שבוע לכל חלק: ליבה, מעטפת, עורך, מאסמבלר.",
+      "coda": "ארבעה שבועות אחר כך המכונה שאיש לא רצה הריצה יוניקס."
     },
     "alarm-1202": {
-      "tag": "Incident",
-      "title": "Program alarm 1202",
-      "body": "Four minutes from the surface the guidance computer raised five alarms: a rendezvous radar switch left in the wrong position was eating its cycles. It did not hang. It shed the low-priority jobs, restarted, and kept the landing.",
-      "coda": "Knowing what to drop under load is the expensive lesson."
+      "tag": "תקרית",
+      "title": "התראת תוכנית 1202",
+      "body": "ארבע דקות מהקרקע, מחשב ההנחיה העלה חמש התראות: מתג מכ\"ם מפגש שהושאר במצב שגוי אכל את מחזורי העיבוד שלו. הוא לא נתקע. הוא הפיל את המשימות בעדיפות נמוכה, התחיל מחדש, והמשיך בנחיתה.",
+      "coda": "לדעת מה להפיל בעומס הוא הלקח היקר."
     },
     "mariner-1": {
-      "tag": "Incident",
-      "title": "One missing overbar",
-      "body": "Mariner 1 was destroyed 293 seconds after launch. An onboard beacon had failed, and when the guidance equations were copied into the program an overbar was dropped from R. The bar meant take the average.",
-      "coda": "The press found overbar hard to explain and wrote hyphen. The hyphen stuck."
+      "tag": "אירוע",
+      "title": "קו עליון אחד חסר",
+      "body": "מרינר 1 הושמד 293 שניות לאחר ההשקה. פנס קרקע שנמצא על הסיפון נכשל, וכאשר משוואות ההנחיה הועתקו לתוכנית, קו עליון נפל מ-R. הקו העליון פירושו לקחת את הממוצע.",
+      "coda": "התקשורת מצאה את הקו העליון קשה להסבר וכתבה מקף. המקף נשאר."
     },
     "mother-of-all-demos": {
-      "tag": "Demo",
-      "title": "The Mother of All Demos",
-      "body": "Engelbart was given ninety minutes. His terminal ran over telephone lines to a machine thirty miles away, and he demonstrated the mouse, hyperlinks, windows, screen sharing, and two people editing one document at once.",
-      "coda": "A thousand people watched, then went back to punch cards for another decade."
+      "tag": "הדגמה",
+      "title": "אם כל ההדגמות",
+      "body": "אנגלברט קיבל תשעים דקות. המסוף שלו רץ דרך קווי טלפון למכונה שנמצאה בשלושים מייל רחוק, והוא הדגים את העכבר, קישורים היפר, חלונות, שיתוף מסך, ושני אנשים עורכים מסמך אחד בו זמנית.",
+      "coda": "אלף אנשים צפו, ואז חזרו לכרטיסי חורים לעשור נוסף."
     },
     "conway": {
-      "tag": "Law",
-      "title": "The paper that was turned down",
-      "body": "Melvin Conway wrote up the observation that a system's structure ends up mirroring the communication structure of the organisation that built it, and sent \"How Do Committees Invent?\" to Harvard Business Review. They rejected it on the grounds that he had not proved his thesis. Datamation ran it in 1968.",
-      "coda": "Fred Brooks later cited the unproven thesis and named it Conway's law."
+      "tag": "חוק",
+      "title": "הנייר שנדחה",
+      "body": "מלווין קונوی תיאר את התצפית לפיה מבנה המערכת מסתיים כמראה של מבנה התקשורת של הארגון שבנה אותה, ושילח את \"How Do Committees Invent?\" ל-Harvard Business Review. הם דחו אותו בטענה שלא הוכיח את תזתו. Datamation פרסמה אותו ב-1968.",
+      "coda": "פרד ברוקס ציטט מאוחר יותר את התזה הלא מוכחת וקרא לה חוק קונوی."
     },
     "apollo-burn-baby-burn": {
-      "tag": "Comment",
-      "title": "Burn, Baby, Burn",
-      "body": "The lunar module's master ignition routine is labelled BURN_BABY_BURN in the source. The name is not about the thrust; it was borrowed from a soul radio DJ's catchphrase of the day.",
-      "coda": "The line still sits unedited in the public repository."
+      "tag": "הערה",
+      "title": "שרוף, תינוק, שרוף",
+      "body": "שגרת ההצתה הראשית של מודול הירח מסומנת BURN_BABY_BURN בקוד המקור. השם אינו קשור לדחף; הוא הושאל משיר של די ג'יי רדיו נשמה שהיה פופולרי באותה עת.",
+      "coda": "השורה עדיין נמצאת ללא עריכה במאגר הציבורי."
     },
     "waterfall": {
-      "tag": "Misreading",
-      "title": "The diagram was the counterexample",
-      "body": "In \"Managing the Development of Large Software Systems\" Winston Royce drew the chart the industry would come to call the waterfall model, then wrote: \"I believe in this concept, but the implementation described above is risky and invites failure.\" The rest of the paper is about making it iterative.",
-      "coda": "The industry kept the diagram and dropped the sentence."
+      "tag": "קריאה שגויה",
+      "title": "התרשים היה הדוגמה הנגדית",
+      "body": "ב-\"Managing the Development of Large Software Systems\" צייר וינסטון רויס את התרשים שהתעשייה תכנה אחר כך כמודל המפל, ואז כתב: \"אני מאמין ברעיון הזה, אבל ההטמעה המתוארת לעיל מסוכנת ומזמינה כישלון.\" שאר המאמר עוסק בהפיכתו לאיטרטיבי.",
+      "coda": "התעשייה שמרה על התרשים והשמיטה את המשפט."
     },
     "moth": {
-      "tag": "Etymology",
-      "title": "The first actual bug",
-      "body": "A moth was pulled from a relay of the Harvard Mark II and taped into the logbook. The line beside it is cited as the origin of the word, but what it says is: first actual case of bug being found.",
-      "coda": "Engineers had said bug since Edison. The museum doubts the page is even in Hopper's hand."
+      "tag": "אטימולוגיה",
+      "title": "התקלה הראשונה בפועל",
+      "body": "פרפר לילה הוצא מממסר של ה-Harvard Mark II והודבק ביומן. השורה לידו מצוטטת כמקור המילה, אבל מה שנכתב בה הוא: המקרה הראשון בפועל של מציאת תקלה.",
+      "coda": "מהנדסים השתמשו במילה תקלה מאז אדיסון. המוזיאון ספק אם הדף בכלל נכתב בידה של הופר."
     },
     "intel-4004-busicom-rights-1971": {
-      "tag": "Rights",
-      "title": "A Chip Owned by a Calculator Company",
-      "body": "In 1969 Japan's Busicom commissioned Intel to design a calculator chipset, under a contract assigning the design rights to Busicom despite the work being done entirely inside Intel. In 1971 engineer Federico Faggin traded a lower price for release from that exclusivity.",
-      "coda": "General sales of the Intel 4004 began that July."
+      "tag": "זכויות",
+      "title": "שבב ששייך לחברת מחשבונים",
+      "body": "ב-1969 הזמינה Busicom היפנית מ-Intel תכנון של מערך שבבים למחשבון, במסגרת חוזה שהעביר את זכויות העיצוב ל-Busicom למרות שהעבודה בוצעה כולה בתוך Intel. ב-1971 המהנדס Federico Faggin החליף מחיר נמוך יותר בשחרור מהבלעדיות הזו.",
+      "coda": "המכירות הכלליות של ה-Intel 4004 החלו באותו יולי."
     },
     "pong-coin-overflow": {
-      "tag": "Feedback",
-      "title": "The Coin Box Overflowed",
-      "body": "In August 1972, Atari placed the Pong prototype in a bar in Sunnyvale. A few days later the owner reported it broken. Engineer Al Alcorn drove out to fix it and found the fault was not electrical: the coin mechanism had jammed because it was overflowing with quarters.",
-      "coda": "The malfunction was not a wiring fault; it was too many coins."
+      "tag": "משוב",
+      "title": "קופסת המטבעות התמלאה",
+      "body": "באוגוסט 1972 הציבה Atari את אב הטיפוס של Pong בבר בסאניוול. כמה ימים לאחר מכן דיווח הבעלים שהוא פגום. המהנדס Al Alcorn נסע לתקן אותו וגילה שהתקלה לא הייתה חשמלית: מנגנון המטבעות נתקע כי הוא התמלא ברבעים.",
+      "coda": "התקלה לא הייתה פגם חיווט; היו יותר מדי מטבעות."
     },
     "wozniak-breakout-bonus": {
-      "tag": "Bonus",
-      "title": "The Split",
-      "body": "In 1973 Atari asked Steve Jobs to shrink the Breakout circuit board, paying $100 per chip removed. Jobs asked Wozniak to help, promising half. Wozniak cut 50 chips. Jobs said the total came to $700, so Wozniak's share was $350. Ten years later Wozniak learned the real bonus was $5,000.",
-      "coda": "Wozniak said he would have given Jobs the money if asked."
+      "tag": "בונוס",
+      "title": "החלוקה",
+      "body": "ב-1973 ביקשה Atari מ-Steve Jobs לצמצם את לוח המעגלים של Breakout, בתשלום של 100 דולר לכל שבב שהוסר. Jobs ביקש מ-Wozniak לעזור, והבטיח לו מחצית. Wozniak הסיר 50 שבבים. Jobs אמר שהסכום הכולל הגיע ל-700 דולר, כך שחלקו של Wozniak היה 350 דולר. עשר שנים לאחר מכן למד Wozniak שהבונוס האמיתי היה 5,000 דולר.",
+      "coda": "Wozniak אמר שהיה נותן ל-Jobs את הכסף אם היו מבקשים."
     },
     "unix-not-expected-to-understand": {
-      "tag": "Kernel",
-      "title": "Not Expected to Understand",
-      "body": "Sixth Edition Unix's slp.c contains the line 'You are not expected to understand this,' attached to process-swap stack-restoration code built on PDP-11 compiler quirks. Dennis Ritchie later said he meant it the way a teacher says this won't be on the exam.",
-      "coda": "The routine was rewritten for Seventh Edition Unix."
+      "tag": "ליבה",
+      "title": "לא צפוי להבין",
+      "body": "הקובץ slp.c של Unix מהדורה שישית מכיל את השורה 'You are not expected to understand this', המצורפת לקוד שחזור מחסנית של החלפת תהליכים שנבנה על פגמי מילת PDP-11. Dennis Ritchie אמר מאוחר יותר שהוא התכוון לזה כמו שמורה אומר שזה לא יופיע בבחינה.",
+      "coda": "השגרה נכתבה מחדש עבור Unix מהדורה שביעית."
     },
     "vi-adm3a-keys": {
-      "tag": "Keybinds",
-      "title": "Arrows Inscribed on Letter Keys",
-      "body": "Bill Joy wrote vi at Berkeley in 1977 on a Lear Siegler ADM-3A terminal that had no arrow keys; h, j, k and l were inscribed with arrows and became the movement keys. The terse one-letter commands came from typing ahead of a 300-baud modem too slow to keep up.",
-      "coda": "The keys later credited to design philosophy began as a workaround for a terminal with no arrow keys."
+      "tag": "קיצורי מקשים",
+      "title": "חצים חקוקים על מקשי אותיות",
+      "body": "ביל ג'וי כתב את vi בבירקלי ב-1977 על מסוף Lear Siegler ADM-3A ללא מקשי חיצים; על h, j, k ו-l חוקקו חצים והם הפכו למקשי תנועה. הפקודות הקצרות באות אחת נבעו מהקלדה מראש של מודם 300 בוד איטי מדי.",
+      "coda": "המקשים שבהמשך יוחסו לפילוסופיית עיצוב החלו כפתרון חלופי למסוף ללא מקשי חיצים."
     },
     "kildall-flying": {
-      "tag": "Testimony",
-      "title": "The Flight That Wasn't Confirmed",
-      "body": "In 1980 IBM came to license CP/M. Gary Kildall was flying software to a client; his wife Dorothy handled the opening talks. Bill Gates later told reporters Kildall had \"capriciously gone flying.\" IBM's lead negotiator, Jack Sams, said he never met Kildall at all.",
-      "coda": "The two accounts of that meeting have never been reconciled."
+      "tag": "עדות",
+      "title": "הטיסה שלא אושרה",
+      "body": "ב-1980 הגיעה IBM לרכוש רישיון ל-CP/M. גארי קילדל טס עם תוכנה ללקוח; אשתו דורותי טיפלה בשיחות הפתיחה. ביל גייטס סיפר מאוחר יותר לעיתונאים שקילדל \"טס באופן שרירותי\". המנהל המרכזי של IBM, ג'ק סאמס, אמר שלא פגש את קילדל בכלל.",
+      "coda": "שתי הגרסאות על פגישה זו מעולם לא הורמו."
     },
     "trusting-trust": {
-      "tag": "Trust",
-      "title": "Reflections on Trusting Trust",
-      "body": "Thompson's Turing lecture described a compiler that plants a backdoor in the login program, and reinstalls the entire trick whenever it compiles a compiler. Rebuild from clean source and the backdoor survives.",
-      "coda": "You cannot trust code you did not totally create yourself."
+      "tag": "אמון",
+      "title": "הרהורים על אמון באמון",
+      "body": "בהרצאת טיורינג של תומפסון תואר מתרגם המשתולל דלת אחורית בתוכנית ההתחברות, ומתקין מחדש את כל המכשול בכל פעם שהוא מתרגם מתרגם. בנייה מחדש ממקור נקי והדלת האחורית שורדת.",
+      "coda": "לא ניתן לסמוך על קוד שלא יצרת בעצמך לחלוטין."
     },
     "arm-one-person-company-1985": {
-      "tag": "Origin",
-      "title": "A One-Person Chip Company",
-      "body": "Acorn, which had made its name on education computers, began RISC research in 1983. A visit to a rival chip designer showed them that updates to the 6502 came out of what was effectively a one-person company, and they concluded they needed nothing more.",
-      "coda": "ARM1 arrived on 26 April 1985 and worked on first power-up."
+      "tag": "מקור",
+      "title": "חברת שבבים של אדם אחד",
+      "body": "אקורן, שזכתה למוניטין במחשבי חינוך, החלה במחקר RISC ב-1983. ביקור אצל מתכנן שבבים מתחרה הראה להם כי עדכונים ל-6502 יצאו מחברה שהייתה בפועל של אדם אחד, והם הסיקו שאין להם צורך בדבר נוסף.",
+      "coda": "ה-ARM1 הגיע ב-26 באפריל 1985 ועבד בהפעלה ראשונה."
     },
     "copyleft-all-rights-reversed": {
-      "tag": "Copyright",
-      "title": "All Rights Reversed",
-      "body": "Someone mailed Richard Stallman a letter marked \"Copyleft — all rights reversed,\" a pun on the standard notice. After Symbolics enhanced his Lisp interpreter and declined to share the improvements back, he used copyright law itself to write a license demanding the opposite obligation.",
-      "coda": "The General Public License followed in February 1989."
+      "tag": "זכויות יוצרים",
+      "title": "כל הזכויות הפוכות",
+      "body": "מישהו שלח לריצ'רד סטולמן מכתב עם הכיתוב \"Copyleft — כל הזכויות הפוכות\", בדיחה על ההודעה הסטנדרטית. לאחר שסמבוליקס שיפרה את מפרש הליספ שלו וסירבה לשתף את השיפורים חזרה, הוא השתמש בחוק זכויות היוצרים עצמו כדי לכתוב רישיון הדורש את החובה ההפוכה.",
+      "coda": "הרישיון הציבורי הכללי הגיע בפברואר 1989."
     },
     "tetris-unpaid-decade": {
-      "tag": "Rights",
-      "title": "The Block With No Royalties",
-      "body": "In 1985 Pajitnov wrote Tetris as a state employee of the USSR Academy of Sciences; the rights belonged to the Computing Center, not him. Western licenses passed through several hands before reaching Nintendo, and the game sold tens of millions of copies.",
-      "coda": "The rights reverted to him in 1996, eleven years after he wrote it."
+      "tag": "זכויות",
+      "title": "הבלוק ללא רויאלטיות",
+      "body": "ב-1985 כתב פאז'יטנוב את טטריס כעובד מדינה של האקדמיה המדעית של ברית המועצות; הזכויות שייכות למרכז החישוב, לא אליו. רישיונות מערביים עברו ידיים רבות לפני שהגיעו לנינטנדו, והמשחק מכר עשרות מיליוני עותקים.",
+      "coda": "הזכויות חזרו אליו ב-1996, אחת עשרה שנים אחרי שכתב אותו."
     },
     "euv-twenty-three-hours-2018": {
-      "tag": "Lithography",
-      "title": "Twenty-Three Hours for One Wafer",
-      "body": "Hiroo Kinoshita at NTT first demonstrated extreme ultraviolet lithography images in 1986. ASML's 2006 prototype took twenty-three hours to expose one wafer. Not until 2018 did EUV reach production, in a machine MIT Technology Review called the one that saved Moore's law.",
-      "coda": "By 2022 a production EUV scanner processed roughly two hundred wafers an hour."
+      "tag": "ליטוגרפיה",
+      "title": "עשרים ושלוש שעות עבור וואפר אחד",
+      "body": "הירו קינושיטה ב-NTT הדגים לראשונה תמונות ליטוגרפיה באולטרה-סגול קיצוני ב-1986. אב הטיפוס של ASML משנת 2006 לקח עשרים ושלוש שעות כדי לחשוף וואפר אחד. רק ב-2018 הגיע EUV לייצור, במכונה ש-MIT Technology Review כינתה את זו שצילתה את חוק מור.",
+      "coda": "נכון ל-2022 סורק EUV בייצור עיבד כ-200 וואפר בשעה."
     },
     "tsmc-foundry-fifty-six-1987": {
-      "tag": "Foundry",
-      "title": "A Foundry at Fifty-Six",
-      "body": "Morris Chang, born 1931, rose to group vice president of worldwide semiconductor operations at Texas Instruments, then served as president and COO of General Instrument, then headed Taiwan's ITRI. In 1987, at fifty-six, he founded TSMC, which designs none of the chips it makes.",
-      "coda": "It was the first foundry in the world to do nothing but manufacture."
+      "tag": "פאונדרי",
+      "title": "פאונדרי בגיל ששים ושש",
+      "body": "מוריס צ'אנג, שנולד ב-1931, עלה לדרגת סגן נשיא קבוצה לפעולות מוליכים למחצה ברחבי העולם ב-Texas Instruments, ואז שירת כנשיא וכ-COO של General Instrument, ואז הוביל את ITRI של טאיוואן. ב-1987, בגיל ששים ושש, הוא הקים את TSMC, שאינה מעצבת אף אחד מהשבבים שהיא מייצרת.",
+      "coda": "זו הייתה הפאונדרי הראשונה בעולם שעשתה רק ייצור."
     },
     "huawei-diet-pills": {
-      "tag": "Reseller",
-      "title": "Huawei's First Business Wasn't Tech",
-      "body": "Huawei registered with 21,000 yuan of capital on September 15, 1987, calling itself a technology company. It began by trading goods, including diet pills, then resold Hong Kong-made HAX switches for the margin. Its own switch, the BH01, was hand-assembled only in 1989.",
-      "coda": "Four years in, the company drew its own circuit board for the first time."
+      "tag": "מפיץ",
+      "title": "העסק הראשון של Huawei לא היה טכנולוגיה",
+      "body": "Huawei רשמה עצמה עם הון של 21,000 יואן ב-15 בספטמבר 1987, וקראה לעצמה חברה טכנולוגית. היא החלה בסחר בסחורות, כולל כדורי דיאטה, ואז מכרה מחדש מתגים HAX שיוצרו בהונג קונג עבור ההפרש. המתג שלה, BH01, הורכב ידנית רק ב-1989.",
+      "coda": "ארבע שנים אחרי, החברה ציירה לראשונה את לוח המעגלים שלה בעצמה."
     },
     "morris": {
-      "tag": "Incident",
-      "title": "A measurement",
-      "body": "Morris wanted to know how big the internet was, so he wrote a program that copied itself. To stop hosts faking an already-infected reply, he gave it a one-in-seven chance of reinfecting anyway.",
-      "coda": "That one-in-seven took down about 6,000 of the 60,000 hosts then online."
+      "tag": "אירוע",
+      "title": "מדידה",
+      "body": "מוריס רצה לדעת כמה גדול האינטרנט, אז כתב תוכנה שהעתיקה את עצמה. כדי לעצור מארחים שמזייפים תגובה שכבר נדבקה, הוא נתן לה סיכוי אחד מתוך שבע להידבק מחדש בכל מקרה.",
+      "coda": "הסיכוי אחד מתוך שבע הוריד כ-6,000 מתוך 60,000 המארחים שהיו מחוברים אז."
     },
     "naur": {
-      "tag": "Philosophy",
-      "title": "The program is not the artifact",
-      "body": "Naur argued that a program does not live in its source but as a theory, held by the people who wrote it, of why the problem is solved this way. The source is a lossy projection of it.",
-      "coda": "He called the moment the last theory-holder leaves the death of the program."
+      "tag": "פילוסופיה",
+      "title": "התוכנית אינה הארטיפקט",
+      "body": "נאור טען שתוכנית לא חיה במקור שלה אלא כתאוריה, אצל האנשים שכתבו אותה, של למה הבעיה נפתרת דווקא כך. המקור הוא הקרנה אובדת שלה.",
+      "coda": "הוא כינה את הרגע שבו האחרון מחזיקי התאוריה עוזב את מות התוכנית."
     },
     "mit-license-171-words": {
-      "tag": "Terms",
-      "title": "171 Words",
-      "body": "A group at MIT writing a TCP/IP implementation wanted to avoid legal negotiation, so they gave the software away under a notice of roughly 171 words. That short text now covers close to a third of all licensed projects on GitHub, more than any other license.",
-      "coda": "The wording has stayed essentially unchanged since it was written."
+      "tag": "תנאים",
+      "title": "171 מילים",
+      "body": "קבוצה ב-MIT שכתבה יישום של TCP/IP רצתה להימנע ממשא ומתן משפטי, אז הם נתנו את התוכנה בחינם תחת הודעה של כ-171 מילים. הטקסט הקצר הזה מכסה כיום כשליש מכל הפרויקטים המורשים ב-GitHub, יותר מכל רישוי אחר.",
+      "coda": "הניסוח נשאר בעיקרו ללא שינוי מאז שנכתב."
     },
     "photoshop-display-origin": {
-      "tag": "Origin",
-      "title": "It Was Called Display First",
-      "body": "In 1988, Thomas Knoll, a graduate student at the University of Michigan, wrote a small program to view grayscale images on a monochrome Mac screen. He named it Display, then ImagePro, then Photoshop, before his brother John showed it to Adobe, which licensed it that year.",
-      "coda": "Adobe bought full rights outright in 1995, for $34.5 million."
+      "tag": "מקור",
+      "title": "קודם כל קראו לו Display",
+      "body": "ב-1988, תומאס נול, סטודנט לתואר שני באוניברסיטת מישיגן, כתב תוכנית קטנה להצגת תמונות גווני אפור על מסך מק שחור-לבן. הוא קרא לה Display, אחר כך ImagePro, ואז Photoshop, לפני שאחיו ג'ון הראה אותה ל-Adobe, שרכשה את הזכות להשתמש בה באותה שנה.",
+      "coda": "ב-1995 Adobe קנתה את כל הזכויות במלואן, תמורת 34.5 מיליון דולר."
     },
     "sosumi-so-sue-me": {
-      "tag": "Naming",
-      "title": "So Sue Me",
-      "body": "In 1991, Apple's legal department rejected the alert-sound name \"Let It Beep\" as too musical, under a settlement barring Apple Computer from music-related trademarks. Sound designer Jim Reekes wrote back \"so sue me,\" then filed it as \"sosumi.\"",
-      "coda": "The sound shipped in Mac OS for nearly three decades before Big Sur replaced it in 2020."
+      "tag": "שם",
+      "title": "אז תתבעו אותי",
+      "body": "ב-1991, מחלקת המשפטים של Apple דחתה את שם צליל ההתראה \"Let It Beep\" כי היה מוזיקלי מדי, בהתאם להסדר שמונע מ-Apple Computer רישום סימני מסחר הקשורים למוזיקה. מעצב הצליל ג'ים ריקס ענה \"אז תתבעו אותי\", ואז הגיש אותו כ-\"sosumi\".",
+      "coda": "הצליל הגיע עם Mac OS במשך כמעט שלושה עשורים לפני ש-Big Sur החליף אותו ב-2020."
     },
     "www-royalty-free": {
-      "tag": "Given away",
-      "title": "The day it stopped costing",
-      "body": "On 30 April 1993 CERN made the protocol and the code of the World Wide Web available royalty-free. Anyone could take it, without paying and without asking.",
-      "coda": "Nobody has paid a royalty to use it since."
+      "tag": "נתון בחינם",
+      "title": "היום שבו הפסיק לעלות כסף",
+      "body": "ב-30 באפריל 1993 ה-CERN הפך את הפרוטוקול ואת הקוד של ה-World Wide Web לזמינים ללא תמלוגים. כל אחד יכול היה לקחת אותם, בלי לשלם ובלי לשאול.",
+      "coda": "מאז לא שילם אף אחד תמלוג על השימוש בו."
     },
     "doom-ftp-crash": {
-      "tag": "Shareware",
-      "title": "The Server They Couldn't Reach",
-      "body": "On 10 December 1993, id Software gave away Doom's first episode as shareware, betting on sales of the rest. Uploading it to a University of Wisconsin FTP server, they found so many people already waiting that the team itself could not connect.",
-      "coda": "The upload finished near midnight; ten thousand downloads at once crashed the university's network."
+      "tag": "תוכנה לשתף",
+      "title": "השרת שלא הצליחו להגיע אליו",
+      "body": "ב־10 בדצמבר 1993, id Software העניקה את הפרק הראשון של Doom כ־shareware, בהמרה על מכירות השאר. בעת העלאתו לשרת FTP של אוניברסיטת ויסקונסין, גילו שרבים כבר מחכים, עד שהצוות עצמו לא הצליח להתחבר.",
+      "coda": "ההעלאה הסתיימה ליד חצות; עשרת אלפים הורדות בו־זמנית הורידו את רשת האוניברסיטה."
     },
     "zlib-two-authors": {
-      "tag": "Foundation",
-      "title": "The Compression Layer of Two",
-      "body": "zlib sits inside Linux, macOS, iOS and successive generations of game consoles; Git and OpenSSH both lean on it to compress. Two people wrote its first public release in 1995.",
-      "coda": "The authorship line has never grown a third name."
+      "tag": "יסוד",
+      "title": "שכבת הדחיסה של שניים",
+      "body": "zlib נמצא בתוך Linux, macOS, iOS ודורות רצופים של קונסולות משחקים; Git ו־OpenSSH שניהם מסתמכים עליו לדחיסה. שני אנשים כתבו את שחרורה הציבורי הראשון ב־1995.",
+      "coda": "שורת הכתיבה מעולם לא גדלה לשם שלישי."
     },
     "byd-battery-to-car": {
-      "tag": "Acquisition",
-      "title": "The Battery Company Bought a Carmaker",
-      "body": "BYD was founded in Shenzhen's Longgang district on February 10, 1995, making nickel-cadmium and nickel-metal hydride batteries, then entering lithium-ion cells in 1996. In 2003 the battery maker acquired Xi'an Qinchuan Automobile, renaming it BYD Auto.",
-      "coda": "Two years later, its first in-house sedan, the F3, went on sale."
+      "tag": "רכישה",
+      "title": "חברת הסוללות קנתה יצרנית רכב",
+      "body": "BYD הוקמה ב-10 בפברואר 1995 ברובע לונגגאנג בשנזן, ייצרה סוללות ניקל-קדמיום וניקל-מתכת-מימן, ואז נכנסה לתחום תאי ליתיום-יון ב-1996. ב-2003 רכשה יצרנית הסוללות את Xi'an Qinchuan Automobile, ושינתה את שמה ל-BYD Auto.",
+      "coda": "שנתיים מאוחר יותר, המכונית הסדאן הראשונה שפיתחה בעצמה, ה-F3, יצאה למכירה."
     },
     "ariane-501": {
-      "tag": "Incident",
-      "title": "Thirty-seven seconds",
-      "body": "Thirty-seven seconds in, the inertial reference system converted a 64-bit float to a 16-bit integer and overflowed; at about forty seconds the vehicle broke up. The routine came unchanged from Ariane 4 and had no reason to be running after liftoff.",
-      "coda": "Roughly $370 million, spent on code that should have been switched off."
+      "tag": "אירוע",
+      "title": "שלושים ושבע שניות",
+      "body": "בשנייה השלושים ושבע המערכת האינרציאלית המתייחסת המירה צף 64-ביט למספר שלם 16-ביט והתרחבה; בסביבות ארבעים שניות הרכב התפרק. השגרה הגיעה ללא שינוי מ-Ariane 4 ולא היה לה סיבה להמשיך לפעול אחרי ההמראה.",
+      "coda": "כ-370 מיליון דולר, הוצאו על קוד שיש היה צורך לכבות."
     },
     "deep-blue-move-44-1997": {
-      "tag": "Chess",
-      "title": "Move Forty-Four's Glitch",
-      "body": "In game one of the 1997 rematch Kasparov beat Deep Blue in forty-five moves. Deep Blue's forty-fourth move was allegedly the result of a bug: unable to settle on a preferred move inside its search, the engine fell back to a fail-safe.",
-      "coda": "After losing game two, Kasparov accused IBM of cheating."
+      "tag": "שחמט",
+      "title": "התקלה במהלך הארבעים וארבע",
+      "body": "במשחק הראשון של משחק הגמר מ-1997 קספרוב ניצח את Deep Blue בארבעים וחמש מהלכים. המהלך הארבעים וארבע של Deep Blue היה לכאורה תוצאה של באג: לא הצליח להגיע להחלטה על מהלך מועדף בתוך החיפוש שלו, והמנוע נפל חזרה למנגנון בטיחות.",
+      "coda": "לאחר שהפסיד במשחק השני, קספרוב האשים את IBM בהונאה."
     },
     "curl-one-maintainer": {
-      "tag": "Foundation",
-      "title": "One Man's Protocol Stack",
-      "body": "curl's own docs put libcurl on roughly ten billion devices, running on 110 operating systems and 28 CPU architectures. The project has carried Daniel Stenberg's name as lead maintainer since it was renamed curl in 1998.",
-      "coda": "No named successor has ever been listed."
+      "tag": "יסוד",
+      "title": "סטק הפרוטוקול של אדם אחד",
+      "body": "התיעוד של curl עצמו מציב את libcurl על כעשרה מיליארד מכשירים, הפועלים על 110 מערכות הפעלה ו-28 ארכיטקטורות מעבד. הפרויקט נושא את שמו של Daniel Stenberg כמחזיק הראשי מאז ששמו שונה ל-curl ב-1998.",
+      "coda": "עדיין לא פורסם שום יורש מפורש."
     },
     "book-of-mozilla-verses": {
-      "tag": "Easter Egg",
-      "title": "The Book of Mozilla",
-      "body": "Typing about:mozilla into the address bar reveals the Book of Mozilla, an apocalyptic verse pitting 'the beast' against 'Mammon' that each browser generation updates. The verse numbers are not chapter markers: they are release dates.",
-      "coda": "The newest verse, 6:27, first shipped in a Firefox Nightly build in 2020."
+      "tag": "ביצת פסחא",
+      "title": "ספר המוזילה",
+      "body": "הקלדת about:mozilla בשורת הכתובת חושפת את ספר המוזילה, פסוק אפוקליפטי המציב את 'החיה' מול 'ממון' שכל דור של דפדפנים מעדכן. מספרי הפסוקים אינם סמני פרקים: הם תאריכי שחרור.",
+      "coda": "הפסוק החדש ביותר, 6:27, הופץ לראשונה בגרסת Firefox Nightly ב-2020."
     },
     "http-418-teapot": {
-      "tag": "Protocol",
-      "title": "I'm a Teapot",
-      "body": "RFC 2324, published April 1, 1998, defines status 418 as \"I'm a teapot\" and files itself as Informational, not a standard. On April 1, 2014, RFC 7168 extended it to cover tea brewing. The code still never became a real standard.",
-      "coda": "Both documents remain Informational; the status code shipped in real servers anyway."
+      "tag": "פרוטוקול",
+      "title": "אני קומקום",
+      "body": "RFC 2324, שפורסם ב-1 באפריל 1998, מגדיר את הסטטוס 418 כ-\"I'm a teapot\" ומגדיר את עצמו כ-Informational, לא כסטנדרט. ב-1 באפריל 2014, RFC 7168 הרחיב אותו כדי לכסות את האפיית תה. הקוד מעולם לא הפך לסטנדרט אמיתי.",
+      "coda": "שני המסמכים נשארו Informational; קוד הסטטוס הופץ בכל זאת בשרתים אמיתיים."
     },
     "open-source-coined-1998": {
-      "tag": "Naming",
-      "title": "The Coining of Open Source",
-      "body": "In February 1998, Christine Peterson proposed \"open source\" because newcomers kept hearing \"free software\" as a price, not a freedom. At a VA Research meeting on February 5, Todd Anderson slipped the term into conversation rather than formally proposing it, letting it spread on its own.",
-      "coda": "The group later tried to trademark the phrase and failed."
+      "tag": "שמות",
+      "title": "הטבעת המונח Open Source",
+      "body": "בפברואר 1998, כריסטין פטרסון הציעה את המונח \"open source\" כי אנשים חדשים המשיכו לשמוע \"free software\" כמחיר ולא כחופש. ב-5 בפברואר, בפגישה של VA Research, טוד אנדרסון הכניס את המונח לשיחה במקום להציע אותו רשמית, והאפשר לו להתפשט בעצמו.",
+      "coda": "הקבוצה ניסתה מאוחר יותר לרשום את המונח כסימן מסחרי ונכשלה."
     },
     "netscape-source-1998": {
-      "tag": "Release",
-      "title": "Not Quite Open",
-      "body": "On 22 January 1998 Netscape announced that its browser source would be released, and the employee Jamie Zawinski registered mozilla.org. But the licence they wrote kept one door open: Netscape itself could go on folding the same code into proprietary products.",
-      "coda": "Netscape was acquired by AOL roughly a year later."
+      "tag": "שחרור",
+      "title": "לא בדיוק פתוח",
+      "body": "ב-22 בינואר 1998 הודיעה Netscape כי מקור הדפדפן שלה יושחרר, והעובד ג'יימי זוווינסקי רשם את mozilla.org. אבל הרישיון שכתבו השאיר דלת אחת פתוחה: Netscape עצמה יכולה להמשיך לשלב את אותו הקוד במוצרים קנייניים.",
+      "coda": "Netscape נרכשה על ידי AOL כשנה לאחר מכן."
     },
     "bsd-75-acknowledgments": {
-      "tag": "License",
-      "title": "Seventy-Five Acknowledgments",
-      "body": "The original BSD license required every advertisement to credit each contributing author by name. By 1997 a single NetBSD build carried seventy-five such acknowledgments, incompatible with the GPL. Berkeley's licensing director deleted the clause on July 22, 1999.",
-      "coda": "One office's signature retired a clause that had multiplied for a decade."
+      "tag": "רישיון",
+      "title": "שבעים וחמש הכרות",
+      "body": "הרישיון המקורי של BSD דרש מכל פרסומת לזכור כל מחבר תורם לפי שמו. עד 1997 בנייה בודדת של NetBSD כללה שבעים וחמש הכרות כאלה, לא תואמות ל-GPL. מנהל הרישוי של ברקלי מחק את הסעיף ב-22 ביולי 1999.",
+      "coda": "חתימה של משרד אחד פנסה סעיף שהתרבה במשך עשור."
     },
     "red-hat-ipo-1999": {
-      "tag": "IPO",
-      "title": "The Price of Free Software",
-      "body": "Red Hat gave away the source code of its core product and charged instead for support, training and integration. On August 11, 1999 the company went public. Its first-day gain ranked eighth-largest in Wall Street history at the time.",
-      "coda": "Founder Bob Young was replaced as CEO four months later."
+      "tag": "הנפקה",
+      "title": "המחיר של תוכנה חופשית",
+      "body": "Red Hat חילקה את קוד המקור של המוצר המרכזי שלה והטילה תמורה במקום על תמיכה, הכשרה ואינטגרציה. ב-11 באוגוסט 1999 החברה הונפקה בבורסה. העלייה ביום הראשון דורגה כשמינית בגודלה בהיסטוריה של וול סטריט באותה עת.",
+      "coda": "המייסד בוב יאנג הוחלף כמנכ\"ל ארבעה חודשים מאוחר יותר."
     },
     "multics-shutdown": {
-      "tag": "Shutdown",
-      "title": "The last one",
-      "body": "On 30 October 2000 the last known Multics installation running natively on Honeywell hardware was shut down at the Canadian Department of National Defence in Halifax, Nova Scotia.",
-      "coda": "Thirty-five years after the project began."
+      "tag": "כיבוי",
+      "title": "האחרון",
+      "body": "ב-30 באוקטובר 2000 ההתקנה הידועה האחרונה של Multics שפעלה באופן מקורי על חומרה של Honeywell נכבדה במחלקת ההגנה הלאומית הקנדית בהליפקס, נובה סקוטיה.",
+      "coda": "חמישים וחמש שנה לאחר תחילת הפרויקט."
     },
     "sqlite-no-license": {
-      "tag": "Foundation",
-      "title": "The Database With No License",
-      "body": "SQLite's own page estimates over a trillion active database files worldwide, since every smartphone alone carries hundreds, ranking it second only to zlib among deployed software. There is no license, because the authors gave every line to the public domain.",
-      "coda": "Companies wanting legal cover buy a separate warranty of title."
+      "tag": "יסוד",
+      "title": "המסד ללא רישיון",
+      "body": "הדף של SQLite מעריך מעל טריליון קבצי מסד פעילים ברחבי העולם, מכיוון שכל טלפון חכם בודד נושא מאות, ומדרג אותו שני רק ל-zlib בין תוכנה מותקנת. אין רישיון, כי המחברים נתנו כל שורה לנחלת הכלל.",
+      "coda": "חברות הרוצות כיסוי משפטי קונות אחריות נפרדת על זכות הקניין."
     },
     "smic-tsmc-lawsuit": {
-      "tag": "Lawsuit",
-      "title": "SMIC's Two Lawsuits",
-      "body": "SMIC was founded in 2000 by Richard Chang, a former TSMC engineer, among others. TSMC sued twice for trade-secret theft; in the 2009 case a jury found SMIC liable on 61 of the 65 counts brought against it.",
-      "coda": "In November 2010 SMIC settled with TSMC for $200 million and roughly 8 percent of its shares."
+      "tag": "תביעה",
+      "title": "שתי התביעות של SMIC",
+      "body": "SMIC הוקמה ב-2000 על ידי ריצ'רד צ'אנג, מהנדס לשעבר של TSMC, בין היתר. TSMC תבעה פעמיים בגניבת סודות מסחר; בתיק מ-2009 חבר מושבעים מצא את SMIC אשמה ב-61 מתוך 65 ההאשמות שהועלו נגדה.",
+      "coda": "בנובמבר 2010 SMIC הגיעה להסדר עם TSMC בסך 200 מיליון דולר וכ-8 אחוזים ממניותיה."
     },
     "api-mandate": {
-      "tag": "Governance",
-      "title": "The memo",
-      "body": "According to the post that went public by accident in 2011, Bezos ordered in 2002 that teams expose everything through service interfaces: no direct linking, no reading another team's store, no back doors.",
-      "coda": "The author of that post had meant it for his colleagues only."
+      "tag": "ממשל",
+      "title": "התזכיר",
+      "body": "לפי הפוסט שפורסם בטעות ב-2011, בזוס הורה ב-2002 שצוותים יחשו הכל דרך ממשקי שירות: אין קישור ישיר, אין קריאה למאגר של צוות אחר, אין דלתות אחוריות.",
+      "coda": "מחבר הפוסט התכוון לעמיתיו בלבד."
     },
     "hupu-rumours": {
-      "tag": "Forum",
-      "title": "The one translating rumours",
-      "body": "In January 2004 a Chinese student working on a mechanical engineering doctorate in Chicago started a basketball forum in his spare time. The work was mostly translating NBA news and rumours into Chinese and tidying them up.",
-      "coda": "Eight years later the forum opened an online store of its own."
+      "tag": "פורום",
+      "title": "המתרגם שמועות",
+      "body": "בינואר 2004 סטודנט סיני שעבד על דוקטורט בהנדסת מכונות בשיקגו הקים פורום כדורסל בזמנו הפנוי. העבודה הייתה בעיקר תרגום חדשות ושמועות NBA לסינית וסידורם.",
+      "coda": "שמונה שנים מאוחר יותר הפורום פתח חנות מקוונת משלו."
     },
     "jd-the-other-name": {
-      "tag": "Etymology",
-      "title": "The other half of the name",
-      "body": "The retail platform that went online in 2004 took its name from two people: its founder, Liu Qiangdong, and Gong Xiaojing, the woman he had dated first. One character from each.",
-      "coda": "The Jing is hers."
+      "tag": "אטימולוגיה",
+      "title": "החצי השני של השם",
+      "body": "פלטפורמת הקמעונאות שעלתה לאינטרנט ב-2004 קיבלה את שמה משני אנשים: מייסדה, ליו צ'יאנג-דונג, וגונג שיאו-ג'ינג, האישה שאיתה יצא תחילה. תו אחד מכל אחד.",
+      "coda": "הג'ינג הוא שלה."
     },
     "douban-hutong": {
-      "tag": "Etymology",
-      "title": "Named after the alley",
-      "body": "The site that went live on 6 March 2005 is not named after a metaphor. Yang Bo wrote its source in a cafe near Douban Hutong in Beijing, and took the name of the alley.",
-      "coda": "Twenty-one years on, the site still carries it."
+      "tag": "אטימולוגיה",
+      "title": "נקרא על שם הסמטה",
+      "body": "האתר שעלה לאוויר ב-6 במרץ 2005 אינו נקרא על שם מטאפורה. יאנג בו כתב את הקוד שלו בבית קפה ליד סמטת דואובאן בבייג'ינג, ולקח את שם הסמטה.",
+      "coda": "עשרים ואחת שנים אחר כך, האתר עדיין נושא אותו."
     },
     "git-information-manager-hell": {
       "tag": "Git",
-      "title": "Information Manager from Hell",
-      "body": "On 7 April 2005 Linus Torvalds committed git's first revision. The message reads: Initial revision of \"git\", the information manager from hell. The author address on it is torvalds@ppc970.osdl.org.",
-      "coda": "That address points to a PowerPC 970 test machine at OSDL."
+      "title": "מנהל מידע מהגיהנום",
+      "body": "ב-7 באפריל 2005 לינוס טורבאלדס ביצע את הגרסה הראשונה של git. ההודעה אומרת: גרסה ראשונית של \"git\", מנהל המידע מהגיהנום. כתובת המחבר עליו היא torvalds@ppc970.osdl.org.",
+      "coda": "כתובת זו מצביעה על מכונת בדיקה PowerPC 970 ב-OSDL."
     },
     "knuth-reward-check": {
-      "tag": "Reward",
-      "title": "Bank of San Serriffe",
-      "body": "Donald Knuth pays $2.56 for each error found in his books, drawn on the fictional Bank of San Serriffe. By March 2005 the checks he had signed totaled over $20,000.",
-      "coda": "Most recipients frame the check rather than deposit it."
+      "tag": "פרס",
+      "title": "בנק סן סריף",
+      "body": "דונלד קנוט משלם 2.56 דולר על כל שגיאה שנמצאת בספריו, מושך על הבנק הדמיוני בנק סן סריף. נכון למרץ 2005, סך הצ'קים שחתם עלה על 20,000 דולר.",
+      "coda": "רוב המקבלים מפרמטים את הצ'ק במקום להפקיד אותו."
     },
     "dji-helicopter-first": {
-      "tag": "Pivot",
-      "title": "DJI Started With a Helicopter",
-      "body": "Frank Wang graduated from Hong Kong University of Science and Technology in 2006 and co-founded DJI in Shenzhen with classmates. Its first product was a helicopter flight-control system; the first mature version, XP3.1, shipped in 2008.",
-      "coda": "The team later found most gimbal buyers were mounting them on multirotors, not helicopters."
+      "tag": "פיווט",
+      "title": "DJI התחילה עם מסוק",
+      "body": "פרנק וואנג סיים את לימודיו באוניברסיטת המדע והטכנולוגיה של הונג קונג בשנת 2006 והקים יחד עם בני כיתתו את DJI בשנזן. המוצר הראשון שלה היה מערכת בקרת טיסה למסוק; הגרסה הבשלה הראשונה, XP3.1, יצאה לשוק בשנת 2008.",
+      "coda": "הצוות גילה מאוחר יותר שרוב קוני הג'ימבלים מותקנים על רב-מסלולים, לא על מסוקים."
     },
     "dropbox-hn": {
-      "tag": "Counterintuitive",
-      "title": "That reply",
-      "body": "Houston posted the Dropbox demo to Hacker News. The famous reply explained that you could do it yourself with an FTP account, curlftpfs and SVN, and that it did not look like it would make money.",
-      "coda": "Eleven years later, at the IPO, Houston called it his favourite thread on the site."
+      "tag": "נגד האינטואיציה",
+      "title": "התגובה הזו",
+      "body": "היוסטון פרסם את הדמו של Dropbox ב-Hacker News. התגובה המפורסמת הסבירה שניתן לעשות זאת בעצמך עם חשבון FTP, curlftpfs ו-SVN, ושזה לא נראה שזה ירוויח כסף.",
+      "coda": "אחת עשרה שנים מאוחר יותר, בעת ההנפקה, האוסטון כינה זאת השרשור האהוב עליו באתר."
     },
     "butterfield": {
-      "tag": "Pivot",
-      "title": "Twice from the wreckage",
-      "body": "Butterfield's game, Game Neverending, stalled, and the team spun the photo-sharing piece out as Flickr. Eight years later his second game, Glitch, shut down, and the team spun out the chat tool they had built for themselves: Slack.",
-      "coda": "Both times the by-product only became visible once the main thing closed."
+      "tag": "פיבוט",
+      "title": "פעמיים מההריסות",
+      "body": "המשחק של באטרפילד, Game Neverending, נתקע, והצוות הוציא החוצה את רכיב שיתוף התמונות כ-Flickr. שמונה שנים מאוחר יותר המשחק השני שלו, Glitch, נסגר, והצוות הוציא החוצה את כלי הצ'אט שבנה לעצמו: Slack.",
+      "coda": "בשני המקרים התוצר הלוואי הפך לנראה רק אחרי שהדבר הראשי נסגר."
     },
     "blockbuster": {
-      "tag": "The pass",
-      "title": "Fifty million",
-      "body": "Hastings and Randolph flew to Dallas to sell Netflix to Blockbuster for fifty million, and to run the online side for them. By Randolph's account the CEO across the table spent the meeting suppressing a laugh.",
-      "coda": "Blockbuster filed for bankruptcy ten years later."
+      "tag": "המעבר",
+      "title": "חמישים מיליון",
+      "body": "האסטינגס ורנדולף טסו לדאלאס כדי למכור את Netflix ל-Blockbuster בחמישים מיליון, ולנהל עבורם את הצד המקוון. לפי דיווחו של רנדולף, המנכ\"ל מול השולחן בילה את הפגישה מדכא צחוק.",
+      "coda": "Blockbuster הגיש פשיטת רגל עשר שנים מאוחר יותר."
     },
     "y2k": {
-      "tag": "Governance",
-      "title": "Nothing happened",
-      "body": "Gartner put the worldwide cost of Y2K at three to six hundred billion dollars, and hundreds of thousands of people changed two-digit years line by line. On the night, the grid held, the banks held, the planes flew.",
-      "coda": "Four years later an economist published a paper arguing most of the money had been wasted."
+      "tag": "ממשל",
+      "title": "כלום לא קרה",
+      "body": "גרטנר העריכה את העלות העולמית של Y2K ב-300 עד 600 מיליארד דולר, ומאות אלפי אנשים שינו שנים דו-ספרתיות שורה אחר שורה. בלילה, הרשת החזיקה מעמד, הבנקים החזיקו מעמד, המטוסים טסו.",
+      "coda": "ארבע שנים מאוחר יותר פרסם כלכלן מאמר הטוען שרוב הכסף הושלך לריק."
     },
     "unsourced": {
-      "tag": "Unsourced",
-      "title": "Attributed to nobody",
-      "body": "\"640K ought to be enough for anybody\" — Gates's own answer is that there is never a citation, that the quotation just floats like a rumour and gets repeated. \"A world market for maybe five computers\" — Thomas Watson did say five, in 1953, about the orders he expected for one machine, the IBM 701.",
-      "coda": "The 701 went on to sell eighteen."
+      "tag": "ללא מקור",
+      "title": "משויך לאיש",
+      "body": "\"640K צריכים להספיק לכל אחד\" — התשובה של גייטס עצמו היא שאין לעולם ציטוט, שהציטוט פשוט צף כמו שמועה ומתחזר. \"שוק עולמי של אולי חמש מחשבים\" — תומאס ווטסון אמר אכן חמש, ב-1953, לגבי ההזמנות שציפה לקבל למכשיר אחד, ה-IBM 701.",
+      "coda": "ה-701 מכר בסופו של דבר שמונה-עשרה יחידות."
     },
     "homebrew-volunteer-team": {
-      "tag": "Foundation",
-      "title": "The Repository With No Employer",
-      "body": "Homebrew is the default package manager on most Mac developer machines; in 2013 it led all of GitHub in contributors. Max Howell wrote its first release in 2009. It is maintained today by a team of 34 people, all unpaid.",
-      "coda": "Its funding history is one Kickstarter and an Open Source Collective account."
+      "tag": "יסוד",
+      "title": "המאגר ללא מעסיק",
+      "body": "Homebrew הוא מנהל החבילות המובנה ברוב מכונות המפתחים של מק; ב-2013 הוא הוביל את כל GitHub בתורמת. מק האוול כתב את השחרור הראשון שלו ב-2009. הוא מתוחזק כיום על ידי צוות of 34 אנשים, כולם ללא תשלום.",
+      "coda": "היסטוריית המימון שלו היא קיקסטארטר אחד וחשבון Open Source Collective."
     },
     "xiaomi-software-first": {
-      "tag": "Software",
-      "title": "Xiaomi's First Product Wasn't a Phone",
-      "body": "Xiaomi was founded on April 6, 2010. That August and December it released beta versions of the MIUI operating system and the Miliao chat app, both software.",
-      "coda": "The company's first phone did not ship until August of the following year."
+      "tag": "תוכנה",
+      "title": "המוצר הראשון של שיאומי לא היה טלפון",
+      "body": "שיאומי הוקמה ב-6 באפריל 2010. באוגוסט ובדצמבר אותה שנה היא שחררה גרסאות בטא של מערכת ההפעלה MIUI ואפליקציית הצ'אט Miliao, שתיהן תוכנה.",
+      "coda": "הטלפון הראשון של החברה לא שוחרר עד אוגוסט של השנה הבאה."
     },
     "ritchie-same-week": {
-      "tag": "Obituary",
-      "title": "Same Week",
-      "body": "Dennis Ritchie, with Ken Thompson, created Unix and the C programming language. He was found dead at his New Jersey home on October 12, 2011, at 70. Steve Jobs had died a week earlier, on October 5. Commentators later noted Ritchie's work underlay technology Apple built its fortune on.",
-      "coda": "The two obituaries ran in the same week."
+      "tag": "אוביטואר",
+      "title": "אותה שבוע",
+      "body": "דניס ריצ'י, יחד עם קן תומפסון, יצר את Unix ואת שפת התכנות C. הוא נמצא מת בביתו בניו ג'רזי ב-12 באוקטובר 2011, בגיל 70. סטיב ג'ובס מת שבוע קודם לכן, ב-5 באוקטובר. פרשנים ציינו מאוחר יותר שעבודתו of ריצ'י תמכה בטכנולוגיה שעליה בנתה אפל את הונו.",
+      "coda": "שני האוביטוארים פורסמו באותה שבוע."
     },
     "leap-second": {
-      "tag": "Incident",
-      "title": "The extra second",
-      "body": "A leap second was inserted to keep atomic clocks in step with the earth's rotation. The kernel never told its timer subsystem, high-resolution timers fired early, and processors spun. Reddit, Mozilla and LinkedIn seized up; an airline boarded passengers by hand.",
-      "coda": "Time does not increase monotonically. Code assumes it does."
+      "tag": "אירוע",
+      "title": "השנייה הנוספת",
+      "body": "שנייה קבצנית הוכנסה כדי לשמור על תאימות בין שעונים אטומיים לבין סיבוב כדור הארץ. הליבה לעולם לא הודיעה למערכת המזמנים שלה, טיימרים ברזולוציה גבוהה התפעלו מוקדם מדי, והמעבדים סובבו. Reddit, Mozilla ו-LinkedIn קפאו; חברת תעופה העלתה נוסעים ידנית.",
+      "coda": "הזמן אינו עולה באופן מונוטוני. הקוד מניח שהוא עושה זאת."
     },
     "gregorian-1752-eleven-days": {
-      "tag": "Myth",
-      "title": "The Eleven Missing Days",
-      "body": "On 2 September 1752, the British calendar jumped to 14 September, deleting eleven days. Popular history says mobs rioted over it. No contemporary record of any riot survives. The story traces to a banner in a 1755 satirical election painting.",
-      "coda": "A prop from a painting became the record of an event with no other trace."
+      "tag": "מיתוס",
+      "title": "האחד-עשר ימים החסרים",
+      "body": "ב-2 בספטמבר 1752, הלוח הבריטי קפץ ל-14 בספטמבר, ומחק אחד-עשר ימים. ההיסטוריה הפופולרית אומרת שקהלות התמרדו בגלל זה. לא שרד רשום עכשווי של כל מרד. הסיפור נובע מלוח בציור סאטירי של בחירות מ-1755.",
+      "coda": "פריט תפאורה מציור הפך לרשום של אירוע ללא עקבה אחרת."
     },
     "bootstrap-the-impossible-joke": {
-      "tag": "Etymology",
-      "title": "Borrowed From an Impossible Feat",
-      "body": "\"Pulling oneself up by one's bootstraps\" traces to Baron Munchausen's 1785 tall tale and was used through the 19th century as the standard example of a physical impossibility. In 1953, computing borrowed it for the instruction chain that gets a machine to start itself.",
-      "coda": "The word for the trick was, on its first use, a punchline about the trick failing."
+      "tag": "אטימולוגיה",
+      "title": "הושאל מאתגר בלתי אפשרי",
+      "body": "\"להרים את עצמך על ידי רצועות הנעליים שלך\" נובע מספרו של ברון מונכאוזן מ-1785 ונעשה בו שימוש לאורך המאה ה-19 כדוגמה הסטנדרטית לאי-אפשרות פיזית. ב-1953, המחשוב השאל אותו לשרשרת ההוראות שמאפשרת למכונה להתחיל את עצמה.",
+      "coda": "המילה לתיאור הטריק הייתה, בשימוש הראשון שלה, בדיחה על כישלון הטריק."
     },
     "french-revolutionary-decimal-time": {
-      "tag": "Experiment",
-      "title": "The Ten-Hour Day",
-      "body": "In 1793 France divided the day into ten hours of a hundred decimal minutes each. Mandatory use began in September 1794 and was suspended just seven months later. The decimal face on the Tuileries Palace clock kept running at least through 1801.",
-      "coda": "The abolished system stayed mounted on a palace wall for years afterward."
+      "tag": "ניסוי",
+      "title": "יום של עשר שעות",
+      "body": "ב-1793 חילקה צרפת את היום לעשר שעות של מאה דקות עשרוניות כל אחת. השימוש החובה החל בספטמבר 1794 והופסק שבעה חודשים לאחר מכן. הפנים העשרוניות שעל שעון ארמון טווילרי המשיכו לפעול לפחות עד 1801.",
+      "coda": "המערכת המבוטלת נשארה מותקנת על קיר הארמון במשך שנים לאחר מכן."
     },
     "railway-time-gwr": {
-      "tag": "Standard",
-      "title": "The Time the Trains Kept",
-      "body": "In November 1840, the Great Western Railway adopted Greenwich time across its network, replacing each town's own local time. By 1855, about 98 percent of British towns had followed. Parliament did not make it the legal national standard until 1880.",
-      "coda": "The clocks agreed on the time forty years before the law did."
+      "tag": "תקן",
+      "title": "השעה שהרכבות שמרו",
+      "body": "בנובמבר 1840 אימצה רכבת הגדולה המערבית את שעת גריניץ' בכל רשתה, והחליפה את השעה המקומית של כל עיר. עד 1855, כ-98 אחוזים מערי בריטניה עשו כן. הפרלמנט לא הפך אותה לתקן הלאומי החוקי עד 1880.",
+      "coda": "השעונים הסכימו על השעה ארבעים שנה לפני שהחוק עשה זאת."
     },
     "western-union-telephone-memo-1876": {
-      "tag": "Debunked",
-      "title": "The Memo Western Union Never Wrote",
-      "body": "A widely quoted 1876 Western Union memo calls the telephone \"idiotic\" next to sending a messenger to the telegraph office. Researchers combing period newspapers found no trace of it, and the executive it names did not hold that post at the company that year. The text was fabricated later.",
-      "coda": "Western Union did decline Bell's patent that year; it just never wrote this memo."
+      "tag": "הופרך",
+      "title": "המזכר שווסטרן יוניון לעולם לא כתבה",
+      "body": "מזכר מ-1876 של ווסטרן יוניון, המצוטט לעיתים קרובות, מכנה את הטלפון \"אידיוטי\" בהשוואה לשליחת שליח למשרד הטלגרף. חוקרים שסרקו עיתונים מתקופת האירוע לא מצאו שום עקב שלו, והמנהל שמוזכר בו לא כיהן בתפקיד זה בחברה באותה שנה. הטקסט הומצא מאוחר יותר.",
+      "coda": "ווסטרן יוניון אכן דחתה את הפטנט של בל באותה שנה; היא פשוט לעולם לא כתבה את המזכר הזה."
     },
     "nintendo-hanafuda-detours": {
-      "tag": "Pivot",
-      "title": "The Detours After the Flower Cards",
-      "body": "Fusajiro Yamauchi opened a shop in Kyoto in 1889 hand-making hanafuda playing cards. The company later tried a taxi service and instant rice, both abandoned; the widely repeated love-hotel chain claim has no record in securities filings researched back to 1962.",
-      "coda": "In 1966 a toy called the Ultra Hand sold hundreds of thousands of units."
+      "tag": "פנייה",
+      "title": "הסטיות אחרי כרטיסי הפרחים",
+      "body": "פוסאג'ירו ימאוצ'י פתח חנות בקיוטו ב-1889 וייצר ביד כרטיסי משחק מהאפודה. החברה ניסתה מאוחר יותר שירות מוניות ואורז מיידי, שניהם ננטשו; הטענה הנפוצה על רשת מלונות אהבה אינה מופיעה בדוחות ניירות ערך שנוסרו עד 1962.",
+      "coda": "ב-1966 צעצוע בשם אולטרה האנד מכר מאות אלפי יחידות."
     },
     "wrigley-premiums-premium": {
-      "tag": "Pivot",
-      "title": "The Premium's Premium",
-      "body": "In 1891 William Wrigley Jr. sold soap in Chicago and threw in baking powder as a bonus. Customers wanted the baking powder more than the soap, so he switched to selling that instead, and added chewing gum as baking powder's own bonus. Customers wanted the gum more.",
-      "coda": "By 1892 he had dropped both soap and baking powder to sell only gum."
+      "tag": "פנייה",
+      "title": "הבונוס של הבונוס",
+      "body": "ב-1891 מכר ויליאם ריגלי ג'וניור סבון בשיקגו והוסיף אבקת אפייה כבונוס. לקוחות רצו את אבקת האפייה יותר מהסבון, אז הוא עבר למכור אותה במקום, והוסיף סוכריה ללעיסה כבונוס של אבקת האפייה עצמה. לקוחות רצו את הסוכריה יותר.",
+      "coda": "נכון ל-1892 הוא הפסיק למכור סבון ואבקת אפייה והתמקד במכירת סוכריות בלבד."
     },
     "robot-labor-not-brother": {
-      "tag": "Etymology",
-      "title": "Robot's Uncredited Coiner",
-      "body": "Karel Čapek drafted his 1920 play with a Latinate word, \"laboři,\" and thought it too bookish. In a newspaper column he named the actual source: his brother Josef, tossed off in passing. \"Robot\" comes from robota — a serf's compulsory labor, not machinery.",
-      "coda": "The play kept one brother's name on the title page."
+      "tag": "אטימולוגיה",
+      "title": "הממציא הלא מוכר של המילה רובוט",
+      "body": "קארל צ'פק תכנן את מחזהו מ-1920 עם מילה לטינית, \"laboři\", וחשב שהיא ספרותית מדי. בעמוד עיתונאי הוא ציין את המקור האמיתי: אחיו יוזף, שנזכר בדרך אגב. \"Robot\" מגיעה מ-robota — עבודה כפויה של עבד-אדמה, לא מכונות.",
+      "coda": "המחזה שמר על שמו של אח אחד בעמוד השער."
     },
     "play-doh-wallpaper-cleaner": {
-      "tag": "Pivot",
-      "title": "It Was Meant to Clean Wallpaper",
-      "body": "In the 1930s, Kutol formulated a soft dough to scrub coal soot off wallpaper. Once homes switched to cleaner heating fuel, demand vanished. A teacher suggested selling it as modeling clay; it was renamed Play-Doh in 1956.",
-      "coda": "By 2005 it was selling 95 million cans a year across 75 countries."
+      "tag": "פיווט",
+      "title": "הוא נועד לנקות טפטים",
+      "body": "בשנות ה-30, קוטול פיתחה בצק רך לניקוי פחם מטפטים. לאחר שהבתים עברו לדלקי חימום נקיים יותר, הביקוש נעלם. מורה הציעה למכור אותו כבצק עיצוב; הוא שונה שמו ל-Play-Doh ב-1956.",
+      "coda": "נכון ל-2005 הוא מכר 95 מיליון פחיות בשנה ב-75 מדינות."
     },
     "hedy-lamarr-frequency-hopping-patent": {
-      "tag": "Patent",
-      "title": "The Patent They Shelved",
-      "body": "In 1942, Lamarr and composer George Antheil patented a frequency-hopping system to keep torpedo radio from being jammed. The Navy classified it, shelved it, and suggested Lamarr sell war bonds instead. The patent expired in 1959, before any ship carried it.",
-      "coda": "Lamarr never received payment for the patent in her lifetime."
+      "tag": "פטנט",
+      "title": "הפטנט שהם השהו",
+      "body": "ב־1942 רשמו לאמאר והמלחין ג'ורג' אנטייל פטנט על מערכת קפיצות תדרים כדי למנוע עיוות בתקשורת הרדיו של טורפדו. הצי סווג אותה, השהה אותה, והציע ללאמאר למכור אגרות מלחמה במקום. הפטנט פג ב־1959, לפני שכל ספינה נשאה אותו.",
+      "coda": "לאמאר מעולם לא קיבלה תשלום על הפטנט במהלך חייה."
     },
     "bush-1945-memex": {
-      "tag": "Origin",
-      "title": "The Desk Never Built",
-      "body": "In July 1945, Vannevar Bush published \"As We May Think\" in The Atlantic, describing a desk-sized microfilm machine called the Memex that let a user build associative trails through stored knowledge. It ran again in an abridged reprint that September. No prototype was ever built.",
-      "coda": "Engelbart and Nelson both later credited the essay as the reason they started."
+      "tag": "מקור",
+      "title": "השולחן שלא נבנה",
+      "body": "ביוני 1945 פרסם ואנוואר באש ב־The Atlantic את המאמר \"As We May Think\", שבו תיאר מכונת מיקרופילם בגודל שולחן בשם Memex שאפשרה למשתמש לבנות שבילים אסוציאטיביים דרך ידע מאוחסן. הוא פורסם שוב בגרסה מקוצרת באותו ספטמבר. אף אב טיפוס מעולם לא נבנה.",
+      "coda": "אנגלברט ונלסון שניהם מאוחר יותר זיכו את המאמר כסיבה שבה התחילו."
     },
     "jean-bartik-eniac-dinner": {
-      "tag": "Record",
-      "title": "The Dinner They Weren't Invited To",
-      "body": "At ENIAC's public unveiling on February 14, 1946, the trajectory program that impressed the room had been written by Jean Bartik and Betty Holberton. The press introduced only Eckert and Mauchly. None of the six women programmers were invited to the dinner after.",
-      "coda": "Their names were pulled back out of the event photographs decades later."
+      "tag": "תיעוד",
+      "title": "הארוחה שלא הזמינו אליה",
+      "body": "בחשיפת ה־ENIAC הציבורית ב־14 בפברואר 1946, תוכנית המסלול שהרשימה את החדר נכתבה על ידי ז'אן בארטיק ובטי הולברטון. העיתונות הציגה רק את אקרט ומאוצ'לי. אף אחת משש המפתחות לא הוזמנה לארוחה אחרי.",
+      "coda": "שמם הוצא שוב מתצלומי האירוע עשרות שנים לאחר מכן."
     },
     "claude-shannon-juggling-theorem": {
-      "tag": "Paper",
-      "title": "The Juggling Theorem",
-      "body": "In 1948, Shannon published 'A Mathematical Theory of Communication,' founding information theory. Decades later he turned the same rigor on his hobby, deriving a formal relationship between a ball's flight time, its dwell time, and the count of balls and hands.",
-      "coda": "It was collected in the same volume as the 1948 paper."
+      "tag": "מאמר",
+      "title": "משפט ההטעיה",
+      "body": "ב-1948 פרסם שאנון את 'תיאוריה מתמטית של התקשורת', וייסד את תורת המידע. עשרות שנים לאחר מכן הפנה את אותה קפדנות לתחביבו, ופיתח קשר פורמלי בין זמן הטיסה של כדור, זמן המעצר שלו, ומספר הכדורים והידיים.",
+      "coda": "הוא נאסף באותו כרך כמו המאמר מ-1948."
     },
     "mccarthy-1960-eval": {
-      "tag": "Origin",
-      "title": "The Interpreter in the Footnote",
-      "body": "In his 1960 paper, John McCarthy wrote an eval function as mathematical notation, to show that symbolic expressions could describe themselves. His student Steve Russell translated the derivation into IBM 704 machine code. The proof device became the first working Lisp interpreter.",
-      "coda": "McCarthy later said he had not intended anyone to actually run it."
+      "tag": "מקור",
+      "title": "המפרש בהערת השוליים",
+      "body": "במאמרו מ-1960 כתב ג'ון מקארתי פונקציית eval כסימון מתמטי, כדי להראות שביטויים סמליים יכולים לתאר את עצמם. תלמידו סטיב ראסל תרגם את הפיתוח לקוד מכונה של IBM 704. כלי ההוכחה הפך למפרש Lisp הפעיל הראשון.",
+      "coda": "מקארתי אמר מאוחר יותר שלא התכוון שמישהו יפעיל אותו בפועל."
     },
     "licklider-1960-symbiosis": {
-      "tag": "Origin",
-      "title": "Libraries Wired Together",
-      "body": "In his 1960 paper \"Man-Computer Symbiosis,\" J.C.R. Licklider proposed \"thinking centers\" holding library functions, linked into a network for real-time, conversational use of computers. Most machines of the day ran on punch cards in batches; interactive terminals barely existed.",
-      "coda": "Two years later he ran a new Pentagon office and funded the project that became ARPANET."
+      "tag": "מקור",
+      "title": "ספריות מחוברות יחד",
+      "body": "במאמרו משנת 1960 \"Man-Computer Symbiosis\", הציע J.C.R. Licklider \"מרכזי חשיבה\" המכילים פונקציות ספרייה, המחוברים לרשת לשימוש בזמן אמת ובשיחה עם מחשבים. רוב המכונות של אותה תקופה פעלו על כרטיסי חורים בשיטת אצוות; מסופים אינטראקטיביים כמעט שלא קיימים.",
+      "coda": "שנתיים לאחר מכן הוא הוביל משרד חדש בפנטגון ומימן את הפרויקט שהפך ל-ARPANET."
     },
     "ctss-1962-password-leak": {
-      "tag": "Origin",
-      "title": "The Password File, Printed",
-      "body": "In 1962, MIT PhD student Allan Scherr was frustrated with his four hours a week on CTSS. He found the offline print command could pull any account's files, so he printed UACCNT.SECRET, the file holding every password, and shared it to borrow accounts and keep running his simulations.",
-      "coda": "Scherr did not admit it to the lab's director until nearly thirty years later."
+      "tag": "מקור",
+      "title": "קובץ הסיסמאות, מודפס",
+      "body": "ב-1962, סטודנט לדוקטורט במכון MIT בשם Allan Scherr היה מיואש מהארבע שעות בשבוע שלו על CTSS. הוא גילה שהפקודה להדפסה מחוץ לקו יכולה לשלוף קבצים של כל חשבון, אז הוא הדפיס את UACCNT.SECRET, הקובץ שמכיל כל סיסמה, ושיתף אותו כדי להשתמש בחשבונות אחרים ולהמשיך להריץ את הסימולציות שלו.",
+      "coda": "Scherr לא הודה בכך למנהל המעבדה עד כמעט שלושים שנה לאחר מכן."
     },
     "katherine-johnson-check-the-numbers": {
-      "tag": "Record",
-      "title": "Have the Girl Check It",
-      "body": "Before his 1962 orbital flight, John Glenn had engineers ask Katherine Johnson to hand-recompute the trajectory an IBM 7090 had already calculated. 'If she says they're good,' he said, 'I'm ready to go.' Her numbers matched the computer's exactly.",
-      "coda": "Friendship 7 launched on schedule, February 20, 1962."
+      "tag": "תיעוד",
+      "title": "תנו לבחורה לבדוק את זה",
+      "body": "לפני טיסתו המסלולית ב-1962, ביקש John Glenn מהמהנדסים ש-Katherine Johnson תחשב מחדש ידנית את המסלול ש-IBM 7090 כבר חישב. 'אם היא אומרת שהם בסדר', אמר, 'אני מוכן לצאת'. המספרים שלה התאימו בדיוק לאלה של המחשב.",
+      "coda": "Friendship 7 שוגרה לפי לוח הזמנים, ב-20 בפברואר 1962."
     },
     "daemon-backronym": {
-      "tag": "Etymology",
-      "title": "The Daemon's Retrofitted Acronym",
-      "body": "In 1963, MIT's Project MAC programmers named a background tape-backup process after Maxwell's demon, an 1867 thought-experiment agent that sorts molecules tirelessly and invisibly — the Greek daimon, a neutral spirit, not the Judeo-Christian devil.",
-      "coda": "\"Disk And Execution MONitor\" was fitted onto the word afterward."
+      "tag": "אטימולוגיה",
+      "title": "הראשי תיבות המותאם לאחור של ה-Daemon",
+      "body": "ב-1963, מתכנתים בפרויקט MAC של MIT קראו לתהליך גיבוי רקע על סרט על שם שדו של מקסוול, סוכן ניסוי מחשבה מ-1867 שממיין מולקולות ללא פסק ובאופן בלתי נראה — ה-daimon היווני, רוח ניטרלית, לא השטן היהודי-נוצרי.",
+      "coda": "\"Disk And Execution MONitor\" הותאם למילה לאחר מכן."
     },
     "sketchpad-1963": {
-      "tag": "Origin",
-      "title": "A Light Pen and an Oscilloscope",
-      "body": "In January 1963, Ivan Sutherland submitted his MIT thesis on Sketchpad, drawing constrained geometry with a light pen on the TX-2's screen at Lincoln Laboratory. The machine cost roughly a million dollars and only a handful existed; his drawing board could not be handed to anyone else.",
-      "coda": "Commercial CAD software took close to two decades to match what the thesis had shown."
+      "tag": "מקור",
+      "title": "עט אור ומסך אוסצילוסקופ",
+      "body": "בيناר 1963, הגיש Ivan Sutherland את עבודת הדוקטורט שלו ב-MIT על Sketchpad, שציירה גיאומטריה מוגבלת בעזרת עט אור על מסך ה-TX-2 במעבדת לינקולן. המחשב עלה כמיליון דולר ורק כמה יחידות היו קיימות; לוח הציור שלו לא ניתן היה להעביר לאחר.",
+      "coda": "תוכנות CAD מסחריות לקחו כמעט שני עשורים כדי להתאים את מה שהעבודה הראתה."
     },
     "douglas-mcilroy-garden-hose-pipe": {
-      "tag": "Memo",
-      "title": "The Garden Hose Memo",
-      "body": "In October 1964, McIlroy wrote a Bell Labs memo proposing programs connect like garden hoses — screw in another segment to massage data differently. It circulated, was admired, and went unbuilt. Nine years later, Ken Thompson added one character, |, to the Unix shell overnight.",
-      "coda": "By morning, programs that had never spoken to each other did."
+      "tag": "מזכר",
+      "title": "מזכר צינור ההשקיה",
+      "body": "באוקטובר 1964 כתב מקילרוי מזכר בבל לייבס המציע לחבר תוכניות כמו צינורות השקיה — להברגה של קטע נוסף כדי לעבד נתונים אחרת. המזכר התפזר, התקבל בהערכה, ולא יושם. תשע שנים מאוחר יותר הוסיף קן תומפסון תו אחד, |, לשורת הפקודה של יוניקס בלילה אחד.",
+      "coda": "בבוקר תוכניות שלא דיברו זו עם זו לעולם עשו זאת."
     },
     "berkshire-hathaway-spite-buy": {
-      "tag": "Spite",
-      "title": "The Mill Bought Out of Anger",
-      "body": "In 1964 Warren Buffett verbally agreed to sell his shares back to Berkshire's president, Seabury Stanton, at $11.50 each. The written tender offer came in at $11.375. Buffett was angry enough over the missing eighth that he bought control of the company instead and fired Stanton.",
-      "coda": "In 1985 he shut down the textile mills he had fought to keep."
+      "tag": "נקם",
+      "title": "המפעל שנרכש מתוך כעס",
+      "body": "ב-1964 הסכים וורן באפט בעל פה למכור את מניותיו בחזרה לנשיא ברקשייר, סבירי סטנטון, ב-11.50 דולר כל אחת. הצעת הקנייה הכתובה הגיעה ב-11.375 דולר. באפט היה כועס מספיק על השמינית החסרה כדי לרכוש את השליטה בחברה במקום זאת ולפטר את סטנטון.",
+      "coda": "ב-1985 הוא סגר את מפעלי הטקסטיל שבהם נאבק לשמור."
     },
     "nelson-1965-hypertext": {
-      "tag": "Origin",
-      "title": "The Link Before the Page",
-      "body": "In a 1965 ACM paper, Ted Nelson coined \"hypertext\" for documents that link and quote each other non-sequentially, building on a project he had started in 1960 and later named Xanadu. His version paid original authors per link followed. A partial implementation did not ship until 2014.",
-      "coda": "The Web adopted his vocabulary and left the payment mechanism behind."
+      "tag": "מקור",
+      "title": "הקישור לפני הדף",
+      "body": "במאמר ACM מ-1965 טבע טד נלסון את המונח \"היפרטקסט\" למסמכים המקשרים ומצטטים זה את זה באופן לא רציף, בהמשך לפרויקט שהתחיל ב-1960 ואחר כך כינה Xanadu. הגרסה שלו שילמה למחברים המקוריים לפי מספר הקישורים שנלחצו. יישום חלקי לא יצא לאור עד 2014.",
+      "coda": "הרשת אימצה את אוצר המילים שלו והשאירה את מנגנון התשלום מאחור."
     },
     "mary-allen-wilkes-linc": {
-      "tag": "Record",
-      "title": "The LINC in the Living Room",
-      "body": "In 1965, Wilkes moved a 250-pound LINC computer into her parents' Baltimore living room and wrote LAP6, an interactive operating system, alone — twelve years before the Apple II reached any home. Asked if she was first, she said only: 'I guess I might have been.'",
-      "coda": "She never claimed the title outright herself."
+      "tag": "תיעוד",
+      "title": "ה-LINC בסלון",
+      "body": "ב-1965 העבירה וילקס מחשב LINC ששקל 250 פאונד לסלון ההורים שלה בבולטימור וכתבה לבד את LAP6, מערכת הפעלה אינטראקטיבית — שנים עשר שנים לפני שהאפל II הגיע לכל בית. כששאלו אותה אם היא הייתה הראשונה, אמרה רק: 'אני מניחה שאולי הייתי.'",
+      "coda": "היא מעולם לא טענה את התואר בעצמה."
     },
     "hoares-billion-dollar-mistake": {
-      "tag": "Confession",
-      "title": "The Reference He Added Anyway",
-      "body": "In 1965 Tony Hoare was building the first type system meant to make ALGOL W references provably safe at compile time. He added a null reference anyway, because it was easy to implement. In 2009 he called it his billion-dollar mistake.",
-      "coda": "The safety goal was explicit; the failure was that ease won anyway."
+      "tag": "הודאה",
+      "title": "הפנייה שהוסיף בכל זאת",
+      "body": "ב-1965 בנייה טוני הור את מערכת הסוגים הראשונה שנועדה להפוך פניות ב-ALGOL W לבטוחות להוכחה בזמן הקמפילציה. הוא הוסיף פנייה null בכל זאת, כי זה היה קל ליישום. ב-2009 כינה אותה את הטעות של מיליארד הדולר שלו.",
+      "coda": "מטרת הבטיחות הייתה מפורשת; הכשל היה שהקלות ניצחה בכל זאת."
     },
     "johnson-vs-cern-touchscreen": {
-      "tag": "Touchscreen",
-      "title": "Who Actually Was First",
-      "body": "CERN credits Bent Stumpe with building the world's first capacitive touchscreen in 1972, for its accelerator control room. Eric Johnson of Britain's Royal Radar Establishment had already published a paper on finger-driven capacitive touch technology in 1965, seven years earlier.",
-      "coda": "CERN's claim to have built the first touchscreen still stands on its own website."
+      "tag": "מסך מגע",
+      "title": "מי היה ראשון בפועל",
+      "body": "CERN מייחסת לבנט סטומפה את בניית מסך המגע הקיבולי הראשון בעולם ב-1972, לחדר בקרת המאיץ שלה. אריק ג'ונסון ממכון הרדאר המלכותי של בריטניה כבר פרסם מאמר על טכנולוגיית מגע קיבולי מופעלת אצבע ב-1965, שבע שנים קודם לכן.",
+      "coda": "הטענה של CERN לבנות את מסך המגע הראשון עדיין עומדת באתר האינטרנט שלה."
     },
     "second-redefined-1967": {
-      "tag": "Metrology",
-      "title": "9,192,631,770 Cycles",
-      "body": "Until 1960, the second was a fraction of the 1900 tropical year, fixed by astronomical observation. In 1967 the General Conference on Weights and Measures redefined it as 9,192,631,770 cycles of a caesium-133 transition.",
-      "coda": "The length of a second stopped being set by the sun and started being set by an atom."
+      "tag": "מטרולוגיה",
+      "title": "9,192,631,770 מחזורים",
+      "body": "עד 1960, השנייה הייתה שבריר של השנה הטרופית של 1900, קבועה על ידי תצפית אסטרונומית. ב-1967 הוועידה הכללית למשקלות ומידות הגדירה אותה מחדש כ-9,192,631,770 מחזורים של מעבר של צזיום-133.",
+      "coda": "אורך השנייה הפסיק להיקבע על ידי השמש והתחיל להיקבע על ידי אטום."
     },
     "goto-statement-considered-harmful": {
-      "tag": "Correction",
-      "title": "The Title He Did Not Write",
-      "body": "Dijkstra submitted a paper titled A Case against the GO TO Statement to CACM. Editor Niklaus Wirth, rushing it into print as a letter, gave it the title that made it famous: Go To Statement Considered Harmful.",
-      "coda": "The phrase outran the letter, spawning decades of 'X Considered Harmful' titles nobody read past."
+      "tag": "תיקון",
+      "title": "הכותרת שהוא לא כתב",
+      "body": "דיjkסטרה הגיש מאמר בשם A Case against the GO TO Statement ל-CACM. העורך ניקלאוס וירט, שמהר להדפיס אותו כמכתב, נתן לו את הכותרת שהפכה אותו למפורסם: Go To Statement Considered Harmful.",
+      "coda": "הביטוי עקף את המכתב, והוליד עשרות שנים of 'X Considered Harmful' כותרות שאיש לא קרא מעבר להן."
     },
     "rollkugel-vs-mouse": {
-      "tag": "Mouse",
-      "title": "Two Mice, One Year",
-      "body": "In October 1968, Telefunken listed the Rollkugel mouse in a sales brochure, a rolling-ball device its engineers had built since 1966. Two months later, on December 9, Douglas Engelbart demonstrated the wooden mouse his SRI team had built since 1963. Neither team knew of the other.",
-      "coda": "Telefunken reached the market first and was forgotten; Engelbart came second and is what people mean by mouse."
+      "tag": "עכבר",
+      "title": "שני עכברים, שנה אחת",
+      "body": "באוקטובר 1968, טלפונקן רשמה את עכבר ה-Rollkugel בפרוspeקט מכירה, מכשיר כדור גלגל שהמהנדסים שלה בנו מאז 1966. חודשיים לאחר מכן, ב-9 בדצמבר, דאגלס אנגלברט הדגים את העכבר העץ שהצוות שלו ב-SRI בנו מאז 1963. אף צוות לא ידע על השני.",
+      "coda": "טלפונקן הגיעה לשוק ראשונה ונשכחה; אנגלברט הגיע שני והוא מה שאנשים מתכוונים בעכבר."
     },
     "peter-principle-verified": {
-      "tag": "Study",
-      "title": "Promoted to Incompetence",
-      "body": "In 1969, Laurence Peter and Raymond Hull half-joked in a bestseller that every employee rises to the level where they become incompetent, meant as satire. In 2019 a study of sales-force promotion data at 214 real firms found the joke held: top sellers made worse managers.",
-      "coda": "The punchline turned out to be a measurable, published regression coefficient."
+      "tag": "מחקר",
+      "title": "קודמו לחוסר כשירות",
+      "body": "ב-1969, לורנס פיטר וריימונד האל צחקו חצי בשיא בספר בestseller שכל עובד עולה לרמה שבה הוא הופך לא כשיר, כמטרה סאטירית. ב-2019 מחקר של נתוני קידום בכוח מכירות ב-214 חברות אמיתיות מצא שהבדיחה התקיימה: המוכרים הטובים הפכו למנהלים גרועים.",
+      "coda": "הפאנצ'ליין התברר כמקדם רגרסיה נמדד ומפורסם."
     },
     "lanpar-vs-visicalc": {
-      "tag": "Spreadsheet",
-      "title": "The Spreadsheet Nobody Named",
-      "body": "In summer 1969, Harvard graduates Rene Pardo and Remy Landau wrote LANPAR, a spreadsheet language that let users enter formulas in any order and still calculated correctly. Bell Canada and General Motors ran on it. In 1979, Dan Bricklin built VisiCalc without knowing LANPAR existed.",
-      "coda": "LANPAR's patent survived a court challenge through 1983; the magazines had already named VisiCalc first."
+      "tag": "גיליון אלקטרוני",
+      "title": "הגיליון המספרי שאיש לא קרא בשמו",
+      "body": "בקיץ 1969 כתבו בוגרי הארוורד רנה פרדו ורמי לנדאו את LANPAR, שפת גיליונות מספריים שאפשרה למשתמשים להזין נוסחאות בכל סדר ולחשב נכון בכל זאת. בל קנדה וג'נרל מוטורס רצו עליה. ב-1979 בנה דן בריקלין את VisiCalc בלי לדעת ש-LANPAR קיים.",
+      "coda": "פטנט ה-LANPAR שרד אתגור משפטי עד 1983; המגזינים כבר קראו ל-VisiCalc ראשון."
     },
     "spam-vikings-not-marketers": {
-      "tag": "Etymology",
-      "title": "Spam, Before Marketing",
-      "body": "In a 1970 sketch, Monty Python's Vikings chant \"spam\" over a diner's dialogue, mocking a glut of canned meat on the menu. The joke migrated into MUD chatrooms by the late 1980s for chat flooding, then onto email by the early 1990s.",
-      "coda": "The word reached inboxes by way of a comedy sketch about lunch."
+      "tag": "אטימולוגיה",
+      "title": "ספאם, לפני שיווק",
+      "body": "בסקיצה מ-1970, הוויקינגים של מונטי פייתון מרקידים \"spam\" מעל שיחה של אורח במסעדה, ומתעמרים בעודף בשר משומר בתפריט. הבדיחה הגיעה לחדרי צ'אט של MUD בסוף שנות ה-80 להצפת צ'אט, ואז לדואר אלקטרוני בתחילת שנות ה-90.",
+      "coda": "המילה הגיעה לקופות הדואר דרך סקיצת קומדיה על ארוחת צהריים."
     },
     "codd-1970-relational-model": {
-      "tag": "Origin",
-      "title": "The Paper Its Employer Ignored",
-      "body": "In 1970, IBM researcher Edgar Codd published the relational model. IBM's flagship product was hierarchical, and the company was in no hurry to adopt his idea. Larry Ellison read Codd's paper and IBM's own System R reports, then shipped a commercial relational database first, in 1979.",
-      "coda": "IBM's own relational product, DB2, did not ship until 1983."
+      "tag": "מקור",
+      "title": "המאמר שהמעסיק שלו התעלם ממנו",
+      "body": "ב-1970 פרסם החוקר של IBM אדגר קוד את המודל הרלציוני. המוצר הדגל של IBM היה היררכי, והחברה לא נ赶ה לאמץ את הרעיון שלו. לארי אליסון קרא את המאמר של קוד ואת דוחות System R של IBM עצמה, ואז הוציא לשוק בסיס נתונים רלציוני מסחרי ראשון, ב-1979.",
+      "coda": "מוצר הרלציוני של IBM עצמה, DB2, לא יצא לשוק עד 1983."
     },
     "linnainmaa-backpropagation": {
-      "tag": "Algorithm",
-      "title": "The Missing Citation",
-      "body": "In 1970, Finnish student Seppo Linnainmaa published the complete algorithm for reverse-mode automatic differentiation, with working code, in his master's thesis. In 1986, Rumelhart, Hinton and Williams published the same method in Nature to train neural networks. They did not cite him.",
-      "coda": "Linnainmaa's thesis sat uncited for sixteen years before historians of the field dug it back up."
+      "tag": "אלגוריתם",
+      "title": "הציטוט החסר",
+      "body": "ב-1970 פרסם הסטודנט הפיני ספו לינאינמאה את האלגוריתם המלא לדיפרנציאציה אוטומטית במצב הפוך, עם קוד עובד, בעבודת המוסטר שלו. ב-1986 פרסמו ראמלרט, הינטון וויליאמס את אותה שיטה ב-Nature לאימון רשתות נוירונים. הם לא ציטטו אותו.",
+      "coda": "עבודת המוסטר של לינאינמאה נשארה ללא ציטוט במשך שש עשרה שנים לפני שההיסטוריונים של התחום חפרו אותה מחדש."
     },
     "at-sign-arbitrary-pick": {
-      "tag": "Etymology",
-      "title": "The Only Unused Key",
-      "body": "In 1971, BBN engineer Ray Tomlinson needed a separator between username and host that could never appear in an actual person's name. Scanning his Model 33 Teletype keyboard, he picked @ — a character then used almost exclusively by grocers and bookkeepers.",
-      "coda": "Every email address since has carried that one constraint forward."
+      "tag": "אטימולוגיה",
+      "title": "המקש היחיד שלא היה בשימוש",
+      "body": "ב-1971 נזקק מהנדס BBN ריי טומלינסון למפריד בין שם משתמש למארח שלא יכול להופיע בשם של אדם אמיתי. בעת סריקת מקלדת ה-Teletype Model 33 שלו, בחר ב-@ — תו שנעשה אז כמעט בשימוש בלעדי על ידי קצבי וספרים.",
+      "coda": "כל כתובת דואר אלקטרוני מאז נושאת את אותה מגבלה אחת קדימה."
     },
     "parnas-module-decomposition": {
-      "tag": "Method",
-      "title": "Where to Cut a Module",
-      "body": "In 1972 David Parnas split the same KWIC-index system into modules two ways: one by processing step, one by the design decisions most likely to change, each hidden behind an interface. Only the second let a change touch one module without anyone reading the rest.",
-      "coda": "The module boundary turned out to encode a guess about what a future maintainer would need to know."
+      "tag": "שיטה",
+      "title": "איפה לחתוך מודול",
+      "body": "ב־1972 פיצל דייוויד פרנאס את מערכת ה־KWIC לאותם מודולים בשתי דרכים: אחת לפי שלב עיבוד, ואחת לפי החלטות העיצוב שסביר ביותר שישתנו, כל אחת מוסתרת מאחורי ממשק. רק השנייה אפשרה לשינוי לגעת במודול אחד בלי שאיש יקרא את השאר.",
+      "coda": "הגבול המודולרי התברר כמקודד של ניחוש לגבי מה שמתחזק עתידי יצטרך לדעת."
     },
     "karen-sparck-jones-idf": {
-      "tag": "Record",
-      "title": "The Formula Nobody Thanks",
-      "body": "In 1972, Spärck Jones published a paper proposing that a word's rarity across a document collection measures its importance — inverse document frequency, now under the ranking logic of nearly every search engine. She got no permanent post at Cambridge until 1993.",
-      "coda": "Until then she had worked a run of short-term, soft-money contracts."
+      "tag": "רשומה",
+      "title": "הנוסחה שאיש לא מודה עליה",
+      "body": "ב־1972 פרסמה ספארק ג'ונס מאמר המציע כי נדירות של מילה לאורך אוסף מסמכים מודדת את חשיבותה — תדירות מסמך הפוכה, כיום מתחת ללוגיקת הדירוג של כמעט כל מנוע חיפוש. היא לא קיבלה משרה קבועה בקיימברידג' עד 1993.",
+      "coda": "עד אז עבדה סדרה של חוזים לטווח קצר עם מימון רך."
     },
     "cyclades-pouzin-tcpip": {
-      "tag": "Internet",
-      "title": "The Internet's Fifth Man",
-      "body": "In 1972, Louis Pouzin built the CYCLADES network in France, the first to make end hosts, not the network, responsible for reliable delivery. In 1974, Cerf and Kahn's TCP paper thanked him by name. In 2004, Cerf and Kahn won the Turing Award. Pouzin's name was not on it.",
-      "coda": "The Economist later called him the internet's fifth man."
+      "tag": "אינטרנט",
+      "title": "האיש החמישי של האינטרנט",
+      "body": "ב־1972 בנה לואי פוזן את רשת ה־CYCLADES בצרפת, הראשונה שהפכה את המארחים הקצה, ולא את הרשת, לאחראיים למסירה אמינה. ב־1974 הודה לו המאמר על TCP של סרף וקאן בשמו. ב־2004 זכו סרף וקאן בפרס טיורינג. שמו של פוזן לא היה עליו.",
+      "coda": "האקונומיסט כינה אותו מאוחר יותר האיש החמישי של האינטרנט."
     },
     "ethernet-1973-memo": {
-      "tag": "Origin",
-      "title": "The Ether Memo",
-      "body": "On May 22, 1973, Robert Metcalfe wrote a Xerox PARC memo titled \"Ether Acquisition,\" with a hand-drawn diagram of a shared cable linking Alto computers. The technology is usually dated to the 1976 journal paper. The actual sketch is three years older, and hand-drawn.",
-      "coda": "By the time the paper was published, Ethernet had already run inside PARC for three years."
+      "tag": "מקור",
+      "title": "מזכר האתר",
+      "body": "ב-22 במאי 1973 כתב רוברט מטקלף מזכר ב-Xerox PARC בשם \"Ether Acquisition\", עם דיאגרמה שצוירה ביד של כבל משותף המחבר מחשבי Alto. הטכנולוגיה מתוארכת בדרך כלל למאמר בכתב העת מ-1976. הסקיצה האמיתית ישנה בשלוש שנים, וצוירה ביד.",
+      "coda": "עד לפublication המאמר, אתרנט כבר פעלה בתוך PARC במשך שלוש שנים."
     },
     "vint-cerf-envelope-sketch": {
-      "tag": "Anecdote",
-      "title": "The Back of an Envelope",
-      "body": "The internet's founding legend says Cerf sketched the gateway architecture on a napkin. He has corrected this: 'It wasn't a napkin, actually, it was the back of an envelope.' In 1973, waiting in a hotel lobby, he sketched what became TCP/IP's gateway design.",
-      "coda": "The following year, the sketch became a paper in IEEE Transactions on Communications."
+      "tag": "אנקדוטה",
+      "title": "גב המעטפה",
+      "body": "אגדת הייסוד של האינטרנט אומרת שסרף צייר את ארכיטקטורת השער על מגבת. הוא תיקן זאת: 'זה לא היה מגבת, למעשה, זה היה גב של מעטפה.' ב-1973, בזמן שהמתין בהול של מלון, הוא צייר את מה שהפך לעיצוב השער של TCP/IP.",
+      "coda": "בשנה שלאחריה, הסקיצה הפכה למאמר ב-IEEE Transactions on Communications."
     },
     "gchq-nonsecret-encryption": {
-      "tag": "Cryptography",
-      "title": "The Unpublished Key",
-      "body": "In September 1973, 22-year-old Clifford Cocks, newly arrived at GCHQ, worked out a shared-key-free encryption scheme in half an hour. Three years later, Diffie, Hellman and Merkle published the same idea in the US and were credited as its inventors. GCHQ files stayed classified until 1997.",
-      "coda": "James Ellis died in 1997, a few months after the declassification that put his name on the record."
+      "tag": "קריפטוגרפיה",
+      "title": "המפתח שלא פורסם",
+      "body": "בספטמבר 1973, קליפורד קוקס, בן 22, שזה עתה הגיע ל-GCHQ, פיתח תוך חצי שעה סכמת הצפנה ללא מפתח משותף. שלוש שנים מאוחר יותר, דיפי, הלמן ומרכל פרסמו את הרעיון הזה בארה\"ב וזכו להכרה כממציאיו. תיקי ה-GCHQ נותרו מסווגים עד 1997.",
+      "coda": "ג'יימס אליס מת ב-1997, מספר חודשים לאחר פירוק המסיווג שהכניס את שמו לרשומות."
     },
     "kodak-digital-camera-1975": {
-      "tag": "Shelved",
-      "title": "Kodak's Buried Camera",
-      "body": "In 1975, 24-year-old engineer Steven Sasson built the first digital camera: 8 pounds, 23 seconds per shot. Executives reasoned that no one would want to view pictures on a television when print was cheap and had worked for a century. They patented the camera and shelved it.",
-      "coda": "Kodak filed for bankruptcy protection in 2012."
+      "tag": "מונח",
+      "title": "המצלמה הקבורה של קודאק",
+      "body": "ב-1975, המהנדס סטיבן סאסון, בן 24, בנה את המצלמה הדיגיטלית הראשונה: 8 פאונד, 23 שניות לכל צילום. המנהלים הסיקו שאיש לא ירצה לצפות בתמונות בטלוויזיה כשדפוס היה זול ועבד במשך מאה שנה. הם רשמו פטנט על המצלמה והניחו אותה בצד.",
+      "coda": "קודאק הגישה בקשה להגנה מפני פשיטת רגל ב-2012."
     },
     "galls-law-origin": {
-      "tag": "Origin",
-      "title": "A Book About Bureaucracies",
-      "body": "In 1975, after 30 publishers rejected it, pediatrician John Gall self-published Systemantics: a working complex system invariably evolves from a working simple system, and a complex system built from scratch never works. He was writing about hospitals and government agencies.",
-      "coda": "Software architects kept the line and quietly dropped the bureaucracies it was written about."
+      "tag": "מקור",
+      "title": "ספר על משרדים",
+      "body": "ב-1975, לאחר ש-30 הוצאות ספרים דחו אותו, פרסם הפediatר ג'ון גאל בעצמו את Systemantics: מערכת מורכבת עובדת מתפתחת תמיד ממערכת פשוטה עובדת, ומערכת מורכבת שנבנתה מאפס לעולם לא עובדת. הוא כתב על בתי חולים וסוכנויות ממשלתיות.",
+      "coda": "אדריכלי תוכנה שמרו על המשפט והורידו בשקט את המשרדים שבהם נכתב."
     },
     "ken-olsen-home-computer-1977": {
-      "tag": "Misquote",
-      "title": "Olsen's Home Computer",
-      "body": "In 1977, DEC founder Ken Olsen said there was no reason for an individual to have a computer in the home. He meant one central machine running the lights, heat and entertainment for a household, accurate for the thing he described. Coverage kept only the first half of the sentence.",
-      "coda": "Olsen himself owned a computer at home at the time."
+      "tag": "ציטוט שגוי",
+      "title": "מחשב הבית של אולסן",
+      "body": "ב-1977, קן אולסן, מייסד DEC, אמר שאין סיבה לאדם פרטי להחזיק מחשב בבית. הוא התכוון למכונה מרכזית אחת המפעילה את האורות, החימום והבידור של משק בית, מדויק לדבר שתיאר. הכיסוי שמר רק על חצי הראשון של המשפט.",
+      "coda": "אולסן עצמו החזיק מחשב בבית באותה עת."
     },
     "kernighans-debugging-law": {
-      "tag": "Maxim",
-      "title": "Twice as Hard as Writing It",
-      "body": "In the 1978 Elements of Programming Style, Kernighan and Plauger wrote that debugging is twice as hard as writing a program, so writing it as cleverly as you can leaves you, by definition, not smart enough to debug it. A style rule stated as a limit on meeting your own work twice.",
-      "coda": "The adversary was never someone else, it was you a few weeks later."
+      "tag": "מקסמה",
+      "title": "קשה פי שניים מלכתוב אותו",
+      "body": "ב-1978 ב-Elements of Programming Style, כתבו קרניגן ופלאוגר שפיתוח באגים קשה פי שניים מלכתוב תוכנית, כך שכתובה ככל שאתה יכול מותיר אותך, בהגדרה, לא חכם מספיק לפתח את הבאגים. כלל סגנון שנוסח כמגבלה על פגישה עם העבודה שלך פעמיים.",
+      "coda": "היריב לעולם לא היה מישהו אחר, הוא היית אתה כמה שבועות מאוחר יותר."
     },
     "xerox-parc-1979-visit": {
-      "tag": "Origin",
-      "title": "Xerox's Own Deal",
-      "body": "December 1979: Apple toured Xerox PARC after Xerox agreed to buy 100,000 pre-IPO Apple shares at $10 each for the access. Jobs saw the Alto's graphical interface and called it the best thing he'd ever seen. The popular story is theft; the record is a trade Xerox negotiated.",
-      "coda": "Xerox got its shares. The Alto was never sold as a commercial product."
+      "tag": "מקור",
+      "title": "העסקה של Xerox עצמה",
+      "body": "דצמבר 1979: Apple ביקרה ב-Xerox PARC לאחר ש-Xerox הסכימה לרכוש 100,000 מניות Apple לפני ה-IPO ב-$10 כל אחת בתמורה לגישה. Jobs ראה את הממשק הגרפי של Alto וקרא לו הדבר הטוב ביותר שהוא אי פעם ראה. הסיפור הפופולרי הוא גניבה; הרשום הוא עסקה ש-Xerox מיקחה.",
+      "coda": "Xerox קיבלה את המניות שלה. ה-Alto לעולם לא נמכר כמוצר מסחרי."
     },
     "visicalc-1979-no-patent": {
-      "tag": "Origin",
-      "title": "The Patent They Skipped",
-      "body": "Before VisiCalc's 1979 release, Dan Bricklin consulted a patent attorney, who put the odds of success at about one in ten under the era's rules. They filed for copyright and trademark instead. In 1983, Lotus 1-2-3 shipped a compatible interface that could read VisiCalc's own files.",
-      "coda": "The spreadsheet survived as a category. The company that built it did not."
+      "tag": "מקור",
+      "title": "הפטנט שהם דילגו עליו",
+      "body": "לפני השקת VisiCalc ב-1979, Dan Bricklin התייעץ עם עורך דין פטנטים, שהעריך את הסיכויים להצלחה בכ-1 מתוך 10 לפי הכללים של התקופה. הם הגישו בקשה לזכויות יוצרים ולסמל מסחרי במקום. ב-1983, Lotus 1-2-3 שחררה ממשק תואם שיכול לקרוא את קבצי VisiCalc עצמו.",
+      "coda": "הגיליון המספרי שרד כקטגוריה. החברה שבנתה אותו לא."
     },
     "ibm-microsoft-dos-1980": {
-      "tag": "Clause",
-      "title": "IBM Leaves a Door Open",
-      "body": "IBM signed with Microsoft on the PC's operating system on November 6, 1980. Deep in a decade-plus antitrust case, IBM chose not to control its suppliers, and let Microsoft resell DOS to anyone else. As a hedge against another lawsuit, it made sense at the time.",
-      "coda": "Clone makers followed within years, and IBM never regained control of the platform."
+      "tag": "סעיף",
+      "title": "IBM משאירה דלת פתוחה",
+      "body": "IBM חתמה עם Microsoft על מערכת ההפעלה של ה-PC ב-6 בנובמבר 1980. בתוך תיק אנטי-מונופול שנמשך עשור ומעלה, IBM בחרה לא לשלוט בספקים שלה, ואפשרה ל-Microsoft למכור מחדש את DOS לכל אדם אחר. כהגנה נגד תביעה נוספת, זה היה הגיוני באותה עת.",
+      "coda": "יוצרי קלון עקבו אחריה בתוך שנים, ו-IBM לעולם לא שחזרה את השליטה בפלטפורמה."
     },
     "postel-law-robustness-reversal": {
-      "tag": "Governance",
-      "title": "The Robustness Principle, Reversed",
-      "body": "RFC 761 (1980) urged implementers to be liberal in what they accept, conservative in what they send. In 2023 the IETF's own architecture board reversed that guidance in RFC 9413: leniency lets bugs calcify into de facto standards, leaving systems less robust, not more.",
-      "coda": "The standard that told the internet to be lenient was rescinded by its own custodians."
+      "tag": "ממשל",
+      "title": "עקרון האיתנות, הפוך",
+      "body": "RFC 761 (1980) עודד מפתחים להיות ליברליים במה שהם מקבלים, שמרניים במה שהם שולחים. ב-2023, מועצת הארכיטקטורה של ה-IETF עצמה הפכה את ההנחיה הזו ב-RFC 9413: גמישות מאפשרת לטעויות להפוך לתקנים דה-פקטו, ומשאירה מערכות פחות איתנות, לא יותר.",
+      "coda": "התקן שאמר לאינטרנט להיות גמיש בוטל על ידי השומרים שלו עצמם."
     },
     "end-to-end-argument": {
-      "tag": "Paper",
-      "title": "An Argument for a Dumb Network",
-      "body": "In 1981 Saltzer, Reed, and Clark argued that checking a transferred file for errors can only be done correctly at the two endpoints; the network can help but never fully substitute. A paper about where to put a checksum became the founding case for keeping networks simple.",
-      "coda": "A note on error-checking placement grew into the case for net neutrality."
+      "tag": "נייר",
+      "title": "טיעון לרשת טיפשה",
+      "body": "ב-1981, Saltzer, Reed ו-Clark טענו שניתן לבדוק קובץ מועבר לטעויות רק בצורה נכונה בשני הקצוות; הרשת יכולה לעזור אבל לעולם לא להחליף לחלוטין. נייר על מיקום של צ'קסאם הפך לטיעון המייסד לשמירה על רשתות פשוטות.",
+      "coda": "הערה על מיקום בדיקת טעויות גדלה לטיעון לניטרליות רשת."
     },
     "excel-1900-leap-year": {
-      "tag": "Legacy",
-      "title": "The Leap Year That Wasn't",
-      "body": "Lotus 1-2-3 treated 1900 as a leap year, a harmless shortcut. Microsoft copied the same false date to stay compatible. Lotus is gone; the false leap day remains, now written into the Office Open XML specification.",
-      "coda": "A compatibility hack for a discontinued rival is now a written standard."
+      "tag": "מורשת",
+      "title": "שנת המעבר שלא הייתה",
+      "body": "Lotus 1-2-3 טיפלה ב-1900 כשנת מעבר, קיצור דרך חסר חשיבות. Microsoft העתיקה את התאריך השגוי הזה כדי לשמור על תאימות. Lotus נעלמה; יום המעבר השגוי נשאר, כעת כתוב בתוך מפרט Office Open XML.",
+      "coda": "קוד גיבוי לתאימות עבור מתחרה מבוטלת הפך כעת לתקן כתוב."
     },
     "avatar-before-snow-crash": {
-      "tag": "Etymology",
-      "title": "An Avatar Before the Novel",
-      "body": "Neal Stephenson's 1992 novel Snow Crash is usually credited with the online sense of \"avatar.\" But Lucasfilm's Habitat, running on Commodore 64s since 1985, already wrote: \"players are represented by animated figures that we call Avatars,\" from Sanskrit for incarnation.",
-      "coda": "The term was live on a commercial service seven years before the book."
+      "tag": "אטימולוגיה",
+      "title": "אווטאר לפני הרומן",
+      "body": "הרומן Snow Crash משנת 1992 של ניל סטיפנסון מיוחס בדרך כלל למשמעות המקוונת של \"אווטאר\". אבל Habitat של Lucasfilm, שפעל על מחשבי Commodore 64 מאז 1985, כבר כתב: \"שחקנים מיוצגים על ידי דמויות מונפשות שאנו קוראים להן Avatars\", מהסנסקריט ללידה מחדש.",
+      "coda": "המונח היה פעיל בשירות מסחרי שבע שנים לפני הספר."
     },
     "radia-perlman-algorhyme": {
-      "tag": "Anecdote",
-      "title": "Algorhyme",
-      "body": "In 1985, Perlman's manager at DEC assigned the loop-free bridging problem on a Friday, then vanished for a week. She had the spanning-tree algorithm finished by Wednesday — and spent the rest writing Algorhyme, a poem that became the paper's abstract.",
-      "coda": "The poem took longer to write than the algorithm."
+      "tag": "אנקדוטה",
+      "title": "אלגוריים",
+      "body": "ב-1985, המנהל של פרלמן ב-DEC הציב את בעיית הגישור ללא לולאות ביום שישי, ואז נעלם לשבוע. היא סיימה את אלגוריתם עץ הפנים ביום רביעי — והקדישה את הזמן שנותר לכתיבת Algorhyme, שיר שהפך לסיכום המאמר.",
+      "coda": "השיר נכתב לאורך זמן רב יותר מהאלגוריתם."
     },
     "brooks-no-silver-bullet": {
-      "tag": "Essay",
-      "title": "No Silver Bullet",
-      "body": "At the 1986 IFIP congress, Fred Brooks split software difficulty into essential and accidental complexity. Accidental difficulty had fallen sharply, he said, but no single technique would deliver a tenfold productivity gain within a decade.",
-      "coda": "Four decades on, each new paradigm still gets sold as the bullet he said did not exist."
+      "tag": "מאמר",
+      "title": "אין כדור כסוף",
+      "body": "בכנס IFIP של 1986, פריד ברוקס חילק את קושי התוכנה למורכבות מהותית ומורכבות מקרית. הקושי המקרי ירד בחדות, לפי דבריו, אך אף טכניקה בודדת לא תביא לעלייה בעשרה מונים בפרודוקטיביות במשך עשור.",
+      "coda": "ארבעה עשורים מאוחר יותר, כל פרדיגמה חדשה עדיין נמכרת ככדור שהוא אמר שלא קיים."
     },
     "tz-olson-database": {
-      "tag": "Naming",
-      "title": "The Olson Database",
-      "body": "Most devices resolve timezones against one volunteer-run file set, informally called the Olson database after founder Arthur David Olson. Its naming scheme is credited to Paul Eggert, who has actually edited the database since 2005.",
-      "coda": "The eponym and the person who has maintained it since are different people."
+      "tag": "שמות",
+      "title": "מאגר אולסון",
+      "body": "רוב המכשירים פותרים אזורי זמן מול סט קבצים המופעל על ידי מתנדבים, המכונה בלתי רשמי מאגר אולסון על שם המייסד ארתור דייוויד אולסון. סכמת השמות שלו מיוחסת לפול אגרט, שבעצם ערך את המאגר מאז 2005.",
+      "coda": "האפונים והאדם שמחזיק בו מאז הם אנשים שונים."
     },
     "china-1987-first-email": {
-      "tag": "Record",
+      "tag": "רשומה",
       "title": "Beyond the Wall",
       "body": "Retellings credit Qian Tianbai alone with China's first email, 'Across the Great Wall we can reach every corner of the world.' Qian was studying in the US that month; it was typed by Li Chengjiong and Karlsruhe's Werner Zorn, and left China six days later, on September 20.",
       "coda": "His obituaries still list him as the sender."
