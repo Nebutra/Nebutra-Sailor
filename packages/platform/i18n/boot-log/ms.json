@@ -1,5 +1,5 @@
 {
-  "panelLabel": "Boot log",
+  "panelLabel": "Log buta",
   "entries": {
     "transistor-name-off-patent-1947": {
       "tag": "Patent",
@@ -903,537 +903,537 @@
     },
     "bluetooth-the-placeholder": {
       "tag": "Etimologi",
-      "title": "The Codename That Stuck",
-      "body": "In 1996, Intel's Jim Kardach proposed \"Bluetooth\" — after Harald Bluetooth, the Viking king who united Scandinavia — as a throwaway codename during Ericsson-Nokia talks. The intended replacement, RadioWire, could not clear trademark search before launch.",
-      "coda": "No replacement name ever made it to market."
+      "title": "Nama Kod Yang Melekat",
+      "body": "Pada tahun 1996, Jim Kardach dari Intel mencadangkan \"Bluetooth\" — sempena Harald Bluetooth, raja Viking yang menyatukan Scandinavia — sebagai nama kod sementara semasa perbincangan Ericsson-Nokia. Nama pengganti yang dirancang, RadioWire, tidak dapat melepasi carian tanda dagangan sebelum pelancaran.",
+      "coda": "Tiada nama pengganti yang pernah dipasarkan."
     },
     "chinaren-detour": {
-      "tag": "Small world",
-      "title": "The Off-Roster Coder",
-      "body": "In 1996 a Chinese student won gold at the Informatics Olympiad and was admitted straight into Tsinghua's computer science program. As a student he moonlighted building a content system for an alumnus's website. Sohu bought it the next year; he stayed on and kept working there.",
-      "coda": "The student was Wang Xiaochuan. In 2004, inside Sohu, he built Sogou."
+      "tag": "Dunia kecil",
+      "title": "Pengaturcara Luar Senarai",
+      "body": "Pada tahun 1996, seorang pelajar China memenangi emas di Olimpik Informatik dan diterima terus ke program sains komputer Tsinghua. Semasa menjadi pelajar, dia bekerja sambilan membina sistem kandungan untuk laman web seorang alumni. Sohu membelinya pada tahun berikutnya; dia kekal dan terus bekerja di sana.",
+      "coda": "Pelajar itu ialah Wang Xiaochuan. Pada tahun 2004, di dalam Sohu, dia membina Sogou."
     },
     "google-a-typo": {
-      "tag": "Etymology",
-      "title": "A Misspelled Domain Search",
-      "body": "During a September 1997 brainstorm, Sean Anderson suggested \"googolplex\"; Larry Page shortened it to \"googol.\" Checking the domain registry on the spot, Anderson typed \"google\" by mistake and found it unclaimed. Page registered google.com that same day.",
-      "coda": "The registration record still carries the misspelling, dated September 15, 1997."
+      "tag": "Etimologi",
+      "title": "Carian Domain Yang Salah Eja",
+      "body": "Semasa sesi sumbangsaran pada September 1997, Sean Anderson mencadangkan \"googolplex\"; Larry Page memendekkannya kepada \"googol.\" Semasa menyemak pendaftaran domain di tempat kejadian, Anderson tersalah eja \"google\" dan mendapatinya tidak didaftarkan. Page mendaftarkan google.com pada hari yang sama.",
+      "coda": "Rekod pendaftaran masih membawa kesalahan ejaan itu, bertarikh 15 September 1997."
     },
     "rfc2119-must-should": {
-      "tag": "Standard",
-      "title": "MUST vs must: A Twenty-Year Gap",
-      "body": "RFC 2119 (March 1997) defined MUST, SHOULD, MAY and their negatives as binding requirement levels for IETF documents. But it only said these words 'are often capitalized' — lowercase must and should were never excluded. RFC 8174 patched the loophole in 2017: only all-caps counts.",
-      "coda": "For twenty years, a lowercase must carried the same legal weight as a shrug."
+      "tag": "Piawaian",
+      "title": "MUST lawan must: Jurang Dua Puluh Tahun",
+      "body": "RFC 2119 (Mac 1997) mentakrifkan MUST, SHOULD, MAY dan negatifnya sebagai tahap keperluan mengikat untuk dokumen IETF. Tetapi ia hanya menyatakan perkataan ini 'sering menggunakan huruf besar' — must dan should huruf kecil tidak pernah dikecualikan. RFC 8174 menampal kelemahan itu pada tahun 2017: hanya huruf besar semua yang dikira.",
+      "coda": "Selama dua puluh tahun, must huruf kecil membawa berat undang-undang yang sama seperti angkatan bahu."
     },
     "netease-license-mail-1997": {
-      "tag": "Licensing",
-      "title": "Sell the license first",
-      "body": "On June 11, 1997, William Ding registered NetEase in Guangzhou. The company's first business was not free webmail. It licensed a piece of email server software it had built to other websites for a fee.",
-      "coda": "NetEase did not launch its own free email, under 163.com, until 1998."
+      "tag": "Pelesenan",
+      "title": "Jual lesen dahulu",
+      "body": "Pada 11 Jun 1997, William Ding mendaftarkan NetEase di Guangzhou. Perniagaan pertama syarikat itu bukanlah webmail percuma. Ia melesenkan perisian pelayan e-mel yang telah dibinanya kepada laman web lain dengan bayaran.",
+      "coda": "NetEase tidak melancarkan e-mel percuma sendiri, di bawah 163.com, sehingga 1998."
     },
     "lixiang-graphics-card-home": {
-      "tag": "Review site",
-      "title": "Graphics Card Home",
-      "body": "In 1998, a high school student in Hebei started a personal website called Graphics Card Home in his spare time, posting reviews of computer graphics cards. Two years later he renamed it PCPop and kept updating it through the rest of school.",
-      "coda": "In 2005 the same person founded Autohome."
+      "tag": "Laman ulasan",
+      "title": "Laman Utama Kad Grafik",
+      "body": "Pada tahun 1998, seorang pelajar sekolah menengah di Hebei memulakan laman web peribadi bernama Graphics Card Home pada masa lapang, memuat naik ulasan tentang kad grafik komputer. Dua tahun kemudian beliau menukar namanya kepada PCPop dan terus mengemas kini laman tersebut sepanjang tempoh sekolah yang tinggal.",
+      "coda": "Pada tahun 2005 orang yang sama menubuhkan Autohome."
     },
     "china-oicq-to-qq": {
-      "tag": "Rebrand",
-      "title": "From OICQ to QQ",
-      "body": "Tencent launched OICQ in February 1999 — the O stood for 'Open,' a nod to ICQ. That October, AOL, ICQ's owner, sent a cease-and-desist over trademark infringement. In November 2000, Ma Huateng renamed it QQ, chosen because the letter reads as 'cute' in Chinese.",
-      "coda": "Open was the first word to go once AOL's lawyers arrived."
+      "tag": "Penjenamaan Semula",
+      "title": "Dari OICQ ke QQ",
+      "body": "Tencent melancarkan OICQ pada Februari 1999 — huruf O bermaksud 'Open,' sebagai penghormatan kepada ICQ. Pada Oktober tahun itu, AOL, pemilik ICQ, menghantar surat berhenti dan berhenti kerana pelanggaran tanda dagangan. Pada November 2000, Ma Huateng menukar namanya kepada QQ, dipilih kerana huruf tersebut dibaca sebagai 'cute' dalam bahasa Cina.",
+      "coda": "Open ialah perkataan pertama yang dibuang sebaik sahaja peguam AOL tiba."
     },
     "excite-google-1999": {
-      "tag": "Misjudgment",
-      "title": "Excite Turns Down Google",
-      "body": "In 1999 Google offered to sell itself to Excite for $750,000 plus roughly 1% equity. CEO George Bell judged the search gap too small to justify tearing out Excite's technology. The reasoning held up. Google was worth over a billion within a year.",
-      "coda": "Bell has said since that he would make the same call again."
+      "tag": "Kesilapan Penilaian",
+      "title": "Excite Menolak Google",
+      "body": "Pada tahun 1999 Google menawarkan untuk menjual dirinya kepada Excite dengan harga $750,000 plus kira-kira 1% ekuiti. CEO George Bell menilai jurang carian terlalu kecil untuk membenarkan penggantian teknologi Excite. Pemikiran itu terbukti betul. Google bernilai lebih daripada satu bilion dalam masa setahun.",
+      "coda": "Bell telah berkata sejak itu bahawa beliau akan membuat keputusan yang sama sekali lagi."
     },
     "mars-climate-orbiter-units": {
-      "tag": "Incident",
+      "tag": "Insiden",
       "title": "Pound-Force, Newton",
-      "body": "Mars Climate Orbiter went silent during orbital insertion. The board found that the contractor's thruster software output impulse in pound-force seconds while navigation software expected newton-seconds, off by a factor of 4.45. The craft was steered to within roughly 57 km of the surface.",
-      "coda": "The $327.6 million mission never transmitted again."
+      "body": "Mars Climate Orbiter hilang isyarat semasa penyisipan orbit. Lembaga mendapati bahawa perisian pendorong kontraktor mengeluarkan impuls dalam pound-force saat manakala perisian navigasi mengharapkan newton-saat, tersilap sebanyak faktor 4.45. Kapal itu dihala ke dalam jarak kira-kira 57 km dari permukaan.",
+      "coda": "Misi bernilai $327.6 juta itu tidak pernah menghantar isyarat lagi."
     },
     "paypal-palm-beaming": {
       "tag": "Pivot",
-      "title": "The Beam That Never Came",
-      "body": "In 1999 Confinity launched infrared cash transfers between Palm Pilots, demoed live at a funding event. Weeks after launch it had roughly 13,000 users, a number that barely moved over the following year. What actually took off was email payments, built only as a fallback option.",
-      "coda": "The company renamed itself PayPal and quietly dropped the beam."
+      "title": "Sinaran Yang Tidak Pernah Tiba",
+      "body": "Pada tahun 1999 Confinity melancarkan pemindahan wang inframerah antara Palm Pilot, ditunjukkan secara langsung pada acara pembiayaan. Beberapa minggu selepas pelancaran ia mempunyai kira-kira 13,000 pengguna, nombor yang hampir tidak bergerak sepanjang tahun berikutnya. Apa yang sebenarnya berjaya ialah pembayaran e-mel, dibina hanya sebagai pilihan sandaran.",
+      "coda": "Syarikat itu menukar namanya kepada PayPal dan secara senyap-senyap membuang sinar tersebut."
     },
     "cai-500-yuan": {
-      "tag": "Small world",
-      "title": "The 500-Yuan Salary",
-      "body": "In 1999 a Hong Kong investment executive traveled to Hangzhou to assess a small website as a possible investment. He found a dozen-odd people coding in one crowded apartment. He didn't invest — he quit his $700,000 salary and joined instead, for 500 yuan a month.",
-      "coda": "His name was Joe Tsai. He later became Alibaba's executive vice chairman."
+      "tag": "Dunia kecil",
+      "title": "Gaji 500 Yuan",
+      "body": "Pada tahun 1999, seorang eksekutif pelaburan dari Hong Kong pergi ke Hangzhou untuk menilai sebuah laman web kecil sebagai pelaburan yang berpotensi. Dia mendapati lebih sedozen orang menulis kod di sebuah apartmen yang sesak. Dia tidak melabur — dia meletak jawatan daripada gaji $700,000 dan sebaliknya menyertai mereka, dengan gaji 500 yuan sebulan.",
+      "coda": "Namanya Joe Tsai. Dia kemudiannya menjadi naib pengerusi eksekutif Alibaba."
     },
     "gps-week-rollover": {
-      "tag": "Mechanism",
-      "title": "GPS Week 1024",
-      "body": "GPS counts weeks in 10 bits, a field that maxes at 1,023 and rolls to zero roughly every 19.7 years. The first rollover hit in August 1999. The second landed on 6 April 2019, breaking receivers built as if the first had been a one-off.",
-      "coda": "The same overflow is on a schedule and due to recur again in 2038."
+      "tag": "Mekanisme",
+      "title": "Minggu GPS 1024",
+      "body": "GPS mengira minggu dalam 10 bit, medan yang memuncak pada 1,023 dan kembali kepada sifar kira-kira setiap 19.7 tahun. Gulungan pertama berlaku pada Ogos 1999. Yang kedua jatuh pada 6 April 2019, merosakkan penerima yang dibina seolah-olah yang pertama adalah kejadian sekali sahaja.",
+      "coda": "Limpahan yang sama berjadual dan akan berulang lagi pada 2038."
     },
     "foxmail-resold": {
-      "tag": "Small world",
-      "title": "Sold With the Software",
-      "body": "In 1994 a programmer in Guangzhou wrote a free email client in his spare time. In 2000, as the dot-com bubble burst, he sold it to a company and stayed on as tech director. Five years later that company folded and sold the software — and him with it — to Tencent.",
-      "coda": "The programmer was Zhang Xiaolong. Five years after that, inside Tencent, he built WeChat."
+      "tag": "Dunia kecil",
+      "title": "Dijual Bersama Perisian",
+      "body": "Pada tahun 1994, seorang pengaturcara di Guangzhou menulis klien e-mel percuma pada masa lapangnya. Pada tahun 2000, ketika gelembung dot-com pecah, dia menjualnya kepada sebuah syarikat dan kekal sebagai pengarah teknikal. Lima tahun kemudian, syarikat itu gulung tikar dan menjual perisian tersebut — dan dia sekali — kepada Tencent.",
+      "coda": "Pengaturcara itu ialah Zhang Xiaolong. Lima tahun selepas itu, di dalam Tencent, dia membina WeChat."
     },
     "danger-duarte-android-reunion": {
-      "tag": "Reunion",
-      "title": "Design Director, Failed Startup",
-      "body": "In 2000 a designer joined a handheld-device startup founded by Andy Rubin, working on its interface. The company was sold to Microsoft and the team scattered. The designer went on to two other companies over the next decade.",
-      "coda": "The designer was Matias Duarte. Ten years later Rubin hired him onto Android."
+      "tag": "Pertemuan semula",
+      "title": "Pengarah Reka Bentuk, Syarikat Permulaan Gagal",
+      "body": "Pada tahun 2000, seorang pereka menyertai syarikat permulaan peranti genggam yang diasaskan oleh Andy Rubin, bekerja pada antara mukanya. Syarikat itu dijual kepada Microsoft dan pasukan itu berselerak. Pereka itu kemudiannya pergi ke dua syarikat lain sepanjang dekad berikutnya.",
+      "coda": "Pereka itu ialah Matias Duarte. Sepuluh tahun kemudian, Rubin mengupahnya ke Android."
     },
     "slashdot-ipod-2001": {
-      "tag": "Dismissal",
-      "title": "No Wireless, Less Space",
-      "body": "When Apple unveiled the first iPod on October 23, 2001, Slashdot founder Rob \"CmdrTaco\" Malda wrote in his editor's note: \"No wireless. Less space than a nomad. Lame.\" Against the spec sheets of rival MP3 players at the time, the line was not factually wrong.",
-      "coda": "The comment is now cited routinely as the counterexample it produced."
+      "tag": "Penolakan",
+      "title": "Tiada Wayarles, Kurang Ruang",
+      "body": "Apabila Apple melancarkan iPod pertama pada 23 Oktober 2001, pengasas Slashdot, Rob \"CmdrTaco\" Malda, menulis dalam nota editornya: \"No wireless. Less space than a nomad. Lame.\" Berbanding dengan spesifikasi pemain MP3 saingan pada masa itu, kenyataan itu tidak salah dari segi fakta.",
+      "coda": "Komen itu kini sering dipetik sebagai contoh kontra yang dihasilkannya."
     },
     "discuz-shenyang-dorm": {
       "tag": "Forum",
-      "title": "CDB, a dorm build",
-      "body": "In 2001, a university student living in a dormitory in Shenyang wrote a piece of forum software and named it Crossday Bulletin, working on it alongside his coursework. The following October he renamed it Discuz.",
-      "coda": "On August 23, 2010, Tencent acquired the company he had built around it."
+      "title": "CDB, sebuah binaan asrama",
+      "body": "Pada tahun 2001, seorang pelajar universiti yang tinggal di asrama di Shenyang menulis perisian forum dan menamakannya Crossday Bulletin, sambil mengusahakannya bersama tugas pelajarannya. Pada Oktober berikutnya, beliau menukar namanya kepada Discuz.",
+      "coda": "Pada 23 Ogos 2010, Tencent memperoleh syarikat yang dibina di sekelilingnya."
     },
     "wikipedia-side-wiki": {
       "tag": "Wiki",
-      "title": "A Side Project Next to Nupedia",
-      "body": "On January 10, 2001, the founder of a peer-reviewed online encyclopedia installed wiki software on the project's own server, mainly so volunteers could try drafting entries loosely on the side while the reviewed encyclopedia moved slowly ahead.",
-      "coda": "By July 2026 its English edition alone held over 7.2 million articles."
+      "title": "Projek Sampingan Bersebelahan Nupedia",
+      "body": "Pada 10 Januari 2001, pengasas sebuah ensiklopedia dalam talian yang disemak rakan sebaya memasang perisian wiki pada pelayan projek itu sendiri, terutamanya supaya sukarelawan boleh cuba melukis draf entri secara longgar di samping ensiklopedia yang disemak bergerak perlahan-lahan ke hadapan.",
+      "coda": "Setakat Julai 2026, edisi Inggeris sahaja memegang lebih 7.2 juta artikel."
     },
     "bittorrent-mailing-list": {
-      "tag": "Protocol",
-      "title": "A New P2P App",
-      "body": "On July 2, 2001, a programmer posted a message to a Yahoo eGroups mailing list titled \"BitTorrent -- a new P2P app,\" describing a file-distribution protocol he had just finished designing, one that pulled pieces of a file from many sources at once.",
-      "coda": "Three years later it accounted for a third of all internet traffic, per a 2004 CacheLogic study."
+      "tag": "Protokol",
+      "title": "Aplikasi P2P Baharu",
+      "body": "Pada 2 Julai 2001, seorang pemrogram menghantar mesej ke senarai mel Yahoo eGroups bertajuk \"BitTorrent -- a new P2P app,\" menerangkan protokol pengedaran fail yang baru sahaja beliau selesai reka, satu yang menarik kepingan fail daripada banyak sumber sekaligus.",
+      "coda": "Tiga tahun kemudian ia menyumbang satu pertiga daripada semua trafik internet, menurut kajian CacheLogic 2004."
     },
     "webvan-thirty-minute-window": {
-      "tag": "Groceries",
-      "title": "The Thirty-Minute Window",
-      "body": "In 1996 Borders bookstore co-founder Louis Borders started Webvan, promising 30-minute delivery on warehouses built from scratch. It IPO'd in November 1999 for $375 million at a valuation over $4.8 billion, then filed for bankruptcy in July 2001, having lost more than $800 million.",
-      "coda": "Some Webvan executives went on to Amazon; Amazon Fresh and Instacart later filled the same order."
+      "tag": "Barangan runcit",
+      "title": "Tingkap Tiga Puluh Minit",
+      "body": "Pada tahun 1996, Louis Borders, pengasas bersama kedai buku Borders, memulakan Webvan, menjanjikan penghantaran 30 minit pada gudang yang dibina dari awal. Ia melancarkan IPO pada November 1999 sebanyak $375 juta pada penilaian melebihi $4.8 bilion, kemudian memfailkan kebankrapan pada Julai 2001, selepas kehilangan lebih daripada $800 juta.",
+      "coda": "Beberapa pegawai Webvan kemudian pergi ke Amazon; Amazon Fresh dan Instacart kemudian memenuhi pesanan yang sama."
     },
     "kozmo-free-hour-delivery": {
-      "tag": "Delivery",
-      "title": "The Free-Hour Promise",
-      "body": "In 1998 Joseph Park and Yong Kang founded Kozmo.com, promising free one-hour delivery with couriers dispatched by pager. It raised roughly $250 million but earned $3.5 million against a $26.3 million loss in 1999. In April 2001, staff learned of the shutdown by finding closed offices.",
-      "coda": "DoorDash, founded in 2013, dispatches couriers by smartphone GPS and charges a delivery fee."
+      "tag": "Penghantaran",
+      "title": "Janji Satu Jam Percuma",
+      "body": "Pada tahun 1998, Joseph Park dan Yong Kang menubuhkan Kozmo.com, menjanjikan penghantaran satu jam percuma dengan kurier dihantar melalui pager. Ia mengumpulkan kira-kira $250 juta tetapi memperoleh $3.5 juta berbanding kerugian $26.3 juta pada tahun 1999. Pada April 2001, kakitangan mengetahui penutupan dengan menemui pejabat yang ditutup.",
+      "coda": "DoorDash, ditubuhkan pada 2013, menghantar kurier melalui GPS telefon pintar dan mengenakan yuran penghantaran."
     },
     "flooz-digital-currency": {
-      "tag": "Currency",
-      "title": "Money With No Store",
-      "body": "In February 1999, iVillage co-founder Robert Levitan launched Flooz.com, a digital currency users could buy and spend at partner merchants. A crime ring used stolen cards to mint $300,000 in fraudulent credits, and by 2001 fraud reached 19% of volume. The company folded that August.",
-      "coda": "In January 2009, Satoshi Nakamoto mined bitcoin's genesis block."
+      "tag": "Mata wang",
+      "title": "Uang Tanpa Kedai",
+      "body": "Pada Februari 1999, Robert Levitan, pendiri bersama iVillage, melancarkan Flooz.com, mata wang digital yang boleh dibeli dan dibelanjakan di peniaga rakan. Satu sindiket jenayah menggunakan kad yang dicuri untuk mencetak kredit palsu bernilai AS$300,000, dan menjelang 2001 penipuan mencapai 19% daripada jumlah. Syarikat itu bubar pada Ogos tahun itu.",
+      "coda": "Pada Januari 2009, Satoshi Nakamoto menambang blok genesis bitcoin."
     },
     "yahoo-google-2002": {
-      "tag": "Miss",
-      "title": "Yahoo Passes on Google",
-      "body": "In 2002 Yahoo CEO Terry Semel offered $3 billion for Google; Page and Brin held out for $5 billion. Semel's read was that Yahoo's own market cap, near $5 billion after the crash, could not absorb that bet. Google went public two years later at $23 billion.",
-      "coda": "Yahoo sold its core business to Verizon in 2017 for $4.48 billion."
+      "tag": "Meleset",
+      "title": "Yahoo Meleset Google",
+      "body": "Pada 2002, CEO Yahoo Terry Semel menawarkan AS$3 bilion untuk Google; Page dan Brin menuntut AS$5 bilion. Tafsiran Semel ialah nilai pasaran Yahoo sendiri, hampir AS$5 bilion selepas kemerosotan, tidak mampu menyerap taruhan itu. Google pergi awam dua tahun kemudian pada AS$23 bilion.",
+      "coda": "Yahoo menjual perniagaan terasnya kepada Verizon pada 2017 dengan harga AS$4.48 bilion."
     },
     "pplive-dorm-2002": {
-      "tag": "Dorm room",
-      "title": "Building 26, Yunyuan",
-      "body": "During the 2002 World Cup, Yao Xin's dorm at Huazhong University of Science and Technology had no television, so he watched matches over the campus network, which kept crashing. In his room in Building 26 he started working out how to combine peer-to-peer transfer with streaming video.",
-      "coda": "PPLive launched in 2005 and, at its peak, counted over a hundred million users."
+      "tag": "Bilik asrama",
+      "title": "Bangunan 26, Yunyuan",
+      "body": "Semasa Piala Dunia 2002, asrama Yao Xin di Universiti Sains dan Teknologi Huazhong tiada televisyen, jadi dia menonton perlawanan melalui rangkaian kampus yang sentiasa rosak. Di biliknya di Bangunan 26, dia mula mengira cara menggabungkan pemindahan peer-to-peer dengan video strim.",
+      "coda": "PPLive dilancarkan pada 2005 dan, pada kemuncaknya, mempunyai lebih seratus juta pengguna."
     },
     "china-alipay-escrow": {
-      "tag": "Trust",
-      "title": "The Escrow Workaround",
-      "body": "In 2003, with Taobao buyers and sellers unwilling to trust each other first, finance built an escrow workaround: payment sat frozen until goods were confirmed. The first trade closed that October — a student in Xi'an paying a seller in Japan. The name puns 'pay' and 'guarantee.'",
-      "coda": "The pun became the company's permanent, official name."
+      "tag": "Kepercayaan",
+      "title": "Penyelesaian Escrow",
+      "body": "Pada 2003, dengan pembeli dan penjual Taobao enggan mempercayai satu sama lain terlebih dahulu, kewangan membina penyelesaian escrow: pembayaran dibekukan sehingga barang disahkan. Perdagangan pertama ditutup pada Oktober itu — seorang pelajar di Xi'an membayar penjual di Jepun. Namanya bermain kata 'bayar' dan 'jaminan'.",
+      "coda": "Permainan kata itu menjadi nama rasmi kekal syarikat."
     },
     "china-taobao-free-vs-ebay": {
-      "tag": "Competition",
-      "title": "Three Years Free",
-      "body": "In 2003, eBay's Eachnet held over 70 percent of China's C2C market, charging listing and transaction fees. Taobao launched that May to a near-empty site; Alibaba's answer was three years of free listings. By 2006, Taobao held 70 percent and eBay withdrew from Chinese C2C.",
-      "coda": "The side still charging listing fees ran out of runway first."
+      "tag": "Persaingan",
+      "title": "Tiga Tahun Percuma",
+      "body": "Pada 2003, Eachnet milik eBay memegang lebih 70 peratus pasaran C2C China, mengenakan yuran senarai dan transaksi. Taobao dilancarkan pada Mei itu ke laman hampir kosong; jawapan Alibaba ialah tiga tahun senarai percuma. Menjelang 2006, Taobao memegang 70 peratus dan eBay menarik diri daripada C2C China.",
+      "coda": "Sisi yang masih mengenakan yuran senarai kehabisan modal terlebih dahulu."
     },
     "dianping-zagat-notes": {
-      "tag": "Review guide",
-      "title": "A Zagat notebook",
-      "body": "In 2002, Zhang Tao came back to China from the United States carrying an idea he had picked up there: the Zagat Survey, a restaurant guide built from readers' own ratings. He registered the domain zsurvey.com and set out to build a Chinese version in Shanghai.",
-      "coda": "Dianping, the site that grew from it, went live on April 12, 2003."
+      "tag": "Panduan ulasan",
+      "title": "Buku nota Zagat",
+      "body": "Pada tahun 2002, Zhang Tao kembali ke China dari Amerika Syarikat dengan membawa idea yang dipelajarinya di sana: Zagat Survey, panduan restoran yang dibina daripada penilaian pembaca sendiri. Beliau mendaftarkan domain zsurvey.com dan mula membina versi Cina di Shanghai.",
+      "coda": "Dianping, laman yang tumbuh daripadanya, mula beroperasi pada 12 April 2003."
     },
     "wordpress-b2-post": {
       "tag": "Blogging",
-      "title": "The Blogging Software Dilemma",
-      "body": "On January 24, 2003, a university student wrote on his own blog that b2, the blogging software he used daily, had gone unmaintained for months since its lead developer disappeared. He said he wanted to fork it and asked only for a name.",
-      "coda": "The company that grew out of that fork was valued at $7.5 billion by 2021."
+      "title": "Dilema Perisian Blogging",
+      "body": "Pada 24 Januari 2003, seorang pelajar universiti menulis di blognya sendiri bahawa b2, perisian blogging yang digunakannya setiap hari, telah tidak diselenggara selama berbulan-bulan sejak pembangun utamanya hilang. Beliau berkata mahu memforknya dan hanya meminta nama.",
+      "coda": "Syarikat yang tumbuh daripada fork itu dinilai $7.5 bilion menjelang 2021."
     },
     "2003-blackout-race-condition": {
-      "tag": "Incident",
-      "title": "The Alarm That Didn't Ring",
-      "body": "The alarm process at an Ohio control room silently jammed: a coding error let two processes gain write access to the same data structure at once, looping forever. Operators never saw the overload warnings and failed to shed load in time. The cascade left 55 million people without power.",
-      "coda": "Engineers needed eight weeks to reproduce the race condition."
+      "tag": "Insiden",
+      "title": "Penggera yang Tidak Berbunyi",
+      "body": "Proses penggera di bilik kawalan Ohio tersekat secara senyap: ralat pengekodan membenarkan dua proses mendapat akses tulis ke struktur data yang sama serentak, berputar selama-lamanya. Pengendali tidak pernah melihat amaran beban lampau dan gagal mengurangkan beban tepat pada masanya. Lata itu menyebabkan 55 juta orang tanpa bekalan elektrik.",
+      "coda": "Jurutera memerlukan lapan minggu untuk menghasilkan semula keadaan perlumbaan itu."
     },
     "aws-not-leftover-servers": {
-      "tag": "Correction",
-      "title": "Not the Leftover Servers",
-      "body": "The common version says AWS began by reselling Amazon's idle holiday-season server capacity. Benjamin Black calls that flatly false: in 2003 he and Chris Pinkham wrote a memo proposing standardized, automated infrastructure, purpose-built from the start to be sold externally as a service.",
-      "coda": "S3 and EC2 launched in 2006, following that memo."
+      "tag": "Pembetulan",
+      "title": "Bukan Pelayan Lebihan",
+      "body": "Versi umum mengatakan AWS bermula dengan menjual semula kapasiti pelayan terbiar Amazon semasa musim cuti. Benjamin Black menganggap itu jelas palsu: pada tahun 2003, beliau dan Chris Pinkham menulis memo yang mencadangkan infrastruktur automatik piawai, dibina khusus dari awal untuk dijual secara luaran sebagai perkhidmatan.",
+      "coda": "S3 dan EC2 dilancarkan pada 2006, mengikut memo itu."
     },
     "maps-intern-friendfeed": {
-      "tag": "Internship",
-      "title": "The Maps Team Intern",
-      "body": "In 2003 a Google product manager hired an intern onto the team building local search, the project that grew into Google Maps. Four years later that intern and an engineer who had built Gmail left Google together to start a company.",
-      "coda": "The intern was Bret Taylor. The company he left to start was bought by Facebook."
+      "tag": "Latihan",
+      "title": "Pelatih Pasukan Maps",
+      "body": "Pada tahun 2003, seorang pengurus produk Google mengambil pelatih ke dalam pasukan yang membina carian tempatan, projek yang berkembang menjadi Google Maps. Empat tahun kemudian, pelatih itu dan seorang jurutera yang membina Gmail meninggalkan Google bersama untuk memulakan syarikat.",
+      "coda": "Pelatih itu ialah Bret Taylor. Syarikat yang ditinggalkannya untuk dimulakan telah dibeli oleh Facebook."
     },
     "friendster-forty-second-load": {
-      "tag": "Scaling",
-      "title": "The Forty-Second Load",
-      "body": "Friendster launched in 2002 and reached over 100 million registered accounts, but its servers buckled under the load of computing degrees of connection between friends; a single page could take forty seconds to load. Support emails show users threatening to defect to the newer MySpace.",
-      "coda": "Facebook launched in 2004 on the same social-graph idea and held under the traffic."
+      "tag": "Penskalaan",
+      "title": "Muatan Keempat Puluh Dua",
+      "body": "Friendster dilancarkan pada 2002 dan mencapai lebih 100 juta akaun berdaftar, tetapi pelayannya runtuh di bawah beban pengiraan darjah hubungan antara rakan; satu halaman boleh mengambil empat puluh saat untuk dimuatkan. E-mel sokongan menunjukkan pengguna mengancam untuk berpindah ke MySpace yang lebih baru.",
+      "coda": "Facebook dilancarkan pada 2004 dengan idea graf sosial yang sama dan bertahan di bawah trafik."
     },
     "shopify-snowdevil-software": {
       "tag": "Pivot",
-      "title": "The Store Software Outgrew the Store",
-      "body": "In 2004, programmer Tobias Lutke found the e-commerce software of the day too clunky, so he wrote his own to sell snowboard gear online as Snowdevil. Snowdevil itself stayed a small shop, but other merchants started asking to license the software behind it.",
-      "coda": "Shopify listed on the New York Stock Exchange in 2015."
+      "title": "Perisian Kedai Melampaui Kedai",
+      "body": "Pada 2004, pemrogram Tobias Lutke mendapati perisian e-dagang pada masa itu terlalu kaku, jadi beliau menulis sendiri untuk menjual peralatan papan luncur salji secara dalam talian sebagai Snowdevil. Snowdevil sendiri kekal sebagai kedai kecil, tetapi peniaga lain mula meminta lesen perisian di sebaliknya.",
+      "coda": "Shopify disenaraikan di Bursa Saham New York pada 2015."
     },
     "twitter-odeo-podcast-pivot": {
       "tag": "Pivot",
-      "title": "The Podcast Company's Side Project",
-      "body": "On June 28, 2005, Apple built podcast subscriptions into iTunes; within two days subscriptions passed one million, and Odeo's entire podcasting business went obsolete overnight. The next March, an internal hackathon produced Jack Dorsey's SMS status-update pitch: Twitter.",
-      "coda": "Odeo, the company Twitter was built inside, was sold off in 2007."
+      "title": "Projek Sampingan Syarikat Podcast",
+      "body": "Pada 28 Jun 2005, Apple membina langganan podcast ke dalam iTunes; dalam dua hari langganan melepasi satu juta, dan keseluruhan perniagaan podcasting Odeo menjadi usang dalam satu malam. Mac berikutnya, hackathon dalaman menghasilkan cadangan kemaskini status SMS Jack Dorsey: Twitter.",
+      "coda": "Odeo, syarikat di mana Twitter dibina, dijual pada 2007."
     },
     "youtube-tune-in-hook-up": {
-      "tag": "Legend",
-      "title": "The Domain Registered on Valentine's Day",
-      "body": "youtube.com was registered on February 14, 2005, and its founders later told of a dating-site concept modeled on Hot or Not. Jawed Karim denied attending the dinner party the story hinges on, and Steve Chen conceded it reads like a marketing narrative.",
-      "coda": "What Karim cited instead was trouble finding tsunami footage online."
+      "tag": "Legenda",
+      "title": "Domain Didaftarkan pada Hari Valentine",
+      "body": "youtube.com didaftarkan pada 14 Februari 2005, dan pengasasnya kemudian menceritakan konsep laman tarikh yang dimodelkan mengikut Hot or Not. Jawed Karim menafikan menghadiri parti makan malam yang menjadi tumpuan cerita, dan Steve Chen mengakui ia dibaca seperti naratif pemasaran.",
+      "coda": "Apa yang Karim sitasi sebaliknya ialah masalah mencari rakaman tsunami dalam talian."
     },
     "duan-buffett-lunch": {
-      "tag": "Small world",
-      "title": "The Buffett Lunch",
-      "body": "In 2006 a Guangdong electronics manufacturer won the annual charity auction for lunch with Warren Buffett, paying $620,100. He brought along a 26-year-old who had just quit an American company and had no clear plan yet.",
-      "coda": "The manufacturer was Duan Yongping. The young man was Colin Huang, who later founded Pinduoduo."
+      "tag": "Dunia kecil",
+      "title": "Makan Tengah Hari Buffett",
+      "body": "Pada 2006, pengilang elektronik Guangdong menang lelongan amal tahunan untuk makan tengah hari dengan Warren Buffett, membayar $620,100. Beliau membawa seorang lelaki berusia 26 tahun yang baru berhenti syarikat Amerika dan belum mempunyai pelan yang jelas.",
+      "coda": "Pengilang itu ialah Duan Yongping. Lelaki muda itu ialah Colin Huang, yang kemudian menubuhkan Pinduoduo."
     },
     "blackberry-iphone-2007": {
-      "tag": "Misread",
-      "title": "BlackBerry Saw the Flaws",
-      "body": "In January 2007, BlackBerry co-CEO Jim Balsillie and chairman Mike Lazaridis watched the iPhone unveiling. Lazaridis's list of flaws was accurate: no physical keyboard, weak security, poor battery, glass typing. Every item was real. Balsillie's reply was, \"It's OK, we'll be fine.\"",
-      "coda": "BlackBerry's market share eroded to the iPhone in the years that followed."
+      "tag": "Salah baca",
+      "title": "BlackBerry Melihat Kelemahan",
+      "body": "Pada Januari 2007, co-CEO BlackBerry Jim Balsillie dan pengerusi Mike Lazaridis menyaksikan persembahan iPhone. Senarai kelemahan Lazaridis adalah tepat: tiada papan kekunci fizikal, keselamatan lemah, bateri lemah, menaip pada kaca. Setiap item adalah nyata. Balasan Balsillie ialah, \"Tiada apa-apa, kita akan baik-baik saja.\"",
+      "coda": "Bahagian pasaran BlackBerry terkikis kepada iPhone dalam tahun-tahun berikutnya."
     },
     "dvorak-iphone-2007": {
-      "tag": "Prediction",
-      "title": "Dvorak Says Pull the Plug",
-      "body": "On March 28, 2007, columnist John C. Dvorak wrote that phone margins were thin and Nokia and Motorola already dominant, so Apple should hand the iPhone design to some \"suckers\" and walk away. Given Apple's history in that market, the reasoning was not unreasonable.",
-      "coda": "He later said that once he actually held the phone, he regretted the call."
+      "tag": "Ramalan",
+      "title": "Dvorak Kata Cabut Pal",
+      "body": "Pada 28 Mac 2007, kolumnis John C. Dvorak menulis bahawa margin telefon adalah nipis dan Nokia serta Motorola sudah dominan, jadi Apple harus menyerahkan reka bentuk iPhone kepada beberapa \"orang bodoh\" dan pergi. Memandangkan sejarah Apple di pasaran itu, alasan tersebut tidak tidak munasabah.",
+      "coda": "Beliau kemudian berkata bahawa setelah beliau benar-benar memegang telefon itu, beliau menyesal atas panggilan tersebut."
     },
     "auctomatic-taggar-yc": {
-      "tag": "Merger",
-      "title": "The One Who Had to Learn to Code",
-      "body": "In 2007 two Irish teenage brothers brought a homemade e-commerce tool into Y Combinator and merged their company with one run by two Oxford graduates. Neither of the Oxford pair could program. One of them was told to learn, fast.",
-      "coda": "That one was Harj Taggar, later Y Combinator's first non-founder partner."
+      "tag": "Penggabungan",
+      "title": "Orang Yang Perlu Belajar Mengkod",
+      "body": "Pada 2007 dua adik-beradik remaja Ireland membawa alat e-dagang buatan sendiri ke Y Combinator dan menggabungkan syarikat mereka dengan satu yang dikendalikan oleh dua graduan Oxford. Tiada seorang pun daripada pasangan Oxford itu boleh memprogram. Salah seorang daripada mereka diberitahu untuk belajar, dengan pantas.",
+      "coda": "Orang itu ialah Harj Taggar, kemudian rakan kongsi bukan pengasas pertama Y Combinator."
     },
     "justintv-backpack-cruise": {
-      "tag": "The backpack",
-      "title": "The Livestreaming Backpack",
-      "body": "In March 2007 a man strapped a webcam to a baseball cap and began livestreaming his life around San Francisco, twenty-four hours a day, wearing a homemade laptop-backpack rig built by a friend who had dropped out of MIT.",
-      "coda": "The friend who built it was Kyle Vogt, who later founded Cruise, acquired by GM for over $1 billion."
+      "tag": "Beg galas",
+      "title": "Beg Galas Livestreaming",
+      "body": "Pada Mac 2007 seorang lelaki mengikat webcam kepada topi besbol dan mula livestreaming hidupnya di sekitar San Francisco, dua puluh empat jam sehari, memakai rig beg galas komputer riba buatan sendiri yang dibina oleh seorang rakan yang telah berhenti dari MIT.",
+      "coda": "Rakan yang membina itu ialah Kyle Vogt, yang kemudian mengasaskan Cruise, yang diperoleh oleh GM dengan lebih daripada $1 bilion."
     },
     "stackoverflow-blog-post": {
-      "tag": "Q&A",
-      "title": "The Anti-Experts-Exchange",
-      "body": "On April 16, 2008, a programmer posted on his own blog that he wanted to build an \"anti-Experts-Exchange\" question-and-answer site for programmers, without the paywalls and search-engine gaming he found nauseating about the incumbent.",
-      "coda": "In 2021 the site was sold to Prosus for 1.8 billion dollars."
+      "tag": "Soalan & Jawapan",
+      "title": "Anti-Experts-Exchange",
+      "body": "Pada 16 April 2008, seorang pemrogram memuat naik di blognya sendiri bahawa beliau ingin membina laman soalan-dan-jawapan \"anti-Experts-Exchange\" untuk pemrogram, tanpa tembok bayaran dan permainan enjin carian yang beliau rasa menjijikkan tentang incumbent.",
+      "coda": "Pada 2021 laman itu dijual kepada Prosus dengan harga 1.8 bilion dolar."
     },
     "zune-leap-year-freeze": {
-      "tag": "Incident",
-      "title": "Day 366",
-      "body": "Near midnight Pacific time on 31 December 2008, every Zune 30 froze solid, nicknamed Z2K9. The cause was an infinite loop in a power-chip driver that could only trigger on a leap year's 366th day. No patch existed; the only fix was letting the battery die.",
-      "coda": "The remedy shipped by Microsoft was to wait for the device to run out of power."
+      "tag": "Insiden",
+      "title": "Hari 366",
+      "body": "Hampir tengah malam waktu Pasifik pada 31 Disember 2008, setiap Zune 30 membeku tegar, dijuluki Z2K9. Punca ialah gelung tak terhingga dalam pemacu cip kuasa yang hanya boleh mencetuskan pada hari ke-366 tahun lompat. Tiada tampal tersedia; satu-satunya pembaikan ialah membiarkan bateri mati.",
+      "coda": "Rawatan yang dihantar oleh Microsoft ialah menunggu peranti kehabisan kuasa."
     },
     "china-wang-jian-alibaba-cloud": {
-      "tag": "Doubt",
-      "title": "The Liar Who Built the Cloud",
-      "body": "Around 2012, with Alibaba Cloud years into heavy investment and no visible product, staff told Jack Ma directly that Wang Jian was a fraud. Close to eighty percent of the engineering team quit. Ma's reply: fund it a billion yuan a year for ten years, then judge it.",
-      "coda": "Ten years later, the fraud's project turned a profit."
+      "tag": "Syak",
+      "title": "Pendusta Yang Membina Awan",
+      "body": "Sekitar 2012, dengan Alibaba Cloud sudah bertahun-tahun dalam pelaburan berat dan tiada produk yang kelihatan, kakitangan memberitahu Jack Ma secara langsung bahawa Wang Jian ialah penipu. Hampir lapan puluh peratus pasukan kejuruteraan berhenti. Balasan Ma: dana ia satu bilion yuan setahun selama sepuluh tahun, kemudian hakim ia.",
+      "coda": "Sepuluh tahun kemudian, projek penipu itu mendapat untung."
     },
     "taobao-double11-2009": {
-      "tag": "Discount",
-      "title": "27 merchants",
-      "body": "On November 11, 2009, Taobao Mall rounded up twenty-seven brands to fill a slow sales week; the plan had called for over thirty, but merchants kept dropping out. A civil servant named Yan Jun in Shanxi placed the day's first order, 150 yuan of phone credit, at 00:00:03.",
-      "coda": "Sales that day reached 52 million yuan, ten times an ordinary day."
+      "tag": "Diskaun",
+      "title": "27 peniaga",
+      "body": "Pada 11 November 2009, Taobao Mall mengumpulkan dua puluh tujuh jenama untuk mengisi minggu jualan yang perlahan; pelan itu telah memanggil lebih daripada tiga puluh, tetapi peniaga terus keluar. Seorang pegawai awam bernama Yan Jun di Shanxi meletakkan pesanan pertama hari itu, 150 yuan kredit telefon, pada 00:00:03.",
+      "coda": "Jualan hari itu mencapai 52 juta yuan, sepuluh kali ganda hari biasa."
     },
     "cloudflare-hbs-elective": {
-      "tag": "Classmate",
-      "title": "An Elective at HBS",
-      "body": "In 2009 a programmer took a leave of absence to study for an MBA at Harvard Business School. He had spent years running an anti-spam volunteer project on the side. He mentioned it in class one day. A classmate said it should be a real product.",
-      "coda": "That classmate was Michelle Zatlyn, later Cloudflare's co-founder and COO."
+      "tag": "Rakan sekelas",
+      "title": "Satu Elektif di HBS",
+      "body": "Pada 2009 seorang pemrogram mengambil cuti untuk belajar MBA di Harvard Business School. Beliau telah menghabiskan bertahun-tahun menjalankan projek sukarelawan anti-spam di samping. Beliau menyebutnya di kelas suatu hari. Seorang rakan sekelas berkata ia sepatutnya menjadi produk sebenar.",
+      "coda": "Rakan sekelas itu ialah Michelle Zatlyn, kemudian pendiri bersama dan COO Cloudflare."
     },
     "china-3q-war": {
-      "tag": "Incident",
-      "title": "Choose One",
-      "body": "On November 3, 2010, Tencent forced a pop-up choice: uninstall 360 or QQ would stop running. Ma Huateng warned users might be wiped out within three days. Days later the Ministry of Industry and Information Technology ordered both sides to restore compatibility.",
-      "coda": "The regulator ended it, not the market or either company."
+      "tag": "Insiden",
+      "title": "Pilih Satu",
+      "body": "Pada 3 November 2010, Tencent memaksa pilihan pop-up: nyahpasang 360 atau QQ akan berhenti berjalan. Ma Huateng memperingatkan pengguna mungkin akan dipadamkan dalam tiga hari. Beberapa hari kemudian Kementerian Industri dan Teknologi Maklumat memerintahkan kedua-dua pihak memulihkan keserasian.",
+      "coda": "Penguatkuasa mengakhiri ia, bukan pasaran atau mana-mana syarikat."
     },
     "china-thousand-groupon-war": {
-      "tag": "Bubble",
-      "title": "The Thousand-Groupon War",
-      "body": "China's first group-buying site launched in 2010; portals and social networks piled in within months. By August 2011, more than 5,000 group-buying companies were competing — the 'Thousand-Groupon War.' By mid-2014, only 176 sites remained standing.",
-      "coda": "Fewer than two hundred of five thousand survived."
+      "tag": "Gelembung",
+      "title": "Perang Seribu Groupon",
+      "body": "Laman pembelian berkumpulan pertama di China dilancarkan pada 2010; portal dan rangkaian sosial membanjiri pasaran dalam beberapa bulan. Sehingga Ogos 2011, lebih daripada 5,000 syarikat pembelian berkumpulan bersaing — 'Perang Seribu Groupon.' Sehingga pertengahan 2014, hanya 176 laman masih beroperasi.",
+      "coda": "Kurang daripada dua ratus daripada lima ribu bertahan."
     },
     "semver-dependency-hell": {
       "tag": "Standard",
-      "title": "SemVer's Own Exemption",
-      "body": "In 2010 GitHub cofounder Tom Preston-Werner published semver.org, proposing MAJOR.MINOR.PATCH to end 'dependency hell.' The spec itself carves out an exception: during the 0.y.z 'initial development' phase, anything may change at any time — a stage most packages never actually leave.",
-      "coda": "Most published packages never leave the version range the rule does not bind."
+      "title": "Pengecualian SemVer Sendiri",
+      "body": "Pada 2010, Tom Preston-Werner, salah seorang pengasas GitHub, menerbitkan semver.org, mencadangkan MAJOR.MINOR.PATCH untuk mengakhiri 'neraka kebergantungan.' Spesifikasi itu sendiri menyediakan pengecualian: semasa fasa 'pengembangan awal' 0.y.z, apa sahaja boleh berubah pada bila-bila masa — satu peringkat yang kebanyakan pakej tidak pernah benar-benar tinggalkan.",
+      "coda": "Kebanyakan pakej yang diterbitkan tidak pernah meninggalkan julat versi yang tidak terikat oleh peraturan tersebut."
     },
     "instagram-burbn-cut": {
       "tag": "Pivot",
-      "title": "What Got Cut From Burbn",
-      "body": "Kevin Systrom and Mike Krieger spent nearly a year building a full-featured check-in app called Burbn, then judged their own finished iPhone build cluttered. They stripped it down to photos, comments, and likes, and shipped the result eight weeks later as Instagram.",
-      "coda": "Within a week of launch it had 100,000 users."
+      "title": "Apa Yang Dipotong Dari Burbn",
+      "body": "Kevin Systrom dan Mike Krieger menghabiskan hampir setahun membina aplikasi check-in berfitur lengkap bernama Burbn, kemudian menilai binaan iPhone mereka sendiri yang siap sebagai terlalu sesak. Mereka memotongnya kepada gambar, komen, dan suka, dan melancarkan hasilnya lapan minggu kemudian sebagai Instagram.",
+      "coda": "Dalam masa seminggu selepas pelancaran, ia mempunyai 100,000 pengguna."
     },
     "tz-database-lawsuit": {
-      "tag": "Incident",
-      "title": "The Lawsuit Over the Time Zone Database",
-      "body": "In October 2011 astrology-software maker Astrolabe sued the tz database's maintainers, claiming its zone data infringed an atlas it published. The mailing list and FTP server went dark. ICANN stepped in to host the database; Astrolabe withdrew the suit in February 2012.",
-      "coda": "An astrology company's copyright claim over sunrise tables was withdrawn without payment."
+      "tag": "Insiden",
+      "title": "Guaman Atas Pangkalan Data Zon Masa",
+      "body": "Pada Oktober 2011, pengeluar perisian astrologi Astrolabe menggugat penyelenggara pangkalan data tz, mendakwa data zonnya melanggar atlas yang diterbitkan olehnya. Senarai mel dan pelayan FTP menjadi gelap. ICANN campur tangan untuk menjadi hos pangkalan data; Astrolabe menarik balik guaman pada Februari 2012.",
+      "coda": "Tuntutan hak cipta syarikat astrologi atas jadual matahari terbit ditarik balik tanpa bayaran."
     },
     "instagram-facebook-2012": {
-      "tag": "Ridicule",
-      "title": "A Billion for a Filter",
-      "body": "In April 2012 Facebook announced it was paying $1 billion for Instagram, a 13-person team with no revenue. On The Daily Show, Jon Stewart asked, \"A billion dollars of money? For a thing that kind of ruins your pictures?\" Measured against team size and revenue, the question was not unfair.",
-      "coda": "The deal is now cited routinely as one of the best acquisitions in tech history."
+      "tag": "Ketawa",
+      "title": "Satu Bilion Untuk Satu Penapis",
+      "body": "Pada April 2012, Facebook mengumumkan ia membayar $1 bilion untuk Instagram, pasukan 13 orang tanpa pendapatan. Di The Daily Show, Jon Stewart bertanya, \"Satu bilion dolar wang? Untuk sesuatu yang agak merosakkan gambar anda?\" Diukur terhadap saiz pasukan dan pendapatan, soalan itu tidak tidak adil.",
+      "coda": "Perjanjian ini kini kerap dirujuk sebagai salah satu pengambilalihan terbaik dalam sejarah teknologi."
     },
     "didi-alibaba-resignation": {
-      "tag": "Resignation",
-      "title": "From Alibaba to taxis",
-      "body": "Cheng Wei spent eight years at Alibaba, working up to deputy general manager of Alipay's consumer business. In June 2012 he quit and, with Wu Rui and Li Xiang, started a taxi-hailing app. When it launched on September 9, only sixteen drivers were online at once.",
-      "coda": "Two months later, more than a hundred drivers were online at the same time."
+      "tag": "Meletak Jawatan",
+      "title": "Dari Alibaba ke teksi",
+      "body": "Cheng Wei menghabiskan lapan tahun di Alibaba, naik ke jawatan timbalan pengarah umum perniagaan pengguna Alipay. Pada Jun 2012 beliau berhenti dan, bersama Wu Rui dan Li Xiang, memulakan aplikasi panggilan teksi. Apabila dilancarkan pada 9 September, hanya enam belas pemandu dalam talian serentak.",
+      "coda": "Dua bulan kemudian, lebih daripada seratus pemandu dalam talian serentak."
     },
     "knight-capital-power-peg": {
-      "tag": "Incident",
-      "title": "The Eighth Server",
-      "body": "Knight Capital pushed new trading code to eight servers; only seven took it. The eighth still ran dead Power Peg code, retired years earlier, which live orders woke up. In 45 minutes Knight built $3.5B long and $3.15B short. The SEC's finding: nobody reviewed the incomplete deploy.",
-      "coda": "Knight was acquired by a rival within a week of the loss."
+      "tag": "Insiden",
+      "title": "Pelayan Kelapan",
+      "body": "Knight Capital menolak kod perdagangan baharu ke lapan pelayan; hanya tujuh menerimanya. Pelayan kelapan masih menjalankan kod Power Peg mati, yang ditamatkan tahun-tahun sebelumnya, yang pesanan langsung bangunkan. Dalam 45 minit Knight membina $3.5B panjang dan $3.15B pendek. Penemuan SEC: tiada siapa meninjau penyebaran tidak lengkap.",
+      "coda": "Knight diambil alih oleh pesaing dalam tempoh seminggu selepas kerugian."
     },
     "dnnresearch-week-of-bidding": {
-      "tag": "Auction",
-      "title": "A Week of Bidding",
-      "body": "In 2012 a University of Toronto professor and his two graduate students crushed the field in an image-recognition contest, then incorporated a shell company to sell themselves. Google, Microsoft, Baidu, and DeepMind spent a week bidding against each other for it.",
-      "coda": "Hinton chose Google. One of the two students was Ilya Sutskever."
+      "tag": "Lelong",
+      "title": "Seminggu Lelong",
+      "body": "Pada 2012 seorang profesor Universiti Toronto dan dua pelajar ijazah beliau menghancurkan bidang dalam pertandingan pengecaman imej, kemudian menggabungkan syarikat cengkerang untuk menjual diri mereka. Google, Microsoft, Baidu, dan DeepMind menghabiskan seminggu berlelong antara satu sama lain untuknya.",
+      "coda": "Hinton memilih Google. Salah seorang daripada dua pelajar ialah Ilya Sutskever."
     },
     "xiaohongshu-name": {
-      "tag": "Etymology",
-      "title": "Not that little red book",
-      "body": "Most people assume the name points at the other red book. The founder's own account is duller: Bain & Company and the Stanford Graduate School of Business, the firm he worked at and the school he attended, both run on red.",
-      "coda": "Translated into English, the name comes out identical to the other one anyway."
+      "tag": "Etimologi",
+      "title": "Bukan buku merah kecil itu",
+      "body": "Kebanyakan orang menganggap nama itu menunjuk kepada buku merah yang lain. Akaun pengasas sendiri lebih membosankan: Bain & Company dan Sekolah Perniagaan Graduan Stanford, firma tempat beliau bekerja dan sekolah yang beliau hadiri, kedua-duanya beroperasi pada merah.",
+      "coda": "Diterjemahkan ke bahasa Inggeris, nama itu keluar sama dengan yang lain juga."
     },
     "china-wechat-red-envelope-pearl-harbor": {
-      "tag": "Payments",
+      "tag": "Pembayaran",
       "title": "Pearl Harbor, Digital",
-      "body": "Around Chinese New Year 2014, WeChat's red-envelope feature went live; users grabbed over 40 million red packets within days. On the app Laiwang, Jack Ma called it a 'Pearl Harbor sneak attack' — effective short-term, he wrote, but healthy long-term growth mattered more.",
-      "coda": "The red envelope became a payments funnel."
+      "body": "Sekitar Tahun Baru Cina 2014, ciri sampul merah WeChat aktif; pengguna mengambil lebih daripada 40 juta sampul merah dalam beberapa hari. Pada aplikasi Laiwang, Jack Ma memanggilnya 'serangan selit Pearl Harbor' — berkesan jangka pendek, tulis beliau, tetapi pertumbuhan jangka panjang yang sihat lebih penting.",
+      "coda": "Sampul merah menjadi corong pembayaran."
     },
     "heartbleed-two-person-team": {
-      "tag": "Incident",
-      "title": "A Team of Four",
-      "body": "Heartbleed's missing bounds check entered OpenSSL's heartbeat extension in December 2011 and sat unnoticed for two years until independent researchers found it in April 2014. At the time, the codebase behind most of the web's HTTPS traffic was maintained by four volunteers, one full-time.",
-      "coda": "The fix shipped the same day the bug was disclosed."
+      "tag": "Insiden",
+      "title": "Pasukan Empat Orang",
+      "body": "Pemeriksaan sempadan yang hilang dalam Heartbleed memasuki sambungan heartbeat OpenSSL pada Disember 2011 dan tidak disedari selama dua tahun sehingga penyelidik bebas menemuinya pada April 2014. Pada masa itu, pangkalan kod di sebalik kebanyakan trafik HTTPS web diuruskan oleh empat sukarelawan, seorang sepenuh masa.",
+      "coda": "Pembaikan dikeluarkan pada hari yang sama bug itu didedahkan."
     },
     "goto-fail-duplicate": {
-      "tag": "Security",
-      "title": "The Duplicate Jump",
-      "body": "Inside Apple's SSLVerifySignedServerKeyExchange, a goto fail; line was duplicated. The second copy sat outside any if, so the function always jumped past the signature check and returned success regardless.",
-      "coda": "The duplicate line ran unchanged on the affected systems for months."
+      "tag": "Keselamatan",
+      "title": "Lompatan Duplikat",
+      "body": "Di dalam SSLVerifySignedServerKeyExchange Apple, baris goto fail; diduplikat. Salinan kedua berada di luar mana-mana if, jadi fungsi sentiasa melompat melepasi semakan tandatangan dan mengembalikan kejayaan tanpa mengira apa.",
+      "coda": "Baris duplikat itu berjalan tanpa perubahan pada sistem yang terjejas selama berbulan-bulan."
     },
     "ntp-harlan-stenn": {
-      "tag": "Time",
-      "title": "Who Sets the Clock",
-      "body": "Banks, exchanges and satellite systems synchronize against NTP. David Mills designed the protocol; the reference implementation is now led, largely alone, by Harlan Stenn. In March 2015 trade press ran the headline 'NTP Needs Money: Is A Foundation The Answer?'",
-      "coda": "The foundation is still fundraising toward its budget."
+      "tag": "Masa",
+      "title": "Siapa Tetapkan Jam",
+      "body": "Bank, pertukaran dan sistem satelit menyegerakkan terhadap NTP. David Mills mereka bentuk protokol; pelaksanaan rujukan kini diketuai, kebanyakannya seorang diri, oleh Harlan Stenn. Pada Mac 2015 akhbar perdagangan memuatkan tajuk 'NTP Needs Money: Is A Foundation The Answer?'",
+      "coda": "Yayasan itu masih mengumpul dana menuju bajetnya."
     },
     "alphago-lee-sedol-2016": {
       "tag": "Go",
-      "title": "Stone One Hundred and Two",
-      "body": "AlphaGo beat Lee Sedol four games to one in Seoul in March 2016; Lee's only win came in game four. Afterward he said he had made a critical error early in game one, calling the computer's play there excellent and one move unlike anything a human player would choose.",
-      "coda": "The move he singled out kept only a stone number, no name."
+      "title": "Batu Seratus Dua",
+      "body": "AlphaGo mengalahkan Lee Sedol empat perlawanan kepada satu di Seoul pada Mac 2016; kemenangan tunggal Lee berlaku pada perlawanan empat. Selepas itu beliau berkata beliau telah membuat kesilapan kritikal awal dalam perlawanan satu, memanggil permainan komputer di sana cemerlang dan satu langkah tidak seperti apa yang pemain manusia akan pilih.",
+      "coda": "Langkah yang beliau tonjolkan hanya mengekalkan nombor batu, tiada nama."
     },
     "aws-s3-2017-typo": {
-      "tag": "Incident",
-      "title": "One Wide Argument",
-      "body": "An S3 engineer ran an authorized command meant to take a small number of billing servers offline, but one input covered a wider range than intended. The removed servers also backed the index subsystem, which had not been fully restarted in years and came back far slower than expected.",
-      "coda": "The outage ran roughly four hours; AWS's own status page depended on the same systems."
+      "tag": "Insiden",
+      "title": "Satu Argumen Luas",
+      "body": "Jurutera S3 menjalankan arahan yang diiktiraf yang dimaksudkan untuk mematikan sejumlah kecil pelayan bil, tetapi satu input merangkumi julat yang lebih luas daripada yang dimaksudkan. Pelayan yang dialih keluar juga menyokong subsistem indeks, yang tidak telah dimulakan semula sepenuhnya dalam beberapa tahun dan kembali jauh lebih perlahan daripada yang dijangkakan.",
+      "coda": "Kehilangan perkhidmatan berjalan kira-kira empat jam; halaman status AWS sendiri bergantung pada sistem yang sama."
     },
     "gitlab-2017-rm-rf": {
-      "tag": "Incident",
-      "title": "Five Backups, Zero",
-      "body": "An engineer meant to clear a lagging replica but deleted the PostgreSQL data directory on the primary instead, stopping seconds too late; roughly 300GB was already gone. GitLab found that of five backup and replication methods it had running, none could actually restore the data.",
-      "coda": "Recovery relied on a snapshot someone happened to take six hours earlier."
+      "tag": "Insiden",
+      "title": "Lima Sandaran, Sifar",
+      "body": "Seorang jurutera bermaksud membersihkan replika yang tertinggal tetapi memadam direktori data PostgreSQL pada utama sebaliknya, berhenti beberapa saat terlalu lewat; kira-kira 300GB sudah hilang. GitLab mendapati daripada lima kaedah sandaran dan replikasi yang dijalankan, tiada satu pun yang boleh memulihkan data.",
+      "coda": "Pemulihan bergantung pada snapshot yang diambil enam jam sebelumnya."
     },
     "attention-title-beatles-2017": {
-      "tag": "Paper",
-      "title": "A Title Borrowed From the Beatles",
-      "body": "Eight Google researchers published \"Attention Is All You Need\" in June 2017; the title nods to the Beatles song \"All You Need Is Love.\" The paper's stated aim was a sequence model for machine translation that dropped recurrent networks in favor of attention alone.",
-      "coda": "All eight authors have since left Google."
+      "tag": "Kertas",
+      "title": "Tajuk Dipinjam Daripada The Beatles",
+      "body": "Lapan penyelidik Google menerbitkan \"Attention Is All You Need\" pada Jun 2017; tajuk itu merujuk kepada lagu The Beatles \"All You Need Is Love.\" Matlamat yang dinyatakan dalam kertas itu ialah model jujukan untuk terjemahan mesin yang membuang rangkaian berulang demi perhatian sahaja.",
+      "coda": "Kesemua lapan pengarang telah meninggalkan Google sejak itu."
     },
     "cloudflare-2019-regex": {
-      "tag": "Incident",
-      "title": "The Fuse That Was Removed",
-      "body": "A new WAF rule with a catastrophically backtracking regex pushed CPU on Cloudflare's global network to near 100 percent within seconds of deployment. The rule itself was ordinary; what let it detonate was a CPU-usage safeguard on regex rules quietly deleted weeks earlier in a refactor.",
-      "coda": "The outage lasted 27 minutes and ended when the WAF was disabled globally."
+      "tag": "Insiden",
+      "title": "Fius Yang Dibuang",
+      "body": "Peraturan WAF baharu dengan regex yang backtrack secara bencana mendorong CPU pada rangkaian global Cloudflare ke hampir 100 peratus dalam beberapa saat selepas penyebaran. Peraturan itu sendiri biasa; yang membolehkan ia meletup ialah perlindungan penggunaan CPU pada peraturan regex yang dibuang secara senyap beberapa minggu sebelumnya dalam refaktor.",
+      "coda": "Kehilangan perkhidmatan berlangsung 27 minit dan berakhir apabila WAF dilumpuhkan secara global."
     },
     "requests-kenneth-reitz": {
-      "tag": "Handoff",
-      "title": "Handing Over the Keys",
-      "body": "Requests logs over 30 million downloads a month and became the standard HTTP client for Python. Kenneth Reitz released it on February 14, 2011. In 2019, after health problems, he handed control of the project to the Python Software Foundation.",
-      "coda": "He has not returned to lead the project since stepping down."
+      "tag": "Serahan",
+      "title": "Menyerahkan Kunci",
+      "body": "Requests mencatat lebih 30 juta muat turun sebulan dan menjadi klien HTTP piawai untuk Python. Kenneth Reitz mengeluarkannya pada 14 Februari 2011. Pada 2019, selepas masalah kesihatan, beliau menyerahkan kawalan projek kepada Yayasan Perisian Python.",
+      "coda": "Beliau tidak kembali memimpin projek sejak meletak jawatan."
     },
     "linux-y2038-kernel-fix": {
-      "tag": "Fix",
-      "title": "Eighteen Years Early",
-      "body": "32-bit Unix systems will overflow their time_t counter on 19 January 2038. Linux 5.6, released in 2020, was the first kernel able to keep a 32-bit system running past that date. Applications still need a rebuild against a 64-bit time_t to actually benefit.",
-      "coda": "The kernel was patched years before most 32-bit userspace caught up."
+      "tag": "Pembetulan",
+      "title": "Lapan Belas Tahun Awal",
+      "body": "Sistem Unix 32-bit akan melimpah kaunter time_t pada 19 Januari 2038. Linux 5.6, dikeluarkan pada 2020, ialah kernel pertama yang mampu mengekalkan sistem 32-bit beroperasi selepas tarikh itu. Aplikasi masih memerlukan pembinaan semula terhadap time_t 64-bit untuk mendapat manfaat sebenar.",
+      "coda": "Kernel dipatch bertahun-tahun sebelum kebanyakan ruang pengguna 32-bit mengejar."
     },
     "log4shell-eight-years": {
-      "tag": "Vulnerability",
-      "title": "Eight Years Unread",
-      "body": "Log4j sits inside most enterprise Java software; Wiz and EY found 93 percent of cloud environments exposed to Log4Shell. The flaw existed in the code since 2013. It was reported November 24, 2021 and disclosed publicly on December 10, rated CVSS 10.",
-      "coda": "A handful of volunteers wrote the fix that reached millions of servers."
+      "tag": "Kerentanan",
+      "title": "Lapan Tahun Tidak Dibaca",
+      "body": "Log4j berada di dalam kebanyakan perisian Java perusahaan; Wiz dan EY mendapati 93 peratus persekitaran awan terdedah kepada Log4Shell. Kekurangan itu wujud dalam kod sejak 2013. Ia dilaporkan pada 24 November 2021 dan didedahkan secara awam pada 10 Disember, dinilai CVSS 10.",
+      "coda": "Segelintir sukarelawan menulis pembaikan yang sampai ke jutaan pelayan."
     },
     "core-js-denis-pushkarev": {
-      "tag": "Maintainer",
-      "title": "The Patch Nobody Replaced",
-      "body": "core-js ships inside WhatsApp, Netflix, Apple and PayPal, logging roughly 250 million downloads a month. Its author, Denis Pushkarev, was in a fatal 2019 car accident, served about ten months in prison starting January 2020, and kept maintaining the library throughout.",
-      "coda": "Monthly donations fell from about 2,500 dollars to 400."
+      "tag": "Penyelenggara",
+      "title": "Palam Yang Tidak Digantikan",
+      "body": "core-js dihantar di dalam WhatsApp, Netflix, Apple dan PayPal, mencatat kira-kira 250 juta muat turun sebulan. Pengarangnya, Denis Pushkarev, terlibat dalam kemalangan kereta maut pada 2019, menjalani hukuman penjara kira-kira sepuluh bulan bermula Januari 2020, dan terus menyelenggara perpustakaan itu sepanjang tempoh itu.",
+      "coda": "Sumbangan bulanan jatuh daripada kira-kira 2,500 dolar kepada 400."
     },
     "tesla-westinghouse-royalty": {
-      "tag": "Patents",
-      "title": "The Royalty Tesla Waived",
-      "body": "Westinghouse's contract paid Tesla $2.50 per horsepower in royalties. In early 1891, with the company close to failure, Tesla released it from the royalty clause.",
-      "coda": "In 1897 Westinghouse bought his patents outright for $216,000."
+      "tag": "Paten",
+      "title": "Royalti Yang Dibuang Tesla",
+      "body": "Kontrak Westinghouse membayar Tesla $2.50 setiap kuasa kuda sebagai royalti. Pada awal 1891, apabila syarikat hampir gagal, Tesla membebaskannya daripada klausa royalti.",
+      "coda": "Pada 1897 Westinghouse membeli paten beliau sepenuhnya sebanyak $216,000."
     },
     "salk-polio-patent": {
-      "tag": "Patents",
-      "title": "The Sun Has No Patent",
-      "body": "Edward Murrow asked who owned the polio vaccine patent. Salk answered there was none, could you patent the sun. Foundation lawyers had already examined the question and found the vaccine lacked patentable novelty because of prior art.",
-      "coda": "The unpatented vaccine was later valued at seven billion dollars."
+      "tag": "Paten",
+      "title": "Matahari Tidak Mempunyai Paten",
+      "body": "Edward Murrow bertanya siapa yang memiliki paten vaksin polio. Salk menjawab tiada, bolehkah anda mematenkan matahari. Peguam yayasan telah memeriksa soalan itu dan mendapati vaksin itu kekurangan kebaruan yang boleh dipatenkan kerana karya terdahulu.",
+      "coda": "Vaksin yang tidak dipatenkan itu kemudiannya dinilai sebanyak tujuh bilion dolar."
     },
     "cobol-two-hundred-billion-lines": {
-      "tag": "Legacy",
-      "title": "Two Hundred Billion Lines",
-      "body": "By 1997 Gartner estimated 200 billion lines of COBOL running eighty percent of business programs worldwide. In 2020, as COVID-era unemployment claims surged, several US state governments publicly appealed for COBOL programmers to keep their decades-old benefits systems running.",
-      "coda": "Six years have passed since that appeal."
+      "tag": "Warisan",
+      "title": "Dua Ratus Bilion Baris",
+      "body": "Pada 1997 Gartner menganggarkan 200 bilion baris COBOL mengendalikan lapan puluh peratus program perniagaan di seluruh dunia. Pada 2020, apabila tuntutan pengangguran era COVID meningkat, beberapa kerajaan negeri AS secara terbuka memohon programmer COBOL untuk mengekalkan sistem faedah berusia beberapa dekad mereka.",
+      "coda": "Enam tahun telah berlalu sejak permohonan itu."
     },
     "sabre-sage-to-booking": {
-      "tag": "Booking",
-      "title": "From Radar to Reservations",
-      "body": "American Airlines and IBM signed their partnership in 1957, adapting the Air Force's Cold War SAGE air-defense architecture into a booking system. SABRE ran its first online test in 1960 and launched fully in 1964, becoming the world's first online transaction processing system.",
-      "coda": "The parent company still operates, more than sixty years later."
+      "tag": "Tempahan",
+      "title": "Dari Radar ke Tempahan",
+      "body": "American Airlines dan IBM menandatangani kerjasama mereka pada tahun 1957, menyesuaikan seni bina pertahanan udara SAGE Tentera Udara era Perang Dingin menjadi sistem tempahan. SABRE menjalankan ujian dalam talian pertamanya pada tahun 1960 dan dilancarkan sepenuhnya pada tahun 1964, menjadi sistem pemprosesan transaksi dalam talian pertama di dunia.",
+      "coda": "Syarikat induk masih beroperasi, lebih daripada enam puluh tahun kemudian."
     },
     "kay-objects-messaging": {
-      "tag": "Naming",
-      "title": "Objects, Not the Point",
-      "body": "By 1967 Alan Kay was using \"object-oriented\" for a design built on cells or network nodes talking only through messages. He later wrote he was sorry he ever coined the term \"objects,\" because it draws attention to the lesser idea and buries the one he meant: messaging.",
-      "coda": "The word he regretted outlived the idea he meant it to carry."
+      "tag": "Penamaan",
+      "title": "Objek, Bukan Intinya",
+      "body": "Menjelang tahun 1967 Alan Kay telah menggunakan \"berorientasikan objek\" untuk reka bentuk yang dibina di atas sel atau nod rangkaian yang hanya berkomunikasi melalui mesej. Dia kemudian menulis bahawa dia menyesal pernah mencipta istilah \"objek,\" kerana ia menarik perhatian kepada idea yang lebih kecil dan menimbus idea yang dia maksudkan: pemesejan.",
+      "coda": "Perkataan yang disesalinya itu hidup lebih lama daripada idea yang ingin dibawanya."
     },
     "voyager-68-kilobits": {
-      "tag": "Deep Space",
-      "title": "Around the broken chip",
-      "body": "Voyager 1 launched in September 1977. Forty-seven years out, a memory chip in its flight data subsystem failed, three percent of it corrupted beyond repair. On 20 April 2024 engineers rearranged the code around the damaged area and the signal came back.",
-      "coda": "Its generators may supply enough power to return engineering data until 2036."
+      "tag": "Angkasa Dalam",
+      "title": "Mengelilingi cip yang rosak",
+      "body": "Voyager 1 dilancarkan pada September 1977. Empat puluh tujuh tahun kemudian, cip memori dalam subsistem data penerbangannya gagal, tiga peratus daripadanya rosak tanpa dapat dibaiki. Pada 20 April 2024, jurutera menyusun semula kod di sekitar kawasan yang rosak dan isyarat itu kembali.",
+      "coda": "Penjananya mungkin membekalkan kuasa yang mencukupi untuk menghantar data kejuruteraan sehingga 2036."
     },
     "gif-lzw-unisys": {
-      "tag": "Patents",
-      "title": "The Free Format That Wasn't",
-      "body": "CompuServe shipped GIF in June 1987 using LZW compression without realizing Sperry Corporation already held the patent on it. In December 1994 Unisys, formed from Sperry's merger, announced it would collect licensing fees, prompting developers to build PNG as a replacement.",
-      "coda": "The patents ran out worldwide in 2004, and only then was GIF free."
+      "tag": "Paten",
+      "title": "Format Percuma Yang Sebenarnya Tidak",
+      "body": "CompuServe mengeluarkan GIF pada Jun 1987 menggunakan mampatan LZW tanpa menyedari bahawa Sperry Corporation sudah memegang paten untuknya. Pada Disember 1994, Unisys, yang terbentuk daripada penggabungan Sperry, mengumumkan bahawa ia akan mengutip yuran lesen, mendorong pembangun untuk membina PNG sebagai pengganti.",
+      "coda": "Paten itu tamat tempoh di seluruh dunia pada tahun 2004, dan hanya ketika itulah GIF menjadi percuma."
     },
     "zimmermann-pgp-release": {
-      "tag": "Crypto",
-      "title": "PGP Given Away, Then Investigated",
-      "body": "Phil Zimmermann released PGP with its source code on public FTP in 1991, the first widely available public-key encryption program. US Customs opened a criminal investigation for export-control violations. It ran three years and was dropped without indictment in early 1996.",
-      "coda": "Three years under investigation, no charges filed, no royalties ever collected."
+      "tag": "Kripto",
+      "title": "PGP Diberi Percuma, Kemudian Disiasat",
+      "body": "Phil Zimmermann mengeluarkan PGP dengan kod sumbernya di FTP awam pada tahun 1991, program penyulitan kunci awam pertama yang tersedia secara meluas. Kastam AS membuka siasatan jenayah untuk pelanggaran kawalan eksport. Ia berlangsung selama tiga tahun dan digugurkan tanpa pendakwaan pada awal 1996.",
+      "coda": "Tiga tahun disiasat, tiada pertuduhan difailkan, tiada royalti pernah dikutip."
     },
     "json-good-not-evil": {
-      "tag": "License",
-      "title": "For Good, Not Evil",
-      "body": "Douglas Crockford's 2002 license for the JSON libraries adds one clause: the software shall be used for Good, not Evil. JSON itself spread free and unpatented into nearly every API on the internet, but that single sentence made the license incompatible with standard open-source terms.",
-      "coda": "The format became universal; the joke clause it shipped with did not survive contact with corporate legal."
+      "tag": "Lesen",
+      "title": "Untuk Kebaikan, Bukan Keganasan",
+      "body": "Lisens 2002 Douglas Crockford untuk perpustakaan JSON menambah satu klausa: perisian hendaklah digunakan untuk Kebaikan, bukan Keganasan. JSON sendiri tersebar secara percuma dan tanpa paten ke hampir setiap API di internet, tetapi ayat tunggal itu menjadikan lisens tidak serasi dengan terma sumber terbuka piawai.",
+      "coda": "Format itu menjadi sejagat; klausa lawak yang disertakan tidak bertahan selepas berhadapan dengan pihak guaman korporat."
     },
     "sogou-movie-line": {
-      "tag": "Naming",
-      "title": "Sogou's Line Was a Joke First",
-      "body": "The 2001 comedy Big Shot's Funeral has a wordplay line about search engines: \"They search Sohu, we search Sogou, everyone searches their own way.\" Three years later, in 2004, Sohu's team took the joke and launched it as a real search engine, Sogou.",
-      "coda": "The punchline became the product name, unedited."
+      "tag": "Penamaan",
+      "title": "Baris Sogou Adalah Lawak Mula-mula",
+      "body": "Filem komedi 2001 Big Shot's Funeral mempunyai baris permainan kata tentang enjin carian: \"Mereka mencari Sohu, kami mencari Sogou, semua orang mencari cara mereka sendiri.\" Tiga tahun kemudian, pada 2004, pasukan Sohu mengambil lawak itu dan melancarkannya sebagai enjin carian sebenar, Sogou.",
+      "coda": "Punchline menjadi nama produk, tanpa suntingan."
     },
     "tbl-double-slash": {
-      "tag": "Design",
-      "title": "The Extra Slashes",
-      "body": "Tim Berners-Lee put \"//\" in front of the domain name when he designed the URL. In October 2009 he admitted, given the colon already there, the two slashes were not needed at all — \"it seemed like a good idea at the time,\" he said.",
-      "coda": "Every URL since has still typed both of them."
+      "tag": "Reka Bentuk",
+      "title": "Garis Miring Tambahan",
+      "body": "Tim Berners-Lee meletakkan \"//\" di hadapan nama domain apabila beliau mereka bentuk URL. Pada Oktober 2009 beliau mengakui, memandangkan titik dua sudah ada, dua garis miring itu tidak diperlukan langsung — \"ia kelihatan seperti idea yang baik pada masa itu,\" katanya.",
+      "coda": "Setiap URL sejak itu masih menaip kedua-duanya."
     },
     "bilibili-mikufans": {
-      "tag": "Naming",
-      "title": "Bilibili's First Name Was Mikufans",
-      "body": "The site launched in June 2009 as Mikufans, built for fans of the vocaloid Hatsune Miku. In January 2010 it was renamed Bilibili, after a nickname the protagonist of a light novel series gives Misaka Mikoto — an onomatopoeia for electric discharge.",
-      "coda": "The renamed site kept the name through every subsequent redesign."
+      "tag": "Penamaan",
+      "title": "Nama Pertama Bilibili Adalah Mikufans",
+      "body": "Laman itu dilancarkan pada Jun 2009 sebagai Mikufans, dibina untuk peminat vocaloid Hatsune Miku. Pada Januari 2010 ia ditukar nama kepada Bilibili, selepas nama samaran yang diberikan watak utama siri novel ringan kepada Misaka Mikoto — satu onomatopeia untuk pelepasan elektrik.",
+      "coda": "Laman yang ditukar nama itu mengekalkan nama itu melalui setiap reka bentuk semula berikutnya."
     },
     "kuaishou-gif-app": {
-      "tag": "Naming",
-      "title": "Kuaishou Began as a GIF App",
-      "body": "Kuaishou launched in March 2011 as GIF Kuaishou, a phone app for making and sharing GIF images. In 2012 it pivoted to short video, and in 2014 the GIF prefix was dropped, leaving the name it carries as a video platform today.",
-      "coda": "The GIF prefix is gone; the underlying company name never changed."
+      "tag": "Penamaan",
+      "title": "Kuaishou Bermula Sebagai Aplikasi GIF",
+      "body": "Kuaishou dilancarkan pada Mac 2011 sebagai GIF Kuaishou, aplikasi telefon untuk membuat dan berkongsi imej GIF. Pada 2012 ia beralih kepada video pendek, dan pada 2014 awalan GIF dihapuskan, meninggalkan nama yang dibawa sebagai platform video hari ini.",
+      "coda": "Awalan GIF hilang; nama syarikat asas tidak pernah berubah."
     },
     "zhihu-invite-only": {
-      "tag": "Naming",
-      "title": "Zhihu Needed an Invitation",
-      "body": "Zhihu went live on January 26, 2011, and for its first two years registration required an invitation code. Open sign-up did not arrive until March 2013. The name itself is classical Chinese for \"do you know\" — a question, not a slogan.",
-      "coda": "Registration has required no invitation since March 2013."
+      "tag": "Penamaan",
+      "title": "Zhihu Memerlukan Jemputan",
+      "body": "Zhihu dilancarkan pada 26 Januari 2011, dan selama dua tahun pertama pendaftaran memerlukan kod jemputan. Pendaftaran terbuka tidak tiba sehingga Mac 2013. Namanya sendiri ialah bahasa Cina klasik untuk \"adakah anda tahu\" — sebuah soalan, bukan slogan.",
+      "coda": "Pendaftaran tidak memerlukan jemputan sejak Mac 2013."
     },
     "hp-garage-palo-alto": {
-      "tag": "The garage",
-      "title": "The Garage on Addison Avenue",
-      "body": "In 1938 David Packard and his wife rented the ground-floor apartment of a 1905 house at 367 Addison Avenue in Palo Alto. He and Bill Hewlett put 538 dollars into the one-car garage behind it and built their first product, an audio oscillator.",
-      "coda": "The property is now on the National Register of Historic Places and is not open to visitors."
+      "tag": "Garaj",
+      "title": "Garaj di Jalan Addison",
+      "body": "Pada 1938 David Packard dan isterinya menyewa pangsapuri tingkat bawah sebuah rumah tahun 1905 di 367 Jalan Addison di Palo Alto. Beliau dan Bill Hewlett melaburkan 538 dolar ke dalam garaj satu kereta di belakangnya dan membina produk pertama mereka, satu osilator audio.",
+      "coda": "Hartanah kini tersenarai dalam Daftar Kebangsaan Tempat Bersejarah dan tidak dibuka kepada pelawat."
     },
     "apple-crist-drive-garage": {
-      "tag": "The myth",
-      "title": "When the bedroom ran out",
-      "body": "In 1976 Steve Jobs and Steve Wozniak assembled the first Apple boards at the house Jobs's parents owned in Los Altos, California.",
-      "coda": "In his bedroom first. The garage only later, when there was no space left."
+      "tag": "Mitos",
+      "title": "Apabila Bilik Tidur Habis",
+      "body": "Pada 1976 Steve Jobs dan Steve Wozniak memasang papan Apple pertama di rumah yang dimiliki ibu bapa Jobs di Los Altos, California.",
+      "coda": "Di bilik tidurnya dahulu. Garaj kemudian, apabila tiada ruang lagi."
     },
     "huawei-nanyou-flat": {
-      "tag": "The flat",
-      "title": "A Flat in Nanyou Xincun",
-      "body": "In September 1987 Huawei was registered in a residential block in Nanyou Xincun, Shenzhen, with 21,000 yuan of capital, fourteen employees, and six shareholders splitting the equity evenly.",
-      "coda": "The company moved its headquarters out in 1989; the flat's tenancy as HQ ended there."
+      "tag": "Pangsapuri",
+      "title": "Sebuah Pangsapuri di Nanyou Xincun",
+      "body": "Pada September 1987 Huawei didaftarkan di sebuah blok kediaman di Nanyou Xincun, Shenzhen, dengan modal 21,000 yuan, empat belas pekerja, dan enam pemegang saham yang membahagikan ekuiti sama rata.",
+      "coda": "Syarikat memindahkan ibu pejabatnya keluar pada 1989; penyewaan pangsapuri sebagai ibu pejabat berakhir di situ."
     },
     "wojcicki-garage-menlo-park": {
-      "tag": "The landlord",
-      "title": "The Garage She Rented Out",
-      "body": "In September 1998 Page and Brin rented a garage in Menlo Park from Susan Wojcicki for $1,700 a month. Google was incorporated there.",
-      "coda": "She later became YouTube's chief executive."
+      "tag": "Pewang",
+      "title": "Garaj Yang Disewakan",
+      "body": "Pada September 1998 Page dan Brin menyewa sebuah garaj di Menlo Park daripada Susan Wojcicki sebanyak $1,700 sebulan. Google diinkorporasikan di situ.",
+      "coda": "Beliau kemudian menjadi ketua eksekutif YouTube."
     },
     "tencent-seg-403": {
-      "tag": "Room 403",
-      "title": "Building 2, Room 403",
-      "body": "In November 1998 Tencent registered at room 403, building two, of the Saige technology park in Huaqiangbei, Shenzhen. The building was full of startups like it, and the door was no different from any other.",
-      "coda": "The room is kept open only to Tencent employees now, under the name Tencent Origin."
+      "tag": "Bilik 403",
+      "title": "Bangunan 2, Bilik 403",
+      "body": "Pada November 1998 Tencent mendaftar di bilik 403, bangunan dua, taman teknologi Saige di Huaqiangbei, Shenzhen. Bangunan itu penuh dengan startup seperti itu, dan pintunya tidak berbeza dengan mana-mana yang lain.",
+      "coda": "Bilik itu kini dibuka hanya kepada kakitangan Tencent, di bawah nama Tencent Origin."
     },
     "unitree-left-dji": {
-      "tag": "Resignation",
-      "title": "Out of DJI",
-      "body": "During his master's, Wang Xingxing built an all-electric quadruped robot on his own and called it XDog. After graduating he took a job at DJI, and left it soon after.",
-      "coda": "Unitree was registered in the Binjiang district of Hangzhou in August 2016."
+      "tag": "Meletakkan Jawatan",
+      "title": "Keluar dari DJI",
+      "body": "Semasa ijazah master, Wang Xingxing membina robot kukuat elektrik sepenuhnya sendiri dan menamakannya XDog. Selepas tamat pengajian beliau mengambil jawatan di DJI, dan meninggalkannya tidak lama selepas itu.",
+      "coda": "Unitree didaftarkan di daerah Binjiang, Hangzhou pada Ogos 2016."
     },
     "unitree-one-yuan-option": {
-      "tag": "Options",
-      "title": "One yuan a share",
-      "body": "In September 2017 Unitree signed option agreements with seventeen employees at one yuan per share. Further grants followed, held through a single employee vehicle.",
-      "coda": "Eight years later the company opened the book on its IPO."
+      "tag": "Pilihan",
+      "title": "Satu yuan satu saham",
+      "body": "Pada September 2017 Unitree menandatangani perjanjian pilihan dengan tujuh belas kakitangan pada satu yuan setiap saham. Pemberian lanjut diikuti, dipegang melalui satu kenderaan kakitangan.",
+      "coda": "Lapan tahun kemudian syarikat itu membuka buku mengenai IPO-nya."
     },
     "unitree-g1-price": {
-      "tag": "Pricing",
-      "title": "Ninety-nine thousand",
-      "body": "Humanoid robots had been priced as laboratory equipment. Unitree put the G1 on sale at 99,000 yuan, roughly the price of an entry-level car.",
-      "coda": "By 2025 humanoids were 51.78 percent of its revenue, on 5,500 units shipped."
+      "tag": "Penentuan Harga",
+      "title": "Lapan puluh sembilan ribu",
+      "body": "Robot humanoid telah dihargai sebagai peralatan makmal. Unitree meletakkan G1 untuk dijual pada 99,000 yuan, kira-kira harga kereta tahap asas.",
+      "coda": "Pada 2025 humanoid adalah 51.78 peratus daripada pendapatan, pada 5,500 unit dihantar."
     }
   }
 }
