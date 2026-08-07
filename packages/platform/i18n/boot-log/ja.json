@@ -1,5 +1,5 @@
 {
-  "panelLabel": "Boot log",
+  "panelLabel": "起動ログ",
   "entries": {
     "transistor-name-off-patent-1947": {
       "tag": "特許",
@@ -16,13 +16,13 @@
     "traitorous-eight-lie-detector-1957": {
       "tag": "分裂",
       "title": "嘘発見器メモ",
-      "body": "In May 1957, eight engineers at Shockley Semiconductor demanded William Shockley be replaced as manager. He had recorded phone calls, blocked staff from sharing results, and required lie-detector tests. On September 18, 1957, the eight founded Fairchild Semiconductor instead.",
+      "body": "1957年5月、Shockley Semiconductorの8名のエンジニアはWilliam Shockleyのマネージャー交代を要求した。彼は電話を録音し、スタッフが成果を共有することを妨害し、嘘発見器テストを義務づけていた。1957年9月18日、8名はFairchild Semiconductorを設立した。",
       "coda": "Wikipediaは、そのスピンオフに遡る企業の数十社の中にIntelとAMDを数えている。"
     },
     "kilby-noyce-six-months-1958-1959": {
-      "tag": "Parallel",
+      "tag": "並行",
       "title": "半年、一つのメダル",
-      "body": "Kilby demonstrated a working integrated circuit at Texas Instruments in September 1958, its parts joined by external wires. Noyce filed a monolithic silicon version at Fairchild in July 1959, mass-producible. Neither man rejected the other's claim to co-inventor.",
+      "body": "Kilbyは1958年9月、Texas Instrumentsで動作する集積回路を実演した。部品は外部ワイヤーで接続されていた。Noyceは1959年7月、Fairchildで量産可能な単結晶シリコン版を特許出願した。両者は互いの共同発明者としての主張を否定しなかった。",
       "coda": "Kilbyが単独で2000年のノーベル賞を受賞した。Noyceは1990年に死去していた。"
     },
     "perceptron-conscious-machine-1958": {
@@ -88,11 +88,11 @@
     "alarm-1202": {
       "tag": "事故",
       "title": "プログラム警報 1202",
-      "body": "Four minutes from the surface the guidance computer raised five alarms: a rendezvous radar switch left in the wrong position was eating its cycles. It did not hang. It shed the low-priority jobs, restarted, and kept the landing.",
+      "body": "地表から4分、誘導コンピュータが5つのアラームを発した。ドッキングレーダーのスイッチが誤った位置に残されており、サイクルを消費していた。ハングアップしなかった。低優先度のジョブを破棄し、再起動して着陸を続行した。",
       "coda": "負荷時に何を落とすべきかを知ることは、高くつく教訓である。"
     },
     "mariner-1": {
-      "tag": "Incident",
+      "tag": "事故",
       "title": "欠けたオーバーバー",
       "body": "Mariner 1は打ち上げから293秒後に破壊された。機内ビーコンが故障し、誘導方程式をプログラムに転記する際にRのオーバーバーが脱落した。そのバーは平均を取ることを意味していた。",
       "coda": "報道はオーバーバーの説明に苦しみ、ハイフンと書いた。ハイフンが定着した。"
@@ -197,16 +197,16 @@
       "tag": "ファウンドリ",
       "title": "五十六歳でのファウンドリ",
       "body": "1931年生まれ。テキサス・インスツルメンツの世界半導体事業のグループ副社長に昇進。その後、ジェネラル・インスツルメントの社長兼COOを務め、台湾の工業技術研究院（ITRI）の長も務めた。1987年、五十六歳でTSMCを設立。TSMCは製造するチップの設計は行わない。",
-      "coda": "It was the first foundry in the world to do nothing but manufacture."
+      "coda": "世界で初めて製造のみを行うファウンドリだった。"
     },
     "huawei-diet-pills": {
       "tag": "再販売業者",
-      "title": "Huawei's First Business Wasn't Tech",
-      "body": "Huawei registered with 21,000 yuan of capital on September 15, 1987, calling itself a technology company. It began by trading goods, including diet pills, then resold Hong Kong-made HAX switches for the margin. Its own switch, the BH01, was hand-assembled only in 1989.",
+      "title": "Huaweiの最初の事業はテクノロジーではなかった",
+      "body": "Huaweiは1987年9月15日、資本金21,000元で登記し、自らをテクノロジー会社と称した。最初は商品取引、ダイエット薬を含む、から始め、その後香港製HAXスイッチを転売して利益を得た。自社スイッチBH01は1989年にようやく手作業で組み立てられた。",
       "coda": "4年目に、同社は初めて自社の回路基板を設計した。"
     },
     "morris": {
-      "tag": "Incident",
+      "tag": "事故",
       "title": "測定",
       "body": "モリスはインターネットの大きさを知りたかったため、自身を複製するプログラムを書いた。ホストが既に感染済みの返答を偽装するのを防ぐため、彼はそのプログラムに7分の1の確率で再感染させる仕組みを組み込んだ。",
       "coda": "その7分の1の確率により、当時オンライン上にあった6万台のホストのうち約6,000台がダウンした。"
@@ -316,7 +316,7 @@
     "multics-shutdown": {
       "tag": "シャットダウン",
       "title": "最後の一人",
-      "body": "On 30 October 2000 the last known Multics installation running natively on Honeywell hardware was shut down at the Canadian Department of National Defence in Halifax, Nova Scotia.",
+      "body": "2000年10月30日、Honeywellハードウェア上でネイティブに動作する既知の最後のMulticsインストールが、ノバスコシア州ハリファックスのカナダ国防省で停止された。",
       "coda": "プロジェクト開始から35年後。"
     },
     "sqlite-no-license": {
@@ -405,8 +405,8 @@
     },
     "homebrew-volunteer-team": {
       "tag": "Foundation",
-      "title": "The Repository With No Employer",
-      "body": "Homebrew is the default package manager on most Mac developer machines; in 2013 it led all of GitHub in contributors. Max Howell wrote its first release in 2009. It is maintained today by a team of 34 people, all unpaid.",
+      "title": "雇用主のないリポジトリ",
+      "body": "HomebrewはほとんどのMac開発者マシンのデフォルトパッケージマネージャーである。2013年にはGitHub全体でコントリビューター数が首位だった。Max Howellが2009年に最初のリリースを書いた。現在は34名のチームが維持しており、全員無給である。",
       "coda": "資金調達歴はKickstarterとOpen Source Collectiveアカウントの2件である。"
     },
     "xiaomi-software-first": {
@@ -494,16 +494,16 @@
       "coda": "EngelbartとNelsonは後に、このエッセイをきっかけに始めた理由として挙げた。"
     },
     "jean-bartik-eniac-dinner": {
-      "tag": "Record",
+      "tag": "記録",
       "title": "彼女たちが招待されなかった夕食会",
-      "body": "At ENIAC's public unveiling on February 14, 1946, the trajectory program that impressed the room had been written by Jean Bartik and Betty Holberton. The press introduced only Eckert and Mauchly. None of the six women programmers were invited to the dinner after.",
+      "body": "1946年2月14日のENIAC公開披露式で、会場を驚かせた軌道プログラムはJean BartikとBetty Holbertonによって書かれていた。報道はEckertとMauchlyのみを紹介した。6名の女性プログラマーは式後の夕食に招待されなかった。",
       "coda": "彼女たちの名前は数十年後にイベント写真から掘り起こされた。"
     },
     "claude-shannon-juggling-theorem": {
-      "tag": "Paper",
+      "tag": "論文",
       "title": "ジョグリングの定理",
       "body": "1948年、シャノンは『A Mathematical Theory of Communication』を発表し、情報理論を創設した。数十年後、彼は同じ厳密性を趣味に向け、ボールの飛行時間、保持時間、ボール数と手の数の間の形式的関係式を導き出した。",
-      "coda": "It was collected in the same volume as the 1948 paper."
+      "coda": "1948年の論文と同じ巻に収録された。"
     },
     "mccarthy-1960-eval": {
       "tag": "起源",
@@ -579,7 +579,7 @@
     },
     "second-redefined-1967": {
       "tag": "計量学",
-      "title": "9,192,631,770 Cycles",
+      "title": "9,192,631,770サイクル",
       "body": "1960年までは、1秒は1900年熱帯年の分数として天文学的観測によって定められていた。1967年、度量衡総会がこれをセシウム133の遷移の9,192,631,770サイクルと再定義した。",
       "coda": "1秒の長さは太陽によって定められるのをやめ、原子によって定められるようになった。"
     },
@@ -592,8 +592,8 @@
     "rollkugel-vs-mouse": {
       "tag": "マウス",
       "title": "二つのマウス、一年",
-      "body": "In October 1968, Telefunken listed the Rollkugel mouse in a sales brochure, a rolling-ball device its engineers had built since 1966. Two months later, on December 9, Douglas Engelbart demonstrated the wooden mouse his SRI team had built since 1963. Neither team knew of the other.",
-      "coda": "Telefunken reached the market first and was forgotten; Engelbart came second and is what people mean by mouse."
+      "body": "1968年10月、Telefunkenは営業パンフレットにRollkugelマウスを掲載した。エンジニアが1966年から製作していたローリングボール装置だった。2か月後の12月9日、Douglas EngelbartはSRIチームが1963年から製作していた木製マウスを実演した。両チームは互いの存在を知らなかった。",
+      "coda": "Telefunkenは先に市場に出たが忘れ去られた。Engelbartは2位だったが、マウスと言えば彼を指す。"
     },
     "peter-principle-verified": {
       "tag": "研究",
@@ -653,7 +653,7 @@
       "tag": "起源",
       "title": "イーサメモ",
       "body": "1973年5月22日、Robert MetcalfeはXerox PARCのメモ「Ether Acquisition」を執筆し、Altoコンピュータを接続する共有ケーブルの手描き図を添付した。この技術は通常1976年の論文に遡る。実際のスケッチは3年古く、手描きである。",
-      "coda": "By the time the paper was published, Ethernet had already run inside PARC for three years."
+      "coda": "論文が発表された時点で、EthernetはすでにPARC内で3年間動作していた。"
     },
     "vint-cerf-envelope-sketch": {
       "tag": "逸話",
@@ -683,7 +683,7 @@
       "tag": "誤引用",
       "title": "オルセンのホームコンピュータ",
       "body": "1977年、DEC創業者ケン・オルセンは個人が家庭にコンピュータを持つ理由はないと述べた。彼が言及したのは、家庭の照明、暖房、娯楽を制御する単一の中央マシンであり、その記述は正確だった。報道は文の前半のみを残した。",
-      "coda": "Olsen himself owned a computer at home at the time."
+      "coda": "オlsen自身も当時自宅でコンピュータを所有していた。"
     },
     "kernighans-debugging-law": {
       "tag": "格言",
@@ -743,13 +743,13 @@
       "tag": "論文",
       "title": "No Silver Bullet",
       "body": "1986年のIFIP会議において、Fred Brooksはソフトウェアの困難さを本質的複雑さと偶発的複雑さに分けた。偶発的困難さは大幅に減少したと彼は述べたが、単一の手法で10年以内に生産性が10倍になることはないとした。",
-      "coda": "Four decades on, each new paradigm still gets sold as the bullet he said did not exist."
+      "coda": "四半世紀を経て、新しいパラダイムはすべて、彼が否定した銀の弾丸として売り出されている。"
     },
     "tz-olson-database": {
       "tag": "命名",
       "title": "Olsonデータベース",
-      "body": "ほとんどのデバイスは、創設者アーサー・デイビッド・オルソンにちなんで非公式にOlsonデータベースと呼ばれる、ボランティアが運営するファイルセットに対してタイムゾーンを解決する。その命名方式はポール・エグертに帰せられ、彼は2005年以来実際にこのデータベースを編集している。",
-      "coda": "冠名とそれ以来それを維持してきた人物は別人である。"
+      "body": "多くのデバイスが、ボランティアによって運営される1つのファイルセットに対してタイムゾーンを解決している。創設者Arthur David Olsonにちなんで非公式にOlsonデータベースと呼ばれる。その命名方式はPaul Eggertによるものであり、彼は2005年以来実際にこのデータベースを編集している。",
+      "coda": "冠名の人物と、以来それを維持している人物は別人である。"
     },
     "china-1987-first-email": {
       "tag": "記録",
@@ -761,11 +761,11 @@
       "tag": "原則",
       "title": "彼女が名付けなかった法",
       "body": "1987年のOOPSLA基調講演で、バーバラ・リスコフは、型Tのオブジェクトを型Sのオブジェクトに置き換えてもすべてのプログラムの動作が変わらない場合、SはTのサブタイプであると提唱した。彼女はそれを置換性質と呼んだ。数年後、ロバート・マーティンはそれをSOLIDに組み込み、彼女の名を冠した。",
-      "coda": "The word 'principle' was someone else's addition."
+      "coda": "「principle」という語は、他の誰かの追加である。"
     },
     "go-corporation-pen-computing": {
       "tag": "ペンコンピューティング",
-      "title": "The Tablet Nobody Bought",
+      "title": "誰も買わなかったタブレット",
       "body": "1987年、ジェリー・カプランはペン型OS PenPointを開発するためGO Corporationを設立し、7500万ドルを調達した。AT&Tは1994年1月にGOを買収し、2週間後にサポートチップラインを中止し、同年7月にGOは閉鎖された。カプランは後に同社は「実質的な売上はなかった」と語った。",
       "coda": "2010年、Appleは静電容量式マルチタッチタブレットiPadを発売した。"
     },
@@ -778,24 +778,24 @@
     "python-christmas-project": {
       "tag": "Scripting",
       "title": "クリスマスの趣味",
-      "body": "During the Christmas holidays of 1989, with his office closed for the week, a researcher in Amsterdam looked for a hobby programming project. He began writing an interpreter for a new scripting language and named it after a comedy troupe, not the snake.",
+      "body": "1989年のクリスマスの休暇中、オフィスが1週間閉鎖されたため、アムステルダムの研究者は趣味のプログラミングプロジェクトを探した。彼は新しいスクリプト言語のインタプリタを書き始め、コメディ劇団にちなんで名付けた。ヘビではない。",
       "coda": "2026年7月、TIOBEプログラミング言語人気ランキングで1位を獲得した。"
     },
     "worse-is-better": {
       "tag": "Debate",
       "title": "Worse Is Better",
-      "body": "In 1989 Richard Gabriel coined 'worse is better': a simple, half-right implementation survives better than a complete, correct one, which is why he thought C and Unix beat Lisp. In 1991 he published a rebuttal under the pseudonym Nickieben Bourbaki, posing as an old friend.",
+      "body": "1989年、Richard Gabrielは「worse is better」を造語した。単純で半分正しい実装は、完全で正しい実装よりも長く生き残る。CとUnixがLispに勝ったのはそのためだと彼は考えた。1991年、彼はNickieben Bourbakiという偽名で反論を発表し、古い友人を装った。",
       "coda": "数十年後も彼は自らの主張が正しかったかどうか判断できないと述べていた。"
     },
     "rfc1149-avian-carriers-test": {
       "tag": "Incident",
       "title": "実際に誰かが飛ばしたプロトコル",
-      "body": "David Waitzman published RFC 1149 on April Fools' Day, 1990: a spec for carrying IP datagrams by pigeon. On April 28, 2001, the Bergen Linux User Group actually built it, launching nine ping packets over roughly 5 km. Four came back — a 55% loss rate, round trips running 53 to 106 minutes.",
+      "body": "David Waitzmanは1990年のエイプリルフールにRFC 1149を発表した。鳩によってIPデータグラムを運ぶための仕様である。2001年4月28日、Bergen Linux User Groupは実際にそれを構築し、約5 kmにわたり9つのpingパケットを打ち上げた。4つが返ってきた。55%の損失率、往復は53分から106分。",
       "coda": "冗談RFCには実在のパケット損失率が記録されている。55パーセント。"
     },
     "att-1990-break-statement": {
       "tag": "Incident",
-      "title": "The Misplaced Break",
+      "title": "間違った位置のbreak",
       "body": "ニューヨークの4ESS交換機上の回復ルーチンが、break文を一段浅いネストに置いており、テストでは決して実行されない欠陥だった。再起動ルーチンの「ready」信号が隣接交換機にエラーと誤認され、誤警報がネットワーク全体に9時間にわたって連鎖した。",
       "coda": "AT&Tは後にこの損失を6000万ドルと見積もった。"
     },
@@ -874,7 +874,7 @@
     "php-resume-counter": {
       "tag": "Web",
       "title": "履歴書閲覧カウンター",
-      "body": "In 1994, a programmer wrote a handful of small CGI programs in C for no larger reason than wanting to know how many people were looking at his online résumé. He called the toolkit \"Personal Home Page Tools\" and released the source in June 1995.",
+      "body": "1994年、あるプログラマは、自分のオンライン履歴書を見ている人数を知りたいというそれ以上の理由なく、Cで小さなCGIプログラムをいくつか書いた。彼はツールキットを「Personal Home Page Tools」と呼び、1995年6月にソースを公開した。",
       "coda": "30年が経過しても、サーバーサイド言語が判明しているウェブサイトの70%以上がその子孫を実行している。"
     },
     "craigslist-email-list": {
@@ -904,7 +904,7 @@
     "bluetooth-the-placeholder": {
       "tag": "語源",
       "title": "定着したコードネーム",
-      "body": "In 1996, Intel's Jim Kardach proposed \"Bluetooth\" — after Harald Bluetooth, the Viking king who united Scandinavia — as a throwaway codename during Ericsson-Nokia talks. The intended replacement, RadioWire, could not clear trademark search before launch.",
+      "body": "1996年、IntelのJim Kardachは、スカンジナビアを統一したバイキング王Harald Bluetoothにちなんで「Bluetooth」を提案した。Ericsson-Nokiaの協議中の使い捨てコードネームである。本来の代替案RadioWireは、発売前に商標検索を通過できなかった。",
       "coda": "代替名称は市場に出たことがない。"
     },
     "chinaren-detour": {
@@ -959,10 +959,10 @@
       "tag": "転換",
       "title": "届かなかったビーム",
       "body": "1999年、ConfinityはPalm Pilot間の赤外線現金送金を開始し、資金調達イベントでライブデモを行った。開始から数週間で約13,000ユーザーを獲得したが、その後の1年間はほぼ横ばいだった。実際に伸びたのは、代替手段としてのみ構築されたメール送金だった。",
-      "coda": "The company renamed itself PayPal and quietly dropped the beam."
+      "coda": "会社は社名をPayPalに改め、静かにビームを外した。"
     },
     "cai-500-yuan": {
-      "tag": "Small world",
+      "tag": "小さな世界",
       "title": "500元の給与",
       "body": "1999年、香港の投資エグゼクティブが杭州を訪れ、小さなウェブサイトを投資対象として評価した。彼は12人ほどの開発者が1つの狭いアパートでコードを書いているのを目にした。彼は投資しなかった。70万ドルの給与を辞め、代わりに月500元で参加した。",
       "coda": "その名はJoe Tsai。後にAlibabaの執行副会長となった。"
@@ -974,7 +974,7 @@
       "coda": "同じオーバーフローはスケジュールされており、2038年に再発する予定である。"
     },
     "foxmail-resold": {
-      "tag": "Small world",
+      "tag": "小さな世界",
       "title": "ソフトウェアと共に売却された",
       "body": "1994年、広州のプログラマーが余暇に無料のメールクライアントを書いた。2000年、ドットコムバブル崩壊の中、それをある企業に売却し、自身は技術責任者として残留した。5年後、その企業は倒産し、ソフトウェア——そして彼も——をTencentに売却した。",
       "coda": "プログラマーは張小龍（Zhang Xiaolong）であった。その5年後、Tencent内部で彼はWeChatを構築した。"
@@ -999,21 +999,21 @@
     },
     "wikipedia-side-wiki": {
       "tag": "Wiki",
-      "title": "A Side Project Next to Nupedia",
+      "title": "Nupediaの隣のサイドプロジェクト",
       "body": "2001年1月10日、査読制のオンライン百科事典の創設者が、プロジェクト独自のサーバーにウィキソフトウェアをインストールした。主な目的は、査読付き百科事典がゆっくりと進む間、ボランティアが脇で大まかな記事を草稿できるようにすることだった。",
       "coda": "2026年7月までに、英語版だけで720万以上の記事を収録した。"
     },
     "bittorrent-mailing-list": {
-      "tag": "Protocol",
+      "tag": "プロトコル",
       "title": "新しいP2Pアプリ",
       "body": "2001年7月2日、あるプログラマーがYahoo eGroupsのメーリングリストに「BitTorrent -- a new P2P app」と題したメッセージを投稿した。彼は設計を完了したばかりのファイル配布プロトコルについて記述した。このプロトコルは、ファイルの断片を複数のソースから同時に取得する仕組みだった。",
       "coda": "3年後、2004年のCacheLogic調査によれば、インターネットトラフィックの3分の1を占めた。"
     },
     "webvan-thirty-minute-window": {
       "tag": "食料品",
-      "title": "The Thirty-Minute Window",
+      "title": "30分の窓",
       "body": "1996年、Borders書店の共同創業者であるLouis BordersはWebvanを創業し、ゼロから構築した倉庫による30分以内の配達を約束した。1999年11月に3億7500万ドルでIPOを実施し、評価額は48億ドルを超えた。その後、2001年7月に破産を申請した。8億ドル以上の損失を出した。",
-      "coda": "Some Webvan executives went on to Amazon; Amazon Fresh and Instacart later filled the same order."
+      "coda": "Webvanの幹部の一部はAmazonに移り、Amazon FreshとInstacartが後に同じ注文を満たした。"
     },
     "kozmo-free-hour-delivery": {
       "tag": "配送",
@@ -1048,14 +1048,14 @@
     "china-taobao-free-vs-ebay": {
       "tag": "競争",
       "title": "三年間無料",
-      "body": "In 2003, eBay's Eachnet held over 70 percent of China's C2C market, charging listing and transaction fees. Taobao launched that May to a near-empty site; Alibaba's answer was three years of free listings. By 2006, Taobao held 70 percent and eBay withdrew from Chinese C2C.",
+      "body": "2003年、eBayのEachnetは中国のC2C市場の70%以上を占め、出品料と取引手数料を課していた。Taobaoはその5月にほぼ空のサイトとして立ち上がった。Alibabaの答えは3年間の無料出品だった。2006年までにTaobaoは70%を占め、eBayは中国のC2Cから撤退した。",
       "coda": "出品手数料を徴収し続けた側が先に資金を使い果たした。"
     },
     "dianping-zagat-notes": {
       "tag": "レビューガイド",
       "title": "ザガットノート",
       "body": "2002年、張涛は米国から中国に戻った。持ち帰ったのはそこで得たアイデア、読者自身の評価で構成されるレストランガイド「ザガット・サーベイ」だった。彼はドメイン zsurvey.com を登録し、上海で中国版の構築に着手した。",
-      "coda": "Dianping, the site that grew from it, went live on April 12, 2003."
+      "coda": "そこから成長したサイトDianpingは、2003年4月12日に公開された。"
     },
     "wordpress-b2-post": {
       "tag": "ブログ",
@@ -1072,7 +1072,7 @@
     "aws-not-leftover-servers": {
       "tag": "訂正",
       "title": "余剰サーバーではない",
-      "body": "The common version says AWS began by reselling Amazon's idle holiday-season server capacity. Benjamin Black calls that flatly false: in 2003 he and Chris Pinkham wrote a memo proposing standardized, automated infrastructure, purpose-built from the start to be sold externally as a service.",
+      "body": "一般的な説では、AWSはAmazonの遊休ホリデーシーズンのサーバー容量を転売することから始まったとされる。Benjamin Blackはそれを完全に誤りと呼ぶ。2003年、彼とChris Pinkhamは、標準化された自動化インフラを提案するメモを書き、最初から外部にサービスとして販売することを目的として構築された。",
       "coda": "2006年、そのメモに続きS3とEC2が開始された。"
     },
     "maps-intern-friendfeed": {
@@ -1088,21 +1088,21 @@
       "coda": "Facebook于2004年基于相同的社会图谱理念推出，并在流量下保持稳定。"
     },
     "shopify-snowdevil-software": {
-      "tag": "Pivot",
-      "title": "The Store Software Outgrew the Store",
+      "tag": "ピボット",
+      "title": "ストアソフトウェアがストアを超えた",
       "body": "2004年、プログラマーのTobias Lutkeは当時のECソフトウェアが使いにくいと判断し、スノーボード用品をオンラインで販売するために自前のソフトウェアを開発した。これがSnowdevilである。Snowdevil自体は小規模な店舗に留まったが、他の商家からソフトウェアのライセンス提供を求められるようになった。",
       "coda": "Shopifyは2015年にニューヨーク証券取引所に上場した。"
     },
     "twitter-odeo-podcast-pivot": {
-      "tag": "Pivot",
+      "tag": "ピボット",
       "title": "ポッドキャスト企業のサイドプロジェクト",
       "body": "2005年6月28日、AppleがiTunesにポッドキャストの購読機能を組み込んだ。2日以内に購読者数は100万を超え、Odeoのポッドキャスト事業全体が一夜で時代遅れとなった。翌年3月、社内ハッカソンでJack DorseyがSMSステータス更新の提案を行った。それがTwitterである。",
       "coda": "Twitter が開発された会社 Odeo は 2007 年に売却された。"
     },
     "youtube-tune-in-hook-up": {
       "tag": "伝説",
-      "title": "The Domain Registered on Valentine's Day",
-      "body": "youtube.com was registered on February 14, 2005, and its founders later told of a dating-site concept modeled on Hot or Not. Jawed Karim denied attending the dinner party the story hinges on, and Steve Chen conceded it reads like a marketing narrative.",
+      "title": "バレンタインデーに登録されたドメイン",
+      "body": "youtube.comは2005年2月14日に登録され、創設者たちは後にHot or Notをモデルにした出会い系サイトの構想を語った。Jawed Karimはその話の鍵となるディナーパーティーへの出席を否定し、Steve Chenはそれがマーケティングの物語のように読めると認めた。",
       "coda": "Karimが代わりに引用したのは、津波の映像をオンラインで見つけるのが困難だったことである。"
     },
     "duan-buffett-lunch": {
@@ -1150,7 +1150,7 @@
     "china-wang-jian-alibaba-cloud": {
       "tag": "疑念",
       "title": "クラウドを築いた嘘つき",
-      "body": "Around 2012, with Alibaba Cloud years into heavy investment and no visible product, staff told Jack Ma directly that Wang Jian was a fraud. Close to eighty percent of the engineering team quit. Ma's reply: fund it a billion yuan a year for ten years, then judge it.",
+      "body": "2012年頃、Alibaba Cloudが何年も多額の投資を続けても目に見える製品がないままだったとき、スタッフはJack Maに直接、Wang Jianは詐欺師だと伝えた。エンジニアリングチームの80%近くが辞めた。Maの返答は、年間10億元を10年間資金提供し、その後で判断するというものだった。",
       "coda": "10年後、詐欺のプロジェクトは黒字転換した。"
     },
     "taobao-double11-2009": {
@@ -1160,7 +1160,7 @@
       "coda": "当日の売上は5200万元に達し、通常日の10倍であった。"
     },
     "cloudflare-hbs-elective": {
-      "tag": "Classmate",
+      "tag": "同級生",
       "title": "HBSの選択科目",
       "body": "2009年、あるプログラマーがハーバード・ビジネス・スクールのMBA取得のため休職した。彼は長年、副業としてアンチスパムボランティアプロジェクトを運営していた。ある日、彼はそれを授業で話した。同級生が、それは本物のプロダクトにするべきだと語った。",
       "coda": "その同級生はミシェル・ザトリンであり、後にCloudflareの共同創業者兼COOとなった。"
@@ -1174,7 +1174,7 @@
     "china-thousand-groupon-war": {
       "tag": "バブル",
       "title": "千団大戦",
-      "body": "China's first group-buying site launched in 2010; portals and social networks piled in within months. By August 2011, more than 5,000 group-buying companies were competing — the 'Thousand-Groupon War.' By mid-2014, only 176 sites remained standing.",
+      "body": "中国初のグループ購入サイトは2010年に立ち上がり、ポータルやソーシャルネットワークが数ヶ月以内に殺到した。2011年8月までに5,000以上のグループ購入企業が競争していた——「千団戦争」。2014年半ばまでに、残っていたのはわずか176サイトだった。",
       "coda": "五千のうち二百未満が生き残った。"
     },
     "semver-dependency-hell": {
@@ -1247,11 +1247,11 @@
       "tag": "時刻",
       "title": "時計を合わせる者",
       "body": "銀行、取引所、衛星システムはNTPに対して同期する。David Millsがプロトコルを設計した。参照実装は現在、Harlan Stennがほぼ一人で引き継いでいる。2015年3月、業界紙は「NTP Needs Money: Is A Foundation The Answer?」の見出しを掲載した。",
-      "coda": "The foundation is still fundraising toward its budget."
+      "coda": "財団はまだ予算に向けて資金調達を続けている。"
     },
     "alphago-lee-sedol-2016": {
       "tag": "囲碁",
-      "title": "Stone One Hundred and Two",
+      "title": "石百二",
       "body": "2016年3月、ソウルでAlphaGoは李セドルに4勝1敗。李の唯一の勝利は第4局だった。その後、李は第1局の序盤で致命的なミスをしたと語り、コンピュータのその手は秀逸で、人間が選ぶことのない一手だったと評した。",
       "coda": "彼が特筆した一手には石の番号だけが残され、名前はなかった。"
     },
@@ -1287,7 +1287,7 @@
     },
     "linux-y2038-kernel-fix": {
       "tag": "修正",
-      "title": "Eighteen Years Early",
+      "title": "18年早すぎた修正",
       "body": "32ビットUnixシステムは2038年1月19日にtime_tカウンタがオーバーフローする。2020年にリリースされたLinux 5.6は、その日以降も32ビットシステムを稼働させられる初のカーネルだった。アプリケーションは64ビットtime_tに対して再ビルドする必要がある。",
       "coda": "カーネルへのパッチ適用は、ほとんどの32ビットユーザースペースが対応に追いつく何年も前に行われた。"
     },
@@ -1295,7 +1295,7 @@
       "tag": "脆弱性",
       "title": "8年間未読のまま",
       "body": "Log4jは多くのエンタープライズJavaソフトウェアに組み込まれている。WizとEYは、93パーセントのクラウド環境がLog4Shellに曝露されていると発見した。この欠陥は2013年からコード内に存在していた。2021年11月24日に報告され、12月10日に公開され、CVSS 10と評価された。",
-      "coda": "A handful of volunteers wrote the fix that reached millions of servers."
+      "coda": "数人のボランティアが書いた修正が、数百万台のサーバーに届いた。"
     },
     "core-js-denis-pushkarev": {
       "tag": "メンテナー",
@@ -1330,11 +1330,11 @@
     "kay-objects-messaging": {
       "tag": "命名",
       "title": "オブジェクト、ポイントではない",
-      "body": "By 1967 Alan Kay was using \"object-oriented\" for a design built on cells or network nodes talking only through messages. He later wrote he was sorry he ever coined the term \"objects,\" because it draws attention to the lesser idea and buries the one he meant: messaging.",
+      "body": "1967年までにアラン・ケイは、メッセージを通じてのみ通信するセルまたはネットワークノード上に構築された設計に対して「オブジェクト指向」という用語を使用していた。後に彼は、「オブジェクト」という用語を自ら作り出したことを後悔していると述べた。なぜなら、それは重要でないアイデアに注目を集め、彼が意図したメッセージングという本質を埋もれさせてしまうからである。",
       "coda": "彼が後悔した言葉は、意図した考えよりも長く生き残った。"
     },
     "voyager-68-kilobits": {
-      "tag": "Deep Space",
+      "tag": "深宇宙",
       "title": "破損したチップの周りを",
       "body": "Voyager 1は1977年9月に打ち上げられた。打ち上げから47年後、飛行データサブシステム内のメモリチップが故障し、その3%が修復不能な破損状態となった。2024年4月20日、エンジニアは破損領域の周りでコードを再配置し、信号は復帰した。",
       "coda": "その発電機は2036年まで工学データを返送するのに十分な電力を供給し得る。"
@@ -1388,14 +1388,14 @@
       "coda": "2013年3月以降、登録には招待が不要となった。"
     },
     "hp-garage-palo-alto": {
-      "tag": "The garage",
+      "tag": "ガレージ",
       "title": "アディソン・アベニューのガレージ",
       "body": "1938年、デイビッド・パカードと妻は、パロアルトのアディソン・アベニュー367番地にある1905年建造の家の1階アパートを借りた。彼とビル・ヒューレットは、その裏にある一台分のガレージに538ドルを投入し、最初の製品であるオーディオ・オシレーターを製作した。",
       "coda": "この物件は現在、国家歴史登録財に登録されており、一般公開されていない。"
     },
     "apple-crist-drive-garage": {
       "tag": "神話",
-      "title": "When the bedroom ran out",
+      "title": "寝室が手狭になったとき",
       "body": "1976年、スティーブ・ジョブズとスティーブ・ウォズニアックは、ジョブズの両親が所有するカリフォルニア州ロスアルトスの家で、最初のApple基板を組み立てた。",
       "coda": "最初は彼の寝室だった。ガレージは後で、スペースがなくなったから使った。"
     },
@@ -1415,7 +1415,7 @@
       "tag": "Room 403",
       "title": "2号棟 Room 403",
       "body": "1998年11月、Tencentは深センの華強北にある賽格科技園2号棟Room 403に登記した。建物には同様のスタートアップがひしめき、扉も他と変わりはなかった。",
-      "coda": "The room is kept open only to Tencent employees now, under the name Tencent Origin."
+      "coda": "現在、その部屋はTencent Originという名称で、Tencent社員のみに開放されている。"
     },
     "unitree-left-dji": {
       "tag": "退職",
@@ -1425,12 +1425,12 @@
     },
     "unitree-one-yuan-option": {
       "tag": "オプション",
-      "title": "One yuan a share",
+      "title": "1株1元",
       "body": "2017年9月、Unitreeは17名の従業員と1株あたり1元のオプション契約を締結した。その後、追加の割当が行われ、単一の従業員車両を通じて保有された。",
       "coda": "8年後、同社はIPOに向けて帳簿を開いた。"
     },
     "unitree-g1-price": {
-      "tag": "Pricing",
+      "tag": "価格設定",
       "title": "99,000元",
       "body": "ヒューマノイドロボットは実験装置として価格設定されていた。UnitreeはG1を99,000元で販売した。これはエントリーレベルの自動車の価格に相当する。",
       "coda": "2025年までにヒューマノイドは5,500台の出荷に対し、売上高の51.78パーセントを占めた。"
