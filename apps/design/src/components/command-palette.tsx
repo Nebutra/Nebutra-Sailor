@@ -118,7 +118,13 @@ export function CommandPalette({ entries }: { entries: CommandEntry[] }) {
       {open ? (
         // biome-ignore lint/a11y/useKeyWithClickEvents: the backdrop is a dismiss affordance; Escape is handled globally above.
         <div
-          className="fixed inset-0 z-50 flex items-start justify-center bg-foreground/20 p-4 pt-[12vh] backdrop-blur-sm"
+          /* A fixed wash, not a themed one. `bg-foreground/20` is correct in
+             light mode — near-black over a light page — and inverts in a dark
+             skin, where --foreground is near-white and the scrim became a 20%
+             white veil laid over dark content. That is the haze: measured at
+             oklab(0.999994 … / 0.2) under Raycast. A scrim is shadow rather
+             than surface; it darkens in both modes or it is not a scrim. */
+          className="fixed inset-0 z-50 flex items-start justify-center bg-[oklch(0_0_0/0.45)] p-4 pt-[12vh] backdrop-blur-sm"
           onClick={(event) => {
             if (event.target === event.currentTarget) setOpen(false);
           }}

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { DurationCarriers } from "@/components/duration-carriers";
 import { durations, easings, motionComposites } from "@/lib/tokens";
 import { Mono, Note, PageHeader, Section, Table } from "../_components/primitives";
 import { SimpleRow, SimpleTableHead } from "../_components/token-rows";
@@ -86,6 +87,15 @@ export default function MotionPage() {
       </PageHeader>
 
       <Section title="Duration rails">
+        {/* The carriers first. A rail shows that one number exceeds another,
+            which the table already says in digits; what it cannot show is
+            whether a duration is right *for the job it is named after*, and
+            that is the only question a duration token raises. Each token names
+            its own carrier in its description, so each is played on one. */}
+        <div className="mb-10">
+          <DurationCarriers />
+        </div>
+
         {/* Keyframes derived from the same token values the rows below print,
             so a duration that changes in the source changes the motion here on
             the next build rather than drifting away from its own label. */}
