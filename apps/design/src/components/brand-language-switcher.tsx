@@ -58,6 +58,55 @@ const MORPH_MS = 460;
 let morphTimer: ReturnType<typeof setTimeout> | undefined;
 
 /**
+ * Firefox has no view transitions yet, and reduced-motion users should not be
+ * handed a dissolve. Both fall through to the property transition, which is a
+ * real fallback rather than a degraded one — it just cannot carry the type.
+ */
+/**
+ * Families each language asks for, handed in from the server (parsed from
+ * skins.css). Module-level because every switcher instance needs it and none of
+ * them should own it.
+ */
+let fontsByBrand: Record<string, string[]> = {};
+
+export function registerBrandFonts(map: Record<string, string[]>) {
+  fontsByBrand = map;
+}
+
+/**
+ * Make the incoming typefaces resident before the snapshot is taken.
+ *
+ * Without this the dissolve captures a fallback face and the real one swaps in
+ * after the animation has finished — a jump landing on a settled page, which is
+ * the one that actually reads as broken. `document.fonts.load` resolves
+ * immediately for a face already resident, so the common path costs nothing.
+ *
+ * Raced against a short timeout: a proprietary family that will never resolve
+ * here (Mori, Reckless, söhne) must not hold the switch. Falling through to a
+ * dissolve of the fallback is a far better failure than a control that appears
+ * not to respond.
+ */
+async function ensureFontsFor(id: string): Promise<void> {
+  const families = fontsByBrand[id];
+  if (!families?.length || !document.fonts) return;
+  await Promise.race([
+    Promise.allSettled(
+      families.flatMap((family) => [
+        document.fonts.load(`400 1rem "${family}"`),
+        document.fonts.load(`600 1rem "${family}"`),
+      ]),
+    ),
+    new Promise((resolve) => setTimeout(resolve, 220)),
+  ]);
+}
+
+function supportsViewTransition(): boolean {
+  if (typeof document === "undefined") return false;
+  if (typeof document.startViewTransition !== "function") return false;
+  return !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+/**
  * Flip the language, with the change animated rather than cut.
  *
  * The attribute swap rewrites ~200 custom properties in one frame, and custom
@@ -85,12 +134,34 @@ function applyBrand(id: string, animate = true) {
 
   if (!animate) {
     write();
+  } else if (supportsViewTransition()) {
+    // Fonts first, then the snapshot — see ensureFontsFor.
+    // A cross-fade, so the discrete changes come along.
+    //
+    // The property transition below interpolates everything that can be
+    // interpolated — and the most conspicuous parts of a language cannot be.
+    // A typeface is a discrete value. Gradients with different stop counts do
+    // not blend. Shadow stacks of different lengths snap. The page would glide
+    // through its colours while the type and the elevation cut underneath,
+    // which is the seam that reads as "not smooth".
+    //
+    // A view transition photographs the old page and dissolves it into the new
+    // one, so those arrive as pixels rather than as properties. No blanket
+    // transition here: running both would animate the same change twice, and
+    // the two clocks beating against each other is its own kind of jitter.
+    void ensureFontsFor(id).then(() => {
+      document.startViewTransition?.(() => {
+        write();
+      });
+    });
   } else {
-    root.classList.add("brand-morphing");
-    clearTimeout(morphTimer);
-    requestAnimationFrame(() => {
-      write();
-      morphTimer = setTimeout(() => root.classList.remove("brand-morphing"), MORPH_MS);
+    void ensureFontsFor(id).then(() => {
+      root.classList.add("brand-morphing");
+      clearTimeout(morphTimer);
+      requestAnimationFrame(() => {
+        write();
+        morphTimer = setTimeout(() => root.classList.remove("brand-morphing"), MORPH_MS);
+      });
     });
   }
 
