@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Type Lens GSAP runtime — follows greensock/gsap-skills:
+ * TypeLens GSAP runtime — follows greensock/gsap-skills:
  * gsap-core · gsap-timeline · gsap-scrolltrigger · gsap-react · gsap-performance
  */
 import { useGSAP } from "@gsap/react";

@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Product motion for Type Lens.
+ * Product motion for TypeLens.
  * Patterns from greensock/gsap-skills (useGSAP + timeline + ScrollTrigger.batch).
  * Performance: transform + autoAlpha only (gsap-performance).
  */

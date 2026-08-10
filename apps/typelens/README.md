@@ -1,4 +1,4 @@
-# Type Lens
+# TypeLens
 
 FiU-inspired collection UI for **typelens.nebutra.com**  
 Slogan: *The Typography Lens*

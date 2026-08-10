@@ -16,12 +16,12 @@ export function SiteHeader() {
       <div className={`${TL_CONTAINER} pt-6 pb-0 md:pt-8`}>
         <div className="flex flex-wrap items-center justify-between gap-4 pb-5 md:pb-6">
           <div className="flex min-w-0 flex-1 items-start gap-6 md:gap-10">
-            <Link href="/" className="group shrink-0 no-underline" aria-label="Type Lens home">
+            <Link href="/" className="group shrink-0 no-underline" aria-label="TypeLens home">
               <span
                 data-tl-mark
                 className="block text-[1.65rem] font-semibold tracking-[-0.04em] text-[var(--tl-ink)] transition-opacity group-hover:opacity-60 md:text-[1.85rem] will-change-transform"
               >
-                Type Lens
+                TypeLens
               </span>
             </Link>
             <div

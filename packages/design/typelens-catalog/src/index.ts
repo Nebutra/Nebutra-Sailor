@@ -1,6 +1,6 @@
 /**
  * @nebutra/typelens-catalog
- * Type Lens — works · pairings · specimens · extract packs
+ * TypeLens — works · pairings · specimens · extract packs
  * typelens.nebutra.com · The Typography Lens
  */
 

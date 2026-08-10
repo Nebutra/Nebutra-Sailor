@@ -1,5 +1,5 @@
 /**
- * Layout SSOT for Type Lens containers.
+ * Layout SSOT for TypeLens containers.
  *
  * Prefer these Tailwind utility strings for gutters — they go through the
  * utility pipeline and cannot be silently dropped the way custom CSS classes

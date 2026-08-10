@@ -22,7 +22,7 @@ export function SiteFooter() {
       >
         <div className="max-w-sm">
           <p className="text-[1.25rem] font-semibold tracking-[-0.03em] text-[var(--tl-ink)]">
-            Type Lens
+            TypeLens
           </p>
           <p className="mt-3 text-sm leading-relaxed text-[var(--tl-muted)]">
             Verified pairings from real works — free commercial first. Context over catalog.

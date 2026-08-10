@@ -1,5 +1,5 @@
 /**
- * Type Lens CSS entry (Tailwind v4).
+ * TypeLens CSS entry (Tailwind v4).
  *
  * Order matters:
  * 1) preset = tailwind + tokens + UI @source
@@ -9,7 +9,7 @@
  */
 @import "@nebutra/ui/styles/preset.css";
 
-/* Scan Type Lens app source for utility classes */
+/* Scan TypeLens app source for utility classes */
 @source "../**/*.{ts,tsx}";
 
 @import "../styles/shell.css";

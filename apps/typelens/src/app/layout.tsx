@@ -12,8 +12,8 @@ import { TypeLensMotion } from "@/components/type-lens-motion";
 
 export const metadata: Metadata = {
   title: {
-    default: "Type Lens — The Typography Lens",
-    template: "%s | Type Lens",
+    default: "TypeLens — The Typography Lens",
+    template: "%s | TypeLens",
   },
   description:
     "Verified type pairings from real-world works — for human designers and design agents. Free commercial fonts first.",
