@@ -101,7 +101,19 @@ function recipeVars(recipe: BrandRecipe): string[] {
     `  --btn-default-radius: ${radii.button};`,
     `  --radius-button: ${radii.button};`,
     `  --radius-buttons: ${radii.button};`,
-    `  --radius-md: ${radii.button};`,
+    // A step on the size scale, not the button role.
+    //
+    // Aliasing it straight to `radii.button` is fine while a language's buttons
+    // are modestly rounded — five of the seven are 4–8px and never noticed. It
+    // breaks for the two whose buttons are pills: GSAP emitted
+    // `--radius-md: 100px` and Vanta 999px, and forty-two files read that step
+    // for panels and surfaces. The Combobox popover under GSAP came out as a
+    // lozenge, which is what a 100px radius does to a 260px-wide panel.
+    //
+    // `min()` keeps every language whose button is the tighter of the two
+    // exactly where it was, and stops a pill from escaping its role. A pill is
+    // a control decision; it has no business setting the radius of a surface.
+    `  --radius-md: min(${radii.button}, ${radii.card});`,
     `  --radius-card: ${radii.card};`,
     `  --radius-lg: ${radii.card};`,
     `  --radius-badge: ${radii.badge ?? "9999px"};`,

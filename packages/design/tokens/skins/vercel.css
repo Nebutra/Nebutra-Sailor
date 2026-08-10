@@ -73,7 +73,7 @@ html[data-brand="vercel"] {
   --btn-default-radius: 6px;
   --radius-button: 6px;
   --radius-buttons: 6px;
-  --radius-md: 6px;
+  --radius-md: min(6px, 6px);
   --radius-card: 6px;
   --radius-lg: 6px;
   --radius-badge: 6px;

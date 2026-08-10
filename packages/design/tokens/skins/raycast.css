@@ -78,7 +78,7 @@ html[data-brand="raycast"] {
   --btn-default-radius: 8px;
   --radius-button: 8px;
   --radius-buttons: 8px;
-  --radius-md: 8px;
+  --radius-md: min(8px, 16px);
   --radius-card: 16px;
   --radius-lg: 16px;
   --radius-badge: 6px;

@@ -73,7 +73,7 @@ html[data-brand="linear"] {
   --btn-default-radius: 6px;
   --radius-button: 6px;
   --radius-buttons: 6px;
-  --radius-md: 6px;
+  --radius-md: min(6px, 12px);
   --radius-card: 12px;
   --radius-lg: 12px;
   --radius-badge: 9999px;

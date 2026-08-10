@@ -150,7 +150,11 @@ export interface ComboboxListProps extends CommandListProps {
 export const comboboxTriggerVariants = cva(
   [
     "flex w-full items-center justify-between gap-2 whitespace-nowrap",
-    "h-[var(--combobox-trigger-height)] rounded-[var(--radius-md)] border border-input bg-background px-[var(--combobox-trigger-padding-x)]",
+    // --input-radius, not the generic md step: this trigger is a form control and
+    // should round like Input and Select do. Reading the scale step meant it
+    // tracked whatever a language did to medium surfaces instead of what it
+    // decided for its fields.
+    "h-[var(--combobox-trigger-height)] rounded-[var(--input-radius,var(--radius-md))] border border-input bg-background px-[var(--combobox-trigger-padding-x)]",
     "text-[length:var(--combobox-font-size)] ring-offset-background",
     "transition-colors duration-micro ease-out",
     "placeholder:text-muted-foreground",

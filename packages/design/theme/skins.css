@@ -90,7 +90,7 @@ html[data-brand="gsap"] {
   --btn-default-radius: 100px;
   --radius-button: 100px;
   --radius-buttons: 100px;
-  --radius-md: 100px;
+  --radius-md: min(100px, 8px);
   --radius-card: 8px;
   --radius-lg: 8px;
   --radius-badge: 9999px;
@@ -242,7 +242,7 @@ html[data-brand="linear"] {
   --btn-default-radius: 6px;
   --radius-button: 6px;
   --radius-buttons: 6px;
-  --radius-md: 6px;
+  --radius-md: min(6px, 12px);
   --radius-card: 12px;
   --radius-lg: 12px;
   --radius-badge: 9999px;
@@ -451,7 +451,7 @@ html[data-brand="notion"] {
   --btn-default-radius: 8px;
   --radius-button: 8px;
   --radius-buttons: 8px;
-  --radius-md: 8px;
+  --radius-md: min(8px, 12px);
   --radius-card: 12px;
   --radius-lg: 12px;
   --radius-badge: 9999px;
@@ -602,7 +602,7 @@ html[data-brand="raycast"] {
   --btn-default-radius: 8px;
   --radius-button: 8px;
   --radius-buttons: 8px;
-  --radius-md: 8px;
+  --radius-md: min(8px, 16px);
   --radius-card: 16px;
   --radius-lg: 16px;
   --radius-badge: 6px;
@@ -783,7 +783,7 @@ html[data-brand="stripe"] {
   --btn-default-radius: 4px;
   --radius-button: 4px;
   --radius-buttons: 4px;
-  --radius-md: 4px;
+  --radius-md: min(4px, 4px);
   --radius-card: 4px;
   --radius-lg: 4px;
   --radius-badge: 9999px;
@@ -946,7 +946,7 @@ html[data-brand="vanta"] {
   --btn-default-radius: 999px;
   --radius-button: 999px;
   --radius-buttons: 999px;
-  --radius-md: 999px;
+  --radius-md: min(999px, 16px);
   --radius-card: 16px;
   --radius-lg: 16px;
   --radius-badge: 999px;
@@ -1088,7 +1088,7 @@ html[data-brand="vercel"] {
   --btn-default-radius: 6px;
   --radius-button: 6px;
   --radius-buttons: 6px;
-  --radius-md: 6px;
+  --radius-md: min(6px, 6px);
   --radius-card: 6px;
   --radius-lg: 6px;
   --radius-badge: 6px;

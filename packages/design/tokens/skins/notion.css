@@ -84,7 +84,7 @@ html[data-brand="notion"] {
   --btn-default-radius: 8px;
   --radius-button: 8px;
   --radius-buttons: 8px;
-  --radius-md: 8px;
+  --radius-md: min(8px, 12px);
   --radius-card: 12px;
   --radius-lg: 12px;
   --radius-badge: 9999px;

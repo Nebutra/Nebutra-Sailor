@@ -74,7 +74,7 @@ html[data-brand="stripe"] {
   --btn-default-radius: 4px;
   --radius-button: 4px;
   --radius-buttons: 4px;
-  --radius-md: 4px;
+  --radius-md: min(4px, 4px);
   --radius-card: 4px;
   --radius-lg: 4px;
   --radius-badge: 9999px;

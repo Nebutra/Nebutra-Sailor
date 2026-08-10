@@ -80,7 +80,7 @@ html[data-brand="gsap"] {
   --btn-default-radius: 100px;
   --radius-button: 100px;
   --radius-buttons: 100px;
-  --radius-md: 100px;
+  --radius-md: min(100px, 8px);
   --radius-card: 8px;
   --radius-lg: 8px;
   --radius-badge: 9999px;

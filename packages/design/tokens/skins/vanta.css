@@ -91,7 +91,7 @@ html[data-brand="vanta"] {
   --btn-default-radius: 999px;
   --radius-button: 999px;
   --radius-buttons: 999px;
-  --radius-md: 999px;
+  --radius-md: min(999px, 16px);
   --radius-card: 16px;
   --radius-lg: 16px;
   --radius-badge: 999px;
