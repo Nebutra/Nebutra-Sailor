@@ -1,3 +1,4 @@
+import { FIU_WORKS } from "./fiu-load";
 import { type Work, WorkSchema } from "./schema";
 
 const RAW_WORKS: Work[] = [
@@ -245,6 +246,10 @@ const RAW_WORKS: Work[] = [
     status: "published",
   },
 ];
-export const WORKS: readonly Work[] = RAW_WORKS.map((w) => WorkSchema.parse(w));
+
+const seedIds = new Set(RAW_WORKS.map((w) => w.id));
+const merged = [...RAW_WORKS, ...FIU_WORKS.filter((w) => !seedIds.has(w.id))];
+
+export const WORKS: readonly Work[] = merged.map((w) => WorkSchema.parse(w));
 export const WORK_BY_ID: ReadonlyMap<string, Work> = new Map(WORKS.map((w) => [w.id, w]));
 export const WORK_BY_SLUG: ReadonlyMap<string, Work> = new Map(WORKS.map((w) => [w.slug, w]));

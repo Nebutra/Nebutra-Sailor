@@ -1,3 +1,4 @@
+import { FIU_TYPEFACES } from "./fiu-load";
 import { type Typeface, TypefaceSchema } from "./schema";
 
 const ofl = {
@@ -230,7 +231,11 @@ const RAW_TYPEFACES: Typeface[] = [
     license: { ...ofl },
   },
 ];
-export const TYPEFACES: readonly Typeface[] = RAW_TYPEFACES.map((t) => TypefaceSchema.parse(t));
+
+const seedIds = new Set(RAW_TYPEFACES.map((t) => t.id));
+const merged = [...RAW_TYPEFACES, ...FIU_TYPEFACES.filter((t) => !seedIds.has(t.id))];
+
+export const TYPEFACES: readonly Typeface[] = merged.map((t) => TypefaceSchema.parse(t));
 export const TYPEFACE_BY_ID: ReadonlyMap<string, Typeface> = new Map(
   TYPEFACES.map((t) => [t.id, t]),
 );

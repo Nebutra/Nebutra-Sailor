@@ -5,6 +5,7 @@
     "moduleResolution": "bundler",
     "target": "esnext",
     "types": ["node"],
+    "resolveJsonModule": true,
     "incremental": false
   },
   "include": ["src"],

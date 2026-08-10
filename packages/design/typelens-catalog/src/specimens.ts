@@ -1,3 +1,4 @@
+import { FIU_SPECIMENS } from "./fiu-load";
 import { type Specimen, SpecimenSchema } from "./schema";
 
 const RAW_SPECIMENS: Specimen[] = [
@@ -415,7 +416,11 @@ const RAW_SPECIMENS: Specimen[] = [
     summaryZh: "创业落地页：Fraunces + Manrope + IBM Plex。",
   },
 ];
-export const SPECIMENS: readonly Specimen[] = RAW_SPECIMENS.map((s) => SpecimenSchema.parse(s));
+
+const seedIds = new Set(RAW_SPECIMENS.map((s) => s.id));
+const merged = [...RAW_SPECIMENS, ...FIU_SPECIMENS.filter((s) => !seedIds.has(s.id))];
+
+export const SPECIMENS: readonly Specimen[] = merged.map((s) => SpecimenSchema.parse(s));
 export const SPECIMEN_BY_ID: ReadonlyMap<string, Specimen> = new Map(
   SPECIMENS.map((s) => [s.id, s]),
 );
