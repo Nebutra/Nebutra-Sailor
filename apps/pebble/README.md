@@ -18,7 +18,7 @@ Vercel is **not** the production path for this host (Hobby deploy caps; owner ch
 |---------|----------|
 | `/`, `/download` | Next app (marketing / download) |
 | `/whats-new/*.json`, `/media/*` | Static feeds from the app — **no client redirects** |
-| `/updater/latest.json` | Proxied Tauri updater manifest (GitHub origin, edge-cached) |
+| `/updater/latest.json` | Tauri updater manifest mirror: live GitHub fetch with disk + bundled fallback (`public/updater/latest.json`, `src/lib/updater-latest.fallback.json`) |
 | `/docs/*` | Self-hosted docs on the brand app (until Sailor Docs Worker redeploys) |
 | `POST /v1/feedback`, `/diagnostics/*` | nginx reverse-proxy → `api-gateway` `/pebble/*` (legacy clients) |
 

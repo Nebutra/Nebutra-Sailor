@@ -1,76 +1,117 @@
 /**
  * CDN-fronted mirror of the signed Tauri updater manifest.
  *
- * Clients try GitHub first, then this origin (Cloudflare → ECS/Next). The
- * response body is the upstream latest.json unchanged so minisign verification
- * still applies to the same platform asset URLs and signatures.
+ * Prefer a live GitHub fetch when the origin can reach github.com; otherwise
+ * serve the last-known-good snapshot so clients behind GitHub outages still
+ * get a valid signed latest.json (minisign verification unchanged).
+ *
+ * Snapshot sources (in order after live miss):
+ * 1. public/updater/latest.json on disk (refreshable without rebuild)
+ * 2. bundled src/lib/updater-latest.fallback.json (always present in the build)
  */
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+import fallbackManifest from "@/lib/updater-latest.fallback.json";
+
 const UPSTREAM = "https://github.com/nebutra/pebble/releases/latest/download/latest.json";
+const UPSTREAM_TIMEOUT_MS = 8_000;
 
 export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
-export async function GET() {
+const CORS = {
+  "Access-Control-Allow-Origin": "*",
+} as const;
+
+function isValidManifest(body: string): boolean {
+  return body.includes('"version"') && body.includes('"platforms"');
+}
+
+function okJson(body: string, cacheControl: string): Response {
+  return new Response(body, {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      "Cache-Control": cacheControl,
+      ...CORS,
+    },
+  });
+}
+
+async function readDiskFallback(): Promise<string | null> {
+  const candidates = [
+    join(process.cwd(), "public/updater/latest.json"),
+    join(process.cwd(), "apps/pebble/public/updater/latest.json"),
+  ];
+  for (const filePath of candidates) {
+    try {
+      const body = await readFile(filePath, "utf8");
+      if (isValidManifest(body)) {
+        return body;
+      }
+    } catch {
+      // try next candidate
+    }
+  }
+  return null;
+}
+
+function bundledFallback(): string {
+  return JSON.stringify(fallbackManifest);
+}
+
+async function fetchUpstream(): Promise<string | null> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), UPSTREAM_TIMEOUT_MS);
   try {
     const upstream = await fetch(UPSTREAM, {
       headers: {
         Accept: "application/json",
-        "User-Agent": "pebble.nebutra.com-updater-mirror/1.0",
+        "User-Agent": "pebble.nebutra.com-updater-mirror/1.1",
       },
-      // Why: short edge cache; clients also retry + fall back to GitHub.
-      next: { revalidate: 300 },
+      signal: controller.signal,
+      cache: "no-store",
     });
-
     if (!upstream.ok) {
-      return Response.json(
-        {
-          error: "upstream_unavailable",
-          status: upstream.status,
-          upstream: UPSTREAM,
-        },
-        {
-          status: 502,
-          headers: {
-            "Cache-Control": "public, max-age=30, s-maxage=30",
-            "Access-Control-Allow-Origin": "*",
-          },
-        },
-      );
+      return null;
     }
-
     const body = await upstream.text();
-    // Light shape check so we never cache an HTML error page as latest.json.
-    if (!body.includes('"version"') || !body.includes('"platforms"')) {
-      return Response.json(
-        { error: "upstream_invalid_manifest" },
-        {
-          status: 502,
-          headers: {
-            "Cache-Control": "public, max-age=30, s-maxage=30",
-            "Access-Control-Allow-Origin": "*",
-          },
-        },
-      );
-    }
+    return isValidManifest(body) ? body : null;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
 
-    return new Response(body, {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        "Cache-Control": "public, max-age=60, s-maxage=300, stale-while-revalidate=600",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    return Response.json(
-      { error: "upstream_fetch_failed", message },
-      {
-        status: 502,
-        headers: {
-          "Cache-Control": "public, max-age=30, s-maxage=30",
-          "Access-Control-Allow-Origin": "*",
-        },
-      },
+export async function GET() {
+  const live = await fetchUpstream();
+  if (live) {
+    return okJson(live, "public, max-age=60, s-maxage=300, stale-while-revalidate=600");
+  }
+
+  const disk = await readDiskFallback();
+  if (disk) {
+    return okJson(
+      disk,
+      // Why: stale snapshot — cache briefly so deploys can refresh quickly.
+      "public, max-age=30, s-maxage=60, stale-while-revalidate=300",
     );
   }
+
+  const bundled = bundledFallback();
+  if (isValidManifest(bundled)) {
+    return okJson(bundled, "public, max-age=30, s-maxage=60, stale-while-revalidate=300");
+  }
+
+  return Response.json(
+    { error: "updater_manifest_unavailable" },
+    {
+      status: 503,
+      headers: {
+        "Cache-Control": "public, max-age=15, s-maxage=15",
+        ...CORS,
+      },
+    },
+  );
 }
