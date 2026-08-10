@@ -108,6 +108,20 @@ const EXCLUDED: ReadonlySet<string> = new Set([
   "box-demo",
   "card-spotlight-demo",
 
+  // Escape their card entirely.
+  //
+  // `command-dialog-simple-demo` calls setOpen(true) in an effect, so it mounts
+  // already open, portals to <body>, and lays a full-screen scrim over the
+  // grid — one card dimming the whole page it sits on. `command-dialog-demo`
+  // registers a global ⌘K, which is this site's own shortcut: opening the
+  // search on the showcase would open the demo too.
+  //
+  // A thumbnail may not reach outside its frame. Both remain in docs-shared,
+  // where a page devoted to one of them is the right place for that behaviour.
+  "command-dialog-simple-demo",
+  "command-dialog-demo",
+  "popover-controlled-demo",
+
   // Layout primitives; /patterns/layout covers this properly and to scale.
   "flex-demo",
   "stack-demo",

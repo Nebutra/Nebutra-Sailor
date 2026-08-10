@@ -51,13 +51,49 @@ function readStored(): string {
   return "factory";
 }
 
-function applyBrand(id: string) {
+/** How long the blanket transition stays armed. Matches --brand-morph-duration
+ *  in globals.css, plus a frame so the last interpolation lands before it goes. */
+const MORPH_MS = 460;
+
+let morphTimer: ReturnType<typeof setTimeout> | undefined;
+
+/**
+ * Flip the language, with the change animated rather than cut.
+ *
+ * The attribute swap rewrites ~200 custom properties in one frame, and custom
+ * properties do not interpolate — so the whole page used to change between two
+ * frames and read as a reload. The properties that *read* those variables do
+ * interpolate, so a blanket transition is armed just before the flip and
+ * disarmed after: alive for the length of the change and no longer, because
+ * leaving it on would put 400ms of lag on every hover in the component surfaces
+ * this site exists to demonstrate.
+ *
+ * `requestAnimationFrame` before writing the attribute matters — set the class
+ * and the attribute in the same frame and the browser has no previous computed
+ * value to transition from, so it cuts anyway.
+ */
+function applyBrand(id: string, animate = true) {
   const root = document.documentElement;
-  if (id === "factory") {
-    delete root.dataset.brand;
+
+  const write = () => {
+    if (id === "factory") {
+      delete root.dataset.brand;
+    } else {
+      root.dataset.brand = id;
+    }
+  };
+
+  if (!animate) {
+    write();
   } else {
-    root.dataset.brand = id;
+    root.classList.add("brand-morphing");
+    clearTimeout(morphTimer);
+    requestAnimationFrame(() => {
+      write();
+      morphTimer = setTimeout(() => root.classList.remove("brand-morphing"), MORPH_MS);
+    });
   }
+
   try {
     sessionStorage.setItem(STORAGE_KEY, id);
   } catch {
@@ -72,7 +108,9 @@ function useBrandLanguage(): [string, (id: string) => void, boolean] {
 
   React.useEffect(() => {
     const stored = readStored();
-    applyBrand(stored);
+    // No animation on restore: there is no previous language to move away from,
+    // and a page that fades into its own colours on load looks like a bug.
+    applyBrand(stored, false);
     setActive(stored);
     setReady(true);
 

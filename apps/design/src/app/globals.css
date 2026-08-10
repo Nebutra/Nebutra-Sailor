@@ -13,3 +13,49 @@
 
 /* Scan this app's source so its utility classes generate */
 @source "../**/*.{ts,tsx}";
+
+/**
+ * The language change, as a transition rather than a cut.
+ *
+ * A Brand Package swap rewrites about two hundred custom properties at once,
+ * and custom properties do not animate — so every surface on the page changed
+ * in a single frame. Correct, and it read as a page reload.
+ *
+ * The properties that *read* those variables do animate, though: a
+ * `background-color` sourced from `hsl(var(--primary))` interpolates normally
+ * when the variable underneath it changes. So the switch turns this on, flips
+ * `data-brand`, and turns it off again — one blanket transition, alive for the
+ * length of the change and no longer. Leaving it on permanently would put a
+ * 400ms lag on every hover in the product surfaces this site renders, which is
+ * the opposite of what a design system should demonstrate.
+ *
+ * `font-family` is absent because it cannot interpolate — a typeface is a
+ * discrete value, and it snaps at the start while everything around it moves.
+ * Saying so is better than implying a morph that CSS cannot perform.
+ */
+html.brand-morphing,
+html.brand-morphing *,
+html.brand-morphing *::before,
+html.brand-morphing *::after {
+  transition-property: background-color, background-image, color, border-color, border-radius,
+    box-shadow, fill, stroke, outline-color, text-decoration-color, opacity, padding, gap,
+    letter-spacing, font-size, font-weight, line-height, filter, backdrop-filter;
+  transition-duration: var(--brand-morph-duration, 420ms);
+  transition-timing-function: var(--ease-out, cubic-bezier(0, 0, 0.2, 1));
+}
+
+/* Anything already carrying its own transition keeps it: a switch that reveals
+   the language should not also overwrite how the language moves. */
+html.brand-morphing [style*="transition"],
+html.brand-morphing .transition-none {
+  transition-property: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.brand-morphing,
+  html.brand-morphing *,
+  html.brand-morphing *::before,
+  html.brand-morphing *::after {
+    transition-duration: 0s;
+  }
+}
