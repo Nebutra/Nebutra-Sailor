@@ -23,29 +23,29 @@ function msOf(duration: string): number {
 /**
  * Keyframes for the duration rails, generated from the token values.
  *
- * The rails used to run `infinite alternate` at their own duration, each on its
- * own clock. At 100ms that is five round trips a second — it reads as a flicker
- * rather than as a duration, and because the four rails drifted out of phase
- * immediately there was nothing to compare them against. The numbers were right
- * and the demonstration was worthless.
+ * Two goes at this were wrong in opposite directions. `infinite alternate` at
+ * each rail's own duration put 100ms on its own clock — five round trips a
+ * second, read as a flicker, and four rails out of phase with nothing to
+ * compare. Syncing them to a shared cycle fixed the comparison and created a
+ * worse problem: with 100–500ms of travel inside a 900ms period, the rails sit
+ * parked at an identical endpoint for about four fifths of every cycle. Almost
+ * any glance at the page found four identical bars.
  *
- * So every rail now shares one period and moves for exactly its own duration
- * inside it, then holds. All four leave together; the fast one arrives first and
- * waits while the slow one is still travelling. The gap between arrivals *is*
- * the difference between the tokens, shown at full speed with nothing slowed
- * down or exaggerated.
- *
- * Still pure CSS, still no client component, and still silent under
- * `prefers-reduced-motion` — a page about motion tokens that ignored that
- * preference would be making the same category of error as one that hardcoded a
- * colour.
+ * A demonstration you have to catch at the right moment is not one. So the bar
+ * now grows to a width proportional to its own duration, over that duration.
+ * Moving, the four leave together and stop one after another. At rest — which
+ * is most of the time, and unavoidable — they are four different lengths, in the
+ * ratio of the tokens they stand for. There is no frame in which the page says
+ * nothing.
  */
 function railKeyframes(values: string[]): string {
+  const longest = Math.max(...values.map(msOf), 1);
   return values
     .map((duration) => {
       const ms = msOf(duration);
       const stop = Math.min(100, (ms / RAIL_CYCLE_MS) * 100);
-      return `@keyframes rail-${ms} { 0% { transform: translateX(-100%); } ${stop.toFixed(3)}% { transform: translateX(300%); } 100% { transform: translateX(300%); } }`;
+      const width = Math.max(6, (ms / longest) * 100);
+      return `@keyframes rail-${ms} { 0% { width: 0%; } ${stop.toFixed(3)}% { width: ${width.toFixed(2)}%; } 100% { width: ${width.toFixed(2)}%; } }`;
     })
     .join("\n");
 }
@@ -54,7 +54,7 @@ function DurationBar({ duration, easing }: { duration: string; easing: string })
   return (
     <div className="h-2 overflow-hidden rounded-full bg-muted">
       <div
-        className="h-full w-1/4 rounded-full bg-primary motion-safe:animate-[var(--rail)_var(--cycle)_var(--rail-ease)_infinite]"
+        className="h-full rounded-full bg-primary motion-safe:animate-[var(--rail)_var(--cycle)_var(--rail-ease)_infinite] motion-reduce:w-full"
         style={{
           ["--rail" as string]: `rail-${msOf(duration)}`,
           ["--cycle" as string]: `${RAIL_CYCLE_MS}ms`,
