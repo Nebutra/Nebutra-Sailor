@@ -112,7 +112,6 @@ jobs:
       idp:         ${{ steps.resolve.outputs.idp }}
       auth:        ${{ steps.resolve.outputs.auth }}
       design:      ${{ steps.resolve.outputs.design }}
-      design-docs: ${{ steps.resolve.outputs['design-docs'] }}
       pebble:      ${{ steps.resolve.outputs.pebble }}
       sailor-docs: ${{ steps.resolve.outputs['sailor-docs'] }}
       router:      ${{ steps.resolve.outputs.router }}
@@ -206,21 +205,17 @@ jobs:
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
               - 'infra/runtime/nginx/**'
               - '.github/workflows/deploy-ecs.yml'
-            # Retired 2026-08-07. Its content is now on design.nebutra.com,
-            # rendered from source rather than described in MDX: the brand VI,
-            # the showcase, the seven patterns, icons, accessibility and
-            # copywriting. The thirteen components it documents that were never
-            # built are reported on /components as the evidence for this.
+            # apps/design-docs retired 2026-08-07 — its content is on
+            # design.nebutra.com now, rendered from source rather than described
+            # in MDX. The twenty-two enumerations that named it were left in
+            # place at the time behind a path nothing matches, because they
+            # include positional arguments to emit_next_matrix and renumbering
+            # those by hand is how this workflow has previously reported success
+            # while deploying nothing.
             #
-            # A path nothing matches rather than deletion of the twenty-two
-            # enumerations that name this app. Those include positional
-            # arguments to emit_next_matrix, and renumbering them by hand is how
-            # this workflow has previously reported success while deploying
-            # nothing. With the filter dead, `design-docs` is always false and
-            # every branch downstream short-circuits on its own — same outcome,
-            # none of that risk. The enumerations can go in a focused change.
-            design-docs:
-              - 'apps/design-docs/RETIRED-never-matches'
+            # They are gone as of 2026-08-11, once the closure test could see the
+            # dynamic matrix and check the renumbering. Deleting an enumeration
+            # is worth more than guarding one.
             pebble:
               - 'apps/pebble/**'
               - 'infra/runtime/nginx/**'
@@ -278,7 +273,6 @@ jobs:
           F_IDP:          ${{ steps.filter.outputs.idp }}
           F_AUTH:         ${{ steps.filter.outputs.auth }}
           F_DESIGN:       ${{ steps.filter.outputs.design }}
-          F_DESIGN_DOCS:  ${{ steps.filter.outputs['design-docs'] }}
           F_PEBBLE:       ${{ steps.filter.outputs.pebble }}
           F_SAILOR_DOCS:  ${{ steps.filter.outputs['sailor-docs'] }}
           F_ROUTER:       ${{ steps.filter.outputs.router }}
@@ -299,16 +293,15 @@ jobs:
 
           # Build dynamic Next matrix — only selected apps (no false-green skips).
           emit_next_matrix() {
-            local landing="$1" web="$2" idp="$3" auth="$4" design_docs="$5"
-            local pebble="$6" sailor_docs="$7" router="$8" forge="$9" admin="${10}"
-            local design="${11}"
+            local landing="$1" web="$2" idp="$3" auth="$4"
+            local pebble="$5" sailor_docs="$6" router="$7" forge="$8" admin="$9"
+            local design="${10}"
             local items=()
             [ "$landing" = "true" ] && items+=('{"app":"landing","package":"@nebutra/landing","workspace":"apps/landing","kind":"next-standalone","build_command":"build","site_url":"https://nebutra.com"}')
             [ "$web" = "true" ] && items+=('{"app":"web","package":"@nebutra/web","workspace":"apps/web","kind":"next-standalone","build_command":"build:next","site_url":"https://app.nebutra.com"}')
             [ "$idp" = "true" ] && items+=('{"app":"idp","package":"@nebutra/idp","workspace":"apps/idp","kind":"next-standalone","build_command":"build","site_url":"https://sso.nebutra.com"}')
             [ "$auth" = "true" ] && items+=('{"app":"auth","package":"@nebutra/auth-center","workspace":"apps/auth","kind":"next-standalone","build_command":"build","site_url":"https://auth.nebutra.com"}')
             [ "$design" = "true" ] && items+=('{"app":"design","package":"@nebutra/design","workspace":"apps/design","kind":"next-standalone","build_command":"build","site_url":"https://design.nebutra.com"}')
-            [ "$design_docs" = "true" ] && items+=('{"app":"design-docs","package":"@nebutra/design-docs","workspace":"apps/design-docs","kind":"next-standalone","build_command":"build","site_url":"https://design.nebutra.com"}')
             [ "$pebble" = "true" ] && items+=('{"app":"pebble","package":"@nebutra/pebble-site","workspace":"apps/pebble","kind":"next-standalone","build_command":"build","site_url":"https://pebble.nebutra.com"}')
             [ "$sailor_docs" = "true" ] && items+=('{"app":"sailor-docs","package":"@nebutra/sailor-docs","workspace":"apps/sailor-docs","kind":"next-standalone","build_command":"build:vm","site_url":"https://docs.nebutra.com"}')
             [ "$router" = "true" ] && items+=('{"app":"router","package":"@nebutra/router","workspace":"apps/router","kind":"next-standalone","build_command":"build","site_url":"https://router.nebutra.com"}')
@@ -357,14 +350,13 @@ jobs:
               echo "idp=false"
               echo "auth=false"
               echo "design=$design"
-              echo "design-docs=false"
               echo "pebble=$pebble"
               echo "sailor-docs=false"
               echo "router=$router"
               echo "forge=$forge"
               echo "admin=false"
               echo "any=$any"
-              emit_next_matrix false false false false false "$pebble" false "$router" "$forge" false "$design"
+              emit_next_matrix false false false false "$pebble" false "$router" "$forge" false "$design"
             } >> "$GITHUB_OUTPUT"
             echo "Auto-CI push: api=$api forge=$forge router=$router pebble=$pebble design=$design any=$any"
             exit 0
@@ -395,7 +387,6 @@ jobs:
               idp=$(contains_app "$normalized_apps" idp)
               auth=$(contains_app "$normalized_apps" auth)
               design=$(contains_app "$normalized_apps" design)
-              design_docs=$(contains_app "$normalized_apps" design-docs)
               pebble=$(contains_app "$normalized_apps" pebble)
               sailor_docs=$(contains_app "$normalized_apps" sailor-docs)
               router=$(contains_app "$normalized_apps" router)
@@ -407,14 +398,13 @@ jobs:
               echo "idp=$idp"
               echo "auth=$auth"
               echo "design=$design"
-              echo "design-docs=$design_docs"
               echo "pebble=$pebble"
               echo "sailor-docs=$sailor_docs"
               echo "router=$router"
               echo "forge=$forge"
               echo "admin=$admin"
               echo "any=true"
-              emit_next_matrix "$landing" "$web" "$idp" "$auth" "$design_docs" "$pebble" "$sailor_docs" "$router" "$forge" "$admin" "$design"
+              emit_next_matrix "$landing" "$web" "$idp" "$auth" "$pebble" "$sailor_docs" "$router" "$forge" "$admin" "$design"
             else
               echo "landing=$F_LANDING"
               echo "web=$F_WEB"
@@ -422,14 +412,13 @@ jobs:
               echo "idp=$F_IDP"
               echo "auth=$F_AUTH"
               echo "design=$F_DESIGN"
-              echo "design-docs=$F_DESIGN_DOCS"
               echo "pebble=$F_PEBBLE"
               echo "sailor-docs=$F_SAILOR_DOCS"
               echo "router=$F_ROUTER"
               echo "forge=$F_FORGE"
               echo "admin=$F_ADMIN"
-              echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_IDP" == "true" || "$F_AUTH" == "true" || "$F_DESIGN_DOCS" == "true" || "$F_PEBBLE" == "true" || "$F_SAILOR_DOCS" == "true" || "$F_ROUTER" == "true" || "$F_FORGE" == "true" || "$F_ADMIN" == "true" ]] && echo true || echo false)"
-              emit_next_matrix "$F_LANDING" "$F_WEB" "$F_IDP" "$F_AUTH" "$F_DESIGN_DOCS" "$F_PEBBLE" "$F_SAILOR_DOCS" "$F_ROUTER" "$F_FORGE" "$F_ADMIN" "$F_DESIGN"
+              echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_IDP" == "true" || "$F_AUTH" == "true" || "$F_PEBBLE" == "true" || "$F_SAILOR_DOCS" == "true" || "$F_ROUTER" == "true" || "$F_FORGE" == "true" || "$F_ADMIN" == "true" ]] && echo true || echo false)"
+              emit_next_matrix "$F_LANDING" "$F_WEB" "$F_IDP" "$F_AUTH" "$F_PEBBLE" "$F_SAILOR_DOCS" "$F_ROUTER" "$F_FORGE" "$F_ADMIN" "$F_DESIGN"
             fi
           } >> "$GITHUB_OUTPUT"
 
@@ -729,13 +718,6 @@ jobs:
           name: bundle-design
           path: ${{ runner.temp }}/bundles
 
-      - name: Download design-docs bundle
-        if: needs.detect-changes.outputs['design-docs'] == 'true'
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
-        with:
-          name: bundle-design-docs
-          path: ${{ runner.temp }}/bundles
-
       - name: Download pebble bundle
         if: needs.detect-changes.outputs.pebble == 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
@@ -832,7 +814,6 @@ jobs:
           [ "${{ needs.detect-changes.outputs.idp }}" = "true" ] && prune_apps="$prune_apps idp"
           [ "${{ needs.detect-changes.outputs.auth }}" = "true" ] && prune_apps="$prune_apps auth"
           [ "${{ needs.detect-changes.outputs.design }}" = "true" ] && prune_apps="$prune_apps design"
-          [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && prune_apps="$prune_apps design-docs"
           [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ] && prune_apps="$prune_apps pebble"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && prune_apps="$prune_apps sailor-docs"
           [ "${{ needs.detect-changes.outputs.router }}" = "true" ] && prune_apps="$prune_apps router"
@@ -1280,7 +1261,6 @@ jobs:
           [ "${{ needs.detect-changes.outputs.idp }}"            = "true" ] && APPS="$APPS idp"
           [ "${{ needs.detect-changes.outputs.auth }}"           = "true" ] && APPS="$APPS auth"
           [ "${{ needs.detect-changes.outputs.design }}" = "true" ] && APPS="$APPS design"
-          [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && APPS="$APPS design-docs"
           [ "${{ needs.detect-changes.outputs.pebble }}"         = "true" ] && APPS="$APPS pebble"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && APPS="$APPS sailor-docs"
           [ "${{ needs.detect-changes.outputs.router }}"         = "true" ] && APPS="$APPS router"
@@ -1289,9 +1269,9 @@ jobs:
           APPS="$(echo "$APPS" | xargs)"
 
           # An empty APPS must not reach the remote script. Its own
-          # `APPS="${APPS:-landing web api idp auth design-docs sailor-docs
+          # `APPS="${APPS:-landing web api idp auth design pebble sailor-docs
           # router forge}"` default then expands "deploy nothing" into "deploy
-          # everything": it walks all nine apps, logs `skip — no tarball` for
+          # everything": it walks every app, logs `skip — no tarball` for
           # each because only the selected bundle was uploaded, and finishes with
           # `deploy complete: landing web api …`. That is how dispatching
           # apps=admin reported a successful deploy of nine other apps and never
@@ -1572,7 +1552,6 @@ jobs:
           [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && emit_deployment_verified web "https://app.nebutra.com"
           [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && emit_deployment_verified api "https://api.nebutra.com/api/misc/health"
           [ "${{ needs.detect-changes.outputs.idp }}"            = "true" ] && emit_deployment_verified idp "https://sso.nebutra.com/.well-known/openid-configuration"
-          [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && emit_deployment_verified design-docs "https://design.nebutra.com"
           [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ] && emit_deployment_verified pebble "https://pebble.nebutra.com"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && emit_deployment_verified sailor-docs "https://docs.nebutra.com"
 
@@ -1593,7 +1572,6 @@ jobs:
           [ "${{ needs.detect-changes.outputs.idp }}"            = "true" ] && APPS="$APPS idp"
           [ "${{ needs.detect-changes.outputs.auth }}"           = "true" ] && APPS="$APPS auth"
           [ "${{ needs.detect-changes.outputs.design }}" = "true" ] && APPS="$APPS design"
-          [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && APPS="$APPS design-docs"
           [ "${{ needs.detect-changes.outputs.pebble }}"         = "true" ] && APPS="$APPS pebble"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && APPS="$APPS sailor-docs"
           [ "${{ needs.detect-changes.outputs.router }}"         = "true" ] && APPS="$APPS router"
@@ -1641,7 +1619,7 @@ jobs:
             echo "- Commit: \`${{ github.sha }}\`"
             echo "- Provider: ${VM_PROVIDER:-unknown}"
             echo "- **AUTH_DEPLOYED=${{ needs.detect-changes.outputs.auth }}** (true = this run built+uploaded auth; false = auth bundle untouched)"
-            echo "- Apps: landing=${{ needs.detect-changes.outputs.landing }} / web=${{ needs.detect-changes.outputs.web }} / api=${{ needs.detect-changes.outputs.api }} / auth=${{ needs.detect-changes.outputs.auth }} / idp=${{ needs.detect-changes.outputs.idp }} / forge=${{ needs.detect-changes.outputs.forge }} / router=${{ needs.detect-changes.outputs.router }} / design-docs=${{ needs.detect-changes.outputs['design-docs'] }} / sailor-docs=${{ needs.detect-changes.outputs['sailor-docs'] }} / pebble=${{ needs.detect-changes.outputs.pebble }} / admin=${{ needs.detect-changes.outputs.admin }}"
+            echo "- Apps: landing=${{ needs.detect-changes.outputs.landing }} / web=${{ needs.detect-changes.outputs.web }} / api=${{ needs.detect-changes.outputs.api }} / auth=${{ needs.detect-changes.outputs.auth }} / idp=${{ needs.detect-changes.outputs.idp }} / forge=${{ needs.detect-changes.outputs.forge }} / router=${{ needs.detect-changes.outputs.router }} / sailor-docs=${{ needs.detect-changes.outputs['sailor-docs'] }} / pebble=${{ needs.detect-changes.outputs.pebble }} / admin=${{ needs.detect-changes.outputs.admin }}"
             echo "- Triggered by: ${{ github.actor }} via ${{ github.event_name }}"
             if [ -n "${{ github.event.inputs.reason }}" ]; then
               echo "- Reason: ${{ github.event.inputs.reason }}"

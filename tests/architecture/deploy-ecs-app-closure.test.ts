@@ -5,6 +5,8 @@ import { describe, expect, it } from "vitest";
 /**
  * deploy-ecs.yml enumerates its apps in ten places, and the remote script it
  * drives in five more. Nothing made the fifteen agree until this test existed.
+ * One of the fifteen — build-next's own `if:` gate — has since been removed
+ * outright by the move to a dynamic matrix.
  *
  * The failure that prompted it: `admin` was in the dispatch input description,
  * the path filter, the `resolve` outputs and the allow-list `case`, but not the
@@ -27,9 +29,28 @@ import { describe, expect, it } from "vitest";
 const WORKFLOW = resolve(process.cwd(), ".github/workflows/deploy-ecs.yml");
 const yml = readFileSync(WORKFLOW, "utf-8");
 
-/** Apps the build matrix can produce a bundle for. */
+/**
+ * Apps the build matrix can produce a bundle for.
+ *
+ * The matrix is no longer a static `include:` list — it is JSON assembled by
+ * `emit_next_matrix`, one `items+=('{"app":…}')` line per app, and consumed
+ * through `fromJson`. This used to parse `- app: x`, which the workflow stopped
+ * containing; it returned an empty array, and an empty array is the one value
+ * that makes every assertion downstream of it pass. Four of the guards in this
+ * file were reporting green against nothing, including the one named after the
+ * incident that caused the file to exist.
+ *
+ * The count is asserted rather than trusted: a parser that silently finds zero
+ * is the failure mode this whole file is about.
+ */
 function matrixApps(): string[] {
-  return [...yml.matchAll(/^\s+- app:\s*(\S+)\s*$/gm)].map((m) => m[1]);
+  const apps = [...yml.matchAll(/items\+=\('\{"app":"([a-z0-9-]+)"/g)].map((m) => m[1]);
+  expect(
+    apps.length,
+    "parsed no apps out of emit_next_matrix — the emitter's shape changed and this " +
+      "parser did not follow, which makes every assertion below it vacuous",
+  ).toBeGreaterThan(4);
+  return apps;
 }
 
 /**
@@ -48,23 +69,6 @@ function dedicatedJobApps(): string[] {
 /** Everything that can actually produce a deployable bundle. */
 function buildableApps(): string[] {
   return [...new Set([...matrixApps(), ...dedicatedJobApps()])];
-}
-
-/**
- * Apps named in build-next's own `if:` gate — a FIFTH enumeration, and the one
- * that bit after the matrix was fixed. The gate exists so that selecting only
- * `api` does not spin a runner per matrix entry to no-op; the cost of that
- * optimisation is a list that has to stay in step with the matrix, and it did
- * not. A matrix entry absent from the gate never runs at all.
- */
-function buildNextGateApps(): string[] {
-  const gate = yml.match(
-    /name: Build \$\{\{ matrix\.app \}\}[\s\S]*?\n\s+if: \|\n([\s\S]*?)\n\s+runs-on:/,
-  );
-  expect(gate, "build-next job must keep an `if:` gate").toBeTruthy();
-  return [
-    ...(gate?.[1] ?? "").matchAll(/outputs(?:\.([a-z0-9-]+)|\['([a-z0-9-]+)'\])\s*==\s*'true'/g),
-  ].map((m) => m[1] ?? m[2]);
 }
 
 /**
@@ -161,14 +165,11 @@ describe("deploy-ecs app enumeration closure", () => {
     ).toEqual([]);
   });
 
-  it("every build matrix entry is named in build-next's own if gate", () => {
-    const ungated = matrixApps().filter((app) => !buildNextGateApps().includes(app));
-    expect(
-      ungated,
-      `these matrix entries are absent from the build-next \`if:\` gate, so the whole ` +
-        `job is skipped and they never build no matter what selects them: ${ungated.join(", ")}`,
-    ).toEqual([]);
-  });
+  // The fifth enumeration — build-next's per-app `if:` gate — is deliberately
+  // not tested any more, because it no longer exists. The dynamic matrix gates
+  // the whole job on `next_any` and emits an entry only for a selected app, so
+  // a matrix entry that is never reachable is now unrepresentable rather than
+  // merely detected. An enumeration removed beats an enumeration guarded.
 
   it("every buildable app has a download step in the deploy job", () => {
     // The upload side's `bundle-${{ matrix.app }}` does not match the literal
@@ -223,7 +224,6 @@ describe("deploy-ecs app enumeration closure", () => {
     for (const chain of accumulatorChains("prune_apps")) expect(chain).toContain("admin");
     expect(allowListApps()).toContain("admin");
     expect(resolvedOutputs()).toContain("admin");
-    expect(buildNextGateApps()).toContain("admin");
     expect(downloadedApps()).toContain("admin");
     expect(yml).toContain("'apps/admin/**'");
   });
