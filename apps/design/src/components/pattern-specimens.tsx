@@ -293,34 +293,62 @@ export function NavigationSpecimens() {
  * thing that decides which one a section wants, and that only shows up when
  * they sit on top of each other.
  */
-/** One multiplier for all three bars, so the ratio between them stays exact. */
-const RAIL_SCALE = 0.66;
+const ROWS = [
+  { token: "--container-text", css: "var(--container-text)" },
+  { token: "--container-content", css: "var(--container-content)" },
+  { token: "--container-wide", css: "var(--container-wide)" },
+] as const;
 
 export function LayoutSpecimens() {
+  const track = React.useRef<HTMLDivElement>(null);
+  const [scale, setScale] = React.useState<number | null>(null);
+
+  // Fit the widest container to the track, and take the other two down with it.
+  //
+  // This was a constant — 0.66, chosen because it looked about right in the
+  // article column on a laptop. It is a guess about a width nothing guarantees:
+  // --container-wide is 1400px, 66% of that is 924px, and the column here is
+  // narrower than that, so the widest bar ran out past the card and the caption
+  // underneath said the proportions were exact while the longest one was
+  // clipped. Any language free to change --container-wide, and any viewport
+  // other than the one it was eyeballed at, re-breaks it.
+  //
+  // Measured instead: the widest bar is defined to fill the track, so it cannot
+  // overflow, and the ratio is preserved because one factor scales all three.
+  React.useEffect(() => {
+    const node = track.current;
+    if (!node) return;
+    const measure = () => {
+      const available = node.clientWidth;
+      const widest = Number.parseFloat(getComputedStyle(node).getPropertyValue("--container-wide"));
+      if (!available || !widest) return;
+      // Never enlarge: on a wide viewport the real widths are the honest
+      // drawing, and a bar stretched past its token is a lie about the token.
+      setScale(Math.min(1, available / widest));
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="rounded-[var(--radius-lg)] bg-card p-6 shadow-ambient-sm">
-      {/* Drawn to scale rather than at full size. At their real widths the two
-          larger containers both overran the article column and clipped at the
-          same place, so they looked identical — the exact opposite of the
-          point, since the ratio between them is the reason to choose one. A
-          single multiplier fits all three while keeping that ratio exact. */}
-      <div className="flex flex-col gap-3">
-        {[
-          { token: "--container-text", width: "var(--container-text)" },
-          { token: "--container-content", width: "var(--container-content)" },
-          { token: "--container-wide", width: "var(--container-wide)" },
-        ].map((row) => (
+      <div className="flex flex-col gap-3 overflow-hidden" ref={track}>
+        {ROWS.map((row) => (
           <div className="flex flex-col gap-1" key={row.token}>
             <code className="font-mono text-[11px] text-muted-foreground">{row.token}</code>
             <div
               className="h-6 rounded-[var(--radius-sm)] bg-primary/15"
-              style={{ width: `calc(${row.width} * ${RAIL_SCALE})` }}
+              style={{ width: scale === null ? 0 : `calc(${row.css} * ${scale})` }}
             />
           </div>
         ))}
       </div>
       <p className="mt-3 text-[12px] text-muted-foreground">
-        Shown at {Math.round(RAIL_SCALE * 100)}% so all three fit — the proportions are exact.
+        {scale !== null && scale < 1
+          ? `Shown at ${Math.round(scale * 100)}% so all three fit \u2014 the proportions are exact.`
+          : "Drawn at their real widths."}
       </p>
     </div>
   );
