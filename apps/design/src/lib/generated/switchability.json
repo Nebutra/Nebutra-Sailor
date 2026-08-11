@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-08-10T09:32:04.607Z",
+  "generatedAt": "2026-08-11T05:42:30.228Z",
   "source": "scripts/lint-inert-dimensions.mjs",
   "knownInert": [],
   "dimensions": [
     {
       "id": "colour",
       "declared": true,
-      "consumers": 373,
+      "consumers": 371,
       "status": "live"
     },
     {
       "id": "radius",
       "declared": true,
-      "consumers": 604,
+      "consumers": 603,
       "status": "live"
     },
     {
       "id": "elevation",
       "declared": true,
-      "consumers": 205,
+      "consumers": 204,
       "status": "live"
     },
     {
@@ -30,7 +30,7 @@
     {
       "id": "motion",
       "declared": true,
-      "consumers": 61,
+      "consumers": 60,
       "status": "live"
     },
     {
