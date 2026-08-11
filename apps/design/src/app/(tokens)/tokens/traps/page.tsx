@@ -145,8 +145,17 @@ border-color: hsl(var(--border) / 0.4);`}
             <Mono>text-primary</Mono>, <Mono>bg-card</Mono>, <Mono>border-border</Mono>. The{" "}
             <Mono>@theme</Mono> block already wraps each token —{" "}
             <Mono>--color-primary: hsl(var(--primary))</Mono> — which is why the utilities are safe
-            {/* @allow-ui-contract: prose naming the anti-pattern, not a style declaration */}
-            and a raw <Mono>bg-[var(--primary)]</Mono> is not.
+            {/* The class name is split so the scanner does not read this sentence as a
+                use of it. Written whole, Tailwind generates the broken utility into the
+                stylesheet — the page that documents the trap was the only thing in the
+                app still producing it, and audit-css-var-types.mjs reported it forever,
+                which is how a report with one permanent entry stops being read. */}
+            and a raw{" "}
+            <Mono>
+              {"bg-[var(--primary"}
+              {")]"}
+            </Mono>{" "}
+            is not.
           </Note>
         </div>
       </Section>
