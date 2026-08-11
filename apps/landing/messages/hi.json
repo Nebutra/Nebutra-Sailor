@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "अग्रणी डिज़ाइन सिस्टम और कंपोनेंट लाइब्रेरी",
-        "desc": "एक 4-स्तरीय टोकन-संचालित आर्किटेक्चर: ब्रांड → टोकन → थीम → UI। Radix + साझा Motion लेयर पर बनाया गया, oklch मल्टी-थीम, Storybook दस्तावेज़, और दृश्य रिग्रेशन परीक्षण के साथ।",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4-स्तरीय टोकन शासन",
-          "f2": "oklch मल्टी-थीम + Storybook"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "टोकन",
     "flowTokensDesc": "CSS वेरिएबल्स, 12-स्टेप स्केल्स, डार्क मोड",
     "flowTheme": "थीम",
-    "flowThemeDesc": "oklch मल्टी-थीम, 6 प्रीसेट्स, color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "UI",
     "flowUIDesc": "कंपोनेंट्स, Storybook, Chromatic",
     "card1Title": "12-स्टेप कलर स्केल्स",
     "card1Desc": "Geist-एलाइंड सेमैंटिक स्केल: बैकग्राउंड (1-2), स्टेट्स (3-5), बॉर्डर्स (6-8), फिल्स (9-10), टेक्स्ट (11-12)।",
-    "card2Title": "oklch मल्टी-थीम",
-    "card2Desc": "color-mix() डेरिवेशन के साथ oklch का उपयोग करने वाले 6 थीम प्रीसेट्स। sRGB फॉलबैक के साथ Display-P3 वाइड-गैमट।",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "विज़ुअल रिग्रेसन",
     "card3Desc": "Chromatic हर पिक्सेल बदलाव को पकड़ता है। Storybook हर कंपोनेंट की दस्तावेज़ीकरण करता है. आर्किटेक्चर टेस्ट स्टोरी कवरेज को लागू करते हैं।",
     "card4Title": "टोकन गवर्नेंस",
-    "card4Desc": "रेचेट बजट: hex सीलिंग, oklch फ्लोर, रॉ कलर क्लास सीमाएं। CI में ब्रांड ड्रिफ्ट डिटेक्शन।",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "इंटरैक्टिव डॉक्यूमेंटेशन",
-    "card5Desc": "Fumadocs से संचालित पूर्ण डिज़ाइन डॉक्स साइट, जिसमें द्विभाषी (EN/ZH) कंपोनेंट API डॉक्स, टोकन गैलरी, लेआउट पैटर्न गाइड और लाइव कोड उदाहरण शामिल हैं।"
+    "card5Desc": "Fumadocs से संचालित पूर्ण डिज़ाइन डॉक्स साइट, जिसमें द्विभाषी (EN/ZH) कंपोनेंट API डॉक्स, टोकन गैलरी, लेआउट पैटर्न गाइड और लाइव कोड उदाहरण शामिल हैं।",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "पेज नहीं मिला",

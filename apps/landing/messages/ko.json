@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "Leading Modern Component Library System",
-        "desc": "A beautiful, token-driven architecture using Radix + the shared Motion layer. Perfect for teams building their own opinionated UI libraries.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4-Layer Tokens",
-          "f2": "CSS Variables"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "토큰",
     "flowTokensDesc": "CSS 변수, 12단계 스케일, 다크 모드",
     "flowTheme": "테마",
-    "flowThemeDesc": "oklch 멀티 테마, 6개 프리셋, color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "UI",
     "flowUIDesc": "컴포넌트, Storybook, Chromatic",
     "card1Title": "12단계 색상 스케일",
     "card1Desc": "Geist 정렬 시맨틱 스케일: 배경(1-2), 상태(3-5), 테두리(6-8), 채우기(9-10), 텍스트(11-12).",
-    "card2Title": "oklch 멀티 테마",
-    "card2Desc": "oklch 색공간을 사용한 6개 테마 프리셋, color-mix()로 호버/활성 상태 파생. Display-P3 광색역 + sRGB 폴백.",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "비주얼 리그레션",
     "card3Desc": "Chromatic이 모든 픽셀 변경을 감지. Storybook이 모든 컴포넌트를 문서화. 아키텍처 테스트가 Story 커버리지를 강제.",
     "card4Title": "토큰 거버넌스",
-    "card4Desc": "래칫 예산: hex 상한, oklch 하한, 원시 색상 클래스 제한. CI에서 브랜드 드리프트 감지.",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "인터랙티브 문서",
-    "card5Desc": "Fumadocs 기반 디자인 문서 사이트. 이중 언어 컴포넌트 API 문서, 토큰 갤러리, 레이아웃 패턴 가이드."
+    "card5Desc": "Fumadocs 기반 디자인 문서 사이트. 이중 언어 컴포넌트 API 문서, 토큰 갤러리, 레이아웃 패턴 가이드.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "페이지를 찾을 수 없습니다",

@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "پیشرو ڈیزائن سسٹم اور کمپوننٹ لائبریری",
-        "desc": "4 تہوں پر مشتمل ٹوکن ڈرائیون آرکیٹیکچر: برانڈ → ٹوکنز → تھیم → UI۔ Radix اور مشترکہ Motion لیئر پر بنایا گیا، oklch ملٹی تھیم، Storybook دستاویزات، اور بصری ریگریشن ٹیسٹنگ کے ساتھ۔",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4 تہوں پر مشتمل ٹوکن گورننس",
-          "f2": "oklch ملٹی تھیم + Storybook"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "ٹوکنز",
     "flowTokensDesc": "CSS متغیرات، 12-مرحلے کی پیمانے، ڈارک موڈ",
     "flowTheme": "تھیم",
-    "flowThemeDesc": "oklch ملٹی تھیم، 6 پری سیٹس، color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "یو آئی",
     "flowUIDesc": "کمپوننٹس، Storybook، Chromatic",
     "card1Title": "12-مرحلے کی رنگ پیمانے",
     "card1Desc": "Geist-متوازی معنوی پیمانہ: پس منظر (1-2)، حالتیں (3-5)، سرحدیں (6-8)، بھرائی (9-10)، متن (11-12).",
-    "card2Title": "oklch ملٹی تھیم",
-    "card2Desc": "oklch کے ساتھ color-mix() اخذ پر مبنی 6 تھیم پری سیٹس۔ Display-P3 وسیع گیمٹ کے ساتھ sRGB فیل بیک۔",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "بصری ریگریشن",
     "card3Desc": "Chromatic ہر پکسل تبدیلی پکڑتا ہے۔ Storybook ہر کمپوننٹ کی دستاویز کرتا ہے۔ آرکیٹیکچر ٹیسٹس اسٹوری کوریج کو نافذ کرتے ہیں۔",
     "card4Title": "ٹوکن گورننس",
-    "card4Desc": "ریچٹ بجٹس: hex چھت، oklch فرش، خام رنگ کلاس حدیں۔ CI میں برانڈ ڈرفٹ ڈیٹیکشن۔",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "انٹرایکٹو دستاویزات",
-    "card5Desc": "مکمل فوماڈاکس پر مبنی ڈیزائن ڈاکس سائٹ جس میں دو زبانوں (انگریزی/چینی) میں کمپوننٹ API ڈاکس، ٹوکن گیلریز، لے آؤٹ پیٹرن گائیڈز، اور لائیو کوڈ مثالیں شامل ہیں۔"
+    "card5Desc": "مکمل فوماڈاکس پر مبنی ڈیزائن ڈاکس سائٹ جس میں دو زبانوں (انگریزی/چینی) میں کمپوننٹ API ڈاکس، ٹوکن گیلریز، لے آؤٹ پیٹرن گائیڈز، اور لائیو کوڈ مثالیں شامل ہیں۔",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "صفحہ نہیں ملا",

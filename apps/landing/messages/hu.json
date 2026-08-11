@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "Vezető dizájnrendszer és komponenskönyvtár",
-        "desc": "4 rétegű, token-alapú architektúra: Brand → Tokenek → Téma → UI. Radix + megosztott Motion réteg alapokon, oklch többtémás támogatással, Storybook dokumentációval és vizuális regressziós teszteléssel.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4 rétegű token-gazdálkodás",
-          "f2": "oklch többtémás + Storybook"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "Tokenek",
     "flowTokensDesc": "CSS változók, 12 lépcsős skálák, sötét mód",
     "flowTheme": "Téma",
-    "flowThemeDesc": "oklch több témás, 6 előre beállított, color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "Felhasználói felület",
     "flowUIDesc": "Komponensek, Storybook, Chromatic",
     "card1Title": "12 lépcsős szín skálák",
     "card1Desc": "Geist-igazított szemantikai skála: háttérek (1-2), állapotok (3-5), határvonalak (6-8), kitöltések (9-10), szöveg (11-12).",
-    "card2Title": "oklch több témás",
-    "card2Desc": "6 témabeállítás oklch használatával color-mix() levezetéssel. Display-P3 széles színtartomány sRGB visszalépéssel.",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "Vizuális regresszió",
     "card3Desc": "A Chromatic észrevesz minden pixelváltozást. A Storybook dokumentálja minden komponenst. Az architektúra tesztek biztosítják a történet lefedettséget.",
     "card4Title": "Token szabályozás",
-    "card4Desc": "Ratchet keretek: hex plafon, oklch padló, nyers színosztály korlátok. CI-ben márkanév-drift érzékelés.",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "Interaktív dokumentáció",
-    "card5Desc": "Teljes Fumadocs-alapú design docs oldal kétnyelvű (EN/ZH) komponens API dokumentációval, token galériákkal, elrendezési minta útmutatókkal és élő kódpéldákkal."
+    "card5Desc": "Teljes Fumadocs-alapú design docs oldal kétnyelvű (EN/ZH) komponens API dokumentációval, token galériákkal, elrendezési minta útmutatókkal és élő kódpéldákkal.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "Az oldal nem található",

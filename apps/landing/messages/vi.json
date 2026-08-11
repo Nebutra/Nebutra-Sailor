@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "Hệ thống thiết kế & thư viện thành phần hàng đầu",
-        "desc": "Kiến trúc điều khiển bằng token 4 lớp: Thương hiệu → Token → Chủ đề → UI. Xây dựng trên Radix + lớp Motion chung với đa chủ đề oklch, tài liệu Storybook và kiểm thử hồi quy trực quan.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "Quản trị token 4 lớp",
-          "f2": "Đa chủ đề oklch + Storybook"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "Token",
     "flowTokensDesc": "Biến CSS, thang 12 bước, chế độ tối",
     "flowTheme": "Giao diện",
-    "flowThemeDesc": "Đa theme oklch, 6 preset, color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "Giao diện người dùng",
     "flowUIDesc": "Component, Storybook, Chromatic",
     "card1Title": "Thang Màu 12 Bước",
     "card1Desc": "Thang ngữ nghĩa theo Geist: nền (1-2), trạng thái (3-5), viền (6-8), điền (9-10), văn bản (11-12).",
-    "card2Title": "Đa Theme oklch",
-    "card2Desc": "6 preset theme dùng oklch với dẫn xuất color-mix(). Dải màu rộng Display-P3 với fallback sRGB.",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "Hồi quy Trực quan",
     "card3Desc": "Chromatic phát hiện mọi thay đổi pixel. Storybook tài liệu hóa mọi component. Kiểm tra kiến trúc đảm bảo độ phủ story.",
     "card4Title": "Quản trị Token",
-    "card4Desc": "Ngân sách ratchet: trần hex, sàn oklch, giới hạn lớp màu gốc. Phát hiện lệch thương hiệu trong CI.",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "Tài liệu Tương tác",
-    "card5Desc": "Trang tài liệu thiết kế hoàn chỉnh chạy trên Fumadocs, bao gồm tài liệu API thành phần song ngữ (EN/ZH), thư viện token, hướng dẫn mẫu bố cục và ví dụ mã trực tiếp."
+    "card5Desc": "Trang tài liệu thiết kế hoàn chỉnh chạy trên Fumadocs, bao gồm tài liệu API thành phần song ngữ (EN/ZH), thư viện token, hướng dẫn mẫu bố cục và ví dụ mã trực tiếp.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "Không tìm thấy trang",

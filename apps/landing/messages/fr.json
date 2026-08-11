@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "Système de design & bibliothèque de composants leader",
-        "desc": "Une architecture à 4 couches pilotée par tokens : Marque → Tokens → Thème → UI. Construite sur Radix + la couche Motion partagée avec thème oklch multi-preset, docs Storybook et tests de régression visuelle.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "Gouvernance de tokens à 4 couches",
-          "f2": "Multi-thème oklch + Storybook"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "Jetons",
     "flowTokensDesc": "Variables CSS, échelles 12 niveaux, mode sombre",
     "flowTheme": "Thème",
-    "flowThemeDesc": "oklch multi-thème, 6 presets, color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "Interface",
     "flowUIDesc": "Composants, Storybook, Chromatic",
     "card1Title": "Échelles de couleur 12 niveaux",
     "card1Desc": "Échelle sémantique alignée Geist : arrière-plans (1-2), états (3-5), bordures (6-8), remplissages (9-10), texte (11-12).",
-    "card2Title": "oklch Multi-Thème",
-    "card2Desc": "6 presets de thème en oklch avec dérivation color-mix(). Gamut large Display-P3 avec repli sRGB.",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "Régression Visuelle",
     "card3Desc": "Chromatic détecte chaque changement de pixel. Storybook documente chaque composant. Les tests d'architecture imposent la couverture Stories.",
     "card4Title": "Gouvernance des Tokens",
-    "card4Desc": "Budgets cliquet : plafond hex, plancher oklch, limites de classes couleur brutes. Détection de dérive de marque en CI.",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "Documentation interactive",
-    "card5Desc": "Site de documentation de design avec Fumadocs. Documentation API bilingue des composants, galeries de tokens et guides de patterns."
+    "card5Desc": "Site de documentation de design avec Fumadocs. Documentation API bilingue des composants, galeries de tokens et guides de patterns.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "Page non trouvée",

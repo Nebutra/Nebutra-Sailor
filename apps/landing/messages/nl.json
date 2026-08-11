@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "Toonaangevend designsystem en componentenbibliotheek",
-        "desc": "Een 4-laags token-gedreven architectuur: Merk → Tokens → Thema → UI. Gebouwd op Radix + de gedeelde Motion-laag met oklch multi-thema, Storybook-documentatie en visuele regressietests.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4-laagse token-governance",
-          "f2": "oklch multi-thema + Storybook"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "Tokens",
     "flowTokensDesc": "CSS-variabelen, 12-staps schalen, donkere modus",
     "flowTheme": "Thema",
-    "flowThemeDesc": "oklch multi-thema, 6 voorinstellingen, color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "UI",
     "flowUIDesc": "Componenten, Storybook, Chromatic",
     "card1Title": "12-staps kleurschalen",
     "card1Desc": "Geist-uitgelijnde semantische schaal: achtergronden (1-2), statussen (3-5), randen (6-8), vullingen (9-10), tekst (11-12).",
-    "card2Title": "oklch multi-thema",
-    "card2Desc": "6 themavoorinstellingen met oklch en color-mix()-afleiding. Display-P3 breed-gamma met sRGB-fallback.",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "Visuele regressie",
     "card3Desc": "Chromatic vangt elke pixelverandering. Storybook documenteert elk component. Architectuurtests handhaven story-coverage.",
     "card4Title": "Tokenbeheer",
-    "card4Desc": "Ratchet-budgets: hex-plafond, oklch-vloer, ruwe kleurklasse-limieten. Merkdrift-detectie in CI.",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "Interactieve documentatie",
-    "card5Desc": "Volledig Fumadocs-aangedreven design-docs-site met tweetalige (EN/ZH) component-API-documentatie, token-galerijen, layoutpatroon-gidsen en live codevoorbeelden."
+    "card5Desc": "Volledig Fumadocs-aangedreven design-docs-site met tweetalige (EN/ZH) component-API-documentatie, token-galerijen, layoutpatroon-gidsen en live codevoorbeelden.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "Pagina niet gevonden",

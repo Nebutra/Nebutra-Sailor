@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "Vedoucí designový systém a knihovna komponent",
-        "desc": "Architektura řízená tokeny ve 4 vrstvách: Brand → Tokens → Theme → UI. Postaveno na Radix + sdílené vrstvě Motion s oklch multi-themem, dokumentací Storybook a testováním vizuální regrese.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "Správa tokenů ve 4 vrstvách",
-          "f2": "oklch multi-theme + Storybook"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "Tokeny",
     "flowTokensDesc": "CSS proměnné, 12stupňové škály, tmavý režim",
     "flowTheme": "Téma",
-    "flowThemeDesc": "oklch multi-téma, 6 předvoleb, color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "UI",
     "flowUIDesc": "Komponenty, Storybook, Chromatic",
     "card1Title": "12stupňové barevné škály",
     "card1Desc": "Sémantická škála v souladu s Geistem: pozadí (1-2), stavy (3-5), okraje (6-8), výplně (9-10), text (11-12).",
-    "card2Title": "oklch Multi-téma",
-    "card2Desc": "6 předvoleb témat pomocí oklch s odvozením přes color-mix(). Široký gamut Display-P3 s fallbackem na sRGB.",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "Vizuální regrese",
     "card3Desc": "Chromatic zachytí každou změnu pixelu. Storybook dokumentuje každou komponentu. Architektura testů vynucuje pokrytí příběhů.",
     "card4Title": "Řízení tokenů",
-    "card4Desc": "Ratchet rozpočty: hex strop, oklch podlaha, limity pro třídy barev. Detekce odchylek značky v CI.",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "Interaktivní dokumentace",
-    "card5Desc": "Kompletní web s designovou dokumentací poháněný Fumadocs s dvojjazyčnou (EN/ZH) dokumentací API komponent, galeriemi tokenů, průvodci vzory rozložení a živými příklady kódu."
+    "card5Desc": "Kompletní web s designovou dokumentací poháněný Fumadocs s dvojjazyčnou (EN/ZH) dokumentací API komponent, galeriemi tokenů, průvodci vzory rozložení a živými příklady kódu.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "Stránka nenalezena",

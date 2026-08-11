@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "নেতৃত্বদানকারী ডিজাইন সিস্টেম ও কম্পোনেন্ট লাইব্রেরি",
-        "desc": "একটি 4-স্তরের টোকেন-চালিত আর্কিটেকচার: ব্র্যান্ড → টোকেন → থিম → UI। Radix এবং শেয়ার্ড Motion লেয়ারের উপর নির্মিত, oklch মাল্টি-থিম, Storybook ডকস এবং ভিজ্যুয়াল রিগ্রেশন টেস্টিং সহ।",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4-স্তরের টোকেন গভর্ন্যান্স",
-          "f2": "oklch মাল্টি-থিম + Storybook"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "টোকেন",
     "flowTokensDesc": "CSS ভেরিয়েবল, 12-স্টেপ স্কেল, ডার্ক মোড",
     "flowTheme": "থিম",
-    "flowThemeDesc": "oklch মাল্টি-থিম, 6 প্রিসেট, color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "ইউআই",
     "flowUIDesc": "কম্পোনেন্ট, Storybook, Chromatic",
     "card1Title": "12-স্টেপ কালার স্কেল",
     "card1Desc": "Geist-এর সাথে সামঞ্জস্যপূর্ণ সেমান্টিক স্কেল: ব্যাকগ্রাউন্ড (1-2), স্টেট (3-5), বর্ডার (6-8), ফিল (9-10), টেক্সট (11-12)।",
-    "card2Title": "oklch মাল্টি-থিম",
-    "card2Desc": "color-mix() ডেরিভেশন ব্যবহার করে oklch-এর 6টি থিম প্রিসেট। Display-P3 ওয়াইড-গ্যামাট এবং sRGB ফলব্যাক সহ।",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "ভিজ্যুয়াল রিগ্রেশন",
     "card3Desc": "Chromatic প্রতিটি পিক্সেল পরিবর্তন ধরে। Storybook প্রতিটি কম্পোনেন্ট ডকুমেন্ট করে. আর্কিটেকচার টেস্ট স্টোরি কভারেজ নিশ্চিত করে।",
     "card4Title": "টোকেন গভর্ন্যান্স",
-    "card4Desc": "রেচেট বাজেট: hex সীমা, oklch ন্যূনতম, র‍্যাও কালার ক্লাস সীমা। CI-তে ব্র্যান্ড ড্রিফট ডিটেকশন।",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "ইন্টারঅ্যাক্টিভ ডকুমেন্টেশন",
-    "card5Desc": "Fumadocs-চালিত সম্পূর্ণ ডিজাইন ডকস সাইট, যার মধ্যে দ্বিভাষিক (EN/ZH) কম্পোনেন্ট API ডকস, টোকেন গ্যালারি, লেআউট প্যাটার্ন গাইড এবং লাইভ কোড উদাহরণ রয়েছে।"
+    "card5Desc": "Fumadocs-চালিত সম্পূর্ণ ডিজাইন ডকস সাইট, যার মধ্যে দ্বিভাষিক (EN/ZH) কম্পোনেন্ট API ডকস, টোকেন গ্যালারি, লেআউট প্যাটার্ন গাইড এবং লাইভ কোড উদাহরণ রয়েছে।",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "পেজ পাওয়া যায়নি",

@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "Johtava suunnittelujärjestelmä ja komponenttikirjasto",
-        "desc": "Nelikerroksinen token-pohjainen arkkitehtuuri: Brändi → Tokenit → Teema → Käyttöliittymä. Rakennettu Radixin ja yhteisen Motion-kerroksen varaan oklch-moniteemalla, Storybook-dokumentaatiolla ja visuaalisella regressiotestauksella.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "Nelikerroksinen token-hallinta",
-          "f2": "oklch-moniteema + Storybook"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "Tokenit",
     "flowTokensDesc": "CSS-muuttujat, 12-askeliset asteikot, tumma tila",
     "flowTheme": "Teema",
-    "flowThemeDesc": "oklch-moniteema, 6 esiasetusta, color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "Käyttöliittymä",
     "flowUIDesc": "Komponentit, Storybook, Chromatic",
     "card1Title": "12-askeliset väriasteikot",
     "card1Desc": "Geist-yhteensopiva semanttinen asteikko: taustat (1–2), tilat (3–5), reunat (6–8), täytöt (9–10), teksti (11–12).",
-    "card2Title": "oklch-moniteema",
-    "card2Desc": "6 teemaesiasetusta oklch-väreillä ja color-mix()-johtamisella. Display-P3-laajakirjaimisto sRGB-varavaihtoehdolla.",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "Visuaalinen regressio",
     "card3Desc": "Chromatic havaitsee jokaisen pikselin muutoksen. Storybook dokumentoi jokaisen komponentin. Arkkitehtuuritestit varmistavat tarinoiden kattavuuden.",
     "card4Title": "Tokenien hallinta",
-    "card4Desc": "Ratchet- budjetit: hex-katto, oklch-lattia, raakaväriluokkien rajat. Merkkien harhaintunnistus CI:ssä.",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "Interaktiivinen dokumentaatio",
-    "card5Desc": "Kokonainen Fumadocs-pohjainen suunnitteludokumentointisivusto, jossa on kaksikieliset (EN/ZH) komponenttien API-dokumentaatiot, token-galleriat, asettelukuvioiden ohjeet ja reaaliaikaiset koodiesimerkit."
+    "card5Desc": "Kokonainen Fumadocs-pohjainen suunnitteludokumentointisivusto, jossa on kaksikieliset (EN/ZH) komponenttien API-dokumentaatiot, token-galleriat, asettelukuvioiden ohjeet ja reaaliaikaiset koodiesimerkit.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "Sivua ei löydy",

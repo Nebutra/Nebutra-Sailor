@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "מערכת עיצוב ומאגר רכיבים מוביל",
-        "desc": "ארכיטקטורה המונעת על ידי טוקנים ב-4 שכבות: מותג → טוקנים → ערכת נושא → ממשק. מבוסס על Radix ושכבת ה-Motion המשותפת עם ערכות נושא מרובות ב-oklch, תיעוד ב-Storybook ובדיקות רגרסיה ויזואליות.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "ממשל טוקנים ב-4 שכבות",
-          "f2": "ערכות נושא מרובות ב-oklch + Storybook"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "טוקנים",
     "flowTokensDesc": "משתני CSS, סולמות של 12 צעדים, מצב כהה",
     "flowTheme": "ערכת נושא",
-    "flowThemeDesc": "רב-ערכות נושא ב- oklch, 6 הגדרות מראש, color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "ממשק",
     "flowUIDesc": "רכיבים, Storybook, Chromatic",
     "card1Title": "סולמות צבע של 12 צעדים",
     "card1Desc": "סולם סמנטי מותאם ל- Geist: רקעים (1-2), מצבים (3-5), גבולות (6-8), מילויים (9-10), טקסט (11-12).",
-    "card2Title": "רב-ערכות נושא ב- oklch",
-    "card2Desc": "6 הגדרות מראש של ערכות נושא ב- oklch עם גזירה באמצעות color-mix(). טווח צבעים רחב Display-P3 עם נפילה חזרה ל- sRGB.",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "רגרסיה ויזואלית",
     "card3Desc": "Chromatic תופס כל שינוי פיקסל. Storybook מתעד כל רכיב. בדיקות ארכיטקטורה אכפות כיסוי סיפורים.",
     "card4Title": "ניהול טוקנים",
-    "card4Desc": "תקציבי רצ'ט: תקרה של hex, רצפה של oklch, מגבלות על מחלקות צבע גולמיות. זיהוי סטיית מותג ב- CI.",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "תיעוד אינטראקטיבי",
-    "card5Desc": "אתר תיעוד עיצוב מלא המונע על ידי Fumadocs, עם תיעוד API דו-לשוני (EN/ZH) של רכיבים, גלריות טוקנים, מדריכי תבניות פריסה ודוגמאות קוד חיות."
+    "card5Desc": "אתר תיעוד עיצוב מלא המונע על ידי Fumadocs, עם תיעוד API דו-לשוני (EN/ZH) של רכיבים, גלריות טוקנים, מדריכי תבניות פריסה ודוגמאות קוד חיות.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "הדף לא נמצא",

@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "Førende design system & komponentbibliotek",
-        "desc": "En 4-lags token-drevet arkitektur: Brand → Tokens → Theme → UI. Bygget på Radix + den delte Motion-lag med oklch multi-theme, Storybook-dokumentation og visuel regressionstestning.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4-lags token-styring",
-          "f2": "oklch multi-theme + Storybook"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "Tokens",
     "flowTokensDesc": "CSS-variabler, 12-trins skalaer, mørk tilstand",
     "flowTheme": "Tema",
-    "flowThemeDesc": "oklch multi-tema, 6 forudindstillinger, color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "UI",
     "flowUIDesc": "Komponenter, Storybook, Chromatic",
     "card1Title": "12-trins farveskalaer",
     "card1Desc": "Geist-justeret semantisk skala: baggrunde (1-2), tilstande (3-5), kanter (6-8), udfyldninger (9-10), tekst (11-12).",
-    "card2Title": "oklch multi-tema",
-    "card2Desc": "6 tema-forudindstillinger med oklch og color-mix()-afledning. Display-P3 bred-gamut med sRGB fallback.",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "Visuel regression",
     "card3Desc": "Chromatic fanger hver pixelændring. Storybook dokumenterer hver komponent. Arkitektur-tests håndhæver story-dækning.",
     "card4Title": "Token-styring",
-    "card4Desc": "Ratchet-budgets: hex loft, oklch gulv, rå farveklassegrænser. Mærkedrift-detektion i CI.",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "Interaktiv dokumentation",
-    "card5Desc": "Fuld design-dokumentationssite drevet af Fumadocs med tosprogede (EN/ZH) komponent-API-dokumenter, token-gallerier, layoutmønster-guides og live kodeeksempler."
+    "card5Desc": "Fuld design-dokumentationssite drevet af Fumadocs med tosprogede (EN/ZH) komponent-API-dokumenter, token-gallerier, layoutmønster-guides og live kodeeksempler.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "Siden blev ikke fundet",

@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "领先的设计系统与现代组件库",
-        "desc": "四层 Token 驱动架构：品牌 → 令牌 → 主题 → UI。基于 Radix + 共享 Motion 层构建，配合 oklch 多主题、Storybook 文档和视觉回归测试。",
+        "desc": "四层 Token 驱动架构：品牌 → 令牌 → 主题 → UI。基于 Radix + 共享 Motion 层构建，配合 七种可切换的设计语言、Storybook 文档和视觉回归测试。",
         "features": {
           "f1": "四层令牌治理",
-          "f2": "oklch 多主题 + Storybook"
+          "f2": "七种设计语言 + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "令牌",
     "flowTokensDesc": "CSS 变量、12 级色阶、暗黑模式",
     "flowTheme": "主题",
-    "flowThemeDesc": "oklch 多主题、6 个预设、color-mix()",
+    "flowThemeDesc": "Brand Package，7 种语言，html[data-brand]",
     "flowUI": "界面",
     "flowUIDesc": "组件库、Storybook、Chromatic",
     "card1Title": "12 级色阶",
     "card1Desc": "Geist 对齐语义色阶：背景 (1-2)、状态 (3-5)、边框 (6-8)、填充 (9-10)、文本 (11-12)。",
-    "card2Title": "oklch 多主题",
-    "card2Desc": "6 个主题预设使用 oklch 色彩空间，color-mix() 派生悬停/激活态。Display-P3 广色域 + sRGB 回退。",
+    "card2Title": "设计语言",
+    "card2Desc": "七套 Brand Package，挂在 html[data-brand] 上。颜色角色、圆角、投影、字体与缓动一起切换——不只是换配色。",
     "card3Title": "视觉回归测试",
     "card3Desc": "Chromatic 捕捉每个像素变化。Storybook 记录每个组件。架构测试强制 Story 覆盖率。",
     "card4Title": "令牌治理",
-    "card4Desc": "棘轮预算：hex 上限、oklch 下限、原始色彩类限额。品牌漂移检测集成到 CI。",
+    "card4Desc": "品牌色值、品牌字面量与动效 token 的只减不增白名单。新增违例直接卡 CI，存量随改随迁。",
     "card5Title": "交互式文档",
-    "card5Desc": "基于 Fumadocs 的完整设计文档站，中英双语组件 API 文档、令牌展廊、布局模式指南和实时代码示例。"
+    "card5Desc": "基于 Fumadocs 的完整设计文档站，中英双语组件 API 文档、令牌展廊、布局模式指南和实时代码示例。",
+    "card6Title": "Token 流水线",
+    "card6Desc": "品牌基元编译成 DTCG token，token 编译成 CSS 变量，变量再进受治理的组件。单向流动，中间没有一处靠手工搬运。"
   },
   "notFound": {
     "title": "页面未找到",

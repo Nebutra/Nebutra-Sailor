@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "Leading Modern Component Library System",
-        "desc": "A beautiful, token-driven architecture using Radix + the shared Motion layer. Perfect for teams building their own opinionated UI libraries.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4-Layer Tokens",
-          "f2": "CSS Variables"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "Token",
     "flowTokensDesc": "CSS-Variablen, 12-Stufen-Skalen, Dark Mode",
     "flowTheme": "Design",
-    "flowThemeDesc": "oklch Multi-Theme, 6 Presets, color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "UI",
     "flowUIDesc": "Komponenten, Storybook, Chromatic",
     "card1Title": "12-Stufen-Farbskalen",
     "card1Desc": "Geist-ausgerichtete semantische Skala: Hintergründe (1-2), Zustände (3-5), Rahmen (6-8), Füllungen (9-10), Text (11-12).",
-    "card2Title": "oklch Multi-Design",
-    "card2Desc": "6 Theme-Presets mit oklch und color-mix()-Ableitung. Display-P3 Wide-Gamut mit sRGB-Fallback.",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "Visuelle Regression",
     "card3Desc": "Chromatic erkennt jede Pixeländerung. Storybook dokumentiert jede Komponente. Architekturtests erzwingen Story-Abdeckung.",
     "card4Title": "Token-Governance",
-    "card4Desc": "Ratschen-Budgets: Hex-Obergrenze, oklch-Untergrenze, Rohfarb-Klassenlimits. Markendrift-Erkennung in CI.",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "Interaktive Dokumentation",
-    "card5Desc": "Fumadocs-basierte Design-Dokumentationsseite. Zweisprachige Komponenten-API-Docs, Token-Galerien und Layout-Pattern-Guides."
+    "card5Desc": "Fumadocs-basierte Design-Dokumentationsseite. Zweisprachige Komponenten-API-Docs, Token-Galerien und Layout-Pattern-Guides.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "Seite nicht gefunden",

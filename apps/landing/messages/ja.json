@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "先進的なデザインシステム & コンポーネントライブラリ",
-        "desc": "4 層トークン駆動アーキテクチャ：ブランド → トークン → テーマ → UI。Radix + 共有 Motion レイヤーベース、oklch マルチテーマ、Storybook ドキュメント、ビジュアルリグレッションテスト。",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4 層トークンガバナンス",
-          "f2": "oklch マルチテーマ + Storybook"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "トークン",
     "flowTokensDesc": "CSS変数、12段階スケール、ダークモード",
     "flowTheme": "テーマ",
-    "flowThemeDesc": "oklchマルチテーマ、6プリセット、color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "UI",
     "flowUIDesc": "コンポーネント、Storybook、Chromatic",
     "card1Title": "12段階カラースケール",
     "card1Desc": "Geist準拠セマンティックスケール：背景(1-2)、状態(3-5)、ボーダー(6-8)、塗り(9-10)、テキスト(11-12)。",
-    "card2Title": "oklchマルチテーマ",
-    "card2Desc": "oklch色空間を使用した6テーマプリセット、color-mix()によるホバー/アクティブ派生。Display-P3広色域 + sRGBフォールバック。",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "ビジュアルリグレッション",
     "card3Desc": "Chromaticが全ピクセル変更を検出。Storybookが全コンポーネントを文書化。アーキテクチャテストがStoryカバレッジを強制。",
     "card4Title": "トークンガバナンス",
-    "card4Desc": "ラチェット予算：hex上限、oklch下限、生カラークラス制限。CIでブランドドリフト検出。",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "インタラクティブドキュメント",
-    "card5Desc": "Fumadocs ベースの設計ドキュメントサイト。2言語対応のコンポーネント API ドキュメント、トークンギャラリー、レイアウトパターンガイド。"
+    "card5Desc": "Fumadocs ベースの設計ドキュメントサイト。2言語対応のコンポーネント API ドキュメント、トークンギャラリー、レイアウトパターンガイド。",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "ページが見つかりません",

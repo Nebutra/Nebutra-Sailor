@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "Sistem Reka Bentuk & Perpustakaan Komponen Terkemuka",
-        "desc": "Senibina 4 lapisan yang dipacu token: Jenama → Token → Tema → UI. Dibina di atas Radix + lapisan Motion kongsi dengan tema pelbagai oklch, dokumentasi Storybook, dan ujian regresi visual.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "Tadbir Urus Token 4 Lapisan",
-          "f2": "Tema Pelbagai oklch + Storybook"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "Token",
     "flowTokensDesc": "Pemboleh ubah CSS, skala 12 langkah, mod gelap",
     "flowTheme": "Tema",
-    "flowThemeDesc": "Multi-tema oklch, 6 pratetap, color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "UI",
     "flowUIDesc": "Komponen, Storybook, Chromatic",
     "card1Title": "Skala Warna 12 Langkah",
     "card1Desc": "Skala semantik selaras Geist: latar belakang (1-2), keadaan (3-5), sempadan (6-8), isian (9-10), teks (11-12).",
-    "card2Title": "Multi-Tema oklch",
-    "card2Desc": "6 pratetap tema menggunakan oklch dengan terbitan color-mix(). Display-P3 gamut luas dengan sandaran sRGB.",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "Regresi Visual",
     "card3Desc": "Chromatic menangkap setiap perubahan piksel. Storybook mendokumentasikan setiap komponen. Ujian seni bina menguatkuasakan liputan cerita.",
     "card4Title": "Pemerintahan Token",
-    "card4Desc": "Bajet ratchet: siling hex, lantai oklch, had kelas warna mentah. Pengesanan hanyutan jenama dalam CI.",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "Dokumentasi Interaktif",
-    "card5Desc": "Laman dokumen reka bentuk lengkap berkuasa Fumadocs dengan dokumen API komponen dwibahasa (EN/ZH), galeri token, panduan corak susun atur, dan contoh kod langsung."
+    "card5Desc": "Laman dokumen reka bentuk lengkap berkuasa Fumadocs dengan dokumen API komponen dwibahasa (EN/ZH), galeri token, panduan corak susun atur, dan contoh kod langsung.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "Laman Tidak Dijumpai",

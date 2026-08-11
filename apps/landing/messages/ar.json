@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "نظام تصميم ومكتبة مكونات رائدة",
-        "desc": "بنية مدعومة بالرموز على 4 طبقات: العلامة التجارية → الرموز → السمة → واجهة المستخدم. مبني على Radix وطبقة Motion المشتركة مع سمة متعددة oklch، وثائق Storybook، واختبار الانحدار البصري.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "حوكمة رموز على 4 طبقات",
-          "f2": "سمة متعددة oklch + Storybook"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "الرموز",
     "flowTokensDesc": "متغيرات CSS، مقاييس من 12 خطوة، الوضع الداكن",
     "flowTheme": "السمة",
-    "flowThemeDesc": "سمات متعددة باستخدام oklch، 6 قوالب جاهزة، color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "واجهة المستخدم",
     "flowUIDesc": "مكونات، Storybook، Chromatic",
     "card1Title": "مقاييس لونية من 12 خطوة",
     "card1Desc": "مقياس دلالي متوافق مع Geist: الخلفيات (1-2)، الحالات (3-5)، الحدود (6-8)، الملء (9-10)، النص (11-12).",
-    "card2Title": "سمات متعددة باستخدام oklch",
-    "card2Desc": "6 قوالب سمات باستخدام oklch مع اشتقاق color-mix(). نطاق عرض Display-P3 مع بديل sRGB.",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "الانحدار البصري",
     "card3Desc": "Chromatic يلتقط كل تغيير بكسل. Storybook يوثق كل مكون. اختبارات البنية تفرض تغطية القصص.",
     "card4Title": "حُكم الرموز",
-    "card4Desc": "ميزانيات متدرجة: سقف سداسي، أرضية oklch، حدود فئات الألوان الخام. كشف انحراف العلامة التجارية في CI.",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "توثيق تفاعلي",
-    "card5Desc": "موقع توثيق تصميم كامل مدعوم بـ Fumadocs يتضمن وثائق واجهة برمجة المكونات ثنائية اللغة (EN/ZH)، ومعارض الرموز، ودلائل أنماط التخطيط، وأمثلة أكواد حية."
+    "card5Desc": "موقع توثيق تصميم كامل مدعوم بـ Fumadocs يتضمن وثائق واجهة برمجة المكونات ثنائية اللغة (EN/ZH)، ومعارض الرموز، ودلائل أنماط التخطيط، وأمثلة أكواد حية.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "الصفحة غير موجودة",

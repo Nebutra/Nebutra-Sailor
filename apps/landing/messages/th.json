@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "ระบบการออกแบบและไลบรารีคอมโพเนนต์ชั้นนำ",
-        "desc": "สถาปัตยกรรมแบบขับเคลื่อนด้วยโทเค็น 4 ชั้น: Brand → Tokens → Theme → UI สร้างบน Radix + ชั้น Motion ร่วมด้วย oklch หลายธีม, เอกสาร Storybook และการทดสอบการถดถอยทางภาพ",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "การกำกับดูแลโทเค็น 4 ชั้น",
-          "f2": "oklch หลายธีม + Storybook"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "โทเค็น",
     "flowTokensDesc": "ตัวแปร CSS, สเกล 12 ขั้น, โหมดมืด",
     "flowTheme": "ธีม",
-    "flowThemeDesc": "ธีมหลายแบบด้วย oklch, 6 ชุดค่าเริ่มต้น, color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "UI",
     "flowUIDesc": "คอมโพเนนต์, Storybook, Chromatic",
     "card1Title": "สเกลสี 12 ขั้น",
     "card1Desc": "สเกลเชิงความหมายที่สอดคล้องกับ Geist: พื้นหลัง (1-2), สถานะ (3-5), ขอบ (6-8), การเติม (9-10), ข้อความ (11-12)",
-    "card2Title": "ธีมหลายแบบด้วย oklch",
-    "card2Desc": "6 ชุดค่าเริ่มต้นธีมที่ใช้ oklch พร้อมการอนุพัทธ์ด้วย color-mix() รองรับ Display-P3 wide-gamut พร้อมค่าสำรอง sRGB",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "การถดถอยทางภาพ",
     "card3Desc": "Chromatic จับการเปลี่ยนแปลงทุกพิกเซล Storybook บันทึกเอกสารทุกคอมโพเนนต์ การทดสอบสถาปัตยกรรมบังคับให้ครอบคลุมเรื่องราว",
     "card4Title": "การกำกับดูแลโทเค็น",
-    "card4Desc": "งบประมาณแบบ Ratchet: ฝ้าเพดาน hex, พื้น oklch, ข้อจำกัดคลาสสีดิบ การตรวจจับการเบี่ยงเบนของแบรนด์ใน CI",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "เอกสารเชิงโต้ตอบ",
-    "card5Desc": "เว็บไซต์เอกสารดีไซน์ที่ขับเคลื่อนด้วย Fumadocs เต็มรูปแบบ พร้อมเอกสาร API ของคอมโพเนนต์สองภาษา (EN/ZH) แกลเลอรีโทเค็น คู่มือแพทเทิร์นเลย์เอาต์ และตัวอย่างโค้ดแบบเรียลไทม์"
+    "card5Desc": "เว็บไซต์เอกสารดีไซน์ที่ขับเคลื่อนด้วย Fumadocs เต็มรูปแบบ พร้อมเอกสาร API ของคอมโพเนนต์สองภาษา (EN/ZH) แกลเลอรีโทเค็น คู่มือแพทเทิร์นเลย์เอาต์ และตัวอย่างโค้ดแบบเรียลไทม์",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "ไม่พบหน้า",

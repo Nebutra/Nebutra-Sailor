@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "Mfumo wa Kazi wa Muundo & Maktaba ya Vipengele",
-        "desc": "Muundo wa viwango 4 unaosimamiwa na tokens: Brand → Tokens → Theme → UI. Imejengwa juu ya Radix + tabaka la Motion la pamoja lenye oklch multi-theme, hati za Storybook, na upimaji wa mabadiliko ya kuonekana.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "Usimamizi wa Tokens wa Viwango 4",
-          "f2": "oklch Multi-Theme + Storybook"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "Alama",
     "flowTokensDesc": "Vigezo vya CSS, viwango vya hatua 12, hali ya giza",
     "flowTheme": "Mandhari",
-    "flowThemeDesc": "oklch multi-theme, presets 6, color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "Kiolesura",
     "flowUIDesc": "Vipengele, Storybook, Chromatic",
     "card1Title": "Viwango vya Rangi vya Hatua 12",
     "card1Desc": "Kiwango cha maana kilicholingana na Geist: mandhari (1-2), hali (3-5), mipaka (6-8), kujaza (9-10), maandishi (11-12).",
-    "card2Title": "oklch Mandhari Mbalimbali",
-    "card2Desc": "Presets 6 za theme zinazotumia oklch na color-mix() derivation. Display-P3 wide-gamut na sRGB fallback.",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "Urejeshaji wa Visual",
     "card3Desc": "Chromatic inakamata mabadiliko ya kila pixel. Storybook inarekodi kila kipengele. Majaribio ya muundo yanazuia coverage ya story.",
     "card4Title": "Utawala wa Token",
-    "card4Desc": "Ratchet budgets: hex ceiling, oklch floor, mipaka ya class ya rangi ya raw. Utafutaji wa drift ya brand katika CI.",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "Nyaraka za Interactive",
-    "card5Desc": "Tukio kamili la nyaraka za muundo linalotumia Fumadocs, lenye nyaraka za API za vipengele kwa lugha mbili (EN/ZH), maktaba za alama, mwongozo wa mifumo ya mpangilio, na mifano hai ya msimbo."
+    "card5Desc": "Tukio kamili la nyaraka za muundo linalotumia Fumadocs, lenye nyaraka za API za vipengele kwa lugha mbili (EN/ZH), maktaba za alama, mwongozo wa mifumo ya mpangilio, na mifano hai ya msimbo.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "Ukurasa Haukupatikana",

@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "Ведущая система дизайна и библиотека компонентов",
-        "desc": "Архитектура на токенах из 4 уровней: Бренд → Токены → Тема → UI. Построено на Radix и общем слое Motion с поддержкой oklch-тем, документацией в Storybook и тестированием визуальной регрессии.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "Управление токенами в 4 уровня",
-          "f2": "Темы oklch + Storybook"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "Токены",
     "flowTokensDesc": "CSS-переменные, 12-ступенчатые шкалы, тёмная тема",
     "flowTheme": "Тема",
-    "flowThemeDesc": "oklch мульти-темы, 6 пресетов, color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "Интерфейс",
     "flowUIDesc": "Компоненты, Storybook, Chromatic",
     "card1Title": "12-ступенчатые цветовые шкалы",
     "card1Desc": "Семантическая шкала в стиле Geist: фоны (1-2), состояния (3-5), границы (6-8), заливки (9-10), текст (11-12).",
-    "card2Title": "oklch мульти-темы",
-    "card2Desc": "6 пресетов тем на основе oklch с выводом через color-mix(). Широкоцветный Display-P3 с откатом на sRGB.",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "Визуальная регрессия",
     "card3Desc": "Chromatic фиксирует каждое изменение пикселя. Storybook документирует каждый компонент. Тесты архитектуры обеспечивают покрытие историй.",
     "card4Title": "Управление токенами",
-    "card4Desc": "Бюджеты с фиксацией: потолок hex, пол oklch, жёсткие лимиты классов цветов. Обнаружение отклонений бренда в CI.",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "Интерактивная документация",
-    "card5Desc": "Полноценный сайт документации дизайна на базе Fumadocs с двуязычными (EN/ZH) API-документами компонентов, галереями токенов, руководствами по паттернам макетов и живыми примерами кода."
+    "card5Desc": "Полноценный сайт документации дизайна на базе Fumadocs с двуязычными (EN/ZH) API-документами компонентов, галереями токенов, руководствами по паттернам макетов и живыми примерами кода.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "Страница не найдена",

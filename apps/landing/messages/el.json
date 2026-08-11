@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "Προηγούμενο Σύστημα Σχεδίασης & Βιβλιοθήκη Συνιστωσών",
-        "desc": "Αρχιτεκτονική με 4 επίπεδα tokens: Brand → Tokens → Theme → UI. Χτισμένο πάνω στο Radix + το κοινό επίπεδο Motion με oklch multi-theme, τεκμηρίωση Storybook και δοκιμές οπτικής παλινδρόμησης.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "Διακυβέρνηση Tokens 4 Επιπέδων",
-          "f2": "oklch Multi-Theme + Storybook"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "Tokens",
     "flowTokensDesc": "CSS variables, κλίμακες 12 βημάτων, dark mode",
     "flowTheme": "Θέμα",
-    "flowThemeDesc": "oklch multi-theme, 6 προεπιλογές, color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "UI",
     "flowUIDesc": "Συστατικά, Storybook, Chromatic",
     "card1Title": "Κλίμακες Χρώματος 12 Βημάτων",
     "card1Desc": "Σημασιολογική κλίμακα ευθυγραμμισμένη με το Geist: backgrounds (1-2), states (3-5), borders (6-8), fills (9-10), text (11-12).",
-    "card2Title": "oklch Πολυ-Θεματικό",
-    "card2Desc": "6 presets θεμάτων με oklch και παραγωγή μέσω color-mix(). Display-P3 wide-gamut με fallback σε sRGB.",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "Οπτική Παλινδρόμηση",
     "card3Desc": "Το Chromatic εντοπίζει κάθε αλλαγή pixel. Το Storybook τεκμηριώνει κάθε component. Τα architecture tests επιβάλλουν story coverage.",
     "card4Title": "Διακυβέρνηση Tokens",
-    "card4Desc": "Προϋπολογισμοί με μηχανισμό ratchet: οροφή hex, πάτωμα oklch, όρια κλάσεων χρωμάτων. Ανίχνευση αποκλίσεων brand στο CI.",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "Αλληλεπιδραστική Τεκμηρίωση",
-    "card5Desc": "Πλήρης ιστότοπος τεκμηρίωσης σχεδίασης με Fumadocs, με δίγλωσση (EN/ZH) τεκμηρίωση API συνιστωσών, συλλογές token, οδηγούς μοτίβων διάταξης και ζωντανά παραδείγματα κώδικα."
+    "card5Desc": "Πλήρης ιστότοπος τεκμηρίωσης σχεδίασης με Fumadocs, με δίγλωσση (EN/ZH) τεκμηρίωση API συνιστωσών, συλλογές token, οδηγούς μοτίβων διάταξης και ζωντανά παραδείγματα κώδικα.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "Η σελίδα δεν βρέθηκε",

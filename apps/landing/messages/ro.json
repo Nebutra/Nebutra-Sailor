@@ -1441,10 +1441,10 @@
       },
       "design": {
         "title": "Sistem de design și bibliotecă de componente de top",
-        "desc": "O arhitectură condusă de tokeni în 4 straturi: Brand → Tokeni → Temă → UI. Construit pe Radix + stratul Motion comun cu teme multiple oklch, documentație Storybook și testare regresivă vizuală.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "Governanță tokeni în 4 straturi",
-          "f2": "Teme multiple oklch + Storybook"
+          "f2": "Seven design languages + Storybook"
         }
       },
       "edam": {
@@ -1467,19 +1467,21 @@
     "flowTokens": "Tokeni",
     "flowTokensDesc": "Variabile CSS, scale în 12 pași, dark mode",
     "flowTheme": "Temă",
-    "flowThemeDesc": "Multi-temă oklch, 6 preseturi, color-mix()",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
     "flowUI": "UI",
     "flowUIDesc": "Componente, Storybook, Chromatic",
     "card1Title": "Scale de culoare în 12 pași",
     "card1Desc": "Scală semantică aliniată la Geist: fundaluri (1-2), stări (3-5), borduri (6-8), umpluturi (9-10), text (11-12).",
-    "card2Title": "Multi-temă oklch",
-    "card2Desc": "6 preseturi de temă folosind oklch cu derivare color-mix(). Display-P3 wide-gamut cu fallback sRGB.",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
     "card3Title": "Regresie vizuală",
     "card3Desc": "Chromatic detectează fiecare schimbare de pixel. Storybook documentează fiecare componentă. Testele de arhitectură impun acoperirea story-urilor.",
     "card4Title": "Guvernarea tokenilor",
-    "card4Desc": "Bugete cu mecanism de blocare: plafon hex, podea oklch, limite brute pentru clasele de culoare. Detectarea abaterilor de brand în CI.",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
     "card5Title": "Documentație interactivă",
-    "card5Desc": "Site complet de documentație pentru design, bazat pe Fumadocs, cu documentație API pentru componente bilingvă (EN/ZH), galerii de tokeni, ghiduri pentru modele de layout și exemple de cod live."
+    "card5Desc": "Site complet de documentație pentru design, bazat pe Fumadocs, cu documentație API pentru componente bilingvă (EN/ZH), galerii de tokeni, ghiduri pentru modele de layout și exemple de cod live.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
   },
   "notFound": {
     "title": "Pagina nu a fost găsită",
