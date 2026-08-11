@@ -58,7 +58,7 @@ export function BlogCopyButton({
       <button
         type="button"
         onClick={handleCopy}
-        className="inline-flex size-8 items-center justify-center rounded-full border border-border bg-background text-muted-foreground transition-colors hover:border-border hover:bg-muted hover:text-foreground"
+        className="inline-flex size-8 items-center justify-center rounded-full border border-border bg-background text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         aria-label={text}
         title={text}
       >
@@ -71,7 +71,7 @@ export function BlogCopyButton({
     <button
       type="button"
       onClick={handleCopy}
-      className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:border-border hover:bg-muted"
+      className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
       aria-label={text}
     >
       {icon}

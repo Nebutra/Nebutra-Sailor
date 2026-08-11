@@ -77,7 +77,7 @@ function GridCard({ post }: { post: BlogIndexPost }) {
   return (
     <Link
       href={post.href}
-      className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-md)] border border-border bg-background transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none hover:border-border hover:bg-muted"
+      className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-md)] border border-border bg-background transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none hover:bg-muted"
     >
       <div
         className="relative h-52 overflow-hidden bg-muted"
@@ -128,7 +128,7 @@ function ListCard({ post }: { post: BlogIndexPost }) {
   return (
     <Link
       href={post.href}
-      className="group grid gap-5 rounded-[var(--radius-md)] border border-border bg-background p-3 transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none hover:border-border hover:bg-muted sm:grid-cols-[220px_1fr]"
+      className="group grid gap-5 rounded-[var(--radius-md)] border border-border bg-background p-3 transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none hover:bg-muted sm:grid-cols-[220px_1fr]"
     >
       <div
         className="relative min-h-40 overflow-hidden rounded-[calc(var(--radius-md)-2px)] bg-muted"
