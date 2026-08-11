@@ -27,7 +27,7 @@ function getLineClass(type: string, text: string): string {
     return "text-emerald-700 dark:text-emerald-300 font-semibold bg-emerald-50 dark:bg-emerald-500/10";
   }
   if (type === "import") {
-    return "text-primary dark:text-[var(--cyan-9)]";
+    return "text-primary dark:text-[var(--brand-accent)]";
   }
   if (type === "comment") {
     return "text-muted-foreground dark:text-zinc-500";
@@ -38,7 +38,7 @@ function getLineClass(type: string, text: string): string {
     text.includes("export") ||
     text.includes("async")
   ) {
-    return "text-primary dark:text-[var(--cyan-9)]";
+    return "text-primary dark:text-[var(--brand-accent)]";
   }
   if (text.includes("'@nebutra/rls'")) {
     return "text-amber-600 dark:text-amber-400";
@@ -71,7 +71,7 @@ export function MultiTenantCard() {
 
         {/* File Tabs */}
         <div className="flex border-b border-border/60 bg-muted/10/[0.02]">
-          <div className="flex items-center gap-1.5 px-4 py-2 text-[11px] font-semibold text-foreground bg-background dark:bg-muted border-b-2 border-primary dark:border-[var(--cyan-9)]">
+          <div className="flex items-center gap-1.5 px-4 py-2 text-[11px] font-semibold text-foreground bg-background dark:bg-muted border-b-2 border-primary dark:border-[var(--brand-accent)]">
             <span className="w-2 h-2 rounded-[var(--radius-sm)] bg-blue-500/60" />
             query.ts
           </div>

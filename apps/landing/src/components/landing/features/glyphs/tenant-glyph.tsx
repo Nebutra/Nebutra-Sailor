@@ -19,7 +19,7 @@ export function TenantGlyph(_props: SubpackageGlyphProps) {
           <Badge variant="default" className="h-4 px-1.5 text-[10px]">
             Pro
           </Badge>
-          <Check className="h-3.5 w-3.5 text-[var(--cyan-9)]" />
+          <Check className="h-3.5 w-3.5 text-[var(--brand-accent)]" />
         </div>
       </div>
 

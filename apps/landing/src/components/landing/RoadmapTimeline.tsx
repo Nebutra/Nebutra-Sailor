@@ -182,7 +182,7 @@ export function RoadmapTimeline({ data }: { data: RoadmapPhase[] }) {
           <div
             style={{ height: `${beamHeight}px`, opacity: beamOpacity }}
             // Brand gradient progress beam — blue → cyan, matches Nebutra VI.
-            className="absolute inset-x-0 top-0 w-[2px] rounded-full bg-gradient-to-t from-[color:hsl(var(--primary))] via-[color:var(--cyan-9)] to-transparent"
+            className="absolute inset-x-0 top-0 w-[2px] rounded-full bg-gradient-to-t from-[color:hsl(var(--primary))] via-[color:var(--brand-accent)] to-transparent"
           />
         </div>
       </div>

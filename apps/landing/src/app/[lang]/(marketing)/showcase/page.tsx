@@ -135,7 +135,7 @@ export default async function ShowcasePage({ params }: { params: Promise<{ lang:
                   <div className="p-4">
                     <div className="flex items-start justify-between gap-2">
                       <h2 className="text-sm font-semibold text-neutral-12">{project.name}</h2>
-                      <ExternalLink className="h-3.5 w-3.5 shrink-0 text-neutral-10 transition-colors group-hover:text-primary dark:group-hover:text-cyan-9" />
+                      <ExternalLink className="h-3.5 w-3.5 shrink-0 text-neutral-10 transition-colors group-hover:text-primary dark:group-hover:text-[color:var(--brand-accent)]" />
                     </div>
                     {project.description && (
                       <p className="mt-1.5 line-clamp-2 text-xs text-neutral-11">

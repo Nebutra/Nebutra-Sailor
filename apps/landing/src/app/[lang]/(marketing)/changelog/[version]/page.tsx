@@ -20,11 +20,11 @@ import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 const TAG_COLORS: Record<string, string> = {
-  feature: "var(--cyan-9)",
+  feature: "var(--brand-accent)",
   improvement: "var(--status-warning)",
   fix: "var(--status-success)",
   breaking: "var(--status-danger)",
-  security: "var(--cyan-9)",
+  security: "var(--brand-accent)",
   platform: "var(--status-warning)",
   infrastructure: "var(--brand-tertiary)",
   major: "hsl(var(--primary))",

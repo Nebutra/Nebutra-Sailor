@@ -23,7 +23,7 @@ function GraphNode({ kind, label }: { kind: NodeTone; label: string }) {
       variant="outline"
       className="inline-flex items-center gap-1.5 border-blue-7 bg-blue-2 px-2 py-1 font-mono text-[10.5px] text-blue-11 shadow-sm"
     >
-      <Icon className="h-3 w-3 text-blue-9" />
+      <Icon className="h-3 w-3 text-primary" />
       <span className="tracking-tight">{label}</span>
     </Badge>
   );

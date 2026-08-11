@@ -19,7 +19,7 @@ export function HeroLottieVisual() {
         className="absolute inset-0 rounded-[var(--radius-card)]"
         style={{
           background:
-            "linear-gradient(135deg, color-mix(in srgb, hsl(var(--primary)) 8%, transparent), color-mix(in srgb, var(--cyan-9) 12%, transparent))",
+            "linear-gradient(135deg, color-mix(in srgb, hsl(var(--primary)) 8%, transparent), color-mix(in srgb, var(--brand-accent) 12%, transparent))",
         }}
       />
       <div className="relative h-72 w-72">

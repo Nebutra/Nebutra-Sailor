@@ -39,9 +39,9 @@ const PROVIDERS: ProviderRow[] = [
 ];
 
 const TONE_DOT: Record<ProviderRow["tone"], string> = {
-  primary: "bg-blue-9",
+  primary: "bg-primary",
   fallback: "bg-neutral-8",
-  saver: "bg-cyan-9",
+  saver: "bg-[var(--brand-accent)]",
 };
 
 export function LlmGatewayGlyph(_props: SubpackageGlyphProps) {

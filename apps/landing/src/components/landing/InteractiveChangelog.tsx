@@ -50,11 +50,11 @@ export interface InteractiveChangelogProps {
 
 // Tag color map for semantic styling
 const TAG_COLORS: Record<string, string> = {
-  feature: "var(--cyan-9)",
+  feature: "var(--brand-accent)",
   improvement: "var(--status-warning)",
   fix: "var(--status-success)",
   breaking: "var(--status-danger)",
-  security: "var(--cyan-9)",
+  security: "var(--brand-accent)",
   platform: "var(--status-warning)",
   infrastructure: "var(--brand-tertiary)",
   major: "hsl(var(--primary))",
@@ -109,7 +109,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
           {/* Subtle faded-edge grid */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(255_255_255/0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgb(255_255_255/0.04)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_30%,#000_30%,transparent_90%)]" />
           {/* Single brand radial — blue→cyan halo via tokens */}
-          <div className="absolute inset-x-0 -top-32 h-[42rem] bg-[radial-gradient(ellipse_at_top,color-mix(in_oklab,hsl(var(--primary)),transparent_70%)_0%,color-mix(in_oklab,var(--cyan-9),transparent_88%)_40%,transparent_75%)]" />
+          <div className="absolute inset-x-0 -top-32 h-[42rem] bg-[radial-gradient(ellipse_at_top,color-mix(in_oklab,hsl(var(--primary)),transparent_70%)_0%,color-mix(in_oklab,var(--brand-accent),transparent_88%)_40%,transparent_75%)]" />
         </div>
 
         <div className="relative container mx-auto px-4 text-left">

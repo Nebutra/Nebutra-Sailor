@@ -43,12 +43,12 @@ export async function generateMetadata({
 }
 
 const TAG_COLORS: Record<string, string> = {
-  feat: "var(--cyan-9)",
-  feature: "var(--cyan-9)",
+  feat: "var(--brand-accent)",
+  feature: "var(--brand-accent)",
   improvement: "var(--status-warning)",
   fix: "var(--status-success)",
   breaking: "var(--status-danger)",
-  security: "var(--cyan-9)",
+  security: "var(--brand-accent)",
 };
 
 const FALLBACK_RELEASE_IMAGE = "/screenshots/demo-dashboard-command.webp";

@@ -11,7 +11,7 @@ export type NewsDecorVariant = "aurora" | "nebula" | "cyan" | "violet";
 const VARIANT_BACKGROUND: Record<NewsDecorVariant, string> = {
   aurora: "hsl(var(--primary))",
   nebula: "linear-gradient(135deg, var(--brand-tertiary), hsl(var(--primary)))",
-  cyan: "linear-gradient(135deg, var(--cyan-9), hsl(var(--primary)))",
+  cyan: "linear-gradient(135deg, var(--brand-accent), hsl(var(--primary)))",
   violet: "linear-gradient(150deg, hsl(var(--primary)), var(--brand-tertiary))",
 };
 

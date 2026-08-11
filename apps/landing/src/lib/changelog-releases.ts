@@ -35,7 +35,7 @@ const RELEASES: readonly StaticChangelogRelease[] = [
     version: "1.7",
     date: "2026-05-12",
     tag: "Refactor",
-    tagColor: "var(--cyan-9)",
+    tagColor: "var(--brand-accent)",
     title: "TS-by-Default Backends & Dark Border Tokens",
     summary:
       "The Python fleet collapses to _shared + ai under ADR 2026-05-10, a pure-neutral dark border token system lands under ADR 2026-05-11, and the marketing copy passes an honesty audit.",
@@ -49,7 +49,7 @@ const RELEASES: readonly StaticChangelogRelease[] = [
     version: "1.5",
     date: "2026-04",
     tag: "Feat",
-    tagColor: "var(--cyan-9)",
+    tagColor: "var(--brand-accent)",
     title: "Categorized Monorepo & Multi-Provider Auth/Billing",
     summary:
       "Packages regroup by domain, and both auth and billing move behind provider abstractions so a deployment can pick its own stack.",
@@ -63,7 +63,7 @@ const RELEASES: readonly StaticChangelogRelease[] = [
     version: "0.10.0",
     date: "2026-03-13",
     tag: "Security",
-    tagColor: "var(--cyan-9)",
+    tagColor: "var(--brand-accent)",
     title: "ExternalSecrets & RBAC Hardening",
     summary:
       "Production security audit — ExternalSecrets Operator with ClusterSecretStore for AWS Secrets Manager, comprehensive RBAC with least-privilege ServiceAccounts and RoleBindings, Prisma migration automation with K8s init container.",
@@ -107,7 +107,7 @@ const RELEASES: readonly StaticChangelogRelease[] = [
     version: "0.8.0",
     date: "2026-03-03",
     tag: "Feature",
-    tagColor: "var(--cyan-9)",
+    tagColor: "var(--brand-accent)",
     title: "Usage Metering & Error Tracking",
     summary:
       "Billing-ready infrastructure — fire-and-forget usage metering with Redis counters, Sentry error tracking with tenant context, transactional email system via Resend.",
@@ -121,7 +121,7 @@ const RELEASES: readonly StaticChangelogRelease[] = [
     version: "0.7.0",
     date: "2026-02-20",
     tag: "Feature",
-    tagColor: "var(--cyan-9)",
+    tagColor: "var(--brand-accent)",
     title: "Settings & Idempotency",
     summary:
       "Self-service control panel — settings pages for team management, API key rotation, billing, and security. Idempotency middleware prevents duplicate charges.",
@@ -135,7 +135,7 @@ const RELEASES: readonly StaticChangelogRelease[] = [
     version: "1.0",
     date: "2026-02",
     tag: "Feat",
-    tagColor: "var(--cyan-9)",
+    tagColor: "var(--brand-accent)",
     title: "Hono Gateway & Multi-Tenant Primitives",
     summary:
       "The Hono API gateway lands with OpenAPI, oRPC and tRPC, on the Prisma + Supabase foundation, alongside the multi-tenant primitives the rest of the platform builds on.",

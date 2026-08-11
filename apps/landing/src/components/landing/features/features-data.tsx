@@ -25,7 +25,7 @@ export const LARGE_FEATURES = [
     categoryKey: "multi_category",
     href: createPublicDocsUrl("guides/multi-tenancy"),
     icon: Layers,
-    color: "var(--cyan-9)",
+    color: "var(--brand-accent)",
     mockup: MultiTenantMockup,
     features: [
       { titleKey: "multi_f1_title", descKey: "multi_f1_desc" },

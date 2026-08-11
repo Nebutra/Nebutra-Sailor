@@ -327,7 +327,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
           >
             <span
               data-testid="status-dot"
-              className="size-1.5 rounded-full bg-[color:var(--cyan-9)] shadow-[0_0_0_3px_color-mix(in_srgb,var(--cyan-9)_20%,transparent)]"
+              className="size-1.5 rounded-full bg-[color:var(--brand-accent)] shadow-[0_0_0_3px_color-mix(in_srgb,var(--brand-accent)_20%,transparent)]"
             />
             {t("statusOnline")}
           </a>

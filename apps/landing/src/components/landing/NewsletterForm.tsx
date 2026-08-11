@@ -53,7 +53,7 @@ export function NewsletterForm() {
 
   if (status === "success") {
     return (
-      <p role="status" className="text-sm text-[color:var(--cyan-9)]">
+      <p role="status" className="text-sm text-[color:var(--brand-accent)]">
         {t("newsletterSuccess")}
       </p>
     );
