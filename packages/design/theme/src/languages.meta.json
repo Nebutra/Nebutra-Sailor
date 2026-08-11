@@ -7,12 +7,14 @@
     "name": "Nebutra Factory",
     "description": "Default product chrome from @nebutra/tokens (no skin). Clear data-brand to restore.",
     "proves": ["factory HSL SSOT", "recipe defaults", "action≡brand-mark until skin"],
-    "darkDefault": true
+    "darkDefault": true,
+    "tagline": "the token source, unskinned"
   },
   "languages": {
     "linear": {
       "description": "Dual-mode: dark void default + light paper; solid acid-lime CTA, compact density.",
-      "proves": ["chromatic solid action", "dark product chrome", "dual-mode light/dark palettes"]
+      "proves": ["chromatic solid action", "dark product chrome", "dual-mode light/dark palettes"],
+      "tagline": "tight radii, low-contrast chrome"
     },
     "gsap": {
       "description": "Dark cream-on-void; shockingly-green is accent — CTA is gradient-stroke/outline, not solid green fill.",
@@ -20,15 +22,18 @@
         "outline / gradient-stroke recipe",
         "category extensions",
         "marketing display zone"
-      ]
+      ],
+      "tagline": "saturated, fast easing"
     },
     "raycast": {
       "description": "Neutral Mist/Iron filled CTA; Coral is brand-mark only. Key elevation stack.",
-      "proves": ["action ≠ brand-mark", "elevation=key free CSS"]
+      "proves": ["action ≠ brand-mark", "elevation=key free CSS"],
+      "tagline": "dark glass and a coloured halo"
     },
     "vercel": {
       "description": "Monochrome dual-mode: light paper + Obsidian CTA; dark carbon + white CTA; hairline elevation (no chromatic CTA).",
-      "proves": ["light monochrome action", "elevation=hairline", "dual-mode light/dark palettes"]
+      "proves": ["light monochrome action", "elevation=hairline", "dual-mode light/dark palettes"],
+      "tagline": "monochrome, hard edges, lit top edge"
     },
     "vanta": {
       "description": "Editorial violet on parchment; Vivid Violet action ≠ Indigo Ink brand-mark; full pills; elevation=none (carbon hairlines).",
@@ -37,7 +42,8 @@
         "elevation=none border-only",
         "999px pill controls",
         "serif display + sans UI zones"
-      ]
+      ],
+      "tagline": "high-trust enterprise blues"
     },
     "stripe": {
       "description": "Indigo-ink ledger on frost glass; Indigo action ≠ Midnight brand-mark; 4px controls; elevation=none (tint + frost rules).",
@@ -46,7 +52,8 @@
         "elevation=none tint-ladder depth",
         "4px squared controls (not pill)",
         "whisper heading weight 300"
-      ]
+      ],
+      "tagline": "soft elevation, generous type"
     },
     "notion": {
       "description": "Warm paper notebook; Notion Blue sole filled CTA ≠ Ink brand-mark; 8px buttons / 12px cards; elev=none + hairline; accent hues decorative only.",
@@ -56,7 +63,8 @@
         "elevation=none content cards + raised nav shadow slot",
         "table radius priority (8/12 over tertiary 4px)",
         "decorative accents never product CTA"
-      ]
+      ],
+      "tagline": "paper surfaces, muted ink"
     }
   }
 }

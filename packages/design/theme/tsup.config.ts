@@ -6,6 +6,7 @@ export default defineConfig({
     client: "src/client.ts",
     languages: "src/languages.ts",
     "brand-package-surface": "src/brand-package-surface.ts",
+    "language-switcher": "src/language-switcher.tsx",
   },
   format: ["esm"],
   dts: true,

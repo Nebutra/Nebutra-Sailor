@@ -6,12 +6,10 @@ import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { BrandFontsRegistrar } from "@/components/brand-fonts-registrar";
-import { BrandLanguageSwitcher } from "@/components/brand-language-switcher";
 import { CommandPalette } from "@/components/command-palette";
+import { HeaderLanguageSwitcher } from "@/components/header-language-switcher";
 import { PageToc } from "@/components/page-toc";
 import { SiteNav, SiteNavCompact } from "@/components/site-nav";
-import { brandFontFamilies } from "@/lib/brand-fonts";
 import { commandEntries, navSections } from "@/lib/nav";
 import { SITE_NAME } from "@/lib/site";
 
@@ -26,7 +24,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   const sections = navSections();
   const entries = commandEntries();
-  const brandFonts = brandFontFamilies();
 
   return (
     <html
@@ -35,7 +32,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
-        <BrandFontsRegistrar map={brandFonts} />
         {/* The header carries identity and the language switch only. Navigation
             moved into the sidebar, where the whole inventory is visible at once
             rather than five representatives of it. */}
@@ -47,7 +43,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               </Link>
               <div className="flex items-center gap-3">
                 <CommandPalette entries={entries} />
-                <BrandLanguageSwitcher />
+                <HeaderLanguageSwitcher />
               </div>
             </div>
             <SiteNavCompact sections={sections} />

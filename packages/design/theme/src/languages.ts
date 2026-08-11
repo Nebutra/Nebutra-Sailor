@@ -30,6 +30,12 @@ export interface DesignLanguageEntry {
   name: string;
   kind: "design-language";
   description: string;
+  /**
+   * One line naming what this language does, for a picker's caption. Short on
+   * purpose — `description` is the catalog entry, this is the label under eight
+   * buttons. Null for a language whose meta has not written one.
+   */
+  tagline: string | null;
   /** Contract proofs this fixture exercises */
   proves: string[];
   darkDefault: boolean;

@@ -68,6 +68,10 @@ html[data-brand="raycast"] {
   --sidebar-accent-foreground: 210 1% 27%;
   --sidebar-border: 210 2% 19%;
   --sidebar-ring: 240 1% 61%;
+  --brand-primary: hsl(0 100% 69%);
+  --brand-accent: hsl(0 0% 90%);
+  --brand-accent-foreground: hsl(210 1% 27%);
+  --brand-tertiary: hsl(0 0% 90%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));

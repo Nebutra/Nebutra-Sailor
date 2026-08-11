@@ -63,6 +63,10 @@ html[data-brand="vercel"] {
   --sidebar-accent-foreground: 0 0% 30%;
   --sidebar-border: 0 0% 92%;
   --sidebar-ring: 0 0% 9%;
+  --brand-primary: hsl(0 0% 9%);
+  --brand-accent: hsl(0 0% 9%);
+  --brand-accent-foreground: hsl(0 0% 100%);
+  --brand-tertiary: hsl(0 0% 9%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
@@ -195,6 +199,10 @@ html.dark[data-brand="vercel"] {
   --sidebar-accent-foreground: 0 0% 93%;
   --sidebar-border: 0 0% 16%;
   --sidebar-ring: 0 0% 100%;
+  --brand-primary: hsl(0 0% 100%);
+  --brand-accent: hsl(0 0% 100%);
+  --brand-accent-foreground: hsl(0 0% 0%);
+  --brand-tertiary: hsl(0 0% 100%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));

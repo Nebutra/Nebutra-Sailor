@@ -74,6 +74,10 @@ html[data-brand="notion"] {
   --sidebar-accent-foreground: 0 0% 100%;
   --sidebar-border: 30 5% 88%;
   --sidebar-ring: 208 100% 44%;
+  --brand-primary: hsl(0 0% 0%);
+  --brand-accent: hsl(208 100% 44%);
+  --brand-accent-foreground: hsl(0 0% 100%);
+  --brand-tertiary: hsl(208 100% 44%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));

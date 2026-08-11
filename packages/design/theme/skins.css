@@ -80,6 +80,10 @@ html[data-brand="gsap"] {
   --sidebar-accent-foreground: 54 100% 94%;
   --sidebar-border: 70 5% 25%;
   --sidebar-ring: 137 92% 47%;
+  --brand-primary: hsl(137 92% 47%);
+  --brand-accent: hsl(137 92% 47%);
+  --brand-accent-foreground: hsl(150 7% 6%);
+  --brand-tertiary: hsl(137 92% 47%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
@@ -232,6 +236,10 @@ html[data-brand="linear"] {
   --sidebar-accent-foreground: 210 11% 4%;
   --sidebar-border: 220 13% 91%;
   --sidebar-ring: 64 89% 54%;
+  --brand-primary: hsl(64 89% 54%);
+  --brand-accent: hsl(64 89% 54%);
+  --brand-accent-foreground: hsl(210 11% 4%);
+  --brand-tertiary: hsl(64 89% 54%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
@@ -360,6 +368,10 @@ html.dark[data-brand="linear"] {
   --sidebar-accent-foreground: 218 21% 85%;
   --sidebar-border: 223 9% 15%;
   --sidebar-ring: 64 89% 54%;
+  --brand-primary: hsl(64 89% 54%);
+  --brand-accent: hsl(64 89% 54%);
+  --brand-accent-foreground: hsl(210 11% 4%);
+  --brand-tertiary: hsl(64 89% 54%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
@@ -441,6 +453,10 @@ html[data-brand="notion"] {
   --sidebar-accent-foreground: 0 0% 100%;
   --sidebar-border: 30 5% 88%;
   --sidebar-ring: 208 100% 44%;
+  --brand-primary: hsl(0 0% 0%);
+  --brand-accent: hsl(208 100% 44%);
+  --brand-accent-foreground: hsl(0 0% 100%);
+  --brand-tertiary: hsl(208 100% 44%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
@@ -592,6 +608,10 @@ html[data-brand="raycast"] {
   --sidebar-accent-foreground: 210 1% 27%;
   --sidebar-border: 210 2% 19%;
   --sidebar-ring: 240 1% 61%;
+  --brand-primary: hsl(0 100% 69%);
+  --brand-accent: hsl(0 0% 90%);
+  --brand-accent-foreground: hsl(210 1% 27%);
+  --brand-tertiary: hsl(0 0% 90%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
@@ -773,6 +793,10 @@ html[data-brand="stripe"] {
   --sidebar-accent-foreground: 0 0% 100%;
   --sidebar-border: 210 44% 93%;
   --sidebar-ring: 248 98% 61%;
+  --brand-primary: hsl(211 78% 11%);
+  --brand-accent: hsl(248 98% 61%);
+  --brand-accent-foreground: hsl(0 0% 100%);
+  --brand-tertiary: hsl(248 98% 61%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
@@ -936,6 +960,10 @@ html[data-brand="vanta"] {
   --sidebar-accent-foreground: 0 0% 100%;
   --sidebar-border: 240 17% 11%;
   --sidebar-ring: 268 95% 39%;
+  --brand-primary: hsl(272 100% 14%);
+  --brand-accent: hsl(268 95% 39%);
+  --brand-accent-foreground: hsl(0 0% 100%);
+  --brand-tertiary: hsl(268 95% 39%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
@@ -1078,6 +1106,10 @@ html[data-brand="vercel"] {
   --sidebar-accent-foreground: 0 0% 30%;
   --sidebar-border: 0 0% 92%;
   --sidebar-ring: 0 0% 9%;
+  --brand-primary: hsl(0 0% 9%);
+  --brand-accent: hsl(0 0% 9%);
+  --brand-accent-foreground: hsl(0 0% 100%);
+  --brand-tertiary: hsl(0 0% 9%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
@@ -1210,6 +1242,10 @@ html.dark[data-brand="vercel"] {
   --sidebar-accent-foreground: 0 0% 93%;
   --sidebar-border: 0 0% 16%;
   --sidebar-ring: 0 0% 100%;
+  --brand-primary: hsl(0 0% 100%);
+  --brand-accent: hsl(0 0% 100%);
+  --brand-accent-foreground: hsl(0 0% 0%);
+  --brand-tertiary: hsl(0 0% 100%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));

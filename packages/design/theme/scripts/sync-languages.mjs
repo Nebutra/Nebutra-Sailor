@@ -46,6 +46,9 @@ const languages = [
     name: factoryMeta.name ?? "Nebutra Factory",
     kind: "design-language",
     description: factoryMeta.description ?? "Default product chrome (no skin).",
+    // One-line caption for a language picker. Carried through so a switcher
+    // renders from the catalog instead of keeping its own list of eight.
+    tagline: factoryMeta.tagline ?? null,
     proves: factoryMeta.proves ?? [],
     darkDefault: factoryMeta.darkDefault ?? true,
     brandPath: null,
@@ -82,6 +85,7 @@ for (const id of brandIds) {
     name: brand.name || id,
     kind: "design-language",
     description: entryMeta?.description ?? `${brand.name || id} design language.`,
+    tagline: entryMeta?.tagline ?? null,
     proves: entryMeta?.proves ?? [],
     darkDefault: Boolean(brand.darkDefault),
     brandPath: `brands/${id}/brand.json`,

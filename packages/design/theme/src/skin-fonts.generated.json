@@ -1,0 +1,9 @@
+{
+  "gsap": ["Mori", "Inter Tight", "DM Sans"],
+  "linear": ["Inter Variable", "Inter", "Berkeley Mono", "JetBrains Mono"],
+  "notion": ["NotionInter", "Inter"],
+  "raycast": ["Inter", "Geist Mono", "GeistMono", "Menlo"],
+  "stripe": ["sohne-var", "Inter Tight", "Inter"],
+  "vanta": ["Inter Variable", "Inter", "Reckless", "Source Serif 4", "Lora"],
+  "vercel": ["Geist Sans", "Geist", "Geist Mono", "Menlo"]
+}

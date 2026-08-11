@@ -23,6 +23,11 @@
       "import": "./dist/client.js",
       "default": "./dist/client.js"
     },
+    "./language-switcher": {
+      "types": "./dist/language-switcher.d.ts",
+      "import": "./dist/language-switcher.js",
+      "default": "./dist/language-switcher.js"
+    },
     "./languages": {
       "types": "./dist/languages.d.ts",
       "import": "./dist/languages.js",
@@ -36,7 +41,9 @@
     },
     "./keyframes.css": "./keyframes.css",
     "./themes.css": "./themes.css",
-    "./skins.css": "./skins.css"
+    "./skins.css": "./skins.css",
+    "./morph.css": "./morph.css",
+    "./styles/sources.css": "./styles/sources.css"
   },
   "scripts": {
     "build": "tsup",
@@ -80,6 +87,8 @@
     "skins.css",
     "README.md",
     "LICENSE",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "morph.css",
+    "styles"
   ]
 }

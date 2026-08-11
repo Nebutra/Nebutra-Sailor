@@ -1,0 +1,99 @@
+/**
+ * @nebutra/theme — morph.css
+ *
+ * How a design-language change moves. Imported by any app that imports
+ * skins.css and lets people switch at runtime.
+ *
+ * This lived in the design site's globals.css, which was fine while the design
+ * site was the only thing that could switch. The moment a second app wanted the
+ * same control, the choice was to copy sixty lines of timing into it or to put
+ * them where the mechanism already lives. A language that morphs on one site and
+ * cuts on another is not one design system.
+ */
+
+/**
+ * The language change, as a transition rather than a cut.
+ *
+ * A Brand Package swap rewrites about two hundred custom properties at once,
+ * and custom properties do not animate — so every surface on the page changed
+ * in a single frame. Correct, and it read as a page reload.
+ *
+ * The properties that *read* those variables do animate, though: a
+ * `background-color` sourced from `hsl(var(--primary))` interpolates normally
+ * when the variable underneath it changes. So the switch turns this on, flips
+ * `data-brand`, and turns it off again — one blanket transition, alive for the
+ * length of the change and no longer. Leaving it on permanently would put a
+ * 400ms lag on every hover in the product surfaces this site renders, which is
+ * the opposite of what a design system should demonstrate.
+ *
+ * `font-family` is absent because it cannot interpolate — a typeface is a
+ * discrete value, and it snaps at the start while everything around it moves.
+ * Saying so is better than implying a morph that CSS cannot perform.
+ */
+html.brand-morphing,
+html.brand-morphing *,
+html.brand-morphing *::before,
+html.brand-morphing *::after {
+  transition-property: background-color, background-image, color, border-color, border-radius,
+    box-shadow, fill, stroke, outline-color, text-decoration-color, opacity, padding, gap,
+    letter-spacing, font-size, font-weight, line-height, filter, backdrop-filter;
+  transition-duration: var(--brand-morph-duration, 420ms);
+  transition-timing-function: var(--ease-out, cubic-bezier(0, 0, 0.2, 1));
+}
+
+/* Anything already carrying its own transition keeps it: a switch that reveals
+   the language should not also overwrite how the language moves. */
+html.brand-morphing [style*="transition"],
+html.brand-morphing .transition-none {
+  transition-property: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.brand-morphing,
+  html.brand-morphing *,
+  html.brand-morphing *::before,
+  html.brand-morphing *::after {
+    transition-duration: 0s;
+  }
+}
+
+
+/**
+ * The change as a cross-fade, where the browser can do one.
+ *
+ * The blanket transition above interpolates every property that *can*
+ * interpolate, and several of the most visible ones cannot. A typeface is a
+ * discrete value. Two gradients with different stop counts do not blend. Skins
+ * carry shadow stacks of different lengths — Raycast's is inset + ring + inset
+ * where Notion's is a single hairline — and mismatched lists snap. So the page
+ * would glide through its colours while the type and the elevation cut
+ * underneath, which is exactly the seam that reads as "not smooth".
+ *
+ * A view transition has no such limit: it photographs the old page, applies the
+ * change, and dissolves one image into the other. Fonts, gradients and shadows
+ * come along because they are pixels by then, not properties.
+ *
+ * Slightly slower than the property transition it replaces. A cross-fade needs
+ * the extra time to read as a dissolve rather than a flicker, and it is the
+ * whole page changing material — the one moment on this site where taking a
+ * beat is the point.
+ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 560ms;
+  animation-timing-function: cubic-bezier(0.32, 0.08, 0.24, 1);
+}
+
+/* Both layers paint at once so it dissolves rather than wiping through the
+   backdrop — the default cross-fade leaves a pale frame mid-way on a light-to-
+   dark change, which is the flicker people notice. */
+::view-transition-old(root) {
+  mix-blend-mode: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}

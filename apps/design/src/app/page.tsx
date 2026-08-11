@@ -1,5 +1,5 @@
+import { DesignLanguageSwitcher } from "@nebutra/theme/language-switcher";
 import Link from "next/link";
-import { BrandLanguagePicker } from "@/components/brand-language-switcher";
 import { LiveSpecimen } from "@/components/live-specimen";
 import { coveredNames, GROUPS } from "@/lib/components/registry";
 import { componentExports } from "@/lib/components/ui-source";
@@ -123,7 +123,7 @@ export default function HomePage() {
           </p>
         </header>
 
-        <BrandLanguagePicker />
+        <DesignLanguageSwitcher caption variant="picker" />
 
         <LiveSpecimen />
       </section>

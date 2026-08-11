@@ -1,0 +1,16 @@
+/**
+ * Tailwind v4 source registration for @nebutra/theme.
+ *
+ * The language switcher styles itself with utility class strings, and under
+ * Tailwind v4 those utilities exist in an app's bundle only if the app's CSS
+ * pipeline scans this package. The package owns its own scan path — an app
+ * never hardcodes a monorepo-relative @source, because that path is wrong the
+ * moment the package is resolved through node_modules.
+ *
+ * Usage, after @import "tailwindcss":
+ *   @import "@nebutra/theme/styles/sources.css";
+ *   @import "@nebutra/theme/skins.css";
+ *   @import "@nebutra/theme/morph.css";
+ */
+
+@source "../src/**/*.{ts,tsx}";

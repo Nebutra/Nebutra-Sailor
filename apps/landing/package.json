@@ -38,6 +38,7 @@
     "@nebutra/marketing": "workspace:*",
     "@nebutra/sanity": "workspace:*",
     "@nebutra/tokens": "workspace:*",
+    "@nebutra/theme": "workspace:*",
     "@nebutra/ui": "workspace:*",
     "@nebutra/waitlist": "workspace:*",
     "@phosphor-icons/react": "^2.1.10",

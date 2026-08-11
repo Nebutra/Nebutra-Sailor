@@ -70,4 +70,60 @@ for (const file of files) {
 
 writeFileSync(outPath, `${chunks.join("\n").trimEnd()}\n`);
 formatGenerated(outPath);
-process.stdout.write(`skins.css refreshed: ${ids.length} languages -> ${outPath}\n`);
+/**
+ * Which typefaces each language asks for, emitted alongside the sheet.
+ *
+ * A switch has to make the incoming faces resident *before* it starts, or the
+ * cross-fade photographs a fallback and the real face swaps in after the
+ * animation has finished — a jump landing on a settled page, which is the one
+ * people actually see. The switcher needs the list to do that.
+ *
+ * It is generated here rather than parsed by each consumer: the design site used
+ * to read this file off disk at build time, which works exactly once, for an app
+ * that happens to sit two directories below the repo root. The package that
+ * writes the stylesheet is the only thing that can be sure the list matches it.
+ *
+ * Generics are dropped — they are always resident and document.fonts.load on
+ * them is a wasted round trip. Purely numeric values are dropped too:
+ * `--font-weight-*` matches the same prefix and would otherwise ask the browser
+ * for a family called "600".
+ */
+const GENERIC = new Set([
+  "ui-sans-serif",
+  "ui-serif",
+  "ui-monospace",
+  "system-ui",
+  "sans-serif",
+  "serif",
+  "monospace",
+  "-apple-system",
+  "Georgia",
+]);
+
+const sheet = readFileSync(outPath, "utf8");
+const fonts = {};
+for (const block of sheet.matchAll(/html[^{]*\[data-brand="([a-z0-9-]+)"\][^{]*\{([^}]*)\}/g)) {
+  const [, brand, body] = block;
+  const bucket = (fonts[brand] ??= new Set());
+  for (const decl of body.matchAll(/--font-[a-z-]+:\s*([^;]+);/g)) {
+    for (const raw of decl[1].split(",")) {
+      const family = raw.trim().replace(/^["']|["']$/g, "");
+      if (!family || /^\d+$/.test(family) || GENERIC.has(family)) continue;
+      bucket.add(family);
+    }
+  }
+}
+const fontsPath = join(packageRoot, "src", "skin-fonts.generated.json");
+writeFileSync(
+  fontsPath,
+  `${JSON.stringify(
+    Object.fromEntries(Object.entries(fonts).map(([id, set]) => [id, [...set]])),
+    null,
+    2,
+  )}\n`,
+);
+
+process.stdout.write(
+  `skins.css refreshed: ${ids.length} languages -> ${outPath}\n` +
+    `skin-fonts.generated.json: ${Object.keys(fonts).length} languages\n`,
+);

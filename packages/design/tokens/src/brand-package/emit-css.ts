@@ -373,6 +373,37 @@ function emitColorVars(s: BrandSemanticColors, r: BrandColorRoles | undefined): 
     `  --sidebar-accent-foreground: ${s.accentForeground};`,
     `  --sidebar-border: ${s.border};`,
     `  --sidebar-ring: ${s.ring};`,
+    // The identity aliases, taken over by the language.
+    //
+    // These were the one family a Brand Package did not reach: --brand-primary
+    // and --brand-accent are declared in styles.css as Nebutra's own #0033FE and
+    // #0BF1C3, and no skin overrode them. Switching to Linear moved three
+    // thousand semantic usages and left seventy-five sitting in Nebutra's cyan —
+    // a page that reads as half-switched rather than as another language.
+    //
+    // A language has exactly two vivid hues to offer, and they are `roles.brand`
+    // — the identity mark — and `roles.action`, the product fill. Notion is blue
+    // on black, Raycast coral behind near-white chrome, Stripe indigo on
+    // midnight. --brand-primary takes the mark, --brand-accent the action, and a
+    // language declaring no separate mark simply shows one hue in both, which is
+    // true of it rather than a gap to paper over.
+    //
+    // NOT `semantic.accent`: that is the shadcn hover-surface role, and mapping
+    // it here produced --brand-accent: 220 14% 96% for Linear and 70 5% 25% for
+    // GSAP. The glow elevations would have tinted themselves with a hover grey.
+    // Same slot-versus-role confusion as --radius-md and --input, one family out.
+    //
+    // --brand-tertiary falls back to the accent rather than inventing a third
+    // hue: two honest hues beat three where one is made up.
+    //
+    // Emitted as complete colours, not channel triples. --brand-accent is read
+    // inside `color-mix(in srgb, var(--brand-accent) 8%, transparent)` by the
+    // glow elevations, and a bare triple there voids the whole declaration —
+    // silently, which is the failure this codebase keeps relearning.
+    `  --brand-primary: hsl(${r?.brand ?? s.primary});`,
+    `  --brand-accent: hsl(${s.primary});`,
+    `  --brand-accent-foreground: hsl(${s.primaryForeground});`,
+    `  --brand-tertiary: hsl(${s.primary});`,
     `  --brand-gradient: hsl(var(--primary));`,
     `  --brand-gradient-reverse: hsl(var(--primary));`,
     `  --brand-gradient-vertical: hsl(var(--primary));`,

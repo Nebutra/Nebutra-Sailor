@@ -81,6 +81,10 @@ html[data-brand="vanta"] {
   --sidebar-accent-foreground: 0 0% 100%;
   --sidebar-border: 240 17% 11%;
   --sidebar-ring: 268 95% 39%;
+  --brand-primary: hsl(272 100% 14%);
+  --brand-accent: hsl(268 95% 39%);
+  --brand-accent-foreground: hsl(0 0% 100%);
+  --brand-tertiary: hsl(268 95% 39%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));

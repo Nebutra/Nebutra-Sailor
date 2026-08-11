@@ -64,6 +64,10 @@ html[data-brand="stripe"] {
   --sidebar-accent-foreground: 0 0% 100%;
   --sidebar-border: 210 44% 93%;
   --sidebar-ring: 248 98% 61%;
+  --brand-primary: hsl(211 78% 11%);
+  --brand-accent: hsl(248 98% 61%);
+  --brand-accent-foreground: hsl(0 0% 100%);
+  --brand-tertiary: hsl(248 98% 61%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));

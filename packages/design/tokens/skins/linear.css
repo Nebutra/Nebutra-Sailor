@@ -63,6 +63,10 @@ html[data-brand="linear"] {
   --sidebar-accent-foreground: 210 11% 4%;
   --sidebar-border: 220 13% 91%;
   --sidebar-ring: 64 89% 54%;
+  --brand-primary: hsl(64 89% 54%);
+  --brand-accent: hsl(64 89% 54%);
+  --brand-accent-foreground: hsl(210 11% 4%);
+  --brand-tertiary: hsl(64 89% 54%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
@@ -191,6 +195,10 @@ html.dark[data-brand="linear"] {
   --sidebar-accent-foreground: 218 21% 85%;
   --sidebar-border: 223 9% 15%;
   --sidebar-ring: 64 89% 54%;
+  --brand-primary: hsl(64 89% 54%);
+  --brand-accent: hsl(64 89% 54%);
+  --brand-accent-foreground: hsl(210 11% 4%);
+  --brand-tertiary: hsl(64 89% 54%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));

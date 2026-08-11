@@ -70,6 +70,10 @@ html[data-brand="gsap"] {
   --sidebar-accent-foreground: 54 100% 94%;
   --sidebar-border: 70 5% 25%;
   --sidebar-ring: 137 92% 47%;
+  --brand-primary: hsl(137 92% 47%);
+  --brand-accent: hsl(137 92% 47%);
+  --brand-accent-foreground: hsl(150 7% 6%);
+  --brand-tertiary: hsl(137 92% 47%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));

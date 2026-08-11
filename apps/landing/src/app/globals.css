@@ -13,6 +13,11 @@
 @import "@nebutra/tokens/recipe.css";
 /* UI CVA source scan — owned by @nebutra/ui (do not hardcode monorepo @source) */
 @import "@nebutra/ui/styles/sources.css";
+/* Design-language catalog: the skins, how a change between them moves, and the
+ * scan path for the switcher's own classes. Owned by @nebutra/theme. */
+@import "@nebutra/theme/styles/sources.css";
+@import "@nebutra/theme/skins.css";
+@import "@nebutra/theme/morph.css";
 @import "tw-animate-css";
 
 /* Typography plugin — enables prose classes for legal/content pages */
@@ -21,9 +26,11 @@
  */
 @custom-variant dark (&:is(.dark *));
 
-/* Brand aliases (--brand-primary, --brand-accent, --brand-tertiary)
- * are defined in @nebutra/tokens/styles.css — the single source of truth.
- * Do NOT redefine them here. */
+/* Brand aliases (--brand-primary, --brand-accent, --brand-tertiary) are defined
+ * in @nebutra/tokens/styles.css, and overridden per design language by
+ * skins.css above. Do NOT redefine them here — a copy would win over the skin
+ * and freeze those seventy-five usages on Nebutra's own blue while the rest of
+ * the page changed language around them. */
 
 /* Custom overrides for landing page */
 @layer base {
