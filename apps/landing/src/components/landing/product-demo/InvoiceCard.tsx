@@ -70,7 +70,7 @@ export function InvoiceCard() {
             layout
             className={`absolute inset-y-1 left-1 right-1 rounded-full flex items-center justify-center shadow-sm ${
               status === "paid"
-                ? "bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400"
+                ? "bg-emerald-500/10 border border-emerald-500/20 text-success"
                 : "bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400"
             }`}
             animate={

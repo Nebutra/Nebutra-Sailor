@@ -15,7 +15,7 @@ export function AnalyticsTerminal() {
         <AnimatedSpan delay={1500} className="text-cyan-600 dark:text-cyan-400">
           ⚡ Connecting to real-time stream...
         </AnimatedSpan>
-        <AnimatedSpan delay={2200} className="text-emerald-600 dark:text-emerald-400 font-medium">
+        <AnimatedSpan delay={2200} className="text-success font-medium">
           ✔ [200 OK] Connected. Ingesting telemetry.
         </AnimatedSpan>
       </div>

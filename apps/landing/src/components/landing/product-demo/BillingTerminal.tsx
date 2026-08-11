@@ -19,14 +19,14 @@ export function BillingTerminal() {
         <AnimatedSpan delay={2500} className="text-primary dark:text-blue-400 mt-2">
           ↳ [Webhook] customer.subscription.created
         </AnimatedSpan>
-        <AnimatedSpan delay={3200} className="text-emerald-600 dark:text-emerald-400">
+        <AnimatedSpan delay={3200} className="text-success">
           {"  "}✔ Provisioned limits.
         </AnimatedSpan>
 
         <AnimatedSpan delay={4000} className="text-primary dark:text-blue-400 mt-2">
           ↳ [Webhook] invoice.paid - $4,200.00
         </AnimatedSpan>
-        <AnimatedSpan delay={4800} className="text-emerald-600 dark:text-emerald-400">
+        <AnimatedSpan delay={4800} className="text-success">
           {"  "}✔ Payment recorded. Emitting events.
         </AnimatedSpan>
       </div>

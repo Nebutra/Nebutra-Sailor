@@ -146,7 +146,7 @@ export function TenantDiagram() {
                 />
               )}
             </div>
-            <div className="px-3 py-1.5 rounded-[var(--radius-lg)] border border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono tracking-wide shadow-sm">
+            <div className="px-3 py-1.5 rounded-[var(--radius-lg)] border border-emerald-500/20 bg-emerald-500/10 text-success text-[10px] font-mono tracking-wide shadow-sm">
               Schema: Globex
             </div>
           </div>

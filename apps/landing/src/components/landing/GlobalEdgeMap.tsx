@@ -160,7 +160,7 @@ export function GlobalEdgeMap() {
               </div>
               <div className="flex items-center gap-2 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px_#34d399]" />
-                <span className="text-[10px] text-emerald-600 dark:text-emerald-400 uppercase tracking-widest font-bold">
+                <span className="text-[10px] text-success uppercase tracking-widest font-bold">
                   Live
                 </span>
               </div>

@@ -20,11 +20,11 @@ export function AuditGlyph(_props: SubpackageGlyphProps) {
     >
       {/* Header */}
       <div className="flex items-center gap-1.5">
-        <Shield className="h-3.5 w-3.5 shrink-0 text-emerald-500" aria-hidden="true" />
+        <Shield className="h-3.5 w-3.5 shrink-0 text-success" aria-hidden="true" />
         <span className="truncate font-mono text-[10px] text-muted-foreground">
           audit log · 12,847 entries · hash-verified
         </span>
-        <Check className="h-3 w-3 shrink-0 text-emerald-500" aria-hidden="true" />
+        <Check className="h-3 w-3 shrink-0 text-success" aria-hidden="true" />
       </div>
 
       {/* Entries */}
@@ -44,7 +44,7 @@ export function AuditGlyph(_props: SubpackageGlyphProps) {
         <EntryRow
           time="1h"
           initials="JT"
-          color="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400"
+          color="bg-emerald-500/15 text-success"
           action="auth.signin"
         />
       </div>

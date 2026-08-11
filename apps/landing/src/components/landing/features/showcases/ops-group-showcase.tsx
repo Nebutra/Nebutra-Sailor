@@ -99,10 +99,10 @@ function CliBody({ slug }: { slug: string }) {
   return (
     <TerminalView className="max-w-full">
       <TypingAnimation>{`$ pnpm nebutra ${slug} init`}</TypingAnimation>
-      <AnimatedSpan className="text-emerald-500">✓ Resolving workspace presets</AnimatedSpan>
-      <AnimatedSpan className="text-emerald-500">✓ Linking @nebutra/{slug}@1.4.2</AnimatedSpan>
-      <AnimatedSpan className="text-emerald-500">✓ Writing release boundary config</AnimatedSpan>
-      <AnimatedSpan className="text-emerald-500">✓ Health probe green · 0 drift</AnimatedSpan>
+      <AnimatedSpan className="text-success">✓ Resolving workspace presets</AnimatedSpan>
+      <AnimatedSpan className="text-success">✓ Linking @nebutra/{slug}@1.4.2</AnimatedSpan>
+      <AnimatedSpan className="text-success">✓ Writing release boundary config</AnimatedSpan>
+      <AnimatedSpan className="text-success">✓ Health probe green · 0 drift</AnimatedSpan>
       <AnimatedSpan className="text-muted-foreground">→ ready in 2.4s</AnimatedSpan>
     </TerminalView>
   );

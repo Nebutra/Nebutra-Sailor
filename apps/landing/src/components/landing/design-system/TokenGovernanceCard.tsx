@@ -20,7 +20,7 @@ export function TokenGovernanceCard() {
       <div className="relative z-10 mt-auto flex flex-col h-[180px] w-full rounded-[var(--radius-xl)] border border-border/60 bg-background p-4 shadow-sm font-mono text-xs overflow-hidden group">
         <div className="flex items-center justify-between border-b border-border/50 pb-2 mb-3">
           <div className="flex items-center gap-2 text-foreground font-semibold bg-muted px-2 py-0.5 rounded-[var(--radius-md)] border border-border/50">
-            <GitBranch className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
+            <GitBranch className="h-3 w-3 text-success" />
             <span className="font-bold text-[10px]">token-sync.yml</span>
           </div>
           <span className="text-muted-foreground bg-muted/40 px-1.5 py-0.5 rounded text-[10px] font-medium border border-border/40">
@@ -37,7 +37,7 @@ export function TokenGovernanceCard() {
             <div className="h-4 w-4 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center bg-background">
               <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             </div>
-            <span className="text-foreground font-medium group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+            <span className="text-foreground font-medium group-hover:text-success transition-colors">
               token parsing config
             </span>
           </div>
@@ -46,7 +46,7 @@ export function TokenGovernanceCard() {
             <div className="h-4 w-4 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center bg-background">
               <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             </div>
-            <span className="text-foreground font-medium group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+            <span className="text-foreground font-medium group-hover:text-success transition-colors">
               generate css variables
             </span>
           </div>

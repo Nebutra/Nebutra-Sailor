@@ -370,7 +370,7 @@ export const TREE_DATA: FileNode[] = [
     path: "packages",
     tag: "104",
     icon: React.createElement(Box, {
-      className: "h-[15px] w-[15px] text-emerald-500 fill-emerald-500/20",
+      className: "h-[15px] w-[15px] text-success fill-emerald-500/20",
     }),
     description: "- Domain-grouped workspace packages",
     children: packageGroups.map((group) => ({

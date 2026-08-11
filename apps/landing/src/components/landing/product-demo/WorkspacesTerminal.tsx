@@ -16,7 +16,7 @@ export function WorkspacesTerminal() {
           ⚡ Establishing multi-tenant DB proxy...
         </AnimatedSpan>
 
-        <AnimatedSpan delay={2000} className="text-emerald-600 dark:text-emerald-400 font-medium">
+        <AnimatedSpan delay={2000} className="text-success font-medium">
           ✔ [200 OK] Connected to 'Globex' cluster space.
         </AnimatedSpan>
       </div>

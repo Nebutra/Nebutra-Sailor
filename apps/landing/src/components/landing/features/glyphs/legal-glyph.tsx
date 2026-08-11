@@ -47,8 +47,8 @@ export function LegalGlyph({ locale }: SubpackageGlyphProps) {
       <div className="flex items-center gap-1.5">
         <BookClosed className="h-3.5 w-3.5 shrink-0 text-muted-foreground" aria-hidden="true" />
         <span className="truncate font-mono text-[10px] text-muted-foreground">{copy.header}</span>
-        <Shield className="ml-auto h-3 w-3 shrink-0 text-emerald-500" aria-hidden="true" />
-        <Check className="h-3 w-3 shrink-0 text-emerald-500" aria-hidden="true" />
+        <Shield className="ml-auto h-3 w-3 shrink-0 text-success" aria-hidden="true" />
+        <Check className="h-3 w-3 shrink-0 text-success" aria-hidden="true" />
       </div>
 
       {/* Doc rows */}

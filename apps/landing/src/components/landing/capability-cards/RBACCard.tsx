@@ -55,7 +55,7 @@ export function RBACCard() {
         <div className="flex items-center gap-2 px-6 py-4 border-b border-border/60 text-[11px] uppercase tracking-widest text-muted-foreground dark:text-zinc-500 font-semibold bg-muted/20/[0.02]">
           <Fingerprint className="w-4 h-4" />
           Access Matrix
-          <span className="ml-auto text-[10px] font-semibold normal-case tracking-normal text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 dark:border-emerald-400/20">
+          <span className="ml-auto text-[10px] font-semibold normal-case tracking-normal text-success bg-success/10 px-2 py-0.5 rounded-full border border-success/20">
             5 rules active
           </span>
         </div>
@@ -103,7 +103,7 @@ export function RBACCard() {
                     <span className="inline-flex items-center justify-center w-full h-full">
                       {allowed ? (
                         <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-500/15 shadow-[0_0_8px_rgba(16,185,129,0.15)] dark:shadow-[0_0_10px_rgba(52,211,153,0.2)]">
-                          <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                          <CheckCircle2 className="w-4 h-4 text-success" />
                         </span>
                       ) : (
                         <span className="inline-flex items-center justify-center w-6 h-6 rounded-full border border-border/50">

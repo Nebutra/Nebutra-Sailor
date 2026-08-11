@@ -89,7 +89,7 @@ function ChecklistRow({ row }: ChecklistRowProps) {
   return (
     <div className="flex items-center gap-2">
       {isOk ? (
-        <Check className="h-3.5 w-3.5 shrink-0 text-emerald-500" aria-hidden="true" />
+        <Check className="h-3.5 w-3.5 shrink-0 text-success" aria-hidden="true" />
       ) : (
         <Clock className="h-3.5 w-3.5 shrink-0 text-amber-500" aria-hidden="true" />
       )}

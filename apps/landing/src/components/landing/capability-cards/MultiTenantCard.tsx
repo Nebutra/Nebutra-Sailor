@@ -24,7 +24,7 @@ const CODE_LINES = [
 
 function getLineClass(type: string, text: string): string {
   if (type === "key") {
-    return "text-emerald-700 dark:text-emerald-300 font-semibold bg-emerald-50 dark:bg-emerald-500/10";
+    return "text-success font-semibold bg-success/10";
   }
   if (type === "import") {
     return "text-primary dark:text-[var(--brand-accent)]";
@@ -91,7 +91,7 @@ export function MultiTenantCard() {
             {CODE_LINES.map((line) => (
               <div
                 key={line.num}
-                className={`flex ${line.type === "key" ? "bg-emerald-50 dark:bg-emerald-500/10 border-l-[3px] border-emerald-500/50" : ""}`}
+                className={`flex ${line.type === "key" ? "bg-success/10 border-l-[3px] border-emerald-500/50" : ""}`}
               >
                 <span className="w-10 shrink-0 text-right pr-3 select-none text-[11px] text-muted-foreground dark:text-zinc-400">
                   {line.num}
@@ -116,9 +116,7 @@ export function MultiTenantCard() {
             <p className="text-muted-foreground dark:text-zinc-500">
               $ npx nebutra rls-audit --strict
             </p>
-            <p className="text-emerald-700 dark:text-emerald-300 font-semibold">
-              ✔ 0 cross-tenant leaks detected
-            </p>
+            <p className="text-success font-semibold">✔ 0 cross-tenant leaks detected</p>
             <p className="text-muted-foreground dark:text-zinc-400">14 queries scanned in 0.8s</p>
           </div>
         </div>

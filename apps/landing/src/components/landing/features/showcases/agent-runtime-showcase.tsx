@@ -110,9 +110,9 @@ const KIND_META: Record<
   },
   result: {
     Icon: Check,
-    iconClass: "text-emerald-600 dark:text-emerald-400",
+    iconClass: "text-success",
     pipClass: "bg-emerald-500",
-    chip: "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300",
+    chip: "bg-success/10 text-success",
   },
   answer: {
     Icon: ArrowRight,

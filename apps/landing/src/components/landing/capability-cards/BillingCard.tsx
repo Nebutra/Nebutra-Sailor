@@ -56,7 +56,7 @@ export function BillingCard() {
             <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground dark:text-zinc-500">
               Monthly Recurring Revenue
             </span>
-            <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 dark:border-emerald-400/20">
+            <span className="text-[10px] font-semibold text-success bg-success/10 px-2 py-0.5 rounded-full border border-success/20">
               +14.2%
             </span>
           </div>
@@ -149,7 +149,7 @@ export function BillingCard() {
                 className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${
                   metric.delta.startsWith("-") && !metric.positive
                     ? "text-rose-600 bg-rose-50 dark:text-rose-400 dark:bg-rose-500/10"
-                    : "text-emerald-600 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-500/10"
+                    : "text-success bg-success/10"
                 }`}
               >
                 {metric.delta}

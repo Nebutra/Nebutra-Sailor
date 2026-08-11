@@ -22,7 +22,7 @@ const ROLES = ["admin", "member", "viewer"] as const;
 
 function Cell({ allow }: { allow: Allow }) {
   return allow === "yes" ? (
-    <Check className="h-3.5 w-3.5 text-emerald-500" aria-label="allow" />
+    <Check className="h-3.5 w-3.5 text-success" aria-label="allow" />
   ) : (
     <Cross className="h-3.5 w-3.5 text-red-500" aria-label="deny" />
   );

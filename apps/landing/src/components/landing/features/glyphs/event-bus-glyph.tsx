@@ -76,7 +76,7 @@ export function EventBusGlyph(_props: SubpackageGlyphProps) {
               key={i}
               className={
                 isLive
-                  ? "flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-500 motion-safe:animate-pulse"
+                  ? "flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500/10 text-success motion-safe:animate-pulse"
                   : "flex h-5 w-5 items-center justify-center rounded-full text-muted-foreground"
               }
               title={pulse.label}

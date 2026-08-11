@@ -52,7 +52,7 @@ export function CreateSailorGlyph(_props: SubpackageGlyphProps) {
           if (line.kind === "ok") {
             return (
               <div key={i} className="flex items-center gap-1.5 truncate">
-                <Check className="h-3 w-3 shrink-0 text-emerald-500" />
+                <Check className="h-3 w-3 shrink-0 text-success" />
                 <span className="truncate text-muted-foreground">{line.text}</span>
               </div>
             );

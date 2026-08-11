@@ -16,7 +16,7 @@ export function VrtCard() {
             {t("card3Title")}
           </h3>
         </div>
-        <div className="flex items-center gap-1.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 text-xs font-semibold border border-emerald-500/20 shadow-sm shrink-0">
+        <div className="flex items-center gap-1.5 rounded-full bg-emerald-500/15 text-success px-2 py-0.5 text-xs font-semibold border border-emerald-500/20 shadow-sm shrink-0">
           <CheckCircle2 className="w-3.5 h-3.5" />
           <span>Passed</span>
         </div>
@@ -46,7 +46,7 @@ export function VrtCard() {
 
           {/* Right side (Head / Polished) */}
           <div className="absolute inset-y-0 right-0 w-1/2 flex items-center justify-center bg-background/50 group-hover:w-[60%] transition-[width] duration-700 ease-in-out motion-reduce:transition-none z-20 flex-col gap-2">
-            <span className="text-[10px] uppercase tracking-widest text-emerald-500 font-bold flex items-center gap-1">
+            <span className="text-[10px] uppercase tracking-widest text-success font-bold flex items-center gap-1">
               <CheckCircle2 className="w-3 h-3" /> V1.1
             </span>
 

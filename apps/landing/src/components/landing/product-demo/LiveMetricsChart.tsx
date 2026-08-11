@@ -62,9 +62,7 @@ export function LiveMetricsChart() {
               )}
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-medium">
-              Live
-            </span>
+            <span className="text-xs font-mono text-success font-medium">Live</span>
           </div>
         </div>
         <div className="text-right">

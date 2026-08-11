@@ -20,7 +20,7 @@ export function StatusGlyph(_props: SubpackageGlyphProps) {
         </div>
         <Badge
           variant="outline"
-          className="gap-1 border-emerald-500/30 bg-emerald-500/10 px-1.5 py-0 text-[10px] font-medium text-emerald-600"
+          className="gap-1 border-emerald-500/30 bg-emerald-500/10 px-1.5 py-0 text-[10px] font-medium text-success"
         >
           <Check className="h-2.5 w-2.5" />
           All systems operational
