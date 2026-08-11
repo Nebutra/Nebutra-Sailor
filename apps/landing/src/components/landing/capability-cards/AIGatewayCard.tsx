@@ -44,7 +44,7 @@ export function AIGatewayCard() {
         {/* Code Window Mockup */}
         <div
           style={{ boxShadow: "var(--ring-hairline)" }}
-          className="w-full max-w-[340px] bg-background dark:bg-muted border border-border rounded-[var(--radius-button)] overflow-hidden z-20 transition-transform duration-150 hover:-translate-y-px"
+          className="w-full max-w-[340px] bg-background dark:bg-muted border border-border rounded-[var(--radius-card)] overflow-hidden z-20 transition-transform duration-150 hover:-translate-y-px"
         >
           <div className="flex items-center px-4 py-2.5 bg-muted/30/[0.02] border-b border-border/50">
             <div className="flex gap-1.5">
