@@ -89,6 +89,23 @@
 /*---break---
  */
 @theme inline {
+  /* How every bare transition on this site moves.
+   *
+   * `transition-colors` with no duration and no easing appears about forty
+   * times here, and `duration-150` with no easing another fourteen. Tailwind's
+   * defaults are 150ms on a near-linear curve, so every hover on the marketing
+   * site arrived as a step rather than a movement — the stiffness that came in
+   * when the GSAP layer was unhooked and nothing replaced what it was doing.
+   *
+   * Setting the default is the whole fix: no per-element churn, and a hover
+   * written tomorrow is smooth without anyone remembering to say so. The curve
+   * is the motion language's signature — a long deceleration that covers most
+   * of the distance immediately and then settles, which is the quality people
+   * mean by silky. Both sides are tokens, so a Brand Package moves them.
+   */
+  --default-transition-duration: var(--duration-flow);
+  --default-transition-timing-function: var(--ease-brand);
+
   /* Section spacing tokens — standardize pb-12 / pb-16 / pb-32 usage */
   --section-gap-sm: 3rem;
   --section-gap-md: 4rem;

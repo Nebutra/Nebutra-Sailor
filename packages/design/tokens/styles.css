@@ -873,6 +873,7 @@
      (No backticks in this block — it is inside a JS template literal.) */
   --ease-in: var(--motion-ease-in);
   --ease-out: var(--motion-ease-out);
+  --ease-brand: var(--motion-ease-brand);
   --ease-in-out: var(--motion-ease-in-out);
   --ease-spring: var(--motion-ease-spring);
 
@@ -881,6 +882,20 @@
   --duration-flow: var(--motion-duration-flow);
   --duration-reveal: var(--motion-duration-reveal);
   --duration-cinematic: var(--motion-duration-cinematic);
+
+  /* The same four rails on the namespace Tailwind reads for duration-*.
+     --duration-* is the variable other CSS consumes; the utility class is built
+     from --transition-duration-*, and only that one. Without these,
+     duration-micro and duration-reveal are class names that generate nothing:
+     they were in use in the component library and on the marketing site, and
+     every one of them silently fell back to the 150ms default. */
+  --transition-duration-micro: var(--motion-duration-micro);
+  --transition-duration-flow: var(--motion-duration-flow);
+  --transition-duration-reveal: var(--motion-duration-reveal);
+  --transition-duration-cinematic: var(--motion-duration-cinematic);
+
+  /* Likewise for ease-*: the utility namespace is --ease-* already, so the four
+     above are reachable as ease-brand / ease-spring without further mapping. */
 
   /* Spacing — DO NOT register --spacing-sm|md|lg|xl|2xl here.
      Tailwind v4 puts every --spacing-{key} on the shared size rail, so
@@ -941,6 +956,13 @@
   --motion-ease-out: cubic-bezier(0, 0, 0.2, 1);
   --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --motion-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  /* The signature: a long, strong deceleration — most of the distance is
+     covered in the first fifth of the time, then it settles. It has existed as
+     `brandEasing.brand` in @nebutra/brand since the motion language was
+     written, usable only from JS, so every CSS transition on every marketing
+     surface fell back to Tailwind's default curve instead. That default is
+     what "the hovers feel stiff" is: a near-linear ramp at 150ms. */
+  --motion-ease-brand: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ─── Spacing source rail ────────────────────────────────────

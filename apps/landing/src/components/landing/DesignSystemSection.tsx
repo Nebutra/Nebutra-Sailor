@@ -50,21 +50,21 @@ export function DesignSystemSection() {
             {/* Top Row: 3-5-4 Split */}
             <AnimateIn
               preset="fadeUp"
-              className="md:col-span-12 lg:col-span-4 xl:col-span-3 h-[400px] rounded-[var(--radius-panel)] group overflow-hidden bg-card/70 backdrop-blur-xl shadow-ambient-sm transition-[background-color,box-shadow,transform] duration-150 hover:bg-card hover:shadow-ambient-md hover:-translate-y-px"
+              className="md:col-span-12 lg:col-span-4 xl:col-span-3 h-[400px] rounded-[var(--radius-panel)] group overflow-hidden bg-card/70 backdrop-blur-xl shadow-ambient-sm transition-[background-color,box-shadow,transform] duration-reveal hover:bg-card hover:shadow-ambient-md hover:-translate-y-0.5"
             >
               <ColorScaleCard />
             </AnimateIn>
 
             <AnimateIn
               preset="fadeUp"
-              className="md:col-span-12 lg:col-span-8 xl:col-span-4 h-[400px] rounded-[var(--radius-panel)] group overflow-hidden bg-card/70 backdrop-blur-xl shadow-ambient-sm transition-[background-color,box-shadow,transform] duration-150 hover:bg-card hover:shadow-ambient-md hover:-translate-y-px"
+              className="md:col-span-12 lg:col-span-8 xl:col-span-4 h-[400px] rounded-[var(--radius-panel)] group overflow-hidden bg-card/70 backdrop-blur-xl shadow-ambient-sm transition-[background-color,box-shadow,transform] duration-reveal hover:bg-card hover:shadow-ambient-md hover:-translate-y-0.5"
             >
               <PipelineCard />
             </AnimateIn>
 
             <AnimateIn
               preset="fadeUp"
-              className="md:col-span-12 lg:col-span-12 xl:col-span-5 h-[400px] rounded-[var(--radius-panel)] group overflow-hidden bg-card/70 backdrop-blur-xl shadow-ambient-sm transition-[background-color,box-shadow,transform] duration-150 hover:bg-card hover:shadow-ambient-md hover:-translate-y-px"
+              className="md:col-span-12 lg:col-span-12 xl:col-span-5 h-[400px] rounded-[var(--radius-panel)] group overflow-hidden bg-card/70 backdrop-blur-xl shadow-ambient-sm transition-[background-color,box-shadow,transform] duration-reveal hover:bg-card hover:shadow-ambient-md hover:-translate-y-0.5"
             >
               <InteractiveDocsCard />
             </AnimateIn>
@@ -72,21 +72,21 @@ export function DesignSystemSection() {
             {/* Bottom Row: 4-4-4 Split */}
             <AnimateIn
               preset="fadeUp"
-              className="md:col-span-12 lg:col-span-4 h-[320px] rounded-[var(--radius-panel)] group overflow-hidden bg-card/70 backdrop-blur-xl shadow-ambient-sm transition-[background-color,box-shadow,transform] duration-150 hover:bg-card hover:shadow-ambient-md hover:-translate-y-px"
+              className="md:col-span-12 lg:col-span-4 h-[320px] rounded-[var(--radius-panel)] group overflow-hidden bg-card/70 backdrop-blur-xl shadow-ambient-sm transition-[background-color,box-shadow,transform] duration-reveal hover:bg-card hover:shadow-ambient-md hover:-translate-y-0.5"
             >
               <VrtCard />
             </AnimateIn>
 
             <AnimateIn
               preset="fadeUp"
-              className="md:col-span-12 lg:col-span-4 h-[320px] rounded-[var(--radius-panel)] group overflow-hidden bg-card/70 backdrop-blur-xl shadow-ambient-sm transition-[background-color,box-shadow,transform] duration-150 hover:bg-card hover:shadow-ambient-md hover:-translate-y-px"
+              className="md:col-span-12 lg:col-span-4 h-[320px] rounded-[var(--radius-panel)] group overflow-hidden bg-card/70 backdrop-blur-xl shadow-ambient-sm transition-[background-color,box-shadow,transform] duration-reveal hover:bg-card hover:shadow-ambient-md hover:-translate-y-0.5"
             >
               <TokenGovernanceCard />
             </AnimateIn>
 
             <AnimateIn
               preset="fadeUp"
-              className="md:col-span-12 lg:col-span-4 h-[320px] rounded-[var(--radius-panel)] group overflow-hidden bg-card/70 backdrop-blur-xl shadow-ambient-sm transition-[background-color,box-shadow,transform] duration-150 hover:bg-card hover:shadow-ambient-md hover:-translate-y-px"
+              className="md:col-span-12 lg:col-span-4 h-[320px] rounded-[var(--radius-panel)] group overflow-hidden bg-card/70 backdrop-blur-xl shadow-ambient-sm transition-[background-color,box-shadow,transform] duration-reveal hover:bg-card hover:shadow-ambient-md hover:-translate-y-0.5"
             >
               <ThemeSelectorCard />
             </AnimateIn>

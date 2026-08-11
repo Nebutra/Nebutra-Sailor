@@ -26,6 +26,13 @@
   --motion-ease-out: cubic-bezier(0, 0, 0.2, 1);
   --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --motion-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  /* The signature: a long, strong deceleration — most of the distance is
+     covered in the first fifth of the time, then it settles. It has existed as
+     `brandEasing.brand` in @nebutra/brand since the motion language was
+     written, usable only from JS, so every CSS transition on every marketing
+     surface fell back to Tailwind's default curve instead. That default is
+     what "the hovers feel stiff" is: a near-linear ramp at 150ms. */
+  --motion-ease-brand: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ─── Spacing source rail ────────────────────────────────────

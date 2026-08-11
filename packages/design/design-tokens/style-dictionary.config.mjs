@@ -842,6 +842,7 @@ function buildTailwindThemeInline() {
      (No backticks in this block — it is inside a JS template literal.) */
   --ease-in: var(--motion-ease-in);
   --ease-out: var(--motion-ease-out);
+  --ease-brand: var(--motion-ease-brand);
   --ease-in-out: var(--motion-ease-in-out);
   --ease-spring: var(--motion-ease-spring);
 
@@ -850,6 +851,20 @@ function buildTailwindThemeInline() {
   --duration-flow: var(--motion-duration-flow);
   --duration-reveal: var(--motion-duration-reveal);
   --duration-cinematic: var(--motion-duration-cinematic);
+
+  /* The same four rails on the namespace Tailwind reads for duration-*.
+     --duration-* is the variable other CSS consumes; the utility class is built
+     from --transition-duration-*, and only that one. Without these,
+     duration-micro and duration-reveal are class names that generate nothing:
+     they were in use in the component library and on the marketing site, and
+     every one of them silently fell back to the 150ms default. */
+  --transition-duration-micro: var(--motion-duration-micro);
+  --transition-duration-flow: var(--motion-duration-flow);
+  --transition-duration-reveal: var(--motion-duration-reveal);
+  --transition-duration-cinematic: var(--motion-duration-cinematic);
+
+  /* Likewise for ease-*: the utility namespace is --ease-* already, so the four
+     above are reachable as ease-brand / ease-spring without further mapping. */
 
   /* Spacing — DO NOT register --spacing-sm|md|lg|xl|2xl here.
      Tailwind v4 puts every --spacing-{key} on the shared size rail, so
