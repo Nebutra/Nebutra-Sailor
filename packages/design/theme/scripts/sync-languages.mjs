@@ -49,6 +49,9 @@ const languages = [
     // One-line caption for a language picker. Carried through so a switcher
     // renders from the catalog instead of keeping its own list of eight.
     tagline: factoryMeta.tagline ?? null,
+    // Button label. "Nebutra Factory" is twice the width of every other name and
+    // wrapped the picker onto two rows on the marketing card.
+    shortName: factoryMeta.shortName ?? factoryMeta.name ?? "Factory",
     proves: factoryMeta.proves ?? [],
     darkDefault: factoryMeta.darkDefault ?? true,
     brandPath: null,
@@ -86,6 +89,7 @@ for (const id of brandIds) {
     kind: "design-language",
     description: entryMeta?.description ?? `${brand.name || id} design language.`,
     tagline: entryMeta?.tagline ?? null,
+    shortName: entryMeta?.shortName ?? brand.name ?? id,
     proves: entryMeta?.proves ?? [],
     darkDefault: Boolean(brand.darkDefault),
     brandPath: `brands/${id}/brand.json`,

@@ -36,6 +36,8 @@ export interface DesignLanguageEntry {
    * buttons. Null for a language whose meta has not written one.
    */
   tagline: string | null;
+  /** Button-width label. Falls back to `name` for the languages that fit. */
+  shortName: string;
   /** Contract proofs this fixture exercises */
   proves: string[];
   darkDefault: boolean;

@@ -38,8 +38,9 @@ export function ThemeSelectorCard() {
       </div>
 
       {/* No caption: the switcher's own is English prose, and this site is
-          localised. The language names are proper nouns and need no translation. */}
-      <DesignLanguageSwitcher className="relative z-10" variant="compact" />
+          localised. The language names are proper nouns and need no translation.
+          No legend either — the card heading above already names this. */}
+      <DesignLanguageSwitcher className="relative z-10" showLegend={false} variant="compact" />
 
       <div className="relative z-10 mt-auto flex flex-col gap-3 rounded-[var(--radius-xl)] bg-muted/30 p-4">
         {/* Every one of these reads a token the language rewrites. The button is

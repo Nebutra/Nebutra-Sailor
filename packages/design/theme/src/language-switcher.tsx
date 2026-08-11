@@ -183,6 +183,12 @@ export interface DesignLanguageSwitcherProps {
   variant?: "compact" | "picker";
   /** Shown under a `picker`: names the active language and what it changes. */
   caption?: boolean;
+  /**
+   * Visible "Design language" label. Off where the surrounding surface already
+   * says it — on the marketing card the legend sat directly under a heading
+   * reading the same thing. Still rendered for assistive tech either way.
+   */
+  showLegend?: boolean;
 }
 
 /**
@@ -196,6 +202,7 @@ export function DesignLanguageSwitcher({
   className,
   variant = "compact",
   caption = false,
+  showLegend = true,
 }: DesignLanguageSwitcherProps) {
   const { active, select, ready } = useDesignLanguage();
   const current = LANGUAGES.find((l) => l.id === active) ?? LANGUAGES[0];
@@ -211,7 +218,7 @@ export function DesignLanguageSwitcher({
       >
         <legend
           className={
-            isPicker
+            isPicker || !showLegend
               ? "sr-only"
               : "mr-1 float-left w-auto font-mono text-[10px] text-muted-foreground uppercase tracking-wider"
           }
@@ -236,7 +243,7 @@ export function DesignLanguageSwitcher({
               onClick={() => select(language.id)}
               type="button"
             >
-              {language.name}
+              {language.shortName}
             </button>
           );
         })}

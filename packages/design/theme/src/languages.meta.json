@@ -8,7 +8,8 @@
     "description": "Default product chrome from @nebutra/tokens (no skin). Clear data-brand to restore.",
     "proves": ["factory HSL SSOT", "recipe defaults", "action≡brand-mark until skin"],
     "darkDefault": true,
-    "tagline": "the token source, unskinned"
+    "tagline": "the token source, unskinned",
+    "shortName": "Factory"
   },
   "languages": {
     "linear": {

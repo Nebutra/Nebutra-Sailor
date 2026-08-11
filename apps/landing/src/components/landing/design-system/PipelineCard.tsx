@@ -17,7 +17,7 @@ export function PipelineCard() {
           <GitCommit className="h-4 w-4" />
         </div>
         <h3 className="text-lg font-bold tracking-tight text-foreground line-clamp-1">
-          {t("badge")}
+          {t("card6Title")}
         </h3>
       </div>
 
