@@ -30,7 +30,7 @@ function getLineClass(type: string, text: string): string {
     return "text-primary dark:text-[var(--brand-accent)]";
   }
   if (type === "comment") {
-    return "text-muted-foreground dark:text-zinc-500";
+    return "text-muted-foreground";
   }
   if (
     text.includes("await") ||
@@ -43,7 +43,7 @@ function getLineClass(type: string, text: string): string {
   if (text.includes("'@nebutra/rls'")) {
     return "text-amber-600 dark:text-amber-400";
   }
-  return "text-foreground dark:text-zinc-300";
+  return "text-foreground";
 }
 
 export function MultiTenantCard() {
@@ -64,9 +64,9 @@ export function MultiTenantCard() {
       >
         {/* Window Chrome */}
         <div className="flex items-center gap-1.5 px-5 py-3 border-b border-border/60 bg-muted/30">
-          <div className="w-2.5 h-2.5 rounded-full bg-border dark:bg-zinc-700" />
-          <div className="w-2.5 h-2.5 rounded-full bg-border dark:bg-zinc-700" />
-          <div className="w-2.5 h-2.5 rounded-full bg-border dark:bg-zinc-700" />
+          <div className="w-2.5 h-2.5 rounded-full bg-border" />
+          <div className="w-2.5 h-2.5 rounded-full bg-border" />
+          <div className="w-2.5 h-2.5 rounded-full bg-border" />
         </div>
 
         {/* File Tabs */}
@@ -75,11 +75,11 @@ export function MultiTenantCard() {
             <span className="w-2 h-2 rounded-[var(--radius-sm)] bg-blue-500/60" />
             query.ts
           </div>
-          <div className="flex items-center gap-1.5 px-4 py-2 text-[11px] font-medium text-muted-foreground dark:text-zinc-500">
+          <div className="flex items-center gap-1.5 px-4 py-2 text-[11px] font-medium text-muted-foreground">
             <span className="w-2 h-2 rounded-[var(--radius-sm)] bg-emerald-500/40" />
             schema.prisma
           </div>
-          <div className="flex items-center gap-1.5 px-4 py-2 text-[11px] font-medium text-muted-foreground dark:text-zinc-500">
+          <div className="flex items-center gap-1.5 px-4 py-2 text-[11px] font-medium text-muted-foreground">
             <span className="w-2 h-2 rounded-[var(--radius-sm)] bg-amber-500/40" />
             middleware.ts
           </div>
@@ -93,7 +93,7 @@ export function MultiTenantCard() {
                 key={line.num}
                 className={`flex ${line.type === "key" ? "bg-success/10 border-l-[3px] border-emerald-500/50" : ""}`}
               >
-                <span className="w-10 shrink-0 text-right pr-3 select-none text-[11px] text-muted-foreground dark:text-zinc-400">
+                <span className="w-10 shrink-0 text-right pr-3 select-none text-[11px] text-muted-foreground">
                   {line.num}
                 </span>
                 <span className={getLineClass(line.type, line.text)}>{line.text || "\u00a0"}</span>
@@ -105,19 +105,15 @@ export function MultiTenantCard() {
         {/* Mini Terminal Output */}
         <div className="border-t border-border/60 bg-muted/20/[0.02] px-4 py-3">
           <div className="flex items-center gap-2 mb-1.5">
-            <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground dark:text-zinc-500">
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
               Terminal
             </span>
-            <span className="text-[10px] text-muted-foreground dark:text-zinc-400">
-              &mdash; rls-audit
-            </span>
+            <span className="text-[10px] text-muted-foreground">&mdash; rls-audit</span>
           </div>
           <div className="font-mono text-[11px] leading-relaxed">
-            <p className="text-muted-foreground dark:text-zinc-500">
-              $ npx nebutra rls-audit --strict
-            </p>
+            <p className="text-muted-foreground">$ npx nebutra rls-audit --strict</p>
             <p className="text-success font-semibold">✔ 0 cross-tenant leaks detected</p>
-            <p className="text-muted-foreground dark:text-zinc-400">14 queries scanned in 0.8s</p>
+            <p className="text-muted-foreground">14 queries scanned in 0.8s</p>
           </div>
         </div>
       </div>

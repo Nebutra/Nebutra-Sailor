@@ -78,7 +78,7 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
   });
 
   return (
-    <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
+    <main id="main-content" className="min-h-screen bg-background">
       <StructuredData data={productLd} id="pricing-product-jsonld" />
       <Navbar />
 
@@ -99,7 +99,7 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
                   {SOCIAL_AVATARS.map((avatar) => (
                     <div
                       key={avatar.id}
-                      className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-background bg-muted dark:bg-zinc-800"
+                      className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-background bg-muted"
                     >
                       <User className="h-5 w-5 text-muted-foreground" />
                     </div>

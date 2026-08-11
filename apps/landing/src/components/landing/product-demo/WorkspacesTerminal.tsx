@@ -9,7 +9,7 @@ export function WorkspacesTerminal() {
       className="font-mono text-xs md:text-sm leading-relaxed flex flex-col gap-2 h-full"
     >
       <div className="flex flex-col gap-2 relative z-20">
-        <TypingAnimation delay={100} className="text-muted-foreground/80 dark:text-zinc-400">
+        <TypingAnimation delay={100} className="text-muted-foreground/80">
           &gt; nebutra rbac --tenant org_kjl9a
         </TypingAnimation>
         <AnimatedSpan delay={1200} className="text-cyan-600 dark:text-cyan-400">

@@ -84,9 +84,7 @@ function TreeNodes({
           <TreeLabel
             translate="no"
             className={`pointer-events-none shrink-0 whitespace-nowrap font-mono font-medium tracking-normal ${
-              isTopLevel
-                ? "text-[13.5px] text-foreground"
-                : "text-[13px] text-foreground/90 dark:text-zinc-300"
+              isTopLevel ? "text-[13.5px] text-foreground" : "text-[13px] text-foreground/90"
             }`}
           >
             {node.label}
@@ -155,7 +153,7 @@ export function MinimalMonorepoTree() {
   return (
     <div className="flex-1 overflow-hidden flex flex-col w-full h-full relative group/tree">
       {/* Subtle hover gradient indicator for scrollability */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-10 bg-gradient-to-t from-background to-transparent opacity-80 transition-opacity group-hover/tree:opacity-10 dark:from-zinc-950" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-10 bg-gradient-to-t from-background to-transparent opacity-80 transition-opacity group-hover/tree:opacity-10" />
 
       <BaseTree variant="minimal" />
 
@@ -219,7 +217,7 @@ export function MonorepoFileTree() {
         </AnimateIn>
 
         <div className="relative flex min-h-[360px] flex-1 flex-col overflow-hidden rounded-[var(--radius-card)] border border-border bg-background/55 shadow-inner dark:bg-muted/80">
-          <div className="z-20 flex h-[42px] flex-none items-center border-black/5 border-b bg-white/55 px-4 dark:bg-zinc-900/55">
+          <div className="z-20 flex h-[42px] flex-none items-center border-black/5 border-b bg-white/55 px-4">
             <div className="flex gap-1.5 items-center">
               <div className="size-2.5 rounded-full bg-[#ff5f56] shadow-sm" />
               <div className="size-2.5 rounded-full bg-[#ffbd2e] shadow-sm" />
@@ -227,7 +225,7 @@ export function MonorepoFileTree() {
             </div>
             <div className="flex min-w-0 flex-1 justify-center pb-0.5 pr-[48px]">
               <span
-                className="truncate font-sans font-medium text-[12px] text-zinc-500 dark:text-zinc-400"
+                className="truncate font-sans font-medium text-[12px] text-muted-foreground"
                 translate="no"
               >
                 nebutra-sailor / Project Explorer / packages
@@ -244,7 +242,7 @@ export function MonorepoFileTree() {
             <span className="hidden truncate sm:inline">{t("verifiedPaths")}</span>
           </div>
 
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-14 bg-gradient-to-t from-background to-transparent opacity-85 dark:from-zinc-950" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-14 bg-gradient-to-t from-background to-transparent opacity-85" />
 
           <BaseTree variant="default" />
         </div>

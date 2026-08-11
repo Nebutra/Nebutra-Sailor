@@ -109,13 +109,13 @@ export function HeroMockupWindow() {
     <AnimateIn preset="fadeUp" className="w-full max-w-[1400px] mx-auto relative z-20 px-4 group">
       <div
         style={{ boxShadow: "var(--ring-hairline)" }}
-        className="relative rounded-[var(--radius-panel)] border border-border bg-background/95 dark:bg-zinc-950/95 overflow-hidden transition-[background-color,border-color,box-shadow] duration-500"
+        className="relative rounded-[var(--radius-panel)] border border-border bg-background/95 overflow-hidden transition-[background-color,border-color,box-shadow] duration-500"
       >
         {/* Top highlight line */}
         <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
         {/* macOS Title Bar */}
-        <div className="relative z-20 flex h-11 w-full items-center justify-between border-b border-border/30 bg-muted/40 px-4 dark:bg-zinc-950/80">
+        <div className="relative z-20 flex h-11 w-full items-center justify-between border-b border-border/30 bg-muted/40 px-4">
           <div className="flex items-center gap-2">
             <div className="size-3 rounded-full bg-[#ff5f56] shadow-sm" />
             <div className="size-3 rounded-full bg-[#ffbd2e] shadow-sm" />
@@ -129,16 +129,16 @@ export function HeroMockupWindow() {
 
         <div className="relative z-10 flex h-[360px] w-full flex-col sm:h-[440px] md:h-[520px] md:flex-row">
           {/* Left Sidebar — fixed height, vertical scroll inside */}
-          <div className="hidden w-full shrink-0 flex-col overflow-hidden border-border/30 border-b bg-muted/30 dark:bg-zinc-950/50 md:flex md:w-[420px] md:border-r md:border-b-0">
+          <div className="hidden w-full shrink-0 flex-col overflow-hidden border-border/30 border-b bg-muted/30 md:flex md:w-[420px] md:border-r md:border-b-0">
             <MinimalMonorepoTree />
           </div>
 
           {/* Right Editor */}
-          <div className="flex-1 bg-background dark:bg-zinc-950 flex flex-col overflow-hidden relative">
+          <div className="flex-1 bg-background flex flex-col overflow-hidden relative">
             {/* Editor tab bar */}
-            <div className="flex flex-none items-center h-[38px] border-b border-border/30 bg-muted/20 dark:bg-zinc-900/50 z-20">
+            <div className="flex flex-none items-center h-[38px] border-b border-border/30 bg-muted/20 z-20">
               <div className="flex items-center h-full">
-                <div className="flex items-center gap-1.5 px-4 h-full bg-background dark:bg-zinc-950 border-b-2 border-primary text-foreground text-[11px] font-medium">
+                <div className="flex items-center gap-1.5 px-4 h-full bg-background border-b-2 border-primary text-foreground text-[11px] font-medium">
                   <svg
                     className="size-3 shrink-0 text-blue-500"
                     viewBox="0 0 24 24"

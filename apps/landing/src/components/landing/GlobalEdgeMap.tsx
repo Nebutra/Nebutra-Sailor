@@ -30,7 +30,7 @@ export function GlobalEdgeMap() {
 
   return (
     <article
-      className="group relative flex h-full flex-col rounded-[var(--radius-panel)] border border-border bg-background/60 dark:bg-zinc-950/60 p-8 md:p-10 transition-colors hover:border-primary/40 overflow-hidden"
+      className="group relative flex h-full flex-col rounded-[var(--radius-panel)] border border-border bg-background/60 p-8 md:p-10 transition-colors hover:border-primary/40 overflow-hidden"
       style={{ boxShadow: "var(--ring-hairline)" }}
     >
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
@@ -60,14 +60,14 @@ export function GlobalEdgeMap() {
         {/* Map container */}
         <div className="flex-1 relative overflow-hidden rounded-[var(--radius-card)] border border-border bg-background/40 dark:bg-muted/80 min-h-[250px] shadow-inner mb-6">
           {/* Faux Terminal Header */}
-          <div className="absolute top-0 inset-x-0 flex items-center px-4 h-10 border-b border-border/60 bg-muted/50 dark:bg-zinc-950/80 z-20">
+          <div className="absolute top-0 inset-x-0 flex items-center px-4 h-10 border-b border-border/60 bg-muted/50 z-20">
             <div className="flex gap-1.5">
-              <div className="w-2 h-2 rounded-full bg-border/80 dark:bg-zinc-700/80"></div>
-              <div className="w-2 h-2 rounded-full bg-border/80 dark:bg-zinc-700/80"></div>
-              <div className="w-2 h-2 rounded-full bg-border/80 dark:bg-zinc-700/80"></div>
+              <div className="w-2 h-2 rounded-full bg-border/80"></div>
+              <div className="w-2 h-2 rounded-full bg-border/80"></div>
+              <div className="w-2 h-2 rounded-full bg-border/80"></div>
             </div>
             <div className="ml-4 flex-1 text-center pr-6">
-              <span className="text-[10px] font-mono font-medium text-muted-foreground/80 dark:text-zinc-500 tracking-wider">
+              <span className="text-[10px] font-mono font-medium text-muted-foreground/80 tracking-wider">
                 edge-router status --live
               </span>
             </div>
@@ -138,7 +138,7 @@ export function GlobalEdgeMap() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span
-                  className="text-base font-semibold text-foreground dark:text-zinc-100 tabular-nums"
+                  className="text-base font-semibold text-foreground tabular-nums"
                   style={{ letterSpacing: "var(--tracking-tight)" }}
                 >
                   11
@@ -149,7 +149,7 @@ export function GlobalEdgeMap() {
               </div>
               <div className="flex items-center gap-2">
                 <span
-                  className="text-base font-semibold text-foreground dark:text-zinc-100 tabular-nums"
+                  className="text-base font-semibold text-foreground tabular-nums"
                   style={{ letterSpacing: "var(--tracking-tight)" }}
                 >
                   ~50ms

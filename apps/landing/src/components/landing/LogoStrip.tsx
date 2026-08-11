@@ -21,10 +21,10 @@ export async function LogoStrip({ locale }: { locale: Locale }) {
   return (
     <section className="relative z-10 w-full bg-transparent pb-8 pt-4 md:pb-12 md:pt-6">
       <div className="mx-auto flex w-full max-w-3xl flex-col items-center px-4">
-        <p className="mb-6 w-full text-center text-[10px] font-medium tracking-[0.2em] text-zinc-500 uppercase md:text-[11px] dark:text-zinc-400">
+        <p className="mb-6 w-full text-center text-[10px] font-medium tracking-[0.2em] text-muted-foreground uppercase md:text-[11px]">
           {t.rich("tagline", {
             dot: () => (
-              <span className="mx-1.5 mb-0.5 inline-block align-middle text-[8px] text-foreground/80 dark:text-zinc-300">
+              <span className="mx-1.5 mb-0.5 inline-block align-middle text-[8px] text-foreground/80">
                 •
               </span>
             ),

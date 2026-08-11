@@ -53,7 +53,7 @@ export function BillingCard() {
         {/* MRR Sparkline Area */}
         <div className="px-5 pt-5 pb-3">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground dark:text-zinc-500">
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
               Monthly Recurring Revenue
             </span>
             <span className="text-[10px] font-semibold text-success bg-success/10 px-2 py-0.5 rounded-full border border-success/20">
@@ -136,7 +136,7 @@ export function BillingCard() {
               key={metric.label}
               className="flex flex-col items-center py-4 px-2 bg-background dark:bg-muted"
             >
-              <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground dark:text-zinc-500 mb-1">
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-1">
                 {metric.label}
               </p>
               <p

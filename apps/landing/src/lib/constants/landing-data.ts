@@ -41,7 +41,7 @@ export interface FileNode {
   children?: FileNode[];
 }
 
-const packageIcon = (className = "h-4 w-4 text-zinc-500") =>
+const packageIcon = (className = "h-4 w-4 text-muted-foreground") =>
   React.createElement(Package, { className });
 
 const packageNode = (group: string, name: string, description?: string): FileNode => ({
@@ -167,7 +167,7 @@ const packageGroups = [
   {
     id: "ops",
     description: "- CLI, create-sailor, presets, Sanity, Supabase, compliance",
-    icon: React.createElement(Settings, { className: "h-4 w-4 text-slate-500" }),
+    icon: React.createElement(Settings, { className: "h-4 w-4 text-muted-foreground" }),
     children: ["china-compliance", "cli", "create-sailor", "preset", "sanity", "supabase"],
   },
   {
@@ -390,7 +390,7 @@ export const TREE_DATA: FileNode[] = [
     path: ".",
     tag: "5",
     icon: React.createElement(FolderOpen, {
-      className: "h-[15px] w-[15px] text-zinc-400 fill-zinc-400/20",
+      className: "h-[15px] w-[15px] text-muted-foreground fill-muted-foreground/20",
     }),
     description: "- Development tooling and configuration",
     children: [
@@ -427,7 +427,7 @@ export const TREE_DATA: FileNode[] = [
         label: ".github/workflows",
         path: ".github/workflows",
         description: "- CI, release, security, and deployment workflows",
-        icon: React.createElement(GitBranch, { className: "h-4 w-4 text-slate-500" }),
+        icon: React.createElement(GitBranch, { className: "h-4 w-4 text-muted-foreground" }),
       },
     ],
   },

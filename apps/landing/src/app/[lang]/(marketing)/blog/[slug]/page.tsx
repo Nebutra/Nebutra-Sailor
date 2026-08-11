@@ -388,7 +388,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
   ]);
 
   return (
-    <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
+    <main id="main-content" className="min-h-screen bg-background">
       <StructuredData data={[articleLd, breadcrumbLd]} id="blog-article-jsonld" />
       <Navbar />
 
@@ -587,7 +587,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
 
 function BlogPostSkeleton() {
   return (
-    <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950" aria-busy="true">
+    <main id="main-content" className="min-h-screen bg-background" aria-busy="true">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
         <div className="h-8 w-36 animate-pulse rounded bg-muted" />
         <div className="hidden gap-3 sm:flex">

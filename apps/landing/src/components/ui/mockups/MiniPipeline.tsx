@@ -5,7 +5,7 @@ import { HARNESS_PIPELINE_STEPS } from "@/lib/constants/landing-data";
 /** Mini pipeline diagram for CI card */
 export function MiniPipeline() {
   return (
-    <div className="overflow-hidden rounded-[var(--radius-2xl)] border border-border/50 bg-muted/30 dark:bg-zinc-950/60 p-5">
+    <div className="overflow-hidden rounded-[var(--radius-2xl)] border border-border/50 bg-muted/30 p-5">
       <div className="flex items-center justify-between gap-1">
         {HARNESS_PIPELINE_STEPS.map((step, i) => (
           <div key={step} className="flex items-center flex-1">

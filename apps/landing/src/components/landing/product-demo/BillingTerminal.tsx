@@ -9,7 +9,7 @@ export function BillingTerminal() {
       className="font-mono text-xs md:text-sm leading-relaxed flex flex-col gap-2 h-full justify-between"
     >
       <div className="flex flex-col gap-2 relative z-20">
-        <TypingAnimation delay={100} className="text-muted-foreground/80 dark:text-zinc-400">
+        <TypingAnimation delay={100} className="text-muted-foreground/80">
           &gt; stripe listen --forward-to localhost
         </TypingAnimation>
         <AnimatedSpan delay={1200} className="text-amber-600 dark:text-amber-400">
@@ -45,7 +45,7 @@ export function BillingTerminal() {
           </span>
           <button
             type="button"
-            className="px-4 py-1.5 rounded-full bg-background dark:bg-zinc-900 border border-border/50 text-[10px] font-mono font-bold text-foreground shadow-sm flex items-center gap-2 cursor-default group"
+            className="px-4 py-1.5 rounded-full bg-background border border-border/50 text-[10px] font-mono font-bold text-foreground shadow-sm flex items-center gap-2 cursor-default group"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
             Listening :4242

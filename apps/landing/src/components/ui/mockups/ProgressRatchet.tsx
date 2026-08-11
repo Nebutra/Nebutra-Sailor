@@ -14,7 +14,7 @@ export function ProgressRatchet() {
         return (
           <div
             key={bar.label}
-            className="rounded-[var(--radius-xl)] border border-border/50 bg-muted/30 dark:bg-zinc-950/60 px-5 py-4"
+            className="rounded-[var(--radius-xl)] border border-border/50 bg-muted/30 px-5 py-4"
           >
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground/80">
@@ -25,7 +25,7 @@ export function ProgressRatchet() {
                 {bar.pass ? "\u2713" : "\u2717"}
               </span>
             </div>
-            <div className="h-2 rounded-full bg-border/30 dark:bg-zinc-800 overflow-hidden">
+            <div className="h-2 rounded-full bg-border/30 overflow-hidden">
               <div
                 className="h-full rounded-full bg-primary transition-[width] duration-700 motion-reduce:transition-none"
                 style={{ width: `${percentage}%` }}

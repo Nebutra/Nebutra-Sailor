@@ -9,7 +9,7 @@ export function AnalyticsTerminal() {
       className="font-mono text-xs md:text-sm leading-relaxed flex flex-col h-full"
     >
       <div className="flex flex-col gap-2">
-        <TypingAnimation delay={100} className="text-muted-foreground/80 dark:text-zinc-400">
+        <TypingAnimation delay={100} className="text-muted-foreground/80">
           &gt; nebutra telemetry --live
         </TypingAnimation>
         <AnimatedSpan delay={1500} className="text-cyan-600 dark:text-cyan-400">

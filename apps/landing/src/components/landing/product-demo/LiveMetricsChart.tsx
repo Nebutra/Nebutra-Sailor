@@ -49,7 +49,7 @@ export function LiveMetricsChart() {
   const value = Math.floor(data[data.length - 1] * 12.3);
 
   return (
-    <div className="relative w-full rounded-[var(--radius-xl)] border border-border/40 bg-background/50 dark:bg-zinc-950/50 p-4 shadow-elevation-high overflow-hidden">
+    <div className="relative w-full rounded-[var(--radius-xl)] border border-border/40 bg-background/50 p-4 shadow-elevation-high overflow-hidden">
       <div className="relative z-10 flex items-center justify-between mb-4">
         <div>
           <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/80 mb-1">

@@ -132,7 +132,7 @@ async function BlogTagPageLoader({ params }: { params: Promise<Params> }) {
   const tagLabel = decodeURIComponent(tag).replace(/-/g, " ");
 
   return (
-    <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
+    <main id="main-content" className="min-h-screen bg-background">
       <Navbar />
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
         <AnimateIn preset="emerge" inView>
@@ -161,7 +161,7 @@ async function BlogTagPageLoader({ params }: { params: Promise<Params> }) {
 
 function BlogTagPageSkeleton() {
   return (
-    <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950" aria-busy="true">
+    <main id="main-content" className="min-h-screen bg-background" aria-busy="true">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
         <div className="h-8 w-36 animate-pulse rounded bg-muted" />
         <div className="hidden gap-3 sm:flex">

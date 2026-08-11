@@ -37,18 +37,18 @@ export async function HeroSection() {
                 attribute it. AnimateIn would inline `opacity:0` server-side
                 and disqualify the element. */}
             <h1
-              className="mx-auto w-full max-w-[900px] text-balance text-3xl font-semibold text-zinc-950 sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl dark:text-zinc-50"
+              className="mx-auto w-full max-w-[900px] text-balance text-3xl font-semibold text-muted-foreground sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
               style={{
                 letterSpacing: "var(--tracking-display)",
                 lineHeight: "var(--leading-display)",
               }}
             >
               {t("headline1")}{" "}
-              <span className="text-zinc-950 dark:text-zinc-50">{t("headline2")}</span>
+              <span className="text-muted-foreground text-foreground">{t("headline2")}</span>
             </h1>
 
             <AnimateIn preset="fadeUp" className="w-full min-w-0">
-              <p className="mx-auto w-full max-w-[680px] px-1 text-[16px] font-medium leading-normal text-zinc-600 sm:px-4 sm:text-[17px] md:text-[19px] dark:text-zinc-300">
+              <p className="mx-auto w-full max-w-[680px] px-1 text-[16px] font-medium leading-normal text-muted-foreground sm:px-4 sm:text-[17px] md:text-[19px] text-foreground">
                 {t.rich("subheadline", {
                   highlight: (chunks) => (
                     <span

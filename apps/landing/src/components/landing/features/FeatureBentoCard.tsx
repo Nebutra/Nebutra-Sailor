@@ -38,7 +38,7 @@ export function FeatureBentoCard({
           >
             {title}
           </h2>
-          <p className="mt-4 text-[15px] sm:text-base text-muted-foreground dark:text-zinc-400 font-medium leading-relaxed max-w-sm">
+          <p className="mt-4 text-[15px] sm:text-base text-muted-foreground font-medium leading-relaxed max-w-sm">
             {description}
           </p>
 
