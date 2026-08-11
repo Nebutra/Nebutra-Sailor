@@ -4,6 +4,6 @@
 #
 # channel: optional major.minor floor for the auto-check workflow
 # (only propose bumps that stay on the same 0.8 line unless channel is empty).
-version=0.8.6
+version=0.8.14
 channel=0.8
 repository=Nebutra/carina
