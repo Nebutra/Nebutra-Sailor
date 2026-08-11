@@ -117,8 +117,6 @@ describe("bare-zh URL literals", () => {
   const KNOWN_BARE_ZH: Readonly<Record<string, string>> = {
     "apps/sailor-docs/next.config.ts":
       "docs origin serves /<contentLocale>/<slug> with languages ['en','zh']; these are its own back-compat 301 sources.",
-    "apps/design-docs/next.config.ts":
-      "internal design-docs origin (robots-disallowed) keeps a /zh/docs MDX rewrite for its own bilingual axis.",
   };
 
   function candidateFiles(): string[] {
@@ -184,7 +182,6 @@ describe("per-app robots posture", () => {
     "admin",
     "auth",
     "design",
-    "design-docs",
     "idp",
     "mail-preview",
     "sleptons",

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Point design.nebutra.com → ECS origin (A, proxied).
-# Origin: PM2 design-docs :3004 + nginx conf.d/design.nebutra.com.conf
+# Origin: PM2 design :3109 + nginx conf.d/design.nebutra.com.conf
 #
 # Without a design server_name (or when DNS points nowhere useful), the
 # default 443 block 301s to nebutra.com. Without PM2 on :3004, CF returns 502.
@@ -67,6 +67,6 @@ print(r.get("type"), r.get("name"), "->", r.get("content"), "proxied=", r.get("p
 ' "$tmp"
 rm -f "$tmp"
 
-echo "=== smoke (origin needs PM2 design-docs :3004) ==="
+echo "=== smoke (origin needs PM2 design :3109) ==="
 curl -sSI --max-time 20 "https://${HOST}/" | head -20 || true
 echo "done"

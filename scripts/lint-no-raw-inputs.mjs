@@ -15,7 +15,7 @@
 //
 // Whitelisted areas (exempt from check):
 //   • storybook/src/stories/**           — demos of native HTML behavior
-//   • design-docs/src/components/previews/**, sailor-docs/src/components/previews/**
+//   • sailor-docs/src/components/previews/**
 //                                        — registry preview demos
 //   • packages/design/ui/src/primitives/** — DS wrappers (not under apps/)
 //   • test files
@@ -28,7 +28,6 @@ import { readFileSync } from "node:fs";
 
 const WHITELIST = [
   /\/storybook\/src\/stories\//,
-  /\/design-docs\/src\/components\/previews\//,
   /\/sailor-docs\/src\/components\/previews\//,
 
   /\.test\.tsx?$/,

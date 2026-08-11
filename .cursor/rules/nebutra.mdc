@@ -19,7 +19,7 @@ alwaysApply: true
 
 ```
 apps/                            # User-facing apps
-  landing/ web/ storybook/ design-docs/ studio/ docs/
+  landing/ web/ storybook/ studio/ docs/
   sleptons/ idp/ mail-preview/ sailor-docs/ tsekaluk-dev/
 
 backends/                        # No-UI backends, split by language

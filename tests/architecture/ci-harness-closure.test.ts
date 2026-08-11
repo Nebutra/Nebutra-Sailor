@@ -93,9 +93,6 @@ describe("ci harness dependency closure", () => {
 
     expect(workflow).not.toContain(".github/actions/setup-node-pnpm/action.yml");
     expect(workflow).toContain("uses: dorny/paths-filter@d1c1ffe0248fe513906c8e24db8ea791d46f8590");
-    expect(workflow).toContain("visual-design-docs:");
-    expect(workflow).toContain("if: needs.detect-changes.outputs.design-docs == 'true'");
-    expect(workflow).toContain("pnpm visual:design-docs:ci");
     expect(workflow).toContain("visual-landing:");
     expect(workflow).toContain("if: needs.detect-changes.outputs.landing == 'true'");
     expect(workflow).toContain("pnpm visual:landing:ci");
@@ -132,7 +129,7 @@ describe("ci harness dependency closure", () => {
 
     expect(workflow).toContain(`filters=(--filter="...[${turboBaseRef}]...")`);
     // Path-glob filters (tolerate stripped apps in the template build).
-    expect(workflow).toContain("apps/design-docs apps/sailor-docs apps/storybook apps/studio");
+    expect(workflow).toContain("apps/sailor-docs apps/storybook apps/studio");
     expect(workflow).toContain('filters+=(--filter="!./$app")');
     expect(workflow).toContain(`pnpm turbo build "\${filters[@]}"`);
   });
@@ -160,7 +157,7 @@ describe("ci harness dependency closure", () => {
     const governedPaths = [
       ".github/actions/setup-node-pnpm/action.yml",
       ".github/workflows/ui-governance.yml",
-      "apps/design-docs/**",
+      "apps/design/src/**",
       "apps/landing/src/**",
       "apps/web/src/**",
       "packages/design/**",

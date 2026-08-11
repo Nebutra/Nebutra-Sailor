@@ -203,7 +203,7 @@ export const TREE_DATA: FileNode[] = [
     id: "apps",
     label: "apps",
     path: "apps",
-    tag: "16",
+    tag: "15",
     icon: React.createElement(FolderOpen, {
       className: "h-[15px] w-[15px] text-blue-500 fill-blue-500/20",
     }),
@@ -228,13 +228,6 @@ export const TREE_DATA: FileNode[] = [
         label: "design",
         path: "apps/design",
         description: "- Live design system surface (tokens + components)",
-        icon: React.createElement(Paintbrush, { className: "h-4 w-4 text-teal-400" }),
-      },
-      {
-        id: "apps-design-docs",
-        label: "design-docs",
-        path: "apps/design-docs",
-        description: "- Internal design docs (Next.js + Fumadocs)",
         icon: React.createElement(Paintbrush, { className: "h-4 w-4 text-teal-400" }),
       },
       {

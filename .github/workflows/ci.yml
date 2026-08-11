@@ -519,7 +519,7 @@ jobs:
       - name: Build (affected)
         run: |
           filters=(--filter="...[${TURBO_BASE_REF}]...")
-          for app in apps/design-docs apps/sailor-docs apps/storybook apps/studio; do
+          for app in apps/sailor-docs apps/storybook apps/studio; do
             if [ -d "$app" ]; then
               filters+=(--filter="!./$app")
             fi
@@ -593,7 +593,7 @@ jobs:
   #
   # This job does NOT build. It downloads the stylesheets the `build` job
   # produced, so a one-line CSS error comes back in a couple of minutes instead
-  # of behind a full app build. apps/design-docs is audited in
+  # of behind a full app build. apps/design is audited in
   # ui-governance.yml, which already builds it.
   css-var-types:
     name: CSS Var Type Audit
@@ -630,7 +630,7 @@ jobs:
           if [ ! -s artifacts/built-css/manifest.txt ]; then
             echo "The affected build produced no landing/web stylesheets, so there is nothing to audit."
             echo "apps/landing and apps/web are audited whenever the affected filter builds them;"
-            echo "apps/design-docs is audited in .github/workflows/ui-governance.yml."
+            echo "apps/design is audited in .github/workflows/ui-governance.yml."
             exit 0
           fi
           echo "collected stylesheets (app, chunk count):"

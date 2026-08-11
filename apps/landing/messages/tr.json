@@ -177,7 +177,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO YAPISI",
-    "title": "10 uygulama. 104 paket. 4 arka uç hattı.",
+    "title": "15 uygulama. 113 paket. 4 arka uç hattı.",
     "description": "Paylaşılan kod, paralel derlemeler, sıfır tekrar. Veritabanından ön yüzeye kadar uçtan uca tam tipleme.",
     "metricApps": "uygulama",
     "metricBackends": "arka uç şeritleri",

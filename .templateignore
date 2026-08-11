@@ -72,7 +72,6 @@ apps/web/src/lib/__tests__/audit-remediation.test.ts
 # ---------------------------------------------------------------------------
 apps/sleptons/
 apps/tsekaluk-dev/
-apps/design-docs/content/
 apps/docs-hub/
 apps/studio/
 apps/docs/
@@ -156,7 +155,6 @@ openstatus.lock
 # ---------------------------------------------------------------------------
 # Nebutra-owned content for design-docs shell (keep the Fumadocs skeleton)
 # ---------------------------------------------------------------------------
-apps/design-docs/.source/
 
 # ---------------------------------------------------------------------------
 # Internal scripts that only make sense for the Nebutra repo itself

@@ -177,7 +177,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO-STRUKTUR",
-    "title": "10 apper. 104 pakker. 4 bakendspor.",
+    "title": "15 apper. 113 pakker. 4 bakendspor.",
     "description": "Delt kode, parallelle bygginger, null duplisering. Full end-to-end-typing fra database til frontend.",
     "metricApps": "apper",
     "metricBackends": "backend-sporer",

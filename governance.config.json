@@ -123,19 +123,6 @@
     "allowlist": [
       "apps/admin/src/lib/auth.ts",
       "apps/admin/src/lib/staff.ts",
-      "apps/design-docs/mdx-components.tsx",
-      "apps/design-docs/src/__registry__/index.tsx",
-      "apps/design-docs/src/app/[lang]/docs/[[...slug]]/page.tsx",
-      "apps/design-docs/src/app/[lang]/docs/layout.tsx",
-      "apps/design-docs/src/app/[lang]/layout.tsx",
-      "apps/design-docs/src/app/[lang]/registry/[name]/page.tsx",
-      "apps/design-docs/src/app/[lang]/registry/page.tsx",
-      "apps/design-docs/src/app/og/docs/[...slug]/route.tsx",
-      "apps/design-docs/src/components/brand-overview-visuals.tsx",
-      "apps/design-docs/src/components/color-usage.tsx",
-      "apps/design-docs/src/components/component-preview.tsx",
-      "apps/design-docs/src/components/introduction-hero.tsx",
-      "apps/design-docs/src/components/registry/registry-card.tsx",
       "apps/forge/src/app/api/docs/route.ts",
       "apps/forge/src/app/docs/page.tsx",
       "apps/forge/src/app/wallet/page.tsx",
@@ -394,31 +381,30 @@
       "\\.test\\.tsx?$",
       "/__tests__/",
       "/storybook/src/stories/",
-      "/design-docs/",
       "/sailor-docs/"
     ],
     "bannedPatterns": [
       {
-        "pattern": "暂无",
-        "label": "禁七: 空白状态禁用「暂无」"
+        "pattern": "\u6682\u65e0",
+        "label": "\u7981\u4e03: \u7a7a\u767d\u72b6\u6001\u7981\u7528\u300c\u6682\u65e0\u300d"
       },
       {
         "pattern": "No [A-Za-z].*(yet|available)",
-        "label": "禁七: empty state lacks a 母题 (\"No X yet/available\")"
+        "label": "\u7981\u4e03: empty state lacks a \u6bcd\u9898 (\"No X yet/available\")"
       },
       {
-        "pattern": "赋能|闭环|抓手|颗粒度|打法|系统检测到|请您",
-        "label": "禁四: LinkedIn/corporate-speak (赋能/闭环/抓手/颗粒度/打法/系统检测到/请您)"
+        "pattern": "\u8d4b\u80fd|\u95ed\u73af|\u6293\u624b|\u9897\u7c92\u5ea6|\u6253\u6cd5|\u7cfb\u7edf\u68c0\u6d4b\u5230|\u8bf7\u60a8",
+        "label": "\u7981\u56db: LinkedIn/corporate-speak (\u8d4b\u80fd/\u95ed\u73af/\u6293\u624b/\u9897\u7c92\u5ea6/\u6253\u6cd5/\u7cfb\u7edf\u68c0\u6d4b\u5230/\u8bf7\u60a8)"
       },
       {
-        "pattern": "加油|你能行|冲鸭|梦想成真",
-        "label": "禁一 (partial): over-incentive words (加油/你能行/冲鸭/梦想成真)"
+        "pattern": "\u52a0\u6cb9|\u4f60\u80fd\u884c|\u51b2\u9e2d|\u68a6\u60f3\u6210\u771f",
+        "label": "\u7981\u4e00 (partial): over-incentive words (\u52a0\u6cb9/\u4f60\u80fd\u884c/\u51b2\u9e2d/\u68a6\u60f3\u6210\u771f)"
       }
     ],
     "allowlist": []
   },
   "inertDimensions": {
-    "description": "Dimensions every Brand Package declares that no shipped code reads, measured 2026-07-31 by compiling the real Tailwind pipeline rather than reading source. A skin can override these forever without moving a pixel. Shrink-only: give a dimension a consumer and delete its entry. This list records what was already true when the guard was written — it is not somewhere to park a new dimension so the gate goes green. spacing and controls were removed 2026-07-31: both were false positives from a detector bug (scripts/lint-inert-dimensions.mjs required var(--x) to close immediately, but every real caller writes a CSS fallback, var(--spacing-md, ...)). Compiling apps/web's real globals.css with @tailwindcss/node confirmed --spacing-md/--spacing-lg vary per brand (consumed by apps/web/src/components/theme-playground) and --control-height-* is read at 58 call sites in packages/design/ui/src/primitives/button-variants.ts and switch.tsx, density-driven via packages/design/tokens/src/brand-package/emit-css.ts. Both dimensions were already wired; only the guard was blind to it.",
+    "description": "Dimensions every Brand Package declares that no shipped code reads, measured 2026-07-31 by compiling the real Tailwind pipeline rather than reading source. A skin can override these forever without moving a pixel. Shrink-only: give a dimension a consumer and delete its entry. This list records what was already true when the guard was written \u2014 it is not somewhere to park a new dimension so the gate goes green. spacing and controls were removed 2026-07-31: both were false positives from a detector bug (scripts/lint-inert-dimensions.mjs required var(--x) to close immediately, but every real caller writes a CSS fallback, var(--spacing-md, ...)). Compiling apps/web's real globals.css with @tailwindcss/node confirmed --spacing-md/--spacing-lg vary per brand (consumed by apps/web/src/components/theme-playground) and --control-height-* is read at 58 call sites in packages/design/ui/src/primitives/button-variants.ts and switch.tsx, density-driven via packages/design/tokens/src/brand-package/emit-css.ts. Both dimensions were already wired; only the guard was blind to it.",
     "known": []
   }
 }

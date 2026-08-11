@@ -47,7 +47,6 @@ my-app/ contains only the reusable skeleton
 
 - Every `packages/*` primitive (UI, tokens, queue, search, metering, vault, …)
 - Scaffold apps: `web`, `landing` (shell), `idp`, `mail-preview`, `storybook`,
-  `design-docs` (shell without Nebutra content)
 - App shells: `layout.tsx`, `globals.css`, `package.json`, `next.config.ts`
 - Build config: `turbo.json`, `pnpm-workspace.yaml`, `tsconfig.base.json`,
   `biome.json`

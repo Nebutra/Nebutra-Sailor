@@ -177,7 +177,7 @@
   },
   "monorepoTree": {
     "badge": "STRUKTURA TURBOREPO",
-    "title": "10 aplikacji. 104 pakiety. 4 tory backendowe.",
+    "title": "15 aplikacji. 113 pakiety. 4 tory backendowe.",
     "description": "Wspólny kod, równoległe budowanie, zero duplikacji. Pełne typowanie od bazy danych po frontend.",
     "metricApps": "aplikacje",
     "metricBackends": "korytarze backendowe",

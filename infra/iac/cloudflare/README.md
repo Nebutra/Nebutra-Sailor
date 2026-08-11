@@ -34,7 +34,7 @@ User ──────────────►│  │ WAF │──│Cache
 | `sso.nebutra.com` | ✅ Proxied after origin health | No cache | Cloud VM (OIDC IdP; permanent issuer) |
 | `api.nebutra.com` | ✅ Proxied after origin health | No cache | Cloud VM (api-gateway; EC2/ECS/CVM/GCE compatible) |
 | `status.nebutra.com` | ✅ Proxied | No cache | Cloud VM nginx reverse-proxy → landing `/status` (future: pure Vercel) |
-| `design.nebutra.com` | ✅ Proxied | No cache | Cloud VM (design-docs PM2 :3004) |
+| `design.nebutra.com` | ✅ Proxied | No cache | Cloud VM (design PM2 :3109) |
 | `docs.nebutra.com` | DNS only (CNAME → Vercel) | Docs/static | Vercel project `docs` (`apps/sailor-docs`); grey-cloud avoids CF↔Vercel 525 |
 | `studio.nebutra.com` | ✅ Proxied when active | No cache | Optional branded Studio alias |
 | `cdn.nebutra.com` | ✅ Proxied | Long cache | R2 bucket |
@@ -53,7 +53,7 @@ A       auth      106.15.4.31              ✅      Auto   # ECS login center (t
 A       api       106.15.4.31              ✅      Auto
 A       sso       106.15.4.31              ✅      Auto   # permanent OIDC issuer
 A       status    106.15.4.31              ✅      Auto   # ECS nginx → landing /status (no apex 301)
-A       design    106.15.4.31              ✅      Auto   # design-docs PM2 :3004
+A       design    106.15.4.31              ✅      Auto   # design PM2 :3109
 CNAME   docs      331816c5997d8344.vercel-dns-017.com  DNS only  # project-specific Auto  # grey cloud
 CNAME   studio    <active studio host>     ✅      Auto
 CNAME   cdn       <r2-bucket>.r2.dev       ✅      Auto

@@ -76,4 +76,38 @@ describe("landing structure tree", () => {
 
     expect(Number(tag), `apps tag says ${tag}, repo has ${actual}`).toBe(actual);
   });
+
+  it("headlines the tree with counts that match the repo", () => {
+    // A second hand-typed count, in a different file, about the same facts. The
+    // tag above was guarded and correct; this headline said "10 apps. 104
+    // packages." while the repo held 15 and 113, because nothing read it.
+    // Guarding it is cheaper than generating it and catches the same drift.
+    const en = JSON.parse(
+      readFileSync(join(REPO_ROOT, "apps/landing/messages/en.json"), "utf8"),
+    ) as { monorepoTree?: { title?: string } };
+    const title = en.monorepoTree?.title ?? "";
+    const [, apps, packages, lanes] =
+      /(\d+) apps\. (\d+) packages\. (\d+) backend lanes\./.exec(title) ?? [];
+
+    expect(title, "monorepoTree.title must state apps/packages/backend lanes").toMatch(
+      /\d+ apps\. \d+ packages\. \d+ backend lanes\./,
+    );
+
+    const dirs = (root: string) =>
+      readdirSync(join(REPO_ROOT, root), { withFileTypes: true }).filter(
+        (e) => e.isDirectory() && !e.name.startsWith("."),
+      );
+    const actualPackages = dirs("packages").reduce(
+      (total, category) =>
+        total +
+        dirs(join("packages", category.name)).filter((entry) =>
+          existsSync(join(REPO_ROOT, "packages", category.name, entry.name, "package.json")),
+        ).length,
+      0,
+    );
+
+    expect(Number(apps), `title says ${apps} apps`).toBe(dirs("apps").length);
+    expect(Number(packages), `title says ${packages} packages`).toBe(actualPackages);
+    expect(Number(lanes), `title says ${lanes} backend lanes`).toBe(dirs("backends").length);
+  });
 });

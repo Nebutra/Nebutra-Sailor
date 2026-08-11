@@ -15,7 +15,6 @@ apps/                  # User-facing apps (Next.js / Hono)
   landing/        # Public marketing site (Next.js 16 + Tailwind v4)
   web/                 # Authenticated dashboard (Next.js 16 + Tailwind v4)
   storybook/           # Component library documentation (Storybook 8.x)
-  design-docs/         # Internal design docs (Next.js + Fumadocs)
   studio/              # Sanity Studio v4 — content management
   sailor-docs/         # Public product docs (Fumadocs)
   sleptons/  idp/  mail-preview/
@@ -302,7 +301,7 @@ const ALL = "__all__";
 
 Escape hatch only with `// allow-os-select: <reason>` on the preceding line (lint still documents it; avoid).
 
-CI guard: `scripts/lint-no-raw-inputs.mjs` (wired into `pnpm lint`). Whitelist: storybook stories, design-docs/sailor-docs previews, test files, all `packages/**/primitives/**`.
+CI guard: `scripts/lint-no-raw-inputs.mjs` (wired into `pnpm lint`). Whitelist: storybook stories, sailor-docs previews, test files, all `packages/**/primitives/**`.
 
 ```tsx
 // ✅ Accessible icon button — no focus classes needed

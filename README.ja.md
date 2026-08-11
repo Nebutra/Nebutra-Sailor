@@ -585,7 +585,6 @@ Nebutra-Sailor/
 │   ├── web/               # メイン SaaS ダッシュボード
 │   ├── studio/            # Sanity CMS
 │   ├── api-gateway/       # BFF レイヤー
-│   ├── design-docs/       # コンポーネントドキュメント (Fumadocs)
 │   ├── docs/              # Mintlify ドキュメントサイト
 │   ├── idp/               # アイデンティティプロバイダー
 │   └── storybook/         # コンポーネント Playground

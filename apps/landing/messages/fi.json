@@ -177,7 +177,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO-RAKENNE",
-    "title": "10 sovellusta. 104 pakettia. 4 backend-raitaa.",
+    "title": "15 sovellusta. 113 pakettia. 4 backend-raitaa.",
     "description": "Jaettu koodi, rinnakkaiset buildit, nolla päällekkäisyyksiä. Täydellinen päästä-päähän-tyypitys tietokannasta frontendiin.",
     "metricApps": "sovellusta",
     "metricBackends": "backend-laneja",

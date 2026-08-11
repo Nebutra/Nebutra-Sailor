@@ -74,7 +74,7 @@ function walk(dir: string, visit: (absolutePath: string) => void): void {
 function governedDocs(): string[] {
   const docs = new Set<string>([CLAUDE_MD, "README.md"]);
 
-  for (const contentRoot of ["apps/design-docs/content", "apps/sailor-docs/content"]) {
+  for (const contentRoot of ["apps/sailor-docs/content"]) {
     walk(join(REPO_ROOT, contentRoot), (abs) => {
       if (abs.endsWith(".mdx") || abs.endsWith(".md")) docs.add(relative(REPO_ROOT, abs));
     });

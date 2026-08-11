@@ -12,7 +12,7 @@ mail:
 # Pebble brand front is ECS (same A pattern as app/api) — owner topology 2026-07-30.
 # Brand product fronts on ECS (same A pattern as app/api) — owner 2026-07-30.
 # pebble: PM2 Next; carina: nginx static Astro from Nebutra/carina apps/docs.
-# design: PM2 design-docs :3004 + nginx conf.d/design.nebutra.com.conf
+# design: PM2 design :3109 + nginx conf.d/design.nebutra.com.conf
 #
 # status: A → ECS. nginx conf.d/status.nebutra.com.conf reverse-proxies the
 # landing status surface (nebutra.com/status) so the host no longer falls

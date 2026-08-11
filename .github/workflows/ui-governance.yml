@@ -7,7 +7,7 @@ on:
     paths:
       - ".github/actions/setup-node-pnpm/action.yml"
       - ".github/workflows/ui-governance.yml"
-      - "apps/design-docs/**"
+      - "apps/design/src/**"
       - "apps/landing/src/**"
       - "apps/web/src/**"
       - "package.json"
@@ -25,7 +25,7 @@ on:
     paths:
       - ".github/actions/setup-node-pnpm/action.yml"
       - ".github/workflows/ui-governance.yml"
-      - "apps/design-docs/**"
+      - "apps/design/src/**"
       - "apps/landing/src/**"
       - "apps/web/src/**"
       - "package.json"
@@ -65,36 +65,16 @@ jobs:
       - name: Verify UI Governance Rules
         run: pnpm exec tsx scripts/verify-ui-governance.ts
 
-      - name: Refresh Design Docs Registry
-        run: pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs prebuild
-
-      - name: Verify Design Docs Governance
-        run: pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs docs:governance
-
-      - name: Verify Design Docs Registry Freshness
+      # apps/design-docs was retired on 2026-08-07 and deleted on 2026-08-11;
+      # its registry-freshness and docs:governance steps went with it. These two
+      # did not: a build gate and the stylesheet audit are about the design
+      # system, not about which app renders it, and design.nebutra.com is the
+      # app that renders it now.
+      - name: Verify Design Site Runtime Contract
         run: |
-          git diff --exit-code -- \
-            apps/design-docs/public/r \
-            apps/design-docs/public/registry.json \
-            apps/design-docs/public/agent \
-            apps/design-docs/public/agent-manifest.json \
-            apps/design-docs/public/previews-index.json \
-            apps/design-docs/src/__registry__/index.tsx \
-            apps/design-docs/src/__registry__/file-map.json
+          pnpm --config.verify-deps-before-run=false --filter @nebutra/design typecheck
+          pnpm --config.verify-deps-before-run=false --filter @nebutra/design build
 
-      - name: Verify Design Docs Runtime Contract
-        run: |
-          pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs typecheck
-          pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs build
-
-      # scripts/audit-css-var-types.mjs needs BUILT css — Tailwind arbitrary
-      # values do not exist before a build — and the Design Docs build above has
-      # just produced it, so this attaches to that build instead of adding one.
-      # The failure class has no other signal: the build is green, the class is
-      # in the stylesheet, the element carries it, and nothing paints. It last
-      # shipped as the docs' own colour swatches having no colour.
-      # apps/landing and apps/web are audited by the css-var-types job in
-      # .github/workflows/ci.yml, off the stylesheets its build job produces.
       - name: Cache Playwright Browsers
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
@@ -106,7 +86,7 @@ jobs:
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Audit Design Docs Stylesheets for Dropped Declarations
+      - name: Audit Design Site Stylesheets for Dropped Declarations
         run: |
           # One sheet, not one per chunk. Next.js puts the token :root block in
           # one CSS chunk and the utilities that read those tokens in another;
@@ -116,12 +96,12 @@ jobs:
           # injected var-type error in the component chunk was reported only
           # after the chunks were concatenated. The glob is sorted, so the order
           # is deterministic.
-          chunks=$(find apps/design-docs/.next/static/css -maxdepth 1 -name '*.css' 2>/dev/null | wc -l | tr -d ' ')
+          chunks=$(find apps/design/.next/static/css -maxdepth 1 -name '*.css' 2>/dev/null | wc -l | tr -d ' ')
           if [ "$chunks" -eq 0 ]; then
-            echo "::error file=.github/workflows/ui-governance.yml::[css-var-types] The Design Docs build produced no stylesheets at apps/design-docs/.next/static/css, so this audit would pass without checking anything. Fix the path here — do not delete the check."
+            echo "::error file=.github/workflows/ui-governance.yml::[css-var-types] The Design Site build produced no stylesheets at apps/design/.next/static/css, so this audit would pass without checking anything. Fix the path here — do not delete the check."
             exit 1
           fi
-          mkdir -p artifacts/design-docs-css
-          cat apps/design-docs/.next/static/css/*.css > artifacts/design-docs-css/design-docs.css
-          echo "auditing apps/design-docs ($chunks css chunks, concatenated)"
-          node scripts/audit-css-var-types.mjs artifacts/design-docs-css/design-docs.css
+          mkdir -p artifacts/design-css
+          cat apps/design/.next/static/css/*.css > artifacts/design-css/design.css
+          echo "auditing apps/design ($chunks css chunks, concatenated)"
+          node scripts/audit-css-var-types.mjs artifacts/design-css/design.css

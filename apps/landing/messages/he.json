@@ -177,7 +177,7 @@
   },
   "monorepoTree": {
     "badge": "מבנה TURBOREPO",
-    "title": "10 אפליקציות. 104 חבילות. 4 מסלולי backend.",
+    "title": "15 אפליקציות. 113 חבילות. 4 מסלולי backend.",
     "description": "קוד משותף, בנייה מקבילית, אפס כפילויות. טיפוס מלא מקצה לקצה מהמסד נתונים ועד ה־frontend.",
     "metricApps": "אפליקציות",
     "metricBackends": "מסלולי backend",

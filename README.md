@@ -528,7 +528,6 @@ Nebutra-Sailor/
 │   ├── landing/      # Marketing site (nebutra.com)
 │   ├── web/               # Main SaaS dashboard (app.nebutra.com)
 │   ├── studio/            # Sanity CMS (studio.nebutra.com)
-│   ├── design-docs/       # Component documentation (Fumadocs)
 │   ├── sailor-docs/       # Public product docs (docs.nebutra.com)
 │   ├── idp/               # Identity provider service (OAuth 2.0 / OIDC)
 │   ├── storybook/         # Component playground
@@ -594,7 +593,6 @@ Each component has its own README with setup instructions and API documentation:
 <tr>
 <td><strong>Design Docs</strong></td>
 <td>
-  <a href="apps/design-docs/">Design System Docs</a> (Fumadocs)
 </td>
 </tr>
 <tr>

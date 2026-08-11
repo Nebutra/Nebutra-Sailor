@@ -38,7 +38,7 @@ const endpoints = [
     okStatuses: [200],
   },
   {
-    id: "design-docs",
+    id: "design",
     url: "https://design.nebutra.com",
     okStatuses: [200],
   },

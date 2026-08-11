@@ -177,7 +177,7 @@
   },
   "monorepoTree": {
     "badge": "CẤU TRÚC TURBOREPO",
-    "title": "10 ứng dụng. 104 gói. 4 luồng backend.",
+    "title": "15 ứng dụng. 113 gói. 4 luồng backend.",
     "description": "Mã nguồn chung, xây dựng song song, không trùng lặp. Typing đầu cuối hoàn chỉnh từ cơ sở dữ liệu đến frontend.",
     "metricApps": "ứng dụng",
     "metricBackends": "luồng backend",

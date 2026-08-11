@@ -31,7 +31,6 @@ const config = {
         "landing",
         "api-gateway",
         "storybook",
-        "design-docs",
         "studio",
         // Packages
         "ui",

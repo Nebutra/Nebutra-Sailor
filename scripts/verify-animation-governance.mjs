@@ -70,11 +70,7 @@ function zoneFor(file) {
   ) {
     return "Marketing";
   }
-  if (
-    file.startsWith("apps/design-docs/") ||
-    file.startsWith("apps/sailor-docs/") ||
-    file.startsWith("apps/storybook/")
-  ) {
+  if (file.startsWith("apps/sailor-docs/") || file.startsWith("apps/storybook/")) {
     return "Documentation";
   }
   if (

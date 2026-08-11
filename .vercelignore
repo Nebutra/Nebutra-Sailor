@@ -26,7 +26,6 @@ coverage
 # Apps not deployed via this monorepo's Vercel CLI workflows
 apps/typelens
 apps/storybook
-apps/design-docs
 apps/studio
 apps/sleptons
 apps/mail-preview

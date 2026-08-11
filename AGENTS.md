@@ -30,7 +30,6 @@ apps/                  # User-facing apps (Next.js / Storybook / Mintlify)
   landing/        # Public marketing site (Next.js 16, next-intl, 7 locales)
   web/                 # Authenticated SaaS dashboard (Next.js 16, Clerk auth)
   storybook/           # Component library documentation (Storybook 8.x)
-  design-docs/         # Internal design docs (Next.js + Fumadocs)
   sailor-docs/         # Product/design documentation app
   studio/              # Sanity Studio v5 — CMS for blog/changelog/pages
   idp/                 # Identity Provider application

@@ -34,7 +34,7 @@ import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 
 // Scope: the directories swept by scripts/sweep-dark-overrides.mjs.
-// Other apps (sailor-docs, design-docs, etc.) carry legacy drift
+// Other apps (sailor-docs, etc.) carry legacy drift
 // that predates this audit and is tracked separately.
 const ROOTS = ["apps/web/src", "apps/landing/src", "packages/design"];
 

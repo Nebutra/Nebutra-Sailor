@@ -534,7 +534,6 @@ Nebutra-Sailor/
 │   ├── landing/      # 营销官网 (nebutra.com)
 │   ├── web/               # SaaS 主控台 (app.nebutra.com)
 │   ├── studio/            # Sanity CMS (studio.nebutra.com)
-│   ├── design-docs/       # 组件文档站 (Fumadocs)
 │   ├── sailor-docs/       # 公开产品文档 (docs.nebutra.com)
 │   ├── idp/               # 身份认证服务 (OAuth 2.0 / OIDC)
 │   ├── storybook/         # 组件 Playground
@@ -598,7 +597,6 @@ Nebutra-Sailor/
 <tr>
 <td><strong>设计文档</strong></td>
 <td>
-  <a href="apps/design-docs/">设计系统文档站</a> (Fumadocs)
 </td>
 </tr>
 <tr>
