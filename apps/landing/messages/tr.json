@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "Abone Ol",
     "newsletterSuccess": "Abone olduğunuz için teşekkürler!",
-    "newsletterError": "Bir şeyler yanlış gitti"
+    "newsletterError": "Bir şeyler yanlış gitti",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "SEVDİĞİNİZ TEKNOLOJİLERLE İNŞA EDİLDİ."

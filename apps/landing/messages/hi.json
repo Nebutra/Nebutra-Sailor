@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "सब्सक्राइब करें",
     "newsletterSuccess": "सब्सक्राइब करने के लिए धन्यवाद!",
-    "newsletterError": "कुछ गलत हुआ"
+    "newsletterError": "कुछ गलत हुआ",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "आपके पसंदीदा स्टैक से बनी।"

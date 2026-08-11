@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "Odebírat",
     "newsletterSuccess": "Děkujeme za odběr!",
-    "newsletterError": "Něco se pokazilo"
+    "newsletterError": "Něco se pokazilo",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "VYTVOŘENO S TECHNOLOGIEMI, KTERÉ MILUJETE."

@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "Підписатися",
     "newsletterSuccess": "Дякуємо за підписку!",
-    "newsletterError": "Щось пішло не так"
+    "newsletterError": "Щось пішло не так",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "СТВОРЕНО НА СТЕКУ, ЯКУ ВИ ЛЮБИТЕ."

@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "Abonneren",
     "newsletterSuccess": "Bedankt voor je aanmelding!",
-    "newsletterError": "Er is iets misgegaan"
+    "newsletterError": "Er is iets misgegaan",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "BOUW MET DE STACK DIE JE LIEFHEBT."

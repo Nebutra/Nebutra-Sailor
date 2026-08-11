@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "Iscriviti",
     "newsletterSuccess": "Grazie per l'iscrizione!",
-    "newsletterError": "Si è verificato un errore"
+    "newsletterError": "Si è verificato un errore",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "REALIZZATO CON LO STACK CHE AMI."

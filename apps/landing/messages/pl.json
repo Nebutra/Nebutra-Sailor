@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "Subskrybuj",
     "newsletterSuccess": "Dziękujemy za subskrypcję!",
-    "newsletterError": "Coś poszło nie tak"
+    "newsletterError": "Coś poszło nie tak",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "ZBUDOWANE NA STACKU, KTÓRY KIERUJESZ."

@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "du@beispiel.com",
     "newsletterSubscribe": "Abonnieren",
     "newsletterSuccess": "Danke für Ihr Abonnement!",
-    "newsletterError": "Etwas ist schiefgelaufen"
+    "newsletterError": "Etwas ist schiefgelaufen",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "MIT DEM STACK GEBAUT, DEN SIE LIEBEN."

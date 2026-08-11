@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "הירשמו",
     "newsletterSuccess": "תודה על ההרשמה!",
-    "newsletterError": "משהו השתבש"
+    "newsletterError": "משהו השתבש",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "בנוי עם הטכנולוגיות שאתם אוהבים."

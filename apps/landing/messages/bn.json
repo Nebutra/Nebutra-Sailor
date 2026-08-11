@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "সাবস্ক্রাইব করুন",
     "newsletterSuccess": "সাবস্ক্রাইব করার জন্য ধন্যবাদ!",
-    "newsletterError": "কিছু একটা সমস্যা হয়েছে"
+    "newsletterError": "কিছু একটা সমস্যা হয়েছে",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "আপনার প্রিয় স্ট্যাক দিয়ে তৈরি।"

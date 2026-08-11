@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "購読",
     "newsletterSuccess": "購読ありがとうございます！",
-    "newsletterError": "エラーが発生しました"
+    "newsletterError": "エラーが発生しました",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "あなたが愛するスタックで構築。"

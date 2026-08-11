@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "Jisajili",
     "newsletterSuccess": "Asante kwa kujiandikisha!",
-    "newsletterError": "Kuna kitu kilichokosea"
+    "newsletterError": "Kuna kitu kilichokosea",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "IMEJENGEWA KWA STACK UNAYOPENDA."

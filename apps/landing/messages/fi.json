@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "Tilaa",
     "newsletterSuccess": "Kiitos tilauksesta!",
-    "newsletterError": "Jokin meni pieleen"
+    "newsletterError": "Jokin meni pieleen",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "RATKAISU RAKENNETTU SUOSIKKISTACKILLASI."

@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "Εγγραφή",
     "newsletterSuccess": "Ευχαριστούμε για την εγγραφή σας!",
-    "newsletterError": "Κάτι πήγε στραβά"
+    "newsletterError": "Κάτι πήγε στραβά",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "ΚΑΤΑΣΚΕΥΑΣΜΕΝΟ ΜΕ ΤΟ STACK ΠΟΥ ΑΓΑΠΑΤΕ."

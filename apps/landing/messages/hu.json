@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "Feliratkozás",
     "newsletterSuccess": "Köszönjük a feliratkozást!",
-    "newsletterError": "Valami hiba történt"
+    "newsletterError": "Valami hiba történt",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "AZON A STACKEN ÉPÍTVE, AMIT SZERETSZ."

@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "Inscrever-se",
     "newsletterSuccess": "Obrigado por se inscrever!",
-    "newsletterError": "Algo deu errado"
+    "newsletterError": "Algo deu errado",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "CONSTRUÍDO COM A STACK QUE VOCÊ AMA."

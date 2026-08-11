@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "Abonează-te",
     "newsletterSuccess": "Mulțumim pentru abonare!",
-    "newsletterError": "A apărut o problemă"
+    "newsletterError": "A apărut o problemă",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "CONSTRUIT CU STACKUL PE CARE ÎL IUBEȘTI."

@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "سبسکرائب کریں",
     "newsletterSuccess": "سبسکرپشن کا شکریہ!",
-    "newsletterError": "کوئی مسئلہ پیش آیا"
+    "newsletterError": "کوئی مسئلہ پیش آیا",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "آپ کی پسندیدہ اسٹیک کے ساتھ بنایا گیا۔"

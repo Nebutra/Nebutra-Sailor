@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "Abonner",
     "newsletterSuccess": "Takk for at du abonnerte!",
-    "newsletterError": "Noe gikk galt"
+    "newsletterError": "Noe gikk galt",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "BYGGT MED STACKEN DU ELsker."

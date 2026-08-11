@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "สมัครรับ",
     "newsletterSuccess": "ขอบคุณที่สมัครรับข้อมูล!",
-    "newsletterError": "เกิดข้อผิดพลาดบางอย่าง"
+    "newsletterError": "เกิดข้อผิดพลาดบางอย่าง",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "สร้างด้วยสแต็กที่คุณรัก"

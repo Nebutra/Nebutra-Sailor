@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "Langgan",
     "newsletterSuccess": "Terima kasih kerana melanggan!",
-    "newsletterError": "Terdapat masalah"
+    "newsletterError": "Terdapat masalah",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "DIANGKAT DENGAN STACK YANG ANDA SUKA."

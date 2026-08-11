@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "订阅",
     "newsletterSuccess": "感谢订阅！",
-    "newsletterError": "出了些问题"
+    "newsletterError": "出了些问题",
+    "statusDegraded": "服務降級",
+    "statusOutage": "重大服務中斷",
+    "statusUnknown": "正在檢查狀態"
   },
   "logoStrip": {
     "tagline": "基于您热爱的技术栈构建。"

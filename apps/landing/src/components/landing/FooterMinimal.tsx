@@ -16,6 +16,7 @@ import { createPublicDocsUrl } from "@/lib/docs-links";
 import { footerContent, heroContent } from "@/lib/landing-content";
 import { cn } from "@/lib/utils";
 import { CommandInstallBox } from "./CommandInstallBox";
+import { FooterStatus } from "./footer-status";
 import { NewsletterForm } from "./NewsletterForm";
 
 const SOCIAL_ICONS = {
@@ -318,19 +319,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
             )}
           </div>
 
-          {/* Status indicator */}
-          <a
-            href={status.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-xs text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <span
-              data-testid="status-dot"
-              className="size-1.5 rounded-full bg-[color:var(--brand-accent)] shadow-[0_0_0_3px_color-mix(in_srgb,var(--brand-accent)_20%,transparent)]"
-            />
-            {t("statusOnline")}
-          </a>
+          <FooterStatus href={status.href} />
         </div>
       </div>
     </footer>

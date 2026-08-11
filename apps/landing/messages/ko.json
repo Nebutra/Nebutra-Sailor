@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "구독",
     "newsletterSuccess": "구독해 주셔서 감사합니다!",
-    "newsletterError": "문제가 발생했습니다"
+    "newsletterError": "문제가 발생했습니다",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "사랑하는 스택으로 구축됨."

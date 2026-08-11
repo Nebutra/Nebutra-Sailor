@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "عضویت",
     "newsletterSuccess": "از عضویت شما متشکریم!",
-    "newsletterError": "مشکلی پیش آمد"
+    "newsletterError": "مشکلی پیش آمد",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "ساخته شده با استکی که دوست دارید."

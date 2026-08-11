@@ -167,7 +167,10 @@
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "Đăng ký",
     "newsletterSuccess": "Cảm ơn bạn đã đăng ký!",
-    "newsletterError": "Đã xảy ra lỗi"
+    "newsletterError": "Đã xảy ra lỗi",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
   },
   "logoStrip": {
     "tagline": "XÂY DỰNG VỚI BỘ CÔNG CỤ BẠN YÊU THÍCH."
