@@ -1170,7 +1170,7 @@
       "team": {
         "badge": "TEAM",
         "price": "$2,000",
-        "period": "/ year",
+        "period": "year",
         "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "Get {brandName} support",
         "f1": "Private support channel (email + shared Slack or Discord)",
@@ -1182,7 +1182,7 @@
       "enterprise": {
         "badge": "ENTERPRISE",
         "price": "From $30,000",
-        "period": "/ year",
+        "period": "year",
         "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
         "cta": "Contact sales",
         "f1": "Response SLA — 4 business hours standard, 1 hour production-down",

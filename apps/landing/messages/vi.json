@@ -1170,7 +1170,7 @@
       "team": {
         "badge": "NHÓM",
         "price": "2.000 $",
-        "period": "/ năm",
+        "period": "năm",
         "desc": "Dành cho các đội nhóm không thể để thời gian phản hồi cộng đồng ảnh hưởng đến tiến độ quan trọng.",
         "cta": "Nhận hỗ trợ {brandName}",
         "f1": "Kênh hỗ trợ riêng (email + Slack hoặc Discord dùng chung)",
@@ -1182,7 +1182,7 @@
       "enterprise": {
         "badge": "DOANH NGHIỆP",
         "price": "Từ 30.000 $",
-        "period": "/ năm",
+        "period": "năm",
         "desc": "Dành cho tổ chức mà bộ phận mua sắm, pháp lý hoặc rà soát bảo mật yêu cầu một đối tác ký kết.",
         "cta": "Liên hệ bộ phận kinh doanh",
         "f1": "SLA phản hồi — 4 giờ làm việc tiêu chuẩn, 1 giờ khi ngừng sản xuất",

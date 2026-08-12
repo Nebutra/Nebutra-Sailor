@@ -1170,7 +1170,7 @@
       "team": {
         "badge": "HOLD",
         "price": "2.000 $",
-        "period": "/ år",
+        "period": "år",
         "desc": "Til teams, der ikke kan sætte en kritisk proces i bero på communitys svartider.",
         "cta": "Få {brandName}-support",
         "f1": "Privat supportkanal (e-mail + delt Slack eller Discord)",
@@ -1182,7 +1182,7 @@
       "enterprise": {
         "badge": "VIRKSOMHED",
         "price": "Fra 30.000 $",
-        "period": "/ år",
+        "period": "år",
         "desc": "Til organisationer, hvis indkøb, jura eller sikkerhedsgennemgang kræver en modpart, der skriver under.",
         "cta": "Kontakt salg",
         "f1": "Svar-SLA — 4 arbejdstimer som standard, 1 time ved produktionsnedbrud",

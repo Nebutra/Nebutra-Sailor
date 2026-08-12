@@ -1170,7 +1170,7 @@
       "team": {
         "badge": "TEAM",
         "price": "$2.000",
-        "period": "/ jaar",
+        "period": "jaar",
         "desc": "Voor teams die geen kritieke pad kunnen leggen op community-reactietijden.",
         "cta": "{brandName}-support afnemen",
         "f1": "Privé supportkanaal (e-mail + gedeelde Slack of Discord)",
@@ -1182,7 +1182,7 @@
       "enterprise": {
         "badge": "ENTERPRISE",
         "price": "Vanaf $30.000",
-        "period": "/ jaar",
+        "period": "jaar",
         "desc": "Voor organisaties waarvan inkoop, juridische zaken of security een tegenpartij eist die tekent.",
         "cta": "Neem contact op met sales",
         "f1": "Reactie-SLA — 4 werkuren standaard, 1 uur bij productiestoring",

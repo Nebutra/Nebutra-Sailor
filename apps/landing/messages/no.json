@@ -1170,7 +1170,7 @@
       "team": {
         "badge": "TEAM",
         "price": "2 000 $",
-        "period": "/ år",
+        "period": "år",
         "desc": "For teamer som ikke kan sette en kritisk vei på community-svarstider.",
         "cta": "Skaff {brandName}-support",
         "f1": "Privat supportkanal (e-post + delt Slack eller Discord)",
@@ -1182,7 +1182,7 @@
       "enterprise": {
         "badge": "ENTERPRISE",
         "price": "Fra 30 000 $",
-        "period": "/ år",
+        "period": "år",
         "desc": "For organisasjoner der innkjøp, juridisk eller sikkerhetsgjennomgang krever en motpart som signerer.",
         "cta": "Kontakt salg",
         "f1": "Svar-SLA — 4 arbeidstimer som standard, 1 time ved produksjonsstans",

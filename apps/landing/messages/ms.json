@@ -1170,7 +1170,7 @@
       "team": {
         "badge": "PASUKAN",
         "price": "$2,000",
-        "period": "/ tahun",
+        "period": "tahun",
         "desc": "Untuk pasukan yang tidak boleh bergantung kepada masa tindak balas komuniti dalam laluan kritikal.",
         "cta": "Dapatkan sokongan {brandName}",
         "f1": "Saluran sokongan peribadi (e-mel + Slack atau Discord dikongsi)",
@@ -1182,7 +1182,7 @@
       "enterprise": {
         "badge": "ENTERPRISE",
         "price": "Dari $30,000",
-        "period": "/ tahun",
+        "period": "tahun",
         "desc": "Untuk organisasi yang bahagian perolehan, guaman atau semakan keselamatannya memerlukan pihak yang menandatangani.",
         "cta": "Hubungi jualan",
         "f1": "SLA maklum balas — 4 jam bekerja standard, 1 jam apabila produksi terhenti",

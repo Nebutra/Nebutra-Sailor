@@ -1170,7 +1170,7 @@
       "team": {
         "badge": "ZESPÓŁ",
         "price": "2000 $",
-        "period": "/ rok",
+        "period": "rok",
         "desc": "Dla zespołów, które nie mogą pozwolić sobie na opóźnienia w reakcji społeczności.",
         "cta": "Uzyskaj wsparcie {brandName}",
         "f1": "Prywatny kanał wsparcia (e-mail + wspólny Slack lub Discord)",
@@ -1182,7 +1182,7 @@
       "enterprise": {
         "badge": "ENTERPRISE",
         "price": "Od 30 000 $",
-        "period": "/ rok",
+        "period": "rok",
         "desc": "Dla organizacji, których dział zakupów, prawny lub bezpieczeństwa wymaga kontrahenta, który podpisze umowę.",
         "cta": "Skontaktuj się z działem sprzedaży",
         "f1": "SLA odpowiedzi — 4 godziny robocze standardowo, 1 godzina przy awarii produkcji",

@@ -1170,7 +1170,7 @@
       "team": {
         "badge": "TIMU",
         "price": "$2,000",
-        "period": "/ mwaka",
+        "period": "mwaka",
         "desc": "Kwa timu ambazo haziwezi kuweka njia muhimu kwenye muda wa majibu ya jamii.",
         "cta": "Pata msaada wa {brandName}",
         "f1": "Njia binafsi ya msaada (barua pepe + Slack au Discord ya pamoja)",
@@ -1182,7 +1182,7 @@
       "enterprise": {
         "badge": "BIASHARA KUBWA",
         "price": "Kuanzia $30,000",
-        "period": "/ mwaka",
+        "period": "mwaka",
         "desc": "Kwa mashirika ambayo idara ya manunuzi, sheria au ukaguzi wa usalama inahitaji mshirika anayetia saini.",
         "cta": "Wasiliana na mauzo",
         "f1": "SLA ya majibu — saa 4 za kazi kwa kawaida, saa 1 wakati uzalishaji umesimama",

@@ -1170,7 +1170,7 @@
       "team": {
         "badge": "ECHIPĂ",
         "price": "2.000 $",
-        "period": "/ an",
+        "period": "an",
         "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "Obține suport {brandName}",
         "f1": "Canal privat de suport (email + Slack sau Discord partajat)",
@@ -1182,7 +1182,7 @@
       "enterprise": {
         "badge": "ENTERPRISE",
         "price": "De la 30.000 $",
-        "period": "/ an",
+        "period": "an",
         "desc": "Pentru organizațiile ale căror achiziții, departament juridic sau analiză de securitate cer o contraparte care semnează.",
         "cta": "Contactează echipa de vânzări",
         "f1": "SLA de răspuns — 4 ore lucrătoare standard, 1 oră la oprirea producției",

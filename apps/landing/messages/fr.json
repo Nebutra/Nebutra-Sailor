@@ -1170,7 +1170,7 @@
       "team": {
         "badge": "ÉQUIPE",
         "price": "2 000 $",
-        "period": "/ an",
+        "period": "an",
         "desc": "Pour les équipes qui ne peuvent pas se permettre de dépendre des délais de réponse de la communauté.",
         "cta": "Obtenir le support {brandName}",
         "f1": "Canal de support privé (e-mail + Slack ou Discord partagé)",
@@ -1182,7 +1182,7 @@
       "enterprise": {
         "badge": "ENTREPRISE",
         "price": "À partir de 30 000 $",
-        "period": "/ an",
+        "period": "an",
         "desc": "Pour les organisations dont les achats, le juridique ou la sécurité exigent une contrepartie qui signe.",
         "cta": "Contacter le service commercial",
         "f1": "SLA de réponse — 4 heures ouvrées en standard, 1 heure en cas d'arrêt de production",

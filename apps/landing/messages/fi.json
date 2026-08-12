@@ -1170,7 +1170,7 @@
       "team": {
         "badge": "TIIMI",
         "price": "2 000 $",
-        "period": "/ vuosi",
+        "period": "vuosi",
         "desc": "Tiimeille, jotka eivät voi sallia kriittisen toimintaketjun riippuvuutta yhteisön vasteajoista.",
         "cta": "Hanki {brandName}-tuki",
         "f1": "Yksityinen tukikanava (sähköposti + jaettu Slack tai Discord)",
@@ -1182,7 +1182,7 @@
       "enterprise": {
         "badge": "YRITYS",
         "price": "Alkaen 30 000 $",
-        "period": "/ vuosi",
+        "period": "vuosi",
         "desc": "Organisaatioille, joiden hankinta, lakiasiat tai tietoturva-arviointi edellyttää sopimuskumppania, joka allekirjoittaa.",
         "cta": "Ota yhteyttä myyntiin",
         "f1": "Vastaus-SLA — 4 työtuntia vakiona, 1 tunti tuotantokatkossa",

@@ -1170,7 +1170,7 @@
       "team": {
         "badge": "TÝM",
         "price": "2 000 $",
-        "period": "/ rok",
+        "period": "rok",
         "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "Získat podporu {brandName}",
         "f1": "Soukromý kanál podpory (e-mail + sdílený Slack nebo Discord)",
@@ -1182,7 +1182,7 @@
       "enterprise": {
         "badge": "ENTERPRISE",
         "price": "Od 30 000 $",
-        "period": "/ rok",
+        "period": "rok",
         "desc": "Pro organizace, jejichž nákup, právní oddělení nebo bezpečnostní prověrka vyžaduje protistranu, která podepíše.",
         "cta": "Kontaktovat obchod",
         "f1": "SLA odezvy — 4 pracovní hodiny standardně, 1 hodina při výpadku produkce",

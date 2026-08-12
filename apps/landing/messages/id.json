@@ -1170,7 +1170,7 @@
       "team": {
         "badge": "TIM",
         "price": "$2.000",
-        "period": "/ tahun",
+        "period": "tahun",
         "desc": "Untuk tim yang tidak bisa mengandalkan waktu respons komunitas pada jalur kritis.",
         "cta": "Dapatkan dukungan {brandName}",
         "f1": "Kanal dukungan privat (email + Slack atau Discord bersama)",
@@ -1182,7 +1182,7 @@
       "enterprise": {
         "badge": "ENTERPRISE",
         "price": "Mulai $30.000",
-        "period": "/ tahun",
+        "period": "tahun",
         "desc": "Untuk organisasi yang bagian pengadaan, hukum, atau tinjauan keamanannya menuntut pihak lawan yang menandatangani.",
         "cta": "Hubungi tim penjualan",
         "f1": "SLA respons — 4 jam kerja standar, 1 jam saat produksi mati",

@@ -1170,7 +1170,7 @@
       "team": {
         "badge": "TEAM",
         "price": "$2.000",
-        "period": "/ Jahr",
+        "period": "Jahr",
         "desc": "Für Teams, die kritische Abläufe nicht von Community-Antwortzeiten abhängig machen können.",
         "cta": "{brandName}-Support holen",
         "f1": "Privater Support-Kanal (E-Mail + gemeinsamer Slack- oder Discord-Kanal)",
@@ -1182,7 +1182,7 @@
       "enterprise": {
         "badge": "ENTERPRISE",
         "price": "Ab $30.000",
-        "period": "/ Jahr",
+        "period": "Jahr",
         "desc": "Für Organisationen, deren Einkauf, Rechtsabteilung oder Sicherheitsprüfung einen unterschriftsfähigen Vertragspartner verlangt.",
         "cta": "Vertrieb kontaktieren",
         "f1": "Reaktions-SLA — 4 Arbeitsstunden im Standard, 1 Stunde bei Produktionsausfall",

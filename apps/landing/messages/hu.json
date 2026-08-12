@@ -1170,7 +1170,7 @@
       "team": {
         "badge": "CSAPAT",
         "price": "2 000 $",
-        "period": "/ év",
+        "period": "év",
         "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "{brandName} támogatás igénylése",
         "f1": "Privát támogatási csatorna (e-mail + közös Slack vagy Discord)",
@@ -1182,7 +1182,7 @@
       "enterprise": {
         "badge": "VÁLLALATI",
         "price": "30 000 $-tól",
-        "period": "/ év",
+        "period": "év",
         "desc": "Olyan szervezeteknek, ahol a beszerzés, a jogi vagy a biztonsági felülvizsgálat aláíró szerződő felet kíván.",
         "cta": "Kapcsolatfelvétel az értékesítéssel",
         "f1": "Válasz-SLA — 4 munkaóra alapesetben, 1 óra éles leállásnál",

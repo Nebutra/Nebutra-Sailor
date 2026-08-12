@@ -1170,7 +1170,7 @@
       "team": {
         "badge": "EKİP",
         "price": "2.000 $",
-        "period": "/ yıl",
+        "period": "yıl",
         "desc": "Toplum yanıt sürelerini kritik yol olarak göremeyen ekipler için.",
         "cta": "{brandName} desteği alın",
         "f1": "Özel destek kanalı (e-posta + paylaşılan Slack veya Discord)",
@@ -1182,7 +1182,7 @@
       "enterprise": {
         "badge": "KURUMSAL",
         "price": "30.000 $'dan başlayan",
-        "period": "/ yıl",
+        "period": "yıl",
         "desc": "Satın alma, hukuk veya güvenlik incelemesi imza atacak bir muhatap gerektiren kuruluşlar için.",
         "cta": "Satışla iletişime geçin",
         "f1": "Yanıt SLA'sı — standartta 4 iş saati, üretim durduğunda 1 saat",
