@@ -111,14 +111,21 @@ export async function PricingSection({
                 {t(`${tier.key}.badge` as PricingTranslationKey)}
               </Badge>
 
-              <div className="mb-6 flex items-baseline">
+              {/* The price sets its own size. "From $30,000" at text-5xl is wider
+                  than a third-width card, so it wrapped between the prefix and the
+                  figure and left the unit stacked in a column of its own. A longer
+                  string takes the next size down instead of breaking. */}
+              <div className="mb-6 flex flex-wrap items-baseline gap-x-2">
                 <span
-                  className="text-4xl md:text-5xl font-semibold"
+                  className={[
+                    "whitespace-nowrap font-semibold",
+                    tier.dynamicPrice.length > 8 ? "text-3xl md:text-4xl" : "text-4xl md:text-5xl",
+                  ].join(" ")}
                   style={{ letterSpacing: "var(--tracking-heading)" }}
                 >
                   {tier.dynamicPrice}
                 </span>
-                <span className="text-muted-foreground font-medium ml-2">
+                <span className="whitespace-nowrap font-medium text-muted-foreground">
                   / {t(`${tier.key}.period` as PricingTranslationKey)}
                 </span>
               </div>

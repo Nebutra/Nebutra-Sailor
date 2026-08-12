@@ -173,7 +173,7 @@
     "statusUnknown": "Checking status"
   },
   "logoStrip": {
-    "tagline": "ΚΑΤΑΣΚΕΥΑΣΜΕΝΟ ΜΕ ΤΟ STACK ΠΟΥ ΑΓΑΠΑΤΕ."
+    "tagline": "Τρέχει σε"
   },
   "monorepoTree": {
     "badge": "ΔΟΜΗ TURBOREPO",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "Διαδραστική Demo",
-      "title": "Ζήστε την ταχύτητα σε πραγματικό χρόνο.",
+      "title": "The local loop, end to end.",
       "description": "Αισθανθείτε τη διεπαφή γραμμής εντολών, το tunneling webhook Stripe και την τοπική προμήθεια multi-tenant βάσης δεδομένων.",
       "analytics": {
         "label": "Ζωντανή Τηλεμετρία",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "ΚΛΙΜΑΚΑΡΙΑ ΣΕΝΑΡΙΑ",
-    "title": "Μία θεμελίωση. Άπειρες δυνατότητες.",
-    "description": "Το {productName} υποστηρίζει την επόμενη γενιά προϊόντων SaaS σε παγκόσμιες αγορές.",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
     "tabs": {
       "opc": "Αυτοματοποιημένες Λειτουργίες",
       "ip": "Προσωπικός Πίνακας IP",

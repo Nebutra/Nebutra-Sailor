@@ -173,7 +173,7 @@
     "statusUnknown": "Checking status"
   },
   "logoStrip": {
-    "tagline": "あなたが愛するスタックで構築。"
+    "tagline": "実行基盤"
   },
   "monorepoTree": {
     "badge": "TURBOREPO構成",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "インタラクティブデモ",
-      "title": "リアルタイムの速度を体験。",
+      "title": "The local loop, end to end.",
       "description": "コマンドラインインターフェース、Stripe Webhook トンネリング、ローカルマルチテナントデータベースプロビジョニングを体感してください。",
       "analytics": {
         "label": "ライブテレメトリ",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "スケーラブルなシナリオ",
-    "title": "ひとつの基盤。無限の可能性。",
-    "description": "{productName} は世界中の市場で次世代 SaaS プロダクトを支えます。",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
     "tabs": {
       "opc": "エージェント型オペレーション",
       "ip": "個人 IP マトリックス",

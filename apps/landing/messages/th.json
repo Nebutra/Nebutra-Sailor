@@ -173,7 +173,7 @@
     "statusUnknown": "Checking status"
   },
   "logoStrip": {
-    "tagline": "สร้างด้วยสแต็กที่คุณรัก"
+    "tagline": "ทำงานบน"
   },
   "monorepoTree": {
     "badge": "โครงสร้าง TURBOREPO",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "เดโมแบบโต้ตอบ",
-      "title": "สัมผัสความเร็วแบบเรียลไทม์",
+      "title": "The local loop, end to end.",
       "description": "ลองใช้งานอินเทอร์เฟซบรรทัดคำสั่ง การส่งต่อ webhook ของ Stripe และการจัดเตรียมฐานข้อมูลหลายเทแนนต์แบบท้องถิ่น",
       "analytics": {
         "label": "เทเลเมทรีสด",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "สถานการณ์ที่ปรับขนาดได้",
-    "title": "ฐานรากเดียว ความเป็นไปได้ไม่จำกัด",
-    "description": "{productName} ขับเคลื่อนผลิตภัณฑ์ SaaS รุ่นต่อไปในตลาดทั่วโลก",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
     "tabs": {
       "opc": "การดำเนินงานแบบเอเจนต์",
       "ip": "เมทริกซ์ทรัพย์สินทางปัญญาส่วนบุคคล",

@@ -173,7 +173,7 @@
     "statusUnknown": "Checking status"
   },
   "logoStrip": {
-    "tagline": "СТВОРЕНО НА СТЕКУ, ЯКУ ВИ ЛЮБИТЕ."
+    "tagline": "Працює на"
   },
   "monorepoTree": {
     "badge": "СТРУКТУРА TURBOREPO",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "Інтерактивна демонстрація",
-      "title": "Відчуйте швидкість у реальному часі.",
+      "title": "The local loop, end to end.",
       "description": "Ознайомтеся з інтерфейсом командного рядка, тунелюванням вебхуків Stripe та локальним налаштуванням багатокористувацької бази даних.",
       "analytics": {
         "label": "Телеметрія в реальному часі",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "МАСШТАБОВАНІ СЦЕНАРІЇ",
-    "title": "Одна основа. Безмежні можливості.",
-    "description": "{productName} забезпечує наступне покоління SaaS-продуктів на глобальних ринках.",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
     "tabs": {
       "opc": "Агентні операції",
       "ip": "Особиста матриця IP",

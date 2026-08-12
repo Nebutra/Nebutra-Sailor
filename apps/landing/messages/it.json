@@ -173,7 +173,7 @@
     "statusUnknown": "Checking status"
   },
   "logoStrip": {
-    "tagline": "REALIZZATO CON LO STACK CHE AMI."
+    "tagline": "Basato su"
   },
   "monorepoTree": {
     "badge": "STRUTTURA TURBOREPO",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "Demo Interattiva",
-      "title": "Prova la velocità in tempo reale.",
+      "title": "The local loop, end to end.",
       "description": "Scopri l'interfaccia a riga di comando, l'inoltro dei webhook Stripe e la provisioning del database multi-tenant locale.",
       "analytics": {
         "label": "Telemetria in Diretta",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "SCENARI SCALABILI",
-    "title": "Una base. Possibilità infinite.",
-    "description": "{productName} alimenta la prossima generazione di prodotti SaaS in mercati globali.",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
     "tabs": {
       "opc": "Operazioni Agentic",
       "ip": "Matrice IP Personale",

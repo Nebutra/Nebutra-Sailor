@@ -173,7 +173,7 @@
     "statusUnknown": "Checking status"
   },
   "logoStrip": {
-    "tagline": "RATKAISU RAKENNETTU SUOSIKKISTACKILLASI."
+    "tagline": "Toimii alustalla"
   },
   "monorepoTree": {
     "badge": "TURBOREPO-RAKENNE",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "Interaktiivinen demo",
-      "title": "Koe reaaliaikainen nopeus.",
+      "title": "The local loop, end to end.",
       "description": "Kokeile komentorajapintaa, Stripe-webhook-tunnelointia ja paikallista monivuokralaistietokannan varausta.",
       "analytics": {
         "label": "Reaaliaikainen telemetria",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "SKAALAUTUVAT KÄYTTÖTILANTEET",
-    "title": "Yksi perusta. Äärettömät mahdollisuudet.",
-    "description": "{productName} voimistaa seuraavan sukupolven SaaS-tuotteita globaaleilla markkinoilla.",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
     "tabs": {
       "opc": "Agentic-toiminnallisuus",
       "ip": "Henkilökohtainen IP-matriisi",

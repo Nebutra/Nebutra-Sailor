@@ -173,7 +173,7 @@
     "statusUnknown": "Checking status"
   },
   "logoStrip": {
-    "tagline": "CONSTRUIT CU STACKUL PE CARE ÎL IUBEȘTI."
+    "tagline": "Rulează pe"
   },
   "monorepoTree": {
     "badge": "STRUCTURĂ TURBOREPO",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "Demo Interactiv",
-      "title": "Experimentează viteza în timp real.",
+      "title": "The local loop, end to end.",
       "description": "Simte interfața de linie de comandă, tunelarea webhook-urilor Stripe și provisionarea locală a bazei de date multi-tenant.",
       "analytics": {
         "label": "Telemetrie Live",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "SCENARII SCALABILE",
-    "title": "O singură fundație. Posibilități infinite.",
-    "description": "{productName} alimentează generația următoare de produse SaaS pe piețele globale.",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
     "tabs": {
       "opc": "Operațiuni Agentic",
       "ip": "Matrice IP Personală",

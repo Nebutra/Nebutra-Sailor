@@ -173,7 +173,7 @@
     "statusUnknown": "Checking status"
   },
   "logoStrip": {
-    "tagline": "BOUW MET DE STACK DIE JE LIEFHEBT."
+    "tagline": "Draait op"
   },
   "monorepoTree": {
     "badge": "TURBOREPO-STRUCTUUR",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "Interactieve demo",
-      "title": "Ervaar de realtime snelheid.",
+      "title": "The local loop, end to end.",
       "description": "Maak kennis met de commandoregelinterface, Stripe-webhooktunneling en lokaal multi-tenant databaseprovisioning.",
       "analytics": {
         "label": "Live telemetrie",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "SCHAALBARE SCENARIO'S",
-    "title": "Eén basis. Oneindig veel mogelijkheden.",
-    "description": "{productName} ondersteunt de volgende generatie SaaS-producten op wereldwijde markten.",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
     "tabs": {
       "opc": "Agentische Operaties",
       "ip": "Persoonlijke IP-matrix",

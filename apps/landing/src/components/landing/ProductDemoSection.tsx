@@ -75,7 +75,13 @@ export function ProductDemoSection() {
                     key={tab.id}
                     aria-pressed={isActive}
                     onClick={() => setActiveId(tab.id)}
-                    className={`group relative flex items-start text-left py-6 transition-opacity duration-500 motion-reduce:duration-0 outline-none w-full ${isActive ? "opacity-100" : "opacity-60 hover:opacity-100"}`}
+                    // Inactive is expressed by colour, not by fading. The children already
+                    // switch text-foreground → text-muted-foreground for the state;
+                    // the 60% opacity on top of that put the two unselected steps at
+                    // roughly 2:1 against the page, which is not "inactive", it is
+                    // "unreadable". Nothing here needs to disappear to show which
+                    // step is current.
+                    className="group relative flex w-full items-start py-6 text-left outline-none"
                   >
                     {/* Step Node */}
                     <div className="relative z-10 mr-6 hidden size-14 shrink-0 items-center justify-center transition-transform duration-300 motion-reduce:transition-none md:flex">

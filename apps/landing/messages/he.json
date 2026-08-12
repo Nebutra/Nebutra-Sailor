@@ -173,7 +173,7 @@
     "statusUnknown": "Checking status"
   },
   "logoStrip": {
-    "tagline": "בנוי עם הטכנולוגיות שאתם אוהבים."
+    "tagline": "פועל על"
   },
   "monorepoTree": {
     "badge": "מבנה TURBOREPO",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "הדגמה אינטראקטיבית",
-      "title": "חוו את מהירות הזמן האמיתי.",
+      "title": "The local loop, end to end.",
       "description": "הרגש את ממשק שורת הפקודה, מנהור ווב-הוקים של Stripe ואספקת מסד נתונים רב-לקוח מקומי.",
       "analytics": {
         "label": "טלמטריה חיה",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "תרחישים סקלביים",
-    "title": "בסיס אחד. אינסוף אפשרויות.",
-    "description": "{productName} מניע את הדור הבא של מוצרי SaaS בשווקים גלובליים.",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
     "tabs": {
       "opc": "פעולות אגנטיות",
       "ip": "מטריצת IP אישית",

@@ -173,7 +173,7 @@
     "statusUnknown": "Checking status"
   },
   "logoStrip": {
-    "tagline": "BYGGET MED STACKEN DU ELsker."
+    "tagline": "Kører på"
   },
   "monorepoTree": {
     "badge": "TURBOREPO STRUKTUR",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "Interaktiv demo",
-      "title": "Oplev hastigheden i realtid.",
+      "title": "The local loop, end to end.",
       "description": "Få et indblik i kommandolinjegrænsefladen, Stripe-webhook-tunneling og lokal multi-tenant database-provisioning.",
       "analytics": {
         "label": "Live-telemetri",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "SKALERBARE SCENARIER",
-    "title": "Ét grundlag. Uendelige muligheder.",
-    "description": "{productName} driver næste generation af SaaS-produkter på tværs af globale markeder.",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
     "tabs": {
       "opc": "Agentic-drift",
       "ip": "Personlig IP-matrix",

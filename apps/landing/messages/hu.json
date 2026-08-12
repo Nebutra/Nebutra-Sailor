@@ -173,7 +173,7 @@
     "statusUnknown": "Checking status"
   },
   "logoStrip": {
-    "tagline": "AZON A STACKEN ÉPÍTVE, AMIT SZERETSZ."
+    "tagline": "Ezen fut"
   },
   "monorepoTree": {
     "badge": "TURBOREPO STRUKTÚRA",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "Interaktív demó",
-      "title": "Tapasztald meg a valós idejű sebességet.",
+      "title": "The local loop, end to end.",
       "description": "Érezd meg a parancssoros felületet, a Stripe webhook-alagutazást és a helyi több bérlős adatbázis-ellátást.",
       "analytics": {
         "label": "Élő telemetria",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "SKÁLÁZHATÓ JÁRATOK",
-    "title": "Egy alap. Végtelen lehetőség.",
-    "description": "A {productName} a következő generációs SaaS termékeket hajtja a globális piacokon.",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
     "tabs": {
       "opc": "Agens alapú műveletek",
       "ip": "Személyes IP mátrix",

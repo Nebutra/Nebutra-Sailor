@@ -173,7 +173,7 @@
     "statusUnknown": "正在檢查狀態"
   },
   "logoStrip": {
-    "tagline": "基于您热爱的技术栈构建。"
+    "tagline": "執行於"
   },
   "monorepoTree": {
     "badge": "TURBOREPO 架构",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "交互式演示",
-      "title": "立即体验实时研发加速",
+      "title": "本地閉環，從頭到尾。",
       "description": "感受顶级的终端命令行工具、Stripe Webhook 本地隧道穿透能力，以及本地开发环境下的多租户数据库自动装配体验。",
       "analytics": {
         "label": "实时遥测",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "无限应用场景",
-    "title": "一个基座，无限可能。",
-    "description": "{productName} 驱动全球市场的下一代 SaaS 产品。",
+    "title": "七種形態，同一套底座。",
+    "description": "營運中樞、作品集站、多模態 SaaS、兩個企業站、一套設計系統、一個資產庫——底下是同一個核心。",
     "tabs": {
       "opc": "智能体运营中枢",
       "ip": "个人 IP 矩阵",

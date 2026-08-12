@@ -32,10 +32,6 @@ export async function HeroSection() {
             stagger="normal"
             className="flex w-full min-w-0 flex-col items-center justify-center space-y-6 md:space-y-7"
           >
-            <AnimateIn preset="fadeUp" className="w-full min-w-0 max-w-full">
-              <HeroInstallPill command="npx create-sailor@latest" copiedLabel={t("pillCopied")} />
-            </AnimateIn>
-
             {/* H1 paints at full opacity from first frame so the LCP API can
                 attribute it. AnimateIn would inline `opacity:0` server-side
                 and disqualify the element. */}
@@ -77,6 +73,16 @@ export async function HeroSection() {
                   </Link>
                 </Button>
               </div>
+            </AnimateIn>
+
+            {/* Below the buttons, not above the headline. The slot before an h1
+                is where a page says what it is; a terminal command there answers
+                "how do I install this" to somebody who does not yet know what it
+                is, and repeats the install box the page closes with. Beside the
+                CTAs it is the third option for the reader who has already
+                decided. */}
+            <AnimateIn className="w-full min-w-0 max-w-full pt-2" preset="fadeUp">
+              <HeroInstallPill command="npx create-sailor@latest" copiedLabel={t("pillCopied")} />
             </AnimateIn>
           </AnimateInGroup>
         </div>

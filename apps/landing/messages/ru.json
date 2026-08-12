@@ -173,7 +173,7 @@
     "statusUnknown": "Checking status"
   },
   "logoStrip": {
-    "tagline": "СОЗДАНО НА СТЕКЕ, КОТОРЫЙ ВЫ ЛЮБИТЕ."
+    "tagline": "Работает на"
   },
   "monorepoTree": {
     "badge": "СТРУКТУРА TURBOREPO",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "Интерактивная демоверсия",
-      "title": "Оцените скорость работы в реальном времени.",
+      "title": "The local loop, end to end.",
       "description": "Познакомьтесь с интерфейсом командной строки, туннелированием вебхуков Stripe и локальным предоставлением многоарендной базы данных.",
       "analytics": {
         "label": "Телеметрия в реальном времени",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "МАСШТАБИРУЕМЫЕ СЦЕНАРИИ",
-    "title": "Единая основа. Бесконечные возможности.",
-    "description": "{productName} обеспечивает работу следующего поколения SaaS-продуктов на глобальных рынках.",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
     "tabs": {
       "opc": "Агентные операции",
       "ip": "Личная матрица IP",

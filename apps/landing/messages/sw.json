@@ -173,7 +173,7 @@
     "statusUnknown": "Checking status"
   },
   "logoStrip": {
-    "tagline": "IMEJENGEWA KWA STACK UNAYOPENDA."
+    "tagline": "Inaendeshwa na"
   },
   "monorepoTree": {
     "badge": "MUUNGO WA TURBOREPO",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "Onyesho la Kuingiliana",
-      "title": "Pata uzoefu wa kasi ya wakati halisi.",
+      "title": "The local loop, end to end.",
       "description": "Pata hisia ya kioo cha mstari wa amri, upitishaji wa webhook za Stripe, na uwekaji wa hifadha ya data ya watumiaji wengi ndani ya kompyuta.",
       "analytics": {
         "label": "Telemetri ya Moja kwa Moja",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "MISITISHO ZINAZOPANUKA",
-    "title": "Msingi mmoja. Uwezekano usio na mwisho.",
-    "description": "{productName} inasaidia kizazi kipya cha bidhaa za SaaS katika masoko ya kimataifa.",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
     "tabs": {
       "opc": "Uendeshaji wa Agentic",
       "ip": "Matriksi ya IP Binafsi",

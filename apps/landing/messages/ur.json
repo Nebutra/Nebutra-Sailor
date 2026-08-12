@@ -173,7 +173,7 @@
     "statusUnknown": "Checking status"
   },
   "logoStrip": {
-    "tagline": "آپ کی پسندیدہ اسٹیک کے ساتھ بنایا گیا۔"
+    "tagline": "اس پر چلتا ہے"
   },
   "monorepoTree": {
     "badge": "TURBOREPO STRUCTURE",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "انٹرایکٹو ڈیمو",
-      "title": "ریل ٹائم رفتار کا تجربہ کریں۔",
+      "title": "The local loop, end to end.",
       "description": "کمانڈ لائن انٹرفیس، Stripe ویب ہُک ٹنلنگ، اور مقامی ملٹی ٹیننٹ ڈیٹا بیس پرووائیڈنگ کا احساس حاصل کریں۔",
       "analytics": {
         "label": "لائیو ٹیلی میٹری",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "پائیدار منظرے",
-    "title": "ایک بنیاد۔ لامحدود امکانات۔",
-    "description": "{productName} عالمی مارکیٹوں میں اگلی نسل کے SaaS پروڈکٹس کو طاقت دیتا ہے۔",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
     "tabs": {
       "opc": "ایجنٹ آپریشنز",
       "ip": "ذاتی IP میٹرکس",

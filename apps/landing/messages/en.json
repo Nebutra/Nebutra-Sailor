@@ -173,7 +173,7 @@
     "newsletterError": "Something went wrong"
   },
   "logoStrip": {
-    "tagline": "BUILT WITH THE STACK YOU LOVE."
+    "tagline": "RUNS ON"
   },
   "monorepoTree": {
     "badge": "TURBOREPO STRUCTURE",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "Interactive Demo",
-      "title": "Experience the real-time velocity.",
+      "title": "The local loop, end to end.",
       "description": "Get a feel for the command-line interface, Stripe webhook tunneling, and local multi-tenant database provisioning.",
       "analytics": {
         "label": "Live Telemetry",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "SCALABLE SCENARIOS",
-    "title": "One foundation. Infinite possibilities.",
-    "description": "{productName} powers the next generation of SaaS products across global markets.",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
     "tabs": {
       "opc": "Agentic Operations",
       "ip": "Personal IP Matrix",

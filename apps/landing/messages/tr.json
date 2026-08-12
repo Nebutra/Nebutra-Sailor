@@ -173,7 +173,7 @@
     "statusUnknown": "Checking status"
   },
   "logoStrip": {
-    "tagline": "SEVDİĞİNİZ TEKNOLOJİLERLE İNŞA EDİLDİ."
+    "tagline": "Şunun üzerinde çalışır"
   },
   "monorepoTree": {
     "badge": "TURBOREPO YAPISI",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "Etkileşimli Demo",
-      "title": "Gerçek zamanlı hızı deneyimleyin.",
+      "title": "The local loop, end to end.",
       "description": "Komut satırı arayüzü, Stripe webhook tünellemesi ve yerel çok kiracılı veritabanı sağlama hakkında bir fikir edinin.",
       "analytics": {
         "label": "Canlı Telemetri",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "ÖLÇEĞİ BÜYÜYEBİLİR SENARYOLAR",
-    "title": "Tek bir temel. Sonsuz olasılık.",
-    "description": "{productName}, küresel pazarlarda bir sonraki nesil SaaS ürünlerini güçlendiriyor.",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
     "tabs": {
       "opc": "Ajan Tabanlı Operasyonlar",
       "ip": "Kişisel Fikri Mülkiyet Matrisi",

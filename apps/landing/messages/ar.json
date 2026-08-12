@@ -173,7 +173,7 @@
     "statusUnknown": "Checking status"
   },
   "logoStrip": {
-    "tagline": "مبني باستخدام التقنيات التي تحبها."
+    "tagline": "يعمل على"
   },
   "monorepoTree": {
     "badge": "هيكلية TURBOREPO",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "عرض تفاعلي",
-      "title": "اختبر سرعة الوقت الفعلي.",
+      "title": "The local loop, end to end.",
       "description": "احصل على فكرة عن واجهة سطر الأوامر، وتوجيه وكلاء الويب لـ Stripe، وتزويد قاعدة بيانات متعددة المستأجرين محليًا.",
       "analytics": {
         "label": "قياسات فورية",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "سيناريوهات قابلة للتوسع",
-    "title": "أساس واحد. إمكانيات لا نهائية.",
-    "description": "{productName} يدعم الجيل القادم من منتجات SaaS عبر الأسواق العالمية.",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
     "tabs": {
       "opc": "عمليات Agentic",
       "ip": "مصفوفة الملكية الفكرية الشخصية",

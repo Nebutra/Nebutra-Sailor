@@ -173,7 +173,7 @@
     "statusUnknown": "Checking status"
   },
   "logoStrip": {
-    "tagline": "사랑하는 스택으로 구축됨."
+    "tagline": "실행 환경"
   },
   "monorepoTree": {
     "badge": "TURBOREPO 구조",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "인터랙티브 데모",
-      "title": "실시간 속도를 경험하십시오.",
+      "title": "The local loop, end to end.",
       "description": "커맨드라인 인터페이스, Stripe 웹훅 터널링, 로컬 멀티 테넌트 데이터베이스 프로비저닝을 직접 체험해 보십시오.",
       "analytics": {
         "label": "실시간 텔레메트리",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "배포 시나리오",
-    "title": "하나의 기반. 무한한 가능성.",
-    "description": "{productName}는 글로벌 시장에서 차세대 SaaS 제품을 지원합니다.",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
     "tabs": {
       "opc": "Agentic 운영",
       "ip": "개인 IP 매트릭스",

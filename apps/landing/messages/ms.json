@@ -173,7 +173,7 @@
     "statusUnknown": "Checking status"
   },
   "logoStrip": {
-    "tagline": "DIANGKAT DENGAN STACK YANG ANDA SUKA."
+    "tagline": "Berjalan pada"
   },
   "monorepoTree": {
     "badge": "STRUKTUR TURBOREPO",
@@ -1243,7 +1243,7 @@
     },
     "productDemo": {
       "badge": "Demo Interaktif",
-      "title": "Rasai kelajuan masa nyata.",
+      "title": "The local loop, end to end.",
       "description": "Rasai antara muka baris arahan, terowong webhook Stripe, dan peruntukan pangkalan data pelbagai penyewa tempatan.",
       "analytics": {
         "label": "Telemetri Langsung",
@@ -1390,8 +1390,8 @@
   },
   "useCases": {
     "badge": "SENARIO BERKAYAT",
-    "title": "Satu asas. Peluang tanpa had.",
-    "description": "{productName} memacu generasi seterusnya produk SaaS merentas pasaran global.",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
     "tabs": {
       "opc": "Operasi Agentic",
       "ip": "Matriks IP Peribadi",
