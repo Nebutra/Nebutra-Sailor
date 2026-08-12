@@ -24,7 +24,6 @@ export function CapabilityCard({
 }: CapabilityCardProps) {
   return (
     <KineticFeatureCard
-      eyebrow="capability"
       icon={icon}
       title={title}
       description={description}

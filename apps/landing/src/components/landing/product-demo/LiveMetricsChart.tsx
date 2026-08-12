@@ -1,6 +1,5 @@
 "use client";
 
-import NumberFlow from "@number-flow/react";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "@/shared/motion";
 
@@ -46,34 +45,21 @@ export function LiveMetricsChart() {
   const width = 300;
   const height = 80;
   const path = generatePath(data, width, height, 200);
-  const value = Math.floor(data[data.length - 1] * 12.3);
 
   return (
     <div className="relative w-full rounded-[var(--radius-xl)] border border-border/40 bg-background/50 p-4 shadow-elevation-high overflow-hidden">
-      <div className="relative z-10 flex items-center justify-between mb-4">
-        <div>
-          <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/80 mb-1">
-            Realtime Traffic
-          </h4>
-          <div className="flex items-center gap-1.5">
-            <span className="relative flex h-2 w-2">
-              {!shouldReduceMotion && (
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              )}
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span className="text-xs font-mono text-success font-medium">Live</span>
-          </div>
-        </div>
-        <div className="text-right">
-          <div
-            className="text-2xl font-semibold text-foreground font-mono"
-            style={{ letterSpacing: "var(--tracking-tight)" }}
-          >
-            <NumberFlow value={value} trend={(prev, curr) => (curr > prev ? 1 : -1)} />
-          </div>
-          <p className="text-[10px] text-muted-foreground">Requests / sec</p>
-        </div>
+      {/* No "Live" dot and no requests-per-second readout. The series is
+          Math.random() walked between 50 and 180 and multiplied by 12.3; a
+          pulsing green dot and a counter reading "2,214 Requests / sec" present
+          that as traffic through somebody's production fleet. The shape of a
+          telemetry stream is what this illustrates, and the shape is honest. */}
+      <div className="relative z-10 mb-4">
+        <h4 className="mb-1 font-bold text-[10px] text-muted-foreground/80 uppercase tracking-widest">
+          Telemetry stream
+        </h4>
+        <p className="text-[11px] text-muted-foreground">
+          Usage events as they arrive, per tenant and per meter.
+        </p>
       </div>
 
       <div className="relative h-[80px] w-full mt-2">

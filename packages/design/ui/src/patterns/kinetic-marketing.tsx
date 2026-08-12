@@ -10,7 +10,6 @@ type IconInput = IconComponent | ReactNode;
 
 export interface KineticFeatureCardProps extends Omit<HTMLAttributes<HTMLElement>, "title"> {
   icon?: IconInput;
-  eyebrow?: ReactNode;
   title: ReactNode;
   description: ReactNode;
   children?: ReactNode;
@@ -98,7 +97,6 @@ function renderIcon(icon: IconInput | undefined) {
 
 export function KineticFeatureCard({
   icon,
-  eyebrow,
   title,
   description,
   children,
@@ -118,21 +116,12 @@ export function KineticFeatureCard({
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,var(--neutral-8)_1px,transparent_0)] bg-[length:18px_18px] opacity-[0.12]"
-      />
-      <div
-        aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-primary/12 via-primary/5 to-transparent"
         style={{ maskImage: "linear-gradient(to bottom, black 45%, transparent 100%)" }}
       />
-      <div className="absolute right-0 top-0 z-10 rounded-bl-[2rem] border-b border-l border-border/60 bg-muted/55 px-4 py-2 backdrop-blur-xl">
-        <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-          {eyebrow}
-        </span>
-      </div>
 
       <div className="relative z-10 flex h-full flex-col">
-        <div className="mb-8 flex items-start justify-between gap-4 pr-16">
+        <div className="mb-8 flex items-start justify-between gap-4">
           {renderedIcon && (
             <div className="grid size-14 place-items-center rounded-[var(--radius-xl)] border border-border/65 bg-background/75 shadow-glass-sm transition-transform duration-500 group-hover/kinetic:-translate-y-1">
               {renderedIcon}
@@ -273,10 +262,6 @@ export function KineticMorphSurface({
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,var(--neutral-8)_1px,transparent_0)] bg-[length:20px_20px] opacity-[0.10]"
-      />
-      <div
-        aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-primary/12 via-primary/4 to-transparent"
         style={{ maskImage: "linear-gradient(to bottom, black 45%, transparent 100%)" }}
       />
@@ -346,10 +331,6 @@ export function KineticCommandBox({
       data-taste="nebutra-texture-command"
       {...props}
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,var(--neutral-8)_1px,transparent_0)] bg-[length:16px_16px] opacity-[0.10]"
-      />
       <code className="relative z-10 flex-1 overflow-x-auto whitespace-nowrap px-4 py-3.5 font-mono text-xs text-foreground sm:px-5 sm:text-sm md:text-base">
         <span className="text-muted-foreground">$</span> {command}
       </code>

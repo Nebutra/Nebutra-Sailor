@@ -45,13 +45,15 @@ export function ActivityMatrix() {
         <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
           Fleet Telemetry
         </span>
-        <div className="flex gap-4 text-[10px] font-mono font-medium">
+        {/* A legend, not a census. The grid is generated from Math.sin(i * 17),
+            so "Active: 18,390 / Idle: 2,156" was two invented integers with a
+            pulsing green dot attached — a fleet size nobody counted. */}
+        <div className="flex gap-4 font-medium font-mono text-[10px] text-muted-foreground">
           <span className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse" />{" "}
-            Active: 18,390
+            <span className="h-1.5 w-1.5 rounded-full bg-success" /> Active
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/30" /> Idle: 2,156
+            <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/30" /> Idle
           </span>
         </div>
       </div>

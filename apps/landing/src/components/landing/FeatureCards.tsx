@@ -79,7 +79,6 @@ export function FeatureCards() {
             return (
               <AnimateIn key={feature.id} preset="fadeUp" className="h-full">
                 <KineticFeatureCard
-                  eyebrow={`signal 0${idx + 1}`}
                   icon={feature.icon}
                   title={feature.title}
                   description={feature.description}
