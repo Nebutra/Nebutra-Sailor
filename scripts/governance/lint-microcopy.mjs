@@ -30,7 +30,7 @@
 // creative copy. Use sparingly; API route error bodies are excluded structurally
 // via excludePaths (/api/).
 //
-// Permanent exemptions (stories, __tests__, design-docs, sailor-docs) live in
+// Permanent exemptions (stories, __tests__, sailor-docs) live in
 // excludePaths, not the allowlist — they are intentionally illustrative.
 //
 // A fresh scaffold has ZERO microcopy debt → defaults are EMPTY.

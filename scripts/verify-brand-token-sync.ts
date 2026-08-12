@@ -127,22 +127,11 @@ const typographyFontsTs = read("packages/design/ui/src/typography/fonts.ts");
 const tailwindPresetTs = read("packages/design/ui/src/tailwind.preset.ts");
 const uiThemeTokensTs = read("packages/design/ui/src/theme/tokens.ts");
 const docsDriftSources = [
-  "apps/design-docs/content/docs/en/foundations/brand.mdx",
-  "apps/design-docs/content/docs/zh/foundations/brand.mdx",
-  "apps/design-docs/content/docs/en/foundations/brand-guidelines.mdx",
-  "apps/design-docs/content/docs/zh/foundations/brand-guidelines.mdx",
-  "apps/design-docs/content/docs/en/foundations/tailwind.mdx",
-  "apps/design-docs/content/docs/zh/foundations/tailwind.mdx",
-  "apps/design-docs/content/docs/en/foundations/theming.mdx",
-  "apps/design-docs/content/docs/zh/foundations/theming.mdx",
-  "apps/design-docs/content/docs/en/foundations/typography.mdx",
-  "apps/design-docs/content/docs/zh/foundations/typography.mdx",
   "apps/sailor-docs/content/docs/en/customization/theming.mdx",
   "apps/sailor-docs/content/docs/zh/customization/theming.mdx",
   "DESIGN.md",
   "packages/design/brand/README.md",
   "apps/storybook/src/stories/Typography.stories.tsx",
-  "apps/design-docs/src/components/typography-demos.tsx",
   "apps/sailor-docs/src/components/typography-demos.tsx",
 ].map((relativePath) => ({ relativePath, content: read(relativePath) }));
 const runtimeFontSources = [

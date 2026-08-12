@@ -54,7 +54,6 @@ const MUST_STRIP = [
   "marketing",
   "changelog",
   "apps/sleptons",
-  "apps/design-docs/content",
   "apps/docs-hub",
   "apps/docs",
   "apps/studio",

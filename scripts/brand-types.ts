@@ -197,7 +197,7 @@ export interface BrandConfig {
     description: string;
     descriptionCn?: string;
     /**
-     * Brand story / VI rationale. Surfaced in About pages and design-docs,
+     * Brand story / VI rationale. Surfaced in About pages and the design site,
      * separated by language because translations are not always 1:1.
      */
     story?: {

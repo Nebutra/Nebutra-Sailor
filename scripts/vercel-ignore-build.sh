@@ -127,16 +127,6 @@ packages/commerce/waitlist
 packages/design/design-tokens
 EOF
       ;;
-    apps/design-docs)
-      cat <<'EOF'
-apps/design-docs
-packages/design/brand
-packages/design/icons
-packages/design/tokens
-packages/design/ui
-packages/design/design-tokens
-EOF
-      ;;
     apps/studio)
       cat <<'EOF'
 apps/studio

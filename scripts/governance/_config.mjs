@@ -28,7 +28,6 @@ const DEFAULTS = {
     // to demonstrate browser behavior — they are documentation, not product UI.
     whitelist: [
       "/storybook/src/stories/",
-      "/design-docs/src/components/previews/",
       "/sailor-docs/src/components/previews/",
       "\\.test\\.tsx?$",
       "/__tests__/",
@@ -122,7 +121,6 @@ const DEFAULTS = {
       "\\.test\\.tsx?$",
       "/__tests__/",
       "/storybook/src/stories/",
-      "/design-docs/",
       "/sailor-docs/",
     ],
     // Banned copy patterns to detect (array of { pattern: string, label: string }).

@@ -94,7 +94,6 @@ function isSharedMotionLayer(file) {
   return (
     file === "apps/web/src/shared/motion.ts" ||
     file === "apps/landing/src/shared/motion.ts" ||
-    file === "apps/design-docs/src/shared/motion.ts" ||
     file === "apps/sailor-docs/src/shared/motion.ts" ||
     file.startsWith("packages/design/ui/src/shared/animation/motion/")
   );

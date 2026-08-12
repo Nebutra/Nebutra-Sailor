@@ -10,7 +10,7 @@
  *   tsx scripts/generate-cli-docs.ts [--output PATH]
  *   node scripts/generate-cli-docs.ts [--output PATH]
  *
- * Default output: apps/design-docs/content/cli-reference.md
+ * Default output: apps/sailor-docs/content/docs/en/cli-reference.md
  */
 
 import fs from "node:fs";
@@ -802,7 +802,7 @@ function writeDocs(content: string, outputPath: string): void {
  */
 async function main(): Promise<void> {
   const options = parseArgs();
-  const outputPath = options.output || "apps/design-docs/content/cli-reference.md";
+  const outputPath = options.output || "apps/sailor-docs/content/docs/en/cli-reference.md";
 
   const documentation = generateDocumentation();
   writeDocs(documentation, outputPath);

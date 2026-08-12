@@ -135,14 +135,14 @@ const landingRegistryTasks = landingPlan.tasks
   .filter((taskId) => taskId.endsWith("#build:registry"));
 assert(
   landingRegistryTasks.length === 0,
-  `Landing build must not generate design-docs registry manifests; found ${landingRegistryTasks.join(", ")}`,
+  `Landing build must not generate registry manifests; found ${landingRegistryTasks.join(", ")}`,
 );
 
 const uiBuild = taskById(landingPlan, "@nebutra/ui#build");
 assert(uiBuild, "Landing build graph must include @nebutra/ui#build");
 assert(
   !String(uiBuild.command).includes("build-registry"),
-  "@nebutra/ui#build must be side-effect free; run build:registry only from design-docs",
+  "@nebutra/ui#build must be side-effect free",
 );
 
 const blogBuild = taskById(landingPlan, "@nebutra/blog#build");
@@ -201,17 +201,6 @@ assert(
   "@nebutra/theme#build must explicitly depend on @nebutra/design-tokens#build",
 );
 
-const designDocsPlan = dryRun("@nebutra/design-docs");
-assert(
-  Boolean(taskById(designDocsPlan, "@nebutra/design-docs#build:registry")),
-  "@nebutra/design-docs#build must be the owner that triggers registry generation",
-);
-
-const designDocsBuild = taskById(designDocsPlan, "@nebutra/design-docs#build");
-assert(designDocsBuild, "Design-docs build graph must include @nebutra/design-docs#build");
-assert(
-  designDocsBuild.dependencies.includes("@nebutra/design-docs#build:registry"),
-  "@nebutra/design-docs#build must depend on @nebutra/design-docs#build:registry",
-);
+// The registry-generation contract belonged to apps/design-docs, deleted 2026-08-11.
 
 process.stdout.write("turbo build contract: ok\n");
