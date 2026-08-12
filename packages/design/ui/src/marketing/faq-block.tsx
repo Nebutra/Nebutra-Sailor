@@ -194,7 +194,7 @@ export default function FAQBlock({
                 </Button>
                 {aiResponse && (
                   <div
-                    className="bg-accent rounded-[var(--radius-md)] p-3 text-sm text-foreground"
+                    className="bg-accent rounded-[var(--radius-md)] p-3 text-accent-foreground text-sm"
                     role="alert"
                   >
                     {aiResponse}

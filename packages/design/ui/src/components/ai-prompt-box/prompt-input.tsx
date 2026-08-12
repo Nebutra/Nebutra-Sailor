@@ -441,7 +441,7 @@ function PromptSubmitAction({
             ? "bg-transparent hover:bg-accent text-destructive hover:text-destructive/80"
             : hasContent
               ? "bg-primary hover:bg-primary/90 text-primary-foreground"
-              : "bg-transparent hover:bg-accent text-muted-foreground hover:text-foreground",
+              : "bg-transparent hover:bg-accent text-muted-foreground hover:text-accent-foreground",
         )}
         onClick={onActivate}
         disabled={isLoading && !hasContent}

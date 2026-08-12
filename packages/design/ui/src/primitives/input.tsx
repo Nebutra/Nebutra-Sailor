@@ -102,7 +102,7 @@ const inputControlButtonVariants = cva(
   [
     "absolute right-[var(--input-control-inset)] top-1/2 flex size-[var(--input-control-size)] -translate-y-1/2 items-center justify-center",
     "rounded-[var(--radius-sm)] text-muted-foreground transition-colors duration-micro ease-out",
-    "hover:bg-accent hover:text-foreground",
+    "hover:bg-accent hover:text-accent-foreground",
     "focus-visible:outline-none",
     "disabled:pointer-events-none disabled:opacity-50",
     "[&_svg]:size-[var(--input-control-icon-size)]",

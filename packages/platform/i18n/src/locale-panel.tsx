@@ -250,7 +250,7 @@ export function LocalePanel({
                     type="button"
                     aria-label={copy.closeAria}
                     onClick={close}
-                    className="-mr-1 -mt-1 inline-flex min-h-11 min-w-11 items-center justify-center rounded-[var(--radius-sm)] p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                    className="-mr-1 -mt-1 inline-flex min-h-11 min-w-11 items-center justify-center rounded-[var(--radius-sm)] p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
                   >
                     <Cross className="h-4 w-4" aria-hidden />
                   </button>
