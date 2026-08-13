@@ -62,6 +62,33 @@ describe("landing structure tree", () => {
     expect(undeclared, `apps missing from the landing tree: ${undeclared.join(", ")}`).toEqual([]);
   });
 
+  it("shows lane counts that match the repo", () => {
+    // Every lane, not just apps. The packages tag said 104 against 113 for as
+    // long as the apps tag beside it was guarded and correct — one watched
+    // number is not a watched tree.
+    const source = readFileSync(DATA_FILE, "utf8");
+    const dirs = (root: string) =>
+      readdirSync(join(REPO_ROOT, root), { withFileTypes: true }).filter(
+        (e) => e.isDirectory() && !e.name.startsWith("."),
+      );
+    const tagFor = (label: string) =>
+      Number(
+        new RegExp(`label: "${label}",\\n(?:.*\\n)*?    tag: "(\\d+)"`).exec(source)?.[1] ?? "-1",
+      );
+    const packages = dirs("packages").reduce(
+      (total, category) =>
+        total +
+        dirs(join("packages", category.name)).filter((entry) =>
+          existsSync(join(REPO_ROOT, "packages", category.name, entry.name, "package.json")),
+        ).length,
+      0,
+    );
+
+    expect(tagFor("apps"), "apps tag").toBe(dirs("apps").length);
+    expect(tagFor("backends"), "backends tag").toBe(dirs("backends").length);
+    expect(tagFor("packages"), "packages tag").toBe(packages);
+  });
+
   it("shows a count that matches how many apps there are", () => {
     // The tag is a hand-typed number next to a hand-typed list, which is two
     // chances to be wrong about the same fact. It read 10 while 14 apps

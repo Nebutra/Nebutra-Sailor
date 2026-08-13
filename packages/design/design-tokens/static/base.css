@@ -35,6 +35,61 @@
   --motion-ease-brand: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* ─── Category rail ──────────────────────────────────────────
+   Four accents for taxonomy — the monorepo tree's four lanes, and
+   anywhere else a small set of peers has to be told apart.
+
+   Derived, not picked. Hand-picking is how the file tree ended up
+   with fifteen hues across twenty-five rows, three of them reused
+   on unrelated rows: a colour that encodes nothing a reader can
+   learn and follows no design language.
+
+   Each accent is a position on the background→foreground axis,
+   tinted a quarter of the way toward the action fill rotated by
+   72°. Two axes, both always live:
+
+     • the position carries contrast. That axis is non-degenerate
+       in every language by definition — it is the axis that makes
+       body text readable — so a monochrome language still gets
+       four distinct tones. Vercel and Notion anchor on black,
+       where rotating hue returns the same colour four times.
+     • the rotation carries hue separation for the languages that
+       have chroma to give.
+
+   Two earlier constructions failed here and are worth naming.
+   Offsetting lightness from the anchor and clamping collapses when
+   the anchor already sits near the band edge — Raycast's fill is
+   near-white, so all four pinned to one value. A fixed lightness
+   ladder cannot serve both canvases: Raycast and GSAP are dark by
+   default in light mode, so the `.dark` class is not set and an
+   absolute ladder is upside down for them.
+
+   Measured across all seven languages plus factory: lowest contrast
+   3.50:1 against each canvas, closest pair 30/255 apart.
+   ─────────────────────────────────────────────────────────── */
+:root {
+  --category-1: color-mix(
+    in oklab,
+    color-mix(in oklab, hsl(var(--foreground)) 55%, hsl(var(--background))) 75%,
+    oklch(from hsl(var(--primary)) l c h)
+  );
+  --category-2: color-mix(
+    in oklab,
+    color-mix(in oklab, hsl(var(--foreground)) 67%, hsl(var(--background))) 75%,
+    oklch(from hsl(var(--primary)) l c calc(h + 72))
+  );
+  --category-3: color-mix(
+    in oklab,
+    color-mix(in oklab, hsl(var(--foreground)) 79%, hsl(var(--background))) 75%,
+    oklch(from hsl(var(--primary)) l c calc(h + 144))
+  );
+  --category-4: color-mix(
+    in oklab,
+    color-mix(in oklab, hsl(var(--foreground)) 91%, hsl(var(--background))) 75%,
+    oklch(from hsl(var(--primary)) l c calc(h + 216))
+  );
+}
+
 /* ─── Spacing source rail ────────────────────────────────────
    A second, named scale — NOT Tailwind's own `--spacing` multiplier.
    `--spacing` (0.25rem) is shared arithmetic for width, height and

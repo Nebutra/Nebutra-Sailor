@@ -27,10 +27,20 @@ const TREE_METRICS = [
 const EMPTY_PARENT_PATH: boolean[] = [];
 
 function TreeNodes({
+  accent,
   level = 0,
   nodes,
   parentPath = EMPTY_PARENT_PATH,
 }: {
+  /**
+   * The lane's accent, chosen once at the top level and inherited all the way
+   * down. Colour here says which of the four lanes a row belongs to — apps,
+   * backends, packages, tooling — which is a fact a reader can learn at a
+   * glance. It used to be assigned per row from fifteen hand-picked hues, three
+   * of them reused across unrelated rows, which is a colour that means nothing
+   * and cannot follow a design language either.
+   */
+  accent?: string;
   level?: number;
   nodes: FileNode[];
   parentPath?: boolean[];
@@ -38,6 +48,7 @@ function TreeNodes({
   const locale = useLocale();
 
   return nodes.map((node, index) => {
+    const laneAccent = accent ?? `var(--category-${Math.min(index + 1, 4)})`;
     const hasChildren = Boolean(node.children?.length);
     const isLast = index === nodes.length - 1;
     const isTopLevel = level === 0;
@@ -46,6 +57,7 @@ function TreeNodes({
       <span
         aria-hidden="true"
         className="mr-2 flex size-4 shrink-0 items-center justify-center opacity-90 transition-opacity group-hover/trigger:opacity-100"
+        style={{ color: laneAccent }}
       >
         {node.icon}
       </span>
@@ -113,6 +125,7 @@ function TreeNodes({
         {hasChildren && (
           <TreeNodeContent hasChildren={hasChildren}>
             <TreeNodes
+              accent={laneAccent}
               nodes={node.children ?? []}
               level={level + 1}
               parentPath={[...parentPath, isLast]}
