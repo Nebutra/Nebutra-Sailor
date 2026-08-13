@@ -4,11 +4,11 @@ import { KineticConsoleFrame } from "@nebutra/ui/patterns";
 import { AuroraBackground } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { domAnimation, LazyMotion, m, useReducedMotion } from "@/shared/motion";
 import { AnalyticsTerminal } from "./product-demo/AnalyticsTerminal";
 import { BillingTerminal } from "./product-demo/BillingTerminal";
 import { PRODUCT_DEMO_TABS, type ProductDemoTabId } from "./product-demo/product-demo-data";
 import { WorkspacesTerminal } from "./product-demo/WorkspacesTerminal";
+import { SlidingIndicator } from "./SlidingIndicator";
 
 function ProductDemoTerminal({ activeId }: { activeId: ProductDemoTabId }) {
   switch (activeId) {
@@ -27,7 +27,6 @@ export function ProductDemoSection() {
   const t = useTranslations("microLanding.productDemo");
   type ProductDemoTranslationKey = Parameters<typeof t>[0];
   const [activeId, setActiveId] = useState<ProductDemoTabId>(PRODUCT_DEMO_TABS[0].id);
-  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section
@@ -60,85 +59,78 @@ export function ProductDemoSection() {
         </div>
 
         {/* Interactive Split Interface */}
-        <LazyMotion features={domAnimation}>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center max-w-[1400px] mx-auto">
-            {/* Left: Structural Stepper Navigation */}
-            <div className="lg:col-span-5 flex flex-col relative w-full pt-4">
-              {/* Continuous Vertical Tracking Line */}
-              <div className="absolute left-[27px] top-6 bottom-12 w-px bg-border/60 hidden md:block" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center max-w-[1400px] mx-auto">
+          {/* Left: Structural Stepper Navigation */}
+          <div className="relative flex w-full flex-col pt-4 lg:col-span-5">
+            {/* Continuous Vertical Tracking Line */}
+            <div className="absolute left-[27px] top-6 bottom-12 hidden w-px bg-border/60 md:block" />
 
-              {PRODUCT_DEMO_TABS.map((tab, index) => {
-                const isActive = activeId === tab.id;
-                return (
-                  <button
-                    type="button"
-                    key={tab.id}
-                    aria-pressed={isActive}
-                    onClick={() => setActiveId(tab.id)}
-                    // Inactive is expressed by colour, not by fading. The children already
-                    // switch text-foreground → text-muted-foreground for the state;
-                    // the 60% opacity on top of that put the two unselected steps at
-                    // roughly 2:1 against the page, which is not "inactive", it is
-                    // "unreadable". Nothing here needs to disappear to show which
-                    // step is current.
-                    className="group relative flex w-full items-start py-6 text-left outline-none"
-                  >
-                    {/* Step Node */}
-                    <div className="relative z-10 mr-6 hidden size-14 shrink-0 items-center justify-center transition-transform duration-300 motion-reduce:transition-none md:flex">
-                      {/* The active pill animation */}
-                      {isActive && (
-                        <m.div
-                          layoutId={shouldReduceMotion ? undefined : "activeDemoTab"}
-                          className="absolute inset-0 rounded-full bg-foreground border-2 border-background dark:border-[#0A0A0B]"
-                          style={{ boxShadow: "var(--ring-hairline)" }}
-                          transition={
-                            shouldReduceMotion
-                              ? { duration: 0 }
-                              : { type: "spring", stiffness: 300, damping: 30 }
-                          }
-                        />
-                      )}
-                      {/* The static inactive background */}
-                      {!isActive && (
-                        <div className="absolute inset-0 rounded-full bg-muted ring-1 ring-border/50 group-hover:bg-muted/80 transition-colors motion-reduce:transition-none" />
-                      )}
+            <SlidingIndicator
+              activeKey={activeId}
+              className="z-10 hidden rounded-full border-2 border-background bg-foreground md:block dark:border-[#0A0A0B]"
+              style={{ boxShadow: "var(--ring-hairline)" }}
+            />
 
-                      <span
-                        className={`relative z-20 font-mono text-sm font-bold transition-colors delay-75 motion-reduce:delay-0 motion-reduce:transition-none ${
-                          isActive ? "text-background" : "text-muted-foreground"
-                        }`}
-                      >
-                        0{index + 1}
-                      </span>
-                    </div>
+            {PRODUCT_DEMO_TABS.map((tab, index) => {
+              const isActive = activeId === tab.id;
+              return (
+                <button
+                  type="button"
+                  key={tab.id}
+                  aria-pressed={isActive}
+                  onClick={() => setActiveId(tab.id)}
+                  // Inactive is expressed by colour, not by fading. The children already
+                  // switch text-foreground → text-muted-foreground for the state;
+                  // the 60% opacity on top of that put the two unselected steps at
+                  // roughly 2:1 against the page, which is not "inactive", it is
+                  // "unreadable". Nothing here needs to disappear to show which
+                  // step is current.
+                  className="group relative flex w-full items-start py-6 text-left outline-none"
+                >
+                  {/* Step Node */}
+                  <div className="relative z-10 mr-6 hidden size-14 shrink-0 items-center justify-center transition-transform duration-300 motion-reduce:transition-none md:flex">
+                    {/* The node the indicator slides to. The pill itself lives
+                          once, at the list level — see SlidingIndicator below. */}
+                    <div
+                      className="absolute inset-0 rounded-full bg-muted ring-1 ring-border/50 transition-colors group-hover:bg-muted/80 motion-reduce:transition-none"
+                      data-indicator-target={isActive ? "true" : undefined}
+                    />
 
-                    {/* Content Fragment */}
-                    <div className="flex-1 pt-1">
-                      <h3
-                        className={`text-xl md:text-2xl font-semibold mb-3 transition-colors duration-400 motion-reduce:duration-0 ${isActive ? "text-foreground" : "text-muted-foreground"}`}
-                        style={{ letterSpacing: "var(--tracking-tight)" }}
-                      >
-                        {t(tab.labelKey as ProductDemoTranslationKey)}
-                      </h3>
-                      <p
-                        className={`text-sm md:text-base leading-relaxed font-medium transition-colors duration-400 motion-reduce:duration-0 ${isActive ? "text-muted-foreground" : "text-muted-foreground/60"}`}
-                      >
-                        {t(tab.descKey as ProductDemoTranslationKey)}
-                      </p>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
+                    <span
+                      className={`relative z-20 font-mono text-sm font-bold transition-colors delay-75 motion-reduce:delay-0 motion-reduce:transition-none ${
+                        isActive ? "text-background" : "text-muted-foreground"
+                      }`}
+                    >
+                      0{index + 1}
+                    </span>
+                  </div>
 
-            {/* Right: Premium Faux-Terminal Render */}
-            <div className="hidden lg:col-span-7 lg:block w-full h-[500px] relative">
-              <KineticConsoleFrame status={activeId}>
-                <ProductDemoTerminal activeId={activeId} />
-              </KineticConsoleFrame>
-            </div>
+                  {/* Content Fragment */}
+                  <div className="flex-1 pt-1">
+                    <h3
+                      className={`text-xl md:text-2xl font-semibold mb-3 transition-colors duration-400 motion-reduce:duration-0 ${isActive ? "text-foreground" : "text-muted-foreground"}`}
+                      style={{ letterSpacing: "var(--tracking-tight)" }}
+                    >
+                      {t(tab.labelKey as ProductDemoTranslationKey)}
+                    </h3>
+                    <p
+                      className={`text-sm md:text-base leading-relaxed font-medium transition-colors duration-400 motion-reduce:duration-0 ${isActive ? "text-muted-foreground" : "text-muted-foreground/60"}`}
+                    >
+                      {t(tab.descKey as ProductDemoTranslationKey)}
+                    </p>
+                  </div>
+                </button>
+              );
+            })}
           </div>
-        </LazyMotion>
+
+          {/* Right: Premium Faux-Terminal Render */}
+          <div className="hidden lg:col-span-7 lg:block w-full h-[500px] relative">
+            <KineticConsoleFrame status={activeId}>
+              <ProductDemoTerminal activeId={activeId} />
+            </KineticConsoleFrame>
+          </div>
+        </div>
       </div>
     </section>
   );

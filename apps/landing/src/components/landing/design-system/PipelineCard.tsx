@@ -3,11 +3,10 @@
 import { GitCommit } from "@nebutra/icons";
 import { cn } from "@nebutra/ui/utils";
 import { useTranslations } from "next-intl";
-import { motion, useReducedMotion } from "@/shared/motion";
+import { AnimateIn } from "../AnimateIn";
 
 export function PipelineCard() {
   const t = useTranslations("designSystem");
-  const shouldReduceMotion = useReducedMotion();
 
   return (
     <div className="relative flex h-full flex-col overflow-hidden p-6 md:p-8">
@@ -25,9 +24,9 @@ export function PipelineCard() {
       <div className="relative z-10 flex-1 w-full bg-background/40 rounded-[var(--radius-xl)] border border-border/50 p-4 xl:p-6 flex flex-col justify-between shadow-inner group">
         {/* Line down the middle */}
         <div className="absolute left-1/2 top-4 bottom-4 w-[2px] bg-gradient-to-b from-primary/10 via-primary/40 to-primary/10 -translate-x-1/2 rounded-full overflow-hidden">
-          {!shouldReduceMotion && (
-            <div className="absolute top-0 w-full h-1/4 bg-primary blur-[2px] -translate-y-full opacity-60 animate-[slide-down_3s_ease-in-out_infinite]" />
-          )}
+          {/* Already a CSS animation — the JS guard around it was doing what
+              motion-reduce: does, one library heavier. */}
+          <div className="-translate-y-full absolute top-0 h-1/4 w-full animate-[slide-down_3s_ease-in-out_infinite] bg-primary opacity-60 blur-[2px] motion-reduce:animate-none" />
         </div>
 
         {/* Steps */}
@@ -37,7 +36,6 @@ export function PipelineCard() {
           value="--primary: hex..."
           position="left"
           delay={0}
-          reduceMotion={shouldReduceMotion}
         />
         <PipelineStep
           icon="📦"
@@ -45,7 +43,6 @@ export function PipelineCard() {
           value="data(scale)"
           position="right"
           delay={0.2}
-          reduceMotion={shouldReduceMotion}
         />
         <PipelineStep
           icon="🎨"
@@ -53,7 +50,6 @@ export function PipelineCard() {
           value="color-mix(...)"
           position="left"
           delay={0.4}
-          reduceMotion={shouldReduceMotion}
         />
         <PipelineStep
           icon="🧩"
@@ -61,7 +57,6 @@ export function PipelineCard() {
           value="<Button />"
           position="right"
           delay={0.6}
-          reduceMotion={shouldReduceMotion}
         />
       </div>
     </div>
@@ -74,28 +69,23 @@ function PipelineStep({
   value,
   position,
   delay,
-  reduceMotion,
 }: {
   icon: string;
   label: string;
   value: string;
   position: "left" | "right";
   delay: number;
-  reduceMotion: boolean | null;
 }) {
   const isLeft = position === "left";
   return (
-    <motion.div
-      initial={reduceMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 15, scale: 0.95 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={
-        reduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.2 + delay, ease: "easeOut" }
-      }
+    <AnimateIn
       className={cn(
-        "flex w-full relative items-center z-20",
+        "relative z-20 flex w-full items-center",
         isLeft ? "justify-start" : "justify-end",
       )}
+      delay={0.2 + delay}
+      inView
+      preset="scale"
     >
       <div className="absolute left-1/2 top-1/2 w-2.5 h-2.5 bg-background border-[2px] border-primary rounded-full -translate-x-1/2 -translate-y-1/2 z-10 shadow-[0_0_10px_hsl(var(--primary)/0.4)] transition-[opacity,transform] duration-150 hover:-translate-y-0.5 hover:opacity-80 motion-reduce:hover:-translate-y-1/2" />
 
@@ -121,6 +111,6 @@ function PipelineStep({
           {value}
         </div>
       </div>
-    </motion.div>
+    </AnimateIn>
   );
 }

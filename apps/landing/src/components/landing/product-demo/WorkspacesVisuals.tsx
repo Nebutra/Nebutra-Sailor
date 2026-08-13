@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "@/shared/motion";
+import { SlidingIndicator } from "../SlidingIndicator";
 
 /** Animated Toggle Role Switcher */
 export function RoleSwitcher() {
@@ -44,23 +44,23 @@ export function RoleSwitcher() {
         </div>
 
         {/* The active background layout */}
-        <div className="absolute inset-y-0.5 left-0.5 right-0.5 flex z-0">
-          {role === "Viewer" ? (
-            <motion.div
-              layoutId="roleIndicator"
-              className="w-16 h-full bg-white rounded-full shadow-sm border border-black/5"
-              transition={{ type: "spring", stiffness: 400, damping: 30 }}
-            />
-          ) : (
-            <>
-              <div className="w-16 h-full" />
-              <motion.div
-                layoutId="roleIndicator"
-                className="w-16 h-full bg-primary rounded-full shadow-sm"
-                transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              />
-            </>
-          )}
+        <div className="absolute inset-y-0.5 right-0.5 left-0.5 z-0 flex">
+          <div
+            className="h-full w-16"
+            data-indicator-target={role === "Viewer" ? "true" : undefined}
+          />
+          <div
+            className="h-full w-16"
+            data-indicator-target={role === "Viewer" ? undefined : "true"}
+          />
+          <SlidingIndicator
+            activeKey={role}
+            className={
+              role === "Viewer"
+                ? "rounded-full border border-black/5 bg-background shadow-sm"
+                : "rounded-full bg-primary shadow-sm"
+            }
+          />
         </div>
 
         <button
@@ -82,8 +82,6 @@ export function RoleSwitcher() {
 
 /** Animated Tenant Diagram */
 export function TenantDiagram() {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <div className="w-full flex items-center justify-center p-4">
       <div className="flex gap-4 items-center">
@@ -105,14 +103,7 @@ export function TenantDiagram() {
             <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
           </svg>
           {/* Animated ripple circle — skipped under reduced-motion */}
-          {!shouldReduceMotion && (
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0.8 }}
-              animate={{ scale: 1.5, opacity: 0 }}
-              transition={{ repeat: Infinity, duration: 2, ease: "easeOut" }}
-              className="absolute inset-0 rounded-[var(--radius-2xl)] border border-primary/40 pointer-events-none"
-            />
-          )}
+          <div className="pointer-events-none absolute inset-0 animate-node-ripple rounded-[var(--radius-2xl)] border border-primary/40 motion-reduce:animate-none" />
         </div>
 
         {/* Connections */}
@@ -120,14 +111,7 @@ export function TenantDiagram() {
           {/* Line 1 */}
           <div className="flex items-center gap-2">
             <div className="w-12 h-px bg-gradient-to-r from-border/50 to-primary/50 relative overflow-hidden">
-              {!shouldReduceMotion && (
-                <motion.div
-                  initial={{ x: "-100%" }}
-                  animate={{ x: "100%" }}
-                  transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-                  className="w-4 h-full bg-primary absolute top-0 left-0 blur-[2px]"
-                />
-              )}
+              <div className="w-4 h-full bg-primary absolute top-0 left-0 blur-[2px] animate-wire-pulse motion-reduce:animate-none" />
             </div>
             <div className="px-3 py-1.5 rounded-[var(--radius-lg)] border border-primary/20 bg-primary/10 text-primary text-[10px] font-mono tracking-wide shadow-sm">
               Schema: Acme
@@ -137,14 +121,7 @@ export function TenantDiagram() {
           {/* Line 2 */}
           <div className="flex items-center gap-2 -ml-4">
             <div className="w-16 h-px bg-gradient-to-r from-border/50 to-emerald-500/50 relative overflow-hidden">
-              {!shouldReduceMotion && (
-                <motion.div
-                  initial={{ x: "-100%" }}
-                  animate={{ x: "100%" }}
-                  transition={{ repeat: Infinity, duration: 1.5, delay: 0.75, ease: "linear" }}
-                  className="w-4 h-full bg-emerald-500 absolute top-0 left-0 blur-[2px]"
-                />
-              )}
+              <div className="w-4 h-full bg-emerald-500 absolute top-0 left-0 blur-[2px] animate-wire-pulse motion-reduce:animate-none" />
             </div>
             <div className="px-3 py-1.5 rounded-[var(--radius-lg)] border border-emerald-500/20 bg-emerald-500/10 text-success text-[10px] font-mono tracking-wide shadow-sm">
               Schema: Globex

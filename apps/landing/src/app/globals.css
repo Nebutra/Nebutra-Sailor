@@ -321,6 +321,14 @@
   --animate-snippet-fade-out: snippet-fade-out 0.2s ease-out forwards;
 
   /* InputOTP caret animation */
+  @keyframes node-ripple {
+    from { transform: scale(0.8); opacity: 0.8; }
+    to { transform: scale(1.5); opacity: 0; }
+  }
+  @keyframes wire-pulse {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(100%); }
+  }
   @keyframes caret-blink {
     0%,
     70%,
@@ -333,6 +341,13 @@
     }
   }
   --animate-caret-blink: caret-blink 1.25s ease-out infinite;
+  /* Two loops the workspace visual used to drive through framer: a ripple
+     leaving a node, and a highlight travelling a connector. Neither needs a
+     JS timeline — an infinite loop is what CSS keyframes are for, and this
+     way they cost nothing at runtime and pause with prefers-reduced-motion
+     through the global guard. */
+  --animate-node-ripple: node-ripple 2s ease-out infinite;
+  --animate-wire-pulse: wire-pulse 1.5s linear infinite;
 }
 /*---break---
  */
