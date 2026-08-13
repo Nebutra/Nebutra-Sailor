@@ -71,9 +71,14 @@ jobs:
       # system, not about which app renders it, and design.nebutra.com is the
       # app that renders it now.
       - name: Verify Design Site Runtime Contract
+        # Through turbo, not pnpm --filter. turbo's typecheck dependsOn ^build,
+        # so the workspace packages the app imports are built first; running the
+        # script directly skipped that and the app could not resolve
+        # @nebutra/brand or @nebutra/icons at all. The design-docs step this
+        # replaced had a prebuild in front of it doing the same job.
         run: |
-          pnpm --config.verify-deps-before-run=false --filter @nebutra/design typecheck
-          pnpm --config.verify-deps-before-run=false --filter @nebutra/design build
+          pnpm --config.verify-deps-before-run=false exec turbo run typecheck --filter=@nebutra/design
+          pnpm --config.verify-deps-before-run=false exec turbo run build --filter=@nebutra/design
 
       - name: Cache Playwright Browsers
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
