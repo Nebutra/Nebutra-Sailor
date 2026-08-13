@@ -104,7 +104,9 @@ const CI_WORKFLOW_CONTRACTS = [
     file: ".github/workflows/ui-governance.yml",
     requiredContains: [
       "pnpm exec tsx scripts/verify-ui-governance.ts",
-      "git diff --exit-code -- \\",
+      // The `git diff --exit-code` marker guarded design-docs' registry
+      // freshness. That app was deleted on 2026-08-11 and the step went with
+      // it; requiring the marker afterwards asserted a step that cannot exist.
       "pnpm --config.verify-deps-before-run=false --filter @nebutra/design typecheck",
       "pnpm --config.verify-deps-before-run=false --filter @nebutra/design build",
     ],

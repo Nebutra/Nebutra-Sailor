@@ -107,7 +107,8 @@
       "./styles/sources.css",
       "./styles/preset.css",
       "./styles.css",
-      "./utils"
+      "./utils",
+      "./utils/auth-surfaces"
     ]
   },
   "dashboardExperience": {
@@ -204,14 +205,14 @@
       },
       {
         "name": "web-brand-assets-single-source",
-        "description": "Web brand chrome must render package inline SVG (LogoEnSVG/LogomarkSVG from @nebutra/brand) instead of retyping the brand or depending on public/brand sync for chrome.",
+        "description": "Web brand chrome must render package assets from @nebutra/brand — the multi-path colour mark for light, mono LogomarkSVG for dark, and an independent WordmarkEnSVG — instead of retyping the brand, depending on public/brand sync, or tinting the mono mark with solid brand-mark blue (see commit 60e5f740).",
         "file": "apps/web/src/components/brand/brand-assets.tsx",
         "requiredContains": [
           "from \"@nebutra/brand\"",
-          "LogoEnSVG",
+          "WordmarkEnSVG",
           "LogomarkSVG",
+          "logo-color.svg",
           "data-brand-source={webBrandAssets.source}",
-          "text-brand-mark",
           "alt=\"\""
         ],
         "forbiddenContains": [
