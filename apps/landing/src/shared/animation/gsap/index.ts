@@ -5,10 +5,12 @@ export {
   killMarketingScrollMotion,
   MARKETING_GSAP_SELECTORS,
   MARKETING_MOTION_QUERIES,
+  marketingGsap,
   marketingMotion,
   prefersReducedMarketingMotion,
   refreshMarketingScrollMotion,
   registerMarketingGsap,
+  ScrollTrigger,
 } from "./helpers/runtime";
 export { useFeatureTimeline } from "./hooks/use-feature-timeline";
 export { useHeroAnimation } from "./hooks/use-hero-animation";
