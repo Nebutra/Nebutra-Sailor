@@ -2,7 +2,13 @@
 
 import type { ReactNode } from "react";
 import { AnimateIn } from "./AnimateIn";
+import { AI_SHOWCASE_ROWS } from "./features/glyphs/ai-showcase.generated";
 import { MinimalMonorepoTree } from "./MonorepoFileTree";
+
+/** The OpenAI row from the catalog, so the snippet cannot drift past the
+ *  frontier the way "o3" did. */
+const SAMPLE_MODEL =
+  AI_SHOWCASE_ROWS.find((row) => row.model.startsWith("gpt-"))?.model ?? "gpt-5.5";
 
 const CODE_SNIPPET = `import { Hono } from "hono";
 import { streamText } from "ai";
@@ -17,7 +23,7 @@ const app = new Hono()
     const { messages, model } = await c.req.json();
 
     const result = streamText({
-      model: openai(model ?? "o3"),
+      model: openai(model ?? "${SAMPLE_MODEL}"),
       system: "You are Nebutra Intelligence...",
       messages,
       tools: {
@@ -139,14 +145,17 @@ export function HeroMockupWindow() {
             <div className="flex flex-none items-center h-[38px] border-b border-border/30 bg-muted/20 z-20">
               <div className="flex items-center h-full">
                 <div className="flex items-center gap-1.5 px-4 h-full bg-background border-b-2 border-primary text-foreground text-[11px] font-medium">
+                  {/* TypeScript, not JavaScript. The tab reads chat.ts and wore
+                      the JS logo — a detail that undercuts a snippet whose whole
+                      point is that the stack is typed. */}
                   <svg
-                    className="size-3 shrink-0 text-blue-500"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
                     aria-hidden="true"
+                    className="size-3 shrink-0 text-[#3178C6]"
+                    fill="currentColor"
                     focusable="false"
+                    viewBox="0 0 24 24"
                   >
-                    <path d="M3 3h18v18H3V3zm16.525 13.707c-.131-.821-.666-1.511-2.252-2.155-.552-.259-1.167-.438-1.349-.854-.068-.248-.083-.382-.036-.528.126-.611.936-.793 1.553-.625.397.108.77.421.992.813.836-.544.836-.544 1.416-.91-.216-.366-.328-.526-.476-.657-.652-.72-1.528-1.088-2.941-1.055l-.723.099c-.695.17-1.353.552-1.738 1.076-1.124 1.426-.803 3.924.563 4.949 1.351 1.075 3.33 1.312 3.581 2.321.24 1.2-.886 1.583-2.003 1.443-.828-.182-1.285-.672-1.786-1.219l-1.474.85c.174.393.375.57.674.915 1.44 1.479 5.038 1.405 5.685-.852.022-.076.156-.491.044-1.16zm-6.737-5.48h-1.826c0 1.403-.007 2.8-.01 4.205 0 .893.045 1.715-.098 1.967-.237.484-.853.424-1.134.336-.29-.147-.435-.35-.604-.642-.047-.079-.082-.142-.095-.142l-1.46.892c.243.502.583.928 1.017 1.205.644.41 1.508.559 2.413.369.588-.15 1.093-.477 1.36-.964.389-.665.307-1.482.299-2.394.02-1.611.007-3.223.007-4.843l.13.01z" />
+                    <path d="M3 3h18v18H3V3zm10.71 12.29c.39.6 1.02.94 1.9.94.74 0 1.21-.29 1.21-.79 0-.54-.42-.73-1.28-1.1l-.47-.2c-1.36-.58-2.26-1.3-2.26-2.83 0-1.41 1.07-2.48 2.75-2.48 1.19 0 2.05.41 2.67 1.5l-1.46.94c-.32-.58-.67-.81-1.21-.81-.55 0-.9.35-.9.81 0 .57.35.8 1.16 1.15l.47.2c1.6.69 2.5 1.38 2.5 2.95 0 1.69-1.33 2.62-3.11 2.62-1.74 0-2.87-.83-3.42-1.92l1.45-.98zM8.6 10.9H5.9V9.35h7.05v1.55h-2.7v7.5H8.6v-7.5z" />
                   </svg>
                   chat.ts
                 </div>
