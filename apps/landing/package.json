@@ -52,7 +52,6 @@
     "clsx": "^2.1.1",
     "cobe": "^0.6.5",
     "date-fns": "^4.1.0",
-    "framer-motion": "^12.35.0",
     "geist": "catalog:",
     "gsap": "^3.15.0",
     "katex": "^0.17.0",

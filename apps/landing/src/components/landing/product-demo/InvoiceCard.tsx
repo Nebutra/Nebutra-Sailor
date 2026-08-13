@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "@/shared/motion";
+import { AnimateIn } from "../AnimateIn";
 
 export function InvoiceCard() {
-  const shouldReduceMotion = useReducedMotion();
   const [status, setStatus] = useState<"pending" | "paid">("pending");
 
   useEffect(() => {
@@ -15,18 +14,12 @@ export function InvoiceCard() {
   }, []);
 
   return (
-    <motion.div
-      initial={
-        shouldReduceMotion ? { opacity: 1, y: 0, rotateX: 0 } : { opacity: 0, y: 20, rotateX: 10 }
-      }
-      animate={{ opacity: 1, y: 0, rotateX: 0 }}
-      transition={
-        shouldReduceMotion
-          ? { duration: 0 }
-          : { delay: 2.2, duration: 0.8, type: "spring", bounce: 0.4 }
-      }
-      className="relative w-full max-w-sm mx-auto rounded-[var(--radius-card)] bg-white/90 dark:bg-muted/90 border border-border p-5"
-      style={{ boxShadow: "var(--ring-hairline)" }}
+    <AnimateIn
+      className="relative mx-auto w-full max-w-sm rounded-[var(--radius-card)] border border-border bg-background/90 p-5"
+      delay={2.2}
+      duration={0.8}
+      from={{ rotateX: 10, transformPerspective: 800 }}
+      preset="fadeUp"
     >
       {/* Top Section */}
       <div className="flex justify-between items-start mb-6">
@@ -66,74 +59,54 @@ export function InvoiceCard() {
       <div className="mt-4 pt-4 border-t border-border/30 flex items-center justify-between">
         <span className="text-xs font-medium text-muted-foreground">Status</span>
         <div className="relative h-7 w-[100px] overflow-hidden rounded-full border border-border/50 bg-muted/50 p-1">
-          <motion.div
-            layout
+          <div
             className={`absolute inset-y-1 left-1 right-1 rounded-full flex items-center justify-center shadow-sm ${
               status === "paid"
                 ? "bg-emerald-500/10 border border-emerald-500/20 text-success"
                 : "bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400"
             }`}
-            animate={
-              status === "paid"
-                ? {
-                    backgroundColor: "rgba(16, 185, 129, 0.1)",
-                    borderColor: "rgba(16, 185, 129, 0.2)",
-                  }
-                : {
-                    backgroundColor: "rgba(245, 158, 11, 0.1)",
-                    borderColor: "rgba(245, 158, 11, 0.2)",
-                  }
-            }
           >
-            <motion.span
+            <span
+              className="flex animate-[fade-in-up_0.3s_ease-out_both] items-center gap-1.5 font-bold text-[10px] uppercase tracking-widest motion-reduce:animate-none"
               key={status}
-              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={
-                shouldReduceMotion
-                  ? { duration: 0 }
-                  : { type: "spring", stiffness: 300, damping: 20 }
-              }
-              className="text-[10px] font-bold tracking-widest uppercase flex items-center gap-1.5"
             >
               {status === "paid" && (
                 <svg
-                  className="w-3 h-3"
-                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  className="h-3 w-3"
                   fill="none"
+                  focusable="false"
                   stroke="currentColor"
-                  strokeWidth="3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  aria-hidden="true"
-                  focusable="false"
+                  strokeWidth="3"
+                  viewBox="0 0 24 24"
                 >
-                  <motion.polyline
-                    initial={shouldReduceMotion ? { pathLength: 1 } : { pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={
-                      shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.1 }
-                    }
+                  {/* Drawn with a dash rather than framer's pathLength: the path
+                      is 32 units long, so a dash that length offset out and
+                      pulled back in is the same gesture in CSS. */}
+                  <polyline
+                    className="animate-draw-check motion-reduce:animate-none"
                     points="20 6 9 17 4 12"
+                    style={{ strokeDasharray: 32 }}
                   />
                 </svg>
               )}
               {status}
-            </motion.span>
-          </motion.div>
+            </span>
+          </div>
         </div>
       </div>
 
       {/* Decorative Glow if Paid */}
-      <AnimatePresence>
-        {status === "paid" && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="absolute -inset-0.5 rounded-[var(--radius-2xl)] border-2 border-emerald-500/30 blur-[4px] pointer-events-none -z-10"
-          />
-        )}
-      </AnimatePresence>
-    </motion.div>
+      {/* AnimatePresence with no exit prop was doing nothing on the way out.
+          A glow that fades in when the status flips is one transition. */}
+      <div
+        aria-hidden="true"
+        className={`-z-10 pointer-events-none absolute -inset-0.5 rounded-[var(--radius-2xl)] border-2 border-success/30 blur-[4px] transition-opacity ${
+          status === "paid" ? "opacity-100" : "opacity-0"
+        }`}
+      />
+    </AnimateIn>
   );
 }

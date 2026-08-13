@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "@/shared/motion";
+import { prefersReducedMarketingMotion } from "@/shared/animation/gsap";
 
 /** Spline curve builder */
 function generatePath(points: number[], width: number, height: number, max: number) {
@@ -24,12 +24,11 @@ function generatePath(points: number[], width: number, height: number, max: numb
 }
 
 export function LiveMetricsChart() {
-  const shouldReduceMotion = useReducedMotion();
   const [data, setData] = useState<number[]>(() => Array.from({ length: 20 }, () => 100));
 
   useEffect(() => {
     // Reduced motion: freeze the chart — no continuous data churn / path morphing.
-    if (shouldReduceMotion) return;
+    if (prefersReducedMarketingMotion()) return;
     const interval = setInterval(() => {
       setData((prev) => {
         const nextValue = Math.min(
@@ -40,7 +39,7 @@ export function LiveMetricsChart() {
       });
     }, 1500);
     return () => clearInterval(interval);
-  }, [shouldReduceMotion]);
+  }, []);
 
   const width = 300;
   const height = 80;
@@ -75,26 +74,19 @@ export function LiveMetricsChart() {
               <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0.0" />
             </linearGradient>
           </defs>
-          <motion.path
-            d={`${path} L ${width} ${height} L 0 ${height} Z`}
-            fill="url(#chartGlow)"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: shouldReduceMotion ? 0 : 1 }}
-          />
-          <motion.path
+          <path d={`${path} L ${width} ${height} L 0 ${height} Z`} fill="url(#chartGlow)" />
+          {/* The line no longer draws itself. `d` is recomputed every 1.5s as
+              the series advances, so a path-length tween restarted on every
+              tick and only ever completed if the data stopped. The chart fades
+              in once, then updates — which is what it is showing. */}
+          <path
             d={path}
             fill="none"
             stroke="var(--color-primary)"
-            strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={
-              shouldReduceMotion ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }
-            }
-            animate={{ pathLength: 1, opacity: 1 }}
-            transition={{ duration: shouldReduceMotion ? 0 : 1.5, ease: "easeInOut" }}
-            style={{ filter: "drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))" }}
+            strokeWidth="2"
+            style={{ filter: "drop-shadow(0 4px 6px rgb(0 0 0 / 0.1))" }}
           />
         </svg>
       </div>

@@ -50,7 +50,7 @@ export function UiGlyph(_props: SubpackageGlyphProps) {
             Composable Card
           </div>
           <p className="mt-0.5 text-[9px] leading-tight text-muted-foreground">
-            Primitives + framer-motion, themed by tokens.
+            Primitives + GSAP, themed by tokens.
           </p>
         </Card>
       </div>

@@ -80,6 +80,13 @@ export interface AnimateInProps {
   duration?: number;
   inView?: boolean;
   className?: string;
+  /**
+   * Extra from-vars merged over the preset, for the one-off an entrance needs
+   * that the five presets do not describe — the invoice card's 3D tilt, for
+   * instance. Prefer a preset; this exists so a single unusual entrance does
+   * not become a reason to import GSAP into a leaf component.
+   */
+  from?: Record<string, unknown>;
 }
 
 export function AnimateIn({
@@ -89,12 +96,14 @@ export function AnimateIn({
   duration,
   inView = false,
   className,
+  from,
 }: AnimateInProps) {
   const spec = PRESETS[preset];
   const ref = useEntrance(
     (node) => {
       marketingGsap.from(node, {
         ...spec.from,
+        ...from,
         duration: duration ?? spec.duration,
         ease: spec.ease,
         delay,

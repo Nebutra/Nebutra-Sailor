@@ -3,7 +3,6 @@
 import { DottedWorldMap } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { createPublicDocsUrl } from "@/lib/docs-links";
-import { motion, useReducedMotion } from "@/shared/motion";
 import { AnimateIn } from "./AnimateIn";
 
 const CDN_NODES = [
@@ -26,8 +25,6 @@ const CDN_NODES = [
  * World map with animated CDN edge nodes. Uses semantic tokens for theme compat.
  */
 export function GlobalEdgeMap() {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <article
       className="group relative flex h-full flex-col rounded-[var(--radius-panel)] border border-border bg-background/60 p-8 md:p-10 transition-colors hover:border-primary/40 overflow-hidden"
@@ -94,39 +91,17 @@ export function GlobalEdgeMap() {
                     transform: "translate(-50%, -50%)",
                   }}
                 >
-                  {!shouldReduceMotion && (
-                    <motion.div
-                      className="absolute rounded-full border border-primary/20 dark:border-primary/40"
-                      initial={{ width: 4, height: 4, opacity: 0.8, x: "-50%", y: "-50%" }}
-                      animate={{ width: 32, height: 32, opacity: 0 }}
-                      transition={{
-                        duration: 3,
-                        delay: i * 0.4,
-                        repeat: Infinity,
-                        repeatDelay: 2,
-                        ease: "easeOut",
-                      }}
-                      style={{ left: "50%", top: "50%" }}
-                    />
-                  )}
+                  <div
+                    className="-translate-x-1/2 -translate-y-1/2 absolute animate-edge-ping rounded-full border border-primary/20 motion-reduce:animate-none dark:border-primary/40"
+                    style={{ left: "50%", top: "50%", animationDelay: `${i * 0.4}s` }}
+                  />
                   <div
                     className="absolute w-4 h-4 rounded-full bg-primary/10 dark:bg-primary/30 blur-[2px] dark:blur-[4px] -translate-x-1/2 -translate-y-1/2"
                     style={{ left: "50%", top: "50%" }}
                   />
-                  <motion.div
-                    className="w-2 h-2 rounded-full bg-primary shadow-[0_0_4px_var(--color-primary)] dark:shadow-[0_0_8px_var(--color-primary)]"
-                    initial={{ opacity: 0.6 }}
-                    animate={shouldReduceMotion ? { opacity: 1 } : { opacity: [0.6, 1, 0.6] }}
-                    transition={
-                      shouldReduceMotion
-                        ? { duration: 0 }
-                        : {
-                            duration: 2,
-                            delay: i * 0.3,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }
-                    }
+                  <div
+                    className="h-2 w-2 animate-edge-breath rounded-full bg-primary shadow-[0_0_4px_var(--color-primary)] motion-reduce:animate-none dark:shadow-[0_0_8px_var(--color-primary)]"
+                    style={{ animationDelay: `${i * 0.3}s` }}
                   />
                 </div>
               ))}
