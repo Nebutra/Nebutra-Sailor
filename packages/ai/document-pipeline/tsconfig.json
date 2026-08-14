@@ -5,7 +5,11 @@
     "moduleResolution": "bundler",
     "target": "esnext",
     "types": ["node"],
-    "incremental": false
+    "incremental": false,
+    "baseUrl": ".",
+    "paths": {
+      "@nebutra/document-pipeline": ["./src/index.ts"]
+    }
   },
   "include": ["src", "examples"],
   "exclude": ["node_modules", "dist"]
