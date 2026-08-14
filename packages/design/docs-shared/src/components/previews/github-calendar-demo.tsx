@@ -18,8 +18,10 @@ export function GithubCalendarDemo() {
         count = Math.floor(Math.random() * 5) + 1;
       }
 
+      // `split` is typed as possibly-undefined at index 0 under noUncheckedIndexedAccess;
+      // an ISO string always has a date part, so slice says so without a cast.
       data.push({
-        date: date.toISOString().split("T")[0],
+        date: date.toISOString().slice(0, 10),
         count,
       });
     }

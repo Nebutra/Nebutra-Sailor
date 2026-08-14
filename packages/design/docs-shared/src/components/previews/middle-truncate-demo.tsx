@@ -67,10 +67,13 @@ function ExampleRow({ item, width }: { item: ExampleItem; width: number }) {
     <div className="grid grid-cols-[9rem_minmax(0,1fr)] items-center gap-4 rounded-[var(--radius-md)] border border-border bg-background px-4 py-3">
       <span className="text-muted-foreground text-sm">{item.label}</span>
       <span className="block min-w-0" style={{ maxWidth: width }}>
+        {/* Spread rather than pass-through: under exactOptionalPropertyTypes an
+            optional prop and a prop explicitly set to undefined are different
+            types, and only the first is what this component accepts. */}
         <MiddleTruncatePreview
-          value={item.value}
-          className={item.className}
           aria-label={`${item.label}: ${item.value}`}
+          value={item.value}
+          {...(item.className ? { className: item.className } : {})}
         />
       </span>
     </div>

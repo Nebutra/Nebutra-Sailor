@@ -31,7 +31,7 @@ export function ProgressDemo() {
           <span>Connecting...</span>
           <span>Indeterminate</span>
         </div>
-        <Progress value={undefined} />
+        <Progress />
       </div>
     </div>
   );

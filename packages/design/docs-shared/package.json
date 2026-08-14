@@ -6,6 +6,13 @@
   "description": "Shared UI/docs components for design-docs and sailor-docs (byte-identical SSOT)",
   "license": "MIT",
   "exports": {
+    "./components/previews/*": [
+      "./src/components/previews/*.tsx",
+      "./src/components/previews/*.ts"
+    ],
+    "./components/previews": [
+      "./src/components/previews/index.ts"
+    ],
     "./components/*": [
       "./src/components/*.tsx",
       "./src/components/*.ts",
@@ -38,5 +45,8 @@
     "@types/react": "catalog:",
     "typescript": "catalog:"
   },
-  "types": "./src/components"
+  "types": "./src/components",
+  "scripts": {
+    "gen:previews": "node scripts/gen-previews.mjs"
+  }
 }

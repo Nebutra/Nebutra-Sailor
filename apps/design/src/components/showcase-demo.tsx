@@ -18,6 +18,7 @@
  * client immediately throws away, and for a few of them it produces an error.
  */
 
+import { PREVIEW_MODULES, type PreviewId } from "@nebutra/docs-shared/components/previews";
 import dynamic from "next/dynamic";
 import * as React from "react";
 
@@ -47,10 +48,14 @@ function pascal(id: string): string {
 function loader(id: string) {
   return dynamic(
     async () => {
-      const mod: Record<string, unknown> = await import(
-        /* webpackInclude: /\.tsx$/ */
-        `@nebutra/docs-shared/components/previews/${id}`
-      );
+      // Through the package's own registry rather than a template-literal
+      // import. webpack has to resolve the previews folder to build a context
+      // for an expression specifier, and an `exports` map only ever yields
+      // files — so the folder resolved to nothing on a clean checkout while a
+      // tree with stale build output happened to satisfy it.
+      const load = PREVIEW_MODULES[id as PreviewId];
+      if (!load) throw new Error(`No preview module registered for "${id}"`);
+      const mod: Record<string, unknown> = await load();
       // Only eight of the ~190 files have a default export; the rest name the
       // component after the file. Resolving by rule rather than by a lookup
       // table keeps the section derived — and the last fallback means a file
