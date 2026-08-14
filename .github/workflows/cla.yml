@@ -58,14 +58,16 @@ jobs:
       # CLA — labelling requires triage permission, but defence in depth is cheap
       # here and the alternative is one label standing between a fork and an
       # unsigned merge.
-      # Internal same-repo PRs do not need a CLA — the author already has
-      # write access. Fork PRs still go through CLA Assistant below.
-      - name: Skip CLA for same-repo PRs
-        if: >-
-          github.event_name == 'pull_request_target' &&
-          github.event.pull_request.head.repo.full_name == github.repository
-        run: echo "Same-repo PR — CLA not required for internal collaborators."
-
+      # Same-repo PRs need no CLA — the author already has write access — and
+      # that is expressed in the CLA Assistant step's own `if:` below, which
+      # requires the head to be a fork. There is deliberately no step for it
+      # here: this job runs on pull_request_target, so the base repo's write
+      # token and secrets are live while the PR head is untrusted, and a `run:`
+      # step is where that combination becomes code execution.
+      # scripts/verify-supply-chain-policy.mjs forbids the pair outright and is
+      # right to. A `run: echo` reads as harmless, which is exactly why it keeps
+      # coming back — the comment above this block already recorded it blocking
+      # the whole pipeline for three days once, and it had done so again.
       - name: "CLA Assistant"
         if: >-
           (
