@@ -20,6 +20,43 @@ const researchDir = path.join(root, "research");
 const outDir = path.join(root, "src", "generated");
 const outFile = path.join(outDir, "fiu-catalog.json");
 
+/**
+ * Promotion is an authoring step, not a build step.
+ *
+ * The research JSONs are gitignored on purpose — the crawl state alone is 42MB
+ * — and `fiu-catalog.json` is the committed artifact they produce. But this ran
+ * from `prebuild` unconditionally, so every clean checkout threw "Missing
+ * research file" and took the whole CI build with it. It has been red since
+ * 2026-08-04 for that reason and no other.
+ *
+ * With the inputs absent and the catalog already present, the right thing is to
+ * leave the committed catalog alone and say so. Absent inputs AND no catalog is
+ * still an error: that is a genuinely unbuildable package, not a checkout
+ * without the crawl.
+ */
+const REQUIRED_RESEARCH = [
+  "fiu-traverse-uses.json",
+  "fiu-traverse-typefaces.json",
+  "fiu-traverse-nameplates.json",
+];
+
+const haveResearch = REQUIRED_RESEARCH.every((name) => fs.existsSync(path.join(researchDir, name)));
+
+if (!haveResearch) {
+  if (fs.existsSync(outFile)) {
+    process.stdout.write(
+      "fiu-promote: no research crawl present — keeping the committed " +
+        "src/generated/fiu-catalog.json. Run `pnpm research:fiu:quick` to refresh it.\n",
+    );
+    process.exit(0);
+  }
+  process.stderr.write(
+    "fiu-promote: no research crawl AND no committed catalog at " +
+      `${outFile}. Run \`pnpm research:fiu:quick\` then \`pnpm research:fiu:promote\`.\n`,
+  );
+  process.exit(1);
+}
+
 const CAP = Number(process.env.FIU_PROMOTE_CAP || 500);
 const MAX_IMAGES = Number(process.env.FIU_PROMOTE_MAX_IMAGES || 3);
 
