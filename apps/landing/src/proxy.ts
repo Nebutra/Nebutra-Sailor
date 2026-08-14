@@ -77,7 +77,11 @@ function withSecurityHeaders(response: NextResponse): NextResponse {
 /** G32 — Host allowlist. Empty ALLOWED_HOSTS = soft mode (log only via header). */
 function isHostAllowed(host: string | undefined): boolean {
   if (!host) return false;
-  const h = host.toLowerCase();
+  // Compare hostnames, not host:port. The allowlist holds domains, so a request
+  // arriving on any port other than 80/443 could never match one — which made
+  // the loopback branch below dead for every local server, since those all run
+  // on a port. An allowlist is about which name reaches us, not which socket.
+  const h = host.toLowerCase().replace(/:\d+$/, "");
   const fromEnv = (process.env.ALLOWED_HOSTS ?? "")
     .split(",")
     .map((s) => s.trim().toLowerCase())
@@ -100,11 +104,19 @@ function isHostAllowed(host: string | undefined): boolean {
           .split("/")[0]!,
     );
   const allow = new Set([...fromEnv, ...brandHosts]);
-  if (process.env.NODE_ENV !== "production") {
+  // Loopback is allowed whenever the app is not actually serving a public
+  // origin. NODE_ENV alone cannot tell those apart: `next start` sets it to
+  // production, so a production build served locally — which is what visual
+  // acceptance and any local smoke test do — was rejected with 421 on every
+  // request. ALLOWED_HOSTS being unset is the honest signal that nobody has
+  // told this process which public names it answers to.
+  if (process.env.NODE_ENV !== "production" || fromEnv.length === 0) {
     allow.add("localhost");
     allow.add("127.0.0.1");
+    allow.add("[::1]");
   }
-  // Soft allow when no allowlist configured (local / unset)
+  // Unreachable in practice — brandHosts is never empty — but kept so the
+  // function still means what it says if the brand config ever yields nothing.
   if (allow.size === 0) return true;
   return allow.has(h);
 }
