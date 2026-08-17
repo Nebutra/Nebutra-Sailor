@@ -1,5 +1,8 @@
 # @nebutra/billing
 
+Status: **Foundation** — the core contract is production-usable; the provider
+adapters need credentials and the UI surfaces belong to the consuming app.
+
 Comprehensive billing and monetization infrastructure for Nebutra SaaS platform.
 
 ## Features

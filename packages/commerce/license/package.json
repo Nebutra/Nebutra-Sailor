@@ -1,7 +1,7 @@
 {
   "name": "@nebutra/license",
   "version": "0.1.4",
-  "description": "License domain logic — issuance, validation, and lifecycle events",
+  "description": "License domain logic \u2014 issuance, validation, and lifecycle events",
   "private": false,
   "license": "MIT",
   "type": "module",
@@ -15,6 +15,11 @@
       "Host-injected getSystemDb via configureLicenseSystemDb",
       "@nebutra/queue for license.issued fan-out",
       "@nebutra/email for welcome mail (handler)"
+    ],
+    "gaps": [
+      "Persistence is host-injected \u2014 the package defines a LicenseDb interface and deliberately never imports @nebutra/db",
+      "Issuance sends through @nebutra/email, so a working email provider must be configured before a key reaches anyone",
+      "No UI surface: key entry, activation and portal screens belong to the consuming app"
     ]
   },
   "main": "./dist/index.js",

@@ -11,7 +11,12 @@
     "surface": "execution-capability",
     "featureId": "forge-dns-leak",
     "category": "ai",
-    "summary": "UDP/TCP53 authority that logs recursive resolvers for unique leak probes; localhost control API for Forge"
+    "summary": "UDP/TCP53 authority that logs recursive resolvers for unique leak probes; localhost control API for Forge",
+    "gaps": [
+      "Requires a delegated authoritative zone \u2014 NS records at the registrar, DNS-only at Cloudflare \u2014 before any probe resolves",
+      "Six FORGE_DNS_LEAK_* variables configure the DNS and API listeners; there are no defaults that work off a clean checkout",
+      "Sessions are held in an in-process Map, so probe results do not survive a restart or span replicas"
+    ]
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

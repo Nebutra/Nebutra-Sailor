@@ -1,5 +1,8 @@
 # @nebutra/license
 
+Status: **Foundation** — the issuance and validation contract is usable; the
+database surface is host-injected and delivery needs an email provider.
+
 > License domain logic for issuance, validation, and lifecycle event handling.
 
 ## Installation

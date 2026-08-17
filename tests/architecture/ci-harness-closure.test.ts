@@ -49,10 +49,11 @@ describe("ci harness dependency closure", () => {
       join(process.cwd(), ".github/actions/setup-node/action.yml"),
       "utf8",
     );
-    const migratedWorkflows = [
-      ".github/workflows/package-registry-governance.yml",
-      ".github/workflows/sync-subrepo-mirrors.yml",
-    ];
+    // Pure Node only. sync-subrepo-mirrors runs `pnpm turbo run build`, so it
+    // needs the pnpm composite and is no longer a member of this set — it did
+    // not regress, it outgrew the classification, and asserting otherwise
+    // demanded a setup that would not have installed what the job runs.
+    const migratedWorkflows = [".github/workflows/package-registry-governance.yml"];
     const nodeVersionInput = "node-version: $" + "{{ inputs.node-version }}";
 
     expect(setupAction).toContain("actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e");

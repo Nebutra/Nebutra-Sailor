@@ -12,6 +12,11 @@
     "summary": "Multi-provider billing with host-injected tenant DB",
     "requires": [
       "Host-injected getTenantDb via configureBillingTenantDb for credits/usage ledger"
+    ],
+    "gaps": [
+      "Provider adapters need credentials before they do anything: STRIPE_SECRET_KEY + STRIPE_WEBHOOK_SECRET, POLAR_ACCESS_TOKEN, LEMONSQUEEZY_API_KEY, CHINAPAY_APP_SECRET",
+      "Persistence is host-owned \u2014 the package ships no prisma/ schema and reads the client through @nebutra/db",
+      "No UI surface: checkout, portal and invoice screens are the consuming app's"
     ]
   },
   "main": "./dist/index.js",

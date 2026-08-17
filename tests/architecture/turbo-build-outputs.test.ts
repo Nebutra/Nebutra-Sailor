@@ -44,11 +44,28 @@ function packageTurboConfigs(): string[] {
   return out;
 }
 
+/**
+ * turbo.json is JSONC — turbo documents comments as supported, and the configs
+ * in this repo use them to record why an outputs list is what it is. JSON.parse
+ * chokes on that, so this test crashed on a valid file rather than checking it.
+ */
+function readJsonc(path: string): Record<string, unknown> {
+  const raw = readFileSync(path, "utf-8")
+    .replace(/^\s*\/\/.*$/gm, "")
+    .replace(/\/\*[\s\S]*?\*\//g, "");
+  return JSON.parse(raw) as Record<string, unknown>;
+}
+
 /** True when the package's build script actually writes files. */
 function buildEmits(pkgDir: string): boolean {
   const pkgPath = join(pkgDir, "package.json");
   if (!existsSync(pkgPath)) return false;
-  const pkg = JSON.parse(readFileSync(pkgPath, "utf-8"));
+  const pkg = readJsonc(pkgPath) as {
+    scripts?: Record<string, string>;
+    main?: string;
+    types?: string;
+    exports?: Record<string, { import?: string }>;
+  };
   const build: string | undefined = pkg.scripts?.build;
   if (!build) return false;
   // `tsc --noEmit` checks types and writes nothing.
@@ -66,7 +83,8 @@ describe("turbo build outputs", () => {
   it("no package that emits dist/ declares empty build outputs", () => {
     const offenders: string[] = [];
     for (const cfg of packageTurboConfigs()) {
-      const outputs = JSON.parse(readFileSync(cfg, "utf-8")).tasks?.build?.outputs;
+      const outputs = (readJsonc(cfg) as { tasks?: { build?: { outputs?: unknown } } }).tasks?.build
+        ?.outputs;
       if (!Array.isArray(outputs) || outputs.length > 0) continue;
       const dir = dirname(cfg);
       if (buildEmits(dir)) {

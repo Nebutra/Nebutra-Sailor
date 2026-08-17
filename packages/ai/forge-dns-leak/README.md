@@ -1,5 +1,8 @@
 # `@nebutra/forge-dns-leak`
 
+Status: **WIP** — needs a delegated zone and explicit listener
+configuration; probe sessions are in-process only.
+
 Authoritative DNS zone for **true** DNS-leak detection (dnsleaktest-style).
 
 Recursive resolvers that query unique probe names under the zone are logged by

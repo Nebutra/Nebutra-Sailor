@@ -28,7 +28,7 @@ package is not `stable`, the CLI will:
 You are never blocked from selecting a preview provider — the guarantee
 is transparency, not restriction.
 
-## Foundation packages (16)
+## Foundation packages (18)
 
 These packages ship a real factory, type definitions, and provider
 registration. Their core path is usable, but the happy path usually
@@ -38,7 +38,9 @@ contribute, or (c) a managed SaaS that the provider wraps.
 | Package                  | CLI flag(s)            | Ready out-of-the-box?                 | Main gaps                                                           |
 | ------------------------ | ---------------------- | ------------------------------------- | ------------------------------------------------------------------- |
 | `@nebutra/metering`      | (enabled via payment)  | No — needs ClickHouse or local dev    | Gateway/billing ingestion and enforcement wiring pending             |
+| `@nebutra/billing`       | `--payment`            | No — provider credentials required    | Persistence and UI are host-owned; each adapter needs its own keys  |
 | `@nebutra/legal`         | (consumed directly)    | Partial — package seams exist         | Consent persistence API, DB-backed store, and publishing workflow pending |
+| `@nebutra/license`       | (consumed directly)    | Partial — contract usable             | Host injects LicenseDb; delivery needs an email provider; no UI      |
 | `@nebutra/permissions`   | (consumed directly)    | Partial — CASL works in-process       | OpenFGA adapter stub                                                |
 | `@nebutra/queue`         | `--queue`              | No — QStash or Redis credentials      | QStash DLQ retrieval TODO; worker auto-scaling TODO                 |
 | `@nebutra/search`        | `--search`             | No — provider creds required          | Provider adapters are stubs; pgvector not implemented               |
@@ -54,7 +56,7 @@ contribute, or (c) a managed SaaS that the provider wraps.
 | `@nebutra/admin-tooling` | (consumed directly)    | Contract surface stable               | No concrete Retool/Forest/Appsmith adapter examples wired yet        |
 | `@nebutra/onboarding`    | (consumed directly)    | Client-side localStorage flow works   | Server-side completion sync pending; analytics hook for step transitions |
 
-## WIP packages (39)
+## WIP packages (40)
 
 These packages have code skeletons, README intent, and types, but no
 production integrations. Their READMEs carry a `Status: WIP — Not yet
@@ -99,6 +101,7 @@ and missing functionality.
 | `@nebutra/knowledge-base` | (consumed directly) | Product cognition layer over existing retrieval and ingestion; production wiring + persistence pending |
 | `@nebutra/ai-primitives` | (consumed directly) | Shared low-level utilities for the AI package family (scopedKey, sha256, cosineSimilarity, clamp, estimateTokens); interfaces still settling |
 | `@nebutra/forge-runtime` | (consumed directly) | Registry + dual-surface invoke live on forge host; hard-correct gate delists lab/shell blades; production wallet = CreditLedger (memory forbidden); metering host-injected |
+| `@nebutra/forge-dns-leak` | (consumed directly) | Authoritative zone must be delegated at the registrar; six FORGE_DNS_LEAK_* vars configure the listeners; probe sessions are an in-process Map |
 | `@nebutra/prepaid-wallet` | (consumed directly) | Prepaid + API key contracts; Prisma/CreditBalance adapter and billing UI are host-owned |
 | `@nebutra/router-supply` | (consumed directly) | Router supply alias/engine resolution; production sidecar health and multi-tenant credentials pending |
 | `@nebutra/typelens-catalog` | (consumed directly) | Type Lens catalog data model; product surface and seed licensing incomplete |
