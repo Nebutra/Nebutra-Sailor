@@ -14,7 +14,7 @@ the machine-readable source of truth; this file is the human map.
 | `tool-protocol` | `@nebutra/mcp` | Owns MCP host/client/server protocol seams. |
 | `tool-registry` | `@nebutra/tool-registry` | Owns SKILL.md parsing, discovery, validation, and progressive loading. |
 | `execution-router` | `@nebutra/sandbox-runtime` | Owns sandbox provider routing and execution isolation. |
-| `execution-capability` | `@nebutra/browser-control`, `@nebutra/code-execution`, `@nebutra/document-pipeline`, `@nebutra/forge-runtime` | Tool-shaped execution abilities. No runtime state or model ownership. Forge owns tool-station registry/invoke + dual-surface page models. |
+| `execution-capability` | `@nebutra/browser-control`, `@nebutra/code-execution`, `@nebutra/document-pipeline`, `@nebutra/forge-runtime`, `@nebutra/forge-dns-leak` | Tool-shaped execution abilities. No runtime state or model ownership. Forge owns tool-station registry/invoke + dual-surface page models. |
 | `generation-capability` | `@nebutra/image-pipeline`, `@nebutra/video-pipeline`, `@nebutra/audio-pipeline`, `@nebutra/voice-realtime`, `@nebutra/3d-pipeline` | BrandContext-first media abilities. No runtime state or model ownership. |
 | `support-contract` | `@nebutra/generation-context`, `@nebutra/execution-policy`, `@nebutra/local-embedding`, `@nebutra/ai-primitives`, `@nebutra/ecosystem-safety` | Shared typed contracts used across runtime, persistence, semantic-index, ecosystem, and capability packages. Must stay dependency-light. |
 | `persistence` | `@nebutra/content-store`, `@nebutra/event-log` | File truth, frontmatter/chunking helpers, indexing, immutable event history, rollback, and branch state. |

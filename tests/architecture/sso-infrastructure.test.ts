@@ -101,7 +101,8 @@ describe("Enterprise SSO infrastructure contract", () => {
     expect(nginxReadme).toContain("-d sso.nebutra.com");
 
     expect(dockerWorkflow).toContain("dockerfile: apps/idp/Dockerfile");
-    expect(deployWorkflow).toContain('package: "@nebutra/idp"');
+    // JSON matrix entry, not a YAML key — see emit_next_matrix.
+    expect(deployWorkflow).toContain('"package":"@nebutra/idp"');
     expect(deployWorkflow).toContain("https://sso.nebutra.com/.well-known/openid-configuration");
     expect(deployWorkflow).toContain(
       ["OIDC_COOKIE_KEYS: ", "{{ secrets.OIDC_COOKIE_KEYS }}"].join("$"),

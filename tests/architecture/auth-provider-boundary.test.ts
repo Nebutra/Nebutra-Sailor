@@ -105,8 +105,18 @@ describe("auth provider boundary", () => {
     const FORBIDDEN =
       /from\s+["'](@clerk\/|better-auth|better-auth\/|next-auth|next-auth\/|@supabase\/supabase-js)/;
 
-    /** Permanent standalone-app exceptions (not shrink-only product debt). */
-    const STANDALONE_APP_PATH_SNIPPETS = ["/sleptons/"];
+    /**
+     * Permanent exceptions (not shrink-only product debt).
+     *
+     * apps/auth/src/worker-edge.ts is a Cloudflare Workers build, not a Next
+     * app: the full OpenNext auth bundle is ~8.5 MiB gzip against a 3 MiB Free
+     * plan ceiling, so this edge exists to stay near 200 KiB. Routing it
+     * through @nebutra/auth would pull the multi-provider abstraction — every
+     * adapter, not just the one in use — into the one bundle that cannot
+     * afford it. That is a size constraint rather than a decision anyone is
+     * putting off, so it belongs here and not in PENDING_DECISION.
+     */
+    const STANDALONE_APP_PATH_SNIPPETS = ["/sleptons/", "/apps/auth/src/worker-edge.ts"];
 
     /**
      * SHRINK-ONLY product debt, kept separate from the permanent list above

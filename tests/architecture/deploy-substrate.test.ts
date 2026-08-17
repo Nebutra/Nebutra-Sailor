@@ -46,8 +46,12 @@ describe("Deploy substrate governance", () => {
     // (see deploy-ecs.yml on.push paths). Other fleet apps stay
     // workflow_dispatch-only so path-filter entries like apps/web/**
     // (manual detect) must NOT appear under on.push.paths.
+    // Comment lines count as part of the block. The previous pattern matched
+    // only `- …` entries, so it stopped at the first explanatory comment inside
+    // the list and captured a single path — which then failed to contain forge
+    // while forge was sitting three lines below it.
     const pushPaths = yml.match(
-      /\n\s+push:\n\s+branches:\s*\[main\]\n\s+paths:\n((?:\s+- [^\n]+\n)+)/,
+      /\n\s+push:\n\s+branches:\s*\[main\]\n\s+paths:\n((?:\s+(?:-|#)[^\n]+\n)+)/,
     )?.[1];
     expect(pushPaths, "deploy-ecs.yml must define on.push.paths for main").toBeTruthy();
     expect(pushPaths).toContain("apps/forge/**");
@@ -104,9 +108,13 @@ describe("Deploy substrate governance", () => {
       "utf-8",
     );
 
-    expect(yml).toContain('package: "@nebutra/web"');
-    expect(yml).toContain('kind: "next-standalone"');
-    expect(yml).toContain('build_command: "build:next"');
+    // The matrix is JSON emitted by emit_next_matrix and consumed through
+    // fromJson, not a static YAML `include:` list. Same facts, different shape:
+    // asserting the old literals meant asserting a format the workflow stopped
+    // producing when it went dynamic.
+    expect(yml).toContain('"package":"@nebutra/web"');
+    expect(yml).toContain('"kind":"next-standalone"');
+    expect(yml).toContain('"build_command":"build:next"');
     expect(yml).toContain(
       "pnpm --filter ${" + "{ matrix.package }} ${" + "{ matrix.build_command }}",
     );

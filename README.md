@@ -534,7 +534,7 @@ Nebutra-Sailor/
 │   ├── mail-preview/      # Email template preview
 │   ├── sleptons/          # Sleptons companion app
 ├── packages/                  # Shared TS libraries (categorized in W3b)
-│   ├── ai/                # 41 pkgs — e.g. agents, agent-runtime, ai-providers, startup-os, knowledge-rag, mcp
+│   ├── ai/                # 42 pkgs — e.g. agents, agent-runtime, ai-providers, startup-os, knowledge-rag, mcp
 │   ├── commerce/          # 9 pkgs — e.g. billing, metering, contracts, license, access-gate, waitlist
 │   ├── design/            # 10 pkgs — e.g. ui, tokens, design-tokens, brand, theme, icons, fonts
 │   ├── iam/               # 8 pkgs — auth, audit, vault, oauth, permissions, tenant, identity, captcha

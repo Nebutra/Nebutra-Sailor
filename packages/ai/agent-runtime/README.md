@@ -1,6 +1,6 @@
 # @nebutra/agent-runtime
 
-Status: **Track A live (grammar + gateway demo); Track B Phase 1 docked**
+Status: **WIP** — Track A live (grammar + gateway demo); Track B Phase 1 docked
 
 | Layer | State |
 |-------|--------|
