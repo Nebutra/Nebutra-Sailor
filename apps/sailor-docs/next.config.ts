@@ -1,3 +1,5 @@
+import { existsSync, readFileSync } from "node:fs";
+import { dirname, resolve as resolvePath } from "node:path";
 import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 import { createMDX } from "fumadocs-mdx/next";
 import type { NextConfig } from "next";
@@ -68,6 +70,44 @@ const nextConfig: NextConfig = {
     "fumadocs-mdx",
     "@fumadocs/story",
   ],
+  /**
+   * fumadocs-mermaid's `./ui` subpath declares only an `import` condition and
+   * no `require`. Turbopack resolves it regardless, so `next build` is green
+   * and the docs deploy has always passed; the VM artifact runs
+   * `next build --webpack`, which honours export conditions strictly and fails
+   * with "Package path ./ui is not exported".
+   *
+   * Aliasing the one subpath is the narrow fix. transpilePackages does not
+   * help — resolution happens before transpilation — and adding `import` to
+   * the resolver conditions globally pulls server-only code into the client
+   * graph, which fails instead on `node:fs/promises`.
+   *
+   * The target is read out of the package's own exports map rather than typed,
+   * so a change to its file layout follows automatically instead of silently
+   * pointing at nothing.
+   */
+  webpack: (config: { resolve: { alias?: Record<string, string> } }) => {
+    // Located on disk rather than through require.resolve: this package
+    // exports only an `import` condition, so CJS resolution cannot see even
+    // its main entry, let alone ./ui. pnpm puts a direct dependency under the
+    // app's own node_modules, and Next runs the build with cwd set there.
+    const packageRoot = resolvePath(process.cwd(), "node_modules/fumadocs-mermaid");
+    const manifestPath = resolvePath(packageRoot, "package.json");
+    if (existsSync(manifestPath)) {
+      const manifest = JSON.parse(readFileSync(manifestPath, "utf8")) as {
+        exports?: Record<string, { import?: string }>;
+      };
+      const uiEntry = manifest.exports?.["./ui"]?.import;
+      if (uiEntry) {
+        config.resolve.alias = {
+          ...config.resolve.alias,
+          "fumadocs-mermaid/ui": resolvePath(packageRoot, uiEntry),
+        };
+      }
+    }
+    return config;
+  },
+
   reactStrictMode: true,
   // Clean-subdomain URL scheme (docs.brand domain/<lang>/<slug>). Old
   // `/docs/...` and `/<lang>/docs/...` URLs are 301'd to the new paths so
