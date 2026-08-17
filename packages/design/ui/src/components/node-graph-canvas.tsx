@@ -84,16 +84,19 @@ export interface NodeGraphCanvasProps<
   readonly className?: string;
 }
 
-const XYFLOW_TOKEN_THEME: CSSProperties = {
-  ["--xy-background-pattern-color" as string]: "var(--neutral-6)",
-  ["--xy-edge-stroke" as string]: "var(--neutral-8)",
-  ["--xy-connectionline-stroke" as string]: "var(--neutral-8)",
-  ["--xy-handle-background-color" as string]: "var(--neutral-9)",
-  ["--xy-handle-border-color" as string]: "var(--neutral-7)",
-  ["--xy-controls-button-background-color" as string]: "var(--neutral-2)",
-  ["--xy-controls-button-border-color" as string]: "var(--neutral-7)",
-  ["--xy-controls-button-color" as string]: "var(--neutral-11)",
-};
+// Cast the object, not each key. `["--x" as string]` widens the key and
+// hides from anything reading the source that these are custom properties;
+// one cast on the record says the same thing once and stays greppable.
+const XYFLOW_TOKEN_THEME = {
+  "--xy-background-pattern-color": "var(--neutral-6)",
+  "--xy-edge-stroke": "var(--neutral-8)",
+  "--xy-connectionline-stroke": "var(--neutral-8)",
+  "--xy-handle-background-color": "var(--neutral-9)",
+  "--xy-handle-border-color": "var(--neutral-7)",
+  "--xy-controls-button-background-color": "var(--neutral-2)",
+  "--xy-controls-button-border-color": "var(--neutral-7)",
+  "--xy-controls-button-color": "var(--neutral-11)",
+} as CSSProperties;
 
 const nodeCardVariants = cva(
   "min-w-[160px] rounded-[var(--radius-lg)] border bg-neutral-2 px-3 py-2 text-neutral-12 shadow-sm transition-colors",

@@ -61,8 +61,8 @@ const Ray = ({ left, rotate, width, swing, delay, duration, intensity }: LightRa
       className="pointer-events-none absolute -top-[12%] left-[var(--ray-left)] h-[var(--light-rays-length)] w-[var(--ray-width)] origin-top -translate-x-1/2 rounded-full bg-gradient-to-b from-[color-mix(in_srgb,var(--light-rays-color)_70%,transparent)] to-transparent opacity-0 mix-blend-screen blur-[var(--light-rays-blur)]"
       style={
         {
-          ["--ray-left" as string]: `${left}%`,
-          ["--ray-width" as string]: `${width}px`,
+          "--ray-left": `${left}%`,
+          "--ray-width": `${width}px`,
         } as MotionStyle
       }
       initial={{ rotate: rotate }}
@@ -133,9 +133,9 @@ export function LightRays({
       )}
       style={
         {
-          ["--light-rays-color" as string]: color,
-          ["--light-rays-blur" as string]: `${blur}px`,
-          ["--light-rays-length" as string]: length,
+          "--light-rays-color": color,
+          "--light-rays-blur": `${blur}px`,
+          "--light-rays-length": length,
           ...style,
         } as React.CSSProperties
       }
