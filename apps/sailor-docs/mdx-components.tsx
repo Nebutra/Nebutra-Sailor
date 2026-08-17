@@ -1,4 +1,5 @@
 // Common Lucide Icons used in documentation examples
+
 import {
   Warning as AlertCircle,
   AlignmentCenter as AlignCenter,
@@ -265,6 +266,7 @@ import { InlineTOC } from "fumadocs-ui/components/inline-toc";
 import { TypeTable } from "fumadocs-ui/components/type-table";
 import defaultComponents from "fumadocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 // Registry demos: client-only dynamic (ssr:false) — keeps OpenNext handler lean
 import {
@@ -350,7 +352,6 @@ import {
   Warning,
 } from "@/components/mdx-compat";
 import {
-  APIPage,
   BrandPhilosophyVisual,
   ColorPalette,
   ColorUsageDemos,
@@ -360,6 +361,11 @@ import {
   Mermaid,
   MotionDemos,
 } from "@/components/mdx-lazy";
+
+// Code-split from the server side: APIPage is a server component built from the
+// OpenAPI instance, so it must not cross a client boundary. See mdx-lazy.tsx.
+const APIPage = dynamic(() => import("@/components/api-page").then((m) => m.APIPage));
+
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/mdx-resizable";
 import { ScrollArea, ScrollBar } from "@/components/mdx-scroll-area";
 import {
