@@ -297,16 +297,16 @@ jobs:
             local pebble="$5" sailor_docs="$6" router="$7" forge="$8" admin="$9"
             local design="${10}"
             local items=()
-            [ "$landing" = "true" ] && items+=('{"app":"landing","package":"@nebutra/landing","workspace":"apps/landing","kind":"next-standalone","build_command":"build","site_url":"https://nebutra.com"}')
-            [ "$web" = "true" ] && items+=('{"app":"web","package":"@nebutra/web","workspace":"apps/web","kind":"next-standalone","build_command":"build:next","site_url":"https://app.nebutra.com"}')
-            [ "$idp" = "true" ] && items+=('{"app":"idp","package":"@nebutra/idp","workspace":"apps/idp","kind":"next-standalone","build_command":"build","site_url":"https://sso.nebutra.com"}')
-            [ "$auth" = "true" ] && items+=('{"app":"auth","package":"@nebutra/auth-center","workspace":"apps/auth","kind":"next-standalone","build_command":"build","site_url":"https://auth.nebutra.com"}')
-            [ "$design" = "true" ] && items+=('{"app":"design","package":"@nebutra/design","workspace":"apps/design","kind":"next-standalone","build_command":"build","site_url":"https://design.nebutra.com"}')
-            [ "$pebble" = "true" ] && items+=('{"app":"pebble","package":"@nebutra/pebble-site","workspace":"apps/pebble","kind":"next-standalone","build_command":"build","site_url":"https://pebble.nebutra.com"}')
-            [ "$sailor_docs" = "true" ] && items+=('{"app":"sailor-docs","package":"@nebutra/sailor-docs","workspace":"apps/sailor-docs","kind":"next-standalone","build_command":"build:vm","site_url":"https://docs.nebutra.com"}')
-            [ "$router" = "true" ] && items+=('{"app":"router","package":"@nebutra/router","workspace":"apps/router","kind":"next-standalone","build_command":"build","site_url":"https://router.nebutra.com"}')
-            [ "$forge" = "true" ] && items+=('{"app":"forge","package":"@nebutra/forge","workspace":"apps/forge","kind":"next-standalone","build_command":"build","site_url":"https://forge.nebutra.com"}')
-            [ "$admin" = "true" ] && items+=('{"app":"admin","package":"@nebutra/admin","workspace":"apps/admin","kind":"next-standalone","build_command":"build","site_url":"https://admin.nebutra.com"}')
+            if [ "$landing" = "true" ]; then items+=('{"app":"landing","package":"@nebutra/landing","workspace":"apps/landing","kind":"next-standalone","build_command":"build","site_url":"https://nebutra.com"}'); fi
+            if [ "$web" = "true" ]; then items+=('{"app":"web","package":"@nebutra/web","workspace":"apps/web","kind":"next-standalone","build_command":"build:next","site_url":"https://app.nebutra.com"}'); fi
+            if [ "$idp" = "true" ]; then items+=('{"app":"idp","package":"@nebutra/idp","workspace":"apps/idp","kind":"next-standalone","build_command":"build","site_url":"https://sso.nebutra.com"}'); fi
+            if [ "$auth" = "true" ]; then items+=('{"app":"auth","package":"@nebutra/auth-center","workspace":"apps/auth","kind":"next-standalone","build_command":"build","site_url":"https://auth.nebutra.com"}'); fi
+            if [ "$design" = "true" ]; then items+=('{"app":"design","package":"@nebutra/design","workspace":"apps/design","kind":"next-standalone","build_command":"build","site_url":"https://design.nebutra.com"}'); fi
+            if [ "$pebble" = "true" ]; then items+=('{"app":"pebble","package":"@nebutra/pebble-site","workspace":"apps/pebble","kind":"next-standalone","build_command":"build","site_url":"https://pebble.nebutra.com"}'); fi
+            if [ "$sailor_docs" = "true" ]; then items+=('{"app":"sailor-docs","package":"@nebutra/sailor-docs","workspace":"apps/sailor-docs","kind":"next-standalone","build_command":"build:vm","site_url":"https://docs.nebutra.com"}'); fi
+            if [ "$router" = "true" ]; then items+=('{"app":"router","package":"@nebutra/router","workspace":"apps/router","kind":"next-standalone","build_command":"build","site_url":"https://router.nebutra.com"}'); fi
+            if [ "$forge" = "true" ]; then items+=('{"app":"forge","package":"@nebutra/forge","workspace":"apps/forge","kind":"next-standalone","build_command":"build","site_url":"https://forge.nebutra.com"}'); fi
+            if [ "$admin" = "true" ]; then items+=('{"app":"admin","package":"@nebutra/admin","workspace":"apps/admin","kind":"next-standalone","build_command":"build","site_url":"https://admin.nebutra.com"}'); fi
             local joined=""
             if [ "${#items[@]}" -gt 0 ]; then
               local IFS=,
@@ -808,17 +808,17 @@ jobs:
           keep_releases=$(printf '%q' "${ECS_KEEP_RELEASES:-1}")
           # Only prune apps selected for this deploy.
           prune_apps=""
-          [ "${{ needs.detect-changes.outputs.landing }}" = "true" ] && prune_apps="$prune_apps landing"
-          [ "${{ needs.detect-changes.outputs.web }}" = "true" ] && prune_apps="$prune_apps web"
-          [ "${{ needs.detect-changes.outputs.api }}" = "true" ] && prune_apps="$prune_apps api"
-          [ "${{ needs.detect-changes.outputs.idp }}" = "true" ] && prune_apps="$prune_apps idp"
-          [ "${{ needs.detect-changes.outputs.auth }}" = "true" ] && prune_apps="$prune_apps auth"
-          [ "${{ needs.detect-changes.outputs.design }}" = "true" ] && prune_apps="$prune_apps design"
-          [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ] && prune_apps="$prune_apps pebble"
-          [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && prune_apps="$prune_apps sailor-docs"
-          [ "${{ needs.detect-changes.outputs.router }}" = "true" ] && prune_apps="$prune_apps router"
-          [ "${{ needs.detect-changes.outputs.forge }}" = "true" ] && prune_apps="$prune_apps forge"
-          [ "${{ needs.detect-changes.outputs.admin }}" = "true" ] && prune_apps="$prune_apps admin"
+          if [ "${{ needs.detect-changes.outputs.landing }}" = "true" ]; then prune_apps="$prune_apps landing"; fi
+          if [ "${{ needs.detect-changes.outputs.web }}" = "true" ]; then prune_apps="$prune_apps web"; fi
+          if [ "${{ needs.detect-changes.outputs.api }}" = "true" ]; then prune_apps="$prune_apps api"; fi
+          if [ "${{ needs.detect-changes.outputs.idp }}" = "true" ]; then prune_apps="$prune_apps idp"; fi
+          if [ "${{ needs.detect-changes.outputs.auth }}" = "true" ]; then prune_apps="$prune_apps auth"; fi
+          if [ "${{ needs.detect-changes.outputs.design }}" = "true" ]; then prune_apps="$prune_apps design"; fi
+          if [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ]; then prune_apps="$prune_apps pebble"; fi
+          if [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ]; then prune_apps="$prune_apps sailor-docs"; fi
+          if [ "${{ needs.detect-changes.outputs.router }}" = "true" ]; then prune_apps="$prune_apps router"; fi
+          if [ "${{ needs.detect-changes.outputs.forge }}" = "true" ]; then prune_apps="$prune_apps forge"; fi
+          if [ "${{ needs.detect-changes.outputs.admin }}" = "true" ]; then prune_apps="$prune_apps admin"; fi
           prune_apps="$(echo "$prune_apps" | xargs)"
           prune_apps_q=$(printf '%q' "$prune_apps")
           echo "Preflight will only prune releases for: ${prune_apps:-<none>}"
@@ -1255,17 +1255,17 @@ jobs:
         run: |
           set -euo pipefail
           APPS=""
-          [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && APPS="$APPS landing"
-          [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && APPS="$APPS web"
-          [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && APPS="$APPS api"
-          [ "${{ needs.detect-changes.outputs.idp }}"            = "true" ] && APPS="$APPS idp"
-          [ "${{ needs.detect-changes.outputs.auth }}"           = "true" ] && APPS="$APPS auth"
-          [ "${{ needs.detect-changes.outputs.design }}" = "true" ] && APPS="$APPS design"
-          [ "${{ needs.detect-changes.outputs.pebble }}"         = "true" ] && APPS="$APPS pebble"
-          [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && APPS="$APPS sailor-docs"
-          [ "${{ needs.detect-changes.outputs.router }}"         = "true" ] && APPS="$APPS router"
-          [ "${{ needs.detect-changes.outputs.forge }}"          = "true" ] && APPS="$APPS forge"
-          [ "${{ needs.detect-changes.outputs.admin }}"          = "true" ] && APPS="$APPS admin"
+          if [ "${{ needs.detect-changes.outputs.landing }}" = "true" ]; then APPS="$APPS landing"; fi
+          if [ "${{ needs.detect-changes.outputs.web }}" = "true" ]; then APPS="$APPS web"; fi
+          if [ "${{ needs.detect-changes.outputs.api }}" = "true" ]; then APPS="$APPS api"; fi
+          if [ "${{ needs.detect-changes.outputs.idp }}" = "true" ]; then APPS="$APPS idp"; fi
+          if [ "${{ needs.detect-changes.outputs.auth }}" = "true" ]; then APPS="$APPS auth"; fi
+          if [ "${{ needs.detect-changes.outputs.design }}" = "true" ]; then APPS="$APPS design"; fi
+          if [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ]; then APPS="$APPS pebble"; fi
+          if [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ]; then APPS="$APPS sailor-docs"; fi
+          if [ "${{ needs.detect-changes.outputs.router }}" = "true" ]; then APPS="$APPS router"; fi
+          if [ "${{ needs.detect-changes.outputs.forge }}" = "true" ]; then APPS="$APPS forge"; fi
+          if [ "${{ needs.detect-changes.outputs.admin }}" = "true" ]; then APPS="$APPS admin"; fi
           APPS="$(echo "$APPS" | xargs)"
 
           # An empty APPS must not reach the remote script. Its own
@@ -1566,17 +1566,17 @@ jobs:
         run: |
           set -euo pipefail
           APPS=""
-          [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && APPS="$APPS landing"
-          [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && APPS="$APPS web"
-          [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && APPS="$APPS api"
-          [ "${{ needs.detect-changes.outputs.idp }}"            = "true" ] && APPS="$APPS idp"
-          [ "${{ needs.detect-changes.outputs.auth }}"           = "true" ] && APPS="$APPS auth"
-          [ "${{ needs.detect-changes.outputs.design }}" = "true" ] && APPS="$APPS design"
-          [ "${{ needs.detect-changes.outputs.pebble }}"         = "true" ] && APPS="$APPS pebble"
-          [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && APPS="$APPS sailor-docs"
-          [ "${{ needs.detect-changes.outputs.router }}"         = "true" ] && APPS="$APPS router"
-          [ "${{ needs.detect-changes.outputs.forge }}"          = "true" ] && APPS="$APPS forge"
-          [ "${{ needs.detect-changes.outputs.admin }}"          = "true" ] && APPS="$APPS admin"
+          if [ "${{ needs.detect-changes.outputs.landing }}" = "true" ]; then APPS="$APPS landing"; fi
+          if [ "${{ needs.detect-changes.outputs.web }}" = "true" ]; then APPS="$APPS web"; fi
+          if [ "${{ needs.detect-changes.outputs.api }}" = "true" ]; then APPS="$APPS api"; fi
+          if [ "${{ needs.detect-changes.outputs.idp }}" = "true" ]; then APPS="$APPS idp"; fi
+          if [ "${{ needs.detect-changes.outputs.auth }}" = "true" ]; then APPS="$APPS auth"; fi
+          if [ "${{ needs.detect-changes.outputs.design }}" = "true" ]; then APPS="$APPS design"; fi
+          if [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ]; then APPS="$APPS pebble"; fi
+          if [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ]; then APPS="$APPS sailor-docs"; fi
+          if [ "${{ needs.detect-changes.outputs.router }}" = "true" ]; then APPS="$APPS router"; fi
+          if [ "${{ needs.detect-changes.outputs.forge }}" = "true" ]; then APPS="$APPS forge"; fi
+          if [ "${{ needs.detect-changes.outputs.admin }}" = "true" ]; then APPS="$APPS admin"; fi
           APPS="$(echo "$APPS" | xargs)"
           # Empty means the deploy never named anything, so there is nothing to
           # undo — and it must exit rather than fall through, because the remote

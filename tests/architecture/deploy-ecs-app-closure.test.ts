@@ -84,7 +84,12 @@ function downloadedApps(): string[] {
 
 /**
  * Apps appended to a shell accumulator by a chain of
- * `[ "…outputs.<app>" = "true" ] && VAR="$VAR <app>"` lines. There are two such
+ * `if [ "…outputs.<app>" = "true" ]; then VAR="$VAR <app>"; fi` lines. They were
+ * `[ … ] && VAR=…` until 2026-08-17: under `set -euo pipefail` an AND-list
+ * whose test fails returns 1, and a failing list at top level aborts the step.
+ * The chain only ran while its first app happened to be selected, and a deploy
+ * that skipped that app died on line one with nothing in the log. There are two
+ * such
  * chains — APPS, handed to the remote script, and prune_apps, which decides
  * whose old releases get cleaned — and they are the last two enumerations.
  *
@@ -101,7 +106,7 @@ function accumulatorChains(variable: string): string[][] {
   // here: the union contained admin, the rollback chain did not.
   const blocks = yml.split(new RegExp(String.raw`^\s+${variable}=""$`, "m")).slice(1);
   const pattern = new RegExp(
-    String.raw`outputs(?:\.([a-z0-9-]+)|\['([a-z0-9-]+)'\])\s*\}\}"\s*=\s*"true"\s*\]\s*&&\s*${variable}="\$${variable} `,
+    String.raw`outputs(?:\.([a-z0-9-]+)|\['([a-z0-9-]+)'\])\s*\}\}"\s*=\s*"true"\s*\];\s*then\s*${variable}="\$${variable} `,
     "g",
   );
   const chains = blocks.map((block) => [...block.matchAll(pattern)].map((m) => m[1] ?? m[2]));
