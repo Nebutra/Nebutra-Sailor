@@ -43,8 +43,14 @@ describe("compileReferoTokens — GSAP", () => {
     assert.match(result.css, /--btn-default-bg: transparent/);
     assert.match(result.css, /--btn-default-stroke-gradient:/);
     assert.match(result.css, /--btn-default-border-width: 1\.5px/);
-    assert.match(result.css, /@font-face/);
-    assert.ok((result.brand.typography.faces?.length ?? 0) > 0);
+    // No @font-face. The gsap preset used to declare Mori from
+    // /brand-assets/mori-*.woff2 — files that are not in the repo and never can
+    // be, because Mori is licensed to somebody else. Nine such declarations
+    // across the seven languages produced zero fonts and no error of any kind.
+    // A skin now only emits a face it can actually serve, and the type stack
+    // resolves through FONT_REGISTRY instead.
+    assert.doesNotMatch(result.css, /@font-face/);
+    assert.match(result.css, /--font-sans:\s*var\(--font-/);
     assert.ok(result.warnings.some((w) => w.includes("shockingly-green")));
   });
 });

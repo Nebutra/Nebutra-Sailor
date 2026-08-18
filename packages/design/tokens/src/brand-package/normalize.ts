@@ -25,9 +25,14 @@ const KEY_SHADOW =
 
 const HAIRLINE_SHADOW = "rgba(0, 0, 0, 0.08) 0px 0px 0px 1px, rgb(250, 250, 250) 0px 0px 0px 1px";
 
-const SOFT_CARD = "var(--shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05))";
-const SOFT_CONTROL = "var(--shadow-xs, 0 1px 2px 0 rgb(0 0 0 / 0.04))";
-const SOFT_RAISED = "var(--shadow-md, 0 4px 6px -1px rgb(0 0 0 / 0.1))";
+// Inlined, not `var(--shadow-sm, …)`. The theme block maps --shadow-sm to
+// var(--elevation-sm) and the skin sets --elevation-sm from these, so the
+// reference closed a loop onto itself: the fallback rescued it in the browser
+// while validateBrandPackage — correctly — refused the package. A default that
+// only works because its own fallback fires is not a default.
+const SOFT_CARD = "0 1px 2px 0 rgb(0 0 0 / 0.05)";
+const SOFT_CONTROL = "0 1px 2px 0 rgb(0 0 0 / 0.04)";
+const SOFT_RAISED = "0 4px 6px -1px rgb(0 0 0 / 0.1)";
 
 /** Ensure role color is HSL channels (accept hex for convenience). */
 function asChannels(value: string | undefined): string | undefined {
