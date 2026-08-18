@@ -93,15 +93,10 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
   setRequestLocale(locale);
 
   return (
-    <>
+    <Suspense>
       {/* React 19 hoists these to <head>. Keep the decorative hero video out of
           the preload scanner; preconnect is enough and avoids competing with
-          text/CSS during LCP.
-
-          Not wrapped in a Suspense boundary: the layout already provides one
-          with a real fallback, and a second boundary with none contributes no
-          streaming and puts the hoisted <link> elements inside a segment React
-          has to relocate on reveal. */}
+          text/CSS during LCP. */}
       <link rel="preconnect" href="https://d8j0ntlcm91z4.cloudfront.net" crossOrigin="anonymous" />
       <link rel="dns-prefetch" href="https://d8j0ntlcm91z4.cloudfront.net" />
       <main
@@ -162,6 +157,6 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
           <FooterMinimal showFinalCta />
         </Suspense>
       </main>
-    </>
+    </Suspense>
   );
 }
