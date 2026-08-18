@@ -25,13 +25,7 @@
  */
 
 import type * as React from "react";
-import { useLayoutEffect, useRef } from "react";
-import {
-  marketingGsap,
-  prefersReducedMarketingMotion,
-  registerMarketingGsap,
-  ScrollTrigger,
-} from "@/shared/animation/gsap";
+import { gsapFrom, useGsapEntrance } from "@/shared/animation/gsap";
 
 /** The brand motion language, as GSAP from-vars. Mirrors @nebutra/brand's
  *  emerge / flow signatures rather than restating them by feel. */
@@ -55,76 +49,6 @@ const STAGGER = { fast: 0.05, normal: 0.1, slow: 0.2 } as const;
  */
 export function MarketingMotionProvider({ children }: { children: React.ReactNode }) {
   return children;
-}
-
-/**
- * Shared plumbing: run `build` once against the node, cleaned up on unmount.
- *
- * `inView` entrances are driven by IntersectionObserver rather than
- * ScrollTrigger. ScrollTrigger measures positions globally and re-derives them
- * on refresh; in a production build, where sections mount from dynamic imports
- * after it has already measured, four capability cards were left at
- * `autoAlpha: 0` — visibility:hidden — and never revealed, because the trigger
- * they waited on no longer matched where they had ended up. The section kept
- * its height, so the page showed a 2115px hole. An observer attached to the
- * element itself cannot disagree about where that element is.
- *
- * The deadline is the second guard: if the entrance has not run by then, the
- * element is shown as-is. A failed animation should cost the animation, never
- * the content.
- */
-function useEntrance(
-  build: (node: HTMLElement) => void,
-  deps: unknown[],
-  { inView = false }: { inView?: boolean } = {},
-) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    const node = ref.current;
-    if (!node || prefersReducedMarketingMotion()) return;
-    registerMarketingGsap();
-
-    let context: gsap.Context | undefined;
-    let observer: IntersectionObserver | undefined;
-    let deadline: ReturnType<typeof setTimeout> | undefined;
-    let done = false;
-
-    const run = () => {
-      if (done) return;
-      done = true;
-      observer?.disconnect();
-      clearTimeout(deadline);
-      context = marketingGsap.context(() => build(node), node);
-    };
-
-    if (inView) {
-      observer = new IntersectionObserver(
-        (entries) => {
-          if (entries.some((entry) => entry.isIntersecting)) run();
-        },
-        { rootMargin: "0px 0px -10% 0px" },
-      );
-      observer.observe(node);
-      deadline = setTimeout(() => {
-        if (done) return;
-        done = true;
-        observer?.disconnect();
-        marketingGsap.set(node, { autoAlpha: 1, clearProps: "transform,filter" });
-      }, 5000);
-    } else {
-      run();
-    }
-
-    return () => {
-      observer?.disconnect();
-      clearTimeout(deadline);
-      context?.revert();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
-
-  return ref;
 }
 
 export interface AnimateInProps {
@@ -153,9 +77,9 @@ export function AnimateIn({
   from,
 }: AnimateInProps) {
   const spec = PRESETS[preset];
-  const ref = useEntrance(
+  const ref = useGsapEntrance<HTMLDivElement>(
     (node) => {
-      marketingGsap.from(node, {
+      gsapFrom(node, {
         ...spec.from,
         ...from,
         duration: duration ?? spec.duration,
@@ -187,7 +111,7 @@ export function AnimateInGroup({
   inView = false,
   className,
 }: AnimateInGroupProps) {
-  const ref = useEntrance(
+  const ref = useGsapEntrance<HTMLDivElement>(
     (node) => {
       // Only children that do not animate themselves. A child that is an
       // AnimateIn sets its own from-state, and two tweens each driving
@@ -199,7 +123,7 @@ export function AnimateInGroup({
         (child) => !(child instanceof HTMLElement && child.dataset.animateIn !== undefined),
       );
       if (targets.length === 0) return;
-      marketingGsap.from(targets, {
+      gsapFrom(targets, {
         autoAlpha: 0,
         y: 16,
         duration: 0.4,
@@ -217,5 +141,3 @@ export function AnimateInGroup({
     </div>
   );
 }
-
-export { ScrollTrigger };

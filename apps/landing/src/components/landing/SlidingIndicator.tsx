@@ -18,11 +18,7 @@
  */
 
 import { useLayoutEffect, useRef } from "react";
-import {
-  marketingGsap,
-  prefersReducedMarketingMotion,
-  registerMarketingGsap,
-} from "@/shared/animation/gsap";
+import { gsapMoveTo } from "@/shared/animation/gsap";
 
 export interface SlidingIndicatorProps {
   /** Changes when the selection does — that is what re-runs the measurement. */
@@ -56,15 +52,10 @@ export function SlidingIndicator({ activeKey, className, style }: SlidingIndicat
     // reads as a glitch.
     if (!node.dataset.placed) {
       node.dataset.placed = "true";
-      marketingGsap.set(node, { ...to, autoAlpha: 1 });
+      gsapMoveTo(node, { ...to, autoAlpha: 1 }, { animate: false });
       return;
     }
-    if (prefersReducedMarketingMotion()) {
-      marketingGsap.set(node, to);
-      return;
-    }
-    registerMarketingGsap();
-    marketingGsap.to(node, { ...to, duration: 0.32, ease: "power3.out", overwrite: true });
+    gsapMoveTo(node, to, { animate: true });
   }, [activeKey]);
 
   return (

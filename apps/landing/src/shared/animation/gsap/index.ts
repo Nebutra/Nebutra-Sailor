@@ -12,6 +12,7 @@ export {
   registerMarketingGsap,
   ScrollTrigger,
 } from "./helpers/runtime";
+export { gsapFrom, gsapMoveTo, gsapPresence, useGsapEntrance } from "./hooks/use-entrance";
 export { useFeatureTimeline } from "./hooks/use-feature-timeline";
 export { useHeroAnimation } from "./hooks/use-hero-animation";
 export { useMarketingGsap } from "./hooks/use-landing-gsap";

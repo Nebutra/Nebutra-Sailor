@@ -15,11 +15,7 @@
 
 import type * as React from "react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import {
-  marketingGsap,
-  prefersReducedMarketingMotion,
-  registerMarketingGsap,
-} from "@/shared/animation/gsap";
+import { gsapPresence } from "@/shared/animation/gsap";
 
 export interface PresenceProps {
   show: boolean;
@@ -48,33 +44,20 @@ export function Presence({
   useLayoutEffect(() => {
     const node = ref.current;
     if (!node) return;
-    const reduced = prefersReducedMarketingMotion();
 
     if (show) {
       if (wasShown.current && mounted) return;
       wasShown.current = true;
-      if (reduced) {
-        marketingGsap.set(node, { autoAlpha: 1, clearProps: "transform" });
-        return;
-      }
-      registerMarketingGsap();
-      marketingGsap.from(node, { ...from, duration, ease: "expo.out", overwrite: true });
+      gsapPresence(node, from, { entering: true, duration });
       return;
     }
 
     if (!wasShown.current) return;
     wasShown.current = false;
-    if (reduced) {
-      setMounted(false);
-      return;
-    }
-    registerMarketingGsap();
-    marketingGsap.to(node, {
-      ...from,
-      duration: duration * 0.8,
-      ease: "power2.in",
-      overwrite: true,
-      onComplete: () => setMounted(false),
+    gsapPresence(node, from, {
+      entering: false,
+      duration,
+      onExited: () => setMounted(false),
     });
   }, [show, mounted, duration, from]);
 
