@@ -1,10 +1,11 @@
+import { brand } from "@nebutra/brand/metadata";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { DOCS_BASE, GITHUB_REPO, STATUS_URL } from "@/lib/releases";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://pebble.nebutra.com"),
+  metadataBase: new URL(`https://${brand.domains.pebble}`),
   title: {
     default: "Pebble — the AI orchestrator for 100x builders",
     template: "%s · Pebble",
@@ -18,13 +19,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Pebble · 溪石",
     description: "The AI orchestrator for 100x builders.",
-    url: "https://pebble.nebutra.com",
+    url: `https://${brand.domains.pebble}`,
     siteName: "Pebble",
     type: "website",
     images: [{ url: "/assets/hero.jpg", width: 1600, height: 1000, alt: "Pebble desktop" }],
   },
   alternates: {
-    canonical: "https://pebble.nebutra.com",
+    canonical: `https://${brand.domains.pebble}`,
   },
 };
 
@@ -50,11 +51,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </header>
         {children}
         <footer className="footer">
-          <span>© {new Date().getFullYear()} Nebutra · Pebble · 溪石</span>
+          <span>
+            © {new Date().getFullYear()} {brand.name} · Pebble · 溪石
+          </span>
           <span>
             <a href={DOCS_BASE}>docs</a>
             {" · "}
-            <a href="https://nebutra.com">nebutra.com</a>
+            <a href={`https://${brand.domains.landing}`}>{brand.domains.landing}</a>
           </span>
         </footer>
       </body>

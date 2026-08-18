@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 /**
  * GitHub Releases artifact URLs for the download surface.
  * Names must match `STABLE_DIRECT_DOWNLOAD_ASSETS` in
@@ -7,7 +8,7 @@
  * Live on v1.4.124+: Linux debs + macOS Universal DMG.
  * Windows setup.exe waits on WINDOWS_CERTIFICATE secrets.
  */
-export const GITHUB_RELEASES = "https://github.com/Nebutra/pebble/releases/latest";
+export const GITHUB_RELEASES = `${brand.social.github}/pebble/releases/latest`;
 
 export const DOWNLOADS = {
   macosUniversal: `${GITHUB_RELEASES}/download/pebble-macos-universal.dmg`,
@@ -54,6 +55,6 @@ export const DOWNLOAD_ROWS: readonly DownloadRow[] = [
 ] as const;
 
 /** Prefer on-origin docs while docs.nebutra.com/pebble Worker is stale. */
-export const DOCS_BASE = "https://pebble.nebutra.com/docs";
-export const STATUS_URL = "https://status.nebutra.com";
-export const GITHUB_REPO = "https://github.com/Nebutra/pebble";
+export const DOCS_BASE = `https://${brand.domains.pebble}/docs`;
+export const STATUS_URL = `https://${brand.domains.status}`;
+export const GITHUB_REPO = `${brand.social.github}/pebble`;

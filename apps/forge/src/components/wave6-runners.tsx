@@ -1,4 +1,5 @@
 "use client";
+// @brand-exempt: seed values for the host and colour-pair tools; the user edits them and nothing here paints chrome
 
 /**
  * Wave-6 hard-correct product runners: network, mermaid, ΔE, DBML.

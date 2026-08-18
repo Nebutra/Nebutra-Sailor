@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,8 +11,8 @@ export default function DocsHomePage() {
     <>
       <h1>Pebble</h1>
       <p>
-        Pebble is Nebutra&apos;s AI orchestrator for builders: run Codex, Claude Code, OpenCode, and
-        more side-by-side in isolated git worktrees from one desktop surface.
+        Pebble is {brand.name}&apos;s AI orchestrator for builders: run Codex, Claude Code,
+        OpenCode, and more side-by-side in isolated git worktrees from one desktop surface.
       </p>
 
       <h2>Where things live</h2>
@@ -26,31 +27,33 @@ export default function DocsHomePage() {
           <tr>
             <td>Product / download</td>
             <td>
-              <a href="https://pebble.nebutra.com">pebble.nebutra.com</a>
+              <a href={`https://${brand.domains.pebble}`}>{brand.domains.pebble}</a>
             </td>
           </tr>
           <tr>
             <td>These docs</td>
             <td>
-              <a href="https://pebble.nebutra.com/docs">pebble.nebutra.com/docs</a>
+              <a href={`https://${brand.domains.pebble}/docs`}>{brand.domains.pebble}/docs</a>
             </td>
           </tr>
           <tr>
             <td>Feedback &amp; diagnostics API</td>
             <td>
-              <code>https://api.nebutra.com/pebble/*</code>
+              <code>https://{brand.domains.api}/pebble/*</code>
             </td>
           </tr>
           <tr>
             <td>Status</td>
             <td>
-              <a href="https://status.nebutra.com">status.nebutra.com</a>
+              <a href={`https://${brand.domains.status}`}>{brand.domains.status}</a>
             </td>
           </tr>
           <tr>
             <td>Source &amp; releases</td>
             <td>
-              <a href="https://github.com/Nebutra/pebble">github.com/Nebutra/pebble</a>
+              <a href={`${brand.social.github}/pebble`}>
+                {brand.social.github.replace("https://", "")}/pebble
+              </a>
             </td>
           </tr>
         </tbody>

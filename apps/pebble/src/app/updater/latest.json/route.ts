@@ -9,8 +9,10 @@
  * 1. public/updater/latest.json on disk (refreshable without rebuild)
  * 2. bundled src/lib/updater-latest.fallback.json (always present in the build)
  */
+
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { brand } from "@nebutra/brand/metadata";
 import fallbackManifest from "@/lib/updater-latest.fallback.json";
 
 const UPSTREAM = "https://github.com/nebutra/pebble/releases/latest/download/latest.json";
@@ -67,7 +69,7 @@ async function fetchUpstream(): Promise<string | null> {
     const upstream = await fetch(UPSTREAM, {
       headers: {
         Accept: "application/json",
-        "User-Agent": "pebble.nebutra.com-updater-mirror/1.1",
+        "User-Agent": `${brand.domains.pebble}-updater-mirror/1.1`,
       },
       signal: controller.signal,
       cache: "no-store",

@@ -16,6 +16,7 @@
  * sessions minted here are accepted by app RPs.
  */
 
+import { brand } from "@nebutra/brand/metadata";
 import { betterAuth } from "better-auth";
 import { Pool } from "pg";
 
@@ -52,13 +53,16 @@ let pool: Pool | null = null;
 let authSingleton: AuthInstance | null = null;
 let authKey = "";
 
+// Derived from brand.domains rather than typed out, so a rebrand moves the
+// trusted origins with everything else. A stale entry here is not a cosmetic
+// drift: it decides which sites may carry a session.
 const DEFAULT_TRUSTED = [
-  "https://nebutra.com",
-  "https://www.nebutra.com",
-  "https://app.nebutra.com",
-  "https://auth.nebutra.com",
-  "https://forge.nebutra.com",
-  "https://router.nebutra.com",
+  `https://${brand.domains.landing}`,
+  `https://www.${brand.domains.landing}`,
+  `https://${brand.domains.app}`,
+  `https://${brand.domains.auth}`,
+  `https://${brand.domains.forge}`,
+  `https://${brand.domains.router}`,
 ] as const;
 
 function json(body: unknown, status = 200, extra?: HeadersInit): Response {
@@ -171,9 +175,11 @@ function getAuth(env: AuthEdgeEnv): AuthInstance {
   const baseURL =
     env.BETTER_AUTH_URL?.trim() ||
     process.env.BETTER_AUTH_URL?.trim() ||
-    "https://auth.nebutra.com";
+    `https://${brand.domains.auth}`;
   const cookieDomain =
-    env.AUTH_COOKIE_DOMAIN?.trim() || process.env.AUTH_COOKIE_DOMAIN?.trim() || ".nebutra.com";
+    env.AUTH_COOKIE_DOMAIN?.trim() ||
+    process.env.AUTH_COOKIE_DOMAIN?.trim() ||
+    `.${brand.domains.landing}`;
 
   const instance = betterAuth({
     secret,
@@ -405,7 +411,7 @@ async function handleOAuthStart(
   const appOrigin =
     env.NEXT_PUBLIC_APP_URL?.trim() ||
     process.env.NEXT_PUBLIC_APP_URL?.trim() ||
-    "https://app.nebutra.com";
+    `https://${brand.domains.app}`;
   const rawCallback =
     url.searchParams.get("callbackURL") ??
     url.searchParams.get("callback") ??
@@ -505,7 +511,7 @@ async function handleAuthApi(request: Request, env: AuthEdgeEnv): Promise<Respon
  * Nginx routes X-Nebutra-Edge-Auth: 1 → nebutra_auth.
  */
 async function forwardToOrigin(request: Request, env: AuthEdgeEnv): Promise<Response> {
-  const originBase = env.ORIGIN_URL?.trim() || "https://origin.nebutra.com";
+  const originBase = env.ORIGIN_URL?.trim() || `https://${brand.domains.origin}`;
   let base: URL;
   try {
     base = new URL(originBase);
@@ -537,7 +543,7 @@ async function forwardToOrigin(request: Request, env: AuthEdgeEnv): Promise<Resp
     }
     headers.set(key, value);
   });
-  headers.set("x-forwarded-host", "auth.nebutra.com");
+  headers.set("x-forwarded-host", brand.domains.auth);
   headers.set("x-forwarded-proto", "https");
   headers.set("x-nebutra-edge-auth", "1");
   const clientIp = request.headers.get("cf-connecting-ip");

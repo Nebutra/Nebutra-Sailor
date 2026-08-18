@@ -1,3 +1,4 @@
+// @brand-exempt: this page IS the brand — the swatch labels are the colours' Chinese names, and a page that shows the identity cannot source it from a token
 import {
   allowedColorCombinations,
   brand,

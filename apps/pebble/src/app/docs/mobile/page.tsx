@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -20,7 +21,7 @@ export default function DocsMobilePage() {
         </li>
         <li>
           <strong>Android:</strong> APK builds ship on{" "}
-          <a href="https://github.com/Nebutra/pebble/releases">GitHub Releases</a>
+          <a href={`${brand.social.github}/pebble/releases`}>GitHub Releases</a>
         </li>
       </ul>
       <p>

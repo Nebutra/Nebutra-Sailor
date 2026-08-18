@@ -1,3 +1,4 @@
+// @brand-exempt: NebutraConfig is a type identifier, not brand copy — a rebrand renames it by codemod along with the package, not by reading brand.name at runtime
 /**
  * Post-summary confirmation + optional customization of region-defaulted
  * providers. Keeps the main wizard short while making silent defaults visible

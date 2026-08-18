@@ -2,7 +2,7 @@
   "name": "@nebutra/pebble-site",
   "version": "0.1.0",
   "private": true,
-  "description": "Pebble brand front — landing, download, static feeds; no product API",
+  "description": "Pebble brand front \u2014 landing, download, static feeds; no product API",
   "scripts": {
     "dev": "next dev --port 3017",
     "build": "next build",
@@ -13,6 +13,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@nebutra/brand": "workspace:*",
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"

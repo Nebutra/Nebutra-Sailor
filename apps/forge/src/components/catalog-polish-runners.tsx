@@ -1,4 +1,5 @@
 "use client";
+// @brand-exempt: demo input for the email/URL validators and the summariser; the literal is text the tool parses
 
 /**
  * Hard-correct polish for high-traffic catalog tools that previously dumped

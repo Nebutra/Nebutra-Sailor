@@ -1,3 +1,4 @@
+// @brand-exempt: the downloadable brand kit; the alt text names the mark being offered, which is the subject of the page rather than chrome on it
 /**
  * Web product chrome brand assets.
  *

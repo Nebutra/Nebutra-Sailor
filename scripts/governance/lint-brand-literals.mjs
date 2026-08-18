@@ -70,6 +70,20 @@ const candidates = raw
   .filter(Boolean)
   .filter((p) => !isExempt(p));
 
+/**
+ * grep -l answers "does this file contain the string", which is not the
+ * question. A doc comment naming the host a route serves, or explaining which
+ * domain a redirect targets, is prose: rebranding rewrites it by hand and no
+ * amount of `brand.domains.*` belongs inside a sentence. Seven of the files
+ * this gate reported were comments only, and the cheapest way to satisfy it was
+ * to delete the explanation — which is the opposite of what the gate is for.
+ *
+ * So the match has to be on a line that ships. Same line-level rule the other
+ * two brand guards settled on.
+ */
+const literalRe = new RegExp(allowExpressions.join("|"));
+const commentRe = /^\s*(\/\/|\*|\/\*)/;
+
 const detected = new Set();
 for (const file of candidates) {
   let src = "";
@@ -80,7 +94,8 @@ for (const file of candidates) {
   }
   // Honor the file-level escape hatch.
   if (/\/\/\s*@brand-exempt/.test(src)) continue;
-  detected.add(file);
+  const inCode = src.split("\n").some((line) => !commentRe.test(line) && literalRe.test(line));
+  if (inCode) detected.add(file);
 }
 
 const newViolations = [...detected].filter((f) => !allowlist.has(f)).sort();

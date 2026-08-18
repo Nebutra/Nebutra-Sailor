@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = { title: "Privacy & telemetry" };
@@ -29,13 +30,13 @@ export default function Page() {
           <tr>
             <td>In-app feedback</td>
             <td>
-              <code>POST https://api.nebutra.com/pebble/v1/feedback</code>
+              <code>POST https://{brand.domains.api}/pebble/v1/feedback</code>
             </td>
           </tr>
           <tr>
             <td>Diagnostics bundles</td>
             <td>
-              <code>POST https://api.nebutra.com/pebble/diagnostics/*</code>
+              <code>POST https://{brand.domains.api}/pebble/diagnostics/*</code>
             </td>
           </tr>
         </tbody>

@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { DOCS_BASE, DOWNLOADS, GITHUB_REPO } from "@/lib/releases";
 
 const features = [
@@ -23,7 +24,7 @@ export default function HomePage() {
     <main>
       <section className="hero">
         <div>
-          <p className="eyebrow">Nebutra product · 溪石</p>
+          <p className="eyebrow">{brand.name} product · 溪石</p>
           <h1>
             Small, precise contributions.
             <br />

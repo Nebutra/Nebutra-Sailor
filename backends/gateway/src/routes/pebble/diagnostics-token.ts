@@ -9,6 +9,7 @@
  * Lifetime is 10 minutes per the baseline policy in pebble's ROADMAP.md.
  */
 
+import { brand } from "@nebutra/brand/metadata";
 import { jwtVerify, SignJWT } from "jose";
 
 export const DIAGNOSTIC_TOKEN_TTL_SECONDS = 600;
@@ -111,8 +112,8 @@ export type PublicRequestHints = {
 
 /** Internal / alternate hosts that must never appear in client-facing URLs. */
 const HOST_ALIASES: Record<string, string> = {
-  "origin.nebutra.com": "api.nebutra.com",
-  origin: "api.nebutra.com",
+  [brand.domains.origin]: brand.domains.api,
+  origin: brand.domains.api,
 };
 
 /**
@@ -121,8 +122,8 @@ const HOST_ALIASES: Record<string, string> = {
  * without the `/pebble` prefix.
  */
 const BRAND_DIAGNOSTICS_HOSTS = new Set([
-  "pebble.nebutra.com",
-  "www.pebble.nebutra.com",
+  brand.domains.pebble,
+  `www.${brand.domains.pebble}`,
   "www.onpebble.dev",
   "onpebble.dev",
 ]);
@@ -158,7 +159,11 @@ export function resolvePublicTokenEndpoint(hints: PublicRequestHints): URL {
     "https";
 
   // Production public hosts must never advertise http — CF/nginx terminate TLS.
-  if (host.endsWith(".nebutra.com") || host.endsWith(".onpebble.dev") || host === "onpebble.dev") {
+  if (
+    host.endsWith(`.${brand.domains.landing}`) ||
+    host.endsWith(".onpebble.dev") ||
+    host === "onpebble.dev"
+  ) {
     proto = "https";
   }
 
@@ -176,7 +181,7 @@ export function resolvePublicTokenEndpoint(hints: PublicRequestHints): URL {
 
   // Direct API host must keep /pebble prefix.
   if (
-    (host === "api.nebutra.com" || host.endsWith(".workers.dev")) &&
+    (host === brand.domains.api || host.endsWith(".workers.dev")) &&
     pathname.startsWith("/diagnostics")
   ) {
     pathname = `/pebble${pathname}`;

@@ -1,4 +1,5 @@
 import { LogomarkSVG } from "@nebutra/brand";
+import { brand } from "@nebutra/brand/metadata";
 import { cn } from "@nebutra/ui/utils";
 import { Link } from "@/i18n/navigation";
 import type { ServiceProbe, StatusSnapshot } from "@/lib/status-checks";
@@ -201,7 +202,7 @@ export function StatusPageView({ snapshot }: { snapshot: StatusSnapshot }) {
               </a>
             </p>
             <p className="mt-1">
-              Powered by Nebutra edge probes · Independent of the app origin when possible
+              Powered by {brand.name} edge probes · Independent of the app origin when possible
             </p>
           </footer>
         </div>
@@ -266,12 +267,12 @@ function StatusChrome({ checkedAt }: { checkedAt: string }) {
         <Link
           href="/status"
           className="group flex min-w-0 items-center gap-2 rounded-md outline-offset-2"
-          aria-label="Nebutra Status"
+          aria-label={`${brand.name} Status`}
         >
           <LogomarkSVG className="h-5 w-5 shrink-0 text-foreground sm:h-[1.375rem] sm:w-[1.375rem]" />
           <span className="flex min-w-0 items-baseline gap-1.5">
             <span className="truncate text-[13px] font-semibold tracking-tight text-foreground sm:text-sm">
-              Nebutra
+              {brand.name}
             </span>
             <span aria-hidden className="hidden h-3 w-px shrink-0 bg-border sm:block" />
             <span className="text-[13px] font-medium tracking-tight text-muted-foreground sm:text-sm">

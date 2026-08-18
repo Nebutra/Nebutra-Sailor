@@ -1,4 +1,5 @@
 "use client";
+// @brand-exempt: seed values and sample text for the tools themselves — a colour picker, a text runner; the literal is input the user edits, never a painted surface
 
 /**
  * High-quality convergence for remaining catalog-only tools.
