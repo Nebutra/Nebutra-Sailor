@@ -29,8 +29,10 @@ export const FONT_REGISTRY: Record<string, string> = {
   "vivo sans sc": "--font-vivo-sans-sc",
   // Self-hosted via next/font/google (see ./next)
   inter: "--font-inter",
+  "inter tight": "--font-reg-inter-tight",
   "space grotesk": "--font-space-grotesk",
   "playfair display": "--font-playfair-display",
+  "source serif 4": "--font-reg-source-serif-4",
   "jetbrains mono": "--font-jetbrains-mono",
   manrope: "--font-reg-manrope",
   sora: "--font-reg-sora",
@@ -73,4 +75,29 @@ export function withRegistryFont(stack: string | undefined): string | undefined 
   if (!stack) return stack;
   const variable = resolveRegistryVar(stack);
   return variable ? `var(${variable}), ${stack}` : stack;
+}
+
+/**
+ * Like `withRegistryFont`, but matches the first registered family ANYWHERE in
+ * the stack rather than only in first position.
+ *
+ * A brand package names the typeface the design language actually uses, and
+ * those are frequently licensed faces we have no right to serve — Söhne, Mori,
+ * Lyon Text, Reckless. The declared stack already says what to do when they are
+ * absent: fall to the next family. But "the next family" is usually a bare name
+ * like `Inter`, which does NOT reach next/font's hashed face, so the stack
+ * skidded past every self-hosted option and landed on `ui-sans-serif`. All
+ * seven built-in design languages rendered in the system font until 2026-08-18.
+ *
+ * Prepending the nearest registered family produces exactly the outcome the
+ * declared chain intended, and leaves the licensed names in place so a customer
+ * who does own the font still gets it by shipping the face themselves.
+ */
+export function withNearestRegistryFont(stack: string | undefined): string | undefined {
+  if (!stack) return stack;
+  for (const token of stack.split(",")) {
+    const variable = FONT_REGISTRY[normalizeFamily(token)];
+    if (variable) return `var(${variable}), ${stack}`;
+  }
+  return stack;
 }

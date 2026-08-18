@@ -135,25 +135,6 @@ export function buildNotion(ctx: CompileContext): BrandPackage {
       fontSans: `'NotionInter', 'Inter', ui-sans-serif, system-ui, sans-serif`,
       fontDisplay: `'NotionInter', 'Inter', ui-sans-serif, system-ui, sans-serif`,
       headingWeight: 700,
-      faces: [
-        {
-          family: "NotionInter",
-          src: [
-            {
-              url: "https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2",
-              format: "woff2",
-            },
-          ],
-          weight: "100 900",
-          display: "swap",
-        },
-        {
-          family: "Lyon Text",
-          src: [{ url: "/brand-assets/lyon-text-regular.woff2", format: "woff2" }],
-          weight: 400,
-          display: "swap",
-        },
-      ],
     },
     extensions: {
       categories: {

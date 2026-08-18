@@ -42,7 +42,8 @@
     "test": "tsx --test src/brand-package/__tests__/*.test.ts"
   },
   "dependencies": {
-    "@nebutra/design-tokens": "workspace:*"
+    "@nebutra/design-tokens": "workspace:*",
+    "@nebutra/fonts": "workspace:*"
   },
   "peerDependencies": {
     "react": "^19"

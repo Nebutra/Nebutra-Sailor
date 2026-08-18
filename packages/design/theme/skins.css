@@ -13,24 +13,9 @@
 /**
  * Brand carrier skin: GSAP (gsap) v1.0.0
  * darkDefault=true dualMode=false button=gradient-stroke
- * fonts=2 mode=global
+ * fonts=0 mode=global
  * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
-
-/* Brand font faces */
-@font-face {
-  font-family: "Mori";
-  src: url("/brand-assets/mori-regular.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Mori";
-  src: url("/brand-assets/mori-semibold.woff2") format("woff2");
-  font-weight: 600;
-  font-display: swap;
-}
 
 html[data-brand="gsap"] {
   /* ── Color roles (carrier) ── */
@@ -134,9 +119,16 @@ html[data-brand="gsap"] {
   --control-font-size-md: 0.8125rem;
 
   /* Typography */
-  --font-sans: "Mori", "Inter Tight", "DM Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "Mori", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Mori", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:
+    var(--font-reg-inter-tight), "Mori", "Inter Tight", "DM Sans",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-heading:
+    var(--font-reg-inter-tight), "Mori", "Inter Tight", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    var(--font-reg-inter-tight), "Mori", "Inter Tight", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-weight-heading: 600;
 
   /* Motion */
@@ -175,18 +167,9 @@ html[data-brand="gsap"] {
 /**
  * Brand carrier skin: Linear (linear) v1.0.0
  * darkDefault=true dualMode=true button=solid
- * fonts=1 mode=global
+ * fonts=0 mode=global
  * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
-
-/* Brand font faces */
-@font-face {
-  font-family: "Inter Variable";
-  src: url("https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2")
-    format("woff2");
-  font-weight: 100 900;
-  font-display: swap;
-}
 
 html[data-brand="linear"] {
   /* ── Color roles (carrier) ── */
@@ -290,10 +273,17 @@ html[data-brand="linear"] {
   --control-font-size-md: 0.8125rem;
 
   /* Typography */
-  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Berkeley Mono", "JetBrains Mono", ui-monospace, monospace;
+  --font-sans:
+    var(--font-inter), "Inter Variable", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-heading:
+    var(--font-inter), "Inter Variable", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    var(--font-inter), "Inter Variable", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:
+    var(--font-jetbrains-mono), "Berkeley Mono", "JetBrains Mono", ui-monospace, monospace;
   --font-weight-heading: 510;
 
   /* Motion */
@@ -381,25 +371,9 @@ html.dark[data-brand="linear"] {
 /**
  * Brand carrier skin: Notion (notion) v1.0.0
  * darkDefault=false dualMode=false button=solid
- * fonts=2 mode=global
+ * fonts=0 mode=global
  * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
-
-/* Brand font faces */
-@font-face {
-  font-family: "NotionInter";
-  src: url("https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2")
-    format("woff2");
-  font-weight: 100 900;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Lyon Text";
-  src: url("/brand-assets/lyon-text-regular.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-}
 
 html[data-brand="notion"] {
   /* ── Color roles (carrier) ── */
@@ -497,9 +471,15 @@ html[data-brand="notion"] {
   --badge-default-hover-bg: color-mix(in srgb, hsl(var(--secondary)) 90%, white);
 
   /* Typography */
-  --font-sans: "NotionInter", "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "NotionInter", "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "NotionInter", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:
+    var(--font-inter), "NotionInter", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-heading:
+    var(--font-inter), "NotionInter", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    var(--font-inter), "NotionInter", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-weight-heading: 700;
 
   /* Motion */
@@ -543,18 +523,9 @@ html[data-brand="notion"] {
 /**
  * Brand carrier skin: Raycast (raycast) v1.0.0
  * darkDefault=true dualMode=false button=solid
- * fonts=1 mode=global
+ * fonts=0 mode=global
  * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
-
-/* Brand font faces */
-@font-face {
-  font-family: "Inter";
-  src: url("https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2")
-    format("woff2");
-  font-weight: 100 900;
-  font-display: swap;
-}
 
 html[data-brand="raycast"] {
   /* ── Color roles (carrier) ── */
@@ -692,10 +663,16 @@ html[data-brand="raycast"] {
   --control-font-size-md: 0.8125rem;
 
   /* Typography */
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-heading: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", "GeistMono", ui-monospace, Menlo, monospace;
+  --font-sans:
+    var(--font-inter), "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    "PingFang SC", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-heading:
+    var(--font-inter), "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    var(--font-inter), "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), "Geist Mono", "GeistMono", ui-monospace, Menlo, monospace;
   --font-weight-heading: 400;
 
   /* Motion */
@@ -731,17 +708,9 @@ html[data-brand="raycast"] {
 /**
  * Brand carrier skin: Stripe (stripe) v1.0.0
  * darkDefault=false dualMode=false button=solid
- * fonts=1 mode=global
+ * fonts=0 mode=global
  * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
-
-/* Brand font faces */
-@font-face {
-  font-family: "sohne-var";
-  src: url("/brand-assets/sohne-var.woff2") format("woff2");
-  font-weight: 300 400;
-  font-display: swap;
-}
 
 html[data-brand="stripe"] {
   /* ── Color roles (carrier) ── */
@@ -837,9 +806,18 @@ html[data-brand="stripe"] {
   --badge-default-hover-bg: color-mix(in srgb, hsl(var(--secondary)) 90%, white);
 
   /* Typography */
-  --font-sans: "sohne-var", "Inter Tight", "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "sohne-var", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "sohne-var", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:
+    var(--font-reg-inter-tight), "sohne-var", "Inter Tight", "Inter",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-heading:
+    var(--font-reg-inter-tight), "sohne-var", "Inter Tight",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-display:
+    var(--font-reg-inter-tight), "sohne-var", "Inter Tight",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    system-ui, sans-serif;
   --font-weight-heading: 300;
 
   /* Motion */
@@ -881,32 +859,9 @@ html[data-brand="stripe"] {
 /**
  * Brand carrier skin: Vanta (vanta) v1.0.0
  * darkDefault=false dualMode=false button=solid
- * fonts=3 mode=global
+ * fonts=0 mode=global
  * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
-
-/* Brand font faces */
-@font-face {
-  font-family: "Inter Variable";
-  src: url("https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2")
-    format("woff2");
-  font-weight: 100 900;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Reckless";
-  src: url("/brand-assets/reckless-regular.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Reckless";
-  src: url("/brand-assets/reckless-medium.woff2") format("woff2");
-  font-weight: 500;
-  font-display: swap;
-}
 
 html[data-brand="vanta"] {
   /* ── Color roles (carrier) ── */
@@ -1004,9 +959,17 @@ html[data-brand="vanta"] {
   --badge-default-hover-bg: color-mix(in srgb, hsl(var(--secondary)) 90%, white);
 
   /* Typography */
-  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "Reckless", "Source Serif 4", "Lora", ui-serif, Georgia, serif;
-  --font-display: "Reckless", "Source Serif 4", "Lora", ui-serif, Georgia, serif;
+  --font-sans:
+    var(--font-inter), "Inter Variable", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-heading:
+    var(--font-reg-source-serif-4), "Reckless", "Source Serif 4", "Lora",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-serif, Georgia,
+    serif;
+  --font-display:
+    var(--font-reg-source-serif-4), "Reckless", "Source Serif 4", "Lora",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-serif, Georgia,
+    serif;
   --font-weight-heading: 500;
 
   /* Motion */
@@ -1045,18 +1008,9 @@ html[data-brand="vanta"] {
 /**
  * Brand carrier skin: Vercel (vercel) v1.0.0
  * darkDefault=false dualMode=true button=solid
- * fonts=1 mode=global
+ * fonts=0 mode=global
  * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
-
-/* Brand font faces */
-@font-face {
-  font-family: "Geist Sans";
-  src: url("https://cdn.jsdelivr.net/fontsource/fonts/geist-sans:vf@latest/latin-wght-normal.woff2")
-    format("woff2");
-  font-weight: 100 900;
-  font-display: swap;
-}
 
 html[data-brand="vercel"] {
   /* ── Color roles (carrier) ── */
@@ -1160,10 +1114,16 @@ html[data-brand="vercel"] {
   --control-font-size-md: 0.8125rem;
 
   /* Typography */
-  --font-sans: "Geist Sans", "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "Geist Sans", "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Geist Sans", "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  --font-sans:
+    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-heading:
+    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, Menlo, monospace;
   --font-weight-heading: 450;
 
   /* Motion */

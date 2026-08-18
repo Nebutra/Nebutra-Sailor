@@ -1,17 +1,9 @@
 /**
  * Brand carrier skin: Stripe (stripe) v1.0.0
  * darkDefault=false dualMode=false button=solid
- * fonts=1 mode=global
+ * fonts=0 mode=global
  * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
-
-/* Brand font faces */
-@font-face {
-  font-family: "sohne-var";
-  src: url("/brand-assets/sohne-var.woff2") format("woff2");
-  font-weight: 300 400;
-  font-display: swap;
-}
 
 :root,
 html[data-brand="stripe"] {
@@ -108,9 +100,18 @@ html[data-brand="stripe"] {
   --badge-default-hover-bg: color-mix(in srgb, hsl(var(--secondary)) 90%, white);
 
   /* Typography */
-  --font-sans: "sohne-var", "Inter Tight", "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "sohne-var", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "sohne-var", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:
+    var(--font-reg-inter-tight), "sohne-var", "Inter Tight", "Inter",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-heading:
+    var(--font-reg-inter-tight), "sohne-var", "Inter Tight",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-display:
+    var(--font-reg-inter-tight), "sohne-var", "Inter Tight",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    system-ui, sans-serif;
   --font-weight-heading: 300;
 
   /* Motion */

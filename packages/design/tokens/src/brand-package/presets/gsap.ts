@@ -88,21 +88,6 @@ export function buildGsap(ctx: CompileContext): BrandPackage {
       fontSans: `'Mori', 'Inter Tight', 'DM Sans', ui-sans-serif, system-ui, sans-serif`,
       fontDisplay: `'Mori', 'Inter Tight', ui-sans-serif, system-ui, sans-serif`,
       headingWeight: 600,
-      faces: [
-        {
-          family: "Mori",
-          // Placeholder — Create Center replaces with tenant-uploaded WOFF2
-          src: [{ url: "/brand-assets/mori-regular.woff2", format: "woff2" }],
-          weight: 400,
-          display: "swap",
-        },
-        {
-          family: "Mori",
-          src: [{ url: "/brand-assets/mori-semibold.woff2", format: "woff2" }],
-          weight: 600,
-          display: "swap",
-        },
-      ],
     },
     extensions: {
       categories: {

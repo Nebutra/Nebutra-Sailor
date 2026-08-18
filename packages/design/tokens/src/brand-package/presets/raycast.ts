@@ -94,19 +94,6 @@ export function buildRaycast(ctx: CompileContext): BrandPackage {
       fontMono: `'Geist Mono', 'GeistMono', ui-monospace, Menlo, monospace`,
       fontDisplay: `'Inter', ui-sans-serif, system-ui, sans-serif`,
       headingWeight: 400,
-      faces: [
-        {
-          family: "Inter",
-          src: [
-            {
-              url: "https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2",
-              format: "woff2",
-            },
-          ],
-          weight: "100 900",
-          display: "swap",
-        },
-      ],
     },
     extensions: {
       categories: {

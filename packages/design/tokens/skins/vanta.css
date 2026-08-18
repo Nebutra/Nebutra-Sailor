@@ -1,32 +1,9 @@
 /**
  * Brand carrier skin: Vanta (vanta) v1.0.0
  * darkDefault=false dualMode=false button=solid
- * fonts=3 mode=global
+ * fonts=0 mode=global
  * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
-
-/* Brand font faces */
-@font-face {
-  font-family: "Inter Variable";
-  src: url("https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2")
-    format("woff2");
-  font-weight: 100 900;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Reckless";
-  src: url("/brand-assets/reckless-regular.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Reckless";
-  src: url("/brand-assets/reckless-medium.woff2") format("woff2");
-  font-weight: 500;
-  font-display: swap;
-}
 
 :root,
 html[data-brand="vanta"] {
@@ -125,9 +102,17 @@ html[data-brand="vanta"] {
   --badge-default-hover-bg: color-mix(in srgb, hsl(var(--secondary)) 90%, white);
 
   /* Typography */
-  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "Reckless", "Source Serif 4", "Lora", ui-serif, Georgia, serif;
-  --font-display: "Reckless", "Source Serif 4", "Lora", ui-serif, Georgia, serif;
+  --font-sans:
+    var(--font-inter), "Inter Variable", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-heading:
+    var(--font-reg-source-serif-4), "Reckless", "Source Serif 4", "Lora",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-serif, Georgia,
+    serif;
+  --font-display:
+    var(--font-reg-source-serif-4), "Reckless", "Source Serif 4", "Lora",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-serif, Georgia,
+    serif;
   --font-weight-heading: 500;
 
   /* Motion */

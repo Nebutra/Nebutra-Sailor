@@ -1,5 +1,6 @@
 import "./globals.css";
 import { brand } from "@nebutra/brand/metadata";
+import { fontRegistryClassName } from "@nebutra/fonts/next";
 import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
@@ -27,7 +28,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
   return (
     <html
-      className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}
+      // fontRegistryClassName defines the --font-* variables skins.css names.
+      // This app IS the language switcher; without it every non-default language
+      // demonstrates itself in the system font.
+      className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName} ${fontRegistryClassName}`}
       lang="en"
       suppressHydrationWarning
     >

@@ -114,15 +114,6 @@ export function buildStripe(ctx: CompileContext): BrandPackage {
       fontDisplay: `'sohne-var', 'Inter Tight', ui-sans-serif, system-ui, sans-serif`,
       // Whisper weight is the Stripe signature (even at 56px display)
       headingWeight: 300,
-      faces: [
-        {
-          family: "sohne-var",
-          // Placeholder — Create Center / licensed Söhne Variable
-          src: [{ url: "/brand-assets/sohne-var.woff2", format: "woff2" }],
-          weight: "300 400",
-          display: "swap",
-        },
-      ],
     },
     extensions: {
       categories: {

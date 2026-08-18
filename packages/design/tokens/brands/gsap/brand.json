@@ -49,31 +49,7 @@
   "typography": {
     "fontSans": "'Mori', 'Inter Tight', 'DM Sans', ui-sans-serif, system-ui, sans-serif",
     "fontDisplay": "'Mori', 'Inter Tight', ui-sans-serif, system-ui, sans-serif",
-    "headingWeight": 600,
-    "faces": [
-      {
-        "family": "Mori",
-        "src": [
-          {
-            "url": "/brand-assets/mori-regular.woff2",
-            "format": "woff2"
-          }
-        ],
-        "weight": 400,
-        "display": "swap"
-      },
-      {
-        "family": "Mori",
-        "src": [
-          {
-            "url": "/brand-assets/mori-semibold.woff2",
-            "format": "woff2"
-          }
-        ],
-        "weight": 600,
-        "display": "swap"
-      }
-    ]
+    "headingWeight": 600
   },
   "motion": {
     "easeOut": "cubic-bezier(0.22, 1, 0.36, 1)",

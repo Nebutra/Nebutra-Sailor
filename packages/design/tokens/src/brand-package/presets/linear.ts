@@ -146,19 +146,6 @@ export function buildLinear(ctx: CompileContext): BrandPackage {
       fontSans: `'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif`,
       fontMono: `'Berkeley Mono', 'JetBrains Mono', ui-monospace, monospace`,
       headingWeight: 510,
-      faces: [
-        {
-          family: "Inter Variable",
-          src: [
-            {
-              url: "https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2",
-              format: "woff2",
-            },
-          ],
-          weight: "100 900",
-          display: "swap",
-        },
-      ],
     },
     extensions: {
       sourceUrl: typeof ctx.refero.url === "string" ? ctx.refero.url : "https://linear.app",

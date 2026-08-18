@@ -133,32 +133,6 @@ export function buildVanta(ctx: CompileContext): BrandPackage {
       fontSans: `'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif`,
       fontDisplay: `'Reckless', 'Source Serif 4', 'Lora', ui-serif, Georgia, serif`,
       headingWeight: 500,
-      faces: [
-        {
-          family: "Inter Variable",
-          src: [
-            {
-              url: "https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2",
-              format: "woff2",
-            },
-          ],
-          weight: "100 900",
-          display: "swap",
-        },
-        {
-          family: "Reckless",
-          // Placeholder — Create Center / tenant hosts the licensed Reckless cut
-          src: [{ url: "/brand-assets/reckless-regular.woff2", format: "woff2" }],
-          weight: 400,
-          display: "swap",
-        },
-        {
-          family: "Reckless",
-          src: [{ url: "/brand-assets/reckless-medium.woff2", format: "woff2" }],
-          weight: 500,
-          display: "swap",
-        },
-      ],
     },
     extensions: {
       categories: {

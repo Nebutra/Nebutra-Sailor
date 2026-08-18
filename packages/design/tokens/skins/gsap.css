@@ -1,24 +1,9 @@
 /**
  * Brand carrier skin: GSAP (gsap) v1.0.0
  * darkDefault=true dualMode=false button=gradient-stroke
- * fonts=2 mode=global
+ * fonts=0 mode=global
  * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
-
-/* Brand font faces */
-@font-face {
-  font-family: "Mori";
-  src: url("/brand-assets/mori-regular.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Mori";
-  src: url("/brand-assets/mori-semibold.woff2") format("woff2");
-  font-weight: 600;
-  font-display: swap;
-}
 
 :root,
 .dark,
@@ -124,9 +109,16 @@ html[data-brand="gsap"] {
   --control-font-size-md: 0.8125rem;
 
   /* Typography */
-  --font-sans: "Mori", "Inter Tight", "DM Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "Mori", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Mori", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:
+    var(--font-reg-inter-tight), "Mori", "Inter Tight", "DM Sans",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-heading:
+    var(--font-reg-inter-tight), "Mori", "Inter Tight", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    var(--font-reg-inter-tight), "Mori", "Inter Tight", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-weight-heading: 600;
 
   /* Motion */

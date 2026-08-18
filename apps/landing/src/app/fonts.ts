@@ -1,7 +1,7 @@
+import { fontRegistryClassName } from "@nebutra/fonts/next";
 import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
-import { Inter, JetBrains_Mono, Playfair_Display, Space_Grotesk } from "next/font/google";
 
 // GeistSans → --font-geist-sans | GeistMono → --font-geist-mono
 // cjkFontClassName → --font-vivo-sans-sc (self-hosted vivo Sans SC subset,
@@ -10,30 +10,16 @@ import { Inter, JetBrains_Mono, Playfair_Display, Space_Grotesk } from "next/fon
 // falls through to vivo Sans SC, whose subset contains no Latin glyphs at all.
 // Weights 400/500/600 are real files — see @nebutra/fonts/next/cjk.
 //
-// Theme-preset webfonts — loaded once so that non-default themes (gradient,
-// design languages via @nebutra/theme (data-brand)
-// render in their declared typeface instead of falling back to system fonts.
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
-  display: "swap",
-});
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space-grotesk",
-  display: "swap",
-});
-const playfairDisplay = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair-display",
-  display: "swap",
-});
-
+// Design-language webfonts — the registry in @nebutra/fonts/next, self-hosted at
+// build time. Declaring the whole set is cheap: a file is only fetched when an
+// element actually resolves to that variable, and skins.css names them via
+// var(--font-*), which is the ONLY way to reach next/font's hashed families.
+// Hand-declaring a subset here is what left four of the seven design languages
+// pointing at variables no app defined.
 /**
  * Combined font CSS-variable classes applied to <html>. Shared by the two
  * root-layout owners — `app/[lang]/layout.tsx` (localized routes) and
  * `app/not-found.tsx` (the global, non-localized 404) — so both render the
  * same typography shell.
  */
-export const fontVariables = `${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName} ${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable}`;
+export const fontVariables = `${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName} ${fontRegistryClassName}`;

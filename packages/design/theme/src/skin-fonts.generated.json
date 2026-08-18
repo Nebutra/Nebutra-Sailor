@@ -1,9 +1,80 @@
 {
-  "gsap": ["Mori", "Inter Tight", "DM Sans"],
-  "linear": ["Inter Variable", "Inter", "Berkeley Mono", "JetBrains Mono"],
-  "notion": ["NotionInter", "Inter"],
-  "raycast": ["Inter", "Geist Mono", "GeistMono", "Menlo"],
-  "stripe": ["sohne-var", "Inter Tight", "Inter"],
-  "vanta": ["Inter Variable", "Inter", "Reckless", "Source Serif 4", "Lora"],
-  "vercel": ["Geist Sans", "Geist", "Geist Mono", "Menlo"]
+  "gsap": [
+    "var(--font-reg-inter-tight)",
+    "Mori",
+    "Inter Tight",
+    "DM Sans",
+    "var(--font-vivo-sans-sc",
+    "vivo Sans SC\")",
+    "Noto Sans SC",
+    "PingFang SC"
+  ],
+  "linear": [
+    "var(--font-inter)",
+    "Inter Variable",
+    "Inter",
+    "var(--font-vivo-sans-sc",
+    "vivo Sans SC\")",
+    "Noto Sans SC",
+    "PingFang SC",
+    "var(--font-jetbrains-mono)",
+    "Berkeley Mono",
+    "JetBrains Mono"
+  ],
+  "notion": [
+    "var(--font-inter)",
+    "NotionInter",
+    "Inter",
+    "var(--font-vivo-sans-sc",
+    "vivo Sans SC\")",
+    "Noto Sans SC",
+    "PingFang SC"
+  ],
+  "raycast": [
+    "var(--font-inter)",
+    "Inter",
+    "var(--font-vivo-sans-sc",
+    "vivo Sans SC\")",
+    "Noto Sans SC",
+    "PingFang SC",
+    "var(--font-geist-mono)",
+    "Geist Mono",
+    "GeistMono",
+    "Menlo"
+  ],
+  "stripe": [
+    "var(--font-reg-inter-tight)",
+    "sohne-var",
+    "Inter Tight",
+    "Inter",
+    "var(--font-vivo-sans-sc",
+    "vivo Sans SC\")",
+    "Noto Sans SC",
+    "PingFang SC"
+  ],
+  "vanta": [
+    "var(--font-inter)",
+    "Inter Variable",
+    "Inter",
+    "var(--font-vivo-sans-sc",
+    "vivo Sans SC\")",
+    "Noto Sans SC",
+    "PingFang SC",
+    "var(--font-reg-source-serif-4)",
+    "Reckless",
+    "Source Serif 4",
+    "Lora"
+  ],
+  "vercel": [
+    "var(--font-geist-sans)",
+    "Geist Sans",
+    "Geist",
+    "var(--font-vivo-sans-sc",
+    "vivo Sans SC\")",
+    "Noto Sans SC",
+    "PingFang SC",
+    "var(--font-geist-mono)",
+    "Geist Mono",
+    "Menlo"
+  ]
 }

@@ -21,6 +21,32 @@ const ids = readdirSync(brandsDir, { withFileTypes: true })
   .map((d) => d.name)
   .sort();
 
+/**
+ * Refuse to write a skin whose typography cannot render.
+ *
+ * next/font registers each self-hosted face under a hashed family name that is
+ * reachable ONLY through its CSS variable, so a stack of bare names —
+ * `"Mori", "Inter Tight", ui-sans-serif` — silently resolves to the system font
+ * no matter how many families it lists. Every one of the seven built-in
+ * languages was in that state, and nothing anywhere reported it: the CSS
+ * parsed, the variable was set, the page rendered.
+ *
+ * `cssFontStack` prepends the nearest family in FONT_REGISTRY, so a declaration
+ * without a leading `var(--font-…)` means the brand named nothing we self-host.
+ * That is a brand-authoring mistake, and the only moment it is visible is here.
+ */
+function assertFontsCanRender(id: string, css: string): void {
+  const dead = [...css.matchAll(/--font-(sans|heading|display|mono):\s*([^;]+);/g)].filter(
+    (m) => !m[2].trim().startsWith("var(--font"),
+  );
+  if (dead.length === 0) return;
+  throw new Error(
+    `${id}: ${dead.map((m) => `--font-${m[1]}`).join(", ")} name no self-hosted family, ` +
+      `so they would render in the system font. Add a family from FONT_REGISTRY ` +
+      `(@nebutra/fonts) to the stack — registering the face there if it is a new one.`,
+  );
+}
+
 const written: string[] = [];
 const cssPaths: string[] = [];
 
@@ -33,6 +59,7 @@ for (const id of ids) {
   const raw = JSON.parse(readFileSync(brandPath, "utf8"));
   const brand = normalizeBrandPackage({ ...raw, id: raw.id || id });
   const css = emitBrandCss(brand, { mode: "global" });
+  assertFontsCanRender(brand.id, css);
 
   // Single publish path: skins/<id>.css (no brands/<id>/skin.css mirror)
   const outPath = join(skinsDir, `${brand.id}.css`);

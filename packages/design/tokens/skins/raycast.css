@@ -1,18 +1,9 @@
 /**
  * Brand carrier skin: Raycast (raycast) v1.0.0
  * darkDefault=true dualMode=false button=solid
- * fonts=1 mode=global
+ * fonts=0 mode=global
  * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
-
-/* Brand font faces */
-@font-face {
-  font-family: "Inter";
-  src: url("https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2")
-    format("woff2");
-  font-weight: 100 900;
-  font-display: swap;
-}
 
 :root,
 .dark,
@@ -152,10 +143,16 @@ html[data-brand="raycast"] {
   --control-font-size-md: 0.8125rem;
 
   /* Typography */
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-heading: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", "GeistMono", ui-monospace, Menlo, monospace;
+  --font-sans:
+    var(--font-inter), "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    "PingFang SC", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-heading:
+    var(--font-inter), "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    var(--font-inter), "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), "Geist Mono", "GeistMono", ui-monospace, Menlo, monospace;
   --font-weight-heading: 400;
 
   /* Motion */

@@ -3,6 +3,7 @@
  * Components bind: --primary (= action), --brand-mark, --elevation-*, --radius-*.
  */
 
+import { withNearestRegistryFont } from "@nebutra/fonts";
 import { isDualModeBrand, normalizeBrandPackage } from "./normalize";
 import type {
   BrandColorRoles,
@@ -14,9 +15,48 @@ import type {
   BrandSpacing,
 } from "./types";
 
-/** Biome CSS formatter prefers double-quoted font families over single quotes. */
+/**
+ * Resolve a declared stack to something that can actually render.
+ *
+ * Biome's CSS formatter prefers double quotes, and `withNearestRegistryFont`
+ * prepends the first family in the stack that the app self-hosts — without it a
+ * bare `Inter` in a brand stack does not reach next/font's hashed face and the
+ * whole chain falls through to `ui-sans-serif`.
+ */
 function cssFontStack(stack: string): string {
-  return stack.replace(/'/g, '"');
+  return (withNearestRegistryFont(stack) ?? stack).replace(/'/g, '"');
+}
+
+/** The generic families that end a stack — nothing after one is ever reached. */
+const GENERIC_FAMILIES = new Set([
+  "ui-sans-serif",
+  "ui-serif",
+  "ui-monospace",
+  "system-ui",
+  "sans-serif",
+  "serif",
+  "monospace",
+  "-apple-system",
+  "BlinkMacSystemFont",
+]);
+
+/**
+ * Keep Chinese readable in every design language.
+ *
+ * Inter, Geist, Söhne and Mori carry no CJK glyphs, and a generic family always
+ * resolves — so `"Inter", ui-sans-serif, sans-serif` hands every Han character
+ * to whatever the OS picks, and the careful vivo Sans SC / PingFang order that
+ * the default stack spells out is lost the moment a visitor picks a language.
+ *
+ * The tail goes in ahead of the first generic family, which is the last point
+ * at which it can still be reached.
+ */
+function withCjkTail(stack: string): string {
+  const families = stack.split(",").map((f) => f.trim());
+  const cut = families.findIndex((f) => GENERIC_FAMILIES.has(f.replace(/"/g, "")));
+  if (cut === -1 || families.some((f) => f.includes("vivo Sans SC"))) return stack;
+  const cjk = ['var(--font-vivo-sans-sc, "vivo Sans SC")', '"Noto Sans SC"', '"PingFang SC"'];
+  return [...families.slice(0, cut), ...cjk, ...families.slice(cut)].join(", ");
 }
 
 /**
@@ -242,10 +282,30 @@ function recipeVars(recipe: BrandRecipe): string[] {
   return lines;
 }
 
+/**
+ * A skin may only @font-face something the app's own origin can serve.
+ *
+ * The seven built-in languages between them declared nine faces: four pulled
+ * Inter/Geist from a public CDN, which every app's `font-src 'self' data:` CSP
+ * blocked, and five pointed at `/brand-assets/*.woff2` files that are not in
+ * the repo and never can be — they are other companies' licensed typefaces.
+ * Nine declarations, zero fonts, no error anywhere: the stylesheet parsed, the
+ * rule was present, the browser simply refused the fetch.
+ *
+ * Same-origin is the line because it is the one the CSP already draws. A
+ * customer who owns Söhne drops the file in `public/` and the face works; a
+ * skin cannot quietly reintroduce a third-party runtime dependency, and there
+ * is no CSP to widen for it.
+ */
+function isServableFaceUrl(url: string): boolean {
+  return url.startsWith("/") && !url.startsWith("//");
+}
+
 function emitFontFaces(faces: BrandFontFace[] | undefined): string[] {
-  if (!faces?.length) return [];
+  const servable = faces?.filter((face) => face.src.every((s) => isServableFaceUrl(s.url)));
+  if (!servable?.length) return [];
   const out: string[] = ["/* Brand font faces */"];
-  for (const face of faces) {
+  for (const face of servable) {
     const src = face.src
       .map((s) => {
         const fmt = s.format ? ` format("${s.format}")` : "";
@@ -434,8 +494,8 @@ export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions =
   ];
 
   // Biome CSS formatter prefers double-quoted font families.
-  const fontSans = cssFontStack(t.fontSans);
-  const fontDisplay = cssFontStack(t.fontDisplay ?? t.fontSans);
+  const fontSans = withCjkTail(cssFontStack(t.fontSans));
+  const fontDisplay = withCjkTail(cssFontStack(t.fontDisplay ?? t.fontSans));
   const typeLines = [
     `  --font-sans: ${fontSans};`,
     `  --font-heading: ${fontDisplay};`,

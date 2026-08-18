@@ -29,6 +29,7 @@ import {
   Figtree,
   Fira_Code,
   Inter,
+  Inter_Tight,
   JetBrains_Mono,
   Lexend,
   Manrope,
@@ -39,6 +40,7 @@ import {
   Roboto_Mono,
   Sora,
   Source_Code_Pro,
+  Source_Serif_4,
   Space_Grotesk,
   Work_Sans,
 } from "next/font/google";
@@ -46,6 +48,11 @@ import {
 export { cjkFontClassName, vivoSansCn } from "./next-cjk";
 
 const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-inter" });
+const interTight = Inter_Tight({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-reg-inter-tight",
+});
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   display: "swap",
@@ -92,6 +99,11 @@ const robotoMono = Roboto_Mono({
   display: "swap",
   variable: "--font-reg-roboto-mono",
 });
+const sourceSerif4 = Source_Serif_4({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-reg-source-serif-4",
+});
 const sourceCodePro = Source_Code_Pro({
   subsets: ["latin"],
   display: "swap",
@@ -101,8 +113,10 @@ const sourceCodePro = Source_Code_Pro({
 /** All registry faces, in declaration order. */
 export const FONT_REGISTRY_FACES = [
   inter,
+  interTight,
   spaceGrotesk,
   playfairDisplay,
+  sourceSerif4,
   jetbrainsMono,
   manrope,
   sora,
