@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
+import { COMMAND_EXEC_TOOL_NAME, registerCommandExecTool } from "./command-exec";
 import { isTurnTerminal, mergeTurnConfig, type TurnConfig } from "./model";
 import { DEFAULT_CAPABILITY_POLICY, DENIED, isApproval, resolveRuleDecision } from "./policy";
 import { METHOD_REGISTRY, resolveScope, scopeKey } from "./protocol";
@@ -9,10 +10,6 @@ import {
   replay,
   sanitizeForPersist,
 } from "./rollout";
-import {
-  COMMAND_EXEC_TOOL_NAME,
-  registerCommandExecTool,
-} from "./command-exec";
 import {
   assertSafePosture,
   CarinaProtocolError,
@@ -296,7 +293,6 @@ describe("tools", () => {
   });
 });
 
-
 describe("Carina Phase 2 host helpers", () => {
   it("resolveCarinaSandboxFromEnv fails closed when co-deploy is off", () => {
     expect(resolveCarinaSandboxFromEnv({ CARINA_CODEPLOY: "0" })).toBe(REFUSING_SANDBOX);
@@ -434,7 +430,6 @@ describe("Carina Phase 2 host helpers", () => {
   });
 });
 
-
 describe("Carina workspace + approval", () => {
   it("resolveCarinaWorkspaceRoot prefers map then template then root", () => {
     expect(
@@ -495,10 +490,9 @@ describe("Carina workspace + approval", () => {
         );
       }
       if (body.method === "governance.approval.resolve") {
-        return new Response(
-          JSON.stringify({ jsonrpc: "2.0", id: body.id, result: { ok: true } }),
-          { status: 200 },
-        );
+        return new Response(JSON.stringify({ jsonrpc: "2.0", id: body.id, result: { ok: true } }), {
+          status: 200,
+        });
       }
       if (body.method === "command.exec") {
         execCount += 1;

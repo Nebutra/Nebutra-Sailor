@@ -5,14 +5,14 @@
  */
 
 import * as p from "@clack/prompts";
+import { mapDeploy, mapPayment, resolvePaymentChoice } from "../steps/mappers";
+import type { ResolvedConfig } from "../steps/resolve-config";
 import type { NebutraConfig } from "./config";
+import { resolveScaffoldDeployTargets } from "./deploy";
 import { EMAIL_PROVIDERS } from "./email-meta";
 import { collectPreviewSelections } from "./package-status";
 import type { PaymentChoice } from "./payment";
 import { STORAGE_PROVIDERS } from "./storage-meta";
-import type { ResolvedConfig } from "../steps/resolve-config";
-import { mapDeploy, mapPayment, resolvePaymentChoice } from "../steps/mappers";
-import { resolveScaffoldDeployTargets } from "./deploy";
 
 export type ReviewOutcome = "proceed" | "cancelled";
 
@@ -66,10 +66,7 @@ function refreshPreview(resolved: ResolvedConfig): void {
   resolved.config = rebuildConfig(resolved);
 }
 
-async function customizeProviders(
-  resolved: ResolvedConfig,
-  onCancel: () => never,
-): Promise<void> {
+async function customizeProviders(resolved: ResolvedConfig, onCancel: () => never): Promise<void> {
   const payment = await p.select({
     message: "Payment provider",
     options: [

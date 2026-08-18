@@ -1,10 +1,10 @@
-import { describe, expect, it } from "vitest";
 import {
   CODEPLOY_CARINA_SOCKET_PATH,
   CODEPLOY_CARINA_WORKSPACE_ROOT,
-  REFUSING_SANDBOX,
   isCarinaSandbox,
+  REFUSING_SANDBOX,
 } from "@nebutra/agent-runtime";
+import { describe, expect, it } from "vitest";
 import { createGatewayCarinaBundle, getCarinaSandbox } from "./carina-sandbox.js";
 
 describe("createGatewayCarinaBundle", () => {

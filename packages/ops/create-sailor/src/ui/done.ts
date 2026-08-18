@@ -51,9 +51,7 @@ export function showDone(opts: DoneOptions): void {
     lines.push(`     ${arrow} ${pm} install`);
   }
 
-  lines.push(
-    `     ${arrow} fill .env.local  ${dim("→ provider keys from .env.example")}`,
-  );
+  lines.push(`     ${arrow} fill .env.local  ${dim("→ provider keys from .env.example")}`);
 
   if (hasDatabase) {
     lines.push(

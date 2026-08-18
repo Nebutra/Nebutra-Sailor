@@ -9,8 +9,7 @@ import { createConnection, type Socket } from "node:net";
 import { homedir } from "node:os";
 import { join } from "node:path";
 
-export const defaultCarinaSocketPath = (): string =>
-  join(homedir(), ".carina", "daemon.sock");
+export const defaultCarinaSocketPath = (): string => join(homedir(), ".carina", "daemon.sock");
 
 /** Production co-deploy layout on the Sailor ECS api host. */
 export const CODEPLOY_CARINA_SOCKET_PATH = "/var/carina/run/daemon.sock";
@@ -131,9 +130,7 @@ export function createCarinaNdjsonClient(
           socket = null;
         });
         s.on("close", () => {
-          failAll(
-            new CarinaNdjsonError("carina-daemon connection closed", 503, "transport_error"),
-          );
+          failAll(new CarinaNdjsonError("carina-daemon connection closed", 503, "transport_error"));
           socket = null;
         });
         resolve();

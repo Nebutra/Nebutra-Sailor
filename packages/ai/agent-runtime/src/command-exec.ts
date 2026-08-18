@@ -5,12 +5,8 @@
 
 import { z } from "zod";
 
-import { DEFAULT_CAPABILITY_POLICY, type CapabilityPolicy } from "./policy";
-import {
-  isCarinaSandbox,
-  type ExternalSandbox,
-  type SandboxExecResult,
-} from "./sandbox";
+import { type CapabilityPolicy, DEFAULT_CAPABILITY_POLICY } from "./policy";
+import { type ExternalSandbox, isCarinaSandbox, type SandboxExecResult } from "./sandbox";
 import { RuntimeToolRegistry } from "./tools";
 
 export const COMMAND_EXEC_TOOL_NAME = "command_exec" as const;

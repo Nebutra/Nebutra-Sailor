@@ -290,7 +290,10 @@ export function buildProgram(options: BuildProgramOptions): Command {
         }
 
         // Post-scaffold golden path when create-sailor marker is present
-        if (fs.existsSync(scaffoldMetaFile) || fs.existsSync(path.join(root, "nebutra.config.json"))) {
+        if (
+          fs.existsSync(scaffoldMetaFile) ||
+          fs.existsSync(path.join(root, "nebutra.config.json"))
+        ) {
           logger.info("");
           logger.info("Golden path to a running app:");
           logger.info("  1. Fill .env.local (copy keys from .env.example)");
