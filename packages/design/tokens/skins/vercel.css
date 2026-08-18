@@ -63,6 +63,20 @@ html[data-brand="vercel"] {
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
 
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(0 0% 98%);
+  --neutral-2: hsl(0 0% 100%);
+  --neutral-3: color-mix(in oklab, hsl(0 0% 92%) 20%, hsl(0 0% 100%));
+  --neutral-4: color-mix(in oklab, hsl(0 0% 92%) 40%, hsl(0 0% 100%));
+  --neutral-5: color-mix(in oklab, hsl(0 0% 92%) 60%, hsl(0 0% 100%));
+  --neutral-6: color-mix(in oklab, hsl(0 0% 92%) 80%, hsl(0 0% 100%));
+  --neutral-7: hsl(0 0% 92%);
+  --neutral-8: color-mix(in oklab, hsl(0 0% 40%) 25%, hsl(0 0% 92%));
+  --neutral-9: color-mix(in oklab, hsl(0 0% 40%) 50%, hsl(0 0% 92%));
+  --neutral-10: color-mix(in oklab, hsl(0 0% 40%) 75%, hsl(0 0% 92%));
+  --neutral-11: hsl(0 0% 40%);
+  --neutral-12: hsl(0 0% 9%);
+
   /* Recipe (action language + free elev/radii) */
   /* Shape slots */
   --btn-default-radius: 6px;
@@ -207,4 +221,18 @@ html.dark[data-brand="vercel"] {
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
+
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(0 0% 0%);
+  --neutral-2: hsl(0 0% 4%);
+  --neutral-3: color-mix(in oklab, hsl(0 0% 16%) 20%, hsl(0 0% 4%));
+  --neutral-4: color-mix(in oklab, hsl(0 0% 16%) 40%, hsl(0 0% 4%));
+  --neutral-5: color-mix(in oklab, hsl(0 0% 16%) 60%, hsl(0 0% 4%));
+  --neutral-6: color-mix(in oklab, hsl(0 0% 16%) 80%, hsl(0 0% 4%));
+  --neutral-7: hsl(0 0% 16%);
+  --neutral-8: color-mix(in oklab, hsl(0 0% 63%) 25%, hsl(0 0% 16%));
+  --neutral-9: color-mix(in oklab, hsl(0 0% 63%) 50%, hsl(0 0% 16%));
+  --neutral-10: color-mix(in oklab, hsl(0 0% 63%) 75%, hsl(0 0% 16%));
+  --neutral-11: hsl(0 0% 63%);
+  --neutral-12: hsl(0 0% 93%);
 }

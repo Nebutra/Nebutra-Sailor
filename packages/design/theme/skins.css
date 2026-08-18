@@ -74,6 +74,20 @@ html[data-brand="gsap"] {
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
 
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(150 7% 6%);
+  --neutral-2: hsl(0 0% 10%);
+  --neutral-3: color-mix(in oklab, hsl(70 5% 25%) 20%, hsl(0 0% 10%));
+  --neutral-4: color-mix(in oklab, hsl(70 5% 25%) 40%, hsl(0 0% 10%));
+  --neutral-5: color-mix(in oklab, hsl(70 5% 25%) 60%, hsl(0 0% 10%));
+  --neutral-6: color-mix(in oklab, hsl(70 5% 25%) 80%, hsl(0 0% 10%));
+  --neutral-7: hsl(70 5% 25%);
+  --neutral-8: color-mix(in oklab, hsl(60 6% 46%) 25%, hsl(70 5% 25%));
+  --neutral-9: color-mix(in oklab, hsl(60 6% 46%) 50%, hsl(70 5% 25%));
+  --neutral-10: color-mix(in oklab, hsl(60 6% 46%) 75%, hsl(70 5% 25%));
+  --neutral-11: hsl(60 6% 46%);
+  --neutral-12: hsl(54 100% 94%);
+
   /* Recipe (action language + free elev/radii) */
   /* Shape slots */
   --btn-default-radius: 100px;
@@ -232,6 +246,20 @@ html[data-brand="linear"] {
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
 
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(0 0% 100%);
+  --neutral-2: hsl(0 0% 98%);
+  --neutral-3: color-mix(in oklab, hsl(220 13% 91%) 20%, hsl(0 0% 98%));
+  --neutral-4: color-mix(in oklab, hsl(220 13% 91%) 40%, hsl(0 0% 98%));
+  --neutral-5: color-mix(in oklab, hsl(220 13% 91%) 60%, hsl(0 0% 98%));
+  --neutral-6: color-mix(in oklab, hsl(220 13% 91%) 80%, hsl(0 0% 98%));
+  --neutral-7: hsl(220 13% 91%);
+  --neutral-8: color-mix(in oklab, hsl(218 5% 41%) 25%, hsl(220 13% 91%));
+  --neutral-9: color-mix(in oklab, hsl(218 5% 41%) 50%, hsl(220 13% 91%));
+  --neutral-10: color-mix(in oklab, hsl(218 5% 41%) 75%, hsl(220 13% 91%));
+  --neutral-11: hsl(218 5% 41%);
+  --neutral-12: hsl(210 11% 4%);
+
   /* Recipe (action language + free elev/radii) */
   /* Shape slots */
   --btn-default-radius: 6px;
@@ -373,6 +401,20 @@ html.dark[data-brand="linear"] {
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
+
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(210 11% 4%);
+  --neutral-2: hsl(210 6% 6%);
+  --neutral-3: color-mix(in oklab, hsl(223 9% 15%) 20%, hsl(210 6% 6%));
+  --neutral-4: color-mix(in oklab, hsl(223 9% 15%) 40%, hsl(210 6% 6%));
+  --neutral-5: color-mix(in oklab, hsl(223 9% 15%) 60%, hsl(210 6% 6%));
+  --neutral-6: color-mix(in oklab, hsl(223 9% 15%) 80%, hsl(210 6% 6%));
+  --neutral-7: hsl(223 9% 15%);
+  --neutral-8: color-mix(in oklab, hsl(218 5% 41%) 25%, hsl(223 9% 15%));
+  --neutral-9: color-mix(in oklab, hsl(218 5% 41%) 50%, hsl(223 9% 15%));
+  --neutral-10: color-mix(in oklab, hsl(218 5% 41%) 75%, hsl(223 9% 15%));
+  --neutral-11: hsl(218 5% 41%);
+  --neutral-12: hsl(0 0% 100%);
 }
 
 /**
@@ -393,7 +435,7 @@ html[data-brand="notion"] {
   --role-quiet: 208 92% 95%;
   --role-quiet-fg: 208 100% 44%;
   --role-muted: 208 92% 95%;
-  --role-muted-fg: 0 0% 46%;
+  --role-muted-fg: 0 0% 43%;
   --role-border: 30 5% 88%;
   --role-input: 30 5% 88%;
   --role-ring: 208 100% 44%;
@@ -414,7 +456,7 @@ html[data-brand="notion"] {
   --secondary: 208 92% 95%;
   --secondary-foreground: 208 100% 44%;
   --muted: 208 92% 95%;
-  --muted-foreground: 0 0% 46%;
+  --muted-foreground: 0 0% 43%;
   --accent: 0 0% 0%;
   --accent-foreground: 0 0% 100%;
   --destructive: 7 92% 58%;
@@ -442,6 +484,20 @@ html[data-brand="notion"] {
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
+
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(30 10% 96%);
+  --neutral-2: hsl(0 0% 100%);
+  --neutral-3: color-mix(in oklab, hsl(30 5% 88%) 20%, hsl(0 0% 100%));
+  --neutral-4: color-mix(in oklab, hsl(30 5% 88%) 40%, hsl(0 0% 100%));
+  --neutral-5: color-mix(in oklab, hsl(30 5% 88%) 60%, hsl(0 0% 100%));
+  --neutral-6: color-mix(in oklab, hsl(30 5% 88%) 80%, hsl(0 0% 100%));
+  --neutral-7: hsl(30 5% 88%);
+  --neutral-8: color-mix(in oklab, hsl(0 0% 43%) 25%, hsl(30 5% 88%));
+  --neutral-9: color-mix(in oklab, hsl(0 0% 43%) 50%, hsl(30 5% 88%));
+  --neutral-10: color-mix(in oklab, hsl(0 0% 43%) 75%, hsl(30 5% 88%));
+  --neutral-11: hsl(0 0% 43%);
+  --neutral-12: hsl(0 0% 0%);
 
   /* Recipe (action language + free elev/radii) */
   /* Shape slots */
@@ -548,7 +604,7 @@ html[data-brand="raycast"] {
   --role-quiet: 220 5% 11%;
   --role-quiet-fg: 0 0% 100%;
   --role-muted: 220 8% 7%;
-  --role-muted-fg: 210 1% 42%;
+  --role-muted-fg: 210 1% 48%;
   --role-border: 210 2% 19%;
   --role-input: 210 2% 19%;
   --role-ring: 240 1% 61%;
@@ -569,7 +625,7 @@ html[data-brand="raycast"] {
   --secondary: 220 5% 11%;
   --secondary-foreground: 0 0% 100%;
   --muted: 220 8% 7%;
-  --muted-foreground: 210 1% 42%;
+  --muted-foreground: 210 1% 48%;
   --accent: 0 100% 69%;
   --accent-foreground: 210 1% 27%;
   --destructive: 0 72% 51%;
@@ -597,6 +653,20 @@ html[data-brand="raycast"] {
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
+
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(210 20% 2%);
+  --neutral-2: hsl(220 18% 3%);
+  --neutral-3: color-mix(in oklab, hsl(210 2% 19%) 20%, hsl(220 18% 3%));
+  --neutral-4: color-mix(in oklab, hsl(210 2% 19%) 40%, hsl(220 18% 3%));
+  --neutral-5: color-mix(in oklab, hsl(210 2% 19%) 60%, hsl(220 18% 3%));
+  --neutral-6: color-mix(in oklab, hsl(210 2% 19%) 80%, hsl(220 18% 3%));
+  --neutral-7: hsl(210 2% 19%);
+  --neutral-8: color-mix(in oklab, hsl(210 1% 48%) 25%, hsl(210 2% 19%));
+  --neutral-9: color-mix(in oklab, hsl(210 1% 48%) 50%, hsl(210 2% 19%));
+  --neutral-10: color-mix(in oklab, hsl(210 1% 48%) 75%, hsl(210 2% 19%));
+  --neutral-11: hsl(210 1% 48%);
+  --neutral-12: hsl(0 0% 100%);
 
   /* Recipe (action language + free elev/radii) */
   /* Shape slots */
@@ -784,6 +854,20 @@ html[data-brand="stripe"] {
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
 
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(0 0% 100%);
+  --neutral-2: hsl(0 0% 100%);
+  --neutral-3: color-mix(in oklab, hsl(210 44% 93%) 20%, hsl(0 0% 100%));
+  --neutral-4: color-mix(in oklab, hsl(210 44% 93%) 40%, hsl(0 0% 100%));
+  --neutral-5: color-mix(in oklab, hsl(210 44% 93%) 60%, hsl(0 0% 100%));
+  --neutral-6: color-mix(in oklab, hsl(210 44% 93%) 80%, hsl(0 0% 100%));
+  --neutral-7: hsl(210 44% 93%);
+  --neutral-8: color-mix(in oklab, hsl(217 17% 47%) 25%, hsl(210 44% 93%));
+  --neutral-9: color-mix(in oklab, hsl(217 17% 47%) 50%, hsl(210 44% 93%));
+  --neutral-10: color-mix(in oklab, hsl(217 17% 47%) 75%, hsl(210 44% 93%));
+  --neutral-11: hsl(217 17% 47%);
+  --neutral-12: hsl(211 78% 11%);
+
   /* Recipe (action language + free elev/radii) */
   /* Shape slots */
   --btn-default-radius: 4px;
@@ -941,6 +1025,20 @@ html[data-brand="vanta"] {
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
 
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(220 23% 97%);
+  --neutral-2: hsl(0 0% 100%);
+  --neutral-3: color-mix(in oklab, hsl(240 17% 11%) 20%, hsl(0 0% 100%));
+  --neutral-4: color-mix(in oklab, hsl(240 17% 11%) 40%, hsl(0 0% 100%));
+  --neutral-5: color-mix(in oklab, hsl(240 17% 11%) 60%, hsl(0 0% 100%));
+  --neutral-6: color-mix(in oklab, hsl(240 17% 11%) 80%, hsl(0 0% 100%));
+  --neutral-7: hsl(240 17% 11%);
+  --neutral-8: color-mix(in oklab, hsl(238 11% 48%) 25%, hsl(240 17% 11%));
+  --neutral-9: color-mix(in oklab, hsl(238 11% 48%) 50%, hsl(240 17% 11%));
+  --neutral-10: color-mix(in oklab, hsl(238 11% 48%) 75%, hsl(240 17% 11%));
+  --neutral-11: hsl(238 11% 48%);
+  --neutral-12: hsl(240 17% 11%);
+
   /* Recipe (action language + free elev/radii) */
   /* Shape slots */
   --btn-default-radius: 999px;
@@ -1089,6 +1187,20 @@ html[data-brand="vercel"] {
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
 
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(0 0% 98%);
+  --neutral-2: hsl(0 0% 100%);
+  --neutral-3: color-mix(in oklab, hsl(0 0% 92%) 20%, hsl(0 0% 100%));
+  --neutral-4: color-mix(in oklab, hsl(0 0% 92%) 40%, hsl(0 0% 100%));
+  --neutral-5: color-mix(in oklab, hsl(0 0% 92%) 60%, hsl(0 0% 100%));
+  --neutral-6: color-mix(in oklab, hsl(0 0% 92%) 80%, hsl(0 0% 100%));
+  --neutral-7: hsl(0 0% 92%);
+  --neutral-8: color-mix(in oklab, hsl(0 0% 40%) 25%, hsl(0 0% 92%));
+  --neutral-9: color-mix(in oklab, hsl(0 0% 40%) 50%, hsl(0 0% 92%));
+  --neutral-10: color-mix(in oklab, hsl(0 0% 40%) 75%, hsl(0 0% 92%));
+  --neutral-11: hsl(0 0% 40%);
+  --neutral-12: hsl(0 0% 9%);
+
   /* Recipe (action language + free elev/radii) */
   /* Shape slots */
   --btn-default-radius: 6px;
@@ -1233,4 +1345,18 @@ html.dark[data-brand="vercel"] {
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
+
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(0 0% 0%);
+  --neutral-2: hsl(0 0% 4%);
+  --neutral-3: color-mix(in oklab, hsl(0 0% 16%) 20%, hsl(0 0% 4%));
+  --neutral-4: color-mix(in oklab, hsl(0 0% 16%) 40%, hsl(0 0% 4%));
+  --neutral-5: color-mix(in oklab, hsl(0 0% 16%) 60%, hsl(0 0% 4%));
+  --neutral-6: color-mix(in oklab, hsl(0 0% 16%) 80%, hsl(0 0% 4%));
+  --neutral-7: hsl(0 0% 16%);
+  --neutral-8: color-mix(in oklab, hsl(0 0% 63%) 25%, hsl(0 0% 16%));
+  --neutral-9: color-mix(in oklab, hsl(0 0% 63%) 50%, hsl(0 0% 16%));
+  --neutral-10: color-mix(in oklab, hsl(0 0% 63%) 75%, hsl(0 0% 16%));
+  --neutral-11: hsl(0 0% 63%);
+  --neutral-12: hsl(0 0% 93%);
 }

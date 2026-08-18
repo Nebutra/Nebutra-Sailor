@@ -90,7 +90,7 @@
     "quiet": "220 5% 11%",
     "quietForeground": "0 0% 100%",
     "muted": "220 8% 7%",
-    "mutedForeground": "210 1% 42%",
+    "mutedForeground": "210 1% 48%",
     "border": "210 2% 19%",
     "ring": "240 1% 61%",
     "destructive": "0 72% 51%",

@@ -18,7 +18,7 @@ html[data-brand="raycast"] {
   --role-quiet: 220 5% 11%;
   --role-quiet-fg: 0 0% 100%;
   --role-muted: 220 8% 7%;
-  --role-muted-fg: 210 1% 42%;
+  --role-muted-fg: 210 1% 48%;
   --role-border: 210 2% 19%;
   --role-input: 210 2% 19%;
   --role-ring: 240 1% 61%;
@@ -39,7 +39,7 @@ html[data-brand="raycast"] {
   --secondary: 220 5% 11%;
   --secondary-foreground: 0 0% 100%;
   --muted: 220 8% 7%;
-  --muted-foreground: 210 1% 42%;
+  --muted-foreground: 210 1% 48%;
   --accent: 0 100% 69%;
   --accent-foreground: 210 1% 27%;
   --destructive: 0 72% 51%;
@@ -67,6 +67,20 @@ html[data-brand="raycast"] {
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
+
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(210 20% 2%);
+  --neutral-2: hsl(220 18% 3%);
+  --neutral-3: color-mix(in oklab, hsl(210 2% 19%) 20%, hsl(220 18% 3%));
+  --neutral-4: color-mix(in oklab, hsl(210 2% 19%) 40%, hsl(220 18% 3%));
+  --neutral-5: color-mix(in oklab, hsl(210 2% 19%) 60%, hsl(220 18% 3%));
+  --neutral-6: color-mix(in oklab, hsl(210 2% 19%) 80%, hsl(220 18% 3%));
+  --neutral-7: hsl(210 2% 19%);
+  --neutral-8: color-mix(in oklab, hsl(210 1% 48%) 25%, hsl(210 2% 19%));
+  --neutral-9: color-mix(in oklab, hsl(210 1% 48%) 50%, hsl(210 2% 19%));
+  --neutral-10: color-mix(in oklab, hsl(210 1% 48%) 75%, hsl(210 2% 19%));
+  --neutral-11: hsl(210 1% 48%);
+  --neutral-12: hsl(0 0% 100%);
 
   /* Recipe (action language + free elev/radii) */
   /* Shape slots */

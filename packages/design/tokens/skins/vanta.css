@@ -67,6 +67,20 @@ html[data-brand="vanta"] {
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
 
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(220 23% 97%);
+  --neutral-2: hsl(0 0% 100%);
+  --neutral-3: color-mix(in oklab, hsl(240 17% 11%) 20%, hsl(0 0% 100%));
+  --neutral-4: color-mix(in oklab, hsl(240 17% 11%) 40%, hsl(0 0% 100%));
+  --neutral-5: color-mix(in oklab, hsl(240 17% 11%) 60%, hsl(0 0% 100%));
+  --neutral-6: color-mix(in oklab, hsl(240 17% 11%) 80%, hsl(0 0% 100%));
+  --neutral-7: hsl(240 17% 11%);
+  --neutral-8: color-mix(in oklab, hsl(238 11% 48%) 25%, hsl(240 17% 11%));
+  --neutral-9: color-mix(in oklab, hsl(238 11% 48%) 50%, hsl(240 17% 11%));
+  --neutral-10: color-mix(in oklab, hsl(238 11% 48%) 75%, hsl(240 17% 11%));
+  --neutral-11: hsl(238 11% 48%);
+  --neutral-12: hsl(240 17% 11%);
+
   /* Recipe (action language + free elev/radii) */
   /* Shape slots */
   --btn-default-radius: 999px;

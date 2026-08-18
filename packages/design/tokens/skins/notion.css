@@ -17,7 +17,7 @@ html[data-brand="notion"] {
   --role-quiet: 208 92% 95%;
   --role-quiet-fg: 208 100% 44%;
   --role-muted: 208 92% 95%;
-  --role-muted-fg: 0 0% 46%;
+  --role-muted-fg: 0 0% 43%;
   --role-border: 30 5% 88%;
   --role-input: 30 5% 88%;
   --role-ring: 208 100% 44%;
@@ -38,7 +38,7 @@ html[data-brand="notion"] {
   --secondary: 208 92% 95%;
   --secondary-foreground: 208 100% 44%;
   --muted: 208 92% 95%;
-  --muted-foreground: 0 0% 46%;
+  --muted-foreground: 0 0% 43%;
   --accent: 0 0% 0%;
   --accent-foreground: 0 0% 100%;
   --destructive: 7 92% 58%;
@@ -66,6 +66,20 @@ html[data-brand="notion"] {
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
+
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(30 10% 96%);
+  --neutral-2: hsl(0 0% 100%);
+  --neutral-3: color-mix(in oklab, hsl(30 5% 88%) 20%, hsl(0 0% 100%));
+  --neutral-4: color-mix(in oklab, hsl(30 5% 88%) 40%, hsl(0 0% 100%));
+  --neutral-5: color-mix(in oklab, hsl(30 5% 88%) 60%, hsl(0 0% 100%));
+  --neutral-6: color-mix(in oklab, hsl(30 5% 88%) 80%, hsl(0 0% 100%));
+  --neutral-7: hsl(30 5% 88%);
+  --neutral-8: color-mix(in oklab, hsl(0 0% 43%) 25%, hsl(30 5% 88%));
+  --neutral-9: color-mix(in oklab, hsl(0 0% 43%) 50%, hsl(30 5% 88%));
+  --neutral-10: color-mix(in oklab, hsl(0 0% 43%) 75%, hsl(30 5% 88%));
+  --neutral-11: hsl(0 0% 43%);
+  --neutral-12: hsl(0 0% 0%);
 
   /* Recipe (action language + free elev/radii) */
   /* Shape slots */

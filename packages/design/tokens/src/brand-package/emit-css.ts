@@ -364,6 +364,51 @@ export function emitDarkModeSelector(brandId: string, mode: EmitBrandCssMode): s
   return `.dark,\nhtml.dark[data-brand="${brandId}"] {`;
 }
 
+/**
+ * The 12-step neutral ramp, re-anchored on the language's own roles.
+ *
+ * `--neutral-1 … --neutral-12` is a fixed slate scale that no skin touched, so
+ * `text-neutral-11` and `bg-neutral-2` rendered identically under every design
+ * language — 1065 call sites across web, landing and the component library.
+ * Under a language whose canvas is dark that is not a small drift: the navbar
+ * links came out at 1.84:1, dark slate text on a dark canvas, unreadable.
+ *
+ * A neutral ramp IS part of a design language, so it belongs in the skin. The
+ * anchors are the roles the package already declares, in the positions
+ * CLAUDE.md gives them — 1 app background, 2 subtle background, 7 default
+ * border, 11 secondary text, 12 primary text — and the steps between are mixed
+ * in Oklab, which keeps the ramp perceptually even instead of bunching in the
+ * middle the way an sRGB blend does.
+ *
+ * Deriving rather than hand-listing means a language cannot ship a ramp that
+ * disagrees with its own surfaces, and a new language gets one for free.
+ */
+function neutralRamp(s: BrandSemanticColors, r: BrandColorRoles | undefined): string[] {
+  const hsl = (triple: string) => `hsl(${triple})`;
+  const anchors: Array<[number, string]> = [
+    [1, hsl(r?.canvas ?? s.background)],
+    [2, hsl(r?.surface ?? s.card)],
+    [7, hsl(r?.border ?? s.border)],
+    [11, hsl(r?.mutedForeground ?? s.mutedForeground)],
+    [12, hsl(r?.canvasForeground ?? s.foreground)],
+  ];
+
+  const lines = [``, `  /* ── Neutral ramp, anchored on this language's roles ── */`];
+  for (let step = 1; step <= 12; step++) {
+    const exact = anchors.find(([n]) => n === step);
+    if (exact) {
+      lines.push(`  --neutral-${step}: ${exact[1]};`);
+      continue;
+    }
+    const lower = [...anchors].reverse().find(([n]) => n < step);
+    const upper = anchors.find(([n]) => n > step);
+    if (!lower || !upper) continue;
+    const t = Math.round(((step - lower[0]) / (upper[0] - lower[0])) * 100);
+    lines.push(`  --neutral-${step}: color-mix(in oklab, ${upper[1]} ${t}%, ${lower[1]});`);
+  }
+  return lines;
+}
+
 function emitColorVars(s: BrandSemanticColors, r: BrandColorRoles | undefined): string[] {
   const roleLines: string[] = [
     `  /* ── Color roles (carrier) ── */`,
@@ -473,7 +518,7 @@ function emitColorVars(s: BrandSemanticColors, r: BrandColorRoles | undefined): 
     `  --brand-gradient-radial: hsl(var(--primary));`,
   );
 
-  return [...roleLines, ...semantic];
+  return [...roleLines, ...semantic, ...neutralRamp(s, r)];
 }
 
 /**

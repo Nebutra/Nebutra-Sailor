@@ -64,6 +64,20 @@ html[data-brand="gsap"] {
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
 
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(150 7% 6%);
+  --neutral-2: hsl(0 0% 10%);
+  --neutral-3: color-mix(in oklab, hsl(70 5% 25%) 20%, hsl(0 0% 10%));
+  --neutral-4: color-mix(in oklab, hsl(70 5% 25%) 40%, hsl(0 0% 10%));
+  --neutral-5: color-mix(in oklab, hsl(70 5% 25%) 60%, hsl(0 0% 10%));
+  --neutral-6: color-mix(in oklab, hsl(70 5% 25%) 80%, hsl(0 0% 10%));
+  --neutral-7: hsl(70 5% 25%);
+  --neutral-8: color-mix(in oklab, hsl(60 6% 46%) 25%, hsl(70 5% 25%));
+  --neutral-9: color-mix(in oklab, hsl(60 6% 46%) 50%, hsl(70 5% 25%));
+  --neutral-10: color-mix(in oklab, hsl(60 6% 46%) 75%, hsl(70 5% 25%));
+  --neutral-11: hsl(60 6% 46%);
+  --neutral-12: hsl(54 100% 94%);
+
   /* Recipe (action language + free elev/radii) */
   /* Shape slots */
   --btn-default-radius: 100px;
