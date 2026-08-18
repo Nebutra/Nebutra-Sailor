@@ -1,6 +1,7 @@
 "use client";
 
 import { Logo, Logomark } from "@nebutra/brand";
+import { useDarkSurface } from "@nebutra/theme";
 import { useTheme } from "@nebutra/tokens";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
@@ -25,8 +26,12 @@ export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean })
   const isMounted = useMount();
   const [isScrolled, setIsScrolled] = useState(false);
 
+  // The canvas, not the theme's name. A design language can paint a dark canvas
+  // while the theme is still light — under gsap, linear and raycast the dark
+  // wordmark was rendering on a dark background and the logo vanished.
+  const isDarkCanvas = useDarkSurface();
   const isForcedDark = forceDarkTheme && !isScrolled && resolvedTheme === "light";
-  const isDark = !isMounted || resolvedTheme !== "light" || isForcedDark;
+  const isDark = !isMounted || (isDarkCanvas ?? resolvedTheme !== "light") || isForcedDark;
 
   useEffect(() => {
     const handleScroll = () => {

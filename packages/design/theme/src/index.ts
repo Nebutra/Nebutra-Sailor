@@ -51,3 +51,4 @@ export {
   type LanguageId,
   listSkinLanguages,
 } from "./languages";
+export { useDarkSurface } from "./use-dark-surface";
