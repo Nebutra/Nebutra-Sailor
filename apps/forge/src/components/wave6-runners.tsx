@@ -249,7 +249,9 @@ export { MermaidRenderRunner } from "@/components/mermaid-runner";
 
 export function ColorDeltaERunner({ toolId }: { toolId: string }) {
   const t = useTranslations("runners");
+  // @allow-brand-hex: seed value for a colour-pair tool; the user edits it and it never paints chrome
   const [a, setA] = useState("#0033FE");
+  // @allow-brand-hex: the other half of the seeded pair
   const [b, setB] = useState("#0BF1C3");
   const [out, setOut] = useState<Record<string, unknown> | null>(null);
   const [error, setError] = useState("");
@@ -297,6 +299,7 @@ export function ColorDeltaERunner({ toolId }: { toolId: string }) {
             data-allow-native
             type="color"
             aria-label="color A"
+            // @allow-brand-hex: fallback for the seeded input while the typed hex is incomplete
             value={/^#[0-9a-fA-F]{6}$/.test(hexA) ? hexA : "#0033FE"}
             onChange={(e) => setA(e.target.value)}
             className="h-10 w-12 cursor-pointer rounded border border-[var(--neutral-7)] bg-transparent p-1"
@@ -314,6 +317,7 @@ export function ColorDeltaERunner({ toolId }: { toolId: string }) {
             data-allow-native
             type="color"
             aria-label="color B"
+            // @allow-brand-hex: fallback for the other seeded input
             value={/^#[0-9a-fA-F]{6}$/.test(hexB) ? hexB : "#0BF1C3"}
             onChange={(e) => setB(e.target.value)}
             className="h-10 w-12 cursor-pointer rounded border border-[var(--neutral-7)] bg-transparent p-1"

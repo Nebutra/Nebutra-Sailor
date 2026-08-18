@@ -70,6 +70,7 @@ function useLiveInvoke(
 
 export function ColorContrastRunner({ toolId }: { toolId: string }) {
   const t = useTranslations("runners");
+  // @allow-brand-hex: seed value for a contrast checker — the brand pair is the obvious thing to check first; the user edits it and it never paints chrome
   const [fg, setFg] = useState("#0033FE");
   const [bg, setBg] = useState("#ffffff");
   const { out, error, loading } = useLiveInvoke(
@@ -104,6 +105,7 @@ export function ColorContrastRunner({ toolId }: { toolId: string }) {
             data-allow-native
             type="color"
             aria-label={t("contrast.fg")}
+            // @allow-brand-hex: fallback for the same seeded input when the typed hex is incomplete
             value={/^#[0-9a-fA-F]{6}$/.test(fg) ? fg : "#0033FE"}
             onChange={(e) => setFg(e.target.value)}
             className="h-10 w-12 cursor-pointer rounded border border-[var(--neutral-7)] bg-transparent p-1"
@@ -806,6 +808,7 @@ export function EpochConvertRunner({ toolId }: { toolId: string }) {
 
 export function HexRgbRunner({ toolId }: { toolId: string }) {
   const t = useTranslations("runners");
+  // @allow-brand-hex: seed text for a colour-parsing runner; it is the tool's input, not a surface
   const [text, setText] = useState("#0033FE");
   const [mode, setMode] = useState("hex_to_rgb");
   const { out, error, loading } = useLiveInvoke(

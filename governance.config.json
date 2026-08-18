@@ -363,8 +363,6 @@
       "backends/gateway/src/routes/webhooks/clerk.ts",
       "backends/gateway/src/routes/webhooks/stripe.ts",
       "packages/ai/agent-runtime/src/adapters/prisma-rollout.ts",
-      "packages/commerce/billing/src/credits/service.ts",
-      "packages/commerce/billing/src/usage/ledger.ts",
       "packages/commerce/license/src/handlers/on-license-issued.ts",
       "packages/commerce/license/src/issue-license.ts",
       "packages/commerce/license/src/validate-license.ts",

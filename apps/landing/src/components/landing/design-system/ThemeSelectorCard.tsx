@@ -58,6 +58,7 @@ export function ThemeSelectorCard() {
             <span
               aria-hidden
               className="size-4 rounded-full"
+              // @allow-brand-hex: this dot IS the identity, shown as a swatch so a visitor can see the language they picked. The rule stops the identity becoming a control fill; a swatch is the one surface it belongs on.
               style={{ background: "var(--brand-primary)" }}
             />
             <span

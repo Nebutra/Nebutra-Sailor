@@ -147,8 +147,16 @@ for (const file of scanned) {
     const rule = RULES.find((r) => RULE_RE.get(r.id).test(line));
     if (!rule) return;
     if (/@allow-brand-hex:/.test(line) || /@allow-brand-hex:/.test(lines[i - 1] ?? "")) return;
-    // Pure comments documenting the mapping are fine.
-    if (/^\s*(\/\/|\*|\/\*)/.test(line) && /→|var\(--|brand|status/.test(line)) return;
+    // A comment paints nothing, so it cannot put the brand on a surface —
+    // which is the only thing this guard exists to prevent.
+    //
+    // This used to also require the line to carry `→`, `var(--`, `brand` or
+    // `status`, which recognised a one-line mapping table and nothing else. A
+    // paragraph explaining why a token moved got flagged on whichever line the
+    // hex happened to land, and the cheapest way out was to reword the sentence
+    // until the regex was happy. A guard that edits prose to suit itself is
+    // worse than no guard.
+    if (/^\s*(\/\/|\*|\/\*)/.test(line)) return;
     if (allowSet.has(file)) {
       stillOffending.add(file);
       return;

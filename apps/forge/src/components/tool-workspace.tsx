@@ -517,6 +517,7 @@ export function ToolWorkspace({
       return (
         <FormatLiveRunner
           toolId={toolId}
+          // @allow-brand-hex: demo input for the CSS formatter; the hex is text the tool reformats
           sample={".btn{color:#0033FE;margin:0 auto}"}
           downloadName="styles.css"
           extraFields={[{ key: "indent", label: "Indent", kind: "number", defaultValue: "2" }]}
@@ -552,6 +553,7 @@ export function ToolWorkspace({
       return (
         <FormatLiveRunner
           toolId={toolId}
+          // @allow-brand-hex: the formatted counterpart of the same demo input
           sample={".btn {\n  color: #0033FE;\n  margin: 0 auto;\n}\n"}
           downloadName="styles.min.css"
         />

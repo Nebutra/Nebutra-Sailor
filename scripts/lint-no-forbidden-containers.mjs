@@ -29,7 +29,14 @@ const SCAN_ROOTS = ["apps", "packages/design"];
  * rule* rather than apply it: the design-sync prose that tells a design tool
  * what not to emit, and the test asserting that prose.
  */
-const ALLOWLIST = [/\/serialize\/to-design-md\.prose\.ts$/, /\/__tests__\/to-design-md\.test\.ts$/];
+const ALLOWLIST = [
+  /\/serialize\/to-design-md\.prose\.ts$/,
+  /\/__tests__\/to-design-md\.test\.ts$/,
+  // The design site's own copy about the container contract. Its strings are
+  // prose the same way a comment is prose — the page exists to tell a reader
+  // which widths not to reach for, and it cannot do that without naming them.
+  /apps\/design\/src\/lib\/pattern-data\.ts$/,
+];
 
 const BAD_RE = /\bmax-w-(?:5xl|7xl)\b/;
 
