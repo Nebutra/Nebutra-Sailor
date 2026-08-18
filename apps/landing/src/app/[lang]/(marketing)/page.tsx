@@ -30,40 +30,47 @@ const SectionSkeleton = ({
   />
 );
 
-const AIConstellationMarquee = dynamic(
-  () => import("@/components/landing/AIConstellationMarquee").then((m) => m.AIConstellationMarquee),
-  { loading: () => <SectionSkeleton minH="14rem" mobileMinH="10rem" /> },
+/**
+ * Each section streams into its own boundary, with the skeleton as that
+ * boundary's fallback.
+ *
+ * These were `dynamic(..., { loading: () => <SectionSkeleton/> })`. On a server
+ * component that resolves the import and streams the real section, while the
+ * client's lazy component renders the skeleton until its chunk lands — so React
+ * hydrated a skeleton against real markup and threw a recoverable mismatch for
+ * every one of them, regenerating seven subtrees on the client. It was
+ * invisible: the content was correct either way, and the only evidence was six
+ * minified #418s in the console on the homepage and nowhere else.
+ *
+ * As a Suspense fallback the skeleton shows while the boundary is pending and
+ * is replaced by the same markup the server sent, which is what a fallback is.
+ */
+const AIConstellationMarquee = dynamic(() =>
+  import("@/components/landing/AIConstellationMarquee").then((m) => m.AIConstellationMarquee),
 );
 
-const CapabilityMatrixSection = dynamic(
-  () =>
-    import("@/components/landing/CapabilityMatrixSection").then((m) => m.CapabilityMatrixSection),
-  { loading: () => <SectionSkeleton minH="56rem" mobileMinH="42rem" /> },
+const CapabilityMatrixSection = dynamic(() =>
+  import("@/components/landing/CapabilityMatrixSection").then((m) => m.CapabilityMatrixSection),
 );
 
-const UseCasesSection = dynamic(
-  () => import("@/components/landing/use-cases/UseCasesSection").then((m) => m.UseCasesSection),
-  { loading: () => <SectionSkeleton minH="56rem" mobileMinH="34rem" /> },
+const UseCasesSection = dynamic(() =>
+  import("@/components/landing/use-cases/UseCasesSection").then((m) => m.UseCasesSection),
 );
 
-const DesignSystemSection = dynamic(
-  () => import("@/components/landing/DesignSystemSection").then((m) => m.DesignSystemSection),
-  { loading: () => <SectionSkeleton minH="48rem" mobileMinH="38rem" /> },
+const DesignSystemSection = dynamic(() =>
+  import("@/components/landing/DesignSystemSection").then((m) => m.DesignSystemSection),
 );
 
-const PricingSection = dynamic(
-  () => import("@/components/landing/PricingSection").then((m) => m.PricingSection),
-  { loading: () => <SectionSkeleton minH="56rem" mobileMinH="42rem" /> },
+const PricingSection = dynamic(() =>
+  import("@/components/landing/PricingSection").then((m) => m.PricingSection),
 );
 
-const FAQSection = dynamic(
-  () => import("@/components/landing/faq-section").then((m) => m.FAQSection),
-  { loading: () => <SectionSkeleton minH="36rem" mobileMinH="28rem" /> },
+const FAQSection = dynamic(() =>
+  import("@/components/landing/faq-section").then((m) => m.FAQSection),
 );
 
-const FooterMinimal = dynamic(
-  () => import("@/components/landing/FooterMinimal").then((m) => m.FooterMinimal),
-  { loading: () => <SectionSkeleton minH="20rem" mobileMinH="16rem" /> },
+const FooterMinimal = dynamic(() =>
+  import("@/components/landing/FooterMinimal").then((m) => m.FooterMinimal),
 );
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
@@ -111,7 +118,9 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
         </div>
 
         {/* 4. AI Constellation Marquee */}
-        <AIConstellationMarquee />
+        <Suspense fallback={<SectionSkeleton minH="14rem" mobileMinH="10rem" />}>
+          <AIConstellationMarquee />
+        </Suspense>
 
         {/* 5. Product Demo */}
         <div id="demo" className="scroll-mt-24">
@@ -119,22 +128,34 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
         </div>
 
         {/* 6. Capability Matrix */}
-        <CapabilityMatrixSection />
+        <Suspense fallback={<SectionSkeleton minH="56rem" mobileMinH="42rem" />}>
+          <CapabilityMatrixSection />
+        </Suspense>
 
         {/* 7. Design System */}
-        <DesignSystemSection />
+        <Suspense fallback={<SectionSkeleton minH="48rem" mobileMinH="38rem" />}>
+          <DesignSystemSection />
+        </Suspense>
 
         {/* 8. Use Cases */}
-        <UseCasesSection />
+        <Suspense fallback={<SectionSkeleton minH="56rem" mobileMinH="34rem" />}>
+          <UseCasesSection />
+        </Suspense>
 
         {/* 9. Pricing */}
-        <PricingSection />
+        <Suspense fallback={<SectionSkeleton minH="56rem" mobileMinH="42rem" />}>
+          <PricingSection />
+        </Suspense>
 
         {/* 10. FAQ */}
-        <FAQSection />
+        <Suspense fallback={<SectionSkeleton minH="36rem" mobileMinH="28rem" />}>
+          <FAQSection />
+        </Suspense>
 
         {/* Footer (includes Final CTA at top) */}
-        <FooterMinimal showFinalCta />
+        <Suspense fallback={<SectionSkeleton minH="20rem" mobileMinH="16rem" />}>
+          <FooterMinimal showFinalCta />
+        </Suspense>
       </main>
     </Suspense>
   );
