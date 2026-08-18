@@ -46,8 +46,8 @@
 // Run: node scripts/lint-ui-contracts.mjs
 // Exit 1 on any violation, and on any stale allowlist entry.
 
-import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
+import { findFiles, grepExcludes } from "./lib/scan.mjs";
 
 const TOKENS_CSS = "packages/design/tokens/styles.css";
 
@@ -127,18 +127,15 @@ const SHRINK_ONLY = {
 
 const repoFiles = (pattern, globs) => {
   const excludes = EXCLUDE_DIRS.map((d) => `--glob '!**/${d}/**'`).join(" ");
-  try {
-    return execSync(
+  return findFiles({
+    label: "lint-ui-contracts",
+    rgCommand:
       `rg -l --glob '*.tsx' --glob '*.ts' --glob '*.css' --glob '!*.d.ts' ${excludes} ` +
-        `${JSON.stringify(pattern)} ${globs.join(" ")}`,
-      { encoding: "utf-8" },
-    )
-      .trim()
-      .split("\n")
-      .filter(Boolean);
-  } catch {
-    return []; // rg exits 1 on zero matches
-  }
+      `${JSON.stringify(pattern)} ${globs.join(" ")}`,
+    grepCommand:
+      `grep -rlE ${JSON.stringify(pattern)} --include='*.tsx' --include='*.ts' --include='*.css' ` +
+      `${grepExcludes()} ${globs.join(" ")}`,
+  });
 };
 
 const isNotShippedUi = (file) => NOT_SHIPPED_UI.some((re) => re.test(file));

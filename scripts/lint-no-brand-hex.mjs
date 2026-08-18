@@ -44,8 +44,8 @@
 //
 // Run: node scripts/lint-no-brand-hex.mjs
 
-import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
+import { findFiles, grepExcludes } from "./lib/scan.mjs";
 
 const SCAN_ROOTS = ["apps", "packages/design"];
 
@@ -120,21 +120,18 @@ function loadAllowlist() {
 const allowlist = loadAllowlist();
 const allowSet = new Set(allowlist);
 
-let filesRaw = "";
-try {
-  filesRaw = execSync(
+const candidates = findFiles({
+  label: "lint-no-brand-hex",
+  rgCommand:
     "rg -l --glob '*.{tsx,ts,jsx,js}' --glob '!**/node_modules/**' " +
-      "--glob '!**/.next/**' --glob '!**/.open-next/**' --glob '!**/.turbo/**' " +
-      "--glob '!**/dist/**' --glob '!**/storybook-static/**' --glob '!**/.deploy/**' " +
-      `${JSON.stringify(PREFILTER)} ${SCAN_ROOTS.join(" ")}`,
-    { encoding: "utf-8" },
-  ).trim();
-} catch {
-  // rg exits 1 on zero matches — a clean tree, not an error.
-  filesRaw = "";
-}
-
-const candidates = filesRaw.split("\n").filter(Boolean);
+    "--glob '!**/.next/**' --glob '!**/.open-next/**' --glob '!**/.turbo/**' " +
+    "--glob '!**/dist/**' --glob '!**/storybook-static/**' --glob '!**/.deploy/**' " +
+    `${JSON.stringify(PREFILTER)} ${SCAN_ROOTS.join(" ")}`,
+  grepCommand:
+    `grep -rlE ${JSON.stringify(PREFILTER)} ` +
+    "--include='*.tsx' --include='*.ts' --include='*.jsx' --include='*.js' " +
+    `${grepExcludes()} ${SCAN_ROOTS.join(" ")}`,
+});
 const scanned = candidates.filter((f) => !isExemptPath(f));
 
 const violations = [];

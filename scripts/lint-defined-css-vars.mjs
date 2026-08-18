@@ -19,6 +19,7 @@
 
 import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
+import { findFiles, grepExcludes } from "./lib/scan.mjs";
 
 /** Trees whose code is governed. */
 const SCAN_ROOTS = ["apps", "packages/design", "backends/gateway"];
@@ -76,23 +77,29 @@ const RUNTIME_DEFINITION_RE =
  */
 const REFERENCE_RE = /var\(\s*(--[a-zA-Z0-9-]+)\s*\)/g;
 
+/**
+ * `find` exits 1 only when it cannot search. Swallowing that returned an empty
+ * string, which emptied BASE_UI_VARS, which turned every property the library
+ * sets at runtime into an "undefined custom property" — a guard failing loudly
+ * about the wrong thing, for the same reason the scanners used to pass quietly
+ * about nothing.
+ */
 function sh(cmd) {
-  try {
-    return execSync(cmd, { encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 }).trim();
-  } catch {
-    return "";
-  }
+  return execSync(cmd, { encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 }).trim();
 }
 
 // ── 1. Collect every defined custom property from our stylesheets ──────────────
 
-const cssFiles = sh(
-  `rg -l --glob '*.css' --glob '!**/node_modules/**' --glob '!**/dist/**' ` +
+const cssFiles = findFiles({
+  label: "lint-defined-css-vars (definitions)",
+  rgCommand:
+    `rg -l --glob '*.css' --glob '!**/node_modules/**' --glob '!**/dist/**' ` +
     `--glob '!**/.next/**' --glob '!**/.open-next/**' --glob '!**/.turbo/**' ` +
     `-- '^\\s*--[a-zA-Z0-9-]+\\s*:' ${DEFINITION_GLOBS.join(" ")}`,
-)
-  .split("\n")
-  .filter(Boolean);
+  grepCommand:
+    `grep -rlE '^[[:space:]]*--[a-zA-Z0-9-]+[[:space:]]*:' --include='*.css' ` +
+    `${grepExcludes()} ${DEFINITION_GLOBS.join(" ")}`,
+});
 
 const defined = new Set();
 for (const file of cssFiles) {
@@ -112,14 +119,17 @@ if (defined.size === 0) {
 
 // ── 2. Check every reference in component code ────────────────────────────────
 
-const codeFiles = sh(
-  `rg -l --glob '*.{ts,tsx}' --glob '!*.d.ts' --glob '!**/node_modules/**' ` +
+const codeFiles = findFiles({
+  label: "lint-defined-css-vars (references)",
+  rgCommand:
+    `rg -l --glob '*.{ts,tsx}' --glob '!*.d.ts' --glob '!**/node_modules/**' ` +
     `--glob '!**/dist/**' --glob '!**/.next/**' --glob '!**/.open-next/**' ` +
     `--glob '!**/.turbo/**' --glob '!**/generated/**' ` +
     `-- 'var\\(--' ${SCAN_ROOTS.join(" ")}`,
-)
-  .split("\n")
-  .filter(Boolean);
+  grepCommand:
+    `grep -rlE 'var\\(--' --include='*.ts' --include='*.tsx' ` +
+    `${grepExcludes()} --exclude-dir='generated' ${SCAN_ROOTS.join(" ")}`,
+});
 
 /**
  * Custom properties @base-ui/react sets on its own elements at runtime —

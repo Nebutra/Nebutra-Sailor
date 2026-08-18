@@ -32,8 +32,8 @@
 // Run: node scripts/lint-no-arbitrary-breakpoints.mjs
 // Exit 1 on any violation. Wired into root `pnpm lint`.
 
-import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
+import { findFiles, grepExcludes } from "./lib/scan.mjs";
 
 const SCAN_ROOTS = ["apps", "packages/design"];
 
@@ -44,22 +44,18 @@ const isWhitelisted = (path) => WHITELIST.some((re) => re.test(path));
 // Pattern: `min-[NNNpx]:` or `max-[NNNpx]:` Tailwind responsive prefix.
 const BAD_RE = /\b(min|max)-\[(\d+)px\]:/g;
 
-// rg exits 1 when zero matches — that's a clean state, not an error.
-let filesRaw;
-try {
-  filesRaw = execSync(
+const files = findFiles({
+  label: "lint-no-arbitrary-breakpoints",
+  rgCommand:
     "rg -l --glob '*.{tsx,ts,jsx,js}' --glob '!**/node_modules/**' " +
-      "--glob '!**/.next/**' --glob '!**/.open-next/**' --glob '!**/.turbo/**' " +
-      "--glob '!**/dist/**' --glob '!**/build/**' --glob '!**/storybook-static/**' " +
-      `--glob '!**/.deploy/**' '(min|max)-\\[[0-9]+px\\]:' ${SCAN_ROOTS.join(" ")}`,
-    { encoding: "utf-8" },
-  ).trim();
-} catch {
-  filesRaw = "";
-}
-
-const files = filesRaw
-  .split("\n")
+    "--glob '!**/.next/**' --glob '!**/.open-next/**' --glob '!**/.turbo/**' " +
+    "--glob '!**/dist/**' --glob '!**/build/**' --glob '!**/storybook-static/**' " +
+    `--glob '!**/.deploy/**' '(min|max)-\\[[0-9]+px\\]:' ${SCAN_ROOTS.join(" ")}`,
+  grepCommand:
+    `grep -rlE '(min|max)-\\[[0-9]+px\\]:' ` +
+    "--include='*.tsx' --include='*.ts' --include='*.jsx' --include='*.js' " +
+    `${grepExcludes()} ${SCAN_ROOTS.join(" ")}`,
+})
   .filter(Boolean)
   .filter((f) => !isWhitelisted(f));
 
