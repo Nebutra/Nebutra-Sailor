@@ -73,3 +73,17 @@ export function findFiles({ rgCommand, grepCommand, label }) {
 export function grepExcludes() {
   return EXCLUDED_DIRS.map((d) => `--exclude-dir='${d}'`).join(" ");
 }
+
+/**
+ * Rewrite a PCRE-flavoured pattern into POSIX ERE for the grep fallback.
+ *
+ * The guards write their patterns for ripgrep, which speaks PCRE. `grep -E`
+ * does not know `(?:` — BSD grep happens to tolerate it, GNU grep does not, so
+ * the fallback matched a different set of files on the runner than on a
+ * developer's machine and the two paths quietly disagreed about what the repo
+ * contained. A non-capturing group and a capturing one select the same text
+ * here; only the capture is discarded, and nothing reads captures from `-l`.
+ */
+export function toEre(pattern) {
+  return pattern.replace(/\(\?:/g, "(");
+}

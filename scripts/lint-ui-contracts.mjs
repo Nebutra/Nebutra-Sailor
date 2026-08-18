@@ -47,7 +47,7 @@
 // Exit 1 on any violation, and on any stale allowlist entry.
 
 import { readFileSync } from "node:fs";
-import { findFiles, grepExcludes } from "./lib/scan.mjs";
+import { findFiles, grepExcludes, toEre } from "./lib/scan.mjs";
 
 const TOKENS_CSS = "packages/design/tokens/styles.css";
 
@@ -133,7 +133,7 @@ const repoFiles = (pattern, globs) => {
       `rg -l --glob '*.tsx' --glob '*.ts' --glob '*.css' --glob '!*.d.ts' ${excludes} ` +
       `${JSON.stringify(pattern)} ${globs.join(" ")}`,
     grepCommand:
-      `grep -rlE ${JSON.stringify(pattern)} --include='*.tsx' --include='*.ts' --include='*.css' ` +
+      `grep -rlE ${JSON.stringify(toEre(pattern))} --include='*.tsx' --include='*.ts' --include='*.css' ` +
       `${grepExcludes()} ${globs.join(" ")}`,
   });
 };

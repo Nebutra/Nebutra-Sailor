@@ -45,7 +45,7 @@
 // Run: node scripts/lint-no-brand-hex.mjs
 
 import { readFileSync } from "node:fs";
-import { findFiles, grepExcludes } from "./lib/scan.mjs";
+import { findFiles, grepExcludes, toEre } from "./lib/scan.mjs";
 
 const SCAN_ROOTS = ["apps", "packages/design"];
 
@@ -128,7 +128,7 @@ const candidates = findFiles({
     "--glob '!**/dist/**' --glob '!**/storybook-static/**' --glob '!**/.deploy/**' " +
     `${JSON.stringify(PREFILTER)} ${SCAN_ROOTS.join(" ")}`,
   grepCommand:
-    `grep -rlE ${JSON.stringify(PREFILTER)} ` +
+    `grep -rlE ${JSON.stringify(toEre(PREFILTER))} ` +
     "--include='*.tsx' --include='*.ts' --include='*.jsx' --include='*.js' " +
     `${grepExcludes()} ${SCAN_ROOTS.join(" ")}`,
 });
