@@ -146,6 +146,9 @@ html[data-brand="raycast"] {
   --font-sans:
     var(--font-inter), "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
     "PingFang SC", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-cn:
+    var(--font-inter), "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    "PingFang SC", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-heading:
     var(--font-inter), "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
     "PingFang SC", ui-sans-serif, system-ui, sans-serif;

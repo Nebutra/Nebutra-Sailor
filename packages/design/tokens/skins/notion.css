@@ -105,6 +105,9 @@ html[data-brand="notion"] {
   --font-sans:
     var(--font-inter), "NotionInter", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
     "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-cn:
+    var(--font-inter), "NotionInter", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-heading:
     var(--font-inter), "NotionInter", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
     "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;

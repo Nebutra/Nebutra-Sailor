@@ -501,6 +501,12 @@ export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions =
   const fontDisplay = withCjkTail(cssFontStack(t.fontDisplay ?? t.fontSans));
   const typeLines = [
     `  --font-sans: ${fontSans};`,
+    // The CJK-locale rule in base.css sets body's font-family from --font-cn,
+    // which sits above --font-sans in specificity. A skin that left it alone
+    // was silently overruled on every Chinese page: picking a design language
+    // changed nothing about the type. The tail is already in fontSans, so the
+    // two stacks are the same stack.
+    `  --font-cn: ${fontSans};`,
     `  --font-heading: ${fontDisplay};`,
     `  --font-display: ${fontDisplay};`,
   ];

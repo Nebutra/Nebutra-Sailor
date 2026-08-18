@@ -104,6 +104,10 @@ html[data-brand="stripe"] {
     var(--font-reg-inter-tight), "sohne-var", "Inter Tight", "Inter",
     var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
     system-ui, sans-serif;
+  --font-cn:
+    var(--font-reg-inter-tight), "sohne-var", "Inter Tight", "Inter",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    system-ui, sans-serif;
   --font-heading:
     var(--font-reg-inter-tight), "sohne-var", "Inter Tight",
     var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,

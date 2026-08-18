@@ -123,6 +123,10 @@ html[data-brand="gsap"] {
     var(--font-reg-inter-tight), "Mori", "Inter Tight", "DM Sans",
     var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
     system-ui, sans-serif;
+  --font-cn:
+    var(--font-reg-inter-tight), "Mori", "Inter Tight", "DM Sans",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    system-ui, sans-serif;
   --font-heading:
     var(--font-reg-inter-tight), "Mori", "Inter Tight", var(--font-vivo-sans-sc, "vivo Sans SC"),
     "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
@@ -274,6 +278,9 @@ html[data-brand="linear"] {
 
   /* Typography */
   --font-sans:
+    var(--font-inter), "Inter Variable", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-cn:
     var(--font-inter), "Inter Variable", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
     "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-heading:
@@ -474,6 +481,9 @@ html[data-brand="notion"] {
   --font-sans:
     var(--font-inter), "NotionInter", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
     "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-cn:
+    var(--font-inter), "NotionInter", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-heading:
     var(--font-inter), "NotionInter", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
     "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
@@ -666,6 +676,9 @@ html[data-brand="raycast"] {
   --font-sans:
     var(--font-inter), "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
     "PingFang SC", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-cn:
+    var(--font-inter), "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    "PingFang SC", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-heading:
     var(--font-inter), "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
     "PingFang SC", ui-sans-serif, system-ui, sans-serif;
@@ -807,6 +820,10 @@ html[data-brand="stripe"] {
 
   /* Typography */
   --font-sans:
+    var(--font-reg-inter-tight), "sohne-var", "Inter Tight", "Inter",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-cn:
     var(--font-reg-inter-tight), "sohne-var", "Inter Tight", "Inter",
     var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
     system-ui, sans-serif;
@@ -962,6 +979,9 @@ html[data-brand="vanta"] {
   --font-sans:
     var(--font-inter), "Inter Variable", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
     "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-cn:
+    var(--font-inter), "Inter Variable", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-heading:
     var(--font-reg-source-serif-4), "Reckless", "Source Serif 4", "Lora",
     var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-serif, Georgia,
@@ -1115,6 +1135,9 @@ html[data-brand="vercel"] {
 
   /* Typography */
   --font-sans:
+    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-cn:
     var(--font-geist-sans), "Geist Sans", "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"),
     "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-heading:

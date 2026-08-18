@@ -111,6 +111,9 @@ html[data-brand="vercel"] {
   --font-sans:
     var(--font-geist-sans), "Geist Sans", "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"),
     "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-cn:
+    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-heading:
     var(--font-geist-sans), "Geist Sans", "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"),
     "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
