@@ -40,6 +40,11 @@
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
+    "./registry": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
     "./next": {
       "types": "./src/next.ts",
       "import": "./src/next.ts",

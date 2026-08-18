@@ -3,7 +3,10 @@
  * Components bind: --primary (= action), --brand-mark, --elevation-*, --radius-*.
  */
 
-import { withNearestRegistryFont } from "@nebutra/fonts";
+// The source subpath, not the built entry: this module is consumed by
+// emit-skins at build time, and depending on another package's dist made the
+// skin pipeline fail whenever turbo scheduled the two builds side by side.
+import { withNearestRegistryFont } from "@nebutra/fonts/registry";
 import { isDualModeBrand, normalizeBrandPackage } from "./normalize";
 import type {
   BrandColorRoles,
