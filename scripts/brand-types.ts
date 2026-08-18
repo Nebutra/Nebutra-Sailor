@@ -244,6 +244,12 @@ export interface BrandConfig {
     /** Product analytics / PostHog host. */
     analytics: string;
     /**
+     * Grey-clouded ECS origin. It carries traffic and is named in Worker
+     * routing, so leaving it out meant a rebrand moved every host except the
+     * one the edge actually fetches from.
+     */
+    origin: string;
+    /**
      * Pebble brand front (landing / download / docs redirect). Backends stay on
      * the platform hosts — feedback + diagnostics live under `api` at
      * `/pebble/v1/*`, status under `status`. See docs/DOMAINS.md.
@@ -369,6 +375,7 @@ export const DEFAULT_BRAND: BrandConfig = {
     analytics: "analytics.nebutra.com",
     pebble: "pebble.nebutra.com",
     carina: "carina.nebutra.com",
+    origin: "origin.nebutra.com",
   },
   social: {
     twitter: "https://twitter.com/nebutra",

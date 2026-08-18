@@ -53,9 +53,6 @@ export const brand = {
     analytics: "analytics.nebutra.com",
     pebble: "pebble.nebutra.com",
     carina: "carina.nebutra.com",
-    // Grey-clouded ECS origin. It carries traffic and is named in Worker
-    // routing, so leaving it out of the SSOT meant a rebrand would move every
-    // host but the one the edge actually fetches from.
     origin: "origin.nebutra.com",
   },
 
