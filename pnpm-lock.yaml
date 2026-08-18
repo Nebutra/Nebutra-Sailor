@@ -40,7 +40,7 @@ catalogs:
       specifier: ^6.0.116
       version: 6.0.116
     fumadocs-core:
-      specifier: ^16.14.4
+      specifier: ^16.6.12
       version: 16.14.4
     fumadocs-mdx:
       specifier: ^14.2.10
