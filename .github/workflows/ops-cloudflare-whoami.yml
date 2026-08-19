@@ -76,3 +76,12 @@ jobs:
           probe "Workers scripts (typelens deploys, so expected OK)" "deployments list --name nebutra-typelens"
           probe "Hyperdrive — auth binds one, typelens does not"     "hyperdrive list"
           probe "Workers secrets on the auth worker"                  "secret list --config apps/auth/wrangler.edge.jsonc"
+          # `deploy` fails on GET /accounts/*/workers/services/nebutra-auth while
+          # `secret list` (a different endpoint) succeeds. Either the service is
+          # not in this account, or that one endpoint needs a permission the
+          # others do not. Ask about both workers so the answer is a comparison.
+          probe "deployments — typelens (known good)" "deployments list --name nebutra-typelens"
+          probe "deployments — auth (the failing one)" "deployments list --name nebutra-auth"
+          echo "── every worker this token can see"
+          timeout 60 pnpm exec wrangler list 2>&1 | head -30 || \
+            timeout 60 pnpm exec wrangler deployments list 2>&1 | head -10 || true
