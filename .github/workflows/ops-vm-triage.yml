@@ -105,6 +105,14 @@ jobs:
           # "optimised" — landing/sailor-docs ship Next standalone, api ships
           # `pnpm deploy --prod`. So the size is the dependencies themselves,
           # and the only useful question is which ones.
+          # sailor-docs: 2.0 GB of its 2.2 GB is .next, not dependencies. Next's
+          # build cache lives there and has no business on a runtime host.
+          probe_slow "inside sailor-docs/.next" \
+                "du -xh --max-depth=1 ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}/sailor-docs/releases/*/apps/sailor-docs/.next 2>/dev/null | sort -rh | head -10"
+          # api: everything is in .pnpm, and nothing listed at depth 3 was big,
+          # so the weight is one level further in.
+          probe_slow "api's largest packages" \
+                "du -xh --max-depth=1 ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}/api/releases/*/node_modules/.pnpm 2>/dev/null | sort -rh | head -16"
           probe_slow "inside api" \
                 "du -xh --max-depth=3 ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}/api/releases 2>/dev/null | sort -rh | head -18"
           probe_slow "inside sailor-docs" \
