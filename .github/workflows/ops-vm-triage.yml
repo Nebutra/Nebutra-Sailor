@@ -101,6 +101,14 @@ jobs:
                 "du -xh --max-depth=1 ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }} 2>/dev/null | sort -rh | head -14"
           probe_slow "releases per app" \
                 "for d in ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}/*/releases; do [ -d \"\$d\" ] && echo \"\$d: \$(ls -1 \"\$d\" | wc -l) release(s), \$(du -xsh \"\$d\" 2>/dev/null | cut -f1)\"; done"
+          # The two apps that own two thirds of the deploy root are already
+          # "optimised" — landing/sailor-docs ship Next standalone, api ships
+          # `pnpm deploy --prod`. So the size is the dependencies themselves,
+          # and the only useful question is which ones.
+          probe_slow "inside api" \
+                "du -xh --max-depth=3 ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}/api/releases 2>/dev/null | sort -rh | head -18"
+          probe_slow "inside sailor-docs" \
+                "du -xh --max-depth=4 ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}/sailor-docs/releases 2>/dev/null | sort -rh | head -18"
           probe_slow "caches worth reclaiming" \
                 "du -xsh /root/.cache /root/.npm /root/.local/share/pnpm /var/log /var/lib/docker /tmp 2>/dev/null; journalctl --disk-usage 2>/dev/null"
           probe "oom kills"   "dmesg -T 2>/dev/null | grep -i -m5 'out of memory' || echo none"
