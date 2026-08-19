@@ -54,3 +54,25 @@ jobs:
             echo "So either the pin is stale and auth should follow typelens, or the token was"
             echo "issued on the wrong account. The account(s) listed above are the ones it has."
           fi
+
+      - name: Which capability is missing
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          set -uo pipefail
+          # typelens ships on this token, so Workers Scripts:Edit is present.
+          # auth differs from typelens in exactly one way that touches another
+          # product: it declares a Hyperdrive binding. Probe each capability on
+          # its own so the answer is a name, not a guess.
+          probe() {
+            echo "── $1"
+            if out=$(timeout 60 pnpm exec wrangler $2 2>&1); then
+              echo "  OK"
+            else
+              echo "$out" | grep -iE 'code: [0-9]+|Authentication|Unauthorized|permission' | head -3 | sed 's/^/  /'
+              echo "  (failed)"
+            fi
+          }
+          probe "Workers scripts (typelens deploys, so expected OK)" "deployments list --name nebutra-typelens"
+          probe "Hyperdrive — auth binds one, typelens does not"     "hyperdrive list"
+          probe "Workers secrets on the auth worker"                  "secret list --config apps/auth/wrangler.edge.jsonc"
