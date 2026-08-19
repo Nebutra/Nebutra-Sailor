@@ -121,6 +121,18 @@ jobs:
                 "du -xsh /root/.cache /root/.npm /root/.local/share/pnpm /var/log /var/lib/docker /tmp 2>/dev/null; journalctl --disk-usage 2>/dev/null"
           probe "oom kills"   "dmesg -T 2>/dev/null | grep -i -m5 'out of memory' || echo none"
 
+          # Two removals are worth ~1.4 GB and both are blocked by a safety
+          # check, correctly. Deciding whether to lift either needs to know what
+          # is actually running, not what the repo thinks is running.
+          probe "pm2 processes" \
+                "pm2 jlist 2>/dev/null | node -e \"let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{for(const p of JSON.parse(d))console.log([p.name,p.pm2_env?.status,'restarts='+p.pm2_env?.restart_time,'port='+(p.pm2_env?.env?.PORT||'?'),'cwd='+(p.pm2_env?.pm_cwd||'?')].join('  '))}catch(e){console.log('(pm2 jlist unreadable)')}})\" || echo '(pm2 not available)'"
+          probe "who listens where" "ss -ltnp 2>/dev/null | head -20 || netstat -ltnp 2>/dev/null | head -20"
+          probe "nginx upstreams" \
+                "grep -rhoE 'proxy_pass[[:space:]]+http://[^;]+|server_name[[:space:]]+[^;]+' /etc/nginx/conf.d /etc/nginx/sites-enabled 2>/dev/null | sort -u | head -30"
+          probe "docker containers" \
+                "docker ps -a --format '{{.Names}}  {{.Image}}  {{.Status}}' 2>/dev/null || echo '(docker not available)'"
+          probe "docker disk"  "docker system df 2>/dev/null || true"
+
       - name: What to do with the answer
         if: always()
         run: |
