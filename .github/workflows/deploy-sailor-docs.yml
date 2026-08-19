@@ -10,7 +10,12 @@ name: Deploy Sailor Docs
 #   cloudflare-workers | cloudflare-pages → Cloudflare job
 # workflow_dispatch can force both / cloudflare / vercel.
 #
-# Cloudflare token: CLOUDFLARE_WORKERS_API_TOKEN || CLOUDFLARE_API_TOKEN
+# Cloudflare token: CLOUDFLARE_API_TOKEN, with CLOUDFLARE_WORKERS_API_TOKEN as a
+# legacy fallback. The order used to be reversed, so a token left behind on
+# 2026-08-05 silently outranked the one rotated on 2026-08-19 and every deploy
+# authenticated as the stale one — typelens worked only because it never read
+# the second name. Two secrets for one credential, resolved by a precedence
+# rule nobody sees, is the whole failure.
 # must include Workers Scripts Edit (preflight probes assets-upload-session).
 # See docs/ops/cloudflare-ci-token.md. Until token is fixed, set
 # DEPLOY_TARGET_SAILOR_DOCS=vercel so push deploys stay healthy.
@@ -125,9 +130,15 @@ jobs:
         with:
           node-version: 22
 
-      # Prefer CLOUDFLARE_WORKERS_API_TOKEN (Workers Scripts Edit) when the
-      # general CLOUDFLARE_API_TOKEN is read-only / DNS-only. See:
-      # docs/ops/cloudflare-ci-token.md
+      # CLOUDFLARE_API_TOKEN first, CLOUDFLARE_WORKERS_API_TOKEN as legacy
+      # fallback. The order was the other way round on the theory that the
+      # general token might be DNS-only — but a stale Workers token outranks a
+      # freshly rotated general one just as easily, which is what happened on
+      # 2026-08-19: the rotated token was correct and every Workers deploy
+      # authenticated as the one from two weeks earlier. Whichever name is
+      # preferred, being preferred is not evidence of being right; prefer the
+      # one the rest of the repo already uses so there is one place to rotate.
+      # See docs/ops/cloudflare-ci-token.md
       - name: Validate Cloudflare secrets
         id: cf_secrets
         env:
@@ -137,7 +148,7 @@ jobs:
           ACCOUNT_ID_VAR: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           set -euo pipefail
-          TOKEN="${WORKERS_TOKEN:-${API_TOKEN:-}}"
+          TOKEN="${API_TOKEN:-${WORKERS_TOKEN:-}}"
           if [ -z "$TOKEN" ]; then
             echo "::error::Set CLOUDFLARE_WORKERS_API_TOKEN or CLOUDFLARE_API_TOKEN (Workers Scripts Edit required). See docs/ops/cloudflare-ci-token.md"
             exit 1
@@ -147,10 +158,12 @@ jobs:
             echo "::error::CLOUDFLARE_ACCOUNT_ID secret/var is not set"
             exit 1
           fi
-          if [ -n "${WORKERS_TOKEN:-}" ]; then
-            echo "token_source=CLOUDFLARE_WORKERS_API_TOKEN"
-          else
+          # Print which name won. A deploy that fails on auth should not need
+          # someone to read this file to find out which of two secrets it used.
+          if [ -n "${API_TOKEN:-}" ]; then
             echo "token_source=CLOUDFLARE_API_TOKEN"
+          else
+            echo "token_source=CLOUDFLARE_WORKERS_API_TOKEN (legacy fallback)"
           fi
           echo "account_id=$ACCOUNT_ID" >> "$GITHUB_OUTPUT"
           # Masked echo only of source name for logs
@@ -188,7 +201,7 @@ jobs:
         uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
         with:
           # Workers-scoped token first; general API token as fallback.
-          apiToken: ${{ secrets.CLOUDFLARE_WORKERS_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFLARE_WORKERS_API_TOKEN }}
           # Secret preferred; vars fallback if secret is empty/stale.
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: apps/sailor-docs
