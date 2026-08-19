@@ -1,0 +1,103 @@
+name: Ops — Cloud VM triage
+
+# Answers one question: why does a deploy SSH session to the Cloud VM connect
+# and then die without printing anything?
+#
+# On 2026-08-19 the box answered ping, opened 22/80/443, returned an SSH banner
+# and served a 301 on :80 — while the TLS handshake on :443 never completed and
+# the deploy's cleanup step produced zero output for two minutes before
+# `Connection closed by <host> port 22`, exit 255. Everything that accepts a
+# connection works; everything that has to fork a shell or finish a handshake
+# does not. That shape is a full disk or exhausted memory, and the cleanup that
+# would fix it is exactly what cannot run.
+#
+# Read-only. Hard timeouts on both the SSH client and the job, so a wedged host
+# reports a wedged host instead of hanging for six hours.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ops-vm-triage
+  cancel-in-progress: true
+
+jobs:
+  triage:
+    name: Probe the Cloud VM
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    env:
+      ECS_HOST: ${{ vars.VM_HOST || vars.CLOUD_VM_HOST || vars.ECS_HOST }}
+      ECS_USER: ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
+      ECS_SSH_PORT: ${{ vars.VM_SSH_PORT || vars.CLOUD_VM_SSH_PORT || vars.ECS_SSH_PORT || '22' }}
+    steps:
+      - name: Reachability (no credentials needed)
+        run: |
+          set -uo pipefail
+          [ -n "${ECS_HOST:-}" ] || { echo "::error::VM_HOST / CLOUD_VM_HOST / ECS_HOST is not set"; exit 1; }
+          echo "host: $ECS_HOST"
+          ping -c 3 -W 3 "$ECS_HOST" || echo "(ping blocked or filtered — not conclusive)"
+          for p in "$ECS_SSH_PORT" 80 443; do
+            if timeout 8 bash -c "cat < /dev/null > /dev/tcp/$ECS_HOST/$p" 2>/dev/null; then
+              echo "port $p: open"
+            else
+              echo "port $p: closed or filtered"
+            fi
+          done
+          echo "--- ssh banner ---"
+          timeout 8 bash -c "exec 3<>/dev/tcp/$ECS_HOST/$ECS_SSH_PORT; head -c 64 <&3" || echo "(no banner)"
+          echo
+          echo "--- :443 TLS handshake ---"
+          curl -sk -o /dev/null --max-time 20 \
+            -w 'http=%{http_code} tls=%{time_appconnect}s total=%{time_total}s\n' \
+            "https://$ECS_HOST/" || echo "(handshake failed — exit $?)"
+
+      - name: Prepare SSH
+        env:
+          SSH_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.CLOUD_VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VM_SSH_KNOWN_HOSTS || secrets.CLOUD_VM_SSH_KNOWN_HOSTS || secrets.ECS_SSH_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          [ -n "${SSH_KEY:-}" ]     || { echo "::error::no VM SSH private key secret is set"; exit 1; }
+          [ -n "${KNOWN_HOSTS:-}" ] || { echo "::error::no VM SSH known-hosts secret is set"; exit 1; }
+          mkdir -p ~/.ssh
+          umask 077
+          printf '%s\n' "$SSH_KEY"     > ~/.ssh/id_deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_deploy ~/.ssh/known_hosts
+
+      - name: Ask the host what is full
+        run: |
+          set -uo pipefail
+          # Each probe is its own session with its own deadline: if the shell
+          # cannot fork, one hanging command must not eat the whole budget.
+          probe() {
+            echo "── $1"
+            timeout 25 ssh -i ~/.ssh/id_deploy \
+              -o BatchMode=yes -o ConnectTimeout=10 -o ServerAliveInterval=5 \
+              -o ServerAliveCountMax=2 -p "$ECS_SSH_PORT" \
+              "$ECS_USER@$ECS_HOST" "$2" \
+              || echo "  (no answer — exit $?; a wedged host fails here)"
+          }
+          probe "disk"        "df -h"
+          probe "inodes"      "df -i"
+          probe "memory"      "free -m || cat /proc/meminfo | head -5"
+          probe "load"        "uptime"
+          probe "biggest dirs under the deploy root" \
+                "du -xh --max-depth=2 ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }} 2>/dev/null | sort -rh | head -15"
+          probe "oom kills"   "dmesg -T 2>/dev/null | grep -i -m5 'out of memory' || echo none"
+
+      - name: What to do with the answer
+        if: always()
+        run: |
+          {
+            echo "## Cloud VM triage"
+            echo "- Host: \`$ECS_HOST\`"
+            echo "- If every probe printed '(no answer)', the box accepts TCP but cannot fork a shell."
+            echo "  Nothing in CI can fix that; it needs the provider console (VNC) to free space or reboot."
+            echo "- If \`df\` answered and / is at 100%, the deploy's own pre-flight cleanup is the fix —"
+            echo "  it just needs enough headroom to start. Free a few hundred MB by hand, then re-run Deploy to Cloud VM."
+          } >> "$GITHUB_STEP_SUMMARY"
