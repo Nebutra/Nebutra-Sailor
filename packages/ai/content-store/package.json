@@ -30,8 +30,7 @@
     "@nebutra/capability-kit": "workspace:*",
     "@nebutra/errors": "workspace:*",
     "@nebutra/local-embedding": "workspace:*",
-    "better-sqlite3": "12.10.0",
-    "fastembed": "2.1.0"
+    "better-sqlite3": "12.10.0"
   },
   "devDependencies": {
     "@types/node": "catalog:",

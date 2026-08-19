@@ -68,7 +68,6 @@
     "@nebutra/audit": "workspace:*",
     "@nebutra/email": "workspace:*",
     "@nebutra/logger": "workspace:*",
-    "@nebutra/ui": "workspace:*",
     "@simplewebauthn/server": "^13.3.0",
     "better-auth": "^1.6.13",
     "jose": "^6.2.0"
@@ -85,7 +84,8 @@
     "@nebutra/feature-flags": "workspace:*",
     "@supabase/supabase-js": ">=2.0.0",
     "next-auth": "^5.0.0-beta.32",
-    "react": "^19.0.0"
+    "react": "^19.0.0",
+    "@nebutra/ui": "workspace:*"
   },
   "peerDependenciesMeta": {
     "@clerk/nextjs": {
@@ -101,6 +101,9 @@
       "optional": true
     },
     "@nebutra/feature-flags": {
+      "optional": true
+    },
+    "@nebutra/ui": {
       "optional": true
     }
   },

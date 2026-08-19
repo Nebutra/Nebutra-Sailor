@@ -56,7 +56,6 @@
     "@nebutra/brand": "workspace:*",
     "dub": "^0.71.5",
     "p-limit": "^7.3.0",
-    "posthog-js": "^1.360.1",
     "zod": "catalog:"
   },
   "devDependencies": {
@@ -71,13 +70,17 @@
   },
   "peerDependencies": {
     "next": "catalog:",
-    "react": "catalog:"
+    "react": "catalog:",
+    "posthog-js": "^1.360.1"
   },
   "peerDependenciesMeta": {
     "next": {
       "optional": true
     },
     "react": {
+      "optional": true
+    },
+    "posthog-js": {
       "optional": true
     }
   },

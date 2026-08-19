@@ -90,7 +90,6 @@
     "@nebutra/db": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/preset": "workspace:*",
-    "@nebutra/ui": "workspace:*",
     "ai": "catalog:",
     "zod": "catalog:",
     "@nebutra/tokens": "workspace:*"

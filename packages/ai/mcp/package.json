@@ -51,7 +51,6 @@
     "@nebutra/errors": "workspace:*",
     "@nebutra/event-log": "workspace:*",
     "@nebutra/trace-store": "workspace:*",
-    "@nebutra/ui": "workspace:*",
     "zod": "catalog:"
   },
   "devDependencies": {
@@ -76,5 +75,13 @@
     "README.md",
     "LICENSE",
     "CHANGELOG.md"
-  ]
+  ],
+  "peerDependencies": {
+    "@nebutra/ui": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@nebutra/ui": {
+      "optional": true
+    }
+  }
 }
