@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { listTypefaces } from "@/lib/catalog";
+import { resolvedStack } from "@/lib/catalog-fonts.generated";
 import { TL_CONTAINER } from "@/lib/layout";
 
 export const metadata = { title: "Typefaces" };
@@ -32,7 +33,7 @@ export default function TypefacesPage() {
               <Link
                 href={`/typefaces/${tf.id}`}
                 className="block text-[clamp(1.75rem,3vw,2.5rem)] leading-none font-semibold tracking-[-0.03em] no-underline transition-opacity hover:opacity-55"
-                style={{ fontFamily: tf.cssStack }}
+                style={{ fontFamily: resolvedStack(tf.id, tf.cssStack) }}
               >
                 {tf.family}
               </Link>

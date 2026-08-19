@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTypeface, listSpecimens, listWorks } from "@/lib/catalog";
+import { resolvedStack } from "@/lib/catalog-fonts.generated";
 
 type Params = Promise<{ id: string }>;
 export async function generateMetadata({ params }: { params: Params }) {
@@ -25,7 +26,7 @@ export default async function TypefaceDetailPage({ params }: { params: Params })
       </p>
       <h1
         className="text-5xl font-bold tracking-tight md:text-6xl"
-        style={{ fontFamily: tf.cssStack }}
+        style={{ fontFamily: resolvedStack(tf.id, tf.cssStack) }}
       >
         {tf.family}
       </h1>
@@ -41,7 +42,7 @@ export default async function TypefaceDetailPage({ params }: { params: Params })
       </p>
       <div
         className="mt-8 border border-neutral-200 bg-neutral-50 p-8 text-3xl leading-snug"
-        style={{ fontFamily: tf.cssStack }}
+        style={{ fontFamily: resolvedStack(tf.id, tf.cssStack) }}
       >
         The quick brown fox jumps over the lazy dog.
         <br />

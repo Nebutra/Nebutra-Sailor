@@ -7,6 +7,7 @@ import {
   getWork,
   mediumLabel,
 } from "@/lib/catalog";
+import { resolvedStack } from "@/lib/catalog-fonts.generated";
 import { TL_CONTAINER } from "@/lib/layout";
 
 type Params = Promise<{ slug: string }>;
@@ -70,7 +71,7 @@ export default async function WorkDetailPage({ params }: { params: Params }) {
                   key={role}
                   className="leading-[1.05] tracking-[-0.03em]"
                   style={{
-                    fontFamily: p.cssStack,
+                    fontFamily: resolvedStack(p.typefaceId, p.cssStack),
                     fontSize:
                       role === "display"
                         ? "clamp(2.5rem, 6vw, 4rem)"
@@ -120,7 +121,7 @@ export default async function WorkDetailPage({ params }: { params: Params }) {
                     <Link
                       href={`/typefaces/${tf.id}`}
                       className="text-2xl font-medium tracking-tight no-underline hover:opacity-55"
-                      style={{ fontFamily: tf.cssStack }}
+                      style={{ fontFamily: resolvedStack(tf.id, tf.cssStack) }}
                     >
                       {tf.family}
                     </Link>

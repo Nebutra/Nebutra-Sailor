@@ -9,6 +9,7 @@ import { ScrollToTopOnNav } from "@/components/scroll-to-top";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { TypeLensMotion } from "@/components/type-lens-motion";
+import { catalogFontClassName } from "@/lib/catalog-fonts.generated";
 
 export const metadata: Metadata = {
   title: {
@@ -23,7 +24,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}
+      // catalogFontClassName defines one --tl-face-* variable per typeface the
+      // catalog names. next/font reaches a self-hosted face only through its
+      // variable, so without this every specimen on a type-specimen site fell
+      // through to the page font — 128 faces rendering as one.
+      className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName} ${catalogFontClassName}`}
       suppressHydrationWarning
     >
       <body className="min-h-screen font-sans antialiased" suppressHydrationWarning>
