@@ -77,10 +77,7 @@ export default function PairingsPage() {
 
                   <ul className="mt-7 space-y-3.5">
                     {g.faces.map((f) => (
-                      <li key={`${f.typefaceId}-${f.role}`} className="flex items-center gap-4">
-                        <span className="w-16 shrink-0 text-[0.62rem] font-semibold tracking-[0.12em] text-[var(--tl-muted-soft)] uppercase">
-                          {f.role}
-                        </span>
+                      <li key={f.typefaceId} className="flex items-center gap-4">
                         <Link
                           href={`/typefaces/${f.typefaceId}`}
                           className="min-w-0 flex-1 no-underline"

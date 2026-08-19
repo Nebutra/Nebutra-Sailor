@@ -68,8 +68,6 @@ const OFL = {
   licenseUrl: "https://scripts.sil.org/OFL",
 };
 
-const ROLE_CYCLE = ["display", "body", "headline", "caption", "accent", "mono"];
-
 function readJson(name) {
   const p = path.join(researchDir, name);
   if (!fs.existsSync(p)) throw new Error(`Missing research file: ${p}`);
@@ -279,18 +277,24 @@ function main() {
       status: "published",
     });
 
-    const typefacesRefs = c.uniqueIds.slice(0, 6).map((typefaceId, i) => ({
-      typefaceId,
-      role: ROLE_CYCLE[i % ROLE_CYCLE.length],
-      weight: i === 0 ? 600 : 400,
-    }));
-
-    const hierarchy = typefacesRefs.map((ref, i) => ({
-      role: ref.role,
-      rem: [3.2, 1.5, 1.125, 0.875, 1, 0.875][i] ?? 1,
-      weight: ref.weight,
-      leading: [1.1, 1.3, 1.6, 1.4, 1.4, 1.5][i] ?? 1.4,
-    }));
+    // Fonts In Use tells us WHICH faces appear in a work. It does not tell us
+    // which one set the headline and which one set the body — and this script
+    // used to invent that, cycling ROLE_CYCLE by array index, assigning 600
+    // weight to whichever face happened to sort first, reading rem and leading
+    // out of a fixed array, and stamping a confidence of 0.82 that was a
+    // literal rather than a measurement.
+    //
+    // The result was a real designer's work presented with a fabricated
+    // analysis of it: the Naomi Osaka site was captioned "Noto Sans" as its
+    // display face because noto-sans came back at index 0. Someone comparing
+    // the caption to the poster could see it was wrong; nothing in the data
+    // said so.
+    //
+    // So the catalog now records only what the source supports — the set of
+    // faces — and the surfaces present them as a set. Roles stay in the schema
+    // as optional, for a future pass that reads them from the page instead of
+    // from an index.
+    const typefacesRefs = c.uniqueIds.slice(0, 6).map((typefaceId) => ({ typefaceId }));
 
     const families = typefacesRefs.map((r) => typefaces.get(r.typefaceId)?.family || r.typefaceId);
     specimens.push({
@@ -299,12 +303,9 @@ function main() {
       typefaces: typefacesRefs,
       pairing: {
         strategy: families.join(" + "),
-        contrast: typefacesRefs.length >= 2 ? "medium" : "harmonious",
       },
-      hierarchy,
       tags: ["fiu-promote", ...tags].slice(0, 16),
-      confidence: typefacesRefs.length >= 2 ? 0.82 : 0.72,
-      verifiedBy: "hybrid",
+      verifiedBy: "source-listing",
       summary: `${c.use.title || "Work"}: ${families.join(" + ")}.`,
     });
   }

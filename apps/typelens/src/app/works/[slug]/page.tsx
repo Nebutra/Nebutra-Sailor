@@ -115,7 +115,7 @@ export default async function WorkDetailPage({ params }: { params: Params }) {
                 if (!tf) return null;
                 return (
                   <li
-                    key={`${ref.typefaceId}-${ref.role}`}
+                    key={ref.typefaceId}
                     className="flex flex-wrap items-baseline justify-between gap-3 py-5"
                   >
                     <Link
@@ -125,9 +125,15 @@ export default async function WorkDetailPage({ params }: { params: Params }) {
                     >
                       {tf.family}
                     </Link>
+                    {/* Role and weight are printed only when the source recorded
+                        them. They used to be assigned by array index, so this
+                        line said "display · 600" about whichever face happened
+                        to sort first. */}
                     <span className="text-sm tracking-wide text-[var(--tl-muted)]">
-                      {ref.role}
-                      {ref.weight ? ` · ${ref.weight}` : ""} · {tf.license.spdxOrLabel}
+                      {ref.role ? `${ref.role}` : null}
+                      {ref.role && ref.weight ? ` · ${ref.weight}` : ""}
+                      {ref.role ? " · " : ""}
+                      {tf.license.spdxOrLabel}
                     </span>
                   </li>
                 );
@@ -135,32 +141,34 @@ export default async function WorkDetailPage({ params }: { params: Params }) {
             </ul>
           </section>
 
-          <section>
-            <h2 className="mb-4 text-2xl font-semibold tracking-tight">Hierarchy</h2>
-            <table className="w-full text-left text-sm">
-              <thead>
-                <tr className="border-b-2 border-[var(--tl-ink)] text-[var(--tl-muted)]">
-                  <th className="py-3 pr-4 font-semibold tracking-wide uppercase">Role</th>
-                  <th className="py-3 pr-4 font-semibold tracking-wide uppercase">Size</th>
-                  <th className="py-3 pr-4 font-semibold tracking-wide uppercase">Weight</th>
-                  <th className="py-3 font-semibold tracking-wide uppercase">Tracking</th>
-                </tr>
-              </thead>
-              <tbody>
-                {specimen.hierarchy.map((step) => (
-                  <tr
-                    key={`${step.role}-${step.rem}`}
-                    className="border-b border-[var(--tl-line-soft)]"
-                  >
-                    <td className="py-3.5 pr-4 font-medium">{step.role}</td>
-                    <td className="py-3.5 pr-4">{step.rem}rem</td>
-                    <td className="py-3.5 pr-4">{step.weight}</td>
-                    <td className="py-3.5">{step.tracking ?? "—"}</td>
+          {specimen.hierarchy ? (
+            <section>
+              <h2 className="mb-4 text-2xl font-semibold tracking-tight">Hierarchy</h2>
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b-2 border-[var(--tl-ink)] text-[var(--tl-muted)]">
+                    <th className="py-3 pr-4 font-semibold tracking-wide uppercase">Role</th>
+                    <th className="py-3 pr-4 font-semibold tracking-wide uppercase">Size</th>
+                    <th className="py-3 pr-4 font-semibold tracking-wide uppercase">Weight</th>
+                    <th className="py-3 font-semibold tracking-wide uppercase">Tracking</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </section>
+                </thead>
+                <tbody>
+                  {specimen.hierarchy.map((step) => (
+                    <tr
+                      key={`${step.role}-${step.rem}`}
+                      className="border-b border-[var(--tl-line-soft)]"
+                    >
+                      <td className="py-3.5 pr-4 font-medium">{step.role}</td>
+                      <td className="py-3.5 pr-4">{step.rem}rem</td>
+                      <td className="py-3.5 pr-4">{step.weight}</td>
+                      <td className="py-3.5">{step.tracking ?? "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </section>
+          ) : null}
         </div>
       ) : null}
 
@@ -169,8 +177,7 @@ export default async function WorkDetailPage({ params }: { params: Params }) {
           <p className="tl-kicker mb-2">For agents</p>
           <h2 className="text-2xl font-semibold tracking-tight">Extract pack</h2>
           <p className="mt-2 text-sm text-[var(--tl-muted)]">
-            schema v{extract.schemaVersion} · confidence {(extract.confidence * 100).toFixed(0)}% ·
-            licenses included
+            schema v{extract.schemaVersion} · faces as listed by the source · licenses included
           </p>
           <pre className="mt-6 max-h-80 overflow-auto bg-[var(--tl-ink)] p-5 text-xs leading-relaxed text-neutral-200">
             {JSON.stringify(extract, null, 2)}

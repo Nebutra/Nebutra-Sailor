@@ -17,7 +17,8 @@ import {
 
 export type PairingFace = {
   typefaceId: string;
-  role: string;
+  /** Only when the source actually recorded it. */
+  role?: string;
   family: string;
   sampleImageUrl?: string;
   cssStack: string;
@@ -48,30 +49,34 @@ function coverOf(work: Work): string | undefined {
   );
 }
 
-const ROLE_ORDER = ["display", "headline", "body", "caption", "mono", "accent"];
-
+/**
+ * The faces a work uses, deduped, in the order the source listed them.
+ *
+ * This used to key on `role` and sort by a ROLE_ORDER table. Both were built on
+ * a value the promote script assigned by array index, so the "display face" of
+ * every work was simply whichever face came back first. Now that roles are only
+ * present when known, dedupe on the typeface itself and keep source order.
+ */
 function freeFacesFromSpecimen(
-  typefaces: readonly { typefaceId: string; role: string }[],
+  typefaces: readonly { typefaceId: string; role?: string | undefined }[],
 ): PairingFace[] {
-  const byRole = new Map<string, PairingFace>();
+  const seen = new Set<string>();
+  const out: PairingFace[] = [];
   for (const ref of typefaces) {
-    if (byRole.has(ref.role)) continue;
+    if (seen.has(ref.typefaceId)) continue;
     const tf: Typeface | undefined = getTypeface(ref.typefaceId);
     if (!tf?.license.commercialOk) continue;
+    seen.add(ref.typefaceId);
     const face: PairingFace = {
       typefaceId: tf.id,
-      role: ref.role,
       family: tf.family,
       cssStack: tf.cssStack,
     };
+    if (ref.role) face.role = ref.role;
     if (tf.sampleImageUrl) face.sampleImageUrl = tf.sampleImageUrl;
-    byRole.set(ref.role, face);
+    out.push(face);
   }
-  return [...byRole.values()].sort((a, b) => {
-    const ia = ROLE_ORDER.indexOf(a.role);
-    const ib = ROLE_ORDER.indexOf(b.role);
-    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
-  });
+  return out;
 }
 
 type Acc = {
@@ -83,7 +88,6 @@ type Acc = {
   strategy: string;
   mediums: Set<string>;
   tags: Set<string>;
-  confidence: number;
   seenSlugs: Set<string>;
 };
 
@@ -111,7 +115,6 @@ function buildAllGroups(): PairingGroup[] {
         strategy: s.pairing.strategy,
         mediums: new Set(),
         tags: new Set(),
-        confidence: s.confidence,
         seenSlugs: new Set(),
       };
       map.set(key, acc);
@@ -122,8 +125,11 @@ function buildAllGroups(): PairingGroup[] {
     for (const t of s.tags) {
       if (t !== "fiu-promote" && t !== "listing-only") acc.tags.add(t);
     }
-    if (s.confidence >= acc.confidence) {
-      acc.confidence = s.confidence;
+    // The representative specimen used to be whichever had the highest
+    // `confidence`, a field the promote script set to one of two constants —
+    // so the choice was effectively arbitrary and dressed as a ranking. The
+    // first published work carrying this exact face set is at least a fact.
+    if (!acc.specimenId) {
       acc.specimenId = s.id;
       acc.strategy = s.pairing.strategy;
       acc.faces = faces;

@@ -31,7 +31,10 @@ export type WorkStatus = z.infer<typeof WorkStatusSchema>;
 export const TypeRoleSchema = z.enum(["display", "headline", "body", "caption", "accent", "mono"]);
 export type TypeRole = z.infer<typeof TypeRoleSchema>;
 
-export const VerifiedBySchema = z.enum(["human", "hybrid", "model-only"]);
+// "source-listing" = the catalogue records what the source listed and claims
+// nothing beyond it. Distinct from "hybrid", which implied a review that the
+// promote pipeline never performed.
+export const VerifiedBySchema = z.enum(["human", "hybrid", "model-only", "source-listing"]);
 export type VerifiedBy = z.infer<typeof VerifiedBySchema>;
 
 export const LicenseRecordSchema = z.object({
@@ -78,7 +81,13 @@ export type Work = z.infer<typeof WorkSchema>;
 
 export const SpecimenTypefaceRefSchema = z.object({
   typefaceId: z.string().min(1),
-  role: TypeRoleSchema,
+  /**
+   * Optional, and absent for everything promoted from Fonts In Use. The source
+   * lists which faces a work uses, not which one set the headline — and the
+   * promote script used to fill this in by array index. Present only when the
+   * role is known.
+   */
+  role: TypeRoleSchema.optional(),
   weight: z.number().int().min(100).max(900).optional(),
   style: z.enum(["normal", "italic"]).optional(),
 });
@@ -106,10 +115,12 @@ export const SpecimenSchema = z.object({
   workId: z.string().min(1),
   typefaces: z.array(SpecimenTypefaceRefSchema).min(1),
   pairing: PairingSchema,
-  hierarchy: z.array(HierarchyStepSchema).min(1),
+  /** Only where a real type scale was recorded, never derived from position. */
+  hierarchy: z.array(HierarchyStepSchema).min(1).optional(),
   rhythm: z.string().optional(),
   tags: z.array(z.string()).default([]),
-  confidence: z.number().min(0).max(1),
+  /** A measurement, not a constant. Absent when nothing measured it. */
+  confidence: z.number().min(0).max(1).optional(),
   verifiedBy: VerifiedBySchema,
   summary: z.string().min(1),
   summaryZh: z.string().optional(),
@@ -128,12 +139,13 @@ export const AgentExtractPackSchema = z.object({
     z.object({
       family: z.string(),
       typefaceId: z.string(),
-      role: TypeRoleSchema,
+      /** Present only when the source recorded it. */
+      role: TypeRoleSchema.optional(),
       weight: z.number().optional(),
       cssStack: z.string(),
     }),
   ),
-  hierarchy: z.object({ steps: z.array(HierarchyStepSchema) }),
+  hierarchy: z.object({ steps: z.array(HierarchyStepSchema) }).optional(),
   cssTokens: z.record(z.string(), z.string()),
   licenses: z.array(
     z.object({
@@ -145,7 +157,8 @@ export const AgentExtractPackSchema = z.object({
       attributionRequired: z.boolean(),
     }),
   ),
-  confidence: z.number().min(0).max(1),
+  /** Absent unless something measured it. */
+  confidence: z.number().min(0).max(1).optional(),
   humanVerified: z.boolean(),
   medium: MediumSchema,
   scripts: z.array(ScriptTagSchema),

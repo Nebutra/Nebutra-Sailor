@@ -30,15 +30,22 @@ export function extractFromParts(
     const tf = typefaceIndex.get(ref.typefaceId);
     if (!tf) throw new Error(`Typeface ${ref.typefaceId} missing for specimen ${specimen.id}`);
     if (!tf.license.commercialOk) throw new Error(`Typeface ${tf.id} is not commercialOk`);
-    if (!pairing[ref.role]) {
-      pairing[ref.role] = {
+    // Keyed by role only where the source recorded one. Everything promoted
+    // from Fonts In Use has no role — that field used to be filled in by array
+    // index, which made `--font-display` mean "whichever face sorted first".
+    // Faces without a role are still exported, keyed by their own id, so an
+    // agent gets the set without being told a hierarchy nobody observed.
+    const key = ref.role ?? tf.id;
+    if (!pairing[key]) {
+      const entry: (typeof pairing)[string] = {
         family: tf.family,
         typefaceId: tf.id,
-        role: ref.role,
-        weight: ref.weight,
         cssStack: tf.cssStack,
       };
-      cssTokens[roleCssVar(ref.role)] = tf.cssStack;
+      if (ref.role) entry.role = ref.role;
+      if (ref.weight) entry.weight = ref.weight;
+      pairing[key] = entry;
+      if (ref.role) cssTokens[roleCssVar(ref.role)] = tf.cssStack;
     }
     if (!seen.has(tf.id)) {
       seen.add(tf.id);
@@ -59,11 +66,13 @@ export function extractFromParts(
     workSlug: work.slug,
     intentHints: [...specimen.tags, ...work.mood, work.medium, work.industry ?? ""].filter(Boolean),
     pairing,
-    hierarchy: { steps: specimen.hierarchy },
+    ...(specimen.hierarchy ? { hierarchy: { steps: specimen.hierarchy } } : {}),
     cssTokens,
     licenses,
-    confidence: specimen.confidence,
-    humanVerified: specimen.verifiedBy === "human" || specimen.verifiedBy === "hybrid",
+    ...(specimen.confidence == null ? {} : { confidence: specimen.confidence }),
+    // "hybrid" used to count as human-verified. Nothing in the promote
+    // pipeline was reviewed by a person, so only "human" says so now.
+    humanVerified: specimen.verifiedBy === "human",
     medium: work.medium,
     scripts: work.scripts,
     summary: specimen.summary,
