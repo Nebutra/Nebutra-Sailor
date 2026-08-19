@@ -11,7 +11,11 @@ name: Ops — Cloud VM reclaim
 #                         again — it is unreachable by the normal cleanup.
 #   carina        4 extra releases; every other app holds 1. PRUNE_APPS only
 #                 lists apps being deployed, and carina is deployed elsewhere.
-#   docker        813 MB  images and layers, if nothing is running.
+#
+# Docker is NOT touched. The 813 MB looked reclaimable until the inventory came
+# back: pgvector and redis have been Up and healthy for three months and are
+# this host's database and cache. An earlier version of this file offered
+# `docker system prune -af --volumes`, which would have deleted their volumes.
 #
 # Every removal is gated on a check that proves the target is unused, and the
 # check runs on the host rather than being asserted here. `dry_run` defaults to
@@ -84,10 +88,23 @@ jobs:
             df -h / | tail -1
 
             say
-            say '── design-docs (app deleted from the repo)'
+            say '── design-docs (app deleted from the repo, orphaned on the host)'
+            # It listens on 127.0.0.1:3004 and appears in no nginx upstream —
+            # admin, auth, design, forge, pebble and router are all proxied,
+            # design-docs is not. Nothing can reach it. `design` on 3109 is the
+            # app that replaced it. So the pm2 entry is not evidence of use, and
+            # stopping it is part of the removal rather than a reason to skip.
             if pm2 jlist 2>/dev/null | grep -q '\"name\":\"design-docs\"'; then
-              say '    SKIP: a pm2 process named design-docs is running'
-            elif [ -d \"\$DEPLOY_ROOT/design-docs\" ]; then
+              if [ \"\$DRY\" = 'true' ]; then
+                say '    would run: pm2 delete design-docs && pm2 save'
+              else
+                pm2 delete design-docs >/dev/null 2>&1 && say '    pm2: deleted design-docs'
+                pm2 save >/dev/null 2>&1 || true
+              fi
+            else
+              say '    pm2: no design-docs process'
+            fi
+            if [ -d \"\$DEPLOY_ROOT/design-docs\" ]; then
               say \"    size: \$(du -xsh \"\$DEPLOY_ROOT/design-docs\" 2>/dev/null | cut -f1)\"
               do_rm \"\$DEPLOY_ROOT/design-docs\"
             else
@@ -116,20 +133,20 @@ jobs:
             fi
 
             say
-            say '── docker'
-            if ! command -v docker >/dev/null 2>&1; then
-              say '    docker not installed'
-            elif [ -n \"\$(docker ps -q 2>/dev/null)\" ]; then
-              say '    SKIP: containers are running'
-              docker ps --format '      {{.Names}} ({{.Image}})' 2>/dev/null
-            else
-              say \"    reclaimable: \$(du -xsh /var/lib/docker 2>/dev/null | cut -f1)\"
-              if [ \"\$DRY\" = 'true' ]; then
-                say '    would run: docker system prune -af --volumes'
-              else
-                docker system prune -af --volumes 2>&1 | tail -3
-              fi
-            fi
+            say '── docker (left alone, deliberately)'
+            # Three containers are Up: pgvector/pgvector:pg16 and redis:7-alpine,
+            # both healthy for three months, plus carina-runtime. They are this
+            # host's database and cache — the docker-proxy entries on 5432 and
+            # 6379 are them.
+            #
+            # This step used to offer `docker system prune -af --volumes`, which
+            # would delete those volumes. That command has no place in an
+            # automated reclaim on a host that runs a production database, and
+            # the 813 MB it targets has never been shown to be reclaimable —
+            # `docker system df` timed out, so nothing here knows how much of it
+            # is dangling. Report and stop.
+            docker ps --format '    {{.Names}}  {{.Image}}  {{.Status}}' 2>/dev/null || say '    docker not available'
+            say '    no docker reclaim is attempted; run `docker system df` by hand to size it'
 
             say
             say '── caches'
