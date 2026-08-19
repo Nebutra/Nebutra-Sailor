@@ -86,8 +86,23 @@ jobs:
           probe "inodes"      "df -i"
           probe "memory"      "free -m || cat /proc/meminfo | head -5"
           probe "load"        "uptime"
-          probe "biggest dirs under the deploy root" \
-                "du -xh --max-depth=2 ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }} 2>/dev/null | sort -rh | head -15"
+          # Bounded and given room: the first version asked for depth 2 over the
+          # whole deploy root in 25s and timed out, which told us nothing.
+          probe_slow() {
+            echo "── $1"
+            timeout 180 ssh -i ~/.ssh/id_deploy \
+              -o BatchMode=yes -o ConnectTimeout=10 -o ServerAliveInterval=15 \
+              -o ServerAliveCountMax=8 -p "$ECS_SSH_PORT" \
+              "$ECS_USER@$ECS_HOST" "$2" \
+              || echo "  (no answer — exit $?)"
+          }
+          probe_slow "top-level of /" "du -xh --max-depth=1 / 2>/dev/null | sort -rh | head -12"
+          probe_slow "deploy root, one level" \
+                "du -xh --max-depth=1 ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }} 2>/dev/null | sort -rh | head -14"
+          probe_slow "releases per app" \
+                "for d in ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}/*/releases; do [ -d \"\$d\" ] && echo \"\$d: \$(ls -1 \"\$d\" | wc -l) release(s), \$(du -xsh \"\$d\" 2>/dev/null | cut -f1)\"; done"
+          probe_slow "caches worth reclaiming" \
+                "du -xsh /root/.cache /root/.npm /root/.local/share/pnpm /var/log /var/lib/docker /tmp 2>/dev/null; journalctl --disk-usage 2>/dev/null"
           probe "oom kills"   "dmesg -T 2>/dev/null | grep -i -m5 'out of memory' || echo none"
 
       - name: What to do with the answer
