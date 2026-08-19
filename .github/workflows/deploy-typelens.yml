@@ -1,7 +1,9 @@
 name: Deploy Type Lens (Cloudflare)
 
 # Primary production path: OpenNext → Cloudflare Worker + Assets
-# Domain: typelens.nebutra.com (route in apps/typelens/wrangler.jsonc)
+# Domain: typelens.nebutra.com — the route lives in wrangler.jsonc and is
+# managed out of band; CI deploys with wrangler.deploy.jsonc, which omits it
+# so a Workers Scripts:Edit token can ship the Worker without Zone rights.
 
 on:
   workflow_dispatch:
@@ -60,7 +62,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: apps/typelens
-          command: deploy --config wrangler.jsonc
+          command: deploy --config wrangler.deploy.jsonc
 
       - name: Smoke
         run: |
