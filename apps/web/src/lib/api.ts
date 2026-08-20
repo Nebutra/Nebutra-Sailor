@@ -77,39 +77,48 @@ export const api = {
  * Use in Server Components, Route Handlers, and Server Actions.
  */
 export async function getAuthenticatedApi() {
-  const { createAuth } = await import("@nebutra/auth/server");
-  const { getConfiguredAuthProvider } = await import("@nebutra/auth");
-  const provider = getConfiguredAuthProvider();
+  const { signServiceToken } = await import("@nebutra/auth");
+  const { getAuth } = await import("./auth");
+  const { buildServiceAuthHeaders } = await import("./service-auth");
 
-  const auth = await createAuth({ provider });
-  const session = await auth.getSession();
+  const { userId, orgId, sessionClaims } = await getAuth();
 
-  // For now, we'll use an empty token. In a production setup,
-  // you'd call auth.getToken() or similar method if available.
-  // The session.userId can be used to mint JWTs server-side if needed.
-  const token = session?.userId ? undefined : undefined;
+  const authHeaders = await buildServiceAuthHeaders(
+    {
+      userId,
+      organizationId: orgId,
+      role: sessionClaims?.org_role,
+      plan: sessionClaims?.org_plan,
+    },
+    (context) => signServiceToken(context),
+  );
+
+  const withAuth = (options?: Omit<RequestOptions, "method" | "body">) => ({
+    ...options,
+    headers: { ...authHeaders, ...options?.headers },
+  });
 
   return {
     get: <T>(endpoint: string, options?: Omit<RequestOptions, "method" | "body">) =>
-      api.get<T>(endpoint, { ...options, token }),
+      api.get<T>(endpoint, withAuth(options)),
 
     post: <T>(
       endpoint: string,
       body?: unknown,
       options?: Omit<RequestOptions, "method" | "body">,
-    ) => api.post<T>(endpoint, body, { ...options, token }),
+    ) => api.post<T>(endpoint, body, withAuth(options)),
 
     put: <T>(endpoint: string, body?: unknown, options?: Omit<RequestOptions, "method" | "body">) =>
-      api.put<T>(endpoint, body, { ...options, token }),
+      api.put<T>(endpoint, body, withAuth(options)),
 
     patch: <T>(
       endpoint: string,
       body?: unknown,
       options?: Omit<RequestOptions, "method" | "body">,
-    ) => api.patch<T>(endpoint, body, { ...options, token }),
+    ) => api.patch<T>(endpoint, body, withAuth(options)),
 
     delete: <T>(endpoint: string, options?: Omit<RequestOptions, "method" | "body">) =>
-      api.delete<T>(endpoint, { ...options, token }),
+      api.delete<T>(endpoint, withAuth(options)),
   };
 }
 
