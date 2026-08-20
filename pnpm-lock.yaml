@@ -40,7 +40,7 @@ catalogs:
       specifier: ^6.0.116
       version: 6.0.116
     fumadocs-core:
-      specifier: ^16.14.4
+      specifier: ^16.6.12
       version: 16.14.4
     fumadocs-mdx:
       specifier: ^14.2.10
@@ -18561,9 +18561,6 @@ packages:
     resolution: {integrity: sha512-VXJjc87FScF88uafS3JllDgvAm+c/Slfz06lorj2uAY34rlUu0Nt+v8wreiImcrgAjjIHp1rXpTDlLOGw29WwQ==}
     engines: {node: '>=18'}
 
-  oniguruma-parser@0.12.1:
-    resolution: {integrity: sha512-8Unqkvk1RYc6yq2WBYRj4hdnsAxVze8i7iPfQr8e4uSP3tRv0rpZcbGUDvxfQQcdwHt/e9PrMvGCsa8OqG9X3w==}
-
   oniguruma-parser@0.12.2:
     resolution: {integrity: sha512-6HVa5oIrgMC6aA6WF6XyyqbhRPJrKR02L20+2+zpDtO5QAzGHAUGw5TKQvwi5vctNnRHkJYmjAhRVQF2EKdTQw==}
 
@@ -29945,7 +29942,7 @@ snapshots:
 
   '@rollup/pluginutils@5.3.0(rollup@4.59.0)':
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
       estree-walker: 2.0.2
       picomatch: 4.0.4
     optionalDependencies:
@@ -30948,7 +30945,7 @@ snapshots:
     dependencies:
       '@shikijs/types': 3.23.0
       '@shikijs/vscode-textmate': 10.0.2
-      oniguruma-to-es: 4.3.4
+      oniguruma-to-es: 4.3.6
 
   '@shikijs/engine-javascript@4.0.2':
     dependencies:
@@ -35102,7 +35099,7 @@ snapshots:
 
   estree-walker@3.0.3:
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
 
   esutils@2.0.3: {}
 
@@ -36620,7 +36617,7 @@ snapshots:
 
   is-reference@1.2.1:
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
 
   is-regex@1.2.1:
     dependencies:
@@ -38623,13 +38620,11 @@ snapshots:
     dependencies:
       mimic-function: 5.0.1
 
-  oniguruma-parser@0.12.1: {}
-
   oniguruma-parser@0.12.2: {}
 
   oniguruma-to-es@4.3.4:
     dependencies:
-      oniguruma-parser: 0.12.1
+      oniguruma-parser: 0.12.2
       regex: 6.1.0
       regex-recursion: 6.0.2
 
