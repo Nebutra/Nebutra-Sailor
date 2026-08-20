@@ -1,5 +1,6 @@
 import { logger } from "@nebutra/logger";
 import pLimit from "p-limit";
+import { NotificationNotFoundError, NotificationUnsupportedOperationError } from "../errors";
 import type { NotificationProviderRuntimeMetadata } from "../runtime";
 import type {
   ChannelResult,
@@ -190,6 +191,30 @@ export class DirectProvider implements NotificationProvider {
       });
       // Don't throw — this is not critical
     }
+  }
+
+  /**
+   * Flip an in-app notification back to unread.
+   *
+   * Unlike `markAsRead`, failures are propagated: the caller asked for a state
+   * change it will render, so a swallowed error would leave the UI lying.
+   */
+  async markAsUnread(notificationId: string, userId: string, tenantId?: string): Promise<void> {
+    if (!this.inAppStore.markAsUnread) {
+      throw new NotificationUnsupportedOperationError(
+        "markAsUnread",
+        this.name,
+        "the configured in-app store does not implement markAsUnread",
+      );
+    }
+
+    logger.info("[notifications:direct] Marking as unread", {
+      notificationId,
+      userId,
+      tenantId,
+    });
+
+    await this.inAppStore.markAsUnread(notificationId, userId, tenantId);
   }
 
   /**
@@ -595,6 +620,27 @@ class InMemoryInAppStore implements InAppNotificationStore {
       notification.read = true;
       notification.updatedAt = new Date().toISOString();
     }
+  }
+
+  async markAsUnread(notificationId: string, userId: string, tenantId?: string): Promise<void> {
+    const key = `${userId}:${tenantId || "default"}`;
+    const notifications = this.notifications.get(key);
+    const match = notifications?.some((notification) => notification.id === notificationId);
+
+    // Matching nothing means another user's or tenant's id, or none at all —
+    // report it rather than resolve as if the flip had happened.
+    if (!notifications || !match) {
+      throw new NotificationNotFoundError(notificationId);
+    }
+
+    this.notifications.set(
+      key,
+      notifications.map((notification) =>
+        notification.id === notificationId
+          ? { ...notification, read: false, updatedAt: new Date().toISOString() }
+          : notification,
+      ),
+    );
   }
 
   async markAsReadBatch(

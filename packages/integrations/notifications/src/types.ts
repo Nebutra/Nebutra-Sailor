@@ -182,6 +182,15 @@ export interface NotificationProvider {
   markAsRead(notificationId: string, userId: string, tenantId?: string): Promise<void>;
 
   /**
+   * Mark an in-app notification as unread again.
+   *
+   * Implementations that cannot express this must throw
+   * `NotificationUnsupportedOperationError` rather than resolve silently —
+   * a resolved promise is a promise the notification really is unread.
+   */
+  markAsUnread(notificationId: string, userId: string, tenantId?: string): Promise<void>;
+
+  /**
    * Mark multiple in-app notifications as read.
    */
   markAsReadBatch(notificationIds: string[], userId: string, tenantId?: string): Promise<void>;
@@ -274,6 +283,12 @@ export interface InAppNotificationStore {
   ): Promise<InAppNotification>;
   markAsRead(notificationId: string, userId: string, tenantId?: string): Promise<void>;
   markAsReadBatch(notificationIds: string[], userId: string, tenantId?: string): Promise<void>;
+  /**
+   * Flip a notification back to unread. Optional so that stores written before
+   * this method existed keep compiling; `DirectProvider` reports the gap as an
+   * unsupported operation instead of pretending the write happened.
+   */
+  markAsUnread?(notificationId: string, userId: string, tenantId?: string): Promise<void>;
   getByUserId(
     userId: string,
     options?: InAppFeedOptions,

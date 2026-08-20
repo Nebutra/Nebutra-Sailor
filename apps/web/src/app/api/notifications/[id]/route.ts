@@ -1,4 +1,8 @@
-import { getNotificationProvider } from "@nebutra/notifications";
+import {
+  getNotificationProvider,
+  isNotificationNotFoundError,
+  isNotificationUnsupportedOperationError,
+} from "@nebutra/notifications";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { requireOrg } from "@/lib/auth";
@@ -66,8 +70,16 @@ export async function PATCH(request: Request, context: RouteContext): Promise<Ne
   try {
     if (parsed.data.read) {
       await provider.markAsRead(id, userId, orgId);
+    } else if (typeof provider.markAsUnread === "function") {
+      await provider.markAsUnread(id, userId, orgId);
     } else {
-      // Provider does not currently support unread; no-op for now.
+      return NextResponse.json(
+        {
+          success: false,
+          error: "The configured notification backend cannot restore a notification to unread.",
+        },
+        { status: 501 },
+      );
     }
 
     return NextResponse.json({
@@ -75,6 +87,27 @@ export async function PATCH(request: Request, context: RouteContext): Promise<Ne
       data: { id, read: parsed.data.read },
     });
   } catch (error) {
+    if (isNotificationNotFoundError(error)) {
+      return NextResponse.json(
+        { success: false, error: "That notification is not available to this account." },
+        { status: 404 },
+      );
+    }
+
+    if (isNotificationUnsupportedOperationError(error)) {
+      const operation = parsed.data.read
+        ? "mark a notification as read"
+        : "restore a notification to unread";
+
+      return NextResponse.json(
+        {
+          success: false,
+          error: `The configured notification backend cannot ${operation}. ${error.message}`,
+        },
+        { status: 501 },
+      );
+    }
+
     return NextResponse.json(
       {
         success: false,

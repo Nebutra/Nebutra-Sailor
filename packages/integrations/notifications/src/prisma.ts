@@ -1,4 +1,5 @@
 import { getDefaultNotificationPreferences } from "./defaults";
+import { NotificationNotFoundError } from "./errors";
 import type {
   InAppFeedOptions,
   InAppFeedResult,
@@ -57,7 +58,7 @@ interface PrismaNotificationDelegate {
   }): Promise<PrismaNotificationRecord[]>;
   updateMany(input: {
     where: Record<string, unknown>;
-    data: { read: true };
+    data: { read: boolean };
   }): Promise<{ count: number }>;
 }
 
@@ -272,6 +273,23 @@ function createInAppStore(prisma: PrismaNotificationClient): InAppNotificationSt
         },
         data: { read: true },
       });
+    },
+
+    async markAsUnread(notificationId, userId, tenantId) {
+      const result = await notificationDelegate.updateMany({
+        where: {
+          id: { in: [notificationId] },
+          userId,
+          tenantId: toTenantKey(tenantId),
+        },
+        data: { read: false },
+      });
+
+      // Zero rows means the id belongs to another user or tenant, or does not
+      // exist. Resolving here would tell the caller a write happened.
+      if (result.count === 0) {
+        throw new NotificationNotFoundError(notificationId);
+      }
     },
 
     async markAsReadBatch(notificationIds, userId, tenantId) {

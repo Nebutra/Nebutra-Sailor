@@ -199,6 +199,16 @@ export class KnockProvider implements NotificationProvider {
     });
   }
 
+  /**
+   * Knock models "undo a status" as a DELETE on the same status path, so
+   * unread is the inverse of the read call above.
+   */
+  async markAsUnread(notificationId: string, _userId: string, _tenantId?: string): Promise<void> {
+    await this.knockFetch(`/messages/${encodeURIComponent(notificationId)}/status/read`, {
+      method: "DELETE",
+    });
+  }
+
   async markAsReadBatch(
     notificationIds: string[],
     userId: string,

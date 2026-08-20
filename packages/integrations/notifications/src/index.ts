@@ -28,6 +28,13 @@ export {
   NEBUTRA_NOTIFICATION_SETTINGS_CHANNELS,
 } from "./catalog";
 export { DEFAULT_NOTIFICATION_CHANNELS, getDefaultNotificationPreferences } from "./defaults";
+// ── Errors ──────────────────────────────────────────────────────────────────
+export {
+  isNotificationNotFoundError,
+  isNotificationUnsupportedOperationError,
+  NotificationNotFoundError,
+  NotificationUnsupportedOperationError,
+} from "./errors";
 // ── Factory ─────────────────────────────────────────────────────────────────
 export {
   closeNotificationProvider,

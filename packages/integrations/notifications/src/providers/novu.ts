@@ -58,7 +58,7 @@ type NovuMessage = {
 type NovuMessagesApi = {
   markAs: (
     notificationId: string,
-    payload: { status: "read"; subscriberId: string },
+    payload: { status: "read" | "unread"; subscriberId: string },
   ) => Promise<unknown>;
   get: (
     userId: string,
@@ -257,6 +257,25 @@ export class NovuProvider implements NotificationProvider {
       logger.warn("[notifications:novu] Failed to mark as read", { error: errorMessage });
       // Don't throw — this is not critical
     }
+  }
+
+  /**
+   * Flip a message back to unread. Novu's message status accepts `unread`
+   * alongside `read`, so this is the same call with the inverse status.
+   *
+   * Errors propagate — the caller renders the resulting state.
+   */
+  async markAsUnread(notificationId: string, userId: string, tenantId?: string): Promise<void> {
+    logger.info("[notifications:novu] Marking as unread", {
+      notificationId,
+      userId,
+      tenantId,
+    });
+
+    await (this.novu.messages as unknown as NovuMessagesApi).markAs(notificationId, {
+      status: "unread",
+      subscriberId: userId,
+    });
   }
 
   /**
