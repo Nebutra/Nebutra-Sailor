@@ -21,3 +21,11 @@
  * narrow on purpose — broad globs (e.g. apps/web/**) hang the dev server. */
 @source "../../../packages/design/ui/src/**/*.{ts,tsx}";
 @source "../src/**/*.{ts,tsx}";
+/* Stories of apps/web components (reached through the `@/` alias) were styled
+ * only by the classes those two globs happened to also produce. A class unique
+ * to an apps/web file — `xl:grid-cols-[360px_minmax(0,1fr)]` on the Startup OS
+ * workspace — simply had no rule, so the story rendered a two-column shell as
+ * one stacked column and looked broken for a reason that was not in the
+ * component. Scoped to src/components, not apps/web/**, which does hang the
+ * dev server. */
+@source "../../web/src/components/**/*.{ts,tsx}";

@@ -1,6 +1,9 @@
 import type { Preview, StoryContext, StoryFn } from "@storybook/react";
+import { NextIntlClientProvider } from "next-intl";
+import { createElement } from "react";
 // Single stylesheet — Tailwind v4 + tokens + fonts + @source scan directives.
 import "./preview.css";
+import enMessages from "../../../packages/platform/i18n/locales/en.json";
 import { a11yConfig } from "./a11y-config";
 
 const preview: Preview = {
@@ -46,6 +49,18 @@ const preview: Preview = {
       }
       return Story(context.args, context);
     },
+
+    // Any story reaching a component that calls `useTranslations` throws
+    // without this — and the throw is caught by Storybook's error boundary, so
+    // the build succeeds, the story is indexed, and the frame renders the
+    // error text instead of the component. Two Startup OS stories shipped that
+    // way. Real `en` copy, not key echoes, so a visual review sees real strings.
+    (Story: StoryFn, context: StoryContext) =>
+      createElement(
+        NextIntlClientProvider,
+        { locale: "en", messages: enMessages, timeZone: "UTC" },
+        Story(context.args, context),
+      ),
   ],
 };
 
