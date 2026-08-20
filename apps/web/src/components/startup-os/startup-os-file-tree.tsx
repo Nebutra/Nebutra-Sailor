@@ -123,8 +123,8 @@ export function getStartupExplorerExpandedIds(files: readonly StartupOSFile[]): 
   for (const file of files) {
     const parts = file.path.split("/").filter(Boolean);
     let currentPath = "";
-    for (let index = 0; index < parts.length - 1; index += 1) {
-      currentPath = currentPath ? `${currentPath}/${parts[index]}` : parts[index];
+    for (const part of parts.slice(0, -1)) {
+      currentPath = currentPath ? `${currentPath}/${part}` : part;
       ids.add(`dir:${currentPath}`);
     }
   }
