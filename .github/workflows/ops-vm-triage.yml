@@ -118,6 +118,16 @@ jobs:
           # and the only useful question is which ones.
           # sailor-docs: 2.0 GB of its 2.2 GB is .next, not dependencies. Next's
           # build cache lives there and has no business on a runtime host.
+          # sailor-docs holds 2.0 GB in .next/server — not cache, not
+          # node_modules. A docs site's server output should be a few hundred
+          # MB at most, so the question is what kind of file it is: one huge
+          # artefact, or many.
+          probe_slow "sailor-docs .next/server, one level" \
+                "du -xh --max-depth=1 ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}/sailor-docs/releases/*/apps/sailor-docs/.next/server 2>/dev/null | sort -rh | head -12"
+          probe_slow "sailor-docs: 12 biggest files" \
+                "find ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}/sailor-docs/releases/*/apps/sailor-docs/.next/server -type f -printf '%s %p\n' 2>/dev/null | sort -rn | head -12 | awk '{printf \"%8.1f MB  %s\\n\", \$1/1048576, \$2}'"
+          probe_slow "sailor-docs: file count and extensions" \
+                "find ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}/sailor-docs/releases/*/apps/sailor-docs/.next/server -type f 2>/dev/null | sed 's/.*\\.//' | sort | uniq -c | sort -rn | head -10"
           probe_slow "inside sailor-docs/.next" \
                 "du -xh --max-depth=1 ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}/sailor-docs/releases/*/apps/sailor-docs/.next 2>/dev/null | sort -rh | head -10"
           # api: everything is in .pnpm, and nothing listed at depth 3 was big,
