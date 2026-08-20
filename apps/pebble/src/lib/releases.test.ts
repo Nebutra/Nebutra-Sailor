@@ -3,7 +3,12 @@ import { DOCS_BASE, DOWNLOAD_ROWS, DOWNLOADS, GITHUB_RELEASES } from "./releases
 
 describe("pebble brand front release links", () => {
   it("points download artifacts at GitHub Releases, not the brand origin", () => {
-    expect(GITHUB_RELEASES).toContain("github.com/Nebutra/pebble/releases");
+    // Case-insensitive on the org: GITHUB_RELEASES is derived from
+    // brand.social.github, which stores the lowercase form, and GitHub treats
+    // the two as the same account. Asserting the capital N pinned a spelling
+    // the SSOT does not own — the claim worth making is that downloads leave
+    // for GitHub Releases rather than the brand origin.
+    expect(GITHUB_RELEASES.toLowerCase()).toContain("github.com/nebutra/pebble/releases");
     for (const url of Object.values(DOWNLOADS)) {
       expect(url.startsWith("https://github.com/")).toBe(true);
     }
