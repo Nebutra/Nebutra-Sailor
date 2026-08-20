@@ -37,6 +37,20 @@ const nextConfig: NextConfig = {
   // Mermaid is 75MB on disk; OG image renderer is native; octokit only for feedback.
   serverExternalPackages: ["@takumi-rs/image-response", "mermaid", "playwright", "playwright-core"],
   experimental: {
+    // No source maps for the server bundle.
+    //
+    // Turbopack emits them and webpack does not, so apps that stayed on
+    // `next build --webpack` (landing) ship 2 MB of maps while every Turbopack
+    // app ships hundreds: 138 MB across 132 files here, against 50 MB of actual
+    // server JS — 41% of .next/server, and the same shape in forge (68%),
+    // router (75%) and idp (70%). Nobody chose this; it arrived with the
+    // builder and was never looked at until a 20 GB VM hit 96% and a deploy's
+    // SSH session died before its own cleanup could run.
+    //
+    // They only symbolicate server stack traces and are never served to a
+    // browser. Readable traces are worth having, but not at three times the
+    // size of the code they describe on a host this tight.
+    serverSourceMaps: false,
     // Tree-shake barrel imports so icons/ui do not land wholesale in handler.mjs.
     optimizePackageImports: [
       "@nebutra/icons",

@@ -22,6 +22,11 @@ const nextConfig: NextConfig = {
     root: monorepoRoot,
   },
   experimental: {
+    // No source maps for the server bundle — Turbopack emits them, webpack
+    // does not, and nobody chose them. Measured on sailor-docs: 138 MB of maps
+    // against 50 MB of server JS. They only symbolicate server stack traces and
+    // never reach a browser. See apps/sailor-docs/next.config.ts.
+    serverSourceMaps: false,
     optimizePackageImports: ["@nebutra/icons"],
   },
   // Internal surface — never indexed, never framed.
