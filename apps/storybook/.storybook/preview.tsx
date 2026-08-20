@@ -1,6 +1,5 @@
 import type { Preview, StoryContext, StoryFn } from "@storybook/react";
 import { NextIntlClientProvider } from "next-intl";
-import { createElement } from "react";
 // Single stylesheet — Tailwind v4 + tokens + fonts + @source scan directives.
 import "./preview.css";
 import enMessages from "../../../packages/platform/i18n/locales/en.json";
@@ -55,12 +54,11 @@ const preview: Preview = {
     // the build succeeds, the story is indexed, and the frame renders the
     // error text instead of the component. Two Startup OS stories shipped that
     // way. Real `en` copy, not key echoes, so a visual review sees real strings.
-    (Story: StoryFn, context: StoryContext) =>
-      createElement(
-        NextIntlClientProvider,
-        { locale: "en", messages: enMessages, timeZone: "UTC" },
-        Story(context.args, context),
-      ),
+    (Story: StoryFn, context: StoryContext) => (
+      <NextIntlClientProvider locale="en" messages={enMessages} timeZone="UTC">
+        {Story(context.args, context)}
+      </NextIntlClientProvider>
+    ),
   ],
 };
 
