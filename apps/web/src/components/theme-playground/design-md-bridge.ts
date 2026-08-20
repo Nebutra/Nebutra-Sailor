@@ -19,7 +19,7 @@ import "server-only";
 import { serializeToDesignMd, serializeToPreviewHtml } from "@nebutra/design-sync";
 import { importFromDesignMd } from "@nebutra/design-sync/design-md";
 import { BASE_TOKEN_SETS, MODE_TOKEN_SETS } from "@nebutra/design-tokens/themes";
-import { getLanguageById } from "@nebutra/theme/languages";
+import { getLanguageById, LANGUAGE_IDS } from "@nebutra/theme/languages";
 
 import type { ExportedTheme, ImportedTheme } from "./design-md-types";
 import type { ThemeTokenSet } from "./theme-token-data";
@@ -78,16 +78,22 @@ export function importDesignMdToThemeTokens(content: string): ImportedTheme {
  * @throws Error for an unknown themeId (clear message includes the ID).
  */
 export function exportThemeToDesignMd(themeId: string): ExportedTheme {
-  // Design languages without DTCG mood files fall back to light SSOT for export base.
-  const themeJson = THEME_JSON_LOOKUP[themeId] ?? THEME_JSON_LOOKUP.factory;
+  const language = getLanguageById(themeId);
+
+  // A design language carries no DTCG mood file of its own, so it exports off
+  // the light SSOT as its base. Anything that is neither a mode nor a
+  // registered language is a caller bug — say so instead of silently handing
+  // back the factory theme under someone else's name.
+  const themeJson =
+    THEME_JSON_LOOKUP[themeId] ?? (language ? THEME_JSON_LOOKUP.factory : undefined);
   if (themeJson === undefined) {
     throw new Error(
       `[design-md-bridge] Unknown themeId: "${themeId}". ` +
-        `Must be one of: ${Object.keys(THEME_JSON_LOOKUP).join(", ")} (or a design language id).`,
+        `Must be one of: ${Object.keys(THEME_JSON_LOOKUP).join(", ")} ` +
+        `or a design language id (${LANGUAGE_IDS.join(", ")}).`,
     );
   }
 
-  const language = getLanguageById(themeId);
   const name = language?.name ?? themeId;
 
   const sets = [

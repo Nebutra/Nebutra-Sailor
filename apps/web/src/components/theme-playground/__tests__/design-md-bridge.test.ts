@@ -9,6 +9,7 @@
  * (actions.ts uses "use server" and is not tested here per vitest compatibility).
  */
 
+import { LANGUAGE_IDS } from "@nebutra/theme/languages";
 import { describe, expect, it } from "vitest";
 import { exportThemeToDesignMd, importDesignMdToThemeTokens } from "../design-md-bridge";
 
@@ -21,7 +22,7 @@ import { exportThemeToDesignMd, importDesignMdToThemeTokens } from "../design-md
 const VALID_FIXTURE = `---
 name: Test Brand
 colors:
-  primary: "hsl(var(--primary))"
+  primary: "#0033FE"
   accent: "#0BF1C3"
   background: "#ffffff"
   foreground: "#111111"
@@ -214,16 +215,22 @@ describe("exportThemeToDesignMd", () => {
     });
   });
 
-  describe("other built-in themes", () => {
+  // The exportable universe is the two modes plus the design-language registry.
+  // The old oklch mood ids (dark-dense / minimal / vibrant / ocean) were removed
+  // in 2026-07 and must not come back through this test.
+  describe("modes and design languages", () => {
     it.each([
-      "dark-dense",
-      "minimal",
-      "vibrant",
-      "ocean",
-    ] as const)("exportThemeToDesignMd('%s') returns valid designMd and previewHtml", (themeId) => {
+      "light",
+      "dark",
+      ...LANGUAGE_IDS,
+    ])("exportThemeToDesignMd('%s') returns valid designMd and previewHtml", (themeId) => {
       const { designMd, previewHtml } = exportThemeToDesignMd(themeId);
       expect(designMd).toContain("version: alpha");
       expect(previewHtml.trimStart()).toMatch(/^<!DOCTYPE html>/i);
+    });
+
+    it("covers every registered design language", () => {
+      expect(LANGUAGE_IDS.length).toBeGreaterThan(0);
     });
   });
 

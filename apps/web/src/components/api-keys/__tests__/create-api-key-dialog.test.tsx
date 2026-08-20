@@ -5,6 +5,20 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { CreateApiKeyDialog } from "@/components/api-keys/create-api-key-dialog";
 
+/**
+ * The dialog surface carries two buttons named "Close": the labelled one in the
+ * footer, and the icon-only dismiss the DS DialogContent puts in the chrome
+ * (its name comes from an sr-only span). Both route through the same
+ * `attemptClose` guard; this picks the footer one so the query stays singular.
+ */
+function footerCloseButton(): HTMLElement {
+  const matches = screen
+    .getAllByRole("button", { name: /^close$/i })
+    .filter((button) => button.querySelector("svg") === null);
+  expect(matches).toHaveLength(1);
+  return matches[0] as HTMLElement;
+}
+
 describe("CreateApiKeyDialog", () => {
   afterEach(() => {
     cleanup();
@@ -107,13 +121,13 @@ describe("CreateApiKeyDialog", () => {
     });
 
     const confirmSpy = vi.spyOn(window, "confirm").mockReturnValue(false);
-    await user.click(screen.getByRole("button", { name: /close|done|cancel/i }));
+    await user.click(footerCloseButton());
 
     expect(confirmSpy).toHaveBeenCalled();
     expect(onOpenChange).not.toHaveBeenCalledWith(false);
 
     confirmSpy.mockReturnValue(true);
-    await user.click(screen.getByRole("button", { name: /close|done|cancel/i }));
+    await user.click(footerCloseButton());
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 });

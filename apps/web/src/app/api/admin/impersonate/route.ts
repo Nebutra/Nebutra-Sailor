@@ -102,6 +102,9 @@ export async function DELETE(request: Request) {
   }).log({
     action: "admin.impersonate.ended",
     outcome: "success",
+    // Session-lifecycle events on the admin surface are reviewed, not just
+    // recorded — same severity the revoke-session routes use.
+    severity: "warning",
     resource: { type: "session", id: auth.userId },
   });
 

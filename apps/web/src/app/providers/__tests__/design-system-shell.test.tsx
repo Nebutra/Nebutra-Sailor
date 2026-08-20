@@ -128,7 +128,11 @@ vi.mock("@nebutra/ui/patterns", () => ({
   WorkspaceSwitcher: () => null,
 }));
 
-vi.mock("@nebutra/ui/primitives", () => ({
+// Partial mock: the dropdown family is flattened (its popup needs a pointer
+// stack jsdom does not provide) and `toast` is spied. Every other primitive —
+// Button, and whatever the shell reaches for next — stays real.
+vi.mock("@nebutra/ui/primitives", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@nebutra/ui/primitives")>()),
   DropdownMenu: ({ children }: { children: React.ReactNode }) => <>{children}</>,
   DropdownMenuContent: ({ children }: { children: React.ReactNode }) => <>{children}</>,
   DropdownMenuItem: ({

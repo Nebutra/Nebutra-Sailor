@@ -46,7 +46,11 @@ vi.mock("next-intl", () => ({
   }),
 }));
 
-vi.mock("@nebutra/ui/primitives", () => ({
+// Partial mock: only the Select family is doubled (Radix's listbox needs a real
+// pointer stack jsdom does not provide). Everything else — Table, ConfirmDialog
+// — comes from the real library so this suite tracks it instead of drifting.
+vi.mock("@nebutra/ui/primitives", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@nebutra/ui/primitives")>()),
   Select: ({
     children,
     value,
@@ -376,7 +380,9 @@ describe("MembersClient (react-query integration)", () => {
     // Owner row is not removable — the only Remove button targets the member row.
     await user.click(screen.getByRole("button", { name: /^Remove Grace Hopper$/ }));
 
-    const confirmDialog = await screen.findByRole("dialog");
+    // ConfirmDialog is an alert dialog — its popup carries role="alertdialog",
+    // which byRole does not fold into "dialog".
+    const confirmDialog = await screen.findByRole("alertdialog");
     await user.click(within(confirmDialog).getByRole("button", { name: "Confirm" }));
 
     // Optimistic update removes the row immediately.

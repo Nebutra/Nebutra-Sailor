@@ -110,8 +110,13 @@ describe("/api/admin/impersonate", () => {
       );
 
       expect(response.status).toBe(501);
-      await expect(response.json()).resolves.toEqual({
-        error: "Admin impersonation is disabled until auth-layer integration is complete.",
+      // The 501 body names the capability and the provider that lacks it, so a
+      // caller can tell "not built yet" apart from "not available on Clerk".
+      await expect(response.json()).resolves.toMatchObject({
+        error: "Impersonation is not available for this auth provider.",
+        code: "AUTH_CAPABILITY_UNSUPPORTED",
+        capability: "impersonation",
+        declared: false,
       });
       expect(response.headers.get("set-cookie")).toBeNull();
       expect(dbMock.user.findUnique).not.toHaveBeenCalled();

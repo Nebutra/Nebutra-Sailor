@@ -98,7 +98,11 @@ describe("UI/UX audit remediation invariants", () => {
     // variables — same intent (fluid, breakpoint-aware), expressed through
     // tokens instead of clamp. Either form satisfies the UX invariant:
     // headline scales responsively + tracks token-driven type metrics.
-    expect(hero).toMatch(/clamp\(|text-4xl[\s\S]*sm:text-5xl[\s\S]*md:text-6xl/);
+    //
+    // The invariant is "a base step plus at least two breakpoint steps", not a
+    // particular rung of the scale — pinning the exact sizes made a routine
+    // retune of the headline read as a regression.
+    expect(hero).toMatch(/clamp\(|text-\d+xl[\s\S]*sm:text-\d+xl[\s\S]*md:text-\d+xl/);
     expect(hero).toMatch(/var\(--tracking-display\)|var\(--leading-display\)/);
     expect(productDemo).toMatch(/lg:grid-cols-|lg:col-span-/);
   });
@@ -133,7 +137,10 @@ describe("UI/UX audit remediation invariants", () => {
     expect(shell).not.toContain('aria-label="Open feedback dialog"');
     expect(userMenu).toContain("useFeedbackDialog");
     expect(userMenu).toContain("openFeedback");
-    expect(userMenu).toContain('aria-label={t("feedback")}');
+    // The entry is a labelled menu item now, not an icon-only button, so its
+    // accessible name comes from the visible text. An aria-label on top of that
+    // would be duplicate chrome — assert the label, not the attribute.
+    expect(userMenu).toContain('{t("feedback")}');
     expect(userMenu).toContain("LifeBuoy");
   });
 
