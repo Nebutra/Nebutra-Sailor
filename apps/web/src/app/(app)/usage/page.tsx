@@ -1,10 +1,16 @@
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { Card, EmptyState, LoadingState, PageHeader } from "@nebutra/ui/layout";
+import { Card, EmptyState, ErrorState, LoadingState, PageHeader } from "@nebutra/ui/layout";
 import { headers } from "next/headers";
 import { getTranslations } from "next-intl/server";
-import { Suspense } from "react";
+import { type ReactNode, Suspense } from "react";
+import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 import { getTypedApi } from "@/lib/api/client";
-import { resolveServerRequestOrigin } from "@/lib/auth";
+import { getTenantContext, resolveServerRequestOrigin } from "@/lib/auth";
+import {
+  loadUsageBreakdown,
+  type UsageBreakdownGroup,
+  type UsageBreakdownResult,
+} from "@/lib/metering/usage-breakdown";
 
 // ── Data Fetching ────────────────────────────────────────────────────────────
 
@@ -304,9 +310,170 @@ function CreditSummarySection({
   );
 }
 
+// ── Usage Breakdown ──────────────────────────────────────────────────────────
+
+/**
+ * Fixed-height slot shared by the breakdown's loading, empty, error and loaded
+ * states so the page below it does not move as the section resolves.
+ */
+function BreakdownFrame({ children }: { children: ReactNode }) {
+  return <div className="mt-4 min-h-[19rem]">{children}</div>;
+}
+
+function BreakdownSkeleton() {
+  const placeholders = ["model", "provider", "endpoint"];
+
+  return (
+    <BreakdownFrame>
+      <div
+        className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+        role="status"
+        aria-label="Loading usage breakdown"
+      >
+        {placeholders.map((id) => (
+          <Card key={id} className="p-4 sm:p-6">
+            <div className="h-3.5 w-24 animate-pulse rounded bg-neutral-3" />
+            <div className="mt-3 h-7 w-32 animate-pulse rounded bg-neutral-3" />
+            <div className="mt-5 space-y-4">
+              {[0, 1, 2, 3].map((row) => (
+                <div key={row} className="space-y-1.5">
+                  <div className="h-3 w-full animate-pulse rounded bg-neutral-2" />
+                  <div className="h-1.5 w-full animate-pulse rounded-full bg-neutral-3" />
+                </div>
+              ))}
+            </div>
+          </Card>
+        ))}
+      </div>
+    </BreakdownFrame>
+  );
+}
+
+function BreakdownGroupCard({ group }: { group: UsageBreakdownGroup }) {
+  return (
+    <Card className="p-4 sm:p-6">
+      <div className="flex items-baseline justify-between gap-3">
+        <h3 className="text-sm font-semibold text-neutral-12">{group.dimensionLabel}</h3>
+        <span className="shrink-0 text-xs text-neutral-10">{group.meterName}</span>
+      </div>
+
+      <p className="mt-2 text-2xl font-bold tracking-tight text-neutral-12">
+        {group.total.toLocaleString()}
+        <span className="ml-1 text-xs font-normal text-neutral-10">{group.unit}</span>
+      </p>
+
+      <ul className="mt-4 space-y-3">
+        {group.rows.map((row) => (
+          <li key={row.key}>
+            <div className="flex items-baseline justify-between gap-3">
+              <span className="truncate text-xs font-medium text-neutral-11">{row.label}</span>
+              <span className="shrink-0 text-xs tabular-nums text-neutral-10">
+                {row.value.toLocaleString()} · {row.share.toFixed(0)}%
+              </span>
+            </div>
+            <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-neutral-3">
+              <div
+                className="h-full rounded-full bg-primary transition-[width] duration-500 motion-reduce:transition-none"
+                style={{ width: `${Math.max(row.share, 2)}%` }}
+              />
+            </div>
+          </li>
+        ))}
+      </ul>
+    </Card>
+  );
+}
+
+type BreakdownSectionResult = UsageBreakdownResult | { status: "no-tenant" };
+
+/**
+ * Resolve the breakdown without awaiting anything else first, so its latency
+ * runs alongside the gateway usage and credit requests rather than after them.
+ * Never rejects: the tenant lookup is guarded here and `loadUsageBreakdown`
+ * converts backend failures into an `error` result.
+ */
+async function resolveUsageBreakdown(): Promise<BreakdownSectionResult> {
+  let tenantId: string | null = null;
+
+  try {
+    const tenant = await getTenantContext();
+    tenantId = tenant?.tenantId ?? null;
+  } catch {
+    tenantId = null;
+  }
+
+  if (!tenantId) {
+    return { status: "no-tenant" };
+  }
+
+  return loadUsageBreakdown(tenantId);
+}
+
+async function UsageBreakdownSection({
+  result: pending,
+}: {
+  result: Promise<BreakdownSectionResult>;
+}) {
+  const result = await pending;
+
+  if (result.status === "no-tenant") {
+    return (
+      <BreakdownFrame>
+        <EmptyState
+          tone="subtle"
+          size="md"
+          title="Select an organization to see the breakdown"
+          description="Metered usage is recorded per organization. Switch to one to see how this period splits across models, providers and endpoints."
+        />
+      </BreakdownFrame>
+    );
+  }
+
+  if (result.status === "error") {
+    return (
+      <BreakdownFrame>
+        <ErrorState title="Usage breakdown unavailable" message={result.message} />
+      </BreakdownFrame>
+    );
+  }
+
+  if (result.breakdown.groups.length === 0) {
+    return (
+      <BreakdownFrame>
+        <EmptyState
+          tone="subtle"
+          size="md"
+          title="This period has no metered usage"
+          description="Model calls and API requests are grouped here as soon as the first usage event lands in this billing period."
+        />
+      </BreakdownFrame>
+    );
+  }
+
+  return (
+    <BreakdownFrame>
+      <AnimateInGroup stagger="fast" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {result.breakdown.groups.map((group) => (
+          <AnimateIn key={group.id} preset="fadeUp">
+            <BreakdownGroupCard group={group} />
+          </AnimateIn>
+        ))}
+      </AnimateInGroup>
+
+      {result.breakdown.periodStart && result.breakdown.periodEnd && (
+        <p className="mt-4 text-xs text-neutral-10 first-letter:uppercase">
+          {result.breakdown.period} window · {formatCreditDate(result.breakdown.periodStart)} to{" "}
+          {formatCreditDate(result.breakdown.periodEnd)}
+        </p>
+      )}
+    </BreakdownFrame>
+  );
+}
+
 // ── Main Content ─────────────────────────────────────────────────────────────
 
 async function UsageContent() {
+  const breakdown = resolveUsageBreakdown();
   const t = await getTranslations("startupOs");
   const [usage, creditSummary] = await Promise.all([fetchUsage(), fetchCreditSummary()]);
 
@@ -334,74 +501,57 @@ async function UsageContent() {
           />
         </AnimateIn>
       ) : (
-        <>
-          {/* Quota Gauges */}
-          <AnimateInGroup stagger="fast" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <AnimateIn preset="fadeUp">
-              <UsageGauge
-                label="API Calls"
-                used={usage.apiCalls.used}
-                limit={usage.apiCalls.limit}
-                unit="requests"
-              />
-            </AnimateIn>
-
-            <AnimateIn preset="fadeUp">
-              <StatCard
-                label="AI Tokens Used"
-                value={usage.aiTokens.used.toLocaleString()}
-                subLabel="Total tokens consumed this period"
-              />
-            </AnimateIn>
-
-            <AnimateIn preset="fadeUp">
-              <StatCard
-                label="Billing Period"
-                value={usage.period}
-                subLabel="Current metering window"
-              />
-            </AnimateIn>
-          </AnimateInGroup>
-
-          {/* Usage Breakdown heading */}
+        /* Quota Gauges */
+        <AnimateInGroup stagger="fast" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <AnimateIn preset="fadeUp">
-            <h2 className="mt-8 text-lg font-semibold text-neutral-12">Usage Breakdown</h2>
-            <p className="mt-1 text-sm text-neutral-11">
-              Detailed per-model and per-endpoint breakdown coming soon.
-            </p>
+            <UsageGauge
+              label="API Calls"
+              used={usage.apiCalls.used}
+              limit={usage.apiCalls.limit}
+              unit="requests"
+            />
           </AnimateIn>
 
-          {/* Quick-action cards */}
-          <AnimateInGroup stagger="fast" className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <AnimateIn preset="fadeUp">
-              <Card className="group cursor-pointer p-4 transition-[border-color,box-shadow] duration-150 hover:border-[var(--blue-7)] hover:shadow-md sm:p-6">
-                <h3 className="text-sm font-semibold text-neutral-12">Per-Model Breakdown</h3>
-                <p className="mt-1 text-xs text-neutral-10">
-                  See token usage per AI model (GPT-5, Claude Sonnet, Gemini).
-                </p>
-              </Card>
-            </AnimateIn>
+          <AnimateIn preset="fadeUp">
+            <StatCard
+              label="AI Tokens Used"
+              value={usage.aiTokens.used.toLocaleString()}
+              subLabel="Total tokens consumed this period"
+            />
+          </AnimateIn>
 
-            <AnimateIn preset="fadeUp">
-              <Card className="group cursor-pointer p-4 transition-[border-color,box-shadow] duration-150 hover:border-[var(--blue-7)] hover:shadow-md sm:p-6">
-                <h3 className="text-sm font-semibold text-neutral-12">Historical Trends</h3>
-                <p className="mt-1 text-xs text-neutral-10">
-                  View daily/weekly/monthly usage trends over time.
-                </p>
-              </Card>
-            </AnimateIn>
-
-            <AnimateIn preset="fadeUp">
-              <Card className="group cursor-pointer p-4 transition-[border-color,box-shadow] duration-150 hover:border-[var(--blue-7)] hover:shadow-md sm:p-6">
-                <h3 className="text-sm font-semibold text-neutral-12">Quota Settings</h3>
-                <p className="mt-1 text-xs text-neutral-10">
-                  Configure usage thresholds and alert notifications.
-                </p>
-              </Card>
-            </AnimateIn>
-          </AnimateInGroup>
-        </>
+          <AnimateIn preset="fadeUp">
+            <StatCard
+              label="Billing Period"
+              value={usage.period}
+              subLabel="Current metering window"
+            />
+          </AnimateIn>
+        </AnimateInGroup>
       )}
+
+      {/* Usage Breakdown — read straight from @nebutra/metering, so it renders
+          independently of the gateway usage endpoint above. */}
+      <AnimateIn preset="fadeUp">
+        <div className="mt-8 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 className="text-lg font-semibold text-neutral-12">Usage Breakdown</h2>
+            <p className="mt-1 text-sm text-neutral-11">
+              This period&rsquo;s metered usage, grouped by the dimensions recorded on each event.
+            </p>
+          </div>
+          <ViewTransitionLink
+            href="/billing"
+            className="shrink-0 text-sm font-medium text-neutral-11 underline-offset-4 transition-colors hover:text-neutral-12 hover:underline"
+          >
+            Manage plan and limits
+          </ViewTransitionLink>
+        </div>
+      </AnimateIn>
+
+      <Suspense fallback={<BreakdownSkeleton />}>
+        <UsageBreakdownSection result={breakdown} />
+      </Suspense>
     </>
   );
 }
