@@ -1,38 +1,10 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  Input,
-  useCopyToClipboard,
-} from "@nebutra/ui/primitives";
+import { Button, useCopyToClipboard } from "@nebutra/ui/primitives";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-/**
- * Standard webhook events surfaced in the UI. The full enum lives in
- * `@nebutra/webhooks` (`WebhookEventType`); this list is curated for the most
- * common subscriptions a customer would pick from when wiring up a new endpoint.
- */
-export const STANDARD_WEBHOOK_EVENTS: ReadonlyArray<{ id: string; label: string }> = [
-  { id: "user.created", label: "User created" },
-  { id: "user.updated", label: "User updated" },
-  { id: "user.deleted", label: "User deleted" },
-  { id: "invoice.paid", label: "Invoice paid" },
-  { id: "invoice.failed", label: "Invoice failed" },
-  { id: "invoice.updated", label: "Invoice updated" },
-  { id: "subscription.created", label: "Subscription created" },
-  { id: "subscription.updated", label: "Subscription updated" },
-  { id: "subscription.cancelled", label: "Subscription cancelled" },
-  { id: "org.created", label: "Organization created" },
-  { id: "org.updated", label: "Organization updated" },
-  { id: "org.deleted", label: "Organization deleted" },
-];
+import { WebhookEndpointForm, type WebhookEndpointFormValues } from "./webhook-endpoint-form";
+
+export { STANDARD_WEBHOOK_EVENTS } from "./webhook-endpoint-form";
 
 export interface CreateWebhookResult {
   endpoint: {
@@ -69,41 +41,15 @@ async function defaultSubmit(input: {
   return (await response.json()) as CreateWebhookResult;
 }
 
-const webhookFormSchema = z.object({
-  url: z.string().url(),
-  events: z.array(z.string()).min(1, "Select at least one event."),
-});
-type WebhookFormValues = z.infer<typeof webhookFormSchema>;
-
 export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialogProps) {
-  const form = useForm<WebhookFormValues>({
-    resolver: zodResolver(webhookFormSchema),
-    defaultValues: { url: "", events: [] },
-  });
   const [result, setResult] = useState<CreateWebhookResult | null>(null);
   const { copied, copy } = useCopyToClipboard({ timeout: 2000, showToast: false });
 
-  const url = form.watch("url");
-  const events = form.watch("events");
-
-  function toggleEvent(id: string, currentEvents: string[]) {
-    const next = currentEvents.includes(id)
-      ? currentEvents.filter((value) => value !== id)
-      : [...currentEvents, id];
-    form.setValue("events", next, { shouldValidate: form.formState.isSubmitted });
-  }
-
-  async function submit(values: WebhookFormValues) {
+  async function submit(values: WebhookEndpointFormValues) {
     const runSubmit = onSubmit ?? defaultSubmit;
-    try {
-      const created = await runSubmit({ url: values.url, events: values.events });
-      setResult(created);
-      onCreated?.(created);
-    } catch (err) {
-      form.setError("root", {
-        message: err instanceof Error ? err.message : "Unknown error",
-      });
-    }
+    const created = await runSubmit({ url: values.url, events: values.events });
+    setResult(created);
+    onCreated?.(created);
   }
 
   async function copySecret(secret: string) {
@@ -112,115 +58,38 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
 
   if (result) {
     const { signingSecret, endpoint } = result;
+    // This panel used to be hand-coloured in the amber-50/amber-800/white ramp,
+    // which has no dark-mode value: the secret rendered as near-white text on a
+    // white block — the one string in the app you cannot get back was the one
+    // you could not read. Semantic tokens carry both themes.
     return (
       <div
         role="alert"
-        className="rounded-[var(--radius-md)] border border-warning/20 bg-amber-50 p-4 text-sm text-[hsl(var(--warning-strong))]"
+        className="rounded-[var(--radius-md)] bg-warning/10 p-4 text-sm text-[hsl(var(--warning-strong))]"
       >
         <p className="mb-2 font-medium">Endpoint created. The signing secret appears once.</p>
         <p className="mb-3 text-xs">
           Store it in your application&apos;s secret manager before closing.
         </p>
         <div className="mb-3 flex items-center gap-2">
-          <code className="flex-1 rounded bg-white px-3 py-2 font-mono text-xs text-amber-800 shadow-inner">
+          <code className="min-w-0 flex-1 overflow-x-auto whitespace-nowrap rounded bg-neutral-1 px-3 py-2 font-mono text-xs text-neutral-12">
             {signingSecret}
           </code>
-          <button
+          <Button
             type="button"
+            variant="outline"
+            size="sm"
             onClick={() => copySecret(signingSecret)}
-            className="rounded-[var(--radius-md)] border border-amber-300 px-3 py-2 text-xs font-medium text-amber-800 hover:bg-amber-100"
           >
             {copied ? "Copied" : "Copy"}
-          </button>
+          </Button>
         </div>
-        <p className="text-xs text-amber-800">Endpoint URL: {endpoint.url}</p>
+        <p className="text-xs">Endpoint URL: {endpoint.url}</p>
       </div>
     );
   }
 
-  const rootError = form.formState.errors.root?.message;
-
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(submit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="url"
-          render={({ field }) => (
-            <FormItem className="space-y-0">
-              <FormLabel className="mb-1 block text-sm font-medium text-foreground">
-                Endpoint URL
-              </FormLabel>
-              <FormControl>
-                <Input
-                  type="url"
-                  required
-                  placeholder="https://api.example.com/webhooks/nebutra"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="events"
-          render={({ field }) => (
-            <FormItem className="space-y-0">
-              <fieldset>
-                <legend className="mb-2 text-sm font-medium text-foreground">Events</legend>
-                <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
-                  {STANDARD_WEBHOOK_EVENTS.map((eventDef) => {
-                    const checked = field.value.includes(eventDef.id);
-                    return (
-                      <label
-                        key={eventDef.id}
-                        className="flex items-center gap-2 text-sm text-foreground"
-                      >
-                        <input
-                          data-allow-native
-                          type="checkbox"
-                          name="events"
-                          value={eventDef.id}
-                          checked={checked}
-                          onChange={() => toggleEvent(eventDef.id, field.value)}
-                          className="h-4 w-4 rounded border-border"
-                        />
-                        <span>
-                          <span className="font-mono text-xs text-muted-foreground">
-                            {eventDef.id}
-                          </span>
-                          <span className="ml-2 text-foreground">{eventDef.label}</span>
-                        </span>
-                      </label>
-                    );
-                  })}
-                </div>
-              </fieldset>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {rootError && (
-          <p role="alert" className="text-sm text-[hsl(var(--destructive-strong))]">
-            {rootError}
-          </p>
-        )}
-
-        <div className="flex justify-end">
-          <button
-            type="submit"
-            disabled={form.formState.isSubmitting || !url || events.length === 0}
-            className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity disabled:opacity-50"
-            style={{ background: "hsl(var(--primary))" }}
-          >
-            {form.formState.isSubmitting ? "Creating…" : "Create endpoint"}
-          </button>
-        </div>
-      </form>
-    </Form>
+    <WebhookEndpointForm submitLabel="Create endpoint" pendingLabel="Creating…" onSubmit={submit} />
   );
 }
