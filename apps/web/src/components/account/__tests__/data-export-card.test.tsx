@@ -82,6 +82,75 @@ describe("DataExportCard", () => {
     });
   });
 
+  it("keeps polling while the job is pending and only then reveals the link", async () => {
+    // The export is a queued job: the first status read is normally still
+    // pending. Reading once and declaring success showed a ready message with
+    // no file behind it.
+    const startExport = vi.fn().mockResolvedValue({ exportId: "ex_3", status: "pending" });
+    const fetchExport = vi
+      .fn()
+      .mockResolvedValueOnce({ exportId: "ex_3", status: "pending" })
+      .mockResolvedValueOnce({ exportId: "ex_3", status: "pending" })
+      .mockResolvedValue({
+        exportId: "ex_3",
+        status: "ready",
+        inline: false,
+        downloadUrl: "https://uploads.example.com/ex_3.json?sig=abc",
+      });
+
+    render(
+      <DataExportCard
+        startExport={startExport}
+        fetchExport={fetchExport}
+        wait={() => Promise.resolve()}
+      />,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "account.export.export" }));
+
+    await waitFor(() => {
+      const anchors = document.querySelectorAll("a[download]");
+      expect(anchors.length).toBe(1);
+    });
+    expect(fetchExport).toHaveBeenCalledTimes(3);
+    expect(document.querySelector("a[download]")?.getAttribute("href")).toBe(
+      "https://uploads.example.com/ex_3.json?sig=abc",
+    );
+  });
+
+  it("treats a ready export with no artifact as a failure, not a success", async () => {
+    const startExport = vi.fn().mockResolvedValue({ exportId: "ex_4", status: "pending" });
+    const fetchExport = vi.fn().mockResolvedValue({ exportId: "ex_4", status: "ready" });
+
+    render(
+      <DataExportCard
+        startExport={startExport}
+        fetchExport={fetchExport}
+        wait={() => Promise.resolve()}
+      />,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "account.export.export" }));
+
+    await waitFor(() => expect(screen.getByRole("alert").textContent).toBe("account.export.error"));
+    expect(document.querySelectorAll("a[download]").length).toBe(0);
+  });
+
+  it("gives up after a bounded number of polls instead of hanging", async () => {
+    const startExport = vi.fn().mockResolvedValue({ exportId: "ex_5", status: "pending" });
+    const fetchExport = vi.fn().mockResolvedValue({ exportId: "ex_5", status: "pending" });
+
+    render(
+      <DataExportCard
+        startExport={startExport}
+        fetchExport={fetchExport}
+        wait={() => Promise.resolve()}
+      />,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "account.export.export" }));
+
+    await waitFor(() => expect(screen.getByRole("alert").textContent).toBe("account.export.error"));
+    expect(fetchExport).toHaveBeenCalledTimes(45);
+  });
+
   it("shows error message when startExport rejects", async () => {
     const startExport = vi.fn().mockRejectedValue(new Error("boom"));
     const fetchExport = vi.fn();

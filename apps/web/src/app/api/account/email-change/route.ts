@@ -104,8 +104,31 @@ export async function POST(request: Request) {
         userId: authState.userId,
         error: error instanceof Error ? error.message : "Unknown error",
       });
-      // We still return 202 because the verification row was written — the
-      // user can request another email if delivery fails.
+
+      // The link only reaches the user by mail, so a send failure means the
+      // flow cannot be completed. Returning 202 {verificationSent:true} told
+      // them to go and check an inbox nothing had been sent to. Drop the
+      // now-unreachable token and say what happened.
+      await db.authVerification.deleteMany({ where: { identifier } });
+
+      await auditLogger(request, {
+        actor: { id: authState.userId, type: "user" },
+        tenantId: authState.orgId ?? authState.userId,
+      }).log({
+        action: "account.email.changed",
+        outcome: "failure",
+        resource: { type: "user", id: authState.userId },
+        severity: "warning",
+        metadata: { state: "verification_send_failed" },
+      });
+
+      return NextResponse.json(
+        {
+          error: "Could not send the verification email. Please try again.",
+          code: "EMAIL_SEND_FAILED",
+        },
+        { status: 502 },
+      );
     }
 
     logger.info("[account/email-change] Verification requested", {

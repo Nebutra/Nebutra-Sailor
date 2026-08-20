@@ -4,62 +4,24 @@ import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getAuth } from "@/lib/auth";
-import { db } from "@/lib/db";
-import { type ExportRecord, exportStore } from "./_store";
+import {
+  ExportStorageUnsupportedError,
+  getExportRuntime,
+  resolveExportStatus,
+  startExport,
+} from "./_service";
 
 /**
  * GDPR Article 20 + PIPL Article 45 — right to data portability.
  *
  * POST /api/account/export
- *   Authenticated user kicks off an export. For MVP we build the export
- *   synchronously and return inline if small (< INLINE_LIMIT_BYTES). For larger
- *   payloads we write to /tmp and return a stub `downloadUrl`. In a production
- *   deployment the real implementation should enqueue a background job and the
- *   download URL should resolve to a short-lived signed URL.
+ *   Enqueues a build job through `@nebutra/queue` and returns the export id
+ *   immediately (202). Nothing is built on the request path.
  *
  * GET /api/account/export?id=...
- *   Returns the status of a previously kicked-off export.
+ *   Reports the real state of that job. Once the artifact is in object storage
+ *   the response carries a presigned download URL and its expiry.
  */
-
-const INLINE_LIMIT_BYTES = 500 * 1024; // 500 KB
-
-async function buildExportPayload(userId: string) {
-  const [user, memberships, auditEvents, invitations] = await Promise.all([
-    db.user.findUnique({ where: { id: userId } }),
-    db.organizationMember.findMany({
-      where: { userId },
-      include: { organization: true },
-    }),
-    db.auditLog.findMany({
-      where: { userId },
-      orderBy: { createdAt: "desc" },
-      take: 5000,
-    }),
-    db.organizationInvitation.findMany({
-      where: { inviterId: userId },
-      orderBy: { createdAt: "desc" },
-      take: 1000,
-    }),
-  ]);
-
-  return {
-    user,
-    organizations: memberships.map((m) => ({
-      role: m.role,
-      joinedAt: m.createdAt,
-      organization: m.organization,
-    })),
-    auditEvents,
-    // No notification model exists in the schema today; emit an empty list
-    // so the export shape stays stable for downstream consumers.
-    notifications: [] as unknown[],
-    invitations,
-  };
-}
-
-function jsonByteLength(value: unknown): number {
-  return Buffer.byteLength(JSON.stringify(value), "utf8");
-}
 
 export async function POST(request: Request) {
   try {
@@ -68,76 +30,54 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Authentication required." }, { status: 401 });
     }
 
-    const exportId = crypto.randomUUID();
     const userId = authState.userId;
+    const exportId = crypto.randomUUID();
 
-    let data: unknown;
-    try {
-      data = await buildExportPayload(userId);
-    } catch (error) {
-      logger.error("[account/export] Failed to build payload", {
-        userId,
-        error: error instanceof Error ? error.message : "Unknown error",
-      });
-      return NextResponse.json({ error: "Failed to build export." }, { status: 500 });
-    }
+    const runtime = await getExportRuntime();
+    const started = await startExport(runtime, userId, exportId);
 
-    const sizeBytes = jsonByteLength(data);
-    const inline = sizeBytes < INLINE_LIMIT_BYTES;
-    const now = new Date();
-
-    const record: ExportRecord = {
-      exportId,
-      userId,
-      status: "ready",
-      estimatedReadyAt: now.toISOString(),
-      createdAt: now.toISOString(),
-      sizeBytes,
-      ...(inline
-        ? { data }
-        : {
-            // Production note: write to durable object storage and sign the
-            // download URL. For MVP we return a stub URL that integrators must
-            // back with their preferred storage adapter.
-            downloadUrl: `/api/account/export?id=${exportId}&download=1`,
-            data,
-          }),
-    };
-    exportStore.set(exportId, record);
-
-    logger.info("[account/export] Export ready", {
+    logger.info("[account/export] Export enqueued", {
       userId,
       exportId,
-      sizeBytes,
-      inline,
+      jobId: started.jobId,
+      queueProvider: started.queueProvider,
     });
 
     // SOC 2 audit — GDPR Art. 20 / PIPL Art. 45 data portability event.
-    // Tenant scoping: account-level exports are not org-scoped, so we use the
-    // user id as the tenant boundary for these events. Cross-org exports
-    // require a separate `org.export` action when those routes land.
+    // Tenant scoping: account-level exports are not org-scoped, so the user id
+    // is the tenant boundary. Cross-org exports require a separate `org.export`
+    // action when those routes land.
     await auditLogger(request, {
       actor: { id: userId, type: "user" },
       tenantId: userId,
     }).log({
-      action: "data.export.completed",
+      action: "data.export.requested",
       outcome: "success",
       resource: { type: "account_export", id: exportId },
       severity: "warning",
-      metadata: { sizeBytes, inline },
+      metadata: { jobId: started.jobId, queueProvider: started.queueProvider },
     });
 
     return NextResponse.json(
       {
-        exportId,
-        status: "pending" as const,
-        estimatedReadyAt: now.toISOString(),
-        sizeBytes,
-        inline,
+        exportId: started.exportId,
+        status: started.status,
+        jobId: started.jobId,
+        queueProvider: started.queueProvider,
+        estimatedReadyAt: started.estimatedReadyAt,
       },
       { status: 202 },
     );
   } catch (error) {
+    // A deployment without private object storage cannot hold a personal-data
+    // export. Say so rather than reporting a success the user cannot download.
+    if (error instanceof ExportStorageUnsupportedError) {
+      logger.error("[account/export] Storage provider cannot hold exports", {
+        provider: error.provider,
+      });
+      return NextResponse.json({ error: error.message }, { status: 501 });
+    }
+
     logger.error("[account/export] POST failed", {
       error: error instanceof Error ? error.message : "Unknown error",
     });
@@ -162,18 +102,20 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Missing export id." }, { status: 400 });
     }
 
-    const record = exportStore.get(parsed.data.id);
-    if (!record || record.userId !== authState.userId) {
+    const runtime = await getExportRuntime();
+    const result = await resolveExportStatus(runtime, authState.userId, parsed.data.id);
+    if (!result) {
       return NextResponse.json({ error: "Export not found." }, { status: 404 });
     }
 
-    const inline = record.sizeBytes < INLINE_LIMIT_BYTES;
     return NextResponse.json({
-      exportId: record.exportId,
-      status: record.status,
-      sizeBytes: record.sizeBytes,
-      inline,
-      ...(inline ? { data: record.data } : { downloadUrl: record.downloadUrl }),
+      exportId: result.exportId,
+      status: result.status,
+      sizeBytes: result.sizeBytes,
+      createdAt: result.createdAt,
+      ...(result.downloadUrl ? { downloadUrl: result.downloadUrl } : {}),
+      ...(result.expiresAt ? { expiresAt: result.expiresAt } : {}),
+      ...(result.failedReason ? { failedReason: result.failedReason } : {}),
     });
   } catch (error) {
     logger.error("[account/export] GET failed", {

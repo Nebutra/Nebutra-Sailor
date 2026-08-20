@@ -2,14 +2,30 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/lib/auth", () => ({
   getAuth: vi.fn(),
+  resolveServerRequestOrigin: () => "https://app.example",
 }));
 
 vi.mock("@/lib/db", () => ({
   db: {
     user: {
       update: vi.fn(),
+      findUnique: vi.fn(),
+    },
+    authVerification: {
+      deleteMany: vi.fn(),
+      create: vi.fn(),
     },
   },
+}));
+
+const sendEmailChangeEmail = vi.fn(async () => ({ id: "msg_1" }));
+vi.mock("@nebutra/email", () => ({
+  sendEmailChangeEmail: (...args: unknown[]) => sendEmailChangeEmail(...(args as [])),
+}));
+
+const auditLog = vi.fn(async () => undefined);
+vi.mock("@nebutra/audit", () => ({
+  auditLogger: () => ({ log: auditLog }),
 }));
 
 import { getAuth } from "@/lib/auth";
@@ -17,6 +33,9 @@ import { db } from "@/lib/db";
 
 const mockedGetAuth = vi.mocked(getAuth);
 const mockedUserUpdate = vi.mocked(db.user.update);
+const mockedUserFindUnique = vi.mocked(db.user.findUnique);
+const mockedVerificationDeleteMany = vi.mocked(db.authVerification.deleteMany);
+const mockedVerificationCreate = vi.mocked(db.authVerification.create);
 
 async function loadRoute() {
   return import("@/app/api/account/route");
@@ -134,6 +153,13 @@ describe("POST /api/account (email change)", () => {
   beforeEach(() => {
     vi.resetModules();
     mockedGetAuth.mockReset();
+    mockedUserFindUnique.mockReset();
+    mockedVerificationDeleteMany.mockReset();
+    mockedVerificationCreate.mockReset();
+    sendEmailChangeEmail.mockClear();
+    auditLog.mockClear();
+    mockedVerificationDeleteMany.mockResolvedValue({ count: 0 } as never);
+    mockedVerificationCreate.mockResolvedValue({ id: "v_1" } as never);
   });
 
   afterEach(() => {
@@ -166,8 +192,17 @@ describe("POST /api/account (email change)", () => {
     expect(response.status).toBe(400);
   });
 
-  it("returns 200 with verificationSent on a valid request", async () => {
+  it("persists a pending change and dispatches the verification mail", async () => {
     mockedGetAuth.mockResolvedValue(buildAuth());
+    mockedUserFindUnique
+      .mockResolvedValueOnce({
+        id: "user_1",
+        email: "alice@example.com",
+        name: "Alice",
+      } as never)
+      // Second lookup: is the target address already claimed?
+      .mockResolvedValueOnce(null);
+
     const { POST } = await loadRoute();
     const response = await POST(
       new Request("https://app.example/api/account", {
@@ -176,7 +211,8 @@ describe("POST /api/account (email change)", () => {
         body: JSON.stringify({ newEmail: "alice2@example.com" }),
       }),
     );
-    expect(response.status).toBe(200);
+
+    expect(response.status).toBe(202);
     const body = (await response.json()) as {
       ok: boolean;
       verificationSent: boolean;
@@ -185,5 +221,51 @@ describe("POST /api/account (email change)", () => {
     expect(body.ok).toBe(true);
     expect(body.verificationSent).toBe(true);
     expect(body.newEmail).toBe("alice2@example.com");
+
+    // The pending change is persisted with an expiry, and any earlier pending
+    // request for this user is cleared first.
+    expect(mockedVerificationDeleteMany).toHaveBeenCalledWith({
+      where: { identifier: "email-change:user_1" },
+    });
+    const created = mockedVerificationCreate.mock.calls[0]?.[0] as unknown as {
+      data: { identifier: string; value: string; expiresAt: Date };
+    };
+    expect(created.data.identifier).toBe("email-change:user_1");
+    expect(created.data.value.startsWith("alice2@example.com:")).toBe(true);
+    expect(created.data.expiresAt.getTime()).toBeGreaterThan(Date.now());
+
+    // The mail goes to the *new* address, carrying the minted token.
+    expect(sendEmailChangeEmail).toHaveBeenCalledTimes(1);
+    const mailArgs = sendEmailChangeEmail.mock.calls[0]?.[0] as unknown as {
+      to: string;
+      confirmUrl: string;
+    };
+    expect(mailArgs.to).toBe("alice2@example.com");
+    const mintedToken = created.data.value.split(":").pop() as string;
+    expect(mailArgs.confirmUrl).toContain(mintedToken);
+  });
+
+  it("rejects an address that is already in use", async () => {
+    mockedGetAuth.mockResolvedValue(buildAuth());
+    mockedUserFindUnique
+      .mockResolvedValueOnce({
+        id: "user_1",
+        email: "alice@example.com",
+        name: "Alice",
+      } as never)
+      .mockResolvedValueOnce({ id: "user_other" } as never);
+
+    const { POST } = await loadRoute();
+    const response = await POST(
+      new Request("https://app.example/api/account", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ newEmail: "taken@example.com" }),
+      }),
+    );
+
+    expect(response.status).toBe(409);
+    expect(mockedVerificationCreate).not.toHaveBeenCalled();
+    expect(sendEmailChangeEmail).not.toHaveBeenCalled();
   });
 });

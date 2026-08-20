@@ -36,10 +36,6 @@ const patchSchema = z
     message: "At least one of `name` or `language` must be provided.",
   });
 
-const emailChangeSchema = z.object({
-  newEmail: z.string().trim().toLowerCase().email(),
-});
-
 /**
  * PATCH /api/account
  *
@@ -92,39 +88,14 @@ export async function PATCH(request: Request) {
 /**
  * POST /api/account
  *
- * Initiates an email-change flow: validates the new address and queues a
- * verification email. Today this is a stub that logs the request — the actual
- * email dispatch will be wired up to `@nebutra/notifications` in a follow-up.
+ * Initiates an email-change flow. The implementation — minting the single-use
+ * verification token, persisting the pending change in `auth_verifications`,
+ * and dispatching the confirmation mail through `@nebutra/email` — lives in
+ * `./email-change/route.ts`, and the token is consumed by
+ * `./email-change/[token]/route.ts`.
+ *
+ * This path delegates rather than reimplementing so the two entry points
+ * cannot drift apart. It answers `202 Accepted`: the address is not changed
+ * until the link in the mail is confirmed.
  */
-export async function POST(request: Request) {
-  try {
-    const authState = await getAuth(request);
-    if (!authState.userId) {
-      return NextResponse.json({ error: "Authentication required." }, { status: 401 });
-    }
-
-    const parsed = emailChangeSchema.safeParse(await request.json().catch(() => null));
-    if (!parsed.success) {
-      return NextResponse.json(
-        { error: parsed.error.issues[0]?.message ?? "Invalid email address." },
-        { status: 400 },
-      );
-    }
-
-    logger.info("[account] Email change verification requested", {
-      userId: authState.userId,
-      newEmail: parsed.data.newEmail,
-    });
-
-    return NextResponse.json({
-      ok: true,
-      verificationSent: true,
-      newEmail: parsed.data.newEmail,
-    });
-  } catch (error) {
-    logger.error("[account] Failed to request email change", {
-      error: error instanceof Error ? error.message : "Unknown error",
-    });
-    return NextResponse.json({ error: "Failed to request email change." }, { status: 500 });
-  }
-}
+export { POST } from "./email-change/route";

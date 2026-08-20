@@ -17,10 +17,12 @@ vi.mock("@/lib/db", () => ({
   },
 }));
 
+// The route calls `sendEmailChangeEmail`, not `getEmailProvider`. This mock
+// used to double the wrong symbol, so the dynamic import blew up on every run
+// — and the 202 assertion below only passed because the route swallowed that
+// error and reported success anyway. Both halves are fixed now.
 vi.mock("@nebutra/email", () => ({
-  getEmailProvider: () => ({
-    send: vi.fn(async () => ({ id: "msg_1" })),
-  }),
+  sendEmailChangeEmail: vi.fn(async () => ({ id: "msg_1" })),
 }));
 
 import { getAuth } from "@/lib/auth";

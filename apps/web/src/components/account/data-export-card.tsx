@@ -24,7 +24,22 @@ interface DataExportCardProps {
   startExport?: () => Promise<ExportResponse>;
   /** Override the status fetch for testing. */
   fetchExport?: (id: string) => Promise<ExportStatusResponse>;
+  /** Override the inter-poll delay for testing. */
+  wait?: (ms: number) => Promise<void>;
 }
+
+/**
+ * The export runs as a queued job, so the first status read is normally still
+ * `pending`. Reading once and calling it done — which is what this card used to
+ * do — leaves the user looking at a success message with no file behind it.
+ */
+const POLL_INTERVAL_MS = 2_000;
+const MAX_POLL_ATTEMPTS = 45;
+
+const sleep = (ms: number) =>
+  new Promise<void>((resolve) => {
+    setTimeout(resolve, ms);
+  });
 
 async function defaultStartExport(): Promise<ExportResponse> {
   const response = await fetch("/api/account/export", { method: "POST" });
@@ -52,6 +67,7 @@ function buildDownloadHref(payload: unknown): string {
 export function DataExportCard({
   startExport = defaultStartExport,
   fetchExport = defaultFetchExport,
+  wait = sleep,
 }: DataExportCardProps = {}) {
   const t = useTranslations("account.export");
   const [phase, setPhase] = useState<"idle" | "pending" | "ready" | "error">("idle");
@@ -64,18 +80,47 @@ export function DataExportCard({
     setDownloadHref(null);
     try {
       const start = await startExport();
-      const status = await fetchExport(start.exportId);
-      if (status.status === "failed") {
-        setPhase("error");
-        setErrorMessage(t("error"));
+
+      for (let attempt = 0; attempt < MAX_POLL_ATTEMPTS; attempt += 1) {
+        if (attempt > 0) {
+          await wait(POLL_INTERVAL_MS);
+        }
+
+        const status = await fetchExport(start.exportId);
+
+        if (status.status === "failed") {
+          setPhase("error");
+          setErrorMessage(t("error"));
+          return;
+        }
+        if (status.status !== "ready") {
+          continue;
+        }
+
+        const href =
+          status.inline && status.data !== undefined
+            ? buildDownloadHref(status.data)
+            : (status.downloadUrl ?? null);
+
+        // A "ready" export with nothing to download is a failure wearing a
+        // success label — the build finished but the artifact never landed.
+        if (!href) {
+          setPhase("error");
+          setErrorMessage(t("error"));
+          return;
+        }
+
+        setDownloadHref(href);
+        setPhase("ready");
         return;
       }
-      if (status.inline && status.data !== undefined) {
-        setDownloadHref(buildDownloadHref(status.data));
-      } else if (status.downloadUrl) {
-        setDownloadHref(status.downloadUrl);
-      }
-      setPhase("ready");
+
+      // Ninety seconds of pending. Reuses the generic failure copy rather than
+      // adding a `timeout` key, which would need a real translation in all 35
+      // catalogs for a state the user reaches only when the queue is stuck —
+      // and "try again" is the right advice either way.
+      setPhase("error");
+      setErrorMessage(t("error"));
     } catch (error) {
       setPhase("error");
       setErrorMessage(error instanceof Error ? error.message : t("error"));
