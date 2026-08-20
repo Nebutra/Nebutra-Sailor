@@ -93,7 +93,9 @@ overrides:
   '@opentelemetry/propagator-jaeger': '>=2.9.0'
   '@opentelemetry/sdk-node': '>=0.219.0'
   '@protobufjs/utf8': '>=1.1.1'
+  '@redocly/cli>js-yaml': '>=4.3.1 <5'
   '@redocly/cli>undici': '>=7.29.0 <8'
+  '@redocly/openapi-core>js-yaml': '>=4.3.1 <5'
   '@redocly/respect-core>undici': '>=7.29.0 <8'
   '@smithy/core': ^3.29.6
   '@svgr/plugin-svgo>svgo': 4.0.2
@@ -17162,6 +17164,10 @@ packages:
     resolution: {integrity: sha512-S99WuO3HlhO3XN41EtYUNl9zzXjoJx7QvmipxsJVxtCBT0YHEFy+iOJhjSvrmV12nYhWpZaM8lPHkJm0yUMbag==}
     hasBin: true
 
+  js-yaml@4.3.1:
+    resolution: {integrity: sha512-CY6crGq313MX8GkwvB7tzgp99vjQxY1++5y10/BKN/GUfHqWaOGQMNZkBvqSzsZKWk/ijwHlWzzkLulsGHhjWQ==}
+    hasBin: true
+
   js-yaml@5.2.2:
     resolution: {integrity: sha512-dayzUzKkJ1MkuUtZglSebU43utNXH0OWQByK9rKOOuYIO8M5TV1y+n8ALMdG0rdzBnfNkOmZEqrURepb0ejqBw==}
     hasBin: true
@@ -29824,7 +29830,7 @@ snapshots:
       colorette: 1.4.0
       https-proxy-agent: 7.0.6(supports-color@10.2.2)
       js-levenshtein: 1.1.6
-      js-yaml: 5.2.2
+      js-yaml: 4.3.1
       minimatch: 10.2.4
       pluralize: 8.0.0
       yaml-ast-parser: 0.0.43
@@ -29839,7 +29845,7 @@ snapshots:
       ajv-formats: 3.0.1(@redocly/ajv@8.18.1)
       colorette: 1.4.0
       js-levenshtein: 1.1.6
-      js-yaml: 5.2.2
+      js-yaml: 4.3.1
       picomatch: 4.0.4
       pluralize: 8.0.0
       yaml-ast-parser: 0.0.43
@@ -36849,6 +36855,10 @@ snapshots:
     dependencies:
       argparse: 1.0.10
       esprima: 4.0.1
+
+  js-yaml@4.3.1:
+    dependencies:
+      argparse: 2.0.1
 
   js-yaml@5.2.2:
     dependencies:

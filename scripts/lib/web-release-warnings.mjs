@@ -7,7 +7,14 @@ export const knownWarnings = [
   },
   {
     id: "nextauth-provider-dynamic-require",
-    markers: ["packages/iam/auth/src/providers/nextauth.ts"],
+    // Matched on the path segment, not on src/*.ts, because webpack reports
+    // whichever form it resolved. @nebutra/ui moved from a dependency of
+    // @nebutra/auth to an optional peer, and the resolution moved with it:
+    // the same dynamic require started arriving as
+    // packages/iam/auth/dist/providers/nextauth.js. The warning did not
+    // change; only the file webpack names for it did, and this gate failed as
+    // though a new one had appeared.
+    markers: ["iam/auth", "providers/nextauth"],
   },
   {
     id: "opentelemetry-instrumentation-dynamic-require",
