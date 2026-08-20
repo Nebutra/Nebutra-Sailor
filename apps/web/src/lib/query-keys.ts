@@ -57,6 +57,12 @@ export const queryKeys = {
       orgId ? (["org-members", "list", orgId] as const) : (["org-members", "list"] as const),
   },
 
+  referrals: {
+    all: ["referrals"] as const,
+    list: (orgId?: string) =>
+      orgId ? (["referrals", "list", orgId] as const) : (["referrals", "list"] as const),
+  },
+
   personalization: {
     all: ["personalization"] as const,
     detail: (userId?: string) =>
