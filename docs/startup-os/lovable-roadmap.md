@@ -83,9 +83,37 @@ but adopts Lovable's signature mechanics and craft:
   (`5023e148` remove mock seed workspaces from sidebar, `fb42789f` sidebar collapse toggle).
   → **P3.5 Home redesign DEFERRED** (touches `workspace/page.tsx`/dashboard — their territory).
   Stay in startup-os files this session. Re-check before touching dashboard chrome.
-- **P3a NEXT** — SSE client hook + Lovable chat panel as NEW startup-os components (zero
-  collision), unit-tested keyless + Storybook story for visual verification. Command-center
-  integration + screenshot follows. Live streaming needs a provider key (ask user at that point).
+- **P3a DONE** — SSE client hook (`use-startup-conversation.ts`) + chat panel
+  (`startup-chat-panel.tsx`), both keyless-testable.
+- **P4 DONE** (2026-08-20) — `startup-command-center.tsx` 1889 → 532 lines; six extracted
+  surfaces (builder home, workspace shell, thread / files / canvas panels, run-status badge),
+  each with a Storybook story. Regions separate by gutter + tonal shift rather than rules; every
+  text/surface pair clears 4.5:1; loading / empty / error hold the loaded geometry.
+  **Not yet eyeballed in a browser** — the evidence is a passing Storybook build. Run
+  `pnpm --filter @nebutra/storybook dev` and look at "Startup OS/Workspace Shell" before
+  treating the craft half as accepted.
+- **P5 DONE** (2026-08-20) — all seven de-mock targets wired; see the list below for what each
+  one landed on and what is deliberately still open.
+- **P6 NEXT** — add SiliconFlow to the `@nebutra/agents` fallback chain and run a live streaming
+  session. Needs a provider key from the user.
+
+### Left open on purpose after P5
+
+- `api_calls` has ingest nowhere in the repo, so that breakdown group renders only once
+  something meters it. Skipped rather than shown empty.
+- Usage "Historical Trends" was removed, not built: `MemoryProvider.getUsageHistory` re-queries
+  the current period each iteration, so a chart on it would draw a wrong graph in dev.
+- The referral reward ladder states invite counts, not payouts. Credits are recorded per claim
+  with no balance to spend them from, and there is no revenue-share ledger — the economics are a
+  product decision that has to precede the numbers.
+- Export in local dev: `LocalUploadProvider` presigns to an upload server this app does not run,
+  so exports fail locally unless S3/R2 or Vercel Blob is configured.
+- `DELETE /api/notifications/[id]` still returns `{archived:true}` unconditionally via the
+  error-swallowing `markAsRead`; `markAsRead` swallows its own provider errors the same way the
+  unread path used to. Same defect, adjacent lines, not yet fixed.
+- Query keys repo-wide omit `orgId` (`queryKeys.*.list()` is called bare everywhere), so an org
+  switch can paint the previous tenant's cached figures before the refetch resolves. Repo-wide
+  convention, not a referral-specific bug.
 
 ## De-mock inventory (P5 — 2026-06-05 audit; classification = "wire-real" only)
 
