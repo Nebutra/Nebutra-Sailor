@@ -881,14 +881,30 @@ jobs:
           code=$?
           set -e
           cat /tmp/pnpm-audit.txt
-          if [ "$code" -eq 0 ]; then
-            exit 0
-          fi
           if grep -qiE 'Unexpected token|is not valid JSON|ECONNRESET|ETIMEDOUT|socket hang up|503|502' /tmp/pnpm-audit.txt; then
             echo "::warning::pnpm audit failed due to registry/transport flake — advisory only"
             exit 0
           fi
-          exit "$code"
+          # Judge on the high count, not on pnpm's exit code.
+          #
+          # `pnpm audit` exits non-zero whenever anything at all is found, so
+          # --audit-level=high never reached the decision: a repo with only
+          # moderate advisories failed this gate exactly like one with a high.
+          # It also means auditConfig.ignoreGhsas had no effect here — pnpm
+          # subtracts ignored entries from the report and still exits non-zero.
+          #
+          # The line reads: "Severity: 2 low | 11 moderate | 2 high (2 ignored)".
+          # What matters is high-minus-ignored.
+          sev=$(grep -oE '[0-9]+ high( \([0-9]+ ignored\))?' /tmp/pnpm-audit.txt | tail -1)
+          high=$(echo "$sev" | grep -oE '^[0-9]+' || echo 0)
+          ignored=$(echo "$sev" | grep -oE '\(([0-9]+) ignored' | grep -oE '[0-9]+' || echo 0)
+          unignored=$(( ${high:-0} - ${ignored:-0} ))
+          echo "high=$high ignored=$ignored unignored=$unignored"
+          if [ "$unignored" -gt 0 ]; then
+            echo "::error::$unignored unignored high advisory(ies) in the production graph"
+            exit 1
+          fi
+          exit 0
 
       - name: Generate SBOM
         id: sbom
