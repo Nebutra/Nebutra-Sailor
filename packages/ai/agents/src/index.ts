@@ -82,6 +82,7 @@ export {
   resolveModel,
   type StreamTextResult,
   streamText,
+  toAi302ModelId,
   validateStructured,
 } from "./sdk/index";
 // ─── Tenant ───────────────────────────────────────────────────────────────────

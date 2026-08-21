@@ -130,6 +130,8 @@
     "generate:api-types": "tsx scripts/generate-api-types.ts",
     "gen:capability-stats": "node scripts/generate-capability-stats.mjs",
     "gen:capability-stats:check": "node scripts/generate-capability-stats.mjs --check",
+    "gen:frontier-models": "node scripts/generate-frontier-models.mjs",
+    "gen:frontier-models:check": "node scripts/generate-frontier-models.mjs --check",
     "gen:route-lastmod": "node scripts/generate-route-lastmod.mjs",
     "gen:route-lastmod:check": "node scripts/generate-route-lastmod.mjs --check",
     "size": "size-limit",

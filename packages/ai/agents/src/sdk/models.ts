@@ -6,30 +6,28 @@
  * When using Vercel AI Gateway, use "provider/model" format.
  * When using SiliconFlow, use "Vendor/Model" format (e.g. "Qwen/Qwen2.5-72B-Instruct").
  *
- * These hardcoded ids are the FALLBACK tier of the hybrid model strategy — they
- * are the current Pareto frontier (audited 2026-06-05 against OpenRouter ∩
- * models.dev). For always-fresh resolution use `resolveFrontierModel(tier)` from
- * `@nebutra/ai-providers/catalog`, which picks the newest routable model per tier
- * at runtime and falls back to exactly these values when offline.
+ * The six frontier tiers are GENERATED — `pnpm gen:frontier-models` resolves
+ * them from the live gateway catalogue and writes
+ * `frontier-fallback.generated.ts`. They were hand-typed with an audit date in
+ * this comment until 2026-08-21, by which point `flagship` still said
+ * `claude-sonnet-4.6` and `reasoning` `claude-opus-4.8` — two releases behind —
+ * and `openai-flagship` named `gpt-5.5` after the whole 5.6 family had shipped.
+ * Nothing failed, because a stale id routes to a real older model; the only
+ * symptom was weaker output. The same generator writes the copy that
+ * `@nebutra/ai-providers` uses, so the two lists cannot drift apart.
+ *
+ * They remain the FALLBACK tier: `resolveFrontierModel(tier)` from
+ * `@nebutra/ai-providers/catalog` re-resolves against the live list at runtime
+ * and only lands on these values when that list is unreachable.
+ *
+ * The presets below the generated block are vendor-specific and stay
+ * hand-maintained — each needs that vendor's own catalogue to verify.
  */
+import { AI302_ALIASES, FRONTIER_FALLBACK } from "./frontier-fallback.generated";
+
 export const models = {
-  /** High-quality reasoning — default for complex tasks */
-  flagship: "anthropic/claude-sonnet-4.6",
-
-  /** Deep reasoning for architecture and research */
-  reasoning: "anthropic/claude-opus-4.8",
-
-  /** Fast + cheap — chat, summaries, classification */
-  fast: "anthropic/claude-haiku-4.5",
-
-  /** OpenAI flagship */
-  "openai-flagship": "openai/gpt-5.5",
-
-  /** Google flagship */
-  "google-flagship": "google/gemini-3.1-pro-preview",
-
-  /** Google fast */
-  "google-fast": "google/gemini-3.5-flash",
+  // ── Generated frontier tiers — edit via `pnpm gen:frontier-models` ──────────
+  ...FRONTIER_FALLBACK,
 
   /** Embedding model */
   embedding: "openai/text-embedding-3-small",
@@ -73,4 +71,30 @@ export function resolveModel(modelOrPreset: string): string {
     return models[modelOrPreset as ModelPreset];
   }
   return modelOrPreset;
+}
+
+/**
+ * Rewrite a resolved model id into the form 302.AI serves.
+ *
+ * Dropping the gateway's `vendor/` prefix covers most of the catalogue, but not
+ * all of it: OpenRouter writes `anthropic/claude-haiku-4.5` where 302 lists
+ * `claude-haiku-4-5-20251001`, and asking 302 for the stripped form returns 503
+ * "No available models currently" — which reads like an outage, not a wrong id.
+ * The exceptions come from `AI302_ALIASES`, resolved against 302's own
+ * catalogue by `pnpm gen:frontier-models`, so they are looked up rather than
+ * guessed at.
+ */
+const AI302_BY_GATEWAY_ID: Record<string, string> = Object.fromEntries(
+  Object.entries(AI302_ALIASES).map(([tier, id]) => [
+    FRONTIER_FALLBACK[tier as keyof typeof FRONTIER_FALLBACK],
+    id,
+  ]),
+);
+
+export function toAi302ModelId(modelOrPreset: string): string {
+  const modelId = resolveModel(modelOrPreset);
+  const alias = AI302_BY_GATEWAY_ID[modelId];
+  if (alias) return alias;
+  const slash = modelId.indexOf("/");
+  return slash === -1 ? modelId : modelId.slice(slash + 1);
 }

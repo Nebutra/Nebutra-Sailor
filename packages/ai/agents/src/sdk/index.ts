@@ -213,7 +213,7 @@ export {
   type ResolvedNebutraAIConfig,
 } from "./config";
 export type { ModelPreset } from "./models";
-export { models, resolveModel } from "./models";
+export { models, resolveModel, toAi302ModelId } from "./models";
 export {
   assertSafeOpenAIJsonPayload,
   findOversizedPropertyName,

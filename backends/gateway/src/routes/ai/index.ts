@@ -6,7 +6,7 @@
  */
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
-import { listModels } from "@nebutra/ai-providers/catalog";
+import { FRONTIER_FALLBACK, listModels } from "@nebutra/ai-providers/catalog";
 import { toApiError } from "@nebutra/errors";
 import { SpanStatusCode, trace } from "@opentelemetry/api";
 import { env } from "../../config/env.js";
@@ -26,10 +26,21 @@ const ChatMessageSchema = z.object({
   content: z.string().min(1).max(32_000),
 });
 
+/**
+ * The upstream AI service speaks vendor-native ids, so the gateway namespace
+ * prefix on a frontier id is dropped here. The id itself is generated
+ * (`pnpm gen:frontier-models`) rather than typed — this default read "gpt-5.5"
+ * for two months after the 5.6 family shipped, and because a retired id still
+ * routes, nothing failed.
+ */
+const bareFrontier = (tier: keyof typeof FRONTIER_FALLBACK): string => {
+  const id = FRONTIER_FALLBACK[tier];
+  return id.slice(id.indexOf("/") + 1);
+};
+
 const ChatRequestSchema = z.object({
   messages: z.array(ChatMessageSchema).min(1).max(50),
-  // models.dev / OpenRouter frontier default (not gpt-4 / gpt-4o era)
-  model: z.string().default("gpt-5.5"),
+  model: z.string().default(bareFrontier("openai-flagship")),
   temperature: z.number().min(0).max(2).default(0.7),
   maxTokens: z.number().int().min(1).max(16_384).optional(),
   stream: z.boolean().default(false),

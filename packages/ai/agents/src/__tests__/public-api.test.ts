@@ -99,7 +99,11 @@ describe("@nebutra/agents public API contract", () => {
     expect(agents.NebutraAIConfigSchema).toBeDefined();
     const parsed = agents.NebutraAIConfigSchema.parse({});
     expect(parsed.provider).toBe("openrouter"); // default
-    expect(parsed.defaultModel).toBe("anthropic/claude-sonnet-4.6");
+    // Asserts the WIRING (default === the flagship preset), not a version.
+    // Pinning the literal made this test a third hand-maintained copy of the
+    // model id: it had to be edited on every model release, so in practice the
+    // id was never released and the test guarded the staleness instead.
+    expect(parsed.defaultModel).toBe(agents.models.flagship);
   });
 
   it("AgentOrchestrator can be instantiated with empty agents", () => {

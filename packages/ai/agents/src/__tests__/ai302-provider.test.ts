@@ -17,6 +17,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { _resetAgentsEnvCache } from "../env";
 import { filterAvailableProviders } from "../fallback";
 import { NebutraAIConfigSchema, resolveApiKey } from "../sdk/config";
+import { AI302_ALIASES, FRONTIER_FALLBACK } from "../sdk/frontier-fallback.generated";
 import { createModel } from "../sdk/provider";
 
 vi.mock("@ai-sdk/openai", () => ({
@@ -75,6 +76,30 @@ describe("302.AI provider", () => {
   it("leaves a bare vendor-native id alone", () => {
     const model = createModel("MiniMax-M2.1", config()) as unknown as { __id: string };
     expect(model.__id).toBe("MiniMax-M2.1");
+  });
+
+  it("applies the generated alias where 302 spells the id differently", () => {
+    // The gateway writes `anthropic/claude-haiku-4.5`; 302 lists
+    // `claude-haiku-4-5-20251001`. Asking for the merely-stripped form gets a
+    // 503 "No available models currently", which reads like an outage rather
+    // than a wrong id — verified against the live service on 2026-08-21.
+    // Asserted through AI302_ALIASES rather than the literal so a regenerated
+    // catalogue moves the expectation with the code.
+    const aliased = AI302_ALIASES.fast;
+    expect(aliased, "the fast tier alias is what this test exists to cover").toBeTruthy();
+
+    const model = createModel("fast", config()) as unknown as { __id: string };
+    expect(model.__id).toBe(aliased);
+    expect(model.__id).not.toBe("claude-haiku-4.5");
+  });
+
+  it("passes through tiers 302 serves under the bare id", () => {
+    for (const tier of ["reasoning", "flagship", "openai-flagship"] as const) {
+      if (AI302_ALIASES[tier]) continue; // aliased tiers are covered above
+      const gatewayId = FRONTIER_FALLBACK[tier];
+      const model = createModel(tier, config()) as unknown as { __id: string };
+      expect(model.__id).toBe(gatewayId.slice(gatewayId.indexOf("/") + 1));
+    }
   });
 
   it("names AI302_API_KEY when no credential is configured", () => {

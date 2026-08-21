@@ -9,6 +9,8 @@
 
 import { z } from "zod";
 
+import { models } from "./models";
+
 /**
  * Supported AI provider backends for the top-level helpers.
  *
@@ -36,8 +38,12 @@ export const NebutraAIConfigSchema = z.object({
   /** API key override. Falls back to env vars per provider. */
   apiKey: z.string().optional(),
 
-  /** Default model id — OpenRouter / models.dev frontier (not Claude 3.x / GPT-4 era). */
-  defaultModel: z.string().default("anthropic/claude-sonnet-4.6"),
+  /**
+   * Default model id. Reads the generated frontier flagship rather than naming
+   * a version, so `pnpm gen:frontier-models` moves it and it cannot go stale
+   * here independently of everywhere else.
+   */
+  defaultModel: z.string().default(models.flagship),
 
   /** Default temperature for generations. */
   temperature: z.number().min(0).max(2).default(0.7),

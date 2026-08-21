@@ -14,6 +14,7 @@
 
 import type { ProviderModel, ProvidersCatalog } from "@tokenlens/core";
 import { fetchModels } from "@tokenlens/fetch";
+import { FRONTIER_FALLBACK as GENERATED_FALLBACK } from "./frontier-fallback.generated";
 
 /** Our coarse provider buckets — one BYOK key + base URL per bucket. */
 export type AIProviderId = "OPENAI" | "ANTHROPIC" | "GOOGLE" | "SILICONFLOW" | "CUSTOM";
@@ -311,55 +312,61 @@ export type ModelTier =
   | "google-flagship"
   | "google-fast";
 
-interface TierRule {
+export interface TierRule {
   /** Match on the OpenRouter (gateway) id. */
   include: RegExp;
-  /** Drop non-frontier variants (fast/mini/codex/image/…). */
+  /**
+   * Drop variants that are not the interactive frontier model of the tier.
+   *
+   * `:batch` belongs in every one of these. OpenRouter lists a batch-only
+   * endpoint alongside most frontier models; it satisfies the family pattern,
+   * and routing a live stream at one fails. Before 2026-08 nothing excluded
+   * it and only Set iteration order kept it from being selected.
+   */
   exclude: RegExp;
-  /** Current frontier (audited 2026-06-05) — used when the live lists are unavailable. */
-  fallback: string;
 }
 
-const TIER_RULES: Record<ModelTier, TierRule> = {
+/**
+ * Tier matching rules. Exported so `scripts/generate-frontier-models.mjs` can be
+ * checked against them — the generator has to select by the same rules the
+ * runtime resolves by, or the offline fallback stops matching the online pick.
+ */
+export const TIER_RULES: Record<ModelTier, TierRule> = {
   reasoning: {
     include: /^anthropic\/claude-opus-/,
-    exclude: /-(fast|mini|nano|image|codex)/,
-    fallback: "anthropic/claude-opus-4.8",
+    exclude: /-(fast|mini|nano|image|codex)|:batch/,
   },
   flagship: {
     include: /^anthropic\/claude-sonnet-/,
-    exclude: /-(fast|mini|nano|image|codex)/,
-    fallback: "anthropic/claude-sonnet-4.6",
+    exclude: /-(fast|mini|nano|image|codex)|:batch/,
   },
   fast: {
     include: /^anthropic\/claude-haiku-/,
-    exclude: /-(image|codex)/,
-    fallback: "anthropic/claude-haiku-4.5",
+    exclude: /-(image|codex)|:batch/,
   },
   "openai-flagship": {
     include: /^openai\/gpt-5/,
     // Prefer full flagship over mini/nano/chat/image/codex variants
-    exclude: /-(pro|mini|nano|codex|image|chat)|gpt-5\.\d+-(mini|nano|pro)/,
-    // models.dev current OpenAI flagship (audited 2026-07); live resolver may pick newer
-    fallback: "openai/gpt-5.5",
+    exclude: /-(pro|mini|nano|codex|image|chat)|gpt-5\.\d+-(mini|nano|pro)|:batch/,
   },
   "google-flagship": {
     include: /^google\/gemini-.*pro/,
-    exclude: /-(image|tts|customtools)/,
-    fallback: "google/gemini-3.1-pro-preview",
+    exclude: /-(image|tts|customtools)|:batch/,
   },
   "google-fast": {
     include: /^google\/gemini-.*flash/,
-    exclude: /-(image|tts|lite)/,
-    // models.dev: gemini-3.5-flash / 3.6-flash class
-    fallback: "google/gemini-3.5-flash",
+    exclude: /-(image|tts|lite)|:batch/,
   },
 };
 
-/** The hardcoded frontier fallbacks, exported so consumers can mirror them. */
-export const FRONTIER_FALLBACK: Record<ModelTier, string> = Object.fromEntries(
-  Object.entries(TIER_RULES).map(([tier, rule]) => [tier, rule.fallback]),
-) as Record<ModelTier, string>;
+/**
+ * Offline frontier fallbacks — GENERATED from the live gateway catalogue by
+ * `pnpm gen:frontier-models`, not hand-typed. They used to be `fallback` fields
+ * on the rules above with an audit date in a comment, and by 2026-08 they named
+ * two-generations-old models that still routed fine, so nothing failed and the
+ * only symptom was weaker output.
+ */
+export const FRONTIER_FALLBACK: Record<ModelTier, string> = GENERATED_FALLBACK;
 
 const OPENROUTER_MODELS_URL =
   process.env.OPENROUTER_MODELS_URL ?? "https://openrouter.ai/api/v1/models";
@@ -412,21 +419,22 @@ const versionOf = (id: string): number => {
  */
 export async function resolveFrontierModel(tier: ModelTier): Promise<string> {
   const rule = TIER_RULES[tier];
+  const fallback = FRONTIER_FALLBACK[tier];
   try {
     const [routable, metaIndex] = await Promise.all([fetchRoutableIds(), loadIndex()]);
-    if (routable.size === 0) return rule.fallback;
+    if (routable.size === 0) return fallback;
 
     const metaNorm = new Set([...metaIndex.keys()].map(collapseId));
     const candidates = [...routable].filter(
       (id) =>
         rule.include.test(id) && !rule.exclude.test(id) && metaNorm.has(collapseId(bareId(id))),
     );
-    if (candidates.length === 0) return rule.fallback;
+    if (candidates.length === 0) return fallback;
 
     candidates.sort((a, b) => versionOf(b) - versionOf(a));
-    return candidates[0] ?? rule.fallback;
+    return candidates[0] ?? fallback;
   } catch {
-    return rule.fallback;
+    return fallback;
   }
 }
 

@@ -30,7 +30,7 @@ export const DEFAULT_AGENTS: readonly DefaultAgentConfig[] = [
     id: "assistant",
     name: "Nebutra Assistant",
     description: "General-purpose AI assistant for your SaaS",
-    model: "openai/gpt-5.4",
+    model: "openai-flagship",
     instructions:
       "You are a helpful AI assistant for this SaaS application. Help users with their questions about the platform, their data, and general inquiries. Always be professional and concise.",
     maxSteps: 10,
@@ -40,7 +40,7 @@ export const DEFAULT_AGENTS: readonly DefaultAgentConfig[] = [
     id: "analyst",
     name: "Data Analyst",
     description: "Analyzes data and generates insights from your dashboard",
-    model: "anthropic/claude-sonnet-4.6",
+    model: "flagship",
     instructions:
       "You are a data analyst agent. Help users understand their metrics, generate reports, and find insights in their data. Use the database_query tool to fetch relevant data.",
     tools: ["database_query", "knowledge_base"],
@@ -51,7 +51,7 @@ export const DEFAULT_AGENTS: readonly DefaultAgentConfig[] = [
     id: "support",
     name: "Support Agent",
     description: "Handles customer support inquiries using your knowledge base",
-    model: "openai/gpt-5.4",
+    model: "openai-flagship",
     instructions:
       "You are a customer support agent. Use the knowledge base to find answers to customer questions. If you cannot find an answer, suggest the user contact human support.",
     tools: ["knowledge_base", "web_search"],

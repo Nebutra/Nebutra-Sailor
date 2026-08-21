@@ -18,7 +18,7 @@
 import { logger } from "@nebutra/logger";
 import type { EmbeddingModel, LanguageModel, ModelMessage } from "ai";
 import { type FallbackProviderName, getAgentsEnv } from "./env";
-import { resolveModel } from "./sdk/models";
+import { resolveModel, toAi302ModelId } from "./sdk/models";
 
 // ────────────────────────────────────────────────────────────────────────────
 // Env-key lookup — used to filter the chain to providers that actually have
@@ -31,18 +31,6 @@ const ENV_KEY_BY_PROVIDER: Record<FallbackProviderName, string> = {
   openai: "OPENAI".concat("_API_KEY"),
   ai302: "AI302_API_KEY",
 };
-
-/**
- * 302.AI is an aggregator fronting many vendors over an OpenAI-compatible
- * surface, so it takes vendor-native bare ids ("MiniMax-M2.1", "gpt-4o") while
- * this package's presets resolve to OpenRouter form ("anthropic/…"). Strip the
- * routing prefix; an id 302 does not recognise comes back as its own 4xx
- * rather than being silently rewritten into a different model.
- */
-function stripRoutingPrefix(modelId: string): string {
-  const slash = modelId.indexOf("/");
-  return slash === -1 ? modelId : modelId.slice(slash + 1);
-}
 
 function ai302BaseUrl(): string {
   return globalThis.process?.env?.AI302_BASE_URL ?? "https://api.302.ai/v1";
@@ -112,7 +100,7 @@ async function buildModel(
     }
     case "ai302": {
       const { createOpenAI } = await import("@ai-sdk/openai");
-      return createOpenAI({ apiKey, baseURL: ai302BaseUrl() })(stripRoutingPrefix(modelId));
+      return createOpenAI({ apiKey, baseURL: ai302BaseUrl() })(toAi302ModelId(modelId));
     }
   }
 }
@@ -306,7 +294,7 @@ async function buildEmbeddingModel(
     case "ai302": {
       const { createOpenAI } = await import("@ai-sdk/openai");
       return createOpenAI({ apiKey, baseURL: ai302BaseUrl() }).textEmbeddingModel(
-        stripRoutingPrefix(modelId),
+        toAi302ModelId(modelId),
       );
     }
     case "anthropic": {
