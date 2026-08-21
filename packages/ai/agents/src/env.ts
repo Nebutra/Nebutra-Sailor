@@ -9,7 +9,7 @@
 import { z } from "zod";
 
 /** Comma-separated provider chain. Order = priority. */
-const FallbackProviderName = z.enum(["openrouter", "anthropic", "openai"]);
+const FallbackProviderName = z.enum(["openrouter", "anthropic", "openai", "ai302"]);
 export type FallbackProviderName = z.infer<typeof FallbackProviderName>;
 
 const FallbackChain = z

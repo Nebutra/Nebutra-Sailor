@@ -29,7 +29,24 @@ const ENV_KEY_BY_PROVIDER: Record<FallbackProviderName, string> = {
   openrouter: "OPENROUTER_API_KEY",
   anthropic: "ANTHROPIC".concat("_API_KEY"),
   openai: "OPENAI".concat("_API_KEY"),
+  ai302: "AI302_API_KEY",
 };
+
+/**
+ * 302.AI is an aggregator fronting many vendors over an OpenAI-compatible
+ * surface, so it takes vendor-native bare ids ("MiniMax-M2.1", "gpt-4o") while
+ * this package's presets resolve to OpenRouter form ("anthropic/…"). Strip the
+ * routing prefix; an id 302 does not recognise comes back as its own 4xx
+ * rather than being silently rewritten into a different model.
+ */
+function stripRoutingPrefix(modelId: string): string {
+  const slash = modelId.indexOf("/");
+  return slash === -1 ? modelId : modelId.slice(slash + 1);
+}
+
+function ai302BaseUrl(): string {
+  return globalThis.process?.env?.AI302_BASE_URL ?? "https://api.302.ai/v1";
+}
 
 function hasProviderKey(provider: FallbackProviderName): boolean {
   const k = ENV_KEY_BY_PROVIDER[provider];
@@ -92,6 +109,10 @@ async function buildModel(
         ? modelId.slice("openai/".length)
         : modelId;
       return createOpenAI({ apiKey })(openaiModelId);
+    }
+    case "ai302": {
+      const { createOpenAI } = await import("@ai-sdk/openai");
+      return createOpenAI({ apiKey, baseURL: ai302BaseUrl() })(stripRoutingPrefix(modelId));
     }
   }
 }
@@ -256,6 +277,9 @@ export function buildSystemWithCache(systemPrompt: string): {
 const EMBEDDING_CAPABLE: ReadonlySet<FallbackProviderName> = new Set<FallbackProviderName>([
   "openrouter",
   "openai",
+  // 302.AI serves /v1/embeddings — an unauthenticated POST answers
+  // `Missing 302 Apikey` rather than 404, so the route exists behind auth.
+  "ai302",
 ]);
 
 async function buildEmbeddingModel(
@@ -278,6 +302,12 @@ async function buildEmbeddingModel(
         ? modelId.slice("openai/".length)
         : modelId;
       return createOpenAI({ apiKey }).textEmbeddingModel(openaiModelId);
+    }
+    case "ai302": {
+      const { createOpenAI } = await import("@ai-sdk/openai");
+      return createOpenAI({ apiKey, baseURL: ai302BaseUrl() }).textEmbeddingModel(
+        stripRoutingPrefix(modelId),
+      );
     }
     case "anthropic": {
       throw new Error("Anthropic does not expose embedding models");

@@ -5,6 +5,17 @@ import { type ResolvedNebutraAIConfig, resolveApiKey } from "./config";
 import { resolveModel } from "./models";
 
 /**
+ * Drop an OpenRouter-style `vendor/` routing prefix, leaving the vendor-native
+ * model id. Presets in this package resolve to OpenRouter form
+ * ("anthropic/claude-sonnet-4.6"); providers that speak to a vendor directly
+ * want the bare id.
+ */
+function stripRoutingPrefix(modelId: string): string {
+  const slash = modelId.indexOf("/");
+  return slash === -1 ? modelId : modelId.slice(slash + 1);
+}
+
+/**
  * Creates a language model instance based on the resolved config.
  *
  * Provider routing:
@@ -54,6 +65,21 @@ export function createModel(modelOrPreset: string, config: ResolvedNebutraAIConf
         baseURL: process.env.SENSENOVA_BASE_URL ?? "https://token.sensenova.cn/v1",
       });
       return provider(modelId);
+    }
+
+    case "ai302": {
+      // 302.AI — an aggregator in front of many vendors, OpenAI-compatible.
+      // Base: https://api.302.ai/v1 (an unauthenticated POST answers
+      // `Missing 302 Apikey`, so the path is right and auth is Bearer).
+      // Model ids are vendor-native and bare — "MiniMax-M2.1", "gpt-4o" —
+      // not OpenRouter's "vendor/model", so a preset's routing prefix is
+      // stripped. An id 302 does not know surfaces as its own 4xx rather
+      // than being quietly rewritten into something else.
+      const provider = createOpenAI({
+        apiKey,
+        baseURL: process.env.AI302_BASE_URL ?? "https://api.302.ai/v1",
+      });
+      return provider(stripRoutingPrefix(modelId));
     }
 
     case "gateway": {
