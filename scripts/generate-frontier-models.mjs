@@ -227,15 +227,33 @@ async function resolve302Aliases(selected, previous, previousOpen) {
   return { aliases, open, resolved: true };
 }
 
+/** Entries of a single generated `export const NAME = { … }` block. */
+function parseBlock(source, name) {
+  const match = source.match(new RegExp(`export const ${name}[^=]*= \\{([^}]*)\\}`));
+  if (!match?.[1]) return {};
+  return Object.fromEntries(
+    [...match[1].matchAll(/^ {2}"?([\w-]+)"?: "([^"]+)",$/gm)].map((m) => [m[1], m[2]]),
+  );
+}
+
+/**
+ * Emit an object key the way Biome formats one, so the generated file is a
+ * fixed point. Emitting every key quoted made `--check` report drift on a
+ * perfectly current file forever, because the pre-commit formatter unquotes the
+ * identifier-safe ones — a gate that always fires is a gate people learn to
+ * ignore.
+ */
+const objectKey = (key) => (/^[A-Za-z_$][\w$]*$/.test(key) ? key : `"${key}"`);
+
 function renderModule(selected, generatedAt, aliases, openModels) {
   const entries = Object.entries(selected)
-    .map(([tier, id]) => `  "${tier}": "${id}",`)
+    .map(([tier, id]) => `  ${objectKey(tier)}: "${id}",`)
     .join("\n");
   const aliasEntries = Object.entries(aliases)
-    .map(([tier, id]) => `  "${tier}": "${id}",`)
+    .map(([tier, id]) => `  ${objectKey(tier)}: "${id}",`)
     .join("\n");
   const openEntries = Object.entries(openModels)
-    .map(([preset, id]) => `  "${preset}": "${id}",`)
+    .map(([preset, id]) => `  ${objectKey(preset)}: "${id}",`)
     .join("\n");
 
   return `// GENERATED — do not edit by hand.
@@ -301,14 +319,12 @@ async function main() {
   const existing = existingSource.match(/resolved (\d{4}-\d{2}-\d{2})/);
   const today = new Date().toISOString().slice(0, 10);
 
-  const previousAliases = Object.fromEntries(
-    [...existingSource.matchAll(/^ {2}"([\w-]+)": "([^"]+)",$/gm)]
-      .slice(Object.keys(selected).length)
-      .map((m) => [m[1], m[2]]),
-  );
-  const previousOpen = Object.fromEntries(
-    [...existingSource.matchAll(/^ {2}"(302-[\w-]+)": "([^"]+)",$/gm)].map((m) => [m[1], m[2]]),
-  );
+  // Parse each export block by name. An earlier version matched every entry in
+  // the file and sliced by count, which silently folded the open-model block
+  // into the alias map the moment a second generated export appeared.
+  const previousAliases = parseBlock(existingSource, "AI302_ALIASES");
+  const previousOpen = parseBlock(existingSource, "AI302_OPEN_MODELS");
+
   const { aliases, open, resolved } = await resolve302Aliases(
     selected,
     previousAliases,
