@@ -17,7 +17,12 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { _resetAgentsEnvCache } from "../env";
 import { filterAvailableProviders } from "../fallback";
 import { NebutraAIConfigSchema, resolveApiKey } from "../sdk/config";
-import { AI302_ALIASES, FRONTIER_FALLBACK } from "../sdk/frontier-fallback.generated";
+import {
+  AI302_ALIASES,
+  AI302_OPEN_MODELS,
+  FRONTIER_FALLBACK,
+} from "../sdk/frontier-fallback.generated";
+import { models } from "../sdk/models";
 import { createModel } from "../sdk/provider";
 
 vi.mock("@ai-sdk/openai", () => ({
@@ -120,5 +125,30 @@ describe("302.AI provider", () => {
     vi.stubEnv("OPENAI_API_KEY", "");
     vi.stubEnv("AI302_API_KEY", "302-key");
     expect(filterAvailableProviders(["openrouter", "anthropic", "ai302"])).toEqual(["ai302"]);
+  });
+});
+
+describe("302.AI open-weight presets", () => {
+  // Every id here was answered 200 by the live service on 2026-08-21. The test
+  // is offline: it asserts the presets resolve and are shaped like 302 ids, so
+  // a bad regenerate is caught without a key or a network call.
+  it("exposes each generated family as a preset", () => {
+    for (const [preset, id] of Object.entries(AI302_OPEN_MODELS)) {
+      expect(models[preset as keyof typeof models], `${preset} missing from models`).toBe(id);
+    }
+  });
+
+  it("keeps them bare, since 302 does not namespace by vendor", () => {
+    for (const id of Object.values(AI302_OPEN_MODELS)) {
+      expect(id, `${id} carries a gateway prefix 302 will not accept`).not.toContain("/");
+    }
+  });
+
+  it("has retired the unverifiable SiliconFlow presets", () => {
+    // They named Qwen2.5-72B / DeepSeek-R1 / DeepSeek-V3 with no caller and no
+    // way to check them, which is exactly the shape of a hallucinated id.
+    for (const gone of ["sf-qwen", "sf-deepseek-r1", "sf-deepseek-v3"]) {
+      expect(models).not.toHaveProperty(gone);
+    }
   });
 });

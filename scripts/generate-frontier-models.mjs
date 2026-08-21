@@ -115,6 +115,51 @@ function selectFrontier(models) {
   return selected;
 }
 
+/**
+ * Open-weight families 302.AI serves that the gateway tiers above do not cover.
+ *
+ * These replaced three SiliconFlow presets that named `Qwen2.5-72B-Instruct`,
+ * `DeepSeek-R1` and `DeepSeek-V3` — all long superseded, none with a single
+ * caller in the repo, and unverifiable without a SiliconFlow key. 302 fronts
+ * the same models and its catalogue is readable, so these are resolved instead
+ * of remembered.
+ *
+ * Ids are 302-native and bare, hence the `302-` key prefix: they are not
+ * routable through OpenRouter, which namespaces the same models as `qwen/…`.
+ */
+const AI302_FAMILIES = {
+  "302-deepseek": {
+    include: /^deepseek-v\d/,
+    // Regional mirrors, dated snapshots, -exp/-terminus previews and the
+    // thinking + flash variants are all the same generation under other names.
+    exclude: /-(thinking|exp|terminus|flash|huoshan|baidu|aliyun)|-\d{4}/,
+  },
+  "302-deepseek-fast": {
+    include: /^deepseek-v\d.*-flash$/,
+    exclude: /-(thinking|exp)/,
+  },
+  "302-qwen": {
+    include: /^qwen3(\.\d+)?-max/,
+    exclude: /-preview|-\d{4}-\d{2}-\d{2}/,
+  },
+  "302-glm": {
+    // `glm-4v` / `glm-5v-turbo` are vision; `-air|-airx|-x|-flash|-flashx|
+    // -turbo|-long|-plus` are cheaper cuts of the same generation.
+    include: /^glm-\d/,
+    exclude: /^glm-\d+(\.\d+)?v|-(air|airx|x|flash|flashx|turbo|long|plus|preview|coding)|-\d{6}/,
+  },
+  "302-kimi": {
+    include: /^kimi-k\d/,
+    exclude: /-(preview|thinking|turbo|code)|-\d{6}/,
+  },
+  "302-minimax": {
+    // M-series only. H3 shares the version number with M3 and is a separate
+    // line, so including it would make the pick a coin toss on sort order.
+    include: /^MiniMax-M\d/,
+    exclude: /-(highspeed|ir)/,
+  },
+};
+
 /** Ignore separator and case differences: `claude-haiku-4.5` ≡ `claude_Haiku-4-5`. */
 const collapse = (s) => s.toLowerCase().replace(/[._-]/g, "");
 
@@ -132,9 +177,9 @@ const collapse = (s) => s.toLowerCase().replace(/[._-]/g, "");
  * Needs AI302_API_KEY (302 requires auth even to list models). Without it the
  * previously generated aliases are kept, so CI does not silently empty the map.
  */
-async function resolve302Aliases(selected, previous) {
+async function resolve302Aliases(selected, previous, previousOpen) {
   const key = process.env.AI302_API_KEY;
-  if (!key) return { aliases: previous, resolved: false };
+  if (!key) return { aliases: previous, open: previousOpen, resolved: false };
 
   const res = await fetch(`${process.env.AI302_BASE_URL ?? "https://api.302.ai/v1"}/models`, {
     headers: { Authorization: `Bearer ${key}` },
@@ -163,15 +208,34 @@ async function resolve302Aliases(selected, previous) {
     if (candidates[0]) aliases[tier] = candidates[0];
   }
 
-  return { aliases, resolved: true };
+  // Newest member of each open-weight family, by the same version-then-price
+  // rule as the gateway tiers (302 exposes no price, so version alone decides;
+  // ties fall back to the shorter id, which is the plain variant).
+  const open = {};
+  for (const [preset, rule] of Object.entries(AI302_FAMILIES)) {
+    const candidates = ids.filter((id) => rule.include.test(id) && !rule.exclude.test(id));
+    if (candidates.length === 0) {
+      throw new Error(
+        `[frontier-models] no 302 model matched "${preset}". The family was renamed or ` +
+          `the pattern is wrong — a silently missing preset is how a stale id survives.`,
+      );
+    }
+    candidates.sort((a, b) => versionOf(b) - versionOf(a) || a.length - b.length);
+    open[preset] = candidates[0];
+  }
+
+  return { aliases, open, resolved: true };
 }
 
-function renderModule(selected, generatedAt, aliases) {
+function renderModule(selected, generatedAt, aliases, openModels) {
   const entries = Object.entries(selected)
     .map(([tier, id]) => `  "${tier}": "${id}",`)
     .join("\n");
   const aliasEntries = Object.entries(aliases)
     .map(([tier, id]) => `  "${tier}": "${id}",`)
+    .join("\n");
+  const openEntries = Object.entries(openModels)
+    .map(([preset, id]) => `  "${preset}": "${id}",`)
     .join("\n");
 
   return `// GENERATED — do not edit by hand.
@@ -195,6 +259,15 @@ export type FrontierTier = keyof typeof FRONTIER_FALLBACK;
 export const AI302_ALIASES: Partial<Record<FrontierTier, string>> = {
 ${aliasEntries}
 };
+
+/**
+ * Newest member of each open-weight family 302.AI serves — the models the
+ * Anthropic/OpenAI/Google tiers above do not cover. Ids are 302-native and bare,
+ * so these presets only resolve against the \`ai302\` provider.
+ */
+export const AI302_OPEN_MODELS = {
+${openEntries}
+} as const;
 `;
 }
 
@@ -233,12 +306,19 @@ async function main() {
       .slice(Object.keys(selected).length)
       .map((m) => [m[1], m[2]]),
   );
-  const { aliases, resolved } = await resolve302Aliases(selected, previousAliases);
+  const previousOpen = Object.fromEntries(
+    [...existingSource.matchAll(/^ {2}"(302-[\w-]+)": "([^"]+)",$/gm)].map((m) => [m[1], m[2]]),
+  );
+  const { aliases, open, resolved } = await resolve302Aliases(
+    selected,
+    previousAliases,
+    previousOpen,
+  );
   if (!resolved) {
     process.stdout.write("  (302 aliases kept — AI302_API_KEY not set)\n");
   }
 
-  const rendered = renderModule(selected, check ? (existing?.[1] ?? today) : today, aliases);
+  const rendered = renderModule(selected, check ? (existing?.[1] ?? today) : today, aliases, open);
 
   let drifted = false;
   for (const target of TARGETS) {
@@ -249,7 +329,7 @@ async function main() {
     if (!check) writeFileSync(full, rendered);
   }
 
-  for (const [tier, id] of Object.entries(selected)) {
+  for (const [tier, id] of Object.entries({ ...selected, ...open })) {
     process.stdout.write(`  ${tier.padEnd(18)} ${id}\n`);
   }
 

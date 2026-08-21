@@ -24,3 +24,17 @@ export type FrontierTier = keyof typeof FRONTIER_FALLBACK;
 export const AI302_ALIASES: Partial<Record<FrontierTier, string>> = {
   fast: "claude-haiku-4-5-20251001",
 };
+
+/**
+ * Newest member of each open-weight family 302.AI serves — the models the
+ * Anthropic/OpenAI/Google tiers above do not cover. Ids are 302-native and bare,
+ * so these presets only resolve against the `ai302` provider.
+ */
+export const AI302_OPEN_MODELS = {
+  "302-deepseek": "deepseek-v4-pro",
+  "302-deepseek-fast": "deepseek-v4-flash",
+  "302-qwen": "qwen3.8-max",
+  "302-glm": "glm-5.3",
+  "302-kimi": "kimi-k3",
+  "302-minimax": "MiniMax-M3",
+} as const;

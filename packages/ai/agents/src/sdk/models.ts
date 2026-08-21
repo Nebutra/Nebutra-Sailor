@@ -23,7 +23,7 @@
  * The presets below the generated block are vendor-specific and stay
  * hand-maintained — each needs that vendor's own catalogue to verify.
  */
-import { AI302_ALIASES, FRONTIER_FALLBACK } from "./frontier-fallback.generated";
+import { AI302_ALIASES, AI302_OPEN_MODELS, FRONTIER_FALLBACK } from "./frontier-fallback.generated";
 
 export const models = {
   // ── Generated frontier tiers — edit via `pnpm gen:frontier-models` ──────────
@@ -35,16 +35,13 @@ export const models = {
   /** Embedding model (high-dimensional) */
   "embedding-large": "openai/text-embedding-3-large",
 
-  // --- SiliconFlow presets (use with provider: "siliconflow") ---
-
-  /** SiliconFlow — Qwen 2.5 72B (flagship open-source) */
-  "sf-qwen": "Qwen/Qwen2.5-72B-Instruct",
-
-  /** SiliconFlow — DeepSeek R1 reasoning (via SiliconFlow Pro) */
-  "sf-deepseek-r1": "Pro/deepseek-ai/DeepSeek-R1",
-
-  /** SiliconFlow — DeepSeek V3 (fast, capable) */
-  "sf-deepseek-v3": "deepseek-ai/DeepSeek-V3",
+  // --- Open-weight families via 302.AI (use with provider: "ai302") ---
+  // Generated with the tiers above. These replaced three SiliconFlow presets
+  // naming Qwen2.5-72B, DeepSeek-R1 and DeepSeek-V3 — every one superseded,
+  // none with a caller anywhere in the repo, and none checkable without a
+  // SiliconFlow key. 302 serves the same families and lists its catalogue,
+  // so these are resolved rather than remembered.
+  ...AI302_OPEN_MODELS,
 
   // --- SenseNova Token Plan presets (use with provider: "sensenova") ---
   // Base URL: https://token.sensenova.cn/v1
