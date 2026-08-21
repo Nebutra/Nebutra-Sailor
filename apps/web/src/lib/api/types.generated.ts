@@ -300,7 +300,9 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "text/plain": string;
+          };
         };
       };
     };
@@ -608,7 +610,9 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "text/plain": string;
+          };
         };
       };
     };
@@ -1554,6 +1558,40 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/agent-runtime/carina/status": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Probe Carina Track-B connectivity */
+    get: operations["getCarinaStatus"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/agent-runtime/carina/approvals": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Approve or deny a Carina governance decision */
+    post: operations["resolveCarinaApproval"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/agent-runtime/turns": {
     parameters: {
       query?: never;
@@ -1684,7 +1722,7 @@ export interface paths {
               role: "system" | "user" | "assistant";
               content: string;
             }[];
-            /** @default gpt-5.5 */
+            /** @default gpt-5.6-sol */
             model?: string;
             /** @default 0.7 */
             temperature?: number;
@@ -1700,7 +1738,11 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              [key: string]: unknown;
+            };
+          };
         };
         /** @description Quota exceeded */
         402: {
@@ -1756,7 +1798,11 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              [key: string]: unknown;
+            };
+          };
         };
         /** @description AI service unavailable */
         503: {
@@ -1795,7 +1841,20 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              models: {
+                id: string;
+                name: string;
+                provider: string;
+                contextWindow: number | null;
+                maxOutput: number | null;
+                pricing?: unknown;
+                capabilities: string[];
+              }[];
+              total: number;
+            };
+          };
         };
       };
     };
@@ -1926,6 +1985,754 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/pebble/v1/feedback": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Submit Pebble feedback
+     * @description Unauthenticated support intake for the Pebble desktop client. Idempotent on submission_id.
+     */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": {
+            submission_id?: string;
+            kind?: string;
+            message?: string;
+            contact_email?: string;
+            app_version?: string;
+            platform?: string;
+            locale?: string;
+            feedback?: string;
+            submission_type?: string;
+            github_email?: string;
+            os_release?: string;
+            arch?: string;
+          } & {
+            [key: string]: unknown;
+          };
+          "multipart/form-data": {
+            submission_id?: string;
+            kind?: string;
+            message?: string;
+            contact_email?: string;
+            app_version?: string;
+            platform?: string;
+            locale?: string;
+            feedback?: string;
+            submission_type?: string;
+            github_email?: string;
+            os_release?: string;
+            arch?: string;
+          } & {
+            [key: string]: unknown;
+          };
+        };
+      };
+      responses: {
+        /** @description Submission accepted */
+        202: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              submission_id: string;
+              /** @enum {boolean} */
+              received: true;
+            };
+          };
+        };
+        /** @description Malformed submission */
+        400: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+        /** @description Body too large */
+        413: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+        /** @description Rate limited */
+        429: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/pebble/diagnostics/token": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Issue a diagnostic upload token */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": {
+            bundle_submission_id: string;
+            bytes: number;
+            app_version?: string;
+            platform?: string;
+          };
+        };
+      };
+      responses: {
+        /** @description Token issued */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              token: string;
+              /** Format: uri */
+              upload_url: string;
+              max_bytes: number;
+            };
+          };
+        };
+        /** @description Malformed request */
+        400: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+        /** @description Declared size above the cap */
+        413: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+        /** @description Rate limited */
+        429: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/pebble/diagnostics/upload": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Upload a redacted diagnostic bundle
+     * @description Requires a token from /token. Content-Type must be application/x-ndjson and Content-Length must match the byte count the token was issued for.
+     */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/x-ndjson": string;
+        };
+      };
+      responses: {
+        /** @description Bundle stored */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              ticket_id: string;
+            };
+          };
+        };
+        /** @description Malformed upload */
+        400: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+        /** @description Missing, invalid, expired, or spent token */
+        401: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+        /** @description Body above the cap or above the declared size */
+        413: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+        /** @description Wrong content type */
+        415: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+        /** @description Rate limited */
+        429: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/pebble/diagnostics/delete/{ticketId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Delete a diagnostic bundle at the user's request
+     * @description Idempotent. A success response confirms the ticket and its stored object are deleted, not merely scheduled.
+     */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          ticketId: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Ticket and object deleted */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              ticket_id: string;
+              /** @enum {boolean} */
+              deleted: true;
+            };
+          };
+        };
+        /** @description No such ticket */
+        404: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+        /** @description Rate limited */
+        429: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/pebble/v1/feedback": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Submit Pebble feedback
+     * @description Unauthenticated support intake for the Pebble desktop client. Idempotent on submission_id.
+     */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": {
+            submission_id?: string;
+            kind?: string;
+            message?: string;
+            contact_email?: string;
+            app_version?: string;
+            platform?: string;
+            locale?: string;
+            feedback?: string;
+            submission_type?: string;
+            github_email?: string;
+            os_release?: string;
+            arch?: string;
+          } & {
+            [key: string]: unknown;
+          };
+          "multipart/form-data": {
+            submission_id?: string;
+            kind?: string;
+            message?: string;
+            contact_email?: string;
+            app_version?: string;
+            platform?: string;
+            locale?: string;
+            feedback?: string;
+            submission_type?: string;
+            github_email?: string;
+            os_release?: string;
+            arch?: string;
+          } & {
+            [key: string]: unknown;
+          };
+        };
+      };
+      responses: {
+        /** @description Submission accepted */
+        202: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              submission_id: string;
+              /** @enum {boolean} */
+              received: true;
+            };
+          };
+        };
+        /** @description Malformed submission */
+        400: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+        /** @description Body too large */
+        413: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+        /** @description Rate limited */
+        429: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/pebble/diagnostics/token": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Issue a diagnostic upload token */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": {
+            bundle_submission_id: string;
+            bytes: number;
+            app_version?: string;
+            platform?: string;
+          };
+        };
+      };
+      responses: {
+        /** @description Token issued */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              token: string;
+              /** Format: uri */
+              upload_url: string;
+              max_bytes: number;
+            };
+          };
+        };
+        /** @description Malformed request */
+        400: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+        /** @description Declared size above the cap */
+        413: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+        /** @description Rate limited */
+        429: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/pebble/diagnostics/upload": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Upload a redacted diagnostic bundle
+     * @description Requires a token from /token. Content-Type must be application/x-ndjson and Content-Length must match the byte count the token was issued for.
+     */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/x-ndjson": string;
+        };
+      };
+      responses: {
+        /** @description Bundle stored */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              ticket_id: string;
+            };
+          };
+        };
+        /** @description Malformed upload */
+        400: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+        /** @description Missing, invalid, expired, or spent token */
+        401: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+        /** @description Body above the cap or above the declared size */
+        413: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+        /** @description Wrong content type */
+        415: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+        /** @description Rate limited */
+        429: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/pebble/diagnostics/delete/{ticketId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Delete a diagnostic bundle at the user's request
+     * @description Idempotent. A success response confirms the ticket and its stored object are deleted, not merely scheduled.
+     */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          ticketId: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Ticket and object deleted */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              ticket_id: string;
+              /** @enum {boolean} */
+              deleted: true;
+            };
+          };
+        };
+        /** @description No such ticket */
+        404: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+        /** @description Rate limited */
+        429: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message?: string;
+            };
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/ai/gateway/chat/completions": {
     parameters: {
       query?: never;
@@ -1965,12 +2772,15 @@ export interface paths {
         };
       };
       responses: {
-        /** @description Chat completion response */
+        /** @description Chat completion response (JSON body or SSE stream) */
         200: {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": unknown;
+            "text/event-stream": string;
+          };
         };
         /** @description Invalid or missing API key */
         401: {
@@ -2924,7 +3734,18 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              id?: string;
+              status?: string;
+              customer?: unknown;
+              items?: unknown;
+              current_period_end?: number;
+              cancel_at_period_end?: boolean;
+            } & {
+              [key: string]: unknown;
+            };
+          };
         };
         /** @description No active subscription */
         404: {
@@ -3971,7 +4792,29 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              hits: {
+                doc: {
+                  [key: string]: unknown;
+                };
+                score: number;
+                highlights?: {
+                  [key: string]: string;
+                };
+              }[];
+              totalHits: number;
+              processingTimeMs: number;
+              facetDistribution?: {
+                [key: string]: {
+                  [key: string]: number;
+                };
+              };
+              page: number;
+              hitsPerPage: number;
+              totalPages: number;
+            };
+          };
         };
         /** @description Invalid request */
         400: {
@@ -4014,12 +4857,29 @@ export interface paths {
       };
       requestBody?: never;
       responses: {
-        /** @description Sync triggered */
+        /** @description Sync triggered (also accepted as 202) */
         200: {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              queued: boolean;
+              message: string;
+            };
+          };
+        };
+        /** @description Sync job accepted */
+        202: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              queued: boolean;
+              message: string;
+            };
+          };
         };
         /** @description Forbidden */
         403: {
@@ -4058,7 +4918,9 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": Record<string, never>;
+          };
         };
       };
     };
@@ -4092,7 +4954,9 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": Record<string, never>;
+          };
         };
         /** @description Invalid request */
         400: {
@@ -4138,7 +5002,9 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": Record<string, never>;
+          };
         };
         /** @description Not found */
         404: {
@@ -4166,7 +5032,9 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": Record<string, never>;
+          };
         };
         /** @description Not found */
         404: {
@@ -4207,7 +5075,9 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": Record<string, never>;
+          };
         };
         /** @description Not found */
         404: {
@@ -4302,7 +5172,18 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              data: {
+                [key: string]: unknown;
+              }[];
+              meta: {
+                total: number;
+                limit: number;
+                offset: number;
+              };
+            };
+          };
         };
       };
     };
@@ -4338,7 +5219,11 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              [key: string]: unknown;
+            };
+          };
         };
         /** @description Not found */
         404: {
@@ -4383,7 +5268,14 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              organizationId: string;
+              /** @enum {string} */
+              status: "suspended";
+              keysRevoked: number;
+            };
+          };
         };
         /** @description Not found */
         404: {
@@ -4426,7 +5318,14 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              organizationId: string;
+              /** @enum {string} */
+              status: "active";
+              newKeyPrefix: string;
+            };
+          };
         };
         /** @description Not found */
         404: {
@@ -4467,7 +5366,14 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              data: {
+                [key: string]: unknown;
+              }[];
+              generatedAt: string;
+            };
+          };
         };
       };
     };
@@ -4501,7 +5407,14 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              data: {
+                [key: string]: unknown;
+              }[];
+              total: number;
+            };
+          };
         };
       };
     };
@@ -4539,7 +5452,13 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              id: string;
+              /** @enum {string} */
+              status: "acknowledged";
+            };
+          };
         };
       };
     };
@@ -4556,7 +5475,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    /** List per-tenant feature flag overrides */
+    /** List runtime-only per-tenant feature flag override records */
     get: {
       parameters: {
         query?: never;
@@ -4566,17 +5485,33 @@ export interface paths {
       };
       requestBody?: never;
       responses: {
-        /** @description Feature flag overrides */
+        /** @description Runtime-only feature flag override records */
         200: {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              overrides: {
+                [key: string]: {
+                  [key: string]: boolean;
+                };
+              };
+              runtimeOnlyOverrides: {
+                [key: string]: {
+                  [key: string]: unknown;
+                };
+              };
+              metadata: {
+                [key: string]: unknown;
+              };
+            };
+          };
         };
       };
     };
     put?: never;
-    /** Set a per-tenant feature flag override */
+    /** Record a runtime-only per-tenant feature flag override */
     post: {
       parameters: {
         query?: never;
@@ -4594,12 +5529,24 @@ export interface paths {
         };
       };
       responses: {
-        /** @description Updated */
+        /** @description Runtime-only override record updated */
         200: {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              organizationId: string;
+              flag: string;
+              enabled: boolean;
+              runtimeOnlyOverride: {
+                [key: string]: unknown;
+              };
+              metadata: {
+                [key: string]: unknown;
+              };
+            };
+          };
         };
       };
     };
@@ -4763,6 +5710,86 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+  getCarinaStatus: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Carina configuration + optional hello probe */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            enabled: boolean;
+            workspaceConfigured: boolean;
+            autoApprove: boolean;
+            protocolVersion?: number;
+            error?: string;
+          };
+        };
+      };
+      /** @description Unauthenticated */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  resolveCarinaApproval: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "application/json": {
+          decisionId: string;
+          approve: boolean;
+          /** @enum {string} */
+          scope?: "once" | "session" | "project";
+        };
+      };
+    };
+    responses: {
+      /** @description Carina resolve result */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            ok: boolean;
+            result?: unknown;
+            error?: string;
+          };
+        };
+      };
+      /** @description Unauthenticated */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Carina not configured */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
   createAgentRuntimeTurn: {
     parameters: {
       query?: never;
@@ -4785,7 +5812,9 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "text/event-stream": string;
+        };
       };
       /** @description Unauthenticated */
       401: {
