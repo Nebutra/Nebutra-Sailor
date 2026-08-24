@@ -33,6 +33,7 @@ import { BlogImage } from "@/components/landing/blog-image";
 import { BlogPortableText } from "@/components/landing/blog-portable-text";
 import { BlogShareActions } from "@/components/landing/blog-share-actions";
 import { StructuredData } from "@/components/seo/structured-data";
+import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
 import {
   getAllPosts,
@@ -68,6 +69,7 @@ async function buildBlogMetadata(lang: string, slug: string): Promise<Metadata> 
   if (!post) return {};
 
   const ogImage = `${getSiteUrl()}${localizedPostHref(lang, post.slug)}/opengraph-image`;
+  const authorName = getAuthorName(post.author);
 
   return buildPageMetadata({
     title: `${post.title} — Nebutra Blog`,
@@ -77,6 +79,9 @@ async function buildBlogMetadata(lang: string, slug: string): Promise<Metadata> 
     type: "article",
     image: ogImage,
     publishedIn: await blogPublicationSet(post),
+    ...(post.date ? { publishedTime: new Date(post.date).toISOString() } : {}),
+    ...(post.updatedAt ? { modifiedTime: new Date(post.updatedAt).toISOString() } : {}),
+    ...(authorName ? { authors: [authorName] } : {}),
   });
 }
 
@@ -117,6 +122,17 @@ async function blogPublicationSet(post: BlogPostWithSource): Promise<Publication
   return { path: pathByLocale[primary] as `/${string}`, locales: ordered, pathByLocale };
 }
 
+/**
+ * Pre-build the default locale only, so the most-crawled URLs are a CDN hit
+ * instead of a cold on-demand render. Other locales render on-demand and are
+ * then cached via PPR — `dynamicParams = true` is forbidden under
+ * cacheComponents and also redundant.
+ */
+export async function generateStaticParams() {
+  const posts = await getAllPosts(toBlogLanguage(routing.defaultLocale));
+  return prerenderDefaultLocale(posts.slice(0, 50), (post) => ({ slug: post.slug }));
+}
+
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { lang, slug } = await params;
   return buildBlogMetadata(lang, slug);
@@ -143,7 +159,7 @@ function localizedPageHref(locale: string, path: string): string {
 }
 
 function languageSwitchPostHref(locale: Locale, slug: string): string {
-  return `/${locale}/blog/${slug}`;
+  return localizedPostHref(locale, slug);
 }
 
 function localeForBlogLanguage(language: BlogLanguage): Locale {
@@ -382,7 +398,12 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
     },
   });
   const breadcrumbLd = buildBreadcrumbListSchema([
-    { name: "Home", url: `${getSiteUrl()}/${lang}` },
+    // English is unprefixed under `localePrefix: "as-needed"`, so `/en` would
+    // name a URL that 308s instead of the homepage canonical.
+    {
+      name: "Home",
+      url: lang === routing.defaultLocale ? getSiteUrl() : `${getSiteUrl()}/${lang}`,
+    },
     { name: "Blog", url: `${getSiteUrl()}${localizedPostHref(lang)}` },
     { name: post.title, url: canonicalUrl },
   ]);

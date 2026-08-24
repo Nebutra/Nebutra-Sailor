@@ -13,7 +13,9 @@ export async function GET() {
   const entries = posts
     .slice(0, 50)
     .map((post) => {
-      const link = `${base}/en/blog/${post.slug}`;
+      // English is the unprefixed default under `localePrefix: "as-needed"`;
+      // `/en/blog/...` is a 308 away from the canonical the sitemap publishes.
+      const link = `${base}/blog/${post.slug}`;
       const title = escapeXml(post.title ?? post.slug);
       const summary = escapeXml(post.excerpt ?? post.description ?? "");
       const updated = post.updatedAt ?? post.date ?? new Date().toISOString();
@@ -30,9 +32,9 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>${brand.name} Blog</title>
-  <link href="${base}/en/blog"/>
+  <link href="${base}/blog"/>
   <link rel="self" href="${base}/api/blog/atom"/>
-  <id>${base}/en/blog</id>
+  <id>${base}/blog</id>
   <updated>${new Date().toISOString()}</updated>
 ${entries}
 </feed>`;

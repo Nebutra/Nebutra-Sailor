@@ -51,7 +51,7 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
   const isZh = isZhUiLocale(lang);
-  return buildPageMetadata({
+  const metadata = buildPageMetadata({
     title: isZh ? "博客 — Nebutra" : "Blog — Nebutra",
     description: isZh
       ? "来自 Nebutra 团队的工程实践、产品进展与 SaaS 架构笔记。"
@@ -59,6 +59,18 @@ export async function generateMetadata({
     path: "/blog",
     locale: lang as Locale,
   });
+
+  return {
+    ...metadata,
+    alternates: {
+      ...metadata.alternates,
+      types: {
+        "application/rss+xml": "/api/blog/rss",
+        "application/atom+xml": "/api/blog/atom",
+        "application/feed+json": "/api/blog/feed.json",
+      },
+    },
+  };
 }
 
 function getAuthorName(author: BlogPostWithSource["author"]): string | null {
@@ -231,7 +243,7 @@ async function BlogPageLoader({ params }: { params: Promise<{ lang: string }> })
                   {isZh ? "阅读更新日志" : "Read our changelog"}
                 </Link>
                 <Link
-                  href="/api/changelog/rss"
+                  href="/api/blog/rss"
                   prefetch={false}
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-background px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
                 >

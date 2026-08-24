@@ -16,7 +16,9 @@ export async function GET() {
   const items = posts
     .slice(0, 50)
     .map((post) => {
-      const link = `${base}/en/blog/${post.slug}`;
+      // English is the unprefixed default under `localePrefix: "as-needed"`;
+      // `/en/blog/...` is a 308 away from the canonical the sitemap publishes.
+      const link = `${base}/blog/${post.slug}`;
       const title = escapeXml(post.title ?? post.slug);
       const desc = escapeXml(post.excerpt ?? post.description ?? "");
       // BlogPostBase exposes `date` (published) and `updatedAt`; `publishedAt`
@@ -37,7 +39,7 @@ export async function GET() {
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>${brand.name} Blog</title>
-    <link>${base}/en/blog</link>
+    <link>${base}/blog</link>
     <description>Engineering and product writing from ${brand.name}</description>
     <language>en</language>
     <atom:link href="${base}/api/blog/rss" rel="self" type="application/rss+xml"/>

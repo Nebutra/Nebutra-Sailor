@@ -43,6 +43,10 @@ export interface BuildPageMetadataOptions {
   readonly publishedIn?: PublicationSet;
   /** ISO timestamp for `og:article:published_time`. Only meaningful with `type: "article"`. */
   readonly publishedTime?: string;
+  /** ISO timestamp for `og:article:modified_time`. Only meaningful with `type: "article"`. */
+  readonly modifiedTime?: string;
+  /** Author names. Emitted as document `authors` and, for articles, `og:article:author`. */
+  readonly authors?: readonly string[];
 }
 
 function defaultOgImageUrl(baseUrl: string, title: string, subtitle?: string): string {
@@ -93,9 +97,12 @@ export function buildPageMetadata(opts: BuildPageMetadataOptions): Metadata {
     ? set.locales.filter((locale) => locale !== routeLocale).map(toOpenGraphLocale)
     : [];
 
+  const authors = opts.authors?.filter((name) => name.trim().length > 0) ?? [];
+
   return {
     title: opts.title,
     description: opts.description,
+    ...(authors.length ? { authors: authors.map((name) => ({ name })) } : {}),
     ...(isMember ? {} : { robots: { index: false, follow: true } }),
     alternates: {
       canonical,
@@ -112,6 +119,8 @@ export function buildPageMetadata(opts: BuildPageMetadataOptions): Metadata {
       alternateLocale,
       images: [{ url: imageUrl, width: 1200, height: 630, alt: opts.title }],
       ...(ogType === "article" && opts.publishedTime ? { publishedTime: opts.publishedTime } : {}),
+      ...(ogType === "article" && opts.modifiedTime ? { modifiedTime: opts.modifiedTime } : {}),
+      ...(ogType === "article" && authors.length ? { authors: [...authors] } : {}),
     },
     twitter: {
       card: "summary_large_image",

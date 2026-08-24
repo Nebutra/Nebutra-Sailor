@@ -162,10 +162,21 @@ export function buildHreflangAlternates(
   return languages;
 }
 
+/**
+ * Sitelink candidacy is a navigation claim, not a localization scope, so this
+ * reads the registry directly. Filtering `PUBLIC_SEO_ROUTES` would silently
+ * drop a nav destination the moment its body stops being UI-translatable —
+ * which is exactly what `/blog` is.
+ */
 export function getSitelinkCandidateRoutes(): ReadonlyArray<PublicSitelinkCandidateRoute> {
-  return PUBLIC_SEO_ROUTES.filter((route): route is PublicSitelinkCandidateRoute =>
-    Boolean(route.sitelinkCandidate),
-  );
+  return SEO_ROUTE_REGISTRY.filter(
+    (entry) => entry.localization !== "none" && Boolean(entry.sitelinkCandidate),
+  ).map((entry) => ({
+    path: entry.pattern,
+    changeFrequency: entry.changeFrequency,
+    priority: entry.priority,
+    sitelinkCandidate: entry.sitelinkCandidate as { readonly label: string },
+  }));
 }
 
 /** Same-origin sitelinks plus the public Forge station (follow discovery). */

@@ -13,12 +13,14 @@ export async function GET() {
   const feed = {
     version: "https://jsonfeed.org/version/1.1",
     title: `${brand.name} Blog`,
-    home_page_url: `${base}/en/blog`,
+    // English is the unprefixed default under `localePrefix: "as-needed"`;
+    // `/en/blog/...` is a 308 away from the canonical the sitemap publishes.
+    home_page_url: `${base}/blog`,
     feed_url: `${base}/api/blog/feed.json`,
     language: "en",
     items: posts.slice(0, 50).map((post) => ({
-      id: `${base}/en/blog/${post.slug}`,
-      url: `${base}/en/blog/${post.slug}`,
+      id: `${base}/blog/${post.slug}`,
+      url: `${base}/blog/${post.slug}`,
       title: post.title ?? post.slug,
       summary: post.excerpt ?? post.description ?? "",
       date_published: post.date ?? post.updatedAt,

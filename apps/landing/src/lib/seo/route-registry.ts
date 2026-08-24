@@ -95,11 +95,15 @@ export const SEO_ROUTE_REGISTRY: ReadonlyArray<SeoRouteEntry> = [
     localization: "ui",
     sitelinkCandidate: { label: "AI Models" },
   },
+  // Scoped to the languages posts are actually written in. The index lists post
+  // bodies, and `toBlogLanguage` collapses every locale to en or zh — so a "ui"
+  // scope would publish 32 near-duplicate indexes and cluster them as hreflang
+  // siblings of the two real ones.
   {
     pattern: "/blog",
     changeFrequency: "weekly",
     priority: 0.8,
-    localization: "ui",
+    localization: "content",
     sitelinkCandidate: { label: "Blog" },
   },
   {
