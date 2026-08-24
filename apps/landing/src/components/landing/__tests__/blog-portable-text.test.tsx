@@ -3,15 +3,41 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@nebutra/icons", () => ({
-  ArrowUpRight: () => <span data-testid="arrow-up-right-icon" />,
-  ArrowRight: () => <span data-testid="arrow-right-icon" />,
-  Check: () => <span data-testid="check-icon" />,
-  Copy: () => <span data-testid="copy-icon" />,
-  Hash: () => <span data-testid="hash-icon" />,
-  InformationFillSmall: () => <span data-testid="information-icon" />,
-  Sparkles: () => <span data-testid="sparkles-icon" />,
-}));
+/**
+ * Stub every icon rather than listing them.
+ *
+ * The real barrel is 541 components, and an explicit allow-list turned every
+ * new icon in a rendered block into an unrelated suite failure.
+ */
+// Stubbing the icon barrels keeps this suite off 541 real icon modules.
+// `vi.mock` is hoisted above every declaration in this file, so each factory
+// has to be self-contained. Vitest builds the module namespace from the
+// returned object's own keys, so a Proxy is not enough — names are listed.
+const stubIconModule = (names: string[]) =>
+  Object.fromEntries(names.map((name) => [name, () => null]));
+
+vi.mock("@nebutra/icons", () =>
+  Object.fromEntries(
+    [
+      "ArrowRight",
+      "ArrowUpRight",
+      "Check",
+      "CheckCircle",
+      "Copy",
+      "External",
+      "Globe",
+      "Hash",
+      "Information",
+      "InformationFillSmall",
+      "Plus",
+      "Sparkles",
+      "Warning",
+      "WarningFill",
+    ].map((name) => [name, () => null]),
+  ),
+);
+
+vi.mock("@icons-pack/react-simple-icons", () => stubIconModule(["SiGithub", "SiX", "SiYoutube"]));
 
 vi.mock("@nebutra/ui/primitives", () => ({
   CodeBlockLanguageIcon: () => <span data-testid="code-language-icon" />,
@@ -249,7 +275,7 @@ describe("BlogPortableText", () => {
     });
 
     render(ui);
-    const sourceGrid = document.querySelector("[data-blog-source-grid]");
+    const sourceIndex = screen.getByRole("region", { name: "Source index" });
 
     expect(screen.getByText("核心判断")).not.toBeNull();
     expect(screen.getByText("Agent 之后的抽象层是协调系统。")).not.toBeNull();
@@ -257,16 +283,155 @@ describe("BlogPortableText", () => {
       "https://example.com/sequoia",
     );
     expect(screen.getByText("$0.99")).not.toBeNull();
-    expect(screen.getByRole("cell", { name: "Organization" })).not.toBeNull();
+    expect(screen.getByText("Organization").closest("td")).not.toBeNull();
     expect(screen.getByText("Big Ideas 2026").closest("a")?.getAttribute("href")).toBe(
       "https://example.com/a16z",
     );
     expect(screen.getByText("This Is AGI").closest("a")?.getAttribute("href")).toBe(
       "https://example.com/sequoia-agi",
     );
-    expect(sourceGrid?.textContent).toContain("2 sources");
-    expect(screen.getByText("Reference page").getAttribute("href")).toBe(
+    // Adjacent source cards collapse into one ordered index.
+    expect(sourceIndex.querySelectorAll("li")).toHaveLength(2);
+    expect(sourceIndex.textContent).toContain("2 sources");
+    expect(screen.getByText("Reference page").closest("a")?.getAttribute("href")).toBe(
       "https://example.com/reference",
     );
+  });
+
+  it("localizes the comparison-table row-label header on Chinese posts", async () => {
+    const ui = await BlogPortableText({
+      language: "zh",
+      body: [
+        {
+          _key: "comparison",
+          _type: "comparisonTable",
+          columns: ["Markdown", "PortableText"],
+          rows: [{ _key: "row-1", label: "结构化块", cells: ["无法表达", "完整支持"] }],
+        },
+      ],
+    });
+
+    render(ui);
+
+    expect(screen.queryByText("Dimension")).toBeNull();
+    expect(screen.getByText("维度")).not.toBeNull();
+  });
+
+  it("renders the newly supported editorial blocks", async () => {
+    const ui = await BlogPortableText({
+      body: [
+        {
+          _key: "takeaways",
+          _type: "keyTakeaways",
+          items: [
+            { _key: "t1", text: "Shipping is no longer the moat." },
+            { _key: "t2", text: "Taste and speed did not get democratized." },
+          ],
+        },
+        {
+          _key: "timeline",
+          _type: "timelineBlock",
+          items: [
+            { _key: "e1", marker: "1997", title: "Think Different ships" },
+            { _key: "e2", marker: "2026", title: "Interface similarity hits 92%" },
+          ],
+        },
+        {
+          _key: "chart",
+          _type: "chartBlock",
+          variant: "bar",
+          title: "Where new AI companies cluster",
+          points: [
+            { _key: "p1", label: "Customer service", value: 34, display: "34%" },
+            { _key: "p2", label: "Image generation", value: 27, display: "27%" },
+          ],
+        },
+        {
+          _key: "steps",
+          _type: "stepLadder",
+          steps: [
+            { _key: "s1", title: "Write both locales" },
+            { _key: "s2", title: "Dry-run the parser" },
+          ],
+        },
+        {
+          _key: "faq",
+          _type: "faqBlock",
+          items: [
+            { _key: "f1", question: "Do I publish both languages?", answer: "Yes, by default." },
+          ],
+        },
+        {
+          _key: "bio",
+          _type: "authorBio",
+          name: "Tseka Luk",
+          role: "Founder, Nebutra",
+        },
+      ],
+    });
+
+    render(ui);
+
+    expect(screen.getByText("Shipping is no longer the moat.")).not.toBeNull();
+    expect(screen.getByText("Think Different ships")).not.toBeNull();
+    // A chart emits each value twice: once beside the bar, once in the
+    // visually hidden data table that keeps the figures readable without
+    // sight of the bars.
+    expect(screen.getAllByText("34%")).toHaveLength(2);
+    expect(screen.getByRole("table", { name: "Where new AI companies cluster" })).not.toBeNull();
+    expect(screen.getByText("Dry-run the parser")).not.toBeNull();
+    expect(screen.getByText("Do I publish both languages?").closest("summary")).not.toBeNull();
+    expect(screen.getByText("Founder, Nebutra")).not.toBeNull();
+  });
+
+  it("renders an entity chip inside a paragraph", async () => {
+    const ui = await BlogPortableText({
+      body: [
+        {
+          _key: "para",
+          _type: "block",
+          style: "normal",
+          markDefs: [],
+          children: [
+            { _key: "a", _type: "span", text: "When ", marks: [] },
+            { _key: "b", _type: "entityChip", name: "Cursor", href: "https://cursor.com" },
+            { _key: "c", _type: "span", text: " first launched...", marks: [] },
+          ],
+        },
+      ],
+    });
+
+    render(ui);
+
+    expect(screen.getByRole("link", { name: "Cursor" }).getAttribute("href")).toBe(
+      "https://cursor.com",
+    );
+  });
+
+  it("never renders renderer diagnostics to readers", async () => {
+    const ui = await BlogPortableText({
+      body: [
+        {
+          _key: "concept",
+          _type: "diagramBlock",
+          diagramType: "concept",
+          title: "Coordination layer",
+          caption: "Sketched, not drawn.",
+        },
+        {
+          _key: "unknown-component",
+          _type: "componentBlock",
+          componentKey: "typoedKey",
+          props: [{ _key: "p", name: "internalFlag", value: "true" }],
+        },
+      ],
+    });
+
+    const { container } = render(ui);
+
+    expect(screen.getByText("Coordination layer")).not.toBeNull();
+    expect(container.textContent).not.toContain("needs a supported renderer");
+    expect(container.textContent).not.toContain("typoedKey");
+    expect(container.textContent).not.toContain("internalFlag");
   });
 });

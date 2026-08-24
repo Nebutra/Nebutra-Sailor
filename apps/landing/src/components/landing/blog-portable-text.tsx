@@ -12,8 +12,37 @@ import {
   type PortableTextTableCell,
   TEMPLATE_PLACEHOLDER_MARK,
 } from "@nebutra/blog";
-import { ArrowUpRight, Hash, InformationFillSmall, Sparkles } from "@nebutra/icons";
+import { Hash } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
+import {
+  EditorialAuthorBio,
+  EditorialCallout,
+  EditorialChart,
+  type EditorialChartPoint,
+  EditorialComparisonTable,
+  EditorialDataTable,
+  type EditorialDataTableRow,
+  EditorialDivider,
+  EditorialEmbedCard,
+  EditorialEntityChip,
+  EditorialFaq,
+  type EditorialFaqItem,
+  EditorialFigure,
+  EditorialFigureGroup,
+  EditorialKeyTakeaways,
+  EditorialMarginNote,
+  EditorialPullQuote,
+  EditorialSourceIndex,
+  type EditorialSourceItem,
+  EditorialStatGrid,
+  type EditorialStatItem,
+  type EditorialStep,
+  EditorialStepLadder,
+  EditorialTimeline,
+  type EditorialTimelineItem,
+  isEditorialEmbedProvider,
+  isEditorialTone,
+} from "@nebutra/ui/editorial";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import katex from "katex";
 import Image from "next/image";
@@ -28,6 +57,83 @@ import { BlogMermaidDiagram } from "./blog-mermaid-diagram";
 type SourceCardGroupBlock = PortableTextBlock & {
   sources: PortableTextBlock[];
 };
+
+/**
+ * Fallbacks for block eyebrows the author left blank.
+ *
+ * Authored labels always win — a post is one document per language, so the
+ * author writes the eyebrow in the right language. These only cover the case
+ * where a block carries no label at all, which is why they must not be baked
+ * into `@nebutra/ui/editorial`.
+ */
+const UI_LABELS = {
+  en: {
+    authoredBy: "Written by",
+    dimension: "Dimension",
+    references: "Source index",
+    sourceSummary: (count: number) => `${count} source${count === 1 ? "" : "s"} behind this note.`,
+    takeaways: "Key takeaways",
+  },
+  zh: {
+    authoredBy: "作者",
+    dimension: "维度",
+    references: "资料索引",
+    sourceSummary: (count: number) => `${count} 个来源支撑这篇笔记。`,
+    takeaways: "核心结论",
+  },
+} as const;
+
+function labelsFor(language: BlogLanguage) {
+  return isZhUiLocale(language) ? UI_LABELS.zh : UI_LABELS.en;
+}
+
+function trimmed(value: string | null | undefined): string | undefined {
+  const text = value?.trim();
+  return text || undefined;
+}
+
+// ─── Sanity image adapters ────────────────────────────────────────────────────
+//
+// `@nebutra/ui/editorial` takes rendered media as a slot, so `next/image` and
+// the Sanity URL builder stay here in the app.
+
+function sanityImageNode(image: PortableTextImage, sizes: string): ReactNode {
+  const url = getImageUrl(image as Parameters<typeof getImageUrl>[0], {
+    width: 1200,
+    format: "webp",
+  });
+
+  return (
+    <Image
+      alt={image.alt ?? ""}
+      className="h-auto w-full object-cover"
+      height={675}
+      sizes={sizes}
+      src={url}
+      width={1200}
+    />
+  );
+}
+
+function sanityAvatarNode(image: PortableTextImage, size: number): ReactNode {
+  const url = getImageUrl(image as Parameters<typeof getImageUrl>[0], {
+    width: size * 2,
+    height: size * 2,
+    format: "webp",
+  });
+
+  return (
+    <Image
+      alt={image.alt ?? ""}
+      className="size-full object-cover"
+      height={size}
+      src={url}
+      width={size}
+    />
+  );
+}
+
+// ─── Table cells ──────────────────────────────────────────────────────────────
 
 function getTableCellMarkDef(
   block: PortableTextBlock,
@@ -109,7 +215,7 @@ function renderTableCellMark(
 
   if (mark === "highlight") {
     return (
-      <mark key={key} className="rounded-[var(--radius-sm)] bg-amber-200 px-1 text-foreground">
+      <mark key={key} className={cnHighlight}>
         {children}
       </mark>
     );
@@ -153,8 +259,18 @@ function renderTableCellMark(
     );
   }
 
-  return children;
+  return <span key={key}>{children}</span>;
 }
+
+/**
+ * Highlight wash.
+ *
+ * Built from the warning status token rather than `bg-amber-200`: the raw
+ * palette class has no dark-mode value, so a highlighted phrase used to sit as
+ * a near-white block in dark mode.
+ */
+const cnHighlight =
+  "rounded-[var(--radius-sm)] bg-[color-mix(in_srgb,var(--status-warning)_28%,transparent)] px-1 text-foreground";
 
 function BlogTableCellSpan({
   block,
@@ -165,6 +281,16 @@ function BlogTableCellSpan({
   index: number;
   span: PortableTextSpan;
 }) {
+  if (span._type === "entityChip") {
+    return (
+      <EditorialEntityChip
+        key={span._key ?? index}
+        href={span.href ?? null}
+        name={span.name ?? ""}
+      />
+    );
+  }
+
   const marks = span.marks ?? [];
   let node: ReactNode = span.text ?? "";
 
@@ -193,6 +319,8 @@ function BlogTableCellContent({ cell }: { cell: PortableTextTableCell }) {
     </>
   );
 }
+
+// ─── Localization of authored prose ───────────────────────────────────────────
 
 function localizeTldrLabel(text: string, language: BlogLanguage): string {
   if (language !== "zh") return text;
@@ -223,6 +351,8 @@ function localizeBlockquoteLabel(
   return replaced ? { ...block, children } : block;
 }
 
+// ─── Block adapters ───────────────────────────────────────────────────────────
+
 function BlogTable({ value }: { value: PortableTextBlock }) {
   const rows =
     value.rows
@@ -240,36 +370,17 @@ function BlogTable({ value }: { value: PortableTextBlock }) {
   const [header, ...bodyRows] = rows;
   if (!header?.cells.length) return null;
 
-  return (
-    <div className="my-8 overflow-x-auto rounded-[var(--radius-lg)] border border-border bg-background shadow-sm">
-      <table className="w-full min-w-[680px] border-collapse text-left text-sm text-muted-foreground">
-        <thead className="bg-muted text-foreground">
-          <tr>
-            {header.cells.map((cell, index) => (
-              <th
-                key={`${value._key ?? "table"}-head-${index}`}
-                className="border-b border-border px-4 py-3 font-semibold"
-                scope="col"
-              >
-                <BlogTableCellContent cell={cell} />
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {bodyRows.map((row) => (
-            <tr key={row.key} className="border-b border-border last:border-b-0">
-              {row.cells.map((cell, cellIndex) => (
-                <td key={`${row.key}-cell-${cellIndex}`} className="px-4 py-3 align-top leading-6">
-                  <BlogTableCellContent cell={cell} />
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+  const head: ReactNode[] = header.cells.map((cell, index) => (
+    <BlogTableCellContent key={`${header.key}-head-${index}`} cell={cell} />
+  ));
+  const dataRows: EditorialDataTableRow[] = bodyRows.map((row) => ({
+    key: row.key,
+    cells: row.cells.map((cell, cellIndex) => (
+      <BlogTableCellContent key={`${row.key}-cell-${cellIndex}`} cell={cell} />
+    )),
+  }));
+
+  return <EditorialDataTable head={head} rows={dataRows} />;
 }
 
 function getHeadingId(
@@ -326,264 +437,120 @@ function BlogMathBlock({ value }: { value: PortableTextBlock }) {
   if (!math) return null;
 
   return (
-    <figure className="blog-math-block my-8 overflow-x-auto rounded-[var(--radius-lg)] border border-border bg-background px-4 py-5 shadow-sm">
+    <figure className="blog-math-block my-8 overflow-x-auto rounded-[var(--radius-xl)] border border-border bg-background px-4 py-5 shadow-ambient-sm">
       <div dangerouslySetInnerHTML={{ __html: renderMath(math, true) }} />
     </figure>
   );
 }
 
 function BlogCalloutBlock({ value }: { value: PortableTextBlock }) {
-  const tone =
-    value.tone === "warning" || value.tone === "success" || value.tone === "insight"
-      ? value.tone
-      : "note";
-  const toneClass = {
-    insight: "border-[var(--blue-7)] bg-[var(--blue-2)] text-[var(--blue-12)]",
-    note: "border-border bg-muted text-foreground",
-    success: "border-green-700/35 bg-green-200 text-green-900",
-    warning: "border-amber-700/40 bg-amber-200 text-amber-900",
-  }[tone];
-  const label = value.title ?? (tone === "insight" ? "Field note" : tone);
-
   return (
-    <aside
-      className={`lg:-mx-8 my-10 overflow-hidden rounded-[var(--radius-lg)] border shadow-sm ${toneClass}`}
+    <EditorialCallout
+      label={trimmed(value.label)}
+      title={trimmed(value.title)}
+      tone={isEditorialTone(value.tone) ? value.tone : "note"}
     >
-      <div className="flex gap-4 px-5 py-5 sm:px-6">
-        <div className="mt-1 flex size-8 shrink-0 items-center justify-center rounded-full border border-current/20 bg-white/60 dark:bg-black/20">
-          {tone === "insight" ? (
-            <Sparkles className="size-4" aria-hidden />
-          ) : (
-            <InformationFillSmall className="size-4" aria-hidden />
-          )}
-        </div>
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-[0.16em] text-current/70">
-            {label}
-          </div>
-          {value.body && (
-            <p className="mt-2 text-lg font-medium leading-8 text-foreground">{value.body}</p>
-          )}
-        </div>
-      </div>
-    </aside>
+      {trimmed(value.body)}
+    </EditorialCallout>
   );
 }
 
 function BlogQuoteBlock({ value }: { value: PortableTextBlock }) {
-  if (!value.quote?.trim()) return null;
-  const attribution = value.sourceHref ? (
-    <a
-      href={value.sourceHref}
-      className="underline decoration-[hsl(var(--border))] underline-offset-4"
-      rel="noopener noreferrer"
-      target="_blank"
-    >
-      {value.attribution}
-    </a>
-  ) : (
-    value.attribution
-  );
+  const quote = value.quote?.trim();
+  if (!quote) return null;
 
   return (
-    <figure className="lg:-mx-10 my-10 rounded-[var(--radius-lg)] border border-border bg-background px-6 py-6 shadow-sm">
-      <div className="flex gap-4">
-        <div
-          className="mt-1 font-serif text-5xl leading-none text-[var(--blue-8)]"
-          aria-hidden="true"
-        >
-          "
-        </div>
-        <div>
-          <blockquote className="text-xl font-semibold leading-10 text-foreground">
-            {value.quote}
-          </blockquote>
-          {value.attribution && (
-            <figcaption className="mt-4 text-sm font-medium text-muted-foreground">
-              {attribution}
-            </figcaption>
-          )}
-        </div>
-      </div>
-    </figure>
+    <EditorialPullQuote
+      attribution={trimmed(value.attribution) ?? null}
+      portrait={value.portrait?.asset?._ref ? sanityAvatarNode(value.portrait, 36) : undefined}
+      quote={quote}
+      role={trimmed(value.role) ?? null}
+      sourceHref={trimmed(value.sourceHref) ?? null}
+    />
   );
 }
 
 function BlogStatGrid({ value }: { value: PortableTextBlock }) {
-  const items = Array.isArray(value.items) ? value.items : [];
-  if (!items.length) return null;
+  const items: EditorialStatItem[] =
+    value.items
+      ?.filter((item) => item.value && item.label)
+      .map((item, index) => ({
+        caption: trimmed(item.caption) ?? null,
+        key: item._key ?? `${value._key ?? "stat"}-${index}`,
+        label: item.label ?? "",
+        value: item.value ?? "",
+      })) ?? [];
 
   return (
-    <section className="my-9 rounded-[var(--radius-lg)] border border-border bg-background p-5">
-      {value.title && (
-        <h3 className="mb-4 text-base font-semibold text-foreground">{value.title}</h3>
-      )}
-      <div className="grid gap-3 sm:grid-cols-2">
-        {items.map((item, index) => (
-          <div
-            key={item._key ?? `${value._key ?? "stat"}-${index}`}
-            className="rounded-[var(--radius-md)] border border-border bg-muted p-4"
-          >
-            <div className="font-mono text-2xl font-semibold text-foreground">{item.value}</div>
-            <div className="mt-2 text-sm font-medium text-foreground">{item.label}</div>
-            {item.caption && (
-              <p className="mt-1 text-sm leading-6 text-muted-foreground">{item.caption}</p>
-            )}
-          </div>
-        ))}
-      </div>
-    </section>
+    <EditorialStatGrid
+      items={items}
+      label={trimmed(value.label)}
+      title={trimmed(value.title) ?? null}
+    />
   );
 }
 
-function BlogComparisonTable({ value }: { value: PortableTextBlock }) {
-  const columns = value.columns?.filter(Boolean) ?? [];
-  const rows = value.rows?.filter((row) => row.label || row.cells?.some(Boolean)) ?? [];
-  if (columns.length < 2 || !rows.length) return null;
-
-  return (
-    <section className="my-9">
-      {value.title && (
-        <h3 className="mb-4 text-base font-semibold text-foreground">{value.title}</h3>
-      )}
-      <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-border bg-background">
-        <table className="w-full min-w-[720px] border-collapse text-left text-sm">
-          <thead className="bg-muted text-foreground">
-            <tr>
-              <th className="border-b border-border px-4 py-3">Dimension</th>
-              {columns.map((column) => (
-                <th key={column} className="border-b border-border px-4 py-3">
-                  {column}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row, rowIndex) => (
-              <tr
-                key={row._key ?? `${value._key ?? "comparison"}-${rowIndex}`}
-                className="border-b border-border last:border-b-0"
-              >
-                <th className="px-4 py-3 align-top font-semibold text-foreground" scope="row">
-                  {row.label}
-                </th>
-                {columns.map((column, cellIndex) => (
-                  <td key={`${column}-${cellIndex}`} className="px-4 py-3 align-top leading-6">
-                    {row.cells?.[cellIndex]}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
-  );
-}
-
-function BlogSourceCard({ value }: { value: PortableTextBlock }) {
-  if (!value.title || !value.url) return null;
-
-  return (
-    <aside className="my-7 rounded-[var(--radius-md)] border border-border bg-background p-5 shadow-sm">
-      <div className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-        Source
-      </div>
-      <a
-        href={value.url}
-        className="mt-2 block text-base font-semibold text-foreground underline decoration-[hsl(var(--border))] underline-offset-4"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        {value.title}
-      </a>
-      {(value.publisher || value.author || value.accessedAt) && (
-        <div className="mt-2 text-sm text-muted-foreground">
-          {[value.publisher, value.author, value.accessedAt].filter(Boolean).join(" · ")}
-        </div>
-      )}
-      {value.summary && (
-        <p className="mt-3 text-sm leading-7 text-muted-foreground">{value.summary}</p>
-      )}
-    </aside>
-  );
-}
-
-function BlogSourceCardGroup({
+function BlogComparisonTable({
   language,
   value,
 }: {
   language: BlogLanguage;
-  value: SourceCardGroupBlock;
+  value: PortableTextBlock;
 }) {
-  const sources = value.sources.filter((source) => source.title && source.url);
-  if (!sources.length) return null;
+  const columns = value.columns?.filter(Boolean) ?? [];
+  const rows =
+    value.rows
+      ?.filter((row) => row.label || row.cells?.some(Boolean))
+      .map((row, index) => ({
+        cells: row.cells ?? [],
+        key: row._key ?? `${value._key ?? "comparison"}-${index}`,
+        label: row.label ?? "",
+      })) ?? [];
 
   return (
-    <section className="lg:-mx-16 my-9" data-blog-source-grid>
-      <div className="mb-4 flex items-end justify-between gap-4 border-b border-border pb-3">
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-            {isZhUiLocale(language) ? "资料索引" : "Source index"}
-          </div>
-          <p className="mt-1 text-sm leading-6 text-muted-foreground">
-            {isZhUiLocale(language)
-              ? `${sources.length} 个来源支撑这篇 Frontier 笔记。`
-              : `${sources.length} sources behind this Frontier note.`}
-          </p>
-        </div>
-      </div>
-      <div className="grid gap-3 md:grid-cols-2">
-        {sources.map((source, index) => (
-          <a
-            key={source._key ?? `${value._key ?? "source-group"}-${index}`}
-            href={source.url ?? "#"}
-            className="group flex min-h-32 flex-col rounded-[var(--radius-md)] border border-border bg-background p-4 transition-colors hover:border-[var(--blue-7)] hover:bg-muted"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <div className="flex items-start justify-between gap-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                {source.publisher ?? (isZhUiLocale(language) ? "来源" : "Source")}
-              </div>
-              <ArrowUpRight
-                className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-[hsl(var(--primary))]"
-                aria-hidden
-              />
-            </div>
-            <h3 className="mt-3 text-base font-semibold leading-6 text-foreground">
-              {source.title}
-            </h3>
-            {source.summary && (
-              <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">
-                {source.summary}
-              </p>
-            )}
-          </a>
-        ))}
-      </div>
-    </section>
+    <EditorialComparisonTable
+      columns={columns}
+      dimensionLabel={trimmed(value.dimensionLabel) ?? labelsFor(language).dimension}
+      label={trimmed(value.label)}
+      rows={rows}
+      title={trimmed(value.title) ?? null}
+    />
   );
 }
 
-function BlogImageFigure({ image }: { image: PortableTextImage }) {
-  const imageUrl = getImageUrl(image as Parameters<typeof getImageUrl>[0], {
-    width: 1200,
-    format: "webp",
-  });
-  const alt = image.alt ?? "";
+function toSourceItem(block: PortableTextBlock, index: number): EditorialSourceItem | null {
+  if (!block.title || !block.url) return null;
+  return {
+    accessedAt: trimmed(block.accessedAt) ?? null,
+    author: trimmed(block.author) ?? null,
+    key: block._key ?? `source-${index}`,
+    publisher: trimmed(block.publisher) ?? null,
+    summary: trimmed(block.summary) ?? null,
+    title: block.title,
+    url: block.url,
+  };
+}
+
+function BlogSourceIndex({
+  blocks,
+  language,
+}: {
+  blocks: PortableTextBlock[];
+  language: BlogLanguage;
+}) {
+  const sources = blocks
+    .map(toSourceItem)
+    .filter((source): source is EditorialSourceItem => source !== null);
+  if (!sources.length) return null;
+
+  const labels = labelsFor(language);
 
   return (
-    <figure>
-      <div className="relative aspect-[16/9] overflow-hidden rounded-[var(--radius-lg)] bg-muted">
-        <Image src={imageUrl} alt={alt} fill className="object-cover" sizes="720px" />
-      </div>
-      {image.caption && (
-        <figcaption className="mt-2 text-center text-sm text-muted-foreground">
-          {image.caption}
-        </figcaption>
-      )}
-    </figure>
+    <EditorialSourceIndex
+      label={labels.references}
+      sources={sources}
+      summary={labels.sourceSummary(sources.length)}
+    />
   );
 }
 
@@ -591,20 +558,23 @@ function BlogImageSet({ value }: { value: PortableTextBlock }) {
   const images = value.images?.filter((image) => image.asset?._ref) ?? [];
   if (!images.length) return null;
 
+  const variant =
+    value.variant === "comparison" || value.variant === "sequence" ? value.variant : "grid";
+
   return (
-    <section className="my-9">
-      {value.title && (
-        <h3 className="mb-4 text-base font-semibold text-foreground">{value.title}</h3>
-      )}
-      <div className={images.length === 1 ? "" : "grid gap-4 md:grid-cols-2"}>
-        {images.map((image, index) => (
-          <BlogImageFigure
-            key={image._key ?? `${value._key ?? "image-set"}-${index}`}
-            image={image}
-          />
-        ))}
-      </div>
-    </section>
+    <EditorialFigureGroup
+      label={trimmed(value.label)}
+      title={trimmed(value.title) ?? null}
+      variant={variant}
+    >
+      {images.map((image, index) => (
+        <EditorialFigure
+          key={image._key ?? `${value._key ?? "image-set"}-${index}`}
+          caption={image.caption}
+          media={sanityImageNode(image, "(max-width: 640px) 100vw, 480px")}
+        />
+      ))}
+    </EditorialFigureGroup>
   );
 }
 
@@ -612,109 +582,259 @@ function BlogEmbedBlock({ value }: { value: PortableTextBlock }) {
   if (!value.url || !value.title) return null;
 
   return (
-    <aside className="my-8 rounded-[var(--radius-lg)] border border-border bg-background p-5">
-      <div className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-        {value.provider ?? "Embed"}
-      </div>
-      <a
-        href={value.url}
-        className="mt-2 block text-lg font-semibold text-foreground underline decoration-[hsl(var(--border))] underline-offset-4"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        {value.title}
-      </a>
-      {value.caption && (
-        <p className="mt-2 text-sm leading-6 text-muted-foreground">{value.caption}</p>
-      )}
-    </aside>
+    <EditorialEmbedCard
+      caption={trimmed(value.caption) ?? null}
+      provider={isEditorialEmbedProvider(value.provider) ? value.provider : "website"}
+      title={value.title}
+      url={value.url}
+    />
   );
 }
 
+/**
+ * Diagram block.
+ *
+ * The `concept` variant has no renderer, and previously fell through to a
+ * dashed box reading "needs a supported renderer" — an engineering note shipped
+ * to readers. It now degrades to the authored title and caption, which is the
+ * part a reader can actually use.
+ */
 function BlogDiagramBlock({ value }: { value: PortableTextBlock }) {
+  const title = trimmed(value.title);
+  const caption = trimmed(value.caption);
+
   if (value.diagramType === "mermaid" && value.mermaidCode) {
     return (
-      <figure className="my-9">
-        {value.title && (
-          <figcaption className="mb-3 text-sm font-semibold text-foreground">
-            {value.title}
-          </figcaption>
+      <figure className="my-10">
+        {title && (
+          <figcaption className="mb-3 text-sm font-semibold text-foreground">{title}</figcaption>
         )}
         <BlogMermaidDiagram chart={value.mermaidCode} />
-        {value.caption && (
-          <p className="mt-2 text-center text-sm text-muted-foreground">{value.caption}</p>
-        )}
+        {caption && <p className="mt-2 text-center text-sm text-muted-foreground">{caption}</p>}
       </figure>
     );
   }
 
-  const image = (value as PortableTextBlock & { image?: PortableTextImage }).image;
+  const image = value.images?.[0] ?? (value as { image?: PortableTextImage }).image;
   if (value.diagramType === "image" && image?.asset?._ref) {
     return (
-      <section className="my-9">
-        {value.title && (
-          <h3 className="mb-4 text-base font-semibold text-foreground">{value.title}</h3>
-        )}
-        <BlogImageFigure image={{ ...image, caption: image.caption ?? value.caption }} />
-      </section>
+      <EditorialFigure
+        caption={caption ?? image.caption}
+        media={sanityImageNode(image, "(max-width: 768px) 100vw, 860px")}
+        width="breakout"
+      />
     );
   }
 
-  return (
-    <aside className="my-8 rounded-[var(--radius-lg)] border border-dashed border-border bg-background p-5 text-sm text-muted-foreground">
-      {value.title || "Diagram"} is recorded as a structured diagram block and needs a supported
-      renderer.
-    </aside>
-  );
-}
-
-function BlogComponentBlock({ value }: { value: PortableTextBlock }) {
-  if (value.componentKey === "articleDivider") {
-    return (
-      <div className="my-14 flex items-center gap-4" aria-hidden>
-        <div className="h-px flex-1 bg-[hsl(var(--border))]" />
-        <div className="size-2 rounded-full bg-[var(--blue-8)]" />
-        <div className="h-px flex-1 bg-[hsl(var(--border))]" />
-      </div>
-    );
-  }
-
-  const props = value.props?.filter((prop) => prop.name && prop.value) ?? [];
+  if (!title && !caption) return null;
 
   return (
-    <aside className="my-8 rounded-[var(--radius-lg)] border border-border bg-background p-5">
-      <div className="text-sm font-semibold text-foreground">
-        {value.componentKey ?? "Component"}
-      </div>
-      {props.length > 0 && (
-        <dl className="mt-3 space-y-2 text-sm text-muted-foreground">
-          {props.map((prop, index) => (
-            <div key={prop._key ?? `${value._key ?? "component"}-${index}`}>
-              <dt className="font-mono text-xs uppercase tracking-[0.12em]">{prop.name}</dt>
-              <dd className="mt-1 text-muted-foreground">{prop.value}</dd>
-            </div>
-          ))}
-        </dl>
+    <figure className="my-8">
+      {title && <p className="text-sm font-semibold text-foreground">{title}</p>}
+      {caption && (
+        <figcaption className="mt-1 text-sm leading-6 text-muted-foreground">{caption}</figcaption>
       )}
-    </aside>
+    </figure>
   );
 }
 
+/**
+ * Whitelisted component block.
+ *
+ * An unrecognized `componentKey` renders nothing. The previous fallback printed
+ * the key and every prop as a definition list, which is a debugging view: an
+ * author typo became a panel of `componentKey / props` jargon in a published
+ * article.
+ */
+function BlogComponentBlock({ value }: { value: PortableTextBlock }) {
+  const props = value.props?.filter((prop) => prop.name) ?? [];
+  const byName = new Map(props.map((prop) => [prop.name ?? "", prop.value ?? ""]));
+
+  if (value.componentKey === "articleDivider") {
+    return <EditorialDivider />;
+  }
+
+  if (value.componentKey === "frontierNote") {
+    const body = trimmed(byName.get("body"));
+    if (!body) return null;
+    return (
+      <EditorialCallout
+        label={trimmed(byName.get("label"))}
+        title={trimmed(byName.get("title"))}
+        tone="insight"
+      >
+        {body}
+      </EditorialCallout>
+    );
+  }
+
+  if (value.componentKey === "outcomeLadder") {
+    // Each prop is one rung: the prop name is the outcome, its value the detail.
+    const steps: EditorialStep[] = props
+      .filter((prop) => prop.name)
+      .map((prop, index) => ({
+        body: trimmed(prop.value) ?? null,
+        key: prop._key ?? `${value._key ?? "ladder"}-${index}`,
+        title: prop.name ?? "",
+      }));
+    if (steps.length < 2) return null;
+    return <EditorialStepLadder label={trimmed(value.label)} steps={steps} />;
+  }
+
+  return null;
+}
+
+function BlogKeyTakeaways({
+  language,
+  value,
+}: {
+  language: BlogLanguage;
+  value: PortableTextBlock;
+}) {
+  const items =
+    value.items
+      ?.filter((item) => item.text?.trim())
+      .map((item, index) => ({
+        key: item._key ?? `${value._key ?? "takeaway"}-${index}`,
+        text: item.text ?? "",
+      })) ?? [];
+  if (!items.length) return null;
+
+  return (
+    <EditorialKeyTakeaways
+      items={items}
+      label={trimmed(value.label) ?? labelsFor(language).takeaways}
+      title={trimmed(value.title) ?? null}
+    />
+  );
+}
+
+function BlogTimelineBlock({ value }: { value: PortableTextBlock }) {
+  const items: EditorialTimelineItem[] =
+    value.items
+      ?.filter((item) => item.marker?.trim() && item.title?.trim())
+      .map((item, index) => ({
+        body: trimmed(item.body) ?? null,
+        key: item._key ?? `${value._key ?? "timeline"}-${index}`,
+        marker: item.marker ?? "",
+        title: item.title ?? "",
+      })) ?? [];
+  if (!items.length) return null;
+
+  return (
+    <EditorialTimeline
+      items={items}
+      label={trimmed(value.label)}
+      title={trimmed(value.title) ?? null}
+    />
+  );
+}
+
+function BlogChartBlock({ value }: { value: PortableTextBlock }) {
+  const points: EditorialChartPoint[] =
+    value.points
+      ?.filter((point) => point.label?.trim() && typeof point.value === "number")
+      .map((point, index) => ({
+        display: trimmed(point.display) ?? null,
+        key: point._key ?? `${value._key ?? "point"}-${index}`,
+        label: point.label ?? "",
+        value: point.value ?? 0,
+      })) ?? [];
+  if (!points.length) return null;
+
+  return (
+    <EditorialChart
+      caption={trimmed(value.caption) ?? null}
+      label={trimmed(value.label)}
+      points={points}
+      title={trimmed(value.title) ?? null}
+      variant={value.variant === "line" ? "line" : "bar"}
+    />
+  );
+}
+
+function BlogStepLadder({ value }: { value: PortableTextBlock }) {
+  const steps: EditorialStep[] =
+    value.steps
+      ?.filter((step) => step.title?.trim())
+      .map((step, index) => ({
+        body: trimmed(step.body) ?? null,
+        key: step._key ?? `${value._key ?? "step"}-${index}`,
+        title: step.title ?? "",
+      })) ?? [];
+  if (!steps.length) return null;
+
+  return (
+    <EditorialStepLadder
+      label={trimmed(value.label)}
+      steps={steps}
+      title={trimmed(value.title) ?? null}
+    />
+  );
+}
+
+function BlogFaqBlock({ value }: { value: PortableTextBlock }) {
+  const items: EditorialFaqItem[] =
+    value.items
+      ?.filter((item) => item.question?.trim() && item.answer?.trim())
+      .map((item, index) => ({
+        answer: item.answer ?? "",
+        key: item._key ?? `${value._key ?? "faq"}-${index}`,
+        question: item.question ?? "",
+      })) ?? [];
+  if (!items.length) return null;
+
+  return (
+    <EditorialFaq
+      defaultOpenFirst={value.defaultOpenFirst === true}
+      items={items}
+      label={trimmed(value.label)}
+      title={trimmed(value.title) ?? null}
+    />
+  );
+}
+
+function BlogAuthorBio({ language, value }: { language: BlogLanguage; value: PortableTextBlock }) {
+  if (!value.name?.trim()) return null;
+
+  const links =
+    value.links
+      ?.filter((link) => link.label && link.href)
+      .map((link, index) => ({
+        href: link.href ?? "",
+        key: link._key ?? `${value._key ?? "link"}-${index}`,
+        label: link.label ?? "",
+      })) ?? [];
+
+  return (
+    <EditorialAuthorBio
+      avatar={value.avatar?.asset?._ref ? sanityAvatarNode(value.avatar, 48) : undefined}
+      bio={trimmed(value.bio) ?? null}
+      label={trimmed(value.label) ?? labelsFor(language).authoredBy}
+      links={links}
+      name={value.name}
+      role={trimmed(value.role) ?? null}
+    />
+  );
+}
+
+/**
+ * Adjacent source cards become one numbered index.
+ *
+ * Authors write references as a run of `sourceCard` blocks; readers want a
+ * single ordered list they can scan and cite against.
+ */
 function groupAdjacentSourceCards(blocks: PortableTextBlock[]): PortableTextBlock[] {
   const grouped: PortableTextBlock[] = [];
   let pendingSources: PortableTextBlock[] = [];
 
   const flushSources = () => {
     if (pendingSources.length === 0) return;
-    if (pendingSources.length === 1) {
-      grouped.push(pendingSources[0] as PortableTextBlock);
-    } else {
-      grouped.push({
-        _key: `${pendingSources[0]?._key ?? "source"}-group`,
-        _type: "sourceCardGroup",
-        sources: pendingSources,
-      } as SourceCardGroupBlock);
-    }
+    grouped.push({
+      _key: `${pendingSources[0]?._key ?? "source"}-group`,
+      _type: "sourceCardGroup",
+      sources: pendingSources,
+    } as SourceCardGroupBlock);
     pendingSources = [];
   };
 
@@ -732,17 +852,13 @@ function groupAdjacentSourceCards(blocks: PortableTextBlock[]): PortableTextBloc
 }
 
 function getCtaItems(value: PortableTextBlock): BlogCtaBlockItem[] {
-  if (!Array.isArray(value.items)) return [];
-
-  return value.items.map((item, index) => {
-    const itemRecord = item as Record<string, unknown>;
-    return {
-      body: typeof itemRecord.body === "string" ? itemRecord.body : undefined,
-      key:
-        typeof itemRecord._key === "string" ? itemRecord._key : `${value._key ?? "cta"}-${index}`,
-      title: typeof itemRecord.title === "string" ? itemRecord.title : undefined,
-    };
-  });
+  return (
+    value.items?.map((item, index) => ({
+      body: item.body ?? undefined,
+      key: item._key ?? `${value._key ?? "cta"}-${index}`,
+      title: item.title ?? undefined,
+    })) ?? []
+  );
 }
 
 function createPortableTextComponents(
@@ -792,14 +908,14 @@ function createPortableTextComponents(
 
         if (!isTemplate) {
           return (
-            <blockquote className="my-8 border-l border-border pl-5 text-lg font-semibold leading-9 text-foreground">
+            <blockquote className="my-8 border-l-2 border-border pl-5 text-lg font-medium leading-9 text-foreground">
               {children}
             </blockquote>
           );
         }
 
         return (
-          <blockquote className="group relative my-7 rounded-[var(--radius-lg)] border border-border bg-background px-5 py-4 text-base font-medium leading-8 text-foreground">
+          <blockquote className="group relative my-7 rounded-[var(--radius-xl)] border border-border bg-background px-5 py-4 text-base font-medium leading-8 text-foreground shadow-ambient-sm">
             <div className="pr-10">{children}</div>
             <div className="absolute right-3 top-3">
               <BlogCopyButton
@@ -887,11 +1003,7 @@ function createPortableTextComponents(
         <strong className="font-semibold text-foreground">{children}</strong>
       ),
       em: ({ children }) => <em className="italic text-foreground">{children}</em>,
-      highlight: ({ children }) => (
-        <mark className="rounded-[var(--radius-sm)] bg-amber-200 px-1 text-foreground">
-          {children}
-        </mark>
-      ),
+      highlight: ({ children }) => <mark className={cnHighlight}>{children}</mark>,
       kbd: ({ children }) => (
         <kbd className="rounded-[var(--radius-sm)] border border-border bg-muted px-1.5 py-0.5 font-mono text-[0.82em] text-foreground">
           {children}
@@ -905,7 +1017,7 @@ function createPortableTextComponents(
           <span className="group/footnote relative inline-flex">
             <span className="underline decoration-dotted underline-offset-4">{children}</span>
             {note && (
-              <span className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 hidden w-64 -translate-x-1/2 rounded-[var(--radius-md)] border border-border bg-background p-3 text-xs leading-5 text-muted-foreground shadow-lg group-hover/footnote:block">
+              <span className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 hidden w-64 -translate-x-1/2 rounded-[var(--radius-lg)] border border-border bg-background p-3 text-xs leading-5 text-muted-foreground shadow-ambient-md group-hover/footnote:block">
                 {note}
               </span>
             )}
@@ -923,6 +1035,15 @@ function createPortableTextComponents(
       ),
     },
     types: {
+      authorBio: ({ value }) => (
+        <BlogAuthorBio language={language} value={value as PortableTextBlock} />
+      ),
+      calloutBlock: ({ value }) => <BlogCalloutBlock value={value as PortableTextBlock} />,
+      chartBlock: ({ value }) => <BlogChartBlock value={value as PortableTextBlock} />,
+      comparisonTable: ({ value }) => (
+        <BlogComparisonTable language={language} value={value as PortableTextBlock} />
+      ),
+      componentBlock: ({ value }) => <BlogComponentBlock value={value as PortableTextBlock} />,
       ctaBlock: ({ value }) => {
         const block = value as PortableTextBlock;
         return (
@@ -935,22 +1056,35 @@ function createPortableTextComponents(
           />
         );
       },
-      calloutBlock: ({ value }) => <BlogCalloutBlock value={value as PortableTextBlock} />,
-      comparisonTable: ({ value }) => <BlogComparisonTable value={value as PortableTextBlock} />,
-      componentBlock: ({ value }) => <BlogComponentBlock value={value as PortableTextBlock} />,
       diagramBlock: ({ value }) => <BlogDiagramBlock value={value as PortableTextBlock} />,
       embedBlock: ({ value }) => <BlogEmbedBlock value={value as PortableTextBlock} />,
+      faqBlock: ({ value }) => <BlogFaqBlock value={value as PortableTextBlock} />,
       imageSet: ({ value }) => <BlogImageSet value={value as PortableTextBlock} />,
+      keyTakeaways: ({ value }) => (
+        <BlogKeyTakeaways language={language} value={value as PortableTextBlock} />
+      ),
+      marginNote: ({ value }) => {
+        const block = value as PortableTextBlock;
+        return (
+          <EditorialMarginNote label={trimmed(block.label)} title={trimmed(block.title) ?? null}>
+            {trimmed(block.body) ?? null}
+          </EditorialMarginNote>
+        );
+      },
       mathBlock: ({ value }) => <BlogMathBlock value={value as PortableTextBlock} />,
       mermaid: ({ value }) => (
         <BlogMermaidDiagram chart={typeof value?.code === "string" ? value.code : ""} />
       ),
       quoteBlock: ({ value }) => <BlogQuoteBlock value={value as PortableTextBlock} />,
-      sourceCard: ({ value }) => <BlogSourceCard value={value as PortableTextBlock} />,
+      sourceCard: ({ value }) => (
+        <BlogSourceIndex blocks={[value as PortableTextBlock]} language={language} />
+      ),
       sourceCardGroup: ({ value }) => (
-        <BlogSourceCardGroup language={language} value={value as SourceCardGroupBlock} />
+        <BlogSourceIndex blocks={(value as SourceCardGroupBlock).sources} language={language} />
       ),
       statGrid: ({ value }) => <BlogStatGrid value={value as PortableTextBlock} />,
+      stepLadder: ({ value }) => <BlogStepLadder value={value as PortableTextBlock} />,
+      timelineBlock: ({ value }) => <BlogTimelineBlock value={value as PortableTextBlock} />,
       codeHtml: ({ value }) => (
         <BlogCodeBlock
           code={typeof value?.code === "string" ? value.code : ""}
@@ -961,6 +1095,17 @@ function createPortableTextComponents(
           language={typeof value?.language === "string" ? value.language : null}
         />
       ),
+      entityChip: ({ value }) => {
+        const block = value as PortableTextBlock;
+        if (!block.name) return null;
+        return (
+          <EditorialEntityChip
+            href={block.href ?? null}
+            logo={block.logo?.asset?._ref ? sanityAvatarNode(block.logo, 20) : undefined}
+            name={block.name}
+          />
+        );
+      },
       inlineBadge: ({ value }) => {
         const label = typeof value?.label === "string" ? value.label : null;
         if (!label) return null;
@@ -973,24 +1118,15 @@ function createPortableTextComponents(
       },
       table: ({ value }) => <BlogTable value={value as PortableTextBlock} />,
       image: ({ value }) => {
-        const imageUrl = getImageUrl(value as Parameters<typeof getImageUrl>[0], {
-          width: 1200,
-          format: "webp",
-        });
-        const alt = typeof value?.alt === "string" ? value.alt : "";
-        const caption = typeof value?.caption === "string" ? value.caption : null;
+        const image = value as PortableTextImage;
+        if (!image.asset?._ref) return null;
 
         return (
-          <figure className="mt-8">
-            <div className="relative aspect-[16/9] overflow-hidden rounded-xl bg-muted">
-              <Image src={imageUrl} alt={alt} fill className="object-cover" sizes="720px" />
-            </div>
-            {caption && (
-              <figcaption className="mt-2 text-center text-sm text-muted-foreground">
-                {caption}
-              </figcaption>
-            )}
-          </figure>
+          <EditorialFigure
+            caption={image.caption}
+            media={sanityImageNode(image, "(max-width: 768px) 100vw, 860px")}
+            width="breakout"
+          />
         );
       },
     },
@@ -1023,7 +1159,9 @@ export async function BlogPortableText({
   if (!visibleBody.length) return null;
 
   return (
-    <div className="max-w-none text-muted-foreground">
+    <div
+      className={`max-w-none text-muted-foreground ${isZhUiLocale(language) ? "cjk-prose" : ""}`}
+    >
       <style>{`
         .blog-code-html .shiki {
           margin: 0;
@@ -1054,10 +1192,10 @@ export async function BlogPortableText({
           background: color-mix(in oklch, var(--blue-3) 74%, transparent);
         }
         .blog-code-html .line[data-diff="add"] {
-          background: color-mix(in oklch, var(--color-green-200) 74%, transparent);
+          background: color-mix(in srgb, var(--status-success) 18%, transparent);
         }
         .blog-code-html .line[data-diff="remove"] {
-          background: color-mix(in oklch, var(--color-red-200) 74%, transparent);
+          background: color-mix(in srgb, var(--status-danger) 18%, transparent);
         }
         :is(.dark .blog-code-html) .shiki,
         :is(.dark .blog-code-html) .shiki span {

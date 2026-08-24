@@ -118,3 +118,107 @@ test("dry-run import accepts PortableText JSON without markdown downgrade", asyn
     await rm(dir, { force: true, recursive: true });
   }
 });
+
+test("container directives compile to structured blocks", async () => {
+  const dir = await mkdtemp(path.join(tmpdir(), "nebutra-blog-publish-directive-"));
+  const file = path.join(dir, "post.md");
+
+  await writeFile(
+    file,
+    [
+      "# Directive post",
+      "",
+      ":::insight Field note",
+      "Model capability will be democratized; product capability will not.",
+      ":::",
+      "",
+      ":::takeaways What this argues",
+      "- Shipping is no longer the moat.",
+      "- Taste and speed did not get democratized.",
+      ":::",
+      "",
+      ":::steps Runbook",
+      "- Write both locales: One file per language.",
+      "- Dry-run the parser: Confirm the reported block types.",
+      ":::",
+      "",
+      ":::faq",
+      "- Do I publish both languages: Yes, by default.",
+      ":::",
+      "",
+      ":::timeline",
+      "- 1997: Think Different ships",
+      "- 2026: Interface similarity hits 92%",
+      ":::",
+      "",
+      ":::margin Aside",
+      "Factories kept the central shaft for decades.",
+      ":::",
+      "",
+    ].join("\n"),
+    "utf8",
+  );
+
+  try {
+    const { stdout } = await execFileAsync(process.execPath, [
+      scriptPath,
+      "--file",
+      file,
+      "--language",
+      "en",
+      "--slug",
+      "directive-post",
+      "--translation-key",
+      "directive-post",
+      "--dry-run",
+    ]);
+
+    const result = JSON.parse(stdout);
+    assert.equal(result.ok, true);
+    assert.deepEqual(result.summary.blockTypes, [
+      "calloutBlock",
+      "keyTakeaways",
+      "stepLadder",
+      "faqBlock",
+      "timelineBlock",
+      "marginNote",
+    ]);
+  } finally {
+    await rm(dir, { force: true, recursive: true });
+  }
+});
+
+test("an unknown block type fails the dry run instead of publishing a hole", async () => {
+  const dir = await mkdtemp(path.join(tmpdir(), "nebutra-blog-publish-unknown-"));
+  const file = path.join(dir, "post.json");
+
+  await writeFile(
+    file,
+    JSON.stringify({
+      title: "Typo post",
+      slug: "typo-post",
+      translationKey: "typo-post",
+      body: [{ _key: "oops", _type: "calloutBlokc", tone: "note", body: "Typo in _type." }],
+    }),
+    "utf8",
+  );
+
+  try {
+    await assert.rejects(
+      execFileAsync(process.execPath, [
+        scriptPath,
+        "--portable-json",
+        file,
+        "--language",
+        "en",
+        "--dry-run",
+      ]),
+      (error) => {
+        assert.match(error.stderr, /Unknown block type\(s\): calloutBlokc/);
+        return true;
+      },
+    );
+  } finally {
+    await rm(dir, { force: true, recursive: true });
+  }
+});

@@ -46,6 +46,20 @@ Options:
   --no-revalidate           Skip the production revalidation webhook.
   --help                    Show this help.
 
+Markdown container directives:
+  :::note | :::insight | :::warning | :::success | :::danger  [title]
+      Callout. Directive content becomes the body.
+  :::takeaways [title]     Key takeaways. One "- " list item per line.
+  :::steps [title]         Step ladder. "- Title: body" per step.
+  :::faq [title]           FAQ. "- Question: Answer" per entry.
+  :::timeline [title]      Timeline. "- Marker: Title" per entry.
+  :::margin [title]        Margin note. Directive content becomes the body.
+  Close every directive with a line containing only ":::".
+
+  Timeline bodies, chart values, author bios, entity chips and image sets have
+  no Markdown syntax on purpose — publish those with --portable-json rather
+  than flattening a field away.
+
 Environment:
   SANITY_API_TOKEN          Required unless --dry-run. Token needs document write access.
   SANITY_WEBHOOK_SECRET     Optional. Used to sign the blog revalidation request.
@@ -366,6 +380,102 @@ function ctaBlock({ title, body, items, ctaLabel, ctaHref }) {
   };
 }
 
+/**
+ * Container directives — the Markdown door onto the structured blocks.
+ *
+ * Markdown remains an input adapter, not the content model: only blocks whose
+ * shape survives a title plus a flat list get a directive. Timeline markers,
+ * chart values, author bios and image sets stay PortableText-only rather than
+ * getting a fragile ad hoc syntax that silently loses a field.
+ */
+const CALLOUT_TONES = new Set(["note", "insight", "warning", "success", "danger"]);
+
+const DIRECTIVE_NAMES = new Set([
+  ...CALLOUT_TONES,
+  "faq",
+  "margin",
+  "steps",
+  "takeaways",
+  "timeline",
+]);
+
+/** `- Foo: bar` → `{ title: "Foo", body: "bar" }`, tolerating the CJK colon. */
+function splitLabeledItem(text) {
+  const [rawTitle, ...rest] = text.split(/[：:]\s*/);
+  return { title: (rawTitle ?? text).trim(), body: rest.join(": ").trim() };
+}
+
+function directiveListItems(lines) {
+  return lines
+    .map((line) =>
+      line
+        .trim()
+        .match(/^[-*]\s+(.+)$/)?.[1]
+        ?.trim(),
+    )
+    .filter((item) => Boolean(item));
+}
+
+function directiveProse(lines) {
+  return lines
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .join("\n\n");
+}
+
+function buildDirectiveBlock(name, title, lines) {
+  if (CALLOUT_TONES.has(name)) {
+    const body = directiveProse(lines);
+    if (!body) return null;
+    return { _type: "calloutBlock", _key: key(), tone: name, ...(title ? { title } : {}), body };
+  }
+
+  if (name === "margin") {
+    const body = directiveProse(lines);
+    if (!body) return null;
+    return { _type: "marginNote", _key: key(), ...(title ? { title } : {}), body };
+  }
+
+  if (name === "takeaways") {
+    const items = directiveListItems(lines).map((text) => ({ _key: key(), text }));
+    if (!items.length) return null;
+    return { _type: "keyTakeaways", _key: key(), ...(title ? { title } : {}), items };
+  }
+
+  if (name === "steps") {
+    const steps = directiveListItems(lines)
+      .map(splitLabeledItem)
+      .filter((step) => step.title)
+      .map((step) => ({
+        _key: key(),
+        title: step.title,
+        ...(step.body ? { body: step.body } : {}),
+      }));
+    if (!steps.length) return null;
+    return { _type: "stepLadder", _key: key(), ...(title ? { title } : {}), steps };
+  }
+
+  if (name === "faq") {
+    const items = directiveListItems(lines)
+      .map(splitLabeledItem)
+      .filter((item) => item.title && item.body)
+      .map((item) => ({ _key: key(), question: item.title, answer: item.body }));
+    if (!items.length) return null;
+    return { _type: "faqBlock", _key: key(), ...(title ? { title } : {}), items };
+  }
+
+  if (name === "timeline") {
+    const items = directiveListItems(lines)
+      .map(splitLabeledItem)
+      .filter((item) => item.title && item.body)
+      .map((item) => ({ _key: key(), marker: item.title, title: item.body }));
+    if (!items.length) return null;
+    return { _type: "timelineBlock", _key: key(), ...(title ? { title } : {}), items };
+  }
+
+  return null;
+}
+
 function maybePromoteCtaBlock(blocks) {
   if (process.env.BLOG_DISABLE_CTA_PROMOTION === "1") return blocks;
 
@@ -466,6 +576,31 @@ function markdownToPortableText(markdown, title) {
 
     if (/^---+$/.test(line)) {
       flushParagraph(paragraph, blocks);
+      continue;
+    }
+
+    const directive = line.match(/^:::([a-z]+)(?:\s+(.*))?$/);
+    if (directive?.[1] && DIRECTIVE_NAMES.has(directive[1])) {
+      flushParagraph(paragraph, blocks);
+      const name = directive[1];
+      const directiveTitle = directive[2]?.trim() || null;
+      const directiveLines = [];
+      index += 1;
+
+      while (index < lines.length && lines[index].trim() !== ":::") {
+        directiveLines.push(lines[index]);
+        index += 1;
+      }
+
+      const directiveBlock = buildDirectiveBlock(name, directiveTitle, directiveLines);
+      if (directiveBlock) {
+        blocks.push(directiveBlock);
+      } else {
+        // An empty or malformed directive must not swallow the author's text.
+        throw new Error(
+          `Directive ":::${name}" produced no block. Check that it has content and a closing ":::".`,
+        );
+      }
       continue;
     }
 
@@ -587,6 +722,55 @@ function markdownToPortableText(markdown, title) {
 
   flushParagraph(paragraph, blocks);
   return maybePromoteCtaBlock(blocks);
+}
+
+/**
+ * Block types the `post` schema declares and the landing renderer implements.
+ *
+ * Sanity accepts unknown `_type` values into an array field and the renderer
+ * skips what it does not recognize, so a typo in hand-written PortableText JSON
+ * publishes green and renders as a hole in the article. This turns that into a
+ * dry-run failure.
+ */
+const KNOWN_BLOCK_TYPES = new Set([
+  "authorBio",
+  "block",
+  "calloutBlock",
+  "chartBlock",
+  "code",
+  "comparisonTable",
+  "componentBlock",
+  "ctaBlock",
+  "diagramBlock",
+  "embedBlock",
+  "faqBlock",
+  "image",
+  "imageSet",
+  "keyTakeaways",
+  "marginNote",
+  "mathBlock",
+  "mermaid",
+  "quoteBlock",
+  "sourceCard",
+  "statGrid",
+  "stepLadder",
+  "table",
+  "timelineBlock",
+]);
+
+function assertKnownBlockTypes(body) {
+  const unknown = [
+    ...new Set(
+      body
+        .map((block) => block?._type)
+        .filter((blockType) => blockType && !KNOWN_BLOCK_TYPES.has(blockType)),
+    ),
+  ];
+  if (!unknown.length) return;
+
+  throw new Error(
+    `Unknown block type(s): ${unknown.join(", ")}. Known types: ${[...KNOWN_BLOCK_TYPES].sort().join(", ")}.`,
+  );
 }
 
 function csv(value, fallback) {
@@ -764,6 +948,7 @@ async function main() {
   if (!translationKey) throw new Error("Missing --translation-key or frontmatter translationKey.");
 
   const body = portableJsonFile ? portableBody : markdownToPortableText(markdown, title);
+  assertKnownBlockTypes(body);
   const id = documentId(translationKey, language);
 
   const summary = {

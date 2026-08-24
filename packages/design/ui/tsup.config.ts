@@ -90,6 +90,10 @@ const ENTRIES: Record<string, string> = {
   "layouts/index": "src/layouts/index.ts",
   "icons/index": "src/icons/index.ts",
   "theme/index": "src/theme/index.ts",
+  // Editorial blocks are deliberately free of "use client": the blog article
+  // body renders as RSC, and one client file in src/editorial/ would make
+  // entryNeedsUseClient stamp the whole barrel.
+  "editorial/index": "src/editorial/index.ts",
   "primitives/index": "src/primitives/index.ts",
   "primitives/canonical": "src/primitives/canonical.ts",
   "patterns/index": "src/patterns/index.ts",

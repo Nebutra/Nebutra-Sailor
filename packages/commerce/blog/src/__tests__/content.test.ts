@@ -323,4 +323,119 @@ describe("blog content helpers", () => {
     expect(getBlogUrlSegment("Design System / 中文")).toBe("design-system-%E4%B8%AD%E6%96%87");
     expect(getBlogViewTransitionName("post.draft/中文")).toBe("blog-post-draft");
   });
+
+  test("copies the editorial blocks as readable markdown", () => {
+    const post: BlogPostWithSource = {
+      id: "editorial",
+      slug: "editorial",
+      title: "Editorial",
+      language: "en",
+      excerpt: "",
+      description: "",
+      date: "2026-08-24",
+      tags: [],
+      source: "sanity",
+      body: [
+        {
+          _key: "takeaways",
+          _type: "keyTakeaways",
+          items: [{ _key: "t1", text: "Shipping is not the moat." }],
+        },
+        {
+          _key: "timeline",
+          _type: "timelineBlock",
+          items: [{ _key: "e1", marker: "1997", title: "Think Different ships" }],
+        },
+        {
+          _key: "chart",
+          _type: "chartBlock",
+          points: [{ _key: "p1", label: "Customer service", value: 34, display: "34%" }],
+        },
+        {
+          _key: "steps",
+          _type: "stepLadder",
+          steps: [{ _key: "s1", title: "Write both locales", body: "One file per language." }],
+        },
+        {
+          _key: "faq",
+          _type: "faqBlock",
+          items: [{ _key: "f1", question: "Both languages?", answer: "Yes." }],
+        },
+        { _key: "margin", _type: "marginNote", title: "Aside", body: "Line shafts." },
+        {
+          _key: "bio",
+          _type: "authorBio",
+          name: "Tseka Luk",
+          links: [{ _key: "l1", label: "Website", href: "https://nebutra.com" }],
+        },
+      ],
+    };
+
+    const copy = getPostCopyText(post);
+
+    expect(copy).toContain("1. Shipping is not the moat.");
+    expect(copy).toContain("- **1997 — Think Different ships**");
+    // A chart copies as its data, not as a description of its geometry.
+    expect(copy).toContain("| Customer service | 34% |");
+    expect(copy).toContain("- **Write both locales**: One file per language.");
+    expect(copy).toContain("**Both languages?**");
+    expect(copy).toContain("> **Aside**");
+    expect(copy).toContain("[Website](https://nebutra.com)");
+  });
+
+  test("an inline entity chip contributes its name to text extraction", () => {
+    const post: BlogPostWithSource = {
+      id: "chip",
+      slug: "chip",
+      title: "Chip",
+      language: "en",
+      excerpt: "",
+      description: "",
+      date: "2026-08-24",
+      tags: [],
+      source: "sanity",
+      body: [
+        {
+          _key: "para",
+          _type: "block",
+          style: "normal",
+          children: [
+            { _key: "a", _type: "span", text: "When " },
+            { _key: "b", _type: "entityChip", name: "Cursor", href: "https://cursor.com" },
+            { _key: "c", _type: "span", text: " launched." },
+          ],
+        },
+      ],
+    };
+
+    expect(getPostCopyText(post)).toContain("When [Cursor](https://cursor.com) launched.");
+  });
+
+  test("comparison-table copy uses the authored row-label header", () => {
+    const post: BlogPostWithSource = {
+      id: "comparison",
+      slug: "comparison",
+      title: "Comparison",
+      language: "zh",
+      excerpt: "",
+      description: "",
+      date: "2026-08-24",
+      tags: [],
+      source: "sanity",
+      body: [
+        {
+          _key: "table",
+          _type: "comparisonTable",
+          dimensionLabel: "维度",
+          columns: ["Markdown", "PortableText"],
+          rows: [{ _key: "r1", label: "结构化块", cells: ["无法表达", "完整支持"] }],
+        },
+      ],
+    };
+
+    const copy = getPostCopyText(post);
+
+    expect(copy).toContain("| 维度 | Markdown | PortableText |");
+    expect(copy).not.toContain("Dimension");
+  });
 });

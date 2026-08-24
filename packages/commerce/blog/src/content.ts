@@ -45,8 +45,21 @@ export function hasTemplatePlaceholders(text: string): boolean {
   return TEMPLATE_PLACEHOLDER_PATTERN.test(text);
 }
 
+/**
+ * Plain text of a block's children.
+ *
+ * Inline objects have no `text`, so an `entityChip` contributes its name.
+ * Without that, a sentence built around a chip loses the company it is about —
+ * in the table of contents, in the copy-to-clipboard payload, and in the
+ * reading-time estimate.
+ */
 export function getBlockText(block: PortableTextBlock | undefined): string {
-  return block?.children?.map((child) => child.text ?? "").join("") ?? "";
+  return block?.children?.map(getChildText).join("") ?? "";
+}
+
+function getChildText(child: PortableTextSpan): string {
+  if (child._type === "entityChip") return child.name ?? "";
+  return child.text ?? "";
 }
 
 export function getTableCellBlock(cell: PortableTextTableCell | undefined): PortableTextBlock {
@@ -75,7 +88,7 @@ export function getTableCellText(cell: PortableTextTableCell | undefined): strin
 
 export function hasVisibleText(block: PortableTextBlock): boolean {
   if (block._type !== "block") return true;
-  return Boolean(block.children?.some((child) => child.text?.trim()));
+  return Boolean(block.children?.some((child) => getChildText(child).trim()));
 }
 
 export function splitSpanTemplatePlaceholders(span: PortableTextSpan): PortableTextSpan[] {
@@ -412,6 +425,12 @@ function getMarkHref(block: PortableTextBlock, mark: string): string | null {
 }
 
 export function getSpanCopyText(span: PortableTextSpan, block: PortableTextBlock): string {
+  if (span._type === "entityChip") {
+    const name = span.name?.trim();
+    if (!name) return "";
+    return span.href ? `[${name}](${span.href})` : name;
+  }
+
   const marks = span.marks ?? [];
   let text = span.text ?? "";
 
@@ -514,7 +533,7 @@ export function getPortableBlockCopyText(block: PortableTextBlock): string | nul
     const columns = block.columns?.filter(Boolean) ?? [];
     const rows = block.rows?.filter((row) => row.label || row.cells?.some(Boolean)) ?? [];
     if (columns.length < 2 || !rows.length) return null;
-    const header = ["Dimension", ...columns];
+    const header = [block.dimensionLabel?.trim() || "Dimension", ...columns];
     const tableRows = [
       `| ${header.join(" | ")} |`,
       `| ${header.map(() => "---").join(" | ")} |`,
@@ -547,6 +566,94 @@ export function getPortableBlockCopyText(block: PortableTextBlock): string | nul
     return [block.componentKey, ...(block.props?.map((prop) => prop.value).filter(Boolean) ?? [])]
       .filter(Boolean)
       .join("\n");
+  }
+
+  if (block._type === "keyTakeaways") {
+    const lines =
+      block.items
+        ?.map((item) => item.text?.trim())
+        .filter((text): text is string => Boolean(text))
+        .map((text, index) => `${index + 1}. ${text}`) ?? [];
+    if (!lines.length) return null;
+    return [block.title ? `## ${block.title}` : null, ...lines].filter(Boolean).join("\n");
+  }
+
+  if (block._type === "timelineBlock") {
+    const lines =
+      block.items
+        ?.map((item) => {
+          const marker = item.marker?.trim();
+          const itemTitle = item.title?.trim();
+          if (!marker && !itemTitle) return null;
+          return `- **${[marker, itemTitle].filter(Boolean).join(" — ")}**${
+            item.body?.trim() ? `: ${item.body.trim()}` : ""
+          }`;
+        })
+        .filter((line): line is string => Boolean(line)) ?? [];
+    if (!lines.length) return null;
+    return [block.title ? `## ${block.title}` : null, ...lines].filter(Boolean).join("\n");
+  }
+
+  if (block._type === "chartBlock") {
+    const points =
+      block.points?.filter((point) => point.label?.trim() && point.value != null) ?? [];
+    if (!points.length) return null;
+    // A chart copies as a table: the numbers are the content, the geometry is
+    // presentation, and a reader pasting this into notes wants the former.
+    const rows = [
+      "| Label | Value |",
+      "| --- | --- |",
+      ...points.map((point) => `| ${point.label} | ${point.display ?? point.value} |`),
+    ];
+    return [block.title ? `## ${block.title}` : null, rows.join("\n"), block.caption]
+      .filter(Boolean)
+      .join("\n\n");
+  }
+
+  if (block._type === "stepLadder") {
+    const lines =
+      block.steps
+        ?.map((step) => {
+          const stepTitle = step.title?.trim();
+          if (!stepTitle) return null;
+          return `- **${stepTitle}**${step.body?.trim() ? `: ${step.body.trim()}` : ""}`;
+        })
+        .filter((line): line is string => Boolean(line)) ?? [];
+    if (!lines.length) return null;
+    return [block.title ? `## ${block.title}` : null, ...lines].filter(Boolean).join("\n");
+  }
+
+  if (block._type === "faqBlock") {
+    const entries =
+      block.items
+        ?.map((item) => {
+          const question = item.question?.trim();
+          const answer = item.answer?.trim();
+          if (!question || !answer) return null;
+          return `**${question}**\n\n${answer}`;
+        })
+        .filter((entry): entry is string => Boolean(entry)) ?? [];
+    if (!entries.length) return null;
+    return [block.title ? `## ${block.title}` : null, ...entries].filter(Boolean).join("\n\n");
+  }
+
+  if (block._type === "marginNote") {
+    return (
+      [block.title ? `> **${block.title}**` : null, block.body ? `> ${block.body}` : null]
+        .filter(Boolean)
+        .join("\n") || null
+    );
+  }
+
+  if (block._type === "authorBio") {
+    const links =
+      block.links
+        ?.filter((link) => link.label && link.href)
+        .map((link) => `[${link.label}](${link.href})`) ?? [];
+    return (
+      [block.name, block.role, block.bio, links.join(" · ") || null].filter(Boolean).join("\n") ||
+      null
+    );
   }
 
   if (block._type !== "block") return null;
@@ -640,7 +747,42 @@ export function extractBodyText(post: BlogPostWithSource): string {
             ...(block.images?.flatMap((image) => [image.alt, image.caption]) ?? []),
           ].filter((item): item is string => Boolean(item));
         }
-        return block.children?.map((child) => child.text ?? "") ?? [];
+        if (
+          block._type === "keyTakeaways" ||
+          block._type === "timelineBlock" ||
+          block._type === "faqBlock"
+        ) {
+          return [
+            block.title,
+            ...(block.items?.flatMap((item) => [
+              item.text,
+              item.marker,
+              item.title,
+              item.body,
+              item.question,
+              item.answer,
+            ]) ?? []),
+          ].filter((item): item is string => Boolean(item));
+        }
+        if (block._type === "stepLadder") {
+          return [
+            block.title,
+            ...(block.steps?.flatMap((step) => [step.title, step.body]) ?? []),
+          ].filter((item): item is string => Boolean(item));
+        }
+        if (block._type === "chartBlock") {
+          return [
+            block.title,
+            block.caption,
+            ...(block.points?.flatMap((point) => [point.label, point.display]) ?? []),
+          ].filter((item): item is string => Boolean(item));
+        }
+        if (block._type === "marginNote" || block._type === "authorBio") {
+          return [block.title, block.body, block.name, block.role, block.bio].filter(
+            (item): item is string => Boolean(item),
+          );
+        }
+        return block.children?.map(getChildText) ?? [];
       })
       .join(" ") ?? "";
   return `${post.title} ${post.excerpt} ${bodyText}`.trim();

@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { POST_EDITORIAL_BLOCKS, POST_INLINE_OBJECTS } from "./post-blocks";
 
 export const post = defineType({
   name: "post",
@@ -213,6 +214,7 @@ export const post = defineType({
                 }),
               ],
             },
+            ...POST_INLINE_OBJECTS,
           ],
         },
         {
@@ -399,6 +401,7 @@ export const post = defineType({
                   { title: "Insight", value: "insight" },
                   { title: "Warning", value: "warning" },
                   { title: "Success", value: "success" },
+                  { title: "Danger", value: "danger" },
                 ],
               },
               validation: (Rule) => Rule.required(),
@@ -442,6 +445,18 @@ export const post = defineType({
               name: "attribution",
               title: "Attribution",
               type: "string",
+            }),
+            defineField({
+              name: "role",
+              title: "Role",
+              description: "Title, company or context shown under the attribution.",
+              type: "string",
+            }),
+            defineField({
+              name: "portrait",
+              title: "Portrait",
+              type: "image",
+              options: { hotspot: true },
             }),
             defineField({
               name: "sourceHref",
@@ -528,6 +543,13 @@ export const post = defineType({
             defineField({
               name: "title",
               title: "Title",
+              type: "string",
+            }),
+            defineField({
+              name: "dimensionLabel",
+              title: "Row-label column header",
+              description:
+                'Header above the row labels. Write it in the document\'s language — the renderer default is the English "Dimension".',
               type: "string",
             }),
             defineField({
@@ -866,6 +888,7 @@ export const post = defineType({
             },
           },
         },
+        ...POST_EDITORIAL_BLOCKS,
         {
           name: "table",
           title: "Table",

@@ -135,6 +135,7 @@ const nextConfig: NextConfig = {
       "@nebutra/ui",
       "@nebutra/ui/primitives",
       "@nebutra/ui/components",
+      "@nebutra/ui/editorial",
       "@nebutra/icons",
       "@nebutra/brand",
     ],

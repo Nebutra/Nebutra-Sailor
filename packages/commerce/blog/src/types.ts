@@ -7,11 +7,66 @@ export type BlogAuthor = {
   bio?: unknown;
 };
 
+/**
+ * A child of a text block.
+ *
+ * Usually a span, but Portable Text also allows inline objects here — Nebutra
+ * uses `inlineBadge` and `entityChip` — so `_type` is a free string and the
+ * inline-object fields are optional siblings of `text`. Consumers must key off
+ * `_type` rather than assuming `text` exists.
+ */
 export type PortableTextSpan = {
-  _type?: "span";
+  _type?: string;
   _key?: string;
   text?: string;
   marks?: string[];
+  /** entityChip */
+  name?: string | null;
+  href?: string | null;
+  logo?: PortableTextImage | null;
+};
+
+/**
+ * One entry inside a block's `items` array.
+ *
+ * Several blocks share the array name — `ctaBlock`, `statGrid`, `keyTakeaways`,
+ * `timelineBlock` and `faqBlock` all use `items` — so the fields are unioned
+ * here rather than split into per-block types. Every field is optional; the
+ * owning block decides which ones it reads.
+ */
+export type PortableTextBlockItem = {
+  _key?: string;
+  answer?: string | null;
+  body?: string | null;
+  caption?: string | null;
+  label?: string | null;
+  /** Timeline: the year, quarter or version in the left margin. */
+  marker?: string | null;
+  question?: string | null;
+  /** Key takeaway line. */
+  text?: string | null;
+  title?: string | null;
+  value?: string | null;
+};
+
+export type PortableTextChartPoint = {
+  _key?: string;
+  /** Formatted string shown to readers, when it differs from the raw value. */
+  display?: string | null;
+  label?: string | null;
+  value?: number | null;
+};
+
+export type PortableTextLink = {
+  _key?: string;
+  href?: string | null;
+  label?: string | null;
+};
+
+export type PortableTextStep = {
+  _key?: string;
+  body?: string | null;
+  title?: string | null;
 };
 
 export type PortableTextBlock = {
@@ -44,14 +99,7 @@ export type PortableTextBlock = {
   ctaLabel?: string | null;
   columns?: string[] | null;
   rows?: PortableTextTableRow[];
-  items?: Array<{
-    _key?: string;
-    title?: string | null;
-    body?: string | null;
-    label?: string | null;
-    value?: string | null;
-    caption?: string | null;
-  }>;
+  items?: PortableTextBlockItem[];
   images?: PortableTextImage[];
   componentKey?: string | null;
   props?: Array<{ _key?: string; name?: string | null; value?: string | null }>;
@@ -63,6 +111,26 @@ export type PortableTextBlock = {
   html?: string | null;
   language?: string | null;
   math?: string | null;
+  /** Author-written eyebrow. Localized by the author, not by the renderer. */
+  label?: string | null;
+  /** comparisonTable: header above the row-label column. */
+  dimensionLabel?: string | null;
+  /** quoteBlock: title or company under the attribution. */
+  role?: string | null;
+  portrait?: PortableTextImage | null;
+  /** chartBlock */
+  points?: PortableTextChartPoint[];
+  /** stepLadder */
+  steps?: PortableTextStep[];
+  /** faqBlock */
+  defaultOpenFirst?: boolean | null;
+  /** authorBio + entityChip */
+  name?: string | null;
+  bio?: string | null;
+  avatar?: PortableTextImage | null;
+  links?: PortableTextLink[];
+  href?: string | null;
+  logo?: PortableTextImage | null;
 };
 
 export type PortableTextTableCell = {

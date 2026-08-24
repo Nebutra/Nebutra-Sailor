@@ -37,6 +37,10 @@
       "types": "./dist/theme/index.d.ts",
       "import": "./dist/theme/index.js"
     },
+    "./editorial": {
+      "types": "./dist/editorial/index.d.ts",
+      "import": "./dist/editorial/index.js"
+    },
     "./primitives": {
       "types": "./dist/primitives/index.d.ts",
       "import": "./dist/primitives/index.js"
