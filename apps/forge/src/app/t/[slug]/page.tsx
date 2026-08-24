@@ -5,9 +5,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { PageFrame } from "@/components/page-frame";
+import { StructuredData } from "@/components/structured-data";
 import { ToolWorkspace } from "@/components/tool-workspace";
 import { pickBilingual } from "@/lib/bilingual";
 import { getForgeRegistry } from "@/lib/registry";
+import { buildForgePageMetadata, buildForgeToolJsonLd } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -20,18 +22,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const registry = getForgeRegistry();
   if (!registry.has(slug)) {
-    return { title: "Tool not found" };
+    return { title: "Tool not found", robots: { index: false, follow: false } };
   }
   const page = buildToolPageModel(registry, slug);
   const locale = await getLocale();
   const description = pickBilingual(locale, page.description);
   const seoTitle = pickBilingual(locale, page.seo.title);
   const keywords = pickBilingual(locale, page.seo.keywords);
-  return {
+  return buildForgePageMetadata({
     title: seoTitle,
     description,
-    keywords: keywords.split(","),
-  };
+    path: `/t/${slug}`,
+    keywords: keywords
+      .split(",")
+      .map((word) => word.trim())
+      .filter(Boolean),
+  });
 }
 
 /**
@@ -57,6 +63,15 @@ export default async function ToolPage({ params }: Props) {
 
   return (
     <PageFrame width="text" className="py-10 md:py-12" as="article">
+      <StructuredData
+        id="forge-tool-jsonld"
+        data={buildForgeToolJsonLd({
+          name: title,
+          description,
+          path: page.path,
+          category: page.category,
+        })}
+      />
       <div className="space-y-8">
         <div className="space-y-4">
           <nav

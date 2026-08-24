@@ -73,6 +73,8 @@ const ALLOWED_IDENTICAL_VALUES = new Set([
   "Nebutra",
   "Nebutra Sailor",
   "Sailor",
+  "Forge",
+  "Forge 工具站",
   // Social / contact
   "GitHub",
   "GitHub Issues",

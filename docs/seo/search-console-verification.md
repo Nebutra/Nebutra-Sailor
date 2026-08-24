@@ -1,7 +1,7 @@
 # Search Console / Bing verification
 
 **Visibility:** G3  
-**Last updated:** 2026-07-27
+**Last updated:** 2026-08-24
 
 ## Where verification lives
 
@@ -9,7 +9,9 @@
 | --- | --- | --- |
 | Google Search Console | DNS TXT on apex **or** meta tag | Prefer DNS for multi-app |
 | Bing Webmaster | DNS or `BingSiteAuth.xml` | Prefer DNS |
-| Optional meta | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` / `NEXT_PUBLIC_BING_SITE_VERIFICATION` | Wired in landing root metadata |
+| Optional meta | `GOOGLE_SITE_VERIFICATION` / `BING_SITE_VERIFICATION` (or `NEXT_PUBLIC_*`) | Wired in landing **and** Forge root metadata |
+
+Apex DNS verification covers every `*.nebutra.com` host. Still add a **URL-prefix** property for `https://forge.nebutra.com` and submit `https://forge.nebutra.com/sitemap.xml` — a new subdomain is not auto-discovered from the marketing sitemap.
 
 ## Meta tags (optional)
 

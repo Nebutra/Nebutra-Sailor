@@ -1,4 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { toHreflang, toRouteLocale } from "@nebutra/i18n/locales";
 import { type Locale, routing } from "@/i18n/routing";
 import { localesForPath, SEO_ROUTE_REGISTRY } from "./route-registry";
@@ -165,4 +166,18 @@ export function getSitelinkCandidateRoutes(): ReadonlyArray<PublicSitelinkCandid
   return PUBLIC_SEO_ROUTES.filter((route): route is PublicSitelinkCandidateRoute =>
     Boolean(route.sitelinkCandidate),
   );
+}
+
+/** Same-origin sitelinks plus the public Forge station (follow discovery). */
+export function getPublicNavigationItems(): ReadonlyArray<{
+  readonly name: string;
+  readonly url: string;
+}> {
+  return [
+    ...getSitelinkCandidateRoutes().map((route) => ({
+      name: route.sitelinkCandidate.label,
+      url: canonicalUrlForLocale(getSiteUrl(), routing.defaultLocale, route.path),
+    })),
+    { name: "Forge", url: getBrandOrigin("forge") },
+  ];
 }

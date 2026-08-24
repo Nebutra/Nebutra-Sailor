@@ -12,7 +12,7 @@ import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useMount } from "@/hooks/useMount";
 import { Link } from "@/i18n/navigation";
-import { createPublicDocsUrl } from "@/lib/docs-links";
+import { FOOTER_COLUMNS } from "@/lib/constants/footer-links";
 import { footerContent, heroContent } from "@/lib/landing-content";
 import { cn } from "@/lib/utils";
 import { CommandInstallBox } from "./CommandInstallBox";
@@ -30,65 +30,6 @@ const SOCIAL_LABELS: Record<string, string> = {
   github: "View on GitHub",
   discord: "Join our Discord",
 };
-
-interface FooterColumn {
-  titleKey: string;
-  links: {
-    labelKey: string;
-    href: string;
-    external?: boolean;
-  }[];
-}
-
-const FOOTER_COLUMNS: FooterColumn[] = [
-  {
-    titleKey: "product",
-    links: [
-      { labelKey: "features", href: "/features" },
-      { labelKey: "pricing", href: "/pricing" },
-      { labelKey: "about", href: "/about" },
-      { labelKey: "careers", href: "/careers" },
-    ],
-  },
-  {
-    titleKey: "resources",
-    links: [
-      { labelKey: "blog", href: "/blog" },
-      { labelKey: "playbook", href: "/playbook" },
-      { labelKey: "changelog", href: "/changelog" },
-      { labelKey: "roadmap", href: "/roadmap" },
-      { labelKey: "docs", href: createPublicDocsUrl(), external: true },
-      { labelKey: "ideas", href: "/ideas" },
-      { labelKey: "opc", href: "/about/products" },
-    ],
-  },
-  {
-    titleKey: "legal",
-    links: [
-      { labelKey: "security", href: "/security" },
-      { labelKey: "privacy", href: "/privacy" },
-      { labelKey: "terms", href: "/terms" },
-      { labelKey: "cookies", href: "/cookies" },
-      { labelKey: "dpa", href: "/dpa" },
-      { labelKey: "refund", href: "/refund" },
-      { labelKey: "licensing", href: "/licensing" },
-      { labelKey: "contact", href: "/contact" },
-      { labelKey: "faq", href: "/faq" },
-    ],
-  },
-  {
-    titleKey: "community",
-    links: [
-      {
-        labelKey: "github",
-        href: "https://github.com/Nebutra/Nebutra-Sailor",
-        external: true,
-      },
-      { labelKey: "discord", href: "https://discord.gg/nebutra", external: true },
-      { labelKey: "twitter", href: "https://x.com/nebutra", external: true },
-    ],
-  },
-];
 
 interface FooterMinimalProps {
   /**

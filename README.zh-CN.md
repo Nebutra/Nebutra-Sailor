@@ -17,6 +17,7 @@
   <br />
   <p>
     <a href="https://nebutra.com"><strong>官网</strong></a> · 
+    <a href="https://forge.nebutra.com"><strong>Forge 工具站</strong></a> · 
     <a href="#-简介"><strong>简介</strong></a> · 
     <a href="#%EF%B8%8F-技术栈"><strong>技术栈</strong></a> · 
     <a href="#-快速开始"><strong>快速开始</strong></a> · 
@@ -641,6 +642,8 @@ npm install -g nebutra
 ### nebutra.com
 
 [`nebutra.com`](https://nebutra.com) 是 Nebutra Sailor 的公开产品入口，也是我们自己 dogfooding 这套平台的地方。后续更多产品能力、商业授权、托管能力、发布工作流和基于本仓库构建的真实案例都会在官网持续更新。
+
+公开工具站在 [`forge.nebutra.com`](https://forge.nebutra.com) — 编解码、文本、哈希、文档与图片工具，同一套实现也可通过 API / MCP 调用。
 
 <br />
 

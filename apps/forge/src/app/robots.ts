@@ -1,18 +1,20 @@
-import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import type { MetadataRoute } from "next";
+import { getForgeOrigin } from "@/lib/seo";
+
+export const revalidate = 3600;
 
 /** G24 — forge robots for public tool station. */
 export default function robots(): MetadataRoute.Robots {
-  const base = process.env.NEXT_PUBLIC_FORGE_URL ?? getBrandOrigin("forge");
+  const base = getForgeOrigin();
   return {
     rules: [
       {
         userAgent: "*",
-        allow: ["/", "/t/", "/docs"],
+        allow: ["/", "/t/", "/docs", "/llms.txt", "/indexnow-key.txt"],
         disallow: ["/api/", "/dashboard", "/wallet", "/keys"],
       },
     ],
-    sitemap: `${base.replace(/\/$/, "")}/sitemap.xml`,
-    host: base.replace(/^https?:\/\//, "").replace(/\/$/, ""),
+    sitemap: `${base}/sitemap.xml`,
+    host: base.replace(/^https?:\/\//, ""),
   };
 }

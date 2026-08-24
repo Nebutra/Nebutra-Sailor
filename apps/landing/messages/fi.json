@@ -137,6 +137,7 @@
     "links": {
       "product": "Tuote",
       "features": "Ominaisuudet",
+      "forge": "Forge",
       "pricing": "Hinnoittelu",
       "about": "Tietoa",
       "showcase": "Esittely",

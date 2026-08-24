@@ -1,4 +1,3 @@
-import { brand } from "@nebutra/brand/metadata";
 import { buildRootHub, DEMAND_ROOTS } from "@nebutra/forge-runtime";
 import { PageHeader, Section } from "@nebutra/ui/layout";
 import type { Metadata } from "next";
@@ -9,6 +8,7 @@ import { PageFrame } from "@/components/page-frame";
 import { ToolCard } from "@/components/tool-card";
 import { pickBilingual } from "@/lib/bilingual";
 import { getForgeRegistry } from "@/lib/registry";
+import { buildForgePageMetadata } from "@/lib/seo";
 
 type Props = { params: Promise<{ root: string }> };
 
@@ -25,10 +25,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = await getLocale();
   const title = pickBilingual(locale, hub.title);
   const description = pickBilingual(locale, hub.description);
-  return {
-    title: `${title} | ${brand.name} Forge`,
+  return buildForgePageMetadata({
+    title,
     description,
-  };
+    path: `/r/${root}`,
+  });
 }
 
 /**

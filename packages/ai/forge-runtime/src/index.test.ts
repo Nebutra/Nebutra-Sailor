@@ -103,6 +103,9 @@ describe("buildToolPageModel", () => {
     expect(page.api.path).toContain("/v1/tools/");
     expect(page.api.exampleCurl).toContain("curl");
     expect(page.seo.title.zh).toContain("Base64");
+    expect(page.seo.title.en).toBe("Base64 Encode/Decode Online");
+    expect(page.seo.title.zh).not.toMatch(/\|\s*\S+ Forge/);
+    expect(page.seo.title.en).not.toMatch(/\|\s*\S+ Forge/);
     expect(page.engine.name).toBeTruthy();
   });
 

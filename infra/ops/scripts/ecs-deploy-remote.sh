@@ -81,7 +81,7 @@ DEPLOY_RUNTIME_KEYS=(
   INNGEST_EVENT_KEY INNGEST_SIGNING_KEY
   SANITY_API_TOKEN NEXT_PUBLIC_SANITY_PROJECT_ID NEXT_PUBLIC_SANITY_DATASET
   NEXT_PUBLIC_SANITY_API_VERSION SANITY_WEBHOOK_SECRET
-  GOOGLE_SITE_VERIFICATION
+  GOOGLE_SITE_VERIFICATION BING_SITE_VERIFICATION INDEXNOW_KEY INDEXNOW_HOST
 )
 capture_deploy_runtime_env "${DEPLOY_RUNTIME_KEYS[@]}"
 
@@ -752,6 +752,17 @@ load_runtime_env() {
     replace_env_assignment "$app_root/.env" PORT "3105"
     replace_env_assignment "$app_root/.env" HOSTNAME "127.0.0.1"
     replace_env_assignment "$app_root/.env" PLAYWRIGHT_BROWSERS_PATH "$PLAYWRIGHT_BROWSERS_PATH"
+    # SEO discovery. These are read at request time by app/layout.tsx metadata
+    # and the IndexNow routes, so the running host needs them — a build-time
+    # value would not reach a standalone bundle started by PM2.
+    NEXT_PUBLIC_FORGE_URL="${NEXT_PUBLIC_FORGE_URL:-https://forge.nebutra.com}"
+    replace_env_assignment "$app_root/.env" NEXT_PUBLIC_FORGE_URL "$NEXT_PUBLIC_FORGE_URL"
+    local seo_key seo_value
+    for seo_key in GOOGLE_SITE_VERIFICATION BING_SITE_VERIFICATION INDEXNOW_KEY INDEXNOW_HOST; do
+      seo_value="$(runtime_env_value "$seo_key")"
+      [ -n "$seo_value" ] || continue
+      replace_env_assignment "$app_root/.env" "$seo_key" "$seo_value"
+    done
     # Wallet: default memory on forge host until CreditBalance / app_user role is
     # proven. Operators may pin FORGE_WALLET_MODE=ledger in forge/.env after the
     # DB role is provisioned. Hard-correct: never pretend ledger works when it does not.

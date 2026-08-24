@@ -23,6 +23,7 @@ import {
   Route,
   ShieldCheck,
   Sparkles,
+  Wrench,
 } from "@nebutra/icons";
 import type { ComponentType } from "react";
 import { createPublicDocsUrl } from "@/lib/docs-links";
@@ -61,6 +62,17 @@ export const RESOURCES: ResourceLink[] = [
     label: { en: "Docs", zh: "文档" },
     tagline: { en: "API docs and guides", zh: "API 文档与指南" },
     href: createPublicDocsUrl(),
+    external: true,
+  },
+  {
+    groupId: "developers",
+    icon: Wrench,
+    label: { en: "Forge", zh: "Forge 工具站" },
+    tagline: {
+      en: "Online codecs, text, hashing, and document tools",
+      zh: "在线编解码、文本、哈希与文档工具",
+    },
+    href: getBrandOrigin("forge"),
     external: true,
   },
   {

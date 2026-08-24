@@ -27,6 +27,7 @@ multi-tenant products with agent workflows.
 ## Product
 
 - [Home](${base}/): Product overview and Agent OS positioning
+- [Forge](${getBrandOrigin("forge")}/): Online tool station (codecs, text, hashing, documents)
 - [Features](${base}/features): Capability catalog (auth, billing, tenancy, AI, …)
 - [Pricing](${base}/pricing): Plans and commercial license options
 - [Blog](${base}/blog): Engineering and product writing

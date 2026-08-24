@@ -1252,6 +1252,13 @@ jobs:
           NEXT_PUBLIC_SANITY_API_VERSION: ${{ vars.NEXT_PUBLIC_SANITY_API_VERSION }}
           SANITY_WEBHOOK_SECRET: ${{ secrets.SANITY_WEBHOOK_SECRET }}
           GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+          BING_SITE_VERIFICATION: ${{ vars.BING_SITE_VERIFICATION }}
+          # IndexNow proves ownership by serving this value back at
+          # /indexnow-key.txt, so it is a shared token rather than a credential
+          # — a repository variable, readable in the run log like the host it
+          # names.
+          INDEXNOW_KEY: ${{ vars.INDEXNOW_KEY }}
+          INDEXNOW_HOST: ${{ vars.INDEXNOW_HOST }}
         run: |
           set -euo pipefail
           APPS=""
@@ -1345,7 +1352,8 @@ jobs:
             QSTASH_TOKEN QSTASH_CURRENT_SIGNING_KEY QSTASH_NEXT_SIGNING_KEY QSTASH_CALLBACK_BASE_URL \
             INNGEST_EVENT_KEY INNGEST_SIGNING_KEY \
             SANITY_API_TOKEN NEXT_PUBLIC_SANITY_PROJECT_ID NEXT_PUBLIC_SANITY_DATASET NEXT_PUBLIC_SANITY_API_VERSION \
-            SANITY_WEBHOOK_SECRET GOOGLE_SITE_VERIFICATION
+            SANITY_WEBHOOK_SECRET GOOGLE_SITE_VERIFICATION BING_SITE_VERIFICATION \
+            INDEXNOW_KEY INDEXNOW_HOST
           REMOTE_CMD="${REMOTE_CMD} bash /tmp/ecs-deploy-remote.sh"
           ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
               -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \

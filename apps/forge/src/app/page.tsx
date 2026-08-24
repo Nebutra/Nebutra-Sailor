@@ -8,8 +8,10 @@ import { CategoryNav } from "@/components/category-nav";
 import { HomeSearch } from "@/components/home-search";
 import { PageFrame } from "@/components/page-frame";
 import { RootNav } from "@/components/root-nav";
+import { StructuredData } from "@/components/structured-data";
 import { ToolCard } from "@/components/tool-card";
 import { getForgeRegistry } from "@/lib/registry";
+import { buildForgePageMetadata, buildForgeWebSiteJsonLd } from "@/lib/seo";
 
 /**
  * Home layout (landing-aligned):
@@ -21,13 +23,12 @@ import { getForgeRegistry } from "@/lib/registry";
  */
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("meta");
-  return {
-    title: {
-      default: t("titleDefault", { brandName: brand.name }),
-      template: t("titleTemplate", { brandName: brand.name }),
-    },
+  return buildForgePageMetadata({
+    title: t("titleDefault", { brandName: brand.name }),
     description: t("description"),
-  };
+    path: "/",
+    absoluteTitle: true,
+  });
 }
 
 export default async function ForgeHomePage() {
@@ -38,6 +39,7 @@ export default async function ForgeHomePage() {
 
   return (
     <>
+      <StructuredData data={buildForgeWebSiteJsonLd(t("subtitle"))} id="forge-website-jsonld" />
       <section className="relative w-full overflow-hidden border-b border-[var(--neutral-6)]">
         <AuroraBackground variant="subtle" position="top" intensity={0.28} />
         <PageFrame className="relative z-10 py-16 text-center md:py-24 lg:py-28">

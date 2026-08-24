@@ -99,8 +99,10 @@ export function buildToolPageModel(
     sideEffect: tool.sideEffect,
     seo: {
       title: {
-        zh: `${tool.title.zh} - 在线工具 | Nebutra Forge`,
-        en: `${tool.title.en} Online | Nebutra Forge`,
+        // Host layout appends `| {brand} Forge`. Do not bake the brand in here
+        // or the document title stacks (`… | Nebutra Forge | Nebutra Forge`).
+        zh: `${tool.title.zh} - 在线工具`,
+        en: `${tool.title.en} Online`,
       },
       keywords: tool.seoKeywords,
     },

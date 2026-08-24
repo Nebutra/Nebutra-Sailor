@@ -20,11 +20,7 @@ import RouteSkeleton from "@/components/ui/route-skeleton";
 import { type Locale, routing } from "@/i18n/routing";
 import { seoContent } from "@/lib/landing-content";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import {
-  canonicalUrlForLocale,
-  getSitelinkCandidateRoutes,
-  getSiteUrl,
-} from "@/lib/seo/site-routes";
+import { getPublicNavigationItems } from "@/lib/seo/site-routes";
 import { buildSiteNavigationSchema } from "@/lib/seo/structured-data";
 import { fontVariables } from "../fonts";
 import { Providers } from "../providers";
@@ -83,12 +79,7 @@ const jsonLd = [
       availability: "https://schema.org/InStock",
     },
   },
-  buildSiteNavigationSchema(
-    getSitelinkCandidateRoutes().map((route) => ({
-      name: route.sitelinkCandidate.label,
-      url: canonicalUrlForLocale(getSiteUrl(), routing.defaultLocale, route.path),
-    })),
-  ),
+  buildSiteNavigationSchema(getPublicNavigationItems()),
 ];
 
 function toSafeJsonLd(value: unknown): string {

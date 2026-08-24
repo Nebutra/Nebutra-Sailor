@@ -11,5 +11,6 @@ describe("/llms.txt (G16)", () => {
     expect(body).toContain("/features");
     expect(body).toContain("llms.txt");
     expect(body).toContain("Citation");
+    expect(body).toContain("https://forge.nebutra.com/");
   });
 });

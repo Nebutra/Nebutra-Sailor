@@ -19,6 +19,9 @@ Separate three classes of automated agents:
 | --- | --- |
 | Marketing robots | `apps/landing/src/app/robots.ts` |
 | Marketing LLM map | `apps/landing/src/app/llms.txt/route.ts` → `/llms.txt` |
+| Forge robots | `apps/forge/src/app/robots.ts` |
+| Forge sitemap | `apps/forge/src/app/sitemap.ts` → `/sitemap.xml` |
+| Forge LLM map | `apps/forge/src/app/llms.txt/route.ts` → `/llms.txt` |
 | Docs robots | `apps/sailor-docs/src/app/robots.ts` |
 | Docs LLM map | `apps/sailor-docs/src/app/llms.txt/route.ts` |
 

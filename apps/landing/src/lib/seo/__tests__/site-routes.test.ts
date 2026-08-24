@@ -1,7 +1,9 @@
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { describe, expect, it } from "vitest";
 import {
   buildHreflangAlternates,
   canonicalUrlForLocale,
+  getPublicNavigationItems,
   getSitelinkCandidateRoutes,
   HREFLANG_BY_LOCALE,
   PUBLIC_SEO_ROUTES,
@@ -75,5 +77,11 @@ describe("site SEO route registry", () => {
     expect(HREFLANG_BY_LOCALE["zh-Hans"]).toBe("zh-Hans-CN");
     expect(HREFLANG_BY_LOCALE.de).toBe("de-DE");
     expect(PUBLIC_SEO_ROUTES.every((route) => route.path.startsWith("/"))).toBe(true);
+  });
+
+  it("includes a follow link to the public Forge origin in JSON-LD navigation", () => {
+    expect(getPublicNavigationItems()).toEqual(
+      expect.arrayContaining([{ name: "Forge", url: getBrandOrigin("forge") }]),
+    );
   });
 });

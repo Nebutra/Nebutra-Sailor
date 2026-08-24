@@ -17,6 +17,7 @@ import { getLocale, getMessages } from "next-intl/server";
 import type { ReactNode } from "react";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { getForgeOrigin, getForgeVerification } from "@/lib/seo";
 
 // Full SSR: avoids Next 16 static export flakiness (workStore on _not-found / global-error).
 // CDN (CF) can still cache HTML at the edge for public tool pages if desired.
@@ -28,12 +29,49 @@ export const dynamic = "force-dynamic";
  * that touches request APIs throws InvariantError and fails the whole build.
  * Locale-specific titles live on route segments (home / tool pages).
  */
+const forgeTitle = `${brand.name} Forge — Online tool station`;
+const forgeDescription = "Codecs, text, hashing, documents, and image tools online.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(getForgeOrigin()),
+  applicationName: `${brand.name} Forge`,
   title: {
-    default: `${brand.name} Forge — Online tool station`,
+    default: forgeTitle,
     template: `%s | ${brand.name} Forge`,
   },
-  description: "Codecs, text, hashing, documents, and image tools online.",
+  description: forgeDescription,
+  authors: [{ name: brand.name, url: getBrandOrigin("landing") }],
+  creator: brand.name,
+  publisher: brand.name,
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: getForgeVerification(),
+  openGraph: {
+    type: "website",
+    siteName: `${brand.name} Forge`,
+    title: forgeTitle,
+    description: forgeDescription,
+    url: "/",
+    images: [{ url: "/product/forge-anvil.png", alt: `${brand.name} Forge` }],
+  },
+  twitter: {
+    card: "summary",
+    title: forgeTitle,
+    description: forgeDescription,
+    images: ["/product/forge-anvil.png"],
+  },
   icons: {
     icon: [
       { url: "/favicon.png", type: "image/png", sizes: "32x32" },
