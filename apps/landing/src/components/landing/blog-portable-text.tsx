@@ -13,7 +13,7 @@ import {
   TEMPLATE_PLACEHOLDER_MARK,
 } from "@nebutra/blog";
 import { Hash } from "@nebutra/icons";
-import { getImageUrl } from "@nebutra/sanity/image";
+import { getImageDimensions, getImageUrl } from "@nebutra/sanity/image";
 import {
   EditorialAuthorBio,
   EditorialCallout,
@@ -97,20 +97,25 @@ function trimmed(value: string | null | undefined): string | undefined {
 // `@nebutra/ui/editorial` takes rendered media as a slot, so `next/image` and
 // the Sanity URL builder stay here in the app.
 
+// Editorial figures are authored at whatever shape the diagram needs — a wide
+// three-frame plate is 2:1, a portrait card is 3:4. Declaring a fixed 16:9 pair
+// here made the browser adopt that ratio (the UA maps width/height onto
+// `aspect-ratio`) and `object-cover` cropped the overflow off both edges.
+const FALLBACK_IMAGE_RATIO = { width: 1200, height: 675 };
+
 function sanityImageNode(image: PortableTextImage, sizes: string): ReactNode {
-  const url = getImageUrl(image as Parameters<typeof getImageUrl>[0], {
-    width: 1200,
-    format: "webp",
-  });
+  const source = image as Parameters<typeof getImageUrl>[0];
+  const url = getImageUrl(source, { width: 1200, format: "webp" });
+  const intrinsic = getImageDimensions(source) ?? FALLBACK_IMAGE_RATIO;
 
   return (
     <Image
       alt={image.alt ?? ""}
-      className="h-auto w-full object-cover"
-      height={675}
+      className="h-auto w-full"
+      height={intrinsic.height}
       sizes={sizes}
       src={url}
-      width={1200}
+      width={intrinsic.width}
     />
   );
 }

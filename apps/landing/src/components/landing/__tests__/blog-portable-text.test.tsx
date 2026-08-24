@@ -49,12 +49,25 @@ vi.mock("@nebutra/ui/utils", () => ({
 
 vi.mock("@nebutra/sanity/image", () => ({
   getImageUrl: () => "/mock-image.webp",
+  // Mirrors the real parser: the asset ref carries `-<width>x<height>-<ext>`.
+  getImageDimensions: (source: { asset?: { _ref?: string } }) => {
+    const match = source?.asset?._ref?.match(/-(\d+)x(\d+)-[a-z]+$/);
+    return match ? { width: Number(match[1]), height: Number(match[2]) } : null;
+  },
 }));
 
 vi.mock("next/image", () => ({
-  default: ({ alt, src }: { alt: string; src: string }) => (
-    <span aria-label={alt} data-src={src} role="img" />
-  ),
+  default: ({
+    alt,
+    height,
+    src,
+    width,
+  }: {
+    alt: string;
+    height: number;
+    src: string;
+    width: number;
+  }) => <span aria-label={alt} data-height={height} data-src={src} data-width={width} role="img" />,
 }));
 
 const { BlogPortableText } = await import("../blog-portable-text");
@@ -433,5 +446,29 @@ describe("BlogPortableText", () => {
     expect(container.textContent).not.toContain("needs a supported renderer");
     expect(container.textContent).not.toContain("typoedKey");
     expect(container.textContent).not.toContain("internalFlag");
+  });
+
+  it("sizes a figure from the asset's own dimensions instead of a fixed ratio", async () => {
+    const ui = await BlogPortableText({
+      body: [
+        {
+          _key: "figure",
+          _type: "image",
+          alt: "Three-beat plate",
+          asset: {
+            _ref: "image-4eaf01a7aecd5fcf525bc783d2bc71f2-1774x887-png",
+            _type: "reference",
+          },
+        },
+      ],
+    });
+
+    render(ui);
+    const figure = screen.getByRole("img", { name: "Three-beat plate" });
+
+    // A hardcoded 1200x675 here would make the UA lay out a 16:9 box for a 2:1
+    // plate, and `object-cover` would crop both edges away.
+    expect(figure.getAttribute("data-width")).toBe("1774");
+    expect(figure.getAttribute("data-height")).toBe("887");
   });
 });
