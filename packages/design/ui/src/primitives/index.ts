@@ -94,6 +94,11 @@ export {
   type ButtonProps,
 } from "./button";
 export { buttonVariants } from "./button-variants";
+/**
+ * Month grid used on its own or behind DatePicker. Themed rather than native,
+ * so a dark surface does not hand off to an OS-drawn white panel.
+ */
+export { Calendar, type CalendarProps } from "./calendar";
 export * from "./canvas-reveal-effect";
 export * from "./card";
 export * from "./card-spotlight";
@@ -150,6 +155,17 @@ export * from "./context-menu";
 export * from "./control-glyph";
 export * from "./copy-button";
 export * from "./data-list";
+/**
+ * Themed replacement for `<input type="date">`. Value stays `yyyy-MM-dd`, so a
+ * field can swap over without changing whatever reads it.
+ */
+export {
+  DatePicker,
+  type DatePickerProps,
+  ISO_DATE_FORMAT,
+  parseIsoDate,
+  toIsoDate,
+} from "./date-picker";
 export * from "./description";
 export {
   Dialog,

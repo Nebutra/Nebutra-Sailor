@@ -6,7 +6,7 @@
  * Patterns: live calculators, WCAG/verdict banners, structured tables,
  * generators with copy+download — no raw JSON walls.
  */
-import { Button, Input, Textarea } from "@nebutra/ui/primitives";
+import { Button, DatePicker, Input, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import {
@@ -203,20 +203,13 @@ export function AgeCalculatorRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-2">
-        <Input
+        <DatePicker
           label={t("age.birthDate")}
           id="age-birth"
-          type="date"
           value={birthDate}
-          onChange={(e) => setBirth(e.target.value)}
+          onValueChange={setBirth}
         />
-        <Input
-          label={t("age.asOf")}
-          id="age-asof"
-          type="date"
-          value={asOf}
-          onChange={(e) => setAsOf(e.target.value)}
-        />
+        <DatePicker label={t("age.asOf")} id="age-asof" value={asOf} onValueChange={setAsOf} />
       </div>
       <p className="text-xs text-[var(--neutral-10)]">
         {loading ? t("common.running") : t("common.liveHint")}
@@ -1283,13 +1276,7 @@ export function WeekdayRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <Input
-        label="Date"
-        id="wd-date"
-        type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-      />
+      <DatePicker label="Date" id="wd-date" value={date} onValueChange={setDate} />
       <p className="text-xs text-[var(--neutral-10)]">
         {loading ? t("common.running") : t("common.liveHint")}
       </p>

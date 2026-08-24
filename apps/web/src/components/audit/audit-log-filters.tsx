@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Input, Select } from "@nebutra/ui/primitives";
+import { Button, DatePicker, Input, Select } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useDebounceCallback } from "usehooks-ts";
@@ -159,12 +159,11 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
         >
           {t("startDate")}
         </label>
-        <Input
+        <DatePicker
           id="audit-filter-start"
           data-testid="audit-filter-start"
-          type="date"
           value={filters.startDate ?? ""}
-          onChange={(e) => setField("startDate", e.target.value || undefined)}
+          onValueChange={(next) => setField("startDate", next || undefined)}
         />
       </div>
 
@@ -175,12 +174,11 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
         >
           {t("endDate")}
         </label>
-        <Input
+        <DatePicker
           id="audit-filter-end"
           data-testid="audit-filter-end"
-          type="date"
           value={filters.endDate ?? ""}
-          onChange={(e) => setField("endDate", e.target.value || undefined)}
+          onValueChange={(next) => setField("endDate", next || undefined)}
         />
       </div>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Input } from "@nebutra/ui/primitives";
+import { Button, DatePicker, Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { RunnerError, RunnerNote, RunnerPanel, RunnerSelect } from "@/components/runner-ui";
@@ -348,20 +348,13 @@ export function DateDiffRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-2">
-        <Input
+        <DatePicker
           label={t("dateDiff.from")}
           id="date-diff-from"
-          type="date"
           value={from}
-          onChange={(e) => setFrom(e.target.value)}
+          onValueChange={setFrom}
         />
-        <Input
-          label={t("dateDiff.to")}
-          id="date-diff-to"
-          type="date"
-          value={to}
-          onChange={(e) => setTo(e.target.value)}
-        />
+        <DatePicker label={t("dateDiff.to")} id="date-diff-to" value={to} onValueChange={setTo} />
       </div>
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
         {loading ? t("dateDiff.computing") : t("dateDiff.compute")}

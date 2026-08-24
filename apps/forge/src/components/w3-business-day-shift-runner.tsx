@@ -14,7 +14,7 @@
  * calendar that produced it is a number nobody can reconcile.
  */
 import { ArrowRight, Calendar } from "@nebutra/icons";
-import { Button, Checkbox, Input, Textarea } from "@nebutra/ui/primitives";
+import { Button, Checkbox, DatePicker, Input, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useId, useMemo, useState } from "react";
 import {
@@ -249,12 +249,11 @@ export function W3BusinessDayShiftRunner({ toolId }: { toolId: string }) {
       </div>
 
       <div className="flex flex-wrap items-end gap-3">
-        <Input
+        <DatePicker
           id={`${uid}-start`}
-          type="date"
           label={t("businessDayShift.startDate")}
           value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
+          onValueChange={setStartDate}
         />
         {mode === "shift" ? (
           <Input
@@ -267,12 +266,11 @@ export function W3BusinessDayShiftRunner({ toolId }: { toolId: string }) {
             className="w-40"
           />
         ) : (
-          <Input
+          <DatePicker
             id={`${uid}-end`}
-            type="date"
             label={t("businessDayShift.endDate")}
             value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
+            onValueChange={setEndDate}
           />
         )}
       </div>
