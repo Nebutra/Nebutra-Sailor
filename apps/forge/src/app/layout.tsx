@@ -110,6 +110,14 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     getBrandOrigin("forge");
   const signInHref = buildAuthCenterSignInUrl(defaultReturnTo);
   const signUpHref = buildAuthCenterSignUpUrl(defaultReturnTo);
+  // Search Console reads this from the live HTML. Keep it request-time so a
+  // token rotation is an env change, not a rebuild of `export const metadata`.
+  const siteVerification = getForgeVerification();
+  const googleVerification =
+    typeof siteVerification?.google === "string" ? siteVerification.google : undefined;
+  const bingVerification = siteVerification?.other?.["msvalidate.01"];
+  const bingVerificationContent =
+    typeof bingVerification === "string" ? bingVerification : undefined;
 
   return (
     <html
@@ -117,6 +125,12 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       dir={toTextDir(locale)}
       className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}
     >
+      {googleVerification ? (
+        <meta name="google-site-verification" content={googleVerification} />
+      ) : null}
+      {bingVerificationContent ? (
+        <meta name="msvalidate.01" content={bingVerificationContent} />
+      ) : null}
       <body className="flex min-h-screen flex-col bg-[var(--neutral-1)] font-sans text-[var(--neutral-12)] antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AuthProvider provider={authProvider} config={authProviderConfig}>

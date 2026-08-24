@@ -518,6 +518,10 @@ jobs:
           # `output: "standalone"` on this env so Vercel builds skip the trace
           # cost. This workflow needs the standalone bundle for assembly below.
           NEXT_OUTPUT: standalone
+          # Forge root metadata also reads these at build time. The deploy job
+          # still writes them into the VM .env so request-time tags stay live.
+          GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+          BING_SITE_VERIFICATION: ${{ vars.BING_SITE_VERIFICATION }}
         run: pnpm --filter ${{ matrix.package }} ${{ matrix.build_command }}
 
       # Next standalone output is at <workspace>/.next/standalone/. Route
