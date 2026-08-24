@@ -20,4 +20,15 @@ interface CloudflareEnv {
   AUTH_COOKIE_DOMAIN?: string;
   NEXT_PUBLIC_AUTH_URL?: string;
   NEXT_PUBLIC_APP_URL?: string;
+  ACCESS_GATE_MODE?: string;
+  NEXT_PUBLIC_ACCESS_GATE_MODE?: string;
+  NEXT_PUBLIC_WECHAT_APP_ID?: string;
+}
+
+declare namespace NodeJS {
+  interface ProcessEnv {
+    ACCESS_GATE_MODE?: string;
+    NEXT_PUBLIC_ACCESS_GATE_MODE?: string;
+    NEXT_PUBLIC_WECHAT_APP_ID?: string;
+  }
 }
