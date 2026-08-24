@@ -1,7 +1,8 @@
-import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+import { getMarketingHomeUrl } from "@nebutra/brand/metadata-helpers";
+import { DEFAULT_ROUTE_LOCALE, toRouteLocale } from "@nebutra/i18n/locales";
 import { ArrowLeft } from "@nebutra/icons";
 import { AUTH_FORM_COLUMN_CLASS } from "@nebutra/ui/utils/auth-surfaces";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { cn } from "@/lib/cn";
 import { AuthBanner } from "./auth-banner";
 import { LocaleSwitcher } from "./locale-switcher";
@@ -22,14 +23,15 @@ export async function AuthSplitLayout({
   children: React.ReactNode;
   className?: string;
 }) {
-  const t = await getTranslations("auth.signIn");
-  // Not NEXT_PUBLIC_SITE_URL. It is meant to be the marketing origin, but the
-  // deployed auth center answers with its own host, so this link pointed back
-  // at the page the visitor was already on. The marketing home is a brand fact
-  // rather than a per-deployment one, so read it from the domains map — which
-  // also retires the hardcoded fallback this file carried a brand-exempt
-  // comment for.
-  const homeHref = getBrandOrigin("landing");
+  const [t, locale] = await Promise.all([getTranslations("auth.signIn"), getLocale()]);
+  // Marketing home, not this host and not the product `/workspace` bounce.
+  // `stay` + auth Referer keep a leftover session-hint from looping login →
+  // landing → app → login.
+  const homeHref = getMarketingHomeUrl({
+    locale: toRouteLocale(locale),
+    defaultLocale: DEFAULT_ROUTE_LOCALE,
+    stay: true,
+  });
 
   return (
     <div
@@ -45,7 +47,7 @@ export async function AuthSplitLayout({
       >
         <a
           href={homeHref}
-          className="absolute left-5 top-6 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[hsl(var(--primary))] sm:left-8 lg:left-12 lg:top-10"
+          className="absolute left-5 top-6 z-20 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[hsl(var(--primary))] sm:left-8 lg:left-12 lg:top-10"
         >
           <ArrowLeft className="h-4 w-4" aria-hidden />
           {t("homeLink")}

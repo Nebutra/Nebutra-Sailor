@@ -1,7 +1,9 @@
+import { getMarketingHomeUrl } from "@nebutra/brand/metadata-helpers";
+import { DEFAULT_ROUTE_LOCALE, toRouteLocale } from "@nebutra/i18n/locales";
 import { ArrowLeft } from "@nebutra/icons";
 import { cn } from "@nebutra/ui/utils";
 import { AUTH_FORM_COLUMN_CLASS } from "@nebutra/ui/utils/auth-surfaces";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { LocaleSwitcher } from "@/components/navigation/locale-switcher";
 import { AuthBanner } from "./auth-banner";
 
@@ -17,13 +19,15 @@ interface AuthSplitLayoutProps {
  */
 export function AuthSplitLayout({ children, className }: AuthSplitLayoutProps) {
   const t = useTranslations("auth.signIn");
+  const locale = useLocale();
 
-  // Home points at the marketing site (apps/landing) — `/` of the web
-  // app is the dashboard root which requires auth, so clicking it from
-  // sign-in would loop the unauthenticated visitor back to this page.
-  // Fall back to "/" only when NEXT_PUBLIC_SITE_URL is unset (e.g. local
-  // smoke tests where landing isn't running on a separate port).
-  const homeHref = process.env.NEXT_PUBLIC_SITE_URL ?? "/";
+  // Same helper as apps/auth. NEXT_PUBLIC_SITE_URL is this app's origin, so
+  // using it here sent "Home" back to the dashboard (and then to login).
+  const homeHref = getMarketingHomeUrl({
+    locale: toRouteLocale(locale),
+    defaultLocale: DEFAULT_ROUTE_LOCALE,
+    stay: true,
+  });
 
   return (
     <div
@@ -39,7 +43,7 @@ export function AuthSplitLayout({ children, className }: AuthSplitLayoutProps) {
       >
         <a
           href={homeHref}
-          className="absolute left-5 top-6 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[hsl(var(--primary))] sm:left-8 lg:left-12 lg:top-10"
+          className="absolute left-5 top-6 z-20 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[hsl(var(--primary))] sm:left-8 lg:left-12 lg:top-10"
         >
           <ArrowLeft className="h-4 w-4" aria-hidden />
           {t("homeLink")}

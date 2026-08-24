@@ -77,8 +77,11 @@ export {
   getBrandMailFrom,
   getBrandOrigin,
   getBrandPublicUrls,
+  getMarketingHomeUrl,
   getSiteMetadata,
   getSiteUrl,
+  MARKETING_HOME_STAY_PARAM,
+  MARKETING_HOME_STAY_VALUE,
 } from "./metadata-helpers";
 // Microcopy SSOT — typed projection of docs/microcopy/nebutra-microcopy-system.md
 export type {

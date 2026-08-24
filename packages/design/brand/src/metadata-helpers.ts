@@ -34,6 +34,36 @@ export function getBrandOrigin(service: BrandService): string {
   return `https://${host.replace(/^https?:\/\//, "").replace(/\/+$/, "")}`;
 }
 
+/**
+ * Query flag for login-center → marketing Home. Landing skips the
+ * session-hint bounce into the app when this is present.
+ */
+export const MARKETING_HOME_STAY_PARAM = "stay";
+export const MARKETING_HOME_STAY_VALUE = "1";
+
+/**
+ * Marketing homepage URL. `stay` keeps a signed-in visitor on the
+ * marketing surface instead of `/workspace`.
+ *
+ * `defaultLocale` is the landing path locale that lives on `/` (today `en`).
+ * Pass it from `@nebutra/i18n` so brand does not import the i18n package.
+ */
+export function getMarketingHomeUrl(options?: {
+  locale?: string;
+  defaultLocale?: string;
+  stay?: boolean;
+}): string {
+  const origin = getBrandOrigin("landing");
+  const defaultLocale = options?.defaultLocale?.trim() || "en";
+  const locale = options?.locale?.trim();
+  const path = locale && locale !== defaultLocale ? `/${locale}` : "/";
+  const url = new URL(path, `${origin}/`);
+  if (options?.stay) {
+    url.searchParams.set(MARKETING_HOME_STAY_PARAM, MARKETING_HOME_STAY_VALUE);
+  }
+  return url.toString();
+}
+
 /** Cookie parent domain from landing apex (e.g. `.example.com`). */
 export function getBrandCookieDomain(): string {
   const apex = brand.domains.landing.replace(/^https?:\/\//, "").replace(/\/+$/, "");

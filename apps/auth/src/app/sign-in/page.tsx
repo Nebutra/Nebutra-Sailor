@@ -1,6 +1,7 @@
 import { isAuthFeatureEnabled } from "@nebutra/auth";
 import { AuthSplitLayout } from "@/components/auth-split-layout";
 import { CredentialsForm } from "@/components/credentials-form";
+import { isAccessGateEnabled } from "@/lib/access-gate-mode";
 import { detectEnabledOAuthProviders } from "@/lib/oauth-providers";
 import { resolvePostLoginReturnTo } from "@/lib/return-to";
 
@@ -38,6 +39,8 @@ export default async function SignInPage({
         passkeyEnabled={passkeyEnabled}
         turnstileSiteKey={turnstileSiteKey}
         oauthErrorCode={oauthErrorCode}
+        accessGateEnabled={isAccessGateEnabled()}
+        wechatAppId={process.env.NEXT_PUBLIC_WECHAT_APP_ID}
       />
     </AuthSplitLayout>
   );

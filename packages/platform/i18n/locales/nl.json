@@ -397,7 +397,13 @@
       "submitLoading": "Account aanmaken…",
       "alreadyHaveAccount": "Heb je al een account?",
       "signInLink": "Inloggen",
-      "signUpFailed": "Aanmelden mislukt"
+      "signUpFailed": "Aanmelden mislukt",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },
     "passkeys": {
       "title": "Passkeys",

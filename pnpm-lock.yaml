@@ -332,12 +332,18 @@ importers:
       '@marsidev/react-turnstile':
         specifier: ^1.5.2
         version: 1.5.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@nebutra/access-gate':
+        specifier: workspace:*
+        version: link:../../packages/commerce/access-gate
       '@nebutra/auth':
         specifier: workspace:*
         version: link:../../packages/iam/auth
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/design/brand
+      '@nebutra/china-compliance':
+        specifier: workspace:*
+        version: link:../../packages/ops/china-compliance
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/platform/db

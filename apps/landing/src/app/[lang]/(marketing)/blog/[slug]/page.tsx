@@ -216,7 +216,7 @@ function BlogArticleFooter({
       {/* items-start: grid items stretch to the row height by default, so the
           subscribe card grew to match the taller article column and painted its
           bg-muted across the gap — a block of grey with nothing in it. */}
-      <div className="grid items-start gap-8 lg:grid-cols-[1fr_280px]">
+      <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,280px)]">
         <div>
           <div className="flex items-center justify-between gap-4">
             <div>
@@ -271,7 +271,7 @@ function BlogArticleFooter({
             })}
           </div>
         </div>
-        <aside className="rounded-[var(--radius-lg)] bg-muted p-5">
+        <aside className="min-w-0 overflow-hidden rounded-[var(--radius-lg)] bg-muted p-5">
           <p className="text-sm font-semibold text-foreground">
             {isZh ? "订阅 Nebutra Originals" : "Subscribe to Nebutra Originals"}
           </p>

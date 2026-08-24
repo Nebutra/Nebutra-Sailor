@@ -397,7 +397,13 @@
       "submitLoading": "Δημιουργία λογαριασμού…",
       "alreadyHaveAccount": "Έχετε ήδη λογαριασμό;",
       "signInLink": "Σύνδεση",
-      "signUpFailed": "Η εγγραφή απέτυχε"
+      "signUpFailed": "Η εγγραφή απέτυχε",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },
     "passkeys": {
       "title": "Κλειδιά πρόσβασης",

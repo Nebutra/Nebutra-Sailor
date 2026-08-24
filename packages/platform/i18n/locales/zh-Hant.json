@@ -397,7 +397,13 @@
       "submitLoading": "创建中…",
       "alreadyHaveAccount": "已有账号？",
       "signInLink": "登录",
-      "signUpFailed": "注册失败"
+      "signUpFailed": "注册失败",
+      "inviteLabel": "邀請碼",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "冷啟動期間僅支援邀請註冊。",
+      "inviteRequired": "註冊需要有效邀請碼。",
+      "inviteInvalid": "邀請碼無效、已過期或不可用。",
+      "inviteRedemptionFailed": "邀請碼核銷失敗。重試前請聯繫支援。"
     },
     "passkeys": {
       "title": "Passkey",

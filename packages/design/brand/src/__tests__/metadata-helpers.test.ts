@@ -16,8 +16,10 @@ import {
   getBrandMailFrom,
   getBrandOrigin,
   getBrandPublicUrls,
+  getMarketingHomeUrl,
   getSiteMetadata,
   getSiteUrl,
+  MARKETING_HOME_STAY_PARAM,
 } from "../metadata-helpers";
 
 describe("getSiteUrl", () => {
@@ -238,5 +240,25 @@ describe("getBrandEmail / getBrandMailFrom", () => {
   it("derives mailboxes from landing apex", () => {
     expect(getBrandEmail("contact")).toBe(`contact@${brand.domains.landing}`);
     expect(getBrandMailFrom()).toBe(`${brand.name} <noreply@${brand.domains.landing}>`);
+  });
+});
+
+describe("getMarketingHomeUrl", () => {
+  it("uses the landing origin for the default locale", () => {
+    expect(getMarketingHomeUrl()).toBe(`https://${brand.domains.landing}/`);
+    expect(getMarketingHomeUrl({ locale: "en" })).toBe(`https://${brand.domains.landing}/`);
+  });
+
+  it("prefixes a non-default locale", () => {
+    expect(getMarketingHomeUrl({ locale: "zh-Hans" })).toBe(
+      `https://${brand.domains.landing}/zh-Hans`,
+    );
+  });
+
+  it("asks landing not to bounce a signed-in visitor into the app", () => {
+    const url = new URL(getMarketingHomeUrl({ locale: "zh-Hans", stay: true }));
+    expect(url.origin).toBe(`https://${brand.domains.landing}`);
+    expect(url.pathname).toBe("/zh-Hans");
+    expect(url.searchParams.get(MARKETING_HOME_STAY_PARAM)).toBe("1");
   });
 });

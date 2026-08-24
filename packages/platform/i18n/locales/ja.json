@@ -397,7 +397,13 @@
       "submitLoading": "作成中…",
       "alreadyHaveAccount": "すでにアカウントをお持ちですか？",
       "signInLink": "ログイン",
-      "signUpFailed": "登録に失敗しました"
+      "signUpFailed": "登録に失敗しました",
+      "inviteLabel": "招待コード",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "コールドスタート中は招待制です。",
+      "inviteRequired": "登録には有効な招待コードが必要です。",
+      "inviteInvalid": "招待コードが無効、期限切れ、または利用できません。",
+      "inviteRedemptionFailed": "招待コードの利用に失敗しました。再試行する前にサポートへ連絡してください。"
     },
     "passkeys": {
       "title": "パスキー",

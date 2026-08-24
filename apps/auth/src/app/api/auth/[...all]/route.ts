@@ -15,6 +15,14 @@ import {
   sanitizeReturnUrl,
 } from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
+import {
+  accessGateOauthDisabledResponse,
+  enforceAccessGatePreflight,
+  isAccessGateEnabled,
+  isOAuthRequest,
+  readAccessGateSignupContext,
+  redeemAccessInviteAfterSignup,
+} from "@/lib/access-gate";
 import { applyCloudflareAuthSecrets, applyCloudflareDatabaseEnv } from "@/lib/cloudflare-env";
 import { applyAuthCors } from "@/lib/cors";
 import { isOAuthProvider, type OAuthProvider } from "@/lib/oauth-providers";
@@ -148,6 +156,10 @@ async function handle(request: Request): Promise<Response> {
     );
   }
 
+  if (isAccessGateEnabled() && isOAuthRequest(request)) {
+    return applyAuthCors(request, accessGateOauthDisabledResponse());
+  }
+
   const oauthStartResponse = await handleOAuthStartRequest(request);
   if (oauthStartResponse) {
     const url = new URL(request.url);
@@ -155,9 +167,22 @@ async function handle(request: Request): Promise<Response> {
     return applyAuthCors(request, withHint);
   }
 
+  const accessGateContextOrResponse = await readAccessGateSignupContext(request);
+  if (accessGateContextOrResponse instanceof Response) {
+    return applyAuthCors(request, accessGateContextOrResponse);
+  }
+  const accessGateResponse = await enforceAccessGatePreflight(accessGateContextOrResponse);
+  if (accessGateResponse) return applyAuthCors(request, accessGateResponse);
+
   const auth = await getAuth();
   const authHandler = auth.middleware();
   const response = (await authHandler(request)) ?? new Response(null, { status: 404 });
+  const redemptionFailure = await redeemAccessInviteAfterSignup(
+    accessGateContextOrResponse,
+    response,
+  );
+  if (redemptionFailure) return applyAuthCors(request, redemptionFailure);
+
   const url = new URL(request.url);
   const withHint = applySessionHint(response, url.pathname, response.status);
   return applyAuthCors(request, withHint);

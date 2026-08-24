@@ -397,7 +397,13 @@
       "submitLoading": "กำลังสร้างบัญชี…",
       "alreadyHaveAccount": "มีบัญชีอยู่แล้ว?",
       "signInLink": "เข้าสู่ระบบ",
-      "signUpFailed": "สมัครไม่สำเร็จ"
+      "signUpFailed": "สมัครไม่สำเร็จ",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },
     "passkeys": {
       "title": "รหัสผ่านแบบไม่ใช้รหัสผ่าน",

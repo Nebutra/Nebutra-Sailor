@@ -397,7 +397,13 @@
       "submitLoading": "Création…",
       "alreadyHaveAccount": "Vous avez déjà un compte ?",
       "signInLink": "Se connecter",
-      "signUpFailed": "Échec de l'inscription"
+      "signUpFailed": "Échec de l'inscription",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },
     "passkeys": {
       "title": "Clés d'accès",

@@ -397,7 +397,13 @@
       "submitLoading": "اکاؤنٹ بنایا جا رہا ہے…",
       "alreadyHaveAccount": "پہلے سے اکاؤنٹ ہے؟",
       "signInLink": "لاگ ان کریں",
-      "signUpFailed": "سائن اپ ناکام رہا"
+      "signUpFailed": "سائن اپ ناکام رہا",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },
     "passkeys": {
       "title": "پاس کیز",

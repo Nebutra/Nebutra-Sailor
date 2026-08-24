@@ -1,5 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
-import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+import { getBrandOrigin, MARKETING_HOME_STAY_PARAM } from "@nebutra/brand/metadata-helpers";
 import { MARKET_COOKIE } from "@nebutra/i18n/cookies";
 import { legacyLocalePathRedirect } from "@nebutra/i18n/locales";
 import {
@@ -11,6 +11,7 @@ import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 import { createLegacyAppRedirectUrl } from "./lib/app-redirects";
 import { createDocsRedirectUrl } from "./lib/docs-routing";
+import { shouldBounceSignedInVisitorToApp } from "./lib/session-home-redirect";
 
 const intlMiddleware = createMiddleware(routing);
 const STATUS_HOST = brand.domains.status;
@@ -29,18 +30,6 @@ const STATUS_HOST = brand.domains.status;
  */
 const SESSION_HINT_COOKIE = "nebutra_session_hint";
 const APP_REDIRECT_URL = process.env.NEXT_PUBLIC_APP_URL ?? getBrandOrigin("app");
-
-/**
- * Does the request live on a path that should redirect signed-in users
- * straight to the product? Only the absolute root + bare-locale roots.
- * Specific marketing pages (/pricing, /features, etc.) always render
- * regardless of session state — they're intentional marketing visits.
- */
-function isAppRedirectablePath(pathname: string): boolean {
-  if (pathname === "/" || pathname === "") return true;
-  // Bare locale roots like `/en`, `/zh-Hans`, `/ja` — same semantics as `/`.
-  return routing.locales.some((locale) => pathname === `/${locale}`);
-}
 
 /**
  * 308 every legacy locale path prefix onto its route locale.
@@ -181,12 +170,23 @@ export default function proxy(request: NextRequest): NextResponse {
   // root + bare-locale roots redirect into the product. Marketing sub-pages always
   // render (signed-in users still want to read /pricing, /changelog, etc.).
   //
+  // In-site Home is the opposite intent — skip the bounce when `stay=1`
+  // or the click came from the auth host / a marketing page (navbar logo).
+  //
   // The response is intentionally `Cache-Control: private, no-store` because the
   // body varies per-cookie — never cache at the edge.
   if (
-    host !== STATUS_HOST &&
-    isAppRedirectablePath(pathname) &&
-    request.cookies.get(SESSION_HINT_COOKIE)?.value === "1"
+    shouldBounceSignedInVisitorToApp({
+      pathname,
+      host,
+      statusHost: STATUS_HOST,
+      authHost: brand.domains.auth,
+      landingHost: brand.domains.landing,
+      hasSessionHint: request.cookies.get(SESSION_HINT_COOKIE)?.value === "1",
+      stayParam: request.nextUrl.searchParams.get(MARKETING_HOME_STAY_PARAM),
+      referer: request.headers.get("referer"),
+      locales: routing.locales,
+    })
   ) {
     const redirect = NextResponse.redirect(new URL("/workspace", APP_REDIRECT_URL), 302);
     redirect.headers.set("Cache-Control", "private, no-store");

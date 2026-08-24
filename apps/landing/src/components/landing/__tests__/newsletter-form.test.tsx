@@ -89,4 +89,19 @@ describe("NewsletterForm", () => {
 
     expect(await screen.findByRole("alert")).toHaveTextContent("Something went wrong");
   });
+
+  it("fills a narrow sidebar instead of locking a 20rem row that overflows the card", () => {
+    render(<NewsletterForm />);
+
+    const form = screen.getByTestId("newsletter-form");
+    expect(form.className.split(" ")).toEqual(
+      expect.arrayContaining(["w-full", "min-w-0", "max-w-[20rem]"]),
+    );
+    expect(form.className).not.toMatch(/sm:w-auto/);
+
+    const fieldGroup = form.querySelector("div");
+    expect(fieldGroup).not.toBeNull();
+    expect(fieldGroup?.className.split(" ")).toEqual(expect.arrayContaining(["w-full", "min-w-0"]));
+    expect(fieldGroup?.className).not.toMatch(/sm:w-\[20rem\]/);
+  });
 });

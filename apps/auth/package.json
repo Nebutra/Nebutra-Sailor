@@ -17,8 +17,10 @@
   },
   "dependencies": {
     "@marsidev/react-turnstile": "^1.5.2",
+    "@nebutra/access-gate": "workspace:*",
     "@nebutra/auth": "workspace:*",
     "@nebutra/brand": "workspace:*",
+    "@nebutra/china-compliance": "workspace:*",
     "@nebutra/db": "workspace:*",
     "@nebutra/i18n": "workspace:*",
     "@nebutra/icons": "workspace:*",

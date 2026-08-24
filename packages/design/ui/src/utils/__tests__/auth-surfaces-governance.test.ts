@@ -53,6 +53,7 @@ describe("auth surface layout contracts", () => {
       // Server-safe path only — @nebutra/ui/utils was once client-stamped and
       // RSC treated AUTH_FORM_* as client proxies (login card className empty).
       expect(source, rel).toContain('from "@nebutra/ui/utils/auth-surfaces"');
+      expect(source, rel).toContain("getMarketingHomeUrl");
       // Forbid bare barrel import of AUTH_FORM_* (cn from @nebutra/ui/utils is fine).
       expect(source, rel).not.toMatch(
         /import\s*\{[^}]*AUTH_FORM_COLUMN_CLASS[^}]*\}\s*from\s*["']@nebutra\/ui\/utils["']/,

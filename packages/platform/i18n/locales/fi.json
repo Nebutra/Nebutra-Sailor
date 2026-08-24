@@ -397,7 +397,13 @@
       "submitLoading": "Luodaan tiliä…",
       "alreadyHaveAccount": "Onko sinulla jo tili?",
       "signInLink": "Kirjaudu sisään",
-      "signUpFailed": "Rekisteröityminen epäonnistui"
+      "signUpFailed": "Rekisteröityminen epäonnistui",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },
     "passkeys": {
       "title": "Salaisimet",

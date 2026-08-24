@@ -13,7 +13,13 @@ import { AuthSplitLayout } from "@/components/auth/auth-split-layout";
 import { SignUpForm } from "@/components/auth/sign-up-form";
 import { detectEnabledOAuthProviders } from "@/lib/auth/oauth-providers";
 
-type SearchParams = { returnUrl?: string; returnTo?: string; redirect?: string };
+type SearchParams = {
+  returnUrl?: string;
+  returnTo?: string;
+  redirect?: string;
+  invite?: string;
+  tenantId?: string;
+};
 
 function resolveAppOrigin(headerStore: Headers): string {
   const configured = process.env.NEXT_PUBLIC_APP_URL?.trim().replace(/\/$/, "");
@@ -44,7 +50,12 @@ async function SignUpPageContent({ searchParams }: { searchParams: Promise<Searc
     }
     if (!isAuthCenterHost) {
       const returnTo = returnUrl || `${thisOrigin}/onboarding`;
-      redirect(buildAuthCenterSignUpUrl(returnTo));
+      const dest = new URL(buildAuthCenterSignUpUrl(returnTo));
+      const invite = query.invite?.trim();
+      const tenantId = query.tenantId?.trim();
+      if (invite) dest.searchParams.set("invite", invite);
+      if (tenantId) dest.searchParams.set("tenantId", tenantId);
+      redirect(dest.toString());
     }
   }
 

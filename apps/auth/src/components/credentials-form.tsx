@@ -20,6 +20,15 @@ import {
 import { challengePath, writePendingAuth } from "@/lib/pending-auth";
 import { OAuthButtons } from "./oauth-buttons";
 import { useCapsLock } from "./use-caps-lock";
+import { WeChatLoginButton } from "./wechat-login-button";
+
+interface SsoDiscoveryProvider {
+  id: string;
+  name: string;
+  type: "saml" | "oidc";
+  domain: string;
+  loginUrl: string;
+}
 
 const LANDING_ORIGIN = getBrandOrigin("landing");
 const TERMS_HREF = `${LANDING_ORIGIN}/terms`;
@@ -42,6 +51,14 @@ interface CredentialsFormProps {
    * human-readable alert so IdP round-trips that fail don't look like a dead UI.
    */
   oauthErrorCode?: string | null;
+  /** Invite-only cold-start gate — hide social sign-up and require a code. */
+  accessGateEnabled?: boolean;
+  /** Prefilled from `?invite=` on the sign-up URL. */
+  initialInviteCode?: string;
+  /** Optional tenant scope for a tenant-issued invite. */
+  tenantId?: string;
+  /** WeChat Open Platform AppID (build-time public env). */
+  wechatAppId?: string;
 }
 
 /**
@@ -61,6 +78,16 @@ function oauthErrorMessage(
   return key ? t(key) : null;
 }
 
+function signUpErrorMessage(
+  code: string | null | undefined,
+  t: (key: "inviteRequired" | "inviteInvalid" | "inviteRedemptionFailed") => string,
+): string | null {
+  if (code === "ACCESS_INVITE_REQUIRED") return t("inviteRequired");
+  if (code === "INVALID_ACCESS_INVITE") return t("inviteInvalid");
+  if (code === "ACCESS_INVITE_REDEMPTION_FAILED") return t("inviteRedemptionFailed");
+  return null;
+}
+
 export function CredentialsForm({
   mode,
   returnTo,
@@ -69,6 +96,10 @@ export function CredentialsForm({
   passkeyEnabled = false,
   turnstileSiteKey,
   oauthErrorCode = null,
+  accessGateEnabled = false,
+  initialInviteCode = "",
+  tenantId,
+  wechatAppId,
 }: CredentialsFormProps) {
   const tSignIn = useTranslations("auth.signIn");
   const tSignUp = useTranslations("auth.signUp");
@@ -77,13 +108,16 @@ export function CredentialsForm({
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [inviteCode, setInviteCode] = useState(initialInviteCode);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [passkeyLoading, setPasskeyLoading] = useState(false);
   const [passkeyAvailable, setPasskeyAvailable] = useState(false);
+  const [ssoProvider, setSsoProvider] = useState<SsoDiscoveryProvider | null>(null);
   const { capsLockOn, onKeyEvent } = useCapsLock();
   const conditionalUIStartedRef = useRef(false);
+  const ssoDiscoverySeqRef = useRef(0);
 
   useEffect(() => {
     setPasskeyAvailable(isPasskeySupported());
@@ -116,6 +150,31 @@ export function CredentialsForm({
     return `${path}?${params.toString()}`;
   }
 
+  async function discoverSsoProvider() {
+    if (accessGateEnabled) return;
+    const normalizedEmail = email.trim().toLowerCase();
+    ssoDiscoverySeqRef.current += 1;
+    const seq = ssoDiscoverySeqRef.current;
+    setSsoProvider(null);
+
+    if (!normalizedEmail.includes("@")) return;
+
+    const params = new URLSearchParams({ email: normalizedEmail, returnUrl: returnTo });
+
+    try {
+      const response = await fetch(`/api/auth/sso/discovery?${params.toString()}`, {
+        credentials: "include",
+      });
+      if (!response.ok || seq !== ssoDiscoverySeqRef.current) return;
+      const payload = (await response.json().catch(() => null)) as {
+        provider?: SsoDiscoveryProvider | null;
+      } | null;
+      setSsoProvider(payload?.provider ?? null);
+    } catch {
+      // Password / passkey / magic-link remain available if discovery fails.
+    }
+  }
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
@@ -129,7 +188,15 @@ export function CredentialsForm({
       const body =
         mode === "sign-in"
           ? { email, password, callbackURL: returnTo }
-          : { email, password, name, callbackURL: returnTo };
+          : {
+              email,
+              password,
+              name,
+              callbackURL: returnTo,
+              ...(accessGateEnabled
+                ? { accessInviteCode: inviteCode, ...(tenantId ? { tenantId } : {}) }
+                : {}),
+            };
 
       // When Turnstile is configured, never mount the widget on this form —
       // park the request and challenge on a dedicated page so layout stays stable.
@@ -160,7 +227,8 @@ export function CredentialsForm({
           code?: string;
         } | null;
         setError(
-          data?.message ||
+          signUpErrorMessage(data?.code, tSignUp) ||
+            data?.message ||
             data?.error ||
             (mode === "sign-in" ? tSignIn("signInFailed") : tSignUp("signUpFailed")),
         );
@@ -198,9 +266,10 @@ export function CredentialsForm({
   }
 
   const altHref = mode === "sign-in" ? withReturnTo("/sign-up") : withReturnTo("/sign-in");
-  const showOAuth = enabledOAuthProviders.length > 0;
+  const showOAuth = !accessGateEnabled && enabledOAuthProviders.length > 0;
   const showAltMethods =
     mode === "sign-in" && (magicLinkEnabled || (passkeyEnabled && passkeyAvailable));
+  const submitDisabled = loading || (mode === "sign-up" && accessGateEnabled && !inviteCode.trim());
 
   return (
     <div className="w-full">
@@ -216,6 +285,7 @@ export function CredentialsForm({
       {showOAuth ? (
         <>
           <OAuthButtons providers={enabledOAuthProviders} returnTo={returnTo} />
+          <WeChatLoginButton appId={wechatAppId} className="mt-3" />
           <div className="relative my-6">
             <div className="h-px w-full bg-[hsl(var(--border))]" aria-hidden />
             <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-3 text-xs font-medium text-muted-foreground">
@@ -223,6 +293,8 @@ export function CredentialsForm({
             </span>
           </div>
         </>
+      ) : !accessGateEnabled ? (
+        <WeChatLoginButton appId={wechatAppId} className="mb-6" />
       ) : null}
 
       <form
@@ -273,13 +345,32 @@ export function CredentialsForm({
             required
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setSsoProvider(null);
+            }}
+            onBlur={() => {
+              void discoverSsoProvider();
+            }}
             autoComplete={passkeyEnabled ? "username webauthn" : "email"}
             size="lg"
             className="h-12 border-border bg-background text-foreground shadow-none"
             placeholder={tSignIn("emailPlaceholder")}
           />
         </div>
+
+        {ssoProvider ? (
+          <Button
+            type="button"
+            variant="outline"
+            className="h-11 w-full justify-center border-border bg-background text-foreground shadow-none hover:bg-muted"
+            onClick={() => {
+              window.location.href = ssoProvider.loginUrl;
+            }}
+          >
+            {tSignIn("continueWithProvider", { provider: ssoProvider.name })}
+          </Button>
+        ) : null}
 
         <div className="flex flex-col gap-1.5">
           <div className="flex items-center justify-between">
@@ -338,6 +429,25 @@ export function CredentialsForm({
           ) : null}
         </div>
 
+        {mode === "sign-up" && accessGateEnabled ? (
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="auth-invite" className="text-sm font-medium text-foreground">
+              {tSignUp("inviteLabel")}
+            </label>
+            <Input
+              id="auth-invite"
+              required
+              value={inviteCode}
+              onChange={(e) => setInviteCode(e.target.value)}
+              autoComplete="off"
+              size="lg"
+              className="h-12 border-border bg-background text-foreground shadow-none"
+              placeholder={tSignUp("invitePlaceholder")}
+            />
+            <p className="text-xs text-muted-foreground">{tSignUp("inviteHint")}</p>
+          </div>
+        ) : null}
+
         {error ? (
           <p
             id="auth-form-error"
@@ -349,7 +459,12 @@ export function CredentialsForm({
           </p>
         ) : null}
 
-        <Button type="submit" disabled={loading} variant="ink" className={AUTH_PRIMARY_CTA_CLASS}>
+        <Button
+          type="submit"
+          disabled={submitDisabled}
+          variant="ink"
+          className={AUTH_PRIMARY_CTA_CLASS}
+        >
           {mode === "sign-in"
             ? loading
               ? tSignIn("submitLoading")

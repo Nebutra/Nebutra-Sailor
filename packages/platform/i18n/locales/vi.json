@@ -397,7 +397,13 @@
       "submitLoading": "Đang tạo tài khoản…",
       "alreadyHaveAccount": "Đã có tài khoản?",
       "signInLink": "Đăng nhập",
-      "signUpFailed": "Đăng ký thất bại"
+      "signUpFailed": "Đăng ký thất bại",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },
     "passkeys": {
       "title": "Passkey",

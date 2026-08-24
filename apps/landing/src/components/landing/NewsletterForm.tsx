@@ -65,7 +65,7 @@ export function NewsletterForm() {
       data-status={status}
       data-testid="newsletter-form"
       onSubmit={handleSubmit}
-      className="flex w-full max-w-md flex-col gap-2 sm:w-auto sm:max-w-none"
+      className="flex w-full min-w-0 max-w-[20rem] flex-col gap-2"
     >
       {/* G27 honeypot — bots fill hidden fields; humans never see it */}
       <input
@@ -89,8 +89,12 @@ export function NewsletterForm() {
         --muted, not neutral-3: the footer sits on --background, and in dark mode
         the two ramps disagree in saturation, so a neutral-3 fill reads as navy
         against a near-neutral page.
+
+        w-full + max-w-[20rem] on the form — not sm:w-[20rem] on this pill.
+        The blog article aside is 280px with padding; a locked 20rem row shoved
+        Subscribe off the card. Footer still gets the 20rem cap when it has room.
       */}
-      <div className="flex w-full items-center gap-1 rounded-full bg-muted p-0.5 transition-shadow focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[hsl(var(--ring)/0.5)] sm:w-[20rem]">
+      <div className="flex w-full min-w-0 items-center gap-1 rounded-full bg-muted p-0.5 transition-shadow focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[hsl(var(--ring)/0.5)]">
         <Input
           type="email"
           size="sm"
@@ -120,7 +124,7 @@ export function NewsletterForm() {
         </Button>
       </div>
       {status === "error" && (
-        <p role="alert" className="self-center text-xs text-red-500 sm:ms-0">
+        <p role="alert" className="self-center text-xs text-destructive sm:ms-0">
           {t("newsletterError")}
         </p>
       )}

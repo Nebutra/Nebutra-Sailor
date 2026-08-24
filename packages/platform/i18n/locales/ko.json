@@ -397,7 +397,13 @@
       "submitLoading": "만드는 중…",
       "alreadyHaveAccount": "이미 계정이 있나요?",
       "signInLink": "로그인",
-      "signUpFailed": "가입에 실패했습니다"
+      "signUpFailed": "가입에 실패했습니다",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },
     "passkeys": {
       "title": "패스키",
