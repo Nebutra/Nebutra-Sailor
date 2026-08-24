@@ -2,7 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { EditorialDataTable } from "./editorial-data-table";
 
 const meta: Meta<typeof EditorialDataTable> = {
-  title: "Editorial/DataTable",
+  // The leaf segment has to be the exact component name. The story-coverage
+  // ratchet reads it as the subject under test, so a leaf of "DataTable" here
+  // silently marked the unrelated patterns/data-table component as covered.
+  title: "Editorial/EditorialDataTable",
   component: EditorialDataTable,
   tags: ["autodocs"],
   parameters: {

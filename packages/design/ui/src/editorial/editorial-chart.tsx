@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { cn } from "../utils/cn";
 import {
   EDITORIAL_CAPTION,
@@ -40,25 +41,33 @@ function formatPoint(point: EditorialChartPoint): string {
 function BarChart({ points, max }: { max: number; points: EditorialChartPoint[] }) {
   return (
     <div className="grid gap-3">
-      {points.map((point, index) => (
-        <div
-          key={point.key ?? `${index}-${point.label}`}
-          className="grid grid-cols-[minmax(5rem,9rem)_1fr_auto] items-center gap-3"
-        >
-          <span className="truncate text-sm text-muted-foreground" title={point.label}>
-            {point.label}
-          </span>
-          <span aria-hidden className="h-2.5 overflow-hidden rounded-full bg-muted">
-            <span
-              className="block h-full rounded-full bg-primary"
-              style={{ width: `${max > 0 ? Math.max((point.value / max) * 100, 1.5) : 0}%` }}
-            />
-          </span>
-          <span className="font-mono text-sm font-semibold tabular-nums text-foreground">
-            {formatPoint(point)}
-          </span>
-        </div>
-      ))}
+      {points.map((point, index) => {
+        // A bar with a real zero width is invisible, so the floor keeps the
+        // smallest value legible as a value rather than as an empty track.
+        const share = max > 0 ? Math.max((point.value / max) * 100, 1.5) : 0;
+
+        return (
+          <div
+            key={point.key ?? `${index}-${point.label}`}
+            className="grid grid-cols-[minmax(5rem,9rem)_1fr_auto] items-center gap-3"
+          >
+            <span className="truncate text-sm text-muted-foreground" title={point.label}>
+              {point.label}
+            </span>
+            <span aria-hidden className="h-2.5 overflow-hidden rounded-full bg-muted">
+              {/* The measured width travels as a custom property so the class,
+                  not the element, still owns the `width` declaration. */}
+              <span
+                className="block h-full w-[var(--editorial-bar)] rounded-full bg-primary"
+                style={{ "--editorial-bar": `${share}%` } as CSSProperties}
+              />
+            </span>
+            <span className="font-mono text-sm font-semibold tabular-nums text-foreground">
+              {formatPoint(point)}
+            </span>
+          </div>
+        );
+      })}
     </div>
   );
 }
