@@ -90,6 +90,7 @@
       ".",
       "./agent",
       "./components",
+      "./editorial",
       "./hooks",
       "./icons",
       "./layout",
