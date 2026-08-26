@@ -25,8 +25,8 @@
 
 export const NEBUTRA_PACKAGE_VERSIONS: Record<string, string> = {
   // Design layer (consumed by every scaffolded app)
-  "@nebutra/ui": "^0.2.2",
-  "@nebutra/tokens": "^0.1.2",
+  "@nebutra/ui": "^0.2.3",
+  "@nebutra/tokens": "^0.1.3",
   "@nebutra/icons": "^0.1.2",
   "@nebutra/brand": "^0.1.2",
   "@nebutra/design-tokens": "^0.1.2",
@@ -40,13 +40,13 @@ export const NEBUTRA_PACKAGE_VERSIONS: Record<string, string> = {
   "@nebutra/audit": "^0.1.3",
 
   // Commerce
-  "@nebutra/billing": "^0.1.3",
+  "@nebutra/billing": "^0.1.4",
   "@nebutra/contracts": "^0.1.2",
-  "@nebutra/license": "^0.1.3",
+  "@nebutra/license": "^0.1.4",
   "@nebutra/metering": "^0.1.2",
 
   // Integrations
-  "@nebutra/queue": "^0.1.3",
+  "@nebutra/queue": "^0.1.4",
   "@nebutra/search": "^0.1.2",
   "@nebutra/cache": "^0.0.3",
   "@nebutra/notifications": "^0.1.3",
@@ -56,7 +56,7 @@ export const NEBUTRA_PACKAGE_VERSIONS: Record<string, string> = {
 
   // AI
   "@nebutra/agents": "^1.1.2",
-  "@nebutra/mcp": "^0.1.3",
+  "@nebutra/mcp": "^0.1.4",
 
   // Platform
   "@nebutra/logger": "^0.1.2",
