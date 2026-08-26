@@ -81,7 +81,7 @@ jobs:
         run: pnpm template:check
 
       - name: Smoke test CLI bundle
-        run: node packages/ops/cli/dist/index.js --help
+        run: node packages/ops/create-sailor/dist/index.js --help
 
       - name: Create Release Pull Request or Publish
         id: changesets
