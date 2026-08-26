@@ -1,5 +1,15 @@
 # create-sailor
 
+## 1.9.6
+
+### Patch Changes
+
+- [`e9ced5c`](https://github.com/Nebutra/Nebutra-Sailor/commit/e9ced5c4c51c958752b4e2c860ac4132f202e6aa) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Align the published CLI surface with the MIT scaffold contract and stop leftover Aug 3 hotfix changesets from re-bumping already-shipped versions.
+  - Backfill create-sailor 1.9.2–1.9.5 and nebutra 0.4.2–0.4.3 changelog entries the hotfix train skipped
+  - Fix README, welcome-page, and template `package.json` copy still describing AGPL / get-license
+  - Document `--audit-log` as default-off (`@nebutra/audit` is WIP)
+  - Raise the create-sailor tsup target to Node 22 to match `engines`
+
 ## 1.9.5
 
 ### Patch Changes
