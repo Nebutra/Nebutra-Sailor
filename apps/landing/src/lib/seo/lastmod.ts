@@ -35,12 +35,18 @@ export function lastModifiedFor(
  * `lastModifiedFor`: a real content clock, or omit. Never `new Date()`.
  */
 export function contentTimestamp(value: Date | null | string | undefined): string | undefined {
-  return toValidDate(value)?.toISOString();
+  if (value instanceof Date) {
+    const time = value.getTime();
+    return Number.isFinite(time) && time > 0 ? value.toISOString() : undefined;
+  }
+  if (!value) return undefined;
+  const time = Date.parse(value);
+  return Number.isFinite(time) && time > 0 ? value : undefined;
 }
 
 /**
  * A date is only usable as `<lastmod>` if it is a real timestamp. The Unix
- * epoch is not: `@/lib/blog` synthesizes `new Date(0)` for a post with neither
+ * epoch is not: `@/lib/blog` synthesizes `1970-01-01T00:00:00.000Z` for a post with neither
  * `publishedAt` nor `_updatedAt`, and a 1970 `<lastmod>` is a fabricated date
  * in the opposite direction from `new Date()` — equally untrustworthy, and it
  * slips past a guard that only rejects timestamps in the future. Anything at or
@@ -48,7 +54,6 @@ export function contentTimestamp(value: Date | null | string | undefined): strin
  */
 function toValidDate(value: Date | null | string | undefined): Date | undefined {
   if (!value) return undefined;
-  const date = value instanceof Date ? value : new Date(value);
-  const time = date.getTime();
-  return Number.isNaN(time) || time <= 0 ? undefined : date;
+  const time = value instanceof Date ? value.getTime() : Date.parse(value);
+  return Number.isFinite(time) && time > 0 ? new Date(time) : undefined;
 }

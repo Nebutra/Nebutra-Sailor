@@ -1,14 +1,8 @@
 import {
-  type BlogLanguage,
   type BlogPostWithSource,
   estimateReadTime,
-  getBlogRelatedPosts,
-  getBlogTableOfContents,
   getBlogUrlSegment,
   getBlogViewTransitionName,
-  getFallbackBlogCover,
-  getPostCopyText,
-  oppositeBlogLanguage,
   resolveBlogCover,
   toBlogLanguage,
 } from "@nebutra/blog";
@@ -16,10 +10,7 @@ import { ArrowLeft, ArrowRight, BookOpen, Calendar, Clock, Globe, Message } from
 import { getImageUrl } from "@nebutra/sanity/image";
 import { AnimateIn } from "@nebutra/ui/components";
 import { DynamicIslandTOC } from "@nebutra/ui/primitives";
-import { format as dateFnsFormat } from "date-fns";
-import { zhCN } from "date-fns/locale";
 import type { Metadata } from "next";
-import { cacheLife, cacheTag } from "next/cache";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { hasLocale } from "next-intl";
@@ -35,93 +26,17 @@ import { BlogShareActions } from "@/components/landing/blog-share-actions";
 import { StructuredData } from "@/components/seo/structured-data";
 import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
+import { getAllPosts } from "@/lib/blog";
 import {
-  getAllPosts,
-  getLocalizedPostForSiblingSlug,
-  getPostBySlug,
-  getPostTranslation,
-} from "@/lib/blog";
+  buildBlogMetadata,
+  loadCachedBlogArticle,
+  localizedPageHref,
+  localizedPostHref,
+} from "@/lib/blog-page-cache";
 import { env } from "@/lib/env";
 import { isZhUiLocale } from "@/lib/i18n/localized";
-import { contentTimestamp } from "@/lib/seo/lastmod";
-import { buildPageMetadata } from "@/lib/seo/metadata";
-import { localesForPath } from "@/lib/seo/route-registry";
-import { getSiteUrl, type PublicationSet } from "@/lib/seo/site-routes";
-import { buildArticleSchema, buildBreadcrumbListSchema } from "@/lib/seo/structured-data";
 
 type Params = { lang: string; slug: string };
-
-// Sentinel slug Next emits during static prerender warm-up before any blog
-// pages exist; surfacing it to Sanity wastes a fetch + pollutes error logs.
-const EMPTY_BLOG_PLACEHOLDER_SLUG = "empty-placeholder-do-not-fetch";
-
-async function buildBlogMetadata(lang: string, slug: string): Promise<Metadata> {
-  "use cache";
-  cacheLife("hours");
-  cacheTag("blog");
-
-  if (!hasLocale(routing.locales, lang)) return {};
-  if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG) return {};
-  cacheTag(`blog:${slug}`);
-
-  const post =
-    (await getCachedBlogPost(slug, toBlogLanguage(lang))) ??
-    (await getCachedLocalizedPostForSiblingSlug(slug, toBlogLanguage(lang)));
-  if (!post) return {};
-
-  const ogImage = `${getSiteUrl()}${localizedPostHref(lang, post.slug)}/opengraph-image`;
-  const authorName = getAuthorName(post.author);
-
-  return buildPageMetadata({
-    title: `${post.title} — Nebutra Blog`,
-    description: post.excerpt || post.title,
-    path: `/blog/${post.slug}`,
-    locale: lang as Locale,
-    type: "article",
-    image: ogImage,
-    publishedIn: await blogPublicationSet(post),
-    ...(post.date ? { publishedTime: new Date(post.date).toISOString() } : {}),
-    ...(post.updatedAt ? { modifiedTime: new Date(post.updatedAt).toISOString() } : {}),
-    ...(authorName ? { authors: [authorName] } : {}),
-  });
-}
-
-/**
- * The translation cluster this post belongs to.
- *
- * A translated post lives at a *different slug*, so the cluster has to be
- * assembled from the two real documents rather than reusing this locale's slug
- * for both — the latter fabricates a sibling URL that 404s. A post with no
- * sibling is a legitimate single-member cluster: it exists in one language and
- * says so, instead of claiming a translation that was never written.
- */
-async function blogPublicationSet(post: BlogPostWithSource): Promise<PublicationSet> {
-  // No `"use cache"` here: the only caller is already inside one, the sibling
-  // lookup it makes is separately cached, and a `post` object is not a valid
-  // cache key.
-  const selfLocale = localeForBlogLanguage(post.language);
-  const pathByLocale: Record<string, `/${string}`> = {
-    [selfLocale]: `/blog/${post.slug}`,
-  };
-  const locales: string[] = [selfLocale];
-
-  if (post.translationKey) {
-    const sibling = await getCachedPostTranslation(
-      post.translationKey,
-      oppositeBlogLanguage(post.language),
-    );
-    if (sibling) {
-      const siblingLocale = localeForBlogLanguage(sibling.language);
-      if (!locales.includes(siblingLocale)) locales.push(siblingLocale);
-      pathByLocale[siblingLocale] = `/blog/${sibling.slug}`;
-    }
-  }
-
-  // Registry order, so the cluster and the sitemap list the members alike.
-  const ordered = localesForPath("/blog/*").filter((locale) => locales.includes(locale));
-  const primary = (ordered[0] ?? selfLocale) as string;
-  return { path: pathByLocale[primary] as `/${string}`, locales: ordered, pathByLocale };
-}
 
 /**
  * Pre-build the default locale only, so the most-crawled URLs are a CDN hit
@@ -139,73 +54,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   return buildBlogMetadata(lang, slug);
 }
 
-function getAuthorName(author: BlogPostWithSource["author"]): string | null {
-  if (!author) return null;
-  return typeof author === "string" ? author : (author.name ?? null);
-}
-
-function getAuthorAvatarUrl(author: BlogPostWithSource["author"]): string | null {
-  if (!author || typeof author === "string" || !author.image) return null;
-  return getImageUrl(author.image, { width: 96, height: 96, format: "webp" });
-}
-
-function localizedPostHref(locale: string, slug?: string): string {
-  const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
-  return slug ? `${prefix}/blog/${slug}` : `${prefix}/blog`;
-}
-
-function localizedPageHref(locale: string, path: string): string {
-  const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
-  return `${prefix}${path}`;
-}
-
 function languageSwitchPostHref(locale: Locale, slug: string): string {
   return localizedPostHref(locale, slug);
-}
-
-function localeForBlogLanguage(language: BlogLanguage): Locale {
-  // Content language "zh" maps to Simplified Chinese product locale (CLDR Hans).
-  return language === "zh" ? "zh-Hans" : "en";
-}
-
-async function getCachedBlogPost(
-  slug: string,
-  language: BlogLanguage,
-): Promise<BlogPostWithSource | null> {
-  "use cache";
-  cacheLife("hours");
-  cacheTag("blog");
-  cacheTag(`blog:${slug}`);
-  return getPostBySlug(slug, language);
-}
-
-async function getCachedLocalizedPostForSiblingSlug(
-  slug: string,
-  language: BlogLanguage,
-): Promise<BlogPostWithSource | null> {
-  "use cache";
-  cacheLife("hours");
-  cacheTag("blog");
-  cacheTag(`blog:${slug}`);
-  return getLocalizedPostForSiblingSlug(slug, language);
-}
-
-async function getCachedAllPosts(language: BlogLanguage): Promise<BlogPostWithSource[]> {
-  "use cache";
-  cacheLife("hours");
-  cacheTag("blog");
-  return getAllPosts(language);
-}
-
-async function getCachedPostTranslation(
-  translationKey: string,
-  language: BlogLanguage,
-): Promise<BlogPostWithSource | null> {
-  "use cache";
-  cacheLife("hours");
-  cacheTag("blog");
-  cacheTag(`blog-translation:${translationKey}`);
-  return getPostTranslation(translationKey, language);
 }
 
 function postCover(post: BlogPostWithSource) {
@@ -333,81 +183,33 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
   const { lang, slug } = await params;
 
   if (!hasLocale(routing.locales, lang)) notFound();
-  const isZh = isZhUiLocale(lang);
   setRequestLocale(lang as Locale);
 
-  const blogLanguage = toBlogLanguage(lang);
-  let post = await getCachedBlogPost(slug, blogLanguage);
-  if (!post) {
-    post = await getCachedLocalizedPostForSiblingSlug(slug, blogLanguage);
-    if (post?.slug && post.slug !== slug) {
-      redirect(localizedPostHref(lang, post.slug));
-    }
-  }
-  if (!post) notFound();
-  const targetLanguage = oppositeBlogLanguage(blogLanguage);
-  const translation = post.translationKey
-    ? await getCachedPostTranslation(post.translationKey, targetLanguage)
-    : null;
-  const translationLocale = localeForBlogLanguage(targetLanguage);
+  const article = await loadCachedBlogArticle(lang, slug);
+  if (article.kind === "not-found") notFound();
+  if (article.kind === "redirect") redirect(article.href);
 
-  const fallbackCover = getFallbackBlogCover(post);
-  const primaryImageUrl = post.mainImage
-    ? getImageUrl(post.mainImage as Parameters<typeof getImageUrl>[0], {
-        width: 1200,
-        height: 630,
-        format: "webp",
-      })
-    : null;
-  const cover = resolveBlogCover(post, { alt: `${post.title} cover`, imageUrl: primaryImageUrl });
-  const imageUrl = cover.src;
-  const imageAlt = cover.alt;
-
-  const date = (() => {
-    if (!post.date) return null;
-    const d = new Date(post.date);
-    if (Number.isNaN(d.getTime())) return null;
-    return dateFnsFormat(
-      d,
-      isZh ? "yyyy年M月d日" : "MMMM d, yyyy",
-      isZh ? { locale: zhCN } : undefined,
-    );
-  })();
-  const authorName = getAuthorName(post.author);
-  const authorAvatarUrl = getAuthorAvatarUrl(post.author);
-  const articleCopyText = getPostCopyText(post);
-  const tableOfContents = getBlogTableOfContents(post.body);
-  const canonicalUrl = `${getSiteUrl()}${localizedPostHref(lang, post.slug)}`;
-  const allPosts = await getCachedAllPosts(blogLanguage);
-  const relatedPosts = getBlogRelatedPosts(allPosts, post, 2);
-  const footerPosts =
-    relatedPosts.length > 0
-      ? relatedPosts
-      : allPosts.filter((candidate) => candidate.slug !== post.slug).slice(0, 2);
-
-  const articleLd = buildArticleSchema({
-    headline: post.title,
-    description: post.excerpt || post.title,
-    url: canonicalUrl,
-    image: imageUrl ?? undefined,
-    datePublished: contentTimestamp(post.date) ?? contentTimestamp(post.updatedAt),
-    dateModified: contentTimestamp(post.updatedAt) ?? contentTimestamp(post.date),
-    author: authorName ? { name: authorName } : undefined,
-    publisher: {
-      name: "Nebutra",
-      logo: `${getSiteUrl()}/icon.png`,
-    },
-  });
-  const breadcrumbLd = buildBreadcrumbListSchema([
-    // English is unprefixed under `localePrefix: "as-needed"`, so `/en` would
-    // name a URL that 308s instead of the homepage canonical.
-    {
-      name: "Home",
-      url: lang === routing.defaultLocale ? getSiteUrl() : `${getSiteUrl()}/${lang}`,
-    },
-    { name: "Blog", url: `${getSiteUrl()}${localizedPostHref(lang)}` },
-    { name: post.title, url: canonicalUrl },
-  ]);
+  const {
+    post,
+    blogLanguage,
+    isZh,
+    date,
+    authorName,
+    authorAvatarUrl,
+    articleCopyText,
+    tableOfContents,
+    canonicalUrl,
+    footerPosts,
+    cover,
+    fallbackCover,
+    imageUrl,
+    imageAlt,
+    translation,
+    translationLocale,
+    targetLanguage,
+    articleLd,
+    breadcrumbLd,
+  } = article;
 
   return (
     <main id="main-content" className="min-h-screen bg-background">

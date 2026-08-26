@@ -67,7 +67,7 @@ function normalizeSanityPost(post: SanityPost | null): BlogPostWithSource | null
     translationKey: post.translationKey ?? undefined,
     excerpt,
     description: excerpt,
-    date: post.publishedAt ?? post._updatedAt ?? new Date(0).toISOString(),
+    date: post.publishedAt ?? post._updatedAt ?? "1970-01-01T00:00:00.000Z",
     updatedAt: post._updatedAt,
     tags: post.categories?.filter(Boolean) ?? [],
     author: post.author ?? undefined,
