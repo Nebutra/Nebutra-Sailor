@@ -67,8 +67,15 @@ jobs:
       - name: Typecheck publishable package graph
         run: pnpm turbo run typecheck ${{ steps.release_filters.outputs.filters }}
 
-      - name: Test publishable package graph
-        run: pnpm turbo run test ${{ steps.release_filters.outputs.filters }}
+      - name: Resolve test filters for packages shipping this cycle
+        id: test_filters
+        run: |
+          filters="$(node scripts/print-release-test-filters.mjs)"
+          echo "filters=${filters}" >> "$GITHUB_OUTPUT"
+          echo "$filters"
+
+      - name: Test packages shipping this cycle
+        run: pnpm turbo run test ${{ steps.test_filters.outputs.filters }}
 
       - name: Verify scaffold template
         run: pnpm template:check

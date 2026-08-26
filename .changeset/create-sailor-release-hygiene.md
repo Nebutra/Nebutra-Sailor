@@ -1,6 +1,5 @@
 ---
 "create-sailor": patch
-"nebutra": patch
 ---
 
 Align the published CLI surface with the MIT scaffold contract and stop leftover Aug 3 hotfix changesets from re-bumping already-shipped versions.
