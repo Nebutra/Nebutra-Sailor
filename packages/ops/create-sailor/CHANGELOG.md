@@ -1,5 +1,31 @@
 # create-sailor
 
+## 1.9.5
+
+### Patch Changes
+
+- [`2a118b4`](https://github.com/Nebutra/Nebutra-Sailor/commit/2a118b477f4cf4467f107430d1b47a220a22ed86) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Strip Nebutra product apps, product CI/DNS, and product backends from the Sailor-Template surface. Raise the Node engine floor to `>=22` to match the monorepo.
+
+## 1.9.4
+
+### Patch Changes
+
+- [`739439a`](https://github.com/Nebutra/Nebutra-Sailor/commit/739439a4781de645b153fe57f46f50f2a9193a4e) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Converge the first-run UX: compact plan summary with confirm/customize for payment · email · storage · deploy, a config-aware golden-path done screen, clearer install failures, and English region labels.
+
+  Published as a patch on the 2026-08-03 hotfix train; the official changeset changelog was not generated.
+
+## 1.9.3
+
+### Patch Changes
+
+- [`739439a`](https://github.com/Nebutra/Nebutra-Sailor/commit/739439a4781de645b153fe57f46f50f2a9193a4e) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Replace the path text prompt with a two-intent location flow: create in a new folder (name only, default `my-app`) or scaffold into the current directory. Prefer current when cwd is empty; refuse when a project already exists. CLI still accepts names, paths, and `.`.
+
+## 1.9.2
+
+### Patch Changes
+
+- [`739439a`](https://github.com/Nebutra/Nebutra-Sailor/commit/739439a4781de645b153fe57f46f50f2a9193a4e) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Restore `npx create-sailor`. `1.9.1` shipped `"@nebutra/brand": "workspace:*"` as a production dependency, which npm cannot resolve (`EUNSUPPORTEDPROTOCOL`). Keep `@nebutra/*` as build-time devDependencies, bundle them via tsup `noExternal`, and reject monorepo-only protocols on CLI production deps in `verify:release-surface`.
+
 ## 1.9.1
 
 ### Patch Changes

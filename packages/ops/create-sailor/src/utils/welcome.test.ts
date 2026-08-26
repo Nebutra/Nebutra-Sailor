@@ -38,6 +38,11 @@ describe("generateWelcomePage", () => {
     expect(welcomePage).toContain('command="pnpm brand:init"');
     expect(welcomePage).toContain("pnpm brand:apply");
     expect(welcomePage).not.toContain("pnpm sailor");
+    expect(welcomePage).not.toContain("get-license");
+    expect(welcomePage).not.toContain("@nebutra/brand/metadata");
+    expect(welcomePage).toContain("https://nebutra.com/licensing");
+    expect(nextSteps).not.toContain("get-license");
+    expect(nextSteps).toContain("https://nebutra.com/licensing");
   });
 
   it("documents preview-status provider selections in the scaffold handoff", async () => {

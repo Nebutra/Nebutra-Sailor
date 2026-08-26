@@ -29,5 +29,5 @@
     "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3"
   },
-  "license": "AGPL-3.0-only"
+  "license": "MIT"
 }

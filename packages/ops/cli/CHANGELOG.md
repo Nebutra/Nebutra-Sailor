@@ -1,5 +1,20 @@
 # nebutra
 
+## 0.4.3
+
+### Patch Changes
+
+- [`739439a`](https://github.com/Nebutra/Nebutra-Sailor/commit/739439a4781de645b153fe57f46f50f2a9193a4e) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Converge `nebutra create` with create-sailor: pass-through argv (no double outro), `upgrade` reads the real package version, `doctor` prints the post-scaffold golden path, and the shared first-run banner uses picocolors.
+- [`2a118b4`](https://github.com/Nebutra/Nebutra-Sailor/commit/2a118b477f4cf4467f107430d1b47a220a22ed86) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Expand `nebutra dev --app` filters for monorepo product apps and keep the CLI Node floor aligned with create-sailor `>=22`.
+
+  Published on the 2026-08-03 hotfix train; the official changeset changelog was not generated.
+
+## 0.4.2
+
+### Patch Changes
+
+- [`739439a`](https://github.com/Nebutra/Nebutra-Sailor/commit/739439a4781de645b153fe57f46f50f2a9193a4e) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Restore `npx nebutra`. `0.4.1` shipped `"@nebutra/brand": "workspace:*"` as a production dependency, which npm cannot resolve (`EUNSUPPORTEDPROTOCOL`). Keep `@nebutra/*` as build-time deps and bundle them into the CLI.
+
 ## 0.4.1
 
 ### Patch Changes

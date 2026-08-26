@@ -3,8 +3,8 @@
 > Governed scaffolding for AI-native SaaS. Bootstrap the Nebutra Sailor platform baseline with multi-tenant foundations, region-aware defaults, and production-ready AI integrations.
 
 [![npm version](https://img.shields.io/npm/v/create-sailor.svg?color=0033FE)](https://www.npmjs.com/package/create-sailor)
-[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-0033FE.svg)](https://www.gnu.org/licenses/agpl-3.0)
-[![Commercial License](https://img.shields.io/badge/Licensing-Commercial%20Options-0BF1C3.svg)](https://nebutra.com/licensing)
+[![License: MIT](https://img.shields.io/badge/License-MIT-0033FE.svg)](https://opensource.org/licenses/MIT)
+[![Licensing](https://img.shields.io/badge/Licensing-MIT%20%2B%20optional%20support-0BF1C3.svg)](https://nebutra.com/licensing)
 
 ## Quick Start
 
@@ -92,7 +92,7 @@ npm create sailor@latest my-app \
 | `--analytics` | `posthog` · `plausible` · `umami` · `baidu` · `sensors` · `none` | region-based |
 | `--sms` | `twilio` · `aliyun-sms` · `tencent-sms` · `yunpian` · `none` | region-based |
 | `--deploy` | `vercel` · `railway` · `cloudflare` · `selfhost` | `vercel` |
-| `--docs` | `fumadocs` · `none` | `fumadocs` |
+| `--docs` | `fumadocs` · `mintlify` · `docusaurus` · `nextra` · `vitepress` · `none` | `fumadocs` |
 | `--orm` | `prisma` · `drizzle` · `none` | `prisma` |
 | `--db` | `postgres` · `mysql` · `sqlite` · `none` | `postgresql` |
 | `--queue` | `qstash` · `bullmq` · `upstash` · `sqs` · `none` | region-based |
@@ -109,7 +109,7 @@ npm create sailor@latest my-app \
 | `--idp` | `clerk` · `oauth-server` | `clerk` |
 | `--access-gate` | `none` · `invite` | `none` |
 | `--cron-jobs` | `true` · `false` — scaffold scheduled cron handlers | `true` |
-| `--audit-log` | `true` · `false` — enable `/settings/audit-log` + arch test | `true` |
+| `--audit-log` | `true` · `false` — enable `/settings/audit-log` + arch test | `false` (`@nebutra/audit` is WIP) |
 | `--api-keys` | `true` · `false` — enable `/settings/api-keys` page | `true` |
 | `--command-palette` | `true` · `false` — enable ⌘K command palette | `true` |
 | `--cookie-consent` | `true` · `false` — enable GDPR/CCPA cookie banner | `true` |
@@ -190,13 +190,15 @@ single monorepo you can extend instead of re-assembling from scratch.
 - **Getting Started**: [docs.nebutra.com/getting-started/installation](https://docs.nebutra.com/getting-started/installation)
 - **Customization Guide**: [docs.nebutra.com/customization/overview](https://docs.nebutra.com/customization/overview)
 - **Licensing**: [nebutra.com/licensing](https://nebutra.com/licensing)
-- **Get Free License**: [nebutra.com/get-license](https://nebutra.com/get-license)
 
 ## License
 
-AGPL-3.0 with a commercial license exception.
-See [LICENSE-COMMERCIAL.md](https://github.com/Nebutra/Nebutra-Sailor/blob/main/LICENSE-COMMERCIAL.md) for details.
-Commercial and individual licensing details: [get-license](https://nebutra.com/get-license).
+MIT. This package and the projects it scaffolds are MIT — commercial use is
+free, with no registration, licence key, or attribution requirement.
+
+The upstream [Nebutra-Sailor](https://github.com/Nebutra/Nebutra-Sailor)
+monorepo is FSL-1.1-ALv2. Optional paid support tiers do not gate the
+software. See [nebutra.com/licensing](https://nebutra.com/licensing).
 
 ---
 

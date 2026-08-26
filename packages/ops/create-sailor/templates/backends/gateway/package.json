@@ -20,5 +20,5 @@
     "tsup": "catalog:",
     "typescript": "catalog:"
   },
-  "license": "AGPL-3.0-only"
+  "license": "MIT"
 }

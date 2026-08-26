@@ -40,8 +40,7 @@ function renderWelcomePageTsx(projectName: string): string {
   // backslashes, and any stray braces inside the generated TSX.
   const safeName = JSON.stringify(projectName);
 
-  return `import { brand } from "@nebutra/brand/metadata";
-import Link from "next/link";
+  return `import Link from "next/link";
 
 export default function WelcomePage() {
   const projectName = ${safeName};
@@ -106,10 +105,10 @@ export default function WelcomePage() {
             </li>
             <li>
               <a
-                href={\`https://\${brand.domains.landing}/get-license\`}
+                href="https://nebutra.com/licensing"
                 className="underline"
               >
-                Get free license (Individual/OPC)
+                Licensing
               </a>
             </li>
           </ul>
@@ -238,7 +237,7 @@ ${renderWhatYouCanDoNext(waveFeatures)}${renderReadinessHolds(previewSelections)
 
 - [Documentation](/docs)
 - [GitHub](https://github.com/nebutra/nebutra-sailor)
-- [Get free license (Individual/OPC)](https://nebutra.com/get-license)
+- [Licensing](https://nebutra.com/licensing)
 `;
 }
 

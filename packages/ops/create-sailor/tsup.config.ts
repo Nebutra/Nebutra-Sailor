@@ -4,7 +4,7 @@ export default defineConfig({
   entry: ["src/index.ts"],
   format: ["esm"],
   platform: "node",
-  target: "node18",
+  target: "node22",
   clean: true,
   minify: true,
   // CLI is a binary, not a library — no consumer imports types from it.
