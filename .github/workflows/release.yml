@@ -13,6 +13,7 @@ permissions: read-all
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+  npm_config_verify_deps_before_run: "false"
 
 jobs:
   release:
