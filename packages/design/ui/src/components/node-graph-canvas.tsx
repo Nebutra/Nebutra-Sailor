@@ -12,7 +12,7 @@
  * preserved) through `onChange`. Cyclic connections are rejected via the
  * neutral `@nebutra/graph-model` guard.
  *
- * Chrome uses the shared `@lobehub/ui` `Button`; xyflow surfaces are themed
+ * Chrome uses the shared Nebutra `Button`; xyflow surfaces are themed
  * through xyflow CSS custom properties bound to Nebutra semantic tokens. The
  * custom node is intentionally not `Card`-wrapped (it owns its sizing + the
  * two connection `Handle`s) — see docs/capabilities/canvas/ANTI_PATTERNS.md.
@@ -37,9 +37,9 @@ import {
   ReactFlowProvider,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import { Button } from "@lobehub/ui";
 import { cva } from "class-variance-authority";
 import { type CSSProperties, type ReactNode, useId, useState } from "react";
+import { Button } from "../primitives/button";
 import { cn } from "../utils/cn";
 import { AnimateIn } from "./animate-in";
 import {
@@ -238,9 +238,9 @@ export function NodeGraphCanvas<N extends GraphNode, E extends GraphEdge, G exte
                 >
                   <span>{rejection}</span>
                   <Button
-                    size="small"
-                    type="text"
-                    icon={<CrossSmall size={14} />}
+                    size="sm"
+                    variant="ghost"
+                    prefix={<CrossSmall size={14} />}
                     aria-label="Dismiss connection error"
                     onClick={() => setRejection(null)}
                   >

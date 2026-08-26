@@ -13,7 +13,7 @@ import {
   ThumbUp,
   Warning,
 } from "@nebutra/icons";
-import { AnimateIn, AnimateInGroup, PromptInputBox } from "@nebutra/ui/components";
+import { PromptInputBox } from "@nebutra/ui/components";
 import {
   Alert,
   AlertContent,
@@ -135,7 +135,7 @@ export function StartupChatPanel({
   };
 
   return (
-    <AnimateIn preset="emerge" className="h-full min-h-0">
+    <div className="h-full min-h-0">
       <section
         aria-label="Startup OS conversational build"
         className="flex h-full min-h-0 flex-col bg-neutral-1 text-neutral-12"
@@ -186,17 +186,15 @@ export function StartupChatPanel({
           {summary ? <SummaryCard summary={summary} durationMs={durationMs} /> : null}
 
           {error ? (
-            <AnimateIn preset="fadeUp">
-              <Alert variant="destructive" appearance="light" size="md">
-                <AlertIcon>
-                  <Warning aria-hidden="true" />
-                </AlertIcon>
-                <AlertContent>
-                  <AlertTitle>Conversation failed</AlertTitle>
-                  <AlertDescription>{error}</AlertDescription>
-                </AlertContent>
-              </Alert>
-            </AnimateIn>
+            <Alert variant="destructive" appearance="light" size="md">
+              <AlertIcon>
+                <Warning aria-hidden="true" />
+              </AlertIcon>
+              <AlertContent>
+                <AlertTitle>Conversation failed</AlertTitle>
+                <AlertDescription>{error}</AlertDescription>
+              </AlertContent>
+            </Alert>
           ) : null}
         </div>
 
@@ -235,7 +233,7 @@ export function StartupChatPanel({
           </div>
         </footer>
       </section>
-    </AnimateIn>
+    </div>
   );
 }
 
@@ -303,59 +301,54 @@ function FileEventList({
           {events.length}
         </Badge>
       </div>
-      <AnimateInGroup stagger="fast" className="grid gap-1.5">
+      <div className="grid gap-1.5">
         {events.map((event, index) => {
           const isActive = index === activeIndex;
           return (
-            <AnimateIn
-              // File paths can repeat across a turn; pair with index for a stable key.
+            <div
               key={`${event.path}-${index}`}
-              preset="fadeUp"
+              data-testid="startup-chat-file"
+              data-state={isActive ? "writing" : "written"}
+              className="flex items-center gap-2.5 rounded-[var(--radius-md)] border border-neutral-6 bg-neutral-2 px-3 py-2"
             >
-              <div
-                data-testid="startup-chat-file"
-                data-state={isActive ? "writing" : "written"}
-                className="flex items-center gap-2.5 rounded-[var(--radius-md)] border border-neutral-6 bg-neutral-2 px-3 py-2"
-              >
-                {isActive ? (
-                  <span
-                    className="size-2 shrink-0 animate-pulse rounded-full"
-                    style={{ background: "var(--brand-accent)" }}
-                    aria-hidden="true"
-                  />
-                ) : (
-                  <FileText
-                    className="size-4 shrink-0"
-                    style={{ color: "hsl(var(--primary))" }}
-                    aria-hidden="true"
-                  />
-                )}
-                <span className="min-w-0 flex-1 truncate font-mono text-[12px] leading-5 text-neutral-11">
-                  {event.path}
+              {isActive ? (
+                <span
+                  className="size-2 shrink-0 animate-pulse rounded-full"
+                  style={{ background: "var(--brand-accent)" }}
+                  aria-hidden="true"
+                />
+              ) : (
+                <FileText
+                  className="size-4 shrink-0"
+                  style={{ color: "hsl(var(--primary))" }}
+                  aria-hidden="true"
+                />
+              )}
+              <span className="min-w-0 flex-1 truncate font-mono text-[12px] leading-5 text-neutral-11">
+                {event.path}
+              </span>
+              {isActive ? (
+                <span
+                  className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.08em]"
+                  style={{ color: "var(--brand-accent)" }}
+                >
+                  Writing
                 </span>
-                {isActive ? (
-                  <span
-                    className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.08em]"
-                    style={{ color: "var(--brand-accent)" }}
-                  >
-                    Writing
-                  </span>
-                ) : (
-                  <span
-                    className="shrink-0 rounded-full border px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.08em]"
-                    style={{
-                      borderColor: "color-mix(in srgb, var(--status-success) 25%, transparent)",
-                      color: "var(--status-success)",
-                    }}
-                  >
-                    {event.action}
-                  </span>
-                )}
-              </div>
-            </AnimateIn>
+              ) : (
+                <span
+                  className="shrink-0 rounded-full border px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.08em]"
+                  style={{
+                    borderColor: "color-mix(in srgb, var(--status-success) 25%, transparent)",
+                    color: "var(--status-success)",
+                  }}
+                >
+                  {event.action}
+                </span>
+              )}
+            </div>
           );
         })}
-      </AnimateInGroup>
+      </div>
     </div>
   );
 }
@@ -632,51 +625,49 @@ function SummaryCard({
     .join(" · ");
 
   return (
-    <AnimateIn preset="fadeUp">
-      <div data-testid="startup-chat-summary" className="px-1">
-        <div className="flex items-start gap-2.5">
-          <CheckCircle
-            className="mt-0.5 size-4 shrink-0"
-            style={{ color: "var(--status-success)" }}
+    <div data-testid="startup-chat-summary" className="px-1">
+      <div className="flex items-start gap-2.5">
+        <CheckCircle
+          className="mt-0.5 size-4 shrink-0"
+          style={{ color: "var(--status-success)" }}
+          aria-hidden="true"
+        />
+        <p className="text-sm leading-6 text-neutral-11">{summary.summary}</p>
+      </div>
+
+      <div className="mt-2 flex flex-wrap items-center gap-1 pl-6">
+        <ToolbarButton label={copied ? "Copied" : "Copy"} onClick={() => void copy()}>
+          {copied ? (
+            <Check className="size-3.5 text-success" aria-hidden="true" />
+          ) : (
+            <Copy className="size-3.5" aria-hidden="true" />
+          )}
+        </ToolbarButton>
+        <ToolbarButton
+          label="Helpful"
+          active={vote === "up"}
+          disabled={Boolean(vote) || voting}
+          onClick={() => void sendVote("up")}
+        >
+          <ThumbUp
+            className={`size-3.5 ${vote === "up" ? "text-success" : ""}`}
             aria-hidden="true"
           />
-          <p className="text-sm leading-6 text-neutral-11">{summary.summary}</p>
-        </div>
-
-        <div className="mt-2 flex flex-wrap items-center gap-1 pl-6">
-          <ToolbarButton label={copied ? "Copied" : "Copy"} onClick={() => void copy()}>
-            {copied ? (
-              <Check className="size-3.5 text-success" aria-hidden="true" />
-            ) : (
-              <Copy className="size-3.5" aria-hidden="true" />
-            )}
-          </ToolbarButton>
-          <ToolbarButton
-            label="Helpful"
-            active={vote === "up"}
-            disabled={Boolean(vote) || voting}
-            onClick={() => void sendVote("up")}
-          >
-            <ThumbUp
-              className={`size-3.5 ${vote === "up" ? "text-success" : ""}`}
-              aria-hidden="true"
-            />
-          </ToolbarButton>
-          <ToolbarButton
-            label="Not helpful"
-            active={vote === "down"}
-            disabled={Boolean(vote) || voting}
-            onClick={() => void sendVote("down")}
-          >
-            <ThumbDown
-              className={`size-3.5 ${vote === "down" ? "text-[color:var(--status-danger)]" : ""}`}
-              aria-hidden="true"
-            />
-          </ToolbarButton>
-          {meta ? <span className="ml-1.5 text-[11px] text-neutral-9">{meta}</span> : null}
-        </div>
+        </ToolbarButton>
+        <ToolbarButton
+          label="Not helpful"
+          active={vote === "down"}
+          disabled={Boolean(vote) || voting}
+          onClick={() => void sendVote("down")}
+        >
+          <ThumbDown
+            className={`size-3.5 ${vote === "down" ? "text-[color:var(--status-danger)]" : ""}`}
+            aria-hidden="true"
+          />
+        </ToolbarButton>
+        {meta ? <span className="ml-1.5 text-[11px] text-neutral-9">{meta}</span> : null}
       </div>
-    </AnimateIn>
+    </div>
   );
 }
 

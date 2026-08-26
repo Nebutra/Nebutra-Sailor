@@ -3,14 +3,7 @@ import { render } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 
-/**
- * `@lobehub/ui` exposes only its full barrel (no `./Button` subpath), which
- * transitively pulls `@emoji-mart/data` JSON that the jsdom runner can't
- * import without an attribute. Production uses the real DS `Button`; this
- * mount-only smoke test stubs the barrel (behaviour is covered by the pure
- * generic adapter suite).
- */
-vi.mock("@lobehub/ui", () => ({
+vi.mock("../../primitives/button", () => ({
   Button: ({
     children,
     onClick,

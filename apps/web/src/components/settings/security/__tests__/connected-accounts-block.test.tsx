@@ -27,24 +27,22 @@ vi.mock("next-intl", () => ({
   },
 }));
 
-vi.mock("@nebutra/ui/components", () => ({
+vi.mock("@nebutra/ui/primitives", () => ({
   Button: ({
     children,
-    htmlType,
     onClick,
     disabled,
-    type: _type,
+    type,
     variant: _variant,
     ...rest
   }: {
     children?: ReactNode;
-    htmlType?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
     onClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
     disabled?: boolean;
     type?: string;
     variant?: string;
   } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type">) => (
-    <button type={htmlType ?? "button"} onClick={onClick} disabled={disabled} {...rest}>
+    <button type={type ?? "button"} onClick={onClick} disabled={disabled} {...rest}>
       {children}
     </button>
   ),

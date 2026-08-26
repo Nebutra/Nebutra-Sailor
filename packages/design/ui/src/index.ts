@@ -12,7 +12,8 @@
  * @example
  * ```tsx
  * import { NebutraThemeProvider } from "@nebutra/ui";
- * import { Button, ChatList } from "@nebutra/ui/components";
+ * import { Button } from "@nebutra/ui/primitives";
+ * import { ChatList } from "@nebutra/ui/chat";
  * import { OpenAI, Settings } from "@nebutra/ui/icons";
  *
  * function App() {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@nebutra/ui/components";
+import { Button } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { useState } from "react";
 
@@ -117,9 +117,9 @@ export function ConnectIntegrationsStep({ onComplete }: ConnectIntegrationsStepP
                 <p className="text-xs text-muted-foreground">{integration.description}</p>
               </div>
               <Button
-                htmlType="button"
-                variant={isConnected ? "outlined" : "outlined"}
-                size="small"
+                type="button"
+                variant="outline"
+                size="sm"
                 className="w-full text-xs"
                 onClick={() => !isConnected && handleConnect(integration.id)}
                 disabled={isConnected}
@@ -147,8 +147,8 @@ export function ConnectIntegrationsStep({ onComplete }: ConnectIntegrationsStepP
       </div>
 
       <Button
-        htmlType="button"
-        variant="text"
+        type="button"
+        variant="ghost"
         className="w-full text-muted-foreground"
         onClick={onComplete}
       >

@@ -1,8 +1,15 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@nebutra/ui/components";
-import { Form, FormControl, FormField, FormItem, FormLabel, Input } from "@nebutra/ui/primitives";
+import {
+  Button,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  Input,
+} from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -115,7 +122,7 @@ export function DeleteAccountForm({ available, onSubmit, onDeleted }: DeleteAcco
         <p className="text-sm text-muted-foreground">{t("auth.security.deleteAccount.success")}</p>
       ) : stage === 1 ? (
         <div className="flex justify-end">
-          <Button htmlType="button" onClick={() => setStage(2)} variant="outlined">
+          <Button type="button" onClick={() => setStage(2)} variant="outline">
             {t("auth.security.deleteAccount.submit")}
           </Button>
         </div>
@@ -160,10 +167,10 @@ export function DeleteAccountForm({ available, onSubmit, onDeleted }: DeleteAcco
             {errorMessage && <p className="text-sm text-[var(--status-danger)]">{errorMessage}</p>}
 
             <div className="flex flex-col gap-2 md:flex-row md:justify-end">
-              <Button htmlType="button" onClick={resetForm} disabled={pending} variant="outlined">
+              <Button type="button" onClick={resetForm} disabled={pending} variant="outline">
                 {t("auth.security.deleteAccount.cancel")}
               </Button>
-              <Button htmlType="submit" disabled={!canSubmit} variant="filled">
+              <Button type="submit" disabled={!canSubmit} variant="default">
                 {t("auth.security.deleteAccount.submit")}
               </Button>
             </div>

@@ -11,6 +11,14 @@
  * Tailwind utilities: bg-brand-mark / text-brand-mark (see @theme below).
  */
 
+@custom-variant hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
+}
+
 :root {
   /* ── Color roles (overridden by brand skins) ──────────────────── */
   --role-action: var(--primary);

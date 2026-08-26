@@ -40,7 +40,7 @@ export const motionDurations = {
 export const easings = {
   linear: "linear",
   easeIn: [0.4, 0, 1, 1] as [number, number, number, number],
-  easeOut: [0, 0, 0.2, 1] as [number, number, number, number],
+  easeOut: [0.16, 1, 0.3, 1] as [number, number, number, number],
   easeInOut: [0.4, 0, 0.2, 1] as [number, number, number, number],
   spring: [0.34, 1.56, 0.64, 1] as [number, number, number, number],
   bounce: [0.68, -0.6, 0.32, 1.6] as [number, number, number, number],
@@ -80,19 +80,19 @@ export const transitions: Record<string, Transition> = {
  */
 export const motionVariants: Record<string, Variants> = {
   fadeInUp: {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: 10 },
+    initial: { opacity: 0, transform: "translateY(20px)" },
+    animate: { opacity: 1, transform: "translateY(0px)" },
+    exit: { opacity: 0, transform: "translateY(10px)" },
   },
   fadeInLeft: {
-    initial: { opacity: 0, x: -20 },
-    animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -10 },
+    initial: { opacity: 0, transform: "translateX(-20px)" },
+    animate: { opacity: 1, transform: "translateX(0px)" },
+    exit: { opacity: 0, transform: "translateX(-10px)" },
   },
   fadeInRight: {
-    initial: { opacity: 0, x: 20 },
-    animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: 10 },
+    initial: { opacity: 0, transform: "translateX(20px)" },
+    animate: { opacity: 1, transform: "translateX(0px)" },
+    exit: { opacity: 0, transform: "translateX(10px)" },
   },
   scaleIn: {
     initial: { opacity: 0, scale: 0.95 },
@@ -102,7 +102,7 @@ export const motionVariants: Record<string, Variants> = {
   staggerContainer: {
     initial: {},
     animate: {
-      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+      transition: { staggerChildren: 0.06, delayChildren: 0.04 },
     },
   },
   staggerItem: {
@@ -153,15 +153,15 @@ export const sectionMotions: Record<string, Variants> = {
 export const staggerContainers: Record<"fast" | "normal" | "slow", Variants> = {
   fast: {
     initial: {},
-    animate: { transition: { staggerChildren: 0.05, delayChildren: 0.1 } },
+    animate: { transition: { staggerChildren: 0.04, delayChildren: 0 } },
   },
   normal: {
     initial: {},
-    animate: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
+    animate: { transition: { staggerChildren: 0.06, delayChildren: 0.04 } },
   },
   slow: {
     initial: {},
-    animate: { transition: { staggerChildren: 0.15, delayChildren: 0.3 } },
+    animate: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
   },
 };
 

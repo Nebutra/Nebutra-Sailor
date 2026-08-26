@@ -7,30 +7,6 @@ vi.mock("next-intl", () => ({
   useTranslations: () => (key: string) => key,
 }));
 
-vi.mock("@nebutra/ui/components", () => ({
-  Button: ({
-    children,
-    onClick,
-    disabled,
-    htmlType,
-    ...rest
-  }: {
-    children: React.ReactNode;
-    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    disabled?: boolean;
-    htmlType?: "button" | "submit" | "reset";
-  } & Record<string, unknown>) => (
-    <button
-      type={htmlType ?? "button"}
-      onClick={onClick}
-      disabled={disabled}
-      {...(rest as Record<string, unknown>)}
-    >
-      {children}
-    </button>
-  ),
-}));
-
 afterEach(() => {
   cleanup();
 });

@@ -1,7 +1,6 @@
 "use client";
 
 import { ArrowRight, Sparkles } from "@nebutra/icons";
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { EmptyState } from "@nebutra/ui/layout";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -83,22 +82,20 @@ export function MatchesList() {
   }
 
   return (
-    <AnimateInGroup stagger="normal" className="grid gap-5 sm:grid-cols-2">
+    <div className="grid gap-5 sm:grid-cols-2">
       {matches.map((match) => (
-        <AnimateIn key={match.profileId} preset="fadeUp">
-          <div className="flex flex-col items-center gap-3">
-            <CofounderCard data={match} />
-            <Link
-              href={`/${locale}/cofounder/room/${match.profileId}`}
-              className="inline-flex w-full max-w-sm items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold text-white"
-              style={{ background: "hsl(var(--primary))" }}
-            >
-              <Sparkles className="size-4" aria-hidden="true" />
-              Open Cofounder Room
-            </Link>
-          </div>
-        </AnimateIn>
+        <div key={match.profileId} className="flex flex-col items-center gap-3">
+          <CofounderCard data={match} />
+          <Link
+            href={`/${locale}/cofounder/room/${match.profileId}`}
+            className="inline-flex w-full max-w-sm items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold text-white"
+            style={{ background: "hsl(var(--primary))" }}
+          >
+            <Sparkles className="size-4" aria-hidden="true" />
+            Open Cofounder Room
+          </Link>
+        </div>
       ))}
-    </AnimateInGroup>
+    </div>
   );
 }

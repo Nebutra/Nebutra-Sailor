@@ -74,20 +74,12 @@
         "count": 1
       },
       {
-        "file": "packages/design/ui/src/primitives/bento-grid.tsx",
-        "count": 5
-      },
-      {
         "file": "packages/design/ui/src/primitives/book.tsx",
         "count": 1
       },
       {
         "file": "packages/design/ui/src/primitives/display-cards.stories.tsx",
         "count": 2
-      },
-      {
-        "file": "packages/design/ui/src/primitives/display-cards.tsx",
-        "count": 4
       },
       {
         "file": "packages/design/ui/src/primitives/dithering-background.tsx",

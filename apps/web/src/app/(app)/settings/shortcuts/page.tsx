@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Table } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
@@ -75,122 +74,115 @@ export default function ShortcutsPage() {
 
   return (
     <section className="space-y-8">
-      <AnimateIn preset="fadeUp">
-        <header>
-          <h1 className="text-base font-semibold text-neutral-12">Keyboard shortcuts</h1>
-          <p className="mt-1 text-sm text-neutral-11">
-            Press{" "}
-            <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] dark:bg-black/40">
-              ⌘K
-            </kbd>{" "}
-            anywhere to run any command. Use{" "}
-            <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] dark:bg-black/40">
-              ↑
-            </kbd>
-            /
-            <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] dark:bg-black/40">
-              ↓
-            </kbd>{" "}
-            to navigate the list.
-          </p>
-        </header>
-      </AnimateIn>
+      <header>
+        <h1 className="text-base font-semibold text-neutral-12">Keyboard shortcuts</h1>
+        <p className="mt-1 text-sm text-neutral-11">
+          Press{" "}
+          <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] dark:bg-black/40">
+            ⌘K
+          </kbd>{" "}
+          anywhere to run any command. Use{" "}
+          <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] dark:bg-black/40">
+            ↑
+          </kbd>
+          /
+          <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] dark:bg-black/40">
+            ↓
+          </kbd>{" "}
+          to navigate the list.
+        </p>
+      </header>
 
       {/* Global shortcuts */}
-      <AnimateIn preset="fadeUp">
-        <div>
-          <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-10">
-            Global
-          </h2>
-          <Table
-            bare
-            wrapperClassName="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7"
-            wrapperStyle={SHORTCUT_DENSITY}
-          >
-            <Table.Body bordered>
-              {GLOBAL_SHORTCUTS.map((row) => (
-                <Table.Row key={row.label} className="bg-neutral-1">
-                  <Table.Cell className="align-top">
-                    <div className="flex items-center gap-1">
-                      {row.keys.map((k, i) => (
-                        <span
-                          key={`${row.label}-${k}-${i}`}
-                          className="inline-flex items-center gap-1"
-                        >
-                          <KeyCap>{k}</KeyCap>
-                          {i < row.keys.length - 1 && (
-                            <span className="text-[10px] text-neutral-9">+</span>
-                          )}
-                        </span>
-                      ))}
-                    </div>
-                  </Table.Cell>
-                  <Table.Cell alignment="start" className="align-top">
-                    <p className="font-medium text-neutral-12">{row.label}</p>
-                    <p className="mt-0.5 text-xs text-neutral-10">{row.description}</p>
-                  </Table.Cell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
-        </div>
-      </AnimateIn>
+
+      <div>
+        <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-10">
+          Global
+        </h2>
+        <Table
+          bare
+          wrapperClassName="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7"
+          wrapperStyle={SHORTCUT_DENSITY}
+        >
+          <Table.Body bordered>
+            {GLOBAL_SHORTCUTS.map((row) => (
+              <Table.Row key={row.label} className="bg-neutral-1">
+                <Table.Cell className="align-top">
+                  <div className="flex items-center gap-1">
+                    {row.keys.map((k, i) => (
+                      <span
+                        key={`${row.label}-${k}-${i}`}
+                        className="inline-flex items-center gap-1"
+                      >
+                        <KeyCap>{k}</KeyCap>
+                        {i < row.keys.length - 1 && (
+                          <span className="text-[10px] text-neutral-9">+</span>
+                        )}
+                      </span>
+                    ))}
+                  </div>
+                </Table.Cell>
+                <Table.Cell alignment="start" className="align-top">
+                  <p className="font-medium text-neutral-12">{row.label}</p>
+                  <p className="mt-0.5 text-xs text-neutral-10">{row.description}</p>
+                </Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
+      </div>
 
       {/* Command palette commands */}
-      <AnimateInGroup stagger="fast" className="space-y-6">
+      <div className="space-y-6">
         {SECTION_ORDER.map((section) => {
           const items = grouped[section];
           if (items.length === 0) return null;
           return (
-            <AnimateIn key={section} preset="fadeUp">
-              <div>
-                <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-10">
-                  {t(`sections.${section}`)}
-                </h2>
-                <Table
-                  bare
-                  wrapperClassName="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7"
-                  wrapperStyle={SHORTCUT_DENSITY}
-                >
-                  <Table.Body bordered>
-                    {items.map((cmd) => {
-                      const Icon = cmd.icon;
-                      return (
-                        <Table.Row key={cmd.id} className="bg-neutral-1">
-                          <Table.Cell className="w-12">
-                            <Icon className="h-4 w-4 text-neutral-11" aria-hidden />
-                          </Table.Cell>
-                          <Table.Cell alignment="start">
-                            <p className="font-medium text-neutral-12">
-                              {t(`commands.${cmd.titleKey}`)}
-                            </p>
-                            {cmd.tags && cmd.tags.length > 0 && (
-                              <p className="mt-0.5 text-xs text-neutral-10">
-                                {cmd.tags.join(" · ")}
-                              </p>
-                            )}
-                          </Table.Cell>
-                          <Table.Cell>
-                            {cmd.shortcut ? (
-                              <div className="inline-flex items-center gap-1">
-                                {cmd.shortcut.map((k, i) => (
-                                  <KeyCap key={`${cmd.id}-${k}-${i}`}>{k}</KeyCap>
-                                ))}
-                              </div>
-                            ) : (
-                              <span className="text-[11px] text-neutral-10">via ⌘K</span>
-                            )}
-                          </Table.Cell>
-                        </Table.Row>
-                      );
-                    })}
-                  </Table.Body>
-                </Table>
-              </div>
-            </AnimateIn>
+            <div key={section}>
+              <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-10">
+                {t(`sections.${section}`)}
+              </h2>
+              <Table
+                bare
+                wrapperClassName="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7"
+                wrapperStyle={SHORTCUT_DENSITY}
+              >
+                <Table.Body bordered>
+                  {items.map((cmd) => {
+                    const Icon = cmd.icon;
+                    return (
+                      <Table.Row key={cmd.id} className="bg-neutral-1">
+                        <Table.Cell className="w-12">
+                          <Icon className="h-4 w-4 text-neutral-11" aria-hidden />
+                        </Table.Cell>
+                        <Table.Cell alignment="start">
+                          <p className="font-medium text-neutral-12">
+                            {t(`commands.${cmd.titleKey}`)}
+                          </p>
+                          {cmd.tags && cmd.tags.length > 0 && (
+                            <p className="mt-0.5 text-xs text-neutral-10">{cmd.tags.join(" · ")}</p>
+                          )}
+                        </Table.Cell>
+                        <Table.Cell>
+                          {cmd.shortcut ? (
+                            <div className="inline-flex items-center gap-1">
+                              {cmd.shortcut.map((k, i) => (
+                                <KeyCap key={`${cmd.id}-${k}-${i}`}>{k}</KeyCap>
+                              ))}
+                            </div>
+                          ) : (
+                            <span className="text-[11px] text-neutral-10">via ⌘K</span>
+                          )}
+                        </Table.Cell>
+                      </Table.Row>
+                    );
+                  })}
+                </Table.Body>
+              </Table>
+            </div>
           );
         })}
-      </AnimateInGroup>
+      </div>
     </section>
   );
 }

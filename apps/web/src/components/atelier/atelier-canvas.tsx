@@ -12,7 +12,6 @@
 
 import type { CanvasElement, CanvasFile, ScenePatch } from "@nebutra/atelier-canvas";
 import { Sparkles } from "@nebutra/icons";
-import { AnimateIn } from "@nebutra/ui/components";
 import { Button, Textarea, toast } from "@nebutra/ui/primitives";
 import { useCallback, useMemo, useState } from "react";
 
@@ -109,26 +108,25 @@ export function AtelierCanvas({ canvasId }: AtelierCanvasProps) {
       </div>
 
       {/* Prompt panel */}
-      <AnimateIn preset="fade">
-        <div className="flex h-full flex-col gap-3 rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-4">
-          <h2 className="font-semibold text-neutral-12 text-sm">Brief</h2>
-          <Textarea
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            placeholder="A serene alpine lake at dawn, editorial photography…"
-            rows={5}
-            disabled={busy}
-          />
-          <Button type="button" onClick={submit} disabled={busy || !prompt.trim()}>
-            <Sparkles className="mr-2 h-4 w-4" />
-            {busy ? "Generating…" : "Generate"}
-          </Button>
-          <p className="mt-auto text-neutral-11 text-xs">
-            Mock provider — no AI key needed. The server picks a non-overlapping position and
-            persists before this panel is told.
-          </p>
-        </div>
-      </AnimateIn>
+
+      <div className="flex h-full flex-col gap-3 rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-4">
+        <h2 className="font-semibold text-neutral-12 text-sm">Brief</h2>
+        <Textarea
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          placeholder="A serene alpine lake at dawn, editorial photography…"
+          rows={5}
+          disabled={busy}
+        />
+        <Button type="button" onClick={submit} disabled={busy || !prompt.trim()}>
+          <Sparkles className="mr-2 h-4 w-4" />
+          {busy ? "Generating…" : "Generate"}
+        </Button>
+        <p className="mt-auto text-neutral-11 text-xs">
+          Mock provider — no AI key needed. The server picks a non-overlapping position and persists
+          before this panel is told.
+        </p>
+      </div>
     </div>
   );
 }

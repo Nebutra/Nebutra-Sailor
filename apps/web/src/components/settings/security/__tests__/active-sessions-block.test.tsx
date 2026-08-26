@@ -17,19 +17,19 @@ vi.mock("next-intl", () => ({
 // Mock @nebutra/ui/components so we don't transitively import @emoji-mart/data
 // (which Vitest cannot import without a "type: json" attribute) via the heroui
 // barrel. The Button stub mirrors the props this component actually uses.
-vi.mock("@nebutra/ui/components", () => ({
+vi.mock("@nebutra/ui/primitives", () => ({
   Button: ({
     children,
-    htmlType = "button",
+    type = "button",
     onClick,
     disabled,
   }: {
     children: ReactNode;
-    htmlType?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
+    type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
     onClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
     disabled?: boolean;
   }) => (
-    <button type={htmlType} onClick={onClick} disabled={disabled}>
+    <button type={type ?? "button"} onClick={onClick} disabled={disabled}>
       {children}
     </button>
   ),

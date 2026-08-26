@@ -1,8 +1,15 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@nebutra/ui/components";
-import { Form, FormControl, FormField, FormItem, FormLabel, Input } from "@nebutra/ui/primitives";
+import {
+  Button,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  Input,
+} from "@nebutra/ui/primitives";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -105,7 +112,7 @@ export function DeleteOrganizationForm({
       </div>
 
       {stage === "idle" ? (
-        <Button htmlType="button" onClick={() => setStage("confirm")}>
+        <Button type="button" onClick={() => setStage("confirm")}>
           {t("trigger")}
         </Button>
       ) : (
@@ -147,15 +154,10 @@ export function DeleteOrganizationForm({
             )}
 
             <div className="flex flex-wrap gap-3">
-              <Button htmlType="submit" disabled={!canSubmit}>
+              <Button type="submit" disabled={!canSubmit}>
                 {t("submit")}
               </Button>
-              <Button
-                htmlType="button"
-                variant="outlined"
-                onClick={handleCancel}
-                disabled={pending}
-              >
+              <Button type="button" variant="outline" onClick={handleCancel} disabled={pending}>
                 {t("cancel")}
               </Button>
             </div>

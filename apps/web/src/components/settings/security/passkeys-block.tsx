@@ -1,7 +1,6 @@
 "use client";
 
-import { Button } from "@nebutra/ui/components";
-import { Input } from "@nebutra/ui/primitives";
+import { Button, Input } from "@nebutra/ui/primitives";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useFormatter, useTranslations } from "next-intl";
 import { type FormEvent, useReducer } from "react";
@@ -354,14 +353,14 @@ export function PasskeysBlock({
                     value={state.editingName}
                   />
                   <div className="flex gap-2">
-                    <Button disabled={pending} htmlType="submit" type="primary">
+                    <Button disabled={pending} type="submit">
                       {t("saveRename")}
                     </Button>
                     <Button
                       disabled={pending}
-                      htmlType="button"
+                      type="button"
                       onClick={() => dispatch({ type: "rename.cancel" })}
-                      variant="outlined"
+                      variant="outline"
                     >
                       {t("cancelAdd")}
                     </Button>
@@ -389,19 +388,19 @@ export function PasskeysBlock({
                   <div className="flex gap-2">
                     <Button
                       disabled={pending || state.removingId === passkey.id}
-                      htmlType="button"
+                      type="button"
                       onClick={() =>
                         dispatch({ type: "rename.open", id: passkey.id, name: passkey.name })
                       }
-                      variant="outlined"
+                      variant="outline"
                     >
                       {t("rename")}
                     </Button>
                     <Button
                       disabled={state.removingId === passkey.id}
-                      htmlType="button"
+                      type="button"
                       onClick={() => handleRemove(passkey.id)}
-                      variant="outlined"
+                      variant="outline"
                     >
                       {t("remove")}
                     </Button>
@@ -434,16 +433,16 @@ export function PasskeysBlock({
               <p className="text-xs text-muted-foreground">{t("nameHelp")}</p>
             </div>
             <div className="flex gap-2">
-              <Button disabled={pending} htmlType="submit" type="primary">
+              <Button disabled={pending} type="submit">
                 {t("addPasskey")}
               </Button>
-              <Button disabled={pending} htmlType="button" onClick={cancelAdd} variant="outlined">
+              <Button disabled={pending} type="button" onClick={cancelAdd} variant="outline">
                 {t("cancelAdd")}
               </Button>
             </div>
           </form>
         ) : (
-          <Button disabled={pending} htmlType="button" onClick={startAdd} type="primary">
+          <Button disabled={pending} type="button" onClick={startAdd}>
             {t("addPasskey")}
           </Button>
         )}

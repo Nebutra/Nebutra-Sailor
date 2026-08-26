@@ -23,8 +23,8 @@
  */
 
 import { Trash as Trash2 } from "@nebutra/icons";
-import { AnimateIn, Button } from "@nebutra/ui/components";
 import {
+  Button,
   ConfirmDialog,
   Select,
   SelectContent,
@@ -190,158 +190,154 @@ export function MembersClient({ orgId }: MembersClientProps) {
   const errorMessage = membersQuery.error ? t("errorLoad") : null;
 
   return (
-    <AnimateIn preset="fadeUp">
-      <div className="space-y-6">
-        <header className="flex flex-wrap items-start justify-between gap-3">
-          <div className="space-y-1">
-            <h1 className="text-xl font-semibold text-neutral-12">{t("heading")}</h1>
-            <p className="text-sm text-neutral-11">{t("description")}</p>
-          </div>
-          <Button htmlType="button" onClick={() => setInviteOpen(true)}>
-            {t("invite")}
-          </Button>
-        </header>
+    <div className="space-y-6">
+      <header className="flex flex-wrap items-start justify-between gap-3">
+        <div className="space-y-1">
+          <h1 className="text-xl font-semibold text-neutral-12">{t("heading")}</h1>
+          <p className="text-sm text-neutral-11">{t("description")}</p>
+        </div>
+        <Button type="button" onClick={() => setInviteOpen(true)}>
+          {t("invite")}
+        </Button>
+      </header>
 
-        {successMessage && (
-          <p
-            role="status"
-            className="rounded-[var(--radius-sm)] bg-[color:var(--status-success)]/10 px-3 py-2 text-xs text-[color:var(--status-success)]"
-          >
-            {successMessage}
-          </p>
-        )}
+      {successMessage && (
+        <p
+          role="status"
+          className="rounded-[var(--radius-sm)] bg-[color:var(--status-success)]/10 px-3 py-2 text-xs text-[color:var(--status-success)]"
+        >
+          {successMessage}
+        </p>
+      )}
 
-        {errorMessage && (
-          <p
-            role="alert"
-            className="rounded-[var(--radius-sm)] bg-[color:var(--status-danger)]/10 px-3 py-2 text-xs text-[color:var(--status-danger)]"
-          >
-            {errorMessage}
-          </p>
-        )}
+      {errorMessage && (
+        <p
+          role="alert"
+          className="rounded-[var(--radius-sm)] bg-[color:var(--status-danger)]/10 px-3 py-2 text-xs text-[color:var(--status-danger)]"
+        >
+          {errorMessage}
+        </p>
+      )}
 
-        {membersQuery.isPending ? (
-          <p className="text-sm text-neutral-11">{t("loading")}</p>
-        ) : members.length === 0 ? (
-          <p className="rounded-[var(--radius-md)] border border-dashed border-neutral-7 px-4 py-6 text-center text-sm text-neutral-11">
-            {t("empty")}
-          </p>
-        ) : (
-          <Table
-            bare
-            wrapperClassName="overflow-hidden rounded-[var(--radius-md)] border border-neutral-7"
-            wrapperStyle={MEMBER_DENSITY}
-          >
-            <Table.Header className="bg-neutral-2 text-xs uppercase">
-              <Table.Row>
-                <Table.Head>{t("columnMember")}</Table.Head>
-                <Table.Head>{t("columnRole")}</Table.Head>
-                <Table.Head>{t("columnJoined")}</Table.Head>
-                <Table.Head>
-                  <span className="sr-only">{t("columnActions")}</span>
-                </Table.Head>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body bordered>
-              {members.map((member) => {
-                const isSelf = member.userId === currentUserId;
-                const isOwner = member.role === "owner";
-                const canEditRole = canManageRoles && !isSelf && !isOwner;
-                const canRemove = canRemoveMembers && !isSelf && !isOwner;
-                const displayName = member.user.name ?? member.user.email;
-                return (
-                  <Table.Row key={member.id} className="bg-neutral-1 dark:bg-transparent">
-                    <Table.Cell>
-                      <div className="flex items-center gap-2">
-                        <div
-                          className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[hsl(var(--primary))] text-xs font-semibold text-white"
-                          aria-hidden
-                        >
-                          {(displayName?.[0] ?? "?").toUpperCase()}
-                        </div>
-                        <div className="min-w-0">
-                          <div className="truncate font-medium text-neutral-12">{displayName}</div>
-                          <div className="truncate text-xs text-neutral-11">
-                            {member.user.email}
-                          </div>
-                        </div>
+      {membersQuery.isPending ? (
+        <p className="text-sm text-neutral-11">{t("loading")}</p>
+      ) : members.length === 0 ? (
+        <p className="rounded-[var(--radius-md)] border border-dashed border-neutral-7 px-4 py-6 text-center text-sm text-neutral-11">
+          {t("empty")}
+        </p>
+      ) : (
+        <Table
+          bare
+          wrapperClassName="overflow-hidden rounded-[var(--radius-md)] border border-neutral-7"
+          wrapperStyle={MEMBER_DENSITY}
+        >
+          <Table.Header className="bg-neutral-2 text-xs uppercase">
+            <Table.Row>
+              <Table.Head>{t("columnMember")}</Table.Head>
+              <Table.Head>{t("columnRole")}</Table.Head>
+              <Table.Head>{t("columnJoined")}</Table.Head>
+              <Table.Head>
+                <span className="sr-only">{t("columnActions")}</span>
+              </Table.Head>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body bordered>
+            {members.map((member) => {
+              const isSelf = member.userId === currentUserId;
+              const isOwner = member.role === "owner";
+              const canEditRole = canManageRoles && !isSelf && !isOwner;
+              const canRemove = canRemoveMembers && !isSelf && !isOwner;
+              const displayName = member.user.name ?? member.user.email;
+              return (
+                <Table.Row key={member.id} className="bg-neutral-1 dark:bg-transparent">
+                  <Table.Cell>
+                    <div className="flex items-center gap-2">
+                      <div
+                        className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[hsl(var(--primary))] text-xs font-semibold text-white"
+                        aria-hidden
+                      >
+                        {(displayName?.[0] ?? "?").toUpperCase()}
                       </div>
-                    </Table.Cell>
-                    <Table.Cell>
-                      {canEditRole ? (
-                        <Select
-                          disabled={pendingMemberId === member.id}
-                          value={member.role}
-                          onValueChange={(value) => handleRoleChange(member.id, value as Role)}
-                        >
-                          <SelectTrigger aria-label={`${t("changeRole")} for ${displayName}`}>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="admin">{t("role.admin")}</SelectItem>
-                            <SelectItem value="member">{t("role.member")}</SelectItem>
-                            <SelectItem value="viewer">{t("role.viewer")}</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      ) : (
-                        <span className="text-xs text-neutral-11">
-                          {t(`role.${member.role}` as `role.${Role}`)}
-                        </span>
-                      )}
-                    </Table.Cell>
-                    <Table.Cell className="text-xs text-neutral-11">
-                      {Number.isNaN(new Date(member.joinedAt).getTime())
-                        ? member.joinedAt
-                        : format.dateTime(new Date(member.joinedAt), {
-                            year: "numeric",
-                            month: "short",
-                            day: "numeric",
-                          })}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {canRemove && (
-                        <button
-                          type="button"
-                          aria-label={`${t("remove")} ${displayName}`}
-                          onClick={() => setConfirmRemoveId(member.id)}
-                          className="inline-flex items-center gap-1 rounded-[var(--radius-sm)] px-2 py-1 text-xs text-[color:var(--status-danger)] transition-colors hover:bg-[color:var(--status-danger)]/10"
-                        >
-                          <Trash2 className="h-3.5 w-3.5" aria-hidden />
-                          <span>{t("remove")}</span>
-                        </button>
-                      )}
-                    </Table.Cell>
-                  </Table.Row>
-                );
-              })}
-            </Table.Body>
-          </Table>
-        )}
+                      <div className="min-w-0">
+                        <div className="truncate font-medium text-neutral-12">{displayName}</div>
+                        <div className="truncate text-xs text-neutral-11">{member.user.email}</div>
+                      </div>
+                    </div>
+                  </Table.Cell>
+                  <Table.Cell>
+                    {canEditRole ? (
+                      <Select
+                        disabled={pendingMemberId === member.id}
+                        value={member.role}
+                        onValueChange={(value) => handleRoleChange(member.id, value as Role)}
+                      >
+                        <SelectTrigger aria-label={`${t("changeRole")} for ${displayName}`}>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="admin">{t("role.admin")}</SelectItem>
+                          <SelectItem value="member">{t("role.member")}</SelectItem>
+                          <SelectItem value="viewer">{t("role.viewer")}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <span className="text-xs text-neutral-11">
+                        {t(`role.${member.role}` as `role.${Role}`)}
+                      </span>
+                    )}
+                  </Table.Cell>
+                  <Table.Cell className="text-xs text-neutral-11">
+                    {Number.isNaN(new Date(member.joinedAt).getTime())
+                      ? member.joinedAt
+                      : format.dateTime(new Date(member.joinedAt), {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {canRemove && (
+                      <button
+                        type="button"
+                        aria-label={`${t("remove")} ${displayName}`}
+                        onClick={() => setConfirmRemoveId(member.id)}
+                        className="inline-flex items-center gap-1 rounded-[var(--radius-sm)] px-2 py-1 text-xs text-[color:var(--status-danger)] transition-colors hover:bg-[color:var(--status-danger)]/10"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" aria-hidden />
+                        <span>{t("remove")}</span>
+                      </button>
+                    )}
+                  </Table.Cell>
+                </Table.Row>
+              );
+            })}
+          </Table.Body>
+        </Table>
+      )}
 
-        <InviteDialog
-          orgId={orgId}
-          open={inviteOpen}
-          onClose={() => setInviteOpen(false)}
-          onSuccess={() => {
-            setSuccessMessage(tInvite("success"));
-            void queryClient.invalidateQueries({ queryKey: listKey });
-          }}
-        />
+      <InviteDialog
+        orgId={orgId}
+        open={inviteOpen}
+        onClose={() => setInviteOpen(false)}
+        onSuccess={() => {
+          setSuccessMessage(tInvite("success"));
+          void queryClient.invalidateQueries({ queryKey: listKey });
+        }}
+      />
 
-        <ConfirmDialog
-          open={confirmRemoveId !== null}
-          onOpenChange={(open) => {
-            if (!open) setConfirmRemoveId(null);
-          }}
-          title={t("confirmRemove")}
-          confirmText={t("confirm")}
-          cancelText={t("cancel")}
-          loading={pendingMemberId === confirmRemoveId}
-          onConfirm={() => {
-            if (confirmRemoveId) handleConfirmRemove(confirmRemoveId);
-          }}
-        />
-      </div>
-    </AnimateIn>
+      <ConfirmDialog
+        open={confirmRemoveId !== null}
+        onOpenChange={(open) => {
+          if (!open) setConfirmRemoveId(null);
+        }}
+        title={t("confirmRemove")}
+        confirmText={t("confirm")}
+        cancelText={t("cancel")}
+        loading={pendingMemberId === confirmRemoveId}
+        onConfirm={() => {
+          if (confirmRemoveId) handleConfirmRemove(confirmRemoveId);
+        }}
+      />
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@nebutra/ui/components";
+import { Button } from "@nebutra/ui/primitives";
 import { useFormatter } from "next-intl";
 import { useEffect, useReducer } from "react";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
@@ -286,17 +286,17 @@ export function ActiveSessionsBlock({
               <div className="flex gap-2">
                 <Button
                   disabled={state.revokingAll}
-                  htmlType="button"
+                  type="button"
                   onClick={() => dispatch({ type: "confirmAll.close" })}
-                  variant="outlined"
+                  variant="outline"
                 >
                   {SESSION_STRINGS.cancel}
                 </Button>
                 <Button
                   disabled={state.revokingAll}
-                  htmlType="button"
+                  type="button"
                   onClick={handleRevokeAllOthers}
-                  variant="filled"
+                  variant="default"
                 >
                   {SESSION_STRINGS.confirm}
                 </Button>
@@ -305,9 +305,9 @@ export function ActiveSessionsBlock({
           ) : (
             <Button
               disabled={state.revokingAll || otherSessionsCount === 0}
-              htmlType="button"
+              type="button"
               onClick={() => dispatch({ type: "confirmAll.open" })}
-              variant="outlined"
+              variant="outline"
             >
               {SESSION_STRINGS.revokeAll}
             </Button>
@@ -382,9 +382,9 @@ export function ActiveSessionsBlock({
                     !canRevokeSession(session) ||
                     state.pendingSessionId === session.id
                   }
-                  htmlType="button"
+                  type="button"
                   onClick={() => handleRevoke(session)}
-                  variant="outlined"
+                  variant="outline"
                 >
                   {state.pendingSessionId === session.id
                     ? SESSION_STRINGS.revoking

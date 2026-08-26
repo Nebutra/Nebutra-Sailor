@@ -1,8 +1,15 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@nebutra/ui/components";
-import { Form, FormControl, FormField, FormItem, FormLabel, Input } from "@nebutra/ui/primitives";
+import {
+  Button,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  Input,
+} from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { type FieldErrors, useForm } from "react-hook-form";
@@ -295,7 +302,7 @@ export function ChangePasswordForm({
           )}
 
           <div>
-            <Button disabled={pending} htmlType="submit" type="primary">
+            <Button disabled={pending} type="submit">
               {pending ? t("pending") : t("submit")}
             </Button>
           </div>

@@ -409,7 +409,6 @@ function FeedbackInline({
       ref={rootRef}
       className={cn(
         "m-0 min-w-0 w-fit overflow-hidden rounded-[var(--feedback-panel-radius)] border border-border bg-card p-0 text-card-foreground shadow-sm",
-        "transition-[max-height,width] duration-[var(--feedback-duration)] ease-[var(--feedback-easing)] motion-reduce:transition-none",
         expanded ? "w-[var(--feedback-width)]" : "max-w-full",
         className,
       )}

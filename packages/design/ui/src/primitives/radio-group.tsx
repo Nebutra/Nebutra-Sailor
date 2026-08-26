@@ -132,7 +132,7 @@ const radioControlClassName = cn(
   "relative inline-flex shrink-0 items-center justify-center rounded-[var(--radius-full)] border-[length:var(--radio-border-width)] border-border bg-background text-foreground",
   "size-[var(--radio-control-size)]",
   "transition-[background-color,border-color,box-shadow] duration-[var(--radio-motion-duration)] ease-[var(--radio-motion-easing)]",
-  "after:size-[var(--radio-dot-size)] after:scale-0 after:rounded-[var(--radius-full)] after:bg-current after:opacity-0 after:transition-[opacity,transform] after:duration-[var(--radio-motion-duration)] after:ease-[var(--radio-motion-easing)] after:content-['']",
+  "after:size-[var(--radio-dot-size)] after:scale-95 after:rounded-[var(--radius-full)] after:bg-current after:opacity-0 after:transition-[opacity,transform] after:duration-[var(--radio-motion-duration)] after:ease-[var(--radio-motion-easing)] after:content-['']",
   "peer-checked:border-[var(--neutral-12)] peer-checked:after:scale-100 peer-checked:after:opacity-100",
   "peer-focus-visible:outline-none",
   "peer-disabled:border-[var(--neutral-5)] peer-disabled:bg-muted peer-disabled:text-[var(--neutral-8)]",

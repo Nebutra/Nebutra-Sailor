@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@nebutra/ui/components";
+import { Button } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
@@ -86,7 +86,7 @@ export function SetPasswordForm({ email, onSubmit }: SetPasswordFormProps) {
           {t("sentMessage")}
         </p>
       ) : (
-        <Button disabled={pending} htmlType="button" onClick={requestPasswordSetup} type="primary">
+        <Button disabled={pending} type="button" onClick={requestPasswordSetup}>
           {pending ? t("pending") : t("submit")}
         </Button>
       )}

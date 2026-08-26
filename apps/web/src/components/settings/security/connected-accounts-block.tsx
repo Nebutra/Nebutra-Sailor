@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@nebutra/ui/components";
+import { Button } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
@@ -164,19 +164,14 @@ export function ConnectedAccountsBlock({
                 {isLinked ? (
                   <Button
                     disabled={isPending}
-                    htmlType="button"
+                    type="button"
                     onClick={() => handleUnlink(providerId)}
-                    variant="outlined"
+                    variant="outline"
                   >
                     {t("unlink")}
                   </Button>
                 ) : (
-                  <Button
-                    disabled={isPending}
-                    htmlType="button"
-                    onClick={() => handleLink(providerId)}
-                    type="primary"
-                  >
+                  <Button disabled={isPending} type="button" onClick={() => handleLink(providerId)}>
                     {t("connect")}
                   </Button>
                 )}

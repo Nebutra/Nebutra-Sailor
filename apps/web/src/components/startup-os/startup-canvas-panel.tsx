@@ -22,7 +22,6 @@ import type {
   StartupOperatingRun,
   StartupOSProject,
 } from "@nebutra/startup-os/compiler";
-import { AnimateIn } from "@nebutra/ui/components";
 import { Badge, Button, EmptyState } from "@nebutra/ui/primitives";
 import { type PointerEvent as ReactPointerEvent, useEffect, useRef, useState } from "react";
 import {
@@ -188,7 +187,7 @@ export function StartupCanvasPanel({
   }
 
   return (
-    <AnimateIn preset="fadeUp" className="h-full min-h-0">
+    <div className="h-full min-h-0">
       <div className="flex h-full min-h-0 min-w-0 flex-col overflow-hidden bg-neutral-1">
         <div className="flex shrink-0 flex-col gap-3 p-4 lg:flex-row lg:items-start lg:justify-between">
           <div className="min-w-0">
@@ -324,7 +323,7 @@ export function StartupCanvasPanel({
           />
         </div>
       </div>
-    </AnimateIn>
+    </div>
   );
 }
 
@@ -360,56 +359,52 @@ function StartupCanvasInspector({
       )}
 
       {selectedArtifact ? (
-        <AnimateIn preset="fade">
-          <div className="mt-3 rounded-2xl bg-neutral-2 p-3">
-            <p className="text-sm font-semibold text-neutral-12">{selectedArtifact.title}</p>
-            <p className="mt-1 text-xs leading-5 text-neutral-11">{selectedArtifact.summary}</p>
-            <div className="mt-3 grid gap-1.5 text-[11px] text-neutral-11">
-              <span>Status: {selectedArtifact.status}</span>
-              <span>Owner: {selectedArtifact.owner}</span>
-              <span className="break-words">
-                Dependencies:{" "}
-                {selectedArtifact.dependencies.length > 0
-                  ? selectedArtifact.dependencies.join(", ")
-                  : "CompanyContext"}
-              </span>
-            </div>
+        <div className="mt-3 rounded-2xl bg-neutral-2 p-3">
+          <p className="text-sm font-semibold text-neutral-12">{selectedArtifact.title}</p>
+          <p className="mt-1 text-xs leading-5 text-neutral-11">{selectedArtifact.summary}</p>
+          <div className="mt-3 grid gap-1.5 text-[11px] text-neutral-11">
+            <span>Status: {selectedArtifact.status}</span>
+            <span>Owner: {selectedArtifact.owner}</span>
+            <span className="break-words">
+              Dependencies:{" "}
+              {selectedArtifact.dependencies.length > 0
+                ? selectedArtifact.dependencies.join(", ")
+                : "CompanyContext"}
+            </span>
           </div>
-        </AnimateIn>
+        </div>
       ) : null}
 
       {selectedRun ? (
-        <AnimateIn preset="fade">
-          <div className="mt-3 rounded-2xl bg-neutral-2 p-3">
-            <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0">
-                <p className="text-sm font-semibold text-neutral-12">{selectedRun.stage}</p>
-                <p className="mt-1 text-xs leading-5 text-neutral-11">{selectedRun.summary}</p>
-              </div>
-              <StartupRunStatusBadge status={selectedRun.status} />
+        <div className="mt-3 rounded-2xl bg-neutral-2 p-3">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-sm font-semibold text-neutral-12">{selectedRun.stage}</p>
+              <p className="mt-1 text-xs leading-5 text-neutral-11">{selectedRun.summary}</p>
             </div>
-            <div className="mt-3 grid gap-1.5 text-[11px] text-neutral-11">
-              <span>Adapter: {selectedRun.adapter}</span>
-              <span>Approval: {selectedRun.approval}</span>
-              <span>Budget: ${selectedRun.costEstimateUsd.toFixed(2)}</span>
-            </div>
-            <Button
-              type="button"
-              variant="ink"
-              size="sm"
-              className="mt-3 w-full"
-              disabled={!selectedRunExecutable || isExecuting}
-              onClick={() => onExecuteRun(selectedRun.id)}
-              prefix={<Lightning className="size-3.5" aria-hidden="true" />}
-            >
-              {isExecuting
-                ? "Executing..."
-                : selectedRunExecutable
-                  ? "Execute selected run"
-                  : "Not executable"}
-            </Button>
+            <StartupRunStatusBadge status={selectedRun.status} />
           </div>
-        </AnimateIn>
+          <div className="mt-3 grid gap-1.5 text-[11px] text-neutral-11">
+            <span>Adapter: {selectedRun.adapter}</span>
+            <span>Approval: {selectedRun.approval}</span>
+            <span>Budget: ${selectedRun.costEstimateUsd.toFixed(2)}</span>
+          </div>
+          <Button
+            type="button"
+            variant="ink"
+            size="sm"
+            className="mt-3 w-full"
+            disabled={!selectedRunExecutable || isExecuting}
+            onClick={() => onExecuteRun(selectedRun.id)}
+            prefix={<Lightning className="size-3.5" aria-hidden="true" />}
+          >
+            {isExecuting
+              ? "Executing..."
+              : selectedRunExecutable
+                ? "Execute selected run"
+                : "Not executable"}
+          </Button>
+        </div>
       ) : null}
     </aside>
   );

@@ -1,8 +1,15 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@nebutra/ui/components";
-import { Form, FormControl, FormField, FormItem, FormLabel, Input } from "@nebutra/ui/primitives";
+import {
+  Button,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  Input,
+} from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -194,7 +201,7 @@ export function MagicLinkForm({ onSendLink, onVerify, onSuccess }: MagicLinkForm
               )}
             />
 
-            <Button disabled={pending} htmlType="submit" type="primary">
+            <Button disabled={pending} type="submit">
               {t("send")}
             </Button>
           </form>
@@ -227,9 +234,9 @@ export function MagicLinkForm({ onSendLink, onVerify, onSuccess }: MagicLinkForm
 
           <Button
             disabled={cooldown > 0 || pending}
-            htmlType="button"
+            type="button"
             onClick={handleResend}
-            variant="outlined"
+            variant="outline"
           >
             {cooldown > 0 ? t("resendCooldown", { seconds: cooldown }) : t("resend")}
           </Button>

@@ -1,5 +1,4 @@
 import { brand } from "@nebutra/brand/metadata";
-import { AnimateIn } from "@nebutra/ui/components";
 import { PageHeader } from "@nebutra/ui/layout";
 import { DashboardPanel } from "@nebutra/ui/patterns";
 import { FleetMatrix } from "@/components/fleet-matrix";
@@ -63,34 +62,30 @@ export default function FleetPage() {
 
       <FleetMetrics metrics={metrics} />
 
-      <AnimateIn preset="fadeUp">
-        <DashboardPanel
-          className="mt-6"
-          title="Service matrix"
-          description="Host, runtime, and configured deploy target per service."
-        >
-          <FleetMatrix rows={rows} />
-        </DashboardPanel>
-      </AnimateIn>
+      <DashboardPanel
+        className="mt-6"
+        title="Service matrix"
+        description="Host, runtime, and configured deploy target per service."
+      >
+        <FleetMatrix rows={rows} />
+      </DashboardPanel>
 
-      <AnimateIn preset="fadeUp">
-        <DashboardPanel
-          className="mt-6"
-          title="Unclaimed hosts"
-          description="Hostnames in the domain SSOT that no service in this repo owns. Infrastructure hosts and external brand fronts are expected here."
-        >
-          <ul className="flex flex-wrap gap-1.5">
-            {unclaimed.map((host) => (
-              <li
-                key={host}
-                className="rounded-[var(--radius-sm)] bg-neutral-2 px-2 py-1 font-mono text-neutral-11 text-xs"
-              >
-                {host}
-              </li>
-            ))}
-          </ul>
-        </DashboardPanel>
-      </AnimateIn>
+      <DashboardPanel
+        className="mt-6"
+        title="Unclaimed hosts"
+        description="Hostnames in the domain SSOT that no service in this repo owns. Infrastructure hosts and external brand fronts are expected here."
+      >
+        <ul className="flex flex-wrap gap-1.5">
+          {unclaimed.map((host) => (
+            <li
+              key={host}
+              className="rounded-[var(--radius-sm)] bg-neutral-2 px-2 py-1 font-mono text-neutral-11 text-xs"
+            >
+              {host}
+            </li>
+          ))}
+        </ul>
+      </DashboardPanel>
     </div>
   );
 }

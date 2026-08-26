@@ -1,7 +1,7 @@
 "use client";
 
 import { useOrganization } from "@nebutra/auth/client";
-import { Button } from "@nebutra/ui/components";
+import { Button } from "@nebutra/ui/primitives";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -131,7 +131,7 @@ export function SelectOrgClient({ initialJourneyParams }: SelectOrgClientProps) 
               </button>
             ))}
             <Link href="/onboarding">
-              <Button variant="outlined" className="mt-4 w-full">
+              <Button variant="outline" className="mt-4 w-full">
                 {copy.createActionLabel}
               </Button>
             </Link>

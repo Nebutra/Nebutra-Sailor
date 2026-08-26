@@ -193,7 +193,7 @@ function renderSocialLoginButtons(providers: SocialLoginMeta[]): string {
  * page. The OAuth callback lives at \`/api/auth/callback/<id>\`.
  */
 
-import { Button } from "@nebutra/ui/components";
+import { Button } from "@nebutra/ui/primitives";
 
 interface SocialProvider {
   id: string;

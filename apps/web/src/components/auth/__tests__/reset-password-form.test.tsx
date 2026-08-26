@@ -2,7 +2,7 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const messages: Record<string, string> = {
@@ -45,29 +45,6 @@ vi.mock("next/link", () => ({
     <a href={href} {...rest}>
       {children}
     </a>
-  ),
-}));
-
-vi.mock("@nebutra/ui/components", () => ({
-  Button: ({
-    children,
-    htmlType,
-    onClick,
-    disabled,
-    type: _type,
-    variant: _variant,
-    ...rest
-  }: {
-    children?: ReactNode;
-    htmlType?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
-    onClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
-    disabled?: boolean;
-    type?: string;
-    variant?: string;
-  } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type">) => (
-    <button type={htmlType ?? "button"} onClick={onClick} disabled={disabled} {...rest}>
-      {children}
-    </button>
   ),
 }));
 

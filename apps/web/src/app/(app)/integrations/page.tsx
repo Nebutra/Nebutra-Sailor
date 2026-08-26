@@ -9,7 +9,6 @@ import {
   SettingsGear as Settings,
   Cross as X,
 } from "@nebutra/icons";
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Card, EmptyState, PageHeader } from "@nebutra/ui/layout";
 import { DashboardPanel } from "@nebutra/ui/patterns";
 import { useTranslations } from "next-intl";
@@ -147,195 +146,180 @@ export default function IntegrationsPage() {
 
   return (
     <section className="mx-auto w-full max-w-[1400px]" aria-label="Integrations">
-      <AnimateIn preset="fadeUp">
-        <PageHeader
-          title="Integrations"
-          description="Connect your favorite tools and services to supercharge your workflow."
-        />
-      </AnimateIn>
+      <PageHeader
+        title="Integrations"
+        description="Connect your favorite tools and services to supercharge your workflow."
+      />
 
       {/* Document pipeline — rehomed from the converged dashboard Home */}
-      <AnimateIn preset="fadeUp">
-        <div className="mt-8">
-          <DocumentPipelineSection />
-        </div>
-      </AnimateIn>
+
+      <div className="mt-8">
+        <DocumentPipelineSection />
+      </div>
 
       {/* Connected Integrations */}
       {integrations.length > 0 && (
         <>
-          <AnimateIn preset="fadeUp">
-            <h2 className="mt-8 text-lg font-semibold text-neutral-12">Connected</h2>
-          </AnimateIn>
+          <h2 className="mt-8 text-lg font-semibold text-neutral-12">Connected</h2>
 
-          <AnimateInGroup stagger="fast" className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {integrations.map((integration) => {
               const catalog = CATALOG.find((c) => c.type === integration.type);
               const Icon = catalog?.icon ?? Activity;
 
               return (
-                <AnimateIn key={integration.id} preset="fadeUp">
-                  <Card className="relative p-4 sm:p-5">
-                    {/* Status dot */}
-                    <div className="absolute right-4 top-4">
-                      <span
-                        className={`inline-block h-2.5 w-2.5 rounded-full ${
-                          integration.isActive ? "bg-success" : "bg-neutral-8"
-                        }`}
-                      />
-                    </div>
+                <Card key={integration.id} className="relative p-4 sm:p-5">
+                  {/* Status dot */}
+                  <div className="absolute right-4 top-4">
+                    <span
+                      className={`inline-block h-2.5 w-2.5 rounded-full ${
+                        integration.isActive ? "bg-success" : "bg-neutral-8"
+                      }`}
+                    />
+                  </div>
 
-                    <div className="flex items-start gap-3">
-                      <div
-                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-lg)] ${catalog?.bgColor ?? "bg-neutral-3"}`}
-                      >
-                        <Icon className={`h-5 w-5 ${catalog?.color ?? "text-neutral-11"}`} />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <h3 className="text-sm font-semibold text-neutral-12">
-                          {integration.name}
-                        </h3>
-                        <p className="mt-0.5 text-xs text-neutral-10">
-                          {integration.isActive ? "Active" : "Paused"}
-                          {integration.lastSyncAt &&
-                            ` · Last sync ${new Date(integration.lastSyncAt).toLocaleDateString()}`}
-                        </p>
-                      </div>
+                  <div className="flex items-start gap-3">
+                    <div
+                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-lg)] ${catalog?.bgColor ?? "bg-neutral-3"}`}
+                    >
+                      <Icon className={`h-5 w-5 ${catalog?.color ?? "text-neutral-11"}`} />
                     </div>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-sm font-semibold text-neutral-12">{integration.name}</h3>
+                      <p className="mt-0.5 text-xs text-neutral-10">
+                        {integration.isActive ? "Active" : "Paused"}
+                        {integration.lastSyncAt &&
+                          ` · Last sync ${new Date(integration.lastSyncAt).toLocaleDateString()}`}
+                      </p>
+                    </div>
+                  </div>
 
-                    {/* Actions */}
-                    <div className="mt-4 flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => handleToggle(integration.id, integration.isActive)}
-                        className={`flex items-center gap-1 rounded-[var(--radius-md)] px-2.5 py-1.5 text-xs font-medium transition-colors ${
-                          integration.isActive
-                            ? "bg-warning/10 text-[hsl(var(--warning-strong))] hover:bg-warning/10/70"
-                            : "bg-success/10 text-[hsl(var(--success-strong))] hover:bg-success/10/70"
-                        }`}
-                      >
-                        {integration.isActive ? (
-                          <>
-                            <Settings className="h-3 w-3" /> Pause
-                          </>
-                        ) : (
-                          <>
-                            <Check className="h-3 w-3" /> Resume
-                          </>
-                        )}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleDisconnect(integration.id)}
-                        className="flex items-center gap-1 rounded-[var(--radius-md)] bg-destructive/10 px-2.5 py-1.5 text-xs font-medium text-[hsl(var(--destructive-strong))] transition-colors hover:bg-destructive/10/70"
-                      >
-                        <X className="h-3 w-3" /> Disconnect
-                      </button>
-                    </div>
-                  </Card>
-                </AnimateIn>
+                  {/* Actions */}
+                  <div className="mt-4 flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => handleToggle(integration.id, integration.isActive)}
+                      className={`flex items-center gap-1 rounded-[var(--radius-md)] px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                        integration.isActive
+                          ? "bg-warning/10 text-[hsl(var(--warning-strong))] hover:bg-warning/10/70"
+                          : "bg-success/10 text-[hsl(var(--success-strong))] hover:bg-success/10/70"
+                      }`}
+                    >
+                      {integration.isActive ? (
+                        <>
+                          <Settings className="h-3 w-3" /> Pause
+                        </>
+                      ) : (
+                        <>
+                          <Check className="h-3 w-3" /> Resume
+                        </>
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleDisconnect(integration.id)}
+                      className="flex items-center gap-1 rounded-[var(--radius-md)] bg-destructive/10 px-2.5 py-1.5 text-xs font-medium text-[hsl(var(--destructive-strong))] transition-colors hover:bg-destructive/10/70"
+                    >
+                      <X className="h-3 w-3" /> Disconnect
+                    </button>
+                  </div>
+                </Card>
               );
             })}
-          </AnimateInGroup>
+          </div>
         </>
       )}
 
       {/* Available Integrations */}
-      <AnimateIn preset="fadeUp">
-        <h2 className="mt-10 text-lg font-semibold text-neutral-12">
-          {integrations.length > 0 ? "Available" : "Connect an Integration"}
-        </h2>
-        {integrations.length === 0 && !loading && (
-          <p className="mt-1 text-sm text-neutral-11">
-            Get started by connecting one of the services below.
-          </p>
-        )}
-      </AnimateIn>
+
+      <h2 className="mt-10 text-lg font-semibold text-neutral-12">
+        {integrations.length > 0 ? "Available" : "Connect an Integration"}
+      </h2>
+      {integrations.length === 0 && !loading && (
+        <p className="mt-1 text-sm text-neutral-11">
+          Get started by connecting one of the services below.
+        </p>
+      )}
 
       {loading ? (
-        <AnimateIn preset="fade">
-          <div className="mt-8 flex items-center justify-center gap-2 py-12 text-neutral-10">
-            <Loader2 className="h-5 w-5 animate-spin" />
-            <span className="text-sm">Loading integrations...</span>
-          </div>
-        </AnimateIn>
+        <div className="mt-8 flex items-center justify-center gap-2 py-12 text-neutral-10">
+          <Loader2 className="h-5 w-5 animate-spin" />
+          <span className="text-sm">Loading integrations...</span>
+        </div>
       ) : (
-        <AnimateInGroup stagger="fast" className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {CATALOG.map((item) => {
             const isConnected = connectedTypes.has(item.type);
             const isConnecting_ = connecting === item.type;
             const Icon = item.icon;
 
             return (
-              <AnimateIn key={item.type} preset="fadeUp">
-                <Card
-                  className={`group flex flex-col p-4 transition-[border-color,box-shadow,opacity] duration-150 sm:p-5 ${
-                    isConnected
-                      ? "border-success/40 opacity-60"
-                      : "hover:border-[var(--blue-7)] hover:shadow-md"
-                  }`}
-                >
-                  <div className="flex items-start gap-3">
-                    <div
-                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-lg)] ${item.bgColor}`}
-                    >
-                      <Icon className={`h-5 w-5 ${item.color}`} />
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-semibold text-neutral-12">{item.name}</h3>
-                    </div>
+              <Card
+                key={item.type}
+                className={`group flex flex-col p-4 transition-[border-color,box-shadow,opacity] duration-150 sm:p-5 ${
+                  isConnected
+                    ? "border-success/40 opacity-60"
+                    : "hover:border-[var(--blue-7)] hover:shadow-md"
+                }`}
+              >
+                <div className="flex items-start gap-3">
+                  <div
+                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-lg)] ${item.bgColor}`}
+                  >
+                    <Icon className={`h-5 w-5 ${item.color}`} />
                   </div>
-
-                  <p className="mt-3 flex-1 text-xs leading-relaxed text-neutral-10">
-                    {item.description}
-                  </p>
-
-                  <div className="mt-4 flex items-center gap-2">
-                    {isConnected ? (
-                      <span className="flex items-center gap-1 text-xs font-medium text-success">
-                        <Check className="h-3.5 w-3.5" /> Connected
-                      </span>
-                    ) : (
-                      <button
-                        type="button"
-                        disabled={isConnecting_}
-                        onClick={() => handleConnect(item.type, item.name)}
-                        className="flex items-center gap-1 rounded-[var(--radius-md)] bg-primary px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-primary/90 disabled:opacity-50"
-                      >
-                        {isConnecting_ ? (
-                          <Loader2 className="h-3 w-3 animate-spin" />
-                        ) : (
-                          <Plus className="h-3 w-3" />
-                        )}
-                        Connect
-                      </button>
-                    )}
-                    <a
-                      href={item.docUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1 text-xs text-neutral-10 transition-colors hover:text-neutral-12"
-                    >
-                      <ExternalLink className="h-3 w-3" /> Docs
-                    </a>
+                  <div>
+                    <h3 className="text-sm font-semibold text-neutral-12">{item.name}</h3>
                   </div>
-                </Card>
-              </AnimateIn>
+                </div>
+
+                <p className="mt-3 flex-1 text-xs leading-relaxed text-neutral-10">
+                  {item.description}
+                </p>
+
+                <div className="mt-4 flex items-center gap-2">
+                  {isConnected ? (
+                    <span className="flex items-center gap-1 text-xs font-medium text-success">
+                      <Check className="h-3.5 w-3.5" /> Connected
+                    </span>
+                  ) : (
+                    <button
+                      type="button"
+                      disabled={isConnecting_}
+                      onClick={() => handleConnect(item.type, item.name)}
+                      className="flex items-center gap-1 rounded-[var(--radius-md)] bg-primary px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-primary/90 disabled:opacity-50"
+                    >
+                      {isConnecting_ ? (
+                        <Loader2 className="h-3 w-3 animate-spin" />
+                      ) : (
+                        <Plus className="h-3 w-3" />
+                      )}
+                      Connect
+                    </button>
+                  )}
+                  <a
+                    href={item.docUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 text-xs text-neutral-10 transition-colors hover:text-neutral-12"
+                  >
+                    <ExternalLink className="h-3 w-3" /> Docs
+                  </a>
+                </div>
+              </Card>
             );
           })}
-        </AnimateInGroup>
+        </div>
       )}
 
       {/* Empty state fallback */}
       {!loading && integrations.length === 0 && CATALOG.length === 0 && (
-        <AnimateIn preset="fadeUp">
-          <Card className="mt-8 p-8">
-            <EmptyState
-              title={tSos("emptyState.integrations")}
-              description="Integration connectors will be added in future updates."
-            />
-          </Card>
-        </AnimateIn>
+        <Card className="mt-8 p-8">
+          <EmptyState
+            title={tSos("emptyState.integrations")}
+            description="Integration connectors will be added in future updates."
+          />
+        </Card>
       )}
     </section>
   );

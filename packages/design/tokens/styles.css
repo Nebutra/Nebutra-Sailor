@@ -90,7 +90,7 @@
   --duration-reveal: 300ms; /** Content unveil: slide-in, expand, accordion, drawer */
   --duration-cinematic: 500ms; /** Hero-grade entrance: landing reveal, large delight moments */
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
-  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
   --tracking-display: -0.04em; /** Hero H1 */
@@ -419,7 +419,7 @@
   --duration-reveal: 300ms; /** Content unveil: slide-in, expand, accordion, drawer */
   --duration-cinematic: 500ms; /** Hero-grade entrance: landing reveal, large delight moments */
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
-  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
   --tracking-display: -0.04em; /** Hero H1 */
@@ -953,7 +953,7 @@
    ─────────────────────────────────────────────────────────── */
 :root {
   --motion-ease-in: cubic-bezier(0.4, 0, 1, 1);
-  --motion-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --motion-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
   /* The signature: a long, strong deceleration — most of the distance is

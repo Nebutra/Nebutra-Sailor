@@ -161,42 +161,6 @@ vi.mock("../invite-dialog", () => ({
   },
 }));
 
-vi.mock("@nebutra/ui/components", () => ({
-  AnimateIn: ({ children }: { children: ReactNode }) => <div>{children}</div>,
-  Button: ({
-    children,
-    onClick,
-    htmlType,
-    disabled,
-    type: _type,
-    ...rest
-  }: {
-    children?: ReactNode;
-    onClick?: () => void;
-    htmlType?: "button" | "submit";
-    type?: string;
-    disabled?: boolean;
-  }) => (
-    <button type={htmlType ?? "button"} onClick={onClick} disabled={disabled} {...rest}>
-      {children}
-    </button>
-  ),
-  Input: ({
-    onChange,
-    value,
-    name,
-    type,
-    ...rest
-  }: {
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    value?: string;
-    name?: string;
-    type?: string;
-  }) => (
-    <input type={type ?? "text"} name={name} value={value ?? ""} onChange={onChange} {...rest} />
-  ),
-}));
-
 import { MembersClient } from "../members-client";
 
 const sampleMembers = [

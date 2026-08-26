@@ -6,7 +6,6 @@ import {
   Lightning as Rocket,
   Users,
 } from "@nebutra/icons";
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Card } from "@nebutra/ui/layout";
 import { DashboardMetricTile, DashboardPanel } from "@nebutra/ui/patterns";
 import { getLocale, getTranslations } from "next-intl/server";
@@ -120,20 +119,19 @@ async function WorkspaceMetrics() {
         </div>
       }
     >
-      <AnimateInGroup stagger="fast" className="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
         {metrics.map(({ label, value, detail, source, icon: Icon, tone }) => (
-          <AnimateIn key={label} preset="fadeUp">
-            <DashboardMetricTile
-              label={label}
-              value={value}
-              detail={detail}
-              source={source}
-              icon={Icon}
-              tone={tone}
-            />
-          </AnimateIn>
+          <DashboardMetricTile
+            key={label}
+            label={label}
+            value={value}
+            detail={detail}
+            source={source}
+            icon={Icon}
+            tone={tone}
+          />
         ))}
-      </AnimateInGroup>
+      </div>
     </DashboardPanel>
   );
 }
@@ -188,37 +186,31 @@ export default async function AdminPage({ searchParams }: { searchParams: AdminS
         <WorkspaceMetrics />
       </Suspense>
 
-      <AnimateIn preset="fadeUp">
-        <Card className="mt-6 p-4 sm:p-6">
-          <h3 className="text-sm font-medium text-neutral-12">Escape hatches</h3>
-          <p className="mt-1 text-neutral-10 text-xs">
-            Debug-only utilities. Not a substitute for Retool flows.
-          </p>
-          <ul className="mt-3 space-y-1.5 text-neutral-11 text-sm">
-            <li>
-              <code className="font-mono text-xs">POST /api/admin/impersonate</code>
-              {": "}
-              capability-gated (matrix currently unsupported → 501 until an adapter ships it)
-            </li>
-          </ul>
-        </Card>
-      </AnimateIn>
+      <Card className="mt-6 p-4 sm:p-6">
+        <h3 className="text-sm font-medium text-neutral-12">Escape hatches</h3>
+        <p className="mt-1 text-neutral-10 text-xs">
+          Debug-only utilities. Not a substitute for Retool flows.
+        </p>
+        <ul className="mt-3 space-y-1.5 text-neutral-11 text-sm">
+          <li>
+            <code className="font-mono text-xs">POST /api/admin/impersonate</code>
+            {": "}
+            capability-gated (matrix currently unsupported → 501 until an adapter ships it)
+          </li>
+        </ul>
+      </Card>
 
-      <AnimateIn preset="fadeUp">
-        <AccessInviteIssuer />
-      </AnimateIn>
+      <AccessInviteIssuer />
 
-      <AnimateIn preset="fadeUp">
-        <AdminDirectoryPanel
-          query={directory.query}
-          page={directory.page}
-          pageSize={directory.pageSize}
-          users={directory.users}
-          organizations={directory.organizations}
-          totalUsers={directory.totalUsers}
-          totalOrganizations={directory.totalOrganizations}
-        />
-      </AnimateIn>
+      <AdminDirectoryPanel
+        query={directory.query}
+        page={directory.page}
+        pageSize={directory.pageSize}
+        users={directory.users}
+        organizations={directory.organizations}
+        totalUsers={directory.totalUsers}
+        totalOrganizations={directory.totalOrganizations}
+      />
     </>
   );
 }

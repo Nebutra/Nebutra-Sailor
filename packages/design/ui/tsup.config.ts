@@ -85,6 +85,7 @@ function copyAsset(srcAbs: string, destAbs: string): void {
 const ENTRIES: Record<string, string> = {
   index: "src/index.ts",
   "components/index": "src/components/index.ts",
+  "chat/index": "src/chat/index.ts",
   "agent/index": "src/agent/index.ts",
   "layout/index": "src/layout/index.ts",
   "layouts/index": "src/layouts/index.ts",

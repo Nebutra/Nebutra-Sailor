@@ -1,13 +1,14 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Input } from "@nebutra/ui/components";
 import {
+  Button,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
+  Input,
   Label,
   Separator,
 } from "@nebutra/ui/primitives";
@@ -213,7 +214,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
 
           {error && <p className="text-sm text-[hsl(var(--destructive))]">{error}</p>}
 
-          <Button htmlType="submit" className="w-full" disabled={loading || code.length !== 6}>
+          <Button type="submit" className="w-full" disabled={loading || code.length !== 6}>
             {loading ? "Verifying…" : "Verify"}
           </Button>
         </form>
@@ -342,7 +343,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
           {error && <p className="text-sm text-[hsl(var(--destructive))]">{error}</p>}
 
           <Button
-            htmlType="submit"
+            type="submit"
             className="w-full"
             disabled={loading || (accessGateEnabled && !accessInviteCode.trim())}
           >

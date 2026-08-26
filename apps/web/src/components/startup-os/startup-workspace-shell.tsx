@@ -18,7 +18,6 @@ import type {
   StartupOSProject,
 } from "@nebutra/startup-os/compiler";
 import type { StartupOSFile } from "@nebutra/startup-os/files";
-import { AnimateIn } from "@nebutra/ui/components";
 import { Tabs, TabsList, TabsTrigger } from "@nebutra/ui/primitives";
 import { useState } from "react";
 import { useSidebar } from "@/components/navigation/sidebar-context";
@@ -88,7 +87,7 @@ export function StartupWorkspaceShell({
   const isFilesSurface = activeSurface === "code" || activeSurface === "preview";
 
   return (
-    <AnimateIn preset="fadeUp" className="h-[100dvh] min-h-0">
+    <div className="h-[100dvh] min-h-0">
       {/* Fixed full-height app shell: the workspace is exactly the viewport, so
  the OUTER container never scrolls. `h-full` percentage doesn't resolve
  through AppShell's overflow-y-auto block <main>, so the dynamic-viewport
@@ -172,6 +171,6 @@ export function StartupWorkspaceShell({
           </main>
         </div>
       </section>
-    </AnimateIn>
+    </div>
   );
 }

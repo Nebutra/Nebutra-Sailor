@@ -1,4 +1,3 @@
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Card, EmptyState, ErrorState, LoadingState, PageHeader } from "@nebutra/ui/layout";
 import { headers } from "next/headers";
 import { getTranslations } from "next-intl/server";
@@ -214,98 +213,86 @@ function CreditSummarySection({
 }) {
   if (!creditSummary) {
     return (
-      <AnimateIn preset="fadeUp">
-        <Card className="p-4 sm:p-6">
-          <h2 className="text-lg font-semibold text-neutral-12">Credit Balance</h2>
-          <p className="mt-2 text-sm text-neutral-11">
-            Credit balance is unavailable right now. Usage metering below is still loaded from the
-            gateway.
-          </p>
-        </Card>
-      </AnimateIn>
+      <Card className="p-4 sm:p-6">
+        <h2 className="text-lg font-semibold text-neutral-12">Credit Balance</h2>
+        <p className="mt-2 text-sm text-neutral-11">
+          Credit balance is unavailable right now. Usage metering below is still loaded from the
+          gateway.
+        </p>
+      </Card>
     );
   }
 
   return (
     <>
-      <AnimateInGroup stagger="fast" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <AnimateIn preset="fadeUp">
-          <StatCard
-            label="Credit Balance"
-            value={creditSummary.balance.amount.toLocaleString()}
-            subLabel={`${creditSummary.balance.formatted} available`}
-          />
-        </AnimateIn>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <StatCard
+          label="Credit Balance"
+          value={creditSummary.balance.amount.toLocaleString()}
+          subLabel={`${creditSummary.balance.formatted} available`}
+        />
 
-        <AnimateIn preset="fadeUp">
-          <StatCard
-            label="Daily refresh"
-            value={formatCreditAllowance(creditSummary.allowance.dailyRefresh)}
-            subLabel={`Refreshes at ${creditSummary.allowance.refreshTime}`}
-          />
-        </AnimateIn>
+        <StatCard
+          label="Daily refresh"
+          value={formatCreditAllowance(creditSummary.allowance.dailyRefresh)}
+          subLabel={`Refreshes at ${creditSummary.allowance.refreshTime}`}
+        />
 
-        <AnimateIn preset="fadeUp">
-          <StatCard
-            label="Plan allowance"
-            value={formatCreditAllowance(creditSummary.allowance.includedMonthly)}
-            subLabel={`${creditSummary.allowance.plan} monthly included credits`}
-          />
-        </AnimateIn>
-      </AnimateInGroup>
+        <StatCard
+          label="Plan allowance"
+          value={formatCreditAllowance(creditSummary.allowance.includedMonthly)}
+          subLabel={`${creditSummary.allowance.plan} monthly included credits`}
+        />
+      </div>
 
-      <AnimateIn preset="fadeUp">
-        <Card className="mt-6 p-4 sm:p-6">
-          <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h2 className="text-lg font-semibold text-neutral-12">Credit Activity</h2>
-              <p className="text-sm text-neutral-11">
-                Recent credit grants and consumption events.
-              </p>
-            </div>
-            <span className="text-xs font-medium uppercase tracking-normal text-neutral-10">
-              {creditSummary.allowance.plan}
-            </span>
+      <Card className="mt-6 p-4 sm:p-6">
+        <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 className="text-lg font-semibold text-neutral-12">Credit Activity</h2>
+            <p className="text-sm text-neutral-11">Recent credit grants and consumption events.</p>
           </div>
+          <span className="text-xs font-medium uppercase tracking-normal text-neutral-10">
+            {creditSummary.allowance.plan}
+          </span>
+        </div>
 
-          {creditSummary.transactions.length === 0 ? (
-            <p className="mt-6 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2 px-4 py-3 text-sm text-neutral-11">
-              {emptyActivityLabel}
-            </p>
-          ) : (
-            <div className="mt-4 divide-y divide-neutral-6">
-              {creditSummary.transactions.map((transaction) => (
-                <div
-                  key={transaction.id}
-                  className="grid gap-2 py-3 sm:grid-cols-[minmax(0,1fr)_auto_auto] sm:items-center sm:gap-6"
-                >
-                  <div className="min-w-0">
-                    <p className="truncate text-sm font-medium text-neutral-12">
-                      {transaction.description ?? formatTransactionType(transaction.type)}
-                    </p>
-                    <p className="mt-1 text-xs text-neutral-10">
-                      {formatCreditDate(transaction.createdAt)}
-                      {transaction.relatedId ? ` · ${transaction.relatedId}` : ""}
-                    </p>
-                  </div>
-
-                  <span
-                    className={`text-sm font-semibold ${
-                      transaction.amount >= 0 ? "text-success" : "text-neutral-12"
-                    }`}
-                  >
-                    {formatSignedCredits(transaction.amount)}
-                  </span>
-
-                  <span className="text-xs text-neutral-10">
-                    Balance {transaction.balanceAfter.toLocaleString()}
-                  </span>
+        {creditSummary.transactions.length === 0 ? (
+          <p className="mt-6 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2 px-4 py-3 text-sm text-neutral-11">
+            {emptyActivityLabel}
+          </p>
+        ) : (
+          <div className="mt-4 divide-y divide-neutral-6">
+            {creditSummary.transactions.map((transaction) => (
+              <div
+                key={transaction.id}
+                className="grid gap-2 py-3 sm:grid-cols-[minmax(0,1fr)_auto_auto] sm:items-center sm:gap-6"
+              >
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-medium text-neutral-12">
+                    {transaction.description ?? formatTransactionType(transaction.type)}
+                  </p>
+                  <p className="mt-1 text-xs text-neutral-10">
+                    {formatCreditDate(transaction.createdAt)}
+                    {transaction.relatedId ? ` · ${transaction.relatedId}` : ""}
+                  </p>
                 </div>
-              ))}
-            </div>
-          )}
-        </Card>
-      </AnimateIn>
+
+                <span
+                  className={`text-sm font-semibold ${
+                    transaction.amount >= 0 ? "text-success" : "text-neutral-12"
+                  }`}
+                >
+                  {formatSignedCredits(transaction.amount)}
+                </span>
+
+                <span className="text-xs text-neutral-10">
+                  Balance {transaction.balanceAfter.toLocaleString()}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+      </Card>
     </>
   );
 }
@@ -452,13 +439,11 @@ async function UsageBreakdownSection({
 
   return (
     <BreakdownFrame>
-      <AnimateInGroup stagger="fast" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {result.breakdown.groups.map((group) => (
-          <AnimateIn key={group.id} preset="fadeUp">
-            <BreakdownGroupCard group={group} />
-          </AnimateIn>
+          <BreakdownGroupCard key={group.id} group={group} />
         ))}
-      </AnimateInGroup>
+      </div>
 
       {result.breakdown.periodStart && result.breakdown.periodEnd && (
         <p className="mt-4 text-xs text-neutral-10 first-letter:uppercase">
@@ -479,12 +464,10 @@ async function UsageContent() {
 
   return (
     <>
-      <AnimateIn preset="fadeUp">
-        <PageHeader
-          title="Usage & Metering"
-          description="Monitor credits, API calls, AI token consumption, and quota status across your organization."
-        />
-      </AnimateIn>
+      <PageHeader
+        title="Usage & Metering"
+        description="Monitor credits, API calls, AI token consumption, and quota status across your organization."
+      />
 
       <CreditSummarySection
         creditSummary={creditSummary}
@@ -492,62 +475,53 @@ async function UsageContent() {
       />
 
       {!usage ? (
-        <AnimateIn preset="fadeUp">
-          <EmptyState
-            tone="branded"
-            size="lg"
-            title={t("emptyState.usageData")}
-            description="Usage metrics will appear once your organization starts making API calls. Ensure the API gateway is connected."
-          />
-        </AnimateIn>
+        <EmptyState
+          tone="branded"
+          size="lg"
+          title={t("emptyState.usageData")}
+          description="Usage metrics will appear once your organization starts making API calls. Ensure the API gateway is connected."
+        />
       ) : (
         /* Quota Gauges */
-        <AnimateInGroup stagger="fast" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <AnimateIn preset="fadeUp">
-            <UsageGauge
-              label="API Calls"
-              used={usage.apiCalls.used}
-              limit={usage.apiCalls.limit}
-              unit="requests"
-            />
-          </AnimateIn>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <UsageGauge
+            label="API Calls"
+            used={usage.apiCalls.used}
+            limit={usage.apiCalls.limit}
+            unit="requests"
+          />
 
-          <AnimateIn preset="fadeUp">
-            <StatCard
-              label="AI Tokens Used"
-              value={usage.aiTokens.used.toLocaleString()}
-              subLabel="Total tokens consumed this period"
-            />
-          </AnimateIn>
+          <StatCard
+            label="AI Tokens Used"
+            value={usage.aiTokens.used.toLocaleString()}
+            subLabel="Total tokens consumed this period"
+          />
 
-          <AnimateIn preset="fadeUp">
-            <StatCard
-              label="Billing Period"
-              value={usage.period}
-              subLabel="Current metering window"
-            />
-          </AnimateIn>
-        </AnimateInGroup>
+          <StatCard
+            label="Billing Period"
+            value={usage.period}
+            subLabel="Current metering window"
+          />
+        </div>
       )}
 
       {/* Usage Breakdown — read straight from @nebutra/metering, so it renders
           independently of the gateway usage endpoint above. */}
-      <AnimateIn preset="fadeUp">
-        <div className="mt-8 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <h2 className="text-lg font-semibold text-neutral-12">Usage Breakdown</h2>
-            <p className="mt-1 text-sm text-neutral-11">
-              This period&rsquo;s metered usage, grouped by the dimensions recorded on each event.
-            </p>
-          </div>
-          <ViewTransitionLink
-            href="/billing"
-            className="shrink-0 text-sm font-medium text-neutral-11 underline-offset-4 transition-colors hover:text-neutral-12 hover:underline"
-          >
-            Manage plan and limits
-          </ViewTransitionLink>
+
+      <div className="mt-8 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h2 className="text-lg font-semibold text-neutral-12">Usage Breakdown</h2>
+          <p className="mt-1 text-sm text-neutral-11">
+            This period&rsquo;s metered usage, grouped by the dimensions recorded on each event.
+          </p>
         </div>
-      </AnimateIn>
+        <ViewTransitionLink
+          href="/billing"
+          className="shrink-0 text-sm font-medium text-neutral-11 underline-offset-4 transition-colors hover:text-neutral-12 hover:underline"
+        >
+          Manage plan and limits
+        </ViewTransitionLink>
+      </div>
 
       <Suspense fallback={<BreakdownSkeleton />}>
         <UsageBreakdownSection result={breakdown} />

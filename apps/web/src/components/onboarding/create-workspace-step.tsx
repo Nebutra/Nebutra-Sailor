@@ -2,8 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { brand } from "@nebutra/brand/metadata";
-import { Button } from "@nebutra/ui/components";
 import {
+  Button,
   Form,
   FormControl,
   FormField,
@@ -148,7 +148,7 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
 
           {rootError && <p className="text-sm text-destructive">{rootError}</p>}
 
-          <Button htmlType="submit" className="w-full" disabled={loading || !name}>
+          <Button type="submit" className="w-full" disabled={loading || !name}>
             {loading ? "Creating…" : "Create Workspace →"}
           </Button>
         </form>

@@ -1,4 +1,3 @@
-import { AnimateIn } from "@nebutra/ui/components";
 import { RoomView } from "@/components/cofounder-match/room-view";
 
 export default async function CofounderRoomPage({
@@ -17,24 +16,22 @@ export default async function CofounderRoomPage({
       />
 
       <div className="relative mx-auto w-full max-w-2xl px-5 py-14 sm:px-8">
-        <AnimateIn preset="emerge">
-          <div className="mb-10 text-center">
-            <h1
-              className="text-2xl font-semibold tracking-[-0.04em] sm:text-3xl"
-              style={{
-                background: "hsl(var(--primary))",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              Cofounder Room
-            </h1>
-            <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-neutral-10">
-              Where a mutual match becomes a team.
-            </p>
-          </div>
-        </AnimateIn>
+        <div className="mb-10 text-center">
+          <h1
+            className="text-2xl font-semibold tracking-[-0.04em] sm:text-3xl"
+            style={{
+              background: "hsl(var(--primary))",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
+            Cofounder Room
+          </h1>
+          <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-neutral-10">
+            Where a mutual match becomes a team.
+          </p>
+        </div>
 
         <RoomView profileId={profileId} />
       </div>

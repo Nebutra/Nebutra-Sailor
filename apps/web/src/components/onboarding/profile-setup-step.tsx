@@ -2,8 +2,15 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CloudUpload as Upload } from "@nebutra/icons";
-import { Button, Input } from "@nebutra/ui/components";
-import { Form, FormField, FormItem, FormLabel, FormMessage } from "@nebutra/ui/primitives";
+import {
+  Button,
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+} from "@nebutra/ui/primitives";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -123,13 +130,13 @@ export function ProfileSetupStep({ onComplete }: ProfileSetupStepProps) {
             )}
           />
 
-          <Button htmlType="submit" className="w-full" disabled={form.formState.isSubmitting}>
+          <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
             {form.formState.isSubmitting ? "Saving…" : "Continue →"}
           </Button>
 
           <Button
-            htmlType="button"
-            variant="text"
+            type="button"
+            variant="ghost"
             className="w-full text-muted-foreground"
             onClick={onComplete}
           >

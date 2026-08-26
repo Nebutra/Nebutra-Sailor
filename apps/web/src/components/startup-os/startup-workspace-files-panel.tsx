@@ -12,7 +12,6 @@
 
 import { FolderClosed, PreviewEye } from "@nebutra/icons";
 import { buildStartupPreviewHtml, type StartupOSFile } from "@nebutra/startup-os/files";
-import { AnimateIn } from "@nebutra/ui/components";
 import {
   CodeBlockLanguageIcon,
   EmptyState,
@@ -62,7 +61,7 @@ export function StartupWorkspaceFilesPanel({
     previewFiles.length > 0 ? buildStartupPreviewHtml(previewFiles) : previewHtml;
 
   return (
-    <AnimateIn preset="fadeUp" className="h-full min-h-0">
+    <div className="h-full min-h-0">
       <section className="flex h-full min-h-0 flex-col overflow-hidden bg-neutral-1">
         <div
           className={`grid min-h-0 flex-1 ${
@@ -139,7 +138,7 @@ export function StartupWorkspaceFilesPanel({
           </div>
         </div>
       </section>
-    </AnimateIn>
+    </div>
   );
 }
 

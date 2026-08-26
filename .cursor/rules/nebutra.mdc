@@ -52,7 +52,7 @@ Notes:
 
 ```tsx
 // UI components (low-level primitives + composed patterns)
-import { Button, Input, Card } from "@nebutra/ui/components";
+import { Button, Input, Card } from "@nebutra/ui/primitives";
 import { Browser, Safari } from "@nebutra/ui/primitives";
 import { PageHeader, EmptyState, LoadingState, ErrorState } from "@nebutra/ui/layout";
 

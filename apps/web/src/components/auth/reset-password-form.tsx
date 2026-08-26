@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button as LobeButton } from "@nebutra/ui/components";
 import {
   Button,
   Form,
@@ -174,9 +173,9 @@ export function ResetPasswordForm({ token, onSubmit }: ResetPasswordFormProps) {
             )}
           />
 
-          <LobeButton disabled={pending} htmlType="submit" type="primary">
+          <Button disabled={pending} type="submit">
             {t("submit")}
-          </LobeButton>
+          </Button>
         </form>
       </Form>
     </section>

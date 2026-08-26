@@ -15,9 +15,9 @@ export const brandEasing = {
   /** Signature Nebutra ease — smooth deceleration with slight overshoot */
   brand: [0.16, 1, 0.3, 1] as const,
   /** For enter animations */
-  enter: [0, 0, 0.2, 1] as const,
-  /** For exit animations */
-  exit: [0.4, 0, 1, 1] as const,
+  enter: [0.16, 1, 0.3, 1] as const,
+  /** For exit animations — ease-out, never ease-in */
+  exit: [0.16, 1, 0.3, 1] as const,
   /** Spring-like bounce */
   spring: [0.34, 1.56, 0.64, 1] as const,
 } as const;
@@ -63,17 +63,26 @@ export const brandSpring = {
 
 /** 涌现 — data materializing from the cloud. Cinematic entrance rail. */
 export const emerge = {
-  initial: { opacity: 0, y: 16, filter: "blur(6px)" },
-  animate: { opacity: 1, y: 0, filter: "blur(0px)" },
-  exit: { opacity: 0, y: -8, filter: "blur(4px)" },
+  initial: { opacity: 0, transform: "translateY(16px)", filter: "blur(6px)" },
+  animate: { opacity: 1, transform: "translateY(0px)", filter: "blur(0px)" },
+  exit: {
+    opacity: 0,
+    transform: "translateY(-8px)",
+    filter: "blur(4px)",
+    transition: { duration: motionDurationSec.flow, ease: brandEasing.exit },
+  },
   transition: { duration: motionDurationSec.cinematic, ease: brandEasing.brand },
 } as const;
 
 /** 流动 — data streaming through pipelines. Reveal rail. */
 export const flow = {
-  initial: { opacity: 0, x: -20 },
-  animate: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: 20 },
+  initial: { opacity: 0, transform: "translateX(-20px)" },
+  animate: { opacity: 1, transform: "translateX(0px)" },
+  exit: {
+    opacity: 0,
+    transform: "translateX(20px)",
+    transition: { duration: motionDurationSec.flow, ease: brandEasing.exit },
+  },
   transition: { duration: motionDurationSec.reveal, ease: brandEasing.enter },
 } as const;
 

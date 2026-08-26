@@ -13,13 +13,6 @@ vi.mock("next-intl", () => ({
   useTranslations: (ns: string) => (key: string) => `${ns}.${key}`,
 }));
 
-vi.mock("@nebutra/ui/components", () => ({
-  Button: (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
-    // biome-ignore lint/a11y/useButtonType: test stub
-    <button {...props} />
-  ),
-}));
-
 import { DeleteOrganizationForm } from "../delete-organization-form";
 
 describe("DeleteOrganizationForm", () => {

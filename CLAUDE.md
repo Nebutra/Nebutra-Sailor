@@ -88,7 +88,7 @@ tests/                 # architecture/ + load/  (vitest + k6)
 // UI components (Nebutra primitives, patterns, and curated AI/chat surfaces)
 // Note: many primitives also live under @nebutra/ui/primitives — prefer
 // /primitives for low-level building blocks, /components for composed patterns.
-import { Button, Input, Card } from "@nebutra/ui/components";
+import { Button, Input, Card } from "@nebutra/ui/primitives";
 
 // Layout wrapper components (merged from design-system)
 import { PageHeader, EmptyState, LoadingState, ErrorState } from "@nebutra/ui/layout";

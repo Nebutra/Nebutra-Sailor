@@ -12,7 +12,6 @@
  */
 
 import { FLAGS, isFeatureEnabled } from "@nebutra/feature-flags";
-import { AnimateIn } from "@nebutra/ui/components";
 import { PageHeader } from "@nebutra/ui/layout";
 import { notFound } from "next/navigation";
 import { AtelierCanvas } from "@/components/atelier/atelier-canvas";
@@ -31,15 +30,12 @@ export default async function AtelierPage() {
 
   return (
     <section className="mx-auto w-full max-w-[1400px]">
-      <AnimateIn preset="fadeUp">
-        <PageHeader
-          title="Atelier"
-          description="Describe what you want — the agent generates it and the server places it on the canvas."
-        />
-      </AnimateIn>
-      <AnimateIn preset="emerge">
-        <AtelierCanvas canvasId="demo" />
-      </AnimateIn>
+      <PageHeader
+        title="Atelier"
+        description="Describe what you want — the agent generates it and the server places it on the canvas."
+      />
+
+      <AtelierCanvas canvasId="demo" />
     </section>
   );
 }

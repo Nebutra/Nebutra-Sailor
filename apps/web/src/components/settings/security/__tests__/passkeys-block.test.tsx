@@ -3,7 +3,7 @@ import "@testing-library/jest-dom/vitest";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import type { ButtonHTMLAttributes, ReactElement, ReactNode } from "react";
+import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactElement, ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const messages: Record<string, string> = {
@@ -43,27 +43,26 @@ vi.mock("next-intl", () => ({
   }),
 }));
 
-vi.mock("@nebutra/ui/components", () => ({
+vi.mock("@nebutra/ui/primitives", () => ({
   Button: ({
     children,
-    htmlType,
     onClick,
     disabled,
-    type: _type,
+    type,
     variant: _variant,
     ...rest
   }: {
     children?: ReactNode;
-    htmlType?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
     onClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
     disabled?: boolean;
     type?: string;
     variant?: string;
   } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type">) => (
-    <button type={htmlType ?? "button"} onClick={onClick} disabled={disabled} {...rest}>
+    <button type={type ?? "button"} onClick={onClick} disabled={disabled} {...rest}>
       {children}
     </button>
   ),
+  Input: (props: InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
 }));
 
 import { type PasskeyRecord, PasskeysBlock } from "../passkeys-block";

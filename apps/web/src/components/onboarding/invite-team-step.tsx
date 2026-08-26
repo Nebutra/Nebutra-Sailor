@@ -1,8 +1,7 @@
 "use client";
 
 import { Plus, Cross as X } from "@nebutra/icons";
-import { Button, Input } from "@nebutra/ui/components";
-import { Button as IconButton, Label } from "@nebutra/ui/primitives";
+import { Button, Button as IconButton, Input, Label } from "@nebutra/ui/primitives";
 import { useState } from "react";
 
 interface InviteTeamStepProps {
@@ -112,14 +111,14 @@ export function InviteTeamStep({ onComplete }: InviteTeamStepProps) {
         {error && <p className="text-sm text-destructive">{error}</p>}
 
         <div className="flex gap-3">
-          <Button htmlType="submit" className="flex-1" disabled={loading}>
+          <Button type="submit" className="flex-1" disabled={loading}>
             {loading ? "Sending invites…" : "Send Invitations →"}
           </Button>
         </div>
 
         <Button
-          htmlType="button"
-          variant="text"
+          type="button"
+          variant="ghost"
           className="w-full text-muted-foreground"
           onClick={onComplete}
         >

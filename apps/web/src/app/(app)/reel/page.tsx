@@ -9,7 +9,6 @@
  */
 
 import { FLAGS, isFeatureEnabled } from "@nebutra/feature-flags";
-import { AnimateIn } from "@nebutra/ui/components";
 import { PageHeader } from "@nebutra/ui/layout";
 import { notFound } from "next/navigation";
 import { ReelStudio } from "@/components/reel/reel-studio";
@@ -28,15 +27,12 @@ export default async function ReelPage() {
 
   return (
     <section className="mx-auto w-full max-w-[1400px]">
-      <AnimateIn preset="fadeUp">
-        <PageHeader
-          title="Reel"
-          description="Split a script into shots — each becomes a typed node whose generated output flows through a versioned IO envelope."
-        />
-      </AnimateIn>
-      <AnimateIn preset="emerge">
-        <ReelStudio graphId="demo" />
-      </AnimateIn>
+      <PageHeader
+        title="Reel"
+        description="Split a script into shots — each becomes a typed node whose generated output flows through a versioned IO envelope."
+      />
+
+      <ReelStudio graphId="demo" />
     </section>
   );
 }

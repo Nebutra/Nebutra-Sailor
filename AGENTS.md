@@ -110,7 +110,7 @@ pnpm build             # production build (all apps)
 
 ```tsx
 // UI components
-import { Button, Input, Card } from "@nebutra/ui/components";
+import { Button, Input, Card } from "@nebutra/ui/primitives";
 
 // Layout wrappers
 import { PageHeader, EmptyState, LoadingState, ErrorState } from "@nebutra/ui/layout";
@@ -357,7 +357,9 @@ const key = "sk-proj-xxxxx";
 
 | Need | Package | Import |
 |------|---------|--------|
-| UI components | `@nebutra/ui` | `@nebutra/ui/components` |
+| UI chrome | `@nebutra/ui` | `@nebutra/ui/primitives` |
+| Composed patterns | `@nebutra/ui` | `@nebutra/ui/components` |
+| Chat surfaces | `@nebutra/ui` | `@nebutra/ui/chat` |
 | Layout shells | `@nebutra/ui` | `@nebutra/ui/layout` |
 | CSS variables | `@nebutra/tokens` | `@import "@nebutra/tokens/styles.css"` |
 | Icons | `@nebutra/icons` | Named exports |

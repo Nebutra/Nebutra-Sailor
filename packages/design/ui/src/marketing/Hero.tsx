@@ -130,7 +130,7 @@ export function Hero({
                 >
                   <a
                     href={primaryCTA?.href || "/signup"}
-                    className="inline-flex h-12 items-center justify-center rounded-[var(--radius-lg)] bg-primary px-8 text-base font-semibold text-white shadow-lg shadow-primary/20 hover:bg-primary/90 transition-[background-color,box-shadow,transform] hover:scale-105 active:scale-95 motion-reduce:hover:scale-100 motion-reduce:active:scale-100 group"
+                    className="inline-flex h-12 items-center justify-center rounded-[var(--radius-lg)] bg-primary px-8 text-base font-semibold text-white shadow-lg shadow-primary/20 hover:bg-primary/90 transition-[background-color,box-shadow,transform] duration-flow ease-[var(--ease-brand)] hover:scale-[1.02] active:scale-[0.97] motion-reduce:hover:scale-100 motion-reduce:active:scale-100 group"
                   >
                     {primaryCTA?.text || "Start Free Trial"}
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -138,7 +138,7 @@ export function Hero({
 
                   <a
                     href={secondaryCTA?.href || "/demo"}
-                    className="inline-flex h-12 items-center justify-center rounded-[var(--radius-lg)] border border-border bg-white/50 px-8 text-base font-medium text-foreground shadow-sm backdrop-blur-sm transition-[background-color,border-color,box-shadow,transform] hover:scale-[1.02] hover:bg-muted active:scale-[0.98] motion-reduce:hover:scale-100 motion-reduce:active:scale-100 dark:bg-background/70 group"
+                    className="inline-flex h-12 items-center justify-center rounded-[var(--radius-lg)] border border-border bg-white/50 px-8 text-base font-medium text-foreground shadow-sm backdrop-blur-sm transition-[background-color,border-color,box-shadow,transform] duration-flow ease-[var(--ease-brand)] hover:scale-[1.02] hover:bg-muted active:scale-[0.97] motion-reduce:hover:scale-100 motion-reduce:active:scale-100 dark:bg-background/70 group"
                   >
                     <Play className="mr-2 h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />
                     {secondaryCTA?.text || "Watch Demo"}

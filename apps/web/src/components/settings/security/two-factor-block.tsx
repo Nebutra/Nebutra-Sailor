@@ -1,7 +1,6 @@
 "use client";
 
-import { Button } from "@nebutra/ui/components";
-import { Input } from "@nebutra/ui/primitives";
+import { Button, Input } from "@nebutra/ui/primitives";
 import NextImage from "next/image";
 import { useTranslations } from "next-intl";
 import { type FormEvent, useReducer } from "react";
@@ -438,11 +437,11 @@ function IdleTwoFactorActions({
   return (
     <div className="flex justify-start">
       {enabled ? (
-        <Button htmlType="button" onClick={onDisable} variant="outlined">
+        <Button type="button" onClick={onDisable} variant="outline">
           {disableLabel}
         </Button>
       ) : (
-        <Button htmlType="button" onClick={onEnable} type="primary">
+        <Button type="button" onClick={onEnable}>
           {enableLabel}
         </Button>
       )}
@@ -495,10 +494,10 @@ function PasswordStepForm({
       </div>
 
       <div className="flex items-center gap-3">
-        <Button disabled={pending} htmlType="submit" type="primary">
+        <Button disabled={pending} type="submit">
           {submitLabel}
         </Button>
-        <Button disabled={pending} htmlType="button" onClick={onCancel} variant="outlined">
+        <Button disabled={pending} type="button" onClick={onCancel} variant="outline">
           {cancelLabel}
         </Button>
       </div>
@@ -585,10 +584,10 @@ function VerifyTotpForm({
       </div>
 
       <div className="flex items-center gap-3">
-        <Button disabled={pending} htmlType="submit" type="primary">
+        <Button disabled={pending} type="submit">
           {verifyLabel}
         </Button>
-        <Button disabled={pending} htmlType="button" onClick={onCancel} variant="outlined">
+        <Button disabled={pending} type="button" onClick={onCancel} variant="outline">
           {cancelLabel}
         </Button>
       </div>
@@ -636,10 +635,10 @@ function BackupCodesPanel({
       </ul>
 
       <div className="flex items-center gap-3">
-        <Button htmlType="button" onClick={onCopy} variant="outlined">
+        <Button type="button" onClick={onCopy} variant="outline">
           {copyLabel}
         </Button>
-        <Button htmlType="button" onClick={onFinish} type="primary">
+        <Button type="button" onClick={onFinish}>
           {finishLabel}
         </Button>
         {copied && (

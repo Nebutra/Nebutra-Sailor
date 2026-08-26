@@ -359,7 +359,7 @@
       "$type": "cubicBezier"
     },
     "out": {
-      "$value": "cubic-bezier(0, 0, 0.2, 1)",
+      "$value": "cubic-bezier(0.16, 1, 0.3, 1)",
       "$type": "cubicBezier"
     },
     "in-out": {

@@ -59,37 +59,37 @@ const PRESETS = {
    * Pair with `AnimateSwap`.
    */
   swap: {
-    initial: { opacity: 0, y: 10, filter: "blur(4px)" },
-    animate: { opacity: 1, y: 0, filter: "blur(0px)" },
-    exit: { opacity: 0, y: -10, filter: "blur(4px)" },
+    initial: { opacity: 0, transform: "translateY(10px)", filter: "blur(4px)" },
+    animate: { opacity: 1, transform: "translateY(0px)", filter: "blur(0px)" },
+    exit: { opacity: 0, transform: "translateY(-10px)", filter: "blur(4px)" },
     transition: { duration: motionDurations.reveal / 1000 },
   },
   /** Off-canvas panel entering from the right edge (drawer, sheet). */
   slideFromRight: {
-    initial: { x: "100%" },
-    animate: { x: 0 },
-    exit: { x: "100%" },
+    initial: { transform: "translateX(100%)" },
+    animate: { transform: "translateX(0%)" },
+    exit: { transform: "translateX(100%)" },
     transition: brandSpring.default,
   },
   /** Off-canvas panel entering from the left edge. */
   slideFromLeft: {
-    initial: { x: "-100%" },
-    animate: { x: 0 },
-    exit: { x: "-100%" },
+    initial: { transform: "translateX(-100%)" },
+    animate: { transform: "translateX(0%)" },
+    exit: { transform: "translateX(-100%)" },
     transition: brandSpring.default,
   },
   /** Off-canvas panel entering from the top edge (banner, command bar). */
   slideFromTop: {
-    initial: { y: "-100%" },
-    animate: { y: 0 },
-    exit: { y: "-100%" },
+    initial: { transform: "translateY(-100%)" },
+    animate: { transform: "translateY(0%)" },
+    exit: { transform: "translateY(-100%)" },
     transition: brandSpring.default,
   },
   /** Off-canvas panel entering from the bottom edge (mobile action sheet). */
   slideFromBottom: {
-    initial: { y: "100%" },
-    animate: { y: 0 },
-    exit: { y: "100%" },
+    initial: { transform: "translateY(100%)" },
+    animate: { transform: "translateY(0%)" },
+    exit: { transform: "translateY(100%)" },
     transition: brandSpring.default,
   },
 } as const;
@@ -159,7 +159,7 @@ export interface AnimateInProps extends ForwardedDivProps {
 export function AnimateIn(props: AnimateInProps) {
   const {
     children,
-    preset = "emerge",
+    preset = "fade",
     delay = 0,
     duration,
     inView = false,
@@ -167,7 +167,7 @@ export function AnimateIn(props: AnimateInProps) {
     ...rest
   } = props;
   const shouldReduce = useFramerReducedMotion();
-  const base = PRESETS[preset] || PRESETS.emerge;
+  const base = PRESETS[preset] || PRESETS.fade;
 
   // Accessibility: honour prefers-reduced-motion
   const initial = (shouldReduce ? { opacity: 0 } : base.initial) as MotionInitial;

@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -94,5 +94,33 @@ describe("@nebutra/web dashboard UI governance", () => {
     expect(readFileSync(WEBHOOK_DIALOG, "utf8")).toContain(
       "Endpoint created. The signing secret appears once.",
     );
+  });
+
+  it("does not animate dashboard page shells or product lists", () => {
+    const roots = [
+      join(APP_ROOT, "src/app/(app)"),
+      join(APP_ROOT, "src/components/startup-os"),
+      join(APP_ROOT, "src/components/atelier"),
+      join(APP_ROOT, "src/components/reel"),
+      join(APP_ROOT, "src/components/cofounder-match"),
+      join(APP_ROOT, "src/components/settings/organization"),
+      join(APP_ROOT, "src/vite-app/routes"),
+    ];
+    const files: string[] = [];
+    const walk = (dir: string) => {
+      for (const entry of readdirSync(dir)) {
+        const next = join(dir, entry);
+        if (statSync(next).isDirectory()) walk(next);
+        else if (/\.(tsx|ts)$/u.test(entry) && !entry.includes(".test.")) files.push(next);
+      }
+    };
+    for (const root of roots) walk(root);
+
+    for (const file of files) {
+      const source = readFileSync(file, "utf8");
+      expect(source, file).not.toMatch(/preset="(?:emerge|fadeUp|fade|scale)"/u);
+      expect(source, file).not.toMatch(/<AnimateIn[\s>]/u);
+      expect(source, file).not.toMatch(/<AnimateInGroup[\s>]/u);
+    }
   });
 });

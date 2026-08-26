@@ -12,6 +12,14 @@
 
 @import "tailwindcss";
 
+@custom-variant hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
+}
+
 @import "@nebutra/tokens/styles.css";
 @import "@nebutra/ui/typography/fonts.css";
 

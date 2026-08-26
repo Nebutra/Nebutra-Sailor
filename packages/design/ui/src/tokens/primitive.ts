@@ -227,7 +227,7 @@ export const primitiveTransition = {
     cinematic: 500, // hero entrance, big delight moments
   },
   easing: {
-    default: "ease-out",
+    default: "var(--ease-brand)",
     spring: "cubic-bezier(0.34, 1.56, 0.64, 1)",
     inOut: "cubic-bezier(0.4, 0, 0.2, 1)",
   },

@@ -27,26 +27,13 @@ export interface ExpandableTabsProps {
   onChange?: (index: number | null) => void;
 }
 
-const buttonVariants = {
-  initial: {
-    gap: 0,
-    paddingLeft: ".5rem",
-    paddingRight: ".5rem",
-  },
-  animate: (isSelected: boolean) => ({
-    gap: isSelected ? ".5rem" : 0,
-    paddingLeft: isSelected ? "1rem" : ".5rem",
-    paddingRight: isSelected ? "1rem" : ".5rem",
-  }),
-};
-
 const spanVariants = {
-  initial: { width: 0, opacity: 0 },
-  animate: { width: "auto", opacity: 1 },
-  exit: { width: 0, opacity: 0 },
+  initial: { opacity: 0, transform: "translateX(-4px)" },
+  animate: { opacity: 1, transform: "translateX(0px)" },
+  exit: { opacity: 0, transform: "translateX(-4px)" },
 };
 
-const transition = { delay: 0.1, type: "spring" as const, bounce: 0, duration: 0.6 };
+const transition = { duration: 0.2, ease: [0.16, 1, 0.3, 1] as const };
 
 export function ExpandableTabs({
   tabs,
@@ -94,20 +81,13 @@ export function ExpandableTabs({
           "relative rounded-[var(--radius-xl)] py-2 text-sm font-medium transition-colors duration-flow",
           "focus-visible:outline-none",
           isSelected
-            ? cn("bg-muted", activeColor)
-            : "text-muted-foreground hover:bg-muted hover:text-foreground",
+            ? cn("bg-muted px-4", activeColor)
+            : "px-2 text-muted-foreground hover:bg-muted hover:text-foreground",
         );
 
         const tabContent = (
           // biome-ignore lint/correctness/useJsxKeyInIterable: key is on the parent <button>
-          <motion.span
-            variants={buttonVariants}
-            initial={false}
-            animate="animate"
-            custom={isSelected}
-            transition={activeTransition}
-            className="flex items-center"
-          >
+          <span className="flex items-center gap-2">
             <Icon size={20} aria-hidden="true" />
             <AnimatePresence initial={false}>
               {isSelected && (
@@ -117,13 +97,13 @@ export function ExpandableTabs({
                   animate="animate"
                   exit="exit"
                   transition={activeTransition}
-                  className="overflow-hidden"
+                  className="overflow-hidden whitespace-nowrap"
                 >
                   {tab.title}
                 </motion.span>
               )}
             </AnimatePresence>
-          </motion.span>
+          </span>
         );
 
         return isSelected ? (

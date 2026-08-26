@@ -35,7 +35,7 @@ function DisplayCard({
   return (
     <div
       className={cn(
-        "relative flex h-36 w-[22rem] -skew-y-[8deg] select-none flex-col justify-between rounded-[var(--radius-xl)] border-2 bg-muted/70 backdrop-blur-sm px-4 py-3 transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-700",
+        "relative flex h-36 w-[22rem] -skew-y-[8deg] select-none flex-col justify-between rounded-[var(--radius-xl)] border-2 bg-muted/70 backdrop-blur-sm px-4 py-3 transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-cinematic",
         "after:absolute after:-right-1 after:top-[-5%] after:h-[110%] after:w-[20rem] after:bg-gradient-to-l after:from-background after:to-transparent after:content-['']",
         "hover:border-white/20 hover:bg-muted",
         "[&>*]:flex [&>*]:items-center [&>*]:gap-2",
@@ -62,11 +62,11 @@ export interface DisplayCardsProps {
 const DEFAULT_CARDS: DisplayCardProps[] = [
   {
     className:
-      "[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-[var(--radius-xl)] before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
+      "[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-[var(--radius-xl)] before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-cinematic hover:grayscale-0 before:left-0 before:top-0",
   },
   {
     className:
-      "[grid-area:stack] translate-x-16 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-[var(--radius-xl)] before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
+      "[grid-area:stack] translate-x-16 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-[var(--radius-xl)] before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-cinematic hover:grayscale-0 before:left-0 before:top-0",
   },
   {
     className: "[grid-area:stack] translate-x-32 translate-y-20 hover:translate-y-10",
@@ -96,7 +96,7 @@ export function DisplayCards({ cards, className }: DisplayCardsProps) {
   return (
     <div
       className={cn(
-        "grid [grid-template-areas:'stack'] place-items-center opacity-100 animate-in fade-in-0 duration-700",
+        "grid [grid-template-areas:'stack'] place-items-center opacity-100 animate-in fade-in-0 duration-cinematic",
         className,
       )}
     >

@@ -46,27 +46,6 @@ vi.mock("next-intl", () => ({
   },
 }));
 
-// Avoid loading the heavy @nebutra/ui barrel (which pulls Lobe UI / emoji-mart) in tests.
-vi.mock("@nebutra/ui/components", () => ({
-  Button: ({
-    children,
-    disabled,
-    htmlType,
-    onClick,
-  }: {
-    children?: React.ReactNode;
-    disabled?: boolean;
-    htmlType?: "button" | "submit" | "reset";
-    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    type?: string;
-    variant?: string;
-  }) => (
-    <button disabled={disabled} onClick={onClick} type={htmlType ?? "button"}>
-      {children}
-    </button>
-  ),
-}));
-
 import { ChangePasswordForm } from "../change-password-form";
 import type { SecurityCapabilities } from "../security-capabilities";
 

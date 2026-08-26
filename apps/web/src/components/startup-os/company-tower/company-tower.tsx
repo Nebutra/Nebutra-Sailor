@@ -9,7 +9,6 @@ import type {
   Stage,
 } from "@nebutra/startup-os/company-context/model";
 import { companyName } from "@nebutra/startup-os/company-context/projection";
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Badge, Button, DotPattern } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { BrandKitFloor } from "./brand-kit-floor";
@@ -96,54 +95,53 @@ export function CompanyTower({
 
       <div className="relative mx-auto flex max-w-[1400px] flex-col">
         {/* Header — left-aligned tool chrome, NOT a centered marketing hero. */}
-        <AnimateIn preset="fade">
-          <header className="flex flex-wrap items-center gap-x-4 gap-y-3 border-b border-neutral-7 px-4 py-3">
-            <div className="flex min-w-0 items-center gap-3">
-              {/* The ONE brand-gradient use: the overall-completeness ring. */}
-              <OverallRing percent={overallPercent} />
-              <div className="flex min-w-0 flex-col">
-                <h2 className="truncate text-base font-semibold text-neutral-12">{name}</h2>
-                <span className="font-mono text-[10px] tabular-nums text-neutral-9">
-                  {overallPercent}% complete · 9 layers
-                </span>
-              </div>
-            </div>
 
-            <Badge variant="gray-subtle" size="sm" className="font-mono">
-              {STAGE_LABEL[context.stage]}
-            </Badge>
-
-            <div className="ml-auto flex items-center gap-1.5">
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                prefix={<ArrowUp aria-hidden="true" />}
-                disabled={onUploadDoc === undefined}
-                aria-label="Upload a source document"
-                onClick={() => onUploadDoc?.()}
-              >
-                Upload doc
-              </Button>
-              <Button
-                type="button"
-                variant="default"
-                size="sm"
-                prefix={<Sparkles aria-hidden="true" />}
-                disabled={onCompile === undefined}
-                aria-label="Compile the company tower"
-                onClick={() => onCompile?.()}
-                className="border-0 text-white disabled:opacity-50"
-                style={{ background: "hsl(var(--primary))" }}
-              >
-                Compile
-              </Button>
+        <header className="flex flex-wrap items-center gap-x-4 gap-y-3 border-b border-neutral-7 px-4 py-3">
+          <div className="flex min-w-0 items-center gap-3">
+            {/* The ONE brand-gradient use: the overall-completeness ring. */}
+            <OverallRing percent={overallPercent} />
+            <div className="flex min-w-0 flex-col">
+              <h2 className="truncate text-base font-semibold text-neutral-12">{name}</h2>
+              <span className="font-mono text-[10px] tabular-nums text-neutral-9">
+                {overallPercent}% complete · 9 layers
+              </span>
             </div>
-          </header>
-        </AnimateIn>
+          </div>
+
+          <Badge variant="gray-subtle" size="sm" className="font-mono">
+            {STAGE_LABEL[context.stage]}
+          </Badge>
+
+          <div className="ml-auto flex items-center gap-1.5">
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              prefix={<ArrowUp aria-hidden="true" />}
+              disabled={onUploadDoc === undefined}
+              aria-label="Upload a source document"
+              onClick={() => onUploadDoc?.()}
+            >
+              Upload doc
+            </Button>
+            <Button
+              type="button"
+              variant="default"
+              size="sm"
+              prefix={<Sparkles aria-hidden="true" />}
+              disabled={onCompile === undefined}
+              aria-label="Compile the company tower"
+              onClick={() => onCompile?.()}
+              className="border-0 text-white disabled:opacity-50"
+              style={{ background: "hsl(var(--primary))" }}
+            >
+              Compile
+            </Button>
+          </div>
+        </header>
 
         {/* The stratigraphy — nine floors, crown (L9) -> base (L1). */}
-        <AnimateInGroup stagger="fast" className="flex flex-col">
+        <div className="flex flex-col">
           {FLOORS_TOP_DOWN.map((layerId) => {
             const layer = context.layers[layerId];
             const manifestEntry = byId.get(layerId);
@@ -151,18 +149,17 @@ export function CompanyTower({
               return null;
             }
             return (
-              <AnimateIn key={layerId} preset="fade">
-                <TowerFloor
-                  layerId={layerId}
-                  layer={layer}
-                  manifestEntry={manifestEntry}
-                  renderBody={renderBodyFor(layerId)}
-                  {...handlers}
-                />
-              </AnimateIn>
+              <TowerFloor
+                key={layerId}
+                layerId={layerId}
+                layer={layer}
+                manifestEntry={manifestEntry}
+                renderBody={renderBodyFor(layerId)}
+                {...handlers}
+              />
             );
           })}
-        </AnimateInGroup>
+        </div>
       </div>
     </section>
   );

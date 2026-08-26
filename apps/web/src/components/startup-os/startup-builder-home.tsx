@@ -26,7 +26,6 @@ import {
   type StartupArena,
   type StartupOSProject,
 } from "@nebutra/startup-os/compiler";
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import {
   Button,
   Select,
@@ -150,7 +149,7 @@ export function StartupBuilderHome({
   };
 
   return (
-    <AnimateIn preset="emerge" className="h-full min-h-0">
+    <div className="h-full min-h-0">
       <section className="relative flex h-full min-h-0 flex-col justify-center overflow-y-auto overflow-x-hidden bg-neutral-1 text-neutral-12">
         {/* Ambient brand wash — subtle (governed/enterprise), not a loud aurora. */}
         <div
@@ -278,30 +277,26 @@ export function StartupBuilderHome({
               </div>
             ) : null}
 
-            <AnimateInGroup
-              stagger="normal"
-              className="mt-10 grid grid-cols-2 gap-3 text-left sm:grid-cols-3 lg:grid-cols-5"
-            >
+            <div className="mt-10 grid grid-cols-2 gap-3 text-left sm:grid-cols-3 lg:grid-cols-5">
               {COMPILE_OUTPUTS.map((output) => {
                 const OutputIcon = output.icon;
                 return (
-                  <AnimateIn key={output.title} preset="fadeUp">
-                    <div
-                      className={`flex h-full flex-col gap-2 rounded-2xl p-3.5 ${
-                        output.highlight ? "bg-primary/10 dark:bg-primary/15" : "bg-neutral-2"
-                      }`}
-                    >
-                      <OutputIcon
-                        className={`size-4 ${output.highlight ? "text-primary" : "text-neutral-10"}`}
-                        aria-hidden="true"
-                      />
-                      <span className="text-sm font-semibold text-neutral-12">{output.title}</span>
-                      <span className="text-xs leading-5 text-neutral-11">{output.desc}</span>
-                    </div>
-                  </AnimateIn>
+                  <div
+                    key={output.title}
+                    className={`flex h-full flex-col gap-2 rounded-2xl p-3.5 ${
+                      output.highlight ? "bg-primary/10 dark:bg-primary/15" : "bg-neutral-2"
+                    }`}
+                  >
+                    <OutputIcon
+                      className={`size-4 ${output.highlight ? "text-primary" : "text-neutral-10"}`}
+                      aria-hidden="true"
+                    />
+                    <span className="text-sm font-semibold text-neutral-12">{output.title}</span>
+                    <span className="text-xs leading-5 text-neutral-11">{output.desc}</span>
+                  </div>
                 );
               })}
-            </AnimateInGroup>
+            </div>
 
             <StartupRecentProjects
               disabled={disabled}
@@ -313,7 +308,7 @@ export function StartupBuilderHome({
           </div>
         </div>
       </section>
-    </AnimateIn>
+    </div>
   );
 }
 
@@ -348,29 +343,28 @@ function StartupRecentProjects({
   if (projects.length === 0) return null;
 
   return (
-    <AnimateInGroup stagger="fast" className="mx-auto mt-8 grid max-w-2xl gap-2 sm:grid-cols-2">
+    <div className="mx-auto mt-8 grid max-w-2xl gap-2 sm:grid-cols-2">
       {projects.slice(0, 4).map((project) => (
-        <AnimateIn key={project.id} preset="fadeUp">
-          <Button
-            type="button"
-            variant="ghost"
-            disabled={disabled}
-            onClick={() => onProjectSelect(project)}
-            className={`h-auto w-full flex-col items-start gap-1 rounded-2xl p-3 text-left ${
-              project.id === selectedProjectId
-                ? "bg-primary/10 text-primary dark:bg-primary/15"
-                : "bg-neutral-2 text-neutral-11 hover:bg-neutral-3"
-            }`}
-          >
-            <span className="block w-full truncate text-sm font-semibold">
-              {companyName(project.companyContext)}
-            </span>
-            <span className="block w-full truncate text-[11px] font-normal opacity-80">
-              {project.arena} / {project.status}
-            </span>
-          </Button>
-        </AnimateIn>
+        <Button
+          key={project.id}
+          type="button"
+          variant="ghost"
+          disabled={disabled}
+          onClick={() => onProjectSelect(project)}
+          className={`h-auto w-full flex-col items-start gap-1 rounded-2xl p-3 text-left ${
+            project.id === selectedProjectId
+              ? "bg-primary/10 text-primary dark:bg-primary/15"
+              : "bg-neutral-2 text-neutral-11 hover:bg-neutral-3"
+          }`}
+        >
+          <span className="block w-full truncate text-sm font-semibold">
+            {companyName(project.companyContext)}
+          </span>
+          <span className="block w-full truncate text-[11px] font-normal opacity-80">
+            {project.arena} / {project.status}
+          </span>
+        </Button>
       ))}
-    </AnimateInGroup>
+    </div>
   );
 }

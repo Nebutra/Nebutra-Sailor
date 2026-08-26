@@ -1,7 +1,6 @@
 "use client";
 
 import { ArrowRight, LockClosed, Sparkles, Users } from "@nebutra/icons";
-import { AnimateIn } from "@nebutra/ui/components";
 import { EmptyState } from "@nebutra/ui/layout";
 import { Button } from "@nebutra/ui/primitives";
 import Link from "next/link";
@@ -105,72 +104,66 @@ export function RoomView({ profileId }: { profileId: string }) {
 
   return (
     <div className="flex flex-col items-center gap-6">
-      <AnimateIn preset="scale">
-        <CofounderCard data={match} />
-      </AnimateIn>
+      <CofounderCard data={match} />
 
       {access.granted ? (
-        <AnimateIn preset="fadeUp">
-          <div className="w-full max-w-md rounded-2xl border border-neutral-6 bg-neutral-1 p-5 text-center">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1 text-[11px] font-semibold text-primary dark:bg-primary/15">
-              <Sparkles className="size-3.5" aria-hidden="true" />
-              Room open
-            </span>
-            <p className="mt-3 text-sm font-semibold text-neutral-12">
-              You both want to build together.
-            </p>
-            <p className="mt-1 text-xs leading-5 text-neutral-10">
-              Forming the team turns your one-person company into a shared Organization — your whole
-              compiled company carries over and your cofounder is invited as an equal founder.
-            </p>
-            {formState === "formed" ? (
-              <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-success/30 bg-success/10 px-4 py-2 text-sm font-semibold text-[hsl(var(--success-strong))]">
-                <Sparkles className="size-4" aria-hidden="true" />
-                Team forming — invitation sent
-              </div>
-            ) : (
-              <Button
-                type="button"
-                shape="pill"
-                className="mt-4"
-                onClick={formTeam}
-                disabled={formState === "forming"}
-                prefix={<Users className="size-4" aria-hidden="true" />}
-              >
-                {formState === "forming" ? "Forming…" : "Form the team"}
-              </Button>
-            )}
-            {formState === "error" ? (
-              <p className="mt-2 text-xs text-[color:var(--status-danger)]">
-                Couldn't form the team. Please try again.
-              </p>
-            ) : null}
-          </div>
-        </AnimateIn>
-      ) : (
-        <AnimateIn preset="fadeUp">
-          <div className="w-full max-w-md rounded-2xl border border-primary/30 bg-primary/5 p-5 text-center dark:bg-primary/15">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-neutral-1/85 px-2.5 py-1 text-[11px] font-semibold text-primary backdrop-blur">
-              <LockClosed className="size-3.5" aria-hidden="true" />
-              Paid plan required
-            </span>
-            <p className="mt-3 text-sm font-semibold text-neutral-12">
-              Open the Cofounder Room with a paid plan
-            </p>
-            <p className="mt-1 text-xs leading-5 text-neutral-10">
-              As the founder opening the room, a paid plan unlocks the conversation with every match
-              — no per-room fee.
-            </p>
-            <Link
-              href={`/${locale}/choose-plan`}
-              className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white"
-              style={{ background: "hsl(var(--primary))" }}
+        <div className="w-full max-w-md rounded-2xl border border-neutral-6 bg-neutral-1 p-5 text-center">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1 text-[11px] font-semibold text-primary dark:bg-primary/15">
+            <Sparkles className="size-3.5" aria-hidden="true" />
+            Room open
+          </span>
+          <p className="mt-3 text-sm font-semibold text-neutral-12">
+            You both want to build together.
+          </p>
+          <p className="mt-1 text-xs leading-5 text-neutral-10">
+            Forming the team turns your one-person company into a shared Organization — your whole
+            compiled company carries over and your cofounder is invited as an equal founder.
+          </p>
+          {formState === "formed" ? (
+            <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-success/30 bg-success/10 px-4 py-2 text-sm font-semibold text-[hsl(var(--success-strong))]">
+              <Sparkles className="size-4" aria-hidden="true" />
+              Team forming — invitation sent
+            </div>
+          ) : (
+            <Button
+              type="button"
+              shape="pill"
+              className="mt-4"
+              onClick={formTeam}
+              disabled={formState === "forming"}
+              prefix={<Users className="size-4" aria-hidden="true" />}
             >
-              Upgrade to open the room
-              <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
-          </div>
-        </AnimateIn>
+              {formState === "forming" ? "Forming…" : "Form the team"}
+            </Button>
+          )}
+          {formState === "error" ? (
+            <p className="mt-2 text-xs text-[color:var(--status-danger)]">
+              Couldn't form the team. Please try again.
+            </p>
+          ) : null}
+        </div>
+      ) : (
+        <div className="w-full max-w-md rounded-2xl border border-primary/30 bg-primary/5 p-5 text-center dark:bg-primary/15">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-neutral-1/85 px-2.5 py-1 text-[11px] font-semibold text-primary backdrop-blur">
+            <LockClosed className="size-3.5" aria-hidden="true" />
+            Paid plan required
+          </span>
+          <p className="mt-3 text-sm font-semibold text-neutral-12">
+            Open the Cofounder Room with a paid plan
+          </p>
+          <p className="mt-1 text-xs leading-5 text-neutral-10">
+            As the founder opening the room, a paid plan unlocks the conversation with every match —
+            no per-room fee.
+          </p>
+          <Link
+            href={`/${locale}/choose-plan`}
+            className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white"
+            style={{ background: "hsl(var(--primary))" }}
+          >
+            Upgrade to open the room
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </Link>
+        </div>
       )}
     </div>
   );

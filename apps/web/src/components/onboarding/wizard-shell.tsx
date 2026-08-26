@@ -2,7 +2,7 @@
 
 import { safeGetJson, safeRemoveItem, safeSetJson } from "@nebutra/browser-utils";
 import { ArrowLeft } from "@nebutra/icons";
-import { Button } from "@nebutra/ui/components";
+import { Button } from "@nebutra/ui/primitives";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -185,8 +185,8 @@ function ChoosePlanStep({ onChoose, onSkip }: ChoosePlanStepProps) {
       </Button>
 
       <Button
-        htmlType="button"
-        variant="text"
+        type="button"
+        variant="ghost"
         onClick={onSkip}
         className="w-full text-muted-foreground"
       >

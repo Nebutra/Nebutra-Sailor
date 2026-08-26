@@ -13,7 +13,7 @@ import { cn } from "../utils/cn";
  *  drift gets called out at code review):
  *    - Opens on hover AND keyboard focus (Base UI default — don't override).
  *    - Default entry delay ≈ 150ms so the tooltip doesn't flicker on a
- *      sweeping mouse. Provider-level default set below; caller can override.
+ *      sweeping mouse. Subsequent tooltips in a group skip delay + duration.
  *    - Escape closes the tooltip and returns focus to the trigger (Base UI).
  *
  *  Content rules (Geist):
@@ -35,12 +35,36 @@ import { cn } from "../utils/cn";
  *      action — the tooltip body adds context, it doesn't replace the label.
 \* -------------------------------------------------------------------------- */
 
-// Geist-standard delay; matches the platform Best Practices.
 const DEFAULT_TOOLTIP_DELAY_MS = 150;
+const SKIP_DELAY_WINDOW_MS = 400;
 
-// We expose Base UI's native Provider to pass global `delayDuration` downwards.
-// Default landed at 150ms so isolated `<Tooltip>` usage matches Geist out of
-// the box — explicit callers can still override per provider scope.
+let lastTooltipOpenAt = 0;
+const skipDelayListeners = new Set<() => void>();
+
+function markTooltipOpened() {
+  lastTooltipOpenAt = Date.now();
+  for (const listener of skipDelayListeners) listener();
+}
+
+function shouldSkipDelay() {
+  return Date.now() - lastTooltipOpenAt < SKIP_DELAY_WINDOW_MS;
+}
+
+function useSkipDelay() {
+  const [, tick] = React.useReducer((count: number) => count + 1, 0);
+
+  React.useEffect(() => {
+    skipDelayListeners.add(tick);
+    return () => {
+      skipDelayListeners.delete(tick);
+    };
+  }, []);
+
+  return shouldSkipDelay();
+}
+
+const TooltipInstantContext = React.createContext(false);
+
 const TooltipProvider = ({
   children,
   delayDuration = DEFAULT_TOOLTIP_DELAY_MS,
@@ -48,24 +72,39 @@ const TooltipProvider = ({
   children: React.ReactNode;
   delayDuration?: number;
 }) => {
-  return <BaseTooltip.Provider delay={delayDuration}>{children}</BaseTooltip.Provider>;
+  const skipDelay = useSkipDelay();
+  return (
+    <BaseTooltip.Provider delay={skipDelay ? 0 : delayDuration}>{children}</BaseTooltip.Provider>
+  );
 };
 
 const Tooltip = ({
   delayDuration,
   children,
+  onOpenChange,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseTooltip.Root> & {
   delayDuration?: number;
   children?: React.ReactNode;
 }) => {
-  // Standalone `<Tooltip>` (no enclosing Provider) gets the Geist default;
-  // any explicit `delayDuration` wins.
-  const delay = delayDuration ?? DEFAULT_TOOLTIP_DELAY_MS;
+  const skipDelay = useSkipDelay();
+  const instant = delayDuration == null && skipDelay;
+  const delay = delayDuration ?? (instant ? 0 : DEFAULT_TOOLTIP_DELAY_MS);
+
   return (
-    <BaseTooltip.Provider delay={delay}>
-      <BaseTooltip.Root {...props}>{children}</BaseTooltip.Root>
-    </BaseTooltip.Provider>
+    <TooltipInstantContext.Provider value={instant}>
+      <BaseTooltip.Provider delay={delay}>
+        <BaseTooltip.Root
+          {...props}
+          onOpenChange={(open, eventDetails) => {
+            if (open) markTooltipOpened();
+            onOpenChange?.(open, eventDetails);
+          }}
+        >
+          {children}
+        </BaseTooltip.Root>
+      </BaseTooltip.Provider>
+    </TooltipInstantContext.Provider>
   );
 };
 
@@ -108,24 +147,29 @@ const TooltipContent = ({
   align?: "start" | "center" | "end";
   sideOffset?: number;
   alignOffset?: number;
-} & { ref?: React.Ref<React.ElementRef<typeof BaseTooltip.Popup>> | undefined }) => (
-  <BaseTooltip.Portal>
-    <BaseTooltip.Positioner
-      side={side}
-      align={align}
-      sideOffset={sideOffset}
-      alignOffset={alignOffset}
-      style={{ zIndex: overlayZIndex.tooltip }}
-    >
-      <BaseTooltip.Popup
-        ref={ref}
-        className={cn(overlayClassNames.tooltipSurface, className)}
-        style={{ zIndex: overlayZIndex.tooltip, ...style }}
-        {...props}
-      />
-    </BaseTooltip.Positioner>
-  </BaseTooltip.Portal>
-);
+} & { ref?: React.Ref<React.ElementRef<typeof BaseTooltip.Popup>> | undefined }) => {
+  const instant = React.use(TooltipInstantContext);
+
+  return (
+    <BaseTooltip.Portal>
+      <BaseTooltip.Positioner
+        side={side}
+        align={align}
+        sideOffset={sideOffset}
+        alignOffset={alignOffset}
+        style={{ zIndex: overlayZIndex.tooltip }}
+      >
+        <BaseTooltip.Popup
+          ref={ref}
+          className={cn(overlayClassNames.tooltipSurface, className)}
+          data-instant={instant || undefined}
+          style={{ zIndex: overlayZIndex.tooltip, ...style }}
+          {...props}
+        />
+      </BaseTooltip.Positioner>
+    </BaseTooltip.Portal>
+  );
+};
 TooltipContent.displayName = "TooltipContent";
 
 export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger };

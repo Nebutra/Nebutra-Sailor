@@ -41,19 +41,19 @@ vi.mock("next-intl", () => ({
 // Stub @nebutra/ui/components — the real module pulls heavyweight
 // dependencies (@emoji-mart/data JSON imports) that vitest cannot resolve
 // without `import attributes`. We only need a plain <button> here.
-vi.mock("@nebutra/ui/components", () => ({
+vi.mock("@nebutra/ui/primitives", () => ({
   Button: ({
     children,
     onClick,
-    htmlType = "button",
+    type = "button",
     className,
   }: {
     children: React.ReactNode;
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    htmlType?: "button" | "submit" | "reset";
+    type?: "button" | "submit" | "reset";
     className?: string;
   }) => (
-    <button type={htmlType} onClick={onClick} className={className}>
+    <button type={type} onClick={onClick} className={className}>
       {children}
     </button>
   ),

@@ -32,24 +32,6 @@ vi.mock("next/link", () => ({
   ),
 }));
 
-vi.mock("@nebutra/ui/components", () => ({
-  Button: ({
-    children,
-    htmlType,
-    type: _type,
-    ...props
-  }: {
-    children?: ReactNode;
-    htmlType?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
-    type?: string;
-  } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type">) => (
-    <button type={htmlType ?? "button"} {...props}>
-      {children}
-    </button>
-  ),
-  Input: (props: InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
-}));
-
 // Lightweight passthrough doubles for the react-hook-form primitives. We must
 // NOT spread importActual("@nebutra/ui/primitives") — that eagerly loads the
 // heavy real barrel (THREE.js / Lobe UI) and hangs the jsdom run. These doubles
@@ -59,6 +41,19 @@ vi.mock("@nebutra/ui/components", () => ({
 const FormItemIdContext = createContext<string>("");
 
 vi.mock("@nebutra/ui/primitives", () => ({
+  Button: ({
+    children,
+    type,
+    ...props
+  }: {
+    children?: ReactNode;
+    type?: string;
+  } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type">) => (
+    <button type={type ?? "button"} {...props}>
+      {children}
+    </button>
+  ),
+  Input: (props: InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
   Form: FormProvider,
   FormField: ({
     name,

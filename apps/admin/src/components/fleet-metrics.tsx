@@ -1,7 +1,6 @@
 "use client";
 
 import { Cloud, Globe, Servers, Warning } from "@nebutra/icons";
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { DashboardMetricTile } from "@nebutra/ui/patterns";
 import type { ComponentType } from "react";
 
@@ -38,18 +37,17 @@ export interface FleetMetric {
 
 export function FleetMetrics({ metrics }: { metrics: FleetMetric[] }) {
   return (
-    <AnimateInGroup stagger="fast" className="mt-6 grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
+    <div className="mt-6 grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
       {metrics.map((metric) => (
-        <AnimateIn key={metric.label} preset="fadeUp">
-          <DashboardMetricTile
-            label={metric.label}
-            value={metric.value}
-            detail={metric.detail}
-            icon={ICONS[metric.icon]}
-            tone={metric.tone}
-          />
-        </AnimateIn>
+        <DashboardMetricTile
+          key={metric.label}
+          label={metric.label}
+          value={metric.value}
+          detail={metric.detail}
+          icon={ICONS[metric.icon]}
+          tone={metric.tone}
+        />
       ))}
-    </AnimateInGroup>
+    </div>
   );
 }

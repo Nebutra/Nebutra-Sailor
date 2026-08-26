@@ -2,7 +2,6 @@
 import "@testing-library/jest-dom/vitest";
 import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const messages: Record<string, string> = {
@@ -30,29 +29,6 @@ vi.mock("next-intl", () => ({
       values[name] !== undefined ? String(values[name]) : `{${name}}`,
     );
   },
-}));
-
-vi.mock("@nebutra/ui/components", () => ({
-  Button: ({
-    children,
-    htmlType,
-    onClick,
-    disabled,
-    type: _type,
-    variant: _variant,
-    ...rest
-  }: {
-    children?: ReactNode;
-    htmlType?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
-    onClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
-    disabled?: boolean;
-    type?: string;
-    variant?: string;
-  } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type">) => (
-    <button type={htmlType ?? "button"} onClick={onClick} disabled={disabled} {...rest}>
-      {children}
-    </button>
-  ),
 }));
 
 import { MagicLinkForm } from "../magic-link-form";
