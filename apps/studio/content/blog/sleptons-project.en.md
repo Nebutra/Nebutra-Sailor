@@ -88,7 +88,7 @@ Sleptons names this the **Creativity-to-Organization Gap**.
 
 ### 3. Capital is still large. Discovery, concentration, and exits are the new bottlenecks.
 
-“The rich are getting poorer” does not match the data. UBS reports global billionaire wealth at a record $15.8 trillion in 2025, with a new generation of self-made wealth still being created. [5]
+UBS reports global billionaire wealth at a record $15.8 trillion in 2025, with a new generation of self-made wealth still being created. [5]
 
 What changed is structure. US 2025 venture dollars concentrated in AI and a few mega-rounds. NVCA data put AI at about 65% of US venture dollars, with five companies raising nearly $60 billion, while exits and fundraising stayed in crisis and first-time funds hit their lowest count since 2007. [5]
 
