@@ -42,7 +42,10 @@ describe("to-brand-package", () => {
     const result = compileBrandFromTokenSets(sets, { id: "linear" });
     expect(result.brand.id).toBe("linear");
     expect(result.brand.recipe.buttonDefault).toBe("solid");
-    expect(result.css).toContain("@font-face");
+    // Color-only token sets do not emit @font-face. Skins only declare a face
+    // they can serve from this origin; the type stack goes through FONT_REGISTRY.
+    expect(result.css).not.toContain("@font-face");
+    expect(result.css).toContain("fonts=0");
   });
 
   it("compiles gsap-like set with font faces", () => {
@@ -69,6 +72,7 @@ describe("to-brand-package", () => {
       designMd: "gradient-stroked CTA outlined-only",
     });
     expect(result.brand.recipe.buttonDefault).toBe("gradient-stroke");
-    expect(result.brand.typography.faces?.length).toBeGreaterThan(0);
+    expect(result.brand.typography.faces ?? []).toHaveLength(0);
+    expect(result.css).not.toContain("@font-face");
   });
 });
