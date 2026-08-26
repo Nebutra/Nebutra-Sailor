@@ -18,10 +18,12 @@ describe("blog post prerender clock", () => {
     expect(source).not.toMatch(/new Date\(\s*0\s*\)/u);
   });
 
-  it("does not statically export blog slugs during next build", () => {
+  it("only statically exports the empty blog placeholder slug", () => {
     const source = readFileSync(join(ROOT, FILES[0]), "utf8");
 
-    expect(source).toMatch(/generateStaticParams[\s\S]*return \[\]/u);
+    expect(source).toContain("EMPTY_BLOG_PLACEHOLDER_SLUG");
+    expect(source).toContain("prerenderDefaultLocale([{ slug: EMPTY_BLOG_PLACEHOLDER_SLUG }]");
+    expect(source).not.toContain("posts.slice(0, 50)");
     expect(source).toContain("await connection()");
   });
 });

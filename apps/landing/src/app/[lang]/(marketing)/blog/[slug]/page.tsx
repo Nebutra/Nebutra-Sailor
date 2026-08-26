@@ -24,9 +24,11 @@ import { BlogImage } from "@/components/landing/blog-image";
 import { BlogPortableText } from "@/components/landing/blog-portable-text";
 import { BlogShareActions } from "@/components/landing/blog-share-actions";
 import { StructuredData } from "@/components/seo/structured-data";
+import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
 import {
   buildBlogMetadata,
+  EMPTY_BLOG_PLACEHOLDER_SLUG,
   loadCachedBlogArticle,
   localizedPageHref,
   localizedPostHref,
@@ -37,17 +39,19 @@ import { isZhUiLocale } from "@/lib/i18n/localized";
 type Params = { lang: string; slug: string };
 
 /**
- * Do not prerender post slugs at build time. Under cacheComponents a
- * generateStaticParams page has no request IO, so cacheLife / child clocks
- * throw the prerender current-time guard and abort the landing production
- * build. First request fills the cache.
+ * Cache Components requires at least one generateStaticParams result. Returning
+ * real slugs prerenders them without request IO and trips the current-time
+ * guard. The sentinel exists only so the build can validate the route.
  */
 export function generateStaticParams() {
-  return [];
+  return prerenderDefaultLocale([{ slug: EMPTY_BLOG_PLACEHOLDER_SLUG }], (item) => ({
+    slug: item.slug,
+  }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { lang, slug } = await params;
+  if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG) return {};
   await connection();
   return buildBlogMetadata(lang, slug);
 }
@@ -181,6 +185,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
   const { lang, slug } = await params;
 
   if (!hasLocale(routing.locales, lang)) notFound();
+  if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG) notFound();
   await connection();
   setRequestLocale(lang as Locale);
 
