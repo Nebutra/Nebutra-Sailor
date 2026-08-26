@@ -84,6 +84,9 @@ jobs:
       - name: Smoke test CLI bundle
         run: node packages/ops/create-sailor/dist/index.js --help
 
+      - name: Ensure npm CLI supports trusted publishing
+        run: npm install -g npm@11.5.1
+
       - name: Create Release Pull Request or Publish
         id: changesets
         uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1

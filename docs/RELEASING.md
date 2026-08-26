@@ -53,8 +53,10 @@ Once your PR lands on `main`, run `.github/workflows/release.yml` from the Actio
 When you merge **`chore(release): version packages`** to main, run `release.yml` again:
 - This time, no `.changeset/*.md` files remain, and `package.json` versions differ from what's on npm
 - `changesets/action@v1` calls `bash ./scripts/release-publish.sh`
-- That script reads `NPM_TOKEN` from secrets, runs `pnpm exec changeset publish`
-- Packages go up to npm with provenance attestation when trusted publishing is enabled
+- That script publishes **two identities**:
+  - Unscoped CLIs (`create-sailor`, `nebutra`) via GitHub OIDC trusted publishing
+  - `@nebutra/*` via `secrets.NPM_TOKEN` (granular token scoped to the nebutra npm org)
+- An org-scoped token **cannot** `PUT` unscoped names. That is the `E404 PUT create-sailor` failure, not a missing version bump.
 - Published scoped packages are mirrored to GitHub Packages
 
 Confirm on https://www.npmjs.com/package/create-sailor (or whatever you shipped).
@@ -67,10 +69,12 @@ Confirm on https://www.npmjs.com/package/create-sailor (or whatever you shipped)
 |---|---|
 | `.changeset/config.json` | Changesets CLI config (baseBranch, changelog repo, access level) |
 | `.github/workflows/release.yml` | Manual GitHub Actions release workflow |
-| `scripts/release-publish.sh` | Picks `NPM_TRUSTED_PUBLISHING` (OIDC) or `NPM_TOKEN` and runs `changeset publish` |
+| `scripts/release-publish.sh` | Unscoped CLIs via OIDC, then `changeset publish` for `@nebutra/*` with `NPM_TOKEN` |
+| `scripts/publish-unscoped-packages.mjs` | Publishes pending `create-sailor` / `nebutra` without the org token |
+| `config/npm-publish-identity.json` | SSOT for which names must not use the org token |
 | `scripts/release-publish-github-packages.sh` | Mirrors scoped packages to GitHub Packages |
 | `package.json` root scripts | `pnpm version:packages` → `changeset version` |
-| GitHub secrets | `NPM_TOKEN` — a granular access token with `bypass_2fa: true` scoped to the `nebutra` org |
+| GitHub secrets | `NPM_TOKEN` — a granular access token with `bypass_2fa: true` scoped to the `nebutra` org. It cannot publish unscoped names. |
 
 ---
 
@@ -84,6 +88,16 @@ node scripts/print-release-filters.mjs
 ```
 
 The current publishable surface includes the `@nebutra/*` infrastructure packages, `create-sailor`, and `nebutra`. Publishable packages must not depend at runtime on private workspace packages, must declare a license, and scoped packages must use `publishConfig.access=public`.
+
+Unscoped CLIs stay unscoped on purpose (`npm create sailor`, `npx nebutra`). They are listed in `config/npm-publish-identity.json` and must have a GitHub Actions trusted publisher on npmjs.com:
+
+- Organization or user: `Nebutra`
+- Repository: `Nebutra-Sailor`
+- Workflow filename: `release.yml` (filename only)
+- Environment name: leave empty
+- Allowed actions: `npm publish`
+
+Do this once per unscoped package at `https://www.npmjs.com/package/<name>/access`. Until that row exists, Release will fail on the unscoped package with a setup hint instead of a bare `E404`.
 
 ## GitHub Packages and subrepo mirrors
 
@@ -136,6 +150,7 @@ gh run view <run-id> --log
 ```
 
 Common causes:
+- `E404 PUT create-sailor` / `nebutra` → the org `NPM_TOKEN` cannot publish unscoped names. Add the trusted publisher (see above) and re-run Release. Do not mint a second org token.
 - `scripts/release-publish.sh` exited 1 because `NPM_TOKEN` was missing → re-set the secret
 - The package's version in `package.json` matches what's already on npm → changeset thinks there's nothing to publish (this is the silent "success" case)
 - Package has `"private": true` → excluded from publish
@@ -152,15 +167,15 @@ You can create new ones at https://www.npmjs.com/settings/tseka_luk/tokens (requ
 
 ---
 
-## Moving to OIDC trusted publishing (future)
+## OIDC trusted publishing
 
-npm now supports OIDC-based trusted publishing without any token at all. Our `scripts/release-publish.sh` already branches on `NPM_TRUSTED_PUBLISHING=true`. To migrate:
+Unscoped CLIs already publish this way from `release.yml` (`permissions.id-token: write`, npm >= 11.5.1). The remaining migration is for `@nebutra/*`:
 
-1. On npmjs.com, set up trusted publisher for `create-sailor` and `nebutra` → link to `Nebutra/Nebutra-Sailor` + `release.yml` workflow
-2. Add `NPM_TRUSTED_PUBLISHING=true` as a GitHub **variable** (not secret) on the repo
+1. Add the same trusted publisher (`Nebutra` / `Nebutra-Sailor` / `release.yml`) on every `@nebutra/*` package, or at the npm org default
+2. Set the GitHub variable `NPM_TRUSTED_PUBLISHING=true`
 3. Remove the `NPM_TOKEN` secret
 
-After this, CI publishes via short-lived OIDC tokens — no long-lived credential exists anywhere.
+Until then, keep the org token for scoped packages only. Do not flip the variable early — scoped packages without a trusted publisher will fail.
 
 ---
 

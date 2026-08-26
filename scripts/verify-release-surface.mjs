@@ -1,7 +1,9 @@
 #!/usr/bin/env node
+import { getNpmPublishIdentityDiagnostics } from "./lib/npm-publish-identity.mjs";
 import { getReleaseSurfaceDiagnostics } from "./lib/release-surface.mjs";
 
 const diagnostics = getReleaseSurfaceDiagnostics();
+const publishIdentity = getNpmPublishIdentityDiagnostics();
 
 const failures = [
   ...diagnostics.missingChangesetPackages.map(
@@ -22,6 +24,13 @@ const failures = [
   ...diagnostics.manifestRuntimeFilesExcludedByFiles.map(
     (entry) =>
       `${entry.packageName} manifest references ${entry.reference}, but package files only include ${entry.files.join(", ")} (${entry.packageDir})`,
+  ),
+  ...publishIdentity.missingFromConfig.map(
+    (name) =>
+      `${name} is unscoped and publishable but missing from ${publishIdentity.identityPath}`,
+  ),
+  ...publishIdentity.extraInConfig.map(
+    (name) => `${publishIdentity.identityPath} lists ${name}, which is not publishable`,
   ),
 ];
 

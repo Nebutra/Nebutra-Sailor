@@ -2,6 +2,12 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
+import {
+  formatTrustedPublisherSetup,
+  getNpmPublishIdentityDiagnostics,
+  listPendingUnscopedPackages,
+  npmVersionSupportsTrustedPublishing,
+} from "../../scripts/lib/npm-publish-identity.mjs";
 import { getReleaseSurfaceDiagnostics } from "../../scripts/lib/release-surface.mjs";
 
 describe("release surface governance", () => {
@@ -83,5 +89,31 @@ describe("release surface governance", () => {
       .filter((offender): offender is string => offender !== null);
 
     expect(offenders).toEqual([]);
+  });
+
+  it("lists every unscoped publishable package for trusted publishing", () => {
+    const identity = getNpmPublishIdentityDiagnostics();
+
+    expect(identity.missingFromConfig).toEqual([]);
+    expect(identity.extraInConfig).toEqual([]);
+    expect(identity.listed).toEqual(["create-sailor", "nebutra"]);
+    expect(identity.workflowFile).toBe("release.yml");
+    expect(npmVersionSupportsTrustedPublishing("11.5.1")).toBe(true);
+    expect(npmVersionSupportsTrustedPublishing("10.9.2")).toBe(false);
+    expect(formatTrustedPublisherSetup(identity.identity, "create-sailor")).toContain(
+      "Workflow filename: release.yml",
+    );
+  });
+
+  it("treats a missing registry version as a pending unscoped publish", async () => {
+    const fetchImpl = async () =>
+      ({
+        ok: false,
+        status: 404,
+        text: async () => "Not found",
+      }) as Response;
+
+    const { pending } = await listPendingUnscopedPackages(process.cwd(), fetchImpl);
+    expect(pending.map((entry) => entry.name).sort()).toEqual(["create-sailor", "nebutra"]);
   });
 });

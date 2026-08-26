@@ -96,6 +96,7 @@
     "template:build": "tsx scripts/template-build.ts",
     "prepare": "node scripts/install-git-hooks.mjs",
     "verify:release-surface": "node scripts/verify-release-surface.mjs",
+    "verify:npm-publish-identity": "node scripts/verify-npm-publish-identity.mjs",
     "verify:subrepo-mirrors": "node scripts/verify-subrepo-mirrors.mjs",
     "verify:subrepo-readmes": "node scripts/verify-subrepo-readmes.mjs",
     "subrepo:create": "node scripts/create-subrepo-mirrors.mjs",
