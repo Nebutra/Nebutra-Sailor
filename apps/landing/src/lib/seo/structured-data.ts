@@ -186,7 +186,7 @@ export interface ArticleSchemaInput {
   readonly image?: string;
   readonly author?: { readonly name: string; readonly url?: string };
   readonly publisher?: { readonly name: string; readonly logo?: string };
-  readonly datePublished: string;
+  readonly datePublished?: string;
   readonly dateModified?: string;
 }
 
@@ -207,7 +207,7 @@ export interface ArticleSchema {
     readonly name: string;
     readonly logo?: { readonly "@type": "ImageObject"; readonly url: string };
   };
-  readonly datePublished: string;
+  readonly datePublished?: string;
   readonly dateModified?: string;
 }
 
@@ -239,7 +239,7 @@ export function buildArticleSchema(input: ArticleSchemaInput): ArticleSchema {
           },
         }
       : {}),
-    datePublished: input.datePublished,
+    ...(input.datePublished ? { datePublished: input.datePublished } : {}),
     ...(input.dateModified ? { dateModified: input.dateModified } : {}),
   };
 }

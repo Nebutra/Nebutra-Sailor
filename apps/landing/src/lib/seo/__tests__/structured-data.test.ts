@@ -130,6 +130,16 @@ describe("buildArticleSchema", () => {
     expect(schema.dateModified).toBe("2026-01-02");
     expect(schema.image).toBe("https://nebutra.com/og.png");
   });
+
+  it("omits article dates when the post has no honest timestamp", () => {
+    const schema = buildArticleSchema({
+      headline: "Undated note",
+      url: "https://nebutra.com/blog/undated",
+    });
+
+    expect(schema.datePublished).toBeUndefined();
+    expect(schema.dateModified).toBeUndefined();
+  });
 });
 
 describe("buildProductSchema", () => {

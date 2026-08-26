@@ -43,6 +43,7 @@ import {
 } from "@/lib/blog";
 import { env } from "@/lib/env";
 import { isZhUiLocale } from "@/lib/i18n/localized";
+import { contentTimestamp } from "@/lib/seo/lastmod";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { localesForPath } from "@/lib/seo/route-registry";
 import { getSiteUrl, type PublicationSet } from "@/lib/seo/site-routes";
@@ -389,8 +390,8 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
     description: post.excerpt || post.title,
     url: canonicalUrl,
     image: imageUrl ?? undefined,
-    datePublished: post.date ?? new Date().toISOString(),
-    dateModified: post.updatedAt ?? post.date,
+    datePublished: contentTimestamp(post.date) ?? contentTimestamp(post.updatedAt),
+    dateModified: contentTimestamp(post.updatedAt) ?? contentTimestamp(post.date),
     author: authorName ? { name: authorName } : undefined,
     publisher: {
       name: "Nebutra",

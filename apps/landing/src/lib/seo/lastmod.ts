@@ -31,6 +31,14 @@ export function lastModifiedFor(
 }
 
 /**
+ * ISO timestamp for JSON-LD / article metadata. Same honesty rule as
+ * `lastModifiedFor`: a real content clock, or omit. Never `new Date()`.
+ */
+export function contentTimestamp(value: Date | null | string | undefined): string | undefined {
+  return toValidDate(value)?.toISOString();
+}
+
+/**
  * A date is only usable as `<lastmod>` if it is a real timestamp. The Unix
  * epoch is not: `@/lib/blog` synthesizes `new Date(0)` for a post with neither
  * `publishedAt` nor `_updatedAt`, and a 1970 `<lastmod>` is a fabricated date
