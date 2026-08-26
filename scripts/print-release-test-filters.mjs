@@ -8,9 +8,11 @@
  *
  *   1. Pending changesets (version-PR pass)
  *   2. package.json files bumped in HEAD (publish pass after version merge)
- *   3. Fallback: create-sailor + nebutra
+ *   3. Local versions that are not on npm yet (follow-up CI commits after
+ *      the version merge must not fall back to every CLI)
  */
 import { execSync } from "node:child_process";
+import { listPendingPublishablePackages } from "./lib/npm-publish-identity.mjs";
 import { getReleaseSurfaceDiagnostics, readChangesetPackageNames } from "./lib/release-surface.mjs";
 
 function toFilters(names) {
@@ -52,5 +54,18 @@ try {
   fromHead = [];
 }
 
-const names = fromHead.length > 0 ? fromHead : ["create-sailor", "nebutra"];
+if (fromHead.length > 0) {
+  process.stdout.write(`${toFilters(fromHead)}\n`);
+  process.exit(0);
+}
+
+let pendingNames = [];
+try {
+  pendingNames = (await listPendingPublishablePackages()).map((entry) => entry.name);
+} catch (error) {
+  const message = error instanceof Error ? error.message : String(error);
+  console.error(`[release-test-filters] npm lookup failed: ${message}`);
+}
+
+const names = pendingNames.length > 0 ? pendingNames : ["create-sailor"];
 process.stdout.write(`${toFilters(names)}\n`);

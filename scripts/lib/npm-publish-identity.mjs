@@ -82,25 +82,42 @@ export async function npmVersionExists(packageName, version, fetchImpl = fetch) 
   return true;
 }
 
-export async function listPendingUnscopedPackages(root = process.cwd(), fetchImpl = fetch) {
-  const diagnostics = getNpmPublishIdentityDiagnostics(root);
+export async function listPendingPublishablePackages(root = process.cwd(), fetchImpl = fetch) {
+  const diagnostics = getReleaseSurfaceDiagnostics(root);
   const pending = [];
 
-  for (const name of diagnostics.listed) {
-    const entry = diagnostics.publishableByName.get(name);
-    if (!entry) continue;
+  await Promise.all(
+    diagnostics.publishable.map(async (entry) => {
+      const published = await npmVersionExists(
+        entry.manifest.name,
+        entry.manifest.version,
+        fetchImpl,
+      );
+      if (!published) {
+        pending.push({
+          name: entry.manifest.name,
+          version: entry.manifest.version,
+          packageDir: entry.packageDir,
+        });
+      }
+    }),
+  );
 
-    const version = entry.manifest.version;
-    const published = await npmVersionExists(name, version, fetchImpl);
-    if (!published) {
-      pending.push({
-        name,
-        version,
-        packageDir: entry.packageDir,
-        reason: diagnostics.identity.unscoped.find((item) => item.name === name)?.reason,
-      });
-    }
-  }
+  return pending.sort((a, b) => a.name.localeCompare(b.name));
+}
 
-  return { diagnostics, pending };
+export async function listPendingUnscopedPackages(root = process.cwd(), fetchImpl = fetch) {
+  const diagnostics = getNpmPublishIdentityDiagnostics(root);
+  const pendingPublishable = await listPendingPublishablePackages(root, fetchImpl);
+  const listed = new Set(diagnostics.listed);
+
+  return {
+    diagnostics,
+    pending: pendingPublishable
+      .filter((entry) => listed.has(entry.name))
+      .map((entry) => ({
+        ...entry,
+        reason: diagnostics.identity.unscoped.find((item) => item.name === entry.name)?.reason,
+      })),
+  };
 }
