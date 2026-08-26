@@ -17,4 +17,11 @@ describe("blog post prerender clock", () => {
     expect(source).not.toMatch(/new Date\(\s*\)/u);
     expect(source).not.toMatch(/new Date\(\s*0\s*\)/u);
   });
+
+  it("does not statically export blog slugs during next build", () => {
+    const source = readFileSync(join(ROOT, FILES[0]), "utf8");
+
+    expect(source).toMatch(/generateStaticParams[\s\S]*return \[\]/u);
+    expect(source).toContain("await connection()");
+  });
 });

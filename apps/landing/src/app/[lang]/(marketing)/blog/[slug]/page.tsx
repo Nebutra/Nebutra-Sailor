@@ -4,7 +4,6 @@ import {
   getBlogUrlSegment,
   getBlogViewTransitionName,
   resolveBlogCover,
-  toBlogLanguage,
 } from "@nebutra/blog";
 import { ArrowLeft, ArrowRight, BookOpen, Calendar, Clock, Globe, Message } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
@@ -13,6 +12,7 @@ import { DynamicIslandTOC } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import { connection } from "next/server";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
@@ -24,9 +24,7 @@ import { BlogImage } from "@/components/landing/blog-image";
 import { BlogPortableText } from "@/components/landing/blog-portable-text";
 import { BlogShareActions } from "@/components/landing/blog-share-actions";
 import { StructuredData } from "@/components/seo/structured-data";
-import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
-import { getAllPosts } from "@/lib/blog";
 import {
   buildBlogMetadata,
   loadCachedBlogArticle,
@@ -39,18 +37,18 @@ import { isZhUiLocale } from "@/lib/i18n/localized";
 type Params = { lang: string; slug: string };
 
 /**
- * Pre-build the default locale only, so the most-crawled URLs are a CDN hit
- * instead of a cold on-demand render. Other locales render on-demand and are
- * then cached via PPR — `dynamicParams = true` is forbidden under
- * cacheComponents and also redundant.
+ * Do not prerender post slugs at build time. Under cacheComponents a
+ * generateStaticParams page has no request IO, so cacheLife / child clocks
+ * throw the prerender current-time guard and abort the landing production
+ * build. First request fills the cache.
  */
-export async function generateStaticParams() {
-  const posts = await getAllPosts(toBlogLanguage(routing.defaultLocale));
-  return prerenderDefaultLocale(posts.slice(0, 50), (post) => ({ slug: post.slug }));
+export function generateStaticParams() {
+  return [];
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { lang, slug } = await params;
+  await connection();
   return buildBlogMetadata(lang, slug);
 }
 
@@ -183,6 +181,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
   const { lang, slug } = await params;
 
   if (!hasLocale(routing.locales, lang)) notFound();
+  await connection();
   setRequestLocale(lang as Locale);
 
   const article = await loadCachedBlogArticle(lang, slug);
