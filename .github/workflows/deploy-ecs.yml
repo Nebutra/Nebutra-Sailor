@@ -1443,20 +1443,27 @@ jobs:
               exit 1
             }
             echo "✅ api database dependency -> up"
+            session_code=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 15 \
+              https://api.nebutra.com/api/auth/session || echo 000)
+            if [ "$session_code" != "200" ]; then
+              echo "::error::API session probe failed at https://api.nebutra.com/api/auth/session (expected 200, got $session_code)"
+              exit 1
+            fi
+            echo "✅ api auth session -> $session_code"
           fi
 
           # Multi-app RP model: app.nebutra.com/sign-in is a soft redirect into
           # auth.nebutra.com (login center). Expect 307, not a local 200 page.
+          # Do not probe the origin gateway here — a 502 there rolled back a
+          # healthy web release (2026-08-27) while /__edge/health was still 200.
           if [ "${{ needs.detect-changes.outputs.web }}" = "true" ]; then
             declare -A web_targets=(
               [web-sign-in]="https://app.nebutra.com/sign-in"
               [web-desktop-auth-foundryoss]="https://app.nebutra.com/signup/remote?scheme=foundryoss&state=f80fe991-f260-468a-b9fc-9a9b98bf9352&public_beta=true"
-              [web-gateway-auth-session]="https://api.nebutra.com/api/auth/session"
             )
             declare -A expected_codes=(
               [web-sign-in]="307"
               [web-desktop-auth-foundryoss]="307"
-              [web-gateway-auth-session]="200"
             )
             for name in "${!web_targets[@]}"; do
               url="${web_targets[$name]}"

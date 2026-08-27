@@ -132,6 +132,21 @@ describe("Deploy substrate governance", () => {
     expect(remote).toContain("BETTER_AUTH_URL");
   });
 
+  it("does not roll back a healthy web release when the origin gateway is 502", () => {
+    const yml = read("deploy-ecs.yml");
+    const webSmokeStart = yml.indexOf("Multi-app RP model");
+    const authSmokeStart = yml.indexOf("auth-sign-in HTML contains RSC client-proxy");
+
+    expect(webSmokeStart).toBeGreaterThan(0);
+    expect(authSmokeStart).toBeGreaterThan(webSmokeStart);
+
+    const webSmoke = yml.slice(webSmokeStart, authSmokeStart);
+    expect(webSmoke).toContain("web-sign-in");
+    expect(webSmoke).toContain("web-desktop-auth-foundryoss");
+    expect(webSmoke).not.toContain("/api/auth/session");
+    expect(webSmoke).not.toContain("web-gateway-auth-session");
+  });
+
   it("manual ECS shell helpers build web with build:next (not Vite turbo build)", () => {
     const lite = readFileSync(
       resolve(process.cwd(), "infra/ops/scripts/deploy-ecs-lite.sh"),
