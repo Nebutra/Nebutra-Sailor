@@ -732,7 +732,17 @@ jobs:
           echo "Using TURBO_BASE_REF=$BASE_SHA"
 
       - name: Run tests (affected)
-        run: pnpm turbo test --filter="...[${TURBO_BASE_REF}]..."
+        run: |
+          filters=(--filter="...[${TURBO_BASE_REF}]...")
+          # Same labs sidecars as Build: token diffs pull them in, and several
+          # have no test files (vitest exits 1) or Google-font / brand:sync seams.
+          for app in apps/sailor-docs apps/storybook apps/studio apps/typelens apps/router apps/forge apps/pebble apps/design apps/sleptons; do
+            if [ -d "$app" ]; then
+              filters+=(--filter="!./$app")
+            fi
+          done
+
+          pnpm turbo test "${filters[@]}"
         env:
           CI: true
 
