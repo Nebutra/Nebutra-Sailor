@@ -217,15 +217,7 @@ jobs:
             'https://auth.nebutra.com/health?probe=db' || echo 000)
           echo "GET https://auth.nebutra.com/health?probe=db -> $db_code"
           if [ "$db_code" = "200" ]; then
-            python3 -c '
-import json
-d=json.load(open("/tmp/adb.json"))
-db=d.get("database") or {}
-print(json.dumps(db, indent=2))
-status=db.get("status")
-if status and status != "ok":
-    print("::warning::Auth edge Hyperdrive probe is", status, "-", db.get("error") or "no error")
-' || true
+            python3 -c 'import json; d=json.load(open("/tmp/adb.json")); db=d.get("database") or {}; print(json.dumps(db, indent=2)); status=db.get("status"); print("::warning::Auth edge Hyperdrive probe is %s - %s" % (status, db.get("error") or "no error")) if status and status!="ok" else None' || true
           fi
 
       - name: Point DNS auth → Worker (soft-fail if token lacks DNS Edit)
