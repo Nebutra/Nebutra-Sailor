@@ -13,10 +13,10 @@ on:
     branches: [main]
     paths:
       - "apps/auth/src/worker-edge.ts"
+      - "apps/auth/src/lib/auth-edge-pool.ts"
       - "apps/auth/wrangler.edge.jsonc"
       - "apps/auth/package.json"
       - "packages/iam/auth/**"
-      - "pnpm-lock.yaml"
       - ".github/workflows/deploy-auth-cloudflare.yml"
 
 permissions:
@@ -212,6 +212,20 @@ jobs:
             python3 -c 'import json; d=json.load(open("/tmp/ag.json")); print(json.dumps((d.get("oauth") or {}).get("googlePairing") or d.get("oauth"), indent=2))' || true
           else
             echo "::warning::Product host not on auth edge yet (DNS still Vercel/ECS?). Deploy ok; attach domain auth.nebutra.com to Worker nebutra-auth."
+          fi
+          db_code=$(curl -sS -o /tmp/adb.json -w '%{http_code}' --max-time 20 \
+            'https://auth.nebutra.com/health?probe=db' || echo 000)
+          echo "GET https://auth.nebutra.com/health?probe=db -> $db_code"
+          if [ "$db_code" = "200" ]; then
+            python3 -c '
+import json
+d=json.load(open("/tmp/adb.json"))
+db=d.get("database") or {}
+print(json.dumps(db, indent=2))
+status=db.get("status")
+if status and status != "ok":
+    print("::warning::Auth edge Hyperdrive probe is", status, "-", db.get("error") or "no error")
+' || true
           fi
 
       - name: Point DNS auth → Worker (soft-fail if token lacks DNS Edit)

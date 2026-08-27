@@ -19,6 +19,7 @@
 import { brand } from "@nebutra/brand/metadata";
 import { betterAuth } from "better-auth";
 import { Pool } from "pg";
+import { attachPoolErrorGuard, isPgConnectFailure, withConnectRetry } from "./lib/auth-edge-pool";
 
 interface HyperdriveBinding {
   connectionString: string;
@@ -52,6 +53,14 @@ type AuthInstance = { handler: (request: Request) => Promise<Response>; api: any
 let pool: Pool | null = null;
 let authSingleton: AuthInstance | null = null;
 let authKey = "";
+
+/** Drop a dead isolate pool. Do not pool.end() here — that races in-flight queries into 1101. */
+function discardAuthPool(dead?: Pool | null): void {
+  if (dead && pool && dead !== pool) return;
+  pool = null;
+  authSingleton = null;
+  authKey = "";
+}
 
 // Derived from brand.domains rather than typed out, so a rebrand moves the
 // trusted origins with everything else. A stale entry here is not a cosmetic
@@ -157,6 +166,10 @@ function getAuth(env: AuthEdgeEnv): AuthInstance {
     idleTimeoutMillis: 0,
     connectionTimeoutMillis: 8_000,
     allowExitOnIdle: false,
+  });
+  attachPoolErrorGuard(pool, (err) => {
+    console.error("[nebutra-auth] pg pool error", err.message);
+    discardAuthPool(pool);
   });
   authKey = key;
 
@@ -316,7 +329,7 @@ async function handleHealth(request: Request, env: AuthEdgeEnv): Promise<Respons
     role: "login-center-edge",
     deploy: "cloudflare-workers-edge",
     // Bump when shipping edge fixes so /health proves the new script is live.
-    edgeBuild: "2026-08-06-no-route-redeploy",
+    edgeBuild: "2026-08-27-pg-pool-guard",
     features: {
       authApi: true,
       // ORIGIN_URL is the preferred pass-through; ORIGIN_IP alone is legacy.
@@ -342,7 +355,43 @@ async function handleHealth(request: Request, env: AuthEdgeEnv): Promise<Respons
     };
   }
 
+  if (url.searchParams.get("probe") === "db") {
+    body.database = await probeDatabase(env);
+  }
+
   return json(body, 200, { "cache-control": "no-store" });
+}
+
+/** One-off SELECT 1 — does not touch the request-path singleton. */
+async function probeDatabase(env: AuthEdgeEnv): Promise<Record<string, unknown>> {
+  const dbUrl = connectionString(env);
+  if (!dbUrl) {
+    return { status: "missing_env" };
+  }
+
+  const started = Date.now();
+  const client = new Pool({
+    connectionString: dbUrl,
+    max: 1,
+    idleTimeoutMillis: 0,
+    connectionTimeoutMillis: 5_000,
+    allowExitOnIdle: false,
+  });
+  attachPoolErrorGuard(client, (err) => {
+    console.error("[nebutra-auth] db probe pool error", err.message);
+  });
+  try {
+    await client.query("SELECT 1");
+    return { status: "ok", ms: Date.now() - started };
+  } catch (error) {
+    return {
+      status: isPgConnectFailure(error) ? "timeout" : "error",
+      ms: Date.now() - started,
+      error: error instanceof Error ? error.message : String(error),
+    };
+  } finally {
+    await client.end().catch(() => undefined);
+  }
 }
 
 /**
@@ -429,13 +478,18 @@ async function handleOAuthStart(
   }
 
   try {
-    const auth = getAuth(env);
-    const result = await auth.api.signInSocial({
-      body: { provider, callbackURL },
-      headers: request.headers,
-      asResponse: true,
-    });
-    return asBrowserOAuthRedirect(result);
+    return await withConnectRetry(
+      async () => {
+        const auth = getAuth(env);
+        const result = await auth.api.signInSocial({
+          body: { provider, callbackURL },
+          headers: request.headers,
+          asResponse: true,
+        });
+        return asBrowserOAuthRedirect(result);
+      },
+      () => discardAuthPool(),
+    );
   } catch (error) {
     return json(
       {
@@ -473,18 +527,23 @@ async function handleAuthApi(request: Request, env: AuthEdgeEnv): Promise<Respon
   }
 
   try {
-    const auth = getAuth(env);
-    const res = await auth.handler(request);
-    // Top-level social start must 302 (see asBrowserOAuthRedirect).
-    const path = new URL(request.url).pathname;
-    if (
-      path.includes("/sign-in/social") ||
-      path.includes("/signin/social") ||
-      path.includes("/oauth/")
-    ) {
-      return asBrowserOAuthRedirect(res);
-    }
-    return res;
+    return await withConnectRetry(
+      async () => {
+        const auth = getAuth(env);
+        const res = await auth.handler(request);
+        // Top-level social start must 302 (see asBrowserOAuthRedirect).
+        const path = new URL(request.url).pathname;
+        if (
+          path.includes("/sign-in/social") ||
+          path.includes("/signin/social") ||
+          path.includes("/oauth/")
+        ) {
+          return asBrowserOAuthRedirect(res);
+        }
+        return res;
+      },
+      () => discardAuthPool(),
+    );
   } catch (error) {
     return json(
       {
