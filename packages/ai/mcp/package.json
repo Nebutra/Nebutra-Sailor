@@ -40,7 +40,7 @@
     "nebutra-tool-protocol": "./dist/cli.js"
   },
   "scripts": {
-    "prepare": "mkdir -p dist/server && test -f dist/server/contextServer.js || echo '#!/usr/bin/env node' > dist/server/contextServer.js",
+    "prepare": "mkdir -p dist/server && (test -f dist/server/contextServer.js || echo '#!/usr/bin/env node' > dist/server/contextServer.js) && (test -f dist/cli.js || echo '#!/usr/bin/env node' > dist/cli.js)",
     "build": "tsup",
     "dev": "tsup --watch",
     "test": "vitest run",
