@@ -150,7 +150,8 @@ describe("ci harness dependency closure", () => {
     // Prisma 7 dropped the CLI flag; the shadow URL is injected as env for
     // packages/platform/db/prisma.config.ts datasource.shadowDatabaseUrl.
     expect(workflow).toContain(`SHADOW_DATABASE_URL: ${shadowDatabaseUrl}`);
-    expect(workflow).toContain("--from-migrations ./prisma/migrations");
+    expect(workflow).toContain("prisma db push --accept-data-loss --skip-generate");
+    expect(workflow).toContain("--from-config-datasource");
     expect(workflow).toContain("--to-schema ./prisma/schema.prisma");
 
     const prismaConfig = await readFile(

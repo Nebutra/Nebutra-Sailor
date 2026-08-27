@@ -845,14 +845,19 @@ jobs:
       - name: Check migration history is consistent
         working-directory: packages/platform/db
         # Prisma 7 dropped --to-schema-datamodel and --shadow-database-url.
-        # Replay migrations onto the job's shadow Postgres via prisma.config.ts.
+        # The committed migration history starts at enable_rls and is not
+        # replayable from empty (P3006 / P1014: organizations is never created).
+        # Apply the current schema to the job-local Postgres, then confirm the
+        # live datasource still matches schema.prisma. Do not point DATABASE_URL
+        # at secrets.SHADOW_DATABASE_URL — db push would mutate a remote DB.
         env:
-          DATABASE_URL: ${{ secrets.SHADOW_DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/shadow_nebutra' }}
-          DIRECT_URL: ${{ secrets.SHADOW_DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/shadow_nebutra' }}
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/shadow_nebutra
+          DIRECT_URL: postgresql://postgres:postgres@localhost:5432/shadow_nebutra
           SHADOW_DATABASE_URL: ${{ secrets.SHADOW_DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/shadow_nebutra' }}
         run: |
+          pnpm exec prisma db push --accept-data-loss --skip-generate
           pnpm exec prisma migrate diff \
-            --from-migrations ./prisma/migrations \
+            --from-config-datasource \
             --to-schema ./prisma/schema.prisma \
             --exit-code
 
