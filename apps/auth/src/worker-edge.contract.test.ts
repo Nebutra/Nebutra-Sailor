@@ -7,7 +7,8 @@ const source = readFileSync(path.join(__dirname, "worker-edge.ts"), "utf8");
 describe("auth-edge worker contract", () => {
   it("opens a pg Client per request instead of reusing a Pool across isolates", () => {
     expect(source).toContain("new Client");
-    expect(source).toContain("client.connect");
+    expect(source).toContain("client.end");
+    expect(source).not.toContain("await client.connect()");
     expect(source).not.toContain("authSingleton");
     expect(source).toContain("withConnectRetry");
     expect(source).toContain("attachPoolErrorGuard");
@@ -19,6 +20,6 @@ describe("auth-edge worker contract", () => {
   });
 
   it("bumps edgeBuild when the request-path contract changes", () => {
-    expect(source).toContain('edgeBuild: "2026-08-27-pg-client-per-request"');
+    expect(source).toContain('edgeBuild: "2026-08-27-pg-client-no-preconnect"');
   });
 });
