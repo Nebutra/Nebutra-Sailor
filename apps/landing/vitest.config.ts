@@ -7,7 +7,6 @@ export default defineConfig({
     globals: true,
     exclude: ["**/node_modules/**", "**/dist/**", "scripts/**"],
   },
-  css: true,
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
