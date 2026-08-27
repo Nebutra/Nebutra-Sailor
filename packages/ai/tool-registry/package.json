@@ -6,6 +6,8 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "status": "wip",
+    "graph": "runtime",
     "featureId": "tool-registry",
     "category": "ai",
     "surface": "tool-registry",

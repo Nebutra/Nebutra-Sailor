@@ -89,6 +89,10 @@ node scripts/print-release-filters.mjs
 
 The current publishable surface includes the `@nebutra/*` infrastructure packages, `create-sailor`, and `nebutra`. Publishable packages must not depend at runtime on private workspace packages, must declare a license, and scoped packages must use `publishConfig.access=public`.
 
+The **build/test release graph** is a different cut: `nebutra.graph` of
+`core` or `runtime`. Labs stay in the workspace but are excluded from
+`pnpm build:release` / `pnpm test:release`. See `docs/package-status.md`.
+
 Unscoped CLIs stay unscoped on purpose (`npm create sailor`, `npx nebutra`). They are listed in `config/npm-publish-identity.json` and must have a GitHub Actions trusted publisher on npmjs.com:
 
 - Organization or user: `Nebutra`

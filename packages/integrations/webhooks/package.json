@@ -5,6 +5,7 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "graph": "core",
     "status": "stable",
     "productionReady": true,
     "requires": [

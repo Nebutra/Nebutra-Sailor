@@ -2,6 +2,7 @@ import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { getSystemDb, type Role } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import {
+  acceptWebhookEvent,
   type JsonValue,
   OrganizationMemberRepository,
   OrganizationRepository,
@@ -109,7 +110,7 @@ const clerkWebhookRoute = createRoute({
   tags: ["Webhooks"],
   summary: "Clerk webhook handler",
   description:
-    "Receives Clerk webhook events for user and organization lifecycle management. Signature verification is handled by the Svix SDK.",
+    "Receives Clerk webhook events for user and organization lifecycle management. Signature verification is handled by the Svix SDK. 2xx is returned only after the inbox row is marked processed.",
   request: {
     body: {
       content: {
@@ -121,7 +122,7 @@ const clerkWebhookRoute = createRoute({
   },
   responses: {
     200: {
-      description: "Webhook received and queued for processing",
+      description: "Webhook processed, or already processed",
       content: {
         "application/json": {
           schema: z.object({
@@ -142,7 +143,17 @@ const clerkWebhookRoute = createRoute({
       },
     },
     500: {
-      description: "Webhook not configured",
+      description: "Webhook not configured or handler failed",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z.string(),
+          }),
+        },
+      },
+    },
+    503: {
+      description: "Event is still being processed; provider should retry",
       content: {
         "application/json": {
           schema: z.object({
@@ -201,41 +212,45 @@ export function createClerkWebhookRoutes(repos?: Partial<ClerkRepos>): OpenAPIHo
       return c.json({ error: "Invalid signature" }, 400);
     }
 
-    // Atomic idempotency claim — relies on the unique constraint
-    // `@@unique([provider, eventId])` on WebhookEvent. The first pod to
-    // insert the row wins; concurrent retries short-circuit on P2002.
-    const claim = await resolvedRepos.webhookEventRepo.claim({
-      provider: "clerk",
-      eventId: svixId,
-      eventType: payload.type,
-      payload: payload as unknown as JsonValue,
-    });
+    let accepted: Awaited<ReturnType<typeof acceptWebhookEvent>>;
+    try {
+      accepted = await acceptWebhookEvent(resolvedRepos.webhookEventRepo, {
+        provider: "clerk",
+        eventId: svixId,
+        eventType: payload.type,
+        payload: payload as unknown as JsonValue,
+      });
+    } catch (err) {
+      log.error("Failed to record Clerk webhook event", err, { svixId, type: payload.type });
+      return c.json({ error: "Failed to record event" }, 500);
+    }
 
-    if (!claim.claimed) {
-      log.info("Clerk event already received, skipping", {
+    if (accepted.outcome === "skip_processed") {
+      log.info("Clerk event already processed, skipping", {
         svixId,
         type: payload.type,
       });
       return c.json({ received: true as const, skipped: true }, 200);
     }
 
-    // Respond immediately; process asynchronously
-    const response = c.json({ received: true as const }, 200);
+    if (accepted.outcome === "in_flight") {
+      log.info("Clerk event is still processing", { svixId, type: payload.type });
+      return c.json({ error: "Event is still processing" }, 503);
+    }
 
-    handleClerkEvent(payload, resolvedRepos)
-      .then(async () => {
-        await resolvedRepos.webhookEventRepo.markProcessed("clerk", svixId);
-      })
-      .catch(async (err: unknown) => {
-        log.error("Clerk event handler error", err, { type: payload.type });
-        await resolvedRepos.webhookEventRepo
-          .markFailed("clerk", svixId, err instanceof Error ? err.message : "Unknown error")
-          .catch(() => {
-            // Best-effort — do not throw inside catch
-          });
-      });
-
-    return response;
+    try {
+      await handleClerkEvent(payload, resolvedRepos);
+      await resolvedRepos.webhookEventRepo.markProcessed("clerk", svixId);
+      return c.json({ received: true as const }, 200);
+    } catch (err) {
+      log.error("Clerk event handler error", err, { type: payload.type });
+      await resolvedRepos.webhookEventRepo
+        .markFailed("clerk", svixId, err instanceof Error ? err.message : "Unknown error")
+        .catch(() => {
+          // Best-effort — do not throw inside catch
+        });
+      return c.json({ error: "Failed to process event" }, 500);
+    }
   });
 
   return app;

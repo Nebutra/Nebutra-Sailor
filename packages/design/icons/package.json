@@ -3,6 +3,11 @@
   "version": "0.1.2",
   "description": "Geist icon set (541 icons) packaged as TypeScript React components",
   "private": false,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "license": "MIT",
   "sideEffects": false,
   "main": "./dist/index.js",

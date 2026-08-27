@@ -2,6 +2,11 @@
   "name": "@nebutra/browser-utils",
   "version": "0.1.0",
   "private": true,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "type": "module",
   "description": "Shared browser helpers: safe storage, fetch with timeout",
   "license": "MIT",

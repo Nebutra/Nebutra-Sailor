@@ -2,6 +2,11 @@
   "name": "@nebutra/oauth",
   "version": "0.1.2",
   "private": true,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "type": "module",
   "exports": {
     ".": {

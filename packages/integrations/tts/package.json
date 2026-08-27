@@ -6,6 +6,8 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "status": "wip",
+    "graph": "labs",
     "featureId": "tts",
     "category": "integrations",
     "summary": "Multi-tenant text-to-speech provider abstraction"

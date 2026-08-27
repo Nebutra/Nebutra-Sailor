@@ -6,6 +6,8 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "status": "wip",
+    "graph": "labs",
     "featureId": "atelier-canvas",
     "category": "ai",
     "surface": "creative-surface",

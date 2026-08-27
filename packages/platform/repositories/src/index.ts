@@ -74,6 +74,8 @@ export type {
 } from "./webhook-event.repository";
 // WebhookEvent
 export { WebhookEventRepository } from "./webhook-event.repository";
+export type { AcceptWebhookEventResult, WebhookInboxDecision } from "./webhook-inbox";
+export { acceptWebhookEvent, decideWebhookInbox, WEBHOOK_IN_FLIGHT_MS } from "./webhook-inbox";
 // Workflows
 export type { CreateWorkflowData, UpdateWorkflowData } from "./workflow.repository";
 export { getWorkflowRepository, WorkflowRepository } from "./workflow.repository";

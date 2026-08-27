@@ -5,6 +5,7 @@
   "description": "Legal & Compliance infrastructure for Nebutra SaaS",
   "type": "module",
   "nebutra": {
+    "graph": "core",
     "status": "foundation",
     "productionReady": false,
     "requires": [

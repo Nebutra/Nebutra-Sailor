@@ -18,6 +18,15 @@ const {
 }));
 
 vi.mock("@nebutra/billing", () => ({
+  BillingError: class BillingError extends Error {
+    code: string;
+    statusCode: number;
+    constructor(message: string, code: string, statusCode = 400) {
+      super(message);
+      this.code = code;
+      this.statusCode = statusCode;
+    }
+  },
   checkUsageLimit: vi.fn(() => ({
     allowed: true,
     limit: BigInt(10000),
@@ -32,6 +41,26 @@ vi.mock("@nebutra/billing", () => ({
     ENTERPRISE: { apiCalls: 1000000 },
   },
   getStripeSubscription: getStripeSubscriptionMock,
+  parseCheckoutSelection: ({ plan, interval }: { plan: string; interval: string }) => ({
+    plan: plan.startsWith("plan_") ? plan.slice(5) : plan,
+    interval: interval === "year" ? "yearly" : interval === "month" ? "monthly" : interval,
+  }),
+  resolveCheckoutOffer: ({ plan, interval }: { plan: string; interval: string }) => ({
+    plan,
+    interval,
+    priceId: interval === "yearly" ? "price_pro_yearly" : "price_pro_monthly",
+    quantity: 1 as const,
+  }),
+  resolveCheckoutReturnUrls: () => ({
+    successUrl: "https://app.example/checkout-return?billing=checkout-success",
+    cancelUrl: "https://app.example/checkout-return?billing=checkout-canceled",
+  }),
+  assertProductReturnUrl: (url: string) => {
+    if (!url.startsWith("https://app.example")) {
+      throw new Error("Billing return URL must stay on the product origin");
+    }
+    return url;
+  },
   resolveBillingProviderReadiness: resolveBillingProviderReadinessMock,
 }));
 
@@ -110,6 +139,7 @@ describe("billing self-service routes", () => {
         "Checkout and hosted billing portal actions can be exposed for configured plans.",
     });
     process.env.BILLING_PROVIDER = "stripe";
+    process.env.APP_URL = "https://app.example";
     process.env.STRIPE_SECRET_KEY = "sk_test_123";
     process.env.STRIPE_PRICE_ID_PRO_MONTHLY = "price_pro_monthly";
     process.env.STRIPE_PRICE_ID_PRO_YEARLY = "price_pro_yearly";
@@ -130,9 +160,8 @@ describe("billing self-service routes", () => {
         ...(await authHeaders()),
       },
       body: JSON.stringify({
-        priceId: "price_pro_monthly",
-        successUrl: "https://app.example/en/billing?billing=checkout-success",
-        cancelUrl: "https://app.example/en/billing?billing=checkout-canceled",
+        plan: "pro",
+        interval: "monthly",
       }),
     });
 
@@ -145,6 +174,9 @@ describe("billing self-service routes", () => {
       expect.objectContaining({
         customerId: "cus_alpha",
         priceId: "price_pro_monthly",
+        quantity: 1,
+        successUrl: "https://app.example/checkout-return?billing=checkout-success",
+        cancelUrl: "https://app.example/checkout-return?billing=checkout-canceled",
       }),
     );
     await expect(readJson(response)).resolves.toEqual({
@@ -153,7 +185,7 @@ describe("billing self-service routes", () => {
     });
   });
 
-  it("forwards seat quantity and trial metadata when creating checkout sessions", async () => {
+  it("ignores client-supplied price, quantity, trial, and redirect URLs", async () => {
     stripeCustomerFindUniqueMock.mockResolvedValue({ stripeId: "cus_alpha" });
     createCheckoutSessionMock.mockResolvedValue({
       id: "cs_alpha",
@@ -167,21 +199,49 @@ describe("billing self-service routes", () => {
         ...(await authHeaders()),
       },
       body: JSON.stringify({
-        priceId: "price_pro_monthly",
-        successUrl: "https://app.example/en/billing?billing=checkout-success",
-        cancelUrl: "https://app.example/en/billing?billing=checkout-canceled",
-        quantity: 7,
-        trialPeriodDays: 14,
+        plan: "pro",
+        interval: "monthly",
+        priceId: "price_attacker",
+        successUrl: "https://evil.example/phish",
+        cancelUrl: "https://evil.example/phish",
+        quantity: 7000,
+        trialPeriodDays: 30,
       }),
     });
 
     expect(response.status).toBe(200);
     expect(createCheckoutSessionMock).toHaveBeenCalledWith(
       expect.objectContaining({
-        quantity: 7,
-        trialPeriodDays: 14,
+        priceId: "price_pro_monthly",
+        quantity: 1,
+        successUrl: "https://app.example/checkout-return?billing=checkout-success",
       }),
     );
+    expect(createCheckoutSessionMock.mock.calls[0]?.[0]).not.toMatchObject({
+      trialPeriodDays: 30,
+    });
+  });
+
+  it("rejects members who cannot manage billing", async () => {
+    const response = await app.request("/checkout", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        ...(await s2sHeaders({
+          userId: "user_member",
+          orgId: "org_alpha",
+          role: "member",
+          plan: "PRO",
+        })),
+      },
+      body: JSON.stringify({
+        plan: "pro",
+        interval: "monthly",
+      }),
+    });
+
+    expect(response.status).toBe(403);
+    expect(createCheckoutSessionMock).not.toHaveBeenCalled();
   });
 
   it("returns a dependency error when checkout has no Stripe customer mapping", async () => {
@@ -194,9 +254,8 @@ describe("billing self-service routes", () => {
         ...(await authHeaders()),
       },
       body: JSON.stringify({
-        priceId: "price_pro_monthly",
-        successUrl: "https://app.example/en/billing?billing=checkout-success",
-        cancelUrl: "https://app.example/en/billing?billing=checkout-canceled",
+        plan: "pro",
+        interval: "monthly",
       }),
     });
 

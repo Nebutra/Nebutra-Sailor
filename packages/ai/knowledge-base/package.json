@@ -6,6 +6,7 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "graph": "labs",
     "status": "wip",
     "productionReady": false,
     "surface": "knowledge-product",

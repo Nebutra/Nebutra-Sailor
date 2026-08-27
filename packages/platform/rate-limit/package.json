@@ -2,6 +2,11 @@
   "name": "@nebutra/rate-limit",
   "version": "0.1.0",
   "private": true,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

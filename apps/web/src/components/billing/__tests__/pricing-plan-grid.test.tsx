@@ -235,7 +235,7 @@ describe("PricingPlanGrid", () => {
     Object.defineProperty(window, "location", { configurable: true, value: originalLocation });
   });
 
-  it("default checkout forwards selected price trial and seat metadata", async () => {
+  it("default checkout sends only the catalog selection", async () => {
     const user = userEvent.setup();
     const fetchMock = vi.fn().mockResolvedValue(
       new Response(JSON.stringify({ url: "https://stripe.example/checkout/session_1" }), {
@@ -277,11 +277,10 @@ describe("PricingPlanGrid", () => {
       expect(fetchMock).toHaveBeenCalledTimes(1);
     });
     const [, init] = fetchMock.mock.calls[0];
-    expect(JSON.parse((init as RequestInit).body as string)).toMatchObject({
+    expect(JSON.parse((init as RequestInit).body as string)).toEqual({
       planId: "plan_pro",
       interval: "month",
-      trialPeriodDays: 14,
-      seatBased: true,
+      redirectUrl: "https://app.example/checkout-return?organizationId=org_1",
     });
 
     Object.defineProperty(window, "location", { configurable: true, value: originalLocation });

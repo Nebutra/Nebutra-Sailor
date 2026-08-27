@@ -1,9 +1,10 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { type CreditPurchaseWebhookInput, handleCreditPurchaseWebhook } from "@nebutra/billing";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
-import { getSystemDb, Prisma } from "@nebutra/db";
+import { getSystemDb } from "@nebutra/db";
 import { issueLicense } from "@nebutra/license";
 import { logger } from "@nebutra/logger";
+import { acceptWebhookEvent, type JsonValue, WebhookEventRepository } from "@nebutra/repositories";
 import Stripe from "stripe";
 import { inngest } from "../../inngest/client.js";
 
@@ -77,7 +78,7 @@ const stripeWebhookRoute = createRoute({
   tags: ["Webhooks"],
   summary: "Stripe webhook handler",
   description:
-    "Receives Stripe webhook events for subscription lifecycle management. Signature verification is handled by the Stripe SDK.",
+    "Receives Stripe webhook events for subscription lifecycle management. Signature verification is handled by the Stripe SDK. 2xx is returned only after the inbox row is marked processed.",
   request: {
     body: {
       content: {
@@ -89,7 +90,7 @@ const stripeWebhookRoute = createRoute({
   },
   responses: {
     200: {
-      description: "Webhook received and queued for processing",
+      description: "Webhook processed, or already processed",
       content: {
         "application/json": {
           schema: z.object({
@@ -110,7 +111,17 @@ const stripeWebhookRoute = createRoute({
       },
     },
     500: {
-      description: "Webhook not configured",
+      description: "Webhook not configured or handler failed",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z.string(),
+          }),
+        },
+      },
+    },
+    503: {
+      description: "Event is still being processed; provider should retry",
       content: {
         "application/json": {
           schema: z.object({
@@ -148,30 +159,16 @@ stripeWebhookRoutes.openapi(stripeWebhookRoute, async (c) => {
     return c.json({ error: "Invalid signature" }, 400);
   }
 
-  // Atomic idempotency claim — relies on the unique constraint
-  // `@@unique([provider, eventId])` on the WebhookEvent model. The first
-  // instance to insert the row wins and proceeds to processing; any
-  // concurrent delivery hits a P2002 unique-constraint violation and
-  // short-circuits with `{ skipped: true }`. This eliminates the
-  // classic check-then-act race between Stripe retries and multi-pod
-  // deployments that `findUnique` + `upsert` could not guarantee.
+  const inbox = new WebhookEventRepository(prisma);
+  let accepted: Awaited<ReturnType<typeof acceptWebhookEvent>>;
   try {
-    await prisma.webhookEvent.create({
-      data: {
-        provider: "stripe",
-        eventId: event.id,
-        eventType: event.type,
-        payload: event as unknown as Prisma.InputJsonValue,
-      },
+    accepted = await acceptWebhookEvent(inbox, {
+      provider: "stripe",
+      eventId: event.id,
+      eventType: event.type,
+      payload: event as unknown as JsonValue,
     });
   } catch (err) {
-    if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2002") {
-      log.info("Stripe event already received, skipping", {
-        eventId: event.id,
-        type: event.type,
-      });
-      return c.json({ received: true as const, skipped: true }, 200);
-    }
     log.error("Failed to record Stripe webhook event", err, {
       eventId: event.id,
       type: event.type,
@@ -179,37 +176,38 @@ stripeWebhookRoutes.openapi(stripeWebhookRoute, async (c) => {
     return c.json({ error: "Failed to record event" }, 500);
   }
 
-  // Respond immediately; process asynchronously
-  const response = c.json({ received: true as const }, 200);
-
-  handleStripeEvent(event, stripe, prisma)
-    .then(async () => {
-      await prisma.webhookEvent.update({
-        where: { provider_eventId: { provider: "stripe", eventId: event.id } },
-        data: { processedAt: new Date() },
-      });
-    })
-    .catch(async (err: unknown) => {
-      log.error("Stripe event handler error", err, { type: event.type });
-      await prisma.webhookEvent
-        .update({
-          where: {
-            provider_eventId: { provider: "stripe", eventId: event.id },
-          },
-          data: {
-            errorMessage: err instanceof Error ? err.message : "Unknown error",
-            retryCount: { increment: 1 },
-          },
-        })
-        .catch((updateError) => {
-          log.warn("Failed to persist Stripe webhook handler failure state", {
-            error: updateError,
-            eventId: event.id,
-          });
-        });
+  if (accepted.outcome === "skip_processed") {
+    log.info("Stripe event already processed, skipping", {
+      eventId: event.id,
+      type: event.type,
     });
+    return c.json({ received: true as const, skipped: true }, 200);
+  }
 
-  return response;
+  if (accepted.outcome === "in_flight") {
+    log.info("Stripe event is still processing", {
+      eventId: event.id,
+      type: event.type,
+    });
+    return c.json({ error: "Event is still processing" }, 503);
+  }
+
+  try {
+    await handleStripeEvent(event, stripe, prisma);
+    await inbox.markProcessed("stripe", event.id);
+    return c.json({ received: true as const }, 200);
+  } catch (err) {
+    log.error("Stripe event handler error", err, { type: event.type });
+    await inbox
+      .markFailed("stripe", event.id, err instanceof Error ? err.message : "Unknown error")
+      .catch((updateError) => {
+        log.warn("Failed to persist Stripe webhook handler failure state", {
+          error: updateError,
+          eventId: event.id,
+        });
+      });
+    return c.json({ error: "Failed to process event" }, 500);
+  }
 });
 
 // ============================================

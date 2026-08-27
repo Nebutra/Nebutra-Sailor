@@ -92,13 +92,14 @@
     border-top: 1px solid hsl(var(--border) / 0.8);
   }
 
-  .theme-preview-canvas {
+  .theme-preview-artboard {
     container: theme-preview / inline-size;
   }
 
   .theme-preview-grid,
   .theme-pricing-grid,
-  .theme-stats-grid {
+  .theme-stats-grid,
+  .theme-charts-grid {
     display: grid;
   }
 
@@ -112,6 +113,10 @@
 
   .theme-stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .theme-charts-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -167,7 +172,8 @@
 }
 
 @container theme-preview (min-width: 40rem) {
-  .theme-pricing-grid {
+  .theme-pricing-grid,
+  .theme-charts-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

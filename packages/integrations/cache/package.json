@@ -2,6 +2,11 @@
   "name": "@nebutra/cache",
   "version": "0.0.3",
   "private": false,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",

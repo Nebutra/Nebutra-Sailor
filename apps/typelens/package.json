@@ -2,6 +2,11 @@
   "name": "@nebutra/typelens",
   "version": "0.1.1",
   "private": true,
+  "nebutra": {
+    "status": "wip",
+    "graph": "labs",
+    "productionReady": false
+  },
   "scripts": {
     "dev": "next dev --port 3107",
     "build": "node scripts/gen-catalog-fonts.mjs && next build --webpack",
