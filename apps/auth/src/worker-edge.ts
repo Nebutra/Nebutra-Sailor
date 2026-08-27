@@ -249,7 +249,7 @@ async function withAuth<T>(env: AuthEdgeEnv, fn: (auth: AuthInstance) => Promise
   attachPoolErrorGuard(client, (err) => {
     console.error("[nebutra-auth] pg client error", err.message);
   });
-  await client.connect();
+  // Do not client.connect() here — Better Auth / Kysely connects the same Client.
   try {
     return await fn(createAuth(env, client, secret));
   } finally {
@@ -342,7 +342,7 @@ async function handleHealth(request: Request, env: AuthEdgeEnv): Promise<Respons
     role: "login-center-edge",
     deploy: "cloudflare-workers-edge",
     // Bump when shipping edge fixes so /health proves the new script is live.
-    edgeBuild: "2026-08-27-pg-client-per-request",
+    edgeBuild: "2026-08-27-pg-client-no-preconnect",
     features: {
       authApi: true,
       // ORIGIN_URL is the preferred pass-through; ORIGIN_IP alone is legacy.
