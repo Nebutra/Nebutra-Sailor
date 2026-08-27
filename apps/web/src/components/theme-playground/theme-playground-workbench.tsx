@@ -59,10 +59,10 @@ type Surface = "neutral" | "brand" | "product";
 type PreviewSuite = "forms" | "pricing" | "dashboard" | "ai-chat" | "charts";
 type ViewportId = "1280x800" | "1440x1024" | "390x844";
 
-const viewportSpec: Record<ViewportId, { width: number; label: string }> = {
-  "1280x800": { width: 1280, label: "1280 × 800" },
-  "1440x1024": { width: 1440, label: "1440 × 1024" },
-  "390x844": { width: 390, label: "390 × 844" },
+const viewportSpec: Record<ViewportId, { width: number; height: number; label: string }> = {
+  "1280x800": { width: 1280, height: 800, label: "1280 × 800" },
+  "1440x1024": { width: 1440, height: 1024, label: "1440 × 1024" },
+  "390x844": { width: 390, height: 844, label: "390 × 844" },
 };
 
 const suites: Array<{ id: PreviewSuite; label: string; icon: ReactNode }> = [
@@ -500,7 +500,7 @@ function PreviewCanvas({
   styleOverride?: CSSProperties;
 }) {
   const style = styleOverride ?? getThemePreviewStyle(theme.id, mode);
-  const viewportWidth = viewportSpec[viewport].width;
+  const { width: viewportWidth, height: viewportHeight } = viewportSpec[viewport];
 
   // Tailwind v4 in this app uses `@theme inline { --color-*: hsl(var(--*)) }`,
   // which inlines the value into the utility — so `bg-background` reads `--background`
@@ -508,16 +508,16 @@ function PreviewCanvas({
   // inside `hsl(...)`. Solution: inside the preview, bypass the indirection and read
   // `var(--color-*)` straight from the wrapper's inline style.
   return (
-    <section className="theme-preview-canvas min-h-0 min-w-0 bg-background/55">
+    <section className="theme-preview-canvas flex h-full min-h-0 min-w-0 flex-col overflow-hidden bg-background/55">
       <CanvasHeader
         activeSuite={activeSuite}
         onSuiteChange={onSuiteChange}
         viewport={viewport}
         onViewportChange={onViewportChange}
       />
-      <div className="h-full min-h-[680px] overflow-auto p-4">
-        {/* Viewport frame — centered, max-width clamps to selected device width.
-            Switching the dropdown actually resizes the inner canvas. */}
+      <div className="min-h-0 flex-1 overflow-auto p-4">
+        {/* Viewport frame — centered, max-width/min-height follow the selected device.
+            The pane scrolls when that artboard is taller than the remaining slot. */}
         <div
           data-brand={theme.id === "factory" ? undefined : theme.id}
           data-mode={mode}
@@ -525,9 +525,10 @@ function PreviewCanvas({
           style={{
             ...style,
             maxWidth: `${viewportWidth}px`,
+            minHeight: `${viewportHeight}px`,
           }}
           className={cn(
-            "mx-auto min-h-[640px] w-full overflow-hidden rounded-[var(--radius-lg)] bg-[var(--color-background)] text-[color:var(--color-foreground)] transition-[max-width] duration-200",
+            "mx-auto w-full overflow-hidden rounded-[var(--radius-lg)] bg-[var(--color-background)] text-[color:var(--color-foreground)] transition-[max-width] duration-200",
             // Force theme fonts onto ALL descendants, beating any intermediate CSS
             // rule (e.g. globals.css @layer base h1-h6 / body font-family) that
             // would otherwise re-declare font-family and break inheritance from
@@ -1117,7 +1118,7 @@ export function ThemePlaygroundWorkbench() {
   }
 
   return (
-    <div className="theme-playground-frame flex h-[calc(100dvh-3rem)] min-h-0 flex-col overflow-hidden bg-background text-foreground">
+    <div className="theme-playground-frame flex h-full min-h-0 flex-1 flex-col overflow-hidden bg-background text-foreground">
       <TopBar
         mode={mode}
         density={density}

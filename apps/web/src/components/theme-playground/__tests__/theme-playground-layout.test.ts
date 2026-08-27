@@ -39,4 +39,22 @@ describe("Theme Playground layout contract", () => {
     expect(css).toContain("@container theme-preview (min-width: 40rem)");
     expect(css).toContain("grid-template-columns: repeat(3, minmax(0, 1fr))");
   });
+
+  it("gives the live preview pane a bounded scrollport instead of a 680px floor", () => {
+    const source = readFileSync(WORKBENCH, "utf8");
+
+    expect(source).toContain("theme-preview-canvas");
+    expect(source).toContain("min-h-0 flex-1 overflow-auto");
+    expect(source).not.toContain("min-h-[680px]");
+    expect(source).not.toContain("min-h-[640px]");
+    expect(source).not.toContain("h-[calc(100dvh-3rem)]");
+  });
+
+  it("keeps the canvas beside the stacked registry on mid-width playgrounds", () => {
+    const css = readFileSync(PLAYGROUND_CSS, "utf8");
+
+    expect(css).toContain('"registry canvas"');
+    expect(css).toContain('"inspector canvas"');
+    expect(css).not.toContain("grid-column: 1 / -1");
+  });
 });

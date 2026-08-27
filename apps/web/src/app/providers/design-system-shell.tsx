@@ -658,11 +658,13 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
             // the page's absolute gradient fills it edge-to-edge. Banner +
             // content header sit on top of the gradient.
             "relative p-0 sm:p-0 md:p-0 2xl:p-0"
-          : isWorkspaceCanvasRoute || isStartupOSRoute
-            ? "mx-0 max-w-none p-0 sm:p-0 md:p-0 2xl:p-0"
-            : // Two-tier surface: tint the outer main bg so the `bg-card`
-              // panels inside each page read as inset floating cards.
-              "dashboard-app-content bg-muted/40"
+          : isWorkspaceCanvasRoute
+            ? "mx-0 max-w-none flex flex-col overflow-hidden p-0 sm:p-0 md:p-0 2xl:p-0"
+            : isStartupOSRoute
+              ? "mx-0 max-w-none p-0 sm:p-0 md:p-0 2xl:p-0"
+              : // Two-tier surface: tint the outer main bg so the `bg-card`
+                // panels inside each page read as inset floating cards.
+                "dashboard-app-content bg-muted/40"
       }
     >
       {isWorkspaceHomeRoute ? (
