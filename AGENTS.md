@@ -69,6 +69,18 @@ packages/
    product behavior, then localize to Nebutra package boundaries and tests.
 7. Do not broaden a fix into unrelated formatting churn. Stage only intended
    files when committing.
+8. **Closure phase (2026-08-27).** Do not add product nouns, workspace
+   packages, infrastructure categories, or abstraction layers. Do not delete,
+   archive, or gut existing modules. Allowed work is install/run/test,
+   security, real business-path wiring, docs/deploy/DX, de-duplication, or
+   monitoring/recovery/upgrade of something that already exists. Repair order
+   is P0 repo trust → P1 security/billing → P2 package graph → P3 golden path.
+   Do not skip levels. No official Release until P0 is green. One risk per PR.
+   “Done” means clean clone → frozen install → lint → typecheck → unit →
+   integration → production build → pack → example deploy → smoke. Security
+   invariant PRs must ship a failing case and a regression case. Package-graph
+   PRs must install and test in a temporary directory. Canonical text:
+   [docs/architecture/2026-08-27-closure-phase.md](docs/architecture/2026-08-27-closure-phase.md).
 
 ## Quick Start
 
