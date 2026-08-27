@@ -6619,30 +6619,16 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "priceId": {
-                    "type": "string"
-                  },
-                  "successUrl": {
+                  "plan": {
                     "type": "string",
-                    "format": "uri"
+                    "enum": ["pro", "enterprise", "plan_pro", "plan_enterprise"]
                   },
-                  "cancelUrl": {
+                  "interval": {
                     "type": "string",
-                    "format": "uri"
-                  },
-                  "quantity": {
-                    "type": "integer",
-                    "minimum": 0,
-                    "exclusiveMinimum": true,
-                    "maximum": 10000
-                  },
-                  "trialPeriodDays": {
-                    "type": "integer",
-                    "minimum": 0,
-                    "maximum": 30
+                    "enum": ["monthly", "yearly", "month", "year"]
                   }
                 },
-                "required": ["priceId", "successUrl", "cancelUrl"]
+                "required": ["plan", "interval"]
               }
             }
           }
@@ -9171,7 +9157,7 @@
       "post": {
         "tags": ["Webhooks"],
         "summary": "Stripe webhook handler",
-        "description": "Receives Stripe webhook events for subscription lifecycle management. Signature verification is handled by the Stripe SDK.",
+        "description": "Receives Stripe webhook events for subscription lifecycle management. Signature verification is handled by the Stripe SDK. 2xx is returned only after the inbox row is marked processed.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -9185,7 +9171,7 @@
         },
         "responses": {
           "200": {
-            "description": "Webhook received and queued for processing",
+            "description": "Webhook processed, or already processed",
             "content": {
               "application/json": {
                 "schema": {
@@ -9221,7 +9207,23 @@
             }
           },
           "500": {
-            "description": "Webhook not configured",
+            "description": "Webhook not configured or handler failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Event is still being processed; provider should retry",
             "content": {
               "application/json": {
                 "schema": {
@@ -9243,7 +9245,7 @@
       "post": {
         "tags": ["Webhooks"],
         "summary": "Clerk webhook handler",
-        "description": "Receives Clerk webhook events for user and organization lifecycle management. Signature verification is handled by the Svix SDK.",
+        "description": "Receives Clerk webhook events for user and organization lifecycle management. Signature verification is handled by the Svix SDK. 2xx is returned only after the inbox row is marked processed.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -9257,7 +9259,7 @@
         },
         "responses": {
           "200": {
-            "description": "Webhook received and queued for processing",
+            "description": "Webhook processed, or already processed",
             "content": {
               "application/json": {
                 "schema": {
@@ -9293,7 +9295,23 @@
             }
           },
           "500": {
-            "description": "Webhook not configured",
+            "description": "Webhook not configured or handler failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Event is still being processed; provider should retry",
             "content": {
               "application/json": {
                 "schema": {
