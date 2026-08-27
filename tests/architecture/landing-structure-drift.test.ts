@@ -53,6 +53,7 @@ describe("landing structure tree", () => {
 
     const onDisk = readdirSync(join(REPO_ROOT, "apps"), { withFileTypes: true })
       .filter((e) => e.isDirectory() && !e.name.startsWith("."))
+      .filter((e) => existsSync(join(REPO_ROOT, "apps", e.name, "package.json")))
       .map((e) => `apps/${e.name}`)
       .filter((p) => !EXCLUDED.has(p));
 
@@ -84,7 +85,10 @@ describe("landing structure tree", () => {
       0,
     );
 
-    expect(tagFor("apps"), "apps tag").toBe(dirs("apps").length);
+    const apps = dirs("apps").filter((entry) =>
+      existsSync(join(REPO_ROOT, "apps", entry.name, "package.json")),
+    );
+    expect(tagFor("apps"), "apps tag").toBe(apps.length);
     expect(tagFor("backends"), "backends tag").toBe(dirs("backends").length);
     expect(tagFor("packages"), "packages tag").toBe(packages);
   });
@@ -98,7 +102,10 @@ describe("landing structure tree", () => {
     const tag = group.match(/tag:\s*"(\d+)"/)?.[1];
 
     const actual = readdirSync(join(REPO_ROOT, "apps"), { withFileTypes: true }).filter(
-      (e) => e.isDirectory() && !e.name.startsWith("."),
+      (e) =>
+        e.isDirectory() &&
+        !e.name.startsWith(".") &&
+        existsSync(join(REPO_ROOT, "apps", e.name, "package.json")),
     ).length;
 
     expect(Number(tag), `apps tag says ${tag}, repo has ${actual}`).toBe(actual);
@@ -133,7 +140,10 @@ describe("landing structure tree", () => {
       0,
     );
 
-    expect(Number(apps), `title says ${apps} apps`).toBe(dirs("apps").length);
+    const actualApps = dirs("apps").filter((entry) =>
+      existsSync(join(REPO_ROOT, "apps", entry.name, "package.json")),
+    ).length;
+    expect(Number(apps), `title says ${apps} apps`).toBe(actualApps);
     expect(Number(packages), `title says ${packages} packages`).toBe(actualPackages);
     expect(Number(lanes), `title says ${lanes} backend lanes`).toBe(dirs("backends").length);
   });
