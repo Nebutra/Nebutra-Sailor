@@ -18,7 +18,7 @@
 
 import { brand } from "@nebutra/brand/metadata";
 import { betterAuth } from "better-auth";
-import { Client, Pool } from "pg";
+import { Pool } from "pg";
 import { attachPoolErrorGuard, isPgConnectFailure, withConnectRetry } from "./lib/auth-edge-pool";
 
 interface HyperdriveBinding {
@@ -50,13 +50,15 @@ export interface AuthEdgeEnv {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AuthInstance = { handler: (request: Request) => Promise<Response>; api: any };
 
-type PgDatabase = Client | Pool;
+type PgDatabase = Pool;
 
 /**
  * nodejs_compat `net.Socket` + a reused pg Pool leaves zombie connections in
  * the isolate. The next query parks forever; workerd cancels it as
  * "would never generate a response" (Error 1101) in a couple of milliseconds.
- * Hyperdrive already pools — open a Client per request and close it after.
+ * Hyperdrive already pools — open a max-1 Pool per request and end it after.
+ * Kysely requires Pool.connect()/release(); a raw Client throws
+ * "release is not a function".
  */
 addEventListener("unhandledrejection", (event) => {
   console.error("[nebutra-auth] unhandledrejection", event.reason);
@@ -191,7 +193,7 @@ function createAuth(env: AuthEdgeEnv, database: PgDatabase, secret: string): Aut
         domain: cookieDomain,
       },
     },
-    // Client → Kysely path (no Prisma / no 17 MiB workerd client).
+    // Pool → Kysely path (no Prisma / no 17 MiB workerd client).
     database,
     user: {
       modelName: "auth_users",
@@ -242,19 +244,21 @@ function createAuth(env: AuthEdgeEnv, database: PgDatabase, secret: string): Aut
 
 async function withAuth<T>(env: AuthEdgeEnv, fn: (auth: AuthInstance) => Promise<T>): Promise<T> {
   const { secret, dbUrl } = requireAuthSecrets(env);
-  const client = new Client({
+  const pool = new Pool({
     connectionString: dbUrl,
+    max: 1,
+    idleTimeoutMillis: 0,
     connectionTimeoutMillis: 8_000,
+    allowExitOnIdle: false,
   });
-  attachPoolErrorGuard(client, (err) => {
-    console.error("[nebutra-auth] pg client error", err.message);
+  attachPoolErrorGuard(pool, (err) => {
+    console.error("[nebutra-auth] pg pool error", err.message);
   });
-  // Do not client.connect() here — Better Auth / Kysely connects the same Client.
   try {
-    return await fn(createAuth(env, client, secret));
+    return await fn(createAuth(env, pool, secret));
   } finally {
     await Promise.race([
-      client.end().catch(() => undefined),
+      pool.end().catch(() => undefined),
       new Promise((resolve) => setTimeout(resolve, 500)),
     ]);
   }
@@ -342,7 +346,7 @@ async function handleHealth(request: Request, env: AuthEdgeEnv): Promise<Respons
     role: "login-center-edge",
     deploy: "cloudflare-workers-edge",
     // Bump when shipping edge fixes so /health proves the new script is live.
-    edgeBuild: "2026-08-27-pg-client-no-preconnect",
+    edgeBuild: "2026-08-27-pg-pool-per-request",
     features: {
       authApi: true,
       // ORIGIN_URL is the preferred pass-through; ORIGIN_IP alone is legacy.
