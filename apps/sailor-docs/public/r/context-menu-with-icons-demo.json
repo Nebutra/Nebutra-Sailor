@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "context-menu-with-icons-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/icons",
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/context-menu-with-icons-demo.tsx",
+      "content": "\"use client\";\n\nimport { Copy, Pencil as Edit2, Trash as Trash2 } from \"@nebutra/icons\";\nimport { ContextMenu } from \"@nebutra/ui/primitives\";\n\nexport function ContextMenuWithIconsDemo() {\n  return (\n    <ContextMenu>\n      <ContextMenu.Trigger asChild>\n        <div className=\"flex h-[150px] w-[300px] items-center justify-center rounded-[var(--radius-md)] border border-dashed border-border text-sm text-muted-foreground\">\n          Right-click here\n        </div>\n      </ContextMenu.Trigger>\n      <ContextMenu.Content>\n        <ContextMenu.Item prefix={<Edit2 className=\"size-4\" />} value=\"rename\" onSelect={() => {}}>\n          Rename Deployment...\n        </ContextMenu.Item>\n        <ContextMenu.Item prefix={<Copy className=\"size-4\" />} value=\"copy\" onSelect={() => {}}>\n          Copy URL\n          <ContextMenu.Shortcut>⌘C</ContextMenu.Shortcut>\n        </ContextMenu.Item>\n        <ContextMenu.Separator />\n        <ContextMenu.Item\n          prefix={<Trash2 className=\"size-4\" />}\n          value=\"delete\"\n          variant=\"destructive\"\n          onSelect={() => {}}\n        >\n          Delete Deployment\n        </ContextMenu.Item>\n      </ContextMenu.Content>\n    </ContextMenu>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

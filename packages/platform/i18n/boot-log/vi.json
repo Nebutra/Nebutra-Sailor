@@ -1,0 +1,1439 @@
+{
+  "panelLabel": "Boot log",
+  "entries": {
+    "transistor-name-off-patent-1947": {
+      "tag": "Bằng sáng chế",
+      "title": "Cái Tên Bị Bỏ Khỏi Bằng Sáng Chế",
+      "body": "Ngày 23 tháng 12 năm 1947, Bardeen và Brattain trình diễn một transistor tiếp điểm germanium tại Bell Labs. Shockley không có mặt trong phòng. Các luật sư phát hiện thiết kế của ông quá giống với một bằng sáng chế năm 1925 của Julius Lilienfeld và đã gạch tên ông khỏi bằng sáng chế này.",
+      "coda": "Năm 1956, cả ba người cùng chia sẻ Giải Nobel Vật lý."
+    },
+    "dartmouth-two-month-study-1956": {
+      "tag": "Đề xuất",
+      "title": "Một Nghiên Cứu Hai Tháng",
+      "body": "Đề xuất năm 1955 của McCarthy, Minsky, Rochester và Shannon yêu cầu một nghiên cứu kéo dài hai tháng với mười người, dựa trên tiền đề rằng trí thông minh có thể được mô tả đủ chính xác để một cỗ máy mô phỏng nó. Hội thảo năm 1956 kéo dài sáu đến tám tuần; chỉ ba người tham dự ở lại trọn vẹn.",
+      "coda": "Cái tên mà họ chọn cho lĩnh vực, trí tuệ nhân tạo, là cái tên được giữ lại."
+    },
+    "traitorous-eight-lie-detector-1957": {
+      "tag": "Tách ra",
+      "title": "Bản Ghi Nhớ Máy Đo Nói Dối",
+      "body": "Tháng 5 năm 1957, tám kỹ sư tại Shockley Semiconductor yêu cầu thay thế William Shockley khỏi vị trí quản lý. Ông đã ghi âm các cuộc gọi điện thoại, ngăn cản nhân viên chia sẻ kết quả, và bắt buộc kiểm tra bằng máy đo nói dối. Ngày 18 tháng 9 năm 1957, tám người đó thành lập Fairchild Semiconductor.",
+      "coda": "Wikipedia liệt kê Intel và AMD trong số hàng chục công ty có nguồn gốc từ vụ tách ra đó."
+    },
+    "kilby-noyce-six-months-1958-1959": {
+      "tag": "Song song",
+      "title": "Sáu Tháng, Một Huy Chương",
+      "body": "Kilby trình diễn một mạch tích hợp hoạt động tại Texas Instruments vào tháng 9 năm 1958, các bộ phận của nó được nối bằng dây bên ngoài. Noyce nộp một phiên bản silicon nguyên khối tại Fairchild vào tháng 7 năm 1959, có thể sản xuất hàng loạt. Không ai trong hai người bác bỏ tuyên bố đồng phát minh của người kia.",
+      "coda": "Kilby nhận Giải Nobel năm 2000 một mình. Noyce đã mất năm 1990."
+    },
+    "perceptron-conscious-machine-1958": {
+      "tag": "Mạng nơ-ron",
+      "title": "Cỗ Máy Sẽ Tỉnh Dậy",
+      "body": "Năm 1958, New York Times đưa tin rằng perceptron của Frank Rosenblatt là phôi thai của một cỗ máy mà Hải quân kỳ vọng sẽ biết đi, nói, nhìn, viết, tự sinh sản và có ý thức về sự tồn tại của mình. Năm 1969, cuốn sách của Minsky và Papert chứng minh rằng một perceptron đơn lớp không thể tính toán XOR.",
+      "coda": "Nguồn tài trợ cho nghiên cứu mạng nơ-ron cạn kiệt và không quay trở lại cho đến thập niên 1980."
+    },
+    "hamilton-software-engineering": {
+      "tag": "Đặt tên",
+      "title": "Một trò đùa kéo dài",
+      "body": "Trong chương trình Apollo, Margaret Hamilton bắt đầu gọi công việc của mình là \"kỹ thuật phần mềm\" để phân biệt với kỹ thuật phần cứng. Bà nói không ai từng nghe thuật ngữ này trước đó và nó trở thành một trò đùa kéo dài, cho đến khi một kỹ sư phần cứng uy tín đứng lên trong một cuộc họp và đồng ý.",
+      "coda": "Trò đùa kéo dài nhiều năm, sau đó không ai kể nó nữa."
+    },
+    "macau-seventeen-thousand": {
+      "tag": "Thầu",
+      "title": "Mười bảy nghìn",
+      "body": "Vào tháng 10 năm 1961, một liên minh do Stanley Ho, Henry Fok, Yip Hon và Teddy Yip thành lập đã đấu thầu độc quyền cờ bạc Macau. Họ đưa ra mức giá 3.167.000 pataca, cao hơn mười bảy nghìn so với mức thầu của đối thủ.",
+      "coda": "Khoảng chênh lệch đó đã mua cho họ độc quyền trong hơn bốn mươi năm."
+    },
+    "moores-law-ten-year-bet-1965": {
+      "tag": "Dự đoán",
+      "title": "Một cuộc cược mười năm",
+      "body": "Bài báo năm 1965 của Moore dự đoán số lượng thành phần trên một chip sẽ tăng gấp đôi mỗi năm trong thập kỷ tới, đạt khoảng 65.000 vào năm 1975. Năm 1975 ông điều chỉnh chu kỳ tăng gấp đôi thành hai năm. Đường cong sau này được gọi là định luật thực chất là dự báo của chính ông, đã được sửa đổi một lần.",
+      "coda": "Đến năm 1995 Moore nói thuật ngữ này đã trở nên có nghĩa gần như bất cứ điều gì trong ngành chip."
+    },
+    "eliza-secretary-1966": {
+      "tag": "Chatbot",
+      "title": "Người thư ký và DOCTOR",
+      "body": "Năm 1966 Joseph Weizenbaum phát hành kịch bản DOCTOR của ELIZA tại MIT, một chương trình chủ yếu phản chiếu lại câu của người dùng dưới dạng câu hỏi. Người thư ký của ông据报道 yêu cầu ông rời phòng để bà có thể nói chuyện với nó một mình.",
+      "coda": "Mẫu mà ông không ngờ tới sau này được đặt tên là hiệu ứng ELIZA."
+    },
+    "engelbart-royalties": {
+      "tag": "Bằng sáng chế",
+      "title": "Bốn mươi nghìn đô la",
+      "body": "SRI đã cấp bằng sáng chế cho chuột sau buổi demo và, theo tường trình của chính họ, không có ý tưởng thực sự về giá trị của nó. Một vài năm sau người ta phát hiện họ đã cấp phép cho Apple với mức khoảng 40.000 đô la.",
+      "coda": "Engelbart không bao giờ nhận được bất kỳ bản quyền nào cho việc phát minh ra nó."
+    },
+    "lo": {
+      "tag": "Lần đầu tiên",
+      "title": "LO",
+      "body": "Charley Kline từ UCLA bắt đầu đăng nhập vào một máy tính tại SRI. Chữ L đến. Chữ O đến. Khi gõ G, đầu xa bị sập.",
+      "coda": "Điều đầu tiên từng được nói trên internet chỉ là hai chữ cái: LO."
+    },
+    "multics": {
+      "tag": "Bản thiết kế",
+      "title": "Điện toán như một tiện ích",
+      "body": "Multics không được thiết kế như một máy tính mà như một tiện ích điện toán: luôn hoạt động, như điện năng, với các đối tượng thuê của một máy được cách ly với nhau. Nó ra mắt muộn và đắt đỏ, và Bell Labs đã rút lui.",
+      "coda": "Năm mươi năm sau, ý tưởng đó được đổi tên thành điện toán đám mây."
+    },
+    "rfc1": {
+      "tag": "Quản trị",
+      "title": "Yêu cầu bình luận",
+      "body": "Steve Crocker phải viết những quy tắc đầu tiên cho một vài máy chủ nối mạng. Không ai trao cho ông thẩm quyền, và ông sợ nó sẽ bị coi là lạm quyền — vì vậy ông gọi thể loại đó là Yêu cầu bình luận.",
+      "coda": "Mọi quy tắc mà internet đã đồng thuận kể từ đó vẫn được gọi là RFC."
+    },
+    "pdp7": {
+      "tag": "Nguồn gốc",
+      "title": "Cỗ máy không ai muốn",
+      "body": "Sau khi Bell Labs rời bỏ Multics, Ken Thompson có một chiếc PDP-7 bỏ đi và một tháng ở một mình khi vợ và con trai ông ở San Diego. Ông tự cho mình một tuần cho mỗi phần: nhân, shell, trình soạn thảo, trình hợp dịch.",
+      "coda": "Bốn tuần sau, cỗ máy không ai muốn đã chạy Unix."
+    },
+    "alarm-1202": {
+      "tag": "Sự cố",
+      "title": "Báo động chương trình 1202",
+      "body": "Bốn phút trước khi chạm bề mặt, máy tính dẫn đường đã đưa ra năm báo động: một công tắc radar điểm hẹn bị để sai vị trí đang ngốn chu kỳ xử lý của nó. Nó không treo. Nó loại bỏ các tác vụ ưu tiên thấp, khởi động lại và giữ được cú hạ cánh.",
+      "coda": "Biết cần bỏ gì khi quá tải là bài học đắt giá."
+    },
+    "mariner-1": {
+      "tag": "Sự cố",
+      "title": "Một vạch ngang bị thiếu",
+      "body": "Mariner 1 bị phá hủy 293 giây sau khi phóng. Một thiết bị phát tín hiệu trên tàu bị hỏng, và khi các phương trình dẫn đường được sao chép vào chương trình, một vạch ngang trên R bị bỏ sót. Vạch đó có nghĩa là lấy giá trị trung bình.",
+      "coda": "Báo chí thấy vạch ngang khó giải thích nên viết thành dấu gạch nối. Dấu gạch nối được giữ lại."
+    },
+    "mother-of-all-demos": {
+      "tag": "Demo",
+      "title": "Bản demo của mọi bản demo",
+      "body": "Engelbart được cho chín mươi phút. Thiết bị đầu cuối của ông kết nối qua đường dây điện thoại với một máy cách ba mươi dặm, và ông đã trình diễn chuột, siêu liên kết, cửa sổ, chia sẻ màn hình, và hai người cùng chỉnh sửa một tài liệu cùng lúc.",
+      "coda": "Một nghìn người đã xem, rồi quay lại dùng thẻ đục lỗ thêm một thập kỷ nữa."
+    },
+    "conway": {
+      "tag": "Định luật",
+      "title": "Bài báo bị từ chối",
+      "body": "Melvin Conway viết lại quan sát rằng cấu trúc của một hệ thống cuối cùng sẽ phản ánh cấu trúc giao tiếp của tổ chức đã xây dựng nó, và gửi \"How Do Committees Invent?\" cho Harvard Business Review. Họ từ chối với lý do rằng ông chưa chứng minh được luận điểm của mình. Datamation đăng bài vào năm 1968.",
+      "coda": "Fred Brooks sau đó đã trích dẫn luận điểm chưa được chứng minh này và đặt tên là định luật Conway."
+    },
+    "apollo-burn-baby-burn": {
+      "tag": "Bình luận",
+      "title": "Burn, Baby, Burn",
+      "body": "Thủ tục đánh lửa chính của module hạ cánh được gắn nhãn BURN_BABY_BURN trong mã nguồn. Cái tên không liên quan đến lực đẩy; nó được mượn từ câu khẩu hiệu của một DJ đài phát thanh soul thời bấy giờ.",
+      "coda": "Dòng mã đó vẫn nằm nguyên chưa bị chỉnh sửa trong kho lưu trữ công khai."
+    },
+    "waterfall": {
+      "tag": "Diễn giải sai",
+      "title": "Sơ đồ chính là phản ví dụ",
+      "body": "Trong \"Managing the Development of Large Software Systems\" Winston Royce vẽ biểu đồ mà ngành công nghiệp sau này gọi là mô hình thác nước, rồi viết: \"I believe in this concept, but the implementation described above is risky and invites failure.\" Phần còn lại của bài báo nói về việc làm cho nó mang tính lặp lại.",
+      "coda": "Ngành công nghiệp giữ lại sơ đồ và bỏ đi câu chữ."
+    },
+    "moth": {
+      "tag": "Nguồn gốc từ",
+      "title": "Lỗi thực sự đầu tiên",
+      "body": "Một con bướm đêm được lấy ra khỏi một bộ chuyển tiếp của Harvard Mark II và dán vào sổ nhật ký. Dòng bên cạnh nó được trích dẫn là nguồn gốc của từ này, nhưng nội dung ghi là: trường hợp thực sự đầu tiên của lỗi được tìm thấy.",
+      "coda": "Các kỹ sư đã dùng từ bug từ thời Edison. Bảo tàng nghi ngờ trang này thậm chí không phải do Hopper viết."
+    },
+    "intel-4004-busicom-rights-1971": {
+      "tag": "Quyền",
+      "title": "Một Con Chip Thuộc Về Công Ty Máy Tính",
+      "body": "Năm 1969, Busicom của Nhật Bản ủy thác cho Intel thiết kế bộ chipset máy tính, theo hợp đồng chuyển nhượng quyền thiết kế cho Busicom mặc dù công việc được thực hiện hoàn toàn bên trong Intel. Năm 1971, kỹ sư Federico Faggin đã đổi mức giá thấp hơn để thoát khỏi sự độc quyền đó.",
+      "coda": "Việc bán Intel 4004 rộng rãi bắt đầu vào tháng Bảy năm đó."
+    },
+    "pong-coin-overflow": {
+      "tag": "Phản hồi",
+      "title": "Hộp Tiền Xu Bị Tràn",
+      "body": "Tháng Tám năm 1972, Atari đặt nguyên mẫu Pong vào một quán bar ở Sunnyvale. Vài ngày sau, chủ quán báo cáo nó bị hỏng. Kỹ sư Al Alcorn lái xe đến sửa và phát hiện lỗi không phải do điện: cơ chế tiền xu bị kẹt vì bị tràn đầy đồng xu 25 xu.",
+      "coda": "Sự cố không phải do lỗi dây nối; đó là quá nhiều tiền xu."
+    },
+    "wozniak-breakout-bonus": {
+      "tag": "Thưởng",
+      "title": "Sự Chia Cắt",
+      "body": "Năm 1973, Atari yêu cầu Steve Jobs thu nhỏ bảng mạch Breakout, trả 100 đô la cho mỗi chip bị loại bỏ. Jobs nhờ Wozniak giúp, hứa chia đôi. Wozniak cắt 50 chip. Jobs nói tổng cộng là 700 đô la, nên phần của Wozniak là 350 đô la. Mười năm sau, Wozniak biết được khoản thưởng thực sự là 5.000 đô la.",
+      "coda": "Wozniak nói anh sẽ đưa tiền cho Jobs nếu được yêu cầu."
+    },
+    "unix-not-expected-to-understand": {
+      "tag": "Kernel",
+      "title": "Không Được Mong Đợi Hiểu",
+      "body": "slp.c của Unix Phiên bản Thứ Sáu chứa dòng 'Bạn không được mong đợi hiểu điều này,' gắn vào mã khôi phục ngăn xếp chuyển đổi tiến trình được xây dựng dựa trên các đặc điểm của trình biên dịch PDP-11. Dennis Ritchie sau đó nói anh ý nó theo cách một giáo viên nói điều này sẽ không có trong bài kiểm tra.",
+      "coda": "Quy trình này được viết lại cho Unix Phiên bản Thứ Bảy."
+    },
+    "vi-adm3a-keys": {
+      "tag": "Phím tắt",
+      "title": "Mũi tên khắc trên phím chữ",
+      "body": "Bill Joy viết vi tại Berkeley năm 1977 trên máy đầu cuối Lear Siegler ADM-3A không có phím mũi tên; h, j, k và l được khắc mũi tên và trở thành phím di chuyển. Các lệnh một chữ ngắn gọn xuất phát từ việc gõ trước modem 300 baud quá chậm để theo kịp.",
+      "coda": "Các phím sau này được ghi công cho triết lý thiết kế bắt đầu như một giải pháp thay thế cho máy đầu cuối không có phím mũi tên."
+    },
+    "kildall-flying": {
+      "tag": "Chứng từ",
+      "title": "Chuyến bay không được xác nhận",
+      "body": "Năm 1980 IBM đến để cấp phép CP/M. Gary Kildall đang bay phần mềm đến khách hàng; vợ ông Dorothy xử lý các cuộc đàm phán mở đầu. Bill Gates sau đó nói với phóng viên rằng Kildall đã \"bất chợt bay đi.\" Người đàm phán chính của IBM, Jack Sams, nói ông chưa bao giờ gặp Kildall.",
+      "coda": "Hai tài khoản về cuộc gặp đó chưa bao giờ được điều hòa."
+    },
+    "trusting-trust": {
+      "tag": "Tin cậy",
+      "title": "Suy ngẫm về việc tin cậy Trust",
+      "body": "Bài giảng Turing của Thompson mô tả một trình biên dịch cấy cửa hậu vào chương trình đăng nhập, và cài đặt lại toàn bộ thủ thuật mỗi khi biên dịch một trình biên dịch. Xây dựng lại từ nguồn sạch và cửa hậu vẫn tồn tại.",
+      "coda": "Bạn không thể tin cậy mã nguồn mà bạn không tự mình tạo ra hoàn toàn."
+    },
+    "arm-one-person-company-1985": {
+      "tag": "Nguồn gốc",
+      "title": "Công ty chip một người",
+      "body": "Acorn, đã làm nên tên tuổi trên máy tính giáo dục, bắt đầu nghiên cứu RISC năm 1983. Một chuyến thăm đến nhà thiết kế chip đối thủ cho họ thấy rằng các bản cập nhật cho 6502 xuất phát từ một công ty thực chất là một người, và họ kết luận rằng họ không cần gì hơn.",
+      "coda": "ARM1 ra mắt ngày 26 tháng 4 năm 1985 và hoạt động ngay lần khởi động đầu tiên."
+    },
+    "copyleft-all-rights-reversed": {
+      "tag": "Bản quyền",
+      "title": "Tất cả quyền được đảo ngược",
+      "body": "Ai đó gửi Richard Stallman một bức thư đánh dấu \"Copyleft — tất cả quyền được đảo ngược,\" một trò chơi chữ trên thông báo tiêu chuẩn. Sau khi Symbolics nâng cấp trình thông dịch Lisp của ông và từ chối chia sẻ các cải tiến ngược lại, ông sử dụng chính luật bản quyền để viết một giấy phép yêu cầu nghĩa vụ ngược lại.",
+      "coda": "Giấy phép Công cộng Chung được công bố vào tháng 2 năm 1989."
+    },
+    "tetris-unpaid-decade": {
+      "tag": "Quyền",
+      "title": "Khối Không Có Tiền Bản Quyền",
+      "body": "Năm 1985 Pajitnov viết Tetris với tư cách nhân viên nhà nước của Viện Hàn lâm Khoa học Liên Xô; quyền sở hữu thuộc về Trung tâm Tin học, không phải ông. Các giấy phép phương Tây đi qua nhiều tay trước khi đến Nintendo, và trò chơi đã bán được hàng chục triệu bản.",
+      "coda": "Quyền sở hữu được trả lại cho ông vào năm 1996, mười một năm sau khi ông viết nó."
+    },
+    "euv-twenty-three-hours-2018": {
+      "tag": "Lithography",
+      "title": "Hai Mươi Ba Giờ Cho Một Wafer",
+      "body": "Hiroo Kinoshita tại NTT lần đầu trình diễn hình ảnh extreme ultraviolet lithography vào năm 1986. Nguyên mẫu năm 2006 của ASML mất hai mươi ba giờ để phơi sáng một wafer. Mãi đến năm 2018 EUV mới được đưa vào sản xuất, trong một cỗ máy mà MIT Technology Review gọi là cỗ máy đã cứu Moore's law.",
+      "coda": "Đến năm 2022, một máy quét EUV sản xuất xử lý khoảng hai trăm wafer một giờ."
+    },
+    "tsmc-foundry-fifty-six-1987": {
+      "tag": "Foundry",
+      "title": "Foundry Ở Tuổi Năm Mươi Sáu",
+      "body": "Morris Chang, sinh năm 1931, thăng tiến lên phó chủ tịch nhóm mảng hoạt động bán dẫn toàn cầu tại Texas Instruments, sau đó làm chủ tịch kiêm COO của General Instrument, rồi đứng đầu ITRI của Đài Loan. Năm 1987, ở tuổi năm mươi sáu, ông thành lập TSMC, công ty không tự thiết kế bất kỳ con chip nào trong số những chip nó sản xuất.",
+      "coda": "Đó là foundry đầu tiên trên thế giới chỉ làm một việc là sản xuất."
+    },
+    "huawei-diet-pills": {
+      "tag": "Đại lý phân phối",
+      "title": "Kinh Doanh Đầu Tiên Của Huawei Không Phải Là Công Nghệ",
+      "body": "Huawei đăng ký với số vốn 21.000 nhân dân tệ vào ngày 15 tháng 9 năm 1987, tự gọi mình là công ty công nghệ. Ban đầu nó kinh doanh hàng hóa, bao gồm thuốc giảm cân, sau đó phân phối lại tổng đài HAX do Hồng Kông sản xuất để lấy biên lợi nhuận. Tổng đài riêng của nó, BH01, chỉ được lắp ráp thủ công vào năm 1989.",
+      "coda": "Bốn năm sau, công ty lần đầu tự vẽ bo mạch của riêng mình."
+    },
+    "morris": {
+      "tag": "Sự cố",
+      "title": "Một phép đo",
+      "body": "Morris muốn biết internet lớn đến đâu, nên ông viết một chương trình tự sao chép chính nó. Để ngăn các host giả mạo phản hồi đã nhiễm, ông cho nó một phần bảy cơ hội lây nhiễm lại.",
+      "coda": "Phần một phần bảy đó đã hạ khoảng 6.000 trong số 60.000 host đang trực tuyến lúc bấy giờ."
+    },
+    "naur": {
+      "tag": "Triết học",
+      "title": "Chương trình không phải là sản phẩm",
+      "body": "Naur lập luận rằng một chương trình không tồn tại trong mã nguồn mà tồn tại như một lý thuyết, được giữ bởi những người viết nó, về lý do tại sao vấn đề được giải quyết theo cách này. Mã nguồn là một phép chiếu có tổn thất của nó.",
+      "coda": "Ông gọi khoảnh khắc người giữ lý thuyết cuối cùng rời đi là cái chết của chương trình."
+    },
+    "mit-license-171-words": {
+      "tag": "Điều khoản",
+      "title": "171 Từ",
+      "body": "Một nhóm tại MIT đang viết một bản triển khai TCP/IP muốn tránh đàm phán pháp lý, nên họ cho đi phần mềm dưới một thông báo khoảng 171 từ. Đoạn văn ngắn đó hiện bao phủ gần một phần ba tất cả các dự án được cấp phép trên GitHub, nhiều hơn bất kỳ giấy phép nào khác.",
+      "coda": "Văn bản đã giữ nguyên cơ bản kể từ khi được viết."
+    },
+    "photoshop-display-origin": {
+      "tag": "Nguồn gốc",
+      "title": "Trước hết nó được gọi là Display",
+      "body": "Năm 1988, Thomas Knoll, một sinh viên nghiên cứu tại Đại học Michigan, viết một chương trình nhỏ để xem hình ảnh thang xám trên màn hình Mac đơn sắc. Ông đặt tên nó là Display, sau đó là ImagePro, rồi Photoshop, trước khi anh trai ông là John giới thiệu nó với Adobe, bên đã cấp phép nó trong năm đó.",
+      "coda": "Adobe mua toàn bộ quyền sở hữu outright vào năm 1995, với giá 34,5 triệu đô la."
+    },
+    "sosumi-so-sue-me": {
+      "tag": "Đặt tên",
+      "title": "Vậy kiện tôi đi",
+      "body": "Năm 1991, bộ phận pháp lý của Apple từ chối tên âm thanh cảnh báo \"Let It Beep\" vì quá mang tính âm nhạc, theo một thỏa thuận cấm Apple Computer sử dụng nhãn hiệu liên quan đến âm nhạc. Nhà thiết kế âm thanh Jim Reekes trả lời \"so sue me,\" sau đó nộp nó dưới dạng \"sosumi.\"",
+      "coda": "Âm thanh được phát hành trong Mac OS trong gần ba thập kỷ trước khi Big Sur thay thế nó vào năm 2020."
+    },
+    "www-royalty-free": {
+      "tag": "Cho đi",
+      "title": "Ngày nó ngừng có chi phí",
+      "body": "Ngày 30 tháng 4 năm 1993, CERN công bố giao thức và mã nguồn của World Wide Web miễn phí bản quyền. Bất kỳ ai cũng có thể lấy nó, mà không cần trả tiền và không cần xin phép.",
+      "coda": "Không ai đã trả phí bản quyền để sử dụng nó kể từ đó."
+    },
+    "doom-ftp-crash": {
+      "tag": "Shareware",
+      "title": "Máy chủ họ không thể truy cập",
+      "body": "Ngày 10 tháng 12 năm 1993, id Software phát hành miễn phí tập đầu của Doom dưới dạng shareware, đặt cược vào doanh số của các phần còn lại. Khi tải lên máy chủ FTP của Đại học Wisconsin, họ thấy rất nhiều người đã chờ sẵn đến mức chính nhóm phát triển cũng không thể kết nối.",
+      "coda": "Việc tải lên hoàn tất gần nửa đêm; mười nghìn lượt tải cùng lúc đã làm sập mạng của trường đại học."
+    },
+    "zlib-two-authors": {
+      "tag": "Nền tảng",
+      "title": "Lớp nén của hai người",
+      "body": "zlib nằm trong Linux, macOS, iOS và các thế hệ máy chơi game kế tiếp; Git và OpenSSH đều dựa vào nó để nén. Hai người đã viết bản phát hành công khai đầu tiên vào năm 1995.",
+      "coda": "Dòng tác giả chưa bao giờ có thêm tên thứ ba."
+    },
+    "byd-battery-to-car": {
+      "tag": "Thương vụ mua lại",
+      "title": "Công ty pin mua một hãng xe",
+      "body": "BYD được thành lập tại quận Longgang, Thâm Quyến vào ngày 10 tháng 2 năm 1995, sản xuất pin niken-cadmium và niken-metal hydride, sau đó chuyển sang pin lithium-ion vào năm 1996. Năm 2003, nhà sản xuất pin này mua lại Xi'an Qinchuan Automobile và đổi tên thành BYD Auto.",
+      "coda": "Hai năm sau, chiếc sedan đầu tiên do họ tự phát triển, F3, được bán ra."
+    },
+    "ariane-501": {
+      "tag": "Sự cố",
+      "title": "Ba mươi bảy giây",
+      "body": "Sau ba mươi bảy giây, hệ thống tham chiếu quán tính chuyển đổi một số thực 64-bit thành số nguyên 16-bit và bị tràn; khoảng bốn mươi giây, phương tiện vỡ tan. Quy trình này đến từ Ariane 4 không thay đổi và không có lý do gì để chạy sau khi cất cánh.",
+      "coda": "Khoảng 370 triệu đô la, chi cho đoạn mã lẽ ra phải được tắt."
+    },
+    "deep-blue-move-44-1997": {
+      "tag": "Cờ vua",
+      "title": "Lỗi ở nước đi thứ 44",
+      "body": "Trong ván một của trận tái đấu năm 1997, Kasparov đánh bại Deep Blue sau 45 nước. Nước đi thứ 44 của Deep Blue được cho là kết quả của một lỗi: không thể quyết định nước đi ưa thích trong quá trình tìm kiếm, cỗ máy rơi vào chế độ an toàn.",
+      "coda": "Sau khi thua ván hai, Kasparov cáo buộc IBM gian lận."
+    },
+    "curl-one-maintainer": {
+      "tag": "Nền tảng",
+      "title": "Stack giao thức của một người",
+      "body": "Tài liệu chính thức của curl ghi nhận libcurl có mặt trên khoảng mười tỷ thiết bị, chạy trên 110 hệ điều hành và 28 kiến trúc CPU. Dự án do Daniel Stenberg giữ vai trò bảo trì chính kể từ khi được đổi tên thành curl vào năm 1998.",
+      "coda": "Chưa từng có người kế nhiệm được chỉ định."
+    },
+    "book-of-mozilla-verses": {
+      "tag": "Easter Egg",
+      "title": "The Book of Mozilla",
+      "body": "Nhập about:mozilla vào thanh địa tiết lộ The Book of Mozilla, một đoạn kinh văn mang sắc thái tận thế đối lập 'con thú' với 'Mammon', được mỗi thế hệ trình duyệt cập nhật. Các số câu không phải là đánh dấu chương: chúng là ngày phát hành.",
+      "coda": "Đoạn mới nhất, 6:27, lần đầu xuất hiện trong bản dựng Firefox Nightly năm 2020."
+    },
+    "http-418-teapot": {
+      "tag": "Giao thức",
+      "title": "Tôi là ấm trà",
+      "body": "RFC 2324, công bố ngày 1 tháng 4 năm 1998, định nghĩa mã trạng thái 418 là \"I'm a teapot\" và tự phân loại là Informational, không phải tiêu chuẩn. Ngày 1 tháng 4 năm 2014, RFC 7168 mở rộng nó để bao gồm việc pha trà. Mã này vẫn chưa bao giờ trở thành tiêu chuẩn thực sự.",
+      "coda": "Cả hai tài liệu đều vẫn là Informational; mã trạng thái vẫn được tích hợp trong các máy chủ thực tế."
+    },
+    "open-source-coined-1998": {
+      "tag": "Đặt tên",
+      "title": "Sự ra đời của Open Source",
+      "body": "Tháng 2 năm 1998, Christine Peterson đề xuất \"open source\" vì những người mới thường nghe \"free software\" như một mức giá, không phải một quyền tự do. Tại cuộc họp VA Research ngày 5 tháng 2, Todd Anderson đưa thuật ngữ này vào cuộc trò chuyện thay vì đề xuất chính thức, để nó lan truyền tự nhiên.",
+      "coda": "Nhóm sau đó đã cố gắng đăng ký nhãn hiệu cho cụm từ này và thất bại."
+    },
+    "netscape-source-1998": {
+      "tag": "Phát hành",
+      "title": "Không Hoàn Toàn Mở",
+      "body": "Ngày 22 tháng 1 năm 1998, Netscape thông báo sẽ phát hành mã nguồn trình duyệt của mình, và nhân viên Jamie Zawinski đã đăng ký mozilla.org. Nhưng giấy phép họ viết ra vẫn giữ một cửa mở: Netscape có thể tiếp tục tích hợp cùng mã đó vào các sản phẩm độc quyền.",
+      "coda": "Netscape bị AOL mua lại khoảng một năm sau đó."
+    },
+    "bsd-75-acknowledgments": {
+      "tag": "Giấy phép",
+      "title": "Bảy mươi lăm lời ghi công",
+      "body": "Giấy phép BSD gốc yêu cầu mọi quảng cáo phải ghi công từng tác giả đóng góp theo tên. Đến năm 1997, một bản dựng NetBSD duy nhất mang bảy mươi lăm lời ghi công như vậy, không tương thích với GPL. Giám đốc cấp phép của Berkeley đã xóa điều khoản này vào ngày 22 tháng 7 năm 1999.",
+      "coda": "Chữ ký của một văn phòng đã nghỉ hưu một điều khoản đã nhân lên trong một thập kỷ."
+    },
+    "red-hat-ipo-1999": {
+      "tag": "IPO",
+      "title": "Giá của phần mềm miễn phí",
+      "body": "Red Hat cho đi mã nguồn của sản phẩm cốt lõi và thay vào đó tính phí hỗ trợ, đào tạo và tích hợp. Vào ngày 11 tháng 8 năm 1999, công ty đã niêm yết công khai. Mức tăng trong ngày đầu tiên của nó xếp hạng thứ tám lớn nhất trong lịch sử Phố Wall tại thời điểm đó.",
+      "coda": "Người sáng lập Bob Young đã bị thay thế bằng CEO bốn tháng sau."
+    },
+    "multics-shutdown": {
+      "tag": "Tắt",
+      "title": "Cái cuối cùng",
+      "body": "Vào ngày 30 tháng 10 năm 2000, cài đặt Multics cuối cùng được biết đến chạy bản địa trên phần cứng Honeywell đã bị tắt tại Bộ Quốc phòng Quốc gia Canada ở Halifax, Nova Scotia.",
+      "coda": "Ba mươi lăm năm sau khi dự án bắt đầu."
+    },
+    "sqlite-no-license": {
+      "tag": "Nền tảng",
+      "title": "Cơ sở dữ liệu không có giấy phép",
+      "body": "Trang của riêng SQLite ước tính hơn một nghìn tỷ tệp cơ sở dữ liệu đang hoạt động trên toàn thế giới, vì mỗi điện thoại thông minh riêng lẻ mang theo hàng trăm, xếp nó thứ hai chỉ sau zlib trong số phần mềm được triển khai. Không có giấy phép, vì các tác giả đã cho mọi dòng vào miền công cộng.",
+      "coda": "Các công ty muốn che đậy pháp lý mua một bảo hiểm quyền sở hữu riêng biệt."
+    },
+    "smic-tsmc-lawsuit": {
+      "tag": "Vụ kiện",
+      "title": "Hai vụ kiện của SMIC",
+      "body": "SMIC được thành lập vào năm 2000 bởi Richard Chang, một cựu kỹ sư TSMC, cùng những người khác. TSMC đã kiện hai lần vì ăn cắp bí mật thương mại; trong vụ năm 2009, bồi thẩm đoàn đã tìm thấy SMIC có trách nhiệm trong 61 trong số 65 cáo buộc được đưa ra chống lại nó.",
+      "coda": "Vào tháng 11 năm 2010, SMIC đã dàn xếp với TSMC với giá 200 triệu đô la và khoảng 8 phần trăm cổ phần của nó."
+    },
+    "api-mandate": {
+      "tag": "Quản trị",
+      "title": "Bản ghi nhớ",
+      "body": "Theo bài đăng bị công khai nhầm vào năm 2011, Bezos đã ra lệnh vào năm 2002 rằng các nhóm phải phơi bày mọi thứ qua giao diện dịch vụ: không liên kết trực tiếp, không đọc kho của nhóm khác, không cửa sau.",
+      "coda": "Tác giả của bài đăng đó chỉ định nó cho đồng nghiệp của mình."
+    },
+    "hupu-rumours": {
+      "tag": "Diễn đàn",
+      "title": "Người dịch tin đồn",
+      "body": "Vào tháng 1 năm 2004, một sinh viên Trung Quốc đang làm tiến sĩ kỹ thuật cơ khí ở Chicago đã bắt đầu một diễn đàn bóng rổ trong thời gian rảnh. Công việc chủ yếu là dịch tin tức và tin đồn NBA sang tiếng Trung và sắp xếp chúng.",
+      "coda": "Tám năm sau, diễn đàn mở một cửa hàng trực tuyến của riêng mình."
+    },
+    "jd-the-other-name": {
+      "tag": "Nguồn gốc từ",
+      "title": "Nửa còn lại của cái tên",
+      "body": "Nền tảng bán lẻ đi vào hoạt động năm 2004 lấy tên từ hai người: người sáng lập, Liu Qiangdong, và Gong Xiaojing, người phụ nữ anh từng hẹn hò đầu tiên. Một chữ từ mỗi người.",
+      "coda": "Chữ Jing là của cô ấy."
+    },
+    "douban-hutong": {
+      "tag": "Nguồn gốc từ",
+      "title": "Đặt tên theo con hẻm",
+      "body": "Trang web đi vào hoạt động ngày 6 tháng 3 năm 2005 không đặt tên theo một ẩn dụ. Yang Bo viết mã nguồn của nó trong một quán cà phê gần Douban Hutong ở Bắc Kinh, và lấy tên của con hẻm.",
+      "coda": "Hai mươi mốt năm sau, trang web vẫn mang tên đó."
+    },
+    "git-information-manager-hell": {
+      "tag": "Git",
+      "title": "Quản lý thông tin từ địa ngục",
+      "body": "Ngày 7 tháng 4 năm 2005, Linus Torvalds đã cam kết bản sửa đổi đầu tiên của git. Thông điệp ghi: Bản sửa đổi ban đầu của \"git\", quản lý thông tin từ địa ngục. Địa chỉ tác giả trên đó là torvalds@ppc970.osdl.org.",
+      "coda": "Địa chỉ đó trỏ đến một máy thử nghiệm PowerPC 970 tại OSDL."
+    },
+    "knuth-reward-check": {
+      "tag": "Phần thưởng",
+      "title": "Ngân hàng San Serriffe",
+      "body": "Donald Knuth trả $2.56 cho mỗi lỗi được tìm thấy trong các cuốn sách của ông, rút từ Ngân hàng San Serriffe hư cấu. Đến tháng 3 năm 2005, tổng số séc ông đã ký vượt quá $20,000.",
+      "coda": "Hầu hết người nhận đóng khung séc thay vì gửi vào tài khoản."
+    },
+    "dji-helicopter-first": {
+      "tag": "Chuyển hướng",
+      "title": "DJI Bắt đầu từ một chiếc trực thăng",
+      "body": "Frank Wang tốt nghiệp Đại học Khoa học và Công nghệ Hồng Kông năm 2006 và đồng sáng lập DJI tại Thâm Quyến cùng các bạn cùng lớp. Sản phẩm đầu tiên là hệ thống điều khiển bay cho trực thăng; phiên bản trưởng thành đầu tiên, XP3.1, được phát hành năm 2008.",
+      "coda": "Đội sau này phát hiện hầu hết người mua gimbal gắn chúng lên đa rotor, không phải trực thăng."
+    },
+    "dropbox-hn": {
+      "tag": "Ngược trực giác",
+      "title": "Lời phản hồi đó",
+      "body": "Houston đăng bản demo Dropbox lên Hacker News. Lời phản hồi nổi tiếng giải thích rằng bạn có thể tự làm với tài khoản FTP, curlftpfs và SVN, và rằng nó không trông như sẽ kiếm được tiền.",
+      "coda": "Mười một năm sau, tại IPO, Houston gọi đó là chuỗi thảo luận yêu thích của ông trên trang."
+    },
+    "butterfield": {
+      "tag": "Chuyển hướng",
+      "title": "Hai lần từ đống đổ nát",
+      "body": "Trò chơi của Butterfield, Game Neverending, đình trệ, và đội tách phần chia sẻ ảnh ra thành Flickr. Tám năm sau, trò chơi thứ hai của ông, Glitch, đóng cửa, và đội tách ra công cụ trò chuyện họ đã xây dựng cho chính mình: Slack.",
+      "coda": "Cả hai lần sản phẩm phụ chỉ trở nên rõ ràng khi thứ chính thức đóng cửa."
+    },
+    "blockbuster": {
+      "tag": "Cú từ chối",
+      "title": "Năm mươi triệu",
+      "body": "Hastings và Randolph bay đến Dallas để bán Netflix cho Blockbuster với năm mươi triệu, và vận hành bên online cho họ. Theo Randolph, CEO ngồi đối diện dành cả buổi họp để kìm nén tiếng cười.",
+      "coda": "Blockbuster nộp đơn phá sản mười năm sau."
+    },
+    "y2k": {
+      "tag": "Quản trị",
+      "title": "Không có gì xảy ra",
+      "body": "Gartner ước tính chi phí toàn cầu của Y2K vào khoảng ba đến sáu trăm tỷ đô la, và hàng trăm nghìn người đã sửa từng dòng năm hai chữ số. Đêm đó, lưới điện vẫn hoạt động, ngân hàng vẫn hoạt động, máy bay vẫn bay.",
+      "coda": "Bốn năm sau, một nhà kinh tế công bố một bài báo lập luận rằng hầu hết số tiền đó đã bị lãng phí."
+    },
+    "unsourced": {
+      "tag": "Không có nguồn",
+      "title": "Không ai được ghi nhận",
+      "body": "\"640K ought to be enough for anybody\" — câu trả lời của chính Gates là không bao giờ có trích dẫn, rằng câu nói chỉ trôi nổi như một tin đồn và được lặp lại. \"A world market for maybe five computers\" — Thomas Watson đã nói năm, vào năm 1953, về số đơn hàng ông mong đợi cho một máy, IBM 701.",
+      "coda": "701 sau đó bán được mười tám chiếc."
+    },
+    "homebrew-volunteer-team": {
+      "tag": "Nền tảng",
+      "title": "Kho Không Có Nhà Tuyển Dụng",
+      "body": "Homebrew là trình quản lý gói mặc định trên hầu hết máy của nhà phát triển Mac; vào năm 2013 nó dẫn đầu toàn bộ GitHub về số người đóng góp. Max Howell viết bản phát hành đầu tiên vào năm 2009. Hiện nay nó được duy trì bởi một đội 34 người, tất cả không được trả lương.",
+      "coda": "Lịch sử tài trợ của nó là một Kickstarter và một tài khoản Open Source Collective."
+    },
+    "xiaomi-software-first": {
+      "tag": "Phần mềm",
+      "title": "Sản phẩm đầu tiên của Xiaomi không phải là điện thoại",
+      "body": "Xiaomi được thành lập vào ngày 6 tháng 4 năm 2010. Tháng 8 và tháng 12 năm đó, công ty phát hành các phiên bản beta của hệ điều hành MIUI và ứng dụng nhắn tin Miliao, cả hai đều là phần mềm.",
+      "coda": "Điện thoại đầu tiên của công ty không được giao cho đến tháng 8 năm sau."
+    },
+    "ritchie-same-week": {
+      "tag": "Tin tang",
+      "title": "Cùng tuần",
+      "body": "Dennis Ritchie, cùng Ken Thompson, tạo ra Unix và ngôn ngữ lập trình C. Ông được phát hiện tử vong tại nhà ở New Jersey vào ngày 12 tháng 10 năm 2011, ở tuổi 70. Steve Jobs đã qua đời một tuần trước đó, vào ngày 5 tháng 10. Các nhà bình luận sau này lưu ý rằng công việc của Ritchie là nền tảng cho công nghệ mà Apple xây dựng tài sản của mình.",
+      "coda": "Hai tin tang được đăng trong cùng một tuần."
+    },
+    "leap-second": {
+      "tag": "Sự cố",
+      "title": "Giây nhuận",
+      "body": "Một giây nhuận được thêm vào để đồng bộ đồng hồ nguyên tử với vòng quay của Trái Đất. Nhân hệ thống không thông báo cho hệ thống con định thời của nó, các bộ định thời độ phân giải cao kích hoạt sớm, và các bộ xử lý quay vòng. Reddit, Mozilla và LinkedIn bị đình trệ; một hãng hàng không phải làm thủ tục lên máy bay bằng tay.",
+      "coda": "Thời gian không tăng đơn điệu. Mã nguồn giả định điều đó."
+    },
+    "gregorian-1752-eleven-days": {
+      "tag": "Huyền thoại",
+      "title": "Mười Một Ngày Mất Tích",
+      "body": "Vào ngày 2 tháng 9 năm 1752, lịch Anh nhảy sang ngày 14 tháng 9, xóa mất mười một ngày. Lịch sử phổ biến cho rằng đám đông đã nổi loạn vì điều này. Không có ghi chép đương thời nào về cuộc bạo loạn nào còn tồn tại. Câu chuyện bắt nguồn từ một biểu ngữ trong một bức tranh châm biếm bầu cử năm 1755.",
+      "coda": "Một đạo cụ từ một bức tranh đã trở thành ghi chép về một sự kiện không còn dấu vết nào khác."
+    },
+    "bootstrap-the-impossible-joke": {
+      "tag": "Từ nguyên",
+      "title": "Mượn Từ Một Kỳ Tích Bất Khả Thi",
+      "body": "\"Tự kéo mình lên bằng dây giày\" bắt nguồn từ câu chuyện hoang đường của Nam tước Munchausen năm 1785 và được sử dụng trong suốt thế kỷ 19 như một ví dụ điển hình về điều bất khả thi về mặt vật lý. Năm 1953, ngành máy tính đã mượn nó cho chuỗi lệnh giúp máy móc tự khởi động.",
+      "coda": "Từ chỉ mẹo đó, ngay từ lần sử dụng đầu tiên, đã là một câu chốt hạ về sự thất bại của mẹo đó."
+    },
+    "french-revolutionary-decimal-time": {
+      "tag": "Thử nghiệm",
+      "title": "Ngày Mười Giờ",
+      "body": "Năm 1793, Pháp chia một ngày thành mười giờ, mỗi giờ gồm một trăm phút thập phân. Việc sử dụng bắt buộc bắt đầu vào tháng 9 năm 1794 và bị đình chỉ chỉ bảy tháng sau đó. Mặt số thập phân trên đồng hồ Cung điện Tuileries vẫn tiếp tục chạy ít nhất cho đến năm 1801.",
+      "coda": "Hệ thống đã bị bãi bỏ vẫn được gắn trên tường cung điện trong nhiều năm sau đó."
+    },
+    "railway-time-gwr": {
+      "tag": "Tiêu chuẩn",
+      "title": "Thời Gian Đường Sắt Giữ",
+      "body": "Vào tháng 11 năm 1840, Công ty Đường sắt Great Western đã áp dụng giờ Greenwich trên toàn mạng lưới của mình, thay thế giờ địa phương của từng thị trấn. Đến năm 1855, khoảng 98 phần trăm các thị trấn ở Anh đã làm theo. Quốc hội đã không đưa nó thành tiêu chuẩn quốc gia hợp pháp cho đến năm 1880.",
+      "coda": "Đồng hồ đã thống nhất về thời gian bốn mươi năm trước khi luật pháp làm điều đó."
+    },
+    "western-union-telephone-memo-1876": {
+      "tag": "Đã bóc mẽ",
+      "title": "Bản ghi nhớ mà Western Union chưa bao giờ viết",
+      "body": "Một bản ghi nhớ năm 1876 của Western Union thường được trích dẫn gọi điện thoại là \"đần độn\" so với việc gửi người đưa thư đến văn phòng điện tín. Các nhà nghiên cứu rà soát báo chí đương thời không tìm thấy dấu vết nào của nó, và vị giám đốc được nêu tên không giữ chức vụ đó tại công ty trong năm đó. Văn bản được bịa ra sau này.",
+      "coda": "Western Union đã từ chối bằng sáng chế của Bell trong năm đó; họ chỉ chưa bao giờ viết bản ghi nhớ này."
+    },
+    "nintendo-hanafuda-detours": {
+      "tag": "Chuyển hướng",
+      "title": "Những lần chuyển hướng sau bộ bài hoa",
+      "body": "Fusajiro Yamauchi mở một cửa hàng ở Kyoto năm 1889 làm thủ công các lá bài hanafuda. Công ty sau đó thử dịch vụ taxi và cơm ăn liền, cả hai đều bị bỏ; tuyên bố về chuỗi khách sạn tình yêu được lặp lại rộng rãi không có ghi chép trong các báo cáo chứng khoán được nghiên cứu ngược về năm 1962.",
+      "coda": "Năm 1966 một món đồ chơi gọi là Ultra Hand bán được hàng trăm nghìn đơn vị."
+    },
+    "wrigley-premiums-premium": {
+      "tag": "Chuyển hướng",
+      "title": "Phần thưởng của phần thưởng",
+      "body": "Năm 1891 William Wrigley Jr. bán xà phòng ở Chicago và tặng bột nở làm quà. Khách hàng muốn bột nở hơn xà phòng, nên ông chuyển sang bán thứ đó thay thế, và thêm kẹo cao su làm quà riêng cho bột nở. Khách hàng muốn kẹo cao su hơn.",
+      "coda": "Đến năm 1892 ông đã bỏ cả xà phòng và bột nở để chỉ bán kẹo cao su."
+    },
+    "robot-labor-not-brother": {
+      "tag": "Nguồn gốc từ",
+      "title": "Người đặt tên robot không được ghi công",
+      "body": "Karel Čapek phác thảo vở kịch năm 1920 với một từ gốc Latinh, \"laboři,\" và nghĩ nó quá sách vở. Trong một chuyên mục báo ông nêu nguồn gốc thực sự: anh trai Josef, nói qua loa. \"Robot\" bắt nguồn từ robota — lao động cưỡng bức của nông nô, không phải máy móc.",
+      "coda": "Vở kịch giữ tên một người anh trên trang bìa."
+    },
+    "play-doh-wallpaper-cleaner": {
+      "tag": "Chuyển hướng",
+      "title": "Nó được tạo ra để lau giấy dán tường",
+      "body": "Thập niên 1930, Kutol tạo ra một loại bột mềm để chà sạch muội than khỏi giấy dán tường. Khi các ngôi nhà chuyển sang nhiên liệu sưởi ấm sạch hơn, nhu cầu biến mất. Một giáo viên đề xuất bán nó làm đất nặn; nó được đổi tên thành Play-Doh năm 1956.",
+      "coda": "Đến năm 2005 nó bán được 95 triệu hộp mỗi năm ở 75 quốc gia."
+    },
+    "hedy-lamarr-frequency-hopping-patent": {
+      "tag": "Bằng sáng chế",
+      "title": "Bằng sáng chế bị cất đi",
+      "body": "Năm 1942, Lamarr và nhà soạn nhạc George Antheil đã cấp bằng sáng chế cho một hệ thống nhảy tần số để giữ cho vô tuyến ngư lôi không bị nhiễu. Hải quân đã phân loại nó, cất nó đi và gợi ý Lamarr bán trái phiếu chiến tranh thay vì vậy. Bằng sáng chế hết hạn vào năm 1959, trước khi bất kỳ tàu nào mang nó.",
+      "coda": "Lamarr không bao giờ nhận được khoản thanh toán cho bằng sáng chế trong suốt cuộc đời bà."
+    },
+    "bush-1945-memex": {
+      "tag": "Nguồn gốc",
+      "title": "Bàn làm việc chưa bao giờ được xây dựng",
+      "body": "Vào tháng 7 năm 1945, Vannevar Bush xuất bản \"As We May Think\" trên The Atlantic, mô tả một máy phim vi mô cỡ bàn làm việc gọi là Memex cho phép người dùng xây dựng các lối đi liên kết qua kiến thức được lưu trữ. Nó được in lại dưới dạng bản rút gọn vào tháng 9 năm đó. Không có nguyên mẫu nào bao giờ được xây dựng.",
+      "coda": "Engelbart và Nelson sau này đều ghi nhận bài luận là lý do họ bắt đầu."
+    },
+    "jean-bartik-eniac-dinner": {
+      "tag": "Hồ sơ",
+      "title": "Bữa tối họ không được mời",
+      "body": "Tại buổi ra mắt công khai của ENIAC vào ngày 14 tháng 2 năm 1946, chương trình quỹ đạo gây ấn tượng với phòng đã được viết bởi Jean Bartik và Betty Holberton. Báo chí chỉ giới thiệu Eckert và Mauchly. Không một trong sáu lập trình viên nữ nào được mời đến bữa tối sau đó.",
+      "coda": "Tên của họ được lấy lại từ các bức ảnh sự kiện nhiều thập kỷ sau."
+    },
+    "claude-shannon-juggling-theorem": {
+      "tag": "Giấy tờ",
+      "title": "Định lý juggling",
+      "body": "Năm 1948, Shannon xuất bản 'A Mathematical Theory of Communication,' đặt nền móng cho lý thuyết thông tin. Nhiều thập kỷ sau ông áp dụng cùng sự nghiêm ngặt đó vào sở thích của mình, suy ra một mối quan hệ chính thức giữa thời gian bay của quả bóng, thời gian ở lại của nó và số lượng quả bóng và tay.",
+      "coda": "Nó được thu thập trong cùng một tập với bài báo năm 1948."
+    },
+    "mccarthy-1960-eval": {
+      "tag": "Nguồn gốc",
+      "title": "Trình thông dịch trong chú thích",
+      "body": "Trong bài báo năm 1960 của mình, John McCarthy viết một hàm eval dưới dạng ký hiệu toán học, để chỉ ra rằng các biểu thức ký hiệu có thể mô tả chính chúng. Sinh viên của ông là Steve Russell đã dịch phép suy ra đó thành mã máy IBM 704. Thiết bị chứng minh trở thành trình thông dịch Lisp đầu tiên hoạt động.",
+      "coda": "McCarthy sau này nói rằng ông không có ý định ai đó thực sự chạy nó."
+    },
+    "licklider-1960-symbiosis": {
+      "tag": "Nguồn gốc",
+      "title": "Các Thư Viện Được Kết Nối Với Nhau",
+      "body": "Trong bài báo năm 1960 \"Man-Computer Symbiosis,\" J.C.R. Licklider đề xuất các \"trung tâm tư duy\" chứa các chức năng thư viện, được liên kết thành một mạng lưới để sử dụng máy tính theo thời gian thực và tương tác. Hầu hết các máy tính thời đó chạy trên thẻ đục lỗ theo lô; các terminal tương tác hầu như chưa tồn tại.",
+      "coda": "Hai năm sau ông điều hành một văn phòng mới của Pentagon và tài trợ cho dự án sau này trở thành ARPANET."
+    },
+    "ctss-1962-password-leak": {
+      "tag": "Nguồn Gốc",
+      "title": "Tệp Mật Khẩu, Được In Ra",
+      "body": "Năm 1962, sinh viên tiến sĩ MIT Allan Scherr bực bội vì phải dành bốn giờ mỗi tuần trên CTSS. Anh phát hiện lệnh in ngoại tuyến có thể lấy bất kỳ tệp nào của tài khoản, nên đã in UACCNT.SECRET, tệp chứa mọi mật khẩu, và chia sẻ nó để mượn tài khoản và tiếp tục chạy các mô phỏng của mình.",
+      "coda": "Scherr không thú nhận với giám đốc phòng thí nghiệm cho đến gần ba mươi năm sau."
+    },
+    "katherine-johnson-check-the-numbers": {
+      "tag": "Hồ Sơ",
+      "title": "Để Cô Gái Kiểm Tra Nó",
+      "body": "Trước chuyến bay quỹ đạo năm 1962, John Glenn yêu cầu các kỹ sư nhờ Katherine Johnson tính lại bằng tay quỹ đạo mà một IBM 7090 đã tính sẵn. 'Nếu cô ấy nói chúng ổn,' anh nói, 'tôi sẵn sàng bay.' Các con số của cô khớp chính xác với máy tính.",
+      "coda": "Friendship 7 phóng đúng lịch trình, ngày 20 tháng 2 năm 1962."
+    },
+    "daemon-backronym": {
+      "tag": "Nguồn Gốc Từ",
+      "title": "Viết Tắt Được Gắn Ngược Của Daemon",
+      "body": "Năm 1963, các lập trình viên của Dự án MAC tại MIT đặt tên cho một quy trình sao lưu băng nền theo quỷ Maxwell, một tác nhân trong thí nghiệm tư duy năm 1867 phân loại các phân tử không ngừng và vô hình — từ daimon trong tiếng Hy Lạp, một linh hồn trung tính, không phải quỷ trong Do Thái-Kitô giáo.",
+      "coda": "\"Disk And Execution MONitor\" được gắn vào từ này sau đó."
+    },
+    "sketchpad-1963": {
+      "tag": "Nguồn Gốc",
+      "title": "Một Bút Ánh Sáng Và Một Máy Đo Dao Động",
+      "body": "Tháng 1 năm 1963, Ivan Sutherland nộp luận án MIT về Sketchpad, vẽ hình học có ràng buộc bằng bút ánh sáng trên màn hình TX-2 tại Phòng thí nghiệm Lincoln. Máy tính này có giá khoảng một triệu đô la và chỉ có một vài chiếc; bảng vẽ của anh không thể chuyển giao cho bất kỳ ai khác.",
+      "coda": "Phần mềm CAD thương mại mất gần hai thập kỷ để bắt kịp những gì luận án đã thể hiện."
+    },
+    "douglas-mcilroy-garden-hose-pipe": {
+      "tag": "Memo",
+      "title": "Bản Ghi nhớ Vòi Tưới Vườn",
+      "body": "Tháng 10 năm 1964, McIlroy viết một bản ghi nhớ tại Bell Labs đề xuất các chương trình kết nối với nhau như vòi tưới vườn — vặn thêm một đoạn để xử lý dữ liệu khác đi. Bản ghi nhớ được truyền tay, được ngưỡng mộ, và không được hiện thực hóa. Chín năm sau, Ken Thompson thêm một ký tự, |, vào Unix shell trong một đêm.",
+      "coda": "Sáng hôm sau, các chương trình chưa từng giao tiếp với nhau đã làm được điều đó."
+    },
+    "berkshire-hathaway-spite-buy": {
+      "tag": "Sự bực tức",
+      "title": "Nhà Máy Mua Lại Vì Sự Tức Giận",
+      "body": "Năm 1964, Warren Buffett đồng ý bằng lời nói bán lại cổ phần của mình cho chủ tịch Berkshire, Seabury Stanton, với giá 11,50 USD mỗi cổ phiếu. Thư mời thầu bằng văn bản gửi đến với mức giá 11,375 USD. Buffett đủ tức giận vì khoản thiếu hụt một phần tám đô la đó nên đã mua lại quyền kiểm soát công ty và sa thải Stanton.",
+      "coda": "Năm 1985, ông đóng cửa các nhà máy dệt mà ông từng cố gắng giữ lại."
+    },
+    "nelson-1965-hypertext": {
+      "tag": "Nguồn gốc",
+      "title": "Liên Kết Truớc Trang",
+      "body": "Trong một bài báo ACM năm 1965, Ted Nelson đặt thuật ngữ \"hypertext\" cho các tài liệu liên kết và trích dẫn lẫn nhau không theo trình tự, dựa trên một dự án ông bắt đầu từ năm 1960 và sau này đặt tên là Xanadu. Phiên bản của ông trả tiền cho tác giả gốc theo mỗi liên kết được theo dõi. Một bản hiện thực hóa một phần không được phát hành cho đến năm 2014.",
+      "coda": "Web tiếp thu từ vựng của ông và bỏ lại cơ chế thanh toán."
+    },
+    "mary-allen-wilkes-linc": {
+      "tag": "Ghi chép",
+      "title": "LINC Trong Phòng Khách",
+      "body": "Năm 1965, Wilkes chuyển một máy tính LINC nặng 250 pound vào phòng khách nhà bố mẹ tại Baltimore và tự viết LAP6, một hệ điều hành tương tác, một mình — mười hai năm trước khi Apple II đến bất kỳ gia đình nào. Khi được hỏi có phải bà là người đầu tiên không, bà chỉ nói: 'Tôi đoán có thể tôi là người đầu tiên.'",
+      "coda": "Bà không bao giờ tự nhận danh hiệu này một cách dứt khoát."
+    },
+    "hoares-billion-dollar-mistake": {
+      "tag": "Lời thú tội",
+      "title": "Tham Chiếu Ông Vẫn Thêm Vào",
+      "body": "Năm 1965, Tony Hoare đang xây dựng hệ thống kiểu đầu tiên nhằm biến các tham chiếu ALGOL W thành an toàn có thể chứng minh tại thời điểm biên dịch. Ông vẫn thêm vào một tham chiếu null, vì nó dễ hiện thực hóa. Năm 2009, ông gọi đó là sai lầm tỷ đô của mình.",
+      "coda": "Mục tiêu an toàn đã được nêu rõ; thất bại nằm ở chỗ sự dễ dàng vẫn chiến thắng."
+    },
+    "johnson-vs-cern-touchscreen": {
+      "tag": "Màn hình cảm ứng",
+      "title": "Ai Thực Sự Đến Trước",
+      "body": "CERN ghi công Bent Stumpe đã chế tạo màn hình cảm ứng điện dung đầu tiên trên thế giới vào năm 1972, phục vụ phòng điều khiển máy gia tốc. Eric Johnson của Royal Radar Establishment Anh đã công bố một bài báo về công nghệ cảm ứng điện dung điều khiển bằng ngón tay vào năm 1965, sớm hơn bảy năm.",
+      "coda": "Lời tuyên bố của CERN về việc chế tạo màn hình cảm ứng đầu tiên vẫn còn trên trang web riêng của họ."
+    },
+    "second-redefined-1967": {
+      "tag": "Đo lường học",
+      "title": "9.192.631.770 Chu kỳ",
+      "body": "Cho đến năm 1960, giây là một phân số của năm nhiệt đới 1900, được xác định bằng quan sát thiên văn. Năm 1967, Đại hội đồng Đo lường và Cân đã định nghĩa lại nó là 9.192.631.770 chu kỳ của một chuyển dịch caesium-133.",
+      "coda": "Độ dài của một giây ngừng được xác định bởi mặt trời và bắt đầu được xác định bởi một nguyên tử."
+    },
+    "goto-statement-considered-harmful": {
+      "tag": "Sửa lỗi",
+      "title": "Tiêu đề Anh ấy Không Viết",
+      "body": "Dijkstra đã nộp một bài báo có tiêu đề A Case against the GO TO Statement cho CACM. Biên tập viên Niklaus Wirth, vội vàng in nó dưới dạng một bức thư, đã đặt cho nó tiêu đề khiến nó nổi tiếng: Go To Statement Considered Harmful.",
+      "coda": "Cụm từ đã vượt xa bức thư, sinh ra hàng thập kỷ tiêu đề 'X Considered Harmful' mà không ai đọc qua."
+    },
+    "rollkugel-vs-mouse": {
+      "tag": "Chuột",
+      "title": "Hai Con Chuột, Một Năm",
+      "body": "Vào tháng 10 năm 1968, Telefunken liệt kê chuột Rollkugel trong một tờ rơi bán hàng, một thiết bị quả cầu lăn mà các kỹ sư của họ đã chế tạo từ năm 1966. Hai tháng sau, vào ngày 9 tháng 12, Douglas Engelbart đã trình diễn con chuột bằng gỗ mà nhóm SRI của ông đã chế tạo từ năm 1963. Không nhóm nào biết về nhóm kia.",
+      "coda": "Telefunken đến thị trường trước và bị lãng quên; Engelbart đến sau và là thứ mọi người nghĩ đến khi nói về chuột."
+    },
+    "peter-principle-verified": {
+      "tag": "Nghiên cứu",
+      "title": "Được Thăng Chức Đến Vô Năng",
+      "body": "Năm 1969, Laurence Peter và Raymond Hull nửa đùa nửa thật trong một cuốn sách bán chạy rằng mọi nhân viên đều thăng chức đến mức mà họ trở nên vô năng, được viết như một sự châm biếm. Năm 2019, một nghiên cứu về dữ liệu thăng chức lực lượng bán hàng tại 214 công ty thực tế đã phát hiện ra rằng trò đùa đó đúng: những người bán hàng giỏi nhất trở thành những nhà quản lý tồi tệ hơn.",
+      "coda": "Cái kết hài hước hóa ra là một hệ số hồi quy có thể đo lường và được công bố."
+    },
+    "lanpar-vs-visicalc": {
+      "tag": "Bảng tính",
+      "title": "Bảng Tính Không Ai Đặt Tên",
+      "body": "Mùa hè năm 1969, Rene Pardo và Remy Landau, hai cử nhân Harvard, viết LANPAR, một ngôn ngữ bảng tính cho phép người dùng nhập công thức theo bất kỳ thứ tự nào mà vẫn tính toán đúng. Bell Canada và General Motors chạy trên nó. Năm 1979, Dan Bricklin xây dựng VisiCalc mà không biết LANPAR tồn tại.",
+      "coda": "Bằng sáng chế của LANPAR tồn tại qua một vụ kiện đến năm 1983; các tạp chí đã đặt tên VisiCalc là thứ nhất."
+    },
+    "spam-vikings-not-marketers": {
+      "tag": "Nguồn gốc từ",
+      "title": "Spam, Trước Khi Có Marketing",
+      "body": "Trong một vở kịch năm 1970, những người Viking của Monty Python hát \"spam\" đè lên cuộc đối thoại của một khách ăn, chế giễu sự dư thừa thịt hộp trong thực đơn. Cú đùa này di cư vào các phòng chat MUD vào cuối thập niên 1980 để làm ngập chat, sau đó lên email vào đầu thập niên 1990.",
+      "coda": "Từ này đến hộp thư qua một vở kịch hài về bữa trưa."
+    },
+    "codd-1970-relational-model": {
+      "tag": "Nguồn gốc",
+      "title": "Bản Giấy Công Ty Bỏ Qua",
+      "body": "Năm 1970, nhà nghiên cứu IBM Edgar Codd xuất bản mô hình quan hệ. Sản phẩm chủ lực của IBM là phân cấp, và công ty không vội áp dụng ý tưởng của ông. Larry Ellison đọc bản giấy của Codd và các báo cáo System R của chính IBM, sau đó phát hành cơ sở dữ liệu quan hệ thương mại đầu tiên, vào năm 1979.",
+      "coda": "Sản phẩm quan hệ của chính IBM, DB2, không phát hành cho đến năm 1983."
+    },
+    "linnainmaa-backpropagation": {
+      "tag": "Thuật toán",
+      "title": "Trích Dẫn Bị Thiếu",
+      "body": "Năm 1970, sinh viên Phần Lan Seppo Linnainmaa xuất bản thuật toán hoàn chỉnh cho biệt tự động chế độ ngược, kèm mã chạy được, trong luận văn thạc sĩ của mình. Năm 1986, Rumelhart, Hinton và Williams xuất bản cùng phương pháp trong Nature để huấn luyện mạng nơ-ron. Họ không trích dẫn ông.",
+      "coda": "Luận văn của Linnainmaa nằm không được trích dẫn trong mười sáu năm trước khi các nhà sử học của lĩnh vực đào nó lên."
+    },
+    "at-sign-arbitrary-pick": {
+      "tag": "Nguồn gốc từ",
+      "title": "Phím Không Dùng Đến Duy Nhất",
+      "body": "Năm 1971, kỹ sư BBN Ray Tomlinson cần một dấu phân cách giữa tên người dùng và máy chủ mà không bao giờ xuất hiện trong tên của một người thực. Quét bàn phím Teletype Model 33 của mình, ông chọn @ — một ký tự lúc đó hầu như chỉ được các chủ cửa hàng tạp hóa và kế toán sử dụng.",
+      "coda": "Mỗi địa chỉ email kể từ đó đã mang theo ràng buộc duy nhất đó."
+    },
+    "parnas-module-decomposition": {
+      "tag": "Phương pháp",
+      "title": "Nơi Cắt Một Module",
+      "body": "Năm 1972, David Parnas chia cùng một hệ thống KWIC-index thành các module theo hai cách: một theo bước xử lý, một theo các quyết định thiết kế dễ thay đổi nhất, mỗi cái được giấu sau một interface. Chỉ cách thứ hai cho phép một thay đổi chạm vào một module mà không ai phải đọc phần còn lại.",
+      "coda": "Ranh giới module hóa ra mã hóa một phỏng đoán về những gì một người bảo trì tương lai sẽ cần biết."
+    },
+    "karen-sparck-jones-idf": {
+      "tag": "Record",
+      "title": "Công Thức Không Ai Cảm Ơn",
+      "body": "Năm 1972, Spärck Jones công bố một bài báo đề xuất rằng độ hiếm của một từ trong bộ sưu tập tài liệu đo lường tầm quan trọng của nó — tần số tài liệu nghịch đảo, hiện nằm dưới logic xếp hạng của hầu hết mọi công cụ tìm kiếm. Cô ấy không có vị trí thường trực tại Cambridge cho đến năm 1993.",
+      "coda": "Trước đó cô ấy đã làm một chuỗi hợp đồng ngắn hạn, tài trợ mềm."
+    },
+    "cyclades-pouzin-tcpip": {
+      "tag": "Internet",
+      "title": "Người Thứ Năm Của Internet",
+      "body": "Năm 1972, Louis Pouzin xây dựng mạng CYCLADES tại Pháp, mạng đầu tiên khiến các host cuối, không phải mạng, chịu trách nhiệm cho việc giao nhận đáng tin cậy. Năm 1974, bài báo TCP của Cerf và Kahn cảm ơn ông ấy theo tên. Năm 2004, Cerf và Kahn giành Giải Turing. Tên của Pouzin không có trên đó.",
+      "coda": "The Economist sau đó gọi ông ấy là người thứ năm của internet."
+    },
+    "ethernet-1973-memo": {
+      "tag": "Origin",
+      "title": "Memo Ether",
+      "body": "Ngày 22 tháng 5 năm 1973, Robert Metcalfe viết một memo Xerox PARC có tiêu đề \"Ether Acquisition,\" với một sơ đồ vẽ tay về một cáp chia sẻ kết nối các máy Alto. Công nghệ thường được tính từ bài báo tạp chí năm 1976. Bản phác thảo thực tế cũ hơn ba năm, và vẽ tay.",
+      "coda": "Đến khi bài báo được công bố, Ethernet đã chạy bên trong PARC trong ba năm."
+    },
+    "vint-cerf-envelope-sketch": {
+      "tag": "Anecdote",
+      "title": "Mặt Lưng Của Một Phong Bì",
+      "body": "Truyền thuyết sáng lập internet nói rằng Cerf phác thảo kiến trúc gateway trên một khăn ăn. Ông ấy đã đính chính: 'Thực ra không phải khăn ăn, mà là mặt lưng của một phong bì.' Năm 1973, chờ đợi trong sảnh khách sạn, ông ấy phác thảo thứ sau này trở thành thiết kế gateway của TCP/IP.",
+      "coda": "Năm sau, bản phác thảo trở thành một bài báo trong IEEE Transactions on Communications."
+    },
+    "gchq-nonsecret-encryption": {
+      "tag": "Cryptography",
+      "title": "The Unpublished Key",
+      "body": "Tháng 9 năm 1973, Clifford Cocks 22 tuổi, vừa đến GCHQ, đã giải ra một phương pháp mã hóa không dùng khóa chung trong nửa giờ. Ba năm sau, Diffie, Hellman và Merkle công bố cùng ý tưởng tại Mỹ và được ghi nhận là người phát minh. Hồ sơ GCHQ vẫn bị phân loại cho đến năm 1997.",
+      "coda": "James Ellis qua đời năm 1997, vài tháng sau khi hồ sơ được giải mật và tên ông được ghi vào hồ sơ."
+    },
+    "kodak-digital-camera-1975": {
+      "tag": "Shelved",
+      "title": "Kodak's Buried Camera",
+      "body": "Năm 1975, kỹ sư Steven Sasson 24 tuổi chế tạo chiếc máy ảnh kỹ thuật số đầu tiên: nặng 8 pound, chụp mỗi tấm mất 23 giây. Ban lãnh đạo lập luận rằng không ai muốn xem ảnh trên tivi khi bản in rẻ và đã hoạt động suốt một thế kỷ. Họ cấp bằng sáng chế cho máy ảnh và cất nó đi.",
+      "coda": "Kodak nộp đơn xin bảo vệ phá sản năm 2012."
+    },
+    "galls-law-origin": {
+      "tag": "Origin",
+      "title": "A Book About Bureaucracies",
+      "body": "Năm 1975, sau khi 30 nhà xuất bản từ chối, bác sĩ nhi khoa John Gall tự xuất bản Systemantics: một hệ thống phức tạp đang hoạt động luôn tiến hóa từ một hệ thống đơn giản đang hoạt động, và một hệ thống phức tạp xây dựng từ đầu không bao giờ hoạt động. Ông đang viết về bệnh viện và các cơ quan chính phủ.",
+      "coda": "Các kiến trúc sư phần mềm giữ lại câu đó và lặng lẽ bỏ qua các cơ quan hành chính mà nó được viết về."
+    },
+    "ken-olsen-home-computer-1977": {
+      "tag": "Misquote",
+      "title": "Olsen's Home Computer",
+      "body": "Năm 1977, người sáng lập DEC Ken Olsen nói rằng không có lý do gì để một cá nhân có máy tính trong nhà. Ông muốn nói một máy trung tâm điều khiển đèn, sưởi và giải trí cho một hộ gia đình, chính xác với thứ ông mô tả. Các bài báo chỉ giữ lại nửa đầu câu.",
+      "coda": "Olsen bản thân ông có máy tính ở nhà vào thời điểm đó."
+    },
+    "kernighans-debugging-law": {
+      "tag": "Maxim",
+      "title": "Twice as Hard as Writing It",
+      "body": "Trong Elements of Programming Style năm 1978, Kernighan và Plauger viết rằng gỡ lỗi khó gấp đôi việc viết chương trình, nên viết nó khéo léo nhất có thể khiến bạn, theo định nghĩa, không đủ thông minh để gỡ lỗi nó. Một quy tắc phong cách được phát biểu như một giới hạn về việc gặp lại chính công việc của mình hai lần.",
+      "coda": "Đối thủ không bao giờ là người khác, đó là bạn vài tuần sau."
+    },
+    "xerox-parc-1979-visit": {
+      "tag": "Origin",
+      "title": "Giao dịch của chính Xerox",
+      "body": "Tháng 12 năm 1979: Apple tham quan Xerox PARC sau khi Xerox đồng ý mua 100.000 cổ phiếu Apple tiền IPO với giá 10 đô la mỗi cổ phiếu để có quyền truy cập. Jobs đã nhìn thấy giao diện đồ họa của Alto và gọi đó là thứ hay nhất ông từng thấy. Câu chuyện phổ biến là ăn cắp; hồ sơ ghi lại là một giao dịch Xerox đã đàm phán.",
+      "coda": "Xerox đã nhận được cổ phiếu của mình. Alto chưa bao giờ được bán như một sản phẩm thương mại."
+    },
+    "visicalc-1979-no-patent": {
+      "tag": "Nguồn gốc",
+      "title": "Bằng sáng chế họ đã bỏ qua",
+      "body": "Trước khi VisiCalc ra mắt năm 1979, Dan Bricklin đã tham khảo ý kiến một luật sư sở hữu trí tuệ, người này đánh giá xác suất thành công khoảng một trong mười theo quy tắc của thời đại. Họ đã nộp đăng ký bản quyền và nhãn hiệu thay vì bằng sáng chế. Năm 1983, Lotus 1-2-3 phát hành một giao diện tương thích có thể đọc các tệp của chính VisiCalc.",
+      "coda": "Bảng tính tồn tại như một danh mục. Công ty xây dựng nó thì không."
+    },
+    "ibm-microsoft-dos-1980": {
+      "tag": "Điều khoản",
+      "title": "IBM để lại một cánh cửa mở",
+      "body": "IBM ký hợp đồng với Microsoft về hệ điều hành của PC vào ngày 6 tháng 11 năm 1980. Nằm sâu trong một vụ kiện chống độc quyền kéo dài hơn một thập kỷ, IBM chọn không kiểm soát các nhà cung cấp của mình và để Microsoft bán lại DOS cho bất kỳ ai khác. Như một biện pháp phòng ngừa chống lại một vụ kiện khác, điều này có ý nghĩa vào thời điểm đó.",
+      "coda": "Các nhà sản xuất máy clone đã theo sau trong vòng vài năm, và IBM chưa bao giờ lấy lại quyền kiểm soát nền tảng."
+    },
+    "postel-law-robustness-reversal": {
+      "tag": "Quản trị",
+      "title": "Nguyên tắc Robustness, đảo ngược",
+      "body": "RFC 761 (1980) khuyến khích các nhà triển khai nên rộng rãi trong những gì họ chấp nhận, thận trọng trong những gì họ gửi đi. Năm 2023, ban kiến trúc của chính IETF đã đảo ngược hướng dẫn đó trong RFC 9413: sự khoan dung để lỗi hóa cứng thành các tiêu chuẩn thực tế, để lại các hệ thống kém bền vững hơn, không phải bền vững hơn.",
+      "coda": "Tiêu chuẩn bảo internet nên khoan dung đã bị chính những người quản lý nó thu hồi."
+    },
+    "end-to-end-argument": {
+      "tag": "Giấy tờ",
+      "title": "Một lập luận cho mạng ngu",
+      "body": "Năm 1981, Saltzer, Reed và Clark lập luận rằng việc kiểm tra lỗi một tệp được chuyển chỉ có thể được thực hiện đúng tại hai điểm cuối; mạng có thể giúp đỡ nhưng không bao giờ thay thế hoàn toàn. Một bài báo về vị trí đặt checksum đã trở thành trường hợp sáng lập cho việc giữ mạng đơn giản.",
+      "coda": "Một ghi chú về vị trí kiểm tra lỗi đã phát triển thành lập luận cho tính trung lập mạng."
+    },
+    "excel-1900-leap-year": {
+      "tag": "Di sản",
+      "title": "Năm nhuận không tồn tại",
+      "body": "Lotus 1-2-3 coi 1900 là năm nhuận, một lối tắt vô hại. Microsoft sao chép ngày sai đó để duy trì tương thích. Lotus đã biến mất; ngày nhuận giả vẫn còn, giờ được ghi vào đặc tả Office Open XML.",
+      "coda": "Một thủ thuật tương thích cho đối thủ đã ngừng sản xuất giờ là tiêu chuẩn được ghi thành văn."
+    },
+    "avatar-before-snow-crash": {
+      "tag": "Nguồn gốc từ vựng",
+      "title": "Avatar trước cuốn tiểu thuyết",
+      "body": "Tiểu thuyết Snow Crash năm 1992 của Neal Stephenson thường được ghi nhận là nguồn của nghĩa trực tuyến của \"avatar.\" Nhưng Habitat của Lucasfilm, chạy trên Commodore 64 từ năm 1985, đã viết: \"players are represented by animated figures that we call Avatars,\" từ tiếng Phạn chỉ sự hóa thân.",
+      "coda": "Thuật ngữ này đã hoạt động trên dịch vụ thương mại bảy năm trước cuốn sách."
+    },
+    "radia-perlman-algorhyme": {
+      "tag": "Mẩu chuyện",
+      "title": "Algorhyme",
+      "body": "Năm 1985, quản lý của Perlman tại DEC giao bài toán cầu nối không vòng lặp vào thứ Sáu, rồi biến mất một tuần. Cô hoàn thành thuật toán cây bao trùm vào thứ Ba — và dành thời gian còn lại viết Algorhyme, một bài thơ trở thành tóm tắt của bài báo.",
+      "coda": "Bài thơ mất nhiều thời gian viết hơn thuật toán."
+    },
+    "brooks-no-silver-bullet": {
+      "tag": "Bản luận",
+      "title": "Không có viên đạn bạc",
+      "body": "Tại hội nghị IFIP năm 1986, Fred Brooks chia độ khó phần mềm thành độ phức tạp cốt lõi và ngẫu nhiên. Ông nói độ khó ngẫu nhiên đã giảm mạnh, nhưng không có kỹ thuật đơn lẻ nào mang lại tăng năng suất gấp mười lần trong một thập kỷ.",
+      "coda": "Bốn thập kỷ sau, mỗi mô hình mới vẫn được bán như viên đạn ông nói không tồn tại."
+    },
+    "tz-olson-database": {
+      "tag": "Đặt tên",
+      "title": "Cơ sở dữ liệu Olson",
+      "body": "Hầu hết thiết bị giải quyết múi giờ dựa trên một bộ tập tin do tình nguyện viên vận hành, gọi không chính thức là cơ sở dữ liệu Olson theo tên người sáng lập Arthur David Olson. Hệ thống đặt tên được ghi công cho Paul Eggert, người thực sự biên tập cơ sở dữ liệu từ năm 2005.",
+      "coda": "Người được đặt tên và người duy trì nó từ đó là hai người khác nhau."
+    },
+    "china-1987-first-email": {
+      "tag": "Hồ sơ",
+      "title": "Vượt qua bức tường",
+      "body": "Các bản kể lại ghi công Qian Tianbai một mình với email đầu tiên của Trung Quốc, 'Across the Great Wall we can reach every corner of the world.' Tháng đó Qian đang học ở Mỹ; email được Li Chengjiong và Werner Zorn ở Karlsruhe đánh máy, và rời Trung Quốc sáu ngày sau, vào ngày 20 tháng 9.",
+      "coda": "Các bài cáo phó của ông vẫn liệt ông là người gửi."
+    },
+    "barbara-liskov-substitution-property": {
+      "tag": "Nguyên lý",
+      "title": "Định luật bà chưa bao giờ đặt tên",
+      "body": "Trong bài phát biểu chính tại OOPSLA năm 1987, Barbara Liskov đề xuất rằng nếu thay thế một đối tượng loại S bằng loại T mà không làm thay đổi hành vi của bất kỳ chương trình nào, thì S là một kiểu con của T. Bà gọi đó là một thuộc tính thay thế. Nhiều năm sau, Robert Martin đưa nó vào SOLID và đặt tên theo bà.",
+      "coda": "Từ 'nguyên lý' là sự bổ sung của người khác."
+    },
+    "go-corporation-pen-computing": {
+      "tag": "Máy tính bút",
+      "title": "Máy tính bảng không ai mua",
+      "body": "Năm 1987 Jerry Kaplan thành lập GO Corporation để xây dựng hệ điều hành PenPoint dùng bút, huy động 75 triệu đô la. AT&T mua lại GO vào tháng 1 năm 1994, hủy dòng chip hỗ trợ hai tuần sau, và GO đóng cửa tháng 7 năm đó. Kaplan sau đó nói công ty \"không có doanh số có ý nghĩa.\"",
+      "coda": "Năm 2010 Apple phát hành iPad, một máy tính bảng đa chạm điện dung."
+    },
+    "iso8601-unify-then-fork": {
+      "tag": "Tiêu chuẩn",
+      "title": "Người thay thế hẹp hơn của ISO 8601",
+      "body": "ISO 8601 được xuất bản lần đầu năm 1988, thống nhất năm tiêu chuẩn ISO về ngày và giờ trước đó, mâu thuẫn nhau, thành một. Nhưng định dạng mà hầu hết phần mềm internet xác thực là RFC 3339 (1997), một hồ sơ hẹp hơn mà, sau khi ISO 8601 được sửa đổi sau này, thậm chí không phải là tập con nghiêm ngặt của nó.",
+      "coda": "Tiêu chuẩn mọi người trích dẫn và phương ngữ mà mã của mọi người kiểm tra không phải là cùng một tài liệu."
+    },
+    "python-christmas-project": {
+      "tag": "Kịch bản",
+      "title": "Một sở thích Giáng sinh",
+      "body": "Trong kỳ nghỉ Giáng sinh năm 1989, với văn phòng đóng cửa trong tuần, một nhà nghiên cứu ở Amsterdam tìm kiếm một dự án lập trình sở thích. Ông bắt đầu viết một trình thông dịch cho một ngôn ngữ kịch bản mới và đặt tên theo một nhóm hài kịch, không phải con rắn.",
+      "coda": "Tháng 7 năm 2026 nó xếp hạng nhất trên chỉ số TIOBE về độ phổ biến của ngôn ngữ lập trình."
+    },
+    "worse-is-better": {
+      "tag": "Tranh luận",
+      "title": "Worse Is Better",
+      "body": "Năm 1989 Richard Gabriel đặt ra thuật ngữ 'worse is better': một bản thực thi đơn giản, đúng một nửa tồn tại tốt hơn một bản hoàn chỉnh, chính xác, đó là lý do ông cho rằng C và Unix vượt Lisp. Năm 1991 ông công bố một bài bác dưới bút danh Nickieben Bourbaki, giả mạo một người bạn cũ.",
+      "coda": "Nhiều thập kỷ sau ông vẫn nói không thể quyết định liệu lập luận của chính mình có đúng hay không."
+    },
+    "rfc1149-avian-carriers-test": {
+      "tag": "Sự cố",
+      "title": "Giao thức ai đó thực sự bay",
+      "body": "David Waitzman công bố RFC 1149 vào Ngày Cá tháng Tư, 1990: một đặc tả để vận chuyển datagram IP bằng bồ câu. Ngày 28 tháng 4 năm 2001, Nhóm Người dùng Linux Bergen thực sự xây dựng nó, phóng chín gói ping qua khoảng 5 km. Bốn gói quay lại — tỷ lệ mất 55%, lượt đi về chạy từ 53 đến 106 phút.",
+      "coda": "RFC đùa có một con số mất gói thực tế được ghi nhận: 55 phần trăm."
+    },
+    "att-1990-break-statement": {
+      "tag": "Sự cố",
+      "title": "Câu lệnh Break đặt sai chỗ",
+      "body": "Một thủ tục khôi phục trên switch 4ESS ở New York giữ một câu lệnh break lồng một cấp nông hơn, một lỗi kiểm thử chưa bao giờ kích hoạt. Tín hiệu \"ready\" của thủ tục khởi động lại sau đó bị các switch lân cận đọc sai là lỗi, và báo động giả lan truyền qua mạng trong chín giờ.",
+      "coda": "AT&T sau đó ước tính doanh thu mất đi là sáu mươi triệu đô la."
+    },
+    "aspec-vs-musicam": {
+      "tag": "Âm thanh",
+      "title": "Thua kẻ đơn giản hơn",
+      "body": "Năm 1991, MPEG thử nghiệm hai codec âm thanh đối thủ. ASPEC, do Fraunhofer, AT&T và CNET của Pháp xây dựng, thắng các thử nghiệm chất lượng nhưng bị coi là quá phức tạp. MUSICAM, từ Matsushita và Philips, thắng về sự đơn giản. MP3 hoàn thiện cuối cùng vẫn gộp thiết kế bộ lọc của ASPEC trở lại.",
+      "coda": "Định dạng mọi người gọi là MP3 mang kỹ thuật của đề xuất thua bên trong tên của đề xuất thắng."
+    },
+    "linux-minix-post": {
+      "tag": "Kernel",
+      "title": "Một bài đăng lên comp.os.minix",
+      "body": "Ngày 25 tháng 8 năm 1991, một sinh viên đại học Helsinki đăng lên nhóm tin comp.os.minix rằng anh ấy đang viết một hệ điều hành miễn phí, gọi nó là \"chỉ là sở thích, sẽ không lớn và chuyên nghiệp như gnu,\" và hỏi mọi người muốn những tính năng gì.",
+      "coda": "Kể từ tháng 11 năm 2017, tất cả 500 siêu máy tính nhanh nhất thế giới đều chạy một hệ điều hành xây dựng trên nó."
+    },
+    "web-vs-gopher-1991": {
+      "tag": "Web",
+      "title": "Beat Miễn Phí",
+      "body": "Năm 1991, Tim Berners-Lee phát hành World Wide Web từ CERN. Cùng năm đó, Đại học Minnesota phát hành Gopher, trong một thời gian là hệ thống phổ biến hơn. Tháng 2 năm 1993, Minnesota thông báo phí cấp phép cho máy chủ Gopher. Tháng 4 năm đó, CERN miễn phí giao thức web.",
+      "coda": "Gopher có lượng người dùng lớn hơn trước khi thông báo phí, và không bao giờ có lại sau đó."
+    },
+    "rough-consensus-running-code": {
+      "tag": "Quản trị",
+      "title": "Đồng Ý Khá Khá, Mã Chạy Được",
+      "body": "Tại hội nghị IETF tháng 7 năm 1992, Dave Clark của MIT đưa ra một slide: 'Chúng tôi bác bỏ vua chúa, tổng thống và bỏ phiếu. Chúng tôi tin vào đồng ý khá khá và mã chạy được.' Cụm từ này giờ đây là nền tảng của truyền thuyết quản trị internet. Nó bắt đầu như một lời châm chọc vào quy trình bỏ phiếu ủy ban chính thức của OSI.",
+      "coda": "Slide đùa về quy tắc bỏ phiếu của OSI trở thành điều lệ sáng lập của quản trị internet."
+    },
+    "han-unification-japanese-delegate": {
+      "tag": "Tiêu chuẩn",
+      "title": "Tác Giả Không Ngờ Của Han Unification",
+      "body": "Năm 1992, Nhóm Nghiên Cứu Chung CJK hợp nhất hàng chục nghìn ký tự Trung Quốc, Nhật Bản và Hàn Quốc vào các điểm mã Unicode chung. Các câu chuyện phổ biến coi Nhật Bản là bên phản đối. Lịch sử của chính Unicode ghi công các quy tắc xác minh cho đại biểu Nhật Bản Miyazawa Akira.",
+      "coda": "Đại biểu bị coi là nạn nhân đã giúp viết ra các quy tắc mà họ được nhớ đến vì đã phản đối."
+    },
+    "china-first-internet-line": {
+      "tag": "Hồ sơ",
+      "title": "Đường Dây Sớm Hơn Một Năm",
+      "body": "Trung Quốc đánh dấu ngày 20 tháng 4 năm 1994 là ngày tham gia internet toàn cầu — một đường dây 64K, truy cập đầy đủ chức năng. Mười ba tháng trước đó, các nhà vật lý tại IHEP đã thuê một đường dây đến SLAC của Stanford, trao đổi email với hàng chục tổ chức. Nó chỉ không phải là loại đường dây ai cũng tính đến.",
+      "coda": "Hai đường dây tồn tại; chỉ một được kỷ niệm."
+    },
+    "wiki-the-airport-shuttle": {
+      "tag": "Nguồn gốc từ",
+      "title": "Đặt Tên Theo Xe Đưa Đón",
+      "body": "'Wiki' trong tiếng Hawaii có nghĩa là 'nhanh.' Năm 1995, Ward Cunningham cần một tên cho hệ thống web có thể chỉnh sửa đầu tiên anh ấy xây dựng và không chọn bất kỳ thuật ngữ kỹ thuật nào mà là ký ức về Wiki Wiki Shuttle, chiếc xe buýt miễn phí giữa các ga tại sân bay Honolulu.",
+      "coda": "Nơi đầu tiên của từ được sơn bên hông một chiếc xe buýt sân bay."
+    },
+    "robots-exclusion-rfc9309": {
+      "tag": "Tiêu chuẩn",
+      "title": "robots.txt: 28 năm chưa được phê chuẩn",
+      "body": "Martijn Koster đề xuất robots.txt vào năm 1994; các crawler tuân theo nó một cách tự nguyện, không có tiêu chuẩn chính thức và không có gì để thực thi. Google đề xuất chuẩn hóa vào năm 2019, và IETF cuối cùng đã công bố RFC 9309 vào tháng 9 năm 2022, khép lại khoảng trống 28 năm.",
+      "coda": "Thỏa thuận hiệp sĩ được tuân thủ nhiều nhất trên web mất hai mươi tám năm để trở thành một tiêu chuẩn thực sự."
+    },
+    "pentium-fdiv-writeoff": {
+      "tag": "Sự cố",
+      "title": "Các mục bảng bị thiếu",
+      "body": "Nhà toán học Thomas Nicely nhận thấy chiếc Pentium mới của mình trả về kết quả hơi sai khi cộng các nghịch đảo của số nguyên tố, và truy vết lỗi đến chính con chip. Intel ban đầu chỉ thay thế cho khách hàng nào phàn nàn, và chỉ đảo ngược thành thu hồi toàn bộ dưới áp lực công chúng.",
+      "coda": "Intel ghi nhận khoản chi phí trước thuế 475 triệu USD cho đợt thu hồi."
+    },
+    "general-magic-private-network": {
+      "tag": "Mạng",
+      "title": "Dây riêng của General Magic",
+      "body": "Năm 1990, các kỹ sư cũ của Apple là Bill Atkinson, Andy Hertzfeld và Marc Porat thành lập General Magic. Magic Link của Sony ra mắt năm 1994 với giá 800 USD, gửi email và chạy ứng dụng. Ban lãnh đạo xây dựng mạng AT&T độc quyền thay vì sử dụng internet, gọi web là \"passive.\"",
+      "coda": "Nhân viên Tony Fadell sau đó dẫn dắt phát triển phần cứng cho iPod và iPhone tại Apple."
+    },
+    "ibm-simon-first-touchscreen": {
+      "tag": "Màn hình cảm ứng",
+      "title": "Máy fax của Simon",
+      "body": "Ngày 16 tháng 8 năm 1994, IBM và BellSouth ra mắt Simon Personal Communicator: một màn hình cảm ứng 4,5 inch gửi email và fax, giá 899 USD. Pin chạy khoảng một giờ. Nó bị ngừng sản xuất sáu tháng sau, đã bán khoảng 50.000 chiếc.",
+      "coda": "Năm 2007 Apple ra mắt iPhone, một điện thoại màn hình cảm ứng dung lượng không có bàn phím vật lý."
+    },
+    "cors-same-origin-orphaned": {
+      "tag": "Tiêu chuẩn",
+      "title": "CORS: Một khuyến nghị đã nghỉ hưu",
+      "body": "Netscape gắn chính sách same-origin vào Navigator năm 1995, cùng với JavaScript, không có quy trình tiêu chuẩn nào cả. CORS, vốn để nới lỏng chính sách đó một cách chính thức, chỉ trở thành Khuyến nghị W3C vào năm 2014 — và đến năm 2020 W3C đã nghỉ hưu nó, giao bản đặc tả cho tài liệu Fetch của WHATWG.",
+      "coda": "Cơ quan tiêu chuẩn đã nghỉ hưu khuyến nghị bảo mật của chính mình sáu năm sau khi công bố."
+    },
+    "php-resume-counter": {
+      "tag": "Web",
+      "title": "Bộ đếm lượt xem sơ yếu lý lịch",
+      "body": "Năm 1994, một lập trình viên viết một vài chương trình CGI nhỏ bằng C, chỉ vì muốn biết có bao nhiêu người đang xem sơ yếu lý lịch trực tuyến của anh ta. Anh ta gọi bộ công cụ này là \"Personal Home Page Tools\" và công bố mã nguồn vào tháng 6 năm 1995.",
+      "coda": "Ba thập kỷ sau, hơn 70% các trang web có ngôn ngữ phía máy chủ được biết đến vẫn chạy hậu duệ của nó."
+    },
+    "craigslist-email-list": {
+      "tag": "Tin rao vặt",
+      "title": "Danh sách thư về các sự kiện",
+      "body": "Năm 1995, một kỹ sư phần mềm ở San Francisco bắt đầu tổng hợp các cuộc tụ tập và sự kiện địa phương mà anh ta biết thành một email và gửi cho một vài người bạn, chủ yếu để mọi người có thể hiểu nhau hơn một chút.",
+      "coda": "Danh sách này hiện phủ sóng 570 thành phố ở 70 quốc gia và thu hút hơn 140 triệu lượt truy cập mỗi tháng."
+    },
+    "wirths-law-misattributed": {
+      "tag": "Sửa lỗi",
+      "title": "Định luật ông đã ghi công cho người khác",
+      "body": "Năm 1995, Niklaus Wirth xuất bản 'A Plea for Lean Software', viết rằng phần mềm đang trở nên chậm hơn nhanh hơn phần cứng trở nên nhanh hơn. Dòng sau này được gọi là Định luật Wirth, theo chính chú thích của ông, là một trích dẫn của đồng nghiệp Martin Reiser.",
+      "coda": "Người được đặt tên đã trích dẫn nguồn; hậu thế chỉ giữ lại người được đặt tên."
+    },
+    "general-magic-weekend-site": {
+      "tag": "Dự án phụ",
+      "title": "Trang web ông không coi trọng",
+      "body": "Giữa thập niên 1990, tại một startup ở Thung lũng Silicon được kỳ vọng sẽ cách mạng hóa tính toán cầm tay, một lập trình viên đã dành thời gian rảnh để viết một trang web nhỏ lẻ cho việc bán đồ cũ. Nó được đưa lên mạng vào một cuối tuần. Anh ta không coi nó nghiêm túc.",
+      "coda": "Startup đó là General Magic. Trang web sau này được đổi tên thành eBay."
+    },
+    "gettickcount-776-day-bug": {
+      "tag": "Tràn số",
+      "title": "Nợ 776 ngày",
+      "body": "GetTickCount của Windows 95 quay về 0 mỗi 49,7 ngày, hành vi được ghi tài liệu, chưa bao giờ được coi là lỗi. Nhưng trên Windows 8 đến Server 2019, hàm tương tự có thể quay sớm, gần 776 ngày, một khiếm khuyết thực sự. Microsoft chỉ sửa nó trong Windows 11, phiên bản 24H2.",
+      "coda": "Lời sửa được đưa ra ba thập kỷ sau khi bộ đếm mà nó vá lần đầu ra mắt."
+    },
+    "bluetooth-the-placeholder": {
+      "tag": "Nguồn gốc từ",
+      "title": "Tên mã bị kẹt lại",
+      "body": "Năm 1996, Jim Kardach của Intel đề xuất \"Bluetooth\" — theo tên vị vua Viking Harald Bluetooth, người đã thống nhất Scandinavia — như một tên mã tạm thời trong các cuộc đàm phán giữa Ericsson và Nokia. Cái tên thay thế dự kiến, RadioWire, không thể vượt qua kiểm tra nhãn hiệu trước khi ra mắt.",
+      "coda": "Không có tên thay thế nào từng được đưa ra thị trường."
+    },
+    "chinaren-detour": {
+      "tag": "Thế giới nhỏ",
+      "title": "Lập trình viên ngoài danh sách",
+      "body": "Năm 1996, một sinh viên Trung Quốc giành huy chương vàng tại Olympic Tin học và được nhận thẳng vào chương trình khoa học máy tính của Đại học Thanh Hoa. Khi còn là sinh viên, anh làm thêm xây dựng hệ thống nội dung cho trang web của một cựu sinh viên. Sohu mua lại hệ thống này vào năm sau; anh ở lại và tiếp tục làm việc tại đó.",
+      "coda": "Sinh viên đó là Vương Tiểu Xuyên. Năm 2004, bên trong Sohu, anh xây dựng Sogou."
+    },
+    "google-a-typo": {
+      "tag": "Nguồn gốc từ",
+      "title": "Một Lỗi Gõ Tên Miền",
+      "body": "Trong một buổi头脑风暴 tháng 9 năm 1997, Sean Anderson đề xuất \"googolplex\"; Larry Page rút ngắn thành \"googol.\" Kiểm tra sổ đăng ký tên miền tại chỗ, Anderson gõ nhầm \"google\" và thấy tên miền chưa được đăng ký. Page đăng ký google.com ngay ngày hôm đó.",
+      "coda": "Hồ sơ đăng ký vẫn mang lỗi chính tả, đề ngày 15 tháng 9 năm 1997."
+    },
+    "rfc2119-must-should": {
+      "tag": "Tiêu chuẩn",
+      "title": "MUST so với must: Khoảng cách hai mươi năm",
+      "body": "RFC 2119 (tháng 3 năm 1997) định nghĩa MUST, SHOULD, MAY và các dạng phủ định của chúng là các mức yêu cầu ràng buộc cho tài liệu IETF. Nhưng nó chỉ nói các từ này 'thường được viết hoa' — must và should viết thường chưa bao giờ bị loại trừ. RFC 8174 đã vá lỗ hổng này vào năm 2017: chỉ viết hoa toàn bộ mới có hiệu lực.",
+      "coda": "Trong hai mươi năm, một từ must viết thường mang trọng lượng pháp lý ngang với một cái nhún vai."
+    },
+    "netease-license-mail-1997": {
+      "tag": "Cấp phép",
+      "title": "Bán giấy phép trước",
+      "body": "Ngày 11 tháng 6 năm 1997, William Ding đăng ký thành lập NetEase tại Quảng Châu. Mảng kinh doanh đầu tiên của công ty không phải là webmail miễn phí. Công ty cấp phép một phần mềm máy chủ email tự phát triển cho các trang web khác với khoản phí.",
+      "coda": "Mãi đến năm 1998 NetEase mới ra mắt dịch vụ email miễn phí riêng dưới tên miền 163.com."
+    },
+    "lixiang-graphics-card-home": {
+      "tag": "Trang đánh giá",
+      "title": "Trang chủ Card Đồ họa",
+      "body": "Năm 1998, một học sinh trung học ở Hà Bắc đã lập một trang web cá nhân tên là Card Đồ họa trong thời gian rảnh, đăng các bài đánh giá về card đồ họa máy tính. Hai năm sau, anh đổi tên thành PCPop và tiếp tục cập nhật trong suốt quãng thời gian còn lại của việc học.",
+      "coda": "Năm 2005, cùng người đó đã thành lập Autohome."
+    },
+    "china-oicq-to-qq": {
+      "tag": "Đổi thương hiệu",
+      "title": "Từ OICQ đến QQ",
+      "body": "Tencent ra mắt OICQ vào tháng 2 năm 1999 — chữ O đại diện cho 'Open', một cái gật đầu với ICQ. Tháng 10 năm đó, AOL, chủ sở hữu của ICQ, đã gửi thư yêu cầu ngừng và chấm dứt vì vi phạm nhãn hiệu. Tháng 11 năm 2000, Mã Hóa Đằng đổi tên thành QQ, chọn vì chữ cái này đọc là 'dễ thương' trong tiếng Trung.",
+      "coda": "Open là từ đầu tiên biến mất khi luật sư của AOL đến."
+    },
+    "excite-google-1999": {
+      "tag": "Đánh giá sai",
+      "title": "Excite Từ chối Google",
+      "body": "Năm 1999, Google đề nghị bán mình cho Excite với giá 750.000 đô la cộng khoảng 1% cổ phần. CEO George Bell đánh giá khoảng cách tìm kiếm quá nhỏ để biện minh cho việc loại bỏ công nghệ của Excite. Lý do đó đứng vững. Google có giá trị hơn một tỷ trong vòng một năm.",
+      "coda": "Bell sau đó đã nói rằng anh ấy sẽ đưa ra cùng một quyết định đó một lần nữa."
+    },
+    "mars-climate-orbiter-units": {
+      "tag": "Sự cố",
+      "title": "Pound-Force, Newton",
+      "body": "Mars Climate Orbiter mất liên lạc trong quá trình chèn quỹ đạo. Hội đồng xác định rằng phần mềm động cơ của nhà thầu xuất xung lực bằng pound-force giây trong khi phần mềm điều hướng mong đợi newton-giây, sai lệch một hệ số 4.45. Tàu vũ trụ được lái đến khoảng cách khoảng 57 km từ bề mặt.",
+      "coda": "Nhiệm vụ trị giá 327,6 triệu đô la không bao giờ truyền tin trở lại."
+    },
+    "paypal-palm-beaming": {
+      "tag": "Chuyển hướng",
+      "title": "Tia Không Bao Giờ Đến",
+      "body": "Năm 1999 Confinity ra mắt chuyển tiền hồng ngoại giữa các Palm Pilot, trình diễn trực tiếp tại một sự kiện tài trợ. Vài tuần sau khi ra mắt, nó có khoảng 13.000 người dùng, một con số hầu như không thay đổi trong năm sau đó. Điều thực sự phát triển là thanh toán qua email, được xây dựng chỉ như một tùy chọn dự phòng.",
+      "coda": "Công ty đổi tên thành PayPal và lặng lẽ bỏ rơi tia hồng ngoại."
+    },
+    "cai-500-yuan": {
+      "tag": "Thế giới nhỏ",
+      "title": "Lương 500 Nhân Tệ",
+      "body": "Năm 1999, một giám đốc đầu tư Hồng Kông đến Hàng Châu để đánh giá một trang web nhỏ như một khoản đầu tư tiềm năng. Anh ấy tìm thấy hơn một tá người đang lập trình trong một căn hộ chật chội. Anh ấy không đầu tư — anh ấy từ bỏ mức lương 700.000 đô la và tham gia thay vào đó, với mức lương 500 nhân tệ mỗi tháng.",
+      "coda": "Tên anh ấy là Joe Tsai. Anh ấy sau này trở thành phó chủ tịch điều hành của Alibaba."
+    },
+    "gps-week-rollover": {
+      "tag": "Cơ chế",
+      "title": "Tuần GPS 1024",
+      "body": "GPS đếm tuần bằng 10 bit, một trường có giá trị tối đa là 1.023 và quay về 0 khoảng mỗi 19,7 năm. Lần quay số đầu tiên xảy ra vào tháng 8 năm 1999. Lần thứ hai rơi vào ngày 6 tháng 4 năm 2019, làm hỏng các bộ thu được xây dựng như thể lần đầu tiên là một sự cố duy nhất.",
+      "coda": "Sự tràn số tương tự nằm trong lịch trình và sẽ tái diễn vào năm 2038."
+    },
+    "foxmail-resold": {
+      "tag": "Thế giới nhỏ",
+      "title": "Bán Cùng Phần Mềm",
+      "body": "Năm 1994, một lập trình viên ở Quảng Châu viết một ứng dụng email miễn phí trong thời gian rảnh. Năm 2000, khi bong bóng dot-com vỡ, anh ấy bán nó cho một công ty và ở lại làm giám đốc công nghệ. Năm năm sau, công ty đó đóng cửa và bán phần mềm — và cả anh ấy — cho Tencent.",
+      "coda": "Người lập trình là Zhang Xiaolong. Năm năm sau đó, bên trong Tencent, ông xây dựng WeChat."
+    },
+    "danger-duarte-android-reunion": {
+      "tag": "Hội ngộ",
+      "title": "Giám đốc Thiết kế, Startup Thất bại",
+      "body": "Năm 2000, một nhà thiết kế gia nhập startup thiết bị cầm tay do Andy Rubin sáng lập, phụ trách giao diện. Công ty bị bán cho Microsoft và đội ngũ tan rã. Nhà thiết kế tiếp tục chuyển đến hai công ty khác trong thập kỷ tiếp theo.",
+      "coda": "Nhà thiết kế là Matias Duarte. Mười năm sau, Rubin tuyển anh vào Android."
+    },
+    "slashdot-ipod-2001": {
+      "tag": "Bác bỏ",
+      "title": "Không Wireless, Ít Dung Lượng Hơn",
+      "body": "Khi Apple trình bày iPod thế hệ đầu tiên vào ngày 23 tháng 10 năm 2001, người sáng lập Slashdot Rob \"CmdrTaco\" Malda viết trong ghi chú biên tập: \"No wireless. Less space than a nomad. Lame.\" So với thông số kỹ thuật của các máy MP3 cạnh tranh thời bấy giờ, câu nói đó không sai về mặt sự thật.",
+      "coda": "Bình luận này hiện được trích dẫn thường xuyên như một phản ví dụ mà nó tạo ra."
+    },
+    "discuz-shenyang-dorm": {
+      "tag": "Diễn đàn",
+      "title": "CDB, một bản dựng trong ký túc xá",
+      "body": "Năm 2001, một sinh viên sống trong ký túc xá ở Thẩm Dương đã viết một phần mềm diễn đàn và đặt tên là Crossday Bulletin, làm việc trên nó song song với việc học. Tháng 10 năm sau, anh đổi tên nó thành Discuz.",
+      "coda": "Ngày 23 tháng 8, 2010, Tencent thâu tóm công ty mà anh đã xây dựng quanh nó."
+    },
+    "wikipedia-side-wiki": {
+      "tag": "Wiki",
+      "title": "Một dự án phụ bên cạnh Nupedia",
+      "body": "Ngày 10 tháng 1, 2001, người sáng lập một bách khoa toàn thư trực tuyến có bình duyệt đã cài đặt phần mềm wiki trên máy chủ riêng của dự án, chủ yếu để tình nguyện viên có thể thử soạn thảo các mục từ lỏng lẻo bên cạnh trong khi bách khoa toàn thư được bình duyệt tiến triển chậm chạp.",
+      "coda": "Đến tháng 7, 2026, riêng phiên bản tiếng Anh đã chứa hơn 7,2 triệu bài viết."
+    },
+    "bittorrent-mailing-list": {
+      "tag": "Giao thức",
+      "title": "Một ứng dụng P2P mới",
+      "body": "Ngày 2 tháng 7, 2001, một lập trình viên gửi thông điệp đến danh sách gửi thư Yahoo eGroups với tiêu đề \"BitTorrent -- a new P2P app,\" mô tả một giao thức phân phối tệp mà anh vừa hoàn thành thiết kế, một giao thức kéo các mảnh của một tệp từ nhiều nguồn cùng lúc.",
+      "coda": "Ba năm sau, nó chiếm một phần ba tổng lưu lượng internet, theo nghiên cứu của CacheLogic năm 2004."
+    },
+    "webvan-thirty-minute-window": {
+      "tag": "Hàng tạp hóa",
+      "title": "Khoảng Cửa 30 Phút",
+      "body": "Năm 1996, Louis Borders, đồng sáng lập hiệu sách Borders, thành lập Webvan, hứa hẹn giao hàng trong 30 phút từ các kho xây dựng từ đầu. Nó IPO vào tháng 11 năm 1999 với giá 375 triệu đô la ở mức định giá hơn 4,8 tỷ đô la, sau đó nộp đơn phá sản vào tháng 7 năm 2001, đã mất hơn 800 triệu đô la.",
+      "coda": "Một số giám đốc Webvan sau đó chuyển sang Amazon; Amazon Fresh và Instacart sau này lấp đầy cùng một đơn hàng."
+    },
+    "kozmo-free-hour-delivery": {
+      "tag": "Giao hàng",
+      "title": "Lời Hứa Giờ Miễn Phí",
+      "body": "Năm 1998, Joseph Park và Yong Kang thành lập Kozmo.com, hứa hẹn giao hàng miễn phí trong một giờ với các nhân viên giao hàng được điều động bằng máy nhắn tin. Nó huy động khoảng 250 triệu đô la nhưng kiếm được 3,5 triệu đô la so với khoản lỗ 26,3 triệu đô la trong năm 1999. Vào tháng 4 năm 2001, nhân viên biết về việc đóng cửa khi tìm thấy văn phòng đóng cửa.",
+      "coda": "DoorDash, thành lập năm 2013, điều động nhân viên giao hàng bằng GPS điện thoại thông minh và tính phí giao hàng."
+    },
+    "flooz-digital-currency": {
+      "tag": "Tiền tệ",
+      "title": "Tiền Không Có Kho",
+      "body": "Vào tháng 2 năm 1999, Robert Levitan, đồng sáng lập iVillage, đã ra mắt Flooz.com, một loại tiền kỹ thuật số người dùng có thể mua và tiêu tại các đối tác thương mại. Một băng nhóm tội phạm đã sử dụng thẻ bị đánh cắp để đúc 300.000 đô la tín dụng gian lận, và đến năm 2001, tỷ lệ gian lận đạt 19% tổng khối lượng. Công ty đã đóng cửa vào tháng 8 năm đó.",
+      "coda": "Vào tháng 1 năm 2009, Satoshi Nakamoto đã khai thác khối genesis của bitcoin."
+    },
+    "yahoo-google-2002": {
+      "tag": "Bỏ lỡ",
+      "title": "Yahoo Bỏ Qua Google",
+      "body": "Năm 2002, CEO Yahoo Terry Semel đã đề nghị 3 tỷ đô la cho Google; Page và Brin giữ mức 5 tỷ đô la. Semel đánh giá rằng vốn hóa thị trường của Yahoo, gần 5 tỷ đô la sau vụ sập, không thể hấp thụ khoản cược đó. Google đã niêm yết công khai hai năm sau với mức 23 tỷ đô la.",
+      "coda": "Yahoo đã bán bộ phận kinh doanh cốt lõi cho Verizon vào năm 2017 với giá 4,48 tỷ đô la."
+    },
+    "pplive-dorm-2002": {
+      "tag": "Phòng ký túc",
+      "title": "Tòa 26, Yunyuan",
+      "body": "Trong kỳ World Cup 2002, ký túc xá của Yao Xin tại Đại học Khoa học và Công nghệ Hoa Trung không có tivi, nên anh xem các trận đấu qua mạng lưới trường, mạng liên tục bị sập. Trong phòng ở tòa 26, anh bắt đầu tìm cách kết hợp truyền tải ngang hàng với video trực tuyến.",
+      "coda": "PPLive ra mắt năm 2005 và ở thời kỳ đỉnh điểm, ghi nhận hơn một trăm triệu người dùng."
+    },
+    "china-alipay-escrow": {
+      "tag": "Niềm tin",
+      "title": "Giải pháp ký quỹ",
+      "body": "Năm 2003, khi người mua và người bán trên Taobao không sẵn sàng tin tưởng nhau trước, bộ phận tài chính đã xây dựng một giải pháp ký quỹ: khoản thanh toán bị đóng băng cho đến khi hàng hóa được xác nhận. Giao dịch đầu tiên hoàn tất vào tháng 10 năm đó — một sinh viên ở Xi'an thanh toán cho một người bán ở Nhật Bản. Cái tên chơi chữ giữa 'pay' và 'guarantee.'",
+      "coda": "Cái chữ chơi chữ trở thành tên chính thức và vĩnh viễn của công ty."
+    },
+    "china-taobao-free-vs-ebay": {
+      "tag": "Cạnh tranh",
+      "title": "Ba năm miễn phí",
+      "body": "Năm 2003, Eachnet của eBay chiếm hơn 70 phần trăm thị trường C2C Trung Quốc, thu phí đăng bài và phí giao dịch. Taobao ra mắt vào tháng Năm năm đó với một trang web gần như trống rỗng; câu trả lời của Alibaba là ba năm đăng bài miễn phí. Đến năm 2006, Taobao chiếm 70 phần trăm và eBay rút khỏi C2C Trung Quốc.",
+      "coda": "Phía vẫn thu phí đăng bài hết vốn trước."
+    },
+    "dianping-zagat-notes": {
+      "tag": "Hướng dẫn đánh giá",
+      "title": "Sổ tay Zagat",
+      "body": "Năm 2002, Zhang Tao trở về Trung Quốc từ Mỹ mang theo một ý tưởng học được ở đó: Zagat Survey, một cẩm nang ẩm thực được xây dựng từ đánh giá của chính độc giả. Anh đăng ký tên miền zsurvey.com và bắt tay xây dựng phiên bản tiếng Trung tại Thượng Hải.",
+      "coda": "Dianping, trang web phát triển từ đó, chính thức ra mắt ngày 12 tháng 4 năm 2003."
+    },
+    "wordpress-b2-post": {
+      "tag": "Viết blog",
+      "title": "Bài toán phần mềm viết blog",
+      "body": "Ngày 24 tháng 1 năm 2003, một sinh viên đại học viết trên blog của mình rằng b2, phần mềm viết blog anh dùng hằng ngày, đã bị bỏ mặc nhiều tháng kể từ khi nhà phát triển chính biến mất. Anh nói muốn fork nó và chỉ xin một cái tên.",
+      "coda": "Công ty phát triển từ nhánh fork đó được định giá 7,5 tỷ đô la vào năm 2021."
+    },
+    "2003-blackout-race-condition": {
+      "tag": "Sự cố",
+      "title": "Chuông báo không kêu",
+      "body": "Tiến trình báo động tại phòng điều khiển Ohio bị kẹt âm thầm: một lỗi mã khiến hai tiến trình cùng lúc ghi vào cùng một cấu trúc dữ liệu, lặp vô hạn. Các kỹ thuật viên không bao giờ thấy cảnh báo quá tải và không kịp giảm tải. Sự cố dây chuyền khiến 55 triệu người mất điện.",
+      "coda": "Kỹ sư cần tám tuần để tái hiện điều kiện đua."
+    },
+    "aws-not-leftover-servers": {
+      "tag": "Sửa lỗi",
+      "title": "Không Phải Máy Chủ Dư",
+      "body": "Phiên bản phổ biến cho rằng AWS bắt đầu bằng việc bán lại công suất máy chủ nhàn rỗi mùa lễ của Amazon. Benjamin Black gọi điều đó là sai hoàn toàn: năm 2003 ông và Chris Pinkham viết một bản ghi nhớ đề xuất hạ tầng chuẩn hóa, tự động hóa, được xây dựng ngay từ đầu để bán ra bên ngoài dưới dạng dịch vụ.",
+      "coda": "S3 và EC2 ra mắt năm 2006, sau bản ghi nhớ đó."
+    },
+    "maps-intern-friendfeed": {
+      "tag": "Thực tập",
+      "title": "Thực tập sinh Đội Maps",
+      "body": "Năm 2003 một quản lý sản phẩm của Google thuê một thực tập sinh vào đội xây dựng tìm kiếm địa phương, dự án sau này phát triển thành Google Maps. Bốn năm sau thực tập sinh đó và một kỹ sư từng xây Gmail rời Google cùng nhau để lập công ty.",
+      "coda": "Thực tập sinh là Bret Taylor. Công ty ông rời để lập bị Facebook mua lại."
+    },
+    "friendster-forty-second-load": {
+      "tag": "Mở rộng quy mô",
+      "title": "Thời gian tải bốn mươi hai giây",
+      "body": "Friendster ra mắt năm 2002 và đạt hơn 100 triệu tài khoản đã đăng ký, nhưng máy chủ của nó bị quá tải khi tính toán bậc kết nối giữa những người bạn; một trang đơn lẻ có thể mất bốn mươi giây để tải. Email hỗ trợ cho thấy người dùng đe dọa chuyển sang nền tảng MySpace mới hơn.",
+      "coda": "Facebook ra mắt năm 2004 trên cùng ý đồ đồ thị xã hội và chịu được lưu lượng truy cập."
+    },
+    "shopify-snowdevil-software": {
+      "tag": "Chuyển hướng",
+      "title": "Phần mềm cửa hàng vượt qua cửa hàng",
+      "body": "Năm 2004, lập trình viên Tobias Lutke thấy phần mềm thương mại điện tử thời bấy giờ quá cồng kềnh, nên ông tự viết phần mềm riêng để bán đồ trượt tuyết trực tuyến dưới tên Snowdevil. Snowdevil vẫn là một cửa hàng nhỏ, nhưng các thương nhân khác bắt đầu xin cấp phép phần mềm đứng sau nó.",
+      "coda": "Shopify niêm yết trên Sở giao dịch chứng khoán New York năm 2015."
+    },
+    "twitter-odeo-podcast-pivot": {
+      "tag": "Chuyển hướng",
+      "title": "Dự án phụ của công ty podcast",
+      "body": "Ngày 28 tháng 6 năm 2005, Apple tích hợp đăng ký podcast vào iTunes; trong vòng hai ngày lượt đăng ký vượt một triệu, và toàn bộ hoạt động kinh doanh podcast của Odeo trở nên lỗi thời sau một đêm. Tháng Ba năm sau, một cuộc hackathon nội bộ tạo ra bản đề xuất cập nhật trạng thái qua SMS của Jack Dorsey: Twitter.",
+      "coda": "Odeo, công ty mà Twitter được xây dựng bên trong, đã bị bán lại vào năm 2007."
+    },
+    "youtube-tune-in-hook-up": {
+      "tag": "Truyền thuyết",
+      "title": "Tên miền được đăng ký vào Ngày Valentine",
+      "body": "youtube.com được đăng ký vào ngày 14 tháng 2 năm 2005, và các nhà sáng lập sau đó kể về một khái niệm trang hẹn hò được mô phỏng theo Hot or Not. Jawed Karim phủ nhận việc tham dự bữa tiệc tối mà câu chuyện dựa vào, và Steve Chen thừa nhận nó đọc như một câu chuyện tiếp thị.",
+      "coda": "Điều Karim trích dẫn thay vào đó là khó khăn trong việc tìm footage sóng thần trực tuyến."
+    },
+    "duan-buffett-lunch": {
+      "tag": "Thế giới nhỏ",
+      "title": "Bữa trưa Buffett",
+      "body": "Năm 2006, một nhà sản xuất điện tử Quảng Đông trúng đấu giá từ thiện thường niên để ăn trưa với Warren Buffett, trả 620.100 USD. Anh ta dẫn theo một người 26 tuổi vừa nghỉ việc ở một công ty Mỹ và chưa có kế hoạch rõ ràng.",
+      "coda": "Nhà sản xuất là Duan Yongping. Người trẻ là Colin Huang, người sau này sáng lập Pinduoduo."
+    },
+    "blackberry-iphone-2007": {
+      "tag": "Đọc sai",
+      "title": "BlackBerry thấy những sai sót",
+      "body": "Vào tháng 1 năm 2007, đồng CEO của BlackBerry Jim Balsillie và chủ tịch Mike Lazaridis đã xem buổi ra mắt iPhone. Danh sách sai sót của Lazaridis là chính xác: không có bàn phím vật lý, bảo mật yếu, pin kém, gõ trên kính. Mọi điểm đều có thật. Câu trả lời của Balsillie là, \"Không sao, chúng ta sẽ ổn thôi.\"",
+      "coda": "Thị phần của BlackBerry bị iPhone bào mòn trong những năm sau đó."
+    },
+    "dvorak-iphone-2007": {
+      "tag": "Dự đoán",
+      "title": "Dvorak nói hãy rút phích cắm",
+      "body": "Vào ngày 28 tháng 3 năm 2007, nhà báo John C. Dvorak viết rằng biên lợi nhuận điện thoại mỏng và Nokia cùng Motorola đã thống trị, vì vậy Apple nên giao thiết kế iPhone cho một số \"kẻ ngốc\" và rút lui. Với lịch sử của Apple trong thị trường đó, lý luận này không phải là vô lý.",
+      "coda": "Ông sau đó nói rằng khi thực sự cầm chiếc điện thoại, ông đã hối hận về nhận định của mình."
+    },
+    "auctomatic-taggar-yc": {
+      "tag": "Sáp nhập",
+      "title": "Người phải học lập trình",
+      "body": "Năm 2007, hai anh em thiếu niên người Ireland mang một công cụ thương mại điện tử tự chế vào Y Combinator và sáp nhập công ty của họ với một công ty do hai người tốt nghiệp Oxford điều hành. Cả hai người Oxford đều không biết lập trình. Một trong số họ được bảo phải học nhanh.",
+      "coda": "Người đó là Harj Taggar, sau này trở thành đối tác không phải người sáng lập đầu tiên của Y Combinator."
+    },
+    "justintv-backpack-cruise": {
+      "tag": "Cái ba lô",
+      "title": "Cái ba lô phát trực tiếp",
+      "body": "Tháng 3 năm 2007, một người đàn ông gắn webcam vào mũ bóng chày và bắt đầu phát trực tiếp cuộc sống của mình khắp San Francisco, hai mươi bốn giờ một ngày, mặc một bộ ba lô gắn laptop tự chế do một người bạn từng bỏ học MIT làm ra.",
+      "coda": "Người bạn làm ra nó là Kyle Vogt, sau này sáng lập Cruise, được GM mua lại với hơn 1 tỷ đô la."
+    },
+    "stackoverflow-blog-post": {
+      "tag": "Hỏi & Đáp",
+      "title": "Anti-Experts-Exchange",
+      "body": "Ngày 16 tháng 4 năm 2008, một lập trình viên đăng trên blog của mình rằng anh muốn xây dựng một trang hỏi-đáp \"anti-Experts-Exchange\" dành cho lập trình viên, không có tường trả phí và việc thao túng công cụ tìm kiếm mà anh thấy khó chịu ở trang đang thống trị.",
+      "coda": "Năm 2021 trang web được bán cho Prosus với 1,8 tỷ đô la."
+    },
+    "zune-leap-year-freeze": {
+      "tag": "Sự cố",
+      "title": "Ngày 366",
+      "body": "Gần nửa đêm theo giờ Pacific ngày 31 tháng 12 năm 2008, mọi chiếc Zune 30 đều đơ cứng hoàn toàn, được đặt biệt danh Z2K9. Nguyên nhân là một vòng lặp vô hạn trong trình điều khiển chip nguồn chỉ có thể kích hoạt vào ngày thứ 366 của năm nhuận. Không có bản vá nào tồn tại; cách khắc phục duy nhất là để pin cạn kiệt.",
+      "coda": "Biện pháp do Microsoft đưa ra là chờ thiết bị hết pin."
+    },
+    "china-wang-jian-alibaba-cloud": {
+      "tag": "Nghi ngờ",
+      "title": "Kẻ nói dối đã xây dựng Cloud",
+      "body": "Khoảng năm 2012, khi Alibaba Cloud đã đầu tư mạnh nhiều năm mà chưa có sản phẩm hữu hình, nhân viên nói thẳng với Jack Ma rằng Wang Jian là kẻ lừa đảo. Gần tám mươi phần trăm đội ngũ kỹ thuật nghỉ việc. Phản hồi của Ma: cấp một tỷ nhân dân tệ mỗi năm trong mười năm, rồi mới đánh giá.",
+      "coda": "Mười năm sau, dự án của kẻ lừa đảo bắt đầu có lãi."
+    },
+    "taobao-double11-2009": {
+      "tag": "Giảm giá",
+      "title": "27 thương gia",
+      "body": "Ngày 11 tháng 11 năm 2009, Taobao Mall tập hợp hai mươi bảy thương hiệu để lấp đầy một tuần doanh số ế ẩm; kế hoạch ban đầu dự kiến hơn ba mươi, nhưng các thương gia liên tục rút lui. Một công chức tên Yan Jun ở Sơn Tây đặt đơn hàng đầu tiên trong ngày, 150 nhân dân tệ tiền nạp điện thoại, lúc 00:00:03.",
+      "coda": "Doanh số ngày hôm đó đạt 52 triệu nhân dân tệ, gấp mười lần một ngày bình thường."
+    },
+    "cloudflare-hbs-elective": {
+      "tag": "Bạn học",
+      "title": "Một môn tự chọn tại HBS",
+      "body": "Năm 2009 một lập trình viên xin nghỉ phép để học MBA tại Harvard Business School. Anh đã dành nhiều năm điều hành một dự án tình nguyện chống thư rác bên cạnh công việc. Anh nhắc đến nó trong lớp một ngày. Một bạn học nói rằng nó nên trở thành một sản phẩm thực sự.",
+      "coda": "Người bạn học đó là Michelle Zatlyn, sau này là đồng sáng lập và COO của Cloudflare."
+    },
+    "china-3q-war": {
+      "tag": "Sự cố",
+      "title": "Chọn một",
+      "body": "Ngày 3 tháng 11 năm 2010, Tencent ép người dùng chọn: gỡ 360 hoặc QQ sẽ ngừng chạy. Ma Huateng cảnh báo người dùng có thể bị xóa sạch trong ba ngày. Vài ngày sau, Bộ Công nghiệp và Công nghệ Thông tin ra lệnh cả hai bên khôi phục khả năng tương thích.",
+      "coda": "Cơ quan quản lý chấm dứt vụ việc, không phải thị trường hay công ty nào."
+    },
+    "china-thousand-groupon-war": {
+      "tag": "Bong bóng",
+      "title": "Chiến tranh nghìn Groupon",
+      "body": "Trang web mua hàng nhóm đầu tiên của Trung Quốc ra mắt năm 2010; các cổng thông tin và mạng xã hội ồ ạt tham gia trong vòng vài tháng. Đến tháng 8 năm 2011, hơn 5.000 công ty mua hàng nhóm đang cạnh tranh — 'Chiến tranh nghìn Groupon.' Đến giữa năm 2014, chỉ còn 176 trang web trụ vững.",
+      "coda": "Ít hơn hai trăm trong năm nghìn đã sống sót."
+    },
+    "semver-dependency-hell": {
+      "tag": "Tiêu chuẩn",
+      "title": "Miễn trừ của chính SemVer",
+      "body": "Năm 2010, đồng sáng lập GitHub Tom Preston-Werner công bố semver.org, đề xuất MAJOR.MINOR.PATCH để chấm dứt 'dependency hell.' Bản thân đặc tả dành ra một ngoại lệ: trong giai đoạn 'initial development' 0.y.z, mọi thứ có thể thay đổi bất cứ lúc nào — một giai đoạn hầu hết các gói không bao giờ thực sự rời khỏi.",
+      "coda": "Hầu hết các gói được công bố không bao giờ rời khỏi khoảng phiên bản mà quy tắc không ràng buộc."
+    },
+    "instagram-burbn-cut": {
+      "tag": "Pivot",
+      "title": "Những Gì Bị Cắt Bỏ Từ Burbn",
+      "body": "Kevin Systrom và Mike Krieger dành gần một năm xây dựng ứng dụng check-in đầy đủ tính năng tên Burbn, sau đó đánh giá bản dựng iPhone hoàn chỉnh của chính họ là rối rắm. Họ cắt giảm xuống còn ảnh, bình luận và lượt thích, rồi phát hành kết quả tám tuần sau dưới tên Instagram.",
+      "coda": "Trong vòng một tuần sau khi ra mắt, nó đã có 100.000 người dùng."
+    },
+    "tz-database-lawsuit": {
+      "tag": "Sự cố",
+      "title": "Vụ kiện về Cơ sở dữ liệu Múi giờ",
+      "body": "Vào tháng 10 năm 2011, công ty phần mềm chiêm tinh Astrolabe đã kiện những người duy trì cơ sở dữ liệu tz, cho rằng dữ liệu múi giờ của họ vi phạm một tập bản đồ mà công ty này đã xuất bản. Danh sách gửi thư và máy chủ FTP đã ngừng hoạt động. ICANN đã vào cuộc để lưu trữ cơ sở dữ liệu; Astrolabe đã rút đơn kiện vào tháng 2 năm 2012.",
+      "coda": "Khiếu nại bản quyền về bảng giờ mặt trời của một công ty chiêm tinh đã được rút lại mà không có khoản bồi thường nào."
+    },
+    "instagram-facebook-2012": {
+      "tag": "Chế giễu",
+      "title": "Một Tỷ cho một Bộ lọc",
+      "body": "Vào tháng 4 năm 2012, Facebook thông báo sẽ trả 1 tỷ đô la cho Instagram, một đội ngũ 13 người không có doanh thu. Trên The Daily Show, Jon Stewart hỏi: \"Một tỷ đô la tiền thật? Cho một thứ làm hỏng ảnh của bạn?\" Đo lường theo quy mô đội ngũ và doanh thu, câu hỏi đó không phải là vô lý.",
+      "coda": "Thương vụ này hiện được trích dẫn thường xuyên như một trong những vụ mua lại thành công nhất trong lịch sử công nghệ."
+    },
+    "didi-alibaba-resignation": {
+      "tag": "Từ chức",
+      "title": "Từ Alibaba đến taxi",
+      "body": "Cheng Wei làm việc tại Alibaba trong tám năm, leo lên đến phó tổng giám đốc mảng kinh doanh người tiêu dùng của Alipay. Tháng 6 năm 2012 anh nghỉ việc và cùng Wu Rui, Li Xiang khởi động một ứng dụng gọi taxi. Khi ra mắt vào ngày 9 tháng 9, chỉ có mười sáu tài xế trực tuyến cùng lúc.",
+      "coda": "Hai tháng sau, hơn một trăm tài xế trực tuyến cùng lúc."
+    },
+    "knight-capital-power-peg": {
+      "tag": "Sự cố",
+      "title": "Máy chủ thứ tám",
+      "body": "Knight Capital đẩy mã giao dịch mới lên tám máy chủ; chỉ bảy máy chủ nhận được. Máy chủ thứ tám vẫn chạy mã Power Peg đã chết, đã nghỉ hưu từ nhiều năm trước, mà các lệnh trực tiếp đã đánh thức. Trong 45 phút Knight xây dựng vị thế dài $3.5B và vị thế ngắn $3.15B. Kết luận của SEC: không ai xem xét bản triển khai chưa hoàn thành.",
+      "coda": "Knight bị một đối thủ mua lại trong vòng một tuần sau khoản lỗ."
+    },
+    "dnnresearch-week-of-bidding": {
+      "tag": "Đấu giá",
+      "title": "Một tuần đấu giá",
+      "body": "Năm 2012 một giáo sư Đại học Toronto và hai sinh viên nghiên cứu sinh của ông đã đè bẹp lĩnh vực trong một cuộc thi nhận dạng hình ảnh, sau đó thành lập một công ty vỏ để bán chính mình. Google, Microsoft, Baidu và DeepMind đã dành một tuần đấu giá với nhau để mua nó.",
+      "coda": "Hinton chọn Google. Một trong hai sinh viên là Ilya Sutskever."
+    },
+    "xiaohongshu-name": {
+      "tag": "Nguồn gốc từ",
+      "title": "Không phải cuốn sách đỏ nhỏ ấy",
+      "body": "Hầu hết mọi người cho rằng cái tên ám chỉ cuốn sách đỏ kia. Lời kể của người sáng lập thì tẻ nhạt hơn: Bain & Company và Stanford Graduate School of Business, công ty ông từng làm việc và ngôi trường ông từng theo học, đều dùng màu đỏ.",
+      "coda": "Dịch sang tiếng Anh, cái tên vẫn ra giống hệt cái kia."
+    },
+    "china-wechat-red-envelope-pearl-harbor": {
+      "tag": "Thanh toán",
+      "title": "Trân Châu Cảng, Kỹ thuật số",
+      "body": "Khoảng Tết Nguyên Đán 2014, tính năng lì xì của WeChat ra mắt; người dùng đã nhận hơn 40 triệu phong bao trong vài ngày. Trên ứng dụng Laiwang, Jack Ma gọi đây là một 'cuộc tấn công lén lút Trân Châu Cảng' — có hiệu quả trong ngắn hạn, ông viết, nhưng sự tăng trưởng dài hạn lành mạnh mới quan trọng hơn.",
+      "coda": "Lì xì trở thành một phễu thanh toán."
+    },
+    "heartbleed-two-person-team": {
+      "tag": "Sự cố",
+      "title": "Một Đội Bốn Người",
+      "body": "Lỗi thiếu kiểm tra giới hạn của Heartbleed đã xâm nhập vào phần mở rộng heartbeat của OpenSSL vào tháng 12 năm 2011 và nằm im lặng trong hai năm cho đến khi các nhà nghiên cứu độc lập phát hiện ra nó vào tháng 4 năm 2014. Vào thời điểm đó, mã nguồn đứng sau hầu hết lưu lượng HTTPS của web được duy trì bởi bốn tình nguyện viên, một người toàn thời gian.",
+      "coda": "Bản vá được phát hành cùng ngày lỗi được tiết lộ."
+    },
+    "goto-fail-duplicate": {
+      "tag": "Bảo mật",
+      "title": "Lệnh Nhảy Lặp",
+      "body": "Bên trong hàm SSLVerifySignedServerKeyExchange của Apple, một dòng goto fail; bị lặp lại. Bản sao thứ hai nằm ngoài bất kỳ điều kiện if nào, nên hàm luôn nhảy qua kiểm tra chữ ký và trả về thành công bất kể.",
+      "coda": "Dòng lặp đó chạy không thay đổi trên các hệ thống bị ảnh hưởng trong nhiều tháng."
+    },
+    "ntp-harlan-stenn": {
+      "tag": "Thời gian",
+      "title": "Ai Đặt Đồng Hồ",
+      "body": "Ngân hàng, sàn giao dịch và hệ thống vệ tinh đồng bộ hóa theo NTP. David Mills thiết kế giao thức; bản triển khai tham chiếu hiện nay do Harlan Stenn dẫn dắt, phần lớn một mình. Vào tháng 3 năm 2015, báo chí thương mại chạy tiêu đề 'NTP Needs Money: Is A Foundation The Answer?'",
+      "coda": "Quỹ vẫn đang huy động vốn để đạt ngân sách."
+    },
+    "alphago-lee-sedol-2016": {
+      "tag": "Cờ vây",
+      "title": "Đá Một Trăm Hai",
+      "body": "AlphaGo đánh bại Lee Sedol bốn ván một ở Seoul vào tháng 3 năm 2016; ván duy nhất Lee thắng là ván bốn. Sau đó anh nói đã phạm sai lầm nghiêm trọng ở đầu ván một, gọi nước đi của máy tính ở đó là xuất sắc và là một nước đi không giống bất kỳ nước đi nào người chơi thường chọn.",
+      "coda": "Nước đi anh chỉ ra chỉ giữ một số đá, không có tên."
+    },
+    "aws-s3-2017-typo": {
+      "tag": "Sự cố",
+      "title": "Một đối số quá rộng",
+      "body": "Một kỹ sư S3 đã chạy lệnh được ủy quyền nhằm đưa một số lượng nhỏ máy chủ thanh toán ra khỏi hoạt động, nhưng một đầu vào bao phủ phạm vi rộng hơn dự định. Các máy chủ bị gỡ bỏ cũng hỗ trợ hệ thống con chỉ mục, vốn chưa được khởi động lại hoàn toàn trong nhiều năm và trở lại chậm hơn nhiều so với dự kiến.",
+      "coda": "Sự cố kéo dài khoảng bốn giờ; trang trạng thái của chính AWS phụ thuộc vào cùng các hệ thống đó."
+    },
+    "gitlab-2017-rm-rf": {
+      "tag": "Sự cố",
+      "title": "Năm bản sao lưu, không có bản nào khôi phục được",
+      "body": "Một kỹ sư định xóa một bản sao chép bị lag nhưng lại xóa thư mục dữ liệu PostgreSQL trên máy chủ chính, dừng lại quá muộn; khoảng 300GB đã biến mất. GitLab phát hiện rằng trong số năm phương pháp sao lưu và nhân bản đang chạy, không có phương pháp nào thực sự khôi phục được dữ liệu.",
+      "coda": "Việc khôi phục phụ thuộc vào một bản snapshot mà ai đó tình cờ chụp sáu giờ trước đó."
+    },
+    "attention-title-beatles-2017": {
+      "tag": "Bài báo",
+      "title": "Một tiêu đề mượn từ The Beatles",
+      "body": "Tám nhà nghiên cứu của Google công bố \"Attention Is All You Need\" vào tháng 6 năm 2017; tiêu đề gợi nhắc đến bài hát \"All You Need Is Love\" của The Beatles. Mục tiêu được nêu của bài báo là một mô hình chuỗi cho dịch máy loại bỏ mạng hồi tiếp để chỉ dùng cơ chế chú ý.",
+      "coda": "Cả tám tác giả đều đã rời Google."
+    },
+    "cloudflare-2019-regex": {
+      "tag": "Sự cố",
+      "title": "Cầu chì đã bị tháo",
+      "body": "Một quy tắc WAF mới với biểu thức chính quy backtracking thảm khốc đã đẩy CPU trên mạng lưới toàn cầu của Cloudflare lên gần 100 phần trăm trong vài giây sau khi triển khai. Bản thân quy tắc này bình thường; thứ khiến nó phát nổ là một biện pháp bảo vệ mức sử dụng CPU trên các quy tắc regex đã bị xóa âm thầm vài tuần trước trong một lần tái cấu trúc.",
+      "coda": "Sự cố kéo dài 27 phút và kết thúc khi WAF bị tắt toàn cầu."
+    },
+    "requests-kenneth-reitz": {
+      "tag": "Giao tiếp",
+      "title": "Giao lại chìa khóa",
+      "body": "Requests ghi nhận hơn 30 triệu lượt tải mỗi tháng và trở thành client HTTP tiêu chuẩn cho Python. Kenneth Reitz phát hành nó vào ngày 14 tháng 2 năm 2011. Năm 2019, sau các vấn đề sức khỏe, ông giao quyền kiểm soát dự án cho Python Software Foundation.",
+      "coda": "Ông chưa quay lại dẫn dắt dự án kể từ khi từ chức."
+    },
+    "linux-y2038-kernel-fix": {
+      "tag": "Bản vá",
+      "title": "Sớm Mười Tám Năm",
+      "body": "Các hệ thống Unix 32-bit sẽ bị tràn bộ đếm time_t vào ngày 19 tháng 1 năm 2038. Linux 5.6, phát hành năm 2020, là kernel đầu tiên có thể giữ cho hệ thống 32-bit tiếp tục chạy qua ngày đó. Các ứng dụng vẫn cần biên dịch lại với time_t 64-bit để thực sự được hưởng lợi.",
+      "coda": "Kernel được vá nhiều năm trước khi phần lớn không gian người dùng 32-bit kịp theo kịp."
+    },
+    "log4shell-eight-years": {
+      "tag": "Lỗ hổng",
+      "title": "Tám Năm Không Được Đọc",
+      "body": "Log4j nằm bên trong hầu hết phần mềm Java doanh nghiệp; Wiz và EY phát hiện 93 phần trăm môi trường đám mây bị phơi nhiễm Log4Shell. Lỗi tồn tại trong mã từ năm 2013. Nó được báo cáo ngày 24 tháng 11 năm 2021 và công bố công khai ngày 10 tháng 12, xếp hạng CVSS 10.",
+      "coda": "Một vài tình nguyện viên đã viết bản vá đạt đến hàng triệu máy chủ."
+    },
+    "core-js-denis-pushkarev": {
+      "tag": "Người duy trì",
+      "title": "Bản vá Không Ai Thay Thế",
+      "body": "core-js được đóng gói bên trong WhatsApp, Netflix, Apple và PayPal, ghi nhận khoảng 250 triệu lượt tải xuống mỗi tháng. Tác giả của nó, Denis Pushkarev, đã qua đời trong tai nạn xe hơi năm 2019, thụ án khoảng mười tháng bắt đầu từ tháng 1 năm 2020, và vẫn duy trì thư viện trong suốt thời gian đó.",
+      "coda": "Quyên góp hàng tháng giảm từ khoảng 2.500 đô la xuống 400."
+    },
+    "tesla-westinghouse-royalty": {
+      "tag": "Bằng sáng chế",
+      "title": "Bằng Bản Quyền Tesla Miễn Phí",
+      "body": "Hợp đồng của Westinghouse trả Tesla 2,50 đô la mỗi mã lực dưới dạng bản quyền. Đầu năm 1891, khi công ty gần như thất bại, Tesla đã miễn cho nó khỏi điều khoản bản quyền.",
+      "coda": "Năm 1897, Westinghouse mua đứt bằng sáng chế của ông với giá 216.000 đô la."
+    },
+    "salk-polio-patent": {
+      "tag": "Bằng sáng chế",
+      "title": "Mặt trời không có bằng sáng chế",
+      "body": "Edward Murrow hỏi ai sở hữu bằng sáng chế vắc-xin bại liệt. Salk trả lời không có, liệu có thể cấp bằng sáng chế cho mặt trời. Các luật sư của quỹ đã xem xét vấn đề và kết luận vắc-xin thiếu tính mới để được cấp bằng sáng chế do có kỹ thuật đã biết trước.",
+      "coda": "Vắc-xin không được cấp bằng sáng chế sau đó được định giá bảy tỷ đô la."
+    },
+    "cobol-two-hundred-billion-lines": {
+      "tag": "Huyền thoại",
+      "title": "Hai Trăm Tỷ Dòng",
+      "body": "Đến năm 1997, Gartner ước tính có 200 tỷ dòng COBOL đang chạy tám mươi phần trăm các chương trình kinh doanh trên toàn thế giới. Năm 2020, khi các yêu cầu trợ cấp thất nghiệp thời kỳ COVID tăng vọt, một số chính quyền bang tại Mỹ đã công khai kêu gọi các lập trình viên COBOL để duy trì hệ thống phúc lợi đã tồn tại hàng thập kỷ của họ.",
+      "coda": "Sáu năm đã trôi qua kể từ lời kêu gọi đó."
+    },
+    "sabre-sage-to-booking": {
+      "tag": "Đặt chỗ",
+      "title": "Từ Radar đến Đặt chỗ",
+      "body": "American Airlines và IBM ký kết hợp tác năm 1957, chuyển đổi kiến trúc phòng không SAGE thời Chiến tranh Lạnh của Không quân thành hệ thống đặt chỗ. SABRE chạy thử nghiệm trực tuyến đầu tiên năm 1960 và ra mắt chính thức năm 1964, trở thành hệ thống xử lý giao dịch trực tuyến đầu tiên trên thế giới.",
+      "coda": "Công ty mẹ vẫn hoạt động, hơn sáu mươi năm sau."
+    },
+    "kay-objects-messaging": {
+      "tag": "Đặt tên",
+      "title": "Đối tượng, Không phải Điểm mấu chốt",
+      "body": "Đến năm 1967 Alan Kay dùng \"hướng đối tượng\" cho thiết kế dựa trên các tế bào hoặc nút mạng chỉ giao tiếp qua tin nhắn. Ông sau đó viết rằng hối hận đã đặt ra thuật ngữ \"đối tượng,\" vì nó thu hút sự chú ý vào ý tưởng nhỏ hơn và chôn vùi ý tưởng ông thực sự muốn nói: tin nhắn.",
+      "coda": "Từ ông hối hận sống lâu hơn ý tưởng ông muốn nó mang."
+    },
+    "voyager-68-kilobits": {
+      "tag": "Không gian sâu",
+      "title": "Xung quanh chip hỏng",
+      "body": "Voyager 1 phóng tháng Chín 1977. Sau bốn mươi bảy năm, một chip bộ nhớ trong hệ thống dữ liệu bay bị hỏng, ba phần trăm bị hỏng không thể sửa. Ngày 20 tháng 4 năm 2024 kỹ sư sắp xếp lại mã xung quanh khu vực bị hỏng và tín hiệu quay lại.",
+      "coda": "Các bộ phát của nó có thể cung cấp đủ năng lượng để truyền dữ liệu kỹ thuật cho đến năm 2036."
+    },
+    "gif-lzw-unisys": {
+      "tag": "Bằng sáng chế",
+      "title": "Định dạng tự do không tồn tại",
+      "body": "CompuServe phát hành GIF vào tháng 6 năm 1987 sử dụng nén LZW mà không nhận ra Sperry Corporation đã sở hữu bằng sáng chế cho nó. Vào tháng 12 năm 1994, Unisys, được hình thành từ cuộc sáp nhập của Sperry, thông báo sẽ thu phí cấp phép, thúc đẩy các nhà phát triển xây dựng PNG như một giải pháp thay thế.",
+      "coda": "Các bằng sáng chế hết hạn trên toàn thế giới vào năm 2004, và chỉ khi đó GIF mới trở nên miễn phí."
+    },
+    "zimmermann-pgp-release": {
+      "tag": "Mật mã",
+      "title": "PGP được phát hành miễn phí, sau đó bị điều tra",
+      "body": "Phil Zimmermann phát hành PGP kèm mã nguồn trên FTP công cộng vào năm 1991, chương trình mã hóa khóa công khai đầu tiên được phổ biến rộng rãi. Hải quan Mỹ mở điều tra hình sự vì vi phạm kiểm soát xuất khẩu. Vụ việc kéo dài ba năm và bị bãi bỏ mà không có cáo trạng vào đầu năm 1996.",
+      "coda": "Ba năm điều tra, không có cáo trạng, không có bản quyền nào được thu thập."
+    },
+    "json-good-not-evil": {
+      "tag": "Giấy phép",
+      "title": "Vì điều thiện, không phải điều ác",
+      "body": "Giấy phép năm 2002 của Douglas Crockford cho các thư viện JSON thêm một điều khoản: phần mềm phải được sử dụng cho điều thiện, không phải điều ác. Bản thân JSON lan truyền tự do và không có bằng sáng chế vào hầu hết mọi API trên internet, nhưng câu duy nhất đó khiến giấy phép không tương thích với các điều khoản mã nguồn mở tiêu chuẩn.",
+      "coda": "Định dạng trở nên phổ biến; điều khoản đùa nó đi kèm không tồn tại được khi tiếp xúc với pháp lý doanh nghiệp."
+    },
+    "sogou-movie-line": {
+      "tag": "Đặt tên",
+      "title": "Sogou bắt đầu là một câu đùa",
+      "body": "Phim hài năm 2001 Big Shot's Funeral có một câu chơi chữ về công cụ tìm kiếm: \"Họ tìm Sohu, chúng tôi tìm Sogou, mỗi người tìm theo cách của mình.\" Ba năm sau, vào năm 2004, đội ngũ của Sohu đã lấy câu đùa đó và ra mắt nó như một công cụ tìm kiếm thực sự, Sogou.",
+      "coda": "Câu chốt trở thành tên sản phẩm, không chỉnh sửa."
+    },
+    "tbl-double-slash": {
+      "tag": "Thiết kế",
+      "title": "Các dấu gạch chéo thừa",
+      "body": "Tim Berners-Lee đặt \"//\" trước tên miền khi ông thiết kế URL. Vào tháng 10 năm 2009 ông thừa nhận, với dấu hai chấm đã có sẵn, hai dấu gạch chéo hoàn toàn không cần thiết — \"thời đó nó có vẻ là một ý tưởng hay,\" ông nói.",
+      "coda": "Mọi URL kể từ đó vẫn gõ cả hai dấu gạch chéo."
+    },
+    "bilibili-mikufans": {
+      "tag": "Đặt tên",
+      "title": "Tên đầu tiên của Bilibili là Mikufans",
+      "body": "Trang web ra mắt vào tháng 6 năm 2009 với tên Mikufans, được xây dựng cho người hâm mộ vocaloid Hatsune Miku. Tháng 1 năm 2010, trang được đổi tên thành Bilibili, theo biệt danh mà nhân vật chính của một bộ light novel gọi Misaka Mikoto — một từ tượng thanh cho hiện tượng phóng điện.",
+      "coda": "Trang web sau khi đổi tên giữ nguyên tên đó qua mọi lần thiết kế lại sau này."
+    },
+    "kuaishou-gif-app": {
+      "tag": "命名",
+      "title": "快手最初是一款 GIF 应用",
+      "body": "Kuaishou ra mắt vào tháng 3 năm 2011 với tên GIF Kuaishou, một ứng dụng điện thoại để tạo và chia sẻ ảnh GIF. Năm 2012, nó chuyển hướng sang video ngắn, và năm 2014, tiền tố GIF bị loại bỏ, để lại cái tên mà nó mang với tư cách là một nền tảng video ngày nay.",
+      "coda": "Tiền tố GIF đã biến mất; tên công ty cơ bản chưa bao giờ thay đổi."
+    },
+    "zhihu-invite-only": {
+      "tag": "命名",
+      "title": "知乎需要邀请",
+      "body": "Zhihu ra mắt vào ngày 26 tháng 1 năm 2011, và trong hai năm đầu tiên việc đăng ký yêu cầu mã mời. Đăng ký mở không có cho đến tháng 3 năm 2013. Tên gọi này là tiếng Trung cổ nghĩa là \"bạn có biết\" — một câu hỏi, không phải khẩu hiệu.",
+      "coda": "Việc đăng ký không yêu cầu mời kể từ tháng 3 năm 2013."
+    },
+    "hp-garage-palo-alto": {
+      "tag": "车库",
+      "title": "艾迪生大道上的车库",
+      "body": "Năm 1938 David Packard và vợ thuê căn hộ tầng trệt của ngôi nhà xây năm 1905 tại 367 Addison Avenue ở Palo Alto. Anh và Bill Hewlett bỏ 538 đô la vào gara một ô tô phía sau và chế tạo sản phẩm đầu tiên, một bộ dao động âm thanh.",
+      "coda": "Khu đất này hiện nằm trong Danh sách Di tích Quốc gia và không mở cửa cho khách tham quan."
+    },
+    "apple-crist-drive-garage": {
+      "tag": "神话",
+      "title": "当卧室不够用时",
+      "body": "Năm 1976 Steve Jobs và Steve Wozniak lắp ráp các bo mạch Apple đầu tiên tại ngôi nhà mà cha mẹ Jobs sở hữu ở Los Altos, California.",
+      "coda": "Trong phòng ngủ của anh ấy trước. Nhà để xe chỉ sau đó, khi không còn chỗ trống."
+    },
+    "huawei-nanyou-flat": {
+      "tag": "Căn hộ",
+      "title": "Một căn hộ ở Nanyou Xincun",
+      "body": "Tháng 9 năm 1987, Huawei được đăng ký tại một khu dân cư ở Nanyou Xincun, Thâm Quyến, với số vốn 21.000 nhân dân tệ, mười bốn nhân viên và sáu cổ đông chia đều cổ phần.",
+      "coda": "Công ty chuyển trụ sở chính ra ngoài vào năm 1989; hợp đồng thuê căn hộ làm trụ sở chính kết thúc tại đó."
+    },
+    "wojcicki-garage-menlo-park": {
+      "tag": "Chủ nhà",
+      "title": "Chiếc Gara Bà Cho Thuê",
+      "body": "Vào tháng 9 năm 1998, Page và Brin thuê một gara ở Menlo Park từ Susan Wojcicki với giá 1.700 đô la mỗi tháng. Google được thành lập tại đó.",
+      "coda": "Bà sau này trở thành giám đốc điều hành của YouTube."
+    },
+    "tencent-seg-403": {
+      "tag": "Phòng 403",
+      "title": "Tòa nhà 2, Phòng 403",
+      "body": "Tháng 11 năm 1998, Tencent đăng ký tại phòng 403, tòa nhà hai, của công viên công nghệ Saige ở华强北, Thâm Quyến. Tòa nhà chật kín các startup như vậy, và cánh cửa không khác gì bất kỳ cánh cửa nào khác.",
+      "coda": "Phòng này hiện chỉ mở cửa cho nhân viên Tencent, dưới tên gọi Tencent Origin."
+    },
+    "unitree-left-dji": {
+      "tag": "Từ chức",
+      "title": "Rời khỏi DJI",
+      "body": "Trong thời gian học thạc sĩ, Vương Tinh Tinh tự xây dựng một robot bốn chân hoàn toàn điện và gọi nó là XDog. Sau khi tốt nghiệp, anh ấy nhận một công việc tại DJI và rời đi ngay sau đó.",
+      "coda": "Unitree được đăng ký tại quận Binjiang, Hàng Châu vào tháng 8 năm 2016."
+    },
+    "unitree-one-yuan-option": {
+      "tag": "Quyền chọn",
+      "title": "Một cổ phiếu một đồng",
+      "body": "Tháng 9 năm 2017, Unitree ký hợp đồng quyền chọn với mười bảy nhân viên với giá một đồng một cổ phiếu. Các đợt cấp tiếp theo được thực hiện thông qua một phương tiện sở hữu duy nhất của nhân viên.",
+      "coda": "Tám năm sau, công ty mở sổ đăng ký IPO."
+    },
+    "unitree-g1-price": {
+      "tag": "Định giá",
+      "title": "Chín mươi chín nghìn",
+      "body": "Robot hình người từng được định giá như thiết bị phòng thí nghiệm. Unitree đưa G1 ra thị trường với giá 99.000 nhân dân tệ, xấp xỉ giá một chiếc xe hạng phổ thông.",
+      "coda": "Đến năm 2025, robot hình người chiếm 51,78% doanh thu của công ty, với 5.500 đơn vị đã xuất xưởng."
+    }
+  }
+}

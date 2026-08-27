@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — API piactér",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "Minden modell API piactere · fizess használat után · kezelj kulcsokat és tárcát · gyors kipróbálás."
+  },
+  "admin": {
+    "dashboard": "Áttekintés",
+    "keys": "API-kulcsok",
+    "wallet": "Tárca",
+    "docs": "Dokumentáció",
+    "title": "Adminisztráció",
+    "backToMarket": "Vissza a piactérre",
+    "quickUse": "Gyors használat"
+  },
+  "chrome": {
+    "searchPlaceholder": "Mit szeretnél az AI-val csinálni?",
+    "search": "Keresés",
+    "locale": "Nyelv",
+    "currency": "Pénznem",
+    "collapseSidebar": "Oldalsáv összecsukása",
+    "expandSidebar": "Oldalsáv kibontása",
+    "home": "Főoldal",
+    "adminConsole": "Adminisztráció",
+    "quickUse": "Gyors használat",
+    "support": "Támogatás",
+    "apiDocs": "API-dokumentáció",
+    "integrationHelp": "Integrációs útmutató",
+    "aiRecommend": "AI-javaslatok",
+    "market": "Piac",
+    "usageTitle": "Gyors használat"
+  },
+  "channels": {
+    "app": "Alkalmazáspiac",
+    "api": "API-piac",
+    "models": "Modellkatalógus",
+    "client": "Kliens"
+  },
+  "market": {
+    "new": "Új",
+    "hot": "Népszerű",
+    "forYou": "Neked",
+    "grid": "Rács",
+    "list": "Lista",
+    "apiShelf": "API-polc",
+    "toolShelf": "Eszközpolc",
+    "categories": "Kategóriák",
+    "apps": "Alkalmazások",
+    "newRelease": "Új kiadás",
+    "forgeTitle": "Forge eszköz munkaterület",
+    "forgeBlurb": "Szövegalakítások, kodekek, űrlapok és összetevő eszközök. Az alkalmazáspiaci labor a Forge-ra mutat.",
+    "openForge": "Forge megnyitása →",
+    "allApi": "Minden API →",
+    "all": "Összes →",
+    "viewAll": "Összes {label} megtekintése →",
+    "gridView": "Rácsnézet",
+    "listView": "Listanézet",
+    "hiTitle": "Vállalati AI erőforrás-platform",
+    "hiSubtitle": "Minden igényhez a megfelelő AI",
+    "sellable": "Értékesíthető",
+    "walletTopup": "Feltöltés"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "Nyelvi modellek",
+      "hint": "Csevegés · gondolkodás"
+    },
+    "image-gen": {
+      "label": "Képgenerálás",
+      "hint": "Szöveg-kép"
+    },
+    "image-edit": {
+      "label": "Kép szerkesztése",
+      "hint": "Szerkesztés · kivágás"
+    },
+    "video": {
+      "label": "Videógenerálás",
+      "hint": "Szövegből videó"
+    },
+    "audio": {
+      "label": "Hang és videó",
+      "hint": "Beszéd · átirat"
+    },
+    "data": {
+      "label": "Információ",
+      "hint": "Keresés · kinyerés"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "Tudásbővített"
+    },
+    "tools": {
+      "label": "Eszköz-API-k",
+      "hint": "Ügynök · eszközök"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "Botok",
+      "chips": "Csevegőbotok · rajzolóbotok · tudás"
+    },
+    "productivity": {
+      "label": "Termelékenység",
+      "chips": "Modellverseny · AI-írás"
+    },
+    "academic": {
+      "label": "Akadémiai",
+      "chips": "PDF eszközök · AI szabadalomkeresés"
+    },
+    "image": {
+      "label": "Képeszközök",
+      "chips": "3D stúdió · Vázlat"
+    },
+    "audio": {
+      "label": "Hang",
+      "chips": "Beszéd · AI zene"
+    },
+    "code": {
+      "label": "Kód",
+      "chips": "Webgenerátor · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "Áttekintés",
+    "keys": "Kulcsok",
+    "wallet": "Tárca",
+    "use": "Kipróbálás",
+    "docs": "Dokumentáció",
+    "models": "Továbbiak"
+  }
+}

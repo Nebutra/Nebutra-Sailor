@@ -1,0 +1,80 @@
+---
+title: 实战指南概览
+description: 有主见的端到端实现教程，使用 Nebutra-Sailor 的完整技术栈构建真实功能。
+---
+
+实战指南与概念指南不同。概念指南解释**系统如何运作**，实战指南则展示**如何构建真实的功能**——从数据库模式到已部署的特性，使用本代码库的实际包和模式。
+
+## 实战指南的运作方式
+
+每篇实战指南：
+
+- 针对一个**具体的、有代表性的功能**，覆盖技术栈的多个层级
+- 在每个步骤提供**可直接使用的可运行代码**——而非伪代码
+- 遵循 `CLAUDE.md` 中的**规范模式**（token 使用、组件导入、测试约定）
+- 以**测试**（Vitest 单元测试 + Playwright E2E 测试）和 **Storybook 故事**收尾
+
+实战指南是快速熟悉代码库新领域最高效的方式。如果您在引导新工程师入职，请在要求他们编写代码之前，先让他们阅读最相关的实战指南。
+
+## 可用实战指南
+
+<CardGroup cols={2}>
+  <Card title="构建使用量分析仪表板" icon="chart-line" href="/zh/recipes/build-a-feature">
+    完整端到端功能开发：Prisma 模式 → Hono API → React Server Component → Recharts 可视化图表 → RBAC 权限控制 → Vitest + Playwright 测试。
+
+    **技术栈覆盖：** 数据库、API、前端、权限、图表、测试、Storybook
+  </Card>
+  <Card title="更多实战指南即将推出" icon="clock" href="#">
+    多租户数据隔离、Webhook 事件管道、带进度条的文件上传以及 CSV 导出正在编写中。欢迎社区贡献——请参阅贡献指南。
+  </Card>
+</CardGroup>
+
+## 技术栈覆盖地图
+
+使用此表格查找哪篇实战指南涵盖您需要学习的技术：
+
+| 技术 | 实战指南 |
+|------|---------|
+| Prisma 模式 + 数据迁移 | 功能开发（第 1 阶段） |
+| Hono API 路由 + OpenAPI | 功能开发（第 2 阶段） |
+| `@nebutra/metering`（ClickHouse） | 功能开发（第 2 阶段） |
+| TypeScript 类型生成 | 功能开发（第 3 阶段） |
+| React Server Components | 功能开发（第 4 阶段） |
+| Recharts + 深色模式颜色 | 功能开发（第 5 阶段） |
+| `@nebutra/permissions` RBAC | 功能开发（第 6 阶段） |
+| 侧边栏导航 | 功能开发（第 7 阶段） |
+| Vitest 单元测试 | 功能开发（第 8 阶段） |
+| Playwright E2E 测试 | 功能开发（第 8 阶段） |
+| Storybook 故事 | 功能开发（第 9 阶段） |
+
+## 实战指南的维护方式
+
+当 API 发生变更时，实战指南会与代码库同步更新。每篇实战指南页面顶部都有一个版本注释，标明最后验证的提交 SHA。
+
+欢迎社区贡献。如需提议新实战指南：
+
+1. 提交一个 Issue，描述您想要记录的功能
+2. 遵循实战指南模板：第 1 阶段（数据库）→ 第 N 阶段（测试 + Storybook）
+3. 所有代码块必须经过当前 `main` 分支的验证
+4. 向 `apps/sailor-docs/content/docs/zh/recipes/` 提交 PR
+
+<Note>
+  实战指南是有主见的。它们反映了在本代码库中构建功能的推荐方式，而非唯一方式。如果您的用例有所不同，可以将实战指南作为起点并按需调整。
+</Note>
+
+---
+
+<CardGroup cols={2}>
+  <Card title="功能开发实战" icon="hammer" href="/zh/recipes/build-a-feature">
+    从旗舰实战指南开始：使用量分析仪表板
+  </Card>
+  <Card title="定制概览" icon="sliders" href="/zh/customization/overview">
+    定制品牌、主题、仪表板和引导流程
+  </Card>
+  <Card title="概念指南" icon="book-open" href="/zh/guides/multi-tenancy">
+    解释各系统工作原理的概念指南
+  </Card>
+  <Card title="API 参考" icon="code" href="/zh/api-reference">
+    api-gateway 的完整 OpenAPI 参考文档
+  </Card>
+</CardGroup>

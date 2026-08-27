@@ -1,0 +1,54 @@
+/**
+ * Utility Functions
+ */
+
+/** Auth split-shell + primary CTA contracts (width + ink CTA pairing). */
+export {
+  AUTH_FORM_COLUMN_CLASS,
+  AUTH_OAUTH_BUTTON_CLASS,
+  AUTH_OAUTH_GRID_CLASS,
+  AUTH_PRIMARY_CTA_CLASS,
+} from "./auth-surfaces";
+/**
+ * Merge class names — canonical implementation from ./cn.ts
+ * Uses twMerge(clsx(...)) to correctly resolve Tailwind class conflicts.
+ */
+export { cn } from "./cn";
+export {
+  asPlainStyle,
+  type PrimitiveComponent,
+  type PrimitiveProps,
+  withHtmlProps,
+} from "./primitive-props";
+
+/**
+ * Breakpoint values (matches Primer)
+ */
+export const BREAKPOINTS = {
+  xs: 0,
+  sm: 544,
+  md: 768,
+  lg: 1012,
+  xl: 1280,
+} as const;
+
+export type Breakpoint = keyof typeof BREAKPOINTS;
+
+/**
+ * Check if viewport is at or above breakpoint
+ */
+export function isBreakpointUp(breakpoint: Breakpoint): boolean {
+  if (typeof window === "undefined") return true;
+  return window.innerWidth >= BREAKPOINTS[breakpoint];
+}
+
+export {
+  BRAND_FALLBACK,
+  getBrandAccent,
+  getBrandMark,
+  getBrandMarkForeground,
+  getBrandPrimary,
+  getBrandTertiary,
+  getProductPrimary,
+  readCssVar,
+} from "./brand-colors";

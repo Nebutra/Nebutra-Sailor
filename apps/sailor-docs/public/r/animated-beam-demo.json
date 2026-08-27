@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "animated-beam-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/icons",
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/animated-beam-demo.tsx",
+      "content": "\"use client\";\n\nimport { LogoGithub, LogoSlack, Workflow } from \"@nebutra/icons\";\nimport { AnimatedBeam } from \"@nebutra/ui/primitives\";\nimport type * as React from \"react\";\nimport { useRef } from \"react\";\n\nfunction FlowNode({\n  ref,\n  icon,\n  label,\n  detail,\n}: {\n  ref: React.Ref<HTMLDivElement>;\n  icon: React.ReactNode;\n  label: string;\n  detail: string;\n}) {\n  return (\n    <div\n      ref={ref}\n      className=\"relative z-10 flex min-w-28 flex-col items-center gap-2 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-3 text-center shadow-sm dark:border-white/10 dark:bg-[var(--neutral-2)]\"\n    >\n      <div className=\"flex size-9 items-center justify-center rounded-md border border-[var(--neutral-6)] bg-[var(--neutral-2)] text-[var(--neutral-12)]\">\n        {icon}\n      </div>\n      <div className=\"space-y-0.5\">\n        <p className=\"text-xs font-medium text-[var(--neutral-12)]\">{label}</p>\n        <p className=\"text-[11px] text-[var(--neutral-11)]\">{detail}</p>\n      </div>\n    </div>\n  );\n}\n\nexport function AnimatedBeamDemo() {\n  const containerRef = useRef<HTMLDivElement>(null);\n  const fromRef = useRef<HTMLDivElement>(null);\n  const centerRef = useRef<HTMLDivElement>(null);\n  const toRef = useRef<HTMLDivElement>(null);\n\n  return (\n    <div\n      ref={containerRef}\n      className=\"relative flex min-h-[260px] w-full max-w-2xl items-center justify-between overflow-hidden rounded-lg border border-[var(--neutral-7)] bg-[radial-gradient(circle_at_50%_0%,var(--blue-2),transparent_42%),var(--neutral-1)] p-8\"\n    >\n      <div className=\"pointer-events-none absolute inset-x-8 top-1/2 h-px bg-[linear-gradient(90deg,transparent,var(--neutral-6),transparent)]\" />\n      <FlowNode\n        ref={fromRef}\n        icon={<LogoGithub className=\"size-4\" />}\n        label=\"GitHub\"\n        detail=\"PR opened\"\n      />\n      <FlowNode\n        ref={centerRef}\n        icon={<Workflow className=\"size-4 text-[var(--brand-primary)]\" />}\n        label=\"Nebutra\"\n        detail=\"Policy run\"\n      />\n      <FlowNode\n        ref={toRef}\n        icon={<LogoSlack className=\"size-4\" />}\n        label=\"Slack\"\n        detail=\"Alert sent\"\n      />\n      <AnimatedBeam\n        containerRef={containerRef}\n        fromRef={fromRef}\n        toRef={centerRef}\n        curvature={-28}\n        tone=\"brand\"\n        intensity=\"normal\"\n      />\n      <AnimatedBeam\n        containerRef={containerRef}\n        fromRef={centerRef}\n        toRef={toRef}\n        curvature={28}\n        tone=\"success\"\n        intensity=\"subtle\"\n        delay={0.8}\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — API 마켓플레이스",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "모든 모델 API 마켓플레이스 · 사용량 기반 결제 · 키 및 지갑 관리 · 빠른 체험."
+  },
+  "admin": {
+    "dashboard": "개요",
+    "keys": "API 키",
+    "wallet": "지갑",
+    "docs": "문서",
+    "title": "관리자",
+    "backToMarket": "마켓으로 돌아가기",
+    "quickUse": "빠른 사용"
+  },
+  "chrome": {
+    "searchPlaceholder": "AI로 무엇을 하시겠습니까?",
+    "search": "검색",
+    "locale": "언어",
+    "currency": "통화",
+    "collapseSidebar": "사이드바 접기",
+    "expandSidebar": "사이드바 펼치기",
+    "home": "홈",
+    "adminConsole": "관리자",
+    "quickUse": "빠른 사용",
+    "support": "지원",
+    "apiDocs": "API 문서",
+    "integrationHelp": "통합 가이드",
+    "aiRecommend": "AI 추천",
+    "market": "마켓",
+    "usageTitle": "빠른 사용"
+  },
+  "channels": {
+    "app": "앱 마켓",
+    "api": "API 마켓",
+    "models": "모델 카탈로그",
+    "client": "클라이언트"
+  },
+  "market": {
+    "new": "새로운",
+    "hot": "인기",
+    "forYou": "추천",
+    "grid": "그리드",
+    "list": "목록",
+    "apiShelf": "API 선반",
+    "toolShelf": "도구 선반",
+    "categories": "카테고리",
+    "apps": "앱",
+    "newRelease": "새로운 출시",
+    "forgeTitle": "Forge 도구 작업 공간",
+    "forgeBlurb": "텍스트 변환, 코덱, 폼, 그리고 조합 가능한 도구. 앱 마켓 라브는 Forge를 가리킵니다.",
+    "openForge": "Forge 열기 →",
+    "allApi": "모든 API →",
+    "all": "모두 →",
+    "viewAll": "모든 {label} 보기 →",
+    "gridView": "그리드 보기",
+    "listView": "목록 보기",
+    "hiTitle": "엔터프라이즈 AI 리소스 플랫폼",
+    "hiSubtitle": "모든 요구에 맞는 AI를 매칭하세요",
+    "sellable": "판매 가능",
+    "walletTopup": "충전하기"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "언어 모델",
+      "hint": "채팅 · 추론"
+    },
+    "image-gen": {
+      "label": "이미지 생성",
+      "hint": "텍스트-투-이미지"
+    },
+    "image-edit": {
+      "label": "이미지 편집",
+      "hint": "편집 · 배경 제거"
+    },
+    "video": {
+      "label": "비디오 생성",
+      "hint": "텍스트-투-비디오"
+    },
+    "audio": {
+      "label": "오디오 & 비디오",
+      "hint": "음성 · 전사"
+    },
+    "data": {
+      "label": "정보",
+      "hint": "검색 · 추출"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "지식 증강"
+    },
+    "tools": {
+      "label": "도구 API",
+      "hint": "에이전트 · 도구"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "봇",
+      "chips": "채팅 봇 · 그리기 봇 · 지식"
+    },
+    "productivity": {
+      "label": "생산성",
+      "chips": "모델 아레나 · AI 글쓰기"
+    },
+    "academic": {
+      "label": "학술",
+      "chips": "PDF 도구 · AI 특허 검색"
+    },
+    "image": {
+      "label": "이미지 도구",
+      "chips": "3D 스튜디오 · 캔버스"
+    },
+    "audio": {
+      "label": "오디오",
+      "chips": "음성 · AI 음악"
+    },
+    "code": {
+      "label": "코드",
+      "chips": "웹 생성기 · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "개요",
+    "keys": "키",
+    "wallet": "지갑",
+    "use": "시도",
+    "docs": "문서",
+    "models": "더 보기"
+  }
+}

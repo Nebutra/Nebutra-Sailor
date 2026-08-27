@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "macbook-pro-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/macbook-pro-demo.tsx",
+      "content": "\"use client\";\n\nimport { MacbookPro } from \"@nebutra/ui/primitives\";\n\nexport function MacbookProDemo() {\n  return (\n    <div className=\"max-w-4xl p-8 relative mx-auto flex w-full items-center justify-center\">\n      <MacbookPro\n        src=\"https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop\"\n        className=\"h-auto w-full\"\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

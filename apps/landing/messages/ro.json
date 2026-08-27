@@ -1,0 +1,1781 @@
+{
+  "nav": {
+    "features": "Funcționalități",
+    "solutions": "Soluții",
+    "pricing": "Prețuri",
+    "docs": "Documentație",
+    "github": "GitHub",
+    "npm": "npm",
+    "about": "Despre noi",
+    "ideas": "Idei",
+    "opc": "Platformă",
+    "roadmap": "Harta drumului",
+    "resources": "Resurse",
+    "signIn": "Autentificare",
+    "getStarted": "Începe navigarea",
+    "changelog": "Jurnal de modificări",
+    "news": "Știri",
+    "designDocs": "Sistem de design",
+    "avatarMenu": {
+      "ariaLabel": "Meniu cont",
+      "loadingName": "Se încarcă…",
+      "dashboard": "Panou de control",
+      "account": "Cont",
+      "billing": "Facturare",
+      "docs": "Documentație",
+      "signOut": "Deconectare"
+    }
+  },
+  "refer": {
+    "metadataTitle": "Alătură-te buclei de referire pentru fondatori {brandName}",
+    "metadataDescription": "Intră pe lista de așteptare {brandName}, păstrează atribuirea referinței și deblochează propriul tău link de partajare într-o singură buclă produs-găsită.",
+    "eyebrow": "Bucle de referire pentru fondatori",
+    "title": "Alătură-te următoarei cohorte de fondatori și obține propriul tău link de partajare.",
+    "description": "Intră cu orice cod de invitație sau înscrie-te direct. Vom păstra atribuirea când există un cod, te vom plasa pe lista de așteptare și îți vom emite un URL privat de referire pe care îl poți partaja imediat.",
+    "signal": {
+      "waitlist": "Listă de așteptare durabilă",
+      "codeDetected": "Cod {code} detectat",
+      "direct": "Înregistrare directă"
+    },
+    "form": {
+      "emailLabel": "Email de serviciu",
+      "emailPlaceholder": "you@example.com",
+      "codeLabel": "Cod de referire",
+      "codePlaceholder": "Cod opțional",
+      "submit": "Intră pe lista de așteptare",
+      "submitting": "Se înscrie",
+      "invalidEmail": "Introdu o adresă de e-mail validă.",
+      "error": "Nu am putut înscrie acum. Te rog încearcă din nou.",
+      "successTitle": "Ești pe listă",
+      "successDescription": "Link-ul tău privat de partajare este gata.",
+      "positionLabel": "Poziție în coadă",
+      "referralCodeLabel": "Codul tău",
+      "referralUrlLabel": "Link-ul tău de partajare",
+      "copyLink": "Copiază link-ul",
+      "copied": "Copiat",
+      "share": "Partajează",
+      "shareTitle": "Intră în cercul fondatorilor {brandName}",
+      "shareText": "Folosește link-ul meu de invitație pentru a intra pe lista de așteptare a fondatorilor {brandName}.",
+      "directMode": "Nu este nevoie de cod de recomandare",
+      "codeMode": "Atribuirea recomandărilor activată"
+    },
+    "proof": {
+      "peerLoop": {
+        "title": "Circuit fondator-la-fondator",
+        "description": "Fiecare înscriere acceptată primește un cod și un URL, astfel încât următoarea recomandare începe fără o predare manuală."
+      },
+      "attribution": {
+        "title": "Atribuire corectă",
+        "description": "Codurile necunoscute sunt stocate ca atribuiri încercate, în timp ce codurile valide cresc numărul recomandatorului și mențin înscrierea curată."
+      },
+      "shareLink": {
+        "title": "Stare de succes gata de distribuire",
+        "description": "Starea de confirmare expune poziția, codul, opțiunea de copiere și acțiuni native de distribuire, astfel încât circuitul se încheie direct pe pagină."
+      }
+    },
+    "infrastructure": {
+      "eyebrow": "Infrastructură condusă de produs",
+      "title": "Concepută ca infrastructură SaaS durabilă, nu ca un formular de unică folosință.",
+      "description": "Suprafața de recomandare este susținută de un pachet de domeniu, un model Prisma persistent, o rută Next.js tipizată și verificări publice de funcționalitate care pot fi rulate după implementările ECS.",
+      "data": {
+        "eyebrow": "Date",
+        "title": "O singură tabelă durabilă pentru lista de așteptare",
+        "description": "Unicitatea emailului, poziția incrementată automat, indexele codurilor de recomandare, metadatele atribuiriilor încercate și tranzițiile de stare există în baza de date a platformei."
+      },
+      "api": {
+        "eyebrow": "API",
+        "title": "Endpoint de înscriere tipizat",
+        "description": "Pagina trimite date către `/api/waitlist`, normalizează codurile arbitrare, returnează înregistrările existente idempotent și nu depinde niciodată de un cod de probă."
+      },
+      "cicd": {
+        "eyebrow": "CI/CD",
+        "title": "Testare publică la deploy",
+        "description": "URL-urile canonice și alias sunt gata pentru verificări automate, astfel încât livrarea ECS să detecteze regresii la rute, DNS și starea de sănătate."
+      }
+    }
+  },
+  "hero": {
+    "headline1": "Lansează-ți Startup-ul,",
+    "headline2": "propulsat de {brandName} Agent OS.",
+    "subheadline": "Ocolește săptămâni de muncă pe platformă cu o fundație <highlight>gata de producție</highlight> și o arhitectură guvernată, construită pentru agenți AI de codare și fondatori care merg global.",
+    "copyLabel": "Copiază Comanda",
+    "copiedLabel": "Copiat",
+    "ctaGetAccess": "Lansează-ți Startup-ul",
+    "ctaExploreDemo": "Explorează demo",
+    "pillCopied": "Copiat"
+  },
+  "features": {
+    "sectionTitle": "Infrastructură gata de utilizat, de la prototip la scalare.",
+    "item0": {
+      "title": "Infrastructură pentru Aplicații AI",
+      "description": "Framework-uri Agent integrate și testate în producție, plus motoare de orchestrare LLM. Ocolește abstractizările complexe și interacționează direct cu API-uri de inteligență structurată."
+    },
+    "item1": {
+      "title": "Bază de Platformă Guvernată",
+      "description": "O bază de platformă guvernată pentru echipele care lansează SaaS nativ AI. Aliniază scheletul, primitivele de runtime și suprafețele de livrare fără a îmbina instrumente ad-hoc."
+    },
+    "item2": {
+      "title": "Automatizare SaaS Enterprise",
+      "description": "Integrare profundă cu stack-ul modern de tehnologie Vercel, Supabase și Stripe. Oferă securitate la nivel de rând, izolare complexă multi-tenant și facturare globală pentru abonamente, gata de utilizare."
+    }
+  },
+  "cta": {
+    "heading": "Pregătit să lansezi următorul tău produs AI?",
+    "subheading": "Inițializează local o arhitectură SaaS completă și cloud-native cu o singură comandă în terminal.",
+    "copyLabel": "Copiază Comanda",
+    "copiedLabel": "Copiat",
+    "startBuilding": "Începe Construirea"
+  },
+  "footer": {
+    "brandDescription": "Lansează Startup-ul tău cu Agent OS {brandName}. Multi-tenancy, facturare, autentificare și AI — gata de producție din prima zi.",
+    "columns": {
+      "product": "Produs",
+      "resources": "Resurse",
+      "legal": "Legal",
+      "community": "Comunitate"
+    },
+    "links": {
+      "product": "Produs",
+      "features": "Funcționalități",
+      "forge": "Forge",
+      "pricing": "Prețuri",
+      "about": "Despre",
+      "showcase": "Showcase",
+      "blog": "Blog",
+      "playbook": "Playbook",
+      "changelog": "Jurnal de modificări",
+      "roadmap": "Roadmap",
+      "docs": "Documentație",
+      "ideas": "Idei",
+      "opc": "Platformă",
+      "careers": "Carieră",
+      "security": "Securitate",
+      "dpa": "DPA",
+      "privacy": "Confidențialitate",
+      "terms": "Termeni",
+      "cookies": "Cookies",
+      "refund": "Rambursare",
+      "licensing": "Licențiere",
+      "contact": "Contact",
+      "faq": "FAQ",
+      "github": "GitHub",
+      "discord": "Discord",
+      "twitter": "X (Twitter)"
+    },
+    "copyright": "© 2026 {brandName} Intelligence. Toate drepturile rezervate.",
+    "statusOnline": "Toate sistemele funcționale",
+    "newsletterTitle": "Rămâi la curent",
+    "newsletterPlaceholder": "you@example.com",
+    "newsletterSubscribe": "Abonează-te",
+    "newsletterSuccess": "Mulțumim pentru abonare!",
+    "newsletterError": "A apărut o problemă",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
+  },
+  "logoStrip": {
+    "tagline": "Rulează pe"
+  },
+  "monorepoTree": {
+    "badge": "STRUCTURĂ TURBOREPO",
+    "title": "15 aplicații. 113 pachete. 4 căi backend.",
+    "description": "Cod partajat, build-uri paralele, zero duplicare. Tipizare completă end-to-end de la bază de date la frontend.",
+    "metricApps": "aplicații",
+    "metricBackends": "piste backend",
+    "metricPackages": "pachete",
+    "verifiedPaths": "Căi verificate față de spațiul de lucru actual",
+    "cta": "Explorează arhitectura monorepo"
+  },
+  "stats": {
+    "title": "În cifre",
+    "github": "Stele GitHub",
+    "discord": "Membri Discord",
+    "setup": "Timp mediu de configurare",
+    "packages": "Pachete Monorepo",
+    "ctaStar": "Dă un ⭐ →",
+    "ctaJoin": "Alătură-te →",
+    "ctaStart": "Începe →",
+    "ctaExplore": "Explorează →"
+  },
+  "legalPages": {
+    "about": {
+      "title": "Despre noi — Platforma AI guvernată",
+      "description": "Descoperă viziunea comercială și principiile de inginerie din spatele platformei AI guvernate de {brandName}.",
+      "heading": "Era echipelor de produs agile",
+      "subheading": "Înlocuiește munca repetată pe platformă cu infrastructură guvernată, automatizare puternică și un avantaj durabil în inginerie.",
+      "missionTitle": "O nouă ordine care rezistă degradării administrative",
+      "missionP1": "{brandName} construiește o platformă AI guvernată pentru echipele care au nevoie de infrastructură durabilă, nu de stack-uri de start efemere. Scalarea tradițională adesea vine cu birocrație și entropie; noi răspundem cu guvernanță a codului, automatizare și o bază de platformă care rămâne auditabilă pe măsură ce crește.",
+      "missionP2": "Comerțul suferă încă din cauza overhead-ului de coordonare, a instrumentelor fragmentate și a căilor slabe de upgrade. Ne pasă să reducem aceste fricțiuni prin contracte de platformă mai clare, primitive de livrare mai puternice și un comportament runtime pe care echipele îl pot observa și în care pot avea încredere.",
+      "missionP3": "Respingem obiceiul de a rezolva problemele de scalare cu mai multă greutate organizațională. Automatizarea, testele și guvernanța ar trebui să absoarbă munca operațională repetată, astfel încât echipele să se poată concentra pe produs, arhitectură și rezultate pentru clienți.",
+      "missionP4": "",
+      "valuesTitle": "Cele patru piloni",
+      "values": {
+        "0": {
+          "title": "Scalare guvernată (Filozofie)",
+          "description": "Scalarea ar trebui să vină din sisteme mai puternice, un avantaj mai mare și reguli de operare mai clare — nu din acumularea de greutate organizațională."
+        },
+        "1": {
+          "title": "Nucleul constructorului (Infrastructură)",
+          "description": "O bază de platformă reutilizabilă pentru multi-tenancy, facturare, autentificare, conformitate și integrări AI, pe care echipele o pot audita, extinde și livra repetat."
+        },
+        "2": {
+          "title": "Disciplina upgrade-ului (Routing)",
+          "description": "Sistemele sănătoase cresc prin verificări de compatibilitate, migrații și contracte runtime observabile, nu prin derapaje, eroism sau rescrieri ocazionale."
+        },
+        "3": {
+          "title": "Codul este legea (Organizație)",
+          "description": "Disciplina operațională ar trebui codificată în teste, fluxuri de lucru și reguli de guvernanță, astfel încât echipele să poată îmbunătăți platforma fără a se baza pe politică sau memorie instituțională."
+        }
+      },
+      "jobsTitle": "Semnale de inginerie în locul acreditărilor",
+      "jobsDescription": "Ne pasă mai mult de output-ul verificabil de inginerie, claritatea gândirii și judecata de sistem decât de pedigree sau inflația titlurilor.",
+      "jobsButton": "Trimite profilul GitHub",
+      "companyInfoTitle": "Conformitate organizațională",
+      "companyInfo": {
+        "legalName": "Înregistrare entitate juridică",
+        "founded": "Data înregistrării",
+        "headquarters": "Centru operațional global",
+        "jurisdiction": "Jurisdicție aplicabilă"
+      },
+      "ctaHeading": "Ai nevoie de o evaluare tehnică mai aprofundată?",
+      "ctaDescription": "Contactează specialiștii noștri de inginerie pentru o evaluare a integrării enterprise sau consultă documentația de implementare.",
+      "ctaButton": "Stabilește contact"
+    },
+    "contact": {
+      "title": "Interogare tehnică și comercială — Inteligență {brandName}",
+      "description": "Canalul de comunicare dedicat pentru licențiere comercială, self-hosting enterprise și suport tehnic avansat.",
+      "heading": "Stabilește conexiunea de suport",
+      "subheading": "Vom desemna un specialist tehnic sau arhitect dedicat pentru a evalua cerințele tale explicite.",
+      "contacts": {
+        "founder": {
+          "title": "Contact direct cu fondatorul",
+          "description": "Canal de comunicare directă pentru alinierea strategică de bază și interogări la nivel executiv."
+        },
+        "general": {
+          "title": "Consultanță enterprise",
+          "description": "Discuții preliminare privind parteneriatele strategice ecologice și evoluția arhitecturală generală."
+        },
+        "sales": {
+          "title": "Implementare Comercială",
+          "description": "Negociere privind licențierea sursă închisă și detaliile legate de implementările în medii private de cluster."
+        },
+        "support": {
+          "title": "Suport de Nivel Expert",
+          "description": "Ghidare arhitecturală țintită și servicii de depanare pentru integrări active de afaceri și depanarea sistemului central."
+        },
+        "legal": {
+          "title": "Juridic și Conformitate",
+          "description": "Întrebări legate de definirea limitelor open-source, audituri de conformitate enterprise și termeni contractuali."
+        },
+        "privacy": {
+          "title": "Confidențialitate Centrul de Date",
+          "description": "Verificare tehnică și directive de conformitate privind GDPR și legislația ulterioară internațională de protecție a datelor."
+        },
+        "security": {
+          "title": "Divulgări de Securitate",
+          "description": "Trimiteți în siguranță rapoarte tehnice de reproducere privind vulnerabilitățile potențiale ale software-ului direct către echipa noastră de infrastructură."
+        }
+      },
+      "formTitle": "Portal de Trimitere",
+      "form": {
+        "name": "Denumire Expeditor",
+        "email": "Adresă de Email Oficială",
+        "company": "Organizație Afiliată",
+        "category": "Domeniu de Cerință",
+        "categories": {
+          "general": "Consultanță Corporate",
+          "sales": "Licențiere și Arhitectură",
+          "support": "Asistență pentru Dezvoltatori",
+          "legal": "Limitări Juridice și de Conformitate",
+          "privacy": "Politici de Procesare a Datelor",
+          "partnership": "Integrări în Ecosistem",
+          "press": "Relații Publice"
+        },
+        "subject": "Rezumatul Problemei Principale",
+        "message": "Specificații Tehnice/Comerciale Detaliate",
+        "submit": "Transmite către Backend",
+        "privacyNotice": "Executarea acestei cereri de rețea semnifică citirea și acordarea consimțământului pentru",
+        "privacyLink": "Infrastructura Sistemică de Confidențialitate",
+        "submitting": "Intrare în coada de procesare...",
+        "successMessage": "Date transmise cu succes. Echipa operațională responsabilă va emite un răspuns detaliat în termen de 1-2 zile lucrătoare standard."
+      },
+      "companyInfoTitle": "Telemetrie Operațională",
+      "companyNameChinese": "{companyLegal}",
+      "companyNameEnglish": "{companyLegalEn}",
+      "companyAddress": "Wuxi, Provincia Jiangsu, China",
+      "socialMedia": "Legături principale pe rețelele de socializare"
+    },
+    "cookies": {
+      "title": "Politica de cookies — {brandName}",
+      "description": "Cum folosește {brandName} cookies și tehnologii similare de urmărire pe site-ul și serviciile noastre.",
+      "heading": "Politica de cookies",
+      "effectiveDate": "Data intrării în vigoare",
+      "lastUpdated": "Ultima actualizare",
+      "dates": {
+        "effective": "1 ianuarie 2025",
+        "updated": "1 ianuarie 2025"
+      },
+      "intro": "Această Politică de cookies explică modul în care {brandName} Co., Ltd. (\"{brandName}\", \"noi\", \"ne\" sau \"al nostru\") folosește cookies și tehnologii similare de urmărire pe site-ul și serviciile noastre.",
+      "whatAreCookies": {
+        "title": "Ce sunt cookies-urile?",
+        "content": "Cookies-urile sunt fișiere text mici plasate pe dispozitivul dvs. atunci când vizitați un site web. Ele sunt utilizate pe scară largă pentru a face site-urile web să funcționeze mai eficient și pentru a oferi informații proprietarilor site-urilor web."
+      },
+      "howWeUse": {
+        "title": "Cum folosim cookies-urile",
+        "intro": "Folosim cookies-urile pentru a:",
+        "items": {
+          "0": {
+            "label": "Activarea funcțiilor esențiale",
+            "desc": "Asigurarea funcționalității de bază, cum ar fi autentificarea utilizatorilor și securitatea"
+          },
+          "1": {
+            "label": "Reținerea preferințelor",
+            "desc": "Salvează limba, tema și alte setări"
+          },
+          "2": {
+            "label": "Îmbunătățește performanța",
+            "desc": "Înțelege cum interacționează vizitatorii cu serviciile noastre"
+          },
+          "3": {
+            "label": "Personalizează experiența",
+            "desc": "Oferă conținut și recomandări relevante"
+          },
+          "4": {
+            "label": "Măsoară marketingul",
+            "desc": "Urmărește eficacitatea campaniilor noastre de marketing"
+          }
+        }
+      },
+      "typesTitle": "Tipuri de cookies pe care le folosim",
+      "tableHeaders": {
+        "cookie": "Cookie",
+        "provider": "Furnizor",
+        "purpose": "Scop",
+        "duration": "Durată"
+      },
+      "necessary": {
+        "title": "Cookies strict necesare",
+        "description": "Aceste cookies sunt esențiale pentru ca site-ul să funcționeze corect. Nu pot fi dezactivate.",
+        "cookies": {
+          "0": {
+            "name": "__session",
+            "provider": "{brandName}",
+            "purpose": "Sesiune de autentificare a utilizatorului",
+            "duration": "Sesiune"
+          },
+          "1": {
+            "name": "__clerk_db_jwt",
+            "provider": "Clerk",
+            "purpose": "Token de autentificare",
+            "duration": "7 zile"
+          },
+          "2": {
+            "name": "cookie_consent",
+            "provider": "{brandName}",
+            "purpose": "Salvează preferințele de consimțământ pentru cookie-uri",
+            "duration": "1 an"
+          }
+        }
+      },
+      "functional": {
+        "title": "Cookie-uri funcționale",
+        "description": "Aceste cookie-uri permit funcționalități personalizate și își amintesc preferințele tale.",
+        "cookies": {
+          "0": {
+            "name": "locale",
+            "provider": "{brandName}",
+            "purpose": "Salvează preferința de limbă",
+            "duration": "1 an"
+          },
+          "1": {
+            "name": "theme",
+            "provider": "{brandName}",
+            "purpose": "Salvează preferința de temă",
+            "duration": "1 an"
+          }
+        }
+      },
+      "analyticsType": {
+        "title": "Cookies de analiză",
+        "description": "Aceste cookies ne ajută să înțelegem cum interacționează vizitatorii cu site-ul nostru.",
+        "cookies": {
+          "0": {
+            "name": "_ga",
+            "provider": "Google Analytics",
+            "purpose": "Distinge utilizatorii unici",
+            "duration": "2 ani"
+          },
+          "1": {
+            "name": "ph_*",
+            "provider": "PostHog",
+            "purpose": "Analiză produs",
+            "duration": "1 an"
+          }
+        }
+      },
+      "marketingType": {
+        "title": "Cookies de marketing",
+        "description": "Aceste cookies sunt folosite pentru publicitate și pentru urmărirea performanței campaniilor publicitare.",
+        "cookies": {
+          "0": {
+            "name": "_fbp",
+            "provider": "Facebook",
+            "purpose": "Urmărește vizitele pentru anunțurile Facebook",
+            "duration": "3 luni"
+          },
+          "1": {
+            "name": "_gcl_au",
+            "provider": "Google Ads",
+            "purpose": "Urmărire conversii",
+            "duration": "3 luni"
+          }
+        }
+      },
+      "managingTitle": "Gestionarea preferințelor privind cookie-urile",
+      "consentBanner": {
+        "title": "Banner de consimțământ cookie",
+        "intro": "La prima vizită pe site-ul nostru, veți vedea un banner de consimțământ cookie care vă permite să:",
+        "items": {
+          "0": {
+            "label": "Acceptă tot",
+            "desc": "Activează toate categoriile de cookie-uri"
+          },
+          "1": {
+            "label": "Respinge tot",
+            "desc": "Dezactivează toate cookie-urile opționale (cookie-urile necesare rămân)"
+          },
+          "2": {
+            "label": "Personalizează",
+            "desc": "Alege categoriile specifice de cookie-uri pe care să le activezi"
+          }
+        },
+        "changeNote": "Puteți modifica preferințele oricând făcând clic pe \"Setări cookie\" din subsol."
+      },
+      "browserSettings": {
+        "title": "Setări browser",
+        "intro": "Majoritatea browserelor web vă permit să controlați cookie-urile prin setările lor:",
+        "browsers": {
+          "0": {
+            "name": "Chrome",
+            "path": "Setări > Confidențialitate și securitate > Cookies"
+          },
+          "1": {
+            "name": "Firefox",
+            "path": "Setări > Confidențialitate și securitate > Cookies"
+          },
+          "2": {
+            "name": "Safari",
+            "path": "Preferințe > Confidențialitate > Cookies"
+          },
+          "3": {
+            "name": "Edge",
+            "path": "Setări > Confidențialitate, căutare și servicii > Cookies"
+          }
+        },
+        "note": "Blocarea anumitor cookies poate afecta funcționalitatea site-ului."
+      },
+      "similarTech": {
+        "title": "Tehnologii similare",
+        "intro": "Pe lângă cookies, putem folosi și:",
+        "items": {
+          "0": {
+            "label": "Stocare locală",
+            "desc": "Pentru a stoca preferințele și a memora în cache datele local"
+          },
+          "1": {
+            "label": "Stocare sesiune",
+            "desc": "Pentru date temporare în timpul sesiunii dvs. de navigare"
+          },
+          "2": {
+            "label": "Pixel Tags",
+            "desc": "Imagini mici pentru a urmări deschiderile de email și vizitele pe site"
+          }
+        },
+        "noFingerprinting": "NU folosim fingerprinting-ul browserului pentru urmărire."
+      },
+      "updates": {
+        "title": "Actualizări ale acestei politici",
+        "content": "Putem actualiza această Politică privind Cookie-urile din când în când. Vă vom notifica despre modificările substanțiale prin publicarea politicii actualizate pe site-ul nostru."
+      },
+      "contactUs": {
+        "title": "Contactați-ne",
+        "intro": "Dacă aveți întrebări privind utilizarea cookie-urilor, vă rugăm să ne contactați:",
+        "company": "{brandName} Co., Ltd.",
+        "privacyNote": "Pentru mai multe informații despre modul în care colectăm și procesăm datele dumneavoastră, vă rugăm să consultați",
+        "privacyLink": "Politica de confidențialitate"
+      }
+    },
+    "faq": {
+      "title": "Ghidare tehnică și Întrebări frecvente — {brandName}",
+      "description": "Analiză cuprinzătoare a arhitecturii framework-ului, a topologiilor de bază și a strategiilor de implementare comercială.",
+      "heading": "Analiză detaliată pentru conducere",
+      "subheading": "Materiale de suport optimizate pentru integrarea în ingineria sistemelor și luarea deciziilor comerciale la nivel executiv.",
+      "categories": {
+        "0": {
+          "name": "Prezentare generală a arhitecturii",
+          "questions": {
+            "0": {
+              "q": "Care este scopul operațional explicit al {productName}?",
+              "a": "{productName} este un framework AI SaaS Next.js, foarte structurat și gata de producție. Include facturare corporativă, autentificare cu mai mulți factori și izolare multi-tenant într-o bază de platformă guvernată, permițând echipelor să se concentreze pe implementarea AI specifică produsului."
+            },
+            "1": {
+              "q": "Cum este structurată licențierea repository-ului?",
+              "a": "Infrastructura de bază aplică strict acordul OSS AGPLv3, garantând transparență și utilizare fără costuri. Pentru organizațiile care necesită obfuscare proprietară și garanții ridicate de rescriere, sunt disponibile contracte comerciale explicite cu sursă închisă."
+            },
+            "2": {
+              "q": "Care este viteza evaluării comerciale inițiale?",
+              "a": "Extrem de mare. Folosind lanțul nostru de instrumente Node CLI personalizat împreună cu specificația tehnică precisă, un inginer junior poate pune în funcțiune o instanță locală autonomă de Minimum Viable Product (MVP) în câteva minute."
+            }
+          }
+        },
+        "1": {
+          "name": "Operațiuni Comerciale",
+          "questions": {
+            "0": {
+              "q": "Cât de mare este toleranța pentru scalarea comercială?",
+              "a": "Proiectat în mare măsură pe paradigme de micro-componente, capacitatea de încărcare structurală se mapază perfect de la nivelurile gratuite fără cerere, dinamic până la pragurile Enterprise care servesc milioane de cereri lunare, configurate complet prin constrângeri din dashboard."
+            },
+            "1": {
+              "q": "Cum afectează volatilitatea abonamentului contabilitatea standard?",
+              "a": "Operăm utilizând jurnalizare structurală precisă, la nivel de secundă, a resurselor și a throughput-ului API. Modificarea constrângerilor se reconciliează instantaneu cu stratul de contabilitate — fie prin rambursarea diferențelor prorata, fie prin emiterea automată de credite. Nu există absolut nicio perioadă de înghețare a nivelului."
+            },
+            "2": {
+              "q": "Ce infrastructură de procesare izolează vectorii de plată?",
+              "a": "Rutarea globală a fondelor se bazează fundamental pe interfețele server Stripe, garantând telemetrie strictă PCI-DSS și integritate în procesare. Implementările Enterprise pot integra pipeline-uri private de audit financiar guvernate de angajamente SLA personalizate."
+            }
+          }
+        },
+        "2": {
+          "name": "Stratul de Inginerie a Sistemului",
+          "questions": {
+            "0": {
+              "q": "Ce abstracțiuni fundamentale de inteligență sunt suportate nativ?",
+              "a": "Logica principală de interacțiune dictează interoperabilitate nativă peste specificațiile standard OpenAI, Anthropic și Gemini. Acest lucru oferă o flexibilitate uriașă pentru a schimba rapid punctele de intrare pentru raționament eficient prin mapare variabilă, fără degradare a logicii comerciale upstream."
+            },
+            "1": {
+              "q": "Cum este abordat riscul de obfuscare a bazei de date?",
+              "a": "Implementarea implicită deployează intrinsec politici Postgres Row-Level Security (RLS) strâns cuplate cu primitivele noastre de rutare a rezoluției Tenant serverless. Acest lucru asigură că partițiile rigide previn activ contaminarea datelor la nivel de aplicație și suprapunerea execuției."
+            },
+            "2": {
+              "q": "Există restricții arhitecturale pentru implementările auto-gestionate?",
+              "a": "Deloc. Topologia este complet decuplată. Dacă mediul execută runtime-uri independente Node.js alături de clustere PostgreSQL sănătoase, funcționalitatea completă este inherent păstrată."
+            }
+          }
+        },
+        "3": {
+          "name": "Integritate Sistemică",
+          "questions": {
+            "0": {
+              "q": "Ce protocoale determină apărarea mecanică a perimetrului?",
+              "a": "Mecanismele execută criptare TLS obligatorie în timpul transmiterii, algoritmi de hashing deterministi pentru maparea secretelor și înregistrarea omniprezentă a evenimentelor de mutație scrise strict în registrele interne de urmărire a seriei temporale."
+            },
+            "1": {
+              "q": "Respectă topologia principalele statute internaționale privind confidențialitatea?",
+              "a": "Da, profund. Modulele de afaceri furnizează implementări algoritmice gata de utilizare care vizează stările de retragere a consimțământului, logica de ștergere definitivă și interogări de export aprofundate conforme optim cu GDPR și cadrele reglementare localizate."
+            },
+            "2": {
+              "q": "Ce se execută în cazul unui incident catastrofic anormal?",
+              "a": "Sentinelii automatizați alertează instantaneu vectorii de inginerie centrali care blochează circuitele și implementează un triaj rapid. Guvernat de un manual avansat de rezolvare, Postmortemurile Incidentelor complet transparente sunt diseminate universal într-o fereastră absolută de 72 de ore."
+            }
+          }
+        },
+        "4": {
+          "name": "Directive de Asistență Tehnică",
+          "questions": {
+            "0": {
+              "q": "Cum se rezolvă depanarea gâtuirilor operaționale?",
+              "a": "Vectorii de triaj inițial vizează matricea de documentație riguros întreținută și revizuită de colegi și interacțiunile verificate ale comunității. Achiziționarea unei licențe standard sau la nivel enterprise deblochează accesul la cozi private de escaladare care se rezolvă prin noduri interne de inginerie directe."
+            },
+            "1": {
+              "q": "Extindeți operațiuni de integrare fizică sau în medii specializate?",
+              "a": "Aceasta intră în categoria noastră premium personalizată pentru conglomerate corporative de top. Arhitecții noștri cei mai seniori se deplasează în teren pentru a efectua audituri de cod împotriva arhitecturii legacy, a gestiona relocări delicate în cloud și a valida partiții de rețea foarte izolate."
+            }
+          }
+        }
+      },
+      "ctaHeading": "Aveți nevoie de sincronizare tehnică imediată?",
+      "ctaDescription": "Fie că validați un schema specifică de comportament API sau executați acorduri de integrare pe termen lung, interfațați direct cu ierarhia de inginerie.",
+      "ctaButton": "Primiți Instrucțiuni de Integrare",
+      "ctaEmail": "Transmiteți Mesaj Direct"
+    },
+    "privacy": {
+      "title": "Protocol de Confidențialitate și Apărare a Informațiilor — {brandName}",
+      "description": "Documentare extensivă privind modul exact în care mecanica infrastructurii guvernează autonomia utilizatorului și izolarea datelor mașinii.",
+      "heading": "Directive de Protecție a Informațiilor",
+      "effectiveDate": "Data Intrării în Vigoare",
+      "lastUpdated": "Ultima Actualizare",
+      "dates": {
+        "effective": "1 ianuarie 2025",
+        "updated": "1 ianuarie 2025"
+      },
+      "intro": "La {brandName} (\"Companie,\" \"noi,\" \"ne\" sau \"nostru\"), suntem angajați să vă protejăm confidențialitatea. Această Politică de Confidențialitate explică modul în care colectăm, folosim, divulgăm și protejăm informațiile dumneavoastră atunci când utilizați site-ul nostru, aplicațiile și serviciile (în ansamblu, \"Serviciile\").",
+      "infoWeCollect": {
+        "title": "1. Informațiile pe care le Colectăm",
+        "youProvide": {
+          "title": "1.1 Informațiile pe care le Furnizați",
+          "intro": "Colectăm informațiile pe care ni le furnizați direct, inclusiv:",
+          "items": {
+            "0": {
+              "label": "Informații Cont",
+              "desc": "Nume, adresă de e-mail, parolă și detalii organizaționale atunci când creați un cont."
+            },
+            "1": {
+              "label": "Informații Profil",
+              "desc": "Imaginea de profil, funcția, numele companiei și alte informații opționale."
+            },
+            "2": {
+              "label": "Informații de plată",
+              "desc": "Adresa de facturare și detaliile metodei de plată (procesate în siguranță prin Stripe)."
+            },
+            "3": {
+              "label": "Comunicări",
+              "desc": "Mesaje, feedback și alte comunicări pe care ni le trimiteți."
+            },
+            "4": {
+              "label": "Conținut",
+              "desc": "Orice conținut pe care îl creați, încărcați sau stocați folosind Serviciile noastre."
+            }
+          }
+        },
+        "automatic": {
+          "title": "1.2 Informații colectate automat",
+          "intro": "Când utilizați Serviciile noastre, colectăm automat anumite informații:",
+          "items": {
+            "0": {
+              "label": "Informații despre dispozitiv",
+              "desc": "Tipul dispozitivului, sistemul de operare, tipul browserului și identificatorii unici ai dispozitivului."
+            },
+            "1": {
+              "label": "Informații de utilizare",
+              "desc": "Paginile vizualizate, funcțiile utilizate, acțiunile întreprinse și timpul petrecut pe Servicii."
+            },
+            "2": {
+              "label": "Date de jurnal",
+              "desc": "Adresa IP, orele de acces, URL-urile de referință și jurnalele de activitate a sistemului."
+            },
+            "3": {
+              "label": "Informații despre locație",
+              "desc": "Locația generală bazată pe adresa IP (nu colectăm geolocația precisă)."
+            }
+          }
+        }
+      },
+      "howWeUse": {
+        "title": "2. Cum folosim informațiile dumneavoastră",
+        "intro": "Folosim informațiile pe care le colectăm pentru a:",
+        "items": {
+          "0": {
+            "label": "Furnizarea serviciilor",
+            "desc": "Operăm, menținem și îmbunătățim serviciile noastre."
+          },
+          "1": {
+            "label": "Procesarea tranzacțiilor",
+            "desc": "Gestionăm plățile, facturarea și operațiunile conexe."
+          },
+          "2": {
+            "label": "Comunicarea",
+            "desc": "Trimitem anunțuri de serviciu, actualizări și comunicări de marketing (cu acordul dumneavoastră)."
+          },
+          "3": {
+            "label": "Personalizarea",
+            "desc": "Personalizăm experiența dumneavoastră și oferim recomandări relevante."
+          },
+          "4": {
+            "label": "Analiza",
+            "desc": "Înțelegem tiparele de utilizare și îmbunătățim serviciile noastre."
+          },
+          "5": {
+            "label": "Protecția",
+            "desc": "Detectăm, prevenim și răspundem la fraude, abuzuri și incidente de securitate."
+          }
+        }
+      },
+      "howWeShare": {
+        "title": "3. Cum împărtășim informațiile dumneavoastră",
+        "intro": "Putem împărtăși informațiile dumneavoastră în următoarele situații:",
+        "serviceProviders": {
+          "title": "3.1 Furnizori de servicii",
+          "intro": "Împărtășim informații cu furnizori terți care oferă servicii în numele nostru, inclusiv:",
+          "items": {
+            "0": {
+              "label": "Infrastructură",
+              "desc": "Găzduire cloud (Vercel, Supabase), servicii de bază de date"
+            },
+            "1": {
+              "label": "Procesare plăți",
+              "desc": "Stripe pentru gestionarea securizată a plăților"
+            },
+            "2": {
+              "label": "Autentificare",
+              "desc": "Clerk pentru gestionarea identității"
+            },
+            "3": {
+              "label": "Analitică",
+              "desc": "PostHog, Vercel Analytics pentru informații despre utilizare"
+            }
+          }
+        },
+        "businessTransfers": {
+          "title": "3.2 Transferuri de afaceri",
+          "content": "Dacă suntem implicați într-o fuziune, achiziție sau vânzare de active, informațiile dumneavoastră pot fi transferate ca parte a acelei tranzacții."
+        },
+        "legalRequirements": {
+          "title": "3.3 Cerințe legale",
+          "content": "Putem divulga informații atunci când este cerut de lege, de un proces legal sau de o cerere guvernamentală, sau pentru a ne proteja drepturile, intimitatea, siguranța sau proprietatea."
+        }
+      },
+      "yourRights": {
+        "title": "4. Drepturile și opțiunile dumneavoastră",
+        "accessPortability": {
+          "title": "4.1 Acces și portabilitate",
+          "content": "Puteți accesa informațiile dvs. personale prin setările contului și solicita o copie a datelor într-un format portabil."
+        },
+        "correction": {
+          "title": "4.2 Corectare",
+          "content": "Puteți actualiza informațiile contului dvs. în orice moment prin intermediul panoului de control."
+        },
+        "deletion": {
+          "title": "4.3 Ștergere",
+          "content": "Puteți solicita ștergerea contului și a datelor asociate prin setări sau contactându-ne."
+        },
+        "marketing": {
+          "title": "4.4 Comunicări marketing",
+          "content": "Puteți renunța la e-mailurile marketing făcând clic pe \"dezabonare\" în orice e-mail marketing sau actualizând preferințele."
+        }
+      },
+      "dataSecurity": {
+        "title": "5. Securitatea datelor",
+        "intro": "Implementăm măsuri tehnice și organizaționale adecvate pentru a proteja informațiile dvs., inclusiv:",
+        "items": {
+          "0": "Criptarea datelor în tranzit (TLS) și la repaus",
+          "1": "Evaluări periodice de securitate și teste de penetrare",
+          "2": "Controale de acces și cerințe de autentificare",
+          "3": "Monitorizarea și înregistrarea activității sistemului"
+        }
+      },
+      "ccpa": {
+        "title": "6. Drepturi de confidențialitate California (CCPA)",
+        "intro": "Dacă sunteți rezident în California, aveți drepturi specifice privind informațiile dvs. personale:",
+        "items": {
+          "0": {
+            "label": "Dreptul de a afla",
+            "desc": "Solicitați divulgarea informațiilor pe care le colectăm, le folosim și le împărtășim."
+          },
+          "1": {
+            "label": "Dreptul de a șterge",
+            "desc": "Solicitați ștergerea datelor dvs. personale."
+          },
+          "2": {
+            "label": "Dreptul de a refuza",
+            "desc": "Refuzați vânzarea datelor personale (nu vindem datele dvs.)."
+          },
+          "3": {
+            "label": "Dreptul la nediscriminare",
+            "desc": "Nu vă vom discrimina pentru că vă exercitați drepturile."
+          }
+        }
+      },
+      "gdpr": {
+        "title": "7. Drepturi europene privind confidențialitatea (GDPR)",
+        "intro": "Dacă vă aflați în SEE, Marea Britanie sau Elveția, aveți drepturi suplimentare în temeiul GDPR:",
+        "items": {
+          "0": {
+            "label": "Baza legală",
+            "desc": "Preluăm datele dvs. pe baza executării contractului, a intereselor legitime sau a consimțământului."
+          },
+          "1": {
+            "label": "Drepturi",
+            "desc": "Acces, rectificare, ștergere, portabilitate, restricționare și opoziție."
+          },
+          "2": {
+            "label": "DPO",
+            "desc": "Puteți contacta Ofițerul nostru de Protecție a Datelor la adresa dpo@nebutra.com."
+          }
+        }
+      },
+      "contactUs": {
+        "title": "8. Contactați-ne",
+        "intro": "Dacă aveți întrebări cu privire la această Politică de Confidențialitate, vă rugăm să ne contactați:",
+        "company": "{brandName} Co., Ltd."
+      }
+    },
+    "refund": {
+      "title": "Protocoale pentru Anomalii de Transacție — {brandName}",
+      "description": "Delimitare riguroasă privind parametrii exacti de rambursare a capitalului în cadrul diverselor modele de implicare structurală.",
+      "heading": "Cadrul de Execuție a Controverselor",
+      "effectiveDate": "Data Implementării Executării",
+      "lastUpdated": "Epoca Urmăririi Revizuirilor",
+      "dates": {
+        "effective": "1 ianuarie 2025",
+        "updated": "1 ianuarie 2025"
+      },
+      "intro": "La {brandName}, dorim să fiți complet mulțumiți de serviciile noastre. Această Politică de Rambursare descrie circumstanțele în care sunt disponibile rambursările și procesul de solicitare a acestora.",
+      "subscriptionPlans": {
+        "title": "Planuri de Abonament",
+        "monthly": {
+          "title": "Abonamente Lunare",
+          "items": {
+            "0": {
+              "label": "Anulare",
+              "desc": "Puteți anula abonamentul lunar în orice moment"
+            },
+            "1": {
+              "label": "Rambursări Pro-rata",
+              "desc": "Nu oferim rambursări proporționale pentru perioade parțiale ale lunii"
+            },
+            "2": {
+              "label": "Acces",
+              "desc": "Păstrați accesul la funcțiile plătite până la sfârșitul perioadei de facturare"
+            },
+            "3": {
+              "label": "Renovare automată",
+              "desc": "Abonamentele se reînnoiesc automat, cu excepția cazului în care sunt anulate"
+            }
+          }
+        },
+        "annual": {
+          "title": "Abonamente anuale",
+          "items": {
+            "0": {
+              "label": "Garanție de rambursare în 14 zile",
+              "desc": "Noii abonați anual pot solicita o rambursare completă în termen de 14 zile de la prima achiziție"
+            },
+            "1": {
+              "label": "După 14 zile",
+              "desc": "Rambursările nu sunt disponibile în general după perioada de 14 zile"
+            },
+            "2": {
+              "label": "Anulare",
+              "desc": "Puteți anula în orice moment, dar abonamentul va rămâne activ până la sfârșitul perioadei anuale"
+            },
+            "3": {
+              "label": "Fără rambursări proporționale",
+              "desc": "Nu oferim rambursări parțiale pentru lunile neutilizate"
+            }
+          }
+        }
+      },
+      "eligibleScenarios": {
+        "title": "Scenarii eligibile pentru rambursare",
+        "intro": "Vom lua în considerare cererile de rambursare în următoarele circumstanțe:",
+        "serviceIssues": {
+          "title": "1. Probleme de serviciu",
+          "items": {
+            "0": "Pene de serviciu semnificative care vă afectează capacitatea de a utiliza funcțiile principale",
+            "1": "Probleme tehnice pe care nu le putem rezolva într-un interval de timp rezonabil",
+            "2": "Funcții semnificativ diferite de cele publicitate"
+          }
+        },
+        "billingErrors": {
+          "title": "2. Erori de facturare",
+          "items": {
+            "0": "Taxe duble",
+            "1": "Suma facturată incorect",
+            "2": "Taxe neautorizate (după verificare)"
+          }
+        },
+        "exceptionalCircumstances": {
+          "title": "3. Circumstanțe excepționale",
+          "items": {
+            "0": "Urgențe medicale documentate",
+            "1": "Dezastre naturale care vă afectează afacerea",
+            "2": "Alte circumstanțe evaluate caz cu caz"
+          }
+        }
+      },
+      "nonRefundable": {
+        "title": "Articole nerambursabile",
+        "intro": "Următoarele nu sunt, în general, eligibile pentru rambursare:",
+        "items": {
+          "0": {
+            "label": "Taxe bazate pe utilizare",
+            "desc": "Apeluri API, consum de tokeni AI sau spațiu de stocare utilizat"
+          },
+          "1": {
+            "label": "Adaugări și servicii suplimentare",
+            "desc": "Achiziții unice sau servicii suplimentare"
+          },
+          "2": {
+            "label": "Contracte enterprise",
+            "desc": "Acordurile personalizate au propriile lor termeni"
+          },
+          "3": {
+            "label": "Anulări voluntare",
+            "desc": "După perioada de eligibilitate pentru rambursare"
+          },
+          "4": {
+            "label": "Încălcări ale termenilor",
+            "desc": "Conturi închise pentru încălcarea politicilor"
+          }
+        }
+      },
+      "howToRequest": {
+        "title": "Cum să solicitați o rambursare",
+        "step1": {
+          "title": "Pasul 1: Contactați suportul",
+          "intro": "Trimiteți-ne un e-mail la billing@nebutra.com cu:",
+          "items": {
+            "0": "Adresa de e-mail a contului dvs.",
+            "1": "Planul de abonament și perioada de facturare",
+            "2": "Motivul solicitării de rambursare",
+            "3": "Orice documentație relevantă"
+          }
+        },
+        "step2": {
+          "title": "Pasul 2: Procesul de verificare",
+          "items": {
+            "0": "Vom analiza solicitarea dumneavoastră în termen de 5 zile lucrătoare",
+            "1": "Putem solicita informații suplimentare",
+            "2": "Veți primi un răspuns scris prin e-mail"
+          }
+        },
+        "step3": {
+          "title": "Pasul 3: Procesarea rambursării",
+          "intro": "În cazul aprobării:",
+          "items": {
+            "0": "Rambursările sunt procesate către metoda de plată originală",
+            "1": "Rambursările pe cardul de credit apar de obicei în 5-10 zile lucrătoare",
+            "2": "Timpul de procesare al băncii poate varia"
+          }
+        }
+      },
+      "planChanges": {
+        "title": "Modificări plan",
+        "upgrades": {
+          "title": "Actualizări",
+          "items": {
+            "0": "Actualizările intră în vigoare imediat",
+            "1": "Vă este facturată diferența proporțională pentru restul perioadei de facturare",
+            "2": "Nu se acordă rambursare pentru planul anterior"
+          }
+        },
+        "downgrades": {
+          "title": "Degradări",
+          "items": {
+            "0": "Degradările intră în vigoare la următoarea perioadă de facturare",
+            "1": "Păstrați accesul la funcțiile curente până atunci",
+            "2": "Nu se acordă rambursări parțiale pentru perioada curentă"
+          }
+        }
+      },
+      "freeTrial": {
+        "title": "Perioadă de probă gratuită",
+        "items": {
+          "0": "Perioadele de probă gratuită nu necesită date de plată",
+          "1": "Nu se efectuează nicio taxare în timpul perioadei de probă",
+          "2": "Veți fi notificat înainte de începerea oricăror taxări"
+        }
+      },
+      "disputeResolution": {
+        "title": "Rezolvarea disputelor",
+        "intro": "Dacă nu sunteți de acord cu decizia noastră privind rambursarea:",
+        "steps": {
+          "0": "Răspundeți la e-mailul cu decizia, furnizând informații suplimentare",
+          "1": "Solicitați escaladarea către un supervisor",
+          "2": "Contactați-ne la legal@nebutra.com pentru o analiză suplimentară"
+        }
+      },
+      "contactUs": {
+        "title": "Contactați-ne",
+        "intro": "Pentru cereri de rambursare sau întrebări legate de această politică:",
+        "company": "{brandName} Co., Ltd.",
+        "billingLabel": "Facturare",
+        "supportLabel": "Suport",
+        "legalLabel": "Juridic",
+        "responseNote": "Ne propunem să răspundem tuturor cererilor de rambursare în termen de 5 zile lucrătoare.",
+        "termsNote": "Această politică face parte din",
+        "termsLink": "Termenii și condițiile",
+        "termsAgreement": "Prin utilizarea {brandName}, sunteți de acord cu acești termeni de rambursare."
+      }
+    },
+    "terms": {
+      "title": "Termenii și condițiile — {brandName}",
+      "description": "Termenii și condițiile care reglementează accesul și utilizarea site-ului web, aplicațiilor, API-urilor și serviciilor {brandName}.",
+      "heading": "Termenii și condițiile",
+      "effectiveDate": "Data intrării în vigoare",
+      "lastUpdated": "Ultima actualizare",
+      "dates": {
+        "effective": "1 ianuarie 2025",
+        "updated": "1 ianuarie 2025"
+      },
+      "intro1": "Bine ați venit la {brandName}! Acești Termeni și condiții (\"Termeni\") reglementează accesul și utilizarea site-ului web, aplicațiilor, API-urilor și serviciilor (în continuare, \"Servicii\") oferite de {brandName} Co., Ltd. (\"{brandName}\", \"Companie\", \"noi\", \"ne\" sau \"noastre\").",
+      "intro2": "Prin accesarea sau utilizarea serviciilor noastre, sunteți de acord să fiți legat de acești Termeni și de",
+      "intro2PrivacyLink": "Politica de confidențialitate",
+      "intro2End": ". Dacă nu sunteți de acord cu acești Termeni, nu utilizați serviciile noastre.",
+      "acceptance": {
+        "title": "1. Acceptarea termenilor",
+        "eligibility": {
+          "title": "1.1 Eligibilitate",
+          "intro": "Pentru a utiliza serviciile noastre, trebuie să:",
+          "items": {
+            "0": "Ai cel puțin 18 ani sau vârsta majoratului legal în jurisdicția ta",
+            "1": "Ai autoritatea de a încheia acești Termeni în numele tău sau al organizației tale",
+            "2": "Să nu fii interzis să utilizezi serviciile noastre conform legii aplicabile"
+          }
+        },
+        "orgAccounts": {
+          "title": "1.2 Conturi de organizație",
+          "content": "Dacă utilizezi serviciile noastre în numele unei organizații, declară că ai autoritatea de a obliga acea organizație la acești Termeni."
+        }
+      },
+      "services": {
+        "title": "2. Descrierea serviciilor",
+        "intro": "{brandName} oferă o platformă SaaS care include:",
+        "items": {
+          "0": "Funcții și generare de conținut bazate pe AI",
+          "1": "Gestiunea conținutului și instrumente pentru comunitate",
+          "2": "Sisteme de recomandare",
+          "3": "Integrări e-commerce",
+          "4": "Capabilități Web3",
+          "5": "Analitică și raportare"
+        }
+      },
+      "account": {
+        "title": "3. Înregistrarea contului",
+        "creation": {
+          "title": "3.1 Crearea contului",
+          "intro": "Pentru a accesa anumite funcționalități, trebuie să creați un cont. Sunteți de acord să:",
+          "items": {
+            "0": "Furnizați informații exacte și complete",
+            "1": "Mențineți securitatea acreditativelor contului dvs.",
+            "2": "Actualizați prompt informațiile dacă acestea se schimbă",
+            "3": "Preluați responsabilitatea pentru toate activitățile din contul dvs."
+          }
+        }
+      },
+      "billing": {
+        "title": "4. Abonament și facturare",
+        "pricing": {
+          "title": "4.1 Prețuri",
+          "content": "Serviciile noastre sunt oferite în cadrul diverselor planuri de abonament, așa cum sunt descrise pe pagina noastră de Prețuri. Prețurile pot fi modificate cu o notificare de 30 de zile."
+        },
+        "payment": {
+          "title": "4.2 Plată",
+          "items": {
+            "0": "Abonamentele sunt facturate în avans lunar sau anual",
+            "1": "Toate taxele sunt nerambursabile, cu excepția cazurilor menționate în",
+            "2": "Ne autorizați să debităm metoda dvs. de plată pentru taxele aplicabile",
+            "3": "Folosim Stripe pentru procesarea securizată a plăților",
+            "1RefundLink": "Politica de rambursare"
+          }
+        }
+      },
+      "acceptableUse": {
+        "title": "5. Utilizare acceptabilă",
+        "prohibited": {
+          "title": "5.1 Activități interzise",
+          "intro": "Vă obligați SĂ NU:",
+          "items": {
+            "0": "Să încălcați orice lege, regulament sau drepturi ale terților aplicabile",
+            "1": "Să folosiți Serviciile pentru a transmite malware, spam sau conținut dăunător",
+            "2": "Să încercați să obțineți acces neautorizat la sistemele noastre",
+            "3": "Să interferați sau să perturbați integritatea sau performanța Serviciilor noastre",
+            "4": "Să folosiți instrumente automate pentru a extrage, copia sau prelua date fără permisiune",
+            "5": "Să faceți inginerie inversă, decompilare sau dezambalare a Serviciilor noastre",
+            "6": "Să folosiți funcțiile noastre AI pentru a genera conținut ilegal, dăunător sau înșelător"
+          }
+        }
+      },
+      "ip": {
+        "title": "6. Proprietate intelectuală",
+        "ours": {
+          "title": "6.1 Proprietatea noastră intelectuală",
+          "content": "{brandName} și licențiatorii săi dețin toate drepturile, titlurile și interesul asupra Serviciilor, inclusiv asupra tuturor software-urilor, designurilor, mărcilor comerciale și conținutului creat de noi."
+        },
+        "yours": {
+          "title": "6.2 Conținutul dumneavoastră",
+          "content": "Păstrați dreptul de proprietate asupra conținutului pe care îl creați sau îl încărcați (\"Conținutul dumneavoastră\"). Folosind Serviciile noastre, ne acordați o licență mondială, neexclusivă și fără redevențe pentru a folosi, stoca, procesa și afișa Conținutul dumneavoastră, exclusiv pentru a vă furniza Serviciile."
+        }
+      },
+      "warranties": {
+        "title": "7. Excluderea garanțiilor",
+        "content": "SERVICIILE SUNT FURNIZATE \"CUM STAU\" ȘI \"CUM SUNT DISPONIBILE\", FĂRĂ GARANȚII DE NICIUN FEL, FIE EXPRIMATE, FIE TACITE, INCLUZÂND, DAR NELIMITÂNDU-SE LA GARANȚIILE TACITE DE COMERȚABILITATE, POTRIVIRE PENTRU UN SCOP ANUMIT, TITLU ȘI NEÎNCĂLCARE."
+      },
+      "liability": {
+        "title": "8. Limitarea răspunderii",
+        "para1": "ÎN MĂSURA MAXIMĂ PERMISĂ DE LEGE, NEBUTRA NU VA FI RĂSPUNZĂTOARE PENTRU DAUNE INDIRECTE, ACCIDENTALE, SPECIALE, CONSECUTIVE SAU PUNITIVE, SAU PENTRU PIERDEREA PROFITURILOR, A DATELOR, A UTILIZĂRII SAU A BUNĂSĂI CUVINTE.",
+        "para2": "ÎN NIMICUN CAZ, RĂSPUNDEREA NOASTRĂ TOTALĂ NU VA DEPĂȘI CEL MAI MARE DINTRE (A) SUMA PLĂTITĂ NOUĂ ÎN CEL MAI RECENT PERIOADĂ DE 12 LUNI PRECEDENTĂ CERERII, SAU (B) 100 USD."
+      },
+      "termination": {
+        "title": "9. Reziliere",
+        "byYou": {
+          "title": "9.1 De către dumneavoastră",
+          "content": "Puteți rezilia contul în orice moment prin setările contului. La reziliere, veți pierde accesul la Servicii."
+        },
+        "byUs": {
+          "title": "9.2 De către noi",
+          "intro": "Putem suspenda sau rezilia contul dacă:",
+          "items": {
+            "0": "Încălcați acești Termeni",
+            "1": "Vă implicați în activități frauduloase sau ilegale",
+            "2": "Nu plătiți taxele aplicabile",
+            "3": "Creați riscuri sau expuneri legale pentru noi"
+          }
+        }
+      },
+      "disputes": {
+        "title": "10. Rezolvarea litigiilor",
+        "informal": {
+          "title": "10.1 Rezolvare informală",
+          "content": "Înainte de a iniția proceduri formale, vă obligați să ne contactați la legal@nebutra.com pentru a încerca rezolvarea informală a litigiilor."
+        },
+        "governingLaw": {
+          "title": "10.2 Legea aplicabilă",
+          "content": "Aceste Termeni sunt guvernați de legile Statului Delaware, fără a lua în considerare principiile conflictului de legi."
+        }
+      },
+      "contactUs": {
+        "title": "11. Contactați-ne",
+        "intro": "Dacă aveți întrebări cu privire la acești Termeni, vă rugăm să ne contactați:",
+        "company": "{brandName} Co., Ltd.",
+        "emailLabel": "Email",
+        "supportLabel": "Suport"
+      },
+      "acknowledgement": "Prin utilizarea {brandName}, recunoașteți că ați citit, înțeles și sunteți de acord să fiți legat de acești Termeni de Serviciu."
+    }
+  },
+  "metadata": {
+    "title": "{brandName} Agent OS | Sistemul de operare pentru agenții startup",
+    "description": "Sistemul de operare pentru agenții startup destinat fondatorilor care se internaționalizează. Baza Next.js gata de producție cu arhitectură guvernată, autentificare, facturare, agenți și i18n — construită pentru agenții de codare AI și echipe serioase."
+  },
+  "microLanding": {
+    "architecture": {
+      "badge": "TOPOLOGIE SISTEM",
+      "title": "Arhitectură transparentă, fără cutii negre.",
+      "description": "{productName} este proiectat cu o structură Turborepo hiper-modulară, oferindu-vă controlul complet asupra întregului ciclu de viață al software-ului dvs.",
+      "database": {
+        "title": "PostgreSQL + Prisma v7",
+        "desc": "ORM complet tipizat cu politici de securitate la nivel de rând (RLS) integrate nativ."
+      },
+      "auth": {
+        "title": "Clerk Multi-Tenant / Identitate Personalizată",
+        "desc": "Gateway de autentificare pregătit pentru SOC2, care suportă comutarea între organizații B2B și RBAC."
+      }
+    },
+    "pricing": {
+      "title": "Gratuit de construit. Plătești doar dacă ai nevoie să răspundem noi.",
+      "description": "Construirea unui produs comercial pe {brandName} nu costă nimic — fără taxă, fără cheie de licență, fără înregistrare, fără copyleft. Nivelurile plătite vând suport, SLA-uri, despăgubire și drepturi de marcă, niciodată permisiunea de utilizare.",
+      "socialProofText": "MIT pe npm · FSL-1.1-ALv2 în repository, trece la Apache-2.0 după doi ani · utilizare comercială gratuită la orice scară.",
+      "community": {
+        "badge": "COMUNITATE",
+        "price": "Gratuit",
+        "period": "pentru totdeauna",
+        "desc": "Pentru toată lumea. Orice dimensiune a echipei, orice cifră de afaceri. Utilizarea comercială cu sursă închisă este inclusă, fără înregistrare și fără obligația de atribuire.",
+        "cta": "npx create-sailor",
+        "f1": "Nucleu SaaS Next.js 16 complet, toate pachetele incluse",
+        "f2": "Utilizare comercială cu sursă închisă la orice dimensiune sau cifră de afaceri",
+        "f3": "Stivă completă: Auth, Plăți, Organizații, API, Email, i18n, Sarcini de fundal, Stocare și altele",
+        "f4": "Funcții de marketing: Blog, pagină de destinație, SEO, Analytics",
+        "f5": "Issue-uri publice, Discussions și Discord — în măsura posibilului, fără garanție de răspuns"
+      },
+      "team": {
+        "badge": "ECHIPĂ",
+        "price": "2.000 $",
+        "period": "an",
+        "desc": "For teams that cannot put a critical path on community response times.",
+        "cta": "Obține suport {brandName}",
+        "f1": "Canal privat de suport (email + Slack sau Discord partajat)",
+        "f2": "Primul răspuns garantat în două zile lucrătoare",
+        "f3": "Triaj prioritar al erorilor, înaintea issue-urilor comunității",
+        "f4": "Asistență la actualizare și notificare prealabilă a modificărilor incompatibile",
+        "f5": "Tot ce este în Comunitate"
+      },
+      "enterprise": {
+        "badge": "ENTERPRISE",
+        "price": "De la 30.000 $",
+        "period": "an",
+        "desc": "Pentru organizațiile ale căror achiziții, departament juridic sau analiză de securitate cer o contraparte care semnează.",
+        "cta": "Contactează echipa de vânzări",
+        "f1": "SLA de răspuns — 4 ore lucrătoare standard, 1 oră la oprirea producției",
+        "f2": "Despăgubire și angajament contractual privind patch-urile de securitate",
+        "f3": "DPA semnat, pachet de conformitate și angajament de continuitate",
+        "f4": "Drepturi de marcă și white label, plus derogare pentru utilizarea concurentă",
+        "f5": "Ramură de suport pe termen lung și inginerie pentru implementare privată",
+        "f6": "Tot ce este în Echipă"
+      }
+    },
+    "faq": {
+      "title": "Întrebări frecvente despre prețuri și licențiere",
+      "description": "Întrebări despre nivelurile de licență, rambursări și drepturi de utilizare comercială.",
+      "q1": {
+        "q": "Sailor este un abonament SaaS lunar?",
+        "a": "Nu. Această tarifare este pentru licențele de cod sursă Sailor: Independent este gratuit, Startup se facturează anual, iar Enterprise este personalizată."
+      },
+      "q2": {
+        "q": "Oferiți rambursări?",
+        "a": "Licențele comerciale Startup includ o perioadă de rambursare de 14 zile pentru achizițiile inițiale. Termenii Enterprise sunt stabiliți în contractul semnat."
+      },
+      "q3": {
+        "q": "Pot folosi Sailor pentru proiecte clienți?",
+        "a": "Da. O licență comercială permite echipei tale să lanseze produse închise pentru clienți sau interne în cadrul licenței; drepturile white-label necesită aprobarea Enterprise."
+      },
+      "contactNudge": "Ai încă întrebări? Vorbește cu echipa {brandName} →"
+    },
+    "cta": {
+      "eyebrow": "Începe",
+      "title": "Oprește-te din configurat. Începe să construiești.",
+      "description": "Inițializează o arhitectură SaaS scalabilă local cu CLI-ul {brandName}.",
+      "button": "Implementează Arhitectura",
+      "license": "Open source sub licența AGPL-3.0. Nu este necesară o card de credit."
+    },
+    "capability": {
+      "badge": "Capabilități Enterprise",
+      "title": "Un nucleu complet tipat și extensibil.",
+      "multiTenant": {
+        "title": "Securitate nativă la nivel de rând",
+        "desc": "Fiecare interogare de bază de date este strict delimitată de contextul tenantului curent.",
+        "cta": "Citește filosofia bazei de date"
+      },
+      "aiGateway": {
+        "title": "AI Gateway Universal",
+        "desc": "Redirecționează prompturile către OpenAI, Anthropic sau modele open-source fără întreruperi.",
+        "cta": "Explorează handler-ul AI SDK"
+      },
+      "rbac": {
+        "title": "Control Granular al Accesului",
+        "desc": "Definește roluri de admin, membru și vizualizator cu o structură de politici integrată.",
+        "cta": "Vezi documentația RBAC"
+      },
+      "billing": {
+        "title": "Infrastructură de Facturare Multi-Provider",
+        "desc": "Utilizare măsurată, webhook-uri de abonament și portaluri self-serve pentru clienți.",
+        "cta": "Vezi arhitectura de facturare"
+      }
+    },
+    "productDemo": {
+      "badge": "Demo Interactiv",
+      "title": "The local loop, end to end.",
+      "description": "Simte interfața de linie de comandă, tunelarea webhook-urilor Stripe și provisionarea locală a bazei de date multi-tenant.",
+      "analytics": {
+        "label": "Telemetrie Live",
+        "desc": "Transmite datele de utilizare din producție direct în terminalul tău."
+      },
+      "billing": {
+        "label": "Evenimente de facturare",
+        "desc": "Urmărește execuția webhook-urilor Stripe prin tunelare locală."
+      },
+      "workspaces": {
+        "label": "Inițializare spațiu de lucru",
+        "desc": "Configurează instantaneu scheme PostgreSQL B2B izolate."
+      }
+    },
+    "workflow": {
+      "badge": "Viteză",
+      "title": "De la zero la producție în timp record.",
+      "step1": {
+        "title": "1. Clonează",
+        "desc": "Clonează instantaneu monorepo-ul {brandName} și rulează pnpm install."
+      },
+      "step2": {
+        "title": "2. Configurează",
+        "desc": "Configurează Prisma, Clerk și Stripe prin CLI-ul interactiv în câteva minute."
+      },
+      "step3": {
+        "title": "3. Construiește",
+        "desc": "Concentrează-te pe logica produsului și pe UI, în timp ce baza platformei este deja configurată."
+      },
+      "step4": {
+        "title": "4. Distribuie",
+        "desc": "Trimite pe Vercel și AWS pentru distribuție globală instantanee."
+      },
+      "speedometer": {
+        "number": "10",
+        "unit": "min",
+        "subtitle": "TIMP PÂNĂ LA LANSARE",
+        "comparison": "Ocolește luni de muncă pe platformă.",
+        "phases": {
+          "scaffold": "Inițializare",
+          "wire": "Nucleu",
+          "ship": "Lansare",
+          "scale": "Scalare",
+          "ongoing": "∞"
+        },
+        "cta": "Pornește cronometrul"
+      },
+      "presetHint": {
+        "badge": "Sistem presetat",
+        "message": "O singură configurație. Toate funcțiile. Alege presetul și lansează.",
+        "detail": "Configurează o dată, generează totul — facturare, autentificare, AI, i18n — dintr-o singură configurație presetată.",
+        "readyStatus": "Sistemul presetat este gata"
+      }
+    }
+  },
+  "featuresPage": {
+    "hero": {
+      "badge": "Capabilități platformă",
+      "headlinePrefix": "Tot ce ai nevoie pentru a ",
+      "headlineHighlight": "lansa cu încredere.",
+      "description": "{brandName} este o platformă SaaS full-stack — AI, facturare, multi-tenancy, observabilitate și securitate integrate din prima zi. Oprește-te din reconstruirea stratului de platformă."
+    },
+    "sections": {
+      "exploreFeature": "Explorează funcția",
+      "ai_category": "AI și Inteligență",
+      "ai_f1_title": "Completări chat multi-model",
+      "ai_f1_desc": "Redirecționează cererile către Anthropic, OpenAI, Google sau modelele tale fine-tunite. Streaming, vision și function calling sunt suportate din start.",
+      "ai_f2_title": "Embeddings semantice",
+      "ai_f2_desc": "Generează și stochează embeddings vectoriale cu pgvector. Activează căutarea semantică, pipeline-urile RAG și motoarele de recomandare.",
+      "ai_f3_title": "Contorizare utilizare AI",
+      "ai_f3_desc": "Cote per plan cu tracking de utilizare — contorizează tokenii AI, apelurile API și stocarea în funcție de agregate în timp real bazate pe ClickHouse.",
+      "multi_category": "Platformă Multi-tenant",
+      "multi_f1_title": "Izolare la nivel de organizație",
+      "multi_f1_desc": "Securitatea la nivel de rând în Postgres asigură că tenantii nu pot accesa niciodată datele unora față de alții — aplicată la nivel de bază de date, nu doar aplicație.",
+      "multi_f2_title": "Autentificare multi-provider (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_desc": "OAuth multi-provider (Google, GitHub etc.) plus email/parolă și magic-link — comută între Clerk, Better Auth, NextAuth sau Supabase Auth printr-o singură variabilă de mediu.",
+      "multi_f3_title": "Provisionare automată tenant",
+      "multi_f3_desc": "Când o nouă organizație se înregistrează prin Clerk, generăm automat primul lor API key și trimitem un email de bun-venit personalizat — zero pași manuali.",
+      "dx_category": "Experiența Developer",
+      "dx_f1_title": "Chei API hashuite",
+      "dx_f1_desc": "Chei hashuite SHA-256 cu afișare prefix (nbtr_live_…). Afișate în clar exact o dată la creare — securitate fără fricțiuni.",
+      "dx_f2_title": "Middleware de idempotență",
+      "dx_f2_desc": "Transmite un antet Idempotency-Key și orice cerere POST devine sigură pentru reîncercare. Bazat pe Redis, cache de 24 de ore, conform draftului IETF.",
+      "dx_f3_title": "API Multi-Protocol (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI pentru API-uri publice, oRPC pentru apeluri frontend sigure din punct de vedere al tipurilor, tRPC pentru compatibilitate cu stack-ul T3. Toate protocoalele împărtășesc aceleași contracte Zod și același stack de middleware. Activează pe protocol prin configurație presetată.",
+      "billing_category": "Facturare & Monetizare",
+      "billing_f1_title": "Stripe, LemonSqueezy, Polar și China Pay",
+      "billing_f1_desc": "Alege furnizorul tău de plăți: Stripe pentru enterprise global, LemonSqueezy pentru dezvoltatori indie, Polar pentru OSS sau Alipay/WeChat Pay pentru piața din China. Checkout cu un singur clic și portal de facturare self-serve.",
+      "billing_f2_title": "Aplicare cotă bazată pe utilizare",
+      "billing_f2_desc": "Contoare Redis în timp real urmăresc apelurile API și utilizarea tokenilor per tenant. Cererile sunt blocate la gateway când se ating limitele.",
+      "billing_f3_title": "Sincronizare ciclu de viață webhook",
+      "billing_f3_desc": "Evenimentele de abonament Stripe actualizează automat planurile organizației în baza ta de date prin Inngest — fără joburi cron, fără polling.",
+      "rel_category": "Fiabilitate",
+      "rel_f1_title": "Circuit breaker + retry",
+      "rel_f1_desc": "Gateway-ul și serviciul AI folosesc un circuit breaker CLOSED/OPEN/HALF_OPEN cu backoff exponențial și jitter — fără eșecuri în cascadă.",
+      "rel_f2_title": "Coadă de mesaje moarte (DLQ)",
+      "rel_f2_desc": "Handlerii de evenimente care epuizează 3 încercări de reîncercare ajung în DLQ. Redă-i individual din API-ul de administrare fără a redeploya.",
+      "rel_f3_title": "Alerte de rată de consum SLO",
+      "rel_f3_desc": "Alerte multi-fereastră în stil Google SRE se declanșează la rate de consum de 14.4×, 6× și 3× înainte ca bugetul de erori să fie epuizat.",
+      "sec_category": "Securitate",
+      "sec_f1_title": "Antete bazate pe nonce CSP",
+      "sec_f1_desc": "Content Security Policy strict-dynamic cu nonce-uri per cerere generate în middleware-ul Clerk — fără unsafe-inline oriunde.",
+      "sec_f2_title": "WAF ModSecurity",
+      "sec_f2_desc": "OWASP Core Rule Set în modul DetectionOnly pe fiecare intrare. Limitare de rată la 30 RPS cu toleranță la burst prin anotații nginx.",
+      "sec_f3_title": "SBOM + proveniență SLSA",
+      "sec_f3_desc": "Fiecare lansare generează o listă de materiale software CycloneDX și o atestare de proveniență SLSA, încărcate în GitHub Release.",
+      "obs_category": "Observabilitate",
+      "obs_f1_title": "Trasare OpenTelemetry",
+      "obs_f1_desc": "Trasări distribuite curg de la Next.js → Hono → microservicii Python prin OTLP. Exportate către Jaeger (dev) și Grafana Tempo (prod).",
+      "obs_f2_title": "Panouri Grafana",
+      "obs_f2_desc": "Prezentare generală multi-panou a platformei: disponibilitate SLO, buget de erori rămas, saturație HPA, restarturi pod și limitare CPU.",
+      "obs_f3_title": "Urmărire erori Sentry",
+      "obs_f3_desc": "Erori de pe server și client capturate cu context de tenant, ID cerere și ID trasare pentru corelare între sisteme.",
+      "data_category": "Date și Analitică",
+      "data_f1_title": "Depozit OLAP ClickHouse",
+      "data_f1_desc": "Evenimentele ajung în ClickHouse pentru interogări analitice rapide. dbt transformă evenimentele brute în metrici de creștere de nivel gold vizibile în dashboard.",
+      "data_f2_title": "Analitică funnel",
+      "data_f2_desc": "Urmărește înscrierile → activările → conversiile cu atribuire la nivel de cohortă. Venitul per utilizator activ calculat din stratul gold.",
+      "data_f3_title": "Ingestie Kafka / evenimente",
+      "data_f3_desc": "Ingestie de evenimente cu throughput ridicat prin Inngest în stratul bronze ClickHouse, cu deduplicare în memorie și validare schema la marginea gateway-ului.",
+      "infra_category": "Infrastructură",
+      "infra_f1_title": "GitOps cu ArgoCD",
+      "infra_f1_desc": "Modificările din ramura principală sunt reconciliate automat în cluster. Self-heal revine editările manuale kubectl. Fereestrele de sincronizare impun ore de deploy sigure.",
+      "infra_f2_title": "Pool de conexiuni PgBouncer",
+      "infra_f2_desc": "PgBouncer în modul tranzacție în fața Supabase gestionează 1.000 de conexiuni app pe 20 de conexiuni Postgres. HA cu 2 replici.",
+      "infra_f3_title": "Autoscaling orizontal + vertical",
+      "infra_f3_desc": "HPA scalează după CPU/memorie. VPA rulează în modul Off oferind recomandări de dimensionare. Metrici personalizate KEDA planificate pentru v2."
+    }
+  },
+  "comingSoon": {
+    "badge": "🚧 În Construcție",
+    "description": {
+      "ideas": "În prezent, creăm o experiență incredibilă, condusă de geeki, pentru această secțiune. Va fi lansată împreună cu următoarea actualizare majoră a pipeline-ului de arhitectură.",
+      "opc": "O prezentare mai detaliată a platformei este în curs de dezvoltare. Urmăriți jurnalul de modificări și harta drumului pentru lansările viitoare.",
+      "roadmap": "De la fundația infrastructurii până la scalarea enterprise — fazele produsului nostru, etapele versiunilor și viziunea de finanțare."
+    },
+    "returnBtn": "Înapoi la Hub"
+  },
+  "blogShowcase": {
+    "badge": "DIN BLOG",
+    "title": "Perspective de Inginerie",
+    "subtitle": "Analize aprofundate ale arhitecturii SaaS, infrastructurii AI și ingineriei de producție.",
+    "readMore": "Citește mai mult"
+  },
+  "useCases": {
+    "badge": "SCENARII SCALABILE",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
+    "tabs": {
+      "opc": "Operațiuni Agentic",
+      "ip": "Matrice IP Personală",
+      "multimodal": "SaaS AI Multimodal",
+      "enterprise": "Enterprise Modern (CN)",
+      "export": "Export Software Global",
+      "design": "Motor de Sistem de Design",
+      "edam": "Active Digitale pentru Enterprise"
+    },
+    "content": {
+      "opc": {
+        "title": "Hub Operațional AI-Native",
+        "desc": "Execută fluxuri de lucru cu agenți, instrumente interne și suprafețe de integrare pe o singură platformă de bază guvernată. Extensii bazate pe registru, portaluri pentru operatori și modele runtime reutilizabile rămân aliniate pe măsură ce sistemul se extinde.",
+        "features": {
+          "f1": "Registru Instrumente & Suprafață de Integrare",
+          "f2": "Portal Operator & Consolă Internă"
+        }
+      },
+      "ip": {
+        "title": "Creștere IP Personală & Matrice Portofoliu",
+        "desc": "Stabilește o prezență de fondator de clasă mondială cu blog MDX cu conversie ridicată, portofoliu și pagini de profil. Newsletter integrat, analitică și SEO asigură că brandul tău personal se compensează.",
+        "features": {
+          "f1": "Blog MDX + Motor Newsletter",
+          "f2": "Optimizat pentru SEO & Graf Social"
+        }
+      },
+      "multimodal": {
+        "title": "SaaS AI Multimodal Inovator",
+        "desc": "Lansează produse SaaS de orchestrare Multi-Agent, Chatbot, Text-to-Image, Image-to-Text și Text-to-Video cu UI streaming lider UX, rutare inteligentă a modelelor și măsurare utilizare.",
+        "features": {
+          "f1": "UI Streaming Multi-Agent",
+          "f2": "Router Modele + Măsurare Utilizare"
+        }
+      },
+      "enterprise": {
+        "title": "Site Web Enterprise Modern (CN)",
+        "desc": "Personalizat pentru scenarii de business din China — CDN domestic ultra-rapid, integrare ecosistem WeChat, design responsive mobile-first și conformitate localizată din start.",
+        "features": {
+          "f1": "CDN Local + Conformitate",
+          "f2": "Compatibil cu ecosistemul WeChat"
+        }
+      },
+      "export": {
+        "title": "Pagini de aterizare pentru export software global",
+        "desc": "Construite special pentru SaaS-ul care se internaționalizează. Checkout Stripe multi-valută, rutare automată i18n next-intl în 7 limbi, conformitate GDPR/CCPA și conținut geo-targetat.",
+        "features": {
+          "f1": "Plăți globale multi-valută",
+          "f2": "7 limbi + compatibil GDPR"
+        }
+      },
+      "design": {
+        "title": "Sistem de design și bibliotecă de componente de top",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "features": {
+          "f1": "Governanță tokeni în 4 straturi",
+          "f2": "Seven design languages + Storybook"
+        }
+      },
+      "edam": {
+        "title": "Gestiune enterprise a activelor digitale",
+        "desc": "Lacuri de date structurate și topologii complexe de dashboard-uri, folosind arhitecturi PostgreSQL scalabile și RBAC granular.",
+        "features": {
+          "f1": "Securitate la nivel de rând",
+          "f2": "Interogări complexe",
+          "f3": "Gestiune roluri"
+        }
+      }
+    }
+  },
+  "designSystem": {
+    "badge": "SISTEM DE DESIGN",
+    "headline": "4 straturi de guvernanță a designului.",
+    "subheadline": "De la primitive de brand la tokeni runtime, de la motor multi-temă la componente guvernate — nu doar shadcn cu Tailwind.",
+    "flowBrand": "Brand",
+    "flowBrandDesc": "Primitive de culoare, gradienti, limbaj motion",
+    "flowTokens": "Tokeni",
+    "flowTokensDesc": "Variabile CSS, scale în 12 pași, dark mode",
+    "flowTheme": "Temă",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
+    "flowUI": "UI",
+    "flowUIDesc": "Componente, Storybook, Chromatic",
+    "card1Title": "Scale de culoare în 12 pași",
+    "card1Desc": "Scală semantică aliniată la Geist: fundaluri (1-2), stări (3-5), borduri (6-8), umpluturi (9-10), text (11-12).",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
+    "card3Title": "Regresie vizuală",
+    "card3Desc": "Chromatic detectează fiecare schimbare de pixel. Storybook documentează fiecare componentă. Testele de arhitectură impun acoperirea story-urilor.",
+    "card4Title": "Guvernarea tokenilor",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
+    "card5Title": "Documentație interactivă",
+    "card5Desc": "Site complet de documentație pentru design, bazat pe Fumadocs, cu documentație API pentru componente bilingvă (EN/ZH), galerii de tokeni, ghiduri pentru modele de layout și exemple de cod live.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
+  },
+  "notFound": {
+    "title": "Pagina nu a fost găsită",
+    "desc": "Legătura poate fi învechită sau pagina s-a mutat.",
+    "home": "Înapoi la {brandName}",
+    "docs": "Deschide documentația"
+  },
+  "ui": {
+    "search": {
+      "placeholder": "Caută lansări..."
+    },
+    "nav": {
+      "toggleMenu": "Comută meniul"
+    },
+    "actions": {
+      "showFullRelease": "Afișează lansarea completă",
+      "copyLinkToRelease": "Copiază legătura către lansare",
+      "copyLink": "Copiază legătura",
+      "openInNewTab": "Deschide în tab nou"
+    },
+    "status": {
+      "comingSoon": "În curând"
+    }
+  },
+  "licensing": {
+    "hero": {
+      "title": "Gratuit pentru a <hl>Construi Pe</hl>",
+      "description": "{brandName}-Sailor nu costă nimic pentru utilizare comercială — MIT pe npm, FSL-1.1-ALv2 pe repository, convertit în Apache-2.0 după doi ani. Nivelurile plătite vând suport și angajamente contractuale, niciodată permisiunea."
+    },
+    "plans": {
+      "community": {
+        "badge": "Întotdeauna Gratuit",
+        "title": "Comunitate",
+        "subtitle": "Toată lumea",
+        "description": "Orice dimensiune de echipă, orice venit. Produse comerciale cu sursă închisă incluse.",
+        "features": {
+          "fullSource": "Cod sursă complet, toate pachetele",
+          "closedSourceOk": "Utilizare comercială cu sursă închisă — fără copyleft",
+          "noAttribution": "Fără înregistrare, fără atribuire necesară",
+          "communitySupport": "Suport comunitate — după posibilități"
+        },
+        "cta": "Vezi pe GitHub"
+      },
+      "team": {
+        "badge": "De la {price}/an",
+        "title": "Echipă",
+        "subtitle": "Abonament suport",
+        "description": "For teams that cannot put a critical path on community response times.",
+        "features": {
+          "privateChannel": "Canal privat de suport",
+          "firstResponse": "Răspuns inițial în două zile lucrătoare, garantat",
+          "priorityTriage": "Triage prioritar pentru erori",
+          "upgradeHelp": "Asistență la upgrade și notificare pentru schimbări majore"
+        },
+        "cta": "Obține suport"
+      },
+      "enterprise": {
+        "badge": "De la 30.000 USD/an",
+        "title": "Enterprise",
+        "subtitle": "Gata de achiziție",
+        "description": "Pentru organizațiile ale căror procese de verificare juridică, de securitate sau de achiziții necesită o parte care semnează.",
+        "features": {
+          "sla": "SLA de răspuns — 4 ore lucrătoare, 1 oră în caz de întrerupere a producției",
+          "indemnity": "Indemnizare și angajament privind patch-urile de securitate",
+          "compliance": "DPA semnat, pachet de conformitate, angajament de continuitate",
+          "trademark": "Drepturi de marcă și white-label"
+        },
+        "cta": "Contactează vânzările"
+      }
+    },
+    "faq": {
+      "title": "Întrebări frecvente",
+      "description": "Versiunea scurtă: utilizarea este gratuită. Plata este pentru când ai nevoie de noi contractual răspunzători.",
+      "items": {
+        "whyFsl": {
+          "q": "De ce FSL în loc de MIT sau AGPL?",
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
+        },
+        "reallyFree": {
+          "q": "Este utilizarea comercială cu adevărat gratuită?",
+          "a": "Da. Fără taxă, fără cheie de licență, fără înregistrare, fără prag de venit sau număr de angajați, fără atribuire. Construiește un produs cu sursă închisă și vinde-l."
+        },
+        "competingUse": {
+          "q": "Ce se consideră utilizare concurențială?",
+          "a": "Oferirea lui Sailor însuși — un serviciu Sailor găzduit sau o platformă concurențială repachetată. Construirea unui SaaS vertical, a unui instrument intern sau a proiectelor pentru clienți pe Sailor nu este utilizare concurențială. Dacă modelul tău o necesită, un acord Enterprise poate include o renunțare scrisă."
+        },
+        "upgrade": {
+          "q": "Ce cumpără de fapt nivelurile plătite?",
+          "a": "Angajamente de suport, SLA-uri de răspuns, indemnizare, documentație de conformitate și drepturi de marcă. Niciodată permisiunea de a utiliza software-ul — aceea este deja a ta."
+        },
+        "contributions": {
+          "q": "Ce se întâmplă cu contribuțiile open source?",
+          "a": "Toate contribuțiile necesită un CLA. Vezi CONTRIBUTING.md."
+        }
+      }
+    },
+    "meta": {
+      "title": "Licențiere — {brandName}",
+      "description": "Gratuit pentru uz comercial. MIT pe npm, FSL-1.1-ALv2 pe repository, conversie la Apache-2.0."
+    }
+  },
+  "licenseWizard": {
+    "tiers": {
+      "individualFree": "Licență gratuită individuală",
+      "opcFree": "Licență pentru companie cu un singur proprietar",
+      "startupCommercial": "Licență comercială Startup",
+      "enterprise": "Licență Enterprise"
+    },
+    "referralSource": {
+      "selectPlaceholder": "Selectează o opțiune...",
+      "productHunt": "Product Hunt"
+    }
+  },
+  "changelogMeta": {
+    "title": "Jurnal de modificări — {brandName}",
+    "description": "Fiecare lansare, livrată cu o atenție obsesivă la detalii.",
+    "versionTitleSuffix": "Changelog {brandName}"
+  },
+  "roadmapMeta": {
+    "title": "Roadmap Platformă — {brandName}",
+    "description": "Roadmap-ul pentru baza de platformă guvernată {brandName}, runtime-ul Harness și calea de upgrade."
+  },
+  "blogMeta": {
+    "title": "Blog — {brandName}",
+    "description": "Insight-uri de inginerie, actualizări de produs și cele mai bune practici SaaS de la echipa {brandName}."
+  },
+  "getLicenseMeta": {
+    "title": "Obține Licența Ta — {brandName}",
+    "description": "Obține licența {brandName} și accesul la platformă în 2 minute."
+  },
+  "landing": {
+    "faq": {
+      "badge": "Întrebări frecvente",
+      "title": "Întrebări, răspunse direct",
+      "subtitle": "Tot ce trebuie să știi înainte de a lansa.",
+      "items": {
+        "what-is-sailor": {
+          "question": "Ce este exact {productName}?",
+          "answer": "Sailor este o fundație SaaS Next.js + Tailwind v4 cu opinii clare, care include deja auth, billing, multi-tenancy, AI, cozi, căutare și email configurate. O clonezi, configurezi providerii și lansezi — de obicei într-o săptămână."
+        },
+        "who-is-it-for": {
+          "question": "Pentru cine este construit Sailor?",
+          "answer": "Pentru fondatori și ingineri de produs care vor să își petreacă timpul pe diferențiator — nu pe reconstruirea aceleiași infrastructuri de auth/billing/tenancy pentru a cincea oară."
+        },
+        "free-or-paid": {
+          "question": "Este gratuit sau plătit?",
+          "answer": "Codul sursă complet este distribuit sub AGPL-3.0 — gratuit pentru proiecte personale, instrumente interne și proiecte open-source compatibile AGPL. O licență comercială deblochează dreptul de a distribui Sailor în SaaS proprietar closed-source. Fiecare plan include setul complet de funcționalități (autentificare, facturare, multi-tenancy, AI, audit); diferențele între niveluri sunt în termenii licenței și SLA-ul de suport, nu în funcționalități."
+        },
+        "china-friendly": {
+          "question": "Funcționează în China?",
+          "answer": "Da. Oferim o configurație infra paralelă (CDN compatibil Aliyun, domenii compatibile ICP, Penpot opțional în locul lui Figma) astfel încât aceeași bază de cod se poate deploya fără probleme în interiorul Great Firewall."
+        },
+        "deployment": {
+          "question": "Unde îl pot deploya?",
+          "answer": "Oricunde rulează Node 22+. Site-ul de marketing se deployează pe Vercel; dashboard-ul, gateway-ul și serviciile Python rulează pe Docker / PM2 (noi le rulăm pe Aliyun ECS, cu manifeste Kubernetes complete în infra/iac/k8s/ pentru clustere). Clienții Enterprise pot deploya și în propriile VPC-uri."
+        },
+        "security": {
+          "question": "Cum este gestionată securitatea?",
+          "answer": "Criptare la nivel de aplicație pentru secrete (@nebutra/vault), Postgres RLS pentru izolarea tenantilor, RBAC/ABAC prin CASL sau OpenFGA (@nebutra/permissions), tokeni inter-servicii semnați HMAC, webhooks outbound semnați și un pipeline de audit aliniat SOC 2 (@nebutra/audit) inclus în fiecare plan. Pro și Enterprise adaugă suport pentru atestare SOC 2, răspuns dedicat la incidente și retenție mai lungă a logurilor de audit."
+        },
+        "support": {
+          "question": "Ce suport primesc?",
+          "answer": "Clienții Free primesc comunitate Discord + GitHub Issues. Pro adaugă email cu prioritate și SLA de răspuns într-o zi lucrătoare. Enterprise primește un canal Slack dedicat și un inginer de onboarding."
+        },
+        "byo-provider": {
+          "question": "Pot folosi propriul meu provider?",
+          "answer": "Da. Fiecare integrare (autentificare, coadă, căutare, email, plăți, stocare, facturare) este agnostică față de provider. Factory-ul din fiecare pachet selectează adaptorul potrivit dintr-o singură variabilă de mediu — poți înlocui Clerk cu Better Auth, NextAuth sau Supabase Auth, QStash cu BullMQ, Resend cu SES, Stripe cu Polar / LemonSqueezy / ChinaPay — fără a modifica codul aplicației."
+        },
+        "tech-stack": {
+          "question": "Care este stack-ul tehnologic?",
+          "answer": "Next.js 16 (App Router) pe React 19, TypeScript 5.9, Tailwind v4, Prisma 7 peste Postgres (cu pgvector + RLS), Hono pentru gateway-ul BFF, FastAPI pentru servicii ML/grele și o bibliotecă de componente curată pe Radix, primitivele {brandName} UI și stratul Motion comun. Funcționalitățile AI trec prin Vercel AI SDK cu portabilitate între provideri (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
+        },
+        "license": {
+          "question": "Care este licența?",
+          "answer": "AGPL-3.0 cu o excepție comercială. Gratuit pentru uz personal, instrumente interne și OSS compatibil AGPL. O licență comercială plătită deblochează dreptul de a distribui Sailor ca atare în SaaS proprietar. Codul sursă complet este inclus în fiecare plan."
+        },
+        "paid-updates": {
+          "question": "Trebuie să plătesc pentru actualizări?",
+          "answer": "Nu. Actualizările surselor sunt incluse în fiecare licență comercială — poți face pull din main oricând și să rebase-zi fork-ul tău. Nivelul plătit este dreptul de a folosi Sailor în producție comercială, nu dreptul de a primi cod. Fiecare versiune minoră include un CHANGELOG și un ghid de upgrade pentru orice modificare breaking."
+        },
+        "why-turborepo": {
+          "question": "De ce Turborepo în loc de o aplicație Next.js standard?",
+          "answer": "Sailor este format din 10 aplicații + 104 pachete comune sub packages/*/* + 4 căi backend (Hono gateway, FastAPI/Python, Go, Rust) — mult dincolo de punctul în care o mega-aplicație Next.js rămâne ușor de întreținut. Turborepo ne oferă build-uri doar pentru fișierele afectate, cache remote transparent și o singură sursă de adevăr pentru design tokens, auth, billing și observability — fără a forța fiecare echipă să folosească același proces Next.js."
+        },
+        "multi-tenancy": {
+          "question": "Cum este gestionată multi-tenancy?",
+          "answer": "Două niveluri. Context tenant scoped la cerere prin @nebutra/tenant (AsyncLocalStorage propagă organizația activă prin fiecare apel server, inclusiv query-uri DB și webhooks outbound), și izolare impusă la nivel de bază de date prin politici Postgres Row-Level Security (infra/data/database/policies/rls.sql) legate de app.current_tenant_id local sesiunii. Conexiunile cu rol de serviciu ocolește RLS doar în interiorul serviciilor interne de încredere; toate rutele expuse utilizatorilor trec prin clientul scoped la tenant."
+        },
+        "swap-clerk": {
+          "question": "Pot înlocui Clerk cu un alt provider de auth?",
+          "answer": "Da. @nebutra/auth include adaptori first-class pentru Clerk, Better Auth, NextAuth (Auth.js v5) și Supabase Auth. Comută prin variabila de mediu AUTH_PROVIDER sau alege la scaffold cu create-sailor --auth=... — suprafețele server, React și middleware rămân identice indiferent de provider. Adăugarea unui al cincilea adaptor înseamnă implementarea unei singure interfețe (~80 LOC); nimic din codul înconjurător nu este cuplat la un provider specific."
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "Iubit de builderi",
+      "title": "Ce spun founderii după ce au lansat cu Sailor",
+      "subtitle": "Povestile clienților din cohorta noastră beta vor apărea curând — fii printre primii."
+    },
+    "comparison": {
+      "badge": "Compară nivelurile",
+      "title": "Totul este gratuit. Alege de cât angajament ai nevoie.",
+      "subtitle": "Fiecare nivel include codul sursă complet și permite utilizarea comercială cu sursă închisă fără costuri. Diferențele sunt suportul, angajamentele contractuale și drepturile de marcă.",
+      "plan": {
+        "community": "Comunitate",
+        "team": "Echipă",
+        "enterprise": "Enterprise"
+      },
+      "feature": {
+        "license": {
+          "label": "Licență",
+          "type": "Licență",
+          "commercial-use": "Utilizare comercială cu sursă închisă",
+          "registration": "Înregistrare",
+          "trademark": "Drepturi de marcă"
+        },
+        "source": {
+          "label": "Cod sursă",
+          "full-source": "Cod sursă complet",
+          "all-packages": "Toate pachetele și modulele",
+          "update-window": "Actualizări"
+        },
+        "support": {
+          "label": "Suport",
+          "channel": "Canal de suport",
+          "first-response": "Primul răspuns garantat",
+          "security-patch": "Angajament privind patch-urile de securitate"
+        },
+        "procurement": {
+          "label": "Achiziții",
+          "indemnification": "Despăgubire",
+          "dpa": "DPA semnat și pachet de conformitate",
+          "continuity": "Angajament de continuitate"
+        }
+      },
+      "ariaTable": "Compararea nivelurilor și funcțiilor",
+      "value": {
+        "included": "Inclus",
+        "notIncluded": "Neinclus",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Nu este necesară",
+        "whiteLabelRights": "Drepturi white label",
+        "unlimited": "Nelimitate",
+        "unlimitedPlusNotice": "Nelimitate + notificare prealabilă a modificărilor incompatibile",
+        "unlimitedPlusLts": "Nelimitate + ramură de suport pe termen lung",
+        "publicChannels": "Issue-uri publice și Discord",
+        "privateChannel": "Canal privat",
+        "namedContact": "Contact desemnat",
+        "twoBusinessDays": "2 zile lucrătoare",
+        "fourBusinessHours": "4 ore lucrătoare",
+        "bestEffort": "În măsura posibilului",
+        "contractual": "Contractual"
+      }
+    },
+    "socialProof": {
+      "title": "Construit pe o stack pe care îl poți încrede",
+      "logosLabel": "Parteneri de integrare",
+      "metrics": {
+        "developers": {
+          "value": "47+",
+          "label": "Furnizori AI susținuți"
+        },
+        "projects": {
+          "value": "104",
+          "label": "pachete monorepo"
+        },
+        "uptime": {
+          "value": "7",
+          "label": "locații i18n din start"
+        }
+      }
+    }
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "Înregistrare ICP",
+      "publicSecurity": "Securitate publică"
+    }
+  },
+  "icpFooter": {
+    "recordNumber": "Înregistrare ICP",
+    "publicSecurity": "Înregistrare securitate publică"
+  },
+  "MarketLocalePicker": {
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
+    "plannedHint": "Interfața revine la engleză până când această limbă este lansată",
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
+  }
+}

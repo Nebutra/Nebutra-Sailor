@@ -1,0 +1,105 @@
+# This file instructs Redocly's linter to ignore the rules contained for specific parts of your API.
+# See https://redocly.com/docs/cli/ for more information.
+openapi.json:
+  info-license:
+    - '#/info'
+  operation-operationId:
+    - '#/paths/~1api~1misc~1health/get/operationId'
+    - '#/paths/~1api~1system~1status/get/operationId'
+    - '#/paths/~1api~1system~1ready/get/operationId'
+    - '#/paths/~1api~1system~1live/get/operationId'
+    - '#/paths/~1api~1system~1ping/get/operationId'
+    - '#/paths/~1misc~1health/get/operationId'
+    - '#/paths/~1system~1status/get/operationId'
+    - '#/paths/~1system~1ready/get/operationId'
+    - '#/paths/~1system~1live/get/operationId'
+    - '#/paths/~1system~1ping/get/operationId'
+    - '#/paths/~1api~1v1~1legal~1consent/post/operationId'
+    - '#/paths/~1api~1v1~1legal~1consent/delete/operationId'
+    - '#/paths/~1api~1v1~1legal~1consent~1status/get/operationId'
+    - '#/paths/~1api~1v1~1legal~1cookie-consent/get/operationId'
+    - '#/paths/~1api~1v1~1legal~1cookie-consent/post/operationId'
+    - '#/paths/~1api~1v1~1legal~1documents/get/operationId'
+    - '#/paths/~1api~1v1~1legal~1documents~1{slug}/get/operationId'
+    - '#/paths/~1api~1v1~1legal~1contact/post/operationId'
+    - '#/paths/~1api~1v1~1events~1ingest/post/operationId'
+    - '#/paths/~1api~1v1~1ai~1chat/post/operationId'
+    - '#/paths/~1api~1v1~1ai~1embeddings/post/operationId'
+    - '#/paths/~1api~1v1~1ai~1models/get/operationId'
+    - '#/paths/~1api~1v1~1billing~1checkout/post/operationId'
+    - '#/paths/~1api~1v1~1billing~1portal/post/operationId'
+    - '#/paths/~1api~1v1~1billing~1subscription/get/operationId'
+    - '#/paths/~1api~1v1~1billing~1usage/get/operationId'
+    - '#/paths/~1api~1v1~1admin~1tenants/get/operationId'
+    - '#/paths/~1api~1v1~1admin~1tenants~1{id}/get/operationId'
+    - '#/paths/~1api~1v1~1admin~1tenants~1{id}~1suspend/post/operationId'
+    - '#/paths/~1api~1v1~1admin~1tenants~1{id}~1unsuspend/post/operationId'
+    - '#/paths/~1api~1v1~1admin~1usage~1report/get/operationId'
+    - '#/paths/~1api~1v1~1admin~1dlq/get/operationId'
+    - '#/paths/~1api~1v1~1admin~1dlq~1{id}~1ack/post/operationId'
+    - '#/paths/~1api~1v1~1admin~1feature-flags/get/operationId'
+    - '#/paths/~1api~1v1~1admin~1feature-flags/post/operationId'
+    - '#/paths/~1api~1webhooks~1stripe/post/operationId'
+    - '#/paths/~1api~1webhooks~1clerk/post/operationId'
+  operation-4xx-response:
+    - '#/paths/~1api~1misc~1health/get/responses'
+    - '#/paths/~1api~1system~1status/get/responses'
+    - '#/paths/~1api~1system~1ready/get/responses'
+    - '#/paths/~1api~1system~1live/get/responses'
+    - '#/paths/~1api~1system~1ping/get/responses'
+    - '#/paths/~1misc~1health/get/responses'
+    - '#/paths/~1system~1status/get/responses'
+    - '#/paths/~1system~1ready/get/responses'
+    - '#/paths/~1system~1live/get/responses'
+    - '#/paths/~1system~1ping/get/responses'
+    - '#/paths/~1api~1v1~1legal~1consent/delete/responses'
+    - '#/paths/~1api~1v1~1legal~1cookie-consent/post/responses'
+    - '#/paths/~1api~1v1~1legal~1documents/get/responses'
+    - '#/paths/~1api~1v1~1legal~1contact/post/responses'
+    - '#/paths/~1api~1v1~1events~1ingest/post/responses'
+    - '#/paths/~1api~1v1~1ai~1embeddings/post/responses'
+    - '#/paths/~1api~1v1~1ai~1models/get/responses'
+    - '#/paths/~1api~1v1~1billing~1usage/get/responses'
+    - '#/paths/~1api~1v1~1admin~1tenants/get/responses'
+    - '#/paths/~1api~1v1~1admin~1usage~1report/get/responses'
+    - '#/paths/~1api~1v1~1admin~1dlq/get/responses'
+    - '#/paths/~1api~1v1~1admin~1dlq~1{id}~1ack/post/responses'
+    - '#/paths/~1api~1v1~1admin~1feature-flags/get/responses'
+    - '#/paths/~1api~1v1~1admin~1feature-flags/post/responses'
+  struct:
+    - >-
+      #/paths/~1api~1v1~1legal~1consent/post/requestBody/content/application~1json/schema/properties/metadata/additionalProperties/nullable
+    - >-
+      #/paths/~1api~1v1~1legal~1consent/post/responses/404/content/application~1json/schema/properties/error/properties/details/additionalProperties/nullable
+    - >-
+      #/paths/~1api~1v1~1legal~1consent/post/responses/500/content/application~1json/schema/properties/error/properties/details/additionalProperties/nullable
+    - >-
+      #/paths/~1api~1v1~1legal~1consent/delete/responses/500/content/application~1json/schema/properties/error/properties/details/additionalProperties/nullable
+    - >-
+      #/paths/~1api~1v1~1legal~1consent~1status/get/responses/200/content/application~1json/schema/properties/lastConsentedAt/anyOf/2/nullable
+    - >-
+      #/paths/~1api~1v1~1legal~1consent~1status/get/responses/404/content/application~1json/schema/properties/error/properties/details/additionalProperties/nullable
+    - >-
+      #/paths/~1api~1v1~1legal~1consent~1status/get/responses/500/content/application~1json/schema/properties/error/properties/details/additionalProperties/nullable
+    - >-
+      #/paths/~1api~1v1~1legal~1cookie-consent/get/responses/500/content/application~1json/schema/properties/error/properties/details/additionalProperties/nullable
+    - >-
+      #/paths/~1api~1v1~1legal~1cookie-consent/post/responses/500/content/application~1json/schema/properties/error/properties/details/additionalProperties/nullable
+    - >-
+      #/paths/~1api~1v1~1legal~1documents/get/responses/500/content/application~1json/schema/properties/error/properties/details/additionalProperties/nullable
+    - >-
+      #/paths/~1api~1v1~1legal~1documents~1{slug}/get/responses/200/content/application~1json/schema/properties/document/additionalProperties/nullable
+    - >-
+      #/paths/~1api~1v1~1legal~1documents~1{slug}/get/responses/404/content/application~1json/schema/properties/error/properties/details/additionalProperties/nullable
+    - >-
+      #/paths/~1api~1v1~1legal~1documents~1{slug}/get/responses/500/content/application~1json/schema/properties/error/properties/details/additionalProperties/nullable
+    - >-
+      #/paths/~1api~1v1~1legal~1contact/post/responses/500/content/application~1json/schema/properties/error/properties/details/additionalProperties/nullable
+    - >-
+      #/paths/~1api~1v1~1events~1ingest/post/requestBody/content/application~1json/schema/properties/events/items/properties/payload/additionalProperties/nullable
+    - >-
+      #/paths/~1api~1v1~1events~1ingest/post/responses/200/content/application~1json/schema/additionalProperties/nullable
+    - >-
+      #/paths/~1api~1webhooks~1stripe/post/requestBody/content/application~1json/schema/additionalProperties/nullable
+    - >-
+      #/paths/~1api~1webhooks~1clerk/post/requestBody/content/application~1json/schema/additionalProperties/nullable

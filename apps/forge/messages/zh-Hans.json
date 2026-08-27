@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — 在线工具站",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "编解码、文本、哈希、文档与图片等在线工具。"
+  },
+  "nav": {
+    "main": "主导航",
+    "homeAria": "{brandName} Forge 首页",
+    "tools": "工具",
+    "wallet": "钱包",
+    "api": "API",
+    "routerAria": "{brandName} Router",
+    "categoriesAria": "工具分类",
+    "languageAria": "切换语言"
+  },
+  "tool": {
+    "breadcrumbAria": "面包屑",
+    "workspace": "工作台",
+    "workspaceHint": "本地或服务端 · 与 API 同一路径",
+    "api": "API",
+    "apiHint": "与页面同一调用契约。生产环境请走认证 Key。",
+    "related": "相关工具"
+  },
+  "auth": {
+    "signIn": "登录",
+    "signUp": "注册",
+    "signOut": "退出"
+  },
+  "footer": {
+    "navAria": "页脚",
+    "blurb": "在线工具站。页面上手动完成，或经 API / MCP 接入自动化。",
+    "product": "产品",
+    "developers": "开发",
+    "company": "公司",
+    "docs": "接入文档",
+    "website": "官网",
+    "privacy": "隐私"
+  },
+  "home": {
+    "eyebrow": "所见即可调用",
+    "title": "在线工具瑞士军刀",
+    "subtitle": "编解码、文本、哈希、文档与图片处理。页面上手动完成，或经 API / MCP 接入自动化——能力只实现一次。",
+    "toolCount": "{count} 个工具",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "搜索：字数、base64、json、时间戳…",
+    "aria": "搜索工具",
+    "emptyTitle": "没有匹配「{query}」的工具",
+    "emptyHint": "试试别的关键词，或从分类里挑一把锤子。"
+  },
+  "categories": {
+    "codec": {
+      "label": "编解码",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "国内校验",
+      "hint": "身份证 · 手机号"
+    },
+    "data": {
+      "label": "数据",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "开发",
+      "hint": "正则 · SQL · 颜色 · UUID"
+    },
+    "doc": {
+      "label": "文档",
+      "hint": "Markdown · PDF 合并拆分"
+    },
+    "finance": {
+      "label": "财务",
+      "hint": "金额大写"
+    },
+    "hash": {
+      "label": "哈希与安全",
+      "hint": "MD5 · SHA · HMAC · 密码"
+    },
+    "image": {
+      "label": "图像",
+      "hint": "压缩 · 二维码 · 转换"
+    },
+    "life": {
+      "label": "生活计算",
+      "hint": "房贷 · BMI · 亲戚称呼"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "Token · 费用 · Schema"
+    },
+    "net": {
+      "label": "网络",
+      "hint": "DNS · TLS · IP · 泄露检测"
+    },
+    "security": {
+      "label": "安全",
+      "hint": "密码生成"
+    },
+    "text": {
+      "label": "文本",
+      "hint": "字数 · 简繁 · 拼音 · Diff"
+    },
+    "time": {
+      "label": "时间",
+      "hint": "时间戳 · 时区 · Cron · 农历"
+    },
+    "unit": {
+      "label": "单位",
+      "hint": "长度 · 重量 · 温度 · 数据量"
+    },
+    "template": {
+      "label": "模板",
+      "hint": ".gitignore · LICENSE · Dockerfile · README"
+    }
+  },
+  "runners": {
+    "common": {
+      "run": "运行",
+      "running": "运行中…",
+      "copy": "复制",
+      "copied": "已复制",
+      "sameAsApi": "与 API 同一 invoke 路径 · OSS 引擎",
+      "mustBeNumber": "{label} 需为数字",
+      "base64Loaded": "已加载 Base64 载荷",
+      "workspaceMissing": "未配置工作台：{slug}",
+      "yes": "是",
+      "no": "否",
+      "text": "文本",
+      "input": "输入",
+      "output": "输出",
+      "outputPlaceholder": "结果将显示在此处",
+      "localRun": "本地运行",
+      "serverRun": "服务器运行",
+      "serverVerify": "服务器验证",
+      "outputPreview": "输出预览",
+      "mode": "模式",
+      "encode": "编码",
+      "decode": "解码",
+      "file": "文件",
+      "clear": "清空",
+      "length": "长度：{n}",
+      "bytes": "{bytes} 字节",
+      "download": "下载",
+      "format": "格式化",
+      "formatting": "格式化中…",
+      "dialect": "方言",
+      "color": "颜色",
+      "pickColor": "取色",
+      "content": "内容",
+      "algorithm": "算法",
+      "encoding": "编码",
+      "message": "消息",
+      "secret": "密钥",
+      "password": "密码",
+      "direction": "方向",
+      "preview": "预览",
+      "query": "查询",
+      "querying": "查询中…",
+      "validate": "校验",
+      "validating": "校验中…",
+      "processing": "处理中…",
+      "pretty": "美化",
+      "minify": "压缩",
+      "from": "从",
+      "to": "到",
+      "timezone": "时区",
+      "datetime": "日期时间",
+      "compute": "计算",
+      "computing": "计算中…",
+      "convertAction": "转换",
+      "count": "数量",
+      "value": "数值",
+      "unit": "单位",
+      "generateLocal": "本地生成",
+      "generateServer": "服务端生成",
+      "copyAll": "复制全部",
+      "emptyResult": "结果会显示在这里",
+      "copyText": "复制文本",
+      "quality": "质量",
+      "original": "原图",
+      "result": "结果",
+      "downloadPdf": "下载 PDF",
+      "openTab": "新标签打开",
+      "pdfPreview": "PDF 预览",
+      "pdfPreviewTitle": "PDF 预览",
+      "pdfPreviewHint": "浏览器内置 PDF 预览。部分移动端浏览器仅支持下载。",
+      "single": "单次",
+      "batch": "批量",
+      "privacyUpload": "文件会发送到 Forge 主机处理，请求结束后不保留。",
+      "dragDrop": "拖放文件到此处，或点击选择",
+      "resultMeta": "结果",
+      "before": "处理前",
+      "after": "处理后",
+      "liveHint": "输入即更新",
+      "tablePreview": "表格预览",
+      "sourcePreview": "源文件预览",
+      "metrics": "指标",
+      "thumbnail": "预览"
+    },
+    "base64": {
+      "encodeDir": "文本 → Base64",
+      "decodeDir": "Base64 → 文本",
+      "localNote": "本地 Web API（TextEncoder / atob）",
+      "serverNote": "服务器 Buffer · 与 API 路径相同"
+    },
+    "password": {
+      "uppercase": "大写字母",
+      "lowercase": "小写字母",
+      "digits": "数字",
+      "symbols": "符号",
+      "generate": "生成密码",
+      "recent": "最近",
+      "note": "引擎：node:crypto randomInt · 加密安全 · 与 API 路径相同"
+    },
+    "hash": {
+      "algo": "算法：{algo}",
+      "md5Warn": " · 仅用于校验/兼容 — 请勿存储密码",
+      "md5LocalError": "MD5 需要服务端运行（Web Crypto 不支持 MD5）",
+      "md5ServerHint": "MD5：请使用服务端运行（仅兼容，不可用于密码存储）",
+      "localNote": "本地 Web Crypto · {algo}",
+      "serverNote": "服务端 node:crypto · 与 API 路径一致"
+    },
+    "convert": {
+      "converting": "转换中…",
+      "convert": "转换",
+      "done": "完成 · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "将文件拖放到此处，或点击浏览",
+      "needFile": "请先选择文件",
+      "needAlgo": "请至少选择一种算法",
+      "compute": "计算校验和",
+      "computing": "计算中…",
+      "algorithms": "算法",
+      "note": "node:crypto · 多算法 · 与 API 路径一致"
+    },
+    "lorem": {
+      "paragraphs": "段落数",
+      "wordsPerParagraph": "每段词数",
+      "startWithLorem": "以 Lorem ipsum 开头",
+      "note": "Lorem 生成器 · pure"
+    },
+    "emailValidate": {
+      "note": "邮箱校验 · 仅格式（不做 MX 查询）"
+    },
+    "creditCardLuhn": {
+      "number": "卡号",
+      "note": "Luhn 校验 · 离线、不存储",
+      "digits": "位",
+      "specimenLabel": "样张",
+      "structureOnly": "仅 Luhn 结构",
+      "unknownBrand": "银行卡"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "JSON 压缩 · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "CSS 压缩 · 轻量（边缘安全）"
+    },
+    "hashCompare": {
+      "a": "哈希 A",
+      "b": "哈希 B",
+      "ignoreCase": "忽略大小写",
+      "note": "哈希比对 · 等长常量时间比较"
+    },
+    "jsonDiff": {
+      "left": "JSON A",
+      "right": "JSON B",
+      "note": "JSON 对比 · 路径级差异 · 分色行 · 双栏",
+      "equal": "完全一致",
+      "differs": "{count} 处差异",
+      "colPath": "路径",
+      "colKind": "类型",
+      "colLeft": "左侧",
+      "colRight": "右侧",
+      "filtersAria": "按变更类型筛选",
+      "filterAll": "全部 ({count})",
+      "filterAdd": "新增 ({count})",
+      "filterRemove": "删除 ({count})",
+      "filterChange": "修改 ({count})",
+      "filterType": "类型 ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "模式",
+      "pretty": "美化",
+      "compact": "紧凑",
+      "indent": "缩进",
+      "note": "YAML 格式化 · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "TOML 格式化 · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "XML 压缩 · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "URL 校验 · WHATWG URL（不联网）"
+    },
+    "ipValidate": {
+      "note": "IP 校验 · IPv4/IPv6 离线"
+    },
+    "uuidValidate": {
+      "note": "UUID 校验 · RFC 4122 形态"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "HTML 压缩 · 轻量（边缘安全）"
+    },
+    "randomString": {
+      "length": "长度",
+      "count": "数量",
+      "charset": "字符集",
+      "alphanumeric": "字母数字",
+      "symbols": "字母数字 + 符号",
+      "hex": "十六进制",
+      "base64url": "Base64URL",
+      "note": "随机字符串 · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "阅读时间 · 中英混排启发式"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "最大标题层级",
+      "note": "Markdown 目录 · ATX 标题"
+    },
+    "pdfInfo": {
+      "file": "PDF 文件",
+      "note": "PDF 信息 · pdf-lib（页数 + 元数据）"
+    },
+    "rot13": {
+      "shift": "位移（13 = ROT13）",
+      "note": "ROT13 / 凯撒 · pure"
+    },
+    "morse": {
+      "note": "摩斯电码 · ITU · pure"
+    },
+    "textBinary": {
+      "toBinary": "文本 → 二进制",
+      "fromBinary": "二进制 → 文本",
+      "note": "文本 ⇄ 二进制 · UTF-8 bits"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "摘要编码",
+      "note": "多算法哈希 · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "一次性摘要 · 分别复制 · node:crypto"
+    },
+    "cssFormat": {
+      "note": "CSS 美化 · 轻量"
+    },
+    "htmlFormat": {
+      "note": "HTML 美化 · 轻量"
+    },
+    "stringSimilarity": {
+      "a": "字符串 A",
+      "b": "字符串 B",
+      "note": "字符串相似度 · Levenshtein"
+    },
+    "roman": {
+      "toRoman": "数字 → 罗马",
+      "fromRoman": "罗马 → 数字",
+      "note": "罗马数字 · 1–3999"
+    },
+    "age": {
+      "birthDate": "出生日期 (YYYY-MM-DD)",
+      "asOf": "截至日期（可选）",
+      "note": "年龄计算 · 精确年/月/日"
+    },
+    "tip": {
+      "bill": "账单金额",
+      "percent": "小费 %",
+      "people": "人数",
+      "note": "小费计算 · 支持分摊"
+    },
+    "aspect": {
+      "width": "宽",
+      "height": "高",
+      "note": "宽高比 · GCD 化简"
+    },
+    "mime": {
+      "note": "MIME 查询 · 常见 Web 类型"
+    },
+    "ua": {
+      "note": "UA 解析 · 启发式（离线）"
+    },
+    "imageMeta": {
+      "file": "图片文件",
+      "note": "图片元数据 · sharp（EXIF 缓冲长度）"
+    },
+    "wordFreq": {
+      "top": "Top N",
+      "note": "词频统计 · 中英混排"
+    },
+    "jsonXml": {
+      "note": "JSON ⇄ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "SQL 压缩 · 注释与空白"
+    },
+    "lineNum": {
+      "start": "起始行号",
+      "note": "添加行号 · pure"
+    },
+    "uniqueWords": {
+      "note": "单词去重 · 保序"
+    },
+    "epoch": {
+      "value": "值",
+      "msToIso": "毫秒 → ISO",
+      "isoToMs": "ISO → 毫秒",
+      "note": "Epoch 毫秒 · Date"
+    },
+    "passwordEntropy": {
+      "password": "密码",
+      "note": "密码熵 · 字符集启发式"
+    },
+    "contrast": {
+      "fg": "前景色 (#hex)",
+      "bg": "背景色 (#hex)",
+      "note": "颜色对比度 · WCAG 2.x",
+      "sampleHeadline": "示例文本",
+      "pass": "通过",
+      "fail": "未通过",
+      "aaNormal": "AA 正文",
+      "aaLarge": "AA 大字",
+      "aaaNormal": "AAA 正文",
+      "aaaLarge": "AAA 大字"
+    },
+    "exif": {
+      "file": "图片文件",
+      "note": "EXIF 查看 · exifr + JPEG 回落"
+    },
+    "regex": {
+      "pattern": "正则",
+      "flags": "标志",
+      "replacement": "替换为",
+      "match": "匹配",
+      "replace": "替换",
+      "test": "测试",
+      "local": "本地运行",
+      "server": "服务端验证",
+      "count": "{count} 个匹配",
+      "sotaNote": "即时本地高亮 · 服务端超时预算 · 与 API 路径一致"
+    },
+    "jwt": {
+      "decode": "解码 JWT",
+      "sample": "加载示例",
+      "tokenPlaceholder": "粘贴 JWT",
+      "decodeNote": "{engine} · 仅解码，不验证签名",
+      "footerNote": "引擎：jose · 不验证签名。生产环境请使用服务端 jwtVerify 配合密钥进行验证。",
+      "generateHint": "需要签发令牌？",
+      "secret": "密钥",
+      "exp": "过期（秒）",
+      "payload": "负载 JSON",
+      "note": "JWT 生成 · HS256（仅开发/测试）",
+      "header": "令牌头",
+      "payloadLabel": "载荷",
+      "signature": "签名",
+      "emptySignature": "（空签名段）"
+    },
+    "rand": {
+      "min": "最小",
+      "max": "最大",
+      "count": "数量",
+      "note": "随机数 · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "面数",
+      "count": "骰子数",
+      "note": "掷骰子 · 密码学随机"
+    },
+    "hexRgb": {
+      "note": "HEX ⇄ RGB · pure"
+    },
+    "base64url": {
+      "note": "Base64URL · JWT 风格"
+    },
+    "hmac": {
+      "message": "消息",
+      "secret": "密钥",
+      "signature": "签名",
+      "note": "HMAC 校验 · SHA-256"
+    },
+    "secret": {
+      "bytes": "字节数",
+      "count": "数量",
+      "note": "密钥生成 · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "PDF 文件",
+      "note": "PDF 轻量优化 · pdf-lib 重写（非图片重压缩）",
+      "needFile": "请先选择 PDF 文件"
+    },
+    "pdfCompress": {
+      "file": "PDF 文件",
+      "drop": "拖放或选择 PDF",
+      "quality": "质量",
+      "engine": "引擎",
+      "qStructural": "结构压缩（qpdf，无损流）",
+      "qScreen": "屏幕（最小，Ghostscript）",
+      "qEbook": "电子书（均衡，Ghostscript）",
+      "qPrinter": "打印（更高质量，Ghostscript）",
+      "eAuto": "自动（qpdf → Ghostscript → pdf-lib）",
+      "download": "下载 PDF",
+      "needFile": "请先选择 PDF 文件",
+      "needPdf": "请选择 PDF 文件",
+      "privacy": "PDF 会发送到主机压缩，处理后不保留。",
+      "barHint": "条形表示输出相对大小",
+      "in": "输入",
+      "out": "输出",
+      "saved": "节省",
+      "note": "PDF 压缩 · 宿主 qpdf / Ghostscript · pdf-lib 回落 · 引擎标签如实展示"
+    },
+    "jsonFormat": {
+      "indent": "缩进",
+      "format": "格式化",
+      "minify": "压缩",
+      "serverVerify": "服务端验证",
+      "clear": "清空",
+      "sample": "示例",
+      "placeholder": "粘贴 JSON…",
+      "formatted": "已格式化",
+      "minified": "已压缩",
+      "serverOk": "服务端 {mode} · {engine}",
+      "valid": "JSON 格式正确",
+      "invalid": "JSON 格式错误",
+      "line": "行",
+      "column": "列",
+      "sortKeys": "排序键",
+      "stats": "{chars} 字符 · {lines} 行",
+      "liveOff": "关闭实时",
+      "note": "引擎：JSON.parse/stringify · 实时校验 · ⌘/Ctrl+Enter 格式化 · 与 API 路径一致"
+    },
+    "qr": {
+      "size": "尺寸",
+      "ecl": "纠错等级",
+      "generate": "生成",
+      "download": "下载 PNG",
+      "needText": "请输入文本或网址",
+      "note": "二维码 · qrcode · 实时预览 · 与 API 路径一致"
+    },
+    "pdfText": {
+      "file": "PDF 文件",
+      "layout": "布局",
+      "needFile": "请先选择 PDF 文件",
+      "note": "PDF 文本提取 · 主机端 pdftotext (poppler)"
+    },
+    "svg": {
+      "optimize": "优化",
+      "note": "SVG 优化 · 轻量级纯压缩"
+    },
+    "routerTranslate": {
+      "lab": "Lab 外壳：此处不执行翻译。将打开 Router 并附带提示词——模型用量仅在 Router 端计量。",
+      "source": "源语言",
+      "target": "目标语言",
+      "open": "准备 Router 链接",
+      "deepLink": "在 Router 中打开",
+      "note": "外部 · 无静默 Forge LLM 账本"
+    },
+    "imageCrop": {
+      "needFile": "请先选择图片",
+      "crop": "裁剪",
+      "note": "图片裁剪 · 拖拽选区 · sharp extract",
+      "drop": "拖拽图片或点击选择",
+      "dragHint": "在图上拖拽选择裁剪区域",
+      "left": "左",
+      "top": "上",
+      "width": "宽",
+      "height": "高",
+      "natural": "原图像素 {w}×{h}",
+      "source": "原图",
+      "result": "裁剪结果"
+    },
+    "markdown": {
+      "preview": "预览",
+      "html": "HTML",
+      "emptyPreview": "点击运行查看预览",
+      "emptyHtml": "渲染结果",
+      "rendering": "渲染中…",
+      "toHtml": "转为 HTML",
+      "copyHtml": "复制 HTML",
+      "note": "marked · 预览使用沙箱 iframe · 与 API 同一路径"
+    },
+    "pdfMerge": {
+      "files": "PDF 文件（≥2，顺序即合并顺序）",
+      "needFiles": "请至少选择 2 个 PDF",
+      "merging": "合并中…",
+      "mergeDownload": "合并并下载",
+      "done": "合并完成 · {pages} 页 · {bytes} bytes",
+      "note": "pdf-lib · 与 API 同一路径",
+      "merge": "合并"
+    },
+    "pdfSplit": {
+      "file": "PDF 文件",
+      "needFile": "请选择 PDF",
+      "fromPage": "起始页 (1-based)",
+      "toPage": "结束页 (空=到末页)",
+      "toPlaceholder": "末页",
+      "splitting": "拆分中…",
+      "splitDownload": "拆分并下载",
+      "done": "拆分完成 · 源 {source} 页 → 输出 {pages} 页",
+      "note": "pdf-lib · 与 API 同一路径",
+      "split": "拆分"
+    },
+    "passwordStrength": {
+      "check": "检测强度",
+      "checking": "检测中…",
+      "crack": "离线慢哈希粗估：{time}",
+      "score0": "极弱",
+      "score1": "弱",
+      "score2": "一般",
+      "score3": "较强",
+      "score4": "很强",
+      "note": "zxcvbn-ts · 与 API 同一路径 · 密码不会落盘"
+    },
+    "hmacSign": {
+      "compute": "计算 HMAC",
+      "computing": "计算中…",
+      "note": "node:crypto · 与 API 同一路径"
+    },
+    "costEstimate": {
+      "text": "输入文本（用于估算 input tokens）",
+      "model": "模型",
+      "outputTokens": "输出 tokens 估",
+      "estimate": "估算费用",
+      "estimating": "估算中…",
+      "note": "@nebutra/ai-providers/frontier 价卡 + js-tiktoken · 标价球估，非账单"
+    },
+    "jsonSchema": {
+      "data": "JSON 数据",
+      "schema": "JSON Schema",
+      "validate": "校验",
+      "validating": "校验中…",
+      "pass": "通过",
+      "fail": "未通过",
+      "note": "Ajv · 与 API 同一路径"
+    },
+    "zhCnTw": {
+      "s2t": "简 → 繁",
+      "t2s": "繁 → 简",
+      "s2tw": "简 → 台湾",
+      "tw2s": "台湾 → 简",
+      "s2hk": "简 → 香港",
+      "hk2s": "香港 → 简",
+      "note": "OpenCC (opencc-js) · 与 API 同一路径"
+    },
+    "pinyin": {
+      "tones": "声调",
+      "symbol": "符号 nǐ",
+      "num": "数字 ni3",
+      "none": "无调 ni",
+      "hanzi": "汉字",
+      "convert": "转拼音",
+      "converting": "转换中…",
+      "note": "pinyin-pro · 与 API 同一路径"
+    },
+    "sqlFormat": {
+      "dialect": "方言",
+      "format": "格式化",
+      "formatting": "格式化中…",
+      "note": "sql-formatter · 与 API 同一路径"
+    },
+    "colorConvert": {
+      "color": "颜色",
+      "pick": "取色",
+      "convert": "转换",
+      "converting": "转换中…",
+      "note": "culori · hex / rgb / hsl / oklch · 与 API 同一路径"
+    },
+    "qrGen": {
+      "content": "内容",
+      "format": "格式",
+      "pngPreview": "PNG (预览)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "生成二维码",
+      "generating": "生成中…",
+      "note": "qrcode · 与 API 同一路径"
+    },
+    "qrDecode": {
+      "upload": "上传含二维码的图片",
+      "parsing": "解析中…",
+      "note": "jsQR + sharp · 与 API 同一路径"
+    },
+    "cron": {
+      "expression": "Cron 表达式",
+      "timezone": "时区",
+      "parse": "解析下次触发",
+      "parsing": "解析中…",
+      "nextTitle": "下次触发 (ISO)",
+      "note": "cron-parser · 与 API 同一路径"
+    },
+    "timezone": {
+      "datetime": "日期时间",
+      "from": "从",
+      "to": "到",
+      "convert": "转换时区",
+      "converting": "转换中…",
+      "placeholder": "2026-07-24 12:00:00 或 ISO / unix",
+      "note": "dayjs timezone · 与 API 同一路径"
+    },
+    "csvPreview": {
+      "preview": "预览表格",
+      "parsing": "解析中…",
+      "rows": "预览 {shown} / 共 {total} 行",
+      "note": "papaparse · 与 API 同一路径"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "查询",
+      "querying": "查询中…",
+      "note": "jsonpath-plus · 与 API 同一路径"
+    },
+    "xmlFormat": {
+      "pretty": "美化",
+      "minify": "压缩",
+      "validate": "校验",
+      "validOk": "校验通过",
+      "done": "完成 · {engine}",
+      "processing": "处理中…",
+      "note": "fast-xml-parser · 与 API 同一路径"
+    },
+    "regexLegacy": {
+      "pattern": "正则",
+      "flags": "标志",
+      "mode": "模式",
+      "match": "匹配",
+      "replace": "替换",
+      "test": "测试",
+      "replacement": "替换为",
+      "note": "本地即时 · 服务端带超时预算 · 与 API 同一路径"
+    },
+    "docxText": {
+      "file": "DOCX 文件",
+      "needFile": "请先选择 .docx 文件",
+      "extract": "提取文本",
+      "extracting": "提取中…",
+      "note": "DOCX → 文本 · pure ZIP + document.xml（无需 Office）"
+    },
+    "uuid": {
+      "count": "数量",
+      "local": "本地生成",
+      "server": "服务端生成",
+      "copyAll": "复制全部",
+      "empty": "生成结果会显示在这里"
+    },
+    "timestamp": {
+      "nowSec": "当前秒",
+      "nowMs": "当前毫秒 / ISO",
+      "serverNow": "服务端 now",
+      "toDate": "时间戳 → 日期",
+      "toUnix": "日期 → 时间戳",
+      "seconds": "秒",
+      "milliseconds": "毫秒",
+      "value": "值",
+      "convert": "转换",
+      "note": "与 API 同一路径"
+    },
+    "wordCount": {
+      "words": "词数",
+      "chars": "字符",
+      "noSpaces": "不含空格",
+      "cjk": "中日韩",
+      "lines": "行",
+      "paragraphs": "段",
+      "placeholder": "粘贴或输入文字…",
+      "copyText": "复制文本",
+      "clear": "清空",
+      "verifying": "校验中…",
+      "serverNote": "服务端 words={words} · 与 API 同一路径",
+      "note": "实时引擎：{engine} · 不上传即可统计 · 与 API 同一路径"
+    },
+    "bmi": {
+      "height": "身高 (cm)",
+      "weight": "体重 (kg)",
+      "compute": "计算 BMI",
+      "computing": "计算中…",
+      "invalid": "请输入有效的身高（cm）与体重（kg）",
+      "underweight": "偏瘦",
+      "normal": "正常",
+      "overweight": "超重",
+      "obese": "肥胖",
+      "note": "WHO BMI · 与 API 同一路径 · 仅供参考，非医疗诊断"
+    },
+    "percentage": {
+      "mode": "计算方式",
+      "percentOf": "a% 的 b 是多少",
+      "isWhat": "a 是 b 的百分之几",
+      "percentA": "百分比 a",
+      "valueA": "数值 a",
+      "baseB": "基数 b",
+      "compute": "计算",
+      "computing": "计算中…",
+      "invalid": "请输入有效数字",
+      "note": "与 API 同一路径"
+    },
+    "dataSize": {
+      "value": "数值",
+      "convert": "换算",
+      "converting": "换算中…",
+      "invalid": "请输入有效数值",
+      "binary": "{value} {from} → 1024 进制",
+      "note": "二进制单位（1 KB = 1024 B）· 与 API 同一路径"
+    },
+    "rmb": {
+      "amount": "金额（元）",
+      "convert": "转大写",
+      "converting": "转换中…",
+      "invalid": "请输入非负金额",
+      "note": "中文发票金额大写 · 与 API 同一路径"
+    },
+    "dateDiff": {
+      "from": "起始日期",
+      "to": "结束日期",
+      "compute": "计算间隔",
+      "computing": "计算中…",
+      "days": "天",
+      "note": "ECMAScript Date · 与 API 同一路径"
+    },
+    "xlsxText": {
+      "file": "XLSX 文件",
+      "needFile": "请先选择 .xlsx 文件",
+      "extract": "提取表格",
+      "extracting": "提取中…",
+      "note": "XLSX → CSV · pure ZIP + sheet1.xml（首表）"
+    },
+    "mdToPdf": {
+      "drop": "拖拽 .md 文件，或粘贴下方 Markdown",
+      "title": "标题",
+      "engine": "引擎",
+      "ePlaywright": "playwright（产品必选路径）",
+      "eSimple": "simple（仅测试/显式指定）",
+      "generate": "生成 PDF",
+      "generating": "生成中…",
+      "download": "下载 PDF",
+      "openTab": "新标签打开",
+      "preview": "PDF 预览",
+      "previewTitle": "PDF 预览",
+      "previewHint": "浏览器内置 PDF 预览。部分移动端仅支持下载。",
+      "noPayload": "未返回 PDF 内容",
+      "note": "难而正确：产品路径为 marked → HTML → Playwright Chromium 打印。无 Chromium 时 fail closed，禁止静默回退 simple。simple 仅用于显式测试。"
+    },
+    "tokenCount": {
+      "count": "精确计数",
+      "counting": "计数中…",
+      "chars": "字符 {n}",
+      "note": "引擎：js-tiktoken · 服务端精确计数 · 可对接 Router 费用估算"
+    },
+    "codec": {
+      "encodeDir": "文本 → 编码",
+      "decodeDir": "编码 → 文本",
+      "localNote": "本地运行",
+      "serverNote": "服务端 · 与 API 同一路径",
+      "hexInvalid": "不是合法的十六进制字符串",
+      "hexDecodeFail": "服务端无法将输入解码为 UTF-8（需合法 hex）",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · 与 API 同一路径",
+      "noteHtml": "HTML 实体映射 · 与 API 同一路径",
+      "noteHex": "UTF-8 ↔ hex · 与 API 同一路径"
+    },
+    "textDiff": {
+      "left": "左侧",
+      "right": "右侧",
+      "compare": "对比",
+      "comparing": "对比中…"
+    },
+    "imageTool": {
+      "drop": "拖拽图片到此处，或点击选择",
+      "selected": "已选：{name}（{kb} KB）",
+      "needFile": "请先选择图片",
+      "format": "输出格式",
+      "quality": "质量 {n}",
+      "maxW": "最大宽",
+      "maxH": "最大高",
+      "optional": "可选",
+      "resizeEg": "如 1280",
+      "processing": "处理中…",
+      "compress": "压缩",
+      "resize": "缩放",
+      "convert": "转换格式",
+      "download": "下载结果",
+      "outMeta": "输出 {kb} KB{dims}{ratio} · {type}",
+      "ratio": " · 约为原图 {pct}%",
+      "dims": " · {w}×{h}",
+      "original": "原图",
+      "result": "结果",
+      "privacy": "图片会发送到主机处理，处理后不保留。",
+      "note": "引擎：sharp（libvips）· 服务端 · 单张 + 批处理 · 与 API 同一路径（imageBase64）"
+    },
+    "pptxText": {
+      "file": "PPTX 文件",
+      "needFile": "请先选择 .pptx 文件",
+      "extract": "提取大纲",
+      "extracting": "提取中…",
+      "note": "PPTX 大纲 · pure ZIP + slide XML（无需 PowerPoint）"
+    },
+    "shell": {
+      "copyJson": "复制 JSON",
+      "sample": "示例",
+      "chars": "{n} 个字符",
+      "largeInput": "输入内容较大 — 结果会在您停止输入片刻后更新。",
+      "manualInput": "输入内容过大，实时计算会导致页面卡顿。请点击运行。",
+      "options": "选项",
+      "regenerateNote": "输出会随选项更改自动更新。",
+      "fileTab": "文件",
+      "pasteTab": "粘贴",
+      "browse": "选择文件",
+      "selectedFile": "{name} · {kb} KB",
+      "truncated": "已读取前 {kb} KB — 足以回答问题，其余内容始终保留在您的设备上。",
+      "detail": "详情",
+      "dropIntoPane": "将文件拖放到此处",
+      "swap": "交换两侧",
+      "prevChange": "上一条",
+      "nextChange": "下一条",
+      "changePosition": "{index} / {total}",
+      "result": "结果"
+    },
+    "readmeSkeleton": {
+      "emptyHint": "请至少勾选一个章节以生成 README。",
+      "note": "使用与 API 相同的引擎。未勾选的章节不会出现 — 不会生成空标题。",
+      "orderNote": "章节始终按此固定顺序渲染，因此相同输入会生成相同的文件。",
+      "group": {
+        "core": "核心",
+        "docs": "文档",
+        "community": "社区",
+        "meta": "元信息"
+      },
+      "section": {
+        "title": "标题与描述",
+        "badges": "徽章",
+        "callout": "提示框",
+        "toc": "目录",
+        "installation": "安装",
+        "usage": "用法",
+        "features": "功能特性",
+        "api-reference": "API 参考",
+        "screenshots": "截图",
+        "roadmap": "路线图",
+        "contributing": "贡献指南",
+        "support": "支持",
+        "acknowledgements": "致谢",
+        "license": "许可证",
+        "authors": "作者",
+        "tech-stack": "技术栈"
+      },
+      "projectName": "项目名称",
+      "projectNamePlaceholder": "项目名称",
+      "description": "描述",
+      "descriptionPlaceholder": "一句话说明项目功能",
+      "badgeLicense": "许可证徽章",
+      "badgeNpm": "npm 版本",
+      "badgeBuild": "构建状态",
+      "npmPackage": "npm 包",
+      "npmPackagePlaceholder": "@scope/package",
+      "repo": "GitHub 仓库",
+      "repoPlaceholder": "owner/repo",
+      "calloutKind": "提示类型",
+      "calloutBody": "提示内容",
+      "calloutBodyPlaceholder": "1.0 之前 — API 仍在变动",
+      "fenceLanguage": "语言",
+      "installCommand": "安装命令",
+      "installCommandPlaceholder": "npm install your-project",
+      "usageExample": "使用示例",
+      "usageExamplePlaceholder": "展示价值的最小示例",
+      "features": "功能特性",
+      "featuresPlaceholder": "每行一个功能",
+      "contact": "联系方式",
+      "contactPlaceholder": "you@example.com",
+      "license": "许可证",
+      "authors": "作者",
+      "authorsPlaceholder": "@handle, Jane Roe",
+      "techStack": "技术栈",
+      "techStackPlaceholder": "typescript, postgresql（simple-icons 标识符）",
+      "sectionCount": "{n} 个章节",
+      "charCount": "{n} 个字符",
+      "warningCount": "{n} 项已跳过",
+      "omittedTitle": "省略内容及原因"
+    },
+    "gitignore": {
+      "searchLabel": "搜索技术栈",
+      "searchPlaceholder": "搜索语言、框架、操作系统或编辑器…",
+      "add": "添加 {stack}",
+      "remove": "移除 {stack}",
+      "selected": "已选技术栈",
+      "suggestions": "匹配的技术栈",
+      "noMatches": "没有技术栈匹配“{query}”。按 Enter 仍然发送——别名将在服务端解析。",
+      "catalogFallback": "技术栈列表不可用——请输入技术栈名称并按 Enter。",
+      "emptyHint": "请在上方至少选择一个语言、框架、操作系统或编辑器。",
+      "regenerate": "重新生成",
+      "sections": "{n} 个区块",
+      "lines": "{n} 行",
+      "deduped": "已合并 {n} 个重复模式",
+      "notFound": "语料库中未收录：{stacks}",
+      "globalScope": "{stacks} 属于操作系统/编辑器条目——许多开发者会将其放在个人 ~/.gitignore_global 中，而非每个仓库。",
+      "untrackedNote": ".gitignore 仅影响未跟踪的文件。对于 git 已跟踪的文件，请运行 git rm -r --cached <path>。",
+      "fileLabel": ".gitignore"
+    },
+    "editorconfig": {
+      "emptyHint": "请至少设置一个属性以查看文件。",
+      "note": "与 API 使用相同的引擎。您的选择仅保存在本次浏览器会话中，不会存储。",
+      "checks": "检查项",
+      "presets": "从预设开始",
+      "preset": {
+        "spaces2": "2 个空格，LF",
+        "spaces4": "4 个空格，LF",
+        "tabs": "制表符，宽度 4",
+        "repo": "仓库模板（含 Markdown、Makefile）"
+      },
+      "rootLabel": "root = true — 阻止编辑器合并父级 .editorconfig 文件",
+      "glob": "通配符 {n}",
+      "addSection": "添加区块",
+      "removeSection": "移除",
+      "notSet": "（未设置）",
+      "import": "导入现有 .editorconfig",
+      "importPlaceholder": "在此粘贴 .editorconfig 以加载到表单中",
+      "importAction": "导入",
+      "importing": "正在导入…",
+      "importFailed": "导入失败：{message}"
+    },
+    "robotsTxt": {
+      "emptyHint": "设置上方选项 — 文件将在此显示",
+      "deployNote": "robots.txt 仅在域名根路径生效（https://example.com/robots.txt）。每个子域名需要单独的文件。",
+      "outputLabel": "robots.txt",
+      "defaultAccess": "默认访问权限（User-agent: *）",
+      "defaultAllow": "允许全部",
+      "defaultDisallow": "拒绝全部",
+      "defaultAccessNote": "\"Allow all\" 会写入一个空的 \"Disallow:\" — 这就是允许所有访问的方式。",
+      "crawlDelay": "爬取延迟（秒）",
+      "crawlDelayPlaceholder": "无",
+      "crawlDelayNote": "不属于 RFC 9309 规范。Google 会忽略此设置；它永远不会写入 Google 群组。",
+      "searchAgents": "搜索引擎",
+      "aiAgents": "AI 爬虫",
+      "aiAgentsNote": "训练和答案引擎爬虫。阻止它们不会影响搜索索引。",
+      "accessDefault": "默认",
+      "accessAllow": "允许",
+      "accessDisallow": "禁止",
+      "rules": "路径规则",
+      "rulesNote": "路径区分大小写且相对于根目录。添加尾部斜杠可将规则限制到某个目录。",
+      "rulePath": "路径 {n}",
+      "rulePathPlaceholder": "/admin/",
+      "ruleType": "规则类型",
+      "addRule": "添加路径规则",
+      "removeRule": "移除",
+      "sitemaps": "站点地图",
+      "sitemapsNote": "绝对 http(s) URL。作为独立行写入，位于所有组之外。",
+      "sitemapUrl": "站点地图 {n}",
+      "addSitemap": "添加站点地图",
+      "removeSitemap": "移除",
+      "groupCount": "{n} 个分组",
+      "lineCount": "{n} 行",
+      "sitemapCount": "{n} 个站点地图",
+      "warningsSummary": "此文件说明 ({n})"
+    },
+    "encodingDetect": {
+      "drop": "拖放文件以识别其编码",
+      "privacy": "仅读取前 {kb} KB，并发送至代理会调用的同一公开 invoke 端点——不会写入磁盘。",
+      "pasteLabel": "或粘贴文本",
+      "pastePlaceholder": "粘贴文本——包括需要解释的乱码",
+      "detail": "候选编码、换行符与字节统计",
+      "idle": "拖放文件或粘贴文本——有内容可读时报告将自动填充。",
+      "readOnly": "只读：此工具仅识别编码，不会改写字节。",
+      "headline": "{encoding} · {confidence}% 置信度",
+      "notText": "这看起来不像文本",
+      "bomPresent": "BOM {bytes}",
+      "bomAbsent": "无 BOM",
+      "eol": "{kind} 换行符",
+      "eolMixed": "混合换行符",
+      "language": "语言 {language} · {confidence}%",
+      "sampled": "从 {totalKb} KB 中的前 {kb} KB 检测",
+      "candidates": "候选项排名",
+      "candidatesNote": "有意显示备选编码：短样本或对称样本确实存在歧义。",
+      "lineEndings": "换行符",
+      "byteStats": "字节统计",
+      "totalBytes": "总计",
+      "asciiBytes": "ASCII",
+      "highBytes": "高 (0x80–0xFF)",
+      "nullBytes": "NUL",
+      "mojibake": "乱码已恢复"
+    },
+    "dockerfileStarter": {
+      "language": "语言",
+      "framework": "框架",
+      "packageManager": "包管理器",
+      "baseVariant": "基础镜像",
+      "version": "运行时版本",
+      "workdir": "工作目录",
+      "port": "端口",
+      "buildCommand": "构建命令",
+      "startCommand": "启动命令",
+      "commandPlaceholder": "留空 = 使用预设默认值",
+      "frameworkNone": "无（纯运行时）",
+      "pmAuto": "自动",
+      "variantSlim": "slim（glibc）",
+      "variantAlpine": "alpine（musl）",
+      "variantFull": "完整",
+      "multiStage": "多阶段构建",
+      "nonRootUser": "非 root 用户",
+      "includeDockerignore": "添加 .dockerignore",
+      "includeCompose": "添加 compose.yaml",
+      "includeHealthcheck": "添加 HEALTHCHECK",
+      "groupWhat": "构建内容",
+      "groupHow": "运行方式",
+      "emptyHint": "选择一种语言以查看 Dockerfile。",
+      "note": "仅提供预设——除上述选项外，不会有任何内容离开你的浏览器。发布前请阅读文件。",
+      "warnings": "{n} 项待检查",
+      "stages": "{n} 个阶段",
+      "badgeNonRoot": "非 root",
+      "badgeRoot": "以 root 运行",
+      "badgePort": "端口 {port}"
+    },
+    "lineEndingDetect": {
+      "dropLabel": "拖放文本文件以检查其换行符",
+      "privacy": "粘贴的文本以及拖放文件的前 256 KB 会发送至 Forge API 进行扫描；字节内容不会被存储。",
+      "pasteLabel": "或粘贴文本",
+      "pastePlaceholder": "粘贴要检查的文本",
+      "idle": "粘贴文本或拖放文件以查看其换行符判定结果。",
+      "detail": "计数与检查",
+      "note": "仅检测 — 此工具不会重写您的文件。",
+      "empty": "输入为空",
+      "noTerminator": "无行终止符 — 一行未终止",
+      "consistent": "{style} — 一致",
+      "mixed": "混合 — {parts}",
+      "sharePart": "{pct}% {style}",
+      "style": {
+        "LF": "LF（Unix/Linux/macOS）",
+        "CRLF": "CRLF（Windows）",
+        "CR": "CR（经典 Mac OS 9 及更早版本）"
+      },
+      "lines": "{n} 行",
+      "bytes": "{n} 字节",
+      "trailing": {
+        "present": "以换行符结尾",
+        "absent": "文件末尾没有换行符"
+      },
+      "bomUtf8": "UTF-8 BOM",
+      "bomNone": "无 BOM",
+      "countRow": "{style}: {n} ({pct}%)",
+      "colStyle": "样式",
+      "colCount": "数量",
+      "colShare": "占比",
+      "minorityLines": "与主流样式不同的行：{lines}",
+      "andMore": "及其他",
+      "findings": "检查项",
+      "level": {
+        "info": "提示",
+        "warning": "警告",
+        "danger": "阻断"
+      },
+      "sampled": "已扫描前 {n} 字节（共 {total} 字节）",
+      "encodingLink": "打开编码检测器"
+    },
+    "fileTypeDetect": {
+      "drop": "拖放文件以识别其真实类型",
+      "privacy": "仅读取前 {kb} KB 的文件头——文件其余部分不会离开您的设备。",
+      "hexTab": "粘贴十六进制",
+      "detail": "显示字节和候选类型",
+      "idle": "拖放文件，或粘贴其开头的十六进制字节。",
+      "note": "签名用于识别容器，而非其中的编解码器或内容。",
+      "unset": "—",
+      "unknownType": "未匹配到任何签名",
+      "polyglot": "多格式文件",
+      "tierNone": "扩展名一致",
+      "tierBenign": "良性不匹配",
+      "tierMismatch": "扩展名不匹配",
+      "tierHighRisk": "高风险",
+      "confidenceMatch": "签名匹配",
+      "confidenceContainer": "仅容器",
+      "confidenceAmbiguous": "不明确",
+      "confidenceNone": "无匹配",
+      "signalDetected": "检测到的 MIME",
+      "signalReported": "报告的 MIME",
+      "signalExtension": "文件名扩展名",
+      "drillResolved": "已打开 {kind} 容器：{type}",
+      "drillUnresolved": "已确认 {kind} 容器；无法从采样字节解析子类型",
+      "hexDump": "头部字节",
+      "bytesRead": "已读取 {n} 字节",
+      "headerOnly": "仅头部样本",
+      "entropy": "熵 {bits} 位/字节",
+      "signatureCount": "表中包含 {n} 个签名",
+      "textHints": "结构提示：{hints}",
+      "candidates": "所有匹配签名",
+      "atOffset": "偏移量 {offset}"
+    },
+    "licenseChooser": {
+      "prompt": "这个项目需要什么？",
+      "pickScenario": "选择最符合你项目情况的描述——答案和文件会直接显示在这里。",
+      "disclaimer": "确定性模板输出，不构成法律建议。",
+      "noAnswer": "没有单一许可证适合此情况",
+      "permissions": "允许",
+      "conditions": "要求",
+      "limitations": "不涵盖",
+      "alternates": "此情况的其他选项",
+      "useThis": "使用此选项",
+      "readCanonical": "在 SPDX 上查看规范文本",
+      "holder": "版权所有者",
+      "holderPlaceholder": "您的姓名或公司名称",
+      "holderHint": "添加版权所有者，文件将随输入自动填充。",
+      "year": "年份",
+      "manifest": "SPDX ID 的填写位置",
+      "verbatim": "{name} 为所有用户提供完全相同的字节内容——版权声明写在源文件通知中，而不是 LICENSE 文件里。",
+      "noLicense": {
+        "summary": "如果完全不添加许可证会怎样？",
+        "body": "没有许可证并不等同于公有领域。如果没有许可证，默认适用版权保护，任何人都不得复制、修改或重新分发你的代码——公开仓库只是可见性，而非授权。"
+      },
+      "artifact": {
+        "header": "源文件头部",
+        "notice": "源文件声明"
+      },
+      "refine": {
+        "patent": "此处涉及专利授权（公司代码、硬件、标准工作）",
+        "network": "将作为托管服务运行，而非仅作为下载",
+        "library": "是其他软件链接的库",
+        "later": "允许使用许可证的后续版本（保持与 Apache-2.0 代码兼容）",
+        "none": "此场景无需进一步细化。"
+      },
+      "scenario": {
+        "permissive": {
+          "label": "任何人都可自由使用",
+          "detail": "可使用、修改、销售、集成到闭源产品中——只需保留版权声明。"
+        },
+        "copyleft": {
+          "label": "改进必须回馈",
+          "detail": "任何分发修改版本的人都必须同时公开源代码。"
+        },
+        "community": {
+          "label": "我正在为现有项目做贡献",
+          "detail": "许可证已确定——请匹配您要贡献的项目。"
+        },
+        "non-software": {
+          "label": "这不是软件",
+          "detail": "文档、数据、设计或媒体需要使用知识共享（Creative Commons）许可证，而非 OSI 许可证。"
+        },
+        "unsure": {
+          "label": "我还不清楚",
+          "detail": "获取低后悔的默认选项，以及另外两个值得了解的选项。"
+        }
+      },
+      "family": {
+        "permissive": "宽松许可",
+        "weak-copyleft": "弱著佐权",
+        "strong-copyleft": "强著佐权",
+        "public-domain": "公有领域",
+        "content": "内容许可"
+      },
+      "flag": {
+        "commercial-use": "商业使用",
+        "modifications": "修改",
+        "distribution": "分发",
+        "private-use": "私人使用",
+        "patent-use": "专利授权",
+        "include-copyright": "保留版权声明",
+        "document-changes": "说明修改内容",
+        "disclose-source": "公开源代码",
+        "same-license": "整个作品使用相同许可",
+        "same-license-file": "每个修改文件使用相同许可",
+        "same-license-library": "库使用相同许可",
+        "network-use-disclose": "网络使用视为分发",
+        "liability": "责任",
+        "warranty": "担保",
+        "trademark-use": "商标使用"
+      }
+    },
+    "isbn": {
+      "inputLabel": "ISBN",
+      "placeholder": "978-0-306-40615-7 — 每行一个，连字符和空格将被忽略",
+      "idle": "粘贴一个 ISBN 或整列数据；输入时结果会实时显示。",
+      "scope": "仅校验校验位计算。有效的 ISBN 表示内部一致，并不代表该 ISBN 已由机构分配给真实书籍。",
+      "summary": "{total} 个中有 {valid} 个有效",
+      "singleValid": "ISBN 有效",
+      "singleInvalid": "ISBN 无效",
+      "invalidCount": "{n} 个无效",
+      "convertedTo": "{type}: {value}",
+      "valid": "有效",
+      "invalid": "无效",
+      "truncated": "仅显示前 {shown} 行。",
+      "col": {
+        "input": "输入",
+        "normalized": "标准化",
+        "type": "类型",
+        "status": "状态",
+        "converted": "已转换",
+        "note": "备注"
+      },
+      "type": {
+        "isbn10": "ISBN-10",
+        "isbn13": "ISBN-13",
+        "invalidLength": "长度错误"
+      },
+      "note": {
+        "checkDigit": "校验位应为 {expected}",
+        "invalidLength": "ISBN 必须为 10 或 13 个字符",
+        "invalidCharacter": "包含非数字字符",
+        "xMisplaced": "X 只能作为 ISBN-10 的最后一个字符",
+        "noIsbn10": "979 前缀没有对应的 ISBN-10",
+        "nonBookland": "13 位 ISBN 必须以 978 或 979 开头",
+        "ismn": "979-0 是 ISMN 范围（印刷乐谱），不是 ISBN"
+      },
+      "specimenTitle": "ISBN · 结构样张",
+      "segPrefix": "前缀",
+      "segBody": "主体",
+      "segCheck": "校验位"
+    },
+    "languageDetect": {
+      "inputLabel": "代码片段",
+      "inputPlaceholder": "粘贴不带文件名的代码——来自聊天记录、工单、回答……",
+      "hintLabel": "文件名或扩展名（可选）",
+      "hintPlaceholder": "main.h · .pl · Dockerfile",
+      "note": "使用与 API 相同的引擎。检测仅基于内容，除非你提供文件名提示；模糊扩展名（.h .m .pl .fs .ts .cs .r）会优先通过各自的规则处理。",
+      "idle": "粘贴一个代码片段——结果会随你输入实时显示。",
+      "confidence": {
+        "high": "高置信度",
+        "medium": "中等置信度",
+        "low": "低置信度"
+      },
+      "score": "{n}/100",
+      "dataFormat": "数据格式，不是编程语言",
+      "multiLanguage": "疑似多种语言",
+      "why": "为何得出此结论",
+      "signals": "匹配信号",
+      "alternates": "其他候选",
+      "composeNext": "格式化此 {language}"
+    },
+    "iban": {
+      "inputLabel": "IBAN",
+      "idle": "粘贴 IBAN——输入即判，无需点击。",
+      "sourceNote": "校验码和结构遵循 ISO 13616-1:2020。各国长度和 BBAN 格式来自 ISO IBAN 注册表的公开复刻版本，而非注册表本身。",
+      "valid": "格式正确的 IBAN",
+      "keepTyping": "继续输入 — 短于该国家的 IBAN 长度",
+      "caveat": "仅限格式正确。校验和通过并不确认该账户存在、有效或属于收款人。",
+      "printFormat": "打印格式",
+      "details": "解析明细",
+      "notEncoded": "不符合该国家的格式编码",
+      "coverage": "{n} 个国家已注册 IBAN 格式",
+      "reason": {
+        "bad_charset": "不符合IBAN格式——IBAN由两个字母、两个数字，后跟字母和数字组成",
+        "country_unsupported": "该国家代码没有注册的IBAN格式",
+        "incomplete": "不完整",
+        "wrong_length_for_country": "对于该国家的IBAN来说过长",
+        "structure_mismatch": "长度正确，但不符合该国家IBAN的格式",
+        "checksum_failed": "校验和失败——此IBAN中存在拼写错误"
+      },
+      "badge": {
+        "country": "{name} ({code})",
+        "unknownCountry": "国家代码 {code}",
+        "length": "{n} / {expected} 个字符",
+        "bankCode": "银行代码 {code}",
+        "expectedCheckDigits": "该账号的校验位应为 {digits}"
+      },
+      "field": {
+        "normalized": "电子格式",
+        "country": "国家",
+        "checkDigits": "校验位",
+        "bban": "BBAN",
+        "bbanFormat": "BBAN 格式",
+        "bankCode": "银行代码"
+      },
+      "check": {
+        "charset": "字符集",
+        "country": "国家",
+        "length": "长度",
+        "structure": "结构",
+        "checksum": "MOD 97-10"
+      },
+      "state": {
+        "pass": "通过",
+        "fail": "失败",
+        "skipped": "未执行"
+      },
+      "specimenTitle": "IBAN · 结构样张",
+      "segCountry": "国家",
+      "segCheck": "校验位",
+      "segBban": "账号主体（BBAN）"
+    },
+    "secretScan": {
+      "pasteLabel": "粘贴代码、配置或 .env",
+      "pastePlaceholder": "DATABASE_URL=postgres://…\nAPI_KEY=…",
+      "dropLabel": "拖放文件进行扫描",
+      "privacy": "完全在您的浏览器中运行。不会向任何地方发送数据——包括我们。",
+      "scan": "扫描",
+      "scanning": "扫描中…",
+      "idleTitle": "粘贴内容并按下扫描。",
+      "idleHint": "检查供应商 API 密钥、令牌、私钥和高熵密钥。匹配到的值会被掩码处理；仅行号会完整显示。",
+      "clean": "未发现密钥",
+      "cleanCaveat": "此处内容未匹配已知凭证格式，也不像随机密钥。模式匹配并非确证——如有疑虑，请人工复核。",
+      "found": "{n, plural, one {发现 # 个疑似密钥} other {发现 # 个疑似密钥}}",
+      "foundCaveat": "在粘贴到任何地方之前，请先对这些内容脱敏。如果密钥真实有效，请立即轮换。",
+      "countHigh": "{n} 高置信度",
+      "countMedium": "{n} 中置信度",
+      "countLow": "{n} 低置信度",
+      "confidence": {
+        "high": "高",
+        "medium": "中",
+        "low": "低"
+      },
+      "position": "第 {line} 行，第 {column} 列",
+      "length": "{n} 个字符",
+      "maskedLabel": "已屏蔽匹配项",
+      "why": "匹配原因",
+      "candidates": "也可能是：",
+      "scanDetail": "扫描详情",
+      "lines": "{n} 行",
+      "bytes": "已扫描 {n} 字节",
+      "suppressed": "已忽略 {n} 个占位符",
+      "suppressedNote": "已知的演示值（EXAMPLE 密钥、your-api-key-here、重复字符）会被忽略，以免示例文件误报。",
+      "omitted": "还有 {n} 项未显示",
+      "truncated": "输入已截断——仅扫描了第一部分",
+      "reportTitle": "密钥扫描结果（值已脱敏）",
+      "scopeNote": "仅检测：此工具不会联系供应商检查密钥是否仍有效——那意味着将您的密钥发送给第三方。"
+    },
+    "eanUpcGtin": {
+      "inputLabel": "条形码编号",
+      "placeholder": "每行一个编码（逗号和分号也可分隔）",
+      "idle": "粘贴一个编码或整列数据——输入时即显示判定结果。",
+      "operationLabel": "操作",
+      "operationValidate": "验证（代码已包含校验位）",
+      "operationCalculate": "计算（代码缺少校验位）",
+      "typeLabel": "类型",
+      "typeAuto": "按长度自动识别",
+      "total": "{n} 个代码",
+      "validCount": "{n} 个有效",
+      "invalidCount": "{n} 个无效",
+      "calculatedCount": "{n} 个已计算",
+      "unrecognizedCount": "{n} 个长度无法识别",
+      "verdict": {
+        "valid": "有效",
+        "invalid": "无效",
+        "calculated": "已计算",
+        "unrecognized-length": "长度无法识别"
+      },
+      "alsoReadsAs": "也可识别为 {type}",
+      "checkDigit": "校验位",
+      "corrected": "应为",
+      "gtin14": "GTIN-14 格式",
+      "reason": {
+        "empty": "此行无内容可校验。",
+        "non-digit-characters": "包含既非数字也非分隔符的字符。",
+        "unsupported-length": "没有GS1标识符支持此长度（支持8、12、13、14和18位数字）。",
+        "length-mismatch": "所选类型的长度不正确。",
+        "check-digit-mismatch": "最后一位数字与标准要求的不匹配。"
+      },
+      "warning": {
+        "separators-stripped": "检查前已移除空格、连字符和点号。",
+        "all-zero": "全零——数学上有效，但不是真实标识符。",
+        "payload-is-also-a-complete-code": "这也是完整的代码长度。如果它已经包含校验位，请切换到验证。"
+      },
+      "math": "显示算术过程",
+      "mathSum": "总和 {sum} → 校验位 {check}",
+      "truncatedRows": "仅显示前 {shown} 行，共 {total} 行。复制和下载将包含全部数据。",
+      "privacy": "编码将发送至 Forge API 进行检查，不会存储。",
+      "scopeNote": "校验位正确仅表示编号格式规范，并不代表 GS1 曾将其分配给真实的产品、公司或地点——只有查询 GEPIR 注册库才能确认。",
+      "specimenTitle": "GTIN · 结构样张",
+      "segPayload": "载荷",
+      "segCheck": "校验位"
+    },
+    "vin": {
+      "inputLabel": "VIN（17 位字符）",
+      "privacy": "在您的浏览器中本地校验，VIN 不会发送到任何地方。",
+      "idle": "粘贴 VIN 即可——结果随输入实时显示，无需点击按钮。",
+      "scope": "仅校验结构与校验位（49 CFR 565.15 / ISO 3779）。此功能不提供车辆历史记录查询。",
+      "verdict": {
+        "valid": "VIN 结构有效",
+        "keepTyping": "继续输入 — 还需 {remaining} 个字符",
+        "tooLong": "过长——VIN 码恰好为 17 位字符，此处有 {n} 位",
+        "invalidCharacter": "非 VIN 字符：位置 {position} 处的 \"{char}\"",
+        "checkDigitMismatch": "校验位不匹配——期望 {expected}，实际为 {found}"
+      },
+      "hint": {
+        "confusable": "“{char}”从未在VIN中使用。您是指{suggest}吗？"
+      },
+      "notice": {
+        "notProvenance": "有效的校验位确认VIN格式正确，但并不确认车辆存在、未经改装或拥有干净的历史记录——克隆的VIN也能通过此检查。",
+        "pre1981": "1981年之前生产的车辆以及部分进口（JDM/欧洲）车辆不使用此校验位——不匹配可能并不意味着VIN输入错误。",
+        "partial": "校验位验证需要完整的17位VIN。部分VIN是解码任务，而非校验和任务。"
+      },
+      "badge": {
+        "length": "{n} 个字符",
+        "expected": "校验位 {d}"
+      },
+      "invalidChars": {
+        "more": "此外非VIN字符：{list}"
+      },
+      "segment": {
+        "wmi": "WMI 1-3",
+        "vds": "描述符 4-8",
+        "checkDigit": "校验位 9",
+        "modelYear": "车型年份 10",
+        "plant": "工厂 11",
+        "serial": "序列号 12-17"
+      },
+      "math": {
+        "title": "显示计算过程",
+        "col": {
+          "position": "位置",
+          "char": "字符",
+          "value": "数值",
+          "weight": "权重",
+          "product": "乘积"
+        },
+        "formula": "sum = {sum};  {sum} mod 11 = {remainder}  →  校验位 {expected}"
+      },
+      "specimenTitle": "VIN · 结构样张"
+    },
+    "envDiff": {
+      "envA": "环境 A",
+      "envB": "环境 B",
+      "placeholderA": "粘贴或拖放第一个 .env 文件",
+      "placeholderB": "粘贴或拖入第二个 .env 文件",
+      "paneNoAssignment": "未找到 KEY=value 行",
+      "optIgnoreComments": "忽略注释和空行",
+      "optCaseInsensitive": "不区分大小写的键比较",
+      "optRedactSecrets": "遮蔽检测到的密钥",
+      "emptyHint": "添加第二个环境以查看对比",
+      "summaryNone": "{total} 个键均无差异",
+      "summaryDiff": "{n} 个键与 {total} 个键不同",
+      "note": {
+        "unchanged": "两侧值相同",
+        "changed": "值不同",
+        "added": "仅在 B 中设置",
+        "removed": "仅在 A 中设置",
+        "commentedOutInA": "在 A 中已注释，在 B 中已设置",
+        "commentedOutInB": "在 A 中已设置，在 B 中已注释"
+      },
+      "secretChanged": "密钥不同",
+      "secretSame": "两侧密钥相同",
+      "count": {
+        "unchanged": "{n} 个未更改",
+        "changed": "{n} 项已更改",
+        "added": "{n} 项已添加",
+        "removed": "{n} 项已移除",
+        "commentedOut": "{n} 项已注释"
+      },
+      "warnings": "输入警告 ({n})",
+      "warningType": {
+        "duplicateKey": "{file} · 重复键",
+        "quoteMismatch": "{file} · 引号不匹配",
+        "unparsableLine": "{file} · 无法解析的行"
+      },
+      "showUnchanged": "显示未更改项 ({n})",
+      "commentedIn": {
+        "A": "在 A 中已注释掉",
+        "B": "在 B 中已注释",
+        "both": "双方均已注释"
+      },
+      "redactedNote": "密钥值通过键名关键词启发式规则进行掩码处理——并非安全扫描器。比较基于原始值运行，因此轮换后的密钥仍会显示为已更改。",
+      "interpolationNote": "${VAR} 引用按字面比较，从不解析：展开方式因消费者而异。",
+      "truncated": "仅列出前 5,000 个键；计数涵盖所有键。",
+      "colKey": "键",
+      "colA": "A",
+      "colB": "B",
+      "colStatus": "状态",
+      "privacy": "两个文件均在您的浏览器中进行比较，不会上传任何内容。"
+    },
+    "csvDiff": {
+      "originalLabel": "原始 CSV",
+      "updatedLabel": "更新后的 CSV",
+      "originalPlaceholder": "粘贴原始导出内容，或将 .csv 文件拖放到此处",
+      "updatedPlaceholder": "粘贴更新后的导出内容，或将 .csv 文件拖放到此处",
+      "emptyHint": "粘贴或拖放两个文件——两侧均有内容时，比较将自动运行。",
+      "note": "行按标识匹配，而非按位置匹配，因此插入或重新排序的行不会显示为大量变更。内容将发送至 API 进行比较，不会存储。",
+      "columns": "{n} 列",
+      "keyLabel": "键列",
+      "keyAuto": "自动建议",
+      "keyNone": "无键——比较整行",
+      "joinLabel": "连接",
+      "joinFull": "全外连接 — 所有行",
+      "joinInner": "内连接 — 两表共有行",
+      "joinLeft": "左连接 — 原始行集",
+      "ignoreWhitespace": "忽略空白字符",
+      "ignoreCase": "忽略大小写",
+      "treatEmptyAsNull": "空值 = NULL = N/A",
+      "noDifferences": "无差异",
+      "differences": "{added} 新增 · {removed} 删除 · {changed} 变更",
+      "added": "{n} 新增",
+      "removed": "已移除 {n} 项",
+      "changed": "已变更 {n} 项",
+      "unchangedCount": "未变更 {n} 项",
+      "totals": "{original} → {updated} 行",
+      "matchedBy": "按 {columns} 匹配（{source}）",
+      "matchedWholeRow": "按整行内容匹配 — 未使用键列，因此未报告任何变更。",
+      "keySource": {
+        "provided": "您选择的",
+        "auto": "自动建议的",
+        "full-row": "整行"
+      },
+      "keyRejected": "已拒绝的键候选项：{items}",
+      "columnMismatch": "仅存在于原文件：{original} · 仅存在于更新文件：{updated}",
+      "truncated": "显示完整结果的 {shown} 条（预览上限 {limit} 行）—— 以上计数为完整数据。",
+      "findings": "备注 ({n})",
+      "level": {
+        "info": "信息",
+        "warning": "警告",
+        "danger": "错误"
+      },
+      "wholeRow": "第 {n} 行",
+      "exportChanged": "变更行 (CSV)",
+      "exportFull": "完整差异 (CSV)"
+    },
+    "uscc": {
+      "modeLabel": "验证或生成",
+      "tab": {
+        "verify": "验证",
+        "generate": "生成测试代码"
+      },
+      "inputLabel": "统一社会信用代码",
+      "placeholder": "18 位字符，例如 91500000059926748X",
+      "idle": "粘贴 18 位代码。输入时会在浏览器中实时校验——不会存储任何内容。",
+      "scope": "仅结构校验（GB 32100-2015 + ISO 7064 MOD 31-3）。通过校验的代码格式正确；这并不代表有机构已注册该代码——请在国家注册库 cods.org.cn 核实。",
+      "valid": "有效的统一社会信用代码",
+      "invalid": "不是有效的统一社会信用代码",
+      "incomplete": "已输入 {n} 个字符，共需 18 个",
+      "invalidCharacters": "包含标准不允许的字符",
+      "checksumOk": "校验位正确",
+      "checksumBad": "校验位不匹配",
+      "expectedDigit": "校验位应为 {expected}，而非 {actual}",
+      "illegalAt": "位置 {position}：“{char}”不在代码字符集中（I、O、S、V、Z 已排除）",
+      "detail": "字段详情",
+      "legacyTitle": "旧版组织机构代码（GB 11714）",
+      "legacy": {
+        "ok": "内嵌的 9 位组织机构代码自洽",
+        "mismatch": "旧版校验位应为 {expected} — 仅供参考；并非所有注册类别都包含 GB 11714 组织机构代码",
+        "unchecked": "未校验"
+      },
+      "divisionScope": "第 3–8 位与 GB/T 2260 省份表及六位形式的嵌套规则进行匹配；未携带完整的县级表。",
+      "field": {
+        "registrationDept": "登记机关",
+        "orgCategory": "机构类别",
+        "adminDivision": "行政区划",
+        "orgIdentifier": "主体标识码",
+        "checkDigit": "校验码"
+      },
+      "depth": {
+        "none": "未解析",
+        "province": "省级",
+        "prefecture": "地级",
+        "county": "县级"
+      },
+      "note": {
+        "empty": "暂无待检查项",
+        "incomplete": "统一社会信用代码必须恰好为 18 位字符",
+        "tooLong": "超过 18 位字符",
+        "illegalCharacter": "包含 GB 32100-2015 字符集之外的字符（排除 I、O、S、V 和 Z）",
+        "checkDigitMismatch": "校验位与前 17 位字符不匹配",
+        "departmentUnknown": "第 1 位不是标准定义的登记管理部门（1、5、9、Y）",
+        "categoryUnknown": "第 2 位不是该登记管理部门定义的组织类别",
+        "divisionNotNumeric": "第 3–8 位必须为六位数字",
+        "divisionUnknownProvince": "第 3–4 位不是 GB/T 2260 省份代码",
+        "divisionMalformed": "存在无地级市管辖的县级单位，GB/T 2260 不允许"
+      },
+      "gen": {
+        "dept": "登记管理部门",
+        "category": "组织类别",
+        "province": "省份",
+        "count": "数量",
+        "randomProvince": "任意省份",
+        "regenerate": "生成新批次",
+        "emptyHint": "选择上方选项以生成测试代码。",
+        "testDataBadge": "测试数据",
+        "seed": "种子 {seed}",
+        "allCodes": "所有代码",
+        "disclaimer": "这些代码在结构上有效，但不属于任何已注册机构。请勿将其用于代表真实实体。",
+        "note": "生成过程基于种子：相同的选项和种子始终返回相同的批次，因此 fixture 可复现。每段代码在 JSON 和此处均标记为 isTestData。"
+      },
+      "specimenTitle": "统一社会信用代码 · 结构样张"
+    },
+    "yamlDiff": {
+      "original": "原始",
+      "changed": "已更改",
+      "originalPlaceholder": "粘贴或拖放原始 YAML（或 JSON）",
+      "changedPlaceholder": "粘贴或拖放已更改的 YAML（或 JSON）",
+      "idle": "填写两个面板，比较将在您输入时自动运行。",
+      "privacy": "两个文档均在此浏览器中解析和比较——不会上传任何内容，这对于携带主机名和密钥名称的清单尤为重要。",
+      "modeLabel": "比较",
+      "modeSemantic": "语义（结构）",
+      "modeRawText": "原始文本（字符）",
+      "resolveAnchors": "将锚点和别名解析为其实际值",
+      "valid": "YAML 有效",
+      "validMulti": "YAML 有效 · {n} 个文档",
+      "invalid": "解析错误，第 {line} 行",
+      "parseFailed": "一侧解析失败 — 未进行任何比较",
+      "equivalent": "无差异 — 两个文档解析为相同结构",
+      "equivalentStructural": "解析结构相同 · {n} 处格式或锚点差异",
+      "summary": "新增 {added} · 删除 {removed} · 修改 {changed} · 类型变更 {typeChanged}",
+      "parseErrorAt": "{side} · 第 {line} 行，第 {column} 列：{message}",
+      "documentCountMismatch": "文档数量不一致：{original} 对比 {changed} — 文档按顺序配对，多余文档整体报告",
+      "duplicateKeys": "源文件中存在重复键",
+      "unified": "统一补丁（规范化 YAML）",
+      "howItWorks": "此比较的工作原理",
+      "rule": {
+        "keyOrder": "映射键的顺序、引号和缩进将被忽略；序列顺序会进行比较，因为列表的顺序具有含义。",
+        "anchors": "别名会解析为其值，因此共享锚点背后的编辑会在每个别名位置显示；如果锚点或别名发生变化但值保持不变，则会单独报告为结构性变更。",
+        "mergeKeys": "合并键 (<<) 在比较前展开，节点自身的键优先于合并的键。",
+        "types": "类型属于值的一部分：8080、\"8080\" 和 !!str 8080 均报告为类型变更，而非通用变更。",
+        "sequences": "映射序列在 name、id 或 key 字段两侧唯一时按该字段配对，因此插入一项不会级联；重新排序仍会报告。",
+        "blockScalars": "块标量按解析后的字符串进行比较，因此 |- 去除的尾随换行符是实际变更；相同值的重新格式化属于结构变化。",
+        "comments": "注释不属于 YAML 数据模型，不参与比较。",
+        "multiDoc": "--- 流按文档逐一配对；数量不匹配时报告差异，而非仅比较第一个文档。",
+        "duplicateKeys": "输入中存在重复的映射键，将采用最后一次出现的值，并报告为警告。"
+      },
+      "note": {
+        "raw-text-mode": "纯文本模式按字符比较，而非结构：键顺序、引号和缩进均会影响结果。",
+        "parse-error": "一侧无法解析，因此未进行比较。",
+        "document-count-mismatch": "两侧的 --- 文档数量不同；文档按顺序配对，多余的文档将整体报告。",
+        "merge-keys-expanded": "比较前已展开合并键 (<<)。",
+        "anchors-unresolved": "别名按 *name 引用进行比较，而非其解析后的值。",
+        "yaml11-ambiguous-scalars": "未加引号的 y/n/yes/no/on/off 在此处被读取为字符串（YAML 1.2 Core），在 YAML 1.1 下则为布尔值——如需布尔值请添加引号。",
+        "sequence-matched-by-identity": "映射序列已通过标识字段而非位置进行配对。",
+        "duplicate-keys": "映射中声明了重复的键；将使用最后一个出现的值。",
+        "truncated": "仅列出前 2000 项变更。"
+      }
+    },
+    "listSetCompare": {
+      "listA": "列表 A",
+      "listB": "列表 B",
+      "placeholder": "粘贴项目，每行一个（或拖放 .txt/.csv 文件）",
+      "emptyHint": "请同时在列表 A 和列表 B 中添加项目以查看比较结果。",
+      "privacy": "两个列表均在您的浏览器中比较，不会上传任何内容。相同的引擎在服务器端为 API 和 MCP 调用者运行。",
+      "delimiter": "分隔符",
+      "delimiterOption": {
+        "auto": "自动检测",
+        "newline": "换行",
+        "comma": "逗号",
+        "tab": "制表符",
+        "custom": "自定义"
+      },
+      "customDelimiter": "分隔符",
+      "customDelimiterPlaceholder": "| 或 \\t",
+      "sort": "排序",
+      "sortOption": {
+        "original": "原始顺序",
+        "asc": "A→Z",
+        "desc": "Z→A",
+        "byCount": "按数量"
+      },
+      "optCaseSensitive": "区分大小写",
+      "optTrim": "修剪空白字符",
+      "optCollapse": "合并内部空格",
+      "optIgnoreZeros": "忽略前导零",
+      "paneItems": "{n} 项",
+      "paneSingle": "1 项 — 请检查分隔符",
+      "items": "{n}",
+      "none": "无",
+      "more": "+{n} 项 — 复制或下载以查看完整列表",
+      "panel": {
+        "onlyInA": "仅在 A 中",
+        "onlyInB": "仅在 B 中",
+        "intersection": "交集（两者共有）",
+        "union": "并集（所有项目）",
+        "symmetricDifference": "对称差集"
+      },
+      "summaryIdentical": "相同集合 — {n} 个共享项目",
+      "summaryDiff": "A 独有 {a} · B 独有 {b} · 共享 {shared}",
+      "drill": {
+        "symmetricDifference": "对称差集 ({n})",
+        "duplicates": "列表内重复项 ({n})",
+        "multiplicities": "逐项计数 ({n})",
+        "warnings": "提示 ({n})"
+      },
+      "duplicatesInA": "A 中重复项",
+      "duplicatesInB": "B 中重复",
+      "colValue": "项目",
+      "colCountA": "A 中",
+      "colCountB": "B 中",
+      "detailTruncated": "逐项计数已截断 — 请在 API 中提高 maxDetail 以获取完整表格。",
+      "reportTitle": "列表对比"
+    },
+    "loanAmortization": {
+      "principal": "贷款金额",
+      "rate": "年利率 %",
+      "term": "期限",
+      "termUnit": "期限单位",
+      "unitYears": "年",
+      "unitMonths": "月",
+      "startMonth": "首期还款月份",
+      "startMonthHint": "YYYY-MM。用于标注还款计划，不影响金额。",
+      "extraHeading": "额外还款",
+      "extraMonthly": "每月额外还款",
+      "extraYearly": "每年额外还款一次",
+      "extraYearlyMonth": "每年额外还款落在第几个月",
+      "extraOneTime": "一次性额外还款",
+      "extraOneTimePeriod": "一次性支付第 #",
+      "extraNote": "额外还款会减少其所在期的本金，从而降低后续各期的利息。利率和计划还款额保持不变。",
+      "monthlyPayment": "每月还款额",
+      "totalInterest": "总利息",
+      "totalPaid": "总还款额",
+      "crossover": "交叉点",
+      "crossoverValue": "第 {n} 期",
+      "crossoverNone": "无",
+      "payoff": "第 {n} 期还清",
+      "monthsSaved": "提前 {n} 个月",
+      "totalExtra": "超出计划支付 {amount}",
+      "viewMonthly": "逐笔还款",
+      "viewAnnual": "按年查看",
+      "tableCaption": "还款计划表：每期还款额、利息、本金及剩余余额",
+      "colPeriod": "#",
+      "colDate": "月份",
+      "colPayment": "还款额",
+      "colInterest": "利息",
+      "colPrincipal": "本金",
+      "colBalance": "余额",
+      "colYear": "年份",
+      "expandRows": "显示全部 {total} 笔还款",
+      "collapseRows": "显示更少期数",
+      "windowNote": "显示 {shown} / {total} 期。CSV 和 API 均包含全部期数。",
+      "emptyHint": "输入贷款金额、利率和期限以查看还款计划。",
+      "note": "与 API 使用相同引擎。计算仅基于您的贷款条款；不会上传或存储任何数据。",
+      "errPrincipal": "请输入大于 0 的贷款金额。",
+      "errRate": "请输入 0 到 100 之间的利率。",
+      "errTerm": "请输入 1 个月到 100 年之间的期限。",
+      "errStartMonth": "请使用 YYYY-MM 格式，例如 2026-01。",
+      "errExtra": "请输入 0 或以上的金额。",
+      "errOneTimePeriod": "请输入一次性还款所对应的期数。"
+    },
+    "businessDayShift": {
+      "modeLabel": "计算内容",
+      "mode": {
+        "shift": "平移日期",
+        "countBetween": "计算日期之间的天数"
+      },
+      "startDate": "开始日期",
+      "days": "工作日",
+      "daysHint": "负数表示向前推算：−10 表示开始日期之前的 10 个工作日。",
+      "daysInvalid": "工作日必须为整数，可选择在前面加负号。",
+      "endDate": "结束日期",
+      "includeEndDate": "是否计入结束日期——这与电子表格中 NETWORKDAYS 的返回值一致",
+      "weekendLabel": "每周休息日",
+      "weekendHint": "默认为周六和周日。若周末为周五和周六，请相应调整。",
+      "weekday": {
+        "sun": "周日",
+        "mon": "周一",
+        "tue": "周二",
+        "wed": "周三",
+        "thu": "周四",
+        "fri": "周五",
+        "sat": "周六"
+      },
+      "holidays": "节假日",
+      "holidaysHint": "留空则按纯周末规则计算，不应用任何国家日历。",
+      "makeupWorkdays": "调休补班日",
+      "makeupHint": "虽落在周末或节假日但仍需上班的日期——中国的调休/补班周六填在这里。",
+      "datesPlaceholder": "YYYY-MM-DD（每行一个）",
+      "datesIgnored": "{n, plural, one {# 条记录不是 YYYY-MM-DD 日期格式，将不予使用} other {# 条记录不是 YYYY-MM-DD 日期格式，将不予使用}}",
+      "pickStart": "请选择开始日期。",
+      "emptyHintShift": "请选择开始日期和营业天数。",
+      "emptyHintCount": "请选择开始日期和结束日期。",
+      "note": "与 API 使用相同的引擎。计算基于所示规则集运行并返回结果，不会存储任何数据。",
+      "countHeadline": "{n, plural, one {# 个工作日} other {# 个工作日}}",
+      "reversedRange": "结束日期早于开始日期，因此计数结果为负数。",
+      "classification": {
+        "workday": "工作日",
+        "weekend": "周末",
+        "holiday": "节假日",
+        "makeupWorkday": "调休工作日"
+      },
+      "ruleWeekend": "{days} 休息",
+      "ruleNoWeekend": "无每周休息日",
+      "ruleHolidays": "{n, plural, =0 {无节假日列表} one {# 个节假日} other {# 个节假日}}",
+      "ruleMakeups": "{n, plural, =0 {无调休工作日} one {# 个调休工作日} other {# 个调休工作日}}",
+      "ruleEndIncluded": "包含结束日期",
+      "ruleEndExcluded": "结束日期不计入",
+      "chain": "从该日期再次偏移"
+    },
+    "retryBackoff": {
+      "strategy": {
+        "exponential": "指数",
+        "linear": "线性",
+        "fixed": "固定"
+      },
+      "initialDelay": "初始延迟（毫秒）",
+      "factor": "退避因子",
+      "factorHint": "每次重试应用的乘数。必须大于 1。",
+      "increment": "线性增量（毫秒）",
+      "incrementHint": "每次重试在延迟上增加的毫秒数。",
+      "maxDelay": "最大延迟上限（毫秒）",
+      "maxDelayHint": "留空表示无上限。达到上限后，后续所有延迟均保持该值不变。",
+      "maxAttempts": "最大尝试次数",
+      "maxAttemptsHint": "1 到 100。",
+      "excludeInitial": "最大尝试次数不包含初始请求",
+      "excludeInitialNote": "开启：上方数字仅计算重试次数，初始请求另计。关闭：计算所有尝试次数，包含初始请求。",
+      "jitter": {
+        "none": "无 — 精确延迟",
+        "equal": "等量 — 一半固定，一半随机",
+        "full": "完全 — 从零到延迟值之间任意取值"
+      },
+      "callerTimeout": "自定义超时（毫秒）",
+      "callerTimeoutHint": "可选。留空则跳过预算检查。",
+      "emptyHint": "修复高亮字段以查看计划。",
+      "note": "仅根据策略计算 — 不会向任何上游服务发送数据。抖动以真实客户端可能落入的范围报告，而非单次采样结果。",
+      "headlineExact": "共 {attempts} 次尝试，总计等待 {wait}。",
+      "headlineRange": "{attempts} 次尝试，平均等待 {expected}，最坏情况等待 {max}。",
+      "finalDelay": "第 {attempt} 次尝试前的最后一次等待为 {delay}。",
+      "noRetries": "此预算仅允许一次尝试，无重试，因此无需等待。",
+      "retryCount": "{count, plural, =0 {无重试} one {# 次重试} other {# 次重试}}",
+      "capFlattened": "第 {attempt} 次尝试时达到上限——此后每次延迟均保持为 {delay}。",
+      "timeoutExceeded": "最坏情况等待 {wait}，超出您的 {timeout} 预算。",
+      "timeoutOk": "最坏情况等待 {wait}，在您的 {timeout} 预算范围内。",
+      "tableLabel": "重试计划",
+      "colAttempt": "尝试",
+      "colDelay": "延迟",
+      "colCumulative": "累计等待",
+      "average": "平均 {value}",
+      "formula": {
+        "none": "延迟精确，不添加抖动。",
+        "equal": "等量抖动：一半延迟固定，另一半均匀随机抽取，因此每次等待时间介于延迟的一半到完整延迟之间。",
+        "full": "完全抖动：等待时间在零到计算出的延迟之间均匀随机抽取。"
+      },
+      "errInitialDelay": "初始延迟必须是毫秒的整数，且至少为 1。",
+      "errFactor": "因子必须大于 1 且不超过 100。因子为 1 即为固定策略。",
+      "errIncrement": "增量必须是毫秒的整数，且大于等于 0。",
+      "errMaxDelay": "上限必须是毫秒的整数，且至少为 1。",
+      "errCapBelowInitial": "上限必须至少等于初始延迟。",
+      "errMaxAttempts": "重试次数必须是 1 到 100 之间的整数。",
+      "errCallerTimeout": "超时必须是毫秒的整数，且至少为 1。"
+    },
+    "csvColumns": {
+      "csvLabel": "CSV",
+      "csvPlaceholder": "在此粘贴 CSV，或拖放文件——第一行将作为列名读取",
+      "sample": "示例 CSV",
+      "chooseFile": "选择文件",
+      "fileFailed": "无法读取 {name}。",
+      "delimiterLabel": "分隔符",
+      "delimiter": {
+        "comma": "逗号  ,",
+        "semicolon": "分号  ;",
+        "tab": "制表符",
+        "pipe": "竖线  |"
+      },
+      "raggedPolicyLabel": "与表头不匹配的行",
+      "ragged": {
+        "pad": "对齐到表头",
+        "truncate": "截断长行，保留短行",
+        "reject": "停止并报告"
+      },
+      "columnsTitle": "列 — 保留 {kept}/{total}",
+      "columnsHint": "取消勾选以删除列，编辑文本框以重命名，使用箭头调整顺序。所有操作均基于原始表头解析。",
+      "reset": "重置列",
+      "keep": "保留列 {name}",
+      "renameLabel": "{name}",
+      "moveUp": "将 {name} 上移",
+      "moveDown": "将 {name} 下移",
+      "noneKept": "所有列均已取消勾选 — 请至少保留一列。",
+      "emptyHint": "在上方粘贴 CSV 以管理其列。",
+      "note": "基于您粘贴的文本运行。先删除，再重命名，最后调整顺序 — 始终按此固定顺序，并基于原始表头。",
+      "columnCount": "{n} 列",
+      "rowCount": "{n} 行",
+      "duplicateHeaders": "按名称使用了重复表头：{names}",
+      "raggedCount": "{n}{more} 行与表头列数不匹配",
+      "previewLabel": "输出 CSV",
+      "previewTruncated": "显示前 {shown} 行，共 {total} 行。复制或下载以获取完整文件。",
+      "raggedListLabel": "与表头列数不匹配的行",
+      "raggedRow": "第 {line} 行：{actual} 个字段，表头为 {expected}",
+      "unusedRenames": "重命名已忽略——这些列不在输出中：{names}"
+    },
+    "imageRotateFlip": {
+      "drop": "拖放图片，或点击浏览",
+      "browse": "选择图片",
+      "selected": "{name} · {kb} KB",
+      "privacy": "文件将发送至 Forge API 进行转换，且不会存储。",
+      "tooLarge": "该图片大于 {mb} MB。",
+      "ccw": "向左 90°",
+      "cw": "顺时针 90°",
+      "half": "180°",
+      "reset": "重置",
+      "flipHorizontal": "水平翻转",
+      "flipVertical": "垂直翻转",
+      "angle": "角度",
+      "exactAngle": "精确角度 °",
+      "fitMode": "画布",
+      "fitExpand": "扩展画布",
+      "fitCrop": "裁剪填充",
+      "fitInside": "适应内部",
+      "fitNote": "旋转非 90° 倍数时，图像无法再贴合原画框：扩展保留所有像素，裁剪保持原尺寸并切掉边角，适应则整体缩小。",
+      "outputFormat": "输出格式",
+      "sameFormat": "与输入相同",
+      "idle": "拖放图片以查看重定向效果。",
+      "original": "原始 · {w}×{h}",
+      "originalAlt": "上传的原始图片",
+      "result": "结果 · {w}×{h}",
+      "resultAlt": "重定向后的图片",
+      "badgeLossless": "无损重采样",
+      "badgeResampled": "已重采样",
+      "badgeSize": "{kb} KB",
+      "badgeExif": "已优先应用 EXIF 方向 {orientation}",
+      "badgeSnapped": "已对齐到精确的四分之一旋转",
+      "badgeReencode": "几何精确；编解码器重新编码",
+      "download": "下载",
+      "note": "90°、180° 和 270° 旋转仅移动像素，不会混合。其他角度会重采样。暂不支持动画 GIF、APNG 和动画 WebP。"
+    },
+    "exifStrip": {
+      "drop": "拖放 JPEG、PNG 或 WebP 以移除其元数据",
+      "privacy": "在我们的服务器上处理，永不存储。每张图片最多 {mb} MB。",
+      "idle": "已移除：GPS、拍摄时间、相机和设备信息、嵌入缩略图、编辑历史。已保留：方向、色彩配置文件、尺寸、像素数据。",
+      "note": "仅限静态图像。视频、PDF、HEIC、AVIF 和 GIF 不在支持范围内，C2PA 来源清单将保持原样。",
+      "detail": "已移除的内容",
+      "optKeepThumbnail": "保留嵌入的 Exif 缩略图",
+      "verdictStripped": "已移除 {fields} 个元数据字段（{kb} KB）",
+      "verdictClean": "此文件不含可移除的元数据",
+      "strippedCaveat": "图像本身未改变——相同的像素、相同的尺寸，未重新编码。",
+      "cleanCaveat": "按原样逐字节返回。",
+      "badgeOrientationKept": "方向已保留",
+      "badgeOrientationLost": "方向无法保留",
+      "badgeColorProfileKept": "色彩配置文件已保留",
+      "badgeThumbnailKept": "缩略图已保留",
+      "badgeThumbnailRemoved": "缩略图已移除",
+      "download": "下载清理后的图片",
+      "sizes": "{before} KB → {after} KB",
+      "detailFields": "{fields} 个字段 · {kb} KB",
+      "detailNothing": "此文件未移除任何内容。",
+      "detailOrientation": "已从文件中读取 Exif 方向 {value} 并保留。",
+      "detailNoOrientation": "文件未声明 Exif 方向，因此显示不受影响。",
+      "segmentExif": "Exif",
+      "segmentIptc": "IPTC",
+      "segmentXmp": "XMP",
+      "segmentComment": "注释",
+      "segmentText": "文本元数据",
+      "segmentTime": "时间戳",
+      "segmentVendor": "厂商块",
+      "summaryStripped": "已移除 {fields} 个元数据字段（{families}），共 {kb} KB。图像其余部分未作更改。",
+      "summaryClean": "未找到可移除的元数据。文件原样返回。"
+    },
+    "validate": {
+      "valid": "有效",
+      "invalid": "无效",
+      "summary": "{valid} / {total} 有效",
+      "match": "一致",
+      "mismatch": "不一致",
+      "luhnCaveat": "Luhn 通过仅表示号码结构合法，不代表卡片真实存在或可用。",
+      "luhnReason": {
+        "length_or_digits": "需要 12–19 位数字",
+        "luhn_failed": "Luhn 校验失败"
+      }
+    },
+    "worldClock": {
+      "zones": "时区列表（每行一个）",
+      "at": "指定时刻（可选 ISO / unix）"
+    },
+    "dns": {
+      "name": "域名 / 主机",
+      "type": "记录类型",
+      "note": "由 Forge 主机 DNS 解析器查询，可能与本地 stub 或浏览器 DoH 不一致。"
+    },
+    "tls": {
+      "host": "主机",
+      "expired": "证书已过期",
+      "validDays": "剩余 {n} 天",
+      "note": "从 Forge 主机发起连接。为便于检视关闭了信任拒绝，这不等于信任结论。"
+    },
+    "myIp": {
+      "refresh": "刷新",
+      "note": "展示请求到达 Forge 时的观测。无授权数据源时不做 ASN/归属地推断。"
+    },
+    "mermaid": {
+      "source": "Mermaid 源码",
+      "idle": "合法图会渲染在这里",
+      "note": "官方 mermaid 11（securityLevel=strict）。浏览器 live 预览 · Agent 侧 Playwright 出 SVG。不是 DBML ERD 产品。",
+      "sample": "示例",
+      "theme": "主题",
+      "theme_default": "默认",
+      "theme_dark": "深色",
+      "theme_forest": "森林",
+      "theme_neutral": "中性",
+      "theme_base": "Base",
+      "sample_flowchart": "流程图",
+      "sample_sequence": "时序图",
+      "sample_class": "类图",
+      "sample_er": "ER 图",
+      "sample_state": "状态图",
+      "sample_gantt": "甘特图",
+      "sample_pie": "饼图",
+      "sample_mindmap": "思维导图",
+      "zoomIn": "放大",
+      "zoomOut": "缩小",
+      "zoomReset": "重置视图",
+      "copySvg": "复制 SVG",
+      "downloadSvg": "下载 SVG",
+      "downloadPng": "下载 PNG",
+      "previewAria": "Mermaid 图预览",
+      "canvasHint": "拖拽平移 · ⌘/Ctrl+滚轮缩放"
+    },
+    "colorDeltaE": {
+      "note": "culori CIEDE2000。阈值仅供 UI 评审参考。OKLCH 已在颜色转换工具中提供。"
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL 方言",
+      "parseNote": "硬正确：仅解析与清单。ER 图画布需布局质量过 gate 后再单独上架。",
+      "convertNote": "@dbml/core 导出/导入 — 与 API 同一路径。"
+    },
+    "dnsLeak": {
+      "probeHost": "对照域名（高级）",
+      "probeHostHint": "仅用于多解析器 / 浏览器 DoH 的 A 记录对照，不是系统 DNS 泄漏探测名。",
+      "run": "开始 DNS 泄漏检测",
+      "retest": "再测一次",
+      "showAdvanced": "高级选项",
+      "hideAdvanced": "收起高级选项",
+      "idle": "开始检测以对照多解析器、浏览器 DoH 与 WebRTC。",
+      "idleOnline": "权威区在线。一点即可捕获系统 DNS 递归解析器，并对照 DoH / WebRTC。",
+      "note": "完整系统 DNS 泄漏图需要权威区。Forge 不做虚假 Geo/ASN。",
+      "noteOnline": "leak.nebutra.com 下的唯一探测名会暴露操作系统 DNS 路径上的递归解析器。",
+      "edgeIp": "你的边缘 IP",
+      "authorityHits": "递归 IP 数",
+      "forgePaths": "Forge 解析命中",
+      "dohPaths": "浏览器 DoH 命中",
+      "webrtcCount": "WebRTC IP 数",
+      "forgeResolvers": "Forge 多解析器（服务端）",
+      "forgeNote": "这些查询从 Forge 主机发出，不是你的电脑。",
+      "browserDoh": "浏览器 DoH",
+      "webrtc": "WebRTC ICE",
+      "egressMarkers": "Forge 出口标记",
+      "egressNote": "OpenDNS/Google 看到的是 Forge 主机出口，不是你的设备。",
+      "honestyPrefix": "诚实说明：",
+      "verdictConsistent": "本轮路径表现一致",
+      "verdictSplit": "不同 DNS 路径应答不一致",
+      "verdictIpMismatch": "WebRTC 公网 IP 与边缘 IP 不一致",
+      "verdictIncomplete": "不完整 — 缺少浏览器探测",
+      "verdictAuthority": "已捕获系统 DNS 递归解析器",
+      "infraOn": "权威区在线",
+      "infraOff": "权威区离线 — 仅多路径",
+      "infraChecking": "检测中…",
+      "authorityResolvers": "系统 DNS 递归解析器",
+      "authorityNote": "查询了你唯一探测名的递归解析器 IP（操作系统 DNS 路径）。请与 VPN/DNS 提供商对照。",
+      "authorityNoHits": "本轮未捕获递归命中。可暂时关闭浏览器「安全 DNS」后重试。",
+      "authorityOfflineHint": "权威区离线 — 无法做系统 DNS 捕获。",
+      "authorityDetail": "Authority session detail",
+      "phaseSession": "正在创建会话…",
+      "phaseSystemDns": "正在触发系统 DNS…",
+      "phasePoll": "等待递归命中（{n}/{total}）…",
+      "phaseBrowser": "浏览器 DoH + WebRTC…",
+      "phaseServer": "Forge 多解析器…",
+      "stepSession": "会话",
+      "stepSystemDns": "系统 DNS",
+      "stepPoll": "监听",
+      "stepBrowser": "浏览器",
+      "stepServer": "服务端",
+      "pollHint": "轮询 {n}/{total} · 查询 {hits} · 解析器 {resolvers}",
+      "liveHits": "实时递归命中",
+      "sectionSystemDns": "系统 DNS（核心结果）",
+      "sectionComplementary": "互补路径",
+      "sectionTech": "技术会话详情",
+      "copyIps": "复制 IP",
+      "copied": "已复制",
+      "queryCount": "{n} 次查询",
+      "colPath": "路径",
+      "colAnswers": "应答",
+      "colMs": "ms",
+      "ipPublic": "公网",
+      "ipPrivate": "内网",
+      "sig": {
+        "captured": "已捕获系统 DNS",
+        "onlineNoHits": "权威区在线 · 暂无命中",
+        "offline": "权威区离线",
+        "forgeSplit": "Forge 解析器不一致",
+        "dohSplit": "浏览器 DoH 不一致",
+        "webrtcMismatch": "WebRTC ≠ 边缘 IP",
+        "webrtcLocal": "本地 WebRTC 候选",
+        "noBrowser": "无浏览器探测"
+      }
+    },
+    "honesty": {
+      "algorithmOnly": "仅算法校验 · 不查户籍/银行库",
+      "signatureNotVerified": "{engine} · 仅解码 · 未验证签名",
+      "localOnly": "仅本次处理 · 不保存卡号或凭证"
+    },
+    "idCard": {
+      "number": "身份证号",
+      "note": "GB 11643 校验位 · 不查库 · 与 API 同一路径",
+      "specimenTitle": "居民身份证 · 结构样张",
+      "segRegion": "区划",
+      "segBirth": "生日",
+      "segSeq": "顺序码",
+      "segCheck": "校验位",
+      "metaBirth": "出生日期",
+      "metaGender": "性别",
+      "metaRegion": "行政区划码",
+      "genderMale": "男",
+      "genderFemale": "女",
+      "reasonFormat": "格式应为 18 位（末位可为 X）",
+      "reasonBirth": "出生日期段无效",
+      "reasonCheck": "校验位错误",
+      "reasonCheckExpected": "校验位错误 · 期望 {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} 行",
+      "chars": "{n} 字符",
+      "empty": "（空文件）",
+      "readyToShip": "可直接放进仓库"
+    },
+    "textTransform": {
+      "mode": "模式",
+      "input": "输入",
+      "output": "输出",
+      "emptyResult": "结果会显示在这里",
+      "runLocal": "本地运行",
+      "runServer": "服务端运行",
+      "statusLocalLive": "本地 · 实时",
+      "statusLocal": "本地",
+      "statusServer": "服务端 · 与 API 同一路径",
+      "noteDefault": "与 API 同一路径"
+    }
+  },
+  "roots": {
+    "hubLabel": "按意图",
+    "tools": "个工具",
+    "dualSurface": "人类页面 + Agent API · 同一引擎",
+    "otherRoots": "其他需求根"
+  }
+}

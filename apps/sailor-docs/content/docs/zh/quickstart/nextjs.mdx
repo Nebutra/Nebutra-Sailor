@@ -1,0 +1,148 @@
+---
+title: Next.js 快速开始
+description: 在 5 分钟内将 Nebutra 集成到你的 Next.js 16 App Router 项目中。
+---
+
+## 前提条件
+
+- Node.js 22+
+- 拥有 [OPC 许可证](https://nebutra.com/en/get-license) 的 Nebutra 账户（免费）
+- 已有 Next.js 16 项目，或创建一个新项目：
+
+```bash
+npx create-next-app@latest my-app --typescript --tailwind --app
+cd my-app
+```
+
+## 第一步：安装 SDK
+
+<CodeGroup>
+
+```bash npm
+npm install @nebutra/sdk
+```
+
+```bash pnpm
+pnpm add @nebutra/sdk
+```
+
+</CodeGroup>
+
+## 第二步：配置环境变量
+
+在项目根目录创建 `.env.local` 文件：
+
+```bash .env.local
+# 在 Nebutra 仪表板 → 设置 → API 密钥 中获取
+NEBUTRA_API_KEY=nbk_live_xxxxxxxxxxxxxxxxxxxx
+NEBUTRA_ORG_ID=org_xxxxxxxxxxxxxxxxxxxx
+
+# 公开密钥——可以安全地暴露给浏览器
+NEXT_PUBLIC_NEBUTRA_ORG_ID=org_xxxxxxxxxxxxxxxxxxxx
+```
+
+<Warning>
+  永远不要将 `.env.local` 提交到版本控制。请将其添加到 `.gitignore`。
+</Warning>
+
+## 第三步：初始化客户端
+
+创建一个共享的 Nebutra 客户端：
+
+```typescript lib/nebutra.ts
+import { createClient } from "@nebutra/sdk";
+
+export const nebutra = createClient({
+  apiKey: process.env.NEBUTRA_API_KEY!,
+  orgId: process.env.NEBUTRA_ORG_ID!,
+});
+```
+
+## 第四步：通过认证保护路由
+
+使用 Nebutra 代理为 Server Component 添加认证（Next.js 16+ 使用 `proxy.ts` 替代 `middleware.ts`）：
+
+```typescript proxy.ts
+import { withNebutraAuth } from "@nebutra/sdk/next";
+
+export default withNebutraAuth({
+  publicRoutes: ["/", "/sign-in", "/sign-up"],
+});
+
+export const config = {
+  matcher: ["/((?!_next|favicon.ico).*)"],
+};
+```
+
+## 第五步：在 Server Component 中读取当前用户
+
+```typescript app/dashboard/page.tsx
+import { getAuth } from "@nebutra/sdk/next/server";
+
+export default async function DashboardPage() {
+  const { user, org } = await getAuth();
+
+  if (!user) {
+    redirect("/sign-in");
+  }
+
+  return (
+    <div>
+      <h1>欢迎，{user.firstName}</h1>
+      <p>组织：{org.name}</p>
+      <p>套餐：{org.plan}</p>
+    </div>
+  );
+}
+```
+
+## 第六步：发起第一次 API 调用
+
+```typescript app/api/projects/route.ts
+import { NextResponse } from "next/server";
+import { nebutra } from "@/lib/nebutra";
+import { getAuth } from "@nebutra/sdk/next/server";
+
+export async function GET() {
+  const { org } = await getAuth();
+
+  const projects = await nebutra.projects.list({
+    orgId: org.id,
+    limit: 20,
+  });
+
+  return NextResponse.json(projects);
+}
+```
+
+## 第七步：在操作前检查权限
+
+```typescript app/actions/delete-project.ts
+"use server";
+import { requirePermission } from "@nebutra/sdk/next/server";
+import { nebutra } from "@/lib/nebutra";
+
+export async function deleteProject(projectId: string) {
+  // 如果用户缺少 `project:delete` 范围，则抛出 403
+  await requirePermission("project:delete");
+
+  await nebutra.projects.delete(projectId);
+}
+```
+
+## 准备就绪
+
+<CardGroup cols={2}>
+  <Card title="核心概念" icon="layers" href="/zh/concepts/architecture">
+    了解多租户和权限模型。
+  </Card>
+  <Card title="认证指南" icon="shield-check" href="/zh/guides/authentication">
+    深入了解认证流程和会话管理。
+  </Card>
+  <Card title="Webhooks" icon="webhook" href="/zh/guides/webhooks">
+    监听来自 Nebutra 租户的实时事件。
+  </Card>
+  <Card title="API 参考" icon="code" href="/zh/api-reference/overview">
+    完整的 REST API 文档。
+  </Card>
+</CardGroup>

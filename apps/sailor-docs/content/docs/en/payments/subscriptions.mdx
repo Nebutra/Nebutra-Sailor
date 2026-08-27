@@ -1,0 +1,166 @@
+---
+title: Subscriptions
+description: Redirect to Stripe Checkout, handle subscription lifecycle states, and manage trial periods.
+---
+
+## Checkout flow
+
+<Steps>
+  <Step title="Redirect the user to Stripe Checkout">
+    Call `createCheckoutSession` from `@nebutra/billing` to generate a Stripe-hosted checkout URL, then redirect the user to it.
+
+    ```typescript apps/web/src/app/billing/upgrade/route.ts
+    import { createCheckoutSession } from "@nebutra/billing";
+    import { redirect } from "next/navigation";
+    import { getCurrentTenant } from "@nebutra/tenant";
+
+    export async function GET() {
+      const tenant = getCurrentTenant();
+
+      const session = await createCheckoutSession({
+        orgId: tenant.tenantId,
+        priceId: process.env.STRIPE_PRO_PRICE_ID!,
+        successUrl: `${process.env.NEXT_PUBLIC_APP_URL}/billing/success`,
+        cancelUrl: `${process.env.NEXT_PUBLIC_APP_URL}/billing`,
+        trialDays: 14,
+      });
+
+      redirect(session.url);
+    }
+    ```
+  </Step>
+  <Step title="User completes payment on Stripe">
+    Stripe handles the payment form, SCA/3DS, and error states. You do not need to build a payment form.
+  </Step>
+  <Step title="Handle the success redirect">
+    On a successful payment, Stripe redirects the user to your `successUrl`. Show a confirmation UI — but do **not** update the plan here. Plan activation is confirmed by the webhook.
+
+    ```typescript apps/web/src/app/billing/success/page.tsx
+    export default function BillingSuccessPage() {
+      return (
+        <div>
+          <h1>You're on PRO!</h1>
+          <p>
+            Your plan is being activated. This usually takes a few seconds.
+            Refresh the page if your new limits aren't reflected immediately.
+          </p>
+        </div>
+      );
+    }
+    ```
+  </Step>
+  <Step title="Webhook confirms plan activation">
+    Stripe fires `checkout.session.completed`. The webhook handler in `@nebutra/billing` updates the tenant plan in the database. Quota limits update automatically.
+  </Step>
+</Steps>
+
+<Warning>
+Do not update the plan based on a successful redirect URL alone. A redirect can be faked. Always wait for the `checkout.session.completed` webhook to confirm the payment.
+</Warning>
+
+## Checking subscription status
+
+Use `getSubscription` to fetch the current subscription state for an organization:
+
+```typescript
+import { getSubscription } from "@nebutra/billing";
+
+const subscription = await getSubscription("org_123");
+// → {
+//     orgId: "org_123",
+//     plan: "pro",
+//     status: "active",
+//     currentPeriodEnd: "2026-04-30T00:00:00.000Z",
+//     cancelAtPeriodEnd: false,
+//     trialEnd: null,
+//   }
+```
+
+### Subscription lifecycle states
+
+| State | Meaning | User impact |
+|-------|---------|-------------|
+| `trialing` | Within the 14-day trial period | Full PRO access, no charge yet |
+| `active` | Subscription is current and paid | Full plan access |
+| `past_due` | Latest invoice payment failed | Plan remains active; user is prompted to update payment |
+| `canceled` | Subscription was canceled | Downgraded to FREE at period end |
+| `unpaid` | Multiple failed attempts; Stripe paused subscription | Access revoked; user must update payment method |
+
+### Displaying status in the UI
+
+```typescript apps/web/src/app/settings/billing/page.tsx
+import { getSubscription } from "@nebutra/billing";
+import { getCurrentTenant } from "@nebutra/tenant";
+
+export default async function BillingSettingsPage() {
+  const tenant = getCurrentTenant();
+  const subscription = await getSubscription(tenant.tenantId);
+
+  return (
+    <div>
+      <p>Current plan: <strong>{subscription.plan.toUpperCase()}</strong></p>
+      <p>Status: {subscription.status}</p>
+      {subscription.status === "past_due" && (
+        <a href="/billing/portal">Update payment method</a>
+      )}
+    </div>
+  );
+}
+```
+
+## Trial periods
+
+PRO subscriptions include a **14-day free trial**. No credit card is charged until the trial ends.
+
+- Trial state is reflected as `status: "trialing"` in `getSubscription`.
+- When the trial expires, Stripe charges the card on file and moves the status to `active`.
+- If no payment method is provided before trial end, the subscription moves to `canceled` and the tenant is downgraded to FREE.
+
+```typescript
+// Pass trialDays when creating the checkout session to activate a trial
+const session = await createCheckoutSession({
+  orgId: "org_123",
+  priceId: process.env.STRIPE_PRO_PRICE_ID!,
+  successUrl: "https://app.nebutra.com/billing/success",
+  cancelUrl: "https://app.nebutra.com/billing",
+  trialDays: 14,
+});
+```
+
+<Tip>
+You can set `trialDays: 0` to skip the trial for specific users (e.g., users migrating from a legacy plan or those using promo codes).
+</Tip>
+
+## Cancellation and self-service
+
+Customers can cancel, upgrade, or update their payment method via the **Stripe Customer Portal** — no custom UI required:
+
+```typescript apps/web/src/app/billing/portal/route.ts
+import { createPortalSession } from "@nebutra/billing";
+import { redirect } from "next/navigation";
+import { getCurrentTenant } from "@nebutra/tenant";
+
+export async function GET() {
+  const tenant = getCurrentTenant();
+
+  const session = await createPortalSession({
+    orgId: tenant.tenantId,
+    returnUrl: `${process.env.NEXT_PUBLIC_APP_URL}/settings/billing`,
+  });
+
+  redirect(session.url);
+}
+```
+
+This route is already wired to the **Settings → Billing → Manage Subscription** button in the dashboard.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Webhooks" icon="webhook" href="/payments/webhooks">
+    Handle subscription lifecycle events from Stripe.
+  </Card>
+  <Card title="Paywall" icon="lock" href="/payments/paywall">
+    Gate UI and API routes based on the active plan.
+  </Card>
+</CardGroup>

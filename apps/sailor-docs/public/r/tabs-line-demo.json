@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs-line-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/tabs-line-demo.tsx",
+      "content": "\"use client\";\n\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@nebutra/ui/primitives\";\n\nexport function TabsLineDemo() {\n  return (\n    <Tabs defaultValue=\"overview\" className=\"w-full max-w-md\">\n      <TabsList aria-label=\"Project sections\" variant=\"line\">\n        <TabsTrigger value=\"overview\">Overview</TabsTrigger>\n        <TabsTrigger value=\"logs\" badge=\"12\">\n          Logs\n        </TabsTrigger>\n        <TabsTrigger value=\"settings\">Settings</TabsTrigger>\n      </TabsList>\n      <TabsContent value=\"overview\">Deployment health and current project ownership.</TabsContent>\n      <TabsContent value=\"logs\">Recent events, build traces, and audit entries.</TabsContent>\n      <TabsContent value=\"settings\">Project-level controls for owners and maintainers.</TabsContent>\n    </Tabs>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — marketplace API",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "Marketplace API semua model · bayar sesuai pemakaian · kelola kunci & dompet · coba cepat."
+  },
+  "admin": {
+    "dashboard": "Ringkasan",
+    "keys": "Kunci API",
+    "wallet": "Dompet",
+    "docs": "Dokumentasi",
+    "title": "Admin",
+    "backToMarket": "Kembali ke marketplace",
+    "quickUse": "Gunakan cepat"
+  },
+  "chrome": {
+    "searchPlaceholder": "Apa yang ingin Anda lakukan dengan AI?",
+    "search": "Cari",
+    "locale": "Bahasa",
+    "currency": "Mata uang",
+    "collapseSidebar": "Ciutkan sidebar",
+    "expandSidebar": "Perluas sidebar",
+    "home": "Beranda",
+    "adminConsole": "Admin",
+    "quickUse": "Gunakan cepat",
+    "support": "Dukungan",
+    "apiDocs": "Dokumentasi API",
+    "integrationHelp": "Panduan integrasi",
+    "aiRecommend": "Rekomendasi AI",
+    "market": "Pasar",
+    "usageTitle": "Penggunaan cepat"
+  },
+  "channels": {
+    "app": "Pasar aplikasi",
+    "api": "Pasar API",
+    "models": "Katalog model",
+    "client": "Klien"
+  },
+  "market": {
+    "new": "Baru",
+    "hot": "Populer",
+    "forYou": "Untuk Anda",
+    "grid": "Grid",
+    "list": "Daftar",
+    "apiShelf": "Rak API",
+    "toolShelf": "Rak alat",
+    "categories": "Kategori",
+    "apps": "Aplikasi",
+    "newRelease": "Rilis baru",
+    "forgeTitle": "Ruang kerja alat Forge",
+    "forgeBlurb": "Transformasi teks, codec, formulir, dan alat yang dapat dikomposisikan. Lab pasar aplikasi mengarah ke Forge.",
+    "openForge": "Buka Forge →",
+    "allApi": "Semua API →",
+    "all": "Semua →",
+    "viewAll": "Lihat semua {label} →",
+    "gridView": "Tampilan grid",
+    "listView": "Tampilan daftar",
+    "hiTitle": "Platform sumber daya AI perusahaan",
+    "hiSubtitle": "Penuhi setiap kebutuhan dengan AI yang tepat",
+    "sellable": "Dapat dijual",
+    "walletTopup": "Isi ulang"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "Model bahasa",
+      "hint": "Chat · penalaran"
+    },
+    "image-gen": {
+      "label": "Generasi gambar",
+      "hint": "Teks-ke-gambar"
+    },
+    "image-edit": {
+      "label": "Pengeditan gambar",
+      "hint": "Edit · matting"
+    },
+    "video": {
+      "label": "Generasi video",
+      "hint": "Teks-ke-video"
+    },
+    "audio": {
+      "label": "Audio & video",
+      "hint": "Ucapan · transkripsi"
+    },
+    "data": {
+      "label": "Informasi",
+      "hint": "Pemanggilan · ekstraksi"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "Diperkaya pengetahuan"
+    },
+    "tools": {
+      "label": "API Alat",
+      "hint": "Agen · alat"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "Bot",
+      "chips": "Bot obrolan · bot gambar · pengetahuan"
+    },
+    "productivity": {
+      "label": "Produktivitas",
+      "chips": "Arena model · penulisan AI"
+    },
+    "academic": {
+      "label": "Akademik",
+      "chips": "Toolkit PDF · Pencarian paten AI"
+    },
+    "image": {
+      "label": "Alat gambar",
+      "chips": "Studio 3D · Kanvas"
+    },
+    "audio": {
+      "label": "Audio",
+      "chips": "Suara · Musik AI"
+    },
+    "code": {
+      "label": "Kode",
+      "chips": "Generator web · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "Ringkasan",
+    "keys": "Kunci",
+    "wallet": "Dompet",
+    "use": "Coba",
+    "docs": "Dokumentasi",
+    "models": "Lainnya"
+  }
+}

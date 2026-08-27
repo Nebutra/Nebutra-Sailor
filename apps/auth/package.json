@@ -1,0 +1,52 @@
+{
+  "name": "@nebutra/auth-center",
+  "version": "0.1.1",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3101",
+    "build": "pnpm --filter @nebutra/brand sync && next build",
+    "start": "next start",
+    "build:worker": "OPEN_NEXT_BUILD=true opennextjs-cloudflare build",
+    "preview:worker": "opennextjs-cloudflare preview",
+    "preview": "pnpm build:worker && pnpm preview:worker",
+    "deploy:worker": "OPEN_NEXT_BUILD=true opennextjs-cloudflare build && wrangler deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv",
+    "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf .next .open-next .wrangler"
+  },
+  "dependencies": {
+    "@marsidev/react-turnstile": "^1.5.2",
+    "@nebutra/access-gate": "workspace:*",
+    "@nebutra/auth": "workspace:*",
+    "@nebutra/brand": "workspace:*",
+    "@nebutra/china-compliance": "workspace:*",
+    "@nebutra/db": "workspace:*",
+    "@nebutra/i18n": "workspace:*",
+    "@nebutra/icons": "workspace:*",
+    "@nebutra/logger": "workspace:*",
+    "@nebutra/tokens": "workspace:*",
+    "@nebutra/ui": "workspace:*",
+    "@simplewebauthn/browser": "^13.3.0",
+    "better-auth": "1.6.23",
+    "next": "^16.2.11",
+    "next-intl": "catalog:",
+    "pg": "^8.20.0",
+    "pg-cloudflare": "1.3.0",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@opennextjs/cloudflare": "1.20.1",
+    "@tailwindcss/postcss": "^4.2.1",
+    "@types/node": "^22.19.15",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "tailwindcss": "^4.2.1",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "wrangler": "4.112.0"
+  },
+  "license": "AGPL-3.0-only"
+}

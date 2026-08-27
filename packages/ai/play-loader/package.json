@@ -1,0 +1,67 @@
+{
+  "name": "@nebutra/play-loader",
+  "version": "0.1.3",
+  "description": "Declarative SKILL.md play loader and dependency planner",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "requires": [
+      "@nebutra/tool-registry for SKILL.md parsing",
+      "@nebutra/agent-runtime for execution"
+    ],
+    "gaps": [
+      "Runtime runner delegates are interface-only",
+      "Remote install and migration APIs are not production-backed"
+    ],
+    "featureId": "play-loader",
+    "category": "ai",
+    "surface": "product-orchestration",
+    "summary": "SKILL.md play parser, dependency-chain planner, and agent-runtime runner seam"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/capability-kit": "workspace:*",
+    "@nebutra/errors": "workspace:*",
+    "@nebutra/tool-registry": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/play-loader#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/play-loader"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
+}

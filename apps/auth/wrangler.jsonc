@@ -1,0 +1,47 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nebutra-auth",
+  // Same account as sailor-docs / typelens / gateway.
+  "account_id": "a4248a5738df319996a70092fe598d37",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-06-04",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "minify": true,
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  // Edge pool in front of PlanetScale Postgres (same Hyperdrive as gateway).
+  // Query cache off: auth/session reads must not be cache-keyed without tenant.
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+      "id": "8a0e4251ae014472879ae3b2a57276cb",
+      "localConnectionString": "postgresql://postgres:postgres@localhost:5432/nebutra"
+    }
+  ],
+  "vars": {
+    "NEXT_PUBLIC_AUTH_URL": "https://auth.nebutra.com",
+    "NEXT_PUBLIC_APP_URL": "https://app.nebutra.com",
+    "NEXT_PUBLIC_SITE_URL": "https://nebutra.com",
+    "BETTER_AUTH_URL": "https://auth.nebutra.com",
+    "AUTH_COOKIE_DOMAIN": ".nebutra.com",
+    "AUTH_PROVIDER": "better-auth",
+    "NEXT_PUBLIC_AUTH_PROVIDER": "better-auth",
+    "DEPLOY_TARGET_AUTH": "cloudflare-workers"
+  },
+  // Secrets (set via `wrangler secret put`): BETTER_AUTH_SECRET, GOOGLE_CLIENT_ID,
+  // GOOGLE_CLIENT_SECRET, GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, DATABASE_URL
+  // (fallback when Hyperdrive missing), TURNSTILE_*, etc.
+  "routes": [
+    {
+      "pattern": "auth.nebutra.com/*",
+      "zone_name": "nebutra.com"
+    }
+  ],
+  // Auth production is wrangler.edge.jsonc (custom domain only). Keep off.
+  "workers_dev": false
+}

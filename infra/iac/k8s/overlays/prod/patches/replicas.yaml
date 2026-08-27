@@ -1,0 +1,35 @@
+# Production replica overrides
+# Applied on top of the base (2 replicas) to scale critical services for production load.
+#
+# api-gateway: 3 replicas — public-facing; needs capacity and zero-downtime deploys
+# web:         3 replicas — SaaS dashboard; primary user-facing surface
+# ai-service:  2 replicas — kept at base; GPU/LLM calls are expensive; scale via HPA
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+  namespace: nebutra
+spec:
+  replicas: 3
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: nebutra
+spec:
+  replicas: 3
+
+---
+# ai-service intentionally stays at 2 in base prod.
+# Horizontal Pod Autoscaler (HPA) should be used to burst beyond 2 under load.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-service
+  namespace: nebutra
+spec:
+  replicas: 2

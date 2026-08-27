@@ -1,0 +1,139 @@
+"use client";
+
+import { KineticConsoleFrame } from "@nebutra/ui/patterns";
+import { AuroraBackground } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { AnalyticsTerminal } from "./product-demo/AnalyticsTerminal";
+import { BillingTerminal } from "./product-demo/BillingTerminal";
+import { PRODUCT_DEMO_TABS, type ProductDemoTabId } from "./product-demo/product-demo-data";
+import { WorkspacesTerminal } from "./product-demo/WorkspacesTerminal";
+import { SlidingIndicator } from "./SlidingIndicator";
+
+function ProductDemoTerminal({ activeId }: { activeId: ProductDemoTabId }) {
+  switch (activeId) {
+    case "analytics":
+      return <AnalyticsTerminal />;
+    case "billing":
+      return <BillingTerminal />;
+    case "workspaces":
+      return <WorkspacesTerminal />;
+    default:
+      return null;
+  }
+}
+
+export function ProductDemoSection() {
+  const t = useTranslations("microLanding.productDemo");
+  type ProductDemoTranslationKey = Parameters<typeof t>[0];
+  const [activeId, setActiveId] = useState<ProductDemoTabId>(PRODUCT_DEMO_TABS[0].id);
+
+  return (
+    <section
+      id="product"
+      className="relative w-full overflow-hidden bg-background py-16 md:py-24 lg:py-32"
+    >
+      {/* Ambient aurora background */}
+      <AuroraBackground variant="monochrome" position="center" intensity={0.4} />
+
+      <div className="container mx-auto px-4 max-w-[1400px] relative z-10">
+        {/* Header */}
+        <div className="mb-12 flex w-full flex-col items-center text-center md:mb-20 lg:mb-28">
+          <div className="mb-8 inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5">
+            <span className="text-sm font-semibold tracking-wide text-primary uppercase">
+              {t("badge")}
+            </span>
+          </div>
+          <h2
+            className="mb-6 w-full max-w-4xl text-balance text-3xl font-semibold text-foreground md:text-4xl lg:text-5xl"
+            style={{
+              letterSpacing: "var(--tracking-heading)",
+              lineHeight: "var(--leading-heading)",
+            }}
+          >
+            {t("title")}
+          </h2>
+          <p className="w-full max-w-2xl text-balance text-lg font-medium leading-relaxed text-muted-foreground md:text-xl">
+            {t("description")}
+          </p>
+        </div>
+
+        {/* Interactive Split Interface */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center max-w-[1400px] mx-auto">
+          {/* Left: Structural Stepper Navigation */}
+          <div className="relative flex w-full flex-col pt-4 lg:col-span-5">
+            {/* Continuous Vertical Tracking Line */}
+            <div className="absolute left-[27px] top-6 bottom-12 hidden w-px bg-border/60 md:block" />
+
+            <SlidingIndicator
+              activeKey={activeId}
+              className="z-10 hidden rounded-full border-2 border-background bg-foreground md:block dark:border-[#0A0A0B]"
+              style={{ boxShadow: "var(--ring-hairline)" }}
+            />
+
+            {PRODUCT_DEMO_TABS.map((tab, index) => {
+              const isActive = activeId === tab.id;
+              return (
+                <button
+                  type="button"
+                  key={tab.id}
+                  aria-pressed={isActive}
+                  onClick={() => setActiveId(tab.id)}
+                  // Inactive is expressed by colour, not by fading. The children already
+                  // switch text-foreground → text-muted-foreground for the state;
+                  // the 60% opacity on top of that put the two unselected steps at
+                  // roughly 2:1 against the page, which is not "inactive", it is
+                  // "unreadable". Nothing here needs to disappear to show which
+                  // step is current.
+                  className="group relative flex w-full items-start py-6 text-left outline-none"
+                >
+                  {/* Step Node */}
+                  <div className="relative z-10 mr-6 hidden size-14 shrink-0 items-center justify-center transition-transform duration-300 motion-reduce:transition-none md:flex">
+                    {/* The node the indicator slides to. The pill itself lives
+                          once, at the list level — see SlidingIndicator below. */}
+                    <div
+                      className="absolute inset-0 rounded-full bg-muted ring-1 ring-border/50 transition-colors group-hover:bg-muted/80 motion-reduce:transition-none"
+                      data-indicator-target={isActive ? "true" : undefined}
+                    />
+
+                    <span
+                      className={`relative z-20 font-mono text-sm font-bold transition-colors delay-75 motion-reduce:delay-0 motion-reduce:transition-none ${
+                        isActive ? "text-background" : "text-muted-foreground"
+                      }`}
+                    >
+                      0{index + 1}
+                    </span>
+                  </div>
+
+                  {/* Content Fragment */}
+                  <div className="flex-1 pt-1">
+                    <h3
+                      className={`text-xl md:text-2xl font-semibold mb-3 transition-colors duration-400 motion-reduce:duration-0 ${isActive ? "text-foreground" : "text-muted-foreground"}`}
+                      style={{ letterSpacing: "var(--tracking-tight)" }}
+                    >
+                      {t(tab.labelKey as ProductDemoTranslationKey)}
+                    </h3>
+                    <p
+                      className={`text-sm md:text-base leading-relaxed font-medium transition-colors duration-400 motion-reduce:duration-0 ${isActive ? "text-muted-foreground" : "text-muted-foreground/60"}`}
+                    >
+                      {t(tab.descKey as ProductDemoTranslationKey)}
+                    </p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Right: Premium Faux-Terminal Render */}
+          <div className="hidden lg:col-span-7 lg:block w-full h-[500px] relative">
+            <KineticConsoleFrame status={activeId}>
+              <ProductDemoTerminal activeId={activeId} />
+            </KineticConsoleFrame>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+ProductDemoSection.displayName = "ProductDemoSection";

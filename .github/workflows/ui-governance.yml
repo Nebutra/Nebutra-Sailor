@@ -1,0 +1,112 @@
+# governance-green-recheck
+name: UI Governance
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/actions/setup-node-pnpm/action.yml"
+      - ".github/workflows/ui-governance.yml"
+      - "apps/design/src/**"
+      - "apps/landing/src/**"
+      - "apps/web/src/**"
+      - "package.json"
+      - "packages/design/**"
+      - "pnpm-lock.yaml"
+      - "scripts/audit-css-var-types.mjs"
+      - "scripts/lib/ui-governance-policy.ts"
+      - "scripts/validate-ui-governance-policy.ts"
+      - "scripts/verify-brand-token-sync.ts"
+      - "scripts/verify-theme-quality.mts"
+      - "scripts/verify-ui-governance.ts"
+      - "tests/architecture/governance/**"
+  push:
+    branches: [main]
+    paths:
+      - ".github/actions/setup-node-pnpm/action.yml"
+      - ".github/workflows/ui-governance.yml"
+      - "apps/design/src/**"
+      - "apps/landing/src/**"
+      - "apps/web/src/**"
+      - "package.json"
+      - "packages/design/**"
+      - "pnpm-lock.yaml"
+      - "scripts/audit-css-var-types.mjs"
+      - "scripts/lib/ui-governance-policy.ts"
+      - "scripts/validate-ui-governance-policy.ts"
+      - "scripts/verify-brand-token-sync.ts"
+      - "scripts/verify-theme-quality.mts"
+      - "scripts/verify-ui-governance.ts"
+      - "tests/architecture/governance/**"
+
+permissions:
+  contents: read
+
+jobs:
+  ui-governance:
+    name: UI Governance Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Validate UI Governance Policy Schema
+        run: pnpm exec tsx scripts/validate-ui-governance-policy.ts
+
+      - name: Verify Brand Token Sync
+        run: pnpm exec tsx scripts/verify-brand-token-sync.ts
+
+      - name: Verify Theme Quality
+        run: pnpm exec tsx scripts/verify-theme-quality.mts packages/design/design-tokens/tokens/themes/*.json
+
+      - name: Verify UI Governance Rules
+        run: pnpm exec tsx scripts/verify-ui-governance.ts
+
+      # apps/design-docs was retired on 2026-08-07 and deleted on 2026-08-11;
+      # its registry-freshness and docs:governance steps went with it. These two
+      # did not: a build gate and the stylesheet audit are about the design
+      # system, not about which app renders it, and design.nebutra.com is the
+      # app that renders it now.
+      - name: Verify Design Site Runtime Contract
+        # Through turbo, not pnpm --filter. turbo's typecheck dependsOn ^build,
+        # so the workspace packages the app imports are built first; running the
+        # script directly skipped that and the app could not resolve
+        # @nebutra/brand or @nebutra/icons at all. The design-docs step this
+        # replaced had a prebuild in front of it doing the same job.
+        run: |
+          pnpm --config.verify-deps-before-run=false exec turbo run typecheck --filter=@nebutra/design
+          pnpm --config.verify-deps-before-run=false exec turbo run build --filter=@nebutra/design
+
+      - name: Cache Playwright Browsers
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Audit Design Site Stylesheets for Dropped Declarations
+        run: |
+          # One sheet, not one per chunk. Next.js puts the token :root block in
+          # one CSS chunk and the utilities that read those tokens in another;
+          # the audit skips any var() name the stylesheet it was handed does not
+          # define, so a chunk-by-chunk run silently skips every cross-chunk
+          # reference — which is most of them. Verified on apps/landing: an
+          # injected var-type error in the component chunk was reported only
+          # after the chunks were concatenated. The glob is sorted, so the order
+          # is deterministic.
+          chunks=$(find apps/design/.next/static/css -maxdepth 1 -name '*.css' 2>/dev/null | wc -l | tr -d ' ')
+          if [ "$chunks" -eq 0 ]; then
+            echo "::error file=.github/workflows/ui-governance.yml::[css-var-types] The Design Site build produced no stylesheets at apps/design/.next/static/css, so this audit would pass without checking anything. Fix the path here — do not delete the check."
+            exit 1
+          fi
+          mkdir -p artifacts/design-css
+          cat apps/design/.next/static/css/*.css > artifacts/design-css/design.css
+          echo "auditing apps/design ($chunks css chunks, concatenated)"
+          node scripts/audit-css-var-types.mjs artifacts/design-css/design.css

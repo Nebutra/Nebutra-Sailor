@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — API মার্কেটপ্লেস",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "সব মডেলের API মার্কেটপ্লেস · ব্যবহার অনুযায়ী পেমেন্ট · কী ও ওয়ালেট ম্যানেজ করুন · দ্রুত ট্রাই করুন।"
+  },
+  "admin": {
+    "dashboard": "সারসংক্ষেপ",
+    "keys": "API কী",
+    "wallet": "ওয়ালেট",
+    "docs": "ডক্স",
+    "title": "অ্যাডমিন",
+    "backToMarket": "মার্কেটে ফিরে যান",
+    "quickUse": "দ্রুত ব্যবহার"
+  },
+  "chrome": {
+    "searchPlaceholder": "AI দিয়ে আপনি কী করতে চান?",
+    "search": "খুঁজুন",
+    "locale": "ভাষা",
+    "currency": "মুদ্রা",
+    "collapseSidebar": "সাইডবার সংকুচিত করুন",
+    "expandSidebar": "সাইডবার প্রসারিত করুন",
+    "home": "হোম",
+    "adminConsole": "অ্যাডমিন",
+    "quickUse": "দ্রুত ব্যবহার",
+    "support": "সাপোর্ট",
+    "apiDocs": "API ডক্স",
+    "integrationHelp": "ইন্টিগ্রেশন গাইড",
+    "aiRecommend": "AI পিকস",
+    "market": "মার্কেট",
+    "usageTitle": "দ্রুত ব্যবহার"
+  },
+  "channels": {
+    "app": "অ্যাপ মার্কেট",
+    "api": "এপিআই মার্কেট",
+    "models": "মডেল ক্যাটালগ",
+    "client": "ক্লায়েন্ট"
+  },
+  "market": {
+    "new": "নতুন",
+    "hot": "জনপ্রিয়",
+    "forYou": "আপনার জন্য",
+    "grid": "গ্রিড",
+    "list": "তালিকা",
+    "apiShelf": "এপিআই শেলফ",
+    "toolShelf": "টুল শেলফ",
+    "categories": "ক্যাটাগরি",
+    "apps": "অ্যাপস",
+    "newRelease": "নতুন রিলিজ",
+    "forgeTitle": "ফোর্জ টুল ওয়ার্কস্পেস",
+    "forgeBlurb": "টেক্সট রূপান্তর, কোডেক, ফর্ম এবং কম্পোজেবল টুলস। অ্যাপ মার্কেট ল্যাব Forge-এর দিকে ইঙ্গিত করে।",
+    "openForge": "Open Forge →",
+    "allApi": "সব API →",
+    "all": "সব →",
+    "viewAll": "সব {label} দেখুন →",
+    "gridView": "গ্রিড ভিউ",
+    "listView": "লিস্ট ভিউ",
+    "hiTitle": "এন্টারপ্রাইজ AI রিসোর্স প্ল্যাটফর্ম",
+    "hiSubtitle": "প্রতিটি প্রয়োজনকে সঠিক AI দিয়ে মিলান",
+    "sellable": "বিক্রয়যোগ্য",
+    "walletTopup": "টপ আপ"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "ভাষা মডেল",
+      "hint": "চ্যাট · রিজনিং"
+    },
+    "image-gen": {
+      "label": "ছবি তৈরি",
+      "hint": "টেক্সট-টু-ইমেজ"
+    },
+    "image-edit": {
+      "label": "ছবি সম্পাদনা",
+      "hint": "এডিট · ম্যাটিং"
+    },
+    "video": {
+      "label": "ভিডিও জেনারেশন",
+      "hint": "টেক্সট-টু-ভিডিও"
+    },
+    "audio": {
+      "label": "অডিও ও ভিডিও",
+      "hint": "স্পিচ · ট্রান্সক্রিপশন"
+    },
+    "data": {
+      "label": "তথ্য",
+      "hint": "রিকভারি · এক্সট্র্যাক্ট"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "জ্ঞান-সমৃদ্ধ"
+    },
+    "tools": {
+      "label": "টুল API",
+      "hint": "এজেন্ট · টুল"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "বট",
+      "chips": "চ্যাট বট · ড্রয়িং বট · জ্ঞান"
+    },
+    "productivity": {
+      "label": "প্রোডাক্টিভিটি",
+      "chips": "মডেল অ্যারেনা · AI লেখা"
+    },
+    "academic": {
+      "label": "শিক্ষামূলক",
+      "chips": "PDF টুলকিট · AI পেটেন্ট সার্চ"
+    },
+    "image": {
+      "label": "ইমেজ টুলস",
+      "chips": "3D স্টুডিও · ক্যানভাস"
+    },
+    "audio": {
+      "label": "অডিও",
+      "chips": "স্পিচ · AI মিউজিক"
+    },
+    "code": {
+      "label": "কোড",
+      "chips": "ওয়েব জেনারেটর · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "সংক্ষিপ্ত বিবরণ",
+    "keys": "কী",
+    "wallet": "ওয়ালেট",
+    "use": "চেষ্টা করুন",
+    "docs": "ডক্স",
+    "models": "আরও"
+  }
+}

@@ -1,0 +1,1781 @@
+{
+  "nav": {
+    "features": "Vipengele",
+    "solutions": "Suluhisho",
+    "pricing": "Bei",
+    "docs": "Nyaraka",
+    "github": "GitHub",
+    "npm": "npm",
+    "about": "Kuhusu Sisi",
+    "ideas": "Maana",
+    "opc": "Jukwaa",
+    "roadmap": "Ramani ya Njia",
+    "resources": "Rasilimali",
+    "signIn": "Ingia",
+    "getStarted": "Anza Safari",
+    "changelog": "Mabadiliko",
+    "news": "Habari",
+    "designDocs": "Mfumo wa Ubunifu",
+    "avatarMenu": {
+      "ariaLabel": "Menyu ya akaunti",
+      "loadingName": "Inapakia…",
+      "dashboard": "Dashibodi",
+      "account": "Akaunti",
+      "billing": "Malipo",
+      "docs": "Nyaraka",
+      "signOut": "Ondoka"
+    }
+  },
+  "refer": {
+    "metadataTitle": "Jiunge na mzunguko wa marejeleo ya mwenza {brandName}",
+    "metadataDescription": "Jiunge na orodha ya kusubiri ya {brandName}, uhifadhi uainishaji wa marejeleo, na ufungue kiungo chako cha kushiriki katika mzunguko mmoja wa bidhaa.",
+    "eyebrow": "Mzunguko wa marejeleo ya mwenza",
+    "title": "Jiunge na kikundi kinachofuata cha wenza na upate kiungo chako cha kushiriki.",
+    "description": "Ingia kwa nambari yoyote ya kurudisha au jiunge moja kwa moja. Tutahifadhi uainishaji wakati nambari ipo, kukusanya kwenye orodha ya kusubiri, na kutoa URL ya marejeleo ya siri unayoweza kushiriki mara moja.",
+    "signal": {
+      "waitlist": "Orodha ya kusubiri ya kudumu",
+      "codeDetected": "Nambari {code} imegunduliwa",
+      "direct": "Ujiandishi wa moja kwa moja"
+    },
+    "form": {
+      "emailLabel": "Barua pepe ya kazi",
+      "emailPlaceholder": "you@example.com",
+      "codeLabel": "Nambari ya marejeleo",
+      "codePlaceholder": "Nambari hiari",
+      "submit": "Jiunge na orodha ya kusubiri",
+      "submitting": "Inajiunga",
+      "invalidEmail": "Ingiza barua pepe halali.",
+      "error": "Haikuweza kujiunga sasa. Tafadhali jaribu tena.",
+      "successTitle": "Uko kwenye orodha",
+      "successDescription": "Kiungo chako cha siri cha kushiriki kiko tayari.",
+      "positionLabel": "Nafasi katika mistari",
+      "referralCodeLabel": "Nambari yako",
+      "referralUrlLabel": "Kiungo chako cha kushiriki",
+      "copyLink": "Nakili kiungo",
+      "copied": "Imenakiliwa",
+      "share": "Shiriki",
+      "shareTitle": "Jiunge na mzunguko wa kuanzisha {brandName}",
+      "shareText": "Tumia kiungo changu cha kuhamasisha kujiunga na orodha ya kusubiri ya wanaanzisha {brandName}.",
+      "directMode": "Hakuna msimbo wa marejeleo unaohitajika",
+      "codeMode": "Uamuzi wa marejeleo umewashwa"
+    },
+    "proof": {
+      "peerLoop": {
+        "title": "Mzunguko wa mwanza hadi mwanza",
+        "description": "Kila usajili uliopokelewa unapokea msimbo na URL, ili marejeleo ya kufuata yanze bila uhamisho wa mkono."
+      },
+      "attribution": {
+        "title": "Uamuzi wa kweli",
+        "description": "Msimbo usiojulikana unahifadhiwa kama jaribio la uamuzi, huku misimbo halali ikiongeza mrejeshaji na kuweka usajili safi."
+      },
+      "shareLink": {
+        "title": "Hali ya mafanikio tayari ya kushiriki",
+        "description": "Hali ya uthibitisho inaonyesha nafasi, msimbo, nakala, na vitendo vya kushiriki asili ili mzunguko ukanne ukweli kwenye ukurasa."
+      }
+    },
+    "infrastructure": {
+      "eyebrow": "Miundombinu inayoongozwa na bidhaa",
+      "title": "Imeundwa kama miundombinu ya kudumu ya SaaS, si fomu ya kukataa.",
+      "description": "Upeo wa marejeleo unasaidiwa na pakiti ya domain, mfano wa kudumu wa Prisma, njia ya Next.js iliyobainishwa, na vipimo vya moshi vya umma vinavyoweza kufanya kazi baada ya kuweka ECS.",
+      "data": {
+        "eyebrow": "Data",
+        "title": "Jedwali moja la kudumu la orodha ya kusubiri",
+        "description": "Ukamilifu wa barua pepe, nafasi inayoongezeka kiotomatiki, viashiria vya msimbo wa marejeleo, metadata ya jaribio la uamuzi, na mabadiliko ya hali yako kwenye hifadhi ya data ya jukwaa."
+      },
+      "api": {
+        "eyebrow": "API",
+        "title": "Nda ya muunganisho iliyobainishwa",
+        "description": "Ukurasa unatuma kwa `/api/waitlist`, unasawazisha kodhi zozote, unarudisha kuingizwa kilichopo kwa upole, na hakitegemei kodhi ya mfano."
+      },
+      "cicd": {
+        "eyebrow": "CI/CD",
+        "title": "Mvua ya umma wakati wa kuweka",
+        "description": "Viungo vya kanuni na vya jina lingine tayari kwa ukaguzi wa kiotomatiki ili usafirishaji wa ECS ukamate mabadiliko ya njia, DNS, na afya."
+      }
+    }
+  },
+  "hero": {
+    "headline1": "Zindua Startup yako,",
+    "headline2": "ikiendeshwa na {brandName} Agent OS.",
+    "subheadline": "Epuka wiki za kazi ya msingi wa <highlight>msingi wa uzalishaji</highlight> wenye muundo uliosimamiwa, ulioundwa kwa wakala wa AI na wanaanzisha wanaosafiri kimataifa.",
+    "copyLabel": "Nakili Amri",
+    "copiedLabel": "Imenakiliwa",
+    "ctaGetAccess": "Anzisha Startup Yako",
+    "ctaExploreDemo": "Chunguza demo",
+    "pillCopied": "Imenakiliwa"
+  },
+  "features": {
+    "sectionTitle": "Miundombinu tayari kutoka kwenye prototype hadi kiwango kikubwa.",
+    "item0": {
+      "title": "Miundombinu ya Programu za AI",
+      "description": "Mifumo ya Agent na injini za usimamizi wa LLM zilizojengwa ndani na kujaribiwa kwa uzalishaji. Epuka utata wa mifumo ya chini na kuunganisha moja kwa moja na API za akili zilizopangwa."
+    },
+    "item1": {
+      "title": "Mstari wa Msingi wa Jukwaa Lililodhibitiwa",
+      "description": "Mstari wa msingi wa jukwaa lililodhibitiwa kwa timu zinazotoa SaaS za AI-native. Linganisha miundo, vifaa vya runtime, na nyuso za utoaji bila kuunganisha zana za ad-hoc."
+    },
+    "item2": {
+      "title": "Uotomatiki wa SaaS ya Biashara",
+      "description": "Uunganisho wa kina wa stack ya teknolojia ya kisasa ya Vercel, Supabase, na Stripe. Inatoa usalama wa kiwango cha safu, utengano wa multi-tenant wa kina, na bili ya usajili wa kimataifa."
+    }
+  },
+  "cta": {
+    "heading": "Uko tayari kuweka bidhaa yako inayofuata ya AI?",
+    "subheading": "Anzisha muundo kamili wa SaaS unaotegemea wavuti ndani ya kompyuta yako kwa amri moja ya terminal.",
+    "copyLabel": "Nakili Amri",
+    "copiedLabel": "Imenakiliwa",
+    "startBuilding": "Anza Kujenga"
+  },
+  "footer": {
+    "brandDescription": "Safirisha Startup yako kwa Agent OS ya {brandName}. Multi-tenancy, bili, auth, na AI — tayari kwa uzalishaji tangu siku ya kwanza.",
+    "columns": {
+      "product": "Bidhaa",
+      "resources": "Rasilimali",
+      "legal": "Kisheria",
+      "community": "Jamii"
+    },
+    "links": {
+      "product": "Bidhaa",
+      "features": "Vipengele",
+      "forge": "Forge",
+      "pricing": "Bei",
+      "about": "Kuhusu",
+      "showcase": "Onyesho",
+      "blog": "Blogu",
+      "playbook": "Kitabu cha Mwongozo",
+      "changelog": "Changelog",
+      "roadmap": "Ramani ya Njia",
+      "docs": "Nyaraka",
+      "ideas": "Maono",
+      "opc": "Jukwaa",
+      "careers": "Kazi",
+      "security": "Usalama",
+      "dpa": "DPA",
+      "privacy": "Siri",
+      "terms": "Masharti",
+      "cookies": "Vikuki",
+      "refund": "Rudisho",
+      "licensing": "Leseni",
+      "contact": "Wasiliana",
+      "faq": "Maswali Yanayoulizwa Mara kwa Mara",
+      "github": "GitHub",
+      "discord": "Discord",
+      "twitter": "X (Twitter)"
+    },
+    "copyright": "© 2026 {brandName} Intelligence. Haki zote zimehifadhiwa.",
+    "statusOnline": "Mifumo yote inafanya kazi",
+    "newsletterTitle": "Kaa kwa sasa",
+    "newsletterPlaceholder": "you@example.com",
+    "newsletterSubscribe": "Jisajili",
+    "newsletterSuccess": "Asante kwa kujiandikisha!",
+    "newsletterError": "Kuna kitu kilichokosea",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
+  },
+  "logoStrip": {
+    "tagline": "Inaendeshwa na"
+  },
+  "monorepoTree": {
+    "badge": "MUUNGO WA TURBOREPO",
+    "title": "Programu 15. Pakiti 113. Njia 4 za backend.",
+    "description": "Msimbo wa pamoja, ujenzi sambamba, hakuna upitishaji. Aina kamili kutoka hifadha ya data hadi frontend.",
+    "metricApps": "programu",
+    "metricBackends": "njia za backend",
+    "metricPackages": "pakiti",
+    "verifiedPaths": "Njia zimehakikishwa dhidi ya eneo la kazi la sasa",
+    "cta": "Chunguza muundo wa monorepo"
+  },
+  "stats": {
+    "title": "Kwa Nambari",
+    "github": "Nyota za GitHub",
+    "discord": "Wanachama wa Discord",
+    "setup": "Muda wa Kuanzisha",
+    "packages": "Vipaketi vya Monorepo",
+    "ctaStar": "Piga Nyota →",
+    "ctaJoin": "Jiunge →",
+    "ctaStart": "Anza →",
+    "ctaExplore": "Chunguza →"
+  },
+  "legalPages": {
+    "about": {
+      "title": "Kuhusu Sisi — Jukwaa la AI Lililodhibitiwa",
+      "description": "Gundua maono ya biashara na kanuni za uhandisi nyuma ya jukwaa la AI lililodhibitiwa la {brandName}.",
+      "heading": "Ura wa Timu za Bidhaa Nyepesi",
+      "subheading": "Badilisha kazi za mara kwa mara za jukwaa kwa miundombinu iliyodhibitiwa, uotomatishaji imara, na nguvu ya uhandisi endelevu.",
+      "missionTitle": "Mpangilio Mpya Unaopigana na Uharibifu wa Utawala",
+      "missionP1": "{brandName} inajenga jukwaa la AI lililodhibitiwa kwa timu zinazohitaji miundombinu endelevu badala ya stack za kuanza za muda mfupi. Ukuaji wa kawaida mara nyingi huja na uburokrasia na entropy; tunajibu kwa utawala wa msimbo, uotomatishaji, na msingi wa jukwaa unaobaki kuweza kutathmini kadiri unavyokua.",
+      "missionP2": "Biashara bado inakumbana na mzigo wa ushirikiano, zana zilizogawanyika, na njia dhaifu za kuboresha. Tunajali kupunguza msongo huo kupitia mikataba wazi zaidi ya jukwaa, vifaa imara zaidi vya utoaji, na tabia za runtime ambazo timu zinaweza kuona na kuamini.",
+      "missionP3": "Tunakataa tabia ya kutatua matatizo ya ukubwa kwa kuongeza mzigo wa shirika. Uotomatishaji, majaribio, na utawala wanapaswa kunyonya kazi za utendaji mara kwa mara ili timu ziweze kuendelea kukusanyika kwenye bidhaa, muundo, na matokeo ya wateja.",
+      "missionP4": "",
+      "valuesTitle": "Nguzo Nne",
+      "values": {
+        "0": {
+          "title": "Ukuaji Uliodhibitiwa (Falsafa)",
+          "description": "Ukuaji unapaswa kuja kutoka kwa mifumo imara zaidi, nguvu bora, na sheria wazi za utendaji — si kutoka kwa kuweka uzito mwingi wa shirika."
+        },
+        "1": {
+          "title": "Msingi wa Mjenzi (Miundombinu)",
+          "description": "Msingi wa jukwaa unaoweza kutumika tena kwa multi-tenancy, bili, auth, ushirikiano, na uunganisho wa AI ambao timu zinaweza kutathmini, kupanua, na kuwasilisha tena na tena."
+        },
+        "2": {
+          "title": "Kanuni ya Kuboresha (Uelekezi)",
+          "description": "Mifumo yenye afya hukuwa kupitia ukaguzi wa ubadilishaji, uhamisho, na mikataba inayoonekana ya runtime badala ya drift, heroics, na uandishi upya wa mara moja."
+        },
+        "3": {
+          "title": "Msimbo ni Sheria (Shirika)",
+          "description": "Kanuni za utendaji zinapaswa kuandikwa katika majaribio, mifumo ya kazi, na sheria za utawala ili timu ziweze kuboresha jukwaa bila kutegemea siasa au kumbukumbu za taasisi."
+        }
+      },
+      "jobsTitle": "Alama za Uhandisi Badala ya Shahada",
+      "jobsDescription": "Tunajali zaidi matokeo ya uhandisi yanayoweza kuthibitishwa, uwazi wa kufikiri, na hukumu ya mfumo kuliko asili au upeo wa cheo.",
+      "jobsButton": "Wasilisha Wasifu wa Github",
+      "companyInfoTitle": "Udhibiti wa Shirika",
+      "companyInfo": {
+        "legalName": "Usajili wa Kifalme",
+        "founded": "Tarehe ya Usajili",
+        "headquarters": "Kituo cha Operesheni za Kimataifa",
+        "jurisdiction": "Huduma ya Sheria"
+      },
+      "ctaHeading": "Unahitaji tathmini ya kiufundi ya kina?",
+      "ctaDescription": "Wasiliana na wataalamu wetu wa uhandisi kwa tathmini ya muunganisho wa biashara au ukague nyaraka za uwekaji.",
+      "ctaButton": "Kuanzisha Mawasiliano"
+    },
+    "contact": {
+      "title": "Utafuta wa Kiufundi na wa Biashara — {brandName} Intelligence",
+      "description": "Njia maalum ya mawasiliano kwa leseni za biashara, kujikimu kwa biashara, na msaada wa kiufundi wa hali ya juu.",
+      "heading": "Kuanzisha Uunganisho wa Msaada",
+      "subheading": "Tutatumia mtaalamu wa kiufundi au mhandisi maalum kufanya tathmini ya mahitaji yako.",
+      "contacts": {
+        "founder": {
+          "title": "Mwenyeji wa Moja kwa Moja",
+          "description": "Njia ya mawasiliano moja kwa moja kwa usawazishaji wa kimkakati wa msingi na maswali ya kiutendaji."
+        },
+        "general": {
+          "title": "Ushauri wa Biashara",
+          "description": "Mazungumzo ya awali kuhusu ushirikiano wa kimkakati wa ikolojia na mageuzi ya muundo wa jumla."
+        },
+        "sales": {
+          "title": "Uwekaji wa Biashara",
+          "description": "Mazungumzo kuhusu leseni za chanzo kilichofungwa na maelezo yanayohusiana na uwekaji wa mazingira ya kundi binafsi."
+        },
+        "support": {
+          "title": "Msaada wa Kiufundi",
+          "description": "Mwongozo wa muundo maalum na huduma za kutatua matatizo kwa muunganisho wa biashara zinazofanya kazi na kutafuta makosa ya mfumo wa msingi."
+        },
+        "legal": {
+          "title": "Sheria na Utekeleza",
+          "description": "Maswali yanayohusu ufafanuzi wa mipaka ya chanzo huru, ukaguzi wa utekeleza wa biashara, na masharti ya mkataba."
+        },
+        "privacy": {
+          "title": "Siri ya Kituo cha Data",
+          "description": "Uthibitisho wa kiufundi na maagizo ya utekeleza kuhusu GDPR na sheria zinazofuata za ulinzi wa data za kimataifa."
+        },
+        "security": {
+          "title": "Ufunuo wa Usalama",
+          "description": "Wasilisha ripoti za kiufundi za uundaji upya kuhusu udhaifu wa programu kwa usalama moja kwa moja kwa timu yetu ya miundombinu."
+        }
+      },
+      "formTitle": "Lango la Uwasilishaji",
+      "form": {
+        "name": "Jina la Mwasilishi",
+        "email": "Barua Pepe Rasmi",
+        "company": "Shirika linalohusishwa",
+        "category": "Eneo la Hitaji",
+        "categories": {
+          "general": "Ushauri wa Biashara",
+          "sales": "Leseni na Muundo",
+          "support": "Msaada wa Mtaalamu",
+          "legal": "Mipaka ya Sheria na Utekeleza",
+          "privacy": "Sera za Usindikaji wa Data",
+          "partnership": "Ujumuishaji wa Mfumo wa Ecosistema",
+          "press": "Uhusiano na Umma"
+        },
+        "subject": "Muhtasari wa Tatizo Kuu",
+        "message": "Maelezo ya Kiufundi/Biashara",
+        "submit": "Tuma kwa Backend",
+        "privacyNotice": "Kutekeleza ombi hili la mtandao kunamaanisha kusoma na kukubali",
+        "privacyLink": "Miundombinu ya Faragha ya Mfumo",
+        "submitting": "Inaingia katika foleni ya kuchakata...",
+        "successMessage": "Data imetumwa kwa mafanikio. Timu inayohusika itatoa jibu la kina ndani ya siku 1-2 za biashara za kawaida."
+      },
+      "companyInfoTitle": "Telemetria ya Uendeshaji",
+      "companyNameChinese": "{companyLegal}",
+      "companyNameEnglish": "{companyLegalEn}",
+      "companyAddress": "Wuxi, Jimbo la Jiangsu, China",
+      "socialMedia": "Viungo Vikuu vya Mtandao"
+    },
+    "cookies": {
+      "title": "Sera ya Cookies — {brandName}",
+      "description": "Jinsi {brandName} inavyotumia cookies na teknolojia zinazofanana za ufuatiliaji kwenye tovuti na huduma zetu.",
+      "heading": "Sera ya Cookies",
+      "effectiveDate": "Tarehe ya Uanzishwaji",
+      "lastUpdated": "Ilisasishwa Mwisho",
+      "dates": {
+        "effective": "1 Januari, 2025",
+        "updated": "1 Januari, 2025"
+      },
+      "intro": "Sera hii ya Cookies inaelezea jinsi {brandName} Co., Ltd. (\"{brandName},\" \"sisi,\" \"tunayotumia,\" au \"yetu\") inavyotumia cookies na teknolojia zinazofanana za ufuatiliaji kwenye tovuti na huduma zetu.",
+      "whatAreCookies": {
+        "title": "Cookies Ni Nini?",
+        "content": "Cookies ni faili ndogo za maandishi zinazowekwa kwenye kifaa chako unapotembelea tovuti. Zinatumiwa sana kuifanya tovuti ifanye kazi kwa ufanisi zaidi na kutoa taarifa kwa wanamiliki wa tovuti."
+      },
+      "howWeUse": {
+        "title": "Jinsi Tunavyotumia Cookies",
+        "intro": "Tunatumia cookies ili:",
+        "items": {
+          "0": {
+            "label": "Washa Vipengele Muhimu",
+            "desc": "Toa utendaji wa msingi kama uthibitisho wa mtumiaji na usalama"
+          },
+          "1": {
+            "label": "Kumbuka Mapendeleo",
+            "desc": "Hifadhi lugha yako, mandhari, na mipangilio mingine"
+          },
+          "2": {
+            "label": "Boresha Utendaji",
+            "desc": "Elewa jinsi wageni wanavyofanya kazi na huduma zetu"
+          },
+          "3": {
+            "label": "Badilisha Uzoefu",
+            "desc": "Toa maudhui na mapendekezo yanayohusika"
+          },
+          "4": {
+            "label": "Pima Masoko",
+            "desc": "Fuata ufanisi wa michezo yetu ya masoko"
+          }
+        }
+      },
+      "typesTitle": "Aina za Cookies Tunazotumia",
+      "tableHeaders": {
+        "cookie": "Kuki",
+        "provider": "Mtoa Huduma",
+        "purpose": "Lengo",
+        "duration": "Muda"
+      },
+      "necessary": {
+        "title": "Cookies Muhimu Sana",
+        "description": "Cookies hizi ni muhimu kwa tovuti kufanya kazi vizuri. Haziwezi kuzimwa.",
+        "cookies": {
+          "0": {
+            "name": "__session",
+            "provider": "{brandName}",
+            "purpose": "Kipindi cha uthibitisho wa mtumiaji",
+            "duration": "Kipindi"
+          },
+          "1": {
+            "name": "__clerk_db_jwt",
+            "provider": "Clerk",
+            "purpose": "Token ya uthibitishaji",
+            "duration": "Siku 7"
+          },
+          "2": {
+            "name": "cookie_consent",
+            "provider": "{brandName}",
+            "purpose": "Hifadhi mapendeleo ya ruhusa ya cookies",
+            "duration": "Mwaka 1"
+          }
+        }
+      },
+      "functional": {
+        "title": "Cookies za Kazi",
+        "description": "Cookies hizi zinawezesha vipengele vya kibinafsi na kukumbuka mapendeleo yako.",
+        "cookies": {
+          "0": {
+            "name": "locale",
+            "provider": "{brandName}",
+            "purpose": "Hifadhi mapendeleo ya lugha",
+            "duration": "Mwaka 1"
+          },
+          "1": {
+            "name": "theme",
+            "provider": "{brandName}",
+            "purpose": "Hifadhi mapendeleo ya mandhari",
+            "duration": "Mwaka 1"
+          }
+        }
+      },
+      "analyticsType": {
+        "title": "Cookies za Uchambuzi",
+        "description": "Cookies hizi zinatusaidia kuelewa jinsi wageni wanavyofanya kazi na tovuti yetu.",
+        "cookies": {
+          "0": {
+            "name": "_ga",
+            "provider": "Google Analytics",
+            "purpose": "Tofautisha watumiaji wengine",
+            "duration": "Miaka 2"
+          },
+          "1": {
+            "name": "ph_*",
+            "provider": "PostHog",
+            "purpose": "Uchambuzi wa bidhaa",
+            "duration": "Mwaka 1"
+          }
+        }
+      },
+      "marketingType": {
+        "title": "Vikuki vya Masoko",
+        "description": "Vikuki hivi vinatumika kwa uuzaji wa bidhaa na kufuatilia utendaji wa kampeni za matangazo.",
+        "cookies": {
+          "0": {
+            "name": "_fbp",
+            "provider": "Facebook",
+            "purpose": "Kufuatilia ziara kwa matangazo ya Facebook",
+            "duration": "Miezi 3"
+          },
+          "1": {
+            "name": "_gcl_au",
+            "provider": "Google Ads",
+            "purpose": "Ufuatiliaji wa mabadiliko",
+            "duration": "Miezi 3"
+          }
+        }
+      },
+      "managingTitle": "Kudhibiti Mapendeleo Yako ya Vikuki",
+      "consentBanner": {
+        "title": "Banari ya Idhini ya Vikuki",
+        "intro": "Unapotokea kwenye tovuti yetu kwa mara ya kwanza, utapata banari ya idhini ya vikuki inayokuruhusu ku:",
+        "items": {
+          "0": {
+            "label": "Kubali Yote",
+            "desc": "Washa makundi yote ya vikuki"
+          },
+          "1": {
+            "label": "Kataa Zote",
+            "desc": "Zima biskuti zote za hiari (biskuti zinazohitajika zinabaki)"
+          },
+          "2": {
+            "label": "Badilisha",
+            "desc": "Chagua makundi maalum ya biskuti kuwezesha"
+          }
+        },
+        "changeNote": "Unaweza kubadilisha mapendeleo yako wakati wowote kwa kubofya \"Mipangilio ya Biskuti\" kwenye sehemu ya chini."
+      },
+      "browserSettings": {
+        "title": "Mipangilio ya kivinjari",
+        "intro": "Kivinjari vingi vya wavuti vinakuruhusu kudhibiti biskuti kupitia mipangilio yake:",
+        "browsers": {
+          "0": {
+            "name": "Chrome",
+            "path": "Mipangilio > Faragha na usalama > Biskuti"
+          },
+          "1": {
+            "name": "Firefox",
+            "path": "Mipangilio > Faragha & Usalama > Biskuti"
+          },
+          "2": {
+            "name": "Safari",
+            "path": "Mapendeleo > Faragha > Biskuti"
+          },
+          "3": {
+            "name": "Edge",
+            "path": "Mipangilio > Faragha, utafutaji, na huduma > Biskuti"
+          }
+        },
+        "note": "Kuzuia biskuti fulani kunaweza kuathiri utendaji wa tovuti."
+      },
+      "similarTech": {
+        "title": "Teknolojia zinazofanana",
+        "intro": "Pia na biskuti, tunaweza kutumia:",
+        "items": {
+          "0": {
+            "label": "Hifadhi ya Ndani",
+            "desc": "Kuhifadhi mapendeleo na data ya cache ndani"
+          },
+          "1": {
+            "label": "Hifadhi ya Kipindi",
+            "desc": "Kwa data ya muda wakati wa kipindi chako cha kutafuta"
+          },
+          "2": {
+            "label": "Aina za Pikseli",
+            "desc": "Picha ndogo za kufuatilia ufunguzi wa barua pepe na ziara za tovuti"
+          }
+        },
+        "noFingerprinting": "Hatutumii fingerprinting ya kivinjari kwa ufuatiliaji."
+      },
+      "updates": {
+        "title": "Sasisho za Sera Hii",
+        "content": "Tunaweza kusasisha Sera hii ya Cooki kwa wakati mwingine. Tutakuletea mabadiliko makubwa kwa kuweka sera iliyosasishwa kwenye tovuti yetu."
+      },
+      "contactUs": {
+        "title": "Wasiliana Nasi",
+        "intro": "Ikiwa una maswali kuhusu matumizi yetu ya cooki, tafadhali wasiliana nasi:",
+        "company": "{brandName} Co., Ltd.",
+        "privacyNote": "Kwa maelezo zaidi kuhusu jinsi tunavyokusanya na kuchakata data yako, tafadhali angalia",
+        "privacyLink": "Sera ya Faragha"
+      }
+    },
+    "faq": {
+      "title": "Mwongozo wa Uhandisi & FAQ — {brandName}",
+      "description": "Uchambuzi wa kina wa muundo wa mfumo, topolojia za msingi, na mikakati ya uendeshaji wa biashara.",
+      "heading": "Uchambuzi wa Kina wa Utendaji",
+      "subheading": "Nyenzo za msaada zilizoboreshwa kwa ujumuishaji wa uhandisi wa mifumo na uamuzi wa biashara wa utendaji.",
+      "categories": {
+        "0": {
+          "name": "Maelezo ya Muundo",
+          "questions": {
+            "0": {
+              "q": "Ni nini lengo la utendaji la {productName}?",
+              "a": "{productName} ni mfumo wa Next.js AI SaaS ulioandaliwa kwa uzalishaji. Unapakia bili ya kampuni, uthibitisho wa neno siri, na utenganisho wa watumiaji wengi katika msingi wa mfumo, ikiruhusu timu kujitolea kwa utekelezaji wa AI maalum."
+            },
+            "1": {
+              "q": "Jinsi gani leseni ya hazina imeundwa?",
+              "a": "Miundombinu wa msingi unatekeleza kwa ukali mkataba wa OSS AGPLv3, ukihakikisha uwazi na matumizi ya gharama sifuri. Kwa mashirika yanayohitaji upotevu wa mali na dhamana za kuandika upya zilizoinuliwa, mikataba ya biashara ya chanzo kilichofungwa inapatikana."
+            },
+            "2": {
+              "q": "Je, kasi ya tathmini ya kwanza ya biashara ni ipi?",
+              "a": "Kasi kubwa sana. Kwa kutumia zana za Node CLI zilizobinafsishwa pamoja na tafsiri ya kiufundi sahihi, mhandisi mchache anaweza kuanzisha mfano wa Minimum Viable Product (MVP) wa ndani wa kujitegemea ndani ya dakika chache."
+            }
+          }
+        },
+        "1": {
+          "name": "Shughuli za Biashara",
+          "questions": {
+            "0": {
+              "q": "Je, upungufu wa kasi ya biashara ni upana gani?",
+              "a": "Imeundwa kwa kiasi kikubwa kwenye paradimu za sehemu ndogo, uwezo wa mzigo wa muundo unachora kwa urahisi kutoka kwa Free Tiers za mahitaji sifuri hadi viwango vya Enterprise vinavyohudumia maombi ya mamilioni kwa mwezi, yote yanasanidiwa kupitia vikwazo vya dashibodi."
+            },
+            "1": {
+              "q": "Je, mabadiliko ya usajili yanavyoathiri hesabu za kawaida?",
+              "a": "Tunafanya kazi kwa kutumia uandishi wa muundo wa sekunde za rasilimali na upitishaji wa API. Vikwazo vinavyobadilika vinarekebisha papo hapo dhidi ya tabaka la hesabu—au kurudisha tofauti za prorated au kutoa mikopo ya kiotomatiki. Hakuna kipindi cha kufunga kiwango."
+            },
+            "2": {
+              "q": "Je, miundombinu gani ya kuchakata inatenganisha vekta za malipo?",
+              "a": "Upelekaji wa fedha duniani kote unasimama kwa msingi kwenye viwango vya seva za Stripe, ukihakikisha telemetry ya PCI-DSS na uadilifu wa kuchakata. Usanidi wa Enterprise unaweza kuunganisha mistari ya ukaguzi wa fedha wa kibinafsi inayodhibitiwa na dhamana za SLA maalum."
+            }
+          }
+        },
+        "2": {
+          "name": "Tabaka la Uhandisi wa Mfumo",
+          "questions": {
+            "0": {
+              "q": "Je, mifumo gani ya akili ya msingi inasaidiwa kwa asili?",
+              "a": "Mantiki kuu ya mwingiliano inasema interoperability ya asili juu ya OpenAI, Anthropic, na Gemini standard specifications. Hii inatoa uelekevu mkubwa wa kubadilisha pointi za kufikiri kwa ufanisi kupitia ramani ya vigeu bila kupungua kwa mantiki ya biashara ya juu."
+            },
+            "1": {
+              "q": "Je, hatari ya upotevu wa hifadhi ya data inavyokabiliwa?",
+              "a": "Utekelezaji wa chaguo-msingi unafanya kazi kwa asili Postgres Row-Level Security (RLS) policies zinazounganishwa kwa karibu na vigezo vya Tenant Resolution Routing vya serverless. Hii inahakikisha sehemu ngumu zinazuia kwa ufanisi uchafuzi wa data ya kiwango cha programu na mwingiliano wa utekelezaji."
+            },
+            "2": {
+              "q": "Je, kuna vikwazo vya muundo kwenye usanidi wa kujitunza?",
+              "a": "Hakuna yoyote. Topolojia imepatikana kabisa. Ikiwa mazingira inafanya kazi Node.js runtimes huru pamoja na PostgreSQL clusters zenye afya, utendaji kamili unahifadhiwa kwa asili."
+            }
+          }
+        },
+        "3": {
+          "name": "Uaminifu wa Mfumo",
+          "questions": {
+            "0": {
+              "q": "Je, viwango gani vinahukumu ulinzi wa mekaniki wa mpaka?",
+              "a": "Mifumo inafanya kazi kwa TLS encryption lazima kupitia upitishaji, algoriti za hashing za deterministic kwa ramani ya siri, na uandishi wa matukio ya mabadiliko yaliyoandikwa kwa ukali kwenye ledger za ufuatiliaji wa mfululizo wa muda wa ndani."
+            },
+            "1": {
+              "q": "Je, muundo unaheshimu sheria kuu za kimataifa za faragha?",
+              "a": "Ndiyo, kwa kina. Moduli za biashara zinatoa utekelezaji wa algoriti wa kutoka kwenye sanduku unaolenga hali za kuondoa idhini, mantiki ya kuharibu kwa nguvu, na machunguzi ya kuuza kwa kina yanayofaa kwa hali bora kwa GDPR na miundo ya udhibiti ya ndani."
+            },
+            "2": {
+              "q": "Je, nini hutekelezwa wakati wa tukio la ajabu la haraka?",
+              "a": "Sentineli za kiotomatiki huarifu kwa haraka vekta za uhandisi wa msingi ambao haweka vikwazo vya mzunguko na kutekeleza triaji ya haraka. Inaongozwa na kitabu cha ufumbuzi cha hali ya juu, Postmortems za Tukio zinazojulikana kwa uwazi zinasambazwa kwa siku 72 kamili."
+            }
+          }
+        },
+        "4": {
+          "name": "Maelekezo ya Msaada wa Kiufundi",
+          "questions": {
+            "0": {
+              "q": "Je, matatizo ya kizuizi cha utendaji yanatatuliwa vipi?",
+              "a": "Vekta za triaji za awali zinangalia matriksi ya nyaraka zilizohifadhiwa kwa makini na zilizopitishwa na wenzao na mwingiliano wa jamii uliothibitishwa. Kununua leseni ya kawaida au ya kiwango cha biashara hufungua upatikanaji wa mistari ya kasi ya kibinafsi inayatatuliwa kupitia nodi za uhandisi wa ndani moja kwa moja."
+            },
+            "1": {
+              "q": "Je, unatoa operesheni za muunganisho wa mazingira maalum au ya kimwili?",
+              "a": "Hii inakusanyika chini ya kiwango chetu cha juu cha utekelezaji wa premium kwa konglomerati za makampuni ya ngazi ya juu. Wabunifu wetu wa ngazi ya juu wanatekeleza nje ya kawaida kufanya ukaguzi wa msimbo dhidi ya muundo wa zamani, kudhibiti uhamisho wa wingu wa nyeti, na kuthibitisha sehemu za mtandao zilizotengwa sana."
+            }
+          }
+        }
+      },
+      "ctaHeading": "Unahitaji usawazishaji wa kiufundi mara moja?",
+      "ctaDescription": "Iwe unathibitisha schema ya tabia maalum ya API au kutekeleza makubaliano ya muunganisho wa muda mrefu, unganisha moja kwa moja na ierarikia ya uhandisi.",
+      "ctaButton": "Pokea Maelekezo ya Muunganisho",
+      "ctaEmail": "Tuma ujumbe wa moja kwa moja"
+    },
+    "privacy": {
+      "title": "Protokoli ya Faragha na Ulinzi wa Habari — {brandName}",
+      "description": "Kuyanyesha kwa kina jinsi mekaniki za miundombinu zinavyosimamia uhuru wa mtumiaji na utenganisho wa data ya mashine.",
+      "heading": "Maelekezo ya Ulinzi wa Habari",
+      "effectiveDate": "Tarehe ya Utekelezaji",
+      "lastUpdated": "Ilisasishwa Mwisho",
+      "dates": {
+        "effective": "Januari 1, 2025",
+        "updated": "Januari 1, 2025"
+      },
+      "intro": "Kwa {brandName} (\"Kampuni,\" \"sisi,\" \"tunao,\" au \"yetu\"), tunajitolea kulinda siri yako. Sera hii ya Siri inaeleza jinsi tunavyokusanya, kutumia, kufunua, na kulinda taarifa zako unapotumia tovuti yetu, programu, na huduma (kwa pamoja, \"Huduma\").",
+      "infoWeCollect": {
+        "title": "1. Taarifa Tunazokusanya",
+        "youProvide": {
+          "title": "1.1 Taarifa Unazotoa",
+          "intro": "Tunakusanya taarifa unazotupa moja kwa moja, ikiwa ni pamoja na:",
+          "items": {
+            "0": {
+              "label": "Taarifa za Akaunti",
+              "desc": "Jina, barua pepe, neno siri, na maelezo ya shirika unapounda akaunti."
+            },
+            "1": {
+              "label": "Taarifa za Wasifu",
+              "desc": "Picha ya wasifu, cheo la kazi, jina la kampuni, na taarifa nyingine za hiari."
+            },
+            "2": {
+              "label": "Taarifa za Malipo",
+              "desc": "Anwani ya bili na maelezo ya njia ya malipo (inayochakuliwa kwa usalama kupitia Stripe)."
+            },
+            "3": {
+              "label": "Mawasiliano",
+              "desc": "Ujumbe, maoni, na mawasiliano mengine unayotutumia."
+            },
+            "4": {
+              "label": "Mazao",
+              "desc": "Mazao yoyote unayounda, kupakia, au kuhifadhi ukionyesha Huduma zetu."
+            }
+          }
+        },
+        "automatic": {
+          "title": "1.2 Taarifa Inayokusanywa Kiotomatiki",
+          "intro": "Unapotumia Huduma zetu, tunakusanya kiotomatiki taarifa fulani:",
+          "items": {
+            "0": {
+              "label": "Taarifa za Kifaa",
+              "desc": "Aina ya kifaa, mfumo wa uendeshaji, aina ya kivinjari, na vidokezi vya kipekee vya kifaa."
+            },
+            "1": {
+              "label": "Taarifa za Matumizi",
+              "desc": "Ukurasa ulioangaliwa, vipengele vilivyotumika, vitendo vilivyofanywa, na muda uliopitishwa kwenye Huduma."
+            },
+            "2": {
+              "label": "Data ya Logi",
+              "desc": "Anuani ya IP, masaa ya kufikia, URL zinazorejea, na logi za shughuli za mfumo."
+            },
+            "3": {
+              "label": "Taarifa za Mahali",
+              "desc": "Mahali kwa ujumla kulingana na anuani ya IP (hatukusanyii mahali sahihi sana)."
+            }
+          }
+        }
+      },
+      "howWeUse": {
+        "title": "2. Jinsi Tunavyotumia Taarifa zako",
+        "intro": "Tunatumia taarifa tunazokusanya ili:",
+        "items": {
+          "0": {
+            "label": "Kutoa Huduma",
+            "desc": "Kufanya kazi, kudumisha, na kuboresha Huduma zetu."
+          },
+          "1": {
+            "label": "Kusimamia Amana",
+            "desc": "Kusimamia malipo, bili, na shughuli zinazohusiana."
+          },
+          "2": {
+            "label": "Kuwasiliana",
+            "desc": "Kutumia tangazo la huduma, masasisho, na mawasiliano ya masoko (kwa idhini)."
+          },
+          "3": {
+            "label": "Kubinafsisha",
+            "desc": "Kubinafsisha uzoefu wako na kutoa mapendekezo yanayohusika."
+          },
+          "4": {
+            "label": "Kuchambua",
+            "desc": "Kuelewa mifumo ya matumizi na kuboresha Huduma zetu."
+          },
+          "5": {
+            "label": "Kulinda",
+            "desc": "Kugundua, kuzuia, na kujibu udanganyifu, matumizi mabaya, na matukio ya usalama."
+          }
+        }
+      },
+      "howWeShare": {
+        "title": "3. Jinsi Tunavyoshiriki Taarifa zako",
+        "intro": "Tunaweza kushiriki taarifa zako katika hali zifuatazo:",
+        "serviceProviders": {
+          "title": "3.1 Wazawishi wa Huduma",
+          "intro": "Tunashiriki taarifa na wauzaji wa tatu ambao hutoa huduma kwa niaba yetu, ikiwa ni pamoja na:",
+          "items": {
+            "0": {
+              "label": "Miundombinu",
+              "desc": "Uhudumu wa wavuti (Vercel, Supabase), huduma za hifadhi ya data"
+            },
+            "1": {
+              "label": "Usindikaji wa Malipo",
+              "desc": "Stripe kwa usindikaji salama wa malipo"
+            },
+            "2": {
+              "label": "Uthibitishaji",
+              "desc": "Clerk kwa usimamizi wa utambulisho"
+            },
+            "3": {
+              "label": "Uchambuzi",
+              "desc": "PostHog, Vercel Analytics kwa ufahamu wa matumizi"
+            }
+          }
+        },
+        "businessTransfers": {
+          "title": "3.2 Uhamisho wa Biashara",
+          "content": "Ikiwa tutashiriki katika muungano, ununuzi, au uuzaji wa mali, taarifa zako zinaweza kuhama kama sehemu ya muamala huo."
+        },
+        "legalRequirements": {
+          "title": "3.3 Mahitaji ya Kisheria",
+          "content": "Tunaweza kufunua taarifa wakati inahitajika na sheria, mchakato wa kisheria, au ombi la serikali, au kulinda haki zetu, faragha, usalama, au mali."
+        }
+      },
+      "yourRights": {
+        "title": "4. Haki zako na Chaguzi",
+        "accessPortability": {
+          "title": "4.1 Upatikanaji na Uhamishaji",
+          "content": "Unaweza kupata taarifa zako za kibinafsi kupitia mipangilio ya akaunti yako na kuomba nakala ya data yako katika muundo unaoweza kuhama."
+        },
+        "correction": {
+          "title": "4.2 Urekebishaji",
+          "content": "Unaweza kusasisha taarifa za akaunti yako wakati wowote kupitia dashibodi."
+        },
+        "deletion": {
+          "title": "4.3 Ufutaji",
+          "content": "Unaweza kuomba usirishaji wa akaunti yako na data inayohusiana kupitia mipangilio au kwa kutuwasiliana nasi."
+        },
+        "marketing": {
+          "title": "4.4 Mawasiliano ya Masoko",
+          "content": "Unaweza kukataa barua pepe za masoko kwa kubofya \"toa usajili\" katika barua pepe yoyote ya masoko au kwa kurekebisha mapendeleo yako."
+        }
+      },
+      "dataSecurity": {
+        "title": "5. Usalama wa Data",
+        "intro": "Tunatekeleza hatua za kiufundi na za shirika zinazofaa ili kulinda taarifa zako, ikiwa ni pamoja na:",
+        "items": {
+          "0": "Ufungaji wa data inayopitishwa (TLS) na iliyohifadhiwa",
+          "1": "Tathmini za usalama na majaribio ya upenyezaji kwa kawaida",
+          "2": "Vidhibiti vya upatikanaji na mahitaji ya uthibitishaji",
+          "3": "Ufuatiliaji na kumbukumbu za shughuli za mfumo"
+        }
+      },
+      "ccpa": {
+        "title": "6. Haki za Usiri wa California (CCPA)",
+        "intro": "Ikiwa wewe ni mwenyeji wa California, una haki maalum kuhusu taarifa zako za kibinafsi:",
+        "items": {
+          "0": {
+            "label": "Haki ya Kujua",
+            "desc": "Omba ufunguzi wa taarifa tunazokusanya, kutumia, na kushiriki."
+          },
+          "1": {
+            "label": "Haki ya Kufuta",
+            "desc": "Omba usirishaji wa taarifa zako za kibinafsi."
+          },
+          "2": {
+            "label": "Haki ya Kukataa",
+            "desc": "Kataa uuzaji wa taarifa za kibinafsi (hatuuze data yako)."
+          },
+          "3": {
+            "label": "Haki ya Kusaidiwa Bila Utohozi",
+            "desc": "Hatutatoa tofauti dhidi yako kwa kutumia haki zako."
+          }
+        }
+      },
+      "gdpr": {
+        "title": "7. Haki za Usiri wa Ulaya (GDPR)",
+        "intro": "Ikiwa uko EEA, UK, au Uswisi, una haki za ziada chini ya GDPR:",
+        "items": {
+          "0": {
+            "label": "Msingi wa Kisheria",
+            "desc": "Tunachakata data yako kulingana na utekelezaji wa mkataba, maslahi halali, au idhini."
+          },
+          "1": {
+            "label": "Haki",
+            "desc": "Upatikanaji, urekebishaji, uondoshaji, uhamishaji, ukandamizaji, na uasi."
+          },
+          "2": {
+            "label": "DPO",
+            "desc": "Unaweza kuwasiliana na Mkuu wa Ulinzi wa Data wetu kwa dpo@nebutra.com."
+          }
+        }
+      },
+      "contactUs": {
+        "title": "8. Wasiliana Nasi",
+        "intro": "Ikiwa una maswali kuhusu Sera hii ya Faragha, tafadhali wasiliana nasi:",
+        "company": "{brandName} Co., Ltd."
+      }
+    },
+    "refund": {
+      "title": "Mikataba ya Utohozi wa Amani — {brandName}",
+      "description": "Ufafanuzi wa kina kuhusu viwango vya kurudisha fedha kwa modeli tofauti za ushiriki wa muundo.",
+      "heading": "Mfumo wa Utekelezaji wa Tofauti",
+      "effectiveDate": "Tarehe ya Utekelezaji wa Sheria",
+      "lastUpdated": "Tarehe ya Mabadiliko",
+      "dates": {
+        "effective": "Januari 1, 2025",
+        "updated": "Januari 1, 2025"
+      },
+      "intro": "Kwa {brandName}, tunataka uwe na furaha kamili na huduma zetu. Sera hii ya Kurudisha Fedha inaelezea hali ambazo kurudisha fedha kunapatikana na mchakato wa kuomba.",
+      "subscriptionPlans": {
+        "title": "Mipango ya Usajili",
+        "monthly": {
+          "title": "Usajili wa Kila Mwezi",
+          "items": {
+            "0": {
+              "label": "Kufuta",
+              "desc": "Unaweza kufuta usajili wako wa mwele mmoja wakati wowote"
+            },
+            "1": {
+              "label": "Rudisho la Kiasi Kilichobaki",
+              "desc": "Hatutotoa rudisho la kiasi kilichobaki kwa miezi isiyokamilika"
+            },
+            "2": {
+              "label": "Upatikanaji",
+              "desc": "Unabaki na upatikanaji wa vipengele vilivyolipwa hadi mwisho wa kipindi chako cha bili"
+            },
+            "3": {
+              "label": "Ujuzi Upya wa Kiotomatiki",
+              "desc": "Usajili hujuziwa upya kiotomatiki isipokuwa ukifutwa"
+            }
+          }
+        },
+        "annual": {
+          "title": "Usajili wa Mwaka",
+          "items": {
+            "0": {
+              "label": "Ahadi ya Kurudisha Pesa za Siku 14",
+              "desc": "Wajasili wapya wa mwaka wanaweza kuomba rudisho kamili ndani ya siku 14 baada ya ununuzi wao wa kwanza"
+            },
+            "1": {
+              "label": "Baada ya Siku 14",
+              "desc": "Rudisho kwa kawaida hapatikani baada ya kipindi cha siku 14"
+            },
+            "2": {
+              "label": "Kufuta",
+              "desc": "Unaweza kufuta wakati wowote, lakini usajili wako utabaki ukiwa na nguvu hadi mwisho wa kipindi cha mwaka"
+            },
+            "3": {
+              "label": "Hakuna Rudisho la Kiasi Kilichobaki",
+              "desc": "Hatutotoa rudisho la sehemu kwa miezi isiyoitumika"
+            }
+          }
+        }
+      },
+      "eligibleScenarios": {
+        "title": "Mazingira Yanayostahili Rudisho",
+        "intro": "Tutazingatia maombi ya rudisho katika hali zifuatazo:",
+        "serviceIssues": {
+          "title": "1. Matatizo ya Huduma",
+          "items": {
+            "0": "Kutokuwa na huduma kwa muda mrefu kinachokuzuia kutumia vipengele vya msingi",
+            "1": "Matatizo ya kiufundi ambayo hatuwezi kutatua ndani ya muda wa kufaa",
+            "2": "Vipengele tofauti sana na vilivyotangazwa"
+          }
+        },
+        "billingErrors": {
+          "title": "2. Hitilafu za Bililingi",
+          "items": {
+            "0": "Malipo ya ziada",
+            "1": "Kiasi kisichofaa cha bililingi",
+            "2": "Malipo yasiyoidhinishwa (baada ya uthibitisho)"
+          }
+        },
+        "exceptionalCircumstances": {
+          "title": "3. Hali za Kipekee",
+          "items": {
+            "0": "Dharura za kiafya zilizorekodiwa",
+            "1": "Maafa ya asili yanayothiri biashara yako",
+            "2": "Hali nyingine zinazohitimu kulingana na kesi kwa kesi"
+          }
+        }
+      },
+      "nonRefundable": {
+        "title": "Vitu Visivyoweza Kurudishiwa",
+        "intro": "Yafuatayo kwa kawaida hayana haki ya kurudishiwa:",
+        "items": {
+          "0": {
+            "label": "Malipo kulingana na matumizi",
+            "desc": "Viitio vya API, matumizi ya AI token, au hifadhi iliyotumika"
+          },
+          "1": {
+            "label": "Viweko na huduma za ziada",
+            "desc": "Ununuzi wa mara moja au huduma za ziada"
+          },
+          "2": {
+            "label": "Miethio ya Enterprise",
+            "desc": "Mikataba maalum ina masharti yake mwenyewe"
+          },
+          "3": {
+            "label": "Kughairi kwa hiari",
+            "desc": "Baada ya kipindi cha uhakiki wa kurudishiwa pesa"
+          },
+          "4": {
+            "label": "Uvunjaji wa masharti",
+            "desc": "Akaunti zilizofutwa kwa uvunjaji wa sera"
+          }
+        }
+      },
+      "howToRequest": {
+        "title": "Jinsi ya Kuhitajia Kurudishiwa Pesa",
+        "step1": {
+          "title": "Hatua 1: Wasiliana na Msaada",
+          "intro": "Tuma barua pepe kwa billing@nebutra.com na:",
+          "items": {
+            "0": "Barua pepe ya akaunti yako",
+            "1": "Mpango wa usajili na kipindi cha bili",
+            "2": "Sababu ya ombi la kurudishiwa pesa",
+            "3": "Maelezo yoyote yanayohusika"
+          }
+        },
+        "step2": {
+          "title": "Hatua 2: Mchakato wa Kuchunguza",
+          "items": {
+            "0": "Tutachunguza ombi lako ndani ya siku 5 za kazi",
+            "1": "Tunaweza kuomba maelezo ya ziada",
+            "2": "Utapokea uamuzi kwa maandishi kupitia barua pepe"
+          }
+        },
+        "step3": {
+          "title": "Hatua 3: Mchakato wa Kurudishiwa Pesa",
+          "intro": "Ikiwa imethibitishwa:",
+          "items": {
+            "0": "Kurudishiwa pesa hufanywa kwa njia ya malipo ya asili",
+            "1": "Kurudishiwa pesa kwa kadi ya mkopo kwa kawaida hujitokeza ndani ya siku 5-10 za kazi",
+            "2": "Muda wa mchakato wa benki unaweza kutofautiana"
+          }
+        }
+      },
+      "planChanges": {
+        "title": "Mabadiliko ya Mpango",
+        "upgrades": {
+          "title": "Maboresho",
+          "items": {
+            "0": "Maboresho hufanyika mara moja",
+            "1": "Unalipishwa tofauti iliyosawazishwa kwa muda uliobaki wa kipindi chako cha kulipia",
+            "2": "Hakuna marejesho ya fedha yanayotolewa kwa mpango wa awali"
+          }
+        },
+        "downgrades": {
+          "title": "Kupunguzwa",
+          "items": {
+            "0": "Kupunguzwa hufanyika katika kipindi kinachofuata cha kulipia",
+            "1": "Unaendelea kupata ufikiaji wa vipengele vya sasa hadi wakati huo",
+            "2": "Hakuna marejesho ya sehemu kwa kipindi cha sasa"
+          }
+        }
+      },
+      "freeTrial": {
+        "title": "Majaribio ya Bure",
+        "items": {
+          "0": "Majaribio ya bure hayahitaji taarifa za malipo",
+          "1": "Hakuna malipo yanayotokea wakati wa kipindi cha majaribio",
+          "2": "Utahimizwa kabla ya malipo yoyote kuanza"
+        }
+      },
+      "disputeResolution": {
+        "title": "Uhalisi wa Migogoro",
+        "intro": "Ikiwa hukupenda naamuzi wetu wa marejesho ya fedha:",
+        "steps": {
+          "0": "Jibu barua pepe ya uamuzi kwa taarifa za ziada",
+          "1": "Omba kupelekwa kwa mkuu",
+          "2": "Wasiliana nasi kwa legal@nebutra.com kwa ukaguzi zaidi"
+        }
+      },
+      "contactUs": {
+        "title": "Wasiliana Nasi",
+        "intro": "Kwa maombi ya marejesho ya fedha au maswali kuhusu sera hii:",
+        "company": "{brandName} Co., Ltd.",
+        "billingLabel": "Mali",
+        "supportLabel": "Msaada",
+        "legalLabel": "Sheria",
+        "responseNote": "Tunajitahidi kujibu maombi yote ya kurudishiwa pesa ndani ya siku 5 za kazi.",
+        "termsNote": "Sera hii ni sehemu ya",
+        "termsLink": "Masharti ya Huduma",
+        "termsAgreement": "Kwa kutumia {brandName}, unakubali masharti haya ya kurudishiwa pesa."
+      }
+    },
+    "terms": {
+      "title": "Masharti ya Huduma — {brandName}",
+      "description": "Masharti ya Huduma yanayodhibiti upatikanaji wako na matumizi ya tovuti, programu, API, na huduma za {brandName}.",
+      "heading": "Masharti ya Huduma",
+      "effectiveDate": "Tarehe ya Uanzishaji",
+      "lastUpdated": "Ilisasishwa Mwisho",
+      "dates": {
+        "effective": "1 Januari, 2025",
+        "updated": "1 Januari, 2025"
+      },
+      "intro1": "Karibu {brandName}! Masharti haya ya Huduma (\"Masharti\") yanadhibiti upatikanaji wako na matumizi ya tovuti, programu, API, na huduma za {brandName} (kwa pamoja, \"Huduma\") zinazotolewa na {brandName} Co., Ltd. (\"{brandName},\" \"Kampuni,\" \"sisi,\" \"tunatoa,\" au \"yetu\").",
+      "intro2": "Kwa kupata au kutumia Huduma zetu, unakubali kuwa dhamiriwa na Masharti haya na",
+      "intro2PrivacyLink": "Sera ya Faragha",
+      "intro2End": ". Ikiwa haukubali Masharti haya, usitumie Huduma zetu.",
+      "acceptance": {
+        "title": "1. Kukubali Masharti",
+        "eligibility": {
+          "title": "1.1 Uhakiki wa Ustahili",
+          "intro": "Ili kutumia Huduma zetu, lazima uwe na:",
+          "items": {
+            "0": "Uwe na umri wa miaka 18 au zaidi, au umri wa kuzaliwa kwa sheria katika enzi lako la sheria",
+            "1": "Uwe na haki ya kuandika Masharti haya kwa niaba yako mwenyewe au shirika lako",
+            "2": "Usiwe na kizuizi cha kutumia Huduma zetu chini ya sheria inayotumika"
+          }
+        },
+        "orgAccounts": {
+          "title": "1.2 Akaunti za Shirika",
+          "content": "Ikiwa unatumia Huduma zetu kwa niaba ya shirika, unawakilisha kwamba una haki ya kuweka shirika hilo chini ya Masharti haya."
+        }
+      },
+      "services": {
+        "title": "2. Maelezo ya Huduma",
+        "intro": "{brandName} inatoa jukwaa la SaaS linalojumuisha:",
+        "items": {
+          "0": "Sifa za AI na uundaji wa maudhui",
+          "1": "Zana za usimamizi wa maudhui na jamii",
+          "2": "Mifumo ya mapendekezo",
+          "3": "Uunganisho wa biashara ya mtandaoni",
+          "4": "Uwezo wa Web3",
+          "5": "Uchambuzi na ripoti"
+        }
+      },
+      "account": {
+        "title": "3. Usajili wa Akaunti",
+        "creation": {
+          "title": "3.1 Uundaji wa Akaunti",
+          "intro": "Ili kupata sifa fulani, lazima uunde akaunti. Unakubali ku:",
+          "items": {
+            "0": "Toa taarifa sahihi na kamili",
+            "1": "Tunza usalama wa vidokezo vya akaunti yako",
+            "2": "Sasisha taarifa yako haraka ikiwa imebadilika",
+            "3": "Kubali jukumu la shughuli zote chini ya akaunti yako"
+          }
+        }
+      },
+      "billing": {
+        "title": "4. Usajili na Malipo",
+        "pricing": {
+          "title": "4.1 Bei",
+          "content": "Huduma zetu zinapatikana chini ya mipango tofauti ya usajili kama ilivyoelezwa kwenye ukurasa wetu wa Bei. Bei zinaweza kubadilika kwa taarifa ya siku 30."
+        },
+        "payment": {
+          "title": "4.2 Malipo",
+          "items": {
+            "0": "Usajili unalipwa mapema kila mwezi au kila mwaka",
+            "1": "Gharama zote hazirejeshwi isipokuwa kama ilivyoelezwa katika",
+            "2": "Unatupa ruhusa ya kulipa njia yako ya malipo kwa gharama zinazohusika",
+            "3": "Tunatumia Stripe kwa usindikaji salama wa malipo",
+            "1RefundLink": "Sera ya Kurudisha"
+          }
+        }
+      },
+      "acceptableUse": {
+        "title": "5. Matumizi Yanayokubalika",
+        "prohibited": {
+          "title": "5.1 Shughuli Zilizopigwa Marufuku",
+          "intro": "Unakubali KUSIOFANYA:",
+          "items": {
+            "0": "Kukiuka sheria, kanuni, au haki za upande wa tatu zinazohusika",
+            "1": "Kutumia Huduma kuhamisha malware, spam, au maudhui madhara",
+            "2": "Kujaribu kupata upenyezaji usio na ruhusa kwenye mifumo yetu",
+            "3": "Kuingilia au kuharibu utulivu au utendaji wa Huduma zetu",
+            "4": "Kutumia zana za kiotomatiki kukusanya, kunakili, au kuchukua data bila ruhusa",
+            "5": "Kufanya uhandisi wa kinyume, kutenganisha, au kuvunja Huduma zetu",
+            "6": "Kutumia vipengele vya AI vya kuunda maudhui haramu, madhara, au yanayolazimisha"
+          }
+        }
+      },
+      "ip": {
+        "title": "6. Mali ya Kibinafsi",
+        "ours": {
+          "title": "6.1 Mali Yetu ya Kibinafsi",
+          "content": "{brandName} na wazawishi wake wana uhakika, mwenendo, na maslahi yote katika Huduma, ikiwa ni pamoja na programu zote, muundo, alama za biashara, na maudhui yaliyotengenezwa na sisi."
+        },
+        "yours": {
+          "title": "6.2 Maudhui Yako",
+          "content": "Una uhakika wa maudhui unaotengeneza au kupakia (\"Maudhui Yako\"). Kwa kutumia Huduma zetu, unatupa ruhusa ya kimataifa, isiyo ya kipekee, bila ada kutumia, kuhifadhi, kuchakata, na kuonyesha Maudhui Yako kwa dhamana ya kutoa Huduma kwako."
+        }
+      },
+      "warranties": {
+        "title": "7. Kutokuwa na Dhamana",
+        "content": "HUDUMA ZINATOLEWA \"KAMA ZIVYO\" NA \"KAMA ZINAPATIKANA\" BILA DHAMANA YA AINA YOTE, IWE ILIYOELEZWA AU Iliyokubaliwa, IKIJUMUIA LAKINI SIYA KUMEZUIWA DHAMANA ZILIZOKUBALIWA ZA UFAFANUJI, UFAFANUJI WA Lengo LA MAALUM, MWENENDO, NA KUTOKUWA NA UVUYAJI."
+      },
+      "liability": {
+        "title": "8. Kikomo cha Amana",
+        "para1": "KWA KIKOMO CHA KWAHARI KINACHORUHUSIWA NA SHERIA, NEBUTRA HAITAKUWA NA AMANA YA MISIMIYA, KUSAFIRISHA, MAALUM, KUFUATA, AU KUDHIBITI, AU KUPOTEA FAIDA, DATA, MATUMIZI, AU HUSUANI.",
+        "para2": "KWA HATUA YOTE, AMANA YETU YA KWAHARI HAITEGEE ZIADA YA (A) Kiasi CHA KWAHARI ULICHOTOA KWASINI MWAKA 12 ULIOPITA KABLA YA MAHALA, AU (B) $100 USD."
+      },
+      "termination": {
+        "title": "9. Kutangaza",
+        "byYou": {
+          "title": "9.1 Na Wewe",
+          "content": "Unaweza kutangaza akaunti yako wakati wowote kupitia mipangilio ya akaunti yako. Baada ya kutangaza, utapoteza ufikiaji wa Huduma."
+        },
+        "byUs": {
+          "title": "9.2 Na Sisi",
+          "intro": "Tunaweza kusimamisha au kutangaza akaunti yako ikiwa wewe:",
+          "items": {
+            "0": "Ukiukie Masharti haya",
+            "1": "Ushiriki katika shughuli za udanganyifu au haramu",
+            "2": "Usilipie ada zinazohusika",
+            "3": "Uundie hatari au uwezo wa kisheria kwetu"
+          }
+        }
+      },
+      "disputes": {
+        "title": "10. Ufumbuzi wa Migongano",
+        "informal": {
+          "title": "10.1 Ufumbuzi Usio Rasmi",
+          "content": "Kabla ya kuanzisha mchakato rasmi, unakubali kututembelea kwa legal@nebutra.com kujaribu kutatua migogoro kwa njia isiyo rasmi."
+        },
+        "governingLaw": {
+          "title": "10.2 Sheria Inayosimamia",
+          "content": "Masharti haya yanastawishwa na sheria za Jimbo la Delaware, bila kujali kanuni za mgongano wa sheria."
+        }
+      },
+      "contactUs": {
+        "title": "11. Tuwasiliane",
+        "intro": "Ikiwa una maswali kuhusu masharti haya, tafadhali tuwasiliane:",
+        "company": "{brandName} Co., Ltd.",
+        "emailLabel": "Barua Pepe",
+        "supportLabel": "Msaada"
+      },
+      "acknowledgement": "Kwa kutumia {brandName}, unathibitisha kuwa umesoma, kuelewa, na kukubali kuwa dhamiriwa na Masharti haya ya Huduma."
+    }
+  },
+  "metadata": {
+    "title": "{brandName} Agent OS | Agent OS ya Biashara",
+    "description": "Agent OS ya biashara kwa wanaojenga biashara zinazoenda kimataifa. Msingi wa Next.js wa tayari kwa uzalishaji wenye muundo uliosimamiwa, uthibitisho, malipo, wakala, na i18n — iliyotengenezwa kwa wakala wa kuandika AI na timu za kudumu."
+  },
+  "microLanding": {
+    "architecture": {
+      "badge": "TOPOLOJIA YA MIFUMO",
+      "title": "Muundo wazi, hakuna sanduku zilizofungwa.",
+      "description": "{productName} imeundwa kwa muundo wa Turborepo wenye moduli nyingi sana, ikikuwezesha kuwa na udhibiti kamili wa mzunguko mzima wa programu yako.",
+      "database": {
+        "title": "PostgreSQL + Prisma v7",
+        "desc": "ORM iliyofafanuliwa kikamilifu yenye sera za Usalama wa Kirowo (RLS) zilizojengwa ndani."
+      },
+      "auth": {
+        "title": "Clerk Multi-Tenant / Utambulisho wa Kipekee",
+        "desc": "Lango la uthibitisho la SOC2 tayari linalosaidia kubadilisha mashirika ya B2B na RBAC."
+      }
+    },
+    "pricing": {
+      "title": "Ni bure kujenga juu yake. Lipa tu ikiwa unahitaji tuwajibike.",
+      "description": "Kujenga bidhaa ya kibiashara juu ya {brandName} hakugharimu chochote — hakuna ada, hakuna ufunguo wa leseni, hakuna usajili, hakuna copyleft. Viwango vinavyolipiwa vinauza msaada, SLA, fidia na haki za alama ya biashara, kamwe si ruhusa ya matumizi.",
+      "socialProofText": "MIT kwenye npm · FSL-1.1-ALv2 kwenye hazina, hubadilika kuwa Apache-2.0 baada ya miaka miwili · matumizi ya kibiashara ni bure kwa ukubwa wowote.",
+      "community": {
+        "badge": "JUMUIYA",
+        "price": "Bure",
+        "period": "milele",
+        "desc": "Kwa kila mtu. Ukubwa wowote wa timu, mapato yoyote. Matumizi ya kibiashara ya msimbo funge yamejumuishwa, bila usajili na bila sharti la kutaja chanzo.",
+        "cta": "npx create-sailor",
+        "f1": "Kiini kamili cha SaaS cha Next.js 16, pamoja na vifurushi vyote",
+        "f2": "Matumizi ya kibiashara ya msimbo funge kwa ukubwa wowote wa timu au mapato",
+        "f3": "Stack kamili: Auth, Malipo, Mashirika, API, Barua pepe, i18n, Kazi za nyuma, Hifadhi na zaidi",
+        "f4": "Vipengele vya masoko: Blogu, ukurasa wa kutua, SEO, Analytics",
+        "f5": "Issue za umma, Discussions na Discord — kwa kadri iwezekanavyo, bila dhamana ya jibu"
+      },
+      "team": {
+        "badge": "TIMU",
+        "price": "$2,000",
+        "period": "mwaka",
+        "desc": "Kwa timu ambazo haziwezi kuweka njia muhimu kwenye muda wa majibu ya jamii.",
+        "cta": "Pata msaada wa {brandName}",
+        "f1": "Njia binafsi ya msaada (barua pepe + Slack au Discord ya pamoja)",
+        "f2": "Jibu la kwanza limehakikishwa ndani ya siku mbili za kazi",
+        "f3": "Upangaji wa kipaumbele wa hitilafu, mbele ya issue za jumuiya",
+        "f4": "Msaada wa kuboresha na taarifa ya mapema kuhusu mabadiliko yanayovunja utangamano",
+        "f5": "Kila kitu kilicho katika Jumuiya"
+      },
+      "enterprise": {
+        "badge": "BIASHARA KUBWA",
+        "price": "Kuanzia $30,000",
+        "period": "mwaka",
+        "desc": "Kwa mashirika ambayo idara ya manunuzi, sheria au ukaguzi wa usalama inahitaji mshirika anayetia saini.",
+        "cta": "Wasiliana na mauzo",
+        "f1": "SLA ya majibu — saa 4 za kazi kwa kawaida, saa 1 wakati uzalishaji umesimama",
+        "f2": "Fidia na ahadi ya kimkataba kuhusu viraka vya usalama",
+        "f3": "DPA iliyotiwa saini, kifurushi cha uzingatiaji na ahadi ya mwendelezo",
+        "f4": "Haki za alama ya biashara na white label, pamoja na msamaha wa matumizi shindani",
+        "f5": "Tawi la msaada wa muda mrefu na uhandisi wa usambazaji binafsi",
+        "f6": "Kila kitu kilicho katika Timu"
+      }
+    },
+    "faq": {
+      "title": "Maswali Yanayoulizwa Mara kwa Mara kuhusu Bei na Leseni",
+      "description": "Maswali kuhusu viwango vya leseni, kurudishwa kwa pesa, na haki za matumizi ya biashara.",
+      "q1": {
+        "q": "Je, Sailor ni usajili wa SaaS wa kila mwezi?",
+        "a": "Hapana. Bei hii ni kwa leseni za chanzo cha Sailor: Independent ni bure, Startup inachukuliwa kwa mwaka, na Enterprise ni ya kipekee."
+      },
+      "q2": {
+        "q": "Je, mnatoa kurudishwa kwa pesa?",
+        "a": "Leseni za biashara za Startup zinajumuisha kipindi cha siku 14 cha kurudishwa kwa pesa kwa ununuzi wa kwanza. Masharti ya Enterprise yanashughulikiwa katika mkataba uliosainiwa."
+      },
+      "q3": {
+        "q": "Je, ninaweza kutumia Sailor kwa kazi za wateja?",
+        "a": "Ndiyo. Leseni ya biashara inaruhusu timu yako kutoa bidhaa za wateja au za ndani zisizo na chanzo wazi ndani ya upeo wa leseni; haki za white-label zinahitaji idhini ya Enterprise."
+      },
+      "contactNudge": "Bado una maswali? Zungumza na timu ya {brandName} →"
+    },
+    "cta": {
+      "eyebrow": "Anza Sasa",
+      "title": "Acha kuweka mipangilio. Anza kujenga.",
+      "description": "Anzisha muundo wa SaaS unaoweza kupanuka ndani kwa kutumia {brandName} CLI.",
+      "button": "Weka Muundo",
+      "license": "Chanzo huria chini ya leseni ya AGPL-3.0. Hakuna kadi ya mkopo inayohitajika."
+    },
+    "capability": {
+      "badge": "Uwezo wa Biashara",
+      "title": "Msingi ulio na aina kamili na unaoweza kupanuliwa.",
+      "multiTenant": {
+        "title": "Usalama wa Kiwango cha Safu wa Asili",
+        "desc": "Kichunguzi kila kimoja cha hifadha ya data kina mipaka kwa ukali kwa muktadha wa mtumiaji wa sasa.",
+        "cta": "Soma falsafa ya hifadha ya data"
+      },
+      "aiGateway": {
+        "title": "Lango la AI la Kila Aina",
+        "desc": "Pitisha maombi kwa urahisi hadi OpenAI, Anthropic, au mifano ya chanzo huria.",
+        "cta": "Chunguza msimamizi wa AI SDK"
+      },
+      "rbac": {
+        "title": "Udhibiti wa Upatikanaji wa Kina",
+        "desc": "Fafanua majukumu ya msimamizi, mwanachama, na mtazamaji kwa muundo wa sera iliyojengwa ndani.",
+        "cta": "Angalia nyaraka za RBAC"
+      },
+      "billing": {
+        "title": "Miundombinu ya Bililingi ya Watoa Huduma Wengi",
+        "desc": "Matumizi yaliyopimwa, webhooks za usajili, na milango ya wateja wa kujitumikia.",
+        "cta": "Tazama muundo wa bililingi"
+      }
+    },
+    "productDemo": {
+      "badge": "Onyesho la Kuingiliana",
+      "title": "The local loop, end to end.",
+      "description": "Pata hisia ya kioo cha mstari wa amri, upitishaji wa webhook za Stripe, na uwekaji wa hifadha ya data ya watumiaji wengi ndani ya kompyuta.",
+      "analytics": {
+        "label": "Telemetri ya Moja kwa Moja",
+        "desc": "Sogea data ya matumizi ya uzalishaji moja kwa moja kwenye terminali yako."
+      },
+      "billing": {
+        "label": "Matukio ya Bililingi",
+        "desc": "Tazama Stripe webhooks zinazotekelezwa kupitia tunneling ya ndani."
+      },
+      "workspaces": {
+        "label": "Kuanzisha Workspace",
+        "desc": "Pata schemas za PostgreSQL za B2B zilizotengwa papo hapo."
+      }
+    },
+    "workflow": {
+      "badge": "Kasi",
+      "title": "Kutoka sifuri hadi uzalishaji kwa muda wa rekodi.",
+      "step1": {
+        "title": "1. Clone",
+        "desc": "Clone monorepo ya {brandName} papo hapo na uendeshe pnpm install."
+      },
+      "step2": {
+        "title": "2. Weka mipangilio",
+        "desc": "Weka Prisma, Clerk, na Stripe kupitia CLI ya mwingiliano kwa dakika chache."
+      },
+      "step3": {
+        "title": "3. Jenga",
+        "desc": "Jitolee kwa mantiki ya bidhaa na UI huku msingi wa jukwaa tayari ukiwa umewekwa."
+      },
+      "step4": {
+        "title": "4. Deploy",
+        "desc": "Push kwa Vercel na AWS kwa usambazaji wa kimataifa papo hapo."
+      },
+      "speedometer": {
+        "number": "10",
+        "unit": "dak",
+        "subtitle": "MUDA WA KUSIMAMA SOKONI",
+        "comparison": "Puuza miezi ya kazi ya jukwaa.",
+        "phases": {
+          "scaffold": "Anzisha",
+          "wire": "Msingi",
+          "ship": "Deploy",
+          "scale": "Panga",
+          "ongoing": "∞"
+        },
+        "cta": "Anza saa yako"
+      },
+      "presetHint": {
+        "badge": "Mfumo wa Kibainisho",
+        "message": "Mfumo mmoja. Kila kipengele. Chagua kibainisho chako na uwashe.",
+        "detail": "Sanidi mara moja, tengeneza kila kitu — bili, uthibitisho, AI, i18n — kutoka kwa mfumo mmoja wa kibainisho.",
+        "readyStatus": "Mfumo wa kibainisho tayari"
+      }
+    }
+  },
+  "featuresPage": {
+    "hero": {
+      "badge": "Uwezo wa Jukwaa",
+      "headlinePrefix": "Kila unachohitaji ili ",
+      "headlineHighlight": "utoe kwa ujasiri.",
+      "description": "{brandName} ni jukwaa la SaaS la full-stack—AI, bili, multi-tenancy, ufuatiliaji, na usalama zimejengwa tangu siku ya kwanza. Acha kujenga tena tabaka la jukwaa."
+    },
+    "sections": {
+      "exploreFeature": "Chunguza kipengele",
+      "ai_category": "AI & Akili",
+      "ai_f1_title": "Makamilisho ya mazungumzo ya multi-model",
+      "ai_f1_desc": "Rusha maombi kwenda kwa Anthropic, OpenAI, Google, au modeli zako mwenyewe za fine-tuned. Streaming, vision, na function calling zinapatikana out of the box.",
+      "ai_f2_title": "Uingizo wa maana (semantic embeddings)",
+      "ai_f2_desc": "Tengeneza na uhifadhi vector embeddings kwa pgvector. Nguvu semantic search, RAG pipelines, na recommendation engines.",
+      "ai_f3_title": "Kipimo cha matumizi ya AI",
+      "ai_f3_desc": "Quotas kwa kila plan na usage tracking — pima AI tokens, API calls, na storage dhidi ya ClickHouse-backed real-time aggregates.",
+      "multi_category": "Jukwaa la Multi-tenant",
+      "multi_f1_title": "Utohozi wa kiwango cha shirika",
+      "multi_f1_desc": "Usalama wa row-level katika Postgres huhakikisha tenants hawawezi kufikia data ya wengine—inafanywa katika tabaka la database, si tu programu.",
+      "multi_f2_title": "Uthibitisho wa watoa huduma wengi (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, n.k.) pamoja na email/password na magic-link—badilisha kati ya Clerk, Better Auth, NextAuth, au Supabase Auth kupitia env var moja.",
+      "multi_f3_title": "Uandishi wa kodi wa wafadhili kwa utaratibu",
+      "multi_f3_desc": "Polepole shirika jipya linajisajili kupitia Clerk, tunatengeneza API key yao ya kwanza na kutuma barua pepe ya karibisha iliyobrand—hatua za mkono sifuri.",
+      "dx_category": "Uzoefu wa Mtaalamu wa Programu",
+      "dx_f1_title": "Ufunguo za API zilizohashwa",
+      "dx_f1_desc": "Ufunguo zilizohashwa kwa SHA-256 zenye onyesho la kiambishi awali (nbtr_live_…). Zinaonyeshwa kwa maandishi wazi mara moja tu wakati wa kuundwa — usalama bila shida.",
+      "dx_f2_title": "Middleware ya Idempotency",
+      "dx_f2_desc": "Pitisha header ya Idempotency-Key na ombi lolote la POST linakuwa salama kujaribu tena. Ina msingi wa Redis, kumbukumbu ya saa 24, inafuata rasimu ya IETF.",
+      "dx_f3_title": "API ya Multi-Protocol (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI kwa API za umma, oRPC kwa simu za frontend zenye usalama wa aina, tRPC kwa urahisiano wa T3-stack. Mikataba yote ya Zod na stack ya middleware zinashirikiwa na viashiria vyote. Wezesha kwa kila kiashiria kupitia config ya preset.",
+      "billing_category": "Kubidisha na Uwekezaji wa Fedha",
+      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
+      "billing_f1_desc": "Chagua mtoa huduma wa malipo: Stripe kwa biashara za kimataifa, LemonSqueezy kwa wabunifu wa kujitegemea, Polar kwa OSS, au Alipay/WeChat Pay kwa soko la China. Malipo kwa bonyezo moja na mlango wa kubidisha mwenyewe.",
+      "billing_f2_title": "Kutekeleza kiasi kulingana na matumizi",
+      "billing_f2_desc": "Visembo vya Redis vya wakati halisi vinafuatilia simu za API na matumizi ya token kwa kila mwenyeji. Ombi linazuiliwa kwenye gateway wakati mipaka inafikiwa.",
+      "billing_f3_title": "Unganisho la mzunguko wa Webhook",
+      "billing_f3_desc": "Matukio ya usajili wa Stripe hubadilisha mipango ya shirika kwenye hifadhi yako ya data kupitia Inngest — hakuna kazi za cron, hakuna polling.",
+      "rel_category": "Uaminifu",
+      "rel_f1_title": "Kibali cha mzunguko + kujaribu tena",
+      "rel_f1_desc": "Gateway na huduma ya AI zinatumia kibali cha mzunguko cha CLOSED/OPEN/HALF_OPEN na kurudi nyuma kwa kasi na jitter — hakuna kushindwa kwa mfululizo.",
+      "rel_f2_title": "Furushi la barua zilizokufa",
+      "rel_f2_desc": "Watekelezaji wa matukio ambao wameisha jaribio 3 huingia kwenye DLQ. Wajaribu tena mmoja mmoja kutoka API ya msimamizi bila kuweka upya.",
+      "rel_f3_title": "Onyo la kiwango cha kuchoma SLO",
+      "rel_f3_desc": "Onyo la Google SRE-style la dirisha nyingi hufanya kazi kwa viwango vya kuchoma 14.4×, 6×, na 3× kabla bajeti yako ya makosa haisha.",
+      "sec_category": "Usalama",
+      "sec_f1_title": "Vichacheo vya CSP vya msingi wa nonce",
+      "sec_f1_desc": "Sera ya Usalama wa Yaliyomo ya Strict-dynamic yenye nonces za kila ombi zilizotengenezwa katika middleware ya Clerk — hakuna unsafe-inline popote.",
+      "sec_f2_title": "WAF ya ModSecurity",
+      "sec_f2_desc": "Seti ya Kanuni za Msingi za OWASP katika hali ya DetectionOnly kwenye kila ingress. Kuzuia kiwango kwa 30 RPS kwa utulivu wa burst kupitia alama za nginx.",
+      "sec_f3_title": "SBOM + asili ya SLSA",
+      "sec_f3_desc": "Kila toleo hutoa orodha ya vifaa vya programu ya CycloneDX na uthibitisho wa asili ya SLSA, zilizopakiwa kwenye GitHub Release.",
+      "obs_category": "Uangalizi",
+      "obs_f1_title": "Ufuatiliaji wa OpenTelemetry",
+      "obs_f1_desc": "Ufuatiliaji wa kutawanyika hutoka Next.js → Hono → huduma ndogo za Python kupitia OTLP. Inasafirishwa kwa Jaeger (dev) na Grafana Tempo (prod).",
+      "obs_f2_title": "Dashibodi za Grafana",
+      "obs_f2_desc": "Mwonekano wa jukwaa la paneli nyingi: upatikanaji wa SLO, bajeti ya makosa iliyobaki, upeo wa HPA, marejesho ya pod, na kuzuia CPU.",
+      "obs_f3_title": "Ufuatiliaji wa makosa ya Sentry",
+      "obs_f3_desc": "Makosa ya upande wa seva na upande wa mteja yaliyokusanywa na muktadha wa mshirika, kitambulisho cha ombi, na kitambulisho cha ufuatiliaji kwa uhusiano wa kati ya mifumo.",
+      "data_category": "Data & Uchambuzi",
+      "data_f1_title": "Hifadhi ya OLAP ya ClickHouse",
+      "data_f1_desc": "Matukio huingia kwenye ClickHouse kwa maswali ya uchambuzi ya haraka. dbt hubadilisha matukio ya asili kuwa vipimo vya ukuaji wa tabaka la dhahabu vilivyoonwa kwenye dashibodi.",
+      "data_f2_title": "Uchambuzi wa funnel",
+      "data_f2_desc": "Fuata usajili → uanzishaji → ubadilishaji kwa uhusiano wa kiwango cha kikundi. Mapato kwa mtumiaji mwenye nguvu kinakokotolewa kutoka tabaka la dhahabu.",
+      "data_f3_title": "Kafka / uingizaji wa matukio",
+      "data_f3_desc": "Uingizaji wa matukio kwa kasi kubwa kupitia Inngest hadi kwenye ClickHouse bronze, na uondoshaji wa kurudisha na uthibitisho wa schema kwenye kingo ya gateway.",
+      "infra_category": "Miundombinu",
+      "infra_f1_title": "GitOps na ArgoCD",
+      "infra_f1_desc": "Mabadiliko ya tawi kuu yanarekebishwa moja kwa moja kwenye cluster. Urekebishaji wa kiotomatiki unarudisha urekebishaji wa mkono wa kubectl. Majani ya usawazishaji yanazuia saa salama za kuweka.",
+      "infra_f2_title": "Uunganisho wa PgBouncer",
+      "infra_f2_desc": "PgBouncer wa hali ya muamala mbele ya Supabase hudumisha uunganisho 1,000 wa programu kwenye uunganisho 20 wa Postgres. HA na nakala 2.",
+      "infra_f3_title": "Kupanuka kwa usawa + wima",
+      "infra_f3_desc": "HPA inapanuka kulingana na CPU/kumbukumbu. VPA inafanya kazi katika hali ya Off ikitoa mapendekezo ya ukubwa sahihi. Vipimo maalum vya KEDA vinapangwa kwa v2."
+    }
+  },
+  "comingSoon": {
+    "badge": "🚧 Inayojengwa",
+    "description": {
+      "ideas": "Tunatengeneza sasa uzoefu wa kipekee unaosimamiwa na wataalamu wa teknolojia kwa sehemu hii. Itafunguliwa pamoja na sasisho la mstari wa mifumo wa msingi unaofuata.",
+      "opc": "Maelezo ya kina ya jukwaa yanasimama. Fuata orodha ya mabadiliko na ramani ya njia kwa toleo la baadaye.",
+      "roadmap": "Kutoka msingi wa miundombinu hadi kiwango cha biashara — hatua za bidhaa yetu, alama za toleo, na maono ya ufadhili."
+    },
+    "returnBtn": "Rudi kwenye Hub"
+  },
+  "blogShowcase": {
+    "badge": "KTU BLOG",
+    "title": "Mawazo ya Uhandisi",
+    "subtitle": "Uchambuzi wa kina wa muundo wa SaaS, miundombinu ya AI, na uhandisi wa uzalishaji.",
+    "readMore": "Soma zaidi"
+  },
+  "useCases": {
+    "badge": "MISITISHO ZINAZOPANUKA",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
+    "tabs": {
+      "opc": "Uendeshaji wa Agentic",
+      "ip": "Matriksi ya IP Binafsi",
+      "multimodal": "SaaS ya AI ya Multimodal",
+      "enterprise": "Biashara ya Kisasa (CN)",
+      "export": "Usafirishaji wa Programu wa Kimataifa",
+      "design": "Injini ya Mfumo wa Muundo",
+      "edam": "Asha za Kidijitali za Biashara"
+    },
+    "content": {
+      "opc": {
+        "title": "Kituo cha Uendeshaji wa AI-Native",
+        "desc": "Endesha mifumo ya kazi ya agent, zana za ndani, na uso wa ujumuishaji kwenye msingi mmoja wa programu iliyodhibitiwa. Upanuzi unaongozwa na rejista, malango ya wafanya kazi, na mifumo ya runtime inayoweza kutumika tena hupunguza tofauti kadiri mfumo unavyokua.",
+        "features": {
+          "f1": "Rejista ya Zana & Uso wa Ujumuishaji",
+          "f2": "Malango ya Mfanyikazi & Konsole ya Ndani"
+        }
+      },
+      "ip": {
+        "title": "Ukuaji wa IP Binafsi & Matriksi ya Porofoli",
+        "desc": "Kuanzisha uwepo wa kizazi cha kwanza wa darasa la dunia kwa blogi ya MDX yenye ubadilishaji wa juu, kurasa za porofoli na wasifu. Jarida la kuingiza, uchanganuzi, na SEO zinazojengwa ndani hahakikishia kuwa alama yako ya kibinafsi inaongezeka.",
+        "features": {
+          "f1": "Blogi ya MDX + Injini ya Jarida",
+          "f2": "SEO & Social Graph Optimized"
+        }
+      },
+      "multimodal": {
+        "title": "SaaS ya AI ya Multimodal ya Ubunifu",
+        "desc": "Toa bidhaa za SaaS za Multi-Agent orchestration, Chatbot, Text-to-Image, Image-to-Text, na Text-to-Video kwa UI ya streaming inayongoza UX, urambazaji wa akili wa modeli, na kipimo cha matumizi.",
+        "features": {
+          "f1": "UI ya Multi-Agent Streaming",
+          "f2": "Router ya Model + Upimiaji wa Matumizi"
+        }
+      },
+      "enterprise": {
+        "title": "Tovuti ya Kisasa ya Biashara (CN)",
+        "desc": "Imeandaliwa kwa hali za biashara za China — CDN ya ndani ya kasi sana, muunganisho wa mfumo wa WeChat, muundo wa responsive unaopendelea simu, na usimamizi wa sheria za ndani tangu mwanzo.",
+        "features": {
+          "f1": "CDN ya Ndani + Usimamizi wa Sheria",
+          "f2": "Tayari kwa Mfumo wa WeChat"
+        }
+      },
+      "export": {
+        "title": "Ukurasa wa Lango wa Usafirishaji wa Programu Duniani",
+        "desc": "Imeundwa kwa ajili ya SaaS zinazokwenda kimataifa. Malipo ya Stripe ya sarafu nyingi, i18n ya next-intl inayoelekeza kiotomatiki katika lugha 7, usimamizi wa GDPR/CCPA, na maudhui yanayolenga eneo.",
+        "features": {
+          "f1": "Malipo ya Kimataifa ya Sarafu Nyingi",
+          "f2": "Lugha 7 + Tayari kwa GDPR"
+        }
+      },
+      "design": {
+        "title": "Mfumo wa Kazi wa Muundo & Maktaba ya Vipengele",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "features": {
+          "f1": "Usimamizi wa Tokens wa Viwango 4",
+          "f2": "Seven design languages + Storybook"
+        }
+      },
+      "edam": {
+        "title": "Usimamizi wa Amana za Kidijitali wa Biashara",
+        "desc": "Ziwa la data lililoandaliwa na topolojia ngumu za dashibodi zinazotumia miundo ya PostgreSQL inayoweza kupanuka na RBAC ya kina.",
+        "features": {
+          "f1": "Usalama wa Kirowi",
+          "f2": "Maswali Magumu",
+          "f3": "Usimamizi wa Majukumu"
+        }
+      }
+    }
+  },
+  "designSystem": {
+    "badge": "MIFUMO YA MUONEKANO",
+    "headline": "Sanaa 4 za utawala wa muonekano.",
+    "subheadline": "Kutoka kwa vigezo vya brand hadi tokens za runtime hadi injini ya multi-theme hadi vipengele vilivyodhibitiwa — si shadcn tu na Tailwind.",
+    "flowBrand": "Chapa",
+    "flowBrandDesc": "Vigezo vya rangi, gradients, lugha ya mwendo",
+    "flowTokens": "Alama",
+    "flowTokensDesc": "Vigezo vya CSS, viwango vya hatua 12, hali ya giza",
+    "flowTheme": "Mandhari",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
+    "flowUI": "Kiolesura",
+    "flowUIDesc": "Vipengele, Storybook, Chromatic",
+    "card1Title": "Viwango vya Rangi vya Hatua 12",
+    "card1Desc": "Kiwango cha maana kilicholingana na Geist: mandhari (1-2), hali (3-5), mipaka (6-8), kujaza (9-10), maandishi (11-12).",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
+    "card3Title": "Urejeshaji wa Visual",
+    "card3Desc": "Chromatic inakamata mabadiliko ya kila pixel. Storybook inarekodi kila kipengele. Majaribio ya muundo yanazuia coverage ya story.",
+    "card4Title": "Utawala wa Token",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
+    "card5Title": "Nyaraka za Interactive",
+    "card5Desc": "Tukio kamili la nyaraka za muundo linalotumia Fumadocs, lenye nyaraka za API za vipengele kwa lugha mbili (EN/ZH), maktaba za alama, mwongozo wa mifumo ya mpangilio, na mifano hai ya msimbo.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
+  },
+  "notFound": {
+    "title": "Ukurasa Haukupatikana",
+    "desc": "Kiungo kinaweza kuwa kimepita au ukurasa umehamishwa.",
+    "home": "Rudi {brandName}",
+    "docs": "Fungua nyaraka"
+  },
+  "ui": {
+    "search": {
+      "placeholder": "Tafuta toleo..."
+    },
+    "nav": {
+      "toggleMenu": "Geuza menyu"
+    },
+    "actions": {
+      "showFullRelease": "Onyesha toleo kamili",
+      "copyLinkToRelease": "Nakili kiungo cha toleo",
+      "copyLink": "Nakili kiungo",
+      "openInNewTab": "Fungua kwenye kichupo kipya"
+    },
+    "status": {
+      "comingSoon": "Inakuja hivi karibuni"
+    }
+  },
+  "licensing": {
+    "hero": {
+      "title": "Bure kwa <hl>Kujenga Juu</hl>",
+      "description": "{brandName}-Sailor hauguste chochote kutumia biashara — MIT kwenye npm, FSL-1.1-ALv2 kwenye hazina, inabadilika kuwa Apache-2.0 baada ya miaka miwili. Viwango vilivyolipwa vinauza usaidizi na ahadi za mkataba, si ruhusa."
+    },
+    "plans": {
+      "community": {
+        "badge": "Bure Daima",
+        "title": "Jamii",
+        "subtitle": "Kila Mtu",
+        "description": "Ukubwa wowote wa timu, mapato yoyote. Bidhaa za biashara za chanzo kilichofungwa zimejumuishwa.",
+        "features": {
+          "fullSource": "Msimbo mzima wa chanzo, paketi zote",
+          "closedSourceOk": "Matumizi ya biashara ya chanzo kilichofungwa — hakuna copyleft",
+          "noAttribution": "Hakuna usajili, hakuna uhusiano unaohitajika",
+          "communitySupport": "Usaidizi wa jamii — juhudi bora"
+        },
+        "cta": "Angalia kwenye GitHub"
+      },
+      "team": {
+        "badge": "Kutoka {price}/mw",
+        "title": "Timu",
+        "subtitle": "Ujiwezi wa usaidizi",
+        "description": "Kwa timu ambazo haziwezi kuweka njia muhimu kwenye vipindi vya jibu la jamii.",
+        "features": {
+          "privateChannel": "Kituo cha usaidizi cha siri",
+          "firstResponse": "Jibu la kwanza la siku mbili za kazi, linalohakikishiwa",
+          "priorityTriage": "Uchambuzi wa hitilafu wa kipaumbele",
+          "upgradeHelp": "Msaada wa kuboresha na taarifa ya mabadiliko makubwa"
+        },
+        "cta": "Pata usaidizi"
+      },
+      "enterprise": {
+        "badge": "Kutoka $30,000/mwaka",
+        "title": "Kampuni",
+        "subtitle": "Inayokidhi mahitaji ya ununuzi",
+        "description": "Kwa mashirika ambayo uchunguzi wa kisheria, usalama, au ununuzi unahitaji mpaka anayesaini.",
+        "features": {
+          "sla": "SLA ya jibu — masaa 4 ya kazi, saa 1 wakati wa kuzima uzalishaji",
+          "indemnity": "Ulinzi wa kisheria na ahadi ya patch za usalama",
+          "compliance": "DPA iliyosainiwa, kifurushi cha kufuata sheria, ahadi ya uendelezaji",
+          "trademark": "Haki za alama ya biashara na lebo nyeupe"
+        },
+        "cta": "Wasiliana na uuzaji"
+      }
+    },
+    "faq": {
+      "title": "Maswali Yanayoulizwa Mara kwa Mara",
+      "description": "Toleo fupi: kutumia ni bure. Kulipa ni wakati unapotuhitaji kisheria kuhusika.",
+      "items": {
+        "whyFsl": {
+          "q": "Kwa nini FSL badala ya MIT au AGPL?",
+          "a": "FSL inaruhusu matumizi yote isipokuwa kuuza badala ya Sailor yenyewe, na kila toleo linakuwa Apache-2.0 miaka miwili baada ya kutolewa — ruhusa inayotolewa bila kufutwa mapema. Inapitisha ukaguzi wa kisheria wa kampuni kwa urahisi zaidi kuliko AGPL."
+        },
+        "reallyFree": {
+          "q": "Je, matumizi ya biashara ni bure kweli?",
+          "a": "Ndiyo. Hakuna ada, hakuna ufunguo wa leseni, hakuna usajili, hakuna kizingiti cha mapato au idadi ya wafanyakazi, hakuna kuzitaja. Tengeneza bidhaa ya chanzo kilichofungwa na uiuze."
+        },
+        "competingUse": {
+          "q": "Je, nini huchukuliwa kama matumizi yanayofanana?",
+          "a": "Kutoa Sailor mwenyewe — huduma ya Sailor iliyohifadhiwa, au msingi wa jukwaa linalofanana lililopakuliwa upya. Kutengeneza SaaS ya wima, zana ya ndani, au miradi ya wateja juu ya Sailor si matumizi yanayofanana. Ikiwa mfumo wako unahitaji, mkataba wa Enterprise unaweza kujumuisha msamaha ulioandikwa."
+        },
+        "upgrade": {
+          "q": "Je, viwango vilivyolipwa vinunua nini kweli?",
+          "a": "Ahadi za usaidizi, SLAs za jibu, ulinzi wa kisheria, nyaraka za kufuata sheria, na haki za alama ya biashara. Sio ruhusa ya kutumia programu — hiyo tayari ni yako."
+        },
+        "contributions": {
+          "q": "Je, na michango ya chanzo huru?",
+          "a": "Michango zote zinahitaji CLA. Angalia CONTRIBUTING.md."
+        }
+      }
+    },
+    "meta": {
+      "title": "Leseni — {brandName}",
+      "description": "Bure kwa matumizi ya biashara. MIT kwenye npm, FSL-1.1-ALv2 kwenye hazina, ikibadilishwa kuwa Apache-2.0."
+    }
+  },
+  "licenseWizard": {
+    "tiers": {
+      "individualFree": "Leseni Bure la Binafsi",
+      "opcFree": "Leseni la Kampuni ya Mwenyeji Mmoja",
+      "startupCommercial": "Leseni ya Biashara ya Startup",
+      "enterprise": "Leseni ya Enterprise"
+    },
+    "referralSource": {
+      "selectPlaceholder": "Chagua chaguo...",
+      "productHunt": "Product Hunt"
+    }
+  },
+  "changelogMeta": {
+    "title": "Mabadiliko — {brandName}",
+    "description": "Kila toleo, linatolewa kwa makini sana kwa kila kina.",
+    "versionTitleSuffix": "Mabadiliko ya {brandName}"
+  },
+  "roadmapMeta": {
+    "title": "Ramani ya Jukwaa — {brandName}",
+    "description": "Ramani ya msingi wa jukwaa linalodhibitiwa la {brandName}, runtime ya Harness, na njia ya kuboresha."
+  },
+  "blogMeta": {
+    "title": "Blogi — {brandName}",
+    "description": "Uchambuzi wa uhandisi, masasisho ya bidhaa, na mifano bora ya SaaS kutoka timu ya {brandName}."
+  },
+  "getLicenseMeta": {
+    "title": "Pata Leseni Yako — {brandName}",
+    "description": "Pata leseni ya {brandName} na upatikanaji wa jukwaa kwa dakika 2."
+  },
+  "landing": {
+    "faq": {
+      "badge": "Maswali Yanayoulizwa Mara kwa Mara",
+      "title": "Maswali, yaliyojibiwa moja kwa moja",
+      "subtitle": "Kila kitu unachohitaji kujua kabla ya kutoa bidhaa.",
+      "items": {
+        "what-is-sailor": {
+          "question": "Ni nini hasa {productName}?",
+          "answer": "Sailor ni msingi wa SaaS wa Next.js + Tailwind v4 wenye maoni, unaohifadhiwa tayari na uhalalishaji, malipo, multi-tenancy, AI, mistari ya kusubiri, utafutaji, na barua pepe tayari imewekwa. Unakopa, unaweka mipangilio ya watoa huduma, na unatoa — kawaida ndani ya wiki moja."
+        },
+        "who-is-it-for": {
+          "question": "Sailor imejengwa kwa nani?",
+          "answer": "Wanaharakati na wahandisi wa bidhaa wanaotaka kutumia muda wao kwenye tofauti — si kujenga tena mifumo ile ile ya uhalalishaji/malipo/tenancy mara ya tano."
+        },
+        "free-or-paid": {
+          "question": "Je, ni bure au inalipwa?",
+          "answer": "Chanzo kamili kinatolewa chini ya AGPL-3.0 — bure kwa miradi ya kibinafsi, zana za ndani, na kazi za chanzo wazi zinazofaa na AGPL. Leseni ya biashara inafungua haki ya kutoa Sailor katika SaaS ya kibinafsi isiyo na chanzo wazi. Kila mpango unajumuisha seti kamili ya vipengele (uhalalishaji, malipo, multi-tenancy, AI, ukaguzi); viwango vinatofautiana katika masharti ya leseni na SLA ya msaada, si katika vipengele."
+        },
+        "china-friendly": {
+          "question": "Je, inafanya kazi China?",
+          "answer": "Ndiyo. Tunatoa mipangilio ya miundombinu sambamba (CDN inayofaa na Aliyun, domain zinazofaa na ICP, Penpot wa hiari badala ya Figma) ili msingi huo huo wa msimbo utolewe kwa usafi ndani ya Great Firewall."
+        },
+        "deployment": {
+          "question": "Wapi naweza kuweka?",
+          "answer": "Popote Node 22+ inafanya kazi. Tovuti ya masoko inatolewa kwa Vercel; dashibodi, gateway, na huduma za Python zinafanya kazi kwenye Docker / PM2 (tunazifanya kazi kwenye Aliyun ECS leo, na manifesiti kamili ya Kubernetes chini ya infra/iac/k8s/ kwa vikundi). Wateja wa Enterprise pia wanaweka ndani ya VPC zao wenyewe."
+        },
+        "security": {
+          "question": "Je, usalama unashughulikiwa vipi?",
+          "answer": "Ufungaji wa envelope wa ngazi ya programu kwa siri (@nebutra/vault), Postgres RLS kwa utenganisho wa tenanti, RBAC/ABAC kupitia CASL au OpenFGA (@nebutra/permissions), alama za kati-huduma zilizosainiwa na HMAC, webhooks za nje zilizosainiwa, na mchakato wa ukaguzi unaofaa na SOC 2 (@nebutra/audit) unaojumuishwa katika kila mpango. Pro na Enterprise zinaongeza msaada wa uthibitisho wa SOC 2, msaada maalum wa matukio, na uhifadhi mrefu wa logi za ukaguzi."
+        },
+        "support": {
+          "question": "Msaada gani ninapata?",
+          "answer": "Wateja wa bure wanapata Discord ya jamii + GitHub Issues. Pro inaongeza barua pepe ya kipaumbele na SLA ya jibu la siku 1 ya biashara. Enterprise inapata chaneli maalum ya Slack na mhandisi wa kuanzisha."
+        },
+        "byo-provider": {
+          "question": "Je, naweza kuleta mtoa huduma wangu mwenyewe?",
+          "answer": "Ndiyo. Kila muunganisho (uhalalishaji, mistari ya kusubiri, utafutaji, barua pepe, malipo, hifadhi, bili) haitegemei mtoa huduma. Kifekete katika kila paketi kinachagua adapter sahihi kutoka kwenye kigezo kimoja cha mazingira — ubadilishe Clerk kwa Better Auth, NextAuth, au Supabase Auth, QStash kwa BullMQ, Resend kwa SES, Stripe kwa Polar / LemonSqueezy / ChinaPay — bila kugusa msimbo wa programu."
+        },
+        "tech-stack": {
+          "question": "Je, ni nini stack ya teknolojia?",
+          "answer": "Next.js 16 (App Router) juu ya React 19, TypeScript 5.9, Tailwind v4, Prisma 7 juu ya Postgres (ikiwa na pgvector + RLS), Hono kwa gateway ya BFF, FastAPI kwa huduma za ML/zevu, na maktaba ya vipengele iliyochaguliwa juu ya Radix, vigezo vya msingi vya UI ya {brandName}, na tabaka la Motion la pamoja. Vipengele vya AI vinapita kupitia Vercel AI SDK kwa uhamishaji wa watoa huduma (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
+        },
+        "license": {
+          "question": "Ni leseni gani?",
+          "answer": "AGPL-3.0 kwa Utepekelezo wa Biashara. Bure kwa matumizi binafsi, zana za ndani, na OSS zinazofaa na AGPL. Leseni ya biashara inayolipwa inafungua haki ya kutuma Sailor kama ilivyo katika SaaS ya kibinafsi. Chanzo kamili kinajumuishwa kwenye kila mpango."
+        },
+        "paid-updates": {
+          "question": "Je, ninahitaji kulipa kwa masasisho?",
+          "answer": "Hapana. Masasisho ya chanzo yanajumuishwa na kila leseni ya biashara — chukua kutoka main wakati wowote unataka na upate tena fork yako. Kipindi kilicholipwa ni haki ya kutumia Sailor katika uzalishaji wa biashara, si haki ya kupokea msimbo. Kila toleo la kichwa hutoa CHANGELOG na mwongozo wa kuboresha kwa mabadiliko yoyote yanayovunja."
+        },
+        "why-turborepo": {
+          "question": "Kwa nini Turborepo badala ya programu ya kawaida ya Next.js?",
+          "answer": "Sailor ni programu 10 + pakiti 104 za pamoja chini ya packages/*/* + njia 4 za backend (Hono gateway, FastAPI/Python, Go, Rust) — zaidi sana ya hatua ambapo programu moja kubwa ya Next.js inabaki kuendeshwa kwa urahisi. Turborepo inatupelekea kujenga kwa athari tu, uwekaji wa mbali wa wazi, na chanzo kimoja cha ukweli kwa vigezo vya muundo, uthibitisho, malipo, na ufuatiliaji wa pamoja — bila kuwashawishi timu zote kwenye mchakato mmoja wa Next.js."
+        },
+        "multi-tenancy": {
+          "question": "Jinsi multi-tenancy inavyoshughulikiwa?",
+          "answer": "Tabaka mbili. Muktadha wa mtumiaji wa ombi kupitia @nebutra/tenant (AsyncLocalStorage inasambaza shirika la sasa kupitia kila simu ya seva, ikiwa ni pamoja na maswali ya DB na webhooks za nje), na utenganisho unaodhibitiwa na hifadhi ya data kupitia sera za Row-Level Security za Postgres (infra/data/database/policies/rls.sql) zilizounganishwa na app.current_tenant_id ya kikao. Muunganisho wa jukumu la huduma unapita RLS ndani tu ya huduma za ndani zinazowezekana; njia zote zinazowasiliana na mtumiaji zinapita kupitia mteja wa muktadha wa mtumiaji."
+        },
+        "swap-clerk": {
+          "question": "Je, ninaweza kubadilisha Clerk kwa mtoa huduma mwingine wa uthibitisho?",
+          "answer": "Ndiyo. @nebutra/auth inatoa adapter za darasa la kwanza kwa Clerk, Better Auth, NextAuth (Auth.js v5), na Supabase Auth. Badilisha kupitia kigezo cha mazingira AUTH_PROVIDER au uchague wakati wa scaffold na create-sailor --auth=... — uso wa seva, React, na middleware unabaki sawa bila kujali mtoa huduma. Kuongeza adapter ya tano kunamaanisha kutumia interface moja (~80 LOC); hakuna kitu katika msimbo wa mazingira kinachounganishwa na mtoa huduma maalum."
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "Inapendwa na wabunifu",
+      "title": "Majukwa ya wanaofanya kazi baada ya kutuma na Sailor",
+      "subtitle": "Hadithi za wateja kutoka kwenye kikundi chetu cha beta zinakuja hivi karibuni — uwe miongoni mwa wa kwanza."
+    },
+    "comparison": {
+      "badge": "Linganisha viwango",
+      "title": "Kila kitu ni bure. Chagua kiasi cha ahadi unachohitaji.",
+      "subtitle": "Kila kiwango kinatoa msimbo kamili wa chanzo na kinaruhusu matumizi ya kibiashara ya msimbo funge bila gharama. Tofauti ziko katika msaada, ahadi za kimkataba na haki za alama ya biashara.",
+      "plan": {
+        "community": "Jumuiya",
+        "team": "Timu",
+        "enterprise": "Biashara Kubwa"
+      },
+      "feature": {
+        "license": {
+          "label": "Leseni",
+          "type": "Leseni",
+          "commercial-use": "Matumizi ya kibiashara ya msimbo funge",
+          "registration": "Usajili",
+          "trademark": "Haki za alama ya biashara"
+        },
+        "source": {
+          "label": "Msimbo wa Chanzo",
+          "full-source": "Msimbo kamili wa chanzo",
+          "all-packages": "Vifurushi na moduli zote",
+          "update-window": "Masasisho"
+        },
+        "support": {
+          "label": "Msaada",
+          "channel": "Njia ya msaada",
+          "first-response": "Jibu la kwanza lililohakikishwa",
+          "security-patch": "Ahadi ya viraka vya usalama"
+        },
+        "procurement": {
+          "label": "Manunuzi",
+          "indemnification": "Fidia",
+          "dpa": "DPA iliyotiwa saini na kifurushi cha uzingatiaji",
+          "continuity": "Ahadi ya mwendelezo"
+        }
+      },
+      "ariaTable": "Ulinganisho wa viwango na vipengele",
+      "value": {
+        "included": "Imejumuishwa",
+        "notIncluded": "Haijajumuishwa",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Hauhitajiki",
+        "whiteLabelRights": "Haki za white label",
+        "unlimited": "Bila kikomo",
+        "unlimitedPlusNotice": "Bila kikomo + taarifa ya mapema ya mabadiliko yanayovunja",
+        "unlimitedPlusLts": "Bila kikomo + tawi la msaada wa muda mrefu",
+        "publicChannels": "Issue za umma na Discord",
+        "privateChannel": "Njia binafsi",
+        "namedContact": "Mwasiliani maalum",
+        "twoBusinessDays": "Siku 2 za kazi",
+        "fourBusinessHours": "Saa 4 za kazi",
+        "bestEffort": "Kwa kadri iwezekanavyo",
+        "contractual": "Kimkataba"
+      }
+    },
+    "socialProof": {
+      "title": "Imejengwa juu ya stack unayoweza kuamini",
+      "logosLabel": "Washirika wa ujumuishaji",
+      "metrics": {
+        "developers": {
+          "value": "47+",
+          "label": "Watoa huduma wa AI wanaosaidiwa"
+        },
+        "projects": {
+          "value": "104",
+          "label": "pakiti za monorepo"
+        },
+        "uptime": {
+          "value": "7",
+          "label": "lugha za i18n zinazopatikana moja kwa moja"
+        }
+      }
+    }
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "Nambari ya ICP",
+      "publicSecurity": "Usalama wa umma"
+    }
+  },
+  "icpFooter": {
+    "recordNumber": "Rekodi ya ICP",
+    "publicSecurity": "Rekodi ya usalama wa umma"
+  },
+  "MarketLocalePicker": {
+    "title": "Mikoa na lugha",
+    "description": "Chagua eneo na lugha kwa tovuti ya masoko.",
+    "triggerAria": "Chagua eneo na lugha",
+    "searchPlaceholder": "Tafuta mikoa…",
+    "plannedHint": "Kiolesura kinakwenda kwa Kiingereza hadi lugha hii itafikishwa",
+    "noResults": "Hakuna mikoa inayolingana",
+    "menuAria": "Mikoa na lugha"
+  }
+}

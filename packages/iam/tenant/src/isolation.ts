@@ -1,0 +1,471 @@
+import { logger } from "@nebutra/logger";
+import type { IsolationStrategy } from "./types";
+import { TenantIsolationError } from "./types";
+
+// =============================================================================
+// Lightweight Prisma-compatible types (avoids hard dependency on "@prisma/client")
+// =============================================================================
+
+/** Minimal Prisma-like client interface for RLS extension support. */
+interface PrismaLikeClient {
+  $extends?: (extension: unknown) => unknown;
+  $executeRaw?: (query: TemplateStringsArray, ...values: unknown[]) => Promise<number>;
+  $queryRaw?: (query: TemplateStringsArray, ...values: unknown[]) => Promise<unknown[]>;
+  $transaction?: (operations: unknown[]) => Promise<unknown[]>;
+  $executeRawUnsafe?: (query: string) => Promise<number>;
+}
+
+// Optional non-bypassrls role to assume for tenant-scoped queries — e.g. "app_user"
+// on Supabase, whose `postgres` connection role bypasses RLS entirely. Env-driven so
+// other backends opt in (or leave unset); validated as a bare SQL identifier before
+// interpolation since role names cannot be bound as parameters.
+const RLS_ROLE = (() => {
+  const r = process.env.APP_DB_ROLE;
+  return r && /^[a-z_][a-z0-9_]*$/.test(r) ? r : null;
+})();
+
+export type RlsPolicyCommand = "ALL" | "SELECT" | "INSERT" | "UPDATE" | "DELETE";
+
+export interface RlsPolicySqlOptions {
+  /** Tables that contain the tenant discriminator column. Sorted for deterministic output. */
+  tables: string[];
+  /** Optional schema qualifier. Defaults to unqualified table names. */
+  schema?: string;
+  /** Tenant discriminator column name. */
+  tenantColumn?: string;
+  /** PostgreSQL policy name prefix. Policy names are generated as `${prefix}_${table}`. */
+  policyPrefix?: string;
+  /** Policy command. Defaults to ALL for read/write tenant isolation. */
+  command?: RlsPolicyCommand;
+  /** Tenant expression used by generated policies. */
+  tenantExpression?: string;
+  /** Emit FORCE ROW LEVEL SECURITY after enabling RLS. Defaults to true. */
+  forceRls?: boolean;
+}
+
+const DEFAULT_TENANT_COLUMN = "tenant_id";
+const DEFAULT_POLICY_PREFIX = "tenant_isolation";
+const DEFAULT_TENANT_EXPRESSION = "current_setting('app.current_tenant_id', true)";
+
+function assertNonEmptyIdentifier(value: string, label: string): void {
+  if (typeof value !== "string" || value.trim().length === 0 || value.includes("\0")) {
+    throw new TenantIsolationError(`Invalid ${label} for RLS policy generation`, "shared_schema");
+  }
+}
+
+function quoteIdentifier(identifier: string): string {
+  assertNonEmptyIdentifier(identifier, "identifier");
+  return `"${identifier.replaceAll('"', '""')}"`;
+}
+
+function tableReference(table: string, schema?: string): string {
+  assertNonEmptyIdentifier(table, "table name");
+
+  if (!schema) {
+    return quoteIdentifier(table);
+  }
+
+  assertNonEmptyIdentifier(schema, "schema name");
+  return `${quoteIdentifier(schema)}.${quoteIdentifier(table)}`;
+}
+
+function policyPredicate(tenantColumn: string, tenantExpression: string): string {
+  assertNonEmptyIdentifier(tenantColumn, "tenant column");
+
+  if (tenantExpression.trim().length === 0 || tenantExpression.includes("\0")) {
+    throw new TenantIsolationError(
+      "Invalid tenant expression for RLS policy generation",
+      "shared_schema",
+    );
+  }
+
+  return `${quoteIdentifier(tenantColumn)} = ${tenantExpression}`;
+}
+
+/**
+ * Generate deterministic PostgreSQL Row-Level Security DDL for shared-schema tenancy.
+ *
+ * The generated SQL is intentionally migration-tool friendly: stable table sorting,
+ * explicit policy replacement, and no database connection side effects.
+ */
+export function generateRlsPolicySql(options: RlsPolicySqlOptions): string {
+  const {
+    command = "ALL",
+    forceRls = true,
+    policyPrefix = DEFAULT_POLICY_PREFIX,
+    schema,
+    tables,
+    tenantColumn = DEFAULT_TENANT_COLUMN,
+    tenantExpression = DEFAULT_TENANT_EXPRESSION,
+  } = options;
+
+  if (!Array.isArray(tables) || tables.length === 0) {
+    throw new TenantIsolationError(
+      "At least one table is required for RLS policy generation",
+      "shared_schema",
+    );
+  }
+
+  assertNonEmptyIdentifier(policyPrefix, "policy prefix");
+
+  const normalizedCommand = command.toUpperCase() as RlsPolicyCommand;
+  if (!["ALL", "SELECT", "INSERT", "UPDATE", "DELETE"].includes(normalizedCommand)) {
+    throw new TenantIsolationError(`Unsupported RLS policy command: ${command}`, "shared_schema");
+  }
+
+  const predicate = policyPredicate(tenantColumn, tenantExpression);
+  const sortedTables = [...new Set(tables)].sort((a, b) => a.localeCompare(b));
+
+  return sortedTables
+    .map((table) => {
+      const target = tableReference(table, schema);
+      const policyName = quoteIdentifier(`${policyPrefix}_${table}`);
+      const statements = [`ALTER TABLE ${target} ENABLE ROW LEVEL SECURITY;`];
+
+      if (forceRls) {
+        statements.push(`ALTER TABLE ${target} FORCE ROW LEVEL SECURITY;`);
+      }
+
+      statements.push(`DROP POLICY IF EXISTS ${policyName} ON ${target};`);
+
+      const createPolicyLines = [`CREATE POLICY ${policyName} ON ${target}`];
+
+      if (normalizedCommand !== "ALL") {
+        createPolicyLines[0] += ` FOR ${normalizedCommand}`;
+      }
+
+      if (normalizedCommand !== "INSERT") {
+        createPolicyLines.push(`  USING (${predicate})`);
+      }
+
+      if (["ALL", "INSERT", "UPDATE"].includes(normalizedCommand)) {
+        const prefix = createPolicyLines.length > 1 ? "  WITH CHECK" : "  WITH CHECK";
+        createPolicyLines.push(`${prefix} (${predicate})`);
+      }
+
+      statements.push(`${createPolicyLines.join("\n")};`);
+      return statements.join("\n");
+    })
+    .join("\n\n");
+}
+
+// =============================================================================
+// Database Isolation Helpers
+// =============================================================================
+
+/**
+ * Apply Prisma client extension that sets RLS (Row-Level Security) context.
+ *
+ * Works with PostgreSQL RLS policies that check `app.current_tenant_id`.
+ * This is the standard pattern for shared-schema multi-tenancy.
+ *
+ * The Prisma client middleware intercepts all queries and sets the
+ * application-level variable before executing.
+ *
+ * @param prisma The Prisma client to extend
+ * @param tenantId The tenant ID to set in RLS context
+ * @returns The extended Prisma client
+ *
+ * @example
+ * ```ts
+ * import { PrismaClient } from "@prisma/client";
+ * import { withRls } from "@nebutra/tenant/isolation";
+ * import { getCurrentTenant } from "@nebutra/tenant";
+ *
+ * const prisma = new PrismaClient();
+ *
+ * // In a request handler:
+ * const tenant = getCurrentTenant();
+ * const client = withRls(prisma, tenant.id);
+ *
+ * // All queries now include RLS enforcement:
+ * const users = await client.user.findMany();
+ * // SQL: SELECT * FROM users WHERE current_setting('app.current_tenant_id') = user.tenant_id
+ * ```
+ */
+export function withRls<P extends PrismaLikeClient>(prisma: P, tenantId: string): P {
+  try {
+    // Check if Prisma client supports $extends (v5+)
+    if (typeof prisma.$extends === "function") {
+      // Create a Prisma client extension that scopes every query to the tenant.
+      const extended = prisma.$extends({
+        query: {
+          async $allOperations({
+            args,
+            query,
+          }: {
+            args: unknown;
+            query: (a: unknown) => Promise<unknown>;
+          }) {
+            // Run the RLS setting and the operation in ONE transaction so they
+            // share a connection, and set it transaction-local (third arg
+            // `true`) so it is cleared at transaction end. A session-level SET
+            // would leak across pooled/reused connections; running the SET
+            // outside a transaction does not guarantee the query lands on the
+            // same connection at all.
+            if (
+              typeof prisma.$transaction === "function" &&
+              typeof prisma.$executeRaw === "function"
+            ) {
+              const ops: unknown[] = [];
+              // Switch to the non-bypassrls role first (when configured) so RLS
+              // policies apply; role names can't be bound, hence validated raw.
+              if (RLS_ROLE && typeof prisma.$executeRawUnsafe === "function") {
+                ops.push(prisma.$executeRawUnsafe(`SET LOCAL ROLE "${RLS_ROLE}"`));
+              }
+              ops.push(
+                prisma.$executeRaw`SELECT set_config('app.current_tenant_id', ${tenantId}, true)`,
+              );
+              ops.push(query(args));
+              const results = (await prisma.$transaction(ops)) as unknown[];
+              logger.debug("RLS context set", { tenantId });
+              return results[results.length - 1];
+            }
+            return query(args);
+          },
+        },
+      });
+
+      return extended as P;
+    }
+
+    logger.debug("withRls: Prisma client does not support $extends, returning original client", {
+      tenantId,
+    });
+    return prisma;
+  } catch (err) {
+    logger.error("Failed to apply RLS extension", err, { tenantId });
+    throw new TenantIsolationError(
+      `Failed to apply RLS isolation for tenant ${tenantId}`,
+      "shared_schema",
+    );
+  }
+}
+
+/**
+ * Get the PostgreSQL schema name for schema-per-tenant strategy.
+ *
+ * Converts a tenant ID to a safe PostgreSQL schema name.
+ * Schema names must start with a letter and contain only alphanumerics and underscores.
+ *
+ * @param tenantId The tenant ID
+ * @returns The schema name (e.g., "org_acme_corp_public")
+ * @throws TenantIsolationError if tenant ID is invalid
+ *
+ * @example
+ * ```ts
+ * const schemaName = getTenantSchema("acme-corp");
+ * // Returns: "org_acme_corp_public"
+ * ```
+ */
+export function getTenantSchema(tenantId: string): string {
+  if (!tenantId || typeof tenantId !== "string") {
+    throw new TenantIsolationError("Invalid tenant ID for schema generation", "schema_per_tenant");
+  }
+
+  // Convert tenant ID to safe schema name
+  // Replace hyphens and special chars with underscores
+  const safe = tenantId
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^[0-9]+/, "org_");
+
+  // Ensure doesn't conflict with reserved schemas
+  const reserved = ["public", "pg_", "information_schema", "pg_catalog"];
+  if (reserved.some((r) => safe.startsWith(r))) {
+    return `org_${safe}`;
+  }
+
+  return `${safe}_public`;
+}
+
+/**
+ * Get the PostgreSQL connection string for database-per-tenant strategy.
+ *
+ * Constructs a connection URL with the tenant-specific database name.
+ * Assumes the base connection URL is available and tenant databases follow
+ * a naming pattern (e.g., `nebutra_acme_corp`).
+ *
+ * @param tenantId The tenant ID
+ * @param baseUrl Optional base connection URL (defaults to process.env.DATABASE_URL)
+ * @returns The tenant-specific database URL
+ * @throws TenantIsolationError if base URL is invalid
+ *
+ * @example
+ * ```ts
+ * const dbUrl = getTenantDatabaseUrl("acme-corp");
+ * // Returns: "postgresql://user:pass@localhost/nebutra_acme_corp"
+ * ```
+ */
+export function getTenantDatabaseUrl(tenantId: string, baseUrl?: string): string {
+  const url = baseUrl || process.env.DATABASE_URL;
+
+  if (!url) {
+    throw new TenantIsolationError(
+      "No base database URL available for tenant database resolution",
+      "database_per_tenant",
+    );
+  }
+
+  try {
+    const parsedUrl = new URL(url);
+
+    // Convert tenant ID to safe database name
+    const dbName = `nebutra_${tenantId.toLowerCase().replace(/[^a-z0-9]+/g, "_")}`;
+
+    // Replace pathname (database name)
+    parsedUrl.pathname = `/${dbName}`;
+
+    logger.debug("Tenant database URL constructed", { tenantId, dbName });
+
+    return parsedUrl.toString();
+  } catch (err) {
+    logger.error("Failed to construct tenant database URL", err, { tenantId });
+    throw new TenantIsolationError(
+      `Failed to construct database URL for tenant ${tenantId}`,
+      "database_per_tenant",
+    );
+  }
+}
+
+/**
+ * Wrapper for a Prisma client that automatically applies tenant filtering.
+ *
+ * This is useful for schema-per-tenant or database-per-tenant strategies
+ * where you want to ensure tenant isolation at the client level.
+ *
+ * @example
+ * ```ts
+ * import { TenantAwarePrismaClient } from "@nebutra/tenant/isolation";
+ * import { getCurrentTenant } from "@nebutra/tenant";
+ *
+ * export function getTenantPrisma() {
+ *   const tenant = getCurrentTenant();
+ *   return new TenantAwarePrismaClient(prisma, tenant.id);
+ * }
+ * ```
+ */
+export class TenantAwarePrismaClient {
+  constructor(
+    private prisma: PrismaLikeClient,
+    private tenantId: string,
+  ) {
+    logger.debug("TenantAwarePrismaClient initialized", { tenantId });
+  }
+
+  /**
+   * Get the underlying Prisma client with RLS context applied.
+   */
+  get client() {
+    return withRls(this.prisma, this.tenantId);
+  }
+
+  /**
+   * Get the schema name for this tenant (schema-per-tenant strategy).
+   */
+  getSchema(): string {
+    return getTenantSchema(this.tenantId);
+  }
+
+  /**
+   * Get the database URL for this tenant (database-per-tenant strategy).
+   */
+  getDatabaseUrl(baseUrl?: string): string {
+    return getTenantDatabaseUrl(this.tenantId, baseUrl);
+  }
+
+  /**
+   * Execute a raw SQL statement with tenant context.
+   *
+   * Tagged-template only — interpolated values are bound as parameters by
+   * Prisma, never concatenated into the SQL string:
+   *   client.executeRaw`UPDATE users SET active = ${flag} WHERE id = ${id}`
+   */
+  async executeRaw(query: TemplateStringsArray, ...values: unknown[]): Promise<number> {
+    try {
+      logger.debug("Executing raw statement with tenant context", {
+        tenantId: this.tenantId,
+      });
+
+      const client = this.client as PrismaLikeClient;
+      if (!client.$executeRaw) {
+        throw new TenantIsolationError(
+          "Prisma client does not support $executeRaw",
+          "shared_schema",
+        );
+      }
+      return await client.$executeRaw(query, ...values);
+    } catch (err) {
+      logger.error("Failed to execute raw query", err, { tenantId: this.tenantId });
+      throw new TenantIsolationError(
+        `Failed to execute query for tenant ${this.tenantId}`,
+        "shared_schema",
+      );
+    }
+  }
+
+  /**
+   * Execute a raw SQL query with tenant context and return rows.
+   *
+   * Tagged-template only — interpolated values are bound as parameters:
+   *   client.queryRaw`SELECT * FROM users WHERE id = ${id}`
+   */
+  async queryRaw(query: TemplateStringsArray, ...values: unknown[]): Promise<unknown[]> {
+    try {
+      logger.debug("Executing raw query with tenant context", {
+        tenantId: this.tenantId,
+      });
+
+      const client = this.client as PrismaLikeClient;
+      if (!client.$queryRaw) {
+        throw new TenantIsolationError("Prisma client does not support $queryRaw", "shared_schema");
+      }
+      return await client.$queryRaw(query, ...values);
+    } catch (err) {
+      logger.error("Failed to execute query", err, { tenantId: this.tenantId });
+      throw new TenantIsolationError(
+        `Failed to query tenant data for ${this.tenantId}`,
+        "shared_schema",
+      );
+    }
+  }
+}
+
+/**
+ * Create a tenant-aware Prisma proxy that applies isolation based on strategy.
+ *
+ * @param prisma The base Prisma client
+ * @param tenantId The tenant ID
+ * @param strategy The isolation strategy (default: "shared_schema")
+ * @returns A proxy or wrapper for the Prisma client
+ *
+ * @example
+ * ```ts
+ * const prisma = createTenantPrismaProxy(client, "acme-corp", "shared_schema");
+ * const users = await prisma.user.findMany(); // Filtered by RLS
+ * ```
+ */
+export function createTenantPrismaProxy(
+  prisma: PrismaLikeClient,
+  tenantId: string,
+  strategy: IsolationStrategy = "shared_schema",
+): PrismaLikeClient {
+  logger.debug("Creating tenant Prisma proxy", { tenantId, strategy });
+
+  switch (strategy) {
+    case "shared_schema":
+      // Apply RLS extension
+      return withRls(prisma, tenantId);
+
+    case "schema_per_tenant":
+      // Wrap with schema awareness
+      return new TenantAwarePrismaClient(prisma, tenantId).client;
+
+    case "database_per_tenant":
+      // Wrap with database URL awareness
+      return new TenantAwarePrismaClient(prisma, tenantId).client;
+
+    default:
+      throw new TenantIsolationError(`Unknown isolation strategy: ${strategy}`);
+  }
+}

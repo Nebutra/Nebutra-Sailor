@@ -1,0 +1,36 @@
+---
+title: "Prisma Multi-Schema"
+description: "Isolate your data like an Enterprise"
+---
+
+Most SaaS boilerplates give you a single `schema.prisma` file. This works fine for a todo-list app, but breaks down when you're building a multi-tenant enterprise system with independent microservices (like Stripe does).
+
+## The Sailor Approach
+
+Nebutra Sailor utilizes Prisma 7's `multiSchema` preview feature extensively. 
+
+In `packages/platform/db/prisma/schema.prisma`, you will see something like this:
+
+```prisma
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["public", "auth", "stripe", "ai"]
+}
+
+// ... Models spread across different schemas ...
+```
+
+## Why schemas?
+
+By physically isolating your tables into schemas (e.g., `auth.Users`, `stripe.Subscriptions`, `ai.Embeddings`), you achieve:
+1. **Security boundaries**: A bug in the AI service cannot accidentally drop the `stripe` billing schema.
+2. **Microservice portability**: If your AI service gets huge, it's trivial to move the `ai` schema to a completely different physical database later.
+3. **Cleaner Cognitive Load**: You aren't scrolling through 200 models in one giant block.
+
+When using `create-sailor`, if you opt-out of "Stripe integration", the CLI handles automatically pruning the `stripe` schema entirely before your first boot!

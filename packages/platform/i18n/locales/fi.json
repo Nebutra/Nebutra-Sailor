@@ -1,0 +1,1273 @@
+{
+  "admin": {
+    "title": "Ylläpito",
+    "description": "Ylläpitopaneeli — hallinnoi käyttäjiä, organisaatioita ja järjestelmän kuntoa.",
+    "nav": {
+      "overview": "Yleiskatsaus",
+      "users": "Käyttäjät",
+      "organizations": "Organisaatiot"
+    },
+    "users": {
+      "title": "Käyttäjät",
+      "description": "Selaa, hae ja ota käyttöön mikä tahansa käyttäjä kaikissa organisaatioissa.",
+      "searchPlaceholder": "Hae käyttäjiä…",
+      "totalCount": "{count, plural, one {# käyttäjä} other {# käyttäjää}}",
+      "empty": "Käyttäjiä ei löytynyt.",
+      "loadError": "Käyttäjien lataaminen epäonnistui.",
+      "columns": {
+        "email": "Sähköposti",
+        "name": "Nimi",
+        "created": "Luotu",
+        "activeOrgs": "Aktiiviset organisaatiot",
+        "actions": "Toiminnot"
+      },
+      "viewOrgs": "Näytä organisaatiot"
+    },
+    "organizations": {
+      "title": "Organisaatiot",
+      "description": "Kaikki järjestelmän työtilat, järjestettynä ajankohtaisuuden mukaan.",
+      "searchPlaceholder": "Hae organisaatioita…",
+      "totalCount": "{count, plural, one {# organisaatio} other {# organisaatiota}}",
+      "empty": "Organisaatioita ei löytynyt.",
+      "loadError": "Organisaatioiden lataaminen epäonnistui.",
+      "columns": {
+        "name": "Nimi",
+        "slug": "Lyhenne",
+        "plan": "Suunnitelma",
+        "members": "Jäsenet",
+        "created": "Luotu",
+        "actions": "Toiminnot"
+      },
+      "view": "Näytä"
+    },
+    "impersonate": {
+      "trigger": "Ole toisen roolissa",
+      "starting": "Aloitetaan…",
+      "stop": "Lopeta esittäminen",
+      "confirm": "Esitä käyttäjä {label}? Näet sovelluksen tämän käyttäjän näkökulmasta, kunnes lopetat.",
+      "error": "Esittämisen käynnistäminen epäonnistui.",
+      "stopError": "Esittämisen lopettaminen epäonnistui."
+    },
+    "pagination": {
+      "previous": "Edellinen",
+      "next": "Seuraava",
+      "pageOf": "Sivu {page} / {total}"
+    }
+  },
+  "Common": {
+    "hello": "Hei maailma",
+    "dashboard": "Kojelauta",
+    "actions": {
+      "continue": "Jatka",
+      "confirm": "Vahvista",
+      "done": "Valmis",
+      "cancel": "Peruuta"
+    }
+  },
+  "theme": {
+    "light": "Vaalea",
+    "dark": "Tumma",
+    "system": "Järjestelmä"
+  },
+  "LocaleSwitcher": {
+    "label": "Kieli",
+    "ariaLabel": "Vaihda kieli",
+    "searchPlaceholder": "Hae kieliä…",
+    "noResults": "Ei vastaavia kieliä",
+    "menuAria": "Valitse kieli"
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP-rekisterinumero",
+      "publicSecurity": "Yleisen turvallisuuden rekisteri"
+    },
+    "wechat": {
+      "signIn": "Kirjaudu sisään WeChatilla",
+      "notConfigured": "WeChat- kirjautumista ei ole määritetty"
+    }
+  },
+  "onboarding": {
+    "title": "Aseta työtila",
+    "subtitle": "Kolme nopeaa askelta ja olet valmis julkaisemaan.",
+    "steps": {
+      "workspace": "Työtila",
+      "invite": "Kutsu tiimi",
+      "plan": "Valitse suunnitelma"
+    },
+    "progress": {
+      "back": "Takaisin",
+      "stepCounter": "Vaihe {current}/{total}"
+    },
+    "plan": {
+      "title": "Valitse suunnitelma",
+      "description": "Aloita ilmaiseksi tai avaa enemmän kapasiteettia. Voit vaihtaa suunnitelmaa milloin tahansa.",
+      "choose": "Valitse suunnitelma",
+      "skip": "Ohita nyt"
+    }
+  },
+  "userMenu": {
+    "ariaLabel": "Avaa käyttäjävalikko",
+    "profile": "Profiili",
+    "settings": "Asetukset",
+    "feedback": "Palaute",
+    "theme": "Teema",
+    "language": "Kieli",
+    "signOut": "Kirjaudu ulos",
+    "signedInAs": "Kirjautunut käyttäjänä"
+  },
+  "account": {
+    "profile": {
+      "title": "Profiili",
+      "description": "Päivitä henkilökohtaiset tietosi.",
+      "nameLabel": "Nimi",
+      "namePlaceholder": "Koko nimesi",
+      "emailLabel": "Sähköposti",
+      "emailHint": "Lähetämme vahvistuslinkin uuden sähköpostiosoitteen vahvistamiseksi.",
+      "languageLabel": "Kieli",
+      "submit": "Tallenna muutokset",
+      "saving": "Tallennetaan…",
+      "verifyEmail": "Vahvista",
+      "verifying": "Lähetetään vahvistus…",
+      "success": "Profiili päivitetty.",
+      "verificationSent": "Vahvistussähköposti lähetetty.",
+      "errorRequiredName": "Nimi on pakollinen.",
+      "errorInvalidEmail": "Sähköpostiosoite ei ole kelvollinen.",
+      "subtitle": "Identiteettisi ja yhteystietosi.",
+      "unknown": "Nimeämätön käyttäjä",
+      "manageCta": "Avaa täydelliset tiliasetukset"
+    },
+    "avatar": {
+      "title": "Profiilikuva",
+      "description": "Lataa neliönmuotoinen kuva (PNG, JPEG tai WebP, enintään 2 Mt).",
+      "uploadButton": "Lataa profiilikuva",
+      "uploading": "Ladataan…",
+      "fileTooBig": "Tiedosto on liian suuri. Enimmäiskoko on 2 Mt.",
+      "invalidType": "Kuvatyyppiä ei tueta. Käytä PNG-, JPEG- tai WebP-tiedostoa.",
+      "success": "Profiilikuva päivitetty.",
+      "removeButton": "Poista profiilikuva",
+      "removed": "Profiilikuva poistettu.",
+      "deleteError": "Profiilikuvan poistaminen epäonnistui."
+    },
+    "export": {
+      "title": "Vie tietoni",
+      "description": "Lataa kopio kaikista tilisi tiedoista, mukaan lukien profiili, organisaatiot, tarkastuslokit, ilmoitukset ja kutsut.",
+      "compliance": "Vaaditaan GDPR:n artiklan 20 (tietojen siirrettävyys) ja PIPL:n artiklan 45 (oikeus saada kopio henkilötiedoista) mukaisesti.",
+      "export": "Vie tietoni",
+      "pending": "Viedäntä valmistellaan…",
+      "ready": "Viedäntäsi on valmis.",
+      "download": "Lataa JSON",
+      "error": "Viedännän valmistelu epäonnistui. Yritä uudelleen."
+    },
+    "emailChange": {
+      "title": "Vaihda sähköpostiosoite",
+      "description": "Lähetämme vahvistuslinkin uuteen osoitteeseen. Muutos astuu voimaan vasta, kun vahvistat sen kyseisestä sähköpostilaatikosta.",
+      "newEmailLabel": "Uusi sähköpostiosoite",
+      "newEmailPlaceholder": "you@example.com",
+      "submit": "Lähetä vahvistuslinkki",
+      "submitting": "Lähetetään…",
+      "verificationSent": "Tarkista sähköpostilaatikko osoitteessa {email} vahvistaaksesi muutoksen.",
+      "errorInvalidEmail": "Sähköpostiosoite ei ole kelvollinen.",
+      "error": "Sähköpostin vaihtopyynnön lähettäminen epäonnistui.",
+      "confirm": {
+        "successTitle": "Sähköposti päivitetty",
+        "successDescription": "Kirjautumissähköpostisi on päivitetty.",
+        "successWithEmail": "Kirjautumissähköpostisi on nyt {email}.",
+        "failureTitle": "Emme voineet vahvistaa linkkiä",
+        "failureDescription": "Tämä vahvistuslinkki on virheellinen, vanhentunut tai jo käytetty. Pyydä uusi linkki tilisi asetuksista.",
+        "errorCode": "Syy: {code}",
+        "continueCta": "Takaisin tilille",
+        "backCta": "Takaisin tilille"
+      }
+    },
+    "title": "Tili",
+    "ariaLabel": "Tilin asetukset",
+    "navLabel": "Tilin asetusten välilehdet",
+    "tip": "Paina {key} -näppäintä missä tahansa uudelleen avataksesi tämän valintaikkunan.",
+    "tabs": {
+      "profile": "Profiili",
+      "subscription": "Tilaus",
+      "billing": "Laskutus",
+      "preferences": "Ominaisuudet",
+      "personalization": "Personointi"
+    },
+    "subscription": {
+      "title": "Tilaus",
+      "subtitle": "Suunnitelma, kiintiö ja uusiminen.",
+      "currentPlan": "Nykyinen suunnitelma",
+      "upgradeCta": "Vertaa suunnitelmia",
+      "manageCta": "Hallinnoi tilausta"
+    },
+    "billing": {
+      "title": "Laskutus",
+      "subtitle": "Laskuhistoria ja maksutapa.",
+      "empty": {
+        "title": "Ei vielä historiaa",
+        "description": "Maksut ja laskut näkyvät täällä ensimmäisen maksullisen kauden jälkeen.",
+        "cta": "Avaa koko laskutus"
+      }
+    },
+    "preferences": {
+      "title": "Asetukset",
+      "subtitle": "Teema ja saavutettavuus.",
+      "theme": "Teema",
+      "light": "Vaalea",
+      "dark": "Tumma",
+      "system": "Järjestelmä",
+      "help": "Ohje",
+      "reportIssue": "Ilmoita ongelmasta",
+      "shortcuts": "Pikanäppäimet"
+    },
+    "personalization": {
+      "title": "Personointi",
+      "subtitle": "Kerro Sailorille, kuka olet ja miten siihen tulee vastata."
+    }
+  },
+  "impact": {
+    "hero_title": "Uudelleenmäärittelemässä paradigmaa",
+    "hero_subtitle": "Ei saa olla vaikeaa liiketoimintaa maailmassa.",
+    "social_title": "Yhteiskunta",
+    "social_headline": "Absoluuttinen teknologian tasa-arvo",
+    "social_description": "Mahdollistetaan laiterajapinnan innovaattoreita. Perinteisten suodattimien murtaminen ja yksin perustajien valmentaminen infrastruktuurilla, joka on valmiina.",
+    "governance_title": "Hallinto",
+    "governance_headline": "Koodi on laki",
+    "governance_description": "Algoritmisen hallinnon rakentaminen Proof of Work -periaatteella ja todellisilla liiketoiminnan tuloksilla, korvaten läpinäkyvää byrokratiaa.",
+    "environment_title": "Ympäristö",
+    "environment_headline": "Digitaalinen minimalismi",
+    "environment_description": "Pilvipääoman vähentäminen äärimmäisen SaaS-integraation ja resurssitehokkuuden kautta."
+  },
+  "auth": {
+    "security": {
+      "title": "Turvallisuus",
+      "description": "Hallinnoi salasanaasi, monivaiheista todennusta ja aktiivisia istuntoja.",
+      "managedByProvider": "Turvallisuusasetukset hallitaan todennuspalveluntarjoajasi kautta.",
+      "openProviderProfile": "Avaa profiili",
+      "changePassword": {
+        "title": "Vaihda salasana",
+        "description": "Käytä vahvaa salasanaa, jota et käytä uudelleen muilla sivustoilla.",
+        "currentPasswordLabel": "Nykyinen salasana",
+        "newPasswordLabel": "Uusi salasana",
+        "confirmPasswordLabel": "Vahvista uusi salasana",
+        "revokeOtherSessions": "Kirjaudu ulos muilta laitteilta",
+        "submit": "Päivitä salasana",
+        "pending": "Päivitetään salasanaa…",
+        "success": "Salasana päivitetty onnistuneesti."
+      },
+      "twoFactor": {
+        "title": "Kaksivaiheinen todennus",
+        "description": "Lisää toinen vahvistusvaihe käyttämällä todennussovellusta.",
+        "enabled": "Ota käyttöön",
+        "disabled": "Poista käytöstä",
+        "enabledHelp": "Tilisi pyytää 6-numeroista todennuskoodia salasanan kirjautumisen jälkeen.",
+        "disabledHelp": "Suojaa tilisi 6-numeroisella koodilla todennussovelluksesta.",
+        "enable": "Ota kaksivaiheinen todennus käyttöön",
+        "disable": "Poista kaksivaiheinen todennus käytöstä",
+        "passwordPrompt": "Vahvista salasanasi",
+        "scanQrCode": "Skannaa tämä QR-koodi todennussovelluksellasi ja syötä alla oleva 6-numeroinen koodi.",
+        "secretKeyLabel": "Tai syötä tämä salainen avain manuaalisesti",
+        "verificationCodeLabel": "Varmennuskoodi",
+        "verify": "Varmenna ja ota käyttöön",
+        "backupCodesTitle": "Varmuuskoodit",
+        "backupCodesDescription": "Tallenna nämä koodit turvalliseen paikkaan. Jokainen koodi voidaan käyttää kerran, jos menetät pääsyn todennussovellukseen.",
+        "copyBackupCodes": "Kopioi koodit",
+        "finishSetup": "Viimeistele asennus",
+        "successEnabled": "Kaksivaiheinen todennus otettu käyttöön.",
+        "successDisabled": "Kaksivaiheinen todennus poistettu käytöstä."
+      },
+      "sessions": {
+        "title": "Aktiiviset istunnot",
+        "description": "Laitteet ja selaimet, jotka ovat tällä hetkellä kirjautuneet tilillesi.",
+        "currentSession": "(nykyinen)",
+        "ipLabel": "IP-osoite",
+        "lastActiveLabel": "Viimeksi aktiivinen",
+        "revoke": "Kirjaudu ulos",
+        "revokeAll": "Kirjaudu ulos kaikista muista laitteista",
+        "empty": "Ei muita aktiivisia istuntoja.",
+        "successRevoked": "Istunto kirjattiin ulos.",
+        "successRevokedAll": "Kaikki muut istunnot kirjattiin ulos."
+      },
+      "deleteAccount": {
+        "title": "Poista tili",
+        "description": "Poista tili ja kaikki siihen liittyvät tiedot pysyvästi. Tätä ei voi peruuttaa.",
+        "passwordPrompt": "Syötä salasanasi vahvistaaksesi",
+        "confirmTextLabel": "Kirjoita DELETE vahvistaaksesi",
+        "submit": "Poista tili",
+        "cancel": "Peruuta",
+        "success": "Tili poistettu."
+      },
+      "connectedAccounts": {
+        "title": "Yhdistetyt tilit",
+        "description": "Tarkista Nebutra-identiteettisi kanssa yhdistetyt OAuth-merkinnät.",
+        "connected": "Yhdistetty",
+        "connect": "Yhdistä",
+        "help": "Pidä vähintään yksi luotettava kirjautumistapa käytettävissä ennen palveluntarjoajan irrottamista.",
+        "unlink": "Irrota",
+        "notLinked": "Ei yhdistetty"
+      },
+      "passkeys": {
+        "title": "Salaisavaimet",
+        "description": "Käytä laitteen sidottuja todennusvälineitä kalastusta vastaan kestävässä kirjautumisessa.",
+        "empty": "Salaisavaimia ei ole vielä rekisteröity",
+        "addPasskey": "Lisää salaisavain",
+        "cancelAdd": "Peruuta",
+        "cancelled": "Salaisavaimen asennus peruutettiin. Mitään ei muutettu.",
+        "defaultName": "Salaisavain {number}",
+        "nameHelp": "Anna tälle salaisavaimelle tunnistettava nimi ennen kuin selaimesi pyytää vahvistusta.",
+        "nameLabel": "Salaisavaimen nimi",
+        "rename": "Nimeä uudelleen",
+        "saveRename": "Tallenna nimi",
+        "remove": "Poista",
+        "successAdded": "Salasanan avain lisätty.",
+        "successRemoved": "Salasanan avain poistettu.",
+        "unavailableBadge": "Ei saatavilla"
+      },
+      "setPassword": {
+        "title": "Aseta salasana",
+        "description": "Lisää salasana kirjautuaksesi ilman OAuth-palveluntarjoajaa.",
+        "submit": "Aseta salasana",
+        "pending": "Lähetetään salasanan asennuslinkkiä…",
+        "sentMessage": "Olemme lähettäneet salasanan asennuslinkin sähköpostiisi."
+      }
+    },
+    "banner": {
+      "logoAlt": "Nebutra",
+      "slogan": "Julkaise startuppi, hallittuna jo päivästä yksi.",
+      "tagline": "Monialueiset agentit, monivuokraisuus oletuksena. Ei alustatiimiä tarvita."
+    },
+    "signIn": {
+      "title": "Kirjaudu sisään Nebutraan",
+      "subtitle": "Valitse kirjautumistapa.",
+      "continueWith": "Jatka käyttäen",
+      "continueWithProvider": "Jatka käyttäen {provider}",
+      "providers": {
+        "google": "Google",
+        "github": "GitHub",
+        "apple": "Apple",
+        "microsoft": "Microsoft",
+        "feishu": "Feishu"
+      },
+      "providerLoading": "Uudelleenohjataan…",
+      "dividerOr": "Tai jatka sähköpostilla",
+      "emailLabel": "Sähköposti",
+      "emailPlaceholder": "you@example.com",
+      "continue": "Jatka",
+      "back": "Takaisin",
+      "passwordLabel": "Salasana",
+      "passwordPlaceholder": "Syötä salasanasi",
+      "showPassword": "Näytä salasana",
+      "hidePassword": "Piilota salasana",
+      "capsLockOn": "Caps Lock on päällä",
+      "forgotPassword": "Unohditko salasanasi?",
+      "submit": "Kirjaudu sisään",
+      "submitLoading": "Kirjaudutaan sisään…",
+      "useMagicLink": "Lähetä minulle taikalinkki",
+      "usePasskey": "Kirjaudu sisään salasanalla",
+      "passkeyTitle": "Kirjaudu sisään salasanalla",
+      "passkeyDescription": "Käytä Face ID:tä, Touch ID:tä tai turvaimme. Salasanaa ei tarvita.",
+      "passkeyButton": "Jatka salasanalla",
+      "passkeyCancelled": "Salasanan pyyntö peruutettiin.",
+      "passkeyUnsupported": "Tämä selain ei tue salasanoja.",
+      "passkeyError": "Salasanan kirjautuminen epäonnistui. Kokeile toista menetelmää.",
+      "ssoTitle": "Jatka yrityksen SSO:lla",
+      "ssoDescription": "Ohjataan sinut kohteeseen {provider} sähköpostiosoitteella {email}.",
+      "ssoError": "Yrityksen SSO:ta ei voitu aloittaa. Kokeile toista menetelmää.",
+      "ssoRetry": "Yritä uudelleen",
+      "newToProduct": "Uusi Nebutra-käyttäjä?",
+      "signUpLink": "Rekisteröidy",
+      "homeLink": "Koti",
+      "signInFailed": "Kirjautuminen epäonnistui",
+      "genericError": "Tapahtui virhe. Yritä uudelleen.",
+      "captchaError": "Bot-tunnistus epäonnistui. Päivitä sivu ja yritä uudelleen.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
+      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
+      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
+      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+    },
+    "signUp": {
+      "title": "Luo Nebutra-tilisi",
+      "subtitle": "Yksi tili kaikille Nebutra-sovelluksille.",
+      "firstNameLabel": "Etunimi",
+      "lastNameLabel": "Sukunimi",
+      "firstNamePlaceholder": "Etunimi",
+      "lastNamePlaceholder": "Sukunimi",
+      "submit": "Luo tili",
+      "submitLoading": "Luodaan tiliä…",
+      "alreadyHaveAccount": "Onko sinulla jo tili?",
+      "signInLink": "Kirjaudu sisään",
+      "signUpFailed": "Rekisteröityminen epäonnistui",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+    },
+    "passkeys": {
+      "title": "Salaisimet",
+      "description": "Käytä Face ID:tä, Touch ID:tä, Windows Helloa tai turvallisuusavainta salasanan sijaan. Jokaisella laitteella on oma salaisimensa.",
+      "addButton": "Lisää salainava",
+      "adding": "Määritetään…",
+      "namePlaceholder": "esim. MacBook Pro",
+      "nameLabel": "Nimi (valinnainen)",
+      "registerSuccess": "Salainava lisätty.",
+      "registerCancelled": "Määritys peruutettu.",
+      "registerUnsupported": "Tämä selain ei tue salainavia.",
+      "registerError": "Salainavan rekisteröinti epäonnistui.",
+      "empty": "Ei vielä salainavia.",
+      "loadError": "Salainavien lataaminen epäonnistui.",
+      "revoke": "Poista",
+      "revoking": "Poistetaan…",
+      "revokeConfirm": "Poistetaanko tämä salainava? Et voi enää kirjautua sillä sisään.",
+      "revokeSuccess": "Salainava poistettu.",
+      "revokeError": "Salainavan poisto epäonnistui.",
+      "device": {
+        "singleDevice": "Laitteeseen sidottu",
+        "multiDevice": "Synkronoitu laitteiden välillä"
+      },
+      "addedOn": "Lisätty {date}"
+    },
+    "magicLink": {
+      "title": "Kirjaudu sisään magic-linkillä",
+      "description": "Syötä sähköpostiosoitteesi, niin lähetämme sinulle 6-numeroinen koodin kirjautumista varten.",
+      "emailLabel": "Sähköposti",
+      "send": "Lähetä linkki",
+      "codeLabel": "Varmennuskoodi",
+      "verify": "Varmenna",
+      "resend": "Lähetä koodi uudelleen",
+      "resendCooldown": "Voit lähettää uudelleen {seconds} sekunnin kuluttua",
+      "sentTo": "Lähetimme koodin osoitteeseen {email}"
+    },
+    "forgotPassword": {
+      "title": "Unohditko salasanasi?",
+      "description": "Syötä sähköpostiosoitteesi, niin lähetämme linkin salasanan palauttamiseen.",
+      "emailLabel": "Sähköposti",
+      "submit": "Lähetä palautuslinkki",
+      "successTitle": "Tarkista sähköpostisi",
+      "success": "Jos sähköposti on rekisteröity, saat pian palautuslinkin."
+    },
+    "resetPassword": {
+      "title": "Palauta salasana",
+      "description": "Valitse uusi salasana tilillesi.",
+      "newPasswordLabel": "Uusi salasana",
+      "confirmPasswordLabel": "Vahvista uusi salasana",
+      "submit": "Palauta salasana",
+      "successTitle": "Salasana palautettu",
+      "successDescription": "Voit nyt kirjautua sisään uudella salasanallasi.",
+      "signInCta": "Siirry kirjautumiseen",
+      "invalidTitle": "Virheellinen palautuslinkki",
+      "invalidDescription": "Tämä salasanan palautuslinkki puuttuu tai on virheellinen. Pyydä uusi linkki unohtuneen salasanan sivulta."
+    },
+    "verifyEmail": {
+      "successTitle": "Sähköposti vahvistettu",
+      "successDescription": "Sähköpostiosoitteesi on vahvistettu.",
+      "failureTitle": "Vahvistus epäonnistui",
+      "failureDescription": "Emme voineet vahvistaa sähköpostiasi tällä linkillä.",
+      "continueCta": "Jatka",
+      "signInCta": "Siirry kirjautumaan"
+    },
+    "loginSuccess": {
+      "eyebrow": "Kirjautuminen valmis",
+      "title": "Olet kirjautunut sisään",
+      "description": "Istunto on valmis. Avataan Nebutra-työtila ja varmistetaan turvallinen siirto kirjautumisprosessista.",
+      "session": "Istunto",
+      "verified": "Varmennettu",
+      "workspace": "Työtila",
+      "preparing": "Valmistellaan",
+      "redirecting": "Siirrytään työtilaan {seconds} sekunnissa",
+      "secureHandoff": "Turvallinen siirto",
+      "continueCta": "Jatka työtilaan",
+      "signInCta": "Käytä toista tiliä"
+    },
+    "errors": {
+      "invalidCredentials": "Sähköposti tai salasana on väärä.",
+      "userNotFound": "Tiliä ei löydy tällä sähköpostiosoitteella.",
+      "userAlreadyExists": "Tili tällä sähköpostiosoitteella on jo olemassa.",
+      "weakPassword": "Salasana on liian heikko. Käytä vähintään 8 merkkiä, sisältäen isoja ja pieniä kirjaimia sekä numeroita.",
+      "passwordsDontMatch": "Salasanat eivät täsmää.",
+      "passwordTooShort": "Salasanan tulee olla vähintään 8 merkkiä.",
+      "currentPasswordIncorrect": "Nykyinen salasana on virheellinen.",
+      "samePassword": "Uuden salasanan tulee olla eri kuin nykyinen.",
+      "invalidEmail": "Sähköpostiosoite ei ole kelvollinen.",
+      "emailNotVerified": "Varmista sähköpostiosoitteesi ensin.",
+      "sessionExpired": "Istunto on vanhentunut. Kirjaudu sisään uudelleen.",
+      "twoFactorRequired": "Kaksivaiheinen vahvistus vaaditaan.",
+      "invalidVerificationCode": "Vahvistuskoodi on virheellinen tai vanhentunut.",
+      "twoFactorAlreadyEnabled": "Kaksivaiheinen tunnistautuminen on jo käytössä.",
+      "twoFactorNotEnabled": "Kaksivaiheinen tunnistautuminen ei ole käytössä.",
+      "tooManyAttempts": "Liian monta yritystä. Yritä myöhemmin uudelleen.",
+      "rateLimited": "Teet tätä liian usein. Hidasta tahtia.",
+      "providerNotSupported": "Tämän toiminnon hallinnoi tunnistautumispalveluntarjoajasi.",
+      "networkError": "Verkkovirhe. Tarkista yhteys ja yritä uudelleen.",
+      "unknown": "Jokin meni pieleen. Yritä uudelleen."
+    }
+  },
+  "chat": {
+    "suggestions": {
+      "title": "Kokeile jotain näistä aloittaaksesi",
+      "activity": {
+        "title": "Näytä viimeisin toiminta",
+        "prompt": "Näytä viimeisin toiminta työtilassani viimeisen 24 tunnin ajalta."
+      },
+      "debug": {
+        "title": "Vianetsi virhe",
+        "prompt": "Auta minua vianetsimään ajonaikaista virhettä. Liitän virhelokin, ja voit ohjata minua sen läpi."
+      },
+      "email": {
+        "title": "Laadi yhteenvetoviesti",
+        "prompt": "Laadi tiivis viikoittainen yhteenvetoviesti, jonka voin lähettää tiimilleni alustan edistymisestä."
+      },
+      "features": {
+        "title": "Tutustu alustan ominaisuuksiin",
+        "prompt": "Käy läpi tämän SaaS-alustan keskeiset ominaisuudet ja kerro, miten niitä voi käyttää."
+      }
+    }
+  },
+  "billing": {
+    "activePlan": {
+      "title": "Aktiivinen tilaus",
+      "manage": "Hallinnoi tilausta",
+      "noPlanTitle": "Ei aktiivista tilausta",
+      "noPlanDescription": "Valitse tilaus, jotta saat käyttöösi maksulliset ominaisuudet ja korkeammat käyttörajat.",
+      "choosePlan": "Valitse tilaus",
+      "renewsOn": "Uudistuu {date}",
+      "endsOn": "Päätyy {date}",
+      "trialEndsOn": "Kokeilu päättyy {date}",
+      "status": {
+        "active": "Aktiivinen",
+        "trialing": "Kokeilujakso",
+        "past_due": "Maksu myöhässä",
+        "canceled": "Peruutettu",
+        "free": "Ilmainen"
+      },
+      "errors": {
+        "loadFailed": "Laskutustilaa ei voitu ladata."
+      }
+    },
+    "pricing": {
+      "trial": "Ilmainen {days} päivän kokeilu",
+      "seat": "{count, plural, one {# istuin} other {# istuinta}}",
+      "perSeat": "/ istuin"
+    }
+  },
+  "organizations": {
+    "settings": {
+      "logo": {
+        "title": "Organisaation logo",
+        "description": "Lataa neliönmuotoinen kuva (PNG, JPEG tai WebP, enintään 2 Mt) edustamaan organisaatiotasi.",
+        "uploadButton": "Lataa logo",
+        "uploading": "Ladataan…",
+        "fileTooBig": "Tiedosto on liian suuri. Enimmäiskoko on 2 Mt.",
+        "invalidType": "Kuvatyyppiä ei tueta. Käytä PNG-, JPEG- tai WebP-tiedostoa.",
+        "success": "Logo päivitetty.",
+        "removeButton": "Poista logo",
+        "removed": "Logo poistettu."
+      },
+      "name": {
+        "title": "Organisaation nimi",
+        "description": "Päivitä näyttönimi, jota tiimisi ja asiakkaasi näkevät.",
+        "label": "Nimi",
+        "submit": "Tallenna",
+        "saving": "Tallennetaan…",
+        "success": "Organisaation nimi päivitetty."
+      },
+      "delete": {
+        "title": "Poista organisaatio",
+        "description": "Poista tämä organisaatio pysyvästi, mukaan lukien kaikki jäsenet, kutsut ja liittyvät tiedot. Tätä toimintoa ei voi peruuttaa.",
+        "trigger": "Poista organisaatio",
+        "confirmLabel": "Kirjoita organisaation nimi vahvistaaksesi",
+        "submit": "Poista organisaatio",
+        "cancel": "Peruuta",
+        "success": "Organisaatio poistettu."
+      }
+    },
+    "invitation": {
+      "title": "Sinut on kutsuttu",
+      "heading": "Sinut on kutsuttu liittymään organisaatioon {organizationName}",
+      "description": "Hyväksy kutsu aloittaaksesi yhteistyön tiimin kanssa.",
+      "accept": "Hyväksy kutsu",
+      "accepting": "Hyväksytään...",
+      "decline": "Hylkää",
+      "declining": "Hylätään...",
+      "declinedView": "Kutsu hylätty",
+      "success": "Olemme ilmoittaneet kutsujan puolesta.",
+      "backToDashboard": "Takaisin kojelaudalle",
+      "roleLabel": "Rooli: {role}",
+      "errorEmailMismatch": "Tämä kutsu lähetettiin toiseen sähköpostiosoitteeseen",
+      "errorEmailMismatchDetail": "Kirjaudu sisään sähköpostiosoitteella, johon kutsu lähetettiin, voidaksesi hyväksyä sen.",
+      "errorExpired": "Kutsu on vanhentunut",
+      "errorExpiredDetail": "Pyydä kutsujaa lähettämään uusi kutsu.",
+      "errorNotFound": "Kutsua ei löydy",
+      "errorNotFoundDetail": "Kutsulinkki on virheellinen tai se on kumottu.",
+      "errorNotAvailable": "Kutsu ei ole käytettävissä",
+      "errorNotAvailableDetail": "Tähän kutsuun on jo vastattu, eikä se ole enää voimassa.",
+      "role": {
+        "owner": "Omistaja",
+        "admin": "Ylläpitäjä",
+        "member": "Jäsen",
+        "viewer": "Katsoja"
+      }
+    }
+  },
+  "settings": {
+    "apiKeys": {
+      "title": "API-avaimet",
+      "description": "Luo ja hallinnoi API-avaimia Nebutraan ohjelmalliseen pääsyyn.",
+      "createButton": "Luo API-avain",
+      "noPermission": "Sinulla ei ole oikeutta näyttää API-avaimia.",
+      "loading": "Ladataan…",
+      "loadError": "API-avainten lataaminen epäonnistui.",
+      "createError": "API-avaimen luominen epäonnistui.",
+      "revokeError": "API-avaimen kumoaminen epäonnistui.",
+      "empty": {
+        "title": "Ei vielä API-avaimia",
+        "cta": "Luo ensimmäinen API-avain"
+      },
+      "columns": {
+        "name": "Nimi",
+        "prefix": "Etuliite",
+        "lastUsed": "Viimeksi käytetty",
+        "scopes": "Käyttöoikeudet",
+        "created": "Luotu",
+        "actions": "Toiminnot",
+        "never": "Ei koskaan"
+      },
+      "actions": {
+        "revoke": "Peruuta",
+        "revoking": "Perutaan…",
+        "copy": "Kopioi",
+        "copied": "Kopioitu",
+        "close": "Sulje",
+        "submit": "Luo avain",
+        "submitting": "Luodaan…"
+      },
+      "dialog": {
+        "title": "Luo API-avain",
+        "description": "API-avaimet mahdollistavat ulkoisten järjestelmien viestinnän Nebutraan puolestasi. Käsittele niitä kuten salasanoja.",
+        "nameLabel": "Nimi",
+        "namePlaceholder": "esim. Tuotannon backend",
+        "scopesLabel": "Alueet",
+        "successWarning": "Tämä avain näytetään vain kerran. Tallenna se ennen sulkemista.",
+        "confirmClose": "Sulkeminen piilottaa tämän avaimen pysyvästi. Varmista, että se on tallennettu."
+      }
+    },
+    "auditLog": {
+      "title": "Tarkastuspäiväkirja",
+      "description": "Seuraa kaikkia työtilasi hallinnollisia toimia. Suodata toimijan, toiminnon, entiteetin tai aikavälin perusteella.",
+      "empty": "Ei vielä tarkastustapahtumia",
+      "loadMore": "Lataa lisää",
+      "loading": "Ladataan…",
+      "forbidden": "Tarvitset ylläpitäjän oikeudet tarkastuspäiväkirjan näyttämiseen.",
+      "columns": {
+        "when": "Milloin",
+        "actor": "Toimija",
+        "action": "Toiminto",
+        "entity": "Entiteetti",
+        "outcome": "Tulos",
+        "ip": "IP-osoite"
+      },
+      "diff": {
+        "oldValue": "Vanha arvo",
+        "newValue": "Uusi arvo"
+      },
+      "filters": {
+        "action": "Toiminto",
+        "actionPlaceholder": "Hae toimintoa…",
+        "entityType": "Entiteetin tyyppi",
+        "outcome": "Tulos",
+        "outcomeSuccess": "Onnistui",
+        "outcomeFailure": "Epäonnistui",
+        "outcomePending": "Odottaa",
+        "startDate": "Alkamispäivä",
+        "endDate": "Päättymispäivä",
+        "range24h": "Viimeiset 24 h",
+        "range7d": "Viimeiset 7 pv",
+        "range30d": "Viimeiset 30 pv",
+        "reset": "Tyhjennä",
+        "all": "Kaikki"
+      }
+    },
+    "notifications": {
+      "title": "Ilmoitukset",
+      "description": "Valitse, miten Nebutra tavoittaa sinut kunkin tapahtumatyypin ja toimituskanavan osalta.",
+      "actions": {
+        "resetAll": "Palauta oletusasetukset",
+        "save": "Tallenna"
+      },
+      "status": {
+        "saving": "Tallennetaan…",
+        "saved": "Tallennettu",
+        "error": "Tallennus epäonnistui. Yritä uudelleen."
+      },
+      "eventTypes": {
+        "security": {
+          "label": "Turvallisuusilmoitukset",
+          "description": "Kirjautumisilmoitukset, salasanan muutokset, kaksivaiheisen todennuksen muutokset."
+        },
+        "billing": {
+          "label": "Laskutus",
+          "description": "Laskut, maksun epäonnistumiset ja tilausmuutokset."
+        },
+        "invitation": {
+          "label": "Tiimin kutsut",
+          "description": "Järjestöön liittymiskutsut, hyväksytyt tai hylätyt."
+        },
+        "activity": {
+          "label": "Tiimin toiminta",
+          "description": "Jäsenet liittyivät, roolimuutokset ja muu työtilan toiminta."
+        },
+        "updates": {
+          "label": "Tuotepäivitykset",
+          "description": "Uudet ominaisuudet, muutoslokin kohokohdat ja julkaisutiedot."
+        },
+        "marketing": {
+          "label": "Markkinointi",
+          "description": "Uutiskirje ja satunnaiset tarjoukset. Vain opt-in."
+        }
+      },
+      "channels": {
+        "in_app": {
+          "label": "Sovelluksen sisällä"
+        },
+        "email": {
+          "label": "Sähköposti"
+        },
+        "push": {
+          "label": "Push"
+        },
+        "sms": {
+          "label": "SMS"
+        }
+      }
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "Tilaa työtilasi lähettämät tapahtumat. Allekirjoitamme jokaisen kuorman päätepisteesi salasanalla, jotta voit varmistaa aitouden.",
+      "create": {
+        "heading": "Uusi päätepiste",
+        "urlLabel": "Päätepisteen URL",
+        "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
+        "eventsLegend": "Tapahtumat",
+        "submit": "Luo päätepiste",
+        "submitting": "Luodaan…",
+        "selectEvent": "Valitse vähintään yksi tapahtuma.",
+        "successTitle": "Päätepiste luotu. Allekirjoitussalaisuus näytetään vain kerran.",
+        "successWarning": "Tallenna se sovelluksesi salaisuuksien hallintaan ennen sulkemista.",
+        "copy": "Kopioi",
+        "copied": "Kopioitu"
+      },
+      "list": {
+        "heading": "Aktiiviset päätepisteet",
+        "empty": "Ei vielä webhook-päätepisteitä. Luo yksi yllä.",
+        "loading": "Ladataan…",
+        "loadFailed": "Webhookien lataaminen epäonnistui",
+        "columns": {
+          "url": "URL",
+          "events": "Tapahtumat",
+          "status": "Tila",
+          "lastDelivered": "Viimeksi toimitettu",
+          "actions": "Toiminnot"
+        },
+        "status": {
+          "active": "Aktiivinen",
+          "disabled": "Poistettu käytöstä"
+        },
+        "actions": {
+          "edit": "Muokkaa",
+          "enable": "Ota käyttöön",
+          "disable": "Poista käytöstä",
+          "viewDeliveries": "Näytä toimitukset",
+          "delete": "Poista"
+        }
+      },
+      "deliveries": {
+        "heading": "Viimeisimmät toimitukset",
+        "close": "Sulje",
+        "loading": "Ladataan…",
+        "loadFailed": "Toimitusten lataaminen epäonnistui",
+        "empty": "Ei vielä toimituksia.",
+        "viewPayload": "Näytä kuorma",
+        "hidePayload": "Piilota kuorma",
+        "replay": "Toista",
+        "replaying": "Toistetaan…",
+        "status": {
+          "success": "onnistui",
+          "failed": "epäonnistui",
+          "retrying": "yritetään uudelleen"
+        }
+      }
+    },
+    "appearance": {
+      "title": "Ulkoasu",
+      "theme": {
+        "title": "Teema",
+        "description": "Käytä vaaleaa, tummaa tai järjestelmän asetuksen mukaista teemaa."
+      },
+      "themePreset": {
+        "title": "Teeman esiasetus",
+        "description": "Käytä Theme Playground -teemaa koko sovelluksessa. Alla olevilla säätöillä voit hienosäätää sitä.",
+        "search": "Hae teemoja…",
+        "searchLabel": "Hae teemoja",
+        "default": "Oletus",
+        "defaultMood": "Nebutra base palette",
+        "active": "Aktiivinen",
+        "empty": "Ei teemoja, jotka vastaavat hakua.",
+        "count": "{count} teemaa"
+      },
+      "themeEditor": {
+        "title": "Teema",
+        "description": "Valitse esiasetus, tuo DESIGN.md-tiedosto ja hienosäädä alla olevia arvoja.",
+        "selectLabel": "Teeman esiasetus",
+        "import": "Tuo",
+        "copy": "Kopioi teema",
+        "copied": "Kopioitu",
+        "copyError": "Kopiointi epäonnistui",
+        "custom": "Mukautettu"
+      },
+      "designMd": {
+        "title": "Tuo DESIGN.md",
+        "description": "Liitä tai lataa DESIGN.md, jotta sen värit, säde, fontit, väli ja varjot sovelletaan koko sovellukseen — säilyvät uudelleenlatauksissa.",
+        "applied": "Sovellettu:",
+        "remove": "Poista"
+      },
+      "themeMode": {
+        "label": "Teemamoodi",
+        "light": "Vaalea",
+        "dark": "Tumma",
+        "system": "Järjestelmä"
+      },
+      "accent": {
+        "title": "Korostusväri",
+        "description": "Valitse brändin korostusväri, joka sävyttää aktiiviset tilat koko sovelluksessa.",
+        "label": "Korostusväri",
+        "options": {
+          "default": "Oletus",
+          "blue": "Sininen",
+          "cyan": "Syaani",
+          "violet": "Violetti",
+          "pink": "Vaaleanpunainen",
+          "amber": "Kultainen",
+          "green": "Vihreä",
+          "red": "Punainen"
+        }
+      },
+      "colors": {
+        "title": "Värit",
+        "description": "Korostus-, tausta- ja etualan värit.",
+        "background": {
+          "label": "Tausta",
+          "description": "Muuta pinnan taustaväriä."
+        },
+        "foreground": {
+          "label": "Etuala",
+          "description": "Muuta päätekstin väriä."
+        },
+        "resetToDefault": "Palauta oletus"
+      },
+      "fontFamily": {
+        "uiLabel": "Käyttöliittymän fontti",
+        "uiDescription": "Fonttiperhe, jota käytetään käyttöliittymässä.",
+        "codeLabel": "Koodifontti",
+        "codeDescription": "Fonttifamilia, jota käytetään koodipinnoilla.",
+        "options": {
+          "ui": {
+            "theme": "Teeman oletus",
+            "system": "Järjestelmä",
+            "geist": "Geist",
+            "inter": "Inter",
+            "sf": "SF Pro"
+          },
+          "code": {
+            "theme": "Teeman oletus",
+            "system": "Järjestelmä mono",
+            "geist-mono": "Geist Mono",
+            "sf-mono": "SF Mono",
+            "jetbrains-mono": "JetBrains Mono"
+          }
+        }
+      },
+      "contrast": {
+        "title": "Kontrasti",
+        "description": "Säädä tekstin kontrastia tarkasti (50 = ei muutosta).",
+        "label": "Kontrastitaso"
+      },
+      "pointerCursor": {
+        "title": "Käytä osoitinta",
+        "description": "Käytä osoitinta hiiren vieraillessa vuorovaikutteisilla elementeillä.",
+        "label": "Osoitin vuorovaikutteisilla elementeillä"
+      },
+      "diffMarkers": {
+        "title": "Diff-merkit",
+        "description": "Näytä väriaukeamat tai +/--merkit jokaisella muutetulla rivillä.",
+        "label": "Diff-merkkien tyyli",
+        "color": "Väri",
+        "plusminus": "+/-"
+      },
+      "fontSmoothing": {
+        "title": "Fonttien sileytys",
+        "description": "Käytä macOSin natiivia fonttien sileytystä.",
+        "label": "Natiivi fonttien sileytys"
+      },
+      "typography": {
+        "title": "Typografia",
+        "description": "UI:n ja koodin peruspääkoko.",
+        "uiFontSize": "UI:n fonttikoko",
+        "uiFontSizeDescription": "Säädä UI:n peruspääkokoa.",
+        "codeFontSize": "Koodin fonttikoko",
+        "codeFontSizeDescription": "Säädä koodin peruspääkokoa."
+      },
+      "fontSize": {
+        "followTheme": "Teema",
+        "customize": "Mukauta"
+      },
+      "motion": {
+        "title": "Vähennä liikettä",
+        "description": "Vähennä animaatioita tai käytä järjestelmän asetuksia.",
+        "label": "Liikeasetus",
+        "system": "Järjestelmä",
+        "on": "Päällä",
+        "off": "Pois"
+      },
+      "surface": {
+        "title": "Läpinäkyvä sivupalkki",
+        "description": "Käytä sivupalkissa läpinäkyvää materiaalia."
+      },
+      "transparency": {
+        "label": "Läpinäkyvä sivupalkki",
+        "description": "Käytä sivupalkissa läpinäkyvää materiaalia."
+      }
+    }
+  },
+  "legal": {
+    "version": "Versio",
+    "effective": "Voimassa",
+    "notFound": "Tätä asiakirjaa ei ole saatavilla.",
+    "backHome": "Takaisin etusivulle"
+  },
+  "commandPalette": {
+    "ariaLabel": "Komentovalikko",
+    "placeholder": "Kirjoita komento tai hae…",
+    "empty": "Ei tuloksia.",
+    "sections": {
+      "navigation": "Navigointi",
+      "actions": "Toiminnot",
+      "settings": "Asetukset",
+      "account": "Tili",
+      "admin": "Ylläpito",
+      "help": "Ohje"
+    },
+    "commands": {
+      "nav": {
+        "home": "Koti",
+        "settings": "Asetukset",
+        "billing": "Laskutus",
+        "team": "Tiimi",
+        "apiKeys": "API-avaimet",
+        "notifications": "Ilmoitukset",
+        "auditLog": "Tarkastuspäiväkirja",
+        "webhooks": "Webhooks",
+        "admin": "Hallinta"
+      },
+      "action": {
+        "inviteMember": "Kutsu tiimin jäsen",
+        "createApiKey": "Luo API-avain",
+        "switchOrganization": "Vaihda organisaatiota"
+      },
+      "settings": {
+        "themeLight": "Vaihda vaaleaan teemaan",
+        "themeDark": "Vaihda tummaan teemaan",
+        "themeSystem": "Käytä järjestelmän teemaa"
+      },
+      "account": {
+        "signOut": "Kirjaudu ulos"
+      },
+      "help": {
+        "reportIssue": "Ilmoita ongelmasta",
+        "shortcuts": "Pikanäppäimet"
+      }
+    }
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "Yksityisyydensuojavalintasi",
+      "description": "Käytämme evästeitä parantaaksemme käyttökokemustasi, analysoiaksemme sivuston liikennettä ja räätälöidäksemme sisältöä. Valitse, mitkä kategoriat haluat sallia."
+    },
+    "button": {
+      "acceptAll": "Hyväksy kaikki",
+      "savePreferences": "Tallenna asetukset"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "Välttämättömät",
+        "description": "Tarvitaan sivuston toimintaan. Ei voi poistaa käytöstä."
+      },
+      "functional": {
+        "label": "Toiminnalliset",
+        "description": "Muista asetuksesi (kieli, teema, asettelu)."
+      },
+      "analytics": {
+        "label": "Analytiikka",
+        "description": "Anonyymi käyttödata tuotteen kehittämiseen."
+      },
+      "marketing": {
+        "label": "Markkinointi",
+        "description": "Personoidut mainokset ja uudelleenohjaus kolmansien osapuolten alustoilla."
+      }
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "Ilmoitukset",
+      "description": "Kaikki ilmoituksesi yhdessä paikassa.",
+      "filter": {
+        "all": "Kaikki",
+        "unread": "Lukemattomat"
+      },
+      "actions": {
+        "markAllRead": "Merkitse kaikki luetuiksi",
+        "markRead": "Merkitse luetuksi",
+        "archive": "Arkistoi",
+        "loadMore": "Lataa lisää",
+        "loading": "Ladataan...",
+        "selected": "{count} valittu"
+      },
+      "empty": {
+        "all": "Kaikki on luettu.",
+        "unread": "Ei lukemattomia ilmoituksia."
+      },
+      "errors": {
+        "load": "Ilmoitusten lataaminen epäonnistui.",
+        "network": "Verkkovirhe. Yritä uudelleen.",
+        "markRead": "Ilmoituksen merkitseminen luetuksi epäonnistui.",
+        "archive": "Ilmoituksen arkistointi epäonnistui.",
+        "bulkMarkRead": "Joitakin ilmoituksia ei voitu merkitä luetuiksi."
+      },
+      "inbox": {
+        "noBackend": "Postilaatikko vaatii pysyvän ilmoitusten taustajärjestelmän. Tarkista palveluntarjoajan asetuksesi.",
+        "emptyCaughtUp": "Postilaatikko on tyhjä.",
+        "emptyChangelog": "Muutoslokin päivitykset näkyvät täällä."
+      }
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Hyvää huomenta",
+      "afternoon": "Hyvää päivää",
+      "evening": "Hyvää iltaa"
+    },
+    "home": {
+      "connectorsPill": "Viedä sovelluksesi eteenpäin yhdistimillä",
+      "subtitle": "Lisää kehotteita, paina ⌘K mistä tahansa tai siirry suoraan työtilapintaan.",
+      "promptPlaceholder": "Mitä mielessäsi pyörii?",
+      "actions": {
+        "connect": "Yhdistä integraatio",
+        "theme": "Teemakokeilutila",
+        "audit": "Tarkastuspäiväkirja",
+        "billing": "Laskutus"
+      }
+    },
+    "commandSurface": {
+      "noAuth": "Valitulle tarjoajalle ei ole määritetty todennusta. Aseta tarjoajan salaisuudet käyttäjäistuntojen käyttöönottoa varten."
+    },
+    "commandCenter": {
+      "description": "Aloita yhdellä toiminnolla: kysy Sailorilta, tarkastele työtilan signaaleja tai ohjaa työ automaatiopintaan.",
+      "openSailor": "Avaa Sailor AI",
+      "viewAnalytics": "Näytä analytiikka"
+    },
+    "workspaceSnapshot": {
+      "title": "Työtilan hetkikuva",
+      "description": "Viimeisin varaston päivä · {day}",
+      "viewAnalytics": "Näytä analytiikka →",
+      "metrics": {
+        "activeUsers": "Aktiiviset käyttäjät",
+        "totalEvents": "Kaikki tapahtumat",
+        "conversions": "Muunnokset",
+        "revenue": "Liikevaihto"
+      },
+      "details": {
+        "activeUsers": "Kirjautuneet käyttäjät",
+        "totalEvents": "Tallennetut tapahtumat",
+        "conversions": "Laadukkaat toiminnot",
+        "revenue": "Tunnustettu tulo"
+      },
+      "meta": {
+        "snapshot": "Hetkikuva",
+        "cadence": "Tahti",
+        "tenant": "Asiakas",
+        "daily": "Päivittäinen",
+        "latestDay": "{day}",
+        "users": "Asiakkaan käyttäjät",
+        "events": "Tapahtumavirta",
+        "funnel": "Suppi",
+        "billing": "Laskutus"
+      }
+    },
+    "documentPipeline": {
+      "title": "Dokumenttiputkisto",
+      "description": "Lähetä lähdetiedostot alkuperäiseen tehtäväjonoon.",
+      "intakeTitle": "Dokumenttien vastaanotto",
+      "intakeDescription": "PDF, Markdown, teksti tai Word-dokumentti",
+      "chooseDocument": "Valitse dokumentti",
+      "startParseTask": "Aloita jäsentämistehtävä",
+      "queued": "Jonossa",
+      "fileInputLabel": "Dokumentt tiedosto",
+      "fallbackError": "Dokumenttitehtävä epäonnistui.",
+      "taskStatus": "Tehtävän tila",
+      "progressLabel": "Tehtävän edistyminen",
+      "refreshStatus": "Päivitä",
+      "cancelTask": "Peruuta",
+      "statusError": "Tehtävän tilaa ei voitu päivittää.",
+      "cancelError": "Tehtävää ei voitu peruuttaa.",
+      "statusQueued": "Jonossa",
+      "statusRunning": "Käynnissä",
+      "statusSucceeded": "Onnistui",
+      "statusFailed": "Epäonnistui",
+      "statusCancelled": "Peruutettu",
+      "resultReady": "Tulos valmis",
+      "taskError": "Tehtävän virhe",
+      "updatedAt": "Päivitetty"
+    },
+    "recentSessions": {
+      "title": "Jatka siitä, mihin jäit",
+      "subtitle": "{count, plural, =0 {Ei istuntoja} =1 {1 viimeisin istunto} other {# viimeisintä istuntoa}}",
+      "viewAll": "Näytä kaikki →",
+      "newChat": "Uusi keskustelu",
+      "untitled": "Nimetön istunto",
+      "messageCount": "{count, plural, =1 {1 viesti} other {# viestiä}}"
+    },
+    "gettingStarted": {
+      "title": "Aloitusopas",
+      "description": "{done} / {total} valmista · viimeistele asennus saadaksesi koko työtilan käyttöön",
+      "progressLabel": "Asennuksen edistyminen",
+      "tasks": {
+        "team": {
+          "label": "Kutsu tiimikaveri",
+          "description": "Lisää työtilaasi vähintään yksi yhteistyökumppani."
+        },
+        "api": {
+          "label": "Luo API-avain",
+          "description": "Ohjelmallinen pääsy työtilasi päätepisteisiin."
+        },
+        "integration": {
+          "label": "Yhdistä integraatio",
+          "description": "Stripe, Slack, webhooks, jonot ja paljon muuta."
+        },
+        "ai": {
+          "label": "Avaa Sailor AI",
+          "description": "Kokeile keskustelu-, data- tai työvirtatilaa."
+        }
+      }
+    }
+  },
+  "Sidebar": {
+    "projects": "Hankkeet",
+    "noThreads": "Ei ketjuja",
+    "expandAll": "Laajenna kaikki",
+    "collapseAll": "Kutista kaikki",
+    "sectionMore": "Lisää vaihtoehtoja",
+    "newProject": "Uusi hanke",
+    "restoredGroups": "Aiemmin laajennetut ryhmät palautettu",
+    "newProjectPlaceholder": "Hankkeen nimi",
+    "newProjectDefault": "Nimetön",
+    "newProjectSuccess": "Hanke luotu",
+    "newProjectError": "Hanketta ei voitu luoda",
+    "sortBy": "Järjestä",
+    "sortRecent": "Viimeksi aktiiviset",
+    "sortAlphabetical": "Aakkosten mukaan",
+    "sortCreated": "Luontipäivämäärä",
+    "archiveAll": "Arkistoi kaikki",
+    "comingV2": "Tulossa versiossa 2"
+  },
+  "startupOs": {
+    "milestone": {
+      "firstRoom": "Ensimmäinen huone on valmis.",
+      "firstFolder": "Monet yritykset alkavat kansiosta.",
+      "firstTable": "Ensimmäisellä pöydällä on toinen paikka.",
+      "firstSignal": "Todellinen maailma on alkanut puhua.",
+      "firstShip": "Maailma näkee sen ensimmäistä kertaa.",
+      "firstBeliever": "Tämästä päivästä et enää rakenna vain itsellesi.",
+      "firstRevenue": "Unelmalla on nyt kassavirta.",
+      "firstReturn": "Paluu merkitsee enemmän kuin vierailu.",
+      "firstTeam": "Kolme ihmistä voi aloittaa yrityksen.",
+      "firstCrowd": "Ensimmäinen pöytä täyttyy.",
+      "firstReset": "Uudelleenkäynnistys on rehellisempi alku.",
+      "firstPublic": "Aseta pala tulevaisuudesta julkisesti.",
+      "firstDemo": "Tämä ei ole show. Tämä on testi.",
+      "graduation": "Olet kasvanut perusteita suuremmaksi. Edessä oleva tie tarvitsee vahvempia työkaluja."
+    },
+    "emptyState": {
+      "default": "Monet yritykset alkavat kansiona.",
+      "integrations": "Yhteyksiä ei ole määritetty.",
+      "creditActivity": "Luottotoiminta näkyy ensimmäisen pyynnön jälkeen.",
+      "usageData": "Käyttötilastot näkyvät, kun organisaatiosi aloittaa pyyntöjen tekemisen.",
+      "apiKeys": "Avaimia ei vielä ole.",
+      "apiKeysCta": "Luo ensimmäinen avain",
+      "teamMembers": "Yksi voi aloittaa. Muutama voi rakentaa.",
+      "cofounders": "Ensimmäinen henkilö, joka uskoo sinuun, ei ole vielä ilmestynyt.",
+      "cofoundersDescription": "Kun sinä ja toinen perustaja osoittavat molemmat kiinnostusta, he näkyvät täällä.",
+      "cofoundersAction": "Etsi perustajia",
+      "growthChart": "Trenditiedot näkyvät toiminnan alettua.",
+      "revenueChart": "Tulotiedot näkyvät transaktioiden alettua.",
+      "webhookDeliveries": "Toimitukset näkyvät täällä ensimmäisen tapahtuman jälkeen.",
+      "webhookEndpoints": "Lisää päätepiste yllä aloittaaksesi tapahtumien vastaanottamisen.",
+      "accessInvites": "Kutsukoodia ei ole myönnetty."
+    },
+    "success": "Ensimmäinen huone on valmis.",
+    "failure": "Uudelleenkäynnistys on rehellisempi alku.",
+    "errors": {
+      "loadMatches": "Otteluita ei voitu ladata.",
+      "loadMatchesDescription": "Jokin meni pieleen puolellamme. Pyydä sivu uudelleen kokeaksesi uudelleen.",
+      "loadWebhookDeliveries": "Toimituksia ei voitu ladata.",
+      "replayWebhookDelivery": "Toisto ei onnistunut.",
+      "loadWebhookEndpoints": "Päätepisteitä ei voitu ladata."
+    },
+    "team": "Yksi voi aloittaa. Muutama voi rakentaa.",
+    "revenue": "Unelmalla on nyt kassavirta.",
+    "growth": "Signaali vahvistuu.",
+    "deployment": {
+      "primary": "Maailma näkee sen ensimmäistä kertaa.",
+      "echo": "Se pääsi viimein irti localhostista."
+    },
+    "onboarding": "Sinun ei tarvitse olla valmis. Sinun tarvitsee vain aloittaa.",
+    "graduation": "Olet kasvanut perusteita suuremmaksi. Kokeile {tool}-työkalua edessäsi olevaa matkaa varten.",
+    "company": {
+      "emptyTitle": "Ensimmäinen kontekstitorneesi alkaa tästä.",
+      "emptyDescription": "Käännä yritys Startup OS -ympäristössä nähdäksesi ja muokataksesi sen kontekstipinoa.",
+      "emptyAction": "Avaa Startup OS",
+      "notice": {
+        "needsProvider": "Yhdistä tekoälypalveluntarjoajan avain täyttääksesi kentät automaattisesti.",
+        "generateFailed": "Generointi ei sujunut loppuun.",
+        "saveFailed": "Muutoksiasi ei tallennettu."
+      },
+      "action": {
+        "save": "Tallenna",
+        "saving": "Tallennetaan…",
+        "cancel": "Peruuta",
+        "open": "Avaa Startup OS"
+      }
+    },
+    "execution": {
+      "noBets": "Ei vielä vetoja.",
+      "noRuns": "Ei aktiivisia suorituksia."
+    },
+    "fileTree": {
+      "empty": "Tässä projektissa ei vielä ole tiedostoja."
+    }
+  },
+  "selectOrg": {
+    "invitation": {
+      "emptyTitle": "Työtila on tulossa.",
+      "emptyDescription": "Kutsu voi olla vielä synkronoimassa. Päivitä tämä sivu tai luo erillinen työtila."
+    },
+    "billing": {
+      "emptyTitle": "Luo työtila ennen laskutusta.",
+      "emptyDescription": "Laskutustoiminnat vaativat aktiivisen työtilan. Luo yksi ensin ja palaa sitten laskutukseen."
+    },
+    "default": {
+      "emptyTitle": "Ensimmäinen työtila alkaa tästä.",
+      "emptyDescription": "Luo työtila aloittaaksesi."
+    }
+  }
+}

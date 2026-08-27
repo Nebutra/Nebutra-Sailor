@@ -1,0 +1,116 @@
+# PR auto-labeler configuration
+# Docs: https://github.com/actions/labeler
+
+# ── Apps ──────────────────────────────────────────────────────────────────────
+
+"app: landing":
+  - changed-files:
+      - any-glob-to-any-file: "apps/landing/**"
+
+"app: web":
+  - changed-files:
+      - any-glob-to-any-file: "apps/web/**"
+
+"app: api-gateway":
+  - changed-files:
+      - any-glob-to-any-file: "backends/gateway/**"
+
+"app: studio":
+  - changed-files:
+      - any-glob-to-any-file: "apps/studio/**"
+
+"app: storybook":
+  - changed-files:
+      - any-glob-to-any-file: "apps/storybook/**"
+
+# ── Packages ──────────────────────────────────────────────────────────────────
+
+"pkg: ui":
+  - changed-files:
+      - any-glob-to-any-file: "packages/design/ui/**"
+
+"pkg: tokens":
+  - changed-files:
+      - any-glob-to-any-file: "packages/design/tokens/**"
+
+"pkg: db":
+  - changed-files:
+      - any-glob-to-any-file: "packages/platform/db/**"
+
+"pkg: logger":
+  - changed-files:
+      - any-glob-to-any-file: "packages/platform/logger/**"
+
+"pkg: analytics":
+  - changed-files:
+      - any-glob-to-any-file: "packages/platform/analytics/**"
+
+"pkg: feature-flags":
+  - changed-files:
+      - any-glob-to-any-file: "packages/platform/feature-flags/**"
+
+"pkg: billing":
+  - changed-files:
+      - any-glob-to-any-file: "packages/commerce/billing/**"
+
+# ── Services ──────────────────────────────────────────────────────────────────
+
+"service: ai":
+  - changed-files:
+      - any-glob-to-any-file: "backends/python/ai/**"
+
+"service: recsys":
+  - changed-files:
+      - any-glob-to-any-file: "backends/python/recsys/**"
+
+"service: event-ingest":
+  - changed-files:
+      - any-glob-to-any-file: "backends/python/event-ingest/**"
+
+# ── Infrastructure ────────────────────────────────────────────────────────────
+
+"infra: k8s":
+  - changed-files:
+      - any-glob-to-any-file: "infra/iac/k8s/**"
+
+"infra: terraform":
+  - changed-files:
+      - any-glob-to-any-file: "infra/iac/terraform/**"
+
+"infra: docker":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/Dockerfile*"
+          - "docker-compose*.yml"
+          - ".dockerignore"
+
+"ci/cd":
+  - changed-files:
+      - any-glob-to-any-file: ".github/**"
+
+# ── Change type ───────────────────────────────────────────────────────────────
+
+"dependencies":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/package.json"
+          - "pnpm-lock.yaml"
+          - "**/requirements*.txt"
+          - "**/pyproject.toml"
+
+"docs":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.md"
+          - "apps/docs/**"
+          - "apps/design-docs/**"
+
+"tests":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.test.ts"
+          - "**/*.test.tsx"
+          - "**/*.spec.ts"
+          - "**/*.spec.tsx"
+          - "**/__tests__/**"
+          - "e2e/**"

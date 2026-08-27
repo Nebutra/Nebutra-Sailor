@@ -1,0 +1,326 @@
+---
+title: 文件上传
+description: 如何使用预签名 URL、分片上传和 Tus 断点续传通过 @nebutra/uploads 上传文件。
+---
+
+`@nebutra/uploads` 支持三种上传策略。100 MB 以下的简单文件使用预签名 URL，大文件使用分片上传，网络不稳定时使用 Tus 断点续传。
+
+## 预签名 URL 上传
+
+最常用的方案。服务端生成一个短期有效的 URL，客户端直接上传到存储提供商，不经过你的服务器。
+
+<Steps>
+  <Step title="配置环境变量">
+    设置存储提供商的凭据。完整变量说明请参阅[提供商](/storage/providers)。
+
+    ```bash
+    AWS_BUCKET_NAME=nebutra-uploads
+    AWS_REGION=us-east-1
+    AWS_ACCESS_KEY_ID=AKIA...
+    AWS_SECRET_ACCESS_KEY=...
+    ```
+  </Step>
+
+  <Step title="创建服务端上传接口">
+    在服务端生成预签名 URL，并限定在已认证租户的范围内。
+
+    ```typescript
+    // app/api/upload/presigned/route.ts
+    import { getUploadProvider } from "@nebutra/uploads";
+    import { getCurrentTenant } from "@nebutra/tenant";
+    import { z } from "zod";
+
+    const bodySchema = z.object({
+      filename: z.string().min(1).max(255),
+      contentType: z.string().min(1),
+      size: z.number().int().positive().max(100 * 1024 * 1024), // 100 MB
+    });
+
+    export async function POST(request: Request) {
+      const tenant = getCurrentTenant();
+      const body = bodySchema.parse(await request.json());
+
+      // 在服务端校验文件类型
+      const allowedTypes = ["image/jpeg", "image/png", "image/webp", "application/pdf"];
+      if (!allowedTypes.includes(body.contentType)) {
+        return Response.json({ error: "File type not allowed" }, { status: 422 });
+      }
+
+      const uploads = await getUploadProvider();
+      const key = `${tenant.tenantId}/${Date.now()}-${body.filename}`;
+
+      const { url, headers } = await uploads.createPresignedUpload({
+        bucket: process.env.AWS_BUCKET_NAME!,
+        key,
+        contentType: body.contentType,
+        tenantId: tenant.tenantId,
+        expiresIn: 3600,
+      });
+
+      return Response.json({ url, headers, key });
+    }
+    ```
+  </Step>
+
+  <Step title="从客户端上传">
+    使用预签名 URL 直接上传到存储提供商。
+
+    ```typescript
+    async function uploadFile(file: File): Promise<string> {
+      // 1. 从服务端获取预签名 URL
+      const res = await fetch("/api/upload/presigned", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          filename: file.name,
+          contentType: file.type,
+          size: file.size,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to get upload URL");
+      const { url, headers, key } = await res.json();
+
+      // 2. 直接上传到 S3/R2
+      const uploadRes = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": file.type,
+          ...headers,
+        },
+        body: file,
+      });
+
+      if (!uploadRes.ok) throw new Error("Upload failed");
+      return key;
+    }
+    ```
+  </Step>
+
+  <Step title="确认并保存文件引用">
+    上传完成后，将文件键存入数据库以便后续检索。
+
+    ```typescript
+    const key = await uploadFile(file);
+
+    await db.attachment.create({
+      data: {
+        key,
+        filename: file.name,
+        contentType: file.type,
+        size: file.size,
+        tenantId: tenant.tenantId,
+      },
+    });
+    ```
+  </Step>
+</Steps>
+
+## 带进度的 React Hook
+
+使用此 hook 在 UI 组件中追踪上传进度。
+
+```typescript
+// hooks/use-file-upload.ts
+import { useState, useCallback } from "react";
+
+interface UploadState {
+  progress: number;
+  status: "idle" | "uploading" | "done" | "error";
+  key: string | null;
+  error: string | null;
+}
+
+export function useFileUpload() {
+  const [state, setState] = useState<UploadState>({
+    progress: 0,
+    status: "idle",
+    key: null,
+    error: null,
+  });
+
+  const upload = useCallback(async (file: File) => {
+    setState({ progress: 0, status: "uploading", key: null, error: null });
+
+    try {
+      const res = await fetch("/api/upload/presigned", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          filename: file.name,
+          contentType: file.type,
+          size: file.size,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to get upload URL");
+      const { url, headers, key } = await res.json();
+
+      // 使用 XMLHttpRequest 获取进度事件
+      await new Promise<void>((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable) {
+            setState((prev) => ({
+              ...prev,
+              progress: Math.round((event.loaded / event.total) * 100),
+            }));
+          }
+        };
+
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) resolve();
+          else reject(new Error(`Upload failed with status ${xhr.status}`));
+        };
+
+        xhr.onerror = () => reject(new Error("Network error"));
+
+        xhr.open("PUT", url);
+        Object.entries(headers ?? {}).forEach(([k, v]) =>
+          xhr.setRequestHeader(k, v as string)
+        );
+        xhr.setRequestHeader("Content-Type", file.type);
+        xhr.send(file);
+      });
+
+      setState({ progress: 100, status: "done", key, error: null });
+    } catch (err) {
+      setState({
+        progress: 0,
+        status: "error",
+        key: null,
+        error: err instanceof Error ? err.message : "Upload failed",
+      });
+    }
+  }, []);
+
+  return { ...state, upload };
+}
+```
+
+## 分片上传（超过 10 MB 的文件）
+
+对于大文件，将上传拆分为多个分片。各分片并行上传后由存储提供商合并。
+
+```typescript
+import { getUploadProvider } from "@nebutra/uploads";
+
+const uploads = await getUploadProvider();
+
+// 发起分片上传（10 个分片）
+const mp = await uploads.createMultipartUpload(
+  {
+    bucket: "nebutra-uploads",
+    key: `${tenantId}/videos/demo.mp4`,
+  },
+  10 // 分片数量
+);
+
+// mp.uploadId       — 分片上传会话标识符
+// mp.parts          — [{ partNumber, presignedUrl }] 数组
+
+// 从客户端上传每个分片
+const uploadedParts = await Promise.all(
+  mp.parts.map(async ({ partNumber, presignedUrl }) => {
+    const start = (partNumber - 1) * partSize;
+    const end = Math.min(start + partSize, file.size);
+    const chunk = file.slice(start, end);
+
+    const res = await fetch(presignedUrl, { method: "PUT", body: chunk });
+    const etag = res.headers.get("ETag")!;
+    return { partNumber, etag };
+  })
+);
+
+// 完成分片上传
+await uploads.completeMultipartUpload(
+  "nebutra-uploads",
+  mp.key,
+  mp.uploadId,
+  uploadedParts
+);
+```
+
+<Note>
+每个分片必须至少 5 MB（最后一个分片除外）。建议的最小分片大小为 `10 * 1024 * 1024`（10 MB）。
+</Note>
+
+## Tus 断点续传
+
+<Note>
+  `@nebutra/uploads` 的 Tus 适配器正在开发中，将遵循 [tus-js-client](https://github.com/tus/tus-js-client) 接口规范，并集成到 `UploadProvider` 抽象层中。
+</Note>
+
+在适配器正式发布之前，对于超过 100 MB 的文件请使用上方的**分片上传**方案。如需立即支持断点续传，可直接调用 S3/R2 分片上传 API：
+
+```typescript
+// 持久化 uploadId 和 ETags，以便浏览器刷新后恢复上传
+const { uploadId, key } = await uploads.createMultipartUpload(
+  { bucket: "nebutra-uploads", key: "videos/demo.mp4" },
+  10  // 分片数量
+);
+
+// 将 uploadId 存储在 localStorage 或 sessionStorage 中
+localStorage.setItem("pendingUpload", JSON.stringify({ uploadId, key, etags: [] }));
+
+// 恢复时，从存储中加载并使用收集到的 ETags 调用 completeMultipartUpload
+```
+
+可关注 [更新日志](/changelog) 或 `packages/integrations/uploads/` 目录中的 `tus.ts` 适配器文件以跟踪进度。
+
+## 服务端文件校验
+
+在签发预签名 URL 之前，务必在服务端校验文件类型和大小。不要仅依赖客户端提供的 MIME 类型。
+
+```typescript
+import { z } from "zod";
+
+const ALLOWED_MIME_TYPES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+  "application/pdf",
+  "text/csv",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+]);
+
+const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100 MB
+
+const uploadRequestSchema = z.object({
+  filename: z
+    .string()
+    .min(1)
+    .max(255)
+    .regex(/^[\w\-. ]+$/, "Filename contains invalid characters"),
+  contentType: z.string().refine(
+    (type) => ALLOWED_MIME_TYPES.has(type),
+    "File type is not allowed"
+  ),
+  size: z
+    .number()
+    .int()
+    .positive()
+    .max(MAX_FILE_SIZE, "File exceeds the 100 MB limit"),
+});
+```
+
+<Warning>
+仅靠 MIME 类型校验是不够的。对于敏感上传场景，文件落入存储桶后，还应在服务端使用魔法字节检测（如 `file-type` npm 包）进行二次校验。
+</Warning>
+
+<CardGroup cols={2}>
+  <Card title="提供商" icon="server" href="/storage/providers">
+    AWS S3、Cloudflare R2 和兼容 S3 的配置
+  </Card>
+  <Card title="访问文件" icon="file" href="/storage/accessing-files">
+    签名 URL、CDN 和 Next.js 图片优化
+  </Card>
+  <Card title="存储概览" icon="hard-drive" href="/storage/overview">
+    架构与上传策略对比
+  </Card>
+  <Card title="多租户" icon="building" href="/zh/guides/multi-tenancy">
+    租户上下文与键前缀约定
+  </Card>
+</CardGroup>

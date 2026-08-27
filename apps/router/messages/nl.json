@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — API-marktplaats",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "API-marktplaats voor alle modellen · betaal per gebruik · beheer sleutels & portemonnee · snel uitproberen."
+  },
+  "admin": {
+    "dashboard": "Overzicht",
+    "keys": "API-sleutels",
+    "wallet": "Portefeuille",
+    "docs": "Documentatie",
+    "title": "Beheerder",
+    "backToMarket": "Terug naar de markt",
+    "quickUse": "Snel gebruiken"
+  },
+  "chrome": {
+    "searchPlaceholder": "Wat wil je met AI doen?",
+    "search": "Zoeken",
+    "locale": "Taal",
+    "currency": "Valuta",
+    "collapseSidebar": "Zijbalk inklappen",
+    "expandSidebar": "Zijbalk uitvouwen",
+    "home": "Startpagina",
+    "adminConsole": "Beheer",
+    "quickUse": "Snel gebruiken",
+    "support": "Ondersteuning",
+    "apiDocs": "API-documentatie",
+    "integrationHelp": "Integratiehandleiding",
+    "aiRecommend": "AI-keuzes",
+    "market": "Marktplaats",
+    "usageTitle": "Snel gebruiken"
+  },
+  "channels": {
+    "app": "App-marktplaats",
+    "api": "API-marktplaats",
+    "models": "Modelcatalogus",
+    "client": "Client"
+  },
+  "market": {
+    "new": "Nieuw",
+    "hot": "Populair",
+    "forYou": "Voor jou",
+    "grid": "Roster",
+    "list": "Lijst",
+    "apiShelf": "API-schouw",
+    "toolShelf": "Tool-schouw",
+    "categories": "Categorieën",
+    "apps": "Apps",
+    "newRelease": "Nieuwe release",
+    "forgeTitle": "Forge-toolwerkruimte",
+    "forgeBlurb": "Teksttransformaties, codecs, formulieren en samenstelbare tools. De app-marktplaatslab verwijst naar Forge.",
+    "openForge": "Open Forge →",
+    "allApi": "Alle API's →",
+    "all": "Alles →",
+    "viewAll": "Bekijk alle {label} →",
+    "gridView": "Rasterweergave",
+    "listView": "Lijstweergave",
+    "hiTitle": "Enterprise AI-bronnenplatform",
+    "hiSubtitle": "Voor elke behoefte de juiste AI",
+    "sellable": "Verkoopt",
+    "walletTopup": "Opladen"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "Taalmodellen",
+      "hint": "Chat · redeneren"
+    },
+    "image-gen": {
+      "label": "Afbeeldingsgeneratie",
+      "hint": "Tekst-naar-afbeelding"
+    },
+    "image-edit": {
+      "label": "Afbeeldingsbewerking",
+      "hint": "Bewerken · matting"
+    },
+    "video": {
+      "label": "Videogeneratie",
+      "hint": "Tekst-naar-video"
+    },
+    "audio": {
+      "label": "Audio en video",
+      "hint": "Spraak · transcriptie"
+    },
+    "data": {
+      "label": "Informatie",
+      "hint": "Ophalen · extraheren"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "Kennisverrijkt"
+    },
+    "tools": {
+      "label": "Tool-API's",
+      "hint": "Agent · tools"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "Bots",
+      "chips": "Chatbots · tekenbots · kennis"
+    },
+    "productivity": {
+      "label": "Productiviteit",
+      "chips": "Modelarena · AI-schrijven"
+    },
+    "academic": {
+      "label": "Academisch",
+      "chips": "PDF-toolkit · AI-patentzoeken"
+    },
+    "image": {
+      "label": "Afbeeldingstools",
+      "chips": "3D-studio · Canvas"
+    },
+    "audio": {
+      "label": "Audio",
+      "chips": "Spraak · AI muziek"
+    },
+    "code": {
+      "label": "Code",
+      "chips": "Webgenerator · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "Overzicht",
+    "keys": "Sleutels",
+    "wallet": "Portefeuille",
+    "use": "Proberen",
+    "docs": "Documentatie",
+    "models": "Meer"
+  }
+}

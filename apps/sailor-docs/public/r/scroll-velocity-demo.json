@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scroll-velocity-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/scroll-velocity-demo.tsx",
+      "content": "\"use client\";\n\nimport { ScrollVelocityContainer, ScrollVelocityRow } from \"@nebutra/ui/primitives\";\n\nexport function ScrollVelocityDemo() {\n  return (\n    <div className=\"py-12 md:py-24 mx-auto w-full overflow-hidden border-y bg-background font-sans\">\n      <div className=\"mb-12 px-4 text-center\">\n        <h2 className=\"text-2xl font-bold tracking-tight mb-2\">Scroll Velocity</h2>\n        <p className=\"text-muted-foreground\">\n          Scroll down or up to change the speed and direction.\n        </p>\n      </div>\n\n      <ScrollVelocityContainer className=\"gap-6 flex flex-col\">\n        <ScrollVelocityRow baseVelocity={3} direction={1}>\n          <div className=\"gap-4 pr-4 flex\">\n            <span className=\"text-4xl md:text-6xl font-black tracking-tighter text-foreground uppercase opacity-80\">\n              BUILD FASTER\n            </span>\n            <span className=\"text-4xl md:text-6xl font-black tracking-tighter stroke-text text-transparent uppercase\">\n              •\n            </span>\n            <span className=\"text-4xl md:text-6xl font-black tracking-tighter text-foreground uppercase opacity-80\">\n              SHIP SAFER\n            </span>\n            <span className=\"text-4xl md:text-6xl font-black tracking-tighter stroke-text text-transparent uppercase\">\n              •\n            </span>\n            <span className=\"text-4xl md:text-6xl font-black tracking-tighter text-foreground uppercase opacity-80\">\n              SCALE HIGHER\n            </span>\n            <span className=\"text-4xl md:text-6xl font-black tracking-tighter stroke-text text-transparent uppercase\">\n              •\n            </span>\n          </div>\n        </ScrollVelocityRow>\n\n        <ScrollVelocityRow baseVelocity={4} direction={-1}>\n          <div className=\"gap-4 pr-4 flex\">\n            <span className=\"text-4xl md:text-6xl font-black tracking-tighter text-primary uppercase\">\n              NEXTJS\n            </span>\n            <span className=\"text-4xl md:text-6xl font-black tracking-tighter stroke-text text-transparent uppercase\">\n              •\n            </span>\n            <span className=\"text-4xl md:text-6xl font-black tracking-tighter text-primary uppercase\">\n              REACT\n            </span>\n            <span className=\"text-4xl md:text-6xl font-black tracking-tighter stroke-text text-transparent uppercase\">\n              •\n            </span>\n            <span className=\"text-4xl md:text-6xl font-black tracking-tighter text-primary uppercase\">\n              TAILWIND\n            </span>\n            <span className=\"text-4xl md:text-6xl font-black tracking-tighter stroke-text text-transparent uppercase\">\n              •\n            </span>\n          </div>\n        </ScrollVelocityRow>\n      </ScrollVelocityContainer>\n\n      <style jsx global>{`\n        .stroke-text {\n          -webkit-text-stroke: 1px hsl(var(--foreground));\n        }\n      `}</style>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

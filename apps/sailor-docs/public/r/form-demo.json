@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "form-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/form-demo.tsx",
+      "content": "\"use client\";\n\nimport { Button, Input, Label } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nexport function FormDemo() {\n  const [username, setUsername] = useState(\"\");\n  const [submitted, setSubmitted] = useState<string | null>(null);\n\n  const trimmed = username.trim();\n  const error =\n    trimmed.length === 0\n      ? \"Username is required.\"\n      : trimmed.length < 2\n        ? \"Username must be at least 2 characters.\"\n        : null;\n\n  return (\n    <form\n      className=\"max-w-sm space-y-4 p-6 w-full rounded-xl border bg-background text-left shadow-sm\"\n      onSubmit={(event) => {\n        event.preventDefault();\n        if (error) return;\n        setSubmitted(trimmed);\n      }}\n    >\n      <div className=\"space-y-2\">\n        <Label htmlFor=\"form-demo-username\">Username</Label>\n        <Input\n          id=\"form-demo-username\"\n          placeholder=\"johndoe\"\n          value={username}\n          aria-invalid={Boolean(error)}\n          aria-describedby=\"form-demo-description form-demo-message\"\n          onChange={(event) => {\n            setUsername(event.target.value);\n            if (submitted) setSubmitted(null);\n          }}\n        />\n        <p id=\"form-demo-description\" className=\"text-sm text-muted-foreground\">\n          This is your public display name.\n        </p>\n        <p id=\"form-demo-message\" className=\"min-h-5 text-sm text-destructive\" aria-live=\"polite\">\n          {error ?? \"\"}\n        </p>\n      </div>\n      <div className=\"gap-3 flex items-center\">\n        <Button type=\"submit\" disabled={Boolean(error)}>\n          Submit\n        </Button>\n        {submitted ? (\n          <span className=\"text-sm text-muted-foreground\">Saved as {submitted}</span>\n        ) : null}\n      </div>\n    </form>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

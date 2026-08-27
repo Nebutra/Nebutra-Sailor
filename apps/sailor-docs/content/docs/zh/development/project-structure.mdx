@@ -1,0 +1,187 @@
+---
+title: 项目结构
+description: Nebutra-Sailor monorepo 目录树——按领域分类的 packages、按语言切分的 backends，以及 infra / workflows / e2e / tests 顶层目录。
+---
+
+Nebutra-Sailor monorepo 顶层按**用途**组织（`apps/`、`backends/`、`packages/`、`infra/`、`workflows/`、`e2e/`、`tests/`），其中 packages 进一步按**领域**分类（`packages/<category>/<name>/`）。
+
+## 顶层布局
+
+```
+nebutra-sailor/
+├── apps/                面向用户的应用（Next.js / Hono / Storybook / 文档站）
+├── backends/            无 UI 后端 —— 按语言切分（gateway/、python/）
+├── packages/            共享 TypeScript 库 —— 按领域分类
+├── infra/               iac/ + runtime/ + data/ + ops/  （Wave 2.2）
+├── workflows/           inngest/ + n8n/ + pusher/        （Wave 2.3）
+├── e2e/                 smoke/ + golden/ + sleptons/     （Wave 2.1）
+├── tests/               architecture/ + load/            （vitest + k6）
+├── docs/                内部架构 ADR（仅源仓库可见）
+├── scripts/             仓库级工具脚本
+├── docker-compose.infra.yml
+├── turbo.json
+├── pnpm-workspace.yaml
+└── package.json
+```
+
+## `apps/` —— 面向用户的应用
+
+| 应用 | 框架 | 用途 |
+|------|------|------|
+| `apps/landing` | Next.js 16 + Tailwind v4 | 公开营销站（7 语言） |
+| `apps/web` | Next.js 16 + Tailwind v4 | 已认证的 SaaS 控制台 |
+| `apps/storybook` | Storybook 8.x | 组件库文档 |
+| `apps/design-docs` | Next.js + Fumadocs | 内部设计系统文档 |
+| `apps/sailor-docs` | Next.js + Fumadocs | 公开产品文档（本站） |
+| `apps/studio` | Sanity Studio v4 | CMS —— 内容管理 |
+| `apps/docs` | Mintlify | 公开产品文档（Mintlify 变体） |
+| `apps/idp` | Next.js | 自托管身份服务（IdP） |
+| `apps/mail-preview` | Next.js | React Email 模板预览 |
+| `apps/sleptons` | —— | 辅助产品界面 |
+
+## `backends/` —— 无 UI 服务
+
+```
+backends/
+├── gateway/             TypeScript / Hono —— BFF、认证、租户、限流、路由
+│                        按 ADR 2026-05-10，新后端工作的默认归属
+└── python/              Python / FastAPI —— 仅限批处理 / ML / 专用库场景
+    ├── _shared/         跨服务工具（active）
+    └── ai/              LLM、Embedding、Agent 编排（active）
+```
+
+TS / Python 切分参考 `vercel/vercel` 的 `pkg/` 模式。**新增后端默认进入 `backends/gateway`**，除非满足 [TS-by-Default ADR](/docs/architecture/backend-language-policy) 的例外条件。
+
+每个 Python 模块属于三种生命周期之一 —— `active`（有真实调用者，参与 CI）、`stub`（接口保留、`src/` 为空）、`incubator`（移出 workspaces 与 CI）。
+
+## `packages/` —— 按领域分类的库
+
+所有包都位于 `packages/<category>/<name>/`：
+
+| 类别 | 用途 | 示例 |
+|------|------|------|
+| `design/` | UI、Token、品牌、图标、主题 | `ui`、`tokens`、`design-tokens`、`brand`、`theme`、`icons`、`design-sync` |
+| `iam/` | 身份、认证、租户、密钥、审计、权限 | `auth`、`audit`、`vault`、`tenant`、`permissions`、`identity` |
+| `commerce/` | 计费、营销、License、计量、契约、Waitlist | `billing`、`contracts`、`license`、`marketing`、`metering`、`waitlist` |
+| `integrations/` | 队列、搜索、通知、Webhook、上传、存储、邮件、Saga | `queue`、`search`、`notifications`、`webhooks`、`uploads`、`storage`、`email`、`saga` |
+| `platform/` | 底层平台原语 | `db`、`logger`、`config` |
+| `ai/` | AI 原语与 Provider 元数据 | `mcp`、`ai-providers`、`agents` |
+| `ops/` | CLI、脚手架、预设、Sanity 辅助 | `cli`、`create-sailor`、`sanity`、`preset` |
+
+### Design System 变更
+
+`@nebutra/design-system` 已**合并入 `@nebutra/ui`**。原本由它导出的布局封装组件现位于 `@nebutra/ui/layout`：
+
+```tsx
+import { Button, Input, Card } from "@nebutra/ui/components";
+import { PageHeader, EmptyState, LoadingState } from "@nebutra/ui/layout";
+```
+
+### 图标治理（三层）
+
+允许的图标库共有三个，每个有清晰的位置：
+
+| 层级 | 包 | 适用场景 |
+|------|----|----------|
+| 1 —— 默认 | `@nebutra/icons`（Geist 541） | 全部产品 / 应用 / 控制台界面 |
+| 2 —— 营销 | `@phosphor-icons/react/light` | **仅限** `packages/design/ui/src/marketing/**`，提供 AI 品牌所需的细描 / 双色调权重 |
+| 3 —— 弃用 | `lucide-react` | **禁止新增任何引用**——现有引用将逐步迁移 |
+
+详见 [Linting 规则](/docs/customization/linting-rules)。
+
+## `infra/`、`workflows/`、`e2e/`、`tests/`
+
+```
+infra/
+├── iac/                 Terraform / Pulumi
+├── runtime/             Cloud Run / ECS / Vercel 运行时配置
+├── data/                迁移 / 数据填充流水线
+└── ops/                 运维 Runbook
+
+workflows/
+├── inngest/             持久化工作流函数
+├── n8n/                 自托管 n8n 工作流 JSON 导出
+└── pusher/              实时频道
+
+e2e/
+├── smoke/               关键路径冒烟测试
+├── golden/              黄金路径视觉回归
+├── sleptons/            Sleptons 产品流
+├── playwright.config.ts
+├── playwright.golden.config.ts
+└── playwright.sleptons.config.ts
+
+tests/
+├── architecture/        架构合规测试（vitest）
+└── load/                压力测试（k6）
+```
+
+`nebutra workflow init <provider>` 将起始模板写入 `workflows/<provider>/`；`nebutra e2e <suite>` 通过对应的 Playwright 配置运行套件。
+
+## 文件命名约定
+
+| 模式 | 示例 | 用途 |
+|------|------|------|
+| `kebab-case.tsx` | `user-avatar.tsx` | React 组件 |
+| `kebab-case.ts` | `format-date.ts` | 工具 / 辅助函数 |
+| `*.test.ts` / `*.test.tsx` | `billing.test.ts` | Vitest 测试 |
+| `*.stories.tsx` | `button.stories.tsx` | Storybook Story |
+| `route.ts` | `app/api/webhooks/route.ts` | Next.js App Router API 路由 |
+| `page.tsx` / `layout.tsx` | `app/dashboard/page.tsx` | App Router 页面 / 布局 |
+
+## 新增内容应放在哪里
+
+| 你想要…… | 放置位置 |
+|----------|----------|
+| 新增控制台页面 | `apps/web/src/app/(dashboard)/` |
+| 新增营销页面 | `apps/landing/src/app/[lang]/` |
+| 新增 API 路由 | `backends/gateway/src/routes/` |
+| 新增 Python 服务 | `backends/python/<name>/`（README 必须引用 ADR 例外理由） |
+| 新增 UI 组件 | `packages/design/ui/src/components/` + Storybook Story |
+| 新增布局封装组件 | `packages/design/ui/src/layout/` |
+| 新增设计 Token | `packages/design/tokens/styles.css` |
+| 新增邮件模板 | `packages/integrations/email/src/templates/` |
+| 新增 Prisma 模型 | `packages/platform/db/prisma/schema.prisma` |
+| 新增队列处理器 | `packages/integrations/queue/src/handlers/` |
+| 新增工作流 | `workflows/<provider>/`（用 `nebutra workflow init` 脚手架） |
+| 新增 E2E 测试 | `e2e/<suite>/` |
+
+## Turborepo 任务管道
+
+仓库根目录的 `turbo.json` 定义了任务依赖关系：
+
+```json
+{
+  "tasks": {
+    "build":     { "dependsOn": ["^build"], "outputs": [".next/**", "dist/**"] },
+    "typecheck": { "dependsOn": ["^typecheck"] },
+    "lint":      { "dependsOn": [] },
+    "test":      { "dependsOn": ["^build"] },
+    "dev":       { "cache": false, "persistent": true }
+  }
+}
+```
+
+使用 `--filter` 将任务限定到单个 workspace：
+
+```bash
+pnpm turbo run build --filter=@nebutra/ui
+pnpm turbo run typecheck --filter=apps/web
+```
+
+## 相关内容
+
+<CardGroup cols={2}>
+  <Card title="后端语言策略" icon="server" href="/zh/docs/architecture/backend-language-policy">
+    TS-by-Default ADR —— 何时（且仅何时）可以引入 Python。
+  </Card>
+  <Card title="Lint 规则" icon="shield" href="/zh/docs/customization/linting-rules">
+    Lint 强制治理：表单控件、焦点环、图标层级。
+  </Card>
+  <Card title="本地开发" icon="laptop" href="/zh/docs/development/local-dev">
+    开发环境分步配置指南。
+  </Card>
+  <Card title="开发概览" icon="map" href="/zh/docs/development/overview">
+    前置条件与快速开始。
+  </Card>
+</CardGroup>

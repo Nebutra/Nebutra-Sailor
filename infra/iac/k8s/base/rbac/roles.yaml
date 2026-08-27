@@ -1,0 +1,116 @@
+# =============================================================================
+# Roles & RoleBindings — least-privilege access within the nebutra namespace.
+#
+# Design:
+#   - app-config-reader  : read ConfigMaps (all workloads need this)
+#   - db-migrator        : used by the api-gateway migrate init container
+#   - metrics-reader     : read Pod metrics (Prometheus scrape via serviceaccount)
+#
+# Note: Pods do NOT need RBAC to consume secrets mounted via secretKeyRef —
+# the Kubelet fetches those. RBAC is only needed when the pod's own process
+# calls the K8s API (e.g., to list pods, read configmaps dynamically).
+# =============================================================================
+
+---
+# All application pods — read non-secret config from ConfigMaps
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: app-config-reader
+  namespace: nebutra
+  labels:
+    app.kubernetes.io/part-of: nebutra-sailor
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "list", "watch"]
+
+---
+# API gateway only — needed to read its own Pod info for health/diagnostics
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: api-gateway-operator
+  namespace: nebutra
+  labels:
+    app.kubernetes.io/part-of: nebutra-sailor
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "list", "watch"]
+  # Required for Inngest serve handler introspection
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get"]
+
+---
+# Metrics scrape — Prometheus uses a ServiceAccount that can read pod/node metrics
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: nebutra-metrics-reader
+  labels:
+    app.kubernetes.io/part-of: nebutra-sailor
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "nodes", "services", "endpoints"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["metrics.k8s.io"]
+    resources: ["pods", "nodes"]
+    verbs: ["get", "list"]
+
+---
+# ── RoleBindings ─────────────────────────────────────────────────────────────
+
+# api-gateway gets its own elevated Role
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-gateway-operator
+  namespace: nebutra
+  labels:
+    app.kubernetes.io/part-of: nebutra-sailor
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: api-gateway-operator
+subjects:
+  - kind: ServiceAccount
+    name: api-gateway
+    namespace: nebutra
+
+---
+# All other services — read-only config access
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: app-config-readers
+  namespace: nebutra
+  labels:
+    app.kubernetes.io/part-of: nebutra-sailor
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: app-config-reader
+subjects:
+  - kind: ServiceAccount
+    name: web
+    namespace: nebutra
+  - kind: ServiceAccount
+    name: landing
+    namespace: nebutra
+  - kind: ServiceAccount
+    name: ai-service
+    namespace: nebutra
+  - kind: ServiceAccount
+    name: ecommerce-service
+    namespace: nebutra
+  - kind: ServiceAccount
+    name: recsys-service
+    namespace: nebutra
+  - kind: ServiceAccount
+    name: event-ingest-service
+    namespace: nebutra
+  - kind: ServiceAccount
+    name: studio
+    namespace: nebutra

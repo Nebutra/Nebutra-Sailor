@@ -1,0 +1,31 @@
+# Pinned supply-engine images for Nebutra Router.
+# Bump only with changelog review + contract smoke tests.
+
+new-api:
+  image: calciumion/new-api
+  tag: v0.8.7.4
+  role: channel-hub
+  notes: Official keys, peer New-API, model channels. Internal ops UI only.
+
+sub2api:
+  image: ghcr.io/wei-shaw/sub2api
+  tag: latest
+  role: subscription-pool
+  notes: >
+    B-class account/subscription relay. Compose profile "sub2api".
+    Pin a digest in production; "latest" is for lab only.
+
+redis:
+  image: redis
+  tag: 7.4-alpine
+
+postgres:
+  image: postgres
+  tag: 16-alpine
+
+policy:
+  public_ingress: false
+  customer_entry: https://router.nebutra.com
+  upgrade_requires:
+    - contract tests against chat completions stream
+    - balance debit reconciliation sample

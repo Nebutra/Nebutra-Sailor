@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/text-demo.tsx",
+      "content": "import { Text } from \"@nebutra/ui/primitives\";\n\nexport function TextDemo() {\n  return (\n    <div className=\"gap-4 flex flex-col\">\n      <Text variant=\"body\">Body text — default paragraph style</Text>\n      <Text variant=\"body-sm\">Small body — captions and secondary content</Text>\n      <Text variant=\"label\" color=\"muted\">\n        Label — form labels and metadata\n      </Text>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "drawer-3-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/drawer-3-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Button,\n  Drawer,\n  DrawerBody,\n  DrawerClose,\n  DrawerContent,\n  DrawerDescription,\n  DrawerFooter,\n  DrawerHeader,\n  DrawerTitle,\n  DrawerTrigger,\n} from \"@nebutra/ui/primitives\";\nexport function Drawer3Demo() {\n  return (\n    <Drawer height=\"70vh\">\n      <DrawerTrigger asChild>\n        <Button variant=\"outline\">Open Scrollable</Button>\n      </DrawerTrigger>\n      <DrawerContent>\n        <DrawerHeader>\n          <DrawerTitle>Notification Rules</DrawerTitle>\n          <DrawerDescription>Review the rules before applying changes.</DrawerDescription>\n        </DrawerHeader>\n        <DrawerBody>\n          <div className=\"grid gap-2\">\n            {Array.from({ length: 12 }, (_, index) => (\n              <div\n                key={index}\n                className=\"rounded-[var(--radius-md)] border bg-card px-3 py-2 text-sm text-muted-foreground\"\n              >\n                Rule {index + 1}: notify the owner when this condition matches.\n              </div>\n            ))}\n          </div>\n        </DrawerBody>\n        <DrawerFooter>\n          <Button>Save Rules</Button>\n          <DrawerClose asChild>\n            <Button variant=\"outline\">Cancel</Button>\n          </DrawerClose>\n        </DrawerFooter>\n      </DrawerContent>\n    </Drawer>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

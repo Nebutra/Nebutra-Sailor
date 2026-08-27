@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — محطة أدوات عبر الإنترنت",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "أدوات عبر الإنترنت للتشفير، والنصوص، والتجزئة، والمستندات، والصور."
+  },
+  "nav": {
+    "main": "التنقل الرئيسي",
+    "homeAria": "الصفحة الرئيسية لـ {brandName} Forge",
+    "tools": "الأدوات",
+    "wallet": "المحفظة",
+    "api": "API",
+    "routerAria": "{brandName} Router",
+    "categoriesAria": "فئات الأدوات",
+    "languageAria": "تغيير اللغة"
+  },
+  "tool": {
+    "breadcrumbAria": "مسار التنقل",
+    "workspace": "مساحة العمل",
+    "workspaceHint": "محلي أو خادم · نفس مسار API",
+    "api": "API",
+    "apiHint": "نفس العقد الموجود في الصفحة. استخدم مفتاحاً مصادقاً في الإنتاج.",
+    "related": "أدوات ذات صلة"
+  },
+  "auth": {
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "signOut": "تسجيل الخروج"
+  },
+  "footer": {
+    "navAria": "تذييل الصفحة",
+    "blurb": "محطة أدوات عبر الإنترنت. أكمل المهام في المتصفح، أو أتمها عبر API / MCP.",
+    "product": "المنتج",
+    "developers": "المطورون",
+    "company": "الشركة",
+    "docs": "وثائق التكامل",
+    "website": "الموقع الإلكتروني",
+    "privacy": "الخصوصية"
+  },
+  "home": {
+    "eyebrow": "شاهده. استدعه.",
+    "title": "سكين سويسري متعدد الاستخدامات للأدوات عبر الإنترنت",
+    "subtitle": "ترميز، نص، تجزئة، مستندات، ومعالجة الصور. أكمل في المتصفح، أو أتم عبر API / MCP — تنفيذ واحد.",
+    "toolCount": "{count} أداة",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "بحث: عدد الكلمات، base64، json، timestamp…",
+    "aria": "البحث في الأدوات",
+    "emptyTitle": "لا توجد أدوات مطابقة لـ “{query}”",
+    "emptyHint": "جرب كلمة مفتاحية أخرى، أو اختر أداة من الفئات أدناه."
+  },
+  "categories": {
+    "codec": {
+      "label": "الترميز",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "التحقق الصيني",
+      "hint": "المعرّف · الهاتف"
+    },
+    "data": {
+      "label": "البيانات",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "المطور",
+      "hint": "Regex · SQL · اللون · UUID"
+    },
+    "doc": {
+      "label": "المستندات",
+      "hint": "Markdown · دمج/تقسيم PDF"
+    },
+    "finance": {
+      "label": "المالية",
+      "hint": "المبلغ إلى كلمات"
+    },
+    "hash": {
+      "label": "التجزئة والأمان",
+      "hint": "MD5 · SHA · HMAC · كلمة المرور"
+    },
+    "image": {
+      "label": "الصور",
+      "hint": "ضغط · QR · تحويل"
+    },
+    "life": {
+      "label": "حسابات الحياة",
+      "hint": "الرهن العقاري · مؤشر كتلة الجسم · القرابة"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "الرموز · التكلفة · المخطط"
+    },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
+    "security": {
+      "label": "الأمان",
+      "hint": "مولّد كلمات المرور"
+    },
+    "text": {
+      "label": "النص",
+      "hint": "عدد الكلمات · CJK · بينيين · Diff"
+    },
+    "time": {
+      "label": "الوقت",
+      "hint": "الطابع الزمني · المنطقة الزمنية · Cron · القمري"
+    },
+    "unit": {
+      "label": "الوحدات",
+      "hint": "الطول · الوزن · درجة الحرارة · البيانات"
+    },
+    "template": {
+      "label": "القوالب",
+      "hint": ".gitignore · LICENSE · Dockerfile · README"
+    }
+  },
+  "runners": {
+    "common": {
+      "run": "تشغيل",
+      "running": "جارٍ التشغيل…",
+      "copy": "نسخ",
+      "copied": "تم النسخ",
+      "sameAsApi": "نفس مسار الـ API · محرك مفتوح المصدر",
+      "mustBeNumber": "يجب أن يكون {label} رقمًا",
+      "base64Loaded": "تم تحميل حمولة Base64",
+      "workspaceMissing": "لم يتم تكوين مساحة العمل: {slug}",
+      "yes": "نعم",
+      "no": "لا",
+      "text": "نص",
+      "input": "الإدخال",
+      "output": "الإخراج",
+      "outputPlaceholder": "تظهر النتيجة هنا",
+      "localRun": "تشغيل محلي",
+      "serverRun": "تشغيل على الخادم",
+      "serverVerify": "التحقق من الخادم",
+      "outputPreview": "معاينة الإخراج",
+      "mode": "الوضع",
+      "encode": "ترميز",
+      "decode": "فك الترميز",
+      "file": "ملف",
+      "clear": "مسح",
+      "length": "الطول: {n}",
+      "bytes": "{bytes} بايت",
+      "download": "تحميل",
+      "format": "التنسيق",
+      "formatting": "تنسيق…",
+      "dialect": "اللهجة",
+      "color": "اللون",
+      "pickColor": "اختر لونًا",
+      "content": "المحتوى",
+      "algorithm": "الخوارزمية",
+      "encoding": "ترميز",
+      "message": "الرسالة",
+      "secret": "السر",
+      "password": "كلمة المرور",
+      "direction": "الاتجاه",
+      "preview": "معاينة",
+      "query": "استعلام",
+      "querying": "جاري الاستعلام…",
+      "validate": "تحقق",
+      "validating": "جاري التحقق…",
+      "processing": "جاري المعالجة…",
+      "pretty": "تنسيق",
+      "minify": "تصغير",
+      "from": "من",
+      "to": "إلى",
+      "timezone": "المنطقة الزمنية",
+      "datetime": "التاريخ والوقت",
+      "compute": "حساب",
+      "computing": "جارٍ الحساب…",
+      "convertAction": "تحويل",
+      "count": "العدد",
+      "value": "القيمة",
+      "unit": "الوحدة",
+      "generateLocal": "إنشاء محلي",
+      "generateServer": "إنشاء على الخادم",
+      "copyAll": "نسخ الكل",
+      "emptyResult": "تظهر النتائج هنا",
+      "copyText": "نسخ النص",
+      "quality": "الجودة",
+      "original": "الأصلي",
+      "result": "النتيجة",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
+    },
+    "base64": {
+      "encodeDir": "نص → Base64",
+      "decodeDir": "Base64 → نص",
+      "localNote": "Local Web API (TextEncoder / atob)",
+      "serverNote": "خادم Buffer · نفس مسار API"
+    },
+    "password": {
+      "uppercase": "أحرف كبيرة",
+      "lowercase": "أحرف صغيرة",
+      "digits": "أرقام",
+      "symbols": "رموز",
+      "generate": "إنشاء كلمة مرور",
+      "recent": "الأخيرة",
+      "note": "المحرك: node:crypto randomInt · آمن تشفيرياً · نفس مسار API"
+    },
+    "hash": {
+      "algo": "الخوارزمية: {algo}",
+      "md5Warn": " · للتحقق والتوافق فقط — لا تخزّن كلمات المرور",
+      "md5LocalError": "يتطلب MD5 التشغيل على الخادم (لا يدعم Web Crypto خوارزمية MD5)",
+      "md5ServerHint": "MD5: استخدم التشغيل على الخادم (للتوافق فقط، وليس لتخزين كلمات المرور)",
+      "localNote": "Web Crypto المحلي · {algo}",
+      "serverNote": "خادم node:crypto · نفس مسار API"
+    },
+    "convert": {
+      "converting": "جارٍ التحويل…",
+      "convert": "تحويل",
+      "done": "تم · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "اسحب ملفًا هنا، أو انقر للتصفح",
+      "needFile": "اختر ملفًا أولاً",
+      "needAlgo": "اختر خوارزمية واحدة على الأقل",
+      "compute": "حساب القيم التجزئة",
+      "computing": "جارٍ الحساب…",
+      "algorithms": "الخوارزميات",
+      "note": "node:crypto · خوارزميات متعددة · نفس مسار API"
+    },
+    "lorem": {
+      "paragraphs": "الفقرات",
+      "wordsPerParagraph": "الكلمات في الفقرة",
+      "startWithLorem": "ابدأ بـ \"Lorem ipsum\"",
+      "note": "مولّد Lorem Ipsum · نقي"
+    },
+    "emailValidate": {
+      "note": "مُحقّق البريد الإلكتروني · التنسيق فقط (بدون بحث MX)"
+    },
+    "creditCardLuhn": {
+      "number": "رقم البطاقة",
+      "note": "فاحص Luhn · غير متصل، لا يُحفظ",
+      "digits": "digits",
+      "specimenLabel": "Specimen",
+      "structureOnly": "Luhn structure only",
+      "unknownBrand": "Card"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "مُصغّر JSON · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "مُصغّر CSS · خفيف (آمن للحواف)"
+    },
+    "hashCompare": {
+      "a": "التجزئة أ",
+      "b": "التجزئة ب",
+      "ignoreCase": "تجاهل حالة الأحرف",
+      "note": "مقارن التجزئة · زمن ثابت للطول المتساوي"
+    },
+    "jsonDiff": {
+      "left": "JSON أ",
+      "right": "JSON ب",
+      "note": "اختلاف JSON · عمليات على مستوى المسار · صفوف ملونة حسب النوع · جنبًا إلى جنب",
+      "equal": "متطابق",
+      "differs": "{count} تغيير(ات)",
+      "colPath": "المسار",
+      "colKind": "النوع",
+      "colLeft": "اليسار",
+      "colRight": "اليمين",
+      "filtersAria": "تصفية حسب نوع التغيير",
+      "filterAll": "الكل ({count})",
+      "filterAdd": "إضافة ({count})",
+      "filterRemove": "إزالة ({count})",
+      "filterChange": "تغيير ({count})",
+      "filterType": "النوع ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "الوضع",
+      "pretty": "منسق",
+      "compact": "مضغوط",
+      "indent": "مسافة بادئة",
+      "note": "منسق YAML · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "منسق TOML · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "مُصغّر XML · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "مدقق URL · WHATWG URL (بدون جلب شبكة)"
+    },
+    "ipValidate": {
+      "note": "مدقق IP · IPv4/IPv6 دون اتصال"
+    },
+    "uuidValidate": {
+      "note": "مدقق UUID · شكل RFC 4122"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "مُصغّر HTML · خفيف (آمن للحواف)"
+    },
+    "randomString": {
+      "length": "الطول",
+      "count": "العدد",
+      "charset": "مجموعة الأحرف",
+      "alphanumeric": "أحرف وأرقام",
+      "symbols": "أحرف وأرقام + رموز",
+      "hex": "سداسي عشري",
+      "base64url": "Base64URL",
+      "note": "سلسلة عشوائية · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "وقت القراءة · قاعدة تقريبية لـ CJK + اللاتينية"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "أقصى مستوى للعنوان",
+      "note": "فهرس Markdown · عناوين ATX"
+    },
+    "pdfInfo": {
+      "file": "ملف PDF",
+      "note": "معلومات PDF · pdf-lib (الصفحات + البيانات الوصفية)"
+    },
+    "rot13": {
+      "shift": "الإزاحة (13 = ROT13)",
+      "note": "ROT13 / قيصر · نقي"
+    },
+    "morse": {
+      "note": "شفرة مورس · ITU · نقي"
+    },
+    "textBinary": {
+      "toBinary": "نص → ثنائي",
+      "fromBinary": "ثنائي → نص",
+      "note": "نص ↔ ثنائي · بتات UTF-8"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "ترميز التلخيص",
+      "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "ملخصات دفعة واحدة · انسخ كل منها · node:crypto"
+    },
+    "cssFormat": {
+      "note": "منسق CSS · خفيف"
+    },
+    "htmlFormat": {
+      "note": "منسق HTML · خفيف"
+    },
+    "stringSimilarity": {
+      "a": "النص أ",
+      "b": "النص ب",
+      "note": "تشابه النصوص · ليفنشتاين"
+    },
+    "roman": {
+      "toRoman": "رقم → روماني",
+      "fromRoman": "روماني → رقم",
+      "note": "الأرقام الرومانية · 1–3999"
+    },
+    "age": {
+      "birthDate": "تاريخ الميلاد (YYYY-MM-DD)",
+      "asOf": "حتى تاريخ (اختياري)",
+      "note": "حاسبة العمر · سنوات/أشهر/أيام بالضبط"
+    },
+    "tip": {
+      "bill": "مبلغ الفاتورة",
+      "percent": "نسبة البقشيش %",
+      "people": "الأشخاص",
+      "note": "حاسبة الإكرامية · تقسيم سهل"
+    },
+    "aspect": {
+      "width": "العرض",
+      "height": "الارتفاع",
+      "note": "نسبة العرض إلى الارتفاع · تبسيط القاسم المشترك الأكبر"
+    },
+    "mime": {
+      "note": "البحث عن MIME · الأنواع الشائعة للويب"
+    },
+    "ua": {
+      "note": "محلل User-Agent · استدلالي (دون اتصال)"
+    },
+    "imageMeta": {
+      "file": "ملف الصورة",
+      "note": "بيانات الصورة الوصفية · sharp (حجم مخزن EXIF)"
+    },
+    "wordFreq": {
+      "top": "أعلى N",
+      "note": "تكرار الكلمات · CJK + لاتيني"
+    },
+    "jsonXml": {
+      "note": "JSON ↔ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "مُصغّر SQL · التعليقات + المسافات البيضاء"
+    },
+    "lineNum": {
+      "start": "رقم البداية",
+      "note": "إضافة أرقام الأسطر · نقي"
+    },
+    "uniqueWords": {
+      "note": "كلمات فريدة · ترتيب أول ظهور"
+    },
+    "epoch": {
+      "value": "القيمة",
+      "msToIso": "مللي ثانية → ISO",
+      "isoToMs": "ISO → مللي ثانية",
+      "note": "مللي ثوان Epoch · التاريخ"
+    },
+    "passwordEntropy": {
+      "password": "كلمة المرور",
+      "note": "إنتروبيا كلمة المرور · استنتاج مجموعة الأحرف"
+    },
+    "contrast": {
+      "fg": "اللون الأمامي (#hex)",
+      "bg": "اللون الخلفي (#hex)",
+      "note": "تباين الألوان · WCAG 2.x",
+      "sampleHeadline": "Sample text",
+      "pass": "pass",
+      "fail": "fail",
+      "aaNormal": "AA normal",
+      "aaLarge": "AA large",
+      "aaaNormal": "AAA normal",
+      "aaaLarge": "AAA large"
+    },
+    "exif": {
+      "file": "ملف الصورة",
+      "note": "عارض EXIF · exifr + JPEG fallback"
+    },
+    "regex": {
+      "pattern": "النمط",
+      "flags": "العلامات",
+      "replacement": "الاستبدال",
+      "match": "تطابق",
+      "replace": "استبدال",
+      "test": "اختبار",
+      "local": "تشغيل محلي",
+      "server": "التحقق من الخادم",
+      "count": "{count} تطابقات",
+      "sotaNote": "تظليل محلي فوري · ميزانية مهلة الخادم · نفس مسار API"
+    },
+    "jwt": {
+      "decode": "فك تشفير JWT",
+      "sample": "تحميل نموذج",
+      "tokenPlaceholder": "الصق JWT",
+      "decodeNote": "{engine} · فك تشفير فقط، لم يتم التحقق من التوقيع",
+      "footerNote": "المحرك: jose · بدون التحقق من التوقيع. في الإنتاج، تحقق باستخدام المفاتيح عبر jwtVerify على الخادم.",
+      "generateHint": "تحتاج إلى توقيع الرموز؟",
+      "secret": "السر",
+      "exp": "تاريخ الانتهاء (بالثواني)",
+      "payload": "حمولة JSON",
+      "note": "إنشاء JWT · HS256 (للتطوير والاختبار فقط)",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "(empty signature segment)"
+    },
+    "rand": {
+      "min": "الحد الأدنى",
+      "max": "الحد الأقصى",
+      "count": "العدد",
+      "note": "رقم عشوائي · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "الأوجه",
+      "count": "عدد النرد",
+      "note": "مرح النرد · مولد أرقام عشوائية"
+    },
+    "hexRgb": {
+      "note": "HEX ↔ RGB · نقي"
+    },
+    "base64url": {
+      "note": "Base64URL · نمط JWT"
+    },
+    "hmac": {
+      "message": "الرسالة",
+      "secret": "السر",
+      "signature": "التوقيع",
+      "note": "التحقق من HMAC · SHA-256"
+    },
+    "secret": {
+      "bytes": "بايت",
+      "count": "العدد",
+      "note": "مولّد المفتاح السري · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "ملف PDF",
+      "note": "تحسين PDF خفيف · إعادة كتابة pdf-lib (بدون ضغط صور)",
+      "needFile": "اختر ملف PDF أولاً"
+    },
+    "pdfCompress": {
+      "file": "ملف PDF",
+      "quality": "الجودة",
+      "engine": "المحرك",
+      "qStructural": "هيكلية (qpdf، تيارات بدون فقدان)",
+      "qScreen": "شاشة (الأصغر، Ghostscript)",
+      "qEbook": "كتاب إلكتروني (متوازن، Ghostscript)",
+      "qPrinter": "طابعة (جودة أعلى، Ghostscript)",
+      "eAuto": "تلقائي (qpdf → Ghostscript → pdf-lib)",
+      "download": "تحميل PDF",
+      "needFile": "اختر ملف PDF أولاً",
+      "in": "الإدخال",
+      "out": "الإخراج",
+      "saved": "تم الحفظ",
+      "note": "ضغط PDF · qpdf / Ghostscript على المضيف · pdf-lib كخيار بديل",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+    },
+    "jsonFormat": {
+      "indent": "المسافة البادئة",
+      "format": "تنسيق",
+      "minify": "تصغير",
+      "serverVerify": "التحقق من الخادم",
+      "clear": "مسح",
+      "sample": "عينة",
+      "placeholder": "الصق JSON…",
+      "formatted": "منسق",
+      "minified": "مضغوط",
+      "serverOk": "الخادم {mode} · {engine}",
+      "valid": "JSON صالح",
+      "invalid": "JSON غير صالح",
+      "line": "سطر",
+      "column": "عمود",
+      "note": "المحرك: JSON.parse/stringify · محلي فوري · نفس مسار API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
+    },
+    "qr": {
+      "size": "الحجم",
+      "ecl": "تصحيح الأخطاء",
+      "generate": "إنشاء",
+      "download": "تحميل PNG",
+      "needText": "أدخل نصًا أو عنوان URL",
+      "note": "رمز QR · qrcode · معاينة حية · نفس مسار API"
+    },
+    "pdfText": {
+      "file": "ملف PDF",
+      "layout": "التخطيط",
+      "needFile": "اختر ملف PDF أولاً",
+      "note": "نص PDF · pdftotext (poppler) على المضيف"
+    },
+    "svg": {
+      "optimize": "تحسين",
+      "note": "تحسين SVG · ضغط خفيف نقي"
+    },
+    "routerTranslate": {
+      "lab": "واجهة Lab: لا تُترجم هنا. تفتح Router مع مطالبة — عداد النموذج على Router فقط.",
+      "source": "اللغة المصدر",
+      "target": "اللغة الهدف",
+      "open": "إعداد رابط Router",
+      "deepLink": "الفتح في Router",
+      "note": "خارجي · بدون دفتر Forge LLM صامت"
+    },
+    "imageCrop": {
+      "needFile": "اختر صورة أولاً",
+      "crop": "قص",
+      "note": "قص الصورة · اسحب المنطقة · استخراج حاد",
+      "drop": "أفلت الصورة أو انقر للتصفح",
+      "dragHint": "اسحب على الصورة لتحديد منطقة القص",
+      "left": "يسار",
+      "top": "أعلى",
+      "width": "العرض",
+      "height": "الارتفاع",
+      "natural": "طبيعي {w}×{h}",
+      "source": "المصدر",
+      "result": "مُقتطع"
+    },
+    "markdown": {
+      "preview": "معاينة",
+      "html": "HTML",
+      "emptyPreview": "شغّل لرؤية المعاينة",
+      "emptyHtml": "HTML المُصيَّر",
+      "rendering": "جارٍ التصيير…",
+      "toHtml": "إلى HTML",
+      "copyHtml": "نسخ HTML",
+      "note": "marked · معاينة iframe معزولة · نفس مسار API"
+    },
+    "pdfMerge": {
+      "files": "ملفات PDF (≥2، الترتيب = ترتيب الدمج)",
+      "needFiles": "اختر ملفين PDF على الأقل",
+      "merging": "جارٍ الدمج…",
+      "mergeDownload": "دمج وتحميل",
+      "done": "تم الدمج · {pages} صفحات · {bytes} بايت",
+      "note": "pdf-lib · نفس مسار API",
+      "merge": "دمج وتحميل"
+    },
+    "pdfSplit": {
+      "file": "ملف PDF",
+      "needFile": "اختر ملف PDF",
+      "fromPage": "من الصفحة (بدءاً من 1)",
+      "toPage": "إلى الصفحة (فارغ = الأخيرة)",
+      "toPlaceholder": "الصفحة الأخيرة",
+      "splitting": "جارٍ التقسيم…",
+      "splitDownload": "تقسيم وتحميل",
+      "done": "تقسيم · المصدر {source} صفحات → المخرج {pages} صفحات",
+      "note": "pdf-lib · نفس مسار API",
+      "split": "تقسيم وتحميل"
+    },
+    "passwordStrength": {
+      "check": "فحص القوة",
+      "checking": "جارٍ الفحص…",
+      "crack": "تقدير كسر التشفير البطيء غير المتصل: {time}",
+      "score0": "ضعيفة جداً",
+      "score1": "ضعيفة",
+      "score2": "متوسطة",
+      "score3": "قوية",
+      "score4": "قوية جداً",
+      "note": "zxcvbn-ts · نفس مسار API · لا يتم تخزين كلمة المرور"
+    },
+    "hmacSign": {
+      "compute": "حساب HMAC",
+      "computing": "جارٍ الحساب…",
+      "note": "node:crypto · نفس المسار كما في API"
+    },
+    "costEstimate": {
+      "text": "نص الإدخال (لتقدير رموز الإدخال)",
+      "model": "النموذج",
+      "outputTokens": "رموز الإخراج (تقريبي)",
+      "estimate": "تقدير التكلفة",
+      "estimating": "جارٍ التقدير…",
+      "note": "بطاقة @nebutra/ai-providers/frontier + js-tiktoken · تقدير بسعر القائمة، وليس فاتورة"
+    },
+    "jsonSchema": {
+      "data": "بيانات JSON",
+      "schema": "مخطط JSON",
+      "validate": "تحقق",
+      "validating": "جارٍ التحقق…",
+      "pass": "نجاح",
+      "fail": "فشل",
+      "note": "Ajv · نفس مسار API"
+    },
+    "zhCnTw": {
+      "s2t": "مبسط → تقليدي",
+      "t2s": "تقليدي → مبسط",
+      "s2tw": "مبسط → تايوان",
+      "tw2s": "تايوان → مبسط",
+      "s2hk": "مبسط → هونغ كونغ",
+      "hk2s": "هونغ كونغ → مبسط",
+      "note": "OpenCC (opencc-js) · نفس مسار API"
+    },
+    "pinyin": {
+      "tones": "نمط النبرة",
+      "symbol": "الرمز nǐ",
+      "num": "رقم ni3",
+      "none": "لا شيء ni",
+      "hanzi": "حروف صينية",
+      "convert": "إلى بينيين",
+      "converting": "جارٍ التحويل…",
+      "note": "pinyin-pro · نفس مسار API"
+    },
+    "sqlFormat": {
+      "dialect": "اللهجة",
+      "format": "تنسيق",
+      "formatting": "جارٍ التنسيق…",
+      "note": "sql-formatter · نفس مسار API"
+    },
+    "colorConvert": {
+      "color": "اللون",
+      "pick": "اختر لونًا",
+      "convert": "تحويل",
+      "converting": "جارٍ التحويل…",
+      "note": "culori · hex / rgb / hsl / oklch · نفس مسار API"
+    },
+    "qrGen": {
+      "content": "المحتوى",
+      "format": "الصيغة",
+      "pngPreview": "PNG (معاينة)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "إنشاء رمز QR",
+      "generating": "جارٍ الإنشاء…",
+      "note": "qrcode · نفس مسار API"
+    },
+    "qrDecode": {
+      "upload": "رفع صورة تحتوي على رمز QR",
+      "parsing": "جاري فك التشفير…",
+      "note": "jsQR + sharp · نفس المسار كما في API"
+    },
+    "cron": {
+      "expression": "تعبير Cron",
+      "timezone": "المنطقة الزمنية",
+      "parse": "التشغيلات القادمة",
+      "parsing": "جاري التحليل…",
+      "nextTitle": "التشغيلات القادمة (ISO)",
+      "note": "cron-parser · نفس المسار كما في API"
+    },
+    "timezone": {
+      "datetime": "التاريخ والوقت",
+      "from": "من",
+      "to": "إلى",
+      "convert": "تحويل المنطقة الزمنية",
+      "converting": "جارٍ التحويل…",
+      "placeholder": "2026-07-24 12:00:00 أو ISO / unix",
+      "note": "dayjs timezone · نفس مسار API"
+    },
+    "csvPreview": {
+      "preview": "معاينة الجدول",
+      "parsing": "جارٍ التحليل…",
+      "rows": "معاينة {shown} / {total} صف",
+      "note": "papaparse · نفس مسار API"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "استعلام",
+      "querying": "جارٍ الاستعلام…",
+      "note": "jsonpath-plus · نفس مسار API"
+    },
+    "xmlFormat": {
+      "pretty": "تنسيق جميل",
+      "minify": "تصغير",
+      "validate": "التحقق",
+      "validOk": "صحيح",
+      "done": "تم · {engine}",
+      "processing": "جارٍ المعالجة…",
+      "note": "fast-xml-parser · نفس مسار API"
+    },
+    "regexLegacy": {
+      "pattern": "النمط",
+      "flags": "العلامات",
+      "mode": "الوضع",
+      "match": "المطابقة",
+      "replace": "الاستبدال",
+      "test": "الاختبار",
+      "replacement": "الاستبدال",
+      "note": "محلي فوري · ميزانية مهلة الخادم · نفس مسار API"
+    },
+    "docxText": {
+      "file": "ملف DOCX",
+      "needFile": "اختر ملف .docx أولاً",
+      "extract": "استخراج النص",
+      "extracting": "جارٍ الاستخراج…",
+      "note": "DOCX → نص · ZIP نقي + document.xml (بدون حزمة Office)"
+    },
+    "uuid": {
+      "count": "العدد",
+      "local": "إنشاء محلي",
+      "server": "إنشاء على الخادم",
+      "copyAll": "نسخ الكل",
+      "empty": "تظهر معرفات UUID هنا"
+    },
+    "timestamp": {
+      "nowSec": "ثوانٍ يونكس",
+      "nowMs": "مللي ثانية يونكس / ISO",
+      "serverNow": "الوقت الحالي على الخادم",
+      "toDate": "الطابع الزمني → تاريخ",
+      "toUnix": "تاريخ → طابع زمني",
+      "seconds": "ثوانٍ",
+      "milliseconds": "المللي ثانية",
+      "value": "القيمة",
+      "convert": "تحويل",
+      "note": "نفس مسار الـ API"
+    },
+    "wordCount": {
+      "words": "الكلمات",
+      "chars": "الأحرف",
+      "noSpaces": "بدون مسافات",
+      "cjk": "صينية-يابانية-كورية",
+      "lines": "سطور",
+      "paragraphs": "فقرات",
+      "placeholder": "الصق أو اكتب النص…",
+      "copyText": "نسخ النص",
+      "clear": "مسح",
+      "verifying": "جارٍ التحقق…",
+      "serverNote": "كلمات الخادم={words} · نفس مسار الـ API",
+      "note": "محرك مباشر: {engine} · لا حاجة للرفع · نفس مسار الـ API"
+    },
+    "bmi": {
+      "height": "الطول (سم)",
+      "weight": "الوزن (كغ)",
+      "compute": "حساب مؤشر كتلة الجسم",
+      "computing": "جارٍ الحساب…",
+      "invalid": "أدخل طولاً (سم) ووزناً (كجم) صالحين",
+      "underweight": "نقص في الوزن",
+      "normal": "طبيعي",
+      "overweight": "زيادة في الوزن",
+      "obese": "سمنة",
+      "note": "مؤشر كتلة الجسم لمنظمة الصحة العالمية · نفس مسار الـ API · ليس نصيحة طبية"
+    },
+    "percentage": {
+      "mode": "الوضع",
+      "percentOf": "أ% من ب",
+      "isWhat": "ما نسبة أ من ب",
+      "percentA": "النسبة المئوية لـ أ",
+      "valueA": "القيمة أ",
+      "baseB": "الأس ب",
+      "compute": "احسب",
+      "computing": "جارٍ الحساب…",
+      "invalid": "أدخل أرقامًا صالحة",
+      "note": "نفس المسار الخاص بـ API"
+    },
+    "dataSize": {
+      "value": "القيمة",
+      "convert": "تحويل",
+      "converting": "جارٍ التحويل…",
+      "invalid": "أدخل رقمًا صالحًا",
+      "binary": "{value} {from} → الأساس 1024",
+      "note": "وحدات ثنائية (1 KB = 1024 B) · نفس المسار الخاص بـ API"
+    },
+    "rmb": {
+      "amount": "المبلغ (يوان)",
+      "convert": "إلى الحروف الكبيرة",
+      "converting": "جارٍ التحويل…",
+      "invalid": "أدخل مبلغاً غير سالب",
+      "note": "المبلغ بالعربية الفصحى للفاتورة الصينية · نفس مسار API"
+    },
+    "dateDiff": {
+      "from": "تاريخ البدء",
+      "to": "تاريخ الانتهاء",
+      "compute": "الفرق بالأيام",
+      "computing": "جارٍ الحساب…",
+      "days": "أيام",
+      "note": "ECMAScript Date · نفس مسار API"
+    },
+    "xlsxText": {
+      "file": "ملف XLSX",
+      "needFile": "اختر ملف .xlsx أولاً",
+      "extract": "استخراج الورقة",
+      "extracting": "جارٍ الاستخراج…",
+      "note": "XLSX → CSV · ملف ZIP نقي + sheet1.xml (الورقة الأولى)"
+    },
+    "mdToPdf": {
+      "drop": "اسحب ملف .md هنا، أو ألصق Markdown أدناه",
+      "title": "العنوان",
+      "engine": "المحرك",
+      "ePlaywright": "Playwright (طباعة Chromium)",
+      "eSimple": "بسيط (بدون متصفح)",
+      "generate": "إنشاء PDF",
+      "generating": "جارٍ الإنشاء…",
+      "download": "تحميل PDF",
+      "note": "marked → HTML → طباعة Playwright Chromium. إذا كان Chromium غير موجود، يتم التراجع تلقائيًا إلى PDF مُنظَّم بسيط — تحقق من renderEngine؛ البسيط ليس تخطيطًا بجودة الطباعة.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
+    },
+    "tokenCount": {
+      "count": "عد الرموز",
+      "counting": "جارٍ العد…",
+      "chars": "أحرف {n}",
+      "note": "المحرك: js-tiktoken · عدّ دقيق على جانب الخادم · يمكن تغذية تقدير تكلفة Router"
+    },
+    "codec": {
+      "encodeDir": "نص → مشفر",
+      "decodeDir": "مشفر → نص",
+      "localNote": "تشغيل محلي",
+      "serverNote": "الخادم · نفس مسار الـ API",
+      "hexInvalid": "ليس سلسلة سداسية عشرية صالحة",
+      "hexDecodeFail": "لم يستطع الخادم فك التشفير كـ UTF-8 (يتطلب سلسلة سداسية عشرية صالحة)",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · نفس مسار API",
+      "noteHtml": "خريطة كيان HTML · نفس مسار API",
+      "noteHex": "UTF-8 ↔ سداسي عشري · نفس مسار API"
+    },
+    "textDiff": {
+      "left": "اليسار",
+      "right": "اليمين",
+      "compare": "مقارنة",
+      "comparing": "جارٍ المقارنة…"
+    },
+    "imageTool": {
+      "drop": "أفلت صورة هنا، أو انقر للتصفح",
+      "selected": "المحدد: {name} ({kb} KB)",
+      "needFile": "اختر صورة أولاً",
+      "format": "تنسيق الإخراج",
+      "quality": "الجودة {n}",
+      "maxW": "العرض الأقصى",
+      "maxH": "الارتفاع الأقصى",
+      "optional": "اختياري",
+      "resizeEg": "مثال: 1280",
+      "processing": "جارٍ المعالجة…",
+      "compress": "ضغط",
+      "resize": "تغيير الحجم",
+      "convert": "تحويل التنسيق",
+      "download": "تحميل النتيجة",
+      "outMeta": "المخرج {kb} KB{dims}{ratio} · {type}",
+      "ratio": " · ~{pct}% من الأصل",
+      "dims": " · {w}×{h}",
+      "original": "الأصلي",
+      "result": "النتيجة",
+      "note": "المحرك: sharp (libvips) · على الخادم · نفس مسار API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+    },
+    "pptxText": {
+      "file": "ملف PPTX",
+      "needFile": "اختر ملف .pptx أولاً",
+      "extract": "استخراج المخطط",
+      "extracting": "جارٍ الاستخراج…",
+      "note": "مخطط PPTX · ZIP + XML الشرائح فقط (بدون PowerPoint)"
+    },
+    "shell": {
+      "copyJson": "نسخ JSON",
+      "sample": "عينة",
+      "chars": "{n} حرف",
+      "largeInput": "إدخال كبير — ستُحدَّث النتيجة بعد لحظة من توقفك عن الكتابة.",
+      "manualInput": "الإدخال كبير بما يكفي لدرجة أن إعادة الحساب المباشر ستعطل الصفحة. اضغط تشغيل.",
+      "options": "الخيارات",
+      "regenerateNote": "المخرجات تتحدث تلقائياً عند تغيير الخيارات.",
+      "fileTab": "ملف",
+      "pasteTab": "لصق",
+      "browse": "اختر ملفاً",
+      "selectedFile": "{name} · {kb} KB",
+      "truncated": "تم قراءة أول {kb} KB — يكفي للإجابة، والباقي لن يغادر جهازك أبداً.",
+      "detail": "التفاصيل",
+      "dropIntoPane": "اسحب ملفاً هنا",
+      "swap": "تبديل الجانبين",
+      "prevChange": "التغيير السابق",
+      "nextChange": "التالي",
+      "changePosition": "{index} من {total}",
+      "result": "النتيجة"
+    },
+    "readmeSkeleton": {
+      "emptyHint": "حدد قسمًا واحدًا على الأقل لإنشاء ملف README.",
+      "note": "يعمل بنفس المحرك المستخدم في الـ API. الأقسام التي لا تحدد لا تظهر أبدًا — لا توجد عناوين فارغة.",
+      "orderNote": "تظهر الأقسام دائمًا بهذا الترتيب الثابت، لذا فإن نفس المدخلات تُنتج نفس الملف.",
+      "group": {
+        "core": "أساسي",
+        "docs": "التوثيق",
+        "community": "المجتمع",
+        "meta": "معلومات إضافية"
+      },
+      "section": {
+        "title": "العنوان والوصف",
+        "badges": "الشارات",
+        "callout": "ملاحظة بارزة",
+        "toc": "فهرس المحتويات",
+        "installation": "التثبيت",
+        "usage": "الاستخدام",
+        "features": "الميزات",
+        "api-reference": "مرجع الـ API",
+        "screenshots": "لقطات الشاشة",
+        "roadmap": "خارطة الطريق",
+        "contributing": "المساهمة",
+        "support": "الدعم",
+        "acknowledgements": "الاعترافات",
+        "license": "الترخيص",
+        "authors": "المؤلفون",
+        "tech-stack": "التقنيات المستخدمة"
+      },
+      "projectName": "اسم المشروع",
+      "projectNamePlaceholder": "اسم المشروع",
+      "description": "الوصف",
+      "descriptionPlaceholder": "جملة واحدة توضح وظيفته",
+      "badgeLicense": "شارة الترخيص",
+      "badgeNpm": "npm version",
+      "badgeBuild": "حالة البناء",
+      "npmPackage": "npm package",
+      "npmPackagePlaceholder": "@scope/package",
+      "repo": "مستودع GitHub",
+      "repoPlaceholder": "المالك/المستودع",
+      "calloutKind": "نوع التنبيه",
+      "calloutBody": "نص التنبيه",
+      "calloutBodyPlaceholder": "ما قبل الإصدار 1.0 — لا يزال API يتغير",
+      "fenceLanguage": "اللغة",
+      "installCommand": "أمر التثبيت",
+      "installCommandPlaceholder": "npm install your-project",
+      "usageExample": "مثال على الاستخدام",
+      "usageExamplePlaceholder": "أصغر مثال يوضح القيمة",
+      "features": "الميزات",
+      "featuresPlaceholder": "ميزة واحدة في كل سطر",
+      "contact": "التواصل",
+      "contactPlaceholder": "support@example.com",
+      "license": "الترخيص",
+      "authors": "المؤلفون",
+      "authorsPlaceholder": "@handle, Jane Roe",
+      "techStack": "التقنيات المستخدمة",
+      "techStackPlaceholder": "typescript, postgresql (رموز simple-icons)",
+      "sectionCount": "{n} أقسام",
+      "charCount": "{n} حرف",
+      "warningCount": "{n} تم تخطيها",
+      "omittedTitle": "ما تم حذفه ولماذا"
+    },
+    "gitignore": {
+      "searchLabel": "البحث في التقنيات",
+      "searchPlaceholder": "ابحث عن لغات، أطر عمل، أنظمة تشغيل، أو محررات…",
+      "add": "إضافة {stack}",
+      "remove": "إزالة {stack}",
+      "selected": "التقنيات المختارة",
+      "suggestions": "التقنيات المطابقة",
+      "noMatches": "لا توجد مجموعة تطابق “{query}”. اضغط Enter للإرسال على أي حال — سيتم حل المستعرات على الخادم.",
+      "catalogFallback": "قائمة المجموعات غير متاحة — اكتب اسم مجموعة واضغط Enter.",
+      "emptyHint": "اختر لغة أو إطار عمل أو نظام تشغيل أو محرر واحدًا على الأقل من الخيارات أعلاه.",
+      "regenerate": "إعادة إنشاء",
+      "sections": "{n} أقسام",
+      "lines": "{n} أسطر",
+      "deduped": "تم دمج {n} أنماط مكررة",
+      "notFound": "غير موجود في المجموعة المرجعية: {stacks}",
+      "globalScope": "{stacks} هي إدخالات لنظام التشغيل/المحرر — يفضل العديد من المطورين الاحتفاظ بها في ملف ~/.gitignore_global الشخصي بدلاً من كل مستودع.",
+      "untrackedNote": "ملف .gitignore يؤثر فقط على الملفات غير المتعقبة. بالنسبة لملف يتعقبه git بالفعل، نفذ git rm -r --cached <path>.",
+      "fileLabel": ".gitignore"
+    },
+    "editorconfig": {
+      "emptyHint": "حدد خاصية واحدة على الأقل لعرض الملف.",
+      "note": "نفس محرك الـ API. خياراتك تبقى في جلسة المتصفح هذه فقط، ولا يتم تخزين أي شيء.",
+      "checks": "التحقق",
+      "presets": "ابدأ من",
+      "preset": {
+        "spaces2": "مسافتان، LF",
+        "spaces4": "أربع مسافات، LF",
+        "tabs": "علامات التبويب، عرض 4",
+        "repo": "قالب المستودع (+ Markdown، Makefile)"
+      },
+      "rootLabel": "root = true — منع المحررات من دمج ملفات .editorconfig الأصلية",
+      "glob": "Glob {n}",
+      "addSection": "إضافة قسم",
+      "removeSection": "إزالة",
+      "notSet": "(لم يتم التعيين)",
+      "import": "استيراد ملف .editorconfig موجود",
+      "importPlaceholder": "الصق ملف .editorconfig هنا لتحميله في النموذج",
+      "importAction": "استيراد",
+      "importing": "جارٍ الاستيراد…",
+      "importFailed": "تعذر الاستيراد: {message}"
+    },
+    "robotsTxt": {
+      "emptyHint": "حدد الخيارات أعلاه — سيظهر الملف هنا",
+      "deployNote": "لا يعمل robots.txt إلا في جذر النطاق (https://example.com/robots.txt). يحتاج كل نطاق فرعي إلى ملف خاص به.",
+      "outputLabel": "robots.txt",
+      "defaultAccess": "الوصول الافتراضي (User-agent: *)",
+      "defaultAllow": "السماح الكل",
+      "defaultDisallow": "منع الكل",
+      "defaultAccessNote": "يكتب \"السماح الكل\" \"Disallow:\" فارغاً — وهذا ما يسمح بكل شيء.",
+      "crawlDelay": "تأخير الزحف (بالثواني)",
+      "crawlDelayPlaceholder": "لا شيء",
+      "crawlDelayNote": "ليس جزءًا من RFC 9309. يتجاهله Google ولا يُكتب أبدًا في مجموعة Google.",
+      "searchAgents": "محركات البحث",
+      "aiAgents": "زاحفات الذكاء الاصطناعي",
+      "aiAgentsNote": "زاحفات التدريب ومحركات الإجابات. حظرها لا يؤثر على فهرسة البحث.",
+      "accessDefault": "افتراضي",
+      "accessAllow": "سماح",
+      "accessDisallow": "منع",
+      "rules": "قواعد المسار",
+      "rulesNote": "المسارات حساسة لحالة الأحرف وrelative إلى الجذر. أضف شرطة مائلة نهائية لتقييد القاعدة على مجلد.",
+      "rulePath": "المسار {n}",
+      "rulePathPlaceholder": "/admin/",
+      "ruleType": "نوع القاعدة",
+      "addRule": "إضافة قاعدة مسار",
+      "removeRule": "إزالة",
+      "sitemaps": "خرائط الموقع",
+      "sitemapsNote": "عناوين URL مطلقة http(s). تُكتب كسطور منفصلة، خارج كل مجموعة.",
+      "sitemapUrl": "خريطة الموقع {n}",
+      "addSitemap": "إضافة خريطة موقع",
+      "removeSitemap": "إزالة",
+      "groupCount": "{n} مجموعات",
+      "lineCount": "{n} أسطر",
+      "sitemapCount": "{n} خرائط موقع",
+      "warningsSummary": "ملاحظات حول هذا الملف ({n})"
+    },
+    "encodingDetect": {
+      "drop": "اسحب ملفًا لتحديد ترميزه",
+      "privacy": "يتم قراءة أول {kb} كيلوبايت فقط، وإرسالها إلى نفس نقطة الاتصال العامة التي يستدعيها الوكيل — لا يُكتب أي شيء على القرص.",
+      "pasteLabel": "أو الصق نصًا",
+      "pastePlaceholder": "الصق النص — بما في ذلك الرموز المشوهة التي تريد شرحها",
+      "detail": "المرشحين، نهايات الأسطر، وإحصائيات البايتات",
+      "idle": "اسحب ملفًا أو الصق نصًا — سيتم ملء التقرير بمجرد وجود شيء للقراءة.",
+      "readOnly": "للقراءة فقط: يحدد هذا الأداة الترميز، ولا يعيد كتابة البايتات أبدًا.",
+      "headline": "{encoding} · ثقة {confidence}%",
+      "notText": "هذا لا يبدو كنص",
+      "bomPresent": "BOM {bytes}",
+      "bomAbsent": "لا يوجد BOM",
+      "eol": "نهايات أسطر {kind}",
+      "eolMixed": "نهايات أسطر مختلطة",
+      "language": "اللغة {language} · {confidence}%",
+      "sampled": "تم الكشف من أول {kb} كيلوبايت من أصل {totalKb} كيلوبايت",
+      "candidates": "المرشحين المرتبين",
+      "candidatesNote": "يتم عرض ترميزات الوصيف عمداً: العينات القصيرة أو المتماثلة غامضة حقاً.",
+      "lineEndings": "نهايات الأسطر",
+      "byteStats": "إحصائيات البايتات",
+      "totalBytes": "المجموع",
+      "asciiBytes": "ASCII",
+      "highBytes": "عالية (0x80–0xFF)",
+      "nullBytes": "NUL",
+      "mojibake": "تم استعادة التشويش النصي"
+    },
+    "dockerfileStarter": {
+      "language": "اللغة",
+      "framework": "الإطار",
+      "packageManager": "مدير الحزم",
+      "baseVariant": "الصورة الأساسية",
+      "version": "إصدار وقت التشغيل",
+      "workdir": "مجلد العمل",
+      "port": "المنفذ",
+      "buildCommand": "أمر البناء",
+      "startCommand": "أمر التشغيل",
+      "commandPlaceholder": "فارغ = الافتراضي المحدد مسبقاً",
+      "frameworkNone": "لا شيء (بيئة تشغيل عادية)",
+      "pmAuto": "تلقائي",
+      "variantSlim": "slim (glibc)",
+      "variantAlpine": "alpine (musl)",
+      "variantFull": "كامل",
+      "multiStage": "بناء متعدد المراحل",
+      "nonRootUser": "مستخدم غير root",
+      "includeDockerignore": "إضافة .dockerignore",
+      "includeCompose": "إضافة compose.yaml",
+      "includeHealthcheck": "إضافة HEALTHCHECK",
+      "groupWhat": "ما تبنيه",
+      "groupHow": "كيف يجب أن يعمل",
+      "emptyHint": "اختر لغة لعرض ملف Dockerfile.",
+      "note": "قوالب جاهزة فقط — لن يغادر متصفحك سوى الخيارات أعلاه. اقرأ الملف قبل نشره.",
+      "warnings": "{n} عنصر للتحقق",
+      "stages": "{n} مراحل",
+      "badgeNonRoot": "غير الجذر",
+      "badgeRoot": "يعمل بصلاحيات الجذر",
+      "badgePort": "المنفذ {port}"
+    },
+    "lineEndingDetect": {
+      "dropLabel": "اسحب ملف نصي للتحقق من نهايات الأسطر",
+      "privacy": "يتم إرسال النص المُلصق، وأول 256 كيلوبايت من الملف المُسحَب، إلى واجهة Forge API للمسح؛ لن تُحفظ هذه البيانات.",
+      "pasteLabel": "أو ألصق نصاً",
+      "pastePlaceholder": "ألصق النص الذي تريد التحقق منه",
+      "idle": "ألصق نصاً أو اسحب ملفاً لرؤية نتيجة نهايات الأسطر.",
+      "detail": "العد والتحقق",
+      "note": "كشف فقط — هذه الأداة لا تعيد كتابة ملفك.",
+      "empty": "إدخال فارغ",
+      "noTerminator": "لا يوجد مُنهي سطر — سطر واحد غير منتهي",
+      "consistent": "{style} — متسق",
+      "mixed": "مختلط — {parts}",
+      "sharePart": "{pct}% {style}",
+      "style": {
+        "LF": "LF (Unix/Linux/macOS)",
+        "CRLF": "CRLF (Windows)",
+        "CR": "CR (classic Mac OS 9 and earlier)"
+      },
+      "lines": "{n} أسطر",
+      "bytes": "{n} بايت",
+      "trailing": {
+        "present": "ينتهي بسطر جديد",
+        "absent": "لا توجد سطر جديد في نهاية الملف"
+      },
+      "bomUtf8": "علامة BOM بتنسيق UTF-8",
+      "bomNone": "لا توجد علامة BOM",
+      "countRow": "{style}: {n} ({pct}%)",
+      "colStyle": "الأسلوب",
+      "colCount": "العدد",
+      "colShare": "الحصة",
+      "minorityLines": "الأسطر التي تختلف عن الأسلوب السائد: {lines}",
+      "andMore": "والمزيد",
+      "findings": "التحقق",
+      "level": {
+        "info": "ملاحظة",
+        "warning": "تحذير",
+        "danger": "تسبب أخطاء"
+      },
+      "sampled": "تم فحص أول {n} من أصل {total} بايت",
+      "encodingLink": "فتح كاشف الترميز"
+    },
+    "fileTypeDetect": {
+      "drop": "اسحب ملفًا لتحديد ماهيته الحقيقية",
+      "privacy": "يتم قراءة أول {kb} كيلوبايت من الرأس فقط — لا يغادر باقي الملف جهازك أبدًا.",
+      "hexTab": "لصق سداسي عشري",
+      "detail": "إظهار البايتات والمرشحين",
+      "idle": "اسحب ملفًا، أو الصق بايتاته الأولية بصيغة سداسية عشرية.",
+      "note": "التوقيعات تحدد الحاوية، وليس مشفرها أو محتوياتها الداخلية.",
+      "unset": "—",
+      "unknownType": "لم يتطابق أي توقيع",
+      "polyglot": "متعدد اللغات",
+      "tierNone": "الامتداد متوافق",
+      "tierBenign": "عدم تطابق غير ضار",
+      "tierMismatch": "عدم تطابق الامتداد",
+      "tierHighRisk": "مخاطر عالية",
+      "confidenceMatch": "تطابق التوقيع",
+      "confidenceContainer": "حاوية فقط",
+      "confidenceAmbiguous": "غير محدد",
+      "confidenceNone": "لا يوجد تطابق",
+      "signalDetected": "MIME المكتشف",
+      "signalReported": "MIME المُبلغ عنه",
+      "signalExtension": "امتداد اسم الملف",
+      "drillResolved": "تم فتح حاوية {kind}: {type}",
+      "drillUnresolved": "تم تأكيد حاوية {kind}؛ لم يتم تحديد النوع الفرعي من البايتات المُعَيَّنَة",
+      "hexDump": "بايتات الرأس",
+      "bytesRead": "تم قراءة {n} بايت",
+      "headerOnly": "عينة رأس فقط",
+      "entropy": "الإنتروبيا {bits} بت/بايت",
+      "signatureCount": "{n} توقيع في الجدول",
+      "textHints": "إشارات هيكلية: {hints}",
+      "candidates": "جميع التواقيع المطابقة",
+      "atOffset": "الإزاحة {offset}"
+    },
+    "licenseChooser": {
+      "prompt": "ماذا يحتاج هذا المشروع؟",
+      "pickScenario": "اختر السطر الذي يبدو وكأنه مشروعك — ستظهر الإجابة والملف هنا مباشرة.",
+      "disclaimer": "إخراج قالب حتمي، وليس نصيحة قانونية.",
+      "noAnswer": "لا يناسب هذا الحالة ترخيص واحد",
+      "permissions": "يسمح بـ",
+      "conditions": "يشترط",
+      "limitations": "لا يغطي",
+      "alternates": "خيارات أخرى لهذه الحالة",
+      "useThis": "استخدم هذا",
+      "readCanonical": "اقرأ النص الرسمي على SPDX",
+      "holder": "صاحب حقوق النشر",
+      "holderPlaceholder": "اسمك أو اسم شركتك",
+      "holderHint": "أضف صاحب حقوق النشر وسيتم ملء الملف أثناء الكتابة.",
+      "year": "السنة",
+      "manifest": "مكان وضع معرف SPDX",
+      "verbatim": "{name} يُوزَّع مطابقاً حرفياً للجميع — توضع سطر حقوق النشر في إشعار ملف المصدر بدلاً من ملف LICENSE.",
+      "noLicense": {
+        "summary": "ماذا لو لم أضيف أي رخصة على الإطلاق؟",
+        "body": "عدم وجود رخصة لا يعني أن العمل من الملكية العامة. بدونه، ينطبق حق النشر الافتراضي ولا يجوز لأحد نسخ أو تعديل أو إعادة توزيع الكود الخاص بك — المستودع العام يعني الظهور، وليس الإذن."
+      },
+      "artifact": {
+        "header": "ترويسة ملف المصدر",
+        "notice": "إشعار ملف المصدر"
+      },
+      "refine": {
+        "patent": "منح براءة الاختراع مهم هنا (كود الشركات، الأجهزة، عمل المعايير)",
+        "network": "سيتم تشغيله كخدمة مستضافة، وليس فقط كتحميل",
+        "library": "إنه مكتبة يرتبط بها برنامج آخر",
+        "later": "السماح بالإصدارات اللاحقة من الرخصة (يحافظ على توافق كود Apache-2.0)",
+        "none": "لا يوجد المزيد من التحسينات لهذه الحالة."
+      },
+      "scenario": {
+        "permissive": {
+          "label": "يمكن لأي شخص استخدامه بحرية",
+          "detail": "الاستخدام، التغيير، البيع، التضمين في منتجات مغلقة — فقط احتفظ بإشعار حقوق النشر."
+        },
+        "copyleft": {
+          "label": "يجب أن تعود التحسينات",
+          "detail": "يجب على أي شخص يوزع نسخة معدلة نشر المصدر أيضًا."
+        },
+        "community": {
+          "label": "أنا أساهم في مشروع قائم",
+          "detail": "تم تحديد الترخيص بالفعل — تطابق مع المشروع الذي تساهم فيه."
+        },
+        "non-software": {
+          "label": "هذا ليس برنامجًا",
+          "detail": "التوثيق والبيانات والتصميم أو الوسائط تحتاج إلى ترخيص Creative Commons، وليس ترخيص OSI."
+        },
+        "unsure": {
+          "label": "لا أعرف بعد",
+          "detail": "احصل على الخيار الافتراضي الأقل ندمًا، بالإضافة إلى خيارين يستحقان المعرفة."
+        }
+      },
+      "family": {
+        "permissive": "تساهلي",
+        "weak-copyleft": "نسخة اشتراكية ضعيفة",
+        "strong-copyleft": "نسخة اشتراكية قوية",
+        "public-domain": "نطاق عام",
+        "content": "ترخيص المحتوى"
+      },
+      "flag": {
+        "commercial-use": "الاستخدام التجاري",
+        "modifications": "التعديل",
+        "distribution": "التوزيع",
+        "private-use": "الاستخدام الخاص",
+        "patent-use": "منح براءة الاختراع",
+        "include-copyright": "الحفاظ على إشعار حقوق النشر",
+        "document-changes": "اذكر التغييرات",
+        "disclose-source": "كشف المصدر",
+        "same-license": "نفس الترخيص للعمل بأكمله",
+        "same-license-file": "نفس الترخيص لكل ملف معدل",
+        "same-license-library": "نفس الترخيص للمكتبة",
+        "network-use-disclose": "يُعد الاستخدام عبر الشبكة توزيعاً",
+        "liability": "المسؤولية",
+        "warranty": "الضمان",
+        "trademark-use": "استخدام العلامة التجارية"
+      }
+    },
+    "isbn": {
+      "inputLabel": "أرقام ISBN",
+      "placeholder": "978-0-306-40615-7 — واحد في كل سطر، يتم تجاهل الشرطة والمسافات",
+      "idle": "الصق رقم ISBN واحد أو عمودًا كاملاً؛ ستظهر النتائج أثناء الكتابة.",
+      "scope": "حساب رقم التحقق فقط. رقم ISBN صالح يعني أنه متسق داخليًا — وليس دليلًا على أن وكالة ما خصصته لكتاب حقيقي.",
+      "summary": "{valid} من {total} صالح",
+      "singleValid": "ISBN صالح",
+      "singleInvalid": "ليس ISBN صالحًا",
+      "invalidCount": "{n} غير صالح",
+      "convertedTo": "{type}: {value}",
+      "valid": "صالح",
+      "invalid": "غير صالح",
+      "truncated": "يتم عرض أول {shown} صفوف.",
+      "col": {
+        "input": "الإدخال",
+        "normalized": "المُوحَّد",
+        "type": "النوع",
+        "status": "الحالة",
+        "converted": "تم التحويل",
+        "note": "ملاحظة"
+      },
+      "type": {
+        "isbn10": "ISBN-10",
+        "isbn13": "ISBN-13",
+        "invalidLength": "طول غير صحيح"
+      },
+      "note": {
+        "checkDigit": "يجب أن يكون رقم التحقق {expected}",
+        "invalidLength": "يتكون رقم ISBN من 10 أو 13 حرفًا بالضبط",
+        "invalidCharacter": "يحتوي على حرف ليس رقمًا",
+        "xMisplaced": "الحرف X صالح فقط كآخر حرف في ISBN-10",
+        "noIsbn10": "لا يوجد مقابل لـ ISBN-10 للبادئة 979",
+        "nonBookland": "يجب أن تبدأ أرقام ISBN المكونة من 13 رقمًا بـ 978 أو 979",
+        "ismn": "النطاق 979-0 مخصص لـ ISMN (الموسيقى المطبوعة) وليس ISBN"
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
+    },
+    "languageDetect": {
+      "inputLabel": "مقتطف كود",
+      "inputPlaceholder": "الصق كودًا بدون اسم ملف — من سجل محادثة، تذكرة، إجابة…",
+      "hintLabel": "اسم الملف أو الامتداد (اختياري)",
+      "hintPlaceholder": "main.h · .pl · Dockerfile",
+      "note": "يعمل بنفس المحرك المستخدم في الـ API. يعتمد الكشف على المحتوى فقط ما لم تُقدّم تلميحًا باسم الملف؛ يتم توجيه الامتدادات الغامضة (.h .m .pl .fs .ts .cs .r) عبر قواعدها الخاصة أولاً.",
+      "idle": "الصق مقتطفًا — سيظهر الحكم أثناء الكتابة.",
+      "confidence": {
+        "high": "ثقة عالية",
+        "medium": "ثقة متوسطة",
+        "low": "ثقة منخفضة"
+      },
+      "score": "{n}/100",
+      "dataFormat": "تنسيق بيانات، وليس لغة برمجة",
+      "multiLanguage": "يُشتبه في وجود لغات متعددة",
+      "why": "لماذا هذا الجواب",
+      "signals": "الإشارات المطابقة",
+      "alternates": "مرشّحون آخرون",
+      "composeNext": "تنسيق هذا {language}"
+    },
+    "iban": {
+      "inputLabel": "IBAN",
+      "idle": "ألصق رقم IBAN — يظهر الحكم بعد كل ضغطة، دون زر.",
+      "sourceNote": "الرقم المرجعي والهيكل وفق ISO 13616-1:2020. طول كل بلد وتنسيق BBAN مستمدان من نسخة منشورة من سجل IBAN التابع لـ ISO، وليس من السجل نفسه.",
+      "valid": "رقم IBAN صحيح الشكل",
+      "keepTyping": "تابع الكتابة — أقصر من طول IBAN هذا البلد",
+      "caveat": "صحيح الشكل فقط. اجتياز الرقم المرجعي لا يؤكد وجود الحساب أو فتحه أو أنه مملوك للمستفيد.",
+      "printFormat": "تنسيق الطباعة",
+      "details": "التفكيك المُحلَّل",
+      "notEncoded": "غير مشفر بتنسيق هذا البلد",
+      "coverage": "{n} بلدًا بتنسيق IBAN مسجَّل",
+      "reason": {
+        "bad_charset": "ليس شكل IBAN — يتألف من حرفين، ثم رقمين، ثم أحرف وأرقام فقط",
+        "country_unsupported": "لا يوجد تنسيق IBAN مسجَّل لهذا الرمز الوطني",
+        "incomplete": "غير مكتمل",
+        "wrong_length_for_country": "طويل جدًا لرقم IBAN الخاص بهذا البلد",
+        "structure_mismatch": "الطول صحيح، لكن الهيكل غير مطابق لتنسيق هذا البلد",
+        "checksum_failed": "فشل التحقق من المجموع — يوجد خطأ مطبعي في مكان ما في هذا الرقم IBAN"
+      },
+      "badge": {
+        "country": "{name} ({code})",
+        "unknownCountry": "رمز البلد {code}",
+        "length": "{n} من {expected} حرفًا",
+        "bankCode": "رمز البنك {code}",
+        "expectedCheckDigits": "أرقام التحقق لهذا رقم الحساب ستكون {digits}"
+      },
+      "field": {
+        "normalized": "التنسيق الإلكتروني",
+        "country": "البلد",
+        "checkDigits": "أرقام التحقق",
+        "bban": "BBAN",
+        "bbanFormat": "تنسيق BBAN",
+        "bankCode": "رمز البنك"
+      },
+      "check": {
+        "charset": "مجموعة الأحرف",
+        "country": "الدولة",
+        "length": "الطول",
+        "structure": "الهيكل",
+        "checksum": "MOD 97-10"
+      },
+      "state": {
+        "pass": "نجاح",
+        "fail": "فشل",
+        "skipped": "لم يتم الوصول"
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
+    },
+    "secretScan": {
+      "pasteLabel": "الصق الكود أو الإعدادات أو ملف .env",
+      "pastePlaceholder": "DATABASE_URL=postgres://…\nAPI_KEY=…",
+      "dropLabel": "اسحب ملفًا لفحصه",
+      "privacy": "تعمل بالكامل داخل متصفحك. لا يُرسل أي شيء إلى أي مكان — حتى إلينا.",
+      "scan": "فحص",
+      "scanning": "جارٍ الفحص…",
+      "idleTitle": "الصق شيئًا ثم اضغط على فحص.",
+      "idleHint": "Checks for vendor API keys, tokens, private keys and high-entropy secrets. Matched values are masked; only line numbers are shown in full.",
+      "clean": "لم يتم العثور على أسرار",
+      "cleanCaveat": "لا يتطابق أي شيء هنا مع تنسيق بيانات اعتماد معروف أو يبدو كسر عشوائي. مطابقة الأنماط ليست دليلاً — راجع أي شيء لست متأكداً منه.",
+      "found": "{n, plural, one {تم العثور على # سر محتمل} other {تم العثور على # أسرار محتملة}}",
+      "foundCaveat": "احذف هذه قبل لصقها في أي مكان. إذا كانت المفتاح حقيقية، قم بتدويرها.",
+      "countHigh": "{n} ثقة عالية",
+      "countMedium": "{n} ثقة متوسطة",
+      "countLow": "{n} منخفض",
+      "confidence": {
+        "high": "مرتفع",
+        "medium": "متوسط",
+        "low": "منخفض"
+      },
+      "position": "السطر {line}، العمود {column}",
+      "length": "{n} حرف",
+      "maskedLabel": "تطابق مخفي",
+      "why": "سبب التطابق",
+      "candidates": "قد يكون أيضًا:",
+      "scanDetail": "تفاصيل المسح",
+      "lines": "{n} سطر",
+      "bytes": "تم مسح {n} بايت",
+      "suppressed": "تم تجاهل {n} عنصر نائب",
+      "suppressedNote": "يتم تجاهل قيم العرض المعروفة (مفاتيح EXAMPLE، your-api-key-here، الأحرف المتكررة) حتى لا تثير الملفات التجريبية إنذارات كاذبة.",
+      "omitted": "{n} أخرى غير معروضة",
+      "truncated": "تم تحديد حد للإدخال — تم فحص الجزء الأول فقط",
+      "reportTitle": "نتائج فحص الأسرار (تم إخفاء القيم)",
+      "scopeNote": "كشف فقط: لا يتصل هذا الأداة مطلقاً بجهة خارجية للتحقق مما إذا كان المفتاح لا يزال نشطاً — إذ إن ذلك يعني إرسال مفتاحك إلى طرف ثالث."
+    },
+    "eanUpcGtin": {
+      "inputLabel": "أرقام الباركود",
+      "placeholder": "رمز واحد في كل سطر (الفواصل والنقط الفاصلة تفصل أيضاً)",
+      "idle": "الصق رمزاً واحداً أو عموداً كاملاً — سيظهر الحكم أثناء الكتابة.",
+      "operationLabel": "العملية",
+      "operationValidate": "التحقق (الرمز يتضمن رقم التحقق)",
+      "operationCalculate": "الحساب (الرمز يفتقر إلى رقم التحقق)",
+      "typeLabel": "النوع",
+      "typeAuto": "الكشف حسب الطول",
+      "total": "{n} رمز",
+      "validCount": "{n} صالح",
+      "invalidCount": "{n} غير صالح",
+      "calculatedCount": "{n} محسوب",
+      "unrecognizedCount": "{n} طول غير معترف به",
+      "verdict": {
+        "valid": "صالح",
+        "invalid": "غير صالح",
+        "calculated": "محسوب",
+        "unrecognized-length": "طول غير معترف به"
+      },
+      "alsoReadsAs": "يُقرأ أيضاً كـ {type}",
+      "checkDigit": "رقم التحقق",
+      "corrected": "يجب أن يكون",
+      "gtin14": "صيغة GTIN-14",
+      "reason": {
+        "empty": "لا يوجد شيء للتحقق منه في هذا السطر.",
+        "non-digit-characters": "يحتوي على أحرف ليست أرقاماً ولا فواصل.",
+        "unsupported-length": "لا يوجد معرّف GS1 بهذا الطول (الطول المدعوم هو 8 و12 و13 و14 و18 رقماً).",
+        "length-mismatch": "الطول غير صحيح للنوع الذي اخترته.",
+        "check-digit-mismatch": "الرقم الأخير لا يتطابق مع المطلوب وفق المعيار."
+      },
+      "warning": {
+        "separators-stripped": "تمت إزالة المسافات والواصلات والنقاط قبل التحقق.",
+        "all-zero": "كل الأرقام أصفار — صحيح رياضياً، لكنه ليس معرّفاً حقيقياً.",
+        "payload-is-also-a-complete-code": "هذا أيضاً طول رمز كامل. إذا كان يحتوي بالفعل على رقم التحقق، فانتقل إلى التحقق."
+      },
+      "math": "إظهار الحساب",
+      "mathSum": "المجموع {sum} → رقم التحقق {check}",
+      "truncatedRows": "يُعرض أول {shown} من أصل {total} صف. النسخ والتحميل يشمل الكل.",
+      "privacy": "يتم إرسال الرموز إلى واجهة Forge API للتحقق منها ولا تُخزَّن.",
+      "scopeNote": "يشير رقم تحقق صحيح إلى أن الرقم مُشكَّل بشكل سليم. ولا يعني ذلك أن GS1 قد خصصته لمنتج أو شركة أو موقع حقيقي — فقط البحث في سجل GEPIR يجيب على ذلك.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
+    },
+    "vin": {
+      "inputLabel": "رقم الهيكل (VIN) (17 حرفًا)",
+      "privacy": "يتم التحقق منه في متصفحك. لن يُرسل رقم الهيكل إلى أي مكان.",
+      "idle": "الصق رقم هيكل — سيظهر الحكم أثناء الكتابة، دون زر.",
+      "scope": "الهيكل ورقم التحقق فقط (49 CFR 565.15 / ISO 3779). هذا ليس بحثًا في سجلات المركبة.",
+      "verdict": {
+        "valid": "هيكل رقم هيكل صحيح",
+        "keepTyping": "استمر في الكتابة — يتبقى {remaining} حرفًا آخر",
+        "tooLong": "طويل جدًا — يتكون رقم الهيكل من 17 حرفًا بالضبط، وهذا يحتوي على {n}",
+        "invalidCharacter": "ليس حرفًا صالحًا لرقم الهيكل: \"{char}\" عند الموضع {position}",
+        "checkDigitMismatch": "عدم تطابق رقم التحقق — المتوقع {expected}، المُعثر عليه {found}"
+      },
+      "hint": {
+        "confusable": "لا يُستخدم الحرف \"{char}\" في رقم تعريف المركبة (VIN). هل تقصد {suggest}؟"
+      },
+      "notice": {
+        "notProvenance": "يؤكد رقم التحقق الصحيح أن رقم تعريف المركبة مُشكَّل بشكل صحيح. لكنه لا يؤكد وجود المركبة، أو أنها غير مُعدَّلة، أو أن سجلها نظيف — فحتى رقم تعريف مركبة مُقلَّد يجتاز هذا التحقق.",
+        "pre1981": "المركبات المُصنَّعة قبل عام 1981، وبعض المركبات المُستوردة (اليابانية/الأوروبية) لا تستخدم هذا رقم التحقق — لذا قد لا يعني عدم التطابق أن رقم تعريف المركبة مُدخَّل خطأ.",
+        "partial": "يتطلب التحقق من رقم التحقق رقم تعريف مركبة كاملًا مكونًا من 17 حرفًا. رقم تعريف مركبة جزئي هو مهمة فك تشفير، وليس مهمة حساب المجموع التحققي."
+      },
+      "badge": {
+        "length": "{n} أحرف",
+        "expected": "رقم التحقق {d}"
+      },
+      "invalidChars": {
+        "more": "أيضًا ليست أحرفًا لرقم تعريف المركبة: {list}"
+      },
+      "segment": {
+        "wmi": "WMI 1-3",
+        "vds": "الوصف 4-8",
+        "checkDigit": "رقم التحقق 9",
+        "modelYear": "سنة الطراز 10",
+        "plant": "مصنع 11",
+        "serial": "سلسلة 12-17"
+      },
+      "math": {
+        "title": "عرض الحساب",
+        "col": {
+          "position": "الموقع",
+          "char": "الحرف",
+          "value": "القيمة",
+          "weight": "الوزن",
+          "product": "المنتج"
+        },
+        "formula": "المجموع = {sum}؛  {sum} mod 11 = {remainder}  →  رقم التحقق {expected}"
+      },
+      "specimenTitle": "VIN · structure specimen"
+    },
+    "envDiff": {
+      "envA": "البيئة أ",
+      "envB": "البيئة ب",
+      "placeholderA": "الصق أو اسحب ملف .env الأول",
+      "placeholderB": "الصق أو اسحب ملف .env الثاني هنا",
+      "paneNoAssignment": "لم يتم العثور على سطر KEY=value",
+      "optIgnoreComments": "تجاهل التعليقات والأسطر الفارغة",
+      "optCaseInsensitive": "مقارنة المفاتيح بغض النظر عن حالة الأحرف",
+      "optRedactSecrets": "إخفاء الأسرار المكتشفة",
+      "emptyHint": "أضف بيئة ثانية لعرض المقارنة",
+      "summaryNone": "لا توجد اختلافات في {total} مفتاح",
+      "summaryDiff": "{n} من {total} مفتاح مختلف",
+      "note": {
+        "unchanged": "نفس القيمة على الجانبين",
+        "changed": "القيمة مختلفة",
+        "added": "محدد في B فقط",
+        "removed": "محدد في A فقط",
+        "commentedOutInA": "معطل في A، مُفعّل في B",
+        "commentedOutInB": "مُفعّل في A، معطل في B"
+      },
+      "secretChanged": "السر مختلف",
+      "secretSame": "السر متطابق في الجانبين",
+      "count": {
+        "unchanged": "{n} دون تغيير",
+        "changed": "{n} مُعدّل",
+        "added": "{n} مُضاف",
+        "removed": "{n} مُزال",
+        "commentedOut": "{n} معطل"
+      },
+      "warnings": "تحذيرات الإدخال ({n})",
+      "warningType": {
+        "duplicateKey": "{file} · مفتاح مكرر",
+        "quoteMismatch": "{file} · عدم تطابق علامات الاقتباس",
+        "unparsableLine": "{file} · سطر غير قابل للتفسير"
+      },
+      "showUnchanged": "إظهار غير المتغيّر ({n})",
+      "commentedIn": {
+        "A": "معطّل في A",
+        "B": "معطّل في B",
+        "both": "معطّل في كليهما"
+      },
+      "redactedNote": "تُخفَّض القيم السرية باستخدام قاعدة اسم المفتاح — وليس ماسح أمان. تتم المقارنة على القيم الخام، لذا سيظهر أي سر مُدوَّر كمتغيّر.",
+      "interpolationNote": "تُقارَن مراجع ${VAR} حرفيًا ولا تُحلّ أبدًا: التوسيع يختلف حسب المستهلك.",
+      "truncated": "يتم سرد أول 5000 مفتاح فقط؛ الأرقام تغطي كل المفتاح.",
+      "colKey": "المفتاح",
+      "colA": "A",
+      "colB": "B",
+      "colStatus": "الحالة",
+      "privacy": "يتم مقارنة الملفين في متصفحك. لا يتم رفع أي شيء."
+    },
+    "csvDiff": {
+      "originalLabel": "ملف CSV الأصلي",
+      "updatedLabel": "ملف CSV المحدّث",
+      "originalPlaceholder": "الصق التصدير الأصلي، أو اسحب ملف .csv هنا",
+      "updatedPlaceholder": "الصق التصدير المحدّث، أو اسحب ملف .csv هنا",
+      "emptyHint": "الصق أو اسحب كلا الملفين — تبدأ المقارنة بمجرد وجود محتوى في كل جانب.",
+      "note": "تتم مطابقة الصفوف حسب الهوية وليس حسب الموقع، لذا لا يُقرأ الصف المُدرج أو المُعاد ترتيبه كتغييرات متتالية. يُرسل المحتوى إلى API للمقارنة ولا يتم تخزينه.",
+      "columns": "{n} أعمدة",
+      "keyLabel": "عمود المفتاح",
+      "keyAuto": "اقتراح تلقائي",
+      "keyNone": "بدون مفتاح — قارن الصفوف كاملة",
+      "joinLabel": "دمج",
+      "joinFull": "خارجي كامل — كل الصفوف",
+      "joinInner": "داخلي — الصفوف المشتركة",
+      "joinLeft": "يسار — مجموعة الصفوف الأصلية",
+      "ignoreWhitespace": "تجاهل المسافات",
+      "ignoreCase": "تجاهل حالة الأحرف",
+      "treatEmptyAsNull": "فارغ = NULL = N/A",
+      "noDifferences": "لا توجد اختلافات",
+      "differences": "{added} مضاف · {removed} محذوف · {changed} معدل",
+      "added": "{n} مضاف",
+      "removed": "{n} محذوف",
+      "changed": "{n} معدل",
+      "unchangedCount": "{n} دون تغيير",
+      "totals": "{original} → {updated} صفوف",
+      "matchedBy": "تم التطابق باستخدام {columns} ({source})",
+      "matchedWholeRow": "تم التطابق باستخدام محتوى الصف بالكامل — لم يتم استخدام عمود مفتاح، لذا لا يُبلغ عن أي تغيير.",
+      "keySource": {
+        "provided": "اختيارك",
+        "auto": "مقترح تلقائيًا",
+        "full-row": "الصف بالكامل"
+      },
+      "keyRejected": "مرشحو المفتاح المرفوضون: {items}",
+      "columnMismatch": "أعمدة موجودة فقط في النسخة الأصلية: {original} · موجودة فقط في النسخة المحدثة: {updated}",
+      "truncated": "عرض {shown} من النتيجة الكاملة (تم تحديد معاينة بحد أقصى {limit} صف) — الأعداد أعلاه كاملة.",
+      "findings": "ملاحظات ({n})",
+      "level": {
+        "info": "معلومة",
+        "warning": "تحذير",
+        "danger": "خطأ"
+      },
+      "wholeRow": "الصف {n}",
+      "exportChanged": "صفوف معدّلة (CSV)",
+      "exportFull": "الفرق الكامل (CSV)"
+    },
+    "uscc": {
+      "modeLabel": "التحقق أو التوليد",
+      "tab": {
+        "verify": "التحقق",
+        "generate": "توليد رموز الاختبار"
+      },
+      "inputLabel": "الرمز الموحد للائتمان الاجتماعي",
+      "placeholder": "18 حرفًا، مثلاً 91500000059926748X",
+      "idle": "الصق رمزًا مكونًا من 18 حرفًا. يتم التحقق منه في المتصفح أثناء الكتابة — لا يتم تخزين أي شيء.",
+      "scope": "فحص هيكلي فقط (GB 32100-2015 + ISO 7064 MOD 31-3). الرمز الناجح صحيح الهيكل؛ ولا يعني أن منظمة مسجّلة تحت هذا الرمز — تحقق من ذلك في السجل الوطني cods.org.cn.",
+      "valid": "رمز ائتمان اجتماعي موحد صالح",
+      "invalid": "ليس رمزًا اجتماعيًا موحدًا صالحًا",
+      "incomplete": "{n} من 18 حرفًا",
+      "invalidCharacters": "يحتوي على أحرف يستثنيها المعيار",
+      "checksumOk": "رقم التحقق صحيح",
+      "checksumBad": "عدم تطابق رقم التحقق",
+      "expectedDigit": "يجب أن يكون رقم التحقق {expected} وليس {actual}",
+      "illegalAt": "الموقع {position}: \"{char}\" غير موجود في مجموعة رموز الرمز (تم استبعاد I، O، S، V، Z)",
+      "detail": "تفاصيل الحقل",
+      "legacyTitle": "رمز المؤسسة القديم (GB 11714)",
+      "legacy": {
+        "ok": "رمز المؤسسة المضمن المكون من 9 أحرف متسق ذاتياً",
+        "mismatch": "سيكون حرف التحقق القديم {expected} — للإشارة فقط؛ لا يحمل كل فئة مسجل رمز مؤسسة GB 11714",
+        "unchecked": "لم يتم التحقق"
+      },
+      "divisionScope": "يتم مطابقة المراكز من 3 إلى 8 مع جدول مقاطعات GB/T 2260 وقواعد التداخل الخاصة بالشكل المكوّن من ست خانات؛ ولا يتم حمل جدول المقاطعات الكامل.",
+      "field": {
+        "registrationDept": "جهة التسجيل",
+        "orgCategory": "فئة المؤسسة",
+        "adminDivision": "التقسيم الإداري",
+        "orgIdentifier": "معرف الموضوع",
+        "checkDigit": "رقم التحقق"
+      },
+      "depth": {
+        "none": "لم يتم التحديد",
+        "province": "مستوى المحافظة",
+        "prefecture": "مستوى المقاطعة",
+        "county": "مستوى المقاطعة المحلية"
+      },
+      "note": {
+        "empty": "لا يوجد شيء للتحقق منه بعد",
+        "incomplete": "يجب أن يتكون الرمز الموحد للائتمان الاجتماعي من 18 حرفًا بالضبط",
+        "tooLong": "أكثر من 18 حرفًا",
+        "illegalCharacter": "يحتوي على حرف خارج مجموعة GB 32100-2015 (تم استبعاد I و O و S و V و Z)",
+        "checkDigitMismatch": "رقم التحقق لا يتطابق مع أول 17 حرفًا",
+        "departmentUnknown": "الموضع 1 ليس قسم تسجيل محدد في المعيار (1، 5، 9، Y)",
+        "categoryUnknown": "الموضع 2 ليس فئة منظمة محددة لهذا قسم التسجيل",
+        "divisionNotNumeric": "يجب أن تكون المواضع من 3 إلى 8 مكونة من ستة أرقام",
+        "divisionUnknownProvince": "المواقع 3–4 ليست رمز مقاطعة وفق GB/T 2260",
+        "divisionMalformed": "محافظة تابعة لولاية غير موجودة، وهو ما لا يسمح به GB/T 2260"
+      },
+      "gen": {
+        "dept": "جهة التسجيل",
+        "category": "فئة المؤسسة",
+        "province": "المقاطعة",
+        "count": "العدد",
+        "randomProvince": "أي مقاطعة",
+        "regenerate": "دفعة جديدة",
+        "emptyHint": "اختر الخيارات أعلاه لتوليد رموز اختبار.",
+        "testDataBadge": "بيانات اختبار",
+        "seed": "بذرة {seed}",
+        "allCodes": "جميع الرموز",
+        "disclaimer": "هذه الرموز صالحة من الناحية الهيكلية لكنها لا تنتمي إلى أي جهة مسجلة. لا تستخدمها لتمثيل كيان حقيقي.",
+        "note": "التوليد مبذّر: نفس الخيارات والبذرة تعيد دائماً نفس الدفعة، لذا يبقى العنصر قابلاً للتكرار. كل رمز مُعلّم بـ isTestData في ملف JSON وكذلك هنا."
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
+    },
+    "yamlDiff": {
+      "original": "الأصلي",
+      "changed": "المعدّل",
+      "originalPlaceholder": "الصق أو أسقط ملف YAML الأصلي (أو JSON)",
+      "changedPlaceholder": "الصق أو أسقط ملف YAML المعدّل (أو JSON)",
+      "idle": "املأ كلا اللوحتين وسيعمل المقارنة أثناء الكتابة.",
+      "privacy": "يتم تحليل ومقارنة المستندين في هذا المتصفح — لا يتم رفع أي شيء، وهو بالضبط المطلوب للبيانات التي تحتوي على أسماء مضيفين وأسماء أسرار.",
+      "modeLabel": "مقارنة",
+      "modeSemantic": "دلالية (هيكل)",
+      "modeRawText": "نص خام (حروف)",
+      "resolveAnchors": "حل المراسي والاختصارات إلى قيمها",
+      "valid": "YAML صالح",
+      "validMulti": "YAML صالح · {n} مستندات",
+      "invalid": "خطأ في التحليل، السطر {line}",
+      "parseFailed": "لم يتم تحليل جانب واحد — لم تتم أي مقارنة",
+      "equivalent": "لا توجد فروق — المستندان يحلان إلى نفس الهيكل",
+      "equivalentStructural": "نفس الهيكل المحلول · {n} فروقات في التنسيق أو المراسي",
+      "summary": "{added} تمت إضافته · {removed} تمت إزالته · {changed} تم تغييره · {typeChanged} تغييرات في النوع",
+      "parseErrorAt": "{side} · السطر {line}، العمود {column}: {message}",
+      "documentCountMismatch": "يختلف عدد المستندات: {original} مقابل {changed} — تم تجميع المستندات بالترتيب وإبلاغ الإضافات كاملة",
+      "duplicateKeys": "مفاتيح مكررة في المصدر",
+      "unified": "رقعة موحدة (YAML مُعَيَّرة)",
+      "howItWorks": "كيف يعمل هذا المقارنة",
+      "rule": {
+        "keyOrder": "يتم تجاهل ترتيب مفاتيح الخرائط، والتوثيق، والمسافات البادئة؛ يتم مقارنة ترتيب التسلسل، لأن ترتيب القائمة يحمل معنى.",
+        "anchors": "يتم حل المستعرات إلى قيمها، لذا يظهر التعديل خلف مرساة مشتركة في كل موقع مستعر؛ يُبلغ عن المرساة أو المستعر الذي تغير مع بقاء القيمة سليمة بشكل منفصل كبنية.",
+        "mergeKeys": "يتم توسيع مفاتيح الدمج (<<) قبل المقارنة، وتغلب مفاتيح العقدة الخاصة بها على المفاتيح المدمجة.",
+        "types": "النوع جزء من القيمة: يُبلغ عن 8080 و\"8080\" و!!str 8080 كتغييرات في النوع، وليس كتغيير عام.",
+        "sequences": "تتزاوج تسلسلات الخرائط بالاسم أو المعرف أو المفتاح عندما يكون هذا الحقل فريدًا على كلا الجانبين، لذا لا يتسبب إدخال عنصر واحد في تسلسل متتالي؛ لا يزال يُبلغ عن إعادة الترتيب.",
+        "blockScalars": "Block scalars compare by resolved string, so the trailing newline that |- strips is a real change; a restyle with the same value is structural.",
+        "comments": "التعليقات ليست جزءًا من نموذج بيانات YAML ولا تتم مقارنتها.",
+        "multiDoc": "--- يقارن المستندات زوجًا زوجًا؛ في حالة عدم تطابق العدد يُبلغ عن ذلك بدلاً من مقارنة الأول فقط.",
+        "duplicateKeys": "في حالة وجود مفتاح تكرار في الإدخال، يُستخدم آخر ظهور ويُبلغ عنه كتحذير."
+      },
+      "note": {
+        "raw-text-mode": "يُقارن الوضع النصي الخام الأحرف وليس الهيكل: ترتيب المفاتيح، الاقتباسات والمسافات البادئة كلها تُؤخذ في الاعتبار.",
+        "parse-error": "لم تتم معالجة جانب واحد، لذا لم تتم أي مقارنة.",
+        "document-count-mismatch": "يحتوي الجانبان على عدد مختلف من مستندات ---؛ تم مطابقة المستندات بالترتيب وتم الإبلاغ عن الإضافات كاملة.",
+        "merge-keys-expanded": "تمت توسيع مفاتيح الدمج (<<) قبل المقارنة.",
+        "anchors-unresolved": "تمت مقارنة المستعرات كمرجع *name وليس كقيمها المُحلَّلة.",
+        "yaml11-ambiguous-scalars": "يتم قراءة y/n/yes/no/on/off غير المقتبسة كسلاسل هنا (YAML 1.2 Core) وكقيم منطقية تحت YAML 1.1 — اقتبسها إذا كان المقصود قيمة منطقية.",
+        "sequence-matched-by-identity": "تمت مطابقة متتابعات الخرائط باستخدام حقل الهوية بدلاً من الموقع.",
+        "duplicate-keys": "يُعلن الخريطة عن نفس المفتاح مرتين؛ تم استخدام آخر ظهور.",
+        "truncated": "يتم سرد أول 2000 تغيير فقط."
+      }
+    },
+    "listSetCompare": {
+      "listA": "القائمة أ",
+      "listB": "القائمة ب",
+      "placeholder": "الصق العناصر، عنصر واحد في كل سطر (أو اسحب ملف .txt/.csv)",
+      "emptyHint": "أضف عناصر إلى كل من القائمة أ والقائمة ب لعرض المقارنة.",
+      "privacy": "يتم مقارنة القائمتين في متصفحك — لا يتم رفع أي شيء. يعمل نفس المحرك على جانب الخادم لمتصلّي API و MCP.",
+      "delimiter": "الفاصل",
+      "delimiterOption": {
+        "auto": "كشف تلقائي",
+        "newline": "سطر جديد",
+        "comma": "فاصلة",
+        "tab": "تاب",
+        "custom": "مخصص"
+      },
+      "customDelimiter": "فاصل",
+      "customDelimiterPlaceholder": "| أو \\t",
+      "sort": "ترتيب",
+      "sortOption": {
+        "original": "الترتيب الأصلي",
+        "asc": "أ→ي",
+        "desc": "ي→أ",
+        "byCount": "حسب العدد"
+      },
+      "optCaseSensitive": "حساسة لحالة الأحرف",
+      "optTrim": "إزالة المسافات الزائدة",
+      "optCollapse": "دمج المسافات الداخلية",
+      "optIgnoreZeros": "تجاهل الأصفار الرائدة",
+      "paneItems": "{n} عناصر",
+      "paneSingle": "عنصر واحد — تحقق من الفاصل",
+      "items": "{n}",
+      "none": "لا شيء",
+      "more": "+{n} أخرى — انسخ أو حمّل للحصول على القائمة الكاملة",
+      "panel": {
+        "onlyInA": "في A فقط",
+        "onlyInB": "في B فقط",
+        "intersection": "التقاطع (في كلاهما)",
+        "union": "الاتحاد (جميع العناصر)",
+        "symmetricDifference": "الفرق المتماثل"
+      },
+      "summaryIdentical": "نفس المجموعة — {n} عنصر مشترك",
+      "summaryDiff": "{a} في A فقط · {b} في B فقط · {shared} مشترك",
+      "drill": {
+        "symmetricDifference": "الفرق المتماثل ({n})",
+        "duplicates": "التكرارات داخل قائمة ({n})",
+        "multiplicities": "عدد مرات ظهور كل عنصر ({n})",
+        "warnings": "إشعارات ({n})"
+      },
+      "duplicatesInA": "مكررة في أ",
+      "duplicatesInB": "مكررة في ب",
+      "colValue": "العنصر",
+      "colCountA": "في أ",
+      "colCountB": "في ب",
+      "detailTruncated": "تم اختصار عدد العناصر — زد maxDetail في الـ API للحصول على الجدول الكامل.",
+      "reportTitle": "مقارنة القوائم"
+    },
+    "loanAmortization": {
+      "principal": "مبلغ القرض",
+      "rate": "السنوية %",
+      "term": "المدة",
+      "termUnit": "وحدة المدة",
+      "unitYears": "سنوات",
+      "unitMonths": "أشهر",
+      "startMonth": "شهر أول قسط",
+      "startMonthHint": "YYYY-MM. يُسمّي الجدول ولا يُغيّر أي مبلغ.",
+      "extraHeading": "قسط إضافي",
+      "extraMonthly": "إضافي كل شهر",
+      "extraYearly": "إضافي مرة في السنة",
+      "extraYearlyMonth": "الشهر الذي يُدفع فيه القسط الإضافي السنوي",
+      "extraOneTime": "إضافي لمرة واحدة",
+      "extraOneTimePeriod": "إضافي عند القسط رقم",
+      "extraNote": "تُقلّل القسط الإضافي من أصل الدين في الفترة التي يُدفع فيها، مما يُقلّل الفائدة في كل فترة لاحقة. يبقى السعر والقسط المجدول كما هما.",
+      "monthlyPayment": "القسط الشهري",
+      "totalInterest": "إجمالي الفائدة",
+      "totalPaid": "إجمالي المبلغ المدفوع",
+      "crossover": "نقطة التعادل",
+      "crossoverValue": "القسط {n}",
+      "crossoverNone": "أبداً",
+      "payoff": "تم سداد القرض عند القسط {n}",
+      "monthsSaved": "{n} أشهر مبكراً",
+      "totalExtra": "{amount} مدفوع فوق الجدول الزمني",
+      "viewMonthly": "كل قسط",
+      "viewAnnual": "سنوياً",
+      "tableCaption": "جدول السداد: القسط، الفائدة، أصل القرض، والرصيد المتبقي لكل فترة",
+      "colPeriod": "#",
+      "colDate": "الشهر",
+      "colPayment": "الدفع",
+      "colInterest": "الفائدة",
+      "colPrincipal": "رأس المال",
+      "colBalance": "الرصيد",
+      "colYear": "السنة",
+      "expandRows": "عرض جميع عمليات الدفع ({total})",
+      "collapseRows": "عرض عدد أقل من عمليات الدفع",
+      "windowNote": "يتم عرض {shown} من أصل {total} عملية دفع. يتضمن ملف CSV وواجهة API جميعها.",
+      "emptyHint": "أدخل مبلغ القرض ومعدل الفائدة والمدة لعرض الجدول.",
+      "note": "نفس المحرك المستخدم في واجهة API. تُحسب المعادلات بناءً على شروط قرضك فقط؛ لا يتم رفع أي بيانات أو تخزينها.",
+      "errPrincipal": "أدخل مبلغ قرض أكبر من 0.",
+      "errRate": "أدخل معدل فائدة بين 0 و100.",
+      "errTerm": "أدخل فترة تتراوح بين شهر واحد و100 سنة.",
+      "errStartMonth": "استخدم صيغة YYYY-MM، مثل 2026-01.",
+      "errExtra": "أدخل مبلغًا يساوي 0 أو أكثر.",
+      "errOneTimePeriod": "أدخل رقم القسط الذي ينطبق عليه الدفع الوحيد."
+    },
+    "businessDayShift": {
+      "modeLabel": "ما الذي تريد حسابه",
+      "mode": {
+        "shift": "نقل تاريخ",
+        "countBetween": "العد بين التاريخين"
+      },
+      "startDate": "تاريخ البدء",
+      "days": "أيام عمل",
+      "daysHint": "القيم السالبة تعود للخلف: −10 تعني عشرة أيام عمل قبل تاريخ البدء.",
+      "daysInvalid": "يجب أن يكون عدد أيام العمل عددًا صحيحًا، مع إشارة ناقص اختيارية في البداية.",
+      "endDate": "تاريخ الانتهاء",
+      "includeEndDate": "احتسب تاريخ الانتهاء أيضاً — هذا ما تُرجعه دالة NETWORKDAYS في الجداول",
+      "weekendLabel": "أيام الإجازة أسبوعياً",
+      "weekendHint": "الافتراضي هو السبت والأحد. غيّر إلى الجمعة والسبت حيث يُعدّان عطلة نهاية الأسبوع.",
+      "weekday": {
+        "sun": "أحد",
+        "mon": "إثنين",
+        "tue": "ثلاثاء",
+        "wed": "أربعاء",
+        "thu": "خميس",
+        "fri": "جمعة",
+        "sat": "سبت"
+      },
+      "holidays": "العطل",
+      "holidaysHint": "إذا تُركت فارغة، تكون النتيجة هي العدّ وفق قاعدة عطلة نهاية الأسبوع فقط — لن يُطبَّق أي تقويم وطني تلقائياً.",
+      "makeupWorkdays": "أيام عمل تعويضية",
+      "makeupHint": "التواريخ التي تم العمل فيها رغم وقوعها في عطلة نهاية الأسبوع أو عيد — تُدخل هنا أيام السبت التعويضية في الصين (调休/补班).",
+      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesIgnored": "{n, plural, one {لم يكن الإدخال # تاريخًا بصيغة YYYY-MM-DD ولن يُستخدم} other {لم تكن الإدخالات # تواريخ بصيغة YYYY-MM-DD ولن تُستخدم}}",
+      "pickStart": "اختر تاريخ بدء للبدء.",
+      "emptyHintShift": "اختر تاريخ بدء وعدد أيام عمل.",
+      "emptyHintCount": "اختر تاريخ بدء وتاريخ انتهاء.",
+      "note": "نفس المحرك المستخدم في الـ API. يتم الحساب بناءً على مجموعة القواعد المعروضة مع النتيجة؛ لا يتم تخزين أي شيء.",
+      "countHeadline": "{n, plural, one {# يوم عمل} other {# أيام عمل}}",
+      "reversedRange": "تاريخ الانتهاء يسبق تاريخ البدء، لذا تظهر النتيجة سالبة.",
+      "classification": {
+        "workday": "يوم عمل",
+        "weekend": "عطلة نهاية أسبوع",
+        "holiday": "عطلة",
+        "makeupWorkday": "يوم عمل تعويضي"
+      },
+      "ruleWeekend": "{days} إجازة",
+      "ruleNoWeekend": "لا توجد أيام إجازة أسبوعية",
+      "ruleHolidays": "{n, plural, =0 {لا توجد قائمة عطل} one {# عطلة} other {# عطل}}",
+      "ruleMakeups": "{n, plural, =0 {لا توجد أيام عمل تعويضية} one {# يوم عمل تعويضي} other {# أيام عمل تعويضية}}",
+      "ruleEndIncluded": "تُحسب تاريخ النهاية",
+      "ruleEndExcluded": "لا تُحسب تاريخ النهاية",
+      "chain": "تغيير آخر من هذا التاريخ"
+    },
+    "retryBackoff": {
+      "strategy": {
+        "exponential": "أسي",
+        "linear": "خطي",
+        "fixed": "ثابت"
+      },
+      "initialDelay": "التأخير الأولي (مللي ثانية)",
+      "factor": "عامل التخفيف",
+      "factorHint": "المُضاعف المطبق في كل محاولة إعادة. يجب أن يكون أكبر من 1.",
+      "increment": "الزيادة الخطية (مللي ثانية)",
+      "incrementHint": "مللي ثانية تُضاف إلى التأخير في كل محاولة إعادة.",
+      "maxDelay": "الحد الأقصى للتأخير (مللي ثانية)",
+      "maxDelayHint": "اتركه فارغًا لعدم تحديد حد. بمجرد الوصول إلى الحد، يبقى كل تأخير لاحق ثابتًا عند هذا الحد.",
+      "maxAttempts": "الحد الأقصى للمحاولات",
+      "maxAttemptsHint": "من 1 إلى 100.",
+      "excludeInitial": "الحد الأقصى للمحاولات لا يشمل الطلب الأولي",
+      "excludeInitialNote": "مفعّل: العدد أعلاه يحسب عمليات إعادة المحاولة فقط، والطلب الأولي يُضاف بشكل منفصل. معطّل: يحسب كل محاولة، بما فيها الطلب الأولي.",
+      "jitter": {
+        "none": "لا شيء — تأخيرات دقيقة",
+        "equal": "متساوي — نصف ثابت ونصف عشوائي",
+        "full": "كامل — أي قيمة من الصفر إلى التأخير"
+      },
+      "callerTimeout": "مهلة خاصة بك (مللي ثانية)",
+      "callerTimeoutHint": "اختياري. اتركه فارغًا لتخطي فحص الميزانية.",
+      "emptyHint": "صلح الحقل المميز لعرض الجدول الزمني.",
+      "note": "يُحسب من السياسة وحدها — لا يُرسل أي شيء إلى أي خدمة خارجية. يُبلغ عن jitter كنطاق يقع فيه عميل حقيقي، وليس كسحب عينة واحد.",
+      "headlineExact": "{attempts} محاولات، {wait} من الانتظار في المجموع.",
+      "headlineRange": "{attempts} محاولات، {expected} من الانتظار في المتوسط، يصل إلى {max} في أسوأ الحالات.",
+      "finalDelay": "آخر انتظار، قبل المحاولة {attempt}، هو {delay}.",
+      "noRetries": "تسمح هذه الميزانية بمحاولة واحدة دون إعادة محاولة، لذا لا يوجد شيء للانتظار.",
+      "retryCount": "{count, plural, =0 {بدون إعادة محاولة} one {# إعادة محاولة} other {# إعادة محاولة}}",
+      "capFlattened": "تم الوصول إلى الحد الأقصى في المحاولة {attempt} — كل تأخير لاحق يبقى عند {delay}.",
+      "timeoutExceeded": "أسوأ حالة تنتظر {wait}، مما يتجاوز ميزانيتك {timeout}.",
+      "timeoutOk": "Worst case waits {wait}, inside your {timeout} budget.",
+      "tableLabel": "Retry schedule",
+      "colAttempt": "Attempt",
+      "colDelay": "Delay",
+      "colCumulative": "Cumulative wait",
+      "average": "avg {value}",
+      "formula": {
+        "none": "Delays are exact — no jitter applied.",
+        "equal": "Equal jitter: half the delay is fixed, the other half is drawn uniformly, so each wait lands between half the delay and the full delay.",
+        "full": "Full jitter: the wait is drawn uniformly between zero and the computed delay."
+      },
+      "errInitialDelay": "يجب أن يكون التأخير الأولي عددًا صحيحًا من الميلي ثانية، على الأقل 1.",
+      "errFactor": "يجب أن يكون العامل أكبر من 1 وعلى الأكثر 100. العامل 1 هو الاستراتيجية الثابتة.",
+      "errIncrement": "يجب أن يكون مقدار الزيادة عدداً صحيحاً بالميلي ثانية، 0 أو أكثر.",
+      "errMaxDelay": "يجب أن يكون الحد الأقصى عدداً صحيحاً بالميلي ثانية، 1 على الأقل.",
+      "errCapBelowInitial": "يجب أن يكون الحد الأقصى مساوياً أو أكبر من التأخير الأولي.",
+      "errMaxAttempts": "يجب أن يكون عدد المحاولات عدداً صحيحاً بين 1 و 100.",
+      "errCallerTimeout": "يجب أن يكون الوقت المحدد عدداً صحيحاً بالميلي ثانية، 1 على الأقل."
+    },
+    "csvColumns": {
+      "csvLabel": "CSV",
+      "csvPlaceholder": "الصق CSV هنا، أو اسحب ملفاً — تُقرأ السطر الأول كأسماء الأعمدة",
+      "sample": "CSV نموذجي",
+      "chooseFile": "اختر ملفاً",
+      "fileFailed": "تعذر قراءة {name}.",
+      "delimiterLabel": "الفاصل",
+      "delimiter": {
+        "comma": "فاصلة  ,",
+        "semicolon": "فاصلة منقوطة  ;",
+        "tab": "Tab",
+        "pipe": "Pipe  |"
+      },
+      "raggedPolicyLabel": "Rows that don't match the header",
+      "ragged": {
+        "pad": "Align to the header",
+        "truncate": "Cut long rows, leave short rows short",
+        "reject": "Stop and report"
+      },
+      "columnsTitle": "Columns — {kept} of {total} kept",
+      "columnsHint": "Untick to drop a column, edit the box to rename it, use the arrows to reorder. Everything resolves against the original header.",
+      "reset": "Reset columns",
+      "keep": "إبقاء العمود {name}",
+      "renameLabel": "{name}",
+      "moveUp": "نقل {name} للأعلى",
+      "moveDown": "نقل {name} للأسفل",
+      "noneKept": "Every column is unticked — keep at least one.",
+      "emptyHint": "Paste a CSV above to manage its columns.",
+      "note": "Runs on the text you paste. Drop, then rename, then reorder — in that fixed order, always against the original header.",
+      "columnCount": "{n} columns",
+      "rowCount": "{n} rows",
+      "duplicateHeaders": "Duplicate header used by name: {names}",
+      "raggedCount": "{n}{more} rows don't match the header width",
+      "previewLabel": "Output CSV",
+      "previewTruncated": "Showing the first {shown} of {total} lines. Copy or download for the whole file.",
+      "raggedListLabel": "الصفوف التي لا تتطابق مع عرض الرأس",
+      "raggedRow": "السطر {line}: {actual} حقول، الرأس يحتوي على {expected}",
+      "unusedRenames": "تم تجاهل إعادة التسمية — هذه الأعمدة غير موجودة في المخرجات: {names}"
+    },
+    "imageRotateFlip": {
+      "drop": "اسحب صورة هنا، أو انقر للتصفح",
+      "browse": "اختر صورة",
+      "selected": "{name} · {kb} KB",
+      "privacy": "يتم إرسال الملف إلى Forge API لإجراء التحويل ولن يتم تخزينه.",
+      "tooLarge": "هذه الصورة أكبر من {mb} MB.",
+      "ccw": "90° يسار",
+      "cw": "90° يمين",
+      "half": "180°",
+      "reset": "إعادة تعيين",
+      "flipHorizontal": "قلب أفقي",
+      "flipVertical": "قلب عمودي",
+      "angle": "الزاوية",
+      "exactAngle": "الزاوية بالضبط °",
+      "fitMode": "وضع التثبيت",
+      "fitExpand": "توسيع اللوحة",
+      "fitCrop": "قص لملء المساحة",
+      "fitInside": "تثبيت داخل الإطار",
+      "fitNote": "عند الدوران ربع دورة، لم يعد الصورة تتناسب مع إطارها القديم: التوسيع يحافظ على كل بكسل، القص يحافظ على الحجم الأصلي ويقص الزوايا، التثبيت يصغر الصورة كاملة.",
+      "outputFormat": "تنسيق الإخراج",
+      "sameFormat": "نفس تنسيق الإدخال",
+      "idle": "اسحب صورة لرؤية إعادة توجيهها.",
+      "original": "الأصلية · {w}×{h}",
+      "originalAlt": "الصورة كما تم رفعها",
+      "result": "النتيجة · {w}×{h}",
+      "resultAlt": "الصورة بعد إعادة التوجيه",
+      "badgeLossless": "بدون إعادة عينة",
+      "badgeResampled": "تمت إعادة العينة",
+      "badgeSize": "{kb} KB",
+      "badgeExif": "تم تطبيق اتجاه EXIF {orientation} أولاً",
+      "badgeSnapped": "تم ضبطه على ربع دورة بالضبط",
+      "badgeReencode": "الهندسة دقيقة؛ يقوم مشفر الفيديو بإعادة الترميز",
+      "download": "تحميل",
+      "note": "تدويرات 90° و180° و270° تحرك البكسلات دون دمجها. أي زاوية أخرى تعيد العينة. لا يتم دعم GIF المتحركة وAPNG وWebP المتحركة بعد."
+    },
+    "exifStrip": {
+      "drop": "اسحب ملف JPEG أو PNG أو WebP لإزالة بياناته الوصفية",
+      "privacy": "تمت المعالجة على خوادمنا ولم يتم تخزينها. يصل إلى {mb} MB لكل صورة.",
+      "idle": "تمت الإزالة: GPS، وقت الالتقاط، معلومات الكاميرا والجهاز، الصورة المصغرة المضمنة، تاريخ التعديل. تم الإبقاء على: الاتجاه، ملف تعريف الألوان، الأبعاد، بيانات البكسل.",
+      "note": "الصور الثابتة فقط. الفيديو وPDF وHEIC وAVIF وGIF خارج النطاق، وتُترك مظاهر C2PA للأصل كما هي.",
+      "detail": "ما الذي تمت إزالته",
+      "optKeepThumbnail": "إبقاء صورة مصغرة Exif المضمنة",
+      "verdictStripped": "تمت إزالة {fields} من حقول البيانات الوصفية ({kb} كيلوبايت)",
+      "verdictClean": "لا يحتوي هذا الملف على بيانات وصفية قابلة للإزالة",
+      "strippedCaveat": "لم يتغير الملف نفسه — نفس البكسلات، نفس الأبعاد، ولم يتم إعادة الترميز.",
+      "cleanCaveat": "تم إرجاع الملف كما ورد، بايتًا بايتًا.",
+      "badgeOrientationKept": "تم الإبقاء على الاتجاه",
+      "badgeOrientationLost": "لم يمكن نقل الاتجاه",
+      "badgeColorProfileKept": "تم الإبقاء على ملف تعريف الألوان",
+      "badgeThumbnailKept": "تم الإبقاء على الصورة المصغرة",
+      "badgeThumbnailRemoved": "تمت إزالة الصورة المصغرة",
+      "download": "تحميل الصورة المنظفة",
+      "sizes": "{before} KB → {after} KB",
+      "detailFields": "{fields} حقول · {kb} KB",
+      "detailNothing": "لم يتم إزالة أي شيء من هذا الملف.",
+      "detailOrientation": "تم قراءة اتجاه Exif {value} من الملف ونقله.",
+      "detailNoOrientation": "لم يعلن الملف عن أي اتجاه Exif، لذا لا يتأثر العرض.",
+      "segmentExif": "Exif",
+      "segmentIptc": "IPTC",
+      "segmentXmp": "XMP",
+      "segmentComment": "تعليق",
+      "segmentText": "بيانات نصية وصفية",
+      "segmentTime": "طابع زمني",
+      "segmentVendor": "كتلة البائع",
+      "summaryStripped": "تمت إزالة {fields} من حقول البيانات الوصفية ({families})، {kb} كيلوبايت. الصورة لم تتغير.",
+      "summaryClean": "لم يتم العثور على بيانات وصفية قابلة للإزالة. تم إرجاع الملف دون تغيير."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "Nombre / host",
+      "type": "Tipo de registro",
+      "note": "Resuelto por el DNS del host Forge."
+    },
+    "tls": {
+      "host": "Host",
+      "expired": "Certificado caducado",
+      "validDays": "{n} días restantes",
+      "note": "Conexión desde el host Forge. Solo inspección."
+    },
+    "myIp": {
+      "refresh": "Actualizar",
+      "note": "IP vista por Forge. Sin geo sin fuente licenciada."
+    },
+    "mermaid": {
+      "source": "Mermaid source",
+      "idle": "Valid diagrams render here",
+      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
+      "sample": "Sample",
+      "theme": "Theme",
+      "theme_default": "Default",
+      "theme_dark": "Dark",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "Flowchart",
+      "sample_sequence": "Sequence",
+      "sample_class": "Class",
+      "sample_er": "ER diagram",
+      "sample_state": "State",
+      "sample_gantt": "Gantt",
+      "sample_pie": "Pie",
+      "sample_mindmap": "Mindmap",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "zoomReset": "Reset view",
+      "copySvg": "Copy SVG",
+      "downloadSvg": "Download SVG",
+      "downloadPng": "Download PNG",
+      "previewAria": "Mermaid diagram preview",
+      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
+    },
+    "colorDeltaE": {
+      "note": "CIEDE2000 con culori. Umbrales orientativos de UI."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "Dialecto SQL",
+      "parseNote": "Solo parseo e inventario. ERD visual aparte.",
+      "convertNote": "@dbml/core — misma ruta que la API."
+    },
+    "dnsLeak": {
+      "probeHost": "Compare host (advanced)",
+      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
+      "run": "Start DNS leak check",
+      "retest": "Run again",
+      "showAdvanced": "Advanced options",
+      "hideAdvanced": "Hide advanced",
+      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
+      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
+      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
+      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
+      "edgeIp": "Your edge IP",
+      "authorityHits": "Recursive IPs",
+      "forgePaths": "Forge resolver hits",
+      "dohPaths": "Browser DoH hits",
+      "webrtcCount": "WebRTC IPs",
+      "forgeResolvers": "Forge multi-resolver (server-side)",
+      "forgeNote": "These queries leave from the Forge host — not your laptop.",
+      "browserDoh": "Browser DoH",
+      "webrtc": "WebRTC ICE",
+      "egressMarkers": "Forge egress markers",
+      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
+      "honestyPrefix": "Honesty:",
+      "verdictConsistent": "Paths look consistent on this check",
+      "verdictSplit": "Split answers across DNS paths",
+      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
+      "verdictIncomplete": "Incomplete — browser probes missing",
+      "verdictAuthority": "System DNS recursives captured",
+      "infraOn": "Authority online",
+      "infraOff": "Authority offline — multi-path only",
+      "infraChecking": "Checking…",
+      "authorityResolvers": "System DNS recursive resolvers",
+      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
+      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
+      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
+      "authorityDetail": "Authority session detail",
+      "phaseSession": "Creating session…",
+      "phaseSystemDns": "Triggering system DNS…",
+      "phasePoll": "Listening for recursive hits ({n}/{total})…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "stepSession": "Session",
+      "stepSystemDns": "System DNS",
+      "stepPoll": "Listen",
+      "stepBrowser": "Browser",
+      "stepServer": "Server",
+      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
+      "liveHits": "Live recursive hits",
+      "sectionSystemDns": "System DNS (what you came for)",
+      "sectionComplementary": "Complementary paths",
+      "sectionTech": "Technical session detail",
+      "copyIps": "Copy IPs",
+      "copied": "Copied",
+      "queryCount": "{n} queries",
+      "colPath": "Path",
+      "colAnswers": "Answers",
+      "colMs": "ms",
+      "ipPublic": "public",
+      "ipPrivate": "private",
+      "sig": {
+        "captured": "System DNS captured",
+        "onlineNoHits": "Authority online · no hits yet",
+        "offline": "Authority offline",
+        "forgeSplit": "Forge resolvers disagree",
+        "dohSplit": "Browser DoH disagree",
+        "webrtcMismatch": "WebRTC ≠ edge IP",
+        "webrtcLocal": "Local WebRTC candidates",
+        "noBrowser": "No browser probes"
+      }
+    },
+    "honesty": {
+      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
+      "signatureNotVerified": "{engine} · decode only · signature not verified",
+      "localOnly": "Processed for this request · not stored as a card or credential"
+    },
+    "idCard": {
+      "number": "Resident ID number",
+      "note": "GB 11643 check digit · no household registry lookup · same path as API",
+      "specimenTitle": "Resident ID · structure specimen",
+      "segRegion": "Region",
+      "segBirth": "Birth",
+      "segSeq": "Seq",
+      "segCheck": "Check",
+      "metaBirth": "Birth",
+      "metaGender": "Gender",
+      "metaRegion": "Region code",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "reasonFormat": "Format should be 18 characters (last may be X)",
+      "reasonBirth": "Birth date segment is invalid",
+      "reasonCheck": "Check digit is wrong",
+      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} lines",
+      "chars": "{n} chars",
+      "empty": "(empty file)",
+      "readyToShip": "Ready to drop into the repo"
+    },
+    "textTransform": {
+      "mode": "Mode",
+      "input": "Input",
+      "output": "Output",
+      "emptyResult": "Result appears here",
+      "runLocal": "Run locally",
+      "runServer": "Run on server",
+      "statusLocalLive": "Local · live",
+      "statusLocal": "Local",
+      "statusServer": "Server · same path as API",
+      "noteDefault": "Same path as API"
+    }
+  },
+  "roots": {
+    "hubLabel": "حسب النية",
+    "tools": "أدوات",
+    "dualSurface": "Human page + Agent API · same engine",
+    "otherRoots": "جذور الطلب الأخرى"
+  }
+}

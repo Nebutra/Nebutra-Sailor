@@ -1,0 +1,348 @@
+---
+title: Database Providers
+description: Connecting Nebutra to Neon, Supabase, or PlanetScale Postgres — environment variables, connection pooling, and migration setup for each provider.
+---
+
+Nebutra supports three managed PostgreSQL providers out of the box: Neon, Supabase, and PlanetScale Postgres. The application code is identical across these providers. The differences are connection strings, pooler behavior, and how you enable provider-managed PostgreSQL extensions.
+
+<Note>
+All supported providers on this page are PostgreSQL. Keep `provider = "postgresql"` in Prisma, commit generated migrations, and run migrations through `DIRECT_URL`.
+</Note>
+
+<Warning>
+PlanetScale Vitess/MySQL is not the same support path as PlanetScale Postgres. It requires a separate schema, adapter, relation, index, and migration strategy, so it is treated as a future/template path rather than a supported core runtime.
+</Warning>
+
+<Tabs>
+  <Tab title="Neon (default)">
+    Neon is the default provider. It is a serverless PostgreSQL platform with branching, auto-suspend, and a generous free tier. PgBouncer connection pooling is built in.
+
+    ### Why Neon
+
+    - **Branching** — create an isolated database branch for each feature branch or PR, with zero data-copy cost
+    - **Serverless** — scales to zero when idle; no compute charge for dormant databases
+    - **Auto-suspend** — free tier databases pause after 5 minutes of inactivity and resume in ~500 ms
+    - **pgvector** — enabled by default on all Neon databases
+
+    ### Connection string format
+
+    Neon provides two URLs per database: a pooled URL (via PgBouncer) for runtime queries, and a direct URL for migrations.
+
+    ```
+    # Pooled — use this for all application queries
+    postgresql://USER:PASSWORD@ep-XXXXXX.us-east-2.aws.neon.tech/neondb?sslmode=require&pgbouncer=true
+
+    # Direct — use this for migrations only
+    postgresql://USER:PASSWORD@ep-XXXXXX.us-east-2.aws.neon.tech/neondb?sslmode=require
+    ```
+
+    ### Environment variables
+
+    ```bash .env
+    # Runtime queries (pooled via PgBouncer)
+    DATABASE_URL="postgresql://USER:PASSWORD@ep-XXXXXX.us-east-2.aws.neon.tech/neondb?sslmode=require&pgbouncer=true"
+
+    # Migrations only (direct connection — bypasses pooler)
+    DIRECT_URL="postgresql://USER:PASSWORD@ep-XXXXXX.us-east-2.aws.neon.tech/neondb?sslmode=require"
+    ```
+
+    ### Prisma datasource and migration config
+
+    ```prisma packages/platform/db/prisma/schema.prisma
+    datasource db {
+      provider = "postgresql"
+    }
+    ```
+
+    ```ts packages/platform/db/prisma.config.ts
+    const runtimeDatabaseUrl = process.env.DATABASE_URL ?? "";
+    const migrationDatabaseUrl = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
+    ```
+
+    ### Connection pooling with PgBouncer
+
+    Neon's PgBouncer operates in **transaction mode** — a connection is held only for the duration of a single transaction, then returned to the pool. This supports thousands of concurrent application connections with a small number of actual PostgreSQL connections.
+
+    <Warning>
+    PgBouncer transaction mode does not support `SET` statements that persist across transactions (e.g. `SET LOCAL` for RLS). Nebutra's `withRls` sets the tenant variable inside a transaction, which is compatible with transaction-mode pooling.
+    </Warning>
+
+    ### Database branching for development
+
+    Create a branch from the Neon console or CLI to get an isolated copy of your schema for a feature branch:
+
+    ```bash
+    # Neon CLI
+    neon branches create --name feature/new-model --parent main
+    ```
+
+    Each branch has its own `DATABASE_URL`. Set it in your local `.env` or in Vercel's environment variable settings per branch.
+  </Tab>
+  <Tab title="Supabase">
+    Supabase is a PostgreSQL platform with a managed dashboard, built-in auth, storage, and real-time subscriptions. Connection pooling is provided by Supavisor.
+
+    ### Why Supabase
+
+    - **Managed dashboard** — browse tables, run SQL, and view RLS policies in the Supabase Studio UI
+    - **Supavisor** — session-mode pooling that supports `SET LOCAL` statements needed for RLS
+    - **pgvector** — available as a first-class extension, enableable from the dashboard
+    - **Storage** — S3-compatible object storage co-located with your database (used by `@nebutra/uploads`)
+
+    ### Enabling pgvector
+
+    Before running migrations, enable the pgvector extension from the Supabase dashboard:
+
+    **Dashboard → Database → Extensions → Search "vector" → Enable**
+
+    Or via SQL in the Supabase SQL editor:
+
+    ```sql
+    CREATE EXTENSION IF NOT EXISTS vector;
+    ```
+
+    ### Connection string format
+
+    Supabase provides a pooled URL (Supavisor) and a direct URL per project:
+
+    ```
+    # Pooled via Supavisor (session mode — supports SET LOCAL)
+    postgresql://postgres.PROJECTREF:PASSWORD@aws-0-us-east-1.pooler.supabase.com:5432/postgres
+
+    # Direct connection (for migrations)
+    postgresql://postgres:PASSWORD@db.PROJECTREF.supabase.co:5432/postgres
+    ```
+
+    ### Environment variables
+
+    ```bash .env
+    # Runtime queries (pooled via Supavisor)
+    DATABASE_URL="postgresql://postgres.PROJECTREF:PASSWORD@aws-0-us-east-1.pooler.supabase.com:5432/postgres"
+
+    # Migrations only (direct connection)
+    DIRECT_URL="postgresql://postgres:PASSWORD@db.PROJECTREF.supabase.co:5432/postgres"
+    ```
+
+    ### Prisma datasource and migration config
+
+    ```prisma packages/platform/db/prisma/schema.prisma
+    datasource db {
+      provider = "postgresql"
+    }
+    ```
+
+    ```ts packages/platform/db/prisma.config.ts
+    const runtimeDatabaseUrl = process.env.DATABASE_URL ?? "";
+    const migrationDatabaseUrl = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
+    ```
+
+    ### Connection pooling with Supavisor
+
+    Supabase's Supavisor supports both **transaction mode** (port 6543) and **session mode** (port 5432). Use **session mode** (port 5432 in the pooled URL above) to ensure `SET LOCAL` statements for RLS work correctly.
+
+    <Warning>
+    If you use Supavisor in transaction mode (port 6543), `SET LOCAL` for RLS will not persist across statements in the same logical request. Always use session mode (port 5432) with Supabase when relying on `withRls`.
+    </Warning>
+
+    ### Running migrations with Supabase
+
+    Migrations work exactly the same as with Neon:
+
+    ```bash
+    pnpm db:migrate
+    ```
+
+    Prisma uses `DIRECT_URL` for DDL statements and `DATABASE_URL` for all other queries.
+  </Tab>
+  <Tab title="PlanetScale Postgres">
+    PlanetScale Postgres is the supported PlanetScale path for Nebutra. It keeps the same Prisma PostgreSQL datasource and uses PlanetScale's Postgres PgBouncer endpoint for runtime traffic.
+
+    ### Why PlanetScale Postgres
+
+    - **PostgreSQL-compatible runtime** — keeps Sailor's Prisma, RLS, and pgvector assumptions intact
+    - **PgBouncer endpoint** — use port `6432` for pooled application traffic
+    - **Direct endpoint** — use port `5432` for Prisma migrations, introspection, backups, and other DDL-heavy work
+    - **Branching and operations** — use PlanetScale's managed branching, backups, metrics, and operational tooling without changing application code
+
+    ### Enable pgvector
+
+    Nebutra's AI features require the `pgvector` extension. Before the first migration, enable it with an administrative PlanetScale Postgres role:
+
+    ```sql
+    CREATE EXTENSION IF NOT EXISTS vector;
+    ```
+
+    ### Connection string format
+
+    PlanetScale Postgres provides the same host, credentials, and database name for both connection modes. The port selects the mode, and SSL is required.
+
+    ```
+    # Pooled via PgBouncer — use this for application queries
+    postgresql://ROLE.BRANCH_ID:PASSWORD@HOSTNAME:6432/DATABASE?sslmode=require
+
+    # Direct Postgres — use this for migrations and DDL
+    postgresql://ROLE.BRANCH_ID:PASSWORD@HOSTNAME:5432/DATABASE?sslmode=require
+    ```
+
+    ### Environment variables
+
+    ```bash .env
+    # Runtime queries (pooled via PgBouncer)
+    DATABASE_URL="postgresql://ROLE.BRANCH_ID:PASSWORD@HOSTNAME:6432/DATABASE?sslmode=require"
+
+    # Migrations only (direct connection — bypasses PgBouncer)
+    DIRECT_URL="postgresql://ROLE.BRANCH_ID:PASSWORD@HOSTNAME:5432/DATABASE?sslmode=require"
+    ```
+
+    ### Prisma datasource and migration config
+
+    ```prisma packages/platform/db/prisma/schema.prisma
+    datasource db {
+      provider = "postgresql"
+    }
+    ```
+
+    ```ts packages/platform/db/prisma.config.ts
+    const runtimeDatabaseUrl = process.env.DATABASE_URL ?? "";
+    const migrationDatabaseUrl = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
+    ```
+
+    ### Connection pooling with PgBouncer
+
+    PlanetScale Postgres PgBouncer runs in transaction mode. Use it for normal OLTP application queries. Do not use the pooled URL for schema changes, long-running analytics, backups, or session-specific features that require a persistent connection.
+
+    <Note>
+    Keep RLS tenant context transaction-scoped. Nebutra's `withRls` helper sets tenant variables inside the transaction; new code should not rely on session variables that survive across pooled transactions.
+    </Note>
+
+    <Warning>
+    Keep Prisma migrations on the direct URL. Do not switch Nebutra's Postgres migration workflow to `db push` for PlanetScale Postgres; checked-in migrations remain the source of truth.
+    </Warning>
+
+    ### Running migrations with PlanetScale Postgres
+
+    Migrations work the same way as other PostgreSQL providers:
+
+    ```bash
+    pnpm db:migrate
+    ```
+
+    Prisma uses `DIRECT_URL` for DDL statements and `DATABASE_URL` for runtime queries.
+  </Tab>
+</Tabs>
+
+## Choosing a provider
+
+| Criteria | Neon | Supabase | PlanetScale Postgres |
+|----------|------|----------|----------------------|
+| Branching | Yes — per-branch databases | No | Yes — managed database branches |
+| Managed dashboard | Basic | Full-featured Studio UI | Operational dashboard with metrics and branches |
+| Connection pooling | PgBouncer (transaction mode) | Supavisor (session + transaction modes) | PgBouncer (transaction mode, port `6432`) |
+| Direct migration URL | Direct Postgres URL | Direct Postgres URL | Direct Postgres URL on port `5432` |
+| Built-in auth | No (use Clerk / Better Auth) | Yes (if desired) | No (use Clerk / Better Auth) |
+| Built-in storage | No (use `@nebutra/uploads`) | Yes (S3-compatible) | No (use `@nebutra/uploads`) |
+| pgvector | Enabled by default | Available as extension | Available as extension |
+| Prisma migration workflow | Checked-in Postgres migrations | Checked-in Postgres migrations | Checked-in Postgres migrations |
+
+<Tip>
+If your team relies heavily on per-PR database environments, choose a provider with database branching. If you want a single visual dashboard to inspect tables and run SQL without a separate tool, Supabase Studio is strong. If you already operate on PlanetScale or want its Postgres operational model, use PlanetScale Postgres rather than PlanetScale Vitess/MySQL for Sailor's core runtime.
+</Tip>
+
+## PlanetScale Vitess/MySQL future path
+
+PlanetScale Vitess/MySQL is a different database target, not a connection-string variant of the supported Postgres runtime. A future Sailor template for Vitess/MySQL would need its own contract:
+
+- a MySQL/Vitess Prisma schema or generated schema variant
+- a MySQL-compatible Prisma adapter strategy
+- a `relationMode` decision and, if using Prisma relation mode, explicit `@@index` coverage for relation scalar fields
+- a branch/deploy-request migration workflow that does not conflict with checked-in Postgres migrations
+- replacements for PostgreSQL-only features such as RLS and pgvector
+
+Until that template exists, use PlanetScale Postgres for PlanetScale deployments.
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I switch providers after going to production?">
+    Yes, between the PostgreSQL providers listed here. Because they expose PostgreSQL, switching requires a planned `pg_dump` / `pg_restore` or provider-specific migration flow, plus updated `DATABASE_URL` and `DIRECT_URL` values. Application code does not need a provider fork.
+  </Accordion>
+  <Accordion title="Why do I need two connection strings?">
+    Connection poolers (PgBouncer, Supavisor) multiplex many application connections over a small pool of real PostgreSQL connections. They are not the right path for DDL statements like `CREATE TABLE` or `ALTER TABLE`. `DIRECT_URL` bypasses the pooler so Prisma can run migrations safely.
+  </Accordion>
+  <Accordion title="Can I use PlanetScale Vitess/MySQL instead?">
+    Not for the core Nebutra runtime today. Vitess/MySQL needs a separate Prisma schema or generated schema variant, a MySQL adapter, a relation/index strategy, and a migration workflow aligned with PlanetScale deploy requests. Treat it as a future template path, not as a drop-in replacement for `DATABASE_URL`.
+  </Accordion>
+  <Accordion title="Is self-hosted PostgreSQL supported?">
+    Yes, with additional setup. You need to ensure pgvector is installed, configure a connection pooler (PgBouncer is recommended), and provide a direct URL for migrations.
+
+    **1. Install pgvector**
+
+    ```bash
+    # Ubuntu / Debian
+    sudo apt install postgresql-16-pgvector
+
+    # macOS (Homebrew)
+    brew install pgvector
+
+    # Enable the extension in your database
+    psql -d your_db -c "CREATE EXTENSION IF NOT EXISTS vector;"
+    ```
+
+    **2. Install and configure PgBouncer**
+
+    ```ini
+    # /etc/pgbouncer/pgbouncer.ini
+    [databases]
+    nebutra = host=localhost port=5432 dbname=nebutra
+
+    [pgbouncer]
+    listen_addr = 127.0.0.1
+    listen_port = 6432
+    auth_type = scram-sha-256
+    pool_mode = transaction       # required for Prisma
+    max_client_conn = 500
+    default_pool_size = 20
+    server_reset_query = DISCARD ALL
+    ```
+
+    **3. Set environment variables**
+
+    ```bash
+    # Pooled connection (for app queries)
+    DATABASE_URL="postgresql://user:pass@localhost:6432/nebutra?pgbouncer=true&connect_timeout=10"
+
+    # Direct connection (for migrations — bypasses PgBouncer)
+    DIRECT_URL="postgresql://user:pass@localhost:5432/nebutra"
+    ```
+
+    **4. Keep Prisma config on the Postgres runtime/direct split**
+
+    ```prisma
+    datasource db {
+      provider = "postgresql"
+    }
+    ```
+
+    ```ts
+    const runtimeDatabaseUrl = process.env.DATABASE_URL ?? "";
+    const migrationDatabaseUrl = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
+    ```
+  </Accordion>
+  <Accordion title="What about connection limits on the free tier?">
+    Managed database tiers have connection limits. The pooler is essential on constrained tiers and serverless deployments — never set `DATABASE_URL` to a direct connection string in production serverless environments, as each function invocation can consume a connection.
+  </Accordion>
+</AccordionGroup>
+
+<CardGroup cols={2}>
+  <Card title="Schema & Migrations" icon="database" href="/database/schema-migrations">
+    Running migrations and CI/CD setup
+  </Card>
+  <Card title="Database Overview" icon="layout" href="/database/overview">
+    Architecture, schemas, and pgvector
+  </Card>
+  <Card title="Row-Level Security" icon="shield" href="/database/rls">
+    How RLS interacts with connection pooling
+  </Card>
+  <Card title="Prisma Studio" icon="table" href="/database/studio">
+    Visually inspect your database records
+  </Card>
+</CardGroup>

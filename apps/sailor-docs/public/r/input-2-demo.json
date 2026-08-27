@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-2-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/icons",
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/input-2-demo.tsx",
+      "content": "\"use client\";\n\nimport { MagnifyingGlass as Search } from \"@nebutra/icons\";\nimport { Input } from \"@nebutra/ui/primitives\";\nexport function Input2Demo() {\n  return (\n    <Input\n      aria-label=\"Search projects\"\n      type=\"search\"\n      prefix={<Search aria-hidden=\"true\" />}\n      clearable\n      placeholder=\"Search projects\"\n    />\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

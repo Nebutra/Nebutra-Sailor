@@ -1,0 +1,59 @@
+---
+title: Vercel 部署
+description: 在 Vercel 上部署 Nebutra 前端——营销站与文档为生产路径；web/auth 为可选 cutover。
+---
+
+## 概览
+
+每个公网表面使用**独立 Vercel 项目**，隔离环境变量、域名与部署配额。
+
+| 项目示例 | 应用路径 | 域名 | 稳态 |
+|----------|----------|------|------|
+| landing | `apps/landing` | `nebutra.com` | **Vercel 生产** |
+| `docs` | `apps/sailor-docs` | `docs.nebutra.com` | **Vercel 生产** |
+| `nebutra-web` | `apps/web` | `app.nebutra.com` | 可选；**现为 ECS** |
+| `nebutra-auth` | `apps/auth` | `auth.nebutra.com` | 可选；**现为 ECS** |
+
+生产 API **不要**默认部署为 Vercel Functions——`api.nebutra.com` 在 ECS。
+
+Web 必须使用 Next 构建（不是默认 Vite）：
+
+```bash
+cd ../.. && pnpm turbo run build:next --filter=@nebutra/web
+```
+
+## 链接项目
+
+```bash
+cd apps/landing && vercel link
+cd ../sailor-docs && vercel link
+# 可选：
+cd ../web && vercel link
+cd ../auth && vercel link
+```
+
+仓库中**没有** `apps/api-gateway` 目录；网关路径为 `backends/gateway`。
+
+生产认证变量示例：
+
+```bash
+BETTER_AUTH_URL=https://auth.nebutra.com
+AUTH_COOKIE_DOMAIN=.nebutra.com
+# BETTER_AUTH_SECRET 在 auth 与 web 保持一致
+```
+
+## 可选 web/auth cutover
+
+在 DNS 切换前保持 ECS 承载流量：
+
+```bash
+node scripts/preflight-web-auth-vercel.mjs
+node scripts/redeploy-web-auth-vercel.mjs
+```
+
+详见 monorepo `docs/ops/web-auth-vercel-cutover.md`。
+
+## 相关
+
+- [部署概览](/zh/deployment/overview)
+- [认证指南](/zh/guides/authentication)

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scroll-area-list-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@/components"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/scroll-area-list-demo.tsx",
+      "content": "\"use client\";\n\nimport { ScrollArea } from \"@/components/mdx-scroll-area\";\n\nexport function ScrollAreaListDemo() {\n  return (\n    <ScrollArea className=\"h-[250px] w-[350px] rounded-md border text-left\">\n      {Array.from({ length: 15 }, (_, i) => (\n        <div\n          key={i}\n          className=\"p-4 border-b border-border/50 transition-colors last:border-0 hover:bg-muted/50\"\n        >\n          <p className=\"text-sm font-medium mb-1\">Notification {i + 1}</p>\n          <p className=\"text-xs text-muted-foreground\">{10 * (i + 1)} minutes ago</p>\n        </div>\n      ))}\n    </ScrollArea>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

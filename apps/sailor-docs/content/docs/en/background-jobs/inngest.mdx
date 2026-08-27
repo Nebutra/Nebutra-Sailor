@@ -1,0 +1,310 @@
+---
+title: Inngest
+description: Durable multi-step background functions with automatic retries, event fan-out, and a local dev server — powered by @nebutra/event-bus.
+---
+
+## Overview
+
+Inngest is the primary background job system in Nebutra. It treats each function step as a durable checkpoint — if a step fails, only that step is retried, not the entire job. This makes it ideal for multi-step workflows like onboarding flows, report pipelines, and notification sequences.
+
+Nebutra wraps Inngest via `@nebutra/event-bus`, which pre-configures the client with your credentials and exposes it across the monorepo.
+
+## Setup
+
+<Steps>
+  <Step title="Set environment variables">
+    ```bash
+    INNGEST_EVENT_KEY=""      # From Inngest dashboard → Event Keys
+    INNGEST_SIGNING_KEY=""    # From Inngest dashboard → Signing Keys
+    ```
+  </Step>
+
+  <Step title="Register the Inngest endpoint">
+    The API gateway already exposes `POST /api/v1/inngest`. This is the URL Inngest calls to execute your functions. Register it in the [Inngest dashboard](https://app.inngest.com) under **Apps → Add App**:
+
+    ```
+    https://api.yourdomain.com/api/v1/inngest
+    ```
+
+    For local development, use the Inngest Dev Server instead (see below).
+  </Step>
+
+  <Step title="Define your first function">
+    ```typescript
+    // packages/integrations/event-bus/src/functions/welcome-email.ts
+    import { inngest } from "@nebutra/event-bus";
+    import { db } from "@nebutra/db";
+    import { email } from "@nebutra/email";
+
+    export const sendWelcomeEmail = inngest.createFunction(
+      { id: "send-welcome-email", retries: 3 },
+      { event: "user/signed-up" },
+      async ({ event, step }) => {
+        const user = await step.run("fetch-user", async () => {
+          return db.user.findUnique({ where: { id: event.data.userId } });
+        });
+
+        await step.run("send-email", async () => {
+          return email.send({
+            to: user.email,
+            template: "welcome",
+            data: { userName: user.name },
+          });
+        });
+      }
+    );
+    ```
+  </Step>
+
+  <Step title="Emit an event">
+    ```typescript
+    import { inngest } from "@nebutra/event-bus";
+
+    // From anywhere in your server code
+    await inngest.send({
+      name: "user/signed-up",
+      data: { userId: "user_abc123" },
+    });
+    ```
+  </Step>
+</Steps>
+
+## Function definition
+
+### Basic function
+
+```typescript
+import { inngest } from "@nebutra/event-bus";
+
+export const myFunction = inngest.createFunction(
+  {
+    id: "my-function",           // Unique identifier — used in dashboard and logs
+    retries: 3,                  // Max retry attempts per step (default: 3)
+    concurrency: {
+      limit: 10,                 // Max parallel executions of this function
+    },
+  },
+  { event: "resource/action" },  // Triggering event name
+  async ({ event, step }) => {
+    // function body
+  }
+);
+```
+
+### Configuration options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `id` | `string` | required | Unique function identifier |
+| `retries` | `number` | `3` | Max retries per failing step |
+| `concurrency.limit` | `number` | unlimited | Max simultaneous executions |
+| `throttle.limit` | `number` | — | Max executions per time period |
+| `throttle.period` | `string` | — | e.g. `"1m"`, `"1h"` |
+| `timeouts.finish` | `string` | `"1h"` | Max total function duration |
+
+## Step functions
+
+Steps are the core building block of Inngest functions. Each `step.run()` call is:
+
+- **Memoized** — if the function is retried, completed steps are not re-executed
+- **Independently retried** — only the failing step retries, not the whole function
+- **Checkpointed** — progress is saved between steps
+
+```typescript
+export const processOrder = inngest.createFunction(
+  { id: "process-order", retries: 5 },
+  { event: "order/placed" },
+  async ({ event, step }) => {
+    // Step 1: validate inventory
+    const inventory = await step.run("check-inventory", async () => {
+      return checkStock(event.data.items);
+    });
+
+    if (!inventory.available) {
+      // Returning early is fine — it marks the function as complete
+      return { status: "out-of-stock" };
+    }
+
+    // Step 2: charge payment (retried independently if it fails)
+    const charge = await step.run("charge-payment", async () => {
+      return chargeCard(event.data.paymentMethodId, event.data.total);
+    });
+
+    // Step 3: send confirmation email
+    await step.run("send-confirmation", async () => {
+      return email.send({
+        to: event.data.customerEmail,
+        template: "order-confirmation",
+        data: { orderId: event.data.orderId, charge },
+      });
+    });
+
+    return { status: "processed", chargeId: charge.id };
+  }
+);
+```
+
+### Sleeping between steps
+
+```typescript
+// Wait 24 hours, then send a follow-up email
+await step.sleep("wait-one-day", "24h");
+
+await step.run("send-followup", async () => {
+  return email.send({ to: user.email, template: "day-one-followup" });
+});
+```
+
+### Waiting for an external event
+
+```typescript
+// Pause the function until a specific event arrives (up to 7 days)
+const approval = await step.waitForEvent("wait-for-approval", {
+  event: "approval/granted",
+  match: "data.requestId",    // match on event.data.requestId === current event.data.requestId
+  timeout: "72h",
+});
+
+if (!approval) {
+  // Timed out — no approval received
+  await step.run("notify-expired", () => notifyRequestExpired(event.data.requestId));
+}
+```
+
+## Retry configuration
+
+Each step retries independently. Retries use exponential backoff by default.
+
+```typescript
+inngest.createFunction(
+  {
+    id: "resilient-function",
+    retries: 5,                // 5 retries per failing step
+  },
+  { event: "data/sync" },
+  async ({ event, step, attempt }) => {
+    // `attempt` starts at 0 (first try)
+    console.log(`Attempt ${attempt + 1}`);
+
+    await step.run("sync-data", async () => {
+      return syncToExternalApi(event.data);
+    });
+  }
+);
+```
+
+To permanently fail a step without retrying, throw a `NonRetriableError`:
+
+```typescript
+import { NonRetriableError } from "inngest";
+
+await step.run("validate", async () => {
+  if (!isValid(data)) {
+    throw new NonRetriableError("Data is permanently invalid — skipping retries");
+  }
+});
+```
+
+## Event naming convention
+
+Use the `resource/action` convention for all event names:
+
+| Event | Triggered by |
+|-------|-------------|
+| `user/signed-up` | Auth callback |
+| `user/deleted` | Account deletion |
+| `invoice/payment-failed` | Billing webhook |
+| `invoice/paid` | Billing webhook |
+| `quota/threshold-reached` | Metering pipeline |
+| `export/requested` | Dashboard action |
+| `report/scheduled` | Cron trigger |
+
+Keep event names lowercase with forward-slash separators. Avoid generic names like `job/run`.
+
+## Sending events with data
+
+```typescript
+import { inngest } from "@nebutra/event-bus";
+
+// Single event
+await inngest.send({
+  name: "invoice/payment-failed",
+  data: {
+    tenantId: "org_123",
+    invoiceId: "inv_456",
+    amount: 99.99,
+    customerId: "cust_789",
+  },
+});
+
+// Batch of events (processed in parallel)
+await inngest.send([
+  { name: "user/signed-up", data: { userId: "user_1" } },
+  { name: "user/signed-up", data: { userId: "user_2" } },
+  { name: "user/signed-up", data: { userId: "user_3" } },
+]);
+```
+
+## Inngest Dev Server
+
+During local development, run the Inngest Dev Server to execute functions locally without connecting to Inngest Cloud:
+
+```bash
+npx inngest-cli@latest dev -u http://localhost:3001/api/v1/inngest
+```
+
+The Dev Server:
+- Listens on `http://localhost:8288`
+- Discovers your functions from the endpoint URL
+- Provides a UI to trigger events and inspect function runs
+- Shows step-by-step execution traces
+
+Open `http://localhost:8288` in your browser to access the dashboard.
+
+<Note>
+Set `INNGEST_DEV=true` in your local `.env` to skip signature verification when working with the Dev Server.
+</Note>
+
+## Fan-out pattern
+
+One event can trigger multiple functions simultaneously. Register multiple functions that listen to the same event:
+
+```typescript
+// Both functions trigger on the same event
+export const sendWelcomeEmail = inngest.createFunction(
+  { id: "send-welcome-email" },
+  { event: "user/signed-up" },
+  async ({ event, step }) => { /* send email */ }
+);
+
+export const provisionWorkspace = inngest.createFunction(
+  { id: "provision-workspace" },
+  { event: "user/signed-up" },
+  async ({ event, step }) => { /* create default workspace */ }
+);
+
+export const trackSignUp = inngest.createFunction(
+  { id: "track-sign-up" },
+  { event: "user/signed-up" },
+  async ({ event, step }) => { /* send analytics event */ }
+);
+```
+
+All three run in parallel when a single `user/signed-up` event is emitted.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Cron Jobs" icon="clock" href="/background-jobs/cron">
+    Schedule recurring Inngest functions with cron syntax.
+  </Card>
+  <Card title="Queues" icon="list" href="/background-jobs/queues">
+    Simple task queues for high-throughput workloads.
+  </Card>
+  <Card title="Background Jobs Overview" icon="layers" href="/background-jobs/overview">
+    When to use Inngest vs queues.
+  </Card>
+  <Card title="Email" icon="bell" href="/email/overview">
+    Send notifications from Inngest function steps.
+  </Card>
+</CardGroup>

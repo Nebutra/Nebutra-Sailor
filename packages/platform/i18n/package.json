@@ -1,0 +1,54 @@
+{
+  "name": "@nebutra/i18n",
+  "version": "1.7.14",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./locales": "./src/locales.ts",
+    "./languages": "./src/languages.ts",
+    "./markets": "./src/markets.ts",
+    "./market-locale": "./src/market-locale.ts",
+    "./market-locale-picker": "./src/market-locale-picker.tsx",
+    "./display-names": "./src/display-names.ts",
+    "./cookies": "./src/cookies.ts",
+    "./currency": "./src/currency.ts",
+    "./resolve-market-request": "./src/resolve-market-request.ts",
+    "./scroll-pin": "./src/scroll-pin.ts",
+    "./request": "./src/request.ts",
+    "./routing": "./src/routing.ts",
+    "./locale-switcher": "./src/locale-switcher.tsx",
+    "./bcp47": "./src/bcp47.ts",
+    "./display": "./src/display.ts",
+    "./negotiate": "./src/negotiate.ts",
+    "./world": "./src/world.ts",
+    "./boot-log": "./src/boot-log.ts"
+  },
+  "scripts": {
+    "lint": "biome check .",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "check:markets": "vitest run src/markets.test.ts",
+    "sync:product-locales": "node ./scripts/sync-product-locales.mjs"
+  },
+  "dependencies": {
+    "@nebutra/brand": "workspace:*",
+    "next-intl": "^4.12.0"
+  },
+  "peerDependencies": {
+    "@nebutra/icons": "workspace:*",
+    "@nebutra/ui": "workspace:*",
+    "next": ">=16.0.7",
+    "react": ">=19.0.0",
+    "react-dom": ">=19.0.0"
+  },
+  "devDependencies": {
+    "@nebutra/icons": "workspace:*",
+    "@nebutra/ui": "workspace:*",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "catalog:"
+  },
+  "license": "AGPL-3.0-only"
+}

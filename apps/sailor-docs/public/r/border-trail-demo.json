@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "border-trail-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/border-trail-demo.tsx",
+      "content": "\"use client\";\n\nimport { BorderTrail } from \"@nebutra/ui/primitives\";\n\nexport function BorderTrailDemo() {\n  return (\n    <div className=\"p-12 flex w-full items-center justify-center\">\n      <div className=\"h-40 w-72 p-6 relative flex flex-col items-center justify-center rounded-xl border bg-background\">\n        <BorderTrail\n          className=\"from-blue-500 via-purple-500 to-pink-500 bg-gradient-to-r\"\n          size={120}\n        />\n        <p className=\"font-bold\">Premium Card</p>\n        <p className=\"text-sm text-muted-foreground\">With gradient trail</p>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

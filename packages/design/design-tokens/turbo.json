@@ -1,0 +1,10 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "inputs": ["tokens/**", "style-dictionary.config.mjs", "tsconfig.json", "package.json"],
+      "cache": false,
+      "outputs": ["build/**"]
+    }
+  }
+}

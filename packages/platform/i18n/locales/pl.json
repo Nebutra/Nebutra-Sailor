@@ -1,0 +1,1273 @@
+{
+  "admin": {
+    "title": "Admin",
+    "description": "Panel superadmina — zarządzaj użytkownikami, organizacjami i stanem systemu.",
+    "nav": {
+      "overview": "Przegląd",
+      "users": "Użytkownicy",
+      "organizations": "Organizacje"
+    },
+    "users": {
+      "title": "Użytkownicy",
+      "description": "Przeglądaj, wyszukuj i wcielaj się w dowolnego użytkownika we wszystkich organizacjach.",
+      "searchPlaceholder": "Szukaj użytkowników…",
+      "totalCount": "{count, plural, one {# użytkownik} few {# użytkowników} many {# użytkowników} other {# użytkownika}}",
+      "empty": "Nie znaleziono użytkowników.",
+      "loadError": "Nie udało się załadować użytkowników.",
+      "columns": {
+        "email": "E-mail",
+        "name": "Nazwa",
+        "created": "Utworzono",
+        "activeOrgs": "Aktywne orgi",
+        "actions": "Akcje"
+      },
+      "viewOrgs": "Zobacz organizacje"
+    },
+    "organizations": {
+      "title": "Organizacje",
+      "description": "Wszystkie przestrzenie robocze w systemie, posortowane według aktualności.",
+      "searchPlaceholder": "Szukaj organizacji…",
+      "totalCount": "{count, plural, one {# organizacja} other {# organizacji}}",
+      "empty": "Nie znaleziono organizacji.",
+      "loadError": "Nie udało się załadować organizacji.",
+      "columns": {
+        "name": "Nazwa",
+        "slug": "Slug",
+        "plan": "Plan",
+        "members": "Członkowie",
+        "created": "Utworzono",
+        "actions": "Akcje"
+      },
+      "view": "Zobacz"
+    },
+    "impersonate": {
+      "trigger": "Uzyskaj dostęp jako",
+      "starting": "Uruchamianie…",
+      "stop": "Zakończ impersonację",
+      "confirm": "Impersonuj {label}? Będziesz widzieć aplikację jako ten użytkownik, dopóki nie zakończysz.",
+      "error": "Nie udało się rozpocząć impersonacji.",
+      "stopError": "Nie udało się zakończyć impersonacji."
+    },
+    "pagination": {
+      "previous": "Poprzednia",
+      "next": "Następna",
+      "pageOf": "Strona {page} z {total}"
+    }
+  },
+  "Common": {
+    "hello": "Witaj świecie",
+    "dashboard": "Panel",
+    "actions": {
+      "continue": "Kontynuuj",
+      "confirm": "Potwierdź",
+      "done": "Gotowe",
+      "cancel": "Anuluj"
+    }
+  },
+  "theme": {
+    "light": "Jasny",
+    "dark": "Ciemny",
+    "system": "Systemowy"
+  },
+  "LocaleSwitcher": {
+    "label": "Język",
+    "ariaLabel": "Zmień język",
+    "searchPlaceholder": "Szukaj języków…",
+    "noResults": "Brak pasujących języków",
+    "menuAria": "Wybierz język"
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "Numer rejestracji ICP",
+      "publicSecurity": "Rejestr bezpieczeństwa publicznego"
+    },
+    "wechat": {
+      "signIn": "Zaloguj się przez WeChat",
+      "notConfigured": "Logowanie przez WeChat nie jest skonfigurowane"
+    }
+  },
+  "onboarding": {
+    "title": "Skonfiguruj swoją przestrzeń roboczą",
+    "subtitle": "Trzy szybkie kroki i możesz już publikować.",
+    "steps": {
+      "workspace": "Przestrzeń robocza",
+      "invite": "Zaproś zespół",
+      "plan": "Wybierz plan"
+    },
+    "progress": {
+      "back": "Wstecz",
+      "stepCounter": "Krok {current} z {total}"
+    },
+    "plan": {
+      "title": "Wybierz plan",
+      "description": "Zacznij za darmo lub odblokuj większą moc. Plan możesz zmienić w dowolnym momencie.",
+      "choose": "Wybierz plan",
+      "skip": "Pomiń na razie"
+    }
+  },
+  "userMenu": {
+    "ariaLabel": "Otwórz menu użytkownika",
+    "profile": "Profil",
+    "settings": "Ustawienia",
+    "feedback": "Opinia",
+    "theme": "Motyw",
+    "language": "Język",
+    "signOut": "Wyloguj się",
+    "signedInAs": "Zalogowany jako"
+  },
+  "account": {
+    "profile": {
+      "title": "Profil",
+      "description": "Zaktualizuj swoje dane osobowe.",
+      "nameLabel": "Imię i nazwisko",
+      "namePlaceholder": "Twoje pełne imię i nazwisko",
+      "emailLabel": "E-mail",
+      "emailHint": "Wyślemy link weryfikacyjny, aby potwierdzić nowy adres e-mail.",
+      "languageLabel": "Język",
+      "submit": "Zapisz zmiany",
+      "saving": "Zapisywanie…",
+      "verifyEmail": "Weryfikuj",
+      "verifying": "Wysyłanie weryfikacji…",
+      "success": "Profil zaktualizowany.",
+      "verificationSent": "E-mail weryfikacyjny wysłany.",
+      "errorRequiredName": "Imię i nazwisko są wymagane.",
+      "errorInvalidEmail": "Adres e-mail jest nieprawidłowy.",
+      "subtitle": "Twoje dane tożsamości i kontaktowe.",
+      "unknown": "Nienazwany użytkownik",
+      "manageCta": "Otwórz pełne ustawienia konta"
+    },
+    "avatar": {
+      "title": "Awatar",
+      "description": "Prześlij obraz kwadratowy (PNG, JPEG lub WebP, max 2 MB).",
+      "uploadButton": "Prześlij awatar",
+      "uploading": "Przesyłanie…",
+      "fileTooBig": "Plik jest zbyt duży. Maksymalny rozmiar to 2 MB.",
+      "invalidType": "Nieobsługiwany typ obrazu. Użyj PNG, JPEG lub WebP.",
+      "success": "Awatar zaktualizowany.",
+      "removeButton": "Usuń awatar",
+      "removed": "Awatar usunięty.",
+      "deleteError": "Nie udało się usunąć awatara."
+    },
+    "export": {
+      "title": "Eksportuj moje dane",
+      "description": "Pobierz kopię wszystkich rekordów przechowywanych dla Twojego konta, w tym profil, organizacje, zdarzenia audytowe, powiadomienia i zaproszenia.",
+      "compliance": "Wymagane przez art. 20 RODO (Prawo do przenoszenia danych) i art. 45 PIPL (Prawo do uzyskania kopii danych osobowych).",
+      "export": "Eksportuj moje dane",
+      "pending": "Przygotowywanie eksportu…",
+      "ready": "Twój eksport jest gotowy.",
+      "download": "Pobierz JSON",
+      "error": "Nie udało się przygotować eksportu. Spróbuj ponownie."
+    },
+    "emailChange": {
+      "title": "Zmień adres e-mail",
+      "description": "Wyślemy link weryfikacyjny na nowy adres. Zmiana zostanie wprowadzona dopiero po potwierdzeniu z tej skrzynki odbiorczej.",
+      "newEmailLabel": "Nowy adres e-mail",
+      "newEmailPlaceholder": "you@example.com",
+      "submit": "Wyślij link weryfikacyjny",
+      "submitting": "Wysyłanie…",
+      "verificationSent": "Sprawdź skrzynkę odbiorczą pod adresem {email}, aby potwierdzić zmianę.",
+      "errorInvalidEmail": "Adres e-mail jest nieprawidłowy.",
+      "error": "Nie udało się zainicjować zmiany adresu e-mail.",
+      "confirm": {
+        "successTitle": "E-mail zaktualizowany",
+        "successDescription": "Twój adres e-mail logowania został zaktualizowany.",
+        "successWithEmail": "Twój adres e-mail logowania to teraz {email}.",
+        "failureTitle": "Nie udało się potwierdzić tego linku",
+        "failureDescription": "Ten link weryfikacyjny jest nieprawidłowy, wygasł lub został już użyty. Poproś o nowy w ustawieniach konta.",
+        "errorCode": "Powód: {code}",
+        "continueCta": "Wróć do konta",
+        "backCta": "Wróć do konta"
+      }
+    },
+    "title": "Konto",
+    "ariaLabel": "Ustawienia konta",
+    "navLabel": "Zakładki ustawień konta",
+    "tip": "Naciśnij {key} w dowolnym miejscu, aby ponownie otworzyć to okno dialogowe.",
+    "tabs": {
+      "profile": "Profil",
+      "subscription": "Subskrypcja",
+      "billing": "Rozliczenia",
+      "preferences": "Preferencje",
+      "personalization": "Personalizacja"
+    },
+    "subscription": {
+      "title": "Subskrypcja",
+      "subtitle": "Plan, limity i odnawianie.",
+      "currentPlan": "Aktualny plan",
+      "upgradeCta": "Porównaj plany",
+      "manageCta": "Zarządzaj subskrypcją"
+    },
+    "billing": {
+      "title": "Rozliczenia",
+      "subtitle": "Historia faktur i metoda płatności.",
+      "empty": {
+        "title": "Brak historii",
+        "description": "Płatności i faktury pojawią się tutaj po pierwszym opłaconym okresie.",
+        "cta": "Otwórz pełne rozliczenia"
+      }
+    },
+    "preferences": {
+      "title": "Preferencje",
+      "subtitle": "Motyw i dostępność.",
+      "theme": "Motyw",
+      "light": "Jasny",
+      "dark": "Ciemny",
+      "system": "Systemowy",
+      "help": "Pomoc",
+      "reportIssue": "Zgłoś problem",
+      "shortcuts": "Skróty klawiszowe"
+    },
+    "personalization": {
+      "title": "Personalizacja",
+      "subtitle": "Powiedz Sailorowi, kim jesteś i jak ma odpowiadać."
+    }
+  },
+  "impact": {
+    "hero_title": "Przedefiniowanie paradygmatu",
+    "hero_subtitle": "Niech nie będzie trudnego biznesu na świecie.",
+    "social_title": "Społeczeństwo",
+    "social_headline": "Absolutna równość technologiczna",
+    "social_description": "Wzmacnianie innowatorów na krawędzi. Łamanie tradycyjnych filtrów i wyposażanie solowych założycieli w gotową infrastrukturę.",
+    "governance_title": "Rządzenie",
+    "governance_headline": "Kod to prawo",
+    "governance_description": "Algorytmiczne rządzenie oparte na Proof of Work i rzeczywistych wynikach biznesowych, zastępujące nieprzejrzystą biurokrację.",
+    "environment_title": "Środowisko",
+    "environment_headline": "Cyfrowy minimalizm",
+    "environment_description": "Zmniejszanie śladu chmurowego poprzez ekstremalną integrację SaaS i efektywność zasobów."
+  },
+  "auth": {
+    "security": {
+      "title": "Bezpieczeństwo",
+      "description": "Zarządzaj hasłem, uwierzytelnianiem wieloskładnikowym i aktywnymi sesjami.",
+      "managedByProvider": "Ustawienia bezpieczeństwa są zarządzane przez Twój dostawcę uwierzytelniania.",
+      "openProviderProfile": "Otwórz profil",
+      "changePassword": {
+        "title": "Zmień hasło",
+        "description": "Użyj silnego hasła, którego nie powtarzasz na innych stronach.",
+        "currentPasswordLabel": "Obecne hasło",
+        "newPasswordLabel": "Nowe hasło",
+        "confirmPasswordLabel": "Potwierdź nowe hasło",
+        "revokeOtherSessions": "Wyloguj się z innych urządzeń",
+        "submit": "Zaktualizuj hasło",
+        "pending": "Aktualizowanie hasła…",
+        "success": "Hasło zostało pomyślnie zaktualizowane."
+      },
+      "twoFactor": {
+        "title": "Uwierzytelnianie dwuetapowe",
+        "description": "Dodaj drugi etap weryfikacji za pomocą aplikacji uwierzytelniającej.",
+        "enabled": "Włączone",
+        "disabled": "Wyłączone",
+        "enabledHelp": "Twoje konto wymaga 6-cyfrowego kodu z aplikacji uwierzytelniającej po zalogowaniu hasłem.",
+        "disabledHelp": "Zabezpiecz swoje konto 6-cyfrowym kodem z aplikacji uwierzytelniającej.",
+        "enable": "Włącz uwierzytelnianie dwuskładnikowe",
+        "disable": "Wyłącz uwierzytelnianie dwuskładnikowe",
+        "passwordPrompt": "Potwierdź hasło",
+        "scanQrCode": "Zeskanuj ten kod QR za pomocą aplikacji uwierzytelniającej, a następnie wprowadź poniżej 6-cyfrowy kod.",
+        "secretKeyLabel": "Lub wprowadź ten klucz ręcznie",
+        "verificationCodeLabel": "Kod weryfikacyjny",
+        "verify": "Zweryfikuj i włącz",
+        "backupCodesTitle": "Kody zapasowe",
+        "backupCodesDescription": "Zapisz te kody w bezpiecznym miejscu. Każdy można użyć raz, jeśli utracisz dostęp do aplikacji uwierzytelniającej.",
+        "copyBackupCodes": "Kopiuj kody",
+        "finishSetup": "Zakończ konfigurację",
+        "successEnabled": "Uwierzytelnianie dwuskładnikowe zostało włączone.",
+        "successDisabled": "Uwierzytelnianie dwuskładnikowe zostało wyłączone."
+      },
+      "sessions": {
+        "title": "Aktywne sesje",
+        "description": "Urządzenia i przeglądarki, w których jesteś obecnie zalogowany do swojego konta.",
+        "currentSession": "(bieżąca)",
+        "ipLabel": "Adres IP",
+        "lastActiveLabel": "Ostatnia aktywność",
+        "revoke": "Wyloguj",
+        "revokeAll": "Wyloguj ze wszystkich innych urządzeń",
+        "empty": "Brak innych aktywnych sesji.",
+        "successRevoked": "Sesja wylogowana.",
+        "successRevokedAll": "Wszystkie inne sesje wylogowane."
+      },
+      "deleteAccount": {
+        "title": "Usuń konto",
+        "description": "Trwale usuń swoje konto i wszystkie powiązane dane. Tej operacji nie można cofnąć.",
+        "passwordPrompt": "Wpisz hasło, aby potwierdzić",
+        "confirmTextLabel": "Wpisz DELETE, aby potwierdzić",
+        "submit": "Usuń konto",
+        "cancel": "Anuluj",
+        "success": "Konto usunięte."
+      },
+      "connectedAccounts": {
+        "title": "Połączone konta",
+        "description": "Przeglądaj metody logowania OAuth połączone z Twoją tożsamością Nebutra.",
+        "connected": "Połączono",
+        "connect": "Połącz",
+        "help": "Zanim odłączysz dostawcę, upewnij się, że masz co najmniej jedną zaufaną metodę logowania.",
+        "unlink": "Odłącz",
+        "notLinked": "Nie połączono"
+      },
+      "passkeys": {
+        "title": "Klucze dostępu",
+        "description": "Używaj poświadczeń powiązanych z urządzeniem, aby logować się w sposób odporny na phishing.",
+        "empty": "Nie zarejestrowano jeszcze żadnych kluczy dostępu",
+        "addPasskey": "Dodaj klucz dostępu",
+        "cancelAdd": "Anuluj",
+        "cancelled": "Konfiguracja klucza dostępu została anulowana. Nie wprowadzono żadnych zmian.",
+        "defaultName": "Klucz dostępu {number}",
+        "nameHelp": "Nadaj temu kluczowi dostępu rozpoznawalną nazwę, zanim przeglądarka poprosi o potwierdzenie.",
+        "nameLabel": "Nazwa klucza dostępu",
+        "rename": "Zmień nazwę",
+        "saveRename": "Zapisz nazwę",
+        "remove": "Usuń",
+        "successAdded": "Klucz dostępu dodany.",
+        "successRemoved": "Klucz dostępu usunięty.",
+        "unavailableBadge": "Niedostępny"
+      },
+      "setPassword": {
+        "title": "Ustaw hasło",
+        "description": "Dodaj hasło, aby logować się bez dostawcy OAuth.",
+        "submit": "Ustaw hasło",
+        "pending": "Wysyłanie linku do ustawienia hasła…",
+        "sentMessage": "Wysłaliśmy link do ustawienia hasła na Twój adres e-mail."
+      }
+    },
+    "banner": {
+      "logoAlt": "Nebutra",
+      "slogan": "Wdrażaj swój startup, zarządzany od pierwszego dnia.",
+      "tagline": "Agenci wieloregionalni, wielodostępni domyślnie. Bez zespołu platformowego."
+    },
+    "signIn": {
+      "title": "Zaloguj się do Nebutra",
+      "subtitle": "Wybierz sposób logowania.",
+      "continueWith": "Kontynuuj z",
+      "continueWithProvider": "Kontynuuj z {provider}",
+      "providers": {
+        "google": "Google",
+        "github": "GitHub",
+        "apple": "Apple",
+        "microsoft": "Microsoft",
+        "feishu": "Feishu"
+      },
+      "providerLoading": "Przekierowywanie…",
+      "dividerOr": "Lub kontynuuj za pomocą e-maila",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "you@example.com",
+      "continue": "Kontynuuj",
+      "back": "Wróć",
+      "passwordLabel": "Hasło",
+      "passwordPlaceholder": "Wprowadź hasło",
+      "showPassword": "Pokaż hasło",
+      "hidePassword": "Ukryj hasło",
+      "capsLockOn": "Caps Lock jest włączony",
+      "forgotPassword": "Zapomniałeś hasła?",
+      "submit": "Zaloguj się",
+      "submitLoading": "Logowanie…",
+      "useMagicLink": "Wyślij mi magiczny link",
+      "usePasskey": "Zaloguj się za pomocą klucza dostępu",
+      "passkeyTitle": "Zaloguj się za pomocą klucza dostępu",
+      "passkeyDescription": "Użyj Face ID, Touch ID lub klucza bezpieczeństwa. Hasło nie jest wymagane.",
+      "passkeyButton": "Kontynuuj z kluczem dostępu",
+      "passkeyCancelled": "Wniosek dotyczący klucza dostępu został anulowany.",
+      "passkeyUnsupported": "Ta przeglądarka nie obsługuje kluczy dostępu.",
+      "passkeyError": "Logowanie za pomocą klucza dostępu nie powiodło się. Spróbuj innej metody.",
+      "ssoTitle": "Kontynuuj za pomocą Enterprise SSO",
+      "ssoDescription": "Przekierowujemy Cię do {provider} dla {email}.",
+      "ssoError": "Nie udało się uruchomić Enterprise SSO. Spróbuj innej metody.",
+      "ssoRetry": "Spróbuj ponownie",
+      "newToProduct": "Nowy w Nebutra?",
+      "signUpLink": "Zarejestruj się",
+      "homeLink": "Strona główna",
+      "signInFailed": "Logowanie nie powiodło się",
+      "genericError": "Wystąpił błąd. Spróbuj ponownie.",
+      "captchaError": "Weryfikacja botów nie powiodła się. Odśwież stronę i spróbuj ponownie.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
+      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
+      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
+      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+    },
+    "signUp": {
+      "title": "Utwórz konto Nebutra",
+      "subtitle": "Jedno konto dla każdej aplikacji Nebutra.",
+      "firstNameLabel": "Imię",
+      "lastNameLabel": "Nazwisko",
+      "firstNamePlaceholder": "Imię",
+      "lastNamePlaceholder": "Nazwisko",
+      "submit": "Utwórz konto",
+      "submitLoading": "Tworzenie konta…",
+      "alreadyHaveAccount": "Masz już konto?",
+      "signInLink": "Zaloguj się",
+      "signUpFailed": "Rejestracja nie powiodła się",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+    },
+    "passkeys": {
+      "title": "Klucze dostępu",
+      "description": "Używaj Face ID, Touch ID, Windows Hello lub klucza bezpieczeństwa zamiast hasła. Każde urządzenie ma własny klucz dostępu.",
+      "addButton": "Dodaj klucz dostępu",
+      "adding": "Konfigurowanie…",
+      "namePlaceholder": "np. MacBook Pro",
+      "nameLabel": "Nazwa (opcjonalnie)",
+      "registerSuccess": "Klucz dostępu dodany.",
+      "registerCancelled": "Konfiguracja anulowana.",
+      "registerUnsupported": "Ta przeglądarka nie obsługuje kluczy dostępu.",
+      "registerError": "Nie udało się zarejestrować klucza dostępu.",
+      "empty": "Brak kluczy dostępu.",
+      "loadError": "Nie udało się załadować kluczy dostępu.",
+      "revoke": "Usuń",
+      "revoking": "Usuwanie…",
+      "revokeConfirm": "Usunąć ten klucz dostępu? Nie będzie można się już nim logować.",
+      "revokeSuccess": "Klucz dostępu usunięty.",
+      "revokeError": "Nie udało się usunąć klucza dostępu.",
+      "device": {
+        "singleDevice": "Powiązany z urządzeniem",
+        "multiDevice": "Synchronizowane między urządzeniami"
+      },
+      "addedOn": "Dodano {date}"
+    },
+    "magicLink": {
+      "title": "Zaloguj się za pomocą magicznego linku",
+      "description": "Podaj swój adres e-mail, a wyślemy Ci 6-cyfrowy kod do logowania.",
+      "emailLabel": "E-mail",
+      "send": "Wyślij link",
+      "codeLabel": "Kod weryfikacyjny",
+      "verify": "Zweryfikuj",
+      "resend": "Wyślij ponownie kod",
+      "resendCooldown": "Można wysłać ponownie za {seconds}s",
+      "sentTo": "Wysłaliśmy kod na adres {email}"
+    },
+    "forgotPassword": {
+      "title": "Nie pamiętasz hasła?",
+      "description": "Podaj swój adres e-mail, a wyślemy link do resetowania hasła.",
+      "emailLabel": "E-mail",
+      "submit": "Wyślij link resetujący",
+      "successTitle": "Sprawdź swoją skrzynkę e-mail",
+      "success": "Jeśli ten adres e-mail jest zarejestrowany, wkrótce otrzymasz link do resetowania hasła."
+    },
+    "resetPassword": {
+      "title": "Zresetuj hasło",
+      "description": "Wybierz nowe hasło do swojego konta.",
+      "newPasswordLabel": "Nowe hasło",
+      "confirmPasswordLabel": "Potwierdź nowe hasło",
+      "submit": "Zresetuj hasło",
+      "successTitle": "Hasło zresetowane",
+      "successDescription": "Możesz teraz zalogować się przy użyciu nowego hasła.",
+      "signInCta": "Przejdź do logowania",
+      "invalidTitle": "Nieprawidłowy link resetowania",
+      "invalidDescription": "Ten link do resetowania hasła jest niekompletny lub uszkodzony. Poproś o nowy na stronie „Zapomniałem hasła”."
+    },
+    "verifyEmail": {
+      "successTitle": "E-mail zweryfikowany",
+      "successDescription": "Twój adres e-mail został zweryfikowany.",
+      "failureTitle": "Weryfikacja nieudana",
+      "failureDescription": "Nie udało się zweryfikować Twojego e-maila za pomocą tego linku.",
+      "continueCta": "Kontynuuj",
+      "signInCta": "Przejdź do logowania"
+    },
+    "loginSuccess": {
+      "eyebrow": "Logowanie zakończone",
+      "title": "Zalogowano",
+      "description": "Sesja jest gotowa. Otwieramy przestrzeń roboczą Nebutra i utrzymujemy bezpieczne przejście z procesu uwierzytelniania.",
+      "session": "Sesja",
+      "verified": "Zweryfikowano",
+      "workspace": "Przestrzeń robocza",
+      "preparing": "Przygotowywanie",
+      "redirecting": "Przechodzenie do przestrzeni roboczej za {seconds}s",
+      "secureHandoff": "Bezpieczne przejście",
+      "continueCta": "Przejdź do przestrzeni roboczej",
+      "signInCta": "Użyj innego konta"
+    },
+    "errors": {
+      "invalidCredentials": "Nieprawidłowy e-mail lub hasło.",
+      "userNotFound": "Nie znaleziono konta z tym adresem e-mail.",
+      "userAlreadyExists": "Konto z tym adresem e-mail już istnieje.",
+      "weakPassword": "Hasło jest zbyt słabe. Użyj co najmniej 8 znaków, łącząc wielkie i małe litery oraz cyfry.",
+      "passwordsDontMatch": "Hasła nie są zgodne.",
+      "passwordTooShort": "Hasło musi mieć co najmniej 8 znaków.",
+      "currentPasswordIncorrect": "Obecne hasło jest niepoprawne.",
+      "samePassword": "Nowe hasło musi różnić się od obecnego.",
+      "invalidEmail": "Adres e-mail jest niepoprawny.",
+      "emailNotVerified": "Najpierw zweryfikuj swój adres e-mail.",
+      "sessionExpired": "Sesja wygasła. Zaloguj się ponownie.",
+      "twoFactorRequired": "Wymagane jest weryfikacja dwuskładnikowa.",
+      "invalidVerificationCode": "Kod weryfikacyjny jest niepoprawny lub wygasł.",
+      "twoFactorAlreadyEnabled": "Uwierzytelnianie dwuskładnikowe jest już włączone.",
+      "twoFactorNotEnabled": "Uwierzytelnianie dwuskładnikowe nie jest włączone.",
+      "tooManyAttempts": "Zbyt wiele prób. Spróbuj ponownie później.",
+      "rateLimited": "Robisz to zbyt często. Spowolnij.",
+      "providerNotSupported": "Ta akcja jest zarządzana przez dostawcę uwierzytelniania.",
+      "networkError": "Błąd sieci. Sprawdź połączenie i spróbuj ponownie.",
+      "unknown": "Coś poszło nie tak. Spróbuj ponownie."
+    }
+  },
+  "chat": {
+    "suggestions": {
+      "title": "Wypróbuj jedną z tych opcji, aby rozpocząć",
+      "activity": {
+        "title": "Pokaż ostatnią aktywność",
+        "prompt": "Pokaż mi najnowszą aktywność w mojej przestrzeni roboczej z ostatnich 24 godzin."
+      },
+      "debug": {
+        "title": "Debuguj błąd",
+        "prompt": "Pomóż mi debugować błąd czasu wykonania. Wkleję ślad stosu, a Ty poprowadzisz mnie przez jego analizę."
+      },
+      "email": {
+        "title": "Napisz e-mail z podsumowaniem",
+        "prompt": "Napisz zwięzły tygodniowy e-mail z podsumowaniem, który mogę wysłać do mojego zespołu o postępach platformy."
+      },
+      "features": {
+        "title": "Odkryj funkcje platformy",
+        "prompt": "Przejdź ze mną przez kluczowe funkcje tej platformy SaaS i wyjaśnij, jak mogę ich używać."
+      }
+    }
+  },
+  "billing": {
+    "activePlan": {
+      "title": "Aktywny plan",
+      "manage": "Zarządzaj subskrypcją",
+      "noPlanTitle": "Brak aktywnego planu",
+      "noPlanDescription": "Wybierz plan, aby odblokować płatne funkcje i wyższe limity użycia.",
+      "choosePlan": "Wybierz plan",
+      "renewsOn": "Odnawia się {date}",
+      "endsOn": "Zakończy się {date}",
+      "trialEndsOn": "Okres próbny końči się {date}",
+      "status": {
+        "active": "Aktywny",
+        "trialing": "Okres próbny",
+        "past_due": "Zaległy",
+        "canceled": "Anulowany",
+        "free": "Darmowy"
+      },
+      "errors": {
+        "loadFailed": "Nie udało się załadować statusu rozliczeń."
+      }
+    },
+    "pricing": {
+      "trial": "Darmowy {days}-dniowy okres próbny",
+      "seat": "{count, plural, one {# miejsce} few {# miejsca} many {# miejsc}}",
+      "perSeat": "/ miejsce"
+    }
+  },
+  "organizations": {
+    "settings": {
+      "logo": {
+        "title": "Logo organizacji",
+        "description": "Prześlij obraz w formacie kwadratu (PNG, JPEG lub WebP, max 2 MB), który będzie reprezentował Twoją organizację.",
+        "uploadButton": "Prześlij logo",
+        "uploading": "Przesyłanie…",
+        "fileTooBig": "Plik jest zbyt duży. Maksymalny rozmiar to 2 MB.",
+        "invalidType": "Nieobsługiwany typ obrazu. Użyj PNG, JPEG lub WebP.",
+        "success": "Logo zaktualizowany.",
+        "removeButton": "Usuń logo",
+        "removed": "Logo usunięte."
+      },
+      "name": {
+        "title": "Nazwa organizacji",
+        "description": "Zaktualizuj nazwę wyświetlaną dla zespołu i klientów.",
+        "label": "Nazwa",
+        "submit": "Zapisz",
+        "saving": "Zapisywanie…",
+        "success": "Nazwa organizacji zaktualizowana."
+      },
+      "delete": {
+        "title": "Usuń organizację",
+        "description": "Trwale usuń tę organizację, wszystkich członków, zaproszenia i powiązane dane. Tej operacji nie można cofnąć.",
+        "trigger": "Usuń organizację",
+        "confirmLabel": "Wpisz nazwę organizacji, aby potwierdzić",
+        "submit": "Usuń organizację",
+        "cancel": "Anuluj",
+        "success": "Organizacja usunięta."
+      }
+    },
+    "invitation": {
+      "title": "Otrzymałeś zaproszenie",
+      "heading": "Zostałeś zaproszony do dołączenia do {organizationName}",
+      "description": "Zaakceptuj zaproszenie, aby rozpocząć współpracę z zespołem.",
+      "accept": "Akceptuj zaproszenie",
+      "accepting": "Akceptowanie...",
+      "decline": "Odrzuć",
+      "declining": "Odrzucanie...",
+      "declinedView": "Zaproszenie odrzucone",
+      "success": "Poinformowaliśmy osobę, która wysłała zaproszenie.",
+      "backToDashboard": "Powrót do panelu",
+      "roleLabel": "Rola: {role}",
+      "errorEmailMismatch": "To zaproszenie zostało wysłane na inny adres e-mail",
+      "errorEmailMismatchDetail": "Zaloguj się na adres e-mail, na który zostało wysłane zaproszenie, aby je zaakceptować.",
+      "errorExpired": "Zaproszenie wygasło",
+      "errorExpiredDetail": "Poproś osobę, która wysłała zaproszenie, o wysłanie nowego.",
+      "errorNotFound": "Nie znaleziono zaproszenia",
+      "errorNotFoundDetail": "Link zaproszenia jest nieprawidłowy lub został wycofany.",
+      "errorNotAvailable": "Zaproszenie jest niedostępne",
+      "errorNotAvailableDetail": "To zaproszenie zostało już zaakceptowane lub odrzucone i nie jest już aktywne.",
+      "role": {
+        "owner": "Właściciel",
+        "admin": "Administrator",
+        "member": "Członek",
+        "viewer": "Obserwator"
+      }
+    }
+  },
+  "settings": {
+    "apiKeys": {
+      "title": "Klucze API",
+      "description": "Generuj i zarządzaj kluczami API, aby uzyskać programowy dostęp do Nebutra.",
+      "createButton": "Utwórz klucz API",
+      "noPermission": "Nie masz uprawnień do przeglądania kluczy API.",
+      "loading": "Ładowanie…",
+      "loadError": "Nie udało się załadować kluczy API.",
+      "createError": "Nie udało się utworzyć klucza API.",
+      "revokeError": "Nie udało się wycofać klucza API.",
+      "empty": {
+        "title": "Brak kluczy API",
+        "cta": "Utwórz swój pierwszy klucz API"
+      },
+      "columns": {
+        "name": "Nazwa",
+        "prefix": "Prefiks",
+        "lastUsed": "Ostatnie użycie",
+        "scopes": "Zakresy",
+        "created": "Utworzono",
+        "actions": "Akcje",
+        "never": "Nigdy"
+      },
+      "actions": {
+        "revoke": "Unieważnij",
+        "revoking": "Unieważnianie…",
+        "copy": "Kopiuj",
+        "copied": "Skopiowano",
+        "close": "Zamknij",
+        "submit": "Utwórz klucz",
+        "submitting": "Tworzenie…"
+      },
+      "dialog": {
+        "title": "Utwórz klucz API",
+        "description": "Klucze API pozwalają zewnętrznym systemom komunikować się z Nebutra w Twoim imieniu. Traktuj je jak hasła.",
+        "nameLabel": "Nazwa",
+        "namePlaceholder": "np. Backend produkcyjny",
+        "scopesLabel": "Zakresy",
+        "successWarning": "Ten klucz pojawi się tylko raz. Zapisz go przed zamknięciem.",
+        "confirmClose": "Zamknięcie ukryje ten klucz na zawsze. Upewnij się, że został zapisany."
+      }
+    },
+    "auditLog": {
+      "title": "Dziennik audytu",
+      "description": "Śledź każdą akcję administracyjną w swojej przestrzeni roboczej. Filtruj według wykonawcy, akcji, encji lub zakresu czasu.",
+      "empty": "Brak zdarzeń audytu",
+      "loadMore": "Wczytaj więcej",
+      "loading": "Wczytywanie…",
+      "forbidden": "Potrzebujesz uprawnień administratora, aby wyświetlić dziennik audytu.",
+      "columns": {
+        "when": "Kiedy",
+        "actor": "Wykonawca",
+        "action": "Akcja",
+        "entity": "Encja",
+        "outcome": "Wynik",
+        "ip": "IP"
+      },
+      "diff": {
+        "oldValue": "Stara wartość",
+        "newValue": "Nowa wartość"
+      },
+      "filters": {
+        "action": "Akcja",
+        "actionPlaceholder": "Szukaj akcji…",
+        "entityType": "Typ encji",
+        "outcome": "Wynik",
+        "outcomeSuccess": "Sukces",
+        "outcomeFailure": "Niepowodzenie",
+        "outcomePending": "Oczekiwanie",
+        "startDate": "Data początkowa",
+        "endDate": "Data końcowa",
+        "range24h": "Ostatnie 24h",
+        "range7d": "Ostatnie 7d",
+        "range30d": "Ostatnie 30d",
+        "reset": "Resetuj",
+        "all": "Wszystkie"
+      }
+    },
+    "notifications": {
+      "title": "Powiadomienia",
+      "description": "Wybierz, w jaki sposób Nebutra ma Cię kontaktować w przypadku każdego typu zdarzenia i kanału dostawy.",
+      "actions": {
+        "resetAll": "Przywróć domyślne",
+        "save": "Zapisz"
+      },
+      "status": {
+        "saving": "Zapisywanie…",
+        "saved": "Zapisano",
+        "error": "Zapis nieudany. Spróbuj ponownie."
+      },
+      "eventTypes": {
+        "security": {
+          "label": "Powiadomienia bezpieczeństwa",
+          "description": "Powiadomienia o logowaniu, zmiany hasła, zmiany uwierzytelniania dwuskładnikowego."
+        },
+        "billing": {
+          "label": "Rozliczenia",
+          "description": "Faktury, nieudane płatności i zmiany subskrypcji."
+        },
+        "invitation": {
+          "label": "Zaproszenia zespołowe",
+          "description": "Zaproszenia do dołączenia do organizacji, zaakceptowane lub odrzucone."
+        },
+        "activity": {
+          "label": "Aktywność zespołu",
+          "description": "Dołączanie członków, zmiany ról i inne aktywności w przestrzeni roboczej."
+        },
+        "updates": {
+          "label": "Aktualizacje produktu",
+          "description": "Nowe funkcje, najważniejsze zmiany i notatki wydawnicze."
+        },
+        "marketing": {
+          "label": "Marketing",
+          "description": "Biuletyn i okazjonalne promocje. Tylko po zgłoszeniu zgody."
+        }
+      },
+      "channels": {
+        "in_app": {
+          "label": "W aplikacji"
+        },
+        "email": {
+          "label": "E-mail"
+        },
+        "push": {
+          "label": "Push"
+        },
+        "sms": {
+          "label": "SMS"
+        }
+      }
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "Subskrybuj zdarzenia emitowane przez Twoją przestrzeń roboczą. Każde ładunek podpisujemy tajnym kluczem Twojego punktu końcowea, aby można było zweryfikować jego autentyczność.",
+      "create": {
+        "heading": "Nowy punkt końcowy",
+        "urlLabel": "URL punktu końcowego",
+        "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
+        "eventsLegend": "Zdarzenia",
+        "submit": "Utwórz punkt końcowy",
+        "submitting": "Tworzenie…",
+        "selectEvent": "Wybierz co najmniej jedno zdarzenie.",
+        "successTitle": "Punkt końcowy utworzony. Tajny klucz podpisywania pojawi się tylko raz.",
+        "successWarning": "Zapisz go w menedżerze hasel aplikacji przed zamknięciem.",
+        "copy": "Kopiuj",
+        "copied": "Skopiowano"
+      },
+      "list": {
+        "heading": "Aktywne punkty końcowe",
+        "empty": "Brak punktów końcowych webhook. Utwórz nowy powyżej.",
+        "loading": "Ładowanie…",
+        "loadFailed": "Nie udało się załadować webhooków",
+        "columns": {
+          "url": "URL",
+          "events": "Zdarzenia",
+          "status": "Status",
+          "lastDelivered": "Ostatnio dostarczone",
+          "actions": "Akcje"
+        },
+        "status": {
+          "active": "Aktywny",
+          "disabled": "Wyłączony"
+        },
+        "actions": {
+          "edit": "Edytuj",
+          "enable": "Włącz",
+          "disable": "Wyłącz",
+          "viewDeliveries": "Zobacz dostawy",
+          "delete": "Usuń"
+        }
+      },
+      "deliveries": {
+        "heading": "Ostatnie dostawy",
+        "close": "Zamknij",
+        "loading": "Ładowanie…",
+        "loadFailed": "Nie udało się załadować dostaw",
+        "empty": "Brak dostaw.",
+        "viewPayload": "Zobacz ładunek",
+        "hidePayload": "Ukryj ładunek",
+        "replay": "Odtwórz",
+        "replaying": "Odtwarzanie…",
+        "status": {
+          "success": "udane",
+          "failed": "nieudane",
+          "retrying": "ponawianie"
+        }
+      }
+    },
+    "appearance": {
+      "title": "Wygląd",
+      "theme": {
+        "title": "Motyw",
+        "description": "Użyj jasnego, ciemnego lub dopasuj do preferencji systemu."
+      },
+      "themePreset": {
+        "title": "Wzorzec motywu",
+        "description": "Zastosuj dowolny motyw z Theme Playground w całej aplikacji. Poniższe sterowania nakładają się, aby go doprecyzować.",
+        "search": "Szukaj motywów…",
+        "searchLabel": "Szukaj motywów",
+        "default": "Domyślny",
+        "defaultMood": "Nebutra base palette",
+        "active": "Aktywny",
+        "empty": "Żaden motyw nie pasuje do wyszukiwania.",
+        "count": "{count} motywów"
+      },
+      "themeEditor": {
+        "title": "Motyw",
+        "description": "Wybierz wzorzec, zaimportuj DESIGN.md, a następnie doprecyzuj tokeny poniżej.",
+        "selectLabel": "Wzorzec motywu",
+        "import": "Importuj",
+        "copy": "Kopiuj motyw",
+        "copied": "Skopiowano",
+        "copyError": "Kopiowanie nieudane",
+        "custom": "Własny"
+      },
+      "designMd": {
+        "title": "Importuj DESIGN.md",
+        "description": "Wklej lub prześlij plik DESIGN.md, aby zastosować jego kolory, zaokrąglenia, czcionki, odstępy i cienie w całej aplikacji — zmiany są zachowywane po przeładowaniu.",
+        "applied": "Zastosowano:",
+        "remove": "Usuń"
+      },
+      "themeMode": {
+        "label": "Tryb motywu",
+        "light": "Jasny",
+        "dark": "Ciemny",
+        "system": "Systemowy"
+      },
+      "accent": {
+        "title": "Kolor akcentu",
+        "description": "Wybierz kolor akcentu marki, który nada barwę aktywnym stanom w całej aplikacji.",
+        "label": "Kolor akcentu",
+        "options": {
+          "default": "Domyślny",
+          "blue": "Niebieski",
+          "cyan": "Cyjan",
+          "violet": "Fioletowy",
+          "pink": "Różowy",
+          "amber": "Bursztynowy",
+          "green": "Zielony",
+          "red": "Czerwony"
+        }
+      },
+      "colors": {
+        "title": "Kolory",
+        "description": "Akcent, tło i pierwszy plan.",
+        "background": {
+          "label": "Tło",
+          "description": "Nadpisz kolor tła powierzchni."
+        },
+        "foreground": {
+          "label": "Pierwszy plan",
+          "description": "Nadpisz kolor tekstu treści."
+        },
+        "resetToDefault": "Przywróć domyślne"
+      },
+      "fontFamily": {
+        "uiLabel": "Czcionka interfejsu",
+        "uiDescription": "Rodzina czcionek używana w interfejsie.",
+        "codeLabel": "Czcionka kodu",
+        "codeDescription": "Rodzina czcionek używana w blokach kodu.",
+        "options": {
+          "ui": {
+            "theme": "Domyślna motywu",
+            "system": "Systemowa",
+            "geist": "Geist",
+            "inter": "Inter",
+            "sf": "SF Pro"
+          },
+          "code": {
+            "theme": "Domyślna motywu",
+            "system": "Systemowa mono",
+            "geist-mono": "Geist Mono",
+            "sf-mono": "SF Mono",
+            "jetbrains-mono": "JetBrains Mono"
+          }
+        }
+      },
+      "contrast": {
+        "title": "Kontrast",
+        "description": "Dopasuj kontrast tekstu (50 = bez zmian).",
+        "label": "Poziom kontrastu"
+      },
+      "pointerCursor": {
+        "title": "Użyj kursora wskaźnika",
+        "description": "Przełącz na kursor wskaźnika przy elementach interaktywnych.",
+        "label": "Kursor wskaźnika na elementach interaktywnych"
+      },
+      "diffMarkers": {
+        "title": "Znaki różnic",
+        "description": "Wyświetlaj pasy kolorów lub znaki +/- na każdej zmienionej linii.",
+        "label": "Styl znaków różnic",
+        "color": "Kolor",
+        "plusminus": "+/-"
+      },
+      "fontSmoothing": {
+        "title": "Wygładzanie czcionek",
+        "description": "Zastosuj natywne wygładzanie czcionek macOS.",
+        "label": "Natywne wygładzanie czcionek"
+      },
+      "typography": {
+        "title": "Typografia",
+        "description": "Podstawowe rozmiary czcionek dla interfejsu i kodu.",
+        "uiFontSize": "Rozmiar czcionki interfejsu",
+        "uiFontSizeDescription": "Dostosuj podstawowy rozmiar czcionki interfejsu.",
+        "codeFontSize": "Rozmiar czcionki kodu",
+        "codeFontSizeDescription": "Dostosuj podstawowy rozmiar czcionki kodu."
+      },
+      "fontSize": {
+        "followTheme": "Motyw",
+        "customize": "Dostosuj"
+      },
+      "motion": {
+        "title": "Zmniejsz ruchy",
+        "description": "Zmniejsz animacje lub dopasuj do preferencji systemu.",
+        "label": "Preferencje ruchu",
+        "system": "Systemowy",
+        "on": "Włączone",
+        "off": "Wyłączone"
+      },
+      "surface": {
+        "title": "Półprzezroczysty pasek boczny",
+        "description": "Zastosuj półprzezroczysty materiał do paska bocznego."
+      },
+      "transparency": {
+        "label": "Półprzezroczysty pasek boczny",
+        "description": "Zastosuj półprzezroczysty materiał do paska bocznego."
+      }
+    }
+  },
+  "legal": {
+    "version": "Wersja",
+    "effective": "Obowiązuje",
+    "notFound": "Ten dokument nie jest dostępny.",
+    "backHome": "Powrót na stronę główną"
+  },
+  "commandPalette": {
+    "ariaLabel": "Paleta poleceń",
+    "placeholder": "Wpisz polecenie lub wyszukaj…",
+    "empty": "Nie znaleziono wyników.",
+    "sections": {
+      "navigation": "Nawigacja",
+      "actions": "Akcje",
+      "settings": "Ustawienia",
+      "account": "Konto",
+      "admin": "Admin",
+      "help": "Pomoc"
+    },
+    "commands": {
+      "nav": {
+        "home": "Strona główna",
+        "settings": "Ustawienia",
+        "billing": "Rozliczenia",
+        "team": "Zespół",
+        "apiKeys": "Klucze API",
+        "notifications": "Powiadomienia",
+        "auditLog": "Dziennik audytu",
+        "webhooks": "Webhooks",
+        "admin": "Admin"
+      },
+      "action": {
+        "inviteMember": "Zaproś członka zespołu",
+        "createApiKey": "Utwórz klucz API",
+        "switchOrganization": "Przełącz organizację"
+      },
+      "settings": {
+        "themeLight": "Przełącz na jasny motyw",
+        "themeDark": "Przełącz na ciemny motyw",
+        "themeSystem": "Użyj motywu systemowego"
+      },
+      "account": {
+        "signOut": "Wyloguj się"
+      },
+      "help": {
+        "reportIssue": "Zgłoś problem",
+        "shortcuts": "Skróty klawiszowe"
+      }
+    }
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "Twoje wybory dotyczące prywatności",
+      "description": "Używamy plików cookie, aby poprawić Twoje doświadczenie, analizować ruch na stronie i personalizować treści. Wybierz, które kategorie chcesz zezwolić."
+    },
+    "button": {
+      "acceptAll": "Zaakceptuj wszystkie",
+      "savePreferences": "Zapisz preferencje"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "Niezbędne",
+        "description": "Wymagane do działania strony. Nie można wyłączyć."
+      },
+      "functional": {
+        "label": "Funkcjonalne",
+        "description": "Zapamiętaj preferencje (język, motyw, układ)."
+      },
+      "analytics": {
+        "label": "Analityka",
+        "description": "Anonimowe dane o użytkowaniu, abyśmy mogli ulepszać produkt."
+      },
+      "marketing": {
+        "label": "Marketing",
+        "description": "Spersonalizowane reklamy i retargeting na platformach zewnętrznych."
+      }
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "Powiadomienia",
+      "description": "Wszystkie powiadomienia w jednym miejscu.",
+      "filter": {
+        "all": "Wszystkie",
+        "unread": "Nieprzeczytane"
+      },
+      "actions": {
+        "markAllRead": "Oznacz wszystkie jako przeczytane",
+        "markRead": "Oznacz jako przeczytane",
+        "archive": "Archiwizuj",
+        "loadMore": "Załaduj więcej",
+        "loading": "Ładowanie...",
+        "selected": "Wybrano {count}"
+      },
+      "empty": {
+        "all": "Masz wszystko na bieżąco.",
+        "unread": "Brak nieprzeczytanych powiadomień."
+      },
+      "errors": {
+        "load": "Nie udało się załadować powiadomień.",
+        "network": "Błąd sieci. Spróbuj ponownie.",
+        "markRead": "Nie udało się oznaczyć powiadomienia jako przeczytane.",
+        "archive": "Nie udało się archiwizować powiadomienia.",
+        "bulkMarkRead": "Nie udało się oznaczyć niektórych powiadomień jako przeczytane."
+      },
+      "inbox": {
+        "noBackend": "Skrzynka odbiorcza wymaga trwałego backendu powiadomień. Sprawdź konfigurację dostawcy.",
+        "emptyCaughtUp": "Skrzynka odbiorcza jest pusta.",
+        "emptyChangelog": "Aktualizacje dziennika zmian pojawią się tutaj."
+      }
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Dzień dobry",
+      "afternoon": "Dobry wieczór",
+      "evening": "Dobry wieczór"
+    },
+    "home": {
+      "connectorsPill": "Zasil swoją aplikację za pomocą konektorów",
+      "subtitle": "Wpisz prompt, użyj ⌘K z dowolnego miejsca lub przejdź bezpośrednio do powierzchni roboczej.",
+      "promptPlaceholder": "Co masz na myśli?",
+      "actions": {
+        "connect": "Połącz integrację",
+        "theme": "Miejsce testów motywów",
+        "audit": "Dziennik audytu",
+        "billing": "Rozliczenia"
+      }
+    },
+    "commandSurface": {
+      "noAuth": "Uwierzytelnianie nie jest skonfigurowane dla wybranego dostawcy. Ustaw tajne dane dostawcy, aby włączyć sesje użytkowników."
+    },
+    "commandCenter": {
+      "description": "Zacznij od jednej akcji: zapytaj Sailora, sprawdź sygnały przestrzeni roboczej lub skieruj zadania do powierzchni automatyzacji.",
+      "openSailor": "Otwórz Sailor AI",
+      "viewAnalytics": "Zobacz analitykę"
+    },
+    "workspaceSnapshot": {
+      "title": "Przegląd przestrzeni roboczej",
+      "description": "Najnowszy dzień magazynu · {day}",
+      "viewAnalytics": "Zobacz analitykę →",
+      "metrics": {
+        "activeUsers": "Aktywni użytkownicy",
+        "totalEvents": "Łączna liczba zdarzeń",
+        "conversions": "Konwersje",
+        "revenue": "Przychód"
+      },
+      "details": {
+        "activeUsers": "Zalogowani użytkownicy",
+        "totalEvents": "Zarejestrowane zdarzenia",
+        "conversions": "Kwalifikowane działania",
+        "revenue": "Uznane przychody"
+      },
+      "meta": {
+        "snapshot": "Zrzut",
+        "cadence": "Częstotliwość",
+        "tenant": "Najemca",
+        "daily": "Dzienny",
+        "latestDay": "{day}",
+        "users": "Użytkownicy najemcy",
+        "events": "Strumień zdarzeń",
+        "funnel": "Lejek",
+        "billing": "Rozliczenia"
+      }
+    },
+    "documentPipeline": {
+      "title": "Rurociąg dokumentów",
+      "description": "Przesyłaj pliki źródłowe do kolejki zadań źródłowych.",
+      "intakeTitle": "Przyjmowanie dokumentów",
+      "intakeDescription": "PDF, Markdown, tekst lub dokument Worda",
+      "chooseDocument": "Wybierz dokument",
+      "startParseTask": "Rozpocznij zadanie parsowania",
+      "queued": "W kolejce",
+      "fileInputLabel": "Plik dokumentu",
+      "fallbackError": "Zadanie dokumentu nie powiodło się.",
+      "taskStatus": "Status zadania",
+      "progressLabel": "Postęp zadania",
+      "refreshStatus": "Odśwież",
+      "cancelTask": "Anuluj",
+      "statusError": "Nie udało się odświeżyć statusu zadania.",
+      "cancelError": "Nie udało się anulować zadania.",
+      "statusQueued": "W kolejce",
+      "statusRunning": "W trakcie",
+      "statusSucceeded": "Zakończone",
+      "statusFailed": "Nie powiodło się",
+      "statusCancelled": "Anulowane",
+      "resultReady": "Wynik gotowy",
+      "taskError": "Błąd zadania",
+      "updatedAt": "Zaktualizowano"
+    },
+    "recentSessions": {
+      "title": "Kontynuuj, gdzie zostawiłeś",
+      "subtitle": "{count, plural, =0 {Brak sesji} =1 {1 ostatnia sesja} other {# ostatnich sesji}}",
+      "viewAll": "Zobacz wszystkie →",
+      "newChat": "Nowy czat",
+      "untitled": "Sesja bez tytułu",
+      "messageCount": "{count, plural, =1 {1 wiadomość} other {# wiadomości}}"
+    },
+    "gettingStarted": {
+      "title": "Pierwsze kroki",
+      "description": "{done} z {total} ukończonych · zakończ konfigurację, aby odblokować pełną przestrzeń roboczą",
+      "progressLabel": "Postęp konfiguracji",
+      "tasks": {
+        "team": {
+          "label": "Zaproś koleżankę lub kolegę z zespołu",
+          "description": "Dodaj do przestrzeni roboczej co najmniej jednego współpracownika."
+        },
+        "api": {
+          "label": "Wygeneruj klucz API",
+          "description": "Dostęp programowy do punktów końcowych Twojej przestrzeni roboczej."
+        },
+        "integration": {
+          "label": "Podłącz integrację",
+          "description": "Stripe, Slack, webhooks, kolejki i inne."
+        },
+        "ai": {
+          "label": "Otwórz Sailor AI",
+          "description": "Wypróbuj tryb czatu, danych lub przepływu pracy."
+        }
+      }
+    }
+  },
+  "Sidebar": {
+    "projects": "Projekty",
+    "noThreads": "Brak wątków",
+    "expandAll": "Rozwiń wszystko",
+    "collapseAll": "Zwiń wszystko",
+    "sectionMore": "Więcej opcji",
+    "newProject": "Nowy projekt",
+    "restoredGroups": "Przywrócono wcześniej rozwinięte grupy",
+    "newProjectPlaceholder": "Nazwa projektu",
+    "newProjectDefault": "Bez tytułu",
+    "newProjectSuccess": "Projekt utworzony",
+    "newProjectError": "Nie udało się utworzyć projektu",
+    "sortBy": "Sortuj według",
+    "sortRecent": "Ostatnio aktywny",
+    "sortAlphabetical": "Alfabetycznie",
+    "sortCreated": "Data utworzenia",
+    "archiveAll": "Archiwizuj wszystko",
+    "comingV2": "Wersja v2 wkrótce"
+  },
+  "startupOs": {
+    "milestone": {
+      "firstRoom": "Pierwsza sala jest gotowa.",
+      "firstFolder": "Wiele firm zaczyna się od folderu.",
+      "firstTable": "Pierwsza tabela ma już drugie miejsce.",
+      "firstSignal": "Świat rzeczywisty zaczął mówić.",
+      "firstShip": "Świat widzi to po raz pierwszy.",
+      "firstBeliever": "Od dziś nie budujesz już tylko dla siebie.",
+      "firstRevenue": "Marzenie ma teraz przepływ gotówki.",
+      "firstReturn": "Powracanie ma większe znaczenie niż odwiedzanie.",
+      "firstTeam": "Trzy osoby mogą zacząć tworzyć firmę.",
+      "firstCrowd": "Pierwsza tabela zaczyna się zatłaczać.",
+      "firstReset": "Restart to bardziej szczery początek.",
+      "firstPublic": "Umieść kawałek przyszłości w przestrzeni publicznej.",
+      "firstDemo": "To nie pokaz. To test.",
+      "graduation": "Przekroczyłeś podstawy. Droga przed Tobą wymaga mocniejszych narzędzi."
+    },
+    "emptyState": {
+      "default": "Wiele firm zaczyna jako folder.",
+      "integrations": "Brak skonfigurowanych łączników.",
+      "creditActivity": "Aktywność kredytowa pojawi się po pierwszym żądaniu.",
+      "usageData": "Dane użycia pojawią się, gdy Twoja organizacja zacznie wysyłać żądania.",
+      "apiKeys": "Brak kluczy.",
+      "apiKeysCta": "Utwórz pierwszy klucz",
+      "teamMembers": "Jeden może zacząć. Kilku może zbudować.",
+      "cofounders": "Pierwsza osoba, która w Ciebie wierzy, jeszcze się nie pojawiła.",
+      "cofoundersDescription": "Gdy Ty i inny współzałożyciel wyrazicie zainteresowanie, pojawi się tutaj.",
+      "cofoundersAction": "Znajdź współzałożycieli",
+      "growthChart": "Dane trendów pojawią się, gdy zacznie się aktywność.",
+      "revenueChart": "Dane przychodów pojawią się, gdy rozpoczną się transakcje.",
+      "webhookDeliveries": "Dostawy pojawią się tutaj po pierwszym zdarzeniu.",
+      "webhookEndpoints": "Dodaj punkt końcowy powyżej, aby zacząć odbierać zdarzenia.",
+      "accessInvites": "Nie wydano żadnych kodów zaproszenia."
+    },
+    "success": "Pierwsze pomieszczenie jest gotowe.",
+    "failure": "Restart to bardziej szczery początek.",
+    "errors": {
+      "loadMatches": "Nie udało się załadować meczów.",
+      "loadMatchesDescription": "Coś poszło nie tak po naszej stronie. Odśwież, aby spróbować ponownie.",
+      "loadWebhookDeliveries": "Nie udało się załadować dostaw.",
+      "replayWebhookDelivery": "Odtworzenie nie powiodło się.",
+      "loadWebhookEndpoints": "Nie udało się załadować punktów końcowych."
+    },
+    "team": "Jeden może zacząć. Kilku może budować.",
+    "revenue": "Marzenie ma teraz przepływ gotówki.",
+    "growth": "Sygnał staje się silniejszy.",
+    "deployment": {
+      "primary": "Świat widzi to po raz pierwszy.",
+      "echo": "Wreszcie opuścił localhost."
+    },
+    "onboarding": "Nie musisz być gotowy. Musisz zacząć.",
+    "graduation": "Przekroczyłeś podstawy. Wypróbuj {tool} na drodze przed Tobą.",
+    "company": {
+      "emptyTitle": "Twoja pierwsza wieża kontekstu zaczyna się tutaj.",
+      "emptyDescription": "Skompiluj firmę w Startup OS, aby zobaczyć i edytować jej wieżę kontekstu.",
+      "emptyAction": "Otwórz Startup OS",
+      "notice": {
+        "needsProvider": "Podłącz klucz dostawcy AI, aby automatycznie wypełnić pola.",
+        "generateFailed": "Generowanie nie zostało ukończone.",
+        "saveFailed": "Zmiany nie zostały zapisane."
+      },
+      "action": {
+        "save": "Zapisz",
+        "saving": "Zapisywanie…",
+        "cancel": "Anuluj",
+        "open": "Otwórz Startup OS"
+      }
+    },
+    "execution": {
+      "noBets": "Brak zakładów.",
+      "noRuns": "Brak aktywnych uruchomień."
+    },
+    "fileTree": {
+      "empty": "Ten projekt nie ma jeszcze żadnych plików."
+    }
+  },
+  "selectOrg": {
+    "invitation": {
+      "emptyTitle": "Przestrzeń robocza jest w trakcie tworzenia.",
+      "emptyDescription": "Zaproszenie może się jeszcze synchronizować. Odśwież tę stronę lub utwórz osobną przestrzeń roboczą."
+    },
+    "billing": {
+      "emptyTitle": "Utwórz przestrzeń roboczą przed rozliczeniami.",
+      "emptyDescription": "Akcje rozliczeniowe wymagają aktywnej przestrzeni roboczej. Najpierw ją utwórz, a następnie wróć do rozliczeń."
+    },
+    "default": {
+      "emptyTitle": "Tutaj zaczyna się pierwszy obszar roboczy.",
+      "emptyDescription": "Utwórz obszar roboczy, aby rozpocząć."
+    }
+  }
+}

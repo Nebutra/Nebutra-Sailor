@@ -1,0 +1,71 @@
+{
+  "name": "@nebutra/voice-realtime",
+  "version": "0.1.3",
+  "description": "Voice session lifecycle, narration synthesis, and enrollment surface",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "generation-capability",
+    "requires": [
+      "@nebutra/generation-context for BrandContext",
+      "@nebutra/audio-pipeline for audio rendering utilities",
+      "A voice sidecar for production WebRTC/STT/TTS transport"
+    ],
+    "gaps": [
+      "Realtime transport is represented as a session contract until the sidecar is wired",
+      "Voice enrollment stores metadata only",
+      "Low-latency STT/TTS providers are health-checked through env only"
+    ],
+    "featureId": "voice-realtime",
+    "category": "ai",
+    "summary": "Realtime voice session and narration synthesis surface"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/audio-pipeline": "workspace:*",
+    "@nebutra/capability-kit": "workspace:*",
+    "@nebutra/errors": "workspace:*",
+    "@nebutra/generation-context": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/voice-realtime#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/voice-realtime"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
+}

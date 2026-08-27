@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — ایستگاه ابزار آنلاین",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "کدک‌ها، متن، هش، اسناد و ابزارهای تصویر به صورت آنلاین."
+  },
+  "nav": {
+    "main": "ناوبری اصلی",
+    "homeAria": "خانه {brandName} Forge",
+    "tools": "ابزارها",
+    "wallet": "کیف پول",
+    "api": "API",
+    "routerAria": "{brandName} Router",
+    "categoriesAria": "دسته‌بندی ابزارها",
+    "languageAria": "تغییر زبان"
+  },
+  "tool": {
+    "breadcrumbAria": "مسیر صفحه",
+    "workspace": "محیط کار",
+    "workspaceHint": "محلی یا سرور · مسیر یکسان با API",
+    "api": "API",
+    "apiHint": "قرارداد یکسان با صفحه. در محیط تولید از کلید احراز هویت استفاده کنید.",
+    "related": "ابزارهای مرتبط"
+  },
+  "auth": {
+    "signIn": "ورود",
+    "signUp": "ثبت‌نام",
+    "signOut": "خروج"
+  },
+  "footer": {
+    "navAria": "پاورقی",
+    "blurb": "ایستگاه ابزار آنلاین. کارها را در مرورگر انجام دهید یا از طریق API / MCP خودکار کنید.",
+    "product": "محصول",
+    "developers": "توسعه‌دهندگان",
+    "company": "شرکت",
+    "docs": "مستندات یکپارچه‌سازی",
+    "website": "وب‌سایت",
+    "privacy": "حریم خصوصی"
+  },
+  "home": {
+    "eyebrow": "ببینید. صدا بزنید.",
+    "title": "چاقوی سوئیسی برای ابزارهای آنلاین",
+    "subtitle": "کدک‌ها، متن، هش‌سازی، اسناد و پردازش تصویر. در مرورگر انجام دهید یا از طریق API / MCP خودکار کنید — یک پیاده‌سازی.",
+    "toolCount": "{count} ابزار",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "جستجو: شمارش کلمات، base64، json، timestamp…",
+    "aria": "جستجوی ابزارها",
+    "emptyTitle": "هیچ ابزاری با “{query}” مطابقت ندارد",
+    "emptyHint": "یک کلمه کلیدی دیگر امتحان کنید یا از دسته‌های زیر یک ابزار انتخاب کنید."
+  },
+  "categories": {
+    "codec": {
+      "label": "کدک‌ها",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "اعتبارسنجی چین",
+      "hint": "شناسه · تلفن"
+    },
+    "data": {
+      "label": "داده",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "توسعه‌دهنده",
+      "hint": "Regex · SQL · رنگ · UUID"
+    },
+    "doc": {
+      "label": "اسناد",
+      "hint": "Markdown · ادغام/تقسیم PDF"
+    },
+    "finance": {
+      "label": "مالی",
+      "hint": "مبلغ به حروف"
+    },
+    "hash": {
+      "label": "هش و امنیت",
+      "hint": "MD5 · SHA · HMAC · رمز عبور"
+    },
+    "image": {
+      "label": "تصاویر",
+      "hint": "فشرده‌سازی · QR · تبدیل"
+    },
+    "life": {
+      "label": "ماشین‌حساب‌های زندگی",
+      "hint": "مسکن · BMI · خویشاوندی"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "توکن‌ها · هزینه · طرح"
+    },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
+    "security": {
+      "label": "امنیت",
+      "hint": "تولید رمز عبور"
+    },
+    "text": {
+      "label": "متن",
+      "hint": "تعداد کلمات · CJK · پین‌یین · تفاوت"
+    },
+    "time": {
+      "label": "زمان",
+      "hint": "برچسب زمانی · منطقه زمانی · Cron · قمری"
+    },
+    "unit": {
+      "label": "واحدها",
+      "hint": "طول · وزن · دما · داده"
+    },
+    "template": {
+      "label": "قالب‌ها",
+      "hint": ".gitignore · LICENSE · Dockerfile · README"
+    }
+  },
+  "runners": {
+    "common": {
+      "run": "اجرا",
+      "running": "در حال اجرا…",
+      "copy": "کپی",
+      "copied": "کپی شد",
+      "sameAsApi": "مسیر یکسان با API · موتور OSS",
+      "mustBeNumber": "{label} باید یک عدد باشد",
+      "base64Loaded": "بار Base64 بارگذاری شد",
+      "workspaceMissing": "فضای کاری پیکربندی نشده: {slug}",
+      "yes": "بله",
+      "no": "خیر",
+      "text": "متن",
+      "input": "ورودی",
+      "output": "خروجی",
+      "outputPlaceholder": "نتیجه اینجا نمایش داده می‌شود",
+      "localRun": "اجرای محلی",
+      "serverRun": "اجرا روی سرور",
+      "serverVerify": "تأیید سرور",
+      "outputPreview": "پیش‌نمایش خروجی",
+      "mode": "حالت",
+      "encode": "رمزگذاری",
+      "decode": "رمزگشایی",
+      "file": "فایل",
+      "clear": "پاک کردن",
+      "length": "طول: {n}",
+      "bytes": "{bytes} بایت",
+      "download": "دانلود",
+      "format": "فرمت",
+      "formatting": "قالب‌بندی…",
+      "dialect": "گویش",
+      "color": "رنگ",
+      "pickColor": "انتخاب رنگ",
+      "content": "محتوا",
+      "algorithm": "الگوریتم",
+      "encoding": "کدگذاری",
+      "message": "پیام",
+      "secret": "رمز",
+      "password": "گذرواژه",
+      "direction": "جهت",
+      "preview": "پیش‌نمایش",
+      "query": "پرس‌و‌جو",
+      "querying": "در حال پرس‌و‌جو…",
+      "validate": "اعتبارسنجی",
+      "validating": "در حال اعتبارسنجی…",
+      "processing": "در حال پردازش…",
+      "pretty": "زیباسازی",
+      "minify": "فشرده‌سازی",
+      "from": "از",
+      "to": "تا",
+      "timezone": "منطقه زمانی",
+      "datetime": "تاریخ و ساعت",
+      "compute": "محاسبه",
+      "computing": "در حال محاسبه…",
+      "convertAction": "تبدیل",
+      "count": "تعداد",
+      "value": "مقدار",
+      "unit": "واحد",
+      "generateLocal": "تولید محلی",
+      "generateServer": "تولید روی سرور",
+      "copyAll": "کپی همه",
+      "emptyResult": "نتایج اینجا نمایش داده می‌شوند",
+      "copyText": "کپی متن",
+      "quality": "کیفیت",
+      "original": "اصلی",
+      "result": "نتیجه",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
+    },
+    "base64": {
+      "encodeDir": "متن → Base64",
+      "decodeDir": "Base64 → متن",
+      "localNote": "Web API محلی (TextEncoder / atob)",
+      "serverNote": "Server Buffer · مسیر یکسان با API"
+    },
+    "password": {
+      "uppercase": "حروف بزرگ",
+      "lowercase": "حروف کوچک",
+      "digits": "اعداد",
+      "symbols": "نمادها",
+      "generate": "تولید رمز عبور",
+      "recent": "اخیر",
+      "note": "موتور: node:crypto randomInt · امن از نظر رمزنگاری · مسیر یکسان با API"
+    },
+    "hash": {
+      "algo": "الگوریتم: {algo}",
+      "md5Warn": " · فقط برای چک‌سام/سازگاری — رمز عبور ذخیره نکنید",
+      "md5LocalError": "MD5 نیاز به اجرای سرور دارد (Web Crypto فاقد MD5 است)",
+      "md5ServerHint": "MD5: از اجرای سرور استفاده کنید (فقط سازگاری، نه برای ذخیره رمز عبور)",
+      "localNote": "Web Crypto محلی · {algo}",
+      "serverNote": "سرور node:crypto · مسیر یکسان با API"
+    },
+    "convert": {
+      "converting": "در حال تبدیل…",
+      "convert": "تبدیل",
+      "done": "انجام شد · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "یک فایل اینجا رها کنید، یا برای مرور کلیک کنید",
+      "needFile": "ابتدا یک فایل انتخاب کنید",
+      "needAlgo": "حداقل یک الگوریتم انتخاب کنید",
+      "compute": "محاسبه چک‌سام‌ها",
+      "computing": "در حال محاسبه…",
+      "algorithms": "الگوریتم‌ها",
+      "note": "node:crypto · چند الگوریتمی · مسیر یکسان با API"
+    },
+    "lorem": {
+      "paragraphs": "پاراگراف‌ها",
+      "wordsPerParagraph": "تعداد کلمات در هر پاراگراف",
+      "startWithLorem": "شروع با «Lorem ipsum»",
+      "note": "تولیدکننده Lorem Ipsum · خالص"
+    },
+    "emailValidate": {
+      "note": "اعتبارسنج ایمیل · فقط فرمت (بدون بررسی MX)"
+    },
+    "creditCardLuhn": {
+      "number": "شماره کارت",
+      "note": "بررسی Luhn · آفلاین، هرگز ذخیره نمی‌شود",
+      "digits": "digits",
+      "specimenLabel": "Specimen",
+      "structureOnly": "Luhn structure only",
+      "unknownBrand": "Card"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "فشرده‌ساز JSON · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "فشرده‌ساز CSS · سبک (امن برای لبه)"
+    },
+    "hashCompare": {
+      "a": "هش A",
+      "b": "هش B",
+      "ignoreCase": "نادیده‌گرفتن حروف بزرگ و کوچک",
+      "note": "مقایسه‌گر هش · زمان ثابت برای طول برابر"
+    },
+    "jsonDiff": {
+      "left": "JSON A",
+      "right": "JSON B",
+      "note": "تفاوت JSON · عملیات سطح مسیر · ردیف‌های رنگی بر اساس نوع · کنار به کنار",
+      "equal": "یکسان",
+      "differs": "{count} تغییر",
+      "colPath": "مسیر",
+      "colKind": "نوع",
+      "colLeft": "چپ",
+      "colRight": "راست",
+      "filtersAria": "فیلتر بر اساس نوع تغییر",
+      "filterAll": "همه ({count})",
+      "filterAdd": "افزودن ({count})",
+      "filterRemove": "حذف ({count})",
+      "filterChange": "تغییر ({count})",
+      "filterType": "نوع ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "حالت",
+      "pretty": "زیبا",
+      "compact": "فشرده",
+      "indent": "تورفتگی",
+      "note": "فرمت‌ساز YAML · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "فرمت‌ساز TOML · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "فشرده‌ساز XML · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "اعتبارسنج URL · WHATWG URL (بدون دریافت شبکه)"
+    },
+    "ipValidate": {
+      "note": "اعتبارسنج IP · IPv4/IPv6 آفلاین"
+    },
+    "uuidValidate": {
+      "note": "اعتبارسنج UUID · ساختار RFC 4122"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "فشرده‌ساز HTML · سبک (ایمن برای لبه)"
+    },
+    "randomString": {
+      "length": "طول",
+      "count": "تعداد",
+      "charset": "مجموعه نویسه",
+      "alphanumeric": "الفبایی-عددی",
+      "symbols": "الفبایی-عددی + نمادها",
+      "hex": "هگزادسیمال",
+      "base64url": "Base64URL",
+      "note": "رشته تصادفی · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "زمان مطالعه · تخمین CJK + لاتین"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "بیشینه سطح تیتر",
+      "note": "فهرست Markdown · تیترهای ATX"
+    },
+    "pdfInfo": {
+      "file": "فایل PDF",
+      "note": "اطلاعات PDF · pdf-lib (صفحات + متادیتا)"
+    },
+    "rot13": {
+      "shift": "شیفت (13 = ROT13)",
+      "note": "ROT13 / سزار · خالص"
+    },
+    "morse": {
+      "note": "کد مورس · ITU · خالص"
+    },
+    "textBinary": {
+      "toBinary": "متن → باینری",
+      "fromBinary": "باینری → متن",
+      "note": "متن ↔ باینری · بیت‌های UTF-8"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "کدگذاری Digest",
+      "note": "چند-Hash · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "هضم یک‌باره · کپی هر کدام · node:crypto"
+    },
+    "cssFormat": {
+      "note": "زیباساز CSS · سبک"
+    },
+    "htmlFormat": {
+      "note": "زیباساز HTML · سبک"
+    },
+    "stringSimilarity": {
+      "a": "رشته A",
+      "b": "رشته B",
+      "note": "شباهت رشته‌ها · لونسhtein"
+    },
+    "roman": {
+      "toRoman": "عدد → رومی",
+      "fromRoman": "رومی → عدد",
+      "note": "اعداد رومی · ۱–۳۹۹۹"
+    },
+    "age": {
+      "birthDate": "تاریخ تولد (YYYY-MM-DD)",
+      "asOf": "تا تاریخ (اختیاری)",
+      "note": "محاسبه‌گر سن · دقیق Y/M/D"
+    },
+    "tip": {
+      "bill": "مبلغ قبض",
+      "percent": "نرخ انعام %",
+      "people": "افراد",
+      "note": "ماشین‌حساب انعام · تقسیم دوستانه"
+    },
+    "aspect": {
+      "width": "عرض",
+      "height": "ارتفاع",
+      "note": "نسبت تصویر · ساده‌سازی با ب.م.م"
+    },
+    "mime": {
+      "note": "جستجوی MIME · انواع رایج وب"
+    },
+    "ua": {
+      "note": "تجزیه‌کننده User-Agent · هیوریستیک (آفلاین)"
+    },
+    "imageMeta": {
+      "file": "فایل تصویر",
+      "note": "متادیتای تصویر · sharp (اندازه بافر EXIF)"
+    },
+    "wordFreq": {
+      "top": "برترین N",
+      "note": "فرکانس واژگان · CJK + لاتین"
+    },
+    "jsonXml": {
+      "note": "JSON ↔ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "فشرده‌ساز SQL · حذف کامنت‌ها و فاصله‌ها"
+    },
+    "lineNum": {
+      "start": "شماره شروع",
+      "note": "شماره‌گذاری خطوط · خالص"
+    },
+    "uniqueWords": {
+      "note": "کلمات یکتا · به ترتیب اولین مشاهده"
+    },
+    "epoch": {
+      "value": "مقدار",
+      "msToIso": "ms → ISO",
+      "isoToMs": "ISO → ms",
+      "note": "میلی‌ثانیه Epoch · تاریخ"
+    },
+    "passwordEntropy": {
+      "password": "رمز عبور",
+      "note": "آنتروپی رمز عبور · تخمین بر اساس مجموعه کاراکترها"
+    },
+    "contrast": {
+      "fg": "پیش‌زمینه (#hex)",
+      "bg": "پس‌زمینه (#hex)",
+      "note": "تضاد رنگ · WCAG 2.x",
+      "sampleHeadline": "Sample text",
+      "pass": "pass",
+      "fail": "fail",
+      "aaNormal": "AA normal",
+      "aaLarge": "AA large",
+      "aaaNormal": "AAA normal",
+      "aaaLarge": "AAA large"
+    },
+    "exif": {
+      "file": "فایل تصویر",
+      "note": "نمایشگر EXIF · exifr + JPEG fallback"
+    },
+    "regex": {
+      "pattern": "الگو",
+      "flags": "پرچم‌ها",
+      "replacement": "جایگزینی",
+      "match": "تطبیق",
+      "replace": "جایگزینی",
+      "test": "آزمایش",
+      "local": "اجرای محلی",
+      "server": "تأیید سرور",
+      "count": "{count} تطبیق",
+      "sotaNote": "هایلایت محلی آنی · بودجه مهلت سرور · مسیر یکسان با API"
+    },
+    "jwt": {
+      "decode": "رمزگشایی JWT",
+      "sample": "بارگذاری نمونه",
+      "tokenPlaceholder": "JWT را اینجا بچسبانید",
+      "decodeNote": "{engine} · فقط رمزگشایی، امضا بررسی نمی‌شود",
+      "footerNote": "موتور: jose · بدون بررسی امضا. در محیط تولید با کلیدها از طریق jwtVerify در سرور بررسی کنید.",
+      "generateHint": "نیاز به امضای توکن دارید؟",
+      "secret": "رمز",
+      "exp": "انقضا (ثانیه)",
+      "payload": "Payload JSON",
+      "note": "تولید JWT · HS256 (فقط توسعه/تست)",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "(empty signature segment)"
+    },
+    "rand": {
+      "min": "حداقل",
+      "max": "حداکثر",
+      "count": "تعداد",
+      "note": "عدد تصادفی · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "تعداد اضلاع",
+      "count": "تعداد تاس",
+      "note": "تاس‌انداز · crypto RNG"
+    },
+    "hexRgb": {
+      "note": "HEX ↔ RGB · خالص"
+    },
+    "base64url": {
+      "note": "Base64URL · سبک JWT"
+    },
+    "hmac": {
+      "message": "پیام",
+      "secret": "رمز",
+      "signature": "امضا",
+      "note": "تأیید HMAC · SHA-256"
+    },
+    "secret": {
+      "bytes": "بایت",
+      "count": "تعداد",
+      "note": "تولیدکننده کلید مخفی · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "فایل PDF",
+      "note": "بهینه‌سازی سبک PDF · بازنویسی pdf-lib (بدون فشرده‌سازی مجدد تصویر)",
+      "needFile": "ابتدا یک فایل PDF انتخاب کنید"
+    },
+    "pdfCompress": {
+      "file": "فایل PDF",
+      "quality": "کیفیت",
+      "engine": "موتور",
+      "qStructural": "ساختاری (qpdf، جریان‌های بدون افت)",
+      "qScreen": "صفحه نمایش (کوچک‌ترین، Ghostscript)",
+      "qEbook": "کتاب الکترونیکی (متعادل، Ghostscript)",
+      "qPrinter": "چاپگر (کیفیت بالاتر، Ghostscript)",
+      "eAuto": "خودکار (qpdf → Ghostscript → pdf-lib)",
+      "download": "دانلود PDF",
+      "needFile": "ابتدا یک فایل PDF انتخاب کنید",
+      "in": "ورودی",
+      "out": "خروجی",
+      "saved": "ذخیره شد",
+      "note": "فشرده‌سازی PDF · qpdf / Ghostscript روی میزبان · pdf-lib به‌عنوان جایگزین",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+    },
+    "jsonFormat": {
+      "indent": "فاصله‌گذاری",
+      "format": "فرمت‌بندی",
+      "minify": "فشرده‌سازی",
+      "serverVerify": "بررسی سرور",
+      "clear": "پاک کردن",
+      "sample": "نمونه",
+      "placeholder": "چسباندن JSON…",
+      "formatted": "فرمت‌شده",
+      "minified": "فشرده",
+      "serverOk": "سرور {mode} · {engine}",
+      "valid": "JSON معتبر",
+      "invalid": "JSON نامعتبر",
+      "line": "خط",
+      "column": "ستون",
+      "note": "موتور: JSON.parse/stringify · محلی فوری · مسیر مشابه API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
+    },
+    "qr": {
+      "size": "اندازه",
+      "ecl": "تصحیح خطا",
+      "generate": "تولید",
+      "download": "دانلود PNG",
+      "needText": "متن یا URL را وارد کنید",
+      "note": "QR · qrcode · پیش‌نمایش زنده · مسیر مشابه با API"
+    },
+    "pdfText": {
+      "file": "فایل PDF",
+      "layout": "طرح‌بندی",
+      "needFile": "ابتدا یک PDF انتخاب کنید",
+      "note": "PDF Text · pdftotext (poppler) روی میزبان"
+    },
+    "svg": {
+      "optimize": "بهینه‌سازی",
+      "note": "SVG Optimize · کوچک‌سازی سبک خالص"
+    },
+    "routerTranslate": {
+      "lab": "پوسته آزمایشگاه: اینجا ترجمه نمی‌کند. Router را با یک درخواست باز می‌کند — نمایشگر مدل فقط روی Router.",
+      "source": "زبان مبدأ",
+      "target": "زبان مقصد",
+      "open": "آماده‌سازی لینک Router",
+      "deepLink": "باز کردن در Router",
+      "note": "خارجی · بدون دفتر LLM Forge خاموش"
+    },
+    "imageCrop": {
+      "needFile": "ابتدا یک تصویر انتخاب کنید",
+      "crop": "برش",
+      "note": "برش تصویر · کشیدن ناحیه · استخراج دقیق",
+      "drop": "تصویر را رها کنید یا برای مرور کلیک کنید",
+      "dragHint": "برای انتخاب ناحیه برش روی تصویر بکشید",
+      "left": "چپ",
+      "top": "بالا",
+      "width": "عرض",
+      "height": "ارتفاع",
+      "natural": "طبیعی {w}×{h}",
+      "source": "منبع",
+      "result": "برش‌خورده"
+    },
+    "markdown": {
+      "preview": "پیش‌نمایش",
+      "html": "HTML",
+      "emptyPreview": "اجرا کنید تا پیش‌نمایش را ببینید",
+      "emptyHtml": "HTML رندر شده",
+      "rendering": "در حال رندر…",
+      "toHtml": "تبدیل به HTML",
+      "copyHtml": "کپی HTML",
+      "note": "marked · پیش‌نمایش iframe ایزوله · مسیر یکسان با API"
+    },
+    "pdfMerge": {
+      "files": "فایل‌های PDF (≥2، ترتیب = ترتیب ادغام)",
+      "needFiles": "حداقل ۲ فایل PDF انتخاب کنید",
+      "merging": "در حال ادغام…",
+      "mergeDownload": "ادغام و دانلود",
+      "done": "ادغام شد · {pages} صفحه · {bytes} بایت",
+      "note": "pdf-lib · مسیر یکسان با API",
+      "merge": "ادغام و دانلود"
+    },
+    "pdfSplit": {
+      "file": "فایل PDF",
+      "needFile": "یک فایل PDF انتخاب کنید",
+      "fromPage": "از صفحه (شماره‌گذاری از ۱)",
+      "toPage": "تا صفحه (خالی = آخرین)",
+      "toPlaceholder": "آخرین صفحه",
+      "splitting": "در حال تقسیم…",
+      "splitDownload": "تقسیم و دانلود",
+      "done": "تقسیم · {source} صفحه منبع → {pages} صفحه خروجی",
+      "note": "pdf-lib · مسیر یکسان با API",
+      "split": "تقسیم و دانلود"
+    },
+    "passwordStrength": {
+      "check": "بررسی قدرت",
+      "checking": "در حال بررسی…",
+      "crack": "تخمین هش آفلاین کند: {time}",
+      "score0": "بسیار ضعیف",
+      "score1": "ضعیف",
+      "score2": "متوسط",
+      "score3": "قوی",
+      "score4": "بسیار قوی",
+      "note": "zxcvbn-ts · مسیر یکسان با API · رمز عبور هرگز ذخیره نمی‌شود"
+    },
+    "hmacSign": {
+      "compute": "محاسبه HMAC",
+      "computing": "در حال محاسبه…",
+      "note": "node:crypto · مسیر یکسان با API"
+    },
+    "costEstimate": {
+      "text": "متن ورودی (برای تخمین توکن ورودی)",
+      "model": "مدل",
+      "outputTokens": "توکن‌های خروجی (تخمینی)",
+      "estimate": "تخمین هزینه",
+      "estimating": "در حال تخمین…",
+      "note": "کارت @nebutra/ai-providers/frontier + js-tiktoken · تخمین بر اساس قیمت فهرست، نه صورتحساب"
+    },
+    "jsonSchema": {
+      "data": "داده JSON",
+      "schema": "اسکیما JSON",
+      "validate": "اعتبارسنجی",
+      "validating": "در حال اعتبارسنجی…",
+      "pass": "موفق",
+      "fail": "ناموفق",
+      "note": "Ajv · مسیر یکسان با API"
+    },
+    "zhCnTw": {
+      "s2t": "ساده → سنتی",
+      "t2s": "سنتی → ساده",
+      "s2tw": "ساده → تایوان",
+      "tw2s": "تایوان → ساده",
+      "s2hk": "ساده → هنگ‌کنگ",
+      "hk2s": "هنگ‌کنگ → ساده",
+      "note": "OpenCC (opencc-js) · مسیر یکسان با API"
+    },
+    "pinyin": {
+      "tones": "سبک لحن",
+      "symbol": "نماد nǐ",
+      "num": "شماره ni3",
+      "none": "هیچ‌کدام ni",
+      "hanzi": "کاراکترهای چینی",
+      "convert": "به پین‌یین",
+      "converting": "در حال تبدیل…",
+      "note": "pinyin-pro · مسیر یکسان با API"
+    },
+    "sqlFormat": {
+      "dialect": "گفتار",
+      "format": "قالب‌بندی",
+      "formatting": "در حال قالب‌بندی…",
+      "note": "sql-formatter · مسیر یکسان با API"
+    },
+    "colorConvert": {
+      "color": "رنگ",
+      "pick": "انتخاب رنگ",
+      "convert": "تبدیل",
+      "converting": "در حال تبدیل…",
+      "note": "culori · hex / rgb / hsl / oklch · مسیر یکسان با API"
+    },
+    "qrGen": {
+      "content": "محتوا",
+      "format": "فرمت",
+      "pngPreview": "PNG (پیش‌نمایش)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "ساخت QR",
+      "generating": "در حال ساخت…",
+      "note": "qrcode · مسیر یکسان با API"
+    },
+    "qrDecode": {
+      "upload": "آپلود تصویری با کد QR",
+      "parsing": "در حال رمزگشایی…",
+      "note": "jsQR + sharp · مسیر یکسان با API"
+    },
+    "cron": {
+      "expression": "عبارت Cron",
+      "timezone": "منطقه زمانی",
+      "parse": "اجراهای بعدی",
+      "parsing": "در حال تجزیه…",
+      "nextTitle": "اجراهای بعدی (ISO)",
+      "note": "cron-parser · مسیر یکسان با API"
+    },
+    "timezone": {
+      "datetime": "تاریخ و ساعت",
+      "from": "از",
+      "to": "به",
+      "convert": "تبدیل منطقه زمانی",
+      "converting": "در حال تبدیل…",
+      "placeholder": "2026-07-24 12:00:00 یا ISO / unix",
+      "note": "dayjs timezone · مسیر یکسان با API"
+    },
+    "csvPreview": {
+      "preview": "پیش‌نمایش جدول",
+      "parsing": "در حال تجزیه…",
+      "rows": "پیش‌نمایش {shown} / {total} سطر",
+      "note": "papaparse · مسیر یکسان با API"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "پرس‌وجو",
+      "querying": "در حال پرس‌وجو…",
+      "note": "jsonpath-plus · مسیر یکسان با API"
+    },
+    "xmlFormat": {
+      "pretty": "زیبا",
+      "minify": "فشرده‌سازی",
+      "validate": "اعتبارسنجی",
+      "validOk": "صحیح",
+      "done": "انجام شد · {engine}",
+      "processing": "در حال پردازش…",
+      "note": "fast-xml-parser · مسیر یکسان با API"
+    },
+    "regexLegacy": {
+      "pattern": "الگو",
+      "flags": "پرچم‌ها",
+      "mode": "حالت",
+      "match": "تطبیق",
+      "replace": "جایگزینی",
+      "test": "آزمایش",
+      "replacement": "جایگزینی",
+      "note": "محلی آنی · بودجه مهلت سرور · مسیر یکسان با API"
+    },
+    "docxText": {
+      "file": "فایل DOCX",
+      "needFile": "ابتدا یک فایل .docx انتخاب کنید",
+      "extract": "استخراج متن",
+      "extracting": "در حال استخراج…",
+      "note": "DOCX → متن · فقط ZIP + document.xml (بدون مجموعه Office)"
+    },
+    "uuid": {
+      "count": "تعداد",
+      "local": "تولید محلی",
+      "server": "تولید روی سرور",
+      "copyAll": "کپی همه",
+      "empty": "UUIDها اینجا ظاهر می‌شوند"
+    },
+    "timestamp": {
+      "nowSec": "ثانیه‌های Unix",
+      "nowMs": "میلی‌ثانیه Unix / ISO",
+      "serverNow": "زمان فعلی سرور",
+      "toDate": "تایم‌استمپ → تاریخ",
+      "toUnix": "تاریخ → تایم‌استمپ",
+      "seconds": "ثانیه‌ها",
+      "milliseconds": "میلی‌ثانیه‌ها",
+      "value": "مقدار",
+      "convert": "تبدیل",
+      "note": "مسیر یکسان با API"
+    },
+    "wordCount": {
+      "words": "کلمات",
+      "chars": "کاراکترها",
+      "noSpaces": "بدون فاصله",
+      "cjk": "CJK",
+      "lines": "سطرها",
+      "paragraphs": "پاراگراف‌ها",
+      "placeholder": "متن را بچسبانید یا تایپ کنید…",
+      "copyText": "کپی متن",
+      "clear": "پاک کردن",
+      "verifying": "در حال بررسی…",
+      "serverNote": "کلمات سرور={words} · مسیر یکسان با API",
+      "note": "موتور زنده: {engine} · بدون نیاز به آپلود · مسیر یکسان با API"
+    },
+    "bmi": {
+      "height": "قد (سانتی‌متر)",
+      "weight": "وزن (کیلوگرم)",
+      "compute": "محاسبه شاخص توده بدنی",
+      "computing": "در حال محاسبه…",
+      "invalid": "قد (سانتی‌متر) و وزن (کیلوگرم) معتبر وارد کنید",
+      "underweight": "کمبود وزن",
+      "normal": "نرمال",
+      "overweight": "اضافه وزن",
+      "obese": "چاقی",
+      "note": "شاخص توده بدنی WHO · مسیر یکسان با API · توصیه پزشکی نیست"
+    },
+    "percentage": {
+      "mode": "حالت",
+      "percentOf": "a درصد از b",
+      "isWhat": "a چند درصد از b است",
+      "percentA": "درصد a",
+      "valueA": "مقدار الف",
+      "baseB": "پایان ب",
+      "compute": "محاسبه",
+      "computing": "در حال محاسبه…",
+      "invalid": "اعداد معتبر وارد کنید",
+      "note": "مسیر یکسان با API"
+    },
+    "dataSize": {
+      "value": "مقدار",
+      "convert": "تبدیل",
+      "converting": "در حال تبدیل…",
+      "invalid": "یک عدد معتبر وارد کنید",
+      "binary": "{value} {from} → پایه ۱۰۲۴",
+      "note": "واحدهای دودویی (۱ کیلوبایت = ۱۰۲۴ بایت) · مسیر یکسان با API"
+    },
+    "rmb": {
+      "amount": "مبلغ (CNY)",
+      "convert": "تبدیل به حروف بزرگ",
+      "converting": "در حال تبدیل…",
+      "invalid": "مبلغی غیرمنفی وارد کنید",
+      "note": "مبلغ فاکتور چینی به حروف بزرگ · مسیر مشابه API"
+    },
+    "dateDiff": {
+      "from": "تاریخ شروع",
+      "to": "تاریخ پایان",
+      "compute": "اختلاف روز",
+      "computing": "در حال محاسبه…",
+      "days": "روز",
+      "note": "ECMAScript Date · مسیر مشابه API"
+    },
+    "xlsxText": {
+      "file": "فایل XLSX",
+      "needFile": "ابتدا یک فایل .xlsx انتخاب کنید",
+      "extract": "استخراج شیت",
+      "extracting": "در حال استخراج…",
+      "note": "XLSX → CSV · فقط ZIP + sheet1.xml (اولین شیت)"
+    },
+    "mdToPdf": {
+      "drop": "یک فایل .md اینجا رها کنید یا Markdown را در زیر بچسبانید",
+      "title": "عنوان",
+      "engine": "موتور",
+      "ePlaywright": "Playwright (چاپ Chromium)",
+      "eSimple": "ساده (بدون مرورگر)",
+      "generate": "تولید PDF",
+      "generating": "در حال تولید…",
+      "download": "دانلود PDF",
+      "note": "marked → HTML → چاپ با Playwright Chromium. اگر Chromium موجود نباشد، به‌طور خودکار به PDF ساختاریافته ساده بازمی‌گردد — موتور رندر را بررسی کنید؛ حالت ساده چیدمان چاپی ندارد.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
+    },
+    "tokenCount": {
+      "count": "شمارش توکن‌ها",
+      "counting": "در حال شمارش…",
+      "chars": "کاراکترها {n}",
+      "note": "موتور: js-tiktoken · شمارش دقیق سمت سرور · می‌تواند تخمین هزینه Router را تغذیه کند"
+    },
+    "codec": {
+      "encodeDir": "متن → کدگذاری شده",
+      "decodeDir": "کدگذاری شده → متن",
+      "localNote": "اجرای محلی",
+      "serverNote": "سرور · مسیر مشابه API",
+      "hexInvalid": "رشته hex معتبر نیست",
+      "hexDecodeFail": "سرور نتوانست به صورت UTF-8 رمزگشایی کند (hex معتبر لازم است)",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · همان مسیر API",
+      "noteHtml": "نقشه موجودیت‌های HTML · همان مسیر API",
+      "noteHex": "UTF-8 ↔ hex · همان مسیر API"
+    },
+    "textDiff": {
+      "left": "چپ",
+      "right": "راست",
+      "compare": "مقایسه",
+      "comparing": "در حال مقایسه…"
+    },
+    "imageTool": {
+      "drop": "تصویر را اینجا رها کنید یا برای انتخاب کلیک کنید",
+      "selected": "انتخاب شده: {name} ({kb} کیلوبایت)",
+      "needFile": "ابتدا یک تصویر انتخاب کنید",
+      "format": "فرمت خروجی",
+      "quality": "کیفیت {n}",
+      "maxW": "حداکثر عرض",
+      "maxH": "حداکثر ارتفاع",
+      "optional": "اختیاری",
+      "resizeEg": "مثلاً 1280",
+      "processing": "در حال پردازش…",
+      "compress": "فشرده‌سازی",
+      "resize": "تغییر اندازه",
+      "convert": "تبدیل فرمت",
+      "download": "دانلود نتیجه",
+      "outMeta": "خروجی {kb} کیلوبایت{dims}{ratio} · {type}",
+      "ratio": " · ~{pct}% از اصلی",
+      "dims": " · {w}×{h}",
+      "original": "اصلی",
+      "result": "نتیجه",
+      "note": "موتور: sharp (libvips) · سمت سرور · مسیر یکسان با API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+    },
+    "pptxText": {
+      "file": "فایل PPTX",
+      "needFile": "ابتدا یک فایل .pptx انتخاب کنید",
+      "extract": "استخراج طرح کلی",
+      "extracting": "در حال استخراج…",
+      "note": "طرح کلی PPTX · فقط ZIP + اسلاید XML (بدون PowerPoint)"
+    },
+    "shell": {
+      "copyJson": "کپی JSON",
+      "sample": "نمونه",
+      "chars": "{n} کاراکتر",
+      "largeInput": "ورودی بزرگ — نتیجه پس از توقف تایپ به‌روز می‌شود.",
+      "manualInput": "ورودی آنقدر بزرگ است که محاسبه زنده صفحه را کند می‌کند. دکمه اجرا را بزنید.",
+      "options": "گزینه‌ها",
+      "regenerateNote": "خروجی به‌صورت خودکار با تغییر گزینه‌ها به‌روز می‌شود.",
+      "fileTab": "فایل",
+      "pasteTab": "چسباندن",
+      "browse": "انتخاب فایل",
+      "selectedFile": "{name} · {kb} کیلوبایت",
+      "truncated": "فقط {kb} کیلوبایت اول خوانده می‌شود — کافی برای پاسخ و بقیه هرگز از دستگاه شما خارج نمی‌شود.",
+      "detail": "جزئیات",
+      "dropIntoPane": "فایل را اینجا رها کنید",
+      "swap": "جابجایی طرفین",
+      "prevChange": "تغییر قبلی",
+      "nextChange": "بعدی",
+      "changePosition": "{index} از {total}",
+      "result": "نتیجه"
+    },
+    "readmeSkeleton": {
+      "emptyHint": "حداقل یک بخش را تیک بزنید تا README ساخته شود.",
+      "note": "از همان موتور API اجرا می‌شود. بخش‌هایی که انتخاب نکنید هرگز ظاهر نمی‌شوند — بدون هدرهای خالی.",
+      "orderNote": "بخش‌ها همیشه به همین ترتیب ثابت رندر می‌شوند، بنابراین ورودی یکسان فایل یکسانی می‌دهد.",
+      "group": {
+        "core": "هسته",
+        "docs": "مستندات",
+        "community": "جامعه",
+        "meta": "فرامetadata"
+      },
+      "section": {
+        "title": "عنوان و توضیحات",
+        "badges": "نشان‌ها",
+        "callout": "یادداشت مهم",
+        "toc": "فهرست مطالب",
+        "installation": "نصب",
+        "usage": "نحوه استفاده",
+        "features": "ویژگی‌ها",
+        "api-reference": "مستندات API",
+        "screenshots": "تصاویر",
+        "roadmap": "نقشه راه",
+        "contributing": "مشارکت",
+        "support": "پشتیبانی",
+        "acknowledgements": "قدردانی",
+        "license": "مجوز",
+        "authors": "نویسندگان",
+        "tech-stack": "تکنولوژی‌ها"
+      },
+      "projectName": "نام پروژه",
+      "projectNamePlaceholder": "نام پروژه",
+      "description": "توضیحات",
+      "descriptionPlaceholder": "یک جمله درباره عملکرد آن",
+      "badgeLicense": "نشان مجوز",
+      "badgeNpm": "npm version",
+      "badgeBuild": "وضعیت ساخت",
+      "npmPackage": "npm package",
+      "npmPackagePlaceholder": "@scope/package",
+      "repo": "مخزن GitHub",
+      "repoPlaceholder": "owner/repo",
+      "calloutKind": "نوع یادآوری",
+      "calloutBody": "متن فراخوان",
+      "calloutBodyPlaceholder": "پیش از نسخه ۱.۰ — API هنوز در حال تغییر است",
+      "fenceLanguage": "زبان",
+      "installCommand": "دستور نصب",
+      "installCommandPlaceholder": "npm install your-project",
+      "usageExample": "مثال استفاده",
+      "usageExamplePlaceholder": "کوچکترین مثالی که ارزش را نشان می‌دهد",
+      "features": "ویژگی‌ها",
+      "featuresPlaceholder": "هر ویژگی در یک خط",
+      "contact": "تماس",
+      "contactPlaceholder": "support@example.com",
+      "license": "مجوز",
+      "authors": "نویسندگان",
+      "authorsPlaceholder": "@handle, Jane Roe",
+      "techStack": "پشته فناوری",
+      "techStackPlaceholder": "typescript, postgresql (simple-icons slugs)",
+      "sectionCount": "{n} بخش",
+      "charCount": "{n} کاراکتر",
+      "warningCount": "{n} رد شده",
+      "omittedTitle": "آنچه حذف شد و دلیل آن"
+    },
+    "gitignore": {
+      "searchLabel": "جستجوی پشته‌ها",
+      "searchPlaceholder": "جستجوی زبان‌ها، فریم‌ورک‌ها، سیستم‌عامل یا ویرایشگرها…",
+      "add": "افزودن {stack}",
+      "remove": "حذف {stack}",
+      "selected": "پشته‌های انتخاب شده",
+      "suggestions": "پشته‌های مشابه",
+      "noMatches": "هیچ استکی با «{query}» مطابقت ندارد. برای ارسال آن Enter را بزنید — مستعارها در سمت سرور حل می‌شوند.",
+      "catalogFallback": "لیست استک‌ها در دسترس نیست — نام یک استک را تایپ کنید و Enter را بزنید.",
+      "emptyHint": "حداقل یک زبان، فریم‌ورک، سیستم‌عامل یا ویرایشگر را از بالا انتخاب کنید.",
+      "regenerate": "تولید مجدد",
+      "sections": "{n} بخش",
+      "lines": "{n} خط",
+      "deduped": "{n} الگوی تکراری ادغام شد",
+      "notFound": "در مجموعه داده موجود نیست: {stacks}",
+      "globalScope": "{stacks} ورودی‌های سیستم‌عامل/ویرایشگر هستند — بسیاری از توسعه‌دهندگان این موارد را در ~/.gitignore_global شخصی خود نگه می‌دارند به جای هر مخزن.",
+      "untrackedNote": "یک .gitignore فقط روی فایل‌های ردیافت‌نشده اثر می‌گذارد. برای فایلی که git قبلاً ردیابی می‌کند، دستور git rm -r --cached <path> را اجرا کنید.",
+      "fileLabel": ".gitignore"
+    },
+    "editorconfig": {
+      "emptyHint": "حداقل یک ویژگی را تنظیم کنید تا فایل نمایش داده شود.",
+      "note": "همان موتور API. انتخاب‌های شما فقط در این جلسه مرورگر باقی می‌مانند و چیزی ذخیره نمی‌شود.",
+      "checks": "بررسی‌ها",
+      "presets": "شروع از",
+      "preset": {
+        "spaces2": "۲ فاصله، LF",
+        "spaces4": "4 spaces, LF",
+        "tabs": "تب‌ها، عرض ۴",
+        "repo": "شروع مخزن (+ Markdown، Makefile)"
+      },
+      "rootLabel": "root = true — جلوگیری از ادغام فایل‌های .editorconfig والد توسط ویرایشگرها",
+      "glob": "گلوب {n}",
+      "addSection": "افزودن بخش",
+      "removeSection": "حذف",
+      "notSet": "(تنظیم نشده)",
+      "import": "وارد کردن یک فایل .editorconfig موجود",
+      "importPlaceholder": "یک .editorconfig را اینجا بچسبانید تا در فرم بارگذاری شود",
+      "importAction": "وارد کردن",
+      "importing": "در حال وارد کردن…",
+      "importFailed": "وارد کردن انجام نشد: {message}"
+    },
+    "robotsTxt": {
+      "emptyHint": "گزینه‌های بالا را تنظیم کنید — فایل در اینجا نمایش داده می‌شود",
+      "deployNote": "robots.txt فقط در ریشه دامنه (https://example.com/robots.txt) اعمال می‌شود. هر زیردامنه به فایل جداگانه خود نیاز دارد.",
+      "outputLabel": "robots.txt",
+      "defaultAccess": "دسترسی پیش‌فرض (User-agent: *)",
+      "defaultAllow": "اجازه به همه",
+      "defaultDisallow": "عدم اجازه به همه",
+      "defaultAccessNote": "\"اجازه به همه\" یک \"Disallow:\" خالی می‌نویسد — این یعنی همه چیز مجاز است.",
+      "crawlDelay": "تأخیر خزیدن (ثانیه)",
+      "crawlDelayPlaceholder": "بدون",
+      "crawlDelayNote": "جزئی از RFC 9309 نیست. گوگل آن را نادیده می‌گیرد و هرگز در گروه گوگل نوشته نمی‌شود.",
+      "searchAgents": "موتورهای جستجو",
+      "aiAgents": "خزنده‌های هوش مصنوعی",
+      "aiAgentsNote": "خزنده‌های آموزش و موتورهای پاسخ. مسدود کردن آن‌ها بر فهرست‌بندی جستجو تأثیر نمی‌گذارد.",
+      "accessDefault": "پیش‌فرض",
+      "accessAllow": "اجازه",
+      "accessDisallow": "عدم اجازه",
+      "rules": "قوانین مسیر",
+      "rulesNote": "مسیرها به حروف بزرگ و کوچک حساس هستند و نسبت به ریشه نسبی‌اند. برای محدود کردن یک قانون به یک پوشه، یک اسلش پایانی اضافه کنید.",
+      "rulePath": "مسیر {n}",
+      "rulePathPlaceholder": "/admin/",
+      "ruleType": "نوع قانون",
+      "addRule": "افزودن قانون مسیر",
+      "removeRule": "حذف",
+      "sitemaps": "نقشه‌های سایت",
+      "sitemapsNote": "آدرس‌های مطلق http(s). به صورت خطوط مستقل و خارج از هر گروه نوشته می‌شوند.",
+      "sitemapUrl": "نقشه سایت {n}",
+      "addSitemap": "افزودن نقشه سایت",
+      "removeSitemap": "حذف",
+      "groupCount": "{n} گروه",
+      "lineCount": "{n} خط",
+      "sitemapCount": "{n} نقشه سایت",
+      "warningsSummary": "یادداشت‌های این فایل ({n})"
+    },
+    "encodingDetect": {
+      "drop": "فایلی را رها کنید تا رمزگذاری آن شناسایی شود",
+      "privacy": "فقط {kb} کیلوبایت اول خوانده می‌شود و به همان نقطه پایانی عمومی ارسال می‌شود که یک عامل فراخوانی می‌کند — چیزی روی دیسک نوشته نمی‌شود.",
+      "pasteLabel": "یا متن را بچسبانید",
+      "pastePlaceholder": "متن را بچسبانید — شامل متون به‌هم‌ریخته‌ای که می‌خواهید توضیح داده شوند",
+      "detail": "کاندیداهای رمزگذاری، پایان خطوط و آمار بایت",
+      "idle": "یک فایل رها کنید یا متن بچسبانید — گزارش به‌محض وجود محتوای قابل خواندن پر می‌شود.",
+      "readOnly": "فقط‌خواندنی: این ابزار یک رمزگذاری را شناسایی می‌کند و هرگز بایت‌ها را بازنویسی نمی‌کند.",
+      "headline": "{encoding} · {confidence}% اطمینان",
+      "notText": "این شبیه متن به نظر نمی‌رسد",
+      "bomPresent": "BOM {bytes}",
+      "bomAbsent": "بدون BOM",
+      "eol": "پایان خط {kind}",
+      "eolMixed": "پایان خط‌های ترکیبی",
+      "language": "زبان {language} · {confidence}٪",
+      "sampled": "تشخیص از {kb} کیلوبایت اول از {totalKb} کیلوبایت",
+      "candidates": "کاندیداهای رتبه‌بندی‌شده",
+      "candidatesNote": "کدگذاری‌های رتبه دوم عمداً نمایش داده می‌شوند: نمونه‌های کوتاه یا متقارن واقعاً مبهم هستند.",
+      "lineEndings": "پایان خطوط",
+      "byteStats": "آمار بایت",
+      "totalBytes": "مجموع",
+      "asciiBytes": "ASCII",
+      "highBytes": "بالا (0x80–0xFF)",
+      "nullBytes": "NUL",
+      "mojibake": "Mojibake بازیابی شد"
+    },
+    "dockerfileStarter": {
+      "language": "زبان",
+      "framework": "چارچوب",
+      "packageManager": "مدیر بسته",
+      "baseVariant": "تصویر پایه",
+      "version": "نسخه زمان اجرا",
+      "workdir": "دایرکتوری کاری",
+      "port": "پورت",
+      "buildCommand": "دستور ساخت",
+      "startCommand": "دستور شروع",
+      "commandPlaceholder": "خالی = پیش‌فرض تنظیم شده",
+      "frameworkNone": "هیچکدام (زمان اجرای ساده)",
+      "pmAuto": "خودکار",
+      "variantSlim": "slim (glibc)",
+      "variantAlpine": "alpine (musl)",
+      "variantFull": "کامل",
+      "multiStage": "ساخت چندمرحله‌ای",
+      "nonRootUser": "کاربر غیر root",
+      "includeDockerignore": "افزودن .dockerignore",
+      "includeCompose": "افزودن compose.yaml",
+      "includeHealthcheck": "افزودن HEALTHCHECK",
+      "groupWhat": "آنچه می‌سازید",
+      "groupHow": "نحوه اجرا",
+      "emptyHint": "یک زبان را انتخاب کنید تا Dockerfile نمایش داده شود.",
+      "note": "فقط پیش‌تنظیم‌ها — چیزی جز گزینه‌های بالا از مرورگر شما خارج نمی‌شود. قبل از انتشار، فایل را بخوانید.",
+      "warnings": "{n} مورد برای بررسی",
+      "stages": "{n} مرحله",
+      "badgeNonRoot": "غیر ریشه",
+      "badgeRoot": "به‌عنوان ریشه اجرا می‌شود",
+      "badgePort": "پورت {port}"
+    },
+    "lineEndingDetect": {
+      "dropLabel": "یک فایل متنی رها کنید تا پایان خطوط آن بررسی شود",
+      "privacy": "Pasted text, and the first 256 KB of a dropped file, are sent to the Forge API to be scanned; the bytes are not stored.",
+      "pasteLabel": "یا متن را بچسبانید",
+      "pastePlaceholder": "متنی که می‌خواهید بررسی کنید را بچسبانید",
+      "idle": "متن بچسبانید یا فایلی رها کنید تا حکم پایان خطوط آن را ببینید.",
+      "detail": "شمارش و بررسی",
+      "note": "فقط تشخیص — این ابزار هرگز فایل شما را بازنویسی نمی‌کند.",
+      "empty": "ورودی خالی",
+      "noTerminator": "بدون پایان‌سطر — یک سطر بدون پایان",
+      "consistent": "{style} — یکدست",
+      "mixed": "مختلط — {parts}",
+      "sharePart": "{pct}% {style}",
+      "style": {
+        "LF": "LF (Unix/Linux/macOS)",
+        "CRLF": "CRLF (Windows)",
+        "CR": "CR (classic Mac OS 9 and earlier)"
+      },
+      "lines": "{n} سطر",
+      "bytes": "{n} بایت",
+      "trailing": {
+        "present": "با خط جدید پایان می‌یابد",
+        "absent": "بدون خط جدید در پایان فایل"
+      },
+      "bomUtf8": "UTF-8 BOM",
+      "bomNone": "بدون BOM",
+      "countRow": "{style}: {n} ({pct}%)",
+      "colStyle": "سبک",
+      "colCount": "تعداد",
+      "colShare": "سهم",
+      "minorityLines": "خط‌هایی که با سبک غالب متفاوت هستند: {lines}",
+      "andMore": "و بیشتر",
+      "findings": "بررسی‌ها",
+      "level": {
+        "info": "توجه",
+        "warning": "هشدار",
+        "danger": "شکست"
+      },
+      "sampled": "ابتدای {n} بایت از {total} بایت اسکن شد",
+      "encodingLink": "باز کردن تشخیص‌دهنده رمزنگاری"
+    },
+    "fileTypeDetect": {
+      "drop": "یک فایل رها کنید تا نوع واقعی آن شناسایی شود",
+      "privacy": "فقط {kb} کیلوبایت اول هدر خوانده می‌شود — بقیه فایل هرگز از دستگاه شما خارج نمی‌شود.",
+      "hexTab": "چسباندن هگز",
+      "detail": "نمایش بایت‌ها و گزینه‌ها",
+      "idle": "یک فایل رها کنید، یا بایت‌های ابتدایی آن را به صورت هگز بچسبانید.",
+      "note": "امضاهای فایل ظرف را شناسایی می‌کنند، نه کدک یا محتوای داخل آن.",
+      "unset": "—",
+      "unknownType": "هیچ امضایی مطابقت نداشت",
+      "polyglot": "پلی‌گلوت",
+      "tierNone": "پسوند هم‌خوان است",
+      "tierBenign": "عدم تطابق خوش‌خیم",
+      "tierMismatch": "عدم تطابق پسوند",
+      "tierHighRisk": "ریسک بالا",
+      "confidenceMatch": "تطابق امضا",
+      "confidenceContainer": "فقط کانتینر",
+      "confidenceAmbiguous": "مبهم",
+      "confidenceNone": "بدون تطابق",
+      "signalDetected": "MIME تشخیص‌شده",
+      "signalReported": "MIME گزارش‌شده",
+      "signalExtension": "پسوند نام فایل",
+      "drillResolved": "کانتینر {kind} باز شد: {type}",
+      "drillUnresolved": "کانتینر {kind} تأیید شد؛ زیرنوع از بایت‌های نمونه‌برداری‌شده تشخیص داده نشد",
+      "hexDump": "بایت‌های هدر",
+      "bytesRead": "{n} بایت خوانده شد",
+      "headerOnly": "فقط نمونه هدر",
+      "entropy": "آنتروپی {bits} بیت/بایت",
+      "signatureCount": "{n} امضا در جدول",
+      "textHints": "راهنمایی‌های ساختاری: {hints}",
+      "candidates": "همه امضاهای مطابقت‌یافته",
+      "atOffset": "آفست {offset}"
+    },
+    "licenseChooser": {
+      "prompt": "این پروژه به چه چیزی نیاز دارد؟",
+      "pickScenario": "خطی را انتخاب کنید که شبیه پروژه شماست — پاسخ و فایل همین‌جا ظاهر می‌شوند.",
+      "disclaimer": "خروجی قالب قطعی، نه مشاوره حقوقی.",
+      "noAnswer": "هیچ مجوز واحدی برای این مورد مناسب نیست",
+      "permissions": "اجازه می‌دهد",
+      "conditions": "الزام می‌کند",
+      "limitations": "شامل نمی‌شود",
+      "alternates": "گزینه‌های دیگر برای این مورد",
+      "useThis": "از این استفاده کن",
+      "readCanonical": "متن اصلی را در SPDX بخوانید",
+      "holder": "مالک کپی‌رایت",
+      "holderPlaceholder": "نام شما یا شرکتتان",
+      "holderHint": "مالک کپی‌رایت را اضافه کنید و فایل هنگام تایپ تکمیل می‌شود.",
+      "year": "سال",
+      "manifest": "محل قرارگیری شناسه SPDX",
+      "verbatim": "{name} برای همه به صورت بایت به بایت یکسان توزیع می‌شود — خط کپی‌رایت در اطلاعیه فایل منبع قرار می‌گیرد، نه در فایل LICENSE.",
+      "noLicense": {
+        "summary": "چه می‌شود اگر اصلاً هیچ مجوزی اضافه نکنم؟",
+        "body": "نداشتن مجوز به معنای مالکیت عمومی نیست. بدون آن، حق تکثیر پیش‌فرض اعمال می‌شود و هیچ‌کس نمی‌تواند کد شما را کپی، تغییر یا توزیع مجدد کند — مخزن عمومی به معنای دسترسی است، نه اجازه."
+      },
+      "artifact": {
+        "header": "سربرگ فایل منبع",
+        "notice": "اعلان فایل منبع"
+      },
+      "refine": {
+        "patent": "مجوز اختراع در اینجا اهمیت دارد (کد شرکت، سخت‌افزار، کار روی استانداردها)",
+        "network": "به‌عنوان یک سرویس میزبانی اجرا می‌شود، نه فقط به‌عنوان یک دانلود",
+        "library": "یک کتابخانه است که نرم‌افزارهای دیگر به آن لینک می‌شوند",
+        "later": "اجازه نسخه‌های بعدی مجوز (کد Apache-2.0 را سازگار نگه می‌دارد)",
+        "none": "چیز دیگری برای اصلاح در این مورد وجود ندارد."
+      },
+      "scenario": {
+        "permissive": {
+          "label": "هر کسی می‌تواند آزادانه از آن استفاده کند",
+          "detail": "استفاده، تغییر، فروش، عرضه در محصولات بسته — فقط اعلان حق تکثیر را حفظ کنید."
+        },
+        "copyleft": {
+          "label": "بهبودها باید برگردانده شوند",
+          "detail": "هر کسی که نسخه‌ی تغییر یافته‌ای را توزیع کند، باید سورس آن را نیز منتشر کند."
+        },
+        "community": {
+          "label": "من در حال مشارکت در یک پروژه‌ی موجود هستم",
+          "detail": "مجوز از قبل تعیین شده است — با پروژه‌ای که در آن مشارکت می‌کنید مطابقت دهید."
+        },
+        "non-software": {
+          "label": "این نرم‌افزار نیست",
+          "detail": "مستندات، داده، طراحی یا رسانه به مجوز Creative Commons نیاز دارند، نه مجوز OSI."
+        },
+        "unsure": {
+          "label": "هنوز نمی‌دانم",
+          "detail": "پیش‌فرض کم‌پشیمانی را دریافت کنید به همراه دو گزینه‌ای که ارزش دانستن دارند."
+        }
+      },
+      "family": {
+        "permissive": "آزادانه",
+        "weak-copyleft": "کپی‌لفت ضعیف",
+        "strong-copyleft": "کپی‌لفت قوی",
+        "public-domain": "مالکیت عمومی",
+        "content": "مجوز محتوا"
+      },
+      "flag": {
+        "commercial-use": "استفاده تجاری",
+        "modifications": "تغییرات",
+        "distribution": "توزیع",
+        "private-use": "استفاده شخصی",
+        "patent-use": "مجوز اختراع",
+        "include-copyright": "حفظ اطلاعیه کپی‌رایت",
+        "document-changes": "ذکر تغییرات",
+        "disclose-source": "افشای منبع",
+        "same-license": "مجوز یکسان برای کل اثر",
+        "same-license-file": "مجوز یکسان برای هر فایل تغییر یافته",
+        "same-license-library": "مجوز یکسان برای کتابخانه",
+        "network-use-disclose": "استفاده شبکه‌ای به‌عنوان توزیع محسوب می‌شود",
+        "liability": "مسئولیت",
+        "warranty": "ضمانت",
+        "trademark-use": "استفاده از علامت تجاری"
+      }
+    },
+    "isbn": {
+      "inputLabel": "شناسه‌های ISBN",
+      "placeholder": "978-0-306-40615-7 — هر خط یک مورد، خط‌تیره و فاصله نادیده گرفته می‌شود",
+      "idle": "یک ISBN یا یک ستون کامل را بچسبانید؛ نتایج هنگام تایپ ظاهر می‌شوند.",
+      "scope": "فقط محاسبات رقم کنترل. یک ISBN معتبر از نظر داخلی سازگار است — این به معنای تایید تخصیص آن به یک کتاب واقعی توسط مرجع نیست.",
+      "summary": "{valid} از {total} معتبر",
+      "singleValid": "ISBN معتبر",
+      "singleInvalid": "ISBN معتبر نیست",
+      "invalidCount": "{n} مورد نامعتبر",
+      "convertedTo": "{type}: {value}",
+      "valid": "معتبر",
+      "invalid": "نامعتبر",
+      "truncated": "نمایش {shown} ردیف اول.",
+      "col": {
+        "input": "ورودی",
+        "normalized": "نرمال‌شده",
+        "type": "نوع",
+        "status": "وضعیت",
+        "converted": "تبدیل‌شده",
+        "note": "یادداشت"
+      },
+      "type": {
+        "isbn10": "ISBN-10",
+        "isbn13": "ISBN-13",
+        "invalidLength": "طول نادرست"
+      },
+      "note": {
+        "checkDigit": "رقم کنترل باید {expected} باشد",
+        "invalidLength": "یک ISBN دقیقاً 10 یا 13 کاراکتر دارد",
+        "invalidCharacter": "شامل کاراکتری است که رقم نیست",
+        "xMisplaced": "X فقط به عنوان آخرین کاراکتر یک ISBN-10 معتبر است",
+        "noIsbn10": "پیشوند 979 معادل ISBN-10 ندارد",
+        "nonBookland": "ISBN‌های 13 رقمی باید با 978 یا 979 شروع شوند",
+        "ismn": "979-0 محدوده ISMN (موسیقی چاپی) است، نه ISBN"
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
+    },
+    "languageDetect": {
+      "inputLabel": "تکه کد",
+      "inputPlaceholder": "کد را بدون نام فایل بچسبانید — از یک چت لاگ، تیکت، پاسخ و…",
+      "hintLabel": "نام فایل یا پسوند (اختیاری)",
+      "hintPlaceholder": "main.h · .pl · Dockerfile",
+      "note": "از همان موتور API اجرا می‌شود. تشخیص فقط بر اساس محتواست مگر اینکه یک راهنمای نام فایل ارائه دهید؛ پسوندهای مبهم (.h .m .pl .fs .ts .cs .r) ابتدا از طریق قوانین اختصاصی خودشان هدایت می‌شوند.",
+      "idle": "یک قطعه کد بچسبانید — نتیجه هنگام تایپ ظاهر می‌شود.",
+      "confidence": {
+        "high": "اطمینان بالا",
+        "medium": "اطمینان متوسط",
+        "low": "اطمینان پایین"
+      },
+      "score": "{n}/100",
+      "dataFormat": "فرمت داده، نه زبان برنامه‌نویسی",
+      "multiLanguage": "احتمال چند زبان",
+      "why": "چرا این پاسخ",
+      "signals": "سیگنال‌های مطابقت‌یافته",
+      "alternates": "کاندیداهای دیگر",
+      "composeNext": "فرمت این {language}"
+    },
+    "iban": {
+      "inputLabel": "IBAN",
+      "idle": "یک IBAN بچسبانید — حکم بلافاصله پس از تایپ مشخص می‌شود، بدون دکمه.",
+      "sourceNote": "کد کنترل و ساختار بر اساس ISO 13616-1:2020. طول و فرمت BBAN هر کشور از یک نسخه منتشرشده از ثبت IBAN استاندارد ISO گرفته شده، نه خود ثبت اصلی.",
+      "valid": "IBAN صحیح",
+      "keepTyping": "ادامه بدهید — کوتاه‌تر از IBAN این کشور است",
+      "caveat": "فقط ساختار صحیح. کد کنترل معتبر تأیید نمی‌کند که حساب وجود دارد، باز است یا متعلق به دریافت‌کننده است.",
+      "printFormat": "فرمت چاپ",
+      "details": "تجزیه و تحلیل",
+      "notEncoded": "توسط فرمت این کشور رمزگذاری نشده",
+      "coverage": "{n} کشور با فرمت ثبت‌شده IBAN",
+      "reason": {
+        "bad_charset": "شکل IBAN نیست — IBAN شامل دو حرف، دو رقم، و سپس فقط حروف و اعداد است",
+        "country_unsupported": "فرمت ثبت‌شده IBAN برای این کد کشور وجود ندارد",
+        "incomplete": "ناقص",
+        "wrong_length_for_country": "برای این کشور IBAN خیلی طولانی است",
+        "structure_mismatch": "طول درست است، اما ساختار با فرمت این کشور مطابقت ندارد",
+        "checksum_failed": "جمع کنترلی ناموفق — احتمالاً یک اشتباه تایپی در این IBAN وجود دارد"
+      },
+      "badge": {
+        "country": "{name} ({code})",
+        "unknownCountry": "کد کشور {code}",
+        "length": "{n} از {expected} کاراکتر",
+        "bankCode": "کد بانک {code}",
+        "expectedCheckDigits": "ارقام کنترلی برای این شماره حساب {digits} خواهد بود"
+      },
+      "field": {
+        "normalized": "فرمت الکترونیکی",
+        "country": "کشور",
+        "checkDigits": "ارقام کنترلی",
+        "bban": "BBAN",
+        "bbanFormat": "فرمت BBAN",
+        "bankCode": "کد بانک"
+      },
+      "check": {
+        "charset": "مجموعه کاراکترها",
+        "country": "کشور",
+        "length": "طول",
+        "structure": "ساختار",
+        "checksum": "MOD 97-10"
+      },
+      "state": {
+        "pass": "قبول",
+        "fail": "رد",
+        "skipped": "عدم بررسی"
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
+    },
+    "secretScan": {
+      "pasteLabel": "کد، تنظیمات یا یک فایل .env را جای‌گذاری کنید",
+      "pastePlaceholder": "DATABASE_URL=postgres://…\nAPI_KEY=…",
+      "dropLabel": "یک فایل برای اسکن رها کنید",
+      "privacy": "کاملاً در مرورگر شما اجرا می‌شود. هیچ چیزی به هیچ‌جا ارسال نمی‌شود — حتی به ما هم نه.",
+      "scan": "اسکن",
+      "scanning": "در حال اسکن…",
+      "idleTitle": "متنی را بچسبانید و دکمه اسکن را بزنید.",
+      "idleHint": "بررسی می‌کند که آیا کلیدهای API، توکن‌ها، کلیدهای خصوصی و رازهای با آنتروپی بالا وجود دارد یا نه. مقادیر مطابقت‌یافته پوشانده می‌شوند و فقط شماره خطوط به‌طور کامل نمایش داده می‌شوند.",
+      "clean": "هیچ رازی یافت نشد",
+      "cleanCaveat": "هیچ چیزی در اینجا با فرمت اعتبار شناخته‌شده مطابقت ندارد یا شبیه یک راز تصادفی به نظر نمی‌رسد. تطبیق الگو اثبات نیست — هر چیزی که مطمئن نیستید را بررسی کنید.",
+      "found": "{n, plural, one {# راز احتمالی یافت شد} other {# راز احتمالی یافت شد}}",
+      "foundCaveat": "قبل از اینکه این را هر جای دیگری بچسبانید، این موارد را حذف کنید. اگر کلیدی واقعی است، آن را تغییر دهید.",
+      "countHigh": "{n} اطمینان بالا",
+      "countMedium": "{n} اطمینان متوسط",
+      "countLow": "{n} کم",
+      "confidence": {
+        "high": "بالا",
+        "medium": "متوسط",
+        "low": "کم"
+      },
+      "position": "سطر {line}، ستون {column}",
+      "length": "{n} کاراکتر",
+      "maskedLabel": "تطبیق پوشانده‌شده",
+      "why": "چرا این تطبیق داده شد",
+      "candidates": "ممکن است یکی از موارد زیر باشد:",
+      "scanDetail": "جزئیات اسکن",
+      "lines": "{n} سطر",
+      "bytes": "{n} بایت اسکن شد",
+      "suppressed": "{n} نگه‌داشت نادیده گرفته شد",
+      "suppressedNote": "مقادیر نمایشی شناخته‌شده (کلیدهای EXAMPLE، your-api-key-here، کاراکترهای تکراری) نادیده گرفته می‌شوند تا فایل‌های نمونه هشدار کاذب ندهند.",
+      "omitted": "{n} مورد دیگر نمایش داده نشد",
+      "truncated": "ورودی محدود شد — فقط بخش اول اسکن شد",
+      "reportTitle": "یافته‌های اسکن رازها (مقادیر پوشانده شده)",
+      "scopeNote": "فقط تشخیص: این ابزار هرگز به فروشنده تماس نمی‌گیرد تا بررسی کند آیا کلید هنوز فعال است — این کار به معنای ارسال کلید شما به یک شخص ثالث خواهد بود."
+    },
+    "eanUpcGtin": {
+      "inputLabel": "شماره‌های بارکد",
+      "placeholder": "یک کد در هر خط (ویرگول و نقطه‌ویرگول نیز جدا می‌کنند)",
+      "idle": "یک کد یا یک ستون کامل را بچسبانید — نتیجه هنگام تایپ ظاهر می‌شود.",
+      "operationLabel": "عملیات",
+      "operationValidate": "اعتبارسنجی (کد شامل رقم کنترل است)",
+      "operationCalculate": "محاسبه (کد فاقد رقم کنترل است)",
+      "typeLabel": "نوع",
+      "typeAuto": "تشخیص بر اساس طول",
+      "total": "{n} کد",
+      "validCount": "{n} معتبر",
+      "invalidCount": "{n} نامعتبر",
+      "calculatedCount": "{n} محاسبه‌شده",
+      "unrecognizedCount": "{n} طول ناشناس",
+      "verdict": {
+        "valid": "معتبر",
+        "invalid": "نامعتبر",
+        "calculated": "محاسبه‌شده",
+        "unrecognized-length": "طول ناشناس"
+      },
+      "alsoReadsAs": "همچنین به عنوان {type} خوانده می‌شود",
+      "checkDigit": "رقم کنترل",
+      "corrected": "باید باشد",
+      "gtin14": "فرم GTIN-14",
+      "reason": {
+        "empty": "چیزی برای بررسی در این خط وجود ندارد.",
+        "non-digit-characters": "شامل کاراکترهایی است که نه رقم هستند و نه جداکننده.",
+        "unsupported-length": "هیچ شناسه GS1 این طول را ندارد (طول‌های ۸، ۱۲، ۱۳، ۱۴ و ۱۸ رقمی پشتیبانی می‌شوند).",
+        "length-mismatch": "طول برای نوع انتخاب‌شده شما اشتباه است.",
+        "check-digit-mismatch": "رقم نهایی با آنچه استاندارد نیاز دارد مطابقت ندارد."
+      },
+      "warning": {
+        "separators-stripped": "فاصله‌ها، خط‌تیره‌ها و نقطه‌ها قبل از بررسی حذف شدند.",
+        "all-zero": "همه صفر — از نظر ریاضی معتبر است، اما شناسه واقعی نیست.",
+        "payload-is-also-a-complete-code": "این همچنین طول یک کد کامل است. اگر قبلاً رقم کنترل دارد، به Validate تغییر دهید."
+      },
+      "math": "نمایش محاسبات",
+      "mathSum": "مجموع {sum} → رقم کنترل {check}",
+      "truncatedRows": "نمایش {shown} ردیف اول از {total} ردیف. کپی و دانلود شامل همه ردیف‌ها می‌شود.",
+      "privacy": "کدها برای بررسی به Forge API ارسال می‌شوند و ذخیره نمی‌شوند.",
+      "scopeNote": "رقم کنترل صحیح به معنای ساختار درست عدد است. این به معنای اختصاص آن به یک محصول، شرکت یا مکان واقعی توسط GS1 نیست — تنها جستجو در ثبت GEPIR این موضوع را مشخص می‌کند.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
+    },
+    "vin": {
+      "inputLabel": "VIN (۱۷ کاراکتر)",
+      "privacy": "در مرورگر شما بررسی می‌شود. VIN هرگز به جایی ارسال نمی‌شود.",
+      "idle": "یک VIN را بچسبانید — نتیجه هنگام تایپ ظاهر می‌شود، بدون دکمه.",
+      "scope": "فقط ساختار و رقم کنترل (49 CFR 565.15 / ISO 3779). این جستجوی تاریخچه خودرو نیست.",
+      "verdict": {
+        "valid": "ساختار VIN معتبر",
+        "keepTyping": "ادامه تایپ — {remaining} کاراکتر دیگر باقی‌مانده",
+        "tooLong": "بسیار طولانی — یک VIN دقیقاً ۱۷ کاراکتر دارد، این {n} کاراکتر است",
+        "invalidCharacter": "کاراکتر VIN نیست: \"{char}\" در موقعیت {position}",
+        "checkDigitMismatch": "عدم تطابق رقم کنترل — مورد انتظار {expected}، یافت‌شده {found}"
+      },
+      "hint": {
+        "confusable": "«{char}» هرگز در VIN استفاده نمی‌شود. آیا منظور شما {suggest} بود؟"
+      },
+      "notice": {
+        "notProvenance": "یک رقم کنترل معتبر تأیید می‌کند که VIN به‌درستی تشکیل شده است. این رقم تأیید نمی‌کند که خودرو وجود دارد، دست‌نخورده است یا سابقه‌ای پاک دارد — یک VIN کپی‌شده نیز این بررسی را می‌گذراند.",
+        "pre1981": "خودروهای ساخته‌شده قبل از 1981 و برخی خودروهای وارداتی (JDM/اروپایی) از این رقم کنترل استفاده نمی‌کنند — عدم تطابق ممکن است به معنای اشتباه تایپ VIN نباشد.",
+        "partial": "اعتبارسنجی رقم کنترل نیازمند VIN کامل 17 کاراکتری است. یک VIN ناقص یک کار رمزگشایی است، نه یک کار مجموع کنترل."
+      },
+      "badge": {
+        "length": "{n} کاراکتر",
+        "expected": "رقم کنترل {d}"
+      },
+      "invalidChars": {
+        "more": "همچنین کاراکترهای غیر VIN: {list}"
+      },
+      "segment": {
+        "wmi": "WMI 1-3",
+        "vds": "توصیف‌گر 4-8",
+        "checkDigit": "رقم کنترل 9",
+        "modelYear": "سال مدل 10",
+        "plant": "کارخانه 11",
+        "serial": "شماره سریال 12-17"
+      },
+      "math": {
+        "title": "نمایش محاسبات",
+        "col": {
+          "position": "موقعیت",
+          "char": "کاراکتر",
+          "value": "مقدار",
+          "weight": "وزن",
+          "product": "حاصل‌ضرب"
+        },
+        "formula": "مجموع = {sum}؛  {sum} mod 11 = {remainder}  →  رقم کنترل {expected}"
+      },
+      "specimenTitle": "VIN · structure specimen"
+    },
+    "envDiff": {
+      "envA": "محیط A",
+      "envB": "محیط B",
+      "placeholderA": "فایل .env اول را بچسبانید یا رها کنید",
+      "placeholderB": "فایل .env دوم را اینجا بچسبانید یا رها کنید",
+      "paneNoAssignment": "هیچ خط KEY=value یافت نشد",
+      "optIgnoreComments": "نادیده گرفتن خطوط کامنت و خالی",
+      "optCaseInsensitive": "مقایسه کلیدها بدون حساسیت به حروف بزرگ و کوچک",
+      "optRedactSecrets": "پنهان کردن رازهای شناسایی‌شده",
+      "emptyHint": "یک محیط دوم اضافه کنید تا مقایسه نمایش داده شود",
+      "summaryNone": "بدون تفاوت در {total} کلید",
+      "summaryDiff": "{n} از {total} کلید متفاوت است",
+      "note": {
+        "unchanged": "مقدار در هر دو طرف یکسان است",
+        "changed": "مقدار متفاوت است",
+        "added": "فقط در B تنظیم شده",
+        "removed": "فقط در A تنظیم شده",
+        "commentedOutInA": "در A غیرفعال شده، در B تنظیم شده",
+        "commentedOutInB": "در A تنظیم شده، در B غیرفعال شده"
+      },
+      "secretChanged": "محرمانه متفاوت است",
+      "secretSame": "محرمانه در هر دو طرف یکسان است",
+      "count": {
+        "unchanged": "{n} بدون تغییر",
+        "changed": "{n} تغییر یافته",
+        "added": "{n} اضافه شده",
+        "removed": "{n} حذف شده",
+        "commentedOut": "{n} غیرفعال شده"
+      },
+      "warnings": "هشدارهای ورودی ({n})",
+      "warningType": {
+        "duplicateKey": "{file} · کلید تکراری",
+        "quoteMismatch": "{file} · عدم تطابق نقل‌قول",
+        "unparsableLine": "{file} · خط غیرقابل تجزیه"
+      },
+      "showUnchanged": "نمایش موارد بدون تغییر ({n})",
+      "commentedIn": {
+        "A": "در A کامنت شده",
+        "B": "در B کامنت شده",
+        "both": "در هر دو کامنت شده"
+      },
+      "redactedNote": "مقادیر محرمانه با یک اکتشافی مبتنی بر نام کلید پوشانده می‌شوند — این یک اسکنر امنیتی نیست. مقایسه روی مقادیر خام انجام می‌شود، بنابراین یک راز چرخش‌شده همچنان به‌عنوان تغییر یافته نمایش داده می‌شود.",
+      "interpolationNote": "ارجاعات ${VAR} به‌صورت تحت‌اللفظی مقایسه می‌شوند و هرگز حل نمی‌شوند: بسط دادن بسته به مصرف‌کننده متفاوت است.",
+      "truncated": "فقط ۵,۰۰۰ کلید اول فهرست شده‌اند؛ شمارش‌ها همه کلیدها را پوشش می‌دهند.",
+      "colKey": "کلید",
+      "colA": "A",
+      "colB": "B",
+      "colStatus": "وضعیت",
+      "privacy": "هر دو فایل در مرورگر شما مقایسه می‌شوند. هیچ چیزی آپلود نمی‌شود."
+    },
+    "csvDiff": {
+      "originalLabel": "CSV اصلی",
+      "updatedLabel": "CSV به‌روز شده",
+      "originalPlaceholder": "خروجی اصلی را اینجا بچسبانید یا یک فایل .csv رها کنید",
+      "updatedPlaceholder": "خروجی به‌روز شده را اینجا بچسبانید یا یک فایل .csv رها کنید",
+      "emptyHint": "هر دو فایل را بچسبانید یا رها کنید — به‌محض اینکه هر دو طرف محتوا داشته باشند، مقایسه اجرا می‌شود.",
+      "note": "ردیف‌ها بر اساس هویت تطبیق داده می‌شوند، نه بر اساس موقعیت، بنابراین یک ردیف درج‌شده یا مرتب‌شده به‌عنوان دیواری از تغییرات خوانده نمی‌شود. محتوا برای مقایسه به API ارسال می‌شود و ذخیره نمی‌گردد.",
+      "columns": "{n} ستون",
+      "keyLabel": "ستون کلیدی",
+      "keyAuto": "پیشنهاد خودکار",
+      "keyNone": "بدون کلید — مقایسه کل ردیف‌ها",
+      "joinLabel": "پیوند",
+      "joinFull": "پیوند کامل بیرونی — همه سطرها",
+      "joinInner": "پیوند داخلی — سطرها در هر دو",
+      "joinLeft": "پیوند چپ — مجموعه سطرها به‌صورت اصلی",
+      "ignoreWhitespace": "نادیده گرفتن فاصله‌ها",
+      "ignoreCase": "نادیده گرفتن حروف بزرگ و کوچک",
+      "treatEmptyAsNull": "خالی = NULL = N/A",
+      "noDifferences": "بدون تفاوت",
+      "differences": "{added} اضافه شده · {removed} حذف شده · {changed} تغییر یافته",
+      "added": "{n} اضافه شده",
+      "removed": "{n} حذف شده",
+      "changed": "{n} تغییر یافته",
+      "unchangedCount": "{n} بدون تغییر",
+      "totals": "{original} → {updated} ردیف",
+      "matchedBy": "تطبیق بر اساس {columns} ({source})",
+      "matchedWholeRow": "تطبیق بر اساس محتوای کل ردیف — از ستون کلیدی استفاده نشده، بنابراین تغییری گزارش نمی‌شود.",
+      "keySource": {
+        "provided": "انتخاب شما",
+        "auto": "پیشنهاد خودکار",
+        "full-row": "کل ردیف"
+      },
+      "keyRejected": "کاندیداهای کلیدی رد شده: {items}",
+      "columnMismatch": "ستون‌های موجود فقط در نسخه اصلی: {original} · فقط در نسخه به‌روز شده: {updated}",
+      "truncated": "نمایش {shown} از نتیجه کامل (پیش‌نمایش محدود به {limit} ردیف) — شمارش‌های بالا کامل هستند.",
+      "findings": "یادداشت‌ها ({n})",
+      "level": {
+        "info": "اطلاعات",
+        "warning": "هشدار",
+        "danger": "خطا"
+      },
+      "wholeRow": "ردیف {n}",
+      "exportChanged": "ردیف‌های تغییر یافته (CSV)",
+      "exportFull": "تفاوت کامل (CSV)"
+    },
+    "uscc": {
+      "modeLabel": "تأیید یا تولید",
+      "tab": {
+        "verify": "تأیید",
+        "generate": "تولید کدهای آزمایشی"
+      },
+      "inputLabel": "کد اعتبار اجتماعی یکپارچه",
+      "placeholder": "۱۸ کاراکتر، مثلاً 91500000059926748X",
+      "idle": "یک کد ۱۸ کاراکتری بچسبانید. هنگام تایپ در مرورگر بررسی می‌شود — چیزی ذخیره نمی‌شود.",
+      "scope": "فقط بررسی ساختاری (GB 32100-2015 + ISO 7064 MOD 31-3). کدی که پاس شود، ساختار درستی دارد؛ این به معنای ثبت سازمان تحت آن نیست — این موضوع را در ثبت ملی cods.org.cn بررسی کنید.",
+      "valid": "کد اعتبار اجتماعی یکپارچه معتبر",
+      "invalid": "کد اعتبار اجتماعی یکپارچه معتبر نیست",
+      "incomplete": "{n} از ۱۸ کاراکتر",
+      "invalidCharacters": "شامل کاراکترهایی است که استاندارد آن‌ها را رد می‌کند",
+      "checksumOk": "رقم کنترل صحیح است",
+      "checksumBad": "عدم تطابق رقم کنترل",
+      "expectedDigit": "رقم کنترل باید {expected} باشد، نه {actual}",
+      "illegalAt": "موقعیت {position}: «{char}» در مجموعه کاراکترهای کد وجود ندارد (I، O، S، V، Z حذف شده‌اند)",
+      "detail": "جزئیات فیلد",
+      "legacyTitle": "کد سازمانی قدیمی (GB 11714)",
+      "legacy": {
+        "ok": "کد سازمانی ۹ کاراکتری نهفته سازگار است",
+        "mismatch": "کاراکتر کنترل قدیمی باید {expected} باشد — فقط اطلاع‌رسانی؛ همه دسته‌های ثبت‌شده کد سازمانی GB 11714 ندارند",
+        "unchecked": "بررسی نشده"
+      },
+      "divisionScope": "موقعیت‌های ۳ تا ۸ با جدول استان‌های GB/T 2260 و قوانین تودرتوی فرم شش‌رقمی مطابقت داده می‌شوند؛ جدول کامل شهرستان‌ها حمل نمی‌شود.",
+      "field": {
+        "registrationDept": "دپارتمان ثبت",
+        "orgCategory": "دسته‌بندی سازمان",
+        "adminDivision": "تقسیمات اداری",
+        "orgIdentifier": "شناسه موضوع",
+        "checkDigit": "رقم کنترل"
+      },
+      "depth": {
+        "none": "تعیین نشده",
+        "province": "سطح استان",
+        "prefecture": "سطح فرمانداری",
+        "county": "سطح شهرستان"
+      },
+      "note": {
+        "empty": "هنوز چیزی برای بررسی وجود ندارد",
+        "incomplete": "یک کد اعتبار اجتماعی یکپارچه دقیقاً ۱۸ کاراکتر دارد",
+        "tooLong": "بیش از ۱۸ کاراکتر",
+        "illegalCharacter": "شامل کاراکتری خارج از مجموعه GB 32100-2015 است (I، O، S، V و Z مجاز نیستند)",
+        "checkDigitMismatch": "رقم کنترل با ۱۷ کاراکتر اول مطابقت ندارد",
+        "departmentUnknown": "موقعیت 1 یک بخش ثبت‌نام نیست که استاندارد تعریف می‌کند (1, 5, 9, Y)",
+        "categoryUnknown": "موقعیت 2 یک دسته سازمان تعریف‌شده برای این اداره ثبت نیست",
+        "divisionNotNumeric": "موقعیت‌های 3–8 باید شش رقم باشند",
+        "divisionUnknownProvince": "موقعیت‌های 3–4 کد استان GB/T 2260 نیستند",
+        "divisionMalformed": "یک شهرستان بدون فرمانداری، که GB/T 2260 اجازه نمی‌دهد"
+      },
+      "gen": {
+        "dept": "اداره ثبت",
+        "category": "دسته سازمان",
+        "province": "استان",
+        "count": "چند تا",
+        "randomProvince": "هر استان",
+        "regenerate": "بسته جدید",
+        "emptyHint": "گزینه‌های بالا را انتخاب کنید تا کدهای تست تولید شوند.",
+        "testDataBadge": "داده‌های تست",
+        "seed": "دانه {seed}",
+        "allCodes": "همه کدها",
+        "disclaimer": "این کدها از نظر ساختاری معتبر هستند اما متعلق به هیچ سازمان ثبت‌شده‌ای نیستند. از آن‌ها برای نشان دادن یک نهاد واقعی استفاده نکنید.",
+        "note": "تولید بر اساس دانه انجام می‌شود: همان گزینه‌ها و دانه همیشه همان بسته را برمی‌گردانند، بنابراین یک فیکسچر قابل بازتولید می‌ماند. هر کد در JSON و همچنین اینجا با isTestData علامت‌گذاری شده است."
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
+    },
+    "yamlDiff": {
+      "original": "اصلی",
+      "changed": "تغییر یافته",
+      "originalPlaceholder": "YAML اصلی را بچسبانید یا رها کنید (یا JSON)",
+      "changedPlaceholder": "YAML تغییر یافته را بچسبانید یا رها کنید (یا JSON)",
+      "idle": "هر دو پنل را پر کنید و مقایسه با تایپ شما اجرا می‌شود.",
+      "privacy": "هر دو سند در همین مرورگر تجزیه و مقایسه می‌شوند — چیزی آپلود نمی‌شود، که برای مانیفست‌های حاوی نام میزبان و نام‌های مخفی نکته‌ای کلیدی است.",
+      "modeLabel": "مقایسه",
+      "modeSemantic": "معنایی (ساختار)",
+      "modeRawText": "متن خام (نویسه‌ها)",
+      "resolveAnchors": "حل لنگرها و نام‌های مستعار به مقادیرشان",
+      "valid": "YAML معتبر",
+      "validMulti": "YAML معتبر · {n} سند",
+      "invalid": "خطای تجزیه، خط {line}",
+      "parseFailed": "یک طرف تجزیه نشد — چیزی مقایسه نشد",
+      "equivalent": "بدون تفاوت — دو سند به ساختار یکسانی حل می‌شوند",
+      "equivalentStructural": "ساختار حل شده یکسان · {n} تفاوت قالب‌بندی یا لنگر",
+      "summary": "{added} اضافه شده · {removed} حذف شده · {changed} تغییر یافته · {typeChanged} تغییر نوع",
+      "parseErrorAt": "{side} · خط {line}، ستون {column}: {message}",
+      "documentCountMismatch": "تعداد اسناد متفاوت است: {original} در مقابل {changed} — اسناد به ترتیب جفت شدند و اضافات به‌صورت کامل گزارش شدند",
+      "duplicateKeys": "کلیدهای تکراری در منبع",
+      "unified": "پچ یکپارچه (YAML نرمال‌شده)",
+      "howItWorks": "نحوه عملکرد این مقایسه",
+      "rule": {
+        "keyOrder": "ترتیب کلیدها، نقل‌قول‌ها و تورفتگی‌ها نادیده گرفته می‌شوند؛ ترتیب دنباله‌ها مقایسه می‌شود، زیرا ترتیب یک فهرست حامل معناست.",
+        "anchors": "نام‌های مستعار به مقادیرشان حل می‌شوند، بنابراین تغییری پشت یک لنگر مشترک در همه جایگاه‌های مستعار نمایش داده می‌شود؛ لنگر یا مستعاری که تغییر کرده اما مقدارش دست‌نخورده مانده به‌صورت جداگane به‌عنوان ساختاری گزارش می‌شود.",
+        "mergeKeys": "کلیدهای ادغام (<<) پیش از مقایسه بسط داده می‌شوند و کلیدهای خود گره بر کلیدهای ادغام‌شده ارجحیت دارند.",
+        "types": "نوع بخشی از مقدار است: 8080، \"8080\" و !!str 8080 به‌عنوان تغییر نوع گزارش می‌شوند، نه به‌عنوان یک تغییر عمومی.",
+        "sequences": "توالی‌های نگاشت بر اساس نام، شناسه یا کلید جفت می‌شوند زمانی که آن فیلد در هر دو طرف یکتا باشد، بنابراین یک آیتم درج‌شده آبشاری نمی‌شود؛ بازآرایی همچنان گزارش می‌شود.",
+        "blockScalars": "اسکالرهای بلوکی بر اساس رشته حل‌شده مقایسه می‌شوند، بنابراین خط پایان که |- حذف می‌کند یک تغییر واقعی است؛ بازطراحی با همان مقدار ساختاری محسوب می‌شود.",
+        "comments": "توضیحات بخشی از مدل داده‌های YAML نیستند و مقایسه نمی‌شوند.",
+        "multiDoc": "--- اسناد را به صورت زوجی و سند به سند جریانی می‌کند؛ در صورت عدم تطابق تعداد، به جای مقایسه فقط سند اول، گزارش داده می‌شود.",
+        "duplicateKeys": "کلید نگاشت تکراری در ورودی از آخرین رخداد استفاده می‌کند و به عنوان هشدار گزارش می‌شود."
+      },
+      "note": {
+        "raw-text-mode": "حالت متن خام کاراکترها را مقایسه می‌کند، نه ساختار: ترتیب کلیدها، نقل‌قول‌ها و تورفتگی‌ها همگی محاسبه می‌شوند.",
+        "parse-error": "یکی از طرفین تجزیه نشد، بنابراین چیزی مقایسه نشد.",
+        "document-count-mismatch": "دو طرف تعداد متفاوتی از اسناد --- را در خود دارند؛ اسناد به ترتیب جفت‌سازی شده و موارد اضافی به صورت کامل گزارش شده‌اند.",
+        "merge-keys-expanded": "کلیدهای ادغام (<<) پیش از مقایسه بسط داده شدند.",
+        "anchors-unresolved": "آلیاس‌ها به‌عنوان ارجاعات *name مقایسه شدند، نه به‌عنوان مقادیر حل‌شده آن‌ها.",
+        "yaml11-ambiguous-scalars": "مقادیر y/n/yes/no/on/off بدون نقل‌قول در اینجا به‌عنوان رشته خوانده می‌شوند (YAML 1.2 Core) و در YAML 1.1 به‌عنوان بولی — در صورت نیاز به بولی، آن‌ها را نقل‌قول کنید.",
+        "sequence-matched-by-identity": "توالی‌های نگاشت بر اساس یک فیلد هویتی جفت شدند، نه بر اساس موقعیت.",
+        "duplicate-keys": "یک نگاشت کلید یکسان را دو بار اعلام کرده است؛ آخرین رخداد استفاده شد.",
+        "truncated": "فقط ۲۰۰۰ تغییر اول فهرست شده‌اند."
+      }
+    },
+    "listSetCompare": {
+      "listA": "لیست الف",
+      "listB": "لیست ب",
+      "placeholder": "آیتم‌ها را خط به خط وارد کنید (یا فایل .txt/.csv بکشید)",
+      "emptyHint": "برای مشاهده مقایسه، آیتم‌ها را به هر دو لیست الف و ب اضافه کنید.",
+      "privacy": "هر دو لیست در مرورگر شما مقایسه می‌شوند — چیزی آپلود نمی‌شود. همان موتور به‌صورت سرور برای فراخوانی‌های API و MCP اجرا می‌شود.",
+      "delimiter": "جداکننده",
+      "delimiterOption": {
+        "auto": "تشخیص خودکار",
+        "newline": "خط جدید",
+        "comma": "ویرگول",
+        "tab": "تب",
+        "custom": "سفارشی"
+      },
+      "customDelimiter": "جداکننده",
+      "customDelimiterPlaceholder": "| یا \\t",
+      "sort": "ترتیب",
+      "sortOption": {
+        "original": "ترتیب اصلی",
+        "asc": "الف→ی",
+        "desc": "ی→الف",
+        "byCount": "بر اساس تعداد"
+      },
+      "optCaseSensitive": "حساس به حروف بزرگ و کوچک",
+      "optTrim": "حذف فاصله‌های اضافی",
+      "optCollapse": "ادغام فاصله‌های داخلی",
+      "optIgnoreZeros": "نادیده گرفتن صفرهای پیشین",
+      "paneItems": "{n} مورد",
+      "paneSingle": "۱ مورد — جداکننده را بررسی کنید",
+      "items": "{n}",
+      "none": "هیچکدام",
+      "more": "+{n} مورد دیگر — برای مشاهده فهرست کامل کپی یا دانلود کنید",
+      "panel": {
+        "onlyInA": "فقط در A",
+        "onlyInB": "فقط در B",
+        "intersection": "اشتراک (در هر دو)",
+        "union": "اتحاد (همه موارد)",
+        "symmetricDifference": "تفاوت متقارن"
+      },
+      "summaryIdentical": "مجموعه یکسان — {n} مورد مشترک",
+      "summaryDiff": "{a} فقط در A · {b} فقط در B · {shared} مشترک",
+      "drill": {
+        "symmetricDifference": "تفاوت متقارن ({n})",
+        "duplicates": "تکراری‌ها در یک فهرست ({n})",
+        "multiplicities": "تعداد هر مورد ({n})",
+        "warnings": "اطلاعیه‌ها ({n})"
+      },
+      "duplicatesInA": "تکراری در A",
+      "duplicatesInB": "تکراری در B",
+      "colValue": "آیتم",
+      "colCountA": "در A",
+      "colCountB": "در B",
+      "detailTruncated": "شمارش آیتم‌ها کوتاه شده — برای جدول کامل، maxDetail را در API افزایش دهید.",
+      "reportTitle": "مقایسه لیست"
+    },
+    "loanAmortization": {
+      "principal": "مبلغ وام",
+      "rate": "نرخ سالانه %",
+      "term": "مدت",
+      "termUnit": "واحد مدت",
+      "unitYears": "سال",
+      "unitMonths": "ماه",
+      "startMonth": "ماه اولین پرداخت",
+      "startMonthHint": "YYYY-MM. فقط برای برچسب‌گذاری جدول است و مبلغی را تغییر نمی‌دهد.",
+      "extraHeading": "پرداخت‌های اضافی",
+      "extraMonthly": "اضافه هر ماه",
+      "extraYearly": "اضافه یک بار در سال",
+      "extraYearlyMonth": "ماه پرداخت سالانه اضافی",
+      "extraOneTime": "پرداخت یک‌باره اضافی",
+      "extraOneTimePeriod": "یک‌باره در پرداخت شماره",
+      "extraNote": "پرداخت‌های اضافی در دوره‌ای که انجام شوند، اصل بدهی را کاهش می‌دهند و در نتیجه بهره تمام دوره‌های بعدی را کم می‌کنند. نرخ بهره و مبلغ پرداخت برنامه‌ریزی‌شده تغییر نمی‌کنند.",
+      "monthlyPayment": "پرداخت ماهانه",
+      "totalInterest": "کل بهره",
+      "totalPaid": "کل پرداختی",
+      "crossover": "نقطه تعادل",
+      "crossoverValue": "قسط {n}",
+      "crossoverNone": "هرگز",
+      "payoff": "تسویه در قسط {n}",
+      "monthsSaved": "{n} ماه زودتر",
+      "totalExtra": "{amount} بیشتر از برنامه پرداخت شده",
+      "viewMonthly": "هر قسط",
+      "viewAnnual": "بر اساس سال",
+      "tableCaption": "جدول بازپرداخت: قسط، بهره، اصل و مانده هر دوره",
+      "colPeriod": "#",
+      "colDate": "ماه",
+      "colPayment": "پرداخت",
+      "colInterest": "بهره",
+      "colPrincipal": "اصل وام",
+      "colBalance": "مانده",
+      "colYear": "سال",
+      "expandRows": "نمایش همه {total} پرداخت",
+      "collapseRows": "نمایش تعداد کمتری پرداخت",
+      "windowNote": "نمایش {shown} از {total} پرداخت. فایل CSV و API همه را شامل می‌شوند.",
+      "emptyHint": "مبلغ وام، نرخ بهره و مدت را وارد کنید تا جدول اقساط را مشاهده کنید.",
+      "note": "موتور محاسباتی مشابه API. محاسبات فقط بر اساس شرایط وام شما انجام می‌شود؛ هیچ داده‌ای آپلود یا ذخیره نمی‌شود.",
+      "errPrincipal": "مبلغ وام را بیشتر از 0 وارد کنید.",
+      "errRate": "نرخ بهره را بین 0 تا 100 وارد کنید.",
+      "errTerm": "مدت زمان بین ۱ ماه تا ۱۰۰ سال وارد کنید.",
+      "errStartMonth": "از فرمت YYYY-MM استفاده کنید، مثلاً 2026-01.",
+      "errExtra": "مبلغی به اندازه ۰ یا بیشتر وارد کنید.",
+      "errOneTimePeriod": "شماره اقساطی که پرداخت یک‌باره در آن قرار می‌گیرد را وارد کنید."
+    },
+    "businessDayShift": {
+      "modeLabel": "چه چیزی محاسبه شود",
+      "mode": {
+        "shift": "تغییر یک تاریخ",
+        "countBetween": "شمارش بین تاریخ‌ها"
+      },
+      "startDate": "تاریخ شروع",
+      "days": "روزهای کاری",
+      "daysHint": "شمارش منفی به عقب می‌رود: −10 یعنی ده روز کاری قبل از تاریخ شروع.",
+      "daysInvalid": "روزهای کاری باید عدد صحیح باشد، با علامت منفی اختیاری در ابتدا.",
+      "endDate": "تاریخ پایان",
+      "includeEndDate": "تاریخ پایان را هم بشمار — این همان چیزی است که NETWORKDAYS در اکسل برمی‌گرداند",
+      "weekendLabel": "روزهای تعطیل هر هفته",
+      "weekendHint": "پیش‌فرض شنبه و یکشنبه. در جاهایی که آخر هفته جمعه و شنبه است، آن‌ها را جایگزین کنید.",
+      "weekday": {
+        "sun": "یک",
+        "mon": "دو",
+        "tue": "سه",
+        "wed": "چهار",
+        "thu": "پنج",
+        "fri": "جمعه",
+        "sat": "شنبه"
+      },
+      "holidays": "تعطیلات",
+      "holidaysHint": "اگر خالی بماند، پاسخ فقط بر اساس قانون آخر هفته محاسبه می‌شود — هیچ تقویم کشوری اعمال نمی‌شود.",
+      "makeupWorkdays": "روزهای کاری جبرانی",
+      "makeupHint": "تاریخ‌هایی که با وجود تصادف با آخر هفته یا تعطیل، کار انجام شده — شنبه‌های جبرانی/تعطیلی چین در اینجا قرار می‌گیرند.",
+      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesIgnored": "{n, plural, one {# مورد تاریخ YYYY-MM-DD نبود و استفاده نمی‌شود} other {# مورد تاریخ YYYY-MM-DD نبودند و استفاده نمی‌شوند}}",
+      "pickStart": "برای شروع یک تاریخ آغازین انتخاب کنید.",
+      "emptyHintShift": "یک تاریخ آغازین و تعداد روزهای کاری انتخاب کنید.",
+      "emptyHintCount": "یک تاریخ آغازین و یک تاریخ پایان انتخاب کنید.",
+      "note": "همان موتور API. محاسبه بر اساس مجموعه قوانین نمایش‌داده‌شده انجام می‌شود و نتیجه‌ای ذخیره نمی‌شود.",
+      "countHeadline": "{n, plural, one {# روز کاری} other {# روز کاری}}",
+      "reversedRange": "تاریخ پایان قبل از تاریخ شروع است، بنابراین تعداد منفی برمی‌گردد.",
+      "classification": {
+        "workday": "روز کاری",
+        "weekend": "آخر هفته",
+        "holiday": "تعطیل",
+        "makeupWorkday": "روز کاری جبرانی"
+      },
+      "ruleWeekend": "{days} روز تعطیل",
+      "ruleNoWeekend": "بدون روزهای تعطیل هفتگی",
+      "ruleHolidays": "{n, plural, =0 {بدون لیست تعطیلات} one {# تعطیل} other {# تعطیل}}",
+      "ruleMakeups": "{n, plural, =0 {بدون روز کاری جبرانی} one {# روز کاری جبرانی} other {# روز کاری جبرانی}}",
+      "ruleEndIncluded": "تاریخ پایان محاسبه شده است",
+      "ruleEndExcluded": "تاریخ پایان محاسبه نمی‌شود",
+      "chain": "از این تاریخ دوباره شیفت بزن"
+    },
+    "retryBackoff": {
+      "strategy": {
+        "exponential": "نمایی",
+        "linear": "خطی",
+        "fixed": "ثابت"
+      },
+      "initialDelay": "تاخیر اولیه (میلی‌ثانیه)",
+      "factor": "ضریب عقبنشینی",
+      "factorHint": "ضریب اعمال‌شده به ازای هر تلاش مجدد. باید بزرگتر از ۱ باشد.",
+      "increment": "افزایش خطی (میلی‌ثانیه)",
+      "incrementHint": "میلی‌ثانیه‌ای که در هر تلاش مجدد به تأخیر اضافه می‌شود.",
+      "maxDelay": "سقف حداکثر تأخیر (میلی‌ثانیه)",
+      "maxDelayHint": "برای بدون سقف خالی بگذارید. پس از رسیدن به سقف، تأخیرهای بعدی در همان مقدار ثابت می‌مانند.",
+      "maxAttempts": "حداکثر تلاش",
+      "maxAttemptsHint": "۱ تا ۱۰۰.",
+      "excludeInitial": "حداکثر تلاش شامل درخواست اولیه نمی‌شود",
+      "excludeInitialNote": "روشن: عدد بالا فقط تعداد تلاش‌های مجدد را می‌شمارد و درخواست اولیه جداگانه است. خاموش: همه تلاش‌ها را می‌شمارد، از جمله درخواست اولیه.",
+      "jitter": {
+        "none": "بدون — تأخیرهای دقیق",
+        "equal": "مساوی — نصف ثابت، نصف تصادفی",
+        "full": "کامل — از صفر تا تأخیر"
+      },
+      "callerTimeout": "مهلت زمانی شما (میلی‌ثانیه)",
+      "callerTimeoutHint": "اختیاری. برای رد کردن بررسی بودجه خالی بگذارید.",
+      "emptyHint": "فیلد مشخص‌شده را اصلاح کنید تا برنامه زمانی نمایش داده شود.",
+      "note": "فقط از روی سیاست محاسبه می‌شود — چیزی به هیچ سرویس بالادستی ارسال نمی‌شود. لرزش به صورت بازه‌ای گزارش می‌شود که یک کلاینت واقعی در آن قرار می‌گیرد، نه به صورت یک نمونه کشیده‌شده.",
+      "headlineExact": "{attempts} تلاش، مجموعاً {wait} انتظار.",
+      "headlineRange": "{attempts} تلاش، به‌طور متوسط {expected} انتظار، و در بدترین حالت تا {max}.",
+      "finalDelay": "آخرین انتظار، قبل از تلاش {attempt}، برابر {delay} است.",
+      "noRetries": "این بودجه یک تلاش و بدون تلاش مجدد را مجاز می‌کند، بنابراین چیزی برای انتظار وجود ندارد.",
+      "retryCount": "{count, plural, =0 {بدون تلاش مجدد} one {# تلاش مجدد} other {# تلاش مجدد}}",
+      "capFlattened": "سقف در تلاش {attempt} رسید — هر تأخیر بعدی در {delay} باقی می‌ماند.",
+      "timeoutExceeded": "بدترین حالت {wait} انتظار دارد که از بودجه {timeout} شما فراتر می‌رود.",
+      "timeoutOk": "بدترین حالت {wait} انتظار، در بودجه {timeout} شما.",
+      "tableLabel": "زمان‌بندی تلاش مجدد",
+      "colAttempt": "تلاش",
+      "colDelay": "تاخیر",
+      "colCumulative": "انتظار تجمعی",
+      "average": "میانگین {value}",
+      "formula": {
+        "none": "تاخیرها دقیق هستند — هیچ نویزی اعمال نمی‌شود.",
+        "equal": "نویز مساوی: نصف تاخیر ثابت است و نصف دیگر به‌صورت یکنواخت انتخاب می‌شود، بنابراین هر انتظار بین نصف تاخیر و تاخیر کامل قرار می‌گیرد.",
+        "full": "نویز کامل: انتظار به‌صورت یکنواخت بین صفر و تاخیر محاسبه‌شده انتخاب می‌شود."
+      },
+      "errInitialDelay": "تاخیر اولیه باید عدد صحیح میلی‌ثانیه باشد و حداقل 1.",
+      "errFactor": "ضریب باید بزرگتر از 1 و حداکثر 100 باشد. ضریب 1 استراتژی ثابت است.",
+      "errIncrement": "افزایش باید عدد صحیح میلی‌ثانیه باشد، 0 یا بیشتر.",
+      "errMaxDelay": "باید یک عدد صحیح بر حسب میلی‌ثانیه باشد، حداقل 1.",
+      "errCapBelowInitial": "باید حداقل برابر با تأخیر اولیه باشد.",
+      "errMaxAttempts": "تعداد تلاش‌ها باید عدد صحیحی بین 1 تا 100 باشد.",
+      "errCallerTimeout": "باید یک عدد صحیح بر حسب میلی‌ثانیه باشد، حداقل 1."
+    },
+    "csvColumns": {
+      "csvLabel": "CSV",
+      "csvPlaceholder": "CSV را اینجا بچسبانید یا یک فایل رها کنید — خط اول به عنوان نام ستون‌ها خوانده می‌شود",
+      "sample": "نمونه CSV",
+      "chooseFile": "انتخاب فایل",
+      "fileFailed": "نمی‌توان {name} را خواند.",
+      "delimiterLabel": "جداکننده",
+      "delimiter": {
+        "comma": "ویرگول  ,",
+        "semicolon": "نقطه‌ویرگول  ;",
+        "tab": "Tab",
+        "pipe": "Pipe  |"
+      },
+      "raggedPolicyLabel": "ردیف‌هایی که با هدر مطابقت ندارند",
+      "ragged": {
+        "pad": "هم‌تراز با هدر",
+        "truncate": "ردیف‌های بلند را کوتاه کن، ردیف‌های کوتاه را کوتاه بگذار",
+        "reject": "توقف و گزارش"
+      },
+      "columnsTitle": "ستون‌ها — {kept} از {total} حفظ شد",
+      "columnsHint": "برای حذف ستون تیک آن را بردارید، برای تغییر نام در کادر ویرایش کنید، برای تغییر ترتیب از فلش‌ها استفاده کنید. همه چیز نسبت به هدر اصلی حل می‌شود.",
+      "reset": "بازنشانی ستون‌ها",
+      "keep": "حفظ ستون {name}",
+      "renameLabel": "{name}",
+      "moveUp": "بالا بردن {name}",
+      "moveDown": "پایین آوردن {name}",
+      "noneKept": "همه ستون‌ها غیرفعال هستند — حداقل یکی را نگه دارید.",
+      "emptyHint": "یک CSV در بالا بچسبانید تا ستون‌های آن را مدیریت کنید.",
+      "note": "روی متنی که می‌چسبانید اجرا می‌شود. ابتدا رها کنید، سپس نام‌گذاری کنید و در نهایت مرتب کنید — همیشه به این ترتیب ثابت و نسبت به هدر اصلی.",
+      "columnCount": "{n} ستون",
+      "rowCount": "{n} سطر",
+      "duplicateHeaders": "هدر تکراری با نام استفاده شده: {names}",
+      "raggedCount": "{n}{more} سطر با عرض هدر مطابقت ندارند",
+      "previewLabel": "خروجی CSV",
+      "previewTruncated": "نمایش {shown} خط اول از {total} خط. برای کل فایل کپی یا دانلود کنید.",
+      "raggedListLabel": "سطرهای مطابقت‌ندار با عرض هدر",
+      "raggedRow": "خط {line}: {actual} فیلد، هدر {expected} فیلد دارد",
+      "unusedRenames": "تغییر نام نادیده گرفته شد — این ستون‌ها در خروجی نیستند: {names}"
+    },
+    "imageRotateFlip": {
+      "drop": "تصویر را رها کنید یا برای جستجو کلیک کنید",
+      "browse": "انتخاب تصویر",
+      "selected": "{name} · {kb} کیلوبایت",
+      "privacy": "فایل برای انجام تبدیل به API Forge ارسال می‌شود و هرگز ذخیره نمی‌گردد.",
+      "tooLarge": "این تصویر بزرگ‌تر از {mb} مگابایت است.",
+      "ccw": "۹۰° چپ",
+      "cw": "۹۰° راست",
+      "half": "180°",
+      "reset": "بازنشانی",
+      "flipHorizontal": "وارونه افقی",
+      "flipVertical": "وارونه عمودی",
+      "angle": "زاویه",
+      "exactAngle": "زاویه دقیق °",
+      "fitMode": "حالت تناسب",
+      "fitExpand": "گسترش بوم",
+      "fitCrop": "برش برای پر کردن",
+      "fitInside": "تناسب درون کادر",
+      "fitNote": "پس از چرخش یک‌چهارم دور، تصویر دیگر در قاب قبلی‌اش جا نمی‌شود: گسترش تمام پیکسل‌ها را حفظ می‌کند، برش اندازه اصلی را نگه می‌دارد و گوشه‌ها را می‌برد، تناسب کل تصویر را کوچک می‌کند.",
+      "outputFormat": "فرمت خروجی",
+      "sameFormat": "همانند ورودی",
+      "idle": "یک تصویر رها کنید تا چرخش آن را ببینید.",
+      "original": "اصلی · {w}×{h}",
+      "originalAlt": "تصویر همان‌طور که آپلود شده",
+      "result": "نتیجه · {w}×{h}",
+      "resultAlt": "تصویر چرخش‌یافته",
+      "badgeLossless": "بدون نمونه‌برداری مجدد",
+      "badgeResampled": "نمونه‌برداری مجدد شده",
+      "badgeSize": "{kb} کیلوبایت",
+      "badgeExif": "جهت‌گیری EXIF {orientation} ابتدا اعمال شد",
+      "badgeSnapped": "به چرخش دقیق یک‌چهارم گردش چفت شد",
+      "badgeReencode": "هندسه دقیق است؛ کدک دوباره رمزگذاری می‌کند",
+      "download": "دانلود",
+      "note": "چرخش‌های ۹۰°، ۱۸۰° و ۲۷۰° پیکسل‌ها را بدون ترکیب جابه‌جا می‌کنند. هر زاویه دیگری نمونه‌برداری مجدد انجام می‌دهد. انیمیشن GIF، APNG و WebP متحرک هنوز پشتیبانی نمی‌شوند."
+    },
+    "exifStrip": {
+      "drop": "یک JPEG، PNG یا WebP را رها کنید تا فراداده‌های آن حذف شود",
+      "privacy": "روی سرورهای ما پردازش می‌شود و هرگز ذخیره نمی‌شود. تا {mb} مگابایت به ازای هر تصویر.",
+      "idle": "حذف شده: GPS، زمان ثبت، اطلاعات دوربین و دستگاه، تصویر بندانگشتی تعبیه‌شده، تاریخچه ویرایش. نگه‌داشته شده: جهت‌گیری، پروفایل رنگی، ابعاد، داده‌های پیکسل.",
+      "note": "فقط تصاویر ثابت. ویدئو، PDF، HEIC، AVIF و GIF خارج از محدوده هستند و مانیفست‌های منشأ C2PA دست‌نخورده باقی می‌مانند.",
+      "detail": "چه مواردی حذف شد",
+      "optKeepThumbnail": "نگه‌داشتن تصویر بندانگشتی جاسازی‌شده در Exif",
+      "verdictStripped": "{fields} فیلد متادیتا حذف شد ({kb} کیلوبایت)",
+      "verdictClean": "این فایل فاقد متادیتای قابل حذف است",
+      "strippedCaveat": "خود تصویر تغییری نکرده است — همان پیکسل‌ها، همان ابعاد، بدون رمزگذاری مجدد.",
+      "cleanCaveat": "دقیقاً بایت‌به‌بایت همان‌طور که رسید بازگردانده شد.",
+      "badgeOrientationKept": "جهت تصویر حفظ شد",
+      "badgeOrientationLost": "جهت تصویر قابل انتقال نبود",
+      "badgeColorProfileKept": "پروفایل رنگی حفظ شد",
+      "badgeThumbnailKept": "تصویر بندانگشتی حفظ شد",
+      "badgeThumbnailRemoved": "تصویر بندانگشتی حذف شد",
+      "download": "دانلود تصویر پاک‌شده",
+      "sizes": "{before} KB → {after} KB",
+      "detailFields": "{fields} فیلد · {kb} KB",
+      "detailNothing": "هیچ چیزی از این فایل حذف نشد.",
+      "detailOrientation": "جهت‌گیری Exif {value} از فایل خوانده شد و منتقل گردید.",
+      "detailNoOrientation": "فایل هیچ جهت‌گیری Exif اعلام نکرده، بنابراین نمایش تغییری نمی‌کند.",
+      "segmentExif": "Exif",
+      "segmentIptc": "IPTC",
+      "segmentXmp": "XMP",
+      "segmentComment": "توضیح",
+      "segmentText": "متادیتای متنی",
+      "segmentTime": "تاریخ و ساعت",
+      "segmentVendor": "بلوک سازنده",
+      "summaryStripped": "{fields} فیلد متادیتا ({families}) حذف شد، {kb} کیلوبایت. تصویر در غیر این صورت بدون تغییر.",
+      "summaryClean": "هیچ متادیتای قابل حذفی یافت نشد. فایل بدون تغییر برگردانده شد."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "이름 / 호스트",
+      "type": "레코드 유형",
+      "note": "Forge 호스트 DNS로 해석합니다."
+    },
+    "tls": {
+      "host": "호스트",
+      "expired": "인증서 만료",
+      "validDays": "{n}일 남음",
+      "note": "Forge 호스트에서 연결. 검사용으로 신뢰 검증 완화."
+    },
+    "myIp": {
+      "refresh": "새로고침",
+      "note": "Forge가 본 IP. 라이선스 geo 없음."
+    },
+    "mermaid": {
+      "source": "Mermaid source",
+      "idle": "Valid diagrams render here",
+      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
+      "sample": "Sample",
+      "theme": "Theme",
+      "theme_default": "Default",
+      "theme_dark": "Dark",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "Flowchart",
+      "sample_sequence": "Sequence",
+      "sample_class": "Class",
+      "sample_er": "ER diagram",
+      "sample_state": "State",
+      "sample_gantt": "Gantt",
+      "sample_pie": "Pie",
+      "sample_mindmap": "Mindmap",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "zoomReset": "Reset view",
+      "copySvg": "Copy SVG",
+      "downloadSvg": "Download SVG",
+      "downloadPng": "Download PNG",
+      "previewAria": "Mermaid diagram preview",
+      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
+    },
+    "colorDeltaE": {
+      "note": "culori CIEDE2000. 임계값은 UI 리뷰용."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL 방언",
+      "parseNote": "파싱/목록만. ERD는 별도.",
+      "convertNote": "@dbml/core — API와 동일 경로."
+    },
+    "dnsLeak": {
+      "probeHost": "Compare host (advanced)",
+      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
+      "run": "Start DNS leak check",
+      "retest": "Run again",
+      "showAdvanced": "Advanced options",
+      "hideAdvanced": "Hide advanced",
+      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
+      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
+      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
+      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
+      "edgeIp": "Your edge IP",
+      "authorityHits": "Recursive IPs",
+      "forgePaths": "Forge resolver hits",
+      "dohPaths": "Browser DoH hits",
+      "webrtcCount": "WebRTC IPs",
+      "forgeResolvers": "Forge multi-resolver (server-side)",
+      "forgeNote": "These queries leave from the Forge host — not your laptop.",
+      "browserDoh": "Browser DoH",
+      "webrtc": "WebRTC ICE",
+      "egressMarkers": "Forge egress markers",
+      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
+      "honestyPrefix": "Honesty:",
+      "verdictConsistent": "Paths look consistent on this check",
+      "verdictSplit": "Split answers across DNS paths",
+      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
+      "verdictIncomplete": "Incomplete — browser probes missing",
+      "verdictAuthority": "System DNS recursives captured",
+      "infraOn": "Authority online",
+      "infraOff": "Authority offline — multi-path only",
+      "infraChecking": "Checking…",
+      "authorityResolvers": "System DNS recursive resolvers",
+      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
+      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
+      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
+      "authorityDetail": "Authority session detail",
+      "phaseSession": "Creating session…",
+      "phaseSystemDns": "Triggering system DNS…",
+      "phasePoll": "Listening for recursive hits ({n}/{total})…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "stepSession": "Session",
+      "stepSystemDns": "System DNS",
+      "stepPoll": "Listen",
+      "stepBrowser": "Browser",
+      "stepServer": "Server",
+      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
+      "liveHits": "Live recursive hits",
+      "sectionSystemDns": "System DNS (what you came for)",
+      "sectionComplementary": "Complementary paths",
+      "sectionTech": "Technical session detail",
+      "copyIps": "Copy IPs",
+      "copied": "Copied",
+      "queryCount": "{n} queries",
+      "colPath": "Path",
+      "colAnswers": "Answers",
+      "colMs": "ms",
+      "ipPublic": "public",
+      "ipPrivate": "private",
+      "sig": {
+        "captured": "System DNS captured",
+        "onlineNoHits": "Authority online · no hits yet",
+        "offline": "Authority offline",
+        "forgeSplit": "Forge resolvers disagree",
+        "dohSplit": "Browser DoH disagree",
+        "webrtcMismatch": "WebRTC ≠ edge IP",
+        "webrtcLocal": "Local WebRTC candidates",
+        "noBrowser": "No browser probes"
+      }
+    },
+    "honesty": {
+      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
+      "signatureNotVerified": "{engine} · decode only · signature not verified",
+      "localOnly": "Processed for this request · not stored as a card or credential"
+    },
+    "idCard": {
+      "number": "Resident ID number",
+      "note": "GB 11643 check digit · no household registry lookup · same path as API",
+      "specimenTitle": "Resident ID · structure specimen",
+      "segRegion": "Region",
+      "segBirth": "Birth",
+      "segSeq": "Seq",
+      "segCheck": "Check",
+      "metaBirth": "Birth",
+      "metaGender": "Gender",
+      "metaRegion": "Region code",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "reasonFormat": "Format should be 18 characters (last may be X)",
+      "reasonBirth": "Birth date segment is invalid",
+      "reasonCheck": "Check digit is wrong",
+      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} lines",
+      "chars": "{n} chars",
+      "empty": "(empty file)",
+      "readyToShip": "Ready to drop into the repo"
+    },
+    "textTransform": {
+      "mode": "Mode",
+      "input": "Input",
+      "output": "Output",
+      "emptyResult": "Result appears here",
+      "runLocal": "Run locally",
+      "runServer": "Run on server",
+      "statusLocalLive": "Local · live",
+      "statusLocal": "Local",
+      "statusServer": "Server · same path as API",
+      "noteDefault": "Same path as API"
+    }
+  },
+  "roots": {
+    "hubLabel": "بر اساس قصد",
+    "tools": "ابزارها",
+    "dualSurface": "صفحه انسانی + API عامل · موتور مشترک",
+    "otherRoots": "ریشه‌های تقاضای دیگر"
+  }
+}

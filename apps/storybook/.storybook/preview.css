@@ -1,0 +1,39 @@
+/**
+ * Storybook global stylesheet.
+ *
+ * Mirrors apps/web/src/app/globals.css:
+ *   1. Tailwind CSS v4 (must be first)
+ *   2. @nebutra/tokens runtime CSS variables (SSOT)
+ *   3. @nebutra/ui font typography variables
+ *
+ * @source directives tell Tailwind v4 which files to scan for class names —
+ * the design system source, local story files, and cross-imported apps/web.
+ */
+
+@import "tailwindcss";
+
+@custom-variant hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
+}
+
+@import "@nebutra/tokens/styles.css";
+@import "@nebutra/ui/typography/fonts.css";
+
+/* Tailwind v4 auto-scans files reached via the module graph, but tsup-built
+ * @nebutra/ui dist files are pre-bundled and won't be reached during dev.
+ * Point @source at the *source* tree where authoring happens. Each glob is
+ * narrow on purpose — broad globs (e.g. apps/web/**) hang the dev server. */
+@source "../../../packages/design/ui/src/**/*.{ts,tsx}";
+@source "../src/**/*.{ts,tsx}";
+/* Stories of apps/web components (reached through the `@/` alias) were styled
+ * only by the classes those two globs happened to also produce. A class unique
+ * to an apps/web file — `xl:grid-cols-[360px_minmax(0,1fr)]` on the Startup OS
+ * workspace — simply had no rule, so the story rendered a two-column shell as
+ * one stacked column and looked broken for a reason that was not in the
+ * component. Scoped to src/components, not apps/web/**, which does hang the
+ * dev server. */
+@source "../../web/src/components/**/*.{ts,tsx}";

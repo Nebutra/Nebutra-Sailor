@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip-side-right-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/tooltip-side-right-demo.tsx",
+      "content": "\"use client\";\nimport { Button, GeistTooltip as Tooltip } from \"@nebutra/ui/primitives\";\n\nexport function TooltipSideRightDemo() {\n  return (\n    <div className=\"p-8 flex items-center justify-center\">\n      <Tooltip position=\"right\" text=\"The Evil Rabbit Jumped over the Fence\">\n        <Button variant=\"outline\">Right</Button>\n      </Tooltip>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

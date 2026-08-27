@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "heading-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/heading-demo.tsx",
+      "content": "import { Heading } from \"@nebutra/ui/primitives\";\n\nexport function HeadingDemo() {\n  return (\n    <div className=\"gap-4 flex flex-col\">\n      <Heading level={1}>Heading 1 — The quick brown fox jumps</Heading>\n      <Heading level={2}>Heading 2 — The quick brown fox jumps</Heading>\n      <Heading level={3}>Heading 3 — The quick brown fox jumps</Heading>\n      <Heading level={4}>Heading 4 — The quick brown fox jumps</Heading>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

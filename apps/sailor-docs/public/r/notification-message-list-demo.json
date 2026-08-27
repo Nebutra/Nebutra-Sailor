@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "notification-message-list-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/notification-message-list-demo.tsx",
+      "content": "import type { NotificationMessage } from \"@nebutra/ui/primitives\";\nimport { NotificationMessageList } from \"@nebutra/ui/primitives\";\n\nconst messages: NotificationMessage[] = [\n  {\n    title: \"New deployment\",\n    time: \"2m ago\",\n    content: \"Production deploy succeeded in 42s\",\n    gradientColor: \"from-green-400 to-emerald-600\",\n  },\n  {\n    title: \"Security alert\",\n    time: \"15m ago\",\n    content: \"New login from Berlin, Germany\",\n    gradientColor: \"from-red-400 to-pink-600\",\n  },\n  {\n    title: \"Usage limit\",\n    time: \"1h ago\",\n    content: \"You've used 80% of your monthly API quota\",\n    gradientColor: \"from-amber-400 to-orange-500\",\n  },\n];\n\nexport function NotificationMessageListDemo() {\n  return (\n    <div className=\"max-w-md px-4 py-8 w-full\">\n      <NotificationMessageList messages={messages} />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

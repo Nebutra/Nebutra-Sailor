@@ -1,0 +1,173 @@
+/**
+ * Brand carrier skin: GSAP (gsap) v1.0.0
+ * darkDefault=true dualMode=false button=gradient-stroke
+ * fonts=0 mode=global
+ * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
+ */
+
+:root,
+.dark,
+html[data-brand="gsap"] {
+  /* ── Color roles (carrier) ── */
+  --role-canvas: 150 7% 6%;
+  --role-canvas-fg: 54 100% 94%;
+  --role-surface: 0 0% 10%;
+  --role-surface-fg: 54 100% 94%;
+  --role-action: 137 92% 47%;
+  --role-action-fg: 150 7% 6%;
+  --role-quiet: 70 5% 25%;
+  --role-quiet-fg: 54 100% 94%;
+  --role-muted: 0 0% 10%;
+  --role-muted-fg: 60 6% 46%;
+  --role-border: 70 5% 25%;
+  --role-input: 70 5% 25%;
+  --role-ring: 137 92% 47%;
+
+  /* ── shadcn bridge (primary = action CTA) ── */
+  --background: 150 7% 6%;
+  --foreground: 54 100% 94%;
+  --card: 0 0% 10%;
+  --card-foreground: 54 100% 94%;
+  --popover: 0 0% 10%;
+  --popover-foreground: 54 100% 94%;
+  --primary: 137 92% 47%;
+  --primary-foreground: 150 7% 6%;
+  --secondary: 70 5% 25%;
+  --secondary-foreground: 54 100% 94%;
+  --muted: 0 0% 10%;
+  --muted-foreground: 60 6% 46%;
+  --accent: 70 5% 25%;
+  --accent-foreground: 54 100% 94%;
+  --destructive: 309 100% 47%;
+  --destructive-foreground: 54 100% 94%;
+  --border: 70 5% 25%;
+  --input: 70 5% 25%;
+  --ring: 137 92% 47%;
+  --success: 137 92% 47%;
+  --success-foreground: 150 7% 6%;
+  --info: 191 100% 44%;
+  --info-foreground: 150 7% 6%;
+  --sidebar: 0 0% 10%;
+  --sidebar-foreground: 54 100% 94%;
+  --sidebar-primary: 137 92% 47%;
+  --sidebar-primary-foreground: 150 7% 6%;
+  --sidebar-accent: 70 5% 25%;
+  --sidebar-accent-foreground: 54 100% 94%;
+  --sidebar-border: 70 5% 25%;
+  --sidebar-ring: 137 92% 47%;
+  --brand-primary: hsl(137 92% 47%);
+  --brand-accent: hsl(137 92% 47%);
+  --brand-accent-foreground: hsl(150 7% 6%);
+  --brand-tertiary: hsl(137 92% 47%);
+  --brand-gradient: hsl(var(--primary));
+  --brand-gradient-reverse: hsl(var(--primary));
+  --brand-gradient-vertical: hsl(var(--primary));
+  --brand-gradient-radial: hsl(var(--primary));
+
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(150 7% 6%);
+  --neutral-2: hsl(0 0% 10%);
+  --neutral-3: color-mix(in oklab, hsl(70 5% 25%) 20%, hsl(0 0% 10%));
+  --neutral-4: color-mix(in oklab, hsl(70 5% 25%) 40%, hsl(0 0% 10%));
+  --neutral-5: color-mix(in oklab, hsl(70 5% 25%) 60%, hsl(0 0% 10%));
+  --neutral-6: color-mix(in oklab, hsl(70 5% 25%) 80%, hsl(0 0% 10%));
+  --neutral-7: hsl(70 5% 25%);
+  --neutral-8: color-mix(in oklab, hsl(60 6% 46%) 25%, hsl(70 5% 25%));
+  --neutral-9: color-mix(in oklab, hsl(60 6% 46%) 50%, hsl(70 5% 25%));
+  --neutral-10: color-mix(in oklab, hsl(60 6% 46%) 75%, hsl(70 5% 25%));
+  --neutral-11: hsl(60 6% 46%);
+  --neutral-12: hsl(54 100% 94%);
+
+  /* Recipe (action language + free elev/radii) */
+  /* Shape slots */
+  --btn-default-radius: 100px;
+  --radius-button: 100px;
+  --radius-buttons: 100px;
+  --radius-md: min(100px, 8px);
+  --radius-card: 8px;
+  --radius-lg: 8px;
+  --radius-badge: 9999px;
+  --badge-default-radius: 9999px;
+  --radius-inputs: 100px;
+  --input-radius: 100px;
+  --radius-pill: 9999px;
+
+  /* Free elevation (carrier-provided CSS shadows) */
+  --elevation-card: 0 0 #0000;
+  --elevation-control: 0 0 #0000;
+  --elevation-raised: 0 0 #0000;
+  --elevation-xs: 0 0 #0000;
+  --elevation-sm: 0 0 #0000;
+  --elevation-md: 0 0 #0000;
+  --elevation-lg: 0 0 #0000;
+  --btn-default-shadow: 0 0 #0000;
+  --btn-default-bg: transparent;
+  --btn-default-fg: hsl(var(--foreground));
+  --btn-default-border-width: 1.5px;
+  --btn-default-border: transparent;
+  --btn-default-stroke-gradient: linear-gradient(114.41deg, #0ae448 20.74%, #abff84 65.5%);
+  --btn-default-hover-bg: hsl(var(--primary) / 0.08);
+  --badge-default-bg: transparent;
+  --badge-default-fg: hsl(var(--foreground));
+  --badge-default-border: #fffce1;
+  --badge-default-hover-bg: hsl(var(--foreground) / 0.06);
+  --btn-default-padding-y: 0.5rem;
+  --btn-default-padding-x: 0.875rem;
+  --control-height-tiny: 1.25rem;
+  --control-height-sm: 1.75rem;
+  --control-height-md: 2rem;
+  --control-height-lg: 2.5rem;
+  --control-height-icon-sm: 1.5rem;
+  --control-height-icon-md: 1.75rem;
+  --control-height-icon-lg: 2rem;
+  --control-font-size-md: 0.8125rem;
+
+  /* Typography */
+  --font-sans:
+    var(--font-reg-inter-tight), "Mori", "Inter Tight", "DM Sans",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-cn:
+    var(--font-reg-inter-tight), "Mori", "Inter Tight", "DM Sans",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-heading:
+    var(--font-reg-inter-tight), "Mori", "Inter Tight", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    var(--font-reg-inter-tight), "Mori", "Inter Tight", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-weight-heading: 600;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --motion-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --motion-ease-spring: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --duration-micro: 120ms;
+  --motion-duration-micro: 120ms;
+  --duration-flow: 250ms;
+  --motion-duration-flow: 250ms;
+  --duration-reveal: 400ms;
+  --motion-duration-reveal: 400ms;
+  --duration-cinematic: 700ms;
+  --motion-duration-cinematic: 700ms;
+
+  /* Spacing */
+  --space-source-xs: 0.5rem;
+  --space-source-sm: 0.875rem;
+  --space-source-md: 1.25rem;
+  --space-source-lg: 1.75rem;
+  --space-source-xl: 2.5rem;
+  --space-source-2xl: 3.5rem;
+
+  /* Taxonomy / decorative (not product CTA) */
+  --brand-category-gsap: #0ae448;
+  --brand-category-scroll: #fec5fb;
+  --brand-category-svg: #ff8709;
+  --brand-category-text: #9d95ff;
+  --brand-category-ui: #00bae2;
+  --brand-category-other: #abff84;
+}

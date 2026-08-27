@@ -1,0 +1,1273 @@
+{
+  "admin": {
+    "title": "ผู้ดูแลระบบ",
+    "description": "แผงควบคุมผู้ดูแลระบบหลัก — จัดการผู้ใช้ องค์กร และสถานะระบบ",
+    "nav": {
+      "overview": "ภาพรวม",
+      "users": "ผู้ใช้",
+      "organizations": "องค์กร"
+    },
+    "users": {
+      "title": "ผู้ใช้",
+      "description": "เรียกดู ค้นหา และสวมบทบาทผู้ใช้คนใดก็ได้ในทุกองค์กร",
+      "searchPlaceholder": "ค้นหาผู้ใช้…",
+      "totalCount": "{count, plural, one {ผู้ใช้ # คน} other {ผู้ใช้ # คน}}",
+      "empty": "ไม่พบผู้ใช้",
+      "loadError": "ไม่สามารถโหลดผู้ใช้ได้",
+      "columns": {
+        "email": "อีเมล",
+        "name": "ชื่อ",
+        "created": "สร้างเมื่อ",
+        "activeOrgs": "องค์กรที่ใช้งาน",
+        "actions": "การดำเนินการ"
+      },
+      "viewOrgs": "ดูองค์กร"
+    },
+    "organizations": {
+      "title": "องค์กร",
+      "description": "พื้นที่ทำงานทั้งหมดในระบบ เรียงตามความล่าสุด",
+      "searchPlaceholder": "ค้นหาองค์กร…",
+      "totalCount": "{count, plural, one {# องค์กร} other {# องค์กร}}",
+      "empty": "ไม่พบองค์กร",
+      "loadError": "โหลดองค์กรไม่สำเร็จ",
+      "columns": {
+        "name": "ชื่อ",
+        "slug": "Slug",
+        "plan": "แผน",
+        "members": "สมาชิก",
+        "created": "สร้างเมื่อ",
+        "actions": "การดำเนินการ"
+      },
+      "view": "ดู"
+    },
+    "impersonate": {
+      "trigger": "สวมบทบาท",
+      "starting": "กำลังเริ่มต้น…",
+      "stop": "หยุดการสวมบทบาท",
+      "confirm": "สวมบทบาทเป็น {label} ใช่หรือไม่ คุณจะเห็นแอปในมุมมองของผู้ใช้รายนี้จนกว่าคุณจะหยุด",
+      "error": "เริ่มการสวมบทบาทไม่สำเร็จ",
+      "stopError": "หยุดการสวมบทบาทไม่สำเร็จ"
+    },
+    "pagination": {
+      "previous": "ก่อนหน้า",
+      "next": "ถัดไป",
+      "pageOf": "หน้า {page} จาก {total}"
+    }
+  },
+  "Common": {
+    "hello": "สวัสดีชาวโลก",
+    "dashboard": "แดชบอร์ด",
+    "actions": {
+      "continue": "ดำเนินการต่อ",
+      "confirm": "ยืนยัน",
+      "done": "เสร็จสิ้น",
+      "cancel": "ยกเลิก"
+    }
+  },
+  "theme": {
+    "light": "สว่าง",
+    "dark": "มืด",
+    "system": "ตามระบบ"
+  },
+  "LocaleSwitcher": {
+    "label": "ภาษา",
+    "ariaLabel": "เปลี่ยนภาษา",
+    "searchPlaceholder": "ค้นหาภาษา…",
+    "noResults": "ไม่พบภาษาที่ตรงกัน",
+    "menuAria": "เลือกภาษา"
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "หมายเลขจดทะเบียน ICP",
+      "publicSecurity": "การจดทะเบียนความมั่นคงสาธารณะ"
+    },
+    "wechat": {
+      "signIn": "เข้าสู่ระบบด้วย WeChat",
+      "notConfigured": "ยังไม่มีการตั้งค่าการเข้าสู่ระบบ WeChat"
+    }
+  },
+  "onboarding": {
+    "title": "ตั้งค่าพื้นที่ทำงานของคุณ",
+    "subtitle": "สามขั้นตอนง่ายๆ ก็พร้อมใช้งาน",
+    "steps": {
+      "workspace": "พื้นที่ทำงาน",
+      "invite": "เชิญทีม",
+      "plan": "เลือกแพ็กเกจ"
+    },
+    "progress": {
+      "back": "ย้อนกลับ",
+      "stepCounter": "ขั้นตอนที่ {current} จาก {total}"
+    },
+    "plan": {
+      "title": "เลือกแพ็กเกจ",
+      "description": "เริ่มต้นฟรีหรือปลดล็อกความจุเพิ่มเติม คุณสามารถเปลี่ยนแพ็กเกจได้ตลอดเวลา",
+      "choose": "เลือกแพ็กเกจ",
+      "skip": "ข้ามไปก่อน"
+    }
+  },
+  "userMenu": {
+    "ariaLabel": "เปิดเมนูผู้ใช้",
+    "profile": "โปรไฟล์",
+    "settings": "การตั้งค่า",
+    "feedback": "ข้อเสนอแนะ",
+    "theme": "ธีม",
+    "language": "ภาษา",
+    "signOut": "ออกจากระบบ",
+    "signedInAs": "เข้าสู่ระบบในฐานะ"
+  },
+  "account": {
+    "profile": {
+      "title": "โปรไฟล์",
+      "description": "อัปเดตข้อมูลส่วนบุคคลของคุณ",
+      "nameLabel": "ชื่อ",
+      "namePlaceholder": "ชื่อเต็มของคุณ",
+      "emailLabel": "อีเมล",
+      "emailHint": "เราจะส่งลิงก์ยืนยันเพื่อตรวจสอบที่อยู่อีเมลใหม่",
+      "languageLabel": "ภาษา",
+      "submit": "บันทึกการเปลี่ยนแปลง",
+      "saving": "กำลังบันทึก…",
+      "verifyEmail": "ยืนยัน",
+      "verifying": "กำลังส่งการยืนยัน…",
+      "success": "อัปเดตโปรไฟล์แล้ว",
+      "verificationSent": "ส่งอีเมลยืนยันแล้ว",
+      "errorRequiredName": "จำเป็นต้องระบุชื่อ",
+      "errorInvalidEmail": "ที่อยู่อีเมลไม่ถูกต้อง",
+      "subtitle": "ข้อมูลตัวตนและการติดต่อของคุณ",
+      "unknown": "ผู้ใช้ไม่มีชื่อ",
+      "manageCta": "เปิดการตั้งค่าบัญชีทั้งหมด"
+    },
+    "avatar": {
+      "title": "รูปโปรไฟล์",
+      "description": "อัปโหลดรูปภาพสี่เหลี่ยมจัตุรัส (PNG, JPEG หรือ WebP ขนาดสูงสุด 2MB)",
+      "uploadButton": "อัปโหลดรูปโปรไฟล์",
+      "uploading": "กำลังอัปโหลด…",
+      "fileTooBig": "ไฟล์มีขนาดใหญ่เกินไป ขนาดสูงสุดคือ 2MB",
+      "invalidType": "ไม่รองรับประเภทรูปภาพนี้ ใช้ PNG, JPEG หรือ WebP",
+      "success": "อัปเดตรูปโปรไฟล์แล้ว",
+      "removeButton": "ลบรูปโปรไฟล์",
+      "removed": "ลบรูปโปรไฟล์แล้ว",
+      "deleteError": "ลบรูปโปรไฟล์ไม่สำเร็จ"
+    },
+    "export": {
+      "title": "ส่งออกข้อมูลของฉัน",
+      "description": "ดาวน์โหลดสำเนาของทุกบันทึกที่เราเก็บไว้สำหรับบัญชีของคุณ รวมถึงโปรไฟล์ องค์กร เหตุการณ์การตรวจสอบ การแจ้งเตือน และคำเชิญ",
+      "compliance": "ตามข้อกำหนด GDPR Article 20 (สิทธิในการพกพาข้อมูล) และ PIPL Article 45 (สิทธิในการรับสำเนาข้อมูลส่วนบุคคล)",
+      "export": "ส่งออกข้อมูลของฉัน",
+      "pending": "กำลังเตรียมการส่งออก…",
+      "ready": "การส่งออกของคุณพร้อมแล้ว",
+      "download": "ดาวน์โหลด JSON",
+      "error": "ไม่สามารถเตรียมการส่งออกของคุณได้ โปรดลองอีกครั้ง"
+    },
+    "emailChange": {
+      "title": "เปลี่ยนที่อยู่อีเมล",
+      "description": "เราจะส่งลิงก์ยืนยันไปยังที่อยู่อีเมลใหม่ การเปลี่ยนแปลงจะมีผลเมื่อคุณยืนยันจากกล่องจดหมายนั้น",
+      "newEmailLabel": "ที่อยู่อีเมลใหม่",
+      "newEmailPlaceholder": "you@example.com",
+      "submit": "ส่งลิงก์ยืนยัน",
+      "submitting": "กำลังส่ง…",
+      "verificationSent": "ตรวจสอบกล่องจดหมายของคุณที่ {email} เพื่อยืนยันการเปลี่ยนแปลง",
+      "errorInvalidEmail": "ที่อยู่อีเมลไม่ถูกต้อง",
+      "error": "ไม่สามารถร้องขอการเปลี่ยนอีเมลได้",
+      "confirm": {
+        "successTitle": "อัปเดตอีเมลแล้ว",
+        "successDescription": "อีเมลสำหรับเข้าสู่ระบบของคุณได้รับการอัปเดตแล้ว",
+        "successWithEmail": "อีเมลสำหรับเข้าสู่ระบบของคุณคือ {email}",
+        "failureTitle": "เราไม่สามารถยืนยันลิงก์นั้นได้",
+        "failureDescription": "ลิงก์ยืนยันนี้ไม่ถูกต้อง หมดอายุ หรือถูกใช้งานแล้ว กรุณาขอลิงก์ใหม่จากตั้งค่าบัญชีของคุณ",
+        "errorCode": "เหตุผล: {code}",
+        "continueCta": "กลับไปยังบัญชี",
+        "backCta": "กลับไปยังบัญชี"
+      }
+    },
+    "title": "บัญชี",
+    "ariaLabel": "ตั้งค่าบัญชี",
+    "navLabel": "แท็บตั้งค่าบัญชี",
+    "tip": "กด {key} ที่ใดก็ได้เพื่อเปิดกล่องโต้ตอบนี้ใหม่",
+    "tabs": {
+      "profile": "โปรไฟล์",
+      "subscription": "การสมัครสมาชิก",
+      "billing": "การเรียกเก็บเงิน",
+      "preferences": "การตั้งค่า",
+      "personalization": "การปรับแต่ง"
+    },
+    "subscription": {
+      "title": "การสมัครสมาชิก",
+      "subtitle": "แผน โควตา และการต่ออายุ",
+      "currentPlan": "แผนปัจจุบัน",
+      "upgradeCta": "เปรียบเทียบแพ็กเกจ",
+      "manageCta": "จัดการการสมัคร"
+    },
+    "billing": {
+      "title": "การเรียกเก็บเงิน",
+      "subtitle": "ประวัติใบแจ้งหนี้และวิธีการชำระเงิน",
+      "empty": {
+        "title": "ยังไม่มีประวัติ",
+        "description": "ค่าใช้จ่ายและใบแจ้งหนี้จะปรากฏที่นี่หลังจากช่วงการชำระเงินครั้งแรกของคุณ",
+        "cta": "เปิดการเรียกเก็บเงินแบบเต็ม"
+      }
+    },
+    "preferences": {
+      "title": "การตั้งค่า",
+      "subtitle": "ธีมและการเข้าถึง",
+      "theme": "ธีม",
+      "light": "สว่าง",
+      "dark": "มืด",
+      "system": "ระบบ",
+      "help": "ช่วยเหลือ",
+      "reportIssue": "รายงานปัญหา",
+      "shortcuts": "ปุ่มลัดบนแป้นพิมพ์"
+    },
+    "personalization": {
+      "title": "การปรับแต่ง",
+      "subtitle": "บอก Sailor ว่าเธอเป็นใครและต้องการให้ตอบกลับอย่างไร"
+    }
+  },
+  "impact": {
+    "hero_title": "นิยามใหม่แห่งมาตรฐาน",
+    "hero_subtitle": "ให้ไม่มีธุรกิจใดในโลกนี้ยากลำบาก",
+    "social_title": "สังคม",
+    "social_headline": "ความเท่าเทียมทางเทคโนโลยีอย่างแท้จริง",
+    "social_description": "เสริมพลังผู้บุกเบิกแนวหน้า ทลายตัวกรองแบบเดิม และมอบโครงสร้างพื้นฐานที่คิดนอกกรอบให้ผู้ก่อตั้งเดี่ยว",
+    "governance_title": "ธรรมาภิบาล",
+    "governance_headline": "โค้ดคือกฎหมาย",
+    "governance_description": "ธรรมาภิบาลเชิงอัลกอริทึมที่สร้างบน Proof of Work และผลลัพธ์ทางธุรกิจจริง แทนที่ระบบราชการที่คลุมเครือ",
+    "environment_title": "สิ่งแวดล้อม",
+    "environment_headline": "ความเรียบง่ายดิจิทัล",
+    "environment_description": "ขับเคลื่อนการลดรอยเท้าบนคลาวด์ผ่านการผสาน SaaS อย่างสุดขั้วและประสิทธิภาพการใช้ทรัพยากร"
+  },
+  "auth": {
+    "security": {
+      "title": "ความปลอดภัย",
+      "description": "จัดการรหัสผ่าน การยืนยันตัวตนหลายปัจจัย และเซสชันที่ใช้งานอยู่",
+      "managedByProvider": "การตั้งค่าความปลอดภัยถูกจัดการโดยผู้ให้บริการการยืนยันตัวตนของคุณ",
+      "openProviderProfile": "เปิดโปรไฟล์",
+      "changePassword": {
+        "title": "เปลี่ยนรหัสผ่าน",
+        "description": "ใช้รหัสผ่านที่แข็งแรงและไม่ใช้ซ้ำกับเว็บไซต์อื่น",
+        "currentPasswordLabel": "รหัสผ่านปัจจุบัน",
+        "newPasswordLabel": "รหัสผ่านใหม่",
+        "confirmPasswordLabel": "ยืนยันรหัสผ่านใหม่",
+        "revokeOtherSessions": "ออกจากระบบบนอุปกรณ์อื่น",
+        "submit": "อัปเดตรหัสผ่าน",
+        "pending": "กำลังอัปเดตรหัสผ่าน…",
+        "success": "อัปเดตรหัสผ่านเรียบร้อยแล้ว"
+      },
+      "twoFactor": {
+        "title": "การยืนยันตัวตนสองขั้นตอน",
+        "description": "เพิ่มขั้นตอนการยืนยันครั้งที่สองด้วยแอป Authenticator",
+        "enabled": "เปิดใช้งาน",
+        "disabled": "ปิดใช้งาน",
+        "enabledHelp": "บัญชีของคุณจะขอโค้ด Authenticator 6 หลักหลังจากเข้าสู่ระบบด้วยรหัสผ่าน",
+        "disabledHelp": "ปกป้องบัญชีของคุณด้วยโค้ด 6 หลักจากแอป Authenticator",
+        "enable": "เปิดใช้งานการยืนยันตัวตน 2 ขั้นตอน",
+        "disable": "ปิดใช้งานการยืนยันตัวตน 2 ขั้นตอน",
+        "passwordPrompt": "ยืนยันรหัสผ่านของคุณ",
+        "scanQrCode": "สแกน QR code นี้ด้วยแอป authenticator ของคุณ จากนั้นกรอกโค้ด 6 หลักด้านล่าง",
+        "secretKeyLabel": "หรือกรอกคีย์ลับนี้ด้วยตนเอง",
+        "verificationCodeLabel": "รหัสยืนยัน",
+        "verify": "ยืนยันและเปิดใช้งาน",
+        "backupCodesTitle": "รหัสสำรอง",
+        "backupCodesDescription": "บันทึกโค้ดเหล่านี้ไว้ในที่ปลอดภัย แต่ละโค้ดสามารถใช้ได้ครั้งเดียวหากคุณสูญเสียการเข้าถึง authenticator",
+        "copyBackupCodes": "คัดลอกโค้ด",
+        "finishSetup": "เสร็จสิ้นการตั้งค่า",
+        "successEnabled": "เปิดใช้งานการยืนยันตัวตน 2 ขั้นตอนแล้ว",
+        "successDisabled": "ปิดใช้งานการยืนยันตัวตน 2 ขั้นตอนแล้ว"
+      },
+      "sessions": {
+        "title": "เซสชันที่ใช้งานอยู่",
+        "description": "อุปกรณ์และเบราว์เซอร์ที่เข้าสู่ระบบบัญชีของคุณอยู่",
+        "currentSession": "(ปัจจุบัน)",
+        "ipLabel": "ที่อยู่ IP",
+        "lastActiveLabel": "ใช้งานล่าสุด",
+        "revoke": "ออกจากระบบ",
+        "revokeAll": "ออกจากระบบบนอุปกรณ์อื่นทั้งหมด",
+        "empty": "ไม่มีเซสชันอื่นที่ใช้งานอยู่",
+        "successRevoked": "ออกจากระบบแล้ว",
+        "successRevokedAll": "ออกจากระบบบนอุปกรณ์อื่นทั้งหมดแล้ว"
+      },
+      "deleteAccount": {
+        "title": "ลบบัญชี",
+        "description": "ลบบัญชีและข้อมูลที่เกี่ยวข้องทั้งหมดอย่างถาวร การดำเนินการนี้ไม่สามารถย้อนกลับได้",
+        "passwordPrompt": "กรอกรหัสผ่านเพื่อยืนยัน",
+        "confirmTextLabel": "พิมพ์ DELETE เพื่อยืนยัน",
+        "submit": "ลบบัญชี",
+        "cancel": "ยกเลิก",
+        "success": "ลบบัญชีแล้ว"
+      },
+      "connectedAccounts": {
+        "title": "บัญชีที่เชื่อมต่อ",
+        "description": "ตรวจสอบวิธีการเข้าสู่ระบบ OAuth ที่เชื่อมต่อกับบัญชี Nebutra ของคุณ",
+        "connected": "เชื่อมต่อแล้ว",
+        "connect": "เชื่อมต่อ",
+        "help": "รักษาวิธีการเข้าสู่ระบบที่เชื่อถือได้ไว้อย่างน้อยหนึ่งวิธีก่อนยกเลิกการเชื่อมต่อกับผู้ให้บริการ",
+        "unlink": "ยกเลิกการเชื่อมต่อ",
+        "notLinked": "ไม่ได้เชื่อมต่อ"
+      },
+      "passkeys": {
+        "title": "รหัสผ่านแบบไม่ใช้รหัสผ่าน",
+        "description": "ใช้ข้อมูลประจำตัวที่ผูกกับอุปกรณ์เพื่อเข้าสู่ระบบที่ต้านทานการฟิชชิง",
+        "empty": "ยังไม่ได้ลงทะเบียน passkey",
+        "addPasskey": "เพิ่ม passkey",
+        "cancelAdd": "ยกเลิก",
+        "cancelled": "การตั้งค่า passkey ถูกยกเลิก ไม่มีการเปลี่ยนแปลง",
+        "defaultName": "รหัสผ่านแบบไม่ใช้รหัสผ่าน {number}",
+        "nameHelp": "ตั้งชื่อ passkey นี้ให้จดจำได้ง่ายก่อนที่เบราว์เซอร์จะขอการยืนยัน",
+        "nameLabel": "ชื่อ passkey",
+        "rename": "เปลี่ยนชื่อ",
+        "saveRename": "บันทึกชื่อ",
+        "remove": "ลบ",
+        "successAdded": "เพิ่ม Passkey แล้ว",
+        "successRemoved": "ลบ Passkey แล้ว",
+        "unavailableBadge": "ใช้ไม่ได้"
+      },
+      "setPassword": {
+        "title": "ตั้งรหัสผ่าน",
+        "description": "เพิ่มรหัสผ่านเพื่อเข้าสู่ระบบโดยไม่ต้องใช้ผู้ให้บริการ OAuth",
+        "submit": "ตั้งรหัสผ่าน",
+        "pending": "กำลังส่งลิงก์ตั้งค่ารหัสผ่าน…",
+        "sentMessage": "เราได้ส่งลิงก์ตั้งค่ารหัสผ่านไปยังอีเมลของคุณแล้ว"
+      }
+    },
+    "banner": {
+      "logoAlt": "Nebutra",
+      "slogan": "ปล่อย Startup ของคุณ พร้อมการกำกับดูแลตั้งแต่เริ่มต้น",
+      "tagline": "เอเจนต์หลายภูมิภาค หลายผู้เช่าเป็นค่าเริ่มต้น ไม่ต้องใช้ทีมแพลตฟอร์ม"
+    },
+    "signIn": {
+      "title": "เข้าสู่ระบบ Nebutra",
+      "subtitle": "เลือกวิธีที่คุณต้องการเข้าสู่ระบบ",
+      "continueWith": "ดำเนินการต่อด้วย",
+      "continueWithProvider": "ดำเนินการต่อด้วย {provider}",
+      "providers": {
+        "google": "Google",
+        "github": "GitHub",
+        "apple": "Apple",
+        "microsoft": "Microsoft",
+        "feishu": "Feishu"
+      },
+      "providerLoading": "กำลังเปลี่ยนเส้นทาง…",
+      "dividerOr": "หรือเข้าสู่ระบบด้วยอีเมล",
+      "emailLabel": "อีเมล",
+      "emailPlaceholder": "you@example.com",
+      "continue": "ดำเนินการต่อ",
+      "back": "ย้อนกลับ",
+      "passwordLabel": "รหัสผ่าน",
+      "passwordPlaceholder": "กรอกรหัสผ่านของคุณ",
+      "showPassword": "แสดงรหัสผ่าน",
+      "hidePassword": "ซ่อนรหัสผ่าน",
+      "capsLockOn": "Caps Lock เปิดอยู่",
+      "forgotPassword": "ลืมรหัสผ่าน?",
+      "submit": "เข้าสู่ระบบ",
+      "submitLoading": "กำลังเข้าสู่ระบบ…",
+      "useMagicLink": "ส่งลิงก์เวทมนตร์แทน",
+      "usePasskey": "เข้าสู่ระบบด้วยพาสคีย์",
+      "passkeyTitle": "เข้าสู่ระบบด้วยพาสคีย์ของคุณ",
+      "passkeyDescription": "ใช้ Face ID, Touch ID หรือคีย์ความปลอดภัย ไม่ต้องใช้รหัสผ่าน",
+      "passkeyButton": "ดำเนินการต่อด้วยพาสคีย์",
+      "passkeyCancelled": "ยกเลิกการแจ้งเตือนพาสคีย์",
+      "passkeyUnsupported": "เบราว์เซอร์นี้ไม่รองรับพาสคีย์",
+      "passkeyError": "การเข้าสู่ระบบด้วยพาสคีย์ล้มเหลว ลองใช้วิธีอื่น",
+      "ssoTitle": "ดำเนินการต่อด้วย Enterprise SSO",
+      "ssoDescription": "กำลังเปลี่ยนเส้นทางไปยัง {provider} สำหรับ {email}",
+      "ssoError": "Enterprise SSO ไม่สามารถเริ่มต้นได้ ลองใช้วิธีอื่น",
+      "ssoRetry": "ลองอีกครั้ง",
+      "newToProduct": "新用户 Nebutra?",
+      "signUpLink": "ลงทะเบียน",
+      "homeLink": "หน้าแรก",
+      "signInFailed": "เข้าสู่ระบบไม่สำเร็จ",
+      "genericError": "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง",
+      "captchaError": "การยืนยันว่าไม่ใช่บอทล้มเหลว กรุณารีเฟรชหน้าแล้วลองอีกครั้ง",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
+      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
+      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
+      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+    },
+    "signUp": {
+      "title": "สร้างบัญชี Nebutra ของคุณ",
+      "subtitle": "บัญชีเดียวสำหรับทุกแอป Nebutra",
+      "firstNameLabel": "ชื่อ",
+      "lastNameLabel": "นามสกุล",
+      "firstNamePlaceholder": "ชื่อ",
+      "lastNamePlaceholder": "นามสกุล",
+      "submit": "สร้างบัญชี",
+      "submitLoading": "กำลังสร้างบัญชี…",
+      "alreadyHaveAccount": "มีบัญชีอยู่แล้ว?",
+      "signInLink": "เข้าสู่ระบบ",
+      "signUpFailed": "สมัครไม่สำเร็จ",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+    },
+    "passkeys": {
+      "title": "รหัสผ่านแบบไม่ใช้รหัสผ่าน",
+      "description": "ใช้ Face ID, Touch ID, Windows Hello หรือ security key แทนรหัสผ่าน แต่ละอุปกรณ์จะมี passkey ของตัวเอง",
+      "addButton": "เพิ่มพาสคีย์",
+      "adding": "กำลังตั้งค่า…",
+      "namePlaceholder": "เช่น MacBook Pro",
+      "nameLabel": "ชื่อ (ไม่บังคับ)",
+      "registerSuccess": "เพิ่มพาสคีย์แล้ว",
+      "registerCancelled": "ยกเลิกการตั้งค่า",
+      "registerUnsupported": "เบราว์เซอร์นี้ไม่รองรับพาสคีย์",
+      "registerError": "ลงทะเบียนพาสคีย์ไม่สำเร็จ",
+      "empty": "ยังไม่มีพาสคีย์",
+      "loadError": "โหลดพาสคีย์ไม่สำเร็จ",
+      "revoke": "ลบ",
+      "revoking": "กำลังลบ…",
+      "revokeConfirm": "ลบพาสคีย์นี้หรือไม่ คุณจะไม่สามารถลงชื่อเข้าใช้ด้วยพาสคีย์นี้ได้อีก",
+      "revokeSuccess": "ลบพาสคีย์แล้ว",
+      "revokeError": "ลบพาสคีย์ไม่สำเร็จ",
+      "device": {
+        "singleDevice": "ผูกกับอุปกรณ์",
+        "multiDevice": "ซิงค์ข้ามอุปกรณ์"
+      },
+      "addedOn": "เพิ่มเมื่อ {date}"
+    },
+    "magicLink": {
+      "title": "ลงชื่อเข้าใช้ด้วยลิงก์เวทมนตร์",
+      "description": "กรอกอีเมลของคุณ แล้วเราจะส่งรหัส 6 หลักให้คุณเพื่อลงชื่อเข้าใช้",
+      "emailLabel": "อีเมล",
+      "send": "ส่งลิงก์",
+      "codeLabel": "รหัสยืนยัน",
+      "verify": "ยืนยัน",
+      "resend": "ส่งรหัสอีกครั้ง",
+      "resendCooldown": "ส่งอีกครั้งใน {seconds} วินาที",
+      "sentTo": "เราส่งรหัสไปยัง {email} แล้ว"
+    },
+    "forgotPassword": {
+      "title": "ลืมรหัสผ่าน?",
+      "description": "กรอกอีเมลของคุณ แล้วเราจะส่งลิงก์เพื่อรีเซ็ตรหัสผ่าน",
+      "emailLabel": "อีเมล",
+      "submit": "ส่งลิงก์รีเซ็ต",
+      "successTitle": "ตรวจสอบอีเมลของคุณ",
+      "success": "หากอีเมลนี้ลงทะเบียนไว้ คุณจะได้รับลิงก์รีเซ็ตในไม่ช้า"
+    },
+    "resetPassword": {
+      "title": "รีเซ็ตรหัสผ่าน",
+      "description": "เลือกรหัสผ่านใหม่สำหรับบัญชีของคุณ",
+      "newPasswordLabel": "รหัสผ่านใหม่",
+      "confirmPasswordLabel": "ยืนยันรหัสผ่านใหม่",
+      "submit": "รีเซ็ตรหัสผ่าน",
+      "successTitle": "รีเซ็ตรหัสผ่านสำเร็จ",
+      "successDescription": "ตอนนี้คุณสามารถเข้าสู่ระบบด้วยรหัสผ่านใหม่",
+      "signInCta": "ไปเข้าสู่ระบบ",
+      "invalidTitle": "ลิงก์รีเซ็ตไม่ถูกต้อง",
+      "invalidDescription": "ลิงก์รีเซ็ตรหัสผ่านนี้หายไปหรือไม่ถูกต้อง กรุณาขอใหม่จากหน้าลืมรหัสผ่าน"
+    },
+    "verifyEmail": {
+      "successTitle": "ยืนยันอีเมลสำเร็จ",
+      "successDescription": "อีเมลของคุณได้รับการยืนยันแล้ว",
+      "failureTitle": "การยืนยันล้มเหลว",
+      "failureDescription": "เราไม่สามารถยืนยันอีเมลของคุณด้วยลิงก์นี้",
+      "continueCta": "ดำเนินการต่อ",
+      "signInCta": "ไปเข้าสู่ระบบ"
+    },
+    "loginSuccess": {
+      "eyebrow": "เข้าสู่ระบบเสร็จสิ้น",
+      "title": "คุณเข้าสู่ระบบแล้ว",
+      "description": "เซสชันของคุณพร้อมใช้งาน เรากำลังเปิด workspace ของ Nebutra และรักษาการส่งต่ออย่างปลอดภัยจากขั้นตอนการยืนยันตัวตน",
+      "session": "เซสชัน",
+      "verified": "ยืนยันแล้ว",
+      "workspace": "พื้นที่ทำงาน",
+      "preparing": "กำลังเตรียม",
+      "redirecting": "กำลังเข้าสู่ workspace ใน {seconds} วินาที",
+      "secureHandoff": "ส่งต่ออย่างปลอดภัย",
+      "continueCta": "ไปต่อที่ workspace",
+      "signInCta": "ใช้บัญชีอื่น"
+    },
+    "errors": {
+      "invalidCredentials": "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
+      "userNotFound": "ไม่พบบัญชีที่ใช้อีเมลนี้",
+      "userAlreadyExists": "มีบัญชีที่ใช้อีเมลนี้อยู่แล้ว",
+      "weakPassword": "รหัสผ่านอ่อนเกินไป ใช้อย่างน้อย 8 ตัวอักษร พร้อมตัวพิมพ์ใหญ่-เล็กและตัวเลข",
+      "passwordsDontMatch": "รหัสผ่านไม่ตรงกัน",
+      "passwordTooShort": "รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร",
+      "currentPasswordIncorrect": "รหัสผ่านปัจจุบันไม่ถูกต้อง",
+      "samePassword": "รหัสผ่านใหม่ต้องไม่เหมือนกับรหัสผ่านปัจจุบัน",
+      "invalidEmail": "ที่อยู่อีเมลไม่ถูกต้อง",
+      "emailNotVerified": "กรุณาตรวจสอบที่อยู่อีเมลของคุณก่อน",
+      "sessionExpired": "เซสชันหมดอายุ กรุณาเข้าสู่ระบบอีกครั้ง",
+      "twoFactorRequired": "จำเป็นต้องมีการยืนยันแบบสองปัจจัย",
+      "invalidVerificationCode": "รหัสยืนยันไม่ถูกต้องหรือหมดอายุ",
+      "twoFactorAlreadyEnabled": "การยืนยันแบบสองปัจจัยเปิดใช้งานอยู่แล้ว",
+      "twoFactorNotEnabled": "การยืนยันแบบสองปัจจัยไม่ได้เปิดใช้งาน",
+      "tooManyAttempts": "พยายามมากเกินไป กรุณาลองอีกครั้งในภายหลัง",
+      "rateLimited": "คุณทำสิ่งนี้บ่อยเกินไป กรุณาลดความเร็วลง",
+      "providerNotSupported": "การดำเนินการนี้ถูกจัดการโดยผู้ให้บริการการยืนยันตัวตนของคุณ",
+      "networkError": "เกิดข้อผิดพลาดทางเครือข่าย กรุณาตรวจสอบการเชื่อมต่อและลองอีกครั้ง",
+      "unknown": "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง"
+    }
+  },
+  "chat": {
+    "suggestions": {
+      "title": "ลองใช้ตัวเลือกเหล่านี้เพื่อเริ่มต้น",
+      "activity": {
+        "title": "แสดงกิจกรรมล่าสุด",
+        "prompt": "แสดงกิจกรรมล่าสุดทั้งหมดใน workspace ของฉันในช่วง 24 ชั่วโมงที่ผ่านมา"
+      },
+      "debug": {
+        "title": "ดีบักข้อผิดพลาด",
+        "prompt": "ช่วยฉันดีบักข้อผิดพลาดขณะรันโปรแกรม ฉันจะวาง stack trace และคุณสามารถแนะนำฉันทีละขั้นตอนได้"
+      },
+      "email": {
+        "title": "ร่างอีเมลสรุป",
+        "prompt": "ร่างอีเมลสรุปประจำสัปดาห์แบบกระชับที่ฉันสามารถส่งให้ทีมเกี่ยวกับความคืบหน้าของแพลตฟอร์ม"
+      },
+      "features": {
+        "title": "สำรวจฟีเจอร์ของแพลตฟอร์ม",
+        "prompt": "แนะนำฟีเจอร์หลักของแพลตฟอร์ม SaaS นี้และวิธีใช้งานให้ฉัน"
+      }
+    }
+  },
+  "billing": {
+    "activePlan": {
+      "title": "แผนปัจจุบัน",
+      "manage": "จัดการการสมัครสมาชิก",
+      "noPlanTitle": "ไม่มีแผนใช้งาน",
+      "noPlanDescription": "เลือกแผนเพื่อปลดล็อกฟีเจอร์เสียเงินและขีดจำกัดการใช้งานที่สูงขึ้น",
+      "choosePlan": "เลือกแผน",
+      "renewsOn": "ต่ออายุเมื่อ {date}",
+      "endsOn": "หมดอายุเมื่อ {date}",
+      "trialEndsOn": "ทดลองใช้งานสิ้นสุดวันที่ {date}",
+      "status": {
+        "active": "ใช้งานอยู่",
+        "trialing": "กำลังทดลองใช้งาน",
+        "past_due": "เกินกำหนดชำระ",
+        "canceled": "ยกเลิกแล้ว",
+        "free": "ฟรี"
+      },
+      "errors": {
+        "loadFailed": "ไม่สามารถโหลดสถานะการเรียกเก็บเงินของคุณได้"
+      }
+    },
+    "pricing": {
+      "trial": "ทดลองใช้งานฟรี {days} วัน",
+      "seat": "{count, plural, one {# ที่นั่ง} other {# ที่นั่ง}}",
+      "perSeat": "/ ที่นั่ง"
+    }
+  },
+  "organizations": {
+    "settings": {
+      "logo": {
+        "title": "โลโก้ขององค์กร",
+        "description": "อัปโหลดรูปภาพสี่เหลี่ยม (PNG, JPEG หรือ WebP ขนาดสูงสุด 2MB) เพื่อแสดงแทนองค์กรของคุณ",
+        "uploadButton": "อัปโหลดโลโก้",
+        "uploading": "กำลังอัปโหลด…",
+        "fileTooBig": "ไฟล์มีขนาดใหญ่เกินไป ขนาดสูงสุดคือ 2MB",
+        "invalidType": "ประเภทรูปภาพไม่รองรับ ใช้ PNG, JPEG หรือ WebP",
+        "success": "อัปเดตโลโก้แล้ว",
+        "removeButton": "ลบโลโก้",
+        "removed": "ลบโลโก้แล้ว"
+      },
+      "name": {
+        "title": "ชื่อองค์กร",
+        "description": "อัปเดตชื่อที่แสดงให้ทีมและลูกค้าของคุณเห็น",
+        "label": "ชื่อ",
+        "submit": "บันทึก",
+        "saving": "กำลังบันทึก…",
+        "success": "อัปเดตชื่อองค์กรแล้ว"
+      },
+      "delete": {
+        "title": "ลบองค์กร",
+        "description": "ลบองค์กรนี้ สมาชิกทั้งหมด คำเชิญ และข้อมูลที่เกี่ยวข้องอย่างถาวร การดำเนินการนี้ไม่สามารถย้อนกลับได้",
+        "trigger": "ลบองค์กร",
+        "confirmLabel": "พิมพ์ชื่อองค์กรเพื่อยืนยัน",
+        "submit": "ลบองค์กร",
+        "cancel": "ยกเลิก",
+        "success": "ลบองค์กรแล้ว"
+      }
+    },
+    "invitation": {
+      "title": "คุณได้รับคำเชิญ",
+      "heading": "คุณได้รับเชิญให้เข้าร่วม {organizationName}",
+      "description": "ยอมรับคำเชิญเพื่อเริ่มทำงานร่วมกับทีม",
+      "accept": "ยอมรับคำเชิญ",
+      "accepting": "กำลังยอมรับ...",
+      "decline": "ปฏิเสธ",
+      "declining": "กำลังปฏิเสธ...",
+      "declinedView": "ปฏิเสธคำเชิญแล้ว",
+      "success": "เราได้แจ้งผู้เชิญแล้ว",
+      "backToDashboard": "กลับไปยังแดชบอร์ด",
+      "roleLabel": "บทบาท: {role}",
+      "errorEmailMismatch": "คำเชิญนี้ถูกส่งไปยังอีเมลอื่น",
+      "errorEmailMismatchDetail": "เข้าสู่ระบบด้วยอีเมลที่ได้รับคำเชิญเพื่อรับคำเชิญ",
+      "errorExpired": "คำเชิญหมดอายุ",
+      "errorExpiredDetail": "ขอให้ผู้เชิญส่งคำเชิญใหม่",
+      "errorNotFound": "ไม่พบคำเชิญ",
+      "errorNotFoundDetail": "ลิงก์เชิญไม่ถูกต้องหรือถูกเพิกถอนแล้ว",
+      "errorNotAvailable": "ไม่พบคำเชิญ",
+      "errorNotAvailableDetail": "คำเชิญนี้ได้รับการตอบรับไปแล้วและไม่ใช้งานอีกต่อไป",
+      "role": {
+        "owner": "เจ้าของ",
+        "admin": "ผู้ดูแลระบบ",
+        "member": "สมาชิก",
+        "viewer": "ผู้ดู"
+      }
+    }
+  },
+  "settings": {
+    "apiKeys": {
+      "title": "คีย์ API",
+      "description": "สร้างและจัดการ API keys สำหรับการเข้าถึง Nebutra แบบโปรแกรม",
+      "createButton": "สร้าง API key",
+      "noPermission": "คุณไม่มีสิทธิ์ในการดู API keys",
+      "loading": "กำลังโหลด…",
+      "loadError": "ไม่สามารถโหลด API keys ได้",
+      "createError": "ไม่สามารถสร้าง API key ได้",
+      "revokeError": "ไม่สามารถเพิกถอน API key ได้",
+      "empty": {
+        "title": "ยังไม่มี API keys",
+        "cta": "สร้างคีย์ API ตัวแรกของคุณ"
+      },
+      "columns": {
+        "name": "ชื่อ",
+        "prefix": "คำนำหน้า",
+        "lastUsed": "ใช้ล่าสุด",
+        "scopes": "ขอบเขต",
+        "created": "สร้างเมื่อ",
+        "actions": "การดำเนินการ",
+        "never": "ไม่เคย"
+      },
+      "actions": {
+        "revoke": "เพิกถอน",
+        "revoking": "กำลังเพิกถอน…",
+        "copy": "คัดลอก",
+        "copied": "คัดลอกแล้ว",
+        "close": "ปิด",
+        "submit": "สร้างคีย์",
+        "submitting": "กำลังสร้าง…"
+      },
+      "dialog": {
+        "title": "สร้างคีย์ API",
+        "description": "API key ช่วยให้ระบบภายนอกสื่อสารกับ Nebutra แทนคุณ กรุณาเก็บรักษาเหมือนรหัสผ่าน",
+        "nameLabel": "ชื่อ",
+        "namePlaceholder": "เช่น Production backend",
+        "scopesLabel": "ขอบเขต",
+        "successWarning": "คีย์นี้จะแสดงเพียงครั้งเดียว กรุณาบันทึกก่อนปิด",
+        "confirmClose": "การปิดจะซ่อนคีย์นี้ถาวร กรุณาตรวจสอบว่าบันทึกไว้แล้ว"
+      }
+    },
+    "auditLog": {
+      "title": "บันทึกการตรวจสอบ",
+      "description": "ติดตามการดำเนินการของผู้ดูแลระบบทั้งหมดใน workspace ของคุณ กรองตามผู้ดำเนินการ การกระทำ วัตถุ หรือช่วงเวลา",
+      "empty": "ยังไม่มีเหตุการณ์การตรวจสอบ",
+      "loadMore": "โหลดเพิ่มเติม",
+      "loading": "กำลังโหลด…",
+      "forbidden": "คุณต้องมีสิทธิ์ผู้ดูแลระบบเพื่อดูบันทึกการตรวจสอบ",
+      "columns": {
+        "when": "เมื่อไหร่",
+        "actor": "ผู้ดำเนินการ",
+        "action": "การกระทำ",
+        "entity": "วัตถุ",
+        "outcome": "ผลลัพธ์",
+        "ip": "IP"
+      },
+      "diff": {
+        "oldValue": "ค่าเดิม",
+        "newValue": "ค่าใหม่"
+      },
+      "filters": {
+        "action": "การกระทำ",
+        "actionPlaceholder": "ค้นหาการกระทำ…",
+        "entityType": "ประเภทเอนทิตี",
+        "outcome": "ผลลัพธ์",
+        "outcomeSuccess": "สำเร็จ",
+        "outcomeFailure": "ล้มเหลว",
+        "outcomePending": "รอดำเนินการ",
+        "startDate": "วันที่เริ่มต้น",
+        "endDate": "วันที่สิ้นสุด",
+        "range24h": "24 ชั่วโมงล่าสุด",
+        "range7d": "7 วันล่าสุด",
+        "range30d": "30 วันล่าสุด",
+        "reset": "รีเซ็ต",
+        "all": "ทั้งหมด"
+      }
+    },
+    "notifications": {
+      "title": "การแจ้งเตือน",
+      "description": "เลือกช่องทางที่ Nebutra จะติดต่อคุณสำหรับแต่ละประเภทเหตุการณ์",
+      "actions": {
+        "resetAll": "รีเซ็ตเป็นค่าเริ่มต้น",
+        "save": "บันทึก"
+      },
+      "status": {
+        "saving": "กำลังบันทึก…",
+        "saved": "บันทึกแล้ว",
+        "error": "บันทึกไม่สำเร็จ กรุณาลองอีกครั้ง"
+      },
+      "eventTypes": {
+        "security": {
+          "label": "การแจ้งเตือนความปลอดภัย",
+          "description": "การแจ้งเตือนการเข้าสู่ระบบ การเปลี่ยนรหัสผ่าน และการเปลี่ยนแปลงการยืนยันสองขั้นตอน"
+        },
+        "billing": {
+          "label": "การเรียกเก็บเงิน",
+          "description": "ใบแจ้งหนี้ การชำระเงินล้มเหลว และการเปลี่ยนแปลงการสมัครสมาชิก"
+        },
+        "invitation": {
+          "label": "คำเชิญทีม",
+          "description": "คำเชิญให้เข้าร่วมองค์กร ที่ได้รับการยอมรับหรือปฏิเสธ"
+        },
+        "activity": {
+          "label": "กิจกรรมของทีม",
+          "description": "สมาชิกเข้าร่วม การเปลี่ยนแปลงบทบาท และกิจกรรมอื่นๆ ใน workspace"
+        },
+        "updates": {
+          "label": "อัปเดตผลิตภัณฑ์",
+          "description": "ฟีเจอร์ใหม่ ไฮไลท์จาก changelog และบันทึกการปล่อย"
+        },
+        "marketing": {
+          "label": "การตลาด",
+          "description": "จดหมายข่าวและโปรโมชั่นเป็นครั้งคราว เปิดรับเฉพาะผู้ที่สมัคร"
+        }
+      },
+      "channels": {
+        "in_app": {
+          "label": "ในแอป"
+        },
+        "email": {
+          "label": "อีเมล"
+        },
+        "push": {
+          "label": "Push"
+        },
+        "sms": {
+          "label": "SMS"
+        }
+      }
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "รับข้อมูลเหตุการณ์จาก workspace ของคุณ เราเซ็นทุก payload ด้วย secret ของ endpoint เพื่อให้คุณตรวจสอบความถูกต้อง",
+      "create": {
+        "heading": "Endpoint ใหม่",
+        "urlLabel": "URL ของ Endpoint",
+        "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
+        "eventsLegend": "เหตุการณ์",
+        "submit": "สร้าง endpoint",
+        "submitting": "กำลังสร้าง…",
+        "selectEvent": "เลือกอย่างน้อยหนึ่งเหตุการณ์",
+        "successTitle": "สร้าง Endpoint เรียบร้อย รหัสลับการเซ็นจะแสดงเพียงครั้งเดียว",
+        "successWarning": "เก็บไว้ในตัวจัดการรหัสลับของแอปพลิเคชันก่อนปิด",
+        "copy": "คัดลอก",
+        "copied": "คัดลอกแล้ว"
+      },
+      "list": {
+        "heading": "Endpoint ที่ใช้งานอยู่",
+        "empty": "ยังไม่มี webhook endpoint สร้างด้านบน",
+        "loading": "กำลังโหลด…",
+        "loadFailed": "โหลด webhook ไม่สำเร็จ",
+        "columns": {
+          "url": "URL",
+          "events": "เหตุการณ์",
+          "status": "สถานะ",
+          "lastDelivered": "ส่งล่าสุด",
+          "actions": "การดำเนินการ"
+        },
+        "status": {
+          "active": "ใช้งาน",
+          "disabled": "ปิดใช้งาน"
+        },
+        "actions": {
+          "edit": "แก้ไข",
+          "enable": "เปิดใช้งาน",
+          "disable": "ปิดใช้งาน",
+          "viewDeliveries": "ดูการส่ง",
+          "delete": "ลบ"
+        }
+      },
+      "deliveries": {
+        "heading": "การส่งล่าสุด",
+        "close": "ปิด",
+        "loading": "กำลังโหลด…",
+        "loadFailed": "โหลดการส่งไม่สำเร็จ",
+        "empty": "ยังไม่มีรายการส่ง",
+        "viewPayload": "ดู payload",
+        "hidePayload": "ซ่อน payload",
+        "replay": "เล่นซ้ำ",
+        "replaying": "กำลังเล่นซ้ำ…",
+        "status": {
+          "success": "สำเร็จ",
+          "failed": "ล้มเหลว",
+          "retrying": "กำลังลองส่งใหม่"
+        }
+      }
+    },
+    "appearance": {
+      "title": "รูปลักษณ์",
+      "theme": {
+        "title": "ธีม",
+        "description": "ใช้ธีมสว่าง มืด หรือให้ตรงกับระบบ"
+      },
+      "themePreset": {
+        "title": "ชุดธีม",
+        "description": "ใช้ธีมจาก Theme Playground ทั่วทั้งแอป ควบคุมด้านล่างเพื่อปรับแต่งเพิ่มเติม",
+        "search": "ค้นหาธีม…",
+        "searchLabel": "ค้นหาธีม",
+        "default": "เริ่มต้น",
+        "defaultMood": "Nebutra base palette",
+        "active": "ใช้งานอยู่",
+        "empty": "ไม่พบธีมที่ตรงกับคำค้นหา",
+        "count": "{count} ธีม"
+      },
+      "themeEditor": {
+        "title": "ธีม",
+        "description": "เลือกชุดธีม นำเข้า DESIGN.md แล้วปรับแต่งโทเค็นด้านล่าง",
+        "selectLabel": "ชุดธีม",
+        "import": "นำเข้า",
+        "copy": "คัดลอกธีม",
+        "copied": "คัดลอกแล้ว",
+        "copyError": "คัดลอกไม่สำเร็จ",
+        "custom": "กำหนดเอง"
+      },
+      "designMd": {
+        "title": "นำเข้า DESIGN.md",
+        "description": "วางหรืออัปโหลด DESIGN.md เพื่อใช้สี รัศมี ฟอนต์ ระยะห่าง และเงาทั่วทั้งแอป — จะถูกบันทึกไว้แม้รีโหลด",
+        "applied": "นำไปใช้แล้ว:",
+        "remove": "ลบ"
+      },
+      "themeMode": {
+        "label": "โหมดธีม",
+        "light": "สว่าง",
+        "dark": "มืด",
+        "system": "ระบบ"
+      },
+      "accent": {
+        "title": "สีเน้น",
+        "description": "เลือกสีเน้นแบรนด์เพื่อเปลี่ยนสีสถานะที่ใช้งานทั่วทั้งแอป",
+        "label": "สีเน้น",
+        "options": {
+          "default": "ค่าเริ่มต้น",
+          "blue": "สีน้ำเงิน",
+          "cyan": "สีฟ้า",
+          "violet": "สีม่วง",
+          "pink": "สีชมพู",
+          "amber": "สีเหลืองอำพัน",
+          "green": "สีเขียว",
+          "red": "สีแดง"
+        }
+      },
+      "colors": {
+        "title": "สี",
+        "description": "สีเน้น สีพื้นหลัง และสีพื้นหน้า",
+        "background": {
+          "label": "พื้นหลัง",
+          "description": "เปลี่ยนสีพื้นหลังของพื้นผิว"
+        },
+        "foreground": {
+          "label": "พื้นหน้า",
+          "description": "เปลี่ยนสีข้อความหลัก"
+        },
+        "resetToDefault": "รีเซ็ตเป็นค่าเริ่มต้น"
+      },
+      "fontFamily": {
+        "uiLabel": "ฟอนต์ UI",
+        "uiDescription": "ตระกูลฟอนต์ที่ใช้ทั่วทั้ง UI",
+        "codeLabel": "ฟอนต์โค้ด",
+        "codeDescription": "ตระกูลฟอนต์ที่ใช้กับพื้นผิวโค้ด",
+        "options": {
+          "ui": {
+            "theme": "ค่าเริ่มต้นของธีม",
+            "system": "ระบบ",
+            "geist": "Geist",
+            "inter": "Inter",
+            "sf": "SF Pro"
+          },
+          "code": {
+            "theme": "ค่าเริ่มต้นของธีม",
+            "system": "System mono",
+            "geist-mono": "Geist Mono",
+            "sf-mono": "SF Mono",
+            "jetbrains-mono": "JetBrains Mono"
+          }
+        }
+      },
+      "contrast": {
+        "title": "ความคมชัด",
+        "description": "ปรับความคมชัดของข้อความ (50 = ไม่มีการเปลี่ยนแปลง)",
+        "label": "ระดับความคมชัด"
+      },
+      "pointerCursor": {
+        "title": "ใช้เคอร์เซอร์แบบชี้",
+        "description": "เปลี่ยนเป็นเคอร์เซอร์แบบชี้เมื่อโฮเวอร์เหนือองค์ประกอบที่โต้ตอบได้",
+        "label": "เคอร์เซอร์แบบชี้บนองค์ประกอบที่โต้ตอบได้"
+      },
+      "diffMarkers": {
+        "title": "เครื่องหมายความแตกต่าง",
+        "description": "แสดงแถบสี หรือสัญลักษณ์ +/- บนแต่ละบรรทัดที่เปลี่ยนแปลง",
+        "label": "สไตล์เครื่องหมายความแตกต่าง",
+        "color": "สี",
+        "plusminus": "+/-"
+      },
+      "fontSmoothing": {
+        "title": "การปรับความเรียบของฟอนต์",
+        "description": "ใช้การปรับขอบฟอนต์แบบดั้งเดิมของ macOS",
+        "label": "การปรับความเรียบของฟอนต์แบบดั้งเดิม"
+      },
+      "typography": {
+        "title": "ตัวอักษร",
+        "description": "ขนาดฟอนต์พื้นฐานสำหรับ UI และพื้นที่โค้ด",
+        "uiFontSize": "ขนาดฟอนต์ UI",
+        "uiFontSizeDescription": "ปรับขนาดฟอนต์พื้นฐานของ UI",
+        "codeFontSize": "ขนาดฟอนต์โค้ด",
+        "codeFontSizeDescription": "ปรับขนาดฟอนต์พื้นฐานของโค้ด"
+      },
+      "fontSize": {
+        "followTheme": "ธีม",
+        "customize": "ปรับแต่ง"
+      },
+      "motion": {
+        "title": "ลดการเคลื่อนไหว",
+        "description": "ลดการเคลื่อนไหวหรือใช้ตามการตั้งค่าของระบบ",
+        "label": "การตั้งค่าการเคลื่อนไหว",
+        "system": "ระบบ",
+        "on": "เปิด",
+        "off": "ปิด"
+      },
+      "surface": {
+        "title": "แถบด้านข้างแบบโปร่งแสง",
+        "description": "ใช้วัสดุแบบโปร่งแสงกับแถบด้านข้าง"
+      },
+      "transparency": {
+        "label": "แถบด้านข้างแบบโปร่งแสง",
+        "description": "ใช้วัสดุแบบโปร่งแสงกับแถบด้านข้าง"
+      }
+    }
+  },
+  "legal": {
+    "version": "เวอร์ชัน",
+    "effective": "มีผลบังคับใช้",
+    "notFound": "ไม่พบเอกสารนี้",
+    "backHome": "กลับหน้าหลัก"
+  },
+  "commandPalette": {
+    "ariaLabel": "พาเลทคำสั่ง",
+    "placeholder": "พิมพ์คำสั่งหรือค้นหา…",
+    "empty": "ไม่พบผลลัพธ์",
+    "sections": {
+      "navigation": "การนำทาง",
+      "actions": "การดำเนินการ",
+      "settings": "การตั้งค่า",
+      "account": "บัญชี",
+      "admin": "ผู้ดูแลระบบ",
+      "help": "ช่วยเหลือ"
+    },
+    "commands": {
+      "nav": {
+        "home": "หน้าหลัก",
+        "settings": "การตั้งค่า",
+        "billing": "การเรียกเก็บเงิน",
+        "team": "ทีม",
+        "apiKeys": "คีย์ API",
+        "notifications": "การแจ้งเตือน",
+        "auditLog": "บันทึกการตรวจสอบ",
+        "webhooks": "Webhooks",
+        "admin": "ผู้ดูแลระบบ"
+      },
+      "action": {
+        "inviteMember": "เชิญสมาชิกทีม",
+        "createApiKey": "สร้าง API key",
+        "switchOrganization": "เปลี่ยนองค์กร"
+      },
+      "settings": {
+        "themeLight": "เปลี่ยนเป็นธีมสว่าง",
+        "themeDark": "เปลี่ยนเป็นธีมมืด",
+        "themeSystem": "ใช้ธีมของระบบ"
+      },
+      "account": {
+        "signOut": "ออกจากระบบ"
+      },
+      "help": {
+        "reportIssue": "รายงานปัญหา",
+        "shortcuts": "แป้นพิมพ์ลัด"
+      }
+    }
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "ตัวเลือกความเป็นส่วนตัวของคุณ",
+      "description": "เราใช้คุกกี้เพื่อปรับปรุงประสบการณ์ วิเคราะห์การเข้าชมเว็บไซต์ และปรับแต่งเนื้อหา เลือกหมวดหมู่ที่คุณต้องการอนุญาต"
+    },
+    "button": {
+      "acceptAll": "ยอมรับทั้งหมด",
+      "savePreferences": "บันทึกการตั้งค่า"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "จำเป็น",
+        "description": "จำเป็นสำหรับการทำงานของเว็บไซต์ ไม่สามารถปิดได้"
+      },
+      "functional": {
+        "label": "ฟังก์ชันการทำงาน",
+        "description": "จดจำการตั้งค่าของคุณ (ภาษา, ธีม, การแสดงผล)"
+      },
+      "analytics": {
+        "label": "การวิเคราะห์",
+        "description": "ข้อมูลการใช้งานแบบไม่ระบุตัวตน เพื่อช่วยปรับปรุงผลิตภัณฑ์"
+      },
+      "marketing": {
+        "label": "การตลาด",
+        "description": "โฆษณาส่วนบุคคลและการรีทาร์เก็ตติ้งบนแพลตฟอร์มของบุคคลที่สาม"
+      }
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "การแจ้งเตือน",
+      "description": "การแจ้งเตือนทั้งหมดของคุณในที่เดียว",
+      "filter": {
+        "all": "ทั้งหมด",
+        "unread": "ยังไม่อ่าน"
+      },
+      "actions": {
+        "markAllRead": "ทำเครื่องหมายทั้งหมดว่าอ่านแล้ว",
+        "markRead": "ทำเครื่องหมายว่าอ่านแล้ว",
+        "archive": "เก็บถาวร",
+        "loadMore": "โหลดเพิ่มเติม",
+        "loading": "กำลังโหลด...",
+        "selected": "เลือก {count} รายการ"
+      },
+      "empty": {
+        "all": "คุณอ่านครบทุกข้อความแล้ว",
+        "unread": "ไม่มีข้อความที่ยังไม่ได้อ่าน"
+      },
+      "errors": {
+        "load": "ไม่สามารถโหลดการแจ้งเตือนได้",
+        "network": "เกิดข้อผิดพลาดด้านเครือข่าย กรุณาลองอีกครั้ง",
+        "markRead": "ไม่สามารถทำเครื่องหมายการแจ้งเตือนว่าอ่านแล้วได้",
+        "archive": "ไม่สามารถเก็บการแจ้งเตือนเข้าคลังได้",
+        "bulkMarkRead": "การแจ้งเตือนบางรายการไม่สามารถทำเครื่องหมายว่าอ่านแล้วได้"
+      },
+      "inbox": {
+        "noBackend": "กล่องข้อความต้องการระบบการแจ้งเตือนแบบถาวร กรุณาตรวจสอบการตั้งค่าผู้ให้บริการ",
+        "emptyCaughtUp": "กล่องข้อความว่างเปล่า",
+        "emptyChangelog": "การอัปเดตบันทึกการเปลี่ยนแปลงจะแสดงที่นี่"
+      }
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "อรุณสวัสดิ์",
+      "afternoon": "สวัสดีตอนบ่าย",
+      "evening": "สวัสดีตอนเย็น"
+    },
+    "home": {
+      "connectorsPill": "ขับเคลื่อนแอปด้วยคอนเนคเตอร์",
+      "subtitle": "วางพรอมต์ กด ⌘K จากที่ไหนก็ได้ หรือเข้าใช้งานพื้นที่ทำงานโดยตรง",
+      "promptPlaceholder": "คุณกำลังคิดอะไรอยู่?",
+      "actions": {
+        "connect": "เชื่อมต่ออินทิเกรชัน",
+        "theme": "Theme Playground",
+        "audit": "Audit log",
+        "billing": "Billing"
+      }
+    },
+    "commandSurface": {
+      "noAuth": "ยังไม่ได้ตั้งค่า Auth สำหรับผู้ให้บริการที่เลือก กรุณาตั้งค่า provider secrets เพื่อเปิดใช้งาน user sessions"
+    },
+    "commandCenter": {
+      "description": "เริ่มต้นด้วยหนึ่งการกระทำ: ถาม Sailor, ตรวจสอบ workspace signals หรือ route งานไปยัง automation surface",
+      "openSailor": "เปิด Sailor AI",
+      "viewAnalytics": "ดู Analytics"
+    },
+    "workspaceSnapshot": {
+      "title": "Workspace Snapshot",
+      "description": "ข้อมูลล่าสุดของ warehouse · {day}",
+      "viewAnalytics": "ดู analytics →",
+      "metrics": {
+        "activeUsers": "Active Users",
+        "totalEvents": "Total Events",
+        "conversions": "Conversions",
+        "revenue": "Revenue"
+      },
+      "details": {
+        "activeUsers": "ผู้ใช้งานที่ล็อกอิน",
+        "totalEvents": "เหตุการณ์ที่บันทึก",
+        "conversions": "การดำเนินการที่ผ่านการคัดเลือก",
+        "revenue": "รายได้ที่รับรู้"
+      },
+      "meta": {
+        "snapshot": "ภาพรวม",
+        "cadence": "ความถี่",
+        "tenant": "ผู้เช่า",
+        "daily": "รายวัน",
+        "latestDay": "{day}",
+        "users": "ผู้ใช้งานผู้เช่า",
+        "events": "สตรีมเหตุการณ์",
+        "funnel": "กรวย",
+        "billing": "การเรียกเก็บเงิน"
+      }
+    },
+    "documentPipeline": {
+      "title": "สายงานเอกสาร",
+      "description": "ส่งไฟล์ต้นทางเข้าคิวงานต้นทาง",
+      "intakeTitle": "การรับเอกสาร",
+      "intakeDescription": "PDF, Markdown, ข้อความ หรือเอกสาร Word",
+      "chooseDocument": "เลือกเอกสาร",
+      "startParseTask": "เริ่มงานการแยกวิเคราะห์",
+      "queued": "อยู่ในคิว",
+      "fileInputLabel": "ไฟล์เอกสาร",
+      "fallbackError": "งานเอกสารล้มเหลว",
+      "taskStatus": "สถานะงาน",
+      "progressLabel": "ความคืบหน้าของงาน",
+      "refreshStatus": "รีเฟรช",
+      "cancelTask": "ยกเลิก",
+      "statusError": "ไม่สามารถรีเฟรชสถานะงานได้",
+      "cancelError": "ไม่สามารถยกเลิกงานได้",
+      "statusQueued": "อยู่ในคิว",
+      "statusRunning": "กำลังดำเนินการ",
+      "statusSucceeded": "สำเร็จ",
+      "statusFailed": "ล้มเหลว",
+      "statusCancelled": "ยกเลิกแล้ว",
+      "resultReady": "ผลลัพธ์พร้อมใช้งาน",
+      "taskError": "เกิดข้อผิดพลาดในภารกิจ",
+      "updatedAt": "อัปเดตเมื่อ"
+    },
+    "recentSessions": {
+      "title": "ทำงานต่อจากจุดที่คุณหยุด",
+      "subtitle": "{count, plural, =0 {ไม่มีเซสชัน} =1 {เซสชันล่าสุด 1 เซสชัน} other {เซสชันล่าสุด # เซสชัน}}",
+      "viewAll": "ดูทั้งหมด →",
+      "newChat": "แชทใหม่",
+      "untitled": "เซสชันไม่มีชื่อ",
+      "messageCount": "{count, plural, =1 {1 ข้อความ} other {# ข้อความ}}"
+    },
+    "gettingStarted": {
+      "title": "เริ่มต้นใช้งาน",
+      "description": "เสร็จสิ้น {done} จาก {total} · เสร็จสิ้นการตั้งค่าเพื่อปลดล็อกพื้นที่ทำงานแบบเต็มรูปแบบ",
+      "progressLabel": "ความคืบหน้าการตั้งค่า",
+      "tasks": {
+        "team": {
+          "label": "เชิญเพื่อนร่วมทีม",
+          "description": "เพิ่มผู้ร่วมงานอย่างน้อยหนึ่งคนเข้ามาในพื้นที่ทำงานของคุณ"
+        },
+        "api": {
+          "label": "สร้างคีย์ API",
+          "description": "เข้าถึงจุดสิ้นสุดของพื้นที่ทำงานของคุณผ่านโปรแกรม"
+        },
+        "integration": {
+          "label": "เชื่อมต่ออินทิเกรชัน",
+          "description": "Stripe, Slack, webhooks, queues และอื่นๆ"
+        },
+        "ai": {
+          "label": "Open Sailor AI",
+          "description": "ลองโหมดแชท ข้อมูล หรือ workflow"
+        }
+      }
+    }
+  },
+  "Sidebar": {
+    "projects": "โปรเจกต์",
+    "noThreads": "ไม่มีเธรด",
+    "expandAll": "ขยายทั้งหมด",
+    "collapseAll": "ยุบทั้งหมด",
+    "sectionMore": "ตัวเลือกเพิ่มเติม",
+    "newProject": "โปรเจกต์ใหม่",
+    "restoredGroups": "กู้คืนกลุ่มที่เคยขยายไว้",
+    "newProjectPlaceholder": "ชื่อโปรเจกต์",
+    "newProjectDefault": "ไม่มีชื่อ",
+    "newProjectSuccess": "สร้างโปรเจกต์สำเร็จ",
+    "newProjectError": "ไม่สามารถสร้างโปรเจกต์ได้",
+    "sortBy": "เรียงตาม",
+    "sortRecent": "ใช้งานล่าสุด",
+    "sortAlphabetical": "เรียงตามตัวอักษร",
+    "sortCreated": "วันที่สร้าง",
+    "archiveAll": "เก็บถาวรทั้งหมด",
+    "comingV2": "เร็วๆ นี้ใน v2"
+  },
+  "startupOs": {
+    "milestone": {
+      "firstRoom": "ห้องแรกพร้อมแล้ว",
+      "firstFolder": "หลายบริษัทเริ่มต้นจากโฟลเดอร์",
+      "firstTable": "โต๊ะแรกมีที่นั่งที่สอง",
+      "firstSignal": "โลกภายนอกเริ่มพูดคุยกันแล้ว",
+      "firstShip": "โลกได้เห็นมันครั้งแรก",
+      "firstBeliever": "ตั้งแต่วันนี้ คุณไม่ได้สร้างสิ่งนี้เพื่อตัวเองเพียงอย่างเดียวอีกต่อไป",
+      "firstRevenue": "ความฝันเริ่มมีกระแสเงินสดแล้ว",
+      "firstReturn": "การกลับมาสำคัญกว่าการมาเยี่ยม",
+      "firstTeam": "สามคนสามารถเริ่มก่อตัวเป็นบริษัทได้",
+      "firstCrowd": "โต๊ะแรกเริ่มแน่นขึ้น",
+      "firstReset": "การเริ่มต้นใหม่คือจุดเริ่มต้นที่ซื่อสัตย์กว่า",
+      "firstPublic": "วางชิ้นส่วนหนึ่งของอนาคตไว้ต่อหน้าสาธารณะ",
+      "firstDemo": "นี่ไม่ใช่การแสดง มันคือการทดสอบ",
+      "graduation": "คุณเติบโตเกินพื้นฐานแล้ว เส้นทางข้างหน้าต้องการเครื่องมือที่แข็งแกร่งขึ้น"
+    },
+    "emptyState": {
+      "default": "หลายบริษัทเริ่มต้นจากโฟลเดอร์",
+      "integrations": "ยังไม่ได้กำหนดค่าคอนเนกเตอร์",
+      "creditActivity": "กิจกรรมเครดิตจะปรากฏขึ้นหลังจากคำขอแรกของคุณ",
+      "usageData": "ข้อมูลการใช้งานจะปรากฏขึ้นเมื่อองค์กรของคุณเริ่มส่งคำขอ",
+      "apiKeys": "ยังไม่มีคีย์",
+      "apiKeysCta": "สร้างคีย์แรกของคุณ",
+      "teamMembers": "คนเดียวก็เริ่มต้นได้ หลายคนก็สร้างได้",
+      "cofounders": "คนแรกที่จะเชื่อในคุณยังไม่ได้ปรากฏขึ้น",
+      "cofoundersDescription": "เมื่อคุณและผู้ร่วมก่อตั้งอีกคนแสดงความสนใจทั้งคู่ พวกเขาจะปรากฏที่นี่",
+      "cofoundersAction": "หาผู้ร่วมก่อตั้ง",
+      "growthChart": "ข้อมูลแนวโน้มจะปรากฏขึ้นเมื่อเริ่มมีกิจกรรม",
+      "revenueChart": "ข้อมูลรายได้จะปรากฏขึ้นเมื่อเริ่มมีการทำธุรกรรม",
+      "webhookDeliveries": "การส่งจะปรากฏที่นี่หลังจากเหตุการณ์แรก",
+      "webhookEndpoints": "เพิ่มเอนดพอยต์ด้านบนเพื่อเริ่มรับเหตุการณ์",
+      "accessInvites": "ยังไม่มีรหัสเชิญ"
+    },
+    "success": "ห้องแรกพร้อมแล้ว",
+    "failure": "การเริ่มต้นใหม่คือจุดเริ่มต้นที่จริงใจกว่า",
+    "errors": {
+      "loadMatches": "ไม่สามารถโหลดแมทช์ได้",
+      "loadMatchesDescription": "เกิดข้อผิดพลาดทางฝั่งเรา กรุณารีเฟรชเพื่อลองอีกครั้ง",
+      "loadWebhookDeliveries": "ไม่สามารถโหลดการส่งได้",
+      "replayWebhookDelivery": "การส่งซ้ำไม่สำเร็จ",
+      "loadWebhookEndpoints": "ไม่สามารถโหลดเอนดพอยต์ได้"
+    },
+    "team": "คนเดียวก็เริ่มได้ หลายคนก็สร้างได้",
+    "revenue": "ความฝันเริ่มมีกระแสเงินสดแล้ว",
+    "growth": "สัญญาณกำลังแข็งแกร่งขึ้น",
+    "deployment": {
+      "primary": "โลกได้มองเห็นมันครั้งแรก",
+      "echo": "มันออกจาก localhost ในที่สุด"
+    },
+    "onboarding": "คุณไม่จำเป็นต้องพร้อม คุณแค่ต้องเริ่ม",
+    "graduation": "คุณเติบโตเกินพื้นฐานแล้ว ลองใช้ {tool} สำหรับเส้นทางข้างหน้า",
+    "company": {
+      "emptyTitle": "หอคอยบริบทแรกของคุณเริ่มต้นที่นี่",
+      "emptyDescription": "คอมไพล์บริษัทใน Startup OS เพื่อดูและแก้ไข context tower",
+      "emptyAction": "เปิด Startup OS",
+      "notice": {
+        "needsProvider": "เชื่อมต่อคีย์ผู้ให้บริการ AI เพื่อกรอกฟิลด์อัตโนมัติ",
+        "generateFailed": "การสร้างไม่เสร็จสมบูรณ์",
+        "saveFailed": "การเปลี่ยนแปลงของคุณไม่ได้ถูกบันทึก"
+      },
+      "action": {
+        "save": "บันทึก",
+        "saving": "กำลังบันทึก…",
+        "cancel": "ยกเลิก",
+        "open": "เปิด Startup OS"
+      }
+    },
+    "execution": {
+      "noBets": "ยังไม่มี bets",
+      "noRuns": "ยังไม่มี runs ที่กำลังทำงาน"
+    },
+    "fileTree": {
+      "empty": "โปรเจกต์นี้ยังไม่มีไฟล์"
+    }
+  },
+  "selectOrg": {
+    "invitation": {
+      "emptyTitle": "Workspace กำลังดำเนินการอยู่",
+      "emptyDescription": "คำเชิญอาจกำลังซิงค์อยู่ รีเฟรชหน้านี้หรือสร้าง workspace ใหม่"
+    },
+    "billing": {
+      "emptyTitle": "สร้าง workspace ก่อนจัดการบิล",
+      "emptyDescription": "การดำเนินการบิลต้องการ workspace ที่ใช้งานอยู่ สร้างก่อน แล้วกลับมายังหน้าบิล"
+    },
+    "default": {
+      "emptyTitle": "พื้นที่ทำงานแรกเริ่มที่นี่",
+      "emptyDescription": "สร้างพื้นที่ทำงานเพื่อเริ่มต้น"
+    }
+  }
+}

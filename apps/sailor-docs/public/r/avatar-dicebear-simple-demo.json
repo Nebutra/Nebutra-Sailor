@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "avatar-dicebear-simple-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/avatar-dicebear-simple-demo.tsx",
+      "content": "\"use client\";\n\nimport { DiceBearAvatar } from \"@nebutra/ui/primitives\";\n\nexport function AvatarDicebearSimpleDemo() {\n  return (\n    <div className=\"gap-4 flex\">\n      <DiceBearAvatar seed=\"rauchg\" avatarStyle=\"bottts-neutral\" size=\"md\" />\n      <DiceBearAvatar\n        seed=\"user@example.com\"\n        avatarStyle=\"pixel-art\"\n        options={{ radius: 50 }}\n        size=\"md\"\n      />\n      <DiceBearAvatar seed=\"guest-session-123\" avatarStyle=\"fun-emoji\" size=\"md\" />\n      <DiceBearAvatar seed=\"my-bot-agent\" avatarStyle=\"bottts\" size=\"md\" />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

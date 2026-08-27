@@ -1,0 +1,254 @@
+name: Deploy Cloud VM Origin
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_target:
+        description: "python-ai deploy target to activate"
+        required: true
+        default: "vm-docker"
+        type: choice
+        options:
+          - vm-docker
+          - ecs-docker
+          - k8s
+          - aws
+          - gcp
+          - railway
+      image_tag:
+        description: "Container tag to deploy for ghcr.io/<owner>/nebutra-ai"
+        required: false
+        default: "latest"
+  workflow_run:
+    workflows: ["Docker Build & Push"]
+    branches: [main]
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-origin-cloud-vm
+  cancel-in-progress: false
+
+jobs:
+  python-ai:
+    name: Deploy python-ai Cloud VM origin
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment: ecs-origin
+    if: >-
+      (github.event_name == 'workflow_dispatch' && (inputs.deploy_target == 'vm-docker' || inputs.deploy_target == 'ecs-docker')) ||
+      (github.event_name == 'workflow_run' &&
+        github.event.workflow_run.conclusion == 'success' &&
+        (vars.DEPLOY_TARGET_PYTHON_AI == 'vm-docker' || vars.DEPLOY_TARGET_PYTHON_AI == 'ecs-docker'))
+    env:
+      VM_PROVIDER: ${{ vars.VM_PROVIDER || vars.CLOUD_VM_PROVIDER || vars.ECS_PROVIDER || 'unknown' }}
+      ECS_HOST: ${{ vars.VM_HOST || vars.CLOUD_VM_HOST || vars.ECS_HOST }}
+      ECS_USER: ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
+      ECS_SSH_PORT: ${{ vars.VM_SSH_PORT || vars.CLOUD_VM_SSH_PORT || vars.ECS_SSH_PORT || '22' }}
+      ECS_ORIGIN_ROOT: ${{ vars.VM_ORIGIN_ROOT || vars.CLOUD_VM_ORIGIN_ROOT || vars.ECS_ORIGIN_ROOT || '/opt/nebutra/origin' }}
+      CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL || secrets.UPSTASH_REDIS_URL || secrets.REDIS_URL }}
+      DATABASE_URL: ${{ secrets.SUPABASE_DATABASE_URL || secrets.DATABASE_URL }}
+      UPLOAD_STORAGE_PROVIDER: ${{ vars.UPLOAD_STORAGE_PROVIDER || 'r2' }}
+      UPLOAD_BUCKET: ${{ vars.UPLOAD_BUCKET || secrets.R2_BUCKET_UPLOADS || secrets.OSS_BUCKET }}
+      R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID || vars.R2_ACCOUNT_ID }}
+      R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+      R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      R2_ENDPOINT: ${{ secrets.R2_ENDPOINT || vars.R2_ENDPOINT }}
+      S3_ENDPOINT: ${{ secrets.S3_ENDPOINT || vars.S3_ENDPOINT }}
+      AWS_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      OSS_ENDPOINT: ${{ secrets.OSS_ENDPOINT || vars.OSS_ENDPOINT }}
+      OSS_BUCKET: ${{ secrets.OSS_BUCKET || vars.OSS_BUCKET }}
+      OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
+      OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+      SOURCE_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+    steps:
+      - name: Checkout origin deploy manifests
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          sparse-checkout: |
+            infra/runtime/docker/docker-compose.origin.yml
+            backends/python/ai
+
+      - name: Resolve image
+        id: image
+        env:
+          INPUT_TAG: ${{ inputs.image_tag }}
+        run: |
+          set -euo pipefail
+          owner="${GITHUB_REPOSITORY_OWNER,,}"
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            tag="sha-${SOURCE_SHA:0:7}"
+          else
+            tag="${INPUT_TAG:-latest}"
+          fi
+          echo "image=ghcr.io/${owner}/nebutra-ai:${tag}" >> "$GITHUB_OUTPUT"
+
+      - name: Validate Cloud VM secrets
+        run: |
+          [ -n "${ECS_HOST:-}" ] || { echo "::error::VM_HOST, CLOUD_VM_HOST, or legacy ECS_HOST repository variable is not set"; exit 1; }
+          [ -n "${ECS_USER:-}" ] || { echo "::error::VM_USER, CLOUD_VM_USER, or legacy ECS_USER repository variable is not set"; exit 1; }
+          [ -n "${{ secrets.VM_SSH_PRIVATE_KEY || secrets.CLOUD_VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}" ] || { echo "::error::VM_SSH_PRIVATE_KEY, CLOUD_VM_SSH_PRIVATE_KEY, or legacy ECS_SSH_PRIVATE_KEY secret is not set"; exit 1; }
+          [ -n "${{ secrets.VM_SSH_KNOWN_HOSTS || secrets.CLOUD_VM_SSH_KNOWN_HOSTS || secrets.ECS_SSH_KNOWN_HOSTS }}" ] || { echo "::error::VM_SSH_KNOWN_HOSTS, CLOUD_VM_SSH_KNOWN_HOSTS, or legacy ECS_SSH_KNOWN_HOSTS secret is not set"; exit 1; }
+          [ -n "${{ secrets.GATEWAY_SHARED_SECRET }}" ] || { echo "::error::GATEWAY_SHARED_SECRET secret is not set"; exit 1; }
+          [ -n "${DATABASE_URL:-}" ] || { echo "::error::SUPABASE_DATABASE_URL or DATABASE_URL secret is required for persistent origin tasks"; exit 1; }
+          [ -n "${CELERY_BROKER_URL:-}" ] || { echo "::error::CELERY_BROKER_URL, UPSTASH_REDIS_URL, or REDIS_URL secret is required for VM Celery"; exit 1; }
+          case "${UPLOAD_STORAGE_PROVIDER:-}" in
+            r2)
+              [ -n "${UPLOAD_BUCKET:-}" ] || { echo "::error::UPLOAD_BUCKET or R2_BUCKET_UPLOADS is required for R2 uploads"; exit 1; }
+              [ -n "${R2_ACCOUNT_ID:-}" ] || [ -n "${R2_ENDPOINT:-}" ] || { echo "::error::R2_ACCOUNT_ID or R2_ENDPOINT is required for R2 uploads"; exit 1; }
+              [ -n "${R2_ACCESS_KEY_ID:-}" ] || { echo "::error::R2_ACCESS_KEY_ID secret is required for R2 uploads"; exit 1; }
+              [ -n "${R2_SECRET_ACCESS_KEY:-}" ] || { echo "::error::R2_SECRET_ACCESS_KEY secret is required for R2 uploads"; exit 1; }
+              ;;
+            s3)
+              [ -n "${UPLOAD_BUCKET:-}" ] || { echo "::error::UPLOAD_BUCKET is required for S3 uploads"; exit 1; }
+              [ -n "${AWS_ACCESS_KEY_ID:-}" ] || { echo "::error::AWS_ACCESS_KEY_ID secret is required for S3 uploads"; exit 1; }
+              [ -n "${AWS_SECRET_ACCESS_KEY:-}" ] || { echo "::error::AWS_SECRET_ACCESS_KEY secret is required for S3 uploads"; exit 1; }
+              ;;
+            oss)
+              [ -n "${UPLOAD_BUCKET:-}" ] || [ -n "${OSS_BUCKET:-}" ] || { echo "::error::UPLOAD_BUCKET or OSS_BUCKET is required for OSS uploads"; exit 1; }
+              [ -n "${OSS_ENDPOINT:-}" ] || { echo "::error::OSS_ENDPOINT is required for OSS uploads"; exit 1; }
+              [ -n "${OSS_ACCESS_KEY_ID:-}" ] || { echo "::error::OSS_ACCESS_KEY_ID secret is required for OSS uploads"; exit 1; }
+              [ -n "${OSS_ACCESS_KEY_SECRET:-}" ] || { echo "::error::OSS_ACCESS_KEY_SECRET secret is required for OSS uploads"; exit 1; }
+              ;;
+            *)
+              echo "::error::UPLOAD_STORAGE_PROVIDER must be r2, s3, or oss for ECS origin"; exit 1
+              ;;
+          esac
+
+      - name: Configure SSH
+        env:
+          SSH_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.CLOUD_VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VM_SSH_KNOWN_HOSTS || secrets.CLOUD_VM_SSH_KNOWN_HOSTS || secrets.ECS_SSH_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          umask 077
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_deploy ~/.ssh/known_hosts
+
+      - name: Upload compose manifest
+        run: |
+          set -euo pipefail
+          ssh_opts=(-o StrictHostKeyChecking=yes -o ConnectTimeout=20 -o ServerAliveInterval=30 -o ServerAliveCountMax=6)
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+            "${ssh_opts[@]}" \
+            "${ECS_USER}@${ECS_HOST}" \
+            "mkdir -p $(printf '%q' "$ECS_ORIGIN_ROOT")"
+          scp -i ~/.ssh/id_deploy -P "${ECS_SSH_PORT}" \
+            "${ssh_opts[@]}" -C \
+            infra/runtime/docker/docker-compose.origin.yml \
+            "${ECS_USER}@${ECS_HOST}:${ECS_ORIGIN_ROOT}/docker-compose.origin.yml"
+
+      - name: Write origin env
+        env:
+          NEBUTRA_AI_IMAGE: ${{ steps.image.outputs.image }}
+          DATABASE_URL: ${{ secrets.SUPABASE_DATABASE_URL || secrets.DATABASE_URL }}
+          REDIS_URL: ${{ secrets.UPSTASH_REDIS_URL || secrets.REDIS_URL }}
+          CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL || secrets.UPSTASH_REDIS_URL || secrets.REDIS_URL }}
+          CELERY_RESULT_BACKEND: ${{ secrets.CELERY_RESULT_BACKEND || secrets.CELERY_BROKER_URL || secrets.UPSTASH_REDIS_URL || secrets.REDIS_URL }}
+          CELERY_TASK_DEFAULT_QUEUE: default
+          CELERY_WORKER_CONCURRENCY: "1"
+          CELERY_PREFETCH_MULTIPLIER: "1"
+          APP_ENV: production
+          TASK_STORE_PROVIDER: postgres
+          TASK_DISPATCHER_PROVIDER: celery
+          UPLOAD_STORE_PROVIDER: postgres
+          UPLOAD_STORAGE_PROVIDER: ${{ env.UPLOAD_STORAGE_PROVIDER }}
+          UPLOAD_BUCKET: ${{ env.UPLOAD_BUCKET }}
+          R2_ACCOUNT_ID: ${{ env.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ env.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ env.R2_SECRET_ACCESS_KEY }}
+          R2_ENDPOINT: ${{ env.R2_ENDPOINT }}
+          S3_ENDPOINT: ${{ env.S3_ENDPOINT }}
+          AWS_REGION: ${{ env.AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }}
+          OSS_ENDPOINT: ${{ env.OSS_ENDPOINT }}
+          OSS_BUCKET: ${{ env.OSS_BUCKET }}
+          OSS_ACCESS_KEY_ID: ${{ env.OSS_ACCESS_KEY_ID }}
+          OSS_ACCESS_KEY_SECRET: ${{ env.OSS_ACCESS_KEY_SECRET }}
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+          SERVICE_SECRET: ${{ secrets.SERVICE_SECRET }}
+          GATEWAY_SHARED_SECRET: ${{ secrets.GATEWAY_SHARED_SECRET }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          set -euo pipefail
+          ssh_opts=(-o StrictHostKeyChecking=yes -o ConnectTimeout=20 -o ServerAliveInterval=30 -o ServerAliveCountMax=6)
+          tmp_env="$(mktemp)"
+          write_env() {
+            key="$1"
+            value="${2:-}"
+            value="${value//$'\r'/}"
+            value="${value//$'\n'/}"
+            printf '%s=%s\n' "$key" "$value"
+          }
+          {
+            write_env NEBUTRA_AI_IMAGE "$NEBUTRA_AI_IMAGE"
+            write_env DATABASE_URL "$DATABASE_URL"
+            write_env REDIS_URL "$REDIS_URL"
+            write_env CELERY_BROKER_URL "$CELERY_BROKER_URL"
+            write_env CELERY_RESULT_BACKEND "$CELERY_RESULT_BACKEND"
+            write_env CELERY_TASK_DEFAULT_QUEUE "$CELERY_TASK_DEFAULT_QUEUE"
+            write_env CELERY_WORKER_CONCURRENCY "$CELERY_WORKER_CONCURRENCY"
+            write_env CELERY_PREFETCH_MULTIPLIER "$CELERY_PREFETCH_MULTIPLIER"
+            write_env APP_ENV "$APP_ENV"
+            write_env TASK_STORE_PROVIDER "$TASK_STORE_PROVIDER"
+            write_env TASK_DISPATCHER_PROVIDER "$TASK_DISPATCHER_PROVIDER"
+            write_env UPLOAD_STORE_PROVIDER "$UPLOAD_STORE_PROVIDER"
+            write_env UPLOAD_STORAGE_PROVIDER "$UPLOAD_STORAGE_PROVIDER"
+            write_env UPLOAD_BUCKET "$UPLOAD_BUCKET"
+            write_env R2_ACCOUNT_ID "$R2_ACCOUNT_ID"
+            write_env R2_ACCESS_KEY_ID "$R2_ACCESS_KEY_ID"
+            write_env R2_SECRET_ACCESS_KEY "$R2_SECRET_ACCESS_KEY"
+            write_env R2_ENDPOINT "$R2_ENDPOINT"
+            write_env S3_ENDPOINT "$S3_ENDPOINT"
+            write_env AWS_REGION "$AWS_REGION"
+            write_env AWS_ACCESS_KEY_ID "$AWS_ACCESS_KEY_ID"
+            write_env AWS_SECRET_ACCESS_KEY "$AWS_SECRET_ACCESS_KEY"
+            write_env OSS_ENDPOINT "$OSS_ENDPOINT"
+            write_env OSS_BUCKET "$OSS_BUCKET"
+            write_env OSS_ACCESS_KEY_ID "$OSS_ACCESS_KEY_ID"
+            write_env OSS_ACCESS_KEY_SECRET "$OSS_ACCESS_KEY_SECRET"
+            write_env UPSTASH_REDIS_REST_URL "$UPSTASH_REDIS_REST_URL"
+            write_env UPSTASH_REDIS_REST_TOKEN "$UPSTASH_REDIS_REST_TOKEN"
+            write_env SERVICE_SECRET "$SERVICE_SECRET"
+            write_env GATEWAY_SHARED_SECRET "$GATEWAY_SHARED_SECRET"
+            write_env OPENAI_API_KEY "$OPENAI_API_KEY"
+            write_env SILICONFLOW_API_KEY "$SILICONFLOW_API_KEY"
+            write_env OPENROUTER_API_KEY "$OPENROUTER_API_KEY"
+            write_env AI_ORIGIN_BIND "${AI_ORIGIN_BIND:-127.0.0.1}"
+          } > "$tmp_env"
+          scp -i ~/.ssh/id_deploy -P "${ECS_SSH_PORT}" \
+            "${ssh_opts[@]}" -C \
+            "$tmp_env" "${ECS_USER}@${ECS_HOST}:${ECS_ORIGIN_ROOT}/.env.origin"
+          rm -f "$tmp_env"
+
+      - name: Deploy origin
+        run: |
+          set -euo pipefail
+          ssh_opts=(-o StrictHostKeyChecking=yes -o ConnectTimeout=20 -o ServerAliveInterval=30 -o ServerAliveCountMax=6)
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+            "${ssh_opts[@]}" \
+            "${ECS_USER}@${ECS_HOST}" \
+            "cd $(printf '%q' "$ECS_ORIGIN_ROOT") && docker compose -f docker-compose.origin.yml pull ai-origin ai-worker && docker compose -f docker-compose.origin.yml up -d ai-origin ai-worker"
+
+      - name: Health check origin
+        run: |
+          set -euo pipefail
+          ssh_opts=(-o StrictHostKeyChecking=yes -o ConnectTimeout=20 -o ServerAliveInterval=30 -o ServerAliveCountMax=6)
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+            "${ssh_opts[@]}" \
+            "${ECS_USER}@${ECS_HOST}" \
+            "cd $(printf '%q' "$ECS_ORIGIN_ROOT") && docker compose -f docker-compose.origin.yml ps ai-origin ai-worker && curl -fsS http://127.0.0.1:8000/health"
+
+      - name: Cleanup SSH
+        if: always()
+        run: rm -rf ~/.ssh

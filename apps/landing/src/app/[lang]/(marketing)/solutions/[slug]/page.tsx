@@ -1,0 +1,61 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { hasLocale } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
+import { FooterMinimal, Navbar } from "@/components/landing";
+import { ChinaVcSolution } from "@/components/landing/solutions/china-vc/ChinaVcSolution";
+import { GlobalVcSolution } from "@/components/landing/solutions/global-vc/GlobalVcSolution";
+import { SolutionPage } from "@/components/landing/solutions/SolutionPage";
+import { prerenderDefaultLocale } from "@/i18n/prerender";
+import { type Locale, routing } from "@/i18n/routing";
+import { getAllSolutionSlugs, getSolution, pick } from "@/lib/constants/solutions-data";
+import { buildPageMetadata } from "@/lib/seo/metadata";
+
+type SolutionDetailPageProps = {
+  params: Promise<{ lang: string; slug: string }>;
+};
+
+export function generateStaticParams() {
+  return prerenderDefaultLocale(getAllSolutionSlugs(), (slug) => ({ slug }));
+}
+
+export async function generateMetadata({ params }: SolutionDetailPageProps): Promise<Metadata> {
+  const { lang, slug } = await params;
+  if (!hasLocale(routing.locales, lang)) return {};
+
+  const solution = getSolution(slug);
+  if (!solution) return {};
+
+  return buildPageMetadata({
+    title: `${pick(solution.label, lang)} | Nebutra Solutions`,
+    description: pick(solution.tagline, lang),
+    path: `/solutions/${solution.slug}`,
+    locale: lang as Locale,
+  });
+}
+
+export default async function SolutionDetailPage({ params }: SolutionDetailPageProps) {
+  const { lang, slug } = await params;
+  if (!hasLocale(routing.locales, lang)) notFound();
+  setRequestLocale(lang as Locale);
+
+  const solution = getSolution(slug);
+  if (!solution) notFound();
+
+  return (
+    <main
+      id="main-content"
+      className="relative min-h-screen overflow-hidden bg-background selection:bg-primary/30"
+    >
+      <Navbar />
+      {solution.slug === "china-vc" ? (
+        <ChinaVcSolution locale={lang as Locale} />
+      ) : solution.slug === "global-vc" ? (
+        <GlobalVcSolution locale={lang as Locale} />
+      ) : (
+        <SolutionPage solution={solution} locale={lang as Locale} />
+      )}
+      <FooterMinimal showFinalCta />
+    </main>
+  );
+}

@@ -1,0 +1,1273 @@
+{
+  "admin": {
+    "title": "Admin",
+    "description": "Panou super-admin — gestionează utilizatorii, organizațiile și starea sistemului.",
+    "nav": {
+      "overview": "Prezentare generală",
+      "users": "Utilizatori",
+      "organizations": "Organizații"
+    },
+    "users": {
+      "title": "Utilizatori",
+      "description": "Răsfoiește, caută și impersonifică orice utilizator din toate organizațiile.",
+      "searchPlaceholder": "Caută utilizatori…",
+      "totalCount": "{count, plural, one {# utilizator} other {# utilizatori}}",
+      "empty": "Niciun utilizator găsit.",
+      "loadError": "Nu s-au putut încărca utilizatorii.",
+      "columns": {
+        "email": "Email",
+        "name": "Nume",
+        "created": "Creat",
+        "activeOrgs": "Org. active",
+        "actions": "Acțiuni"
+      },
+      "viewOrgs": "Vizualizează organizațiile"
+    },
+    "organizations": {
+      "title": "Organizații",
+      "description": "Toate spațiile de lucru din sistem, ordonate după recentă.",
+      "searchPlaceholder": "Caută organizații…",
+      "totalCount": "{count, plural, one {# organizație} other {# organizații}}",
+      "empty": "Nicio organizație găsită.",
+      "loadError": "Nu s-au putut încărca organizațiile.",
+      "columns": {
+        "name": "Nume",
+        "slug": "Slug",
+        "plan": "Plan",
+        "members": "Membri",
+        "created": "Creat",
+        "actions": "Acțiuni"
+      },
+      "view": "Vizualizează"
+    },
+    "impersonate": {
+      "trigger": "Impersonare",
+      "starting": "Se inițiază…",
+      "stop": "Oprește impersonarea",
+      "confirm": "Impersonare {label}? Vei vedea aplicația ca acest utilizator până când o oprești.",
+      "error": "Nu s-a putut porni impersonarea.",
+      "stopError": "Nu s-a putut opri impersonarea."
+    },
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Următor",
+      "pageOf": "Pagina {page} din {total}"
+    }
+  },
+  "Common": {
+    "hello": "Salut Lume",
+    "dashboard": "Panou de control",
+    "actions": {
+      "continue": "Continuă",
+      "confirm": "Confirmă",
+      "done": "Gata",
+      "cancel": "Anulează"
+    }
+  },
+  "theme": {
+    "light": "Luminos",
+    "dark": "Întunecat",
+    "system": "Sistem"
+  },
+  "LocaleSwitcher": {
+    "label": "Limbă",
+    "ariaLabel": "Schimbă limba",
+    "searchPlaceholder": "Caută limbi…",
+    "noResults": "Nicio limbă nu corespunde",
+    "menuAria": "Selectează limba"
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "Număr de înregistrare ICP",
+      "publicSecurity": "Înregistrare securitate publică"
+    },
+    "wechat": {
+      "signIn": "Autentificare cu WeChat",
+      "notConfigured": "Autentificarea WeChat nu este configurată"
+    }
+  },
+  "onboarding": {
+    "title": "Configurează-ți spațiul de lucru",
+    "subtitle": "Trei pași rapizi și ești gata să lansezi.",
+    "steps": {
+      "workspace": "Spațiu de lucru",
+      "invite": "Invită echipa",
+      "plan": "Alege planul"
+    },
+    "progress": {
+      "back": "Înapoi",
+      "stepCounter": "Pasul {current} din {total}"
+    },
+    "plan": {
+      "title": "Alege un plan",
+      "description": "Începe gratuit sau deblochează mai multă capacitate. Poți schimba planul oricând.",
+      "choose": "Alege un plan",
+      "skip": "Sari peste acum"
+    }
+  },
+  "userMenu": {
+    "ariaLabel": "Deschide meniul utilizatorului",
+    "profile": "Profil",
+    "settings": "Setări",
+    "feedback": "Feedback",
+    "theme": "Temă",
+    "language": "Limbă",
+    "signOut": "Deconectare",
+    "signedInAs": "Autentificat ca"
+  },
+  "account": {
+    "profile": {
+      "title": "Profil",
+      "description": "Actualizează-ți informațiile personale.",
+      "nameLabel": "Nume",
+      "namePlaceholder": "Numele tău complet",
+      "emailLabel": "Email",
+      "emailHint": "Vom trimite un link de verificare pentru a confirma o adresă de email nouă.",
+      "languageLabel": "Limbă",
+      "submit": "Salvează modificările",
+      "saving": "Se salvează…",
+      "verifyEmail": "Verifică",
+      "verifying": "Se trimite verificarea…",
+      "success": "Profil actualizat.",
+      "verificationSent": "Email-ul de verificare a fost trimis.",
+      "errorRequiredName": "Numele este obligatoriu.",
+      "errorInvalidEmail": "Adresa de email nu este validă.",
+      "subtitle": "Identitatea și informațiile tale de contact.",
+      "unknown": "Utilizator fără nume",
+      "manageCta": "Deschide setările complete ale contului"
+    },
+    "avatar": {
+      "title": "Avatar",
+      "description": "Încarcă o imagine pătrată (PNG, JPEG sau WebP, maxim 2MB).",
+      "uploadButton": "Încarcă avatar",
+      "uploading": "Se încarcă…",
+      "fileTooBig": "Fișierul este prea mare. Dimensiunea maximă este 2MB.",
+      "invalidType": "Tip de imagine nesuportat. Folosește PNG, JPEG sau WebP.",
+      "success": "Avatar actualizat.",
+      "removeButton": "Elimină avatar",
+      "removed": "Avatar eliminat.",
+      "deleteError": "Eșec la ștergerea avatarului."
+    },
+    "export": {
+      "title": "Exportă-ți datele",
+      "description": "Descarcă o copie a tuturor înregistrărilor pe care le deținem pentru contul tău, inclusiv profil, organizații, evenimente de audit, notificări și invitații.",
+      "compliance": "Obligatoriu conform Articolului 20 din GDPR (Dreptul la portabilitatea datelor) și Articolului 45 din PIPL (Dreptul de a obține o copie a informațiilor personale).",
+      "export": "Exportă-ți datele",
+      "pending": "Se pregătește exportul…",
+      "ready": "Exportul tău este gata.",
+      "download": "Descarcă JSON",
+      "error": "Nu s-a putut pregăti exportul. Te rugăm să încerci din nou."
+    },
+    "emailChange": {
+      "title": "Schimbă adresa de email",
+      "description": "Vom trimite un link de verificare la noua adresă. Schimbarea intră în vigoare doar după ce o confirmi din acea căsuță de email.",
+      "newEmailLabel": "Noua adresă de email",
+      "newEmailPlaceholder": "you@example.com",
+      "submit": "Trimite link-ul de verificare",
+      "submitting": "Se trimite…",
+      "verificationSent": "Verifică căsuța de email de la {email} pentru a confirma schimbarea.",
+      "errorInvalidEmail": "Adresa de email nu este validă.",
+      "error": "Nu s-a putut solicita schimbarea emailului.",
+      "confirm": {
+        "successTitle": "Email actualizat",
+        "successDescription": "Email-ul de autentificare a fost actualizat.",
+        "successWithEmail": "Email-ul tău de autentificare este acum {email}.",
+        "failureTitle": "Nu am putut confirma acel link",
+        "failureDescription": "Acest link de verificare este nevalid, expirat sau deja folosit. Solicită unul nou din setările contului tău.",
+        "errorCode": "Motiv: {code}",
+        "continueCta": "Înapoi la cont",
+        "backCta": "Înapoi la cont"
+      }
+    },
+    "title": "Cont",
+    "ariaLabel": "Setări cont",
+    "navLabel": "Filele setărilor contului",
+    "tip": "Apasă {key} oriunde pentru a redeschide acest dialog.",
+    "tabs": {
+      "profile": "Profil",
+      "subscription": "Abonament",
+      "billing": "Facturare",
+      "preferences": "Preferințe",
+      "personalization": "Personalizare"
+    },
+    "subscription": {
+      "title": "Abonament",
+      "subtitle": "Plan, cotă și reînnoire.",
+      "currentPlan": "Planul curent",
+      "upgradeCta": "Compară planurile",
+      "manageCta": "Gestionează abonamentul"
+    },
+    "billing": {
+      "title": "Facturare",
+      "subtitle": "Istoricul facturilor și metoda de plată.",
+      "empty": {
+        "title": "Încă nu există istoric",
+        "description": "Taxele și facturile vor apărea aici după prima perioadă plătită.",
+        "cta": "Deschide facturarea completă"
+      }
+    },
+    "preferences": {
+      "title": "Preferințe",
+      "subtitle": "Temă și accesibilitate.",
+      "theme": "Temă",
+      "light": "Luminoasă",
+      "dark": "Întunecată",
+      "system": "Sistem",
+      "help": "Ajutor",
+      "reportIssue": "Raportează o problemă",
+      "shortcuts": "Scurtături de tastatură"
+    },
+    "personalization": {
+      "title": "Personalizare",
+      "subtitle": "Spune-i lui Sailor cine ești și cum să răspundă."
+    }
+  },
+  "impact": {
+    "hero_title": "Redefinind Paradigma",
+    "hero_subtitle": "Să nu mai existe afaceri dificile în lume.",
+    "social_title": "Social",
+    "social_headline": "Egalitate Tehnologică Absolută",
+    "social_description": "Putere pentru inovatorii de la margine. Eliminăm filtrele tradiționale și oferim fondatorilor solo infrastructură gata de utilizat.",
+    "governance_title": "Guvernanță",
+    "governance_headline": "Codul e Legea",
+    "governance_description": "Guvernanță algoritmică bazată pe Proof of Work și rezultate reale din business, înlocuind birocrația opacă.",
+    "environment_title": "Mediu",
+    "environment_headline": "Minimalism Digital",
+    "environment_description": "Reducerea amprentei cloud prin integrare extremă SaaS și eficiență maximă a resurselor."
+  },
+  "auth": {
+    "security": {
+      "title": "Securitate",
+      "description": "Gestionează-ți parola, autentificarea multi-factor și sesiunile active.",
+      "managedByProvider": "Setările de securitate sunt gestionate de furnizorul tău de autentificare.",
+      "openProviderProfile": "Deschide profilul",
+      "changePassword": {
+        "title": "Schimbă parola",
+        "description": "Folosește o parolă puternică pe care nu o reutilizezi pe alte site-uri.",
+        "currentPasswordLabel": "Parola actuală",
+        "newPasswordLabel": "Parola nouă",
+        "confirmPasswordLabel": "Confirmă parola nouă",
+        "revokeOtherSessions": "Deconectează-te de pe alte dispozitive",
+        "submit": "Actualizează parola",
+        "pending": "Se actualizează parola…",
+        "success": "Parola a fost actualizată cu succes."
+      },
+      "twoFactor": {
+        "title": "Autentificare cu doi factori",
+        "description": "Adaugă un pas suplimentar de verificare folosind o aplicație de autentificare.",
+        "enabled": "Activat",
+        "disabled": "Dezactivat",
+        "enabledHelp": "Contul tău solicită un cod de autentificare cu 6 cifre după conectarea cu parola.",
+        "disabledHelp": "Protejează-ți contul cu un cod de 6 cifre dintr-o aplicație de autentificare.",
+        "enable": "Activează autentificarea cu doi factori",
+        "disable": "Dezactivează autentificarea cu doi factori",
+        "passwordPrompt": "Confirmă parola",
+        "scanQrCode": "Scanează acest cod QR cu aplicația ta de autentificare, apoi introdu codul de 6 cifre mai jos.",
+        "secretKeyLabel": "Sau introdu acest secret manual",
+        "verificationCodeLabel": "Cod de verificare",
+        "verify": "Verifică și activează",
+        "backupCodesTitle": "Coduri de rezervă",
+        "backupCodesDescription": "Salvează aceste coduri într-un loc sigur. Fiecare poate fi folosit o singură dată dacă pierzi accesul la aplicația de autentificare.",
+        "copyBackupCodes": "Copiază codurile",
+        "finishSetup": "Finalizează configurarea",
+        "successEnabled": "Autentificarea cu doi factori a fost activată.",
+        "successDisabled": "Autentificarea cu doi factori a fost dezactivată."
+      },
+      "sessions": {
+        "title": "Sesiuni active",
+        "description": "Dispozitivele și browserele conectate în prezent la contul tău.",
+        "currentSession": "(actual)",
+        "ipLabel": "Adresă IP",
+        "lastActiveLabel": "Ultima activitate",
+        "revoke": "Deconectare",
+        "revokeAll": "Deconectare de pe toate celelalte dispozitive",
+        "empty": "Nu există alte sesiuni active.",
+        "successRevoked": "Sesiunea a fost încheiată.",
+        "successRevokedAll": "Toate celelalte sesiuni au fost încheiate."
+      },
+      "deleteAccount": {
+        "title": "Ștergere cont",
+        "description": "Elimină definitiv contul și toate datele asociate. Această acțiune nu poate fi anulată.",
+        "passwordPrompt": "Introdu parola pentru confirmare",
+        "confirmTextLabel": "Scrie DELETE pentru a confirma",
+        "submit": "Șterge contul",
+        "cancel": "Anulează",
+        "success": "Contul a fost șters."
+      },
+      "connectedAccounts": {
+        "title": "Conturi conectate",
+        "description": "Verifică metodele de autentificare OAuth legate de identitatea ta Nebutra.",
+        "connected": "Conectat",
+        "connect": "Conectează",
+        "help": "Păstrează cel puțin o metodă de autentificare de încredere disponibilă înainte de a deconecta un furnizor.",
+        "unlink": "Deconectează",
+        "notLinked": "Neconectat"
+      },
+      "passkeys": {
+        "title": "Chei de acces",
+        "description": "Folosește acreditări legate de dispozitiv pentru o autentificare rezistentă la phishing.",
+        "empty": "Nicio cheie de acces înregistrată încă",
+        "addPasskey": "Adaugă cheie de acces",
+        "cancelAdd": "Anulează",
+        "cancelled": "Configurarea cheii de acces a fost anulată. Nimic nu s-a schimbat.",
+        "defaultName": "Cheie de acces {number}",
+        "nameHelp": "Dă acestei chei de acces un nume recognoscibil înainte ca browserul să ceară confirmare.",
+        "nameLabel": "Nume cheie de acces",
+        "rename": "Redenumește",
+        "saveRename": "Salvează numele",
+        "remove": "Elimină",
+        "successAdded": "Cheia de acces a fost adăugată.",
+        "successRemoved": "Cheia de acces a fost eliminată.",
+        "unavailableBadge": "Indisponibil"
+      },
+      "setPassword": {
+        "title": "Setează o parolă",
+        "description": "Adaugă o parolă pentru a te autentifica fără furnizorul tău OAuth.",
+        "submit": "Setează parola",
+        "pending": "Se trimite link-ul pentru configurarea parolei…",
+        "sentMessage": "Am trimis un link pentru configurarea parolei la adresa ta de e-mail."
+      }
+    },
+    "banner": {
+      "logoAlt": "Nebutra",
+      "slogan": "Lansează-ți Startup-ul, guvernat de la prima zi.",
+      "tagline": "Agenți multi-region, multi-tenant din start. Fără echipă de platformă necesară."
+    },
+    "signIn": {
+      "title": "Autentifică-te în Nebutra",
+      "subtitle": "Alege cum vrei să te autentifici.",
+      "continueWith": "Continuă cu",
+      "continueWithProvider": "Continuă cu {provider}",
+      "providers": {
+        "google": "Google",
+        "github": "GitHub",
+        "apple": "Apple",
+        "microsoft": "Microsoft",
+        "feishu": "Feishu"
+      },
+      "providerLoading": "Se redirecționează…",
+      "dividerOr": "Sau continuă cu email",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "continue": "Continuă",
+      "back": "Înapoi",
+      "passwordLabel": "Parolă",
+      "passwordPlaceholder": "Introdu parola",
+      "showPassword": "Afișează parola",
+      "hidePassword": "Ascunde parola",
+      "capsLockOn": "Caps Lock este activat",
+      "forgotPassword": "Ai uitat parola?",
+      "submit": "Autentificare",
+      "submitLoading": "Autentificare…",
+      "useMagicLink": "Trimite-mi un link magic în schimb",
+      "usePasskey": "Autentificare cu cheie de acces",
+      "passkeyTitle": "Autentificare cu cheia de acces",
+      "passkeyDescription": "Folosește Face ID, Touch ID sau cheia de securitate. Nu este nevoie de parolă.",
+      "passkeyButton": "Continuă cu cheia de acces",
+      "passkeyCancelled": "Solicitarea cheii de acces a fost anulată.",
+      "passkeyUnsupported": "Acest browser nu acceptă cheile de acces.",
+      "passkeyError": "Autentificarea cu cheia de acces a eșuat. Încearcă o altă metodă.",
+      "ssoTitle": "Continuă cu SSO Enterprise",
+      "ssoDescription": "Te redirecționăm către {provider} pentru {email}.",
+      "ssoError": "SSO Enterprise nu a putut fi inițiat. Încearcă o altă metodă.",
+      "ssoRetry": "Încearcă din nou",
+      "newToProduct": "Ești nou pe Nebutra?",
+      "signUpLink": "Înregistrează-te",
+      "homeLink": "Acasă",
+      "signInFailed": "Autentificarea a eșuat",
+      "genericError": "A apărut o eroare. Vă rugăm să încercați din nou.",
+      "captchaError": "Verificarea botului a eșuat. Reîmprospătați pagina și încercați din nou.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
+      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
+      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
+      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+    },
+    "signUp": {
+      "title": "Creați-vă contul Nebutra",
+      "subtitle": "Un singur cont pentru fiecare aplicație Nebutra.",
+      "firstNameLabel": "Prenume",
+      "lastNameLabel": "Nume",
+      "firstNamePlaceholder": "Prenume",
+      "lastNamePlaceholder": "Nume",
+      "submit": "Creează cont",
+      "submitLoading": "Se creează contul…",
+      "alreadyHaveAccount": "Aveți deja un cont?",
+      "signInLink": "Autentificare",
+      "signUpFailed": "Înregistrarea a eșuat",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+    },
+    "passkeys": {
+      "title": "Chei de acces",
+      "description": "Folosiți Face ID, Touch ID, Windows Hello sau o cheie de securitate în loc de parolă. Fiecare dispozitiv are propria cheie de acces.",
+      "addButton": "Adaugă o cheie de acces",
+      "adding": "Se configurează…",
+      "namePlaceholder": "ex. MacBook Pro",
+      "nameLabel": "Nume (opțional)",
+      "registerSuccess": "Cheia de acces a fost adăugată.",
+      "registerCancelled": "Configurarea a fost anulată.",
+      "registerUnsupported": "Acest browser nu suportă cheile de acces.",
+      "registerError": "Înregistrarea cheii de acces a eșuat.",
+      "empty": "Încă nu există chei de acces.",
+      "loadError": "Încărcarea cheilor de acces a eșuat.",
+      "revoke": "Elimină",
+      "revoking": "Se elimină…",
+      "revokeConfirm": "Elimini această cheie de acces? Nu te vei mai putea autentifica cu ea.",
+      "revokeSuccess": "Cheia de acces a fost eliminată.",
+      "revokeError": "Eliminarea cheii de acces a eșuat.",
+      "device": {
+        "singleDevice": "Legată de dispozitiv",
+        "multiDevice": "Sincronizat pe dispozitive"
+      },
+      "addedOn": "Adăugat {date}"
+    },
+    "magicLink": {
+      "title": "Autentificare cu link magic",
+      "description": "Introduceți adresa de email și vă vom trimite un cod de 6 cifre pentru autentificare.",
+      "emailLabel": "Email",
+      "send": "Trimite link",
+      "codeLabel": "Cod de verificare",
+      "verify": "Verifică",
+      "resend": "Retrimite codul",
+      "resendCooldown": "Retrimite în {seconds}s",
+      "sentTo": "Am trimis un cod la {email}"
+    },
+    "forgotPassword": {
+      "title": "Ai uitat parola?",
+      "description": "Introduceți adresa de email și vă vom trimite un link pentru resetarea parolei.",
+      "emailLabel": "Email",
+      "submit": "Trimite link de resetare",
+      "successTitle": "Verificați emailul",
+      "success": "Dacă acel email este înregistrat, vei primi în scurt timp un link de resetare."
+    },
+    "resetPassword": {
+      "title": "Resetează parola",
+      "description": "Alege o parolă nouă pentru contul tău.",
+      "newPasswordLabel": "Parolă nouă",
+      "confirmPasswordLabel": "Confirmă parola nouă",
+      "submit": "Resetează parola",
+      "successTitle": "Parola resetată",
+      "successDescription": "Acum te poți autentifica cu noua parolă.",
+      "signInCta": "Mergi la autentificare",
+      "invalidTitle": "Link de resetare nevalid",
+      "invalidDescription": "Acest link de resetare a parolei lipsește sau este format incorect. Solicită unul nou de pe pagina de parolă uitată."
+    },
+    "verifyEmail": {
+      "successTitle": "Email verificat",
+      "successDescription": "Adresa ta de email a fost verificată.",
+      "failureTitle": "Verificare eșuată",
+      "failureDescription": "Nu am putut verifica emailul tău cu acel link.",
+      "continueCta": "Continuă",
+      "signInCta": "Mergi la autentificare"
+    },
+    "loginSuccess": {
+      "eyebrow": "Autentificare finalizată",
+      "title": "Ești autentificat",
+      "description": "Sesiunea ta este pregătită. Deschidem spațiul de lucru Nebutra și păstrăm transferul securizat din fluxul de autentificare.",
+      "session": "Sesiune",
+      "verified": "Verificat",
+      "workspace": "Spațiu de lucru",
+      "preparing": "Se pregătește",
+      "redirecting": "Intrare în spațiul de lucru în {seconds}s",
+      "secureHandoff": "Transfer securizat",
+      "continueCta": "Continuă în spațiul de lucru",
+      "signInCta": "Folosește un alt cont"
+    },
+    "errors": {
+      "invalidCredentials": "Emailul sau parola sunt incorecte.",
+      "userNotFound": "Nu s-a găsit niciun cont cu acest email.",
+      "userAlreadyExists": "Un cont cu acest email există deja.",
+      "weakPassword": "Parola este prea slabă. Folosește cel puțin 8 caractere, cu litere mari și mici și cifre.",
+      "passwordsDontMatch": "Parolele nu coincid.",
+      "passwordTooShort": "Parola trebuie să aibă cel puțin 8 caractere.",
+      "currentPasswordIncorrect": "Parola actuală este incorectă.",
+      "samePassword": "Parola nouă trebuie să fie diferită de parola actuală.",
+      "invalidEmail": "Adresa de email nu este validă.",
+      "emailNotVerified": "Vă rugăm să vă verificați mai întâi adresa de email.",
+      "sessionExpired": "Sesiunea dvs. a expirat. Vă rugăm să vă autentificați din nou.",
+      "twoFactorRequired": "Este necesară verificarea în doi pași.",
+      "invalidVerificationCode": "Codul de verificare este incorect sau a expirat.",
+      "twoFactorAlreadyEnabled": "Autentificarea în doi pași este deja activată.",
+      "twoFactorNotEnabled": "Autentificarea în doi pași nu este activată.",
+      "tooManyAttempts": "Prea multe încercări. Vă rugăm să încercați din nou mai târziu.",
+      "rateLimited": "Faceți asta prea des. Încetiniți ritmul.",
+      "providerNotSupported": "Această acțiune este gestionată de furnizorul dvs. de autentificare.",
+      "networkError": "Eroare de rețea. Verificați conexiunea și încercați din nou.",
+      "unknown": "A apărut o problemă. Vă rugăm să încercați din nou."
+    }
+  },
+  "chat": {
+    "suggestions": {
+      "title": "Încearcă una dintre acestea pentru a începe",
+      "activity": {
+        "title": "Afișează activitatea recentă",
+        "prompt": "Arată-mi cea mai recentă activitate din spațiul meu de lucru din ultimele 24 de ore."
+      },
+      "debug": {
+        "title": "Depanează o eroare",
+        "prompt": "Ajută-mă să depanez o eroare la runtime. Voi lipi stack trace-ul și tu mă poți ghida prin el."
+      },
+      "email": {
+        "title": "Scrie un email de rezumat",
+        "prompt": "Scrie un email concis de rezumat săptămânal pe care îl pot trimite echipei mele despre progresul platformei."
+      },
+      "features": {
+        "title": "Explorează funcțiile platformei",
+        "prompt": "Ghidesc-mă prin funcțiile principale ale acestei platforme SaaS și cum le pot folosi."
+      }
+    }
+  },
+  "billing": {
+    "activePlan": {
+      "title": "Plan activ",
+      "manage": "Gestionează abonamentul",
+      "noPlanTitle": "Niciun plan activ",
+      "noPlanDescription": "Alege un plan pentru a debloca funcțiile plătite și limite mai mari de utilizare.",
+      "choosePlan": "Alege un plan",
+      "renewsOn": "Se reînnoiește pe {date}",
+      "endsOn": "Se termină pe {date}",
+      "trialEndsOn": "Perioada de probă se încheie pe {date}",
+      "status": {
+        "active": "Activ",
+        "trialing": "În probă",
+        "past_due": "În întârziere",
+        "canceled": "Anulat",
+        "free": "Gratuit"
+      },
+      "errors": {
+        "loadFailed": "Nu s-a putut încărca starea facturării."
+      }
+    },
+    "pricing": {
+      "trial": "Perioadă de probă gratuită de {days} zile",
+      "seat": "{count, plural, one {# scaun} other {# scaune}}",
+      "perSeat": "/ scaun"
+    }
+  },
+  "organizations": {
+    "settings": {
+      "logo": {
+        "title": "Logo organizație",
+        "description": "Încarcă o imagine pătrată (PNG, JPEG sau WebP, maxim 2 MB) pentru a reprezenta organizația ta.",
+        "uploadButton": "Încarcă logo",
+        "uploading": "Se încarcă…",
+        "fileTooBig": "Fișierul este prea mare. Dimensiunea maximă este de 2 MB.",
+        "invalidType": "Tip de imagine nesuportat. Folosește PNG, JPEG sau WebP.",
+        "success": "Logo actualizat.",
+        "removeButton": "Elimină logo",
+        "removed": "Logo eliminat."
+      },
+      "name": {
+        "title": "Nume organizație",
+        "description": "Actualizează numele afișat echipei tale și clienților.",
+        "label": "Nume",
+        "submit": "Salvează",
+        "saving": "Se salvează…",
+        "success": "Numele organizației a fost actualizat."
+      },
+      "delete": {
+        "title": "Șterge organizația",
+        "description": "Elimină definitiv această organizație, împreună cu toți membrii, invitațiile și datele asociate. Această acțiune nu poate fi anulată.",
+        "trigger": "Șterge organizația",
+        "confirmLabel": "Scrie numele organizației pentru a confirma",
+        "submit": "Șterge organizația",
+        "cancel": "Anulează",
+        "success": "Organizația a fost ștearsă."
+      }
+    },
+    "invitation": {
+      "title": "Ai fost invitat",
+      "heading": "Ai fost invitat să te alături {organizationName}",
+      "description": "Acceptă invitația pentru a începe să colaborezi cu echipa.",
+      "accept": "Acceptă invitația",
+      "accepting": "Se acceptă...",
+      "decline": "Refuză",
+      "declining": "Se refuză...",
+      "declinedView": "Invitație refuzată",
+      "success": "Am informat persoana care te-a invitat.",
+      "backToDashboard": "Înapoi la panoul de control",
+      "roleLabel": "Rol: {role}",
+      "errorEmailMismatch": "Această invitație a fost trimisă către o altă adresă de e-mail",
+      "errorEmailMismatchDetail": "Autentifică-te cu adresa de e-mail care a primit invitația pentru a o accepta.",
+      "errorExpired": "Invitația a expirat",
+      "errorExpiredDetail": "Cere persoanei care te-a invitat să trimită o invitație nouă.",
+      "errorNotFound": "Invitația nu a fost găsită",
+      "errorNotFoundDetail": "Link-ul de invitație este nevalid sau a fost revocat.",
+      "errorNotAvailable": "Invitația nu este disponibilă",
+      "errorNotAvailableDetail": "Această invitație a fost deja răspunsă și nu mai este activă.",
+      "role": {
+        "owner": "Proprietar",
+        "admin": "Administrator",
+        "member": "Membru",
+        "viewer": "Vizualizator"
+      }
+    }
+  },
+  "settings": {
+    "apiKeys": {
+      "title": "Chei API",
+      "description": "Generează și gestionează chei API pentru accesul programatic la Nebutra.",
+      "createButton": "Creează cheia API",
+      "noPermission": "Nu ai permisiunea de a vizualiza cheile API.",
+      "loading": "Se încarcă…",
+      "loadError": "Nu s-au putut încărca cheile API.",
+      "createError": "Nu s-a putut crea cheia API.",
+      "revokeError": "Nu s-a putut revoca cheia API.",
+      "empty": {
+        "title": "Încă nu există chei API",
+        "cta": "Creează prima ta cheie API"
+      },
+      "columns": {
+        "name": "Nume",
+        "prefix": "Prefix",
+        "lastUsed": "Ultima utilizare",
+        "scopes": "Drepturi",
+        "created": "Creată",
+        "actions": "Acțiuni",
+        "never": "Niciodată"
+      },
+      "actions": {
+        "revoke": "Revocă",
+        "revoking": "Se revocă…",
+        "copy": "Copiază",
+        "copied": "Copiat",
+        "close": "Închide",
+        "submit": "Creează cheia",
+        "submitting": "Se creează…"
+      },
+      "dialog": {
+        "title": "Creează cheie API",
+        "description": "Cheile API permit sistemelor externe să comunice cu Nebutra în numele tău. Tratează-le ca pe parole.",
+        "nameLabel": "Nume",
+        "namePlaceholder": "ex. Backend de producție",
+        "scopesLabel": "Domenii",
+        "successWarning": "Această cheie apare o singură dată. Salveaz-o înainte de a închide.",
+        "confirmClose": "Închiderea ascunde această cheie definitiv. Asigură-te că este salvată."
+      }
+    },
+    "auditLog": {
+      "title": "Jurnal de audit",
+      "description": "Urmărește fiecare acțiune administrativă din spațiul tău de lucru. Filtrează după actor, acțiune, entitate sau interval de timp.",
+      "empty": "Încă nu există evenimente de audit",
+      "loadMore": "Încarcă mai multe",
+      "loading": "Se încarcă…",
+      "forbidden": "Ai nevoie de acces administrativ pentru a vizualiza jurnalul de audit.",
+      "columns": {
+        "when": "Când",
+        "actor": "Actor",
+        "action": "Acțiune",
+        "entity": "Entitate",
+        "outcome": "Rezultat",
+        "ip": "IP"
+      },
+      "diff": {
+        "oldValue": "Valoarea anterioară",
+        "newValue": "Valoarea nouă"
+      },
+      "filters": {
+        "action": "Acțiune",
+        "actionPlaceholder": "Caută acțiune…",
+        "entityType": "Tip entitate",
+        "outcome": "Rezultat",
+        "outcomeSuccess": "Succes",
+        "outcomeFailure": "Eșec",
+        "outcomePending": "În așteptare",
+        "startDate": "Data începerii",
+        "endDate": "Data încheierii",
+        "range24h": "Ultimele 24h",
+        "range7d": "Ultimele 7 zile",
+        "range30d": "Ultimele 30 de zile",
+        "reset": "Resetează",
+        "all": "Toate"
+      }
+    },
+    "notifications": {
+      "title": "Notificări",
+      "description": "Alege cum te contactează Nebutra pentru fiecare tip de eveniment, pe fiecare canal de livrare.",
+      "actions": {
+        "resetAll": "Resetează la valorile implicite",
+        "save": "Salvează"
+      },
+      "status": {
+        "saving": "Se salvează…",
+        "saved": "Salvat",
+        "error": "Salvarea a eșuat. Te rugăm să încerci din nou."
+      },
+      "eventTypes": {
+        "security": {
+          "label": "Alerte de securitate",
+          "description": "Alerte de autentificare, modificări de parolă, modificări de autentificare în doi pași."
+        },
+        "billing": {
+          "label": "Facturare",
+          "description": "Facturi, eșecuri de plată și modificări de abonament."
+        },
+        "invitation": {
+          "label": "Invitații de echipă",
+          "description": "Invitații pentru a te alătura unei organizații, acceptate sau refuzate."
+        },
+        "activity": {
+          "label": "Activitate de echipă",
+          "description": "Membrii s-au alăturat, modificări de rol și alte activități din spațiul de lucru."
+        },
+        "updates": {
+          "label": "Actualizări produs",
+          "description": "Funcționalități noi, puncte cheie din changelog și note de lansare."
+        },
+        "marketing": {
+          "label": "Marketing",
+          "description": "Newsletter și promoții ocazionale. Doar cu opt-in."
+        }
+      },
+      "channels": {
+        "in_app": {
+          "label": "În aplicație"
+        },
+        "email": {
+          "label": "Email"
+        },
+        "push": {
+          "label": "Push"
+        },
+        "sms": {
+          "label": "SMS"
+        }
+      }
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "Abonați-vă la evenimentele emise de spațiul dvs. de lucru. Semnăm fiecare payload cu secretul endpoint-ului dvs., astfel încât să puteți verifica autenticitatea.",
+      "create": {
+        "heading": "Endpoint nou",
+        "urlLabel": "URL endpoint",
+        "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
+        "eventsLegend": "Evenimente",
+        "submit": "Creează endpoint",
+        "submitting": "Se creează…",
+        "selectEvent": "Selectează cel puțin un eveniment.",
+        "successTitle": "Endpoint creat. Secretul de semnătură apare o singură dată.",
+        "successWarning": "Salvează-l în secret manager-ul aplicației înainte de a închide.",
+        "copy": "Copiază",
+        "copied": "Copiat"
+      },
+      "list": {
+        "heading": "End-point-uri active",
+        "empty": "Încă nu există end-point-uri webhook. Creează unul mai sus.",
+        "loading": "Se încarcă…",
+        "loadFailed": "Nu s-au putut încărca webhooks",
+        "columns": {
+          "url": "URL",
+          "events": "Evenimente",
+          "status": "Stare",
+          "lastDelivered": "Ultima livrare",
+          "actions": "Acțiuni"
+        },
+        "status": {
+          "active": "Activ",
+          "disabled": "Dezactivat"
+        },
+        "actions": {
+          "edit": "Modifică",
+          "enable": "Activează",
+          "disable": "Dezactivează",
+          "viewDeliveries": "Vizualizează livrările",
+          "delete": "Șterge"
+        }
+      },
+      "deliveries": {
+        "heading": "Livrări recente",
+        "close": "Închide",
+        "loading": "Se încarcă…",
+        "loadFailed": "Nu s-au putut încărca livrările",
+        "empty": "Încă nu există livrări.",
+        "viewPayload": "Vizualizează sarcina",
+        "hidePayload": "Ascunde sarcina",
+        "replay": "Redă",
+        "replaying": "Se redă…",
+        "status": {
+          "success": "reușită",
+          "failed": "eșuată",
+          "retrying": "se reîncercă"
+        }
+      }
+    },
+    "appearance": {
+      "title": "Aspect",
+      "theme": {
+        "title": "Temă",
+        "description": "Folosește tema deschisă, cea închisă sau setează-o să se potrivească cu preferințele sistemului."
+      },
+      "themePreset": {
+        "title": "Predefiniție temă",
+        "description": "Aplică orice temă din Theme Playground în întreaga aplicație. Controalele de mai jos se aplică peste ea pentru ajustări fine.",
+        "search": "Caută teme…",
+        "searchLabel": "Caută teme",
+        "default": "Implicită",
+        "defaultMood": "Nebutra base palette",
+        "active": "Activă",
+        "empty": "Nicio temă nu se potrivește căutării tale.",
+        "count": "{count} teme"
+      },
+      "themeEditor": {
+        "title": "Temă",
+        "description": "Alege o predefiniție, importă un DESIGN.md, apoi ajustează fin tokenii de mai jos.",
+        "selectLabel": "Predefiniție temă",
+        "import": "Importă",
+        "copy": "Copiază tema",
+        "copied": "Copiat",
+        "copyError": "Copierea a eșuat",
+        "custom": "Personalizat"
+      },
+      "designMd": {
+        "title": "Importă DESIGN.md",
+        "description": "Lipește sau încarcă un DESIGN.md pentru a aplica culoriloe, raza, fonturile, spațierea și umbrele în întreaga aplicație — păstrate după reîncărcare.",
+        "applied": "Aplicat:",
+        "remove": "Elimină"
+      },
+      "themeMode": {
+        "label": "Mod temă",
+        "light": "Luminos",
+        "dark": "Întunecat",
+        "system": "Sistem"
+      },
+      "accent": {
+        "title": "Culoare accent",
+        "description": "Alege o culoare accent de brand care să coloreze stările active în întreaga aplicație.",
+        "label": "Culoare accent",
+        "options": {
+          "default": "Implicit",
+          "blue": "Albastru",
+          "cyan": "Cyan",
+          "violet": "Violet",
+          "pink": "Roz",
+          "amber": "Ambră",
+          "green": "Verde",
+          "red": "Roșu"
+        }
+      },
+      "colors": {
+        "title": "Culori",
+        "description": "Accent, fundal și prim-plan.",
+        "background": {
+          "label": "Fundal",
+          "description": "Suprascrie culoarea fundalului suprafeței."
+        },
+        "foreground": {
+          "label": "Prim-plan",
+          "description": "Suprascrie culoarea textului corpului."
+        },
+        "resetToDefault": "Resetează la implicit"
+      },
+      "fontFamily": {
+        "uiLabel": "Font UI",
+        "uiDescription": "Familia de fonturi utilizată în întreaga interfață.",
+        "codeLabel": "Font pentru cod",
+        "codeDescription": "Familia de fonturi utilizată pentru suprafețele de cod.",
+        "options": {
+          "ui": {
+            "theme": "Implicit temă",
+            "system": "Sistem",
+            "geist": "Geist",
+            "inter": "Inter",
+            "sf": "SF Pro"
+          },
+          "code": {
+            "theme": "Implicit temă",
+            "system": "Sistem mono",
+            "geist-mono": "Geist Mono",
+            "sf-mono": "SF Mono",
+            "jetbrains-mono": "JetBrains Mono"
+          }
+        }
+      },
+      "contrast": {
+        "title": "Contrast",
+        "description": "Ajustați fin contrastul textului (50 = fără modificare).",
+        "label": "Nivel de contrast"
+      },
+      "pointerCursor": {
+        "title": "Folosește cursor pointer",
+        "description": "Comută la un cursor de tip pointer pe elementele interactive la hover.",
+        "label": "Cursor de tip pointer pe elemente interactive"
+      },
+      "diffMarkers": {
+        "title": "Marcatori de diferențe",
+        "description": "Afișează benzi colorate sau glife +/- pe fiecare linie modificată.",
+        "label": "Stil marcator diferențe",
+        "color": "Culoare",
+        "plusminus": "+/-"
+      },
+      "fontSmoothing": {
+        "title": "Netezire fonturi",
+        "description": "Aplică antialiasing nativ pentru fonturi pe macOS.",
+        "label": "Netezire nativă a fonturilor"
+      },
+      "typography": {
+        "title": "Tipografie",
+        "description": "Dimensiuni de bază ale fonturilor pentru interfață și cod.",
+        "uiFontSize": "Dimensiune font interfață",
+        "uiFontSizeDescription": "Ajustează dimensiunea de bază a fontului interfeței.",
+        "codeFontSize": "Dimensiune font cod",
+        "codeFontSizeDescription": "Ajustează dimensiunea de bază a fontului pentru cod."
+      },
+      "fontSize": {
+        "followTheme": "Temă",
+        "customize": "Personalizează"
+      },
+      "motion": {
+        "title": "Reduce mișcarea",
+        "description": "Reduce animațiile sau folosește preferința sistemului.",
+        "label": "Preferință mișcare",
+        "system": "Sistem",
+        "on": "Activat",
+        "off": "Dezactivat"
+      },
+      "surface": {
+        "title": "Bară laterală translucidă",
+        "description": "Aplică un material translucid barei laterale."
+      },
+      "transparency": {
+        "label": "Bară laterală translucidă",
+        "description": "Aplică un material translucid barei laterale."
+      }
+    }
+  },
+  "legal": {
+    "version": "Versiune",
+    "effective": "Valabil",
+    "notFound": "Acest document nu este disponibil.",
+    "backHome": "Înapoi la acasă"
+  },
+  "commandPalette": {
+    "ariaLabel": "Paletă de comenzi",
+    "placeholder": "Scrie o comandă sau caută…",
+    "empty": "Niciun rezultat găsit.",
+    "sections": {
+      "navigation": "Navigare",
+      "actions": "Acțiuni",
+      "settings": "Setări",
+      "account": "Cont",
+      "admin": "Admin",
+      "help": "Ajutor"
+    },
+    "commands": {
+      "nav": {
+        "home": "Acasă",
+        "settings": "Setări",
+        "billing": "Facturare",
+        "team": "Echipă",
+        "apiKeys": "Chei API",
+        "notifications": "Notificări",
+        "auditLog": "Jurnal de audit",
+        "webhooks": "Webhooks",
+        "admin": "Admin"
+      },
+      "action": {
+        "inviteMember": "Invită membru în echipă",
+        "createApiKey": "Creează cheie API",
+        "switchOrganization": "Comută organizația"
+      },
+      "settings": {
+        "themeLight": "Comută la tema deschisă",
+        "themeDark": "Comută la tema întunecată",
+        "themeSystem": "Folosește tema sistemului"
+      },
+      "account": {
+        "signOut": "Deconectare"
+      },
+      "help": {
+        "reportIssue": "Raportează o problemă",
+        "shortcuts": "Scurtături de tastatură"
+      }
+    }
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "Opțiunile tale de confidențialitate",
+      "description": "Folosim cookie-uri pentru a îmbunătăți experiența ta, a analiza traficul site-ului și a personaliza conținutul. Alege categoriile pe care dorești să le permiți."
+    },
+    "button": {
+      "acceptAll": "Acceptă toate",
+      "savePreferences": "Salvează preferințele"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "Necesare",
+        "description": "Necesare pentru funcționarea site-ului. Nu pot fi dezactivate."
+      },
+      "functional": {
+        "label": "Funcțional",
+        "description": "Reține preferințele tale (limbă, temă, aspect)."
+      },
+      "analytics": {
+        "label": "Analitică",
+        "description": "Date anonime de utilizare pentru a îmbunătăți produsul."
+      },
+      "marketing": {
+        "label": "Marketing",
+        "description": "Publicitate personalizată și retargeting pe platforme terțe."
+      }
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "Notificări",
+      "description": "Toate notificările tale într-un singur loc.",
+      "filter": {
+        "all": "Toate",
+        "unread": "Necitite"
+      },
+      "actions": {
+        "markAllRead": "Marchează toate ca citite",
+        "markRead": "Marchează ca citită",
+        "archive": "Arhivează",
+        "loadMore": "Încarcă mai multe",
+        "loading": "Se încarcă...",
+        "selected": "{count} selectate"
+      },
+      "empty": {
+        "all": "Ai rămas la curent.",
+        "unread": "Nu există notificări necitite."
+      },
+      "errors": {
+        "load": "Nu s-au putut încărca notificările.",
+        "network": "Eroare de rețea. Te rugăm să încerci din nou.",
+        "markRead": "Nu s-a putut marca notificarea ca citită.",
+        "archive": "Nu s-a putut arhiva notificarea.",
+        "bulkMarkRead": "Unele notificări nu au putut fi marcate ca citite."
+      },
+      "inbox": {
+        "noBackend": "Inbox necesită un backend persistent de notificări. Verifică configurația furnizorului tău.",
+        "emptyCaughtUp": "Inbox-ul este gol.",
+        "emptyChangelog": "Actualizările din changelog vor apărea aici."
+      }
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Bună dimineața",
+      "afternoon": "Bună ziua",
+      "evening": "Bună seara"
+    },
+    "home": {
+      "connectorsPill": "Activează-ți aplicația cu conectori",
+      "subtitle": "Adaugă un prompt, apasă ⌘K oriunde sau intră direct într-o suprafață de lucru.",
+      "promptPlaceholder": "Ce ai pe minte?",
+      "actions": {
+        "connect": "Conectează o integrare",
+        "theme": "Jocul cu Teme",
+        "audit": "Jurnal de audit",
+        "billing": "Facturare"
+      }
+    },
+    "commandSurface": {
+      "noAuth": "Autentificarea nu este configurată pentru furnizorul selectat. Setează secretele furnizorului pentru a activa sesiunile utilizatorilor."
+    },
+    "commandCenter": {
+      "description": "Începe cu o singură acțiune: întreabă-l pe Sailor, inspectează semnalele din spațiul de lucru sau direcționează activitatea către o suprafață de automatizare.",
+      "openSailor": "Deschide Sailor AI",
+      "viewAnalytics": "Vizualizează Analitica"
+    },
+    "workspaceSnapshot": {
+      "title": "Instantaneu Spațiu de Lucru",
+      "description": "Ultima zi din depozit · {day}",
+      "viewAnalytics": "Vizualizează analitica →",
+      "metrics": {
+        "activeUsers": "Utilizatori Activi",
+        "totalEvents": "Evenimente Totale",
+        "conversions": "Conversii",
+        "revenue": "Venituri"
+      },
+      "details": {
+        "activeUsers": "Utilizatori autentificați",
+        "totalEvents": "Evenimente capturate",
+        "conversions": "Acțiuni calificate",
+        "revenue": "Venituri recunoscute"
+      },
+      "meta": {
+        "snapshot": "Instantaneu",
+        "cadence": "Ritm",
+        "tenant": "Tenant",
+        "daily": "Zilnic",
+        "latestDay": "{day}",
+        "users": "Utilizatori tenant",
+        "events": "Flux de evenimente",
+        "funnel": "Pâlnie",
+        "billing": "Facturare"
+      }
+    },
+    "documentPipeline": {
+      "title": "Pipeline documente",
+      "description": "Trimiteți fișierele sursă în coada de sarcini de origine.",
+      "intakeTitle": "Recepție documente",
+      "intakeDescription": "PDF, Markdown, text sau document Word",
+      "chooseDocument": "Alegeți documentul",
+      "startParseTask": "Începeți sarcina de analiză",
+      "queued": "În coadă",
+      "fileInputLabel": "Fișier document",
+      "fallbackError": "Sarcina documentului a eșuat.",
+      "taskStatus": "Starea sarcinii",
+      "progressLabel": "Progresul sarcinii",
+      "refreshStatus": "Reîmprospătați",
+      "cancelTask": "Anulați",
+      "statusError": "Nu s-a putut reîmprospăta starea sarcinii.",
+      "cancelError": "Nu s-a putut anula sarcina.",
+      "statusQueued": "În coadă",
+      "statusRunning": "În curs de execuție",
+      "statusSucceeded": "Reușită",
+      "statusFailed": "Eșuată",
+      "statusCancelled": "Anulată",
+      "resultReady": "Rezultatul este gata",
+      "taskError": "Eroare sarcină",
+      "updatedAt": "Actualizat"
+    },
+    "recentSessions": {
+      "title": "Continuă de unde ai rămas",
+      "subtitle": "{count, plural, =0 {Nicio sesiune} =1 {1 sesiune recentă} other {# sesiuni recente}}",
+      "viewAll": "Vezi toate →",
+      "newChat": "Conversație nouă",
+      "untitled": "Sesiune fără titlu",
+      "messageCount": "{count, plural, =1 {1 mesaj} other {# mesaje}}"
+    },
+    "gettingStarted": {
+      "title": "Introducere",
+      "description": "{done} din {total} finalizate · finalizează configurarea pentru a debloca spațiul de lucru complet",
+      "progressLabel": "Progres configurare",
+      "tasks": {
+        "team": {
+          "label": "Invită un coleg",
+          "description": "Adaugă cel puțin un colaborator în spațiul tău de lucru."
+        },
+        "api": {
+          "label": "Generează o cheie API",
+          "description": "Acces programatic la punctele tale de acces."
+        },
+        "integration": {
+          "label": "Conectează o integrare",
+          "description": "Stripe, Slack, webhooks, cozi și multe altele."
+        },
+        "ai": {
+          "label": "Deschide Sailor AI",
+          "description": "Încearcă modul chat, date sau workflow."
+        }
+      }
+    }
+  },
+  "Sidebar": {
+    "projects": "Proiecte",
+    "noThreads": "Niciun fir",
+    "expandAll": "Extinde tot",
+    "collapseAll": "Restrânge tot",
+    "sectionMore": "Mai multe opțiuni",
+    "newProject": "Proiect nou",
+    "restoredGroups": "Grupurile anterior extinse au fost restaurate",
+    "newProjectPlaceholder": "Numele proiectului",
+    "newProjectDefault": "Fără titlu",
+    "newProjectSuccess": "Proiect creat",
+    "newProjectError": "Nu s-a putut crea proiectul",
+    "sortBy": "Sortează după",
+    "sortRecent": "Activitate recentă",
+    "sortAlphabetical": "Alfabetic",
+    "sortCreated": "Data creării",
+    "archiveAll": "Arhivează tot",
+    "comingV2": "Disponibil în v2"
+  },
+  "startupOs": {
+    "milestone": {
+      "firstRoom": "Prima cameră este gata.",
+      "firstFolder": "Multe companii încep ca un dosar.",
+      "firstTable": "Prima masă are un al doilea loc.",
+      "firstSignal": "Lumea reală a început să vorbească.",
+      "firstShip": "Lumea o vede pentru prima dată.",
+      "firstBeliever": "Începând de azi, nu mai construiești doar pentru tine.",
+      "firstRevenue": "Visul are acum flux de numerar.",
+      "firstReturn": "Întoarcerea contează mai mult decât vizita.",
+      "firstTeam": "Trei persoane pot începe să formeze o companie.",
+      "firstCrowd": "Prima masă se aglomerează.",
+      "firstReset": "Un restart este un început mai sincer.",
+      "firstPublic": "Pune o bucată din viitor în public.",
+      "firstDemo": "Nu e o demonstrație. E un test.",
+      "graduation": "Ai depășit bazele. Drumul de față necesită instrumente mai puternice."
+    },
+    "emptyState": {
+      "default": "Multe companii încep ca un folder.",
+      "integrations": "Niciun conector configurat.",
+      "creditActivity": "Activitatea de credite va apărea după prima cerere.",
+      "usageData": "Datele de utilizare vor apărea după ce organizația ta începe să facă cereri.",
+      "apiKeys": "Încă nu există chei.",
+      "apiKeysCta": "Creează prima cheie",
+      "teamMembers": "Unul poate începe. Cei câțiva pot construi.",
+      "cofounders": "Prima persoană care crede în tine încă nu a apărut.",
+      "cofoundersDescription": "Când tu și un alt fondator semnalezi interes, aceștia apar aici.",
+      "cofoundersAction": "Găsește cofondatori",
+      "growthChart": "Datele de trend vor apărea după ce începe activitatea.",
+      "revenueChart": "Datele de venituri vor apărea după ce încep tranzacțiile.",
+      "webhookDeliveries": "Livrările vor apărea aici după primul eveniment.",
+      "webhookEndpoints": "Adaugă un endpoint mai sus pentru a începe să primești evenimente.",
+      "accessInvites": "Niciun cod de invitație emis."
+    },
+    "success": "Prima cameră este gata.",
+    "failure": "Un restart este un început mai onest.",
+    "errors": {
+      "loadMatches": "Nu s-au putut încărca meciurile.",
+      "loadMatchesDescription": "A apărut o problemă din partea noastră. Reîmprospătează pentru a încerca din nou.",
+      "loadWebhookDeliveries": "Nu s-au putut încărca livrările.",
+      "replayWebhookDelivery": "Redarea nu a funcționat.",
+      "loadWebhookEndpoints": "Nu s-au putut încărca punctele de acces."
+    },
+    "team": "Unul poate începe. Câțiva pot construi.",
+    "revenue": "Visul are acum flux de numerar.",
+    "growth": "Semnalul devine mai puternic.",
+    "deployment": {
+      "primary": "Lumea îl vede pentru prima dată.",
+      "echo": "A părăsit în sfârșit localhost."
+    },
+    "onboarding": "Nu trebuie să fii pregătit. Trebuie să începi.",
+    "graduation": "Ai depășit bazele. Încearcă {tool} pentru drumul de față.",
+    "company": {
+      "emptyTitle": "Prima ta turnă de context începe aici.",
+      "emptyDescription": "Compilează o companie în Startup OS pentru a vedea și edita turnul său de context.",
+      "emptyAction": "Deschide Startup OS",
+      "notice": {
+        "needsProvider": "Conectează o cheie de furnizor AI pentru a completa automat câmpurile.",
+        "generateFailed": "Generarea nu s-a finalizat.",
+        "saveFailed": "Modificările tale nu au fost salvate."
+      },
+      "action": {
+        "save": "Salvează",
+        "saving": "Se salvează…",
+        "cancel": "Anulează",
+        "open": "Deschide Startup OS"
+      }
+    },
+    "execution": {
+      "noBets": "Încă nu există mize.",
+      "noRuns": "Nu există rulări active."
+    },
+    "fileTree": {
+      "empty": "Acest proiect nu are încă fișiere."
+    }
+  },
+  "selectOrg": {
+    "invitation": {
+      "emptyTitle": "Spațiul de lucru este în curs de creare.",
+      "emptyDescription": "Invitația s-ar putea să fie încă în sincronizare. Reîmprospătează această pagină sau creează un spațiu de lucru separat."
+    },
+    "billing": {
+      "emptyTitle": "Creează un spațiu de lucru înainte de facturare.",
+      "emptyDescription": "Acțiunile de facturare necesită un spațiu de lucru activ. Creează unul mai întâi, apoi revino la facturare."
+    },
+    "default": {
+      "emptyTitle": "Prima spațiu de lucru începe aici.",
+      "emptyDescription": "Creează un spațiu de lucru pentru a începe."
+    }
+  }
+}

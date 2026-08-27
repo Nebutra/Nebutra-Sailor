@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Nebutra Cloud Portability Contract",
+  "type": "object",
+  "required": ["version", "defaultTopology", "principles", "providers", "ci"],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "defaultTopology": {
+      "type": "object",
+      "required": ["frontend", "gateway", "originBackend"],
+      "additionalProperties": false,
+      "properties": {
+        "frontend": {
+          "type": "string"
+        },
+        "gateway": {
+          "type": "string"
+        },
+        "originBackend": {
+          "type": "string"
+        }
+      }
+    },
+    "principles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "providers": {
+      "type": "object",
+      "required": ["aws", "gcp", "cloud-vm", "k8s", "vercel"],
+      "additionalProperties": false,
+      "properties": {
+        "aws": {
+          "$ref": "#/$defs/provider"
+        },
+        "gcp": {
+          "$ref": "#/$defs/provider"
+        },
+        "cloud-vm": {
+          "$ref": "#/$defs/provider"
+        },
+        "k8s": {
+          "$ref": "#/$defs/provider"
+        },
+        "vercel": {
+          "$ref": "#/$defs/provider"
+        }
+      }
+    },
+    "ci": {
+      "type": "object",
+      "required": ["doctor", "verify", "workflows"],
+      "additionalProperties": false,
+      "properties": {
+        "doctor": {
+          "type": "string"
+        },
+        "verify": {
+          "type": "string"
+        },
+        "workflows": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        }
+      }
+    }
+  },
+  "$defs": {
+    "provider": {
+      "type": "object",
+      "required": ["status", "compute", "registry", "auth", "terraformModule", "deployTargets"],
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "compute": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "registry": {
+          "type": "object",
+          "required": ["kind"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "imagePattern": {
+              "type": "string"
+            }
+          }
+        },
+        "auth": {
+          "type": "object",
+          "required": ["githubActions"],
+          "additionalProperties": false,
+          "properties": {
+            "githubActions": {
+              "type": "string"
+            },
+            "variables": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "secrets": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "terraformModule": {
+          "type": ["string", "null"]
+        },
+        "deployTargets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "header": "# Changelog\n\nAll notable changes to Nebutra-Sailor will be documented in this file.\n\nThe format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),\nand this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).\n\n",
+  "types": [
+    { "type": "feat", "section": "🆕 Features" },
+    { "type": "fix", "section": "🐛 Bug Fixes" },
+    { "type": "perf", "section": "⚡ Performance Improvements" },
+    { "type": "refactor", "section": "♻️ Code Refactoring" },
+    { "type": "docs", "section": "📚 Documentation", "hidden": false },
+    { "type": "style", "section": "💄 Styles", "hidden": true },
+    { "type": "test", "section": "✅ Tests", "hidden": true },
+    { "type": "build", "section": "📦 Build System", "hidden": false },
+    { "type": "ci", "section": "👷 CI/CD", "hidden": true },
+    { "type": "chore", "section": "🔧 Chores", "hidden": true },
+    { "type": "revert", "section": "⏪ Reverts" }
+  ],
+  "commitUrlFormat": "https://github.com/{{owner}}/{{repository}}/commit/{{hash}}",
+  "compareUrlFormat": "https://github.com/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}",
+  "issueUrlFormat": "https://github.com/{{owner}}/{{repository}}/issues/{{id}}",
+  "userUrlFormat": "https://github.com/{{user}}",
+  "releaseCommitMessageFormat": "chore(release): v{{currentTag}}",
+  "infile": "changelog/CHANGELOG.md",
+  "skip": {
+    "bump": false,
+    "changelog": false,
+    "commit": false,
+    "tag": false
+  },
+  "scripts": {
+    "prerelease": "pnpm db:generate && pnpm lint && pnpm typecheck && pnpm test"
+  },
+  "packageFiles": ["package.json"],
+  "bumpFiles": [
+    {
+      "filename": "package.json",
+      "type": "json"
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+---
+title: AI Overview
+description: Built-in AI capabilities in Nebutra — chat completions, embeddings, and semantic search powered by OpenAI and OpenRouter.
+---
+
+## What's included
+
+Nebutra ships AI features out of the box via `@nebutra/agents`, a thin wrapper around the [Vercel AI SDK](https://sdk.vercel.ai/) that adds tenant context, rate limiting, and usage metering automatically.
+
+The following capabilities are available to every tenant:
+
+| Feature | Description | Feature Flag |
+|---------|-------------|--------------|
+| **Chat completions** | Streaming and non-streaming LLM responses | `ai.chat` |
+| **Embeddings** | Vector representations for semantic search and RAG | `ai.embeddings` |
+| **Image analysis** | Vision-capable model support (GPT-5) | `ai.chat` |
+| **Model selection** | Per-tenant model overrides (Enterprise) | `ai.model_selection` |
+
+## Architecture
+
+Requests flow through the API gateway, which applies auth, rate limiting, and metering before proxying to the underlying model provider:
+
+```
+Client App
+    │
+    ▼
+POST /api/v1/ai/chat          (API Gateway — Hono)
+    │
+    ├─ Auth check (API key)
+    ├─ Feature flag check (ai.chat)
+    ├─ Rate limit (per tenant, @nebutra/rate-limit)
+    │
+    ▼
+@nebutra/agents               (Vercel AI SDK v6 wrapper)
+    │
+    ├─ OpenAI  (default)
+    └─ OpenRouter  (multi-model: Claude, Llama, Mistral…)
+    │
+    ▼
+Response / SSE stream
+    │
+    ▼
+@nebutra/metering             (tokens consumed → billing)
+    │
+    ▼
+pgvector (embeddings only)    (PostgreSQL vector storage)
+```
+
+## Supported models
+
+<Tabs>
+  <Tab title="OpenAI (default)">
+
+| Model | Context | Best for |
+|-------|---------|----------|
+| `gpt-5.5` | ~400 k+ | Flagship reasoning, vision, coding |
+| `gpt-5.4-mini` | ~400 k+ | Fast, cost-effective tasks |
+| `text-embedding-3-small` | — | Embeddings (1536 dims) |
+| `text-embedding-3-large` | — | High-accuracy embeddings (3072 dims) |
+
+Ids follow [models.dev](https://models.dev). Prefer semantic tiers (`flagship` / `fast`) via `@nebutra/ai-providers` when possible so defaults stay current without hand-editing strings.
+
+  </Tab>
+  <Tab title="OpenRouter (multi-model)">
+
+| Model | Provider | Notes |
+|-------|----------|-------|
+| `anthropic/claude-sonnet-4.6` | Anthropic | Default flagship reasoning |
+| `anthropic/claude-haiku-4.5` | Anthropic | Fast / cost-efficient |
+| `openai/gpt-5.5` | OpenAI | OpenAI flagship via OpenRouter |
+| `google/gemini-3.1-pro-preview` | Google | Long-context flagship |
+| `google/gemini-3.5-flash` | Google | Fast multimodal |
+
+Pass the full model slug to `streamText` / `generateText`. Live catalog: [models.dev](https://models.dev) / [OpenRouter models](https://openrouter.ai/models).
+
+  </Tab>
+</Tabs>
+
+## Feature flags
+
+AI features are disabled by default and must be enabled per tenant. The flags are checked in the API gateway before any model call is made — no tokens are consumed if a flag is off.
+
+```typescript
+// Programmatically enable AI for a tenant
+import { setFeatureFlag } from "@nebutra/preset";
+
+await setFeatureFlag("org_123", "ai.chat", true);
+await setFeatureFlag("org_123", "ai.embeddings", true);
+```
+
+You can also toggle flags from the dashboard under **Organization → Features**.
+
+## Environment variables
+
+Add these to your `.env` (or Vercel environment variables):
+
+```bash
+# Required: at least one provider key
+OPENAI_API_KEY=""
+
+# Optional: enables multi-model routing via OpenRouter
+OPENROUTER_API_KEY=""
+
+# Default model used when none is specified per-request
+AI_DEFAULT_MODEL="gpt-5.4-mini"
+
+# Optional: override for embedding model
+AI_EMBEDDING_MODEL="text-embedding-3-small"
+```
+
+<Warning>
+Never expose `OPENAI_API_KEY` or `OPENROUTER_API_KEY` to the client. All model calls must go through the API gateway.
+</Warning>
+
+## Usage and quotas
+
+Token consumption is automatically metered via `@nebutra/metering` and counts against the tenant's API quota. You can inspect current usage from code or the dashboard:
+
+```typescript
+import { getMetering, COMMON_METERS } from "@nebutra/metering";
+
+const metering = await getMetering();
+const quota = await metering.getQuota("org_123", "ai_tokens");
+// → { limit: 5000000, used: 1243000, remaining: 3757000, percentage: 0.249 }
+```
+
+Quota limits by plan:
+
+| Plan | AI tokens / month |
+|------|------------------|
+| FREE | 100,000 |
+| PRO | 5,000,000 |
+| ENTERPRISE | Custom |
+
+## Quick usage example
+
+```typescript
+import { streamText, generateText, embed } from "@nebutra/agents";
+
+// Streaming chat (SSE)
+const result = await streamText({
+  model: "gpt-5.5",
+  messages: [
+    { role: "system", content: "You are a helpful assistant." },
+    { role: "user", content: userMessage },
+  ],
+  tenantId,
+});
+
+// Non-streaming
+const { text } = await generateText({
+  model: "gpt-5.4-mini",
+  prompt: "Summarize: " + content,
+  tenantId,
+});
+
+// Embeddings
+const { embedding } = await embed({
+  model: "text-embedding-3-small",
+  value: "text to embed",
+  tenantId,
+});
+```
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Chatbot" icon="message-bot" href="/ai/chatbot">
+    Build a chatbot with the chat completions API.
+  </Card>
+  <Card title="Streaming" icon="bolt" href="/ai/streaming">
+    Real-time streaming responses via SSE.
+  </Card>
+  <Card title="Embeddings" icon="vector-square" href="/ai/embeddings">
+    Semantic search and RAG with pgvector.
+  </Card>
+  <Card title="Metering" icon="chart-bar" href="/concepts/billing-model">
+    How AI token usage counts against quotas.
+  </Card>
+</CardGroup>

@@ -1,0 +1,3719 @@
+{
+  "pdfData": [
+    [
+      {
+        "bbox": [90, 357, 814, 562],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 云毓智能品牌视觉识别手册",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 0,
+        "id": "9d61f75f-2e04-447c-a359-254055317c51",
+        "page_size": [1920, 1080],
+        "block_position": "0-0"
+      },
+      {
+        "bbox": [88, 610, 449, 731],
+        "type": "text",
+        "angle": 0,
+        "index": 2,
+        "text": "NebutraBrand visual identitymanual",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 0,
+        "id": "d295f34f-be9f-465f-bb33-1b0483e6effc",
+        "page_size": [1920, 1080],
+        "block_position": "0-1"
+      },
+      {
+        "bbox": [90, 992, 458, 1022],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000002,
+        "text": "Corporate Identity February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 0,
+        "is_discarded": true,
+        "id": "e5c5c1f1-4a97-4be9-9ecf-ae62963f4cb9",
+        "page_size": [1920, 1080],
+        "block_position": "0-2"
+      }
+    ],
+    [
+      {
+        "bbox": [192, 112, 391, 209],
+        "type": "title",
+        "angle": 0,
+        "index": 0,
+        "text": "# 目录 三录",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 1,
+        "id": "7ac66ed7-7438-4328-a9b7-1f1c27a82748",
+        "page_size": [1920, 1080],
+        "block_position": "1-0"
+      },
+      {
+        "bbox": [422, 163, 696, 210],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# / CONTENT",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 1,
+        "id": "c3478389-c1e0-4d1d-8689-92b7ae4c85a5",
+        "page_size": [1920, 1080],
+        "block_position": "1-1"
+      },
+      {
+        "bbox": [195, 349, 286, 439],
+        "type": "title",
+        "angle": 0,
+        "index": 2,
+        "text": "# A",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 1,
+        "id": "80953660-6b80-4b82-a44b-14f03527c802",
+        "page_size": [1920, 1080],
+        "block_position": "1-2"
+      },
+      {
+        "bbox": [343, 349, 614, 400],
+        "type": "title",
+        "angle": 0,
+        "index": 3,
+        "text": "# 品牌基本要素",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 1,
+        "id": "0f41eb55-b2e8-4f06-b2cf-891a2c33e709",
+        "page_size": [1920, 1080],
+        "block_position": "1-3"
+      },
+      {
+        "bbox": [345, 409, 614, 436],
+        "type": "title",
+        "angle": 0,
+        "index": 4,
+        "text": "# Brand Basic Elements",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 1,
+        "id": "cc01372e-9f87-4636-9a29-60819bc1dd0d",
+        "page_size": [1920, 1080],
+        "block_position": "1-4"
+      },
+      {
+        "bbox": [343, 511, 485, 537],
+        "type": "text",
+        "angle": 0,
+        "index": 5,
+        "text": "品牌标准标志",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 1,
+        "id": "cc17484f-2ee5-4ef8-a738-ef9282c27b6f",
+        "page_size": [1920, 1080],
+        "block_position": "1-5"
+      },
+      {
+        "bbox": [345, 557, 485, 584],
+        "type": "text",
+        "angle": 0,
+        "index": 6,
+        "text": "品牌标志墨稿",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 1,
+        "id": "ca279d79-cd81-4aa5-9deb-bb50e3a156dd",
+        "page_size": [1920, 1080],
+        "block_position": "1-6"
+      },
+      {
+        "bbox": [345, 602, 529, 628],
+        "type": "text",
+        "angle": 0,
+        "index": 7,
+        "text": "品牌标志方格制图",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 1,
+        "id": "3dbabe5e-4a6b-46e7-91bb-e1a319513e3a",
+        "page_size": [1920, 1080],
+        "block_position": "1-7"
+      },
+      {
+        "bbox": [345, 648, 622, 673],
+        "type": "text",
+        "angle": 0,
+        "index": 8,
+        "text": "安全空间与最小化比例限定",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 1,
+        "id": "09264df1-0faf-4b57-b84a-0a61c6597c3d",
+        "page_size": [1920, 1080],
+        "block_position": "1-8"
+      },
+      {
+        "bbox": [345, 692, 437, 717],
+        "type": "text",
+        "angle": 0,
+        "index": 9,
+        "text": "使用限定",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 1,
+        "id": "2c383686-bd1d-482f-99e4-b6faafa0a523",
+        "page_size": [1920, 1080],
+        "block_position": "1-9"
+      },
+      {
+        "bbox": [345, 738, 574, 763],
+        "type": "text",
+        "angle": 0,
+        "index": 10,
+        "text": "品牌中文名称方格制图",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 1,
+        "id": "97096c63-9d71-4320-9070-40843e560a9e",
+        "page_size": [1920, 1080],
+        "block_position": "1-10"
+      },
+      {
+        "bbox": [345, 784, 576, 808],
+        "type": "text",
+        "angle": 0,
+        "index": 11,
+        "text": "品牌英文名称方格制图",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 1,
+        "id": "b0168f8b-277c-4463-a888-2c81306f1af2",
+        "page_size": [1920, 1080],
+        "block_position": "1-11"
+      },
+      {
+        "bbox": [345, 828, 599, 853],
+        "type": "text",
+        "angle": 0,
+        "index": 12,
+        "text": "品牌中英文组合方格制图",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 1,
+        "id": "162371c0-a22a-4c1a-a784-f0784d4d238a",
+        "page_size": [1920, 1080],
+        "block_position": "1-12"
+      },
+      {
+        "bbox": [345, 873, 529, 898],
+        "type": "text",
+        "angle": 0,
+        "index": 13,
+        "text": "品牌标准中文字体",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 1,
+        "id": "fcd27c89-f8ea-4d27-8243-080418cd8a43",
+        "page_size": [1920, 1080],
+        "block_position": "1-13"
+      },
+      {
+        "bbox": [345, 919, 529, 943],
+        "type": "text",
+        "angle": 0,
+        "index": 14,
+        "text": "品牌标准英文字体",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 1,
+        "id": "18d80621-2757-4224-a6fe-9f59ec2c20b8",
+        "page_size": [1920, 1080],
+        "block_position": "1-14"
+      },
+      {
+        "bbox": [754, 511, 938, 537],
+        "type": "text",
+        "angle": 0,
+        "index": 15,
+        "text": "品牌标准色及色阶",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 1,
+        "id": "dcb1ca97-fe27-4675-9807-9e997b844221",
+        "page_size": [1920, 1080],
+        "block_position": "1-15"
+      },
+      {
+        "bbox": [754, 557, 938, 583],
+        "type": "text",
+        "angle": 0,
+        "index": 16,
+        "text": "品牌辅助色及色阶",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 1,
+        "id": "dce1533d-19a2-4612-ad82-2813e9c291cd",
+        "page_size": [1920, 1080],
+        "block_position": "1-16"
+      },
+      {
+        "bbox": [754, 602, 894, 628],
+        "type": "text",
+        "angle": 0,
+        "index": 17,
+        "text": "色彩禁用示例",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 1,
+        "id": "106fd92b-7a73-49c2-85c2-2303e54dcee0",
+        "page_size": [1920, 1080],
+        "block_position": "1-17"
+      },
+      {
+        "bbox": [754, 648, 894, 673],
+        "type": "text",
+        "angle": 0,
+        "index": 18,
+        "text": "标志左右组合",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 1,
+        "id": "f49e5303-a555-4788-9c27-c977a625153c",
+        "page_size": [1920, 1080],
+        "block_position": "1-18"
+      },
+      {
+        "bbox": [754, 693, 894, 718],
+        "type": "text",
+        "angle": 0,
+        "index": 19,
+        "text": "标志上下组合",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 1,
+        "id": "dbf389e3-a653-4cb0-8ce0-1075a1620a8b",
+        "page_size": [1920, 1080],
+        "block_position": "1-19"
+      },
+      {
+        "bbox": [754, 738, 950, 763],
+        "type": "text",
+        "angle": 0,
+        "index": 20,
+        "text": "标志左右组合-英文",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 1,
+        "id": "358d086c-955f-47a7-a36a-866a03383e46",
+        "page_size": [1920, 1080],
+        "block_position": "1-20"
+      },
+      {
+        "bbox": [754, 783, 950, 808],
+        "type": "text",
+        "angle": 0,
+        "index": 21,
+        "text": "标志上下组合-英文",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 1,
+        "id": "7360d1cd-ab12-4827-a363-9ee08ac84786",
+        "page_size": [1920, 1080],
+        "block_position": "1-21"
+      },
+      {
+        "bbox": [1261, 349, 1328, 438],
+        "type": "title",
+        "angle": 0,
+        "index": 22,
+        "text": "# B",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 1,
+        "id": "e8d302c4-6657-4d78-84fd-26213685b0d0",
+        "page_size": [1920, 1080],
+        "block_position": "1-22"
+      },
+      {
+        "bbox": [1399, 349, 1668, 399],
+        "type": "title",
+        "angle": 0,
+        "index": 23,
+        "text": "# 品牌标志应用",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 1,
+        "id": "279af07b-3448-4378-91ba-1a39a40c8eb9",
+        "page_size": [1920, 1080],
+        "block_position": "1-23"
+      },
+      {
+        "bbox": [1401, 409, 1720, 440],
+        "type": "title",
+        "angle": 0,
+        "index": 24,
+        "text": "# Application of brand logo",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 1,
+        "id": "b69ae76a-5014-40b1-b9b3-4c0b298f8e54",
+        "page_size": [1920, 1080],
+        "block_position": "1-24"
+      },
+      {
+        "bbox": [1399, 511, 1562, 537],
+        "type": "text",
+        "angle": 0,
+        "index": 25,
+        "text": "接待台及背景墙",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 1,
+        "id": "70f77951-b85a-4791-b2ff-5c041d1fe2b7",
+        "page_size": [1920, 1080],
+        "block_position": "1-25"
+      },
+      {
+        "bbox": [1401, 557, 1541, 584],
+        "type": "text",
+        "angle": 0,
+        "index": 26,
+        "text": "路演板 / 展板",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 1,
+        "id": "fc64f782-6bd0-41a3-b9f4-9a4e1b9a8c52",
+        "page_size": [1920, 1080],
+        "block_position": "1-26"
+      },
+      {
+        "bbox": [1783, 972, 1829, 1017],
+        "type": "page_number",
+        "angle": 0,
+        "index": 1000026,
+        "text": ">",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 1,
+        "is_discarded": true,
+        "id": "332385e2-049b-4684-a604-45e6751d1cd3",
+        "page_size": [1920, 1080],
+        "block_position": "1-27"
+      }
+    ],
+    [
+      {
+        "bbox": [1626, 61, 1827, 90],
+        "type": "header",
+        "angle": 0,
+        "index": -99998,
+        "text": "品牌视觉系统规范",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 2,
+        "is_discarded": true,
+        "id": "a7f233fd-f27f-4f18-915f-6ca2af41507e",
+        "page_size": [1920, 1080],
+        "block_position": "2-0"
+      },
+      {
+        "bbox": [1693, 99, 1829, 125],
+        "type": "header",
+        "angle": 0,
+        "index": -99997,
+        "text": "Visual Design",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 2,
+        "is_discarded": true,
+        "id": "7e0e12bb-3795-4722-8d70-fb5e8dec4afb",
+        "page_size": [1920, 1080],
+        "block_position": "2-1"
+      },
+      {
+        "bbox": [90, 62, 754, 295],
+        "type": "title",
+        "angle": 0,
+        "index": 0,
+        "text": "# A品牌基本要素",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 2,
+        "id": "58fc1d1f-8e1f-45de-aafb-95f7affb3f87",
+        "page_size": [1920, 1080],
+        "block_position": "2-2"
+      },
+      {
+        "bbox": [94, 736, 721, 949],
+        "type": "title",
+        "angle": 0,
+        "index": 3,
+        "text": "# Brand BasicElements",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 2,
+        "id": "28fc3f01-25f2-4428-8381-05b92d3d173b",
+        "page_size": [1920, 1080],
+        "block_position": "2-3"
+      },
+      {
+        "bbox": [90, 999, 330, 1019],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000003,
+        "text": "Corporate Identity February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 2,
+        "is_discarded": true,
+        "id": "ec90f495-1f16-48da-9ee9-2bab807c432f",
+        "page_size": [1920, 1080],
+        "block_position": "2-4"
+      }
+    ],
+    [
+      {
+        "bbox": [67, 66, 374, 88],
+        "type": "header",
+        "angle": 0,
+        "index": -99999,
+        "text": "品牌基本要素 / Brand Basic Elements",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 3,
+        "is_discarded": true,
+        "id": "a005a90c-7561-43be-9fa7-034835e4c481",
+        "page_size": [1920, 1080],
+        "block_position": "3-0"
+      },
+      {
+        "bbox": [69, 124, 343, 170],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 品牌标准标志",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 3,
+        "id": "0a3c2cd5-aa83-45c0-ae33-bf0e890de005",
+        "page_size": [1920, 1080],
+        "block_position": "3-1"
+      },
+      {
+        "bbox": [67, 249, 535, 373],
+        "type": "text",
+        "angle": 0,
+        "index": 2,
+        "text": "品牌标志以首字母N的基础造型概念为主要设计框架，但又不直白的体现首字母的造型，通过几何正负空间构建隐形“N”，通过对基础图形的旋转变换，形成一个近似六边形的稳定结构。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 3,
+        "id": "41e46aed-f4d7-420d-9420-362cd8f0806f",
+        "page_size": [1920, 1080],
+        "block_position": "3-2"
+      },
+      {
+        "bbox": [67, 392, 533, 482],
+        "type": "text",
+        "angle": 0,
+        "index": 3,
+        "text": "色彩上使用清新明快的蓝绿渐变，通过线性渐变与角度渐变的方式填充其中，让整体更具未来感与科技的锋芒。整体表达品牌探索与引领未来，创建智能化连接的理念”",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 3,
+        "id": "e86cb656-bf58-4cf9-afa9-a5c148b48dbe",
+        "page_size": [1920, 1080],
+        "block_position": "3-3"
+      },
+      {
+        "bbox": [992, 277, 1549, 799],
+        "index": 4,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/e823943726f9b24cb7cdabd3d567ebf2209556102bf0fa3ab11aba5c34fe70cb.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.29010416666666666,
+        "page_idx": 3,
+        "id": "82e07650-a1ed-467b-80d7-910c5e9e2444",
+        "page_size": [1920, 1080],
+        "block_position": "3-4"
+      },
+      {
+        "bbox": [90, 974, 207, 1004],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000004,
+        "text": "Corporate IdentityFebruary 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 3,
+        "is_discarded": true,
+        "id": "9950cc63-053a-480a-8be1-2a002a213d0f",
+        "page_size": [1920, 1080],
+        "block_position": "3-5"
+      }
+    ],
+    [
+      {
+        "bbox": [67, 66, 374, 88],
+        "type": "header",
+        "angle": 0,
+        "index": -99999,
+        "text": "品牌基本要素 / Brand Basic Elements",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 4,
+        "is_discarded": true,
+        "id": "fa437c8a-1a0f-4ae5-81ce-d3edc042b6f2",
+        "page_size": [1920, 1080],
+        "block_position": "4-0"
+      },
+      {
+        "bbox": [69, 124, 339, 170],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 品牌标志墨稿",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 4,
+        "id": "4c76e823-888e-4c4b-8dbf-2f2ab7489cf8",
+        "page_size": [1920, 1080],
+        "block_position": "4-1"
+      },
+      {
+        "bbox": [67, 249, 531, 436],
+        "type": "text",
+        "angle": 0,
+        "index": 2,
+        "text": "品牌标志墨稿是以黑白色调呈现的标志设计稿，它在品牌视觉体系中有着不可或缺的作用。首先，墨稿能精准检验标志的结构合理性与图形识别性，剥离色彩干扰后，标志的线条粗细、图形比例、元素关系等细节问题会清晰暴露，帮助设计师及时优化，确保标志在任何场景下都能保持清晰易辨。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 4,
+        "id": "e3b92a7c-53b2-4f73-8c4d-e3e18fddf544",
+        "page_size": [1920, 1080],
+        "block_position": "4-2"
+      },
+      {
+        "bbox": [67, 457, 531, 578],
+        "type": "text",
+        "angle": 0,
+        "index": 3,
+        "text": "其次，墨稿能强化品牌标志的通用性，黑白配色不受印刷工艺、显示设备色彩差异的限制，无论是单色印刷品、黑白显示屏，还是烫金、压印等特殊工艺，都能保证标志完整呈现，有效提升品牌传播的稳定性。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 4,
+        "id": "1a871a0b-b6c6-458b-abc2-6e80482c71a6",
+        "page_size": [1920, 1080],
+        "block_position": "4-3"
+      },
+      {
+        "bbox": [666, 66, 741, 89],
+        "index": 4,
+        "angle": 0,
+        "type": "image_caption",
+        "text": "标志反白",
+        "id": "02993454-84b6-45cf-8b31-1e907ebf7ffa",
+        "color": {
+          "line": "rgba(13, 83, 222 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 4,
+        "page_size": [1920, 1080],
+        "block_position": "4-4"
+      },
+      {
+        "bbox": [816, 144, 1077, 393],
+        "index": 5,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/f6b65e082c07eb304013b16337689821b6c665140db7f60dc2cab52825df3d79.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.2,
+        "page_idx": 4,
+        "id": "fc574633-9bde-4454-b354-0b9d9c7f360f",
+        "page_size": [1920, 1080],
+        "block_position": "4-5"
+      },
+      {
+        "bbox": [1315, 66, 1390, 89],
+        "index": 6,
+        "angle": 0,
+        "type": "image_caption",
+        "text": "标志反白",
+        "id": "e069a1a6-90d6-4af9-88e5-435a24ebb821",
+        "color": {
+          "line": "rgba(13, 83, 222 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 4,
+        "page_size": [1920, 1080],
+        "block_position": "4-6"
+      },
+      {
+        "bbox": [1466, 147, 1724, 388],
+        "index": 7,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/ee7ffa0034d535df384612f9f632639dd451034abda8f024f6637232ec276b01.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.2,
+        "page_idx": 4,
+        "id": "7616e454-66e6-423a-80d1-5a92e7001a3d",
+        "page_size": [1920, 1080],
+        "block_position": "4-7"
+      },
+      {
+        "bbox": [666, 606, 741, 629],
+        "index": 8,
+        "angle": 0,
+        "type": "image_caption",
+        "text": "标志烫金",
+        "id": "b0947ff6-9df9-47d4-beaf-2a35353ebbd7",
+        "color": {
+          "line": "rgba(13, 83, 222 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 4,
+        "page_size": [1920, 1080],
+        "block_position": "4-8"
+      },
+      {
+        "bbox": [816, 687, 1075, 928],
+        "index": 9,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/87e4ea195b5e9411af77642592bf676d004e71fe7df9b4299339254eb0aaadf5.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.2,
+        "page_idx": 4,
+        "id": "3781e095-d38a-4b63-887f-4ee4e881a6bd",
+        "page_size": [1920, 1080],
+        "block_position": "4-9"
+      },
+      {
+        "bbox": [1315, 606, 1390, 629],
+        "index": 10,
+        "angle": 0,
+        "type": "image_caption",
+        "text": "标志烫银",
+        "id": "6d7ad760-b5dc-4517-82ff-14c72ba64ced",
+        "color": {
+          "line": "rgba(13, 83, 222 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 4,
+        "page_size": [1920, 1080],
+        "block_position": "4-10"
+      },
+      {
+        "bbox": [1466, 687, 1724, 928],
+        "index": 11,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/871d1880bd00a585e03bf8acbb7e00344c5cf2cbbd4e690f37e3a8712d7ebb34.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.2,
+        "page_idx": 4,
+        "id": "fb0b2e78-cfad-457b-9a88-37b3b1883e27",
+        "page_size": [1920, 1080],
+        "block_position": "4-11"
+      },
+      {
+        "bbox": [90, 974, 205, 988],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000011,
+        "text": "Corporate Identity",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 4,
+        "is_discarded": true,
+        "id": "7451830f-50d1-48b6-9e9b-b86b6306f612",
+        "page_size": [1920, 1080],
+        "block_position": "4-12"
+      },
+      {
+        "bbox": [90, 989, 180, 1003],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000012,
+        "text": "February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 4,
+        "is_discarded": true,
+        "id": "4ecf8a9c-af69-4435-ae0e-d02c40a82a60",
+        "page_size": [1920, 1080],
+        "block_position": "4-13"
+      }
+    ],
+    [
+      {
+        "bbox": [67, 66, 374, 88],
+        "type": "header",
+        "angle": 0,
+        "index": -99999,
+        "text": "品牌基本要素 / Brand Basic Elements",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 5,
+        "is_discarded": true,
+        "id": "8ef16543-efb1-4265-8a44-233626dac336",
+        "page_size": [1920, 1080],
+        "block_position": "5-0"
+      },
+      {
+        "bbox": [69, 123, 428, 170],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 品牌标志方格制图",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 5,
+        "id": "779ed139-5b49-4338-82e1-7393d2252095",
+        "page_size": [1920, 1080],
+        "block_position": "5-1"
+      },
+      {
+        "bbox": [67, 249, 535, 403],
+        "type": "text",
+        "angle": 0,
+        "index": 2,
+        "text": "方格制图通过精确的网格比例，规定标志中各元素（如线条、图形、文字）的尺寸、间距等参数，确保无论在任何场景下（如印刷、屏幕展示、实体制作），标志的形态都保持统一，避免因手工绘制或缩放导致的变形、比例失调。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 5,
+        "id": "a5d06b03-a86b-4e79-9377-3cdf702a53c3",
+        "page_size": [1920, 1080],
+        "block_position": "5-2"
+      },
+      {
+        "bbox": [1251, 160, 1288, 178],
+        "type": "text",
+        "angle": 0,
+        "index": 3,
+        "text": "7.5a",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 5,
+        "id": "639c9c2a-b9b4-4ec0-9a72-a1c86be04ea8",
+        "page_size": [1920, 1080],
+        "block_position": "5-3"
+      },
+      {
+        "bbox": [902, 220, 1693, 920],
+        "index": 4,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/4345ff19239b8f019b4039faacb2ae0a178f4803409dfb75812b21158da59881.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.4119791666666667,
+        "page_idx": 5,
+        "id": "1abf8bfc-d3e4-4bf0-8187-a85fdbc0a4bc",
+        "page_size": [1920, 1080],
+        "block_position": "5-4"
+      },
+      {
+        "bbox": [90, 973, 205, 988],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000004,
+        "text": "Corporate Identity",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 5,
+        "is_discarded": true,
+        "id": "267a7c18-1d34-41fd-bb8a-c11af6d36f86",
+        "page_size": [1920, 1080],
+        "block_position": "5-5"
+      },
+      {
+        "bbox": [90, 989, 180, 1004],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000005,
+        "text": "February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 5,
+        "is_discarded": true,
+        "id": "5ad672e4-5d6e-4f78-b83a-b6ba8fdc9fa8",
+        "page_size": [1920, 1080],
+        "block_position": "5-6"
+      }
+    ],
+    [
+      {
+        "bbox": [67, 66, 374, 88],
+        "type": "header",
+        "angle": 0,
+        "index": -99999,
+        "text": "品牌基本要素 / Brand Basic Elements",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 6,
+        "is_discarded": true,
+        "id": "42a2c7f0-1319-4e0d-bef0-bb2c0966286b",
+        "page_size": [1920, 1080],
+        "block_position": "6-0"
+      },
+      {
+        "bbox": [67, 124, 249, 170],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 安全空间",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 6,
+        "id": "bacc3ea1-a20f-45ad-bf80-96eaa0d5e4fe",
+        "page_size": [1920, 1080],
+        "block_position": "6-1"
+      },
+      {
+        "bbox": [67, 177, 428, 225],
+        "type": "title",
+        "angle": 0,
+        "index": 2,
+        "text": "# 与最小化比例限定",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 6,
+        "id": "5a196e9c-0beb-4ca0-abd2-b22bd665528d",
+        "page_size": [1920, 1080],
+        "block_position": "6-2"
+      },
+      {
+        "bbox": [67, 302, 531, 357],
+        "type": "text",
+        "angle": 0,
+        "index": 3,
+        "text": "在应用品牌视觉识别系统时，需严格遵守以下规范，确保品牌形象统一、专业。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 6,
+        "id": "5561a56a-7869-404c-bc5b-29c2a332022e",
+        "page_size": [1920, 1080],
+        "block_position": "6-3"
+      },
+      {
+        "bbox": [67, 378, 531, 532],
+        "type": "text",
+        "angle": 0,
+        "index": 4,
+        "text": "标志使用 ：标志应用时必须保留安全空间（最小边距不小于标志高度的1�4），避免元素挤压；最小尺寸要求：印刷媒体高度≥6mm，数字媒体高度 $2 3 5 \\mathrm { p } \\times \\mathrm { _ { \\circ } }$ 。优先使用彩色标识，允许单色版，但禁止在浅色或复杂背景中使用反白标识，以防辨识度降低。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 6,
+        "id": "82655be1-2276-4f8b-bbc2-60cb7c0a71c7",
+        "page_size": [1920, 1080],
+        "block_position": "6-4"
+      },
+      {
+        "bbox": [721, 265, 1198, 702],
+        "index": 5,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/9fc95ed957e000973ff488544d7562feecff53bf09445cec70d89906a4e155a4.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.2484375,
+        "page_idx": 6,
+        "id": "d56efc9e-9f77-4f80-8cf1-bb15ad9e3bd4",
+        "page_size": [1920, 1080],
+        "block_position": "6-5"
+      },
+      {
+        "bbox": [723, 772, 927, 793],
+        "index": 6,
+        "angle": 0,
+        "type": "image_caption",
+        "text": "a. 品牌标志使用安全空间",
+        "id": "55794de7-07a1-4d22-9e3f-259a66ab6d1e",
+        "color": {
+          "line": "rgba(13, 83, 222 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 6,
+        "page_size": [1920, 1080],
+        "block_position": "6-6"
+      },
+      {
+        "bbox": [1232, 282, 1822, 716],
+        "index": 7,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/e0b9e6adc6a5ba03eecaffe5d68316547863885934180facf5302321f9f8cac0.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.3072916666666667,
+        "page_idx": 6,
+        "id": "a9e2884a-494d-4dd0-9a5f-3424c2bb6279",
+        "page_size": [1920, 1080],
+        "block_position": "6-7"
+      },
+      {
+        "bbox": [1349, 771, 1797, 822],
+        "index": 8,
+        "angle": 0,
+        "type": "image_caption",
+        "text": "b. 品牌标志在印刷媒体上最小使用：高度大于等于6mm在网络媒体上最小使用：高度大于等于35px",
+        "id": "17801c9f-997f-40e4-9997-c5e245d94805",
+        "color": {
+          "line": "rgba(13, 83, 222 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 6,
+        "page_size": [1920, 1080],
+        "block_position": "6-8"
+      },
+      {
+        "bbox": [90, 974, 205, 988],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000008,
+        "text": "Corporate Identity",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 6,
+        "is_discarded": true,
+        "id": "f0bfc6ad-64c8-4504-81d4-9e3576ba0b36",
+        "page_size": [1920, 1080],
+        "block_position": "6-9"
+      },
+      {
+        "bbox": [90, 989, 180, 1003],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000009,
+        "text": "February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 6,
+        "is_discarded": true,
+        "id": "4e0d9ea9-5b89-482e-8859-aa1a9162796b",
+        "page_size": [1920, 1080],
+        "block_position": "6-10"
+      }
+    ],
+    [
+      {
+        "bbox": [67, 66, 374, 88],
+        "type": "header",
+        "angle": 0,
+        "index": -99999,
+        "text": "品牌基本要素 / Brand Basic Elements",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 7,
+        "is_discarded": true,
+        "id": "6e715e90-fce9-4948-a118-67216d9a65a7",
+        "page_size": [1920, 1080],
+        "block_position": "7-0"
+      },
+      {
+        "bbox": [67, 124, 249, 170],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 使用限定",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 7,
+        "id": "233246eb-c9ce-42e5-acf6-f674033e23da",
+        "page_size": [1920, 1080],
+        "block_position": "7-1"
+      },
+      {
+        "bbox": [67, 248, 531, 372],
+        "type": "text",
+        "angle": 0,
+        "index": 2,
+        "text": "规定品牌标志的使用限定（即明确标志在不同场景下的禁用规则、限制条件等）是品牌视觉管理的核心环节，其作用与方格制图的 “正向规范” 形成互补，从 “反向约束” 角度保障品牌标志的完整性、识别性和品牌形象的一致性。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 7,
+        "id": "1d3c1169-3502-4ed8-b825-91e1e0144662",
+        "page_size": [1920, 1080],
+        "block_position": "7-2"
+      },
+      {
+        "bbox": [721, 160, 1829, 901],
+        "index": 5,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/1400960950aa7bf989293ddc99775df6a9a5467dede215c6fd5aa58ae7d30009.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.5770833333333333,
+        "page_idx": 7,
+        "id": "ac80dba2-cf79-4e99-88fe-25c0422e4cc3",
+        "page_size": [1920, 1080],
+        "block_position": "7-3"
+      },
+      {
+        "bbox": [90, 973, 205, 987],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000002,
+        "text": "Corporate Identity",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 7,
+        "is_discarded": true,
+        "id": "f935d97b-8b75-473e-8fd2-6fdc4b6c3014",
+        "page_size": [1920, 1080],
+        "block_position": "7-4"
+      },
+      {
+        "bbox": [90, 989, 180, 1003],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000003,
+        "text": "February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 7,
+        "is_discarded": true,
+        "id": "4b792b5b-3329-44fb-aac9-9d93c2a3f40e",
+        "page_size": [1920, 1080],
+        "block_position": "7-5"
+      }
+    ],
+    [
+      {
+        "bbox": [67, 66, 374, 88],
+        "type": "header",
+        "angle": 0,
+        "index": -99999,
+        "text": "品牌基本要素 / Brand Basic Elements",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 8,
+        "is_discarded": true,
+        "id": "78349a19-4939-4c6b-82a1-b8c20d5545cf",
+        "page_size": [1920, 1080],
+        "block_position": "8-0"
+      },
+      {
+        "bbox": [67, 123, 341, 226],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 品牌中文名称方格制图",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 8,
+        "id": "b117da91-154f-4e2f-adbe-e66c279ebebd",
+        "page_size": [1920, 1080],
+        "block_position": "8-1"
+      },
+      {
+        "bbox": [67, 302, 535, 459],
+        "type": "text",
+        "angle": 0,
+        "index": 2,
+        "text": "方格制图通过精确的网格比例，规定标志中各元素（如线条、图形、文字）的尺寸、间距等参数，确保无论在任何场景下（如印刷、屏幕展示、实体制作），标志的形态都保持统一，避免因手工绘制或缩放导致的变形、比例失调。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 8,
+        "id": "a4a633d2-eaf4-4fa8-b85f-135fc6fb9c3d",
+        "page_size": [1920, 1080],
+        "block_position": "8-2"
+      },
+      {
+        "bbox": [1238, 303, 1286, 324],
+        "type": "text",
+        "angle": 0,
+        "index": 3,
+        "text": "13.5a",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 8,
+        "id": "b9db3df4-a9be-4405-a939-3262ac609d8d",
+        "page_size": [1920, 1080],
+        "block_position": "8-3"
+      },
+      {
+        "bbox": [906, 459, 1618, 623],
+        "type": "title",
+        "angle": 0,
+        "index": 4,
+        "text": "# 疏起 一 1",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 8,
+        "id": "a7bfa8b6-6683-47e5-828e-e81756ce8fae",
+        "page_size": [1920, 1080],
+        "block_position": "8-4"
+      },
+      {
+        "bbox": [1752, 529, 1776, 549],
+        "type": "text",
+        "angle": 0,
+        "index": 5,
+        "text": "3a",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 8,
+        "id": "21efd3c7-1663-42cc-a14e-e91c0c1dc3a6",
+        "page_size": [1920, 1080],
+        "block_position": "8-5"
+      },
+      {
+        "bbox": [90, 973, 205, 988],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000005,
+        "text": "Corporate Identity",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 8,
+        "is_discarded": true,
+        "id": "caf5a87b-55c3-438f-840c-5dae2077cf5c",
+        "page_size": [1920, 1080],
+        "block_position": "8-6"
+      },
+      {
+        "bbox": [90, 989, 182, 1004],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000006,
+        "text": "February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 8,
+        "is_discarded": true,
+        "id": "e4cf7843-da70-4c88-acb2-e8a7d8f69085",
+        "page_size": [1920, 1080],
+        "block_position": "8-7"
+      }
+    ],
+    [
+      {
+        "bbox": [67, 66, 374, 88],
+        "type": "header",
+        "angle": 0,
+        "index": -99999,
+        "text": "品牌基本要素 / Brand Basic Elements",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 9,
+        "is_discarded": true,
+        "id": "d6a7e2ec-f58c-40e0-b0bc-4439f37fcf75",
+        "page_size": [1920, 1080],
+        "block_position": "9-0"
+      },
+      {
+        "bbox": [67, 123, 343, 226],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 品牌英文名称方格制图",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 9,
+        "id": "623b4e7c-08c1-451a-b6fe-f7ef0a2f2f34",
+        "page_size": [1920, 1080],
+        "block_position": "9-1"
+      },
+      {
+        "bbox": [67, 302, 535, 459],
+        "type": "text",
+        "angle": 0,
+        "index": 2,
+        "text": "方格制图通过精确的网格比例，规定标志中各元素（如线条、图形、文字）的尺寸、间距等参数，确保无论在任何场景下（如印刷、屏幕展示、实体制作），标志的形态都保持统一，避免因手工绘制或缩放导致的变形、比例失调。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 9,
+        "id": "d93e4596-d8e5-4ee8-85df-1cfa5ee64f35",
+        "page_size": [1920, 1080],
+        "block_position": "9-2"
+      },
+      {
+        "bbox": [894, 328, 1716, 698],
+        "index": 4,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/a90262b79fb0870a604b0979cf108b91e2ab6da3dc5f6157a9ca4c86af57b2a1.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.428125,
+        "page_idx": 9,
+        "id": "58d1f0fa-78ff-4905-8e16-c627d95ff999",
+        "page_size": [1920, 1080],
+        "block_position": "9-3"
+      },
+      {
+        "bbox": [90, 973, 207, 1004],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000002,
+        "text": "Corporate IdentityFebruary 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 9,
+        "is_discarded": true,
+        "id": "d74fe306-5fc3-4b08-90e3-981d79dbe6c2",
+        "page_size": [1920, 1080],
+        "block_position": "9-4"
+      }
+    ],
+    [
+      {
+        "bbox": [67, 66, 374, 88],
+        "type": "header",
+        "angle": 0,
+        "index": -99999,
+        "text": "品牌基本要素 / Brand Basic Elements",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 10,
+        "is_discarded": true,
+        "id": "8d3f9d99-22c4-4b26-9dc6-4e47172ec0cb",
+        "page_size": [1920, 1080],
+        "block_position": "10-0"
+      },
+      {
+        "bbox": [65, 123, 385, 225],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 品牌中英文组合方格制图",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 10,
+        "id": "59962c3f-5af6-47f8-bbc1-e78af7ba038d",
+        "page_size": [1920, 1080],
+        "block_position": "10-1"
+      },
+      {
+        "bbox": [67, 302, 535, 459],
+        "type": "text",
+        "angle": 0,
+        "index": 2,
+        "text": "方格制图通过精确的网格比例，规定标志中各元素（如线条、图形、文字）的尺寸、间距等参数，确保无论在任何场景下（如印刷、屏幕展示、实体制作），标志的形态都保持统一，避免因手工绘制或缩放导致的变形、比例失调。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 10,
+        "id": "2ffca179-23c4-4326-938b-cf31cf15e32e",
+        "page_size": [1920, 1080],
+        "block_position": "10-2"
+      },
+      {
+        "bbox": [1248, 225, 1294, 246],
+        "type": "text",
+        "angle": 0,
+        "index": 3,
+        "text": "13.5a",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 10,
+        "id": "e6ae7c3b-4bcb-44cf-b48b-9aac40502d98",
+        "page_size": [1920, 1080],
+        "block_position": "10-3"
+      },
+      {
+        "bbox": [768, 274, 1785, 860],
+        "index": 4,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/d630c610531f86547ebfd99398095fc12251d50534ca99920c65efe36a9c77ed.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.5296875,
+        "page_idx": 10,
+        "id": "9aa1b05d-c888-480d-87ba-cb504f9aecbd",
+        "page_size": [1920, 1080],
+        "block_position": "10-4"
+      },
+      {
+        "bbox": [90, 973, 207, 989],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000004,
+        "text": "Corporate Identity",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 10,
+        "is_discarded": true,
+        "id": "4718f34f-a0e8-42e6-b9c4-3626bea1db19",
+        "page_size": [1920, 1080],
+        "block_position": "10-5"
+      },
+      {
+        "bbox": [90, 989, 182, 1004],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000005,
+        "text": "February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 10,
+        "is_discarded": true,
+        "id": "1c32c180-0d1d-42a6-bde1-373c5025d492",
+        "page_size": [1920, 1080],
+        "block_position": "10-6"
+      }
+    ],
+    [
+      {
+        "bbox": [67, 66, 374, 88],
+        "type": "header",
+        "angle": 0,
+        "index": -99999,
+        "text": "品牌基本要素 / Brand Basic Elements",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 11,
+        "is_discarded": true,
+        "id": "50913e71-c898-424b-ae72-4acfc007adf3",
+        "page_size": [1920, 1080],
+        "block_position": "11-0"
+      },
+      {
+        "bbox": [69, 123, 430, 172],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 品牌标准中文字体",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 11,
+        "id": "dd11bd2f-8a91-4f48-971d-411f92457183",
+        "page_size": [1920, 1080],
+        "block_position": "11-1"
+      },
+      {
+        "bbox": [67, 248, 531, 305],
+        "type": "text",
+        "angle": 0,
+        "index": 2,
+        "text": "为使视觉形象更加统一，企业对内办公、传播文件等在一般情况下应用本章规定的专用字体。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 11,
+        "id": "238ce960-099a-47e5-aec5-17ee030ca584",
+        "page_size": [1920, 1080],
+        "block_position": "11-2"
+      },
+      {
+        "bbox": [67, 326, 531, 383],
+        "type": "text",
+        "angle": 0,
+        "index": 3,
+        "text": "在一般情况下使用品牌标识，应尽量使用提供的电子文件，不建议重绘标识。尽量避免在重绘中出现误差。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 11,
+        "id": "832ea6bc-c70b-4fff-b639-64c158456938",
+        "page_size": [1920, 1080],
+        "block_position": "11-3"
+      },
+      {
+        "bbox": [714, 152, 1520, 224],
+        "type": "text",
+        "angle": 0,
+        "index": 4,
+        "text": "无锡云毓智能科技有限公司",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 11,
+        "id": "3e7be841-1b9c-4edf-8f2b-6c26ef02d89f",
+        "page_size": [1920, 1080],
+        "block_position": "11-4"
+      },
+      {
+        "bbox": [1680, 157, 1825, 184],
+        "type": "text",
+        "angle": 0,
+        "index": 5,
+        "text": "vivo Sans Light",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 11,
+        "id": "4fdeeb5c-a118-40fa-b272-654165ac076b",
+        "page_size": [1920, 1080],
+        "block_position": "11-5"
+      },
+      {
+        "bbox": [716, 314, 1520, 386],
+        "type": "text",
+        "angle": 0,
+        "index": 6,
+        "text": "无锡云毓智能科技有限公司",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 11,
+        "id": "36822a38-f7f7-476e-8bb9-f0cb383a81d7",
+        "page_size": [1920, 1080],
+        "block_position": "11-6"
+      },
+      {
+        "bbox": [1658, 320, 1824, 345],
+        "type": "text",
+        "angle": 0,
+        "index": 7,
+        "text": "vivo Sans Regular",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 11,
+        "id": "2569fdf3-ab7d-48b5-9b2a-4451650cd8c4",
+        "page_size": [1920, 1080],
+        "block_position": "11-7"
+      },
+      {
+        "bbox": [716, 476, 1520, 547],
+        "type": "text",
+        "angle": 0,
+        "index": 8,
+        "text": "无锡云毓智能科技有限公司",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 11,
+        "id": "b8d06986-c312-4b71-90c0-faf19aedba05",
+        "page_size": [1920, 1080],
+        "block_position": "11-8"
+      },
+      {
+        "bbox": [1653, 481, 1824, 505],
+        "type": "text",
+        "angle": 0,
+        "index": 9,
+        "text": "vivo Sans Medium",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 11,
+        "id": "80ebf3f8-d049-4f81-bc09-4fbf4c6884ec",
+        "page_size": [1920, 1080],
+        "block_position": "11-9"
+      },
+      {
+        "bbox": [716, 639, 1520, 710],
+        "type": "text",
+        "angle": 0,
+        "index": 10,
+        "text": "无锡云毓智能科技有限公司",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 11,
+        "id": "235f4cba-bc44-4882-9c7d-bf289ba3ecc2",
+        "page_size": [1920, 1080],
+        "block_position": "11-10"
+      },
+      {
+        "bbox": [1641, 643, 1825, 667],
+        "type": "text",
+        "angle": 0,
+        "index": 11,
+        "text": "vivo Sans DemiBold",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 11,
+        "id": "4b846365-a5b6-4ac5-9ef8-5ccdcb657cd7",
+        "page_size": [1920, 1080],
+        "block_position": "11-11"
+      },
+      {
+        "bbox": [716, 801, 1520, 873],
+        "type": "text",
+        "angle": 0,
+        "index": 12,
+        "text": "无锡云毓智能科技有限公司",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 11,
+        "id": "29c518b2-d3e4-427d-b10e-3561976c271a",
+        "page_size": [1920, 1080],
+        "block_position": "11-12"
+      },
+      {
+        "bbox": [1687, 805, 1825, 829],
+        "type": "text",
+        "angle": 0,
+        "index": 13,
+        "text": "vivo Sans Bold",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 11,
+        "id": "187abad5-8080-408d-a788-4360e9b8149e",
+        "page_size": [1920, 1080],
+        "block_position": "11-13"
+      },
+      {
+        "bbox": [90, 973, 205, 989],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000013,
+        "text": "Corporate Identity",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 11,
+        "is_discarded": true,
+        "id": "6c18889d-7957-4006-ab0b-f0cb22b0ed4c",
+        "page_size": [1920, 1080],
+        "block_position": "11-14"
+      },
+      {
+        "bbox": [90, 989, 182, 1004],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000014,
+        "text": "February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 11,
+        "is_discarded": true,
+        "id": "a285add0-3ce8-4632-adf9-9781615a8c09",
+        "page_size": [1920, 1080],
+        "block_position": "11-15"
+      }
+    ],
+    [
+      {
+        "bbox": [67, 66, 374, 88],
+        "type": "header",
+        "angle": 0,
+        "index": -99999,
+        "text": "品牌基本要素 / Brand Basic Elements",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 12,
+        "is_discarded": true,
+        "id": "60e6cc11-c301-4f66-a7df-345ed603d6b3",
+        "page_size": [1920, 1080],
+        "block_position": "12-0"
+      },
+      {
+        "bbox": [69, 123, 430, 171],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 品牌标准英文字体",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 12,
+        "id": "f5efd672-042f-4730-871d-decc68b8d9d9",
+        "page_size": [1920, 1080],
+        "block_position": "12-1"
+      },
+      {
+        "bbox": [67, 248, 531, 305],
+        "type": "text",
+        "angle": 0,
+        "index": 2,
+        "text": "为使视觉形象更加统一，企业对内办公、传播文件等在一般情况下应用本章规定的专用字体。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 12,
+        "id": "c24ea129-e203-4232-8366-c9d869e87206",
+        "page_size": [1920, 1080],
+        "block_position": "12-2"
+      },
+      {
+        "bbox": [67, 326, 531, 383],
+        "type": "text",
+        "angle": 0,
+        "index": 3,
+        "text": "在一般情况下使用品牌标识，应尽量使用提供的电子文件，不建议重绘标识。尽量避免在重绘中出现误差。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 12,
+        "id": "f11a4c04-81e0-48fd-839f-8ca70bbf0559",
+        "page_size": [1920, 1080],
+        "block_position": "12-3"
+      },
+      {
+        "bbox": [683, 169, 839, 200],
+        "type": "text",
+        "angle": 0,
+        "index": 4,
+        "text": "Poppins Regular",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 12,
+        "id": "56d670c3-eb3b-4bcb-b8f3-60f3752d466c",
+        "page_size": [1920, 1080],
+        "block_position": "12-4"
+      },
+      {
+        "bbox": [1009, 163, 1825, 335],
+        "type": "text",
+        "angle": 0,
+        "index": 5,
+        "text": "ABCDEFGHI JKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 # $ @%&,.-+()",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 12,
+        "id": "e196f9f0-2787-44b5-9c62-5af34f67dd51",
+        "page_size": [1920, 1080],
+        "block_position": "12-5"
+      },
+      {
+        "bbox": [683, 447, 842, 473],
+        "type": "text",
+        "angle": 0,
+        "index": 6,
+        "text": "Poppins Medium",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 12,
+        "id": "7cfd4f23-f793-4ac0-82ba-3b813f5a4606",
+        "page_size": [1920, 1080],
+        "block_position": "12-6"
+      },
+      {
+        "bbox": [1009, 436, 1845, 608],
+        "type": "text",
+        "angle": 0,
+        "index": 7,
+        "text": "ABCDEFGHI JKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 # $ @%&,.-+()",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 12,
+        "id": "1bc907cb-2452-4890-acd3-33a268e0c3e5",
+        "page_size": [1920, 1080],
+        "block_position": "12-7"
+      },
+      {
+        "bbox": [683, 718, 850, 745],
+        "type": "text",
+        "angle": 0,
+        "index": 8,
+        "text": "Poppins SemiBold",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 12,
+        "id": "726f60d0-bdd6-4b75-81ca-d38997710a01",
+        "page_size": [1920, 1080],
+        "block_position": "12-8"
+      },
+      {
+        "bbox": [1008, 707, 1860, 880],
+        "type": "text",
+        "angle": 0,
+        "index": 9,
+        "text": "ABCDEFGHI JKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 # $ @%&,.-+()",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 12,
+        "id": "ec18f32a-01ce-4252-9253-0e3c18768736",
+        "page_size": [1920, 1080],
+        "block_position": "12-9"
+      },
+      {
+        "bbox": [90, 973, 205, 1003],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000009,
+        "text": "Corporate IdentityFebruary 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 12,
+        "is_discarded": true,
+        "id": "8f4ee44c-93a0-431b-871d-9f1adeb9b4a7",
+        "page_size": [1920, 1080],
+        "block_position": "12-10"
+      }
+    ],
+    [
+      {
+        "bbox": [67, 66, 374, 88],
+        "type": "header",
+        "angle": 0,
+        "index": -99999,
+        "text": "品牌基本要素 / Brand Basic Elements",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 13,
+        "is_discarded": true,
+        "id": "bd77ddb8-47fc-4912-bd66-6786694153e1",
+        "page_size": [1920, 1080],
+        "block_position": "13-0"
+      },
+      {
+        "bbox": [69, 124, 430, 171],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 品牌标准色及色阶",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 13,
+        "id": "830168e0-6f2e-4fc2-9cec-c40294d3e8f3",
+        "page_size": [1920, 1080],
+        "block_position": "13-1"
+      },
+      {
+        "bbox": [67, 249, 535, 421],
+        "type": "text",
+        "angle": 0,
+        "index": 2,
+        "text": "云毓蓝品牌的核心标准色。蓝色象征科技与信任，契合云毓智能在AI-SaaS与云端数据智能领域的专业定位。“云”代表云端平台，“毓”寓意孕育与转化。这一色彩诠释了我们致力于将分散数据在云端整合、处理，并转化为有价值产品与服务的使命。它体现了创新、可靠与无限潜力，传递出公司在智能科技领域的前瞻性与突破精神。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 13,
+        "id": "9de3d425-e29c-444c-b3cf-e972273011e6",
+        "page_size": [1920, 1080],
+        "block_position": "13-2"
+      },
+      {
+        "bbox": [879, 237, 1002, 280],
+        "type": "title",
+        "angle": 0,
+        "index": 3,
+        "text": "# 云毓蓝",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 13,
+        "id": "13ca9efc-9e0c-431d-8c35-63e460ae0c3e",
+        "page_size": [1920, 1080],
+        "block_position": "13-3"
+      },
+      {
+        "bbox": [881, 294, 983, 314],
+        "type": "text",
+        "angle": 0,
+        "index": 4,
+        "text": "Nebutra Blue",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 13,
+        "id": "3869ab17-6833-40fd-9952-9a843b69c50d",
+        "page_size": [1920, 1080],
+        "block_position": "13-4"
+      },
+      {
+        "bbox": [881, 387, 929, 407],
+        "type": "text",
+        "angle": 0,
+        "index": 5,
+        "text": "HTML",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 13,
+        "id": "272f65a6-c780-4435-80c5-2fc147fdefcb",
+        "page_size": [1920, 1080],
+        "block_position": "13-5"
+      },
+      {
+        "bbox": [881, 419, 952, 436],
+        "type": "text",
+        "angle": 0,
+        "index": 6,
+        "text": "#0033FE",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 13,
+        "id": "4021fad1-e430-4e74-ad18-9907752cbd89",
+        "page_size": [1920, 1080],
+        "block_position": "13-6"
+      },
+      {
+        "bbox": [881, 477, 917, 496],
+        "type": "text",
+        "angle": 0,
+        "index": 7,
+        "text": "RGB",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 13,
+        "id": "095453c5-90e4-4efc-99aa-c26c8ac52c5c",
+        "page_size": [1920, 1080],
+        "block_position": "13-7"
+      },
+      {
+        "bbox": [881, 507, 958, 527],
+        "type": "text",
+        "angle": 0,
+        "index": 8,
+        "text": "0 51 254",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 13,
+        "id": "bc7db816-a612-4c20-bdc7-41c8c174c260",
+        "page_size": [1920, 1080],
+        "block_position": "13-8"
+      },
+      {
+        "bbox": [90, 974, 205, 988],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000008,
+        "text": "Corporate Identity",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 13,
+        "is_discarded": true,
+        "id": "7ec07778-c712-4a1b-979d-32aa505ed25a",
+        "page_size": [1920, 1080],
+        "block_position": "13-9"
+      },
+      {
+        "bbox": [90, 989, 182, 1004],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000009,
+        "text": "February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 13,
+        "is_discarded": true,
+        "id": "5c4c6f01-e86b-4d09-95c1-9391200e9f3c",
+        "page_size": [1920, 1080],
+        "block_position": "13-10"
+      }
+    ],
+    [
+      {
+        "bbox": [67, 66, 374, 88],
+        "type": "header",
+        "angle": 0,
+        "index": -99999,
+        "text": "品牌基本要素 / Brand Basic Elements",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 14,
+        "is_discarded": true,
+        "id": "439f5e31-024a-462e-bd70-3aa9176581f8",
+        "page_size": [1920, 1080],
+        "block_position": "14-0"
+      },
+      {
+        "bbox": [69, 123, 430, 171],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 品牌辅助色及色阶",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 14,
+        "id": "92db1ba4-549f-411b-a78c-a1459636c64b",
+        "page_size": [1920, 1080],
+        "block_position": "14-1"
+      },
+      {
+        "bbox": [67, 249, 531, 359],
+        "type": "text",
+        "angle": 0,
+        "index": 2,
+        "text": "品牌主要辅助色定义为“云毓青”。它源于数据流动与智能交互的瞬间，青色的通透感象征着信息的清晰与算法的灵动。这一色彩代表了云毓智能在整合与处理数据过程中的高效与精准，体现了从原始数据到智慧产品的转化路径。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 14,
+        "id": "1dbbdc0e-5851-4477-a715-979a6fb907ad",
+        "page_size": [1920, 1080],
+        "block_position": "14-2"
+      },
+      {
+        "bbox": [67, 379, 531, 461],
+        "type": "text",
+        "angle": 0,
+        "index": 3,
+        "text": "它与主色云毓蓝相辅相成，共同构建出我们可靠而不失创新、专业而充满活力的品牌形象，展现了智能科技与自然生机融合的未来感。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 14,
+        "id": "b8a68154-ec66-4e47-848f-fd4949d2acc1",
+        "page_size": [1920, 1080],
+        "block_position": "14-3"
+      },
+      {
+        "bbox": [775, 238, 894, 280],
+        "type": "title",
+        "angle": 0,
+        "index": 4,
+        "text": "# 云毓青",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 14,
+        "id": "c53e1bd5-957b-46a1-b475-0ada104fd227",
+        "page_size": [1920, 1080],
+        "block_position": "14-4"
+      },
+      {
+        "bbox": [777, 294, 883, 314],
+        "type": "text",
+        "angle": 0,
+        "index": 5,
+        "text": "Nebutra Cyan",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 14,
+        "id": "9d112a00-f89b-4732-987b-9b2720dc2c4a",
+        "page_size": [1920, 1080],
+        "block_position": "14-5"
+      },
+      {
+        "bbox": [777, 387, 825, 407],
+        "type": "text",
+        "angle": 0,
+        "index": 6,
+        "text": "HTML",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 14,
+        "id": "a4b6082d-16b3-4271-ba41-e47078753484",
+        "page_size": [1920, 1080],
+        "block_position": "14-6"
+      },
+      {
+        "bbox": [777, 419, 848, 437],
+        "type": "text",
+        "angle": 0,
+        "index": 7,
+        "text": "#0BF1C3",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 14,
+        "id": "525e5db5-8d1b-4e0b-9e91-70e789fe044f",
+        "page_size": [1920, 1080],
+        "block_position": "14-7"
+      },
+      {
+        "bbox": [777, 477, 814, 496],
+        "type": "text",
+        "angle": 0,
+        "index": 8,
+        "text": "RGB",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 14,
+        "id": "9265310d-db53-49be-b8ce-a29105a0a587",
+        "page_size": [1920, 1080],
+        "block_position": "14-8"
+      },
+      {
+        "bbox": [777, 508, 864, 525],
+        "type": "text",
+        "angle": 0,
+        "index": 9,
+        "text": "11 241 195",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 14,
+        "id": "105f0670-8c79-4584-b97a-f9469110811e",
+        "page_size": [1920, 1080],
+        "block_position": "14-9"
+      },
+      {
+        "bbox": [1507, 96, 1543, 137],
+        "type": "title",
+        "angle": 0,
+        "index": 12,
+        "text": "# 白",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 14,
+        "id": "a3f278b9-28e6-48fc-b97b-b2dee3cba20f",
+        "page_size": [1920, 1080],
+        "block_position": "14-10"
+      },
+      {
+        "bbox": [1507, 152, 1555, 169],
+        "type": "text",
+        "angle": 0,
+        "index": 13,
+        "text": "White",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 14,
+        "id": "a5a6ba96-22f5-464c-8f6f-0c8aa3fa28f3",
+        "page_size": [1920, 1080],
+        "block_position": "14-11"
+      },
+      {
+        "bbox": [1507, 245, 1555, 263],
+        "type": "text",
+        "angle": 0,
+        "index": 14,
+        "text": "HTML",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 14,
+        "id": "1e8ad70a-f47c-4b48-be9b-590209f48639",
+        "page_size": [1920, 1080],
+        "block_position": "14-12"
+      },
+      {
+        "bbox": [1507, 274, 1574, 292],
+        "type": "text",
+        "angle": 0,
+        "index": 15,
+        "text": "#FFFFFF",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 14,
+        "id": "468f45ba-813e-439d-8157-f8f5443d4d9c",
+        "page_size": [1920, 1080],
+        "block_position": "14-13"
+      },
+      {
+        "bbox": [1507, 334, 1543, 353],
+        "type": "text",
+        "angle": 0,
+        "index": 16,
+        "text": "RGB",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 14,
+        "id": "340f80d4-b413-4b96-a192-ccb137c5dafa",
+        "page_size": [1920, 1080],
+        "block_position": "14-14"
+      },
+      {
+        "bbox": [1507, 365, 1612, 384],
+        "type": "text",
+        "angle": 0,
+        "index": 17,
+        "text": "255 255 255",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 14,
+        "id": "0fd17a2d-351f-45dc-901d-1a8598a4ce34",
+        "page_size": [1920, 1080],
+        "block_position": "14-15"
+      },
+      {
+        "bbox": [1507, 637, 1545, 677],
+        "type": "title",
+        "angle": 0,
+        "index": 18,
+        "text": "# 黑",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 14,
+        "id": "b14ed3ee-ecd3-4d2e-9580-b1ef7d889b7c",
+        "page_size": [1920, 1080],
+        "block_position": "14-16"
+      },
+      {
+        "bbox": [1507, 692, 1549, 710],
+        "type": "text",
+        "angle": 0,
+        "index": 19,
+        "text": "Black",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 14,
+        "id": "9c7e6f0e-fb71-424a-b38d-a3a6f0114f5b",
+        "page_size": [1920, 1080],
+        "block_position": "14-17"
+      },
+      {
+        "bbox": [1507, 785, 1555, 803],
+        "type": "text",
+        "angle": 0,
+        "index": 20,
+        "text": "HTML",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 14,
+        "id": "8bcd6773-8e24-4b7c-b7a0-c1b7fddc29f2",
+        "page_size": [1920, 1080],
+        "block_position": "14-18"
+      },
+      {
+        "bbox": [1507, 815, 1582, 833],
+        "type": "text",
+        "angle": 0,
+        "index": 21,
+        "text": "#000000",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 14,
+        "id": "e515b2da-f3ed-4920-ba71-f503566e7217",
+        "page_size": [1920, 1080],
+        "block_position": "14-19"
+      },
+      {
+        "bbox": [1507, 874, 1543, 894],
+        "type": "text",
+        "angle": 0,
+        "index": 22,
+        "text": "RGB",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 14,
+        "id": "19c0f7ec-02b2-4edf-b893-d94fe5dd8888",
+        "page_size": [1920, 1080],
+        "block_position": "14-20"
+      },
+      {
+        "bbox": [1507, 906, 1559, 924],
+        "type": "text",
+        "angle": 0,
+        "index": 23,
+        "text": "0 0 0",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 14,
+        "id": "65044355-66f7-4204-addb-cc665d55b87c",
+        "page_size": [1920, 1080],
+        "block_position": "14-21"
+      },
+      {
+        "bbox": [90, 973, 205, 988],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000009,
+        "text": "Corporate Identity",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 14,
+        "is_discarded": true,
+        "id": "1af08bd9-ff97-4113-8072-6a71841764c3",
+        "page_size": [1920, 1080],
+        "block_position": "14-22"
+      },
+      {
+        "bbox": [90, 989, 182, 1004],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000010,
+        "text": "February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 14,
+        "is_discarded": true,
+        "id": "11675437-9322-4711-bbcb-a267aaf3760f",
+        "page_size": [1920, 1080],
+        "block_position": "14-23"
+      }
+    ],
+    [
+      {
+        "bbox": [67, 66, 374, 88],
+        "type": "header",
+        "angle": 0,
+        "index": -99999,
+        "text": "品牌基本要素 / Brand Basic Elements",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 15,
+        "is_discarded": true,
+        "id": "d1114854-a414-40e2-9ce6-1478bd28d137",
+        "page_size": [1920, 1080],
+        "block_position": "15-0"
+      },
+      {
+        "bbox": [67, 124, 339, 170],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 色彩禁用示例",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 15,
+        "id": "7ec84aa5-59e1-441d-8a82-c2b4f0cba62a",
+        "page_size": [1920, 1080],
+        "block_position": "15-1"
+      },
+      {
+        "bbox": [67, 250, 531, 301],
+        "type": "text",
+        "angle": 0,
+        "index": 2,
+        "text": "为了使品牌标准色彩在未来的传播中更加科学有效，我们设置标准色和辅助色的使用规范。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 15,
+        "id": "ea58cfcd-ab07-48e1-9059-dafb001f2036",
+        "page_size": [1920, 1080],
+        "block_position": "15-2"
+      },
+      {
+        "bbox": [67, 319, 531, 371],
+        "type": "text",
+        "angle": 0,
+        "index": 3,
+        "text": "禁用高饱和度背景与颜色重叠，避免颜色过于刺眼，影响品牌形象；禁用明度过高的重叠颜色，避免影响内容的识别性。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 15,
+        "id": "2cd38930-2d4a-4b23-ba36-07a28b93a8c0",
+        "page_size": [1920, 1080],
+        "block_position": "15-3"
+      },
+      {
+        "bbox": [700, 204, 777, 226],
+        "type": "title",
+        "angle": 0,
+        "index": 4,
+        "text": "# 允许使用",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 15,
+        "id": "8a425084-8f2e-42c5-b8d4-8d2fd0de2220",
+        "page_size": [1920, 1080],
+        "block_position": "15-4"
+      },
+      {
+        "bbox": [840, 440, 885, 471],
+        "index": 5,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/9421a2507165ff7978e8e79828b17e883a7a7eded4c175d4dc3d30c9b95c9759.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.2,
+        "page_idx": 15,
+        "id": "08c81989-dcaa-4c95-bc6a-c47fdfd7c182",
+        "page_size": [1920, 1080],
+        "block_position": "15-5"
+      },
+      {
+        "bbox": [718, 617, 810, 635],
+        "type": "text",
+        "angle": 0,
+        "index": 6,
+        "text": "WE NEVER",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 15,
+        "id": "273de6cc-5c42-476b-b1c0-9138c58b4c5a",
+        "page_size": [1920, 1080],
+        "block_position": "15-6"
+      },
+      {
+        "bbox": [720, 637, 768, 654],
+        "type": "text",
+        "angle": 0,
+        "index": 7,
+        "text": "STOP",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 15,
+        "id": "d00706de-7ad9-4714-bcda-4223aa70c06f",
+        "page_size": [1920, 1080],
+        "block_position": "15-7"
+      },
+      {
+        "bbox": [720, 658, 856, 676],
+        "type": "text",
+        "angle": 0,
+        "index": 8,
+        "text": "APPROACHING",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 15,
+        "id": "3e9b0a02-2fb4-40a4-9715-4c0d2671e5bf",
+        "page_size": [1920, 1080],
+        "block_position": "15-8"
+      },
+      {
+        "bbox": [720, 679, 802, 696],
+        "type": "text",
+        "angle": 0,
+        "index": 9,
+        "text": "PERFECT.",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 15,
+        "id": "37384a5d-61f7-496a-a59e-02c08da2de74",
+        "page_size": [1920, 1080],
+        "block_position": "15-9"
+      },
+      {
+        "bbox": [720, 730, 764, 773],
+        "index": 10,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/50ce2c3522e540e857e620ea2018b3b2557994cf6df250bc2f10f1a22df8b3d1.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.2,
+        "page_idx": 15,
+        "id": "5951f830-f3d2-407c-8ee7-84632ea407b0",
+        "page_size": [1920, 1080],
+        "block_position": "15-10"
+      },
+      {
+        "bbox": [773, 733, 856, 752],
+        "type": "text",
+        "angle": 0,
+        "index": 11,
+        "text": "云毓智能",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 15,
+        "id": "962dde50-0761-4b37-8bee-c92f002175ec",
+        "page_size": [1920, 1080],
+        "block_position": "15-11"
+      },
+      {
+        "bbox": [773, 757, 837, 772],
+        "type": "text",
+        "angle": 0,
+        "index": 12,
+        "text": " Nebutra",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 15,
+        "id": "5f33e67e-599f-4adf-b1a4-b4801780654b",
+        "page_size": [1920, 1080],
+        "block_position": "15-12"
+      },
+      {
+        "bbox": [1136, 204, 1213, 226],
+        "type": "title",
+        "angle": 0,
+        "index": 13,
+        "text": "# 禁止使用",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 15,
+        "id": "0b86178a-e032-4ea4-9e4b-b1ce99d837bc",
+        "page_size": [1920, 1080],
+        "block_position": "15-13"
+      },
+      {
+        "bbox": [1136, 308, 1466, 795],
+        "index": 14,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/b22ddeea6bbbad31c66e7bc50dcdc620bb63ca0a3cc07af86642653285aa1427.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.2,
+        "page_idx": 15,
+        "id": "edce8deb-44cc-40f7-9753-041e0fb022fa",
+        "page_size": [1920, 1080],
+        "block_position": "15-14"
+      },
+      {
+        "bbox": [1136, 819, 1367, 839],
+        "index": 15,
+        "angle": 0,
+        "type": "image_caption",
+        "text": "$\\oslash$ 禁用高饱和度背景与颜色重叠",
+        "id": "d24e7584-ee20-499b-b734-a77948ed8dc8",
+        "color": {
+          "line": "rgba(13, 83, 222 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 15,
+        "page_size": [1920, 1080],
+        "block_position": "15-15"
+      },
+      {
+        "bbox": [1484, 308, 1812, 795],
+        "index": 16,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/fced1e9eec54b6589c8869769882a16375ba7912288d35b8071e5cdaa525e192.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.2,
+        "page_idx": 15,
+        "id": "0f39e115-3d98-4e20-8979-3c6b527ac05b",
+        "page_size": [1920, 1080],
+        "block_position": "15-16"
+      },
+      {
+        "bbox": [1484, 819, 1685, 839],
+        "index": 17,
+        "angle": 0,
+        "type": "image_caption",
+        "text": "$\\cdot$ 禁用明度过高的重叠颜色",
+        "id": "e5d6ae19-5bb3-430f-bfa2-2b52a2368fc5",
+        "color": {
+          "line": "rgba(13, 83, 222 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 15,
+        "page_size": [1920, 1080],
+        "block_position": "15-17"
+      },
+      {
+        "bbox": [90, 974, 205, 988],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000017,
+        "text": "Corporate Identity",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 15,
+        "is_discarded": true,
+        "id": "2aa60df4-e2c8-4f36-a64d-6bec05482b01",
+        "page_size": [1920, 1080],
+        "block_position": "15-18"
+      },
+      {
+        "bbox": [90, 989, 180, 1003],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000018,
+        "text": "February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 15,
+        "is_discarded": true,
+        "id": "5a7cbf7d-bed0-4b7b-9411-2b0c38343644",
+        "page_size": [1920, 1080],
+        "block_position": "15-19"
+      }
+    ],
+    [
+      {
+        "bbox": [67, 66, 374, 88],
+        "type": "header",
+        "angle": 0,
+        "index": -99999,
+        "text": "品牌基本要素 / Brand Basic Elements",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 16,
+        "is_discarded": true,
+        "id": "bfd21113-59f7-4e31-b597-1b2cacd8af89",
+        "page_size": [1920, 1080],
+        "block_position": "16-0"
+      },
+      {
+        "bbox": [67, 123, 341, 172],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 标志左右组合",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 16,
+        "id": "3c681402-3571-424a-9f53-c0ed16dceb1a",
+        "page_size": [1920, 1080],
+        "block_position": "16-1"
+      },
+      {
+        "bbox": [67, 249, 516, 272],
+        "type": "text",
+        "angle": 0,
+        "index": 2,
+        "text": "标志的不同组合形式是品牌视觉系统适配多元场景的核心策略。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 16,
+        "id": "34d170ab-6520-4d85-8975-ce410a153d46",
+        "page_size": [1920, 1080],
+        "block_position": "16-2"
+      },
+      {
+        "bbox": [67, 289, 531, 370],
+        "type": "text",
+        "angle": 0,
+        "index": 3,
+        "text": "左右组合适配横向空间（如门店招牌、横幅广告），避免因空间限制导致标志变形或信息压缩，适合强调 “标志 $^ +$ 品牌名” 的同等重要性。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 16,
+        "id": "1eed4d97-49f9-43a6-a392-52171b476c1d",
+        "page_size": [1920, 1080],
+        "block_position": "16-3"
+      },
+      {
+        "bbox": [67, 388, 531, 470],
+        "type": "text",
+        "angle": 0,
+        "index": 4,
+        "text": "强化应用灵活性：不同组合形式能应对印刷、屏幕、实体物料等多样载体，确保在包装、工牌、社交媒体等场景中，标志始终清晰完整，维持品牌一致性。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 16,
+        "id": "f531366e-e6c0-4ae5-88a9-4caf616efa04",
+        "page_size": [1920, 1080],
+        "block_position": "16-4"
+      },
+      {
+        "bbox": [687, 305, 1870, 772],
+        "index": 5,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/a76617581d01c3589c0bf28f9aba532f817a45f71905240d3a337f692d7e87dc.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.6161458333333333,
+        "page_idx": 16,
+        "id": "b4fc480f-99ab-4f44-9688-b308a45ed348",
+        "page_size": [1920, 1080],
+        "block_position": "16-5"
+      },
+      {
+        "bbox": [90, 973, 205, 988],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000005,
+        "text": "Corporate Identity",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 16,
+        "is_discarded": true,
+        "id": "467ad826-cc19-4ab1-9651-28f406810a1c",
+        "page_size": [1920, 1080],
+        "block_position": "16-6"
+      },
+      {
+        "bbox": [90, 989, 180, 1004],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000006,
+        "text": "February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 16,
+        "is_discarded": true,
+        "id": "22cd2eb9-43ee-4152-aa35-c361276ed8fa",
+        "page_size": [1920, 1080],
+        "block_position": "16-7"
+      }
+    ],
+    [
+      {
+        "bbox": [67, 66, 374, 88],
+        "type": "header",
+        "angle": 0,
+        "index": -99999,
+        "text": "品牌基本要素 / Brand Basic Elements",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 17,
+        "is_discarded": true,
+        "id": "9b60e8e1-4b11-48cf-ab41-d6b227a3f8f7",
+        "page_size": [1920, 1080],
+        "block_position": "17-0"
+      },
+      {
+        "bbox": [65, 123, 341, 172],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 标志上下组合",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 17,
+        "id": "82ed4385-2e51-41e3-ae95-6d7a99fceda2",
+        "page_size": [1920, 1080],
+        "block_position": "17-1"
+      },
+      {
+        "bbox": [67, 248, 516, 272],
+        "type": "text",
+        "angle": 0,
+        "index": 2,
+        "text": "标志的不同组合形式是品牌视觉系统适配多元场景的核心策略。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 17,
+        "id": "cff0aebc-6c87-441d-9a17-dae4c4bbcf73",
+        "page_size": [1920, 1080],
+        "block_position": "17-2"
+      },
+      {
+        "bbox": [67, 289, 531, 370],
+        "type": "text",
+        "angle": 0,
+        "index": 3,
+        "text": "左右组合适配横向空间（如门店招牌、横幅广告），避免因空间限制导致标志变形或信息压缩，适合强调 “标志 $^ +$ 品牌名” 的同等重要性。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 17,
+        "id": "4856d67f-eafc-4b52-9df3-cd6a38866136",
+        "page_size": [1920, 1080],
+        "block_position": "17-3"
+      },
+      {
+        "bbox": [67, 388, 531, 470],
+        "type": "text",
+        "angle": 0,
+        "index": 4,
+        "text": "强化应用灵活性：不同组合形式能应对印刷、屏幕、实体物料等多样载体，确保在包装、工牌、社交媒体等场景中，标志始终清晰完整，维持品牌一致性。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 17,
+        "id": "b8deefb3-15b6-44ef-8fab-0e1979871c67",
+        "page_size": [1920, 1080],
+        "block_position": "17-4"
+      },
+      {
+        "bbox": [887, 127, 1655, 951],
+        "index": 7,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/45d02726a564281e871ce9aca0b99aac57f8be954adf8e3cab75b8e49d8d8fbb.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.4,
+        "page_idx": 17,
+        "id": "d56bbaee-5c40-4e58-ac9b-51fe0e463af9",
+        "page_size": [1920, 1080],
+        "block_position": "17-5"
+      },
+      {
+        "bbox": [90, 973, 205, 988],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000004,
+        "text": "Corporate Identity",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 17,
+        "is_discarded": true,
+        "id": "d2ed8306-5769-42c5-9c65-1c10427f24e7",
+        "page_size": [1920, 1080],
+        "block_position": "17-6"
+      },
+      {
+        "bbox": [90, 989, 182, 1004],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000005,
+        "text": "February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 17,
+        "is_discarded": true,
+        "id": "7739cb98-8b63-463d-a87c-e732786463b6",
+        "page_size": [1920, 1080],
+        "block_position": "17-7"
+      }
+    ],
+    [
+      {
+        "bbox": [67, 66, 374, 88],
+        "type": "header",
+        "angle": 0,
+        "index": -99999,
+        "text": "品牌基本要素 / Brand Basic Elements",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 18,
+        "is_discarded": true,
+        "id": "fde88f7a-4fa6-4f7e-98f8-08b4889d3969",
+        "page_size": [1920, 1080],
+        "block_position": "18-0"
+      },
+      {
+        "bbox": [65, 123, 453, 172],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 标志左右组合-英文",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 18,
+        "id": "00f6bb71-a9a0-4f3c-af3e-8c97f9389f77",
+        "page_size": [1920, 1080],
+        "block_position": "18-1"
+      },
+      {
+        "bbox": [67, 249, 516, 272],
+        "type": "text",
+        "angle": 0,
+        "index": 2,
+        "text": "标志的不同组合形式是品牌视觉系统适配多元场景的核心策略。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 18,
+        "id": "3f48fe26-9838-491d-87ec-0071fb8da270",
+        "page_size": [1920, 1080],
+        "block_position": "18-2"
+      },
+      {
+        "bbox": [67, 289, 531, 370],
+        "type": "text",
+        "angle": 0,
+        "index": 3,
+        "text": "左右组合适配横向空间（如门店招牌、横幅广告），避免因空间限制导致标志变形或信息压缩，适合强调 “标志 $^ +$ 品牌名” 的同等重要性。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 18,
+        "id": "7046a936-aec4-4cb8-b7b8-1afd4ce25cbe",
+        "page_size": [1920, 1080],
+        "block_position": "18-3"
+      },
+      {
+        "bbox": [67, 388, 531, 470],
+        "type": "text",
+        "angle": 0,
+        "index": 4,
+        "text": "强化应用灵活性：不同组合形式能应对印刷、屏幕、实体物料等多样载体，确保在包装、工牌、社交媒体等场景中，标志始终清晰完整，维持品牌一致性。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 18,
+        "id": "9b1a8edf-551f-4284-96f3-465852ffeced",
+        "page_size": [1920, 1080],
+        "block_position": "18-4"
+      },
+      {
+        "bbox": [673, 376, 1862, 698],
+        "index": 5,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/589df059e416d6dcc1ded5286a2a765d2ff6864184b5fe80041a6d866015b170.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.6192708333333333,
+        "page_idx": 18,
+        "id": "ee447083-59d1-4e3b-b208-aad055172639",
+        "page_size": [1920, 1080],
+        "block_position": "18-5"
+      },
+      {
+        "bbox": [90, 973, 205, 988],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000005,
+        "text": "Corporate Identity",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 18,
+        "is_discarded": true,
+        "id": "b41b8ec6-f25d-460a-9288-af7bd2a7e7ec",
+        "page_size": [1920, 1080],
+        "block_position": "18-6"
+      },
+      {
+        "bbox": [90, 989, 182, 1004],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000006,
+        "text": "February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 18,
+        "is_discarded": true,
+        "id": "8313492a-eabf-4c56-bd88-0363006274d3",
+        "page_size": [1920, 1080],
+        "block_position": "18-7"
+      }
+    ],
+    [
+      {
+        "bbox": [67, 66, 374, 88],
+        "type": "header",
+        "angle": 0,
+        "index": -99999,
+        "text": "品牌基本要素 / Brand Basic Elements",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 19,
+        "is_discarded": true,
+        "id": "5ad57d8b-5062-41ad-acbb-afa787d38456",
+        "page_size": [1920, 1080],
+        "block_position": "19-0"
+      },
+      {
+        "bbox": [65, 123, 453, 172],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 标志上下组合-英文",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 19,
+        "id": "3479789f-b95d-4d4a-a8f6-90382890ac7e",
+        "page_size": [1920, 1080],
+        "block_position": "19-1"
+      },
+      {
+        "bbox": [67, 249, 516, 272],
+        "type": "text",
+        "angle": 0,
+        "index": 2,
+        "text": "标志的不同组合形式是品牌视觉系统适配多元场景的核心策略。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 19,
+        "id": "c6a66e39-2ede-4422-8eba-87b2d3483ae4",
+        "page_size": [1920, 1080],
+        "block_position": "19-2"
+      },
+      {
+        "bbox": [67, 289, 531, 370],
+        "type": "text",
+        "angle": 0,
+        "index": 3,
+        "text": "左右组合适配横向空间（如门店招牌、横幅广告），避免因空间限制导致标志变形或信息压缩，适合强调 “标志 $^ +$ 品牌名” 的同等重要性。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 19,
+        "id": "35da6c35-bd28-4312-8fce-f35260ff1fe3",
+        "page_size": [1920, 1080],
+        "block_position": "19-3"
+      },
+      {
+        "bbox": [67, 389, 531, 470],
+        "type": "text",
+        "angle": 0,
+        "index": 4,
+        "text": "强化应用灵活性：不同组合形式能应对印刷、屏幕、实体物料等多样载体，确保在包装、工牌、社交媒体等场景中，标志始终清晰完整，维持品牌一致性。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 19,
+        "id": "30b7c8c6-4182-42ee-bab7-390576d37af0",
+        "page_size": [1920, 1080],
+        "block_position": "19-4"
+      },
+      {
+        "bbox": [875, 166, 1666, 911],
+        "index": 5,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/40ab0d0269290d57ae2fc761ddbda8317e328f1efb590dc06dd875b5ee87d277.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.4119791666666667,
+        "page_idx": 19,
+        "id": "5903e933-4aad-48ad-b1b6-10d1ac22de4c",
+        "page_size": [1920, 1080],
+        "block_position": "19-5"
+      },
+      {
+        "bbox": [90, 973, 205, 988],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000005,
+        "text": "Corporate Identity",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 19,
+        "is_discarded": true,
+        "id": "3101f0f1-c5d3-41c4-8e09-d5a10ca07d68",
+        "page_size": [1920, 1080],
+        "block_position": "19-6"
+      },
+      {
+        "bbox": [90, 989, 182, 1004],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000006,
+        "text": "February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 19,
+        "is_discarded": true,
+        "id": "c1eb047b-c3a8-4267-9fb8-9d0640c197fa",
+        "page_size": [1920, 1080],
+        "block_position": "19-7"
+      }
+    ],
+    [
+      {
+        "bbox": [1624, 60, 1831, 92],
+        "type": "header",
+        "angle": 0,
+        "index": -99998,
+        "text": "品牌视觉系统规范",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 20,
+        "is_discarded": true,
+        "id": "6e61ba08-a212-4bb3-afe4-101a57a81108",
+        "page_size": [1920, 1080],
+        "block_position": "20-0"
+      },
+      {
+        "bbox": [1691, 99, 1829, 126],
+        "type": "header",
+        "angle": 0,
+        "index": -99997,
+        "text": "Visual Design",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 20,
+        "is_discarded": true,
+        "id": "8d2d0447-596d-42d4-bc15-3eaa2e8adc94",
+        "page_size": [1920, 1080],
+        "block_position": "20-1"
+      },
+      {
+        "bbox": [90, 58, 760, 304],
+        "type": "title",
+        "angle": 0,
+        "index": 0,
+        "text": "# B品牌标志应用",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 20,
+        "id": "1cdf9b60-b2f9-4f6c-810a-5cb28706942a",
+        "page_size": [1920, 1080],
+        "block_position": "20-2"
+      },
+      {
+        "bbox": [84, 733, 858, 968],
+        "type": "title",
+        "angle": 0,
+        "index": 3,
+        "text": "# Application ofbrand logo",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 20,
+        "id": "24b7447d-66ba-4cdd-9b98-ef35a1760928",
+        "page_size": [1920, 1080],
+        "block_position": "20-3"
+      },
+      {
+        "bbox": [86, 997, 334, 1020],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000003,
+        "text": "Corporate Identity February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 20,
+        "is_discarded": true,
+        "id": "e95b4a96-0ce7-41e2-8a97-b2275fe623af",
+        "page_size": [1920, 1080],
+        "block_position": "20-4"
+      }
+    ],
+    [
+      {
+        "bbox": [67, 66, 408, 91],
+        "type": "header",
+        "angle": 0,
+        "index": -99999,
+        "text": "品牌标志应用 / Application of brand logo",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 21,
+        "is_discarded": true,
+        "id": "23b5bf50-aafe-4882-9c07-77e99649c9b4",
+        "page_size": [1920, 1080],
+        "block_position": "21-0"
+      },
+      {
+        "bbox": [67, 124, 343, 172],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 路演板 / 展板",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 21,
+        "id": "02ca7773-d25f-49c8-9ebf-3f8d41aa74db",
+        "page_size": [1920, 1080],
+        "block_position": "21-1"
+      },
+      {
+        "bbox": [1121, 124, 1754, 237],
+        "type": "text",
+        "angle": 0,
+        "index": 2,
+        "text": "品牌展板与路演板是线下活动的核心视觉载体，承担着集中传递品牌信息、吸引受众并营造沉浸式体验的关键作用。设计上严格遵循VI标准，统一版式、色彩与字体规范，确保核心信息远距可视、一秒读懂。规范化的展板不仅能高效塑造专业权威的品牌形象，更能成为吸引客流、引导动线、并促成深度沟通的战略性媒介。",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 21,
+        "id": "9dd8c3a4-2528-44bc-a3a0-9a0ed84ea1be",
+        "page_size": [1920, 1080],
+        "block_position": "21-2"
+      },
+      {
+        "bbox": [155, 321, 1261, 874],
+        "index": 3,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/6c8e0e385aef7b9739723e5f9c595a4ce5834760bceefeeffcc599a2370fb8fa.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.5760416666666667,
+        "page_idx": 21,
+        "id": "6a866852-3c24-4fd3-981e-ad3d7cbf0147",
+        "page_size": [1920, 1080],
+        "block_position": "21-3"
+      },
+      {
+        "bbox": [687, 900, 727, 922],
+        "index": 4,
+        "angle": 0,
+        "type": "image_caption",
+        "text": "横版",
+        "id": "eac8c431-0896-455f-b2b0-2f8a1a1388fd",
+        "color": {
+          "line": "rgba(13, 83, 222 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 21,
+        "page_size": [1920, 1080],
+        "block_position": "21-4"
+      },
+      {
+        "bbox": [1388, 321, 1760, 874],
+        "index": 5,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/d2b6a7f7b7c6a03bb006e904dcd10009cc329d2fa1f6bc20e5bb2ca12245f7b3.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.2,
+        "page_idx": 21,
+        "id": "c654b2f8-ad28-4709-9c48-8983657f888e",
+        "page_size": [1920, 1080],
+        "block_position": "21-5"
+      },
+      {
+        "bbox": [1555, 900, 1595, 922],
+        "index": 6,
+        "angle": 0,
+        "type": "image_caption",
+        "text": "竖版",
+        "id": "b99d1fba-a9c2-4836-a77a-76ef703e9088",
+        "color": {
+          "line": "rgba(13, 83, 222 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 21,
+        "page_size": [1920, 1080],
+        "block_position": "21-6"
+      },
+      {
+        "bbox": [90, 973, 205, 988],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000006,
+        "text": "Corporate Identity",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 21,
+        "is_discarded": true,
+        "id": "69879a81-cb81-4f2e-89e5-4a682c65474d",
+        "page_size": [1920, 1080],
+        "block_position": "21-7"
+      },
+      {
+        "bbox": [90, 989, 182, 1004],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000007,
+        "text": "February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 21,
+        "is_discarded": true,
+        "id": "28750a60-ef20-4acf-a943-171ec2430bfc",
+        "page_size": [1920, 1080],
+        "block_position": "21-8"
+      }
+    ],
+    [
+      {
+        "bbox": [67, 66, 408, 90],
+        "type": "header",
+        "angle": 0,
+        "index": -99999,
+        "text": "品牌标志应用 / Application of brand logo",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 22,
+        "is_discarded": true,
+        "id": "ed5e72cb-98b7-4444-8b1a-546052426211",
+        "page_size": [1920, 1080],
+        "block_position": "22-0"
+      },
+      {
+        "bbox": [67, 123, 385, 172],
+        "type": "title",
+        "angle": 0,
+        "index": 1,
+        "text": "# 接待台及背景墙",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 22,
+        "id": "e5430a6e-e646-4054-b825-e9767e05a0d4",
+        "page_size": [1920, 1080],
+        "block_position": "22-1"
+      },
+      {
+        "bbox": [67, 248, 531, 331],
+        "type": "text",
+        "angle": 0,
+        "index": 2,
+        "text": "企业前台设计多层次的造型，整体线条与logo的设计呼应，第一层底板可采用纯色背景或浅色木纹效果，体现温馨与人文气息，两边增加LED的流水灯带，营造科技与未来的氛围感",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "page_idx": 22,
+        "id": "c91c2d5a-5845-4014-9e77-d46f939d5f65",
+        "page_size": [1920, 1080],
+        "block_position": "22-2"
+      },
+      {
+        "bbox": [691, 417, 1758, 947],
+        "index": 3,
+        "angle": 0,
+        "type": "image",
+        "img_path": "/c9d93139c935a1a88f3572bdc06f7621e3380796239510e45e4d0cfb2667c151.jpg",
+        "color": {
+          "line": "rgba(89, 92, 220, 1)",
+          "fill": "rgba(89, 92, 220, 1)"
+        },
+        "img_ratio": 0.5557291666666667,
+        "page_idx": 22,
+        "id": "5bae9759-b196-4bee-984c-8d2641369410",
+        "page_size": [1920, 1080],
+        "block_position": "22-3"
+      },
+      {
+        "bbox": [90, 973, 207, 988],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000003,
+        "text": "Corporate Identity",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 22,
+        "is_discarded": true,
+        "id": "a31dcd13-9003-425d-be67-72163fa47e6a",
+        "page_size": [1920, 1080],
+        "block_position": "22-4"
+      },
+      {
+        "bbox": [90, 989, 182, 1004],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000004,
+        "text": "February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 22,
+        "is_discarded": true,
+        "id": "567be79d-3c53-4ecc-a591-664394586eab",
+        "page_size": [1920, 1080],
+        "block_position": "22-5"
+      }
+    ],
+    [
+      {
+        "bbox": [92, 475, 514, 596],
+        "type": "title",
+        "angle": 0,
+        "index": 0,
+        "text": "# ND",
+        "color": {
+          "line": "rgba(13, 83, 222, 1)",
+          "fill": "rgba(13, 83, 222, 1)"
+        },
+        "level": 1,
+        "page_idx": 23,
+        "id": "c03c3ba4-8a34-49e4-8993-70e5181fde27",
+        "page_size": [1920, 1080],
+        "block_position": "23-0"
+      },
+      {
+        "bbox": [90, 992, 458, 1022],
+        "type": "footer",
+        "angle": 0,
+        "index": 1000000,
+        "text": "Corporate Identity February 2026",
+        "color": {
+          "line": "rgba(164, 164, 164, 1)",
+          "fill": "rgba(164, 164, 164, 1)"
+        },
+        "page_idx": 23,
+        "is_discarded": true,
+        "id": "f02fc674-be70-4821-9ced-10fb7a0f5d99",
+        "page_size": [1920, 1080],
+        "block_position": "23-1"
+      }
+    ]
+  ],
+  "mergeConnections": []
+}

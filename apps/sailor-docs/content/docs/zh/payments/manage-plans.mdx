@@ -1,0 +1,169 @@
+---
+title: 管理计划
+description: 创建 Stripe 产品、在代码中配置计划限额，并为 Nebutra 添加新的账单层级。
+---
+
+## 前置条件
+
+- 拥有 API 访问权限的 Stripe 账户
+- 已配置环境变量（参见[账单概览](/zh/payments/overview)）
+- 已安装 Stripe CLI：`npm install -g stripe`
+
+## 第一步：在 Stripe 中创建产品
+
+每个账单层级对应一个 Stripe 产品及一个或多个价格。可通过 Stripe CLI 或 Dashboard 界面创建。
+
+<Tabs>
+  <Tab title="Stripe CLI">
+    ```bash
+    # 创建 PRO 产品
+    stripe products create \
+      --name="Nebutra PRO" \
+      --description="每月 100,000 次 API 调用，10 个成员，邮件支持"
+
+    # 为 PRO 创建每月循环价格（$49/月）
+    stripe prices create \
+      --product=prod_REPLACE_WITH_PRO_ID \
+      --unit-amount=4900 \
+      --currency=usd \
+      --recurring[interval]=month \
+      --nickname="PRO Monthly"
+
+    # 创建 ENTERPRISE 产品（自定义定价 — 手动设置价格）
+    stripe products create \
+      --name="Nebutra ENTERPRISE" \
+      --description="无限量，SSO，SLA，自定义合同"
+    ```
+  </Tab>
+  <Tab title="Stripe Dashboard">
+    1. 进入 **Stripe Dashboard → Products → Add product**。
+    2. 为每个层级填写名称、描述和定价。
+    3. 将每个层级的**价格 ID**（`price_...`）复制到 `.env` 文件中。
+  </Tab>
+</Tabs>
+
+## 第二步：设置价格 ID 环境变量
+
+在 Stripe 中创建价格后，记录其 ID：
+
+```bash
+STRIPE_PRO_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
+STRIPE_ENTERPRISE_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
+```
+
+## 第三步：在代码中配置计划限额
+
+计划限额定义在 `packages/commerce/billing/src/plans.ts` 中。每个条目将计划名称映射到其资源配额。
+
+```typescript packages/commerce/billing/src/plans.ts
+export const PLANS = {
+  free: {
+    id: "free",
+    name: "FREE",
+    stripePriceId: null,
+    limits: {
+      apiCallsPerMonth: 1_000,
+      orgMembers: 1,
+    },
+    features: {
+      emailSupport: false,
+      sso: false,
+    },
+  },
+  pro: {
+    id: "pro",
+    name: "PRO",
+    stripePriceId: process.env.STRIPE_PRO_PRICE_ID!,
+    limits: {
+      apiCallsPerMonth: 100_000,
+      orgMembers: 10,
+    },
+    features: {
+      emailSupport: true,
+      sso: false,
+    },
+  },
+  enterprise: {
+    id: "enterprise",
+    name: "ENTERPRISE",
+    stripePriceId: process.env.STRIPE_ENTERPRISE_PRICE_ID!,
+    limits: {
+      apiCallsPerMonth: Infinity,
+      orgMembers: Infinity,
+    },
+    features: {
+      emailSupport: true,
+      sso: true,
+    },
+  },
+} as const;
+
+export type PlanId = keyof typeof PLANS;
+export type Plan = (typeof PLANS)[PlanId];
+```
+
+## 第四步：通过 ID 获取计划
+
+在后端代码的任意位置使用 `getPlan` 辅助函数：
+
+```typescript
+import { getPlan } from "@nebutra/billing";
+
+const plan = getPlan("pro");
+// → { id: "pro", name: "PRO", limits: { apiCallsPerMonth: 100000, ... }, ... }
+
+const limit = plan.limits.apiCallsPerMonth;
+// → 100000
+```
+
+## 添加新计划层级
+
+<Steps>
+  <Step title="在 Stripe 中创建产品和价格">
+    通过 Stripe CLI 或 Dashboard 创建新产品和价格，并复制价格 ID。
+  </Step>
+  <Step title="将价格 ID 添加到环境变量">
+    ```bash
+    STRIPE_TEAMS_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
+    ```
+  </Step>
+  <Step title="在 PLANS 中添加计划条目">
+    ```typescript packages/commerce/billing/src/plans.ts
+    teams: {
+      id: "teams",
+      name: "TEAMS",
+      stripePriceId: process.env.STRIPE_TEAMS_PRICE_ID!,
+      limits: {
+        apiCallsPerMonth: 500_000,
+        orgMembers: 50,
+      },
+      features: {
+        emailSupport: true,
+        sso: false,
+      },
+    },
+    ```
+  </Step>
+  <Step title="更新计划门控逻辑">
+    如果使用了 `requirePlan('pro')` 检查，在适当的地方更新逻辑以接受新层级（参见[付费墙](/zh/payments/paywall)）。
+  </Step>
+</Steps>
+
+## 更新计划限额
+
+编辑 `packages/commerce/billing/src/plans.ts` 中相应计划的 `limits` 对象。修改在下次部署后立即生效——无需数据库迁移，因为限额在每次请求时动态解析。
+
+<Note>
+数据库中的计划变更在收到并处理 Stripe Webhook 后立即生效，不存在轮询延迟。配额执行在每次请求时使用最新的计划记录。
+</Note>
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="账单概览" icon="credit-card" href="/zh/payments/overview">
+    架构、环境变量与 Stripe Dashboard 配置。
+  </Card>
+  <Card title="付费墙" icon="lock" href="/zh/payments/paywall">
+    按计划层级限制功能和 API 路由的访问。
+  </Card>
+</CardGroup>

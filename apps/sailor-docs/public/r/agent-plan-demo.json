@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "agent-plan-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/agent-plan-demo.tsx",
+      "content": "import { AgentPlan, type AgentTask } from \"@nebutra/ui/primitives\";\n\nexport function AgentPlanDemo() {\n  const tasks: AgentTask[] = [\n    {\n      id: \"1\",\n      title: \"Research Phase\",\n      description: \"Gather necessary materials and set goals\",\n      status: \"completed\",\n      subtasks: [\n        {\n          id: \"1.1\",\n          title: \"Define scope\",\n          description: \"Identify key features and requirements\",\n          status: \"completed\",\n        },\n      ],\n    },\n    {\n      id: \"2\",\n      title: \"Implement UI\",\n      description: \"Build the foundational components\",\n      status: \"in-progress\",\n      dependencies: [\"1\"],\n      subtasks: [\n        {\n          id: \"2.1\",\n          title: \"Design System setup\",\n          description: \"Initialize variables and tokens\",\n          status: \"completed\",\n          tools: [\"css\", \"tailwind\"],\n        },\n        {\n          id: \"2.2\",\n          title: \"Build AgentPlan component\",\n          description: \"Structure the tree view with framer-motion\",\n          status: \"in-progress\",\n          tools: [\"react\", \"framer-motion\"],\n        },\n      ],\n    },\n    {\n      id: \"3\",\n      title: \"Testing & QA\",\n      description: \"Ensure no bugs in production\",\n      status: \"pending\",\n      subtasks: [\n        {\n          id: \"3.1\",\n          title: \"Write unit tests\",\n          description: \"Hit at least 80% coverage\",\n          status: \"pending\",\n        },\n      ],\n    },\n  ];\n\n  return (\n    <div className=\"max-w-lg py-8 mx-auto h-[400px] w-full\">\n      <AgentPlan tasks={tasks} defaultExpandedTasks={[\"2\"]} />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

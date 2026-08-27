@@ -1,0 +1,133 @@
+---
+title: Updating
+description: How to pull the latest changes from upstream, re-run code generators, and handle breaking changes.
+---
+
+## Standard update workflow
+
+Run these commands whenever you pull new commits from the main branch:
+
+<Steps>
+  <Step title="Pull the latest commits">
+    ```bash
+    git pull origin main
+    ```
+  </Step>
+  <Step title="Install updated dependencies">
+    ```bash
+    pnpm install
+    ```
+    Always re-run `pnpm install` after a pull. New packages or version bumps will not take effect otherwise.
+  </Step>
+  <Step title="Apply database migrations">
+    ```bash
+    pnpm db:migrate
+    ```
+    Run this whenever `packages/platform/db/prisma/migrations/` has new migration files. It is safe to run even when there are no pending migrations.
+  </Step>
+  <Step title="Regenerate the Prisma client">
+    ```bash
+    pnpm db:generate
+    ```
+    Required whenever `packages/platform/db/prisma/schema.prisma` has changed. The generated client is gitignored and must be regenerated locally.
+  </Step>
+</Steps>
+
+<Tip>
+  Combine all four steps into one command for convenience:
+  ```bash
+  git pull && pnpm install && pnpm db:migrate && pnpm db:generate
+  ```
+</Tip>
+
+## Checking for breaking changes
+
+Before pulling a major version bump, read the [Changelog](/changelog) for any breaking changes.
+
+Common breaking change categories:
+
+| Category | What to look for |
+|----------|-----------------|
+| **Schema changes** | New required columns, renamed tables, dropped indexes |
+| **Package API changes** | Renamed exports, changed function signatures in `@nebutra/*` packages |
+| **Environment variables** | New required env vars added to `@nebutra/config` |
+| **Build system** | Changes to `turbo.json`, `tsconfig.base.json`, or `biome.json` |
+
+## When to re-run `pnpm db:generate`
+
+Regenerate the Prisma client whenever any of these change:
+
+- `packages/platform/db/prisma/schema.prisma`
+- `packages/platform/db/prisma/migrations/` (new migration file)
+- The `prisma` version in `packages/platform/db/package.json`
+
+```bash
+pnpm db:generate
+```
+
+You do **not** need to regenerate the client after pulling if the schema file has not changed. Check `git diff packages/platform/db/prisma/schema.prisma` if unsure.
+
+## When to re-run `pnpm generate:api-types`
+
+Regenerate the OpenAPI TypeScript types whenever the API gateway's OpenAPI spec changes:
+
+```bash
+pnpm generate:api-types
+```
+
+The generated types live in `apps/web/src/lib/api/types.generated.ts` and are consumed via `openapi-fetch` from `apps/web/src/lib/api/client.ts` (`getTypedApi`) and `apps/web/src/lib/api/browser-client.ts` (`browserApiClient`). A stub is committed so the project typechecks before generation; CI overwrites it.
+
+Signs you need to regenerate:
+- TypeScript errors about missing API request/response types
+- New endpoints added to `backends/gateway/src/routes/`
+- Existing endpoint signatures changed
+
+## Turborepo cache invalidation
+
+Turborepo caches task outputs to speed up builds. If you are seeing stale build artifacts after an update, force a clean run:
+
+```bash
+pnpm turbo run build --force
+```
+
+To clear the local cache entirely:
+
+```bash
+pnpm turbo prune --scope=@nebutra/ui   # remove cache for a specific package
+rm -rf .turbo                           # nuclear option: wipe all local cache
+```
+
+<Note>
+  Vercel Remote Cache is used for CI/CD. Local cache and remote cache are separate — clearing local cache does not affect CI builds.
+</Note>
+
+## Dependency upgrades
+
+To upgrade a single dependency across the workspace:
+
+```bash
+pnpm update --filter @nebutra/ui react
+```
+
+To interactively upgrade all outdated packages:
+
+```bash
+pnpm update --interactive --recursive
+```
+
+After any dependency upgrade, run the full verification suite:
+
+```bash
+pnpm typecheck && pnpm lint && pnpm test && pnpm build
+```
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Local Development" icon="laptop" href="/development/local-dev">
+    Initial setup and all dev commands.
+  </Card>
+  <Card title="Deployment Overview" icon="rocket" href="/deployment/overview">
+    How to deploy after pulling a new release.
+  </Card>
+</CardGroup>

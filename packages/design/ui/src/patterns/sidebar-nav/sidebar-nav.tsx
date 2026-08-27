@@ -1,0 +1,437 @@
+"use client";
+
+import { ChevronRight } from "@nebutra/icons";
+import * as React from "react";
+import { Badge } from "../../primitives/badge";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../primitives/collapsible";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../primitives/tooltip";
+import { cn } from "../../utils/cn";
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+export type SidebarNavBadgeTone = "beta" | "new" | "owner" | "featured" | "coming-soon";
+
+export interface SidebarNavBadge {
+  label: string;
+  tone: SidebarNavBadgeTone;
+}
+
+export type SidebarNavIcon = React.ComponentType<{ className?: string }>;
+
+export interface SidebarNavItem {
+  id: string;
+  label: string;
+  href?: string;
+  icon?: SidebarNavIcon;
+  badge?: SidebarNavBadge;
+  isActive?: boolean;
+  external?: boolean;
+  onClick?: () => void;
+  /** Nested children — 1 level deep max */
+  children?: SidebarNavItem[];
+  disabled?: boolean;
+  /** Controlled expansion for parent items (with children). When provided
+   * together with onExpandedChange, the inner Collapsible runs as a
+   * controlled component. Falls back to uncontrolled otherwise. */
+  expanded?: boolean;
+  onExpandedChange?: (next: boolean) => void;
+}
+
+/** A single icon-button action rendered inline-right of the section label,
+ * revealed only on section hover/focus-within. Max 3 per section. */
+export interface SidebarNavSectionAction {
+  id: string;
+  icon: SidebarNavIcon;
+  /** Accessible name (also used as title attribute). */
+  label: string;
+  /** Click handler — required unless `render` is provided. */
+  onClick?: () => void;
+  /** Optional wrapper to replace the default `<button>` rendering. Receives
+   * the default icon-button element so consumers can compose, e.g., a
+   * DropdownMenu trigger around it. When provided, `onClick` is ignored. */
+  render?: (defaultButton: React.ReactElement) => React.ReactNode;
+}
+
+export interface SidebarNavSection {
+  id: string;
+  /** Group label, e.g. "MiniMax 实验室". Hidden when collapsed. */
+  label?: string;
+  items: SidebarNavItem[];
+  /** Hover/focus-revealed actions next to the section label. Skipped in
+   * collapsed mode and when empty. Limit to ≤ 3 to keep visual rhythm. */
+  actions?: SidebarNavSectionAction[];
+}
+
+export interface SidebarNavRenderLinkProps {
+  href: string;
+  children: React.ReactNode;
+  className?: string | undefined;
+  "aria-current"?: "page" | undefined;
+  "aria-label"?: string | undefined;
+  onClick?: (() => void) | undefined;
+}
+
+export interface SidebarNavProps {
+  sections: SidebarNavSection[];
+  /** Icon-only mode. Section labels hidden; items show tooltip on hover. */
+  collapsed?: boolean;
+  className?: string;
+  itemClassName?: string;
+  /** Slot rendered above sections (e.g. logo + workspace switcher). */
+  header?: React.ReactNode;
+  /** Slot rendered below sections (e.g. theme toggle, sign-out). */
+  footer?: React.ReactNode;
+  /** When provided, this is used to render link items. Default: <a>. */
+  renderLink?: (props: SidebarNavRenderLinkProps) => React.ReactElement;
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+const ITEM_BASE_CLASSES =
+  "group flex min-h-8 items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-1.5 text-[13px] leading-5 transition-[background-color,color,box-shadow,transform]";
+const ITEM_DEFAULT_CLASSES =
+  "text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground";
+const ITEM_ACTIVE_CLASSES =
+  "bg-sidebar-primary text-sidebar-primary-foreground font-medium shadow-sm shadow-sidebar-primary/10 hover:bg-sidebar-primary hover:text-sidebar-primary-foreground";
+const ITEM_DISABLED_CLASSES = "opacity-50 pointer-events-none";
+const ITEM_COLLAPSED_CLASSES = "justify-center px-0 size-8 mx-auto";
+const ICON_CLASSES = "size-4 shrink-0";
+
+function defaultRenderLink({
+  href,
+  children,
+  className,
+  "aria-current": ariaCurrent,
+  "aria-label": ariaLabel,
+  onClick,
+}: SidebarNavRenderLinkProps): React.ReactElement {
+  return (
+    <a
+      href={href}
+      className={className}
+      aria-current={ariaCurrent}
+      aria-label={ariaLabel}
+      onClick={onClick}
+    >
+      {children}
+    </a>
+  );
+}
+
+interface ItemContentProps {
+  item: SidebarNavItem;
+  collapsed: boolean;
+  showChevron?: boolean;
+  chevronOpen?: boolean;
+}
+
+function ItemContent({
+  item,
+  collapsed,
+  showChevron,
+  chevronOpen,
+}: ItemContentProps): React.ReactElement {
+  const Icon = item.icon;
+
+  if (collapsed) {
+    return (
+      <>
+        {Icon ? <Icon className={ICON_CLASSES} /> : null}
+        <span className="sr-only">{item.label}</span>
+      </>
+    );
+  }
+
+  return (
+    <>
+      {Icon ? <Icon className={ICON_CLASSES} /> : null}
+      <span className="flex-1 truncate">{item.label}</span>
+      {item.badge ? (
+        <Badge variant={item.badge.tone} size="sm">
+          {item.badge.label}
+        </Badge>
+      ) : null}
+      {showChevron ? (
+        <ChevronRight
+          className={cn(
+            "size-3.5 shrink-0 text-muted-foreground transition-transform",
+            chevronOpen && "rotate-90",
+          )}
+          aria-hidden="true"
+        />
+      ) : null}
+    </>
+  );
+}
+
+interface InteractiveItemProps {
+  item: SidebarNavItem;
+  collapsed: boolean;
+  itemClassName?: string | undefined;
+  renderLink: (props: SidebarNavRenderLinkProps) => React.ReactElement;
+  /** Indent for nested children. */
+  nested?: boolean | undefined;
+}
+
+function InteractiveItem({
+  item,
+  collapsed,
+  itemClassName,
+  renderLink,
+  nested = false,
+}: InteractiveItemProps): React.ReactElement {
+  const isActive = item.isActive === true;
+  const isDisabled = item.disabled === true;
+
+  const classes = cn(
+    ITEM_BASE_CLASSES,
+    isActive ? ITEM_ACTIVE_CLASSES : ITEM_DEFAULT_CLASSES,
+    isDisabled && ITEM_DISABLED_CLASSES,
+    collapsed && ITEM_COLLAPSED_CLASSES,
+    !collapsed && nested && "pl-9",
+    itemClassName,
+  );
+
+  const ariaCurrent = isActive ? "page" : undefined;
+  const ariaDisabled = isDisabled ? true : undefined;
+
+  const inner = <ItemContent item={item} collapsed={collapsed} />;
+
+  let element: React.ReactElement;
+
+  if (item.href && !isDisabled) {
+    if (item.external) {
+      element = (
+        <a
+          href={item.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={classes}
+          aria-current={ariaCurrent}
+          aria-label={collapsed ? item.label : undefined}
+          onClick={item.onClick}
+        >
+          {inner}
+        </a>
+      );
+    } else {
+      element = renderLink({
+        href: item.href,
+        className: classes,
+        children: inner,
+        "aria-current": ariaCurrent,
+        "aria-label": collapsed ? item.label : undefined,
+        onClick: item.onClick,
+      });
+    }
+  } else {
+    element = (
+      <button
+        type="button"
+        className={cn(classes, "w-full text-left")}
+        aria-current={ariaCurrent}
+        aria-disabled={ariaDisabled}
+        aria-label={collapsed ? item.label : undefined}
+        disabled={isDisabled}
+        onClick={item.onClick}
+      >
+        {inner}
+      </button>
+    );
+  }
+
+  if (collapsed) {
+    return (
+      <Tooltip>
+        <TooltipTrigger asChild>{element}</TooltipTrigger>
+        <TooltipContent side="right" sideOffset={8}>
+          {item.label}
+        </TooltipContent>
+      </Tooltip>
+    );
+  }
+
+  return element;
+}
+
+interface ParentItemProps {
+  item: SidebarNavItem;
+  collapsed: boolean;
+  itemClassName?: string | undefined;
+  renderLink: (props: SidebarNavRenderLinkProps) => React.ReactElement;
+}
+
+function ParentItem({
+  item,
+  collapsed,
+  itemClassName,
+  renderLink,
+}: ParentItemProps): React.ReactElement {
+  const hasActiveChild = item.children?.some((c) => c.isActive === true) ?? false;
+  const [uncontrolledOpen, setUncontrolledOpen] = React.useState<boolean>(
+    item.isActive === true || hasActiveChild,
+  );
+  // Controlled when BOTH expanded + onExpandedChange are provided; otherwise
+  // fall back to the internal uncontrolled state.
+  const isControlled = item.expanded !== undefined && item.onExpandedChange !== undefined;
+  const open = isControlled ? (item.expanded as boolean) : uncontrolledOpen;
+  const setOpen = React.useCallback(
+    (next: boolean) => {
+      if (isControlled) {
+        item.onExpandedChange?.(next);
+      } else {
+        setUncontrolledOpen(next);
+      }
+    },
+    [isControlled, item.onExpandedChange],
+  );
+
+  // If collapsed, render parent as a flat icon-only item with tooltip (no nested expansion).
+  if (collapsed) {
+    return (
+      <InteractiveItem
+        item={item}
+        collapsed
+        itemClassName={itemClassName}
+        renderLink={renderLink}
+      />
+    );
+  }
+
+  const isActive = item.isActive === true;
+  const isDisabled = item.disabled === true;
+
+  const triggerClasses = cn(
+    ITEM_BASE_CLASSES,
+    "w-full text-left",
+    isActive ? ITEM_ACTIVE_CLASSES : ITEM_DEFAULT_CLASSES,
+    isDisabled && ITEM_DISABLED_CLASSES,
+    itemClassName,
+  );
+
+  return (
+    <Collapsible open={open} onOpenChange={setOpen}>
+      <CollapsibleTrigger
+        className={triggerClasses}
+        aria-current={isActive ? "page" : undefined}
+        disabled={isDisabled}
+      >
+        <ItemContent item={item} collapsed={false} showChevron chevronOpen={open} />
+      </CollapsibleTrigger>
+      <CollapsibleContent>
+        <ul className="mt-1 flex flex-col gap-0.5">
+          {item.children?.map((child) => (
+            <li key={child.id}>
+              <InteractiveItem
+                item={child}
+                collapsed={false}
+                itemClassName={itemClassName}
+                renderLink={renderLink}
+                nested
+              />
+            </li>
+          ))}
+        </ul>
+      </CollapsibleContent>
+    </Collapsible>
+  );
+}
+
+// ─── Component ────────────────────────────────────────────────────────────────
+
+export function SidebarNav({
+  sections,
+  collapsed = false,
+  className,
+  itemClassName,
+  header,
+  footer,
+  renderLink = defaultRenderLink,
+}: SidebarNavProps): React.ReactElement {
+  return (
+    <TooltipProvider delayDuration={200}>
+      <nav
+        aria-label="Sidebar"
+        data-ui="nebutra-sidebar-nav"
+        className={cn(
+          "flex h-full flex-col",
+          collapsed ? "gap-3 px-2 py-3" : "gap-5 px-3 py-4",
+          className,
+        )}
+      >
+        {header ? <div className="shrink-0">{header}</div> : null}
+
+        <div className="flex-1 space-y-4 overflow-y-auto">
+          {sections.map((section) => {
+            const visibleActions =
+              !collapsed && section.actions && section.actions.length > 0
+                ? section.actions.slice(0, 3)
+                : null;
+            return (
+              <section key={section.id} className="group/section">
+                {section.label && !collapsed ? (
+                  <div className="mb-1.5 flex items-center justify-between px-2.5">
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-sidebar-foreground/45">
+                      {section.label}
+                    </span>
+                    {visibleActions ? (
+                      <div className="flex items-center gap-0.5 opacity-0 transition-opacity duration-micro group-hover/section:opacity-100 focus-within:opacity-100">
+                        {visibleActions.map((action) => {
+                          const ActionIcon = action.icon;
+                          const defaultButton = (
+                            <button
+                              type="button"
+                              aria-label={action.label}
+                              title={action.label}
+                              onClick={action.onClick}
+                              className="inline-flex size-4 items-center justify-center rounded text-sidebar-foreground/50 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none"
+                            >
+                              <ActionIcon className="size-3" />
+                            </button>
+                          );
+                          return (
+                            <span key={action.id} className="contents">
+                              {action.render ? action.render(defaultButton) : defaultButton}
+                            </span>
+                          );
+                        })}
+                      </div>
+                    ) : null}
+                  </div>
+                ) : null}
+                <ul className="flex flex-col gap-0.5">
+                  {section.items.map((item) => {
+                    const hasChildren = Array.isArray(item.children) && item.children.length > 0;
+                    return (
+                      <li key={item.id}>
+                        {hasChildren ? (
+                          <ParentItem
+                            item={item}
+                            collapsed={collapsed}
+                            itemClassName={itemClassName}
+                            renderLink={renderLink}
+                          />
+                        ) : (
+                          <InteractiveItem
+                            item={item}
+                            collapsed={collapsed}
+                            itemClassName={itemClassName}
+                            renderLink={renderLink}
+                          />
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
+            );
+          })}
+        </div>
+
+        {footer ? (
+          <div className="shrink-0 border-t border-sidebar-border pt-3">{footer}</div>
+        ) : null}
+      </nav>
+    </TooltipProvider>
+  );
+}

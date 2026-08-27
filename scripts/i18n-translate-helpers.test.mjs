@@ -1,0 +1,453 @@
+import { describe, expect, it } from "vitest";
+import { postprocessLeaf, restoreLegalEntity } from "./i18n-glossary-postprocess.mjs";
+import {
+  acceptBatchResults,
+  chunk,
+  chunkByNamespace,
+  collectWork,
+  createModelPool,
+  EXACT_LEAF_KEEP,
+  extractPlaceholders,
+  flatten,
+  formatGlossaryForPrompt,
+  glossaryTermsPresent,
+  isHardQuotaError,
+  isQuotaOrRateLimitError,
+  isSoftRateLimitError,
+  namespaceContextLine,
+  namespaceOfKey,
+  parseTranslateModels,
+  placeholdersMatch,
+  shouldSkipValue,
+  sourceFingerprint,
+  splitBatchForRetry,
+  unflatten,
+  validateTranslation,
+} from "./i18n-translate-helpers.mjs";
+
+describe("shouldSkipValue", () => {
+  it("skips empty, placeholder-only, URLs, and pure symbols", () => {
+    expect(shouldSkipValue("")).toBe(true);
+    expect(shouldSkipValue("{count}")).toBe(true);
+    expect(shouldSkipValue("https://nebutra.com")).toBe(true);
+    expect(shouldSkipValue("—")).toBe(true);
+  });
+
+  it("keeps normal product UI copy including short labels", () => {
+    expect(shouldSkipValue("Search")).toBe(false);
+    expect(shouldSkipValue("钱包")).toBe(false);
+    expect(shouldSkipValue("API Keys")).toBe(false);
+  });
+
+  /**
+   * `collectWork` retranslates any leaf still identical to English, so a leaf
+   * that is *deliberately* untranslated gets picked up on every ordinary run —
+   * no `--force` needed. Licence identifiers are the dangerous case: they are
+   * legal facts, and the pricing table renders one as a cell value.
+   */
+  it("skips strings that are nothing but licence identifiers", () => {
+    expect(shouldSkipValue("MIT + FSL-1.1-ALv2")).toBe(true);
+    expect(shouldSkipValue("Apache-2.0")).toBe(true);
+    expect(shouldSkipValue("MIT")).toBe(true);
+    // Prose that merely mentions a licence still gets translated.
+    expect(shouldSkipValue("Licensed under MIT, converting to Apache-2.0")).toBe(false);
+  });
+});
+
+describe("licence identifiers survive translation", () => {
+  const social = "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years.";
+
+  it("rejects a translation that mangles a licence identifier", () => {
+    const mangled = "MIT auf npm · FSL-1.1 ALv2 im Repo, wechselt nach zwei Jahren zu Apache-2.0.";
+    expect(validateTranslation(social, mangled).ok).toBe(false);
+  });
+
+  it("accepts a translation that preserves them verbatim", () => {
+    const good = "MIT auf npm · FSL-1.1-ALv2 im Repo, wechselt nach zwei Jahren zu Apache-2.0.";
+    expect(validateTranslation(social, good).ok).toBe(true);
+  });
+
+  it("does not false-positive on words containing a licence acronym", () => {
+    // Bare "MIT" is intentionally absent from the glossary: `includes` is a
+    // case-sensitive substring test and would fire on "SUBMIT".
+    expect(validateTranslation("SUBMIT", "ABSENDEN").ok).toBe(true);
+  });
+});
+
+describe("flatten / unflatten", () => {
+  it("round-trips nested catalogs", () => {
+    const src = { chrome: { search: "Search" }, admin: { title: "Admin" } };
+    const map = flatten(src);
+    expect(map.get("chrome.search")).toBe("Search");
+    expect(unflatten(map)).toEqual(src);
+  });
+});
+
+describe("collectWork", () => {
+  it("queues missing and identical-to-English leaves including short labels", () => {
+    const en = flatten({ a: "Hello world here", b: "Search", c: "Done" });
+    const target = new Map([
+      ["a", "Hello world here"],
+      ["b", "Search"],
+      // c missing
+    ]);
+    const work = collectWork(en, target, { force: false });
+    const keys = work.map(([k]) => k).sort();
+    expect(keys).toEqual(["a", "b", "c"]);
+  });
+
+  it("skips already-translated leaves when not forced", () => {
+    const en = flatten({ a: "Search tools" });
+    const target = new Map([["a", "検索ツール"]]);
+    expect(collectWork(en, target, { force: false })).toEqual([]);
+    expect(collectWork(en, target, { force: true })).toEqual([["a", "Search tools"]]);
+  });
+});
+
+describe("confirmed-identical leaves", () => {
+  const en = flatten({ a: "Wallet", b: "Search tools" });
+
+  it("re-queues an identical leaf when nothing is confirmed", () => {
+    const target = new Map([
+      ["a", "Wallet"],
+      ["b", "Suchwerkzeuge"],
+    ]);
+    expect(collectWork(en, target, { force: false }).map(([k]) => k)).toEqual(["a"]);
+  });
+
+  it("skips it once confirmed against the same English", () => {
+    const target = new Map([
+      ["a", "Wallet"],
+      ["b", "Suchwerkzeuge"],
+    ]);
+    const confirmed = new Map([["a", sourceFingerprint("Wallet")]]);
+    expect(collectWork(en, target, { force: false, confirmedIdentical: confirmed })).toEqual([]);
+  });
+
+  it("re-queues when the English changes, so a stale confirmation cannot stick", () => {
+    const changed = flatten({ a: "Wallet balance", b: "Search tools" });
+    const target = new Map([
+      ["a", "Wallet balance"],
+      ["b", "Suchwerkzeuge"],
+    ]);
+    const confirmed = new Map([["a", sourceFingerprint("Wallet")]]);
+    expect(
+      collectWork(changed, target, { force: false, confirmedIdentical: confirmed }).map(([k]) => k),
+    ).toEqual(["a"]);
+  });
+
+  it("never lets a confirmation hide a MISSING leaf", () => {
+    const target = new Map([["b", "Suchwerkzeuge"]]);
+    const confirmed = new Map([["a", sourceFingerprint("Wallet")]]);
+    expect(
+      collectWork(en, target, { force: false, confirmedIdentical: confirmed }).map(([k]) => k),
+    ).toEqual(["a"]);
+  });
+
+  it("--force overrides confirmations", () => {
+    const target = new Map([
+      ["a", "Wallet"],
+      ["b", "Suchwerkzeuge"],
+    ]);
+    const confirmed = new Map([["a", sourceFingerprint("Wallet")]]);
+    expect(
+      collectWork(en, target, { force: true, confirmedIdentical: confirmed })
+        .map(([k]) => k)
+        .sort(),
+    ).toEqual(["a", "b"]);
+  });
+});
+
+describe("chunk", () => {
+  it("splits into fixed batch sizes", () => {
+    expect(chunk([1, 2, 3, 4, 5], 2)).toEqual([[1, 2], [3, 4], [5]]);
+  });
+});
+
+describe("parseTranslateModels", () => {
+  it("parses csv / pipe / whitespace pools", () => {
+    expect(
+      parseTranslateModels({
+        modelsCsv: "sensenova-u1-fast, deepseek-v4-flash | sensenova-6.7-flash-lite",
+      }),
+    ).toEqual(["sensenova-u1-fast", "deepseek-v4-flash", "sensenova-6.7-flash-lite"]);
+  });
+
+  it("falls back to single model then defaults", () => {
+    expect(parseTranslateModels({ singleModel: "sensenova-u1-fast" })).toEqual([
+      "sensenova-u1-fast",
+    ]);
+    expect(parseTranslateModels({})).toContain("deepseek-v4-flash");
+    expect(parseTranslateModels({})).toContain("glm-5.2");
+    // Listed by /v1/models and shown unused on the dashboard, but
+    // /v1/chat/completions 404s it — excluded so runs stop paying to find out.
+    expect(parseTranslateModels({})).not.toContain("sensenova-u1-fast");
+  });
+});
+
+describe("quota / rate-limit classification", () => {
+  /**
+   * Regression: this classifier reads the response BODY, and the body of a
+   * successful translation is product copy. The catalogs contain 61 instances
+   * of "billing". Without a status gate, every 200 that translated one of them
+   * evicted the model from the pool for the rest of the run — two of three
+   * models died within minutes and ~21,000 leaves "failed" against a quota
+   * that was 97%/100%/71% unused.
+   */
+  it("never treats a successful response as hard quota, whatever it contains", () => {
+    const ok = JSON.stringify({
+      choices: [{ message: { content: '{"a":"Billing","b":"Open full billing"}' } }],
+    });
+    expect(isHardQuotaError(200, ok)).toBe(false);
+    expect(isQuotaOrRateLimitError(200, ok)).toBe(false);
+    // The words only mean quota exhaustion on an error response.
+    expect(isHardQuotaError(402, '{"error":"billing quota exceeded"}')).toBe(true);
+    expect(isHardQuotaError(429, '{"code":"insufficient_quota"}')).toBe(true);
+  });
+
+  it("splits hard quota vs soft 429", () => {
+    expect(isHardQuotaError(429, '{"code":"insufficient_quota"}')).toBe(true);
+    expect(isSoftRateLimitError(429, '{"code":"insufficient_quota"}')).toBe(false);
+    expect(isSoftRateLimitError(429, "too many requests")).toBe(true);
+    expect(isQuotaOrRateLimitError(429, "")).toBe(true);
+    expect(isQuotaOrRateLimitError(500, "boom")).toBe(false);
+  });
+});
+
+describe("createModelPool", () => {
+  it("round-robins and skips benched models", () => {
+    const pool = createModelPool(["a", "b", "c"]);
+    expect([pool.pick(), pool.pick(), pool.pick()]).toEqual(["a", "b", "c"]);
+    pool.markExhausted("b");
+    expect(pool.remaining()).toEqual(["a", "c"]);
+    const next = [pool.pick(), pool.pick(), pool.pick()];
+    expect(new Set(next)).toEqual(new Set(["a", "c"]));
+    expect(next).toHaveLength(3);
+    pool.markExhausted("a");
+    pool.markExhausted("c");
+    expect(pool.pick()).toBeNull();
+  });
+
+  /**
+   * The plan meters a rolling window, so "out of budget" is temporary. Retiring
+   * a model permanently on one 4xx stalled a whole run while the dashboard
+   * still showed 17.4% of that model's window unspent.
+   */
+  it("returns a benched model to the pool once its cooldown elapses", async () => {
+    const pool = createModelPool(["a", "b"]);
+    pool.markExhausted("a", { cooldownMs: 40 });
+    expect(pool.remaining()).toEqual(["b"]);
+    await new Promise((r) => setTimeout(r, 60));
+    expect(pool.remaining()).toEqual(["a", "b"]);
+    expect(pool.pick()).not.toBeNull();
+  });
+
+  it("keeps an unusable model id out for good", async () => {
+    const pool = createModelPool(["a", "b"]);
+    pool.markExhausted("a", { cooldownMs: Number.POSITIVE_INFINITY });
+    await new Promise((r) => setTimeout(r, 40));
+    expect(pool.remaining()).toEqual(["b"]);
+  });
+
+  /**
+   * The caller uses this to wait out a rolling window instead of reporting
+   * failures that only mean "not this second".
+   */
+  it("reports when a benched pool will next have a model", () => {
+    const pool = createModelPool(["a", "b"]);
+    expect(pool.msUntilAvailable()).toBe(0);
+    pool.markExhausted("a", { cooldownMs: 5_000 });
+    expect(pool.msUntilAvailable()).toBe(0); // b is still free
+    pool.markExhausted("b", { cooldownMs: 10_000 });
+    const wait = pool.msUntilAvailable();
+    expect(wait).toBeGreaterThan(0);
+    expect(wait).toBeLessThanOrEqual(5_000); // soonest, not latest
+  });
+
+  it("reports null when no model can ever come back", () => {
+    const pool = createModelPool(["a"]);
+    pool.markExhausted("a", { cooldownMs: Number.POSITIVE_INFINITY });
+    expect(pool.msUntilAvailable()).toBeNull();
+  });
+
+  it("recovers from a fully benched pool rather than dying", async () => {
+    const pool = createModelPool(["a", "b"]);
+    pool.markExhausted("a", { cooldownMs: 30 });
+    pool.markExhausted("b", { cooldownMs: 30 });
+    expect(pool.pick()).toBeNull();
+    await new Promise((r) => setTimeout(r, 50));
+    expect(pool.pick()).not.toBeNull();
+  });
+});
+
+describe("placeholders", () => {
+  it("extracts simple ICU and mustache", () => {
+    // Sorted lexicographically: "{name}" < "{{url}}"
+    expect(extractPlaceholders("Hello {name}, see {{url}}")).toEqual(["{name}", "{{url}}"]);
+  });
+
+  it("normalizes nested ICU plural to arg+type signature", () => {
+    const src = "{count, plural, one {# item} other {# items}}";
+    expect(extractPlaceholders(src)).toEqual(["icu:count:plural"]);
+    // Translated branch text is OK as long as count/plural stay
+    const zh = "{count, plural, other {# 项}}";
+    expect(placeholdersMatch(src, zh)).toBe(true);
+  });
+
+  it("matches placeholders multiset-equal", () => {
+    expect(placeholdersMatch("Hi {name}", "你好 {name}")).toBe(true);
+    expect(placeholdersMatch("Hi {name}", "你好 {user}")).toBe(false);
+    expect(placeholdersMatch("a {x} {y}", "b {y} {x}")).toBe(true);
+  });
+});
+
+describe("glossary + validateTranslation", () => {
+  it("requires glossary terms that appear in source", () => {
+    expect(glossaryTermsPresent("Use Nebutra API", "使用 Nebutra API")).toBe(true);
+    expect(glossaryTermsPresent("Use Nebutra API", "使用云毓接口")).toBe(false);
+  });
+
+  it("rejects empty, bad placeholders, dropped glossary", () => {
+    expect(validateTranslation("Hi {n}", "").ok).toBe(false);
+    expect(validateTranslation("Hi {n}", "你好 {x}").ok).toBe(false);
+    expect(validateTranslation("Open Stripe", "打开支付").ok).toBe(false);
+    expect(validateTranslation("Open Stripe", "打开 Stripe").ok).toBe(true);
+  });
+
+  it("treats Webhooks / Discord as glossary terms", () => {
+    expect(glossaryTermsPresent("Configure Webhooks", "配置 Webhooks")).toBe(true);
+    expect(glossaryTermsPresent("Configure Webhooks", "配置 الخطافات")).toBe(false);
+    expect(glossaryTermsPresent("Join Discord", "加入 Discord")).toBe(true);
+  });
+});
+
+describe("glossary postprocess", () => {
+  it("restores exact-keep leaves", () => {
+    expect(EXACT_LEAF_KEEP).toContain("Webhooks");
+    expect(postprocessLeaf("Webhooks", "الخطافات")).toEqual({
+      value: "Webhooks",
+      reasons: ["exact-keep:Webhooks"],
+    });
+    expect(postprocessLeaf("Tokens", "Διακριτικά").value).toBe("Tokens");
+  });
+
+  it("restores legal entity Co., Ltd.", () => {
+    expect(restoreLegalEntity("{brandName} Co., Ltd.", "{brandName} S.r.l.")).toBe(
+      "{brandName} Co., Ltd.",
+    );
+    expect(
+      restoreLegalEntity(
+        "Contact {brandName} Co., Ltd. for help.",
+        "Contact {brandName} B.V. for help.",
+      ),
+    ).toContain("Co., Ltd.");
+    expect(restoreLegalEntity("{brandName} Co., Ltd.", "{brandName} Co., Ltd.")).toBe(
+      "{brandName} Co., Ltd.",
+    );
+  });
+});
+
+describe("CJK punctuation guard", () => {
+  it("rejects full-width punctuation the model invented for a non-CJK locale", () => {
+    const r = validateTranslation("Data, usage or goodwill.", "داده‌ها，استفاده یا اعتبار.", {
+      locale: "fa",
+    });
+    expect(r.ok).toBe(false);
+    expect(r.reason).toMatch(/CJK punctuation/);
+  });
+
+  it("allows it where it belongs", () => {
+    expect(validateTranslation("Data, usage.", "数据，使用。", { locale: "zh-Hans" }).ok).toBe(
+      true,
+    );
+    expect(validateTranslation("Data, usage.", "データ、使用。", { locale: "ja" }).ok).toBe(true);
+  });
+
+  it("does not flag marks that came from the source itself", () => {
+    expect(validateTranslation("前缀：value", "Präfix：value", { locale: "de" }).ok).toBe(true);
+  });
+
+  it("is inert when no locale is supplied", () => {
+    expect(validateTranslation("Data, usage.", "داده‌ها，استفاده.").ok).toBe(true);
+  });
+});
+
+describe("acceptBatchResults", () => {
+  it("keeps valid leaves and lists rejects", () => {
+    const entries = [
+      ["nav.title", "Home"],
+      ["nav.user", "Hello {name}"],
+      ["nav.brand", "Nebutra cloud"],
+    ];
+    const parsed = {
+      "nav.title": "首页",
+      "nav.user": "你好 {user}",
+      "nav.brand": "云平台",
+    };
+    const { accepted, rejected } = acceptBatchResults(entries, parsed);
+    expect([...accepted.keys()]).toEqual(["nav.title"]);
+    expect(rejected.map(([k]) => k).sort()).toEqual(["nav.brand", "nav.user"]);
+  });
+});
+
+describe("namespace batching", () => {
+  it("namespaceOfKey takes first segment", () => {
+    expect(namespaceOfKey("nav.title")).toBe("nav");
+    expect(namespaceOfKey("solo")).toBe("solo");
+  });
+
+  it("chunkByNamespace groups then sizes", () => {
+    const work = [
+      ["nav.a", "A"],
+      ["nav.b", "B"],
+      ["nav.c", "C"],
+      ["billing.x", "X"],
+      ["billing.y", "Y"],
+    ];
+    const batches = chunkByNamespace(work, 2);
+    // billing first alphabetically, then nav
+    expect(batches).toEqual([
+      [
+        ["billing.x", "X"],
+        ["billing.y", "Y"],
+      ],
+      [
+        ["nav.a", "A"],
+        ["nav.b", "B"],
+      ],
+      [["nav.c", "C"]],
+    ]);
+  });
+
+  it("splitBatchForRetry halves until empty for size 1", () => {
+    expect(splitBatchForRetry([["a", "1"]])).toEqual([]);
+    expect(
+      splitBatchForRetry([
+        ["a", "1"],
+        ["b", "2"],
+        ["c", "3"],
+      ]),
+    ).toEqual([
+      [
+        ["a", "1"],
+        ["b", "2"],
+      ],
+      [["c", "3"]],
+    ]);
+  });
+
+  it("namespaceContextLine is stable", () => {
+    expect(namespaceContextLine([["nav.a", "x"]])).toContain('namespace "nav"');
+    expect(
+      namespaceContextLine([
+        ["nav.a", "x"],
+        ["billing.b", "y"],
+      ]),
+    ).toContain("billing");
+  });
+
+  it("formatGlossaryForPrompt includes core brands", () => {
+    expect(formatGlossaryForPrompt()).toContain("Nebutra");
+    expect(formatGlossaryForPrompt()).toContain("Stripe");
+  });
+});

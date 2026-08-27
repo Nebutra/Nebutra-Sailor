@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toggle-group-single-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/toggle-group-single-demo.tsx",
+      "content": "\"use client\";\n\nimport { ToggleGroup, ToggleGroupItem } from \"@nebutra/ui/primitives\";\n\nexport function ToggleGroupSingleDemo() {\n  return (\n    <ToggleGroup type=\"single\" defaultValue=\"center\">\n      <ToggleGroupItem value=\"left\">左 (Left)</ToggleGroupItem>\n      <ToggleGroupItem value=\"center\">中 (Center)</ToggleGroupItem>\n      <ToggleGroupItem value=\"right\">右 (Right)</ToggleGroupItem>\n    </ToggleGroup>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

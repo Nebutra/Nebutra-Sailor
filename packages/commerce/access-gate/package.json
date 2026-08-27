@@ -1,0 +1,41 @@
+{
+  "name": "@nebutra/access-gate",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cold-start invite gate infrastructure for controlled SaaS access",
+  "license": "AGPL-3.0-only",
+  "type": "module",
+  "nebutra": {
+    "status": "foundation",
+    "productionReady": false,
+    "requires": [
+      "@nebutra/db Prisma migration",
+      "@nebutra/rate-limit at app route boundary"
+    ],
+    "gaps": [
+      "Provider-specific OAuth callback gating remains app-owned beyond apps/web disabling social signup in invite mode",
+      "Full real-database integration tests are environment-owned because scaffolded templates may prune access-gate migrations"
+    ],
+    "featureId": "access-gate",
+    "category": "commerce",
+    "summary": "Provider-agnostic invite-code gate for cold-start access control"
+  },
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "name": "@nebutra/audio-pipeline",
+  "version": "0.1.3",
+  "description": "BrandContext-first audio generation, license metadata, and loudness utilities",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "generation-capability",
+    "requires": [
+      "@nebutra/generation-context for BrandContext",
+      "@nebutra/sandbox-runtime for model and ffmpeg sidecars"
+    ],
+    "gaps": [
+      "Music model adapters are health-checked but not launched by this package",
+      "Commercial license policy is local metadata until asset governance lands",
+      "LUFS measurement uses deterministic estimation until ffmpeg/pyloudnorm sidecar is wired"
+    ],
+    "featureId": "audio-pipeline",
+    "category": "ai",
+    "summary": "License-aware BGM, SFX, and song generation surface"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/capability-kit": "workspace:*",
+    "@nebutra/errors": "workspace:*",
+    "@nebutra/generation-context": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/audio-pipeline#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/audio-pipeline"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
+}

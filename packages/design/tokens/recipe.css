@@ -1,0 +1,443 @@
+/**
+ * Product chrome recipe surface — carrier defaults for Nebutra factory brand.
+ *
+ * Contract:
+ *   --primary              = roles.action (CTA only)
+ *   --brand-mark           = roles.brand (logo / AI badge; never default CTA)
+ *   --elevation-card|…     = free CSS box-shadow from brand package
+ *   --radius-button|card|… = shape slots
+ *
+ * VI logo lock (--brand-primary hex) remains separate from product action.
+ * Tailwind utilities: bg-brand-mark / text-brand-mark (see @theme below).
+ */
+
+@custom-variant hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
+}
+
+:root {
+  /* ── Color roles (overridden by brand skins) ──────────────────── */
+  --role-action: var(--primary);
+  --role-action-fg: var(--primary-foreground);
+  --brand-mark: var(--primary);
+  --brand-mark-foreground: var(--primary-foreground);
+
+  /* ── Button default (solid | outline | gradient-stroke) ───────── */
+  --btn-default-bg: hsl(var(--primary));
+  --btn-default-fg: hsl(var(--primary-foreground));
+  --btn-default-border: transparent;
+  --btn-default-border-width: 0px;
+  /* An image, never a colour — see the @property registration below. */
+  --btn-default-stroke-gradient: linear-gradient(transparent, transparent);
+  --btn-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 90%, transparent);
+  --btn-default-radius: var(--radius-button, var(--radius-md, 0.375rem));
+  --btn-default-shadow: 0 0 #0000;
+  --btn-default-padding-y: 0.5rem;
+  --btn-default-padding-x: 1rem;
+
+  /* ── Shape slots ──────────────────────────────────────────────── */
+  --radius-button: var(--radius-md, 0.375rem);
+  --radius-card: var(--radius-lg, 0.75rem);
+  --radius-badge: 9999px;
+  --radius-inputs: var(--radius-md, 0.375rem);
+  --radius-pill: 9999px;
+
+  /* ── Control density (factory = Geist ladder; brands may override) ─ */
+  --control-height-tiny: 1.5rem; /* 24 */
+  --control-height-sm: 2rem; /* 32 */
+  --control-height-md: 2.5rem; /* 40 */
+  --control-height-lg: 3rem; /* 48 */
+  /* Icon-only triggers — orthogonal to the text-button ladder above.
+     apps use 28/32/36 rounded-md squares; circle uses the same boxes. */
+  --control-height-icon-sm: 1.75rem; /* 28 */
+  --control-height-icon-md: 2rem; /* 32 */
+  --control-height-icon-lg: 2.25rem; /* 36 */
+  --control-font-size-tiny: 0.6875rem; /* 11 */
+  --control-font-size-sm: 0.75rem; /* 12 */
+  --control-font-size-md: 0.875rem; /* 14 */
+  --control-font-size-lg: 1rem; /* 16 */
+  --font-weight-medium: 500;
+  --font-weight-heading: 600;
+
+  /* ── Elevation (free CSS; brand package replaces these) ───────── */
+  --elevation-card: var(--shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05));
+  --elevation-control: var(--shadow-xs, 0 1px 2px 0 rgb(0 0 0 / 0.04));
+  --elevation-raised: var(--shadow-md, 0 4px 6px -1px rgb(0 0 0 / 0.1));
+
+  /* ── Badge default = brand mark (AI / identity chips; not CTA) ─── */
+  --badge-default-bg: hsl(var(--brand-mark));
+  --badge-default-fg: hsl(var(--brand-mark-foreground));
+  --badge-default-border: transparent;
+  --badge-default-radius: var(--radius-badge, 9999px);
+  --badge-default-hover-bg: color-mix(in srgb, hsl(var(--brand-mark)) 80%, transparent);
+}
+
+/**
+ * The stroke slot is consumed as a background-image layer, so its value has to
+ * be an <image>. A colour there is not merely ignored: background-image becomes
+ * invalid as a whole and the browser drops every layer, including the solid
+ * brand fill in front of it. The button then renders with no background at all,
+ * while `color` — a separate declaration — keeps painting white text. That is
+ * what shipped: every default Button outside the gsap skin was white-on-white,
+ * because the slot held `transparent`, which is a colour.
+ *
+ * Registering the property makes that unrepresentable rather than merely
+ * discouraged. A colour written here now fails to parse against `<image>`, so
+ * the declaration is rejected and the slot keeps this initial value — the fill
+ * survives. Skins are generated, and a generator is exactly the place where one
+ * wrong branch reaches every brand at once.
+ *
+ * The var() fallbacks at the use sites stay as the unregistered path, so the
+ * recipe is still correct where @property is unsupported.
+ */
+@property --btn-default-stroke-gradient {
+  syntax: "<image>";
+  inherits: true;
+  initial-value: linear-gradient(transparent, transparent);
+}
+
+/**
+ * ── Type contracts for every other recipe slot ───────────────────────────────
+ *
+ * Same reasoning, generalised. Each slot below is read from a typed CSS position
+ * (a colour, a length, a font weight), so a wrong-typed value written by a skin
+ * does not fail locally — it makes the whole consuming declaration invalid at
+ * computed-value time and the browser silently drops it. Registering the slot
+ * moves the failure to the slot itself: the bad value is rejected, the property
+ * keeps its initial-value, and the declaration that reads it still renders.
+ *
+ * Rules observed here:
+ *   • `inherits: true` on every slot. Custom properties inherit by default, and
+ *     every skin sets these on `:root` / `[data-theme]` for descendants to read.
+ *     `inherits: false` would hand every non-root element the initial-value.
+ *   • `initial-value` is computationally independent: absolute colours and `px`
+ *     only. No `var()`, no `em`/`rem`, no `currentcolor`. The declared values in
+ *     `:root` above are free to keep using `var()` and `rem` — the restriction
+ *     applies to the initial-value alone. The px initials are the rem defaults
+ *     resolved at a 16px root (0.375rem → 6px) so the fallback matches the
+ *     factory ladder rather than inventing a new one.
+ *   • Registering a `<length>` slot absolutises `rem` at computed-value time.
+ *     Every skin writes `rem` or `px`, so this is a no-op today. A skin that
+ *     wants element-relative sizing must not use `em` in these slots: it would
+ *     resolve against the element's own font-size before the slot is read.
+ */
+
+/* ── Colour slots ─────────────────────────────────────────────────────────────
+ * Read inside `linear-gradient()` (button) and `background-color` (badge).
+ * Initial-values are the light-theme action blue (222.8 85% 55.7%) and its
+ * white foreground, i.e. the factory default rendered without a skin.
+ */
+@property --btn-default-bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: hsl(222.8 85% 55.7%);
+}
+
+@property --btn-default-fg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ffffff;
+}
+
+@property --btn-default-border {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --btn-default-hover-bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: hsl(222.8 85% 55.7%);
+}
+
+@property --badge-default-bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: hsl(222.8 85% 55.7%);
+}
+
+@property --badge-default-fg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ffffff;
+}
+
+@property --badge-default-border {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --badge-default-hover-bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: hsl(222.8 85% 55.7%);
+}
+
+/* ── Length slots ─────────────────────────────────────────────────────────────
+ * `border-width` and the control ladder are plain lengths. Radii and padding go
+ * into `border-radius` / `padding`, which both accept percentages, so those get
+ * `<length-percentage>` — a skin expressing a pill as `50%` stays legal.
+ */
+@property --btn-default-border-width {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --btn-default-radius {
+  syntax: "<length-percentage>";
+  inherits: true;
+  initial-value: 6px;
+}
+
+@property --btn-default-padding-y {
+  syntax: "<length-percentage>";
+  inherits: true;
+  initial-value: 8px;
+}
+
+@property --btn-default-padding-x {
+  syntax: "<length-percentage>";
+  inherits: true;
+  initial-value: 16px;
+}
+
+@property --badge-default-radius {
+  syntax: "<length-percentage>";
+  inherits: true;
+  initial-value: 9999px;
+}
+
+@property --radius-button {
+  syntax: "<length-percentage>";
+  inherits: true;
+  initial-value: 6px;
+}
+
+@property --radius-card {
+  syntax: "<length-percentage>";
+  inherits: true;
+  initial-value: 12px;
+}
+
+@property --radius-badge {
+  syntax: "<length-percentage>";
+  inherits: true;
+  initial-value: 9999px;
+}
+
+@property --radius-inputs {
+  syntax: "<length-percentage>";
+  inherits: true;
+  initial-value: 6px;
+}
+
+@property --radius-pill {
+  syntax: "<length-percentage>";
+  inherits: true;
+  initial-value: 9999px;
+}
+
+@property --control-height-tiny {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 24px;
+}
+
+@property --control-height-sm {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 32px;
+}
+
+@property --control-height-md {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 40px;
+}
+
+@property --control-height-lg {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 48px;
+}
+
+@property --control-height-icon-sm {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 28px;
+}
+
+@property --control-height-icon-md {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 32px;
+}
+
+@property --control-height-icon-lg {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 36px;
+}
+
+@property --control-font-size-tiny {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 11px;
+}
+
+@property --control-font-size-sm {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 12px;
+}
+
+@property --control-font-size-md {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 14px;
+}
+
+@property --control-font-size-lg {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 16px;
+}
+
+/* ── Numeric slots ────────────────────────────────────────────────────────────
+ * `font-weight` also accepts `normal` / `bold` in CSS, so those two idents are
+ * spelled into the syntax rather than excluded. `bolder` / `lighter` are left
+ * out on purpose: they are parent-relative and cannot survive as a slot value.
+ * Every skin currently writes a number (300–700).
+ */
+@property --font-weight-medium {
+  syntax: "<number> | normal | bold";
+  inherits: true;
+  initial-value: 500;
+}
+
+@property --font-weight-heading {
+  syntax: "<number> | normal | bold";
+  inherits: true;
+  initial-value: 600;
+}
+
+/* ── Genuinely untypeable: box-shadow lists ───────────────────────────────────
+ * These four are consumed as `box-shadow`, and the `@property` syntax grammar
+ * has no `<shadow>` component — its component names are limited to <length>,
+ * <number>, <percentage>, <length-percentage>, <color>, <image>, <url>,
+ * <integer>, <angle>, <time>, <resolution>, <transform-function>,
+ * <transform-list>, <custom-ident> and <string>, with only `+` / `#`
+ * multipliers. A shadow list ("0 1px 2px 0 rgb(…)", possibly comma-separated)
+ * cannot be spelled in that grammar, so `*` is the honest answer, not a
+ * shortcut. These slots therefore remain unguarded and a colour written into
+ * one still voids the `box-shadow` declaration that reads it. The audit script
+ * is the backstop for them.
+ */
+@property --btn-default-shadow {
+  syntax: "*";
+  inherits: true;
+}
+
+@property --elevation-card {
+  syntax: "*";
+  inherits: true;
+}
+
+@property --elevation-control {
+  syntax: "*";
+  inherits: true;
+}
+
+@property --elevation-raised {
+  syntax: "*";
+  inherits: true;
+}
+
+/* ── Genuinely untypeable: bare HSL channel triplets ──────────────────────────
+ * These carry channels ("222 47% 11%"), not colours — they exist to be wrapped
+ * as `hsl(var(--brand-mark))` / `hsl(var(--brand-mark) / 0.08)`, which is what
+ * makes the alpha-suffix idiom possible. `<color>` would reject every one of
+ * them. There is also no typed spelling for the triplet: `@property` syntax has
+ * no space-separated component composition and no <number-percentage>, so
+ * "<number> <percentage> <percentage>" is not expressible. `*` is correct here.
+ * The type error these slots invite is the inverse one — writing a full colour
+ * (`#0033FE`) where channels are expected, which the audit script catches at
+ * the `hsl()` call site.
+ */
+@property --role-action {
+  syntax: "*";
+  inherits: true;
+}
+
+@property --role-action-fg {
+  syntax: "*";
+  inherits: true;
+}
+
+@property --brand-mark {
+  syntax: "*";
+  inherits: true;
+}
+
+@property --brand-mark-foreground {
+  syntax: "*";
+  inherits: true;
+}
+
+/* Tailwind v4: brand-mark as first-class color (Logo / BrandMark / badge) */
+@theme inline {
+  --color-brand-mark: hsl(var(--brand-mark));
+  --color-brand-mark-foreground: hsl(var(--brand-mark-foreground));
+}
+
+/* ── Button default ─────────────────────────────────────────────── */
+.btn-brand-default {
+  border-width: var(--btn-default-border-width, 0px);
+  border-style: solid;
+  border-color: transparent;
+  border-radius: var(--btn-default-radius, var(--radius-md, 0.375rem));
+  background-color: transparent;
+  background-image:
+    linear-gradient(
+      var(--btn-default-bg, hsl(var(--primary))),
+      var(--btn-default-bg, hsl(var(--primary)))
+    ),
+    var(--btn-default-stroke-gradient, linear-gradient(transparent, transparent));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  color: var(--btn-default-fg, hsl(var(--primary-foreground)));
+  box-shadow: var(--btn-default-shadow, 0 0 #0000);
+  font-weight: var(--font-weight-medium, 500);
+}
+
+.btn-brand-default:hover:not(:disabled):not([aria-disabled="true"]) {
+  background-image:
+    linear-gradient(
+      var(--btn-default-hover-bg, color-mix(in srgb, hsl(var(--primary)) 90%, transparent)),
+      var(--btn-default-hover-bg, color-mix(in srgb, hsl(var(--primary)) 90%, transparent))
+    ),
+    var(--btn-default-stroke-gradient, linear-gradient(transparent, transparent));
+}
+
+/* ── Badge default (brand-mark; skins may set match-action → primary) ─ */
+.badge-brand-default {
+  border-color: var(--badge-default-border, transparent);
+  border-radius: var(--badge-default-radius, 9999px);
+  background-color: var(--badge-default-bg, hsl(var(--brand-mark)));
+  color: var(--badge-default-fg, hsl(var(--brand-mark-foreground)));
+  font-weight: var(--font-weight-medium, 500);
+}
+
+.badge-brand-default:hover {
+  background-color: var(
+    --badge-default-hover-bg,
+    color-mix(in srgb, hsl(var(--brand-mark)) 80%, transparent)
+  );
+}

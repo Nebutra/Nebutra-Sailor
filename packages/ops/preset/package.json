@@ -1,0 +1,31 @@
+{
+  "name": "@nebutra/preset",
+  "version": "0.1.2",
+  "private": true,
+  "type": "module",
+  "description": "Scenario preset system — defines which apps, features, and themes each scenario enables",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./deploy-target": "./src/deploy-target.ts",
+    "./nebutra-package-versions": "./src/nebutra-package-versions.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@nebutra/theme": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "license": "AGPL-3.0-only"
+}

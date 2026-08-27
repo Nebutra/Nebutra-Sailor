@@ -1,0 +1,89 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — API marketplace",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "All-model API marketplace · pay as you go · manage keys & wallet · quick try."
+  },
+  "admin": {
+    "dashboard": "Overview",
+    "keys": "API Keys",
+    "wallet": "Wallet",
+    "docs": "Docs",
+    "title": "Admin",
+    "backToMarket": "Back to market",
+    "quickUse": "Quick use"
+  },
+  "chrome": {
+    "searchPlaceholder": "What do you want to do with AI?",
+    "search": "Search",
+    "locale": "Language",
+    "currency": "Currency",
+    "collapseSidebar": "Collapse sidebar",
+    "expandSidebar": "Expand sidebar",
+    "home": "Home",
+    "adminConsole": "Admin",
+    "quickUse": "Quick use",
+    "support": "Support",
+    "apiDocs": "API docs",
+    "integrationHelp": "Integration guide",
+    "aiRecommend": "AI picks",
+    "market": "Market",
+    "usageTitle": "Quick use"
+  },
+  "channels": {
+    "app": "App market",
+    "api": "API market",
+    "models": "Model catalog",
+    "client": "Client"
+  },
+  "market": {
+    "new": "New",
+    "hot": "Hot",
+    "forYou": "For you",
+    "grid": "Grid",
+    "list": "List",
+    "apiShelf": "API shelf",
+    "toolShelf": "Tool shelf",
+    "categories": "Categories",
+    "apps": "Apps",
+    "newRelease": "New release",
+    "forgeTitle": "Forge tool workspace",
+    "forgeBlurb": "Text transforms, codecs, forms, and composable tools. The app market lab points at Forge.",
+    "openForge": "Open Forge →",
+    "allApi": "All APIs →",
+    "all": "All →",
+    "viewAll": "View all {label} →",
+    "gridView": "Grid view",
+    "listView": "List view",
+    "hiTitle": "Enterprise AI resource platform",
+    "hiSubtitle": "Match every need with the right AI",
+    "sellable": "Sellable",
+    "walletTopup": "Top up"
+  },
+  "apiTaxonomy": {
+    "llm": { "label": "Language models", "hint": "Chat · reasoning" },
+    "image-gen": { "label": "Image generation", "hint": "Text-to-image" },
+    "image-edit": { "label": "Image editing", "hint": "Edit · matting" },
+    "video": { "label": "Video generation", "hint": "Text-to-video" },
+    "audio": { "label": "Audio & video", "hint": "Speech · transcription" },
+    "data": { "label": "Information", "hint": "Retrieval · extract" },
+    "rag": { "label": "RAG", "hint": "Knowledge-augmented" },
+    "tools": { "label": "Tool APIs", "hint": "Agent · tools" }
+  },
+  "toolTaxonomy": {
+    "bots": { "label": "Bots", "chips": "Chat bots · drawing bots · knowledge" },
+    "productivity": { "label": "Productivity", "chips": "Model arena · AI writing" },
+    "academic": { "label": "Academic", "chips": "PDF toolkit · AI patent search" },
+    "image": { "label": "Image tools", "chips": "3D studio · Canvas" },
+    "audio": { "label": "Audio", "chips": "Speech · AI music" },
+    "code": { "label": "Code", "chips": "Web generator · Forge" }
+  },
+  "shortcuts": {
+    "dashboard": "Overview",
+    "keys": "Keys",
+    "wallet": "Wallet",
+    "use": "Try",
+    "docs": "Docs",
+    "models": "More"
+  }
+}

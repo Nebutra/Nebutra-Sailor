@@ -1,0 +1,30 @@
+import type * as React from "react";
+import { forwardRef } from "react";
+export interface IconProps extends React.SVGProps<SVGSVGElement> {
+  /** Icon size in px (default: 16). Overrides width/height props. */
+  size?: number | string;
+}
+const Api = forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
+  <svg
+    aria-hidden="true"
+    xmlns="http://www.w3.org/2000/svg"
+    width={width ?? size}
+    height={height ?? size}
+    fill="none"
+    strokeLinejoin="round"
+    viewBox="0 0 16 16"
+    ref={ref}
+    {...props}
+  >
+    <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M.75 1H0v13h5.5v-1.5h-4v-10H5a2.25 2.25 0 0 1 2.25 2.25V6.5h1.5V4.75A2.25 2.25 0 0 1 11 2.5h3.5v4H16V1h-5a3.74 3.74 0 0 0-3 1.5A3.74 3.74 0 0 0 5 1zm10.342 9.218a1.8 1.8 0 0 0 .872-.968h.072c.17.453.508.78.873.967q.09.048.178.104a1.8 1.8 0 0 0 1.277.273l.035.062a1.8 1.8 0 0 0-.402 1.24 2 2 0 0 1 0 .208c-.02.41.095.867.402 1.24l-.035.062a1.8 1.8 0 0 0-1.277.273 2 2 0 0 1-.178.104 1.8 1.8 0 0 0-.873.967h-.072a1.8 1.8 0 0 0-.873-.967 2 2 0 0 1-.178-.104 1.8 1.8 0 0 0-1.277-.273l-.035-.062a1.8 1.8 0 0 0 .402-1.24 2 2 0 0 1 0-.208 1.8 1.8 0 0 0-.402-1.24l.035-.062c.478.08.932-.05 1.277-.273a2 2 0 0 1 .178-.104m4.312 1.19.56-.542-1-1.732-.749.214a.55.55 0 0 1-.447-.076 3 3 0 0 0-.29-.168.55.55 0 0 1-.29-.349L13 8h-2l-.189.755a.55.55 0 0 1-.288.35q-.15.076-.29.167a.55.55 0 0 1-.448.076l-.75-.214-1 1.732.561.542c.114.11.166.266.158.424a3 3 0 0 0 0 .336.55.55 0 0 1-.158.424l-.56.542 1 1.732.749-.214a.55.55 0 0 1 .447.075q.14.092.29.168c.141.072.25.196.29.35L11 16h2l.189-.755a.55.55 0 0 1 .288-.35q.15-.076.29-.168a.55.55 0 0 1 .448-.075l.75.214 1-1.732-.561-.542a.55.55 0 0 1-.158-.424 3 3 0 0 0 0-.336.55.55 0 0 1 .158-.424"
+      clipRule="evenodd"
+    />
+  </svg>
+));
+Api.displayName = "Api";
+
+export { Api };
+export default Api;

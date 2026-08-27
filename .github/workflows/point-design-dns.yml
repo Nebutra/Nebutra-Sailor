@@ -1,0 +1,39 @@
+name: Point design DNS to ECS
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dns:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Upsert design.nebutra.com → ECS
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+          ECS_HOST: ${{ vars.ECS_HOST || vars.VM_HOST || '106.15.4.31' }}
+        run: |
+          set -euo pipefail
+          test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::CLOUDFLARE_API_TOKEN secret missing"; exit 1; }
+          bash infra/ops/scripts/point-design-dns-ecs.sh
+      - name: Smoke design origin
+        run: |
+          set -euo pipefail
+          host_of() { printf '%s' "$1" | sed -E 's#^https?://([^/]+).*#\1#'; }
+          for i in 1 2 3 4 5 6 7 8; do
+            read -r code final < <(curl -sSL -o /tmp/design.html \
+              -w '%{http_code} %{url_effective}\n' --max-time 25 https://design.nebutra.com/ 2>/dev/null || echo "000 -")
+            echo "try $i -> $code $final"
+            if [ "$code" = "200" ] && [ "$(host_of "$final")" = "design.nebutra.com" ]; then
+              head -c 400 /tmp/design.html; echo
+              exit 0
+            fi
+            sleep 12
+          done
+          echo "::warning::DNS may be set but design-docs PM2 not healthy yet — deploy apps=design-docs"
+          curl -sSI --max-time 15 https://design.nebutra.com/ || true
+          exit 0

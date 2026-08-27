@@ -1,0 +1,88 @@
+---
+title: React 快速开始
+description: 向任意 React 应用添加 Nebutra 认证和权限门控。
+---
+
+## 前提条件
+
+- React 18+
+- 拥有 [OPC 许可证](https://nebutra.com/en/get-license) 的 Nebutra 账户（免费）
+
+## 第一步：安装 SDK
+
+```bash
+npm install @nebutra/sdk @nebutra/react
+```
+
+## 第二步：用 NebutraProvider 包裹应用
+
+```tsx src/main.tsx
+import { NebutraProvider } from "@nebutra/react";
+
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <NebutraProvider orgId={import.meta.env.VITE_NEBUTRA_ORG_ID}>
+      <App />
+    </NebutraProvider>
+  </StrictMode>
+);
+```
+
+## 第三步：通过 Hook 访问认证状态
+
+```tsx
+import { useNebutraUser, useNebutraOrg } from "@nebutra/react";
+
+export function UserMenu() {
+  const { user, isLoaded, isSignedIn } = useNebutraUser();
+  const { org } = useNebutraOrg();
+
+  if (!isLoaded) return <Skeleton />;
+  if (!isSignedIn) return <SignInButton />;
+
+  return <p>{user.fullName} · {org.name} · {org.plan}</p>;
+}
+```
+
+## 第四步：用权限检查门控 UI
+
+```tsx
+import { Can } from "@nebutra/react";
+
+export function DeleteButton({ projectId }: { projectId: string }) {
+  return (
+    <Can action="delete" resource="Project">
+      <button onClick={() => handleDelete(projectId)}>删除项目</button>
+    </Can>
+  );
+}
+```
+
+如果当前用户缺少所需范围，`<Can>` 组件将不渲染任何内容。
+
+## 第五步：保护路由
+
+```tsx
+import { useNebutraUser } from "@nebutra/react";
+import { Navigate } from "react-router-dom";
+
+export function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const { isLoaded, isSignedIn } = useNebutraUser();
+
+  if (!isLoaded) return <LoadingSpinner />;
+  if (!isSignedIn) return <Navigate to="/sign-in" />;
+
+  return <>{children}</>;
+}
+```
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="权限" icon="lock" href="/zh/concepts/permissions">
+    完整的 RBAC 模型和权限范围参考。
+  </Card>
+  <Card title="认证指南" icon="shield-check" href="/zh/guides/authentication">
+    深入了解认证流程。
+  </Card>
+</CardGroup>

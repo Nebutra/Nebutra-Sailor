@@ -1,0 +1,300 @@
+[
+  [
+    {
+      "type": "title",
+      "bbox": [0.369, 0.288, 0.627, 0.397],
+      "angle": 0,
+      "content": "Nebutra"
+    },
+    {
+      "type": "title",
+      "bbox": [0.251, 0.415, 0.75, 0.536],
+      "angle": 0,
+      "content": "品牌标志设计提案"
+    },
+    {
+      "type": "text",
+      "bbox": [0.29, 0.575, 0.709, 0.633],
+      "angle": 0,
+      "content": "Nebutra Brand logo design proposal"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.038, 0.059, 0.287, 0.108],
+      "angle": 0,
+      "content": "VISUAL IDENTITY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.038, 0.117, 0.087, 0.134],
+      "angle": 0,
+      "content": "BRANDING"
+    },
+    {
+      "type": "header",
+      "bbox": [0.038, 0.14, 0.138, 0.162],
+      "angle": 0,
+      "content": "Nebutra品牌视觉设计"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.925, 0.066, 0.954, 0.088],
+      "angle": 0,
+      "content": "2025"
+    },
+    {
+      "type": "image",
+      "bbox": [0.218, 0.29, 0.344, 0.495],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.384, 0.32, 0.784, 0.467],
+      "angle": 0,
+      "content": "Nebutra"
+    },
+    {
+      "type": "text",
+      "bbox": [0.242, 0.734, 0.755, 0.788],
+      "angle": 0,
+      "content": "logo以首字母N的基础造型概念为主要设计框架，但又不直白的体现首字母的造型，通过几何正负空间构建隐形“N”，通过对基础图形的旋转变换，形成一个近似六边形的稳定结构。"
+    },
+    {
+      "type": "text",
+      "bbox": [0.241, 0.799, 0.752, 0.861],
+      "angle": 0,
+      "content": "色彩上使用清新明快的蓝绿渐变，通过线性渐变与角度渐变的方式填充其中，让整体更具未来感与科技的锋芒。整体表达品牌探索与引领未来，创建智能化连接的理念"
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.035, 0.058, 0.283, 0.108],
+      "angle": 0,
+      "content": "VISUAL IDENTITY"
+    },
+    {
+      "type": "text",
+      "bbox": [0.035, 0.116, 0.083, 0.134],
+      "angle": 0,
+      "content": "BRANDING"
+    },
+    {
+      "type": "text",
+      "bbox": [0.035, 0.14, 0.135, 0.162],
+      "angle": 0,
+      "content": "Nebutra品牌视觉设计"
+    },
+    {
+      "type": "image",
+      "bbox": [0.142, 0.358, 0.332, 0.672],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.043, 0.916, 0.068, 0.935],
+      "angle": 0,
+      "content": "2025"
+    },
+    {
+      "type": "text",
+      "bbox": [0.711, 0.111, 0.781, 0.15],
+      "angle": 0,
+      "content": "Nebula"
+    },
+    {
+      "type": "text",
+      "bbox": [0.708, 0.256, 0.784, 0.293],
+      "angle": 0,
+      "content": "Nurture"
+    },
+    {
+      "type": "title",
+      "bbox": [0.58, 0.435, 0.917, 0.563],
+      "angle": 0,
+      "content": "Nebutra"
+    },
+    {
+      "type": "text",
+      "bbox": [0.721, 0.7, 0.77, 0.74],
+      "angle": 0,
+      "content": "Ultra"
+    },
+    {
+      "type": "text",
+      "bbox": [0.714, 0.844, 0.777, 0.884],
+      "angle": 0,
+      "content": "Future"
+    }
+  ],
+  [
+    {
+      "type": "image",
+      "bbox": [0.231, 0.1, 0.768, 0.399],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.188, 0.598, 0.312, 0.802],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.149, 0.826, 0.348, 0.902],
+      "angle": 0,
+      "content": "Nebutra"
+    },
+    {
+      "type": "text",
+      "bbox": [0.633, 0.685, 0.866, 0.739],
+      "angle": 0,
+      "content": "云端聚合·引领未来"
+    },
+    {
+      "type": "text",
+      "bbox": [0.596, 0.772, 0.903, 0.813],
+      "angle": 0,
+      "content": "Cloud Aggregation Leads the Future"
+    }
+  ],
+  [
+    {
+      "type": "image",
+      "bbox": [0.388, 0.403, 0.444, 0.49],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.454, 0.412, 0.616, 0.475],
+      "angle": 0,
+      "content": "Nebutra"
+    }
+  ],
+  [
+    {
+      "type": "image",
+      "bbox": [0.142, 0.314, 0.165, 0.352],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.171, 0.316, 0.193, 0.352],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.197, 0.316, 0.22, 0.352],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.226, 0.316, 0.248, 0.352],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.253, 0.308, 0.283, 0.359],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.288, 0.316, 0.356, 0.352],
+      "angle": 0,
+      "content": "Nebutra"
+    },
+    {
+      "type": "image",
+      "bbox": [0.135, 0.42, 0.16, 0.458],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.185, 0.42, 0.207, 0.458],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.236, 0.419, 0.259, 0.458],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.294, 0.42, 0.317, 0.457],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.331, 0.42, 0.447, 0.456],
+      "angle": 0,
+      "content": "Nebutra.com"
+    },
+    {
+      "type": "text",
+      "bbox": [0.699, 0.188, 0.781, 0.252],
+      "angle": 0,
+      "content": "9:41"
+    },
+    {
+      "type": "image",
+      "bbox": [0.711, 0.375, 0.869, 0.583],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.771, 0.584, 0.876, 0.631],
+      "angle": 0,
+      "content": "Nebutra"
+    },
+    {
+      "type": "image",
+      "bbox": [0.791, 0.669, 0.946, 0.877],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.876, 0.877, 0.929, 0.923],
+      "angle": 0,
+      "content": "Mail"
+    }
+  ],
+  [
+    {
+      "type": "image",
+      "bbox": [0.451, 0.483, 0.493, 0.592],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.501, 0.416, 0.613, 0.548],
+      "angle": 0,
+      "content": "Nebutra"
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.302, 0.463, 0.701, 0.573],
+      "angle": 0,
+      "content": "THANK YOU"
+    }
+  ]
+]

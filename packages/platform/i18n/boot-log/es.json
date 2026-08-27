@@ -1,0 +1,1439 @@
+{
+  "panelLabel": "Registro de arranque",
+  "entries": {
+    "transistor-name-off-patent-1947": {
+      "tag": "Patente",
+      "title": "El nombre omitido en la patente",
+      "body": "El 23 de diciembre de 1947, Bardeen y Brattain demostraron un transistor de contacto puntual de germanio en Bell Labs. Shockley no estaba en la sala. Los abogados consideraron que su propio diseño se parecía demasiado a una patente de 1925 de Julius Lilienfeld y omitieron su nombre de esta patente.",
+      "coda": "En 1956 los tres compartieron el Premio Nobel de Física."
+    },
+    "dartmouth-two-month-study-1956": {
+      "tag": "Propuesta",
+      "title": "Un estudio de dos meses",
+      "body": "La propuesta de 1955 de McCarthy, Minsky, Rochester y Shannon solicitaba un estudio de dos meses con diez personas, bajo la premisa de que la inteligencia podía describirse con suficiente precisión para que una máquina la simulara. El taller de 1956 duró de seis a ocho semanas; solo tres asistentes se quedaron todo el tiempo.",
+      "coda": "El nombre que eligieron para el campo, inteligencia artificial, es el que se quedó."
+    },
+    "traitorous-eight-lie-detector-1957": {
+      "tag": "División",
+      "title": "La memoria del detector de mentiras",
+      "body": "En mayo de 1957, ocho ingenieros de Shockley Semiconductor exigieron que William Shockley fuera reemplazado como gerente. Había grabado llamadas telefónicas, impedido que el personal compartiera resultados y exigido pruebas de detector de mentiras. El 18 de septiembre de 1957, los ocho fundaron Fairchild Semiconductor.",
+      "coda": "Wikipedia incluye a Intel y AMD entre las decenas de empresas que se remontan a esa escisión."
+    },
+    "kilby-noyce-six-months-1958-1959": {
+      "tag": "Paralelo",
+      "title": "Seis meses, una medalla",
+      "body": "Kilby demostró un circuito integrado funcional en Texas Instruments en septiembre de 1958, con sus componentes unidos por cables externos. Noyce presentó una versión monolítica de silicio en Fairchild en julio de 1959, apta para producción masiva. Ninguno de los dos rechazó la pretensión del otro de ser co-inventor.",
+      "coda": "Kilby aceptó el Premio Nobel de 2000 solo. Noyce había muerto en 1990."
+    },
+    "perceptron-conscious-machine-1958": {
+      "tag": "Redes neuronales",
+      "title": "La máquina que despertaría",
+      "body": "En 1958 el New York Times informó que el perceptrón de Frank Rosenblatt era el embrión de un ordenador que la Armada esperaba que caminara, hablara, viera, escribiera, se reprodujera y fuera consciente de su existencia. En 1969 el libro de Minsky y Papert demostró que un perceptrón de una sola capa no podía calcular XOR.",
+      "coda": "La financiación para la investigación de redes neuronales se agotó y no volvió hasta la década de 1980."
+    },
+    "hamilton-software-engineering": {
+      "tag": "Nomenclatura",
+      "title": "Una broma constante",
+      "body": "Durante el programa Apollo, Margaret Hamilton comenzó a llamar a su trabajo \"ingeniería de software\" para distinguirlo de la ingeniería de hardware. Dijo que nadie había oído el término antes y se convirtió en una broma constante, hasta que un respetado ingeniero de hardware se levantó en una reunión y estuvo de acuerdo.",
+      "coda": "La broma duró años, luego nadie la volvió a contar."
+    },
+    "macau-seventeen-thousand": {
+      "tag": "Delicado",
+      "title": "Diecisiete mil",
+      "body": "En octubre de 1961, un sindicato formado por Stanley Ho, Henry Fok, Yip Hon y Teddy Yip licitó por el monopolio del juego en Macao. Ofrecieron 3.167.000 patacas, diecisiete mil más que la oferta rival.",
+      "coda": "El monopolio que ese margen les compró se mantuvo durante más de cuarenta años."
+    },
+    "moores-law-ten-year-bet-1965": {
+      "tag": "Predicción",
+      "title": "Una apuesta de diez años",
+      "body": "El artículo de Moore de 1965 predecía que la cantidad de componentes en un chip se duplicaría cada año durante la próxima década, alcanzando aproximadamente 65.000 para 1975. En 1975 revisó el período de duplicación a dos años. La curva que luego se llamó ley era su propia predicción, ya enmendada una vez.",
+      "coda": "Para 1995, Moore dijo que el término había llegado a significar casi cualquier cosa en la industria de los chips."
+    },
+    "eliza-secretary-1966": {
+      "tag": "Chatbot",
+      "title": "La secretaria y DOCTOR",
+      "body": "En 1966, Joseph Weizenbaum publicó el guion DOCTOR de ELIZA en el MIT, un programa que en su mayoría reflejaba las propias frases de los usuarios como preguntas. Se dice que su propia secretaria le pidió que saliera de la habitación para poder hablar con él sola.",
+      "coda": "El patrón que no había esperado más tarde se llamó efecto ELIZA."
+    },
+    "engelbart-royalties": {
+      "tag": "Patente",
+      "title": "Cuarenta mil dólares",
+      "body": "SRI patentó el ratón después de la demostración y, según su propia versión, no tenía idea real de su valor. Años después se supo que lo habían licenciado a Apple por algo así como 40.000 dólares.",
+      "coda": "Engelbart nunca recibió regalías por inventarlo."
+    },
+    "lo": {
+      "tag": "Primer contacto",
+      "title": "LO",
+      "body": "Charley Kline intentó iniciar sesión en una máquina en SRI desde UCLA. Llegó la L. Llegó la O. En la G, el extremo remoto se estrelló.",
+      "coda": "Lo primero que se dijo en internet fueron dos letras: LO."
+    },
+    "multics": {
+      "tag": "Plan maestro",
+      "title": "La computación como servicio público",
+      "body": "Multics no fue diseñado como una computadora, sino como una utilidad de cómputo: siempre encendida, como la electricidad, con los inquilinos de una máquina aislados entre sí. Salió tarde y caro, y Bell Labs se retiró.",
+      "coda": "Cincuenta años después, la idea fue renombrada como computación en la nube."
+    },
+    "rfc1": {
+      "tag": "Gobernanza",
+      "title": "Petición de comentarios",
+      "body": "Steve Crocker tuvo que escribir las primeras reglas para unos pocos hosts en red. Nadie le había dado autoridad, y temió que sonara a prepotencia, así que llamó al género Petición de Comentarios.",
+      "coda": "Toda regla que internet ha acordado desde entonces sigue llamándose RFC."
+    },
+    "pdp7": {
+      "tag": "Origen",
+      "title": "La máquina que nadie quería",
+      "body": "Después de que Bell Labs abandonara Multics, Ken Thompson tenía una PDP-7 desechada y un mes solo mientras su esposa e hijo estaban en San Diego. Se dio una semana por pieza: kernel, shell, editor, ensamblador.",
+      "coda": "Cuatro semanas después, la máquina que nadie quería ejecutaba Unix."
+    },
+    "alarm-1202": {
+      "tag": "Incidente",
+      "title": "Alarma de programa 1202",
+      "body": "A cuatro minutos de la superficie, la computadora de guía activó cinco alarmas: un interruptor de radar de encuentro dejado en la posición incorrecta consumía sus ciclos. No se colgó. Eliminó las tareas de baja prioridad, se reinició y mantuvo el aterrizaje.",
+      "coda": "Saber qué descartar bajo carga es la lección costosa."
+    },
+    "mariner-1": {
+      "tag": "Incidente",
+      "title": "Una barra superior faltante",
+      "body": "Mariner 1 fue destruido 293 segundos después del lanzamiento. Una baliza a bordo había fallado y, al copiar las ecuaciones de guiado en el programa, se omitió la barra superior de R. La barra significaba tomar el promedio.",
+      "coda": "La prensa encontró difícil explicar la barra superior y escribió guion. El guion se quedó."
+    },
+    "mother-of-all-demos": {
+      "tag": "Demo",
+      "title": "La madre de todas las demostraciones",
+      "body": "A Engelbart le dieron noventa minutos. Su terminal funcionaba por líneas telefónicas conectada a una máquina a treinta millas de distancia, y demostró el ratón, los hipervínculos, las ventanas, la compartición de pantalla y dos personas editando un documento al mismo tiempo.",
+      "coda": "Mil personas lo vieron y luego volvieron a las tarjetas perforadas durante otra década."
+    },
+    "conway": {
+      "tag": "Ley",
+      "title": "El artículo que fue rechazado",
+      "body": "Melvin Conway escribió la observación de que la estructura de un sistema termina reflejando la estructura de comunicación de la organización que lo construyó, y envió «How Do Committees Invent?» a Harvard Business Review. Lo rechazaron con el argumento de que no había demostrado su tesis. Datamation lo publicó en 1968.",
+      "coda": "Fred Brooks citó más tarde la tesis no demostrada y la llamó la ley de Conway."
+    },
+    "apollo-burn-baby-burn": {
+      "tag": "Comentario",
+      "title": "Burn, Baby, Burn",
+      "body": "La rutina de ignición principal del módulo lunar está etiquetada como BURN_BABY_BURN en el código fuente. El nombre no tiene que ver con el empuje; fue tomado de la frase de moda de un DJ de radio soul de la época.",
+      "coda": "La línea sigue sin editar en el repositorio público."
+    },
+    "waterfall": {
+      "tag": "Malentendido",
+      "title": "El diagrama era el contraejemplo",
+      "body": "En \"Managing the Development of Large Software Systems\", Winston Royce dibujó el gráfico que la industria terminaría llamando modelo en cascada, y luego escribió: \"Creo en este concepto, pero la implementación descrita anteriormente es arriesgada y conlleva el fracaso\". El resto del artículo trata sobre cómo hacerlo iterativo.",
+      "coda": "La industria mantuvo el diagrama y eliminó la frase."
+    },
+    "moth": {
+      "tag": "Etimología",
+      "title": "La primera plaga real",
+      "body": "Se extrajo una polilla de un relé del Harvard Mark II y se pegó con cinta en el libro de registro. La línea junto a ella se cita como el origen de la palabra, pero lo que dice es: primer caso real de bug encontrado.",
+      "coda": "Los ingenieros decían bug desde Edison. El museo duda que la página esté siquiera en la mano de Hopper."
+    },
+    "intel-4004-busicom-rights-1971": {
+      "tag": "Derechos",
+      "title": "Un chip propiedad de una empresa de calculadoras",
+      "body": "En 1969, Busicom, de Japón, encargó a Intel el diseño de un chipset para calculadoras, bajo un contrato que asignaba los derechos de diseño a Busicom, a pesar de que el trabajo se realizaba íntegramente dentro de Intel. En 1971, el ingeniero Federico Faggin intercambió un precio más bajo por la liberación de esa exclusividad.",
+      "coda": "Las ventas generales del Intel 4004 comenzaron ese julio."
+    },
+    "pong-coin-overflow": {
+      "tag": "Retroalimentación",
+      "title": "La caja de monedas se desbordó",
+      "body": "En agosto de 1972, Atari colocó el prototipo de Pong en un bar de Sunnyvale. Unos días después, el dueño informó que estaba roto. El ingeniero Al Alcorn se dirigió a repararlo y descubrió que el fallo no era eléctrico: el mecanismo de monedas se había atascado porque estaba desbordado de monedas de 25 centavos.",
+      "coda": "La avería no era un fallo de cableado; eran demasiadas monedas."
+    },
+    "wozniak-breakout-bonus": {
+      "tag": "Bonus",
+      "title": "La división",
+      "body": "En 1973, Atari pidió a Steve Jobs que redujera la placa de circuito de Breakout, pagando 100 dólares por cada chip eliminado. Jobs pidió ayuda a Wozniak, prometiéndole la mitad. Wozniak eliminó 50 chips. Jobs dijo que el total ascendía a 700 dólares, por lo que la parte de Wozniak era de 350 dólares. Diez años después, Wozniak supo que la bonificación real era de 5.000 dólares.",
+      "coda": "Wozniak dijo que le habría dado el dinero a Jobs si se lo hubiera pedido."
+    },
+    "unix-not-expected-to-understand": {
+      "tag": "Kernel",
+      "title": "No se esperaba que lo entendieras",
+      "body": "El archivo slp.c de la Sexta Edición de Unix contiene la línea 'No se espera que entiendas esto', adjunta al código de restauración de pila para intercambio de procesos, construido sobre peculiaridades del compilador PDP-11. Dennis Ritchie dijo más tarde que lo decía de la misma manera en que un profesor dice que esto no saldrá en el examen.",
+      "coda": "La rutina se reescribió para la Séptima Edición de Unix."
+    },
+    "vi-adm3a-keys": {
+      "tag": "Atajos de teclado",
+      "title": "Flechas grabadas en las teclas de letras",
+      "body": "Bill Joy escribió vi en Berkeley en 1977 en un terminal Lear Siegler ADM-3A que no tenía teclas de flecha; h, j, k y l estaban grabadas con flechas y se convirtieron en las teclas de movimiento. Los breves comandos de una sola letra provenían de escribir por adelantado en un módem de 300 baudios demasiado lento para mantener el ritmo.",
+      "coda": "Las teclas que luego se atribuyeron a la filosofía de diseño comenzaron como una solución alternativa para un terminal sin teclas de flecha."
+    },
+    "kildall-flying": {
+      "tag": "Testimonio",
+      "title": "El vuelo que no se confirmó",
+      "body": "En 1980, IBM vino a licenciar CP/M. Gary Kildall estaba volando software a un cliente; su esposa Dorothy manejó las conversaciones iniciales. Bill Gates luego dijo a los periodistas que Kildall había \"ido volando caprichosamente\". El negociador principal de IBM, Jack Sams, dijo que nunca conoció a Kildall.",
+      "coda": "Las dos versiones de esa reunión nunca se han reconciliado."
+    },
+    "trusting-trust": {
+      "tag": "Confianza",
+      "title": "Reflexiones sobre la Confianza en la Confianza",
+      "body": "La conferencia Turing de Thompson describió un compilador que planta una puerta trasera en el programa de inicio de sesión, y reinstala todo el truco cada vez que compila un compilador. Reconstruye desde código limpio y la puerta trasera sobrevive.",
+      "coda": "No puedes confiar en código que no creaste totalmente por ti mismo."
+    },
+    "arm-one-person-company-1985": {
+      "tag": "Origen",
+      "title": "Una Empresa de Chips de Una Sola Persona",
+      "body": "Acorn, que se había hecho un nombre con computadoras educativas, comenzó la investigación RISC en 1983. Una visita a un diseñador de chips rival les mostró que las actualizaciones del 6502 provenían de lo que efectivamente era una empresa de una sola persona, y concluyeron que no necesitaban nada más.",
+      "coda": "ARM1 llegó el 26 de abril de 1985 y funcionó al primer encendido."
+    },
+    "copyleft-all-rights-reversed": {
+      "tag": "Copyright",
+      "title": "Todos los Derechos Invertidos",
+      "body": "Alguien envió a Richard Stallman una carta marcada \"Copyleft — todos los derechos invertidos\", un juego de palabras con el aviso estándar. Después de que Symbolics mejorara su intérprete Lisp y se negara a compartir las mejoras, usó la propia ley de derechos de autor para redactar una licencia que exigía la obligación contraria.",
+      "coda": "La Licencia Pública General siguió en febrero de 1989."
+    },
+    "tetris-unpaid-decade": {
+      "tag": "Derechos",
+      "title": "El Bloque Sin Regalías",
+      "body": "En 1985, Pajitnov escribió Tetris como empleado estatal de la Academia de Ciencias de la URSS; los derechos pertenecían al Centro de Cómputo, no a él. Las licencias occidentales pasaron por varias manos antes de llegar a Nintendo, y el juego vendió decenas de millones de copias.",
+      "coda": "Los derechos le fueron revertidos en 1996, once años después de que lo escribiera."
+    },
+    "euv-twenty-three-hours-2018": {
+      "tag": "Litografía",
+      "title": "Veintitrés Horas para una Oblea",
+      "body": "Hiroo Kinoshita en NTT demostró por primera vez imágenes de litografía ultravioleta extrema en 1986. El prototipo de ASML de 2006 tardó veintitrés horas en exponer una oblea. No fue hasta 2018 que EUV alcanzó la producción, en una máquina que MIT Technology Review llamó la que salvó la ley de Moore.",
+      "coda": "Para 2022, un escáner EUV de producción procesaba aproximadamente doscientas obleas por hora."
+    },
+    "tsmc-foundry-fifty-six-1987": {
+      "tag": "Foundry",
+      "title": "Una fundición en el cincuenta y seis",
+      "body": "Morris Chang, nacido en 1931, ascendió a vicepresidente de grupo de operaciones mundiales de semiconductores en Texas Instruments, luego fue presidente y director de operaciones de General Instrument, y posteriormente dirigió el ITRI de Taiwán. En 1987, a los cincuenta y seis años, fundó TSMC, que no diseña ninguno de los chips que fabrica.",
+      "coda": "Fue la primera fundición del mundo dedicada exclusivamente a fabricar."
+    },
+    "huawei-diet-pills": {
+      "tag": "Revendedor",
+      "title": "El primer negocio de Huawei no era tecnológico",
+      "body": "Huawei se registró con un capital de 21.000 yuanes el 15 de septiembre de 1987, autodenominándose empresa tecnológica. Comenzó comerciando con mercancías, incluidas píldoras para adelgazar, y luego revendía con margen los conmutadores HAX fabricados en Hong Kong. Su propio conmutador, el BH01, no se ensambló a mano hasta 1989.",
+      "coda": "A los cuatro años, la empresa diseñó su propia placa de circuitos por primera vez."
+    },
+    "morris": {
+      "tag": "Incidente",
+      "title": "Una medición",
+      "body": "Morris quería saber qué tan grande era Internet, así que escribió un programa que se copiaba a sí mismo. Para evitar que los hosts fingieran una respuesta ya infectada, le dio una probabilidad de uno entre siete de reinfectar de todos modos.",
+      "coda": "Ese uno entre siete dejó fuera de servicio a unos 6.000 de los 60.000 hosts conectados en ese momento."
+    },
+    "naur": {
+      "tag": "Filosofía",
+      "title": "El programa no es el artefacto",
+      "body": "Naur argumentaba que un programa no vive en su código fuente, sino como una teoría, mantenida por quienes lo escribieron, sobre por qué el problema se resuelve de esa manera. El código fuente es una proyección con pérdida de esa teoría.",
+      "coda": "Llamó a ese momento, cuando el último defensor de la teoría se va, la muerte del programa."
+    },
+    "mit-license-171-words": {
+      "tag": "Términos",
+      "title": "171 palabras",
+      "body": "Un grupo del MIT que desarrollaba una implementación de TCP/IP quería evitar negociaciones legales, así que liberó el software bajo un aviso de aproximadamente 171 palabras. Ese breve texto ahora cubre casi un tercio de todos los proyectos con licencia en GitHub, más que cualquier otra licencia.",
+      "coda": "La redacción ha permanecido esencialmente sin cambios desde que se escribió."
+    },
+    "photoshop-display-origin": {
+      "tag": "Origen",
+      "title": "Se llamaba Display al principio",
+      "body": "En 1988, Thomas Knoll, estudiante de posgrado en la Universidad de Míchigan, escribió un pequeño programa para ver imágenes en escala de grises en una pantalla Mac monocromática. Lo llamó Display, luego ImagePro y finalmente Photoshop, antes de que su hermano John lo mostrara a Adobe, que lo licenció ese mismo año.",
+      "coda": "Adobe compró todos los derechos en 1995 por 34,5 millones de dólares."
+    },
+    "sosumi-so-sue-me": {
+      "tag": "Nomenclatura",
+      "title": "Pues demandadme",
+      "body": "En 1991, el departamento legal de Apple rechazó el nombre \"Let It Beep\" para el sonido de alerta por considerarlo demasiado musical, según un acuerdo que impedía a Apple Computer registrar marcas relacionadas con música. El diseñador de sonido Jim Reekes respondió \"so sue me\" y lo registró como \"sosumi\".",
+      "coda": "El sonido se incluyó en Mac OS durante casi tres décadas, hasta que Big Sur lo reemplazó en 2020."
+    },
+    "www-royalty-free": {
+      "tag": "Regalo",
+      "title": "El día que dejó de costar",
+      "body": "El 30 de abril de 1993, el CERN puso el protocolo y el código de la World Wide Web a disposición de todos sin regalías. Cualquiera podía usarlo, sin pagar y sin pedir permiso.",
+      "coda": "Nadie ha pagado una regalía por usarlo desde entonces."
+    },
+    "doom-ftp-crash": {
+      "tag": "Shareware",
+      "title": "El servidor al que no podían llegar",
+      "body": "El 10 de diciembre de 1993, id Software regaló el primer episodio de Doom como shareware, apostando por las ventas del resto. Al subirlo a un servidor FTP de la Universidad de Wisconsin, se encontraron con tanta gente esperando que el propio equipo no pudo conectarse.",
+      "coda": "La subida terminó cerca de la medianoche; diez mil descargas simultáneas colapsaron la red de la universidad."
+    },
+    "zlib-two-authors": {
+      "tag": "Fundación",
+      "title": "La capa de compresión de dos",
+      "body": "zlib está integrado en Linux, macOS, iOS y sucesivas generaciones de consolas de videojuegos; Git y OpenSSH dependen de él para comprimir. Dos personas escribieron su primera versión pública en 1995.",
+      "coda": "La línea de autoría nunca ha añadido un tercer nombre."
+    },
+    "byd-battery-to-car": {
+      "tag": "Adquisición",
+      "title": "La empresa de baterías compró un fabricante de autos",
+      "body": "BYD fue fundada en el distrito de Longgang, Shenzhen, el 10 de febrero de 1995, fabricando baterías de níquel-cadmio e hidruro metálico de níquel, y luego ingresó a las celdas de iones de litio en 1996. En 2003, el fabricante de baterías adquirió Xi'an Qinchuan Automobile, renombrándola como BYD Auto.",
+      "coda": "Dos años después, su primer sedán propio, el F3, salió a la venta."
+    },
+    "ariane-501": {
+      "tag": "Incidente",
+      "title": "Treinta y siete segundos",
+      "body": "A los treinta y siete segundos, el sistema de referencia inercial convirtió un float de 64 bits en un entero de 16 bits y desbordó; a los cuarenta segundos aproximadamente, el vehículo se desintegró. La rutina provenía sin cambios del Ariane 4 y no tenía razón para estar ejecutándose después del despegue.",
+      "coda": "Aproximadamente $370 millones, gastados en código que debería haberse desactivado."
+    },
+    "deep-blue-move-44-1997": {
+      "tag": "Ajedrez",
+      "title": "La jugada cuarenta y cuatro de Deep Blue",
+      "body": "En la primera partida de la revancha de 1997, Kasparov venció a Deep Blue en cuarenta y cinco jugadas. La jugada cuarenta y cuatro de Deep Blue fue supuestamente el resultado de un error: incapaz de decidirse por una jugada preferida dentro de su búsqueda, el motor recurrió a un mecanismo de seguridad.",
+      "coda": "Tras perder la segunda partida, Kasparov acusó a IBM de hacer trampa."
+    },
+    "curl-one-maintainer": {
+      "tag": "Fundación",
+      "title": "El stack de protocolos de un solo hombre",
+      "body": "La documentación de curl sitúa libcurl en aproximadamente diez mil millones de dispositivos, funcionando en 110 sistemas operativos y 28 arquitecturas de CPU. El proyecto ha llevado el nombre de Daniel Stenberg como mantenedor principal desde que se renombró curl en 1998.",
+      "coda": "Nunca se ha mencionado un sucesor."
+    },
+    "book-of-mozilla-verses": {
+      "tag": "Easter Egg",
+      "title": "El Libro de Mozilla",
+      "body": "Escribir about:mozilla en la barra de direcciones revela el Libro de Mozilla, un versículo apocalíptico que enfrenta a «la bestia» contra «Mammon» y que cada generación de navegadores actualiza. Los números de los versículos no son marcadores de capítulo: son fechas de lanzamiento.",
+      "coda": "El versículo más reciente, 6:27, se lanzó por primera vez en una compilación de Firefox Nightly en 2020."
+    },
+    "http-418-teapot": {
+      "tag": "Protocolo",
+      "title": "Soy una tetera",
+      "body": "El RFC 2324, publicado el 1 de abril de 1998, define el estado 418 como \"Soy una tetera\" y se clasifica como Informativo, no como un estándar. El 1 de abril de 2014, el RFC 7168 lo amplió para cubrir la preparación de té. El código nunca llegó a convertirse en un estándar real.",
+      "coda": "Ambos documentos siguen siendo Informativos; el código de estado se incluyó en servidores reales de todos modos."
+    },
+    "open-source-coined-1998": {
+      "tag": "Nomenclatura",
+      "title": "El origen de Open Source",
+      "body": "En febrero de 1998, Christine Peterson propuso \"open source\" porque los nuevos usuarios seguían escuchando \"free software\" como un precio, no como una libertad. En una reunión de VA Research el 5 de febrero, Todd Anderson introdujo el término en la conversación en lugar de proponerlo formalmente, dejando que se extendiera por sí mismo.",
+      "coda": "El grupo intentó registrar la frase como marca comercial y fracasó."
+    },
+    "netscape-source-1998": {
+      "tag": "Lanzamiento",
+      "title": "No del todo abierto",
+      "body": "El 22 de enero de 1998, Netscape anunció que liberaría el código fuente de su navegador, y el empleado Jamie Zawinski registró mozilla.org. Pero la licencia que escribieron dejó una puerta abierta: Netscape podía seguir incorporando el mismo código en productos propietarios.",
+      "coda": "Netscape fue adquirida por AOL aproximadamente un año después."
+    },
+    "bsd-75-acknowledgments": {
+      "tag": "Licencia",
+      "title": "Setenta y Cinco Agradecimientos",
+      "body": "La licencia BSD original exigía que cada anuncio acreditara a cada autor contribuyente por su nombre. Para 1997, una sola compilación de NetBSD incluía setenta y cinco de estos agradecimientos, incompatibles con la GPL. El director de licencias de Berkeley eliminó la cláusula el 22 de julio de 1999.",
+      "coda": "La firma de una oficina retiró una cláusula que se había multiplicado durante una década."
+    },
+    "red-hat-ipo-1999": {
+      "tag": "IPO",
+      "title": "El Precio del Software Libre",
+      "body": "Red Hat regalaba el código fuente de su producto principal y cobraba en su lugar por soporte, capacitación e integración. El 11 de agosto de 1999 la empresa salió a bolsa. Su ganancia del primer día se clasificó como la octava más grande en la historia de Wall Street en ese momento.",
+      "coda": "El fundador Bob Young fue reemplazado como CEO cuatro meses después."
+    },
+    "multics-shutdown": {
+      "tag": "Apagado",
+      "title": "El último",
+      "body": "El 30 de octubre de 2000 se cerró la última instalación conocida de Multics que se ejecutaba nativamente en hardware Honeywell, en el Departamento de Defensa Nacional de Canadá en Halifax, Nueva Escocia.",
+      "coda": "Treinta y cinco años después de que comenzara el proyecto."
+    },
+    "sqlite-no-license": {
+      "tag": "Fundación",
+      "title": "La base de datos sin licencia",
+      "body": "La propia página de SQLite estima más de un billón de archivos de base de datos activos en todo el mundo, ya que solo cada smartphone lleva cientos, lo que la sitúa en segundo lugar solo por detrás de zlib entre el software desplegado. No tiene licencia, porque los autores cedieron cada línea al dominio público.",
+      "coda": "Las empresas que buscan cobertura legal compran una garantía de título separada."
+    },
+    "smic-tsmc-lawsuit": {
+      "tag": "Demanda",
+      "title": "Las dos demandas de SMIC",
+      "body": "SMIC fue fundada en 2000 por Richard Chang, un exingeniero de TSMC, entre otros. TSMC demandó dos veces por robo de secretos comerciales; en el caso de 2009 un jurado encontró a SMIC responsable en 61 de los 65 cargos presentados contra ella.",
+      "coda": "En noviembre de 2010 SMIC llegó a un acuerdo con TSMC por 200 millones de dólares y aproximadamente el 8 por ciento de sus acciones."
+    },
+    "api-mandate": {
+      "tag": "Gobernanza",
+      "title": "La memorándum",
+      "body": "Según la publicación que se hizo pública por accidente en 2011, Bezos ordenó en 2002 que los equipos expusieran todo a través de interfaces de servicio: sin enlaces directos, sin leer el almacén de otro equipo, sin puertas traseras.",
+      "coda": "El autor de esa publicación había querido que fuera solo para sus colegas."
+    },
+    "hupu-rumours": {
+      "tag": "Foro",
+      "title": "El que traduce rumores",
+      "body": "En enero de 2004 un estudiante chino que trabajaba en un doctorado en ingeniería mecánica en Chicago creó un foro de baloncesto en su tiempo libre. El trabajo consistía principalmente en traducir noticias y rumores de la NBA al chino y organizarlos.",
+      "coda": "Ocho años después el foro abrió su propia tienda en línea."
+    },
+    "jd-the-other-name": {
+      "tag": "Etimología",
+      "title": "La otra mitad del nombre",
+      "body": "La plataforma de comercio minorista que se lanzó en línea en 2004 tomó su nombre de dos personas: su fundador, Liu Qiangdong, y Gong Xiaojing, la mujer con la que había salido primero. Un carácter de cada uno.",
+      "coda": "El Jing es suyo."
+    },
+    "douban-hutong": {
+      "tag": "Etimología",
+      "title": "Nombrado por el callejón",
+      "body": "El sitio que se lanzó el 6 de marzo de 2005 no lleva el nombre de una metáfora. Yang Bo escribió su código fuente en un café cerca de Douban Hutong en Pekín, y tomó el nombre del callejón.",
+      "coda": "Veintiún años después, el sitio aún lo conserva."
+    },
+    "git-information-manager-hell": {
+      "tag": "Git",
+      "title": "Gestor de información del infierno",
+      "body": "El 7 de abril de 2005, Linus Torvalds realizó la primera revisión de git. El mensaje dice: Revisión inicial de \"git\", el gestor de información del infierno. La dirección del autor es torvalds@ppc970.osdl.org.",
+      "coda": "Esa dirección apunta a una máquina de prueba PowerPC 970 en OSDL."
+    },
+    "knuth-reward-check": {
+      "tag": "Recompensa",
+      "title": "Banco de San Serriffe",
+      "body": "Donald Knuth paga $2.56 por cada error encontrado en sus libros, con cheques girados contra el ficticio Banco de San Serriffe. Para marzo de 2005, los cheques que había firmado sumaban más de $20,000.",
+      "coda": "La mayoría de los destinatarios enmarcan el cheque en lugar de depositarlo."
+    },
+    "dji-helicopter-first": {
+      "tag": "Giro",
+      "title": "DJI empezó con un helicóptero",
+      "body": "Frank Wang se graduó de la Universidad de Ciencia y Tecnología de Hong Kong en 2006 y cofundó DJI en Shenzhen con compañeros de clase. Su primer producto fue un sistema de control de vuelo para helicópteros; la primera versión madura, XP3.1, se envió en 2008.",
+      "coda": "El equipo descubrió más tarde que la mayoría de los compradores de estabilizadores los montaban en multirrotores, no en helicópteros."
+    },
+    "dropbox-hn": {
+      "tag": "Contraintuitivo",
+      "title": "Esa respuesta",
+      "body": "Houston publicó la demo de Dropbox en Hacker News. La famosa respuesta explicaba que se podía hacer uno mismo con una cuenta FTP, curlftpfs y SVN, y que no parecía que fuera a generar dinero.",
+      "coda": "Once años después, en la OPI, Houston lo llamó su hilo favorito del sitio."
+    },
+    "butterfield": {
+      "tag": "Pivot",
+      "title": "Dos veces desde los escombros",
+      "body": "El juego de Butterfield, Game Neverending, se estancó, y el equipo separó la parte de compartir fotos como Flickr. Ocho años después, su segundo juego, Glitch, cerró, y el equipo separó la herramienta de chat que habían construido para sí mismos: Slack.",
+      "coda": "Ambas veces, el subproducto solo se hizo visible una vez que lo principal cerró."
+    },
+    "blockbuster": {
+      "tag": "El pase",
+      "title": "Cincuenta millones",
+      "body": "Hastings y Randolph volaron a Dallas para vender Netflix a Blockbuster por cincuenta millones y para gestionar la parte online por ellos. Según Randolph, el CEO al otro lado de la mesa pasó la reunión conteniendo la risa.",
+      "coda": "Blockbuster se declaró en quiebra diez años después."
+    },
+    "y2k": {
+      "tag": "Gobernanza",
+      "title": "No pasó nada",
+      "body": "Gartner estimó el costo mundial del Y2K entre tres y seiscientos mil millones de dólares, y cientos de miles de personas cambiaron años de dos dígitos línea por línea. En la noche, la red resistió, los bancos resistieron, los aviones volaron.",
+      "coda": "Cuatro años después, un economista publicó un artículo argumentando que la mayor parte del dinero había sido desperdiciado."
+    },
+    "unsourced": {
+      "tag": "Sin fuente",
+      "title": "Atribuido a nadie",
+      "body": "\"640K deberían ser suficientes para cualquiera\" — la respuesta del propio Gates es que no existe ninguna cita, que la frase flota como un rumor y se repite. \"Un mercado mundial para quizás cinco ordenadores\" — Thomas Watson sí dijo cinco, en 1953, sobre los pedidos que esperaba para una máquina, la IBM 701.",
+      "coda": "La 701 llegó a vender dieciocho."
+    },
+    "homebrew-volunteer-team": {
+      "tag": "Fundación",
+      "title": "El repositorio sin empleador",
+      "body": "Homebrew es el gestor de paquetes predeterminado en la mayoría de las máquinas de desarrollo Mac; en 2013 lideró a todos los de GitHub en contribuyentes. Max Howell escribió su primera versión en 2009. Hoy lo mantiene un equipo de 34 personas, todas sin remuneración.",
+      "coda": "Su historial de financiación es un Kickstarter y una cuenta de Open Source Collective."
+    },
+    "xiaomi-software-first": {
+      "tag": "Software",
+      "title": "El primer producto de Xiaomi no era un teléfono",
+      "body": "Xiaomi se fundó el 6 de abril de 2010. Ese agosto y diciembre lanzó versiones beta del sistema operativo MIUI y de la aplicación de chat Miliao, ambos software.",
+      "coda": "El primer teléfono de la empresa no se lanzó hasta agosto del año siguiente."
+    },
+    "ritchie-same-week": {
+      "tag": "Obituario",
+      "title": "Misma semana",
+      "body": "Dennis Ritchie, junto con Ken Thompson, creó Unix y el lenguaje de programación C. Fue hallado muerto en su casa de Nueva Jersey el 12 de octubre de 2011, a los 70 años. Steve Jobs había muerto una semana antes, el 5 de octubre. Los comentaristas señalaron más tarde que el trabajo de Ritchie sustentaba la tecnología sobre la que Apple construyó su fortuna.",
+      "coda": "Los dos obituarios se publicaron en la misma semana."
+    },
+    "leap-second": {
+      "tag": "Incidente",
+      "title": "El segundo extra",
+      "body": "Se insertó un segundo intercalar para mantener los relojes atómicos al paso con la rotación de la Tierra. El kernel nunca informó a su subsistema de temporizadores, los temporizadores de alta resolución se activaron antes de tiempo y los procesadores giraron en vacío. Reddit, Mozilla y LinkedIn se bloquearon; una aerolínea embarcó a los pasajeros a mano.",
+      "coda": "El tiempo no aumenta de forma monótona. El código asume que sí."
+    },
+    "gregorian-1752-eleven-days": {
+      "tag": "Mito",
+      "title": "Los once días desaparecidos",
+      "body": "El 2 de septiembre de 1752, el calendario británico saltó al 14 de septiembre, eliminando once días. La historia popular dice que las multitudes se amotinaron por ello. No sobrevive ningún registro contemporáneo de ningún motín. La historia se remonta a un cartel en una pintura satírica electoral de 1755.",
+      "coda": "Un elemento de una pintura se convirtió en el registro de un evento sin otra huella."
+    },
+    "bootstrap-the-impossible-joke": {
+      "tag": "Etimología",
+      "title": "Tomado de una hazaña imposible",
+      "body": "\"Arrastrarse uno mismo por las correas de los botines\" se remonta al cuento exagerado del barón Munchausen de 1785 y se usó durante el siglo XIX como el ejemplo estándar de una imposibilidad física. En 1953, la informática lo tomó prestado para la cadena de instrucciones que hace que una máquina se inicie a sí misma.",
+      "coda": "La palabra para el truco fue, en su primer uso, un chiste sobre el fracaso del truco."
+    },
+    "french-revolutionary-decimal-time": {
+      "tag": "Experimento",
+      "title": "El día de diez horas",
+      "body": "En 1793, Francia dividió el día en diez horas de cien minutos decimales cada una. El uso obligatorio comenzó en septiembre de 1794 y se suspendió solo siete meses después. La esfera decimal del reloj del Palacio de las Tullerías siguió funcionando al menos hasta 1801.",
+      "coda": "El sistema abolido permaneció montado en una pared del palacio durante años después."
+    },
+    "railway-time-gwr": {
+      "tag": "Estándar",
+      "title": "La hora que guardaban los trenes",
+      "body": "En noviembre de 1840, el Great Western Railway adoptó la hora de Greenwich en toda su red, reemplazando la hora local de cada pueblo. Para 1855, aproximadamente el 98 % de los pueblos británicos habían seguido el ejemplo. El Parlamento no la convirtió en el estándar nacional legal hasta 1880.",
+      "coda": "Los relojes se pusieron de acuerdo en la hora cuarenta años antes que la ley."
+    },
+    "western-union-telephone-memo-1876": {
+      "tag": "Desmentido",
+      "title": "El memorándum que Western Union nunca escribió",
+      "body": "Un memorándum de Western Union de 1876, ampliamente citado, califica al teléfono de «idiotecia» comparado con enviar un mensajero a la oficina de telégrafo. Investigadores que revisaron periódicos de la época no encontraron rastro alguno, y el ejecutivo que nombra no ocupaba ese cargo en la empresa ese año. El texto fue fabricado posteriormente.",
+      "coda": "Western Union sí rechazó la patente de Bell ese año; simplemente nunca escribió este memorándum."
+    },
+    "nintendo-hanafuda-detours": {
+      "tag": "Pivote",
+      "title": "Los Desvíos Después de las Cartas de Flores",
+      "body": "Fusajiro Yamauchi abrió una tienda en Kioto en 1889 fabricando a mano naipes hanafuda. La empresa probó más tarde un servicio de taxis y arroz instantáneo, ambos abandonados; la afirmación, muy repetida, sobre una cadena de hoteles del amor no aparece en ningún registro de valores investigado hasta 1962.",
+      "coda": "En 1966, un juguete llamado Ultra Hand vendió cientos de miles de unidades."
+    },
+    "wrigley-premiums-premium": {
+      "tag": "Pivote",
+      "title": "El premio de los premios",
+      "body": "En 1891, William Wrigley Jr. vendía jabón en Chicago y regalaba polvo de hornear como bonus. Los clientes querían más el polvo de hornear que el jabón, así que cambió a venderlo y añadió chicle como bonus del polvo de hornear. Los clientes querían más el chicle.",
+      "coda": "En 1892 había dejado tanto el jabón como la levadura en polvo para vender solo chicle."
+    },
+    "robot-labor-not-brother": {
+      "tag": "Etimología",
+      "title": "Creador anónimo de la palabra robot",
+      "body": "Karel Čapek escribió su obra de 1920 con una palabra de origen latino, \"laboři\", y la consideró demasiado académica. En una columna periodística señaló la fuente real: su hermano Josef, mencionado de paso. \"Robot\" proviene de robota, el trabajo forzado de un siervo, no de maquinaria.",
+      "coda": "La obra conservó el nombre de un hermano en la página de título."
+    },
+    "play-doh-wallpaper-cleaner": {
+      "tag": "Pivote",
+      "title": "Estaba Pensado para Limpiar Papeles de Pared",
+      "body": "En la década de 1930, Kutol formuló una masa blanda para fregar la hollín del carbón de los papeles de pared. Cuando los hogares cambiaron a combustibles de calefacción más limpios, la demanda desapareció. Un profesor sugirió venderla como plastilina; en 1956 se renombró como Play-Doh.",
+      "coda": "Para 2005 se vendían 95 millones de latas al año en 75 países."
+    },
+    "hedy-lamarr-frequency-hopping-patent": {
+      "tag": "Patente",
+      "title": "La Patente que Guardaron",
+      "body": "En 1942, Lamarr y el compositor George Antheil patentaron un sistema de salto de frecuencia para evitar que las radios de los torpedos fueran interferidas. La Armada lo clasificó, lo archivó y sugirió que Lamarr vendiera bonos de guerra en su lugar. La patente expiró en 1959, antes de que ningún barco la utilizara.",
+      "coda": "Lamarr nunca recibió pago por la patente en vida."
+    },
+    "bush-1945-memex": {
+      "tag": "Origen",
+      "title": "El Escritorio que Nunca se Construyó",
+      "body": "En julio de 1945, Vannevar Bush publicó \"As We May Think\" en The Atlantic, describiendo una máquina de microfilm del tamaño de un escritorio llamada Memex que permitía al usuario crear senderos asociativos a través del conocimiento almacenado. Se reimprimió en versión abreviada ese mismo septiembre. Nunca se construyó ningún prototipo.",
+      "coda": "Engelbart y Nelson más tarde atribuyeron el ensayo como la razón por la que comenzaron."
+    },
+    "jean-bartik-eniac-dinner": {
+      "tag": "Registro",
+      "title": "La Cena a la que No Fueron Invitadas",
+      "body": "En la presentación pública de ENIAC el 14 de febrero de 1946, el programa de trayectoria que impresionó a la sala había sido escrito por Jean Bartik y Betty Holberton. La prensa presentó solo a Eckert y Mauchly. Ninguna de las seis programadoras fue invitada a la cena posterior.",
+      "coda": "Sus nombres fueron recuperados de las fotografías del evento décadas después."
+    },
+    "claude-shannon-juggling-theorem": {
+      "tag": "Artículo",
+      "title": "El Teorema de las Malabares",
+      "body": "En 1948, Shannon publicó 'A Mathematical Theory of Communication', fundando la teoría de la información. Décadas después aplicó el mismo rigor a su pasatiempo, derivando una relación formal entre el tiempo de vuelo de una pelota, su tiempo de permanencia y la cantidad de pelotas y manos.",
+      "coda": "Fue recopilado en el mismo volumen que el artículo de 1948."
+    },
+    "mccarthy-1960-eval": {
+      "tag": "Origen",
+      "title": "El intérprete en la nota al pie",
+      "body": "En su artículo de 1960, John McCarthy escribió una función eval como notación matemática, para demostrar que las expresiones simbólicas podían describirse a sí mismas. Su estudiante Steve Russell tradujo la derivación a código máquina IBM 704. El dispositivo de prueba se convirtió en el primer intérprete Lisp funcional.",
+      "coda": "McCarthy dijo más tarde que no había pretendido que nadie lo ejecutara realmente."
+    },
+    "licklider-1960-symbiosis": {
+      "tag": "Origen",
+      "title": "Bibliotecas conectadas",
+      "body": "En su artículo de 1960 \"Man-Computer Symbiosis\", J.C.R. Licklider propuso \"centros de pensamiento\" que albergaran funciones de biblioteca, conectados en una red para el uso en tiempo real y conversacional de las computadoras. La mayoría de las máquinas de la época funcionaban con tarjetas perforadas en lotes; las terminales interactivas apenas existían.",
+      "coda": "Dos años después dirigió una nueva oficina del Pentágono y financió el proyecto que se convirtió en ARPANET."
+    },
+    "ctss-1962-password-leak": {
+      "tag": "Origen",
+      "title": "El archivo de contraseñas, impreso",
+      "body": "En 1962, el estudiante de doctorado de MIT Allan Scherr estaba frustrado con sus cuatro horas semanales en CTSS. Descubrió que el comando de impresión fuera de línea podía extraer los archivos de cualquier cuenta, así que imprimió UACCNT.SECRET, el archivo que contenía todas las contraseñas, y lo compartió para tomar prestadas cuentas y seguir ejecutando sus simulaciones.",
+      "coda": "Scherr no lo admitió ante el director del laboratorio hasta casi treinta años después."
+    },
+    "katherine-johnson-check-the-numbers": {
+      "tag": "Registro",
+      "title": "Que la chica lo verifique",
+      "body": "Antes de su vuelo orbital de 1962, John Glenn pidió a los ingenieros que Katherine Johnson recalculara a mano la trayectoria que un IBM 7090 ya había calculado. 'Si ella dice que están bien', dijo, 'estoy listo para ir'. Sus números coincidieron exactamente con los de la computadora.",
+      "coda": "Friendship 7 despegó según lo programado, el 20 de febrero de 1962."
+    },
+    "daemon-backronym": {
+      "tag": "Etimología",
+      "title": "El acrónimo adaptado del daemon",
+      "body": "En 1963, los programadores del Proyecto MAC del MIT nombraron un proceso de respaldo en cinta en segundo plano en honor al demonio de Maxwell, un agente de experimento mental de 1867 que clasifica moléculas incansable e invisiblemente — el daimon griego, un espíritu neutral, no el diablo judeocristiano.",
+      "coda": "«Disk And Execution MONitor» se ajustó a la palabra después."
+    },
+    "sketchpad-1963": {
+      "tag": "Origen",
+      "title": "Un lápiz óptico y un osciloscopio",
+      "body": "En enero de 1963, Ivan Sutherland presentó su tesis del MIT sobre Sketchpad, dibujando geometría restringida con un lápiz óptico en la pantalla del TX-2 en el Laboratorio Lincoln. La máquina costaba aproximadamente un millón de dólares y solo existían un puñado; su tablero de dibujo no podía ser entregado a nadie más.",
+      "coda": "El software CAD comercial tardó casi dos décadas en igualar lo que la tesis había mostrado."
+    },
+    "douglas-mcilroy-garden-hose-pipe": {
+      "tag": "Memo",
+      "title": "El memorándum de la manguera de jardín",
+      "body": "En octubre de 1964, McIlroy escribió un memorándum en Bell Labs proponiendo que los programas se conectaran como mangueras de jardín — enroscar otro segmento para procesar datos de manera diferente. Circuló, fue admirado y no se construyó. Nueve años después, Ken Thompson añadió un carácter, |, al shell de Unix durante la noche.",
+      "coda": "Para la mañana, programas que nunca se habían hablado lo hicieron."
+    },
+    "berkshire-hathaway-spite-buy": {
+      "tag": "Despecho",
+      "title": "La fábrica comprada por rencor",
+      "body": "En 1964, Warren Buffett acordó verbalmente vender sus acciones al presidente de Berkshire, Seabury Stanton, a 11,50 dólares cada una. La oferta pública por escrito llegó a 11,375 dólares. Buffett estaba tan enfadado por la octava parte que faltaba que compró el control de la empresa en su lugar y despidió a Stanton.",
+      "coda": "En 1985 cerró las fábricas textiles por las que había luchado para mantenerlas."
+    },
+    "nelson-1965-hypertext": {
+      "tag": "Origen",
+      "title": "El enlace antes de la página",
+      "body": "En un artículo de la ACM de 1965, Ted Nelson acuñó \"hipertexto\" para documentos que se enlazan y citan entre sí de forma no secuencial, basándose en un proyecto que había iniciado en 1960 y que más tarde llamó Xanadu. Su versión pagaba a los autores originales por cada enlace seguido. Una implementación parcial no se lanzó hasta 2014.",
+      "coda": "La Web adoptó su vocabulario y dejó atrás el mecanismo de pago."
+    },
+    "mary-allen-wilkes-linc": {
+      "tag": "Registro",
+      "title": "El LINC en la sala de estar",
+      "body": "En 1965, Wilkes trasladó un ordenador LINC de 250 libras a la sala de estar de sus padres en Baltimore y escribió LAP6, un sistema operativo interactivo, sola — doce años antes de que el Apple II llegara a cualquier hogar. Cuando le preguntaron si había sido la primera, solo dijo: 'Supongo que quizás sí.'",
+      "coda": "Ella nunca reclamó el título por sí misma."
+    },
+    "hoares-billion-dollar-mistake": {
+      "tag": "Confesión",
+      "title": "La referencia que agregó de todos modos",
+      "body": "En 1965 Tony Hoare construía el primer sistema de tipos destinado a hacer que las referencias de ALGOL W fueran demostrablemente seguras en tiempo de compilación. Aun así añadió una referencia nula, porque era fácil de implementar. En 2009 lo llamó su error de mil millones de dólares.",
+      "coda": "El objetivo de seguridad era explícito; el fallo fue que la facilidad ganó de todos modos."
+    },
+    "johnson-vs-cern-touchscreen": {
+      "tag": "Pantalla táctil",
+      "title": "Quién fue realmente el primero",
+      "body": "CERN atribuye a Bent Stumpe la construcción de la primera pantalla táctil capacitiva del mundo en 1972, para la sala de control de su acelerador. Eric Johnson, del Royal Radar Establishment de Gran Bretaña, ya había publicado un artículo sobre tecnología táctil capacitiva controlada por los dedos en 1965, siete años antes.",
+      "coda": "La afirmación del CERN de haber construido la primera pantalla táctil sigue vigente en su propio sitio web."
+    },
+    "second-redefined-1967": {
+      "tag": "Metrología",
+      "title": "9.192.631.770 ciclos",
+      "body": "Hasta 1960, el segundo era una fracción del año tropical de 1900, fijado por observación astronómica. En 1967, la Conferencia General de Pesos y Medidas lo redefinió como 9.192.631.770 ciclos de una transición del cesio-133.",
+      "coda": "La duración de un segundo dejó de definirse por el sol y pasó a definirse por un átomo."
+    },
+    "goto-statement-considered-harmful": {
+      "tag": "Corrección",
+      "title": "El título que no escribió",
+      "body": "Dijkstra presentó un artículo titulado A Case against the GO TO Statement a CACM. El editor Niklaus Wirth, apresurándose a publicarlo como carta, le dio el título que lo hizo famoso: Go To Statement Considered Harmful.",
+      "coda": "La frase superó a la carta, generando décadas de títulos 'X Considered Harmful' que nadie leyó más allá del título."
+    },
+    "rollkugel-vs-mouse": {
+      "tag": "Ratón",
+      "title": "Dos ratones, un año",
+      "body": "En octubre de 1968, Telefunken incluyó el ratón Rollkugel en un folleto de ventas, un dispositivo de bola rodante que sus ingenieros habían construido desde 1966. Dos meses después, el 9 de diciembre, Douglas Engelbart presentó el ratón de madera que su equipo de SRI había construido desde 1963. Ninguno de los dos equipos conocía al otro.",
+      "coda": "Telefunken llegó al mercado primero y fue olvidada; Engelbart llegó segundo y es lo que la gente entiende por ratón."
+    },
+    "peter-principle-verified": {
+      "tag": "Estudio",
+      "title": "Ascendido a la Incompetencia",
+      "body": "En 1969, Laurence Peter y Raymond Hull bromeaban a medias en un bestseller que todo empleado asciende hasta el nivel en que se vuelve incompetente, pensado como sátira. En 2019, un estudio de datos de promoción de fuerzas de ventas en 214 empresas reales encontró que la broma se cumplía: los mejores vendedores se convertían en peores gerentes.",
+      "coda": "La gracia resultó ser un coeficiente de regresión medible y publicado."
+    },
+    "lanpar-vs-visicalc": {
+      "tag": "Hoja de cálculo",
+      "title": "La Hoja de Cálculo que Nadie Nombró",
+      "body": "En el verano de 1969, los graduados de Harvard Rene Pardo y Remy Landau escribieron LANPAR, un lenguaje de hojas de cálculo que permitía a los usuarios ingresar fórmulas en cualquier orden y aún así calcular correctamente. Bell Canada y General Motors lo usaban. En 1979, Dan Bricklin construyó VisiCalc sin saber que LANPAR existía.",
+      "coda": "La patente de LANPAR sobrevivió a un desafío judicial hasta 1983; las revistas ya habían nombrado a VisiCalc como la primera."
+    },
+    "spam-vikings-not-marketers": {
+      "tag": "Etimología",
+      "title": "Spam, Antes del Marketing",
+      "body": "En un sketch de 1970, los vikingos de Monty Python cantan \"spam\" sobre el diálogo de un comensal, burlándose de la abundancia de carne enlatada en el menú. La broma migró a salas de chat MUD a finales de los años 80 para inundar conversaciones, y luego al correo electrónico a principios de los años 90.",
+      "coda": "La palabra llegó a las bandejas de entrada por medio de un sketch cómico sobre el almuerzo."
+    },
+    "codd-1970-relational-model": {
+      "tag": "Origen",
+      "title": "El Papel que su Empleador Ignoró",
+      "body": "En 1970, el investigador de IBM Edgar Codd publicó el modelo relacional. El producto insignia de IBM era jerárquico, y la empresa no tenía prisa por adoptar su idea. Larry Ellison leyó el papel de Codd y los propios informes de System R de IBM, luego lanzó una base de datos relacional comercial primero, en 1979.",
+      "coda": "El propio producto relacional de IBM, DB2, no se lanzó hasta 1983."
+    },
+    "linnainmaa-backpropagation": {
+      "tag": "Algoritmo",
+      "title": "La Cita Faltante",
+      "body": "En 1970, el estudiante finlandés Seppo Linnainmaa publicó el algoritmo completo para la diferenciación automática en modo inverso, con código funcional, en su tesis de maestría. En 1986, Rumelhart, Hinton y Williams publicaron el mismo método en Nature para entrenar redes neuronales. No lo citaron.",
+      "coda": "La tesis de Linnainmaa permaneció sin citar durante dieciséis años hasta que los historiadores del campo la desenterraron."
+    },
+    "at-sign-arbitrary-pick": {
+      "tag": "Etimología",
+      "title": "La única tecla sin usar",
+      "body": "En 1971, el ingeniero de BBN Ray Tomlinson necesitaba un separador entre el nombre de usuario y el host que nunca pudiera aparecer en el nombre real de una persona. Escaneando su teclado Model 33 Teletype, eligió @ — un carácter que entonces usaban casi exclusivamente tenderos y contables.",
+      "coda": "Cada dirección de correo electrónico desde entonces ha llevado esa única restricción."
+    },
+    "parnas-module-decomposition": {
+      "tag": "Método",
+      "title": "Dónde cortar un módulo",
+      "body": "En 1972, David Parnas dividió el mismo sistema de índice KWIC en módulos de dos maneras: una por paso de procesamiento, otra por las decisiones de diseño con más probabilidad de cambiar, cada una oculta tras una interfaz. Solo la segunda permitió que un cambio afectara a un módulo sin que nadie leyera el resto.",
+      "coda": "El límite del módulo resultó codificar una suposición sobre lo que un futuro mantenedor necesitaría saber."
+    },
+    "karen-sparck-jones-idf": {
+      "tag": "Registro",
+      "title": "La fórmula que nadie agradece",
+      "body": "En 1972, Spärck Jones publicó un artículo proponiendo que la rareza de una palabra en un conjunto de documentos mide su importancia — frecuencia inversa de documento, ahora bajo la lógica de clasificación de casi todos los motores de búsqueda. No obtuvo un puesto permanente en Cambridge hasta 1993.",
+      "coda": "Hasta entonces, había trabajado una serie de contratos de corta duración y financiación inestable."
+    },
+    "cyclades-pouzin-tcpip": {
+      "tag": "Internet",
+      "title": "El quinto hombre de Internet",
+      "body": "En 1972, Louis Pouzin construyó la red CYCLADES en Francia, la primera en hacer que los hosts finales, no la red, fueran responsables de la entrega fiable. En 1974, el artículo TCP de Cerf y Kahn le agradeció por su nombre. En 2004, Cerf y Kahn ganaron el Premio Turing. El nombre de Pouzin no estaba en él.",
+      "coda": "The Economist más tarde lo llamó el quinto hombre de Internet."
+    },
+    "ethernet-1973-memo": {
+      "tag": "Origen",
+      "title": "El memo del éter",
+      "body": "El 22 de mayo de 1973, Robert Metcalfe escribió un memo de Xerox PARC titulado \"Adquisición de Éter\", con un diagrama dibujado a mano de un cable compartido que conectaba computadoras Alto. La tecnología suele fecharse en el artículo de revista de 1976. El boceto real es tres años más antiguo, y está dibujado a mano.",
+      "coda": "Para cuando se publicó el artículo, Ethernet ya había funcionado dentro de PARC durante tres años."
+    },
+    "vint-cerf-envelope-sketch": {
+      "tag": "Anécdota",
+      "title": "El dorso de un sobre",
+      "body": "La leyenda fundacional de internet dice que Cerf dibujó la arquitectura de puerta de enlace en una servilleta. Él lo ha corregido: «No fue una servilleta, en realidad, fue el dorso de un sobre». En 1973, mientras esperaba en el vestíbulo de un hotel, dibujó lo que se convertiría en el diseño de puerta de enlace de TCP/IP.",
+      "coda": "Al año siguiente, el boceto se convirtió en un artículo en IEEE Transactions on Communications."
+    },
+    "gchq-nonsecret-encryption": {
+      "tag": "Criptografía",
+      "title": "La clave no publicada",
+      "body": "En septiembre de 1973, Clifford Cocks, de 22 años, recién llegado al GCHQ, desarrolló en media hora un esquema de cifrado sin clave compartida. Tres años después, Diffie, Hellman y Merkle publicaron la misma idea en EE. UU. y se les atribuyó su invención. Los archivos del GCHQ permanecieron clasificados hasta 1997.",
+      "coda": "James Ellis murió en 1997, unos meses después de la desclasificación que puso su nombre en el registro."
+    },
+    "kodak-digital-camera-1975": {
+      "tag": "Archivado",
+      "title": "La cámara enterrada de Kodak",
+      "body": "En 1975, el ingeniero Steven Sasson, de 24 años, construyó la primera cámara digital: 3,6 kg, 23 segundos por toma. Los ejecutivos razonaron que nadie querría ver fotografías en un televisor cuando la impresión era barata y había funcionado durante un siglo. Patentaron la cámara y la archivaron.",
+      "coda": "Kodak solicitó protección por quiebra en 2012."
+    },
+    "galls-law-origin": {
+      "tag": "Origen",
+      "title": "Un libro sobre las burocracias",
+      "body": "En 1975, tras el rechazo de 30 editoriales, el pediatra John Gall autopublicó Systemantics: un sistema complejo funcional evoluciona inevitablemente a partir de un sistema simple funcional, y un sistema complejo construido desde cero nunca funciona. Escribía sobre hospitales y agencias gubernamentales.",
+      "coda": "Los arquitectos de software mantuvieron la línea y silenciosamente eliminaron las burocracias sobre las que se escribió."
+    },
+    "ken-olsen-home-computer-1977": {
+      "tag": "Cita errónea",
+      "title": "La computadora doméstica de Olsen",
+      "body": "En 1977, el fundador de DEC Ken Olsen dijo que no había razón para que un individuo tuviera una computadora en el hogar. Se refería a una máquina central que controlara la luz, la calefacción y el entretenimiento de un hogar, preciso para lo que describía. La cobertura conservó solo la primera mitad de la frase.",
+      "coda": "Olsen mismo poseía una computadora en casa en ese momento."
+    },
+    "kernighans-debugging-law": {
+      "tag": "Máxima",
+      "title": "El doble de difícil que escribirlo",
+      "body": "En los Elements of Programming Style de 1978, Kernighan y Plauger escribieron que depurar es el doble de difícil que escribir un programa, por lo que escribirlo con la mayor astucia posible te deja, por definición, no lo suficientemente inteligente para depurarlo. Una regla de estilo formulada como un límite para encontrarte dos veces con tu propio trabajo.",
+      "coda": "El adversario nunca fue otra persona, fuiste tú unas semanas después."
+    },
+    "xerox-parc-1979-visit": {
+      "tag": "Origen",
+      "title": "El trato de Xerox",
+      "body": "Diciembre de 1979: Apple visitó Xerox PARC después de que Xerox aceptara comprar 100.000 acciones de Apple pre-IPO a 10 dólares cada una por el acceso. Jobs vio la interfaz gráfica del Alto y la llamó la mejor cosa que había visto jamás. La historia popular es robo; el registro es un intercambio que Xerox negoció.",
+      "coda": "Xerox obtuvo sus acciones. El Alto nunca se vendió como producto comercial."
+    },
+    "visicalc-1979-no-patent": {
+      "tag": "Origen",
+      "title": "La patente que saltaron",
+      "body": "Antes del lanzamiento de VisiCalc en 1979, Dan Bricklin consultó a un abogado de patentes, quien estimó las probabilidades de éxito en aproximadamente una de cada diez bajo las reglas de la época. En su lugar, registraron derechos de autor y marca comercial. En 1983, Lotus 1-2-3 lanzó una interfaz compatible que podía leer los propios archivos de VisiCalc.",
+      "coda": "La hoja de cálculo sobrevivió como categoría. La empresa que la construyó no."
+    },
+    "ibm-microsoft-dos-1980": {
+      "tag": "Cláusula",
+      "title": "IBM deja una puerta abierta",
+      "body": "IBM firmó con Microsoft sobre el sistema operativo del PC el 6 de noviembre de 1980. En medio de un caso antimonopolio de más de una década, IBM optó por no controlar a sus proveedores y permitió que Microsoft revendiera DOS a cualquier otra persona. Como cobertura contra otra demanda, tenía sentido en ese momento.",
+      "coda": "Los fabricantes de clones siguieron años después, y IBM nunca recuperó el control de la plataforma."
+    },
+    "postel-law-robustness-reversal": {
+      "tag": "Gobernanza",
+      "title": "El principio de robustez, invertido",
+      "body": "El RFC 761 (1980) instaba a los implementadores a ser liberales en lo que aceptan y conservadores en lo que envían. En 2023, el propio consejo de arquitectura de la IETF revirtió esa orientación en el RFC 9413: la tolerancia permite que los errores se calcifiquen en estándares de facto, dejando los sistemas menos robustos, no más.",
+      "coda": "El estándar que le decía a internet que fuera tolerante fue rescindido por sus propios custodios."
+    },
+    "end-to-end-argument": {
+      "tag": "Paper",
+      "title": "Un argumento a favor de una red tonta",
+      "body": "En 1981, Saltzer, Reed y Clark argumentaron que la verificación de errores en un archivo transferido solo puede realizarse correctamente en los dos puntos finales; la red puede ayudar, pero nunca sustituir por completo. Un artículo sobre dónde colocar una suma de verificación se convirtió en el caso fundacional para mantener las redes simples.",
+      "coda": "Una nota sobre la ubicación de la verificación de errores se convirtió en el argumento a favor de la neutralidad de la red."
+    },
+    "excel-1900-leap-year": {
+      "tag": "Legado",
+      "title": "El año bisiesto que no lo fue",
+      "body": "Lotus 1-2-3 trataba 1900 como un año bisiesto, un atajo inofensivo. Microsoft copió la misma fecha falsa para mantener la compatibilidad. Lotus ya no existe; el día bisiesto falso permanece, ahora escrito en la especificación Office Open XML.",
+      "coda": "Un hack de compatibilidad para un rival discontinuado es ahora un estándar escrito."
+    },
+    "avatar-before-snow-crash": {
+      "tag": "Etimología",
+      "title": "Un avatar antes de la novela",
+      "body": "La novela Snow Crash de Neal Stephenson (1992) suele atribuirse el sentido en línea de \"avatar\". Pero el Habitat de Lucasfilm, en funcionamiento desde 1985 en Commodore 64, ya decía: \"los jugadores están representados por figuras animadas que llamamos Avatars\", del sánscrito para encarnación.",
+      "coda": "El término estaba activo en un servicio comercial siete años antes del libro."
+    },
+    "radia-perlman-algorhyme": {
+      "tag": "Anécdota",
+      "title": "Algorhyme",
+      "body": "En 1985, el jefe de Perlman en DEC le asignó el problema de puenteo sin bucles un viernes y desapareció durante una semana. Para el miércoles tenía el algoritmo de árbol de expansión terminado — y pasó el resto del tiempo escribiendo Algorhyme, un poema que se convirtió en el resumen del artículo.",
+      "coda": "El poema tomó más tiempo escribirlo que el algoritmo."
+    },
+    "brooks-no-silver-bullet": {
+      "tag": "Ensayo",
+      "title": "No Silver Bullet",
+      "body": "En el congreso IFIP de 1986, Fred Brooks dividió la dificultad del software en complejidad esencial y accidental. La dificultad accidental había disminuido drásticamente, dijo, pero ninguna técnica individual lograría un aumento de productividad diez veces mayor en una década.",
+      "coda": "Cuatro décadas después, cada nuevo paradigma sigue vendiéndose como la bala mágica que él dijo que no existía."
+    },
+    "tz-olson-database": {
+      "tag": "Nombres",
+      "title": "La base de datos Olson",
+      "body": "La mayoría de los dispositivos resuelven las zonas horarias a partir de un conjunto de archivos gestionado por voluntarios, conocido informalmente como la base de datos Olson, en honor a su fundador Arthur David Olson. Su esquema de nombres se atribuye a Paul Eggert, quien en realidad edita la base de datos desde 2005.",
+      "coda": "El epónimo y la persona que la ha mantenido desde entonces son personas diferentes."
+    },
+    "china-1987-first-email": {
+      "tag": "Registro",
+      "title": "Más allá de la Gran Muralla",
+      "body": "Los relatos atribuyen únicamente a Qian Tianbai el primer correo electrónico de China: 'A través de la Gran Muralla podemos llegar a todos los rincones del mundo'. Qian estaba estudiando en EE. UU. ese mes; fue escrito por Li Chengjiong y Werner Zorn de Karlsruhe, y salió de China seis días después, el 20 de septiembre.",
+      "coda": "Sus obituarios aún lo mencionan como el remitente."
+    },
+    "barbara-liskov-substitution-property": {
+      "tag": "Principio",
+      "title": "La ley que ella nunca nombró",
+      "body": "En una conferencia magistral de OOPSLA en 1987, Barbara Liskov propuso que si sustituir un objeto de tipo S por tipo T dejaba el comportamiento de cada programa sin cambios, entonces S era un subtipo de T. Lo llamó propiedad de sustitución. Años después, Robert Martin la integró en SOLID y le puso su nombre.",
+      "coda": "La palabra 'principio' fue una adición de otra persona."
+    },
+    "go-corporation-pen-computing": {
+      "tag": "Computación con lápiz",
+      "title": "La tableta que nadie compró",
+      "body": "En 1987, Jerry Kaplan fundó GO Corporation para desarrollar el sistema operativo PenPoint basado en lápiz, recaudando 75 millones de dólares. AT&T adquirió GO en enero de 1994, canceló su línea de chips de soporte dos semanas después y GO cerró ese julio. Kaplan dijo más tarde que la empresa no tenía \"ventas significativas\".",
+      "coda": "En 2010, Apple lanzó el iPad, una tableta multitáctil capacitiva."
+    },
+    "iso8601-unify-then-fork": {
+      "tag": "Estándar",
+      "title": "El sustituto más restrictivo de ISO 8601",
+      "body": "ISO 8601 se publicó por primera vez en 1988, unificando cinco estándares anteriores y contradictorios de fecha y hora ISO en uno solo. Pero el formato contra el que valida la mayoría del software de internet es RFC 3339 (1997), un perfil más restrictivo que, tras la revisión posterior de ISO 8601, ni siquiera es un subconjunto estricto de este.",
+      "coda": "El estándar que todos citan y el dialecto contra el que todos validan su código no son el mismo documento."
+    },
+    "python-christmas-project": {
+      "tag": "Scripting",
+      "title": "Un pasatiempo navideño",
+      "body": "Durante las vacaciones de Navidad de 1989, con su oficina cerrada por la semana, un investigador en Ámsterdam buscó un proyecto de programación como pasatiempo. Comenzó a escribir un intérprete para un nuevo lenguaje de scripting y lo nombró en honor a una troupe de comedia, no a la serpiente.",
+      "coda": "En julio de 2026 ocupó el primer lugar en el índice TIOBE de popularidad de lenguajes de programación."
+    },
+    "worse-is-better": {
+      "tag": "Debate",
+      "title": "Worse Is Better",
+      "body": "En 1989 Richard Gabriel acuñó «worse is better»: una implementación simple y parcialmente correcta sobrevive mejor que una completa y exacta, razón por la cual creyó que C y Unix superaron a Lisp. En 1991 publicó una refutación bajo el seudónimo Nickieben Bourbaki, haciéndose pasar por un viejo amigo.",
+      "coda": "Décadas después, seguía diciendo que no podía decidir si su propio argumento era correcto."
+    },
+    "rfc1149-avian-carriers-test": {
+      "tag": "Incidente",
+      "title": "El protocolo que alguien voló realmente",
+      "body": "David Waitzman publicó la RFC 1149 el Día de los Inocentes de 1990: una especificación para transportar datagramas IP mediante palomas. El 28 de abril de 2001, el Grupo de Usuarios Linux de Bergen la implementó realmente, lanzando nueve paquetes ping a lo largo de unos 5 km. Cuatro regresaron: una tasa de pérdida del 55 %, con tiempos de ida y vuelta de 53 a 106 minutos.",
+      "coda": "La RFC de broma tiene un porcentaje real de pérdida de paquetes registrado: 55 por ciento."
+    },
+    "att-1990-break-statement": {
+      "tag": "Incidente",
+      "title": "La instrucción break en el lugar equivocado",
+      "body": "Una rutina de recuperación en un conmutador 4ESS de Nueva York tenía una instrucción break anidada un nivel menos de lo necesario, un defecto que las pruebas nunca ejercitaron. La señal \"ready\" de la rutina de reinicio fue entonces malinterpretada por los conmutadores vecinos como un error, y la falsa alarma se propagó en cascada por la red durante nueve horas.",
+      "coda": "AT&T calculó posteriormente las pérdidas de ingresos en sesenta millones de dólares."
+    },
+    "aspec-vs-musicam": {
+      "tag": "Audio",
+      "title": "Perder ante el más simple",
+      "body": "En 1991, MPEG probó dos códecs de audio rivales. ASPEC, desarrollado por Fraunhofer, AT&T y el CNET francés, ganó las pruebas de calidad pero fue descartado por ser demasiado complejo. MUSICAM, de Matsushita y Philips, ganó por simplicidad. El MP3 final terminó reintegrando de todos modos el diseño de filtro de ASPEC.",
+      "coda": "El formato que todos llaman MP3 lleva la ingeniería de la propuesta perdedora dentro del nombre de la ganadora."
+    },
+    "linux-minix-post": {
+      "tag": "Kernel",
+      "title": "Una publicación en comp.os.minix",
+      "body": "El 25 de agosto de 1991, un estudiante universitario de Helsinki publicó en el grupo de noticias comp.os.minix que estaba escribiendo un sistema operativo gratuito, calificándolo como \"solo un pasatiempo, no será grande ni profesional como gnu\", y preguntó qué funciones querían las personas.",
+      "coda": "Desde noviembre de 2017, los 500 supercomputadores más rápidos del mundo han ejecutado un sistema operativo construido sobre él."
+    },
+    "web-vs-gopher-1991": {
+      "tag": "Web",
+      "title": "Precio de Beat Gratuito",
+      "body": "En 1991, Tim Berners-Lee lanzó la World Wide Web desde el CERN. Ese mismo año, la Universidad de Minnesota lanzó Gopher, que durante un tiempo fue el sistema más popular. En febrero de 1993, Minnesota anunció tarifas de licencia para los servidores Gopher. Ese abril, el CERN liberó el protocolo web.",
+      "coda": "Gopher tenía más seguidores antes del anuncio de la tarifa, y nunca volvió a tenerlos después."
+    },
+    "rough-consensus-running-code": {
+      "tag": "Gobernanza",
+      "title": "Consenso aproximado, código funcional",
+      "body": "En la reunión de la IETF de julio de 1992, Dave Clark del MIT proyectó una diapositiva: 'Rechazamos reyes, presidentes y votaciones. Creemos en el consenso aproximado y el código funcional'. La frase ahora ancla el folklore de la gobernanza de internet. Comenzó como una burla al proceso formal de votación de comités de OSI.",
+      "coda": "La diapositiva burlona sobre las reglas de votación de OSI se convirtió en el credo fundacional de la gobernanza de internet."
+    },
+    "han-unification-japanese-delegate": {
+      "tag": "Estándar",
+      "title": "El improbable autor de la Unificación Han",
+      "body": "En 1992, el Grupo Conjunto de Investigación CJK fusionó decenas de miles de caracteres chinos, japoneses y coreanos en puntos de código Unicode compartidos. Las versiones populares presentan a Japón como el objetor. La propia historia de Unicode atribuye las reglas de verificación al delegado japonés Miyazawa Akira.",
+      "coda": "La delegación presentada como víctima ayudó a escribir las reglas que se recuerda que se oponía."
+    },
+    "china-first-internet-line": {
+      "tag": "Registro",
+      "title": "La línea un año antes",
+      "body": "China marca el 20 de abril de 1994 como el día en que se unió a la internet global — una línea de 64K, acceso completo. Trece meses antes, los físicos del IHEP ya habían alquilado una línea al SLAC de Stanford, intercambiando correos electrónicos con decenas de instituciones. Simplemente no era el tipo de línea que nadie contaba.",
+      "coda": "Existen dos líneas; solo una recibe un aniversario."
+    },
+    "wiki-the-airport-shuttle": {
+      "tag": "Etimología",
+      "title": "Nombrado en honor a un autobús lanzadera",
+      "body": "\"Wiki\" significa \"rápido\" en hawaiano. En 1995, Ward Cunningham necesitaba un nombre para el primer sistema web editable que construyó y recurrió no a ningún término técnico, sino a su recuerdo del Wiki Wiki Shuttle, el autobús gratuito entre terminales del aeropuerto de Honolulu.",
+      "coda": "El primer hogar de la palabra estaba pintado en el lateral de un autobús de aeropuerto."
+    },
+    "robots-exclusion-rfc9309": {
+      "tag": "Estándar",
+      "title": "robots.txt: 28 años sin ratificar",
+      "body": "Martijn Koster propuso robots.txt en 1994; los crawlers lo seguían voluntariamente, sin un estándar formal ni nada que lo hiciera cumplir. Google propuso su estandarización en 2019, y la IETF finalmente publicó la RFC 9309 en septiembre de 2022, cerrando un vacío de 28 años.",
+      "coda": "El acuerdo caballeroso más obedecido de la web tardó veintiocho años en convertirse en un estándar real."
+    },
+    "pentium-fdiv-writeoff": {
+      "tag": "Incidente",
+      "title": "Las entradas de tabla faltantes",
+      "body": "El matemático Thomas Nicely notó que su nuevo Pentium devolvía resultados ligeramente incorrectos al sumar recíprocos de primos y rastreó la falla hasta el propio chip. Intel primero ofreció reemplazos solo a los clientes que se quejaron y revirtió a un retiro total solo bajo presión pública.",
+      "coda": "Intel registró un cargo antes de impuestos de 475 millones de dólares por la retirada."
+    },
+    "general-magic-private-network": {
+      "tag": "Redes",
+      "title": "La red privada de General Magic",
+      "body": "En 1990, los ex ingenieros de Apple Bill Atkinson, Andy Hertzfeld y Marc Porat fundaron General Magic. El Magic Link de Sony se lanzó en 1994 por 800 dólares, enviando correos electrónicos y ejecutando aplicaciones. La dirección construyó una red propietaria de AT&T en lugar de usar internet, calificando la web como \"pasiva\".",
+      "coda": "El empleado Tony Fadell lideró posteriormente el desarrollo de hardware del iPod y el iPhone en Apple."
+    },
+    "ibm-simon-first-touchscreen": {
+      "tag": "Pantalla táctil",
+      "title": "La máquina de fax de Simon",
+      "body": "El 16 de agosto de 1994, IBM y BellSouth lanzaron el Simon Personal Communicator: una pantalla táctil de 4,5 pulgadas que enviaba correos electrónicos y faxes, con un precio de 899 dólares. La duración de la batería era de aproximadamente una hora. Se dejó de fabricar seis meses después, habiendo vendido alrededor de 50.000 unidades.",
+      "coda": "En 2007, Apple lanzó el iPhone, un teléfono con pantalla táctil capacitiva y sin teclado físico."
+    },
+    "cors-same-origin-orphaned": {
+      "tag": "Estándar",
+      "title": "CORS: Una recomendación en retiro",
+      "body": "Netscape incorporó la política del mismo origen en Navigator en 1995, junto con JavaScript, sin ningún proceso de estándares. CORS, destinado a relajar formalmente esa política, no se convirtió en una Recomendación del W3C hasta 2014, y para 2020 el W3C la había retirado, transfiriendo la especificación al documento Fetch de WHATWG.",
+      "coda": "El organismo de estándares retiró su propia recomendación de seguridad seis años después de publicarla."
+    },
+    "php-resume-counter": {
+      "tag": "Web",
+      "title": "Un contador de visitas para currículum",
+      "body": "En 1994, un programador escribió un puñado de pequeños programas CGI en C sin más motivo que querer saber cuántas personas veían su currículum en línea. Llamó al conjunto de herramientas \"Personal Home Page Tools\" y publicó el código fuente en junio de 1995.",
+      "coda": "Tres décadas después, más del 70 % de los sitios web con un lenguaje del lado del servidor conocido siguen ejecutando su descendiente."
+    },
+    "craigslist-email-list": {
+      "tag": "Clasificados",
+      "title": "Una lista de correo de eventos",
+      "body": "En 1995, un ingeniero de software en San Francisco comenzó a compilar las reuniones y eventos locales que conocía en un correo electrónico y a enviarlo a unos pocos amigos, principalmente para que la gente pudiera conocerse un poco mejor.",
+      "coda": "La lista ahora llega a 570 ciudades en 70 países y atrae más de 140 millones de visitas al mes."
+    },
+    "wirths-law-misattributed": {
+      "tag": "Corrección",
+      "title": "La ley que se atribuyó a otro",
+      "body": "En 1995, Niklaus Wirth publicó «A Plea for Lean Software», en el que afirmaba que el software se vuelve más lento más rápido de lo que el hardware se vuelve más rápido. La frase que luego se conocería como la Ley de Wirth era, según su propia nota al pie, una cita de su colega Martin Reiser.",
+      "coda": "El epónimo citó la fuente; la posteridad solo conservó el epónimo."
+    },
+    "general-magic-weekend-site": {
+      "tag": "Proyecto secundario",
+      "title": "El sitio que no tomaba en serio",
+      "body": "A mediados de la década de 1990, en una startup del Valle del Silicio que esperaba reinventar la computación portátil, un programador dedicaba su tiempo libre a escribir un pequeño sitio improvisado para vender objetos de segunda mano. Lo lanzó un fin de semana. No lo tomaba en serio.",
+      "coda": "La startup era General Magic. El sitio luego se renombró como eBay."
+    },
+    "gettickcount-776-day-bug": {
+      "tag": "Desbordamiento",
+      "title": "Una deuda de 776 días",
+      "body": "GetTickCount de Windows 95 se reinicia a cero cada 49,7 días, un comportamiento documentado que nunca se trató como un error. Pero en Windows 8 hasta Server 2019, la misma función podía reiniciarse antes, cerca de los 776 días, un defecto real. Microsoft lo corrigió solo en Windows 11, versión 24H2.",
+      "coda": "La corrección llegó tres décadas después de que el contador que parchea se lanzara por primera vez."
+    },
+    "bluetooth-the-placeholder": {
+      "tag": "Etimología",
+      "title": "El nombre en clave que se quedó",
+      "body": "En 1996, Jim Kardach de Intel propuso \"Bluetooth\" — en honor a Harald Bluetooth, el rey vikingo que unió Escandinavia — como un nombre en clave desechable durante las conversaciones entre Ericsson y Nokia. El reemplazo previsto, RadioWire, no pudo superar la búsqueda de marcas registradas antes del lanzamiento.",
+      "coda": "Ningún nombre de reemplazo llegó al mercado."
+    },
+    "chinaren-detour": {
+      "tag": "Mundo pequeño",
+      "title": "El programador fuera del roster",
+      "body": "En 1996, un estudiante chino ganó el oro en la Olimpiada de Informática y fue admitido directamente en el programa de ciencias de la computación de Tsinghua. Como estudiante, trabajó por las noches construyendo un sistema de contenido para el sitio web de un exalumno. Sohu lo compró al año siguiente; él se quedó y siguió trabajando allí.",
+      "coda": "El estudiante era Wang Xiaochuan. En 2004, dentro de Sohu, construyó Sogou."
+    },
+    "google-a-typo": {
+      "tag": "Etimología",
+      "title": "Una búsqueda de dominio mal escrito",
+      "body": "Durante una lluvia de ideas en septiembre de 1997, Sean Anderson sugirió \"googolplex\"; Larry Page lo acortó a \"googol\". Al verificar el registro del dominio en el momento, Anderson escribió \"google\" por error y lo encontró disponible. Page registró google.com ese mismo día.",
+      "coda": "El registro de inscripción conserva el error ortográfico, fechado el 15 de septiembre de 1997."
+    },
+    "rfc2119-must-should": {
+      "tag": "Estándar",
+      "title": "MUST frente a must: una brecha de veinte años",
+      "body": "RFC 2119 (marzo de 1997) definió MUST, SHOULD, MAY y sus negaciones como niveles de requisito vinculantes para documentos del IETF. Pero solo decía que estas palabras 'a menudo se escriben en mayúsculas' — las minúsculas must y should nunca fueron excluidas. RFC 8174 cerró la laguna en 2017: solo cuentan las mayúsculas completas.",
+      "coda": "Durante veinte años, un must en minúsculas tuvo el mismo peso legal que un encogimiento de hombros."
+    },
+    "netease-license-mail-1997": {
+      "tag": "Licencias",
+      "title": "Vende la licencia primero",
+      "body": "El 11 de junio de 1997, William Ding registró NetEase en Guangzhou. El primer negocio de la empresa no fue el correo web gratuito. Licenció un software de servidor de correo que había desarrollado a otros sitios web por una tarifa.",
+      "coda": "NetEase no lanzó su propio correo gratuito, bajo 163.com, hasta 1998."
+    },
+    "lixiang-graphics-card-home": {
+      "tag": "Sitio de reseñas",
+      "title": "Inicio de Tarjetas Gráficas",
+      "body": "En 1998, un estudiante de secundaria de Hebei creó en su tiempo libre un sitio web personal llamado Inicio de Tarjetas Gráficas, donde publicaba reseñas de tarjetas gráficas para ordenador. Dos años después lo renombró como PCPop y siguió actualizándolo durante el resto de su etapa escolar.",
+      "coda": "En 2005, la misma persona fundó Autohome."
+    },
+    "china-oicq-to-qq": {
+      "tag": "Rebranding",
+      "title": "De OICQ a QQ",
+      "body": "Tencent lanzó OICQ en febrero de 1999; la O significaba 'Open', un guiño a ICQ. Ese octubre, AOL, propietaria de ICQ, envió una carta de cesación por infracción de marca. En noviembre de 2000, Ma Huateng lo renombró como QQ, elegido porque la letra suena a 'lindo' en chino.",
+      "coda": "Open fue la primera palabra en irse cuando llegaron los abogados de AOL."
+    },
+    "excite-google-1999": {
+      "tag": "Error de juicio",
+      "title": "Excite rechaza a Google",
+      "body": "En 1999, Google ofreció venderse a Excite por 750.000 dólares más aproximadamente el 1% de participación. El CEO George Bell consideró que la brecha en búsquedas era demasiado pequeña para justificar reemplazar la tecnología de Excite. La razón se mantuvo. Google valía más de mil millones en menos de un año.",
+      "coda": "Bell ha dicho desde entonces que tomaría la misma decisión de nuevo."
+    },
+    "mars-climate-orbiter-units": {
+      "tag": "Incidente",
+      "title": "Libra-fuerza, Newton",
+      "body": "El Mars Climate Orbiter dejó de transmitir durante la inserción orbital. El comité descubrió que el software de los propulsores del contratista emitía impulso en libras-fuerza por segundo, mientras que el software de navegación esperaba newton-segundo, con una diferencia de un factor de 4,45. La nave fue desviada a aproximadamente 57 km de la superficie.",
+      "coda": "La misión de 327,6 millones de dólares nunca volvió a transmitir."
+    },
+    "paypal-palm-beaming": {
+      "tag": "Giro",
+      "title": "El rayo que nunca llegó",
+      "body": "En 1999, Confinity lanzó transferencias de dinero por infrarrojos entre Palm Pilots, demostradas en vivo en un evento de financiación. Semanas después del lanzamiento, tenía aproximadamente 13 000 usuarios, una cifra que apenas se movió durante el año siguiente. Lo que realmente despegó fueron los pagos por correo electrónico, creados solo como una opción de respaldo.",
+      "coda": "La empresa se renombró como PayPal y silenciosamente abandonó el haz."
+    },
+    "cai-500-yuan": {
+      "tag": "Mundo pequeño",
+      "title": "El salario de 500 yuanes",
+      "body": "En 1999, un ejecutivo de inversiones de Hong Kong viajó a Hangzhou para evaluar un pequeño sitio web como posible inversión. Encontró a una docena de personas programando en un apartamento abarrotado. No invirtió: renunció a su salario de 700 000 dólares y se unió en su lugar, por 500 yuanes al mes.",
+      "coda": "Su nombre era Joe Tsai. Más tarde se convirtió en vicepresidente ejecutivo de Alibaba."
+    },
+    "gps-week-rollover": {
+      "tag": "Mecanismo",
+      "title": "Semana GPS 1024",
+      "body": "GPS cuenta las semanas en 10 bits, un campo que llega a un máximo de 1.023 y se reinicia a cero aproximadamente cada 19,7 años. El primer reinicio ocurrió en agosto de 1999. El segundo llegó el 6 de abril de 2019, rompiendo los receptores construidos como si el primero hubiera sido un caso aislado.",
+      "coda": "El mismo desbordamiento está programado y volverá a ocurrir en 2038."
+    },
+    "foxmail-resold": {
+      "tag": "Mundo pequeño",
+      "title": "Vendido con el software",
+      "body": "En 1994, un programador en Guangzhou escribió un cliente de correo gratuito en su tiempo libre. En 2000, cuando estalló la burbuja puntocom, lo vendió a una empresa y se quedó como director técnico. Cinco años después, esa empresa cerró y vendió el software —y a él junto con él— a Tencent.",
+      "coda": "El programador era Zhang Xiaolong. Cinco años después, dentro de Tencent, creó WeChat."
+    },
+    "danger-duarte-android-reunion": {
+      "tag": "Reunión",
+      "title": "Director de Diseño, Startup Fallida",
+      "body": "En 2000, un diseñador se unió a una startup de dispositivos portátiles fundada por Andy Rubin, trabajando en su interfaz. La empresa fue vendida a Microsoft y el equipo se dispersó. El diseñador continuó en otras dos compañías durante la siguiente década.",
+      "coda": "El diseñador era Matias Duarte. Diez años después, Rubin lo contrató para Android."
+    },
+    "slashdot-ipod-2001": {
+      "tag": "Despido",
+      "title": "Sin inalámbrico, menos espacio",
+      "body": "Cuando Apple presentó el primer iPod el 23 de octubre de 2001, Rob \"CmdrTaco\" Malda, fundador de Slashdot, escribió en su nota del editor: \"Sin inalámbrico. Menos espacio que un nomad. Patético\". Frente a las fichas técnicas de los reproductores MP3 rivales de la época, la frase no era factualmente incorrecta.",
+      "coda": "El comentario se cita ahora de forma rutinaria como el contraejemplo que produjo."
+    },
+    "discuz-shenyang-dorm": {
+      "tag": "Foro",
+      "title": "CDB, una construcción de dormitorio",
+      "body": "En 2001, un estudiante universitario que vivía en una residencia en Shenyang escribió un software de foro y lo llamó Crossday Bulletin, trabajando en ello junto con sus estudios. En octubre siguiente lo renombró Discuz.",
+      "coda": "El 23 de agosto de 2010, Tencent adquirió la empresa que había construido en torno a ella."
+    },
+    "wikipedia-side-wiki": {
+      "tag": "Wiki",
+      "title": "Un proyecto paralelo junto a Nupedia",
+      "body": "El 10 de enero de 2001, el fundador de una enciclopedia en línea con revisión por pares instaló un software wiki en el servidor propio del proyecto, principalmente para que los voluntarios pudieran intentar redactar entradas de forma informal mientras la enciclopedia revisada avanzaba lentamente.",
+      "coda": "Para julio de 2026, solo su edición en inglés contaba con más de 7,2 millones de artículos."
+    },
+    "bittorrent-mailing-list": {
+      "tag": "Protocolo",
+      "title": "Una nueva aplicación P2P",
+      "body": "El 2 de julio de 2001, un programador publicó un mensaje en una lista de correo de Yahoo eGroups titulada \"BitTorrent -- una nueva aplicación P2P\", describiendo un protocolo de distribución de archivos que acababa de terminar de diseñar, el cual descargaba fragmentos de un archivo de muchas fuentes al mismo tiempo.",
+      "coda": "Tres años después, representaba un tercio de todo el tráfico de Internet, según un estudio de CacheLogic de 2004."
+    },
+    "webvan-thirty-minute-window": {
+      "tag": "Comestibles",
+      "title": "La ventana de treinta minutos",
+      "body": "En 1996, Louis Borders, cofundador de Borders, lanzó Webvan, prometiendo entregas en 30 minutos desde almacenes construidos desde cero. Se cotizó en bolsa en noviembre de 1999 por 375 millones de dólares con una valoración superior a 4.800 millones, y luego presentó la quiebra en julio de 2001, habiendo perdido más de 800 millones.",
+      "coda": "Algunos ejecutivos de Webvan pasaron a Amazon; Amazon Fresh y Instacart más tarde ocuparon el mismo hueco."
+    },
+    "kozmo-free-hour-delivery": {
+      "tag": "Entrega",
+      "title": "La Promesa de la Hora Gratis",
+      "body": "En 1998, Joseph Park y Yong Kang fundaron Kozmo.com, prometiendo entrega gratuita en una hora con mensajeros despachados por pagers. Recaudaron unos 250 millones de dólares, pero obtuvieron 3,5 millones frente a una pérdida de 26,3 millones en 1999. En abril de 2001, el personal se enteró del cierre al encontrar las oficinas cerradas.",
+      "coda": "DoorDash, fundada en 2013, despacha mensajeros mediante GPS de smartphones y cobra una tarifa de entrega."
+    },
+    "flooz-digital-currency": {
+      "tag": "Moneda",
+      "title": "Dinero Sin Tienda",
+      "body": "En febrero de 1999, Robert Levitan, cofundador de iVillage, lanzó Flooz.com, una moneda digital que los usuarios podían comprar y gastar en comercios asociados. Una banda criminal usó tarjetas robadas para acuñar 300.000 dólares en créditos fraudulentos, y para 2001 el fraude alcanzó el 19% del volumen. La empresa cerró ese agosto.",
+      "coda": "En enero de 2009, Satoshi Nakamoto minó el bloque génesis de bitcoin."
+    },
+    "yahoo-google-2002": {
+      "tag": "Oportunidad perdida",
+      "title": "Yahoo pasa de Google",
+      "body": "En 2002, el CEO de Yahoo, Terry Semel, ofreció 3.000 millones de dólares por Google; Page y Brin esperaban 5.000 millones. Semel consideraba que la capitalización bursátil de Yahoo, cerca de los 5.000 millones tras la crisis, no podía asumir esa apuesta. Google salió a bolsa dos años después por 23.000 millones.",
+      "coda": "Yahoo vendió su negocio principal a Verizon en 2017 por 4.480 millones de dólares."
+    },
+    "pplive-dorm-2002": {
+      "tag": "Dormitorio",
+      "title": "Edificio 26, Yunyuan",
+      "body": "Durante el Mundial de 2002, la residencia de Yao Xin en la Universidad de Ciencia y Tecnología de Huazhong no tenía televisor, así que veía los partidos a través de la red del campus, que no dejaba de fallar. En su habitación del Edificio 26 empezó a idear cómo combinar la transferencia peer-to-peer con la transmisión de video en streaming.",
+      "coda": "PPLive se lanzó en 2005 y, en su apogeo, contó con más de cien millones de usuarios."
+    },
+    "china-alipay-escrow": {
+      "tag": "Confianza",
+      "title": "La solución de depósito en garantía",
+      "body": "En 2003, ante la desconfianza mutua entre compradores y vendedores de Taobao, el equipo de finanzas creó una solución de depósito en garantía: el pago quedaba congelado hasta confirmar la entrega. La primera transacción se cerró ese octubre: un estudiante de Xi'an pagando a un vendedor en Japón. El nombre juega con 'pagar' y 'garantizar'.",
+      "coda": "El juego de palabras se convirtió en el nombre oficial y permanente de la empresa."
+    },
+    "china-taobao-free-vs-ebay": {
+      "tag": "Competencia",
+      "title": "Tres años gratis",
+      "body": "En 2003, Eachnet de eBay controlaba más del 70 % del mercado C2C de China, cobrando tarifas por publicación y transacción. Taobao se lanzó ese mayo con un sitio casi vacío; la respuesta de Alibaba fueron tres años de publicaciones gratuitas. Para 2006, Taobao tenía el 70 % y eBay se retiró del C2C chino.",
+      "coda": "El lado que aún cobraba tarifas por publicar se quedó sin recursos primero."
+    },
+    "dianping-zagat-notes": {
+      "tag": "Guía de reseñas",
+      "title": "Un cuaderno Zagat",
+      "body": "En 2002, Zhang Tao regresó a China desde Estados Unidos con una idea que había recogido allí: la Zagat Survey, una guía de restaurantes construida a partir de las propias valoraciones de los lectores. Registró el dominio zsurvey.com y se propuso construir una versión china en Shanghái.",
+      "coda": "Dianping, el sitio que surgió de él, se lanzó el 12 de abril de 2003."
+    },
+    "wordpress-b2-post": {
+      "tag": "Blogging",
+      "title": "El dilema del software de blogs",
+      "body": "El 24 de enero de 2003, un estudiante universitario escribió en su propio blog que b2, el software de blogs que usaba a diario, llevaba meses sin mantenimiento desde que su desarrollador principal desapareció. Dijo que quería bifurcarlo y solo pedía un nombre.",
+      "coda": "La empresa que surgió de esa bifurcación valía 7.500 millones de dólares en 2021."
+    },
+    "2003-blackout-race-condition": {
+      "tag": "Incidente",
+      "title": "La alarma que no sonó",
+      "body": "El proceso de alarma de una sala de control en Ohio se atascó en silencio: un error de programación permitió que dos procesos obtuvieran acceso de escritura a la misma estructura de datos al mismo tiempo, entrando en un bucle infinito. Los operadores nunca vieron las advertencias de sobrecarga y no lograron reducir la carga a tiempo. La cascada dejó a 55 millones de personas sin electricidad.",
+      "coda": "A los ingenieros les tomó ocho semanas reproducir la condición de carrera."
+    },
+    "aws-not-leftover-servers": {
+      "tag": "Corrección",
+      "title": "No eran los servidores sobrantes",
+      "body": "La versión común dice que AWS comenzó revendiendo la capacidad ociosa de servidores de Amazon durante la temporada navideña. Benjamin Black afirma que eso es simplemente falso: en 2003 él y Chris Pinkham escribieron un memorando proponiendo una infraestructura estandarizada y automatizada, diseñada desde el principio para venderse externamente como un servicio.",
+      "coda": "S3 y EC2 se lanzaron en 2006, siguiendo ese memo."
+    },
+    "maps-intern-friendfeed": {
+      "tag": "Pasantía",
+      "title": "El pasante del equipo de Maps",
+      "body": "En 2003, un gerente de producto de Google contrató a un pasante para el equipo que construía la búsqueda local, el proyecto que se convirtió en Google Maps. Cuatro años después, ese pasante y un ingeniero que había construido Gmail dejaron Google juntos para fundar una empresa.",
+      "coda": "El pasante era Bret Taylor. La empresa que dejó para fundar fue comprada por Facebook."
+    },
+    "friendster-forty-second-load": {
+      "tag": "Escalado",
+      "title": "La carga de cuarenta segundos",
+      "body": "Friendster se lanzó en 2002 y alcanzó más de 100 millones de cuentas registradas, pero sus servidores cedieron ante la carga de calcular los grados de conexión entre amigos; una sola página podía tardar cuarenta segundos en cargarse. Los correos de soporte muestran a usuarios amenazando con migrar al más reciente MySpace.",
+      "coda": "Facebook se lanzó en 2004 con la misma idea de grafo social y soportó el tráfico."
+    },
+    "shopify-snowdevil-software": {
+      "tag": "Pivot",
+      "title": "El software de la tienda superó a la tienda",
+      "body": "En 2004, el programador Tobias Lutke encontró el software de comercio electrónico de la época demasiado engorroso, así que escribió el suyo propio para vender equipo de snowboard en línea como Snowdevil. Snowdevil se mantuvo como una tienda pequeña, pero otros comerciantes comenzaron a pedir licenciar el software que la respaldaba.",
+      "coda": "Shopify se cotizó en la Bolsa de Nueva York en 2015."
+    },
+    "twitter-odeo-podcast-pivot": {
+      "tag": "Pivot",
+      "title": "El proyecto paralelo de la empresa de podcasts",
+      "body": "El 28 de junio de 2005, Apple incorporó las suscripciones a podcasts en iTunes; en dos días las suscripciones superaron el millón y todo el negocio de podcasts de Odeo quedó obsoleto de la noche a la mañana. En marzo del año siguiente, un hackathon interno produjo la propuesta de Jack Dorsey sobre actualizaciones de estado por SMS: Twitter.",
+      "coda": "Odeo, la empresa dentro de la cual se construyó Twitter, fue vendida en 2007."
+    },
+    "youtube-tune-in-hook-up": {
+      "tag": "Leyenda",
+      "title": "El dominio registrado el día de San Valentín",
+      "body": "youtube.com fue registrado el 14 de febrero de 2005, y sus fundadores relataron después un concepto de sitio de citas inspirado en Hot or Not. Jawed Karim negó haber asistido a la cena en la que se basa la historia, y Steve Chen reconoció que suena como una narrativa de marketing.",
+      "coda": "Lo que Karim citó en su lugar fue la dificultad para encontrar imágenes del tsunami en internet."
+    },
+    "duan-buffett-lunch": {
+      "tag": "Mundo pequeño",
+      "title": "El almuerzo con Buffett",
+      "body": "En 2006, un fabricante de electrónica de Guangdong ganó la subasta benéfica anual para almorzar con Warren Buffett, pagando 620.100 dólares. Trajo consigo a un joven de 26 años que acababa de dejar una empresa estadounidense y aún no tenía un plan claro.",
+      "coda": "El fabricante era Duan Yongping. El joven era Colin Huang, quien más tarde fundó Pinduoduo."
+    },
+    "blackberry-iphone-2007": {
+      "tag": "Malinterpretado",
+      "title": "BlackBerry vio las fallas",
+      "body": "En enero de 2007, el co-CEO de BlackBerry, Jim Balsillie, y el presidente Mike Lazaridis vieron la presentación del iPhone. La lista de defectos de Lazaridis era precisa: sin teclado físico, seguridad débil, batería pobre, escritura en vidrio. Cada punto era real. La respuesta de Balsillie fue: \"Está bien, estaremos bien\".",
+      "coda": "La cuota de mercado de BlackBerry se erosionó frente al iPhone en los años siguientes."
+    },
+    "dvorak-iphone-2007": {
+      "tag": "Predicción",
+      "title": "Dvorak dice que hay que desconectar",
+      "body": "El 28 de marzo de 2007, el columnista John C. Dvorak escribió que los márgenes en telefonía eran reducidos y que Nokia y Motorola ya eran dominantes, por lo que Apple debería ceder el diseño del iPhone a unos \"ilusos\" y retirarse. Dada la trayectoria de Apple en ese mercado, el razonamiento no era descabellado.",
+      "coda": "Más tarde dijo que, una vez que tuvo el teléfono en la mano, se arrepintió de la llamada."
+    },
+    "auctomatic-taggar-yc": {
+      "tag": "Fusión",
+      "title": "El que tuvo que aprender a programar",
+      "body": "En 2007, dos hermanos adolescentes irlandeses llevaron una herramienta de comercio electrónico casera a Y Combinator y fusionaron su empresa con otra dirigida por dos graduados de Oxford. Ninguno de los dos de Oxford sabía programar. A uno de ellos le dijeron que aprendiera, rápido.",
+      "coda": "Ese era Harj Taggar, más tarde el primer socio no fundador de Y Combinator."
+    },
+    "justintv-backpack-cruise": {
+      "tag": "La mochila",
+      "title": "La mochila de transmisión en vivo",
+      "body": "En marzo de 2007, un hombre se ató una webcam a una gorra de béisbol y comenzó a transmitir en vivo su vida por San Francisco, veinticuatro horas al día, usando un artilugio casero de mochila con portátil construido por un amigo que había abandonado el MIT.",
+      "coda": "El amigo que lo construyó fue Kyle Vogt, quien más tarde fundó Cruise, adquirida por GM por más de 1.000 millones de dólares."
+    },
+    "stackoverflow-blog-post": {
+      "tag": "P&R",
+      "title": "El anti-Experts-Exchange",
+      "body": "El 16 de abril de 2008, un programador publicó en su propio blog que quería construir un sitio de preguntas y respuestas «anti-Experts-Exchange» para programadores, sin los muros de pago ni el juego con los motores de búsqueda que le resultaban nauseabundos en el sitio vigente.",
+      "coda": "En 2021 el sitio fue vendido a Prosus por 1.800 millones de dólares."
+    },
+    "zune-leap-year-freeze": {
+      "tag": "Incidente",
+      "title": "Día 366",
+      "body": "Cerca de la medianoche en la hora del Pacífico del 31 de diciembre de 2008, todos los Zune 30 se congelaron por completo, apodado Z2K9. La causa fue un bucle infinito en un controlador del chip de energía que solo podía activarse en el día 366 de un año bisiesto. No existía ningún parche; la única solución era dejar que la batería se agotara.",
+      "coda": "El remedio enviado por Microsoft era esperar a que el dispositivo se quedara sin energía."
+    },
+    "china-wang-jian-alibaba-cloud": {
+      "tag": "Duda",
+      "title": "El mentiroso que construyó la nube",
+      "body": "Hacia 2012, con Alibaba Cloud tras años de fuerte inversión y sin un producto visible, empleados le dijeron a Jack Ma directamente que Wang Jian era un fraude. Cerca del ochenta por ciento del equipo de ingeniería renunció. La respuesta de Ma: financiarlo con mil millones de yuanes al año durante diez años, y entonces juzgarlo.",
+      "coda": "Diez años después, el proyecto de la estafa generó ganancias."
+    },
+    "taobao-double11-2009": {
+      "tag": "Descuento",
+      "title": "27 comerciantes",
+      "body": "El 11 de noviembre de 2009, Taobao Mall reunió a veintisiete marcas para llenar una semana de ventas lenta; el plan había previsto más de treinta, pero los comerciantes seguían retirándose. Un funcionario público llamado Yan Jun, en Shanxi, realizó el primer pedido del día, 150 yuanes de crédito telefónico, a las 00:00:03.",
+      "coda": "Las ventas de ese día alcanzaron 52 millones de yuanes, diez veces un día ordinario."
+    },
+    "cloudflare-hbs-elective": {
+      "tag": "Compañero de clase",
+      "title": "Una asignatura optativa en HBS",
+      "body": "En 2009, un programador tomó una licencia para estudiar un MBA en la Harvard Business School. Había pasado años gestionando un proyecto voluntario contra el spam en su tiempo libre. Un día lo mencionó en clase. Un compañero de clase dijo que debería ser un producto real.",
+      "coda": "Ese compañero de clase era Michelle Zatlyn, futura cofundadora y COO de Cloudflare."
+    },
+    "china-3q-war": {
+      "tag": "Incidente",
+      "title": "Elige uno",
+      "body": "El 3 de noviembre de 2010, Tencent obligó a elegir: desinstalar 360 o QQ dejaría de funcionar. Ma Huateng advirtió que los usuarios podrían desaparecer en tres días. Días después, el Ministerio de Industria y Tecnología de la Información ordenó a ambas partes restaurar la compatibilidad.",
+      "coda": "El regulador puso fin, no el mercado ni ninguna de las dos empresas."
+    },
+    "china-thousand-groupon-war": {
+      "tag": "Burbuja",
+      "title": "La guerra de los mil Groupon",
+      "body": "El primer sitio de compras grupales de China se lanzó en 2010; portales y redes sociales se sumaron en cuestión de meses. Para agosto de 2011, más de 5,000 empresas de compras grupales competían: la 'Guerra de los Mil Groupones'. A mediados de 2014, solo quedaban 176 sitios en pie.",
+      "coda": "Menos de doscientos de cinco mil sobrevivieron."
+    },
+    "semver-dependency-hell": {
+      "tag": "Estándar",
+      "title": "La propia exención de SemVer",
+      "body": "En 2010, Tom Preston-Werner, cofundador de GitHub, publicó semver.org, proponiendo MAJOR.MINOR.PATCH para acabar con el 'infierno de las dependencias'. La propia especificación establece una excepción: durante la fase de 'desarrollo inicial' 0.y.z, cualquier cosa puede cambiar en cualquier momento, una etapa de la que la mayoría de los paquetes nunca salen realmente.",
+      "coda": "La mayoría de los paquetes publicados nunca abandonan el rango de versiones; la regla no vincula."
+    },
+    "instagram-burbn-cut": {
+      "tag": "Pivot",
+      "title": "Lo que se eliminó de Burbn",
+      "body": "Kevin Systrom y Mike Krieger pasaron casi un año construyendo una aplicación de registro completa llamada Burbn, y luego consideraron que su propia versión final para iPhone estaba sobrecargada. La redujeron a fotos, comentarios y me gusta, y lanzaron el resultado ocho semanas después como Instagram.",
+      "coda": "En una semana desde su lanzamiento, ya tenía 100.000 usuarios."
+    },
+    "tz-database-lawsuit": {
+      "tag": "Incidente",
+      "title": "La demanda por la base de datos de zonas horarias",
+      "body": "En octubre de 2011, la empresa de software de astrología Astrolabe demandó a los mantenedores de la base de datos tz, alegando que sus datos de zonas infringían un atlas que había publicado. La lista de correo y el servidor FTP se apagaron. ICANN intervino para alojar la base de datos; Astrolabe retiró la demanda en febrero de 2012.",
+      "coda": "La reclamación de derechos de autor de una empresa de astrología sobre tablas de salida del sol fue retirada sin pago."
+    },
+    "instagram-facebook-2012": {
+      "tag": "Ridículo",
+      "title": "Mil millones por un filtro",
+      "body": "En abril de 2012, Facebook anunció que pagaría 1.000 millones de dólares por Instagram, un equipo de 13 personas sin ingresos. En The Daily Show, Jon Stewart preguntó: \"¿Un billón de dólares? Por algo que arruina tus fotos?\" Medido en función del tamaño del equipo y los ingresos, la pregunta no era injusta.",
+      "coda": "La operación se cita habitualmente como una de las mejores adquisiciones de la historia tecnológica."
+    },
+    "didi-alibaba-resignation": {
+      "tag": "Renuncia",
+      "title": "De Alibaba a los taxis",
+      "body": "Cheng Wei pasó ocho años en Alibaba, llegando a ser vicegerente general del negocio de consumo de Alipay. En junio de 2012 renunció y, junto con Wu Rui y Li Xiang, lanzó una aplicación para pedir taxis. Cuando se lanzó el 9 de septiembre, solo había dieciséis conductores conectados al mismo tiempo.",
+      "coda": "Dos meses después, más de cien conductores estaban en línea al mismo tiempo."
+    },
+    "knight-capital-power-peg": {
+      "tag": "Incidente",
+      "title": "El octavo servidor",
+      "body": "Knight Capital envió nuevo código de trading a ocho servidores; solo siete lo recibieron. El octavo seguía ejecutando el código obsoleto de Power Peg, retirado años antes, que las órdenes en vivo reactivaron. En 45 minutos, Knight acumuló $3.5B en largo y $3.15B en corto. La conclusión de la SEC: nadie revisó el despliegue incompleto.",
+      "coda": "Knight fue adquirida por un rival en menos de una semana tras la pérdida."
+    },
+    "dnnresearch-week-of-bidding": {
+      "tag": "Subasta",
+      "title": "Una semana de pujas",
+      "body": "En 2012, un profesor de la Universidad de Toronto y sus dos estudiantes de posgrado dominaron el campo en un concurso de reconocimiento de imágenes y luego constituyeron una empresa fachada para venderse a sí mismos. Google, Microsoft, Baidu y DeepMind pasaron una semana pujando entre ellos por ella.",
+      "coda": "Hinton eligió Google. Uno de los dos estudiantes era Ilya Sutskever."
+    },
+    "xiaohongshu-name": {
+      "tag": "Etimología",
+      "title": "No ese pequeño libro rojo",
+      "body": "La mayoría de la gente asume que el nombre alude al otro libro rojo. La propia versión del fundador es más aburrida: Bain & Company y la Escuela de Negocios de Stanford, la empresa donde trabajaba y la escuela que asistió, ambas usan el rojo.",
+      "coda": "Traducido al inglés, el nombre sale igual al otro de todos modos."
+    },
+    "china-wechat-red-envelope-pearl-harbor": {
+      "tag": "Pagos",
+      "title": "Pearl Harbor, Digital",
+      "body": "Alrededor del Año Nuevo chino de 2014, la función de sobres rojos de WeChat se lanzó; los usuarios agarraron más de 40 millones de sobres rojos en cuestión de días. En la aplicación Laiwang, Jack Ma la llamó un 'ataque sorpresa de Pearl Harbor': efectivo a corto plazo, escribió, pero el crecimiento saludable a largo plazo importaba más.",
+      "coda": "La envoltura roja se convirtió en un embudo de pagos."
+    },
+    "heartbleed-two-person-team": {
+      "tag": "Incidente",
+      "title": "Un equipo de cuatro",
+      "body": "La comprobación de límites faltante de Heartbleed entró en la extensión heartbeat de OpenSSL en diciembre de 2011 y permaneció sin ser detectada durante dos años hasta que investigadores independientes la encontraron en abril de 2014. En ese momento, la base de código detrás de la mayor parte del tráfico HTTPS de la web era mantenida por cuatro voluntarios, uno de ellos a tiempo completo.",
+      "coda": "La corrección se lanzó el mismo día que se reveló el error."
+    },
+    "goto-fail-duplicate": {
+      "tag": "Seguridad",
+      "title": "El salto duplicado",
+      "body": "Dentro de SSLVerifySignedServerKeyExchange de Apple, una línea goto fail; estaba duplicada. La segunda copia quedaba fuera de cualquier if, por lo que la función siempre saltaba la verificación de firma y devolvía éxito sin importar nada.",
+      "coda": "La línea duplicada permaneció sin cambios en los sistemas afectados durante meses."
+    },
+    "ntp-harlan-stenn": {
+      "tag": "Tiempo",
+      "title": "Quién ajusta el reloj",
+      "body": "Bancos, bolsas y sistemas satelitales se sincronizan con NTP. David Mills diseñó el protocolo; la implementación de referencia ahora la lidera, en gran medida en solitario, Harlan Stenn. En marzo de 2015 la prensa económica publicó el titular «NTP Needs Money: Is A Foundation The Answer?»",
+      "coda": "La fundación sigue recaudando fondos para su presupuesto."
+    },
+    "alphago-lee-sedol-2016": {
+      "tag": "Go",
+      "title": "Piedra Ciento Dos",
+      "body": "AlphaGo venció a Lee Sedol por cuatro juegos a uno en Seúl en marzo de 2016; la única victoria de Lee fue en el cuarto juego. Después dijo que había cometido un error crítico al inicio del primer juego, calificando la jugada de la computadora allí de excelente y un movimiento distinto a lo que cualquier jugador humano elegiría.",
+      "coda": "La jugada que destacó solo conservó un número de piedra, sin nombre."
+    },
+    "aws-s3-2017-typo": {
+      "tag": "Incidente",
+      "title": "Un argumento amplio",
+      "body": "Un ingeniero de S3 ejecutó un comando autorizado destinado a desconectar un pequeño número de servidores de facturación, pero una entrada cubrió un rango más amplio de lo previsto. Los servidores eliminados también respaldaban el subsistema de índices, que no se había reiniciado por completo en años y volvió a funcionar mucho más lento de lo esperado.",
+      "coda": "La interrupción duró aproximadamente cuatro horas; la propia página de estado de AWS dependía de los mismos sistemas."
+    },
+    "gitlab-2017-rm-rf": {
+      "tag": "Incidente",
+      "title": "Cinco copias de seguridad, cero",
+      "body": "Un ingeniero pretendía limpiar un réplica rezagado, pero eliminó el directorio de datos de PostgreSQL en el primario en su lugar, deteniéndose segundos demasiado tarde; aproximadamente 300 GB ya se habían perdido. GitLab descubrió que, de los cinco métodos de copia de seguridad y replicación que tenía en ejecución, ninguno podía restaurar realmente los datos.",
+      "coda": "La recuperación dependió de una instantánea que alguien tomó casualmente seis horas antes."
+    },
+    "attention-title-beatles-2017": {
+      "tag": "Artículo",
+      "title": "Un título prestado a los Beatles",
+      "body": "Ocho investigadores de Google publicaron \"Attention Is All You Need\" en junio de 2017; el título rinde homenaje a la canción de los Beatles \"All You Need Is Love\". El objetivo declarado del artículo era un modelo de secuencia para traducción automática que descartara las redes recurrentes en favor de la atención únicamente.",
+      "coda": "Los ocho autores han abandonado Google desde entonces."
+    },
+    "cloudflare-2019-regex": {
+      "tag": "Incidente",
+      "title": "La fusible que se retiró",
+      "body": "Una nueva regla WAF con una expresión regular de retroceso catastrófico elevó el uso de CPU en la red global de Cloudflare a casi el 100 % en segundos tras su implementación. La regla en sí era común; lo que permitió que estallara fue una salvaguarda de uso de CPU en reglas regex eliminada silenciosamente semanas antes durante una refactorización.",
+      "coda": "La interrupción duró 27 minutos y terminó cuando se deshabilitó el WAF a nivel global."
+    },
+    "requests-kenneth-reitz": {
+      "tag": "Transición",
+      "title": "Entregando las Llaves",
+      "body": "Requests registra más de 30 millones de descargas al mes y se convirtió en el cliente HTTP estándar para Python. Kenneth Reitz lo lanzó el 14 de febrero de 2011. En 2019, tras problemas de salud, cedió el control del proyecto a la Python Software Foundation.",
+      "coda": "No ha vuelto a liderar el proyecto desde que se retiró."
+    },
+    "linux-y2038-kernel-fix": {
+      "tag": "Corrección",
+      "title": "Dieciocho Años Antes",
+      "body": "Los sistemas Unix de 32 bits desbordarán su contador time_t el 19 de enero de 2038. Linux 5.6, lanzado en 2020, fue el primer kernel capaz de mantener un sistema de 32 bits funcionando más allá de esa fecha. Las aplicaciones aún necesitan recompilarse contra un time_t de 64 bits para beneficiarse realmente.",
+      "coda": "El kernel se parcheó años antes de que la mayoría de los entornos de usuario de 32 bits se actualizaran."
+    },
+    "log4shell-eight-years": {
+      "tag": "Vulnerabilidad",
+      "title": "Ocho años sin leer",
+      "body": "Log4j está presente en la mayoría de los software Java empresarial; Wiz y EY encontraron que el 93 por ciento de los entornos en la nube estaban expuestos a Log4Shell. La falla existía en el código desde 2013. Fue reportada el 24 de noviembre de 2021 y divulgada públicamente el 10 de diciembre, con una calificación CVSS de 10.",
+      "coda": "Un puñado de voluntarios escribió la corrección que llegó a millones de servidores."
+    },
+    "core-js-denis-pushkarev": {
+      "tag": "Mantenedor",
+      "title": "El parche que nadie reemplazó",
+      "body": "core-js se distribuye dentro de WhatsApp, Netflix, Apple y PayPal, registrando aproximadamente 250 millones de descargas al mes. Su autor, Denis Pushkarev, sufrió un accidente automovilístico fatal en 2019, cumplió unos diez meses de prisión a partir de enero de 2020 y continuó manteniendo la biblioteca durante todo ese tiempo.",
+      "coda": "Las donaciones mensuales cayeron de unos 2.500 dólares a 400."
+    },
+    "tesla-westinghouse-royalty": {
+      "tag": "Patentes",
+      "title": "La regalía que Tesla renunció",
+      "body": "El contrato de Westinghouse pagaba a Tesla 2,50 dólares por caballo de vapor en regalías. A principios de 1891, con la empresa al borde del fracaso, Tesla la liberó de la cláusula de regalías.",
+      "coda": "En 1897, Westinghouse compró sus patentes por completo por 216.000 dólares."
+    },
+    "salk-polio-patent": {
+      "tag": "Patentes",
+      "title": "El sol no tiene patente",
+      "body": "Edward Murrow preguntó quién poseía la patente de la vacuna contra la poliomielitis. Salk respondió que no había ninguna; ¿se podía patentar el sol? Los abogados de la fundación ya habían examinado la cuestión y descubrieron que la vacuna carecía de novedad patentable debido a la técnica anterior.",
+      "coda": "La vacuna no patentada fue valorada posteriormente en siete mil millones de dólares."
+    },
+    "cobol-two-hundred-billion-lines": {
+      "tag": "Legado",
+      "title": "Doscientos mil millones de líneas",
+      "body": "En 1997, Gartner estimó que había 200 mil millones de líneas de COBOL ejecutando el ochenta por ciento de los programas empresariales en todo el mundo. En 2020, cuando las solicitudes de desempleo aumentaron durante la pandemia de COVID, varios gobiernos estatales de EE. UU. pidieron públicamente programadores de COBOL para mantener en funcionamiento sus sistemas de beneficios de décadas de antigüedad.",
+      "coda": "Han pasado seis años desde esa petición."
+    },
+    "sabre-sage-to-booking": {
+      "tag": "Reservas",
+      "title": "De Radar a Reservas",
+      "body": "American Airlines e IBM firmaron su asociación en 1957, adaptando la arquitectura de defensa aérea SAGE de la Guerra Fría de la Fuerza Aérea en un sistema de reservas. SABRE realizó su primera prueba en línea en 1960 y se lanzó por completo en 1964, convirtiéndose en el primer sistema de procesamiento de transacciones en línea del mundo.",
+      "coda": "La empresa matriz sigue operando, más de sesenta años después."
+    },
+    "kay-objects-messaging": {
+      "tag": "Nombres",
+      "title": "Objetos, no el punto",
+      "body": "En 1967, Alan Kay ya usaba «orientado a objetos» para un diseño basado en celdas o nodos de red que solo se comunican mediante mensajes. Más tarde escribió que lamentaba haber acuñado el término «objetos», porque atrae la atención hacia la idea menor y oculta la que realmente quería transmitir: la mensajería.",
+      "coda": "La palabra que lamentó sobrevivió a la idea que pretendía transmitir."
+    },
+    "voyager-68-kilobits": {
+      "tag": "Espacio profundo",
+      "title": "Alrededor del chip roto",
+      "body": "La Voyager 1 se lanzó en septiembre de 1977. Cuarenta y siete años después, un chip de memoria en su subsistema de datos de vuelo falló, con un tres por ciento de su contenido dañado sin posibilidad de reparación. El 20 de abril de 2024, los ingenieros reorganizaron el código alrededor del área dañada y la señal regresó.",
+      "coda": "Sus generadores pueden suministrar suficiente energía para devolver datos de ingeniería hasta 2036."
+    },
+    "gif-lzw-unisys": {
+      "tag": "Patentes",
+      "title": "El formato libre que no lo fue",
+      "body": "CompuServe lanzó GIF en junio de 1987 usando compresión LZW sin darse cuenta de que Sperry Corporation ya tenía la patente sobre ella. En diciembre de 1994 Unisys, formada a partir de la fusión de Sperry, anunció que cobraría tarifas de licencia, lo que impulsó a los desarrolladores a crear PNG como reemplazo.",
+      "coda": "Las patentes expiraron en todo el mundo en 2004, y solo entonces el GIF quedó libre."
+    },
+    "zimmermann-pgp-release": {
+      "tag": "Cifrado",
+      "title": "PGP regalado, luego investigado",
+      "body": "Phil Zimmermann lanzó PGP con su código fuente en un FTP público en 1991, el primer programa de cifrado de clave pública ampliamente disponible. La Aduana de EE. UU. abrió una investigación penal por violaciones de control de exportaciones. Duró tres años y se cerró sin acusación a principios de 1996.",
+      "coda": "Tres años bajo investigación, sin cargos presentados, sin regalías cobradas jamás."
+    },
+    "json-good-not-evil": {
+      "tag": "Licencia",
+      "title": "Para el Bien, No para el Mal",
+      "body": "La licencia de 2002 de Douglas Crockford para las bibliotecas JSON añade una cláusula: el software debe usarse para el Bien, no para el Mal. El propio JSON se extendió libre y sin patentes a casi todas las API de internet, pero esa única frase hizo que la licencia fuera incompatible con los términos estándar de código abierto.",
+      "coda": "El formato se volvió universal; la cláusula broma que lo acompañaba no sobrevivió al contacto con los departamentos legales corporativos."
+    },
+    "sogou-movie-line": {
+      "tag": "Nombres",
+      "title": "La Frase de Sogou Era una Broma Primero",
+      "body": "La comedia de 2001 Big Shot's Funeral tiene una frase con juego de palabras sobre motores de búsqueda: \"Ellos buscan en Sohu, nosotros buscamos en Sogou, todos buscan a su manera\". Tres años después, en 2004, el equipo de Sohu tomó la broma y la lanzó como un motor de búsqueda real, Sogou.",
+      "coda": "La gracia de la broma se convirtió en el nombre del producto, sin editar."
+    },
+    "tbl-double-slash": {
+      "tag": "Diseño",
+      "title": "Las Barras Extra",
+      "body": "Tim Berners-Lee colocó \"//\" delante del nombre de dominio cuando diseñó la URL. En octubre de 2009 admitió que, dado que ya había un dos puntos, las dos barras no eran necesarias en absoluto: \"parecía una buena idea en ese momento\", dijo.",
+      "coda": "Desde entonces, todas las URL siguen escribiendo ambas."
+    },
+    "bilibili-mikufans": {
+      "tag": "Nombres",
+      "title": "El primer nombre de Bilibili era Mikufans",
+      "body": "El sitio se lanzó en junio de 2009 como Mikufans, creado para los fans del vocaloid Hatsune Miku. En enero de 2010 se renombró como Bilibili, en referencia a un apodo que el protagonista de una serie de novelas ligeras le da a Misaka Mikoto: una onomatopeya del descargo eléctrico.",
+      "coda": "El sitio renombrado mantuvo el nombre en cada rediseño posterior."
+    },
+    "kuaishou-gif-app": {
+      "tag": "Nombres",
+      "title": "Kuaishou comenzó como una app de GIF",
+      "body": "Kuaishou se lanzó en marzo de 2011 como GIF Kuaishou, una aplicación móvil para crear y compartir imágenes GIF. En 2012 cambió su enfoque al video corto y, en 2014, se eliminó el prefijo GIF, quedando el nombre que conserva hoy como plataforma de video.",
+      "coda": "El prefijo GIF desapareció; el nombre de la empresa subyacente nunca cambió."
+    },
+    "zhihu-invite-only": {
+      "tag": "Nombres",
+      "title": "Zhihu Requería una Invitación",
+      "body": "Zhihu salió al aire el 26 de enero de 2011, y durante sus dos primeros años el registro requería un código de invitación. La inscripción abierta no llegó hasta marzo de 2013. El nombre en sí es chino clásico para \"¿sabes tú?\" — una pregunta, no un eslogan.",
+      "coda": "El registro no requiere invitación desde marzo de 2013."
+    },
+    "hp-garage-palo-alto": {
+      "tag": "El garaje",
+      "title": "El garaje de la avenida Addison",
+      "body": "En 1938, David Packard y su esposa alquilaron el apartamento de la planta baja de una casa de 1905 en el 367 de Addison Avenue, en Palo Alto. Él y Bill Hewlett invirtieron 538 dólares en el garaje para un solo coche que había detrás y construyeron su primer producto: un oscilador de audio.",
+      "coda": "La propiedad ahora figura en el Registro Nacional de Lugares Históricos y no está abierta al público."
+    },
+    "apple-crist-drive-garage": {
+      "tag": "El mito",
+      "title": "Cuando se quedó sin espacio el dormitorio",
+      "body": "En 1976, Steve Jobs y Steve Wozniak ensamblaron las primeras placas de Apple en la casa que los padres de Jobs poseían en Los Altos, California.",
+      "coda": "Primero en su dormitorio. El garaje fue después, cuando ya no quedaba espacio."
+    },
+    "huawei-nanyou-flat": {
+      "tag": "El apartamento",
+      "title": "Un piso en Nanyou Xincun",
+      "body": "En septiembre de 1987 Huawei se registró en un bloque residencial en Nanyou Xincun, Shenzhen, con 21.000 yuanes de capital, catorce empleados y seis accionistas repartiendo la participación por igual.",
+      "coda": "La empresa trasladó su sede en 1989; el arrendamiento del piso como sede terminó allí."
+    },
+    "wojcicki-garage-menlo-park": {
+      "tag": "El arrendador",
+      "title": "El garaje que alquiló",
+      "body": "En septiembre de 1998, Page y Brin alquilaron un garaje en Menlo Park a Susan Wojcicki por 1.700 dólares al mes. Allí se constituyó Google.",
+      "coda": "Ella se convirtió más tarde en la directora ejecutiva de YouTube."
+    },
+    "tencent-seg-403": {
+      "tag": "Habitación 403",
+      "title": "Edificio 2, Habitación 403",
+      "body": "En noviembre de 1998, Tencent se registró en la habitación 403 del edificio dos del parque tecnológico Saige en Huaqiangbei, Shenzhen. El edificio estaba lleno de startups como la suya, y la puerta no era diferente a ninguna otra.",
+      "coda": "La habitación ahora solo está abierta para empleados de Tencent, bajo el nombre Tencent Origin."
+    },
+    "unitree-left-dji": {
+      "tag": "Renuncia",
+      "title": "Fuera de DJI",
+      "body": "Durante su máster, Wang Xingxing construyó un robot cuadrúpedo totalmente eléctrico por su cuenta y lo llamó XDog. Tras graduarse, trabajó en DJI y la dejó poco después.",
+      "coda": "Unitree se registró en el distrito de Binjiang, Hangzhou, en agosto de 2016."
+    },
+    "unitree-one-yuan-option": {
+      "tag": "Opciones",
+      "title": "Un yuan por acción",
+      "body": "En septiembre de 2017, Unitree firmó acuerdos de opción con diecisiete empleados a un yuan por acción. Posteriormente se realizaron más concesiones, mantenidas a través de un único vehículo de empleados.",
+      "coda": "Ocho años después, la empresa abrió el libro para su IPO."
+    },
+    "unitree-g1-price": {
+      "tag": "Precios",
+      "title": "Noventa y nueve mil",
+      "body": "Los robots humanoides solían tener el precio de un equipo de laboratorio. Unitree puso el G1 a la venta por 99,000 yuanes, aproximadamente el precio de un automóvil de gama básica.",
+      "coda": "Para 2025 los humanoides representaban el 51,78 por ciento de sus ingresos, con 5.500 unidades enviadas."
+    }
+  }
+}

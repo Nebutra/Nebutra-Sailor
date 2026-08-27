@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge-status-dot-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/badge-status-dot-demo.tsx",
+      "content": "\"use client\";\n\nimport { Badge } from \"@nebutra/ui/primitives\";\n\nexport function BadgeStatusDotDemo() {\n  return (\n    <div className=\"gap-3 flex\">\n      <Badge variant=\"green-subtle\" dot>\n        Online\n      </Badge>\n      <Badge variant=\"amber-subtle\" dot>\n        Degraded\n      </Badge>\n      <Badge variant=\"red-subtle\" dot>\n        Outage\n      </Badge>\n      <Badge variant=\"gray-subtle\" dot>\n        Pending\n      </Badge>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

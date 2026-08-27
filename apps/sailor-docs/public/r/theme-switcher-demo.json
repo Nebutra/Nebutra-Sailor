@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-switcher-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/tokens",
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/theme-switcher-demo.tsx",
+      "content": "\"use client\";\n\nimport { ThemeProvider } from \"@nebutra/tokens\";\nimport { ThemeSwitcher } from \"@nebutra/ui/primitives\";\n\nexport function ThemeSwitcherDemo() {\n  return (\n    <ThemeProvider attribute=\"class\" defaultTheme=\"system\">\n      <ThemeSwitcher />\n    </ThemeProvider>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

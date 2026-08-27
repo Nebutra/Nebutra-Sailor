@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "choicebox-radio-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/choicebox-radio-demo.tsx",
+      "content": "\"use client\";\n\nimport { ChoiceboxGroup } from \"@nebutra/ui/primitives\";\nimport * as React from \"react\";\n\nexport function ChoiceboxRadioDemo() {\n  const [value, setValue] = React.useState(\"trial\");\n\n  return (\n    <ChoiceboxGroup\n      direction=\"row\"\n      label=\"Select a plan\"\n      type=\"radio\"\n      value={value}\n      onChange={(v) => setValue(v as string)}\n    >\n      <ChoiceboxGroup.Item title=\"Pro Trial\" description=\"Free for two weeks\" value=\"trial\" />\n      <ChoiceboxGroup.Item title=\"Pro\" description=\"Get started now\" value=\"pro\" />\n    </ChoiceboxGroup>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

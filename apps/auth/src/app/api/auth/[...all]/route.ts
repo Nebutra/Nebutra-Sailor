@@ -1,0 +1,196 @@
+// @brand-exempt: documents canonical auth.nebutra.com host for operators
+/**
+ * Auth-center catch-all — Better Auth / NextAuth surface for all first-party apps.
+ * Canonical host: auth.nebutra.com (BETTER_AUTH_URL).
+ *
+ * Also handles GET /api/auth/oauth/:provider?callbackURL=… (same contract as apps/web).
+ */
+
+import type { AuthProvider, AuthProviderId } from "@nebutra/auth";
+import {
+  buildDefaultPostLoginUrl,
+  buildOAuthStartRedirectResponse,
+  DEFAULT_POST_LOGIN_PATH,
+  getConfiguredAuthProvider,
+  sanitizeReturnUrl,
+} from "@nebutra/auth";
+import { createAuth } from "@nebutra/auth/server";
+import {
+  accessGateOauthDisabledResponse,
+  enforceAccessGatePreflight,
+  isAccessGateEnabled,
+  isOAuthRequest,
+  readAccessGateSignupContext,
+  redeemAccessInviteAfterSignup,
+} from "@/lib/access-gate";
+import { applyCloudflareAuthSecrets, applyCloudflareDatabaseEnv } from "@/lib/cloudflare-env";
+import { applyAuthCors } from "@/lib/cors";
+import { isOAuthProvider, type OAuthProvider } from "@/lib/oauth-providers";
+import { resolveAppOrigin } from "@/lib/return-to";
+import { applySessionHint } from "@/lib/session-hint";
+
+/** Hyperdrive / secrets from OpenNext Cloudflare Worker (no-op on ECS/Node). */
+async function bindCloudflareEnv(): Promise<void> {
+  try {
+    const { getCloudflareContext } = await import("@opennextjs/cloudflare");
+    const { env } = await getCloudflareContext({ async: true });
+    applyCloudflareDatabaseEnv(env as Partial<CloudflareEnv>);
+    applyCloudflareAuthSecrets(env as Partial<CloudflareEnv>);
+  } catch {
+    // Not running on OpenNext Cloudflare — ECS / local use process.env only.
+  }
+}
+
+const PROVIDERS_USING_THIS_ROUTE: ReadonlySet<AuthProviderId> = new Set([
+  "better-auth",
+  "nextauth",
+]);
+
+const provider = getConfiguredAuthProvider();
+let authInstance: AuthProvider | null = null;
+
+async function getAuth(): Promise<AuthProvider> {
+  if (!authInstance) {
+    authInstance = await createAuth({ provider });
+  }
+  return authInstance;
+}
+
+type OAuthStartRequest = {
+  provider: OAuthProvider | null;
+  invalidProvider?: string;
+  callbackURL: string;
+};
+
+function readOAuthStartRequest(request: Request): OAuthStartRequest | null {
+  const url = new URL(request.url);
+  const match = url.pathname.match(/\/api\/auth\/oauth\/([^/]+)\/?$/);
+  if (!match) return null;
+
+  const rawProvider = decodeURIComponent(match[1] ?? "");
+  const rawCallback =
+    url.searchParams.get("callbackURL") ??
+    url.searchParams.get("callback") ??
+    url.searchParams.get("returnUrl") ??
+    url.searchParams.get("returnTo") ??
+    url.searchParams.get("redirect");
+
+  // One chain, defined once. This route had its own copy that also fell back
+  // through NEXT_PUBLIC_SITE_URL — the marketing origin — and then to a
+  // hardcoded app host.
+  const appOrigin = resolveAppOrigin();
+  const fallback = buildDefaultPostLoginUrl(appOrigin);
+
+  let callbackURL = fallback;
+  if (rawCallback?.trim()) {
+    const trimmed = rawCallback.trim();
+    if (trimmed.startsWith("/")) {
+      callbackURL = `${appOrigin}${sanitizeReturnUrl(trimmed, { fallback: DEFAULT_POST_LOGIN_PATH })}`;
+    } else {
+      callbackURL = sanitizeReturnUrl(trimmed, { fallback });
+    }
+  }
+
+  return {
+    provider: isOAuthProvider(rawProvider) ? rawProvider : null,
+    ...(isOAuthProvider(rawProvider) ? {} : { invalidProvider: rawProvider }),
+    callbackURL,
+  };
+}
+
+async function handleOAuthStartRequest(request: Request): Promise<Response | null> {
+  const oauthStart = readOAuthStartRequest(request);
+  if (!oauthStart) return null;
+
+  if (request.method.toUpperCase() !== "GET") {
+    return Response.json(
+      { code: "METHOD_NOT_ALLOWED", error: "OAuth start requests must use GET." },
+      { status: 405 },
+    );
+  }
+
+  if (!oauthStart.provider) {
+    return Response.json(
+      {
+        code: "OAUTH_PROVIDER_NOT_SUPPORTED",
+        error: "This OAuth provider is not supported.",
+        provider: oauthStart.invalidProvider,
+      },
+      { status: 400 },
+    );
+  }
+
+  try {
+    const auth = await getAuth();
+    const result = await auth.signIn({
+      type: "oauth",
+      provider: oauthStart.provider,
+      redirectUrl: oauthStart.callbackURL,
+    });
+
+    // Must forward BA state cookies — bare Response.redirect drops them.
+    return buildOAuthStartRedirectResponse(result, request.url, {
+      provider: oauthStart.provider,
+    });
+  } catch {
+    return Response.json(
+      { code: "OAUTH_START_FAILED", error: "Unable to start OAuth sign-in." },
+      { status: 500 },
+    );
+  }
+}
+
+async function handle(request: Request): Promise<Response> {
+  // Preflight must succeed before BA handler (which may not answer OPTIONS).
+  if (request.method.toUpperCase() === "OPTIONS") {
+    return applyAuthCors(request, new Response(null, { status: 204 }));
+  }
+
+  // OpenNext Worker: Hyperdrive → DATABASE_URL before Prisma/Better Auth init.
+  await bindCloudflareEnv();
+
+  if (!PROVIDERS_USING_THIS_ROUTE.has(provider)) {
+    return applyAuthCors(
+      request,
+      new Response("Auth provider does not use this route", { status: 404 }),
+    );
+  }
+
+  if (isAccessGateEnabled() && isOAuthRequest(request)) {
+    return applyAuthCors(request, accessGateOauthDisabledResponse());
+  }
+
+  const oauthStartResponse = await handleOAuthStartRequest(request);
+  if (oauthStartResponse) {
+    const url = new URL(request.url);
+    const withHint = applySessionHint(oauthStartResponse, url.pathname, oauthStartResponse.status);
+    return applyAuthCors(request, withHint);
+  }
+
+  const accessGateContextOrResponse = await readAccessGateSignupContext(request);
+  if (accessGateContextOrResponse instanceof Response) {
+    return applyAuthCors(request, accessGateContextOrResponse);
+  }
+  const accessGateResponse = await enforceAccessGatePreflight(accessGateContextOrResponse);
+  if (accessGateResponse) return applyAuthCors(request, accessGateResponse);
+
+  const auth = await getAuth();
+  const authHandler = auth.middleware();
+  const response = (await authHandler(request)) ?? new Response(null, { status: 404 });
+  const redemptionFailure = await redeemAccessInviteAfterSignup(
+    accessGateContextOrResponse,
+    response,
+  );
+  if (redemptionFailure) return applyAuthCors(request, redemptionFailure);
+
+  const url = new URL(request.url);
+  const withHint = applySessionHint(response, url.pathname, response.status);
+  return applyAuthCors(request, withHint);
+}
+
+export const GET = handle;
+export const POST = handle;
+export const PUT = handle;
+export const PATCH = handle;
+export const DELETE = handle;
+export const OPTIONS = handle;

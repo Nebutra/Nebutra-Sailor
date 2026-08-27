@@ -1,0 +1,295 @@
+/**
+ * Nebutra Web App - Global Styles
+ *
+ * This file imports:
+ * 1. Tailwind CSS v4 (must be first)
+ * 2. Tokens from @nebutra/tokens (single source of truth)
+ * 3. Typography CSS variables from @nebutra/ui (fonts.css)
+ */
+
+/* Tailwind CSS v4 - must be imported first */
+@import "tailwindcss";
+/* Single token source */
+@import "@nebutra/tokens/styles.css";
+@import "@nebutra/tokens/recipe.css";
+/* UI CVA source scan + fonts — owned by @nebutra/ui */
+@import "@nebutra/ui/styles/sources.css";
+@import "@nebutra/ui/typography/fonts.css";
+/* Product-tour theme overrides (driver.js → our tokens) */
+@import "@nebutra/onboarding/styles.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Custom overrides for web app (dashboard) */
+@layer base {
+  /* Custom font configuration */
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Headings */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-sans);
+    /* Theme/DESIGN can lighten headings via fontWeight.heading; default 600. */
+    font-weight: var(--font-weight-heading, 600);
+  }
+}
+
+/* Dashboard specific utilities */
+@layer utilities {
+  /* Sidebar transition */
+  .sidebar-transition {
+    transition:
+      width 0.2s ease-in-out,
+      transform 0.2s ease-in-out;
+  }
+
+  /* Content area */
+  .content-area {
+    min-height: calc(100vh - 4rem);
+  }
+
+  .dashboard-app-content {
+    container: dashboard-content / inline-size;
+  }
+
+  /*
+   * Theme playground uses dashboard chrome plus its own tool panels. Its breakpoints
+   * must follow the actual content slot width, not the browser viewport.
+   */
+  .theme-playground-frame {
+    container: theme-playground / inline-size;
+  }
+
+  .theme-playground-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .theme-playground-registry {
+    border-right-width: 0;
+    border-bottom: 1px solid hsl(var(--border) / 0.8);
+  }
+
+  .theme-playground-inspector {
+    border-left-width: 0;
+    border-top: 1px solid hsl(var(--border) / 0.8);
+  }
+
+  .theme-preview-canvas {
+    container: theme-preview / inline-size;
+  }
+
+  .theme-preview-grid,
+  .theme-pricing-grid,
+  .theme-stats-grid {
+    display: grid;
+  }
+
+  .theme-preview-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .theme-pricing-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .theme-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container theme-playground (min-width: 66rem) {
+  .theme-playground-layout {
+    grid-template-columns: minmax(17.5rem, 18rem) minmax(0, 1fr);
+  }
+
+  .theme-playground-registry {
+    border-right: 1px solid hsl(var(--border) / 0.8);
+    border-bottom-width: 0;
+  }
+
+  .theme-playground-inspector {
+    grid-column: 1 / -1;
+    border-left-width: 0;
+    border-top: 1px solid hsl(var(--border) / 0.8);
+  }
+}
+
+@container theme-playground (min-width: 92rem) {
+  .theme-playground-layout {
+    grid-template-columns: minmax(18rem, 19rem) minmax(42rem, 1fr) minmax(20rem, 22rem);
+  }
+
+  .theme-playground-inspector {
+    grid-column: auto;
+    border-left: 1px solid hsl(var(--border) / 0.8);
+    border-top-width: 0;
+  }
+}
+
+@container theme-preview (min-width: 46rem) {
+  .theme-stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@container theme-preview (min-width: 66rem) {
+  .theme-preview-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .theme-pricing-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .theme-preview-span-5 {
+    grid-column: span 5 / span 5;
+  }
+
+  .theme-preview-span-7 {
+    grid-column: span 7 / span 7;
+  }
+
+  .theme-preview-span-12 {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Progressive enhancement: route transitions on supporting browsers */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (view-transition-name: page-content) {
+    :root {
+      --dashboard-vt-duration: 260ms;
+      --dashboard-vt-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    .content-area {
+      contain: layout paint;
+      view-transition-name: dashboard-content;
+    }
+
+    ::view-transition-old(dashboard-content),
+    ::view-transition-new(dashboard-content) {
+      animation-duration: var(--dashboard-vt-duration);
+      animation-timing-function: var(--dashboard-vt-ease);
+    }
+
+    ::view-transition-old(dashboard-content) {
+      opacity: 0.9;
+    }
+  }
+}
+
+/* Loader animations */
+@keyframes login-success-progress {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@layer base {
+  /* Body font-size is owned by @nebutra/ui fonts.css (var-driven:
+     --user-ui-font-size → --text-base → 1rem). Defaults are intentionally NOT
+     pinned on :root so the fallback chain can reach the theme/DESIGN type-scale
+     when the user defers to it (uiFontSize = "theme"). Here we only own the code
+     surfaces, which fonts.css doesn't style. */
+  pre,
+  code,
+  kbd,
+  samp,
+  [data-code-surface] {
+    font-size: var(--user-code-font-size, 0.75rem);
+  }
+
+  html.surface-translucent [data-sidebar="sidebar"],
+  html.surface-translucent aside[aria-label*="navigation" i] {
+    background-color: hsl(var(--sidebar) / 0.7);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+  }
+
+  /* WCAG 2.3.3 motion reduction — but EXEMPT functional progress indicators
+   * (spinners/pulses/pings). Loading affordances stay animated regardless of
+   * user motion preference; only decorative animations stop. */
+  html.motion-reduce *:not(.animate-spin):not(.animate-pulse):not(.animate-ping) {
+    /* biome-ignore lint/complexity/noImportantStyles: must defeat component-level animation duration — standard WCAG 2.3.3 / prefers-reduced-motion override */
+    animation-duration: 0.001ms !important;
+    /* biome-ignore lint/complexity/noImportantStyles: must defeat component-level transition duration — standard WCAG 2.3.3 / prefers-reduced-motion override */
+    transition-duration: 0.001ms !important;
+    /* biome-ignore lint/complexity/noImportantStyles: must defeat anchor scroll smoothing — standard WCAG 2.3.3 / prefers-reduced-motion override */
+    scroll-behavior: auto !important;
+  }
+
+  /* User-supplied background/foreground overrides — opt-in via inline CSS vars on <html>. Affects body only; component cards (bg-card) keep semantic token chroma. */
+  html[style*="--user-background"] body {
+    background-color: var(--user-background);
+  }
+  html[style*="--user-foreground"] body {
+    color: var(--user-foreground);
+  }
+
+  /* User-supplied font family stacks are now owned by @nebutra/ui fonts.css,
+     which resolves var(--user-ui-font, var(--font-sans)), var(--font-cjk) (and
+     the code equivalent) in one unlayered rule — so the user override, the
+     theme/DESIGN font, and the CJK fallback all compose with correct
+     precedence. The previous @layer base rules here were shadowed by that
+     unlayered rule and dropped the CJK fallback, so they are removed. */
+
+  /* Pointer cursor on interactive elements when user opts in. */
+  html.cursor-pointer-interactive button:not(:disabled),
+  html.cursor-pointer-interactive [role="button"]:not([aria-disabled="true"]),
+  html.cursor-pointer-interactive a[href] {
+    cursor: pointer;
+  }
+
+  /* macOS-style font smoothing opt-in (body already sets antialiased by default; this scopes the toggle for consistency). */
+  html.font-smoothing-mac body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Diff line markers — when user prefers +/- glyphs, render the data-diff-glyph attr as a leading pseudo. Consumers opt in via [data-diff-line][data-diff-glyph]. */
+  html.diff-markers-plusminus [data-diff-line]::before {
+    content: attr(data-diff-glyph);
+    margin-right: 0.5ch;
+    font-weight: 600;
+  }
+  html:not(.diff-markers-plusminus) [data-diff-line]::before {
+    content: "";
+  }
+
+  /* react-colorful — restyle to match the design system: full-width saturation
+     square + hue bar with token radii and a clean pointer ring. */
+  .appearance-color-picker.react-colorful {
+    width: 100%;
+    height: 9rem;
+    gap: 0.5rem;
+  }
+  .appearance-color-picker .react-colorful__saturation {
+    border-radius: var(--radius-md);
+    border-bottom: none;
+  }
+  .appearance-color-picker .react-colorful__hue {
+    height: 0.75rem;
+    border-radius: var(--radius-full);
+  }
+  .appearance-color-picker .react-colorful__pointer {
+    width: 1rem;
+    height: 1rem;
+    border-width: 2px;
+    border-color: #fff;
+    box-shadow: 0 0 0 1px hsl(var(--border));
+  }
+}

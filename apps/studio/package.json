@@ -1,0 +1,28 @@
+{
+  "name": "@nebutra/studio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "blog:publish": "node scripts/publish-blog-post.mjs",
+    "deploy": "sanity deploy",
+    "start": "sanity start"
+  },
+  "dependencies": {
+    "@sanity/client": "^7.16.0",
+    "@sanity/vision": "^5.25.1",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "remark": "^15.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-math": "^6.0.0",
+    "sanity": "^5.25.1",
+    "styled-components": "^6.3.11"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "typescript": "catalog:"
+  },
+  "license": "AGPL-3.0-only"
+}

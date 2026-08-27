@@ -1,0 +1,136 @@
+---
+title: 账单概览
+description: Nebutra 账单系统的工作原理 — Stripe 订阅、计划同步与配额执行。
+---
+
+## 架构
+
+Nebutra 的账单流水线由三层协同工作，根据计划控制访问权限并实时执行使用配额。
+
+```
+用户
+ └─▶ Stripe 结账
+       └─▶ Stripe 发送 webhook
+             └─▶ /api/v1/webhooks/stripe
+                   └─▶ 数据库计划更新（租户记录）
+                         └─▶ @nebutra/metering 执行配额限制
+```
+
+所有 Stripe 集成代码位于 `packages/commerce/billing/`。应用代码调用 `@nebutra/billing` 中的辅助函数——不直接使用 Stripe SDK。
+
+## 计划
+
+<CardGroup cols={3}>
+  <Card title="FREE" icon="gift">
+    **$0 / 月**
+
+    - 1,000 次 API 调用 / 月
+    - 1 个组织成员
+    - 社区支持
+  </Card>
+  <Card title="PRO" icon="zap">
+    **$49 / 月**
+
+    - 100,000 次 API 调用 / 月
+    - 10 个组织成员
+    - 邮件支持
+    - 解锁所有功能
+  </Card>
+  <Card title="ENTERPRISE" icon="building">
+    **自定义定价**
+
+    - 无限次 API 调用
+    - 无限成员
+    - SSO / SAML
+    - SLA 保证
+    - 自定义合同
+  </Card>
+</CardGroup>
+
+## 计划同步原理
+
+<Steps>
+  <Step title="用户完成 Stripe 结账">
+    用户被重定向至 Stripe 托管的结账页面。支付成功后，Stripe 触发 `checkout.session.completed` 事件。
+  </Step>
+  <Step title="接收并验证 Webhook">
+    API 网关端点 `POST /api/v1/webhooks/stripe` 接收事件，使用 `STRIPE_WEBHOOK_SECRET` 验证签名，并将事件路由到 `@nebutra/billing` 中对应的处理程序。
+  </Step>
+  <Step title="租户计划记录更新">
+    处理程序更新数据库中租户的 `plan` 和 `planExpiresAt` 字段，使 Stripe 订阅状态与本地保持同步。
+  </Step>
+  <Step title="配额执行生效">
+    此后每次 API 请求时，`@nebutra/metering` 从数据库读取租户当前计划的限额，并与 ClickHouse 中累积的用量进行比较。超出配额的请求将收到 `429 Too Many Requests` 响应。
+  </Step>
+</Steps>
+
+## Stripe 配置位置
+
+| 位置 | 用途 |
+|------|------|
+| `packages/commerce/billing/src/stripe.ts` | Stripe 客户端初始化 |
+| `packages/commerce/billing/src/plans.ts` | 计划定义和限额常量 |
+| `packages/commerce/billing/src/handlers/` | Webhook 事件处理程序 |
+| `packages/commerce/billing/src/checkout.ts` | 结账会话创建辅助函数 |
+| `packages/commerce/billing/src/portal.ts` | Stripe 客户门户会话辅助函数 |
+
+## 环境变量
+
+在 `.env` 文件（或部署平台的密钥管理器）中设置以下变量：
+
+```bash
+# Stripe 密钥 — 开发环境使用 sk_test_，生产环境使用 sk_live_
+STRIPE_SECRET_KEY=sk_live_xxxxxxxxxxxxxxxxxxxx
+
+# Webhook 签名密钥 — 从 Stripe Dashboard 或 Stripe CLI 获取
+STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxx
+
+# 前端可公开使用的发布密钥
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_xxxxxxxxxxxxxxxxxxxx
+
+# 各付费计划的价格 ID（从 Stripe Dashboard → Products → Prices 获取）
+STRIPE_PRO_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
+STRIPE_ENTERPRISE_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
+```
+
+<Warning>
+切勿将真实的 Stripe 密钥提交到源代码仓库。本地开发请使用 `.env.local`，生产部署请通过 CI/CD 环境注入密钥。
+</Warning>
+
+## Stripe Dashboard 配置
+
+<Steps>
+  <Step title="创建 Stripe 账户">
+    在 [stripe.com](https://stripe.com) 注册并激活账户。
+  </Step>
+  <Step title="创建产品和价格">
+    进入 **Stripe Dashboard → Products → Add product**。分别为 PRO（$49/月循环计费）和 ENTERPRISE（自定义）创建产品，并将价格 ID 填入环境变量。
+  </Step>
+  <Step title="注册 Webhook 端点">
+    进入 **Developers → Webhooks → Add endpoint**，将 URL 设为 `https://api.yourdomain.com/api/v1/webhooks/stripe`，并选择 [Webhooks](/zh/payments/webhooks) 页面中列出的事件。
+  </Step>
+  <Step title="复制 Webhook 签名密钥">
+    创建端点后，展开并复制 **Signing secret**（`whsec_...`），填入 `STRIPE_WEBHOOK_SECRET`。
+  </Step>
+</Steps>
+
+<Tip>
+本地开发时，使用 [Stripe CLI](https://stripe.com/docs/stripe-cli) 将实时事件转发到本地服务器，无需配置公开端点。
+</Tip>
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="管理计划" icon="sliders" href="/zh/payments/manage-plans">
+    定义计划限额并添加新的账单层级。
+  </Card>
+  <Card title="订阅" icon="refresh-cw" href="/zh/payments/subscriptions">
+    结账流程、订阅状态与试用期。
+  </Card>
+  <Card title="付费墙" icon="lock" href="/zh/payments/paywall">
+    按计划限制功能和 API 路由的访问。
+  </Card>
+  <Card title="Webhooks" icon="webhook" href="/zh/payments/webhooks">
+    可靠地处理 Stripe Webhook 事件。
+  </Card>
+</CardGroup>

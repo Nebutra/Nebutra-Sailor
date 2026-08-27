@@ -1,0 +1,121 @@
+---
+title: 配置概览
+description: Nebutra-Sailor 如何管理运行时配置——启动时验证、三类变量分类，以及各环境中变量的设置位置。
+---
+
+## 配置的工作原理
+
+Nebutra-Sailor 在应用启动时通过 `@nebutra/config` 包对每个环境变量进行验证。如果某个**必填**变量缺失或格式错误，进程会立即退出，并输出清晰的错误信息，明确指出有问题的变量名——不存在静默回退。
+
+```
+Error: [config] Missing required environment variable: DATABASE_URL
+  at validateConfig (packages/platform/config/src/index.ts:42)
+```
+
+这种快速失败的模式确保部署问题在数秒内暴露，而不是在生产环境运行数小时后才出现运行时错误。
+
+验证的唯一来源位于 `packages/platform/config/src/index.ts`。每个应用都从此包导入，因此配置变更会自动同步到所有应用。
+
+## 三类变量
+
+<Tabs>
+  <Tab title="必填">
+    缺少这些变量时，**应用将无法启动**。它们涵盖核心基础设施：数据库连接、身份验证提供商、支付处理器和事务性邮件。
+
+    完整列表请参见[环境变量](/zh/configuration/environment-variables)。
+  </Tab>
+  <Tab title="可选">
+    这些变量提供合理的默认值，可用于本地开发。在生产环境中，应使用真实的服务凭据覆盖它们。
+
+    示例包括：存储提供商选择、AI 模型密钥、Redis URL 和分析令牌。
+  </Tab>
+  <Tab title="功能开关">
+    布尔型开关（如 `FEATURE_AI_CHAT=true`），无需修改代码即可启用或禁用整个产品功能。每个开关若未设置则默认为 `false`。
+
+    完整列表请参见[功能开关](/zh/configuration/feature-flags)。
+  </Tab>
+</Tabs>
+
+## 变量的设置位置
+
+<Steps>
+  <Step title="本地开发 — .env.local">
+    在仓库根目录（或各应用目录）创建 `.env.local` 文件。该文件默认已被 gitignore。
+
+    ```bash
+    cp .env.example .env.local
+    # 填入您的值
+    ```
+
+    <Warning>
+      切勿将 `.env`、`.env.local` 或任何包含真实密钥的文件提交到 git。仓库的 `.gitignore` 已排除这些文件，但每次提交前请务必再次确认。
+    </Warning>
+  </Step>
+  <Step title="预览部署 — Vercel 控制台">
+    打开您的 Vercel 项目 → **Settings** → **Environment Variables**。为 **Preview** 环境设置变量。Vercel 会自动将其注入到每次预览部署中。
+  </Step>
+  <Step title="生产环境 — Vercel 控制台">
+    位置与上述相同，但请选择 **Production** 环境。生产环境变量与预览和开发环境隔离。
+
+    <Tip>
+      利用 Vercel 的环境继承：在**所有环境**上设置一次变量，然后仅覆盖各环境中不同的值。这样可以减少重复配置。
+    </Tip>
+  </Step>
+  <Step title="自托管 / Docker">
+    通过 Docker Compose env 文件或 Kubernetes Secret 传入变量：
+
+    ```yaml docker-compose.yml
+    services:
+      web:
+        env_file:
+          - .env.production
+    ```
+
+    或直接注入：
+
+    ```bash
+    docker run --env-file .env.production nebutra/web:latest
+    ```
+  </Step>
+</Steps>
+
+## 生成密钥
+
+对于需要加密随机值的密钥（如 `CLERK_WEBHOOK_SECRET`、签名密钥）：
+
+```bash
+openssl rand -base64 32
+```
+
+请勿在不同环境中复用同一密钥。
+
+## Vercel 环境继承
+
+Vercel 按以下优先级顺序评估环境变量：
+
+1. **Production** — 仅用于 `main` 分支部署
+2. **Preview** — 用于所有非 `main` 分支的部署
+3. **Development** — 在本地运行 `vercel dev` 时
+
+在**所有环境**上定义的变量适用于这三者，除非某个更具体的环境对其进行了覆盖。
+
+<Info>
+  以 `NEXT_PUBLIC_` 为前缀的变量会在构建时嵌入到客户端包中，对终端用户可见。切勿在 `NEXT_PUBLIC_` 变量中存放密钥。
+</Info>
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="环境变量" icon="key" href="/zh/configuration/environment-variables">
+    所有变量名、必填级别、默认值和用途的完整参考表。
+  </Card>
+  <Card title="功能开关" icon="toggle-on" href="/zh/configuration/feature-flags">
+    无需修改代码，即可按环境启用或禁用产品功能。
+  </Card>
+  <Card title="部署" icon="rocket" href="/zh/deployment/overview">
+    如何将 Nebutra-Sailor 部署到 Vercel、Railway 和自托管 Docker。
+  </Card>
+  <Card title="故障排除" icon="wrench" href="/zh/troubleshooting/overview">
+    常见启动错误及其解决方法。
+  </Card>
+</CardGroup>

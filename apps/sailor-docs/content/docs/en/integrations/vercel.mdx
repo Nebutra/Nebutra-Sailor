@@ -1,0 +1,139 @@
+---
+title: Vercel
+description: Deploy the Nebutra marketing surface to Vercel and keep app/API/docs origins on the appropriate runtime boundary.
+---
+
+## Overview
+
+Nebutra uses Vercel where it is the best runtime boundary: the public marketing
+site, product docs, preview deployments, and content surfaces. Stateful app/API
+origins can run separately on ECS when regional control, network policy, or
+origin ownership matters.
+
+## Deploy from the monorepo
+
+Vercel-hosted apps are deployed as separate projects:
+
+| App | Project name |
+|-----|-------------|
+| `apps/landing` | `nebutra-landing` |
+| `apps/sailor-docs` | `docs` |
+| `apps/studio` | `nebutra-studio` |
+
+`apps/sailor-docs` powers **`https://docs.nebutra.com`** via Git → Vercel
+(project-specific CNAME, DNS-only). `https://nebutra.com/docs` still 308s to
+the docs host for back-compat.
+
+### Link each app
+
+```bash
+cd apps/landing
+vercel link
+
+cd ../web
+vercel link
+
+# Repeat for each app
+```
+
+### Set environment variables
+
+```bash
+# Pull env vars for local development
+vercel env pull .env.local
+
+# Add a new env var
+vercel env add DATABASE_URL production
+```
+
+## Turborepo remote cache
+
+Enable shared build cache across CI and local machines:
+
+```bash
+npx turbo link
+```
+
+This uses your Vercel account as the remote cache backend — cache misses are eliminated across the team.
+
+## Environment variables
+
+Vercel-hosted **landing / docs** rarely need full auth secrets. If you host web
+or auth on Vercel as an optional cutover, mirror the same Better Auth contract
+used on ECS:
+
+```bash
+# Auth (production default = Better Auth auth-center)
+AUTH_PROVIDER=better-auth
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
+BETTER_AUTH_SECRET=...
+BETTER_AUTH_URL=https://auth.nebutra.com
+NEXT_PUBLIC_AUTH_URL=https://auth.nebutra.com
+AUTH_COOKIE_DOMAIN=.nebutra.com
+
+# Optional: Clerk provider instead
+# AUTH_PROVIDER=clerk
+# NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_...
+# CLERK_SECRET_KEY=sk_live_...
+# CLERK_WEBHOOK_SECRET=whsec_...
+
+# Database
+DATABASE_URL=postgresql://...
+
+# Stripe
+STRIPE_SECRET_KEY=sk_live_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+
+# Email
+RESEND_API_KEY=re_...
+
+# Redis
+UPSTASH_REDIS_REST_URL=https://...
+UPSTASH_REDIS_REST_TOKEN=...
+
+# Error tracking
+SENTRY_DSN=https://...
+
+# Internal S2S
+SERVICE_SECRET=... # HS256 for x-service-token
+```
+
+## Preview deployments
+
+Every pull request gets an automatic preview URL. Vercel automatically sets the correct `VERCEL_URL` so API calls work in preview environments.
+
+## Vercel WAF
+
+The WAF is enabled by default for all Nebutra deployments. Custom rules are configured in `vercel.json`:
+
+```json
+{
+  "firewall": {
+    "rules": [
+      {
+        "name": "Block API abuse",
+        "active": true,
+        "condition": {
+          "op": "and",
+          "conditions": [
+            { "type": "path", "op": "pre", "value": "/api/" },
+            { "type": "rate_limit", "requests": 100, "window": 60 }
+          ]
+        },
+        "action": "challenge"
+      }
+    ]
+  }
+}
+```
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Rate Limits" icon="gauge" href="/guides/rate-limits">
+    API quotas and rate limit configuration.
+  </Card>
+  <Card title="API Overview" icon="code" href="/api-reference/overview">
+    API base URL and conventions.
+  </Card>
+</CardGroup>

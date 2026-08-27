@@ -1,0 +1,13 @@
+[project]
+name = "{PRODUCT_NAME}-python-backends"
+version = "0.1.0"
+description = "Python backends for {PRODUCT_NAME} — batch / ML / specialized only."
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115.0",
+  "uvicorn[standard]>=0.32.0",
+  "pydantic>=2.9.0",
+]
+
+[tool.uv.workspace]
+members = ["_shared", "*"]

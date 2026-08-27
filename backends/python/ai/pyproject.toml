@@ -1,0 +1,79 @@
+[project]
+name = "nebutra-ai-service"
+version = "0.1.0"
+description = "Nebutra AI microservice"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "pydantic>=2.10.0",
+    "pydantic-settings>=2.6.0",
+    "openai>=1.57.0",
+    "litellm>=1.55.0",
+    "httpx>=0.28.0",
+    "celery[redis]>=5.5.0",
+    "redis>=5.2.0",
+    "python-dotenv>=1.0.0",
+    "structlog>=24.4.0",
+    "opentelemetry-api>=1.27.0",
+    "opentelemetry-sdk>=1.27.0",
+    "opentelemetry-exporter-otlp-proto-grpc>=1.27.0",
+    "opentelemetry-instrumentation-fastapi>=0.48b0",
+    "e2b-code-interpreter>=1.0.0",
+    "tenacity>=9.1",
+    "asyncpg>=0.31.0",
+    "pyjwt>=2.13.0",
+    "boto3>=1.43.22",
+    "oss2>=2.19.1",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=5.0.0",
+    "httpx>=0.28.0",       # async test client for FastAPI
+    "anyio>=4.0.0",        # asyncio backend for pytest-asyncio
+    "ruff>=0.8.0",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = "--cov=app --cov=services --cov-report=term-missing --cov-fail-under=70"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app", "providers", "services"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "N",   # pep8-naming
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "S",   # flake8-bandit (security)
+    "RUF", # ruff-specific rules
+]
+ignore = [
+    "S101",  # assert statements OK in tests
+    "S603",  # subprocess call — needed for service scripts
+    "S607",  # partial executable path OK
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["_shared"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"

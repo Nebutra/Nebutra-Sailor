@@ -1,0 +1,41 @@
+{
+  "name": "@nebutra/china-compliance",
+  "version": "0.1.0",
+  "private": true,
+  "description": "China-market compliance utilities for Nebutra SaaS — ICP filing, region detection, WeChat OAuth scaffolding.",
+  "type": "module",
+  "nebutra": {
+    "status": "foundation",
+    "productionReady": false,
+    "requires": [
+      "NEXT_PUBLIC_ICP_NUMBER (mainland landing pages)",
+      "NEXT_PUBLIC_PUBLIC_SECURITY_RECORD (optional 公安备案)",
+      "NEXT_PUBLIC_WECHAT_APP_ID + WECHAT_APP_SECRET (WeChat OAuth)",
+      "NEBUTRA_REGION or NEXT_PUBLIC_REGION"
+    ],
+    "gaps": [
+      "WeChat OAuth callback / token exchange not implemented",
+      "Aliyun SMS / Alipay / WeChat Pay adapters scaffolded only",
+      "ICP record validation is a regex stub — real CAC lookup not wired"
+    ]
+  },
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./icp": "./src/icp.ts",
+    "./region": "./src/region.ts",
+    "./wechat": "./src/wechat.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^22.19.15",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "license": "AGPL-3.0-only"
+}

@@ -1,0 +1,80 @@
+---
+title: 邮件测试
+description: 使用无密钥契约测试、本地预览校验和 Resend 测试投递验证 @nebutra/email。
+---
+
+邮件改动按三层验证：包契约、本地预览产物、安全的 provider 投递。
+
+<Warning>
+测试和 CI 环境不要发送真实邮件。包测试和预览校验不需要 `RESEND_API_KEY`。
+</Warning>
+
+## 包契约
+
+修改发送函数、目录项、预览文件名或 import-time 行为后运行：
+
+```bash
+pnpm --filter @nebutra/email test
+pnpm --filter @nebutra/email typecheck
+```
+
+契约测试会确认每个 `EMAIL_TEMPLATE_CATALOG` 项都有公开发送函数和对应预览产物。
+
+## 本地预览产物
+
+使用专门的 preview 工作区：
+
+```bash
+pnpm mail:check
+pnpm mail:export
+```
+
+`mail:check` 会在目录项缺少 `apps/mail-preview/dist` 产物时失败。
+`mail:export` 会根据包目录重新生成 `dist/index.html` 和
+`dist/preview-manifest.json`。
+
+## Resend 测试投递
+
+Resend test key 接受 API 调用并记录日志，但不会投递到真实收件箱。
+
+```bash
+# .env.local — 不要提交
+RESEND_API_KEY=re_test_...
+EMAIL_FROM=Nebutra <noreply@nebutra.com>
+```
+
+```typescript
+import { sendMagicLinkEmail } from "@nebutra/email";
+
+await sendMagicLinkEmail({
+  to: "delivered@resend.dev",
+  magicLinkUrl: "https://app.nebutra.com/login/magic-link/test",
+});
+```
+
+<Tip>
+`delivered@resend.dev` 是 Resend 提供的成功投递测试地址。
+</Tip>
+
+## CI 清单
+
+- [ ] `pnpm --filter @nebutra/email test`
+- [ ] `pnpm --filter @nebutra/email typecheck`
+- [ ] `pnpm mail:check`
+- [ ] 预览索引或 manifest 有意义时运行 `pnpm mail:export`
+- [ ] 生产投递使用已验证域名和生产 key
+
+<CardGroup cols={2}>
+  <Card title="Templates" icon="layout-template" href="/email/templates">
+    Catalog ID 与必填参数示例
+  </Card>
+  <Card title="Providers" icon="server" href="/email/providers">
+    Resend 配置和域名验证
+  </Card>
+  <Card title="Email Overview" icon="mail" href="/email/overview">
+    包架构和预览流程
+  </Card>
+  <Card title="Guides" icon="book" href="/guides">
+    通用开发指南
+  </Card>
+</CardGroup>

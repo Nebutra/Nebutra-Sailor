@@ -1,0 +1,32 @@
+/**
+ * Router — design-system consumption via SSOT package entry.
+ * Market shell ambient tuned for API-supermarket density (302-class midstream).
+ */
+@import "@nebutra/ui/styles/preset.css";
+@import "../styles/market-shell.css";
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-feature-settings:
+    "ss01" on,
+    "cv11" on;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+::selection {
+  background: color-mix(in srgb, hsl(var(--primary)) 28%, transparent);
+}

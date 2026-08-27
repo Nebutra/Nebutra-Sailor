@@ -1,0 +1,156 @@
+name: Ops — Cloud VM triage
+
+# Answers one question: why does a deploy SSH session to the Cloud VM connect
+# and then die without printing anything?
+#
+# On 2026-08-19 the box answered ping, opened 22/80/443, returned an SSH banner
+# and served a 301 on :80 — while the TLS handshake on :443 never completed and
+# the deploy's cleanup step produced zero output for two minutes before
+# `Connection closed by <host> port 22`, exit 255. Everything that accepts a
+# connection works; everything that has to fork a shell or finish a handshake
+# does not. That shape is a full disk or exhausted memory, and the cleanup that
+# would fix it is exactly what cannot run.
+#
+# Read-only. Hard timeouts on both the SSH client and the job, so a wedged host
+# reports a wedged host instead of hanging for six hours.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ops-vm-triage
+  cancel-in-progress: true
+
+jobs:
+  triage:
+    name: Probe the Cloud VM
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      ECS_HOST: ${{ vars.VM_HOST || vars.CLOUD_VM_HOST || vars.ECS_HOST }}
+      ECS_USER: ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
+      ECS_SSH_PORT: ${{ vars.VM_SSH_PORT || vars.CLOUD_VM_SSH_PORT || vars.ECS_SSH_PORT || '22' }}
+    steps:
+      - name: Reachability (no credentials needed)
+        run: |
+          set -uo pipefail
+          [ -n "${ECS_HOST:-}" ] || { echo "::error::VM_HOST / CLOUD_VM_HOST / ECS_HOST is not set"; exit 1; }
+          echo "host: $ECS_HOST"
+          ping -c 3 -W 3 "$ECS_HOST" || echo "(ping blocked or filtered — not conclusive)"
+          for p in "$ECS_SSH_PORT" 80 443; do
+            if timeout 8 bash -c "cat < /dev/null > /dev/tcp/$ECS_HOST/$p" 2>/dev/null; then
+              echo "port $p: open"
+            else
+              echo "port $p: closed or filtered"
+            fi
+          done
+          echo "--- ssh banner ---"
+          timeout 8 bash -c "exec 3<>/dev/tcp/$ECS_HOST/$ECS_SSH_PORT; head -c 64 <&3" || echo "(no banner)"
+          echo
+          echo "--- :443 TLS handshake ---"
+          curl -sk -o /dev/null --max-time 20 \
+            -w 'http=%{http_code} tls=%{time_appconnect}s total=%{time_total}s\n' \
+            "https://$ECS_HOST/" || echo "(handshake failed — exit $?)"
+
+      - name: Prepare SSH
+        env:
+          SSH_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.CLOUD_VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VM_SSH_KNOWN_HOSTS || secrets.CLOUD_VM_SSH_KNOWN_HOSTS || secrets.ECS_SSH_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          [ -n "${SSH_KEY:-}" ]     || { echo "::error::no VM SSH private key secret is set"; exit 1; }
+          [ -n "${KNOWN_HOSTS:-}" ] || { echo "::error::no VM SSH known-hosts secret is set"; exit 1; }
+          mkdir -p ~/.ssh
+          umask 077
+          printf '%s\n' "$SSH_KEY"     > ~/.ssh/id_deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_deploy ~/.ssh/known_hosts
+
+      - name: Ask the host what is full
+        run: |
+          set -uo pipefail
+          # Each probe is its own session with its own deadline: if the shell
+          # cannot fork, one hanging command must not eat the whole budget.
+          probe() {
+            echo "── $1"
+            timeout 25 ssh -i ~/.ssh/id_deploy \
+              -o BatchMode=yes -o ConnectTimeout=10 -o ServerAliveInterval=5 \
+              -o ServerAliveCountMax=2 -p "$ECS_SSH_PORT" \
+              "$ECS_USER@$ECS_HOST" "$2" \
+              || echo "  (no answer — exit $?; a wedged host fails here)"
+          }
+          probe "disk"        "df -h"
+          probe "inodes"      "df -i"
+          probe "memory"      "free -m || cat /proc/meminfo | head -5"
+          probe "load"        "uptime"
+          # Two removals are worth ~1.4 GB and both are blocked by a safety
+          # check, correctly. Deciding whether to lift either needs to know what
+          # is actually running, not what the repo thinks is running.
+          probe "pm2 processes" \
+                "pm2 jlist 2>/dev/null | node -e \"let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{for(const p of JSON.parse(d))console.log([p.name,p.pm2_env?.status,'restarts='+p.pm2_env?.restart_time,'port='+(p.pm2_env?.env?.PORT||'?'),'cwd='+(p.pm2_env?.pm_cwd||'?')].join('  '))}catch(e){console.log('(pm2 jlist unreadable)')}})\" || echo '(pm2 not available)'"
+          probe "who listens where" "ss -ltnp 2>/dev/null | head -20 || netstat -ltnp 2>/dev/null | head -20"
+          probe "nginx upstreams" \
+                "grep -rhoE 'proxy_pass[[:space:]]+http://[^;]+|server_name[[:space:]]+[^;]+' /etc/nginx/conf.d /etc/nginx/sites-enabled 2>/dev/null | sort -u | head -30"
+          probe "docker containers" \
+                "docker ps -a --format '{{.Names}}  {{.Image}}  {{.Status}}' 2>/dev/null || echo '(docker not available)'"
+          probe "docker disk"  "docker system df 2>/dev/null || true"
+          # Bounded and given room: the first version asked for depth 2 over the
+          # whole deploy root in 25s and timed out, which told us nothing.
+          probe_slow() {
+            echo "── $1"
+            timeout 180 ssh -i ~/.ssh/id_deploy \
+              -o BatchMode=yes -o ConnectTimeout=10 -o ServerAliveInterval=15 \
+              -o ServerAliveCountMax=8 -p "$ECS_SSH_PORT" \
+              "$ECS_USER@$ECS_HOST" "$2" \
+              || echo "  (no answer — exit $?)"
+          }
+          probe_slow "top-level of /" "du -xh --max-depth=1 / 2>/dev/null | sort -rh | head -12"
+          probe_slow "deploy root, one level" \
+                "du -xh --max-depth=1 ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }} 2>/dev/null | sort -rh | head -14"
+          probe_slow "releases per app" \
+                "for d in ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}/*/releases; do [ -d \"\$d\" ] && echo \"\$d: \$(ls -1 \"\$d\" | wc -l) release(s), \$(du -xsh \"\$d\" 2>/dev/null | cut -f1)\"; done"
+          # The two apps that own two thirds of the deploy root are already
+          # "optimised" — landing/sailor-docs ship Next standalone, api ships
+          # `pnpm deploy --prod`. So the size is the dependencies themselves,
+          # and the only useful question is which ones.
+          # sailor-docs: 2.0 GB of its 2.2 GB is .next, not dependencies. Next's
+          # build cache lives there and has no business on a runtime host.
+          # sailor-docs holds 2.0 GB in .next/server — not cache, not
+          # node_modules. A docs site's server output should be a few hundred
+          # MB at most, so the question is what kind of file it is: one huge
+          # artefact, or many.
+          probe_slow "sailor-docs .next/server, one level" \
+                "du -xh --max-depth=1 ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}/sailor-docs/releases/*/apps/sailor-docs/.next/server 2>/dev/null | sort -rh | head -12"
+          probe_slow "sailor-docs: 12 biggest files" \
+                "find ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}/sailor-docs/releases/*/apps/sailor-docs/.next/server -type f -printf '%s %p\n' 2>/dev/null | sort -rn | head -12 | awk '{printf \"%8.1f MB  %s\\n\", \$1/1048576, \$2}'"
+          probe_slow "sailor-docs: file count and extensions" \
+                "find ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}/sailor-docs/releases/*/apps/sailor-docs/.next/server -type f 2>/dev/null | sed 's/.*\\.//' | sort | uniq -c | sort -rn | head -10"
+          probe_slow "inside sailor-docs/.next" \
+                "du -xh --max-depth=1 ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}/sailor-docs/releases/*/apps/sailor-docs/.next 2>/dev/null | sort -rh | head -10"
+          # api: everything is in .pnpm, and nothing listed at depth 3 was big,
+          # so the weight is one level further in.
+          probe_slow "api's largest packages" \
+                "du -xh --max-depth=1 ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}/api/releases/*/node_modules/.pnpm 2>/dev/null | sort -rh | head -16"
+          probe_slow "inside api" \
+                "du -xh --max-depth=3 ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}/api/releases 2>/dev/null | sort -rh | head -18"
+          probe_slow "inside sailor-docs" \
+                "du -xh --max-depth=4 ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}/sailor-docs/releases 2>/dev/null | sort -rh | head -18"
+          probe_slow "caches worth reclaiming" \
+                "du -xsh /root/.cache /root/.npm /root/.local/share/pnpm /var/log /var/lib/docker /tmp 2>/dev/null; journalctl --disk-usage 2>/dev/null"
+          probe "oom kills"   "dmesg -T 2>/dev/null | grep -i -m5 'out of memory' || echo none"
+
+
+      - name: What to do with the answer
+        if: always()
+        run: |
+          {
+            echo "## Cloud VM triage"
+            echo "- Host: \`$ECS_HOST\`"
+            echo "- If every probe printed '(no answer)', the box accepts TCP but cannot fork a shell."
+            echo "  Nothing in CI can fix that; it needs the provider console (VNC) to free space or reboot."
+            echo "- If \`df\` answered and / is at 100%, the deploy's own pre-flight cleanup is the fix —"
+            echo "  it just needs enough headroom to start. Free a few hundred MB by hand, then re-run Deploy to Cloud VM."
+          } >> "$GITHUB_STEP_SUMMARY"

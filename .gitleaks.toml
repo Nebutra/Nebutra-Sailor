@@ -1,0 +1,26 @@
+# Gitleaks configuration
+# https://github.com/gitleaks/gitleaks
+
+title = "Nebutra-Sailor gitleaks config"
+
+[allowlist]
+  description = "Global allowlist"
+
+  paths = [
+    '''\.env\.example$''',
+    '''pnpm-lock\.yaml$''',
+    '''node_modules/''',
+    '''__tests__/fixtures/''',
+    '''test/fixtures/''',
+    '''tests/fixtures/''',
+  ]
+
+  # Placeholder / stub connection strings used as CI build & Lighthouse fallbacks.
+  # These carry literal "stub" credentials against localhost — never real secrets
+  # (see #166: CI fallback surfaces in ci.yml, lighthouse-dashboard.yml,
+  # scripts/lighthouse/ci-dashboard-compare.sh). Allowlisted so delta/consistency
+  # sweeps stop flagging them.
+  regexes = [
+    '''(?i)(?:postgres(?:ql)?|mysql|mongodb(?:\+srv)?|redis|amqp)://stub:stub@''',
+    '''stub:stub@localhost''',
+  ]

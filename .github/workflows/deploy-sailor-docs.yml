@@ -1,0 +1,252 @@
+name: Deploy Sailor Docs
+
+# Dual-path production deploy for apps/sailor-docs (docs.nebutra.com):
+#
+# - vercel: CLI re-trigger (Hobby plan caps at ~100 deploys/day)
+# - cloudflare-workers: OpenNext → Worker + Assets (same pattern as typelens)
+#
+# Push path follows vars.DEPLOY_TARGET_SAILOR_DOCS:
+#   vercel | "" → Vercel job
+#   cloudflare-workers | cloudflare-pages → Cloudflare job
+# workflow_dispatch can force both / cloudflare / vercel.
+#
+# Cloudflare token: CLOUDFLARE_API_TOKEN, with CLOUDFLARE_WORKERS_API_TOKEN as a
+# legacy fallback. The order used to be reversed, so a token left behind on
+# 2026-08-05 silently outranked the one rotated on 2026-08-19 and every deploy
+# authenticated as the stale one — typelens worked only because it never read
+# the second name. Two secrets for one credential, resolved by a precedence
+# rule nobody sees, is the whole failure.
+# must include Workers Scripts Edit (preflight probes assets-upload-session).
+# See docs/ops/cloudflare-ci-token.md. Until token is fixed, set
+# DEPLOY_TARGET_SAILOR_DOCS=vercel so push deploys stay healthy.
+#
+# Historical note: old monorepo Workers builds could exceed script size; modern
+# OpenNext keeps handler thin and static under ASSETS. If CF deploy fails on
+# size, fall back to Vercel after quota reset or ECS emergency.
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Deploy target"
+        required: true
+        default: both
+        type: choice
+        options:
+          - both
+          - cloudflare
+          - vercel
+  push:
+    branches: [main]
+    paths:
+      - "apps/sailor-docs/**"
+      - "packages/design/ui/**"
+      - "packages/design/brand/**"
+      - "packages/design/icons/**"
+      - "packages/design/tokens/**"
+      - "pnpm-lock.yaml"
+      - "apps/sailor-docs/vercel.json"
+      - "apps/sailor-docs/wrangler.jsonc"
+      - "apps/sailor-docs/open-next.config.ts"
+      - ".github/workflows/deploy-sailor-docs.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-sailor-docs-production
+  cancel-in-progress: true
+
+jobs:
+  vercel:
+    name: Trigger Vercel production
+    runs-on: ubuntu-latest
+    if: >-
+      (github.event_name == 'workflow_dispatch' && (inputs.target == 'vercel' || inputs.target == 'both')) ||
+      (github.event_name == 'push' && (
+        vars.DEPLOY_TARGET_SAILOR_DOCS == 'vercel' ||
+        vars.DEPLOY_TARGET_SAILOR_DOCS == ''
+      ))
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Deploy to Vercel (production)
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_DOCS_PROJECT_ID || vars.VERCEL_DOCS_PROJECT_ID }}
+        run: |
+          set -euo pipefail
+          if [ -z "${VERCEL_TOKEN:-}" ]; then
+            echo "::notice::VERCEL_TOKEN not set — relying on Vercel Git integration only."
+            echo "If docs.nebutra.com is not updating, add VERCEL_TOKEN + VERCEL_DOCS_PROJECT_ID."
+            exit 0
+          fi
+          if [ -z "${VERCEL_PROJECT_ID:-}" ]; then
+            echo "::error::Set VERCEL_DOCS_PROJECT_ID (prj_…) for the docs Vercel project"
+            exit 1
+          fi
+          npm i -g vercel@56.5.0
+          # Link the Vercel project at the monorepo root. The dashboard Root
+          # Directory is already `apps/sailor-docs` — do NOT pass --cwd into
+          # that folder or Vercel doubles the path
+          # (…/apps/sailor-docs/apps/sailor-docs).
+          mkdir -p .vercel
+          cat > .vercel/project.json <<EOF
+          {"projectId":"${VERCEL_PROJECT_ID}","orgId":"${VERCEL_ORG_ID:-}"}
+          EOF
+          # Deploy from monorepo root so turbo filter + pnpm workspace resolve.
+          # --archive=tgz avoids the 15k-file CLI upload limit on this monorepo.
+          set +e
+          out=$(vercel deploy --prod --yes --archive=tgz --token="$VERCEL_TOKEN" \
+            --scope "${VERCEL_ORG_ID:-}" 2>&1)
+          code=$?
+          set -e
+          echo "$out"
+          if [ "$code" -ne 0 ]; then
+            if echo "$out" | grep -qiE 'api-deployments-free-per-day|Resource is limited|try again in 24 hours'; then
+              echo "::warning::Vercel Hobby daily deploy quota exhausted. Prefer Cloudflare Workers job or retry after ~24h."
+              exit 0
+            fi
+            exit "$code"
+          fi
+
+  cloudflare:
+    name: Deploy Cloudflare Worker
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    if: >-
+      (github.event_name == 'workflow_dispatch' && (inputs.target == 'cloudflare' || inputs.target == 'both')) ||
+      (github.event_name == 'push' && (
+        vars.DEPLOY_TARGET_SAILOR_DOCS == 'cloudflare-pages' ||
+        vars.DEPLOY_TARGET_SAILOR_DOCS == 'cloudflare-workers'
+      ))
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version: 22
+
+      # CLOUDFLARE_API_TOKEN first, CLOUDFLARE_WORKERS_API_TOKEN as legacy
+      # fallback. The order was the other way round on the theory that the
+      # general token might be DNS-only — but a stale Workers token outranks a
+      # freshly rotated general one just as easily, which is what happened on
+      # 2026-08-19: the rotated token was correct and every Workers deploy
+      # authenticated as the one from two weeks earlier. Whichever name is
+      # preferred, being preferred is not evidence of being right; prefer the
+      # one the rest of the repo already uses so there is one place to rotate.
+      # See docs/ops/cloudflare-ci-token.md
+      - name: Validate Cloudflare secrets
+        id: cf_secrets
+        env:
+          WORKERS_TOKEN: ${{ secrets.CLOUDFLARE_WORKERS_API_TOKEN }}
+          API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ACCOUNT_ID_SECRET: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          ACCOUNT_ID_VAR: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          TOKEN="${API_TOKEN:-${WORKERS_TOKEN:-}}"
+          if [ -z "$TOKEN" ]; then
+            echo "::error::Set CLOUDFLARE_WORKERS_API_TOKEN or CLOUDFLARE_API_TOKEN (Workers Scripts Edit required). See docs/ops/cloudflare-ci-token.md"
+            exit 1
+          fi
+          ACCOUNT_ID="${ACCOUNT_ID_SECRET:-${ACCOUNT_ID_VAR:-}}"
+          if [ -z "$ACCOUNT_ID" ]; then
+            echo "::error::CLOUDFLARE_ACCOUNT_ID secret/var is not set"
+            exit 1
+          fi
+          # Print which name won. A deploy that fails on auth should not need
+          # someone to read this file to find out which of two secrets it used.
+          if [ -n "${API_TOKEN:-}" ]; then
+            echo "token_source=CLOUDFLARE_API_TOKEN"
+          else
+            echo "token_source=CLOUDFLARE_WORKERS_API_TOKEN (legacy fallback)"
+          fi
+          echo "account_id=$ACCOUNT_ID" >> "$GITHUB_OUTPUT"
+          # Masked echo only of source name for logs
+          echo "Using token source above for Workers deploy + preflight."
+
+      - name: Preflight Workers token (assets-upload-session)
+        env:
+          CLOUDFLARE_WORKERS_API_TOKEN: ${{ secrets.CLOUDFLARE_WORKERS_API_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          if ! bash infra/ops/scripts/verify-cloudflare-ci-token.sh; then
+            echo "::error::Cloudflare token cannot deploy Workers (often error 10000 — missing Workers Scripts Edit)."
+            echo "::error::Fix: docs/ops/cloudflare-ci-token.md — create token from Edit Cloudflare Workers template, then:"
+            echo "::error::  printf '%s' \"\$NEW_TOKEN\" | gh secret set CLOUDFLARE_API_TOKEN -R Nebutra/Nebutra-Sailor"
+            echo "::error::Temporary path: gh variable set DEPLOY_TARGET_SAILOR_DOCS --body vercel && re-run with target=vercel"
+            exit 1
+          fi
+
+      # Workspace packages export dist/ (gitignored). Build transitive deps so
+      # Next can resolve @nebutra/brand, @nebutra/ui, icons, tokens, etc.
+      - name: Build workspace dependencies
+        run: pnpm turbo build --filter="@nebutra/sailor-docs^..."
+
+      - name: Build OpenNext worker
+        working-directory: apps/sailor-docs
+        env:
+          OPEN_NEXT_BUILD: "true"
+          CI: "true"
+          NEXT_PUBLIC_DOCS_ORIGIN_URL: https://docs.nebutra.com
+        run: pnpm exec opennextjs-cloudflare build
+
+      - name: Deploy Worker
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
+        with:
+          # Workers-scoped token first; general API token as fallback.
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFLARE_WORKERS_API_TOKEN }}
+          # Secret preferred; vars fallback if secret is empty/stale.
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: apps/sailor-docs
+          command: deploy --config wrangler.jsonc
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Point docs DNS at Worker (proxied)
+        # DNS Edit usually lives on CLOUDFLARE_API_TOKEN (not Workers-only).
+        # Soft-fail: Worker is live on *.workers.dev even if DNS write is denied.
+        continue-on-error: true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFLARE_WORKERS_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
+            echo "::warning::No token for DNS point — skip. Worker still on nebutra-sailor-docs.nebutra.workers.dev"
+            exit 0
+          fi
+          if ! bash infra/ops/scripts/point-docs-dns-cloudflare-worker.sh; then
+            echo "::warning::DNS point failed (token may lack Zone DNS Edit). See docs/ops/cloudflare-ci-token.md"
+            exit 1
+          fi
+
+      - name: Smoke docs
+        run: |
+          set -euo pipefail
+          for url in \
+            "https://docs.nebutra.com/en" \
+            "https://docs.nebutra.com/en/pebble" \
+            "https://nebutra-sailor-docs.nebutra.workers.dev/en" \
+            ; do
+            code=$(curl -sS -o /tmp/docs-smoke.html -w '%{http_code}' --max-time 30 -L "$url" || echo 000)
+            echo "$url → $code"
+            if [ "$code" = "200" ]; then
+              if grep -qE '535\.71|LogoEn|currentColor|text-brand-mark|viewBox="0 0 535' /tmp/docs-smoke.html; then
+                echo "logo: inline SVG markers present"
+              elif grep -qi 'logo-horizontal-en' /tmp/docs-smoke.html; then
+                echo "::warning::still serving public/logo img path"
+              else
+                echo "logo markup: (no known marker — check HTML manually)"
+              fi
+              head -c 180 /tmp/docs-smoke.html; echo
+              exit 0
+            fi
+          done
+          echo "::warning::Smoke did not get HTTP 200 yet (DNS/propagation). Worker deploy step already succeeded."

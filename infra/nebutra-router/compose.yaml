@@ -1,0 +1,83 @@
+# Nebutra Router supply engines (internal-only).
+# Do not publish these ports on the public internet in production.
+# Customer traffic must go through router.nebutra.com control plane.
+#
+# Usage:
+#   cd infra/nebutra-router && docker compose up -d
+#   docker compose ps
+#
+# Images are pinned in versions.lock — bump intentionally.
+
+name: nebutra-router
+
+services:
+  redis:
+    image: redis:7.4-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - router_redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: nebutra
+      POSTGRES_PASSWORD: nebutra_dev_only
+      POSTGRES_DB: newapi
+    ports:
+      - "5433:5432"
+    volumes:
+      - router_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nebutra -d newapi"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # New-API — channel hub (official keys, peer relays, model routes)
+  # Image tag: see versions.lock
+  new-api:
+    image: calciumion/new-api:v0.8.7.4
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      # Bind localhost only — never 0.0.0.0 in production without mesh auth
+      - "127.0.0.1:3001:3000"
+    environment:
+      SQL_DSN: postgres://nebutra:nebutra_dev_only@postgres:5432/newapi?sslmode=disable
+      REDIS_CONN_STRING: redis://redis:6379
+      SESSION_SECRET: change-me-in-production
+      TZ: Asia/Shanghai
+    volumes:
+      - new_api_data:/data
+
+  # Sub2API — subscription / account pool (B-class supply)
+  # Optional: comment out if image unavailable; Router can run New-API only.
+  # Replace image when your registry pin is finalized (see versions.lock).
+  sub2api:
+    image: ${SUB2API_IMAGE:-ghcr.io/wei-shaw/sub2api:latest}
+    profiles: ["sub2api"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3002:8080"
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - sub2api_data:/data
+
+volumes:
+  router_redis:
+  router_pg:
+  new_api_data:
+  sub2api_data:

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "loader-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/loader-demo.tsx",
+      "content": "import { Loader } from \"@nebutra/ui/primitives\";\n\nexport function LoaderDemo() {\n  return (\n    <div className=\"max-w-sm px-4 py-8 space-x-4 flex w-full items-center justify-center\">\n      <Loader />\n      <Loader variant=\"dots\" size=\"lg\" />\n      <Loader variant=\"loading-dots\" text=\"Processing\" />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

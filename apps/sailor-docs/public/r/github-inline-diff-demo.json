@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "github-inline-diff-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/github-inline-diff-demo.tsx",
+      "content": "import { GithubInlineDiff } from \"@nebutra/ui/primitives\";\n\nexport function GithubInlineDiffDemo() {\n  const diff = [\n    { kind: \"hunk\", content: \"@@ -12,7 +12,9 @@\" } as const,\n    {\n      kind: \"context\",\n      old: 12,\n      new: 12,\n      content: \"export function evaluateExpression(expr: string) {\",\n    } as const,\n    {\n      kind: \"del\",\n      old: 13,\n      new: null,\n      content: \"  // TODO: Add proper error handling\",\n    } as const,\n    {\n      kind: \"del\",\n      old: 14,\n      new: null,\n      content: \"  return eval(expr);\",\n    } as const,\n    { kind: \"add\", old: null, new: 13, content: \"  try {\" } as const,\n    {\n      kind: \"add\",\n      old: null,\n      new: 14,\n      content: \"    // Using a safer alternative to eval in production\",\n    } as const,\n    {\n      kind: \"add\",\n      old: null,\n      new: 15,\n      content: \"    return safeEval(expr);\",\n    } as const,\n    { kind: \"add\", old: null, new: 16, content: \"  } catch (err) {\" } as const,\n    {\n      kind: \"add\",\n      old: null,\n      new: 17,\n      content: \"    console.error('Invalid expression', err);\",\n    } as const,\n    { kind: \"add\", old: null, new: 18, content: \"    return null;\" } as const,\n    { kind: \"add\", old: null, new: 19, content: \"  }\" } as const,\n    { kind: \"context\", old: 15, new: 20, content: \"}\" } as const,\n  ];\n\n  const initialComments = {\n    6: [\n      {\n        id: \"c1\",\n        author: \"Security Team\",\n        initials: \"ST\",\n        body: \"Good catch replacing eval() here!\",\n        createdAt: \"2d ago\",\n      },\n    ],\n  };\n\n  return (\n    <div className=\"max-w-3xl p-4 md:p-8 mx-auto w-full\">\n      <GithubInlineDiff\n        diff={diff}\n        fileName=\"src/utils/math.ts\"\n        fileStatus=\"modified\"\n        initialComments={initialComments}\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

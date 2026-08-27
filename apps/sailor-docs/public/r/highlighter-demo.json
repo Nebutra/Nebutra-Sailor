@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "highlighter-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/highlighter-demo.tsx",
+      "content": "\"use client\";\n\nimport { Highlighter } from \"@nebutra/ui/primitives\";\n\nexport function HighlighterDemo() {\n  return (\n    <div className=\"max-w-3xl p-8 gap-12 text-lg leading-relaxed mx-auto flex w-full flex-col\">\n      <div>\n        <h3 className=\"text-2xl font-bold mb-4\">Annotate your text with style</h3>\n        <p className=\"mb-4\">\n          Sometimes you need to draw attention to{\" \"}\n          <Highlighter action=\"highlight\" color=\"#fef08a\" animationDuration={800} triggerOnView>\n            specific words\n          </Highlighter>{\" \"}\n          in a paragraph to make sure the user reads them.\n        </p>\n        <p className=\"mb-4\">\n          Or you might want to show that something is{\" \"}\n          <Highlighter action=\"strike-through\" color=\"#f87171\" strokeWidth={2} triggerOnView>\n            no longer applicable\n          </Highlighter>{\" \"}\n          without actually removing the text.\n        </p>\n        <p className=\"mb-4\">\n          You can also{\" \"}\n          <Highlighter\n            action=\"underline\"\n            color=\"#60a5fa\"\n            strokeWidth={3}\n            iterations={3}\n            triggerOnView\n          >\n            underline key concepts\n          </Highlighter>{\" \"}\n          to give them emphasis, similar to what you would do with a pen in a book.\n        </p>\n        <p>\n          For really important metrics, maybe you want to{\" \"}\n          <Highlighter action=\"circle\" color=\"#34d399\" strokeWidth={2} padding={5} triggerOnView>\n            circle\n          </Highlighter>{\" \"}\n          them.\n        </p>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

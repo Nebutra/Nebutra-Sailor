@@ -1,0 +1,205 @@
+---
+title: Payment Webhooks
+description: Handle Stripe webhook events for subscription lifecycle, invoice payment, and plan sync.
+---
+
+## Endpoint
+
+All Stripe events are delivered to a single endpoint on the API gateway:
+
+```
+POST /api/v1/webhooks/stripe
+```
+
+This endpoint is pre-built in `backends/gateway/src/routes/webhooks/stripe.ts`. You do not need to write the routing logic — only add handlers for new events if needed.
+
+## Signature verification
+
+<Warning>
+Always verify the Stripe webhook signature before processing any event. Skipping verification allows anyone to send fake events to your endpoint and manipulate billing state.
+</Warning>
+
+Stripe signs every request with the `Stripe-Signature` header. The handler verifies this against `STRIPE_WEBHOOK_SECRET`:
+
+```typescript backends/gateway/src/routes/webhooks/stripe.ts
+import Stripe from "stripe";
+import { PLANS } from "@nebutra/billing";
+import { db } from "@nebutra/db";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+
+export async function POST(req: Request) {
+  const body = await req.text();
+  const sig = req.headers.get("stripe-signature");
+
+  if (!sig) {
+    return new Response("Missing stripe-signature header", { status: 400 });
+  }
+
+  let event: Stripe.Event;
+
+  try {
+    event = stripe.webhooks.constructEvent(
+      body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET!
+    );
+  } catch {
+    return new Response("Invalid signature", { status: 400 });
+  }
+
+  await handleStripeEvent(event);
+
+  return new Response("OK", { status: 200 });
+}
+```
+
+## Handled events
+
+| Stripe event | Handler action |
+|-------------|---------------|
+| `customer.subscription.updated` | Updates tenant `plan`, `status`, and `currentPeriodEnd` in the database |
+| `customer.subscription.deleted` | Downgrades tenant to FREE plan |
+| `invoice.payment_succeeded` | Logs successful payment; clears any `past_due` flag |
+| `invoice.payment_failed` | Sets tenant status to `past_due`; triggers payment failure email |
+
+### Event handler implementations
+
+<CodeGroup>
+```typescript subscription.updated
+async function handleSubscriptionUpdated(
+  subscription: Stripe.Subscription
+) {
+  const orgId = subscription.metadata.orgId;
+  const priceId = subscription.items.data[0]?.price.id;
+
+  const plan = Object.values(PLANS).find(
+    (p) => p.stripePriceId === priceId
+  );
+
+  await db.tenant.update({
+    where: { id: orgId },
+    data: {
+      plan: plan?.id ?? "free",
+      subscriptionStatus: subscription.status,
+      currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+      cancelAtPeriodEnd: subscription.cancel_at_period_end,
+    },
+  });
+}
+```
+```typescript subscription.deleted
+async function handleSubscriptionDeleted(
+  subscription: Stripe.Subscription
+) {
+  const orgId = subscription.metadata.orgId;
+
+  await db.tenant.update({
+    where: { id: orgId },
+    data: {
+      plan: "free",
+      subscriptionStatus: "canceled",
+      currentPeriodEnd: null,
+    },
+  });
+}
+```
+```typescript invoice.payment_failed
+async function handlePaymentFailed(invoice: Stripe.Invoice) {
+  const customerId = invoice.customer as string;
+
+  const tenant = await db.tenant.findFirst({
+    where: { stripeCustomerId: customerId },
+  });
+
+  if (!tenant) return;
+
+  await db.tenant.update({
+    where: { id: tenant.id },
+    data: { subscriptionStatus: "past_due" },
+  });
+
+  // Notify the user via @nebutra/notifications
+  await notifications.send({
+    id: crypto.randomUUID(),
+    type: "billing.payment_failed",
+    recipientId: tenant.ownerId,
+    tenantId: tenant.id,
+    channels: ["email"],
+    data: { invoiceUrl: invoice.hosted_invoice_url },
+  });
+}
+```
+</CodeGroup>
+
+## Registering events in the Stripe Dashboard
+
+When setting up your production webhook endpoint, enable exactly these events:
+
+```
+customer.subscription.updated
+customer.subscription.deleted
+invoice.payment_succeeded
+invoice.payment_failed
+checkout.session.completed
+```
+
+Go to **Stripe Dashboard → Developers → Webhooks → Add endpoint**, enter your API URL, and select the events above.
+
+## Local testing with Stripe CLI
+
+<Steps>
+  <Step title="Install the Stripe CLI">
+    ```bash
+    # macOS
+    brew install stripe/stripe-cli/stripe
+
+    # npm (cross-platform)
+    npm install -g stripe
+    ```
+  </Step>
+  <Step title="Authenticate">
+    ```bash
+    stripe login
+    ```
+  </Step>
+  <Step title="Forward events to your local server">
+    ```bash
+    stripe listen --forward-to localhost:3001/api/v1/webhooks/stripe
+    ```
+
+    The CLI prints a local webhook signing secret (`whsec_...`). Set this as `STRIPE_WEBHOOK_SECRET` in your `.env.local` during development.
+  </Step>
+  <Step title="Trigger test events">
+    In a separate terminal, trigger individual events to test your handlers:
+
+    ```bash
+    # Simulate a successful subscription update
+    stripe trigger customer.subscription.updated
+
+    # Simulate a payment failure
+    stripe trigger invoice.payment_failed
+    ```
+  </Step>
+</Steps>
+
+<Info>
+The Stripe CLI signing secret is different from your production webhook signing secret. Use the CLI-provided secret in `.env.local` and the Dashboard secret in your production environment.
+</Info>
+
+## Idempotency
+
+Stripe may deliver the same event more than once (at-least-once delivery). Make your handlers idempotent — processing the same event twice should produce the same result as processing it once.
+
+The `subscription.updated` and `subscription.deleted` handlers above are already idempotent because they use upsert-style database updates.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Payments Overview" icon="credit-card" href="/payments/overview">
+    Full billing architecture and environment variable reference.
+  </Card>
+  <Card title="Subscriptions" icon="refresh-cw" href="/payments/subscriptions">
+    Checkout flow and subscription lifecycle states.
+  </Card>
+</CardGroup>

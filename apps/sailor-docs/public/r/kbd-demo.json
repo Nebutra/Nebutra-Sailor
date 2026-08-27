@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "kbd-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/kbd-demo.tsx",
+      "content": "import { Kbd } from \"@nebutra/ui/primitives\";\n\nexport function KbdDemo() {\n  return (\n    <div className=\"flex items-center gap-2\">\n      <Kbd meta />\n      <Kbd shift />\n      <Kbd alt />\n      <Kbd ctrl />\n      <Kbd meta shift />\n      <Kbd small>/</Kbd>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

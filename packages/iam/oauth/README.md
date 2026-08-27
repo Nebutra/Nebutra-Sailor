@@ -1,0 +1,54 @@
+# @nebutra/oauth
+
+> OIDC Identity Provider engine for the Nebutra platform, enabling "Sign in with Nebutra" for third-party applications.
+
+## Installation
+
+```bash
+# Internal monorepo dependency
+pnpm add @nebutra/oauth@workspace:*
+```
+
+## Usage
+
+```typescript
+import { createNebutraOIDCProvider, SCOPE_DESCRIPTIONS } from "@nebutra/oauth";
+
+const provider = createNebutraOIDCProvider({
+  issuer: "https://sso.nebutra.com",
+  prisma, // PrismaClient instance
+  redis,  // ioredis instance
+});
+```
+
+## API
+
+| Export | Description |
+|--------|-------------|
+| `createNebutraOIDCProvider(config)` | Create an OIDC provider instance |
+| `createPrismaAdapter(prisma)` | Prisma-backed adapter for oidc-provider storage |
+| `EPHEMERAL_MODELS` | List of models stored ephemerally (not persisted) |
+| `SUPPORTED_SCOPES` | Array of supported OAuth scopes |
+| `SCOPE_DESCRIPTIONS` | Human-readable scope descriptions |
+| `NEBUTRA_CLAIMS` | Custom claims added to ID tokens |
+
+## Production Notes
+
+- `client_credentials` is disabled by default. Enable it only with an approved
+  service-to-service requirement.
+- Confidential clients that store only `clientSecretHash` are fail-closed until
+  the package has a dedicated secret verification or vault-backed retrieval
+  contract.
+
+### Types
+
+| Type | Description |
+|------|-------------|
+| `NebutraOIDCConfig` | Configuration for the OIDC provider (issuer, prisma, redis) |
+
+## Dependencies
+
+- `oidc-provider` -- Core OIDC implementation
+- `ioredis` -- Redis for session and token storage
+- `@nebutra/db` -- Prisma for persistent data (clients, grants)
+- `@nebutra/contracts` -- Shared type contracts

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "progress-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/progress-demo.tsx",
+      "content": "\"use client\";\n\nimport { Progress } from \"@nebutra/ui/primitives\";\n\nexport function ProgressDemo() {\n  return (\n    <div className=\"space-y-8 w-full\">\n      <div className=\"space-y-2\">\n        <div className=\"text-sm flex justify-between\">\n          <span>Downloading...</span>\n          <span>33%</span>\n        </div>\n        <Progress value={33} />\n      </div>\n      <div className=\"space-y-2\">\n        <div className=\"text-sm flex justify-between\">\n          <span>Processing...</span>\n          <span>66%</span>\n        </div>\n        <Progress value={66} />\n      </div>\n      <div className=\"space-y-2\">\n        <div className=\"text-sm flex justify-between\">\n          <span>Completed</span>\n          <span>100%</span>\n        </div>\n        <Progress value={100} />\n      </div>\n      <div className=\"space-y-2\">\n        <div className=\"text-sm flex justify-between\">\n          <span>Connecting...</span>\n          <span>Indeterminate</span>\n        </div>\n        <Progress value={undefined} />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

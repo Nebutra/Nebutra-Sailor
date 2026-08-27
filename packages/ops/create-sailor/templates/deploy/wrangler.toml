@@ -1,0 +1,8 @@
+name = "nebutra-sailor"
+compatibility_date = "2024-03-20"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".opennext"
+
+[env.production]
+# Add your production variables here
+# DATABASE_URL = "postgress://..."

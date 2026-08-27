@@ -1,0 +1,83 @@
+# Production resource limit overrides
+# Increases CPU and memory ceilings to handle production-scale traffic.
+# Requests remain proportional to ensure the scheduler places pods efficiently.
+
+---
+# web (Next.js SaaS dashboard) — increased for SSR under prod load
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: nebutra
+spec:
+  template:
+    spec:
+      containers:
+        - name: web
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+
+---
+# api-gateway — handles all external API traffic; needs headroom for request bursts
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+  namespace: nebutra
+spec:
+  template:
+    spec:
+      containers:
+        - name: api-gateway
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+
+---
+# ai-service — LLM inference calls can be memory-intensive
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-service
+  namespace: nebutra
+spec:
+  template:
+    spec:
+      containers:
+        - name: ai-service
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+            limits:
+              memory: "2Gi"
+              cpu: "2000m"
+
+---
+# recsys-service — holds model data in memory; needs more RAM in prod
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recsys-service
+  namespace: nebutra
+spec:
+  template:
+    spec:
+      containers:
+        - name: recsys-service
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+            limits:
+              memory: "2Gi"
+              cpu: "2000m"

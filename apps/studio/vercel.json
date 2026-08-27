@@ -1,0 +1,7 @@
+{
+  "buildCommand": "pnpm --filter @nebutra/brand sync && pnpm turbo build --filter=@nebutra/studio",
+  "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh apps/studio",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "outputDirectory": "dist",
+  "framework": null
+}

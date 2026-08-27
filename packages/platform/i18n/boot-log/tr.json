@@ -1,0 +1,1439 @@
+{
+  "panelLabel": "Önyükleme günlüğü",
+  "entries": {
+    "transistor-name-off-patent-1947": {
+      "tag": "Patent",
+      "title": "Patentten Çıkarılan İsim",
+      "body": "23 Aralık 1947'de Bardeen ve Brattain, Bell Labs'ta germanyum nokta temaslı transistörü tanıttı. Shockley odada değildi. Avukatlar kendi tasarımını Julius Lilienfeld'in 1925 patentine fazla yakın buldular ve onun adını bu patentten çıkardılar.",
+      "coda": "1956'da üçü de Nobel Fizik Ödülü'nü paylaştı."
+    },
+    "dartmouth-two-month-study-1956": {
+      "tag": "Öneri",
+      "title": "İki Aylık Bir Çalışma",
+      "body": "McCarthy, Minsky, Rochester ve Shannon'ın 1955 tarihli önerisi, zekânın bir makinenin taklit edebileceği kadar kesin olarak tanımlanabileceği önermesiyle iki aylık, on kişilik bir çalışma talep ediyordu. 1956 atölyesi altı ila sekiz hafta sürdü; yalnızca üç katılımcı tüm süre boyunca kaldı.",
+      "coda": "Alan için seçtikleri ad, yapay zekâ, benimsenen ad oldu."
+    },
+    "traitorous-eight-lie-detector-1957": {
+      "tag": "Bölünme",
+      "title": "Yalan Makinesi Notu",
+      "body": "Mayıs 1957'de Shockley Semiconductor'daki sekiz mühendis, William Shockley'nin yönetici olarak değiştirilmesini talep etti. Shockley telefon görüşmelerini kaydetmiş, personelin sonuçlarını paylaşmasını engellemiş ve yalan makinesi testleri istemişti. 18 Eylül 1957'de sekiz kişi bunun yerine Fairchild Semiconductor'ı kurdu.",
+      "coda": "Wikipedia, Intel ve AMD'yi bu ayrılmadan izi sürülen düzinelerce şirket arasında sayar."
+    },
+    "kilby-noyce-six-months-1958-1959": {
+      "tag": "Paralel",
+      "title": "Altı Ay, Tek Madalya",
+      "body": "Kilby, Eylül 1958'de Texas Instruments'ta parçaları dış kablolarla birleştirilmiş çalışan bir entegre devre tanıttı. Noyce, Temmuz 1959'da Fairchild'da seri üretilebilir monolitik silikon versiyonunun patentini başvurdu. İkisi de diğerinin ortak mucitlik iddiasını reddetmedi.",
+      "coda": "Kilby 2000 Nobel Ödülü'nü tek başına kabul etti. Noyce 1990'da ölmüştü."
+    },
+    "perceptron-conscious-machine-1958": {
+      "tag": "Sinir Ağları",
+      "title": "Uyanacak Olan Makine",
+      "body": "1958'de New York Times, Frank Rosenblatt'ın perceptron'unun Deniz Kuvvetleri'nin yürüyebilecek, konuşabilecek, görebilecek, yazabilecek, kendini çoğaltabilecek ve varlığının farkında olabilecek bir bilgisayarın embriyosu olduğunu bildirdi. 1969'da Minsky ve Papert'in kitabı, tek katmanlı bir perceptron'ın XOR hesaplayamayacağını kanıtladı.",
+      "coda": "Sinir ağı araştırmaları için finansman kurudu ve 1980'lere kadar dönmedi."
+    },
+    "hamilton-software-engineering": {
+      "tag": "Adlandırma",
+      "title": "Sürekli Bir Şaka",
+      "body": "Apollo programı sırasında Margaret Hamilton, işini donanım mühendisliğinden ayırmak için \"yazılım mühendisliği\" olarak adlandırmaya başladı. Terimi daha önce hiç kimsenin duymadığını söyledi ve bu bir süre şaka konusu oldu, ta ki saygın bir donanım mühendisi toplantıda ayağa kalkıp katılana kadar.",
+      "coda": "Şaka yıllarca sürdü, sonra artık kimse anlatmadı."
+    },
+    "macau-seventeen-thousand": {
+      "tag": "İhale",
+      "title": "On yedi bin",
+      "body": "Ekim 1961'de Stanley Ho, Henry Fok, Yip Hon ve Teddy Yip tarafından kurulan bir konsorsiyum, Makao oyun tekelini ihale etti. Rakip tekliften on yedi bin fazla olan 3.167.000 pataca teklif ettiler.",
+      "coda": "Bu marjın satın aldığı tekel kırk yılı aşkın süre devam etti."
+    },
+    "moores-law-ten-year-bet-1965": {
+      "tag": "Tahmin",
+      "title": "On Yıllık Bir Bahis",
+      "body": "Moore'un 1965 tarihli makalesi, bir çip üzerindeki bileşen sayısının önümüzdeki on yıl boyunca her yıl iki katına çıkacağını ve 1975'e kadar yaklaşık 65.000'e ulaşacağını öngörmüştü. 1975'te Moore iki katına çıkma periyodunu iki yıla revize etti. Daha sonra bir yasa olarak adlandırılan eğri, zaten bir kez düzeltilmiş kendi tahminiydi.",
+      "coda": "1995'e gelindiğinde Moore, terimin çip endüstrisinde neredeyse her şeyi ifade etmeye başladığını söyledi."
+    },
+    "eliza-secretary-1966": {
+      "tag": "Sohbet Botu",
+      "title": "Sekreter ve DOCTOR",
+      "body": "1966'da Joseph Weizenbaum, MIT'de ELIZA'nın DOCTOR senaryosunu yayınladı; kullanıcıların kendi cümlelerini çoğunlukla soru olarak geri yansıtan bir program. Kendi sekreteri, onunla yalnızca konuşabilmek için odadan çıkmasını istediği bildirildi.",
+      "coda": "Beklemediği kalıp daha sonra ELIZA etkisi olarak adlandırıldı."
+    },
+    "engelbart-royalties": {
+      "tag": "Patent",
+      "title": "Kırk bin dolar",
+      "body": "SRI, demo sonrasında fareyi patentletti ve kendi ifadesine göre değeri hakkında gerçek bir fikri yoktu. Birkaç yıl sonra Apple'a yaklaşık 40.000 dolara lisansladıkları ortaya çıktı.",
+      "coda": "Engelbart onu icat ettiği için hiçbir telif hakkı almadı."
+    },
+    "lo": {
+      "tag": "İlk temas",
+      "title": "LO",
+      "body": "Charley Kline, UCLA'dan SRI'deki bir makineye giriş yapmaya koyuldu. L geldi. O geldi. G'de uzak uç çöktü.",
+      "coda": "İnternette söylenen ilk şey iki harfti: LO."
+    },
+    "multics": {
+      "tag": "Plan",
+      "title": "Bir hizmet olarak bilgi işlem",
+      "body": "Multics bir bilgisayar olarak değil, bir bilgi işlem hizmeti olarak tasarlandı: her zaman açık, elektrik gibi, bir makinenin kiracıları birbirinden izole edilmiş. Geç ve pahalı teslim edildi ve Bell Labs vazgeçti.",
+      "coda": "Elli yıl sonra bu fikir bulut bilişim olarak adlandırıldı."
+    },
+    "rfc1": {
+      "tag": "Yönetişim",
+      "title": "Yorum İsteği",
+      "body": "Steve Crocker, birkaç ağ bağlantılı ana bilgisayar için ilk kuralları yazmak zorundaydı. Kimse ona yetki vermemişti ve bunun üstünlük taslamak gibi okunacağından korktu — bu yüzden türe Yorum İsteği adını verdi.",
+      "coda": "İnternetin o zamandan beri üzerinde anlaştığı her kural hâlâ RFC olarak adlandırılıyor."
+    },
+    "pdp7": {
+      "tag": "Köken",
+      "title": "Kimsenin istemediği makine",
+      "body": "Bell Labs Multics'ten ayrıldıktan sonra Ken Thompson'da atılmış bir PDP-7 vardı ve karısı ile oğlu San Diego'dayken bir ay yalnızdı. Kendine her parça için bir hafta verdi: çekirdek, kabuk, düzenleyici, derleyici.",
+      "coda": "Dört hafta sonra kimsenin istemediği makine Unix çalıştırıyordu."
+    },
+    "alarm-1202": {
+      "tag": "Olay",
+      "title": "Program alarmı 1202",
+      "body": "Yüzeye dört dakika kala rehberlik bilgisayarı beş alarm verdi: yanlış konumda bırakılmış bir buluşma radarı anahtarı döngülerini tüketiyordu. Takılmadı. Düşük öncelikli işleri attı, yeniden başladı ve inişi sürdürdü.",
+      "coda": "Yük altında neyi bırakacağını bilmek pahalı derstir."
+    },
+    "mariner-1": {
+      "tag": "Olay",
+      "title": "Eksik bir üst çizgi",
+      "body": "Mariner 1, fırlatılışından 293 saniye sonra imha edildi. Yerleşik bir işaretçi arızalanmıştı ve kılavuz denklemleri programa kopyalanırken R'den bir üst çizgi düşürüldü. Çizgi, ortalamayı almak anlamına geliyordu.",
+      "coda": "Basın, üst çizgiyi açıklamakta zorlandı ve kısa çizgi yazdı. Kısa çizgi kaldı."
+    },
+    "mother-of-all-demos": {
+      "tag": "Demo",
+      "title": "Tüm Demoların Anası",
+      "body": "Engelbart'a doksan dakika verildi. Terminali, otuz mil uzaktaki bir makineye telefon hatları üzerinden bağlıydı ve fareyi, köprüleri, pencereleri, ekran paylaşımını ve iki kişinin aynı anda tek bir belgeyi düzenlemesini gösterdi.",
+      "coda": "Bin kişi izledi, ardından bir on yıl daha delikli kartlara geri döndü."
+    },
+    "conway": {
+      "tag": "Yasa",
+      "title": "Reddedilen makale",
+      "body": "Melvin Conway, bir sistemin yapısının onu geliştiren kuruluşun iletişim yapısını yansıttığı gözleminden bahsetti ve \"How Do Committees Invent?\" yazısını Harvard Business Review'a gönderdi. Tezini kanıtlamadığı gerekçesiyle reddedildi. Datamation bunu 1968'de yayımladı.",
+      "coda": "Fred Brooks daha sonra kanıtlanmamış tezi alıntıladı ve buna Conway yasası adını verdi."
+    },
+    "apollo-burn-baby-burn": {
+      "tag": "Yorum",
+      "title": "Burn, Baby, Burn",
+      "body": "Ay modülünün ana ateşleme rutini kaynakta BURN_BABY_BURN olarak etiketlenmiştir. İsim itkiyle ilgili değildir; günün bir soul radyo DJ'sinin sloganından alınmıştır.",
+      "coda": "Satır, kamu deposunda hâlâ düzenlenmemiş halde duruyor."
+    },
+    "waterfall": {
+      "tag": "Yanlış Okuma",
+      "title": "Şema karşıt örnek idi",
+      "body": "\"Managing the Development of Large Software Systems\" adlı yazısında Winston Royce, sektörün şelale modeli olarak adlandıracakları şemayı çizdi, ardından şunları yazdı: \"Bu kavrama inanıyorum, ancak yukarıda açıklanan uygulama riskli ve başarısızlığı davet ediyor.\" Yazının geri kalanı bunu yineleyici hale getirmeye odaklanıyor.",
+      "coda": "Sektör şemayı tuttu ve cümleyi bıraktı."
+    },
+    "moth": {
+      "tag": "Etymology",
+      "title": "İlk gerçek hata",
+      "body": "Harvard Mark II'nin bir rölesinden bir güve çıkarıldı ve günlük defterine yapıştırıldı. Yanındaki satır kelimenin kökeni olarak alıntılanır, ancak üzerinde yazan şudur: hata bulunmasının ilk gerçek durumu.",
+      "coda": "Mühendisler Edison'dan beri hata demişti. Müze, sayfanın Hopper'ın el yazısında olup olmadığını bile şüpheli görüyor."
+    },
+    "intel-4004-busicom-rights-1971": {
+      "tag": "Haklar",
+      "title": "Bir Hesap Makinesi Şirketine Ait Bir Çip",
+      "body": "1969'da Japonya'nın Busicom şirketi, tasarım haklarını Busicom'a devreden bir sözleşme altında Intel'den bir hesap makinesi çip seti tasarlamasını istedi, iş tamamen Intel içinde yapılsa bile. 1971'de mühendis Federico Faggin, bu tekelin kaldırılması karşılığında daha düşük bir fiyat teklif etti.",
+      "coda": "Intel 4004'ün genel satışları o yılın Temmuz ayında başladı."
+    },
+    "pong-coin-overflow": {
+      "tag": "Geri Bildirim",
+      "title": "Para Kutusu Taştı",
+      "body": "Ağustos 1972'de Atari, Pong prototipini Sunnyvale'deki bir bara yerleştirdi. Birkaç gün sonra sahibi bozuk olduğunu bildirdi. Mühendis Al Alcorn onarmaya gitti ve arızanın elektriksel olmadığını buldu: para mekanizması çeyrek dolarlarla taşması nedeniyle sıkışmıştı.",
+      "coda": "Arıza bir kablo hatası değildi; çok fazla paradı."
+    },
+    "wozniak-breakout-bonus": {
+      "tag": "Bonus",
+      "title": "Paylaşım",
+      "body": "1973'te Atari, Steve Jobs'tan Breakout devre kartını küçültmesini istedi, çıkarılan her çip için 100 dolar ödeyeceğini söyledi. Jobs, Wozniak'tan yardım etmesini istedi ve yarısını vaat etti. Wozniak 50 çip çıkardı. Jobs toplamın 700 dolar olduğunu, dolayısıyla Wozniak'ın payının 350 dolar olduğunu söyledi. On yıl sonra Wozniak gerçek bonusun 5.000 dolar olduğunu öğrendi.",
+      "coda": "Wozniak, sorulsaydı parayı Jobs'a vereceğini söyledi."
+    },
+    "unix-not-expected-to-understand": {
+      "tag": "Kernel",
+      "title": "Anlaması Beklenmiyor",
+      "body": "Unix'in Altıncı Sürümü'nün slp.c dosyası, PDP-11 derleyici özellikleri üzerine inşa edilmiş işlem değişimi yığın geri yükleme koduna bağlı olarak 'Bunu anlaman beklenmiyor' satırını içerir. Dennis Ritchie daha sonra bunun bir öğretmenin sınavda çıkmayacak demesi gibi olduğunu söyledi.",
+      "coda": "Rutin, Unix'in Yedinci Sürümü için yeniden yazıldı."
+    },
+    "vi-adm3a-keys": {
+      "tag": "Kısayollar",
+      "title": "Harf Tuşlarına Kazınmış Oklar",
+      "body": "Bill Joy, vi'yi 1977'de Berkeley'de, ok tuşları olmayan bir Lear Siegler ADM-3A terminalinde yazdı; h, j, k ve l tuşlarına oklar kazınmıştı ve hareket tuşları haline geldi. Kısa tek harfli komutlar, yetişemeyecek kadar yavaş olan 300 baud'luk bir modemin önünde yazmaktan doğdu.",
+      "coda": "Daha sonra tasarım felsefesine atfedilen tuşlar, ok tuşları olmayan bir terminal için bir geçici çözüm olarak başladı."
+    },
+    "kildall-flying": {
+      "tag": "Tanıklık",
+      "title": "Doğrulanmayan Uçuş",
+      "body": "1980'de IBM, CP/M'yi lisanslamak için geldi. Gary Kildall bir müşteriye yazılım götürüyordu; açılış görüşmelerini eşi Dorothy yürüttü. Bill Gates daha sonra gazetecilere Kildall'ın \"kaprisli bir şekilde uçmaya gittiğini\" söyledi. IBM'in baş müzakerecisi Jack Sams, Kildall'la hiç tanışmadığını söyledi.",
+      "coda": "Bu toplantıya dair iki anlatı hiçbir zaman uzlaştırılamadı."
+    },
+    "trusting-trust": {
+      "tag": "Güven",
+      "title": "Güven Üzerine Düşünceler",
+      "body": "Thompson'ın Turing konferansı, login programına bir arka kapı yerleştiren ve bir derleyiciyi her derlediğinde tüm hileyi yeniden kuran bir derleyiciyi anlattı. Temiz kaynaktan yeniden derleyin ve arka kapı hayatta kalır.",
+      "coda": "Tamamen kendi yaratmadığınız koda güvenemezsiniz."
+    },
+    "arm-one-person-company-1985": {
+      "tag": "Köken",
+      "title": "Tek Kişilik Bir Çip Şirketi",
+      "body": "Adını eğitim bilgisayarlarıyla duyuran Acorn, 1983'te RISC araştırmalarına başladı. Rakip bir çip tasarımcısına yapılan ziyaret, 6502'ye yönelik güncellemelerin fiilen tek kişilik bir şirketten çıktığını gösterdi ve daha fazlasına ihtiyaçları olmadığı sonucuna vardılar.",
+      "coda": "ARM1, 26 Nisan 1985'te geldi ve ilk açılışta çalıştı."
+    },
+    "copyleft-all-rights-reversed": {
+      "tag": "Telif Hakkı",
+      "title": "Tüm Haklar Tersine Çevrildi",
+      "body": "Birisi Richard Stallman'a standart bildirimin bir kelime oyunu olan \"Copyleft — tüm haklar tersine çevrildi\" yazan bir mektup gönderdi. Symbolics, Lisp yorumlayıcısını geliştirdikten sonra iyileştirmeleri geri paylaşmayı reddedince, ters yükümlülüğü talep eden bir lisans yazmak için telif hakkı yasasının kendisini kullandı.",
+      "coda": "Genel Kamu Lisansı Şubat 1989'da geldi."
+    },
+    "tetris-unpaid-decade": {
+      "tag": "Haklar",
+      "title": "Telifsiz Blok",
+      "body": "1985'te Pajitnov, SSCB Bilimler Akademisi'nin devlet çalışanı olarak Tetris'i yazdı; haklar Hesaplama Merkezi'ne aitti, ona değil. Batı lisansları Nintendo'ya ulaşmadan önce birkaç el değiştirdi ve oyun on milyonlarca kopya sattı.",
+      "coda": "Haklar, onu yazdıktan on bir yıl sonra, 1996'da kendisine geri döndü."
+    },
+    "euv-twenty-three-hours-2018": {
+      "tag": "Litografi",
+      "title": "Tek Bir Wafer İçin Yirmi Üç Saat",
+      "body": "NTT'deki Hiroo Kinoshita, aşırı morötesi litografi görüntülerini ilk kez 1986'da gösterdi. ASML'nin 2006 prototipi tek bir waferı maruz bırakmak için yirmi üç saat aldı. EUV, MIT Technology Review'ın Moore Yasası'nı kurtaran makine olarak adlandırdığı bir cihazda, 2018'e kadar üretime ulaşmadı.",
+      "coda": "2022'ye gelindiğinde bir üretim EUV tarayıcısı saatte yaklaşık iki yüz wafer işledi."
+    },
+    "tsmc-foundry-fifty-six-1987": {
+      "tag": "Foundry",
+      "title": "Altmış Altı Yaşında Bir Foundry",
+      "body": "Morris Chang, 1931 doğumlu, Texas Instruments'ta dünya çapında yarı iletken operasyonları grubu başkan yardımcılığına kadar yükseldi, ardından General Instrument'ta başkan ve COO olarak görev yaptı, daha sonra Tayvan'ın ITRI'sine başkanlık etti. 1987'de, altmış altı yaşında, ürettiği çiplerin hiçbirini tasarlamayan TSMC'yi kurdu.",
+      "coda": "Dünyada sadece üretim yapan ilk foundry oldu."
+    },
+    "huawei-diet-pills": {
+      "tag": "Yeniden Satıcı",
+      "title": "Huawei'nin İlk İşinin Teknolojiyle İlgisi Yoktu",
+      "body": "Huawei, 15 Eylül 1987'de 21.000 yuan sermaye ile, kendini bir teknoloji şirketi olarak tanımlayarak tescil etti. Ticaretle başladı, bunların arasında diyet hapları da vardı, ardından marj için Hong Kong yapımı HAX anahtarlarını yeniden sattı. Kendi anahtarı olan BH01, yalnızca 1989'da el yapımı olarak üretildi.",
+      "coda": "Dört yıl sonra şirket ilk kez kendi devre kartını çizdi."
+    },
+    "morris": {
+      "tag": "Olay",
+      "title": "Bir ölçüm",
+      "body": "Morris, internetin ne kadar büyük olduğunu bilmek istiyordu, bu yüzden kendini kopyalayan bir program yazdı. Zaten enfekte olduğunu sahte olarak bildiren ana bilgisayarları durdurmak için, yine de yedide bir şansla yeniden enfekte etmesini sağladı.",
+      "coda": "O yedide bir, o sırada çevrimiçi olan 60.000 ana bilgisayarın yaklaşık 6.000'ini çökertti."
+    },
+    "naur": {
+      "tag": "Felsefe",
+      "title": "Program, eser değildir",
+      "body": "Naur, bir programın kaynağında değil, onu yazanların neden sorunu bu şekilde çözdüğüne dair kurdukları bir teori olarak yaşadığını savundu. Kaynak, bunun kayıplı bir yansımasıdır.",
+      "coda": "Son teori taşıyıcısının ayrıldığı anı programın ölümü olarak adlandırdı."
+    },
+    "mit-license-171-words": {
+      "tag": "Şartlar",
+      "title": "171 Kelime",
+      "body": "MIT'de bir TCP/IP uygulaması yazan bir grup hukuki müzakerelerden kaçınmak istedi, bu yüzden yazılımı yaklaşık 171 kelimelik bir bildirim altında bedava verdi. Bu kısa metin şimdi GitHub'daki lisanslı projelerin üçte birine yakınını kapsıyor, başka hiçbir lisansınkinden fazla.",
+      "coda": "Metin yazıldığından bu yana esasen değişmedi."
+    },
+    "photoshop-display-origin": {
+      "tag": "Köken",
+      "title": "Önce Display Adı Verildi",
+      "body": "1988'de Michigan Üniversitesi'nde doktora öğrencisi olan Thomas Knoll, monokrom bir Mac ekranında gri tonlamalı görselleri görüntülemek için küçük bir program yazdı. Önce Display, sonra ImagePro, ardından Photoshop adını verdi; kardeşi John bunu Adobe'e gösterene kadar. Adobe aynı yıl lisans aldı.",
+      "coda": "Adobe, 1995'te tüm hakları 34,5 milyon dolara satın aldı."
+    },
+    "sosumi-so-sue-me": {
+      "tag": "Adlandırma",
+      "title": "O Halde Davet",
+      "body": "1991'de Apple'ın hukuk departmanı, Apple Computer'ı müzikle ilgili ticari markalardan men eden bir uzlaşma nedeniyle uyarı sesi ismi \"Let It Beep\"i çok müzikal bularak reddetti. Ses tasarımcısı Jim Reekes \"o halde davet\" diye yazdı, sonra \"sosumi\" olarak kaydetti.",
+      "coda": "Ses, 2020'de Big Sur onu değiştirene kadar Mac OS ile neredeyse üç on yıl boyunca geldi."
+    },
+    "www-royalty-free": {
+      "tag": "Bedava Verildi",
+      "title": "Maliyetinin Bittiği Gün",
+      "body": "30 Nisan 1993'te CERN, World Wide Web'in protokolünü ve kodunu telifsiz olarak kullanıma sundu. Herkes istediğinde, ödeme yapmadan ve izin istemeden alabilirdi.",
+      "coda": "O günden bu yana kimse kullanmak için telif ödemedi."
+    },
+    "doom-ftp-crash": {
+      "tag": "Paylaşım Yazılımı",
+      "title": "Ulaşamadıkları Sunucu",
+      "body": "10 Aralık 1993'te id Software, Doom'un ilk bölümünü paylaşım yazılımı olarak dağıttı ve geri kalanının satışına bağırdı. Bunu Wisconsin Üniversitesi FTP sunucusuna yüklerken, zaten bekleyen o kadar çok insan buldular ki ekip kendisi bağlanamadı.",
+      "coda": "Yükleme gece yarısına yakın bitti; aynı anda on bin indirme üniversitenin ağında çökme yarattı."
+    },
+    "zlib-two-authors": {
+      "tag": "Temel",
+      "title": "İki Kişinin Sıkıştırma Katmanı",
+      "body": "zlib, Linux, macOS, iOS ve ardışık nesil oyun konsollarının içinde yer alır; Git ve OpenSSH sıkıştırmak için buna dayanır. İlk halka açık sürümünü 1995'te iki kişi yazdı.",
+      "coda": "Yazarlık satırı asla üçüncü bir isim kazanmadı."
+    },
+    "byd-battery-to-car": {
+      "tag": "Satın Alma",
+      "title": "Pil Şirketi Bir Otomobil Üreticisini Aldı",
+      "body": "BYD, 10 Şubat 1995'te Shenzhen'in Longgang bölgesinde kurularak nikel-kadmiyum ve nikel-metal hidrit piller üretmeye başladı, ardından 1996'da lityum-iyon hücrelere girdi. 2003'te pil üreticisi Xi'an Qinchuan Automobile'ı satın aldı ve onu BYD Auto olarak yeniden adlandırdı.",
+      "coda": "İki yıl sonra, ilk kendi markalı sedanı F3 satışa çıktı."
+    },
+    "ariane-501": {
+      "tag": "Olay",
+      "title": "Otuz Yedi Saniye",
+      "body": "Otuz yedi saniyede, atalet referans sistemi 64 bitlik bir kayan nokta sayıyı 16 bitlik bir tamsayıya dönüştürdü ve taşma oluştu; yaklaşık kırk saniyede araç parçalandı. Rutin, Ariane 4'ten aynen geldi ve kalkıştan sonra çalışmaya hiçbir nedeni yoktu.",
+      "coda": "Kapatılması gereken koda harcanan yaklaşık 370 milyon dolar."
+    },
+    "deep-blue-move-44-1997": {
+      "tag": "Satranç",
+      "title": "Kırk Dördüncü Hamlenin Arızası",
+      "body": "1997 remiçinin birinci oyununda Kasparov, Deep Blue'u kırk beş hamlede yendi. Deep Blue'un kırk dördüncü hamlesi iddia edildiğine göre bir arızanın sonucuydu: araması içinde tercih edilen bir hamle üzerinde karar veremeyen motor, bir acil durum geri çekilmesine düştü.",
+      "coda": "İkinci oyunu kaybettikten sonra Kasparov, IBM'i hile yapmakla suçladı."
+    },
+    "curl-one-maintainer": {
+      "tag": "Temel",
+      "title": "Tek Kişinin Protokol Yığını",
+      "body": "curl'ün kendi belgeleri, libcurl'ün yaklaşık on milyar cihazda, 110 işletim sistemi ve 28 CPU mimarisinde çalıştığını belirtir. Proje, 1998'de curl olarak yeniden adlandırıldığından beri Daniel Stenberg'in adını baş bakıcı olarak taşımaktadır.",
+      "coda": "Hiçbir isimli halef asla listelenmemiştir."
+    },
+    "book-of-mozilla-verses": {
+      "tag": "Paskalya Yumurtası",
+      "title": "Mozilla Kitabı",
+      "body": "Adres çubuğuna about:mozilla yazmak, her tarayıcı neslinin güncellediği, 'canavar'ı 'Mammon'a karşı koyan apokaliptik bir mısra olan Mozilla Kitabı'nı ortaya çıkarır. Mısra numaraları bölüm işaretleri değildir: bunlar sürüm tarihleridir.",
+      "coda": "En yeni mısra olan 6:27, ilk olarak 2020'de bir Firefox Nightly derlemesinde yayımlandı."
+    },
+    "http-418-teapot": {
+      "tag": "Protokol",
+      "title": "Ben bir Çaydanlıkım",
+      "body": "1 Nisan 1998 tarihinde yayımlanan RFC 2324, 418 durum kodunu \"I'm a teapot\" olarak tanımlar ve kendini Standart değil, Bilgilendirici olarak kaydeder. 1 Nisan 2014 tarihinde RFC 7168, kapsamını çay demlemeyi de içine alacak şekilde genişletti. Kod asla gerçek bir standart haline gelmedi.",
+      "coda": "Her iki belge de Bilgilendirici olarak kaldı; durum kodu yine de gerçek sunucularda kullanıma sunuldu."
+    },
+    "open-source-coined-1998": {
+      "tag": "Adlandırma",
+      "title": "Open Source'un Ortaya Çıkışı",
+      "body": "Şubat 1998'de Christine Peterson, yeni gelenlerin \"free software\" ifadesini bir özgürlük değil bir fiyat olarak duymasını engellemek için \"open source\" önerdi. 5 Şubat'taki VA Research toplantısında Todd Anderson, terimi resmi olarak önermek yerine konuşmaya soktu ve kendi kendine yayılmasına izin verdi.",
+      "coda": "Grup daha sonra bu ifadeyi tescillemeye çalıştı ve başarısız oldu."
+    },
+    "netscape-source-1998": {
+      "tag": "Yayın",
+      "title": "Tamamen Açık Değil",
+      "body": "22 Ocak 1998'de Netscape, tarayıcısının kaynak kodunun yayınlanacağını duyurdu ve çalışan Jamie Zawinski mozilla.org adresini kaydettirdi. Ancak yazdıkları lisans bir kapıyı açık bıraktı: Netscape aynı kodu tescilli ürünlere dahil etmeye devam edebilirdi.",
+      "coda": "Netscape, yaklaşık bir yıl sonra AOL tarafından satın alındı."
+    },
+    "bsd-75-acknowledgments": {
+      "tag": "Lisans",
+      "title": "Yetmiş Beş Teşekkür",
+      "body": "Orijinal BSD lisansı, her reklamın katkıda bulunan her yazarı adıyla tanımasını şart koşuyordu. 1997'ye gelindiğinde tek bir NetBSD derlemesi yetmiş beş böyle teşekkür barındırıyordu ve bu GPL ile uyumsuzdu. Berkeley'nin lisanslama müdürü, 22 Temmuz 1999'da bu maddenin silinmesini sağladı.",
+      "coda": "Bir ofisin imzası, on yıl boyunca çoğalan bir maddeyi emekli etti."
+    },
+    "red-hat-ipo-1999": {
+      "tag": "IPO",
+      "title": "Ücretsiz Yazılımın Fiyatı",
+      "body": "Red Hat, temel ürününün kaynak kodunu bedava dağıttı ve bunun yerine destek, eğitim ve entegrasyon için ücret talep etti. 11 Ağustos 1999'da şirket halka arz oldu. İlk gün kazancı, o dönemde Wall Street tarihinde sekizinci en büyük olarak sıralandı.",
+      "coda": "Kurucu Bob Young, dört ay sonra CEO olarak görevden alındı."
+    },
+    "multics-shutdown": {
+      "tag": "Kapatma",
+      "title": "Sonuncu",
+      "body": "30 Ekim 2000'de, Honeywell donanımında yerel olarak çalışan son bilinen Multics kurulumu, Nova Scotia, Halifax'taki Kanada Ulusal Savunma Bakanlığı'nda kapatıldı.",
+      "coda": "Proje başladığından otuz beş yıl sonra."
+    },
+    "sqlite-no-license": {
+      "tag": "Temel",
+      "title": "Lisanssız Veritabanı",
+      "body": "SQLite'ın kendi sayfası, her akıllı telefonın yalnız başına yüzlerce dosya taşıdığından, dünya çapında aktif veritabanı dosyası sayısının bir trilyonu aştığını tahmin ediyor ve bu onu dağıtılmış yazılımlar arasında zlib'den sonra ikinci sıraya yerleştiriyor. Lisans yok, çünkü yazarlar her satırı kamu malı olarak verdi.",
+      "coda": "Hukuki güvence isteyen şirketler ayrı bir mülkiyet garantisi satın alır."
+    },
+    "smic-tsmc-lawsuit": {
+      "tag": "Dava",
+      "title": "SMIC'in İki Davası",
+      "body": "SMIC, 2000 yılında eski bir TSMC mühendisi olan Richard Chang başta olmak üzere kuruldu. TSMC, ticari sır hırsızlığı nedeniyle iki kez dava açtı; 2009 davasında bir jüri, SMIC'in karşı taraf tarafından açılan 65 suçlamadan 61'inde sorumlu bulundu.",
+      "coda": "Kasım 2010'da SMIC, TSMC ile 200 milyon dolar ve yaklaşık yüzde 8 hisse karşılığında uzlaştı."
+    },
+    "api-mandate": {
+      "tag": "Yönetişim",
+      "title": "Not",
+      "body": "2002'de Bezos, ekiplerin her şeyi hizmet arayüzleri aracılığıyla sunmasını emretti: doğrudan bağlantı yok, başka bir ekibin deposunu okumak yok, arka kapı yok. 2011'de yanlışlıkla kamuya açıklanan bir gönderiye göre.",
+      "coda": "Bu gönderinin yazarı bunu yalnızca meslektaşları için yazmıştı."
+    },
+    "hupu-rumours": {
+      "tag": "Forum",
+      "title": "Söylentileri çeviren",
+      "body": "Ocak 2004'te Chicago'da makine mühendisliği doktorası yapan Çinli bir öğrenci boş zamanlarında bir basketbol forumu kurdu. Çoğunlukla NBA haberlerini ve söylentilerini Çinceye çevirip düzenlemekten ibaretti.",
+      "coda": "Sekiz yıl sonra forum kendi çevrimiçi mağazasını açtı."
+    },
+    "jd-the-other-name": {
+      "tag": "Etimoloji",
+      "title": "İsmin diğer yarısı",
+      "body": "2004'te yayına giren perakende platformu adını iki kişiden aldı: kurucusu Liu Qiangdong ve ilk çıktığı kadın Gong Xiaojing. Her birinden bir karakter.",
+      "coda": "Jing ondan."
+    },
+    "douban-hutong": {
+      "tag": "Etimoloji",
+      "title": "Sokağın adıyla",
+      "body": "6 Mart 2005'te yayına giren site bir mecazdan adını almamıştır. Yang Bo kaynak kodunu Pekin'de Douban Hutong yakınındaki bir kafede yazdı ve sokağın adını aldı.",
+      "coda": "Yirmi bir yıl sonra site hâlâ bu adı taşıyor."
+    },
+    "git-information-manager-hell": {
+      "tag": "Git",
+      "title": "Cehennemden Bilgi Yöneticisi",
+      "body": "7 Nisan 2005'te Linus Torvalds git'in ilk revizyonunu işledi. Mesaj şöyle: \"git\"in, cehennemden bilgi yöneticisinin ilk revizyonu. Üzerindeki yazar adresi torvalds@ppc970.osdl.org.",
+      "coda": "Bu adres OSDL'deki bir PowerPC 970 test makinesini işaret ediyor."
+    },
+    "knuth-reward-check": {
+      "tag": "Ödül",
+      "title": "Bank of San Serriffe",
+      "body": "Donald Knuth, kitaplarında bulunan her hata için 2,56 dolar ödüyor; ödemeler kurgusal Bank of San Serriffe üzerinden yapılıyor. Mart 2005 itibarıyla imzaladığı çeklerin toplam tutarı 20.000 doları aştı.",
+      "coda": "Çekleri yatıranlardan çok çerçeveletenler oldu."
+    },
+    "dji-helicopter-first": {
+      "tag": "Dönüş",
+      "title": "DJI Bir Helikopterle Başladı",
+      "body": "Frank Wang, 2006'da Hong Kong University of Science and Technology'dan mezun oldu ve sınıf arkadaşlarıyla Shenzhen'de DJI'yi kurdu. İlk ürün bir helikopter uçuş kontrol sistemiydi; ilk olgun sürüm olan XP3.1, 2008'de gönderildi.",
+      "coda": "Ekip daha sonra gimbal alıcılarının çoğunun bunları helikopterlere değil çok rotorlu araçlara taktığını öğrendi."
+    },
+    "dropbox-hn": {
+      "tag": "Kuruntu Karşıtı",
+      "title": "O yanıt",
+      "body": "Houston, Dropbox demosunu Hacker News'e gönderdi. Ünlü yanıt, bunu bir FTP hesabı, curlftpfs ve SVN ile kendinizin de yapabileceğini ve para kazandıracağına benzemediğini açıklıyordu.",
+      "coda": "On bir yıl sonra, halka arzda Houston, bunu sitedeki en sevdiği başlık olarak nitelendirdi."
+    },
+    "butterfield": {
+      "tag": "Dönüşüm",
+      "title": "Enkazdan iki kez",
+      "body": "Butterfield'ın oyunu Game Neverending tıkandı ve ekip fotoğraf paylaşma parçasını Flickr olarak çıkardı. Sekiz yıl sonra ikinci oyunu Glitch kapatıldı ve ekip kendileri için inşa ettikleri sohbet aracını çıkardı: Slack.",
+      "coda": "Her iki seferde de yan ürün, ancak ana şey kapanınca görünür hale geldi."
+    },
+    "blockbuster": {
+      "tag": "Geçiş",
+      "title": "Elliş milyon",
+      "body": "Hastings ve Randolph, Netflix'i Blockbuster'a elli milyon dolara satmak ve onların çevrimiçi tarafını yönetmek için Dallas'a uçtu. Randolph'a göre karşı taraftaki CEO, toplantı boyunca kahkaha basmayı zorlukla engelledi.",
+      "coda": "Blockbuster, on yıl sonra iflas başvurusunda bulundu."
+    },
+    "y2k": {
+      "tag": "Yönetişim",
+      "title": "Hiçbir şey olmadı",
+      "body": "Gartner, Y2K'nın küresel maliyetini üç yüz ile altı yüz milyar dolar arasında tahmin etti ve yüz binlerce kişi iki haneli yılları satır satır değiştirdi. O gece, şebeke ayakta kaldı, bankalar ayakta kaldı, uçaklar uçtu.",
+      "coda": "Dört yıl sonra bir ekonomist, harcanan paranın çoğunun israf edildiğini savunan bir makale yayımladı."
+    },
+    "unsourced": {
+      "tag": "Kaynaksız",
+      "title": "Kimseye atfedilmedi",
+      "body": "\"640K ought to be enough for anybody\" — Gates'in kendi cevabı, hiçbir alıntı olmadığı, sözün bir dedikodu gibi havada kaldığı ve tekrarlandığı yönünde. \"A world market for maybe five computers\" — Thomas Watson 1953'te beş dedi, tek bir makine olan IBM 701 için beklediği siparişler hakkında.",
+      "coda": "701 daha sonra on sekiz adet sattı."
+    },
+    "homebrew-volunteer-team": {
+      "tag": "Temel",
+      "title": "İşveren Olmayan Depo",
+      "body": "Homebrew, çoğu Mac geliştirici makinesinde varsayılan paket yöneticisidir; 2013'te GitHub'da katkıda bulunanlar arasında birinci oldu. Max Howell, ilk sürümünü 2009'da yazdı. Bugün 34 kişilik bir ekip tarafından, hepsi ücretsiz olarak sürdürülüyor.",
+      "coda": "Finansman geçmişi tek bir Kickstarter ve bir Open Source Collective hesabıdır."
+    },
+    "xiaomi-software-first": {
+      "tag": "Yazılım",
+      "title": "Xiaomi'nin İlk Ürünü Bir Telefon Değildi",
+      "body": "Xiaomi, 6 Nisan 2010'da kuruldu. O yılın Ağustos ve Aralık aylarında MIUI işletim sisteminin ve Miliao sohbet uygulamasının beta sürümlerini yayımladı, ikisi de yazılımdı.",
+      "coda": "Şirketin ilk telefonu, ertesi yılın Ağustos ayına kadar piyasaya sürülmedi."
+    },
+    "ritchie-same-week": {
+      "tag": "Vefat",
+      "title": "Aynı Hafta",
+      "body": "Dennis Ritchie, Ken Thompson ile birlikte Unix ve C programlama dilini yarattı. 12 Ekim 2011'de, 70 yaşında, New Jersey'deki evinde ölü bulundu. Steve Jobs bir hafta önce, 5 Ekim'de ölmüştü. Yorumcular daha sonra Ritchie'nin çalışmasının, Apple'ın servetini kurduğu teknolojinin altında yattığını belirtti.",
+      "coda": "İki vefat haberi aynı haftada çıktı."
+    },
+    "leap-second": {
+      "tag": "Olay",
+      "title": "Fazladan saniye",
+      "body": "Atom saatlerini dünyanın dönüşüyle uyumlu tutmak için bir artık saniye eklendi. Çekirdek, zamanlayıcı alt sistemine haber vermedi; yüksek çözünürlüklü zamanlayıcılar erken ateşlendi ve işlemciler döndü durdu. Reddit, Mozilla ve LinkedIn kilitlendi; bir havayolu yolcularını elle uçağa aldı.",
+      "coda": "Zaman monoton artmaz. Kod öyle varsayar."
+    },
+    "gregorian-1752-eleven-days": {
+      "tag": "Efsane",
+      "title": "Kayıp On Bir Gün",
+      "body": "2 Eylül 1752'de İngiliz takvimi on bir günü silerek 14 Eylül'e atladı. Popüler tarih anlatısına göre halk bu yüzden ayaklandı. Ancak o döneme ait herhangi bir ayaklanma kaydı yoktur. Hikâye, 1755 tarihli hicivli bir seçim tablosundaki bir pankarta dayanır.",
+      "coda": "Bir tablodaki aksesuar, başka hiçbir izi olmayan bir olayın kaydına dönüştü."
+    },
+    "bootstrap-the-impossible-joke": {
+      "tag": "Kökenbilim",
+      "title": "İmkânsız Bir Başarıdan Ödünç Alınmış",
+      "body": "\"Kendini çizmelerinden çekip kaldırmak\" deyimi Baron Munchausen'in 1785 tarihli abartılı öyküsüne dayanır ve 19. yüzyıl boyunca fiziksel imkânsızlığın standart örneği olarak kullanıldı. 1953'te bilgisayar bilimi, bir makinenin kendini başlatmasını sağlayan komut zinciri için bu deyimi ödünç aldı.",
+      "coda": "Hilenin adı, ilk kullanıldığında hilenin başarısız olmasıyla ilgili bir espriydi."
+    },
+    "french-revolutionary-decimal-time": {
+      "tag": "Deney",
+      "title": "On Saatlik Gün",
+      "body": "1793'te Fransa günü, her biri yüz ondalık dakikadan oluşan on saate böldü. Zorunlu kullanım Eylül 1794'te başladı ve yalnızca yedi ay sonra askıya alındı. Tuileries Sarayı saatinin ondalık kadranı en az 1801'e kadar çalışmaya devam etti.",
+      "coda": "Kaldırılan sistem, yıllar boyunca bir saray duvarında asılı kaldı."
+    },
+    "railway-time-gwr": {
+      "tag": "Standart",
+      "title": "Trenlerin Uyduğu Zaman",
+      "body": "Kasım 1840'ta Great Western Railway, her kasabanın kendi yerel saati yerine ağı genelinde Greenwich saatini kabul etti. 1855'e gelindiğinde İngiliz kasabalarının yaklaşık yüzde 98'i bunu takip etmişti. Parlamento bunu 1880'e kadar yasal ulusal standart haline getirmedi.",
+      "coda": "Saatler, yasadan kırk yıl önce aynı zamanı gösteriyordu."
+    },
+    "western-union-telephone-memo-1876": {
+      "tag": "Çürütüldü",
+      "title": "Western Union'un Asla Yazmadığı Memo",
+      "body": "Genişçe alıntılanan 1876 Western Union memo, telefonun telgraf ofisine bir elçi göndermeye kıyasla \"idiotic\" olduğunu belirtir. Dönemin gazetelerini tarayan araştırmacılar bunun hiçbir izine rastlamadı ve ismini verdiği yönetici o yıl şirkette o göreve sahip değildi. Metin daha sonra uyduruldu.",
+      "coda": "Western Union o yıl Bell'in patentini reddetti; bu memo asla yazılmadı."
+    },
+    "nintendo-hanafuda-detours": {
+      "tag": "Yön Değişimi",
+      "title": "Çiçek Kartları Sonrası Sapmalar",
+      "body": "Fusajiro Yamauchi 1889'da Kyoto'da hanafuda oyun kartlarını el yapımı olarak üreten bir dükkân açtı. Şirket daha sonra bir taksi servisi ve anlık pirinç denedi, ikisi de terk edildi; genişçe tekrarlanan aşk oteli zinciri iddiası 1962'ye kadar araştırılan sermaye dosyalarında hiçbir kayda sahip değil.",
+      "coda": "1966'da Ultra Hand adlı bir oyuncak yüz binlerce adet sattı."
+    },
+    "wrigley-premiums-premium": {
+      "tag": "Yön Değişimi",
+      "title": "Premium'un Premiumu",
+      "body": "1891'de William Wrigley Jr. Chicago'da sabun sattı ve bonus olarak kabartma tozu ekledi. Müşteriler sabun yerine kabartma tozunu daha çok istedi, bu yüzden bunun satımına geçti ve kabartma tozuna kendi bonusu olarak çiğneme sakızı ekledi. Müşteriler sakızı daha çok istedi.",
+      "coda": "1892'ye kadar hem sabun hem kabartma tozunu bırakıp sadece sakız satıyordu."
+    },
+    "robot-labor-not-brother": {
+      "tag": "Etymoloji",
+      "title": "Robot'un Kredisiz Bulucusu",
+      "body": "Karel Čapek 1920 oyununu Latince kökenli \"laboři\" kelimesiyle taslak haline getirdi ve onu çok kitapçı buldu. Bir gazete köşesinde gerçek kaynağı adlandırdı: kardeşi Josef, ara sıra atılmış bir şekilde. \"Robot\" robota'dan gelir — bir serfin zorunlu emeği, makineler değil.",
+      "coda": "Oyun başlık sayfasında bir kardeşin adını korudu."
+    },
+    "play-doh-wallpaper-cleaner": {
+      "tag": "Yön Değişimi",
+      "title": "Duvar Kağıdını Temizlemek İçin Yapılmıştı",
+      "body": "1930'larda Kutol, duvar kağıdından kömür kirliliğini temizlemek için yumuşak bir hamur formüle etti. Evler daha temiz ısıtma yakıtına geçtiğinde talep yok oldu. Bir öğretmen onu modelleme kilisi olarak satmayı önerdi; 1956'da Play-Doh olarak yeniden adlandırıldı.",
+      "coda": "2005'e kadar 75 ülkede yılda 95 milyon kutu satıyordu."
+    },
+    "hedy-lamarr-frequency-hopping-patent": {
+      "tag": "Patent",
+      "title": "Raf edilen Patent",
+      "body": "1942'de Lamarr ve besteci George Antheil, torpido radyosunun bozulmasını önlemek için bir frekans atlama sistemi patentini aldı. Donanma bunu gizli sınıflandırdı, raf etti ve Lamarr'ın bunun yerine savaş tahvili satmasını önerdi. Patent, herhangi bir gemi bunu taşımadan önce 1959'da süresi doldu.",
+      "coda": "Lamarr, patent için ömrü boyunca ödeme almadı."
+    },
+    "bush-1945-memex": {
+      "tag": "Köken",
+      "title": "Asla İnşa Edilmeyen Masa",
+      "body": "Temmuz 1945'te Vannevar Bush, The Atlantic'te \"As We May Think\" başlıklı makalesini yayımladı; bu makalede, kullanıcının depolanan bilgi üzerinden ilişkisel izler oluşturmasına izin veren, masa boyutunda bir mikrofilm makinesi olan Memex'i tanımladı. Aynı yıl eylül ayında kısaltılmış bir yeniden baskıda tekrar yayınlandı. Hiçbir prototip asla inşa edilmedi.",
+      "coda": "Engelbart ve Nelson daha sonra ikisi de makaleyi başladıkları neden olarak tanıdı."
+    },
+    "jean-bartik-eniac-dinner": {
+      "tag": "Kayıt",
+      "title": "Davet Edilmedikleri Yemek",
+      "body": "14 Şubat 1946'da ENIAC'ın halka açılışında, odadaki herkesi etkileyen yörünge programı Jean Bartik ve Betty Holberton tarafından yazılmıştı. Basın yalnızca Eckert ve Mauchly'yi tanıttı. Altı kadın programcıdan hiçbiri ardından verilen yemeğe davet edilmedi.",
+      "coda": "İsimleri, olayın fotoğraflarından onlarca yıl sonra geri çıkarıldı."
+    },
+    "claude-shannon-juggling-theorem": {
+      "tag": "Makale",
+      "title": "Juggling Teoremi",
+      "body": "1948'de Shannon, 'A Mathematical Theory of Communication'ı yayımlayarak bilgi teorisini kurdu. Onlarca yıl sonra aynı titizliği hobisine uyguladı; bir topun uçuş süresi, duraklama süresi ile top ve el sayıları arasındaki resmi bir ilişki türetti.",
+      "coda": "1948 makalesiyle aynı ciltte toplandı."
+    },
+    "mccarthy-1960-eval": {
+      "tag": "Köken",
+      "title": "Dipnottaki Yorumlayıcı",
+      "body": "1960 makalesinde John McCarthy, sembolik ifadelerin kendilerini tanımlayabildiğini göstermek için bir eval fonksiyonunu matematiksel notasyon olarak yazdı. Öğrencisi Steve Russell türetimi IBM 704 makine koduna çevirdi. Kanıt cihazı ilk çalışan Lisp yorumlayıcısı oldu.",
+      "coda": "McCarthy daha sonra bunun gerçekten çalıştırılmasını amaçlamadığını söyledi."
+    },
+    "licklider-1960-symbiosis": {
+      "tag": "Köken",
+      "title": "Birbirine Bağlı Kütüphaneler",
+      "body": "J.C.R. Licklider, 1960 tarihli \"Man-Computer Symbiosis\" makalesinde, kütüphane işlevlerini barındıran ve bilgisayarların gerçek zamanlı, konuşma tarzı kullanımına olanak tanıyacak şekilde bir ağa bağlanmış \"düşünme merkezleri\" önerdi. O günlerin çoğu makinesi, toplu iş olarak delikli kartlarla çalışıyordu; etkileşimli terminaller neredeyse hiç yoktu.",
+      "coda": "İki yıl sonra yeni bir Pentagon ofisini yönetti ve ARPANET'e dönüşen projeyi finanse etti."
+    },
+    "ctss-1962-password-leak": {
+      "tag": "Köken",
+      "title": "Şifre Dosyası, Basılı",
+      "body": "1962 yılında MIT doktora öğrencisi Allan Scherr, CTSS üzerinde haftada dört saat geçirmekten rahatsız oldu. Çevrimdışı yazdırma komutunun herhangi bir hesabın dosyalarını çekebildiğini keşfetti, bu yüzden her şifreyi tutan UACCNT.SECRET dosyasını yazdırdı ve hesapları ödünç alıp simülasyonlarını sürdürmek için paylaştı.",
+      "coda": "Scherr, bunu laboratuvarın müdürüne neredeyse otuz yıl sonra itiraf etti."
+    },
+    "katherine-johnson-check-the-numbers": {
+      "tag": "Kayıt",
+      "title": "Kızı Kontrol Etsin",
+      "body": "1962 yörüngesel uçuşundan önce John Glenn, mühendislerine Katherine Johnson'un IBM 7090'ın zaten hesapladığı yörüngeyi elle yeniden hesaplamasını istedi. 'Eğer o iyi derse,' dedi, 'gitmeye hazırım.' Sayıları bilgisayarınkilerle birebir eşleşti.",
+      "coda": "Friendship 7, 20 Şubat 1962'de planlandığı gibi fırlatıldı."
+    },
+    "daemon-backronym": {
+      "tag": "Etimoloji",
+      "title": "Daemon'un Sonradan Uydurulan Akronimi",
+      "body": "1963 yılında MIT'nin Project MAC programcıları, bir arka plan şerit yedekleme sürecine, molekülleri yorulmadan ve görünmez şekilde sıralayan 1867 tarihli bir düşünce deneyi ajanı olan Maxwell'in şeytanı'ndan esinlenerek ad verdi — Yunanca daimon, nötr bir ruh, Yahudi-Hristiyan şeytanı değil.",
+      "coda": "\"Disk And Execution MONitor\" ifadesi kelimeye sonradan uyduruldu."
+    },
+    "sketchpad-1963": {
+      "tag": "Köken",
+      "title": "Bir Işık Kalem ve Bir Osiloskop",
+      "body": "Ocak 1963'te Ivan Sutherland, Lincoln Laboratuvarı'ndaki TX-2'nin ekranında bir ışık kalemiyle kısıtlı geometri çizdiği Sketchpad üzerine MIT tezini sundu. Makine yaklaşık bir milyon dolara mal oluyordu ve sadece birkaç tane vardı; çizim tahtası başkasına verilemezdi.",
+      "coda": "Ticari CAD yazılımları, tezin gösterdiği şeyi yakalamak için neredeyse iki on yıl bekledi."
+    },
+    "douglas-mcilroy-garden-hose-pipe": {
+      "tag": "Not",
+      "title": "Bahçe Hortumu Notu",
+      "body": "Ekim 1964'te McIlroy, programların bahçe hortumları gibi birbirine bağlanmasını öneren bir Bell Labs notu yazdı — veriyi farklı şekilde işlemek için başka bir segment takmak. Yaygınlaştı, beğenildi ve inşa edilmedi. Dokuz yıl sonra Ken Thompson, Unix kabuğuna bir gece içinde tek bir karakter ekledi: |.",
+      "coda": "Sabaha kadar birbirleriyle hiç konuşmamış programlar konuştu."
+    },
+    "berkshire-hathaway-spite-buy": {
+      "tag": "Kıskançlık",
+      "title": "Öfkeyle Alınan Fabrika",
+      "body": "1964'te Warren Buffett, Berkshire'ın başkanı Seabury Stanton'a hisselerini her biri 11,50 dolara geri satmayı sözlü olarak kabul etti. Yazılı teklif 11,375 dolardan geldi. Buffett, eksik sekizinci dolara kadar öfkeliydi ki şirketin kontrolünü satın aldı ve Stanton'ı işten çıkardı.",
+      "coda": "1985'te tutunmaya çalıştığı tekstil fabrikalarını kapattı."
+    },
+    "nelson-1965-hypertext": {
+      "tag": "Köken",
+      "title": "Sayfadan Önceki Bağlantı",
+      "body": "1965'te ACM'de yayınlanan bir makalede Ted Nelson, birbirine sırasız şekilde bağlanan ve alıntı yapan belgeler için \"hypertext\" terimini yarattı; bu, 1960'ta başladığı ve daha sonra Xanadu adını verdiği bir projeye dayanıyordu. Onun versiyonu, her takip edilen bağlantı için orijinal yazarlara ödeme yapardı. Kısmi bir uygulama 2014'e kadar piyasaya sürülmedi.",
+      "coda": "Web onun kelime dağarcığını benimsedi ve ödeme mekanizmasını geride bıraktı."
+    },
+    "mary-allen-wilkes-linc": {
+      "tag": "Kayıt",
+      "title": "Oturma Odasındaki LINC",
+      "body": "1965'te Wilkes, 250 poundluk bir LINC bilgisayarı Baltimore'daki ebeveynlerinin oturma odasına taşıdı ve LAP6 adlı etkileşimli işletim sistemini yalnız başına yazdı — Apple II'nin herhangi bir eve ulaşmasından on iki yıl önce. İlk olup olmadığını sorulduğunda yalnızca şunu söyledi: 'Sanırım ben olabilirdim.'",
+      "coda": "Başlığı kendisi açıkça iddia etmedi."
+    },
+    "hoares-billion-dollar-mistake": {
+      "tag": "İtiraf",
+      "title": "Yine de Eklediği Referans",
+      "body": "1965'te Tony Hoare, ALGOL W referanslarını derleme zamanında kanıtlanabilir şekilde güvenli hale getirmeyi amaçlayan ilk tip sistemini inşa ediyordu. Yine de null referans ekledi çünkü uygulamak kolaydı. 2009'da bunu milyar dolarlık hatası olarak adlandırdı.",
+      "coda": "Güvenlik hedefi açıkça belirtilmişti; başarısızlık, kolaylığın yine de kazanmasıydı."
+    },
+    "johnson-vs-cern-touchscreen": {
+      "tag": "Dokunmatik Ekran",
+      "title": "Kim Aslında İlk Olan",
+      "body": "CERN, 1972 yılında hızlandırıcı kontrol odası için dünyanın ilk kapasitif dokunmatik ekranını Bent Stumpe'nin yaptığına atıfta bulunur. İngiltere'nin Royal Radar Establishment'ından Eric Johnson, 1965 yılında, yedi yıl önce, parmakla çalışan kapasitif dokunma teknolojisi üzerine bir makale yayınlamıştı.",
+      "coda": "CERN'in ilk dokunmatik ekranı yaptığı iddiası kendi web sitesinde hâlâ geçerli."
+    },
+    "second-redefined-1967": {
+      "tag": "Metroloji",
+      "title": "9.192.631.770 Döngü",
+      "body": "1960'a kadar saniye, astronomik gözlemle sabitlenen 1900 tropikal yılının bir kesriydi. 1967'de Uluslararası Ağırlıklar ve Ölçüler Konferansı bunu caesium-133 geçişinin 9.192.631.770 döngüsü olarak yeniden tanımladı.",
+      "coda": "Bir saniyenin uzunluğu güneş tarafından değil, bir atom tarafından belirlenmeye başladı."
+    },
+    "goto-statement-considered-harmful": {
+      "tag": "Düzeltme",
+      "title": "Yazmadığı Başlık",
+      "body": "Dijkstra, CACM'ye A Case against the GO TO Statement başlıklı bir makale sundu. Editör Niklaus Wirth, bunu bir mektup olarak aceleyle basıma hazırlarken, onu ünlü yapan başlığı verdi: Go To Statement Considered Harmful.",
+      "coda": "İfade mektubu geçti ve kimse okumadığı 'X Considered Harmful' başlıklarının on yıllarını başlattı."
+    },
+    "rollkugel-vs-mouse": {
+      "tag": "Fare",
+      "title": "İki Fare, Bir Yıl",
+      "body": "Ekim 1968'de Telefunken, mühendislerinin 1966'dan beri yaptığı bir yuvarlanma topu cihazı olan Rollkugel faresini bir satış broşüründe listeleşti. İki ay sonra, 9 Aralık'ta Douglas Engelbart, SRI ekibinin 1963'ten beri yaptığı ahşap faresini gösterdi. Hiçbir ekip diğerinden haberdar değildi.",
+      "coda": "Telefunken pazara ilk ulaştı ve unutuldu; Engelbart ikinci geldi ve insanların fare denildiğinde kastettiği şey oldu."
+    },
+    "peter-principle-verified": {
+      "tag": "Çalışma",
+      "title": "Yetersizliğe Terfi",
+      "body": "1969'da Laurence Peter ve Raymond Hull, her çalışanın yetersiz hale geldiği seviyeye yükseldiğini yarı şaka yarı ciddi bir bestseller'de yazdı, bu hiciv olarak kastediliyordu. 2019'da 214 gerçek firmanın satış ekibi terfi verilerine ilişkin bir çalışma şakanın tuttuğunu buldu: en iyi satıcılar daha kötü yöneticiler oldu.",
+      "coda": "Şaka, ölçülebilir, yayınlanmış bir regresyon katsayısı çıktı."
+    },
+    "lanpar-vs-visicalc": {
+      "tag": "Elektronik Tablo",
+      "title": "İsimsiz Kalan Hesap Tablosu",
+      "body": "Yaz 1969'da Harvard mezunları Rene Pardo ve Remy Landau, kullanıcıların formülleri herhangi bir sırada girmesine ve yine doğru hesaplamasına olanak tanıyan LANPAR hesap tablosu dilini yazdı. Bell Canada ve General Motors bunu kullandı. 1979'da Dan Bricklin, LANPAR'ın varlığından habersiz VisiCalc'ı geliştirdi.",
+      "coda": "LANPAR'ın patentini 1983'e kadar mahkeme itirazları geçti; dergiler zaten VisiCalc'ı ilk olarak adlandırmıştı."
+    },
+    "spam-vikings-not-marketers": {
+      "tag": "Kökenbilim",
+      "title": "Pazarlamadan Önce Spam",
+      "body": "1970 tarihli bir skeçte Monty Python'un Vikingleri, bir lokantada menüdeki konserve et bolluğunu alaya alarak müşterinin konuşmasının üzerine \"spam\" diye bağırdı. Şaka 1980'lerin sonuna doğru MUD sohbet odalarına, ardından 1990'ların başında e-postaya taşındı.",
+      "coda": "Kelime, öğle yemeğiyle ilgili bir skeç yoluyla gelen kutularına ulaştı."
+    },
+    "codd-1970-relational-model": {
+      "tag": "Köken",
+      "title": "İşvereninin Gözden Kaçırdığı Makale",
+      "body": "1970'de IBM araştırmacısı Edgar Codd ilişkisel modeli yayımladı. IBM'in amiral gemisi ürünü hiyerarşikti ve şirket fikrini benimsemek için acele etmiyordu. Larry Ellison Codd'un makalesini ve IBM'in kendi System R raporlarını okudu, ardından 1979'da ticari bir ilişkisel veritabanını ilk olarak piyasaya sürdü.",
+      "coda": "IBM'in kendi ilişkisel ürünü DB2, 1983'e kadar piyasaya sürülmedi."
+    },
+    "linnainmaa-backpropagation": {
+      "tag": "Algoritma",
+      "title": "Eksik Atıf",
+      "body": "1970'de Fin öğrenci Seppo Linnainmaa, ters mod otomatik türev alma için tam algoritmayı, çalışan kodlarıyla birlikte, yüksek lisans tezinde yayımladı. 1986'da Rumelhart, Hinton ve Williams aynı yöntemi sinir ağlarını eğitmek için Nature'da yayımladı. Onu atıf etmediler.",
+      "coda": "Linnainmaa'nın tezi, alanın tarihçileri onu yeniden ortaya çıkarmadan on altı yıl atıfsız kaldı."
+    },
+    "at-sign-arbitrary-pick": {
+      "tag": "Kökenbilim",
+      "title": "Kullanılmayan Tek Tuş",
+      "body": "1971'de BBN mühendisi Ray Tomlinson, kullanıcı adı ve ana bilgisayar arasında asla gerçek bir kişinin adında görünmeyecek bir ayırıcıya ihtiyaç duydu. Model 33 Teletype klavyesini taradı ve @'yı seçti — o dönemde neredeyse yalnızca bakkallar ve muhasebeciler tarafından kullanılan bir karakter.",
+      "coda": "O günden beri her e-posta adresi o tek kısıtlamayı taşıdı."
+    },
+    "parnas-module-decomposition": {
+      "tag": "Yöntem",
+      "title": "Modül Nerede Kesilir",
+      "body": "1972'de David Parnas aynı KWIC indeks sistemini iki şekilde modüllere ayırdı: biri işleme adımına göre, diğeri değişmesi en muhtemel tasarım kararlarına göre, her biri bir arayüzün arkasına gizlenmiş. Sadece ikincisi, bir değişikliğin tek bir modülü etkilemesine ve geri kalanı okumadan yapılmasına izin verdi.",
+      "coda": "Modül sınırı, gelecekteki bir bakım sorumlusunun bilmesi gereken şey hakkında bir tahmini kodlamıştı."
+    },
+    "karen-sparck-jones-idf": {
+      "tag": "Kayıt",
+      "title": "Kimse Teşekkür Etmeyen Formül",
+      "body": "1972'de Spärck Jones, bir kelimenin bir belge koleksiyonu içindeki nadirliğinin önemini ölçtüğünü öne süren bir makale yayımladı — ters belge frekansı, şimdi neredeyse her arama motorunun sıralama mantığının altında. Cambridge'de 1993'e kadar kalıcı bir pozisyon alamadı.",
+      "coda": "O zamana kadar kısa vadeli, yumuşak para sözleşmeleri serisi çalıştı."
+    },
+    "cyclades-pouzin-tcpip": {
+      "tag": "İnternet",
+      "title": "İnternet'in Beşinci Adamı",
+      "body": "1972'de Louis Pouzin Fransa'da CYCLADES ağını kurdu, güvenilir teslimattan ağın değil uç isteklerin sorumlu olduğu ilk ağ. 1974'te Cerf ve Kahn'ın TCP makalesi onu adıyla teşekkür etti. 2004'te Cerf ve Kahn Turing Ödülü'nü kazandı. Pouzin'in adı üzerinde değildi.",
+      "coda": "The Economist daha sonra onu internetin beşinci adamı olarak adlandırdı."
+    },
+    "ethernet-1973-memo": {
+      "tag": "Kaynak",
+      "title": "Ether Notu",
+      "body": "22 Mayıs 1973'te Robert Metcalfe, Alto bilgisayarlarını birbirine bağlayan ortak bir kablonun el çizimi diyagramını içeren \"Ether Acquisition\" başlıklı bir Xerox PARC notu yazdı. Teknoloji genellikle 1976 tarihli dergi makalesine tarihlenir. Asıl eskiz üç yıl daha eski ve el çizimidir.",
+      "coda": "Makale yayınlandığında Ethernet, PARC içinde zaten üç yıldır çalışıyordu."
+    },
+    "vint-cerf-envelope-sketch": {
+      "tag": "Anekdot",
+      "title": "Bir Zarfın Arka Yüzü",
+      "body": "İnternetin kuruluş efsanesine göre Cerf, ağ geçidi mimarisini bir peçeteye çizmişti. Bunu düzeltti: 'Aslında bir peçete değildi, bir zarfın arkasıydı.' 1973'te bir otel lobisinde beklerken, TCP/IP'nin ağ geçidi tasarımı haline gelecek şeyi çizdi.",
+      "coda": "Ertesi yıl, eskiz IEEE Transactions on Communications dergisinde bir makaleye dönüştü."
+    },
+    "gchq-nonsecret-encryption": {
+      "tag": "Kriptoloji",
+      "title": "Yayınlanmamış Anahtar",
+      "body": "Eylül 1973'te, GCHQ'ye yeni gelen 22 yaşındaki Clifford Cocks, yarım saat içinde ortak anahtar gerektirmeyen bir şifreleme şeması geliştirdi. Üç yıl sonra Diffie, Hellman ve Merkle aynı fikri ABD'de yayınladı ve icatçı olarak tanındı. GCHQ dosyaları 1997'ye kadar sınıflandırılmış kaldı.",
+      "coda": "James Ellis, adını kayda geçiren sınıflandırma kaldırılmasından birkaç ay sonra, 1997'de öldü."
+    },
+    "kodak-digital-camera-1975": {
+      "tag": "Rafa Kaldırıldı",
+      "title": "Kodak'ın Gömülü Kamerası",
+      "body": "1975'te 24 yaşındaki mühendis Steven Sasson ilk dijital kamerayı yaptı: 8 pound, her çekim için 23 saniye. Yöneticiler, basılı fotoğraf ucuz ve bir yüzyıldır işe yarıyorken, kimse resimleri televizyonda izlemek istemeyeceğini düşündü. Kamerayı patentliye ve rafaya kaldırdılar.",
+      "coda": "Kodak 2012'de iflas koruması için başvurdu."
+    },
+    "galls-law-origin": {
+      "tag": "Köken",
+      "title": "Bürokrasiler Hakkında Bir Kitap",
+      "body": "1975'te 30 yayıncı reddettikten sonra, çocuk doktoru John Gall, Systemantics'i kendi basımından yayınladı: işleyen karmaşık bir sistem her zaman işleyen basit bir sistemden evrimleşir ve sıfırdan inşa edilen karmaşık bir sistem asla çalışmaz. Hastaneler ve devlet kurumları hakkında yazıyordu.",
+      "coda": "Yazılım mimarları cümleyi tuttu ve üzerine yazıldığı bürokrasileri sessizce bıraktı."
+    },
+    "ken-olsen-home-computer-1977": {
+      "tag": "Yanlış Alıntı",
+      "title": "Olsen'in Ev Bilgisayarı",
+      "body": "1977'de DEC kurucusu Ken Olsen, bir bireyin evinde bilgisayar bulundurması için hiçbir neden olmadığını söyledi. Bir evin ışıklarını, ısısını ve eğlencesini çalıştıran tek merkezi bir makine kastediyordu; anlattığı şey için doğru. Haberler cümlenin sadece ilk yarısını tuttu.",
+      "coda": "Olsen o dönemde evinde bir bilgisayara sahipti."
+    },
+    "kernighans-debugging-law": {
+      "tag": "Söz",
+      "title": "Yazmaktan İki Kat Zor",
+      "body": "1978 Elements of Programming Style'da Kernighan ve Plauger, hata ayıklamanın bir program yazmaktan iki kat zor olduğunu ve onu mümkün olduğunca zekice yazmanın, tanım gereği, onu hata ayıklamak için yeterince akıllı bırakmadığını yazdı. Kendi işinizle iki kez karşılaşma sınırını belirten bir stil kuralı.",
+      "coda": "Düşman asla başkası değildi, birkaç hafta sonrasındaki sizdiniz."
+    },
+    "xerox-parc-1979-visit": {
+      "tag": "Köken",
+      "title": "Xerox'un Kendi Anlaşması",
+      "body": "Aralik 1979: Xerox, erişim karşılığında IPO öncesi 100.000 Apple hisselerini her biri 10 dolara satın almaya kabul ettikten sonra Apple, Xerox PARC'yi gezdi. Jobs, Alto'nun grafik arayüzünü gördü ve gördüğü en iyi şey olduğunu söyledi. Yaygın hikâye hırsızlık; kayıt, Xerox'un müzakere ettiği bir takasıdır.",
+      "coda": "Xerox hisselerini aldı. Alto asla ticari bir ürün olarak satılmadı."
+    },
+    "visicalc-1979-no-patent": {
+      "tag": "Köken",
+      "title": "Atladıkları Patent",
+      "body": "VisiCalc'ın 1979 çıkışından önce Dan Bricklin, dönemin kuralları altında başarı şansının yaklaşık onda bir olduğunu söyleyen bir patent avukatına danıştı. Bunun yerine telif hakkı ve ticari marka başvurusunda bulundular. 1983'te Lotus 1-2-3, VisiCalc'ın kendi dosyalarını okuyabilen uyumlu bir arayüz yayınladı.",
+      "coda": "Elektronik tablo bir kategori olarak hayatta kaldı. Onu yapan şirket hayatta kalamadı."
+    },
+    "ibm-microsoft-dos-1980": {
+      "tag": "Madde",
+      "title": "IBM Bir Kapı Açık Bırakıyor",
+      "body": "IBM, 6 Kasım 1980'de PC'nin işletim sistemi konusunda Microsoft ile anlaşma imzaladı. On yılı aşkın bir tekel karşıtı davası içinde olan IBM, tedarikçilerini kontrol etmeyi seçmedi ve Microsoft'a DOS'u başkalarına yeniden satmasına izin verdi. Başka bir dava karşısında bir sigorta olarak, o dönemde mantıklı görünüyordu.",
+      "coda": "Klon üreticileri yıllar içinde takip etti ve IBM platformun kontrolünü asla geri kazanamadı."
+    },
+    "postel-law-robustness-reversal": {
+      "tag": "Yönetişim",
+      "title": "Sağlamlık İlkesi, Tersine Çevrildi",
+      "body": "RFC 761 (1980), uygulayıcılara aldıklarında cömert, gönderdiklerinde ise temkinli olmalarını öneriyordu. 2023'te IETF'nin kendi mimarlık kurulu, RFC 9413'te bu yönergeyi tersine çevirdi: cömertlik, hataların de facto standartlara donmasını sağlar ve sistemleri daha sağlam değil, daha az sağlam bırakır.",
+      "coda": "İnternete cömert davranmasını söyleyen standart, kendi koruyucuları tarafından geri alındı."
+    },
+    "end-to-end-argument": {
+      "tag": "Makale",
+      "title": "Basit Bir Ağ İçin Bir Argüman",
+      "body": "1981'de Saltzer, Reed ve Clark, aktarılan bir dosyanın hataları için kontrolünün yalnızca iki uçta doğru yapılabileceğini, ağın yardımcı olabileceğini ama asla tam olarak yerini tutamayacağını savundu. Bir checksum'un nereye konacağına dair bir makale, ağları basit tutmak için kurucu bir dava haline geldi.",
+      "coda": "Hata kontrolü yerleşimi üzerine bir not, ağ nötrlüğü için bir dava haline geldi."
+    },
+    "excel-1900-leap-year": {
+      "tag": "Miras",
+      "title": "Olmayan Şubat",
+      "body": "Lotus 1-2-3, 1900'ü artık yıl olarak kabul etti; zararsız bir kısayol. Microsoft, uyumluluğu korumak için aynı hatalı tarihi kopyaladı. Lotus yok oldu; hatalı artık günü kaldı, şimdi Office Open XML spesifikasyonuna yazıldı.",
+      "coda": "Kullanımdan kaldırılmış bir rakip için yazılan bir uyumluluk hilesi artık yazılı bir standart."
+    },
+    "avatar-before-snow-crash": {
+      "tag": "Kökenbilim",
+      "title": "Roman Öncesi Bir Avatar",
+      "body": "Neal Stephenson'un 1992 tarihli Snow Crash romanı, \"avatar\" kelimesinin çevrimiçi anlamı için genellikle ilk örnek olarak gösterilir. Ancak Lucasfilm'in Habitat'i, 1985'ten beri Commodore 64'lerde çalışırken şunu yazıyordu: \"oyuncular, Avatar adını verdiğimiz animasyonlu figürlerle temsil edilir\"; Sanskritçe'den, reenkarnasyon.",
+      "coda": "Terim, kitaptan yedi yıl önce ticari bir serviste canlıydı."
+    },
+    "radia-perlman-algorhyme": {
+      "tag": "Anekdot",
+      "title": "Algorhyme",
+      "body": "1985'te Perlman'ın DEC'teki yöneticisi, döngüsüz köprüleme sorununu Cuma günü verdi, ardından bir hafta kayboldu. O, Wednesday'e kadar spanning-tree algoritmasını bitirmişti — ve kalan süreyi Algorhyme'i yazarak geçirdi; makalenin özetine dönüşen bir şiir.",
+      "coda": "Şiiri yazmak, algoritmayı yazmaktan daha uzun sürdü."
+    },
+    "brooks-no-silver-bullet": {
+      "tag": "Deneme",
+      "title": "Gümüş Kurşun Yok",
+      "body": "1986 IFIP kongresinde Fred Brooks, yazılım zorluğunu temel ve kazara karmaşıklık olarak ikiye ayırdı. Kazara zorluk keskin bir şekilde düşmüştü, dedi, ancak on yıl içinde on kat verimlilik artışı sağlayacak tek bir teknik yoktu.",
+      "coda": "Dört on yıl sonra, her yeni paradigma hâlâ var olmadığını söylediği kurşun olarak satılıyor."
+    },
+    "tz-olson-database": {
+      "tag": "Adlandırma",
+      "title": "Olson Veritabanı",
+      "body": "Çoğu cihaz, saat dilimlerini kurucu Arthur David Olson'dan sonra gayriresmî olarak Olson veritabanı adı verilen, gönüllülerce yönetilen tek bir dosya kümesine göre çözer. Adlandırma şeması, 2005'ten beri veritabanını fiilen düzenleyen Paul Eggert'e atfedilir.",
+      "coda": "Adını taşıyan kişi ile onu o tarihten bu yana sürdüren kişi farklı kişilerdir."
+    },
+    "china-1987-first-email": {
+      "tag": "Kayıt",
+      "title": "Duvarın Ötesinde",
+      "body": "Anlatımlar, Çin'in ilk e-postasını yalnızca Qian Tianbai'ye atfeder: 'Büyük Duvar'ı aşarak dünyanın her köşesine ulaşabiliriz.' Qian o ay ABD'de okuyordu; e-posta Li Chengjiong ve Karlsruhe'den Werner Zorn tarafından yazıldı ve altı gün sonra, 20 Eylül'de Çin'den ayrıldı.",
+      "coda": "Ölüm ilanları hâlâ onu gönderen olarak listeliyor."
+    },
+    "barbara-liskov-substitution-property": {
+      "tag": "İlke",
+      "title": "Adını Hiç Koymadığı Yasa",
+      "body": "1987 OOPSLA açılış konuşmasında Barbara Liskov, S tipindeki bir nesnenin T tipinin yerine geçmesinin her programın davranışını değiştirmemesi durumunda S'nin T'nin bir alt tipi olduğunu önerdi. Buna ikame özelliği adını verdi. Yıllar sonra Robert Martin bunu SOLID'e dahil etti ve ona onun adını verdi.",
+      "coda": "'İlke' kelimesi başka birinin eklemesiydi."
+    },
+    "go-corporation-pen-computing": {
+      "tag": "Kalem bilgisayar",
+      "title": "Kimsenin Almadığı Tablet",
+      "body": "1987'de Jerry Kaplan, kalem tabanlı PenPoint işletim sistemini geliştirmek için GO Corporation'ı kurdu ve 75 milyon dolar topladı. AT&T, GO'yu Ocak 1994'te satın aldı, iki hafta sonra destekleyici çip hattını iptal etti ve GO o Temmuz'da kapandı. Kaplan daha sonra şirketin \"anlamlı bir satışı olmadığını\" söyledi.",
+      "coda": "2010 yılında Apple, kapasitif çoklu dokunmatik bir tablet olan iPad'i piyasaya sürdü."
+    },
+    "iso8601-unify-then-fork": {
+      "tag": "Standart",
+      "title": "ISO 8601'in Daraltılmış Vekili",
+      "body": "ISO 8601 ilk kez 1988'de yayımlandı ve birbiriyle çelişen beş eski ISO tarih ve saat standardını tek bir standartta birleştirdi. Ancak çoğu internet yazılımının doğrulama yaptığı biçim, ISO 8601'in sonraki revizyonundan sonra onun katı bir alt kümesi bile olmayan daha dar bir profil olan RFC 3339'dur (1997).",
+      "coda": "Herkesin atıfta bulunduğu standart ile herkesin kodunun kontrol ettiği lehçe aynı belge değildir."
+    },
+    "python-christmas-project": {
+      "tag": "Betik",
+      "title": "Bir Noel Hobisi",
+      "body": "1989 Noel tatillerinde, Amsterdam'daki bir araştırmacı, o hafta kapalı olan ofisinde bir hobi programlama projesi aradı. Yeni bir betik dili için bir yorumlayıcı yazmaya başladı ve onu bir komedi grubundan, yılanlardan değil, adlandırdı.",
+      "coda": "Temmuz 2026'da programlama dili popülaritesine ilişkin TIOBE indeksinde birinci sırada yer aldı."
+    },
+    "worse-is-better": {
+      "tag": "Debate",
+      "title": "Daha Kötü Daha İyi",
+      "body": "1989'da Richard Gabriel 'worse is better' kavramını ortaya attı: basit, yarım doğru bir uygulama, eksiksiz ve doğru bir uygulamadan daha iyi hayatta kalır; bu yüzden C ve Unix'in Lisp'i geçirdiğini düşündü. 1991'de Nickieben Bourbaki takma adıyla, eski bir arkadaş gibi davranarak bir yanıt yayımladı.",
+      "coda": "Onlarca yıl sonra kendi argümanının doğru olup olmadığına karar veremediğini söyledi."
+    },
+    "rfc1149-avian-carriers-test": {
+      "tag": "Olay",
+      "title": "Gerçekten Uçan Protokol",
+      "body": "David Waitzman, 1990 Nisan Şakası Günü'nde RFC 1149'ü yayımladı: güvercinle IP datagramı taşıma için bir spesifikasyon. 28 Nisan 2001'de Bergen Linux Kullanıcı Grubu bunu gerçekten inşa etti ve yaklaşık 5 km üzerinde dokuz ping paketi fırlattı. Dördü geri döndü — %55 kayıp oranı, gidip dönüş süreleri 53 ile 106 dakika arasında.",
+      "coda": "Şaka RFC'si kayıtlara geçen gerçek bir paket kaybı oranına sahip: yüzde 55."
+    },
+    "att-1990-break-statement": {
+      "tag": "Olay",
+      "title": "Yerinden Break",
+      "body": "New York'taki bir 4ESS anahtarında kurtarma rutini, bir break ifadesini bir seviye fazla sığ iç içe tutuyordu; bu kusuru test hiçbir zaman tetiklemedi. Bir yeniden başlatma rutininin \"ready\" sinyali ardından komşu anahtarlar tarafından bir hata olarak yanlış okundu ve yanlış alarm ağ boyunca dokuz saat boyunca yayıldı.",
+      "coda": "AT&T daha sonra kaybedilen geliri altmış milyon dolar olarak belirledi."
+    },
+    "aspec-vs-musicam": {
+      "tag": "Ses",
+      "title": "Daha Basit Olanın Kazandığı",
+      "body": "1991 yılında MPEG iki rakip ses kodeğini test etti. Fraunhofer, AT&T ve Fransa'nın CNET tarafından geliştirilen ASPEC kalite testlerini kazandı ancak çok karmaşık bulundu. Matsushita ve Philips'ten MUSICAM basitliğiyle kazandı. Tamamlanan MP3, ASPEC'in filtre tasarımını yine de geri dahil etti.",
+      "coda": "Herkesin MP3 olarak adlandırdığı format, kaybeden önerinin mühendisliğini kazananın adı altında taşıyor."
+    },
+    "linux-minix-post": {
+      "tag": "Çekirdek",
+      "title": "comp.os.minix'e Bir Gönderi",
+      "body": "25 Ağustos 1991'de Helsinki Üniversitesi'nden bir öğrenci, comp.os.minix haber grubuna ücretsiz bir işletim sistemi yazdığını, buna \"sadece bir hobi, gnu gibi büyük ve profesyonel olmayacak\" dediğini duyurdu ve insanların hangi özellikleri istediğini sordu.",
+      "coda": "Kasım 2017'den bu yana dünyanın en hızlı 500 süperbilgisayarının tamamı, üzerine inşa edilmiş bir işletim sistemi çalıştırmaktadır."
+    },
+    "web-vs-gopher-1991": {
+      "tag": "Web",
+      "title": "Ücretsiz Beat Fiyatlı",
+      "body": "1991'de Tim Berners-Lee, World Wide Web'i CERN'den yayınladı. Aynı yıl Minnesota Üniversitesi, bir süreliğine daha popüler sistem olan Gopher'ı yayınladı. Şubat 1993'te Minnesota, Gopher sunucuları için lisans ücretleri duyurdu. O Nisan'da CERN, web protokolünü ücretsiz hale getirdi.",
+      "coda": "Gopher, ücret duyurusundan önce daha büyük bir takipçi kitlesine sahipti ve sonrasında bir daha asla sahip olamadı."
+    },
+    "rough-consensus-running-code": {
+      "tag": "Yönetişim",
+      "title": "Kaba Fikir Birliği, Çalışan Kod",
+      "body": "Temmuz 1992 IETF toplantısında MIT'den Dave Clark bir slayt gösterdi: 'Kralları, başkanları ve oylamayı reddediyoruz. Kaba fikir birliğine ve çalışan koda inanıyoruz.' Bu ifade artık internet yönetişim folklorunun temelini oluşturuyor. OSI'nin resmi komite oylama sürecine bir gönderme olarak başladı.",
+      "coda": "OSI'nin oylama kuralları hakkındaki şaka slaytı, internet yönetişiminin kurucu inancı haline geldi."
+    },
+    "han-unification-japanese-delegate": {
+      "tag": "Standart",
+      "title": "Han Birleştirmesinin Beklenmedik Yazarı",
+      "body": "1992'de CJK Ortak Araştırma Grubu, on binlerce Çince, Japonca ve Korece karakteri ortak Unicode kod noktalarında birleştirdi. Popüler anlatımlar Japonya'yı itiraz eden taraf olarak gösterir. Unicode'un kendi tarihi, doğrulama kurallarını Japon delege Miyazawa Akira'ya atfeder.",
+      "coda": "Kurban olarak tasvir edilen temsil heyeti, itiraz ettiği kuralların yazılmasına yardımcı oldu."
+    },
+    "china-first-internet-line": {
+      "tag": "Kayıt",
+      "title": "Bir Yıl Önceki Hat",
+      "body": "Çin, 20 Nisan 1994'ü küresel internete katıldığı gün olarak işaretler — 64K hat, tam fonksiyonlu erişim. On üç ay önce, IHEP'deki fizikçiler zaten Stanford'un SLAC'ına bir hat kiralayarak onlarca kurumla e-posta alışverişinde bulunmuştu. Sadece sayılan bir hat türü değildi.",
+      "coda": "İki hat var; sadece biri yıldönümü görüyor."
+    },
+    "wiki-the-airport-shuttle": {
+      "tag": "Etymology",
+      "title": "Bir Şehirler Arası Otobüsten Adını Aldı",
+      "body": "\"Wiki\" Hawaii dilinde \"hızlı\" anlamına gelir. 1995 yılında Ward Cunningham, geliştirdiği ilk düzenlenebilir web sistemi için bir isim ararken teknik bir terim yerine Honolulu havalimanında terminal arası ücretsiz otobüs olan Wiki Wiki Shuttle'ı hatırladı.",
+      "coda": "Kelimenin ilk evi, bir havaalanı otobüsünün yan tarafına boyanmıştı."
+    },
+    "robots-exclusion-rfc9309": {
+      "tag": "Standart",
+      "title": "robots.txt: 28 Yıl Onaylanmadan Kaldı",
+      "body": "Martijn Koster 1994'te robots.txt'yi önerdi; tarayıcılar bunu gönüllü olarak izledi, resmi bir standart yoktu ve bunu zorlayacak hiçbir şey yoktu. Google 2019'da standardizasyon önerdi ve IETF son olarak Eylül 2022'de RFC 9309'u yayımladı, 28 yıllık boşluğu kapattı.",
+      "coda": "Web'in en çok uyulan centilmen anlaşması gerçek bir standart olmak için yirmi sekiz yıl aldı."
+    },
+    "pentium-fdiv-writeoff": {
+      "tag": "Olay",
+      "title": "Eksik Tablo Girişleri",
+      "body": "Matematikçi Thomas Nicely, yeni Pentium'unun asalların terslerini toplarken hafif hatalı sonuçlar verdiğini fark etti ve hatayı çipin kendisinde izledi. Intel başlangıçta yalnızca şikayette bulunan müşterilere değiştirme önerdi ve yalnızca kamu baskısı altında tam bir geri çağırmaya yöneldi.",
+      "coda": "Intel geri çağırma için 475 milyon dolar vergi öncesi gider kaydetti."
+    },
+    "general-magic-private-network": {
+      "tag": "Ağlar",
+      "title": "General Magic'in Özel Hattı",
+      "body": "1990'da eski Apple mühendisleri Bill Atkinson, Andy Hertzfeld ve Marc Porat, General Magic'i kurdu. Sony'nin Magic Link'i 1994'te 800 dolara çıktı, e-posta gönderiyor ve uygulamalar çalıştırıyordu. Liderlik, interneti kullanmak yerine tescilli bir AT&T ağı kurdu ve web'i \"pasif\" olarak adlandırdı.",
+      "coda": "Çalışan Tony Fadell daha sonra Apple'da iPod ve iPhone için donanım geliştirmesini yönetti."
+    },
+    "ibm-simon-first-touchscreen": {
+      "tag": "Dokunmatik Ekran",
+      "title": "Simon'un Faks Makinesi",
+      "body": "16 Ağustos 1994'te IBM ve BellSouth, Simon Personal Communicator'ı piyasaya sürdü: 4,5 inç dokunmatik ekran, e-posta ve faks gönderme, fiyatı 899 dolar. Pil ömrü yaklaşık bir saat sürdü. Yaklaşık 50.000 adet sattıktan sonra altı ay sonra üretimden kaldırıldı.",
+      "coda": "2007'de Apple, fiziksel klavyesi olmayan kapasitif dokunmatik ekranlı bir telefon olan iPhone'u piyasaya sürdü."
+    },
+    "cors-same-origin-orphaned": {
+      "tag": "Standart",
+      "title": "CORS: Emekli Bir Öneri",
+      "body": "Netscape, aynı köken politikasını 1995'te JavaScript ile birlikte Navigator'a ekledi; hiçbir standart süreci yoktu. CORS, bu politikayı resmi olarak gevşetmek için tasarlanmıştı ancak 2014'te W3C Önerisi oldu — ve 2020'ye gelindiğinde W3C onu emekliye ayırarak spesifikasyonu WHATWG'nin Fetch belgesine devretti.",
+      "coda": "Standart kuruluşu, kendi güvenlik tavsiyesini yayınladıktan altı yıl sonra geri çekti."
+    },
+    "php-resume-counter": {
+      "tag": "Web",
+      "title": "Bir Özgeçmiş Görüntüleme Sayacı",
+      "body": "1994 yılında bir programcı, çevrimiçi özgeçmişini kaç kişinin görüntülediğini bilmek istemesi dışında hiçbir nedenle C dilinde birkaç küçük CGI programı yazdı. Araç takımına \"Personal Home Page Tools\" adını verdi ve kaynağı Haziran 1995'te yayınladı.",
+      "coda": "Üç on yıl sonra, sunucu tarafı dili bilinen web sitelerinin %70'inden fazlası hala onun torununu çalıştırıyor."
+    },
+    "craigslist-email-list": {
+      "tag": "İlanlar",
+      "title": "Etkinlikler Bülteni",
+      "body": "1995 yılında San Francisco'daki bir yazılım mühendisi, bildiği yerel toplantıları ve etkinlikleri bir e-postaya derleyip birkaç arkadaşa göndermeye başladı; temel olarak insanların birbirini biraz daha iyi tanıması için.",
+      "coda": "Bülten şimdi 70 ülkede 570 şehre ulaşıyor ve ayda 140 milyondan fazla ziyaret alıyor."
+    },
+    "wirths-law-misattributed": {
+      "tag": "Düzeltme",
+      "title": "Kendi Adından Çektiği Yasa",
+      "body": "1995 yılında Niklaus Wirth, 'A Plea for Lean Software' adlı çalışmayı yayınladı ve yazılımın donanımdan daha hızlı şekilde yavaşladığını yazdı. Daha sonra Wirth Yasası olarak anılan bu satır, kendi dipnotuna göre meslektaşı Martin Reiser'ın bir alıntısıydı.",
+      "coda": "Eponim kaynağı belirtti; sonraki nesiller yalnızca eponimi korudu."
+    },
+    "general-magic-weekend-site": {
+      "tag": "Yan proje",
+      "title": "Ciddiye Almadığı Site",
+      "body": "1990'ların ortalarında, taşınabilir bilişimi yeniden icat etmesi beklenen bir Silicon Valley girişiminde, bir programcı boş zamanlarını ikinci el eşya satmak için kaba bir site yazarak geçirdi. Site bir hafta sonunda yayına girdi. Ciddiye almıyordu.",
+      "coda": "Girişim General Magic'ti. Site daha sonra eBay olarak yeniden adlandırıldı."
+    },
+    "gettickcount-776-day-bug": {
+      "tag": "Taşma",
+      "title": "776 Günlük Borç",
+      "body": "Windows 95'in GetTickCount fonksiyonu her 49.7 günde bir sıfıra döner; belgelenmiş bir davranıştır ve asla hata olarak ele alınmamıştır. Ancak Windows 8'den Server 2019'a kadar aynı fonksiyon erken taşma yapabiliyordu, yaklaşık 776 günde, bu gerçek bir kusurdu. Microsoft bunu yalnızca Windows 11, sürüm 24H2'de düzeltti.",
+      "coda": "Düzeltme, yamalandığı sayaç ilk kez piyasaya çıktığından üç on yıl sonra geldi."
+    },
+    "bluetooth-the-placeholder": {
+      "tag": "Etimoloji",
+      "title": "Yerine Geçen Kod Adı",
+      "body": "1996 yılında Intel'den Jim Kardach, Ericsson-Nokia görüşmeleri sırasında geçici bir kod adı olarak \"Bluetooth\"'u önerdi — İskandinav'ı birleştiren Viking kralı Harald Bluetooth'tan esinlenerek. Yerine konulması planlanan RadioWire, lansman öncesi ticari marka taramasını geçemedi.",
+      "coda": "Hiçbir yedek isim piyasaya sürülmedi."
+    },
+    "chinaren-detour": {
+      "tag": "Küçük dünya",
+      "title": "Liste Dışı Kodlayıcı",
+      "body": "1996 yılında bir Çinli öğrenci Bilgi Bilimleri Olimpiyatı'nda altın madalya kazandı ve doğrudan Tsinghua'nın bilgisayar bilimleri programına kabul edildi. Öğrenci olarak bir mezunun web sitesi için içerik sistemi geliştirdi. Sohu bunu bir yıl sonra satın aldı; o da şirkette kaldı ve orada çalışmaya devam etti.",
+      "coda": "Öğrenci Wang Xiaochuan'dı. 2004 yılında Sohu içinde Sogou'yu geliştirdi."
+    },
+    "google-a-typo": {
+      "tag": "Etimoloji",
+      "title": "Yanlış Yazılmış Alan Adı Araması",
+      "body": "Eylül 1997'de yapılan bir beyin fırtınası sırasında Sean Anderson \"googolplex\" önerdi; Larry Page bunu \"googol\" olarak kısalttı. Alan adı kayıt defterini o an kontrol eden Anderson yanlışlıkla \"google\" yazdı ve bunun boş olduğunu gördü. Page aynı gün google.com'u kaydettirdi.",
+      "coda": "Kayıt defteri yanlış yazımı hâlâ taşımaktadır, 15 Eylül 1997 tarihli."
+    },
+    "rfc2119-must-should": {
+      "tag": "Standart",
+      "title": "MUST ve must: Yirmi Yıllık Bir Boşluk",
+      "body": "RFC 2119 (Mart 1997), MUST, SHOULD, MAY ve olumsuzlarını IETF belgeleri için bağlayıcı gereksinim seviyeleri olarak tanımladı. Ancak bu kelimelerin 'genellikle büyük harfle yazıldığı' belirtildi; küçük harf must ve should hiçbir zaman dışlanmadı. RFC 8174, 2017'de bu boşluğu kapattı: yalnızca tümü büyük harf geçerli sayılır.",
+      "coda": "Yirmi yıl boyunca, küçük harfli bir must, bir omuz silkme ile aynı yasal ağırlığı taşıdı."
+    },
+    "netease-license-mail-1997": {
+      "tag": "Lisanslama",
+      "title": "Lisansı önce sat",
+      "body": "11 Haziran 1997'de William Ding, NetEase'yi Guangzhou'da kaydettirdi. Şirketin ilk işi ücretsiz webmail değildi. Başka web sitelerine ücret karşılığında geliştirdiği bir e-posta sunucu yazılımının lisansını sattı.",
+      "coda": "NetEase, 163.com altında kendi ücretsiz e-postasını 1998'e kadar başlatmadı."
+    },
+    "lixiang-graphics-card-home": {
+      "tag": "İnceleme sitesi",
+      "title": "Grafik Kartı Ana Sayfa",
+      "body": "1998 yılında Hebei'deki bir lise öğrencisi, boş zamanlarında Grafik Kartı Ana Sayfa adlı kişisel bir web sitesi kurdu ve bilgisayar grafik kartları üzerine incelemeler yayınladı. İki yıl sonra siteyi PCPop olarak yeniden adlandırdı ve okul yılları boyunca güncellemeye devam etti.",
+      "coda": "2005 yılında aynı kişi Autohome'ı kurdu."
+    },
+    "china-oicq-to-qq": {
+      "tag": "Marka Değişikliği",
+      "title": "OICQ'dan QQ'ya",
+      "body": "Tencent, Şubat 1999'da OICQ'yu piyasaya sürdü — O harfi 'Open'ı temsil ediyordu ve ICQ'ya bir gönderme içeriyordu. O yıl Ekim ayında, ICQ'nun sahibi AOL, ticari marka ihlali nedeniyle dur ve kes uyarısı gönderdi. Kasım 2000'de Ma Huateng, siteyi QQ olarak yeniden adlandırdı; bu isim, harfin Çince'de 'sevimli' olarak okunmasından dolayı seçildi.",
+      "coda": "AOL'ün avukatları geldiğinde ilk giden kelime Open oldu."
+    },
+    "excite-google-1999": {
+      "tag": "Yanlış Yargı",
+      "title": "Excite, Google'ı Reddetti",
+      "body": "1999 yılında Google, kendisini Excite'a 750.000 dolar ve yaklaşık %1 hisse karşılığında satmayı teklif etti. CEO George Bell, arama motorları arasındaki farkın Excite'ın teknolojisini söküp atmayı haklı çıkarmak için çok küçük olduğunu değerlendirdi. Bu gerekçe ayakta kaldı. Google bir yıl içinde bir milyardan fazla değere ulaştı.",
+      "coda": "Bell daha sonra aynı kararı yine vereceğini söyledi."
+    },
+    "mars-climate-orbiter-units": {
+      "tag": "Olay",
+      "title": "Pound-Force, Newton",
+      "body": "Mars Climate Orbiter yörünge yerleşimi sırasında sessiz kaldı. Kurul, müteahhitin itici yazılımının impulsu pound-force saniye cinsinden çıkartırken, navigasyon yazılımının newton-saniye beklediğini ve 4.45 kat fark olduğunu buldu. Aracın yüzeye yaklaşık 57 km mesafeye kadar yönlendirildiği tespit edildi.",
+      "coda": "327.6 milyon dolarlık görev bir daha asla veri iletmadi."
+    },
+    "paypal-palm-beaming": {
+      "tag": "Pivot",
+      "title": "Hiç Gelmeyen Işın",
+      "body": "1999'da Confinity, Palm Pilot cihazları arasında kızılötesi para transferini başlattı ve bir fonlama etkinliğinde canlı olarak tanıttı. Lansmandan haftalar sonra yaklaşık 13.000 kullanıcısı vardı; bu sayı sonraki yıl boyunca neredeyse hiç değişmedi. Asıl ilgi gören şey, yalnızca bir yedek seçenek olarak geliştirilen e-posta ödemeleri oldu.",
+      "coda": "Şirket kendini PayPal olarak yeniden adlandırdı ve ışını sessizce bıraktı."
+    },
+    "cai-500-yuan": {
+      "tag": "Dünya küçük",
+      "title": "500 Yuankalık Maaş",
+      "body": "1999 yılında Hong Konglu bir yatırım yöneticisi, küçük bir web sitesini olası bir yatırım olarak değerlendirmek için Hangzhou'ya gitti. Kalabalık bir dairede on iki kişi kadar kod yazan insan buldu. Yatırım yapmadı — 700.000 dolarlık maaşından istifa etti ve bunun yerine ayda 500 yuan karşılığında katıldı.",
+      "coda": "Adı Joe Tsai'ydi. Daha sonra Alibaba'nın yürütme başkan yardımcısı oldu."
+    },
+    "gps-week-rollover": {
+      "tag": "Mekanizma",
+      "title": "GPS Haftası 1024",
+      "body": "GPS haftaları 10 bit ile sayar; bu alan 1.023'te tavan yapar ve yaklaşık her 19,7 yılda sıfıra döner. İlk taşma Ağustos 1999'da gerçekleşti. İkinci taşma 6 Nisan 2019'da oldu ve ilk taşmanın tek seferlik bir olaymış gibi üretilen alıcıları bozdu.",
+      "coda": "Aynı taşma takvimde ve 2038'de tekrarlamaya programlanmış durumda."
+    },
+    "foxmail-resold": {
+      "tag": "Küçük dünya",
+      "title": "Yazılımla Birlikte Satıldı",
+      "body": "1994 yılında Guangzhou'daki bir programcı, boş zamanlarında ücretsiz bir e-posta istemcisi yazdı. 2000 yılında, dot-com balonu patlarken, bunu bir şirkete sattı ve teknoloji direktörü olarak kaldı. Beş yıl sonra o şirket iflas etti ve yazılımı — ve onu da birlikte — Tencent'e sattı.",
+      "coda": "Programcı Zhang Xiaolong'du. O tarihten beş yıl sonra Tencent içinde WeChat'i geliştirdi."
+    },
+    "danger-duarte-android-reunion": {
+      "tag": "Birlikte Çalışma",
+      "title": "Tasarım Direktörü, Başarısız Girişim",
+      "body": "2000 yılında bir tasarımcı, Andy Rubin tarafından kurulan bir taşınabilir cihaz girişimine katıldı ve arayüz üzerinde çalıştı. Şirket Microsoft'a satıldı ve ekip dağıldı. Tasarımcı, sonraki on yıl boyunca başka iki şirkete geçti.",
+      "coda": "Tasarımcı Matias Duarte'ydi. On yıl sonra Rubin onu Android ekibine aldı."
+    },
+    "slashdot-ipod-2001": {
+      "tag": "Reddiyet",
+      "title": "Kablosuz Yok, Daha Az Alan",
+      "body": "Apple, ilk iPod'u 23 Ekim 2001'de tanıttığında, Slashdot kurucusu Rob \"CmdrTaco\" Malda, editör notunda şunları yazdı: \"Kablosuz yok. Nomad'dan daha az alan. Sıkıcı.\" O dönemin rakip MP3 çalarlarının teknik özellikleriyle karşılaştırıldığında, bu ifade gerçeğe aykırı değildi.",
+      "coda": "Yorum, yarattığı karşıt örnek olarak artık rutin olarak alıntılanıyor."
+    },
+    "discuz-shenyang-dorm": {
+      "tag": "Forum",
+      "title": "CDB, bir yurt projesi",
+      "body": "2001'de Shenyang'da bir yurtta yaşayan bir üniversite öğrencisi, forum yazılımı yazdı ve Crossday Bulletin adını verdi; dersleriyle birlikte üzerinde çalıştı. Ertesi yılın ekim ayında adını Discuz olarak değiştirdi.",
+      "coda": "23 Ağustos 2010'da Tencent, bunun etrafında kurduğu şirketi satın aldı."
+    },
+    "wikipedia-side-wiki": {
+      "tag": "Wiki",
+      "title": "Nupedia'nın Yanında Bir Yan Proje",
+      "body": "10 Ocak 2001'de, hakemli bir çevrimiçi ansiklopedinin kurucusu, projenin kendi sunucusuna wiki yazılımı kurdu; temel olarak gönüllülerin, hakemli ansiklopedi yavaşça ilerlerken gevşekçe taslak maddeler yazmayı deneyebilmeleri için.",
+      "coda": "Temmuz 2026'ya kadar yalnızca İngilizce baskısı 7.2 milyondan fazla makale içeriyordu."
+    },
+    "bittorrent-mailing-list": {
+      "tag": "Protokol",
+      "title": "Yeni Bir P2P Uygulaması",
+      "body": "2 Temmuz 2001'de bir programcı, \"BitTorrent -- a new P2P app\" başlıklı bir Yahoo eGroups e-posta listesine mesaj gönderdi; az önce tasarımını tamamladığı, bir dosyanın parçalarını aynı anda birçok kaynaktan çeken bir dosdağıtım protokolünü tanımlıyordu.",
+      "coda": "Üç yıl sonra, 2004 CacheLogic araştırmasına göre tüm internet trafiğinin üçte birini oluşturuyordu."
+    },
+    "webvan-thirty-minute-window": {
+      "tag": "Bakkal",
+      "title": "Otuz Dakikalık Pencereler",
+      "body": "1996 yılında Borders kitap dükkanı ortak kurucusu Louis Borders, sıfırdan inşa edilen depolardan 30 dakikada teslimat vaat ederek Webvan'ı kurdu. Şirket Kasım 1999'da 375 milyon dolara halka arz oldu ve 4,8 milyar doların üzerinde bir değerlemeye ulaştı; ardından Temmuz 2001'de 800 milyon dolardan fazla zarar ederek iflas başvurusunda bulundu.",
+      "coda": "Bazı Webvan yöneticileri Amazon'a geçti; Amazon Fresh ve Instacart daha sonra aynı siparişi doldurdu."
+    },
+    "kozmo-free-hour-delivery": {
+      "tag": "Teslimat",
+      "title": "Ücretsiz Bir Saat Sözü",
+      "body": "1998'de Joseph Park ve Yong Kang, Kozmo.com'u kurdu ve çağrı cihazıyla yönlendirilen kuryelerle ücretsiz bir saatlik teslimat vaat etti. Yaklaşık 250 milyon dolar topladı ancak 1999'da 26,3 milyon dolar zarara karşılık yalnızca 3,5 milyon dolar gelir elde etti. Nisan 2001'de çalışanlar, kapalı ofisler bularak kapanışı öğrendi.",
+      "coda": "2013'te kurulan DoorDash, kuryeleri akıllı telefon GPS'iyle yönlendirir ve teslimat ücreti alır."
+    },
+    "flooz-digital-currency": {
+      "tag": "Para Birimi",
+      "title": "Depositsuz Para",
+      "body": "Şubat 1999'da iVillage ortak kurucusu Robert Levitan, kullanıcıların ortak işverenlerde satın alıp harcayabileceği bir dijital para olan Flooz.com'u başlattı. Bir suç örgütü çalınan kartları kullanarak 300.000 dolarlık sahte kredi bastı ve 2001'e gelindiğinde dolandırıcılık hacminin %19'una ulaştı. Şirket o yılın Ağustos ayında kapandı.",
+      "coda": "Ocak 2009'da Satoshi Nakamoto bitcoin'un kök bloğunu kazıdı."
+    },
+    "yahoo-google-2002": {
+      "tag": "Kaçırma",
+      "title": "Yahoo, Google'ı Geçti",
+      "body": "2002'de Yahoo CEO'su Terry Semel, Google için 3 milyar dolar teklif etti; Page ve Brin 5 milyar doları bekledi. Semel'in okuması, Yahoo'nun çöküş sonrası yaklaşık 5 milyar dolar olan kendi piyasa değerinin bu bahsi kaldıramayacağıydı. Google iki yıl sonra 23 milyar dolara halka arz oldu.",
+      "coda": "Yahoo, 2017'de çekirdek işini Verizon'a 4.48 milyar dolara sattı."
+    },
+    "pplive-dorm-2002": {
+      "tag": "Derslik",
+      "title": "Bina 26, Yunyuan",
+      "body": "2002 Dünya Kupası sırasında Huazhong Bilim ve Teknoloji Üniversitesi'ndeki Yao Xin'in dersliğinde televizyon yoktu, bu yüzden maçları sürekli çöken kampüs ağı üzerinden izledi. 26. Bina'daki odasında eşler arası aktarımı akış video ile nasıl birleştireceğini çalışmaya başladı.",
+      "coda": "PPLive 2005'te piyasaya sürüldü ve zirve döneminde yüz milyonun üzerinde kullanıcıya ulaştı."
+    },
+    "china-alipay-escrow": {
+      "tag": "Güven",
+      "title": "Emanet Çözümü",
+      "body": "2003'te, Taobao alıcıları ve satıcıları birbirine güvenmek istemeyince, finans bir emanet çözümü geliştirdi: ödeme, mallar onaylanana kadar donduruldu. İlk işlem o Ekim ayında gerçekleşti — Xi'an'da bir öğrenci, Japonya'daki bir satıcıya ödeme yaptı. İsim, 'ödeme' ve 'garanti' kelimeleriyle bir kelime oyunu yapıyor.",
+      "coda": "Bu kelime oyunu, şirketin kalıcı, resmi adı haline geldi."
+    },
+    "china-taobao-free-vs-ebay": {
+      "tag": "Rekabet",
+      "title": "Üç Yıl Ücretsiz",
+      "body": "2003 yılında eBay'in Eachnet'i, Çin'in C2C pazarının yüzde 70'inden fazlasını elinde tutuyor ve ilan ile işlem ücretleri alıyordu. Taobao o yılın Mayıs ayında neredeyse boş bir siteyle piyasaya çıktı; Alibaba'nın cevabı üç yıl boyunca ücretsiz ilanlar oldu. 2006 yılına gelindiğinde Taobao yüzde 70'e sahipti ve eBay Çin C2C pazarından çekildi.",
+      "coda": "Listeleme ücreti almaya devam eden tarafın ömrü ilk önce tükendi."
+    },
+    "dianping-zagat-notes": {
+      "tag": "İnceleme rehberi",
+      "title": "Bir Zagat not defteri",
+      "body": "2002 yılında Zhang Tao, ABD'den Çin'e döndüğünde orada edindiği bir fikri getirdi: okuyucuların kendi puanlamalarından oluşan bir restoran rehberi olan Zagat Survey. zsurvey.com alan adını kaydetti ve Şanghay'da Çin versiyonunu oluşturmaya başladı.",
+      "coda": "Bundan gelişen site olan Dianping, 12 Nisan 2003'te yayına girdi."
+    },
+    "wordpress-b2-post": {
+      "tag": "Bloglama",
+      "title": "Blog Yazılımı Dilemması",
+      "body": "24 Ocak 2003'te bir üniversite öğrencisi, günlük kullandığı b2 blog yazılımının, baş geliştiricisinin kaybolmasından bu yana aylardır bakımsız kaldığını kendi blogunda yazdı. Çatallamak istediğini ve sadece bir isim istediğini söyledi.",
+      "coda": "Bu çatallamadan çıkan şirket, 2021 yılına kadar 7,5 milyar dolar değerindeydi."
+    },
+    "2003-blackout-race-condition": {
+      "tag": "Olay",
+      "title": "Çalmayan Alarm",
+      "body": "Ohio'daki bir kontrol odasındaki alarm süreci sessizce tıkandı: bir kodlama hatası, iki işlemin aynı veri yapısına aynı anda yazma erişimi kazanmasına izin verdi ve sonsuz döngüye girdi. Operatörler aşırı yük uyarılarını hiç görmedi ve yükü zamanında azaltamadı. Kaskat 55 milyon insanı elektriksiz bıraktı.",
+      "coda": "Mühendisler yarış koşulunu yeniden üretmek için sekiz hafta harcadı."
+    },
+    "aws-not-leftover-servers": {
+      "tag": "Düzeltme",
+      "title": "Artık Sunucular Değil",
+      "body": "Yaygın anlatıya göre AWS, Amazon'un tatil sezonundaki boşta kalan sunucu kapasitesini yeniden satarak başladı. Benjamin Black bunu dümdüz yanlış buluyor: 2003'te Chris Pinkham ile birlikte standartlaştırılmış, otomatize edilmiş bir altyapı öneren bir not yazdılar; bu altyapı başından itibaren bir hizmet olarak dışarıya satılmak üzere özel olarak tasarlanmıştı.",
+      "coda": "S3 ve EC2, o notun ardından 2006'da piyasaya sürüldü."
+    },
+    "maps-intern-friendfeed": {
+      "tag": "Staj",
+      "title": "Haritalar Ekibi Stajyeri",
+      "body": "2003'te bir Google ürün yöneticisi, yerel arama geliştiren ekibe bir stajyer aldı; bu proje daha sonra Google Haritalar'a dönüştü. Dört yıl sonra o stajyer ve Gmail'i geliştiren bir mühendis Google'dan ayrılarak birlikte bir şirket kurdu.",
+      "coda": "Stajyer Bret Taylor'dı. Kurmak için ayrıldığı şirket Facebook tarafından satın alındı."
+    },
+    "friendster-forty-second-load": {
+      "tag": "Ölçekleme",
+      "title": "Kırk İkinci Yükleme",
+      "body": "Friendster 2002'de piyasaya sürüldü ve 100 milyondan fazla kayıtlı hesaba ulaştı, ancak arkadaşlar arasındaki bağlantı derecelerini hesaplamakla ilgili yük altında sunucuları çöktü; tek bir sayfa kırk saniyede yükleniyordu. Destek e-postaları, kullanıcıların daha yeni MySpace'e geçmeyi tehdit ettiğini gösteriyor.",
+      "coda": "Facebook 2004'te aynı sosyal-grafik fikriyle piyasaya sürüldü ve trafik altında kaldı."
+    },
+    "shopify-snowdevil-software": {
+      "tag": "Pivot",
+      "title": "Mağaza Yazılımı Mağazadan Büyüdü",
+      "body": "2004'te programcı Tobias Lutke, günün e-ticaret yazılımının çok kaba olduğunu buldu, bu yüzden Snowdevil olarak karabin ekipmanlarını çevrimiçi satmak için kendi yazılımını yazdı. Snowdevil kendisi küçük bir mağaza olarak kaldı, ancak diğer tüccarlar arkasındaki yazılımı lisanslamaya başladı.",
+      "coda": "Shopify 2015'te New York Stock Exchange'te listelendi."
+    },
+    "twitter-odeo-podcast-pivot": {
+      "tag": "Pivot",
+      "title": "Podcast Şirketinin Yan Projesi",
+      "body": "28 Haziran 2005'te Apple, podcast aboneliklerini iTunes'a ekledi; iki gün içinde abonelikler bir milyonu geçti ve Odeo'nun tüm podcast işi bir gecede geçersiz oldu. Ertesi Mart'ta, iç bir hackathon Jack Dorsey'in SMS durum güncellemesi fikrini üretti: Twitter.",
+      "coda": "Twitter'in içinde inşa edildiği şirket olan Odeo, 2007 yılında satıldı."
+    },
+    "youtube-tune-in-hook-up": {
+      "tag": "Efsane",
+      "title": "Sevgililer Günü'nde Kaydedilen Alan Adı",
+      "body": "youtube.com, 14 Şubat 2005 tarihinde kaydedildi ve kurucuları daha sonra Hot or Not modeline dayalı bir tanışma sitesi konseptinden bahsetti. Jawed Karim, hikâyenin dayandığı akşam yemeğine katıldığını reddetti ve Steve Chen bunun bir pazarlama anlatısı gibi okunduğunu kabul etti.",
+      "coda": "Karim bunun yerine çevrimiçi olarak tsunami görüntüleri bulmakta yaşadığı zorlukları belirtti."
+    },
+    "duan-buffett-lunch": {
+      "tag": "Dünya Küçük",
+      "title": "Buffett Yemeği",
+      "body": "2006 yılında Guangdong eyaletinden bir elektronik üreticisi, Warren Buffett ile yemek yemeği için düzenlenen yıllık hayır çekilişini 620.100 dolar karşılığında kazandı. Yanında henüz bir Amerikan şirketinden ayrılmış ve henüz net bir planı olmayan 26 yaşında bir genç getirdi.",
+      "coda": "Üretici Duan Yongping'di. Genç adam ise daha sonra Pinduoduo'yu kuran Colin Huang'dı."
+    },
+    "blackberry-iphone-2007": {
+      "tag": "Yanlış Okuma",
+      "title": "BlackBerry Kusurları Gördü",
+      "body": "Ocak 2007'de BlackBerry ortak CEO'su Jim Balsillie ve başkanı Mike Lazaridis iPhone tanıtımını izledi. Lazaridis'in kusur listesi doğruydı: fiziksel klavye yok, zayıf güvenlik, kötü pil, cam üzerinde yazma. Her madde gerçekti. Balsillie'nin cevabı şuydu: \"Sorun yok, idare ederiz.\"",
+      "coda": "BlackBerry'nin pazar payı, takip eden yıllarda iPhone'a eridi."
+    },
+    "dvorak-iphone-2007": {
+      "tag": "Tahmin",
+      "title": "Dvorak Fişi Çekmeyi Önerdi",
+      "body": "28 Mart 2007'de köşe yazarı John C. Dvorak, telefon marjlarının ince olduğunu ve Nokia ile Motorola'nın zaten baskın olduğunu yazdı; bu yüzden Apple'ın iPhone tasarımını bazı \"aptallara\" devredip çekilmesi gerektiğini söyledi. Apple'ın bu piyasadaki geçmişi göz önüne alındığında, gerekçelendirme mantıksız değildi.",
+      "coda": "Daha sonra telefonu eline aldığı zaman, bu çağrıyı pişman olduğunu söyledi."
+    },
+    "auctomatic-taggar-yc": {
+      "tag": "Birleşme",
+      "title": "Kod Öğrenmek Zorunda Olan",
+      "body": "2007'de iki İrlandalı genç kardeş, ev yapımı bir e-ticaret aracını Y Combinator'a getirdi ve şirketlerini iki Oxford mezunu tarafından yürütülen bir şirketle birleştirdi. Oxford ikilisinden hiçbiri programlama bilmiyordu. Onlardan birine hızlıca öğrenmesi söylendi.",
+      "coda": "Bu Harj Taggar'dı, daha sonra Y Combinator'un ilk kurucu olmayan ortağı oldu."
+    },
+    "justintv-backpack-cruise": {
+      "tag": "Sırt Çantası",
+      "title": "Canlı Yayın Sırt Çantası",
+      "body": "Mart 2007'de bir adam, bir beyzbol şapkasına webcam bağladı ve San Francisco'da hayatını yirmi dört saat canlı olarak yayınlamaya başladı; sırtında, MIT'den ayrılmış bir arkadaşının yaptığı ev yapımı dizüstü bilgisayar sırt çantası düzeni vardı.",
+      "coda": "Bunu yapan arkadaş Kyle Vogt'tu, daha sonra Cruise'u kurdu ve GM tarafından 1 milyar dolardan fazla bir bedelle satın alındı."
+    },
+    "stackoverflow-blog-post": {
+      "tag": "S&S",
+      "title": "Anti-Uzmanlar-Değişim",
+      "body": "16 Nisan 2008'de bir programcı, kendi blogunda, mevcut site hakkında bulduğu ücret duvarları ve arama motoru manipülasyonlarından nefret ettiğini belirterek, programcılar için bir \"anti-Uzmanlar-Değişim\" soru-cevap sitesi kurmak istediğini yazdı.",
+      "coda": "2021'de site 1.8 milyar dolara Prosus'a satıldı."
+    },
+    "zune-leap-year-freeze": {
+      "tag": "Olay",
+      "title": "366. Gün",
+      "body": "31 Aralık 2008'de Pasifik saatiyle gece yarısına yakın, her Zune 30 dondu; bu olaya Z2K9 adı verildi. Sebep, yalnızca artık yılın 366. gününde tetiklenebilen bir güç yongası sürücüsündeki sonsuz döngüydü. Hiçbir yama mevcut değildi; tek çözüm pilin bitmesini beklemekti.",
+      "coda": "Microsoft tarafından gönderilen çözüm, cihazın gücünün tamamen bitmesini beklemekti."
+    },
+    "china-wang-jian-alibaba-cloud": {
+      "tag": "Şüphe",
+      "title": "Bulutu İnşa Eden Yalancı",
+      "body": "2012 civarında, Alibaba Cloud yıllardır yoğun yatırım yapmış ve görünür bir ürün çıkmamışken, çalışanlar Jack Ma'ya doğrudan Wang Jian'ın bir sahtekar olduğunu söyledi. Mühendislik ekibinin yüzde seksene yakını işten ayrıldı. Ma'nın cevabı: on yıl boyunca yılda bir milyar yuan fonlayın, sonra karar verin.",
+      "coda": "On yıl sonra, sahtekarın projesi kâra geçti."
+    },
+    "taobao-double11-2009": {
+      "tag": "İndirim",
+      "title": "27 satıcı",
+      "body": "11 Kasım 2009'da Taobao Mall, yavaş bir satış haftasını doldurmak için yirmi yedi markayı bir araya getirdi; plan otuzun üzerindeydi ancak satıcılar sürekli çekiliyordu. Shanxi'de Yan Jun adlı bir memur, günün ilk siparişini 00:00:03'te, 150 yuan değerinde telefon kredisi olarak verdi.",
+      "coda": "O günkü satışlar 52 milyon yuana ulaştı, normal bir günün on katı."
+    },
+    "cloudflare-hbs-elective": {
+      "tag": "Sınıf arkadaşı",
+      "title": "HBS'de Bir Seçmeli Ders",
+      "body": "2009 yılında bir programcı, Harvard Business School'da MBA eğitimi almak için izin aldı. Yıllardır yarı zamanlı bir anti-spam gönüllü projesi yürütüyordu. Bir gün sınıfta bunu dile getirdi. Bir sınıf arkadaşı bunun gerçek bir ürün olması gerektiğini söyledi.",
+      "coda": "O sınıf arkadaşı, daha sonra Cloudflare'in kurucu ortağı ve COO'su olan Michelle Zatlyn'di."
+    },
+    "china-3q-war": {
+      "tag": "Olay",
+      "title": "Birini Seç",
+      "body": "3 Kasım 2010'da Tencent, 360'ı kaldırmak ya da QQ'nun çalışmasını durdurmak arasında bir seçim zorunluluğu getirdi. Ma Huateng, kullanıcıların üç gün içinde yok olabileceğini uyardı. Günler sonra Sanayi ve Bilgi Teknolojileri Bakanlığı, her iki tarafın da uyumluluğu yeniden sağlamasını emretti.",
+      "coda": "Bunu piyasa veya şirketlerden biri değil, düzenleyici sonlandırdı."
+    },
+    "china-thousand-groupon-war": {
+      "tag": "Balon",
+      "title": "Bin Grupon Savaşı",
+      "body": "Çin'in ilk toplu alışveriş sitesi 2010'da açıldı; portallar ve sosyal ağlar aylar içinde katıldı. Ağustos 2011'e gelindiğinde 5.000'den fazla toplu alışveriş şirketi rekabet ediyordu — 'Bin Grupon Savaşı.' 2014 ortalarında yalnızca 176 site ayakta kalmıştı.",
+      "coda": "Beş binden azı iki yüzden azı hayatta kaldı."
+    },
+    "semver-dependency-hell": {
+      "tag": "Standart",
+      "title": "SemVer'in Kendi Muafiyeti",
+      "body": "2010'da GitHub kurucu ortağı Tom Preston-Werner, 'bağımlılık cehennemini' bitirmek için MAJOR.MINOR.PATCH öneren semver.org'u yayımladı. Şartnamenin kendisi bir istisna tanır: 0.y.z 'ilk geliştirme' aşamasında her şey her an değişebilir — çoğu paketin aslında hiç terk etmediği bir aşama.",
+      "coda": "Yayımlanan paketlerin çoğu, kuralın bağlamadığı sürüm aralığını asla terk etmez."
+    },
+    "instagram-burbn-cut": {
+      "tag": "Dönüşüm",
+      "title": "Burbn'den Kesilenler",
+      "body": "Kevin Systrom ve Mike Krieger, Burbn adlı tam donanımlı bir check-in uygulaması yapmak için neredeyse bir yıl harcadı, ardından kendi bitirdikleri iPhone yapısını dağınık buldu. Fotoğraflar, yorumlar ve beğenilere indirgediler ve sonucu sekiz hafta sonra Instagram olarak yayımladılar.",
+      "coda": "Lansmandan sonraki bir hafta içinde 100.000 kullanıcıya ulaştı."
+    },
+    "tz-database-lawsuit": {
+      "tag": "Olay",
+      "title": "Saat Dilimi Veritabanı Davası",
+      "body": "Ekim 2011'de astroloji yazılımı üreticisi Astrolabe, tz veritabanının bakımını yapanlara dava açarak bölge verilerinin yayınladığı bir atlası ihlal ettiğini iddia etti. Posta listesi ve FTP sunucusu kapatıldı. ICANN veritabanını barındırmak için devreye girdi; Astrolabe davayı Şubat 2012'de geri çekti.",
+      "coda": "Bir astroloji şirketinin gün doğumu tabloları üzerindeki telif hakkı iddiası ödeme yapılmadan geri çekildi."
+    },
+    "instagram-facebook-2012": {
+      "tag": "Alay",
+      "title": "Bir Filtre İçin Bir Milyar",
+      "body": "Nisan 2012'de Facebook, 13 kişilik ve gelir üretmeyen bir ekip olan Instagram için 1 milyar dolar ödediğini açıkladı. The Daily Show'da Jon Stewart, \"Bir milyar dolar mı? Resimlerinizi bir şekilde bozan bir şey için mi?\" diye sordu. Ekip büyüklüğüne ve gelire göre ölçüldüğünde soru haksız değildi.",
+      "coda": "Bu anlaşma, teknoloji tarihinde yapılan en iyi satın almalar arasında düzenli olarak anılmaktadır."
+    },
+    "didi-alibaba-resignation": {
+      "tag": "İstifa",
+      "title": "Alibaba'dan taksilere",
+      "body": "Cheng Wei, Alipay'in tüketici işleri genel müdür yardımcılığına yükselerek Alibaba'da sekiz yıl geçirdi. Haziran 2012'de istifa etti ve Wu Rui ve Li Xiang ile birlikte bir taksi çağırma uygulaması başlattı. 9 Eylül'de piyasaya sürüldüğünde aynı anda yalnızca on altı sürücü çevrimiçiydi.",
+      "coda": "İki ay sonra aynı anda yüzden fazla sürücü çevrimiçiydi."
+    },
+    "knight-capital-power-peg": {
+      "tag": "Olay",
+      "title": "Sekizinci Sunucu",
+      "body": "Knight Capital yeni işlem kodunu sekiz sunucuya gönderdi; yalnızca yedisi aldı. Sekizincisi yıllar önce emekliye ayrılmış, canlı emirlerin uyandırdığı ölü Power Peg kodunu çalıştırmaya devam ediyordu. 45 dakika içinde Knight 3,5 milyar dolar uzun ve 3,15 milyar dolar kısa pozisyon oluşturdu. SEC'in tespiti: eksik dağıtımı kimse gözden geçirmemişti.",
+      "coda": "Knight, zararın ardından bir hafta içinde bir rakibi tarafından satın alındı."
+    },
+    "dnnresearch-week-of-bidding": {
+      "tag": "Açık Artırma",
+      "title": "Teklif Verilen Bir Hafta",
+      "body": "2012'de Toronto Üniversitesi'nden bir profesör ve iki yüksek lisans öğrencisi bir görüntü tanıma yarışmasında rakiplerini ezip geçti, ardından kendilerini satmak için bir kabuk şirket kurdular. Google, Microsoft, Baidu ve DeepMind onu elde etmek için bir hafta boyunca birbirlerine karşı teklif verdiler.",
+      "coda": "Hinton, Google'u seçti. İki öğrenciden biri Ilya Sutskever'dı."
+    },
+    "xiaohongshu-name": {
+      "tag": "Etymoloji",
+      "title": "O küçük kırmızı kitap değil",
+      "body": "Çoğu insan ismin diğer kırmızı kitaba işaret ettiğini varsayar. Kurucunun kendi anlatımı daha soluk: Bain & Company ve Stanford Graduate School of Business, çalıştığı firma ve gittiği okul, ikisi de kırmızı üzerine çalışıyor.",
+      "coda": "İsmin İngilizceye çevirisi zaten diğerine birebir aynı çıkıyor."
+    },
+    "china-wechat-red-envelope-pearl-harbor": {
+      "tag": "Ödemeler",
+      "title": "Pearl Harbor, Dijital",
+      "body": "2014 Çin Yeni Yılı civarında WeChat'in kırmızı zarf özelliği yayına girdi; kullanıcılar birkaç gün içinde 40 milyondan fazla kırmızı zarf aldı. Laiwang uygulamasında Jack Ma bunu bir 'Pearl Harbor gizli saldırısı' olarak nitelendirdi — kısa vadede etkili, yazdı, ancak uzun vadede sağlıklı büyümenin daha önemli olduğunu belirtti.",
+      "coda": "Kırmızı zarf bir ödeme hunisi haline geldi."
+    },
+    "heartbleed-two-person-team": {
+      "tag": "Olay",
+      "title": "Dört Kişilik Bir Ekip",
+      "body": "Heartbleed'in eksik sınır kontrolü, OpenSSL'in heartbeat eklentisine Aralık 2011'de girdi ve bağımsız araştırmacılar Nisan 2014'te bulana dek iki yıl fark edilmedi. O sırada, web'in HTTPS trafiğinin büyük bir kısmını oluşturan kod tabanı dört gönüllü, biri tam zamanlı, tarafından sürdürülüyordu.",
+      "coda": "Düzeltme, hatanın açıklandığı gün yayınlandı."
+    },
+    "goto-fail-duplicate": {
+      "tag": "Güvenlik",
+      "title": "Yinelenen Atlama",
+      "body": "Apple'ın SSLVerifySignedServerKeyExchange fonksiyonunda bir goto fail; satırı yinelenmişti. İkinci kopya herhangi bir if bloğunun dışındaydı; bu nedenle fonksiyon her zaman imza kontrolünü atladı ve ne olursa olsun başarıyla döndü.",
+      "coda": "Yinelenen satır, etkilenen sistemlerde aylarca değiştirilmeden çalıştı."
+    },
+    "ntp-harlan-stenn": {
+      "tag": "Zaman",
+      "title": "Saati Kim Kurar",
+      "body": "Bankalar, borsalar ve uydu sistemleri NTP'ye göre senkronize olur. Protokolü David Mills tasarladı; referans implementasyonu şu anda büyük ölçüde tek başına Harlan Stenn tarafından yürütülüyor. Mart 2015'te ticari basında 'NTP Needs Money: Is A Foundation The Answer?' başlığı yer aldı.",
+      "coda": "Vakıf hâlâ bütçesi için bağış topluyor."
+    },
+    "alphago-lee-sedol-2016": {
+      "tag": "Go",
+      "title": "Taş Yüz İki",
+      "body": "AlphaGo, Mart 2016'da Seul'de Lee Sedol'u dört bire bir yendi; Lee'nin tek galibiyeti dördüncü oyunda geldi. Sonrasında ilk oyunda erken bir kritik hata yaptığını söyledi ve bilgisayarın oyununu mükemmel olarak nitelendirdi; bir hamleyi ise hiçbir insan oyuncunun seçmeyeceği türden buldu.",
+      "coda": "İşaret ettiği hamle yalnızca bir taş numarası tuttu, adı yok."
+    },
+    "aws-s3-2017-typo": {
+      "tag": "Olay",
+      "title": "Geniş Bir Argüman",
+      "body": "Bir S3 mühendisi, az sayıda faturalama sunucusunu devre dışı bırakmak için tasarlanmış yetkili bir komut çalıştırdı, ancak bir girdi beklenenden daha geniş bir aralığı kapsadı. Kaldırılan sunucular aynı zamanda indeks alt sistemini de destekliyordu; bu alt sistem yıllardır tam olarak yeniden başlatılmamıştı ve beklenenden çok daha yavaş geri döndü.",
+      "coda": "Kesinti yaklaşık dört saat sürdü; AWS'nin kendi durum sayfası aynı sistemlere bağlıydı."
+    },
+    "gitlab-2017-rm-rf": {
+      "tag": "Olay",
+      "title": "Beş Yedekleme, Sıfır",
+      "body": "Bir mühendis geri kalmış bir replikayı temizlemek istedi, bunun yerine birincil sunucudaki PostgreSQL veri dizinini sildi; durdurma saniyeler geç kaldı; yaklaşık 300GB zaten kaybolmuştu. GitLab, çalıştırdığı beş yedekleme ve replikasyon yönteminin hiçbirinin veriyi gerçekten geri yükleyemeyeceğini buldu.",
+      "coda": "Kurtarma, altı saat önce birinin tesadüfen aldığı bir anlık görüntüye dayandı."
+    },
+    "attention-title-beatles-2017": {
+      "tag": "Kağıt",
+      "title": "Beatles'tan Borç Alınmış Bir Başlık",
+      "body": "Sekiz Google araştırmacısı Haziran 2017'de \"Attention Is All You Need\"i yayımladı; başlık Beatles şarkısı \"All You Need Is Love\"a gönderme yapıyor. Kağıdın belirtilen amacı, yinelemeli ağları dikkate alma lehine bırakan, makine çevirisi için bir dizi modeliydi.",
+      "coda": "Sekiz yazar da daha sonra Google'dan ayrıldı."
+    },
+    "cloudflare-2019-regex": {
+      "tag": "Olay",
+      "title": "Kaldırılan Sigorta",
+      "body": "Katastrofik olarak geri izleyen bir regex ile yeni bir WAF kuralı, dağıtımdan saniyeler içinde Cloudflare'in küresel ağında CPU'yu yüzde 100'e yaklaştırdı. Kuralın kendisi sıradandı; onu patlatmaya izin veren şey, regex kurallarındaki CPU kullanımı koruma önlemi, haftalar önce bir yeniden düzenlemede sessizce silindi.",
+      "coda": "Arıza 27 dakika sürdü ve WAF küresel olarak devre dışı bırakıldığında sona erdi."
+    },
+    "requests-kenneth-reitz": {
+      "tag": "Devir",
+      "title": "Anahtarları Devretmek",
+      "body": "Requests ayda 30 milyondan fazla indirme kaydediyor ve Python için standart HTTP istemcisi haline geldi. Kenneth Reitz onu 14 Şubat 2011'de yayınladı. 2019'da sağlık sorunları sonrası projenin kontrolünü Python Software Foundation'a devretti.",
+      "coda": "Görevden ayrıldıktan sonra projeyi tekrar yönetmedi."
+    },
+    "linux-y2038-kernel-fix": {
+      "tag": "Düzeltme",
+      "title": "On Sekiz Yıl Önceden",
+      "body": "32-bit Unix sistemleri 19 Ocak 2038'de time_t sayaçlarını taşıyacak. 2020'de yayınlanan Linux 5.6, o tarihten sonra 32-bit bir sistemi çalıştırmaya yetenekli olan ilk çekirdekti. Uygulamalar gerçekten fayda sağlamak için 64-bit time_t karşısında yeniden derlenmeye ihtiyaç duyuyor.",
+      "coda": "Çekirdek, çoğu 32-bit kullanıcı alanının yetişmesinden yıllar önce yamalandı."
+    },
+    "log4shell-eight-years": {
+      "tag": "Zafiyet",
+      "title": "Sekiz Yıl Okunmadı",
+      "body": "Log4j, çoğu kurumsal Java yazılımının içinde yer alır; Wiz ve EY, bulut ortamlarının yüzde 93'ünün Log4Shell'e açık olduğunu buldu. Hata, 2013'ten beri kodda mevcuttu. 24 Kasım 2021'de bildirildi ve 10 Aralık'ta kamuoyuna açıklandı, CVSS puanı 10 olarak değerlendirildi.",
+      "coda": "Bir avuç gönüllü, milyonlarca sunucuya ulaşan yamayı yazdı."
+    },
+    "core-js-denis-pushkarev": {
+      "tag": "Bakımcı",
+      "title": "Kimse Değiştirmeyen Yama",
+      "body": "core-js, WhatsApp, Netflix, Apple ve PayPal içinde dağıtılır ve ayda yaklaşık 250 milyon indirme kaydedilir. Yazarı Denis Pushkarev, 2019 yılında ölümcül bir trafik kazası geçirdi, Ocak 2020'den itibaren yaklaşık on ay hapis yattı ve bu süreç boyunca kütüphaneyi sürdürdü.",
+      "coda": "Aylık bağışlar yaklaşık 2.500 dolardan 400 dolara düştü."
+    },
+    "tesla-westinghouse-royalty": {
+      "tag": "Patentler",
+      "title": "Tesla'nın Feragat Ettiği Telif Hakkı",
+      "body": "Westinghouse'un sözleşmesi Tesla'ya beygir gücü başına 2,50 dolar telif hakkı ödeyordu. 1891'in başlarında, şirket iflasın eşiğindeyken Tesla onu telif maddesinden kurtardı.",
+      "coda": "1897'de Westinghouse patentlerini 216.000 dolara peşin satın aldı."
+    },
+    "salk-polio-patent": {
+      "tag": "Patentler",
+      "title": "Güneşin Patenti Yok",
+      "body": "Edward Murrow, çocuk felci aşısının patentinin kime ait olduğunu sordu. Salk, patent olmadığını, güneşi patentleyebilir misiniz diye yanıt verdi. Vakıf avukatları soruyu incelemiş ve aşının, önceki buluşlar nedeniyle patentlenebilir yenilik taşımadığını belirlemişti.",
+      "coda": "Patentlenmemiş aşının sonraki değeri yedi milyar dolar olarak belirlendi."
+    },
+    "cobol-two-hundred-billion-lines": {
+      "tag": "Eski Sistem",
+      "title": "İki Yüz Milyar Satır",
+      "body": "1997 yılında Gartner, dünya çapında iş programlarının yüzde seksenini çalıştıran 200 milyar satır COBOL kodu olduğunu tahmin etti. 2020 yılında COVID döneminde işsizlik başvuruları artarken, ABD'nin birkaç eyalet hükümeti, on yıllardır çalışan sosyal yardım sistemlerini ayakta tutmak için COBOL programcıları çağrısında bulundu.",
+      "coda": "O çağrıdan altı yıl geçti."
+    },
+    "sabre-sage-to-booking": {
+      "tag": "Rezervasyon",
+      "title": "Radar'dan Rezervasyonlara",
+      "body": "American Airlines ve IBM 1957'de ortaklık imzaladı ve Hava Kuvvetleri'nin Soğuk Savaş dönemi SAGE hava savunma mimarisini bir rezervasyon sistemine dönüştürdü. SABRE ilk çevrimiçi testini 1960'ta gerçekleştirdi ve 1964'te tam olarak devreye girdi; dünyanın ilk çevrimiçi işlem işleme sistemi oldu.",
+      "coda": "Ana şirket altmış yılı aşkın bir süre sonra hâlâ faaliyet gösteriyor."
+    },
+    "kay-objects-messaging": {
+      "tag": "Adlandırma",
+      "title": "Nokta Nesneler Değil",
+      "body": "1967'ye gelindiğinde Alan Kay, yalnızca mesajlar aracılığıyla iletişim kuran hücreler veya ağ düğümleri üzerine kurulu bir tasarım için \"nesne yönelimli\" ifadesini kullanıyordu. Daha sonra \"nesneler\" terimini uydurduğuna pişman olduğunu yazdı; çünkü bu terim daha az önemli fikre dikkat çeker ve kastettiği fikri gömer: mesajlaşma.",
+      "coda": "Pişman olduğu kelime, taşımasını istediği fikirden daha uzun ömürlü oldu."
+    },
+    "voyager-68-kilobits": {
+      "tag": "Derin Uzay",
+      "title": "Bozuk çipin etrafında",
+      "body": "Voyager 1 Eylül 1977'de fırlatıldı. Kırk yedi yıl sonra uçuş verisi alt sistemlerindeki bir bellek çipi arızalandı ve üç yüzde'ü kurtarılamayacak şekilde bozuldu. 20 Nisan 2024'te mühendisler kodu hasarlı bölgenin etrafında yeniden düzenledi ve sinyal geri döndü.",
+      "coda": "Jeneratörleri, 2036'ya kadar mühendislik verilerini geri döndürmek için yeterli güç sağlayabilir."
+    },
+    "gif-lzw-unisys": {
+      "tag": "Patentler",
+      "title": "Serbest Format Değildi",
+      "body": "CompuServe, Haziran 1987'de GIF'i LZW sıkıştırmasıyla yayınladı, ancak Sperry Corporation'ın bu teknoloji üzerinde zaten bir patenti olduğunu bilmiyordu. Aralık 1994'te Sperry'nin birleşmesiyle oluşan Unisys, lisans ücreti alacağını duyurdu ve geliştiricileri PNG'yi bir alternatif olarak oluşturmaya itti.",
+      "coda": "Patentler 2004 yılında dünya çapında süresini doldurdu ve GIF ancak o zaman özgür oldu."
+    },
+    "zimmermann-pgp-release": {
+      "tag": "Kripto",
+      "title": "PGP Dağıtıldı, Ardından Soruşturuldu",
+      "body": "Phil Zimmermann, 1991 yılında PGP'yi kaynak koduyla birlikte genel FTP'de yayınladı; bu, yaygın olarak kullanılabilen ilk açık anahtarlı şifreleme programıydı. ABD Gümrük İdaresi, ihracat kontrol ihlalleri nedeniyle cezai soruşturma başlattı. Soruşturma üç yıl sürdü ve 1996 başlarında iddianame olmaksızın düşürüldü.",
+      "coda": "Üç yıl soruşturma altında, suçlama yapılmadı, telif hakkı hiçbir zaman tahsil edilmedi."
+    },
+    "json-good-not-evil": {
+      "tag": "Lisans",
+      "title": "İyilik İçin, Kötülük İçin Değil",
+      "body": "Douglas Crockford'ın 2002 tarihli JSON kütüphaneleri lisansı bir madde daha ekler: yazılım İyilik için kullanılmalı, Kötülük için değil. JSON kendisi internet üzerindeki neredeyse her API'ye ücretsiz ve patentli olmadan yayıldı, ancak o tek cümle lisansı standart açık kaynak terimleriyle uyumsuz hale getirdi.",
+      "coda": "Format evrensel oldu; birlikte gönderilen şaka maddesi kurumsal hukukla temas ettiğinde hayatta kalamadı."
+    },
+    "sogou-movie-line": {
+      "tag": "Adlandırma",
+      "title": "Sogou'nun Sloganı Önce Bir Şakaydı",
+      "body": "2001 yapımı Big Shot's Funeral komedisinde arama motorları hakkında bir kelime oyunu satırı var: \"Onlar Sohu'yu arıyor, biz Sogou'yu arıyoruz, herkes kendi yolunu arıyor.\" Üç yıl sonra, 2004'te Sohu'nun ekibi şakayı aldı ve onu gerçek bir arama motoru olarak, Sogou olarak başlattı.",
+      "coda": "Şaka satırı, düzenlenmeden ürün adı oldu."
+    },
+    "tbl-double-slash": {
+      "tag": "Tasarım",
+      "title": "Ekstra Eşitlik İşaretleri",
+      "body": "Tim Berners-Lee, URL'yi tasarladığında alan adının önüne \"//\" koydu. Ekim 2009'da itiraf etti ki, zaten iki nokta varken, iki eğik çizgiye hiç gerek yoktu — \"o zaman iyi bir fikir gibi geldi,\" dedi.",
+      "coda": "O günden beri her URL ikisini de yazdı."
+    },
+    "bilibili-mikufans": {
+      "tag": "İsimlendirme",
+      "title": "Bilibili'nin İlk Adı Mikufans'tı",
+      "body": "Site Haziran 2009'de Mikufans adıyla, Hatsune Miku vokaloitinin hayranları için kuruldu. Ocak 2010'da, bir light novel serisinin başkahramanının Misaka Mikoto'ya verdiği bir lakap olan ve elektrik boşalması için kullanılan bir onomatope olan Bilibili adını aldı.",
+      "coda": "Yeniden adlandırılan site, her sonraki yeniden tasarımda ismini korudu."
+    },
+    "kuaishou-gif-app": {
+      "tag": "Adlandırma",
+      "title": "Kuaishou Bir GIF Uygulaması Olarak Başladı",
+      "body": "Kuaishou, Mart 2011'de GIF Kuaishou adıyla, GIF görselleri oluşturup paylaşmaya yarayan bir telefon uygulaması olarak piyasaya sürüldü. 2012'de kısa videoya yöneldi ve 2014'te GIF ön eki kaldırılarak bugün bir video platformu olarak taşıdığı isim kaldı.",
+      "coda": "GIF ön eki kaldırıldı; altta yatan şirket adı hiç değişmedi."
+    },
+    "zhihu-invite-only": {
+      "tag": "Adlandırma",
+      "title": "Zhihu Davet Gerektiriyordu",
+      "body": "Zhihu 26 Ocak 2011'de yayına girdi ve ilk iki yılında kayıt için davet kodu gerekiyordu. Açık kayıt Mart 2013'e kadar gelmedi. İsim kendisi \"sen biliyor musun\" anlamına gelen klasik Çince bir ifadedir — bir slogan değil, bir soru.",
+      "coda": "Kayıt, Mart 2013'ten beri davet gerektirmemektedir."
+    },
+    "hp-garage-palo-alto": {
+      "tag": "Garaj",
+      "title": "Addison Caddesi'ndeki Garaj",
+      "body": "1938 yılında David Packard ve eşi, Palo Alto'daki 367 Addison Avenue adresindeki 1905 yapısı bir evin zemin kat dairesini kiraladı. O ve Bill Hewlett, arkasındaki tek araçlık garaja 538 dolar yatırdı ve ilk ürünlerini, bir ses osilatörünü, burada inşa etti.",
+      "coda": "Mülk şu anda Ulusal Tarihi Yerler Kaydı'nda yer almakta ve ziyaretçilere açık değildir."
+    },
+    "apple-crist-drive-garage": {
+      "tag": "Efsane",
+      "title": "Yatak odası dolduğunda",
+      "body": "1976 yılında Steve Jobs ve Steve Wozniak, ilk Apple kartlarını Jobs'ın ebeveynlerinin California, Los Altos'ta sahip olduğu evde bir araya getirdi.",
+      "coda": "Önce yatak odasında. Garaj daha sonra, yer kalmadığında."
+    },
+    "huawei-nanyou-flat": {
+      "tag": "Daire",
+      "title": "Nanyou Xincun'daki Bir Daire",
+      "body": "Eylül 1987'de Huawei, Shenzhen'deki Nanyou Xincun'daki bir konut bloğunda 21.000 yuan sermaye, on dört çalışan ve hisse senetlerini eşit paylaşan altı hissedar ile tescil edildi.",
+      "coda": "Şirket merkezi 1989'da taşındı; dairenin genel merkez olarak kiralık dönemi burada sona erdi."
+    },
+    "wojcicki-garage-menlo-park": {
+      "tag": "Ev sahibi",
+      "title": "Kiraladığı Garaj",
+      "body": "Eylül 1998'de Page ve Brin, Menlo Park'ta Susan Wojcicki'den aylık 1.700 dolar karşılığında bir garaj kiraladı. Google burada kuruldu.",
+      "coda": "Daha sonra YouTube'un baş yürütme sorumlusu oldu."
+    },
+    "tencent-seg-403": {
+      "tag": "403. Oda",
+      "title": "Bina 2, Oda 403",
+      "body": "Tencent, Kasım 1998'de Shenzhen Huaqiangbei'deki Saige teknoloji parkının ikinci binasının 403 numaralı odasında kayıt oldu. Bina onun gibi startup'larla doluydu ve kapı diğerlerinden farklı değildi.",
+      "coda": "Oda artık yalnızca Tencent çalışanlarına açık ve Tencent Origin adıyla anılıyor."
+    },
+    "unitree-left-dji": {
+      "tag": "İstifa",
+      "title": "DJI'dan Ayrılış",
+      "body": "Yüksek lisansı sırasında Wang Xingxing, kendi başına tamamen elektrikli dört ayaklı bir robot geliştirdi ve ona XDog adını verdi. Mezun olduktan sonra DJI'da işe girdi ve kısa süre sonra oradan ayrıldı.",
+      "coda": "Unitree, Ağustos 2016'da Hangzhou'nun Binjiang bölgesinde kayıt oldu."
+    },
+    "unitree-one-yuan-option": {
+      "tag": "Opsiyonlar",
+      "title": "Hisse başı bir yuan",
+      "body": "Eylül 2017'de Unitree, on yedi çalışanla hisse başı bir yuan karşılığında opsiyon sözleşmeleri imzaladı. Daha sonra tek bir çalışan aracılığıyla tutulan ek tahsisler yapıldı.",
+      "coda": "Sekiz yıl sonra şirket IPO'su için defteri açtı."
+    },
+    "unitree-g1-price": {
+      "tag": "Fiyatlandırma",
+      "title": "Doksan dokuz bin",
+      "body": "İnsansı robotlar laboratuvar ekipmanı olarak fiyatlandırılıyordu. Unitree, G1'i 99.000 yuan'a sattı, bu da giriş seviyesi bir arabanın fiyatına yakındı.",
+      "coda": "2025 yılına kadar insansı robotlar, 5.500 adet teslimatla gelirin %51,78'ini oluşturuyordu."
+    }
+  }
+}

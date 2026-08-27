@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "context-card-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/context-card-demo.tsx",
+      "content": "\"use client\";\n\nimport { Button, ContextCard } from \"@nebutra/ui/primitives\";\n\nexport function ContextCardDemo() {\n  return (\n    <ContextCard.Trigger\n      side=\"top\"\n      content={\n        <ContextCard.Entity\n          title=\"Nebula Console\"\n          description=\"nebutra/production\"\n          metadata={[\n            { label: \"Plan\", value: \"Pro\" },\n            { label: \"Owner\", value: \"Platform\" },\n            { label: \"Last Active\", value: \"2m ago\" },\n          ]}\n          action={\n            <Button size=\"tiny\" variant=\"outline\" className=\"w-full\">\n              Open Project\n            </Button>\n          }\n        />\n      }\n    >\n      <button\n        type=\"button\"\n        className=\"cursor-default underline decoration-dotted underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n      >\n        Nebula Console\n      </button>\n    </ContextCard.Trigger>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

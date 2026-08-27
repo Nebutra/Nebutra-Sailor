@@ -1,0 +1,47 @@
+{
+  "version": "1.4.132",
+  "notes": "",
+  "pub_date": "2026-08-06T09:26:38.052Z",
+  "platforms": {
+    "linux-aarch64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUSjI3OHRPVmVXZnBjZUVlcmxjOVVuTVJIWjZjT0thRnNQMUs0REJqSS9UQzNDRHJSN0VyQUJFREQ1a2NFMmF4NFpRY2w1SjI2UVZZcXRJcVJieHY2ZnEyUmJoTElmNVFVPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg2MDA3MDMyCWZpbGU6UGViYmxlXzEuNC4xMzJfYXJtNjQuZGViCnVENFBWL0FiNG51M3pPQ0lWNExiZ29YUVp1S2xRMnBPejI0TmZaZVh6dVoyaU4yM2g0YzQ2eVhDUzB0VTlXa0YwZCsvaDFzUmF3Z3BVVFViTHlxc0FBPT0K",
+      "url": "https://api.github.com/repos/Nebutra/pebble/releases/assets/503723963"
+    },
+    "linux-aarch64-deb": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUSjI3OHRPVmVXZnBjZUVlcmxjOVVuTVJIWjZjT0thRnNQMUs0REJqSS9UQzNDRHJSN0VyQUJFREQ1a2NFMmF4NFpRY2w1SjI2UVZZcXRJcVJieHY2ZnEyUmJoTElmNVFVPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg2MDA3MDMyCWZpbGU6UGViYmxlXzEuNC4xMzJfYXJtNjQuZGViCnVENFBWL0FiNG51M3pPQ0lWNExiZ29YUVp1S2xRMnBPejI0TmZaZVh6dVoyaU4yM2g0YzQ2eVhDUzB0VTlXa0YwZCsvaDFzUmF3Z3BVVFViTHlxc0FBPT0K",
+      "url": "https://api.github.com/repos/Nebutra/pebble/releases/assets/503723963"
+    },
+    "linux-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUSjI3OHRPVmVXZmkyb1QvYXNXbGtkRXBieGZjZ2pQZTFqSUVPWGFHOEtNeW5pWGNCMERpQ0ZaYjFoZUxKT3VBRWZpSDYzc3NubXpaaTlETFpwN0s3aG1RN1Z1T0JQeEFRPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg2MDA3MjcxCWZpbGU6UGViYmxlXzEuNC4xMzJfYW1kNjQuZGViCjNudDVyUVpFTU9QYVIvK3dSQXJUdU1heWNsSExZek12RjIwbXJwRnVzU1MxK0VGOVpXYWo0Vk84cXdhTTExNVQrNHdJYldvTWwydGMzSVBXMWhHRkFRPT0K",
+      "url": "https://api.github.com/repos/Nebutra/pebble/releases/assets/503727933"
+    },
+    "linux-x86_64-deb": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUSjI3OHRPVmVXZmkyb1QvYXNXbGtkRXBieGZjZ2pQZTFqSUVPWGFHOEtNeW5pWGNCMERpQ0ZaYjFoZUxKT3VBRWZpSDYzc3NubXpaaTlETFpwN0s3aG1RN1Z1T0JQeEFRPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg2MDA3MjcxCWZpbGU6UGViYmxlXzEuNC4xMzJfYW1kNjQuZGViCjNudDVyUVpFTU9QYVIvK3dSQXJUdU1heWNsSExZek12RjIwbXJwRnVzU1MxK0VGOVpXYWo0Vk84cXdhTTExNVQrNHdJYldvTWwydGMzSVBXMWhHRkFRPT0K",
+      "url": "https://api.github.com/repos/Nebutra/pebble/releases/assets/503727933"
+    },
+    "darwin-aarch64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUSjI3OHRPVmVXZnY3WW1NWVBJNGxiMmdKMWM2Y3NHOWN0WFVJd0RoNndtU1dKZThrRUJicnF5V2IyVEFiMm9iZmlyNUhBaFNYVGJySWYzbjBUby92eXluVWdHVGJ4RVEwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg2MDA4MjMyCWZpbGU6UGViYmxlLmFwcC50YXIuZ3oKVWxTR3JIeWNnREtoenFpWEdlMHJDNHBlMnBSZVVVbHAyVUhkMWU5ait1S0E4VFg5N3k0NTdOSytDSStsVjJsb0lBTjBJUisyZmpwZ2V4TjJLSWxVQ2c9PQo=",
+      "url": "https://api.github.com/repos/Nebutra/pebble/releases/assets/503745711"
+    },
+    "darwin-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUSjI3OHRPVmVXZnY3WW1NWVBJNGxiMmdKMWM2Y3NHOWN0WFVJd0RoNndtU1dKZThrRUJicnF5V2IyVEFiMm9iZmlyNUhBaFNYVGJySWYzbjBUby92eXluVWdHVGJ4RVEwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg2MDA4MjMyCWZpbGU6UGViYmxlLmFwcC50YXIuZ3oKVWxTR3JIeWNnREtoenFpWEdlMHJDNHBlMnBSZVVVbHAyVUhkMWU5ait1S0E4VFg5N3k0NTdOSytDSStsVjJsb0lBTjBJUisyZmpwZ2V4TjJLSWxVQ2c9PQo=",
+      "url": "https://api.github.com/repos/Nebutra/pebble/releases/assets/503745711"
+    },
+    "darwin-universal": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUSjI3OHRPVmVXZnY3WW1NWVBJNGxiMmdKMWM2Y3NHOWN0WFVJd0RoNndtU1dKZThrRUJicnF5V2IyVEFiMm9iZmlyNUhBaFNYVGJySWYzbjBUby92eXluVWdHVGJ4RVEwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg2MDA4MjMyCWZpbGU6UGViYmxlLmFwcC50YXIuZ3oKVWxTR3JIeWNnREtoenFpWEdlMHJDNHBlMnBSZVVVbHAyVUhkMWU5ait1S0E4VFg5N3k0NTdOSytDSStsVjJsb0lBTjBJUisyZmpwZ2V4TjJLSWxVQ2c9PQo=",
+      "url": "https://api.github.com/repos/Nebutra/pebble/releases/assets/503745711"
+    },
+    "darwin-aarch64-app": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUSjI3OHRPVmVXZnY3WW1NWVBJNGxiMmdKMWM2Y3NHOWN0WFVJd0RoNndtU1dKZThrRUJicnF5V2IyVEFiMm9iZmlyNUhBaFNYVGJySWYzbjBUby92eXluVWdHVGJ4RVEwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg2MDA4MjMyCWZpbGU6UGViYmxlLmFwcC50YXIuZ3oKVWxTR3JIeWNnREtoenFpWEdlMHJDNHBlMnBSZVVVbHAyVUhkMWU5ait1S0E4VFg5N3k0NTdOSytDSStsVjJsb0lBTjBJUisyZmpwZ2V4TjJLSWxVQ2c9PQo=",
+      "url": "https://api.github.com/repos/Nebutra/pebble/releases/assets/503745711"
+    },
+    "darwin-x86_64-app": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUSjI3OHRPVmVXZnY3WW1NWVBJNGxiMmdKMWM2Y3NHOWN0WFVJd0RoNndtU1dKZThrRUJicnF5V2IyVEFiMm9iZmlyNUhBaFNYVGJySWYzbjBUby92eXluVWdHVGJ4RVEwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg2MDA4MjMyCWZpbGU6UGViYmxlLmFwcC50YXIuZ3oKVWxTR3JIeWNnREtoenFpWEdlMHJDNHBlMnBSZVVVbHAyVUhkMWU5ait1S0E4VFg5N3k0NTdOSytDSStsVjJsb0lBTjBJUisyZmpwZ2V4TjJLSWxVQ2c9PQo=",
+      "url": "https://api.github.com/repos/Nebutra/pebble/releases/assets/503745711"
+    },
+    "darwin-universal-app": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUSjI3OHRPVmVXZnY3WW1NWVBJNGxiMmdKMWM2Y3NHOWN0WFVJd0RoNndtU1dKZThrRUJicnF5V2IyVEFiMm9iZmlyNUhBaFNYVGJySWYzbjBUby92eXluVWdHVGJ4RVEwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg2MDA4MjMyCWZpbGU6UGViYmxlLmFwcC50YXIuZ3oKVWxTR3JIeWNnREtoenFpWEdlMHJDNHBlMnBSZVVVbHAyVUhkMWU5ait1S0E4VFg5N3k0NTdOSytDSStsVjJsb0lBTjBJUisyZmpwZ2V4TjJLSWxVQ2c9PQo=",
+      "url": "https://api.github.com/repos/Nebutra/pebble/releases/assets/503745711"
+    }
+  }
+}

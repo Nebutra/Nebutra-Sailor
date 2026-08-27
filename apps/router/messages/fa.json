@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — بازار API",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "بازار API همه مدل‌ها · پرداخت به‌صورت مصرفی · مدیریت کلیدها و کیف پول · تست سریع."
+  },
+  "admin": {
+    "dashboard": "نمای کلی",
+    "keys": "کلیدهای API",
+    "wallet": "کیف پول",
+    "docs": "مستندات",
+    "title": "مدیریت",
+    "backToMarket": "بازگشت به بازار",
+    "quickUse": "استفاده سریع"
+  },
+  "chrome": {
+    "searchPlaceholder": "می‌خواهید با هوش مصنوعی چه کاری انجام دهید؟",
+    "search": "جستجو",
+    "locale": "زبان",
+    "currency": "واحد پول",
+    "collapseSidebar": "جمع کردن نوار کناری",
+    "expandSidebar": "باز کردن نوار کناری",
+    "home": "خانه",
+    "adminConsole": "مدیریت",
+    "quickUse": "استفاده سریع",
+    "support": "پشتیبانی",
+    "apiDocs": "مستندات API",
+    "integrationHelp": "راهنمای یکپارچه‌سازی",
+    "aiRecommend": "پیشنهادات هوش مصنوعی",
+    "market": "بازار",
+    "usageTitle": "استفاده سریع"
+  },
+  "channels": {
+    "app": "بازار برنامه‌ها",
+    "api": "بازار API",
+    "models": "کاتالوگ مدل‌ها",
+    "client": "کلاینت"
+  },
+  "market": {
+    "new": "جدید",
+    "hot": "پرطرفدار",
+    "forYou": "برای شما",
+    "grid": "شبکه‌ای",
+    "list": "لیستی",
+    "apiShelf": "قفسه API",
+    "toolShelf": "قفسه ابزار",
+    "categories": "دسته‌بندی‌ها",
+    "apps": "برنامه‌ها",
+    "newRelease": "انتشار جدید",
+    "forgeTitle": "فضای کاری ابزار Forge",
+    "forgeBlurb": "تبدیل متن، کدک‌ها، فرم‌ها و ابزارهای ترکیبی. آزمایشگاه بازار برنامه‌ها به Forge اشاره دارد.",
+    "openForge": "باز کردن Forge →",
+    "allApi": "همه APIها →",
+    "all": "همه →",
+    "viewAll": "مشاهده همه {label} →",
+    "gridView": "نمای شبکه‌ای",
+    "listView": "نمای لیستی",
+    "hiTitle": "پلتفرم منابع هوش مصنوعی سازمانی",
+    "hiSubtitle": "هر نیاز را با هوش مصنوعی مناسب برآورده کنید",
+    "sellable": "قابل فروش",
+    "walletTopup": "شارژ کیف پول"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "مدل‌های زبانی",
+      "hint": "چت · استدلال"
+    },
+    "image-gen": {
+      "label": "تولید تصویر",
+      "hint": "متن به تصویر"
+    },
+    "image-edit": {
+      "label": "ویرایش تصویر",
+      "hint": "ویرایش · ماتیگ"
+    },
+    "video": {
+      "label": "تولید ویدیو",
+      "hint": "متن به ویدیو"
+    },
+    "audio": {
+      "label": "صدا و ویدیو",
+      "hint": "گفتار · رونویسی"
+    },
+    "data": {
+      "label": "اطلاعات",
+      "hint": "بازیابی · استخراج"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "افزایش دانش"
+    },
+    "tools": {
+      "label": "API ابزارها",
+      "hint": "عامل · ابزارها"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "ربات‌ها",
+      "chips": "ربات‌های گفتگو · ربات‌های نقاشی · دانش"
+    },
+    "productivity": {
+      "label": "بهره‌وری",
+      "chips": "آرنا مدل‌ها · نوشتن هوشمند"
+    },
+    "academic": {
+      "label": "آکادمیک",
+      "chips": "PDF toolkit · جستجوی AI برای اختراع"
+    },
+    "image": {
+      "label": "ابزارهای تصویر",
+      "chips": "استودیوی سه‌بعدی · بوم"
+    },
+    "audio": {
+      "label": "صدا",
+      "chips": "گفتار · موسیقی AI"
+    },
+    "code": {
+      "label": "کد",
+      "chips": "تولیدکننده وب · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "نمای کلی",
+    "keys": "کلیدها",
+    "wallet": "کیف پول",
+    "use": "تلاش",
+    "docs": "مستندات",
+    "models": "بیشتر"
+  }
+}

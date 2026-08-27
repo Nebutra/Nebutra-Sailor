@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — онлайн-станція інструментів",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "Онлайн-інструменти для кодеків, тексту, хешування, документів та зображень."
+  },
+  "nav": {
+    "main": "Основна навігація",
+    "homeAria": "Головна {brandName} Forge",
+    "tools": "Інструменти",
+    "wallet": "Гаманець",
+    "api": "API",
+    "routerAria": "{brandName} Router",
+    "categoriesAria": "Категорії інструментів",
+    "languageAria": "Змінити мову"
+  },
+  "tool": {
+    "breadcrumbAria": "Навігаційна стежка",
+    "workspace": "Робоча область",
+    "workspaceHint": "Локально або на сервері · той самий шлях, що й у API",
+    "api": "API",
+    "apiHint": "Той самий контракт, що й на сторінці. У продакшені використовуйте ключ автентифікації.",
+    "related": "Споріднені інструменти"
+  },
+  "auth": {
+    "signIn": "Увійти",
+    "signUp": "Реєстрація",
+    "signOut": "Вийти"
+  },
+  "footer": {
+    "navAria": "Нижній колонтитул",
+    "blurb": "Онлайн-станція інструментів. Виконуйте завдання у браузері або автоматизуйте через API / MCP.",
+    "product": "Продукт",
+    "developers": "Розробники",
+    "company": "Компанія",
+    "docs": "Документація з інтеграції",
+    "website": "Вебсайт",
+    "privacy": "Конфіденційність"
+  },
+  "home": {
+    "eyebrow": "Бачите. Викликаєте.",
+    "title": "Швейцарський ніж для онлайн-інструментів",
+    "subtitle": "Кодеки, текст, хешування, документи та обробка зображень. Виконуйте у браузері або автоматизуйте через API / MCP — один репозиторій.",
+    "toolCount": "{count} інструментів",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "Пошук: підрахунок слів, base64, json, timestamp…",
+    "aria": "Пошук інструментів",
+    "emptyTitle": "Не знайдено інструментів за запитом «{query}»",
+    "emptyHint": "Спробуйте інше ключове слово або оберіть інструмент із категорій нижче."
+  },
+  "categories": {
+    "codec": {
+      "label": "Кодеки",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "Перевірка для Китаю",
+      "hint": "ID · телефон"
+    },
+    "data": {
+      "label": "Дані",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "Розробник",
+      "hint": "Regex · SQL · колір · UUID"
+    },
+    "doc": {
+      "label": "Документи",
+      "hint": "Markdown · об’єднання/розділення PDF"
+    },
+    "finance": {
+      "label": "Фінанси",
+      "hint": "Сума словами"
+    },
+    "hash": {
+      "label": "Хеш та безпека",
+      "hint": "MD5 · SHA · HMAC · пароль"
+    },
+    "image": {
+      "label": "Зображення",
+      "hint": "Стиснення · QR · конвертація"
+    },
+    "life": {
+      "label": "Життєві калькулятори",
+      "hint": "Іпотека · ІМТ · спорідненість"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "Токени · вартість · схема"
+    },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
+    "security": {
+      "label": "Безпека",
+      "hint": "Генератор паролів"
+    },
+    "text": {
+      "label": "Текст",
+      "hint": "Кількість слів · CJK · піньїнь · Diff"
+    },
+    "time": {
+      "label": "Час",
+      "hint": "Відмітка часу · часовий пояс · Cron · місячний календар"
+    },
+    "unit": {
+      "label": "Одиниці",
+      "hint": "Довжина · вага · температура · дані"
+    },
+    "template": {
+      "label": "Шаблони",
+      "hint": ".gitignore · LICENSE · Dockerfile · README"
+    }
+  },
+  "runners": {
+    "common": {
+      "run": "Запустити",
+      "running": "Виконується…",
+      "copy": "Копіювати",
+      "copied": "Скопійовано",
+      "sameAsApi": "Те ж саме, що й у API · OSS рушій",
+      "mustBeNumber": "{label} має бути числом",
+      "base64Loaded": "Навантажено Base64-навантаження",
+      "workspaceMissing": "Робочу область не налаштовано: {slug}",
+      "yes": "Так",
+      "no": "Ні",
+      "text": "Текст",
+      "input": "Ввід",
+      "output": "Вивід",
+      "outputPlaceholder": "Результат з'явиться тут",
+      "localRun": "Запустити локально",
+      "serverRun": "Запустити на сервері",
+      "serverVerify": "Перевірка сервера",
+      "outputPreview": "Попередній перегляд результату",
+      "mode": "Режим",
+      "encode": "Кодувати",
+      "decode": "Декодувати",
+      "file": "Файл",
+      "clear": "Очистити",
+      "length": "Довжина: {n}",
+      "bytes": "{bytes} байтів",
+      "download": "Завантажити",
+      "format": "Формат",
+      "formatting": "Форматування…",
+      "dialect": "Діалект",
+      "color": "Колір",
+      "pickColor": "Обрати колір",
+      "content": "Зміст",
+      "algorithm": "Алгоритм",
+      "encoding": "Кодування",
+      "message": "Повідомлення",
+      "secret": "Секрет",
+      "password": "Пароль",
+      "direction": "Напрямок",
+      "preview": "Попередній перегляд",
+      "query": "Запит",
+      "querying": "Виконується запит…",
+      "validate": "Перевірити",
+      "validating": "Перевіряється…",
+      "processing": "Обробляється…",
+      "pretty": "Форматувати",
+      "minify": "Мініфікувати",
+      "from": "Від",
+      "to": "До",
+      "timezone": "Часовий пояс",
+      "datetime": "Дата та час",
+      "compute": "Обчислити",
+      "computing": "Обчислення…",
+      "convertAction": "Конвертувати",
+      "count": "Кількість",
+      "value": "Значення",
+      "unit": "Одиниця",
+      "generateLocal": "Згенерувати локально",
+      "generateServer": "Згенерувати на сервері",
+      "copyAll": "Копіювати все",
+      "emptyResult": "Результати з’являться тут",
+      "copyText": "Копіювати текст",
+      "quality": "Якість",
+      "original": "Оригінал",
+      "result": "Результат",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
+    },
+    "base64": {
+      "encodeDir": "Текст → Base64",
+      "decodeDir": "Base64 → Текст",
+      "localNote": "Локальний Web API (TextEncoder / atob)",
+      "serverNote": "Серверний Buffer · той самий шлях, що й API"
+    },
+    "password": {
+      "uppercase": "Великі літери",
+      "lowercase": "Малі літери",
+      "digits": "Цифри",
+      "symbols": "Символи",
+      "generate": "Згенерувати пароль",
+      "recent": "Останні",
+      "note": "Двигун: node:crypto randomInt · криптографічно надійний · той самий шлях, що й API"
+    },
+    "hash": {
+      "algo": "Алгоритм: {algo}",
+      "md5Warn": " · лише для контрольної суми/сумісності — не зберігайте паролі",
+      "md5LocalError": "MD5 вимагає виконання на сервері (Web Crypto не підтримує MD5)",
+      "md5ServerHint": "MD5: використовуйте виконання на сервері (лише для сумісності, не для зберігання паролів)",
+      "localNote": "Локальний Web Crypto · {algo}",
+      "serverNote": "Сервер node:crypto · той самий шлях, що й API"
+    },
+    "convert": {
+      "converting": "Конвертація…",
+      "convert": "Конвертувати",
+      "done": "Готово · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "Перетягніть файл сюди або натисніть для вибору",
+      "needFile": "Спочатку виберіть файл",
+      "needAlgo": "Виберіть хоча б один алгоритм",
+      "compute": "Обчислити хеші",
+      "computing": "Обчислення…",
+      "algorithms": "Алгоритми",
+      "note": "node:crypto · багатоалгоритмний · той самий шлях, що й у API"
+    },
+    "lorem": {
+      "paragraphs": "Абзаци",
+      "wordsPerParagraph": "Слів на абзац",
+      "startWithLorem": "Починати з «Lorem ipsum»",
+      "note": "Генератор Lorem Ipsum · чистий"
+    },
+    "emailValidate": {
+      "note": "Перевірка електронної пошти · лише формат (без пошуку MX)"
+    },
+    "creditCardLuhn": {
+      "number": "Номер картки",
+      "note": "Перевірка за алгоритмом Луна · офлайн, ніколи не зберігається",
+      "digits": "digits",
+      "specimenLabel": "Specimen",
+      "structureOnly": "Luhn structure only",
+      "unknownBrand": "Card"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "Мініфікатор JSON · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "Мініфікатор CSS · легкий (безпечний для edge)"
+    },
+    "hashCompare": {
+      "a": "Хеш А",
+      "b": "Хеш Б",
+      "ignoreCase": "Ігнорувати регістр",
+      "note": "Порівняння хешів · постійний час для однакової довжини"
+    },
+    "jsonDiff": {
+      "left": "JSON А",
+      "right": "JSON Б",
+      "note": "Різниця JSON · операції на рівні шляхів · кольорові рядки за типом · поруч",
+      "equal": "Ідентичні",
+      "differs": "{count} зміна(и)",
+      "colPath": "Шлях",
+      "colKind": "Тип",
+      "colLeft": "Ліво",
+      "colRight": "Право",
+      "filtersAria": "Фільтр за типом зміни",
+      "filterAll": "Усі ({count})",
+      "filterAdd": "Додано ({count})",
+      "filterRemove": "Видалено ({count})",
+      "filterChange": "Змінено ({count})",
+      "filterType": "Тип ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "Режим",
+      "pretty": "Оформлений",
+      "compact": "Компактний",
+      "indent": "Відступ",
+      "note": "Формувальник YAML · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "Формувальник TOML · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "Мініфікатор XML · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "Перевірка URL · WHATWG URL (без мережі)"
+    },
+    "ipValidate": {
+      "note": "Перевірка IP · IPv4/IPv6 офлайн"
+    },
+    "uuidValidate": {
+      "note": "Перевірка UUID · формат RFC 4122"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "Мініфікатор HTML · легкий (безпечний для edge)"
+    },
+    "randomString": {
+      "length": "Довжина",
+      "count": "Кількість",
+      "charset": "Набір символів",
+      "alphanumeric": "Літери та цифри",
+      "symbols": "Літери, цифри та символи",
+      "hex": "Hex",
+      "base64url": "Base64URL",
+      "note": "Випадковий рядок · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "Час читання · CJK + латинська евристика"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "Макс. рівень заголовка",
+      "note": "Markdown TOC · заголовки ATX"
+    },
+    "pdfInfo": {
+      "file": "Файл PDF",
+      "note": "Інформація PDF · pdf-lib (сторінки + метадані)"
+    },
+    "rot13": {
+      "shift": "Зсув (13 = ROT13)",
+      "note": "ROT13 / Цезар · чистий"
+    },
+    "morse": {
+      "note": "Код Морзе · ITU · чистий"
+    },
+    "textBinary": {
+      "toBinary": "Текст → бінарний",
+      "fromBinary": "Бінарний → текст",
+      "note": "Текст ↔ Бінарний · біти UTF-8"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "Кодування дайджесту",
+      "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "Одноразові дайджести · копіювати кожен · node:crypto"
+    },
+    "cssFormat": {
+      "note": "Форматувач CSS · легкий"
+    },
+    "htmlFormat": {
+      "note": "Форматування HTML · легкий інструмент"
+    },
+    "stringSimilarity": {
+      "a": "Рядок A",
+      "b": "Рядок B",
+      "note": "Подібність рядків · Левенштейн"
+    },
+    "roman": {
+      "toRoman": "Число → Римська",
+      "fromRoman": "Римська → Число",
+      "note": "Римські числа · 1–3999"
+    },
+    "age": {
+      "birthDate": "Дата народження (РРРР-ММ-ДД)",
+      "asOf": "Станом на (необов’язково)",
+      "note": "Калькулятор віку · точний Р/М/Д"
+    },
+    "tip": {
+      "bill": "Сума рахунку",
+      "percent": "Чапка %",
+      "people": "Люди",
+      "note": "Калькулятор чайових · зручний розподіл"
+    },
+    "aspect": {
+      "width": "Ширина",
+      "height": "Висота",
+      "note": "Співвідношення сторін · спрощення НСД"
+    },
+    "mime": {
+      "note": "Пошук MIME · поширені веб-типи"
+    },
+    "ua": {
+      "note": "Парсер User-Agent · евристичний (офлайн)"
+    },
+    "imageMeta": {
+      "file": "Файл зображення",
+      "note": "Метадані зображення · sharp (розмір буфера EXIF)"
+    },
+    "wordFreq": {
+      "top": "Топ N",
+      "note": "Частотність слів · CJK + латиниця"
+    },
+    "jsonXml": {
+      "note": "JSON ↔ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "SQL Minifier · коментарі + пробіли"
+    },
+    "lineNum": {
+      "start": "Стартовий номер",
+      "note": "Додати номери рядків · чисто"
+    },
+    "uniqueWords": {
+      "note": "Унікальні слова · порядок першого з'явлення"
+    },
+    "epoch": {
+      "value": "Значення",
+      "msToIso": "мс → ISO",
+      "isoToMs": "ISO → мс",
+      "note": "Епоха мілісекунди · Дата"
+    },
+    "passwordEntropy": {
+      "password": "Пароль",
+      "note": "Ентропія пароля · евристика набору символів"
+    },
+    "contrast": {
+      "fg": "Текст (#hex)",
+      "bg": "Фон (#hex)",
+      "note": "Контраст кольорів · WCAG 2.x",
+      "sampleHeadline": "Sample text",
+      "pass": "pass",
+      "fail": "fail",
+      "aaNormal": "AA normal",
+      "aaLarge": "AA large",
+      "aaaNormal": "AAA normal",
+      "aaaLarge": "AAA large"
+    },
+    "exif": {
+      "file": "Файл зображення",
+      "note": "Переглядач EXIF · exifr + резервний JPEG"
+    },
+    "regex": {
+      "pattern": "Шаблон",
+      "flags": "Прапорці",
+      "replacement": "Заміна",
+      "match": "Збіг",
+      "replace": "Замінити",
+      "test": "Перевірити",
+      "local": "Запустити локально",
+      "server": "Перевірка на сервері",
+      "count": "{count} matches",
+      "sotaNote": "Миттєве локальне підсвічування · ліміт часу сервера · той самий шлях, що й у API"
+    },
+    "jwt": {
+      "decode": "Декодувати JWT",
+      "sample": "Завантажити зразок",
+      "tokenPlaceholder": "Вставте JWT",
+      "decodeNote": "{engine} · лише декодування, підпис не перевіряється",
+      "footerNote": "Рушій: jose · без перевірки підпису. Для перевірки у продакшені використовуйте ключі через jwtVerify на сервері.",
+      "generateHint": "Потрібно підписати токени?",
+      "secret": "Секрет",
+      "exp": "Термін дії (секунди)",
+      "payload": "Навантаження JSON",
+      "note": "Генерація JWT · HS256 (тільки для розробки/тестування)",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "(empty signature segment)"
+    },
+    "rand": {
+      "min": "Мін.",
+      "max": "Макс.",
+      "count": "Кількість",
+      "note": "Випадкове число · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "Грані",
+      "count": "Кількість кісток",
+      "note": "Бросання кісток · криптографічний ГСЧ"
+    },
+    "hexRgb": {
+      "note": "HEX ↔ RGB · чистий"
+    },
+    "base64url": {
+      "note": "Base64URL · у стилі JWT"
+    },
+    "hmac": {
+      "message": "Повідомлення",
+      "secret": "Секрет",
+      "signature": "Підпис",
+      "note": "Перевірка HMAC · SHA-256"
+    },
+    "secret": {
+      "bytes": "Байти",
+      "count": "Кількість",
+      "note": "Генератор секретного ключа · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "Файл PDF",
+      "note": "Оптимізація PDF Light · переписування pdf-lib (без стиснення зображень)",
+      "needFile": "Спочатку виберіть PDF-файл"
+    },
+    "pdfCompress": {
+      "file": "Файл PDF",
+      "quality": "Якість",
+      "engine": "Рушій",
+      "qStructural": "Структурна (qpdf, без втрат)",
+      "qScreen": "Екран (мінімальний розмір, Ghostscript)",
+      "qEbook": "Електронна книга (збалансовано, Ghostscript)",
+      "qPrinter": "Друк (висока якість, Ghostscript)",
+      "eAuto": "Авто (qpdf → Ghostscript → pdf-lib)",
+      "download": "Завантажити PDF",
+      "needFile": "Спочатку виберіть PDF-файл",
+      "in": "Вхід",
+      "out": "Вихід",
+      "saved": "Збережено",
+      "note": "PDF Compress · qpdf / Ghostscript на хості · pdf-lib як резерв",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+    },
+    "jsonFormat": {
+      "indent": "Відступ",
+      "format": "Форматувати",
+      "minify": "Мініфікувати",
+      "serverVerify": "Перевірка на сервері",
+      "clear": "Очистити",
+      "sample": "Зразок",
+      "placeholder": "Вставте JSON…",
+      "formatted": "Форматований",
+      "minified": "Мініфікований",
+      "serverOk": "Сервер {mode} · {engine}",
+      "valid": "Валідний JSON",
+      "invalid": "Невалідний JSON",
+      "line": "рядок",
+      "column": "стовпчик",
+      "note": "Двигун: JSON.parse/stringify · миттєво локально · той самий шлях, що й API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
+    },
+    "qr": {
+      "size": "Розмір",
+      "ecl": "Корекція помилок",
+      "generate": "Створити",
+      "download": "Завантажити PNG",
+      "needText": "Введіть текст або URL",
+      "note": "QR · qrcode · попередній перегляд · той самий шлях, що й API"
+    },
+    "pdfText": {
+      "file": "PDF-файл",
+      "layout": "Макет",
+      "needFile": "Спочатку виберіть PDF",
+      "note": "PDF Text · pdftotext (poppler) на хості"
+    },
+    "svg": {
+      "optimize": "Оптимізувати",
+      "note": "SVG Optimize · легке чисте мініфікування"
+    },
+    "routerTranslate": {
+      "lab": "Лабораторна оболонка: не перекладає тут. Відкриває Router із підказкою — лічильник моделі лише на Router.",
+      "source": "Мова джерела",
+      "target": "Цільова мова",
+      "open": "Підготувати Router-посилання",
+      "deepLink": "Відкрити в Router",
+      "note": "зовнішнє · без тихого Forge LLM-журналу"
+    },
+    "imageCrop": {
+      "needFile": "Спочатку виберіть зображення",
+      "crop": "Обрізати",
+      "note": "Обрізання зображення · перетягніть область · чітке виділення",
+      "drop": "Перетягніть зображення або натисніть для вибору",
+      "dragHint": "Перетягніть по зображенню, щоб вибрати область обрізання",
+      "left": "Ліворуч",
+      "top": "Зверху",
+      "width": "Ширина",
+      "height": "Висота",
+      "natural": "Натуральний {w}×{h}",
+      "source": "Джерело",
+      "result": "Обрізано"
+    },
+    "markdown": {
+      "preview": "Попередній перегляد",
+      "html": "HTML",
+      "emptyPreview": "Запустіть, щоб побачити попередній перегляд",
+      "emptyHtml": "Згенерований HTML",
+      "rendering": "Рендеринг…",
+      "toHtml": "У HTML",
+      "copyHtml": "Копіювати HTML",
+      "note": "marked · пісочниця iframe · той самий шлях, що й API"
+    },
+    "pdfMerge": {
+      "files": "PDF-файли (≥2, порядок = порядок об’єднання)",
+      "needFiles": "Оберіть щонайменше 2 PDF",
+      "merging": "Об’єднання…",
+      "mergeDownload": "Об’єднати та завантажити",
+      "done": "Об’єднано · {pages} стор. · {bytes} байт",
+      "note": "pdf-lib · той самий шлях, що й API",
+      "merge": "Об’єднати та завантажити"
+    },
+    "pdfSplit": {
+      "file": "Файл PDF",
+      "needFile": "Оберіть PDF",
+      "fromPage": "Зі сторінки (нумерація з 1)",
+      "toPage": "До сторінки (порожньо = остання)",
+      "toPlaceholder": "Остання сторінка",
+      "splitting": "Розділення…",
+      "splitDownload": "Розділити та завантажити",
+      "done": "Розділено · джерело {source} стор. → вихід {pages} стор.",
+      "note": "pdf-lib · той самий шлях, що й API",
+      "split": "Розділити та завантажити"
+    },
+    "passwordStrength": {
+      "check": "Перевірити міцність",
+      "checking": "Перевіряємо…",
+      "crack": "Оцінка офлайн повільного хешу: {time}",
+      "score0": "Дуже слабий",
+      "score1": "Слабий",
+      "score2": "Прийнятний",
+      "score3": "Міцний",
+      "score4": "Дуже міцний",
+      "note": "zxcvbn-ts · той самий шлях, що й API · пароль ніколи не зберігається"
+    },
+    "hmacSign": {
+      "compute": "Обчислити HMAC",
+      "computing": "Обчислення…",
+      "note": "node:crypto · той самий шлях, що й API"
+    },
+    "costEstimate": {
+      "text": "Вхідний текст (для оцінки токенів вводу)",
+      "model": "Модель",
+      "outputTokens": "Токени виводу (ор.)",
+      "estimate": "Оцінити вартість",
+      "estimating": "Оцінювання…",
+      "note": "@nebutra/ai-providers/frontier card + js-tiktoken · оцінка за лінійною ціною, не рахунок"
+    },
+    "jsonSchema": {
+      "data": "Дані JSON",
+      "schema": "JSON Schema",
+      "validate": "Перевірити",
+      "validating": "Перевірка…",
+      "pass": "Пройдено",
+      "fail": "Не пройдено",
+      "note": "Ajv · той самий шлях, що й API"
+    },
+    "zhCnTw": {
+      "s2t": "Спрощений → Традиційний",
+      "t2s": "Традиційний → Спрощений",
+      "s2tw": "Спрощений → Тайвань",
+      "tw2s": "Тайвань → Спрощений",
+      "s2hk": "Спрощений → Гонконг",
+      "hk2s": "Гонконг → Спрощений",
+      "note": "OpenCC (opencc-js) · той самий шлях, що й API"
+    },
+    "pinyin": {
+      "tones": "Стиль тону",
+      "symbol": "Символ nǐ",
+      "num": "Число ni3",
+      "none": "Немає ni",
+      "hanzi": "Китайські ієрогліфи",
+      "convert": "У піньїнь",
+      "converting": "Конвертую…",
+      "note": "pinyin-pro · той самий шлях, що й API"
+    },
+    "sqlFormat": {
+      "dialect": "Діалект",
+      "format": "Формат",
+      "formatting": "Форматую…",
+      "note": "sql-formatter · той самий шлях, що й API"
+    },
+    "colorConvert": {
+      "color": "Колір",
+      "pick": "Обрати колір",
+      "convert": "Конвертувати",
+      "converting": "Конвертування…",
+      "note": "culori · hex / rgb / hsl / oklch · той самий шлях, що й API"
+    },
+    "qrGen": {
+      "content": "Вміст",
+      "format": "Формат",
+      "pngPreview": "PNG (перегляд)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "Створити QR",
+      "generating": "Створення…",
+      "note": "qrcode · той самий шлях, що й API"
+    },
+    "qrDecode": {
+      "upload": "Завантажте зображення з QR-кодом",
+      "parsing": "Декодування…",
+      "note": "jsQR + sharp · той самий шлях, що й API"
+    },
+    "cron": {
+      "expression": "Вираз Cron",
+      "timezone": "Часовий пояс",
+      "parse": "Наступні запуски",
+      "parsing": "Парсинг…",
+      "nextTitle": "Наступні запуски (ISO)",
+      "note": "cron-parser · той самий шлях, що й API"
+    },
+    "timezone": {
+      "datetime": "Дата та час",
+      "from": "З",
+      "to": "До",
+      "convert": "Перетворити часовий пояс",
+      "converting": "Конвертування…",
+      "placeholder": "2026-07-24 12:00:00 або ISO / unix",
+      "note": "dayjs timezone · той самий шлях, що й API"
+    },
+    "csvPreview": {
+      "preview": "Попередній перегляд таблиці",
+      "parsing": "Парсинг…",
+      "rows": "Перегляд {shown} / {total} рядків",
+      "note": "papaparse · той самий шлях, що й API"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "Запит",
+      "querying": "Виконується запит…",
+      "note": "jsonpath-plus · той самий шлях, що й API"
+    },
+    "xmlFormat": {
+      "pretty": "Форматований",
+      "minify": "Мініфікувати",
+      "validate": "Перевірити",
+      "validOk": "Валідний",
+      "done": "Готово · {engine}",
+      "processing": "Обробка…",
+      "note": "fast-xml-parser · той самий шлях, що й API"
+    },
+    "regexLegacy": {
+      "pattern": "Шаблон",
+      "flags": "Прапори",
+      "mode": "Режим",
+      "match": "Збіг",
+      "replace": "Замінити",
+      "test": "Перевірити",
+      "replacement": "Заміна",
+      "note": "Миттєво локально · ліміт часу сервера · той самий шлях, що й API"
+    },
+    "docxText": {
+      "file": "Файл DOCX",
+      "needFile": "Спочатку виберіть файл .docx",
+      "extract": "Витягти текст",
+      "extracting": "Витягуємо…",
+      "note": "DOCX → текст · чистий ZIP + document.xml (без Office)"
+    },
+    "uuid": {
+      "count": "Кількість",
+      "local": "Згенерувати локально",
+      "server": "Згенерувати на сервері",
+      "copyAll": "Копіювати все",
+      "empty": "UUID з'являться тут"
+    },
+    "timestamp": {
+      "nowSec": "Секунди Unix",
+      "nowMs": "Мілісекунди Unix / ISO",
+      "serverNow": "Поточний час сервера",
+      "toDate": "Відмітка часу → дата",
+      "toUnix": "Дата → відмітка часу",
+      "seconds": "Секунди",
+      "milliseconds": "Мілісекунди",
+      "value": "Значення",
+      "convert": "Перетворити",
+      "note": "Те ж саме, що й у API"
+    },
+    "wordCount": {
+      "words": "Слова",
+      "chars": "Символи",
+      "noSpaces": "Без пробілів",
+      "cjk": "CJK",
+      "lines": "Рядки",
+      "paragraphs": "Абзаци",
+      "placeholder": "Вставте або введіть текст…",
+      "copyText": "Копіювати текст",
+      "clear": "Очистити",
+      "verifying": "Перевірка…",
+      "serverNote": "Слова на сервері={words} · той самий шлях, що й API",
+      "note": "Живий рушій: {engine} · завантаження не потрібне · той самий шлях, що й API"
+    },
+    "bmi": {
+      "height": "Зріст (см)",
+      "weight": "Вага (кг)",
+      "compute": "Обчислити ІМТ",
+      "computing": "Обчислення…",
+      "invalid": "Введіть коректний зріст (см) та вагу (кг)",
+      "underweight": "Недостатня вага",
+      "normal": "Норма",
+      "overweight": "Надмірна вага",
+      "obese": "Ожиріння",
+      "note": "ІМТ ВООЗ · той самий шлях, що й API · не є медичною порадою"
+    },
+    "percentage": {
+      "mode": "Режим",
+      "percentOf": "a% від b",
+      "isWhat": "a — це який % від b",
+      "percentA": "Відсоток a",
+      "valueA": "Значення a",
+      "baseB": "Основа b",
+      "compute": "Обчислити",
+      "computing": "Обчислення…",
+      "invalid": "Введіть коректні числа",
+      "note": "Той самий шлях, що й API"
+    },
+    "dataSize": {
+      "value": "Значення",
+      "convert": "Перетворити",
+      "converting": "Перетворення…",
+      "invalid": "Введіть коректне число",
+      "binary": "{value} {from} → основа-1024",
+      "note": "Двійкові одиниці (1 KB = 1024 B) · той самий шлях, що й API"
+    },
+    "rmb": {
+      "amount": "Сума (CNY)",
+      "convert": "Перетворити у верхній регістр",
+      "converting": "Перетворення…",
+      "invalid": "Введіть невід'ємну суму",
+      "note": "Сума китайської інвойсу у верхньому регістрі · той самий шлях, що й API"
+    },
+    "dateDiff": {
+      "from": "Дата початку",
+      "to": "Кінцева дата",
+      "compute": "Різниця днів",
+      "computing": "Обчислення…",
+      "days": "днів",
+      "note": "ECMAScript Date · той самий шлях, що й у API"
+    },
+    "xlsxText": {
+      "file": "Файл XLSX",
+      "needFile": "Спочатку виберіть файл .xlsx",
+      "extract": "Видобути аркуш",
+      "extracting": "Видобування…",
+      "note": "XLSX → CSV · чистий ZIP + sheet1.xml (перший аркуш)"
+    },
+    "mdToPdf": {
+      "drop": "Перетягніть файл .md сюди або вставте Markdown нижче",
+      "title": "Назва",
+      "engine": "Рушій",
+      "ePlaywright": "playwright (друк через Chromium)",
+      "eSimple": "простий (без браузера)",
+      "generate": "Створити PDF",
+      "generating": "Створення…",
+      "download": "Завантажити PDF",
+      "note": "marked → HTML → Playwright Chromium print. Якщо Chromium відсутній, автоматично використовується простий структурований PDF — перевірте renderEngine; простий варіант не є друкованим макетом.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
+    },
+    "tokenCount": {
+      "count": "Підрахувати токени",
+      "counting": "Підрахунок…",
+      "chars": "Символів {n}",
+      "note": "Двигун: js-tiktoken · точний підрахунок на сервері · можна використовувати для оцінки вартості Router"
+    },
+    "codec": {
+      "encodeDir": "Текст → закодовано",
+      "decodeDir": "Закодовано → текст",
+      "localNote": "Локальний запуск",
+      "serverNote": "Сервер · той самий шлях, що й API",
+      "hexInvalid": "Некоректний hex-рядок",
+      "hexDecodeFail": "Сервер не зміг декодувати як UTF-8 (потрібен коректний hex)",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · той самий шлях, що й API",
+      "noteHtml": "Карта HTML-сутностей · той самий шлях, що й API",
+      "noteHex": "UTF-8 ↔ hex · той самий шлях, що й API"
+    },
+    "textDiff": {
+      "left": "Ліворуч",
+      "right": "Праворуч",
+      "compare": "Порівняти",
+      "comparing": "Порівнюємо…"
+    },
+    "imageTool": {
+      "drop": "Перетягніть зображення сюди або натисніть, щоб вибрати",
+      "selected": "Вибрано: {name} ({kb} КБ)",
+      "needFile": "Спочатку виберіть зображення",
+      "format": "Формат виводу",
+      "quality": "Якість {n}",
+      "maxW": "Макс. ширина",
+      "maxH": "Макс. висота",
+      "optional": "Необов’язково",
+      "resizeEg": "напр. 1280",
+      "processing": "Обробка…",
+      "compress": "Стиснути",
+      "resize": "Змінити розмір",
+      "convert": "Конвертувати формат",
+      "download": "Завантажити результат",
+      "outMeta": "Результат {kb} КБ{dims}{ratio} · {type}",
+      "ratio": " · ~{pct}% від оригіналу",
+      "dims": " · {w}×{h}",
+      "original": "Оригінал",
+      "result": "Результат",
+      "note": "Двигун: sharp (libvips) · серверний · той самий шлях, що й у API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+    },
+    "pptxText": {
+      "file": "Файл PPTX",
+      "needFile": "Спочатку виберіть файл .pptx",
+      "extract": "Видобути структуру",
+      "extracting": "Видобування…",
+      "note": "Структура PPTX · чистий ZIP + слайдовий XML (без PowerPoint)"
+    },
+    "shell": {
+      "copyJson": "Копіювати JSON",
+      "sample": "Приклад",
+      "chars": "{n} символів",
+      "largeInput": "Великий ввід — результат оновиться через мить після того, як ви перестанете вводити.",
+      "manualInput": "Вхідні дані занадто великі для миттєвого перерахунку — це може зависнути сторінку. Натисніть «Запустити».",
+      "options": "Параметри",
+      "regenerateNote": "Результат вже оновлюється автоматично при зміні параметрів.",
+      "fileTab": "Файл",
+      "pasteTab": "Вставити",
+      "browse": "Обрати файл",
+      "selectedFile": "{name} · {kb} КБ",
+      "truncated": "Прочитано перші {kb} КБ — цього достатньо для відповіді, а решта ніколи не покидає ваш пристрій.",
+      "detail": "Деталі",
+      "dropIntoPane": "Перетягніть файл сюди",
+      "swap": "Поміняти місцями",
+      "prevChange": "Попередня зміна",
+      "nextChange": "Далі",
+      "changePosition": "{index} з {total}",
+      "result": "Результат"
+    },
+    "readmeSkeleton": {
+      "emptyHint": "Позначте хоча б один розділ, щоб створити README.",
+      "note": "Використовує той самий рушій, що й API. Розділи, яких ви не позначите, не з’являтимуться — жодних порожніх заголовків.",
+      "orderNote": "Розділи завжди відображаються в цьому фіксованому порядку, тому однаковий вхід дає однаковий файл.",
+      "group": {
+        "core": "Основне",
+        "docs": "Документація",
+        "community": "Спільнота",
+        "meta": "Мета"
+      },
+      "section": {
+        "title": "Назва та опис",
+        "badges": "Бейджі",
+        "callout": "Примітка",
+        "toc": "Зміст",
+        "installation": "Встановлення",
+        "usage": "Використання",
+        "features": "Особливості",
+        "api-reference": "Документація API",
+        "screenshots": "Знімки екрана",
+        "roadmap": "Дорожня карта",
+        "contributing": "Внесок у проєкт",
+        "support": "Підтримка",
+        "acknowledgements": "Подяки",
+        "license": "Ліцензія",
+        "authors": "Автори",
+        "tech-stack": "Технологічний стек"
+      },
+      "projectName": "Назва проєкту",
+      "projectNamePlaceholder": "Назва проєкту",
+      "description": "Опис",
+      "descriptionPlaceholder": "Одне речення про те, що це робить",
+      "badgeLicense": "Бейдж ліцензії",
+      "badgeNpm": "npm version",
+      "badgeBuild": "Стан збірки",
+      "npmPackage": "npm package",
+      "npmPackagePlaceholder": "@scope/package",
+      "repo": "Репозиторій GitHub",
+      "repoPlaceholder": "owner/repo",
+      "calloutKind": "Тип примітки",
+      "calloutBody": "Текст сповіщення",
+      "calloutBodyPlaceholder": "До 1.0 — API ще змінюється",
+      "fenceLanguage": "Мова",
+      "installCommand": "Команда встановлення",
+      "installCommandPlaceholder": "npm install your-project",
+      "usageExample": "Приклад використання",
+      "usageExamplePlaceholder": "Найменший приклад, що демонструє цінність",
+      "features": "Можливості",
+      "featuresPlaceholder": "Одна можливість на рядок",
+      "contact": "Контакти",
+      "contactPlaceholder": "support@example.com",
+      "license": "Ліцензія",
+      "authors": "Автори",
+      "authorsPlaceholder": "@handle, Jane Roe",
+      "techStack": "Технологічний стек",
+      "techStackPlaceholder": "typescript, postgresql (ідентифікатори simple-icons)",
+      "sectionCount": "{n} розділів",
+      "charCount": "{n} символів",
+      "warningCount": "{n} пропущено",
+      "omittedTitle": "Що було виключено і чому"
+    },
+    "gitignore": {
+      "searchLabel": "Пошук стеків",
+      "searchPlaceholder": "Пошук мов, фреймворків, ОС або редакторів…",
+      "add": "Додати {stack}",
+      "remove": "Видалiti {stack}",
+      "selected": "Обрані стеки",
+      "suggestions": "Підходящі стеки",
+      "noMatches": "Жоден стек не відповідає «{query}». Натисніть Enter, щоб надіслати — псевдоніми розв’язуються на сервері.",
+      "catalogFallback": "Список стеків недоступний — введіть назву стека та натисніть Enter.",
+      "emptyHint": "Виберіть хоча б одну мову, фреймворк, ОС або редактор вище.",
+      "regenerate": "Згенерувати знову",
+      "sections": "{n} розділи",
+      "lines": "{n} рядків",
+      "deduped": "{n} дубльованих шаблонів об'єднано",
+      "notFound": "Немає в корпусі: {stacks}",
+      "globalScope": "{stacks} — це записи для ОС/редактора. Багато розробників тримають їх у особистому ~/.gitignore_global, а не в кожному репозиторії.",
+      "untrackedNote": ".gitignore впливає лише на невідстежувані файли. Для файлу, який git вже відстежує, виконайте git rm -r --cached <path>.",
+      "fileLabel": ".gitignore"
+    },
+    "editorconfig": {
+      "emptyHint": "Вкажіть хоча б одну властивість, щоб побачити файл.",
+      "note": "Той самий рушій, що й в API. Ваші налаштування зберігаються лише в цій сесії браузера; нічого не зберігається на сервері.",
+      "checks": "Перевірки",
+      "presets": "Почати з",
+      "preset": {
+        "spaces2": "2 пробіли, LF",
+        "spaces4": "4 пробіли, LF",
+        "tabs": "Табуляція, ширина 4",
+        "repo": "Стартовий репозиторій (+ Markdown, Makefile)"
+      },
+      "rootLabel": "root = true — запобігає злиттю батьківських файлів .editorconfig редакторами",
+      "glob": "Глоб {n}",
+      "addSection": "Додати секцію",
+      "removeSection": "Видалити",
+      "notSet": "(не встановлено)",
+      "import": "Імпортувати наявний .editorconfig",
+      "importPlaceholder": "Вставте .editorconfig сюди, щоб завантажити його у форму",
+      "importAction": "Імпортувати",
+      "importing": "Імпортування…",
+      "importFailed": "Не вдалося імпортувати: {message}"
+    },
+    "robotsTxt": {
+      "emptyHint": "Налаштуйте параметри вище — файл з'явиться тут",
+      "deployNote": "robots.txt діє лише в корені домену (https://example.com/robots.txt). Кожен піддомен потребує власного файлу.",
+      "outputLabel": "robots.txt",
+      "defaultAccess": "Доступ за замовчуванням (User-agent: *)",
+      "defaultAllow": "Дозволити все",
+      "defaultDisallow": "Заборонити все",
+      "defaultAccessNote": "«Дозволити все» записує порожній «Disallow:» — саме це дозволяє все.",
+      "crawlDelay": "Затримка сканування (секунди)",
+      "crawlDelayPlaceholder": "немає",
+      "crawlDelayNote": "Не входить до RFC 9309. Google ігнорує цей параметр; він ніколи не записується в групу Google.",
+      "searchAgents": "Пошукові системи",
+      "aiAgents": "Штучний інтелект",
+      "aiAgentsNote": "Сканери для навчання та пошукових систем. Блокування не впливає на індексацію пошуком.",
+      "accessDefault": "За замовчуванням",
+      "accessAllow": "Дозволити",
+      "accessDisallow": "Заборонити",
+      "rules": "Правила шляхів",
+      "rulesNote": "Шляхи чутливі до регістру та відносні до кореня. Додайте кінцевий слеш, щоб обмежити правило директорією.",
+      "rulePath": "Шлях {n}",
+      "rulePathPlaceholder": "/admin/",
+      "ruleType": "Тип правила",
+      "addRule": "Додати правило шляху",
+      "removeRule": "Видалити",
+      "sitemaps": "Sitemaps",
+      "sitemapsNote": "Абсолютні URL-адреси http(s). Записуються як окремі рядки, поза кожної групою.",
+      "sitemapUrl": "Sitemap {n}",
+      "addSitemap": "Додати sitemap",
+      "removeSitemap": "Видалити",
+      "groupCount": "{n} групи",
+      "lineCount": "{n} рядки",
+      "sitemapCount": "{n} мапи сайту",
+      "warningsSummary": "Примітки щодо цього файлу ({n})"
+    },
+    "encodingDetect": {
+      "drop": "Перетягніть файл, щоб визначити його кодування",
+      "privacy": "Читається лише перші {kb} КБ, і вони надсилаються на той самий публічний invoke-ендпоінт, який викликав би агент — нічого не записується на диск.",
+      "pasteLabel": "Або вставте текст",
+      "pastePlaceholder": "Вставте текст — включаючи моджибаке, який потрібно пояснити",
+      "detail": "Кандидати, закінчення рядків та статистика байтів",
+      "idle": "Перетягніть файл або вставте текст — звіт заповниться, як тільки буде що читати.",
+      "readOnly": "Тільки для читання: цей інструмент визначає кодування, він ніколи не перезаписує байти.",
+      "headline": "{encoding} · впевненість {confidence}%",
+      "notText": "Це не схоже на текст",
+      "bomPresent": "BOM {bytes}",
+      "bomAbsent": "Без BOM",
+      "eol": "Рядкові закінчення {kind}",
+      "eolMixed": "Змішані рядкові закінчення",
+      "language": "Мова {language} · {confidence}%",
+      "sampled": "Визначено з перших {kb} КБ з {totalKb} КБ",
+      "candidates": "Ранговані кандидати",
+      "candidatesNote": "Другорядні кодування показано навмисно: короткі або симетричні зразки дійсно неоднозначні.",
+      "lineEndings": "Рядкові закінчення",
+      "byteStats": "Статистика байтів",
+      "totalBytes": "Всього",
+      "asciiBytes": "ASCII",
+      "highBytes": "Високі (0x80–0xFF)",
+      "nullBytes": "NUL",
+      "mojibake": "Mojibake відновлено"
+    },
+    "dockerfileStarter": {
+      "language": "Мова",
+      "framework": "Фреймворк",
+      "packageManager": "Менеджер пакетів",
+      "baseVariant": "Базовий образ",
+      "version": "Версія середовища",
+      "workdir": "Робоча директорія",
+      "port": "Порт",
+      "buildCommand": "Команда збірки",
+      "startCommand": "Команда старту",
+      "commandPlaceholder": "Порожньо = за замовчуванням",
+      "frameworkNone": "Немає (чисте середовище)",
+      "pmAuto": "Авто",
+      "variantSlim": "slim (glibc)",
+      "variantAlpine": "alpine (musl)",
+      "variantFull": "повна",
+      "multiStage": "Багатостадійна збірка",
+      "nonRootUser": "Користувач не root",
+      "includeDockerignore": "Додати .dockerignore",
+      "includeCompose": "Додати compose.yaml",
+      "includeHealthcheck": "Додати HEALTHCHECK",
+      "groupWhat": "Що ви будуєте",
+      "groupHow": "Як це має працювати",
+      "emptyHint": "Оберіть мову, щоб побачити Dockerfile.",
+      "note": "Тільки шаблони — нічого, окрім наведених вище параметрів, не залишає ваш браузер. Прочитайте файл перед тим, як його використовувати.",
+      "warnings": "{n} речей для перевірки",
+      "stages": "{n} етапів",
+      "badgeNonRoot": "Не root",
+      "badgeRoot": "Працює як root",
+      "badgePort": "Порт {port}"
+    },
+    "lineEndingDetect": {
+      "dropLabel": "Перетягніть текстовий файл, щоб перевірити його розриви рядків",
+      "privacy": "Вставлений текст та перші 256 КБ перетягнутого файлу надсилаються до Forge API для сканування; байти не зберігаються.",
+      "pasteLabel": "Або вставте текст",
+      "pastePlaceholder": "Вставте текст, який потрібно перевірити",
+      "idle": "Вставте текст або перетягніть файл, щоб побачити результат перевірки розривів рядків.",
+      "detail": "Підрахунок та перевірка",
+      "note": "Тільки виявлення — цей інструмент ніколи не перезаписує ваш файл.",
+      "empty": "Порожній вхід",
+      "noTerminator": "Немає термінатора рядка — один незавершений рядок",
+      "consistent": "{style} — узгоджено",
+      "mixed": "ЗМІШАНО — {parts}",
+      "sharePart": "{pct}% {style}",
+      "style": {
+        "LF": "LF (Unix/Linux/macOS)",
+        "CRLF": "CRLF (Windows)",
+        "CR": "CR (класичний Mac OS 9 та раніше)"
+      },
+      "lines": "{n} рядків",
+      "bytes": "{n} байтів",
+      "trailing": {
+        "present": "Закінчується новим рядком",
+        "absent": "У кінці файлу немає нового рядка"
+      },
+      "bomUtf8": "UTF-8 BOM",
+      "bomNone": "Без BOM",
+      "countRow": "{style}: {n} ({pct}%)",
+      "colStyle": "Стиль",
+      "colCount": "Кількість",
+      "colShare": "Частка",
+      "minorityLines": "Рядки, що відрізняються від домінуючого стилю: {lines}",
+      "andMore": "та інші",
+      "findings": "Перевірки",
+      "level": {
+        "info": "Примітка",
+        "warning": "Попередження",
+        "danger": "Порушує"
+      },
+      "sampled": "Перевірено перші {n} з {total} байтів",
+      "encodingLink": "Відкрити детектор кодування"
+    },
+    "fileTypeDetect": {
+      "drop": "Перетягніть файл, щоб визначити його справжній тип",
+      "privacy": "Читається лише заголовок розміром {kb} КБ — решта файлу ніколи не покидає ваш пристрій.",
+      "hexTab": "Вставити шістнадцятковий код",
+      "detail": "Показати байти та кандидати",
+      "idle": "Перетягніть файл або вставте його початкові байти у шістнадцятковому форматі.",
+      "note": "Сигнатури визначають контейнер, а не кодек або вміст всередині нього.",
+      "unset": "—",
+      "unknownType": "Не знайдено відповідної сигнатури",
+      "polyglot": "Поліглот",
+      "tierNone": "Розширення збігається",
+      "tierBenign": "Некритична невідповідність",
+      "tierMismatch": "Невідповідність розширення",
+      "tierHighRisk": "Високий ризик",
+      "confidenceMatch": "Збіг сигнатури",
+      "confidenceContainer": "Тільки контейнер",
+      "confidenceAmbiguous": "Неоднозначно",
+      "confidenceNone": "Немає збігу",
+      "signalDetected": "Виявлений MIME",
+      "signalReported": "Задекларований MIME",
+      "signalExtension": "Розширення файлу",
+      "drillResolved": "Відкрито контейнер {kind}: {type}",
+      "drillUnresolved": "Контейнер {kind} підтверджено; підтип не визначено з вибірки байтів",
+      "hexDump": "Байти заголовка",
+      "bytesRead": "{n} байтів прочитано",
+      "headerOnly": "лише зразок заголовка",
+      "entropy": "Ентропія {bits} біт/байт",
+      "signatureCount": "{n} сигнатур у таблиці",
+      "textHints": "Структурні підказки: {hints}",
+      "candidates": "Усі збіжні сигнатури",
+      "atOffset": "зміщення {offset}"
+    },
+    "licenseChooser": {
+      "prompt": "Що потрібно цьому проекту?",
+      "pickScenario": "Оберіть рядок, який найкраще описує ваш проект — відповідь і файл з'являться тут.",
+      "disclaimer": "Детермінований шаблон, не юридична порада.",
+      "noAnswer": "Жодна ліцензія не підходить для цього випадку",
+      "permissions": "Дозволяє",
+      "conditions": "Вимагає",
+      "limitations": "Не покриває",
+      "alternates": "Інші варіанти для цього випадку",
+      "useThis": "Використовувати цей",
+      "readCanonical": "Прочитати канонічний текст на SPDX",
+      "holder": "Власник авторських прав",
+      "holderPlaceholder": "Ваше ім’я або назва компанії",
+      "holderHint": "Додайте власника авторських прав — файл заповнюватиметься під час введення.",
+      "year": "Рік",
+      "manifest": "Куди помістити SPDX id",
+      "verbatim": "{name} постачається в біт-ідентичному вигляді для всіх — рядок авторських прав розміщується в повідомленні в джерельному файлі, а не в файлі LICENSE.",
+      "noLicense": {
+        "summary": "Що буде, якщо взагалі не додавати ліцензію?",
+        "body": "Відсутність ліцензії — це не те саме, що суспільне надбання. Без ліцензії діє стандартне авторське право, і ніхто не має права копіювати, змінювати чи розповсюджувати ваш код — публічний репозиторій забезпечує лише видимість, а не дозвіл."
+      },
+      "artifact": {
+        "header": "Заголовок у файлі вихідного коду",
+        "notice": "Повідомлення у файлі вихідного коду"
+      },
+      "refine": {
+        "patent": "Тут важливе патентне надання (код компанії, апаратне забезпечення, робота над стандартами)",
+        "network": "Він працюватиме як хостований сервіс, а не лише як завантаження",
+        "library": "Це бібліотека, до якої підключається інший програмний забезпечення",
+        "later": "Дозволити пізніші версії ліцензії (зберігає сумісність з кодом Apache-2.0)",
+        "none": "Для цього випадку нічого більше уточнювати не потрібно."
+      },
+      "scenario": {
+        "permissive": {
+          "label": "Будь-хто може ним користуватися вільно",
+          "detail": "Використовувати, змінювати, продавати, вбудовувати в закриті продукти — головне, зберегти повідомлення про авторське право."
+        },
+        "copyleft": {
+          "label": "Покращення мають повертатися",
+          "detail": "Кожен, хто поширює змінenu версію, зобов’язаний також опублікувати вихідний код."
+        },
+        "community": {
+          "label": "Я роблю внесок у вже існуючий проєкт",
+          "detail": "Ліцензію вже визначено — дотримуйтесь ліцензії проєкта, до якого ви робите внесок."
+        },
+        "non-software": {
+          "label": "Це не програмне забезпечення",
+          "detail": "Документація, дані, дизайн або медіа вимагають ліцензію Creative Commons, а не OSI."
+        },
+        "unsure": {
+          "label": "Я ще не знаю",
+          "detail": "Отримайте ліцензію за замовчуванням із мінімальними ризиками та дві варіанти, про які варто знати."
+        }
+      },
+      "family": {
+        "permissive": "Дозволяюча",
+        "weak-copyleft": "Слабкий copyleft",
+        "strong-copyleft": "Сильний copyleft",
+        "public-domain": "Суспільне надбання",
+        "content": "Ліцензія на контент"
+      },
+      "flag": {
+        "commercial-use": "Комерційне використання",
+        "modifications": "Модифікація",
+        "distribution": "Розповсюдження",
+        "private-use": "Приватне використання",
+        "patent-use": "Надання патентних прав",
+        "include-copyright": "Зберегти застереження про авторські права",
+        "document-changes": "Вказати зміни",
+        "disclose-source": "Розкрити вихідний код",
+        "same-license": "Одна ліцензія для всього твору",
+        "same-license-file": "Одна ліцензія для кожного зміненого файлу",
+        "same-license-library": "Одна ліцензія для бібліотеки",
+        "network-use-disclose": "Мережеве використання вважається розповсюдженням",
+        "liability": "Відповідальність",
+        "warranty": "Гарантія",
+        "trademark-use": "Використання товарного знаку"
+      }
+    },
+    "isbn": {
+      "inputLabel": "ISBN",
+      "placeholder": "978-0-306-40615-7 — по одному в рядку, дефіси та пробіли ігноруються",
+      "idle": "Вставте один ISBN або цілий стовпчик; результати з’являються під час введення.",
+      "scope": "Тільки перевірка контрольного розряду. Коректний ISBN узгоджений внутрішньо — це не гарантія, що його виділила агенція для реальної книги.",
+      "summary": "{valid} із {total} коректних",
+      "singleValid": "Коректний ISBN",
+      "singleInvalid": "Некоректний ISBN",
+      "invalidCount": "{n} некоректних",
+      "convertedTo": "{type}: {value}",
+      "valid": "Дійсний",
+      "invalid": "Недійсний",
+      "truncated": "Показано перші {shown} рядки.",
+      "col": {
+        "input": "Ввід",
+        "normalized": "Нормалізований",
+        "type": "Тип",
+        "status": "Статус",
+        "converted": "Перетворено",
+        "note": "Примітка"
+      },
+      "type": {
+        "isbn10": "ISBN-10",
+        "isbn13": "ISBN-13",
+        "invalidLength": "Неправильна довжина"
+      },
+      "note": {
+        "checkDigit": "Контрольна цифра має бути {expected}",
+        "invalidLength": "ISBN має містити рівно 10 або 13 символів",
+        "invalidCharacter": "Містить символ, який не є цифрою",
+        "xMisplaced": "X допустимий лише як останній символ ISBN-10",
+        "noIsbn10": "Префікс 979 не має еквівалента ISBN-10",
+        "nonBookland": "13-значні ISBN мають починатися з 978 або 979",
+        "ismn": "979-0 — це діапазон ISMN (друкована музика), а не ISBN"
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
+    },
+    "languageDetect": {
+      "inputLabel": "Уривок коду",
+      "inputPlaceholder": "Вставте код без імені файлу — з чату, тікета, відповіді…",
+      "hintLabel": "Ім'я файлу або розширення (необов'язково)",
+      "hintPlaceholder": "main.h · .pl · Dockerfile",
+      "note": "Використовує той самий рушій, що й API. Визначення базується лише на вмісті, якщо не вказано підказку з іменем файлу; неоднозначні розширення (.h .m .pl .fs .ts .cs .r) спочатку обробляються за власними правилами.",
+      "idle": "Вставте фрагмент — результат з'явиться під час введення.",
+      "confidence": {
+        "high": "Висока впевненість",
+        "medium": "Середня впевненість",
+        "low": "Низька впевненість"
+      },
+      "score": "{n}/100",
+      "dataFormat": "Формат даних, а не мова програмування",
+      "multiLanguage": "Підозрюється кілька мов",
+      "why": "Чому така відповідь",
+      "signals": "Знайдені сигнали",
+      "alternates": "Інші кандидати",
+      "composeNext": "Відформатувати цю {language}"
+    },
+    "iban": {
+      "inputLabel": "IBAN",
+      "idle": "Вставте IBAN — результат з'явиться після кожного натискання, кнопка не потрібна.",
+      "sourceNote": "Контрольна сума та структура згідно з ISO 13616-1:2020. Довжина за країною та формат BBAN взято з опублікованої копії реєстру IBAN ISO, а не з самого реєстру.",
+      "valid": "Коректний IBAN",
+      "keepTyping": "Продовжуйте вводити — це коротше, ніж IBAN цієї країни",
+      "caveat": "Лише перевірка форми. Проходження контрольної суми не підтверджує, що рахунок існує, активний або належить отримувачу.",
+      "printFormat": "Формат для друку",
+      "details": "Розбір складових",
+      "notEncoded": "Не закодовано за форматом цієї країни",
+      "coverage": "{n} країн із зареєстрованим форматом IBAN",
+      "reason": {
+        "bad_charset": "Не схоже на IBAN — IBAN складається з двох літер, двох цифр, далі лише літери та цифри",
+        "country_unsupported": "Для цього коду країни немає зареєстрованого формату IBAN",
+        "incomplete": "Незавершений",
+        "wrong_length_for_country": "Занадто довгий для IBAN цієї країни",
+        "structure_mismatch": "Правильна довжина, але неправильна структура для формату цієї країни",
+        "checksum_failed": "Невдала перевірка контрольною сумою — десь у цьому IBAN є помилка"
+      },
+      "badge": {
+        "country": "{name} ({code})",
+        "unknownCountry": "Код країни {code}",
+        "length": "{n} із {expected} символів",
+        "bankCode": "Код банку {code}",
+        "expectedCheckDigits": "Контрольні цифри для цього номера рахунку були б {digits}"
+      },
+      "field": {
+        "normalized": "Електронний формат",
+        "country": "Країна",
+        "checkDigits": "Контрольні цифри",
+        "bban": "BBAN",
+        "bbanFormat": "Формат BBAN",
+        "bankCode": "Код банку"
+      },
+      "check": {
+        "charset": "Набір символів",
+        "country": "Країна",
+        "length": "Довжина",
+        "structure": "Структура",
+        "checksum": "MOD 97-10"
+      },
+      "state": {
+        "pass": "вдалося",
+        "fail": "не вдалося",
+        "skipped": "не досягнуто"
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
+    },
+    "secretScan": {
+      "pasteLabel": "Вставте код, конфіг або .env",
+      "pastePlaceholder": "DATABASE_URL=postgres://…\nAPI_KEY=…",
+      "dropLabel": "Перетягніть файл для перевірки",
+      "privacy": "Працює повністю у вашому браузері. Нічого не надсилається — навіть нам.",
+      "scan": "Перевірити",
+      "scanning": "Перевірка…",
+      "idleTitle": "Вставте текст і натисніть Перевірити.",
+      "idleHint": "Перевіряє наявність ключів API, токенів, приватних ключів та секретів з високою ентропія. Зіставлені значення приховуються; повністю показуються лише номери рядків.",
+      "clean": "Секретів не знайдено",
+      "cleanCaveat": "Нічого тут не відповідає відомому формату облікових даних і не виглядає як випадковий секрет. Збіг за шаблоном — це не доказ. Перевірте все, у чому сумніваєтесь.",
+      "found": "{n, plural, one {# можливий секрет знайдено} other {# можливих секретів знайдено}}",
+      "foundCaveat": "Приберіть їх, перш ніж вставляти це будь-куди. Якщо ключ справжній, змініть його.",
+      "countHigh": "{n} високої впевненості",
+      "countMedium": "{n} середньої",
+      "countLow": "{n} низьких",
+      "confidence": {
+        "high": "Висока",
+        "medium": "Середня",
+        "low": "Низька"
+      },
+      "position": "рядок {line}, стовпчик {column}",
+      "length": "{n} символів",
+      "maskedLabel": "Зашифроване збіг",
+      "why": "Чому це збіглося",
+      "candidates": "Також може бути:",
+      "scanDetail": "Деталі сканування",
+      "lines": "{n} рядків",
+      "bytes": "{n} байтів проскановано",
+      "suppressed": "{n} placeholder(s) ignored",
+      "suppressedNote": "Відомі демо-значення (ключі EXAMPLE, your-api-key-here, повторювані символи) ігноруються, щоб у зразкових файлах не було хибних тривог.",
+      "omitted": "Ще {n} не показано",
+      "truncated": "Вхідні дані обмежено — перевірено лише першу частину",
+      "reportTitle": "Результати сканування секретів (значення замасковано)",
+      "scopeNote": "Тільки виявлення: цей інструмент ніколи не звертається до постачальника, щоб перевірити, чи дійсний ключ — це означало б надсилання вашого ключа третій стороні."
+    },
+    "eanUpcGtin": {
+      "inputLabel": "Номери штрих-кодів",
+      "placeholder": "Один код на рядок (коми та крапки з комою також розділяють)",
+      "idle": "Вставте один код або цілий стовпчик — вердикт з'являється під час введення.",
+      "operationLabel": "Операція",
+      "operationValidate": "Перевірити (код включає контрольну цифру)",
+      "operationCalculate": "Обчислити (у коді відсутня контрольна цифра)",
+      "typeLabel": "Тип",
+      "typeAuto": "Визначити за довжиною",
+      "total": "{n} кодів",
+      "validCount": "{n} дійсних",
+      "invalidCount": "{n} недійсних",
+      "calculatedCount": "{n} розрахованих",
+      "unrecognizedCount": "{n} невизнаної довжини",
+      "verdict": {
+        "valid": "Дійсний",
+        "invalid": "Недійсний",
+        "calculated": "Розрахований",
+        "unrecognized-length": "Невизнана довжина"
+      },
+      "alsoReadsAs": "Також читається як {type}",
+      "checkDigit": "Контрольна цифра",
+      "corrected": "Повинно бути",
+      "gtin14": "Формат GTIN-14",
+      "reason": {
+        "empty": "На цьому рядку немає чого перевіряти.",
+        "non-digit-characters": "Містить символи, які не є цифрами або роздільниками.",
+        "unsupported-length": "Ідентифікатор GS1 такої довжини не існує (підтримуються 8, 12, 13, 14 та 18 цифр).",
+        "length-mismatch": "Неправильна довжина для обраного типу.",
+        "check-digit-mismatch": "Остання цифра не відповідає вимогам стандарту."
+      },
+      "warning": {
+        "separators-stripped": "Перед перевіркою були видалені пробіли, дефіси та крапки.",
+        "all-zero": "Всі нулі — математично коректно, але це не справжній ідентифікатор.",
+        "payload-is-also-a-complete-code": "Це також повна довжина коду. Якщо він вже має контрольну цифру, переключіться на режим перевірки."
+      },
+      "math": "Показати обчислення",
+      "mathSum": "Сума {sum} → контрольна цифра {check}",
+      "truncatedRows": "Показано перші {shown} із {total} рядків. Копіювання та завантаження містять усі.",
+      "privacy": "Коди надсилаються до Forge API для перевірки і не зберігаються.",
+      "scopeNote": "Правильна контрольна цифра означає, що номер сформовано коректно. Це не означає, що GS1 коли-небудь призначав його реальному продукту, компанії чи місцю — це відповідає лише пошук у реєстрі GEPIR.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
+    },
+    "vin": {
+      "inputLabel": "VIN (17 символів)",
+      "privacy": "Перевіряється у вашому браузері. VIN нікуди не надсилається.",
+      "idle": "Вставте VIN — результат з'являється під час введення, без кнопки.",
+      "scope": "Тільки структура та контрольна цифра (49 CFR 565.15 / ISO 3779). Це не пошук історії транспортного засобу.",
+      "verdict": {
+        "valid": "Коректна структура VIN",
+        "keepTyping": "Продовжуйте вводити — залишилось {remaining} символів",
+        "tooLong": "Задовго — VIN має рівно 17 символів, тут їх {n}",
+        "invalidCharacter": "Не символ VIN: \"{char}\" у позиції {position}",
+        "checkDigitMismatch": "Невідповідність контрольної цифри — очікувалося {expected}, знайдено {found}"
+      },
+      "hint": {
+        "confusable": "«{char}» ніколи не використовується в VIN. Можливо, ви мали на увазі {suggest}?"
+      },
+      "notice": {
+        "notProvenance": "Правильна контрольна цифра підтверджує, що VIN сформовано коректно. Вона не підтверджує існування автомобіля, відсутність змін або чисту історію — клонований VIN також проходить цю перевірку.",
+        "pre1981": "Автомобілі, випущені до 1981 року, а також деякі імпортовані (JDM/європейські) не використовують цю контрольну цифру — невідповідність може не означати помилку в VIN.",
+        "partial": "Перевірка контрольної цифри потребує повного 17-символьного VIN. Частковий VIN — це завдання для декодування, а не для контрольної суми."
+      },
+      "badge": {
+        "length": "{n} символів",
+        "expected": "Контрольна цифра {d}"
+      },
+      "invalidChars": {
+        "more": "Також не символи VIN: {list}"
+      },
+      "segment": {
+        "wmi": "WMI 1–3",
+        "vds": "Опис 4–8",
+        "checkDigit": "Контрольна цифра 9",
+        "modelYear": "Модельний рік 10",
+        "plant": "Завод 11",
+        "serial": "Серійний 12-17"
+      },
+      "math": {
+        "title": "Показати розрахунок",
+        "col": {
+          "position": "Поз",
+          "char": "Симв",
+          "value": "Значення",
+          "weight": "Вага",
+          "product": "Добуток"
+        },
+        "formula": "сума = {sum};  {sum} mod 11 = {remainder}  →  контрольна цифра {expected}"
+      },
+      "specimenTitle": "VIN · structure specimen"
+    },
+    "envDiff": {
+      "envA": "Середовище A",
+      "envB": "Середовище B",
+      "placeholderA": "Вставте або перетягніть перший файл .env",
+      "placeholderB": "Вставте або перетягніть другий .env файл",
+      "paneNoAssignment": "Не знайдено рядка KEY=value",
+      "optIgnoreComments": "Ігнорувати коментарі та порожні рядки",
+      "optCaseInsensitive": "Порівняння ключів без урахування регістру",
+      "optRedactSecrets": "Приховувати виявлені секрети",
+      "emptyHint": "Додайте друге середовище, щоб побачити порівняння",
+      "summaryNone": "Немає відмінностей серед {total} ключів",
+      "summaryDiff": "{n} з {total} ключів відрізняються",
+      "note": {
+        "unchanged": "Однакове значення з обох сторін",
+        "changed": "Значення відрізняється",
+        "added": "Встановлено лише в B",
+        "removed": "Встановлено лише в A",
+        "commentedOutInA": "Закоментовано в A, встановлено в B",
+        "commentedOutInB": "Встановлено в A, закоментовано в B"
+      },
+      "secretChanged": "секрет відрізняється",
+      "secretSame": "секрет однаковий з обох сторін",
+      "count": {
+        "unchanged": "{n} без змін",
+        "changed": "{n} змінено",
+        "added": "{n} додано",
+        "removed": "{n} видалено",
+        "commentedOut": "{n} закомментовано"
+      },
+      "warnings": "Попередження вводу ({n})",
+      "warningType": {
+        "duplicateKey": "{file} · дублювання ключа",
+        "quoteMismatch": "{file} · невідповідність лапок",
+        "unparsableLine": "{file} · рядок не розпізнано"
+      },
+      "showUnchanged": "Показати без змін ({n})",
+      "commentedIn": {
+        "A": "закоментовано в A",
+        "B": "закоментовано в B",
+        "both": "закоментовано в обох"
+      },
+      "redactedNote": "Значення секретів приховано за допомогою эвристичного підбору за ключем — це не сканер безпеки. Порівняння виконується на сирих значеннях, тому оновлений секрет все одно відображається як змінений.",
+      "interpolationNote": "Посилання ${VAR} порівнюються буквально і ніколи не розшифровуються: розширення відрізняється залежно від споживача.",
+      "truncated": "Перелічено лише перші 5000 ключів; підрахунок охоплює всі ключі.",
+      "colKey": "Ключ",
+      "colA": "A",
+      "colB": "B",
+      "colStatus": "Статус",
+      "privacy": "Обидва файли порівнюються у вашому браузері. Нічого не завантажується."
+    },
+    "csvDiff": {
+      "originalLabel": "Вихідний CSV",
+      "updatedLabel": "Оновлений CSV",
+      "originalPlaceholder": "Вставте вихідний експорт або перетягніть файл .csv сюди",
+      "updatedPlaceholder": "Вставте оновлений експорт або перетягніть файл .csv сюди",
+      "emptyHint": "Вставте або перетягніть обидва файли — порівняння запуститься, як тільки обидві сторони матимуть вміст.",
+      "note": "Рядки збігаються за ідентифікатором, а не за позицією, тому вставлений або переупорядкований рядок не сприймається як стіна змін. Вміст надсилається до API для порівняння і не зберігається.",
+      "columns": "{n} стовпців",
+      "keyLabel": "Стовпець ключа",
+      "keyAuto": "Автопідказка",
+      "keyNone": "Без ключа — порівнювати цілі рядки",
+      "joinLabel": "Об'єднання",
+      "joinFull": "Повне зовнішнє — кожен рядок",
+      "joinInner": "Внутрішнє — рядки в обох",
+      "joinLeft": "Ліве — початковий набір рядків",
+      "ignoreWhitespace": "Ігнорувати пробіли",
+      "ignoreCase": "Ігнорувати регістр",
+      "treatEmptyAsNull": "Порожнє = NULL = N/A",
+      "noDifferences": "Різниць немає",
+      "differences": "{added} додано · {removed} видалено · {changed} змінено",
+      "added": "{n} додано",
+      "removed": "{n} видалено",
+      "changed": "{n} змінено",
+      "unchangedCount": "{n} без змін",
+      "totals": "{original} → {updated} рядків",
+      "matchedBy": "Збіг за {columns} ({source})",
+      "matchedWholeRow": "Збіг за вмістом цілого рядка — ключовий стовпець не використовувався, тому змін не повідомляється.",
+      "keySource": {
+        "provided": "ваш вибір",
+        "auto": "автоматично запропоновано",
+        "full-row": "весь рядок"
+      },
+      "keyRejected": "Відхилено кандидати на ключ: {items}",
+      "columnMismatch": "Стовпці тільки в оригіналі: {original} · тільки в оновленому: {updated}",
+      "truncated": "Показано {shown} з повного результату (попередній перегляд обмежено {limit} рядками) — підрахунки вище є повними.",
+      "findings": "Примітки ({n})",
+      "level": {
+        "info": "інформація",
+        "warning": "попередження",
+        "danger": "помилка"
+      },
+      "wholeRow": "Рядок {n}",
+      "exportChanged": "Змінено рядки (CSV)",
+      "exportFull": "Повна різниця (CSV)"
+    },
+    "uscc": {
+      "modeLabel": "Перевірити або згенерувати",
+      "tab": {
+        "verify": "Перевірити",
+        "generate": "Згенерувати тестові коди"
+      },
+      "inputLabel": "Єдиний соціальний кредитний код",
+      "placeholder": "18 символів, наприклад 91500000059926748X",
+      "idle": "Вставте 18-символьний код. Він перевіряється у браузері під час введення — нічого не зберігається.",
+      "scope": "Тільки структурна перевірка (GB 32100-2015 + ISO 7064 MOD 31-3). Код, що пройшов перевірку, є коректним за формою; це не означає, що організація зареєстрована під ним — перевірте це в національному реєстрі cods.org.cn.",
+      "valid": "Коректний єдиний соціальний кредитний код",
+      "invalid": "Не є дійсним уніфікованим кодом соціального кредиту",
+      "incomplete": "{n} із 18 символів",
+      "invalidCharacters": "Містить символи, виключені стандартом",
+      "checksumOk": "Контрольна цифра OK",
+      "checksumBad": "Незбіг контрольної цифри",
+      "expectedDigit": "Контрольна цифра має бути {expected}, а не {actual}",
+      "illegalAt": "Позиція {position}: «{char}» не входить до набору символів коду (I, O, S, V, Z виключені)",
+      "detail": "Деталі поля",
+      "legacyTitle": "Код організації застарілого зразка (GB 11714)",
+      "legacy": {
+        "ok": "Вбудований 9-символьний код організації є узгодженим",
+        "mismatch": "Контрольний символ застарілого зразка був би {expected} — лише для довідки; не всі категорії реєстрантів мають код організації GB 11714",
+        "unchecked": "Не перевірено"
+      },
+      "divisionScope": "Позиції 3–8 перевіряються за таблицею провінцій GB/T 2260 та правилами вкладеності шестизначної форми; повна таблиця повітів не використовується.",
+      "field": {
+        "registrationDept": "Відділ реєстрації",
+        "orgCategory": "Категорія організації",
+        "adminDivision": "Адміністративний поділ",
+        "orgIdentifier": "Ідентифікатор суб’єкта",
+        "checkDigit": "Контрольна цифра"
+      },
+      "depth": {
+        "none": "Не визначено",
+        "province": "Рівень провінції",
+        "prefecture": "Рівень префектури",
+        "county": "Рівень повіту"
+      },
+      "note": {
+        "empty": "Ще немає чого перевіряти",
+        "incomplete": "Єдиний соціальний кредитний код складається рівно з 18 символів",
+        "tooLong": "Більше ніж 18 символів",
+        "illegalCharacter": "Містить символ, що не входить до набору GB 32100-2015 (виключено I, O, S, V та Z)",
+        "checkDigitMismatch": "Контрольна цифра не збігається з першими 17 символами",
+        "departmentUnknown": "Позиція 1 не є реєстраційним відомством, визначеним стандартом (1, 5, 9, Y)",
+        "categoryUnknown": "Позиція 2 не є категорією організації, визначеною для цього реєстраційного відомства",
+        "divisionNotNumeric": "Позиції 3–8 мають бути шістьма цифрами",
+        "divisionUnknownProvince": "Позиції 3–4 не є кодом провінції за GB/T 2260",
+        "divisionMalformed": "Повіт без префектури, що не дозволяється за GB/T 2260"
+      },
+      "gen": {
+        "dept": "Реєстраційне відомство",
+        "category": "Категорія організації",
+        "province": "Провінція",
+        "count": "Скільки",
+        "randomProvince": "Будь-яка провінція",
+        "regenerate": "Новий набір",
+        "emptyHint": "Виберіть параметри вище, щоб створити тестові коди.",
+        "testDataBadge": "Тестові дані",
+        "seed": "Сід {seed}",
+        "allCodes": "Усі коди",
+        "disclaimer": "Ці коди структурно валідні, але не належать жодній зареєстрованій організації. Не використовуйте їх для представлення реальної особи.",
+        "note": "Генерація використовує сід: однакові параметри та сід завжди повертають той самий набір, тому фікстура залишається відтворюваною. Кожен код позначено як isTestData у JSON, а також тут."
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
+    },
+    "yamlDiff": {
+      "original": "Оригінал",
+      "changed": "Змінений",
+      "originalPlaceholder": "Вставте або перетягніть оригінальний YAML (або JSON)",
+      "changedPlaceholder": "Вставте або перетягніть змінений YAML (або JSON)",
+      "idle": "Заповніть обидві панелі — порівняння запускається під час введення.",
+      "privacy": "Обидва документи аналізуються та порівнюються у цьому браузері — нічого не завантажується, що є ключовим для маніфестів, які містять імена хостів та секретів.",
+      "modeLabel": "Порівняння",
+      "modeSemantic": "Семантичне (структура)",
+      "modeRawText": "Текстовий (символи)",
+      "resolveAnchors": "Розгортати якорі та псевдоніми до їхніх значень",
+      "valid": "Дійсний YAML",
+      "validMulti": "Дійсний YAML · {n} документів",
+      "invalid": "Помилка синтаксичного аналізу, рядок {line}",
+      "parseFailed": "Одна зі сторін не проаналізувалася — порівняння не виконано",
+      "equivalent": "Відмінностей немає — обидва документи зводяться до однакової структури",
+      "equivalentStructural": "Однакова розгорнута структура · {n} відмінностей у форматуванні або якорях",
+      "summary": "{added} додано · {removed} видалено · {changed} змінено · {typeChanged} змін типу",
+      "parseErrorAt": "{side} · рядок {line}, стовпчик {column}: {message}",
+      "documentCountMismatch": "Різниця в кількості документів: {original} проти {changed} — документи зіставлено за порядком, а зайві показано повністю",
+      "duplicateKeys": "Дублікати ключів у джерелі",
+      "unified": "Єдиний патч (нормалізований YAML)",
+      "howItWorks": "Як працює це порівняння",
+      "rule": {
+        "keyOrder": "Порядок ключів, лапки та відступ ігноруються; порівнюється порядок елементів списку, оскільки він має значення.",
+        "anchors": "Псевдоніми розгортаються до своїх значень, тому зміна за спільним якірцем відображається на всіх місцях псевдоніма; зміна якірця або псевдоніма при незмінному значенні повідомляється окремо як структурна.",
+        "mergeKeys": "Ключі злиття (<<) розгортаються перед порівнянням, а власні ключі вузла мають пріоритет над злитими.",
+        "types": "Тип є частиною значення: 8080, \"8080\" та !!str 8080 повідомляються як зміни типу, а не як загальна зміна.",
+        "sequences": "Послідовності мапінгів з’єднуються за name, id або key, коли це поле є унікальним з обох боків, тому вставлений елемент не запускає каскад; зміна порядку все одно повідомляється.",
+        "blockScalars": "Блокові скаляри порівнюються за розгорнутим рядком, тому кінцевий рядок, який |- видаляє, є реальною зміною; зміна стилю при тому ж значенні є структурною.",
+        "comments": "Коментарі не входять до моделі даних YAML і не порівнюються.",
+        "multiDoc": "--- потоки порівнюються документ за документом; у разі невідповідності кількості повідомляється про невідповідність, а не порівнюється лише перший.",
+        "duplicateKeys": "Дубльований ключ відображення у вході використовує останнє входження і повідомляється як попередження."
+      },
+      "note": {
+        "raw-text-mode": "Режим сирого тексту порівнює символи, а не структуру: порядок ключів, лапки та відступ мають значення.",
+        "parse-error": "Одна сторона не розібрана, тому нічого не порівнювалося.",
+        "document-count-mismatch": "Дві сторони містять різну кількість документів ---; документи були згруповані за порядком, а зайві повідомлені цілком.",
+        "merge-keys-expanded": "Ключі злиття (<<) були розгорнуті перед порівнянням.",
+        "anchors-unresolved": "Аліаси порівнювалися як посилання на *ім'я, а не як їх розв'язані значення.",
+        "yaml11-ambiguous-scalars": "Некотовані y/n/yes/no/on/off тут читаються як рядки (YAML 1.2 Core), а за YAML 1.1 — як логічні значення; додайте лапки, якщо малися на увазі логічні значення.",
+        "sequence-matched-by-identity": "Послідовності мапінгів були зіставлені за полем ідентичності, а не за позицією.",
+        "duplicate-keys": "Мапінг містить той самий ключ двічі; використано останнє входження.",
+        "truncated": "Перелічено лише перші 2000 змін."
+      }
+    },
+    "listSetCompare": {
+      "listA": "Список A",
+      "listB": "Список B",
+      "placeholder": "Вставте елементи, по одному на рядок (або перетягніть файл .txt/.csv)",
+      "emptyHint": "Додайте елементи до Списку A та Списку B, щоб побачити порівняння.",
+      "privacy": "Обидва списки порівнюються у вашому браузері — нічого не завантажується. Той самий рушій працює на сервері для викликів API та MCP.",
+      "delimiter": "Роздільник",
+      "delimiterOption": {
+        "auto": "Автовизначення",
+        "newline": "Новий рядок",
+        "comma": "Кома",
+        "tab": "Табуляція",
+        "custom": "Власний"
+      },
+      "customDelimiter": "Розділювач",
+      "customDelimiterPlaceholder": "| або \\t",
+      "sort": "Порядок",
+      "sortOption": {
+        "original": "Початковий порядок",
+        "asc": "А→Я",
+        "desc": "Я→А",
+        "byCount": "За кількістю"
+      },
+      "optCaseSensitive": "Чутливість до регістру",
+      "optTrim": "Обрізати пробіли",
+      "optCollapse": "Стиснути внутрішні пробіли",
+      "optIgnoreZeros": "Ігнорувати початкові нулі",
+      "paneItems": "{n} елементів",
+      "paneSingle": "1 елемент — перевірте роздільник",
+      "items": "{n}",
+      "none": "Немає",
+      "more": "+{n} ще — скопіюйте або завантажте, щоб побачити повний список",
+      "panel": {
+        "onlyInA": "Тільки в A",
+        "onlyInB": "Тільки в B",
+        "intersection": "Перетин (в обох)",
+        "union": "Об'єднання (усі елементи)",
+        "symmetricDifference": "Симетрична різниця"
+      },
+      "summaryIdentical": "Однакові набори — {n} спільних елементів",
+      "summaryDiff": "{a} тільки в A · {b} тільки в B · {shared} спільних",
+      "drill": {
+        "symmetricDifference": "Симетрична різниця ({n})",
+        "duplicates": "Дублікати в списку ({n})",
+        "multiplicities": "Кількість за елементом ({n})",
+        "warnings": "Сповіщення ({n})"
+      },
+      "duplicatesInA": "Повторюється в A",
+      "duplicatesInB": "Повторюється в B",
+      "colValue": "Елемент",
+      "colCountA": "В A",
+      "colCountB": "В B",
+      "detailTruncated": "Підрахунок по елементах обрізано — збільшіть maxDetail у API для повної таблиці.",
+      "reportTitle": "Порівняння списків"
+    },
+    "loanAmortization": {
+      "principal": "Сума кредиту",
+      "rate": "Річна ставка %",
+      "term": "Термін",
+      "termUnit": "Одиниця терміну",
+      "unitYears": "Роки",
+      "unitMonths": "Місяці",
+      "startMonth": "Місяць першого платежу",
+      "startMonthHint": "РРРР-ММ. Позначає графік; не змінює суми.",
+      "extraHeading": "Додаткові платежі",
+      "extraMonthly": "Додатково щомісяця",
+      "extraYearly": "Додатково раз на рік",
+      "extraYearlyMonth": "Місяць додаткового платежу",
+      "extraOneTime": "Разовий додатковий",
+      "extraOneTimePeriod": "Разовий у платеж №",
+      "extraNote": "Додаткові платежі зменшують основний борг у період їх вніснення, що знижує відсотки за всі наступні періоди. Ставка та плановий платіж залишаються без змін.",
+      "monthlyPayment": "Щомісячний платіж",
+      "totalInterest": "Загальні відсотки",
+      "totalPaid": "Загальна сума виплат",
+      "crossover": "Точка перетину",
+      "crossoverValue": "Платіж {n}",
+      "crossoverNone": "Ніколи",
+      "payoff": "Повністю погашено на платіж {n}",
+      "monthsSaved": "На {n} місяців раніше",
+      "totalExtra": "{amount} сплачено понад графік",
+      "viewMonthly": "Кожен платіж",
+      "viewAnnual": "За роками",
+      "tableCaption": "Графік амортизації: платіж, відсотки, основний борг та залишок за період",
+      "colPeriod": "#",
+      "colDate": "Місяць",
+      "colPayment": "Платіж",
+      "colInterest": "Відсотки",
+      "colPrincipal": "Основний борг",
+      "colBalance": "Залишок",
+      "colYear": "Рік",
+      "expandRows": "Показати всі {total} платежі",
+      "collapseRows": "Показати менше платежів",
+      "windowNote": "Показано {shown} із {total} платежів. У CSV та API — усі.",
+      "emptyHint": "Введіть суму кредиту, ставку та термін, щоб побачити графік.",
+      "note": "Той самий рушій, що й у API. Розрахунок виконується лише за вашими умовами кредиту; нічого не завантажується і не зберігається.",
+      "errPrincipal": "Введіть суму кредиту більше 0.",
+      "errRate": "Введіть ставку від 0 до 100.",
+      "errTerm": "Введіть термін від 1 місяця до 100 років.",
+      "errStartMonth": "Використовуйте формат РРРР-ММ, наприклад 2026-01.",
+      "errExtra": "Введіть суму 0 або більше.",
+      "errOneTimePeriod": "Введіть номер платежу, на який припадає одноразова сума."
+    },
+    "businessDayShift": {
+      "modeLabel": "Що розрахувати",
+      "mode": {
+        "shift": "Зсунути дату",
+        "countBetween": "Підрахувати між датами"
+      },
+      "startDate": "Дата початку",
+      "days": "Робочі дні",
+      "daysHint": "Від’ємні значення відраховуються назад: −10 — це десять робочих днів до дати початку.",
+      "daysInvalid": "Робочі дні мають бути цілим числом, з необов’язковим знаком мінус на початку.",
+      "endDate": "Дата закінчення",
+      "includeEndDate": "Враховувати кінцеву дату — саме так повертає NETWORKDAYS у таблицях",
+      "weekendLabel": "Вихідні дні кожного тижня",
+      "weekendHint": "За замовчуванням субота та неділя. За потреби встановіть п'ятницю та суботу, якщо це вихідні.",
+      "weekday": {
+        "sun": "Нд",
+        "mon": "Пн",
+        "tue": "Вт",
+        "wed": "Ср",
+        "thu": "Чт",
+        "fri": "Пт",
+        "sat": "Сб"
+      },
+      "holidays": "Свята",
+      "holidaysHint": "Якщо залишити порожнім, буде використано лише правило вихідних — календар країни не застосовується.",
+      "makeupWorkdays": "Додаткові робочі дні",
+      "makeupHint": "Дати, коли працювали, хоча це вихідний чи свято — сюди потрапляють суботи з китайської системи 调休/补班.",
+      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesIgnored": "{n, plural, one {# запис не є датою у форматі YYYY-MM-DD і не використовується} other {# записів не є датами у форматі YYYY-MM-DD і не використовуються}}",
+      "pickStart": "Оберіть дату початку, щоб розпочати.",
+      "emptyHintShift": "Оберіть дату початку та кількість робочих днів.",
+      "emptyHintCount": "Оберіть дату початку та дату завершення.",
+      "note": "Те ж саме ядро, що й у API. Розрахунок виконується за набором правил, який показано разом із результатом; нічого не зберігається.",
+      "countHeadline": "{n, plural, one {# робочий день} few {# робочих дні} other {# робочих днів}}",
+      "reversedRange": "Дата закінчення раніша за дату початку, тому кількість виходить від'ємною.",
+      "classification": {
+        "workday": "Робочий день",
+        "weekend": "Вихідний",
+        "holiday": "Свято",
+        "makeupWorkday": "Вихідний день, що компенсується"
+      },
+      "ruleWeekend": "{days} вихідних",
+      "ruleNoWeekend": "без щотижневих вихідних",
+      "ruleHolidays": "{n, plural, =0 {без списку свят} one {# свято} other {# свята}}",
+      "ruleMakeups": "{n, plural, =0 {без компенсаторних робочих днів} one {# компенсаторний робочий день} other {# компенсаторних робочих дні}}",
+      "ruleEndIncluded": "дата закінчення враховується",
+      "ruleEndExcluded": "дата закінчення не враховується",
+      "chain": "Почати чергу знову з цієї дати"
+    },
+    "retryBackoff": {
+      "strategy": {
+        "exponential": "Експоненційна",
+        "linear": "Лінійна",
+        "fixed": "Фіксована"
+      },
+      "initialDelay": "Початкова затримка (мс)",
+      "factor": "Коефіцієнт затримки",
+      "factorHint": "Множник, що застосовується при кожному повторі. Має бути більшим за 1.",
+      "increment": "Лінійний приріст (мс)",
+      "incrementHint": "Мілісекунди, що додаються до затримки при кожному повторі.",
+      "maxDelay": "Максимальна затримка (мс)",
+      "maxDelayHint": "Залиште порожнім, щоб не встановлювати обмеження. Після досягнення ліміту всі подальші затримки залишаться на цьому рівні.",
+      "maxAttempts": "Макс. спроби",
+      "maxAttemptsHint": "Від 1 до 100.",
+      "excludeInitial": "Макс. спроби не включають початковий запит",
+      "excludeInitialNote": "Увімкнено: число вище враховує лише повтори, початковий запит не входить. Вимкнено: враховуються всі спроби, включаючи початковий запит.",
+      "jitter": {
+        "none": "Немає — точні затримки",
+        "equal": "Рівномірний — половина фіксована, половина випадкова",
+        "full": "Повний — від нуля до затримки"
+      },
+      "callerTimeout": "Ваш власний таймаут (мс)",
+      "callerTimeoutHint": "Необов’язково. Залиште порожнім, щоб пропустити перевірку ліміту.",
+      "emptyHint": "Виправте виділене поле, щоб побачити розклад.",
+      "note": "Обчислюється лише на основі політики — нічого не надсилається до жодної зовнішньої служби. Jitter повідомляється як діапазон, в який потрапляє реальний клієнт, а не як один вибірковий результат.",
+      "headlineExact": "{attempts} спроб, {wait} очікування всього.",
+      "headlineRange": "{attempts} спроб, {expected} очікування в середньому, до {max} у найгіршому випадку.",
+      "finalDelay": "Останнє очікування перед спробою {attempt} становить {delay}.",
+      "noRetries": "Цей ліміт дозволяє одну спробу без повтору, тому нічого не потрібно чекати.",
+      "retryCount": "{count, plural, =0 {без повторів} one {# повтор} other {# повторів}}",
+      "capFlattened": "Ліміт досягнуто на спробі {attempt} — усі наступні затримки залишаються на рівні {delay}.",
+      "timeoutExceeded": "У найгіршому випадку очікування становить {wait}, що перевищує ваш ліміт {timeout}.",
+      "timeoutOk": "У найгіршому випадку очікування {wait}, у межах вашого ліміту {timeout}.",
+      "tableLabel": "Розклад повторних спроб",
+      "colAttempt": "Спроба",
+      "colDelay": "Затримка",
+      "colCumulative": "Накопичене очікування",
+      "average": "серед. {value}",
+      "formula": {
+        "none": "Затримки точні — джиттер не застосовується.",
+        "equal": "Рівномірний джиттер: половина затримки фіксована, інша половина вибирається рівномірно, тому кожне очікування потрапляє між половиною затримки та повною затримкою.",
+        "full": "Повний джиттер: час очікування вибирається рівномірно між нулем та обчисленою затримкою."
+      },
+      "errInitialDelay": "Початкова затримка має бути цілим числом мілісекунд, не менше 1.",
+      "errFactor": "Множник має бути більшим за 1 і не більше 100. Множник 1 — це фіксована стратегія.",
+      "errIncrement": "Крок має бути цілим числом мілісекунд, 0 або більше.",
+      "errMaxDelay": "Ліміт має бути цілим числом мілісекунд, не менше 1.",
+      "errCapBelowInitial": "Ліміт має бути не меншим за початкову затримку.",
+      "errMaxAttempts": "Кількість спроб має бути цілим числом від 1 до 100.",
+      "errCallerTimeout": "Таймаут має бути цілим числом мілісекунд, не менше 1."
+    },
+    "csvColumns": {
+      "csvLabel": "CSV",
+      "csvPlaceholder": "Вставте CSV сюди або перетягніть файл — перший рядок буде прочитано як назви стовпців",
+      "sample": "Приклад CSV",
+      "chooseFile": "Обрати файл",
+      "fileFailed": "Не вдалося прочитати {name}.",
+      "delimiterLabel": "Роздільник",
+      "delimiter": {
+        "comma": "Кома  ,",
+        "semicolon": "Крапка з комою  ;",
+        "tab": "Вкладка",
+        "pipe": "Різок |"
+      },
+      "raggedPolicyLabel": "Рядки, що не відповідають заголовку",
+      "ragged": {
+        "pad": "Вирівняти до заголовка",
+        "truncate": "Обрізати довгі рядки, залишити короткі як є",
+        "reject": "Зупинити та повідомити"
+      },
+      "columnsTitle": "Стовпці — {kept} із {total} збережено",
+      "columnsHint": "Зніміть позначку, щоб видалити стовпчик, відредагуйте поле, щоб перейменувати його, використовуйте стрілки для зміни порядку. Усе визначається відносно початкового заголовка.",
+      "reset": "Скинути стовпці",
+      "keep": "Зберегти стовпчик {name}",
+      "renameLabel": "{name}",
+      "moveUp": "Перемістити {name} вгору",
+      "moveDown": "Перемістити {name} вниз",
+      "noneKept": "Усі стовпці зняті — залиште хоча б один.",
+      "emptyHint": "Вставте CSV вище, щоб керувати його стовпцями.",
+      "note": "Працює з текстом, який ви вставляєте. Спочатку скиньте, потім перейменуйте, потім переставте — завжди в цьому порядку, відносно початкового заголовка.",
+      "columnCount": "{n} стовпців",
+      "rowCount": "{n} рядків",
+      "duplicateHeaders": "Дубльований заголовок, використаний за назвою: {names}",
+      "raggedCount": "{n}{more} рядків не відповідають ширині заголовка",
+      "previewLabel": "Вихідний CSV",
+      "previewTruncated": "Показано перші {shown} із {total} рядків. Скопіюйте або завантажте, щоб отримати весь файл.",
+      "raggedListLabel": "Рядки, які не відповідають ширині заголовка",
+      "raggedRow": "Рядок {line}: {actual} полів, у заголовку {expected}",
+      "unusedRenames": "Перейменування проігноровано — ці стовпці не входять до вихідних даних: {names}"
+    },
+    "imageRotateFlip": {
+      "drop": "Перетягніть зображення або натисніть, щоб вибрати",
+      "browse": "Вибрати зображення",
+      "selected": "{name} · {kb} КБ",
+      "privacy": "Файл надсилається до Forge API для трансформації і ніколи не зберігається.",
+      "tooLarge": "Це зображення перевищує {mb} МБ.",
+      "ccw": "90° ліворуч",
+      "cw": "90° праворуч",
+      "half": "180°",
+      "reset": "Скинути",
+      "flipHorizontal": "Віддзеркалити горизонтально",
+      "flipVertical": "Віддзеркалити вертикально",
+      "angle": "Кут",
+      "exactAngle": "Точний °",
+      "fitMode": "Полотно",
+      "fitExpand": "Розширити полотно",
+      "fitCrop": "Обрізати до заповнення",
+      "fitInside": "Вписати всередину",
+      "fitNote": "Після повороту на чверть оберту зображення більше не вміщується в стару рамку: розширення зберігає кожен піксель, обрізання зберігає початковий розмір і обрізає кути, вписування масштабує все зображення.",
+      "outputFormat": "Формат виводу",
+      "sameFormat": "Як у вхідному файлі",
+      "idle": "Перетягніть зображення, щоб побачити його переорієнтацію.",
+      "original": "Оригінал · {w}×{h}",
+      "originalAlt": "Зображення, як завантажено",
+      "result": "Результат · {w}×{h}",
+      "resultAlt": "Переорієнтоване зображення",
+      "badgeLossless": "Без передискретизації",
+      "badgeResampled": "Передискретизовано",
+      "badgeSize": "{kb} КБ",
+      "badgeExif": "Спочатку застосовано орієнтацію EXIF {orientation}",
+      "badgeSnapped": "Прив'язано до точного повороту на чверть",
+      "badgeReencode": "Геометрія точна; кодек перекодовує",
+      "download": "Завантажити",
+      "note": "Обертання на 90°, 180° та 270° зміщують пікселі без змішування. Будь-який інший кут виконує ресемплінг. Анімовані GIF, APNG та анімовані WebP поки що не підтримуються."
+    },
+    "exifStrip": {
+      "drop": "Перетягніть JPEG, PNG або WebP, щоб видалити метадані",
+      "privacy": "Обробляється на наших серверах і ніколи не зберігається. До {mb} МБ на зображення.",
+      "idle": "Видалено: GPS, час зйомки, інформацію про камеру та пристрій, вбудоване мініатюрне зображення, історію редагування. Збережено: орієнтацію, колірний профіль, розміри, піксельні дані.",
+      "note": "Тільки статичні зображення. Відео, PDF, HEIC, AVIF та GIF не підтримуються, а маніфести походження C2PA залишаються недоторканими.",
+      "detail": "Що було видалено",
+      "optKeepThumbnail": "Зберегти вбудоване мініатюрне зображення Exif",
+      "verdictStripped": "Видалено {fields} полів метаданих ({kb} КБ)",
+      "verdictClean": "Цей файл не містить видалюваних метаданих",
+      "strippedCaveat": "Саме зображення не змінилося — ті ж пікселі, ті ж розміри, нічого не перекодовано.",
+      "cleanCaveat": "Повернуто байт-в-байт, як отримано.",
+      "badgeOrientationKept": "Орієнтацію збережено",
+      "badgeOrientationLost": "Орієнтацію не вдалося зберегти",
+      "badgeColorProfileKept": "Колірний профіль збережено",
+      "badgeThumbnailKept": "Мініатюру збережено",
+      "badgeThumbnailRemoved": "Мініатюру видалено",
+      "download": "Завантажити очищене зображення",
+      "sizes": "{before} KB → {after} KB",
+      "detailFields": "{fields} полів · {kb} KB",
+      "detailNothing": "Нічого не було видалено з цього файлу.",
+      "detailOrientation": "Орієнтацію Exif {value} було прочитано з файлу та збережено.",
+      "detailNoOrientation": "Файл не містить орієнтації Exif, тому відображення не змінилося.",
+      "segmentExif": "Exif",
+      "segmentIptc": "IPTC",
+      "segmentXmp": "XMP",
+      "segmentComment": "Коментар",
+      "segmentText": "Текстові метадані",
+      "segmentTime": "Відмітка часу",
+      "segmentVendor": "Блок постачальника",
+      "summaryStripped": "Видалено {fields} полів метаданих ({families}), {kb} КБ. Зображення інакше не змінене.",
+      "summaryClean": "Метадані для видалення не знайдено. Файл повернуто без змін."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "Name / Host",
+      "type": "Record-Typ",
+      "note": "Auflösung über den Forge-Host-DNS — kann vom lokalen Stub abweichen."
+    },
+    "tls": {
+      "host": "Host",
+      "expired": "Zertifikat abgelaufen",
+      "validDays": "Noch {n} Tage",
+      "note": "Verbindung vom Forge-Host. Trust-Prüfung deaktiviert nur zur Inspektion."
+    },
+    "myIp": {
+      "refresh": "Aktualisieren",
+      "note": "IP wie vom Forge-Edge gesehen. Kein Geo ohne Lizenzdaten."
+    },
+    "mermaid": {
+      "source": "Mermaid source",
+      "idle": "Valid diagrams render here",
+      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
+      "sample": "Sample",
+      "theme": "Theme",
+      "theme_default": "Default",
+      "theme_dark": "Dark",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "Flowchart",
+      "sample_sequence": "Sequence",
+      "sample_class": "Class",
+      "sample_er": "ER diagram",
+      "sample_state": "State",
+      "sample_gantt": "Gantt",
+      "sample_pie": "Pie",
+      "sample_mindmap": "Mindmap",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "zoomReset": "Reset view",
+      "copySvg": "Copy SVG",
+      "downloadSvg": "Download SVG",
+      "downloadPng": "Download PNG",
+      "previewAria": "Mermaid diagram preview",
+      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
+    },
+    "colorDeltaE": {
+      "note": "CIEDE2000 via culori. Schwellen nur für UI-Review."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL-Dialekt",
+      "parseNote": "Nur Parse/Inventar. ERD-Canvas separat.",
+      "convertNote": "@dbml/core — gleicher Pfad wie die API."
+    },
+    "dnsLeak": {
+      "probeHost": "Compare host (advanced)",
+      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
+      "run": "Start DNS leak check",
+      "retest": "Run again",
+      "showAdvanced": "Advanced options",
+      "hideAdvanced": "Hide advanced",
+      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
+      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
+      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
+      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
+      "edgeIp": "Your edge IP",
+      "authorityHits": "Recursive IPs",
+      "forgePaths": "Forge resolver hits",
+      "dohPaths": "Browser DoH hits",
+      "webrtcCount": "WebRTC IPs",
+      "forgeResolvers": "Forge multi-resolver (server-side)",
+      "forgeNote": "These queries leave from the Forge host — not your laptop.",
+      "browserDoh": "Browser DoH",
+      "webrtc": "WebRTC ICE",
+      "egressMarkers": "Forge egress markers",
+      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
+      "honestyPrefix": "Honesty:",
+      "verdictConsistent": "Paths look consistent on this check",
+      "verdictSplit": "Split answers across DNS paths",
+      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
+      "verdictIncomplete": "Incomplete — browser probes missing",
+      "verdictAuthority": "System DNS recursives captured",
+      "infraOn": "Authority online",
+      "infraOff": "Authority offline — multi-path only",
+      "infraChecking": "Checking…",
+      "authorityResolvers": "System DNS recursive resolvers",
+      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
+      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
+      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
+      "authorityDetail": "Authority session detail",
+      "phaseSession": "Creating session…",
+      "phaseSystemDns": "Triggering system DNS…",
+      "phasePoll": "Listening for recursive hits ({n}/{total})…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "stepSession": "Session",
+      "stepSystemDns": "System DNS",
+      "stepPoll": "Listen",
+      "stepBrowser": "Browser",
+      "stepServer": "Server",
+      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
+      "liveHits": "Live recursive hits",
+      "sectionSystemDns": "System DNS (what you came for)",
+      "sectionComplementary": "Complementary paths",
+      "sectionTech": "Technical session detail",
+      "copyIps": "Copy IPs",
+      "copied": "Copied",
+      "queryCount": "{n} queries",
+      "colPath": "Path",
+      "colAnswers": "Answers",
+      "colMs": "ms",
+      "ipPublic": "public",
+      "ipPrivate": "private",
+      "sig": {
+        "captured": "System DNS captured",
+        "onlineNoHits": "Authority online · no hits yet",
+        "offline": "Authority offline",
+        "forgeSplit": "Forge resolvers disagree",
+        "dohSplit": "Browser DoH disagree",
+        "webrtcMismatch": "WebRTC ≠ edge IP",
+        "webrtcLocal": "Local WebRTC candidates",
+        "noBrowser": "No browser probes"
+      }
+    },
+    "honesty": {
+      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
+      "signatureNotVerified": "{engine} · decode only · signature not verified",
+      "localOnly": "Processed for this request · not stored as a card or credential"
+    },
+    "idCard": {
+      "number": "Resident ID number",
+      "note": "GB 11643 check digit · no household registry lookup · same path as API",
+      "specimenTitle": "Resident ID · structure specimen",
+      "segRegion": "Region",
+      "segBirth": "Birth",
+      "segSeq": "Seq",
+      "segCheck": "Check",
+      "metaBirth": "Birth",
+      "metaGender": "Gender",
+      "metaRegion": "Region code",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "reasonFormat": "Format should be 18 characters (last may be X)",
+      "reasonBirth": "Birth date segment is invalid",
+      "reasonCheck": "Check digit is wrong",
+      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} lines",
+      "chars": "{n} chars",
+      "empty": "(empty file)",
+      "readyToShip": "Ready to drop into the repo"
+    },
+    "textTransform": {
+      "mode": "Mode",
+      "input": "Input",
+      "output": "Output",
+      "emptyResult": "Result appears here",
+      "runLocal": "Run locally",
+      "runServer": "Run on server",
+      "statusLocalLive": "Local · live",
+      "statusLocal": "Local",
+      "statusServer": "Server · same path as API",
+      "noteDefault": "Same path as API"
+    }
+  },
+  "roots": {
+    "hubLabel": "За наміром",
+    "tools": "інструменти",
+    "dualSurface": "Сторінка користувача + API агента · той самий рушій",
+    "otherRoots": "Інші корені попиту"
+  }
+}

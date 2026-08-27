@@ -1,0 +1,319 @@
+# Grafana Dashboard — Nebutra Platform Overview
+#
+# Imported automatically by the Grafana sidecar (grafana.sidecar.dashboards.enabled=true).
+# The ConfigMap label `grafana_dashboard: "1"` triggers the sidecar to load it.
+#
+# Panels:
+#   Row 1 — SLO summary: availability burn rate, error budget remaining, P99 latency
+#   Row 2 — Request rate by service, error rate by service
+#   Row 3 — Pod status: restarts, HPA saturation
+#   Row 4 — Infrastructure: memory usage, CPU throttling
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nebutra-platform-dashboard
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"    # triggers Grafana sidecar auto-import
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/component: observability
+  annotations:
+    grafana_folder: "Nebutra"
+data:
+  nebutra-platform.json: |
+    {
+      "title": "Nebutra Platform Overview",
+      "uid": "nebutra-platform-v1",
+      "version": 1,
+      "schemaVersion": 39,
+      "refresh": "30s",
+      "time": { "from": "now-1h", "to": "now" },
+      "tags": ["nebutra", "slo", "platform"],
+      "links": [
+        {
+          "title": "Runbooks",
+          "url": "https://docs.nebutra.com/runbooks",
+          "type": "link",
+          "icon": "external link",
+          "targetBlank": true
+        }
+      ],
+      "templating": {
+        "list": [
+          {
+            "name": "job",
+            "type": "query",
+            "datasource": { "type": "prometheus" },
+            "query": "label_values(http_requests_total{namespace=\"nebutra\"}, job)",
+            "label": "Service",
+            "multi": true,
+            "includeAll": true,
+            "current": { "text": "All", "value": "$__all" }
+          }
+        ]
+      },
+      "panels": [
+        {
+          "id": 1,
+          "type": "row",
+          "title": "SLO Summary",
+          "gridPos": { "x": 0, "y": 0, "w": 24, "h": 1 },
+          "collapsed": false
+        },
+        {
+          "id": 2,
+          "title": "Availability (30d rolling)",
+          "type": "stat",
+          "gridPos": { "x": 0, "y": 1, "w": 6, "h": 4 },
+          "datasource": { "type": "prometheus" },
+          "options": {
+            "reduceOptions": { "calcs": ["lastNotNull"] },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "background",
+            "graphMode": "none"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percentunit",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "red", "value": null },
+                  { "color": "yellow", "value": 0.995 },
+                  { "color": "green", "value": 0.999 }
+                ]
+              },
+              "mappings": []
+            }
+          },
+          "targets": [
+            {
+              "expr": "1 - nebutra:http_error_ratio:6h",
+              "legendFormat": "Availability"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "title": "Error Budget Remaining",
+          "type": "gauge",
+          "gridPos": { "x": 6, "y": 1, "w": 6, "h": 4 },
+          "datasource": { "type": "prometheus" },
+          "options": {
+            "reduceOptions": { "calcs": ["lastNotNull"] },
+            "orientation": "auto",
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true
+          },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percentunit",
+              "min": 0,
+              "max": 1,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "red", "value": null },
+                  { "color": "yellow", "value": 0.1 },
+                  { "color": "green", "value": 0.5 }
+                ]
+              }
+            }
+          },
+          "targets": [
+            {
+              "expr": "nebutra:availability_error_budget_remaining",
+              "legendFormat": "Budget remaining"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "title": "P99 Latency",
+          "type": "stat",
+          "gridPos": { "x": 12, "y": 1, "w": 6, "h": 4 },
+          "datasource": { "type": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "s",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "yellow", "value": 0.5 },
+                  { "color": "red", "value": 2.0 }
+                ]
+              }
+            }
+          },
+          "targets": [
+            {
+              "expr": "histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket{namespace=\"nebutra\"}[5m])) by (le))",
+              "legendFormat": "P99"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "title": "Active Alerts",
+          "type": "alertlist",
+          "gridPos": { "x": 18, "y": 1, "w": 6, "h": 4 },
+          "options": {
+            "alertName": "Nebutra",
+            "dashboardAlerts": false,
+            "groupMode": "default",
+            "groupBy": ["alertname"],
+            "maxItems": 10,
+            "sortOrder": 1,
+            "stateFilter": { "firing": true, "pending": true, "noData": false, "normal": false, "error": true }
+          }
+        },
+        {
+          "id": 10,
+          "type": "row",
+          "title": "Request Traffic",
+          "gridPos": { "x": 0, "y": 5, "w": 24, "h": 1 },
+          "collapsed": false
+        },
+        {
+          "id": 11,
+          "title": "Request Rate (rps) by Service",
+          "type": "timeseries",
+          "gridPos": { "x": 0, "y": 6, "w": 12, "h": 8 },
+          "datasource": { "type": "prometheus" },
+          "fieldConfig": {
+            "defaults": { "unit": "reqps", "custom": { "lineWidth": 2 } }
+          },
+          "targets": [
+            {
+              "expr": "sum(rate(http_requests_total{namespace=\"nebutra\", job=~\"$job\"}[2m])) by (job)",
+              "legendFormat": "{{ job }}"
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "title": "Error Rate (%) by Service",
+          "type": "timeseries",
+          "gridPos": { "x": 12, "y": 6, "w": 12, "h": 8 },
+          "datasource": { "type": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percentunit",
+              "custom": { "lineWidth": 2 },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "yellow", "value": 0.01 },
+                  { "color": "red", "value": 0.05 }
+                ]
+              }
+            }
+          },
+          "targets": [
+            {
+              "expr": "sum(rate(http_requests_total{namespace=\"nebutra\", status=~\"5..\", job=~\"$job\"}[2m])) by (job) / sum(rate(http_requests_total{namespace=\"nebutra\", job=~\"$job\"}[2m])) by (job)",
+              "legendFormat": "{{ job }}"
+            }
+          ]
+        },
+        {
+          "id": 20,
+          "type": "row",
+          "title": "Pod Health",
+          "gridPos": { "x": 0, "y": 14, "w": 24, "h": 1 },
+          "collapsed": false
+        },
+        {
+          "id": 21,
+          "title": "Pod Restarts (15m rate)",
+          "type": "timeseries",
+          "gridPos": { "x": 0, "y": 15, "w": 12, "h": 6 },
+          "datasource": { "type": "prometheus" },
+          "fieldConfig": {
+            "defaults": { "unit": "short", "custom": { "lineWidth": 2 } }
+          },
+          "targets": [
+            {
+              "expr": "sum(rate(kube_pod_container_status_restarts_total{namespace=\"nebutra\"}[15m])) by (pod)",
+              "legendFormat": "{{ pod }}"
+            }
+          ]
+        },
+        {
+          "id": 22,
+          "title": "HPA Replica Saturation",
+          "type": "timeseries",
+          "gridPos": { "x": 12, "y": 15, "w": 12, "h": 6 },
+          "datasource": { "type": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percentunit",
+              "custom": {
+                "lineWidth": 2,
+                "thresholdsStyle": { "mode": "line" }
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "yellow", "value": 0.8 },
+                  { "color": "red", "value": 1.0 }
+                ]
+              }
+            }
+          },
+          "targets": [
+            {
+              "expr": "kube_horizontalpodautoscaler_status_current_replicas{namespace=\"nebutra\"} / kube_horizontalpodautoscaler_spec_max_replicas{namespace=\"nebutra\"}",
+              "legendFormat": "{{ horizontalpodautoscaler }}"
+            }
+          ]
+        },
+        {
+          "id": 30,
+          "type": "row",
+          "title": "Resource Usage",
+          "gridPos": { "x": 0, "y": 21, "w": 24, "h": 1 },
+          "collapsed": false
+        },
+        {
+          "id": 31,
+          "title": "Memory Usage by Pod",
+          "type": "timeseries",
+          "gridPos": { "x": 0, "y": 22, "w": 12, "h": 6 },
+          "datasource": { "type": "prometheus" },
+          "fieldConfig": {
+            "defaults": { "unit": "bytes", "custom": { "lineWidth": 1 } }
+          },
+          "targets": [
+            {
+              "expr": "sum(container_memory_working_set_bytes{namespace=\"nebutra\", container!=\"\"}) by (pod)",
+              "legendFormat": "{{ pod }}"
+            }
+          ]
+        },
+        {
+          "id": 32,
+          "title": "CPU Throttling by Pod",
+          "type": "timeseries",
+          "gridPos": { "x": 12, "y": 22, "w": 12, "h": 6 },
+          "datasource": { "type": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percentunit",
+              "custom": { "lineWidth": 1 }
+            }
+          },
+          "targets": [
+            {
+              "expr": "sum(rate(container_cpu_cfs_throttled_seconds_total{namespace=\"nebutra\", container!=\"\"}[5m])) by (pod) / sum(rate(container_cpu_cfs_periods_total{namespace=\"nebutra\", container!=\"\"}[5m])) by (pod)",
+              "legendFormat": "{{ pod }}"
+            }
+          ]
+        }
+      ]
+    }

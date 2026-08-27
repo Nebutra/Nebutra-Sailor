@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — Marketplace API",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "Marketplace API per tutti i modelli · paga solo ciò che usi · gestisci chiavi e portafoglio · prova subito."
+  },
+  "admin": {
+    "dashboard": "Panoramica",
+    "keys": "Chiavi API",
+    "wallet": "Portafoglio",
+    "docs": "Documentazione",
+    "title": "Amministrazione",
+    "backToMarket": "Torna al marketplace",
+    "quickUse": "Uso rapido"
+  },
+  "chrome": {
+    "searchPlaceholder": "Cosa vuoi fare con l'IA?",
+    "search": "Cerca",
+    "locale": "Lingua",
+    "currency": "Valuta",
+    "collapseSidebar": "Comprimi barra laterale",
+    "expandSidebar": "Espandi barra laterale",
+    "home": "Home",
+    "adminConsole": "Admin",
+    "quickUse": "Uso rapido",
+    "support": "Supporto",
+    "apiDocs": "Documentazione API",
+    "integrationHelp": "Guida all'integrazione",
+    "aiRecommend": "Scelte AI",
+    "market": "Mercato",
+    "usageTitle": "Uso rapido"
+  },
+  "channels": {
+    "app": "Market app",
+    "api": "Market API",
+    "models": "Catalogo modelli",
+    "client": "Client"
+  },
+  "market": {
+    "new": "Nuovo",
+    "hot": "Popolare",
+    "forYou": "Per te",
+    "grid": "Griglia",
+    "list": "Lista",
+    "apiShelf": "Scaffale API",
+    "toolShelf": "Scaffale strumenti",
+    "categories": "Categorie",
+    "apps": "App",
+    "newRelease": "Nuovo rilascio",
+    "forgeTitle": "Workspace strumenti Forge",
+    "forgeBlurb": "Trasformazioni di testo, codec, moduli e strumenti componibili. Il laboratorio del marketplace punta su Forge.",
+    "openForge": "Apri Forge →",
+    "allApi": "Tutte le API →",
+    "all": "Tutte →",
+    "viewAll": "Visualizza tutto {label} →",
+    "gridView": "Vista a griglia",
+    "listView": "Vista elenco",
+    "hiTitle": "Piattaforma risorse AI enterprise",
+    "hiSubtitle": "Soddisfa ogni esigenza con l'AI giusta",
+    "sellable": "Vendibile",
+    "walletTopup": "Ricarica"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "Modelli linguistici",
+      "hint": "Chat · ragionamento"
+    },
+    "image-gen": {
+      "label": "Generazione immagini",
+      "hint": "Testo in immagine"
+    },
+    "image-edit": {
+      "label": "Modifica immagini",
+      "hint": "Modifica · ritaglio"
+    },
+    "video": {
+      "label": "Generazione video",
+      "hint": "Testo in video"
+    },
+    "audio": {
+      "label": "Audio e video",
+      "hint": "Voce · trascrizione"
+    },
+    "data": {
+      "label": "Informazioni",
+      "hint": "Recupero · estrazione"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "Conoscenza potenziata"
+    },
+    "tools": {
+      "label": "API strumenti",
+      "hint": "Agente · strumenti"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "Bot",
+      "chips": "Bot di chat · bot di disegno · conoscenza"
+    },
+    "productivity": {
+      "label": "Produttività",
+      "chips": "Arena modelli · scrittura AI"
+    },
+    "academic": {
+      "label": "Accademico",
+      "chips": "Kit PDF · Ricerca brevetti AI"
+    },
+    "image": {
+      "label": "Strumenti immagine",
+      "chips": "Studio 3D · Canvas"
+    },
+    "audio": {
+      "label": "Audio",
+      "chips": "Voce · Musica AI"
+    },
+    "code": {
+      "label": "Codice",
+      "chips": "Generatore web · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "Panoramica",
+    "keys": "Chiavi",
+    "wallet": "Portafoglio",
+    "use": "Prova",
+    "docs": "Documentazione",
+    "models": "Altro"
+  }
+}

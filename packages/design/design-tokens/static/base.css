@@ -1,0 +1,891 @@
+/* ============================================
+   Base Styles — non-token CSS that complements the design-tokens output.
+   This file is concatenated into styles.generated.css after the @theme block.
+   ============================================ */
+
+/* ─── Edge tokens (2026-05 perf governance) ─────────────────
+   Pre-computed alpha values for borders / hairlines / outer glows.
+   Replaces ~70 runtime `color-mix(foreground, transparent N%)` calls per
+   page that re-evaluated on every paint. Mode-aware via CSS cascade.
+   Lives in static/ so it survives Style Dictionary rebuilds.
+   ─────────────────────────────────────────────────────────── */
+/* ─── Motion source rail ────────────────────────────────────
+   The runtime half of the motion tokens, and the reason it exists under a
+   second name: a theme entry cannot point at itself, so the utility layer
+   needs a source that is not the same property. Durations already had that
+   pair; the curves did not, which is why the ease utilities compiled to a
+   literal cubic-bezier and stayed on the default ramp no matter which brand
+   package was applied.
+
+   Same shape as elevation, where `--shadow-*: var(--elevation-*)` has always
+   given the utilities something a skin can move. A Brand Package overrides
+   these; nothing else should.
+   ─────────────────────────────────────────────────────────── */
+:root {
+  --motion-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  /* The signature: a long, strong deceleration — most of the distance is
+     covered in the first fifth of the time, then it settles. It has existed as
+     `brandEasing.brand` in @nebutra/brand since the motion language was
+     written, usable only from JS, so every CSS transition on every marketing
+     surface fell back to Tailwind's default curve instead. That default is
+     what "the hovers feel stiff" is: a near-linear ramp at 150ms. */
+  --motion-ease-brand: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── Category rail ──────────────────────────────────────────
+   Four accents for taxonomy — the monorepo tree's four lanes, and
+   anywhere else a small set of peers has to be told apart.
+
+   Derived, not picked. Hand-picking is how the file tree ended up
+   with fifteen hues across twenty-five rows, three of them reused
+   on unrelated rows: a colour that encodes nothing a reader can
+   learn and follows no design language.
+
+   Each accent is a position on the background→foreground axis,
+   tinted a quarter of the way toward the action fill rotated by
+   72°. Two axes, both always live:
+
+     • the position carries contrast. That axis is non-degenerate
+       in every language by definition — it is the axis that makes
+       body text readable — so a monochrome language still gets
+       four distinct tones. Vercel and Notion anchor on black,
+       where rotating hue returns the same colour four times.
+     • the rotation carries hue separation for the languages that
+       have chroma to give.
+
+   Two earlier constructions failed here and are worth naming.
+   Offsetting lightness from the anchor and clamping collapses when
+   the anchor already sits near the band edge — Raycast's fill is
+   near-white, so all four pinned to one value. A fixed lightness
+   ladder cannot serve both canvases: Raycast and GSAP are dark by
+   default in light mode, so the `.dark` class is not set and an
+   absolute ladder is upside down for them.
+
+   Measured across all seven languages plus factory: lowest contrast
+   3.50:1 against each canvas, closest pair 30/255 apart.
+   ─────────────────────────────────────────────────────────── */
+:root {
+  --category-1: color-mix(
+    in oklab,
+    color-mix(in oklab, hsl(var(--foreground)) 55%, hsl(var(--background))) 75%,
+    oklch(from hsl(var(--primary)) l c h)
+  );
+  --category-2: color-mix(
+    in oklab,
+    color-mix(in oklab, hsl(var(--foreground)) 67%, hsl(var(--background))) 75%,
+    oklch(from hsl(var(--primary)) l c calc(h + 72))
+  );
+  --category-3: color-mix(
+    in oklab,
+    color-mix(in oklab, hsl(var(--foreground)) 79%, hsl(var(--background))) 75%,
+    oklch(from hsl(var(--primary)) l c calc(h + 144))
+  );
+  --category-4: color-mix(
+    in oklab,
+    color-mix(in oklab, hsl(var(--foreground)) 91%, hsl(var(--background))) 75%,
+    oklch(from hsl(var(--primary)) l c calc(h + 216))
+  );
+}
+
+/* ─── Spacing source rail ────────────────────────────────────
+   A second, named scale — NOT Tailwind's own `--spacing` multiplier.
+   `--spacing` (0.25rem) is shared arithmetic for width, height and
+   line-height as well as padding/gap; repointing it per brand would rescale
+   icons and text along with whitespace.
+
+   Brand Packages override `--space-source-*`. Consumers MUST read these
+   vars directly (`var(--space-source-md, ...)`). Do NOT bridge them into
+   `@theme --spacing-sm|md|xl|2xl`: Tailwind v4 maps every --spacing-{key}
+   onto max-width / width / height utilities as well as padding / gap, so
+   those keys hijack the container max-width scale (max-w-2xl became 48px
+   on production 2026-08-03).
+   ─────────────────────────────────────────────────────────── */
+:root {
+  --space-source-xs: 0.5rem;
+  --space-source-sm: 0.75rem;
+  --space-source-md: 1rem;
+  --space-source-lg: 1.5rem;
+  --space-source-xl: 2rem;
+  --space-source-2xl: 3rem;
+}
+
+:root {
+  --edge-faint: rgb(0 0 0 / 0.04);
+  --edge-soft: rgb(0 0 0 / 0.07);
+  --edge-medium: rgb(0 0 0 / 0.12);
+  --halo-faint: rgb(0 0 0 / 0.03);
+}
+.dark {
+  --edge-faint: rgb(255 255 255 / 0.04);
+  --edge-soft: rgb(255 255 255 / 0.06);
+  --edge-medium: rgb(255 255 255 / 0.1);
+  --halo-faint: rgb(255 255 255 / 0.03);
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    /* Token-aware default border — resolves via cascade:
+       :root → light (hsl 240 5.9% 90% ≈ #e4e4e7)
+       .dark → dark  (hsl 0 0% 14.9%  ≈ #262626)
+       Previously hardcoded to the light value, which leaked a near-white border
+       into every element in dark mode regardless of component. See ADR 2026-05-11.
+
+       Keep this in Tailwind's base layer so component utilities such as
+       border-r-transparent can override it. */
+    border-color: hsl(var(--border));
+  }
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+  font-feature-settings:
+    "rlig" 1,
+    "calt" 1;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/*
+ * MUST STAY UNLAYERED. Do not wrap this rule in `@layer base` (or any layer).
+ *
+ * Tailwind v4's `@import "tailwindcss"` puts every generated utility — including
+ * every `outline-none` / `focus-visible:outline-none` a component might carry —
+ * inside `@layer utilities`. Per the cascade-layers spec, unlayered rules beat
+ * layered ones regardless of specificity or source order, which is the only
+ * reason this single declaration can supply the keyboard focus ring for the
+ * whole design system without each component opting in.
+ *
+ * Move it into a layer and keyboard focus indication disappears library-wide,
+ * silently: nothing throws, nothing looks wrong until someone tabs.
+ *
+ * Verified against apps/landing's built CSS (2026-07-30): this rule emits
+ * unlayered, `.outline-none` emits inside `@layer components;@layer utilities`.
+ */
+:focus-visible:not(
+    :where(input, textarea, select, [cmdk-input], [role="textbox"], [contenteditable="true"])
+  ) {
+  outline: 2px solid hsl(var(--ring) / 0.5);
+  outline-offset: 2px;
+  border-radius: inherit;
+}
+
+::selection {
+  background-color: hsl(var(--primary) / 0.2);
+  color: hsl(var(--primary));
+}
+
+/* ============================================
+   Animation Utilities
+   ============================================ */
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in-from-top {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-from-bottom {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-from-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-from-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+/* ============================================
+   Named Typography Utility Classes
+   Geist-style: size encoded in class name,
+   state variants as suffixes (-strong/-mono/-tabular)
+   ============================================ */
+
+@utility text-heading-72 {
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+
+@utility text-heading-64 {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+
+@utility text-heading-56 {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+}
+
+@utility text-heading-48 {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+@utility text-heading-40 {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+@utility text-heading-32 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  font-weight: 600;
+}
+
+@utility text-heading-24 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+@utility text-heading-20 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+@utility text-heading-16 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+  font-weight: 600;
+}
+
+@utility text-heading-14 {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-button-16 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-button-14 {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-button-12 {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+
+@utility text-label-20 {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-18 {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-16 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-14 {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-13 {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-12 {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+
+@utility text-label-20-strong {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-label-18-strong {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-label-16-strong {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-label-14-strong {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-label-13-strong {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-label-12-strong {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  font-weight: 600;
+}
+
+@utility text-label-20-mono {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-18-mono {
+  font-family: var(--font-mono);
+  font-size: 1.125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-16-mono {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-14-mono {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-13-mono {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-12-mono {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+
+@utility text-label-20-tabular {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility text-label-18-tabular {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility text-label-16-tabular {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility text-label-14-tabular {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility text-label-13-tabular {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility text-label-12-tabular {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility text-copy-24 {
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+}
+
+@utility text-copy-20 {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+}
+
+@utility text-copy-18 {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-16 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-14 {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-13 {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-24-strong {
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  font-weight: 600;
+}
+
+@utility text-copy-20-strong {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  font-weight: 600;
+}
+
+@utility text-copy-18-strong {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-copy-16-strong {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-copy-14-strong {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-copy-13-strong {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-copy-24-mono {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+}
+
+@utility text-copy-20-mono {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+}
+
+@utility text-copy-18-mono {
+  font-family: var(--font-mono);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-16-mono {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-14-mono {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-13-mono {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility font-cn {
+  font-family: var(--font-cn);
+  line-height: 1.75;
+  /* Never use word-break: break-all on CJK chrome — see CJK layout note below. */
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+/* ─── CJK Auto-Activation via :lang() ───────────────────────
+   When <html lang="zh|ja|ko"> is set by app layouts, body
+   automatically switches to the CJK font stack.
+
+   Layout note (2026-08): CJK soft-wrap offers a break between almost every
+   glyph, so the CSS *min-content* size of a text run is often one character.
+   Combined with:
+     • flex-col + items-center  (children size to fit-content/min-content)
+     • grid tracks minmax(0, fr) (tracks may size from that min-content)
+   prose collapses into a vertical one-glyph strip (forge/landing heroes &
+   footers). Do NOT "fix" this with a global min-width on all p/h* — that
+   breaks responsive cards. Prefer stretch rules below + local w-full.
+   ─────────────────────────────────────────────────────────── */
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) body {
+  font-family: var(--font-cn);
+  line-height: 1.75;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+/*
+ * flex-col + items-center:
+ * 1) Direct children (incl. AnimateIn wrappers) get a sane box — max 100% of
+ *    the column, min-width 0 so they can wrap instead of forcing the column
+ *    to min-content.
+ * 2) Nested prose (p/h*) under those columns takes width:100% so Chinese
+ *    copy does not collapse to a 1-glyph strip. We deliberately do NOT set
+ *    max-width here — leave Tailwind max-w-* / max-w-[…] in control.
+ */
+:is(html:lang(zh), html:lang(ja), html:lang(ko))
+  :is(.flex.flex-col.items-center, .inline-flex.flex-col.items-center)
+  > * {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+
+:is(html:lang(zh), html:lang(ja), html:lang(ko))
+  :is(.flex.flex-col.items-center, .inline-flex.flex-col.items-center)
+  :is(p, h1, h2, h3, h4, h5, h6, blockquote) {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+}
+
+/*
+ * Brand blurbs that only set max-w-*: give an explicit width so flex/grid
+ * parents don't size them to 1-glyph min-content. min(100%, …) stays mobile-safe.
+ */
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-xs {
+  width: min(100%, 20rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-sm {
+  width: min(100%, 24rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-md {
+  width: min(100%, 28rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-lg {
+  width: min(100%, 32rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-xl {
+  width: min(100%, 36rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-2xl {
+  width: min(100%, 42rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-3xl {
+  width: min(100%, 48rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-4xl {
+  width: min(100%, 56rem);
+  min-width: 0;
+}
+
+/* Opt-in for wrappers (div/section) that hold CJK prose in flex/grid tracks */
+@utility cjk-prose {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+/*
+ * Mobile: kill horizontal page scroll from 100vw / wide tables / marquees.
+ * clip (not hidden) preserves sticky headers.
+ */
+@media (max-width: 767px) {
+  html {
+    overflow-x: clip;
+  }
+
+  body {
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
+  /* Grid/flex children should be allowed to shrink below min-content */
+  .grid > *,
+  .flex > *,
+  .inline-flex > * {
+    min-width: 0;
+  }
+}
+
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(code, kbd, pre, samp) {
+  font-family: var(--font-mono);
+  word-break: normal;
+  min-width: 0;
+}
+
+/* ─── Reduced Motion ─────────────────────────────────────── */
+/* Honors OS preference EXCEPT for functional progress indicators
+ * (spinners / pulses / pings). Per WCAG 2.3.3, those are excluded
+ * from the "animation from interactions" reduction requirement. */
+@media (prefers-reduced-motion: reduce) {
+  *:not(.animate-spin):not(.animate-pulse):not(.animate-ping),
+  *:not(.animate-spin):not(.animate-pulse):not(.animate-ping)::before,
+  *:not(.animate-spin):not(.animate-pulse):not(.animate-ping)::after {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.01ms;
+    scroll-behavior: auto;
+  }
+}

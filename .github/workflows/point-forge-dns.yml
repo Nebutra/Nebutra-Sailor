@@ -1,0 +1,37 @@
+name: Point forge DNS to ECS
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dns:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Upsert forge.nebutra.com → ECS
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+          ECS_HOST: ${{ vars.ECS_HOST || vars.VM_HOST || '106.15.4.31' }}
+        run: |
+          set -euo pipefail
+          test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::CLOUDFLARE_API_TOKEN secret missing"; exit 1; }
+          bash infra/ops/scripts/point-forge-dns-ecs.sh
+      - name: Smoke forge origin
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6 7 8; do
+            code=$(curl -sS -o /tmp/forge.html -w '%{http_code}' --max-time 25 https://forge.nebutra.com/ || echo 000)
+            echo "try $i -> $code"
+            if [ "$code" = "200" ] || [ "$code" = "307" ] || [ "$code" = "302" ]; then
+              head -c 400 /tmp/forge.html; echo
+              exit 0
+            fi
+            sleep 12
+          done
+          echo "::warning::DNS may be set but origin not ready yet"
+          curl -sSI --max-time 15 https://forge.nebutra.com/ || true
+          exit 0

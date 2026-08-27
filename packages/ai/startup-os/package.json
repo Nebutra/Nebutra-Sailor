@@ -1,0 +1,115 @@
+{
+  "name": "@nebutra/startup-os",
+  "version": "0.1.1",
+  "private": true,
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "product-orchestration",
+    "requires": [
+      "@nebutra/agent-runtime for orchestration grammar and runtime policy",
+      "@nebutra/agents for injected model execution and fallback routing",
+      "@nebutra/db for persisted startup context",
+      "@nebutra/preset for generated app scaffolds",
+      "@nebutra/ui and @nebutra/icons for shared Startup OS presentation metadata"
+    ],
+    "gaps": [
+      "Dashboard-facing adapters are still wired through app routes",
+      "Product flows still depend on the host app for auth, billing, and tenant lifecycle",
+      "Durable multi-run orchestration is still delegated to adjacent runtime packages",
+      "File and canvas operations are runtime contracts, not a standalone production surface"
+    ],
+    "featureId": "startup-os",
+    "category": "ai",
+    "summary": "Startup OS product orchestration contracts for company context, founder conversation, execution, files, rollout, canvas state, and model-tier decisions"
+  },
+  "main": "./dist/compiler.js",
+  "types": "./src/compiler.ts",
+  "exports": {
+    "./canvas": {
+      "types": "./src/canvas.ts",
+      "import": "./dist/canvas.js",
+      "default": "./dist/canvas.js"
+    },
+    "./compiler": {
+      "types": "./src/compiler.ts",
+      "import": "./dist/compiler.js",
+      "default": "./dist/compiler.js"
+    },
+    "./conversation": {
+      "types": "./src/conversation.ts",
+      "import": "./dist/conversation.js",
+      "default": "./dist/conversation.js"
+    },
+    "./dev-tenant": {
+      "types": "./src/dev-tenant.ts",
+      "import": "./dist/dev-tenant.js",
+      "default": "./dist/dev-tenant.js"
+    },
+    "./execution": {
+      "types": "./src/execution.ts",
+      "import": "./dist/execution.js",
+      "default": "./dist/execution.js"
+    },
+    "./feature-flag": {
+      "types": "./src/feature-flag.ts",
+      "import": "./dist/feature-flag.js",
+      "default": "./dist/feature-flag.js"
+    },
+    "./files": {
+      "types": "./src/files.ts",
+      "import": "./dist/files.js",
+      "default": "./dist/files.js"
+    },
+    "./model-tier": {
+      "types": "./src/model-tier.ts",
+      "import": "./dist/model-tier.js",
+      "default": "./dist/model-tier.js"
+    },
+    "./rollout": {
+      "types": "./src/rollout.ts",
+      "import": "./dist/rollout.js",
+      "default": "./dist/rollout.js"
+    },
+    "./store": {
+      "types": "./src/store.ts",
+      "import": "./dist/store.js",
+      "default": "./dist/store.js"
+    },
+    "./company-context/projection": {
+      "types": "./src/company-context/projection.ts",
+      "import": "./dist/company-context/projection.js",
+      "default": "./dist/company-context/projection.js"
+    },
+    "./company-context/*": {
+      "types": "./src/company-context/*.ts",
+      "import": "./dist/company-context/*.js",
+      "default": "./dist/company-context/*.js"
+    }
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@nebutra/agent-runtime": "workspace:*",
+    "@nebutra/agents": "workspace:*",
+    "@nebutra/db": "workspace:*",
+    "@nebutra/icons": "workspace:*",
+    "@nebutra/preset": "workspace:*",
+    "ai": "catalog:",
+    "zod": "catalog:",
+    "@nebutra/tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "license": "AGPL-3.0-only",
+  "files": [
+    "dist"
+  ]
+}

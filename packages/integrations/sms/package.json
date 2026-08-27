@@ -1,0 +1,40 @@
+{
+  "name": "@nebutra/sms",
+  "version": "0.1.2",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./aliyun": {
+      "types": "./dist/providers/aliyun.d.ts",
+      "import": "./dist/providers/aliyun.js",
+      "default": "./dist/providers/aliyun.js"
+    },
+    "./tencent": {
+      "types": "./dist/providers/tencent.d.ts",
+      "import": "./dist/providers/tencent.js",
+      "default": "./dist/providers/tencent.js"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@nebutra/cache": "workspace:*",
+    "@nebutra/logger": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  },
+  "license": "AGPL-3.0-only",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ]
+}

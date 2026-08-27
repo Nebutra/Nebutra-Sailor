@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: studio
+  namespace: nebutra
+  labels:
+    app.kubernetes.io/name: studio
+    app.kubernetes.io/component: cms
+spec:
+  replicas: 1   # Sanity Studio is a static SPA — single replica is fine
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: studio
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: studio
+        app.kubernetes.io/component: cms
+    spec:
+      serviceAccountName: studio
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: studio
+          # CI pipeline overrides this tag via kustomize image transforms
+          image: nebutra/studio:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 3003
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: nebutra-config
+          env:
+            - name: NEXT_PUBLIC_SANITY_PROJECT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SANITY_PROJECT_ID
+            - name: NEXT_PUBLIC_SANITY_DATASET
+              value: production
+            - name: NEXT_PUBLIC_SANITY_API_VERSION
+              value: "2024-01-01"
+            - name: SANITY_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SANITY_API_TOKEN
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "50m"
+            limits:
+              memory: "384Mi"
+              cpu: "250m"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            timeoutSeconds: 5
+            failureThreshold: 3
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 1000
+            readOnlyRootFilesystem: true
+      securityContext:
+        fsGroup: 1000

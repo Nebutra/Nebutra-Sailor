@@ -1,0 +1,160 @@
+{
+  "name": "Daily Digest Email",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * *"
+            }
+          ]
+        }
+      },
+      "id": "cron-trigger",
+      "name": "Daily 8AM Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [240, 300],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "query": "SELECT DISTINCT tenant_id FROM users WHERE digest_enabled = true",
+        "options": {}
+      },
+      "id": "get-tenants",
+      "name": "Get Active Tenants",
+      "type": "n8n-nodes-base.postgres",
+      "position": [460, 300],
+      "typeVersion": 2.3
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "query": "SELECT u.email, u.name, c.title, c.summary FROM users u JOIN content_items c ON u.tenant_id = c.tenant_id WHERE u.tenant_id = '{{ $json.tenant_id }}' AND c.created_at > NOW() - INTERVAL '24 hours' ORDER BY c.created_at DESC LIMIT 10",
+        "options": {}
+      },
+      "id": "get-user-content",
+      "name": "Get User Content",
+      "type": "n8n-nodes-base.postgres",
+      "position": [680, 300],
+      "typeVersion": 2.3
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://ai:8001/v1/generate",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "Generate a friendly daily digest email for {{ $json.name }} summarizing the following content updates:\n\n{{ $json.content }}"
+            },
+            {
+              "name": "max_tokens",
+              "value": "1000"
+            }
+          ]
+        }
+      },
+      "id": "generate-digest",
+      "name": "Generate Digest Content",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [900, 300],
+      "typeVersion": 4.1
+    },
+    {
+      "parameters": {
+        "fromEmail": "digest@nebutra.com",
+        "toEmail": "={{ $json.email }}",
+        "subject": "Your Daily Digest - {{ $now.format('MMMM d, yyyy') }}",
+        "emailType": "html",
+        "html": "={{ $json.generatedContent }}"
+      },
+      "id": "send-email",
+      "name": "Send Email via Resend",
+      "type": "n8n-nodes-base.resend",
+      "position": [1120, 300],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "email_logs",
+        "columns": "recipient,subject,sent_at,tenant_id",
+        "values": "={{ $json.email }},Daily Digest,={{ $now.toISO() }},={{ $json.tenant_id }}"
+      },
+      "id": "log-email",
+      "name": "Log Email Sent",
+      "type": "n8n-nodes-base.postgres",
+      "position": [1340, 300],
+      "typeVersion": 2.3
+    }
+  ],
+  "connections": {
+    "Daily 8AM Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Active Tenants",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Active Tenants": {
+      "main": [
+        [
+          {
+            "node": "Get User Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User Content": {
+      "main": [
+        [
+          {
+            "node": "Generate Digest Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Digest Content": {
+      "main": [
+        [
+          {
+            "node": "Send Email via Resend",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email via Resend": {
+      "main": [
+        [
+          {
+            "node": "Log Email Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": ["email", "digest", "cron"],
+  "triggerCount": 1
+}

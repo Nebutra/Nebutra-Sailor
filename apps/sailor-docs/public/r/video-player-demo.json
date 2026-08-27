@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "video-player-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/video-player-demo.tsx",
+      "content": "import { VideoPlayer } from \"@nebutra/ui/primitives\";\n\nexport function VideoPlayerDemo() {\n  return (\n    <div className=\"max-w-4xl px-4 py-8 w-full\">\n      <VideoPlayer\n        src=\"https://www.w3schools.com/html/mov_bbb.mp4\"\n        autoPlay={false}\n        loop={true}\n        className=\"overflow-hidden rounded-xl border border-border shadow-lg\"\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

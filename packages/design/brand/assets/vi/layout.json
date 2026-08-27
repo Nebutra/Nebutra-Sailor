@@ -1,0 +1,6070 @@
+{
+  "pdf_info": [
+    {
+      "para_blocks": [
+        {
+          "bbox": [90, 357, 814, 562],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [86, 347, 458, 462],
+              "spans": [
+                {
+                  "bbox": [86, 347, 458, 462],
+                  "type": "text",
+                  "content": "云毓智能",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [84, 460, 819, 573],
+              "spans": [
+                {
+                  "bbox": [84, 460, 819, 573],
+                  "type": "text",
+                  "content": "品牌视觉识别手册",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [88, 610, 449, 731],
+          "type": "text",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [88, 608, 240, 652],
+              "spans": [
+                {
+                  "bbox": [88, 608, 240, 652],
+                  "type": "text",
+                  "content": "Nebutra",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [90, 646, 451, 697],
+              "spans": [
+                {
+                  "bbox": [90, 646, 451, 697],
+                  "type": "text",
+                  "content": "Brand visual identity",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [86, 693, 224, 729],
+              "spans": [
+                {
+                  "bbox": [86, 693, 224, 729],
+                  "type": "text",
+                  "content": "manual",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [90, 114, 228, 244],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [97, 119, 218, 174],
+              "spans": [
+                {
+                  "bbox": [97, 119, 218, 174],
+                  "type": "text",
+                  "content": "",
+                  "score": 0.0
+                },
+                {
+                  "bbox": [153, 138, 165, 142],
+                  "type": "text",
+                  "content": "",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [145, 140, 153, 145],
+              "spans": [
+                {
+                  "bbox": [145, 140, 153, 145],
+                  "type": "text",
+                  "content": "",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [94, 150, 238, 252],
+              "spans": [
+                {
+                  "bbox": [94, 150, 238, 252],
+                  "type": "text",
+                  "content": "",
+                  "score": 0.0
+                },
+                {
+                  "bbox": [193, 180, 199, 184],
+                  "type": "text",
+                  "content": "",
+                  "score": 0.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 992, 458, 1022],
+          "type": "footer",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [86, 988, 462, 1023],
+              "spans": [
+                {
+                  "bbox": [86, 988, 462, 1023],
+                  "type": "text",
+                  "content": "Corporate Identity February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 0
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [192, 112, 391, 209],
+          "type": "title",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [174, 96, 412, 231],
+              "spans": [
+                {
+                  "bbox": [174, 96, 412, 231],
+                  "type": "text",
+                  "content": "目录",
+                  "score": 1.0
+                },
+                {
+                  "bbox": [232, 132, 357, 189],
+                  "type": "text",
+                  "content": "三录",
+                  "score": 0.518
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [422, 163, 696, 210],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [424, 164, 698, 212],
+              "spans": [
+                {
+                  "bbox": [424, 164, 698, 212],
+                  "type": "text",
+                  "content": "/ CONTENT",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [195, 349, 286, 439],
+          "type": "title",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [180, 333, 301, 454],
+              "spans": [
+                {
+                  "bbox": [180, 333, 301, 454],
+                  "type": "text",
+                  "content": "A",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [343, 349, 614, 400],
+          "type": "title",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [339, 345, 620, 405],
+              "spans": [
+                {
+                  "bbox": [339, 345, 620, 405],
+                  "type": "text",
+                  "content": "品牌基本要素",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [345, 409, 614, 436],
+          "type": "title",
+          "angle": 0,
+          "index": 4,
+          "lines": [
+            {
+              "bbox": [343, 406, 618, 438],
+              "spans": [
+                {
+                  "bbox": [343, 406, 618, 438],
+                  "type": "text",
+                  "content": "Brand Basic Elements",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [343, 511, 485, 537],
+          "type": "text",
+          "angle": 0,
+          "index": 5,
+          "lines": [
+            {
+              "bbox": [341, 509, 489, 541],
+              "spans": [
+                {
+                  "bbox": [341, 509, 489, 541],
+                  "type": "text",
+                  "content": "品牌标准标志",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [345, 557, 485, 584],
+          "type": "text",
+          "angle": 0,
+          "index": 6,
+          "lines": [
+            {
+              "bbox": [341, 554, 489, 586],
+              "spans": [
+                {
+                  "bbox": [341, 554, 489, 586],
+                  "type": "text",
+                  "content": "品牌标志墨稿",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [345, 602, 529, 628],
+          "type": "text",
+          "angle": 0,
+          "index": 7,
+          "lines": [
+            {
+              "bbox": [343, 600, 531, 630],
+              "spans": [
+                {
+                  "bbox": [343, 600, 531, 630],
+                  "type": "text",
+                  "content": "品牌标志方格制图",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [345, 648, 622, 673],
+          "type": "text",
+          "angle": 0,
+          "index": 8,
+          "lines": [
+            {
+              "bbox": [343, 644, 624, 675],
+              "spans": [
+                {
+                  "bbox": [343, 644, 624, 675],
+                  "type": "text",
+                  "content": "安全空间与最小化比例限定",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [345, 692, 437, 717],
+          "type": "text",
+          "angle": 0,
+          "index": 9,
+          "lines": [
+            {
+              "bbox": [341, 689, 443, 721],
+              "spans": [
+                {
+                  "bbox": [341, 689, 443, 721],
+                  "type": "text",
+                  "content": "使用限定",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [345, 738, 574, 763],
+          "type": "text",
+          "angle": 0,
+          "index": 10,
+          "lines": [
+            {
+              "bbox": [341, 735, 577, 766],
+              "spans": [
+                {
+                  "bbox": [341, 735, 577, 766],
+                  "type": "text",
+                  "content": "品牌中文名称方格制图",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [345, 784, 576, 808],
+          "type": "text",
+          "angle": 0,
+          "index": 11,
+          "lines": [
+            {
+              "bbox": [343, 780, 577, 812],
+              "spans": [
+                {
+                  "bbox": [343, 780, 577, 812],
+                  "type": "text",
+                  "content": "品牌英文名称方格制图",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [345, 828, 599, 853],
+          "type": "text",
+          "angle": 0,
+          "index": 12,
+          "lines": [
+            {
+              "bbox": [343, 825, 600, 856],
+              "spans": [
+                {
+                  "bbox": [343, 825, 600, 856],
+                  "type": "text",
+                  "content": "品牌中英文组合方格制图",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [345, 873, 529, 898],
+          "type": "text",
+          "angle": 0,
+          "index": 13,
+          "lines": [
+            {
+              "bbox": [343, 871, 531, 900],
+              "spans": [
+                {
+                  "bbox": [343, 871, 531, 900],
+                  "type": "text",
+                  "content": "品牌标准中文字体",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [345, 919, 529, 943],
+          "type": "text",
+          "angle": 0,
+          "index": 14,
+          "lines": [
+            {
+              "bbox": [343, 915, 531, 946],
+              "spans": [
+                {
+                  "bbox": [343, 915, 531, 946],
+                  "type": "text",
+                  "content": "品牌标准英文字体",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [754, 511, 938, 537],
+          "type": "text",
+          "angle": 0,
+          "index": 15,
+          "lines": [
+            {
+              "bbox": [752, 510, 942, 541],
+              "spans": [
+                {
+                  "bbox": [752, 510, 942, 541],
+                  "type": "text",
+                  "content": "品牌标准色及色阶",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [754, 557, 938, 583],
+          "type": "text",
+          "angle": 0,
+          "index": 16,
+          "lines": [
+            {
+              "bbox": [752, 555, 942, 585],
+              "spans": [
+                {
+                  "bbox": [752, 555, 942, 585],
+                  "type": "text",
+                  "content": "品牌辅助色及色阶",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [754, 602, 894, 628],
+          "type": "text",
+          "angle": 0,
+          "index": 17,
+          "lines": [
+            {
+              "bbox": [750, 599, 898, 631],
+              "spans": [
+                {
+                  "bbox": [750, 599, 898, 631],
+                  "type": "text",
+                  "content": "色彩禁用示例",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [754, 648, 894, 673],
+          "type": "text",
+          "angle": 0,
+          "index": 18,
+          "lines": [
+            {
+              "bbox": [750, 645, 900, 676],
+              "spans": [
+                {
+                  "bbox": [750, 645, 900, 676],
+                  "type": "text",
+                  "content": "标志左右组合",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [754, 693, 894, 718],
+          "type": "text",
+          "angle": 0,
+          "index": 19,
+          "lines": [
+            {
+              "bbox": [750, 689, 900, 721],
+              "spans": [
+                {
+                  "bbox": [750, 689, 900, 721],
+                  "type": "text",
+                  "content": "标志上下组合",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [754, 738, 950, 763],
+          "type": "text",
+          "angle": 0,
+          "index": 20,
+          "lines": [
+            {
+              "bbox": [752, 735, 954, 765],
+              "spans": [
+                {
+                  "bbox": [752, 735, 954, 765],
+                  "type": "text",
+                  "content": "标志左右组合-英文",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [754, 783, 950, 808],
+          "type": "text",
+          "angle": 0,
+          "index": 21,
+          "lines": [
+            {
+              "bbox": [752, 780, 954, 811],
+              "spans": [
+                {
+                  "bbox": [752, 780, 954, 811],
+                  "type": "text",
+                  "content": "标志上下组合-英文",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1261, 349, 1328, 438],
+          "type": "title",
+          "angle": 0,
+          "index": 22,
+          "lines": [
+            {
+              "bbox": [1251, 339, 1342, 448],
+              "spans": [
+                {
+                  "bbox": [1251, 339, 1342, 448],
+                  "type": "text",
+                  "content": "B",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1399, 349, 1668, 399],
+          "type": "title",
+          "angle": 0,
+          "index": 23,
+          "lines": [
+            {
+              "bbox": [1393, 344, 1674, 406],
+              "spans": [
+                {
+                  "bbox": [1393, 344, 1674, 406],
+                  "type": "text",
+                  "content": "品牌标志应用",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1401, 409, 1720, 440],
+          "type": "title",
+          "angle": 0,
+          "index": 24,
+          "lines": [
+            {
+              "bbox": [1397, 403, 1726, 443],
+              "spans": [
+                {
+                  "bbox": [1397, 403, 1726, 443],
+                  "type": "text",
+                  "content": "Application of brand logo",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1399, 511, 1562, 537],
+          "type": "text",
+          "angle": 0,
+          "index": 25,
+          "lines": [
+            {
+              "bbox": [1397, 509, 1566, 541],
+              "spans": [
+                {
+                  "bbox": [1397, 509, 1566, 541],
+                  "type": "text",
+                  "content": "接待台及背景墙",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1401, 557, 1541, 584],
+          "type": "text",
+          "angle": 0,
+          "index": 26,
+          "lines": [
+            {
+              "bbox": [1397, 552, 1545, 586],
+              "spans": [
+                {
+                  "bbox": [1397, 552, 1545, 586],
+                  "type": "text",
+                  "content": "路演板 / 展板",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [1783, 972, 1829, 1017],
+          "type": "page_number",
+          "angle": 0,
+          "index": 27,
+          "lines": [
+            {
+              "bbox": [1787, 973, 1829, 1010],
+              "spans": [
+                {
+                  "bbox": [1787, 973, 1829, 1010],
+                  "type": "text",
+                  "content": ">",
+                  "score": 0.922
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 1
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [90, 62, 754, 295],
+          "type": "title",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [88, 58, 176, 162],
+              "spans": [
+                {
+                  "bbox": [88, 58, 176, 162],
+                  "type": "text",
+                  "content": "A",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [76, 169, 768, 314],
+              "spans": [
+                {
+                  "bbox": [76, 169, 768, 314],
+                  "type": "text",
+                  "content": "品牌基本要素",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [94, 736, 721, 949],
+          "type": "title",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [88, 724, 725, 848],
+              "spans": [
+                {
+                  "bbox": [88, 724, 422, 848],
+                  "type": "text",
+                  "content": "Brand",
+                  "score": 1.0
+                },
+                {
+                  "bbox": [441, 730, 725, 845],
+                  "type": "text",
+                  "content": "Basic",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [84, 833, 604, 965],
+              "spans": [
+                {
+                  "bbox": [84, 833, 604, 965],
+                  "type": "text",
+                  "content": "Elements",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [1626, 61, 1827, 90],
+          "type": "header",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [1626, 61, 1829, 90],
+              "spans": [
+                {
+                  "bbox": [1626, 61, 1829, 90],
+                  "type": "text",
+                  "content": "品牌视觉系统规范",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1693, 99, 1829, 125],
+          "type": "header",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [1689, 96, 1833, 127],
+              "spans": [
+                {
+                  "bbox": [1689, 96, 1833, 127],
+                  "type": "text",
+                  "content": "Visual Design",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 999, 330, 1019],
+          "type": "footer",
+          "angle": 0,
+          "index": 4,
+          "lines": [
+            {
+              "bbox": [88, 996, 332, 1021],
+              "spans": [
+                {
+                  "bbox": [88, 996, 332, 1021],
+                  "type": "text",
+                  "content": "Corporate Identity February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1783, 970, 1831, 1017],
+          "type": "footer",
+          "angle": 0,
+          "index": 5,
+          "lines": []
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 2
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 124, 343, 170],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [65, 119, 347, 176],
+              "spans": [
+                {
+                  "bbox": [65, 119, 347, 176],
+                  "type": "text",
+                  "content": "品牌标准标志",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 249, 535, 373],
+          "type": "text",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [71, 249, 533, 273],
+              "spans": [
+                {
+                  "bbox": [71, 249, 533, 273],
+                  "type": "text",
+                  "content": "品牌标志以首字母N的基础造型概念为主要设计框架，但",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 284, 533, 305],
+              "spans": [
+                {
+                  "bbox": [71, 284, 533, 305],
+                  "type": "text",
+                  "content": "又不直白的体现首字母的造型，通过几何正负空间构建隐",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 317, 531, 339],
+              "spans": [
+                {
+                  "bbox": [72, 317, 531, 339],
+                  "type": "text",
+                  "content": "形“N”，通过对基础图形的旋转变换，形成一个近似六边",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 351, 193, 371],
+              "spans": [
+                {
+                  "bbox": [71, 351, 193, 371],
+                  "type": "text",
+                  "content": "形的稳定结构。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 392, 533, 482],
+          "type": "text",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [71, 392, 533, 414],
+              "spans": [
+                {
+                  "bbox": [71, 392, 533, 414],
+                  "type": "text",
+                  "content": "色彩上使用清新明快的蓝绿渐变，通过线性渐变与角度渐",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 424, 533, 447],
+              "spans": [
+                {
+                  "bbox": [71, 424, 533, 447],
+                  "type": "text",
+                  "content": "变的方式填充其中，让整体更具未来感与科技的锋芒。整",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 460, 497, 482],
+              "spans": [
+                {
+                  "bbox": [71, 460, 497, 482],
+                  "type": "text",
+                  "content": "体表达品牌探索与引领未来，创建智能化连接的理念”",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "bbox": [992, 277, 1549, 799],
+          "blocks": [
+            {
+              "bbox": [992, 277, 1549, 799],
+              "lines": [
+                {
+                  "bbox": [992, 277, 1549, 799],
+                  "spans": [
+                    {
+                      "bbox": [992, 277, 1549, 799],
+                      "type": "image",
+                      "image_path": "e823943726f9b24cb7cdabd3d567ebf2209556102bf0fa3ab11aba5c34fe70cb.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 4,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 4
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [67, 66, 374, 88],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [67, 66, 376, 89],
+              "spans": [
+                {
+                  "bbox": [67, 66, 376, 89],
+                  "type": "text",
+                  "content": "品牌基本要素 / Brand Basic Elements",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 974, 207, 1004],
+          "type": "footer",
+          "angle": 0,
+          "index": 5,
+          "lines": [
+            {
+              "bbox": [92, 973, 207, 990],
+              "spans": [
+                {
+                  "bbox": [92, 973, 207, 990],
+                  "type": "text",
+                  "content": "Corporate Identity",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [90, 987, 184, 1005],
+              "spans": [
+                {
+                  "bbox": [90, 987, 184, 1005],
+                  "type": "text",
+                  "content": "February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 3
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 124, 339, 170],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [65, 118, 343, 176],
+              "spans": [
+                {
+                  "bbox": [65, 118, 343, 176],
+                  "type": "text",
+                  "content": "品牌标志墨稿",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 249, 531, 436],
+          "type": "text",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [72, 250, 531, 272],
+              "spans": [
+                {
+                  "bbox": [72, 250, 531, 272],
+                  "type": "text",
+                  "content": "品牌标志墨稿是以黑白色调呈现的标志设计稿，它在品牌",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 285, 529, 305],
+              "spans": [
+                {
+                  "bbox": [72, 285, 529, 305],
+                  "type": "text",
+                  "content": "视觉体系中有着不可或缺的作用。首先，墨稿能精准检验",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 318, 531, 339],
+              "spans": [
+                {
+                  "bbox": [72, 318, 531, 339],
+                  "type": "text",
+                  "content": "标志的结构合理性与图形识别性，剥离色彩干扰后，标志",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 351, 531, 371],
+              "spans": [
+                {
+                  "bbox": [72, 351, 531, 371],
+                  "type": "text",
+                  "content": "的线条粗细、图形比例、元素关系等细节问题会清晰暴",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 384, 531, 405],
+              "spans": [
+                {
+                  "bbox": [72, 384, 531, 405],
+                  "type": "text",
+                  "content": "露，帮助设计师及时优化，确保标志在任何场景下都能保",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 415, 174, 437],
+              "spans": [
+                {
+                  "bbox": [71, 415, 174, 437],
+                  "type": "text",
+                  "content": "持清晰易辨。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 457, 531, 578],
+          "type": "text",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [71, 457, 531, 481],
+              "spans": [
+                {
+                  "bbox": [71, 457, 531, 481],
+                  "type": "text",
+                  "content": "其次，墨稿能强化品牌标志的通用性，黑白配色不受印刷",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 492, 531, 513],
+              "spans": [
+                {
+                  "bbox": [72, 492, 531, 513],
+                  "type": "text",
+                  "content": "工艺、显示设备色彩差异的限制，无论是单色印刷品、黑",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [74, 525, 531, 546],
+              "spans": [
+                {
+                  "bbox": [74, 525, 531, 546],
+                  "type": "text",
+                  "content": "白显示屏，还是烫金、压印等特殊工艺，都能保证标志完",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 558, 372, 579],
+              "spans": [
+                {
+                  "bbox": [72, 558, 372, 579],
+                  "type": "text",
+                  "content": "整呈现，有效提升品牌传播的稳定性。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "bbox": [816, 144, 1077, 393],
+          "blocks": [
+            {
+              "bbox": [666, 66, 741, 89],
+              "lines": [
+                {
+                  "bbox": [664, 64, 744, 92],
+                  "spans": [
+                    {
+                      "bbox": [664, 64, 744, 92],
+                      "type": "text",
+                      "content": "标志反白",
+                      "score": 1.0
+                    }
+                  ]
+                }
+              ],
+              "index": 4,
+              "angle": 0,
+              "type": "image_caption"
+            },
+            {
+              "bbox": [816, 144, 1077, 393],
+              "lines": [
+                {
+                  "bbox": [816, 144, 1077, 393],
+                  "spans": [
+                    {
+                      "bbox": [816, 144, 1077, 393],
+                      "type": "image",
+                      "image_path": "f6b65e082c07eb304013b16337689821b6c665140db7f60dc2cab52825df3d79.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 5,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 5
+        },
+        {
+          "type": "image",
+          "bbox": [1466, 147, 1724, 388],
+          "blocks": [
+            {
+              "bbox": [1315, 66, 1390, 89],
+              "lines": [
+                {
+                  "bbox": [1315, 66, 1392, 91],
+                  "spans": [
+                    {
+                      "bbox": [1315, 66, 1392, 91],
+                      "type": "text",
+                      "content": "标志反白",
+                      "score": 1.0
+                    }
+                  ]
+                }
+              ],
+              "index": 6,
+              "angle": 0,
+              "type": "image_caption"
+            },
+            {
+              "bbox": [1466, 147, 1724, 388],
+              "lines": [
+                {
+                  "bbox": [1466, 147, 1724, 388],
+                  "spans": [
+                    {
+                      "bbox": [1466, 147, 1724, 388],
+                      "type": "image",
+                      "image_path": "ee7ffa0034d535df384612f9f632639dd451034abda8f024f6637232ec276b01.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 7,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 7
+        },
+        {
+          "type": "image",
+          "bbox": [816, 687, 1075, 928],
+          "blocks": [
+            {
+              "bbox": [666, 606, 741, 629],
+              "lines": [
+                {
+                  "bbox": [666, 605, 743, 631],
+                  "spans": [
+                    {
+                      "bbox": [666, 605, 743, 631],
+                      "type": "text",
+                      "content": "标志烫金",
+                      "score": 1.0
+                    }
+                  ]
+                }
+              ],
+              "index": 8,
+              "angle": 0,
+              "type": "image_caption"
+            },
+            {
+              "bbox": [816, 687, 1075, 928],
+              "lines": [
+                {
+                  "bbox": [816, 687, 1075, 928],
+                  "spans": [
+                    {
+                      "bbox": [816, 687, 1075, 928],
+                      "type": "image",
+                      "image_path": "87e4ea195b5e9411af77642592bf676d004e71fe7df9b4299339254eb0aaadf5.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 9,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 9
+        },
+        {
+          "type": "image",
+          "bbox": [1466, 687, 1724, 928],
+          "blocks": [
+            {
+              "bbox": [1315, 606, 1390, 629],
+              "lines": [
+                {
+                  "bbox": [1313, 605, 1392, 631],
+                  "spans": [
+                    {
+                      "bbox": [1313, 605, 1392, 631],
+                      "type": "text",
+                      "content": "标志烫银",
+                      "score": 1.0
+                    }
+                  ]
+                }
+              ],
+              "index": 10,
+              "angle": 0,
+              "type": "image_caption"
+            },
+            {
+              "bbox": [1466, 687, 1724, 928],
+              "lines": [
+                {
+                  "bbox": [1466, 687, 1724, 928],
+                  "spans": [
+                    {
+                      "bbox": [1466, 687, 1724, 928],
+                      "type": "image",
+                      "image_path": "871d1880bd00a585e03bf8acbb7e00344c5cf2cbbd4e690f37e3a8712d7ebb34.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 11,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 11
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [67, 66, 374, 88],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [67, 66, 376, 89],
+              "spans": [
+                {
+                  "bbox": [67, 66, 376, 89],
+                  "type": "text",
+                  "content": "品牌基本要素 / Brand Basic Elements",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 974, 205, 988],
+          "type": "footer",
+          "angle": 0,
+          "index": 12,
+          "lines": [
+            {
+              "bbox": [92, 970, 207, 990],
+              "spans": [
+                {
+                  "bbox": [92, 970, 207, 990],
+                  "type": "text",
+                  "content": "Corporate Identity",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 989, 180, 1003],
+          "type": "footer",
+          "angle": 0,
+          "index": 13,
+          "lines": [
+            {
+              "bbox": [90, 987, 182, 1004],
+              "spans": [
+                {
+                  "bbox": [90, 987, 182, 1004],
+                  "type": "text",
+                  "content": "February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 4
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 123, 428, 170],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [65, 118, 432, 176],
+              "spans": [
+                {
+                  "bbox": [65, 118, 432, 176],
+                  "type": "text",
+                  "content": "品牌标志方格制图",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 249, 535, 403],
+          "type": "text",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [71, 250, 533, 272],
+              "spans": [
+                {
+                  "bbox": [71, 250, 533, 272],
+                  "type": "text",
+                  "content": "方格制图通过精确的网格比例，规定标志中各元素（如线",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 285, 531, 305],
+              "spans": [
+                {
+                  "bbox": [72, 285, 531, 305],
+                  "type": "text",
+                  "content": "条、图形、文字）的尺寸、间距等参数，确保无论在任何",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 318, 531, 338],
+              "spans": [
+                {
+                  "bbox": [72, 318, 531, 338],
+                  "type": "text",
+                  "content": "场景下（如印刷、屏幕展示、实体制作），标志的形态都",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [74, 351, 531, 371],
+              "spans": [
+                {
+                  "bbox": [74, 351, 531, 371],
+                  "type": "text",
+                  "content": "保持统一，避免因手工绘制或缩放导致的变形、比例失",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [67, 380, 105, 407],
+              "spans": [
+                {
+                  "bbox": [67, 380, 105, 407],
+                  "type": "text",
+                  "content": "调。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1251, 160, 1288, 178],
+          "type": "text",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [1249, 157, 1292, 181],
+              "spans": [
+                {
+                  "bbox": [1249, 157, 1292, 181],
+                  "type": "text",
+                  "content": "7.5a",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "bbox": [902, 220, 1693, 920],
+          "blocks": [
+            {
+              "bbox": [902, 220, 1693, 920],
+              "lines": [
+                {
+                  "bbox": [902, 220, 1693, 920],
+                  "spans": [
+                    {
+                      "bbox": [902, 220, 1693, 920],
+                      "type": "image",
+                      "image_path": "4345ff19239b8f019b4039faacb2ae0a178f4803409dfb75812b21158da59881.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 4,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 4
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [67, 66, 374, 88],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [67, 66, 376, 89],
+              "spans": [
+                {
+                  "bbox": [67, 66, 376, 89],
+                  "type": "text",
+                  "content": "品牌基本要素 / Brand Basic Elements",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 973, 205, 988],
+          "type": "footer",
+          "angle": 0,
+          "index": 5,
+          "lines": [
+            {
+              "bbox": [90, 969, 207, 990],
+              "spans": [
+                {
+                  "bbox": [90, 969, 207, 990],
+                  "type": "text",
+                  "content": "Corporate Identity",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 989, 180, 1004],
+          "type": "footer",
+          "angle": 0,
+          "index": 6,
+          "lines": [
+            {
+              "bbox": [90, 986, 184, 1005],
+              "spans": [
+                {
+                  "bbox": [90, 986, 184, 1005],
+                  "type": "text",
+                  "content": "February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 5
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [67, 124, 249, 170],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [63, 119, 253, 177],
+              "spans": [
+                {
+                  "bbox": [63, 119, 253, 177],
+                  "type": "text",
+                  "content": "安全空间",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 177, 428, 225],
+          "type": "title",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [63, 171, 433, 232],
+              "spans": [
+                {
+                  "bbox": [63, 171, 433, 232],
+                  "type": "text",
+                  "content": "与最小化比例限定",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 302, 531, 357],
+          "type": "text",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [71, 302, 533, 326],
+              "spans": [
+                {
+                  "bbox": [71, 302, 533, 326],
+                  "type": "text",
+                  "content": "在应用品牌视觉识别系统时，需严格遵守以下规范，确保",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 334, 247, 358],
+              "spans": [
+                {
+                  "bbox": [71, 334, 247, 358],
+                  "type": "text",
+                  "content": "品牌形象统一、专业。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 378, 531, 532],
+          "type": "text",
+          "angle": 0,
+          "index": 4,
+          "lines": [
+            {
+              "bbox": [71, 379, 531, 400],
+              "spans": [
+                {
+                  "bbox": [71, 379, 531, 400],
+                  "type": "text",
+                  "content": "标志使用 ：标志应用时必须保留安全空间（最小边距不小",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 413, 531, 434],
+              "spans": [
+                {
+                  "bbox": [72, 413, 531, 434],
+                  "type": "text",
+                  "content": "于标志高度的1�4），避免元素挤压；最小尺寸要求：印",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 444, 531, 468],
+              "spans": [
+                {
+                  "bbox": [72, 446, 347, 467],
+                  "type": "text",
+                  "content": "刷媒体高度≥6mm，数字媒体高度",
+                  "score": 1.0
+                },
+                {
+                  "bbox": [347, 444, 408, 468],
+                  "type": "inline_equation",
+                  "content": "2 3 5 \\mathrm { p } \\times \\mathrm { _ { \\circ } }",
+                  "score": 0.89
+                },
+                {
+                  "bbox": [410, 446, 531, 467],
+                  "type": "text",
+                  "content": "。优先使用彩色",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 479, 531, 500],
+              "spans": [
+                {
+                  "bbox": [72, 479, 531, 500],
+                  "type": "text",
+                  "content": "标识，允许单色版，但禁止在浅色或复杂背景中使用反白",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 511, 264, 532],
+              "spans": [
+                {
+                  "bbox": [71, 511, 264, 532],
+                  "type": "text",
+                  "content": "标识，以防辨识度降低。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "bbox": [721, 265, 1198, 702],
+          "blocks": [
+            {
+              "bbox": [721, 265, 1198, 702],
+              "lines": [
+                {
+                  "bbox": [721, 265, 1198, 702],
+                  "spans": [
+                    {
+                      "bbox": [721, 265, 1198, 702],
+                      "type": "image",
+                      "image_path": "9fc95ed957e000973ff488544d7562feecff53bf09445cec70d89906a4e155a4.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 5,
+              "angle": 0,
+              "type": "image_body"
+            },
+            {
+              "bbox": [723, 772, 927, 793],
+              "lines": [
+                {
+                  "bbox": [723, 772, 929, 794],
+                  "spans": [
+                    {
+                      "bbox": [723, 772, 929, 794],
+                      "type": "text",
+                      "content": "a. 品牌标志使用安全空间",
+                      "score": 1.0
+                    }
+                  ]
+                }
+              ],
+              "index": 6,
+              "angle": 0,
+              "type": "image_caption"
+            }
+          ],
+          "index": 5
+        },
+        {
+          "type": "image",
+          "bbox": [1232, 282, 1822, 716],
+          "blocks": [
+            {
+              "bbox": [1232, 282, 1822, 716],
+              "lines": [
+                {
+                  "bbox": [1232, 282, 1822, 716],
+                  "spans": [
+                    {
+                      "bbox": [1232, 282, 1822, 716],
+                      "type": "image",
+                      "image_path": "e0b9e6adc6a5ba03eecaffe5d68316547863885934180facf5302321f9f8cac0.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 7,
+              "angle": 0,
+              "type": "image_body"
+            },
+            {
+              "bbox": [1349, 771, 1797, 822],
+              "lines": [
+                {
+                  "bbox": [1349, 771, 1799, 794],
+                  "spans": [
+                    {
+                      "bbox": [1349, 771, 1799, 794],
+                      "type": "text",
+                      "content": "b. 品牌标志在印刷媒体上最小使用：高度大于等于6mm",
+                      "score": 1.0
+                    }
+                  ]
+                },
+                {
+                  "bbox": [1370, 797, 1724, 824],
+                  "spans": [
+                    {
+                      "bbox": [1370, 797, 1724, 824],
+                      "type": "text",
+                      "content": "在网络媒体上最小使用：高度大于等于35px",
+                      "score": 1.0
+                    }
+                  ]
+                }
+              ],
+              "index": 8,
+              "angle": 0,
+              "type": "image_caption"
+            }
+          ],
+          "index": 7
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [67, 66, 374, 88],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [67, 66, 376, 89],
+              "spans": [
+                {
+                  "bbox": [67, 66, 376, 89],
+                  "type": "text",
+                  "content": "品牌基本要素 / Brand Basic Elements",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 974, 205, 988],
+          "type": "footer",
+          "angle": 0,
+          "index": 9,
+          "lines": [
+            {
+              "bbox": [92, 970, 207, 990],
+              "spans": [
+                {
+                  "bbox": [92, 970, 207, 990],
+                  "type": "text",
+                  "content": "Corporate Identity",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 989, 180, 1003],
+          "type": "footer",
+          "angle": 0,
+          "index": 10,
+          "lines": [
+            {
+              "bbox": [90, 987, 182, 1004],
+              "spans": [
+                {
+                  "bbox": [90, 987, 182, 1004],
+                  "type": "text",
+                  "content": "February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 6
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [67, 124, 249, 170],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [63, 118, 255, 178],
+              "spans": [
+                {
+                  "bbox": [63, 118, 255, 178],
+                  "type": "text",
+                  "content": "使用限定",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 248, 531, 372],
+          "type": "text",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [71, 248, 531, 273],
+              "spans": [
+                {
+                  "bbox": [71, 248, 531, 273],
+                  "type": "text",
+                  "content": "规定品牌标志的使用限定（即明确标志在不同场景下的禁",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 285, 531, 305],
+              "spans": [
+                {
+                  "bbox": [72, 285, 531, 305],
+                  "type": "text",
+                  "content": "用规则、限制条件等）是品牌视觉管理的核心环节，其作",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 317, 531, 339],
+              "spans": [
+                {
+                  "bbox": [72, 317, 531, 339],
+                  "type": "text",
+                  "content": "用与方格制图的 “正向规范” 形成互补，从 “反向约束” 角",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 351, 516, 371],
+              "spans": [
+                {
+                  "bbox": [72, 351, 516, 371],
+                  "type": "text",
+                  "content": "度保障品牌标志的完整性、识别性和品牌形象的一致性。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "bbox": [721, 160, 1829, 901],
+          "blocks": [
+            {
+              "bbox": [721, 160, 1829, 901],
+              "lines": [
+                {
+                  "bbox": [721, 160, 1829, 901],
+                  "spans": [
+                    {
+                      "bbox": [721, 160, 1829, 901],
+                      "type": "image",
+                      "image_path": "1400960950aa7bf989293ddc99775df6a9a5467dede215c6fd5aa58ae7d30009.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 5,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 5
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [67, 66, 374, 88],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [67, 66, 376, 89],
+              "spans": [
+                {
+                  "bbox": [67, 66, 376, 89],
+                  "type": "text",
+                  "content": "品牌基本要素 / Brand Basic Elements",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 973, 205, 987],
+          "type": "footer",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [92, 972, 207, 989],
+              "spans": [
+                {
+                  "bbox": [92, 972, 207, 989],
+                  "type": "text",
+                  "content": "Corporate Identity",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 989, 180, 1003],
+          "type": "footer",
+          "angle": 0,
+          "index": 4,
+          "lines": [
+            {
+              "bbox": [90, 987, 182, 1004],
+              "spans": [
+                {
+                  "bbox": [90, 987, 182, 1004],
+                  "type": "text",
+                  "content": "February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 7
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [67, 123, 341, 226],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [63, 118, 343, 177],
+              "spans": [
+                {
+                  "bbox": [63, 118, 343, 177],
+                  "type": "text",
+                  "content": "品牌中文名称",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [63, 173, 253, 232],
+              "spans": [
+                {
+                  "bbox": [63, 173, 253, 232],
+                  "type": "text",
+                  "content": "方格制图",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 302, 535, 459],
+          "type": "text",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [71, 302, 533, 325],
+              "spans": [
+                {
+                  "bbox": [71, 302, 533, 325],
+                  "type": "text",
+                  "content": "方格制图通过精确的网格比例，规定标志中各元素（如线",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 335, 531, 358],
+              "spans": [
+                {
+                  "bbox": [71, 335, 531, 358],
+                  "type": "text",
+                  "content": "条、图形、文字）的尺寸、间距等参数，确保无论在任何",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 369, 531, 390],
+              "spans": [
+                {
+                  "bbox": [72, 369, 531, 390],
+                  "type": "text",
+                  "content": "场景下（如印刷、屏幕展示、实体制作），标志的形态都",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 403, 531, 424],
+              "spans": [
+                {
+                  "bbox": [72, 403, 531, 424],
+                  "type": "text",
+                  "content": "保持统一，避免因手工绘制或缩放导致的变形、比例失",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [67, 434, 105, 460],
+              "spans": [
+                {
+                  "bbox": [67, 434, 105, 460],
+                  "type": "text",
+                  "content": "调。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1238, 303, 1286, 324],
+          "type": "text",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [1236, 299, 1288, 327],
+              "spans": [
+                {
+                  "bbox": [1236, 299, 1288, 327],
+                  "type": "text",
+                  "content": "13.5a",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [906, 459, 1618, 623],
+          "type": "title",
+          "angle": 0,
+          "index": 4,
+          "lines": [
+            {
+              "bbox": [1134, 468, 1432, 559],
+              "spans": [
+                {
+                  "bbox": [1134, 468, 1432, 559],
+                  "type": "text",
+                  "content": "疏起",
+                  "score": 0.659
+                },
+                {
+                  "bbox": [1338, 501, 1361, 511],
+                  "type": "text",
+                  "content": "",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [1340, 507, 1415, 515],
+              "spans": [
+                {
+                  "bbox": [1340, 508, 1351, 515],
+                  "type": "text",
+                  "content": "一",
+                  "score": 0.651
+                },
+                {
+                  "bbox": [1407, 507, 1415, 515],
+                  "type": "text",
+                  "content": "1",
+                  "score": 0.679
+                }
+              ]
+            },
+            {
+              "bbox": [1201, 529, 1428, 599],
+              "spans": [
+                {
+                  "bbox": [1201, 556, 1215, 571],
+                  "type": "text",
+                  "content": "",
+                  "score": 1.0
+                },
+                {
+                  "bbox": [1205, 529, 1428, 599],
+                  "type": "text",
+                  "content": "",
+                  "score": 0.0
+                }
+              ]
+            },
+            {
+              "bbox": [1376, 569, 1580, 588],
+              "spans": [
+                {
+                  "bbox": [1376, 570, 1382, 575],
+                  "type": "text",
+                  "content": "",
+                  "score": 0.0
+                },
+                {
+                  "bbox": [1553, 569, 1580, 588],
+                  "type": "text",
+                  "content": "",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1752, 529, 1776, 549],
+          "type": "text",
+          "angle": 0,
+          "index": 5,
+          "lines": [
+            {
+              "bbox": [1749, 525, 1779, 551],
+              "spans": [
+                {
+                  "bbox": [1749, 525, 1779, 551],
+                  "type": "text",
+                  "content": "3a",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [67, 66, 374, 88],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [67, 66, 376, 89],
+              "spans": [
+                {
+                  "bbox": [67, 66, 376, 89],
+                  "type": "text",
+                  "content": "品牌基本要素 / Brand Basic Elements",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 973, 205, 988],
+          "type": "footer",
+          "angle": 0,
+          "index": 6,
+          "lines": [
+            {
+              "bbox": [90, 969, 207, 990],
+              "spans": [
+                {
+                  "bbox": [90, 969, 207, 990],
+                  "type": "text",
+                  "content": "Corporate Identity",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 989, 182, 1004],
+          "type": "footer",
+          "angle": 0,
+          "index": 7,
+          "lines": [
+            {
+              "bbox": [90, 987, 184, 1004],
+              "spans": [
+                {
+                  "bbox": [90, 987, 184, 1004],
+                  "type": "text",
+                  "content": "February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 8
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [67, 123, 343, 226],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [65, 118, 345, 177],
+              "spans": [
+                {
+                  "bbox": [65, 118, 345, 177],
+                  "type": "text",
+                  "content": "品牌英文名称",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [63, 174, 253, 232],
+              "spans": [
+                {
+                  "bbox": [63, 174, 253, 232],
+                  "type": "text",
+                  "content": "方格制图",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 302, 535, 459],
+          "type": "text",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [71, 302, 533, 325],
+              "spans": [
+                {
+                  "bbox": [71, 302, 533, 325],
+                  "type": "text",
+                  "content": "方格制图通过精确的网格比例，规定标志中各元素（如线",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 335, 531, 358],
+              "spans": [
+                {
+                  "bbox": [71, 335, 531, 358],
+                  "type": "text",
+                  "content": "条、图形、文字）的尺寸、间距等参数，确保无论在任何",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 369, 531, 390],
+              "spans": [
+                {
+                  "bbox": [72, 369, 531, 390],
+                  "type": "text",
+                  "content": "场景下（如印刷、屏幕展示、实体制作），标志的形态都",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 403, 531, 424],
+              "spans": [
+                {
+                  "bbox": [72, 403, 531, 424],
+                  "type": "text",
+                  "content": "保持统一，避免因手工绘制或缩放导致的变形、比例失",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [67, 434, 105, 460],
+              "spans": [
+                {
+                  "bbox": [67, 434, 105, 460],
+                  "type": "text",
+                  "content": "调。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "bbox": [894, 328, 1716, 698],
+          "blocks": [
+            {
+              "bbox": [894, 328, 1716, 698],
+              "lines": [
+                {
+                  "bbox": [894, 328, 1716, 698],
+                  "spans": [
+                    {
+                      "bbox": [894, 328, 1716, 698],
+                      "type": "image",
+                      "image_path": "a90262b79fb0870a604b0979cf108b91e2ab6da3dc5f6157a9ca4c86af57b2a1.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 4,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 4
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [67, 66, 374, 88],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [67, 66, 376, 89],
+              "spans": [
+                {
+                  "bbox": [67, 66, 376, 89],
+                  "type": "text",
+                  "content": "品牌基本要素 / Brand Basic Elements",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 973, 207, 1004],
+          "type": "footer",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [92, 973, 207, 990],
+              "spans": [
+                {
+                  "bbox": [92, 973, 207, 990],
+                  "type": "text",
+                  "content": "Corporate Identity",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [90, 987, 182, 1004],
+              "spans": [
+                {
+                  "bbox": [90, 987, 182, 1004],
+                  "type": "text",
+                  "content": "February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 9
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [65, 123, 385, 225],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [63, 118, 389, 177],
+              "spans": [
+                {
+                  "bbox": [63, 118, 389, 177],
+                  "type": "text",
+                  "content": "品牌中英文组合",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [63, 174, 251, 230],
+              "spans": [
+                {
+                  "bbox": [63, 174, 251, 230],
+                  "type": "text",
+                  "content": "方格制图",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 302, 535, 459],
+          "type": "text",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [71, 302, 533, 325],
+              "spans": [
+                {
+                  "bbox": [71, 302, 533, 325],
+                  "type": "text",
+                  "content": "方格制图通过精确的网格比例，规定标志中各元素（如线",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 335, 531, 358],
+              "spans": [
+                {
+                  "bbox": [71, 335, 531, 358],
+                  "type": "text",
+                  "content": "条、图形、文字）的尺寸、间距等参数，确保无论在任何",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 369, 531, 390],
+              "spans": [
+                {
+                  "bbox": [72, 369, 531, 390],
+                  "type": "text",
+                  "content": "场景下（如印刷、屏幕展示、实体制作），标志的形态都",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 403, 531, 424],
+              "spans": [
+                {
+                  "bbox": [72, 403, 531, 424],
+                  "type": "text",
+                  "content": "保持统一，避免因手工绘制或缩放导致的变形、比例失",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [67, 434, 105, 460],
+              "spans": [
+                {
+                  "bbox": [67, 434, 105, 460],
+                  "type": "text",
+                  "content": "调。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1248, 225, 1294, 246],
+          "type": "text",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [1246, 222, 1297, 248],
+              "spans": [
+                {
+                  "bbox": [1246, 222, 1297, 248],
+                  "type": "text",
+                  "content": "13.5a",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "bbox": [768, 274, 1785, 860],
+          "blocks": [
+            {
+              "bbox": [768, 274, 1785, 860],
+              "lines": [
+                {
+                  "bbox": [768, 274, 1785, 860],
+                  "spans": [
+                    {
+                      "bbox": [768, 274, 1785, 860],
+                      "type": "image",
+                      "image_path": "d630c610531f86547ebfd99398095fc12251d50534ca99920c65efe36a9c77ed.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 4,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 4
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [67, 66, 374, 88],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [67, 66, 376, 89],
+              "spans": [
+                {
+                  "bbox": [67, 66, 376, 89],
+                  "type": "text",
+                  "content": "品牌基本要素 / Brand Basic Elements",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 973, 207, 989],
+          "type": "footer",
+          "angle": 0,
+          "index": 5,
+          "lines": [
+            {
+              "bbox": [90, 969, 207, 991],
+              "spans": [
+                {
+                  "bbox": [90, 969, 207, 991],
+                  "type": "text",
+                  "content": "Corporate Identity",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 989, 182, 1004],
+          "type": "footer",
+          "angle": 0,
+          "index": 6,
+          "lines": [
+            {
+              "bbox": [90, 987, 184, 1004],
+              "spans": [
+                {
+                  "bbox": [90, 987, 184, 1004],
+                  "type": "text",
+                  "content": "February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 10
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 123, 430, 172],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [67, 118, 433, 176],
+              "spans": [
+                {
+                  "bbox": [67, 118, 433, 176],
+                  "type": "text",
+                  "content": "品牌标准中文字体",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 248, 531, 305],
+          "type": "text",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [71, 249, 528, 273],
+              "spans": [
+                {
+                  "bbox": [71, 249, 528, 273],
+                  "type": "text",
+                  "content": "为使视觉形象更加统一，企业对内办公、传播文件等在一",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 284, 355, 306],
+              "spans": [
+                {
+                  "bbox": [71, 284, 355, 306],
+                  "type": "text",
+                  "content": "般情况下应用本章规定的专用字体。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 326, 531, 383],
+          "type": "text",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [69, 325, 531, 351],
+              "spans": [
+                {
+                  "bbox": [69, 325, 531, 351],
+                  "type": "text",
+                  "content": "在一般情况下使用品牌标识，应尽量使用提供的电子文",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [69, 358, 481, 384],
+              "spans": [
+                {
+                  "bbox": [69, 358, 481, 384],
+                  "type": "text",
+                  "content": "件，不建议重绘标识。尽量避免在重绘中出现误差。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [714, 152, 1520, 224],
+          "type": "text",
+          "angle": 0,
+          "index": 4,
+          "lines": [
+            {
+              "bbox": [716, 151, 1524, 230],
+              "spans": [
+                {
+                  "bbox": [716, 151, 1524, 230],
+                  "type": "text",
+                  "content": "无锡云毓智能科技有限公司",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1680, 157, 1825, 184],
+          "type": "text",
+          "angle": 0,
+          "index": 5,
+          "lines": [
+            {
+              "bbox": [1678, 155, 1829, 185],
+              "spans": [
+                {
+                  "bbox": [1678, 155, 1829, 185],
+                  "type": "text",
+                  "content": "vivo Sans Light",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [716, 314, 1520, 386],
+          "type": "text",
+          "angle": 0,
+          "index": 6,
+          "lines": [
+            {
+              "bbox": [716, 312, 1524, 394],
+              "spans": [
+                {
+                  "bbox": [716, 312, 1524, 394],
+                  "type": "text",
+                  "content": "无锡云毓智能科技有限公司",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1658, 320, 1824, 345],
+          "type": "text",
+          "angle": 0,
+          "index": 7,
+          "lines": [
+            {
+              "bbox": [1656, 318, 1827, 346],
+              "spans": [
+                {
+                  "bbox": [1656, 318, 1827, 346],
+                  "type": "text",
+                  "content": "vivo Sans Regular",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [716, 476, 1520, 547],
+          "type": "text",
+          "angle": 0,
+          "index": 8,
+          "lines": [
+            {
+              "bbox": [716, 474, 1524, 552],
+              "spans": [
+                {
+                  "bbox": [716, 474, 1524, 552],
+                  "type": "text",
+                  "content": "无锡云毓智能科技有限公司",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1653, 481, 1824, 505],
+          "type": "text",
+          "angle": 0,
+          "index": 9,
+          "lines": [
+            {
+              "bbox": [1653, 480, 1827, 507],
+              "spans": [
+                {
+                  "bbox": [1653, 480, 1827, 507],
+                  "type": "text",
+                  "content": "vivo Sans Medium",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [716, 639, 1520, 710],
+          "type": "text",
+          "angle": 0,
+          "index": 10,
+          "lines": [
+            {
+              "bbox": [716, 637, 1524, 716],
+              "spans": [
+                {
+                  "bbox": [716, 637, 1524, 716],
+                  "type": "text",
+                  "content": "无锡云毓智能科技有限公司",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1641, 643, 1825, 667],
+          "type": "text",
+          "angle": 0,
+          "index": 11,
+          "lines": [
+            {
+              "bbox": [1639, 642, 1827, 668],
+              "spans": [
+                {
+                  "bbox": [1639, 642, 1827, 668],
+                  "type": "text",
+                  "content": "vivo Sans DemiBold",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [716, 801, 1520, 873],
+          "type": "text",
+          "angle": 0,
+          "index": 12,
+          "lines": [
+            {
+              "bbox": [716, 800, 1524, 882],
+              "spans": [
+                {
+                  "bbox": [716, 800, 1524, 882],
+                  "type": "text",
+                  "content": "无锡云毓智能科技有限公司",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1687, 805, 1825, 829],
+          "type": "text",
+          "angle": 0,
+          "index": 13,
+          "lines": [
+            {
+              "bbox": [1685, 804, 1827, 830],
+              "spans": [
+                {
+                  "bbox": [1685, 804, 1827, 830],
+                  "type": "text",
+                  "content": "vivo Sans Bold",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [67, 66, 374, 88],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [67, 66, 376, 89],
+              "spans": [
+                {
+                  "bbox": [67, 66, 376, 89],
+                  "type": "text",
+                  "content": "品牌基本要素 / Brand Basic Elements",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 973, 205, 989],
+          "type": "footer",
+          "angle": 0,
+          "index": 14,
+          "lines": [
+            {
+              "bbox": [92, 969, 207, 991],
+              "spans": [
+                {
+                  "bbox": [92, 969, 207, 991],
+                  "type": "text",
+                  "content": "Corporate Identity",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 989, 182, 1004],
+          "type": "footer",
+          "angle": 0,
+          "index": 15,
+          "lines": [
+            {
+              "bbox": [90, 987, 184, 1004],
+              "spans": [
+                {
+                  "bbox": [90, 987, 184, 1004],
+                  "type": "text",
+                  "content": "February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 11
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 123, 430, 171],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [65, 117, 433, 177],
+              "spans": [
+                {
+                  "bbox": [65, 117, 433, 177],
+                  "type": "text",
+                  "content": "品牌标准英文字体",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 248, 531, 305],
+          "type": "text",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [71, 249, 528, 273],
+              "spans": [
+                {
+                  "bbox": [71, 249, 528, 273],
+                  "type": "text",
+                  "content": "为使视觉形象更加统一，企业对内办公、传播文件等在一",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 282, 355, 305],
+              "spans": [
+                {
+                  "bbox": [71, 282, 355, 305],
+                  "type": "text",
+                  "content": "般情况下应用本章规定的专用字体。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 326, 531, 383],
+          "type": "text",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [69, 325, 531, 351],
+              "spans": [
+                {
+                  "bbox": [69, 325, 531, 351],
+                  "type": "text",
+                  "content": "在一般情况下使用品牌标识，应尽量使用提供的电子文",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [69, 358, 481, 384],
+              "spans": [
+                {
+                  "bbox": [69, 358, 481, 384],
+                  "type": "text",
+                  "content": "件，不建议重绘标识。尽量避免在重绘中出现误差。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [683, 169, 839, 200],
+          "type": "text",
+          "angle": 0,
+          "index": 4,
+          "lines": [
+            {
+              "bbox": [681, 170, 840, 203],
+              "spans": [
+                {
+                  "bbox": [681, 170, 840, 203],
+                  "type": "text",
+                  "content": "Poppins Regular",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1009, 163, 1825, 335],
+          "type": "text",
+          "angle": 0,
+          "index": 5,
+          "lines": [
+            {
+              "bbox": [1009, 162, 1827, 216],
+              "spans": [
+                {
+                  "bbox": [1009, 162, 1827, 216],
+                  "type": "text",
+                  "content": "ABCDEFGHI JKLMNOPQRSTUVWXYZ",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [1006, 216, 1726, 285],
+              "spans": [
+                {
+                  "bbox": [1006, 216, 1726, 285],
+                  "type": "text",
+                  "content": "abcdefghijklmnopqrstuvwxyz",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [1002, 270, 1651, 340],
+              "spans": [
+                {
+                  "bbox": [1002, 270, 1651, 340],
+                  "type": "text",
+                  "content": "1234567890 # $ @%&,.-+()",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [683, 447, 842, 473],
+          "type": "text",
+          "angle": 0,
+          "index": 6,
+          "lines": [
+            {
+              "bbox": [681, 446, 846, 473],
+              "spans": [
+                {
+                  "bbox": [681, 446, 846, 473],
+                  "type": "text",
+                  "content": "Poppins Medium",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1009, 436, 1845, 608],
+          "type": "text",
+          "angle": 0,
+          "index": 7,
+          "lines": [
+            {
+              "bbox": [1009, 434, 1847, 487],
+              "spans": [
+                {
+                  "bbox": [1009, 434, 1847, 487],
+                  "type": "text",
+                  "content": "ABCDEFGHI JKLMNOPQRSTUVWXYZ",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [1006, 488, 1735, 555],
+              "spans": [
+                {
+                  "bbox": [1006, 488, 1735, 555],
+                  "type": "text",
+                  "content": "abcdefghijklmnopqrstuvwxyz",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [1002, 540, 1672, 612],
+              "spans": [
+                {
+                  "bbox": [1002, 540, 1672, 612],
+                  "type": "text",
+                  "content": "1234567890 # $ @%&,.-+()",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [683, 718, 850, 745],
+          "type": "text",
+          "angle": 0,
+          "index": 8,
+          "lines": [
+            {
+              "bbox": [681, 717, 850, 745],
+              "spans": [
+                {
+                  "bbox": [681, 717, 850, 745],
+                  "type": "text",
+                  "content": "Poppins SemiBold",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1008, 707, 1860, 880],
+          "type": "text",
+          "angle": 0,
+          "index": 9,
+          "lines": [
+            {
+              "bbox": [1009, 706, 1862, 759],
+              "spans": [
+                {
+                  "bbox": [1009, 706, 1862, 759],
+                  "type": "text",
+                  "content": "ABCDEFGHI JKLMNOPQRSTUVWXYZ",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [1006, 760, 1751, 828],
+              "spans": [
+                {
+                  "bbox": [1006, 760, 1751, 828],
+                  "type": "text",
+                  "content": "abcdefghijklmnopqrstuvwxyz",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [1000, 812, 1676, 884],
+              "spans": [
+                {
+                  "bbox": [1000, 812, 1676, 884],
+                  "type": "text",
+                  "content": "1234567890 # $ @%&,.-+()",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [67, 66, 374, 88],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [67, 66, 376, 89],
+              "spans": [
+                {
+                  "bbox": [67, 66, 376, 89],
+                  "type": "text",
+                  "content": "品牌基本要素 / Brand Basic Elements",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 973, 205, 1003],
+          "type": "footer",
+          "angle": 0,
+          "index": 10,
+          "lines": [
+            {
+              "bbox": [92, 973, 207, 990],
+              "spans": [
+                {
+                  "bbox": [92, 973, 207, 990],
+                  "type": "text",
+                  "content": "Corporate Identity",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [92, 988, 182, 1004],
+              "spans": [
+                {
+                  "bbox": [92, 988, 182, 1004],
+                  "type": "text",
+                  "content": "February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 12
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 124, 430, 171],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [65, 118, 433, 177],
+              "spans": [
+                {
+                  "bbox": [65, 118, 433, 177],
+                  "type": "text",
+                  "content": "品牌标准色及色阶",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 249, 535, 421],
+          "type": "text",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [71, 249, 533, 270],
+              "spans": [
+                {
+                  "bbox": [71, 249, 533, 270],
+                  "type": "text",
+                  "content": "云毓蓝品牌的核心标准色。蓝色象征科技与信任，契合云毓智能",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 280, 528, 301],
+              "spans": [
+                {
+                  "bbox": [72, 280, 528, 301],
+                  "type": "text",
+                  "content": "在AI-SaaS与云端数据智能领域的专业定位。“云”代表云端平台，",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 309, 531, 330],
+              "spans": [
+                {
+                  "bbox": [72, 309, 531, 330],
+                  "type": "text",
+                  "content": "“毓”寓意孕育与转化。这一色彩诠释了我们致力于将分散数据在",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 340, 531, 360],
+              "spans": [
+                {
+                  "bbox": [72, 340, 531, 360],
+                  "type": "text",
+                  "content": "云端整合、处理，并转化为有价值产品与服务的使命。它体现了",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 370, 531, 390],
+              "spans": [
+                {
+                  "bbox": [72, 370, 531, 390],
+                  "type": "text",
+                  "content": "创新、可靠与无限潜力，传递出公司在智能科技领域的前瞻性与",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 399, 149, 421],
+              "spans": [
+                {
+                  "bbox": [71, 399, 149, 421],
+                  "type": "text",
+                  "content": "突破精神。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [879, 237, 1002, 280],
+          "type": "title",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [875, 234, 1009, 287],
+              "spans": [
+                {
+                  "bbox": [875, 234, 1009, 287],
+                  "type": "text",
+                  "content": "云毓蓝",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [881, 294, 983, 314],
+          "type": "text",
+          "angle": 0,
+          "index": 4,
+          "lines": [
+            {
+              "bbox": [877, 290, 986, 318],
+              "spans": [
+                {
+                  "bbox": [877, 290, 986, 318],
+                  "type": "text",
+                  "content": "Nebutra Blue",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [881, 387, 929, 407],
+          "type": "text",
+          "angle": 0,
+          "index": 5,
+          "lines": [
+            {
+              "bbox": [877, 383, 933, 410],
+              "spans": [
+                {
+                  "bbox": [877, 383, 933, 410],
+                  "type": "text",
+                  "content": "HTML",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [881, 419, 952, 436],
+          "type": "text",
+          "angle": 0,
+          "index": 6,
+          "lines": [
+            {
+              "bbox": [879, 414, 954, 439],
+              "spans": [
+                {
+                  "bbox": [879, 414, 954, 439],
+                  "type": "text",
+                  "content": "#0033FE",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [881, 477, 917, 496],
+          "type": "text",
+          "angle": 0,
+          "index": 7,
+          "lines": [
+            {
+              "bbox": [879, 475, 919, 498],
+              "spans": [
+                {
+                  "bbox": [879, 475, 919, 498],
+                  "type": "text",
+                  "content": "RGB",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [881, 507, 958, 527],
+          "type": "text",
+          "angle": 0,
+          "index": 8,
+          "lines": [
+            {
+              "bbox": [879, 503, 960, 530],
+              "spans": [
+                {
+                  "bbox": [879, 503, 960, 530],
+                  "type": "text",
+                  "content": "0 51 254",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [67, 66, 374, 88],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [67, 66, 376, 89],
+              "spans": [
+                {
+                  "bbox": [67, 66, 376, 89],
+                  "type": "text",
+                  "content": "品牌基本要素 / Brand Basic Elements",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 974, 205, 988],
+          "type": "footer",
+          "angle": 0,
+          "index": 9,
+          "lines": [
+            {
+              "bbox": [92, 970, 207, 990],
+              "spans": [
+                {
+                  "bbox": [92, 970, 207, 990],
+                  "type": "text",
+                  "content": "Corporate Identity",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 989, 182, 1004],
+          "type": "footer",
+          "angle": 0,
+          "index": 10,
+          "lines": [
+            {
+              "bbox": [90, 987, 184, 1004],
+              "spans": [
+                {
+                  "bbox": [90, 987, 184, 1004],
+                  "type": "text",
+                  "content": "February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 13
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [69, 123, 430, 171],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [65, 116, 435, 178],
+              "spans": [
+                {
+                  "bbox": [65, 116, 435, 178],
+                  "type": "text",
+                  "content": "品牌辅助色及色阶",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 249, 531, 359],
+          "type": "text",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [71, 248, 531, 271],
+              "spans": [
+                {
+                  "bbox": [71, 248, 531, 271],
+                  "type": "text",
+                  "content": "品牌主要辅助色定义为“云毓青”。它源于数据流动与智能交互的",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 281, 531, 300],
+              "spans": [
+                {
+                  "bbox": [72, 281, 531, 300],
+                  "type": "text",
+                  "content": "瞬间，青色的通透感象征着信息的清晰与算法的灵动。这一色彩",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 309, 531, 331],
+              "spans": [
+                {
+                  "bbox": [72, 309, 531, 331],
+                  "type": "text",
+                  "content": "代表了云毓智能在整合与处理数据过程中的高效与精准，体现了",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 340, 324, 360],
+              "spans": [
+                {
+                  "bbox": [71, 340, 324, 360],
+                  "type": "text",
+                  "content": "从原始数据到智慧产品的转化路径。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 379, 531, 461],
+          "type": "text",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [72, 380, 531, 400],
+              "spans": [
+                {
+                  "bbox": [72, 380, 531, 400],
+                  "type": "text",
+                  "content": "它与主色云毓蓝相辅相成，共同构建出我们可靠而不失创新、专",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 411, 531, 430],
+              "spans": [
+                {
+                  "bbox": [72, 411, 531, 430],
+                  "type": "text",
+                  "content": "业而充满活力的品牌形象，展现了智能科技与自然生机融合的未",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [69, 439, 117, 463],
+              "spans": [
+                {
+                  "bbox": [69, 439, 117, 463],
+                  "type": "text",
+                  "content": "来感。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [775, 238, 894, 280],
+          "type": "title",
+          "angle": 0,
+          "index": 4,
+          "lines": [
+            {
+              "bbox": [769, 231, 904, 289],
+              "spans": [
+                {
+                  "bbox": [769, 231, 904, 289],
+                  "type": "text",
+                  "content": "云毓青",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [777, 294, 883, 314],
+          "type": "text",
+          "angle": 0,
+          "index": 5,
+          "lines": [
+            {
+              "bbox": [773, 291, 887, 317],
+              "spans": [
+                {
+                  "bbox": [773, 291, 887, 317],
+                  "type": "text",
+                  "content": "Nebutra Cyan",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [777, 387, 825, 407],
+          "type": "text",
+          "angle": 0,
+          "index": 6,
+          "lines": [
+            {
+              "bbox": [775, 385, 827, 409],
+              "spans": [
+                {
+                  "bbox": [775, 385, 827, 409],
+                  "type": "text",
+                  "content": "HTML",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [777, 419, 848, 437],
+          "type": "text",
+          "angle": 0,
+          "index": 7,
+          "lines": [
+            {
+              "bbox": [775, 415, 850, 440],
+              "spans": [
+                {
+                  "bbox": [775, 415, 850, 440],
+                  "type": "text",
+                  "content": "#0BF1C3",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [777, 477, 814, 496],
+          "type": "text",
+          "angle": 0,
+          "index": 8,
+          "lines": [
+            {
+              "bbox": [773, 474, 817, 498],
+              "spans": [
+                {
+                  "bbox": [773, 474, 817, 498],
+                  "type": "text",
+                  "content": "RGB",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [777, 508, 864, 525],
+          "type": "text",
+          "angle": 0,
+          "index": 9,
+          "lines": [
+            {
+              "bbox": [775, 506, 865, 527],
+              "spans": [
+                {
+                  "bbox": [775, 506, 865, 527],
+                  "type": "text",
+                  "content": "11 241 195",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1507, 96, 1543, 137],
+          "type": "title",
+          "angle": 0,
+          "index": 12,
+          "lines": [
+            {
+              "bbox": [1514, 108, 1539, 132],
+              "spans": [
+                {
+                  "bbox": [1514, 108, 1539, 132],
+                  "type": "text",
+                  "content": "白",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1507, 152, 1555, 169],
+          "type": "text",
+          "angle": 0,
+          "index": 13,
+          "lines": [
+            {
+              "bbox": [1507, 150, 1557, 173],
+              "spans": [
+                {
+                  "bbox": [1507, 150, 1557, 173],
+                  "type": "text",
+                  "content": "White",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1507, 245, 1555, 263],
+          "type": "text",
+          "angle": 0,
+          "index": 14,
+          "lines": [
+            {
+              "bbox": [1507, 246, 1557, 266],
+              "spans": [
+                {
+                  "bbox": [1507, 246, 1557, 266],
+                  "type": "text",
+                  "content": "HTML",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1507, 274, 1574, 292],
+          "type": "text",
+          "angle": 0,
+          "index": 15,
+          "lines": [
+            {
+              "bbox": [1507, 275, 1574, 292],
+              "spans": [
+                {
+                  "bbox": [1507, 275, 1574, 292],
+                  "type": "text",
+                  "content": "#FFFFFF",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1507, 334, 1543, 353],
+          "type": "text",
+          "angle": 0,
+          "index": 16,
+          "lines": [
+            {
+              "bbox": [1507, 334, 1545, 356],
+              "spans": [
+                {
+                  "bbox": [1507, 334, 1545, 356],
+                  "type": "text",
+                  "content": "RGB",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1507, 365, 1612, 384],
+          "type": "text",
+          "angle": 0,
+          "index": 17,
+          "lines": [
+            {
+              "bbox": [1507, 363, 1612, 386],
+              "spans": [
+                {
+                  "bbox": [1507, 363, 1612, 386],
+                  "type": "text",
+                  "content": "255 255 255",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1507, 637, 1545, 677],
+          "type": "title",
+          "angle": 0,
+          "index": 18,
+          "lines": [
+            {
+              "bbox": [1501, 631, 1553, 684],
+              "spans": [
+                {
+                  "bbox": [1501, 631, 1553, 684],
+                  "type": "text",
+                  "content": "黑",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1507, 692, 1549, 710],
+          "type": "text",
+          "angle": 0,
+          "index": 19,
+          "lines": [
+            {
+              "bbox": [1505, 690, 1551, 712],
+              "spans": [
+                {
+                  "bbox": [1505, 690, 1551, 712],
+                  "type": "text",
+                  "content": "Black",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1507, 785, 1555, 803],
+          "type": "text",
+          "angle": 0,
+          "index": 20,
+          "lines": [
+            {
+              "bbox": [1503, 783, 1557, 805],
+              "spans": [
+                {
+                  "bbox": [1503, 783, 1557, 805],
+                  "type": "text",
+                  "content": "HTML",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1507, 815, 1582, 833],
+          "type": "text",
+          "angle": 0,
+          "index": 21,
+          "lines": [
+            {
+              "bbox": [1505, 812, 1584, 837],
+              "spans": [
+                {
+                  "bbox": [1505, 812, 1584, 837],
+                  "type": "text",
+                  "content": "#000000",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1507, 874, 1543, 894],
+          "type": "text",
+          "angle": 0,
+          "index": 22,
+          "lines": [
+            {
+              "bbox": [1505, 871, 1547, 896],
+              "spans": [
+                {
+                  "bbox": [1505, 871, 1547, 896],
+                  "type": "text",
+                  "content": "RGB",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1507, 906, 1559, 924],
+          "type": "text",
+          "angle": 0,
+          "index": 23,
+          "lines": [
+            {
+              "bbox": [1503, 901, 1560, 926],
+              "spans": [
+                {
+                  "bbox": [1503, 901, 1560, 926],
+                  "type": "text",
+                  "content": "0 0 0",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [67, 66, 374, 88],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [67, 66, 376, 89],
+              "spans": [
+                {
+                  "bbox": [67, 66, 376, 89],
+                  "type": "text",
+                  "content": "品牌基本要素 / Brand Basic Elements",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 973, 205, 988],
+          "type": "footer",
+          "angle": 0,
+          "index": 10,
+          "lines": [
+            {
+              "bbox": [90, 969, 207, 990],
+              "spans": [
+                {
+                  "bbox": [90, 969, 207, 990],
+                  "type": "text",
+                  "content": "Corporate Identity",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 989, 182, 1004],
+          "type": "footer",
+          "angle": 0,
+          "index": 11,
+          "lines": [
+            {
+              "bbox": [90, 987, 184, 1004],
+              "spans": [
+                {
+                  "bbox": [90, 987, 184, 1004],
+                  "type": "text",
+                  "content": "February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 14
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [67, 124, 339, 170],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [63, 119, 343, 177],
+              "spans": [
+                {
+                  "bbox": [63, 119, 343, 177],
+                  "type": "text",
+                  "content": "色彩禁用示例",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 250, 531, 301],
+          "type": "text",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [71, 249, 531, 270],
+              "spans": [
+                {
+                  "bbox": [71, 249, 531, 270],
+                  "type": "text",
+                  "content": "为了使品牌标准色彩在未来的传播中更加科学有效，我们设置标",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 280, 259, 301],
+              "spans": [
+                {
+                  "bbox": [71, 280, 259, 301],
+                  "type": "text",
+                  "content": "准色和辅助色的使用规范。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 319, 531, 371],
+          "type": "text",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [71, 319, 533, 340],
+              "spans": [
+                {
+                  "bbox": [71, 319, 533, 340],
+                  "type": "text",
+                  "content": "禁用高饱和度背景与颜色重叠，避免颜色过于刺眼，影响品牌形",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 351, 466, 370],
+              "spans": [
+                {
+                  "bbox": [71, 351, 466, 370],
+                  "type": "text",
+                  "content": "象；禁用明度过高的重叠颜色，避免影响内容的识别性。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [700, 204, 777, 226],
+          "type": "title",
+          "angle": 0,
+          "index": 4,
+          "lines": [
+            {
+              "bbox": [700, 201, 777, 228],
+              "spans": [
+                {
+                  "bbox": [700, 201, 777, 228],
+                  "type": "text",
+                  "content": "允许使用",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "bbox": [840, 440, 885, 471],
+          "blocks": [
+            {
+              "bbox": [840, 440, 885, 471],
+              "lines": [
+                {
+                  "bbox": [840, 440, 885, 471],
+                  "spans": [
+                    {
+                      "bbox": [840, 440, 885, 471],
+                      "type": "image",
+                      "image_path": "9421a2507165ff7978e8e79828b17e883a7a7eded4c175d4dc3d30c9b95c9759.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 5,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [718, 617, 810, 635],
+          "type": "text",
+          "angle": 0,
+          "index": 6,
+          "lines": [
+            {
+              "bbox": [716, 614, 814, 638],
+              "spans": [
+                {
+                  "bbox": [716, 614, 814, 638],
+                  "type": "text",
+                  "content": "WE NEVER",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [720, 637, 768, 654],
+          "type": "text",
+          "angle": 0,
+          "index": 7,
+          "lines": [
+            {
+              "bbox": [716, 633, 771, 657],
+              "spans": [
+                {
+                  "bbox": [716, 633, 771, 657],
+                  "type": "text",
+                  "content": "STOP",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [720, 658, 856, 676],
+          "type": "text",
+          "angle": 0,
+          "index": 8,
+          "lines": [
+            {
+              "bbox": [716, 656, 858, 677],
+              "spans": [
+                {
+                  "bbox": [716, 656, 858, 677],
+                  "type": "text",
+                  "content": "APPROACHING",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [720, 679, 802, 696],
+          "type": "text",
+          "angle": 0,
+          "index": 9,
+          "lines": [
+            {
+              "bbox": [718, 676, 804, 698],
+              "spans": [
+                {
+                  "bbox": [718, 676, 804, 698],
+                  "type": "text",
+                  "content": "PERFECT.",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "bbox": [720, 730, 764, 773],
+          "blocks": [
+            {
+              "bbox": [720, 730, 764, 773],
+              "lines": [
+                {
+                  "bbox": [720, 730, 764, 773],
+                  "spans": [
+                    {
+                      "bbox": [720, 730, 764, 773],
+                      "type": "image",
+                      "image_path": "50ce2c3522e540e857e620ea2018b3b2557994cf6df250bc2f10f1a22df8b3d1.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 10,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [773, 733, 856, 752],
+          "type": "text",
+          "angle": 0,
+          "index": 11,
+          "lines": [
+            {
+              "bbox": [769, 730, 860, 756],
+              "spans": [
+                {
+                  "bbox": [769, 730, 860, 756],
+                  "type": "text",
+                  "content": "云毓智能",
+                  "score": 0.998
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [773, 757, 837, 772],
+          "type": "text",
+          "angle": 0,
+          "index": 12,
+          "lines": [
+            {
+              "bbox": [769, 754, 839, 774],
+              "spans": [
+                {
+                  "bbox": [769, 754, 839, 774],
+                  "type": "text",
+                  "content": " Nebutra",
+                  "score": 0.942
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1136, 204, 1213, 226],
+          "type": "title",
+          "angle": 0,
+          "index": 13,
+          "lines": [
+            {
+              "bbox": [1136, 200, 1213, 228],
+              "spans": [
+                {
+                  "bbox": [1136, 200, 1213, 228],
+                  "type": "text",
+                  "content": "禁止使用",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "bbox": [1136, 308, 1466, 795],
+          "blocks": [
+            {
+              "bbox": [1136, 308, 1466, 795],
+              "lines": [
+                {
+                  "bbox": [1136, 308, 1466, 795],
+                  "spans": [
+                    {
+                      "bbox": [1136, 308, 1466, 795],
+                      "type": "image",
+                      "image_path": "b22ddeea6bbbad31c66e7bc50dcdc620bb63ca0a3cc07af86642653285aa1427.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 14,
+              "angle": 0,
+              "type": "image_body"
+            },
+            {
+              "bbox": [1136, 819, 1367, 839],
+              "lines": [
+                {
+                  "bbox": [1136, 819, 1367, 839],
+                  "spans": [
+                    {
+                      "bbox": [1136, 819, 1155, 838],
+                      "type": "inline_equation",
+                      "content": "\\oslash",
+                      "score": 0.71
+                    },
+                    {
+                      "bbox": [1155, 820, 1367, 839],
+                      "type": "text",
+                      "content": "禁用高饱和度背景与颜色重叠",
+                      "score": 1.0
+                    }
+                  ]
+                }
+              ],
+              "index": 15,
+              "angle": 0,
+              "type": "image_caption"
+            }
+          ],
+          "index": 14
+        },
+        {
+          "type": "image",
+          "bbox": [1484, 308, 1812, 795],
+          "blocks": [
+            {
+              "bbox": [1484, 308, 1812, 795],
+              "lines": [
+                {
+                  "bbox": [1484, 308, 1812, 795],
+                  "spans": [
+                    {
+                      "bbox": [1484, 308, 1812, 795],
+                      "type": "image",
+                      "image_path": "fced1e9eec54b6589c8869769882a16375ba7912288d35b8071e5cdaa525e192.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 16,
+              "angle": 0,
+              "type": "image_body"
+            },
+            {
+              "bbox": [1484, 819, 1685, 839],
+              "lines": [
+                {
+                  "bbox": [1486, 819, 1683, 839],
+                  "spans": [
+                    {
+                      "bbox": [1486, 819, 1505, 838],
+                      "type": "inline_equation",
+                      "content": "\\cdot",
+                      "score": 0.72
+                    },
+                    {
+                      "bbox": [1505, 820, 1683, 839],
+                      "type": "text",
+                      "content": "禁用明度过高的重叠颜色",
+                      "score": 1.0
+                    }
+                  ]
+                }
+              ],
+              "index": 17,
+              "angle": 0,
+              "type": "image_caption"
+            }
+          ],
+          "index": 16
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [67, 66, 374, 88],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [67, 66, 376, 89],
+              "spans": [
+                {
+                  "bbox": [67, 66, 376, 89],
+                  "type": "text",
+                  "content": "品牌基本要素 / Brand Basic Elements",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 974, 205, 988],
+          "type": "footer",
+          "angle": 0,
+          "index": 18,
+          "lines": [
+            {
+              "bbox": [92, 970, 207, 990],
+              "spans": [
+                {
+                  "bbox": [92, 970, 207, 990],
+                  "type": "text",
+                  "content": "Corporate Identity",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 989, 180, 1003],
+          "type": "footer",
+          "angle": 0,
+          "index": 19,
+          "lines": [
+            {
+              "bbox": [90, 987, 182, 1004],
+              "spans": [
+                {
+                  "bbox": [90, 987, 182, 1004],
+                  "type": "text",
+                  "content": "February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 15
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [67, 123, 341, 172],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [63, 118, 345, 178],
+              "spans": [
+                {
+                  "bbox": [63, 118, 345, 178],
+                  "type": "text",
+                  "content": "标志左右组合",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 249, 516, 272],
+          "type": "text",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [69, 247, 518, 273],
+              "spans": [
+                {
+                  "bbox": [69, 247, 518, 273],
+                  "type": "text",
+                  "content": "标志的不同组合形式是品牌视觉系统适配多元场景的核心策略。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 289, 531, 370],
+          "type": "text",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [71, 290, 531, 309],
+              "spans": [
+                {
+                  "bbox": [71, 290, 531, 309],
+                  "type": "text",
+                  "content": "左右组合适配横向空间（如门店招牌、横幅广告），避免因空间",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 320, 531, 340],
+              "spans": [
+                {
+                  "bbox": [72, 320, 405, 340],
+                  "type": "text",
+                  "content": "限制导致标志变形或信息压缩，适合强调 “标志",
+                  "score": 1.0
+                },
+                {
+                  "bbox": [405, 322, 422, 339],
+                  "type": "inline_equation",
+                  "content": "^ +",
+                  "score": 0.81
+                },
+                {
+                  "bbox": [422, 320, 531, 340],
+                  "type": "text",
+                  "content": "品牌名” 的同等",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 351, 134, 371],
+              "spans": [
+                {
+                  "bbox": [71, 351, 134, 371],
+                  "type": "text",
+                  "content": "重要性。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 388, 531, 470],
+          "type": "text",
+          "angle": 0,
+          "index": 4,
+          "lines": [
+            {
+              "bbox": [71, 389, 531, 410],
+              "spans": [
+                {
+                  "bbox": [71, 389, 531, 410],
+                  "type": "text",
+                  "content": "强化应用灵活性：不同组合形式能应对印刷、屏幕、实体物料等",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 422, 531, 440],
+              "spans": [
+                {
+                  "bbox": [72, 422, 531, 440],
+                  "type": "text",
+                  "content": "多样载体，确保在包装、工牌、社交媒体等场景中，标志始终清",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 452, 259, 469],
+              "spans": [
+                {
+                  "bbox": [72, 452, 259, 469],
+                  "type": "text",
+                  "content": "晰完整，维持品牌一致性。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "bbox": [687, 305, 1870, 772],
+          "blocks": [
+            {
+              "bbox": [687, 305, 1870, 772],
+              "lines": [
+                {
+                  "bbox": [687, 305, 1870, 772],
+                  "spans": [
+                    {
+                      "bbox": [687, 305, 1870, 772],
+                      "type": "image",
+                      "image_path": "a76617581d01c3589c0bf28f9aba532f817a45f71905240d3a337f692d7e87dc.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 5,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 5
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [67, 66, 374, 88],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [67, 66, 376, 89],
+              "spans": [
+                {
+                  "bbox": [67, 66, 376, 89],
+                  "type": "text",
+                  "content": "品牌基本要素 / Brand Basic Elements",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 973, 205, 988],
+          "type": "footer",
+          "angle": 0,
+          "index": 6,
+          "lines": [
+            {
+              "bbox": [90, 969, 207, 990],
+              "spans": [
+                {
+                  "bbox": [90, 969, 207, 990],
+                  "type": "text",
+                  "content": "Corporate Identity",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 989, 180, 1004],
+          "type": "footer",
+          "angle": 0,
+          "index": 7,
+          "lines": [
+            {
+              "bbox": [90, 986, 184, 1005],
+              "spans": [
+                {
+                  "bbox": [90, 986, 184, 1005],
+                  "type": "text",
+                  "content": "February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 16
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [65, 123, 341, 172],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [61, 117, 345, 177],
+              "spans": [
+                {
+                  "bbox": [61, 117, 345, 177],
+                  "type": "text",
+                  "content": "标志上下组合",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 248, 516, 272],
+          "type": "text",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [69, 248, 516, 273],
+              "spans": [
+                {
+                  "bbox": [69, 248, 516, 273],
+                  "type": "text",
+                  "content": "标志的不同组合形式是品牌视觉系统适配多元场景的核心策略。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 289, 531, 370],
+          "type": "text",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [71, 290, 531, 309],
+              "spans": [
+                {
+                  "bbox": [71, 290, 531, 309],
+                  "type": "text",
+                  "content": "左右组合适配横向空间（如门店招牌、横幅广告），避免因空间",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 320, 531, 340],
+              "spans": [
+                {
+                  "bbox": [72, 320, 405, 340],
+                  "type": "text",
+                  "content": "限制导致标志变形或信息压缩，适合强调 “标志",
+                  "score": 1.0
+                },
+                {
+                  "bbox": [405, 322, 422, 339],
+                  "type": "inline_equation",
+                  "content": "^ +",
+                  "score": 0.81
+                },
+                {
+                  "bbox": [422, 320, 531, 340],
+                  "type": "text",
+                  "content": "品牌名” 的同等",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 351, 134, 371],
+              "spans": [
+                {
+                  "bbox": [71, 351, 134, 371],
+                  "type": "text",
+                  "content": "重要性。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 388, 531, 470],
+          "type": "text",
+          "angle": 0,
+          "index": 4,
+          "lines": [
+            {
+              "bbox": [71, 389, 531, 410],
+              "spans": [
+                {
+                  "bbox": [71, 389, 531, 410],
+                  "type": "text",
+                  "content": "强化应用灵活性：不同组合形式能应对印刷、屏幕、实体物料等",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 422, 531, 440],
+              "spans": [
+                {
+                  "bbox": [72, 422, 531, 440],
+                  "type": "text",
+                  "content": "多样载体，确保在包装、工牌、社交媒体等场景中，标志始终清",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 452, 259, 469],
+              "spans": [
+                {
+                  "bbox": [72, 452, 259, 469],
+                  "type": "text",
+                  "content": "晰完整，维持品牌一致性。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "bbox": [887, 127, 1655, 951],
+          "blocks": [
+            {
+              "bbox": [887, 127, 1655, 951],
+              "lines": [
+                {
+                  "bbox": [887, 127, 1655, 951],
+                  "spans": [
+                    {
+                      "bbox": [887, 127, 1655, 951],
+                      "type": "image",
+                      "image_path": "45d02726a564281e871ce9aca0b99aac57f8be954adf8e3cab75b8e49d8d8fbb.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 7,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 7
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [67, 66, 374, 88],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [67, 66, 376, 89],
+              "spans": [
+                {
+                  "bbox": [67, 66, 376, 89],
+                  "type": "text",
+                  "content": "品牌基本要素 / Brand Basic Elements",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 973, 205, 988],
+          "type": "footer",
+          "angle": 0,
+          "index": 5,
+          "lines": [
+            {
+              "bbox": [90, 969, 207, 990],
+              "spans": [
+                {
+                  "bbox": [90, 969, 207, 990],
+                  "type": "text",
+                  "content": "Corporate Identity",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 989, 182, 1004],
+          "type": "footer",
+          "angle": 0,
+          "index": 6,
+          "lines": [
+            {
+              "bbox": [90, 987, 184, 1004],
+              "spans": [
+                {
+                  "bbox": [90, 987, 184, 1004],
+                  "type": "text",
+                  "content": "February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 17
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [65, 123, 453, 172],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [61, 117, 456, 178],
+              "spans": [
+                {
+                  "bbox": [61, 117, 456, 178],
+                  "type": "text",
+                  "content": "标志左右组合-英文",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 249, 516, 272],
+          "type": "text",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [69, 247, 518, 273],
+              "spans": [
+                {
+                  "bbox": [69, 247, 518, 273],
+                  "type": "text",
+                  "content": "标志的不同组合形式是品牌视觉系统适配多元场景的核心策略。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 289, 531, 370],
+          "type": "text",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [71, 290, 531, 309],
+              "spans": [
+                {
+                  "bbox": [71, 290, 531, 309],
+                  "type": "text",
+                  "content": "左右组合适配横向空间（如门店招牌、横幅广告），避免因空间",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 320, 531, 340],
+              "spans": [
+                {
+                  "bbox": [72, 320, 405, 340],
+                  "type": "text",
+                  "content": "限制导致标志变形或信息压缩，适合强调 “标志",
+                  "score": 1.0
+                },
+                {
+                  "bbox": [405, 322, 422, 339],
+                  "type": "inline_equation",
+                  "content": "^ +",
+                  "score": 0.81
+                },
+                {
+                  "bbox": [422, 320, 531, 340],
+                  "type": "text",
+                  "content": "品牌名” 的同等",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 351, 134, 371],
+              "spans": [
+                {
+                  "bbox": [71, 351, 134, 371],
+                  "type": "text",
+                  "content": "重要性。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 388, 531, 470],
+          "type": "text",
+          "angle": 0,
+          "index": 4,
+          "lines": [
+            {
+              "bbox": [71, 389, 531, 410],
+              "spans": [
+                {
+                  "bbox": [71, 389, 531, 410],
+                  "type": "text",
+                  "content": "强化应用灵活性：不同组合形式能应对印刷、屏幕、实体物料等",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 422, 531, 440],
+              "spans": [
+                {
+                  "bbox": [72, 422, 531, 440],
+                  "type": "text",
+                  "content": "多样载体，确保在包装、工牌、社交媒体等场景中，标志始终清",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 452, 259, 469],
+              "spans": [
+                {
+                  "bbox": [72, 452, 259, 469],
+                  "type": "text",
+                  "content": "晰完整，维持品牌一致性。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "bbox": [673, 376, 1862, 698],
+          "blocks": [
+            {
+              "bbox": [673, 376, 1862, 698],
+              "lines": [
+                {
+                  "bbox": [673, 376, 1862, 698],
+                  "spans": [
+                    {
+                      "bbox": [673, 376, 1862, 698],
+                      "type": "image",
+                      "image_path": "589df059e416d6dcc1ded5286a2a765d2ff6864184b5fe80041a6d866015b170.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 5,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 5
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [67, 66, 374, 88],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [67, 66, 376, 89],
+              "spans": [
+                {
+                  "bbox": [67, 66, 376, 89],
+                  "type": "text",
+                  "content": "品牌基本要素 / Brand Basic Elements",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 973, 205, 988],
+          "type": "footer",
+          "angle": 0,
+          "index": 6,
+          "lines": [
+            {
+              "bbox": [90, 969, 207, 990],
+              "spans": [
+                {
+                  "bbox": [90, 969, 207, 990],
+                  "type": "text",
+                  "content": "Corporate Identity",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 989, 182, 1004],
+          "type": "footer",
+          "angle": 0,
+          "index": 7,
+          "lines": [
+            {
+              "bbox": [90, 987, 184, 1004],
+              "spans": [
+                {
+                  "bbox": [90, 987, 184, 1004],
+                  "type": "text",
+                  "content": "February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 18
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [65, 123, 453, 172],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [63, 118, 456, 177],
+              "spans": [
+                {
+                  "bbox": [63, 118, 456, 177],
+                  "type": "text",
+                  "content": "标志上下组合-英文",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 249, 516, 272],
+          "type": "text",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [69, 247, 518, 273],
+              "spans": [
+                {
+                  "bbox": [69, 247, 518, 273],
+                  "type": "text",
+                  "content": "标志的不同组合形式是品牌视觉系统适配多元场景的核心策略。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 289, 531, 370],
+          "type": "text",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [71, 290, 531, 309],
+              "spans": [
+                {
+                  "bbox": [71, 290, 531, 309],
+                  "type": "text",
+                  "content": "左右组合适配横向空间（如门店招牌、横幅广告），避免因空间",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 320, 531, 340],
+              "spans": [
+                {
+                  "bbox": [72, 320, 405, 340],
+                  "type": "text",
+                  "content": "限制导致标志变形或信息压缩，适合强调 “标志",
+                  "score": 1.0
+                },
+                {
+                  "bbox": [405, 322, 422, 339],
+                  "type": "inline_equation",
+                  "content": "^ +",
+                  "score": 0.81
+                },
+                {
+                  "bbox": [422, 320, 531, 340],
+                  "type": "text",
+                  "content": "品牌名” 的同等",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [71, 351, 134, 371],
+              "spans": [
+                {
+                  "bbox": [71, 351, 134, 371],
+                  "type": "text",
+                  "content": "重要性。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 389, 531, 470],
+          "type": "text",
+          "angle": 0,
+          "index": 4,
+          "lines": [
+            {
+              "bbox": [71, 389, 531, 409],
+              "spans": [
+                {
+                  "bbox": [71, 389, 531, 409],
+                  "type": "text",
+                  "content": "强化应用灵活性：不同组合形式能应对印刷、屏幕、实体物料等",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 421, 531, 440],
+              "spans": [
+                {
+                  "bbox": [72, 421, 531, 440],
+                  "type": "text",
+                  "content": "多样载体，确保在包装、工牌、社交媒体等场景中，标志始终清",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 451, 261, 470],
+              "spans": [
+                {
+                  "bbox": [72, 451, 261, 470],
+                  "type": "text",
+                  "content": "晰完整，维持品牌一致性。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "bbox": [875, 166, 1666, 911],
+          "blocks": [
+            {
+              "bbox": [875, 166, 1666, 911],
+              "lines": [
+                {
+                  "bbox": [875, 166, 1666, 911],
+                  "spans": [
+                    {
+                      "bbox": [875, 166, 1666, 911],
+                      "type": "image",
+                      "image_path": "40ab0d0269290d57ae2fc761ddbda8317e328f1efb590dc06dd875b5ee87d277.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 5,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 5
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [67, 66, 374, 88],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [67, 66, 376, 89],
+              "spans": [
+                {
+                  "bbox": [67, 66, 376, 89],
+                  "type": "text",
+                  "content": "品牌基本要素 / Brand Basic Elements",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 973, 205, 988],
+          "type": "footer",
+          "angle": 0,
+          "index": 6,
+          "lines": [
+            {
+              "bbox": [90, 969, 207, 990],
+              "spans": [
+                {
+                  "bbox": [90, 969, 207, 990],
+                  "type": "text",
+                  "content": "Corporate Identity",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 989, 182, 1004],
+          "type": "footer",
+          "angle": 0,
+          "index": 7,
+          "lines": [
+            {
+              "bbox": [90, 987, 184, 1004],
+              "spans": [
+                {
+                  "bbox": [90, 987, 184, 1004],
+                  "type": "text",
+                  "content": "February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 19
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [90, 58, 760, 304],
+          "type": "title",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [84, 56, 170, 162],
+              "spans": [
+                {
+                  "bbox": [84, 56, 170, 162],
+                  "type": "text",
+                  "content": "B",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [78, 172, 766, 312],
+              "spans": [
+                {
+                  "bbox": [78, 172, 766, 312],
+                  "type": "text",
+                  "content": "品牌标志应用",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [84, 733, 858, 968],
+          "type": "title",
+          "angle": 0,
+          "index": 3,
+          "lines": [
+            {
+              "bbox": [76, 718, 856, 869],
+              "spans": [
+                {
+                  "bbox": [76, 718, 856, 869],
+                  "type": "text",
+                  "content": "Application of",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [88, 818, 700, 995],
+              "spans": [
+                {
+                  "bbox": [88, 833, 416, 960],
+                  "type": "text",
+                  "content": "brand",
+                  "score": 1.0
+                },
+                {
+                  "bbox": [426, 818, 700, 995],
+                  "type": "text",
+                  "content": "logo",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [1624, 60, 1831, 92],
+          "type": "header",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [1626, 61, 1829, 90],
+              "spans": [
+                {
+                  "bbox": [1626, 61, 1829, 90],
+                  "type": "text",
+                  "content": "品牌视觉系统规范",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1691, 99, 1829, 126],
+          "type": "header",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [1687, 95, 1833, 128],
+              "spans": [
+                {
+                  "bbox": [1687, 95, 1833, 128],
+                  "type": "text",
+                  "content": "Visual Design",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [86, 997, 334, 1020],
+          "type": "footer",
+          "angle": 0,
+          "index": 4,
+          "lines": [
+            {
+              "bbox": [88, 996, 334, 1022],
+              "spans": [
+                {
+                  "bbox": [88, 996, 334, 1022],
+                  "type": "text",
+                  "content": "Corporate Identity February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1783, 970, 1831, 1018],
+          "type": "footer",
+          "angle": 0,
+          "index": 5,
+          "lines": []
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 20
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [67, 124, 343, 172],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [63, 120, 347, 180],
+              "spans": [
+                {
+                  "bbox": [63, 120, 347, 180],
+                  "type": "text",
+                  "content": "路演板 / 展板",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [1121, 124, 1754, 237],
+          "type": "text",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [1128, 127, 1751, 143],
+              "spans": [
+                {
+                  "bbox": [1128, 127, 1751, 143],
+                  "type": "text",
+                  "content": "品牌展板与路演板是线下活动的核心视觉载体，承担着集中传递品牌信息、吸引受众并营",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [1127, 155, 1751, 174],
+              "spans": [
+                {
+                  "bbox": [1127, 155, 1751, 174],
+                  "type": "text",
+                  "content": "造沉浸式体验的关键作用。设计上严格遵循VI标准，统一版式、色彩与字体规范，确保核",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [1127, 185, 1752, 204],
+              "spans": [
+                {
+                  "bbox": [1127, 185, 1752, 204],
+                  "type": "text",
+                  "content": "心信息远距可视、一秒读懂。规范化的展板不仅能高效塑造专业权威的品牌形象，更能成",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [1127, 216, 1522, 234],
+              "spans": [
+                {
+                  "bbox": [1127, 216, 1522, 234],
+                  "type": "text",
+                  "content": "为吸引客流、引导动线、并促成深度沟通的战略性媒介。",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "bbox": [155, 321, 1261, 874],
+          "blocks": [
+            {
+              "bbox": [155, 321, 1261, 874],
+              "lines": [
+                {
+                  "bbox": [155, 321, 1261, 874],
+                  "spans": [
+                    {
+                      "bbox": [155, 321, 1261, 874],
+                      "type": "image",
+                      "image_path": "6c8e0e385aef7b9739723e5f9c595a4ce5834760bceefeeffcc599a2370fb8fa.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 3,
+              "angle": 0,
+              "type": "image_body"
+            },
+            {
+              "bbox": [687, 900, 727, 922],
+              "lines": [
+                {
+                  "bbox": [687, 899, 731, 926],
+                  "spans": [
+                    {
+                      "bbox": [687, 899, 731, 926],
+                      "type": "text",
+                      "content": "横版",
+                      "score": 1.0
+                    }
+                  ]
+                }
+              ],
+              "index": 4,
+              "angle": 0,
+              "type": "image_caption"
+            }
+          ],
+          "index": 3
+        },
+        {
+          "type": "image",
+          "bbox": [1388, 321, 1760, 874],
+          "blocks": [
+            {
+              "bbox": [1388, 321, 1760, 874],
+              "lines": [
+                {
+                  "bbox": [1388, 321, 1760, 874],
+                  "spans": [
+                    {
+                      "bbox": [1388, 321, 1760, 874],
+                      "type": "image",
+                      "image_path": "d2b6a7f7b7c6a03bb006e904dcd10009cc329d2fa1f6bc20e5bb2ca12245f7b3.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 5,
+              "angle": 0,
+              "type": "image_body"
+            },
+            {
+              "bbox": [1555, 900, 1595, 922],
+              "lines": [
+                {
+                  "bbox": [1553, 899, 1599, 927],
+                  "spans": [
+                    {
+                      "bbox": [1553, 899, 1599, 927],
+                      "type": "text",
+                      "content": "竖版",
+                      "score": 1.0
+                    }
+                  ]
+                }
+              ],
+              "index": 6,
+              "angle": 0,
+              "type": "image_caption"
+            }
+          ],
+          "index": 5
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [67, 66, 408, 91],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [67, 63, 408, 93],
+              "spans": [
+                {
+                  "bbox": [67, 63, 408, 93],
+                  "type": "text",
+                  "content": "品牌标志应用 / Application of brand logo",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 973, 205, 988],
+          "type": "footer",
+          "angle": 0,
+          "index": 7,
+          "lines": [
+            {
+              "bbox": [90, 969, 207, 990],
+              "spans": [
+                {
+                  "bbox": [90, 969, 207, 990],
+                  "type": "text",
+                  "content": "Corporate Identity",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 989, 182, 1004],
+          "type": "footer",
+          "angle": 0,
+          "index": 8,
+          "lines": [
+            {
+              "bbox": [90, 987, 184, 1004],
+              "spans": [
+                {
+                  "bbox": [90, 987, 184, 1004],
+                  "type": "text",
+                  "content": "February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 21
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [67, 123, 385, 172],
+          "type": "title",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [63, 119, 389, 180],
+              "spans": [
+                {
+                  "bbox": [63, 119, 389, 180],
+                  "type": "text",
+                  "content": "接待台及背景墙",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [67, 248, 531, 331],
+          "type": "text",
+          "angle": 0,
+          "index": 2,
+          "lines": [
+            {
+              "bbox": [72, 250, 531, 271],
+              "spans": [
+                {
+                  "bbox": [72, 250, 531, 271],
+                  "type": "text",
+                  "content": "企业前台设计多层次的造型，整体线条与logo的设计呼应，第一",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 280, 526, 302],
+              "spans": [
+                {
+                  "bbox": [72, 280, 526, 302],
+                  "type": "text",
+                  "content": "层底板可采用纯色背景或浅色木纹效果，体现温馨与人文气息，",
+                  "score": 1.0
+                }
+              ]
+            },
+            {
+              "bbox": [72, 311, 441, 330],
+              "spans": [
+                {
+                  "bbox": [72, 311, 441, 330],
+                  "type": "text",
+                  "content": "两边增加LED的流水灯带，营造科技与未来的氛围感",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "bbox": [691, 417, 1758, 947],
+          "blocks": [
+            {
+              "bbox": [691, 417, 1758, 947],
+              "lines": [
+                {
+                  "bbox": [691, 417, 1758, 947],
+                  "spans": [
+                    {
+                      "bbox": [691, 417, 1758, 947],
+                      "type": "image",
+                      "image_path": "c9d93139c935a1a88f3572bdc06f7621e3380796239510e45e4d0cfb2667c151.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 3,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 3
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [67, 66, 408, 90],
+          "type": "header",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [67, 62, 408, 96],
+              "spans": [
+                {
+                  "bbox": [67, 62, 408, 96],
+                  "type": "text",
+                  "content": "品牌标志应用 / Application of brand logo",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 973, 207, 988],
+          "type": "footer",
+          "angle": 0,
+          "index": 4,
+          "lines": [
+            {
+              "bbox": [90, 969, 209, 990],
+              "spans": [
+                {
+                  "bbox": [90, 969, 209, 990],
+                  "type": "text",
+                  "content": "Corporate Identity",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bbox": [90, 989, 182, 1004],
+          "type": "footer",
+          "angle": 0,
+          "index": 5,
+          "lines": [
+            {
+              "bbox": [90, 987, 184, 1004],
+              "spans": [
+                {
+                  "bbox": [90, 987, 184, 1004],
+                  "type": "text",
+                  "content": "February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 22
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [92, 475, 514, 596],
+          "type": "title",
+          "angle": 0,
+          "index": 0,
+          "lines": [
+            {
+              "bbox": [163, 452, 447, 618],
+              "spans": [
+                {
+                  "bbox": [163, 452, 447, 618],
+                  "type": "text",
+                  "content": "ND",
+                  "score": 1.0
+                },
+                {
+                  "bbox": [195, 545, 228, 577],
+                  "type": "text",
+                  "content": "",
+                  "score": 0.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [90, 992, 458, 1022],
+          "type": "footer",
+          "angle": 0,
+          "index": 1,
+          "lines": [
+            {
+              "bbox": [86, 988, 462, 1023],
+              "spans": [
+                {
+                  "bbox": [86, 988, 462, 1023],
+                  "type": "text",
+                  "content": "Corporate Identity February 2026",
+                  "score": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 23
+    }
+  ],
+  "_backend": "hybrid",
+  "_ocr_enable": false,
+  "_vlm_ocr_enable": false,
+  "_version_name": "2.7.5"
+}

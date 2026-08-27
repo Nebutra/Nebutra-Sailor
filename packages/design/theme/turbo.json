@@ -1,0 +1,26 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["@nebutra/design-tokens#build", "@nebutra/tokens#build"],
+      "inputs": [
+        "$TURBO_EXTENDS$",
+        "scripts/sync-skins.mjs",
+        "scripts/sync-languages.mjs",
+        "src/languages.meta.json",
+        "../tokens/brands/**",
+        "../tokens/skins/**",
+        "../tokens/scripts/emit-skins.mjs",
+        "../tokens/scripts/emit-skins-run.ts"
+      ],
+      "outputs": [
+        "skins.css",
+        "keyframes.css",
+        "themes.css",
+        "src/languages.json",
+        "src/built-in-packages.generated.ts",
+        "dist/**"
+      ]
+    }
+  }
+}

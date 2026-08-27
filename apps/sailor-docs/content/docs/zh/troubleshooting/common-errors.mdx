@@ -1,0 +1,385 @@
+---
+title: 常见错误
+description: Nebutra-Sailor 中 12 个最常见错误的解决方案，包含完整错误信息和分步修复指南。
+---
+
+## 错误参考
+
+<AccordionGroup>
+  <Accordion title="找不到模块 '@nebutra/ui'">
+    **完整错误：**
+    ```
+    Error: Cannot find module '@nebutra/ui'
+    Require stack:
+    - apps/web/src/app/layout.tsx
+    ```
+
+    **原因：** 工作区包符号链接缺失或损坏。通常发生在首次克隆仓库后，或添加/删除包之后。
+
+    **修复：**
+
+    <Steps>
+      <Step title="安装工作区依赖">
+        ```bash
+        pnpm install
+        ```
+      </Step>
+      <Step title="验证符号链接是否存在">
+        ```bash
+        ls node_modules/@nebutra/ui
+        ```
+        若输出路径，说明符号链接存在。若输出错误，请从仓库根目录（而非应用子目录）重新运行 `pnpm install`。
+      </Step>
+      <Step title="如有必要，构建该包">
+        若符号链接存在但错误仍然出现，该包可能尚未构建：
+        ```bash
+        pnpm --filter @nebutra/ui build
+        ```
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Prisma 客户端未生成 / PrismaClientInitializationError">
+    **完整错误：**
+    ```
+    PrismaClientInitializationError: Prisma Client is not yet generated.
+    Run `prisma generate` to generate the client.
+    ```
+
+    或在 TypeScript 编译时：
+    ```
+    Type 'User' is not assignable to type 'User'.
+    ```
+
+    **原因：** Prisma 生成的客户端已过时。在拉取修改了 `packages/platform/db/prisma/schema.prisma` 的提交后会发生此情况。
+
+    **修复：**
+
+    <Steps>
+      <Step title="重新生成 Prisma 客户端">
+        ```bash
+        pnpm db:generate
+        ```
+      </Step>
+      <Step title="在编辑器中重启 TypeScript 服务器">
+        在 VS Code 中：打开命令面板 → **TypeScript: Restart TS Server**。这会清除过时的类型推断。
+      </Step>
+      <Step title="若 schema 已更改，还需运行迁移">
+        ```bash
+        pnpm db:migrate
+        ```
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="auth() 在没有 Clerk 中间件的情况下被调用">
+    **完整错误：**
+    ```
+    Error: auth() was called, but Clerk's Middleware has not been set up.
+    ```
+
+    **原因：** Next.js 16 的代理文件（`proxy.ts`）缺失、位置错误，或未正确导出 Clerk 中间件。Next.js 16+ 使用 `proxy.ts` 而非 `middleware.ts`。
+
+    **修复：**
+
+    <Steps>
+      <Step title="检查代理文件位置">
+        文件必须位于 `apps/web/src/proxy.ts`（不能在 `app/` 或 `pages/` 目录内）。Next.js 16 仅在 `src` 目录根部识别 `proxy.ts`。
+      </Step>
+      <Step title="验证导出内容">
+        ```typescript
+        import { clerkMiddleware } from "@clerk/nextjs/server";
+        export default clerkMiddleware();
+        export const config = {
+          matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+        };
+        ```
+      </Step>
+      <Step title="清除 Next.js 缓存并重启">
+        ```bash
+        rm -rf apps/web/.next && pnpm --filter @nebutra/web dev
+        ```
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="端口 5432 连接被拒绝（PostgreSQL）">
+    **完整错误：**
+    ```
+    Error: connect ECONNREFUSED 127.0.0.1:5432
+    ```
+
+    **原因：** Docker 基础设施服务未运行。
+
+    **修复：**
+
+    <Steps>
+      <Step title="启动基础设施服务">
+        ```bash
+        pnpm infra:up
+        ```
+        这会启动 PostgreSQL 16、Redis 7 和 ClickHouse 24。
+      </Step>
+      <Step title="验证 PostgreSQL 是否正在运行">
+        ```bash
+        docker ps | grep postgres
+        ```
+      </Step>
+      <Step title="检查端口冲突">
+        若其他进程正在使用 5432 端口，请停止该进程，或将 `DATABASE_URL` 改为使用不同端口，并相应更新 Docker Compose 的端口映射。
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Biome lint 错误阻塞构建">
+    **完整错误：**
+    ```
+    error[lint/...]: ...
+    Found 4 errors.
+    ```
+
+    **原因：** Biome 代码检查器发现了代码风格或正确性问题。构建流水线运行 `pnpm lint` 时，任何错误都会导致失败。
+
+    **修复：**
+
+    <Steps>
+      <Step title="自动修复大多数问题">
+        ```bash
+        pnpm lint:fix
+        ```
+        Biome 会就地自动修复格式和大多数 lint 规则。
+      </Step>
+      <Step title="查看剩余错误">
+        ```bash
+        pnpm lint
+        ```
+        无法自动修复的错误（如逻辑问题）会列出文件路径和行号。请手动修复。
+      </Step>
+    </Steps>
+
+    <Note>
+      最常见的无法自动修复的 Biome 错误是未使用的变量和 `console.log` 语句。请删除它们，或用 `@nebutra/logger` 替换。
+    </Note>
+  </Accordion>
+
+  <Accordion title="TypeScript: 类型 'X' 不可赋值给类型 'X'">
+    **完整错误：**
+    ```
+    Type 'User' is not assignable to type 'User'.
+      Types of property 'role' are incompatible.
+    ```
+
+    **原因：** 代码库的两个部分使用了不同版本的 Prisma 生成类型。这发生在 Prisma schema 已更改但客户端尚未重新生成时。
+
+    **修复：**
+
+    <Steps>
+      <Step title="重新生成 Prisma 客户端">
+        ```bash
+        pnpm db:generate
+        ```
+      </Step>
+      <Step title="运行类型检查确认">
+        ```bash
+        pnpm typecheck
+        ```
+      </Step>
+      <Step title="重启 TypeScript 语言服务器">
+        在 VS Code 中：**命令面板** → **TypeScript: Restart TS Server**。
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="STRIPE_WEBHOOK_SECRET 未设置">
+    **完整错误：**
+    ```
+    Error: [config] Missing required environment variable: STRIPE_WEBHOOK_SECRET
+    ```
+
+    **原因：** Stripe Webhook 签名密钥在环境中缺失。这是一个必填变量。
+
+    **修复：**
+
+    <Steps>
+      <Step title="从 Stripe 获取密钥">
+        在 Stripe 控制台中，打开 **Developers** → **Webhooks**。点击您的 Webhook 端点，复制**签名密钥**。它以 `whsec_` 开头。
+      </Step>
+      <Step title="添加到您的环境中">
+        ```bash .env.local
+        STRIPE_WEBHOOK_SECRET=whsec_xxx
+        ```
+      </Step>
+      <Step title="本地测试时使用 Stripe CLI">
+        ```bash
+        stripe listen --forward-to localhost:3001/api/webhooks/stripe
+        ```
+        CLI 会打印一个临时的 `whsec_` 密钥供本地使用。
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="组织无限重定向循环">
+    **症状：** 登录后，用户被无限循环重定向到 `/org-selection` 或 `/create-org`。
+
+    **原因：** Clerk 组织功能已启用（`FEATURE_TEAMS=true`），但应用中不存在 `/create-org` 路由。
+
+    **修复：**
+
+    <Steps>
+      <Step title="创建组织创建页面">
+        添加 `apps/web/src/app/(auth)/create-org/page.tsx`，使用 `@clerk/nextjs` 中的 `<CreateOrganization />` 组件。
+      </Step>
+      <Step title="或者，若不需要团队功能则禁用">
+        ```bash .env.local
+        FEATURE_TEAMS=false
+        ```
+      </Step>
+      <Step title="验证 Clerk afterCreateOrganizationUrl">
+        在您的 Clerk 控制台中，确认 **afterCreateOrganizationUrl** 已设置为有效路由（如 `/dashboard`）。
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="无法读取 cookies() 的属性（读取 'get'）">
+    **完整错误：**
+    ```
+    TypeError: Cannot read properties of undefined (reading 'get')
+    ```
+
+    **原因：** Next.js 16 的动态 API（`cookies()`、`headers()`、`searchParams`）是异步的，必须使用 `await`。同步调用返回 `undefined`。
+
+    **修复：**
+
+    <Steps>
+      <Step title="对异步请求 API 使用 await">
+        ```typescript
+        // ❌ 错误 — Next.js 16 需要 await
+        const cookieStore = cookies();
+
+        // ✅ 正确
+        const cookieStore = await cookies();
+        ```
+      </Step>
+      <Step title="将组件签名更新为 async">
+        ```typescript
+        // 使用这些 API 的页面组件必须是 async
+        export default async function Page({
+          searchParams,
+        }: {
+          searchParams: Promise<{ [key: string]: string }>;
+        }) {
+          const params = await searchParams;
+        }
+        ```
+      </Step>
+    </Steps>
+
+    <Note>
+      这是 Next.js 15 到 16 的破坏性变更。[Next.js 迁移指南](https://nextjs.org/docs/app/building-your-application/upgrading)涵盖了所有受影响的 API。
+    </Note>
+  </Accordion>
+
+  <Accordion title="Turbopack 模块解析错误 / 过时缓存">
+    **症状：** 磁盘上存在的模块抛出 `Cannot find module` 错误。错误时有时无。
+
+    **原因：** Turbopack 持久化缓存已损坏或过时。这可能发生在依赖更新、切换分支或进程异常终止之后。
+
+    **修复：**
+
+    <Steps>
+      <Step title="删除 Next.js 缓存目录">
+        ```bash
+        rm -rf apps/web/.next apps/landing/.next
+        ```
+      </Step>
+      <Step title="重启开发服务器">
+        ```bash
+        pnpm dev
+        ```
+      </Step>
+      <Step title="若问题依然存在，清除 pnpm 存储">
+        ```bash
+        pnpm store prune
+        pnpm install
+        ```
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="QStash Webhook 投递失败（404 或连接拒绝）">
+    **症状：** 通过 QStash 入队的任务从未被处理。QStash 控制台显示 `404` 或连接错误的投递失败。
+
+    **原因：** QStash 将 Webhook 投递到公开 URL。在本地开发中，`localhost` 无法从 QStash 服务器访问。
+
+    **修复：**
+
+    <Steps>
+      <Step title="使用 ngrok 暴露本地隧道">
+        ```bash
+        ngrok http 3001
+        ```
+        ngrok 会打印一个公开的 `https://xxx.ngrok-free.app` URL。
+      </Step>
+      <Step title="更新 QSTASH_CALLBACK_BASE_URL">
+        ```bash .env.local
+        QSTASH_CALLBACK_BASE_URL=https://xxx.ngrok-free.app
+        ```
+      </Step>
+      <Step title="重启 API 网关">
+        ```bash
+        pnpm --filter @nebutra/gateway dev
+        ```
+      </Step>
+    </Steps>
+
+    <Tip>
+      在生产环境中，`QSTASH_CALLBACK_BASE_URL` 应为您稳定的 API URL，例如 `https://api.nebutra.com`。
+    </Tip>
+  </Accordion>
+
+  <Accordion title="ClickHouse 连接错误（计量 / 分析）">
+    **完整错误：**
+    ```
+    Error: [metering] ClickHouse connection failed: connect ECONNREFUSED 127.0.0.1:8123
+    ```
+
+    **原因：** ClickHouse 未运行。`pnpm infra:lite` 命令仅启动 PostgreSQL——不会启动 ClickHouse。
+
+    **修复：**
+
+    <Steps>
+      <Step title="启动完整的基础设施栈">
+        ```bash
+        pnpm infra:up
+        ```
+        与 `infra:lite` 不同，`infra:up` 会启动包括 ClickHouse 24 在内的所有服务。
+      </Step>
+      <Step title="验证 ClickHouse 是否正在运行">
+        ```bash
+        curl http://localhost:8123/ping
+        # 预期响应：Ok.
+        ```
+      </Step>
+      <Step title="若不需要计量功能，可禁用它">
+        只需不设置 `CLICKHOUSE_URL`。`@nebutra/metering` 包会记录一条警告，但不会导致应用崩溃。
+      </Step>
+    </Steps>
+  </Accordion>
+</AccordionGroup>
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="故障排除概览" icon="stethoscope" href="/zh/troubleshooting/overview">
+    快速诊断清单及如何读取 Nebutra 错误信息。
+  </Card>
+  <Card title="环境变量" icon="key" href="/zh/configuration/environment-variables">
+    所有环境变量的完整参考。
+  </Card>
+  <Card title="开发环境搭建" icon="laptop-code" href="/zh/development/overview">
+    完整的本地开发环境搭建指南。
+  </Card>
+  <Card title="部署" icon="rocket" href="/zh/deployment/overview">
+    排查生产部署特有的问题。
+  </Card>
+</CardGroup>

@@ -1,0 +1,160 @@
+name: Nightly Security Scan
+
+# Runs daily dependency audit and opens a GitHub issue if new vulnerabilities
+# are found. Catches newly disclosed CVEs in code that hasn't changed.
+#
+# Schedule: 19:45 UTC daily / 03:45 Asia/Shanghai (off-hours maintenance window)
+
+on:
+  schedule:
+    - cron: "45 19 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  # ── pnpm audit ──────────────────────────────────────────────────────────────
+  npm-audit:
+    name: pnpm Dependency Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      issues: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          verify-supply-chain: "true"
+
+      - name: Run pnpm audit
+        id: audit
+        run: |
+          pnpm audit --audit-level=moderate --json > audit-report.json || true
+          VULN_COUNT=$(jq '.metadata.vulnerabilities | .moderate + .high + .critical' audit-report.json 2>/dev/null || echo 0)
+          echo "vuln_count=$VULN_COUNT" >> "$GITHUB_OUTPUT"
+          echo "Vulnerability count: $VULN_COUNT"
+
+      - name: Create issue if vulnerabilities found
+        if: steps.audit.outputs.vuln_count != '0'
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = JSON.parse(fs.readFileSync('audit-report.json', 'utf8'));
+            const meta = report.metadata?.vulnerabilities ?? {};
+            const body = [
+              '## 🔐 Nightly Security Audit — New Vulnerabilities Found',
+              '',
+              `**Date:** ${new Date().toISOString().split('T')[0]}`,
+              `**Trigger:** Scheduled nightly scan`,
+              '',
+              '### Summary',
+              '| Severity | Count |',
+              '| -------- | ----- |',
+              `| Critical | ${meta.critical ?? 0} |`,
+              `| High     | ${meta.high ?? 0} |`,
+              `| Moderate | ${meta.moderate ?? 0} |`,
+              '',
+              '### Action Required',
+              '- Run `pnpm audit` locally for full details',
+              '- Update affected packages or add overrides to root `package.json`',
+              '- Close this issue once resolved',
+              '',
+              `_This issue was automatically created by the [nightly security scan](${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID})._`,
+            ].join('\n');
+
+            // Check for existing open issue
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'security,automated',
+              state: 'open',
+            });
+
+            const existing = issues.find(i => i.title.includes('Nightly Security Audit'));
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body: `_Updated: ${new Date().toISOString().split('T')[0]}_\n\n${body}`,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `🔐 Nightly Security Audit — ${new Date().toISOString().split('T')[0]}`,
+                body,
+                labels: ['security', 'automated'],
+              });
+            }
+
+  # ── Python pip-audit ────────────────────────────────────────────────────────
+  pip-audit:
+    name: Python Dependency Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      issues: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.11"
+
+      - name: Install uv + pip-audit
+        run: |
+          pip install uv pip-audit
+
+      - name: Audit Python services
+        id: pip-audit
+        run: |
+          FAILED=0
+          for service in backends/python/*/; do
+            if [ -f "$service/pyproject.toml" ]; then
+              echo "Auditing $service..."
+              cd "$service"
+              uv pip compile pyproject.toml -o /tmp/requirements-audit.txt --quiet 2>/dev/null || true
+              if [ -f /tmp/requirements-audit.txt ]; then
+                pip-audit -r /tmp/requirements-audit.txt --format=json \
+                  --output="/tmp/audit-$(basename "$service").json" || FAILED=1
+              fi
+              cd - >/dev/null
+            fi
+          done
+          echo "failed=$FAILED" >> "$GITHUB_OUTPUT"
+
+      - name: Create issue on failure
+        if: steps.pip-audit.outputs.failed == '1'
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
+        with:
+          script: |
+            const body = [
+              '## 🐍 Python Nightly Security Audit — Vulnerabilities Found',
+              '',
+              `**Date:** ${new Date().toISOString().split('T')[0]}`,
+              '',
+              'One or more Python services have vulnerable dependencies.',
+              'Run `pip-audit` in the affected service directory for details.',
+              '',
+              `_[View workflow run](${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID})_`,
+            ].join('\n');
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🐍 Python Security Audit — ${new Date().toISOString().split('T')[0]}`,
+              body,
+              labels: ['security', 'automated', 'python'],
+            });

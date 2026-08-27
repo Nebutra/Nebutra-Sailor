@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "description-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/description-demo.tsx",
+      "content": "import { Description } from \"@nebutra/ui/primitives\";\n\nexport function DescriptionDemo() {\n  return (\n    <Description\n      title=\"Section Title\"\n      content=\"Data about this section.\"\n      tooltip=\"Additional context about what this section refers to.\"\n    />\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

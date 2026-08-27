@@ -1,0 +1,61 @@
+# ResourceQuota — caps total CPU/memory/pod count per namespace.
+# Prevents a rogue deployment from starving other services.
+#
+# Adjust values per environment via kustomize overlay patches:
+#   overlays/dev/patches/quota.yaml     → smaller limits
+#   overlays/staging/patches/quota.yaml → medium limits
+#   overlays/prod/patches/quota.yaml    → production capacity
+#
+# Baseline sized for ~10 services × 2 replicas each.
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: nebutra-quota
+  namespace: nebutra
+spec:
+  hard:
+    # Compute
+    requests.cpu: "10"        # total requested CPUs across all pods
+    requests.memory: 20Gi     # total requested memory
+    limits.cpu: "20"          # total CPU limits
+    limits.memory: 40Gi       # total memory limits
+    # Object counts — prevent API server overload
+    pods: "60"                # max pods (10 services × 2 replicas × 3 headroom)
+    services: "20"
+    persistentvolumeclaims: "10"
+    secrets: "30"
+    configmaps: "20"
+    # Prevent misconfigured HPA from spinning up hundreds of replicas
+    count/horizontalpodautoscalers.autoscaling: "15"
+---
+# LimitRange — sets default requests/limits for containers that don't specify them.
+# Without this, containers with no limits can monopolize node resources.
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: nebutra-limits
+  namespace: nebutra
+spec:
+  limits:
+    - type: Container
+      default:
+        cpu: "500m"
+        memory: 512Mi
+      defaultRequest:
+        cpu: "100m"
+        memory: 128Mi
+      max:
+        cpu: "4"
+        memory: 4Gi
+      min:
+        cpu: "50m"
+        memory: 64Mi
+    - type: Pod
+      max:
+        cpu: "8"
+        memory: 8Gi
+    - type: PersistentVolumeClaim
+      max:
+        storage: 50Gi
+      min:
+        storage: 1Gi

@@ -1,0 +1,51 @@
+services:
+  ai-origin:
+    image: ${NEBUTRA_AI_IMAGE:-ghcr.io/nebutra/nebutra-ai:latest}
+    container_name: nebutra-ai-origin
+    restart: unless-stopped
+    env_file:
+      - .env.origin
+    environment:
+      SERVICE_NAME: python-ai
+      PORT: "8000"
+      GATEWAY_SHARED_SECRET: ${GATEWAY_SHARED_SECRET:?GATEWAY_SHARED_SECRET is required}
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "${AI_ORIGIN_BIND:-127.0.0.1}:8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+  ai-worker:
+    image: ${NEBUTRA_AI_IMAGE:-ghcr.io/nebutra/nebutra-ai:latest}
+    container_name: nebutra-ai-worker
+    restart: unless-stopped
+    env_file:
+      - .env.origin
+    environment:
+      SERVICE_NAME: python-ai-worker
+    command: >-
+      sh -c 'celery -A app.workers.celery_app worker
+      --loglevel=$${CELERY_LOG_LEVEL:-info}
+      --queues=$${CELERY_QUEUES:-default,ai,document,maintenance,webhook}
+      --concurrency=$${CELERY_WORKER_CONCURRENCY:-1}
+      --prefetch-multiplier=$${CELERY_PREFETCH_MULTIPLIER:-1}'
+    depends_on:
+      ai-origin:
+        condition: service_healthy
+  ai-beat:
+    image: ${NEBUTRA_AI_IMAGE:-ghcr.io/nebutra/nebutra-ai:latest}
+    container_name: nebutra-ai-beat
+    restart: unless-stopped
+    profiles:
+      - beat
+    env_file:
+      - .env.origin
+    environment:
+      SERVICE_NAME: python-ai-beat
+    command: sh -c 'celery -A app.workers.celery_app beat --loglevel=$${CELERY_LOG_LEVEL:-info}'
+    depends_on:
+      ai-origin:
+        condition: service_healthy

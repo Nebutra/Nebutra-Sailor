@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "animated-group-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/animated-group-demo.tsx",
+      "content": "\"use client\";\n\nimport { AnimatedGroup } from \"@nebutra/ui/primitives\";\n\nexport function AnimatedGroupDemo() {\n  return (\n    <div className=\"p-8 flex w-full items-center justify-center\">\n      <AnimatedGroup preset=\"blur-slide\" className=\"gap-3 w-48 flex flex-col\">\n        {[\"Item 1\", \"Item 2\", \"Item 3\", \"Item 4\"].map((label) => (\n          <div key={label} className=\"p-4 text-sm font-medium rounded-lg border bg-card\">\n            {label}\n          </div>\n        ))}\n      </AnimatedGroup>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

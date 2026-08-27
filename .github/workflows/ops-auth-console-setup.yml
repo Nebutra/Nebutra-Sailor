@@ -1,0 +1,155 @@
+# One-shot operator bootstrap: Turnstile widget + ECS env + public site key var.
+# Does NOT print secrets. Safe to re-run (idempotent-ish: creates widget if missing).
+name: Ops Auth Console Setup
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Why this run"
+        required: false
+        default: "Register auth.nebutra.com OAuth/Turnstile"
+
+permissions:
+  contents: read
+
+jobs:
+  turnstile-and-ecs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Turnstile widget (Cloudflare)
+        id: turnstile
+        env:
+          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CF_ACCOUNT:-}" ] || [ -z "${CF_TOKEN:-}" ]; then
+            echo "::error::CLOUDFLARE_ACCOUNT_ID or CLOUDFLARE_API_TOKEN missing"
+            exit 1
+          fi
+
+          # List existing widgets; reuse one named nebutra-auth if present
+          list="$(curl -fsS -H "Authorization: Bearer $CF_TOKEN" \
+            "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT}/challenges/widgets")"
+          echo "$list" | jq -e '.success == true' >/dev/null
+
+          sitekey="$(echo "$list" | jq -r '
+            .result[]?
+            | select(.name=="nebutra-auth" or (.domains//[]|index("auth.nebutra.com")))
+            | .sitekey' | head -1)"
+          secret="$(echo "$list" | jq -r '
+            .result[]?
+            | select(.name=="nebutra-auth" or (.domains//[]|index("auth.nebutra.com")))
+            | .secret' | head -1)"
+
+          if [ -z "$sitekey" ] || [ "$sitekey" = "null" ]; then
+            echo "Creating new Turnstile widget nebutra-auth…"
+            create="$(curl -fsS -X POST \
+              -H "Authorization: Bearer $CF_TOKEN" \
+              -H "Content-Type: application/json" \
+              "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT}/challenges/widgets" \
+              --data '{
+                "name": "nebutra-auth",
+                "domains": ["auth.nebutra.com","app.nebutra.com","nebutra.com","localhost"],
+                "mode": "managed",
+                "bot_fight_mode": false,
+                "region": "world"
+              }')"
+            echo "$create" | jq -e '.success == true' >/dev/null || {
+              echo "$create" | jq .
+              exit 1
+            }
+            sitekey="$(echo "$create" | jq -r '.result.sitekey')"
+            secret="$(echo "$create" | jq -r '.result.secret')"
+          else
+            echo "Reusing existing Turnstile widget sitekey=${sitekey:0:8}…"
+            # Secret may be redacted on list — re-fetch widget if needed
+            if [ -z "$secret" ] || [ "$secret" = "null" ] || [ "$secret" = "" ]; then
+              wid="$(echo "$list" | jq -r '
+                .result[]?
+                | select(.sitekey=="'"$sitekey"'")
+                | .sitekey' | head -1)"
+              # CF list usually includes secret once; if missing, create is required
+              if [ -z "$secret" ] || [ "$secret" = "null" ]; then
+                echo "::warning::Existing widget secret not returned by list API; creating rotation widget nebutra-auth-v2"
+                create="$(curl -fsS -X POST \
+                  -H "Authorization: Bearer $CF_TOKEN" \
+                  -H "Content-Type: application/json" \
+                  "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT}/challenges/widgets" \
+                  --data '{
+                    "name": "nebutra-auth-v2",
+                    "domains": ["auth.nebutra.com","app.nebutra.com","nebutra.com","localhost"],
+                    "mode": "managed",
+                    "bot_fight_mode": false,
+                    "region": "world"
+                  }')"
+                echo "$create" | jq -e '.success == true' >/dev/null
+                sitekey="$(echo "$create" | jq -r '.result.sitekey')"
+                secret="$(echo "$create" | jq -r '.result.secret')"
+              fi
+            fi
+          fi
+
+          echo "sitekey=$sitekey" >> "$GITHUB_OUTPUT"
+          # Mask secret in logs
+          echo "::add-mask::$secret"
+          echo "secret=$secret" >> "$GITHUB_OUTPUT"
+          echo "Turnstile sitekey ready: ${sitekey:0:12}…"
+
+      - name: Write public site key to repo variable
+        env:
+          GH_TOKEN: ${{ secrets.PACKAGE_GOVERNANCE_TOKEN || secrets.GITHUB_TOKEN }}
+          SITEKEY: ${{ steps.turnstile.outputs.sitekey }}
+        run: |
+          set -euo pipefail
+          # Prefer governance token if it can write variables; fall back to GITHUB_TOKEN (may lack perms)
+          gh variable set NEXT_PUBLIC_TURNSTILE_SITE_KEY --body "$SITEKEY" --repo "$GITHUB_REPOSITORY" \
+            || echo "::warning::Could not set repo variable NEXT_PUBLIC_TURNSTILE_SITE_KEY (token perms)"
+
+      - name: Patch ECS auth/web env + restart
+        env:
+          ECS_HOST: ${{ vars.ECS_HOST || secrets.ECS_HOST }}
+          ECS_USER: ${{ vars.ECS_USER || 'root' }}
+          ECS_SSH_PRIVATE_KEY: ${{ secrets.ECS_SSH_PRIVATE_KEY }}
+          SITEKEY: ${{ steps.turnstile.outputs.sitekey }}
+          SECRET: ${{ steps.turnstile.outputs.secret }}
+        run: |
+          set -euo pipefail
+          if [ -z "${ECS_HOST:-}" ] || [ -z "${ECS_SSH_PRIVATE_KEY:-}" ]; then
+            echo "::error::ECS_HOST or ECS_SSH_PRIVATE_KEY missing"
+            exit 1
+          fi
+          mkdir -p ~/.ssh
+          echo "$ECS_SSH_PRIVATE_KEY" > ~/.ssh/ecs_key
+          chmod 600 ~/.ssh/ecs_key
+          ssh -i ~/.ssh/ecs_key -o StrictHostKeyChecking=accept-new \
+            "${ECS_USER}@${ECS_HOST}" \
+            "SITEKEY=$(printf %q "$SITEKEY") SECRET=$(printf %q "$SECRET") bash -s" <<'REMOTE'
+          set -euo pipefail
+          upsert() {
+            local file="$1" key="$2" value="$3"
+            touch "$file"
+            if grep -q "^${key}=" "$file" 2>/dev/null; then
+              sed -i "s|^${key}=.*|${key}=${value}|" "$file"
+            else
+              printf '%s=%s\n' "$key" "$value" >> "$file"
+            fi
+          }
+          for f in /var/www/nebutra/auth/.env /var/www/nebutra/web/.env; do
+            upsert "$f" NEXT_PUBLIC_TURNSTILE_SITE_KEY "$SITEKEY"
+            upsert "$f" TURNSTILE_SECRET_KEY "$SECRET"
+            upsert "$f" NEXT_PUBLIC_AUTH_MAGIC_LINK 1
+            upsert "$f" NEXT_PUBLIC_AUTH_PASSKEYS 1
+            upsert "$f" PASSKEY_RP_ID auth.nebutra.com
+            upsert "$f" PASSKEY_RP_NAME Nebutra
+            upsert "$f" PASSKEY_ORIGIN https://auth.nebutra.com
+            echo "updated $f"
+          done
+          pm2 restart auth-center --update-env || pm2 restart auth --update-env || true
+          pm2 restart web --update-env || true
+          pm2 save || true
+          curl -fsS https://auth.nebutra.com/health | head -c 800 || true
+          echo
+          REMOTE
+          rm -f ~/.ssh/ecs_key

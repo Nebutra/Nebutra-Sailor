@@ -1,0 +1,86 @@
+---
+title: 部署概览
+description: Nebutra 生产部署方式 — Cloudflare 边缘、营销/文档走 Vercel、应用/认证/API 走 ECS，以及 Docker 自托管选项。
+---
+
+## 部署选项
+
+| 选项 | 适合场景 | 复杂度 | 成本 |
+|------|---------|--------|------|
+| **拆分部署（nebutra.com 推荐）** | 营销站 Vercel + 应用/API 云主机 | 中 | 基础设施 + 可选 Vercel |
+| **仅 Vercel（前端）** | 文档、落地页；web/auth 可选迁入 | 低 | Hobby/Pro 额度 |
+| **Docker / PM2 自托管** | 数据本地化、完全可控 | 中 | 自有机器 |
+| **Cloudflare Workers（网关）** | 边缘 API 入口 | 中 | Workers 免费额度 |
+
+## 生产架构（nebutra.com 现状）
+
+公网 DNS 在 **Cloudflare**（CDN / WAF）。源站拆分如下：
+
+```
+用户
+  │
+  ▼
+Cloudflare DNS + 代理
+  │
+  ├─── apps/landing     nebutra.com           → Vercel
+  ├─── apps/sailor-docs      docs.nebutra.com      → Vercel
+  │
+  ├─── apps/web              app.nebutra.com       → ECS（PM2 Next standalone）
+  ├─── apps/auth             auth.nebutra.com      → ECS（PM2 登录中心）
+  ├─── backends/gateway      api.nebutra.com       → ECS（PM2 Hono / Node）
+  └─── apps/idp              sso.nebutra.com       → ECS（OIDC 签发方，慎迁）
+              │
+              ├─── PostgreSQL
+              ├─── Redis / KV
+              └─── ClickHouse
+```
+
+| 主机名 | 应用 | 稳态源站 |
+|--------|------|----------|
+| `nebutra.com` | `apps/landing` | Vercel |
+| `docs.nebutra.com` | `apps/sailor-docs` | Vercel |
+| `app.nebutra.com` | `apps/web` | **ECS**（Vercel `nebutra-web` 为可选 cutover） |
+| `auth.nebutra.com` | `apps/auth` | **ECS** |
+| `api.nebutra.com` | `backends/gateway` | **ECS**（生产不跑 Vercel Functions） |
+| `sso.nebutra.com` | `apps/idp` | **ECS** |
+
+详见 monorepo `docs/DOMAINS.md`、`docs/ops/web-auth-vercel-cutover.md`。
+
+### Web 构建注意
+
+`apps/web` 默认 `pnpm build` 是 **Vite**。ECS / 可选 Vercel 生产必须用
+`pnpm --filter @nebutra/web run build:next` 产出 `.next` / standalone。
+官方工作流：`.github/workflows/deploy-ecs.yml`。
+
+### 服务间认证（S2S）
+
+内部 `x-service-token` 为短时 **HS256 JWT**（`@nebutra/auth`）。遗留 hex-HMAC
+**已拒绝**。Python / Go 辅助实现保持同一契约。
+
+## 部署前
+
+```bash
+pnpm db:migrate
+```
+
+生产最小认证相关变量：`AUTH_PROVIDER=better-auth`、`BETTER_AUTH_SECRET`（auth 与 web 一致）、`BETTER_AUTH_URL=https://auth.nebutra.com`、`AUTH_COOKIE_DOMAIN=.nebutra.com`、`DATABASE_URL`、`SERVICE_SECRET`。
+
+## CI/CD
+
+| 工作流 | 作用 |
+|--------|------|
+| `ci.yml` | PR/推送：lint、类型检查、测试 |
+| `deploy-ecs.yml` | **手动** ECS：Next standalone + gateway 包 → PM2 |
+| Vercel Git | 自动部署 landing / docs（及可选 web/auth） |
+
+Hobby 有**每日部署次数**上限（约 100 次/天；跳过/取消的部署也可能计入）。每个已关联的 Vercel 项目在 push 时都可能占一个部署槽，因此：
+
+- `scripts/vercel-ignore-build.sh` **仅在该 app 的 scope 有变更时才构建**（应用目录 + 其 workspace 依赖），而不是整个 monorepo。
+- **ECS 主路径**（`web` / `auth` / `gateway`）默认**跳过** Vercel 自动部署；需要时在项目设 `VERCEL_ALLOW_ECS_OPTIONAL=1`，或在 commit message 写 `[vercel:apps/web]` 等。
+- Hobby 上建议只给 **landing + docs** 接 Git 自动部署；可选 cutover 项目断开或保持 optional。
+
+## 相关
+
+- [Vercel 部署](/zh/deployment/vercel)
+- [Docker 部署](/zh/deployment/docker)
+- [生产检查清单](/zh/deployment/production-checklist)

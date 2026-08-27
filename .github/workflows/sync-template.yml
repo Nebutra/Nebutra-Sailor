@@ -1,0 +1,120 @@
+name: Sync to sailor-template
+
+# Mirrors Nebutra-Sailor main → nebutra/sailor-template (stripped skeleton)
+# Consumed by `create-sailor` at scaffold time for faster, cleaner cloning.
+#
+# Required repo secrets:
+#   TEMPLATE_PUSH_TOKEN   PAT with repo scope, authorized for nebutra/sailor-template
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "docs/**"
+      - "**/*.md"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Build only, do not push"
+        type: boolean
+        default: false
+
+concurrency:
+  group: sync-template
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js and pnpm
+        # Using --no-frozen-lockfile: this workflow only mirrors source to
+        # Sailor-Template; it doesn't run production builds. Lockfile drift
+        # here isn't a security concern (the mirror's consumers have their
+        # own pnpm install). Frozen-lockfile was previously blocking syncs
+        # on catalog resolution edge cases.
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          install-command: pnpm install --no-frozen-lockfile --ignore-scripts
+
+      - name: Build template
+        run: pnpm tsx scripts/template-build.ts --out=/tmp/sailor-template
+
+      - name: Package template bundle
+        run: |
+          tar -czf /tmp/sailor-template.tar.gz -C /tmp/sailor-template .
+          shasum -a 256 /tmp/sailor-template.tar.gz | awk '{print $1}' > /tmp/sailor-template.tar.gz.sha256
+
+      - name: Verify built template is not empty
+        run: |
+          count=$(find /tmp/sailor-template -type f | wc -l)
+          echo "Built template contains $count files"
+          if [ "$count" -lt 100 ]; then
+            echo "::error::Built template is suspiciously small (< 100 files)"
+            exit 1
+          fi
+
+      - name: Configure SSH for Sailor-Template
+        if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
+        env:
+          SAILOR_TEMPLATE_SSH_KEY: ${{ secrets.SAILOR_TEMPLATE_SSH_KEY }}
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "${SAILOR_TEMPLATE_SSH_KEY}" > ~/.ssh/sailor_template
+          chmod 600 ~/.ssh/sailor_template
+          ssh-keyscan -t ed25519,rsa github.com >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Push to Sailor-Template (via SSH deploy key)
+        if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
+        env:
+          SRC_SHA: ${{ github.sha }}
+          GIT_SSH_COMMAND: "ssh -i ~/.ssh/sailor_template -o IdentitiesOnly=yes"
+        run: |
+          set -euo pipefail
+          cd /tmp/sailor-template
+          git init -q
+          git config user.email "bot@nebutra.com"
+          git config user.name "Sailor Template Bot"
+          git checkout -q -b main
+          git add -A
+          git commit -q -m "chore: sync from Nebutra-Sailor@${SRC_SHA}"
+          TEMPLATE_TAG="source-${SRC_SHA}"
+          git remote add origin "git@github.com:Nebutra/Sailor-Template.git"
+          git push -qf origin main
+          git tag -a "${TEMPLATE_TAG}" -m "Template snapshot for ${SRC_SHA}"
+          git push -q origin "refs/tags/${TEMPLATE_TAG}"
+
+      - name: Upload template bundle
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sailor-template-${{ github.sha }}
+          path: |
+            /tmp/sailor-template.tar.gz
+            /tmp/sailor-template.tar.gz.sha256
+          retention-days: 90
+
+      - name: Clean up SSH key
+        if: always()
+        run: rm -f ~/.ssh/sailor_template
+
+      - name: Summary
+        run: |
+          {
+            echo "### Template sync summary"
+            echo ""
+            echo "- Source SHA: \`${{ github.sha }}\`"
+            echo "- File count: $(find /tmp/sailor-template -type f | wc -l)"
+            echo "- Immutable tag: \`source-${{ github.sha }}\`"
+            echo "- Pushed: ${{ github.event_name != 'workflow_dispatch' || !inputs.dry_run }}"
+          } >> "$GITHUB_STEP_SUMMARY"

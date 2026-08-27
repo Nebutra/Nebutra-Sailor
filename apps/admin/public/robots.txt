@@ -1,0 +1,12 @@
+# Nebutra Admin - Ecosystem control plane
+# https://admin.nebutra.com
+# Staff-only internal surface - never index
+#
+# This origin sits behind Cloudflare Access and a platform-staff role gate. The
+# robots file is defense in depth, not the access control: see
+# docs/plans/2026-07-28-nebutra-admin-control-plane-design.md section 6.
+
+User-agent: *
+Disallow: /
+
+# No sitemap - not a public surface

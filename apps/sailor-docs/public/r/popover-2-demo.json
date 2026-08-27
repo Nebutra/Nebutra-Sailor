@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "popover-2-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/popover-2-demo.tsx",
+      "content": "\"use client\";\n\nimport { Button, Popover, PopoverContent, PopoverTrigger } from \"@nebutra/ui/primitives\";\nexport function Popover2Demo() {\n  return (\n    <Popover defaultOpen={true}>\n      <PopoverTrigger asChild>\n        <Button>Toggle Popover</Button>\n      </PopoverTrigger>\n      <PopoverContent>\n        <p className=\"mb-4 text-sm\">Controlled popover content</p>\n        <Button variant=\"outline\" size=\"sm\">\n          Close\n        </Button>\n      </PopoverContent>\n    </Popover>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

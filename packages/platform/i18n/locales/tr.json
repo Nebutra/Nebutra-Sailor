@@ -1,0 +1,1273 @@
+{
+  "admin": {
+    "title": "Yönetici",
+    "description": "Süper yönetici paneli — kullanıcıları, kuruluşları ve sistem sağlığını yönetin.",
+    "nav": {
+      "overview": "Genel Bakış",
+      "users": "Kullanıcılar",
+      "organizations": "Kuruluşlar"
+    },
+    "users": {
+      "title": "Kullanıcılar",
+      "description": "Tüm kuruluşlarda kullanıcıları görüntüleyin, arayın ve taklit edin.",
+      "searchPlaceholder": "Kullanıcı ara…",
+      "totalCount": "{count, plural, one {# kullanıcı} other {# kullanıcı}}",
+      "empty": "Kullanıcı bulunamadı.",
+      "loadError": "Kullanıcılar yüklenemedi.",
+      "columns": {
+        "email": "E-posta",
+        "name": "Ad",
+        "created": "Oluşturulma",
+        "activeOrgs": "Aktif kuruluşlar",
+        "actions": "İşlemler"
+      },
+      "viewOrgs": "Organizasyonları görüntüle"
+    },
+    "organizations": {
+      "title": "Organizasyonlar",
+      "description": "Sistemdeki tüm çalışma alanları, güncelliğe göre sıralanmıştır.",
+      "searchPlaceholder": "Organizasyon ara…",
+      "totalCount": "{count, plural, one {# organizasyon} other {# organizasyon}}",
+      "empty": "Organizasyon bulunamadı.",
+      "loadError": "Organizasyonlar yüklenemedi.",
+      "columns": {
+        "name": "Ad",
+        "slug": "Slug",
+        "plan": "Plan",
+        "members": "Üyeler",
+        "created": "Oluşturulma",
+        "actions": "İşlemler"
+      },
+      "view": "Görüntüle"
+    },
+    "impersonate": {
+      "trigger": "Kimlik taklidi yap",
+      "starting": "Başlatılıyor…",
+      "stop": "Kimlik taklidi durdur",
+      "confirm": "{label} kullanıcısı olarak giriş yapılsın mı? Kimlik taklidini durdurana kadar uygulamayı bu kullanıcı olarak göreceksiniz.",
+      "error": "Kimlik taklidi başlatılamadı.",
+      "stopError": "Kimlik taklidi durdurulamadı."
+    },
+    "pagination": {
+      "previous": "Önceki",
+      "next": "Sonraki",
+      "pageOf": "Sayfa {page} / {total}"
+    }
+  },
+  "Common": {
+    "hello": "Merhaba Dünya",
+    "dashboard": "Panel",
+    "actions": {
+      "continue": "Devam et",
+      "confirm": "Onayla",
+      "done": "Tamamlandı",
+      "cancel": "İptal"
+    }
+  },
+  "theme": {
+    "light": "Açık",
+    "dark": "Koyu",
+    "system": "Sistem"
+  },
+  "LocaleSwitcher": {
+    "label": "Dil",
+    "ariaLabel": "Dili değiştir",
+    "searchPlaceholder": "Dilleri ara…",
+    "noResults": "Eşleşen dil bulunamadı",
+    "menuAria": "Dil seç"
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP kayıt numarası",
+      "publicSecurity": "Güvenlik kaydı"
+    },
+    "wechat": {
+      "signIn": "WeChat ile giriş yap",
+      "notConfigured": "WeChat girişi yapılandırılmadı"
+    }
+  },
+  "onboarding": {
+    "title": "Çalışma alanınızı kurun",
+    "subtitle": "Üç hızlı adımda yayına hazır olacaksınız.",
+    "steps": {
+      "workspace": "Çalışma alanı",
+      "invite": "Takımını davet et",
+      "plan": "Plan seç"
+    },
+    "progress": {
+      "back": "Geri",
+      "stepCounter": "Adım {current} / {total}"
+    },
+    "plan": {
+      "title": "Plan seç",
+      "description": "Ücretsiz başla veya daha fazla kapasite aç. İstediğin zaman planını değiştirebilirsin.",
+      "choose": "Plan seç",
+      "skip": "Şimdilik atla"
+    }
+  },
+  "userMenu": {
+    "ariaLabel": "Kullanıcı menüsünü aç",
+    "profile": "Profil",
+    "settings": "Ayarlar",
+    "feedback": "Geri bildirim",
+    "theme": "Tema",
+    "language": "Dil",
+    "signOut": "Çıkış yap",
+    "signedInAs": "Olarak giriş yapıldı"
+  },
+  "account": {
+    "profile": {
+      "title": "Profil",
+      "description": "Kişisel bilgilerinizi güncelleyin.",
+      "nameLabel": "Ad",
+      "namePlaceholder": "Adınız ve soyadınız",
+      "emailLabel": "E-posta",
+      "emailHint": "Yeni bir e-posta adresini onaylamak için doğrulama bağlantısı göndereceğiz.",
+      "languageLabel": "Dil",
+      "submit": "Değişiklikleri kaydet",
+      "saving": "Kaydediliyor…",
+      "verifyEmail": "Doğrula",
+      "verifying": "Doğrulama gönderiliyor…",
+      "success": "Profil güncellendi.",
+      "verificationSent": "Doğrulama e-postası gönderildi.",
+      "errorRequiredName": "Ad alanı zorunludur.",
+      "errorInvalidEmail": "E-posta adresi geçerli değil.",
+      "subtitle": "Kimlik ve iletişim bilgileriniz.",
+      "unknown": "İsimsiz kullanıcı",
+      "manageCta": "Tüm hesap ayarlarını aç"
+    },
+    "avatar": {
+      "title": "Profil fotoğrafı",
+      "description": "Kare bir görsel yükleyin (PNG, JPEG veya WebP, en fazla 2MB).",
+      "uploadButton": "Profil fotoğrafı yükle",
+      "uploading": "Yükleniyor…",
+      "fileTooBig": "Dosya çok büyük. Maksimum boyut 2MB.",
+      "invalidType": "Desteklenmeyen görsel türü. PNG, JPEG veya WebP kullanın.",
+      "success": "Profil fotoğrafı güncellendi.",
+      "removeButton": "Profil fotoğrafını kaldır",
+      "removed": "Profil fotoğrafı kaldırıldı.",
+      "deleteError": "Profil fotoğrafı silinemedi."
+    },
+    "export": {
+      "title": "Verilerimi dışa aktar",
+      "description": "Hesabınız için tuttuğumuz tüm kayıtların bir kopyasını indirin; profil, kuruluşlar, denetim olayları, bildirimler ve davetler dahil.",
+      "compliance": "GDPR Madde 20 (Veri taşınabilirliği hakkı) ve PIPL Madde 45 (Kişisel bilgilerin kopyasını alma hakkı) gereği zorunludur.",
+      "export": "Verilerimi dışa aktar",
+      "pending": "Dışa aktarma hazırlanıyor…",
+      "ready": "Dışa aktarma hazır.",
+      "download": "JSON İndir",
+      "error": "Dışa aktarma hazırlanamadı. Lütfen tekrar deneyin."
+    },
+    "emailChange": {
+      "title": "E-posta adresini değiştir",
+      "description": "Yeni adrese bir doğrulama bağlantısı göndereceğiz. Değişiklik, o gelen kutusundan onayladığınızda geçerli olur.",
+      "newEmailLabel": "Yeni e-posta adresi",
+      "newEmailPlaceholder": "you@example.com",
+      "submit": "Doğrulama bağlantısı gönder",
+      "submitting": "Gönderiliyor…",
+      "verificationSent": "Değişikliği onaylamak için {email} adresindeki gelen kutunuzu kontrol edin.",
+      "errorInvalidEmail": "E-posta adresi geçerli değil.",
+      "error": "E-posta değişikliği isteği başarısız oldu.",
+      "confirm": {
+        "successTitle": "E-posta güncellendi",
+        "successDescription": "Giriş e-postanız güncellendi.",
+        "successWithEmail": "Giriş e-postanız artık {email}.",
+        "failureTitle": "Bu bağlantıyı onaylayamadık",
+        "failureDescription": "Bu doğrulama bağlantısı geçersiz, süresi dolmuş veya zaten kullanılmış. Lütfen hesap ayarlarınızdan yeni bir tane isteyin.",
+        "errorCode": "Sebep: {code}",
+        "continueCta": "Hesaba dön",
+        "backCta": "Hesaba dön"
+      }
+    },
+    "title": "Hesap",
+    "ariaLabel": "Hesap ayarları",
+    "navLabel": "Hesap ayarları sekmeleri",
+    "tip": "Bu iletişim kutusunu yeniden açmak için herhangi bir yerde {key} tuşuna basın.",
+    "tabs": {
+      "profile": "Profil",
+      "subscription": "Abonelik",
+      "billing": "Faturalama",
+      "preferences": "Tercihler",
+      "personalization": "Kişiselleştirme"
+    },
+    "subscription": {
+      "title": "Abonelik",
+      "subtitle": "Plan, kota ve yenileme.",
+      "currentPlan": "Mevcut plan",
+      "upgradeCta": "Planları karşılaştır",
+      "manageCta": "Aboneliği yönet"
+    },
+    "billing": {
+      "title": "Faturalandırma",
+      "subtitle": "Fatura geçmişi ve ödeme yöntemi.",
+      "empty": {
+        "title": "Henüz geçmiş yok",
+        "description": "İlk ücretli dönemden sonra ücretler ve faturalar burada görünecek.",
+        "cta": "Tüm faturalandırma sayfasını aç"
+      }
+    },
+    "preferences": {
+      "title": "Tercihler",
+      "subtitle": "Tema ve erişilebilirlik.",
+      "theme": "Tema",
+      "light": "Açık",
+      "dark": "Koyu",
+      "system": "Sistem",
+      "help": "Yardım",
+      "reportIssue": "Sorun bildir",
+      "shortcuts": "Klavye kısayolları"
+    },
+    "personalization": {
+      "title": "Kişiselleştirme",
+      "subtitle": "Sailor'a kim olduğunu ve nasıl yanıt vermesi gerektiğini söyle."
+    }
+  },
+  "impact": {
+    "hero_title": "Paradigmayı Yeniden Tanımlama",
+    "hero_subtitle": "Dünyada zor iş olmasın.",
+    "social_title": "Sosyal",
+    "social_headline": "Kesin Teknoloji Eşitliği",
+    "social_description": "Sınır inovatörlerini güçlendirme. Geleneksel filtreleri kırma ve tek kuruculara kutunun dışında altyapı sağlama.",
+    "governance_title": "Yönetişim",
+    "governance_headline": "Kod Yasadır",
+    "governance_description": "İş Kanıtı ve gerçek iş sonuçları üzerine kurulu algoritmik yönetişim, opak bürokrasiyi değiştirir.",
+    "environment_title": "Çevre",
+    "environment_headline": "Dijital Minimalizm",
+    "environment_description": "Aşırı SaaS entegrasyonu ve kaynak verimliliği ile bulut ayak izi azaltımını yönlendirme."
+  },
+  "auth": {
+    "security": {
+      "title": "Güvenlik",
+      "description": "Şifrenizi, çok faktörlü kimlik doğrulamayı ve aktif oturumlarınızı yönetin.",
+      "managedByProvider": "Güvenlik ayarları, kimlik doğrulama sağlayıcınız tarafından yönetilmektedir.",
+      "openProviderProfile": "Profili aç",
+      "changePassword": {
+        "title": "Şifreyi değiştir",
+        "description": "Diğer sitelerde kullanmadığınız güçlü bir şifre kullanın.",
+        "currentPasswordLabel": "Mevcut şifre",
+        "newPasswordLabel": "Yeni şifre",
+        "confirmPasswordLabel": "Yeni şifreyi onayla",
+        "revokeOtherSessions": "Diğer cihazlardan çıkış yap",
+        "submit": "Şifreyi güncelle",
+        "pending": "Şifre güncelleniyor…",
+        "success": "Şifre başarıyla güncellendi."
+      },
+      "twoFactor": {
+        "title": "İki adımlı doğrulama",
+        "description": "Doğrulayıcı uygulaması kullanarak ikinci bir doğrulama adımı ekleyin.",
+        "enabled": "Etkin",
+        "disabled": "Devre dışı",
+        "enabledHelp": "Hesabınız, şifre ile oturum açtıktan sonra 6 haneli bir doğrulayıcı kodu ister.",
+        "disabledHelp": "Hesabınızı doğrulayıcı uygulamasından gelen 6 haneli bir kodla koruyun.",
+        "enable": "İki faktörlü kimlik doğrulamayı etkinleştir",
+        "disable": "İki faktörlü kimlik doğrulamayı devre dışı bırak",
+        "passwordPrompt": "Şifrenizi onaylayın",
+        "scanQrCode": "Bu QR kodunu kimlik doğrulayıcı uygulamanızla tarayın, ardından aşağıya 6 haneli kodu girin.",
+        "secretKeyLabel": "Veya bu gizli anahtarı manuel olarak girin",
+        "verificationCodeLabel": "Doğrulama kodu",
+        "verify": "Doğrula ve etkinleştir",
+        "backupCodesTitle": "Yedek kodlar",
+        "backupCodesDescription": "Bu kodları güvenli bir yerde saklayın. Kimlik doğrulayıcınıza erişiminizi kaybederseniz her biri bir kez kullanılabilir.",
+        "copyBackupCodes": "Kodları kopyala",
+        "finishSetup": "Kurulumu tamamla",
+        "successEnabled": "İki faktörlü kimlik doğrulama etkinleştirildi.",
+        "successDisabled": "İki faktörlü kimlik doğrulama devre dışı bırakıldı."
+      },
+      "sessions": {
+        "title": "Aktif oturumlar",
+        "description": "Hesabınıza şu anda giriş yapmış cihazlar ve tarayıcılar.",
+        "currentSession": "(mevcut)",
+        "ipLabel": "IP adresi",
+        "lastActiveLabel": "Son aktif",
+        "revoke": "Oturumu kapat",
+        "revokeAll": "Diğer tüm cihazlardan çıkış yap",
+        "empty": "Başka aktif oturum yok.",
+        "successRevoked": "Oturum kapatıldı.",
+        "successRevokedAll": "Diğer tüm oturumlar kapatıldı."
+      },
+      "deleteAccount": {
+        "title": "Hesabı sil",
+        "description": "Hesabınızı ve ilişkili tüm verileri kalıcı olarak silin. Bu işlem geri alınamaz.",
+        "passwordPrompt": "Onaylamak için şifrenizi girin",
+        "confirmTextLabel": "Onaylamak için SİL yazın",
+        "submit": "Hesabı sil",
+        "cancel": "İptal",
+        "success": "Hesap silindi."
+      },
+      "connectedAccounts": {
+        "title": "Bağlı hesaplar",
+        "description": "Nebutra kimliğinize bağlı OAuth giriş yöntemlerini inceleyin.",
+        "connected": "Bağlandı",
+        "connect": "Bağla",
+        "help": "Bir sağlayıcıyı bağlantıyı kesmeden önce en az bir güvenilir oturum açma yönteminin kullanılabilir olduğundan emin olun.",
+        "unlink": "Bağlantıyı Kestir",
+        "notLinked": "Bağlı değil"
+      },
+      "passkeys": {
+        "title": "Parola Anahtarları",
+        "description": "Oltalama saldırılarına karşı dayanıklı oturum açma için cihazla sınırlı kimlik bilgilerini kullanın.",
+        "empty": "Henüz parola anahtarı kaydedilmedi",
+        "addPasskey": "Parola anahtarı ekle",
+        "cancelAdd": "İptal",
+        "cancelled": "Parola anahtarı kurulumu iptal edildi. Hiçbir değişiklik yapılmadı.",
+        "defaultName": "Parola Anahtarı {number}",
+        "nameHelp": "Tarayıcınız onay istemeden önce bu parola anahtarına tanınabilir bir ad verin.",
+        "nameLabel": "Parola anahtarı adı",
+        "rename": "Yeniden Adlandır",
+        "saveRename": "Adı Kaydet",
+        "remove": "Kaldır",
+        "successAdded": "Geçiş anahtarı eklendi.",
+        "successRemoved": "Geçiş anahtarı kaldırıldı.",
+        "unavailableBadge": "Kullanılamıyor"
+      },
+      "setPassword": {
+        "title": "Şifre belirle",
+        "description": "OAuth sağlayıcınız olmadan oturum açmak için bir şifre ekleyin.",
+        "submit": "Şifre belirle",
+        "pending": "Şifre ayarlama bağlantısı gönderiliyor…",
+        "sentMessage": "E-posta adresinize bir şifre ayarlama bağlantısı gönderdik."
+      }
+    },
+    "banner": {
+      "logoAlt": "Nebutra",
+      "slogan": "Startup'ınızı, ilk günden itibaren yönetilerek piyasaya sürün.",
+      "tagline": "Bölgesel ajanlar, varsayılan olarak çok kiracılı. Platform ekibi gerekmez."
+    },
+    "signIn": {
+      "title": "Nebutra'ya giriş yapın",
+      "subtitle": "Nasıl oturum açmak istediğinizi seçin.",
+      "continueWith": "Devam et",
+      "continueWithProvider": "{provider} ile devam et",
+      "providers": {
+        "google": "Google",
+        "github": "GitHub",
+        "apple": "Apple",
+        "microsoft": "Microsoft",
+        "feishu": "Feishu"
+      },
+      "providerLoading": "Yönlendiriliyor…",
+      "dividerOr": "veya e-posta ile devam et",
+      "emailLabel": "E-posta",
+      "emailPlaceholder": "you@example.com",
+      "continue": "Devam et",
+      "back": "Geri",
+      "passwordLabel": "Şifre",
+      "passwordPlaceholder": "Şifrenizi girin",
+      "showPassword": "Şifreyi göster",
+      "hidePassword": "Şifreyi gizle",
+      "capsLockOn": "Caps Lock açık",
+      "forgotPassword": "Şifrenizi mi unuttunuz?",
+      "submit": "Giriş yap",
+      "submitLoading": "Giriş yapılıyor…",
+      "useMagicLink": "Bana bunun yerine sihirli bir bağlantı gönder",
+      "usePasskey": "Şifre anahtarı ile giriş yap",
+      "passkeyTitle": "Şifre anahtarınla giriş yap",
+      "passkeyDescription": "Face ID, Touch ID veya güvenlik anahtarını kullan. Şifre gerekmez.",
+      "passkeyButton": "Şifre anahtarı ile devam et",
+      "passkeyCancelled": "Şifre anahtarı istemi iptal edildi.",
+      "passkeyUnsupported": "Bu tarayıcı şifre anahtarlarını desteklemiyor.",
+      "passkeyError": "Şifre anahtarı ile giriş başarısız oldu. Başka bir yöntem deneyin.",
+      "ssoTitle": "Kurumsal SSO ile devam et",
+      "ssoDescription": "{email} için {provider} yönlendiriliyorsunuz.",
+      "ssoError": "Kurumsal SSO başlatılamadı. Başka bir yöntem deneyin.",
+      "ssoRetry": "Tekrar dene",
+      "newToProduct": "Nebutra'yı yeni mi kullanıyorsunuz?",
+      "signUpLink": "Kayıt ol",
+      "homeLink": "Ana sayfa",
+      "signInFailed": "Giriş başarısız oldu",
+      "genericError": "Bir hata oluştu. Lütfen tekrar deneyin.",
+      "captchaError": "Bot doğrulaması başarısız oldu. Sayfayı yenileyin ve tekrar deneyin.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
+      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
+      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
+      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+    },
+    "signUp": {
+      "title": "Nebutra hesabınızı oluşturun",
+      "subtitle": "Her Nebutra uygulaması için tek bir hesap.",
+      "firstNameLabel": "Ad",
+      "lastNameLabel": "Soyad",
+      "firstNamePlaceholder": "Ad",
+      "lastNamePlaceholder": "Soyad",
+      "submit": "Hesap oluştur",
+      "submitLoading": "Hesap oluşturuluyor…",
+      "alreadyHaveAccount": "Zaten hesabınız var mı?",
+      "signInLink": "Giriş yap",
+      "signUpFailed": "Kayıt başarısız oldu",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+    },
+    "passkeys": {
+      "title": "Geçiş Anahtarları",
+      "description": "Şifre yerine Face ID, Touch ID, Windows Hello veya bir güvenlik anahtarı kullanın. Her cihazın kendi geçiş anahtarı vardır.",
+      "addButton": "Parola anahtarı ekle",
+      "adding": "Hazırlanıyor…",
+      "namePlaceholder": "örn. MacBook Pro",
+      "nameLabel": "Ad (isteğe bağlı)",
+      "registerSuccess": "Parola anahtarı eklendi.",
+      "registerCancelled": "Kurulum iptal edildi.",
+      "registerUnsupported": "Bu tarayıcı parola anahtarlarını desteklemiyor.",
+      "registerError": "Parola anahtarı kaydedilemedi.",
+      "empty": "Henüz parola anahtarı yok.",
+      "loadError": "Parola anahtarları yüklenemedi.",
+      "revoke": "Kaldır",
+      "revoking": "Kaldırılıyor…",
+      "revokeConfirm": "Bu parola anahtarını kaldırmak istiyor musunuz? Artık bununla oturum açamayacaksınız.",
+      "revokeSuccess": "Parola anahtarı kaldırıldı.",
+      "revokeError": "Parola anahtarı kaldırılamadı.",
+      "device": {
+        "singleDevice": "Cihaza bağlı",
+        "multiDevice": "Cihazlar arasında senkronize edildi"
+      },
+      "addedOn": "{date} tarihinde eklendi"
+    },
+    "magicLink": {
+      "title": "Büyülü bağlantı ile giriş yap",
+      "description": "E-posta adresinizi girin, giriş yapmak için size 6 haneli bir kod göndereceğiz.",
+      "emailLabel": "E-posta",
+      "send": "Bağlantı gönder",
+      "codeLabel": "Doğrulama kodu",
+      "verify": "Doğrula",
+      "resend": "Kodu tekrar gönder",
+      "resendCooldown": "{seconds} saniye içinde tekrar gönder",
+      "sentTo": "{email} adresine bir kod gönderdik"
+    },
+    "forgotPassword": {
+      "title": "Şifrenizi mi unuttunuz?",
+      "description": "E-posta adresinizi girin, şifrenizi sıfırlamak için size bir bağlantı göndereceğiz.",
+      "emailLabel": "E-posta",
+      "submit": "Sıfırlama bağlantısı gönder",
+      "successTitle": "E-postanızı kontrol edin",
+      "success": "Bu e-posta adresi kayıtlıysa, kısa süre içinde sıfırlama bağlantısı alacaksınız."
+    },
+    "resetPassword": {
+      "title": "Şifrenizi sıfırlayın",
+      "description": "Hesabınız için yeni bir şifre belirleyin.",
+      "newPasswordLabel": "Yeni şifre",
+      "confirmPasswordLabel": "Yeni şifreyi onayla",
+      "submit": "Şifreyi sıfırla",
+      "successTitle": "Şifre sıfırlandı",
+      "successDescription": "Artık yeni şifrenizle giriş yapabilirsiniz.",
+      "signInCta": "Giriş sayfasına git",
+      "invalidTitle": "Geçersiz sıfırlama bağlantısı",
+      "invalidDescription": "Bu şifre sıfırlama bağlantısı eksik veya hatalı. Lütfen şifremi unuttum sayfasından yeni bir bağlantı isteyin."
+    },
+    "verifyEmail": {
+      "successTitle": "E-posta doğrulandı",
+      "successDescription": "E-posta adresiniz doğrulandı.",
+      "failureTitle": "Doğrulama başarısız",
+      "failureDescription": "E-postanızı bu bağlantı ile doğrulayamadık.",
+      "continueCta": "Devam et",
+      "signInCta": "Giriş yap"
+    },
+    "loginSuccess": {
+      "eyebrow": "Giriş tamamlandı",
+      "title": "Oturum açtınız",
+      "description": "Oturumunuz hazır. Nebutra çalışma alanını açıyoruz ve kimlik doğrulama akışından güvenli geçişi koruyoruz.",
+      "session": "Oturum",
+      "verified": "Doğrulanmış",
+      "workspace": "Çalışma alanı",
+      "preparing": "Hazırlanıyor",
+      "redirecting": "{seconds} saniye içinde çalışma alanına giriliyor",
+      "secureHandoff": "Güvenli geçiş",
+      "continueCta": "Çalışma alanına devam et",
+      "signInCta": "Başka bir hesap kullan"
+    },
+    "errors": {
+      "invalidCredentials": "E-posta veya şifre yanlış.",
+      "userNotFound": "Bu e-posta ile bir hesap bulunamadı.",
+      "userAlreadyExists": "Bu e-posta ile bir hesap zaten mevcut.",
+      "weakPassword": "Şifre çok zayıf. En az 8 karakter, büyük-küçük harf ve rakam içeren bir şifre kullanın.",
+      "passwordsDontMatch": "Şifreler eşleşmiyor.",
+      "passwordTooShort": "Şifre en az 8 karakter olmalıdır.",
+      "currentPasswordIncorrect": "Mevcut şifre yanlış.",
+      "samePassword": "Yeni şifre, mevcut şifrenizden farklı olmalıdır.",
+      "invalidEmail": "E-posta adresi geçerli değil.",
+      "emailNotVerified": "Lütfen önce e-posta adresinizi doğrulayın.",
+      "sessionExpired": "Oturumunuz süresi doldu. Lütfen tekrar giriş yapın.",
+      "twoFactorRequired": "İki adımlı doğrulama gerekli.",
+      "invalidVerificationCode": "Doğrulama kodu yanlış veya süresi dolmuş.",
+      "twoFactorAlreadyEnabled": "İki adımlı kimlik doğrulama zaten etkin.",
+      "twoFactorNotEnabled": "İki adımlı kimlik doğrulama etkin değil.",
+      "tooManyAttempts": "Çok fazla deneme. Lütfen daha sonra tekrar deneyin.",
+      "rateLimited": "Bunu çok sık yapıyorsunuz. Yavaşlayın.",
+      "providerNotSupported": "Bu işlem, kimlik doğrulama sağlayıcınız tarafından yönetilir.",
+      "networkError": "Ağ hatası. Bağlantınızı kontrol edin ve tekrar deneyin.",
+      "unknown": "Bir şeyler yanlış gitti. Lütfen tekrar deneyin."
+    }
+  },
+  "chat": {
+    "suggestions": {
+      "title": "Başlamak için bunlardan birini deneyin",
+      "activity": {
+        "title": "Son aktiviteleri göster",
+        "prompt": "Son 24 saat içindeki çalışma alanımdaki en son aktiviteleri göster."
+      },
+      "debug": {
+        "title": "Bir hatayı hata ayıkla",
+        "prompt": "Bir çalışma zamanı hatasını hata ayıklamama yardımcı ol. Yığın izini yapıştıracağım ve sen de beni yönlendirebilirsin."
+      },
+      "email": {
+        "title": "Özet bir e-posta taslağı oluştur",
+        "prompt": "Takımım için platform ilerlemesi hakkında gönderebileceğim kısa bir haftalık özet e-postası taslağı oluştur."
+      },
+      "features": {
+        "title": "Platform özelliklerini keşfet",
+        "prompt": "Bu SaaS platformunun temel özelliklerini ve bunları nasıl kullanabileceğimi adım adım açıkla."
+      }
+    }
+  },
+  "billing": {
+    "activePlan": {
+      "title": "Aktif plan",
+      "manage": "Aboneliği yönet",
+      "noPlanTitle": "Aktif plan yok",
+      "noPlanDescription": "Ücretli özellikleri ve daha yüksek kullanım limitlerini açmak için bir plan seçin.",
+      "choosePlan": "Plan seç",
+      "renewsOn": "{date} tarihinde yenilenir",
+      "endsOn": "{date} tarihinde sona erer",
+      "trialEndsOn": "Deneme süresi {date} tarihinde sona eriyor",
+      "status": {
+        "active": "Aktif",
+        "trialing": "Deneme",
+        "past_due": "Vadesi geçmiş",
+        "canceled": "İptal edildi",
+        "free": "Ücretsiz"
+      },
+      "errors": {
+        "loadFailed": "Faturalandırma durumunuz yüklenemedi."
+      }
+    },
+    "pricing": {
+      "trial": "Ücretsiz {days} günlük deneme",
+      "seat": "{count, plural, one {# koltuk} other {# koltuk}}",
+      "perSeat": "/ koltuk"
+    }
+  },
+  "organizations": {
+    "settings": {
+      "logo": {
+        "title": "Organizasyon logosu",
+        "description": "Organizasyonunuzu temsil etmek için kare bir görsel yükleyin (PNG, JPEG veya WebP, en fazla 2MB).",
+        "uploadButton": "Logo yükle",
+        "uploading": "Yükleniyor…",
+        "fileTooBig": "Dosya çok büyük. Maksimum boyut 2MB'dir.",
+        "invalidType": "Desteklenmeyen görsel türü. PNG, JPEG veya WebP kullanın.",
+        "success": "Logo güncellendi.",
+        "removeButton": "Logoyu kaldır",
+        "removed": "Logo kaldırıldı."
+      },
+      "name": {
+        "title": "Organizasyon adı",
+        "description": "Ekipinize ve müşterilerinize gösterilen görünen adı güncelleyin.",
+        "label": "Ad",
+        "submit": "Kaydet",
+        "saving": "Kaydediliyor…",
+        "success": "Organizasyon adı güncellendi."
+      },
+      "delete": {
+        "title": "Organizasyonu sil",
+        "description": "Bu organizasyonu, tüm üyeleri, davetleri ve ilişkili verileri kalıcı olarak kaldırın. Bu işlem geri alınamaz.",
+        "trigger": "Organizasyonu sil",
+        "confirmLabel": "Onaylamak için organizasyon adını yazın",
+        "submit": "Organizasyonu sil",
+        "cancel": "İptal",
+        "success": "Organizasyon silindi."
+      }
+    },
+    "invitation": {
+      "title": "Davet edildiniz",
+      "heading": "{organizationName} kuruluşuna katılmak için davet edildiniz",
+      "description": "Takımla işbirliğine başlamak için daveti kabul edin.",
+      "accept": "Daveti kabul et",
+      "accepting": "Kabul ediliyor...",
+      "decline": "Reddet",
+      "declining": "Reddediliyor...",
+      "declinedView": "Davet reddedildi",
+      "success": "Davet eden kişiye bildirdik.",
+      "backToDashboard": "Panele dön",
+      "roleLabel": "Rol: {role}",
+      "errorEmailMismatch": "Bu davet başka bir e-posta adresine gönderildi",
+      "errorEmailMismatchDetail": "Daveti kabul etmek için daveti alan e-posta adresiyle giriş yapın.",
+      "errorExpired": "Davet süresi doldu",
+      "errorExpiredDetail": "Davet eden kişiden yeni bir davet göndermesini isteyin.",
+      "errorNotFound": "Davet bulunamadı",
+      "errorNotFoundDetail": "Davet bağlantısı geçersiz veya iptal edilmiş.",
+      "errorNotAvailable": "Davet mevcut değil",
+      "errorNotAvailableDetail": "Bu davete zaten yanıt verilmiş ve artık aktif değil.",
+      "role": {
+        "owner": "Sahip",
+        "admin": "Yönetici",
+        "member": "Üye",
+        "viewer": "İzleyici"
+      }
+    }
+  },
+  "settings": {
+    "apiKeys": {
+      "title": "API Anahtarları",
+      "description": "Nebutra'ya programlı erişim için API anahtarları oluşturun ve yönetin.",
+      "createButton": "API anahtarı oluştur",
+      "noPermission": "API anahtarlarını görüntüleme izniniz yok.",
+      "loading": "Yükleniyor…",
+      "loadError": "API anahtarları yüklenemedi.",
+      "createError": "API anahtarı oluşturulamadı.",
+      "revokeError": "API anahtarı iptal edilemedi.",
+      "empty": {
+        "title": "Henüz API anahtarı yok",
+        "cta": "İlk API anahtarınızı oluşturun"
+      },
+      "columns": {
+        "name": "Ad",
+        "prefix": "Önek",
+        "lastUsed": "Son Kullanım",
+        "scopes": "Kapsamlar",
+        "created": "Oluşturulma",
+        "actions": "İşlemler",
+        "never": "Asla"
+      },
+      "actions": {
+        "revoke": "İptal Et",
+        "revoking": "İptal ediliyor…",
+        "copy": "Kopyala",
+        "copied": "Kopyalandı",
+        "close": "Kapat",
+        "submit": "Anahtar oluştur",
+        "submitting": "Oluşturuluyor…"
+      },
+      "dialog": {
+        "title": "API anahtarı oluştur",
+        "description": "API anahtarları, harici sistemlerin sizin adınıza Nebutra ile iletişim kurmasını sağlar. Onları şifreler gibi koruyun.",
+        "nameLabel": "Ad",
+        "namePlaceholder": "örn. Üretim arka ucu",
+        "scopesLabel": "Kapsamlar",
+        "successWarning": "Bu anahtar yalnızca bir kez görünür. Kapatmadan önce kaydedin.",
+        "confirmClose": "Kapatmak bu anahtarı sonsuza dek gizler. Kaydedildiğinden emin olun."
+      }
+    },
+    "auditLog": {
+      "title": "Denetim Günlüğü",
+      "description": "Çalışma alanınızdaki her yönetici eylemini izleyin. Eylemci, işlem, varlık veya zaman aralığına göre filtreleyin.",
+      "empty": "Henüz denetim olayı yok",
+      "loadMore": "Daha fazla yükle",
+      "loading": "Yükleniyor…",
+      "forbidden": "Denetim günlüğüne erişmek için yönetici yetkisine ihtiyacınız var.",
+      "columns": {
+        "when": "Ne Zaman",
+        "actor": "Eylemci",
+        "action": "İşlem",
+        "entity": "Varlık",
+        "outcome": "Sonuç",
+        "ip": "IP"
+      },
+      "diff": {
+        "oldValue": "Eski değer",
+        "newValue": "Yeni değer"
+      },
+      "filters": {
+        "action": "Eylem",
+        "actionPlaceholder": "Eylem ara…",
+        "entityType": "Varlık türü",
+        "outcome": "Sonuç",
+        "outcomeSuccess": "Başarılı",
+        "outcomeFailure": "Başarısız",
+        "outcomePending": "Beklemede",
+        "startDate": "Başlangıç tarihi",
+        "endDate": "Bitiş tarihi",
+        "range24h": "Son 24 saat",
+        "range7d": "Son 7 gün",
+        "range30d": "Son 30 gün",
+        "reset": "Sıfırla",
+        "all": "Tümü"
+      }
+    },
+    "notifications": {
+      "title": "Bildirimler",
+      "description": "Her etkinlik türü ve her teslim kanalı için Nebutra'nın size nasıl ulaşacağını seçin.",
+      "actions": {
+        "resetAll": "Varsayılana sıfırla",
+        "save": "Kaydet"
+      },
+      "status": {
+        "saving": "Kaydediliyor…",
+        "saved": "Kaydedildi",
+        "error": "Kaydetme başarısız oldu. Lütfen tekrar deneyin."
+      },
+      "eventTypes": {
+        "security": {
+          "label": "Güvenlik uyarıları",
+          "description": "Oturum açma uyarıları, şifre değişiklikleri, iki faktörlü değişiklikler."
+        },
+        "billing": {
+          "label": "Faturalandırma",
+          "description": "Faturalar, ödeme hataları ve abonelik değişiklikleri."
+        },
+        "invitation": {
+          "label": "Ekip davetleri",
+          "description": "Bir organizasyona katılma davetleri, kabul veya reddedildi."
+        },
+        "activity": {
+          "label": "Ekip etkinliği",
+          "description": "Üye katılımları, rol değişiklikleri ve diğer çalışma alanı etkinlikleri."
+        },
+        "updates": {
+          "label": "Ürün güncellemeleri",
+          "description": "Yeni özellikler, değişiklik günlüğü öne çıkanları ve sürüm notları."
+        },
+        "marketing": {
+          "label": "Pazarlama",
+          "description": "Bülten ve ara sıra promosyonlar. Sadece izin verildiğinde gönderilir."
+        }
+      },
+      "channels": {
+        "in_app": {
+          "label": "Uygulama içi"
+        },
+        "email": {
+          "label": "E-posta"
+        },
+        "push": {
+          "label": "Push"
+        },
+        "sms": {
+          "label": "SMS"
+        }
+      }
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "Çalışma alanınız tarafından yayımlanan etkinliklere abone olun. Her yükü, uç noktanızın gizli anahtarıyla imzalıyoruz, böylece doğruluğunu doğrulayabilirsiniz.",
+      "create": {
+        "heading": "Yeni uç nokta",
+        "urlLabel": "Uç nokta URL'si",
+        "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
+        "eventsLegend": "Etkinlikler",
+        "submit": "Uç nokta oluştur",
+        "submitting": "Oluşturuluyor…",
+        "selectEvent": "En az bir olay seçin.",
+        "successTitle": "Uç nokta oluşturuldu. İmzalama sırrı yalnızca bir kez görünür.",
+        "successWarning": "Kapatmadan önce bunu uygulamanızın gizli anahtar yöneticisine kaydedin.",
+        "copy": "Kopyala",
+        "copied": "Kopyalandı"
+      },
+      "list": {
+        "heading": "Aktif uç noktalar",
+        "empty": "Henüz webhook uç noktası yok. Yukarıdan bir tane oluşturun.",
+        "loading": "Yükleniyor…",
+        "loadFailed": "Webhook'lar yüklenemedi",
+        "columns": {
+          "url": "URL",
+          "events": "Olaylar",
+          "status": "Durum",
+          "lastDelivered": "Son teslim",
+          "actions": "İşlemler"
+        },
+        "status": {
+          "active": "Aktif",
+          "disabled": "Devre dışı"
+        },
+        "actions": {
+          "edit": "Düzenle",
+          "enable": "Etkinleştir",
+          "disable": "Devre Dışı Bırak",
+          "viewDeliveries": "Teslimatları Görüntüle",
+          "delete": "Sil"
+        }
+      },
+      "deliveries": {
+        "heading": "Son Teslimatlar",
+        "close": "Kapat",
+        "loading": "Yükleniyor…",
+        "loadFailed": "Teslimatlar yüklenemedi",
+        "empty": "Henüz teslimat yok.",
+        "viewPayload": "İçeriği Görüntüle",
+        "hidePayload": "İçeriği Gizle",
+        "replay": "Yeniden Gönder",
+        "replaying": "Yeniden Gönderiliyor…",
+        "status": {
+          "success": "başarılı",
+          "failed": "başarısız",
+          "retrying": "yeniden deneniyor"
+        }
+      }
+    },
+    "appearance": {
+      "title": "Görünüm",
+      "theme": {
+        "title": "Tema",
+        "description": "Açık, koyu veya sistem tercihine uygun tema kullanın."
+      },
+      "themePreset": {
+        "title": "Tema ön ayarı",
+        "description": "Tema Atölyesi'nden herhangi bir temayı tüm uygulamada kullanın. Aşağıdaki kontroller, temayı ince ayar yapmak için üzerine eklenir.",
+        "search": "Temaları ara…",
+        "searchLabel": "Temaları ara",
+        "default": "Varsayılan",
+        "defaultMood": "Nebutra base palette",
+        "active": "Aktif",
+        "empty": "Aramanızla eşleşen tema bulunamadı.",
+        "count": "{count} tema"
+      },
+      "themeEditor": {
+        "title": "Tema",
+        "description": "Bir ön ayar seçin, bir DESIGN.md dosyası içe aktarın ve ardından aşağıdaki belirteçleri ince ayarlayın.",
+        "selectLabel": "Tema ön ayarı",
+        "import": "İçe aktar",
+        "copy": "Temayı kopyala",
+        "copied": "Kopyalandı",
+        "copyError": "Kopyalama başarısız",
+        "custom": "Özel"
+      },
+      "designMd": {
+        "title": "DESIGN.md içe aktar",
+        "description": "Tüm uygulamada renkleri, yarıçapı, yazı tiplerini, boşlukları ve gölgeleri uygulamak için bir DESIGN.md yapıştırın veya yükleyin — yeniden yüklemeler arasında kalıcı olarak saklanır.",
+        "applied": "Uygulandı:",
+        "remove": "Kaldır"
+      },
+      "themeMode": {
+        "label": "Tema modu",
+        "light": "Açık",
+        "dark": "Koyu",
+        "system": "Sistem"
+      },
+      "accent": {
+        "title": "Vurgu rengi",
+        "description": "Uygulamada aktif durumları renklendirecek bir marka vurgusu seçin.",
+        "label": "Vurgu rengi",
+        "options": {
+          "default": "Varsayılan",
+          "blue": "Mavi",
+          "cyan": "Cyan",
+          "violet": "Menekşe",
+          "pink": "Pembe",
+          "amber": "Amber",
+          "green": "Yeşil",
+          "red": "Kırmızı"
+        }
+      },
+      "colors": {
+        "title": "Renkler",
+        "description": "Vurgu, arka plan ve ön plan.",
+        "background": {
+          "label": "Arka plan",
+          "description": "Yüzey arka plan rengini geçersiz kıl."
+        },
+        "foreground": {
+          "label": "Ön plan",
+          "description": "Gövde metin rengini geçersiz kıl."
+        },
+        "resetToDefault": "Varsayılana sıfırla"
+      },
+      "fontFamily": {
+        "uiLabel": "Arayüz yazı tipi",
+        "uiDescription": "Arayüz genelinde kullanılan yazı tipi ailesi.",
+        "codeLabel": "Kod yazı tipi",
+        "codeDescription": "Kod alanlarında kullanılan yazı tipi ailesi.",
+        "options": {
+          "ui": {
+            "theme": "Tema varsayılanı",
+            "system": "Sistem",
+            "geist": "Geist",
+            "inter": "Inter",
+            "sf": "SF Pro"
+          },
+          "code": {
+            "theme": "Tema varsayılanı",
+            "system": "Sistem mono",
+            "geist-mono": "Geist Mono",
+            "sf-mono": "SF Mono",
+            "jetbrains-mono": "JetBrains Mono"
+          }
+        }
+      },
+      "contrast": {
+        "title": "Kontrast",
+        "description": "Metin kontrastını ince ayarla (50 = değişiklik yok).",
+        "label": "Kontrast seviyesi"
+      },
+      "pointerCursor": {
+        "title": "İmleç işaretini kullan",
+        "description": "Etkileşimli öğelerin üzerine gelindiğinde işaretçi imlecine geç.",
+        "label": "Etkileşimli öğelerde işaretçi imleci"
+      },
+      "diffMarkers": {
+        "title": "Fark işaretleri",
+        "description": "Her değiştirilen satırda renk bantları veya +/- işaretleri göster.",
+        "label": "Fark işareti stili",
+        "color": "Renk",
+        "plusminus": "+/-"
+      },
+      "fontSmoothing": {
+        "title": "Yazı tipi yumuşatma",
+        "description": "macOS yerel yazı tipi antialiasing uygulayın.",
+        "label": "Yerel yazı tipi yumuşatma"
+      },
+      "typography": {
+        "title": "Tipografi",
+        "description": "Arayüz ve kod alanları için temel yazı tipi boyutları.",
+        "uiFontSize": "Arayüz yazı tipi boyutu",
+        "uiFontSizeDescription": "Temel arayüz yazı tipi boyutunu ayarlayın.",
+        "codeFontSize": "Kod yazı tipi boyutu",
+        "codeFontSizeDescription": "Temel kod yazı tipi boyutunu ayarlayın."
+      },
+      "fontSize": {
+        "followTheme": "Tema",
+        "customize": "Özelleştir"
+      },
+      "motion": {
+        "title": "Hareketi azalt",
+        "description": "Animasyonları azaltın veya sistem tercihine uyun.",
+        "label": "Hareket tercihi",
+        "system": "Sistem",
+        "on": "Açık",
+        "off": "Kapalı"
+      },
+      "surface": {
+        "title": "Yarı saydam kenar çubuğu",
+        "description": "Kenar çubuğuna yarı saydam bir malzeme uygulayın."
+      },
+      "transparency": {
+        "label": "Yarı saydam kenar çubuğu",
+        "description": "Kenar çubuğına yarı saydam bir malzeme uygulayın."
+      }
+    }
+  },
+  "legal": {
+    "version": "Sürüm",
+    "effective": "Geçerlilik",
+    "notFound": "Bu belge mevcut değil.",
+    "backHome": "Ana sayfaya dön"
+  },
+  "commandPalette": {
+    "ariaLabel": "Komut paleti",
+    "placeholder": "Bir komut yazın veya arayın…",
+    "empty": "Sonuç bulunamadı.",
+    "sections": {
+      "navigation": "Gezinme",
+      "actions": "Eylemler",
+      "settings": "Ayarlar",
+      "account": "Hesap",
+      "admin": "Yönetici",
+      "help": "Yardım"
+    },
+    "commands": {
+      "nav": {
+        "home": "Ana Sayfa",
+        "settings": "Ayarlar",
+        "billing": "Faturalandırma",
+        "team": "Ekip",
+        "apiKeys": "API Anahtarları",
+        "notifications": "Bildirimler",
+        "auditLog": "Denetim Günlüğü",
+        "webhooks": "Webhooks",
+        "admin": "Yönetici"
+      },
+      "action": {
+        "inviteMember": "Takım üyesi davet et",
+        "createApiKey": "API anahtarı oluştur",
+        "switchOrganization": "Organizasyonu değiştir"
+      },
+      "settings": {
+        "themeLight": "Açık temaya geç",
+        "themeDark": "Koyu temaya geç",
+        "themeSystem": "Sistem temasını kullan"
+      },
+      "account": {
+        "signOut": "Oturumu kapat"
+      },
+      "help": {
+        "reportIssue": "Sorun bildir",
+        "shortcuts": "Klavye kısayolları"
+      }
+    }
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "Gizlilik tercihleriniz",
+      "description": "Deneyiminizi iyileştirmek, site trafiğini analiz etmek ve içeriği kişiselleştirmek için çerezler kullanıyoruz. İzin vermek istediğiniz kategorileri seçin."
+    },
+    "button": {
+      "acceptAll": "Tümünü kabul et",
+      "savePreferences": "Tercihleri kaydet"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "Gerekli",
+        "description": "Sitenin çalışması için gereklidir. Devre dışı bırakılamaz."
+      },
+      "functional": {
+        "label": "İşlevsel",
+        "description": "Tercihlerinizi (dil, tema, düzen) hatırlar."
+      },
+      "analytics": {
+        "label": "Analitik",
+        "description": "Ürünü geliştirebilmemiz için anonim kullanım verileri."
+      },
+      "marketing": {
+        "label": "Pazarlama",
+        "description": "Üçüncü taraf platformlarda kişiselleştirilmiş reklamlar ve yeniden hedefleme."
+      }
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "Bildirimler",
+      "description": "Tüm bildirimleriniz tek bir yerde.",
+      "filter": {
+        "all": "Tümü",
+        "unread": "Okunmamış"
+      },
+      "actions": {
+        "markAllRead": "Tümünü okundu olarak işaretle",
+        "markRead": "Okundu olarak işaretle",
+        "archive": "Arşivle",
+        "loadMore": "Daha fazla yükle",
+        "loading": "Yükleniyor...",
+        "selected": "{count} seçildi"
+      },
+      "empty": {
+        "all": "Her şey güncel.",
+        "unread": "Okunmamış bildirim yok."
+      },
+      "errors": {
+        "load": "Bildirimler yüklenemedi.",
+        "network": "Ağ hatası. Lütfen tekrar deneyin.",
+        "markRead": "Bildirim okundu olarak işaretlenemedi.",
+        "archive": "Bildirim arşivlenemedi.",
+        "bulkMarkRead": "Bazı bildirimler okundu olarak işaretlenemedi."
+      },
+      "inbox": {
+        "noBackend": "Gelen kutusu, kalıcı bir bildirim altyapısı gerektirir. Sağlayıcı yapılandırmanızı kontrol edin.",
+        "emptyCaughtUp": "Gelen kutusu temiz.",
+        "emptyChangelog": "Değişiklik günlüğü güncellemeleri burada görünecek."
+      }
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Günaydın",
+      "afternoon": "İyi öğleden sonra",
+      "evening": "İyi akşamlar"
+    },
+    "home": {
+      "connectorsPill": "Uygulamanızı bağlayıcılarla güçlendirin",
+      "subtitle": "Bir istem bırakın, her yerden ⌘K'ye basın veya doğrudan bir çalışma alanı yüzeyine geçin.",
+      "promptPlaceholder": "Aklınızda ne var?",
+      "actions": {
+        "connect": "Entegrasyon bağla",
+        "theme": "Tema Alanı",
+        "audit": "Denetim günlüğü",
+        "billing": "Faturalama"
+      }
+    },
+    "commandSurface": {
+      "noAuth": "Seçilen sağlayıcı için kimlik doğrulama yapılandırılmadı. Kullanıcı oturumlarını etkinleştirmek için sağlayıcı gizli anahtarlarını ayarlayın."
+    },
+    "commandCenter": {
+      "description": "Tek bir eylemle başlayın: Sailor'a sorun, çalışma alanı sinyallerini inceleyin veya işleri bir otomasyon yüzeyine yönlendirin.",
+      "openSailor": "Sailor AI'yı aç",
+      "viewAnalytics": "Analitikleri görüntüle"
+    },
+    "workspaceSnapshot": {
+      "title": "Çalışma Alanı Anlık Görüntüsü",
+      "description": "En son depo günü · {day}",
+      "viewAnalytics": "Analitikleri görüntüle →",
+      "metrics": {
+        "activeUsers": "Aktif Kullanıcılar",
+        "totalEvents": "Toplam Olay",
+        "conversions": "Dönüşümler",
+        "revenue": "Gelir"
+      },
+      "details": {
+        "activeUsers": "Oturum açmış kullanıcılar",
+        "totalEvents": "Yakalanan olaylar",
+        "conversions": "Nitelikli işlemler",
+        "revenue": "Tahakkuk ettirilen gelir"
+      },
+      "meta": {
+        "snapshot": "Anlık görüntü",
+        "cadence": "Süreklilik",
+        "tenant": "Kiracı",
+        "daily": "Günlük",
+        "latestDay": "{day}",
+        "users": "Kiracı kullanıcıları",
+        "events": "Olay akışı",
+        "funnel": "Huni",
+        "billing": "Faturalandırma"
+      }
+    },
+    "documentPipeline": {
+      "title": "Belge iş akışı",
+      "description": "Kaynak dosyaları kaynak görev kuyruğuna gönderin.",
+      "intakeTitle": "Belge alımı",
+      "intakeDescription": "PDF, Markdown, metin veya Word belgesi",
+      "chooseDocument": "Belge seç",
+      "startParseTask": "Ayrıştırma görevini başlat",
+      "queued": "Sırada",
+      "fileInputLabel": "Belge dosyası",
+      "fallbackError": "Belge görevi başarısız oldu.",
+      "taskStatus": "Görev durumu",
+      "progressLabel": "Görev ilerlemesi",
+      "refreshStatus": "Yenile",
+      "cancelTask": "İptal et",
+      "statusError": "Görev durumu yenilenemedi.",
+      "cancelError": "Görev iptal edilemedi.",
+      "statusQueued": "Sırada",
+      "statusRunning": "Çalışıyor",
+      "statusSucceeded": "Başarılı",
+      "statusFailed": "Başarısız",
+      "statusCancelled": "İptal edildi",
+      "resultReady": "Sonuç hazır",
+      "taskError": "Görev hatası",
+      "updatedAt": "Güncellendi"
+    },
+    "recentSessions": {
+      "title": "Bıraktığınız yerden devam edin",
+      "subtitle": "{count, plural, =0 {Oturum yok} =1 {1 son oturum} other {# son oturum}}",
+      "viewAll": "Tümünü görüntüle →",
+      "newChat": "Yeni sohbet",
+      "untitled": "Başlıksız oturum",
+      "messageCount": "{count, plural, =1 {1 mesaj} other {# mesaj}}"
+    },
+    "gettingStarted": {
+      "title": "Başlangıç",
+      "description": "{done}/{total} tamamlandı · tam çalışma alanını açmak için kurulumu bitirin",
+      "progressLabel": "Kurulum ilerlemesi",
+      "tasks": {
+        "team": {
+          "label": "Bir takım arkadaşını davet et",
+          "description": "Çalışma alanınıza en az bir işbirlikçi ekleyin."
+        },
+        "api": {
+          "label": "Bir API anahtarı oluşturun",
+          "description": "Çalışma alanı uç noktalarınıza programlı erişim."
+        },
+        "integration": {
+          "label": "Bir entegrasyon bağlayın",
+          "description": "Stripe, Slack, webhooks, kuyruklar ve daha fazlası."
+        },
+        "ai": {
+          "label": "Sailor AI'yi Aç",
+          "description": "Sohbet, veri veya iş akışı modunu deneyin."
+        }
+      }
+    }
+  },
+  "Sidebar": {
+    "projects": "Projeler",
+    "noThreads": "Konu yok",
+    "expandAll": "Tümünü genişlet",
+    "collapseAll": "Tümünü daralt",
+    "sectionMore": "Daha fazla seçenek",
+    "newProject": "Yeni proje",
+    "restoredGroups": "Daha önce genişletilmiş gruplar geri yüklendi",
+    "newProjectPlaceholder": "Proje adı",
+    "newProjectDefault": "Adsız",
+    "newProjectSuccess": "Proje oluşturuldu",
+    "newProjectError": "Proje oluşturulamadı",
+    "sortBy": "Sıralama",
+    "sortRecent": "Son aktif",
+    "sortAlphabetical": "Alfabetik",
+    "sortCreated": "Oluşturulma tarihi",
+    "archiveAll": "Tümünü arşivle",
+    "comingV2": "v2'de geliyor"
+  },
+  "startupOs": {
+    "milestone": {
+      "firstRoom": "İlk oda hazır.",
+      "firstFolder": "Birçok şirket bir klasör olarak başlar.",
+      "firstTable": "İlk masada ikinci bir koltuk var.",
+      "firstSignal": "Gerçek dünya konuşmaya başladı.",
+      "firstShip": "Dünya bunu ilk kez görüyor.",
+      "firstBeliever": "Bugünden itibaren artık sadece kendiniz için inşa etmiyorsunuz.",
+      "firstRevenue": "Hayal artık nakit akışına sahip.",
+      "firstReturn": "Dönüş, ziyaretten daha önemlidir.",
+      "firstTeam": "Üç kişi bir şirket kurmaya başlayabilir.",
+      "firstCrowd": "İlk masa kalabalıklaşıyor.",
+      "firstReset": "Yeniden başlamak daha dürüst bir başlangıçtır.",
+      "firstPublic": "Geleceğin bir parçasını herkese açın.",
+      "firstDemo": "Bu bir gösteri değil. Bir test.",
+      "graduation": "Temellerin ötesine geçtin. Önündeki yol daha güçlü araçlar gerektiriyor."
+    },
+    "emptyState": {
+      "default": "Birçok şirket bir klasör olarak başlar.",
+      "integrations": "Henüz bağlantı yapılandırılmadı.",
+      "creditActivity": "İlk isteğinizden sonra kredi aktivitesi burada görünecek.",
+      "usageData": "Organizasyonunuz istek yapmaya başladığında kullanım verileri görünecek.",
+      "apiKeys": "Henüz anahtar yok.",
+      "apiKeysCta": "İlk anahtarınızı oluşturun",
+      "teamMembers": "Bir kişi başlayabilir. Birkaç kişi inşa edebilir.",
+      "cofounders": "Sizlere ilk inanan kişi henüz görünmedi.",
+      "cofoundersDescription": "Siz ve başka bir kurucu ortak ilgi gösterdiğinizde, burada görünecekler.",
+      "cofoundersAction": "Kurucu ortaklar bulun",
+      "growthChart": "Aktivite başladığında trend verileri görünecek.",
+      "revenueChart": "İşlemler başladığında gelir verileri görünecek.",
+      "webhookDeliveries": "İlk olaydan sonra teslimatlar burada görünecek.",
+      "webhookEndpoints": "Olayları almaya başlamak için yukarıya bir uç nokta ekleyin.",
+      "accessInvites": "Henüz davet kodu oluşturulmadı."
+    },
+    "success": "İlk oda hazır.",
+    "failure": "Yeniden başlatmak daha dürüst bir başlangıçtır.",
+    "errors": {
+      "loadMatches": "Eşleşmeler yüklenemedi.",
+      "loadMatchesDescription": "Bizim tarafımızda bir sorun oluştu. Tekrar denemek için sayfayı yenileyin.",
+      "loadWebhookDeliveries": "Teslimatlar yüklenemedi.",
+      "replayWebhookDelivery": "Yeniden oynatma başarılı olmadı.",
+      "loadWebhookEndpoints": "Uç noktalar yüklenemedi."
+    },
+    "team": "Tek başına başlanabilir. Birkaç kişiyle inşa edilir.",
+    "revenue": "Hayal artık nakit akışına sahip.",
+    "growth": "Sinyal güçleniyor.",
+    "deployment": {
+      "primary": "Dünya ilk kez görüyor.",
+      "echo": "Sonunda localhost'tan çıktı."
+    },
+    "onboarding": "Hazır olmanıza gerek yok. Başlamanız gerekiyor.",
+    "graduation": "Temellerin ötesine geçtiniz. Öndeki yol için {tool} deneyin.",
+    "company": {
+      "emptyTitle": "İlk bağlam kuleniz burada başlıyor.",
+      "emptyDescription": "Startup OS'ta bir şirket derleyin ve bağlam kulesini görüntüleyin veya düzenleyin.",
+      "emptyAction": "Startup OS'i Aç",
+      "notice": {
+        "needsProvider": "Alanları otomatik doldurmak için bir AI sağlayıcı anahtarı bağlayın.",
+        "generateFailed": "Oluşturma işlemi tamamlanmadı.",
+        "saveFailed": "Değişiklikleriniz kaydedilmedi."
+      },
+      "action": {
+        "save": "Kaydet",
+        "saving": "Kaydediliyor…",
+        "cancel": "İptal",
+        "open": "Startup OS'i Aç"
+      }
+    },
+    "execution": {
+      "noBets": "Henüz bahis yok.",
+      "noRuns": "Aktif çalıştırma yok."
+    },
+    "fileTree": {
+      "empty": "Bu projede henüz dosya yok."
+    }
+  },
+  "selectOrg": {
+    "invitation": {
+      "emptyTitle": "Çalışma alanı oluşturuluyor.",
+      "emptyDescription": "Davet henüz senkronize ediliyor olabilir. Sayfayı yenileyin veya ayrı bir çalışma alanı oluşturun."
+    },
+    "billing": {
+      "emptyTitle": "Ödeme ayarlarına geçmeden önce bir çalışma alanı oluşturun.",
+      "emptyDescription": "Ödeme işlemleri aktif bir çalışma alanı gerektirir. Önce bir tane oluşturun, ardından ödeme ayarlarına dönün."
+    },
+    "default": {
+      "emptyTitle": "İlk çalışma alanı burada başlıyor.",
+      "emptyDescription": "Başlamak için bir çalışma alanı oluşturun."
+    }
+  }
+}

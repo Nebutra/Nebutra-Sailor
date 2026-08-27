@@ -1,0 +1,122 @@
+{
+  "allocation-loss": {
+    "alt": {
+      "en": "Three-beat plate: unused supply, a meeting that never happened, unused demand",
+      "zh": "三格图：闲置供给、从未发生的相遇、闲置需求"
+    },
+    "caption": {
+      "en": "Allocation Loss — value that was never created because the meeting never happened.",
+      "zh": "配置损耗——因为相遇没有发生而从未被创造的价值。"
+    }
+  },
+  "why-now": {
+    "alt": {
+      "en": "Three-beat plate: more factors, worse matching, seven signals converging on one gap",
+      "zh": "三格图：要素更多、匹配更差、七个信号汇入同一个缺口"
+    },
+    "caption": {
+      "en": "Why now — seven structural signals point at the same allocation gap.",
+      "zh": "为什么是现在——七个结构性信号指向同一个配置缺口。"
+    }
+  },
+  "future-2036": {
+    "alt": {
+      "en": "Three-beat plate: the sentence, four people meet, the 2036 field",
+      "zh": "三格图：那句话、四个人相遇、2036 的网络"
+    },
+    "caption": {
+      "en": "2036 — from one sentence to a network of verified connections.",
+      "zh": "2036——从一句话到一张被验证的连接网络。"
+    }
+  },
+  "principles": {
+    "alt": {
+      "en": "Three-beat plate: desire, trust, learning as seven principles",
+      "zh": "三格图：欲望、信任、学习构成的七条原则"
+    },
+    "caption": {
+      "en": "Principles — desire first, evidence over title, outcomes teach the network.",
+      "zh": "原则——欲望优先，作品重于头衔，结果教会网络。"
+    }
+  },
+  "contribution": {
+    "alt": {
+      "en": "Three-beat plate: idea, persistence, verified outcome",
+      "zh": "三格图：想法、坚持、被验证的结果"
+    },
+    "caption": {
+      "en": "Proof of Contribution — evidence of work and persistence, not a score on a person.",
+      "zh": "贡献证明——记录工作与坚持的证据，而不是给人打分。"
+    }
+  },
+  "category": {
+    "alt": {
+      "en": "Three-beat plate: people intelligence, creativity allocation, production factor network",
+      "zh": "三格图：人才情报、创造力配置、生产要素网络"
+    },
+    "caption": {
+      "en": "Category — people search is the door, allocation results are the destination.",
+      "zh": "品类——人才搜索是入口，配置结果才是终点。"
+    }
+  },
+  "radar": {
+    "alt": {
+      "en": "Three-beat plate: the query, three evidenced hits, the introduction",
+      "zh": "三格图：一次提问、三个带证据的结果、一次引荐"
+    },
+    "caption": {
+      "en": "Sleptons Radar — describe the person you wish existed, then meet them.",
+      "zh": "Sleptons Radar——描述你希望存在的那个人，然后与他相遇。"
+    }
+  },
+  "five-graphs": {
+    "alt": {
+      "en": "Three-beat plate: capability and creativity, desire and trust, outcome",
+      "zh": "三格图：能力与创造力、欲望与信任、结果"
+    },
+    "caption": {
+      "en": "Five graphs, one allocation network — the Outcome Graph is the part that compounds.",
+      "zh": "五张图谱，一张配置网络——结果图谱是会复利的那一层。"
+    }
+  },
+  "flywheel": {
+    "alt": {
+      "en": "Three-beat plate: find and claim, desire and intro, outcome and learning",
+      "zh": "三格图：发现与认领、欲望与引荐、结果与学习"
+    },
+    "caption": {
+      "en": "The product in six acts — match, interact, outcome, learning.",
+      "zh": "产品的六幕——匹配、互动、结果、学习。"
+    }
+  },
+  "personas": {
+    "alt": {
+      "en": "Three-beat plate: the ICP trio, the creator, company and capital",
+      "zh": "三格图：三类核心用户、创造者、公司与资本"
+    },
+    "caption": {
+      "en": "Who starts the network — seekers, builders and organizers make the first liquidity.",
+      "zh": "谁先启动网络——寻找者、建造者与组织者构成最初的流动性。"
+    }
+  },
+  "tagline": {
+    "alt": {
+      "en": "Three-beat plate: describe, meet, belong",
+      "zh": "三格图：描述、相遇、各归其位"
+    },
+    "caption": {
+      "en": "Put potential in motion. Everything, where it belongs.",
+      "zh": "让潜能流动起来。让一切各归其位。"
+    }
+  },
+  "roadmap": {
+    "alt": {
+      "en": "Three-beat plate: year one, year two, year three of the long route",
+      "zh": "三格图：长路线的第一年、第二年、第三年"
+    },
+    "caption": {
+      "en": "The long route — from people and creativity to a production factor network.",
+      "zh": "长路线——从人与创造力，走向生产要素网络。"
+    }
+  }
+}

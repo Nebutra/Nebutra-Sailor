@@ -1,0 +1,169 @@
+---
+# ArgoCD Application — Nebutra Sailor (GitOps)
+#
+# Prerequisites:
+#   kubectl create namespace argocd
+#   kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+#
+# Then apply this file:
+#   kubectl apply -f infra/iac/k8s/argocd/application.yaml
+#
+# ArgoCD will continuously reconcile the cluster state with the Git repository.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nebutra-sailor
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: nebutra-sailor
+    app.kubernetes.io/part-of: nebutra
+  annotations:
+    # Notify Slack on sync events (requires argocd-notifications installed)
+    notifications.argoproj.io/subscribe.on-sync-succeeded.slack: platform-deploys
+    notifications.argoproj.io/subscribe.on-sync-failed.slack: platform-alerts
+    notifications.argoproj.io/subscribe.on-health-degraded.slack: platform-alerts
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: nebutra
+
+  source:
+    repoURL: https://github.com/nebutra/nebutra-sailor
+    targetRevision: main
+    path: infra/iac/k8s/overlays/prod
+    # Kustomize is auto-detected from kustomization.yaml
+    kustomize:
+      # CI pipeline writes the image tag here via:
+      #   kustomize edit set image nebutra/web=nebutra/web:<sha>
+      images: []
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: nebutra
+
+  syncPolicy:
+    automated:
+      # Automatically apply changes when Git changes — safe because we use
+      # pull-request review + CI gating before merging to main.
+      prune: true        # delete resources removed from Git
+      selfHeal: true     # revert manual kubectl changes back to Git state
+      allowEmpty: false  # never prune everything (safety net)
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+      - ApplyOutOfSyncOnly=true   # only apply what has drifted (faster syncs)
+      - RespectIgnoreDifferences=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+
+  # Ignore fields managed at runtime (replica counts managed by HPA, status fields, etc.)
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas   # HPA controls this at runtime
+    - group: ""
+      kind: Secret
+      jsonPointers:
+        - /data            # ExternalSecrets controller populates data
+    - group: autoscaling
+      kind: HorizontalPodAutoscaler
+      jsonPointers:
+        - /spec/metrics    # KEDA may inject custom metrics
+
+  revisionHistoryLimit: 10
+---
+# ArgoCD Project — scoped permissions for Nebutra applications
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: nebutra
+  namespace: argocd
+spec:
+  description: Nebutra SaaS platform — all environments
+
+  sourceRepos:
+    - https://github.com/nebutra/nebutra-sailor
+
+  destinations:
+    - namespace: nebutra
+      server: https://kubernetes.default.svc
+    - namespace: nebutra-staging
+      server: https://kubernetes.default.svc
+    - namespace: nebutra-dev
+      server: https://kubernetes.default.svc
+    - namespace: monitoring
+      server: https://kubernetes.default.svc
+    - namespace: argocd
+      server: https://kubernetes.default.svc
+
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+    - group: rbac.authorization.k8s.io
+      kind: ClusterRole
+    - group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+    - group: kyverno.io
+      kind: ClusterPolicy
+
+  namespaceResourceBlacklist:
+    # Prevent ArgoCD from managing itself
+    - group: argoproj.io
+      kind: Application
+
+  roles:
+    - name: platform-team
+      description: Platform engineers — full sync + override
+      policies:
+        - p, proj:nebutra:platform-team, applications, *, nebutra/*, allow
+      groups:
+        - nebutra:platform
+    - name: dev-readonly
+      description: Developers — view only
+      policies:
+        - p, proj:nebutra:dev-readonly, applications, get, nebutra/*, allow
+      groups:
+        - nebutra:engineers
+
+  syncWindows:
+    # Production syncs allowed only during business hours (UTC+8) on weekdays
+    - kind: allow
+      schedule: "0 2 * * 1-5"   # 10:00–22:00 Asia/Shanghai
+      duration: 12h
+      applications: ["nebutra-sailor"]
+      manualSync: true           # manual syncs always allowed
+---
+# Staging application (auto-deploys from develop branch, no sync windows)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nebutra-sailor-staging
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: nebutra-sailor
+    environment: staging
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: nebutra
+  source:
+    repoURL: https://github.com/nebutra/nebutra-sailor
+    targetRevision: develop
+    path: infra/iac/k8s/overlays/staging
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: nebutra-staging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+  revisionHistoryLimit: 5

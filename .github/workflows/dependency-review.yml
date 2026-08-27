@@ -1,0 +1,45 @@
+name: Dependency Review
+
+# Checks new dependencies introduced in PRs for known vulnerabilities.
+# Blocks merge on High/Critical CVEs; warns on Medium.
+#
+# Requires GitHub dependency graph support. Set repository variable
+# DEPENDENCY_REVIEW_ENABLED=true after security analysis is enabled.
+
+on:
+  pull_request:
+    branches: [main, develop]
+
+permissions: read-all
+
+jobs:
+  dependency-review:
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+      security-events: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Dependency Review
+        if: vars.DEPENDENCY_REVIEW_ENABLED == 'true'
+        uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48 # v4
+        with:
+          # Block on High/Critical — warn on Medium/Low
+          fail-on-severity: high
+          # Allow GPL-licensed packages (monorepo template, not shipping a product)
+          allow-licenses: MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, ISC, CC0-1.0, Unlicense, LGPL-2.1, LGPL-3.0, GPL-2.0, GPL-3.0, MPL-2.0, AGPL-3.0
+          # Comment a summary on the PR
+          comment-summary-in-pr: always
+          # Warn about packages not in the license allowlist
+          warn-only: false
+
+      - name: Dependency Review disabled
+        if: vars.DEPENDENCY_REVIEW_ENABLED != 'true'
+        run: |
+          echo "::notice::Dependency Review skipped. Enable GitHub dependency graph/security analysis and set DEPENDENCY_REVIEW_ENABLED=true to make this check blocking."

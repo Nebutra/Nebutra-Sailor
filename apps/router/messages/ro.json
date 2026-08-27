@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — piață de API-uri",
+    "titleTemplate": "%s | Router {brandName}",
+    "description": "Piață de API-uri pentru toate modelele · plătește pe măsură ce folosești · gestionează cheile și portofelul · încearcă rapid."
+  },
+  "admin": {
+    "dashboard": "Prezentare generală",
+    "keys": "Chei API",
+    "wallet": "Portofel",
+    "docs": "Documentație",
+    "title": "Administrator",
+    "backToMarket": "Înapoi la piață",
+    "quickUse": "Utilizare rapidă"
+  },
+  "chrome": {
+    "searchPlaceholder": "Ce vrei să faci cu AI?",
+    "search": "Caută",
+    "locale": "Limbă",
+    "currency": "Monedă",
+    "collapseSidebar": "Restrânge bara laterală",
+    "expandSidebar": "Extinde bara laterală",
+    "home": "Acasă",
+    "adminConsole": "Admin",
+    "quickUse": "Utilizare rapidă",
+    "support": "Suport",
+    "apiDocs": "Documentație API",
+    "integrationHelp": "Ghid de integrare",
+    "aiRecommend": "Recomandări AI",
+    "market": "Piață",
+    "usageTitle": "Utilizare rapidă"
+  },
+  "channels": {
+    "app": "Piața de aplicații",
+    "api": "Piața de API-uri",
+    "models": "Catalog modele",
+    "client": "Client"
+  },
+  "market": {
+    "new": "Nou",
+    "hot": "Popular",
+    "forYou": "Pentru tine",
+    "grid": "Grilă",
+    "list": "Listă",
+    "apiShelf": "Raft API",
+    "toolShelf": "Raft instrumente",
+    "categories": "Categorii",
+    "apps": "Aplicații",
+    "newRelease": "Lansare nouă",
+    "forgeTitle": "Spațiu de lucru instrumente Forge",
+    "forgeBlurb": "Transformări de text, codec-uri, formulare și instrumente compozabile. Laboratorul de piață al aplicațiilor indică către Forge.",
+    "openForge": "Deschide Forge →",
+    "allApi": "Toate API-urile →",
+    "all": "Toate →",
+    "viewAll": "Vezi toate {label} →",
+    "gridView": "Vizualizare grilă",
+    "listView": "Vizualizare listă",
+    "hiTitle": "Platformă de resurse AI pentru întreprinderi",
+    "hiSubtitle": "Potrivește fiecare nevoie cu AI-ul potrivit",
+    "sellable": "Vândabil",
+    "walletTopup": "Reîncarcă"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "Modele de limbaj",
+      "hint": "Chat · raționament"
+    },
+    "image-gen": {
+      "label": "Generare de imagini",
+      "hint": "Text în imagine"
+    },
+    "image-edit": {
+      "label": "Editare de imagini",
+      "hint": "Editare · matting"
+    },
+    "video": {
+      "label": "Generare video",
+      "hint": "Text-to-video"
+    },
+    "audio": {
+      "label": "Audio și video",
+      "hint": "Vocă · transcriere"
+    },
+    "data": {
+      "label": "Informații",
+      "hint": "Recuperare · extragere"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "Augmentat cu cunoștințe"
+    },
+    "tools": {
+      "label": "API-uri de instrumente",
+      "hint": "Agent · instrumente"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "Boți",
+      "chips": "Chat bots · drawing bots · cunoștințe"
+    },
+    "productivity": {
+      "label": "Productivitate",
+      "chips": "Arena modele · scriere AI"
+    },
+    "academic": {
+      "label": "Academic",
+      "chips": "Set de instrumente PDF · Căutare brevete AI"
+    },
+    "image": {
+      "label": "Instrumente imagine",
+      "chips": "Studio 3D · Pânză"
+    },
+    "audio": {
+      "label": "Audio",
+      "chips": "Vorbire · Muzică AI"
+    },
+    "code": {
+      "label": "Cod",
+      "chips": "Generator web · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "Prezentare generală",
+    "keys": "Chei",
+    "wallet": "Portofel",
+    "use": "Încearcă",
+    "docs": "Documentație",
+    "models": "Mai multe"
+  }
+}

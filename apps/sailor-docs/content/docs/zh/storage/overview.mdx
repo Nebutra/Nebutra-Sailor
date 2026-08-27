@@ -1,0 +1,146 @@
+---
+title: 存储概览
+description: Nebutra 的提供商无关文件存储 — 通过 @nebutra/uploads 支持预签名 URL、分片上传和断点续传。
+---
+
+Nebutra 通过 `@nebutra/uploads` 提供统一的文件存储抽象层。无论文件存储在 AWS S3、Cloudflare R2 还是任何兼容 S3 的后端，应用代码都调用同一套 API。切换提供商只需修改环境变量，无需更改任何代码。
+
+## 架构
+
+```
+┌──────────────────────────────────────┐
+│           浏览器 / 客户端             │
+│  (React、移动应用、CLI)               │
+└──────────────┬───────────────────────┘
+               │ 1. 请求上传 URL
+┌──────────────▼───────────────────────┐
+│         API Route / Server Action    │
+│   getUploadProvider() → 预签名 URL   │
+│   或分片上传会话                       │
+└──────────────┬───────────────────────┘
+               │ 2. 签名 URL 返回给客户端
+┌──────────────▼───────────────────────┐
+│         客户端直接上传                │
+│   PUT {presignedUrl} — 不经过代理     │
+└──────────────┬───────────────────────┘
+               │ 3. 文件进入存储桶
+┌──────────────▼───────────────────────┐
+│     AWS S3 / Cloudflare R2 / MinIO   │
+│     存储桶: nebutra-uploads          │
+└──────────────┬───────────────────────┘
+               │ 4. 通过 CDN 提供服务
+┌──────────────▼───────────────────────┐
+│        CloudFront / R2 公共 URL      │
+│        (私有文件使用 getSignedUrl)    │
+└──────────────────────────────────────┘
+```
+
+客户端直接向存储提供商上传文件，文件不经过你的应用服务器。这样可以保持高上传吞吐量并降低服务器成本。
+
+## 文件上传策略
+
+根据文件大小和可靠性要求选择合适的策略：
+
+| 策略 | 适用场景 | 大小限制 | 可续传 |
+|------|---------|---------|--------|
+| 预签名 URL | 文档、图片、小文件 | 最大约 100 MB | 否 |
+| 分片上传 | 视频、大型压缩包 | 无限制 | 部分 |
+| Tus 断点续传 | 不稳定连接、大文件 | 无限制 | 是 |
+
+### 预签名 URL
+
+最简单的方案。服务端生成一个短期有效的签名 URL，客户端通过单次 `PUT` 请求直接上传，不经过你的服务器。适用于 100 MB 以下的文件。
+
+### 分片上传
+
+将大文件拆分为若干小分片（每片最小 5 MB）并行上传。失败的分片可单独重试。AWS S3 上超过 5 GB 的文件必须使用此方式。
+
+### Tus 断点续传
+
+一种开放的断点续传协议。如果连接断开，上传将从最后确认的字节处继续。最适合在不稳定网络环境下上传大文件。
+
+<Note>
+Tus 断点续传支持取决于你的存储提供商配置。AWS S3 和 Cloudflare R2 通过代理层支持 Tus。详情请参阅[文件上传](/storage/uploads)。
+</Note>
+
+## 租户隔离
+
+每个文件的存储键都包含租户标识符前缀：
+
+```
+{tenantId}/{文件路径}
+
+# 示例
+org_acme/docs/q4-report.pdf
+org_beta/avatars/user_123.jpg
+org_acme/videos/demo.mp4
+```
+
+这种约定确保在共享存储桶中实现租户文件的逻辑隔离。结合 IAM 策略或 Cloudflare R2 访问控制，还可在基础设施层面强制执行访问隔离。
+
+<Warning>
+始终从服务端经过身份验证的会话中获取 `tenantId`。绝对不要接受来自客户端请求体中的 `tenantId`，因为它可以被伪造。
+</Warning>
+
+## 快速开始
+
+```typescript
+import { getUploadProvider } from "@nebutra/uploads";
+
+const uploads = await getUploadProvider();
+
+// 生成客户端上传的预签名 URL
+const { url, headers } = await uploads.createPresignedUpload({
+  bucket: "nebutra-uploads",
+  key: `${tenantId}/docs/report.pdf`,
+  contentType: "application/pdf",
+  tenantId,
+  expiresIn: 3600, // 秒
+});
+
+// 客户端直接上传到存储提供商
+// PUT url  (携带 headers)
+
+// 获取已签名的下载 URL
+const downloadUrl = await uploads.getSignedUrl("nebutra-uploads", key);
+
+// 删除文件
+await uploads.deleteFile("nebutra-uploads", key);
+```
+
+## 环境变量
+
+| 变量 | 是否必填 | 说明 |
+|------|---------|------|
+| `STORAGE_PROVIDER` | 否 | 显式指定提供商：`"s3"` \| `"r2"` \| `"s3-compatible"` |
+| `AWS_BUCKET_NAME` | 仅 S3 | 默认存储桶名称 |
+| `AWS_REGION` | 仅 S3 | AWS 区域，如 `us-east-1` |
+| `AWS_ACCESS_KEY_ID` | 仅 S3 | IAM 访问密钥 |
+| `AWS_SECRET_ACCESS_KEY` | 仅 S3 | IAM 密钥 |
+| `R2_BUCKET_NAME` | 仅 R2 | Cloudflare R2 存储桶名称 |
+| `R2_ACCOUNT_ID` | 仅 R2 | Cloudflare 账户 ID |
+| `R2_ACCESS_KEY_ID` | 仅 R2 | R2 API 令牌 ID |
+| `R2_SECRET_ACCESS_KEY` | 仅 R2 | R2 API 令牌密钥 |
+| `R2_PUBLIC_URL` | 仅 R2 | R2 的公共 CDN 基础 URL |
+
+提供商自动检测优先级：
+
+1. `STORAGE_PROVIDER` 环境变量（若已设置）
+2. 存在 `AWS_BUCKET_NAME` → `s3`
+3. 存在 `R2_ACCOUNT_ID` → `r2`
+4. 兜底 → 内存模式（仅限开发环境）
+
+<CardGroup cols={2}>
+  <Card title="文件上传" icon="upload" href="/storage/uploads">
+    预签名 URL、分片上传和 Tus 上传的分步指南
+  </Card>
+  <Card title="提供商" icon="server" href="/storage/providers">
+    AWS S3、Cloudflare R2 和兼容 S3 的提供商配置
+  </Card>
+  <Card title="访问文件" icon="file" href="/storage/accessing-files">
+    签名 URL、公共 CDN、Next.js 图片优化和文件列表
+  </Card>
+  <Card title="多租户" icon="building" href="/zh/guides/multi-tenancy">
+    租户隔离在 Nebutra 全栈中的工作原理
+  </Card>
+</CardGroup>

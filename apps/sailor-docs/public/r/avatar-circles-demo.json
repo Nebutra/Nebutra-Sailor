@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "avatar-circles-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/avatar-circles-demo.tsx",
+      "content": "\"use client\";\n\nimport { AvatarCircles } from \"@nebutra/ui/primitives\";\n\nconst sampleAvatars = [\n  {\n    imageUrl: \"https://avatars.githubusercontent.com/u/20110627\",\n    profileUrl: \"https://github.com/rdev\",\n    alt: \"User 1\",\n  },\n  {\n    imageUrl: \"https://avatars.githubusercontent.com/u/4211028\",\n    profileUrl: \"https://github.com/user2\",\n    alt: \"User 2\",\n  },\n  {\n    imageUrl: \"https://avatars.githubusercontent.com/u/583231\",\n    profileUrl: \"https://github.com/octocat\",\n    alt: \"Octocat\",\n  },\n  {\n    imageUrl: \"https://avatars.githubusercontent.com/u/9919\",\n    profileUrl: \"https://github.com/user4\",\n    alt: \"User 4\",\n  },\n];\n\nexport function AvatarCirclesDemo() {\n  return (\n    <div className=\"p-8 flex w-full items-center justify-center\">\n      <div className=\"gap-4 flex items-center\">\n        <AvatarCircles avatarUrls={sampleAvatars} numPeople={1200} />\n        <div>\n          <p className=\"text-sm font-semibold\">Join 1,200+ developers</p>\n          <p className=\"text-xs text-muted-foreground\">Building with Nebutra today</p>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

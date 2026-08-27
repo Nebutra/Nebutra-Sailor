@@ -1,0 +1,65 @@
+name: Dead Code Detection
+
+on:
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - "packages/**"
+      - "apps/**"
+      - ".github/workflows/dead-code.yml"
+      - "knip.json"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - "scripts/ci/advisory-gate.mjs"
+      - "vitest.workspace.ts"
+      - ".github/actions/setup-node-pnpm/action.yml"
+  schedule:
+    - cron: "0 4 * * 1" # Weekly Monday 04:00 UTC
+
+concurrency:
+  group: dead-code-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  knip:
+    name: Knip (unused exports & dependencies)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      KNIP_MAX_REPORT_LINES: ${{ vars.KNIP_MAX_REPORT_LINES }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Run Knip advisory gate
+        run: |
+          mkdir -p artifacts/advisory
+
+          set +e
+          pnpm knip --reporter compact 2>&1 | tee knip-report.txt
+          KNIP_STATUS=${PIPESTATUS[0]}
+          set -e
+
+          node scripts/ci/advisory-gate.mjs knip \
+            --status "$KNIP_STATUS" \
+            --log knip-report.txt \
+            --out artifacts/advisory/knip-gate.json \
+            --max-report-lines "${KNIP_MAX_REPORT_LINES:-}"
+
+      - name: Upload Knip report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: knip-report
+          path: |
+            knip-report.txt
+            artifacts/advisory/knip-gate.json
+          if-no-files-found: ignore
+          retention-days: 30

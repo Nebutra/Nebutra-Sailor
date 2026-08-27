@@ -1,0 +1,1273 @@
+{
+  "admin": {
+    "title": "Admin",
+    "description": "Superadminpanel — hantera användare, organisationer och systemhälsa.",
+    "nav": {
+      "overview": "Översikt",
+      "users": "Användare",
+      "organizations": "Organisationer"
+    },
+    "users": {
+      "title": "Användare",
+      "description": "Bläddra, sök och impersonera valfri användare över alla organisationer.",
+      "searchPlaceholder": "Sök användare…",
+      "totalCount": "{count, plural, one {# användare} other {# användare}}",
+      "empty": "Inga användare hittades.",
+      "loadError": "Kunde inte läsa in användare.",
+      "columns": {
+        "email": "E-post",
+        "name": "Namn",
+        "created": "Skapad",
+        "activeOrgs": "Aktiva organisationer",
+        "actions": "Åtgärder"
+      },
+      "viewOrgs": "Visa organisationer"
+    },
+    "organizations": {
+      "title": "Organisationer",
+      "description": "Alla arbetsplatser i systemet, rangordnade efter senast uppdaterad.",
+      "searchPlaceholder": "Sök organisationer…",
+      "totalCount": "{count, plural, one {# organisation} other {# organisationer}}",
+      "empty": "Inga organisationer hittades.",
+      "loadError": "Kunde inte läsa in organisationer.",
+      "columns": {
+        "name": "Namn",
+        "slug": "Slug",
+        "plan": "Plan",
+        "members": "Medlemmar",
+        "created": "Skapad",
+        "actions": "Åtgärder"
+      },
+      "view": "Visa"
+    },
+    "impersonate": {
+      "trigger": "Imitera",
+      "starting": "Startar…",
+      "stop": "Sluta imitera",
+      "confirm": "Imitera {label}? Du kommer att se appen som denna användare tills du slutar.",
+      "error": "Kunde inte starta imitation.",
+      "stopError": "Kunde inte stoppa imitation."
+    },
+    "pagination": {
+      "previous": "Föregående",
+      "next": "Nästa",
+      "pageOf": "Sida {page} av {total}"
+    }
+  },
+  "Common": {
+    "hello": "Hej Värld",
+    "dashboard": "Instrumentpanel",
+    "actions": {
+      "continue": "Fortsätt",
+      "confirm": "Bekräfta",
+      "done": "Klar",
+      "cancel": "Avbryt"
+    }
+  },
+  "theme": {
+    "light": "Ljus",
+    "dark": "Mörk",
+    "system": "System"
+  },
+  "LocaleSwitcher": {
+    "label": "Språk",
+    "ariaLabel": "Byt språk",
+    "searchPlaceholder": "Sök språk…",
+    "noResults": "Inga språk matchar",
+    "menuAria": "Välj språk"
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP-registreringsnummer",
+      "publicSecurity": "Registrering hos polisstyrelsen"
+    },
+    "wechat": {
+      "signIn": "Logga in med WeChat",
+      "notConfigured": "WeChat-inloggning är inte konfigurerad"
+    }
+  },
+  "onboarding": {
+    "title": "Ställ in ditt arbetsyta",
+    "subtitle": "Tre snabba steg så är du redo att leverera.",
+    "steps": {
+      "workspace": "Arbetsyta",
+      "invite": "Bjud in team",
+      "plan": "Välj plan"
+    },
+    "progress": {
+      "back": "Tillbaka",
+      "stepCounter": "Steg {current} av {total}"
+    },
+    "plan": {
+      "title": "Välj en plan",
+      "description": "Börja gratis eller lås upp mer kapacitet. Du kan byta plan när som helst.",
+      "choose": "Välj en plan",
+      "skip": "Hoppa över för nu"
+    }
+  },
+  "userMenu": {
+    "ariaLabel": "Öppna användarmeny",
+    "profile": "Profil",
+    "settings": "Inställningar",
+    "feedback": "Feedback",
+    "theme": "Tema",
+    "language": "Språk",
+    "signOut": "Logga ut",
+    "signedInAs": "Inloggad som"
+  },
+  "account": {
+    "profile": {
+      "title": "Profil",
+      "description": "Uppdatera din personliga information.",
+      "nameLabel": "Namn",
+      "namePlaceholder": "Ditt fullständiga namn",
+      "emailLabel": "E-post",
+      "emailHint": "Vi skickar ett verifieringslänk för att bekräfta en ny e-postadress.",
+      "languageLabel": "Språk",
+      "submit": "Spara ändringar",
+      "saving": "Sparar…",
+      "verifyEmail": "Verifiera",
+      "verifying": "Skickar verifiering…",
+      "success": "Profilen har uppdaterats.",
+      "verificationSent": "Verifieringsmejl skickat.",
+      "errorRequiredName": "Namn krävs.",
+      "errorInvalidEmail": "E-postadressen är inte giltig.",
+      "subtitle": "Din identitet och kontaktinformation.",
+      "unknown": "Namnlös användare",
+      "manageCta": "Öppna fullständiga kontoinställningar"
+    },
+    "avatar": {
+      "title": "Avatar",
+      "description": "Ladda upp en kvadratisk bild (PNG, JPEG eller WebP, max 2 MB).",
+      "uploadButton": "Ladda upp avatar",
+      "uploading": "Laddar upp…",
+      "fileTooBig": "Filen är för stor. Maximal storlek är 2 MB.",
+      "invalidType": "Bildtypen stöds inte. Använd PNG, JPEG eller WebP.",
+      "success": "Avatarn har uppdaterats.",
+      "removeButton": "Ta bort avatar",
+      "removed": "Avatarn har tagits bort.",
+      "deleteError": "Kunde inte ta bort avatarn."
+    },
+    "export": {
+      "title": "Exportera mina data",
+      "description": "Ladda ner en kopia av alla poster vi har för ditt konto, inklusive profil, organisationer, granskningshändelser, aviseringar och inbjudningar.",
+      "compliance": "Krävs enligt GDPR artikel 20 (rätt till dataportabilitet) och PIPL artikel 45 (rätt att erhålla en kopia av personuppgifter).",
+      "export": "Exportera mina data",
+      "pending": "Förbereder export…",
+      "ready": "Din export är klar.",
+      "download": "Ladda ner JSON",
+      "error": "Kunde inte förbereda din export. Försök igen."
+    },
+    "emailChange": {
+      "title": "Byt e-postadress",
+      "description": "Vi skickar en verifieringslänk till den nya adressen. Ändringen träder först i kraft när du bekräftar den i den inkorgen.",
+      "newEmailLabel": "Ny e-postadress",
+      "newEmailPlaceholder": "you@example.com",
+      "submit": "Skicka verifieringslänk",
+      "submitting": "Skickar…",
+      "verificationSent": "Kontrollera din inkorg på {email} för att bekräfta ändringen.",
+      "errorInvalidEmail": "E-postadressen är inte giltig.",
+      "error": "Kunde inte begära e-postbyte.",
+      "confirm": {
+        "successTitle": "E-post uppdaterad",
+        "successDescription": "Din inloggnings-e-post har uppdaterats.",
+        "successWithEmail": "Din inloggnings-e-post är nu {email}.",
+        "failureTitle": "Vi kunde inte bekräfta den länken",
+        "failureDescription": "Den här verifieringslänken är ogiltig, har gått ut eller har redan använts. Begär en ny från dina kontoinställningar.",
+        "errorCode": "Anledning: {code}",
+        "continueCta": "Tillbaka till konto",
+        "backCta": "Tillbaka till konto"
+      }
+    },
+    "title": "Konto",
+    "ariaLabel": "Kontoinställningar",
+    "navLabel": "Flikar för kontoinställningar",
+    "tip": "Tryck på {key} var som helst för att öppna denna dialog igen.",
+    "tabs": {
+      "profile": "Profil",
+      "subscription": "Prenumeration",
+      "billing": "Faktura",
+      "preferences": "Inställningar",
+      "personalization": "Personlig anpassning"
+    },
+    "subscription": {
+      "title": "Prenumeration",
+      "subtitle": "Plan, kvot och förnyelse.",
+      "currentPlan": "Nuvarande plan",
+      "upgradeCta": "Jämför planer",
+      "manageCta": "Hantera prenumeration"
+    },
+    "billing": {
+      "title": "Faktura",
+      "subtitle": "Fakturahistorik och betalningsmetod.",
+      "empty": {
+        "title": "Ingen historik ännu",
+        "description": "Avgifter och fakturor visas här efter din första betalda period.",
+        "cta": "Öppna fullständig faktura"
+      }
+    },
+    "preferences": {
+      "title": "Inställningar",
+      "subtitle": "Tema och tillgänglighet.",
+      "theme": "Tema",
+      "light": "Ljust",
+      "dark": "Mörkt",
+      "system": "System",
+      "help": "Hjälp",
+      "reportIssue": "Rapportera ett problem",
+      "shortcuts": "Tangentbordsgenvägar"
+    },
+    "personalization": {
+      "title": "Personalisering",
+      "subtitle": "Berätta för Sailor vem du är och hur hen ska svara."
+    }
+  },
+  "impact": {
+    "hero_title": "Omdefinierar paradigmet",
+    "hero_subtitle": "Låt det inte finnas några svåra affärer i världen.",
+    "social_title": "Socialt",
+    "social_headline": "Absolut teknisk jämlikhet",
+    "social_description": "Ge edge-innovatörer makt. Bryt traditionella filter och ge ensamgrundare infrastruktur som fungerar utanför ramar.",
+    "governance_title": "Styrning",
+    "governance_headline": "Kod är lag",
+    "governance_description": "Algoritmisk styrning baserad på Proof of Work och verkliga affärsresultat, som ersätter ogenomskinlig byråkrati.",
+    "environment_title": "Miljö",
+    "environment_headline": "Digital minimalism",
+    "environment_description": "Driver minskning av molnfotavtryck via extrem SaaS-integration och resurseffektivitet."
+  },
+  "auth": {
+    "security": {
+      "title": "Säkerhet",
+      "description": "Hantera ditt lösenord, multifaktorautentisering och aktiva sessioner.",
+      "managedByProvider": "Säkerhetsinställningarna hanteras av din autentiseringsleverantör.",
+      "openProviderProfile": "Öppna profil",
+      "changePassword": {
+        "title": "Byt lösenord",
+        "description": "Använd ett starkt lösenord som du inte återanvänder på andra webbplatser.",
+        "currentPasswordLabel": "Nuvarande lösenord",
+        "newPasswordLabel": "Nytt lösenord",
+        "confirmPasswordLabel": "Bekräfta nytt lösenord",
+        "revokeOtherSessions": "Logga ut från andra enheter",
+        "submit": "Uppdatera lösenord",
+        "pending": "Uppdaterar lösenord…",
+        "success": "Lösenordet har uppdaterats."
+      },
+      "twoFactor": {
+        "title": "Tvåfaktorsautentisering",
+        "description": "Lägg till ett extra verifieringssteg med en autentiseringsapp.",
+        "enabled": "Aktiverad",
+        "disabled": "Inaktiverad",
+        "enabledHelp": "Ditt konto efterfrågar en 6-siffrig autentiseringskod efter inloggning med lösenord.",
+        "disabledHelp": "Skydda ditt konto med en 6-siffrig kod från en autentiseringsapp.",
+        "enable": "Aktivera tvåfaktorsautentisering",
+        "disable": "Inaktivera tvåfaktorsautentisering",
+        "passwordPrompt": "Bekräfta ditt lösenord",
+        "scanQrCode": "Skanna denna QR-kod med din autentiseringsapp och ange sedan den 6-siffriga koden nedan.",
+        "secretKeyLabel": "Eller ange denna hemliga nyckel manuellt",
+        "verificationCodeLabel": "Verifieringskod",
+        "verify": "Verificera och aktivera",
+        "backupCodesTitle": "Reservkoder",
+        "backupCodesDescription": "Spara dessa koder på en säker plats. Varje kod kan användas en gång om du förlorar tillgången till din autentiseringsapp.",
+        "copyBackupCodes": "Kopiera koder",
+        "finishSetup": "Slutför inställning",
+        "successEnabled": "Tvåfaktorsautentisering aktiverad.",
+        "successDisabled": "Tvåfaktorsautentisering inaktiverad."
+      },
+      "sessions": {
+        "title": "Aktiva sessioner",
+        "description": "Enheter och webbläsare som för närvarande är inloggade på ditt konto.",
+        "currentSession": "(nuvarande)",
+        "ipLabel": "IP-adress",
+        "lastActiveLabel": "Senast aktiv",
+        "revoke": "Logga ut",
+        "revokeAll": "Logga ut från alla andra enheter",
+        "empty": "Inga andra aktiva sessioner.",
+        "successRevoked": "Sessionen har loggats ut.",
+        "successRevokedAll": "Alla andra sessioner har loggats ut."
+      },
+      "deleteAccount": {
+        "title": "Ta bort konto",
+        "description": "Ta bort ditt konto och all tillhörig data permanent. Detta kan inte ångras.",
+        "passwordPrompt": "Ange ditt lösenord för att bekräfta",
+        "confirmTextLabel": "Skriv DELETE för att bekräfta",
+        "submit": "Ta bort konto",
+        "cancel": "Avbryt",
+        "success": "Kontot har tagits bort."
+      },
+      "connectedAccounts": {
+        "title": "Kopplade konton",
+        "description": "Granska OAuth-inloggningsmetoder som är kopplade till din Nebutra-identitet.",
+        "connected": "Ansluten",
+        "connect": "Anslut",
+        "help": "Behåll minst en betrodd inloggningsmetod tillgänglig innan du kopplar bort en leverantör.",
+        "unlink": "Koppla bort",
+        "notLinked": "Inte kopplad"
+      },
+      "passkeys": {
+        "title": "Nycklar",
+        "description": "Använd enhetsbundna inloggningsuppgifter för inloggning som är motståndskraftig mot phishing.",
+        "empty": "Inga nycklar registrerade ännu",
+        "addPasskey": "Lägg till nyckel",
+        "cancelAdd": "Avbryt",
+        "cancelled": "Inställningen av nyckel avbröts. Inget ändrades.",
+        "defaultName": "Nyckel {number}",
+        "nameHelp": "Ge denna nyckel ett igenkännbart namn innan din webbläsare ber om bekräftelse.",
+        "nameLabel": "Nyckelnamn",
+        "rename": "Byt namn",
+        "saveRename": "Spara namn",
+        "remove": "Ta bort",
+        "successAdded": "Nyckel har lagts till.",
+        "successRemoved": "Nyckel har tagits bort.",
+        "unavailableBadge": "Ej tillgänglig"
+      },
+      "setPassword": {
+        "title": "Ställ in ett lösenord",
+        "description": "Lägg till ett lösenord för att logga in utan din OAuth-leverantör.",
+        "submit": "Ställ in lösenord",
+        "pending": "Skickar länk för lösenordsinställning…",
+        "sentMessage": "Vi har skickat en länk för lösenordsinställning till din e-post."
+      }
+    },
+    "banner": {
+      "logoAlt": "Nebutra",
+      "slogan": "Lansera ditt startup, styrat från dag ett.",
+      "tagline": "Multi-region agenter, multi-tenant som standard. Ingen plattformsteam krävs."
+    },
+    "signIn": {
+      "title": "Logga in på Nebutra",
+      "subtitle": "Välj hur du vill logga in.",
+      "continueWith": "Fortsätt med",
+      "continueWithProvider": "Fortsätt med {provider}",
+      "providers": {
+        "google": "Google",
+        "github": "GitHub",
+        "apple": "Apple",
+        "microsoft": "Microsoft",
+        "feishu": "Feishu"
+      },
+      "providerLoading": "Omdirigerar…",
+      "dividerOr": "Eller fortsätt med e-post",
+      "emailLabel": "E-post",
+      "emailPlaceholder": "you@example.com",
+      "continue": "Fortsätt",
+      "back": "Tillbaka",
+      "passwordLabel": "Lösenord",
+      "passwordPlaceholder": "Ange ditt lösenord",
+      "showPassword": "Visa lösenord",
+      "hidePassword": "Dölj lösenord",
+      "capsLockOn": "Caps Lock är på",
+      "forgotPassword": "Glömt lösenord?",
+      "submit": "Logga in",
+      "submitLoading": "Loggar in…",
+      "useMagicLink": "Skicka mig en magisk länk istället",
+      "usePasskey": "Logga in med en passkey",
+      "passkeyTitle": "Logga in med din passkey",
+      "passkeyDescription": "Använd Face ID, Touch ID eller din säkerhetsnyckel. Inget lösenord krävs.",
+      "passkeyButton": "Fortsätt med passkey",
+      "passkeyCancelled": "Passkey-prompten avbröts.",
+      "passkeyUnsupported": "Den här webbläsaren stöder inte passkeys.",
+      "passkeyError": "Inloggning med passkey misslyckades. Försök med en annan metod.",
+      "ssoTitle": "Fortsätt med Enterprise SSO",
+      "ssoDescription": "Omdirigerar dig till {provider} för {email}.",
+      "ssoError": "Enterprise SSO kunde inte startas. Försök med en annan metod.",
+      "ssoRetry": "Försök igen",
+      "newToProduct": "Ny till Nebutra?",
+      "signUpLink": "Skapa konto",
+      "homeLink": "Hem",
+      "signInFailed": "Inloggningen misslyckades",
+      "genericError": "Ett fel uppstod. Försök igen.",
+      "captchaError": "Bot-verifieringen misslyckades. Uppdatera sidan och försök igen.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
+      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
+      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
+      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+    },
+    "signUp": {
+      "title": "Skapa ditt Nebutra-konto",
+      "subtitle": "Ett konto för alla Nebutra-appar.",
+      "firstNameLabel": "Förnamn",
+      "lastNameLabel": "Efternamn",
+      "firstNamePlaceholder": "Förnamn",
+      "lastNamePlaceholder": "Efternamn",
+      "submit": "Skapa konto",
+      "submitLoading": "Skapar konto…",
+      "alreadyHaveAccount": "Har du redan ett konto?",
+      "signInLink": "Logga in",
+      "signUpFailed": "Registreringen misslyckades",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+    },
+    "passkeys": {
+      "title": "Passkeys",
+      "description": "Använd Face ID, Touch ID, Windows Hello eller en säkerhetsnyckel istället för ett lösenord. Varje enhet har sin egen passkey.",
+      "addButton": "Lägg till en nyckel",
+      "adding": "Ställer in…",
+      "namePlaceholder": "t.ex. MacBook Pro",
+      "nameLabel": "Namn (valfritt)",
+      "registerSuccess": "Nyckel har lagts till.",
+      "registerCancelled": "Inställning avbruten.",
+      "registerUnsupported": "Den här webbläsaren stöder inte nycklar.",
+      "registerError": "Kunde inte registrera nyckel.",
+      "empty": "Inga nycklar ännu.",
+      "loadError": "Kunde inte läsa in nycklar.",
+      "revoke": "Ta bort",
+      "revoking": "Tar bort…",
+      "revokeConfirm": "Ta bort den här nyckeln? Du kan inte längre logga in med den.",
+      "revokeSuccess": "Nyckel har tagits bort.",
+      "revokeError": "Kunde inte ta bort nyckel.",
+      "device": {
+        "singleDevice": "Enhetsspecifik",
+        "multiDevice": "Synkroniserad mellan enheter"
+      },
+      "addedOn": "Lagt till {date}"
+    },
+    "magicLink": {
+      "title": "Logga in med en magisk länk",
+      "description": "Ange din e-postadress så skickar vi en 6-siffrig kod för inloggning.",
+      "emailLabel": "E-post",
+      "send": "Skicka länk",
+      "codeLabel": "Verifieringskod",
+      "verify": "Verifiera",
+      "resend": "Skicka kod igen",
+      "resendCooldown": "Skicka igen om {seconds}s",
+      "sentTo": "Vi skickade en kod till {email}"
+    },
+    "forgotPassword": {
+      "title": "Glömt lösenord?",
+      "description": "Ange din e-postadress så skickar vi en länk för att återställa ditt lösenord.",
+      "emailLabel": "E-post",
+      "submit": "Skicka återställningslänk",
+      "successTitle": "Kontrollera din e-post",
+      "success": "Om den e-postadressen är registrerad får du snart en länk för återställning."
+    },
+    "resetPassword": {
+      "title": "Återställ ditt lösenord",
+      "description": "Välj ett nytt lösenord för ditt konto.",
+      "newPasswordLabel": "Nytt lösenord",
+      "confirmPasswordLabel": "Bekräfta nytt lösenord",
+      "submit": "Återställ lösenord",
+      "successTitle": "Lösenord återställt",
+      "successDescription": "Du kan nu logga in med ditt nya lösenord.",
+      "signInCta": "Gå till inloggning",
+      "invalidTitle": "Ogiltig återställningslänk",
+      "invalidDescription": "Denna länk för lösenordsåterställning saknas eller är felaktig. Begär en ny från sidan för glömt lösenord."
+    },
+    "verifyEmail": {
+      "successTitle": "E-post verifierad",
+      "successDescription": "Din e-postadress har verifierats.",
+      "failureTitle": "Verifiering misslyckades",
+      "failureDescription": "Vi kunde inte verifiera din e-post med den länken.",
+      "continueCta": "Fortsätt",
+      "signInCta": "Gå till inloggning"
+    },
+    "loginSuccess": {
+      "eyebrow": "Inloggning slutförd",
+      "title": "Du är inloggad",
+      "description": "Din session är klar. Vi öppnar Nebutra-arbetsytan och säkerställer en säker överlämning från autentiseringsflödet.",
+      "session": "Session",
+      "verified": "Verifierad",
+      "workspace": "Arbetsyta",
+      "preparing": "Förbereder",
+      "redirecting": "Går in i arbetsytan om {seconds}s",
+      "secureHandoff": "Säker överlämning",
+      "continueCta": "Fortsätt till arbetsytan",
+      "signInCta": "Använd ett annat konto"
+    },
+    "errors": {
+      "invalidCredentials": "E-postadress eller lösenord är felaktigt.",
+      "userNotFound": "Inget konto hittades med den e-postadressen.",
+      "userAlreadyExists": "Ett konto med den e-postadressen finns redan.",
+      "weakPassword": "Lösenordet är för svagt. Använd minst 8 tecken med blandade stora och små bokstäver samt siffror.",
+      "passwordsDontMatch": "Lösenorden matchar inte.",
+      "passwordTooShort": "Lösenordet måste vara minst 8 tecken.",
+      "currentPasswordIncorrect": "Nuvarande lösenord är felaktigt.",
+      "samePassword": "Nytt lösenord måste skilja sig från ditt nuvarande lösenord.",
+      "invalidEmail": "E-postadressen är inte giltig.",
+      "emailNotVerified": "Verifiera din e-postadress först.",
+      "sessionExpired": "Din session har löpt ut. Logga in igen.",
+      "twoFactorRequired": "Tvåfaktorsverifiering krävs.",
+      "invalidVerificationCode": "Verifieringskoden är felaktig eller har löpt ut.",
+      "twoFactorAlreadyEnabled": "Tvåfaktorsautentisering är redan aktiverad.",
+      "twoFactorNotEnabled": "Tvåfaktorsautentisering är inte aktiverad.",
+      "tooManyAttempts": "För många försök. Försök igen senare.",
+      "rateLimited": "Du gör det för ofta. Lugna ner dig.",
+      "providerNotSupported": "Denna åtgärd hanteras av din autentiseringsleverantör.",
+      "networkError": "Nätverksfel. Kontrollera din anslutning och försök igen.",
+      "unknown": "Något gick fel. Försök igen."
+    }
+  },
+  "chat": {
+    "suggestions": {
+      "title": "Prova något av dessa för att komma igång",
+      "activity": {
+        "title": "Visa senaste aktivitet",
+        "prompt": "Visa den senaste aktiviteten i mitt arbetsyta från de senaste 24 timmarna."
+      },
+      "debug": {
+        "title": "Felsök ett fel",
+        "prompt": "Hjälp mig att felsöka ett körningsfel. Jag klistrar in stackspårningen och du kan guida mig genom den."
+      },
+      "email": {
+        "title": "Utkasta ett sammanfattande mejl",
+        "prompt": "Utkasta ett kort veckosammanfattande mejl som jag kan skicka till mitt team om plattformens framsteg."
+      },
+      "features": {
+        "title": "Utforska plattformens funktioner",
+        "prompt": "Gå igenom de viktigaste funktionerna i denna SaaS-plattform och hur jag kan använda dem."
+      }
+    }
+  },
+  "billing": {
+    "activePlan": {
+      "title": "Aktiv plan",
+      "manage": "Hantera prenumeration",
+      "noPlanTitle": "Ingen aktiv plan",
+      "noPlanDescription": "Välj en plan för att låsa upp betalfunktioner och högre användningsgränser.",
+      "choosePlan": "Välj en plan",
+      "renewsOn": "Förnyas den {date}",
+      "endsOn": "Upphör den {date}",
+      "trialEndsOn": "Provetiden slutar {date}",
+      "status": {
+        "active": "Aktiv",
+        "trialing": "Prover",
+        "past_due": "Förfallen",
+        "canceled": "Avslutad",
+        "free": "Gratis"
+      },
+      "errors": {
+        "loadFailed": "Kunde inte hämta din faktureringsstatus."
+      }
+    },
+    "pricing": {
+      "trial": "Gratis {days}-dagars provperiod",
+      "seat": "{count, plural, one {# säte} other {# säten}}",
+      "perSeat": "/ säte"
+    }
+  },
+  "organizations": {
+    "settings": {
+      "logo": {
+        "title": "Organisationslogotyp",
+        "description": "Ladda upp en kvadratisk bild (PNG, JPEG eller WebP, max 2 MB) som representerar din organisation.",
+        "uploadButton": "Ladda upp logotyp",
+        "uploading": "Laddar upp…",
+        "fileTooBig": "Filen är för stor. Maximal storlek är 2 MB.",
+        "invalidType": "Bildtypen stöds inte. Använd PNG, JPEG eller WebP.",
+        "success": "Logotypen har uppdaterats.",
+        "removeButton": "Ta bort logotyp",
+        "removed": "Logotypen har tagits bort."
+      },
+      "name": {
+        "title": "Organisationsnamn",
+        "description": "Uppdatera det visningsnamn som visas för ditt team och dina kunder.",
+        "label": "Namn",
+        "submit": "Spara",
+        "saving": "Sparar…",
+        "success": "Organisationsnamnet har uppdaterats."
+      },
+      "delete": {
+        "title": "Ta bort organisation",
+        "description": "Ta bort denna organisation permanent, inklusive alla medlemmar, inbjudningar och relaterad data. Denna åtgärd kan inte ångras.",
+        "trigger": "Ta bort organisation",
+        "confirmLabel": "Skriv organisationsnamnet för att bekräfta",
+        "submit": "Ta bort organisation",
+        "cancel": "Avbryt",
+        "success": "Organisationen har tagits bort."
+      }
+    },
+    "invitation": {
+      "title": "Du har blivit inbjuden",
+      "heading": "Du har blivit inbjuden att gå med i {organizationName}",
+      "description": "Acceptera inbjudan för att börja samarbeta med teamet.",
+      "accept": "Acceptera inbjudan",
+      "accepting": "Accepterar...",
+      "decline": "Avböj",
+      "declining": "Avböjer...",
+      "declinedView": "Inbjudan avböjd",
+      "success": "Vi har meddelat inbjudaren.",
+      "backToDashboard": "Tillbaka till dashboard",
+      "roleLabel": "Roll: {role}",
+      "errorEmailMismatch": "Denna inbjudan skickades till ett annat e-postadress",
+      "errorEmailMismatchDetail": "Logga in med den e-postadress som mottog inbjudan för att acceptera den.",
+      "errorExpired": "Inbjudan har gått ut",
+      "errorExpiredDetail": "Be inbjudaren skicka en ny inbjudan.",
+      "errorNotFound": "Inbjudan hittades inte",
+      "errorNotFoundDetail": "Inbjudningslänken är ogiltig eller har återkallats.",
+      "errorNotAvailable": "Inbjudan är inte tillgänglig",
+      "errorNotAvailableDetail": "Denna inbjudan har redan besvarats och är inte längre aktiv.",
+      "role": {
+        "owner": "Ägare",
+        "admin": "Administratör",
+        "member": "Medlem",
+        "viewer": "Åskådare"
+      }
+    }
+  },
+  "settings": {
+    "apiKeys": {
+      "title": "API-nycklar",
+      "description": "Skapa och hantera API-nycklar för programmatisk åtkomst till Nebutra.",
+      "createButton": "Skapa API-nyckel",
+      "noPermission": "Du har inte behörighet att visa API-nycklar.",
+      "loading": "Laddar…",
+      "loadError": "Kunde inte ladda API-nycklar.",
+      "createError": "Kunde inte skapa API-nyckel.",
+      "revokeError": "Kunde inte återkalla API-nyckel.",
+      "empty": {
+        "title": "Inga API-nycklar ännu",
+        "cta": "Skapa din första API-nyckel"
+      },
+      "columns": {
+        "name": "Namn",
+        "prefix": "Prefix",
+        "lastUsed": "Senast använd",
+        "scopes": "Områden",
+        "created": "Skapad",
+        "actions": "Åtgärder",
+        "never": "Aldrig"
+      },
+      "actions": {
+        "revoke": "Återkalla",
+        "revoking": "Återkallar…",
+        "copy": "Kopiera",
+        "copied": "Kopierad",
+        "close": "Stäng",
+        "submit": "Skapa nyckel",
+        "submitting": "Skapar…"
+      },
+      "dialog": {
+        "title": "Skapa API-nyckel",
+        "description": "API-nycklar låter externa system kommunicera med Nebutra åt dig. Behandla dem som lösenord.",
+        "nameLabel": "Namn",
+        "namePlaceholder": "t.ex. Produktionsbackend",
+        "scopesLabel": "Områden",
+        "successWarning": "Den här nyckeln visas bara en gång. Spara den innan du stänger.",
+        "confirmClose": "Om du stänger döljs den här nyckeln för alltid. Se till att den är sparad."
+      }
+    },
+    "auditLog": {
+      "title": "Revisionslogg",
+      "description": "Spåra varje administrativ åtgärd i ditt arbetsyta. Filtrera efter aktör, åtgärd, enhet eller tidsintervall.",
+      "empty": "Inga revisionshändelser ännu",
+      "loadMore": "Ladda mer",
+      "loading": "Laddar…",
+      "forbidden": "Du behöver administratörsåtkomst för att visa revisionsloggen.",
+      "columns": {
+        "when": "När",
+        "actor": "Aktör",
+        "action": "Åtgärd",
+        "entity": "Enhet",
+        "outcome": "Resultat",
+        "ip": "IP"
+      },
+      "diff": {
+        "oldValue": "Tidigare värde",
+        "newValue": "Nytt värde"
+      },
+      "filters": {
+        "action": "Åtgärd",
+        "actionPlaceholder": "Sök åtgärd…",
+        "entityType": "Entitetstyp",
+        "outcome": "Resultat",
+        "outcomeSuccess": "Lyckades",
+        "outcomeFailure": "Misslyckades",
+        "outcomePending": "Väntar",
+        "startDate": "Startdatum",
+        "endDate": "Slutdatum",
+        "range24h": "Senaste 24 tim",
+        "range7d": "Senaste 7 dagar",
+        "range30d": "Senaste 30 dagar",
+        "reset": "Återställ",
+        "all": "Alla"
+      }
+    },
+    "notifications": {
+      "title": "Aviseringar",
+      "description": "Välj hur Nebutra når dig för varje händelsetyp på varje leveranskanal.",
+      "actions": {
+        "resetAll": "Återställ till standard",
+        "save": "Spara"
+      },
+      "status": {
+        "saving": "Sparar…",
+        "saved": "Sparat",
+        "error": "Spara misslyckades. Försök igen."
+      },
+      "eventTypes": {
+        "security": {
+          "label": "Säkerhetsaviseringar",
+          "description": "Inloggningsaviseringar, lösenordsändringar, ändringar av tvåfaktorsautentisering."
+        },
+        "billing": {
+          "label": "Faktura",
+          "description": "Fakturor, betalningsfel och prenumeration ändringar."
+        },
+        "invitation": {
+          "label": "Lag inbjudningar",
+          "description": "Inbjudningar att gå med i en organisation, accepterade eller avvisade."
+        },
+        "activity": {
+          "label": "Lag aktivitet",
+          "description": "Medlemmar har gått med, rolländringar och annan aktivitét i arbetsytan."
+        },
+        "updates": {
+          "label": "Produktuppdateringar",
+          "description": "Nya funktioner, framträdande ändringar och versionsanteckningar."
+        },
+        "marketing": {
+          "label": "Marknadsföring",
+          "description": "Nyhetsbrev och tillfälliga kampanjer. Endast om du väljer att delta."
+        }
+      },
+      "channels": {
+        "in_app": {
+          "label": "I appen"
+        },
+        "email": {
+          "label": "E-post"
+        },
+        "push": {
+          "label": "Push"
+        },
+        "sms": {
+          "label": "SMS"
+        }
+      }
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "Prenumerera på händelser som skickas från din arbetsyta. Vi signerar varje nyttolast med din slutpunkts hemlighet så att du kan verifiera äktheten.",
+      "create": {
+        "heading": "Ny slutpunkt",
+        "urlLabel": "Slutpunkts-URL",
+        "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
+        "eventsLegend": "Händelser",
+        "submit": "Skapa slutpunkt",
+        "submitting": "Skapar…",
+        "selectEvent": "Välj minst en händelse.",
+        "successTitle": "Slutpunkt skapad. Signeringshemligheten visas endast en gång.",
+        "successWarning": "Spara den i din applikations hemlighetsbevarare innan du stänger.",
+        "copy": "Kopiera",
+        "copied": "Kopierad"
+      },
+      "list": {
+        "heading": "Aktiva slutpunkter",
+        "empty": "Inga webhook-slutpunkter ännu. Skapa en ovan.",
+        "loading": "Laddar…",
+        "loadFailed": "Kunde inte ladda webhooks",
+        "columns": {
+          "url": "URL",
+          "events": "Händelser",
+          "status": "Status",
+          "lastDelivered": "Senast levererad",
+          "actions": "Åtgärder"
+        },
+        "status": {
+          "active": "Aktiv",
+          "disabled": "Inaktiverad"
+        },
+        "actions": {
+          "edit": "Redigera",
+          "enable": "Aktivera",
+          "disable": "Inaktivera",
+          "viewDeliveries": "Visa leveranser",
+          "delete": "Ta bort"
+        }
+      },
+      "deliveries": {
+        "heading": "Senaste leveranserna",
+        "close": "Stäng",
+        "loading": "Laddar…",
+        "loadFailed": "Kunde inte ladda leveranser",
+        "empty": "Inga leveranser ännu.",
+        "viewPayload": "Visa nyttolast",
+        "hidePayload": "Dölj nyttolast",
+        "replay": "Spela om",
+        "replaying": "Spelar om…",
+        "status": {
+          "success": "lyckades",
+          "failed": "misslyckades",
+          "retrying": "återförsöker"
+        }
+      }
+    },
+    "appearance": {
+      "title": "Utseende",
+      "theme": {
+        "title": "Tema",
+        "description": "Använd ljust, mörkt eller följ systemets inställning."
+      },
+      "themePreset": {
+        "title": "Temamall",
+        "description": "Tillämpa ett tema från Theme Playground i hela appen. Kontrollerna nedan lagras ovanpå för finjustering.",
+        "search": "Sök teman…",
+        "searchLabel": "Sök teman",
+        "default": "Standard",
+        "defaultMood": "Nebutra base palette",
+        "active": "Aktivt",
+        "empty": "Inga teman matchar din sökning.",
+        "count": "{count} teman"
+      },
+      "themeEditor": {
+        "title": "Tema",
+        "description": "Välj en mall, importera en DESIGN.md och finjustera sedan token nedan.",
+        "selectLabel": "Temamall",
+        "import": "Importera",
+        "copy": "Kopiera tema",
+        "copied": "Kopierat",
+        "copyError": "Kopiering misslyckades",
+        "custom": "Anpassat"
+      },
+      "designMd": {
+        "title": "Importera DESIGN.md",
+        "description": "Klistra in eller ladda upp en DESIGN.md för att tillämpa dess färger, radie, typsnitt, avstånd och skuggor i hela appen — sparas över omladdningar.",
+        "applied": "Tillämpad:",
+        "remove": "Ta bort"
+      },
+      "themeMode": {
+        "label": "Temaläge",
+        "light": "Ljust",
+        "dark": "Mörkt",
+        "system": "System"
+      },
+      "accent": {
+        "title": "Accentfärg",
+        "description": "Välj en varumärkesaccent som färgar aktiva tillstånd i hela appen.",
+        "label": "Accentfärg",
+        "options": {
+          "default": "Standard",
+          "blue": "Blå",
+          "cyan": "Cyan",
+          "violet": "Violett",
+          "pink": "Rosa",
+          "amber": "Amber",
+          "green": "Grön",
+          "red": "Röd"
+        }
+      },
+      "colors": {
+        "title": "Färger",
+        "description": "Accent, bakgrund och förgrund.",
+        "background": {
+          "label": "Bakgrund",
+          "description": "Åsidosätt bakgrundsfärgen för ytor."
+        },
+        "foreground": {
+          "label": "Förgrund",
+          "description": "Åsidosätt textfärgen i brödtexten."
+        },
+        "resetToDefault": "Återställ till standard"
+      },
+      "fontFamily": {
+        "uiLabel": "UI-typsnitt",
+        "uiDescription": "Typsnittsfamilj som används i hela gränssnittet.",
+        "codeLabel": "Kodtypsnitt",
+        "codeDescription": "Typsnittsfamilj som används för kodytor.",
+        "options": {
+          "ui": {
+            "theme": "Tema standard",
+            "system": "System",
+            "geist": "Geist",
+            "inter": "Inter",
+            "sf": "SF Pro"
+          },
+          "code": {
+            "theme": "Tema standard",
+            "system": "System mono",
+            "geist-mono": "Geist Mono",
+            "sf-mono": "SF Mono",
+            "jetbrains-mono": "JetBrains Mono"
+          }
+        }
+      },
+      "contrast": {
+        "title": "Kontrast",
+        "description": "Justera textkontrasten (50 = ingen förändring).",
+        "label": "Kontrastnivå"
+      },
+      "pointerCursor": {
+        "title": "Använd pekare",
+        "description": "Byt till pekaremarkör vid interaktiva element.",
+        "label": "Pekaremarkör på interaktiva element"
+      },
+      "diffMarkers": {
+        "title": "Diffmarkörer",
+        "description": "Visa färgband eller +/--symboler på varje ändrad rad.",
+        "label": "Diffmarkörstil",
+        "color": "Färg",
+        "plusminus": "+/-"
+      },
+      "fontSmoothing": {
+        "title": "Teckenjustering",
+        "description": "Tillämpa macOS inbyggd teckenjustering.",
+        "label": "Inbyggd teckenjustering"
+      },
+      "typography": {
+        "title": "Typografi",
+        "description": "Basstorlekar för UI- och kodtecken.",
+        "uiFontSize": "UI-teckenstorlek",
+        "uiFontSizeDescription": "Justera basstorleken för UI-tecken.",
+        "codeFontSize": "Kodteckenstorlek",
+        "codeFontSizeDescription": "Justera basstorleken för kodtecken."
+      },
+      "fontSize": {
+        "followTheme": "Tema",
+        "customize": "Anpassa"
+      },
+      "motion": {
+        "title": "Minska rörelser",
+        "description": "Minska animationer eller följ systemets inställning.",
+        "label": "Rörelseinställning",
+        "system": "System",
+        "on": "På",
+        "off": "Av"
+      },
+      "surface": {
+        "title": "Genomskinlig sidofält",
+        "description": "Tillämpa ett genomskinligt material på sidofältet."
+      },
+      "transparency": {
+        "label": "Genomskinlig sidofält",
+        "description": "Tillämpa ett genomskinligt material på sidofältet."
+      }
+    }
+  },
+  "legal": {
+    "version": "Version",
+    "effective": "Giltig från",
+    "notFound": "Detta dokument finns inte tillgängligt.",
+    "backHome": "Tillbaka till startsidan"
+  },
+  "commandPalette": {
+    "ariaLabel": "Kommandopanel",
+    "placeholder": "Skriv ett kommando eller sök…",
+    "empty": "Inga resultat hittades.",
+    "sections": {
+      "navigation": "Navigering",
+      "actions": "Åtgärder",
+      "settings": "Inställningar",
+      "account": "Konto",
+      "admin": "Admin",
+      "help": "Hjälp"
+    },
+    "commands": {
+      "nav": {
+        "home": "Hem",
+        "settings": "Inställningar",
+        "billing": "Faktura",
+        "team": "Team",
+        "apiKeys": "API-nycklar",
+        "notifications": "Aviseringar",
+        "auditLog": "Granskningslogg",
+        "webhooks": "Webhooks",
+        "admin": "Admin"
+      },
+      "action": {
+        "inviteMember": "Bjud in teammedlem",
+        "createApiKey": "Skapa API-nyckel",
+        "switchOrganization": "Byt organisation"
+      },
+      "settings": {
+        "themeLight": "Byt till ljust tema",
+        "themeDark": "Byt till mörkt tema",
+        "themeSystem": "Använd systemtema"
+      },
+      "account": {
+        "signOut": "Logga ut"
+      },
+      "help": {
+        "reportIssue": "Rapportera ett problem",
+        "shortcuts": "Tangentbordsgenvägar"
+      }
+    }
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "Dina integritetsval",
+      "description": "Vi använder cookies för att förbättra din upplevelse, analysera webbplatsens trafik och anpassa innehåll. Välj vilka kategorier du vill tillåta."
+    },
+    "button": {
+      "acceptAll": "Acceptera alla",
+      "savePreferences": "Spara inställningar"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "Nödvändiga",
+        "description": "Krävs för att webbplatsen ska fungera. Kan inte inaktiveras."
+      },
+      "functional": {
+        "label": "Funktionell",
+        "description": "Kom ihåg dina inställningar (språk, tema, layout)."
+      },
+      "analytics": {
+        "label": "Analytik",
+        "description": "Anonym användardata så att vi kan förbättra produkten."
+      },
+      "marketing": {
+        "label": "Marknadsföring",
+        "description": "Personlig annonsering och retargeting på tredjepartsplattformar."
+      }
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "Aviseringar",
+      "description": "Alla dina aviseringar på ett ställe.",
+      "filter": {
+        "all": "Alla",
+        "unread": "Olästa"
+      },
+      "actions": {
+        "markAllRead": "Markera alla som lästa",
+        "markRead": "Markera som läst",
+        "archive": "Arkivera",
+        "loadMore": "Ladda mer",
+        "loading": "Laddar...",
+        "selected": "{count} valda"
+      },
+      "empty": {
+        "all": "Du har allt under kontroll.",
+        "unread": "Inga olästa aviseringar."
+      },
+      "errors": {
+        "load": "Kunde inte hämta aviseringar.",
+        "network": "Nätverksfel. Försök igen.",
+        "markRead": "Kunde inte markera aviseringen som läst.",
+        "archive": "Kunde inte arkivera aviseringen.",
+        "bulkMarkRead": "Vissa aviseringar kunde inte markeras som lästa."
+      },
+      "inbox": {
+        "noBackend": "Inkorgen kräver en varaktig aviseringsserver. Kontrollera din leverantörsinställning.",
+        "emptyCaughtUp": "Inkorgen är tom.",
+        "emptyChangelog": "Ändringslogguppdateringar visas här."
+      }
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "God morgon",
+      "afternoon": "God eftermiddag",
+      "evening": "God kväll"
+    },
+    "home": {
+      "connectorsPill": "Ge din app kraft med connectors",
+      "subtitle": "Släpp in en prompt, tryck ⌘K var som helst, eller hoppa direkt in i en arbetsplats.",
+      "promptPlaceholder": "Vad tänker du på?",
+      "actions": {
+        "connect": "Anslut en integration",
+        "theme": "Tema-lekplats",
+        "audit": "Revisionslogg",
+        "billing": "Faktura"
+      }
+    },
+    "commandSurface": {
+      "noAuth": "Autentisering är inte konfigurerad för den valda leverantören. Ställ in leverantörens hemligheter för att aktivera användarsessioner."
+    },
+    "commandCenter": {
+      "description": "Börja med en åtgärd: fråga Sailor, undersök arbetsplats signaler eller dirigera arbete till en automatiseringsyta.",
+      "openSailor": "Öppna Sailor AI",
+      "viewAnalytics": "Visa analys"
+    },
+    "workspaceSnapshot": {
+      "title": "Arbetsplatsöversikt",
+      "description": "Senaste lagerdagen · {day}",
+      "viewAnalytics": "Visa analys →",
+      "metrics": {
+        "activeUsers": "Aktiva användare",
+        "totalEvents": "Totala händelser",
+        "conversions": "Konverteringar",
+        "revenue": "Intäkter"
+      },
+      "details": {
+        "activeUsers": "Inloggade användare",
+        "totalEvents": "Händelser registrerade",
+        "conversions": "Kvalificerade åtgärder",
+        "revenue": "Erkänd intäkt"
+      },
+      "meta": {
+        "snapshot": "Ögonblicksbild",
+        "cadence": "Takt",
+        "tenant": "Hyresgäst",
+        "daily": "Daglig",
+        "latestDay": "{day}",
+        "users": "Hyresgästanvändare",
+        "events": "Händelseström",
+        "funnel": "Tratt",
+        "billing": "Faktura"
+      }
+    },
+    "documentPipeline": {
+      "title": "Dokumentpipeline",
+      "description": "Skicka källfiler till ursprungskö.",
+      "intakeTitle": "Dokumentintag",
+      "intakeDescription": "PDF, Markdown, text eller Word-dokument",
+      "chooseDocument": "Välj dokument",
+      "startParseTask": "Starta analysuppgift",
+      "queued": "Köad",
+      "fileInputLabel": "Dokumentfil",
+      "fallbackError": "Dokumentuppgiften misslyckades.",
+      "taskStatus": "Uppgiftsstatus",
+      "progressLabel": "Uppgiftsframsteg",
+      "refreshStatus": "Uppdatera",
+      "cancelTask": "Avbryt",
+      "statusError": "Kunde inte uppdatera uppgiftsstatus.",
+      "cancelError": "Kunde inte avbryta uppgiften.",
+      "statusQueued": "Köad",
+      "statusRunning": "Körs",
+      "statusSucceeded": "Lyckades",
+      "statusFailed": "Misslyckades",
+      "statusCancelled": "Avbruten",
+      "resultReady": "Resultat redo",
+      "taskError": "Uppgiftsfel",
+      "updatedAt": "Uppdaterad"
+    },
+    "recentSessions": {
+      "title": "Fortsätt där du slutade",
+      "subtitle": "{count, plural, =0 {Inga sessioner} =1 {1 nyligen session} other {# nyligen sessioner}}",
+      "viewAll": "Visa alla →",
+      "newChat": "Ny chatt",
+      "untitled": "Namnlös session",
+      "messageCount": "{count, plural, =1 {1 meddelande} other {# meddelanden}}"
+    },
+    "gettingStarted": {
+      "title": "Kom igång",
+      "description": "{done} av {total} klar · slutför inställningarna för att låsa upp hela arbetsytan",
+      "progressLabel": "Inställningsframsteg",
+      "tasks": {
+        "team": {
+          "label": "Bjud in en kollega",
+          "description": "Ta in minst en medarbetare i din arbetsyta."
+        },
+        "api": {
+          "label": "Generera en API-nyckel",
+          "description": "Programmatisk åtkomst till dina arbetsytor."
+        },
+        "integration": {
+          "label": "Anslut en integration",
+          "description": "Stripe, Slack, webhooks, köer och mer."
+        },
+        "ai": {
+          "label": "Öppna Sailor AI",
+          "description": "Testa chatt-, data- eller arbetsflödesläge."
+        }
+      }
+    }
+  },
+  "Sidebar": {
+    "projects": "Projekt",
+    "noThreads": "Inga trådar",
+    "expandAll": "Expandera alla",
+    "collapseAll": "Komprimera alla",
+    "sectionMore": "Fler alternativ",
+    "newProject": "Nytt projekt",
+    "restoredGroups": "Återställde tidigare expanderade grupper",
+    "newProjectPlaceholder": "Projektnamn",
+    "newProjectDefault": "Namnlöst",
+    "newProjectSuccess": "Projekt skapat",
+    "newProjectError": "Kunde inte skapa projekt",
+    "sortBy": "Sortera efter",
+    "sortRecent": "Senast aktiv",
+    "sortAlphabetical": "Alfabetisk",
+    "sortCreated": "Skapad datum",
+    "archiveAll": "Arkivera alla",
+    "comingV2": "Kommer i v2"
+  },
+  "startupOs": {
+    "milestone": {
+      "firstRoom": "Det första rummet är klart.",
+      "firstFolder": "Många företag börjar som en mapp.",
+      "firstTable": "Det första bordet har en andra stol.",
+      "firstSignal": "Den verkliga världen har börjat tala.",
+      "firstShip": "Världen ser det för första gången.",
+      "firstBeliever": "Från idag bygger du inte längre bara för dig själv.",
+      "firstRevenue": "Drömmen har nu kassaflöde.",
+      "firstReturn": "Att återvända betyder mer än att besöka.",
+      "firstTeam": "Tre personer kan börja bilda ett företag.",
+      "firstCrowd": "Det första bordet blir trångt.",
+      "firstReset": "En omstart är en ärligare början.",
+      "firstPublic": "Lägg en bit av framtiden i det offentliga.",
+      "firstDemo": "Detta är inte en show. Det är ett test.",
+      "graduation": "Du har växt bort från grunderna. Vägen framåt kräver starkare verktyg."
+    },
+    "emptyState": {
+      "default": "Många företag börjar som en mapp.",
+      "integrations": "Inga kopplingar konfigurerade.",
+      "creditActivity": "Kreditaktivitet visas efter din första begäran.",
+      "usageData": "Användningsdata visas när din organisation börjar göra begäran.",
+      "apiKeys": "Inga nycklar ännu.",
+      "apiKeysCta": "Skapa din första nyckel",
+      "teamMembers": "En kan börja. Få kan bygga.",
+      "cofounders": "Den första personen som tror på dig har inte dykt upp ännu.",
+      "cofoundersDescription": "När du och en annan grundare båda signalerar intresse visas de här.",
+      "cofoundersAction": "Hitta medgrundare",
+      "growthChart": "Trenddata visas när aktivitet börjar.",
+      "revenueChart": "Intäktsdata visas när transaktioner börjar.",
+      "webhookDeliveries": "Leveranser visas här efter första händelsen.",
+      "webhookEndpoints": "Lägg till en slutpunkt ovan för att börja ta emot händelser.",
+      "accessInvites": "Inga inbjudningskoder har utfärdats."
+    },
+    "success": "Det första rummet är redo.",
+    "failure": "En omstart är ett ärligare början.",
+    "errors": {
+      "loadMatches": "Matcherna kunde inte läsas in.",
+      "loadMatchesDescription": "Något gick fel på vår sida. Uppdatera för att försöka igen.",
+      "loadWebhookDeliveries": "Leveranserna kunde inte läsas in.",
+      "replayWebhookDelivery": "Upprepningen gick inte igenom.",
+      "loadWebhookEndpoints": "Slutpunkterna kunde inte läsas in."
+    },
+    "team": "En kan börja. Få kan bygga.",
+    "revenue": "Drömmen har nu kassaflöde.",
+    "growth": "Signalen blir starkare.",
+    "deployment": {
+      "primary": "Världen ser det för första gången.",
+      "echo": "Det slutligen lämnade localhost."
+    },
+    "onboarding": "Du behöver inte vara redo. Du behöver börja.",
+    "graduation": "Du har växt bort från grunderna. Prova {tool} för vägen framåt.",
+    "company": {
+      "emptyTitle": "Din första kontexttorn börjar här.",
+      "emptyDescription": "Kompilera ett företag i Startup OS för att se och redigera dess kontexttorn.",
+      "emptyAction": "Öppna Startup OS",
+      "notice": {
+        "needsProvider": "Anslut en AI-leverantörsnyckel för att fylla i fälten automatiskt.",
+        "generateFailed": "Genereringen blev inte klar.",
+        "saveFailed": "Dina ändringar sparades inte."
+      },
+      "action": {
+        "save": "Spara",
+        "saving": "Sparar…",
+        "cancel": "Avbryt",
+        "open": "Öppna Startup OS"
+      }
+    },
+    "execution": {
+      "noBets": "Inga satsningar ännu.",
+      "noRuns": "Inga aktiva körningar."
+    },
+    "fileTree": {
+      "empty": "Detta projekt har inga filer ännu."
+    }
+  },
+  "selectOrg": {
+    "invitation": {
+      "emptyTitle": "Arbetsytan är på väg.",
+      "emptyDescription": "Inbjudan kan fortfarande synkroniseras. Uppdatera sidan eller skapa en separat arbetsyta."
+    },
+    "billing": {
+      "emptyTitle": "Skapa en arbetsyta innan fakturering.",
+      "emptyDescription": "Fakturering kräver en aktiv arbetsyta. Skapa en först och återvänd sedan till fakturering."
+    },
+    "default": {
+      "emptyTitle": "Den första arbetsplatsen börjar här.",
+      "emptyDescription": "Skapa en arbetsplats för att komma igång."
+    }
+  }
+}

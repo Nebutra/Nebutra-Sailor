@@ -1,0 +1,20 @@
+/**
+ * Auth center — design-system consumption via SSOT package entry.
+ * Token HSL components must be consumed via hsl(var(--*)), never bare var(--background).
+ */
+@import "@nebutra/ui/styles/preset.css";
+
+@layer base {
+  html,
+  body {
+    min-height: 100%;
+  }
+
+  body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+}

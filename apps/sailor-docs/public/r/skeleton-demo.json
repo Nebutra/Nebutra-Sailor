@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "skeleton-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/skeleton-demo.tsx",
+      "content": "\"use client\";\n\nimport { Skeleton } from \"@nebutra/ui/primitives\";\n\nexport function SkeletonDemo() {\n  return (\n    <div className=\"space-x-4 w-80 p-4 flex items-center rounded-xl border shadow-sm\">\n      <Skeleton className=\"h-12 w-12 shrink-0 rounded-full\" />\n      <div className=\"space-y-2 flex-1\">\n        <Skeleton className=\"h-4 w-[200px]\" />\n        <Skeleton className=\"h-4 w-[160px]\" />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

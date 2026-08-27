@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-03T02:45:00.000Z",
+  "entries": [
+    {
+      "version": "1.4.124",
+      "tag": "v1.4.124",
+      "title": "Pebble 1.4.124 — production soft launch",
+      "summary": "Linux .deb and macOS Universal installers are live on GitHub Releases. In-app updater covers darwin; diagnostics and feedback land on api.nebutra.com/pebble/*; product telemetry uses PostHog and Sentry in stable builds. Windows installers follow when code-signing is configured.",
+      "releaseNotesUrl": "https://github.com/Nebutra/pebble/releases/tag/v1.4.124",
+      "publishedAt": "2026-07-31T10:46:03.000Z"
+    }
+  ]
+}

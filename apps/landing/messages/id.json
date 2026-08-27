@@ -1,0 +1,1781 @@
+{
+  "nav": {
+    "features": "Fitur",
+    "solutions": "Solusi",
+    "pricing": "Harga",
+    "docs": "Dokumentasi",
+    "github": "GitHub",
+    "npm": "npm",
+    "about": "Tentang Kami",
+    "ideas": "Ide",
+    "opc": "Platform",
+    "roadmap": "Peta Jalan",
+    "resources": "Sumber Daya",
+    "signIn": "Masuk",
+    "getStarted": "Mulai Berlayar",
+    "changelog": "Catatan Perubahan",
+    "news": "Berita",
+    "designDocs": "Sistem Desain",
+    "avatarMenu": {
+      "ariaLabel": "Menu akun",
+      "loadingName": "Memuat…",
+      "dashboard": "Dasbor",
+      "account": "Akun",
+      "billing": "Tagihan",
+      "docs": "Dokumentasi",
+      "signOut": "Keluar"
+    }
+  },
+  "refer": {
+    "metadataTitle": "Bergabunglah dengan loop referral pendiri {brandName}",
+    "metadataDescription": "Bergabunglah dengan daftar tunggu {brandName}, pertahankan atribusi referral, dan buka tautan berbagi Anda sendiri dalam satu loop produk tertutup.",
+    "eyebrow": "Loop referral pendiri",
+    "title": "Bergabunglah dengan kohort pendiri berikutnya dan dapatkan tautan berbagi Anda sendiri.",
+    "description": "Masuk dengan kode undangan apa pun atau bergabung langsung. Kami akan mempertahankan atribusi jika kode ada, menempatkan Anda di daftar tunggu, dan menerbitkan URL referral pribadi yang dapat Anda bagikan segera.",
+    "signal": {
+      "waitlist": "Daftar tunggu tahan lama",
+      "codeDetected": "Kode {code} terdeteksi",
+      "direct": "Pendaftaran langsung"
+    },
+    "form": {
+      "emailLabel": "Email kerja",
+      "emailPlaceholder": "you@example.com",
+      "codeLabel": "Kode referral",
+      "codePlaceholder": "Kode opsional",
+      "submit": "Bergabung dengan daftar tunggu",
+      "submitting": "Sedang bergabung",
+      "invalidEmail": "Masukkan email yang valid.",
+      "error": "Tidak dapat bergabung saat ini. Silakan coba lagi.",
+      "successTitle": "Anda sudah terdaftar",
+      "successDescription": "Tautan berbagi pribadi Anda siap.",
+      "positionLabel": "Posisi antrian",
+      "referralCodeLabel": "Kode Anda",
+      "referralUrlLabel": "Tautan berbagi Anda",
+      "copyLink": "Salin tautan",
+      "copied": "Tersalin",
+      "share": "Bagikan",
+      "shareTitle": "Bergabunglah dengan lingkaran pendiri {brandName}",
+      "shareText": "Gunakan tautan undangan saya untuk bergabung dengan daftar tunggu pendiri {brandName}.",
+      "directMode": "Tidak perlu kode rujukan",
+      "codeMode": "Atribusi rujukan diaktifkan"
+    },
+    "proof": {
+      "peerLoop": {
+        "title": "Lingkaran pendiri-ke-pendiri",
+        "description": "Setiap pendaftaran yang diterima menerima kode dan URL, sehingga rujukan berikutnya dimulai tanpa alih tangan manual."
+      },
+      "attribution": {
+        "title": "Atribusi jujur",
+        "description": "Kode yang tidak dikenal disimpan sebagai atribusi yang dicoba, sedangkan kode yang valid menambah jumlah rujukan dan menjaga pendaftaran tetap bersih."
+      },
+      "shareLink": {
+        "title": "Status sukses siap bagikan",
+        "description": "Status konfirmasi menampilkan posisi, kode, salin, dan tindakan bagikan asli sehingga lingkaran selesai di halaman."
+      }
+    },
+    "infrastructure": {
+      "eyebrow": "Infrastruktur berbasis produk",
+      "title": "Dirancang sebagai infrastruktur SaaS yang tahan lama, bukan formulir sekali pakai.",
+      "description": "Permukaan rujukan didukung oleh paket domain, model Prisma yang persisten, rute Next.js bertipe, dan pemeriksaan asap publik yang dapat dijalankan setelah ECS deploys.",
+      "data": {
+        "eyebrow": "Data",
+        "title": "Satu tabel daftar tunggu yang tahan lama",
+        "description": "Keunikan email, posisi auto-increment, indeks kode rujukan, metadata atribusi yang dicoba, dan transisi status ada di database platform."
+      },
+      "api": {
+        "eyebrow": "API",
+        "title": "Endpoint join bertipe",
+        "description": "Halaman mengirim ke `/api/waitlist`, menormalkan kode sembarang, mengembalikan entri yang ada secara idempoten, dan tidak pernah bergantung pada kode sampel."
+      },
+      "cicd": {
+        "eyebrow": "CI/CD",
+        "title": "Smoke publik saat deploy",
+        "description": "URL kanonik dan alias siap untuk pemeriksaan otomatis agar pengiriman ECS menangkap regresi rute, DNS, dan kesehatan."
+      }
+    }
+  },
+  "hero": {
+    "headline1": "Luncurkan Startup Anda,",
+    "headline2": "didukung oleh {brandName} Agent OS.",
+    "subheadline": "Lewati berminggu-minggu kerja platform dengan fondasi <highlight>siap produksi</highlight> dan arsitektur yang diatur, dirancang untuk agen coding AI & pendiri yang ingin go global.",
+    "copyLabel": "Salin Perintah",
+    "copiedLabel": "Disalin",
+    "ctaGetAccess": "Luncurkan Startup Anda",
+    "ctaExploreDemo": "Jelajahi demo",
+    "pillCopied": "Disalin"
+  },
+  "features": {
+    "sectionTitle": "Infrastruktur siap pakai, dari prototipe hingga skala besar.",
+    "item0": {
+      "title": "Infrastruktur Aplikasi AI",
+      "description": "Framework Agen dan mesin orkestrasi LLM bawaan yang telah diuji di produksi. Lewati abstraksi kompleks di bawahnya dan berinteraksi langsung dengan API kecerdasan terstruktur."
+    },
+    "item1": {
+      "title": "Dasar Platform Terkelola",
+      "description": "Dasar platform terkelola untuk tim yang meluncurkan SaaS berbasis AI. Selaraskan kerangka kerja, primitif runtime, dan permukaan pengiriman tanpa merangkai alat ad-hoc."
+    },
+    "item2": {
+      "title": "Otomatisasi SaaS Perusahaan",
+      "description": "Terintegrasi mendalam dengan tumpukan teknologi modern Vercel, Supabase, dan Stripe. Menyediakan keamanan tingkat baris siap pakai, isolasi multi-tenant kompleks, dan penagihan langganan global."
+    }
+  },
+  "cta": {
+    "heading": "Siap untuk meluncurkan produk AI berikutnya Anda?",
+    "subheading": "Inisialisasi arsitektur SaaS cloud-native yang lengkap secara lokal dengan satu perintah terminal.",
+    "copyLabel": "Salin Perintah",
+    "copiedLabel": "Tersalin",
+    "startBuilding": "Mulai Membangun"
+  },
+  "footer": {
+    "brandDescription": "Luncurkan Startup Anda dengan {brandName} Agent OS. Multi-tenancy, billing, auth, dan AI — siap produksi sejak hari pertama.",
+    "columns": {
+      "product": "Produk",
+      "resources": "Sumber Daya",
+      "legal": "Legal",
+      "community": "Komunitas"
+    },
+    "links": {
+      "product": "Produk",
+      "features": "Fitur",
+      "forge": "Forge",
+      "pricing": "Harga",
+      "about": "Tentang",
+      "showcase": "Showcase",
+      "blog": "Blog",
+      "playbook": "Playbook",
+      "changelog": "Changelog",
+      "roadmap": "Roadmap",
+      "docs": "Dokumentasi",
+      "ideas": "Ide",
+      "opc": "Platform",
+      "careers": "Karir",
+      "security": "Keamanan",
+      "dpa": "DPA",
+      "privacy": "Privasi",
+      "terms": "Ketentuan",
+      "cookies": "Cookie",
+      "refund": "Pengembalian Dana",
+      "licensing": "Lisensi",
+      "contact": "Kontak",
+      "faq": "FAQ",
+      "github": "GitHub",
+      "discord": "Discord",
+      "twitter": "X (Twitter)"
+    },
+    "copyright": "© 2026 {brandName} Intelligence. Hak cipta dilindungi.",
+    "statusOnline": "Semua sistem beroperasi",
+    "newsletterTitle": "Tetap dapatkan update",
+    "newsletterPlaceholder": "you@example.com",
+    "newsletterSubscribe": "Berlangganan",
+    "newsletterSuccess": "Terima kasih telah berlangganan!",
+    "newsletterError": "Terjadi kesalahan",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
+  },
+  "logoStrip": {
+    "tagline": "Berjalan di"
+  },
+  "monorepoTree": {
+    "badge": "STRUKTUR TURBOREPO",
+    "title": "15 aplikasi. 113 paket. 4 jalur backend.",
+    "description": "Kode bersama, build paralel, tanpa duplikasi. Tiping end-to-end lengkap dari database hingga frontend.",
+    "metricApps": "aplikasi",
+    "metricBackends": "jalur backend",
+    "metricPackages": "paket",
+    "verifiedPaths": "Jalur diverifikasi terhadap workspace saat ini",
+    "cta": "Jelajahi arsitektur monorepo"
+  },
+  "stats": {
+    "title": "Dalam Angka",
+    "github": "Bintang GitHub",
+    "discord": "Anggota Discord",
+    "setup": "Rata-rata Waktu Setup",
+    "packages": "Paket Monorepo",
+    "ctaStar": "Beri Bintang →",
+    "ctaJoin": "Bergabung →",
+    "ctaStart": "Mulai →",
+    "ctaExplore": "Jelajahi →"
+  },
+  "legalPages": {
+    "about": {
+      "title": "Tentang Kami — Platform AI yang Terkelola",
+      "description": "Temukan visi komersial dan prinsip rekayasa di balik platform AI yang terkelola dari {brandName}.",
+      "heading": "Era Tim Produk yang Ramping",
+      "subheading": "Gantikan pekerjaan platform yang berulang dengan infrastruktur yang terkelola, otomatisasi kuat, dan leverage rekayasa yang tahan lama.",
+      "missionTitle": "Tatanan Baru Menolak Kemerosotan Administratif",
+      "missionP1": "{brandName} membangun platform AI yang terkelola untuk tim yang membutuhkan infrastruktur tahan lama, bukan tumpukan awal yang berumur pendek. Skala tradisional sering disertai birokrasi dan entropi; kami menjawabnya dengan tata kelola kode, otomatisasi, dan baseline platform yang tetap dapat diaudit saat berkembang.",
+      "missionP2": "Komersial masih menderita karena overhead koordinasi, alat yang terfragmentasi, dan jalur upgrade yang lemah. Kami peduli mengurangi gesekan tersebut melalui kontrak platform yang lebih jelas, primitif pengiriman yang lebih kuat, dan perilaku runtime yang dapat diamati dan dipercaya oleh tim.",
+      "missionP3": "Kami menolak kebiasaan menyelesaikan masalah skala dengan lebih banyak hambatan organisasi. Otomatisasi, tes, dan tata kelola harus menyerap pekerjaan operasional berulang agar tim tetap fokus pada produk, arsitektur, dan hasil pelanggan.",
+      "missionP4": "",
+      "valuesTitle": "Empat Pilar",
+      "values": {
+        "0": {
+          "title": "Skala yang Terkelola (Filsafat)",
+          "description": "Skala harus berasal dari sistem yang lebih kuat, leverage yang lebih baik, dan aturan operasional yang lebih jelas — bukan dari menumpuk lebih banyak beban organisasi."
+        },
+        "1": {
+          "title": "Inti Pembangun (Infrastruktur)",
+          "description": "Baseline platform yang dapat digunakan kembali untuk multi-tenancy, billing, auth, kepatuhan, dan integrasi AI yang dapat diaudit, diperluas, dan dikirimkan secara berulang oleh tim."
+        },
+        "2": {
+          "title": "Disiplin Upgrade (Routing)",
+          "description": "Sistem yang sehat berkembang melalui pemeriksaan kompatibilitas, migrasi, dan kontrak runtime yang dapat diamati, bukan melalui penyimpangan, heroisme, dan penulisan ulang satu kali."
+        },
+        "3": {
+          "title": "Kode adalah Hukum (Organisasi)",
+          "description": "Disiplin operasional harus dikodekan dalam tes, alur kerja, dan aturan tata kelola agar tim dapat meningkatkan platform tanpa bergantung pada politik atau memori institusional."
+        }
+      },
+      "jobsTitle": "Sinyal Rekayasa di Atas Kredensial",
+      "jobsDescription": "Kami lebih peduli pada output rekayasa yang dapat diverifikasi, kejelasan berpikir, dan penilaian sistem daripada latar belakang atau inflasi jabatan.",
+      "jobsButton": "Kirim Profil Github",
+      "companyInfoTitle": "Kepatuhan Organisasi",
+      "companyInfo": {
+        "legalName": "Pendaftaran Entitas Hukum",
+        "founded": "Tanggal Pendaftaran",
+        "headquarters": "Pusat Operasi Global",
+        "jurisdiction": "Yurisdiksi Pengatur"
+      },
+      "ctaHeading": "Memerlukan evaluasi teknis lebih mendalam?",
+      "ctaDescription": "Hubungi spesialis teknik kami untuk penilaian integrasi perusahaan atau tinjau dokumentasi penyebaran.",
+      "ctaButton": "Hubungi Kami"
+    },
+    "contact": {
+      "title": "Pertanyaan Teknis & Komersial — {brandName} Intelligence",
+      "description": "Saluran komunikasi khusus untuk lisensi komersial, self-hosting perusahaan, dan dukungan teknis lanjutan.",
+      "heading": "Hubungkan Dukungan",
+      "subheading": "Kami akan mengirimkan spesialis teknis atau arsitek khusus untuk mengevaluasi kebutuhan eksplisit Anda.",
+      "contacts": {
+        "founder": {
+          "title": "Kontak Langsung Pendiri",
+          "description": "Saluran komunikasi langsung untuk keselarasan strategis inti dan pertanyaan tingkat eksekutif."
+        },
+        "general": {
+          "title": "Konsultasi Perusahaan",
+          "description": "Diskusi awal mengenai kemitraan strategis ekologis dan evolusi arsitektur menyeluruh."
+        },
+        "sales": {
+          "title": "Penyebaran Komersial",
+          "description": "Negosiasi mengenai lisensi tertutup dan spesifikasi terkait penyebaran lingkungan kluster pribadi."
+        },
+        "support": {
+          "title": "Dukungan Tingkat Pakar",
+          "description": "Panduan arsitektur terarah dan layanan pemecahan masalah untuk integrasi bisnis aktif dan debugging sistem inti."
+        },
+        "legal": {
+          "title": "Legal & Compliance",
+          "description": "Pertanyaan terkait definisi batas open-source, audit kepatuhan perusahaan, dan ketentuan kontrak."
+        },
+        "privacy": {
+          "title": "Privasi Pusat Data",
+          "description": "Verifikasi teknis dan arahan kepatuhan terkait GDPR serta undang-undang perlindungan data internasional berikutnya."
+        },
+        "security": {
+          "title": "Pengungkapan Keamanan",
+          "description": "Kirim laporan reproduksi teknis mengenai kerentanan perangkat lunak potensial secara aman langsung ke tim infrastruktur kami."
+        }
+      },
+      "formTitle": "Portal Pengajuan",
+      "form": {
+        "name": "Jabatan Pengaju",
+        "email": "Alamat Email Resmi",
+        "company": "Organisasi Terkait",
+        "category": "Bidang Kebutuhan",
+        "categories": {
+          "general": "Konsultasi Perusahaan",
+          "sales": "Lisensi & Arsitektur",
+          "support": "Bantuan Pengembang",
+          "legal": "Batas Legal & Kepatuhan",
+          "privacy": "Kebijakan Pemrosesan Data",
+          "partnership": "Integrasi Ekosistem",
+          "press": "Hubungan Publik"
+        },
+        "subject": "Ringkasan Masalah Utama",
+        "message": "Spesifikasi Teknis/Komersial Detail",
+        "submit": "Kirim ke Backend",
+        "privacyNotice": "Melakukan permintaan jaringan ini menandakan telah membaca dan menyetujui",
+        "privacyLink": "Infrastruktur Privasi Sistemik",
+        "submitting": "Memasuki antrean pemrosesan...",
+        "successMessage": "Data berhasil dikirim. Tim operasional yang bertanggung jawab akan memberikan tanggapan terperinci dalam 1-2 hari kerja standar."
+      },
+      "companyInfoTitle": "Telemetri Operasional",
+      "companyNameChinese": "{companyLegal}",
+      "companyNameEnglish": "{companyLegalEn}",
+      "companyAddress": "Wuxi, Provinsi Jiangsu, Tiongkok",
+      "socialMedia": "Tautan Jaringan Utama"
+    },
+    "cookies": {
+      "title": "Kebijakan Cookie — {brandName}",
+      "description": "Bagaimana {brandName} menggunakan cookie dan teknologi pelacakan serupa di situs web dan layanan kami.",
+      "heading": "Kebijakan Cookie",
+      "effectiveDate": "Tanggal Efektif",
+      "lastUpdated": "Terakhir Diperbarui",
+      "dates": {
+        "effective": "1 Januari 2025",
+        "updated": "1 Januari 2025"
+      },
+      "intro": "Kebijakan Cookie ini menjelaskan bagaimana {brandName} Co., Ltd. (\"{brandName},\" \"kami,\" \"kita,\" atau \"milik kami\") menggunakan cookie dan teknologi pelacakan serupa di situs web dan layanan kami.",
+      "whatAreCookies": {
+        "title": "Apa Itu Cookie?",
+        "content": "Cookie adalah file teks kecil yang ditempatkan di perangkat Anda saat mengunjungi situs web. Cookie banyak digunakan agar situs web berfungsi lebih efisien dan memberikan informasi kepada pemilik situs web."
+      },
+      "howWeUse": {
+        "title": "Bagaimana Kami Menggunakan Cookie",
+        "intro": "Kami menggunakan cookie untuk:",
+        "items": {
+          "0": {
+            "label": "Aktifkan Fitur Penting",
+            "desc": "Menyediakan fungsi inti seperti autentikasi pengguna dan keamanan"
+          },
+          "1": {
+            "label": "Ingat Preferensi",
+            "desc": "Menyimpan bahasa, tema, dan pengaturan lainnya"
+          },
+          "2": {
+            "label": "Tingkatkan Kinerja",
+            "desc": "Memahami bagaimana pengunjung berinteraksi dengan layanan kami"
+          },
+          "3": {
+            "label": "Personalisasi Pengalaman",
+            "desc": "Menyajikan konten dan rekomendasi yang relevan"
+          },
+          "4": {
+            "label": "Ukur Pemasaran",
+            "desc": "Melacak efektivitas kampanye pemasaran kami"
+          }
+        }
+      },
+      "typesTitle": "Jenis Cookie yang Kami Gunakan",
+      "tableHeaders": {
+        "cookie": "Cookie",
+        "provider": "Penyedia",
+        "purpose": "Tujuan",
+        "duration": "Durasi"
+      },
+      "necessary": {
+        "title": "Cookie yang Sangat Diperlukan",
+        "description": "Cookie ini penting agar situs web berfungsi dengan baik. Cookie ini tidak dapat dinonaktifkan.",
+        "cookies": {
+          "0": {
+            "name": "__session",
+            "provider": "{brandName}",
+            "purpose": "Sesi autentikasi pengguna",
+            "duration": "Sesi"
+          },
+          "1": {
+            "name": "__clerk_db_jwt",
+            "provider": "Clerk",
+            "purpose": "Token autentikasi",
+            "duration": "7 hari"
+          },
+          "2": {
+            "name": "cookie_consent",
+            "provider": "{brandName}",
+            "purpose": "Menyimpan preferensi persetujuan cookie",
+            "duration": "1 tahun"
+          }
+        }
+      },
+      "functional": {
+        "title": "Cookie Fungsional",
+        "description": "Cookie ini mengaktifkan fitur personalisasi dan mengingat preferensi Anda.",
+        "cookies": {
+          "0": {
+            "name": "locale",
+            "provider": "{brandName}",
+            "purpose": "Menyimpan preferensi bahasa",
+            "duration": "1 tahun"
+          },
+          "1": {
+            "name": "theme",
+            "provider": "{brandName}",
+            "purpose": "Menyimpan preferensi tema",
+            "duration": "1 tahun"
+          }
+        }
+      },
+      "analyticsType": {
+        "title": "Cookie Analitik",
+        "description": "Cookie ini membantu kami memahami bagaimana pengunjung berinteraksi dengan situs web kami.",
+        "cookies": {
+          "0": {
+            "name": "_ga",
+            "provider": "Google Analytics",
+            "purpose": "Membedakan pengguna unik",
+            "duration": "2 tahun"
+          },
+          "1": {
+            "name": "ph_*",
+            "provider": "PostHog",
+            "purpose": "Analitik produk",
+            "duration": "1 tahun"
+          }
+        }
+      },
+      "marketingType": {
+        "title": "Cookie Pemasaran",
+        "description": "Cookie ini digunakan untuk iklan dan melacak kinerja kampanye iklan.",
+        "cookies": {
+          "0": {
+            "name": "_fbp",
+            "provider": "Facebook",
+            "purpose": "Melacak kunjungan untuk iklan Facebook",
+            "duration": "3 bulan"
+          },
+          "1": {
+            "name": "_gcl_au",
+            "provider": "Google Ads",
+            "purpose": "Pelacakan konversi",
+            "duration": "3 bulan"
+          }
+        }
+      },
+      "managingTitle": "Mengelola Preferensi Cookie Anda",
+      "consentBanner": {
+        "title": "Banner Persetujuan Cookie",
+        "intro": "Saat pertama kali mengunjungi situs web kami, Anda akan melihat banner persetujuan cookie yang memungkinkan Anda untuk:",
+        "items": {
+          "0": {
+            "label": "Terima Semua",
+            "desc": "Aktifkan semua kategori cookie"
+          },
+          "1": {
+            "label": "Tolak Semua",
+            "desc": "Nonaktifkan semua cookie opsional (cookie yang diperlukan tetap aktif)"
+          },
+          "2": {
+            "label": "Sesuaikan",
+            "desc": "Pilih kategori cookie tertentu untuk diaktifkan"
+          }
+        },
+        "changeNote": "Anda dapat mengubah preferensi kapan saja dengan mengklik \"Pengaturan Cookie\" di bagian bawah halaman."
+      },
+      "browserSettings": {
+        "title": "Pengaturan Browser",
+        "intro": "Kebanyakan browser web memungkinkan Anda mengontrol cookie melalui pengaturan mereka:",
+        "browsers": {
+          "0": {
+            "name": "Chrome",
+            "path": "Pengaturan > Privasi dan keamanan > Cookie"
+          },
+          "1": {
+            "name": "Firefox",
+            "path": "Pengaturan > Privasi & Keamanan > Cookie"
+          },
+          "2": {
+            "name": "Safari",
+            "path": "Preferensi > Privasi > Cookie"
+          },
+          "3": {
+            "name": "Edge",
+            "path": "Pengaturan > Privasi, pencarian, dan layanan > Cookie"
+          }
+        },
+        "note": "Memblokir cookie tertentu dapat memengaruhi fungsionalitas situs web."
+      },
+      "similarTech": {
+        "title": "Teknologi Serupa",
+        "intro": "Selain cookie, kami mungkin menggunakan:",
+        "items": {
+          "0": {
+            "label": "Penyimpanan Lokal",
+            "desc": "Untuk menyimpan preferensi dan data cache secara lokal"
+          },
+          "1": {
+            "label": "Penyimpanan Sesi",
+            "desc": "Untuk data sementara selama sesi penelusuran Anda"
+          },
+          "2": {
+            "label": "Tag Piksel",
+            "desc": "Gambar kecil untuk melacak pembukaan email dan kunjungan situs web"
+          }
+        },
+        "noFingerprinting": "Kami TIDAK menggunakan browser fingerprinting untuk pelacakan."
+      },
+      "updates": {
+        "title": "Pembaruan Kebijakan Ini",
+        "content": "Kami dapat memperbarui Kebijakan Cookie ini dari waktu ke waktu. Kami akan memberi tahu Anda tentang perubahan penting dengan memposting kebijakan yang diperbarui di situs web kami."
+      },
+      "contactUs": {
+        "title": "Hubungi Kami",
+        "intro": "Jika Anda memiliki pertanyaan tentang penggunaan cookie kami, silakan hubungi kami:",
+        "company": "{brandName} Co., Ltd.",
+        "privacyNote": "Untuk informasi lebih lanjut tentang cara kami mengumpulkan dan memproses data Anda, silakan lihat",
+        "privacyLink": "Kebijakan Privasi"
+      }
+    },
+    "faq": {
+      "title": "Panduan Teknik & FAQ — {brandName}",
+      "description": "Analisis komprehensif tentang arsitektur kerangka kerja, topologi dasar, dan strategi penyebaran komersial.",
+      "heading": "Analisis Mendalam Eksekutif",
+      "subheading": "Materi pendukung yang dioptimalkan untuk integrasi rekayasa sistem dan pengambilan keputusan komersial eksekutif.",
+      "categories": {
+        "0": {
+          "name": "Ikhtisar Arsitektur",
+          "questions": {
+            "0": {
+              "q": "Apa tujuan operasional eksplisit dari {productName}?",
+              "a": "{productName} adalah kerangka kerja AI SaaS Next.js yang sangat terstruktur dan siap produksi. Ini menggabungkan penagihan perusahaan, autentikasi multi-faktor, dan isolasi multi-tenant ke dalam garis dasar platform yang diatur, memungkinkan tim fokus pada implementasi AI spesifik produk."
+            },
+            "1": {
+              "q": "Bagaimana struktur lisensi repositori?",
+              "a": "Infrastruktur dasar secara ketat menegakkan perjanjian OSS AGPLv3, menjamin transparansi dan penggunaan tanpa biaya. Untuk organisasi yang memerlukan obfuskasi proprietary dan jaminan penulisan ulang yang lebih tinggi, kontrak komersial tertutup eksplisit tersedia."
+            },
+            "2": {
+              "q": "Bagaimana kecepatan evaluasi komersial awal?",
+              "a": "Sangat tinggi. Menggunakan toolchain Node CLI khusus kami bersama spesifikasi teknis yang presisi, insinyur junior dapat menyiapkan instance Minimum Viable Product (MVP) lokal otonom dalam hitungan menit."
+            }
+          }
+        },
+        "1": {
+          "name": "Operasi Komersial",
+          "questions": {
+            "0": {
+              "q": "Seberapa luas toleransi untuk penskalaan komersial?",
+              "a": "Dirancang secara ekstensif pada paradigma mikro-komponen, kapasitas beban struktural memetakan mulus dari Free Tier tanpa permintaan secara dinamis hingga ambang batas Enterprise yang melayani jutaan permintaan bulanan, seluruhnya dikonfigurasi melalui batasan dashboard."
+            },
+            "1": {
+              "q": "Bagaimana volatilitas langganan memengaruhi akuntansi standar?",
+              "a": "Kami beroperasi menggunakan pencatatan struktural sumber daya dan throughput API yang presisi pada tingkat detik. Perubahan batasan segera disesuaikan dengan lapisan akuntansi—baik mengembalikan diferensial prorata atau menerbitkan kredit otomatis. Tidak ada periode pembekuan tier sama sekali."
+            },
+            "2": {
+              "q": "Infrastruktur pemrosesan apa yang mengisolasi vektor pembayaran?",
+              "a": "Rute kas global secara fundamental mendelegasikan ke antarmuka server Stripe, menjamin telemetri PCI-DSS yang ketat dan integritas pemrosesan. Penyebaran Enterprise dapat mengintegrasikan pipeline audit keuangan pribadi yang diatur oleh komitmen SLA khusus."
+            }
+          }
+        },
+        "2": {
+          "name": "Lapisan Rekayasa Sistem",
+          "questions": {
+            "0": {
+              "q": "Abstraksi kecerdasan fundamental apa yang didukung secara native?",
+              "a": "Logika interaksi utama menetapkan interoperabilitas native atas spesifikasi standar OpenAI, Anthropic, dan Gemini. Hal ini menghasilkan fleksibilitas besar untuk menukar endpoint penalaran secara efisien melalui pemetaan variabel tanpa degradasi pada logika komersial hulu."
+            },
+            "1": {
+              "q": "Bagaimana risiko obfuskasi database ditangani?",
+              "a": "Implementasi default secara intrinsik menerapkan kebijakan Postgres Row-Level Security (RLS) yang terikat erat dengan primitif Tenant Resolution Routing serverless kami. Ini memastikan partisi keras secara aktif mencegah kontaminasi data tingkat aplikasi kritis dan tumpang tindih eksekusi."
+            },
+            "2": {
+              "q": "Apakah ada batasan arsitektural pada penyebaran mandiri?",
+              "a": "Sama sekali tidak. Topologi sepenuhnya terdekopel. Jika lingkungan mengeksekusi runtime Node.js independen bersama kluster PostgreSQL yang sehat, fungsionalitas penuh secara inheren dipertahankan."
+            }
+          }
+        },
+        "3": {
+          "name": "Integritas Sistematis",
+          "questions": {
+            "0": {
+              "q": "Protokol apa yang menentukan pertahanan mekanis perimeter?",
+              "a": "Mekanisme mengeksekusi enkripsi TLS wajib melalui transmisi, algoritma hashing deterministik untuk pemetaan rahasia, dan pencatatan peristiwa mutasi yang ditulis secara ketat ke dalam buku besar pelacakan time-series internal."
+            },
+            "1": {
+              "q": "Apakah topologi mematuhi undang-undang privasi internasional utama?",
+              "a": "Ya, secara mendalam. Modul bisnis menyediakan implementasi algoritmik siap pakai yang menargetkan status penarikan persetujuan, logika penghapusan permanen, dan kueri ekspor mendalam yang sesuai secara optimal dengan GDPR dan kerangka regulasi lokal."
+            },
+            "2": {
+              "q": "Apa yang dieksekusi saat terjadi insiden bencana yang tidak biasa?",
+              "a": "Sentinel otomatis segera memberi peringatan ke vektor rekayasa inti yang memaksa blokir sirkuit dan menerapkan triase cepat. Diatur oleh buku panduan resolusi canggih, Postmortem Insiden yang sepenuhnya transparan disebarluaskan secara universal dalam jendela waktu 72 jam mutlak."
+            }
+          }
+        },
+        "4": {
+          "name": "Direktif Bantuan Teknis",
+          "questions": {
+            "0": {
+              "q": "Bagaimana pemecahan masalah kemacetan operasional diselesaikan?",
+              "a": "Vektor triase awal menargetkan matriks dokumentasi yang dipelihara secara ketat dan ditinjau oleh rekan sejawat serta interaksi komunitas yang terverifikasi. Memperoleh lisensi standar atau tingkat perusahaan membuka akses ke antrean eskalasi pribadi yang diselesaikan melalui node rekayasa internal langsung."
+            },
+            "1": {
+              "q": "Apakah Anda menyediakan operasi integrasi lingkungan fisik atau khusus?",
+              "a": "Ini termasuk dalam tier eksekusi premium khusus kami untuk konglomerat perusahaan tingkat atas. Arsitek senior kami dikerahkan ke luar untuk melakukan audit kode terhadap arsitektur warisan, mengelola relokasi cloud yang rumit, dan memvalidasi partisi jaringan yang sangat terisolasi."
+            }
+          }
+        }
+      },
+      "ctaHeading": "Memerlukan sinkronisasi teknis segera?",
+      "ctaDescription": "Baik memvalidasi skema perilaku API tertentu maupun mengeksekusi perjanjian integrasi jangka panjang, antarmuka langsung dengan hierarki rekayasa.",
+      "ctaButton": "Terima Instruksi Integrasi",
+      "ctaEmail": "Kirim Pesan Langsung"
+    },
+    "privacy": {
+      "title": "Protokol Privasi & Pertahanan Informasi — {brandName}",
+      "description": "Mendokumentasikan secara ekstensif secara tepat bagaimana mekanisme infrastruktur mengatur otonomi pengguna dan isolasi data mesin.",
+      "heading": "Direktif Perlindungan Informasi",
+      "effectiveDate": "Tanggal Efektif",
+      "lastUpdated": "Terakhir Diperbarui",
+      "dates": {
+        "effective": "1 Januari 2025",
+        "updated": "1 Januari 2025"
+      },
+      "intro": "Di {brandName} (\"Perusahaan,\" \"kami,\" \"kita,\" atau \"milik kami\"), kami berkomitmen untuk melindungi privasi Anda. Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, mengungkapkan, dan melindungi informasi Anda saat Anda menggunakan situs web, aplikasi, dan layanan kami (secara kolektif, \"Layanan\").",
+      "infoWeCollect": {
+        "title": "1. Informasi yang Kami Kumpulkan",
+        "youProvide": {
+          "title": "1.1 Informasi yang Anda Berikan",
+          "intro": "Kami mengumpulkan informasi yang Anda berikan secara langsung kepada kami, termasuk:",
+          "items": {
+            "0": {
+              "label": "Informasi Akun",
+              "desc": "Nama, alamat email, kata sandi, dan detail organisasi saat Anda membuat akun."
+            },
+            "1": {
+              "label": "Informasi Profil",
+              "desc": "Foto profil, jabatan, nama perusahaan, dan informasi opsional lainnya."
+            },
+            "2": {
+              "label": "Informasi Pembayaran",
+              "desc": "Alamat tagihan dan detail metode pembayaran (diproses secara aman melalui Stripe)."
+            },
+            "3": {
+              "label": "Komunikasi",
+              "desc": "Pesan, umpan balik, dan komunikasi lainnya yang Anda kirimkan kepada kami."
+            },
+            "4": {
+              "label": "Konten",
+              "desc": "Konten apa pun yang Anda buat, unggah, atau simpan menggunakan Layanan kami."
+            }
+          }
+        },
+        "automatic": {
+          "title": "1.2 Informasi yang Dikumpulkan Secara Otomatis",
+          "intro": "Saat Anda menggunakan Layanan kami, kami secara otomatis mengumpulkan informasi tertentu:",
+          "items": {
+            "0": {
+              "label": "Informasi Perangkat",
+              "desc": "Jenis perangkat, sistem operasi, jenis browser, dan pengidentifikasi perangkat unik."
+            },
+            "1": {
+              "label": "Informasi Penggunaan",
+              "desc": "Halaman yang dilihat, fitur yang digunakan, tindakan yang diambil, dan waktu yang dihabiskan di Layanan."
+            },
+            "2": {
+              "label": "Data Log",
+              "desc": "Alamat IP, waktu akses, URL pengarah, dan log aktivitas sistem."
+            },
+            "3": {
+              "label": "Informasi Lokasi",
+              "desc": "Lokasi umum berdasarkan alamat IP (kami tidak mengumpulkan geolokasi yang presisi)."
+            }
+          }
+        }
+      },
+      "howWeUse": {
+        "title": "2. Cara Kami Menggunakan Informasi Anda",
+        "intro": "Kami menggunakan informasi yang kami kumpulkan untuk:",
+        "items": {
+          "0": {
+            "label": "Menyediakan Layanan",
+            "desc": "Mengoperasikan, memelihara, dan meningkatkan Layanan kami."
+          },
+          "1": {
+            "label": "Memproses Transaksi",
+            "desc": "Menangani pembayaran, penagihan, dan operasi terkait."
+          },
+          "2": {
+            "label": "Berkomunikasi",
+            "desc": "Mengirim pengumuman layanan, pembaruan, dan komunikasi pemasaran (dengan persetujuan)."
+          },
+          "3": {
+            "label": "Personalisasi",
+            "desc": "Menyesuaikan pengalaman Anda dan memberikan rekomendasi yang relevan."
+          },
+          "4": {
+            "label": "Menganalisis",
+            "desc": "Memahami pola penggunaan dan meningkatkan Layanan kami."
+          },
+          "5": {
+            "label": "Melindungi",
+            "desc": "Mendeteksi, mencegah, dan menanggapi penipuan, penyalahgunaan, dan insiden keamanan."
+          }
+        }
+      },
+      "howWeShare": {
+        "title": "3. Cara Kami Berbagi Informasi Anda",
+        "intro": "Kami dapat membagikan informasi Anda dalam keadaan berikut:",
+        "serviceProviders": {
+          "title": "3.1 Penyedia Layanan",
+          "intro": "Kami membagikan informasi kepada vendor pihak ketiga yang menyediakan layanan atas nama kami, termasuk:",
+          "items": {
+            "0": {
+              "label": "Infrastruktur",
+              "desc": "Hosting cloud (Vercel, Supabase), layanan database"
+            },
+            "1": {
+              "label": "Pemrosesan Pembayaran",
+              "desc": "Stripe untuk penanganan pembayaran yang aman"
+            },
+            "2": {
+              "label": "Autentikasi",
+              "desc": "Clerk untuk manajemen identitas"
+            },
+            "3": {
+              "label": "Analitik",
+              "desc": "PostHog, Vercel Analytics untuk wawasan penggunaan"
+            }
+          }
+        },
+        "businessTransfers": {
+          "title": "3.2 Transfer Bisnis",
+          "content": "Jika kami terlibat dalam merger, akuisisi, atau penjualan aset, informasi Anda dapat ditransfer sebagai bagian dari transaksi tersebut."
+        },
+        "legalRequirements": {
+          "title": "3.3 Persyaratan Hukum",
+          "content": "Kami dapat mengungkapkan informasi ketika diwajibkan oleh hukum, proses hukum, atau permintaan pemerintah, atau untuk melindungi hak, privasi, keamanan, atau properti kami."
+        }
+      },
+      "yourRights": {
+        "title": "4. Hak dan Pilihan Anda",
+        "accessPortability": {
+          "title": "4.1 Akses dan Portabilitas",
+          "content": "Anda dapat mengakses informasi pribadi Anda melalui pengaturan akun dan meminta salinan data Anda dalam format yang dapat dibawa."
+        },
+        "correction": {
+          "title": "4.2 Koreksi",
+          "content": "Anda dapat memperbarui informasi akun Anda kapan saja melalui dashboard."
+        },
+        "deletion": {
+          "title": "4.3 Penghapusan",
+          "content": "Anda dapat meminta penghapusan akun dan data terkait melalui pengaturan atau dengan menghubungi kami."
+        },
+        "marketing": {
+          "title": "4.4 Komunikasi Pemasaran",
+          "content": "Anda dapat berhenti berlangganan email pemasaran dengan mengklik \"unsubscribe\" di email pemasaran apa pun atau memperbarui preferensi Anda."
+        }
+      },
+      "dataSecurity": {
+        "title": "5. Keamanan Data",
+        "intro": "Kami menerapkan langkah teknis dan organisasi yang sesuai untuk melindungi informasi Anda, termasuk:",
+        "items": {
+          "0": "Enkripsi data saat transit (TLS) dan saat disimpan",
+          "1": "Penilaian keamanan dan pengujian penetrasi secara berkala",
+          "2": "Kontrol akses dan persyaratan autentikasi",
+          "3": "Pemantauan dan pencatatan aktivitas sistem"
+        }
+      },
+      "ccpa": {
+        "title": "6. Hak Privasi California (CCPA)",
+        "intro": "Jika Anda adalah penduduk California, Anda memiliki hak khusus terkait informasi pribadi Anda:",
+        "items": {
+          "0": {
+            "label": "Hak untuk Tahu",
+            "desc": "Minta pengungkapan informasi yang kami kumpulkan, gunakan, dan bagikan."
+          },
+          "1": {
+            "label": "Hak untuk Menghapus",
+            "desc": "Minta penghapusan informasi pribadi Anda."
+          },
+          "2": {
+            "label": "Hak untuk Berhenti Berlangganan",
+            "desc": "Berhenti berlangganan penjualan informasi pribadi (kami tidak menjual data Anda)."
+          },
+          "3": {
+            "label": "Hak untuk Tidak Dibeda-bedakan",
+            "desc": "Kami tidak akan membeda-bedakan Anda karena menggunakan hak Anda."
+          }
+        }
+      },
+      "gdpr": {
+        "title": "7. Hak Privasi Eropa (GDPR)",
+        "intro": "Jika Anda berada di EEA, Inggris, atau Swiss, Anda memiliki hak tambahan di bawah GDPR:",
+        "items": {
+          "0": {
+            "label": "Dasar Hukum",
+            "desc": "Kami memproses data Anda berdasarkan pelaksanaan kontrak, kepentingan sah, atau persetujuan."
+          },
+          "1": {
+            "label": "Hak",
+            "desc": "Akses, perbaikan, penghapusan, portabilitas, pembatasan, dan keberatan."
+          },
+          "2": {
+            "label": "DPO",
+            "desc": "Anda dapat menghubungi Petugas Perlindungan Data kami di dpo@nebutra.com."
+          }
+        }
+      },
+      "contactUs": {
+        "title": "8. Hubungi Kami",
+        "intro": "Jika Anda memiliki pertanyaan tentang Kebijakan Privasi ini, silakan hubungi kami:",
+        "company": "{brandName} Co., Ltd."
+      }
+    },
+    "refund": {
+      "title": "Protokol Anomali Transaksi — {brandName}",
+      "description": "Pembatasan ketat mengenai parameter pengembalian dana yang tepat di berbagai model keterlibatan struktural.",
+      "heading": "Kerangka Eksekusi Sengketa",
+      "effectiveDate": "Tanggal Implementasi Penegakan",
+      "lastUpdated": "Epoch Pelacakan Revisi",
+      "dates": {
+        "effective": "1 Januari 2025",
+        "updated": "1 Januari 2025"
+      },
+      "intro": "Di {brandName}, kami ingin Anda sepenuhnya puas dengan layanan kami. Kebijakan Pengembalian Dana ini menguraikan keadaan di mana pengembalian dana tersedia dan proses untuk memintanya.",
+      "subscriptionPlans": {
+        "title": "Rencana Langganan",
+        "monthly": {
+          "title": "Langganan Bulanan",
+          "items": {
+            "0": {
+              "label": "Pembatalan",
+              "desc": "Anda dapat membatalkan langganan bulanan kapan saja"
+            },
+            "1": {
+              "label": "Pengembalian Dana Proporsional",
+              "desc": "Kami tidak menawarkan pengembalian dana proporsional untuk bulan parsial"
+            },
+            "2": {
+              "label": "Akses",
+              "desc": "Anda tetap memiliki akses ke fitur berbayar hingga akhir periode penagihan Anda"
+            },
+            "3": {
+              "label": "Perpanjangan Otomatis",
+              "desc": "Langganan diperpanjang secara otomatis kecuali dibatalkan"
+            }
+          }
+        },
+        "annual": {
+          "title": "Langganan Tahunan",
+          "items": {
+            "0": {
+              "label": "Jaminan Uang Kembali 14 Hari",
+              "desc": "Pelanggan tahunan baru dapat meminta pengembalian dana penuh dalam 14 hari setelah pembelian awal"
+            },
+            "1": {
+              "label": "Setelah 14 Hari",
+              "desc": "Pengembalian dana umumnya tidak tersedia setelah periode 14 hari"
+            },
+            "2": {
+              "label": "Pembatalan",
+              "desc": "Anda dapat membatalkan kapan saja, namun langganan Anda akan tetap aktif hingga akhir masa berlangganan tahunan"
+            },
+            "3": {
+              "label": "Tanpa Pengembalian Dana Proporsional",
+              "desc": "Kami tidak menawarkan pengembalian dana parsial untuk bulan yang tidak digunakan"
+            }
+          }
+        }
+      },
+      "eligibleScenarios": {
+        "title": "Skenario Pengembalian Dana yang Layak",
+        "intro": "Kami akan mempertimbangkan permintaan pengembalian dana dalam keadaan berikut:",
+        "serviceIssues": {
+          "title": "1. Masalah Layanan",
+          "items": {
+            "0": "Pemadaman layanan signifikan yang memengaruhi kemampuan Anda menggunakan fitur inti",
+            "1": "Masalah teknis yang tidak dapat kami selesaikan dalam jangka waktu yang wajar",
+            "2": "Fitur yang sangat berbeda dari yang diiklankan"
+          }
+        },
+        "billingErrors": {
+          "title": "2. Kesalahan Penagihan",
+          "items": {
+            "0": "Pengecualian ganda",
+            "1": "Jumlah penagihan yang salah",
+            "2": "Pengecualian tanpa otorisasi (setelah verifikasi)"
+          }
+        },
+        "exceptionalCircumstances": {
+          "title": "3. Keadaan Luar Biasa",
+          "items": {
+            "0": "Kecelakaan medis yang terdokumentasi",
+            "1": "Bencana alam yang memengaruhi bisnis Anda",
+            "2": "Keadaan lain yang dievaluasi berdasarkan kasus per kasus"
+          }
+        }
+      },
+      "nonRefundable": {
+        "title": "Item yang Tidak Dapat Dikembalikan",
+        "intro": "Berikut umumnya tidak memenuhi syarat untuk pengembalian dana:",
+        "items": {
+          "0": {
+            "label": "Biaya berbasis penggunaan",
+            "desc": "Pemanggilan API, konsumsi token AI, atau penyimpanan yang digunakan"
+          },
+          "1": {
+            "label": "Add-on dan tambahan",
+            "desc": "Pembelian satu kali atau layanan add-on"
+          },
+          "2": {
+            "label": "Kontrak perusahaan",
+            "desc": "Perjanjian khusus memiliki syaratnya sendiri"
+          },
+          "3": {
+            "label": "Pembatalan sukarela",
+            "desc": "Setelah masa kepatutan pengembalian dana berakhir"
+          },
+          "4": {
+            "label": "Pelanggaran ketentuan",
+            "desc": "Akun yang dihentikan karena pelanggaran kebijakan"
+          }
+        }
+      },
+      "howToRequest": {
+        "title": "Cara Meminta Pengembalian Dana",
+        "step1": {
+          "title": "Langkah 1: Hubungi Dukungan",
+          "intro": "Kirim email ke billing@nebutra.com dengan menyertakan:",
+          "items": {
+            "0": "Alamat email akun Anda",
+            "1": "Rencana langganan dan periode penagihan",
+            "2": "Alasan permintaan pengembalian dana",
+            "3": "Dokumentasi terkait lainnya"
+          }
+        },
+        "step2": {
+          "title": "Langkah 2: Proses Tinjauan",
+          "items": {
+            "0": "Kami akan meninjau permintaan Anda dalam 5 hari kerja",
+            "1": "Kami mungkin meminta informasi tambahan",
+            "2": "Anda akan menerima keputusan tertulis melalui email"
+          }
+        },
+        "step3": {
+          "title": "Langkah 3: Pemrosesan Pengembalian Dana",
+          "intro": "Jika disetujui:",
+          "items": {
+            "0": "Pengembalian dana diproses ke metode pembayaran asli",
+            "1": "Pengembalian dana kartu kredit biasanya muncul dalam 5-10 hari kerja",
+            "2": "Waktu pemrosesan bank dapat bervariasi"
+          }
+        }
+      },
+      "planChanges": {
+        "title": "Perubahan Rencana",
+        "upgrades": {
+          "title": "Peningkatan",
+          "items": {
+            "0": "Peningkatan berlaku segera",
+            "1": "Anda dikenakan biaya selisih proporsional untuk sisa periode penagihan Anda",
+            "2": "Tidak ada pengembalian dana untuk paket sebelumnya"
+          }
+        },
+        "downgrades": {
+          "title": "Penurunan",
+          "items": {
+            "0": "Penurunan berlaku pada periode penagihan berikutnya",
+            "1": "Anda tetap memiliki akses ke fitur saat ini hingga saat itu",
+            "2": "Tidak ada pengembalian dana parsial untuk periode saat ini"
+          }
+        }
+      },
+      "freeTrial": {
+        "title": "Coba Gratis",
+        "items": {
+          "0": "Coba gratis tidak memerlukan informasi pembayaran",
+          "1": "Tidak ada biaya yang dikenakan selama masa percobaan",
+          "2": "Anda akan diberi tahu sebelum ada biaya dimulai"
+        }
+      },
+      "disputeResolution": {
+        "title": "Penyelesaian Sengketa",
+        "intro": "Jika Anda tidak setuju dengan keputusan pengembalian dana kami:",
+        "steps": {
+          "0": "Balas email keputusan dengan informasi tambahan",
+          "1": "Minta eskalasi ke supervisor",
+          "2": "Hubungi kami di legal@nebutra.com untuk tinjauan lebih lanjut"
+        }
+      },
+      "contactUs": {
+        "title": "Hubungi Kami",
+        "intro": "Untuk permintaan pengembalian dana atau pertanyaan tentang kebijakan ini:",
+        "company": "{brandName} Co., Ltd.",
+        "billingLabel": "Tagihan",
+        "supportLabel": "Dukungan",
+        "legalLabel": "Legal",
+        "responseNote": "Kami berusaha merespons semua permintaan pengembalian dana dalam 5 hari kerja.",
+        "termsNote": "Kebijakan ini merupakan bagian dari",
+        "termsLink": "Syarat Layanan",
+        "termsAgreement": "Dengan menggunakan {brandName}, Anda menyetujui ketentuan pengembalian dana ini."
+      }
+    },
+    "terms": {
+      "title": "Syarat Layanan — {brandName}",
+      "description": "Syarat Layanan yang mengatur akses dan penggunaan situs web, aplikasi, API, dan layanan {brandName}.",
+      "heading": "Syarat Layanan",
+      "effectiveDate": "Tanggal Efektif",
+      "lastUpdated": "Terakhir Diperbarui",
+      "dates": {
+        "effective": "1 Januari 2025",
+        "updated": "1 Januari 2025"
+      },
+      "intro1": "Selamat datang di {brandName}! Syarat Layanan ini (\"Syarat\") mengatur akses dan penggunaan situs web, aplikasi, API, dan layanan {brandName} (secara kolektif, \"Layanan\") yang disediakan oleh {brandName} Co., Ltd. (\"{brandName},\" \"Perusahaan,\" \"kami,\" \"kita,\" atau \"milik kami\").",
+      "intro2": "Dengan mengakses atau menggunakan Layanan kami, Anda setuju untuk terikat oleh Syarat ini dan",
+      "intro2PrivacyLink": "Kebijakan Privasi",
+      "intro2End": ". Jika Anda tidak menyetujui Syarat ini, jangan gunakan Layanan kami.",
+      "acceptance": {
+        "title": "1. Penerimaan Syarat",
+        "eligibility": {
+          "title": "1.1 Kelayakan",
+          "intro": "Untuk menggunakan Layanan kami, Anda harus:",
+          "items": {
+            "0": "Berusia minimal 18 tahun atau usia dewasa hukum di yurisdiksi Anda",
+            "1": "Memiliki wewenang untuk menandatangani Syarat ini atas nama diri sendiri atau organisasi Anda",
+            "2": "Tidak dilarang menggunakan Layanan kami berdasarkan hukum yang berlaku"
+          }
+        },
+        "orgAccounts": {
+          "title": "1.2 Akun Organisasi",
+          "content": "Jika Anda menggunakan Layanan kami atas nama organisasi, Anda menyatakan bahwa Anda memiliki wewenang untuk mengikat organisasi tersebut terhadap Syarat ini."
+        }
+      },
+      "services": {
+        "title": "2. Deskripsi Layanan",
+        "intro": "{brandName} menyediakan platform SaaS yang mencakup:",
+        "items": {
+          "0": "Fitur dan pembuatan konten berbasis AI",
+          "1": "Alat manajemen konten dan komunitas",
+          "2": "Sistem rekomendasi",
+          "3": "Integrasi e-commerce",
+          "4": "Kemampuan Web3",
+          "5": "Analitik dan pelaporan"
+        }
+      },
+      "account": {
+        "title": "3. Pendaftaran Akun",
+        "creation": {
+          "title": "3.1 Pembuatan Akun",
+          "intro": "Untuk mengakses fitur tertentu, Anda harus membuat akun. Anda setuju untuk:",
+          "items": {
+            "0": "Menyediakan informasi yang akurat dan lengkap",
+            "1": "Menjaga keamanan kredensial akun Anda",
+            "2": "Segera memperbarui informasi Anda jika terjadi perubahan",
+            "3": "Menerima tanggung jawab atas semua aktivitas di bawah akun Anda"
+          }
+        }
+      },
+      "billing": {
+        "title": "4. Langganan dan Penagihan",
+        "pricing": {
+          "title": "4.1 Harga",
+          "content": "Layanan kami ditawarkan dalam berbagai paket langganan seperti yang dijelaskan di halaman Harga kami. Harga dapat berubah dengan pemberitahuan 30 hari sebelumnya."
+        },
+        "payment": {
+          "title": "4.2 Pembayaran",
+          "items": {
+            "0": "Langganan ditagih secara dimuka secara bulanan atau tahunan",
+            "1": "Semua biaya tidak dapat dikembalikan kecuali sebagaimana dinyatakan dalam",
+            "2": "Anda mengotorisasi kami untuk membebankan biaya yang berlaku ke metode pembayaran Anda",
+            "3": "Kami menggunakan Stripe untuk pemrosesan pembayaran yang aman",
+            "1RefundLink": "Kebijakan Pengembalian Dana"
+          }
+        }
+      },
+      "acceptableUse": {
+        "title": "5. Penggunaan yang Diperbolehkan",
+        "prohibited": {
+          "title": "5.1 Aktivitas yang Dilarang",
+          "intro": "Anda setuju TIDAK untuk:",
+          "items": {
+            "0": "Melanggar hukum, peraturan, atau hak pihak ketiga yang berlaku",
+            "1": "Menggunakan Layanan untuk mengirimkan malware, spam, atau konten berbahaya",
+            "2": "Mencoba mendapatkan akses tidak sah ke sistem kami",
+            "3": "Mengganggu atau merusak integritas atau kinerja Layanan kami",
+            "4": "Menggunakan alat otomatis untuk mengikis, menyalin, atau mengekstrak data tanpa izin",
+            "5": "Melakukan rekayasa balik, dekompilasi, atau disassemble Layanan kami",
+            "6": "Menggunakan fitur AI kami untuk menghasilkan konten ilegal, berbahaya, atau menipu"
+          }
+        }
+      },
+      "ip": {
+        "title": "6. Kekayaan Intelektual",
+        "ours": {
+          "title": "6.1 Kekayaan Intelektual Kami",
+          "content": "{brandName} dan pemberi lisensinya memiliki semua hak, kepemilikan, dan kepentingan atas Layanan, termasuk seluruh perangkat lunak, desain, merek dagang, dan konten yang dibuat oleh kami."
+        },
+        "yours": {
+          "title": "6.2 Konten Anda",
+          "content": "Anda tetap memiliki kepemilikan atas konten yang Anda buat atau unggah (\"Konten Anda\"). Dengan menggunakan Layanan kami, Anda memberikan kami lisensi bebas royalti, non-eksklusif, dan berlaku di seluruh dunia untuk menggunakan, menyimpan, memproses, dan menampilkan Konten Anda semata-mata untuk menyediakan Layanan kepada Anda."
+        }
+      },
+      "warranties": {
+        "title": "7. Penafian Jaminan",
+        "content": "LAYANAN DISEDIAKAN \"APA ADANYA\" DAN \"SESUAI KETERSEDIAAN\" TANPA JAMINAN APA PUN, BA IK TERSURAT ATAU TERSIRAT, TERMASUK TETAPI TIDAK TERBATAS PADA JAMINAN TERSIRAT TENTANG KEMAMPUAN JUAL, KESESUAIAN UNTUK TUJUAN TERTENTU, KEPEMILIKAN, DAN TIDAK MELANGGAR HAK."
+      },
+      "liability": {
+        "title": "8. Batasan Tanggung Jawab",
+        "para1": "SEJAUH YANG DIIZINKAN OLEH HUKUM, NEBUTRA TIDAK AKAN Bertanggung Jawab ATAS KERUGIAN TIDAK LANGSUNG, KEJADIAN, KHUSUS, AKIBAT, ATAU HUKUMAN, ATAU KEHILANGAN LABA, DATA, PENGGUNAAN, ATAU NILAI BAIK.",
+        "para2": "DALAM KEADAAN APA PUN, TOTAL TANGGUNG JAWAB KAMI TIDAK AKAN MELEBIHI YANG LEBIH BESAR DARI (A) JUMLAH YANG ANDA BAYAR KEPADA KAMI DALAM 12 BULAN SEBELUM KLAIM, ATAU (B) $100 USD."
+      },
+      "termination": {
+        "title": "9. Penyelesaian",
+        "byYou": {
+          "title": "9.1 Oleh Anda",
+          "content": "Anda dapat menyelesaikan akun Anda kapan saja melalui pengaturan akun. Setelah penyelesaian, Anda akan kehilangan akses ke Layanan."
+        },
+        "byUs": {
+          "title": "9.2 Oleh Kami",
+          "intro": "Kami dapat menangguhkan atau menyelesaikan akun Anda jika Anda:",
+          "items": {
+            "0": "Melanggar Ketentuan ini",
+            "1": "Melakukan aktivitas penipuan atau ilegal",
+            "2": "Gagal membayar biaya yang berlaku",
+            "3": "Menciptakan risiko atau paparan hukum bagi kami"
+          }
+        }
+      },
+      "disputes": {
+        "title": "10. Penyelesaian Sengketa",
+        "informal": {
+          "title": "10.1 Penyelesaian Informal",
+          "content": "Sebelum memulai prosedur formal, Anda setuju untuk menghubungi kami di legal@nebutra.com untuk berupaya menyelesaikan sengketa secara informal."
+        },
+        "governingLaw": {
+          "title": "10.2 Hukum yang Berlaku",
+          "content": "Ketentuan ini diatur oleh hukum Negara Bagian Delaware, tanpa memperhatikan prinsip konflik hukum."
+        }
+      },
+      "contactUs": {
+        "title": "11. Hubungi Kami",
+        "intro": "Jika Anda memiliki pertanyaan tentang Ketentuan ini, silakan hubungi kami:",
+        "company": "{brandName} Co., Ltd.",
+        "emailLabel": "Email",
+        "supportLabel": "Dukungan"
+      },
+      "acknowledgement": "Dengan menggunakan {brandName}, Anda mengakui bahwa Anda telah membaca, memahami, dan setuju untuk terikat oleh Ketentuan Layanan ini."
+    }
+  },
+  "metadata": {
+    "title": "{brandName} Agent OS | Sistem Operasi Agen Startup",
+    "description": "Sistem Operasi Agen Startup untuk pendiri yang ingin go global. Fondasi Next.js siap produksi dengan arsitektur yang diatur, autentikasi, billing, agen, dan i18n — dibangun untuk agen coding AI dan tim serius."
+  },
+  "microLanding": {
+    "architecture": {
+      "badge": "TOPOLOGI SISTEM",
+      "title": "Arsitektur transparan, tanpa kotak hitam.",
+      "description": "{productName} dirancang dengan struktur Turborepo yang sangat modular, memberi Anda kepemilikan penuh atas seluruh siklus hidup perangkat lunak Anda.",
+      "database": {
+        "title": "PostgreSQL + Prisma v7",
+        "desc": "ORM yang sepenuhnya bertipe dengan kebijakan Keamanan Tingkat Baris (RLS) yang terintegrasi secara native."
+      },
+      "auth": {
+        "title": "Clerk Multi-Tenant / Identitas Kustom",
+        "desc": "Gerbang autentikasi siap SOC2 yang mendukung pengalihan organisasi B2B dan RBAC."
+      }
+    },
+    "pricing": {
+      "title": "Gratis untuk dibangun. Bayar hanya jika Anda butuh kami bertanggung jawab.",
+      "description": "Membangun produk komersial di atas {brandName} tidak berbiaya — tanpa biaya, tanpa kunci lisensi, tanpa pendaftaran, tanpa copyleft. Tingkat berbayar menjual dukungan, SLA, ganti rugi, dan hak merek dagang, bukan izin penggunaan.",
+      "socialProofText": "MIT di npm · FSL-1.1-ALv2 di repositori, beralih ke Apache-2.0 setelah dua tahun · penggunaan komersial gratis pada skala apa pun.",
+      "community": {
+        "badge": "KOMUNITAS",
+        "price": "Gratis",
+        "period": "selamanya",
+        "desc": "Untuk semua orang. Berapa pun ukuran tim dan pendapatan. Termasuk penggunaan komersial sumber tertutup, tanpa pendaftaran dan tanpa kewajiban atribusi.",
+        "cta": "npx create-sailor",
+        "f1": "Inti SaaS Next.js 16 lengkap, semua paket disertakan",
+        "f2": "Penggunaan komersial sumber tertutup pada ukuran tim dan pendapatan berapa pun",
+        "f3": "Stack lengkap: Auth, Pembayaran, Organisasi, API, Email, i18n, Tugas latar belakang, Penyimpanan, dan lainnya",
+        "f4": "Fitur pemasaran: Blog, halaman arahan, SEO, Analytics",
+        "f5": "Issue publik, Discussions, dan Discord — sebisa mungkin, tanpa jaminan respons"
+      },
+      "team": {
+        "badge": "TIM",
+        "price": "$2.000",
+        "period": "tahun",
+        "desc": "Untuk tim yang tidak bisa mengandalkan waktu respons komunitas pada jalur kritis.",
+        "cta": "Dapatkan dukungan {brandName}",
+        "f1": "Kanal dukungan privat (email + Slack atau Discord bersama)",
+        "f2": "Respons pertama dijamin dalam dua hari kerja",
+        "f3": "Triase bug prioritas, mendahului issue komunitas",
+        "f4": "Bantuan peningkatan versi dan pemberitahuan awal perubahan yang merusak",
+        "f5": "Semua yang ada di Komunitas"
+      },
+      "enterprise": {
+        "badge": "ENTERPRISE",
+        "price": "Mulai $30.000",
+        "period": "tahun",
+        "desc": "Untuk organisasi yang bagian pengadaan, hukum, atau tinjauan keamanannya menuntut pihak lawan yang menandatangani.",
+        "cta": "Hubungi tim penjualan",
+        "f1": "SLA respons — 4 jam kerja standar, 1 jam saat produksi mati",
+        "f2": "Ganti rugi dan komitmen kontraktual atas patch keamanan",
+        "f3": "DPA bertanda tangan, paket kepatuhan, dan komitmen keberlangsungan",
+        "f4": "Hak merek dagang dan white label, serta pengecualian penggunaan pesaing",
+        "f5": "Cabang dukungan jangka panjang dan rekayasa penerapan privat",
+        "f6": "Semua yang ada di Tim"
+      }
+    },
+    "faq": {
+      "title": "FAQ Harga & Lisensi",
+      "description": "Pertanyaan tentang tingkatan lisensi, pengembalian dana, dan hak penggunaan komersial.",
+      "q1": {
+        "q": "Apakah Sailor adalah langganan SaaS bulanan?",
+        "a": "Tidak. Harga ini adalah untuk lisensi kode sumber Sailor: Independent gratis, Startup ditagih tahunan, dan Enterprise bersifat kustom."
+      },
+      "q2": {
+        "q": "Apakah Anda menawarkan pengembalian dana?",
+        "a": "Lisensi komersial Startup mencakup jendela pengembalian dana 14 hari untuk pembelian awal. Ketentuan Enterprise ditangani dalam kontrak yang ditandatangani."
+      },
+      "q3": {
+        "q": "Bisakah saya menggunakan Sailor untuk pekerjaan klien?",
+        "a": "Ya. Lisensi komersial memungkinkan tim Anda meluncurkan produk klien atau internal tertutup dalam ruang lingkup lisensi; hak white-label memerlukan persetujuan Enterprise."
+      },
+      "contactNudge": "Masih ada pertanyaan? Bicara dengan tim {brandName} →"
+    },
+    "cta": {
+      "eyebrow": "Mulai Sekarang",
+      "title": "Berhenti mengonfigurasi. Mulai membangun.",
+      "description": "Inisialisasi arsitektur SaaS yang dapat diskalakan secara lokal dengan CLI {brandName}.",
+      "button": "Terapkan Arsitektur",
+      "license": "Sumber terbuka di bawah lisensi AGPL-3.0. Tidak perlu kartu kredit."
+    },
+    "capability": {
+      "badge": "Kemampuan Perusahaan",
+      "title": "Inti yang sepenuhnya diketik dan dapat diperluas.",
+      "multiTenant": {
+        "title": "Keamanan Tingkat Baris Asli",
+        "desc": "Setiap kueri database dibatasi secara ketat oleh konteks tenant saat ini.",
+        "cta": "Baca filosofi database"
+      },
+      "aiGateway": {
+        "title": "Gerbang AI Universal",
+        "desc": "Arahkan prompt ke OpenAI, Anthropic, atau model sumber terbuka dengan mulus.",
+        "cta": "Jelajahi handler SDK AI"
+      },
+      "rbac": {
+        "title": "Kontrol Akses Granular",
+        "desc": "Tentukan peran admin, anggota, dan peninjau dengan struktur kebijakan bawaan.",
+        "cta": "Lihat dokumentasi RBAC"
+      },
+      "billing": {
+        "title": "Infrastruktur Penagihan Multi-Provider",
+        "desc": "Penggunaan terukur, webhook langganan, dan portal pelanggan mandiri.",
+        "cta": "Lihat arsitektur penagihan"
+      }
+    },
+    "productDemo": {
+      "badge": "Demo Interaktif",
+      "title": "The local loop, end to end.",
+      "description": "Rasakan antarmuka baris perintah, terowongan webhook Stripe, dan penyediaan database multi-tenant lokal.",
+      "analytics": {
+        "label": "Telemetri Langsung",
+        "desc": "Salurkan data penggunaan produksi langsung ke terminal Anda."
+      },
+      "billing": {
+        "label": "Event Penagihan",
+        "desc": "Amati eksekusi webhook Stripe melalui tunneling lokal."
+      },
+      "workspaces": {
+        "label": "Inisialisasi Workspace",
+        "desc": "Sediakan skema PostgreSQL B2B terisolasi secara instan."
+      }
+    },
+    "workflow": {
+      "badge": "Kecepatan",
+      "title": "Dari nol ke produksi dalam waktu singkat.",
+      "step1": {
+        "title": "1. Clone",
+        "desc": "Clone monorepo {brandName} secara instan dan jalankan pnpm install."
+      },
+      "step2": {
+        "title": "2. Konfigurasi",
+        "desc": "Atur Prisma, Clerk, dan Stripe melalui CLI interaktif dalam hitungan menit."
+      },
+      "step3": {
+        "title": "3. Bangun",
+        "desc": "Fokus pada logika produk dan UI sementara baseline platform sudah terhubung."
+      },
+      "step4": {
+        "title": "4. Deploy",
+        "desc": "Push ke Vercel dan AWS untuk distribusi global instan."
+      },
+      "speedometer": {
+        "number": "10",
+        "unit": "menit",
+        "subtitle": "WAKTU KE PASAR",
+        "comparison": "Lewati berbulan-bulan pekerjaan platform.",
+        "phases": {
+          "scaffold": "Inisialisasi",
+          "wire": "Inti",
+          "ship": "Terapkan",
+          "scale": "Skalakan",
+          "ongoing": "∞"
+        },
+        "cta": "Mulai timer Anda"
+      },
+      "presetHint": {
+        "badge": "Sistem Preset",
+        "message": "Satu konfigurasi. Semua fitur. Pilih preset Anda dan terapkan.",
+        "detail": "Konfigurasi sekali, hasilkan semuanya — billing, auth, AI, i18n — dari satu konfigurasi preset.",
+        "readyStatus": "Sistem preset siap"
+      }
+    }
+  },
+  "featuresPage": {
+    "hero": {
+      "badge": "Kemampuan Platform",
+      "headlinePrefix": "Semua yang Anda butuhkan untuk ",
+      "headlineHighlight": "meluncurkan dengan percaya diri.",
+      "description": "{brandName} adalah platform SaaS full-stack—AI, billing, multi-tenancy, observability, dan keamanan sudah terintegrasi sejak hari pertama. Berhenti membangun ulang lapisan platform."
+    },
+    "sections": {
+      "exploreFeature": "Jelajahi fitur",
+      "ai_category": "AI & Kecerdasan",
+      "ai_f1_title": "Penyelesaian obrolan multi-model",
+      "ai_f1_desc": "Arahkan permintaan ke Anthropic, OpenAI, Google, atau model fine-tuned Anda sendiri. Streaming, vision, dan function calling didukung langsung dari awal.",
+      "ai_f2_title": "Embedding semantik",
+      "ai_f2_desc": "Buat dan simpan embedding vektor dengan pgvector. Dukung pencarian semantik, pipeline RAG, dan mesin rekomendasi.",
+      "ai_f3_title": "Pengukuran penggunaan AI",
+      "ai_f3_desc": "Kuota per paket dengan pelacakan penggunaan — ukur token AI, panggilan API, dan penyimpanan terhadap agregat real-time berbasis ClickHouse.",
+      "multi_category": "Platform Multi-tenant",
+      "multi_f1_title": "Isolasi tingkat organisasi",
+      "multi_f1_desc": "Keamanan tingkat baris di Postgres memastikan tenant tidak pernah dapat mengakses data satu sama lain — diterapkan di lapisan database, bukan hanya aplikasi.",
+      "multi_f2_title": "Autentikasi multi-provider (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_desc": "OAuth multi-provider (Google, GitHub, dll.) plus email/password dan magic-link — ganti antara Clerk, Better Auth, NextAuth, atau Supabase Auth melalui satu variabel env.",
+      "multi_f3_title": "Provisioning tenant otomatis",
+      "multi_f3_desc": "Saat organisasi baru mendaftar melalui Clerk, kami otomatis membuat kunci API pertama mereka dan mengirim email sambutan berbranding — tanpa langkah manual.",
+      "dx_category": "Pengalaman Pengembang",
+      "dx_f1_title": "Kunci API yang di-hash",
+      "dx_f1_desc": "Kunci yang di-hash SHA-256 dengan tampilan awalan (nbtr_live_…). Ditampilkan dalam teks biasa hanya sekali saat pembuatan — keamanan tanpa hambatan.",
+      "dx_f2_title": "Middleware idempotensi",
+      "dx_f2_desc": "Lewatkan header Idempotency-Key dan permintaan POST apa pun menjadi aman untuk diulang. Berbasis Redis, cache 24 jam, sesuai draft IETF.",
+      "dx_f3_title": "API Multi-Protokol (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI untuk API publik, oRPC untuk panggilan frontend yang aman tipe, tRPC untuk kompatibilitas stack T3. Semua protokol berbagi kontrak Zod dan tumpukan middleware yang sama. Aktifkan per protokol melalui konfigurasi preset.",
+      "billing_category": "Penagihan & Monetisasi",
+      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
+      "billing_f1_desc": "Pilih penyedia pembayaran Anda: Stripe untuk perusahaan global, LemonSqueezy untuk pengembang indie, Polar untuk OSS, atau Alipay/WeChat Pay untuk pasar Tiongkok. Checkout satu klik dan portal penagihan mandiri.",
+      "billing_f2_title": "Penegakan kuota berbasis penggunaan",
+      "billing_f2_desc": "Penghitung Redis real-time melacak panggilan API dan penggunaan token per tenant. Permintaan dikunci di gateway saat batas tercapai.",
+      "billing_f3_title": "Sinkronisasi siklus hidup webhook",
+      "billing_f3_desc": "Peristiwa langganan Stripe secara otomatis memperbarui paket organisasi di database Anda melalui Inngest — tanpa pekerjaan cron, tanpa polling.",
+      "rel_category": "Keandalan",
+      "rel_f1_title": "Pemutus sirkuit + pengulangan",
+      "rel_f1_desc": "Gateway dan layanan AI menggunakan pemutus sirkuit CLOSED/OPEN/HALF_OPEN dengan backoff eksponensial dan jitter — tanpa kegagalan beruntun.",
+      "rel_f2_title": "Antrian surat mati",
+      "rel_f2_desc": "Penangan peristiwa yang menghabiskan 3 upaya pengulangan masuk ke DLQ. Putar ulang secara individual dari API admin tanpa perlu deploy ulang.",
+      "rel_f3_title": "Peringatan tingkat pembakaran SLO",
+      "rel_f3_desc": "Peringatan bergaya SRE Google multi-jendela aktif pada tingkat pembakaran 14.4×, 6×, dan 3× sebelum anggaran kesalahan Anda habis.",
+      "sec_category": "Keamanan",
+      "sec_f1_title": "Header berbasis nonce CSP",
+      "sec_f1_desc": "Content Security Policy strict-dynamic dengan nonce per-request yang dihasilkan di middleware Clerk — tanpa unsafe-inline di mana pun.",
+      "sec_f2_title": "WAF ModSecurity",
+      "sec_f2_desc": "OWASP Core Rule Set dalam mode DetectionOnly di setiap ingress. Pembatasan laju pada 30 RPS dengan toleransi burst melalui anotasi nginx.",
+      "sec_f3_title": "SBOM + provenance SLSA",
+      "sec_f3_desc": "Setiap rilis menghasilkan software bill of materials CycloneDX dan attestasi provenance SLSA, diunggah ke GitHub Release.",
+      "obs_category": "Observabilitas",
+      "obs_f1_title": "Tracing OpenTelemetry",
+      "obs_f1_desc": "Trace terdistribusi mengalir dari Next.js → Hono → microservice Python via OTLP. Diekspor ke Jaeger (dev) dan Grafana Tempo (prod).",
+      "obs_f2_title": "Dashboard Grafana",
+      "obs_f2_desc": "Ringkasan platform multi-panel: ketersediaan SLO, sisa error budget, saturasi HPA, restart pod, dan throttling CPU.",
+      "obs_f3_title": "Pelacakan error Sentry",
+      "obs_f3_desc": "Error sisi server dan klien ditangkap dengan konteks tenant, ID request, dan ID trace untuk korelasi lintas sistem.",
+      "data_category": "Data & Analitik",
+      "data_f1_title": "Gudang OLAP ClickHouse",
+      "data_f1_desc": "Event masuk ke ClickHouse untuk query analitik cepat. dbt mengubah event mentah menjadi metrik pertumbuhan lapisan emas yang terlihat di dashboard.",
+      "data_f2_title": "Analitik funnel",
+      "data_f2_desc": "Lacak pendaftaran → aktivasi → konversi dengan atribusi tingkat kohort. Pendapatan per pengguna aktif dihitung dari lapisan emas.",
+      "data_f3_title": "Ingesti event / Kafka",
+      "data_f3_desc": "Ingest peristiwa throughput tinggi via Inngest ke ClickHouse bronze, dengan dedup in-memory dan validasi skema di edge gateway.",
+      "infra_category": "Infrastruktur",
+      "infra_f1_title": "GitOps dengan ArgoCD",
+      "infra_f1_desc": "Perubahan di cabang utama otomatis disinkronkan ke cluster. Self-heal membatalkan edit kubectl manual. Jendela sinkronisasi menegakkan jam deploy yang aman.",
+      "infra_f2_title": "Connection pooling PgBouncer",
+      "infra_f2_desc": "PgBouncer mode transaksi di depan Supabase menangani 1.000 koneksi aplikasi dengan 20 koneksi Postgres. HA dengan 2 replika.",
+      "infra_f3_title": "Autoscaling horizontal + vertikal",
+      "infra_f3_desc": "HPA menskalakan berdasarkan CPU/memori. VPA berjalan dalam mode Off memberikan rekomendasi right-sizing. Metrik custom KEDA direncanakan untuk v2."
+    }
+  },
+  "comingSoon": {
+    "badge": "🚧 Sedang Dalam Pembangunan",
+    "description": {
+      "ideas": "Kami sedang merancang pengalaman berbasis teknologi yang luar biasa untuk bagian ini. Bagian ini akan diluncurkan bersamaan dengan pembaruan pipeline arsitektur utama berikutnya.",
+      "opc": "Tinjauan platform yang lebih mendalam sedang dalam proses. Ikuti changelog dan roadmap untuk rilis mendatang.",
+      "roadmap": "Dari fondasi infrastruktur hingga skala perusahaan — fase produk, tonggak versi, dan visi pendanaan kami."
+    },
+    "returnBtn": "Kembali ke Hub"
+  },
+  "blogShowcase": {
+    "badge": "DARI BLOG",
+    "title": "Wawasan Teknik",
+    "subtitle": "Eksplorasi mendalam tentang arsitektur SaaS, infrastruktur AI, dan rekayasa produksi.",
+    "readMore": "Baca selengkapnya"
+  },
+  "useCases": {
+    "badge": "SKENARIO YANG DAPAT DIKEMBANGKAN",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
+    "tabs": {
+      "opc": "Operasi Agentic",
+      "ip": "Matriks IP Pribadi",
+      "multimodal": "SaaS AI Multimodal",
+      "enterprise": "Enterprise Modern (CN)",
+      "export": "Ekspor Perangkat Lunak Global",
+      "design": "Mesin Sistem Desain",
+      "edam": "Aset Digital Enterprise"
+    },
+    "content": {
+      "opc": {
+        "title": "Pusat Operasi AI-Native",
+        "desc": "Jalankan alur kerja agen, alat internal, dan permukaan integrasi pada satu platform dasar yang terkelola. Ekstensi berbasis registry, portal operator, dan pola runtime yang dapat digunakan kembali tetap selaras saat sistem berkembang.",
+        "features": {
+          "f1": "Registry Alat & Permukaan Integrasi",
+          "f2": "Portal Operator & Konsol Internal"
+        }
+      },
+      "ip": {
+        "title": "Matriks Portofolio & Pertumbuhan IP Pribadi",
+        "desc": "Bangun kehadiran pendiri kelas dunia dengan blog MDX, portofolio, dan halaman profil berkonversi tinggi. Newsletter, analitik, dan SEO bawaan memastikan merek pribadi Anda terus berkembang.",
+        "features": {
+          "f1": "Blog MDX + Mesin Newsletter",
+          "f2": "SEO & Grafis Sosial Dioptimalkan"
+        }
+      },
+      "multimodal": {
+        "title": "SaaS AI Multimodal Inovatif",
+        "desc": "Luncurkan produk SaaS Orkestrasi Multi-Agen, Chatbot, Teks-ke-Gambar, Gambar-ke-Teks, dan Teks-ke-Video dengan UI streaming terdepan, routing model cerdas, dan pengukuran penggunaan.",
+        "features": {
+          "f1": "Antarmuka Streaming Multi-Agen",
+          "f2": "Router Model + Pengukuran Penggunaan"
+        }
+      },
+      "enterprise": {
+        "title": "Website Perusahaan Modern (CN)",
+        "desc": "Dirancang khusus untuk skenario bisnis Tiongkok — CDN domestik super cepat, integrasi ekosistem WeChat, desain responsif mobile-first, dan kepatuhan lokal siap pakai.",
+        "features": {
+          "f1": "CDN Lokal + Kepatuhan",
+          "f2": "Siap untuk Ekosistem WeChat"
+        }
+      },
+      "export": {
+        "title": "Landing Page Ekspor Perangkat Lunak Global",
+        "desc": "Dirancang khusus untuk SaaS yang melangkah ke pasar global. Pembayaran Stripe multi-mata uang, auto-routing i18n next-intl di 7 bahasa, kepatuhan GDPR/CCPA, dan konten berbasis geo-targeting.",
+        "features": {
+          "f1": "Pembayaran Global Multi-Mata Uang",
+          "f2": "7 Bahasa + Siap GDPR"
+        }
+      },
+      "design": {
+        "title": "Sistem Desain & Perpustakaan Komponen Terkemuka",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "features": {
+          "f1": "Tata Kelola Token 4 Lapis",
+          "f2": "Seven design languages + Storybook"
+        }
+      },
+      "edam": {
+        "title": "Manajemen Aset Digital Perusahaan",
+        "desc": "Data lake terstruktur dan topologi dashboard kompleks yang memanfaatkan arsitektur PostgreSQL yang dapat diskalakan dan RBAC yang granular.",
+        "features": {
+          "f1": "Keamanan Tingkat Baris",
+          "f2": "Query Kompleks",
+          "f3": "Manajemen Peran"
+        }
+      }
+    }
+  },
+  "designSystem": {
+    "badge": "SISTEM DESAIN",
+    "headline": "4 lapisan tata kelola desain.",
+    "subheadline": "Dari primitif merek hingga token runtime, mesin multi-tema, hingga komponen yang diatur — bukan sekadar shadcn dengan Tailwind.",
+    "flowBrand": "Merek",
+    "flowBrandDesc": "Primitif warna, gradien, bahasa gerak",
+    "flowTokens": "Token",
+    "flowTokensDesc": "Variabel CSS, skala 12 langkah, mode gelap",
+    "flowTheme": "Tema",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
+    "flowUI": "UI",
+    "flowUIDesc": "Komponen, Storybook, Chromatic",
+    "card1Title": "Skala Warna 12 Langkah",
+    "card1Desc": "Skala semantik selaras Geist: latar belakang (1-2), status (3-5), batas (6-8), isi (9-10), teks (11-12).",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
+    "card3Title": "Regresi Visual",
+    "card3Desc": "Chromatic menangkap setiap perubahan piksel. Storybook mendokumentasikan setiap komponen. Uji arsitektur menegakkan cakupan cerita.",
+    "card4Title": "Tata Kelola Token",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
+    "card5Title": "Dokumentasi Interaktif",
+    "card5Desc": "Situs dokumentasi desain lengkap berbasis Fumadocs dengan dokumentasi API komponen dwibahasa (EN/ZH), galeri token, panduan pola tata letak, dan contoh kode langsung.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
+  },
+  "notFound": {
+    "title": "Halaman Tidak Ditemukan",
+    "desc": "Tautan mungkin sudah kedaluwarsa, atau halaman telah dipindahkan.",
+    "home": "Kembali ke {brandName}",
+    "docs": "Buka dokumentasi"
+  },
+  "ui": {
+    "search": {
+      "placeholder": "Cari rilis..."
+    },
+    "nav": {
+      "toggleMenu": "Buka/tutup menu"
+    },
+    "actions": {
+      "showFullRelease": "Tampilkan rilis lengkap",
+      "copyLinkToRelease": "Salin tautan ke rilis",
+      "copyLink": "Salin tautan",
+      "openInNewTab": "Buka di tab baru"
+    },
+    "status": {
+      "comingSoon": "Segera hadir"
+    }
+  },
+  "licensing": {
+    "hero": {
+      "title": "Gratis untuk <hl>Dibangun</hl>",
+      "description": "{brandName}-Sailor tidak dikenakan biaya untuk penggunaan komersial — MIT di npm, FSL-1.1-ALv2 di repositori, beralih ke Apache-2.0 setelah dua tahun. Paket berbayar menjual dukungan dan komitmen kontrak, bukan izin."
+    },
+    "plans": {
+      "community": {
+        "badge": "Selalu Gratis",
+        "title": "Komunitas",
+        "subtitle": "Semua Orang",
+        "description": "Ukuran tim apa pun, pendapatan apa pun. Produk komersial tertutup sumber termasuk.",
+        "features": {
+          "fullSource": "Seluruh kode sumber, semua paket",
+          "closedSourceOk": "Penggunaan komersial tertutup sumber — tanpa copyleft",
+          "noAttribution": "Tidak perlu registrasi, tidak perlu atribusi",
+          "communitySupport": "Dukungan komunitas — usaha terbaik"
+        },
+        "cta": "Lihat di GitHub"
+      },
+      "team": {
+        "badge": "Mulai {price}/thn",
+        "title": "Tim",
+        "subtitle": "Langganan dukungan",
+        "description": "Untuk tim yang tidak bisa mengandalkan waktu respons komunitas pada jalur kritis.",
+        "features": {
+          "privateChannel": "Saluran dukungan privat",
+          "firstResponse": "Respons pertama dalam dua hari kerja, dijamin",
+          "priorityTriage": "Prioritas triase bug",
+          "upgradeHelp": "Bantuan upgrade dan pemberitahuan perubahan pemutus"
+        },
+        "cta": "Dapatkan dukungan"
+      },
+      "enterprise": {
+        "badge": "Mulai $30.000/thn",
+        "title": "Enterprise",
+        "subtitle": "Siap pengadaan",
+        "description": "Untuk organisasi yang membutuhkan pihak lawan yang menandatangani persetujuan dalam tinjauan hukum, keamanan, atau pengadaan.",
+        "features": {
+          "sla": "SLA respons — 4 jam kerja, 1 jam saat produksi down",
+          "indemnity": "Jaminan ganti rugi dan komitmen patch keamanan",
+          "compliance": "DPA bertanda tangan, paket kepatuhan, jaminan kelangsungan",
+          "trademark": "Hak merek dagang dan white-label"
+        },
+        "cta": "Hubungi tim penjualan"
+      }
+    },
+    "faq": {
+      "title": "Pertanyaan yang Sering Diajukan",
+      "description": "Versi singkat: menggunakannya gratis. Pembayaran diperlukan saat Anda membutuhkan kami secara kontrak.",
+      "items": {
+        "whyFsl": {
+          "q": "Mengapa FSL bukan MIT atau AGPL?",
+          "a": "FSL mengizinkan setiap penggunaan kecuali menjual pengganti Sailor itu sendiri, dan setiap versi menjadi Apache-2.0 dua tahun setelah rilis — sebuah hak yang diberikan secara tidak dapat ditarik sebelumnya. Ini lebih mudah melewati tinjauan hukum perusahaan dibandingkan AGPL."
+        },
+        "reallyFree": {
+          "q": "Apakah penggunaan komersial benar-benar gratis?",
+          "a": "Ya. Tanpa biaya, tanpa kunci lisensi, tanpa pendaftaran, tanpa batas pendapatan atau jumlah karyawan, tanpa atribusi. Bangun produk tertutup dan jual."
+        },
+        "competingUse": {
+          "q": "Apa yang dianggap penggunaan bersaing?",
+          "a": "Menawarkan Sailor itu sendiri — layanan Sailor yang dihosting, atau platform bersaing yang dikemas ulang. Membangun SaaS vertikal, alat internal, atau proyek klien di atas Sailor bukan penggunaan bersaing. Jika model Anda membutuhkannya, perjanjian Enterprise dapat menyertakan penghapusan tertulis."
+        },
+        "upgrade": {
+          "q": "Apa yang sebenarnya dibeli dari tier berbayar?",
+          "a": "Komitmen dukungan, SLA respons, jaminan ganti rugi, dokumen kepatuhan, dan hak merek dagang. Bukan izin menggunakan perangkat lunak — itu sudah milik Anda."
+        },
+        "contributions": {
+          "q": "Bagaimana dengan kontribusi open source?",
+          "a": "Semua kontribusi memerlukan CLA. Lihat CONTRIBUTING.md."
+        }
+      }
+    },
+    "meta": {
+      "title": "Lisensi — {brandName}",
+      "description": "Gratis untuk penggunaan komersial. MIT di npm, FSL-1.1-ALv2 di repositori, beralih ke Apache-2.0."
+    }
+  },
+  "licenseWizard": {
+    "tiers": {
+      "individualFree": "Lisensi Gratis Perorangan",
+      "opcFree": "Lisensi Perusahaan Pemilik Tunggal",
+      "startupCommercial": "Lisensi Komersial Startup",
+      "enterprise": "Lisensi Perusahaan"
+    },
+    "referralSource": {
+      "selectPlaceholder": "Pilih opsi...",
+      "productHunt": "Product Hunt"
+    }
+  },
+  "changelogMeta": {
+    "title": "Changelog — {brandName}",
+    "description": "Setiap rilis, dikirim dengan perhatian detail yang obsesif.",
+    "versionTitleSuffix": "Changelog {brandName}"
+  },
+  "roadmapMeta": {
+    "title": "Peta Jalan Platform — {brandName}",
+    "description": "Peta jalan untuk baseline platform yang diatur {brandName}, runtime Harness, dan jalur upgrade."
+  },
+  "blogMeta": {
+    "title": "Blog — {brandName}",
+    "description": "Wawasan teknik, pembaruan produk, dan praktik terbaik SaaS dari tim {brandName}."
+  },
+  "getLicenseMeta": {
+    "title": "Dapatkan Lisensi Anda — {brandName}",
+    "description": "Dapatkan lisensi {brandName} dan akses platform dalam 2 menit."
+  },
+  "landing": {
+    "faq": {
+      "badge": "FAQ",
+      "title": "Pertanyaan, dijawab langsung",
+      "subtitle": "Semua yang perlu Anda ketahui sebelum peluncuran.",
+      "items": {
+        "what-is-sailor": {
+          "question": "Apa sebenarnya {productName}?",
+          "answer": "Sailor adalah fondasi SaaS berbasis Next.js + Tailwind v4 yang opinionated dengan auth, billing, multi-tenancy, AI, queues, search, dan email yang sudah terintegrasi. Anda cukup clone, konfigurasi provider, dan peluncur — biasanya dalam seminggu."
+        },
+        "who-is-it-for": {
+          "question": "Untuk siapa Sailor dibuat?",
+          "answer": "Founder dan product engineer yang ingin menghabiskan waktu untuk pembeda — bukan membangun ulang plumbing auth/billing/tenancy yang sama untuk kelima kalinya."
+        },
+        "free-or-paid": {
+          "question": "Apakah gratis atau berbayar?",
+          "answer": "Sumber lengkap dirilis di bawah AGPL-3.0 — gratis untuk proyek pribadi, internal tooling, dan karya open-source yang kompatibel dengan AGPL. Lisensi komersial membuka hak untuk meluncurkan Sailor dalam SaaS proprietary tertutup. Setiap paket mencakup fitur lengkap (auth, billing, multi-tenancy, AI, audit); tier berbeda dalam ketentuan lisensi dan SLA dukungan, bukan fitur."
+        },
+        "china-friendly": {
+          "question": "Apakah berfungsi di Tiongkok?",
+          "answer": "Ya. Kami merilis konfigurasi infra paralel (CDN kompatibel Aliyun, domain ramah ICP, Penpot opsional menggantikan Figma) sehingga kode yang sama dapat di-deploy dengan bersih di dalam Great Firewall."
+        },
+        "deployment": {
+          "question": "Di mana saya bisa deploy?",
+          "answer": "Di mana saja Node 22+ berjalan. Situs marketing di-deploy ke Vercel; dashboard, gateway, dan layanan Python berjalan di Docker / PM2 (kami menjalankannya di Aliyun ECS saat ini, dengan manifest Kubernetes lengkap di infra/iac/k8s/ untuk cluster). Pelanggan Enterprise juga dapat deploy di dalam VPC mereka sendiri."
+        },
+        "security": {
+          "question": "Bagaimana keamanan ditangani?",
+          "answer": "Enkripsi envelope lapisan aplikasi untuk secrets (@nebutra/vault), Postgres RLS untuk isolasi tenant, RBAC/ABAC via CASL atau OpenFGA (@nebutra/permissions), token antar-layanan yang ditandatangani HMAC, webhook keluaran yang ditandatangani, dan pipeline audit yang selaras dengan SOC 2 (@nebutra/audit) termasuk di setiap paket. Pro dan Enterprise menambahkan dukungan atestasi SOC 2, respons insiden khusus, dan retensi log audit yang lebih lama."
+        },
+        "support": {
+          "question": "Dukungan apa yang saya dapatkan?",
+          "answer": "Pelanggan gratis mendapatkan komunitas Discord + GitHub Issues. Pro menambahkan email prioritas dengan SLA respons 1 hari kerja. Enterprise mendapatkan saluran Slack khusus dan engineer onboarding."
+        },
+        "byo-provider": {
+          "question": "Bisakah saya membawa provider sendiri?",
+          "answer": "Ya. Setiap integrasi (auth, queue, search, email, pembayaran, penyimpanan, billing) bersifat provider-agnostic. Factory di setiap paket memilih adapter yang tepat dari satu env var — ganti Clerk dengan Better Auth, NextAuth, atau Supabase Auth, QStash dengan BullMQ, Resend dengan SES, Stripe dengan Polar / LemonSqueezy / ChinaPay — tanpa menyentuh kode aplikasi."
+        },
+        "tech-stack": {
+          "question": "Apa tech stack-nya?",
+          "answer": "Next.js 16 (App Router) di atas React 19, TypeScript 5.9, Tailwind v4, Prisma 7 di atas Postgres (dengan pgvector + RLS), Hono untuk gateway BFF, FastAPI untuk layanan ML/berat, dan perpustakaan komponen pilihan di atas Radix, primitif UI {brandName}, serta lapisan Motion bersama. Fitur AI berjalan melalui Vercel AI SDK dengan portabilitas penyedia (OpenAI / OpenRouter / SiliconFlow / Azure / lokal)."
+        },
+        "license": {
+          "question": "Apa lisensinya?",
+          "answer": "AGPL-3.0 dengan Pengecualian Komersial. Gratis untuk penggunaan pribadi, alat internal, dan OSS yang kompatibel dengan AGPL. Lisensi komersial berbayar membuka hak untuk mengirimkan Sailor apa adanya dalam SaaS proprietari. Sumber lengkap disertakan di setiap paket."
+        },
+        "paid-updates": {
+          "question": "Apakah saya harus membayar untuk pembaruan?",
+          "answer": "Tidak. Pembaruan sumber disertakan dengan setiap lisensi komersial — tarik dari main kapan saja dan rebase fork Anda. Paket berbayar adalah hak untuk menggunakan Sailor dalam produksi komersial, bukan hak untuk menerima kode. Setiap rilis minor menyertakan CHANGELOG dan panduan upgrade untuk setiap perubahan pemutus."
+        },
+        "why-turborepo": {
+          "question": "Mengapa Turborepo daripada aplikasi Next.js standar?",
+          "answer": "Sailor terdiri dari 10 aplikasi + 104 paket bersama di bawah packages/*/* + 4 jalur backend (gateway Hono, FastAPI/Python, Go, Rust) — jauh melampaui titik di mana aplikasi mega Next.js tunggal tetap dapat dipelihara. Turborepo memberi kami build hanya yang terpengaruh, caching jarak jauh yang transparan, dan satu sumber kebenaran untuk token desain bersama, autentikasi, penagihan, dan observabilitas — tanpa memaksa setiap tim ke proses Next.js yang sama."
+        },
+        "multi-tenancy": {
+          "question": "Bagaimana multi-tenancy ditangani?",
+          "answer": "Dua lapisan. Konteks tenant yang di-scope permintaan melalui @nebutra/tenant (AsyncLocalStorage menyebarkan organisasi aktif melalui setiap panggilan server, termasuk kueri DB dan webhook keluar), dan isolasi yang dipaksakan database melalui kebijakan Row-Level Security Postgres (infra/data/database/policies/rls.sql) yang terikat ke app.current_tenant_id sesi-lokal. Koneksi peran layanan melewati RLS hanya di dalam layanan internal tepercaya; semua rute yang menghadap pengguna berjalan melalui klien yang di-scope tenant."
+        },
+        "swap-clerk": {
+          "question": "Bisakah saya mengganti Clerk dengan penyedia autentikasi lain?",
+          "answer": "Ya. @nebutra/auth menyediakan adapter kelas satu untuk Clerk, Better Auth, NextAuth (Auth.js v5), dan Supabase Auth. Beralih melalui variabel lingkungan AUTH_PROVIDER atau pilih saat scaffold dengan create-sailor --auth=... — permukaan server, React, dan middleware tetap identik terlepas dari penyedia. Menambahkan adapter kelima berarti mengimplementasikan satu antarmuka (~80 LOC); tidak ada kode di sekitarnya yang terikat pada penyedia tertentu."
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "Disukai oleh para pembangun",
+      "title": "Apa kata para pendiri setelah meluncurkan dengan Sailor",
+      "subtitle": "Cerita pelanggan dari kohort beta kami segera hadir — jadilah di antara yang pertama."
+    },
+    "comparison": {
+      "badge": "Bandingkan tingkat",
+      "title": "Semuanya gratis. Pilih seberapa besar komitmen yang Anda butuhkan.",
+      "subtitle": "Setiap tingkat menyertakan kode sumber lengkap dan mengizinkan penggunaan komersial sumber tertutup tanpa biaya. Perbedaannya ada pada dukungan, komitmen kontraktual, dan hak merek dagang.",
+      "plan": {
+        "community": "Komunitas",
+        "team": "Tim",
+        "enterprise": "Enterprise"
+      },
+      "feature": {
+        "license": {
+          "label": "Lisensi",
+          "type": "Lisensi",
+          "commercial-use": "Penggunaan komersial sumber tertutup",
+          "registration": "Pendaftaran",
+          "trademark": "Hak merek dagang"
+        },
+        "source": {
+          "label": "Kode Sumber",
+          "full-source": "Kode sumber lengkap",
+          "all-packages": "Semua paket dan modul",
+          "update-window": "Pembaruan"
+        },
+        "support": {
+          "label": "Dukungan",
+          "channel": "Kanal dukungan",
+          "first-response": "Respons pertama terjamin",
+          "security-patch": "Komitmen patch keamanan"
+        },
+        "procurement": {
+          "label": "Pengadaan",
+          "indemnification": "Ganti rugi",
+          "dpa": "DPA bertanda tangan dan paket kepatuhan",
+          "continuity": "Komitmen keberlangsungan"
+        }
+      },
+      "ariaTable": "Perbandingan tingkat dan fitur",
+      "value": {
+        "included": "Termasuk",
+        "notIncluded": "Tidak termasuk",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Tidak perlu",
+        "whiteLabelRights": "Hak white label",
+        "unlimited": "Tanpa batas",
+        "unlimitedPlusNotice": "Tanpa batas + pemberitahuan awal perubahan yang merusak",
+        "unlimitedPlusLts": "Tanpa batas + cabang dukungan jangka panjang",
+        "publicChannels": "Issue publik dan Discord",
+        "privateChannel": "Kanal privat",
+        "namedContact": "Kontak khusus",
+        "twoBusinessDays": "2 hari kerja",
+        "fourBusinessHours": "4 jam kerja",
+        "bestEffort": "Sebisa mungkin",
+        "contractual": "Kontraktual"
+      }
+    },
+    "socialProof": {
+      "title": "Dibangun di atas stack yang dapat dipercaya",
+      "logosLabel": "Mitra integrasi",
+      "metrics": {
+        "developers": {
+          "value": "47+",
+          "label": "Penyedia AI yang didukung"
+        },
+        "projects": {
+          "value": "104",
+          "label": "paket monorepo"
+        },
+        "uptime": {
+          "value": "7",
+          "label": "lokasi i18n bawaan"
+        }
+      }
+    }
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "Rekaman ICP",
+      "publicSecurity": "Keamanan publik"
+    }
+  },
+  "icpFooter": {
+    "recordNumber": "Nomor ICP",
+    "publicSecurity": "Rekam keamanan publik"
+  },
+  "MarketLocalePicker": {
+    "title": "Region dan bahasa",
+    "description": "Pilih region dan bahasa untuk situs pemasaran.",
+    "triggerAria": "Pilih region dan bahasa",
+    "searchPlaceholder": "Cari wilayah…",
+    "plannedHint": "Antarmuka kembali ke bahasa Inggris hingga bahasa ini dirilis",
+    "noResults": "Tidak ada wilayah yang cocok",
+    "menuAria": "Wilayah dan bahasa"
+  }
+}

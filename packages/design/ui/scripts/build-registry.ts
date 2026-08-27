@@ -1,0 +1,2036 @@
+#!/usr/bin/env tsx
+/* eslint-disable */
+/**
+ * @nebutra/ui — shadcn-compatible Registry Builder
+ *
+ * Reads source files for TIER B components from packages/design/ui/src/primitives
+ * (and components/) and emits shadcn registry v2 manifests to:
+ *
+ *   apps/design-docs/public/r/<name>.json    — single component manifest
+ *   apps/design-docs/public/registry.json    — index of all components
+ *
+ * For each component the script:
+ *   1. Reads the full source file content (verbatim).
+ *   2. Parses `import` statements to derive:
+ *        - dependencies        (npm packages)
+ *        - registryDependencies (other components from the same registry)
+ *        - peer/internal       (filtered out — already provided by tokens/utils)
+ *   3. Scans the source for CSS variable references `var(--xxx)` and
+ *      injects `cssVars.light/dark` fallback hex values from
+ *      packages/design/design-tokens/build/ts/light.ts + dark.ts.
+ *   4. Stamps `meta.nebutraTokens` (the variables actually used) and
+ *      `meta.nebutraLayer` (marketing | dataviz | dashboard | animation | decoration | business).
+ *
+ * Run:
+ *   pnpm --filter @nebutra/ui build:registry
+ *
+ * Inputs are listed in COMPONENT_REGISTRY (TIER B Phase 1 batch).
+ * Outputs are deterministic JSON with two-space indent.
+ */
+
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+// ---------------------------------------------------------------------------
+// Paths
+// ---------------------------------------------------------------------------
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const UI_ROOT = resolve(__dirname, "..");
+// W3b layout: packages/design/ui/scripts/build-registry.ts → walk 3 levels up to repo root
+const REPO_ROOT = resolve(UI_ROOT, "..", "..", "..");
+const _PRIMITIVES_DIR = join(UI_ROOT, "src", "primitives");
+const _COMPONENTS_DIR = join(UI_ROOT, "src", "components");
+const TOKENS_LIGHT = join(
+  REPO_ROOT,
+  "packages",
+  "design",
+  "design-tokens",
+  "build",
+  "ts",
+  "light.js",
+);
+const TOKENS_DARK = join(
+  REPO_ROOT,
+  "packages",
+  "design",
+  "design-tokens",
+  "build",
+  "ts",
+  "dark.js",
+);
+const OUT_DIR = join(REPO_ROOT, "apps", "design-docs", "public", "r");
+const OUT_INDEX = join(REPO_ROOT, "apps", "design-docs", "public", "registry.json");
+const OUT_AGENT_DIR = join(REPO_ROOT, "apps", "design-docs", "public", "agent");
+const OUT_AGENT_COMPONENT_DIR = join(OUT_AGENT_DIR, "components");
+const OUT_AGENT_INDEX = join(REPO_ROOT, "apps", "design-docs", "public", "agent-manifest.json");
+
+const CONTEXT_CARD_REGISTRY_TOKENS = `/**
+ * Context Card Component Tokens — standalone registry copy.
+ *
+ * Values are generated from @nebutra/ui source component tokens so this
+ * registry item can be installed without copying the internal token pipeline.
+ */
+
+export const contextCardTokens = {
+  width: {
+    sm: 240,
+    md: 320,
+  },
+  padding: {
+    x: 12,
+    y: 12,
+  },
+  gap: {
+    stack: 12,
+    section: 8,
+    row: 4,
+  },
+  borderRadius: 8,
+  fontSize: {
+    body: 14,
+    metadata: 12,
+  },
+  motion: {
+    openDelay: 150,
+    closeDelay: 120,
+    duration: 200,
+    easing: "ease-out",
+  },
+} as const;
+
+export type ContextCardWidth = keyof typeof contextCardTokens.width;
+`;
+
+const AVATAR_REGISTRY_TOKENS = `/**
+ * Avatar Component Tokens — standalone registry copy.
+ *
+ * Values are generated from @nebutra/ui source component tokens so this
+ * registry item can be installed without copying the internal token pipeline.
+ */
+
+export const avatarTokens = {
+  size: {
+    xs: {
+      dimension: 20,
+      fontSize: 8,
+      iconSize: 10,
+      ringWidth: 1,
+    },
+    sm: {
+      dimension: 32,
+      fontSize: 12,
+      iconSize: 14,
+      ringWidth: 2,
+    },
+    md: {
+      dimension: 40,
+      fontSize: 14,
+      iconSize: 16,
+      ringWidth: 2,
+    },
+    lg: {
+      dimension: 56,
+      fontSize: 20,
+      iconSize: 24,
+      ringWidth: 2,
+    },
+    xl: {
+      dimension: 80,
+      fontSize: 28,
+      iconSize: 32,
+      ringWidth: 3,
+    },
+  },
+  group: {
+    overlapOffset: -8,
+    overflowBadge: 20,
+  },
+} as const;
+
+export type AvatarSize = keyof typeof avatarTokens.size;
+`;
+
+const EMPTY_STATE_REGISTRY_TOKENS = `/**
+ * Empty State Component Tokens — standalone registry copy.
+ *
+ * Values are generated from @nebutra/ui source component tokens so this
+ * registry item can be installed without copying the internal token pipeline.
+ */
+
+export const emptyStateTokens = {
+  root: {
+    minHeight: {
+      sm: 128,
+      md: 192,
+      lg: 256,
+    },
+    paddingX: {
+      sm: 16,
+      md: 24,
+      lg: 32,
+    },
+    paddingY: {
+      sm: 32,
+      md: 40,
+      lg: 56,
+    },
+    radius: 8,
+  },
+  content: {
+    maxWidth: 448,
+    descriptionMaxWidth: 384,
+    stackGap: 16,
+    copyGap: 8,
+    actionsGap: 8,
+  },
+  icon: {
+    size: 48,
+    radius: 8,
+  },
+  typography: {
+    title: {
+      sm: 14,
+      md: 16,
+      lg: 18,
+    },
+    description: {
+      sm: 12,
+      md: 14,
+      lg: 14,
+    },
+    titleWeight: 600,
+    titleLineHeight: 24,
+    descriptionLineHeight: 24,
+  },
+} as const;
+`;
+
+const FEEDBACK_REGISTRY_TOKENS = `/**
+ * Feedback Component Tokens — standalone registry copy.
+ *
+ * Values are generated from @nebutra/ui source component tokens so this
+ * registry item can be installed without copying the internal token pipeline.
+ */
+
+export const feedbackTokens = {
+  width: 320,
+  padding: 12,
+  sideOffset: 8,
+  triggerHeight: 48,
+  controlSize: 32,
+  textareaHeight: 100,
+  gap: {
+    stack: 12,
+    row: 8,
+  },
+  radius: {
+    control: 6,
+    panel: 8,
+  },
+  motion: {
+    duration: 200,
+    easing: "ease-out",
+  },
+} as const;
+`;
+
+const SHOW_MORE_REGISTRY_TOKENS = `/**
+ * ShowMore Component Tokens — standalone registry copy.
+ *
+ * Values are generated from @nebutra/ui source component tokens so this
+ * registry item can be installed without copying the internal token pipeline.
+ */
+
+export const showMoreTokens = {
+  triggerHeight: 32,
+  triggerPaddingX: 12,
+  dividerInset: 20,
+  gap: 8,
+  radius: 9999,
+  iconSize: 16,
+  motion: {
+    duration: 100,
+    easing: "ease-out",
+  },
+} as const;
+`;
+
+const TABLE_REGISTRY_TOKENS = `/**
+ * Table Component Tokens — standalone registry copy.
+ *
+ * Values are generated from @nebutra/ui source component tokens so this
+ * registry item can be installed without copying the internal token pipeline.
+ */
+
+export const tableTokens = {
+  wrapper: {
+    minWidth: 248,
+    padding: 24,
+    radius: 8,
+  },
+  row: {
+    radius: 4,
+  },
+  cell: {
+    paddingX: 8,
+    paddingY: 10,
+  },
+  header: {
+    height: 40,
+  },
+  typography: {
+    size: 14,
+    headingWeight: 500,
+    bodyWeight: 400,
+  },
+  spacer: {
+    bodyTop: 12,
+  },
+  motion: {
+    duration: 100,
+    easing: "ease-out",
+  },
+} as const;
+`;
+
+const TOAST_REGISTRY_TOKENS = `/**
+ * Toast Component Tokens — standalone registry copy.
+ *
+ * Values are generated from @nebutra/ui source component tokens so this
+ * registry item can be installed without copying the internal token pipeline.
+ */
+
+export const toastTokens = {
+  width: 420,
+  radius: 12,
+  shadow: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+  stack: {
+    visibleToasts: 3,
+    gap: 8,
+    offset: 16,
+    mobileOffset: 16,
+  },
+  duration: {
+    default: 3000,
+    undo: 7000,
+  },
+  action: {
+    radius: 6,
+    paddingX: 12,
+    paddingY: 4,
+  },
+  typography: {
+    titleSize: 14,
+    descriptionSize: 12,
+    lineHeight: 21,
+    titleWeight: 500,
+  },
+  motion: {
+    duration: 300,
+    easing: "cubic-bezier(.25,.75,.6,.98)",
+  },
+} as const;
+`;
+
+const THEME_TOGGLE_REGISTRY_TOKENS = `/**
+ * ThemeToggle Component Tokens — standalone registry copy.
+ *
+ * Values are generated from @nebutra/ui source component tokens so this
+ * registry item can be installed without copying the internal token pipeline.
+ */
+
+type RegistryTransition =
+  | { duration: number }
+  | { type: "spring"; stiffness: number; damping: number };
+
+export const themeToggleTokens = {
+  sizes: {
+    sm: {
+      control: 32,
+      icon: 16,
+      padding: 4,
+      radius: 6,
+    },
+    md: {
+      control: 40,
+      icon: 20,
+      padding: 8,
+      radius: 6,
+    },
+    lg: {
+      control: 48,
+      icon: 24,
+      padding: 12,
+      radius: 8,
+    },
+  },
+  icon: {
+    center: 12,
+    sunRadius: 5,
+    moonRadius: 9,
+    maskRadius: 9,
+    strokeWidth: 2,
+  },
+  motion: {
+    duration: 100,
+    easing: "ease-out",
+    hoverScale: 1.06,
+    tapScale: 0.92,
+    morph: { type: "spring", stiffness: 380, damping: 30 } satisfies RegistryTransition,
+    press: { type: "spring", stiffness: 420, damping: 28 } satisfies RegistryTransition,
+    instant: { duration: 0 } satisfies RegistryTransition,
+  },
+} as const;
+
+export type ThemeToggleSize = keyof typeof themeToggleTokens.sizes;
+`;
+
+const DOCS_LAST_VERIFIED = "2026-05-21";
+const AGENT_CONTRACT_GENERATED_AT = "2026-07-06";
+
+const DOCS_STATUS_BY_NAME: Readonly<Record<string, DocsStatus>> = {
+  accordion: "stable",
+  avatar: "stable",
+  button: "stable",
+  checkbox: "stable",
+  choicebox: "beta",
+  dialog: "stable",
+  "dropdown-menu": "stable",
+  input: "stable",
+  popover: "stable",
+  progress: "stable",
+  "radio-group": "stable",
+  select: "stable",
+  skeleton: "stable",
+  table: "stable",
+  tabs: "stable",
+  textarea: "stable",
+  toast: "stable",
+  tooltip: "stable",
+};
+
+const DOCS_MATURITY_BY_NAME: Readonly<Record<string, DocsMaturity>> = {
+  accordion: "canonical",
+  avatar: "canonical",
+  button: "canonical",
+  checkbox: "canonical",
+  choicebox: "beta",
+  dialog: "canonical",
+  "dropdown-menu": "canonical",
+  input: "canonical",
+  popover: "canonical",
+  progress: "canonical",
+  "radio-group": "canonical",
+  select: "canonical",
+  skeleton: "canonical",
+  table: "canonical",
+  tabs: "canonical",
+  textarea: "canonical",
+  toast: "canonical",
+  tooltip: "canonical",
+};
+
+const DOCS_SUBSTRATE_BY_NAME: Readonly<Record<string, DocsSubstrate>> = {
+  accordion: "mixed",
+  avatar: "mixed",
+  button: "native",
+  checkbox: "native",
+  dialog: "mixed",
+  "dropdown-menu": "mixed",
+  input: "mixed",
+  popover: "mixed",
+  progress: "mixed",
+  "radio-group": "native",
+  select: "mixed",
+  skeleton: "native",
+  table: "native",
+  tabs: "mixed",
+  textarea: "native",
+  toast: "mixed",
+  tooltip: "mixed",
+  "file-attachment": "native",
+  "project-banner": "native",
+  "status-dot": "native",
+};
+
+const primitiveTokenFile = {
+  source: "tokens/primitive.ts",
+  targetPath: "components/tokens/primitive.ts",
+  type: "registry:lib" as const,
+};
+
+const shadowTokenFile = {
+  source: "tokens/shadows.ts",
+  targetPath: "components/tokens/shadows.ts",
+  type: "registry:lib" as const,
+};
+
+const overlayTokenFiles = [
+  primitiveTokenFile,
+  shadowTokenFile,
+  {
+    source: "tokens/components/overlay.ts",
+    targetPath: "components/tokens/components/overlay.ts",
+    type: "registry:lib" as const,
+  },
+] as const;
+
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
+
+type RegistryLayer =
+  | "marketing"
+  | "dataviz"
+  | "dashboard"
+  | "animation"
+  | "decoration"
+  | "business";
+
+type DocsStatus = "stable" | "beta" | "deprecated" | "experimental";
+type DocsMaturity = "experimental" | "beta" | "stable" | "canonical";
+type DocsLayer =
+  | "foundation"
+  | "primitive"
+  | "composition"
+  | "pattern"
+  | "registry"
+  | "api"
+  | "guide";
+type DocsSubstrate = "native" | "custom" | "mixed";
+
+interface DocsMetadata {
+  status: DocsStatus;
+  maturity: DocsMaturity;
+  layer: DocsLayer;
+  package: "@nebutra/ui" | "@nebutra/tokens";
+  source: string;
+  substrate: DocsSubstrate;
+  registry: true;
+  lastVerified: string;
+}
+
+interface ComponentSpec {
+  /** kebab-case registry name */
+  name: string;
+  /** human-readable title */
+  title: string;
+  /** short description */
+  description: string;
+  /** source file (relative to packages/design/ui/src) */
+  source: string;
+  /** layer category */
+  layer: RegistryLayer;
+  /** registry:ui | registry:theme */
+  type?: "registry:ui" | "registry:theme";
+  /** Docs governance metadata. Defaults are generated from the source path. */
+  docs?: Partial<Omit<DocsMetadata, "package" | "source" | "registry" | "lastVerified">>;
+  /** path written into the consumer project */
+  targetPath?: string;
+  /** additional files required by relative imports in the emitted component */
+  extraFiles?: Array<{
+    /** source file (relative to packages/design/ui/src) */
+    source?: string;
+    /** inline content for registry-only support files */
+    content?: string;
+    /** path written into the consumer project */
+    targetPath: string;
+    /** shadcn registry file type */
+    type?: "registry:ui" | "registry:lib";
+  }>;
+}
+
+interface ShadcnFile {
+  path: string;
+  type: string;
+  content: string;
+  target?: string;
+}
+
+interface ShadcnRegistryItem {
+  $schema: string;
+  name: string;
+  type: string;
+  title: string;
+  description: string;
+  author: string;
+  dependencies?: string[];
+  registryDependencies?: string[];
+  files: ShadcnFile[];
+  cssVars?: {
+    light: Record<string, string>;
+    dark: Record<string, string>;
+  };
+  tailwind?: { config: { theme: { extend: Record<string, unknown> } } };
+  meta: {
+    nebutraTokens: string[];
+    nebutraLayer: RegistryLayer;
+    docs: DocsMetadata;
+  };
+}
+
+interface AgentManifestCommand {
+  name: "search" | "component" | "validate" | "template" | "migrate";
+  status: "available" | "planned";
+  description: string;
+  json: boolean;
+}
+
+interface AgentComponentSummary {
+  name: string;
+  title: string;
+  description: string;
+  status: DocsStatus;
+  maturity: DocsMaturity;
+  layer: DocsLayer;
+  source: string;
+  href: string;
+  tags: string[];
+}
+
+interface AgentManifest {
+  $schema: string;
+  name: "nebutra-ui-agent";
+  version: 1;
+  generatedAt: string;
+  homepage: string;
+  registry: string;
+  commands: AgentManifestCommand[];
+  rules: {
+    sourceOfTruth: string[];
+    importPolicy: string;
+    registryPolicy: string;
+    tokenPolicy: string;
+  };
+  components: AgentComponentSummary[];
+}
+
+interface AgentComponentContract extends AgentComponentSummary {
+  package: "@nebutra/ui" | "@nebutra/tokens";
+  substrate: DocsSubstrate;
+  imports: {
+    package: string;
+    registry: string;
+  };
+  dependencies: {
+    npm: string[];
+    registry: string[];
+  };
+  files: Array<Pick<ShadcnFile, "path" | "type" | "target">>;
+  tokens: string[];
+  evidence: {
+    source: true;
+    docs: boolean;
+    storybook: boolean;
+    registry: true;
+    tokens: boolean;
+  };
+  docs: {
+    source?: string;
+    routes: string[];
+    storybook?: string;
+    lastVerified: string;
+  };
+  usage: {
+    recommended: string;
+    antiPatterns: string[];
+  };
+  migration: {
+    requiredForBreakingChanges: true;
+    codemods: string[];
+    hints: string[];
+  };
+}
+
+// ---------------------------------------------------------------------------
+// TIER B Phase 1 (10 components) + Phase 2 chat tool-family (2 substrate +
+// 6 tool primitives = 8) + 1 theme entry. Total: 18 + 1 theme.
+// ---------------------------------------------------------------------------
+
+const COMPONENT_REGISTRY: ComponentSpec[] = [
+  {
+    name: "avatar",
+    title: "Avatar",
+    description:
+      "User, team, or organization identity primitive with numeric sizing, initials fallback, and stacked groups.",
+    source: "primitives/avatar.tsx",
+    layer: "business",
+    extraFiles: [
+      {
+        content: AVATAR_REGISTRY_TOKENS,
+        targetPath: "components/tokens/components/avatar.ts",
+        type: "registry:lib",
+      },
+      {
+        source: "primitives/avatar-extended.tsx",
+        targetPath: "components/ui/avatar-extended.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "button",
+    title: "Button",
+    description:
+      "Primary action primitive with intent, size, shape, loading, prefix/suffix, and link variants.",
+    source: "primitives/button.tsx",
+    layer: "business",
+    extraFiles: [
+      {
+        source: "primitives/button-variants.ts",
+        targetPath: "components/ui/button-variants.ts",
+        type: "registry:lib",
+      },
+      {
+        source: "utils/slot.tsx",
+        targetPath: "components/utils/slot.tsx",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
+    name: "input",
+    title: "Input",
+    description:
+      "Single-line form control with labels, helper/error text, clear button, affixes, shortcuts, and password reveal.",
+    source: "primitives/input.tsx",
+    layer: "business",
+    extraFiles: [
+      primitiveTokenFile,
+      {
+        source: "tokens/components/input.ts",
+        targetPath: "components/tokens/components/input.ts",
+        type: "registry:lib",
+      },
+      {
+        source: "primitives/form-control.ts",
+        targetPath: "components/ui/form-control.ts",
+        type: "registry:lib",
+      },
+      {
+        source: "primitives/kbd.tsx",
+        targetPath: "components/ui/kbd.tsx",
+      },
+    ],
+  },
+  {
+    name: "textarea",
+    title: "Textarea",
+    description:
+      "Multi-line text input with tokenized density, helper/error association, and focus-visible-only chrome.",
+    source: "primitives/textarea.tsx",
+    layer: "business",
+    extraFiles: [
+      primitiveTokenFile,
+      {
+        source: "tokens/components/textarea.ts",
+        targetPath: "components/tokens/components/textarea.ts",
+        type: "registry:lib",
+      },
+      {
+        source: "primitives/form-control.ts",
+        targetPath: "components/ui/form-control.ts",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
+    name: "select",
+    title: "Select",
+    description:
+      "Short-list select primitive with native and compound listbox paths sharing one trigger contract.",
+    source: "primitives/select.tsx",
+    layer: "business",
+    extraFiles: [
+      primitiveTokenFile,
+      {
+        source: "tokens/components/select.ts",
+        targetPath: "components/tokens/components/select.ts",
+        type: "registry:lib",
+      },
+      {
+        source: "primitives/error-message.tsx",
+        targetPath: "components/ui/error-message.tsx",
+      },
+      {
+        source: "primitives/form-control.ts",
+        targetPath: "components/ui/form-control.ts",
+        type: "registry:lib",
+      },
+      {
+        source: "primitives/label.tsx",
+        targetPath: "components/ui/label.tsx",
+      },
+    ],
+  },
+  {
+    name: "checkbox",
+    title: "Checkbox",
+    description:
+      "Native checkbox control with checked, unchecked, disabled, and indeterminate states.",
+    source: "primitives/checkbox-group.tsx",
+    layer: "business",
+    targetPath: "components/ui/checkbox.tsx",
+  },
+  {
+    name: "radio-group",
+    title: "Radio Group",
+    description:
+      "Native radio-group fieldset with labelled options, descriptions, disabled reasons, and controlled/uncontrolled value.",
+    source: "primitives/radio-group.tsx",
+    layer: "business",
+    extraFiles: [
+      primitiveTokenFile,
+      {
+        source: "tokens/components/radio.ts",
+        targetPath: "components/tokens/components/radio.ts",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
+    name: "tabs",
+    title: "Tabs",
+    description:
+      "Base UI tabs primitive with tokenized density, indicators, activation modes, badges, and overflow handling.",
+    source: "primitives/tabs.tsx",
+    layer: "business",
+    extraFiles: [
+      primitiveTokenFile,
+      {
+        source: "tokens/components/tabs.ts",
+        targetPath: "components/tokens/components/tabs.ts",
+        type: "registry:lib",
+      },
+      {
+        source: "utils/primitive-props.ts",
+        targetPath: "components/utils/primitive-props.ts",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
+    name: "bento-grid",
+    title: "Bento Grid",
+    description: "Responsive bento-style feature grid with hover-reveal CTAs.",
+    source: "primitives/bento-grid.tsx",
+    layer: "marketing",
+  },
+  {
+    name: "pricing-card",
+    title: "Pricing Card",
+    description: "Composable pricing card with glass header, plan badges, price slots.",
+    source: "primitives/pricing-card.tsx",
+    layer: "marketing",
+  },
+  {
+    name: "feature-card",
+    title: "Feature Card",
+    description:
+      "Feature card with corner bracket decorators, header, body, and dual-mode imagery.",
+    source: "primitives/feature-card.tsx",
+    layer: "marketing",
+  },
+  {
+    name: "animate-in",
+    title: "AnimateIn",
+    description:
+      "Entrance animation primitive with emerge / flow / fade presets, lazy-loaded framer-motion.",
+    source: "primitives/animate-in.tsx",
+    layer: "animation",
+  },
+  {
+    name: "magic-card",
+    title: "Magic Card",
+    description: "Spotlight cursor-tracking card with gradient border highlight.",
+    source: "primitives/magic-card.tsx",
+    layer: "animation",
+  },
+  {
+    name: "globe",
+    title: "Globe (WebGL)",
+    description: "Interactive WebGL globe powered by cobe — heavy peer dependency.",
+    source: "primitives/globe.tsx",
+    layer: "dataviz",
+  },
+  {
+    name: "chart",
+    title: "Chart",
+    description: "Recharts wrapper with theme-aware color tokens and tooltip primitives.",
+    source: "primitives/chart.tsx",
+    layer: "dataviz",
+  },
+  {
+    name: "command-menu",
+    title: "Command Menu",
+    description: "AI command palette built on cmdk + base-ui dialog.",
+    source: "primitives/command-menu.tsx",
+    layer: "business",
+    extraFiles: [
+      {
+        source: "primitives/command-menu-parts.tsx",
+        targetPath: "components/ui/command-menu-parts.tsx",
+      },
+      {
+        source: "primitives/command-styles.ts",
+        targetPath: "components/ui/command-styles.ts",
+        type: "registry:lib",
+      },
+      ...overlayTokenFiles,
+    ],
+  },
+  {
+    name: "empty-state",
+    title: "Empty State",
+    description: "Zero-content surface for blank slate, no-results, permission, and error states.",
+    source: "primitives/empty-state.tsx",
+    layer: "business",
+    extraFiles: [
+      {
+        content: EMPTY_STATE_REGISTRY_TOKENS,
+        targetPath: "components/tokens/components/empty-state.ts",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
+    name: "feedback",
+    title: "Feedback",
+    description: "Compact feedback widget with emotion, message, topic, and metadata payloads.",
+    source: "primitives/feedback.tsx",
+    layer: "business",
+    extraFiles: [
+      {
+        content: FEEDBACK_REGISTRY_TOKENS,
+        targetPath: "components/tokens/components/feedback.ts",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
+    name: "show-more",
+    title: "Show More",
+    description: "Count-aware progressive disclosure trigger for long lists and content blocks.",
+    source: "primitives/show-more.tsx",
+    layer: "business",
+    extraFiles: [
+      {
+        content: SHOW_MORE_REGISTRY_TOKENS,
+        targetPath: "components/tokens/components/show-more.ts",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
+    name: "table",
+    title: "Table",
+    description:
+      "Semantic table primitive with compound API, row states, numeric alignment, and Geist-compatible exports.",
+    source: "primitives/table.tsx",
+    layer: "business",
+    extraFiles: [
+      {
+        content: TABLE_REGISTRY_TOKENS,
+        targetPath: "components/tokens/components/table.ts",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
+    name: "toast",
+    title: "Toast",
+    description:
+      "Sonner-backed transient notification facade with tokenized styling and Geist-compatible useToasts API.",
+    source: "primitives/toaster.tsx",
+    layer: "business",
+    extraFiles: [
+      {
+        content: TOAST_REGISTRY_TOKENS,
+        targetPath: "components/tokens/components/toast.ts",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
+    name: "theme-toggle",
+    title: "Theme Toggle",
+    description:
+      "Binary sun/moon icon-button for light and dark mode switching. Tokenized motion and reduced-motion aware.",
+    source: "primitives/theme-toggle.tsx",
+    layer: "business",
+    extraFiles: [
+      {
+        content: THEME_TOGGLE_REGISTRY_TOKENS,
+        targetPath: "components/tokens/components/theme-toggle.ts",
+        type: "registry:lib",
+      },
+      {
+        source: "hooks/use-reduced-motion.ts",
+        targetPath: "components/hooks/use-reduced-motion.ts",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
+    name: "kpi-card",
+    title: "KPI Card",
+    description: "Dashboard KPI card with trend chevrons and lucide iconography.",
+    source: "primitives/kpi-card.tsx",
+    layer: "dashboard",
+  },
+  {
+    name: "metric-card",
+    title: "Metric Card",
+    description: "Linear / Vercel / Supabase inspired SaaS dashboard metric tile.",
+    source: "primitives/metric-card.tsx",
+    layer: "dashboard",
+  },
+  // -------------------------------------------------------------------------
+  // Chat tool-family substrate (TextShimmer / LoadingDots) — these are leaf
+  // primitives consumed by the six tool primitives below. They MUST be in the
+  // registry so `npx shadcn add edit-tool` can resolve their sibling imports.
+  // -------------------------------------------------------------------------
+  {
+    name: "text-shimmer",
+    title: "Text Shimmer",
+    description:
+      "Animated text shimmer used as the streaming-header substrate for the chat tool-family.",
+    source: "primitives/text-shimmer.tsx",
+    layer: "animation",
+  },
+  {
+    name: "loading-dots",
+    title: "Loading Dots",
+    description: "Three-dot bouncing loader; reused inside EditTool's approval footer.",
+    source: "primitives/loading-dots.tsx",
+    layer: "animation",
+  },
+  // -------------------------------------------------------------------------
+  // Chat tool-family — inline AI tool-call rendering primitives. Siblings of
+  // each other; see `project_tool_family_primitives` memory for the boundary
+  // with AgentPlan (dashboard hierarchical planner).
+  // -------------------------------------------------------------------------
+  {
+    name: "edit-tool",
+    title: "Edit Tool",
+    description:
+      "Inline AI tool-call rendering for file edits — Cursor / Claude Code-style diff block with optional approval footer.",
+    source: "primitives/edit-tool.tsx",
+    layer: "business",
+  },
+  {
+    name: "question-tool",
+    title: "Question Tool",
+    description:
+      "Inline AI tool-call rendering of a multi-step questionnaire — single / multi / text question kinds.",
+    source: "primitives/question-tool.tsx",
+    layer: "business",
+  },
+  {
+    name: "mcp-tool",
+    title: "MCP Tool",
+    description:
+      "Inline AI tool-call rendering for MCP invocations — verb conjugation, priority-sorted args, expandable output panel.",
+    source: "primitives/mcp-tool.tsx",
+    layer: "business",
+  },
+  {
+    name: "todo-tool",
+    title: "Todo Tool",
+    description:
+      "Flat streaming todo list for the Claude TodoWrite tool — sibling of EditTool / McpTool / SearchTool.",
+    source: "primitives/todo-tool.tsx",
+    layer: "business",
+  },
+  {
+    name: "search-tool",
+    title: "Search Tool",
+    description:
+      "Inline AI tool-call rendering for search/retrieval results — honest-link rows, scrollable result panel.",
+    source: "primitives/search-tool.tsx",
+    layer: "business",
+  },
+  {
+    name: "subagent-tool",
+    title: "Subagent Tool",
+    description:
+      "Single-line status pill for delegated subagent invocations — lightest member of the chat tool-family.",
+    source: "primitives/subagent-tool.tsx",
+    layer: "business",
+  },
+  // -------------------------------------------------------------------------
+  // Chat composer primitives — separate from the chat tool-family above.
+  // These render *user input* (uploaded files etc.), not AI output.
+  // -------------------------------------------------------------------------
+  {
+    name: "file-attachment",
+    title: "File Attachment",
+    description:
+      "Chip / thumbnail display for an attached file in a chat composer or message bubble. Keyboard-accessible removal.",
+    source: "primitives/file-attachment.tsx",
+    layer: "business",
+  },
+  // -------------------------------------------------------------------------
+  // Marketing — composed showcase pieces.
+  // -------------------------------------------------------------------------
+  {
+    name: "expandable-gallery",
+    title: "Expandable Gallery",
+    description:
+      "Fanned photo stack that animates into a responsive grid. Tab/Enter expands; outside-click or Back collapses.",
+    source: "primitives/expandable-gallery.tsx",
+    layer: "marketing",
+  },
+  // -------------------------------------------------------------------------
+  // Dashboard — scannable-surface primitives.
+  // RelativeTimeCard composes ContextCard; Tooltip remains earlier because
+  // sibling dashboard primitives still consume it directly.
+  // -------------------------------------------------------------------------
+  {
+    name: "tooltip",
+    title: "Tooltip",
+    description: "Base UI Tooltip wrapper for concise, non-interactive explanatory text.",
+    source: "primitives/tooltip.tsx",
+    layer: "business",
+    extraFiles: [...overlayTokenFiles],
+  },
+  {
+    name: "accordion",
+    title: "Accordion",
+    description:
+      "Base UI accordion primitive with tokenized focus and disclosure motion. Used by Collapse.",
+    source: "primitives/accordion.tsx",
+    layer: "business",
+  },
+  {
+    name: "dialog",
+    title: "Dialog",
+    description:
+      "Base UI dialog primitive with tokenized backdrop, modal surface, close affordance, focus trap, and labelled content.",
+    source: "primitives/dialog.tsx",
+    layer: "business",
+    extraFiles: [...overlayTokenFiles],
+  },
+  {
+    name: "dropdown-menu",
+    title: "Dropdown Menu",
+    description:
+      "Base UI menu primitive with keyboard navigation, checkbox/radio items, and submenu support.",
+    source: "primitives/dropdown-menu.tsx",
+    layer: "business",
+    extraFiles: [...overlayTokenFiles],
+  },
+  {
+    name: "popover",
+    title: "Popover",
+    description:
+      "Anchored Base UI popover primitive for contextual, non-blocking surfaces with shared overlay tokens.",
+    source: "primitives/popover.tsx",
+    layer: "business",
+    extraFiles: [...overlayTokenFiles],
+  },
+  {
+    name: "context-card",
+    title: "Context Card",
+    description:
+      "Geist-style hover/focus card built on Base UI Popover for compact entity metadata.",
+    source: "primitives/context-card.tsx",
+    layer: "business",
+    extraFiles: [
+      {
+        content: CONTEXT_CARD_REGISTRY_TOKENS,
+        targetPath: "components/tokens/components/context-card.ts",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
+    name: "relative-time-card",
+    title: "Relative Time Card",
+    description:
+      "Short relative-time label with hover popover showing absolute UTC + local time. Adaptive tick cadence.",
+    source: "primitives/relative-time-card.tsx",
+    layer: "dashboard",
+  },
+  {
+    name: "project-banner",
+    title: "Project Banner",
+    description:
+      "Full-width, non-dismissible banner for project-wide states needing resolution. Four severity variants + ARIA live region.",
+    source: "primitives/project-banner.tsx",
+    layer: "dashboard",
+  },
+  // -------------------------------------------------------------------------
+  // Marketing chrome.
+  // -------------------------------------------------------------------------
+  {
+    name: "browser-mockup",
+    title: "Browser",
+    description:
+      "Geist-style browser chrome around a screenshot or demo. Middle-truncating address bar, aspect-locked image viewport.",
+    source: "primitives/browser-mockup.tsx",
+    layer: "marketing",
+  },
+  {
+    name: "middle-truncate",
+    title: "Middle Truncate",
+    description:
+      "Accessible middle truncation for long IDs, URLs, and file paths while preserving copy text.",
+    source: "primitives/middle-truncate.tsx",
+    layer: "business",
+  },
+  {
+    name: "choicebox",
+    title: "Choicebox",
+    description:
+      "Card-style selection control with radio (single) and checkbox (multi) modes. Roving tabindex + arrow-key navigation.",
+    source: "primitives/choicebox.tsx",
+    layer: "business",
+  },
+  {
+    name: "code-block",
+    title: "Code Block",
+    description:
+      "Syntax-highlighted code viewer with copy + diff lines. Accepts Geist single-file children API or Nebutra multi-file tabs.",
+    source: "primitives/code-block.tsx",
+    layer: "business",
+  },
+  {
+    name: "collapse",
+    title: "Collapse",
+    description:
+      "Geist-style flat Collapse/CollapseGroup API on top of our Accordion. Single, multiple-open, and standalone modes.",
+    source: "primitives/collapse.tsx",
+    layer: "business",
+  },
+  {
+    name: "description",
+    title: "Description",
+    description:
+      "Definition-list metadata block (<dl>/<dt>/<dd>). Title Case key + emphasized value, optional tooltip on the label.",
+    source: "primitives/description.tsx",
+    layer: "dashboard",
+  },
+  {
+    name: "entity",
+    title: "Entity",
+    description:
+      "Row of descriptive content paired with one or two controls. Compound Entity / Entity.Content / Entity.List.",
+    source: "primitives/entity.tsx",
+    layer: "dashboard",
+  },
+  {
+    name: "material",
+    title: "Material",
+    description:
+      "Surface elevation primitive — 8 Geist-style types (base, small/medium/large, tooltip, menu, modal, fullscreen). Picks chrome from the theme.",
+    source: "primitives/material.tsx",
+    layer: "business",
+  },
+  {
+    name: "menu",
+    title: "Menu",
+    description:
+      "Geist-style flat MenuContainer / MenuButton / Menu / MenuItem / MenuLink / MenuItemLocked / MenuSection API on top of DropdownMenu.",
+    source: "primitives/menu.tsx",
+    layer: "business",
+  },
+  {
+    name: "modal",
+    title: "Modal",
+    description:
+      "Geist-style compound Modal API on top of Dialog. active/onClickOutside/sticky/initialFocusRef + Body/Header/Title/Subtitle/Inset/Actions/Action.",
+    source: "primitives/modal.tsx",
+    layer: "business",
+  },
+  {
+    name: "progress",
+    title: "Progress",
+    description:
+      "Determinate progress bar with max ceiling, threshold-color map, multi-stage stops with tooltips, and ~1Hz aria-valuenow throttling.",
+    source: "primitives/progress.tsx",
+    layer: "dashboard",
+  },
+  {
+    name: "skeleton",
+    title: "Skeleton",
+    description:
+      "Loading placeholder with width/height/boxHeight + pill/rounded/squared + animated/show props. Respects prefers-reduced-motion; aria-busy + inert keep focus off the placeholder.",
+    source: "primitives/skeleton.tsx",
+    layer: "dashboard",
+  },
+  {
+    name: "status-dot",
+    title: "Status Dot",
+    description:
+      "Deployment-lifecycle dot (QUEUED/BUILDING/READY/ERROR/CANCELED/DELETED). QUEUED+BUILDING pulse; terminal states static. Semantic-token colored, decorative-mode aria-hidden when paired with text.",
+    source: "primitives/status-dot.tsx",
+    layer: "dashboard",
+  },
+];
+
+// ---------------------------------------------------------------------------
+// CSS Variable → Hex mapping
+// ---------------------------------------------------------------------------
+
+/**
+ * Build a `--var-name` → hex map by parsing
+ *   export const ColorNebutraBlue500 = "#0033fe";
+ * style declarations from the design-tokens TS output.
+ *
+ * The token names follow PascalCase concat — we transform them to the
+ * canonical CSS variable name used in components (lower-kebab,
+ * `--blue-9`, `--neutral-1`, `--brand-gradient`, etc.).
+ */
+function buildTokenMap(filePath: string): Record<string, string> {
+  const source = readFileSync(filePath, "utf-8");
+  const decls = [...source.matchAll(/export const (\w+)\s*=\s*["']([^"']+)["'];/g)];
+  const map: Record<string, string> = {};
+
+  for (const [, ident, value] of decls) {
+    // ColorNebutraBlue500 → blue-9 (12-step scale: 50→1, 100→2, 200→3, ... 950→12)
+    const blueMatch = ident.match(/^ColorNebutraBlue(\d+)$/);
+    if (blueMatch) {
+      map[`--blue-${scaleStepFor(blueMatch[1])}`] = value;
+      continue;
+    }
+    const cyanMatch = ident.match(/^ColorNebutraCyan(\d+)$/);
+    if (cyanMatch) {
+      map[`--cyan-${scaleStepFor(cyanMatch[1])}`] = value;
+      continue;
+    }
+    const neutralMatch = ident.match(/^ColorNebutraNeutral(\d+)$/);
+    if (neutralMatch) {
+      map[`--neutral-${scaleStepFor(neutralMatch[1])}`] = value;
+      continue;
+    }
+
+    if (ident === "BrandPrimary") map["--brand-primary"] = value;
+    else if (ident === "BrandAccent") map["--brand-accent"] = value;
+    else if (ident === "BrandTertiary") map["--brand-tertiary"] = value;
+    else if (ident === "BrandGradientStart") map["--brand-gradient-start"] = value;
+    else if (ident === "BrandGradientEnd") map["--brand-gradient-end"] = value;
+    else if (ident === "BrandGradientPrimary") map["--brand-gradient"] = value;
+    else if (ident === "BrandGradientReverse") map["--brand-gradient-reverse"] = value;
+    else if (ident === "BrandGradientVertical") map["--brand-gradient-vertical"] = value;
+    else if (ident === "BrandGradientRadial") map["--brand-gradient-radial"] = value;
+    else if (ident === "BrandGradientLogo") map["--brand-gradient-logo"] = value;
+    else if (ident === "BrandGradientLogoReverse") map["--brand-gradient-logo-reverse"] = value;
+    else if (ident === "ColorTertiaryPurple") map["--brand-tertiary"] = value;
+    else if (ident === "ColorStatusDanger") map["--status-danger"] = value;
+    else if (ident === "ColorStatusWarning") map["--status-warning"] = value;
+    else if (ident === "ColorStatusSuccess") map["--status-success"] = value;
+    else if (ident === "ColorWhite") map["--color-white"] = value;
+    else if (ident === "ColorBlack") map["--color-black"] = value;
+    else if (ident === "SizeContainerText") map["--container-text"] = value;
+    else if (ident === "SizeContainerContent") map["--container-content"] = value;
+    else if (ident === "SizeContainerWide") map["--container-wide"] = value;
+    else if (/^SizeRadius/.test(ident)) {
+      // SizeRadiusXl → --radius-xl
+      const suffix = ident
+        .replace(/^SizeRadius/, "")
+        .replace(/([A-Z])/g, (_, c) => `-${c.toLowerCase()}`)
+        .replace(/^-/, "");
+      map[`--radius-${suffix || "default"}`] = value;
+    }
+  }
+
+  // Brand aliases derived from the scale entries.
+  if (!map["--brand-primary"] && map["--blue-9"]) map["--brand-primary"] = map["--blue-9"];
+  if (!map["--brand-accent"] && map["--cyan-9"]) map["--brand-accent"] = map["--cyan-9"];
+  if (!map["--brand-gradient-logo"] && map["--blue-9"] && map["--cyan-9"]) {
+    // Mid stop defaults to Nebutra OKLab midpoint when endpoints match VI hexes.
+    const mid =
+      map["--blue-9"]?.toLowerCase() === "#0033fe" && map["--cyan-9"]?.toLowerCase() === "#0bf1c3"
+        ? "#00a2e9"
+        : null;
+    map["--brand-gradient-logo"] = mid
+      ? `linear-gradient(135deg, ${map["--blue-9"]} 0%, ${mid} 50%, ${map["--cyan-9"]} 100%)`
+      : `linear-gradient(135deg, ${map["--blue-9"]} 0%, ${map["--cyan-9"]} 100%)`;
+  }
+  if (!map["--brand-gradient"] && map["--brand-gradient-start"] && map["--brand-gradient-end"]) {
+    map["--brand-gradient"] =
+      `linear-gradient(135deg, ${map["--brand-gradient-start"]} 0%, ${map["--brand-gradient-end"]} 100%)`;
+  }
+
+  return map;
+}
+
+/**
+ * Map the legacy 50/100/.../950 scale to the Radix-style 1..12 step
+ * convention used across CSS variables (per CLAUDE.md token reference,
+ * where `--blue-9 = #0033FE` is the primary brand fill = legacy 500).
+ *
+ * Convention:
+ *   1 = lightest app background      (legacy 50)
+ *   2 = subtle background            (legacy 100)
+ *   3 = component background         (legacy 200)
+ *   4 = component hover              (legacy 300)
+ *   5 = component active             (legacy 400)
+ *   9 = solid fill / brand           (legacy 500)
+ *   10 = solid hover                 (legacy 600)
+ *   11 = low-contrast text           (legacy 700)
+ *   12 = high-contrast text          (legacy 800/900/950 collapse)
+ */
+function scaleStepFor(legacy: string): number {
+  const map: Record<string, number> = {
+    "50": 1,
+    "100": 2,
+    "200": 3,
+    "300": 4,
+    "400": 5,
+    "500": 9,
+    "600": 10,
+    "700": 11,
+    "800": 12,
+    "900": 12,
+    "950": 12,
+  };
+  return map[legacy] ?? 9;
+}
+
+// ---------------------------------------------------------------------------
+// Import / dependency parsing
+// ---------------------------------------------------------------------------
+
+/** Packages that consumers always have — never list as deps. */
+const SKIP_DEPS = new Set([
+  "react",
+  "react-dom",
+  "next",
+  "next/navigation",
+  "next/dynamic",
+  "next/image",
+  "next/link",
+  "next/font",
+  "next/headers",
+  "next/server",
+]);
+
+/**
+ * Sibling primitives that exist as standard shadcn/ui components upstream.
+ * When a TIER B component imports one of these, we resolve it to the bare
+ * registry name so `npx shadcn add ...` resolves it from the user's
+ * configured base registry (default = ui.shadcn.com).
+ */
+const TIER_A_PRIMITIVES = new Set([
+  "button",
+  "card",
+  "input",
+  "label",
+  "dialog",
+  "tooltip",
+  "popover",
+  "command",
+  "select",
+  "separator",
+  "badge",
+  "skeleton",
+  "textarea",
+]);
+
+function topLevelPackage(specifier: string): string | null {
+  if (specifier.startsWith(".") || specifier.startsWith("node:")) return null;
+  if (specifier.startsWith("@")) {
+    const parts = specifier.split("/");
+    return parts.length >= 2 ? `${parts[0]}/${parts[1]}` : specifier;
+  }
+  return specifier.split("/")[0];
+}
+
+/**
+ * Best-effort resolver for relative imports inside `primitives/`:
+ *   "./button"          → registry dep "button"
+ *   "./card"            → registry dep "card"
+ *   "../utils/cn"       → drop (assumed available via @/lib/utils)
+ *   "./command"         → registry dep "command"
+ */
+function relativeImportToRegistryDep(specifier: string): string | null {
+  if (!specifier.startsWith(".")) return null;
+  const lastSegment = specifier.split("/").pop() ?? "";
+  // Skip utility/internal modules
+  if (lastSegment === "cn" || lastSegment === "utils") return null;
+  if (specifier.includes("../utils") || specifier.includes("../tokens")) return null;
+  // Anything still relative inside primitives/ is a sibling component
+  if (specifier.startsWith("./") && !specifier.includes("/")) {
+    return null; // covered by .split logic below
+  }
+  // Keep only the bare filename portion
+  return lastSegment.replace(/\.tsx?$/, "");
+}
+
+interface ParsedDeps {
+  npmPackages: string[];
+  registryDeps: string[];
+  warnings: string[];
+}
+
+function moduleBasename(path: string): string {
+  return (path.split("/").pop() ?? path).replace(/\.tsx?$/, "");
+}
+
+function parseImports(
+  source: string,
+  knownRegistry: Set<string>,
+  knownExtraFiles = new Set<string>(),
+): ParsedDeps {
+  const npmSet = new Set<string>();
+  const registrySet = new Set<string>();
+  const warnings: string[] = [];
+
+  const importPattern = /\bfrom\s+["']([^"']+)["']/g;
+  for (const m of source.matchAll(importPattern)) {
+    const spec = m[1];
+    if (SKIP_DEPS.has(spec)) continue;
+
+    if (spec.startsWith(".")) {
+      // Sibling component → registry dep
+      const dep = relativeImportToRegistryDep(spec);
+      if (!dep || ["cn", "utils"].includes(dep)) {
+        continue;
+      }
+      if (knownExtraFiles.has(dep)) {
+        continue;
+      }
+      if (knownRegistry.has(dep)) {
+        registrySet.add(dep);
+        continue;
+      }
+      if (TIER_A_PRIMITIVES.has(dep)) {
+        // shadcn upstream resolves this — bare name only
+        registrySet.add(dep);
+        continue;
+      }
+      // Unknown sibling — emit a warning but don't fail
+      warnings.push(`Sibling import "${spec}" not yet in registry`);
+      continue;
+    }
+
+    if (spec.startsWith("node:")) continue;
+
+    const pkg = topLevelPackage(spec);
+    if (!pkg) continue;
+
+    // Internal monorepo @nebutra/* — handle special-cases
+    if (pkg === "@nebutra/ui") {
+      // Path like @nebutra/ui/utils — drop, replaced by @/lib/utils
+      continue;
+    }
+    if (pkg === "@nebutra/brand") {
+      // Tokens-style internal — pull as npm dep so external users can install
+      npmSet.add(pkg);
+      continue;
+    }
+    if (pkg === "@nebutra/tokens") {
+      // Drop — tokens layer is set up via the nebutra-tokens registry:theme entry
+      continue;
+    }
+
+    npmSet.add(pkg);
+  }
+
+  return {
+    npmPackages: [...npmSet].sort(),
+    registryDeps: [...registrySet].sort(),
+    warnings,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// CSS variable scanner
+// ---------------------------------------------------------------------------
+
+function collectCssVars(source: string): string[] {
+  const vars = new Set<string>();
+  for (const m of source.matchAll(/var\((--[a-z0-9-]+)/gi)) {
+    vars.add(m[1]);
+  }
+  return [...vars].sort();
+}
+
+function buildCssVarFallbacks(
+  used: string[],
+  light: Record<string, string>,
+  dark: Record<string, string>,
+): { light: Record<string, string>; dark: Record<string, string> } | undefined {
+  if (used.length === 0) return undefined;
+
+  const lightOut: Record<string, string> = {};
+  const darkOut: Record<string, string> = {};
+
+  for (const varName of used) {
+    if (light[varName]) lightOut[varName] = light[varName];
+    if (dark[varName]) darkOut[varName] = dark[varName];
+  }
+
+  if (Object.keys(lightOut).length === 0 && Object.keys(darkOut).length === 0) {
+    return undefined;
+  }
+
+  return { light: lightOut, dark: darkOut };
+}
+
+// ---------------------------------------------------------------------------
+// Builder
+// ---------------------------------------------------------------------------
+
+function readSource(spec: ComponentSpec): string {
+  const path = join(UI_ROOT, "src", spec.source);
+  return readFileSync(path, "utf-8");
+}
+
+function readExtraFile(source: string): string {
+  return readFileSync(join(UI_ROOT, "src", source), "utf-8");
+}
+
+function buildDocsMetadata(spec: ComponentSpec): DocsMetadata {
+  const status = spec.docs?.status ?? DOCS_STATUS_BY_NAME[spec.name] ?? "experimental";
+
+  return {
+    status,
+    maturity: spec.docs?.maturity ?? DOCS_MATURITY_BY_NAME[spec.name] ?? statusToMaturity(status),
+    layer: spec.docs?.layer ?? "primitive",
+    package: "@nebutra/ui",
+    source: `packages/design/ui/src/${spec.source}`,
+    substrate: spec.docs?.substrate ?? DOCS_SUBSTRATE_BY_NAME[spec.name] ?? "custom",
+    registry: true,
+    lastVerified: DOCS_LAST_VERIFIED,
+  };
+}
+
+function statusToMaturity(status: DocsStatus): DocsMaturity {
+  if (status === "stable") return "stable";
+  if (status === "beta") return "beta";
+  return "experimental";
+}
+
+function docsRoutesFor(name: string, layer: DocsLayer): string[] {
+  const sectionCandidates =
+    layer === "foundation"
+      ? ["foundations"]
+      : ["components", "fragment-components", "patterns", "registry"];
+  const routes: string[] = [];
+
+  for (const lang of ["en", "zh"]) {
+    for (const section of sectionCandidates) {
+      const candidate = join(
+        REPO_ROOT,
+        "apps",
+        "design-docs",
+        "content",
+        "docs",
+        lang,
+        section,
+        `${name}.mdx`,
+      );
+      if (existsSync(candidate)) {
+        routes.push(`/${lang}/docs/${section}/${name}`);
+      }
+    }
+  }
+
+  return routes;
+}
+
+function storybookPathFor(source: string): string | undefined {
+  const adjacentStory = source.replace(/\.(?:tsx|ts)$/, ".stories.tsx");
+  if (existsSync(join(REPO_ROOT, adjacentStory))) {
+    return adjacentStory;
+  }
+
+  return undefined;
+}
+
+function packageImportFor(item: ShadcnRegistryItem): string {
+  if (item.meta.docs.package === "@nebutra/tokens") {
+    return '@import "@nebutra/tokens/styles.css";';
+  }
+
+  if (item.meta.docs.layer === "foundation") {
+    return "@nebutra/ui";
+  }
+
+  return "@nebutra/ui/primitives";
+}
+
+function tagsFor(item: ShadcnRegistryItem): string[] {
+  const tags = new Set<string>([
+    item.meta.docs.status,
+    item.meta.docs.maturity,
+    item.meta.docs.layer,
+    item.meta.docs.substrate,
+    item.meta.nebutraLayer,
+  ]);
+
+  if (item.meta.nebutraTokens.length > 0) tags.add("tokens");
+  if ((item.dependencies?.length ?? 0) > 0) tags.add("npm-dependencies");
+  if ((item.registryDependencies?.length ?? 0) > 0) tags.add("registry-dependencies");
+
+  return [...tags].sort();
+}
+
+function buildAgentComponentContract(item: ShadcnRegistryItem): AgentComponentContract {
+  const docs = item.meta.docs;
+  const docsRoutes = docsRoutesFor(item.name, docs.layer);
+  const storybook = storybookPathFor(docs.source);
+  const registryUrl = `https://ui.nebutra.com/r/${item.name}.json`;
+  const href = `https://ui.nebutra.com/agent/components/${item.name}.json`;
+  const hasTokens = item.meta.nebutraTokens.length > 0;
+
+  return {
+    name: item.name,
+    title: item.title,
+    description: item.description,
+    status: docs.status,
+    maturity: docs.maturity,
+    layer: docs.layer,
+    source: docs.source,
+    href,
+    tags: tagsFor(item),
+    package: docs.package,
+    substrate: docs.substrate,
+    imports: {
+      package: packageImportFor(item),
+      registry: registryUrl,
+    },
+    dependencies: {
+      npm: item.dependencies ?? [],
+      registry: item.registryDependencies ?? [],
+    },
+    files: item.files.map((file) => ({
+      path: file.path,
+      type: file.type,
+      ...(file.target && { target: file.target }),
+    })),
+    tokens: item.meta.nebutraTokens,
+    evidence: {
+      source: true,
+      docs: docsRoutes.length > 0,
+      storybook: Boolean(storybook),
+      registry: true,
+      tokens: hasTokens,
+    },
+    docs: {
+      source: docsRoutes[0],
+      routes: docsRoutes,
+      ...(storybook && { storybook }),
+      lastVerified: docs.lastVerified,
+    },
+    usage: {
+      recommended:
+        docs.package === "@nebutra/tokens"
+          ? "Use the package CSS import inside Nebutra apps; use the registry theme only for standalone registry consumers."
+          : "Use package imports inside Nebutra apps; use the registry URL only for standalone consumers outside the monorepo package graph.",
+      antiPatterns: [
+        "Do not import registry JSON as the internal source of truth.",
+        "Do not import component source through package-internal paths.",
+        "Do not override Nebutra semantic tokens with raw palette values.",
+      ],
+    },
+    migration: {
+      requiredForBreakingChanges: true,
+      codemods: [],
+      hints: [
+        "Keep public API changes behind a migration hint before templates or agents recommend the new shape.",
+        "Prefer additive props first; breaking renames require a dry-run codemod entry and docs update in the same change.",
+        `Use ${registryUrl} only for standalone consumers; Nebutra apps should migrate package imports through @nebutra/ui exports.`,
+      ],
+    },
+  };
+}
+
+function buildAgentManifest(contracts: AgentComponentContract[]): AgentManifest {
+  return {
+    $schema: "https://ui.nebutra.com/schemas/nebutra-ui-agent.v1.json",
+    name: "nebutra-ui-agent",
+    version: 1,
+    generatedAt: AGENT_CONTRACT_GENERATED_AT,
+    homepage: "https://ui.nebutra.com",
+    registry: "https://ui.nebutra.com/registry.json",
+    commands: [
+      {
+        name: "search",
+        status: "available",
+        description: "Find components, foundations, and production UI patterns by name or tag.",
+        json: true,
+      },
+      {
+        name: "component",
+        status: "available",
+        description:
+          "Return one component contract with source, evidence, imports, and governance metadata.",
+        json: true,
+      },
+      {
+        name: "validate",
+        status: "available",
+        description: "Check whether a component has enough evidence for production recommendation.",
+        json: true,
+      },
+      {
+        name: "template",
+        status: "planned",
+        description: "Return governed page or workflow templates once template contracts exist.",
+        json: true,
+      },
+      {
+        name: "migrate",
+        status: "available",
+        description: "Run dry-run codemods for breaking component API migrations.",
+        json: true,
+      },
+    ],
+    rules: {
+      sourceOfTruth: [
+        "packages/design/tokens",
+        "packages/design/ui/src",
+        "apps/design-docs/content",
+        "packages/design/ui/src/**/*.stories.tsx",
+        "apps/design-docs/public/registry.json",
+      ],
+      importPolicy:
+        "Use @nebutra/ui package imports inside Nebutra apps; use registry URLs only for standalone consumers.",
+      registryPolicy:
+        "Registry manifests are distribution adapters and must not become internal design authority.",
+      tokenPolicy:
+        "@nebutra/tokens owns runtime CSS variables; components consume tokens and do not redefine them.",
+    },
+    components: contracts.map((contract) => ({
+      name: contract.name,
+      title: contract.title,
+      description: contract.description,
+      status: contract.status,
+      maturity: contract.maturity,
+      layer: contract.layer,
+      source: contract.source,
+      href: contract.href,
+      tags: contract.tags,
+    })),
+  };
+}
+
+function buildOne(
+  spec: ComponentSpec,
+  knownRegistry: Set<string>,
+  lightMap: Record<string, string>,
+  darkMap: Record<string, string>,
+): { item: ShadcnRegistryItem; warnings: string[]; sizeBytes: number } {
+  const source = readSource(spec);
+  const extraFiles =
+    spec.extraFiles?.map((file) => ({
+      ...file,
+      content: file.content ?? readExtraFile(file.source ?? ""),
+    })) ?? [];
+  const sourceForAnalysis = [source, ...extraFiles.map((file) => file.content)].join("\n");
+  const knownExtraFiles = new Set(
+    spec.extraFiles?.flatMap((file) =>
+      [file.source, file.targetPath]
+        .filter((path): path is string => Boolean(path))
+        .map(moduleBasename),
+    ) ?? [],
+  );
+  const deps = parseImports(sourceForAnalysis, knownRegistry, knownExtraFiles);
+  const cssVarsUsed = collectCssVars(sourceForAnalysis);
+  const fallbacks = buildCssVarFallbacks(cssVarsUsed, lightMap, darkMap);
+
+  const targetPath = spec.targetPath ?? `components/ui/${spec.name}.tsx`;
+  const docs = buildDocsMetadata(spec);
+
+  const item: ShadcnRegistryItem = {
+    $schema: "https://ui.shadcn.com/schema/registry-item.json",
+    name: spec.name,
+    type: spec.type ?? "registry:ui",
+    title: spec.title,
+    description: spec.description,
+    author: "Nebutra <ui.nebutra.com>",
+    ...(deps.npmPackages.length > 0 && { dependencies: deps.npmPackages }),
+    ...(deps.registryDeps.length > 0 && { registryDependencies: deps.registryDeps }),
+    files: [
+      {
+        path: targetPath,
+        type: spec.type ?? "registry:ui",
+        target: targetPath,
+        content: source,
+      },
+      ...extraFiles.map((file) => ({
+        path: file.targetPath,
+        type: file.type ?? "registry:lib",
+        target: file.targetPath,
+        content: file.content,
+      })),
+    ],
+    ...(fallbacks && { cssVars: fallbacks }),
+    meta: {
+      nebutraTokens: cssVarsUsed,
+      nebutraLayer: spec.layer,
+      docs,
+    },
+  };
+
+  const json = `${JSON.stringify(item, null, 2)}\n`;
+  return { item, warnings: deps.warnings, sizeBytes: Buffer.byteLength(json, "utf-8") };
+}
+
+function buildThemeEntry(
+  lightMap: Record<string, string>,
+  darkMap: Record<string, string>,
+): ShadcnRegistryItem {
+  // Curated subset that matches CLAUDE.md token reference.
+  const tokens = [
+    "--neutral-1",
+    "--neutral-2",
+    "--neutral-7",
+    "--neutral-9",
+    "--neutral-11",
+    "--neutral-12",
+    "--blue-3",
+    "--blue-9",
+    "--cyan-9",
+    "--brand-primary",
+    "--brand-accent",
+    "--brand-tertiary",
+    "--brand-gradient-start",
+    "--brand-gradient-end",
+    "--brand-gradient",
+    "--brand-gradient-reverse",
+    "--brand-gradient-vertical",
+    "--brand-gradient-radial",
+    "--brand-gradient-logo",
+    "--brand-gradient-logo-reverse",
+    "--status-danger",
+    "--status-warning",
+    "--status-success",
+    "--container-text",
+    "--container-content",
+    "--container-wide",
+  ];
+
+  const light: Record<string, string> = {};
+  const dark: Record<string, string> = {};
+  for (const t of tokens) {
+    if (lightMap[t]) light[t] = lightMap[t];
+    if (darkMap[t]) dark[t] = darkMap[t];
+  }
+
+  return {
+    $schema: "https://ui.shadcn.com/schema/registry-item.json",
+    name: "nebutra-tokens",
+    type: "registry:theme",
+    title: "Nebutra Tokens",
+    description:
+      "Drops the Nebutra design-system CSS variables (brand, neutral, status, container scale) into globals.css. No TSX.",
+    author: "Nebutra <ui.nebutra.com>",
+    files: [],
+    cssVars: { light, dark },
+    meta: {
+      nebutraTokens: tokens,
+      nebutraLayer: "decoration",
+      docs: {
+        status: "stable",
+        maturity: "canonical",
+        layer: "foundation",
+        package: "@nebutra/tokens",
+        source: "packages/design/tokens/src/index.ts",
+        substrate: "custom",
+        registry: true,
+        lastVerified: DOCS_LAST_VERIFIED,
+      },
+    },
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Main
+// ---------------------------------------------------------------------------
+
+function main(): void {
+  const lightMap = buildTokenMap(TOKENS_LIGHT);
+  const darkMap = buildTokenMap(TOKENS_DARK);
+
+  mkdirSync(OUT_DIR, { recursive: true });
+  mkdirSync(OUT_AGENT_COMPONENT_DIR, { recursive: true });
+
+  const knownRegistry = new Set(COMPONENT_REGISTRY.map((c) => c.name));
+
+  const allWarnings: string[] = [];
+  const sizeReport: Array<{ name: string; sizeKb: string }> = [];
+  const registryItems: ShadcnRegistryItem[] = [];
+
+  // 1) Component registry items
+  for (const spec of COMPONENT_REGISTRY) {
+    const { item, warnings, sizeBytes } = buildOne(spec, knownRegistry, lightMap, darkMap);
+    const outPath = join(OUT_DIR, `${spec.name}.json`);
+    writeFileSync(outPath, `${JSON.stringify(item, null, 2)}\n`, "utf-8");
+    registryItems.push(item);
+    sizeReport.push({ name: spec.name, sizeKb: (sizeBytes / 1024).toFixed(2) });
+    for (const w of warnings) allWarnings.push(`[${spec.name}] ${w}`);
+  }
+
+  // 2) registry:theme entry
+  const themeItem = buildThemeEntry(lightMap, darkMap);
+  const themeJson = `${JSON.stringify(themeItem, null, 2)}\n`;
+  const themeOut = join(OUT_DIR, "nebutra-tokens.json");
+  writeFileSync(themeOut, themeJson, "utf-8");
+  registryItems.push(themeItem);
+  sizeReport.push({
+    name: "nebutra-tokens",
+    sizeKb: (Buffer.byteLength(themeJson, "utf-8") / 1024).toFixed(2),
+  });
+
+  // 3) Index manifest
+  const index = {
+    $schema: "https://ui.shadcn.com/schema/registry.json",
+    name: "nebutra-ui",
+    homepage: "https://ui.nebutra.com",
+    items: [
+      ...COMPONENT_REGISTRY.map((c) => ({
+        name: c.name,
+        type: c.type ?? "registry:ui",
+        title: c.title,
+        description: c.description,
+        meta: {
+          nebutraLayer: c.layer,
+          docs: buildDocsMetadata(c),
+        },
+      })),
+      {
+        name: themeItem.name,
+        type: themeItem.type,
+        title: themeItem.title,
+        description: themeItem.description,
+        meta: {
+          nebutraLayer: themeItem.meta.nebutraLayer,
+          docs: themeItem.meta.docs,
+        },
+      },
+    ],
+  };
+  writeFileSync(OUT_INDEX, `${JSON.stringify(index, null, 2)}\n`, "utf-8");
+
+  // 4) Agent-readable UI contract
+  const agentContracts = registryItems.map(buildAgentComponentContract);
+  for (const contract of agentContracts) {
+    const outPath = join(OUT_AGENT_COMPONENT_DIR, `${contract.name}.json`);
+    writeFileSync(outPath, `${JSON.stringify(contract, null, 2)}\n`, "utf-8");
+  }
+  const agentManifest = buildAgentManifest(agentContracts);
+  writeFileSync(OUT_AGENT_INDEX, `${JSON.stringify(agentManifest, null, 2)}\n`, "utf-8");
+
+  // ---- Report ----
+  process.stdout.write(`[registry] wrote ${sizeReport.length} manifests:\n`);
+  for (const row of sizeReport) {
+    process.stdout.write(`  - ${row.name}: ${row.sizeKb} KB\n`);
+  }
+  process.stdout.write(`[registry] index → ${OUT_INDEX}\n`);
+  process.stdout.write(`[registry] agent contract → ${OUT_AGENT_INDEX}\n`);
+  if (allWarnings.length > 0) {
+    process.stderr.write(`[registry] warnings:\n`);
+    for (const w of allWarnings) process.stderr.write(`  ! ${w}\n`);
+  }
+}
+
+main();

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "iphone-mockup-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/iphone-mockup-demo.tsx",
+      "content": "import { IphoneMockup } from \"@nebutra/ui/primitives\";\n\nexport function IphoneMockupDemo() {\n  return (\n    <div className=\"max-w-xs px-4 py-8 mx-auto w-full\">\n      <IphoneMockup\n        className=\"w-full\"\n        src=\"https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop\"\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

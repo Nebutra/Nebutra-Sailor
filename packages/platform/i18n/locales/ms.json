@@ -1,0 +1,1273 @@
+{
+  "admin": {
+    "title": "Admin",
+    "description": "Panel pentadbir utama — urus pengguna, organisasi, dan kesihatan sistem.",
+    "nav": {
+      "overview": "Gambaran Keseluruhan",
+      "users": "Pengguna",
+      "organizations": "Organisasi"
+    },
+    "users": {
+      "title": "Pengguna",
+      "description": "Layari, cari, dan tiru mana-mana pengguna merentas semua organisasi.",
+      "searchPlaceholder": "Cari pengguna…",
+      "totalCount": "{count, plural, one {# pengguna} other {# pengguna}}",
+      "empty": "Tiada pengguna ditemui.",
+      "loadError": "Gagal memuatkan pengguna.",
+      "columns": {
+        "email": "E-mel",
+        "name": "Nama",
+        "created": "Dicipta",
+        "activeOrgs": "Org aktif",
+        "actions": "Tindakan"
+      },
+      "viewOrgs": "Lihat organisasi"
+    },
+    "organizations": {
+      "title": "Organisasi",
+      "description": "Semua ruang kerja dalam sistem, disusun mengikut kebaruan.",
+      "searchPlaceholder": "Cari organisasi…",
+      "totalCount": "{count, plural, one {# organisasi} other {# organisasi}}",
+      "empty": "Tiada organisasi ditemui.",
+      "loadError": "Gagal memuatkan organisasi.",
+      "columns": {
+        "name": "Nama",
+        "slug": "Slug",
+        "plan": "Pelan",
+        "members": "Ahli",
+        "created": "Dicipta",
+        "actions": "Tindakan"
+      },
+      "view": "Lihat"
+    },
+    "impersonate": {
+      "trigger": "Wakilkan",
+      "starting": "Memulakan…",
+      "stop": "Henti meniru",
+      "confirm": "Tiru {label}? Anda akan melihat aplikasi sebagai pengguna ini sehingga anda berhenti.",
+      "error": "Gagal memulakan peniruan.",
+      "stopError": "Gagal menghentikan peniruan."
+    },
+    "pagination": {
+      "previous": "Sebelumnya",
+      "next": "Seterusnya",
+      "pageOf": "Halaman {page} daripada {total}"
+    }
+  },
+  "Common": {
+    "hello": "Hello World",
+    "dashboard": "Papan Pemuka",
+    "actions": {
+      "continue": "Teruskan",
+      "confirm": "Sahkan",
+      "done": "Selesai",
+      "cancel": "Batal"
+    }
+  },
+  "theme": {
+    "light": "Terang",
+    "dark": "Gelap",
+    "system": "Sistem"
+  },
+  "LocaleSwitcher": {
+    "label": "Bahasa",
+    "ariaLabel": "Tukar bahasa",
+    "searchPlaceholder": "Cari bahasa…",
+    "noResults": "Tiada bahasa sepadan",
+    "menuAria": "Pilih bahasa"
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "Nombor rekod ICP",
+      "publicSecurity": "Rekod keselamatan awam"
+    },
+    "wechat": {
+      "signIn": "Log masuk dengan WeChat",
+      "notConfigured": "Log masuk WeChat belum dikonfigurasi"
+    }
+  },
+  "onboarding": {
+    "title": "Sediakan ruang kerja anda",
+    "subtitle": "Tiga langkah pantas dan anda sedia untuk melancarkan.",
+    "steps": {
+      "workspace": "Ruang kerja",
+      "invite": "Jemput pasukan",
+      "plan": "Pilih pelan"
+    },
+    "progress": {
+      "back": "Kembali",
+      "stepCounter": "Langkah {current} daripada {total}"
+    },
+    "plan": {
+      "title": "Pilih pelan",
+      "description": "Mula secara percuma atau buka lebih kapasiti. Anda boleh menukar pelan bila-bila masa.",
+      "choose": "Pilih pelan",
+      "skip": "Langkau buat masa ini"
+    }
+  },
+  "userMenu": {
+    "ariaLabel": "Buka menu pengguna",
+    "profile": "Profil",
+    "settings": "Tetapan",
+    "feedback": "Maklum balas",
+    "theme": "Tema",
+    "language": "Bahasa",
+    "signOut": "Log keluar",
+    "signedInAs": "Log masuk sebagai"
+  },
+  "account": {
+    "profile": {
+      "title": "Profil",
+      "description": "Kemas kini maklumat peribadi anda.",
+      "nameLabel": "Nama",
+      "namePlaceholder": "Nama penuh anda",
+      "emailLabel": "E-mel",
+      "emailHint": "Kami akan menghantar pautan pengesahan untuk mengesahkan alamat e-mel baharu.",
+      "languageLabel": "Bahasa",
+      "submit": "Simpan perubahan",
+      "saving": "Menyimpan…",
+      "verifyEmail": "Sahkan",
+      "verifying": "Menghantar pengesahan…",
+      "success": "Profil dikemas kini.",
+      "verificationSent": "E-mel pengesahan dihantar.",
+      "errorRequiredName": "Nama diperlukan.",
+      "errorInvalidEmail": "Alamat e-mel tidak sah.",
+      "subtitle": "Identiti dan maklumat hubungan anda.",
+      "unknown": "Pengguna tanpa nama",
+      "manageCta": "Buka tetapan akaun penuh"
+    },
+    "avatar": {
+      "title": "Avatar",
+      "description": "Muat naik imej segi empat sama (PNG, JPEG, atau WebP, maks 2MB).",
+      "uploadButton": "Muat naik avatar",
+      "uploading": "Sedang memuat naik…",
+      "fileTooBig": "Fail terlalu besar. Saiz maksimum ialah 2MB.",
+      "invalidType": "Jenis imej tidak disokong. Gunakan PNG, JPEG, atau WebP.",
+      "success": "Avatar dikemas kini.",
+      "removeButton": "Buang avatar",
+      "removed": "Avatar dibuang.",
+      "deleteError": "Gagal memadam avatar."
+    },
+    "export": {
+      "title": "Eksport data saya",
+      "description": "Muat turun salinan setiap rekod yang kami simpan untuk akaun anda, termasuk profil, organisasi, peristiwa audit, pemberitahuan, dan jemputan.",
+      "compliance": "Diperlukan oleh GDPR Artikel 20 (Hak kepada portabiliti data) dan PIPL Artikel 45 (Hak untuk mendapatkan salinan maklumat peribadi).",
+      "export": "Eksport data saya",
+      "pending": "Sedang menyediakan eksport…",
+      "ready": "Eksport anda sudah siap.",
+      "download": "Muat turun JSON",
+      "error": "Gagal menyediakan eksport anda. Sila cuba lagi."
+    },
+    "emailChange": {
+      "title": "Tukar alamat e-mel",
+      "description": "Kami akan menghantar pautan pengesahan ke alamat baharu. Perubahan hanya berkuat kuasa selepas anda mengesahkannya dari peti masuk tersebut.",
+      "newEmailLabel": "Alamat e-mel baharu",
+      "newEmailPlaceholder": "you@example.com",
+      "submit": "Hantar pautan pengesahan",
+      "submitting": "Menghantar…",
+      "verificationSent": "Semak peti masuk anda di {email} untuk mengesahkan perubahan.",
+      "errorInvalidEmail": "Alamat e-mel tidak sah.",
+      "error": "Gagal memohon perubahan e-mel.",
+      "confirm": {
+        "successTitle": "E-mel dikemas kini",
+        "successDescription": "E-mel log masuk anda telah dikemas kini.",
+        "successWithEmail": "E-mel log masuk anda kini ialah {email}.",
+        "failureTitle": "Kami tidak dapat mengesahkan pautan tersebut",
+        "failureDescription": "Pautan pengesahan ini tidak sah, telah tamat tempoh, atau sudah digunakan. Sila minta yang baharu dari tetapan akaun anda.",
+        "errorCode": "Sebab: {code}",
+        "continueCta": "Kembali ke akaun",
+        "backCta": "Kembali ke akaun"
+      }
+    },
+    "title": "Akaun",
+    "ariaLabel": "Tetapan akaun",
+    "navLabel": "Tab tetapan akaun",
+    "tip": "Tekan {key} di mana-mana untuk membuka semula dialog ini.",
+    "tabs": {
+      "profile": "Profil",
+      "subscription": "Langganan",
+      "billing": "Bil",
+      "preferences": "Keutamaan",
+      "personalization": "Peribadian"
+    },
+    "subscription": {
+      "title": "Langganan",
+      "subtitle": "Pelan, kuota, dan pembaharuan.",
+      "currentPlan": "Pelan semasa",
+      "upgradeCta": "Bandingkan pelan",
+      "manageCta": "Urus langganan"
+    },
+    "billing": {
+      "title": "Pembil",
+      "subtitle": "Sejarah invois dan kaedah pembayaran.",
+      "empty": {
+        "title": "Belum ada sejarah",
+        "description": "Caj dan invois akan muncul di sini selepas tempoh berbayar pertama anda.",
+        "cta": "Buka pembil penuh"
+      }
+    },
+    "preferences": {
+      "title": "Keutamaan",
+      "subtitle": "Tema dan aksesibiliti.",
+      "theme": "Tema",
+      "light": "Terang",
+      "dark": "Gelap",
+      "system": "Sistem",
+      "help": "Bantuan",
+      "reportIssue": "Laporkan isu",
+      "shortcuts": "Pintasan papan kekunci"
+    },
+    "personalization": {
+      "title": "Peribadi",
+      "subtitle": "Beritahu Sailor siapa anda dan cara untuk bertindak balas."
+    }
+  },
+  "impact": {
+    "hero_title": "Mentakrifkan Semula Paradigma",
+    "hero_subtitle": "Jangan ada perniagaan yang sukar di dunia ini.",
+    "social_title": "Sosial",
+    "social_headline": "Kesaksamaan Teknologi Mutlak",
+    "social_description": "Memperkasa pencipta di hujung. Memecahkan penapis tradisional dan memperkasa pengasas solo dengan infrastruktur luar kotak.",
+    "governance_title": "Tadbir Urus",
+    "governance_headline": "Kod ialah Undang-undang",
+    "governance_description": "Tadbir urus algoritmik dibina atas Bukti Kerja dan hasil perniagaan sebenar, menggantikan birokrasi yang tidak telus.",
+    "environment_title": "Persekitaran",
+    "environment_headline": "Minimalisme Digital",
+    "environment_description": "Memacu pengurangan jejak awan melalui integrasi SaaS ekstrem dan kecekapan sumber."
+  },
+  "auth": {
+    "security": {
+      "title": "Keselamatan",
+      "description": "Urus kata laluan, pengesahan dua faktor, dan sesi aktif anda.",
+      "managedByProvider": "Tetapan keselamatan diuruskan oleh penyedia pengesahan anda.",
+      "openProviderProfile": "Buka profil",
+      "changePassword": {
+        "title": "Tukar kata laluan",
+        "description": "Gunakan kata laluan yang kuat dan tidak digunakan semula di laman lain.",
+        "currentPasswordLabel": "Kata laluan semasa",
+        "newPasswordLabel": "Kata laluan baharu",
+        "confirmPasswordLabel": "Sahkan kata laluan baharu",
+        "revokeOtherSessions": "Log keluar dari peranti lain",
+        "submit": "Kemas kini kata laluan",
+        "pending": "Mengemas kini kata laluan…",
+        "success": "Kata laluan berjaya dikemas kini."
+      },
+      "twoFactor": {
+        "title": "Pengesahan dua faktor",
+        "description": "Tambah langkah pengesahan kedua menggunakan aplikasi pengesah.",
+        "enabled": "Dihidupkan",
+        "disabled": "Dimatikan",
+        "enabledHelp": "Akaun anda meminta kod pengesah 6 digit selepas log masuk kata laluan.",
+        "disabledHelp": "Lindungi akaun anda dengan kod 6 digit daripada aplikasi pengesah.",
+        "enable": "Dayakan dua faktor",
+        "disable": "Lepaskan dua faktor",
+        "passwordPrompt": "Sahkan kata laluan anda",
+        "scanQrCode": "Imbas kod QR ini dengan aplikasi pengesah anda, kemudian masukkan kod 6 digit di bawah.",
+        "secretKeyLabel": "Atau masukkan rahsia ini secara manual",
+        "verificationCodeLabel": "Kod pengesahan",
+        "verify": "Pengesahan dan dayakan",
+        "backupCodesTitle": "Kod sandaran",
+        "backupCodesDescription": "Simpan kod ini di tempat yang selamat. Setiap kod boleh digunakan sekali jika anda kehilangan akses ke pengesah anda.",
+        "copyBackupCodes": "Salin kod",
+        "finishSetup": "Selesaikan persediaan",
+        "successEnabled": "Pengesahan dua faktor diaktifkan.",
+        "successDisabled": "Pengesahan dua faktor dilumpuhkan."
+      },
+      "sessions": {
+        "title": "Sesi aktif",
+        "description": "Peranti dan pelayar yang sedang log masuk ke akaun anda.",
+        "currentSession": "(semasa)",
+        "ipLabel": "Alamat IP",
+        "lastActiveLabel": "Aktif terakhir",
+        "revoke": "Log keluar",
+        "revokeAll": "Log keluar dari semua peranti lain",
+        "empty": "Tiada sesi aktif lain.",
+        "successRevoked": "Sesi telah log keluar.",
+        "successRevokedAll": "Semua sesi lain telah log keluar."
+      },
+      "deleteAccount": {
+        "title": "Padam akaun",
+        "description": "Buang akaun anda dan semua data berkaitan secara kekal. Tindakan ini tidak boleh dibatalkan.",
+        "passwordPrompt": "Masukkan kata laluan anda untuk sahkan",
+        "confirmTextLabel": "Taip DELETE untuk sahkan",
+        "submit": "Padam akaun",
+        "cancel": "Batal",
+        "success": "Akaun telah dipadam."
+      },
+      "connectedAccounts": {
+        "title": "Akaun disambungkan",
+        "description": "Semak kaedah log masuk OAuth yang disambungkan kepada identiti Nebutra anda.",
+        "connected": "Disambung",
+        "connect": "Sambung",
+        "help": "Pastikan sekurang-kurangnya satu kaedah log masuk yang dipercayai tersedia sebelum memutuskan sambungan penyedia.",
+        "unlink": "Putuskan sambungan",
+        "notLinked": "Tidak disambung"
+      },
+      "passkeys": {
+        "title": "Kunci Lintas",
+        "description": "Gunakan kelayakan terikat peranti untuk log masuk yang tahan phishing.",
+        "empty": "Tiada kunci lintas didaftarkan lagi",
+        "addPasskey": "Tambah kunci lintas",
+        "cancelAdd": "Batal",
+        "cancelled": "Persediaan kunci lintas dibatalkan. Tiada perubahan dibuat.",
+        "defaultName": "Kunci Lintas {number}",
+        "nameHelp": "Berikan nama yang mudah dikenali kepada kunci lintas ini sebelum pelayar meminta pengesahan.",
+        "nameLabel": "Nama kunci lintas",
+        "rename": "Tukar nama",
+        "saveRename": "Simpan nama",
+        "remove": "Buang",
+        "successAdded": "Kunci laluan ditambah.",
+        "successRemoved": "Kunci laluan dibuang.",
+        "unavailableBadge": "Tidak tersedia"
+      },
+      "setPassword": {
+        "title": "Tetapkan kata laluan",
+        "description": "Tambah kata laluan untuk log masuk tanpa penyedia OAuth anda.",
+        "submit": "Tetapkan kata laluan",
+        "pending": "Menghantar pautan tetapan kata laluan…",
+        "sentMessage": "Kami telah menghantar pautan tetapan kata laluan ke e-mel anda."
+      }
+    },
+    "banner": {
+      "logoAlt": "Nebutra",
+      "slogan": "Lancarkan Startup anda, diuruskan sejak hari pertama.",
+      "tagline": "Ejen multi-kawasan, multi-tenant secara lalai. Tiada pasukan platform diperlukan."
+    },
+    "signIn": {
+      "title": "Log masuk ke Nebutra",
+      "subtitle": "Pilih cara anda ingin log masuk.",
+      "continueWith": "Teruskan dengan",
+      "continueWithProvider": "Teruskan dengan {provider}",
+      "providers": {
+        "google": "Google",
+        "github": "GitHub",
+        "apple": "Apple",
+        "microsoft": "Microsoft",
+        "feishu": "Feishu"
+      },
+      "providerLoading": "Sedang mengalihkan…",
+      "dividerOr": "atau teruskan dengan e-mel",
+      "emailLabel": "E-mel",
+      "emailPlaceholder": "you@example.com",
+      "continue": "Teruskan",
+      "back": "Kembali",
+      "passwordLabel": "Kata laluan",
+      "passwordPlaceholder": "Masukkan kata laluan anda",
+      "showPassword": "Paparkan kata laluan",
+      "hidePassword": "Sembunyikan kata laluan",
+      "capsLockOn": "Caps Lock dihidupkan",
+      "forgotPassword": "Lupa kata laluan?",
+      "submit": "Log masuk",
+      "submitLoading": "Sedang log masuk…",
+      "useMagicLink": "Hantar pautan ajaib kepada saya",
+      "usePasskey": "Log masuk dengan kunci laluan",
+      "passkeyTitle": "Log masuk dengan kunci laluan anda",
+      "passkeyDescription": "Gunakan Face ID, Touch ID, atau kunci keselamatan anda. Tiada kata laluan diperlukan.",
+      "passkeyButton": "Teruskan dengan kunci laluan",
+      "passkeyCancelled": "Amaran kunci laluan dibatalkan.",
+      "passkeyUnsupported": "Pelayar ini tidak menyokong kunci laluan.",
+      "passkeyError": "Log masuk kunci laluan gagal. Cuba kaedah lain.",
+      "ssoTitle": "Teruskan dengan SSO Perusahaan",
+      "ssoDescription": "Mengalihkan anda ke {provider} untuk {email}.",
+      "ssoError": "SSO Perusahaan tidak dapat dimulakan. Cuba kaedah lain.",
+      "ssoRetry": "Cuba lagi",
+      "newToProduct": "Baharu di Nebutra?",
+      "signUpLink": "Daftar",
+      "homeLink": "Laman Utama",
+      "signInFailed": "Log masuk gagal",
+      "genericError": "Ralat berlaku. Sila cuba lagi.",
+      "captchaError": "Pengesahan bot gagal. Muat semula halaman dan cuba lagi.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
+      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
+      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
+      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+    },
+    "signUp": {
+      "title": "Cipta akaun Nebutra anda",
+      "subtitle": "Satu akaun untuk setiap aplikasi Nebutra.",
+      "firstNameLabel": "Nama pertama",
+      "lastNameLabel": "Nama keluarga",
+      "firstNamePlaceholder": "Pertama",
+      "lastNamePlaceholder": "Keluarga",
+      "submit": "Cipta akaun",
+      "submitLoading": "Mencipta akaun…",
+      "alreadyHaveAccount": "Sudah ada akaun?",
+      "signInLink": "Log masuk",
+      "signUpFailed": "Daftar gagal",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+    },
+    "passkeys": {
+      "title": "Kunci Lintas",
+      "description": "Gunakan Face ID, Touch ID, Windows Hello, atau kunci keselamatan sebagai ganti kata laluan. Setiap peranti mempunyai kunci lintasnya sendiri.",
+      "addButton": "Tambah kunci laluan",
+      "adding": "Sedang menyediakan…",
+      "namePlaceholder": "cth. MacBook Pro",
+      "nameLabel": "Nama (pilihan)",
+      "registerSuccess": "Kunci laluan ditambah.",
+      "registerCancelled": "Persediaan dibatalkan.",
+      "registerUnsupported": "Pelayar ini tidak menyokong kunci laluan.",
+      "registerError": "Gagal mendaftar kunci laluan.",
+      "empty": "Belum ada kunci laluan.",
+      "loadError": "Gagal memuatkan kunci laluan.",
+      "revoke": "Buang",
+      "revoking": "Sedang membuang…",
+      "revokeConfirm": "Buang kunci laluan ini? Anda tidak akan dapat log masuk dengannya lagi.",
+      "revokeSuccess": "Kunci laluan dibuang.",
+      "revokeError": "Gagal membuang kunci laluan.",
+      "device": {
+        "singleDevice": "Terikat peranti",
+        "multiDevice": "Disegerakkan merentasi peranti"
+      },
+      "addedOn": "Ditambah {date}"
+    },
+    "magicLink": {
+      "title": "Log masuk dengan pautan ajaib",
+      "description": "Masukkan e-mel anda dan kami akan menghantar kod 6 digit untuk log masuk.",
+      "emailLabel": "E-mel",
+      "send": "Hantar pautan",
+      "codeLabel": "Kod pengesahan",
+      "verify": "Sahkan",
+      "resend": "Hantar semula kod",
+      "resendCooldown": "Hantar semula dalam {seconds}s",
+      "sentTo": "Kami menghantar kod ke {email}"
+    },
+    "forgotPassword": {
+      "title": "Lupa kata laluan?",
+      "description": "Masukkan e-mel anda dan kami akan menghantar pautan untuk menetapkan semula kata laluan anda.",
+      "emailLabel": "E-mel",
+      "submit": "Hantar pautan tetapan semula",
+      "successTitle": "Semak e-mel anda",
+      "success": "Jika e-mel itu didaftarkan, anda akan menerima pautan reset dalam masa terdekat."
+    },
+    "resetPassword": {
+      "title": "Reset kata laluan anda",
+      "description": "Pilih kata laluan baharu untuk akaun anda.",
+      "newPasswordLabel": "Kata laluan baharu",
+      "confirmPasswordLabel": "Sahkan kata laluan baharu",
+      "submit": "Reset kata laluan",
+      "successTitle": "Kata laluan telah direset",
+      "successDescription": "Anda kini boleh log masuk dengan kata laluan baharu anda.",
+      "signInCta": "Pergi ke log masuk",
+      "invalidTitle": "Pautan reset tidak sah",
+      "invalidDescription": "Pautan reset kata laluan ini hilang atau tidak betul. Minta yang baharu dari halaman lupa kata laluan."
+    },
+    "verifyEmail": {
+      "successTitle": "E-mel disahkan",
+      "successDescription": "Alamat e-mel anda telah disahkan.",
+      "failureTitle": "Pengesahan gagal",
+      "failureDescription": "Kami tidak dapat mengesahkan e-mel anda dengan pautan itu.",
+      "continueCta": "Teruskan",
+      "signInCta": "Pergi ke log masuk"
+    },
+    "loginSuccess": {
+      "eyebrow": "Log masuk selesai",
+      "title": "Anda telah log masuk",
+      "description": "Sesi anda sedia. Kami sedang membuka ruang kerja Nebutra dan mengekalkan sambungan selamat daripada aliran pengesahan.",
+      "session": "Sesi",
+      "verified": "Disahkan",
+      "workspace": "Ruang kerja",
+      "preparing": "Sedang menyediakan",
+      "redirecting": "Memasuki ruang kerja dalam {seconds}s",
+      "secureHandoff": "Sambungan selamat",
+      "continueCta": "Teruskan ke ruang kerja",
+      "signInCta": "Gunakan akaun lain"
+    },
+    "errors": {
+      "invalidCredentials": "E-mel atau kata laluan tidak betul.",
+      "userNotFound": "Tiada akaun dijumpai dengan e-mel tersebut.",
+      "userAlreadyExists": "Akaun dengan e-mel tersebut sudah wujud.",
+      "weakPassword": "Kata laluan terlalu lemah. Gunakan sekurang-kurangnya 8 aksara dengan gabungan huruf besar, huruf kecil dan nombor.",
+      "passwordsDontMatch": "Kata laluan tidak sepadan.",
+      "passwordTooShort": "Kata laluan mestilah sekurang-kurangnya 8 aksara.",
+      "currentPasswordIncorrect": "Kata laluan semasa tidak betul.",
+      "samePassword": "Kata laluan baharu mestilah berbeza daripada kata laluan semasa anda.",
+      "invalidEmail": "Alamat e-mel tidak sah.",
+      "emailNotVerified": "Sila sahkan alamat e-mel anda terlebih dahulu.",
+      "sessionExpired": "Sesi anda telah tamat tempoh. Sila log masuk semula.",
+      "twoFactorRequired": "Pengesahan dua faktor diperlukan.",
+      "invalidVerificationCode": "Kod pengesahan tidak betul atau telah tamat tempoh.",
+      "twoFactorAlreadyEnabled": "Pengesahan dua faktor telah diaktifkan.",
+      "twoFactorNotEnabled": "Pengesahan dua faktor tidak diaktifkan.",
+      "tooManyAttempts": "Terlalu banyak percubaan. Sila cuba lagi kemudian.",
+      "rateLimited": "Anda melakukan ini terlalu kerap. Perlahankan sedikit.",
+      "providerNotSupported": "Tindakan ini dikendalikan oleh penyedia pengesahan anda.",
+      "networkError": "Ralat rangkaian. Semak sambungan anda dan cuba lagi.",
+      "unknown": "Ada sesuatu yang salah. Sila cuba lagi."
+    }
+  },
+  "chat": {
+    "suggestions": {
+      "title": "Cuba salah satu ini untuk memulakan",
+      "activity": {
+        "title": "Paparkan aktiviti terkini",
+        "prompt": "Paparkan aktiviti terkini merentas ruang kerja saya dalam tempoh 24 jam yang lalu."
+      },
+      "debug": {
+        "title": "Nyahpepijat ralat",
+        "prompt": "Bantu saya nyahpepijat ralat masa jalan. Saya akan tampal jejak tumpukan dan anda boleh membimbing saya melaluinya."
+      },
+      "email": {
+        "title": "Draf e-mel ringkasan",
+        "prompt": "Drafkan e-mel ringkasan mingguan yang ringkas untuk dihantar kepada pasukan saya tentang kemajuan platform."
+      },
+      "features": {
+        "title": "Teroka ciri platform",
+        "prompt": "Terangkan ciri utama platform SaaS ini dan cara saya boleh menggunakannya."
+      }
+    }
+  },
+  "billing": {
+    "activePlan": {
+      "title": "Pelan aktif",
+      "manage": "Urus langganan",
+      "noPlanTitle": "Tiada pelan aktif",
+      "noPlanDescription": "Pilih pelan untuk membuka ciri berbayar dan had penggunaan yang lebih tinggi.",
+      "choosePlan": "Pilih pelan",
+      "renewsOn": "Diperbaharui pada {date}",
+      "endsOn": "Berakhir pada {date}",
+      "trialEndsOn": "Tempoh percubaan tamat pada {date}",
+      "status": {
+        "active": "Aktif",
+        "trialing": "Dalam percubaan",
+        "past_due": "Terlambat",
+        "canceled": "Dibatalkan",
+        "free": "Percuma"
+      },
+      "errors": {
+        "loadFailed": "Gagal memuatkan status bil anda."
+      }
+    },
+    "pricing": {
+      "trial": "Percubaan percuma {days} hari",
+      "seat": "{count, plural, one {# tempat duduk} other {# tempat duduk}}",
+      "perSeat": "/ tempat duduk"
+    }
+  },
+  "organizations": {
+    "settings": {
+      "logo": {
+        "title": "Logo organisasi",
+        "description": "Muat naik imej segi empat sama (PNG, JPEG, atau WebP, maks 2MB) untuk mewakili organisasi anda.",
+        "uploadButton": "Muat naik logo",
+        "uploading": "Sedang memuat naik…",
+        "fileTooBig": "Fail terlalu besar. Saiz maksimum ialah 2MB.",
+        "invalidType": "Jenis imej tidak disokong. Gunakan PNG, JPEG, atau WebP.",
+        "success": "Logo dikemas kini.",
+        "removeButton": "Buang logo",
+        "removed": "Logo dibuang."
+      },
+      "name": {
+        "title": "Nama organisasi",
+        "description": "Kemas kini nama paparan yang ditunjukkan kepada pasukan dan pelanggan anda.",
+        "label": "Nama",
+        "submit": "Simpan",
+        "saving": "Menyimpan…",
+        "success": "Nama organisasi dikemas kini."
+      },
+      "delete": {
+        "title": "Padam organisasi",
+        "description": "Buang organisasi ini secara kekal, termasuk semua ahli, jemputan, dan data berkaitan. Tindakan ini tidak boleh dibatalkan.",
+        "trigger": "Padam organisasi",
+        "confirmLabel": "Taipkan nama organisasi untuk mengesahkan",
+        "submit": "Padam organisasi",
+        "cancel": "Batal",
+        "success": "Organisasi dipadam."
+      }
+    },
+    "invitation": {
+      "title": "Anda telah dijemput",
+      "heading": "Anda telah dijemput untuk menyertai {organizationName}",
+      "description": "Terima jemputan untuk mula berkolaborasi dengan pasukan.",
+      "accept": "Terima jemputan",
+      "accepting": "Sedang menerima...",
+      "decline": "Tolak",
+      "declining": "Sedang menolak...",
+      "declinedView": "Jemputan ditolak",
+      "success": "Kami telah maklumkan kepada yang menjemput.",
+      "backToDashboard": "Kembali ke papan pemuka",
+      "roleLabel": "Peranan: {role}",
+      "errorEmailMismatch": "Jemputan ini dihantar ke e-mel lain",
+      "errorEmailMismatchDetail": "Log masuk dengan alamat e-mel yang menerima jemputan untuk menerimanya.",
+      "errorExpired": "Jemputan telah tamat tempoh",
+      "errorExpiredDetail": "Minta yang menjemput menghantar jemputan baharu.",
+      "errorNotFound": "Jemputan tidak dijumpai",
+      "errorNotFoundDetail": "Pautan jemputan tidak sah atau telah ditarik balik.",
+      "errorNotAvailable": "Jemputan tidak tersedia",
+      "errorNotAvailableDetail": "Jemputan ini telah dijawab dan tidak lagi aktif.",
+      "role": {
+        "owner": "Pemilik",
+        "admin": "Admin",
+        "member": "Ahli",
+        "viewer": "Penonton"
+      }
+    }
+  },
+  "settings": {
+    "apiKeys": {
+      "title": "Kunci API",
+      "description": "Jana dan uruskan kunci API untuk akses programatik ke Nebutra.",
+      "createButton": "Cipta kunci API",
+      "noPermission": "Anda tidak mempunyai kebenaran untuk melihat kunci API.",
+      "loading": "Memuatkan…",
+      "loadError": "Gagal memuatkan kunci API.",
+      "createError": "Gagal mencipta kunci API.",
+      "revokeError": "Gagal menarik balik kunci API.",
+      "empty": {
+        "title": "Belum ada kunci API",
+        "cta": "Cipta kunci API pertama anda"
+      },
+      "columns": {
+        "name": "Nama",
+        "prefix": "Awalan",
+        "lastUsed": "Terakhir Digunakan",
+        "scopes": "Skop",
+        "created": "Dicipta",
+        "actions": "Tindakan",
+        "never": "Tidak Pernah"
+      },
+      "actions": {
+        "revoke": "Cabut",
+        "revoking": "Sedang mencabut…",
+        "copy": "Salin",
+        "copied": "Disalin",
+        "close": "Tutup",
+        "submit": "Cipta kunci",
+        "submitting": "Sedang mencipta…"
+      },
+      "dialog": {
+        "title": "Cipta kunci API",
+        "description": "Kunci API membolehkan sistem luar berkomunikasi dengan Nebutra atas nama anda. Rawat seperti kata laluan.",
+        "nameLabel": "Nama",
+        "namePlaceholder": "cth. Backend pengeluaran",
+        "scopesLabel": "Skop",
+        "successWarning": "Kunci ini hanya muncul sekali. Simpan sebelum menutup.",
+        "confirmClose": "Menutup akan menyembunyikan kunci ini selamanya. Pastikan ia disimpan."
+      }
+    },
+    "auditLog": {
+      "title": "Log Audit",
+      "description": "Jejak setiap tindakan pentadbiran dalam ruang kerja anda. Tapis mengikut pelakon, tindakan, entiti, atau julat masa.",
+      "empty": "Belum ada peristiwa audit",
+      "loadMore": "Muat lagi",
+      "loading": "Memuat…",
+      "forbidden": "Anda memerlukan akses pentadbir untuk melihat log audit.",
+      "columns": {
+        "when": "Bila",
+        "actor": "Pelakon",
+        "action": "Tindakan",
+        "entity": "Entiti",
+        "outcome": "Hasil",
+        "ip": "IP"
+      },
+      "diff": {
+        "oldValue": "Nilai lama",
+        "newValue": "Nilai baru"
+      },
+      "filters": {
+        "action": "Tindakan",
+        "actionPlaceholder": "Cari tindakan…",
+        "entityType": "Jenis entiti",
+        "outcome": "Hasil",
+        "outcomeSuccess": "Berjaya",
+        "outcomeFailure": "Gagal",
+        "outcomePending": "Menunggu",
+        "startDate": "Tarikh mula",
+        "endDate": "Tarikh tamat",
+        "range24h": "24 jam lepas",
+        "range7d": "7 hari lepas",
+        "range30d": "30 hari lepas",
+        "reset": "Set semula",
+        "all": "Semua"
+      }
+    },
+    "notifications": {
+      "title": "Pemberitahuan",
+      "description": "Pilih cara Nebutra menghubungi anda untuk setiap jenis peristiwa, pada setiap saluran penghantaran.",
+      "actions": {
+        "resetAll": "Set semula ke lalai",
+        "save": "Simpan"
+      },
+      "status": {
+        "saving": "Menyimpan…",
+        "saved": "Disimpan",
+        "error": "Gagal menyimpan. Sila cuba lagi."
+      },
+      "eventTypes": {
+        "security": {
+          "label": "Amaran keselamatan",
+          "description": "Amaran log masuk, perubahan kata laluan, perubahan dua faktor."
+        },
+        "billing": {
+          "label": "Pembilanan",
+          "description": "Invois, kegagalan pembayaran, dan perubahan langganan."
+        },
+        "invitation": {
+          "label": "Jemputan pasukan",
+          "description": "Jemputan untuk menyertai organisasi, diterima atau ditolak."
+        },
+        "activity": {
+          "label": "Aktiviti pasukan",
+          "description": "Ahli menyertai, perubahan peranan, dan aktiviti ruang kerja lain."
+        },
+        "updates": {
+          "label": "Kemas kini produk",
+          "description": "Ciri baharu, sorotan log perubahan, dan nota keluaran."
+        },
+        "marketing": {
+          "label": "Pemasaran",
+          "description": "Buletin dan promosi sekali-sekala. Hanya jika anda bersetuju."
+        }
+      },
+      "channels": {
+        "in_app": {
+          "label": "Dalam aplikasi"
+        },
+        "email": {
+          "label": "E-mel"
+        },
+        "push": {
+          "label": "Push"
+        },
+        "sms": {
+          "label": "SMS"
+        }
+      }
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "Langgan peristiwa yang dipancarkan oleh ruang kerja anda. Kami menandatangani setiap beban dengan rahsia titik akhir anda supaya anda boleh memverifikasi keasliannya.",
+      "create": {
+        "heading": "Titik akhir baharu",
+        "urlLabel": "URL titik akhir",
+        "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
+        "eventsLegend": "Peristiwa",
+        "submit": "Cipta titik akhir",
+        "submitting": "Mencipta…",
+        "selectEvent": "Pilih sekurang-kurangnya satu peristiwa.",
+        "successTitle": "Hujung titik dicipta. Rahsia tandatangan hanya muncul sekali.",
+        "successWarning": "Simpankannya dalam pengurus rahsia aplikasi anda sebelum menutup.",
+        "copy": "Salin",
+        "copied": "Disalin"
+      },
+      "list": {
+        "heading": "Hujung titik aktif",
+        "empty": "Belum ada hujung titik webhook. Ciptakan satu di atas.",
+        "loading": "Memuatkan…",
+        "loadFailed": "Gagal memuatkan webhook",
+        "columns": {
+          "url": "URL",
+          "events": "Peristiwa",
+          "status": "Status",
+          "lastDelivered": "Terakhir dihantar",
+          "actions": "Tindakan"
+        },
+        "status": {
+          "active": "Aktif",
+          "disabled": "Dilumpuhkan"
+        },
+        "actions": {
+          "edit": "Edit",
+          "enable": "Dayakan",
+          "disable": "Lumpuhkan",
+          "viewDeliveries": "Lihat penghantaran",
+          "delete": "Padam"
+        }
+      },
+      "deliveries": {
+        "heading": "Penghantaran terkini",
+        "close": "Tutup",
+        "loading": "Memuatkan…",
+        "loadFailed": "Gagal memuatkan penghantaran",
+        "empty": "Belum ada penghantaran.",
+        "viewPayload": "Lihat beban",
+        "hidePayload": "Sembunyikan beban",
+        "replay": "Main semula",
+        "replaying": "Memainkan semula…",
+        "status": {
+          "success": "berjaya",
+          "failed": "gagal",
+          "retrying": "mencuba semula"
+        }
+      }
+    },
+    "appearance": {
+      "title": "Rupa",
+      "theme": {
+        "title": "Tema",
+        "description": "Gunakan terang, gelap, atau padankan dengan pilihan sistem."
+      },
+      "themePreset": {
+        "title": "Tetapan tema",
+        "description": "Laksanakan mana-mana tema Theme Playground di seluruh aplikasi. Kawalan di bawah akan ditindih untuk penalaan halus.",
+        "search": "Cari tema…",
+        "searchLabel": "Cari tema",
+        "default": "Lalai",
+        "defaultMood": "Nebutra base palette",
+        "active": "Aktif",
+        "empty": "Tiada tema yang sepadan dengan carian anda.",
+        "count": "{count} tema"
+      },
+      "themeEditor": {
+        "title": "Tema",
+        "description": "Pilih tetapan, import DESIGN.md, kemudian tala semula token di bawah.",
+        "selectLabel": "Tetapan tema",
+        "import": "Import",
+        "copy": "Salin tema",
+        "copied": "Disalin",
+        "copyError": "Salinan gagal",
+        "custom": "Tersuai"
+      },
+      "designMd": {
+        "title": "Import DESIGN.md",
+        "description": "Tampal atau muat naik DESIGN.md untuk menggunakan warna, jejari, fon, jarak, dan bayangannya di seluruh aplikasi — kekal walaupun selepas dimuat semula.",
+        "applied": "Digunakan:",
+        "remove": "Buang"
+      },
+      "themeMode": {
+        "label": "Mod tema",
+        "light": "Terang",
+        "dark": "Gelap",
+        "system": "Sistem"
+      },
+      "accent": {
+        "title": "Warna aksen",
+        "description": "Pilih aksen jenama untuk mewarnakan keadaan aktif di seluruh aplikasi.",
+        "label": "Warna aksen",
+        "options": {
+          "default": "Lalai",
+          "blue": "Biru",
+          "cyan": "Sian",
+          "violet": "Ungu",
+          "pink": "Merah Jambu",
+          "amber": "Amber",
+          "green": "Hijau",
+          "red": "Merah"
+        }
+      },
+      "colors": {
+        "title": "Warna",
+        "description": "Aksen, latar belakang, dan latar hadapan.",
+        "background": {
+          "label": "Latar Belakang",
+          "description": "Tindas warna latar belakang permukaan."
+        },
+        "foreground": {
+          "label": "Latar Hadapan",
+          "description": "Tindas warna teks badan."
+        },
+        "resetToDefault": "Set semula ke lalai"
+      },
+      "fontFamily": {
+        "uiLabel": "Fon UI",
+        "uiDescription": "Keluarga fon yang digunakan merentasi UI.",
+        "codeLabel": "Fon kod",
+        "codeDescription": "Keluarga fon yang digunakan untuk permukaan kod.",
+        "options": {
+          "ui": {
+            "theme": "Lalai tema",
+            "system": "Sistem",
+            "geist": "Geist",
+            "inter": "Inter",
+            "sf": "SF Pro"
+          },
+          "code": {
+            "theme": "Lalai tema",
+            "system": "Sistem mono",
+            "geist-mono": "Geist Mono",
+            "sf-mono": "SF Mono",
+            "jetbrains-mono": "JetBrains Mono"
+          }
+        }
+      },
+      "contrast": {
+        "title": "Kontras",
+        "description": "Sesuaikan kontras teks (50 = tiada perubahan).",
+        "label": "Tahap kontras"
+      },
+      "pointerCursor": {
+        "title": "Gunakan kursor pointer",
+        "description": "Tukar kepada kursor penunjuk pada elemen interaktif hover.",
+        "label": "Kursor penunjuk pada elemen interaktif"
+      },
+      "diffMarkers": {
+        "title": "Penanda perbezaan",
+        "description": "Paparkan jalur warna atau glif +/- pada setiap baris yang diubah.",
+        "label": "Gaya penanda perbezaan",
+        "color": "Warna",
+        "plusminus": "+/-"
+      },
+      "fontSmoothing": {
+        "title": "Pelancasan fon",
+        "description": "Gunakan antialiasing fon asli macOS.",
+        "label": "Pelancasan fon asli"
+      },
+      "typography": {
+        "title": "Tipografi",
+        "description": "Saiz fon asas untuk permukaan UI dan kod.",
+        "uiFontSize": "Saiz fon UI",
+        "uiFontSizeDescription": "Laraskan saiz fon asas UI.",
+        "codeFontSize": "Saiz fon kod",
+        "codeFontSizeDescription": "Laraskan saiz fon asas kod."
+      },
+      "fontSize": {
+        "followTheme": "Tema",
+        "customize": "Sesuaikan"
+      },
+      "motion": {
+        "title": "Kurangkan gerakan",
+        "description": "Kurangkan animasi atau ikut pilihan sistem.",
+        "label": "Keutamaan gerakan",
+        "system": "Sistem",
+        "on": "Hidup",
+        "off": "Mati"
+      },
+      "surface": {
+        "title": "Bar sisi lutsinar",
+        "description": "Gunakan bahan lutsinar pada bar sisi."
+      },
+      "transparency": {
+        "label": "Bar sisi lutsinar",
+        "description": "Gunakan bahan lutsinar pada bar sisi."
+      }
+    }
+  },
+  "legal": {
+    "version": "Versi",
+    "effective": "Berkuat kuasa",
+    "notFound": "Dokumen ini tidak tersedia.",
+    "backHome": "Kembali ke halaman utama"
+  },
+  "commandPalette": {
+    "ariaLabel": "Palet arahan",
+    "placeholder": "Taip arahan atau carian…",
+    "empty": "Tiada hasil ditemui.",
+    "sections": {
+      "navigation": "Navigasi",
+      "actions": "Tindakan",
+      "settings": "Tetapan",
+      "account": "Akaun",
+      "admin": "Admin",
+      "help": "Bantuan"
+    },
+    "commands": {
+      "nav": {
+        "home": "Laman Utama",
+        "settings": "Tetapan",
+        "billing": "Pembayaran",
+        "team": "Pasukan",
+        "apiKeys": "Kunci API",
+        "notifications": "Pemberitahuan",
+        "auditLog": "Log Audit",
+        "webhooks": "Webhooks",
+        "admin": "Admin"
+      },
+      "action": {
+        "inviteMember": "Jemput ahli pasukan",
+        "createApiKey": "Cipta kunci API",
+        "switchOrganization": "Tukar organisasi"
+      },
+      "settings": {
+        "themeLight": "Tukar ke tema cerah",
+        "themeDark": "Tukar ke tema gelap",
+        "themeSystem": "Gunakan tema sistem"
+      },
+      "account": {
+        "signOut": "Log keluar"
+      },
+      "help": {
+        "reportIssue": "Laporkan isu",
+        "shortcuts": "Pintasan papan kekunci"
+      }
+    }
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "Pilihan privasi anda",
+      "description": "Kami menggunakan kuki untuk meningkatkan pengalaman anda, menganalisis trafik laman, dan memperibadikan kandungan. Pilih kategori yang ingin anda benarkan."
+    },
+    "button": {
+      "acceptAll": "Terima semua",
+      "savePreferences": "Simpan keutamaan"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "Wajib",
+        "description": "Diperlukan untuk laman berfungsi. Tidak boleh dilumpuhkan."
+      },
+      "functional": {
+        "label": "Fungsional",
+        "description": "Ingati pilihan anda (bahasa, tema, susun atur)."
+      },
+      "analytics": {
+        "label": "Analitik",
+        "description": "Data penggunaan tanpa nama supaya kami boleh meningkatkan produk."
+      },
+      "marketing": {
+        "label": "Pemasaran",
+        "description": "Iklan peribadi dan penargetan semula di platform pihak ketiga."
+      }
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "Pemberitahuan",
+      "description": "Semua pemberitahuan anda di satu tempat.",
+      "filter": {
+        "all": "Semua",
+        "unread": "Belum dibaca"
+      },
+      "actions": {
+        "markAllRead": "Tanda semua sebagai dibaca",
+        "markRead": "Tanda sebagai dibaca",
+        "archive": "Arkib",
+        "loadMore": "Muat lebih",
+        "loading": "Memuatkan...",
+        "selected": "{count} dipilih"
+      },
+      "empty": {
+        "all": "Anda sudah semasa.",
+        "unread": "Tiada pemberitahuan belum dibaca."
+      },
+      "errors": {
+        "load": "Gagal memuatkan pemberitahuan.",
+        "network": "Ralat rangkaian. Sila cuba lagi.",
+        "markRead": "Gagal menandakan pemberitahuan sebagai dibaca.",
+        "archive": "Gagal mengarkibkan pemberitahuan.",
+        "bulkMarkRead": "Sebahagian pemberitahuan tidak dapat ditandakan sebagai dibaca."
+      },
+      "inbox": {
+        "noBackend": "Inbox memerlukan backend pemberitahuan berterusan. Semak konfigurasi penyedia anda.",
+        "emptyCaughtUp": "Inbox kosong.",
+        "emptyChangelog": "Kemas kini Changelog akan dipaparkan di sini."
+      }
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Selamat pagi",
+      "afternoon": "Selamat petang",
+      "evening": "Selamat malam"
+    },
+    "home": {
+      "connectorsPill": "Kuasa aplikasi anda dengan penyambung",
+      "subtitle": "Letakkan arahan, tekan ⌘K dari mana-mana, atau terus ke permukaan ruang kerja.",
+      "promptPlaceholder": "Apa yang anda pikirkan?",
+      "actions": {
+        "connect": "Sambungkan integrasi",
+        "theme": "Padang Permainan Tema",
+        "audit": "Log audit",
+        "billing": "Pembilanan"
+      }
+    },
+    "commandSurface": {
+      "noAuth": "Autentikasi tidak dikonfigurasi untuk penyedia yang dipilih. Tetapkan rahsia penyedia untuk membolehkan sesi pengguna."
+    },
+    "commandCenter": {
+      "description": "Mula dengan satu tindakan: tanya Sailor, periksa isyarat ruang kerja, atau alihkan kerja ke permukaan automasi.",
+      "openSailor": "Buka Sailor AI",
+      "viewAnalytics": "Lihat Analitik"
+    },
+    "workspaceSnapshot": {
+      "title": "Rakaman Ruang Kerja",
+      "description": "Hari gudang terkini · {day}",
+      "viewAnalytics": "Lihat analitik →",
+      "metrics": {
+        "activeUsers": "Pengguna Aktif",
+        "totalEvents": "Jumlah Acara",
+        "conversions": "Penukaran",
+        "revenue": "Pendapatan"
+      },
+      "details": {
+        "activeUsers": "Pengguna yang log masuk",
+        "totalEvents": "Peristiwa yang direkodkan",
+        "conversions": "Tindakan yang layak",
+        "revenue": "Pendapatan yang diiktiraf"
+      },
+      "meta": {
+        "snapshot": "Snapshots",
+        "cadence": "Kadar",
+        "tenant": "Penyewa",
+        "daily": "Harian",
+        "latestDay": "{day}",
+        "users": "Pengguna penyewa",
+        "events": "Aliran peristiwa",
+        "funnel": "Corong",
+        "billing": "Pengebilan"
+      }
+    },
+    "documentPipeline": {
+      "title": "Paip dokumen",
+      "description": "Hantar fail sumber ke dalam baris tugas asal.",
+      "intakeTitle": "Penerimaan dokumen",
+      "intakeDescription": "Dokumen PDF, Markdown, teks, atau Word",
+      "chooseDocument": "Pilih dokumen",
+      "startParseTask": "Mula tugas parse",
+      "queued": "Dalam barisan",
+      "fileInputLabel": "Fail dokumen",
+      "fallbackError": "Tugas dokumen gagal.",
+      "taskStatus": "Status tugas",
+      "progressLabel": "Kemajuan tugas",
+      "refreshStatus": "Segarkan",
+      "cancelTask": "Batalkan",
+      "statusError": "Tidak dapat menyegarkan status tugas.",
+      "cancelError": "Tidak dapat membatalkan tugas.",
+      "statusQueued": "Dalam barisan",
+      "statusRunning": "Sedang berjalan",
+      "statusSucceeded": "Berjaya",
+      "statusFailed": "Gagal",
+      "statusCancelled": "Dibatalkan",
+      "resultReady": "Hasil sedia",
+      "taskError": "Ralat tugas",
+      "updatedAt": "Dikemas kini"
+    },
+    "recentSessions": {
+      "title": "Teruskan dari mana anda berhenti",
+      "subtitle": "{count, plural, =0 {Tiada sesi} =1 {1 sesi terkini} other {# sesi terkini}}",
+      "viewAll": "Lihat semua →",
+      "newChat": "Sembang baharu",
+      "untitled": "Sesi tanpa tajuk",
+      "messageCount": "{count, plural, =1 {1 mesej} other {# mesej}}"
+    },
+    "gettingStarted": {
+      "title": "Memulakan",
+      "description": "{done} daripada {total} selesai · selesaikan persediaan untuk membuka kunci ruang kerja penuh",
+      "progressLabel": "Kemajuan persediaan",
+      "tasks": {
+        "team": {
+          "label": "Jemput rakan sepasukan",
+          "description": "Bawa sekurang-kurangnya seorang kolaborator ke ruang kerja anda."
+        },
+        "api": {
+          "label": "Jana kunci API",
+          "description": "Akses program ke titik akhir ruang kerja anda."
+        },
+        "integration": {
+          "label": "Sambungkan integrasi",
+          "description": "Stripe, Slack, webhooks, queues, dan lain-lain."
+        },
+        "ai": {
+          "label": "Buka Sailor AI",
+          "description": "Cuba mod chat, data, atau workflow."
+        }
+      }
+    }
+  },
+  "Sidebar": {
+    "projects": "Projek",
+    "noThreads": "Tiada thread",
+    "expandAll": "Kembangkan semua",
+    "collapseAll": "Runtuhkan semua",
+    "sectionMore": "Lagi pilihan",
+    "newProject": "Projek baharu",
+    "restoredGroups": "Kumpulan yang dikembangkan sebelum ini telah dipulihkan",
+    "newProjectPlaceholder": "Nama projek",
+    "newProjectDefault": "Tanpa tajuk",
+    "newProjectSuccess": "Projek dicipta",
+    "newProjectError": "Tidak dapat mencipta projek",
+    "sortBy": "Susun mengikut",
+    "sortRecent": "Aktif baru-baru ini",
+    "sortAlphabetical": "Abjad",
+    "sortCreated": "Tarikh dicipta",
+    "archiveAll": "Arkibkan semua",
+    "comingV2": "Akan datang dalam v2"
+  },
+  "startupOs": {
+    "milestone": {
+      "firstRoom": "Ruang pertama sedia.",
+      "firstFolder": "Ramai syarikat bermula sebagai satu folder.",
+      "firstTable": "Meja pertama kini ada kerusi kedua.",
+      "firstSignal": "Dunia sebenar mula bercakap.",
+      "firstShip": "Dunia melihatnya buat pertama kali.",
+      "firstBeliever": "Mulai hari ini, anda tidak lagi membina hanya untuk diri sendiri.",
+      "firstRevenue": "Impian kini ada aliran tunai.",
+      "firstReturn": "Kembali lebih bermakna daripada sekadar melawat.",
+      "firstTeam": "Tiga orang boleh mula membentuk sebuah syarikat.",
+      "firstCrowd": "Meja pertama mula sesak.",
+      "firstReset": "Mula semula adalah permulaan yang lebih jujur.",
+      "firstPublic": "Letakkan sebahagian masa depan di tempat awam.",
+      "firstDemo": "Ini bukan persembahan. Ini adalah ujian.",
+      "graduation": "Anda telah melampaui asas. Jalan ke hadapan memerlukan alat yang lebih kukuh."
+    },
+    "emptyState": {
+      "default": "Banyak syarikat bermula sebagai satu folder.",
+      "integrations": "Tiada penyambung dikonfigurasi.",
+      "creditActivity": "Aktiviti kredit akan muncul selepas permintaan pertama anda.",
+      "usageData": "Data penggunaan akan muncul apabila organisasi anda mula membuat permintaan.",
+      "apiKeys": "Belum ada kunci.",
+      "apiKeysCta": "Cipta kunci pertama anda",
+      "teamMembers": "Satu orang boleh bermula. Beberapa orang boleh membina.",
+      "cofounders": "Orang pertama yang percaya kepada anda belum muncul lagi.",
+      "cofoundersDescription": "Apabila anda dan seorang pengasas lain sama-sama menunjukkan minat, mereka akan muncul di sini.",
+      "cofoundersAction": "Cari pengasas bersama",
+      "growthChart": "Data trend akan muncul apabila aktiviti bermula.",
+      "revenueChart": "Data pendapatan akan muncul apabila transaksi bermula.",
+      "webhookDeliveries": "Penghantaran akan muncul di sini selepas peristiwa pertama.",
+      "webhookEndpoints": "Tambahkan hujung titik di atas untuk mula menerima peristiwa.",
+      "accessInvites": "Tiada kod jemputan dikeluarkan."
+    },
+    "success": "Bilik pertama sedia.",
+    "failure": "Mula semula adalah permulaan yang lebih jujur.",
+    "errors": {
+      "loadMatches": "Padanan tidak dapat dimuatkan.",
+      "loadMatchesDescription": "Ada masalah di pihak kami. Muat semula untuk cuba lagi.",
+      "loadWebhookDeliveries": "Penghantaran tidak dapat dimuatkan.",
+      "replayWebhookDelivery": "Main semula tidak berjaya.",
+      "loadWebhookEndpoints": "Hujung tidak dapat dimuatkan."
+    },
+    "team": "Satu boleh mula. Beberapa boleh bina.",
+    "revenue": "Impian kini ada aliran tunai.",
+    "growth": "Isyarat semakin kuat.",
+    "deployment": {
+      "primary": "Dunia melihatnya buat pertama kali.",
+      "echo": "Akhirnya ia meninggalkan localhost."
+    },
+    "onboarding": "Anda tidak perlu bersedia. Anda perlu bermula.",
+    "graduation": "Anda telah melampaui asas. Cuba {tool} untuk jalan ke hadapan.",
+    "company": {
+      "emptyTitle": "Menara konteks pertama anda bermula di sini.",
+      "emptyDescription": "Susun syarikat dalam Startup OS untuk melihat dan menyunting menara konteksnya.",
+      "emptyAction": "Buka Startup OS",
+      "notice": {
+        "needsProvider": "Sambungkan kunci penyedia AI untuk mengisi medan secara automatik.",
+        "generateFailed": "Penjanaan tidak selesai.",
+        "saveFailed": "Tukaran anda tidak berjaya disimpan."
+      },
+      "action": {
+        "save": "Simpan",
+        "saving": "Menyimpan…",
+        "cancel": "Batal",
+        "open": "Buka Startup OS"
+      }
+    },
+    "execution": {
+      "noBets": "Belum ada pertaruhan.",
+      "noRuns": "Tiada larian aktif."
+    },
+    "fileTree": {
+      "empty": "Projek ini belum mempunyai fail."
+    }
+  },
+  "selectOrg": {
+    "invitation": {
+      "emptyTitle": "Ruang kerja sedang dalam proses.",
+      "emptyDescription": "Jemputan mungkin masih disegerakkan. Segarkan halaman ini atau cipta ruang kerja berasingan."
+    },
+    "billing": {
+      "emptyTitle": "Cipta ruang kerja sebelum pengebilan.",
+      "emptyDescription": "Tindakan pengebilan memerlukan ruang kerja aktif. Cipta satu terlebih dahulu, kemudian kembali ke pengebilan."
+    },
+    "default": {
+      "emptyTitle": "Ruang kerja pertama bermula di sini.",
+      "emptyDescription": "Cipta ruang kerja untuk bermula."
+    }
+  }
+}

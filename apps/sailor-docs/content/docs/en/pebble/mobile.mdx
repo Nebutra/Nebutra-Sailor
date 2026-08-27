@@ -1,0 +1,17 @@
+---
+title: Mobile companion
+description: Monitor and steer Pebble agents from iOS and Android
+---
+
+# Mobile companion
+
+Monitor and steer agents from your phone — get notified when a run finishes and send follow-ups from anywhere.
+
+- **iOS:** [App Store](https://apps.apple.com/us/app/pebble-ide/id6766130217) · [TestFlight](https://testflight.apple.com/join/YjeGMQBA)
+- **Android:** APK builds ship on [GitHub Releases](https://github.com/Nebutra/pebble/releases)
+
+Pairing uses the local Pebble runtime on your machine (`pebble serve`, default port **6768** on `127.0.0.1`). Public mobile traffic never exposes that port; reach remote desktops over SSH tunnels when needed.
+
+```bash
+ssh -L 6768:127.0.0.1:6768 user@host
+```

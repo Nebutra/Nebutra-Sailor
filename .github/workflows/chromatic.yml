@@ -1,0 +1,54 @@
+name: Chromatic Visual Tests
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/design/ui/src/**"
+      - "apps/storybook/**"
+      - "apps/landing/src/components/**"
+      - "apps/landing/src/app/**/page.tsx"
+      - ".github/workflows/chromatic.yml"
+      - ".github/actions/setup-node-pnpm/action.yml"
+  pull_request:
+    paths:
+      - "packages/design/ui/src/**"
+      - "apps/storybook/**"
+      - "apps/landing/src/components/**"
+      - "apps/landing/src/app/**/page.tsx"
+      - ".github/workflows/chromatic.yml"
+      - ".github/actions/setup-node-pnpm/action.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  chromatic:
+    name: Run Chromatic
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Build workspace dependencies
+        run: pnpm --filter @nebutra/brand build
+
+      - name: Build Storybook
+        run: pnpm --filter @nebutra/storybook build
+
+      - name: Publish to Chromatic
+        if: env.CHROMATIC_PROJECT_TOKEN != ''
+        uses: chromaui/action@db24c2b77bb65385a109e4dc29f36f0be9998fa7 # latest
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          storybookBuildDir: apps/storybook/dist
+          exitZeroOnChanges: false
+          autoAcceptChanges: main

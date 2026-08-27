@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-with-icon-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/icons",
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/input-with-icon-demo.tsx",
+      "content": "\"use client\";\n\nimport { Envelope as Mail, MagnifyingGlass as Search } from \"@nebutra/icons\";\nimport { Input } from \"@nebutra/ui/primitives\";\n\nexport function InputWithIconDemo() {\n  return (\n    <div className=\"flex flex-col gap-4\">\n      <Input\n        aria-label=\"Search projects\"\n        type=\"search\"\n        prefix={<Search aria-hidden=\"true\" />}\n        placeholder=\"Search projects\"\n      />\n      <Input\n        aria-label=\"Team email\"\n        prefix={<Mail aria-hidden=\"true\" />}\n        type=\"email\"\n        placeholder=\"contact@nebutra.com\"\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

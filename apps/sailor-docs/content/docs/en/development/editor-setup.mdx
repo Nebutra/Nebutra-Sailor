@@ -1,0 +1,121 @@
+---
+title: Editor Setup
+description: Recommended VS Code extensions, Biome formatter configuration, and Cursor rules for working in the Nebutra-Sailor codebase.
+---
+
+## VS Code
+
+VS Code is the recommended editor. The following extensions are required or strongly advised.
+
+### Required extensions
+
+| Extension | ID | Purpose |
+|-----------|-----|---------|
+| **Biome** | `biomejs.biome` | Lint + format (replaces ESLint and Prettier) |
+| **Prisma** | `prisma.prisma` | Schema syntax highlighting and auto-complete |
+| **Tailwind CSS IntelliSense** | `bradlc.vscode-tailwindcss` | Class name completions and hover previews |
+| **TypeScript and JavaScript** | `ms-vscode.vscode-typescript-next` | Enhanced TypeScript language features |
+| **MDX** | `unifiedjs.vscode-mdx` | Syntax support for `.mdx` files |
+
+### Recommended extensions
+
+| Extension | ID | Purpose |
+|-----------|-----|---------|
+| **Error Lens** | `usernamehw.errorlens` | Inline error and warning display |
+| **Pretty TypeScript Errors** | `yoavbls.pretty-ts-errors` | Human-readable TypeScript error messages |
+| **Import Cost** | `wix.vscode-import-cost` | Bundle size hints next to imports |
+| **GitLens** | `eamodio.gitlens` | Enhanced Git history and blame |
+
+### settings.json
+
+Add the following to your workspace or user `settings.json` to configure Biome as the default formatter and enable format-on-save:
+
+```json
+{
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "quickfix.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
+}
+```
+
+<Warning>
+  Do NOT install the ESLint or Prettier extensions. This codebase uses **Biome** for both linting and formatting. Running ESLint alongside Biome will produce conflicting results.
+</Warning>
+
+## Cursor
+
+Cursor is fully supported. The repository ships a pre-configured rules file at `.cursor/rules/nebutra.mdc` that injects project context (component conventions, token usage, package import paths) directly into the AI context window.
+
+No additional setup is required — open the repo in Cursor and the rules will activate automatically.
+
+<Tip>
+  If you add a new architectural pattern or package convention, update `.cursor/rules/nebutra.mdc` so AI-assisted edits stay consistent with the rest of the codebase.
+</Tip>
+
+## Biome configuration
+
+Biome is configured at the repo root in `biome.json`. Key rules:
+
+- **No `console.log`** in production source code (use `@nebutra/logger` instead)
+- **No unused variables** — enforced as errors
+- **Sorted imports** — auto-fixed on save
+- **Double quotes** for strings
+- **Semicolons** required
+
+To run the linter manually:
+
+```bash
+pnpm lint          # check
+pnpm lint:fix      # check + auto-fix
+```
+
+## TypeScript
+
+The repo uses TypeScript 5.9 in strict mode. A shared base config lives at `tsconfig.base.json` in the repo root. Each package extends it with its own `tsconfig.json`.
+
+Run the type checker across all packages:
+
+```bash
+pnpm typecheck
+```
+
+<Note>
+  Type checking runs in parallel via Turborepo and respects the package dependency graph. If `@nebutra/ui` has a type error, any app that imports it will also fail type checking.
+</Note>
+
+## Tailwind CSS IntelliSense configuration
+
+The Tailwind extension needs to know about the custom CSS variables registered in `@nebutra/tokens`. The workspace-level `tailwind.config.ts` files in `apps/web` and `apps/landing` include the necessary `theme.extend` entries. No additional configuration is needed.
+
+To see token completions in arbitrary value syntax (e.g. `bg-[var(--blue-9)]`), ensure the Tailwind IntelliSense extension is version 0.12 or later.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Local Development" icon="laptop" href="/development/local-dev">
+    Full environment setup guide.
+  </Card>
+  <Card title="Project Structure" icon="folder-tree" href="/development/project-structure">
+    File naming conventions and where things live.
+  </Card>
+</CardGroup>

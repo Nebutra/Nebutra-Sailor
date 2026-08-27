@@ -1,0 +1,15 @@
+# Credentials
+config/.env
+
+# Large assets (optional - uncomment if needed)
+# assets/gallery/*.png
+# assets/gallery/*.jpg
+# assets/*.mp4
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temp files
+*.tmp
+*.bak

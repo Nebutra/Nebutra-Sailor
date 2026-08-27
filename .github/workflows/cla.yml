@@ -1,0 +1,126 @@
+# Contributor License Agreement enforcement.
+#
+# Powered by cla-assistant.io's official GitHub Action:
+#   https://github.com/cla-assistant/github-action
+#
+# Signatures are stored as JSON on a SEPARATE branch (`cla-signatures`)
+# so the main branch stays clean. The action creates the branch + file on
+# first run; you do not need to provision it manually.
+#
+# Do NOT delete the `cla-signatures` branch — it is the signature ledger.
+#
+# Exemptions (still report a green required check):
+#   - Bot accounts in `allowlist` (dependabot, github-actions, *bot, …)
+#   - Same-repo PRs (internal collaborators already have write access)
+#   - PRs labeled BOTH `i18n` AND `automated` (SenseNova locale machine PRs)
+#
+# CLA is required for fork PRs only. To onboard an external contributor:
+#   1. They open a PR from a fork.
+#   2. This workflow comments with a sign-CLA link.
+#   3. They re-comment "I have read the CLA Document and I hereby sign the CLA"
+#      and the workflow flips their PR check to green.
+#   4. Every future PR from that account is unblocked automatically.
+
+name: "CLA Assistant"
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_target:
+    types: [opened, closed, synchronize, labeled, unlabeled, reopened]
+
+# Token permissions required by cla-assistant/github-action — keep tight.
+permissions: read-all
+
+jobs:
+  cla-check:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write # write to the cla-signatures branch
+      pull-requests: write
+      statuses: write
+    # Only run on the specific comment OR on any PR event.
+    if: |
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, 'I have read the CLA Document and I hereby sign the CLA')) ||
+      (github.event_name == 'pull_request_target')
+    steps:
+      # The i18n exemption is a pure `if:` condition, deliberately — this job runs
+      # on pull_request_target, which means the base repo's write token and secrets
+      # are available while the PR head is untrusted. A `run:` step is where that
+      # combination turns into code execution, so scripts/verify-supply-chain-policy.mjs
+      # forbids the pair outright, and it is right to: the previous version of this
+      # file expressed the same exemption in shell and thereby blocked the entire CI
+      # pipeline for three days, because the policy check runs inside the shared
+      # setup action before any job body does.
+      #
+      # Both labels are required. A lone `i18n` label on a human PR still needs a
+      # CLA — labelling requires triage permission, but defence in depth is cheap
+      # here and the alternative is one label standing between a fork and an
+      # unsigned merge.
+      # Same-repo PRs need no CLA — the author already has write access — and
+      # that is expressed in the CLA Assistant step's own `if:` below, which
+      # requires the head to be a fork. There is deliberately no step for it
+      # here: this job runs on pull_request_target, so the base repo's write
+      # token and secrets are live while the PR head is untrusted, and a `run:`
+      # step is where that combination becomes code execution.
+      # scripts/verify-supply-chain-policy.mjs forbids the pair outright and is
+      # right to. A `run: echo` reads as harmless, which is exactly why it keeps
+      # coming back — the comment above this block already recorded it blocking
+      # the whole pipeline for three days once, and it had done so again.
+      - name: "CLA Assistant"
+        if: >-
+          (
+            github.event_name == 'issue_comment' ||
+            (
+              github.event_name == 'pull_request_target' &&
+              github.event.pull_request.head.repo.full_name != github.repository
+            )
+          ) &&
+          !(github.event_name == 'pull_request_target' &&
+            contains(github.event.pull_request.labels.*.name, 'i18n') &&
+            contains(github.event.pull_request.labels.*.name, 'automated'))
+        uses: cla-assistant/github-action@ca4a40a7d1004f18d9960b404b97e5f30a505a08 # v2.6.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # cla-assistant crashes with "Cannot read properties of undefined
+          # (reading 'some')" when PERSONAL_ACCESS_TOKEN is an empty string
+          # (secret defined but blank). Fall back to GITHUB_TOKEN for
+          # same-repo signature storage on the cla-signatures branch.
+          # For a remote legal repo, set org secret PERSONAL_ACCESS_TOKEN.
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN || secrets.GITHUB_TOKEN }}
+        with:
+          # Required by the action — points at the canonical CLA text.
+          path-to-document: "https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/legal/CLA.md"
+          # Where signatures get stored (separate branch keeps main clean).
+          path-to-signatures: ".github/cla-signatures.json"
+          branch: "cla-signatures"
+          # Sentence contributors paste in a PR comment to sign.
+          custom-pr-sign-comment: "I have read the CLA Document and I hereby sign the CLA"
+          # Sentence the bot uses to remind unsigned contributors.
+          custom-notsigned-prcomment: |
+            Thanks for your contribution! Before we can merge, we need you to sign the
+            [Nebutra-Sailor Contributor License Agreement](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/legal/CLA.md).
+
+            To sign, reply to this PR with the following sentence — exactly:
+
+            > I have read the CLA Document and I hereby sign the CLA
+
+            Once you sign, all your current and future PRs to this repo are covered.
+          custom-allsigned-prcomment: |
+            All committers have signed the CLA. Thanks for contributing to Nebutra-Sailor!
+          # Bot accounts + core maintainers that should never be asked to sign.
+          # Patterns: exact login, or trailing *bot / [bot] accounts.
+          # Note: create-pull-request may still attribute commits to the
+          # workflow actor unless commit-user/email are set to github-actions.
+          allowlist: |
+            dependabot[bot]
+            github-actions[bot]
+            renovate[bot]
+            lefthook-bot
+            web-flow
+            TsekaLuk
+            *bot
+            *[bot]
+          # Suppress the action when the PR is closed (cleanup only).
+          lock-pullrequest-aftermerge: false

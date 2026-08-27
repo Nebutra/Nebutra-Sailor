@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "accordion-controlled-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/accordion-controlled-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Accordion,\n  AccordionContent,\n  AccordionItem,\n  AccordionTrigger,\n} from \"@nebutra/ui/primitives\";\n\nexport function AccordionControlledDemo() {\n  return (\n    <Accordion multiple={false} defaultValue={[\"item-1\"]} className=\"w-full\">\n      <AccordionItem value=\"item-1\">\n        <AccordionTrigger>Controlled Item</AccordionTrigger>\n        <AccordionContent>This accordion is controlled.</AccordionContent>\n      </AccordionItem>\n    </Accordion>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

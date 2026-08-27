@@ -1,0 +1,176 @@
+/**
+ * The message catalogs that ship UI strings — the single source of truth for
+ * every i18n tool in this repo.
+ *
+ * This file exists because the two halves of i18n governance had drifted apart:
+ * translation was catalog-driven and covered four apps, while verification was
+ * hardcoded to apps/landing. A catalog could therefore be filled automatically
+ * and still drift silently, which is exactly how Forge shipped 702 English
+ * strings into a Chinese product surface with nothing failing.
+ *
+ * Add a catalog here and both `pnpm i18n:translate` and `pnpm i18n:check` pick
+ * it up. There is no second list to remember.
+ */
+
+/** Locales every product catalog ships. */
+export const GLOBAL_TARGETS = [
+  "ar",
+  "bn",
+  "da",
+  "de",
+  "el",
+  "es",
+  "fa",
+  "fi",
+  "fr",
+  "he",
+  "hi",
+  "id",
+  "it",
+  "ja",
+  "ko",
+  "ms",
+  "nl",
+  "no",
+  "pl",
+  "pt",
+  "ru",
+  "sv",
+  "sw",
+  "th",
+  "tr",
+  "uk",
+  "ur",
+  "vi",
+  "zh-Hans",
+  "zh-Hant",
+];
+
+/**
+ * Locales whose translations are enforced, not merely reported.
+ *
+ * These are the languages a human actually reads the product in today. For the
+ * rest, an English fallback is an honest interim state; for these it is a bug.
+ */
+export const ENFORCED_LOCALES = [
+  "de",
+  "es",
+  "fr",
+  "ja",
+  "ko",
+  "zh-Hans",
+  "zh-Hant",
+  "zh", // legacy stem, if a catalog still carries one
+];
+
+export const CATALOGS = [
+  {
+    id: "landing",
+    messagesDir: "apps/landing/messages",
+    source: "en",
+    targets: GLOBAL_TARGETS,
+    description: "Public marketing site",
+    // Above-the-fold marketing copy: identical-to-EN here is a regression.
+    // `nav` and `footer` are advisory — they are dominated by short link
+    // labels (Blog, FAQ, npm, DPA, Docs) that B2B SaaS keeps in English.
+    criticalNamespaces: [
+      "hero",
+      "cta",
+      "logoStrip",
+      "monorepoTree",
+      "stats",
+      "metadata",
+      "features",
+      "comingSoon",
+    ],
+    advisoryNamespaces: ["nav", "footer", "landing"],
+  },
+  {
+    id: "web",
+    messagesDir: "packages/platform/i18n/locales",
+    source: "en",
+    targets: GLOBAL_TARGETS,
+    description: "Dashboard / authenticated product (shared @nebutra/i18n)",
+    criticalNamespaces: [],
+    advisoryNamespaces: [],
+  },
+  {
+    id: "forge",
+    messagesDir: "apps/forge/messages",
+    source: "en",
+    targets: GLOBAL_TARGETS,
+    description: "Forge online tool station",
+    // `runners.*` is the field labels of every tool workspace — the strings a
+    // user is looking at while doing the work. `categories` and `home` are the
+    // browse surface. Tool titles are NOT here: those live bilingually on the
+    // registry definitions (design doc §6.10), not in this catalog.
+    criticalNamespaces: ["runners", "categories", "home", "tool", "roots"],
+    advisoryNamespaces: ["nav", "footer", "meta", "search", "auth"],
+    // Ratchet on untranslated strings in the enforced locales.
+    //
+    // The rule is "no silent regression", not "never changes". A wave that adds
+    // English keys legitimately raises these counts — Editor and Simulator added
+    // 228 strings and every locale went up by exactly that. Raising a number is
+    // allowed ONLY in the same commit that adds the keys, and it carries a
+    // standing obligation to bring it back down. Lower on every translation
+    // pass; delete an entry at zero. What is forbidden is raising one to make an
+    // existing failure go away.
+    identicalBaseline: {
+      // dns-leak UX wave: table/signal/phase strings seeded EN for enforced locales.
+      "zh-Hant": 8,
+      "zh-Hans": 8,
+      ja: 72,
+      fr: 71,
+      de: 71,
+      es: 69,
+      ko: 72,
+    },
+  },
+  {
+    id: "boot-log",
+    messagesDir: "packages/platform/i18n/boot-log",
+    source: "en",
+    targets: GLOBAL_TARGETS,
+    description: "Auth-center boot-log archive (editorial prose, not UI strings)",
+    // English and Chinese are hand-authored; the rest are translated from the
+    // English. Never run the translator with --force against this catalog — it
+    // would overwrite the authored Chinese with a machine pass.
+    criticalNamespaces: [],
+    advisoryNamespaces: [],
+    // Editorial prose, not UI copy — and the default prompt says "product UI
+    // translator", which is why it behaved like one: a first pass mixed
+    // Japanese 敬体 and 常体 inside a single archive and carried an inline
+    // citation the English should never have had. Declared here so every
+    // future pass inherits it without anyone remembering to.
+    styleGuide: [
+      "This is an archive of historical records, not UI copy. Register: a dry archivist stating facts. Never encouraging, never explanatory.",
+      "Translate what is written. Do NOT add sources, attributions, hedges, connectives, or any clause explaining why the record matters.",
+      "The last sentence of each entry is a deliberate flat statement of outcome. Do not soften it, do not add a concluding connective, do not turn it into a lesson.",
+      "Use ONE register consistently across every string. For Japanese use 常体 (だ・である), never 敬体 (です・ます). For Korean use 해라체/평서형, not 해요체.",
+      "Keep proper nouns, product names and quoted machine text exactly as they appear in the English.",
+    ],
+  },
+  {
+    id: "router",
+    messagesDir: "apps/router/messages",
+    source: "en",
+    targets: GLOBAL_TARGETS,
+    description: "Router API marketplace",
+    criticalNamespaces: [],
+    advisoryNamespaces: [],
+  },
+];
+
+/** Look a catalog up by id, or throw with the valid ids listed. */
+export function catalogById(id) {
+  const found = CATALOGS.find((c) => c.id === id);
+  if (!found) {
+    throw new Error(`Unknown catalog '${id}'. Known: ${CATALOGS.map((c) => c.id).join(", ")}`);
+  }
+  return found;
+}
+
+/** Glob patterns for every catalog's message files — for hook globs and CI paths. */
+export function catalogGlobs() {
+  return CATALOGS.map((c) => `${c.messagesDir}/*.json`);
+}

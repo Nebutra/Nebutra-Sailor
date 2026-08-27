@@ -1,0 +1,385 @@
+---
+title: Common Errors
+description: Solutions for the 12 most frequently encountered errors in Nebutra-Sailor, with exact error messages and step-by-step fixes.
+---
+
+## Error reference
+
+<AccordionGroup>
+  <Accordion title="Cannot find module '@nebutra/ui'">
+    **Full error:**
+    ```
+    Error: Cannot find module '@nebutra/ui'
+    Require stack:
+    - apps/web/src/app/layout.tsx
+    ```
+
+    **Cause:** The workspace package symlinks are missing or broken. This usually happens after cloning the repository for the first time, or after adding/removing packages.
+
+    **Fix:**
+
+    <Steps>
+      <Step title="Install workspace dependencies">
+        ```bash
+        pnpm install
+        ```
+      </Step>
+      <Step title="Verify the symlink exists">
+        ```bash
+        ls node_modules/@nebutra/ui
+        ```
+        If this prints a path, the symlink is present. If it prints an error, re-run `pnpm install` from the repo root (not an app subdirectory).
+      </Step>
+      <Step title="Build the package if needed">
+        If the symlink exists but the error persists, the package may not have been built yet:
+        ```bash
+        pnpm --filter @nebutra/ui build
+        ```
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Prisma client not generated / PrismaClientInitializationError">
+    **Full error:**
+    ```
+    PrismaClientInitializationError: Prisma Client is not yet generated.
+    Run `prisma generate` to generate the client.
+    ```
+
+    Or at TypeScript compile time:
+    ```
+    Type 'User' is not assignable to type 'User'.
+    ```
+
+    **Cause:** The Prisma generated client is out of date. This happens after pulling commits that modify `packages/platform/db/prisma/schema.prisma`.
+
+    **Fix:**
+
+    <Steps>
+      <Step title="Regenerate the Prisma client">
+        ```bash
+        pnpm db:generate
+        ```
+      </Step>
+      <Step title="Restart TypeScript server in your editor">
+        In VS Code: open the Command Palette → **TypeScript: Restart TS Server**. This clears stale type inference.
+      </Step>
+      <Step title="If schema changed, run migrations too">
+        ```bash
+        pnpm db:migrate
+        ```
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="auth() was called without Clerk middleware">
+    **Full error:**
+    ```
+    Error: auth() was called, but Clerk's Middleware has not been set up.
+    ```
+
+    **Cause:** The Next.js 16 proxy file (`proxy.ts`) is missing, in the wrong location, or does not export the Clerk middleware correctly. Next.js 16+ uses `proxy.ts` instead of `middleware.ts`.
+
+    **Fix:**
+
+    <Steps>
+      <Step title="Check proxy file location">
+        The file must be at `apps/web/src/proxy.ts` (not inside `app/` or `pages/`). Next.js 16 picks up `proxy.ts` at the root of the `src` directory.
+      </Step>
+      <Step title="Verify the export">
+        ```typescript
+        import { clerkMiddleware } from "@clerk/nextjs/server";
+        export default clerkMiddleware();
+        export const config = {
+          matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+        };
+        ```
+      </Step>
+      <Step title="Clear the Next.js cache and restart">
+        ```bash
+        rm -rf apps/web/.next && pnpm --filter @nebutra/web dev
+        ```
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Connection refused on port 5432 (PostgreSQL)">
+    **Full error:**
+    ```
+    Error: connect ECONNREFUSED 127.0.0.1:5432
+    ```
+
+    **Cause:** The Docker infrastructure services are not running.
+
+    **Fix:**
+
+    <Steps>
+      <Step title="Start infrastructure services">
+        ```bash
+        pnpm infra:up
+        ```
+        This starts PostgreSQL 16, Redis 7, and ClickHouse 24.
+      </Step>
+      <Step title="Verify PostgreSQL is running">
+        ```bash
+        docker ps | grep postgres
+        ```
+      </Step>
+      <Step title="Check for port conflicts">
+        If another process is using port 5432, either stop it or change `DATABASE_URL` to use a different port and update the Docker Compose port mapping accordingly.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Biome lint errors blocking build">
+    **Full error:**
+    ```
+    error[lint/...]: ...
+    Found 4 errors.
+    ```
+
+    **Cause:** The Biome linter has found code style or correctness issues. The build pipeline runs `pnpm lint` and fails on any error.
+
+    **Fix:**
+
+    <Steps>
+      <Step title="Auto-fix most issues">
+        ```bash
+        pnpm lint:fix
+        ```
+        Biome auto-fixes formatting and most lint rules in place.
+      </Step>
+      <Step title="Review remaining errors">
+        ```bash
+        pnpm lint
+        ```
+        Errors that cannot be auto-fixed (e.g., logic issues) are listed with file paths and line numbers. Fix them manually.
+      </Step>
+    </Steps>
+
+    <Note>
+      The most common non-auto-fixable Biome errors are unused variables and `console.log` statements. Remove or replace them with `@nebutra/logger`.
+    </Note>
+  </Accordion>
+
+  <Accordion title="TypeScript: Type 'X' is not assignable to type 'X'">
+    **Full error:**
+    ```
+    Type 'User' is not assignable to type 'User'.
+      Types of property 'role' are incompatible.
+    ```
+
+    **Cause:** Two parts of the codebase are using different versions of the Prisma-generated types. This happens when the Prisma schema has changed but the client has not been regenerated.
+
+    **Fix:**
+
+    <Steps>
+      <Step title="Regenerate the Prisma client">
+        ```bash
+        pnpm db:generate
+        ```
+      </Step>
+      <Step title="Run typecheck to confirm">
+        ```bash
+        pnpm typecheck
+        ```
+      </Step>
+      <Step title="Restart the TypeScript language server">
+        In VS Code: **Command Palette** → **TypeScript: Restart TS Server**.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="STRIPE_WEBHOOK_SECRET not set">
+    **Full error:**
+    ```
+    Error: [config] Missing required environment variable: STRIPE_WEBHOOK_SECRET
+    ```
+
+    **Cause:** The Stripe webhook signing secret is absent from the environment. This is a required variable.
+
+    **Fix:**
+
+    <Steps>
+      <Step title="Get the secret from Stripe">
+        In the Stripe dashboard, open **Developers** → **Webhooks**. Click your webhook endpoint and copy the **Signing secret**. It starts with `whsec_`.
+      </Step>
+      <Step title="Add it to your environment">
+        ```bash .env.local
+        STRIPE_WEBHOOK_SECRET=whsec_xxx
+        ```
+      </Step>
+      <Step title="For local testing, use the Stripe CLI">
+        ```bash
+        stripe listen --forward-to localhost:3001/api/webhooks/stripe
+        ```
+        The CLI prints a temporary `whsec_` secret for local use.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Organization infinite redirect loop">
+    **Symptom:** After signing in, the user is redirected to `/org-selection` or `/create-org` in an infinite loop.
+
+    **Cause:** The Clerk organization feature is enabled (`FEATURE_TEAMS=true`) but the `/create-org` route does not exist in the app.
+
+    **Fix:**
+
+    <Steps>
+      <Step title="Create the org creation page">
+        Add `apps/web/src/app/(auth)/create-org/page.tsx` with a `<CreateOrganization />` component from `@clerk/nextjs`.
+      </Step>
+      <Step title="Or disable teams if not needed">
+        ```bash .env.local
+        FEATURE_TEAMS=false
+        ```
+      </Step>
+      <Step title="Verify Clerk afterCreateOrganizationUrl">
+        In your Clerk dashboard, confirm that **afterCreateOrganizationUrl** is set to a valid route (e.g., `/dashboard`).
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Cannot read properties of undefined (reading 'get') on cookies()">
+    **Full error:**
+    ```
+    TypeError: Cannot read properties of undefined (reading 'get')
+    ```
+
+    **Cause:** The Next.js 16 dynamic APIs (`cookies()`, `headers()`, `searchParams`) are asynchronous and must be awaited. Calling them synchronously returns `undefined`.
+
+    **Fix:**
+
+    <Steps>
+      <Step title="Await the async request APIs">
+        ```typescript
+        // ❌ Wrong — Next.js 16 requires await
+        const cookieStore = cookies();
+
+        // ✅ Correct
+        const cookieStore = await cookies();
+        ```
+      </Step>
+      <Step title="Update component signatures to async">
+        ```typescript
+        // Page components must be async if they use these APIs
+        export default async function Page({
+          searchParams,
+        }: {
+          searchParams: Promise<{ [key: string]: string }>;
+        }) {
+          const params = await searchParams;
+        }
+        ```
+      </Step>
+    </Steps>
+
+    <Note>
+      This is a breaking change from Next.js 15 to 16. The [Next.js migration guide](https://nextjs.org/docs/app/building-your-application/upgrading) covers all affected APIs.
+    </Note>
+  </Accordion>
+
+  <Accordion title="Turbopack module resolution errors / stale cache">
+    **Symptom:** Modules that exist on disk throw `Cannot find module` errors. Errors disappear and reappear inconsistently.
+
+    **Cause:** The Turbopack persistent cache has become corrupted or stale. This can happen after dependency updates, branch switches, or abnormal process termination.
+
+    **Fix:**
+
+    <Steps>
+      <Step title="Delete the Next.js cache directories">
+        ```bash
+        rm -rf apps/web/.next apps/landing/.next
+        ```
+      </Step>
+      <Step title="Restart the dev server">
+        ```bash
+        pnpm dev
+        ```
+      </Step>
+      <Step title="If the error persists, clear pnpm store">
+        ```bash
+        pnpm store prune
+        pnpm install
+        ```
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="QStash webhook delivery fails (404 or connection refused)">
+    **Symptom:** Jobs enqueued via QStash are never processed. The QStash dashboard shows delivery failures with a `404` or connection error.
+
+    **Cause:** QStash delivers webhooks to a public URL. In local development, `localhost` is not reachable from the QStash servers.
+
+    **Fix:**
+
+    <Steps>
+      <Step title="Expose a local tunnel with ngrok">
+        ```bash
+        ngrok http 3001
+        ```
+        ngrok prints a public `https://xxx.ngrok-free.app` URL.
+      </Step>
+      <Step title="Update QSTASH_CALLBACK_BASE_URL">
+        ```bash .env.local
+        QSTASH_CALLBACK_BASE_URL=https://xxx.ngrok-free.app
+        ```
+      </Step>
+      <Step title="Restart the API gateway">
+        ```bash
+        pnpm --filter @nebutra/gateway dev
+        ```
+      </Step>
+    </Steps>
+
+    <Tip>
+      For production, `QSTASH_CALLBACK_BASE_URL` should be your stable API URL, e.g., `https://api.nebutra.com`.
+    </Tip>
+  </Accordion>
+
+  <Accordion title="ClickHouse connection error (metering / analytics)">
+    **Full error:**
+    ```
+    Error: [metering] ClickHouse connection failed: connect ECONNREFUSED 127.0.0.1:8123
+    ```
+
+    **Cause:** ClickHouse is not running. The `pnpm infra:lite` command starts only PostgreSQL — it does not start ClickHouse.
+
+    **Fix:**
+
+    <Steps>
+      <Step title="Start the full infrastructure stack">
+        ```bash
+        pnpm infra:up
+        ```
+        Unlike `infra:lite`, `infra:up` starts all services including ClickHouse 24.
+      </Step>
+      <Step title="Verify ClickHouse is running">
+        ```bash
+        curl http://localhost:8123/ping
+        # Expected response: Ok.
+        ```
+      </Step>
+      <Step title="If you don't need metering, disable it">
+        Simply do not set `CLICKHOUSE_URL`. The `@nebutra/metering` package will log a warning but will not crash the application.
+      </Step>
+    </Steps>
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Troubleshooting Overview" icon="stethoscope" href="/troubleshooting/overview">
+    Quick diagnostic checklist and how to read Nebutra error messages.
+  </Card>
+  <Card title="Environment Variables" icon="key" href="/configuration/environment-variables">
+    Full reference for all environment variables.
+  </Card>
+  <Card title="Development Setup" icon="laptop-code" href="/development/overview">
+    Complete local development setup guide.
+  </Card>
+  <Card title="Deployment" icon="rocket" href="/deployment/overview">
+    Troubleshooting issues specific to production deployments.
+  </Card>
+</CardGroup>

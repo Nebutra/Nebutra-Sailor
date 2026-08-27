@@ -1,0 +1,138 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "globalDependencies": [".env", ".env.local", ".env.production", ".env.staging"],
+  "globalPassThroughEnv": [
+    "npm_config_verify_deps_before_run",
+    "CI",
+    "CLERK_SECRET_KEY",
+    "DATABASE_URL",
+    "SKIP_ENV_VALIDATION",
+    "AUTH_SECRET",
+    "NEXTAUTH_SECRET",
+    "BETTER_AUTH_SECRET",
+    "BETTER_AUTH_URL",
+    "ADMIN_EMAIL",
+    "OPENROUTER_API_KEY",
+    "OPENAI_API_KEY",
+    "ANTHROPIC_API_KEY",
+    "GOOGLE_CLIENT_ID",
+    "GOOGLE_CLIENT_SECRET",
+    "GITHUB_CLIENT_ID",
+    "GITHUB_CLIENT_SECRET",
+    "NEXT_TELEMETRY_DISABLED"
+  ],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "packages/design/brand/assets/**",
+        "$TURBO_ROOT$/packages/design/brand/assets/**"
+      ],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+      "env": [
+        "NEXT_PUBLIC_SITE_URL",
+        "NEXT_PUBLIC_APP_URL",
+        "NEXT_PUBLIC_API_URL",
+        "NEXT_PUBLIC_DOCS_URL",
+        "DOCS_ORIGIN_URL",
+        "NEBUTRA_LANDING_ORIGIN",
+        "NEBUTRA_SESSION_HINT_DOMAIN",
+        "AUTH_PROVIDER",
+        "NEXT_PUBLIC_AUTH_PROVIDER",
+        "NEXT_OUTPUT",
+        "ANALYZE",
+        "VERCEL"
+      ]
+    },
+    "build:next": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "packages/design/brand/assets/**",
+        "$TURBO_ROOT$/packages/design/brand/assets/**"
+      ],
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": [
+        "NEXT_PUBLIC_SITE_URL",
+        "NEXT_PUBLIC_APP_URL",
+        "NEXT_PUBLIC_API_URL",
+        "NEXT_PUBLIC_DOCS_URL",
+        "DOCS_ORIGIN_URL",
+        "NEBUTRA_LANDING_ORIGIN",
+        "NEBUTRA_SESSION_HINT_DOMAIN",
+        "AUTH_PROVIDER",
+        "NEXT_PUBLIC_AUTH_PROVIDER",
+        "NEXT_OUTPUT",
+        "ANALYZE",
+        "VERCEL",
+        "BETTER_AUTH_URL",
+        "BETTER_AUTH_SECRET",
+        "DATABASE_URL",
+        "AUTH_COOKIE_DOMAIN"
+      ]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "biome.json", "biome.jsonc"],
+      "env": ["NODE_ENV"]
+    },
+    "typecheck": {
+      "dependsOn": ["^build", "db:generate"],
+      "inputs": ["$TURBO_DEFAULT$", "tsconfig*.json"],
+      "env": ["NODE_ENV"]
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "vitest.config*"],
+      "outputs": ["coverage/**", "test-results/**"]
+    },
+    "test:ci": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "vitest.config*"],
+      "outputs": ["coverage/**", "test-results/**"],
+      "env": ["CI"]
+    },
+    "test:coverage": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "vitest.config*"],
+      "outputs": ["coverage/**"],
+      "env": ["CI"]
+    },
+    "test:watch": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "vitest.config*"],
+      "cache": false,
+      "persistent": true
+    },
+    "size": {
+      "dependsOn": ["build"],
+      "inputs": ["$TURBO_DEFAULT$", ".size-limit.json"],
+      "outputs": []
+    },
+    "db:generate": {
+      "cache": true,
+      "inputs": ["prisma/schema.prisma", "prisma.config.ts", "package.json"],
+      "outputs": ["src/generated/prisma/**"]
+    },
+    "db:migrate": {
+      "cache": false,
+      "inputs": ["packages/platform/db/prisma/**"],
+      "env": ["DATABASE_URL"]
+    },
+    "db:push": {
+      "cache": false,
+      "inputs": ["packages/platform/db/prisma/**"],
+      "env": ["DATABASE_URL"]
+    },
+    "e2e": {
+      "dependsOn": ["^build"],
+      "cache": false
+    }
+  }
+}

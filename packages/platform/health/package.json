@@ -1,0 +1,33 @@
+{
+  "name": "@nebutra/health",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Health check utilities for Nebutra services",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@upstash/redis": "^1.36.3",
+    "p-limit": "^7.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.15",
+    "typescript": "catalog:",
+    "vitest": "^4.0.18"
+  },
+  "license": "AGPL-3.0-only"
+}

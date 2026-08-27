@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "label-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/label-demo.tsx",
+      "content": "\"use client\";\n\nimport { Checkbox, Input, Label } from \"@nebutra/ui/primitives\";\n\nexport function LabelDemo() {\n  return (\n    <div className=\"space-y-6 max-w-sm p-4 w-full rounded-xl border shadow-sm\">\n      <div className=\"space-y-2\">\n        <Label htmlFor=\"email\">Email address</Label>\n        <Input id=\"email\" type=\"email\" placeholder=\"you@example.com\" />\n      </div>\n\n      <div className=\"space-x-2 flex items-center\">\n        <Checkbox id=\"terms\" />\n        <Label htmlFor=\"terms\">Accept terms and conditions</Label>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

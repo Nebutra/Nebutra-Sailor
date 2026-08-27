@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "menubar-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/menubar-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Menubar,\n  MenubarContent,\n  MenubarItem,\n  MenubarMenu,\n  MenubarSeparator,\n  MenubarShortcut,\n  MenubarSub,\n  MenubarSubContent,\n  MenubarSubTrigger,\n  MenubarTrigger,\n} from \"@nebutra/ui/primitives\";\nimport { usePathname } from \"next/navigation\";\n\nexport function MenubarDemo() {\n  const pathname = usePathname();\n  const isZh = pathname?.includes(\"/zh/\");\n\n  return (\n    <div className=\"pt-10 flex min-h-[250px] w-full items-start justify-center\">\n      <Menubar>\n        <MenubarMenu>\n          <MenubarTrigger>{isZh ? \"文件 (File)\" : \"File\"}</MenubarTrigger>\n          <MenubarContent>\n            <MenubarItem>\n              {isZh ? \"新建标签页 (New Tab)\" : \"New Tab\"} <MenubarShortcut>⌘T</MenubarShortcut>\n            </MenubarItem>\n            <MenubarItem>\n              {isZh ? \"新建窗口 (New Window)\" : \"New Window\"} <MenubarShortcut>⌘N</MenubarShortcut>\n            </MenubarItem>\n            <MenubarSeparator />\n            <MenubarItem>\n              {isZh ? \"打印... (Print...)\" : \"Print...\"} <MenubarShortcut>⌘P</MenubarShortcut>\n            </MenubarItem>\n          </MenubarContent>\n        </MenubarMenu>\n        <MenubarMenu>\n          <MenubarTrigger>{isZh ? \"编辑 (Edit)\" : \"Edit\"}</MenubarTrigger>\n          <MenubarContent>\n            <MenubarItem>\n              {isZh ? \"撤销 (Undo)\" : \"Undo\"} <MenubarShortcut>⌘Z</MenubarShortcut>\n            </MenubarItem>\n            <MenubarItem>\n              {isZh ? \"重做 (Redo)\" : \"Redo\"} <MenubarShortcut>⇧⌘Z</MenubarShortcut>\n            </MenubarItem>\n            <MenubarSeparator />\n            <MenubarSub>\n              <MenubarSubTrigger>{isZh ? \"查找 (Find)\" : \"Find\"}</MenubarSubTrigger>\n              <MenubarSubContent>\n                <MenubarItem>{isZh ? \"搜索网页 (Search the web)\" : \"Search the web\"}</MenubarItem>\n                <MenubarItem>{isZh ? \"查找... (Find...)\" : \"Find...\"}</MenubarItem>\n              </MenubarSubContent>\n            </MenubarSub>\n          </MenubarContent>\n        </MenubarMenu>\n      </Menubar>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+---
+title: 功能开关
+description: 使用基于环境变量的功能开关，在各环境中启用或禁用 Nebutra-Sailor 的产品功能。
+---
+
+## 功能开关的工作原理
+
+Nebutra-Sailor 使用基于环境变量的功能开关，无需修改代码或重新部署即可启用或禁用整个产品功能。每个开关是一个布尔字符串（`true` / `false`），在启动时由 `@nebutra/config` 读取。
+
+若变量缺失，所有开关默认为 `false`。将开关设为 `true` 会激活对应的路由、界面和后台任务。
+
+## 可用开关
+
+| 开关 | 默认值 | 效果 |
+|------|--------|------|
+| `FEATURE_AI_CHAT` | `false` | 启用 API 网关上的 AI 对话端点和控制台中的对话界面。需要 `OPENAI_API_KEY` 或 `OPENROUTER_API_KEY`。 |
+| `FEATURE_AI_EMBEDDINGS` | `false` | 启用嵌入向量 API。需要 `OPENAI_API_KEY`。 |
+| `FEATURE_BLOG` | `false` | 在落地页上启用 Sanity 驱动的博客。需要配置 Sanity Studio。 |
+| `FEATURE_CHANGELOG` | `false` | 在落地页上启用公开的更新日志页面。 |
+| `FEATURE_TEAMS` | `false` | 启用团队和组织功能：邀请成员、角色管理和按组织计费。 |
+| `FEATURE_ANALYTICS` | `false` | 启用 PostHog 事件追踪。需要 `NEXT_PUBLIC_POSTHOG_KEY`。 |
+
+## 按环境启用开关
+
+<Steps>
+  <Step title="本地开发">
+    将开关添加到 `.env.local`：
+
+    ```bash .env.local
+    FEATURE_AI_CHAT=true
+    FEATURE_TEAMS=true
+    ```
+  </Step>
+  <Step title="预览部署">
+    在 Vercel 控制台中，打开 **Settings** → **Environment Variables**。仅为 **Preview** 环境添加开关。这样您可以在预览 URL 上测试功能，然后再将其推广到生产环境。
+  </Step>
+  <Step title="生产环境">
+    与上述相同，但选择 **Production** 环境。仅启用已完全准备好面向终端用户的功能。
+  </Step>
+</Steps>
+
+## 开关依赖关系
+
+部分开关需要额外的环境变量才能正常工作：
+
+<AccordionGroup>
+  <Accordion title="FEATURE_AI_CHAT">
+    需要至少一个 AI 提供商密钥：
+    - `OPENAI_API_KEY`：直接访问 OpenAI
+    - `OPENROUTER_API_KEY`：通过 OpenRouter 进行模型路由
+
+    还可选读取 `AI_DEFAULT_MODEL` 来选择默认补全模型。
+  </Accordion>
+  <Accordion title="FEATURE_AI_EMBEDDINGS">
+    需要 `OPENAI_API_KEY`。嵌入向量 API 默认使用 `text-embedding-3-small` 模型。
+  </Accordion>
+  <Accordion title="FEATURE_BLOG">
+    需要部署 Sanity Studio（`apps/studio`），并配置 Sanity 项目 ID 和数据集。落地页在构建时和按需请求时从 Sanity CDN 获取博客文章。
+  </Accordion>
+  <Accordion title="FEATURE_ANALYTICS">
+    需要 `NEXT_PUBLIC_POSTHOG_KEY`。如果您自托管 PostHog 或使用欧盟数据区域，可选读取 `NEXT_PUBLIC_POSTHOG_HOST`。
+  </Accordion>
+  <Accordion title="FEATURE_TEAMS">
+    没有外部服务依赖，但需要在您的 Clerk 控制台中启用 Clerk 组织功能。若未启用，团队邀请将在 Clerk API 层面失败。
+  </Accordion>
+</AccordionGroup>
+
+## 通过 Edge Config 实现运行时功能开关
+
+上述基于环境变量的开关在**构建时**（用于 Next.js 静态生成）和**进程启动时**进行评估。对于需要在不重新部署的情况下更改的开关，请使用 Vercel Edge Config。
+
+Edge Config 在边缘节点提供亚毫秒级读取延迟，非常适合无需重新部署即可变更的功能开关。
+
+### 配置步骤
+
+1. 在 Vercel 控制台创建 Edge Config 存储（Storage → Edge Config → Create）。
+2. 将其关联到你的项目，并运行 `vercel env pull` 在本地获取 `EDGE_CONFIG`。
+3. 安装客户端：
+
+```bash
+pnpm add @vercel/edge-config
+```
+
+### 写入开关（服务端或部署 Hook）
+
+```typescript
+// scripts/update-flags.ts — 通过 CI 或 Vercel 部署 Hook 执行
+import { createClient } from "@vercel/edge-config";
+
+const edgeConfig = createClient(process.env.EDGE_CONFIG!);
+await edgeConfig.set("featureFlags", {
+  FEATURE_AI_CHAT: true,
+  FEATURE_BETA_DASHBOARD: false,
+});
+```
+
+### 在边缘读取开关（middleware / `proxy.ts`）
+
+```typescript
+import { get } from "@vercel/edge-config";
+
+export async function middleware() {
+  const flags = await get<Record<string, boolean>>("featureFlags");
+  const aiChatEnabled = flags?.FEATURE_AI_CHAT ?? false;
+  // 根据 aiChatEnabled 进行条件重写/重定向
+}
+```
+
+### 在 Server Component 中读取开关
+
+```typescript
+import { get } from "@vercel/edge-config";
+
+export default async function Page() {
+  const flags = await get<Record<string, boolean>>("featureFlags") ?? {};
+  if (!flags.FEATURE_BETA_DASHBOARD) notFound();
+  return <BetaDashboard />;
+}
+```
+
+Edge Config 每次请求会缓存读取结果，单次渲染中多次调用 `get()` 无额外开销。
+
+## 按租户功能开关（计划中）
+
+Nebutra-Sailor 的未来版本将支持与客户订阅计划绑定的按租户功能开关：
+
+| 计划 | 自动启用的开关 |
+|------|---------------|
+| 免费版 | `FEATURE_CHANGELOG`、`FEATURE_BLOG` |
+| Pro 版 | + `FEATURE_AI_CHAT`、`FEATURE_ANALYTICS` |
+| Enterprise 版 | + `FEATURE_AI_EMBEDDINGS`、`FEATURE_TEAMS` |
+
+<Note>
+  按租户功能开关**已在 Roadmap 中**，尚未实现。当前系统在基础设施层面全局应用开关。在按租户开关上线前，可通过 `@nebutra/permissions` RBAC 系统进行近似的按计划功能限制——在权限策略中检查 `tenant.plan`，并对该计划不包含的功能返回 `403`。
+</Note>
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="配置概览" icon="gear" href="/zh/configuration/overview">
+    配置验证的工作原理及各环境中变量的设置位置。
+  </Card>
+  <Card title="环境变量" icon="key" href="/zh/configuration/environment-variables">
+    包含 AI 和分析密钥的所有环境变量完整参考。
+  </Card>
+  <Card title="AI 集成" icon="robot" href="/zh/ai/overview">
+    设置 AI 对话和嵌入向量功能。
+  </Card>
+  <Card title="部署" icon="rocket" href="/zh/deployment/overview">
+    在 Vercel 预览和生产环境中管理功能开关。
+  </Card>
+</CardGroup>

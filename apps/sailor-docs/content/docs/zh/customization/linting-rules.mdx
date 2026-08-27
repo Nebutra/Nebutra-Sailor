@@ -1,0 +1,137 @@
+---
+title: Lint 规则
+description: 由 Lint 强制的治理规则——表单控件、焦点环、图标三层等级。
+---
+
+仓库通过 `pnpm lint`（Biome v2 + 自定义脚本）强制执行三类治理规则。违规的新代码会让 CI 失败；现有例外见下文。
+
+## 表单控件规则
+
+`apps/**` 中**禁止使用**原生 `<input>` / `<textarea>` / `<select>`。请改用 `@nebutra/ui/primitives` 中的原语：
+
+```tsx
+import {
+  Input,
+  Textarea,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Field,
+  Checkbox,
+  RadioGroup,
+} from "@nebutra/ui/primitives";
+
+<Field label="Email *" htmlFor="email">
+  <Input id="email" type="email" name="email" required />
+</Field>
+
+<Field label="Plan *" htmlFor="plan">
+  <Select name="plan" defaultValue="pro">
+    <SelectTrigger id="plan">
+      <SelectValue />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectItem value="pro">Pro</SelectItem>
+      <SelectItem value="enterprise">Enterprise</SelectItem>
+    </SelectContent>
+  </Select>
+</Field>
+```
+
+### 原生豁免
+
+对合法场景（隐藏字段、配合自定义按钮触发的 `type="file"`、需要空字符串「全部」语义的过滤 select 等）添加 `data-allow-native` 属性即可豁免：
+
+```tsx
+<input data-allow-native type="hidden" name="orgId" value={orgId} />
+
+<input data-allow-native type="file" ref={inputRef} className="sr-only" />
+
+<select
+  data-allow-native
+  value={filters.outcome ?? ""}
+  onChange={(e) => setOutcome(e.target.value || null)}
+>
+  <option value="">全部</option>
+  <option value="success">成功</option>
+  <option value="failure">失败</option>
+</select>
+```
+
+### 强制方式
+
+- **脚本**：`scripts/lint-no-raw-inputs.mjs`（在 `pnpm lint` 中调用）
+- **白名单**：Storybook Story、design-docs / sailor-docs 预览、测试文件、所有 `packages/**/primitives/**`。
+
+## 焦点环规则
+
+**不要在组件层加 `focus:ring*`。** [`packages/design/design-tokens/static/base.css`](https://github.com/Nebutra/Nebutra-Sailor/blob/main/packages/design/design-tokens/static/base.css) 中的全局 `:focus-visible` 规则会为每个可聚焦元素自动添加 2px 半透明描边（`hsl(var(--ring) / 0.5)`）与 2px 偏移。键盘用户获得焦点环；鼠标用户不会触发。
+
+```tsx
+// ✅ 正确 —— 无需任何 focus 类
+<button type="button" aria-label="关闭对话框" className="rounded-md p-1">
+  <X className="h-4 w-4" />
+</button>
+
+// ✅ 正确 —— input 通过 border 颜色变化提供鼠标聚焦反馈
+<input className="rounded-md border border-neutral-7 focus:border-[hsl(var(--ring))] focus:outline-none" />
+
+// ❌ 错误 —— 重新引入 100% 饱和度的品牌蓝环，与全局规则双环叠加
+<button className="focus:ring-[var(--blue-9)] focus:ring-offset-1">…</button>
+```
+
+仅当某个组件确实需要不同的环时才覆写（极少见），并提前与设计体系维护者沟通。
+
+## 图标治理（三层）
+
+只允许三个图标库，每个有明确的唯一位置：
+
+| 层级 | 包 | 适用场景 |
+|------|----|----------|
+| 1 —— 默认 | `@nebutra/icons`（Geist 541） | 全部产品 / 应用 / 控制台界面。视觉与 Vercel、v0 一致。 |
+| 2 —— 营销 | `@phosphor-icons/react/light` | **仅限** `packages/design/ui/src/marketing/**`，提供 AI 品牌的细描 / 双色调表现。 |
+| 3 —— 弃用 | `lucide-react` | **禁止新增任何引用。** 已于 2026-05-14 清扫所有历史用例；后续新增直接 lint 失败。 |
+
+```tsx
+// ✅ 默认（产品界面）
+import {
+  MagnifyingGlass,
+  SettingsGear,
+  ChevronRight,
+  Sparkles,
+} from "@nebutra/icons";
+
+// ✅ 营销（AI 品牌强调使用的细描 / 双色调） —— 仅允许在受限目录
+import { Brain } from "@phosphor-icons/react/dist/ssr";
+// 仅允许在 packages/design/ui/src/marketing/** 内
+
+// ❌ 新代码中禁止
+import { Search } from "lucide-react";
+```
+
+**同时禁止：** 在产品代码内手写 `<svg>` 图标路径，请从层 1 / 2 中选择。数据可视化原语（如 Gauge）使用 SVG 数学绘制仍然允许。
+
+## Console 规则
+
+生产代码禁止 `console.log`，改用 `@nebutra/logger`：
+
+```ts
+import { logger } from "@nebutra/logger";
+
+logger.info({ tenantId }, "subscription.activated");
+```
+
+Biome 允许 `console.warn`、`console.error`、`console.assert` 用于显式告警 / 错误路径。
+
+## 相关内容
+
+<CardGroup cols={2}>
+  <Card title="项目结构" icon="folder" href="/zh/docs/development/project-structure">
+    每个包的位置与图标层级映射。
+  </Card>
+  <Card title="后端语言策略" icon="server" href="/zh/docs/architecture/backend-language-policy">
+    TS-by-Default —— 何时（且仅何时）可以引入 Python。
+  </Card>
+</CardGroup>

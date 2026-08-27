@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — API مارکیٹ پلیس",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "تمام ماڈلز کی API مارکیٹ پلیس · استعمال کے مطابق ادائیگی · کیز اور والیٹ کا انتظام · فوری آزمائش۔"
+  },
+  "admin": {
+    "dashboard": "جائزہ",
+    "keys": "API کیز",
+    "wallet": "والیٹ",
+    "docs": "دستاویزات",
+    "title": "ایڈمن",
+    "backToMarket": "مارکیٹ واپس جائیں",
+    "quickUse": "فوری استعمال"
+  },
+  "chrome": {
+    "searchPlaceholder": "آپ AI کے ساتھ کیا کرنا چاہتے ہیں؟",
+    "search": "تلاش",
+    "locale": "زبان",
+    "currency": "کرنسی",
+    "collapseSidebar": "سائیڈ بار بند کریں",
+    "expandSidebar": "سائیڈ بار کھولیں",
+    "home": "ہوم",
+    "adminConsole": "ایڈمن",
+    "quickUse": "فوری استعمال",
+    "support": "سپورٹ",
+    "apiDocs": "API دستاویزات",
+    "integrationHelp": "انٹیگریشن گائیڈ",
+    "aiRecommend": "AI تجاویز",
+    "market": "مارکیٹ",
+    "usageTitle": "فوری استعمال"
+  },
+  "channels": {
+    "app": "ایپ مارکیٹ",
+    "api": "API مارکیٹ",
+    "models": "ماڈل کیٹلاگ",
+    "client": "کلائنٹ"
+  },
+  "market": {
+    "new": "نیا",
+    "hot": "ہاٹ",
+    "forYou": "آپ کے لیے",
+    "grid": "گرڈ",
+    "list": "فہرست",
+    "apiShelf": "API شیلف",
+    "toolShelf": "ٹول شیلف",
+    "categories": "زمرے",
+    "apps": "ایپس",
+    "newRelease": "نیا ریلیز",
+    "forgeTitle": "Forge ٹول ورک اسپیس",
+    "forgeBlurb": "ٹیکسٹ ٹرانسفارمز، کوڈیکس، فارمز، اور کمپوز ایبل ٹولز۔ ایپ مارکیٹ لیبل فورج کی طرف اشارہ کرتا ہے۔",
+    "openForge": "فورج کھولیں →",
+    "allApi": "تمام APIs →",
+    "all": "تمام →",
+    "viewAll": "تمام {label} دیکھیں →",
+    "gridView": "گرڈ ویو",
+    "listView": "فہرست ویو",
+    "hiTitle": "انٹرپرائز AI وسائل پلیٹ فارم",
+    "hiSubtitle": "ہر ضرورت کو صحیح AI سے ملائیں",
+    "sellable": "فروخت کے قابل",
+    "walletTopup": "ٹاپ اپ کریں"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "زبان کے ماڈلز",
+      "hint": "چیٹ · استدلال"
+    },
+    "image-gen": {
+      "label": "تصویر کی تخلیق",
+      "hint": "ٹیکسٹ سے تصویر"
+    },
+    "image-edit": {
+      "label": "تصویر کی ترمیم",
+      "hint": "تبدیلی · ماتنگ"
+    },
+    "video": {
+      "label": "ویڈیو جنریشن",
+      "hint": "ٹیکسٹ ٹو ویڈیو"
+    },
+    "audio": {
+      "label": "آڈیو اور ویڈیو",
+      "hint": "اسپیچ · ٹرانسکرپشن"
+    },
+    "data": {
+      "label": "معلومات",
+      "hint": "ریٹریول · ایکسٹریکٹ"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "کھوج سے بھرپور"
+    },
+    "tools": {
+      "label": "ٹول APIs",
+      "hint": "ایجنٹ · ٹولز"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "بٹس",
+      "chips": "چیٹ بٹس · ڈرائنگ بٹس · کھوج"
+    },
+    "productivity": {
+      "label": "پروڈکٹیویٹی",
+      "chips": "ماڈل ارینا · AI لکھائی"
+    },
+    "academic": {
+      "label": "تعلیمی",
+      "chips": "PDF ٹول کٹ · AI پیٹنٹ سرچ"
+    },
+    "image": {
+      "label": "امیج ٹولز",
+      "chips": "3D اسٹوڈیو · کینوس"
+    },
+    "audio": {
+      "label": "آڈیو",
+      "chips": "اسپیچ · AI میوزک"
+    },
+    "code": {
+      "label": "کوڈ",
+      "chips": "ویب جنریٹر · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "اوور ویو",
+    "keys": "کیز",
+    "wallet": "والیٹ",
+    "use": "ٹرائے",
+    "docs": "ڈاکس",
+    "models": "مزید"
+  }
+}

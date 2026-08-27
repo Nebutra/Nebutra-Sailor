@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scroll-area-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@/components"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/scroll-area-demo.tsx",
+      "content": "\"use client\";\n\nimport { ScrollArea, ScrollBar } from \"@/components/mdx-scroll-area\";\n\nexport function ScrollAreaDemo() {\n  return (\n    <ScrollArea className=\"mb-6 w-full max-w-[400px] rounded-md border text-left whitespace-nowrap\">\n      <div className=\"space-x-4 p-4 flex w-max\">\n        {Array.from({ length: 10 }, (_, i) => (\n          <figure key={i} className=\"shrink-0\">\n            <div className=\"h-40 w-40 flex items-center justify-center rounded-md bg-muted text-muted-foreground\">\n              Image {i + 1}\n            </div>\n          </figure>\n        ))}\n      </div>\n      <ScrollBar orientation=\"horizontal\" />\n    </ScrollArea>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

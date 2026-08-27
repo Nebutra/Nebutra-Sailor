@@ -1,0 +1,57 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "cd ../.. && pnpm --filter @nebutra/brand sync && pnpm turbo build --filter=@nebutra/auth-center",
+  "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh apps/auth",
+  "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
+  "outputDirectory": ".next",
+  "regions": ["iad1"],
+  "env": {
+    "NEXT_PUBLIC_SITE_URL": "https://nebutra.com",
+    "NEXT_PUBLIC_APP_URL": "https://app.nebutra.com",
+    "NEXT_PUBLIC_AUTH_URL": "https://auth.nebutra.com",
+    "NEXT_PUBLIC_FORGE_URL": "https://forge.nebutra.com",
+    "NEXT_PUBLIC_ROUTER_URL": "https://router.nebutra.com",
+    "NEXT_PUBLIC_AUTH_PROVIDER": "better-auth",
+    "AUTH_PROVIDER": "better-auth",
+    "BETTER_AUTH_URL": "https://auth.nebutra.com",
+    "AUTH_COOKIE_DOMAIN": ".nebutra.com",
+    "AUTH_RETURN_ALLOWED_HOSTS": "forge.nebutra.com,router.nebutra.com,app.nebutra.com,nebutra.com,www.nebutra.com,auth.nebutra.com",
+    "BETTER_AUTH_TRUSTED_ORIGINS": "https://forge.nebutra.com,https://router.nebutra.com,https://app.nebutra.com,https://nebutra.com,https://www.nebutra.com"
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
+      ]
+    }
+  ]
+}

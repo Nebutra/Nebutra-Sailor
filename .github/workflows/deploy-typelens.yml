@@ -1,0 +1,82 @@
+name: Deploy Type Lens (Cloudflare)
+
+# Primary production path: OpenNext → Cloudflare Worker + Assets
+# Domain: typelens.nebutra.com — the route lives in wrangler.jsonc and is
+# managed out of band; CI deploys with wrangler.deploy.jsonc, which omits it
+# so a Workers Scripts:Edit token can ship the Worker without Zone rights.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "apps/typelens/**"
+      - "packages/design/typelens-catalog/**"
+      - "packages/design/ui/**"
+      - "packages/design/tokens/**"
+      - "packages/design/icons/**"
+      - "packages/design/brand/**"
+      - ".github/workflows/deploy-typelens.yml"
+
+concurrency:
+  group: deploy-typelens-production
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version: 22
+
+      - name: Validate Cloudflare secrets
+        run: |
+          [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ] || { echo "::error::CLOUDFLARE_API_TOKEN secret is not set"; exit 1; }
+          [ -n "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" ] || { echo "::error::CLOUDFLARE_ACCOUNT_ID secret is not set"; exit 1; }
+
+      # Workspace packages export dist/ (gitignored). Build transitive deps so
+      # Next can resolve @nebutra/brand, @nebutra/ui, icons, tokens, etc.
+      - name: Build workspace dependencies
+        run: pnpm turbo build --filter="@nebutra/typelens^..."
+
+      - name: Build OpenNext worker
+        working-directory: apps/typelens
+        env:
+          OPEN_NEXT_BUILD: "true"
+          CI: "true"
+          NEXT_PUBLIC_SITE_URL: https://typelens.nebutra.com
+          NEXT_PUBLIC_APP_URL: https://typelens.nebutra.com
+        run: pnpm exec opennextjs-cloudflare build
+
+      - name: Deploy Worker
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: apps/typelens
+          command: deploy --config wrangler.deploy.jsonc
+
+      - name: Smoke
+        run: |
+          set -euo pipefail
+          # workers.dev URL may lag custom domain; try both
+          for url in \
+            "https://typelens.nebutra.com/" \
+            "https://nebutra-typelens.nebutra.workers.dev/" \
+            ; do
+            code=$(curl -sS -o /tmp/tl-smoke.html -w '%{http_code}' --max-time 30 "$url" || echo 000)
+            echo "$url → $code"
+            if [ "$code" = "200" ]; then
+              head -c 200 /tmp/tl-smoke.html; echo
+              exit 0
+            fi
+          done
+          echo "::warning::Smoke did not get HTTP 200 yet (DNS/propagation). Worker deploy step already succeeded."

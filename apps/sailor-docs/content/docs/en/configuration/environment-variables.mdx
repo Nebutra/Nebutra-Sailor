@@ -1,0 +1,279 @@
+---
+title: Environment Variables
+description: Complete reference for every environment variable in Nebutra-Sailor — requirement level, default value, and service context.
+---
+
+## Validation
+
+All variables are validated by `@nebutra/config` at startup (`packages/platform/config/src/index.ts`). Required variables that are absent or empty cause an immediate, descriptive startup error. Optional variables that are absent fall back to the documented default.
+
+<Note>
+  Variables prefixed with `NEXT_PUBLIC_` are bundled into the client-side JavaScript and are visible to end users. Never put secrets in `NEXT_PUBLIC_` variables.
+</Note>
+
+---
+
+## Database
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `DATABASE_URL` | Yes | — | Full PostgreSQL connection string. Format: `postgresql://user:pass@host:5432/nebutra` |
+
+```bash .env.local
+DATABASE_URL=postgresql://postgres:password@localhost:5432/nebutra
+```
+
+<Tip>
+  For local development, `pnpm infra:up` starts a PostgreSQL 16 instance on port 5432 with user `postgres` and password `password`.
+</Tip>
+
+---
+
+## Authentication
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `AUTH_PROVIDER` | No | `better-auth` | Server-side auth provider. One of `better-auth`, `nextauth`, `clerk`, `supabase`, or `dev`. |
+| `NEXT_PUBLIC_AUTH_PROVIDER` | No | `better-auth` | Client-visible auth provider. Keep this aligned with `AUTH_PROVIDER`. |
+| `BETTER_AUTH_SECRET` | If `AUTH_PROVIDER=better-auth` | — | Self-hosted Better Auth signing secret. Generate with `openssl rand -base64 32`. **Must match** on auth-center and every RP app. |
+| `BETTER_AUTH_URL` | If `AUTH_PROVIDER=better-auth` | — | Auth-center origin that serves `/api/auth/*`. Production: `https://auth.nebutra.com`. |
+| `NEXT_PUBLIC_AUTH_URL` | If split auth-center | — | Public auth-center URL for client redirects / SDK baseURL. Usually same as `BETTER_AUTH_URL`. |
+| `AUTH_COOKIE_DOMAIN` | Production multi-subdomain | — | Shared cookie parent domain (e.g. `.nebutra.com`) so session works on `app` + `auth`. |
+| `SERVICE_SECRET` | Yes (gateway / S2S) | — | HS256 secret for internal `x-service-token` JWTs. Not an end-user session secret. |
+| `AUTH_SECRET` | If `AUTH_PROVIDER=nextauth` | — | Auth.js / NextAuth signing secret. Generate with `openssl rand -base64 32`. |
+| `NEXTAUTH_URL` | If `AUTH_PROVIDER=nextauth` | — | Dashboard origin for Auth.js callbacks. |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | If `AUTH_PROVIDER=clerk` | — | Clerk publishable key. Starts with `pk_live_` or `pk_test_`. |
+| `CLERK_SECRET_KEY` | If `AUTH_PROVIDER=clerk` | — | Clerk secret key. Starts with `sk_live_` or `sk_test_`. |
+| `CLERK_WEBHOOK_SECRET` | If Clerk webhooks are enabled | — | Signing secret for Clerk webhook payloads. Starts with `whsec_`. |
+| `AUTH_SSO_DISCOVERY_PROVIDERS` | If Enterprise SSO discovery is enabled | — | JSON array mapping email domains to SSO providers. Clerk entries use `/sign-in/sso`; Feishu entries use `/api/auth/oauth/feishu`; generic entries must define an internal `loginUrl`. |
+| `FEISHU_APP_ID` | If Feishu/Lark SSO is enabled | — | Feishu/Lark app id for Better Auth generic OAuth. |
+| `FEISHU_APP_SECRET` | If Feishu/Lark SSO is enabled | — | Feishu/Lark app secret. Never expose this as `NEXT_PUBLIC_`. |
+| `FEISHU_OAUTH_SCOPES` | No | `contact:user.email contact:user.base:readonly` | Space- or comma-separated OAuth scopes requested from Feishu/Lark. |
+| `FEISHU_ALLOWED_TENANT_KEYS` | No | — | Optional allowlist of Feishu tenant keys accepted by this deployment. |
+| `FEISHU_REDIRECT_URI` | No | — | Optional override. Default Better Auth callback is `/api/auth/oauth2/callback/feishu`. |
+| `GOOGLE_CLIENT_ID` | If Google OAuth is enabled | — | Google OAuth web client id for Better Auth or NextAuth. |
+| `GOOGLE_CLIENT_SECRET` | If Google OAuth is enabled | — | Google OAuth web client secret for Better Auth or NextAuth. |
+| `GITHUB_CLIENT_ID` | If GitHub OAuth is enabled | — | GitHub OAuth app client id (Better Auth). |
+| `GITHUB_CLIENT_SECRET` | If GitHub OAuth is enabled | — | GitHub OAuth app client secret. |
+| `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | If Google One Tap is enabled for Better Auth or NextAuth | — | Public Google OAuth web client id used by the landing page One Tap prompt. |
+| `NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP` | No | `true` | Set to `false` to disable the landing One Tap prompt. |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | If Turnstile captcha is shown | — | Cloudflare Turnstile site key on auth-center forms. |
+| `TURNSTILE_SECRET_KEY` / `TURNSTILE_SECRET` | If Turnstile is enforced | — | Server secret for `siteverify`. When unset, verification is skipped. |
+| `NEXT_PUBLIC_AUTH_MAGIC_LINK` | No | off | Set `1` / `true` to show magic-link alternate on auth-center sign-in. |
+| `NEXT_PUBLIC_AUTH_PASSKEYS` | No | off | Set `1` / `true` to show passkey button + conditional UI. |
+| `PASSKEY_RP_ID` | No | auth hostname | WebAuthn RP ID override (defaults to auth-center host). |
+| `PASSKEY_ORIGIN` | No | auth origin | WebAuthn origin override (defaults to auth-center origin). |
+| `NEBUTRA_LANDING_ORIGIN` | If NextAuth One Tap is enabled | — | Landing origin allowed to POST to `/api/auth/google-one-tap`. |
+| `NEBUTRA_SESSION_HINT_DOMAIN` | No | — | Optional shared cookie domain for the lightweight cross-subdomain session hint. |
+
+<CodeGroup>
+```bash .env.local (development)
+AUTH_PROVIDER=better-auth
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
+BETTER_AUTH_SECRET=local-dev-secret
+BETTER_AUTH_URL=http://localhost:3101
+NEXT_PUBLIC_AUTH_URL=http://localhost:3101
+GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=xxx
+NEXT_PUBLIC_GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
+```
+```bash .env (production — Nebutra.com / Better Auth)
+AUTH_PROVIDER=better-auth
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
+BETTER_AUTH_SECRET=...                 # same on apps/auth + apps/web
+BETTER_AUTH_URL=https://auth.nebutra.com
+NEXT_PUBLIC_AUTH_URL=https://auth.nebutra.com
+AUTH_COOKIE_DOMAIN=.nebutra.com
+DATABASE_URL=postgresql://...
+SERVICE_SECRET=...
+GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=xxx
+GITHUB_CLIENT_ID=...
+GITHUB_CLIENT_SECRET=...
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=0x4AAAAA...
+TURNSTILE_SECRET_KEY=0x4AAAAA...
+# Optional UX flags on auth-center:
+# NEXT_PUBLIC_AUTH_MAGIC_LINK=1
+# NEXT_PUBLIC_AUTH_PASSKEYS=1
+# PASSKEY_RP_ID=auth.nebutra.com
+# PASSKEY_ORIGIN=https://auth.nebutra.com
+```
+```bash .env (optional Clerk provider)
+AUTH_PROVIDER=clerk
+NEXT_PUBLIC_AUTH_PROVIDER=clerk
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_xxx
+CLERK_SECRET_KEY=sk_live_xxx
+CLERK_WEBHOOK_SECRET=whsec_xxx
+```
+```bash .env (Feishu/Lark SSO)
+AUTH_PROVIDER=better-auth
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
+BETTER_AUTH_SECRET=...
+BETTER_AUTH_URL=https://auth.nebutra.com
+NEXT_PUBLIC_AUTH_URL=https://auth.nebutra.com
+AUTH_COOKIE_DOMAIN=.nebutra.com
+FEISHU_APP_ID=cli_xxx
+FEISHU_APP_SECRET=xxx
+FEISHU_OAUTH_SCOPES="contact:user.email contact:user.base:readonly"
+AUTH_SSO_DISCOVERY_PROVIDERS='[{"domain":"example.cn","id":"example-feishu","name":"Example Feishu","type":"oidc","provider":"feishu"}]'
+```
+</CodeGroup>
+
+<Note>
+  OAuth redirect URIs must target the **auth-center** origin, e.g.
+  `https://auth.nebutra.com/api/auth/callback/google` and
+  `https://auth.nebutra.com/api/auth/callback/github`. `GET https://auth.nebutra.com/health`
+  returns the currently enabled `oauth.callbackUrls`.
+</Note>
+
+---
+
+## Application URLs
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `NEXT_PUBLIC_APP_URL` | Yes | — | Base URL of the authenticated dashboard. Example: `https://app.nebutra.com` |
+| `NEXT_PUBLIC_API_URL` | Yes | — | Base URL of the API gateway. Example: `https://api.nebutra.com` |
+
+---
+
+## Payments (Stripe)
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `STRIPE_SECRET_KEY` | Yes | — | Stripe secret key. Starts with `sk_live_` or `sk_test_`. |
+| `STRIPE_WEBHOOK_SECRET` | Yes | — | Signing secret for Stripe webhook payloads. Starts with `whsec_`. |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Yes | — | Stripe publishable key. Starts with `pk_live_` or `pk_test_`. |
+| `STRIPE_PRO_PRICE_ID` | Yes | — | Stripe Price ID for the Pro plan. Starts with `price_`. |
+| `STRIPE_ENTERPRISE_PRICE_ID` | Yes | — | Stripe Price ID for the Enterprise plan. Starts with `price_`. |
+
+<Warning>
+  Use test-mode keys (`sk_test_`, `pk_test_`) in development and preview environments. Never use live-mode keys outside production.
+</Warning>
+
+---
+
+## Email (Resend)
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `RESEND_API_KEY` | Yes | — | Resend API key. Starts with `re_`. |
+| `EMAIL_FROM` | Yes | — | Sender address shown on all transactional emails. Example: `Nebutra <noreply@nebutra.com>` |
+
+---
+
+## Storage
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `STORAGE_PROVIDER` | No | `local` | Storage backend. One of `s3`, `r2`, `s3-compatible`, `local`. |
+| `AWS_BUCKET_NAME` | No | `nebutra-uploads` | S3 or R2 bucket name. |
+| `AWS_REGION` | No | `us-east-1` | AWS region for S3. |
+| `AWS_ACCESS_KEY_ID` | No | — | AWS access key ID. |
+| `AWS_SECRET_ACCESS_KEY` | No | — | AWS secret access key. |
+
+<Info>
+  When `STORAGE_PROVIDER` is `local`, uploaded files are written to `./uploads` on the server filesystem. This is suitable for local development only — local storage is not persistent across deployments.
+</Info>
+
+---
+
+## AI
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `OPENAI_API_KEY` | No | — | OpenAI API key. Required when `FEATURE_AI_CHAT=true` or `FEATURE_AI_EMBEDDINGS=true`. |
+| `OPENROUTER_API_KEY` | No | — | OpenRouter API key. Alternative to direct OpenAI access. |
+| `AI_DEFAULT_MODEL` | No | `gpt-5.4-mini` | Default model identifier used for AI completions. |
+
+---
+
+## Redis
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `REDIS_URL` | No | — | Redis connection string. Required for queues (BullMQ), caching, and rate limiting. Example: `redis://localhost:6379`. |
+
+<Tip>
+  `pnpm infra:up` starts Redis 7 on port 6379. `pnpm infra:lite` starts only PostgreSQL — Redis is not included.
+</Tip>
+
+---
+
+## Analytics & Observability (ClickHouse)
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `CLICKHOUSE_URL` | No | `http://localhost:8123` | ClickHouse HTTP endpoint. Required for the `@nebutra/metering` pipeline. |
+| `CLICKHOUSE_DB` | No | `nebutra` | ClickHouse database name. |
+
+---
+
+## Error Tracking (Sentry)
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `SENTRY_DSN` | No | — | Sentry DSN for server-side error reporting. |
+| `NEXT_PUBLIC_SENTRY_DSN` | No | — | Sentry DSN for client-side error reporting. |
+
+---
+
+## Product Analytics (PostHog)
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `POSTHOG_KEY` | No | — | Server-side PostHog project API key for product events. Starts with `phc_`. |
+| `POSTHOG_HOST` | No | `https://us.i.posthog.com` | Server-side PostHog ingestion host. |
+| `NEXT_PUBLIC_POSTHOG_KEY` | No | — | PostHog project API key. Starts with `phc_`. |
+| `NEXT_PUBLIC_POSTHOG_HOST` | No | `https://app.posthog.com` | PostHog ingestion host. Override to use a self-hosted or EU instance. |
+
+---
+
+## Background Jobs (Inngest)
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `INNGEST_EVENT_KEY` | No | — | Inngest event API key for sending events. |
+| `INNGEST_SIGNING_KEY` | No | — | Inngest signing key for webhook verification. |
+
+---
+
+## Serverless Queue (QStash)
+
+These variables are required only when `QUEUE_PROVIDER=qstash`. If `REDIS_URL` is set and `QUEUE_PROVIDER` is unset, the system auto-selects BullMQ instead.
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `QSTASH_TOKEN` | Conditional | — | Upstash QStash REST token. |
+| `QSTASH_CURRENT_SIGNING_KEY` | Conditional | — | Current webhook signing key for payload verification. |
+| `QSTASH_NEXT_SIGNING_KEY` | Conditional | — | Next signing key, used during key rotation. |
+| `QSTASH_CALLBACK_BASE_URL` | Conditional | — | Public base URL where QStash delivers webhook callbacks. Example: `https://api.nebutra.com`. |
+
+---
+
+## Generating secrets
+
+For any secret that requires a cryptographically random value:
+
+```bash
+openssl rand -base64 32
+```
+
+Use a separate secret value per environment (development, preview, production). Never reuse secrets across environments.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Configuration Overview" icon="gear" href="/configuration/overview">
+    How config validation works and where to set variables per environment.
+  </Card>
+  <Card title="Feature Flags" icon="toggle-on" href="/configuration/feature-flags">
+    Boolean toggles that enable or disable product features.
+  </Card>
+  <Card title="Common Errors" icon="triangle-exclamation" href="/troubleshooting/common-errors">
+    Startup errors caused by missing or incorrect environment variables.
+  </Card>
+  <Card title="Deployment" icon="rocket" href="/deployment/overview">
+    Deploying Nebutra-Sailor and managing secrets in production.
+  </Card>
+</CardGroup>

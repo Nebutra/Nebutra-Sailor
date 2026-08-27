@@ -1,0 +1,96 @@
+{
+  "name": "@nebutra/analytics",
+  "version": "0.0.4",
+  "private": true,
+  "description": "Link attribution, conversion tracking, and product analytics (Dub + PostHog)",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.mjs",
+      "require": "./dist/react.js"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.mjs",
+      "require": "./dist/server.js"
+    },
+    "./posthog": {
+      "types": "./dist/posthog.d.ts",
+      "import": "./dist/posthog.mjs",
+      "require": "./dist/posthog.js"
+    },
+    "./events": {
+      "types": "./dist/events.d.ts",
+      "import": "./dist/events.mjs",
+      "require": "./dist/events.js"
+    },
+    "./track": {
+      "types": "./dist/track.d.ts",
+      "import": "./dist/track.mjs",
+      "require": "./dist/track.js"
+    },
+    "./umami-proxy": {
+      "types": "./dist/umami-proxy.d.ts",
+      "import": "./dist/umami-proxy.mjs",
+      "require": "./dist/umami-proxy.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@nebutra/billing": "workspace:*",
+    "@nebutra/brand": "workspace:*",
+    "dub": "^0.71.5",
+    "p-limit": "^7.3.0",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "next": "catalog:",
+    "react": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "next": "catalog:",
+    "react": "catalog:",
+    "posthog-js": "^1.360.1"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "posthog-js": {
+      "optional": true
+    }
+  },
+  "keywords": [
+    "analytics",
+    "dub",
+    "link-tracking",
+    "conversion",
+    "referral",
+    "attribution"
+  ],
+  "license": "AGPL-3.0-only"
+}

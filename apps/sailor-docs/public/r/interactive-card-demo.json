@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "interactive-card-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/interactive-card-demo.tsx",
+      "content": "\"use client\";\n\nimport { InteractiveCard } from \"@nebutra/ui/primitives\";\n\nexport function InteractiveCardDemo() {\n  return (\n    <InteractiveCard\n      step=\"STEP 1\"\n      title=\"Export Project\"\n      description=\"Download your project as a PowerPoint presentation ready to share.\"\n    />\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

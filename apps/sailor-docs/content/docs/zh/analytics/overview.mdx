@@ -1,0 +1,117 @@
+---
+title: "分析概览"
+description: "了解 Nebutra 如何通过 PostHog 追踪产品使用情况，并通过 Dub.co 追踪营销表现。"
+---
+
+Nebutra 内置两个互补的分析工具：
+
+- **PostHog** — 产品分析、功能开关、会话录制和漏斗分析
+- **Dub.co** — 链接管理、UTM 追踪以及营销活动的短链接分析
+
+两者结合，让你从第一次营销点击到用户在产品内的完整旅程都一览无余。
+
+## 工具职责
+
+<Tabs>
+  <Tab title="PostHog">
+    PostHog 负责**产品内部**发生的一切：
+
+    - 自定义事件追踪（`track(...)`）
+    - 用户和组织身份识别（`identify(...)`）
+    - 漏斗分析（注册 → 激活 → 升级）
+    - 用于 UX 调试的会话录制
+    - 与计费方案绑定的功能开关
+    - A/B 测试实验
+    - 群组分析和留存分析
+  </Tab>
+  <Tab title="Dub.co">
+    Dub.co 负责**产品之前**的一切：
+
+    - 品牌短链接（`links.nebutra.com/...`）
+    - 活动的 UTM 参数管理
+    - 每个活动的点击分析
+    - 推荐来源归因
+    - 营销邮件链接追踪
+  </Tab>
+</Tabs>
+
+## 内置追踪事件
+
+每个 Nebutra 部署都会自动捕获以下事件，无需额外编写代码：
+
+| 事件 | 类别 | 描述 |
+|------|------|------|
+| `user_signed_up` | 认证 | 新用户完成注册 |
+| `org_created` | 认证 | 组织被创建 |
+| `project_created` | 核心 | 用户创建新项目 |
+| `project_deleted` | 核心 | 用户删除项目 |
+| `api_key_created` | 核心 | 生成 API 密钥 |
+| `invitation_sent` | 团队 | 组织管理员发送成员邀请 |
+| `member_joined` | 团队 | 受邀用户接受并加入 |
+| `plan_upgraded` | 计费 | 订阅升级到更高套餐 |
+| `plan_downgraded` | 计费 | 订阅降级到更低套餐 |
+| `subscription_canceled` | 计费 | 用户取消订阅 |
+| `quota_warning` | 计量 | 使用量达到配额的 80% |
+| `quota_exceeded` | 计量 | 使用量达到配额的 100% |
+| `ai_chat_started` | AI | AI 对话会话开始 |
+| `ai_chat_completed` | AI | AI 对话会话成功结束 |
+
+## 配置概览
+
+无需复杂的 SDK 配置。Nebutra 读取 PostHog 服务端/浏览器环境变量，以及一个 Dub.co 环境变量：
+
+```bash
+# PostHog
+POSTHOG_KEY=phc_xxxxxxxxxxxx
+POSTHOG_HOST=https://app.posthog.com
+NEXT_PUBLIC_POSTHOG_KEY=phc_xxxxxxxxxxxx
+NEXT_PUBLIC_POSTHOG_HOST=https://app.posthog.com   # 或你的自托管 URL
+
+# Dub.co
+DUB_API_KEY=dub_xxxxxxxxxxxx
+```
+
+变量设置完成后，所有内置事件将自动开始上报。
+
+## 分析仪表盘
+
+管理面板中的 `/admin/analytics` 提供聚合分析视图，展示：
+
+- 日/周/月活跃用户
+- 核心漏斗转化率
+- 套餐分布情况
+- 各租户的配额使用率
+
+<Note>
+管理分析仪表盘需要 `admin` 角色。普通用户无法访问 `/admin/*` 路由。
+</Note>
+
+## 隐私注意事项
+
+PostHog 会收集行为数据。根据你的部署地区和合规要求：
+
+- **云端（欧盟）**：将 `POSTHOG_HOST` 和 `NEXT_PUBLIC_POSTHOG_HOST` 设置为 `https://eu.posthog.com`，将数据保留在欧盟。
+- **自托管**：在你自己的基础设施上部署 PostHog，并将两个 PostHog host 变量指向你的实例 URL。
+- **会话录制**：可按租户或全局禁用——详见 [PostHog 文档](/zh/analytics/posthog#session-recording)。
+- **GDPR**：PostHog 通过其 API 支持数据删除请求。
+
+<Info>
+Dub.co 仅处理公开 URL 的点击数据。默认情况下不会向 Dub.co 发送任何个人身份信息（PII）。
+</Info>
+
+---
+
+<CardGroup cols={2}>
+  <Card title="PostHog 配置" icon="chart-mixed" href="/zh/analytics/posthog">
+    配置 PostHog、自定义事件、功能开关和会话录制。
+  </Card>
+  <Card title="Dub.co 配置" icon="link" href="/zh/analytics/dub">
+    使用 Dub.co 创建可追踪的营销链接并管理 UTM 活动。
+  </Card>
+  <Card title="监控概览" icon="bell" href="/zh/monitoring/overview">
+    了解如何通过 Sentry 和结构化日志追踪错误和性能。
+  </Card>
+  <Card title="仪表盘定制" icon="gauge" href="/zh/customization/dashboard">
+    访问分析仪表盘并管理你的 Nebutra 部署。
+  </Card>
+</CardGroup>

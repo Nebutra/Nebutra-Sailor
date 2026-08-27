@@ -1,0 +1,149 @@
+{
+  "name": "@nebutra/forge-runtime",
+  "version": "0.1.3",
+  "description": "Nebutra Forge capability registry, invoke pipeline, pure tools, and human page models",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "execution-capability",
+    "featureId": "forge-runtime",
+    "category": "ai",
+    "summary": "Tool-station capability registry + dual-surface invoke for forge.nebutra.com",
+    "gaps": [
+      "kinship / phone-lookup / router-translate deferred until SOTA engines (hard-correct)",
+      "Host metering dual-write still injected per-request (not package-default)",
+      "md-to-pdf requires Playwright Chromium on product hosts (fail-closed without it)"
+    ]
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./pdf": {
+      "types": "./dist/tools/md-to-pdf.d.ts",
+      "import": "./dist/tools/md-to-pdf.js",
+      "default": "./dist/tools/md-to-pdf.js"
+    },
+    "./vin": {
+      "types": "./dist/tools/w3-vin.d.ts",
+      "import": "./dist/tools/w3-vin.js",
+      "default": "./dist/tools/w3-vin.js"
+    },
+    "./secret-scan": {
+      "types": "./dist/tools/w3-secret-scan.d.ts",
+      "import": "./dist/tools/w3-secret-scan.js",
+      "default": "./dist/tools/w3-secret-scan.js"
+    },
+    "./yaml-diff": {
+      "types": "./dist/tools/w3-yaml-diff.d.ts",
+      "import": "./dist/tools/w3-yaml-diff.js",
+      "default": "./dist/tools/w3-yaml-diff.js"
+    },
+    "./env-diff": {
+      "types": "./dist/tools/w3-env-diff.d.ts",
+      "import": "./dist/tools/w3-env-diff.js",
+      "default": "./dist/tools/w3-env-diff.js"
+    },
+    "./list-set-compare": {
+      "types": "./dist/tools/w3-list-set-compare.d.ts",
+      "import": "./dist/tools/w3-list-set-compare.js",
+      "default": "./dist/tools/w3-list-set-compare.js"
+    }
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "skills:generate": "vitest run src/generate-core-skills.test.ts",
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@dbml/core": "^9.1.1",
+    "@zxcvbn-ts/core": "^4.1.2",
+    "@zxcvbn-ts/language-common": "^4.1.3",
+    "ajv": "^8.18.0",
+    "ajv-formats": "^3.0.1",
+    "cron-parser": "^5.5.0",
+    "csso": "^5.0.5",
+    "culori": "^4.0.2",
+    "dayjs": "^1.11.21",
+    "diff": "^7.0.0",
+    "exifr": "^7.1.3",
+    "fast-xml-parser": "^5.8.0",
+    "he": "^1.2.0",
+    "html-minifier-terser": "^7.2.0",
+    "jose": "^6.2.0",
+    "js-tiktoken": "^1.0.21",
+    "js-yaml": "^5.2.1",
+    "jsonpath-plus": "^10.4.0",
+    "jsqr": "^1.4.0",
+    "lunar-javascript": "^1.7.7",
+    "marked": "^15.0.12",
+    "mermaid": "catalog:",
+    "nanoid": "^6.0.0",
+    "opencc-js": "^1.4.1",
+    "papaparse": "^5.5.4",
+    "pdf-lib": "^1.17.1",
+    "pinyin-pro": "^3.28.2",
+    "prettier": "^3.8.1",
+    "qrcode": "^1.5.4",
+    "smol-toml": "^1.6.1",
+    "sql-formatter": "^15.8.2",
+    "svgo": "^4.0.2",
+    "ua-parser-js": "^2.0.10",
+    "zod": "catalog:"
+  },
+  "optionalDependencies": {
+    "sharp": "^0.35.0"
+  },
+  "peerDependencies": {
+    "@nebutra/ai-providers": "workspace:*",
+    "playwright": ">=1.40.0"
+  },
+  "peerDependenciesMeta": {
+    "@nebutra/ai-providers": {
+      "optional": true
+    },
+    "playwright": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@nebutra/ai-providers": "workspace:*",
+    "@types/csso": "^5.0.4",
+    "@types/culori": "^4.0.1",
+    "@types/html-minifier-terser": "^7.0.2",
+    "@types/js-yaml": "^4.0.9",
+    "@types/jsdom": "^28.0.3",
+    "@types/node": "catalog:",
+    "@types/papaparse": "^5.5.2",
+    "@types/qrcode": "^1.5.6",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "tsup": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/forge-runtime#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/forge-runtime"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
+}

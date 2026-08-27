@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea-disabled-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/textarea-disabled-demo.tsx",
+      "content": "\"use client\";\n\nimport { Textarea } from \"@nebutra/ui/primitives\";\n\nexport function TextareaDisabledDemo() {\n  return (\n    <div className=\"w-full\">\n      <Textarea disabled value=\"This field is read-only\" />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

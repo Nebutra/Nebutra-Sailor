@@ -1,0 +1,60 @@
+---
+title: 邮件模板
+description: Nebutra 邮件目录项、公开发送函数和预览产物。
+---
+
+邮件模板的所有权集中在 `packages/integrations/email/src/index.ts`。
+`EMAIL_TEMPLATE_CATALOG` 定义每个模板的 catalog ID、公开发送函数和预览文件名。
+
+## 模板参考
+
+| Catalog ID | 函数 | 必填参数重点 |
+|------------|------|--------------|
+| `welcome` | `sendWelcomeEmail` | `to`, `firstName`, `orgName` |
+| `order-confirmation` | `sendOrderConfirmationEmail` | `to`, `orderId`, `totalAmount`, `items` |
+| `api-key-created` | `sendApiKeyCreatedEmail` | `to`, `firstName`, `keyPrefix`, `keyName`, `plaintextKey` |
+| `quota-warning` | `sendQuotaWarningEmail` | `to`, `orgName`, `metric`, `used`, `limit`, `percentUsed` |
+| `team-invitation` | `sendInviteEmail` | `to`, `inviterName`, `orgName`, `role`, `inviteUrl` |
+| `magic-link` | `sendMagicLinkEmail` | `to`, `magicLinkUrl` |
+| `contact-form-received` | `sendContactFormReceivedEmail` | `to`, `name`, `subject` |
+| `checkout-completed` | `sendCheckoutCompletedEmail` | `to`, `firstName`, `orgName`, `planName` |
+| `trial-ending` | `sendTrialEndingEmail` | `to`, `firstName`, `orgName`, `trialEndDate` |
+| `invoice-paid` | `sendInvoicePaidEmail` | `to`, `orgName`, `invoiceId`, `amountPaid` |
+| `payment-failed` | `sendPaymentFailedEmail` | `to`, `orgName`, `attemptCount` |
+| `subscription-canceled` | `sendSubscriptionCanceledEmail` | `to`, `firstName`, `orgName` |
+| `upcoming-invoice` | `sendUpcomingInvoiceEmail` | `to`, `orgName`, `amountDue` |
+| `plan-changed` | `sendPlanChangedEmail` | `to`, `firstName`, `orgName`, `newPlan` |
+| `license-created` | `sendLicenseCreatedEmail` | `to`, `firstName`, `licenseKey`, `tier` |
+
+## 示例
+
+```typescript
+import { sendInvoicePaidEmail } from "@nebutra/email";
+
+await sendInvoicePaidEmail({
+  to: "owner@example.com",
+  orgName: "Acme Corp",
+  invoiceId: "in_123",
+  amountPaid: 9900,
+  currency: "USD",
+  invoiceUrl: "https://billing.stripe.com/invoice/in_123",
+});
+```
+
+## 新增或修改模板
+
+1. 在 `packages/integrations/email/src/index.ts` 新增或更新公开发送函数。
+2. 新增或更新匹配的 `EMAIL_TEMPLATE_CATALOG` 项。
+3. 重新生成或校验 `apps/mail-preview/dist` 里的预览产物。
+4. 公开接口变化时更新 `packages/integrations/email/src/__tests__/email-contract.test.ts`。
+5. 运行验证：
+
+```bash
+pnpm --filter @nebutra/email test
+pnpm --filter @nebutra/email typecheck
+pnpm mail:check
+```
+
+<Warning>
+不要把生成的预览 HTML 当成源头手工编辑。先改包里的目录和发送函数。
+</Warning>

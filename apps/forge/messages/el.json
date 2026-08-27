@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — Σταθμός εργαλείων online",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "Κωδικοποιητές, κείμενο, hashing, έγγραφα και εργαλεία εικόνων online."
+  },
+  "nav": {
+    "main": "Κύρια πλοήγηση",
+    "homeAria": "Αρχική {brandName} Forge",
+    "tools": "Εργαλεία",
+    "wallet": "Πορτοφόλι",
+    "api": "API",
+    "routerAria": "{brandName} Router",
+    "categoriesAria": "Κατηγορίες εργαλείων",
+    "languageAria": "Αλλαγή γλώσσας"
+  },
+  "tool": {
+    "breadcrumbAria": "Διαδρομή",
+    "workspace": "Εργαζιακός Χώρος",
+    "workspaceHint": "Τοπικό ή server · ίδια διαδρομή με την API",
+    "api": "API",
+    "apiHint": "Ίδιο contract με τη σελίδα. Χρησιμοποιήστε authenticated key σε παραγωγή.",
+    "related": "Σχετικά εργαλεία"
+  },
+  "auth": {
+    "signIn": "Σύνδεση",
+    "signUp": "Εγγραφή",
+    "signOut": "Αποσύνδεση"
+  },
+  "footer": {
+    "navAria": "Ποδιέρα",
+    "blurb": "Σταθμός εργαλείων online. Ολοκληρώστε εργασίες στον browser ή αυτοματοποιήστε μέσω API / MCP.",
+    "product": "Προϊόν",
+    "developers": "Αναπτύκτες",
+    "company": "Εταιρεία",
+    "docs": "Έγγραφα ολοκλήρωσης",
+    "website": "Ιστοσελίδα",
+    "privacy": "Απόρρητο"
+  },
+  "home": {
+    "eyebrow": "Δείτε το. Καλέστε το.",
+    "title": "Ελβετικό μαχαίρι για online εργαλεία",
+    "subtitle": "Codecs, κείμενο, hashing, έγγραφα και επεξεργασία εικόνων. Ολοκληρώστε στον browser ή αυτοματοποιήστε μέσω API / MCP — μία υλοποίηση.",
+    "toolCount": "{count} εργαλεία",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "Αναζήτηση: μέτρηση λέξεων, base64, json, timestamp…",
+    "aria": "Αναζήτηση εργαλείων",
+    "emptyTitle": "Δεν βρέθηκαν εργαλεία για “{query}”",
+    "emptyHint": "Δοκιμάστε άλλο λέξη-κλειδί ή επιλέξτε ένα εργαλείο από τις κατηγορίες παρακάτω."
+  },
+  "categories": {
+    "codec": {
+      "label": "Κωδικοποιητές",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "Έλεγχος Κίνας",
+      "hint": "ID · τηλέφωνο"
+    },
+    "data": {
+      "label": "Δεδομένα",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "Αναπτύκτες",
+      "hint": "Regex · SQL · χρώμα · UUID"
+    },
+    "doc": {
+      "label": "Έγγραφα",
+      "hint": "Markdown · συνένωση/διαίρεση PDF"
+    },
+    "finance": {
+      "label": "Οικονομικά",
+      "hint": "Ποσό σε λέξεις"
+    },
+    "hash": {
+      "label": "Hash & ασφάλεια",
+      "hint": "MD5 · SHA · HMAC · κωδικός"
+    },
+    "image": {
+      "label": "Εικόνες",
+      "hint": "Συμπίεση · QR · μετατροπή"
+    },
+    "life": {
+      "label": "Υπολογιστές ζωής",
+      "hint": "Δάνειο · ΔΜΣ · συγγένεια"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "Tokens · κόστος · schema"
+    },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
+    "security": {
+      "label": "Ασφάλεια",
+      "hint": "Δημιουργός κωδικών"
+    },
+    "text": {
+      "label": "Κείμενο",
+      "hint": "Μήκος λέξεων · CJK · pinyin · Diff"
+    },
+    "time": {
+      "label": "Χρόνος",
+      "hint": "Χρονική σφραγίδα · ζώνη ώρας · Cron · σελήνη"
+    },
+    "unit": {
+      "label": "Μονάδες",
+      "hint": "Μήκος · βάρος · θερμοκρασία · δεδομένα"
+    },
+    "template": {
+      "label": "Πρότυπα",
+      "hint": ".gitignore · LICENSE · Dockerfile · README"
+    }
+  },
+  "runners": {
+    "common": {
+      "run": "Εκτέλεση",
+      "running": "Εκτελείται…",
+      "copy": "Αντιγραφή",
+      "copied": "Αντιγράφηκε",
+      "sameAsApi": "Ίδια διαδρομή με το API · OSS engine",
+      "mustBeNumber": "Το {label} πρέπει να είναι αριθμός",
+      "base64Loaded": "Φορτώθηκε το Base64 payload",
+      "workspaceMissing": "Ο χώρος εργασίας δεν έχει ρυθμιστεί: {slug}",
+      "yes": "Ναι",
+      "no": "Όχι",
+      "text": "Κείμενο",
+      "input": "Είσοδος",
+      "output": "Έξοδος",
+      "outputPlaceholder": "Το αποτέλεσμα εμφανίζεται εδώ",
+      "localRun": "Εκτέλεση τοπικά",
+      "serverRun": "Εκτέλεση στον server",
+      "serverVerify": "Επαλήθευση server",
+      "outputPreview": "Προεπισκόπηση εξόδου",
+      "mode": "Λειτουργία",
+      "encode": "Κωδικοποίηση",
+      "decode": "Αποκωδικοποίηση",
+      "file": "Αρχείο",
+      "clear": "Εκκαθάριση",
+      "length": "Μήκος: {n}",
+      "bytes": "{bytes} bytes",
+      "download": "Λήψη",
+      "format": "Μορφή",
+      "formatting": "Μορφοποίηση…",
+      "dialect": "Διάλεκτος",
+      "color": "Χρώμα",
+      "pickColor": "Επιλογή χρώματος",
+      "content": "Περιεχόμενο",
+      "algorithm": "Αλγόριθμος",
+      "encoding": "Κωδικοποίηση",
+      "message": "Μήνυμα",
+      "secret": "Μυστικό",
+      "password": "Κωδικός",
+      "direction": "Κατεύθυνση",
+      "preview": "Προεπισκόπηση",
+      "query": "Ερώτημα",
+      "querying": "Ερώτημα…",
+      "validate": "Έλεγχος",
+      "validating": "Έλεγχος…",
+      "processing": "Επεξεργασία…",
+      "pretty": "Διαμόρφωση",
+      "minify": "Συμπίεση",
+      "from": "Από",
+      "to": "Έως",
+      "timezone": "Ζώνη ώρας",
+      "datetime": "Ημερομηνία & ώρα",
+      "compute": "Υπολογισμός",
+      "computing": "Υπολογισμός…",
+      "convertAction": "Μετατροπή",
+      "count": "Αριθμός",
+      "value": "Τιμή",
+      "unit": "Μονάδα",
+      "generateLocal": "Δημιουργία τοπικά",
+      "generateServer": "Δημιουργία στον διακομιστή",
+      "copyAll": "Αντιγραφή όλων",
+      "emptyResult": "Τα αποτελέσματα εμφανίζονται εδώ",
+      "copyText": "Αντιγραφή κειμένου",
+      "quality": "Ποιότητα",
+      "original": "Αρχικό",
+      "result": "Αποτέλεσμα",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
+    },
+    "base64": {
+      "encodeDir": "Κείμενο → Base64",
+      "decodeDir": "Base64 → Κείμενο",
+      "localNote": "Τοπική Web API (TextEncoder / atob)",
+      "serverNote": "Server Buffer · ίδια διαδρομή με την API"
+    },
+    "password": {
+      "uppercase": "Κεφαλαία",
+      "lowercase": "Μικρά",
+      "digits": "Ψηφία",
+      "symbols": "Σύμβολα",
+      "generate": "Δημιουργία κωδικού",
+      "recent": "Πρόσφατα",
+      "note": "Κινητήρας: node:crypto randomInt · κρυπτογραφικά ασφαλής · ίδια διαδρομή με την API"
+    },
+    "hash": {
+      "algo": "Αλγόριθμος: {algo}",
+      "md5Warn": " · μόνο για checksum/συμβατότητα — μην αποθηκεύετε κωδικούς",
+      "md5LocalError": "Το MD5 απαιτεί εκτέλεση στο server (το Web Crypto δεν έχει MD5)",
+      "md5ServerHint": "MD5: χρησιμοποιήστε εκτέλεση στο server (μόνο για συμβατότητα, όχι για αποθήκευση κωδικών)",
+      "localNote": "Τοπικό Web Crypto · {algo}",
+      "serverNote": "Server node:crypto · ίδια διαδρομή με το API"
+    },
+    "convert": {
+      "converting": "Μετατροπή…",
+      "convert": "Μετατροπή",
+      "done": "Ολοκληρώθηκε · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "Ρίξτε ένα αρχείο εδώ ή κάντε κλικ για αναζήτηση",
+      "needFile": "Επιλέξτε πρώτα ένα αρχείο",
+      "needAlgo": "Επιλέξτε τουλάχιστον έναν αλγόριθμο",
+      "compute": "Υπολογισμός checksums",
+      "computing": "Υπολογισμός…",
+      "algorithms": "Αλγόριθμοι",
+      "note": "node:crypto · multi-algo · ίδιο path με API"
+    },
+    "lorem": {
+      "paragraphs": "Παράγραφοι",
+      "wordsPerParagraph": "Λέξεις ανά παράγραφο",
+      "startWithLorem": "Έναρξη με “Lorem ipsum”",
+      "note": "Γεννήτρια Lorem Ipsum · καθαρή"
+    },
+    "emailValidate": {
+      "note": "Επαληθευτής Email · μόνο μορφή (χωρίς έλεγχο MX)"
+    },
+    "creditCardLuhn": {
+      "number": "Αριθμός κάρτας",
+      "note": "Έλεγχος Luhn · εκτός σύνδεσης, ποτέ αποθηκευμένο",
+      "digits": "digits",
+      "specimenLabel": "Specimen",
+      "structureOnly": "Luhn structure only",
+      "unknownBrand": "Card"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "Συμπιεστής JSON · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "CSS Minifier · ελαφρύ (ασφαλές για edge)"
+    },
+    "hashCompare": {
+      "a": "Hash A",
+      "b": "Hash B",
+      "ignoreCase": "Αγνόηση πεζών/κεφαλαίων",
+      "note": "Hash Comparator · σταθερού χρόνου για ίσο μήκος"
+    },
+    "jsonDiff": {
+      "left": "JSON A",
+      "right": "JSON B",
+      "note": "JSON Diff · λειτουργίες σε επίπεδο διαδρομής · χρωματισμένες γραμμές ανά τύπο · δίπλα-δίπλα",
+      "equal": "Ίδια",
+      "differs": "{count} αλλαγή/ες",
+      "colPath": "Διαδρομή",
+      "colKind": "Είδος",
+      "colLeft": "Αριστερά",
+      "colRight": "Δεξιά",
+      "filtersAria": "Φιλτράρισμα ανά είδος αλλαγής",
+      "filterAll": "Όλα ({count})",
+      "filterAdd": "Προσθήκη ({count})",
+      "filterRemove": "Αφαίρεση ({count})",
+      "filterChange": "Αλλαγή ({count})",
+      "filterType": "Τύπος ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "Λειτουργία",
+      "pretty": "Όμορφη",
+      "compact": "Συμπαγές",
+      "indent": "Εσοχή",
+      "note": "Διαμορφωτής YAML · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "Διαμορφωτής TOML · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "Συμπιεστής XML · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "Επαληθευτής URL · WHATWG URL (χωρίς ανάκτηση δικτύου)"
+    },
+    "ipValidate": {
+      "note": "Επαληθευτής IP · IPv4/IPv6 εκτός σύνδεσης"
+    },
+    "uuidValidate": {
+      "note": "Επαληθευτής UUID · σχήμα RFC 4122"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "Συμπιεστής HTML · ελαφρύς (ασφαλής για edge)"
+    },
+    "randomString": {
+      "length": "Μήκος",
+      "count": "Αριθμός",
+      "charset": "Σύνολο χαρακτήρων",
+      "alphanumeric": "Αλφαριθμητικά",
+      "symbols": "Αλφαριθμητικά + σύμβολα",
+      "hex": "Hex",
+      "base64url": "Base64URL",
+      "note": "Τυχαία συμβολοσειρά · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "Χρόνος ανάγνωσης · εuristic CJK + Latin"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "Μέγιστο επίπεδο επικεφαλίδας",
+      "note": "Markdown TOC · επικεφαλίδες ATX"
+    },
+    "pdfInfo": {
+      "file": "Αρχείο PDF",
+      "note": "Πληροφορίες PDF · pdf-lib (σελίδες + μεταδεδομένα)"
+    },
+    "rot13": {
+      "shift": "Μετατόπιση (13 = ROT13)",
+      "note": "ROT13 / Caesar · καθαρό"
+    },
+    "morse": {
+      "note": "Κώδικας Μορς · ITU · καθαρό"
+    },
+    "textBinary": {
+      "toBinary": "Κείμενο → δυαδικό",
+      "fromBinary": "Δυαδικό → κείμενο",
+      "note": "Κείμενο ↔ Δυαδικό · UTF-8 bits"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "Κωδικοποίηση σύνοψης",
+      "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "One shot digests · αντιγραφή καθενός · node:crypto"
+    },
+    "cssFormat": {
+      "note": "CSS Beautifier · ελαφρύ"
+    },
+    "htmlFormat": {
+      "note": "HTML Beautifier · ελαφρύ"
+    },
+    "stringSimilarity": {
+      "a": "Συμβολοσειρά Α",
+      "b": "Συμβολοσειρά Β",
+      "note": "Ομοιότητα Συμβολοσειρών · Levenshtein"
+    },
+    "roman": {
+      "toRoman": "Αριθμός → Ρωμαϊκός",
+      "fromRoman": "Ρωμαϊκός → Αριθμός",
+      "note": "Ρωμαϊκοί Αριθμοί · 1–3999"
+    },
+    "age": {
+      "birthDate": "Ημερομηνία γέννησης (YYYY-MM-DD)",
+      "asOf": "Έως (προαιρετικό)",
+      "note": "Υπολογιστής Ηλικίας · ακριβής Ε/Μ/Η"
+    },
+    "tip": {
+      "bill": "Ποσό λογαριασμού",
+      "percent": "Φόρος %",
+      "people": "Άτομα",
+      "note": "Υπολογιστής φιλοδωρήματος · φιλικό για διαμοιρασμό"
+    },
+    "aspect": {
+      "width": "Πλάτος",
+      "height": "Ύψος",
+      "note": "Λόγος διαστάσεων · απλοποίηση GCD"
+    },
+    "mime": {
+      "note": "Αναζήτηση MIME · κοινοί τύποι ιστού"
+    },
+    "ua": {
+      "note": "Ανάλυση User-Agent · ευρετική (εκτός σύνδεσης)"
+    },
+    "imageMeta": {
+      "file": "Αρχείο εικόνας",
+      "note": "Μεταδεδομένα εικόνας · sharp (μέγεθος buffer EXIF)"
+    },
+    "wordFreq": {
+      "top": "Top N",
+      "note": "Συχνότητα λέξεων · CJK + Λατινικά"
+    },
+    "jsonXml": {
+      "note": "JSON ↔ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "SQL Minifier · σχόλια + κενά"
+    },
+    "lineNum": {
+      "start": "Αριθμός εκκίνησης",
+      "note": "Προσθήκη Αριθμών Γραμμών · καθαρή"
+    },
+    "uniqueWords": {
+      "note": "Μοναδικές Λέξεις · σειρά πρώτης εμφάνισης"
+    },
+    "epoch": {
+      "value": "Τιμή",
+      "msToIso": "ms → ISO",
+      "isoToMs": "ISO → ms",
+      "note": "Epoch Milliseconds · Ημερομηνία"
+    },
+    "passwordEntropy": {
+      "password": "Κωδικός",
+      "note": "Εντροπία Κωδικού · εuristic σετ χαρακτήρων"
+    },
+    "contrast": {
+      "fg": "Πρόσθιο (#hex)",
+      "bg": "Υπόβαθρο (#hex)",
+      "note": "Αντίθεση Χρωμάτων · WCAG 2.x",
+      "sampleHeadline": "Sample text",
+      "pass": "pass",
+      "fail": "fail",
+      "aaNormal": "AA normal",
+      "aaLarge": "AA large",
+      "aaaNormal": "AAA normal",
+      "aaaLarge": "AAA large"
+    },
+    "exif": {
+      "file": "Αρχείο εικόνας",
+      "note": "Προβολέας EXIF · exifr + JPEG fallback"
+    },
+    "regex": {
+      "pattern": "Σχέδιο",
+      "flags": "Σημαίες",
+      "replacement": "Αντικατάσταση",
+      "match": "Αντιστοίχιση",
+      "replace": "Αντικατάσταση",
+      "test": "Δοκιμή",
+      "local": "Τοπική εκτέλεση",
+      "server": "Επαλήθευση server",
+      "count": "{count} αντιστοιχίες",
+      "sotaNote": "Άμεση τοπική επισήμανση · budget timeout server · ίδιο path με API"
+    },
+    "jwt": {
+      "decode": "Αποκωδικοποίηση JWT",
+      "sample": "Φόρτωση δείγματος",
+      "tokenPlaceholder": "Επικόλλησε JWT",
+      "decodeNote": "{engine} · μόνο αποκωδικοποίηση, η υπογραφή δεν ελέγχεται",
+      "footerNote": "Κινητήρας: jose · χωρίς έλεγχο υπογραφής. Για παραγωγή, έλεγξε με κλειδιά μέσω jwtVerify στον server.",
+      "generateHint": "Χρειάζεσαι να υπογράψεις tokens;",
+      "secret": "Μυστικό",
+      "exp": "Λήξη (δευτερόλεπτα)",
+      "payload": "Payload JSON",
+      "note": "Δημιουργία JWT · HS256 (μόνο για dev/test)",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "(empty signature segment)"
+    },
+    "rand": {
+      "min": "Ελάχιστο",
+      "max": "Μέγιστο",
+      "count": "Αριθμός",
+      "note": "Τυχαίος Αριθμός · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "Έδρες",
+      "count": "Αριθμός ζαριών",
+      "note": "Ζάρια · crypto RNG"
+    },
+    "hexRgb": {
+      "note": "HEX ↔ RGB · καθαρό"
+    },
+    "base64url": {
+      "note": "Base64URL · στυλ JWT"
+    },
+    "hmac": {
+      "message": "Μήνυμα",
+      "secret": "Μυστικό",
+      "signature": "Υπογραφή",
+      "note": "Επαλήθευση HMAC · SHA-256"
+    },
+    "secret": {
+      "bytes": "Bytes",
+      "count": "Αριθμός",
+      "note": "Γεννήτρια Μυστικού Κλειδιού · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "Αρχείο PDF",
+      "note": "PDF Light Optimize · ξαναγραφή με pdf-lib (όχι επανασυμπίεση εικόνας)",
+      "needFile": "Επιλέξτε αρχικά ένα αρχείο PDF"
+    },
+    "pdfCompress": {
+      "file": "Αρχείο PDF",
+      "quality": "Ποιότητα",
+      "engine": "Κινητήρας",
+      "qStructural": "Δομική (qpdf, απώλειες streams)",
+      "qScreen": "Οθόνη (μικρότερο, Ghostscript)",
+      "qEbook": "Ebook (ισορροπημένο, Ghostscript)",
+      "qPrinter": "Εκτυπωτής (υψηλότερη ποιότητα, Ghostscript)",
+      "eAuto": "Αυτόματο (qpdf → Ghostscript → pdf-lib)",
+      "download": "Λήψη PDF",
+      "needFile": "Επιλέξτε αρχικά ένα αρχείο PDF",
+      "in": "Είσοδος",
+      "out": "Έξοδος",
+      "saved": "Αποθηκεύτηκε",
+      "note": "Συμπίεση PDF · qpdf / Ghostscript στον υπολογιστή · pdf-lib ως εναλλακτική",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+    },
+    "jsonFormat": {
+      "indent": "Εσοχή",
+      "format": "Μορφοποίηση",
+      "minify": "Συμπίεση",
+      "serverVerify": "Έλεγχος server",
+      "clear": "Εκκαθάριση",
+      "sample": "Δείγμα",
+      "placeholder": "Επικόλλησε JSON…",
+      "formatted": "Διαμορφωμένο",
+      "minified": "Συμπυκνωμένο",
+      "serverOk": "Διακομιστής {mode} · {engine}",
+      "valid": "Έγκυρο JSON",
+      "invalid": "Μη έγκυρο JSON",
+      "line": "γραμμή",
+      "column": "στήλη",
+      "note": "Κινητήρας: JSON.parse/stringify · άμεση τοπική επεξεργασία · ίδια διαδρομή με το API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
+    },
+    "qr": {
+      "size": "Μέγεθος",
+      "ecl": "Διόρθωση σφαλμάτων",
+      "generate": "Δημιουργία",
+      "download": "Λήψη PNG",
+      "needText": "Εισάγετε κείμενο ή URL",
+      "note": "QR · qrcode · ζωντανή προεπισκόπηση · ίδια διαδρομή με το API"
+    },
+    "pdfText": {
+      "file": "Αρχείο PDF",
+      "layout": "Διάταξη",
+      "needFile": "Επιλέξτε πρώτα ένα PDF",
+      "note": "PDF Text · pdftotext (poppler) στον υπολογιστή"
+    },
+    "svg": {
+      "optimize": "Βελτιστοποίηση",
+      "note": "SVG Optimize · ελαφριά καθαρή μείωση"
+    },
+    "routerTranslate": {
+      "lab": "Lab shell: δεν μεταφράζει εδώ. Ανοίγει το Router με μια εντολή — ο μετρητής μοντέλου μόνο στο Router.",
+      "source": "Γλώσσα πηγής",
+      "target": "Γλώσσα προορισμού",
+      "open": "Ετοιμάστε σύνδεσμο Router",
+      "deepLink": "Άνοιγμα στο Router",
+      "note": "εξωτερικό · χωρίς σιωπηλό αρχείο Forge LLM"
+    },
+    "imageCrop": {
+      "needFile": "Επιλέξτε πρώτα μια εικόνα",
+      "crop": "Κόψιμο",
+      "note": "Κόψιμο εικόνας · σύρετε περιοχή · καθαρή εξαγωγή",
+      "drop": "Αφήστε εικόνα ή κάντε κλικ για αναζήτηση",
+      "dragHint": "Σύρετε στην εικόνα για να επιλέξετε περιοχή κόψιμου",
+      "left": "Αριστερά",
+      "top": "Επάνω",
+      "width": "Πλάτος",
+      "height": "Ύψος",
+      "natural": "Φυσικό {w}×{h}",
+      "source": "Πηγή",
+      "result": "Περικομμένο"
+    },
+    "markdown": {
+      "preview": "Προεπισκόπηση",
+      "html": "HTML",
+      "emptyPreview": "Εκτελέστε για προεπισκόπηση",
+      "emptyHtml": "Αποδομημένο HTML",
+      "rendering": "Απόδοση…",
+      "toHtml": "Σε HTML",
+      "copyHtml": "Αντιγραφή HTML",
+      "note": "σημασμένο · απομονωμένη προεπισκόπηση iframe · ίδια διαδρομή με API"
+    },
+    "pdfMerge": {
+      "files": "Αρχεία PDF (≥2, σειρά = σειρά ενοποίησης)",
+      "needFiles": "Επιλέξτε τουλάχιστον 2 αρχεία PDF",
+      "merging": "Συγχώνευση…",
+      "mergeDownload": "Συγχώνευση & λήψη",
+      "done": "Συγχωνεύτηκε · {pages} σελίδες · {bytes} bytes",
+      "note": "pdf-lib · ίδια διαδρομή με το API",
+      "merge": "Συγχώνευση & λήψη"
+    },
+    "pdfSplit": {
+      "file": "Αρχείο PDF",
+      "needFile": "Επιλέξτε ένα αρχείο PDF",
+      "fromPage": "Από σελίδα (από την 1)",
+      "toPage": "Έως σελίδα (κενό = τελευταία)",
+      "toPlaceholder": "Τελευταία σελίδα",
+      "splitting": "Διαίρεση…",
+      "splitDownload": "Διαίρεση & λήψη",
+      "done": "Διαίρεση · πηγή {source} σελίδες → έξοδος {pages} σελίδες",
+      "note": "pdf-lib · ίδια διαδρομή με API",
+      "split": "Διαίρεση & λήψη"
+    },
+    "passwordStrength": {
+      "check": "Έλεγχος ισχύος",
+      "checking": "Έλεγχος…",
+      "crack": "Εκτίμηση αργής hash εκτός σύνδεσης: {time}",
+      "score0": "Πολύ αδύναμη",
+      "score1": "Αδύναμη",
+      "score2": "Αποδεκτή",
+      "score3": "Ισχυρή",
+      "score4": "Πολύ ισχυρή",
+      "note": "zxcvbn-ts · ίδια διαδρομή με API · ο κωδικός δεν αποθηκεύεται ποτέ"
+    },
+    "hmacSign": {
+      "compute": "Υπολογισμός HMAC",
+      "computing": "Υπολογισμός…",
+      "note": "node:crypto · ίδια διαδρομή με το API"
+    },
+    "costEstimate": {
+      "text": "Κείμενο εισόδου (για εκτίμηση token εισόδου)",
+      "model": "Μοντέλο",
+      "outputTokens": "Token εξόδου (εκτίμηση)",
+      "estimate": "Εκτίμηση κόστους",
+      "estimating": "Εκτίμηση…",
+      "note": "@nebutra/ai-providers/frontier card + js-tiktoken · εκτίμηση τιμής λίστας, όχι τιμολόγιο"
+    },
+    "jsonSchema": {
+      "data": "Δεδομένα JSON",
+      "schema": "JSON Schema",
+      "validate": "Έλεγχος",
+      "validating": "Έλεγχος…",
+      "pass": "Επιτυχία",
+      "fail": "Αποτυχία",
+      "note": "Ajv · ίδια διαδρομή με το API"
+    },
+    "zhCnTw": {
+      "s2t": "Απλοποιημένα → Παραδοσιακά",
+      "t2s": "Παραδοσιακά → Απλοποιημένα",
+      "s2tw": "Απλοποιημένα → Ταϊβάν",
+      "tw2s": "Ταϊβάν → Απλοποιημένα",
+      "s2hk": "Απλοποιημένα → Χονγκ Κονγκ",
+      "hk2s": "Χονγκ Κονγκ → Απλοποιημένα",
+      "note": "OpenCC (opencc-js) · ίδια διαδρομή με το API"
+    },
+    "pinyin": {
+      "tones": "Στυλ τονισμού",
+      "symbol": "Σύμβολο nǐ",
+      "num": "Αριθμός ni3",
+      "none": "Κανένα ni",
+      "hanzi": "Κινέζικοι χαρακτήρες",
+      "convert": "Σε pinyin",
+      "converting": "Μετατροπή…",
+      "note": "pinyin-pro · ίδια διαδρομή με το API"
+    },
+    "sqlFormat": {
+      "dialect": "Διαλέκτος",
+      "format": "Μορφοποίηση",
+      "formatting": "Μορφοποίηση…",
+      "note": "sql-formatter · ίδια διαδρομή με το API"
+    },
+    "colorConvert": {
+      "color": "Χρώμα",
+      "pick": "Επιλογή χρώματος",
+      "convert": "Μετατροπή",
+      "converting": "Μετατρέπεται…",
+      "note": "χρώματα · hex / rgb / hsl / oklch · ίδια διαδρομή με το API"
+    },
+    "qrGen": {
+      "content": "Περιεχόμενο",
+      "format": "Μορφή",
+      "pngPreview": "PNG (προεπισκόπηση)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "Δημιουργία QR",
+      "generating": "Δημιουργείται…",
+      "note": "qrcode · ίδια διαδρομή με το API"
+    },
+    "qrDecode": {
+      "upload": "Ανέβασε μια εικόνα με κωδικό QR",
+      "parsing": "Αποκωδικοποίηση…",
+      "note": "jsQR + sharp · ίδια διαδρομή με το API"
+    },
+    "cron": {
+      "expression": "Έκφραση Cron",
+      "timezone": "Ζώνη ώρας",
+      "parse": "Επόμενες εκτελέσεις",
+      "parsing": "Ανάλυση…",
+      "nextTitle": "Επόμενες εκτελέσεις (ISO)",
+      "note": "cron-parser · ίδια διαδρομή με το API"
+    },
+    "timezone": {
+      "datetime": "Ημερομηνία & ώρα",
+      "from": "Από",
+      "to": "Προς",
+      "convert": "Μετατροπή ζώνης ώρας",
+      "converting": "Μετατροπή…",
+      "placeholder": "2026-07-24 12:00:00 ή ISO / unix",
+      "note": "dayjs timezone · ίδιο path με API"
+    },
+    "csvPreview": {
+      "preview": "Προεπισκόπηση πίνακα",
+      "parsing": "Ανάλυση…",
+      "rows": "Προεπισκόπηση {shown} / {total} γραμμών",
+      "note": "papaparse · ίδιο path με API"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "Ερώτημα",
+      "querying": "Ερώτηση…",
+      "note": "jsonpath-plus · ίδιο path με API"
+    },
+    "xmlFormat": {
+      "pretty": "Καθαρή μορφή",
+      "minify": "Συμπίεση",
+      "validate": "Επικύρωση",
+      "validOk": "Έγκυρο",
+      "done": "Ολοκληρώθηκε · {engine}",
+      "processing": "Επεξεργασία…",
+      "note": "fast-xml-parser · ίδια διαδρομή με API"
+    },
+    "regexLegacy": {
+      "pattern": "Σχέδιο",
+      "flags": "Σημαίες",
+      "mode": "Λειτουργία",
+      "match": "Αντιστοίχιση",
+      "replace": "Αντικατάσταση",
+      "test": "Δοκιμή",
+      "replacement": "Αντικατάσταση",
+      "note": "Τοπικό άμεσο · χρονικό όριο διακομιστή · ίδια διαδρομή με το API"
+    },
+    "docxText": {
+      "file": "Αρχείο DOCX",
+      "needFile": "Επιλέξτε πρώτα ένα αρχείο .docx",
+      "extract": "Εξαγωγή κειμένου",
+      "extracting": "Εξαγωγή…",
+      "note": "DOCX → κείμενο · καθαρό ZIP + document.xml (χωρίς Office)"
+    },
+    "uuid": {
+      "count": "Πλήθος",
+      "local": "Τοπική δημιουργία",
+      "server": "Δημιουργία στον διακομιστή",
+      "copyAll": "Αντιγραφή όλων",
+      "empty": "Τα UUID εμφανίζονται εδώ"
+    },
+    "timestamp": {
+      "nowSec": "Δευτερόλεπτα Unix",
+      "nowMs": "Χιλιοστά Unix / ISO",
+      "serverNow": "Τώρα στον διακομιστή",
+      "toDate": "Χρονική σφραγίδα → ημερομηνία",
+      "toUnix": "Ημερομηνία → χρονική σφραγίδα",
+      "seconds": "Δευτερόλεπτα",
+      "milliseconds": "Χιλιοστά του δευτερολέπτου",
+      "value": "Τιμή",
+      "convert": "Μετατροπή",
+      "note": "Ίδια διαδρομή με την API"
+    },
+    "wordCount": {
+      "words": "Λέξεις",
+      "chars": "Χαρακτήρες",
+      "noSpaces": "Χωρίς κενά",
+      "cjk": "CJK",
+      "lines": "Γραμμές",
+      "paragraphs": "Παράγραφοι",
+      "placeholder": "Επικόλλησε ή πληκτρολόγησε κείμενο…",
+      "copyText": "Αντιγραφή κειμένου",
+      "clear": "Εκκαθάριση",
+      "verifying": "Επαλήθευση…",
+      "serverNote": "Λέξεις διακομιστή={words} · ίδια διαδρομή με την API",
+      "note": "Ζωντανή μηχανή: {engine} · δεν απαιτείται μεταφόρτωση · ίδια διαδρομή με την API"
+    },
+    "bmi": {
+      "height": "Ύψος (cm)",
+      "weight": "Βάρος (kg)",
+      "compute": "Υπολογισμός ΔΜΣ",
+      "computing": "Υπολογισμός…",
+      "invalid": "Εισάγετε έγκυρο ύψος (cm) και βάρος (kg)",
+      "underweight": "Υποβαρής",
+      "normal": "Κανονικό",
+      "overweight": "Υπερβαρής",
+      "obese": "Παχύσαρκος",
+      "note": "ΔΜΣ ΠΟΥ · ίδια διαδρομή με API · όχι ιατρική συμβουλή"
+    },
+    "percentage": {
+      "mode": "Λειτουργία",
+      "percentOf": "α% του β",
+      "isWhat": "το α είναι ποιο % του β",
+      "percentA": "Ποσοστό α",
+      "valueA": "Τιμή α",
+      "baseB": "Βάση β",
+      "compute": "Υπολογισμός",
+      "computing": "Υπολογίζεται…",
+      "invalid": "Εισάγετε έγκυρους αριθμούς",
+      "note": "Ίδια διαδρομή με την API"
+    },
+    "dataSize": {
+      "value": "Τιμή",
+      "convert": "Μετατροπή",
+      "converting": "Μετατρέπεται…",
+      "invalid": "Εισάγετε έναν έγκυρο αριθμό",
+      "binary": "{value} {from} → βάση-1024",
+      "note": "Δυαδικές μονάδες (1 KB = 1024 B) · ίδια διαδρομή με την API"
+    },
+    "rmb": {
+      "amount": "Ποσό (CNY)",
+      "convert": "Σε κεφαλαία",
+      "converting": "Μετατροπή…",
+      "invalid": "Εισάγετε μη αρνητικό ποσό",
+      "note": "Ποσό τιμολογίου Κίνας σε κεφαλαία · ίδια διαδρομή με API"
+    },
+    "dateDiff": {
+      "from": "Ημερομηνία έναρξης",
+      "to": "Ημερομηνία λήξης",
+      "compute": "Διαφορά ημερών",
+      "computing": "Υπολογισμός…",
+      "days": "ημέρες",
+      "note": "ECMAScript Date · ίδια διαδρομή με API"
+    },
+    "xlsxText": {
+      "file": "Αρχείο XLSX",
+      "needFile": "Επιλέξτε αρχείο .xlsx πρώτα",
+      "extract": "Εξαγωγή φύλλου",
+      "extracting": "Εξαγωγή…",
+      "note": "XLSX → CSV · καθαρό ZIP + sheet1.xml (πρώτο φύλλο)"
+    },
+    "mdToPdf": {
+      "drop": "Αφήστε ένα αρχείο .md εδώ ή επικολλήστε Markdown παρακάτω",
+      "title": "Τίτλος",
+      "engine": "Κινητήρας",
+      "ePlaywright": "playwright (εκτύπωση Chromium)",
+      "eSimple": "απλό (χωρίς browser)",
+      "generate": "Δημιουργία PDF",
+      "generating": "Δημιουργία…",
+      "download": "Λήψη PDF",
+      "note": "marked → HTML → Playwright Chromium print. Αν λείπει το Chromium, γίνεται αυτόματη αναδίπλωση σε απλό δομημένο PDF — ελέγξτε το renderEngine· το απλό δεν είναι τυπογραφικής ποιότητας.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
+    },
+    "tokenCount": {
+      "count": "Μέτρηση tokens",
+      "counting": "Μέτρηση…",
+      "chars": "Χαρακτήρες {n}",
+      "note": "Engine: js-tiktoken · ακριβής μέτρηση server-side · μπορεί να τροφοδοτήσει εκτίμηση κόστους Router"
+    },
+    "codec": {
+      "encodeDir": "Κείμενο → κωδικοποιημένο",
+      "decodeDir": "Κωδικοποιημένο → κείμενο",
+      "localNote": "Τοπική εκτέλεση",
+      "serverNote": "Server · ίδια διαδρομή με το API",
+      "hexInvalid": "Δεν είναι έγκυρη hex συμβολοσειρά",
+      "hexDecodeFail": "Ο server δεν μπόρεσε να αποκωδικοποιήσει ως UTF-8 (απαιτείται έγκυρο hex)",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · ίδιο μονοπάτι με το API",
+      "noteHtml": "Χάρτης οντοτήτων HTML · ίδιο μονοπάτι με το API",
+      "noteHex": "UTF-8 ↔ hex · ίδιο μονοπάτι με το API"
+    },
+    "textDiff": {
+      "left": "Αριστερά",
+      "right": "Δεξιά",
+      "compare": "Σύγκριση",
+      "comparing": "Συγκρίνεται…"
+    },
+    "imageTool": {
+      "drop": "Αφήστε μια εικόνα εδώ ή κάντε κλικ για αναζήτηση",
+      "selected": "Επιλεγμένο: {name} ({kb} KB)",
+      "needFile": "Επιλέξτε πρώτα μια εικόνα",
+      "format": "Μορφή εξόδου",
+      "quality": "Ποιότητα {n}",
+      "maxW": "Μέγιστο πλάτος",
+      "maxH": "Μέγιστο ύψος",
+      "optional": "Προαιρετικό",
+      "resizeEg": "π.χ. 1280",
+      "processing": "Επεξεργασία…",
+      "compress": "Συμπίεση",
+      "resize": "Αλλαγή μεγέθους",
+      "convert": "Μετατροπή μορφής",
+      "download": "Λήψη αποτελέσματος",
+      "outMeta": "Έξοδος {kb} KB{dims}{ratio} · {type}",
+      "ratio": " · ~{pct}% του αρχικού",
+      "dims": " · {w}×{h}",
+      "original": "Αρχικό",
+      "result": "Αποτέλεσμα",
+      "note": "Κινητήρας: sharp (libvips) · server-side · ίδια διαδρομή με API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+    },
+    "pptxText": {
+      "file": "Αρχείο PPTX",
+      "needFile": "Επιλέξτε αρχικά ένα αρχείο .pptx",
+      "extract": "Εξαγωγή περιεχομένου",
+      "extracting": "Εξαγωγή…",
+      "note": "Περιεχόμενο PPTX · καθαρό ZIP + slide XML (χωρίς PowerPoint)"
+    },
+    "shell": {
+      "copyJson": "Αντιγραφή JSON",
+      "sample": "Δείγμα",
+      "chars": "{n} χαρακτήρες",
+      "largeInput": "Μεγάλη είσοδος — το αποτέλεσμα ενημερώνεται λίγο μετά τη διακοπή της πληκτρολόγησης.",
+      "manualInput": "Το κείμενο είναι αρκετά μεγάλο ώστε ο ζωντανός επανυπολογισμός να καθυστερήσει τη σελίδα. Πατήστε Εκτέλεση.",
+      "options": "Επιλογές",
+      "regenerateNote": "Το αποτέλεσμα ενημερώνεται αυτόματα καθώς αλλάζετε τις επιλογές.",
+      "fileTab": "Αρχείο",
+      "pasteTab": "Επικόλληση",
+      "browse": "Επιλογή αρχείου",
+      "selectedFile": "{name} · {kb} KB",
+      "truncated": "Διαβάστε τα πρώτα {kb} KB — αρκετά για απάντηση, και το υπόλοιπο δεν φεύγει ποτέ από τη συσκευή σας.",
+      "detail": "Λεπτομέρειες",
+      "dropIntoPane": "Αφήστε ένα αρχείο εδώ",
+      "swap": "Αντιστοίχιση πλευρών",
+      "prevChange": "Προηγούμενη αλλαγή",
+      "nextChange": "Επόμενο",
+      "changePosition": "{index} από {total}",
+      "result": "Αποτέλεσμα"
+    },
+    "readmeSkeleton": {
+      "emptyHint": "Επιλέξτε τουλάχιστον μία ενότητα για να δημιουργήσετε ένα README.",
+      "note": "Χρησιμοποιεί τον ίδιο μηχανισμό με το API. Οι ενότητες που δεν επιλέξετε δεν εμφανίζονται — χωρίς κενές επικεφαλίδες.",
+      "orderNote": "Οι ενότητες εμφανίζονται πάντα με αυτή τη σταθερή σειρά, ώστε το ίδιο εισαγωγικό να δίνει το ίδιο αρχείο.",
+      "group": {
+        "core": "Κύριο",
+        "docs": "Έγγραφα",
+        "community": "Κοινότητα",
+        "meta": "Μετα"
+      },
+      "section": {
+        "title": "Τίτλος & περιγραφή",
+        "badges": "Σήματα",
+        "callout": "Σημείωση",
+        "toc": "Πίνακας περιεχομένων",
+        "installation": "Εγκατάσταση",
+        "usage": "Χρήση",
+        "features": "Χαρακτηριστικά",
+        "api-reference": "Αναφορά API",
+        "screenshots": "Στιγμιότυπα οθόνης",
+        "roadmap": "Χάρτης διαδρομής",
+        "contributing": "Συνεισφορά",
+        "support": "Υποστήριξη",
+        "acknowledgements": "Ευχαριστίες",
+        "license": "Άδεια",
+        "authors": "Συγγραφείς",
+        "tech-stack": "Τεχνολογικό στοίβα"
+      },
+      "projectName": "Όνομα έργου",
+      "projectNamePlaceholder": "Όνομα έργου",
+      "description": "Περιγραφή",
+      "descriptionPlaceholder": "Μία πρόταση για το τι κάνει",
+      "badgeLicense": "Σήμα άδειας",
+      "badgeNpm": "npm version",
+      "badgeBuild": "Κατάσταση κατασκευής",
+      "npmPackage": "npm package",
+      "npmPackagePlaceholder": "@scope/package",
+      "repo": "Αποθετήριο GitHub",
+      "repoPlaceholder": "ιδιοκτήτης/αποθετήριο",
+      "calloutKind": "Είδος ειδοποίησης",
+      "calloutBody": "Κείμενο ειδοποίησης",
+      "calloutBodyPlaceholder": "Πριν από την 1.0 — το API αλλάζει ακόμα",
+      "fenceLanguage": "Γλώσσα",
+      "installCommand": "Εντολή εγκατάστασης",
+      "installCommandPlaceholder": "npm install your-project",
+      "usageExample": "Παράδειγμα χρήσης",
+      "usageExamplePlaceholder": "Το μικρότερο παράδειγμα που δείχνει την αξία",
+      "features": "Χαρακτηριστικά",
+      "featuresPlaceholder": "Ένα χαρακτηριστικό ανά γραμμή",
+      "contact": "Επικοινωνία",
+      "contactPlaceholder": "support@example.com",
+      "license": "Άδεια",
+      "authors": "Συγγραφείς",
+      "authorsPlaceholder": "@handle, Jane Roe",
+      "techStack": "Τεχνολογικό στοίβα",
+      "techStackPlaceholder": "typescript, postgresql (simple-icons slugs)",
+      "sectionCount": "{n} ενότητες",
+      "charCount": "{n} χαρακτήρες",
+      "warningCount": "{n} παραλείφθηκαν",
+      "omittedTitle": "Τι παραλείφθηκε και γιατί"
+    },
+    "gitignore": {
+      "searchLabel": "Αναζήτηση στοίβων",
+      "searchPlaceholder": "Αναζήτηση γλωσσών, frameworks, λειτουργικών συστημάτων ή editors…",
+      "add": "Προσθήκη {stack}",
+      "remove": "Αφαίρεση {stack}",
+      "selected": "Επιλεγμένες στοίβες",
+      "suggestions": "Σύμφωνες στοίβες",
+      "noMatches": "Δεν υπάρχει αντιστοιχία στοίβας για “{query}”. Πατήστε Enter για αποστολή ούτως ή άλλως — τα ψευδώνυμα επιλύονται στον διακομιστή.",
+      "catalogFallback": "Η λίστα στοίβας δεν είναι διαθέσιμη — πληκτρολογήστε ένα όνομα στοίβας και πατήστε Enter.",
+      "emptyHint": "Επιλέξτε τουλάχιστον μία γλώσσα, πλαίσιο, λειτουργικό σύστημα ή επεξεργαστή παραπάνω.",
+      "regenerate": "Αναδημιουργία",
+      "sections": "{n} ενότητες",
+      "lines": "{n} γραμμές",
+      "deduped": "Συγχωνεύθηκαν {n} διπλότυπα μοτίβα",
+      "notFound": "Δεν βρίσκεται στο σώμα κειμένων: {stacks}",
+      "globalScope": "Τα {stacks} είναι καταχωρήσεις ΛΣ/επεξεργαστή — πολλοί προγραμματιστές τα διατηρούν σε ένα προσωπικό ~/.gitignore_global αντί σε κάθε αποθετήριο.",
+      "untrackedNote": "Ένα .gitignore επηρεάζει μόνο μη παρακολουθούμενα αρχεία. Για ένα αρχείο που ήδη παρακολουθεί το git, εκτελέστε git rm -r --cached <path>.",
+      "fileLabel": ".gitignore"
+    },
+    "editorconfig": {
+      "emptyHint": "Ορίστε τουλάχιστον μία ιδιότητα για να δείτε το αρχείο.",
+      "note": "Ίδιος μηχανισμός με το API. Οι επιλογές σας παραμένουν σε αυτή τη συνεδρία του browser· δεν αποθηκεύεται τίποτα.",
+      "checks": "Έλεγχοι",
+      "presets": "Έναρξη από",
+      "preset": {
+        "spaces2": "2 κενά, LF",
+        "spaces4": "4 κενά, LF",
+        "tabs": "Tabs, πλάτος 4",
+        "repo": "Έναρξη αποθεματικού (+ Markdown, Makefile)"
+      },
+      "rootLabel": "root = true — σταματά τους επεξεργαστές να συγχωνεύουν αρχεία .editorconfig γονικών καταλόγων",
+      "glob": "Glob {n}",
+      "addSection": "Προσθήκη ενότητας",
+      "removeSection": "Αφαίρεση",
+      "notSet": "(δεν έχει οριστεί)",
+      "import": "Εισαγωγή υπάρχοντος .editorconfig",
+      "importPlaceholder": "Επικολλήστε ένα .editorconfig εδώ για να το φορτώσετε στη φόρμα",
+      "importAction": "Εισαγωγή",
+      "importing": "Γίνεται εισαγωγή…",
+      "importFailed": "Αδυναμία εισαγωγής: {message}"
+    },
+    "robotsTxt": {
+      "emptyHint": "Ορίστε τις επιλογές παραπάνω — το αρχείο εμφανίζεται εδώ",
+      "deployNote": "Το robots.txt ισχύει μόνο στη ρίζα του τομέα (https://example.com/robots.txt). Κάθε υποτομέας χρειάζεται το δικό του αρχείο.",
+      "outputLabel": "robots.txt",
+      "defaultAccess": "Προεπιλεγμένη πρόσβαση (User-agent: *)",
+      "defaultAllow": "Να επιτρέπονται όλα",
+      "defaultDisallow": "Να απαγορεύονται όλα",
+      "defaultAccessNote": "Το \"Να επιτρέπονται όλα\" γράφει ένα κενό \"Disallow:\" — αυτό επιτρέπει τα πάντα.",
+      "crawlDelay": "Καθυστέρηση ανεύρεσης (δευτερόλεπτα)",
+      "crawlDelayPlaceholder": "κανένα",
+      "crawlDelayNote": "Δεν αποτελεί μέρος του RFC 9309. Το Google το αγνοεί· δεν γράφεται ποτέ σε ομάδα Google.",
+      "searchAgents": "Μηχανές αναζήτησης",
+      "aiAgents": "AI ανευρευτές",
+      "aiAgentsNote": "Ανευρευτές εκπαίδευσης και μηχανών απαντήσεων. Ο αποκλεισμός τους δεν επηρεάζει την ευρετηρίαση αναζήτησης.",
+      "accessDefault": "Προεπιλογή",
+      "accessAllow": "Επιτρέπεται",
+      "accessDisallow": "Απαγορεύεται",
+      "rules": "Κανόνες διαδρομής",
+      "rulesNote": "Οι διαδρομές διακρίνουν πεζά/κεφαλαία και είναι σχετικές με τη ρίζα. Προσθέστε τελικό κάθετο για να περιορίσετε έναν κανόνα σε έναν φάκελο.",
+      "rulePath": "Διαδρομή {n}",
+      "rulePathPlaceholder": "/admin/",
+      "ruleType": "Τύπος κανόνα",
+      "addRule": "Προσθήκη κανόνα διαδρομής",
+      "removeRule": "Αφαίρεση",
+      "sitemaps": "Χάρτες ιστότοπου",
+      "sitemapsNote": "Απόλυτες διευθύνσεις http(s). Γράφονται ως αυτόνομες γραμμές, εκτός κάθε ομάδας.",
+      "sitemapUrl": "Χάρτης ιστότοπου {n}",
+      "addSitemap": "Προσθήκη χάρτη ιστότοπου",
+      "removeSitemap": "Αφαίρεση",
+      "groupCount": "{n} ομάδες",
+      "lineCount": "{n} γραμμές",
+      "sitemapCount": "{n} χάρτες ιστότοπου",
+      "warningsSummary": "Σημειώσεις για αυτό το αρχείο ({n})"
+    },
+    "encodingDetect": {
+      "drop": "Ρίξτε ένα αρχείο για να εντοπίσετε την κωδικοποίησή του",
+      "privacy": "Διαβάζεται μόνο τα πρώτα {kb} KB και αποστέλλεται στο ίδιο δημόσιο invoke endpoint που θα καλούσε ένας agent — δεν γράφεται τίποτα στον δίσκο.",
+      "pasteLabel": "Ή επικολλήστε κείμενο",
+      "pastePlaceholder": "Επικολλήστε κείμενο — συμπεριλαμβανομένου mojibake που θέλετε να εξηγηθεί",
+      "detail": "Υποψήφιοι, τελειώματα γραμμών και στατιστικά bytes",
+      "idle": "Ρίξτε ένα αρχείο ή επικολλήστε κείμενο — η αναφορά συμπληρώνεται μόλις υπάρχει κάτι να διαβαστεί.",
+      "readOnly": "Μόνο για ανάγνωση: αυτό το εργαλείο εντοπίζει μια κωδικοποίηση, δεν ξαναγράφει ποτέ τα bytes.",
+      "headline": "{encoding} · {confidence}% βεβαιότητα",
+      "notText": "Δεν μοιάζει με κείμενο",
+      "bomPresent": "BOM {bytes}",
+      "bomAbsent": "Χωρίς BOM",
+      "eol": "Τερματισμοί γραμμών {kind}",
+      "eolMixed": "Μικτοί τερματισμοί γραμμών",
+      "language": "Γλώσσα {language} · {confidence}%",
+      "sampled": "Ανιχνεύτηκε από τα πρώτα {kb} KB από {totalKb} KB",
+      "candidates": "Υποψήφιοι κατά σειρά",
+      "candidatesNote": "Οι επόμενοι κωδικοποιήσεις εμφανίζονται σκόπιμα: τα σύντομα ή συμμετρικά δείγματα είναι πραγματικά αμφίσημα.",
+      "lineEndings": "Τερματισμοί γραμμών",
+      "byteStats": "Στατιστικά bytes",
+      "totalBytes": "Σύνολο",
+      "asciiBytes": "ASCII",
+      "highBytes": "Υψηλά (0x80–0xFF)",
+      "nullBytes": "NUL",
+      "mojibake": "Ανάκτηση Mojibake"
+    },
+    "dockerfileStarter": {
+      "language": "Γλώσσα",
+      "framework": "Πλαίσιο",
+      "packageManager": "Διαχειριστής πακέτων",
+      "baseVariant": "Βασική εικόνα",
+      "version": "Έκδοση runtime",
+      "workdir": "Εργασιακός κατάλογος",
+      "port": "Θύρα",
+      "buildCommand": "Εντολή κατασκευής",
+      "startCommand": "Εντολή εκκίνησης",
+      "commandPlaceholder": "Κενό = προκαθορισμένη προεπιλογή",
+      "frameworkNone": "Κανένα (απλό runtime)",
+      "pmAuto": "Αυτόματο",
+      "variantSlim": "slim (glibc)",
+      "variantAlpine": "alpine (musl)",
+      "variantFull": "full",
+      "multiStage": "Multi-stage build",
+      "nonRootUser": "Non-root user",
+      "includeDockerignore": "Προσθήκη .dockerignore",
+      "includeCompose": "Προσθήκη compose.yaml",
+      "includeHealthcheck": "Προσθήκη HEALTHCHECK",
+      "groupWhat": "Τι φτιάχνετε",
+      "groupHow": "Πώς πρέπει να τρέχει",
+      "emptyHint": "Επιλέξτε γλώσσα για να δείτε το Dockerfile.",
+      "note": "Μόνο προεπιλογές — τίποτα εκτός από τις παραπάνω επιλογές δεν φεύγει από τον browser σας. Διαβάστε το αρχείο πριν το στείλετε.",
+      "warnings": "{n} πράγματα για έλεγχο",
+      "stages": "{n} φάσεις",
+      "badgeNonRoot": "Non-root",
+      "badgeRoot": "Τρέχει ως root",
+      "badgePort": "Θύρα {port}"
+    },
+    "lineEndingDetect": {
+      "dropLabel": "Αφήστε ένα αρχείο κειμένου για να ελέγξετε τα τελικά του",
+      "privacy": "Το επικολλημένο κείμενο και τα πρώτα 256 KB ενός αρχείου που αφήνετε, στέλνονται στο Forge API για σάρωση· τα bytes δεν αποθηκεύονται.",
+      "pasteLabel": "Ή επικολλήστε κείμενο",
+      "pastePlaceholder": "Επικολλήστε το κείμενο που θέλετε να ελέγξετε",
+      "idle": "Επικολλήστε κείμενο ή αφήστε ένα αρχείο για να δείτε την απόφαση για τα τελικά του.",
+      "detail": "Μετρήσεις και έλεγχοι",
+      "note": "Μόνο ανίχνευση — αυτό το εργαλείο δεν τροποποιεί ποτέ το αρχείο σας.",
+      "empty": "Κενή είσοδος",
+      "noTerminator": "Χωρίς τερματισμό γραμμής — μία γραμμή χωρίς τερματισμό",
+      "consistent": "{style} — συνεπές",
+      "mixed": "ΜΙΚΤΟ — {parts}",
+      "sharePart": "{pct}% {style}",
+      "style": {
+        "LF": "LF (Unix/Linux/macOS)",
+        "CRLF": "CRLF (Windows)",
+        "CR": "CR (κλασικό Mac OS 9 και παλαιότερα)"
+      },
+      "lines": "{n} γραμμές",
+      "bytes": "{n} bytes",
+      "trailing": {
+        "present": "Τελειώνει με νέα γραμμή",
+        "absent": "Χωρίς νέα γραμμή στο τέλος του αρχείου"
+      },
+      "bomUtf8": "UTF-8 BOM",
+      "bomNone": "Χωρίς BOM",
+      "countRow": "{style}: {n} ({pct}%)",
+      "colStyle": "Στυλ",
+      "colCount": "Πλήθος",
+      "colShare": "Μερίδιο",
+      "minorityLines": "Γραμμές που διαφέρουν από το κυρίαρχο στυλ: {lines}",
+      "andMore": "και άλλα",
+      "findings": "Έλεγχοι",
+      "level": {
+        "info": "Σημείωση",
+        "warning": "Προειδοποίηση",
+        "danger": "Σπάει"
+      },
+      "sampled": "Σαρώθηκαν τα πρώτα {n} από {total} bytes",
+      "encodingLink": "Άνοιξε τον ανιχνευτή κωδικοποίησης"
+    },
+    "fileTypeDetect": {
+      "drop": "Αφίξε ένα αρχείο για να αναγνωρίσεις τι είναι πραγματικά",
+      "privacy": "Διαβάζεται μόνο η κεφαλίδα των πρώτων {kb} KB — το υπόλοιπο του αρχείου δεν φεύγει ποτέ από τη συσκευή σου.",
+      "hexTab": "Επικόλλησε hex",
+      "detail": "Εμφάνιση bytes και υποψηφίων",
+      "idle": "Αφήστε ένα αρχείο ή επικολλήστε τα αρχικά bytes του σε hex.",
+      "note": "Οι υπογραφές εντοπίζουν το περιέκτη, όχι τον codec ή το περιεχόμενο του.",
+      "unset": "—",
+      "unknownType": "Δεν βρέθηκε αντίστοιχη υπογραφή",
+      "polyglot": "Polyglot",
+      "tierNone": "Η επέκταση συμφωνεί",
+      "tierBenign": "Αθώα ασυμφωνία",
+      "tierMismatch": "Ασυμφωνία επέκτασης",
+      "tierHighRisk": "Υψηλός κίνδυνος",
+      "confidenceMatch": "Αντιστοιχία υπογραφής",
+      "confidenceContainer": "Μόνο περιέκτης",
+      "confidenceAmbiguous": "Ασαφές",
+      "confidenceNone": "Καμία αντιστοίχιση",
+      "signalDetected": "Ανιχνεύθηκε MIME",
+      "signalReported": "Αναφερόμενο MIME",
+      "signalExtension": "Επέκταση αρχείου",
+      "drillResolved": "Ανοίχτηκε ο περιέκτης {kind}: {type}",
+      "drillUnresolved": "Ο περιέκτης {kind} επιβεβαιώθηκε· δεν αντιστοιχίστηκε υποτύπος από τα δειγματοληπτικά bytes",
+      "hexDump": "Εξέλιξη κεφαλίδας",
+      "bytesRead": "{n} bytes διαβασμένα",
+      "headerOnly": "μόνο δείγμα κεφαλίδας",
+      "entropy": "Εντροπία {bits} bits/byte",
+      "signatureCount": "{n} υπογραφές στον πίνακα",
+      "textHints": "Δομικές ενδείξεις: {hints}",
+      "candidates": "Όλες οι ταιριασμένες υπογραφές",
+      "atOffset": "μετατόπιση {offset}"
+    },
+    "licenseChooser": {
+      "prompt": "Τι χρειάζεται αυτό το έργο;",
+      "pickScenario": "Επίλεξε τη γραμμή που ταιριάζει στο έργο σου — η απάντηση και το αρχείο εμφανίζονται εδώ.",
+      "disclaimer": "Καθοριστική έξοδος προτύπου, όχι νομική συμβουλή.",
+      "noAnswer": "Καμία άδεια δεν ταιριάζει σε αυτή την περίπτωση",
+      "permissions": "Επιτρέπει",
+      "conditions": "Απαιτεί",
+      "limitations": "Δεν καλύπτει",
+      "alternates": "Άλλες επιλογές για αυτή την περίπτωση",
+      "useThis": "Χρήση αυτής",
+      "readCanonical": "Διαβάστε το επίσημο κείμενο στο SPDX",
+      "holder": "Κάτοχος πνευματικών δικαιωμάτων",
+      "holderPlaceholder": "Το όνομά σας ή της εταιρείας σας",
+      "holderHint": "Προσθέστε τον κάτοχο πνευματικών δικαιωμάτων και το αρχείο θα συμπληρώνεται καθώς πληκτρολογείτε.",
+      "year": "Έτος",
+      "manifest": "Πού τοποθετείται το SPDX id",
+      "verbatim": "Το {name} παρέχεται byte-identical για όλους — η γραμμή πνευματικών δικαιωμάτων τοποθετείται στην ειδοποίηση του αρχείου πηγής αντί για το αρχείο LICENSE.",
+      "noLicense": {
+        "summary": "Τι γίνεται αν δεν προσθέσω καθόλου άδεια;",
+        "body": "Η απουσία άδειας δεν είναι το ίδιο με το δημόσιο τομέα. Χωρίς αυτή, ισχύει το προεπιλεγμένο πνευματικό δικαίωμα και κανείς δεν μπορεί να αντιγράψει, να τροποποιήσει ή να κατανείμει τον κώδικά σας — ένα δημόσιο αποθετήριο είναι ορατότητα, όχι άδεια."
+      },
+      "artifact": {
+        "header": "Κεφαλίδα αρχείου πηγής",
+        "notice": "Σημείωση αρχείου πηγής"
+      },
+      "refine": {
+        "patent": "Έχει σημασία η παροχή διπλώματος ευρεσιτεχνίας εδώ (κώδικας εταιρείας, υλικό, εργασία προτύπων)",
+        "network": "Θα εκτελείται ως φιλοξενούμενη υπηρεσία, όχι μόνο ως λήψη",
+        "library": "Είναι βιβλιοθήκη στην οποία συνδέεται άλλο λογισμικό",
+        "later": "Επιτρέψτε μεταγενέστερες εκδόσεις της άδειας (διατηρεί συμβατότητα με κώδικα Apache-2.0)",
+        "none": "Δεν υπάρχει κάτι άλλο να διευκρινιστεί για αυτή την περίπτωση."
+      },
+      "scenario": {
+        "permissive": {
+          "label": "Οποιοσδήποτε μπορεί να το χρησιμοποιήσει, ελεύθερα",
+          "detail": "Χρήση, αλλαγή, πώληση, διανομή σε κλειστά προϊόντα — αρκεί να διατηρείτε τη σημείωση πνευματικών δικαιωμάτων."
+        },
+        "copyleft": {
+          "label": "Οι βελτιώσεις πρέπει να επιστρέψουν",
+          "detail": "Όποιος διανέμει μια τροποποιημένη έκδοση πρέπει να δημοσιεύσει και τον πηγαίο κώδικα."
+        },
+        "community": {
+          "label": "Συνεισφέρω σε ένα υπάρχον έργο",
+          "detail": "Η άδεια έχει ήδη καθοριστεί — ταιριάξτε την με το έργο στο οποίο συνεισφέρετε."
+        },
+        "non-software": {
+          "label": "Δεν πρόκειται για λογισμικό",
+          "detail": "Τα έγγραφα, τα δεδομένα, ο σχεδιασμός ή τα μέσα χρειάζονται άδεια Creative Commons, όχι OSI."
+        },
+        "unsure": {
+          "label": "Δεν ξέρω ακόμα",
+          "detail": "Λάβετε την προεπιλογή με χαμηλό κίνδυνο και τις δύο επιλογές που αξίζει να γνωρίζετε."
+        }
+      },
+      "family": {
+        "permissive": "Ευέλικτη",
+        "weak-copyleft": "Ασθενές copyleft",
+        "strong-copyleft": "Ισχυρό copyleft",
+        "public-domain": "Κοινό κτήμα",
+        "content": "Άδεια περιεχομένου"
+      },
+      "flag": {
+        "commercial-use": "Εμπορική χρήση",
+        "modifications": "Τροποποίηση",
+        "distribution": "Διανομή",
+        "private-use": "Ιδιωτική χρήση",
+        "patent-use": "Άδεια εφευρέτη",
+        "include-copyright": "Διατήρηση της σημείωσης πνευματικών δικαιωμάτων",
+        "document-changes": "Δήλωση των αλλαγών σας",
+        "disclose-source": "Αποκάλυψη πηγαίου κώδικα",
+        "same-license": "Ίδια άδεια για όλο το έργο",
+        "same-license-file": "Ίδια άδεια, ανά τροποποιημένο αρχείο",
+        "same-license-library": "Ίδια άδεια για τη βιβλιοθήκη",
+        "network-use-disclose": "Η χρήση στο δίκτυο μετρά ως διανομή",
+        "liability": "Ευθύνη",
+        "warranty": "Εγγύηση",
+        "trademark-use": "Χρήση εμπορικού σήματος"
+      }
+    },
+    "isbn": {
+      "inputLabel": "ISBNs",
+      "placeholder": "978-0-306-40615-7 — ένα ανά γραμμή, οι παύλες και τα κενά αγνοούνται",
+      "idle": "Επικολλήστε ένα ISBN ή ολόκληρη στήλη· τα αποτελέσματα εμφανίζονται καθώς πληκτρολογείτε.",
+      "scope": "Μόνο έλεγχος ψηφίου ελέγχου. Ένα έγκυρο ISBN είναι εσωτερικά συνεπές — δεν αποτελεί απόδειξη ότι έχει εκδοθεί σε πραγματικό βιβλίο από αρμόδια αρχή.",
+      "summary": "{valid} από {total} έγκυρα",
+      "singleValid": "Έγκυρο ISBN",
+      "singleInvalid": "Μη έγκυρο ISBN",
+      "invalidCount": "{n} μη έγκυρα",
+      "convertedTo": "{type}: {value}",
+      "valid": "Έγκυρο",
+      "invalid": "Μη έγκυρο",
+      "truncated": "Εμφανίζονται οι πρώτες {shown} γραμμές.",
+      "col": {
+        "input": "Είσοδος",
+        "normalized": "Κανονικοποιημένο",
+        "type": "Τύπος",
+        "status": "Κατάσταση",
+        "converted": "Μετατράπηκε",
+        "note": "Σημείωση"
+      },
+      "type": {
+        "isbn10": "ISBN-10",
+        "isbn13": "ISBN-13",
+        "invalidLength": "Λάθος μήκος"
+      },
+      "note": {
+        "checkDigit": "Το ψηφίο ελέγχου πρέπει να είναι {expected}",
+        "invalidLength": "Ένα ISBN έχει ακριβώς 10 ή 13 χαρακτήρες",
+        "invalidCharacter": "Περιέχει χαρακτήρα που δεν είναι ψηφίο",
+        "xMisplaced": "Το X είναι έγκυρο μόνο ως τελευταίος χαρακτήρας ενός ISBN-10",
+        "noIsbn10": "Το πρόθεμα 979 δεν έχει αντίστοιχο ISBN-10",
+        "nonBookland": "Τα ISBN 13 ψηφίων πρέπει να ξεκινούν με 978 ή 979",
+        "ismn": "Το 979-0 είναι το εύρος ISMN (τυπωμένη μουσική), όχι ISBN"
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
+    },
+    "languageDetect": {
+      "inputLabel": "Απόσπασμα κώδικα",
+      "inputPlaceholder": "Επικόλλησε κώδικα χωρίς όνομα αρχείου — από ιστορικό συνομιλίας, ticket, απάντηση…",
+      "hintLabel": "Όνομα αρχείου ή επέκταση (προαιρετικό)",
+      "hintPlaceholder": "main.h · .pl · Dockerfile",
+      "note": "Τρέχει τον ίδιο μηχανισμό με το API. Ο εντοπισμός βασίζεται μόνο στο περιεχόμενο εκτός αν δώσεις υπόδειξη ονόματος αρχείου· αμφιλεγόμενες επεκτάσεις (.h .m .pl .fs .ts .cs .r) κατευθύνονται πρώτα στους δικούς τους κανόνες.",
+      "idle": "Επικολλήστε ένα απόσπασμα — η ετυμηγορία εμφανίζεται καθώς πληκτρολογείτε.",
+      "confidence": {
+        "high": "Υψηλή βεβαιότητα",
+        "medium": "Μέτρια βεβαιότητα",
+        "low": "Χαμηλή βεβαιότητα"
+      },
+      "score": "{n}/100",
+      "dataFormat": "Μορφή δεδομένων, όχι γλώσσα προγραμματισμού",
+      "multiLanguage": "Αναγνωρίστηκαν πολλαπλές γλώσσες",
+      "why": "Γιατί αυτή η απάντηση",
+      "signals": "Σύμπτωση σημάτων",
+      "alternates": "Άλλοι υποψήφιοι",
+      "composeNext": "Διαμόρφωσε αυτό το {language}"
+    },
+    "iban": {
+      "inputLabel": "IBAN",
+      "idle": "Επικολλήστε ένα IBAN — η ετυμηγορία ακολουθεί κάθε πληκτρολόγηση, χωρίς κουμπί.",
+      "sourceNote": "Άθροισμα ελέγχου και δομή σύμφωνα με το ISO 13616-1:2020. Το μήκος ανά χώρα και η μορφή BBAN προέρχονται από δημοσιευμένη αναπαραγωγή του μητρώου IBAN του ISO, όχι από το ίδιο το μητρώο.",
+      "valid": "Έγκυρο IBAN",
+      "keepTyping": "Συνεχίστε να πληκτρολογείτε — μικρότερο από το IBAN αυτής της χώρας",
+      "caveat": "Μόνο έγκυρη δομή. Ένα επιτυχές άθροισμα ελέγχου δεν επιβεβαιώνει ότι ο λογαριασμός υπάρχει, είναι ενεργός ή ανήκει στον δικαιούχο.",
+      "printFormat": "Μορφή εκτύπωσης",
+      "details": "Ανάλυση",
+      "notEncoded": "Δεν κωδικοποιείται από το μορφότυπο της χώρας αυτής",
+      "coverage": "{n} χώρες με καταχωρημένο μορφότυπο IBAN",
+      "reason": {
+        "bad_charset": "Δεν έχει μορφή IBAN — ένας IBAN αποτελείται από δύο γράμματα, δύο ψηφία και στη συνέχεια μόνο γράμματα και ψηφία",
+        "country_unsupported": "Δεν υπάρχει καταχωρημένος μορφότυπος IBAN για τον κωδικό χώρας αυτής",
+        "incomplete": "Ατελής",
+        "wrong_length_for_country": "Πολύ μεγάλο για το IBAN αυτής της χώρας",
+        "structure_mismatch": "Σωστό μήκος, λάθος δομή για τη μορφή αυτής της χώρας",
+        "checksum_failed": "Αποτυχία αθροίσματος ελέγχου — υπάρχει κάποιο τυπογραφικό λάθος σε αυτό το IBAN"
+      },
+      "badge": {
+        "country": "{name} ({code})",
+        "unknownCountry": "Κωδικός χώρας {code}",
+        "length": "{n} από {expected} χαρακτήρες",
+        "bankCode": "Κωδικός τράπεζας {code}",
+        "expectedCheckDigits": "Τα ψηφία ελέγχου για αυτόν τον αριθμό λογαριασμού θα ήταν {digits}"
+      },
+      "field": {
+        "normalized": "Ηλεκτρονική μορφή",
+        "country": "Χώρα",
+        "checkDigits": "Ψηφία ελέγχου",
+        "bban": "BBAN",
+        "bbanFormat": "Μορφή BBAN",
+        "bankCode": "Κωδικός τράπεζας"
+      },
+      "check": {
+        "charset": "Σύνολο χαρακτήρων",
+        "country": "Χώρα",
+        "length": "Μήκος",
+        "structure": "Δομή",
+        "checksum": "MOD 97-10"
+      },
+      "state": {
+        "pass": "επιτυχία",
+        "fail": "αποτυχία",
+        "skipped": "δεν ελέγχθηκε"
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
+    },
+    "secretScan": {
+      "pasteLabel": "Επικόλλησε κώδικα, ρύθμιση ή αρχείο .env",
+      "pastePlaceholder": "DATABASE_URL=postgres://…\nAPI_KEY=…",
+      "dropLabel": "Αφαιρέστε ένα αρχείο για να το σαρώσετε",
+      "privacy": "Τρέχει εξ ολοκλήρου στον περιηγητή σας. Δεν στέλνεται τίποτα πουθενά — ούτε καν σε εμάς.",
+      "scan": "Σάρωση",
+      "scanning": "Σάρωση…",
+      "idleTitle": "Επικολλήστε κάτι και πατήστε Σάρωση.",
+      "idleHint": "Ελέγχει για κλειδιά API προμηθευτών, tokens, ιδιωτικά κλειδιά και μυστικά υψηλής εντροπίας. Οι ταιριασμένες τιμές καλύπτονται· εμφανίζονται μόνο οι αριθμοί γραμμών.",
+      "clean": "Δεν βρέθηκαν μυστικά",
+      "cleanCaveat": "Τίποτα εδώ δεν ταιριάζει με γνωστή μορφή διαπιστευτηρίου ή δεν μοιάζει με τυχαίο μυστικό. Η ανίχνευση μοτίβων δεν αποτελεί απόδειξη — ελέγξτε οτιδήποτε αμφιβάλλετε.",
+      "found": "{n, plural, one {# πιθανό μυστικό βρέθηκε} other {# πιθανά μυστικά βρέθηκαν}}",
+      "foundCaveat": "Καλύψτε τα πριν τα επικολλήσετε οπουδήποτε. Αν ένα κλειδί είναι αληθινό, περιστρέψτε το.",
+      "countHigh": "{n} υψηλή εμπιστοσύνη",
+      "countMedium": "{n} μέτρια",
+      "countLow": "{n} χαμηλά",
+      "confidence": {
+        "high": "Υψηλή",
+        "medium": "Μέτρια",
+        "low": "Χαμηλή"
+      },
+      "position": "γραμμή {line}, στήλη {column}",
+      "length": "{n} χαρακτήρες",
+      "maskedLabel": "Αναπαριστώμενη αντιστοίχιση",
+      "why": "Γιατί αντιστοιχίστηκε",
+      "candidates": "Μπορεί επίσης να είναι:",
+      "scanDetail": "Λεπτομέρειες σάρωσης",
+      "lines": "{n} γραμμές",
+      "bytes": "{n} bytes σαρώθηκαν",
+      "suppressed": "{n} placeholder(s) αγνοήθηκαν",
+      "suppressedNote": "Γνωστές τιμές demo (κλειδιά EXAMPLE, your-api-key-here, επαναλαμβανόμενοι χαρακτήρες) αγνοούνται ώστε τα δείγματα αρχείων να μην προκαλούν ψευδείς ειδοποιήσεις.",
+      "omitted": "{n} περισσότερα δεν εμφανίζονται",
+      "truncated": "Το εισαγόμενο κείμενο κόπηκε — σκανάστηκε μόνο το πρώτο μέρος",
+      "reportTitle": "Αποτελέσματα σάρωσης μυστικών (τιμές καλυμμένες)",
+      "scopeNote": "Μόνο ανίχνευση: αυτό το εργαλείο δεν επικοινωνεί με τον πάροχο για να ελέγξει αν ένα κλειδί είναι ακόμα ενεργό — αυτό θα σήμαινε αποστολή του κλειδιού σας σε τρίτο μέρος."
+    },
+    "eanUpcGtin": {
+      "inputLabel": "Αριθμοί γραμμωτού κώδικα",
+      "placeholder": "Ένας κώδικας ανά γραμμή (τα κόμματα και τα ερωτηματικά χωρίζουν επίσης)",
+      "idle": "Επικολλήστε έναν κώδικα ή ολόκληρη στήλη — η απόφαση εμφανίζεται καθώς πληκτρολογείτε.",
+      "operationLabel": "Λειτουργία",
+      "operationValidate": "Επικύρωση (ο κώδικας περιέχει τον ψηφίο ελέγχου)",
+      "operationCalculate": "Υπολογισμός (ο κώδικας δεν περιέχει τον ψηφίο ελέγχου)",
+      "typeLabel": "Τύπος",
+      "typeAuto": "Ανίχνευση βάσει μήκους",
+      "total": "{n} κωδικοί",
+      "validCount": "{n} έγκυροι",
+      "invalidCount": "{n} άκυροι",
+      "calculatedCount": "{n} υπολογισμένοι",
+      "unrecognizedCount": "{n} μη αναγνωρισμένο μήκος",
+      "verdict": {
+        "valid": "Έγκυρος",
+        "invalid": "Άκυρος",
+        "calculated": "Υπολογισμένος",
+        "unrecognized-length": "Μη αναγνωρισμένο μήκος"
+      },
+      "alsoReadsAs": "Διαβάζεται επίσης ως {type}",
+      "checkDigit": "Ψηφίο ελέγχου",
+      "corrected": "Πρέπει να είναι",
+      "gtin14": "Μορφή GTIN-14",
+      "reason": {
+        "empty": "Δεν υπάρχει κάτι να ελεγχθεί σε αυτή τη γραμμή.",
+        "non-digit-characters": "Περιέχει χαρακτήρες που δεν είναι ψηφία ούτε διαχωριστικά.",
+        "unsupported-length": "Κανένα αναγνωριστικό GS1 δεν έχει αυτό το μήκος (υποστηρίζονται 8, 12, 13, 14 και 18 ψηφία).",
+        "length-mismatch": "Λάθος μήκος για τον τύπο που επιλέξατε.",
+        "check-digit-mismatch": "Το τελευταίο ψηφίο δεν ταιριάζει με αυτό που απαιτεί το πρότυπο."
+      },
+      "warning": {
+        "separators-stripped": "Τα κενά, τα παύλα και τα τελείες αφαιρέθηκαν πριν από τον έλεγχο.",
+        "all-zero": "Όλα μηδενικά — μαθηματικά έγκυρο, αλλά όχι πραγματικό αναγνωριστικό.",
+        "payload-is-also-a-complete-code": "Αυτό είναι επίσης μήκος πλήρους κωδικού. Αν έχει ήδη το ψηφίο ελέγχου του, μεταβείτε στην Επιλογή Επαλήθευσης."
+      },
+      "math": "Εμφάνιση των πράξεων",
+      "mathSum": "Άθροισμα {sum} → ψηφίο ελέγχου {check}",
+      "truncatedRows": "Εμφανίζονται οι πρώτες {shown} από {total} γραμμές. Το αντιγραφή και λήψη περιλαμβάνει όλες.",
+      "privacy": "Οι κωδικοί αποστέλλονται στο Forge API για έλεγχο και δεν αποθηκεύονται.",
+      "scopeNote": "Ένα σωστό ψηφίο ελέγχου σημαίνει ότι ο αριθμός είναι σωστά διαμορφωμένος. Δεν σημαίνει ότι το GS1 τον έχει εκχωρήσει ποτέ σε πραγματικό προϊόν, εταιρεία ή τοποθεσία — μόνο η αναζήτηση στο μητρώο GEPIR απαντά αυτό.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
+    },
+    "vin": {
+      "inputLabel": "VIN (17 χαρακτήρες)",
+      "privacy": "Ελέγχεται στον περιηγητή σας. Το VIN δεν αποστέλλεται πουθενά.",
+      "idle": "Επικολλήστε ένα VIN — η απόφαση εμφανίζεται καθώς πληκτρολογείτε, χωρίς κουμπί.",
+      "scope": "Μόνο δομή και ψηφίο ελέγχου (49 CFR 565.15 / ISO 3779). Δεν πρόκειται για αναζήτηση ιστορικού οχήματος.",
+      "verdict": {
+        "valid": "Έγκυρη δομή VIN",
+        "keepTyping": "Συνεχίστε να πληκτρολογείτε — {remaining} ακόμα χαρακτήρες",
+        "tooLong": "Πολύ μεγάλο — ένα VIN έχει ακριβώς 17 χαρακτήρες, αυτό έχει {n}",
+        "invalidCharacter": "Όχι χαρακτήρας VIN: \"{char}\" στη θέση {position}",
+        "checkDigitMismatch": "Μη ταιριαστό ψηφίο ελέγχου — αναμενόταν {expected}, βρέθηκε {found}"
+      },
+      "hint": {
+        "confusable": "Το \"{char}\" δεν χρησιμοποιείται ποτέ σε VIN. Ίσως εννοούσατε {suggest};"
+      },
+      "notice": {
+        "notProvenance": "Ένα έγκυρο ψηφίο ελέγχου επιβεβαιώνει ότι το VIN είναι σωστά διαμορφωμένο. Δεν επιβεβαιώνει ότι το όχημα υπάρχει, δεν έχει τροποποιηθεί ή έχει καθαρό ιστορικό — ένα πλαστωμένο VIN περνάει επίσης αυτόν τον έλεγχο.",
+        "pre1981": "Τα οχήματα που κατασκευάστηκαν πριν από το 1981, καθώς και ορισμένα εισαγόμενα (JDM/Ευρωπαϊκά) οχήματα, δεν χρησιμοποιούν αυτό το ψηφίο ελέγχου — μια ασυμφωνία ενδέχεται να μην σημαίνει ότι το VIN πληκτρολογήθηκε λανθασμένα.",
+        "partial": "Ο έλεγχος του ψηφίου ελέγχου απαιτεί το πλήρες VIN 17 χαρακτήρων. Ένα μερικό VIN είναι εργασία αποκωδικοποίησης, όχι έλεγχος αθροίσματος ελέγχου."
+      },
+      "badge": {
+        "length": "{n} χαρακτήρες",
+        "expected": "Ψηφίο ελέγχου {d}"
+      },
+      "invalidChars": {
+        "more": "Επίσης δεν είναι χαρακτήρες VIN: {list}"
+      },
+      "segment": {
+        "wmi": "WMI 1-3",
+        "vds": "Περιγραφέας 4-8",
+        "checkDigit": "Ψηφίο ελέγχου 9",
+        "modelYear": "Έτος μοντέλου 10",
+        "plant": "Εργοστάσιο 11",
+        "serial": "Σειρά 12-17"
+      },
+      "math": {
+        "title": "Εμφάνιση υπολογισμού",
+        "col": {
+          "position": "Θέση",
+          "char": "Χαρακτήρας",
+          "value": "Τιμή",
+          "weight": "Βάρος",
+          "product": "Γινόμενο"
+        },
+        "formula": "άθροισμα = {sum};  {sum} mod 11 = {remainder}  →  ψηφίο ελέγχου {expected}"
+      },
+      "specimenTitle": "VIN · structure specimen"
+    },
+    "envDiff": {
+      "envA": "Περιβάλλον Α",
+      "envB": "Περιβάλλον Β",
+      "placeholderA": "Επικόλλησε ή σύρε το πρώτο αρχείο .env",
+      "placeholderB": "Επικολλήστε ή ρίξτε το δεύτερο αρχείο .env",
+      "paneNoAssignment": "Δεν βρέθηκε γραμμή KEY=value",
+      "optIgnoreComments": "Αγνόηση σχολίων και κενών γραμμών",
+      "optCaseInsensitive": "Σύγκριση κλειδιών ανεξάρτητα από πεζά/κεφαλαία",
+      "optRedactSecrets": "Απόκρυψη εντοπισμένων μυστικών",
+      "emptyHint": "Προσθέστε ένα δεύτερο περιβάλλον για να δείτε τη σύγκριση",
+      "summaryNone": "Καμία διαφορά σε {total} κλειδιά",
+      "summaryDiff": "{n} από {total} κλειδιά διαφέρουν",
+      "note": {
+        "unchanged": "Ίδια τιμή και στις δύο πλευρές",
+        "changed": "Η τιμή διαφέρει",
+        "added": "Ορισμένο μόνο στο B",
+        "removed": "Ορισμένο μόνο στο A",
+        "commentedOutInA": "Σχολιασμένο στο A, ορισμένο στο B",
+        "commentedOutInB": "Ορισμένο στο A, σχολιασμένο στο B"
+      },
+      "secretChanged": "το μυστικό διαφέρει",
+      "secretSame": "το μυστικό είναι ίδιο και στις δύο πλευρές",
+      "count": {
+        "unchanged": "{n} αμετάβλητα",
+        "changed": "{n} άλλαξαν",
+        "added": "{n} προστέθηκαν",
+        "removed": "{n} αφαιρέθηκαν",
+        "commentedOut": "{n} σχολιάστηκαν"
+      },
+      "warnings": "Προειδοποιήσεις εισόδου ({n})",
+      "warningType": {
+        "duplicateKey": "{file} · διπλό κλειδί",
+        "quoteMismatch": "{file} · ασυμφωνία εισαγωγών",
+        "unparsableLine": "{file} · μη αναλύσιμη γραμμή"
+      },
+      "showUnchanged": "Εμφάνιση αμετάβλητων ({n})",
+      "commentedIn": {
+        "A": "σχολιασμένο στο A",
+        "B": "σχολιασμένο στο B",
+        "both": "σχολιασμένο και στα δύο"
+      },
+      "redactedNote": "Οι μυστικές τιμές αποκρύπτονται βάσει ευρετικής λέξης-κλειδιού — όχι σαρωτή ασφαλείας. Η σύγκριση γίνεται στις αρχικές τιμές, οπότε ένας περιστρεφόμενος μυστικός κωδικός εξακολουθεί να εμφανίζεται ως αλλαγμένος.",
+      "interpolationNote": "Οι αναφορές ${VAR} συγκρίνονται κυριολεκτικά και δεν επιλύονται ποτέ: η επέκταση διαφέρει ανά καταναλωτή.",
+      "truncated": "Εμφανίζονται μόνο τα πρώτα 5.000 κλειδιά· οι μετρήσεις καλύπτουν κάθε κλειδί.",
+      "colKey": "Κλειδί",
+      "colA": "Α",
+      "colB": "Β",
+      "colStatus": "Κατάσταση",
+      "privacy": "Και τα δύο αρχεία συγκρίνονται στο πρόγραμμα περιήγησής σας. Δεν μεταφορτώνεται τίποτα."
+    },
+    "csvDiff": {
+      "originalLabel": "Αρχικό CSV",
+      "updatedLabel": "Ενημερωμένο CSV",
+      "originalPlaceholder": "Επικολλήστε την αρχική εξαγωγή ή σύρετε ένα αρχείο .csv εδώ",
+      "updatedPlaceholder": "Επικολλήστε την ενημερωμένη εξαγωγή ή σύρετε ένα αρχείο .csv εδώ",
+      "emptyHint": "Επικολλήστε ή σύρετε και τα δύο αρχεία — η σύγκριση εκτελείται μόλις κάθε πλευρά έχει περιεχόμενο.",
+      "note": "Οι γραμμές αντιστοιχίζονται με βάση την ταυτότητά τους, όχι τη θέση τους, οπότε μια παρεμβιβασμένη ή επαναταξινομημένη γραμμή δεν εμφανίζεται ως τοίχος αλλαγών. Το περιεχόμενο αποστέλλεται στο API για τη σύγκριση και δεν αποθηκεύεται.",
+      "columns": "{n} στήλες",
+      "keyLabel": "Στήλη κλειδιού",
+      "keyAuto": "Αυτόματη πρόταση",
+      "keyNone": "Χωρίς κλειδί — σύγκριση ολόκληρων γραμμών",
+      "joinLabel": "Ενωση",
+      "joinFull": "Πλήρης εξωτερική — κάθε γραμμή",
+      "joinInner": "Εσωτερική — γραμμές και στα δύο",
+      "joinLeft": "Αριστερή — το αρχικό σύνολο γραμμών",
+      "ignoreWhitespace": "Αγνόηση κενών",
+      "ignoreCase": "Αγνόηση πεζών/κεφαλαίων",
+      "treatEmptyAsNull": "Κενό = NULL = N/A",
+      "noDifferences": "Χωρίς διαφορές",
+      "differences": "{added} προστέθηκαν · {removed} αφαιρέθηκαν · {changed} αλλαγές",
+      "added": "{n} προστέθηκαν",
+      "removed": "{n} αφαιρέθηκαν",
+      "changed": "{n} αλλαγές",
+      "unchangedCount": "{n} αμετάβλητα",
+      "totals": "{original} → {updated} γραμμές",
+      "matchedBy": "Ταίριασμα με βάση τις {columns} ({source})",
+      "matchedWholeRow": "Ταίριασμα με βάση το περιεχόμενο ολόκληρης της γραμμής — δεν χρησιμοποιήθηκε στήλη κλειδιού, οπότε δεν αναφέρεται καμία αλλαγή.",
+      "keySource": {
+        "provided": "η επιλογή σας",
+        "auto": "προτεινόμενο αυτόματα",
+        "full-row": "ολόκληρη γραμμή"
+      },
+      "keyRejected": "Απορριφθέντα υποψήφια κλειδιά: {items}",
+      "columnMismatch": "Στήλες μόνο στο αρχικό: {original} · μόνο στο ενημερωμένο: {updated}",
+      "truncated": "Εμφάνιση {shown} από το πλήρες αποτέλεσμα (προεπισκόπηση περιορισμένη στις {limit} γραμμές) — οι μετρήσεις παραπάνω είναι πλήρεις.",
+      "findings": "Σημειώσεις ({n})",
+      "level": {
+        "info": "πληροφορία",
+        "warning": "προειδοποίηση",
+        "danger": "σφάλμα"
+      },
+      "wholeRow": "Σειρά {n}",
+      "exportChanged": "Τροποποιημένες σειρές (CSV)",
+      "exportFull": "Πλήρης diff (CSV)"
+    },
+    "uscc": {
+      "modeLabel": "Επαλήθευση ή δημιουργία",
+      "tab": {
+        "verify": "Επαλήθευση",
+        "generate": "Δημιουργία κωδικών δοκιμής"
+      },
+      "inputLabel": "Ενιαίος κωδικός κοινωνικής πίστης",
+      "placeholder": "18 χαρακτήρες, π.χ. 91500000059926748X",
+      "idle": "Επικολλήστε έναν κωδικό 18 χαρακτήρων. Ελέγχεται στον περιηγητή καθώς πληκτρολογείτε — δεν αποθηκεύεται τίποτα.",
+      "scope": "Μόνο δομικός έλεγχος (GB 32100-2015 + ISO 7064 MOD 31-3). Ένας έγκυρος κωδικός είναι σωστά διαμορφωμένος· δεν σημαίνει ότι υπάρχει οργάνωση εγγεγραμμένη με αυτόν — ελέγξτε το στο εθνικό μητρώο cods.org.cn.",
+      "valid": "Έγκυρος ενιαίος κωδικός κοινωνικής πίστης",
+      "invalid": "Δεν είναι έγκυρος κωδικός ενιαίου κοινωνικού πιστωτικού",
+      "incomplete": "{n} από 18 χαρακτήρες",
+      "invalidCharacters": "Περιέχει χαρακτήρες που αποκλείονται από το πρότυπο",
+      "checksumOk": "Έλεγχος ψηφίου OK",
+      "checksumBad": "Ασυμφωνία ψηφίου ελέγχου",
+      "expectedDigit": "Το ψηφίο ελέγχου πρέπει να είναι {expected}, όχι {actual}",
+      "illegalAt": "Θέση {position}: το “{char}” δεν ανήκει στο σύνολο χαρακτήρων του κωδικού (αποκλείονται τα I, O, S, V, Z)",
+      "detail": "Λεπτομέρεια πεδίου",
+      "legacyTitle": "Κωδικός οργάνωσης παλαιού τύπου (GB 11714)",
+      "legacy": {
+        "ok": "Ο ενσωματωμένος κωδικός οργάνωσης 9 χαρακτήρων είναι εσωτερικά συνεπής",
+        "mismatch": "Το χαρακτήρα ελέγχου παλαιού τύπου θα ήταν {expected} — μόνο ενημερωτικό· δεν φέρουν όλοι οι τύποι καταχωρημένων κωδικό οργάνωσης GB 11714",
+        "unchecked": "Δεν ελέγχθηκε"
+      },
+      "divisionScope": "Οι θέσεις 3–8 αντιστοιχίζονται στον πίνακα επαρχιών GB/T 2260 και στους κανόνες εμφίλωσης της έξιψифιακής μορφής· ο πλήρης πίνακας νομών δεν μεταφέρεται.",
+      "field": {
+        "registrationDept": "Τμήμα εγγραφής",
+        "orgCategory": "Κατηγορία οργάνωσης",
+        "adminDivision": "Διοικητική διαίρεση",
+        "orgIdentifier": "Αναγνωριστικό υποκειμένου",
+        "checkDigit": "Ψήφος ελέγχου"
+      },
+      "depth": {
+        "none": "Δεν έχει επιλυθεί",
+        "province": "Επίπεδο επαρχίας",
+        "prefecture": "Επίπεδο νομού",
+        "county": "Επίπεδο κομητείας"
+      },
+      "note": {
+        "empty": "Δεν υπάρχει κάτι προς έλεγχο ακόμη",
+        "incomplete": "Ένας ενιαίος κωδικός κοινωνικής πίστης έχει ακριβώς 18 χαρακτήρες",
+        "tooLong": "Περισσότερα από 18 χαρακτήρες",
+        "illegalCharacter": "Περιέχει χαρακτήρα εκτός του συνόλου GB 32100-2015 (αποκλείονται τα I, O, S, V και Z)",
+        "checkDigitMismatch": "Ο έλεγχος ψηφίου δεν ταιριάζει με τους πρώτους 17 χαρακτήρες",
+        "departmentUnknown": "Η θέση 1 δεν είναι τμήμα εγγραφής που ορίζει το πρότυπο (1, 5, 9, Y)",
+        "categoryUnknown": "Η θέση 2 δεν είναι κατηγορία οργανισμού που ορίζεται για αυτό το τμήμα εγγραφής",
+        "divisionNotNumeric": "Οι θέσεις 3–8 πρέπει να είναι έξι ψηφία",
+        "divisionUnknownProvince": "Οι θέσεις 3–4 δεν είναι κωδικός επαρχίας GB/T 2260",
+        "divisionMalformed": "Ένας νομός χωρίς νομαρχία, κάτι που το GB/T 2260 δεν επιτρέπει"
+      },
+      "gen": {
+        "dept": "Τμήμα εγγραφής",
+        "category": "Κατηγορία οργανισμού",
+        "province": "Επαρχία",
+        "count": "Πόσα",
+        "randomProvince": "Οποιαδήποτε επαρχία",
+        "regenerate": "Νέα παρτίδα",
+        "emptyHint": "Επιλέξτε τις παραπάνω επιλογές για να δημιουργήσετε δοκιμαστικούς κωδικούς.",
+        "testDataBadge": "Δοκιμαστικά δεδομένα",
+        "seed": "Seed {seed}",
+        "allCodes": "Όλοι οι κωδικοί",
+        "disclaimer": "Αυτοί οι κωδικοί είναι δομικά έγκυροι αλλά δεν ανήκουν σε κανέναν εγγεγραμμένο οργανισμό. Μην τους χρησιμοποιείτε για να αναπαραστήσετε μια πραγματική οντότητα.",
+        "note": "Η δημιουργία βασίζεται σε seed: οι ίδιες επιλογές και το ίδιο seed επιστρέφουν πάντα την ίδια παρτίδα, ώστε ένα fixture να παραμένει αναπαραγώγιμο. Κάθε κωδικός επισημαίνεται ως isTestData στο JSON, καθώς και εδώ."
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
+    },
+    "yamlDiff": {
+      "original": "Πρωτότυπο",
+      "changed": "Τροποποιημένο",
+      "originalPlaceholder": "Επικολλήστε ή σύρετε το αρχικό YAML (ή JSON)",
+      "changedPlaceholder": "Επικολλήστε ή σύρετε το τροποποιημένο YAML (ή JSON)",
+      "idle": "Συμπληρώστε και τα δύο παράθυρα και η σύγκριση εκτελείται καθώς πληκτρολογείτε.",
+      "privacy": "Και τα δύο έγγραφα αναλύονται και συγκρίνονται σε αυτό το πρόγραμμα περιήγησης — τίποτα δεν μεταφορτώνεται, που είναι το νόημα για αρχεία δηλώσεων που φέρουν ονόματα κεντρικών υπολογιστών και μυστικά ονόματα.",
+      "modeLabel": "Σύγκριση",
+      "modeSemantic": "Σημασιολογική (δομή)",
+      "modeRawText": "Ακατέργαστο κείμενο (χαρακτήρες)",
+      "resolveAnchors": "Επίλυση αγκυρών και ψευδωνύμων στις τιμές τους",
+      "valid": "Έγκυρο YAML",
+      "validMulti": "Έγκυρο YAML · {n} έγγραφα",
+      "invalid": "Σφάλμα ανάλυσης, γραμμή {line}",
+      "parseFailed": "Η μία πλευρά δεν αναλύθηκε — δεν συγκρίθηκε τίποτα",
+      "equivalent": "Καμία διαφορά — τα δύο έγγραφα καταλήγουν στην ίδια δομή",
+      "equivalentStructural": "Ίδια επιλυμένη δομή · {n} διαφορές μορφοποίησης ή αγκύρωσης",
+      "summary": "{added} προστέθηκαν · {removed} αφαιρέθηκαν · {changed} άλλαξαν · {typeChanged} αλλαγές τύπου",
+      "parseErrorAt": "{side} · γραμμή {line}, στήλη {column}: {message}",
+      "documentCountMismatch": "Ο αριθμός εγγράφων διαφέρει: {original} έναντι {changed} — τα έγγραφα αντιστοιχίστηκαν με τη σειρά και τα επιπλέον αναφέρονται συνολικά",
+      "duplicateKeys": "Διπλότυπα κλειδιά στην πηγή",
+      "unified": "Ενοποιημένο patch (κανονικοποιημένο YAML)",
+      "howItWorks": "Πώς λειτουργεί αυτή η σύγκριση",
+      "rule": {
+        "keyOrder": "Η σειρά των κλειδιών αντιστοίχισης, τα εισαγωγικά και η στοίχιση αγνοούνται· η σειρά της ακολουθίας συγκρίνεται, επειδή η σειρά μιας λίστας έχει σημασία.",
+        "anchors": "Τα ψευδώνυμα επιλύονται στις τιμές τους, οπότε μια επεξεργασία πίσω από ένα κοινό anchor εμφανίζεται σε κάθε θέση ψευδωνύμου· ένα anchor ή ψευδώνυμο που άλλαξε με την τιμή ανέπαφη αναφέρεται ξεχωριστά ως δομικό.",
+        "mergeKeys": "Τα κλειδιά συγχώνευσης (<<) επεκτείνονται πριν από τη σύγκριση και τα δικά του κλειδιά ενός κόμβου υπερισχύουν των συγχωνευμένων.",
+        "types": "Ο τύπος είναι μέρος της τιμής: 8080, \"8080\" και !!str 8080 αναφέρονται ως αλλαγές τύπου, όχι ως γενική αλλαγή.",
+        "sequences": "Οι ακολουθίες αντιστοιχίσεων ζευγαρώνουν με όνομα, id ή κλειδί όταν αυτό το πεδίο είναι μοναδικό και στις δύο πλευρές, οπότε ένα εισαγόμενο στοιχείο δεν προκαλεί αλυσιδωτές αλλαγές· μια αναδιάταξη αναφέρεται ωστόσο.",
+        "blockScalars": "Τα block scalars συγκρίνονται με την επιλυμένη συμβολοσειρά, οπότε η τελική νέα γραμμή που αφαιρεί το |- είναι πραγματική αλλαγή· μια αλλαγή μορφοποίησης με την ίδια τιμή είναι δομική.",
+        "comments": "Τα σχόλια δεν αποτελούν μέρος του μοντέλου δεδομένων YAML και δεν συγκρίνονται.",
+        "multiDoc": "Το --- ροές ζεύγους ανά έγγραφο· μια ασυμφωνία στον αριθμό αναφέρεται αντί να συγκρίνονται μόνο τα πρώτα.",
+        "duplicateKeys": "Ένα διπλό κλειδί χαρτογράφησης στην είσοδο χρησιμοποιεί την τελευταία εμφάνιση και αναφέρεται ως προειδοποίηση."
+      },
+      "note": {
+        "raw-text-mode": "Η λειτουργία ακατέργαστου κειμένου συγκρίνει χαρακτήρες, όχι δομή: η σειρά κλειδιών, οι εισαγωγικές και η εσοχή μετράνε όλες.",
+        "parse-error": "Η μία πλευρά δεν ανάλυσε, οπότε δεν συγκρίθηκε τίποτα.",
+        "document-count-mismatch": "Οι δύο πλευρές περιέχουν διαφορετικό αριθμό εγγράφων ---· τα έγγραφα ζευγαρώθηκαν με σειρά και τα επιπλέον αναφέρθηκαν ολόκληρα.",
+        "merge-keys-expanded": "Τα κλειδιά ενοποίησης (<<) επεκτάθηκαν πριν τη σύγκριση.",
+        "anchors-unresolved": "Τα ψευδώνυμα συγκρίθηκαν ως αναφορές *όνομα, όχι ως οι ανάλυτες τιμές τους.",
+        "yaml11-ambiguous-scalars": "Τα μη εισαγωγικά y/n/yes/no/on/off διαβάζονται ως συμβολοσειρές εδώ (YAML 1.2 Core) και ως булевες τιμές στο YAML 1.1 — βάλτε εισαγωγικά αν εννοούσατε булеο.",
+        "sequence-matched-by-identity": "Ακολουθίες χαρτογραφήσεων ζευγαρώθηκαν με βάση ένα πεδίο ταυτότητας αντί για θέση.",
+        "duplicate-keys": "Μια χαρτογράφηση δηλώνει το ίδιο κλειδί δύο φορές· χρησιμοποιήθηκε η τελευταία εμφάνιση.",
+        "truncated": "Αναφέρονται μόνο οι πρώτες 2000 αλλαγές."
+      }
+    },
+    "listSetCompare": {
+      "listA": "Λίστα Α",
+      "listB": "Λίστα Β",
+      "placeholder": "Επικόλλησε στοιχεία, ένα ανά γραμμή (ή ρίξε ένα αρχείο .txt/.csv)",
+      "emptyHint": "Πρόσθεσε στοιχεία στις λίστες Α και Β για να δεις τη σύγκριση.",
+      "privacy": "Οι λίστες συγκρίνονται στον browser σου — δεν ανεβαίνει τίποτα. Το ίδιο μηχανισμό χρησιμοποιεί και η πλευρά του server για κλήσεις API και MCP.",
+      "delimiter": "Διαχωριστικό",
+      "delimiterOption": {
+        "auto": "Αυτόματη αναγνώριση",
+        "newline": "Νέα γραμμή",
+        "comma": "Κόμμα",
+        "tab": "Tab",
+        "custom": "Εξατομικευμένο"
+      },
+      "customDelimiter": "Διαχωριστικό",
+      "customDelimiterPlaceholder": "| ή \\t",
+      "sort": "Ταξινόμηση",
+      "sortOption": {
+        "original": "Αρχική σειρά",
+        "asc": "Α→Ω",
+        "desc": "Ω→Α",
+        "byCount": "Ανά πλήθος"
+      },
+      "optCaseSensitive": "Διακριτικό πεζών/κεφαλαίων",
+      "optTrim": "Αφαίρεση κενών",
+      "optCollapse": "Συγχώνευση εσωτερικών κενών",
+      "optIgnoreZeros": "Αγνόηση αρχικών μηδενικών",
+      "paneItems": "{n} στοιχεία",
+      "paneSingle": "1 στοιχείο — ελέγξτε τον διαχωριστή",
+      "items": "{n}",
+      "none": "Κανένα",
+      "more": "+{n} ακόμη — αντιγράψτε ή κατεβάστε για την πλήρη λίστα",
+      "panel": {
+        "onlyInA": "Μόνο στο A",
+        "onlyInB": "Μόνο στο B",
+        "intersection": "Τομή (και στα δύο)",
+        "union": "Ένωση (όλα τα στοιχεία)",
+        "symmetricDifference": "Συμμετρική διαφορά"
+      },
+      "summaryIdentical": "Ίδιο σύνολο — {n} κοινά στοιχεία",
+      "summaryDiff": "{a} μόνο στο A · {b} μόνο στο B · {shared} κοινά",
+      "drill": {
+        "symmetricDifference": "Συμμετρική διαφορά ({n})",
+        "duplicates": "Διπλότυπα εντός λίστας ({n})",
+        "multiplicities": "Αριθμοί ανά στοιχείο ({n})",
+        "warnings": "Ειδοποιήσεις ({n})"
+      },
+      "duplicatesInA": "Επαναλαμβανόμενα στο Α",
+      "duplicatesInB": "Επαναλαμβανόμενα στο Β",
+      "colValue": "Στοιχείο",
+      "colCountA": "Στο Α",
+      "colCountB": "Στο Β",
+      "detailTruncated": "Οι μετρήσεις ανά στοιχείο έχουν περικοπεί — αυξήστε το maxDetail στο API για τον πλήρη πίνακα.",
+      "reportTitle": "Σύγκριση λιστών"
+    },
+    "loanAmortization": {
+      "principal": "Ποσό δανείου",
+      "rate": "Ετήσιο επιτόκιο %",
+      "term": "Διάρκεια",
+      "termUnit": "Μονάδα διάρκειας",
+      "unitYears": "Έτη",
+      "unitMonths": "Μήνες",
+      "startMonth": "Μήνας πρώτης δόσης",
+      "startMonthHint": "YYYY-MM. Ετικέτα του προγράμματος· δεν αλλάζει ποσά.",
+      "extraHeading": "Επιπλέον καταβολές",
+      "extraMonthly": "Επιπλέον κάθε μήνα",
+      "extraYearly": "Επιπλέον μία φορά τον χρόνο",
+      "extraYearlyMonth": "Μήνας ετήσιας επιπλέον καταβολής",
+      "extraOneTime": "Μία φορά επιπλέον",
+      "extraOneTimePeriod": "Μία φορά στη δόση #",
+      "extraNote": "Οι επιπλέον καταβολές μειώνουν το κεφάλαιο την περίοδο που γίνονται, μειώνοντας τα επιτόκια όλων των επόμενων περιόδων. Το επιτόκιο και η προγραμματισμένη δόση παραμένουν ίδια.",
+      "monthlyPayment": "Μηνιαία δόση",
+      "totalInterest": "Συνολικά τόκα",
+      "totalPaid": "Συνολικά πληρωθέντα",
+      "crossover": "Σημείο διασταύρωσης",
+      "crossoverValue": "Δόση {n}",
+      "crossoverNone": "Ποτέ",
+      "payoff": "Εξοφλήθηκε στη δόση {n}",
+      "monthsSaved": "{n} μήνες νωρίτερα",
+      "totalExtra": "{amount} πληρωθέντα πάνω από το πρόγραμμα",
+      "viewMonthly": "Κάθε δόση",
+      "viewAnnual": "Ανά έτος",
+      "tableCaption": "Πρόγραμμα αποσβέσεως: δόση, τόκοι, κεφάλαιο και υπόλοιπο ανά περίοδο",
+      "colPeriod": "#",
+      "colDate": "Μήνας",
+      "colPayment": "Καταβολή",
+      "colInterest": "Τόκοι",
+      "colPrincipal": "Κεφάλαιο",
+      "colBalance": "Υπόλοιπο",
+      "colYear": "Έτος",
+      "expandRows": "Εμφάνιση όλων των {total} καταβολών",
+      "collapseRows": "Εμφάνιση λιγότερων καταβολών",
+      "windowNote": "Εμφανίζονται {shown} από {total} καταβολές. Το CSV και το API περιέχουν όλες.",
+      "emptyHint": "Εισάγετε ποσό δανείου, επιτόκιο και διάρκεια για να δείτε το πρόγραμμα.",
+      "note": "Ίδια μηχανή με το API. Οι υπολογισμοί εκτελούνται μόνο με τους όρους του δανείου σας· δεν ανεβάζονται ή αποθηκεύονται δεδομένα.",
+      "errPrincipal": "Εισάγετε ποσό δανείου μεγαλύτερο από 0.",
+      "errRate": "Εισάγετε επιτόκιο μεταξύ 0 και 100.",
+      "errTerm": "Εισάγετε μια περίοδο μεταξύ 1 μήνα και 100 ετών.",
+      "errStartMonth": "Χρησιμοποιήστε YYYY-MM, για παράδειγμα 2026-01.",
+      "errExtra": "Εισάγετε ένα ποσό 0 ή μεγαλύτερο.",
+      "errOneTimePeriod": "Εισάγετε τον αριθμό της δόσης στην οποία πέφτει η μοναδική πληρωμή."
+    },
+    "businessDayShift": {
+      "modeLabel": "Τι να υπολογίσω",
+      "mode": {
+        "shift": "Μετακίνηση ημερομηνίας",
+        "countBetween": "Μέτρηση μεταξύ ημερομηνιών"
+      },
+      "startDate": "Ημερομηνία έναρξης",
+      "days": "Εργάσιμες ημέρες",
+      "daysHint": "Οι αρνητικές μετρήσεις πάνε προς τα πίσω: −10 είναι δέκα εργάσιμες ημέρες πριν από την ημερομηνία έναρξης.",
+      "daysInvalid": "Οι εργάσιμες ημέρες πρέπει να είναι ακέραιος αριθμός, με προαιρετικό αρνητικό πρόσημο στην αρχή.",
+      "endDate": "Ημερομηνία λήξης",
+      "includeEndDate": "Να μετρηθεί και η ημερομηνία λήξης — αυτό επιστρέφει η NETWORKDAYS σε ένα φύλλο εργασίας",
+      "weekendLabel": "Ημέρες αργίας την εβδομάδα",
+      "weekendHint": "Εποχικά Σάββατο και Κυριακή. Ορίστε Παρασκευή και Σάββατο αντί γι' αυτά όπου αυτό είναι το Σαββατοκύριακο.",
+      "weekday": {
+        "sun": "Κυρ",
+        "mon": "Δευ",
+        "tue": "Τρι",
+        "wed": "Τετ",
+        "thu": "Πεμ",
+        "fri": "Παρ",
+        "sat": "Σαβ"
+      },
+      "holidays": "Αργίες",
+      "holidaysHint": "Αν αφήσετε κενό, η απάντηση είναι ο καθαρός υπολογισμός με βάση τους κανόνες του Σαββατοκύριακου — δεν εφαρμόζεται ημερολόγιο χώρας για εσάς.",
+      "makeupWorkdays": "Εργάσιμες ημέρες αντιστάθμισης",
+      "makeupHint": "Ημερομηνίες εργασίας παρά το γεγονός ότι εμπίπτουν σε σαββατοκύριακο ή αργία — εδώ καταχωρούνται τα Σάββατα 调休/补班 της Κίνας.",
+      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesIgnored": "{n, plural, one {# καταχώριση δεν ήταν ημερομηνία YYYY-MM-DD και δεν χρησιμοποιείται} other {# καταχωρίσεις δεν ήταν ημερομηνίες YYYY-MM-DD και δεν χρησιμοποιούνται}}",
+      "pickStart": "Επιλέξτε μια ημερομηνία έναρξης για να ξεκινήσετε.",
+      "emptyHintShift": "Επιλέξτε μια ημερομηνία έναρξης και έναν αριθμό εργάσιμων ημερών.",
+      "emptyHintCount": "Επιλέξτε μια ημερομηνία έναρξης και μια ημερομηνία λήξης.",
+      "note": "Ίδια μηχανή με το API. Ο υπολογισμός εκτελείται με το σύνολο κανόνων που εμφανίζεται με το αποτέλεσμα· δεν αποθηκεύεται τίποτα.",
+      "countHeadline": "{n, plural, one {# εργάσιμη ημέρα} other {# εργάσιμες ημέρες}}",
+      "reversedRange": "Η ημερομηνία λήξης είναι πριν από την ημερομηνία έναρξης, οπότε ο αριθμός βγαίνει αρνητικός.",
+      "classification": {
+        "workday": "Εργάσιμη ημέρα",
+        "weekend": "Σαββατοκύριακο",
+        "holiday": "Αργία",
+        "makeupWorkday": "Αντισταθμιστική εργάσιμη"
+      },
+      "ruleWeekend": "{days} αργίες",
+      "ruleNoWeekend": "χωρίς εβδομαδιαίες αργίες",
+      "ruleHolidays": "{n, plural, =0 {κανένας κατάλογος αργιών} one {# αργία} other {# αργίες}}",
+      "ruleMakeups": "{n, plural, =0 {κανένα αντισταθμιστικό} one {# αντισταθμιστική εργάσιμη} other {# αντισταθμιστικές εργάσιμες}}",
+      "ruleEndIncluded": "η ημερομηνία λήξης μετράται",
+      "ruleEndExcluded": "η ημερομηνία λήξης δεν μετράται",
+      "chain": "Μετατόπιση ξανά από αυτή την ημερομηνία"
+    },
+    "retryBackoff": {
+      "strategy": {
+        "exponential": "Εκθετική",
+        "linear": "Γραμμική",
+        "fixed": "Σταθερή"
+      },
+      "initialDelay": "Αρχική καθυστέρηση (ms)",
+      "factor": "Συντελεστής καθυστέρησης",
+      "factorHint": "Πολλαπλασιαστής ανά επανάληψη. Πρέπει να είναι μεγαλύτερος από 1.",
+      "increment": "Γραμμική αύξηση (ms)",
+      "incrementHint": "Χιλιοστά του δευτερολέπτου που προστίθενται στην καθυστέρηση σε κάθε επανάληψη.",
+      "maxDelay": "Μέγιστη καθυστέρηση (ms)",
+      "maxDelayHint": "Αφήστε κενό για χωρίς όριο. Μόλις επιτευχθεί το όριο, κάθε επόμενη καθυστέρηση παραμένει σταθερή.",
+      "maxAttempts": "Μέγιστες προσπάθειες",
+      "maxAttemptsHint": "1 έως 100.",
+      "excludeInitial": "Οι μέγιστες προσπάθειες εξαιρούν το αρχικό αίτημα",
+      "excludeInitialNote": "Ενεργό: ο παραπάνω αριθμός μετρά μόνο επαναλήψεις, το αρχικό αίτημα είναι επιπλέον. Ανενεργό: μετρά κάθε προσπάθεια, συμπεριλαμβανομένου του αρχικού αιτήματος.",
+      "jitter": {
+        "none": "Καμία — ακριβείς καθυστερήσεις",
+        "equal": "Ίση — μισή σταθερή, μισή τυχαία",
+        "full": "Πλήρες — οπουδήποτε από το μηδέν έως την καθυστέρηση"
+      },
+      "callerTimeout": "Το δικό σας timeout (ms)",
+      "callerTimeoutHint": "Προαιρετικό. Αφήστε κενό για να παραλείψετε τον έλεγχο προϋπολογισμού.",
+      "emptyHint": "Διορθώστε το επισημασμένο πεδίο για να δείτε το χρονοδιάγραμμα.",
+      "note": "Υπολογίζεται μόνο από την πολιτική — δεν αποστέλλεται τίποτα σε καμία υπηρεσία. Το jitter αναφέρεται ως το εύρος στο οποίο εμπίπτει ένας πραγματικός πελάτης, ποτέ ως μία μόνο τυχαία τιμή.",
+      "headlineExact": "{attempts} προσπάθειες, {wait} αναμονής συνολικά.",
+      "headlineRange": "{attempts} προσπάθειες, {expected} αναμονής κατά μέσο όρο, έως {max} στη χειρότερη περίπτωση.",
+      "finalDelay": "Η τελευταία αναμονή, πριν από την προσπάθεια {attempt}, είναι {delay}.",
+      "noRetries": "Αυτός ο προϋπολογισμός επιτρέπει μία προσπάθεια και καμία επανάληψη, επομένως δεν υπάρχει τίποτα να περιμένετε.",
+      "retryCount": "{count, plural, =0 {καμία επανάληψη} one {# επανάληψη} other {# επαναλήψεις}}",
+      "capFlattened": "Το όριο επιτεύχθηκε στην προσπάθεια {attempt} — κάθε επόμενη καθυστέρηση παραμένει στα {delay}.",
+      "timeoutExceeded": "Η χειρότερη περίπτωση αναμονής είναι {wait}, που υπερβαίνει τον προϋπολογισμό timeout {timeout}.",
+      "timeoutOk": "Η χειρότερη περίπτωση αναμονής είναι {wait}, εντός του ορίου {timeout}.",
+      "tableLabel": "Πρόγραμμα επαναλήψεων",
+      "colAttempt": "Προσπάθεια",
+      "colDelay": "Καθυστέρηση",
+      "colCumulative": "Συνολική αναμονή",
+      "average": "μέσος όρος {value}",
+      "formula": {
+        "none": "Οι καθυστερήσεις είναι ακριβείς — δεν εφαρμόζεται τυχαία διακύμανση.",
+        "equal": "Ομοιόμορφη τυχαία διακύμανση: το μισό της καθυστέρησης είναι σταθερό, το άλλο μισό επιλέγεται τυχαία, οπότε κάθε αναμονή κυμαίνεται μεταξύ του μισού και ολόκληρης της καθυστέρησης.",
+        "full": "Πλήρης τυχαία διακύμανση: η αναμονή επιλέγεται τυχαία μεταξύ μηδέν και της υπολογιζόμενης καθυστέρησης."
+      },
+      "errInitialDelay": "Η αρχική καθυστέρηση πρέπει να είναι ακέραιος αριθμός χιλιοστών του δευτερολέπτου, τουλάχιστον 1.",
+      "errFactor": "Ο συντελεστής πρέπει να είναι μεγαλύτερος από 1 και το πολύ 100. Συντελεστής 1 αντιστοιχεί σε σταθερή στρατηγική.",
+      "errIncrement": "Η προσαύξηση πρέπει να είναι ακέραιος αριθμός χιλιοστών του δευτερολέπτου, 0 ή μεγαλύτερη.",
+      "errMaxDelay": "Το όριο πρέπει να είναι ακέραιος αριθμός χιλιοδευτερολέπτων, τουλάχιστον 1.",
+      "errCapBelowInitial": "Το όριο πρέπει να είναι τουλάχιστον ίσο με την αρχική καθυστέρηση.",
+      "errMaxAttempts": "Οι προσπάθειες πρέπει να είναι ακέραιος αριθμός από 1 έως 100.",
+      "errCallerTimeout": "Το timeout πρέπει να είναι ακέραιος αριθμός χιλιοδευτερολέπτων, τουλάχιστον 1."
+    },
+    "csvColumns": {
+      "csvLabel": "CSV",
+      "csvPlaceholder": "Επικολλήστε CSV εδώ ή ρίξτε ένα αρχείο — η πρώτη γραμμή διαβάζεται ως ονόματα στηλών",
+      "sample": "Δείγμα CSV",
+      "chooseFile": "Επιλογή αρχείου",
+      "fileFailed": "Αδυναμία ανάγνωσης του {name}.",
+      "delimiterLabel": "Διαχωριστικό",
+      "delimiter": {
+        "comma": "Κόμμα  ,",
+        "semicolon": "Επιγονικό  ;",
+        "tab": "Tab",
+        "pipe": "Pipe  |"
+      },
+      "raggedPolicyLabel": "Σειρές που δεν ταιριάζουν με την κεφαλίδα",
+      "ragged": {
+        "pad": "Ευθυγράμμιση με την κεφαλίδα",
+        "truncate": "Κόψιμο μακριών σειρών, διατήρηση μικρών σειρών",
+        "reject": "Διακοπή και αναφορά"
+      },
+      "columnsTitle": "Στήλες — {kept} από {total} διατηρούνται",
+      "columnsHint": "Αποεπιλέξτε για να παραλείψετε μια στήλη, επεξεργαστείτε το πεδίο για να την μετονομάσετε, χρησιμοποιήστε τα βέλη για αναδιάταξη. Όλα αντιστοιχούν στο αρχικό header.",
+      "reset": "Επαναφορά στηλών",
+      "keep": "Διατήρηση στήλης {name}",
+      "renameLabel": "{name}",
+      "moveUp": "Μετακίνηση {name} πάνω",
+      "moveDown": "Μετακίνηση {name} κάτω",
+      "noneKept": "Όλες οι στήλες είναι απενεργοποιημένες — διατηρήστε τουλάχιστον μία.",
+      "emptyHint": "Επικολλήστε ένα CSV παραπάνω για να διαχειριστείτε τις στήλες του.",
+      "note": "Εκτελείται στο κείμενο που επικολλάτε. Αφαιρέστε, μετονομάστε και επαναδιατάξτε — πάντα με αυτή τη σταθερή σειρά, σε σχέση με την αρχική κεφαλίδα.",
+      "columnCount": "{n} στήλες",
+      "rowCount": "{n} γραμμές",
+      "duplicateHeaders": "Διπλή κεφαλίδα με το ίδιο όνομα: {names}",
+      "raggedCount": "{n}{more} γραμμές δεν ταιριάζουν με το πλάτος της κεφαλίδας",
+      "previewLabel": "Έξοδος CSV",
+      "previewTruncated": "Εμφανίζονται οι πρώτες {shown} από τις {total} γραμμές. Αντιγράψτε ή κατεβάστε για το αρχείο στο σύνολό του.",
+      "raggedListLabel": "Γραμμές που δεν ταιριάζουν με το πλάτος της κεφαλίδας",
+      "raggedRow": "Γραμμή {line}: {actual} πεδία, η κεφαλίδα έχει {expected}",
+      "unusedRenames": "Η μετονομασία αγνοήθηκε — αυτές οι στήλες δεν υπάρχουν στην έξοδο: {names}"
+    },
+    "imageRotateFlip": {
+      "drop": "Αφήστε μια εικόνα ή κάντε κλικ για αναζήτηση",
+      "browse": "Επιλέξτε εικόνα",
+      "selected": "{name} · {kb} KB",
+      "privacy": "Το αρχείο αποστέλλεται στο Forge API για τον μετασχηματισμό και δεν αποθηκεύεται ποτέ.",
+      "tooLarge": "Η εικόνα είναι μεγαλύτερη από {mb} MB.",
+      "ccw": "90° αριστερά",
+      "cw": "90° δεξιά",
+      "half": "180°",
+      "reset": "Επαναφορά",
+      "flipHorizontal": "Αναστροφή οριζόντια",
+      "flipVertical": "Αναστροφή κάθετα",
+      "angle": "Γωνία",
+      "exactAngle": "Ακριβής °",
+      "fitMode": "Πλαίσιο",
+      "fitExpand": "Επέκταση πλαισίου",
+      "fitCrop": "Κατοπτική προσαρμογή",
+      "fitInside": "Εντός πλαισίου",
+      "fitNote": "Μετά από στροφή 90 μοιρών, η εικόνα δεν χωράει πια στο αρχικό της πλαίσιο: η επέκταση διατηρεί κάθε pixel, η κατοπτική προσαρμογή διατηρεί το αρχικό μέγεθος και κόβει τις γωνίες, ενώ η προσαρμογή μειώνει την κλίμακα ολόκληρης της εικόνας.",
+      "outputFormat": "Μορφή εξόδου",
+      "sameFormat": "Ίδια με την είσοδο",
+      "idle": "Αφήστε μια εικόνα για να δείτε την επανατοποθέτησή της.",
+      "original": "Αρχική · {w}×{h}",
+      "originalAlt": "Η εικόνα όπως ανεβήκε",
+      "result": "Αποτέλεσμα · {w}×{h}",
+      "resultAlt": "Η επανατοποθετημένη εικόνα",
+      "badgeLossless": "Χωρίς επαναδειγματοληψία",
+      "badgeResampled": "Επαναδειγματοληψία",
+      "badgeSize": "{kb} KB",
+      "badgeExif": "Εφαρμόστηκε πρώτα η προσανατολισμός EXIF {orientation}",
+      "badgeSnapped": "Ευθυγραμμίστηκε με ακριβή στροφή τετάρτου",
+      "badgeReencode": "Η γεωμετρία είναι ακριβής· το codec επανακωδικοποιεί",
+      "download": "Λήψη",
+      "note": "Οι στροφές 90°, 180° και 270° μετακινούν τα pixels χωρίς ανάμειξή τους. Κάθε άλλη γωνία κάνει επαναδειγματοληψία. Τα animated GIF, APNG και animated WebP δεν υποστηρίζονται ακόμη."
+    },
+    "exifStrip": {
+      "drop": "Αφήστε ένα JPEG, PNG ή WebP για να αφαιρέσετε τα μεταδεδομένα του",
+      "privacy": "Επεξεργάζεται στους διακομιστές μας και δεν αποθηκεύεται ποτέ. Μέχρι {mb} MB ανά εικόνα.",
+      "idle": "Αφαιρέθηκαν: GPS, ώρα λήψης, πληροφορίες κάμερας και συσκευής, ενσωματωμένο thumbnail, ιστορικό επεξεργασίας. Διατηρήθηκαν: προσανατολισμός, προφίλ χρώματος, διαστάσεις, δεδομένα pixels.",
+      "note": "Μόνο στατικές εικόνες. Βίντεο, PDF, HEIC, AVIF και GIF δεν καλύπτονται, και τα manifests προέλευσης C2PA παραμένουν αμετάβλητα.",
+      "detail": "Τι αφαιρέθηκε",
+      "optKeepThumbnail": "Διατήρηση της ενσωματωμένης εικόνας προεπισκόπησης Exif",
+      "verdictStripped": "Αφαιρέθηκαν {fields} πεδία μεταδεδομένων ({kb} KB)",
+      "verdictClean": "Αυτό το αρχείο δεν περιέχει μεταδεδομένα που να μπορούν να αφαιρεθούν",
+      "strippedCaveat": "Η ίδια η εικόνα παραμένει αμετάβλητη — ίδια pixels, ίδιες διαστάσεις, χωρίς επανακωδικοποίηση.",
+      "cleanCaveat": "Επιστρέφεται byte προς byte όπως έφτασε.",
+      "badgeOrientationKept": "Η κατεύθυνση διατηρήθηκε",
+      "badgeOrientationLost": "Η κατεύθυνση δεν μπόρεσε να διατηρηθεί",
+      "badgeColorProfileKept": "Το προφίλ χρώματος διατηρήθηκε",
+      "badgeThumbnailKept": "Η εικόνα προεπισκόπησης διατηρήθηκε",
+      "badgeThumbnailRemoved": "Η εικόνα προεπισκόπησης αφαιρέθηκε",
+      "download": "Λήψη καθαρισμένης εικόνας",
+      "sizes": "{before} KB → {after} KB",
+      "detailFields": "{fields} πεδία · {kb} KB",
+      "detailNothing": "Δεν αφαιρέθηκε τίποτα από αυτό το αρχείο.",
+      "detailOrientation": "Ο προσανατολισμός Exif {value} διαβάστηκε από το αρχείο και μεταφέρθηκε.",
+      "detailNoOrientation": "Το αρχείο δεν δήλωνε προσανατολισμό Exif, επομένως η εμφάνιση δεν επηρεάζεται.",
+      "segmentExif": "Exif",
+      "segmentIptc": "IPTC",
+      "segmentXmp": "XMP",
+      "segmentComment": "Σχόλιο",
+      "segmentText": "Μεταδεδομένα κειμένου",
+      "segmentTime": "Χρονική σήμανση",
+      "segmentVendor": "Μπλοκ προμηθευτή",
+      "summaryStripped": "Αφαιρέθηκαν {fields} πεδία μεταδεδομένων ({families}), {kb} KB. Η εικόνα παραμένει αμετάβλητη.",
+      "summaryClean": "Δεν βρέθηκαν αφαιρέσιμα μεταδεδομένα. Το αρχείο επιστράφηκε αμετάβλητο."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "Nom / hôte",
+      "type": "Type d'enregistrement",
+      "note": "Résolu par le DNS de l'hôte Forge."
+    },
+    "tls": {
+      "host": "Hôte",
+      "expired": "Certificat expiré",
+      "validDays": "{n} jours restants",
+      "note": "Connexion depuis l'hôte Forge. Inspection seule."
+    },
+    "myIp": {
+      "refresh": "Actualiser",
+      "note": "IP vue par Forge. Pas de géo sans source licenciée."
+    },
+    "mermaid": {
+      "source": "Mermaid source",
+      "idle": "Valid diagrams render here",
+      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
+      "sample": "Sample",
+      "theme": "Theme",
+      "theme_default": "Default",
+      "theme_dark": "Dark",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "Flowchart",
+      "sample_sequence": "Sequence",
+      "sample_class": "Class",
+      "sample_er": "ER diagram",
+      "sample_state": "State",
+      "sample_gantt": "Gantt",
+      "sample_pie": "Pie",
+      "sample_mindmap": "Mindmap",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "zoomReset": "Reset view",
+      "copySvg": "Copy SVG",
+      "downloadSvg": "Download SVG",
+      "downloadPng": "Download PNG",
+      "previewAria": "Mermaid diagram preview",
+      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
+    },
+    "colorDeltaE": {
+      "note": "CIEDE2000 via culori. Seuils indicatifs UI."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "Dialecte SQL",
+      "parseNote": "Parse/inventaire seulement. ERD à part.",
+      "convertNote": "@dbml/core — même chemin que l'API."
+    },
+    "dnsLeak": {
+      "probeHost": "Compare host (advanced)",
+      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
+      "run": "Start DNS leak check",
+      "retest": "Run again",
+      "showAdvanced": "Advanced options",
+      "hideAdvanced": "Hide advanced",
+      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
+      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
+      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
+      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
+      "edgeIp": "Your edge IP",
+      "authorityHits": "Recursive IPs",
+      "forgePaths": "Forge resolver hits",
+      "dohPaths": "Browser DoH hits",
+      "webrtcCount": "WebRTC IPs",
+      "forgeResolvers": "Forge multi-resolver (server-side)",
+      "forgeNote": "These queries leave from the Forge host — not your laptop.",
+      "browserDoh": "Browser DoH",
+      "webrtc": "WebRTC ICE",
+      "egressMarkers": "Forge egress markers",
+      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
+      "honestyPrefix": "Honesty:",
+      "verdictConsistent": "Paths look consistent on this check",
+      "verdictSplit": "Split answers across DNS paths",
+      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
+      "verdictIncomplete": "Incomplete — browser probes missing",
+      "verdictAuthority": "System DNS recursives captured",
+      "infraOn": "Authority online",
+      "infraOff": "Authority offline — multi-path only",
+      "infraChecking": "Checking…",
+      "authorityResolvers": "System DNS recursive resolvers",
+      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
+      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
+      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
+      "authorityDetail": "Authority session detail",
+      "phaseSession": "Creating session…",
+      "phaseSystemDns": "Triggering system DNS…",
+      "phasePoll": "Listening for recursive hits ({n}/{total})…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "stepSession": "Session",
+      "stepSystemDns": "System DNS",
+      "stepPoll": "Listen",
+      "stepBrowser": "Browser",
+      "stepServer": "Server",
+      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
+      "liveHits": "Live recursive hits",
+      "sectionSystemDns": "System DNS (what you came for)",
+      "sectionComplementary": "Complementary paths",
+      "sectionTech": "Technical session detail",
+      "copyIps": "Copy IPs",
+      "copied": "Copied",
+      "queryCount": "{n} queries",
+      "colPath": "Path",
+      "colAnswers": "Answers",
+      "colMs": "ms",
+      "ipPublic": "public",
+      "ipPrivate": "private",
+      "sig": {
+        "captured": "System DNS captured",
+        "onlineNoHits": "Authority online · no hits yet",
+        "offline": "Authority offline",
+        "forgeSplit": "Forge resolvers disagree",
+        "dohSplit": "Browser DoH disagree",
+        "webrtcMismatch": "WebRTC ≠ edge IP",
+        "webrtcLocal": "Local WebRTC candidates",
+        "noBrowser": "No browser probes"
+      }
+    },
+    "honesty": {
+      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
+      "signatureNotVerified": "{engine} · decode only · signature not verified",
+      "localOnly": "Processed for this request · not stored as a card or credential"
+    },
+    "idCard": {
+      "number": "Resident ID number",
+      "note": "GB 11643 check digit · no household registry lookup · same path as API",
+      "specimenTitle": "Resident ID · structure specimen",
+      "segRegion": "Region",
+      "segBirth": "Birth",
+      "segSeq": "Seq",
+      "segCheck": "Check",
+      "metaBirth": "Birth",
+      "metaGender": "Gender",
+      "metaRegion": "Region code",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "reasonFormat": "Format should be 18 characters (last may be X)",
+      "reasonBirth": "Birth date segment is invalid",
+      "reasonCheck": "Check digit is wrong",
+      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} lines",
+      "chars": "{n} chars",
+      "empty": "(empty file)",
+      "readyToShip": "Ready to drop into the repo"
+    },
+    "textTransform": {
+      "mode": "Mode",
+      "input": "Input",
+      "output": "Output",
+      "emptyResult": "Result appears here",
+      "runLocal": "Run locally",
+      "runServer": "Run on server",
+      "statusLocalLive": "Local · live",
+      "statusLocal": "Local",
+      "statusServer": "Server · same path as API",
+      "noteDefault": "Same path as API"
+    }
+  },
+  "roots": {
+    "hubLabel": "Κατά πρόθεση",
+    "tools": "εργαλεία",
+    "dualSurface": "Ανθρώπινη σελίδα + Agent API · ίδια μηχανή",
+    "otherRoots": "Άλλες ρίζες ζήτησης"
+  }
+}

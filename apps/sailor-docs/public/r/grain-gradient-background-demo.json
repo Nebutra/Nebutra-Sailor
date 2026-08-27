@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "grain-gradient-background-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/grain-gradient-background-demo.tsx",
+      "content": "import { GrainGradientBackground } from \"@nebutra/ui/primitives\";\n\nexport function GrainGradientBackgroundDemo() {\n  return (\n    <div className=\"gap-8 max-w-4xl p-4 mx-auto flex min-h-[500px] w-full flex-col items-center justify-center\">\n      <div className=\"relative flex h-[400px] w-full items-center justify-center overflow-hidden rounded-2xl border shadow-lg\">\n        <GrainGradientBackground\n          colors={[\"#a855f7\", \"#ec4899\", \"#f59e0b\", \"#3b82f6\"]}\n          softness={0.8}\n          noise={0.15}\n          speed={0.3}\n          className=\"opacity-80\"\n        />\n\n        <div className=\"backdrop-blur-md p-8 max-w-md border-white/20 relative z-10 rounded-2xl border bg-background/50 text-center shadow-xl\">\n          <h2 className=\"text-3xl font-bold tracking-tight mb-4\">Dreamy Gradients</h2>\n          <p className=\"mb-6 text-foreground/80\">\n            A beautiful, animated grain gradient background powered by WebGL shaders. Perfect for\n            hero sections and distinctive landing pages.\n          </p>\n          <button\n            type=\"button\"\n            className=\"px-6 py-2 font-medium rounded-full bg-primary text-primary-foreground shadow-lg transition-all hover:scale-105 hover:shadow-xl\"\n          >\n            Get Started Focus\n          </button>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

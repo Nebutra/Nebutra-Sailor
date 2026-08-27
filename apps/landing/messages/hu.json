@@ -1,0 +1,1781 @@
+{
+  "nav": {
+    "features": "Funkciók",
+    "solutions": "Megoldások",
+    "pricing": "Árazás",
+    "docs": "Dokumentáció",
+    "github": "GitHub",
+    "npm": "npm",
+    "about": "Rólunk",
+    "ideas": "Ötletek",
+    "opc": "Platform",
+    "roadmap": "Útiterv",
+    "resources": "Erőforrások",
+    "signIn": "Bejelentkezés",
+    "getStarted": "Kezdjük el",
+    "changelog": "Változásnapló",
+    "news": "Hírek",
+    "designDocs": "Design rendszer",
+    "avatarMenu": {
+      "ariaLabel": "Fiók menü",
+      "loadingName": "Betöltés…",
+      "dashboard": "Vezérlőpult",
+      "account": "Fiók",
+      "billing": "Számlázás",
+      "docs": "Dokumentáció",
+      "signOut": "Kijelentkezés"
+    }
+  },
+  "refer": {
+    "metadataTitle": "Csatlakozz a {brandName} alapító ajánlási köréhez",
+    "metadataDescription": "Csatlakozz a {brandName} várólistájához, tartsd meg az ajánlási hovatartozást, és zárt termékvezérelt körben nyisd meg a saját megosztási linkedet.",
+    "eyebrow": "Alapító ajánlási kör",
+    "title": "Csatlakozz a következő alapító kohorthoz, és kapj egy saját megosztási linket.",
+    "description": "Bármely meghívó kóddal léphetsz be, vagy csatlakozhatsz közvetlenül. Ha létezik kód, megtartjuk a hovatartozást, felkerülsz a várólistára, és azonnal kiállítunk egy privát ajánlási URL-t, amit megoszthatsz.",
+    "signal": {
+      "waitlist": "Tartós várólista",
+      "codeDetected": "A(z) {code} kód érzékelve",
+      "direct": "Közvetlen regisztráció"
+    },
+    "form": {
+      "emailLabel": "Munka e-mail",
+      "emailPlaceholder": "you@example.com",
+      "codeLabel": "Ajánlási kód",
+      "codePlaceholder": "Opcionális kód",
+      "submit": "Csatlakozás a várólistához",
+      "submitting": "Csatlakozás...",
+      "invalidEmail": "Adj meg egy érvényes e-mail címet.",
+      "error": "Jelenleg nem lehet csatlakozni. Kérjük, próbáld újra.",
+      "successTitle": "Te is rajta vagy a listán",
+      "successDescription": "A privát megosztó linked már kész.",
+      "positionLabel": "Helyezés a sorban",
+      "referralCodeLabel": "A kódod",
+      "referralUrlLabel": "A megosztó linked",
+      "copyLink": "Link másolása",
+      "copied": "Másolva",
+      "share": "Megosztás",
+      "shareTitle": "Csatlakozz a {brandName} alapító köréhez",
+      "shareText": "Használd a meghívó linkemet, hogy csatlakozz a {brandName} alapító várólistájához.",
+      "directMode": "Nem szükséges ajánló kód",
+      "codeMode": "Ajánlási attribúció engedélyezve"
+    },
+    "proof": {
+      "peerLoop": {
+        "title": "Alapítótól alapítónak hurok",
+        "description": "Minden elfogadott regisztráció kap egy kódot és URL-t, így a következő ajánlás manuális átadás nélkül indul."
+      },
+      "attribution": {
+        "title": "Őszinte attribúció",
+        "description": "Ismeretlen kódok próbált attribúcióként tárolódnak, míg az érvényes kódok növelik az ajánlót és tiszta regisztrációt biztosítanak."
+      },
+      "shareLink": {
+        "title": "Megosztásra kész sikeres állapot",
+        "description": "A megerősítési állapot kitárja a pozíciót, kódot, másolást és natív megosztási műveleteket, így a hurok a lapon zárul."
+      }
+    },
+    "infrastructure": {
+      "eyebrow": "Termékvezérelt infrastruktúra",
+      "title": "Tartós SaaS infrastruktúraként tervezve, nem eldobható űrlapként.",
+      "description": "Az ajánlási felületet egy domain csomag, egy tartós Prisma modell, egy típusos Next.js útvonal és nyilvános füsttesztek támasztják alá, amelyek az ECS telepítések után futtathatóak.",
+      "data": {
+        "eyebrow": "Adatok",
+        "title": "Egy tartós várólista tábla",
+        "description": "Az e-mail egyediség, az automatikusan növekvő pozíció, az ajánlási kód indexek, a próbált attribúció metaadatok és az állapotátmenetek a platform adatbázisában élnek."
+      },
+      "api": {
+        "eyebrow": "API",
+        "title": "Típusos csatlakozási végpont",
+        "description": "A lap a `/api/waitlist`-re posztol, normalizálja a tetszőleges kódokat, idempotensen visszaadja a meglévő bejegyzéseket, és soha nem függ egy minta kódtól."
+      },
+      "cicd": {
+        "eyebrow": "CI/CD",
+        "title": "Éles környezetben futó smoke teszt",
+        "description": "A kanonikus és alias URL-ek készen állnak az automatizált ellenőrzésekre, így az ECS kiszállítás észleli az útvonal-, DNS- és egészségügyi regressziókat."
+      }
+    }
+  },
+  "hero": {
+    "headline1": "Indítsd el a startupodat,",
+    "headline2": "a {brandName} Agent OS erejével.",
+    "subheadline": "Hagyjad ki a hetekig tartó platformmunkát egy <highlight>éles környezetben üzemképes</highlight> alapzaton, szabályozott architektúrával, amelyet a globálisan terjeszkedni vágyó AI kódoló ügynököknek és alapítókra terveztek.",
+    "copyLabel": "Parancs másolása",
+    "copiedLabel": "Másolva",
+    "ctaGetAccess": "Indítsd el a startupodat",
+    "ctaExploreDemo": "Demo megtekintése",
+    "pillCopied": "Másolva"
+  },
+  "features": {
+    "sectionTitle": "Azonnali infrastruktúra, a prototípusától a skálázásig.",
+    "item0": {
+      "title": "AI alkalmazás-infrastruktúra",
+      "description": "Beépített, éles környezetben tesztelt Agent keretrendszerek és LLM-orchestrációs motorok. Kerüld meg a bonyolult alapszintű absztrakciókat, és közvetlenül kommunikálj a strukturált intelligencia API-kkal."
+    },
+    "item1": {
+      "title": "Szabályozott platformalap",
+      "description": "Szabályozott platformalap az AI-native SaaS-t szállító csapatoknak. Egységesítsd a vázat, a futásidejű primitíveket és a kiszállítási felületeket anélkül, hogy ad-hoc eszközöket kellene összekapcsolnod."
+    },
+    "item2": {
+      "title": "Vállalati SaaS automatizálás",
+      "description": "A Vercel, Supabase és Stripe modern technológiai stackjének mély integrációja. Azonnali sor szintű biztonságot, összetett több bérlős izolációt és globális előfizetési számlázást biztosít."
+    }
+  },
+  "cta": {
+    "heading": "Készen áll a következő AI terméke üzembe helyezésére?",
+    "subheading": "Inicializálj egy teljes, felhőbenn születte SaaS architektúrát helyileg egyetlen terminál paranccsal.",
+    "copyLabel": "Parancs másolása",
+    "copiedLabel": "Másolva",
+    "startBuilding": "Kezdjük az építést"
+  },
+  "footer": {
+    "brandDescription": "Indítsd el a Startup-odat a {brandName} Agent OS-szel. Több bérlő, számlázás, hitelesítés és AI – első naptól kezdve üzemkész.",
+    "columns": {
+      "product": "Termék",
+      "resources": "Erőforrások",
+      "legal": "Jogi",
+      "community": "Közösség"
+    },
+    "links": {
+      "product": "Termék",
+      "features": "Funkciók",
+      "forge": "Forge",
+      "pricing": "Árazás",
+      "about": "Rólunk",
+      "showcase": "Referencia",
+      "blog": "Blog",
+      "playbook": "Játékkönyv",
+      "changelog": "Változásnapló",
+      "roadmap": "Útiterv",
+      "docs": "Dokumentáció",
+      "ideas": "Ötletek",
+      "opc": "Platforma",
+      "careers": "Karrier",
+      "security": "Biztonság",
+      "dpa": "Adatfeldolgozási megállapodás",
+      "privacy": "Adatvédelem",
+      "terms": "Feltételek",
+      "cookies": "Süti",
+      "refund": "Visszatérítés",
+      "licensing": "Licensz",
+      "contact": "Kapcsolat",
+      "faq": "GYIK",
+      "github": "GitHub",
+      "discord": "Discord",
+      "twitter": "X (Twitter)"
+    },
+    "copyright": "© 2026 {brandName} Intelligence. Minden jog fenntartva.",
+    "statusOnline": "Minden rendszer működik",
+    "newsletterTitle": "Maradj naprakész",
+    "newsletterPlaceholder": "you@example.com",
+    "newsletterSubscribe": "Feliratkozás",
+    "newsletterSuccess": "Köszönjük a feliratkozást!",
+    "newsletterError": "Valami hiba történt",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
+  },
+  "logoStrip": {
+    "tagline": "Ezen fut"
+  },
+  "monorepoTree": {
+    "badge": "TURBOREPO STRUKTÚRA",
+    "title": "15 alkalmazás. 113 csomag. 4 backend sáv.",
+    "description": "Megosztott kód, párhuzamos build, nulla duplikáció. Teljes végponttól végpontig terjedő típusozás az adatbázistól a frontendig.",
+    "metricApps": "alkalmazás",
+    "metricBackends": "backend sávok",
+    "metricPackages": "csomagok",
+    "verifiedPaths": "Útvonalak ellenőrizve az aktuális munkaterülettel",
+    "cta": "Fedezd fel a monorepo architektúrát"
+  },
+  "stats": {
+    "title": "Számokban",
+    "github": "GitHub csillagok",
+    "discord": "Discord tagok",
+    "setup": "Átlagos beállítási idő",
+    "packages": "Monorepo csomagok",
+    "ctaStar": "Csillagozd →",
+    "ctaJoin": "Csatlakozz →",
+    "ctaStart": "Kezdés →",
+    "ctaExplore": "Felfedezés →"
+  },
+  "legalPages": {
+    "about": {
+      "title": "Rólunk — A szabályozott AI platform",
+      "description": "Fedezd fel a kereskedelmi víziót és mérnöki elveket a {brandName} szabályozott AI platformja mögött.",
+      "heading": "A karcsú termékcsapatok kora",
+      "subheading": "Cserélje le a platformon ismétlődő munkát szabályozott infrastruktúrára, erős automatizálásra és tartós mérnöki előnyre.",
+      "missionTitle": "Egy új rend, amely ellenáll az adminisztratív elrohadásnak",
+      "missionP1": "A {brandName} egy szabályozott AI-platformot épít azoknak a csapatoknak, akik tartós infrastruktúrára van szükségük, nem pedig rövid életű kezdő stackekre. A hagyományos skálázás gyakran jár bürokráciával és entrópiával; mi kód-szabályozással, automatizálással és egy platform-alappal válaszolunk, amely növekedése során is ellenőrizhető marad.",
+      "missionP2": "A kereskedelem továbbra is szenved a koordinációs terhek, a széttagolt eszközök és a gyenge frissítési utak miatt. Fontos számunkra ezeknek a súrlódásoknak a csökkentése egyértelműbb platform-szerződésekkel, erősebb szállítási primitívekkel és futásidejű viselkedéssel, amelyet a csapatok ténylegesen megfigyelhetnek és megbízhatnak.",
+      "missionP3": "Elutasítjuk azt a szokást, hogy a skálázási problémákat több szervezeti súllyal oldjuk meg. Az automatizálásnak, a teszteket és a szabályozásnak el kell nyelnie a ismétlődő operatív munkát, hogy a csapatok a termékre, az architektúrára és a ügyfél-eredményekre tudjanak fókuszálni.",
+      "missionP4": "",
+      "valuesTitle": "A négy pillér",
+      "values": {
+        "0": {
+          "title": "Szabályozott skálázás (Filozófia)",
+          "description": "A skálázásnak erősebb rendszerekből, jobb előnyből és egyértelműbb üzemeltetési szabályokból kell származnia – nem pedig a szervezeti súly növeléséből."
+        },
+        "1": {
+          "title": "A Builder Core (Infrastruktúra)",
+          "description": "Egy újrahasználható platform-alap a többbérletességhez, számlázáshoz, hitelesítéshez, megfelelőséghez és AI-integrációkhoz, amelyet a csapatok ellenőrizhetnek, bővíthetnek és ismételten szállíthatnak."
+        },
+        "2": {
+          "title": "Frissítési fegyelem (Útvonalvezetés)",
+          "description": "Az egészséges rendszerek kompatibilitási ellenőrzésekkel, migrációkkal és megfigyelhető futásidejű szerződésekkel nőnek, nem pedig elcsúszással, hősies gesztusokkal és egyedi átírásokkal."
+        },
+        "3": {
+          "title": "A kód a törvény (Szervezet)",
+          "description": "Az operatív fegyelemnek teszteken, munkafolyamatokon és szabályozási szabályokon keresztül kell kódolva lennie, hogy a csapatok javíthassák a platformot anélkül, hogy politikára vagy intézményi memóriára támaszkodnának."
+        }
+      },
+      "jobsTitle": "Mérnöki jelzések a hitelesítések helyett",
+      "jobsDescription": "Többet számítanak számunkra a ellenőrizhető mérnöki eredmények, a gondolkodás tisztasága és a rendszerbeli ítélet, mint a származás vagy a címek inflációja.",
+      "jobsButton": "GitHub-profil beküldése",
+      "companyInfoTitle": "Szervezeti megfelelés",
+      "companyInfo": {
+        "legalName": "Jogi entitás regisztráció",
+        "founded": "Regisztráció dátuma",
+        "headquarters": "Globális működési központ",
+        "jurisdiction": "Alkalmazandó joghatóság"
+      },
+      "ctaHeading": "Mélyebb technikai értékelésre van szüksége?",
+      "ctaDescription": "Lépjen kapcsolatba mérnöki szakértőinkkel vállalati integrációs értékelésért, vagy tekintse meg a telepítési dokumentációt.",
+      "ctaButton": "Kapcsolatfelvétel"
+    },
+    "contact": {
+      "title": "Technikai és kereskedelmi érdeklődés — {brandName} Intelligence",
+      "description": "A kereskedelmi licencelés, vállalati önálló üzemeltetés és fejlett technikai támogatás dedikált kommunikációs csatornája.",
+      "heading": "Támogatási kapcsolat létrehozása",
+      "subheading": "Dedikált technikai szakértőt vagy architektust küldünk az Ön explicit igényeinek értékelésére.",
+      "contacts": {
+        "founder": {
+          "title": "Alapító közvetlen",
+          "description": "Közvetlen kommunikációs csatorna a stratégiai összhangokhoz és vezérigazgatói szintű érdeklődésekhez."
+        },
+        "general": {
+          "title": "Vállalati konzultáció",
+          "description": "Előzetes egyeztetések az ökológiai stratégiai partnerségekről és a teljes architektúra evolúciójáról."
+        },
+        "sales": {
+          "title": "Kereskedelmi telepítés",
+          "description": "Zárt forráskódú licencelés és a privát klaszter-környezeti telepítések részletei tárgyában folytatott tárgyalások."
+        },
+        "support": {
+          "title": "Szakértői szintű támogatás",
+          "description": "Célzott architektúra-irányítás és hibaelhárítási szolgáltatások az aktív üzleti integrációkhoz és a rendszermag hibakereséséhez."
+        },
+        "legal": {
+          "title": "Jogi és megfelelőségi ügyek",
+          "description": "Nyílt forráskódú határvonalak meghatározásával, vállalati megfelelőségi auditokkal és szerződési feltételekkel kapcsolatos érdeklődés."
+        },
+        "privacy": {
+          "title": "Adatközpont-magánszféravédelem",
+          "description": "A GDPR és az azt követő nemzetközi adatvédelmi törvények vonatkozásában történő technikai ellenőrzés és megfelelőségi irányelvek."
+        },
+        "security": {
+          "title": "Biztonsági közlések",
+          "description": "A potenciális szoftversebezhetőségekre vonatkozó technikai reprodukálási jelentések biztonságos beküldése közvetlenül az infrastruktúra-csapatunkhoz."
+        }
+      },
+      "formTitle": "Beküldési portál",
+      "form": {
+        "name": "Beküldő megnevezése",
+        "email": "Hivatalos e-mail cím",
+        "company": "Tartozó szervezet",
+        "category": "Szükséglet területe",
+        "categories": {
+          "general": "Vállalati konzultáció",
+          "sales": "Licencelés és architektúra",
+          "support": "Fejlesztői támogatás",
+          "legal": "Jogi és megfelelőségi keretek",
+          "privacy": "Adatfeldolgozási irányelvek",
+          "partnership": "Ökoszisztéma-integrációk",
+          "press": "Közszereplés"
+        },
+        "subject": "Fő probléma összefoglalása",
+        "message": "Részletes technikai/kereskedelmi specifikációk",
+        "submit": "Küldés a háttérrendszernek",
+        "privacyNotice": "Ez a hálózati kérés végrehajtása jelzi, hogy elolvasta és elfogadta a mi",
+        "privacyLink": "Rendszerszintű adatvédelmi infrastruktúra",
+        "submitting": "Feldolgozási sorba állítva...",
+        "successMessage": "Az adatok sikeresen elküldve. A felelős üzemeltetési csapat 1-2 munkanapon belül részletes választ fog küldeni."
+      },
+      "companyInfoTitle": "Üzemeltetési telemetria",
+      "companyNameChinese": "{companyLegal}",
+      "companyNameEnglish": "{companyLegalEn}",
+      "companyAddress": "Wuxi, Jiangsu tartomány, Kína",
+      "socialMedia": "Elsődleges hálózati hivatkozások"
+    },
+    "cookies": {
+      "title": "Süti-szabályzat — {brandName}",
+      "description": "Hogyan használja a {brandName} a sütiket és hasonló követési technológiákat weboldalunkon és szolgáltatásainkban.",
+      "heading": "Süti-szabályzat",
+      "effectiveDate": "Hatálybalépés dátuma",
+      "lastUpdated": "Utoljára frissítve",
+      "dates": {
+        "effective": "2025. január 1.",
+        "updated": "2025. január 1."
+      },
+      "intro": "Ez a Süti-szabályzat bemutatja, hogy a {brandName} Co., Ltd. (\"{brandName}\", \"mi\", \"minket\" vagy \"miénk\") hogyan használja a sütiket és hasonló követési technológiákat weboldalunkon és szolgáltatásainkban.",
+      "whatAreCookies": {
+        "title": "Mi az a süti?",
+        "content": "A sütik kis szöveges fájlok, amelyeket az eszközére helyezünk, amikor felkeres egy weboldalt. Széles körben használják őket a weboldalak hatékonyabb működésének biztosítására és információk megadására az oldal tulajdonosainak."
+      },
+      "howWeUse": {
+        "title": "Hogyan használjuk a sütiket",
+        "intro": "A sütiket az alábbi célokra használjuk:",
+        "items": {
+          "0": {
+            "label": "Lényeges funkciók engedélyezése",
+            "desc": "Alapvető funkciók biztosítása, például felhasználó-hitelesítés és biztonság"
+          },
+          "1": {
+            "label": "Beállítások megjegyzése",
+            "desc": "Nyelv, téma és egyéb beállítások tárolása"
+          },
+          "2": {
+            "label": "Teljesítményjavítás",
+            "desc": "Megértjük, hogyan lépnek kapcsolatba a látogatók szolgáltatásainkkal"
+          },
+          "3": {
+            "label": "Élmény személyre szabása",
+            "desc": "Releváns tartalmak és ajánlások megjelenítése"
+          },
+          "4": {
+            "label": "Marketing mérés",
+            "desc": "Marketingkampányaink hatékonyságának követése"
+          }
+        }
+      },
+      "typesTitle": "A használt cookie-k típusai",
+      "tableHeaders": {
+        "cookie": "Süti",
+        "provider": "Szolgáltató",
+        "purpose": "Cél",
+        "duration": "Időtartam"
+      },
+      "necessary": {
+        "title": "Szigorúan szükséges cookie-k",
+        "description": "Ezek a cookie-k elengedhetetlenek a webhely megfelelő működéséhez. Nem kapcsolhatók ki.",
+        "cookies": {
+          "0": {
+            "name": "__session",
+            "provider": "{brandName}",
+            "purpose": "Felhasználói hitelesítési munkamenet",
+            "duration": "Munkamenet"
+          },
+          "1": {
+            "name": "__clerk_db_jwt",
+            "provider": "Clerk",
+            "purpose": "Hitelesítési token",
+            "duration": "7 nap"
+          },
+          "2": {
+            "name": "cookie_consent",
+            "provider": "{brandName}",
+            "purpose": "Süti-egyeztetési beállítások tárolása",
+            "duration": "1 év"
+          }
+        }
+      },
+      "functional": {
+        "title": "Funkcionális sütik",
+        "description": "Ezek a sütik lehetővé teszik a személyre szabott funkciókat és megjegyzik az Ön beállításait.",
+        "cookies": {
+          "0": {
+            "name": "locale",
+            "provider": "{brandName}",
+            "purpose": "Nyelvi beállítás tárolása",
+            "duration": "1 év"
+          },
+          "1": {
+            "name": "theme",
+            "provider": "{brandName}",
+            "purpose": "Témaválasztási beállítás tárolása",
+            "duration": "1 év"
+          }
+        }
+      },
+      "analyticsType": {
+        "title": "Analitikus sütik",
+        "description": "Ezek a sütik segítik megérteni, hogy a látogatók hogyan lépnek kapcsolatba a weboldalunkkal.",
+        "cookies": {
+          "0": {
+            "name": "_ga",
+            "provider": "Google Analytics",
+            "purpose": "Egyedi felhasználók megkülönböztetése",
+            "duration": "2 év"
+          },
+          "1": {
+            "name": "ph_*",
+            "provider": "PostHog",
+            "purpose": "Termék analitika",
+            "duration": "1 év"
+          }
+        }
+      },
+      "marketingType": {
+        "title": "Marketing sütik",
+        "description": "Ezeket a sütiket hirdetésekhez és hirdetéskampányok teljesítményének követéséhez használjuk.",
+        "cookies": {
+          "0": {
+            "name": "_fbp",
+            "provider": "Facebook",
+            "purpose": "Facebook-hirdetések látogatásainak követése",
+            "duration": "3 hónap"
+          },
+          "1": {
+            "name": "_gcl_au",
+            "provider": "Google Ads",
+            "purpose": "Konverziókövetés",
+            "duration": "3 hónap"
+          }
+        }
+      },
+      "managingTitle": "Sütielőnyben részesítéseinek kezelése",
+      "consentBanner": {
+        "title": "Sütihozzájárulás-sáv",
+        "intro": "Amikor először látogatja meg weboldalunkat, egy sütihozzájárulás-sávot fog látni, amely lehetővé teszi a következőket:",
+        "items": {
+          "0": {
+            "label": "Összes elfogadása",
+            "desc": "Minden sütikategória engedélyezése"
+          },
+          "1": {
+            "label": "Összes elutasítása",
+            "desc": "Minden opcionális süti letiltása (a szükséges sütik megmaradnak)"
+          },
+          "2": {
+            "label": "Testreszabás",
+            "desc": "Konkrét sütikategóriák kiválasztása az engedélyezéshez"
+          }
+        },
+        "changeNote": "Előnyben részesítéseit bármikor módosíthatja a láblécben található \"Sütibeállítások\" gombra kattintva."
+      },
+      "browserSettings": {
+        "title": "Böngészőbeállítások",
+        "intro": "A legtöbb webböngésző lehetővé teszi a sütik kezelését a beállításokon keresztül:",
+        "browsers": {
+          "0": {
+            "name": "Chrome",
+            "path": "Beállítások > Adatvédelem és biztonság > Cookie-k"
+          },
+          "1": {
+            "name": "Firefox",
+            "path": "Beállítások > Adatvédelem és biztonság > Cookie-k"
+          },
+          "2": {
+            "name": "Safari",
+            "path": "Preferenciák > Adatvédelem > Cookie-k"
+          },
+          "3": {
+            "name": "Edge",
+            "path": "Beállítások > Adatvédelem, keresés és szolgáltatások > Cookie-k"
+          }
+        },
+        "note": "Egyes cookie-k letiltása befolyásolhatja a weboldal működését."
+      },
+      "similarTech": {
+        "title": "Hasonló technológiák",
+        "intro": "A cookie-k mellett az alábbiakat is használhatjuk:",
+        "items": {
+          "0": {
+            "label": "Helyi tároló",
+            "desc": "Preferenciák és gyorsítótárazott adatok helyi tárolására"
+          },
+          "1": {
+            "label": "Munkamenet-tároló",
+            "desc": "Ideiglenes adatok tárolására böngészési munkamenet során"
+          },
+          "2": {
+            "label": "Pixel címkék",
+            "desc": "Kis képek az e-mail megnyitások és a webhely-látogatások követésére"
+          }
+        },
+        "noFingerprinting": "Nem használunk böngésző-ujjlenyomatot a követéshez."
+      },
+      "updates": {
+        "title": "Jelen irányelv frissítései",
+        "content": "Időről időre frissíthetjük ezt a Cookie-irányelvet. Jelentős változásokról a frissített irányelvet a webhelyünkön közzé téve értesítjük Önt."
+      },
+      "contactUs": {
+        "title": "Lépjen kapcsolatba velünk",
+        "intro": "Ha kérdése van a cookie-k használatunkkal kapcsolatban, kérjük, lépjen kapcsolatba velünk:",
+        "company": "{brandName} Co., Ltd.",
+        "privacyNote": "Hogyan gyűjtjük és dolgozzuk fel az Ön adatait, arról további információért kérjük, tekintse meg a",
+        "privacyLink": "Adatvédelmi irányelvet"
+      }
+    },
+    "faq": {
+      "title": "Mérnöki útmutató és GYIK — {brandName}",
+      "description": "A keretrendszer-architektúra, az alapvető topológiák és a kereskedelmi üzembe helyezési stratégiák átfogó elemzése.",
+      "heading": "Vezetői mélyreható áttekintés",
+      "subheading": "A rendszermérnöki integrációra és a vezérigazgatói kereskedelmi döntéshozatalra optimalizált kiegészítő anyag.",
+      "categories": {
+        "0": {
+          "name": "Architektúra-áttekintés",
+          "questions": {
+            "0": {
+              "q": "Mi a {productName} kifejezett üzemeltetési célja?",
+              "a": "A {productName} egy erősen strukturált, élesüzemre kész Next.js AI SaaS keretrendszer. Csomagolja a vállalati számlázást, a többtényezős hitelesítést és a többbérletű elszigetelést egy irányított platformalapba, lehetővé téve a csapatok számára, hogy a termék-specifikus AI-megvalósításra összpontosítsanak."
+            },
+            "1": {
+              "q": "Hogyan működik a tároló licencelése?",
+              "a": "Az alapinfrastruktúra szigorúan betartja az OSS AGPLv3 megállapodást, garantálva a átláthatóságot és a költségmentes használatot. Azok számára, akiknek zárt forráskódú elrejtést és fokozott átírás-garanciát kell biztosítaniuk, kifejezett zárt forráskódú kereskedelmi szerződések érhetők el."
+            },
+            "2": {
+              "q": "Mennyire gyors az első kereskedelmi értékelés?",
+              "a": "Nagyon nagy sebességű. A testreszabott Node CLI eszközlánc és a pontos műszaki specifikáció segítségével egy kezdő mérnök egyszámjegyű perc alatt felépíthet egy önálló helyi Minimum Viable Product (MVP) példányt."
+            }
+          }
+        },
+        "1": {
+          "name": "Kereskedelmi Műveletek",
+          "questions": {
+            "0": {
+              "q": "Mennyire rugalmas a kereskedelmi méretezés?",
+              "a": "A mikrokomponens paradigmákra építve, a strukturális teherbírás zökkenőmentesen skálázódik a nullakövetelésű ingyenes csomagoktól kezdve a többmillió havi kérést kiszolgáló vállalati küszöbökig, teljesen a vezérlőpult korlátain keresztül konfigurálva."
+            },
+            "1": {
+              "q": "Hogyan befolyásolja az előfizetési ingadozás a szabványos elszámolást?",
+              "a": "Precíz, másodperces szintű erőforrás- és API-sávszélesség-naplózást alkalmazunk. A korlátok módosítása azonnal kiegyenlítődik az elszámolási réteggel – vagy arányos különbözetet térít vissza, vagy automatikus jóváírást ad ki. Nincs semmilyen csomagfagyasztási időszak."
+            },
+            "2": {
+              "q": "Milyen feldolgozási infrastruktúra izolálja a fizetési vektorokat?",
+              "a": "A globális pénzáramlás alapvetően a Stripe szerverfelületekre támaszkodik, garantálva a szigorú PCI-DSS telemetriát és feldolgozási integritást. A vállalati telepítések integrálhatják a saját pénzügyi audit csatornákat, amelyeket testreszabott SLA kötelezettségek szabályoznak."
+            }
+          }
+        },
+        "2": {
+          "name": "Rendszermérnöki Réteg",
+          "questions": {
+            "0": {
+              "q": "Mely alapvető intelligencia absztrakciókat támogatja natívan?",
+              "a": "A fő interakciós logika natív interoperabilitást ír elő az OpenAI, Anthropic és Gemini szabványos specifikációk felett. Ez hatalmas rugalmasságot biztosít a következtetési végpontok hatékony cseréjéhez változóképezés révén, anélkül, hogy az upstream kereskedelmi logika romlana."
+            },
+            "1": {
+              "q": "Hogyan kezelik az adatbázis elrejtésének kockázatát?",
+              "a": "A megvalósítás alapértelmezetten Postgres sor szintű biztonsági (RLS) szabályzatokat telepít, amelyek szorosan összekapcsolódnak a szerver nélküli bérlőfeloldási útválasztási primitívjeinkkel. Ez biztosítja, hogy a kemény partíciók aktívan megakadályozzák a kritikus alkalmazásszintű adatkontaminációt és végrehajtási átfedést."
+            },
+            "2": {
+              "q": "Vannak-e architektúrális korlátozások a saját üzemeltetésű telepítéseknél?",
+              "a": "Egyáltalán nincsenek. A topológia teljesen szétválasztott. Ha a környezet képes független Node.js futtatókörnyezeteket üzemeltetni egészséges PostgreSQL klaszterek mellett, a teljes funkcionalitás alapból megmarad."
+            }
+          }
+        },
+        "3": {
+          "name": "Rendszerszintű integritás",
+          "questions": {
+            "0": {
+              "q": "Milyen protokollok határozzák meg a határ mechanikai védelmét?",
+              "a": "A mechanizmusok kötelező TLS titkosítást hajtanak végre az átvitel során, determinisztikus hash-algoritmusokat alkalmaznak a titkok leképezésére, és minden módosítási eseményt rögzítenek, amelyeket szigorúan belső idősoros nyilvántartásokba írnak."
+            },
+            "1": {
+              "q": "Tiszteletben tartja-e a topológia a fontos nemzetközi adatvédelmi törvényeket?",
+              "a": "Igen, mélyen. Az üzleti modulok dobozból-kész algoritmikus megvalósításokat biztosítanak az engedély visszavonásának állapotaihoz, a végleges törlés logikájához és a mély export lekérdezésekhez, amelyek optimálisan megfelelnek a GDPR-nak és a helyi szabályozási kereteknek."
+            },
+            "2": {
+              "q": "Mi történik egy rendellenes katasztrofális esemény esetén?",
+              "a": "Az automatizált őrzők azonnal értesítik a központi mérnöki csapatokat, akik áramköri blokkolást hajtanak végre és gyors triázst kezdenek. Egy fejlett megoldási kézikönyv irányítása alatt, a teljesen átlátható eseményelemzéseket szigorúan 72 órán belül terjesztik szét."
+            }
+          }
+        },
+        "4": {
+          "name": "Műszaki támogatási irányelvek",
+          "questions": {
+            "0": {
+              "q": "Hogyan oldják meg az üzemeltetési palacknyak hibaelhárítását?",
+              "a": "Az első triázs a szigorúan karbantartott és szakmai ellenőrzésen átment dokumentációs mátrixra, valamint a hitelesített közösségi interakciókra irányul. Egy szabványos vagy vállalati szintű licenc beszerzése feloldja a hozzáférést a privát eszkalációs sorokhoz, amelyeket közvetlen belső mérnöki csomópontok oldanak meg."
+            },
+            "1": {
+              "q": "Nyújtanak-e fizikai vagy speciális környezeti integrációs műveleteket?",
+              "a": "Ez a mi egyedi prémium végrehajtási szintünkbe tartozik a felső kategóriájú vállalati konglomerátumok számára. Legtapasztaltabb architektáink helyszíni bevetésre indulnak a régi architektúrák elleni kód-auditálásra, a finom felhőáttelepítések kezelésére és a szigorúan izolált hálózati partíciók validálására."
+            }
+          }
+        }
+      },
+      "ctaHeading": "Azonnali műszaki szinkronizációra van szüksége?",
+      "ctaDescription": "Legyen szó egy specifikus API viselkedési sémáról vagy hosszú távú integrációs megállapodásokról, közvetlenül lépjen kapcsolatba a mérnöki hierarchiával.",
+      "ctaButton": "Integrációs útmutató kérése",
+      "ctaEmail": "Üzenet küldése"
+    },
+    "privacy": {
+      "title": "Adatvédelmi és információmegőrzési protokoll — {brandName}",
+      "description": "Részletesen dokumentáljuk, hogyan szabályozza az infrastruktúra mechanizmusa a felhasználói autonómiát és a gépi adatok izolációját.",
+      "heading": "Információvédelmi irányelvek",
+      "effectiveDate": "Hatálybalépés dátuma",
+      "lastUpdated": "Utoljára frissítve",
+      "dates": {
+        "effective": "2025. január 1.",
+        "updated": "2025. január 1."
+      },
+      "intro": "A {brandName} (\"Cég\", \"mi\", \"minket\" vagy \"miénk\") elkötelezett az Ön adatvédelme mellett. Ez az adatvédelmi irányelv bemutatja, hogyan gyűjtjük, használjuk, közöljük és védjük az Ön adatait, amikor Ön használja weboldalunkat, alkalmazásainkat és szolgáltatásainkat (együttesen: \"Szolgáltatások\").",
+      "infoWeCollect": {
+        "title": "1. Az általunk gyűjtött információk",
+        "youProvide": {
+          "title": "1.1 Ön által megadott információk",
+          "intro": "Az alábbiakat gyűjtjük, amelyeket Ön közvetlenül közöl velünk:",
+          "items": {
+            "0": {
+              "label": "Fiókinformációk",
+              "desc": "Név, e-mail cím, jelszó és szervezeti adatok fiók létrehozásakor."
+            },
+            "1": {
+              "label": "Profilinformációk",
+              "desc": "Profilkép, munkakör, cégnév és egyéb opcionális információk."
+            },
+            "2": {
+              "label": "Fizetési adatok",
+              "desc": "Számlázási cím és fizetési mód adatai (biztonságosan, Stripe-on keresztül feldolgozva)."
+            },
+            "3": {
+              "label": "Kommunikáció",
+              "desc": "Üzenetek, visszajelzések és egyéb, nekünk küldött kommunikáció."
+            },
+            "4": {
+              "label": "Tartalom",
+              "desc": "Bármilyen tartalom, amelyet szolgáltatásaink segítségével hoz létre, tölt fel vagy tárol."
+            }
+          }
+        },
+        "automatic": {
+          "title": "1.2 Automatikusan gyűjtött információk",
+          "intro": "Szolgáltatásaink használata során automatikusan gyűjtünk bizonyos információkat:",
+          "items": {
+            "0": {
+              "label": "Eszközadatok",
+              "desc": "Eszköztípus, operációs rendszer, böngészőtípus és egyedi eszközazonosítók."
+            },
+            "1": {
+              "label": "Használati adatok",
+              "desc": "Megtekintett oldalak, használt funkciók, végrehajtott műveletek és a szolgáltatásokon eltöltött idő."
+            },
+            "2": {
+              "label": "Naplóadatok",
+              "desc": "IP-cím, hozzáférési idők, hivatkozó URL-ek és rendszeraktivitás-naplók."
+            },
+            "3": {
+              "label": "Helyadatok",
+              "desc": "IP-cím alapján meghatározott általános földrajzi hely (nem gyűjtünk pontos földrajzi helyadatokat)."
+            }
+          }
+        }
+      },
+      "howWeUse": {
+        "title": "2. Hogyan használjuk az Ön adatait",
+        "intro": "Az összegyűjtött információkat a következő célokra használjuk:",
+        "items": {
+          "0": {
+            "label": "Szolgáltatások nyújtása",
+            "desc": "Szolgáltatásaink üzemeltetése, karbantartása és fejlesztése."
+          },
+          "1": {
+            "label": "Tranzakciók feldolgozása",
+            "desc": "Fizetések, számlázás és kapcsolódó műveletek kezelése."
+          },
+          "2": {
+            "label": "Kommunikáció",
+            "desc": "Szolgáltatási bejelentések, frissítések és marketingüzenetek küldése (hozzájárulással)."
+          },
+          "3": {
+            "label": "Személyre szabás",
+            "desc": "Élményének testreszabása és releváns ajánlások nyújtása."
+          },
+          "4": {
+            "label": "Elemzés",
+            "desc": "Használati mintázatok megértése és szolgáltatásaink fejlesztése."
+          },
+          "5": {
+            "label": "Védelem",
+            "desc": "Csalások, visszaélések és biztonsági incidensek észlelése, megelőzése és kezeléses."
+          }
+        }
+      },
+      "howWeShare": {
+        "title": "3. Hogyan osztjuk meg az Ön adatait",
+        "intro": "Az alábbi esetekben megoszthatjuk az Ön adatait:",
+        "serviceProviders": {
+          "title": "3.1 Szolgáltatók",
+          "intro": "Megosztjuk az adatokat olyan harmadik fél szolgáltatókkal, akik az Ön nevében nyújtanak szolgáltatást, köztük:",
+          "items": {
+            "0": {
+              "label": "Infrastruktúra",
+              "desc": "Felhőalapú hosztolás (Vercel, Supabase), adatbázis-szolgáltatások"
+            },
+            "1": {
+              "label": "Fizetési feldolgozás",
+              "desc": "Stripe a biztonságos fizetések kezeléséhez"
+            },
+            "2": {
+              "label": "Hitelesítés",
+              "desc": "Clerk a identitáskezeléshez"
+            },
+            "3": {
+              "label": "Analitika",
+              "desc": "PostHog, Vercel Analytics a használati betekintésekhez"
+            }
+          }
+        },
+        "businessTransfers": {
+          "title": "3.2 Üzleti átadások",
+          "content": "Ha cégünkbe történő felvásárlás, átvétel vagy vagyonátruházás történik, az Ön adatai az ügylet részeként átadhatók."
+        },
+        "legalRequirements": {
+          "title": "3.3 Jogi követelmények",
+          "content": "Megoszthatjuk az adatokat, ha a törvény, jogi eljárás vagy kormányzati kérelem ezt megköveteli, vagy ha a mi jogainkat, magánéletünket, biztonságunkat vagy tulajdonunkat kell védeni."
+        }
+      },
+      "yourRights": {
+        "title": "4. Ön jogai és lehetőségei",
+        "accessPortability": {
+          "title": "4.1 Hozzáférés és átvihetőség",
+          "content": "Személyes adataidhoz fiókbeállításaiddal férhetsz hozzá, és kérheted az adataid másolatát átvihető formátumban."
+        },
+        "correction": {
+          "title": "4.2 Javítás",
+          "content": "Fiókadataidat bármikor frissítheted a vezérlőpulton keresztül."
+        },
+        "deletion": {
+          "title": "4.3 Törlés",
+          "content": "Kérheted fiókod és a kapcsolódó adatok törlését a beállításokon keresztül vagy minket elérve."
+        },
+        "marketing": {
+          "title": "4.4 Marketingkommunikáció",
+          "content": "Kiléphetsz a marketing e-mailekből bármely marketing e-mailben az \"eliratkozás\" linkre kattintva, vagy a preferenciáid frissítésével."
+        }
+      },
+      "dataSecurity": {
+        "title": "5. Adatbiztonság",
+        "intro": "Megvalósítjuk a megfelelő technikai és szervezési intézkedéseket az adataid védelme érdekében, beleértve a következőket:",
+        "items": {
+          "0": "Adatok titkosítása továbbítás közben (TLS) és tárolás során",
+          "1": "Rendszeres biztonsági értékelések és behatolási tesztek",
+          "2": "Hozzáférés-vezérlés és hitelesítési követelmények",
+          "3": "Rendszeraktivitás figyelése és naplózása"
+        }
+      },
+      "ccpa": {
+        "title": "6. Kaliforniai adatvédelmi jogok (CCPA)",
+        "intro": "Ha kaliforniai lakos vagy, az alábbi speciális jogaid vannak személyes adataiddal kapcsolatban:",
+        "items": {
+          "0": {
+            "label": "Tájékoztatáshoz való jog",
+            "desc": "Kérje meg a gyűjtött, használt és megosztott információk közlését."
+          },
+          "1": {
+            "label": "Törléshez való jog",
+            "desc": "Kérje személyes adatai törlését."
+          },
+          "2": {
+            "label": "Kizáródáshoz való jog",
+            "desc": "Lépjen ki a személyes adatok értékesítéséből (mi nem értékesítjük az adatait)."
+          },
+          "3": {
+            "label": "Megkülönböztetésmentességhez való jog",
+            "desc": "Nem teszünk ellene megkülönböztetést jogainak gyakorlása miatt."
+          }
+        }
+      },
+      "gdpr": {
+        "title": "7. Európai adatvédelmi jogok (GDPR)",
+        "intro": "Ha az EGT-ben, az Egyesült Királyságban vagy Svájcban tartózkodik, további jogai vannak a GDPR alapján:",
+        "items": {
+          "0": {
+            "label": "Jogi alap",
+            "desc": "Az adatait szerződéskötés, jogos érdek vagy hozzájárulás alapján dolgozzuk fel."
+          },
+          "1": {
+            "label": "Jogok",
+            "desc": "Hozzáférés, javítás, törlés, hordozhatóság, korlátozás és tiltakozás."
+          },
+          "2": {
+            "label": "Adatvédelmi tisztviselő",
+            "desc": "Adatvédelmi tisztviselőnkkel a dpo@nebutra.com címen veheti fel a kapcsolatot."
+          }
+        }
+      },
+      "contactUs": {
+        "title": "8. Vegye fel velünk a kapcsolatot",
+        "intro": "Ha kérdése van az Adatvédelmi Tájékoztatóval kapcsolatban, kérjük, vegye fel velünk a kapcsolatot:",
+        "company": "{brandName} Co., Ltd."
+      }
+    },
+    "refund": {
+      "title": "Tranzakciós rendellenességi protokollok — {brandName}",
+      "description": "Részletes szabályok a pontos tőke-visszafizetési paraméterekre vonatkozóan a különböző szerkezeti együttműködési modellek esetén.",
+      "heading": "Vitatott ügyek végrehajtási keretrendszere",
+      "effectiveDate": "Érvénybe lépés dátuma",
+      "lastUpdated": "Utolsó frissítés dátuma",
+      "dates": {
+        "effective": "2025. január 1.",
+        "updated": "2025. január 1."
+      },
+      "intro": "A {brandName} cégnél arra törekszünk, hogy teljesen elégedett legyen szolgáltatásainkkal. Ez a Visszatérítési Szabályzat ismerteti azokat a körülményeket, amelyek esetén visszatérítés igényelhető, valamint a kérelem benyújtásának folyamatát.",
+      "subscriptionPlans": {
+        "title": "Előfizetési csomagok",
+        "monthly": {
+          "title": "Havi előfizetések",
+          "items": {
+            "0": {
+              "label": "Mégálás",
+              "desc": "Havi előfizetését bármikor megszüntetheti"
+            },
+            "1": {
+              "label": "Arányos visszatérítés",
+              "desc": "Nem nyújtunk arányos visszatérítést a részleges hónapokért"
+            },
+            "2": {
+              "label": "Hozzáférés",
+              "desc": "A fizetős funkciókhoz való hozzáférésed a számlázási időszak végéig megmarad"
+            },
+            "3": {
+              "label": "Automatikus megújítás",
+              "desc": "Az előfizetések automatikusan megújulnak, hacsak nem mondod le őket"
+            }
+          }
+        },
+        "annual": {
+          "title": "Éves előfizetések",
+          "items": {
+            "0": {
+              "label": "14 napos pénz-vissza garancia",
+              "desc": "Az új éves előfizetők teljes visszatérítést kérhetnek az első vásárlástól számított 14 napon belül"
+            },
+            "1": {
+              "label": "14 nap után",
+              "desc": "A visszatérítés általában nem érhető el a 14 napos időszak után"
+            },
+            "2": {
+              "label": "Mégsem",
+              "desc": "Bármikor lemondhatod, de az előfizetésed aktív marad az éves időszak végéig"
+            },
+            "3": {
+              "label": "Nincs arányos visszatérítés",
+              "desc": "Nem nyújtunk részleges visszatérítést a használaton kívüli hónapokért"
+            }
+          }
+        }
+      },
+      "eligibleScenarios": {
+        "title": "Visszatérítésre jogosító esetek",
+        "intro": "A következő esetekben fontolóra vesszük a visszatérítési kérelmeket:",
+        "serviceIssues": {
+          "title": "1. Szolgáltatási problémák",
+          "items": {
+            "0": "Jelentős szolgáltatáskiesések, amelyek befolyásolják a fő funkciók használatát",
+            "1": "Műszaki problémák, amelyeket nem tudunk ésszerű időn belül megoldani",
+            "2": "A hirdetettől jelentősen eltérő funkciók"
+          }
+        },
+        "billingErrors": {
+          "title": "2. Számlázási hibák",
+          "items": {
+            "0": "Dupla számlázás",
+            "1": "Helytelen számlázási összegek",
+            "2": "Jogosulatlan terhelések (ellenőrzés után)"
+          }
+        },
+        "exceptionalCircumstances": {
+          "title": "3. Kivételes körülmények",
+          "items": {
+            "0": "Dokumentált egészségügyi vészhelyzetek",
+            "1": "A vállalkozását érintő természeti katasztrófák",
+            "2": "Egyéb, eseti alapon értékelendő körülmények"
+          }
+        }
+      },
+      "nonRefundable": {
+        "title": "Nem visszatérítendő tételek",
+        "intro": "Az alábbiak általában nem jogosítanak visszatérítésre:",
+        "items": {
+          "0": {
+            "label": "Használat alapú díjak",
+            "desc": "API-hívások, AI token-fogyasztás vagy használt tárhely"
+          },
+          "1": {
+            "label": "Kiegészítők és extra szolgáltatások",
+            "desc": "Egyszeri vásárlások vagy kiegészítő szolgáltatások"
+          },
+          "2": {
+            "label": "Vállalati szerződések",
+            "desc": "Az egyedi megállapodásoknak saját feltételeik vannak"
+          },
+          "3": {
+            "label": "Önkéntes lemondások",
+            "desc": "A visszatérítési jogosultság időszakának letelte után"
+          },
+          "4": {
+            "label": "Feltételek megsértése",
+            "desc": "Szabályzat-sértés miatt lezárott fiókok"
+          }
+        }
+      },
+      "howToRequest": {
+        "title": "Hogyan kérj visszatérítést",
+        "step1": {
+          "title": "1. lépés: Fordulj a támogatáshoz",
+          "intro": "Küldj e-mailt a billing@nebutra.com címre az alábbi adatokkal:",
+          "items": {
+            "0": "A fiókod e-mail címe",
+            "1": "Előfizetési csomag és számlázási időszak",
+            "2": "A visszatérítési kérelem indoka",
+            "3": "Esetleges kapcsolódó dokumentáció"
+          }
+        },
+        "step2": {
+          "title": "2. lépés: Felülvizsgálati folyamat",
+          "items": {
+            "0": "5 munkanapon belül átvesszük a kérésedet",
+            "1": "További információkat kérhetünk",
+            "2": "Írásbeli döntést e-mailben küldünk"
+          }
+        },
+        "step3": {
+          "title": "3. lépés: Visszatérítés feldolgozása",
+          "intro": "Ha jóváhagyjuk:",
+          "items": {
+            "0": "A visszatérítést az eredeti fizetési módra utaljuk",
+            "1": "A bankkártyás visszatérítések általában 5-10 munkanap alatt megjelennek",
+            "2": "A banki feldolgozási idők eltérhetnek"
+          }
+        }
+      },
+      "planChanges": {
+        "title": "Csomagváltás",
+        "upgrades": {
+          "title": "Frissítések",
+          "items": {
+            "0": "A frissítések azonnal érvénybe lépnek",
+            "1": "A számlázási időszak hátralévő részére az arányos különbözetet számítjuk fel",
+            "2": "Az előző csomagért nem jár visszatérítés"
+          }
+        },
+        "downgrades": {
+          "title": "Visszaminősítések",
+          "items": {
+            "0": "A visszaminősítések a következő számlázási időszakban lépnek érvénybe",
+            "1": "Addig is hozzáférhetsz a jelenlegi funkciókhoz",
+            "2": "A jelenlegi időszak után nincs részleges visszatérítés"
+          }
+        }
+      },
+      "freeTrial": {
+        "title": "Ingyenes próbaidőszak",
+        "items": {
+          "0": "Az ingyenes próbaidőszak nem igényel fizetési adatokat",
+          "1": "A próbaidőszak alatt nem keletkezik díj",
+          "2": "A díj megkezdése előtt értesítést kap"
+        }
+      },
+      "disputeResolution": {
+        "title": "Vitarendezés",
+        "intro": "Ha nem ért egyet a visszatérítési döntésünkkel:",
+        "steps": {
+          "0": "Válaszoljon a döntésről szóló e-mailre további információkkal",
+          "1": "Kérje az ügy továbbítását egy vezetőhöz",
+          "2": "Vegye fel velünk a kapcsolatot a legal@nebutra.com címen további áttekintésért"
+        }
+      },
+      "contactUs": {
+        "title": "Kapcsolatfelvétel",
+        "intro": "Visszatérítési kérelmekhez vagy ehhez a szabályzathoz kapcsolódó kérdésekhez:",
+        "company": "{brandName} Co., Ltd.",
+        "billingLabel": "Számlázás",
+        "supportLabel": "Támogatás",
+        "legalLabel": "Jogi ügyek",
+        "responseNote": "Törekedünk arra, hogy minden visszatérítési kérelemre 5 munkanapon belül válaszoljunk.",
+        "termsNote": "Ez a szabályzat a mi",
+        "termsLink": "Szolgáltatási Feltételeinknek",
+        "termsAgreement": "A {brandName} használatával elfogadod ezeket a visszatérítési feltételeket."
+      }
+    },
+    "terms": {
+      "title": "Szolgáltatási Feltételek — {brandName}",
+      "description": "A {brandName} weboldalának, alkalmazásainak, API-jainak és szolgáltatásainak hozzáférését és használatát szabályozó Szolgáltatási Feltételek.",
+      "heading": "Szolgáltatási Feltételek",
+      "effectiveDate": "Hatálybalépés dátuma",
+      "lastUpdated": "Utoljára frissítve",
+      "dates": {
+        "effective": "2025. január 1.",
+        "updated": "2025. január 1."
+      },
+      "intro1": "Üdvözlünk a {brandName}nál! Ezek a Szolgáltatási Feltételek (a továbbiakben: \"Feltételek\") szabályozzák a {brandName} weboldalának, alkalmazásainak, API-jainak és szolgáltatásainak (együttesen: \"Szolgáltatások\") hozzáférését és használatát, amelyeket a {brandName} Co., Ltd. (a továbbiakban: \"{brandName}\", \"Cég\", \"mi\", \"minket\" vagy \"miénk\") biztosít.",
+      "intro2": "Szolgáltatásaink hozzáférésével vagy használatával elfogadod, hogy ezeket a Feltételeket és a mi",
+      "intro2PrivacyLink": "Adatvédelmi Nyilatkozatunkat",
+      "intro2End": " kötelező érvényűnek tekinted. Ha nem fogadod el ezeket a Feltételeket, kérjük, ne használd Szolgáltatásainkat.",
+      "acceptance": {
+        "title": "1. A Feltételek elfogadása",
+        "eligibility": {
+          "title": "1.1 Jogosultság",
+          "intro": "A szolgáltatásaink használatához szükséges, hogy:",
+          "items": {
+            "0": "Legalább 18 éves legyen, vagy elérje a jogi cselekvőképesség korhatárát a saját joghatóságában",
+            "1": "Jogosult legyen ezeket a Feltételeket megkötni saját maga vagy szervezete nevében",
+            "2": "Ne legyen tilos számára a szolgáltatásaink használata a hatályos jogszabályok szerint"
+          }
+        },
+        "orgAccounts": {
+          "title": "1.2 Szervezeti fiókok",
+          "content": "Ha szervezete nevében használja szolgáltatásainkat, kijelenti, hogy jogosult arra, hogy ezt a szervezetet kötelezze ezekre a Feltételekre."
+        }
+      },
+      "services": {
+        "title": "2. A szolgáltatások leírása",
+        "intro": "A {brandName} egy SaaS-platformot biztosít, amely magában foglalja:",
+        "items": {
+          "0": "AI-alapú funkciókat és tartalomgenerálást",
+          "1": "Tartalomkezelést és közösségi eszközöket",
+          "2": "Javaslatrendszereket",
+          "3": "E-kereskedelmi integrációkat",
+          "4": "Web3-képességeket",
+          "5": "Analitikát és jelentéstételt"
+        }
+      },
+      "account": {
+        "title": "3. Fiók regisztráció",
+        "creation": {
+          "title": "3.1 Felhasználói fiók létrehozása",
+          "intro": "Egyes funkciók használatához fiókot kell létrehoznia. A következőkhez járul hozzá:",
+          "items": {
+            "0": "Pontos és teljes körű információk megadása",
+            "1": "A fiókjához tartozó belépési adatok biztonságának megőrzése",
+            "2": "Az adatai azonnali frissítése, ha azok változnak",
+            "3": "A fiókja alatt végzett összes tevékenységért vállalt felelősség"
+          }
+        }
+      },
+      "billing": {
+        "title": "4. Előfizetés és számlázás",
+        "pricing": {
+          "title": "4.1 Árazás",
+          "content": "Szolgáltatásainkat különböző előfizetési csomagok keretében kínáljuk, ahogy az az Árazás oldalunkon szerepel. Az árak 30 napos előzetes értesítéssel változhatnak."
+        },
+        "payment": {
+          "title": "4.2 Fizetés",
+          "items": {
+            "0": "Az előfizetéseket havi vagy éves bázison előre számlázzuk",
+            "1": "Minden díj nem visszafizetendő, kivéve, ha az",
+            "2": "Engedélyezi, hogy a megfelelő díjakat levonjuk a fizetési módjáról",
+            "3": "A biztonságos fizetési feldolgozáshoz a Stripe-ot használjuk",
+            "1RefundLink": "Visszatérítési szabályzat"
+          }
+        }
+      },
+      "acceptableUse": {
+        "title": "5. Elfogadható használat",
+        "prohibited": {
+          "title": "5.1 Tilos tevékenységek",
+          "intro": "Ezzel egyetért, hogy NEM fogja a következőket tenni:",
+          "items": {
+            "0": "Sért bármely hatályos törvényt, szabályozást vagy harmadik fél jogait",
+            "1": "A Szolgáltatásokat használja kártevő, spam vagy káros tartalom továbbítására",
+            "2": "Megpróbáljon jogosítatlan hozzáférést szerezni rendszereinkhez",
+            "3": "Zavarja vagy befolyásolja Szolgáltatásaink integritását vagy működését",
+            "4": "Automatizált eszközökkel engedély nélkül gyűjtsön, másoljon vagy nyerjen ki adatokat",
+            "5": "Végezzen fordított mérnöki munkát, dekompilálást vagy szétszerelést Szolgáltatásainkon",
+            "6": "AI funkcióinkat használja illegális, káros vagy megtévesztő tartalom generálására"
+          }
+        }
+      },
+      "ip": {
+        "title": "6. Szellemi tulajdon",
+        "ours": {
+          "title": "6.1 Szellemi tulajdonunk",
+          "content": "A {brandName} és licencadói minden jogot, tulajdonjogot és érdekeltséget birtokolnak a Szolgáltatásokban, beleértve az összes szoftvert, tervezést, védjegyet és általunk létrehozott tartalmat."
+        },
+        "yours": {
+          "title": "6.2 Ön tartalma",
+          "content": "Ön megtartja tulajdonjogát az általuk létrehozott vagy feltöltött tartalomra (\"Ön tartalma\"). Szolgáltatásaink használatával világszerte érvényes, nem kizárólagos, díjmentes engedélyt ad nekünk az Ön tartalma használatára, tárolására, feldolgozására és megjelenítésére kizárólag a Szolgáltatások Önnek történő biztosítása érdekében."
+        }
+      },
+      "warranties": {
+        "title": "7. Garanciák kizárása",
+        "content": "A SZOLGÁLTATÁSOK \"AZON OSZTALÉKON\" ÉS \"ELÉRHETŐSÉG SZERINT\" BIZTOSÍTOTTAK, BÁRMIFÉLE GARANCIA NÉLKÜL, LEGYEN AZ SZERZŐDÉSBEN MEGHATÁROZOTT VAGY TÖRTÉNŐLEGES, BELEÉRTVE DE NEM KIZÁRÓLAG A PIACI ÉRTÉKRE, A KONKRÉT CÉLNAK MEGFELELŐSÉGRE, A TULAJDONJOGRA ÉS A JOGSÉRTÉSMENTESSÉGRE VONATKOZÓ TÖRTÉNŐLEGES GARANCIÁKAT."
+      },
+      "liability": {
+        "title": "8. A felelősség korlátozása",
+        "para1": "A JOG ÁLTAL ENGÉDÉNYEZETT MAXIMÁLIS MÉRTÉKIG A NEBUTRA NEM VÁLIK FELELŐSSÉ KÖZVETETT, VÉLETLENSZERŰ, KÜLÖNLEGES, KÖVETKEZMÉNYES VAGY BÜNTETŐ KÁROKÉRT, VALAMINT NYEREMÉNY-, ADAT-, HASZNÁLATI VAGY ÜZLETI HÍRNÉV-KÁRÉRT.",
+        "para2": "SEMMILYEN ESETBEN NEM HALADHATJA MEG ÖSSZES FELELŐSSÉGÜNK A KÖVETKEZŐK NAGYOBBÁT: (A) AZT AZ ÖSSZEGET, AMELYET AZ IGÉNYELT ELŐZŐ 12 HÓNAPBAN FIZETT Ránk, VAGY (B) 100 USD."
+      },
+      "termination": {
+        "title": "9. Szerződés megszüntetése",
+        "byYou": {
+          "title": "9.1 Ön által",
+          "content": "Fiókját bármikor megszüntetheti a fiókbeállítások menüpontban. A megszüntetés után elveszíti a Szolgáltatásokhoz való hozzáférést."
+        },
+        "byUs": {
+          "title": "9.2 Részünkről",
+          "intro": "Felfüggeszthetjük vagy megszüntethetjük fiókját, ha Ön:",
+          "items": {
+            "0": "Sérti ezt a Szerződést",
+            "1": "Csalárd vagy illegális tevékenységet folytat",
+            "2": "Nem fizeti meg a vonatkozó díjakat",
+            "3": "Kockázatot vagy jogi kockázatot teremt számunkra"
+          }
+        }
+      },
+      "disputes": {
+        "title": "10. Vitarendezés",
+        "informal": {
+          "title": "10.1 Nem hivatalos rendezés",
+          "content": "Hivatalos eljárás megindítása előtt Ön vállalja, hogy a legal@nebutra.com e-mail címen felkeres minket a viták nem hivatalos rendezésének kísérlete érdekében."
+        },
+        "governingLaw": {
+          "title": "10.2 Alkalmazandó jog",
+          "content": "Jelen Szabályzatot Delaware állam jogszabályai irányítják, a jogütközési elvek figyelembevétele nélkül."
+        }
+      },
+      "contactUs": {
+        "title": "11. Vegye fel velünk a kapcsolatot",
+        "intro": "Ha kérdése van a Szabályzattal kapcsolatban, kérjük, lépjen kapcsolatba velünk:",
+        "company": "{brandName} Co., Ltd.",
+        "emailLabel": "E-mail",
+        "supportLabel": "Támogatás"
+      },
+      "acknowledgement": "A {brandName} használatával Ön megerősíti, hogy elolvasta, megértette és elfogadja, hogy kötöttek ezek a Szolgáltatási Feltételek."
+    }
+  },
+  "metadata": {
+    "title": "{brandName} Agent OS | A Startup Agent OS",
+    "description": "A Startup Agent OS a globálisan terjeszkedő alapítók számára. Éles környezetben üzemképes Next.js alap, irányított architektúrával, hitelesítéssel, számlázással, ügynökökkel és i18n támogatással — AI kódoló ügynököknek és komoly csapatoknak."
+  },
+  "microLanding": {
+    "architecture": {
+      "badge": "RENDSZER TOPOLOGIA",
+      "title": "Átlátható architektúra, nincs fekete doboz.",
+      "description": "A {productName} hipermoduláris Turborepo struktúrával készült, így teljes irányítást biztosít a szoftver életciklusának minden szakaszában.",
+      "database": {
+        "title": "PostgreSQL + Prisma v7",
+        "desc": "Teljesen típusos ORM, amelybe natívan beépítve a sor szintű biztonsági (RLS) szabályzatok."
+      },
+      "auth": {
+        "title": "Clerk Multi-Tenant / Egyedi Identitás",
+        "desc": "SOC2-kész hitelesítési kapu, amely támogatja a B2B szervezetek közötti váltást és a RBAC-ot."
+      }
+    },
+    "pricing": {
+      "title": "Ingyenes az építéshez. Csak akkor fizess, ha helytállást vársz tőlünk.",
+      "description": "Kereskedelmi termék építése {brandName} alapon semmibe sem kerül — nincs díj, nincs licenckulcs, nincs regisztráció, nincs copyleft. A fizetős csomagok támogatást, SLA-t, kártalanítást és védjegyjogokat adnak, sosem használati engedélyt.",
+      "socialProofText": "MIT az npm-en · FSL-1.1-ALv2 a repóban, két év után Apache-2.0-ra vált · a kereskedelmi használat bármilyen méretben ingyenes.",
+      "community": {
+        "badge": "KÖZÖSSÉG",
+        "price": "Ingyenes",
+        "period": "örökre",
+        "desc": "Mindenkinek. Bármilyen csapatméret, bármilyen árbevétel. A zárt forráskódú kereskedelmi használat benne van, regisztráció és feltüntetési kötelezettség nélkül.",
+        "cta": "npx create-sailor",
+        "f1": "Teljes Next.js 16 SaaS-mag, minden csomaggal",
+        "f2": "Zárt forráskódú kereskedelmi használat bármilyen csapatméret és árbevétel mellett",
+        "f3": "Teljes stack: Auth, Fizetések, Szervezetek, API, E-mail, i18n, Háttérfeladatok, Tárolás és több",
+        "f4": "Marketingfunkciók: Blog, landing oldal, SEO, Analytics",
+        "f5": "Nyilvános issue-k, Discussions és Discord — legjobb tudásunk szerint, válaszgarancia nélkül"
+      },
+      "team": {
+        "badge": "CSAPAT",
+        "price": "2 000 $",
+        "period": "év",
+        "desc": "For teams that cannot put a critical path on community response times.",
+        "cta": "{brandName} támogatás igénylése",
+        "f1": "Privát támogatási csatorna (e-mail + közös Slack vagy Discord)",
+        "f2": "Első válasz garantáltan két munkanapon belül",
+        "f3": "Elsőbbségi hibabesorolás a közösségi issue-k előtt",
+        "f4": "Frissítési segítség és előzetes értesítés a törő változásokról",
+        "f5": "Minden, ami a Közösségben"
+      },
+      "enterprise": {
+        "badge": "VÁLLALATI",
+        "price": "30 000 $-tól",
+        "period": "év",
+        "desc": "Olyan szervezeteknek, ahol a beszerzés, a jogi vagy a biztonsági felülvizsgálat aláíró szerződő felet kíván.",
+        "cta": "Kapcsolatfelvétel az értékesítéssel",
+        "f1": "Válasz-SLA — 4 munkaóra alapesetben, 1 óra éles leállásnál",
+        "f2": "Kártalanítás és szerződéses vállalás a biztonsági javításokra",
+        "f3": "Aláírt adatfeldolgozói szerződés, megfelelőségi csomag és folytonossági vállalás",
+        "f4": "Védjegy- és white label-jogok, valamint a versenytárs-használati kikötés alóli felmentés",
+        "f5": "Hosszú távú támogatási ág és privát telepítési mérnöki támogatás",
+        "f6": "Minden, ami a Csapatban"
+      }
+    },
+    "faq": {
+      "title": "Árazás és licencelés GYIK",
+      "description": "Kérdések a licencszintekkel, visszatérítésekkel és kereskedelmi használati jogokkal kapcsolatban.",
+      "q1": {
+        "q": "A Sailor havi SaaS előfizetés?",
+        "a": "Nem. Ez az árazás a Sailor forráskód-licencekre vonatkozik: az Independent ingyenes, a Startup éves számlázású, az Enterprise pedig egyedi."
+      },
+      "q2": {
+        "q": "Visszatérítést kínáltok?",
+        "a": "A Startup kereskedelmi licencek tartalmaznak egy 14 napos visszatérítési ablakot az első vásárlásokra. Az Enterprise feltételeket az aláírt szerződésben rögzítjük."
+      },
+      "q3": {
+        "q": "Használhatom a Sailort ügyfélmunkához?",
+        "a": "Igen. Egy kereskedelmi licenc lehetővé teszi, hogy a csapatod zárt forráskódú ügyfél- vagy belső termékeket adjon ki a licenc hatályán belül; a white-label jogokhoz Enterprise jóváhagyás szükséges."
+      },
+      "contactNudge": "Még mindig vannak kérdéseid? Beszélj a {brandName} csapattal →"
+    },
+    "cta": {
+      "eyebrow": "Kezdés",
+      "title": "Állj le a konfigurálással. Kezdj el építeni.",
+      "description": "Inicializálj egy skálázható SaaS architektúrát helyileg a {brandName} CLI segítségével.",
+      "button": "Architektúra telepítése",
+      "license": "Nyílt forráskódú AGPL-3.0 licenc alatt. Nincs szükség bankkártyára."
+    },
+    "capability": {
+      "badge": "Enterprise képességek",
+      "title": "Teljesen típusos, bővíthető mag.",
+      "multiTenant": {
+        "title": "Beépített sor szintű biztonság",
+        "desc": "Minden adatbázis-lekérdezés szigorúan a jelenlegi bérlői kontextusra korlátozódik.",
+        "cta": "Adatbázis-filozófia olvasása"
+      },
+      "aiGateway": {
+        "title": "Univerzális AI Gateway",
+        "desc": "Zökkenőmentesen irányítsd az utasításokat az OpenAI, Anthropic vagy nyílt forráskódú modellek felé.",
+        "cta": "AI SDK kezelő felfedezése"
+      },
+      "rbac": {
+        "title": "Részletes hozzáférés-vezérlés",
+        "desc": "Definiáld az adminisztrátor, tag és néző szerepeket beépített szabályzat-struktúrával.",
+        "cta": "RBAC dokumentáció megtekintése"
+      },
+      "billing": {
+        "title": "Több szolgáltatót támogató számlázási infrastruktúra",
+        "desc": "Mért használat, előfizetési webhookok és önálló ügyfélportálok.",
+        "cta": "Számlázási architektúra megtekintése"
+      }
+    },
+    "productDemo": {
+      "badge": "Interaktív demó",
+      "title": "The local loop, end to end.",
+      "description": "Érezd meg a parancssoros felületet, a Stripe webhook-alagutazást és a helyi több bérlős adatbázis-ellátást.",
+      "analytics": {
+        "label": "Élő telemetria",
+        "desc": "Áramoltasd a termelési használati adatokat közvetlenül a terminálodba."
+      },
+      "billing": {
+        "label": "Számlázási események",
+        "desc": "Figyeld a Stripe webhookok végrehajtását helyi tunnelinggel."
+      },
+      "workspaces": {
+        "label": "Munkaterület inicializálás",
+        "desc": "Azonnal létrehozni az izolált B2B PostgreSQL sémákat."
+      }
+    },
+    "workflow": {
+      "badge": "Sebesség",
+      "title": "Nulláról éles környezetbe rekordidő alatt.",
+      "step1": {
+        "title": "1. Klónozás",
+        "desc": "Azonnal klónozd a {brandName} monorepot és futtasd a pnpm install parancsot."
+      },
+      "step2": {
+        "title": "2. Konfigurálás",
+        "desc": "Állítsd be a Prisma, Clerk és Stripe beállításokat az interaktív CLI segítségével percek alatt."
+      },
+      "step3": {
+        "title": "3. Fejlesztés",
+        "desc": "Fókuszálj a termék logikájára és a felületre, miközben a platform alapjai már be vannak kötve."
+      },
+      "step4": {
+        "title": "4. Telepítés",
+        "desc": "Pusholj a Vercelre és az AWS-re az azonnali globális elosztásért."
+      },
+      "speedometer": {
+        "number": "10",
+        "unit": "perc",
+        "subtitle": "PIACRA KERÜLÉS IDEJE",
+        "comparison": "Hagyja ki a platformfejlesztés hónapjait.",
+        "phases": {
+          "scaffold": "Inicializálás",
+          "wire": "Mag",
+          "ship": "Élesítés",
+          "scale": "Skálázás",
+          "ongoing": "∞"
+        },
+        "cta": "Indítsa el az időzítőt"
+      },
+      "presetHint": {
+        "badge": "Előre beállított rendszer",
+        "message": "Egy konfiguráció. Minden funkció. Válassza ki az előre beállított opciót, és élesítsen.",
+        "detail": "Konfigurálja egyszer, generáljon mindent – számlázás, hitelesítés, AI, i18n – egyetlen előre beállított konfigurációból.",
+        "readyStatus": "Az előre beállított rendszer készen áll"
+      }
+    }
+  },
+  "featuresPage": {
+    "hero": {
+      "badge": "Platform képességek",
+      "headlinePrefix": "Minden, ami ahhoz kell, hogy ",
+      "headlineHighlight": "bizalommal élesítsen.",
+      "description": "A {brandName} egy teljes stack SaaS platform – AI, számlázás, több bérlős architektúra, megfigyelhetőség és biztonság már az első naptól kezdve. Ne építse újra a réteget."
+    },
+    "sections": {
+      "exploreFeature": "Funkció felfedezése",
+      "ai_category": "AI és intelligencia",
+      "ai_f1_title": "Több modell támogatása chat kiegészítésekhez",
+      "ai_f1_desc": "Küldd a kéréseket az Anthropic, OpenAI, Google vagy saját finomhangolt modellek felé. Streaming, látvány és függvényhívás támogatás alapból.",
+      "ai_f2_title": "Szemantikus beágyazások",
+      "ai_f2_desc": "Generálj és tárolj vektorbeágyazásokat pgvectorral. Szemantikus keresés, RAG csövek és ajánlórendszerek támogatása.",
+      "ai_f3_title": "AI használat mérés",
+      "ai_f3_desc": "Tervenkénti kvóták használati követéssel – mérd az AI tokeneket, API hívásokat és tárhelyet a ClickHouse-alapú valós idejű aggregátumok ellen.",
+      "multi_category": "Több bérlős platform",
+      "multi_f1_title": "Szervezet szintű izoláció",
+      "multi_f1_desc": "A Postgres sor szintű biztonsága biztosítja, hogy a bérlők soha ne férhessenek hozzá egymás adataihoz – az adatbázis rétegén, nem csak az alkalmazásban érvényesítve.",
+      "multi_f2_title": "Több szolgáltató hitelesítés (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_desc": "Több szolgáltató OAuth (Google, GitHub stb.) plusz e-mail/jelszó és varázsló link – válthatsz Clerk, Better Auth, NextAuth vagy Supabase Auth között egyetlen környezeti változóval.",
+      "multi_f3_title": "Automatikus bérlő üzembe helyezés",
+      "multi_f3_desc": "Amikor egy új szervezet regisztrál Clerkkel, automatikusan generáljuk az első API kulcsukat és küldünk egy márkázott üdvözlő e-mailt – nulla manuális lépés.",
+      "dx_category": "Fejlesztői élmény",
+      "dx_f1_title": "Hashelt API kulcsok",
+      "dx_f1_desc": "SHA-256 hashelt kulcsok előtag megjelenítéssel (nbtr_live_…). Tiszta szövegként pontosan egyszer látható létrehozáskor – biztonság frusztráció nélkül.",
+      "dx_f2_title": "Idempotencia middleware",
+      "dx_f2_desc": "Adjon meg egy Idempotency-Key fejlécet, és bármely POST kérés biztonságosan újra próbálhatóvá válik. Redis alapú, 24 órás gyorsítótár, IETF draftnak megfelelő.",
+      "dx_f3_title": "Több protokolos API (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI nyilvános API-khoz, oRPC típusbiztos frontend hívásokhoz, tRPC T3-stack kompatibilitáshoz. Minden protokoll ugyanazt a Zod szerződést és middleware stacket használja. Protokollonként engedélyezhető előre beállított konfigurációval.",
+      "billing_category": "Számlázás és Monetizáció",
+      "billing_f1_title": "Stripe, LemonSqueezy, Polar és Kínai Fizetés",
+      "billing_f1_desc": "Válassza ki a fizetési szolgáltatót: Stripe globális vállalati ügyfelekhez, LemonSqueezy indie fejlesztőknek, Polar nyílt forráskódú projektekhez, vagy Alipay/WeChat Pay a kínai piacra. Egy kattintásos fizetés és önálló számlázási portál.",
+      "billing_f2_title": "Használat alapú kvóta érvényesítés",
+      "billing_f2_desc": "Valós idejű Redis számlálók követik az API hívásokat és token használatot bérlőnként. A kéréseket a gateway zárja le, amikor a limitet elérjük.",
+      "billing_f3_title": "Webhook életciklus szinkronizálás",
+      "billing_f3_desc": "A Stripe előfizetési események automatikusan frissítik a szervezeti csomagokat az adatbázisban Inngest-en keresztül — nincs cron feladat, nincs polling.",
+      "rel_category": "Megbízhatóság",
+      "rel_f1_title": "Áramkör törő + újrapróbálkozás",
+      "rel_f1_desc": "A gateway és az AI szolgáltatás CLOSED/OPEN/HALF_OPEN áramkör törőt használ exponenciális visszatartással és jitterrel — nincs kaskád hiba.",
+      "rel_f2_title": "Halott levél sor",
+      "rel_f2_desc": "Az esemény kezelők, amelyek elhasználják a 3 újrapróbálkozási lehetőséget, a DLQ-ba kerülnek. Játssza le őket egyenként az admin API-n keresztül újratelepítés nélkül.",
+      "rel_f3_title": "SLO leégülési sebesség figyelmeztetések",
+      "rel_f3_desc": "Többablakos, Google SRE stílusú figyelmeztetések 14,4×, 6× és 3× leégülési sebességnél, mielőtt az hibakeret elfogy.",
+      "sec_category": "Biztonság",
+      "sec_f1_title": "CSP nonce-alapú fejlécek",
+      "sec_f1_desc": "Szigorú dinamikus Content Security Policy, kérésenként generált nonce-okkal a Clerk middleware-ben – nincs unsafe-inline.",
+      "sec_f2_title": "ModSecurity WAF",
+      "sec_f2_desc": "OWASP Core Rule Set DetectionOnly módban minden bejövő forgalomnál. 30 RPS sebességkorlátozás burst toleranciával nginx annotációkon keresztül.",
+      "sec_f3_title": "SBOM + SLSA származási adatok",
+      "sec_f3_desc": "Minden kiadás generál egy CycloneDX szoftveranyagszámlát és SLSA származási igazolást, amelyeket feltöltünk a GitHub Release-be.",
+      "obs_category": "Megfigyelhetőség",
+      "obs_f1_title": "OpenTelemetry nyomkövetés",
+      "obs_f1_desc": "Elosztott nyomkövetések a Next.js → Hono → Python mikroszolgáltatások között OTLP-n keresztül. Exportálva Jaeger-be (fejlesztés) és Grafana Tempo-ba (éles).",
+      "obs_f2_title": "Grafana irányítópultok",
+      "obs_f2_desc": "Többpanelos platform áttekintés: SLO elérhetőség, hátralévő hibakeret, HPA telítettség, pod újraindítások és CPU throttling.",
+      "obs_f3_title": "Sentry hibakövetés",
+      "obs_f3_desc": "Szerveroldali és kliensoldali hibák rögzítése bérlői kontextussal, kérésazonosítóval és nyomkövetési azonosítóval a rendszerek közötti korrelációhoz.",
+      "data_category": "Adatok és analitika",
+      "data_f1_title": "ClickHouse OLAP adattár",
+      "data_f1_desc": "Az események a ClickHouse-ba érkeznek a gyors analitikai lekérdezésekhez. A dbt átalakítja a nyers eseményeket aranyrétegű növekedési metrikákká, amelyek láthatóak a dashboardon.",
+      "data_f2_title": "Funnel analitika",
+      "data_f2_desc": "Követse nyomon a regisztrációkat → aktiválásokat → konverziókat kohorszszintű attribúcióval. Az aktív felhasználónkénti bevételt az aranyrétegből számítjuk ki.",
+      "data_f3_title": "Kafka / eseménybeolvasás",
+      "data_f3_desc": "Nagy átviteli teljesítményű eseménybeolvasás az Inngest-en keresztül a ClickHouse bronzrétegébe, memóriában történő deduplikálással és sémavalidálással a gateway szélén.",
+      "infra_category": "Infrastruktúra",
+      "infra_f1_title": "GitOps az ArgoCD-vel",
+      "infra_f1_desc": "A fő ág módosításai automatikusan szinkronizálódnak a klaszterrel. Az öngyógyító rendszer visszavonja a manuális kubectl szerkesztéseket. A szinkronizálási ablakok biztosítják a biztonságos telepítési órákat.",
+      "infra_f2_title": "PgBouncer kapcsolattárolás",
+      "infra_f2_desc": "A Supabase előtt lévő tranzakciós módú PgBouncer kezeli az 1000 alkalmazási kapcsolatot 20 Postgres kapcsolaton keresztül. HA 2 replikával.",
+      "infra_f3_title": "Vízszintes és függőleges autoscaling",
+      "infra_f3_desc": "Az HPA CPU/memória alapján skáláz. A VPA Off módban fut, méretezési ajánlásokat nyújtva. A KEDA egyedi metrikák tervezve a v2-hez."
+    }
+  },
+  "comingSoon": {
+    "badge": "🚧 Építés alatt",
+    "description": {
+      "ideas": "Jelenleg egy lenyűgöző, geek-orientált élményt készítünk ehhez a szekcióhoz. A következő nagy architektúra-pipeline frissítéssel együtt kerül kiadásra.",
+      "opc": "A platform áttekintés mélyebb verziója folyamatban van. Kövesd a changelogot és a roadmapet a közelgő kiadásokért.",
+      "roadmap": "Az infrastruktúra alapoktól az enterprise skáláig – termékfázisaink, verziómilestone-jeink és finanszírozási víziónk."
+    },
+    "returnBtn": "Vissza a Hubba"
+  },
+  "blogShowcase": {
+    "badge": "A BLOGRÓL",
+    "title": "Mérnöki betekintések",
+    "subtitle": "Mélymerülések a SaaS architektúrába, az AI infrastruktúrába és a production mérnöki munkába.",
+    "readMore": "Tovább olvasom"
+  },
+  "useCases": {
+    "badge": "SKÁLÁZHATÓ JÁRATOK",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
+    "tabs": {
+      "opc": "Agens alapú műveletek",
+      "ip": "Személyes IP mátrix",
+      "multimodal": "Multimodális AI SaaS",
+      "enterprise": "Modern Enterprise (CN)",
+      "export": "Globális szoftver export",
+      "design": "Design rendszer motor",
+      "edam": "Vállalati digitális eszközök"
+    },
+    "content": {
+      "opc": {
+        "title": "AI-alapú műveleti központ",
+        "desc": "Agent munkafolyamatok, belső eszközök és integrációs felületek egyetlen szabályozott platform-alapon. A nyilvántartásvezérelt bővítmények, operátor-portálok és újrahasználható futási minták skálázódás közben is szinkronban maradnak.",
+        "features": {
+          "f1": "Eszköznyilvántartás és integrációs felület",
+          "f2": "Operátor-portál és belső konzol"
+        }
+      },
+      "ip": {
+        "title": "Személyes IP növekedés és portfólió-mátrix",
+        "desc": "Világklasszis alapító-profil kiépítése magas konverziójú MDX bloggal, portfólióval és profiloldalakkal. Beépített hírlevél, analitika és SEO biztosítja a személyes márka erősödését.",
+        "features": {
+          "f1": "MDX blog és hírlevél-motor",
+          "f2": "SEO és közösségi gráf optimalizálás"
+        }
+      },
+      "multimodal": {
+        "title": "Innovatív multimodális AI SaaS",
+        "desc": "Multi-Agent irányítás, chatbot, szöveg-kép, kép-szöveg és szöveg-videó SaaS termékek kiadása UX-vezérelt streaming felülettel, intelligens modellútvonalazással és használatméréssel.",
+        "features": {
+          "f1": "Multi-Agent streaming felület",
+          "f2": "Modellútvonalazó és használatmérés"
+        }
+      },
+      "enterprise": {
+        "title": "Modern vállalati weboldal (CN)",
+        "desc": "Kínai üzleti forgatókönyvekre szabva – ultragyors hazai CDN, WeChat-ökoszisztéma integráció, mobil-first reszponzív dizájn és helyi megfelelőség alapból.",
+        "features": {
+          "f1": "Helyi CDN és megfelelőség",
+          "f2": "WeChat-ökoszisztémára kész"
+        }
+      },
+      "export": {
+        "title": "Globális szoftverexport landoló oldalak",
+        "desc": "A globálisan terjeszkedő SaaS-ekhez készült. Többvaluta Stripe fizetés, next-intl i18n automatikus útvonalvezetés 7 nyelven, GDPR/CCPA megfelelőség és földrajzilag célzott tartalom.",
+        "features": {
+          "f1": "Többvaluta globális fizetések",
+          "f2": "7 nyelv + GDPR-kész"
+        }
+      },
+      "design": {
+        "title": "Vezető dizájnrendszer és komponenskönyvtár",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "features": {
+          "f1": "4 rétegű token-gazdálkodás",
+          "f2": "Seven design languages + Storybook"
+        }
+      },
+      "edam": {
+        "title": "Vállalati digitális eszközkezelés",
+        "desc": "Strukturált adatmocsarak és összetett dashboard topológiák, skálázható PostgreSQL architektúrákkal és szemcsés RBAC-kal.",
+        "features": {
+          "f1": "Sor szintű biztonság",
+          "f2": "Összetett lekérdezések",
+          "f3": "Szerepkezelés"
+        }
+      }
+    }
+  },
+  "designSystem": {
+    "badge": "DIZÁJNRENDSZER",
+    "headline": "4 rétegű dizájn-gazdálkodás.",
+    "subheadline": "Márkavázlatoktól a futási tokenekig, több témát kezelő motoron át a szabályozott komponensekig — nem csak shadcn Tailwind-del.",
+    "flowBrand": "Márka",
+    "flowBrandDesc": "Színvázlatok, átmenetek, mozgásnyelv",
+    "flowTokens": "Tokenek",
+    "flowTokensDesc": "CSS változók, 12 lépcsős skálák, sötét mód",
+    "flowTheme": "Téma",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
+    "flowUI": "Felhasználói felület",
+    "flowUIDesc": "Komponensek, Storybook, Chromatic",
+    "card1Title": "12 lépcsős szín skálák",
+    "card1Desc": "Geist-igazított szemantikai skála: háttérek (1-2), állapotok (3-5), határvonalak (6-8), kitöltések (9-10), szöveg (11-12).",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
+    "card3Title": "Vizuális regresszió",
+    "card3Desc": "A Chromatic észrevesz minden pixelváltozást. A Storybook dokumentálja minden komponenst. Az architektúra tesztek biztosítják a történet lefedettséget.",
+    "card4Title": "Token szabályozás",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
+    "card5Title": "Interaktív dokumentáció",
+    "card5Desc": "Teljes Fumadocs-alapú design docs oldal kétnyelvű (EN/ZH) komponens API dokumentációval, token galériákkal, elrendezési minta útmutatókkal és élő kódpéldákkal.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
+  },
+  "notFound": {
+    "title": "Az oldal nem található",
+    "desc": "A hivatkozás elavult lehet, vagy az oldal átkerült.",
+    "home": "Vissza a {brandName} oldalra",
+    "docs": "Dokumentáció megnyitása"
+  },
+  "ui": {
+    "search": {
+      "placeholder": "Kiadások keresése..."
+    },
+    "nav": {
+      "toggleMenu": "Menü váltása"
+    },
+    "actions": {
+      "showFullRelease": "Teljes kiadás megjelenítése",
+      "copyLinkToRelease": "Kiadás linkjének másolása",
+      "copyLink": "Link másolása",
+      "openInNewTab": "Megnyitás új lapon"
+    },
+    "status": {
+      "comingSoon": "Hamarosan"
+    }
+  },
+  "licensing": {
+    "hero": {
+      "title": "Ingyenesen <hl>építhetsz</hl>",
+      "description": "A {brandName}-Sailor használata kereskedelmi célokra semmi extra költséggel jár — MIT az npm-en, FSL-1.1-ALv2 a tárolóban, két év után Apache-2.0-ra vált. A fizetős csomagok támogatást és szerződéses elköteleződést adnak, sosem engedélyt."
+    },
+    "plans": {
+      "community": {
+        "badge": "Mindig ingyenes",
+        "title": "Közösségi",
+        "subtitle": "Mindenki",
+        "description": "Bármilyen csapatméret, bármilyen bevétel. Zárt forráskódú kereskedelmi termékek is.",
+        "features": {
+          "fullSource": "Teljes forráskód, minden csomag",
+          "closedSourceOk": "Zárt forráskódú kereskedelmi használat — nincs copyleft",
+          "noAttribution": "Nincs regisztráció, nincs attribúció kötelező",
+          "communitySupport": "Közösségi támogatás — legjobb erőfeszítés"
+        },
+        "cta": "Megtekintés a GitHubon"
+      },
+      "team": {
+        "badge": "Évi {price}-tól",
+        "title": "Csapat",
+        "subtitle": "Támogatási előfizetés",
+        "description": "For teams that cannot put a critical path on community response times.",
+        "features": {
+          "privateChannel": "Privát támogatási csatorna",
+          "firstResponse": "Garantált két munkanapos első válasz",
+          "priorityTriage": "Prioritásos hibakezelés",
+          "upgradeHelp": "Frissítési segítség és töréses változás értesítés"
+        },
+        "cta": "Támogatás igénylése"
+      },
+      "enterprise": {
+        "badge": "Évi 30 000 USD-től",
+        "title": "Vállalati",
+        "subtitle": "Beszerzésre kész",
+        "description": "Szervezeteknek, amelyeknek jogi, biztonsági vagy beszerzési felülvizsgálata aláírásképes felet igényel.",
+        "features": {
+          "sla": "Válaszadási SLA — 4 üzleti óra, 1 óra üzemzavar esetén",
+          "indemnity": "Felelősségvállalás és biztonsági javításokra vonatkozó kötelezettség",
+          "compliance": "Aláírt DPA, megfelelőségi csomag, folytonossági ígéret",
+          "trademark": "Védjegy- és fehér címkézési jogok"
+        },
+        "cta": "Értékesítéssel való kapcsolatfelvétel"
+      }
+    },
+    "faq": {
+      "title": "Gyakran Ismételt Kérdések",
+      "description": "Röviden: használni ingyenes. Fizetni akkor kell, ha szerződéses szinten is számíthatsz ránk.",
+      "items": {
+        "whyFsl": {
+          "q": "Miért FSL, nem MIT vagy AGPL?",
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
+        },
+        "reallyFree": {
+          "q": "Valóban ingyenes a kereskedelmi felhasználás?",
+          "a": "Igen. Nincs díj, nincs licenckulcs, nincs regisztráció, nincs bevételi vagy létszámi küszöb, nincs hivatkozási kötelezettség. Építs zárt forráskódú terméket és add el."
+        },
+        "competingUse": {
+          "q": "Mi számít versenytárs felhasználásnak?",
+          "a": "A Sailor saját maga kínálása — egy hosztolt Sailor szolgáltatás, vagy egy újracsomagolt versenytárs platform alapja. Egy vertikális SaaS, egy belső eszköz vagy ügyfélprojektek építése Sailor-on nem versenytárs felhasználás. Ha az Ön modellje igényli, egy Enterprise megállapodás tartalmazhat írásos felmentést."
+        },
+        "upgrade": {
+          "q": "Mit is vásárolnak valójában a fizetős szintek?",
+          "a": "Támogatási kötelezettségeket, válaszadási SLA-kat, felelősségvállalást, megfelelőségi dokumentumokat és védjegy jogokat. Soha nem a szoftver használatának engedélyét — az már az Öné."
+        },
+        "contributions": {
+          "q": "Mi a helyzet a nyílt forráskódú hozzájárulásokkal?",
+          "a": "Minden hozzájáruláshoz CLA szükséges. Lásd a CONTRIBUTING.md fájlt."
+        }
+      }
+    },
+    "meta": {
+      "title": "Licenc — {brandName}",
+      "description": "Ingyenesen használható kereskedelmi célokra. MIT az npm-en, FSL-1.1-ALv2 a tárolóban, Apache-2.0-ra váltva."
+    }
+  },
+  "licenseWizard": {
+    "tiers": {
+      "individualFree": "Egyéni ingyenes licenc",
+      "opcFree": "Egytulajdonos céges licenc",
+      "startupCommercial": "Startup kereskedelmi licenc",
+      "enterprise": "Vállalati licenc"
+    },
+    "referralSource": {
+      "selectPlaceholder": "Válassz egy lehetőséget...",
+      "productHunt": "Product Hunt"
+    }
+  },
+  "changelogMeta": {
+    "title": "Változásnapló — {brandName}",
+    "description": "Minden kiadásunkat aprólékos figyelemmel készítjük.",
+    "versionTitleSuffix": "{brandName} Változásnapló"
+  },
+  "roadmapMeta": {
+    "title": "Platform Útiterv — {brandName}",
+    "description": "A {brandName} szabályozott platform alapja, a Harness futásideje és a frissítési út útitervje."
+  },
+  "blogMeta": {
+    "title": "Blog — {brandName}",
+    "description": "Mérnöki betekintések, termékinformációk és SaaS legjobb gyakorlatok a {brandName} csapatától."
+  },
+  "getLicenseMeta": {
+    "title": "Szerezd meg a licencedet — {brandName}",
+    "description": "Szerezd meg a {brandName} licencedet és a platform hozzáférést 2 perc alatt."
+  },
+  "landing": {
+    "faq": {
+      "badge": "GYIK",
+      "title": "Kérdések, egyenes válaszokkal",
+      "subtitle": "Minden, amit tudnod kell az indítás előtt.",
+      "items": {
+        "what-is-sailor": {
+          "question": "Mi pontosan a {productName}?",
+          "answer": "A Sailor egy véleményes Next.js + Tailwind v4 SaaS alap, amelybe már beépítve van az auth, számlázás, többbérlős támogatás, AI, sorok, keresés és e-mail. Klónozd, konfiguráld a szolgáltatókat, és indítsd el – általában egy héten belül."
+        },
+        "who-is-it-for": {
+          "question": "Kinek készült a Sailor?",
+          "answer": "Alapítók és termék mérnökök számára, akik a saját idejüket a megkülönböztető tényezőre akarják fordítani – nem arra, hogy ötödik alkalommal építsék újra ugyanazt az auth/számlázás/bérlés csövezést."
+        },
+        "free-or-paid": {
+          "question": "Ingyenes vagy fizetős?",
+          "answer": "A teljes forráskód AGPL-3.0 alatt érhető el — ingyenes személyes projektekhez, belső eszközökhöz és AGPL-kompatibilis nyílt forráskódú munkákhoz. A kereskedelmi licenc lehetővé teszi a Sailor zárt forráskódú, saját SaaS-ben való forgalmazását. Minden csomag tartalmazza a teljes funkciókészletet (hitelesítés, számlázás, több bérlőség, AI, audit); a szintek a licencfeltételekben és támogatási SLA-ban térnek el, nem a funkciókban."
+        },
+        "china-friendly": {
+          "question": "Működik Kínában?",
+          "answer": "Igen. Párhuzamos infrastruktúra-konfigurációt szállítunk (Aliyun-kompatibilis CDN, ICP-barát domainek, opcionális Penpot a Figma helyett), így ugyanaz a kódalap tiszta telepítést tesz lehetővé a Nagy Tűzfalon belül."
+        },
+        "deployment": {
+          "question": "Hová telepíthetem?",
+          "answer": "Mindenfelé, ahol Node 22+ fut. A marketing oldal Vercelre kerül; a dashboard, gateway és Python szolgáltatások Docker / PM2 alatt futnak (jelenleg Aliyun ECS-en futtatjuk őket, teljes Kubernetes manifestók az infra/iac/k8s/ alatt kluszterekhez). A vállalati ügyfelek saját VPC-jükbe is telepíthetik."
+        },
+        "security": {
+          "question": "Hogyan kezeljük a biztonságot?",
+          "answer": "Alkalmazásrétegű boríték titkosítás titkos adatokhoz (@nebutra/vault), Postgres RLS bérlőszigeteléshez, RBAC/ABAC CASL vagy OpenFGA segítségével (@nebutra/permissions), HMAC-aláírt szolgáltatások közötti tokenek, aláírt kimenő webhookok és SOC 2-igazított audit csatorna (@nebutra/audit) minden csomagban. A Pro és Enterprise hozzáadja a SOC 2 tanúsítást, dedikált eseménykezelést és hosszabb audit-napló tárolást."
+        },
+        "support": {
+          "question": "Milyen támogatást kapok?",
+          "answer": "Az ingyenes ügyfelek közösségi Discordot és GitHub Issues-t kapnak. A Pro hozzáadja a prioritásos e-mailt 1 munkanapos válasz SLA-val. A Enterprise dedikált Slack csatornát és bevezető mérnököt kap."
+        },
+        "byo-provider": {
+          "question": "Saját szolgáltatót hozhatok?",
+          "answer": "Igen. Minden integráció (hitelesítés, sor, keresés, e-mail, fizetés, tárolás, számlázás) szolgáltatófüggetlen. A gyár minden csomagban egyetlen env változóból választja ki a megfelelő adaptert — cserélje a Clerk-et Better Auth-ra, NextAuth-ra vagy Supabase Auth-ra, a QStash-t BullMQ-ra, a Resend-et SES-re, a Stripe-ot Polar / LemonSqueezy / ChinaPay-re — anélkül, hogy az alkalmazáskódot érintené."
+        },
+        "tech-stack": {
+          "question": "Mi a technológiai stack?",
+          "answer": "Next.js 16 (App Router) React 19-en, TypeScript 5.9, Tailwind v4, Prisma 7 Postgres felett (pgvector + RLS-szel), Hono a BFF gateway-hez, FastAPI ML/nagy terhelésű szolgáltatásokhoz, és kurírozott komponenskönyvtár Radix-en, {brandName} UI primitíveken és a megosztott Motion rétegen. Az AI funkciók a Vercel AI SDK-n keresztül futnak szolgáltató-portabilitással (OpenAI / OpenRouter / SiliconFlow / Azure / helyi)."
+        },
+        "license": {
+          "question": "Mi a licenc?",
+          "answer": "AGPL-3.0 kereskedelmi kivétellel. Ingyenes személyes használatra, belső eszközökhöz és AGPL-kompatibilis OSS-hez. A fizetős kereskedelmi licenc lehetővé teszi a Sailor saját SaaS-ben való forgalmazását. A teljes forráskód minden csomagban benne van."
+        },
+        "paid-updates": {
+          "question": "Fizetnem kell a frissítésekért?",
+          "answer": "Nem. A forráskód-frissítések minden kereskedelmi licenc része – húzd le a main ágat bármikor, és rebázold a forkodat. A fizetős csomag a Sailor kereskedelmi éles környezetben történő használatának joga, nem pedig a kód fogadásának joga. Minden kisebb verzióhoz CHANGELOG és upgrade útmutató tartozik a töréses változások esetén."
+        },
+        "why-turborepo": {
+          "question": "Miért Turborepo egy szabványos Next.js alkalmazás helyett?",
+          "answer": "A Sailor 10 alkalmazásból és 104 megosztott csomagból áll a packages/*/* alatt, valamint 4 háttér-sávból (Hono gateway, FastAPI/Python, Go, Rust) – ez már jóval túlmutat azon a ponton, ahol egy egyetlen Next.js mega-app még karbantartható marad. A Turborepo lehetővé teszi az érintett részekre korlátozott buildet, átlátható távoli gyorsítótárazást, és egyetlen igazságforrást biztosít a megosztott design tokenekhez, hitelesítéshez, számlázáshoz és megfigyelhetőséghez – anélkül, hogy minden csapatot ugyanabba a Next.js folyamatba kényszerítenénk."
+        },
+        "multi-tenancy": {
+          "question": "Hogyan működik a több bérlős támogatás?",
+          "answer": "Két réteg. Kérés-scope-os bérlő-kontextus az @nebutra/tenant segítségével (az AsyncLocalStorage továbbítja az aktív szervezetet minden szerverhíváson keresztül, beleértve az adatbázis-lekérdezéseket és a kimenő webhookokat), valamint adatbázis-szintű izoláció a Postgres Row-Level Security szabályzatok révén (infra/data/database/policies/rls.sql), amelyek egy session-local app.current_tenant_id-hez vannak kötve. A szolgáltatási szerepkörű kapcsolatok csak megbízható belső szolgáltatásokon belül kerülik meg az RLS-t; minden felhasználó felé nyíló útvonal a bérlő-scope-os kliensen keresztül halad."
+        },
+        "swap-clerk": {
+          "question": "Cserélhetem a Clerk-et másik hitelesítési szolgáltatóra?",
+          "answer": "Igen. Az @nebutra/auth első osztályú adaptereket biztosít Clerkhez, Better Auth-hoz, NextAuth-hoz (Auth.js v5) és Supabase Auth-hoz. Váltás az AUTH_PROVIDER környezeti változóval, vagy válassz scaffoldolás közben a create-sailor --auth=... paranccsal – a szerver, React és middleware felületek minden szolgáltató esetén azonosak maradnak. Egy ötödik adapter hozzáadása egyetlen interfész implementálását jelenti (~80 LOC); a környező kódban semmi sem kötődik egy adott szolgáltatóhoz."
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "A fejlesztők kedvence",
+      "title": "Mit mondanak az alapítók a Sailorral való kiadás után",
+      "subtitle": "A béta csoportunk ügyféltörténetei hamarosan elérhetők – legyél te is az első között."
+    },
+    "comparison": {
+      "badge": "Csomagok összehasonlítása",
+      "title": "Minden ingyenes. Válaszd ki, mekkora vállalásra van szükséged.",
+      "subtitle": "Minden csomag tartalmazza a teljes forráskódot, és díjmentesen engedi a zárt forráskódú kereskedelmi használatot. A különbség a támogatásban, a szerződéses vállalásokban és a védjegyjogokban van.",
+      "plan": {
+        "community": "Közösség",
+        "team": "Csapat",
+        "enterprise": "Vállalati"
+      },
+      "feature": {
+        "license": {
+          "label": "Licenc",
+          "type": "Licenc",
+          "commercial-use": "Zárt forráskódú kereskedelmi használat",
+          "registration": "Regisztráció",
+          "trademark": "Védjegyjogok"
+        },
+        "source": {
+          "label": "Forráskód",
+          "full-source": "Teljes forráskód",
+          "all-packages": "Minden csomag és modul",
+          "update-window": "Frissítések"
+        },
+        "support": {
+          "label": "Támogatás",
+          "channel": "Támogatási csatorna",
+          "first-response": "Garantált első válasz",
+          "security-patch": "Biztonsági javítási vállalás"
+        },
+        "procurement": {
+          "label": "Beszerzés",
+          "indemnification": "Kártalanítás",
+          "dpa": "Aláírt adatfeldolgozói szerződés és megfelelőségi csomag",
+          "continuity": "Folytonossági vállalás"
+        }
+      },
+      "ariaTable": "Csomagok és funkciók összehasonlítása",
+      "value": {
+        "included": "Tartalmazza",
+        "notIncluded": "Nem tartalmazza",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Nem szükséges",
+        "whiteLabelRights": "White label-jogok",
+        "unlimited": "Korlátlan",
+        "unlimitedPlusNotice": "Korlátlan + előzetes értesítés a törő változásokról",
+        "unlimitedPlusLts": "Korlátlan + hosszú távú támogatási ág",
+        "publicChannels": "Nyilvános issue-k és Discord",
+        "privateChannel": "Privát csatorna",
+        "namedContact": "Kijelölt kapcsolattartó",
+        "twoBusinessDays": "2 munkanap",
+        "fourBusinessHours": "4 munkaóra",
+        "bestEffort": "Legjobb tudás szerint",
+        "contractual": "Szerződéses"
+      }
+    },
+    "socialProof": {
+      "title": "Megbízható technológiai alapokon",
+      "logosLabel": "Integrációs partnerek",
+      "metrics": {
+        "developers": {
+          "value": "47+",
+          "label": "Támogatott AI szolgáltatók"
+        },
+        "projects": {
+          "value": "104",
+          "label": "monorepo csomagok"
+        },
+        "uptime": {
+          "value": "7",
+          "label": "i18n nyelvi környezetek alapból"
+        }
+      }
+    }
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP bejegyzés",
+      "publicSecurity": "Közrendvédelem"
+    }
+  },
+  "icpFooter": {
+    "recordNumber": "ICP-nyilvántartás",
+    "publicSecurity": "Közrendvédelmi nyilvántartás"
+  },
+  "MarketLocalePicker": {
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
+    "plannedHint": "A felület angolra vált, amíg ez a nyelv nem érhető el",
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
+  }
+}

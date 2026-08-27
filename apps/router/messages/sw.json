@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — Soko la API",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "Soko la API la modeli zote · malipo kwa matumizi · simamia ufunguo na mkoba · jaribu haraka."
+  },
+  "admin": {
+    "dashboard": "Mwonekano",
+    "keys": "Ufunguo wa API",
+    "wallet": "Mkoba",
+    "docs": "Nyaraka",
+    "title": "Msimamizi",
+    "backToMarket": "Rudi sokoni",
+    "quickUse": "Tumia haraka"
+  },
+  "chrome": {
+    "searchPlaceholder": "Unataka kufanya nini na AI?",
+    "search": "Tafuta",
+    "locale": "Lugha",
+    "currency": "Ardhi",
+    "collapseSidebar": "Punguza upau wa upande",
+    "expandSidebar": "Panua upau wa upande",
+    "home": "Nyumbani",
+    "adminConsole": "Msimamizi",
+    "quickUse": "Tumia haraka",
+    "support": "Msaada",
+    "apiDocs": "Nyaraka za API",
+    "integrationHelp": "Mwongozo wa muunganisho",
+    "aiRecommend": "Chaguzi za AI",
+    "market": "Soko",
+    "usageTitle": "Matumizi ya haraka"
+  },
+  "channels": {
+    "app": "Soko la programu",
+    "api": "Soko la API",
+    "models": "Katalogi ya modeli",
+    "client": "Mteja"
+  },
+  "market": {
+    "new": "Mpya",
+    "hot": "Mchana",
+    "forYou": "Kwa wewe",
+    "grid": "Gridi",
+    "list": "Orodha",
+    "apiShelf": "Rafu ya API",
+    "toolShelf": "Rafu ya zana",
+    "categories": "Aina",
+    "apps": "Programu",
+    "newRelease": "Toleo jipya",
+    "forgeTitle": "Nafasi ya kazi ya zana ya Forge",
+    "forgeBlurb": "Mabadiliko ya maandishi, codecs, fomu, na zana zinazoweza kuunganishwa. Jukwaa la masoko la programu linaelekeza kwenye Forge.",
+    "openForge": "Fungua Forge →",
+    "allApi": "API zote →",
+    "all": "Zote →",
+    "viewAll": "Angalia zote {label} →",
+    "gridView": "Muonekano wa gridi",
+    "listView": "Muonekano wa orodha",
+    "hiTitle": "Jukwaa la rasilimali za AI za biashara",
+    "hiSubtitle": "Linganisha kila hitaji na AI sahihi",
+    "sellable": "Inauzwa",
+    "walletTopup": "Ongeza pesa"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "Mifumo ya lugha",
+      "hint": "Mazungumzo · ujasiri"
+    },
+    "image-gen": {
+      "label": "Uzalishaji wa picha",
+      "hint": "Maandishi hadi picha"
+    },
+    "image-edit": {
+      "label": "Uhariri wa picha",
+      "hint": "Hariri · matting"
+    },
+    "video": {
+      "label": "Uzalishaji wa video",
+      "hint": "Mandhari-kwa-video"
+    },
+    "audio": {
+      "label": "Sauti na video",
+      "hint": "Mazungumzo · transkripsheni"
+    },
+    "data": {
+      "label": "Taarifa",
+      "hint": "Upatikanaji · uondoshaji"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "Inayojumlisha maarifa"
+    },
+    "tools": {
+      "label": "API za zana",
+      "hint": "Agenti · zana"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "Boti",
+      "chips": "Bots za mazungumzo · bots za kuchora · maarifa"
+    },
+    "productivity": {
+      "label": "Ufanisi",
+      "chips": "Uwanja wa modeli · uandishi wa AI"
+    },
+    "academic": {
+      "label": "Elimu",
+      "chips": "Zana za PDF · Utafutaji wa patenti wa AI"
+    },
+    "image": {
+      "label": "Zana za picha",
+      "chips": "Studio ya 3D · Canvas"
+    },
+    "audio": {
+      "label": "Sauti",
+      "chips": "Uandishi wa sauti · Muziki wa AI"
+    },
+    "code": {
+      "label": "Msimbo",
+      "chips": "Mzalishaji wa wavuti · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "Mwonekano wa jumla",
+    "keys": "Ufunguo",
+    "wallet": "Pesa",
+    "use": "Jaribu",
+    "docs": "Nyaraka",
+    "models": "Zaidi"
+  }
+}

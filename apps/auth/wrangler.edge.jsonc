@@ -1,0 +1,46 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nebutra-auth",
+  // Same account as gateway-edge / typelens.
+  "account_id": "a4248a5738df319996a70092fe598d37",
+  // Thin edge — NOT OpenNext. Free plan 3 MiB is enough (~200 KiB gzip).
+  "main": "src/worker-edge.ts",
+  "compatibility_date": "2026-06-04",
+  "compatibility_flags": ["nodejs_compat"],
+  "minify": true,
+  "observability": {
+    "enabled": true
+  },
+  // Edge pool → PlanetScale (same Hyperdrive id as gateway).
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+      "id": "8a0e4251ae014472879ae3b2a57276cb",
+      "localConnectionString": "postgresql://postgres:postgres@localhost:5432/nebutra"
+    }
+  ],
+  "vars": {
+    "BETTER_AUTH_URL": "https://auth.nebutra.com",
+    "NEXT_PUBLIC_AUTH_URL": "https://auth.nebutra.com",
+    "NEXT_PUBLIC_APP_URL": "https://app.nebutra.com",
+    "NEXT_PUBLIC_SITE_URL": "https://nebutra.com",
+    "AUTH_COOKIE_DOMAIN": ".nebutra.com",
+    // Grey-cloud origin (same host gateway-edge uses). Nginx routes
+    // X-Nebutra-Edge-Auth: 1 → auth app. Never Host=auth.nebutra.com on fetch.
+    "ORIGIN_IP": "106.15.4.31",
+    "ORIGIN_URL": "https://origin.nebutra.com",
+    "DEPLOY_TARGET_AUTH": "cloudflare-workers"
+  },
+  // Secrets: BETTER_AUTH_SECRET, GOOGLE_*, GITHUB_*, optional DATABASE_URL fallback.
+  //
+  // Custom domain is bound once in the Cloudflare dashboard:
+  //   auth.nebutra.com → Worker nebutra-auth
+  // Do NOT re-declare `routes`/`custom_domain` here. CI tokens typically have
+  // Account Workers:Edit but lack Zone → Workers Routes:Edit; wrangler then
+  // fails with API 10000 on /zones/.../workers/routes after upload, so the
+  // production script never updates (seen as intermittent Error 1101 while
+  // harden builds sat undeployed on main).
+  //
+  // Only product host. No workers.dev test URL.
+  "workers_dev": false
+}

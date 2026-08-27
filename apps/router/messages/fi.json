@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — API-markkinapaikka",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "Kaikkien mallien API-markkinapaikka · maksa käytön mukaan · hallinnoi avaimia ja lompakkoa · kokeile nopeasti."
+  },
+  "admin": {
+    "dashboard": "Yleiskatsaus",
+    "keys": "API-avaimet",
+    "wallet": "Lompakko",
+    "docs": "Dokumentaatio",
+    "title": "Hallinta",
+    "backToMarket": "Takaisin markkinoille",
+    "quickUse": "Pikaikäyttö"
+  },
+  "chrome": {
+    "searchPlaceholder": "Mitä haluat tehdä tekoälyn kanssa?",
+    "search": "Hae",
+    "locale": "Kieli",
+    "currency": "Valuutta",
+    "collapseSidebar": "Piilota sivupalkki",
+    "expandSidebar": "Näytä sivupalkki",
+    "home": "Koti",
+    "adminConsole": "Hallinta",
+    "quickUse": "Pikaikäyttö",
+    "support": "Tuki",
+    "apiDocs": "API-dokumentaatio",
+    "integrationHelp": "Integraatio-oppaan",
+    "aiRecommend": "AI-suositukset",
+    "market": "Markkina-alue",
+    "usageTitle": "Nopea käyttö"
+  },
+  "channels": {
+    "app": "Sovellusmarkkina-alue",
+    "api": "API-markkina-alue",
+    "models": "Malliluettelo",
+    "client": "Asiakas"
+  },
+  "market": {
+    "new": "Uusi",
+    "hot": "Suosittu",
+    "forYou": "Sinulle",
+    "grid": "Ruudukko",
+    "list": "Lista",
+    "apiShelf": "API-hylly",
+    "toolShelf": "Työkaluhylly",
+    "categories": "Kategoriat",
+    "apps": "Sovellukset",
+    "newRelease": "Uusi julkaisu",
+    "forgeTitle": "Forge-työkalutyötila",
+    "forgeBlurb": "Tekstimuunnokset, kodekit, lomakkeet ja yhdistettävät työkalut. Sovellusmarkkinoiden laboratorio osoittaa Forgeen.",
+    "openForge": "Avaa Forge →",
+    "allApi": "Kaikki API:t →",
+    "all": "Kaikki →",
+    "viewAll": "Näytä kaikki {label} →",
+    "gridView": "Ruudukkonäkymä",
+    "listView": "Luettelonäkymä",
+    "hiTitle": "Yritysten tekoälyresurssialusta",
+    "hiSubtitle": "Vastaanota jokainen tarve oikealla tekoälyllä",
+    "sellable": "Myyntikelpoinen",
+    "walletTopup": "Lataa lompakko"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "Kielimallit",
+      "hint": "Keskustelu · päättely"
+    },
+    "image-gen": {
+      "label": "Kuvagenerointi",
+      "hint": "Tekstistä kuvaan"
+    },
+    "image-edit": {
+      "label": "Kuvankäsittely",
+      "hint": "Muokkaa · mattaus"
+    },
+    "video": {
+      "label": "Videoiden luonti",
+      "hint": "Tekstistä video"
+    },
+    "audio": {
+      "label": "Ääni ja video",
+      "hint": "Puhe · transkriptio"
+    },
+    "data": {
+      "label": "Tiedot",
+      "hint": "Haku · erottelu"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "Tietopohjainen"
+    },
+    "tools": {
+      "label": "Työkalu-API:t",
+      "hint": "Agentti · työkalut"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "Botit",
+      "chips": "Keskustelubotit · piirtämisbotit · tietopohjat"
+    },
+    "productivity": {
+      "label": "Tuottavuus",
+      "chips": "Malliarena · tekoälykirjoitus"
+    },
+    "academic": {
+      "label": "Akateeminen",
+      "chips": "PDF-työkalut · AI-patenttihakku"
+    },
+    "image": {
+      "label": "Kuvatyökalut",
+      "chips": "3D-studio · Canvas"
+    },
+    "audio": {
+      "label": "Ääni",
+      "chips": "Puhe · AI-musiikki"
+    },
+    "code": {
+      "label": "Koodi",
+      "chips": "Verkkogeneraattori · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "Yleiskatsaus",
+    "keys": "Avaimet",
+    "wallet": "Lompakko",
+    "use": "Kokeile",
+    "docs": "Dokumentaatio",
+    "models": "Lisää"
+  }
+}

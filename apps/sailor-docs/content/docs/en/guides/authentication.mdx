@@ -1,0 +1,258 @@
+---
+title: Authentication
+description: How Nebutra handles auth end-to-end — provider setup, token verification, and session management.
+---
+
+## Auth providers
+
+Nebutra supports switchable auth providers through `@nebutra/auth`. Keep
+`AUTH_PROVIDER` and `NEXT_PUBLIC_AUTH_PROVIDER` aligned so server routes,
+middleware, React hooks, and the landing page load the same provider path.
+
+| Provider | Best for | Notes |
+|----------|----------|-------|
+| **Better Auth** | Self-hosted or compliance-sensitive deployments | Default. Open source, Postgres-backed, supports Google One Tap through the official `oneTap` plugin. |
+| **NextAuth / Auth.js v5** | Self-hosted OAuth-heavy deployments | Uses Auth.js session cookies and a Nebutra-owned Google One Tap callback. |
+| **Clerk** | Managed auth with hosted UI components | Uses Clerk's official SDK and `<GoogleOneTap />` component. |
+| **Supabase Auth** | Teams already using Supabase | Hosted auth aligned with Supabase storage/realtime deployments. |
+| **Dev** | Local fixture previews only | Synthetic user and workspace; hard-fails in production. |
+
+```bash
+# .env
+AUTH_PROVIDER=better-auth
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
+```
+
+## Google One Tap
+
+The landing page chooses the correct One Tap implementation from
+`NEXT_PUBLIC_AUTH_PROVIDER`:
+
+| Provider | One Tap implementation | Required public config |
+|----------|------------------------|------------------------|
+| Better Auth | `better-auth` client `oneTapClient`, POSTs to `/api/auth/one-tap/callback` | `NEXT_PUBLIC_GOOGLE_CLIENT_ID` |
+| NextAuth | Google Identity Services HTML API, POSTs to `/api/auth/google-one-tap` | `NEXT_PUBLIC_GOOGLE_CLIENT_ID` |
+| Clerk | Clerk's official `<GoogleOneTap />` component | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` |
+
+Set `NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP=false` to disable the landing prompt.
+When `ACCESS_GATE_MODE=invite`, OAuth and One Tap entrypoints are blocked until
+the invite gate is opened.
+
+## Better Auth (production default)
+
+Production Nebutra uses a dedicated **auth center** (`apps/auth` →
+`https://auth.nebutra.com`) with:
+
+| Variable | Example |
+|----------|---------|
+| `AUTH_PROVIDER` | `better-auth` |
+| `BETTER_AUTH_URL` / `NEXT_PUBLIC_AUTH_URL` | `https://auth.nebutra.com` |
+| `AUTH_COOKIE_DOMAIN` | `.nebutra.com` |
+| `BETTER_AUTH_SECRET` | shared across auth + web |
+
+### Single login entry
+
+Product apps are **RPs**: they soft-redirect auth surfaces to the auth-center.
+There is **one** Better Auth UI — do not keep a second sign-in page on `app`.
+
+| Surface | Behavior |
+|---------|----------|
+| `app.nebutra.com/sign-in` | `307` → `auth.nebutra.com/sign-in?returnTo=…` |
+| `app.nebutra.com/sign-up` | `307` → `auth.nebutra.com/sign-up?returnTo=…` |
+| `auth.nebutra.com/*` | Canonical login UI (credentials, OAuth, optional magic link / passkeys) |
+
+Clerk is the only exception: when `NEXT_PUBLIC_AUTH_PROVIDER=clerk`, web may keep a local Clerk UI.
+
+### OAuth redirect URIs
+
+Register callbacks on the **auth-center** origin (not `app`):
+
+```
+https://auth.nebutra.com/api/auth/callback/google
+https://auth.nebutra.com/api/auth/callback/github
+```
+
+`GET /health` on the auth-center returns `oauth.callbackUrls` for currently enabled providers.
+
+### Captcha, magic link, passkeys
+
+| Flag / env | Effect |
+|------------|--------|
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` + `TURNSTILE_SECRET_KEY` | Cloudflare Turnstile on forms (`x-captcha-response`) |
+| `NEXT_PUBLIC_AUTH_MAGIC_LINK=1` | Magic-link alternate on sign-in |
+| `NEXT_PUBLIC_AUTH_PASSKEYS=1` | Passkey button + conditional UI |
+| `PASSKEY_RP_ID` / `PASSKEY_ORIGIN` | WebAuthn RP overrides (default: auth host) |
+
+Keep `BETTER_AUTH_SECRET` identical across RP apps.
+
+## Clerk setup (optional provider)
+
+### 1. Install Clerk
+
+```bash
+pnpm add @clerk/nextjs
+```
+
+### 2. Add environment variables
+
+```bash .env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_xxxxxxxxxxxx
+CLERK_SECRET_KEY=sk_live_xxxxxxxxxxxx
+CLERK_WEBHOOK_SECRET=whsec_xxxxxxxxxxxx
+```
+
+### 3. Wrap your app
+
+```tsx app/layout.tsx
+import { ClerkProvider } from "@clerk/nextjs";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <ClerkProvider>
+      <html lang="en">
+        <body>{children}</body>
+      </html>
+    </ClerkProvider>
+  );
+}
+```
+
+### 4. Add the auth proxy
+
+```typescript proxy.ts
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+
+const isPublicRoute = createRouteMatcher(["/", "/sign-in(.*)", "/sign-up(.*)"]);
+
+export default clerkMiddleware(async (auth, req) => {
+  if (!isPublicRoute(req)) {
+    await auth.protect();
+  }
+});
+
+export const config = {
+  matcher: ["/((?!_next|favicon.ico).*)"],
+};
+```
+
+### 5. Read auth in Server Components
+
+```typescript app/dashboard/page.tsx
+import { auth, currentUser } from "@clerk/nextjs/server";
+
+export default async function DashboardPage() {
+  const { orgId } = await auth();
+  const user = await currentUser();
+
+  if (!orgId) redirect("/create-org");
+
+  return <Dashboard userId={user?.id} orgId={orgId} />;
+}
+```
+
+## Token verification (API Gateway)
+
+The Hono API gateway verifies the active provider on every protected request
+(`@nebutra/auth` middleware). With Better Auth, session cookies / bearer JWTs are
+validated against the shared secret and database session store. Service-to-service
+calls use a short-lived **HS256** `x-service-token` (`SERVICE_SECRET`) — legacy
+hex-HMAC tokens are rejected.
+
+```typescript
+// Provider-agnostic: middleware resolves AUTH_PROVIDER
+app.use("/api/*", authMiddleware());
+
+app.get("/api/projects", async (c) => {
+  const { userId, orgId } = c.get("auth");
+  // userId and orgId are verified and safe to use
+});
+```
+
+## JWT claims
+
+Verified user tokens typically include:
+
+```json
+{
+  "sub": "user_2a8bXXXXXXXXX",
+  "org_id": "org_2a8bXXXXXXXXX",
+  "org_role": "org:admin",
+  "org_slug": "acme",
+  "scopes": ["project:read", "project:create", "project:update"],
+  "plan": "pro",
+  "iat": 1743427200,
+  "exp": 1743430800
+}
+```
+
+The `scopes` claim is set by Nebutra's RBAC layer at token issuance time.
+
+## Session management
+
+**Better Auth (production default)**
+- Session cookie issued on `auth.nebutra.com` with `AUTH_COOKIE_DOMAIN=.nebutra.com`
+- Dashboard and other RPs read the same cookie after `returnTo` redirect
+- Revoke / sign-out via Better Auth session APIs on the auth-center
+
+**Clerk (optional)**
+- Session duration configurable in Clerk Dashboard
+- Client SDK handles refresh; revoking a session invalidates active tokens
+
+## Multi-factor authentication
+
+MFA can be enforced at the org level (product settings). Supported factors depend
+on the active provider:
+
+- TOTP (authenticator apps)
+- SMS OTP (when configured)
+- Passkeys (WebAuthn) — enable on auth-center with `NEXT_PUBLIC_AUTH_PASSKEYS=1`
+
+## Sign-in / Sign-up UI
+
+**Production (Better Auth):** use the auth-center pages under `apps/auth`
+(`/sign-in`, `/sign-up`, `/forgot-password`, …). Product apps only redirect.
+
+**Clerk (optional):** keep local catch-all pages:
+
+```typescript app/sign-in/[[...sign-in]]/page.tsx
+import { SignIn } from "@clerk/nextjs";
+
+export default function SignInPage() {
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <SignIn />
+    </div>
+  );
+}
+```
+
+## Organization creation flow
+
+After sign-up, users without an organization are redirected to the org creation
+flow (provider-specific UI or Nebutra dashboard onboarding).
+
+For **Clerk**, a typical page looks like:
+
+```typescript app/create-org/page.tsx
+import { CreateOrganization } from "@clerk/nextjs";
+
+export default function CreateOrgPage() {
+  return <CreateOrganization afterCreateOrganizationUrl="/dashboard" />;
+}
+```
+
+<Warning>
+  Without an org-creation path, users can end up with `orgId: null` and bounce
+  between landing and dashboard. Always implement this flow for multi-tenant apps.
+</Warning>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Permissions" icon="lock" href="/concepts/permissions">
+    How scopes are assigned and enforced.
+  </Card>
+  <Card title="Multi-Tenancy" icon="building" href="/concepts/tenants">
+    Tenant isolation and member roles.
+  </Card>
+</CardGroup>

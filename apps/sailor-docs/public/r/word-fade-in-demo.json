@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "word-fade-in-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/word-fade-in-demo.tsx",
+      "content": "import { WordFadeIn } from \"@nebutra/ui/primitives\";\n\nexport default function WordFadeInDemo() {\n  return (\n    <div className=\"flex h-[300px] items-center justify-center\">\n      <WordFadeIn\n        words=\"Take your time focusing on each word\"\n        delay={0.15}\n        className=\"text-4xl font-bold text-center\"\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

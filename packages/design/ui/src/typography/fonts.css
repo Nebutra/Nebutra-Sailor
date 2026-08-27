@@ -1,0 +1,124 @@
+/**
+ * Font rules — the typography BEHAVIOUR layer (which element gets which stack).
+ * The STACKS themselves are owned by @nebutra/tokens, generated from
+ * packages/design/design-tokens/tokens/core.json → fontFamily.*.
+ *
+ * Font loading (Next.js apps): each app's layout.tsx applies the loader classes
+ *   GeistSans        → --font-geist-sans     (variable, 100–900)   Latin + numerals
+ *   GeistMono        → --font-geist-mono     (variable, 100–900)   code
+ *   cjkFontClassName → --font-vivo-sans-sc   (@nebutra/fonts/next/cjk)  CJK
+ * and the token stacks reference those variables in that order, so Geist keeps
+ * Latin and only CJK falls through to vivo Sans SC.
+ *
+ * IMPORT ORDER MATTERS: this file must come AFTER @nebutra/tokens/styles.css
+ * (see ../styles/preset.css). It used to re-declare --font-sans / --font-heading /
+ * --font-mono here as Geist-only literals; being the later import, those copies
+ * won, and the CJK half of every token stack was silently discarded. Declare
+ * stacks in the tokens, never here.
+ */
+
+/* ============================================
+   CSS Custom Properties — derived aliases only
+   ============================================ */
+
+:root {
+  /* Legacy alias for the body/UI stack — the stack lives in the tokens. */
+  --font-primary: var(--font-sans);
+
+  /* CJK — appended as a fallback on the rules below (see the note there). The
+     token already leads with the self-hosted face; the system families repeat
+     here so this alias still degrades on its own. */
+  --font-cjk:
+    var(--font-cn), "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+
+  /* Not a token: no Nebutra surface uses a serif, this exists for shadcn parity. */
+  --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+/* ============================================
+   Font Smoothing & Rendering
+   ============================================ */
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings:
+    "calt" 1,
+    "liga" 1;
+  /* Variable-font polish: */
+  /*  - font-synthesis: none → forbid faux-bold / faux-italic synthesis;
+       variable fonts already ship every weight/style, synthesised faces
+       look fuzzy at sub-pixel boundaries.
+     - font-optical-sizing: auto → tells the engine to use the opsz axis
+       on fonts that ship one (Geist Sans, Geist Mono, Inter, Playfair),
+       so glyphs are rendered with weights tuned to their display size
+       instead of being scaled uniformly. */
+  font-synthesis: none;
+  font-optical-sizing: auto;
+}
+
+/* ============================================
+   Base Typography
+   ============================================ */
+
+body {
+  /* Font precedence in ONE place: explicit user choice (--user-ui-font) →
+     active theme/DESIGN font (--font-sans) → default; the CJK stack is always
+     appended as a fallback so Chinese/Japanese/Korean glyphs render regardless
+     of the (often Latin-only) theme font. This replaces a blanket :lang(zh)
+     override that used to discard the theme font entirely. */
+  font-family: var(--user-ui-font, var(--font-sans)), var(--font-cjk);
+  /* An explicit user size (--user-ui-font-size) wins; otherwise the active
+     theme/DESIGN type-scale (--text-base); otherwise the 1rem default. This is
+     backward-compatible — with neither var set it resolves to exactly 1rem.
+     (Previously this was a hardcoded 1rem that, being unlayered, silently
+     overrode the app's --user-ui-font-size font-size control.) */
+  font-size: var(--user-ui-font-size, var(--text-base, 1rem));
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading), var(--font-cjk);
+  /* Theme/DESIGN can lighten headings via fontWeight.heading; default 600. */
+  font-weight: var(--font-weight-heading, 600);
+  line-height: 1.25;
+}
+
+/* Code */
+code,
+kbd,
+pre,
+samp {
+  font-family: var(--user-code-font, var(--font-mono)), var(--font-cjk);
+}
+
+/* ============================================
+   Font Feature Settings
+   ============================================ */
+
+/* Enable tabular figures for numbers in tables */
+.tabular-nums {
+  font-feature-settings: "tnum" 1;
+}
+
+/* Enable case-sensitive forms for all-caps text */
+.case-sensitive {
+  font-feature-settings: "case" 1;
+}
+
+/* ============================================
+   CJK Support
+   ============================================ */
+
+/* No blanket :lang(zh) font-family override here. The CJK stack is appended as
+   a fallback on the body / heading / code rules above, so the active theme or
+   DESIGN.md font drives Latin text on every locale while CJK glyphs still fall
+   back to --font-cjk. (A blanket override would discard the theme font.) */

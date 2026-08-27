@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gauge-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/gauge-demo.tsx",
+      "content": "import { Gauge } from \"@nebutra/ui/primitives\";\n\nexport function GaugeDemo() {\n  return (\n    <div className=\"flex w-full max-w-sm flex-col items-center justify-center gap-2 px-4 py-8\">\n      <p id=\"gauge-demo-label\" className=\"text-sm text-muted-foreground\">\n        Build Cache Hit Rate · 72%\n      </p>\n      <Gauge aria-labelledby=\"gauge-demo-label\" value={72} size=\"medium\" showValue />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

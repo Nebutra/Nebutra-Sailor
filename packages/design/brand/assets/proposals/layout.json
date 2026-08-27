@@ -1,0 +1,1031 @@
+{
+  "pdf_info": [
+    {
+      "para_blocks": [
+        {
+          "bbox": [708, 311, 1203, 428],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [708, 311, 1203, 428],
+              "spans": [
+                {
+                  "bbox": [708, 311, 1203, 428],
+                  "type": "text",
+                  "content": "Nebutra"
+                }
+              ]
+            }
+          ],
+          "index": 0
+        },
+        {
+          "bbox": [481, 448, 1440, 578],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [481, 448, 1440, 578],
+              "spans": [
+                {
+                  "bbox": [481, 448, 1440, 578],
+                  "type": "text",
+                  "content": "品牌标志设计提案"
+                }
+              ]
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [556, 621, 1361, 683],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [556, 621, 1361, 683],
+              "spans": [
+                {
+                  "bbox": [556, 621, 1361, 683],
+                  "type": "text",
+                  "content": "Nebutra Brand logo design proposal"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [1920, 1080],
+      "page_idx": 0
+    },
+    {
+      "para_blocks": [
+        {
+          "type": "image",
+          "bbox": [418, 313, 660, 534],
+          "blocks": [
+            {
+              "bbox": [418, 313, 660, 534],
+              "lines": [
+                {
+                  "bbox": [418, 313, 660, 534],
+                  "spans": [
+                    {
+                      "bbox": [418, 313, 660, 534],
+                      "type": "image",
+                      "image_path": "572e43d2a4fc2721de1eb007523aab86e720298d05a9a31fa5c7dffe43ed86c7.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 4,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [737, 345, 1505, 504],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [737, 345, 1505, 504],
+              "spans": [
+                {
+                  "bbox": [737, 345, 1505, 504],
+                  "type": "text",
+                  "content": "Nebutra"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [464, 792, 1449, 851],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [464, 792, 1449, 851],
+              "spans": [
+                {
+                  "bbox": [464, 792, 1449, 851],
+                  "type": "text",
+                  "content": "logo以首字母N的基础造型概念为主要设计框架，但又不直白的体现首字母的造型，通过几何正负空间构建隐形“N”，通过对基础图形的旋转变换，形成一个近似六边形的稳定结构。"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [462, 862, 1443, 929],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [462, 862, 1443, 929],
+              "spans": [
+                {
+                  "bbox": [462, 862, 1443, 929],
+                  "type": "text",
+                  "content": "色彩上使用清新明快的蓝绿渐变，通过线性渐变与角度渐变的方式填充其中，让整体更具未来感与科技的锋芒。整体表达品牌探索与引领未来，创建智能化连接的理念"
+                }
+              ]
+            }
+          ],
+          "index": 7
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [72, 63, 551, 116],
+          "type": "header",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [72, 63, 551, 116],
+              "spans": [
+                {
+                  "bbox": [72, 63, 551, 116],
+                  "type": "text",
+                  "content": "VISUAL IDENTITY"
+                }
+              ]
+            }
+          ],
+          "index": 0
+        },
+        {
+          "bbox": [72, 126, 167, 144],
+          "type": "header",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [72, 126, 167, 144],
+              "spans": [
+                {
+                  "bbox": [72, 126, 167, 144],
+                  "type": "text",
+                  "content": "BRANDING"
+                }
+              ]
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [72, 151, 264, 174],
+          "type": "header",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [72, 151, 264, 174],
+              "spans": [
+                {
+                  "bbox": [72, 151, 264, 174],
+                  "type": "text",
+                  "content": "Nebutra品牌视觉设计"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [1776, 71, 1831, 95],
+          "type": "page_number",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [1776, 71, 1831, 95],
+              "spans": [
+                {
+                  "bbox": [1776, 71, 1831, 95],
+                  "type": "text",
+                  "content": "2025"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 1
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [67, 62, 543, 116],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 62, 543, 116],
+              "spans": [
+                {
+                  "bbox": [67, 62, 543, 116],
+                  "type": "text",
+                  "content": "VISUAL IDENTITY"
+                }
+              ]
+            }
+          ],
+          "index": 0
+        },
+        {
+          "bbox": [67, 125, 159, 144],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 125, 159, 144],
+              "spans": [
+                {
+                  "bbox": [67, 125, 159, 144],
+                  "type": "text",
+                  "content": "BRANDING"
+                }
+              ]
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [67, 151, 259, 174],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [67, 151, 259, 174],
+              "spans": [
+                {
+                  "bbox": [67, 151, 259, 174],
+                  "type": "text",
+                  "content": "Nebutra品牌视觉设计"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "type": "image",
+          "bbox": [272, 386, 637, 725],
+          "blocks": [
+            {
+              "bbox": [272, 386, 637, 725],
+              "lines": [
+                {
+                  "bbox": [272, 386, 637, 725],
+                  "spans": [
+                    {
+                      "bbox": [272, 386, 637, 725],
+                      "type": "image",
+                      "image_path": "54f5a59c6e754f2576be69f74daff701d9bacedd3e7bd80325f7d1c6651bedd5.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 3,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [1365, 119, 1499, 162],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [1365, 119, 1499, 162],
+              "spans": [
+                {
+                  "bbox": [1365, 119, 1499, 162],
+                  "type": "text",
+                  "content": "Nebula"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "bbox": [1359, 276, 1505, 316],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [1359, 276, 1505, 316],
+              "spans": [
+                {
+                  "bbox": [1359, 276, 1505, 316],
+                  "type": "text",
+                  "content": "Nurture"
+                }
+              ]
+            }
+          ],
+          "index": 6
+        },
+        {
+          "bbox": [1113, 469, 1760, 608],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [1113, 469, 1760, 608],
+              "spans": [
+                {
+                  "bbox": [1113, 469, 1760, 608],
+                  "type": "text",
+                  "content": "Nebutra"
+                }
+              ]
+            }
+          ],
+          "index": 7
+        },
+        {
+          "bbox": [1384, 756, 1478, 799],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [1384, 756, 1478, 799],
+              "spans": [
+                {
+                  "bbox": [1384, 756, 1478, 799],
+                  "type": "text",
+                  "content": "Ultra"
+                }
+              ]
+            }
+          ],
+          "index": 8
+        },
+        {
+          "bbox": [1370, 911, 1491, 954],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [1370, 911, 1491, 954],
+              "spans": [
+                {
+                  "bbox": [1370, 911, 1491, 954],
+                  "type": "text",
+                  "content": "Future"
+                }
+              ]
+            }
+          ],
+          "index": 9
+        }
+      ],
+      "discarded_blocks": [
+        {
+          "bbox": [82, 989, 130, 1009],
+          "type": "page_number",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [82, 989, 130, 1009],
+              "spans": [
+                {
+                  "bbox": [82, 989, 130, 1009],
+                  "type": "text",
+                  "content": "2025"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        }
+      ],
+      "page_size": [1920, 1080],
+      "page_idx": 2
+    },
+    {
+      "para_blocks": [
+        {
+          "type": "image",
+          "bbox": [443, 108, 1474, 430],
+          "blocks": [
+            {
+              "bbox": [443, 108, 1474, 430],
+              "lines": [
+                {
+                  "bbox": [443, 108, 1474, 430],
+                  "spans": [
+                    {
+                      "bbox": [443, 108, 1474, 430],
+                      "type": "image",
+                      "image_path": "c7aaec07e93b8958f5a368da15df7165cee3bf44d6d8786cbd0ade7591544d36.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 0,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 0
+        },
+        {
+          "type": "image",
+          "bbox": [360, 645, 599, 866],
+          "blocks": [
+            {
+              "bbox": [360, 645, 599, 866],
+              "lines": [
+                {
+                  "bbox": [360, 645, 599, 866],
+                  "spans": [
+                    {
+                      "bbox": [360, 645, 599, 866],
+                      "type": "image",
+                      "image_path": "6fa28c6d8871660c17d771d32a2b04e9836a5f72d5ed42cb4af58d53307c8676.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "bbox": [286, 892, 668, 974],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [286, 892, 668, 974],
+              "spans": [
+                {
+                  "bbox": [286, 892, 668, 974],
+                  "type": "text",
+                  "content": "Nebutra"
+                }
+              ]
+            }
+          ],
+          "index": 2
+        },
+        {
+          "bbox": [1215, 739, 1662, 798],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [1215, 739, 1662, 798],
+              "spans": [
+                {
+                  "bbox": [1215, 739, 1662, 798],
+                  "type": "text",
+                  "content": "云端聚合·引领未来"
+                }
+              ]
+            }
+          ],
+          "index": 3
+        },
+        {
+          "bbox": [1144, 833, 1733, 878],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [1144, 833, 1733, 878],
+              "spans": [
+                {
+                  "bbox": [1144, 833, 1733, 878],
+                  "type": "text",
+                  "content": "Cloud Aggregation Leads the Future"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [1920, 1080],
+      "page_idx": 3
+    },
+    {
+      "para_blocks": [
+        {
+          "type": "image",
+          "bbox": [744, 435, 852, 529],
+          "blocks": [
+            {
+              "bbox": [744, 435, 852, 529],
+              "lines": [
+                {
+                  "bbox": [744, 435, 852, 529],
+                  "spans": [
+                    {
+                      "bbox": [744, 435, 852, 529],
+                      "type": "image",
+                      "image_path": "05342504f4807d7d49e03292c9852334dc8507e5d072d9ffe946156c5ce20668.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 0,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 0
+        },
+        {
+          "bbox": [871, 444, 1182, 513],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [871, 444, 1182, 513],
+              "spans": [
+                {
+                  "bbox": [871, 444, 1182, 513],
+                  "type": "text",
+                  "content": "Nebutra"
+                }
+              ]
+            }
+          ],
+          "index": 1
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [1920, 1080],
+      "page_idx": 4
+    },
+    {
+      "para_blocks": [
+        {
+          "type": "image",
+          "bbox": [272, 339, 316, 380],
+          "blocks": [
+            {
+              "bbox": [272, 339, 316, 380],
+              "lines": [
+                {
+                  "bbox": [272, 339, 316, 380],
+                  "spans": [
+                    {
+                      "bbox": [272, 339, 316, 380],
+                      "type": "image",
+                      "image_path": "cb0704ec40a3888556235aeab82a0cbaaeaacf5c23e85fcbfec9729e078a595c.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 0,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 0
+        },
+        {
+          "type": "image",
+          "bbox": [328, 341, 370, 380],
+          "blocks": [
+            {
+              "bbox": [328, 341, 370, 380],
+              "lines": [
+                {
+                  "bbox": [328, 341, 370, 380],
+                  "spans": [
+                    {
+                      "bbox": [328, 341, 370, 380],
+                      "type": "image",
+                      "image_path": "2d9415e6b3c973a5f090e9cbd125522d2c86d6ff4cb5446759dd70b8a1b52d99.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 1,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 1
+        },
+        {
+          "type": "image",
+          "bbox": [378, 341, 422, 380],
+          "blocks": [
+            {
+              "bbox": [378, 341, 422, 380],
+              "lines": [
+                {
+                  "bbox": [378, 341, 422, 380],
+                  "spans": [
+                    {
+                      "bbox": [378, 341, 422, 380],
+                      "type": "image",
+                      "image_path": "5f44dbd09ec550bce5c29bb864aee53492199b2aeda19be74de2e59e04fc369f.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 2,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 2
+        },
+        {
+          "type": "image",
+          "bbox": [433, 341, 476, 380],
+          "blocks": [
+            {
+              "bbox": [433, 341, 476, 380],
+              "lines": [
+                {
+                  "bbox": [433, 341, 476, 380],
+                  "spans": [
+                    {
+                      "bbox": [433, 341, 476, 380],
+                      "type": "image",
+                      "image_path": "af8631834fe05cb01163f2338fe74e7faeae3efb9e9b23686b7d54437f8cb7cc.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 3,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 3
+        },
+        {
+          "type": "image",
+          "bbox": [485, 332, 543, 387],
+          "blocks": [
+            {
+              "bbox": [485, 332, 543, 387],
+              "lines": [
+                {
+                  "bbox": [485, 332, 543, 387],
+                  "spans": [
+                    {
+                      "bbox": [485, 332, 543, 387],
+                      "type": "image",
+                      "image_path": "5116eca85affc0e71ed495b81199e3d23944c9852883242bd52222afefbaa668.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 4,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 4
+        },
+        {
+          "bbox": [552, 341, 683, 380],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [552, 341, 683, 380],
+              "spans": [
+                {
+                  "bbox": [552, 341, 683, 380],
+                  "type": "text",
+                  "content": "Nebutra"
+                }
+              ]
+            }
+          ],
+          "index": 5
+        },
+        {
+          "type": "image",
+          "bbox": [259, 453, 307, 494],
+          "blocks": [
+            {
+              "bbox": [259, 453, 307, 494],
+              "lines": [
+                {
+                  "bbox": [259, 453, 307, 494],
+                  "spans": [
+                    {
+                      "bbox": [259, 453, 307, 494],
+                      "type": "image",
+                      "image_path": "c897514f6ef577a53f0d82361883d405699e1e7d8623d04394da2949c893a2ed.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 6,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 6
+        },
+        {
+          "type": "image",
+          "bbox": [355, 453, 397, 494],
+          "blocks": [
+            {
+              "bbox": [355, 453, 397, 494],
+              "lines": [
+                {
+                  "bbox": [355, 453, 397, 494],
+                  "spans": [
+                    {
+                      "bbox": [355, 453, 397, 494],
+                      "type": "image",
+                      "image_path": "996f68953cec8b6c647df3c109729e2684436c4723b57cfe28e9269b52000bc2.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 7,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 7
+        },
+        {
+          "type": "image",
+          "bbox": [453, 452, 497, 494],
+          "blocks": [
+            {
+              "bbox": [453, 452, 497, 494],
+              "lines": [
+                {
+                  "bbox": [453, 452, 497, 494],
+                  "spans": [
+                    {
+                      "bbox": [453, 452, 497, 494],
+                      "type": "image",
+                      "image_path": "9bf0d62ce2613104bd6dbeb2d1a3d358a6c65e535ca5554c2a2f134157d4e422.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 8,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 8
+        },
+        {
+          "type": "image",
+          "bbox": [564, 453, 608, 493],
+          "blocks": [
+            {
+              "bbox": [564, 453, 608, 493],
+              "lines": [
+                {
+                  "bbox": [564, 453, 608, 493],
+                  "spans": [
+                    {
+                      "bbox": [564, 453, 608, 493],
+                      "type": "image",
+                      "image_path": "12b61acb77b8fa9ecd512b053a71ae48a43545807c5b3531433d5beb65d3cb31.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 9,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 9
+        },
+        {
+          "bbox": [635, 453, 858, 492],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [635, 453, 858, 492],
+              "spans": [
+                {
+                  "bbox": [635, 453, 858, 492],
+                  "type": "text",
+                  "content": "Nebutra.com"
+                }
+              ]
+            }
+          ],
+          "index": 10
+        },
+        {
+          "bbox": [1342, 203, 1499, 272],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [1342, 203, 1499, 272],
+              "spans": [
+                {
+                  "bbox": [1342, 203, 1499, 272],
+                  "type": "text",
+                  "content": "9:41"
+                }
+              ]
+            }
+          ],
+          "index": 11
+        },
+        {
+          "type": "image",
+          "bbox": [1365, 405, 1668, 629],
+          "blocks": [
+            {
+              "bbox": [1365, 405, 1668, 629],
+              "lines": [
+                {
+                  "bbox": [1365, 405, 1668, 629],
+                  "spans": [
+                    {
+                      "bbox": [1365, 405, 1668, 629],
+                      "type": "image",
+                      "image_path": "5872db72c6dfe94df95e77abb82fa76cc1b9c3943fc80a70cc98e1d3eca23647.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 12,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 12
+        },
+        {
+          "bbox": [1480, 630, 1681, 681],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [1480, 630, 1681, 681],
+              "spans": [
+                {
+                  "bbox": [1480, 630, 1681, 681],
+                  "type": "text",
+                  "content": "Nebutra"
+                }
+              ]
+            }
+          ],
+          "index": 13
+        },
+        {
+          "type": "image",
+          "bbox": [1518, 722, 1816, 947],
+          "blocks": [
+            {
+              "bbox": [1518, 722, 1816, 947],
+              "lines": [
+                {
+                  "bbox": [1518, 722, 1816, 947],
+                  "spans": [
+                    {
+                      "bbox": [1518, 722, 1816, 947],
+                      "type": "image",
+                      "image_path": "8f897b325e60721bb2b01a67fac7c0a249e603867cbf35040077f1ee2e080c14.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 14,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 14
+        },
+        {
+          "bbox": [1681, 947, 1783, 996],
+          "type": "text",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [1681, 947, 1783, 996],
+              "spans": [
+                {
+                  "bbox": [1681, 947, 1783, 996],
+                  "type": "text",
+                  "content": "Mail"
+                }
+              ]
+            }
+          ],
+          "index": 15
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [1920, 1080],
+      "page_idx": 5
+    },
+    {
+      "para_blocks": [
+        {
+          "type": "image",
+          "bbox": [865, 521, 946, 639],
+          "blocks": [
+            {
+              "bbox": [865, 521, 946, 639],
+              "lines": [
+                {
+                  "bbox": [865, 521, 946, 639],
+                  "spans": [
+                    {
+                      "bbox": [865, 521, 946, 639],
+                      "type": "image",
+                      "image_path": "3104b3ceb9958510bf6f39a4f2cebad083a55dbdc4e131dfc6c83e5fd63b9f6e.jpg"
+                    }
+                  ]
+                }
+              ],
+              "index": 0,
+              "angle": 0,
+              "type": "image_body"
+            }
+          ],
+          "index": 0
+        },
+        {
+          "bbox": [961, 449, 1176, 591],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [961, 449, 1176, 591],
+              "spans": [
+                {
+                  "bbox": [961, 449, 1176, 591],
+                  "type": "text",
+                  "content": "Nebutra"
+                }
+              ]
+            }
+          ],
+          "index": 1
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [1920, 1080],
+      "page_idx": 6
+    },
+    {
+      "para_blocks": [
+        {
+          "bbox": [579, 500, 1345, 618],
+          "type": "title",
+          "angle": 0,
+          "lines": [
+            {
+              "bbox": [579, 500, 1345, 618],
+              "spans": [
+                {
+                  "bbox": [579, 500, 1345, 618],
+                  "type": "text",
+                  "content": "THANK YOU"
+                }
+              ]
+            }
+          ],
+          "index": 0
+        }
+      ],
+      "discarded_blocks": [],
+      "page_size": [1920, 1080],
+      "page_idx": 7
+    }
+  ],
+  "_backend": "hybrid",
+  "_ocr_enable": true,
+  "_vlm_ocr_enable": true,
+  "_version_name": "2.7.6"
+}

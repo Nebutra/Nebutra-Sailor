@@ -1,0 +1,44 @@
+"use client";
+
+/**
+ * @nebutra/auth/client — Provider-agnostic auth hooks for React.
+ *
+ * Re-exports hooks and types from the react subpackage. These hooks are
+ * built on a unified AuthContext that normalizes state across Clerk
+ * and Better Auth providers.
+ *
+ * @example
+ * ```tsx
+ * import { useAuth, useUser } from "@nebutra/auth/client";
+ *
+ * function Dashboard() {
+ *   const { user, isSignedIn, signOut } = useAuth();
+ *   const { session } = useSession();
+ *
+ *   if (!isSignedIn) return <Redirect to="/sign-in" />;
+ *   return <div>Welcome, {user?.name}</div>;
+ * }
+ * ```
+ */
+
+// Provider configuration helpers — also pure (env-read only).
+export { getConfiguredAuthProvider, isClerkProvider } from "./config";
+// Feature flag helpers — pure / client-safe (no server-only deps).
+// Re-exported here so client components can stay on the /client subpath
+// instead of pulling the root entrypoint (which transitively imports
+// middleware → @clerk/nextjs/server → 'server-only').
+export type { AuthFeature, AuthFeatureContext } from "./features";
+export { isAuthFeatureEnabled, isAuthFeatureEnabledSync } from "./features";
+// Re-export context for advanced use cases
+export { type AuthContextValue, useAuthContext } from "./react/context";
+// Re-export auth hooks from react subpackage
+export { useAuth, useOrganization, useSession, useUser } from "./react/hooks";
+// Re-export sign-in method type for convenience
+export type { SignInMethod } from "./types";
+// Auth Center URL builders — pure string helpers; must not go through root
+// export (root re-exports createAuth → email/db → Node-only modules).
+export {
+  buildAuthCenterSignInUrl,
+  buildAuthCenterSignUpUrl,
+  getAuthCenterOrigin,
+} from "./utils";

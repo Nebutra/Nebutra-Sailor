@@ -1,0 +1,106 @@
+{
+  "$schema": "https://developers.cloudflare.com/ruleset-engine/rulesets-api/",
+  "description": "Nebutra cache rules for Cloudflare",
+  "rules": [
+    {
+      "name": "Cache static assets (immutable)",
+      "description": "Long cache for static files with hash in filename",
+      "expression": "(http.request.uri.path matches \".*\\.[0-9a-f]{8,}\\.(js|css|woff2?|ttf|eot)$\") or (http.request.uri.path matches \"/_next/static/.*\")",
+      "action": "set_cache_settings",
+      "action_parameters": {
+        "edge_ttl": {
+          "mode": "override_origin",
+          "default": 31536000
+        },
+        "browser_ttl": {
+          "mode": "override_origin",
+          "default": 31536000
+        },
+        "cache": true,
+        "cache_key": {
+          "ignore_query_strings_order": true
+        }
+      }
+    },
+    {
+      "name": "Cache images",
+      "description": "Cache images with moderate TTL",
+      "expression": "http.request.uri.path.extension in {\"jpg\" \"jpeg\" \"png\" \"gif\" \"webp\" \"avif\" \"svg\" \"ico\"}",
+      "action": "set_cache_settings",
+      "action_parameters": {
+        "edge_ttl": {
+          "mode": "override_origin",
+          "default": 86400
+        },
+        "browser_ttl": {
+          "mode": "override_origin",
+          "default": 604800
+        },
+        "cache": true
+      }
+    },
+    {
+      "name": "Cache landing page (ISR)",
+      "description": "Short edge cache for landing page with stale-while-revalidate",
+      "expression": "http.host eq \"nebutra.com\" and http.request.uri.path eq \"/\"",
+      "action": "set_cache_settings",
+      "action_parameters": {
+        "edge_ttl": {
+          "mode": "override_origin",
+          "default": 60
+        },
+        "browser_ttl": {
+          "mode": "respect_origin"
+        },
+        "cache": true,
+        "serve_stale": {
+          "disable_stale_while_updating": false
+        }
+      }
+    },
+    {
+      "name": "No cache - Dashboard app",
+      "description": "Bypass cache for authenticated dashboard",
+      "expression": "http.host eq \"app.nebutra.com\"",
+      "action": "set_cache_settings",
+      "action_parameters": {
+        "cache": false
+      }
+    },
+    {
+      "name": "No cache - API",
+      "description": "Bypass cache for all API requests",
+      "expression": "http.host eq \"api.nebutra.com\"",
+      "action": "set_cache_settings",
+      "action_parameters": {
+        "cache": false
+      }
+    },
+    {
+      "name": "No cache - Studio",
+      "description": "Bypass cache for Sanity Studio",
+      "expression": "http.host eq \"studio.nebutra.com\"",
+      "action": "set_cache_settings",
+      "action_parameters": {
+        "cache": false
+      }
+    },
+    {
+      "name": "Cache CDN assets",
+      "description": "Long cache for R2 CDN assets",
+      "expression": "http.host eq \"cdn.nebutra.com\"",
+      "action": "set_cache_settings",
+      "action_parameters": {
+        "edge_ttl": {
+          "mode": "override_origin",
+          "default": 2592000
+        },
+        "browser_ttl": {
+          "mode": "override_origin",
+          "default": 604800
+        },
+        "cache": true
+      }
+    }
+  ]
+}

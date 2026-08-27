@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "flickering-grid-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/flickering-grid-demo.tsx",
+      "content": "import { FlickeringGrid } from \"@nebutra/ui/primitives\";\n\nexport function FlickeringGridDemo() {\n  return (\n    <div className=\"max-w-3xl bg-slate-950 relative h-[400px] w-full overflow-hidden rounded-xl border\">\n      <FlickeringGrid\n        className=\"inset-0 absolute z-0\"\n        squareSize={4}\n        gridGap={6}\n        color=\"#60A5FA\"\n        maxOpacity={0.5}\n        flickerChance={0.1}\n      />\n      <div className=\"pointer-events-none relative z-10 flex h-full items-center justify-center\">\n        <h2 className=\"text-4xl font-bold text-white tracking-tight\">Flickering Grid</h2>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

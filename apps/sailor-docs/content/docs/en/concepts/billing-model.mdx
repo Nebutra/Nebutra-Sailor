@@ -1,0 +1,128 @@
+---
+title: Billing Model
+description: Nebutra's three-tier plan structure, usage metering, and how quotas are enforced.
+---
+
+## Plans
+
+Nebutra ships with three pre-built billing tiers. You can rename, reprice, and add features to any tier without code changes.
+
+<CardGroup cols={3}>
+  <Card title="FREE" icon="gift">
+    **$0/month**
+
+    - 1 organization
+    - Up to 3 members
+    - 1,000 API calls/month
+    - 100 AI tokens/month
+    - Community support
+  </Card>
+  <Card title="PRO" icon="zap">
+    **$29/month**
+
+    - Unlimited organizations
+    - Up to 25 members
+    - 100,000 API calls/month
+    - 500,000 AI tokens/month
+    - Email support
+  </Card>
+  <Card title="ENTERPRISE" icon="building">
+    **Custom pricing**
+
+    - Unlimited everything
+    - SSO / SAML / SCIM
+    - Custom data residency
+    - SLA guarantees
+    - Dedicated support
+  </Card>
+</CardGroup>
+
+## How metering works
+
+Usage is tracked in real time via `@nebutra/metering`, which aggregates events into ClickHouse. Every API call and AI token usage is recorded with:
+
+- `tenant_id` — which org consumed the resource
+- `metric_id` — what was consumed (`api_calls`, `ai_tokens`, `storage_gb`)
+- `quantity` — how much was consumed
+- `timestamp` — when it happened
+
+```typescript
+import { getMetering, createUsageEvent, COMMON_METERS } from "@nebutra/metering";
+
+const metering = await getMetering();
+
+// Record 1 API call for a tenant
+await metering.ingest(
+  createUsageEvent(COMMON_METERS.API_CALLS.id, "org_123", 1, {
+    endpoint: "/api/v1/ai/chat",
+  })
+);
+```
+
+## Quota enforcement
+
+Quotas are enforced at the API gateway layer **before** any business logic runs. When a tenant exceeds their quota, the API returns:
+
+```json
+HTTP 429 Too Many Requests
+
+{
+  "success": false,
+  "error": {
+    "code": "QUOTA_EXCEEDED",
+    "message": "Monthly API call quota exceeded. Upgrade to PRO for 100x more calls.",
+    "details": {
+      "metric": "api_calls",
+      "limit": 1000,
+      "used": 1001,
+      "reset_at": "2026-04-01T00:00:00Z"
+    }
+  }
+}
+```
+
+Users receive a transactional email warning at 80% and 100% of their quota.
+
+## Quota query
+
+```typescript
+const metering = await getMetering();
+
+const quota = await metering.getQuota("org_123", "api_calls");
+// → {
+//     limit: 1000,
+//     used: 847,
+//     remaining: 153,
+//     percentage: 0.847,
+//     reset_at: "2026-04-01T00:00:00Z"
+//   }
+```
+
+## Stripe integration
+
+Billing is handled by Stripe. The API gateway includes pre-built webhook handlers for:
+
+| Stripe event | Action |
+|--------------|--------|
+| `checkout.session.completed` | Provision plan, send welcome email |
+| `customer.subscription.updated` | Update tenant plan and quotas |
+| `customer.subscription.deleted` | Downgrade to FREE |
+| `invoice.payment_failed` | Send payment failure email |
+| `invoice.paid` | Log payment, update billing period |
+
+## Consumption-based billing (v1.x — Traction phase)
+
+In the upcoming v1.x release, Nebutra will support consumption-based billing — pay only for what you use, beyond a base tier. AI tokens, API calls, and storage will be metered and billed monthly via Stripe metered billing.
+
+See the [Roadmap](https://nebutra.com/en/roadmap) for timeline.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Rate Limits" icon="gauge" href="/guides/rate-limits">
+    How rate limit headers work and how to handle 429 responses.
+  </Card>
+  <Card title="Stripe Integration" icon="credit-card" href="/integrations/stripe">
+    Configure Stripe webhooks and billing portal.
+  </Card>
+</CardGroup>

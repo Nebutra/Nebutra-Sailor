@@ -1,0 +1,52 @@
+# Lefthook configuration
+# Extremely fast parallel git hooks runner in Go
+
+pre-commit:
+  parallel: true
+  commands:
+    biome-check:
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
+      # Call the local binary directly. `pnpm exec biome` is intercepted in some
+      # dev shells (Antigravity/rtk-style wrappers that try ESLint first and OOM
+      # when this repo has no ESLint installed). The direct binary path is fast,
+      # deterministic, and bypasses any per-shell wrapper.
+      run: ./node_modules/.bin/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
+    secrets-scan:
+      run: gitleaks protect --staged --no-banner
+
+pre-push:
+  commands:
+    turbo-contract:
+      run: npm_config_verify_deps_before_run=false node scripts/verify-turbo-build-contract.mjs
+    typecheck:
+      # A RANGE, not a single ref, and this is load-bearing.
+      #
+      # `--affected` resolves to empty when pushing main→main (no diff base), so
+      # the base has to be explicit. But an explicit *single* ref makes turbo
+      # diff the ref against the working tree, which drags every uncommitted
+      # file into scope — including files belonging to other sessions sharing
+      # this worktree. A hook that blocks your push over somebody else's
+      # half-finished edit is checking the wrong thing: those files are not in
+      # your push and cannot break what you are pushing.
+      #
+      # Measured, with an uncommitted edit in an unrelated package and nothing
+      # to push:
+      #   --filter="...[origin/main]"        that package enters scope
+      #   --filter="...[@{push}...HEAD]"     it does not
+      #
+      # `@{push}` rather than a literal origin/main so the base is whatever this
+      # branch actually pushes to, and stays right on a branch or a fork.
+      run: npm_config_verify_deps_before_run=false ./node_modules/.bin/turbo typecheck --filter="...[@{push}...HEAD]"
+    i18n-check:
+      # Every catalog in scripts/i18n-catalogs.mjs, not just landing. The gate
+      # used to watch one app while translation covered four, so a catalog
+      # could be filled automatically and still drift silently.
+      glob: "{apps/landing/messages,apps/forge/messages,apps/router/messages,packages/platform/i18n/locales,packages/platform/i18n/boot-log}/*.json"
+      # Bypass pnpm verify-deps noise in agent shells that flip injected-deps config.
+      run: npm_config_verify_deps_before_run=false pnpm i18n:check
+
+commit-msg:
+  commands:
+    conventional-commit:
+      run: 'grep -qE "^(feat|fix|refactor|docs|test|chore|perf|ci|build|style|revert)(\(.+\))?: .+" {1}'

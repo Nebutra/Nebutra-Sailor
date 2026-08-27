@@ -1,0 +1,160 @@
+---
+title: Multi-Tenancy Guide
+description: Step-by-step guide to creating tenants, managing members, switching organizations, and isolating data.
+---
+
+## Create an organization
+
+New users are prompted to create an organization after sign-up. You can also create one programmatically:
+
+```typescript
+const org = await nebutra.orgs.create({
+  name: "Acme Corp",
+  slug: "acme",
+  ownerId: userId,
+});
+// org.id → "org_2a8bXXXXXXXXX"
+```
+
+## Invite a member
+
+```typescript
+await nebutra.members.invite({
+  orgId: "org_123",
+  email: "alice@acme.com",
+  role: "MEMBER",  // OWNER | ADMIN | MEMBER | VIEWER
+});
+```
+
+Alice receives a transactional email with an invitation link. Accepting the invite creates her membership and triggers the `member.joined` webhook event.
+
+## Change a member's role
+
+```typescript
+await nebutra.members.updateRole({
+  orgId: "org_123",
+  userId: "user_456",
+  role: "ADMIN",
+});
+```
+
+<Warning>
+  You cannot change an `OWNER`'s role unless you first transfer ownership. There must always be at least one `OWNER`.
+</Warning>
+
+## Remove a member
+
+```typescript
+await nebutra.members.remove({
+  orgId: "org_123",
+  userId: "user_456",
+});
+```
+
+Removing a member:
+- Revokes all active sessions for that user in this org
+- Revokes any API keys they created
+- Does not delete their data (projects, resources remain)
+
+## Switch organizations
+
+Users can switch between orgs they belong to. In the dashboard, the org switcher is in the top-left nav. Programmatically:
+
+```typescript
+// Client-side — Clerk
+import { useOrganizationList } from "@clerk/nextjs";
+
+function OrgSwitcher() {
+  const { userMemberships, setActive } = useOrganizationList();
+
+  return (
+    <select onChange={(e) => setActive({ organization: e.target.value })}>
+      {userMemberships.data?.map((m) => (
+        <option key={m.organization.id} value={m.organization.id}>
+          {m.organization.name}
+        </option>
+      ))}
+    </select>
+  );
+}
+```
+
+## Data isolation in practice
+
+All data queries are automatically scoped to the current tenant when using `withRls`:
+
+```typescript
+import { withRls, getCurrentTenant } from "@nebutra/tenant";
+import { prisma } from "@/lib/db";
+
+export async function getProjects() {
+  const tenant = getCurrentTenant();
+  const db = withRls(prisma, tenant.tenantId);
+
+  // This query ONLY returns projects for the current tenant
+  // The WHERE tenant_id = '...' clause is injected by PostgreSQL RLS
+  return db.project.findMany({
+    orderBy: { createdAt: "desc" },
+  });
+}
+```
+
+## Tenant-scoped API keys
+
+API keys belong to a tenant, not a user. Create them in **Settings → API Keys**:
+
+```typescript
+const key = await nebutra.apiKeys.create({
+  orgId: "org_123",
+  name: "Production CI",
+  scopes: ["project:read", "project:create"],
+  expiresAt: new Date("2027-01-01"),
+});
+// key.secret is shown ONCE — store it securely
+```
+
+API keys are hashed with SHA-256 before storage. We cannot recover the plaintext.
+
+## Tenant-specific feature flags
+
+Feature flags can be overridden per tenant:
+
+```typescript
+import { useFeatureFlag } from "@nebutra/ui/components";
+
+// SSR-safe hook — reads tenant context automatically
+const aiWorkflowsEnabled = useFeatureFlag("ai_workflows");
+
+if (aiWorkflowsEnabled) {
+  // Render AI workflow builder
+}
+```
+
+Override for a specific tenant in the dashboard: **Settings → Feature Flags → Override**.
+
+## Delete an organization
+
+```typescript
+await nebutra.orgs.delete({
+  orgId: "org_123",
+  // Requires OWNER role and re-authentication
+  confirmationToken: token,
+});
+```
+
+Deleting an org:
+- Cancels the Stripe subscription
+- Soft-deletes all org data (30-day recovery window)
+- Sends a confirmation email to the owner
+- Triggers the `org.deleted` webhook event
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Multi-Tenancy Concepts" icon="layers" href="/concepts/tenants">
+    Architecture and isolation strategies explained.
+  </Card>
+  <Card title="Permissions" icon="lock" href="/concepts/permissions">
+    Full role and scope reference.
+  </Card>
+</CardGroup>

@@ -1,0 +1,86 @@
+{
+  "name": "@nebutra/vault",
+  "version": "0.1.2",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "foundation",
+    "productionReady": false,
+    "requires": [
+      "AWS_KMS_KEY_ID + AWS credentials (production)",
+      "or VAULT_LOCAL_MASTER_KEY for local HKDF (dev only)"
+    ],
+    "gaps": [
+      "KEK rotation workflow not exposed via CLI",
+      "Per-tenant key isolation scaffolded only",
+      "Audit trail on decrypt operations TODO"
+    ],
+    "featureId": "vault",
+    "category": "iam",
+    "summary": "Application-layer secrets — envelope encryption (AWS KMS + local HKDF)"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./aws-kms": {
+      "types": "./dist/providers/aws-kms.d.ts",
+      "import": "./dist/providers/aws-kms.js",
+      "default": "./dist/providers/aws-kms.js"
+    },
+    "./local": {
+      "types": "./dist/providers/local.d.ts",
+      "import": "./dist/providers/local.js",
+      "default": "./dist/providers/local.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@aws-sdk/client-kms": "^3.700.0",
+    "@nebutra/logger": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/iam/vault#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/iam/vault"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      },
+      "./aws-kms": {
+        "types": "./dist/providers/aws-kms.d.ts",
+        "import": "./dist/providers/aws-kms.js"
+      },
+      "./local": {
+        "types": "./dist/providers/local.d.ts",
+        "import": "./dist/providers/local.js"
+      }
+    }
+  }
+}

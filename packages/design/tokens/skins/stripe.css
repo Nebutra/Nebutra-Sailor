@@ -1,0 +1,169 @@
+/**
+ * Brand carrier skin: Stripe (stripe) v1.0.0
+ * darkDefault=false dualMode=false button=solid
+ * fonts=0 mode=global
+ * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
+ */
+
+:root,
+html[data-brand="stripe"] {
+  /* ── Color roles (carrier) ── */
+  --role-canvas: 0 0% 100%;
+  --role-canvas-fg: 211 78% 11%;
+  --role-surface: 0 0% 100%;
+  --role-surface-fg: 211 78% 11%;
+  --role-action: 248 98% 61%;
+  --role-action-fg: 0 0% 100%;
+  --role-quiet: 237 100% 95%;
+  --role-quiet-fg: 248 98% 61%;
+  --role-muted: 216 56% 98%;
+  --role-muted-fg: 217 17% 47%;
+  --role-border: 210 44% 93%;
+  --role-input: 210 44% 93%;
+  --role-ring: 248 98% 61%;
+  --role-brand: 211 78% 11%;
+  --role-brand-fg: 0 0% 100%;
+  --brand-mark: 211 78% 11%;
+  --brand-mark-foreground: 0 0% 100%;
+
+  /* ── shadcn bridge (primary = action CTA) ── */
+  --background: 0 0% 100%;
+  --foreground: 211 78% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 211 78% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 211 78% 11%;
+  --primary: 248 98% 61%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 237 100% 95%;
+  --secondary-foreground: 248 98% 61%;
+  --muted: 216 56% 98%;
+  --muted-foreground: 217 17% 47%;
+  --accent: 211 78% 11%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 210 44% 93%;
+  --input: 210 44% 93%;
+  --ring: 248 98% 61%;
+  --info: 231 100% 73%;
+  --info-foreground: 211 78% 11%;
+  --sidebar: 0 0% 100%;
+  --sidebar-foreground: 211 78% 11%;
+  --sidebar-primary: 248 98% 61%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 211 78% 11%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-border: 210 44% 93%;
+  --sidebar-ring: 248 98% 61%;
+  --brand-primary: hsl(211 78% 11%);
+  --brand-accent: hsl(248 98% 61%);
+  --brand-accent-foreground: hsl(0 0% 100%);
+  --brand-tertiary: hsl(248 98% 61%);
+  --brand-gradient: hsl(var(--primary));
+  --brand-gradient-reverse: hsl(var(--primary));
+  --brand-gradient-vertical: hsl(var(--primary));
+  --brand-gradient-radial: hsl(var(--primary));
+
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(0 0% 100%);
+  --neutral-2: hsl(0 0% 100%);
+  --neutral-3: color-mix(in oklab, hsl(210 44% 93%) 20%, hsl(0 0% 100%));
+  --neutral-4: color-mix(in oklab, hsl(210 44% 93%) 40%, hsl(0 0% 100%));
+  --neutral-5: color-mix(in oklab, hsl(210 44% 93%) 60%, hsl(0 0% 100%));
+  --neutral-6: color-mix(in oklab, hsl(210 44% 93%) 80%, hsl(0 0% 100%));
+  --neutral-7: hsl(210 44% 93%);
+  --neutral-8: color-mix(in oklab, hsl(217 17% 47%) 25%, hsl(210 44% 93%));
+  --neutral-9: color-mix(in oklab, hsl(217 17% 47%) 50%, hsl(210 44% 93%));
+  --neutral-10: color-mix(in oklab, hsl(217 17% 47%) 75%, hsl(210 44% 93%));
+  --neutral-11: hsl(217 17% 47%);
+  --neutral-12: hsl(211 78% 11%);
+
+  /* Recipe (action language + free elev/radii) */
+  /* Shape slots */
+  --btn-default-radius: 4px;
+  --radius-button: 4px;
+  --radius-buttons: 4px;
+  --radius-md: min(4px, 4px);
+  --radius-card: 4px;
+  --radius-lg: 4px;
+  --radius-badge: 9999px;
+  --badge-default-radius: 9999px;
+  --radius-inputs: 4px;
+  --input-radius: 4px;
+  --radius-pill: 9999px;
+
+  /* Free elevation (carrier-provided CSS shadows) */
+  --elevation-card: 0 0 #0000;
+  --elevation-control: 0 0 #0000;
+  --elevation-raised: 0 0 #0000;
+  --elevation-xs: 0 0 #0000;
+  --elevation-sm: 0 0 #0000;
+  --elevation-md: 0 0 #0000;
+  --elevation-lg: 0 0 #0000;
+  --btn-default-shadow: 0 0 #0000;
+  --btn-default-bg: hsl(var(--primary));
+  --btn-default-fg: hsl(var(--primary-foreground));
+  --btn-default-border-width: 0px;
+  --btn-default-border: transparent;
+  --btn-default-stroke-gradient: linear-gradient(transparent, transparent);
+  --btn-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 90%, transparent);
+  --badge-default-bg: hsl(var(--secondary));
+  --badge-default-fg: hsl(var(--secondary-foreground));
+  --badge-default-border: transparent;
+  --badge-default-hover-bg: color-mix(in srgb, hsl(var(--secondary)) 90%, white);
+
+  /* Typography */
+  --font-sans:
+    var(--font-reg-inter-tight), "sohne-var", "Inter Tight", "Inter",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-cn:
+    var(--font-reg-inter-tight), "sohne-var", "Inter Tight", "Inter",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-heading:
+    var(--font-reg-inter-tight), "sohne-var", "Inter Tight",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-display:
+    var(--font-reg-inter-tight), "sohne-var", "Inter Tight",
+    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-weight-heading: 300;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --motion-ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --motion-ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --duration-micro: 100ms;
+  --motion-duration-micro: 100ms;
+  --duration-flow: 180ms;
+  --motion-duration-flow: 180ms;
+  --duration-reveal: 260ms;
+  --motion-duration-reveal: 260ms;
+  --duration-cinematic: 400ms;
+  --motion-duration-cinematic: 400ms;
+
+  /* Spacing */
+  --space-source-xs: 0.5rem;
+  --space-source-sm: 0.75rem;
+  --space-source-md: 1.125rem;
+  --space-source-lg: 1.75rem;
+  --space-source-xl: 2.25rem;
+  --space-source-2xl: 3.25rem;
+
+  /* Taxonomy / decorative (not product CTA) */
+  --brand-category-brand: #061b31;
+  --brand-category-action: #533afd;
+  --brand-category-link: #533afd;
+  --brand-category-hover: #7389ff;
+  --brand-category-ghostborder: #b9b9f9;
+  --brand-category-wash: #e8e9ff;
+  --brand-category-deep: #182659;
+  --brand-category-smoke: #839bc8;
+  --brand-category-steel: #50617a;
+  --brand-decorative-section-band: #f8fafd;
+  --brand-decorative-frost: #e5edf5;
+}

@@ -1,0 +1,155 @@
+---
+title: create-sailor
+description: Interactive scaffolding wizard — bootstrap a production-ready Nebutra-Sailor project in seconds.
+---
+
+`create-sailor` is a one-time scaffolding tool that clones the Nebutra-Sailor template, walks you through configuration questions, and writes your `.env.local` — so you can start coding in under a minute.
+
+Published npm package: **`create-sailor@1.8.2`** (use `npx create-sailor@latest` to pick up the current release).
+
+<Note>
+  Scaffold **defaults** prefer fast setup (`--auth clerk`, `--deploy vercel`).
+  First-party **nebutra.com** production uses **Better Auth** on
+  `auth.nebutra.com` (ECS) with app/API on ECS — pick `--auth betterauth` and
+  `--deploy selfhost` (or wire ECS yourself) when matching that topology.
+</Note>
+
+## Usage
+
+```bash
+npx create-sailor [dir]
+# pin a release: npx create-sailor@1.8.2 my-app
+```
+
+If you omit `[dir]`, the wizard prompts you for a directory name.
+
+## What it does
+
+<Steps>
+  <Step title="Ask where to create the project">
+    Prompts for a target directory (default: `./my-saas-app`).
+  </Step>
+  <Step title="Choose your core configuration">
+    Four interactive questions: region, auth provider, and AI topology (plus directory). Everything else is resolved from flags or region-aware defaults.
+  </Step>
+  <Step title="Generate environment defaults">
+    Generates random `AUTH_SECRET` / `JWT_SECRET` and writes `.env.local` with provider-specific stub keys you fill in later.
+  </Step>
+  <Step title="Clone, configure, and prune">
+    Clones the Nebutra-Sailor monorepo, sets the project name in `package.json`, writes `nebutra.config.json`, prunes unused template features, and injects your env vars.
+  </Step>
+  <Step title="Print next steps">
+    Outputs exactly what to run next: `cd my-saas-app && pnpm install && pnpm dev`.
+  </Step>
+</Steps>
+
+## Interactive prompts
+
+The wizard asks **only four** questions; every other setting is resolved from flags or region defaults:
+
+1. **Project directory** — defaults to `./my-saas-app`
+2. **Region** — `global` | `cn` | `hybrid`
+3. **Auth provider** — `clerk` | `betterauth` | `nextauth` | `none`
+4. **AI topology** — `gateway` (recommended) | `direct` | `custom` | `none`. Choosing `direct` triggers a follow-up multi-select for provider adapters; choosing `custom` triggers prompts for endpoint name, base URL, and API-key env var.
+
+Everything else (ORM, database, payment, email, storage, etc.) is flag-only.
+
+## Core flags
+
+| Flag | Values | Default |
+|------|--------|---------|
+| `--region` | `global`, `cn`, `hybrid` | `global` |
+| `--orm` | `prisma`, `drizzle` | `prisma` (dual-ORM when `drizzle` — adds `db-drizzle` alongside Prisma) |
+| `--db` | `postgres`, `mysql`, `sqlite`, `none` | `postgresql` |
+| `--db-host` | `local`, `supabase`, `neon`, `vercel-postgres`, `planetscale`, `railway`, `aliyun-rds`, `tencent-cdb`, `none` | region-aware (`supabase` global, `local` cn) |
+| `--auth` | `clerk`, `betterauth`, `nextauth`, `none` | `clerk` |
+| `--payment` | `stripe`, `lemon`, `wechat`, `alipay`, `none` | `stripe` global / `wechat` cn |
+| `--ai` | topology shorthand (`gateway`, `direct`, `custom`, `none`) or comma-separated provider IDs | `gateway` |
+| `--deploy` | `vercel`, `railway`, `cloudflare`, `selfhost`, `none` | `vercel` |
+| `--docs` | `fumadocs`, `none` (others fall back to fumadocs in v1.x) | `fumadocs` |
+| `-y`, `--yes` | (flag) — accept all defaults; non-interactive | off |
+| `--dry-run` | (flag) — print plan, write nothing | off |
+| `--json` | (flag) — machine-readable event stream | off |
+
+<Note>
+  `--db-host=planetscale` targets PlanetScale Postgres. The Vitess/MySQL product
+  needs a separate Prisma schema and migration strategy before it can be treated
+  as a production Sailor runtime.
+</Note>
+
+For the full per-feature flag set (`--email`, `--storage`, `--monitoring`, `--analytics`, `--sms`, `--queue`, `--search`, `--cache`, `--notifications`, `--webhooks`, `--cms`, `--feature-flags`, `--captcha`, `--mcp`, `--metering`, `--billing-mode`, `--idp`, etc.) run `npx create-sailor --help`.
+
+## Advanced flags
+
+### Scaffold extras
+
+| Flag | Effect |
+|------|--------|
+| `--with-workflows` | Adds `workflows/{inngest,n8n,pusher}/` starter directories so you can pick a provider later via `nebutra workflow init`. |
+| `--with-python-backend` | Adds a `backends/python/` FastAPI stub. **Only enable this when the [TS-by-Default ADR](/docs/architecture/backend-language-policy) exception applies** — batch/queued work, ML/scientific compute, or specialized libraries with no TS port. The README produced asks you to cite which justification fits. |
+| `--no-install` | Skip `pnpm install` after scaffolding. |
+| `--no-git` | Skip `git init` and the initial commit. |
+| `--no-color` | Disable ANSI color in stdout (CI-friendly). |
+
+### Compliance / wave-3 toggles
+
+All accept `true` / `false`. Defaults are `true` except `--china-compliance` which auto-flips to `true` when `--region=cn`.
+
+`--cron-jobs`, `--audit-log`, `--api-keys`, `--command-palette`, `--cookie-consent`, `--legal-pages`, `--china-compliance`.
+
+### Wave-2 governance
+
+| Flag | Values | Default |
+|------|--------|---------|
+| `--billing-mode` | `usage`, `seat`, `credits` | `usage` |
+| `--idp` | `clerk`, `oauth-server` | `clerk` |
+| `--social-login` | comma-separated CN providers (`wechat,qq,dingtalk,workweixin,feishu,weibo`) | none |
+
+## Package versioning
+
+Scaffolded projects depend on `@nebutra/*` packages using **npm caret ranges** (e.g. `"@nebutra/ui": "^0.1.0"`), not `workspace:*`. This is what allows a `create-sailor`-generated repo to install and run standalone, outside of the Nebutra-Sailor monorepo. The version pins are read from the published-versions registry at scaffold time.
+
+## Example session
+
+```
+  create-sailor
+
+✔ Where should we create your project? … ./my-saas
+✔ Target region? › global — 海外优先
+✔ Auth provider? › Clerk
+✔ AI topology? › Multi-provider AI Gateway / router
+
+  ▸ Region            global
+  ▸ Auth              clerk
+  ▸ ORM               prisma
+  ▸ Database          postgresql
+  ▸ Payment           stripe
+  ▸ AI topology       gateway
+  ▸ Email             resend
+  ▸ Storage           r2
+  ▸ Deploy Target     vercel
+  ▸ Docs Framework    fumadocs
+
+⠋ Cloning Nebutra-Sailor template into ./my-saas...
+✔ Project my-saas successfully initialized!
+
+  Next steps:
+  cd ./my-saas
+  pnpm install
+  pnpm dev
+```
+
+## After scaffolding
+
+```bash
+cd my-saas
+pnpm install          # Install all dependencies
+pnpm infra:lite       # Start PostgreSQL (Docker)
+pnpm db:generate      # Generate Prisma client
+pnpm db:migrate       # Run initial migrations
+pnpm dev:dashboard    # Start web app + API gateway
+```
+
+<Note>
+  `create-sailor` is a one-time tool. For day-to-day tasks (adding components, managing infra, running migrations), use the `nebutra` CLI after the project is created.
+</Note>

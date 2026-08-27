@@ -1,0 +1,56 @@
+# NOT DEPLOYED. The Worker this describes (nebutra-gateway) was deleted on
+# 2026-07-28: its bundle is the whole Node backend, 25MB and 457ms of startup
+# CPU against a ~400ms budget, so it could not be deployed after 2026-07-22 and
+# no fix could reach it. api.nebutra.com is served by nebutra-gateway-edge —
+# see wrangler.edge.toml — which forwards to ECS Origin.
+#
+# Kept because it still documents the Hyperdrive binding, the retention Cron
+# Trigger and the vars the full gateway expects, and because DEPLOY_TARGET_GATEWAY
+# can select cloudflare-workers again once the entry is small enough to start.
+# Deploying this file as-is will fail at startup validation.
+
+name = "nebutra-gateway"
+main = "src/worker.ts"
+compatibility_date = "2026-06-04"
+compatibility_flags = ["nodejs_compat"]
+
+# Edge connection pool in front of Postgres. Without it every Worker isolate
+# opens its own connection and the database runs out of slots long before the
+# Worker runs out of capacity.
+#
+# Query caching is disabled on this config. Cloudflare's own guidance is to
+# disable it for authentication, sessions, permissions and billing reads —
+# which is most of what this database holds. It also could not have helped:
+# @nebutra/db wraps every query in a transaction to set the tenant, and only
+# plain read queries are cacheable. Leaving it on would have been risk without
+# benefit, since row visibility here depends on a session variable the cache
+# key does not include.
+#
+# `localConnectionString` is what `wrangler dev` uses, so local development
+# still talks to a local database directly.
+[[hyperdrive]]
+binding = "HYPERDRIVE"
+id = "8a0e4251ae014472879ae3b2a57276cb"
+localConnectionString = "postgresql://postgres:postgres@localhost:5432/nebutra"
+
+# Retention purge. On Cloudflare rather than a scheduled GitHub Action: the
+# Worker already reaches Postgres through the binding above, so this adds no
+# new place for a production database credential to live, and Cron Triggers
+# are scheduled where Actions cron is best-effort.
+# 18:17 UTC = 02:17 Asia/Shanghai.
+[triggers]
+crons = ["17 18 * * *"]
+
+[observability]
+enabled = true
+head_sampling_rate = 1
+
+[vars]
+DEPLOY_TARGET_GATEWAY = "cloudflare-workers"
+
+# @nebutra/db issues `SET LOCAL ROLE` with this inside every tenant
+# transaction. Not a secret — a role name — so it belongs in config where it is
+# visible and auditable rather than hidden in the secret store. If it is unset
+# or wrong the SET fails and the query runs as whatever the connection is,
+# which is the one thing tenant isolation cannot afford to get wrong.
+APP_DB_ROLE = "app_user"

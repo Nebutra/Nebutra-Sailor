@@ -1,0 +1,1273 @@
+{
+  "admin": {
+    "title": "Beheer",
+    "description": "Superadminpaneel — beheer gebruikers, organisaties en systeemstatus.",
+    "nav": {
+      "overview": "Overzicht",
+      "users": "Gebruikers",
+      "organizations": "Organisaties"
+    },
+    "users": {
+      "title": "Gebruikers",
+      "description": "Blader, zoek en neem de identiteit aan van elke gebruiker in alle organisaties.",
+      "searchPlaceholder": "Zoek gebruikers…",
+      "totalCount": "{count, plural, one {# gebruiker} other {# gebruikers}}",
+      "empty": "Geen gebruikers gevonden.",
+      "loadError": "Gebruikers konden niet worden geladen.",
+      "columns": {
+        "email": "E-mail",
+        "name": "Naam",
+        "created": "Aangemaakt",
+        "activeOrgs": "Actieve orgs",
+        "actions": "Acties"
+      },
+      "viewOrgs": "Organisaties bekijken"
+    },
+    "organizations": {
+      "title": "Organisaties",
+      "description": "Alle werkruimtes in het systeem, gerangschikt op recentste.",
+      "searchPlaceholder": "Organisaties zoeken…",
+      "totalCount": "{count, plural, one {# organisatie} other {# organisaties}}",
+      "empty": "Geen organisaties gevonden.",
+      "loadError": "Kan organisaties niet laden.",
+      "columns": {
+        "name": "Naam",
+        "slug": "Slug",
+        "plan": "Plan",
+        "members": "Leden",
+        "created": "Aangemaakt",
+        "actions": "Acties"
+      },
+      "view": "Bekijken"
+    },
+    "impersonate": {
+      "trigger": "Impersoneren",
+      "starting": "Starten…",
+      "stop": "Impersonatie beëindigen",
+      "confirm": "{label} impersoneren? Je ziet de app als deze gebruiker tot je stopt.",
+      "error": "Impersonatie kan niet worden gestart.",
+      "stopError": "Impersonatie kan niet worden gestopt."
+    },
+    "pagination": {
+      "previous": "Vorige",
+      "next": "Volgende",
+      "pageOf": "Pagina {page} van {total}"
+    }
+  },
+  "Common": {
+    "hello": "Hallo Wereld",
+    "dashboard": "Dashboard",
+    "actions": {
+      "continue": "Doorgaan",
+      "confirm": "Bevestigen",
+      "done": "Klaar",
+      "cancel": "Annuleren"
+    }
+  },
+  "theme": {
+    "light": "Licht",
+    "dark": "Donker",
+    "system": "Systeem"
+  },
+  "LocaleSwitcher": {
+    "label": "Taal",
+    "ariaLabel": "Taal wijzigen",
+    "searchPlaceholder": "Zoek talen…",
+    "noResults": "Geen talen gevonden",
+    "menuAria": "Selecteer taal"
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP-registratienummer",
+      "publicSecurity": "Registratie openbare veiligheid"
+    },
+    "wechat": {
+      "signIn": "Inloggen met WeChat",
+      "notConfigured": "WeChat-aanmelding niet geconfigureerd"
+    }
+  },
+  "onboarding": {
+    "title": "Stel je werkruimte in",
+    "subtitle": "Drie snelle stappen en je kunt aan de slag.",
+    "steps": {
+      "workspace": "Werkruimte",
+      "invite": "Team uitnodigen",
+      "plan": "Plan kiezen"
+    },
+    "progress": {
+      "back": "Terug",
+      "stepCounter": "Stap {current} van {total}"
+    },
+    "plan": {
+      "title": "Kies een plan",
+      "description": "Begin gratis of ontgrendel meer capaciteit. Je kunt altijd van plan wisselen.",
+      "choose": "Kies een plan",
+      "skip": "Nu overslaan"
+    }
+  },
+  "userMenu": {
+    "ariaLabel": "Gebruikersmenu openen",
+    "profile": "Profiel",
+    "settings": "Instellingen",
+    "feedback": "Feedback",
+    "theme": "Thema",
+    "language": "Taal",
+    "signOut": "Uitloggen",
+    "signedInAs": "Aangemeld als"
+  },
+  "account": {
+    "profile": {
+      "title": "Profiel",
+      "description": "Werk je persoonlijke gegevens bij.",
+      "nameLabel": "Naam",
+      "namePlaceholder": "Je volledige naam",
+      "emailLabel": "E-mail",
+      "emailHint": "We sturen een verificatielink om een nieuw e-mailadres te bevestigen.",
+      "languageLabel": "Taal",
+      "submit": "Wijzigingen opslaan",
+      "saving": "Opslaan…",
+      "verifyEmail": "Verifiëren",
+      "verifying": "Verificatie verzenden…",
+      "success": "Profiel bijgewerkt.",
+      "verificationSent": "Verificatie-e-mail verzonden.",
+      "errorRequiredName": "Naam is verplicht.",
+      "errorInvalidEmail": "E-mailadres is niet geldig.",
+      "subtitle": "Je identiteit en contactgegevens.",
+      "unknown": "Naamloze gebruiker",
+      "manageCta": "Open volledige accountinstellingen"
+    },
+    "avatar": {
+      "title": "Avatar",
+      "description": "Upload een vierkante afbeelding (PNG, JPEG of WebP, max. 2 MB).",
+      "uploadButton": "Avatar uploaden",
+      "uploading": "Uploaden…",
+      "fileTooBig": "Bestand is te groot. Maximale grootte is 2 MB.",
+      "invalidType": "Niet-ondersteund afbeeldingstype. Gebruik PNG, JPEG of WebP.",
+      "success": "Avatar bijgewerkt.",
+      "removeButton": "Avatar verwijderen",
+      "removed": "Avatar verwijderd.",
+      "deleteError": "Kan avatar niet verwijderen."
+    },
+    "export": {
+      "title": "Mijn gegevens exporteren",
+      "description": "Download een kopie van alle gegevens die we voor uw account hebben, inclusief profiel, organisaties, auditgebeurtenissen, meldingen en uitnodigingen.",
+      "compliance": "Vereist volgens GDPR Artikel 20 (Recht op dataportabiliteit) en PIPL Artikel 45 (Recht op een kopie van persoonlijke gegevens).",
+      "export": "Mijn gegevens exporteren",
+      "pending": "Export voorbereiden…",
+      "ready": "Je export is klaar.",
+      "download": "JSON downloaden",
+      "error": "Het voorbereiden van je export is mislukt. Probeer het opnieuw."
+    },
+    "emailChange": {
+      "title": "E-mailadres wijzigen",
+      "description": "We sturen een verificatielink naar het nieuwe adres. De wijziging wordt pas actief zodra je deze bevestigt vanuit dat inbox.",
+      "newEmailLabel": "Nieuw e-mailadres",
+      "newEmailPlaceholder": "you@example.com",
+      "submit": "Verificatielink versturen",
+      "submitting": "Versturen…",
+      "verificationSent": "Controleer je inbox op {email} om de wijziging te bevestigen.",
+      "errorInvalidEmail": "Het e-mailadres is niet geldig.",
+      "error": "Het aanvragen van de e-mailwijziging is mislukt.",
+      "confirm": {
+        "successTitle": "E-mail bijgewerkt",
+        "successDescription": "Je aanmeldings-e-mail is bijgewerkt.",
+        "successWithEmail": "Je aanmeldings-e-mail is nu {email}.",
+        "failureTitle": "We konden die link niet bevestigen",
+        "failureDescription": "Deze verificatielink is ongeldig, verlopen of al gebruikt. Vraag een nieuwe aan in je accountinstellingen.",
+        "errorCode": "Reden: {code}",
+        "continueCta": "Terug naar account",
+        "backCta": "Terug naar account"
+      }
+    },
+    "title": "Account",
+    "ariaLabel": "Accountinstellingen",
+    "navLabel": "Accountinstellingen-tabbladen",
+    "tip": "Druk op {key} om dit dialoogvenster overal te heropenen.",
+    "tabs": {
+      "profile": "Profiel",
+      "subscription": "Abonnement",
+      "billing": "Facturering",
+      "preferences": "Voorkeuren",
+      "personalization": "Personalisatie"
+    },
+    "subscription": {
+      "title": "Abonnement",
+      "subtitle": "Plan, quota en verlenging.",
+      "currentPlan": "Huidig plan",
+      "upgradeCta": "Plannen vergelijken",
+      "manageCta": "Abonnement beheren"
+    },
+    "billing": {
+      "title": "Facturatie",
+      "subtitle": "Factuurgeschiedenis en betaalmethode.",
+      "empty": {
+        "title": "Nog geen geschiedenis",
+        "description": "Kosten en facturen verschijnen hier na je eerste betaalde periode.",
+        "cta": "Volledige facturatie openen"
+      }
+    },
+    "preferences": {
+      "title": "Voorkeuren",
+      "subtitle": "Thema en toegankelijkheid.",
+      "theme": "Thema",
+      "light": "Licht",
+      "dark": "Donker",
+      "system": "Systeem",
+      "help": "Help",
+      "reportIssue": "Probleem melden",
+      "shortcuts": "Sneltoetsen"
+    },
+    "personalization": {
+      "title": "Personalisatie",
+      "subtitle": "Vertel Sailor wie je bent en hoe hij moet reageren."
+    }
+  },
+  "impact": {
+    "hero_title": "Het Paradigma Herdefiniëren",
+    "hero_subtitle": "Laat er geen moeilijke zaken meer zijn in de wereld.",
+    "social_title": "Sociaal",
+    "social_headline": "Absolute Techgelijkheid",
+    "social_description": "Empoweren van innovators aan de rand. Traditionele filters doorbreken en solo-founders uitrusten met out-of-the-box infrastructuur.",
+    "governance_title": "Bestuur",
+    "governance_headline": "Code is Wet",
+    "governance_description": "Algoritmisch bestuur gebouwd op Proof of Work en echte bedrijfsresultaten, als vervanging van ondoorzichtige bureaucratie.",
+    "environment_title": "Milieu",
+    "environment_headline": "Digitale Minimalisme",
+    "environment_description": "Het verkleinen van de cloud-footprint via extreme SaaS-integratie en resource-efficiëntie."
+  },
+  "auth": {
+    "security": {
+      "title": "Beveiliging",
+      "description": "Beheer je wachtwoord, tweefactorauthenticatie en actieve sessies.",
+      "managedByProvider": "Beveiligingsinstellingen worden beheerd door je authenticatieprovider.",
+      "openProviderProfile": "Profiel openen",
+      "changePassword": {
+        "title": "Wachtwoord wijzigen",
+        "description": "Gebruik een sterk wachtwoord dat je niet op andere sites hergebruikt.",
+        "currentPasswordLabel": "Huidig wachtwoord",
+        "newPasswordLabel": "Nieuw wachtwoord",
+        "confirmPasswordLabel": "Bevestig nieuw wachtwoord",
+        "revokeOtherSessions": "Afmelden op andere apparaten",
+        "submit": "Wachtwoord bijwerken",
+        "pending": "Wachtwoord bijwerken…",
+        "success": "Wachtwoord succesvol bijgewerkt."
+      },
+      "twoFactor": {
+        "title": "Tweestapsverificatie",
+        "description": "Voeg een tweede verificatiestap toe met een authenticator-app.",
+        "enabled": "Ingeschakeld",
+        "disabled": "Uitgeschakeld",
+        "enabledHelp": "Je account vraagt om een 6-cijferige authenticatorcode na het inloggen met je wachtwoord.",
+        "disabledHelp": "Bescherm je account met een 6-cijferige code uit een authenticator-app.",
+        "enable": "Tweefactorauthenticatie inschakelen",
+        "disable": "Tweefactorauthenticatie uitschakelen",
+        "passwordPrompt": "Bevestig je wachtwoord",
+        "scanQrCode": "Scan deze QR-code met je authenticator-app en voer vervolgens de 6-cijferige code hieronder in.",
+        "secretKeyLabel": "Of voer dit geheim handmatig in",
+        "verificationCodeLabel": "Verificatiecode",
+        "verify": "Verifiëren en inschakelen",
+        "backupCodesTitle": "Back-upcodes",
+        "backupCodesDescription": "Bewaar deze codes op een veilige plek. Elke code kan één keer worden gebruikt als je geen toegang meer hebt tot je authenticator.",
+        "copyBackupCodes": "Codes kopiëren",
+        "finishSetup": "Instellen voltooien",
+        "successEnabled": "Tweefactorauthenticatie ingeschakeld.",
+        "successDisabled": "Tweefactorauthenticatie uitgeschakeld."
+      },
+      "sessions": {
+        "title": "Actieve sessies",
+        "description": "Apparaten en browsers die momenteel zijn aangemeld bij je account.",
+        "currentSession": "(huidig)",
+        "ipLabel": "IP-adres",
+        "lastActiveLabel": "Laatst actief",
+        "revoke": "Afmelden",
+        "revokeAll": "Afmelden op alle andere apparaten",
+        "empty": "Geen andere actieve sessies.",
+        "successRevoked": "Sessie afgemeld.",
+        "successRevokedAll": "Alle andere sessies afgemeld."
+      },
+      "deleteAccount": {
+        "title": "Account verwijderen",
+        "description": "Verwijder je account en alle bijbehorende gegevens permanent. Dit kan niet ongedaan worden gemaakt.",
+        "passwordPrompt": "Voer je wachtwoord in om te bevestigen",
+        "confirmTextLabel": "Typ VERWIJDEREN om te bevestigen",
+        "submit": "Account verwijderen",
+        "cancel": "Annuleren",
+        "success": "Account verwijderd."
+      },
+      "connectedAccounts": {
+        "title": "Verbonden accounts",
+        "description": "Bekijk de OAuth-aanmeldmethoden die zijn gekoppeld aan je Nebutra-identiteit.",
+        "connected": "Verbonden",
+        "connect": "Verbinden",
+        "help": "Houd ten minste één vertrouwde aanmeldmethode beschikbaar voordat je een provider loskoppelt.",
+        "unlink": "Loskoppelen",
+        "notLinked": "Niet verbonden"
+      },
+      "passkeys": {
+        "title": "Sleutels",
+        "description": "Gebruik apparaatgebonden referenties voor phishingbestendige aanmelding.",
+        "empty": "Nog geen sleutels geregistreerd",
+        "addPasskey": "Sleutel toevoegen",
+        "cancelAdd": "Annuleren",
+        "cancelled": "Sleutelconfiguratie is geannuleerd. Er is niets veranderd.",
+        "defaultName": "Sleutel {number}",
+        "nameHelp": "Geef deze sleutel een herkenbare naam voordat je browser om bevestiging vraagt.",
+        "nameLabel": "Sleutelnaam",
+        "rename": "Hernoemen",
+        "saveRename": "Naam opslaan",
+        "remove": "Verwijderen",
+        "successAdded": "Passkey toegevoegd.",
+        "successRemoved": "Passkey verwijderd.",
+        "unavailableBadge": "Niet beschikbaar"
+      },
+      "setPassword": {
+        "title": "Wachtwoord instellen",
+        "description": "Voeg een wachtwoord toe om in te loggen zonder je OAuth-provider.",
+        "submit": "Wachtwoord instellen",
+        "pending": "Wachtwoord-instellingslink verzenden…",
+        "sentMessage": "We hebben een wachtwoord-instellingslink naar je e-mail gestuurd."
+      }
+    },
+    "banner": {
+      "logoAlt": "Nebutra",
+      "slogan": "Lanceer je startup, vanaf dag één beheerd.",
+      "tagline": "Multi-region agents, standaard multi-tenant. Geen platformteam nodig."
+    },
+    "signIn": {
+      "title": "Inloggen bij Nebutra",
+      "subtitle": "Kies hoe je wilt inloggen.",
+      "continueWith": "Doorgaan met",
+      "continueWithProvider": "Doorgaan met {provider}",
+      "providers": {
+        "google": "Google",
+        "github": "GitHub",
+        "apple": "Apple",
+        "microsoft": "Microsoft",
+        "feishu": "Feishu"
+      },
+      "providerLoading": "Doorverwijzen…",
+      "dividerOr": "Of ga verder met e-mail",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "you@example.com",
+      "continue": "Verder",
+      "back": "Terug",
+      "passwordLabel": "Wachtwoord",
+      "passwordPlaceholder": "Voer uw wachtwoord in",
+      "showPassword": "Wachtwoord tonen",
+      "hidePassword": "Wachtwoord verbergen",
+      "capsLockOn": "Caps Lock staat aan",
+      "forgotPassword": "Wachtwoord vergeten?",
+      "submit": "Inloggen",
+      "submitLoading": "Aan het inloggen…",
+      "useMagicLink": "Stuur me in plaats daarvan een magic link",
+      "usePasskey": "Inloggen met een passkey",
+      "passkeyTitle": "Inloggen met je passkey",
+      "passkeyDescription": "Gebruik Face ID, Touch ID of je beveiligingssleutel. Geen wachtwoord nodig.",
+      "passkeyButton": "Doorgaan met passkey",
+      "passkeyCancelled": "Passkey-prompt geannuleerd.",
+      "passkeyUnsupported": "Deze browser ondersteunt geen passkeys.",
+      "passkeyError": "Inloggen met passkey mislukt. Probeer een andere methode.",
+      "ssoTitle": "Doorgaan met Enterprise SSO",
+      "ssoDescription": "Je wordt doorgestuurd naar {provider} voor {email}.",
+      "ssoError": "Enterprise SSO kon niet worden gestart. Probeer een andere methode.",
+      "ssoRetry": "Opnieuw proberen",
+      "newToProduct": "Nieuw bij Nebutra?",
+      "signUpLink": "Aanmelden",
+      "homeLink": "Home",
+      "signInFailed": "Inloggen mislukt",
+      "genericError": "Er is een fout opgetreden. Probeer het opnieuw.",
+      "captchaError": "Botverificatie mislukt. Vernieuw de pagina en probeer het opnieuw.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
+      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
+      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
+      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+    },
+    "signUp": {
+      "title": "Maak je Nebutra-account aan",
+      "subtitle": "Eén account voor elke Nebutra-app.",
+      "firstNameLabel": "Voornaam",
+      "lastNameLabel": "Achternaam",
+      "firstNamePlaceholder": "Voornaam",
+      "lastNamePlaceholder": "Achternaam",
+      "submit": "Account aanmaken",
+      "submitLoading": "Account aanmaken…",
+      "alreadyHaveAccount": "Heb je al een account?",
+      "signInLink": "Inloggen",
+      "signUpFailed": "Aanmelden mislukt",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+    },
+    "passkeys": {
+      "title": "Passkeys",
+      "description": "Gebruik Face ID, Touch ID, Windows Hello of een beveiligingssleutel in plaats van een wachtwoord. Elk apparaat heeft zijn eigen passkey.",
+      "addButton": "Passkey toevoegen",
+      "adding": "Inrichten…",
+      "namePlaceholder": "bijv. MacBook Pro",
+      "nameLabel": "Naam (optioneel)",
+      "registerSuccess": "Passkey toegevoegd.",
+      "registerCancelled": "Inrichting geannuleerd.",
+      "registerUnsupported": "Deze browser ondersteunt geen passkeys.",
+      "registerError": "Passkey registreren mislukt.",
+      "empty": "Nog geen passkeys.",
+      "loadError": "Passkeys laden mislukt.",
+      "revoke": "Verwijderen",
+      "revoking": "Verwijderen…",
+      "revokeConfirm": "Deze passkey verwijderen? Je kunt er niet meer mee inloggen.",
+      "revokeSuccess": "Passkey verwijderd.",
+      "revokeError": "Passkey verwijderen mislukt.",
+      "device": {
+        "singleDevice": "Aan apparaat gebonden",
+        "multiDevice": "Gesynchroniseerd op meerdere apparaten"
+      },
+      "addedOn": "Toegevoegd op {date}"
+    },
+    "magicLink": {
+      "title": "Inloggen met een magische link",
+      "description": "Voer je e-mailadres in en we sturen je een code van 6 cijfers om in te loggen.",
+      "emailLabel": "E-mail",
+      "send": "Link versturen",
+      "codeLabel": "Verificatiecode",
+      "verify": "Verifiëren",
+      "resend": "Code opnieuw versturen",
+      "resendCooldown": "Opnieuw versturen over {seconds}s",
+      "sentTo": "We hebben een code gestuurd naar {email}"
+    },
+    "forgotPassword": {
+      "title": "Wachtwoord vergeten?",
+      "description": "Voer je e-mailadres in en we sturen je een link om je wachtwoord te resetten.",
+      "emailLabel": "E-mail",
+      "submit": "Resetlink versturen",
+      "successTitle": "Controleer je e-mail",
+      "success": "Als dat e-mailadres is geregistreerd, ontvang je binnenkort een link om je wachtwoord te resetten."
+    },
+    "resetPassword": {
+      "title": "Wachtwoord opnieuw instellen",
+      "description": "Kies een nieuw wachtwoord voor je account.",
+      "newPasswordLabel": "Nieuw wachtwoord",
+      "confirmPasswordLabel": "Bevestig nieuw wachtwoord",
+      "submit": "Wachtwoord opnieuw instellen",
+      "successTitle": "Wachtwoord opnieuw ingesteld",
+      "successDescription": "Je kunt nu inloggen met je nieuwe wachtwoord.",
+      "signInCta": "Naar inloggen",
+      "invalidTitle": "Ongeldige resetlink",
+      "invalidDescription": "Deze link om je wachtwoord te resetten ontbreekt of is ongeldig. Vraag een nieuwe aan op de pagina voor vergeten wachtwoord."
+    },
+    "verifyEmail": {
+      "successTitle": "E-mail geverifieerd",
+      "successDescription": "Je e-mailadres is geverifieerd.",
+      "failureTitle": "Verificatie mislukt",
+      "failureDescription": "We konden je e-mailadres niet verifiëren met die link.",
+      "continueCta": "Verdergaan",
+      "signInCta": "Ga naar inloggen"
+    },
+    "loginSuccess": {
+      "eyebrow": "Inloggen voltooid",
+      "title": "Je bent ingelogd",
+      "description": "Je sessie is klaar. We openen de Nebutra-werkruimte en behouden de veilige overdracht vanuit het authenticatieproces.",
+      "session": "Sessie",
+      "verified": "Geverifieerd",
+      "workspace": "Werkruimte",
+      "preparing": "Voorbereiden",
+      "redirecting": "Werkruimte binnen {seconds}s betreden",
+      "secureHandoff": "Veilige overdracht",
+      "continueCta": "Ga naar werkruimte",
+      "signInCta": "Gebruik een ander account"
+    },
+    "errors": {
+      "invalidCredentials": "E-mailadres of wachtwoord is onjuist.",
+      "userNotFound": "Geen account gevonden met dat e-mailadres.",
+      "userAlreadyExists": "Er bestaat al een account met dat e-mailadres.",
+      "weakPassword": "Wachtwoord is te zwak. Gebruik minimaal 8 tekens met hoofdletters, kleine letters en cijfers.",
+      "passwordsDontMatch": "Wachtwoorden komen niet overeen.",
+      "passwordTooShort": "Wachtwoord moet minimaal 8 tekens bevatten.",
+      "currentPasswordIncorrect": "Huidig wachtwoord is onjuist.",
+      "samePassword": "Nieuw wachtwoord moet verschillen van je huidige wachtwoord.",
+      "invalidEmail": "E-mailadres is niet geldig.",
+      "emailNotVerified": "Verifieer eerst je e-mailadres.",
+      "sessionExpired": "Je sessie is verlopen. Meld je opnieuw aan.",
+      "twoFactorRequired": "Twee-factorverificatie vereist.",
+      "invalidVerificationCode": "Verificatiecode is onjuist of verlopen.",
+      "twoFactorAlreadyEnabled": "Twee-factorauthenticatie is al ingeschakeld.",
+      "twoFactorNotEnabled": "Twee-factorauthenticatie is niet ingeschakeld.",
+      "tooManyAttempts": "Te veel pogingen. Probeer het later opnieuw.",
+      "rateLimited": "Je doet dat te vaak. Langzamer aan.",
+      "providerNotSupported": "Deze actie wordt beheerd door je authenticatieprovider.",
+      "networkError": "Netwerkfout. Controleer je verbindingen en probeer opnieuw.",
+      "unknown": "Er ging iets mis. Probeer het opnieuw."
+    }
+  },
+  "chat": {
+    "suggestions": {
+      "title": "Probeer een van deze om te beginnen",
+      "activity": {
+        "title": "Toon recente activiteit",
+        "prompt": "Toon me de meest recente activiteit in mijn werkruimte van de afgelopen 24 uur."
+      },
+      "debug": {
+        "title": "Fout oplossen",
+        "prompt": "Help me een runtime-fout op te lossen. Ik plak de stack trace en je begeleidt me erdoorheen."
+      },
+      "email": {
+        "title": "Een samenvattingsmail opstellen",
+        "prompt": "Stel een beknopte wekelijkse samenvattingsmail op die ik naar mijn team kan sturen over de voortgang van het platform."
+      },
+      "features": {
+        "title": "Platformfuncties verkennen",
+        "prompt": "Leg me de belangrijkste functies van dit SaaS-platform uit en hoe ik ze kan gebruiken."
+      }
+    }
+  },
+  "billing": {
+    "activePlan": {
+      "title": "Actief abonnement",
+      "manage": "Abonnement beheren",
+      "noPlanTitle": "Geen actief abonnement",
+      "noPlanDescription": "Kies een abonnement om betaalde functies en hogere gebruikslimieten te ontgrendelen.",
+      "choosePlan": "Kies een abonnement",
+      "renewsOn": "Vervaldatum: {date}",
+      "endsOn": "Eindigt op {date}",
+      "trialEndsOn": "Proefperiode eindigt op {date}",
+      "status": {
+        "active": "Actief",
+        "trialing": "Proefperiode",
+        "past_due": "Achterstand",
+        "canceled": "Geannuleerd",
+        "free": "Gratis"
+      },
+      "errors": {
+        "loadFailed": "Kon uw factureringsstatus niet laden."
+      }
+    },
+    "pricing": {
+      "trial": "Gratis proefperiode van {days} dagen",
+      "seat": "{count, plural, one {# zitplaats} other {# zitplaatsen}}",
+      "perSeat": "/ zitplaats"
+    }
+  },
+  "organizations": {
+    "settings": {
+      "logo": {
+        "title": "Organisatielogo",
+        "description": "Upload een vierkante afbeelding (PNG, JPEG of WebP, maximaal 2 MB) om uw organisatie te vertegenwoordigen.",
+        "uploadButton": "Logo uploaden",
+        "uploading": "Uploaden…",
+        "fileTooBig": "Bestand is te groot. Maximale grootte is 2 MB.",
+        "invalidType": "Niet-ondersteund afbeeldingstype. Gebruik PNG, JPEG of WebP.",
+        "success": "Logo bijgewerkt.",
+        "removeButton": "Logo verwijderen",
+        "removed": "Logo verwijderd."
+      },
+      "name": {
+        "title": "Organisatienaam",
+        "description": "Werk de weergavenaam bij die aan je team en klanten wordt getoond.",
+        "label": "Naam",
+        "submit": "Opslaan",
+        "saving": "Opslaan…",
+        "success": "Organisatienaam bijgewerkt."
+      },
+      "delete": {
+        "title": "Organisatie verwijderen",
+        "description": "Verwijder deze organisatie, alle leden, uitnodigingen en bijbehorende gegevens permanent. Deze actie kan niet ongedaan worden gemaakt.",
+        "trigger": "Organisatie verwijderen",
+        "confirmLabel": "Typ de organisatienaam om te bevestigen",
+        "submit": "Organisatie verwijderen",
+        "cancel": "Annuleren",
+        "success": "Organisatie verwijderd."
+      }
+    },
+    "invitation": {
+      "title": "Je bent uitgenodigd",
+      "heading": "Je bent uitgenodigd om lid te worden van {organizationName}",
+      "description": "Accepteer de uitnodiging om samen te werken met het team.",
+      "accept": "Uitnodiging accepteren",
+      "accepting": "Aan het accepteren...",
+      "decline": "Afwijzen",
+      "declining": "Aan het afwijzen...",
+      "declinedView": "Uitnodiging afgewezen",
+      "success": "We hebben de uitnodiger op de hoogte gesteld.",
+      "backToDashboard": "Terug naar dashboard",
+      "roleLabel": "Rol: {role}",
+      "errorEmailMismatch": "Deze uitnodiging is naar een ander e-mailadres verstuurd",
+      "errorEmailMismatchDetail": "Meld je aan met het e-mailadres dat de uitnodiging heeft ontvangen om deze te accepteren.",
+      "errorExpired": "Uitnodiging verlopen",
+      "errorExpiredDetail": "Vraag de uitnodiger om een nieuwe uitnodiging te sturen.",
+      "errorNotFound": "Uitnodiging niet gevonden",
+      "errorNotFoundDetail": "De uitnodigingslink is ongeldig of is ingetrokken.",
+      "errorNotAvailable": "Uitnodiging niet beschikbaar",
+      "errorNotAvailableDetail": "Er is al op deze uitnodiging gereageerd en deze is niet langer actief.",
+      "role": {
+        "owner": "Eigenaar",
+        "admin": "Beheerder",
+        "member": "Lid",
+        "viewer": "Kijker"
+      }
+    }
+  },
+  "settings": {
+    "apiKeys": {
+      "title": "API-sleutels",
+      "description": "Genereer en beheer API-sleutels voor programmatieke toegang tot Nebutra.",
+      "createButton": "API-sleutel aanmaken",
+      "noPermission": "Je hebt geen toestemming om API-sleutels te bekijken.",
+      "loading": "Laden…",
+      "loadError": "Kan API-sleutels niet laden.",
+      "createError": "Kan API-sleutel niet aanmaken.",
+      "revokeError": "Kan API-sleutel niet intrekken.",
+      "empty": {
+        "title": "Nog geen API-sleutels",
+        "cta": "Maak je eerste API-sleutel aan"
+      },
+      "columns": {
+        "name": "Naam",
+        "prefix": "Voorvoegsel",
+        "lastUsed": "Laatst gebruikt",
+        "scopes": "Bereiken",
+        "created": "Aangemaakt",
+        "actions": "Acties",
+        "never": "Nooit"
+      },
+      "actions": {
+        "revoke": "Intrekken",
+        "revoking": "Intrekken…",
+        "copy": "Kopiëren",
+        "copied": "Gekopieerd",
+        "close": "Sluiten",
+        "submit": "Sleutel aanmaken",
+        "submitting": "Aanmaken…"
+      },
+      "dialog": {
+        "title": "API-sleutel aanmaken",
+        "description": "Met API-sleutels kunnen externe systemen namens jou communiceren met Nebutra. Behandel ze als wachtwoorden.",
+        "nameLabel": "Naam",
+        "namePlaceholder": "bijv. Productie backend",
+        "scopesLabel": "Bereiken",
+        "successWarning": "Deze sleutel wordt slechts één keer weergegeven. Bewaar hem voordat je sluit.",
+        "confirmClose": "Sluiten verbergt deze sleutel permanent. Zorg dat hij is opgeslagen."
+      }
+    },
+    "auditLog": {
+      "title": "Auditlogboek",
+      "description": "Houd elke beheeractie in je werkruimte bij. Filter op actor, actie, entiteit of tijdspanne.",
+      "empty": "Nog geen auditgebeurtenissen",
+      "loadMore": "Meer laden",
+      "loading": "Laden…",
+      "forbidden": "Je hebt beheerdersrechten nodig om het auditlogboek te bekijken.",
+      "columns": {
+        "when": "Wanneer",
+        "actor": "Acteur",
+        "action": "Actie",
+        "entity": "Entiteit",
+        "outcome": "Uitslag",
+        "ip": "IP"
+      },
+      "diff": {
+        "oldValue": "Oude waarde",
+        "newValue": "Nieuwe waarde"
+      },
+      "filters": {
+        "action": "Actie",
+        "actionPlaceholder": "Zoek actie…",
+        "entityType": "Entiteittype",
+        "outcome": "Uitslag",
+        "outcomeSuccess": "Succes",
+        "outcomeFailure": "Mislukt",
+        "outcomePending": "In afwachting",
+        "startDate": "Startdatum",
+        "endDate": "Einddatum",
+        "range24h": "Laatste 24u",
+        "range7d": "Laatste 7d",
+        "range30d": "Laatste 30d",
+        "reset": "Resetten",
+        "all": "Alles"
+      }
+    },
+    "notifications": {
+      "title": "Meldingen",
+      "description": "Kies hoe Nebutra je bereikt voor elk gebeurtenistype op elk leveringskanaal.",
+      "actions": {
+        "resetAll": "Terugzetten naar standaard",
+        "save": "Opslaan"
+      },
+      "status": {
+        "saving": "Opslaan…",
+        "saved": "Opgeslagen",
+        "error": "Opslaan mislukt. Probeer het opnieuw."
+      },
+      "eventTypes": {
+        "security": {
+          "label": "Beveiligingsmeldingen",
+          "description": "Inlogmeldingen, wachtwoordwijzigingen, tweefactorwijzigingen."
+        },
+        "billing": {
+          "label": "Facturering",
+          "description": "Facturen, betalingsfouten en abonnementswijzigingen."
+        },
+        "invitation": {
+          "label": "Teamuitnodigingen",
+          "description": "Uitnodigingen om een organisatie te joinen, geaccepteerd of geweigerd."
+        },
+        "activity": {
+          "label": "Teamactiviteit",
+          "description": "Leden toegetreden, rolwijzigingen en andere werkruimteactiviteit."
+        },
+        "updates": {
+          "label": "Productupdates",
+          "description": "Nieuwe functies, changelog-hoogtepunten en release notes."
+        },
+        "marketing": {
+          "label": "Marketing",
+          "description": "Nieuwsbrief en af en toe promoties. Alleen op aanvraag."
+        }
+      },
+      "channels": {
+        "in_app": {
+          "label": "In-app"
+        },
+        "email": {
+          "label": "E-mail"
+        },
+        "push": {
+          "label": "Push"
+        },
+        "sms": {
+          "label": "SMS"
+        }
+      }
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "Abonneer je op gebeurtenissen die door je werkruimte worden gegenereerd. We ondertekenen elke payload met het geheim van je eindpunt, zodat je de authenticiteit kunt verifiëren.",
+      "create": {
+        "heading": "Nieuw eindpunt",
+        "urlLabel": "Eindpunt-URL",
+        "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
+        "eventsLegend": "Gebeurtenissen",
+        "submit": "Eindpunt aanmaken",
+        "submitting": "Aanmaken…",
+        "selectEvent": "Selecteer ten minste één gebeurtenis.",
+        "successTitle": "Eindpunt aangemaakt. Het ondertekeningsgeheim wordt slechts één keer weergegeven.",
+        "successWarning": "Bewaar het in de geheimenbeheerder van uw applicatie voordat u sluit.",
+        "copy": "Kopiëren",
+        "copied": "Gekopieerd"
+      },
+      "list": {
+        "heading": "Actieve eindpunten",
+        "empty": "Nog geen webhook-eindpunten. Maak er hierboven een aan.",
+        "loading": "Laden…",
+        "loadFailed": "Webhooks konden niet worden geladen",
+        "columns": {
+          "url": "URL",
+          "events": "Gebeurtenissen",
+          "status": "Status",
+          "lastDelivered": "Laatst afgeleverd",
+          "actions": "Acties"
+        },
+        "status": {
+          "active": "Actief",
+          "disabled": "Uitgeschakeld"
+        },
+        "actions": {
+          "edit": "Bewerken",
+          "enable": "Inschakelen",
+          "disable": "Uitschakelen",
+          "viewDeliveries": "Afleveringen bekijken",
+          "delete": "Verwijderen"
+        }
+      },
+      "deliveries": {
+        "heading": "Recente afleveringen",
+        "close": "Sluiten",
+        "loading": "Laden…",
+        "loadFailed": "Afleveringen laden mislukt",
+        "empty": "Nog geen afleveringen.",
+        "viewPayload": "Payload bekijken",
+        "hidePayload": "Payload verbergen",
+        "replay": "Opnieuw afleveren",
+        "replaying": "Opnieuw afleveren…",
+        "status": {
+          "success": "geslaagd",
+          "failed": "mislukt",
+          "retrying": "opnieuw proberen"
+        }
+      }
+    },
+    "appearance": {
+      "title": "Weergave",
+      "theme": {
+        "title": "Thema",
+        "description": "Gebruik licht, donker of volg de systeemvoorkeur."
+      },
+      "themePreset": {
+        "title": "Themapreset",
+        "description": "Pas een thema uit Theme Playground toe op de hele app. De onderstaande instellingen kunnen worden gebruikt om het verder aan te passen.",
+        "search": "Thema's zoeken…",
+        "searchLabel": "Thema's zoeken",
+        "default": "Standaard",
+        "defaultMood": "Nebutra base palette",
+        "active": "Actief",
+        "empty": "Geen thema's gevonden die overeenkomen met uw zoekopdracht.",
+        "count": "{count} thema's"
+      },
+      "themeEditor": {
+        "title": "Thema",
+        "description": "Kies een preset, importeer een DESIGN.md en pas de tokens hieronder verder aan.",
+        "selectLabel": "Themapreset",
+        "import": "Importeren",
+        "copy": "Thema kopiëren",
+        "copied": "Gekopieerd",
+        "copyError": "Kopiëren mislukt",
+        "custom": "Aangepast"
+      },
+      "designMd": {
+        "title": "DESIGN.md importeren",
+        "description": "Plak of upload een DESIGN.md om de kleuren, radius, lettertypen, opmaak en schaduwen over de hele app toe te passen — dit blijft behouden na herladen.",
+        "applied": "Toegepast:",
+        "remove": "Verwijderen"
+      },
+      "themeMode": {
+        "label": "Themamodus",
+        "light": "Licht",
+        "dark": "Donker",
+        "system": "Systeem"
+      },
+      "accent": {
+        "title": "Accentkleur",
+        "description": "Kies een merkaccent dat actieve statussen in de hele app een tint geeft.",
+        "label": "Accentkleur",
+        "options": {
+          "default": "Standaard",
+          "blue": "Blauw",
+          "cyan": "Cyaan",
+          "violet": "Violet",
+          "pink": "Roze",
+          "amber": "Amber",
+          "green": "Groen",
+          "red": "Rood"
+        }
+      },
+      "colors": {
+        "title": "Kleuren",
+        "description": "Accent, achtergrond en voorgrond.",
+        "background": {
+          "label": "Achtergrond",
+          "description": "Overschrijf de achtergrondkleur van het oppervlak."
+        },
+        "foreground": {
+          "label": "Voorgrond",
+          "description": "Overschrijf de tekstkleur van de inhoud."
+        },
+        "resetToDefault": "Terug naar standaard"
+      },
+      "fontFamily": {
+        "uiLabel": "UI-lettertype",
+        "uiDescription": "Lettertype dat in de hele UI wordt gebruikt.",
+        "codeLabel": "Code-lettertype",
+        "codeDescription": "Lettertype dat wordt gebruikt voor code-oppervlakken.",
+        "options": {
+          "ui": {
+            "theme": "Standaard thema",
+            "system": "Systeem",
+            "geist": "Geist",
+            "inter": "Inter",
+            "sf": "SF Pro"
+          },
+          "code": {
+            "theme": "Standaard thema",
+            "system": "Systeem mono",
+            "geist-mono": "Geist Mono",
+            "sf-mono": "SF Mono",
+            "jetbrains-mono": "JetBrains Mono"
+          }
+        }
+      },
+      "contrast": {
+        "title": "Contrast",
+        "description": "Fijnafstemmen van tekstcontrast (50 = geen wijziging).",
+        "label": "Contrastniveau"
+      },
+      "pointerCursor": {
+        "title": "Pointer-cursor gebruiken",
+        "description": "Schakel over naar een aanwijzercurser bij interactieve elementen.",
+        "label": "Aanwijzercurser op interactieve elementen"
+      },
+      "diffMarkers": {
+        "title": "Diff-markeringen",
+        "description": "Toon kleurbanden of +/--glyphen op elke gewijzigde regel.",
+        "label": "Stijl diff-markering",
+        "color": "Kleur",
+        "plusminus": "+/-"
+      },
+      "fontSmoothing": {
+        "title": "Lettertypegladstelling",
+        "description": "Pas macOS-native lettertype-anti-aliasing toe.",
+        "label": "Native lettertypegladstelling"
+      },
+      "typography": {
+        "title": "Typografie",
+        "description": "Basislettergroottes voor UI- en codeoppervlakken.",
+        "uiFontSize": "UI-lettergrootte",
+        "uiFontSizeDescription": "Pas de basislettergrootte van de UI aan.",
+        "codeFontSize": "Code-lettergrootte",
+        "codeFontSizeDescription": "Pas de basislettergrootte van code aan."
+      },
+      "fontSize": {
+        "followTheme": "Thema",
+        "customize": "Aanpassen"
+      },
+      "motion": {
+        "title": "Beweging verminderen",
+        "description": "Verminder animaties of volg de systeemvoorkeur.",
+        "label": "Voorkeur beweging",
+        "system": "Systeem",
+        "on": "Aan",
+        "off": "Uit"
+      },
+      "surface": {
+        "title": "Transparante zijbalk",
+        "description": "Pas een transparant materiaal toe op de zijbalk."
+      },
+      "transparency": {
+        "label": "Transparante zijbalk",
+        "description": "Pas een transparant materiaal toe on de zijbalk."
+      }
+    }
+  },
+  "legal": {
+    "version": "Versie",
+    "effective": "Geldig",
+    "notFound": "Dit document is niet beschikbaar.",
+    "backHome": "Terug naar start"
+  },
+  "commandPalette": {
+    "ariaLabel": "Commandopallet",
+    "placeholder": "Typ een opdracht of zoek…",
+    "empty": "Geen resultaten gevonden.",
+    "sections": {
+      "navigation": "Navigatie",
+      "actions": "Acties",
+      "settings": "Instellingen",
+      "account": "Account",
+      "admin": "Admin",
+      "help": "Help"
+    },
+    "commands": {
+      "nav": {
+        "home": "Home",
+        "settings": "Instellingen",
+        "billing": "Facturatie",
+        "team": "Team",
+        "apiKeys": "API-sleutels",
+        "notifications": "Meldingen",
+        "auditLog": "Auditlogboek",
+        "webhooks": "Webhooks",
+        "admin": "Beheer"
+      },
+      "action": {
+        "inviteMember": "Teamlid uitnodigen",
+        "createApiKey": "API-sleutel aanmaken",
+        "switchOrganization": "Organisatie wisselen"
+      },
+      "settings": {
+        "themeLight": "Wisselen naar licht thema",
+        "themeDark": "Wisselen naar donker thema",
+        "themeSystem": "Systeemthema gebruiken"
+      },
+      "account": {
+        "signOut": "Afmelden"
+      },
+      "help": {
+        "reportIssue": "Probleem melden",
+        "shortcuts": "Sneltoetsen"
+      }
+    }
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "Uw privacykeuzes",
+      "description": "We gebruiken cookies om uw ervaring te verbeteren, siteverkeer te analyseren en inhoud te personaliseren. Kies welke categorieen u wilt toestaan."
+    },
+    "button": {
+      "acceptAll": "Alles accepteren",
+      "savePreferences": "Voorkeuren opslaan"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "Noodzakelijk",
+        "description": "Vereist voor de werking van de site. Kan niet worden uitgeschakeld."
+      },
+      "functional": {
+        "label": "Functioneel",
+        "description": "Onthoud je voorkeuren (taal, thema, lay-out)."
+      },
+      "analytics": {
+        "label": "Analytics",
+        "description": "Anonieme gebruiksgegevens zodat we het product kunnen verbeteren."
+      },
+      "marketing": {
+        "label": "Marketing",
+        "description": "Gepersonaliseerde advertenties en retargeting op externe platforms."
+      }
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "Meldingen",
+      "description": "Al je meldingen op één plek.",
+      "filter": {
+        "all": "Alles",
+        "unread": "Ongelezen"
+      },
+      "actions": {
+        "markAllRead": "Alles als gelezen markeren",
+        "markRead": "Als gelezen markeren",
+        "archive": "Archiveren",
+        "loadMore": "Meer laden",
+        "loading": "Laden...",
+        "selected": "{count} geselecteerd"
+      },
+      "empty": {
+        "all": "Je bent helemaal bij.",
+        "unread": "Geen ongelezen meldingen."
+      },
+      "errors": {
+        "load": "Meldingen konden niet worden geladen.",
+        "network": "Netwerkfout. Probeer het opnieuw.",
+        "markRead": "Melding kon niet als gelezen worden gemarkeerd.",
+        "archive": "Melding kon niet worden gearchiveerd.",
+        "bulkMarkRead": "Sommige meldingen konden niet als gelezen worden gemarkeerd."
+      },
+      "inbox": {
+        "noBackend": "Inbox vereist een persistente meldingbackend. Controleer je providerconfiguratie.",
+        "emptyCaughtUp": "Inbox is leeg.",
+        "emptyChangelog": "Changelog-updates verschijnen hier."
+      }
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Goedemorgen",
+      "afternoon": "Goedemiddag",
+      "evening": "Goedenavond"
+    },
+    "home": {
+      "connectorsPill": "Versterk je app met connectors",
+      "subtitle": "Zet een prompt neer, druk op ⌘K van overal, of ga direct naar een werkruimte.",
+      "promptPlaceholder": "Waar denk je aan?",
+      "actions": {
+        "connect": "Integratie koppelen",
+        "theme": "Thema Playground",
+        "audit": "Auditlogboek",
+        "billing": "Facturering"
+      }
+    },
+    "commandSurface": {
+      "noAuth": "Authenticatie is niet geconfigureerd voor de geselecteerde provider. Stel de provider secrets in om gebruikerssessies in te schakelen."
+    },
+    "commandCenter": {
+      "description": "Begin met één actie: vraag Sailor, inspecteer werkruimte-signalen of routeer werk naar een automatiseringsoppervlak.",
+      "openSailor": "Sailor AI openen",
+      "viewAnalytics": "Analytics bekijken"
+    },
+    "workspaceSnapshot": {
+      "title": "Werkruimte Snapshot",
+      "description": "Laatste warehouse dag · {day}",
+      "viewAnalytics": "Analytics bekijken →",
+      "metrics": {
+        "activeUsers": "Actieve gebruikers",
+        "totalEvents": "Totaal gebeurtenissen",
+        "conversions": "Conversies",
+        "revenue": "Omzet"
+      },
+      "details": {
+        "activeUsers": "Aangemelde gebruikers",
+        "totalEvents": "Geregistreerde gebeurtenissen",
+        "conversions": "Gekwalificeerde acties",
+        "revenue": "Erkende omzet"
+      },
+      "meta": {
+        "snapshot": "Momentopname",
+        "cadence": "Frequentie",
+        "tenant": "Tenant",
+        "daily": "Dagelijks",
+        "latestDay": "{day}",
+        "users": "Tenantgebruikers",
+        "events": "Gebeurtenissenstroom",
+        "funnel": "Trechter",
+        "billing": "Facturering"
+      }
+    },
+    "documentPipeline": {
+      "title": "Documentpipeline",
+      "description": "Stuur bronbestanden naar de oorspronkelijke taakwachtrij.",
+      "intakeTitle": "Documentinname",
+      "intakeDescription": "PDF, Markdown, tekst of Word-document",
+      "chooseDocument": "Document kiezen",
+      "startParseTask": "Parse-taak starten",
+      "queued": "In wachtrij",
+      "fileInputLabel": "Documentbestand",
+      "fallbackError": "Documenttaak mislukt.",
+      "taskStatus": "Taakstatus",
+      "progressLabel": "Taakvoortgang",
+      "refreshStatus": "Vernieuwen",
+      "cancelTask": "Annuleren",
+      "statusError": "Kan taakstatus niet vernieuwen.",
+      "cancelError": "Kan taak niet annuleren.",
+      "statusQueued": "In wachtrij",
+      "statusRunning": "Bezig",
+      "statusSucceeded": "Geslaagd",
+      "statusFailed": "Mislukt",
+      "statusCancelled": "Geannuleerd",
+      "resultReady": "Resultaat beschikbaar",
+      "taskError": "Taakfout",
+      "updatedAt": "Bijgewerkt"
+    },
+    "recentSessions": {
+      "title": "Ga verder waar je gebleven was",
+      "subtitle": "{count, plural, =0 {Geen sessies} =1 {1 recente sessie} other {# recente sessies}}",
+      "viewAll": "Alles bekijken →",
+      "newChat": "Nieuwe chat",
+      "untitled": "Naamloze sessie",
+      "messageCount": "{count, plural, =1 {1 bericht} other {# berichten}}"
+    },
+    "gettingStarted": {
+      "title": "Aan de slag",
+      "description": "{done} van {total} voltooid · voltooi de instellingen om de volledige werkruimte te ontgrendelen",
+      "progressLabel": "Instellingsvoortgang",
+      "tasks": {
+        "team": {
+          "label": "Nodig een teamgenoot uit",
+          "description": "Nodig minstens één medewerker uit in je werkruimte."
+        },
+        "api": {
+          "label": "Genereer een API-sleutel",
+          "description": "Programmatieve toegang tot je werkruimte-eindpunten."
+        },
+        "integration": {
+          "label": "Verbind een integratie",
+          "description": "Stripe, Slack, webhooks, wachtrijen en meer."
+        },
+        "ai": {
+          "label": "Open Sailor AI",
+          "description": "Probeer chat-, data- of workflowmodus."
+        }
+      }
+    }
+  },
+  "Sidebar": {
+    "projects": "Projecten",
+    "noThreads": "Geen threads",
+    "expandAll": "Alles uitvouwen",
+    "collapseAll": "Alles invouwen",
+    "sectionMore": "Meer opties",
+    "newProject": "Nieuw project",
+    "restoredGroups": "Voorheen uitgevouwen groepen hersteld",
+    "newProjectPlaceholder": "Projectnaam",
+    "newProjectDefault": "Naamloos",
+    "newProjectSuccess": "Project aangemaakt",
+    "newProjectError": "Kon project niet aanmaken",
+    "sortBy": "Sorteren op",
+    "sortRecent": "Recent actief",
+    "sortAlphabetical": "Alfabetisch",
+    "sortCreated": "Aanmaakdatum",
+    "archiveAll": "Alles archiveren",
+    "comingV2": "Binnenkort in v2"
+  },
+  "startupOs": {
+    "milestone": {
+      "firstRoom": "De eerste ruimte is klaar.",
+      "firstFolder": "Veel bedrijven beginnen als een map.",
+      "firstTable": "De eerste tafel heeft een tweede stoel.",
+      "firstSignal": "De echte wereld begint te praten.",
+      "firstShip": "De wereld ziet het voor het eerst.",
+      "firstBeliever": "Vanaf vandaag bouw je niet langer alleen voor jezelf.",
+      "firstRevenue": "De droom heeft nu cashflow.",
+      "firstReturn": "Terugkeren telt meer dan bezoeken.",
+      "firstTeam": "Drie mensen kunnen beginnen met het vormen van een bedrijf.",
+      "firstCrowd": "De eerste tafel wordt druk.",
+      "firstReset": "Een herstart is een eerlijk begin.",
+      "firstPublic": "Zet een stukje van de toekomst in het openbaar.",
+      "firstDemo": "Dit is geen show. Het is een test.",
+      "graduation": "Je bent de basis te groot geworden. De weg vooruit vraagt om sterkere tools."
+    },
+    "emptyState": {
+      "default": "Veel bedrijven beginnen als een map.",
+      "integrations": "Geen connectoren geconfigureerd.",
+      "creditActivity": "Creditactiviteit verschijnt na je eerste verzoek.",
+      "usageData": "Gebruiksgegevens verschijnen zodra je organisatie verzoeken doet.",
+      "apiKeys": "Nog geen sleutels.",
+      "apiKeysCta": "Maak je eerste sleutel aan",
+      "teamMembers": "Eén kan beginnen. Een paar kunnen bouwen.",
+      "cofounders": "De eerste persoon die in je gelooft, is nog niet verschenen.",
+      "cofoundersDescription": "Wanneer jij en een andere oprichter beide interesse tonen, verschijnen ze hier.",
+      "cofoundersAction": "Zoek medeoprichters",
+      "growthChart": "Trendgegevens verschijnen zodra er activiteit is.",
+      "revenueChart": "Omzetgegevens verschijnen zodra er transacties plaatsvinden.",
+      "webhookDeliveries": "Afleveringen verschijnen hier na het eerste gebeurtenis.",
+      "webhookEndpoints": "Voeg hierboven een eindpunt toe om gebeurtenissen te ontvangen.",
+      "accessInvites": "Geen uitnodigingscodes uitgegeven."
+    },
+    "success": "De eerste ruimte is klaar.",
+    "failure": "Een herstart is een eerlijk begin.",
+    "errors": {
+      "loadMatches": "Matches konden niet worden geladen.",
+      "loadMatchesDescription": "Er ging iets mis aan onze kant. Vernieuw om het opnieuw te proberen.",
+      "loadWebhookDeliveries": "Afleveringen konden niet worden geladen.",
+      "replayWebhookDelivery": "De herhaling is niet gelukt.",
+      "loadWebhookEndpoints": "Eindpunten konden niet worden geladen."
+    },
+    "team": "Eén kan beginnen. Een paar kunnen bouwen.",
+    "revenue": "De droom heeft nu cashflow.",
+    "growth": "Het signaal wordt sterker.",
+    "deployment": {
+      "primary": "De wereld ziet het voor het eerst.",
+      "echo": "Het heeft eindelijk localhost verlaten."
+    },
+    "onboarding": "Je hoeft niet klaar te zijn. Je moet beginnen.",
+    "graduation": "Je bent de basis te groot geworden. Probeer {tool} voor de weg die voorligt.",
+    "company": {
+      "emptyTitle": "Je eerste contexttoren begint hier.",
+      "emptyDescription": "Compileer een bedrijf in Startup OS om de context tower te bekijken en te bewerken.",
+      "emptyAction": "Startup OS openen",
+      "notice": {
+        "needsProvider": "Koppel een AI-provider-sleutel om velden automatisch in te vullen.",
+        "generateFailed": "De generatie is niet voltooid.",
+        "saveFailed": "Je wijzigingen zijn niet opgeslagen."
+      },
+      "action": {
+        "save": "Opslaan",
+        "saving": "Opslaan…",
+        "cancel": "Annuleren",
+        "open": "Startup OS openen"
+      }
+    },
+    "execution": {
+      "noBets": "Nog geen inzetten.",
+      "noRuns": "Geen actieve runs."
+    },
+    "fileTree": {
+      "empty": "Dit project heeft nog geen bestanden."
+    }
+  },
+  "selectOrg": {
+    "invitation": {
+      "emptyTitle": "De werkruimte is onderweg.",
+      "emptyDescription": "De uitnodiging wordt mogelijk nog gesynchroniseerd. Vernieuw deze pagina of maak een aparte werkruimte aan."
+    },
+    "billing": {
+      "emptyTitle": "Maak een werkruimte aan voordat je factuurt.",
+      "emptyDescription": "Factuuracties vereisen een actieve werkruimte. Maak er eerst een aan en keer daarna terug naar facturatie."
+    },
+    "default": {
+      "emptyTitle": "Het eerste werkruimte begint hier.",
+      "emptyDescription": "Maak een werkruimte om te beginnen."
+    }
+  }
+}

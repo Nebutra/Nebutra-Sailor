@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — pasar API",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "Pasar API semua model · bayar ikut guna · urus kunci & dompet · cuba pantas."
+  },
+  "admin": {
+    "dashboard": "Gambaran Keseluruhan",
+    "keys": "Kunci API",
+    "wallet": "Dompet",
+    "docs": "Dokumen",
+    "title": "Admin",
+    "backToMarket": "Kembali ke pasar",
+    "quickUse": "Guna pantas"
+  },
+  "chrome": {
+    "searchPlaceholder": "Apa yang anda mahu lakukan dengan AI?",
+    "search": "Cari",
+    "locale": "Bahasa",
+    "currency": "Mata wang",
+    "collapseSidebar": "Runtuhkan bar sisi",
+    "expandSidebar": "Kembangkan bar sisi",
+    "home": "Utama",
+    "adminConsole": "Pentadbir",
+    "quickUse": "Guna pantas",
+    "support": "Sokongan",
+    "apiDocs": "Dokumen API",
+    "integrationHelp": "Panduan integrasi",
+    "aiRecommend": "Cadangan AI",
+    "market": "Pasaran",
+    "usageTitle": "Gunakan segera"
+  },
+  "channels": {
+    "app": "Pasaran aplikasi",
+    "api": "Pasaran API",
+    "models": "Katalog model",
+    "client": "Pelanggan"
+  },
+  "market": {
+    "new": "Baru",
+    "hot": "Popular",
+    "forYou": "Untuk anda",
+    "grid": "Grid",
+    "list": "Senarai",
+    "apiShelf": "Rak API",
+    "toolShelf": "Rak alat",
+    "categories": "Kategori",
+    "apps": "Aplikasi",
+    "newRelease": "Keluaran baru",
+    "forgeTitle": "Ruang kerja alat Forge",
+    "forgeBlurb": "Transformasi teks, codec, borang, dan alat yang boleh digabungkan. Pasaran aplikasi merujuk kepada Forge.",
+    "openForge": "Buka Forge →",
+    "allApi": "Semua API →",
+    "all": "Semua →",
+    "viewAll": "Lihat semua {label} →",
+    "gridView": "Paparan grid",
+    "listView": "Paparan senarai",
+    "hiTitle": "Platform sumber AI perusahaan",
+    "hiSubtitle": "Padankan setiap keperluan dengan AI yang sesuai",
+    "sellable": "Boleh dijual",
+    "walletTopup": "Isi semula"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "Model bahasa",
+      "hint": "Sembang · penalaran"
+    },
+    "image-gen": {
+      "label": "Penjanaan imej",
+      "hint": "Teks-ke-imej"
+    },
+    "image-edit": {
+      "label": "Penyuntingan imej",
+      "hint": "Sunting · latar belakang"
+    },
+    "video": {
+      "label": "Penjanaan video",
+      "hint": "Teks-ke-video"
+    },
+    "audio": {
+      "label": "Audio & video",
+      "hint": "Suara · transkripsi"
+    },
+    "data": {
+      "label": "Maklumat",
+      "hint": "Pemulangan · ekstraksi"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "Diperkukuh pengetahuan"
+    },
+    "tools": {
+      "label": "API alat",
+      "hint": "Ejen · alat"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "Bot",
+      "chips": "Bot sembang · bot lukisan · pengetahuan"
+    },
+    "productivity": {
+      "label": "Produktiviti",
+      "chips": "Arena model · penulisan AI"
+    },
+    "academic": {
+      "label": "Akademik",
+      "chips": "Alat PDF · Carian paten AI"
+    },
+    "image": {
+      "label": "Alat imej",
+      "chips": "Studio 3D · Kanvas"
+    },
+    "audio": {
+      "label": "Audio",
+      "chips": "Suara · Muzik AI"
+    },
+    "code": {
+      "label": "Kod",
+      "chips": "Penjana web · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "Gambaran keseluruhan",
+    "keys": "Kunci",
+    "wallet": "Dompet",
+    "use": "Cuba",
+    "docs": "Dok",
+    "models": "Lagi"
+  }
+}

@@ -1,0 +1,61 @@
+/**
+ * brand-override.css — Custom Brand Configuration (legacy scale remap)
+ *
+ * Prefer the skin surface for product chrome:
+ *   @import "@nebutra/tokens/skins/<name>.css";
+ *   @see packages/design/tokens/skins/README.md
+ *
+ * This file remaps the **blue scale** only (residual `bg-blue-9` call sites).
+ * New code should use semantic tokens (`bg-primary`, `border-border`).
+ *
+ * Drop into globals.css after tokens if you still need scale remapping:
+ *   @import "@nebutra/ui/styles/brand-override.css";
+ *
+ * ────────────────────────────────────────────────────────────
+ * HOW THE CASCADE WORKS
+ *
+ *   1. You define: --your-primary-* (11 steps)
+ *   2. System maps: --blue-9 → --your-primary-500 (solid fill)
+ *                  --blue-3 → --your-primary-200 (component bg)
+ *   3. Residual blue-N utilities follow your brand; semantic CSS still wins
+ *      for Button / Input that already use --primary.
+ * ────────────────────────────────────────────────────────────
+ */
+
+:root {
+  /* ══════════════════════════════════════════════════════════
+     PRIMARY BRAND COLOR — replace #0033FE with your primary
+     ════════════════════════════════════════════════════════ */
+  --nebutra-blue-50: #f0f4ff; /* lightest tint — backgrounds */
+  --nebutra-blue-100: #dbe4ff;
+  --nebutra-blue-200: #bac8ff;
+  --nebutra-blue-300: #91a7ff;
+  --nebutra-blue-400: #5c7cfa;
+  --nebutra-blue-500: #0033fe; /* ← YOUR PRIMARY COLOR HERE */
+  --nebutra-blue-600: #002ad4;
+  --nebutra-blue-700: #0021ab;
+  --nebutra-blue-800: #001882;
+  --nebutra-blue-900: #000f59;
+  --nebutra-blue-950: #000830; /* darkest — text */
+
+  /* ══════════════════════════════════════════════════════════
+     SECONDARY ACCENT COLOR — replace #0BF1C3 with your accent
+     ════════════════════════════════════════════════════════ */
+  --nebutra-cyan-50: #e6fff8; /* lightest tint */
+  --nebutra-cyan-100: #b3ffec;
+  --nebutra-cyan-200: #80ffe0;
+  --nebutra-cyan-300: #4dfcd4;
+  --nebutra-cyan-400: #1af7c8;
+  --nebutra-cyan-500: #0bf1c3; /* ← YOUR ACCENT COLOR HERE */
+  --nebutra-cyan-600: #09c9a3;
+  --nebutra-cyan-700: #07a183;
+  --nebutra-cyan-800: #057963;
+  --nebutra-cyan-900: #035143;
+  --nebutra-cyan-950: #012923; /* darkest */
+
+  /* ══════════════════════════════════════════════════════════
+     OPTIONAL: Brand name tokens (used in metadata / docs only)
+     ════════════════════════════════════════════════════════ */
+  /* --brand-name: "Your Brand"; */
+  /* --brand-domain: "yourbrand.com"; */
+}

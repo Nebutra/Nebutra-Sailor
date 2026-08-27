@@ -1,0 +1,259 @@
+# .templateignore
+#
+# Gitignore-syntax manifest of files stripped when `create-sailor` scaffolds
+# a new project from this repo. Nebutra-Sailor is simultaneously (1) the
+# template source and (2) Nebutra's live product codebase — this file
+# separates Nebutra-specific business content from the reusable skeleton.
+#
+# Rules:
+#   - Use gitignore syntax (supports globs, negation with `!`).
+#   - Keep packages/* fully intact (they are the reusable primitives).
+#   - Preserve skeleton files (layout.tsx, globals.css, package.json, etc.).
+#   - When adding new Nebutra-owned code, add it here.
+#
+# Validate: `pnpm template:check`
+
+# ---------------------------------------------------------------------------
+# Nebutra landing business content
+# Marketing, legal, blog, changelog — all Nebutra-owned pages & sections.
+# The shell (layout, globals, next.config, package.json) is preserved.
+# ---------------------------------------------------------------------------
+apps/landing/src/app/\[lang\]/(marketing)/
+apps/landing/src/app/\[lang\]/(legal)/
+apps/landing/src/components/landing/
+apps/landing/public/og/
+apps/landing/public/brand/
+apps/landing/public/brand-compliant/
+apps/landing/public/screenshots/
+apps/landing/public/images/
+apps/landing/public/animations/
+apps/landing/src/app/api/changelog/
+apps/landing/src/app/api/license/
+apps/landing/src/app/sitemap.ts
+# Index route imports the stripped sitemap module — leave both out of template.
+apps/landing/src/app/sitemap-index.xml/
+apps/landing/src/lib/constants/landing-data.ts
+# Tests + not-found + mockups that import stripped marketing content.
+# A generic landing 404 is a known follow-up.
+apps/landing/src/__tests__/api/license.test.ts
+apps/landing/src/app/__tests__/sitemap.test.ts
+apps/landing/src/__tests__/ui-governance.test.ts
+apps/landing/src/lib/constants/landing-data.test.ts
+apps/landing/src/app/not-found.tsx
+apps/landing/src/app/\[lang\]/not-found.tsx
+apps/landing/src/components/ui/mockups/
+
+# ---------------------------------------------------------------------------
+# Nebutra dashboard (apps/web) business surfaces
+# Keep the locale shell + layout; strip Nebutra-specific feature pages.
+# ---------------------------------------------------------------------------
+apps/web/src/app/\[locale\]/(app)/admin/
+apps/web/src/app/\[locale\]/(app)/billing/
+apps/web/src/app/\[locale\]/(app)/analytics/
+apps/web/src/app/\[locale\]/(app)/audit/
+apps/web/src/app/\[locale\]/(app)/chat/
+apps/web/src/app/\[locale\]/(app)/integrations/
+apps/web/src/app/\[locale\]/(app)/tenants/
+apps/web/src/app/\[locale\]/(app)/usage/
+apps/web/src/app/\[locale\]/(app)/feature-flags/
+apps/web/src/app/\[locale\]/demo/
+# Test that imports stripped billing journey-state.
+apps/web/src/lib/__tests__/saas-journey-state.test.ts
+# audit-remediation introspects landing source files that are partially
+# stripped — invariant only meaningful in the source repo.
+apps/web/src/lib/__tests__/audit-remediation.test.ts
+
+# ---------------------------------------------------------------------------
+# Nebutra-owned apps (not reusable skeleton)
+# Community = Sleptons forum. tsekaluk-dev = personal site.
+# design-docs + docs-hub + studio are Nebutra-authored content systems.
+# Product lines (forge/router/pebble/typelens/design/admin/auth-center) ship
+# only in the monorepo — customers get web + landing + idp + mail-preview.
+# ---------------------------------------------------------------------------
+apps/sleptons/
+apps/tsekaluk-dev/
+apps/docs-hub/
+apps/studio/
+apps/docs/
+apps/forge/
+apps/router/
+apps/pebble/
+apps/typelens/
+apps/design/
+apps/admin/
+apps/auth/
+
+# ---------------------------------------------------------------------------
+# Marketing, PR, and changelog content
+# ---------------------------------------------------------------------------
+/marketing/
+/changelog/
+WHITELABEL.md
+BRAND_GUIDELINES.md
+TRADEMARK.md
+# NOTE: LICENSE-COMMERCIAL.md MUST NOT be stripped — the dual-license
+# model is the core of the template's distribution. Keep it in the mirror.
+README.ja.md
+README.zh-CN.md
+brand.config.example.ts
+tests/architecture/ci-harness-closure.test.ts
+tests/architecture/readme-template-drift.test.ts
+
+# ---------------------------------------------------------------------------
+# CI/build/test artifacts — should never ship in a fresh scaffold
+# ---------------------------------------------------------------------------
+artifacts/
+playwright-report/
+test-results/
+lighthouse-reports/
+coverage/
+.turbo/
+.next/
+dist/
+build/
+node_modules/
+
+# ---------------------------------------------------------------------------
+# Nebutra-business glue inside otherwise-generic packages
+# on-license-issued.ts creates Sleptons community profiles — that's Nebutra-
+# specific orchestration, not generic license-issuance logic. The rest of
+# @nebutra/license (issue/validate/types) stays in the template.
+# ---------------------------------------------------------------------------
+packages/commerce/license/src/handlers/
+
+# ---------------------------------------------------------------------------
+# Architecture tests that assert source-repo invariants
+# These reference paths stripped from the template (apps/sailor-docs,
+# scripts/lighthouse, apps/landing/src/app/api/changelog) so they
+# cannot run in the scaffolded skeleton. Generic invariants (no-inline-css,
+# dependency-flow, package-readiness, etc.) remain.
+# ---------------------------------------------------------------------------
+tests/architecture/docs-coverage.test.ts
+tests/architecture/lighthouse-ci.test.ts
+
+# ---------------------------------------------------------------------------
+# Internal planning/governance docs
+# ---------------------------------------------------------------------------
+docs/plans/
+docs/reports/
+docs/superpowers/
+docs/DOMAINS.md
+docs/阿里云ECS部署指南.md
+governance/*.current.json
+governance/ui-governance.v1.json
+
+# ---------------------------------------------------------------------------
+# Environment and locks containing Nebutra-specific configuration
+# ---------------------------------------------------------------------------
+.env
+.env.local
+.env.*.local
+.env.production
+.env.staging
+openstatus.lock
+
+# ---------------------------------------------------------------------------
+# Nebutra-owned content for design-docs shell (keep the Fumadocs skeleton)
+# ---------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
+# Internal scripts that only make sense for the Nebutra repo itself
+# ---------------------------------------------------------------------------
+scripts/lighthouse/
+scripts/check-legal-keys.js
+scripts/check-missing-keys.js
+scripts/show-extra-keys.js
+# Monorepo's own path-hardcoded governance lints (design-system-specific +
+# tied to this repo's exact bypass list). Scaffolds get the generalized,
+# config-driven versions under scripts/governance/** instead (wired into the
+# output's `pnpm lint` by create-sailor's applyGovernanceLints step).
+scripts/lint-no-raw-inputs.mjs
+scripts/lint-no-dark-overrides.mjs
+scripts/lint-no-spacing-opacity.mjs
+scripts/lint-no-arbitrary-breakpoints.mjs
+scripts/lint-phosphor-marketing-only.mjs
+scripts/lint-repository-seam.mjs
+
+# ---------------------------------------------------------------------------
+# E2E + load tests tied to Nebutra-specific flows
+# ---------------------------------------------------------------------------
+e2e/changelog.spec.ts
+e2e/showcase.spec.ts
+e2e/sleptons-flow.spec.ts
+tests/load/
+
+# ---------------------------------------------------------------------------
+# Nebutra-internal CI/CD workflows — meaningless or guaranteed-failing in a
+# scaffolded repo (they need Nebutra secrets/infra/targets the consumer lacks):
+# AWS/ECS deploy, the sync-to-template mirror (would sync the template to
+# itself), Figma/Penpot design-sync, Chromatic, CLA bot, blog revalidate,
+# lighthouse dashboard, k6 load test, npm package-registry governance, release
+# (changeset publish), visual-acceptance baselines, Nebutra UI governance, and
+# the Nebutra container-registry push.
+# The template KEEPS the generic, secret-free workflows: ci, codeql,
+# secrets-scan, security-scan, dependency-review, dependabot-automerge,
+# scorecard, labeler, stale, dead-code.
+# ---------------------------------------------------------------------------
+.github/workflows/deploy-ecs.yml
+.github/workflows/deploy.yml
+.github/workflows/sync-template.yml
+# Source-repo only — pushes package subrepos; meaningless for skeleton consumers
+.github/workflows/sync-subrepo-mirrors.yml
+.github/workflows/design-sync.yml
+.github/workflows/chromatic.yml
+.github/workflows/cla.yml
+.github/workflows/blog-revalidate.yml
+.github/workflows/lighthouse-dashboard.yml
+.github/workflows/load-test.yml
+.github/workflows/package-registry-governance.yml
+.github/workflows/release.yml
+.github/workflows/visual-acceptance.yml
+.github/workflows/ui-governance.yml
+.github/workflows/docker-build-push.yml
+# Product deploy targets + Nebutra DNS ops (secrets / account-bound)
+.github/workflows/deploy-auth-vercel.yml
+.github/workflows/deploy-carina-ecs.yml
+.github/workflows/deploy-carina-vercel.yml
+.github/workflows/deploy-gateway.yml
+.github/workflows/deploy-landing-vercel.yml
+.github/workflows/deploy-origin-ecs.yml
+.github/workflows/deploy-pebble-vercel.yml
+.github/workflows/deploy-sailor-docs.yml
+.github/workflows/deploy-typelens.yml
+.github/workflows/deploy-web-vercel.yml
+.github/workflows/ops-auth-console-setup.yml
+.github/workflows/ops-configure-pebble-r2.yml
+.github/workflows/ops-db-inventory.yml
+.github/workflows/point-auth-dns.yml
+.github/workflows/point-carina-dns.yml
+.github/workflows/point-docs-dns.yml
+.github/workflows/point-forge-dns.yml
+.github/workflows/point-pebble-dns.yml
+.github/workflows/point-router-dns.yml
+.github/workflows/point-www-dns.yml
+.github/workflows/tmp-vercel-git-deploy-docs.yml
+.github/workflows/public-url-check.yml
+.github/workflows/route-lastmod.yml
+.github/workflows/i18n-translate.yml
+.github/workflows/i18n-orphan-report.yml
+
+# ---------------------------------------------------------------------------
+# Nebutra product backends / infra (not a generic SaaS skeleton)
+# Keep backends/gateway (pruned of product routes below) + backends/python/*.
+# ---------------------------------------------------------------------------
+backends/go/
+backends/rust/
+infra/nebutra-router/
+infra/platforms/
+
+# Product-only gateway routes (generic billing/auth/ai/webhooks stay)
+backends/gateway/src/routes/pebble/
+backends/gateway/src/routes/startup-os/
+backends/gateway/src/routes/agent-runtime/
+
+# ---------------------------------------------------------------------------
+# Template meta files (strip the ignore file itself after apply)
+# ---------------------------------------------------------------------------
+.templateignore
+TEMPLATE.md
+apps/sailor-docs/

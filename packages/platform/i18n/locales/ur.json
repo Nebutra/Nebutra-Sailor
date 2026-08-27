@@ -1,0 +1,1273 @@
+{
+  "admin": {
+    "title": "ایڈمن",
+    "description": "سپر ایڈمن پینل — صارفین، تنظیمات اور سسٹم کی صحت کا انتظام کریں۔",
+    "nav": {
+      "overview": "جائزہ",
+      "users": "صارفین",
+      "organizations": "تنظیمات"
+    },
+    "users": {
+      "title": "صارفین",
+      "description": "تمام تنظیمات میں کسی بھی صارف کو براؤز، تلاش اور امپرسونیٹ کریں۔",
+      "searchPlaceholder": "صارفین تلاش کریں…",
+      "totalCount": "{count, plural, one {# صارف} other {# صارفین}}",
+      "empty": "کوئی صارف نہیں ملا۔",
+      "loadError": "صارفین لوڈ کرنے میں ناکامی۔",
+      "columns": {
+        "email": "ای میل",
+        "name": "نام",
+        "created": "بنایا گیا",
+        "activeOrgs": "فعال تنظیمات",
+        "actions": "عمل"
+      },
+      "viewOrgs": "تنظیمات دیکھیں"
+    },
+    "organizations": {
+      "title": "تنظیمات",
+      "description": "سسٹم میں تمام ورک اسپیسز، تازگی کے لحاظ سے ترتیب دیے گئے۔",
+      "searchPlaceholder": "تنظیمات تلاش کریں…",
+      "totalCount": "{count, plural, one {# تنظیم} other {# تنظیمات}}",
+      "empty": "کوئی تنظیم نہیں ملی۔",
+      "loadError": "تنظیمات لوڈ کرنے میں ناکامی ہوئی۔",
+      "columns": {
+        "name": "نام",
+        "slug": "سلگ",
+        "plan": "پلان",
+        "members": "ارکان",
+        "created": "بنایا گیا",
+        "actions": "عمل"
+      },
+      "view": "دیکھیں"
+    },
+    "impersonate": {
+      "trigger": "نمائندگی کریں",
+      "starting": "شروع ہو رہا ہے…",
+      "stop": "نمائندگی بند کریں",
+      "confirm": "کیا آپ {label} کی نمائندگی کرنا چاہتے ہیں؟ آپ اس صارف کی طرح ایپ دیکھیں گے جب تک آپ اسے بند نہ کر دیں۔",
+      "error": "نمائندگی شروع کرنے میں ناکامی ہوئی۔",
+      "stopError": "نمائندگی بند کرنے میں ناکامی ہوئی۔"
+    },
+    "pagination": {
+      "previous": "پچھلا",
+      "next": "اگلا",
+      "pageOf": "صفحہ {page} / {total}"
+    }
+  },
+  "Common": {
+    "hello": "ہیلو ورلڈ",
+    "dashboard": "ڈیش بورڈ",
+    "actions": {
+      "continue": "جاری رکھیں",
+      "confirm": "تصدیق کریں",
+      "done": "ہو گیا",
+      "cancel": "منسوخ کریں"
+    }
+  },
+  "theme": {
+    "light": "روشن",
+    "dark": "گہرا",
+    "system": "سسٹم"
+  },
+  "LocaleSwitcher": {
+    "label": "زبان",
+    "ariaLabel": "زبان تبدیل کریں",
+    "searchPlaceholder": "زبان تلاش کریں…",
+    "noResults": "کوئی زبان نہیں ملی",
+    "menuAria": "زبان منتخب کریں"
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "آئی سی پی ریکارڈ نمبر",
+      "publicSecurity": "پبلک سیکیورٹی ریکارڈ"
+    },
+    "wechat": {
+      "signIn": "وی چیٹ کے ساتھ سائن ان کریں",
+      "notConfigured": "وی چیٹ لاگ ان ترتیب نہیں دیا گیا"
+    }
+  },
+  "onboarding": {
+    "title": "اپنا ورک اسپیس سیٹ اپ کریں",
+    "subtitle": "تین تیز مراحل اور آپ شپمنٹ کے لیے تیار ہیں۔",
+    "steps": {
+      "workspace": "ورک اسپیس",
+      "invite": "ٹیم کو مدعو کریں",
+      "plan": "پلان منتخب کریں"
+    },
+    "progress": {
+      "back": "واپس",
+      "stepCounter": "مجموعی {total} میں مرحلہ {current}"
+    },
+    "plan": {
+      "title": "پلان منتخب کریں",
+      "description": "مفت سے شروع کریں یا مزید صلاحیت کھولیں۔ آپ کبھی بھی پلان تبدیل کر سکتے ہیں۔",
+      "choose": "پلان منتخب کریں",
+      "skip": "فی الحال چھوڑیں"
+    }
+  },
+  "userMenu": {
+    "ariaLabel": "صارف مینو کھولیں",
+    "profile": "پروفائل",
+    "settings": "ترتیبات",
+    "feedback": "رائے",
+    "theme": "تھیم",
+    "language": "زبان",
+    "signOut": "سائن آؤٹ",
+    "signedInAs": "سائن ان بطور"
+  },
+  "account": {
+    "profile": {
+      "title": "پروفائل",
+      "description": "اپنی ذاتی معلومات اپ ڈیٹ کریں۔",
+      "nameLabel": "نام",
+      "namePlaceholder": "آپ کا مکمل نام",
+      "emailLabel": "ای میل",
+      "emailHint": "ہم نئے ای میل ایڈریس کی تصدیق کے لیے ایک تصدیقی لنک بھیجیں گے۔",
+      "languageLabel": "زبان",
+      "submit": "تبدیلیاں محفوظ کریں",
+      "saving": "محفوظ ہو رہا ہے…",
+      "verifyEmail": "تصدیق کریں",
+      "verifying": "تصدیقی پیغام بھیجا جا رہا ہے…",
+      "success": "پروفائل اپ ڈیٹ ہو گیا۔",
+      "verificationSent": "تصدیقی ای میل بھیج دیا گیا۔",
+      "errorRequiredName": "نام درکار ہے۔",
+      "errorInvalidEmail": "ای میل ایڈریس درست نہیں ہے۔",
+      "subtitle": "آپ کی شناخت اور رابطے کی معلومات۔",
+      "unknown": "نامعلوم صارف",
+      "manageCta": "مکمل اکاؤنٹ کی ترتیبات کھولیں"
+    },
+    "avatar": {
+      "title": "اویٹار",
+      "description": "ایک مربع تصویر اپ لوڈ کریں (PNG, JPEG, یا WebP، زیادہ سے زیادہ 2MB)۔",
+      "uploadButton": "اویٹار اپ لوڈ کریں",
+      "uploading": "اپ لوڈ ہو رہا ہے…",
+      "fileTooBig": "فائل بہت بڑی ہے۔ زیادہ سے زیادہ سائز 2MB ہے۔",
+      "invalidType": "تصویر کی قسم سپورٹ شدہ نہیں ہے۔ PNG, JPEG, یا WebP استعمال کریں۔",
+      "success": "اویٹار اپ ڈیٹ ہو گیا۔",
+      "removeButton": "اویٹار ہٹائیں",
+      "removed": "اویٹار ہٹا دیا گیا۔",
+      "deleteError": "اویٹار حذف کرنے میں ناکامی ہوئی۔"
+    },
+    "export": {
+      "title": "میری ڈیٹا ایکسپورٹ کریں",
+      "description": "اپنے اکاؤنٹ کے لیے ہمارے پاس موجود ہر ریکارڈ کی کاپی ڈاؤن لوڈ کریں، بشمول پروفائل، تنظیمیں، آڈٹ ایونٹس، نوٹیفکیشنز، اور دعوت نامے۔",
+      "compliance": "GDPR آرٹیکل 20 (ڈیٹا پورٹیبلٹی کا حق) اور PIPL آرٹیکل 45 (ذاتی معلومات کی کاپی حاصل کرنے کا حق) کے تحت ضروری ہے۔",
+      "export": "میری ڈیٹا ایکسپورٹ کریں",
+      "pending": "ایکسپورٹ تیار ہو رہی ہے…",
+      "ready": "آپ کی ایکسپورٹ تیار ہے۔",
+      "download": "JSON ڈاؤن لوڈ کریں",
+      "error": "آپ کی ایکسپورٹ تیار کرنے میں ناکامی ہوئی۔ براہ کرم دوبارہ کوشش کریں۔"
+    },
+    "emailChange": {
+      "title": "ای میل ایڈریس تبدیل کریں",
+      "description": "ہم نئے ایڈریس پر تصدیقی لنک بھیجیں گے۔ تبدیلی صرف اس وقت مؤثر ہوگی جب آپ اس ان باکس سے تصدیق کریں گے۔",
+      "newEmailLabel": "نیا ای میل ایڈریس",
+      "newEmailPlaceholder": "you@example.com",
+      "submit": "تصدیقی لنک بھیجیں",
+      "submitting": "بھیج رہے ہیں…",
+      "verificationSent": "تبدیلی کی تصدیق کے لیے {email} پر اپنے ان باکس کو چیک کریں۔",
+      "errorInvalidEmail": "ای میل ایڈریس درست نہیں ہے۔",
+      "error": "ای میل تبدیلی کی درخواست کرنے میں ناکامی ہوئی۔",
+      "confirm": {
+        "successTitle": "ای میل اپ ڈیٹ ہو گیا",
+        "successDescription": "آپ کا سائن ان ای میل اپ ڈیٹ ہو گیا ہے۔",
+        "successWithEmail": "آپ کا سائن ان ای میل اب {email} ہے۔",
+        "failureTitle": "ہم اس لنک کی تصدیق نہیں کر سکے",
+        "failureDescription": "یہ تصدیقی لنک غلط، ختم شدہ، یا پہلے ہی استعمال شدہ ہے۔ براہ کرم اپنے اکاؤنٹ کی ترتیبات سے نیا درخواست کریں۔",
+        "errorCode": "وجہ: {code}",
+        "continueCta": "اکاؤنٹ پر واپس",
+        "backCta": "اکاؤنٹ پر واپس"
+      }
+    },
+    "title": "اکاؤنٹ",
+    "ariaLabel": "اکاؤنٹ کی ترتیبات",
+    "navLabel": "اکاؤنٹ کی ترتیبات کے ٹیبز",
+    "tip": "اس ڈائیلاگ کو دوبارہ کھولنے کے لیے کہیں بھی {key} دبائیں۔",
+    "tabs": {
+      "profile": "پروفائل",
+      "subscription": "سبسکرپشن",
+      "billing": "بلنگ",
+      "preferences": "ترتیبات",
+      "personalization": "شخصی نوعیت"
+    },
+    "subscription": {
+      "title": "سبسکرپشن",
+      "subtitle": "پلان، کوٹہ، اور تجدید۔",
+      "currentPlan": "موجودہ پلان",
+      "upgradeCta": "پلانز کا موازنہ کریں",
+      "manageCta": "سبسکرپشن مینیج کریں"
+    },
+    "billing": {
+      "title": "بلنگ",
+      "subtitle": "انوائس کی تاریخ اور ادائیگی کا طریقہ۔",
+      "empty": {
+        "title": "ابھی تک کوئی تاریخ نہیں",
+        "description": "پہلے ادائیگی والے دور کے بعد چارجز اور انوائسز یہاں ظاہر ہوں گی۔",
+        "cta": "مکمل بلنگ کھولیں"
+      }
+    },
+    "preferences": {
+      "title": "ترجیحات",
+      "subtitle": "تھیم اور رسائی۔",
+      "theme": "تھیم",
+      "light": "لائٹ",
+      "dark": "ڈارک",
+      "system": "سسٹم",
+      "help": "مدد",
+      "reportIssue": "مسئلہ رپورٹ کریں",
+      "shortcuts": "کی بورڈ شارٹ کٹس"
+    },
+    "personalization": {
+      "title": "شخصی سازی",
+      "subtitle": "سایلر کو بتائیں کہ آپ کون ہیں اور وہ کیسے جواب دے۔"
+    }
+  },
+  "impact": {
+    "hero_title": "پیراڈائم کی نئی تعریف",
+    "hero_subtitle": "دنیا میں کوئی مشکل کاروبار نہ ہو۔",
+    "social_title": "سوشل",
+    "social_headline": "مطلق ٹیک برابری",
+    "social_description": "ایج انوویٹرز کو طاقتور بنانا۔ روایتی فلٹرز توڑنا اور سولو فاؤنڈرز کو باکس سے باہر انفراسٹرکچر دینا۔",
+    "governance_title": "گورننس",
+    "governance_headline": "کوڈ ہی قانون ہے",
+    "governance_description": "پروف آف ورک اور حقیقی کاروباری نتائج پر مبنی الگورتھمک گورننس، غیر شفاف بیوروکریسی کی جگہ لے کر۔",
+    "environment_title": "ماحول",
+    "environment_headline": "ڈیجیٹل مینیمیلزم",
+    "environment_description": "انتہائی SaaS انٹیگریشن اور وسائل کی کارکردگی کے ذریعے کلاؤڈ فوٹ پرنٹ میں کمی لانا۔"
+  },
+  "auth": {
+    "security": {
+      "title": "سیکورٹی",
+      "description": "اپنا پاس ورڈ، ملٹی فیکٹر اتھنٹیکیشن، اور فعال سیشنز مینیج کریں۔",
+      "managedByProvider": "سیکورٹی کی ترتیبات آپ کے اتھنٹیکیشن پرووائیڈر کے ذریعے مینیج کی جاتی ہیں۔",
+      "openProviderProfile": "پروفائل کھولیں",
+      "changePassword": {
+        "title": "پاس ورڈ تبدیل کریں",
+        "description": "ایک مضبوط پاس ورڈ استعمال کریں جو آپ دوسری سائٹس پر دوبارہ استعمال نہ کریں۔",
+        "currentPasswordLabel": "موجودہ پاس ورڈ",
+        "newPasswordLabel": "نیا پاس ورڈ",
+        "confirmPasswordLabel": "نئے پاس ورڈ کی تصدیق کریں",
+        "revokeOtherSessions": "دیگر ڈیوائسز سے سائن آؤٹ کریں",
+        "submit": "پاس ورڈ اپ ڈیٹ کریں",
+        "pending": "پاس ورڈ اپ ڈیٹ ہو رہا ہے…",
+        "success": "پاس ورڈ کامیابی سے اپ ڈیٹ ہو گیا۔"
+      },
+      "twoFactor": {
+        "title": "دو مرحلہ واری تصدیق",
+        "description": "تصدیق ایپ کا استعمال کرتے ہوئے دوسرا تصدیقی مرحلہ شامل کریں۔",
+        "enabled": "فعال",
+        "disabled": "غیر فعال",
+        "enabledHelp": "پاس ورڈ سائن ان کے بعد آپ کی اکاؤنٹ 6 ہندسوں کا تصدیقی کوڈ مانگتی ہے۔",
+        "disabledHelp": "تصدیق ایپ سے 6 ہندسوں کے کوڈ کے ساتھ اپنی اکاؤنٹ کی حفاظت کریں۔",
+        "enable": "دو مرحلہ و تصدیق فعال کریں",
+        "disable": "دو مرحلہ و تصدیق غیر فعال کریں",
+        "passwordPrompt": "اپنی پاس ورڈ کی تصدیق کریں",
+        "scanQrCode": "اپنے تصدیق کنندہ ایپ سے اس QR کوڈ کو اسکین کریں، پھر نیچے 6 ہندسوں کا کوڈ درج کریں۔",
+        "secretKeyLabel": "یا یہ راز کو دستی طور پر درج کریں",
+        "verificationCodeLabel": "تصدیقی کوڈ",
+        "verify": "تصدیق اور فعال کریں",
+        "backupCodesTitle": "بیک اپ کوڈز",
+        "backupCodesDescription": "ان کوڈز کو کہیں محفوظ جگہ پر محفوظ کریں۔ اگر آپ کو اپنے تصدیق کنندہ تک رسائی کھو دے تو ہر کوڈ ایک بار استعمال کیا جا سکتا ہے۔",
+        "copyBackupCodes": "کوڈز کاپی کریں",
+        "finishSetup": "سیٹ اپ مکمل کریں",
+        "successEnabled": "دو مرحلہ و تصدیق فعال ہو گئی۔",
+        "successDisabled": "دو مرحلہ و تصدیق غیر فعال ہو گئی۔"
+      },
+      "sessions": {
+        "title": "فعال سیشنز",
+        "description": "آپ کے اکاؤنٹ میں فی الحال سائن ان شدہ ڈیوائسز اور براؤزرز۔",
+        "currentSession": "(موجودہ)",
+        "ipLabel": "IP پتہ",
+        "lastActiveLabel": "آخری سرگرمی",
+        "revoke": "سائن آؤٹ",
+        "revokeAll": "تمام دیگر آلات سے سائن آؤٹ کریں",
+        "empty": "کوئی اور فعال سیشن نہیں۔",
+        "successRevoked": "سیشن سائن آؤٹ ہو گیا۔",
+        "successRevokedAll": "تمام دیگر سیشنز سائن آؤٹ ہو گئے۔"
+      },
+      "deleteAccount": {
+        "title": "اکاؤنٹ حذف کریں",
+        "description": "اپنا اکاؤنٹ اور تمام منسلک ڈیٹا مستقل طور پر ہٹا دیں۔ یہ عمل واپس نہیں کیا جا سکتا۔",
+        "passwordPrompt": "تصدیق کے لیے اپنا پاس ورڈ درج کریں",
+        "confirmTextLabel": "تصدیق کے لیے DELETE لکھیں",
+        "submit": "اکاؤنٹ حذف کریں",
+        "cancel": "منسوخ کریں",
+        "success": "اکاؤنٹ حذف کر دیا گیا۔"
+      },
+      "connectedAccounts": {
+        "title": "منسلک اکاؤنٹس",
+        "description": "اپنی Nebutra شناخت سے منسلک OAuth سائن ان طریقوں کا جائزہ لیں۔",
+        "connected": "منسلک",
+        "connect": "منسلک کریں",
+        "help": "کسی فراہم کنندہ کو غیر منسلک کرنے سے پہلے کم از کم ایک قابل اعتماد سائن ان طریقہ دستیاب رکھیں۔",
+        "unlink": "غیر منسلک کریں",
+        "notLinked": "منسلک نہیں"
+      },
+      "passkeys": {
+        "title": "پاس کی",
+        "description": "فیشنگ سے محفوظ سائن ان کے لیے ڈیوائس سے منسلک کریڈینشلز استعمال کریں۔",
+        "empty": "ابھی تک کوئی پاس کی رجسٹرڈ نہیں",
+        "addPasskey": "پاس کی شامل کریں",
+        "cancelAdd": "منسوخ کریں",
+        "cancelled": "پاس کی کی ترتیب منسوخ ہو گئی۔ کوئی تبدیلی نہیں ہوئی۔",
+        "defaultName": "پاس کی {number}",
+        "nameHelp": "اپنے براؤزر کی تصدیق مانگنے سے پہلے اس پاس کی کو ایک پہچاننے والا نام دیں۔",
+        "nameLabel": "پاس کی کا نام",
+        "rename": "نام تبدیل کریں",
+        "saveRename": "نام محفوظ کریں",
+        "remove": "ہٹا دیں",
+        "successAdded": "پاسکی شامل کر دیا گیا۔",
+        "successRemoved": "پاسکی ہٹا دیا گیا۔",
+        "unavailableBadge": "غیر دستیاب"
+      },
+      "setPassword": {
+        "title": "پاس ورڈ سیٹ کریں",
+        "description": "اپنے OAuth فراہم کنندہ کے بغیر سائن ان کرنے کے لیے پاس ورڈ شامل کریں۔",
+        "submit": "پاس ورڈ سیٹ کریں",
+        "pending": "پاس ورڈ سیٹ اپ لنک بھیجا جا رہا ہے…",
+        "sentMessage": "ہم نے آپ کے ای میل پر پاس ورڈ سیٹ اپ لنک بھیج دیا ہے۔"
+      }
+    },
+    "banner": {
+      "logoAlt": "Nebutra",
+      "slogan": "اپنی اسٹارٹ اپ کو شپ کریں، پہلے دن سے ہی گورنڈ۔",
+      "tagline": "ملٹی ریجن ایجنٹس، ڈیفالٹ طور پر ملٹی ٹیننٹ۔ کوئی پلیٹ فارم ٹیم درکار نہیں۔"
+    },
+    "signIn": {
+      "title": "Nebutra میں لاگ ان کریں",
+      "subtitle": "سائن ان کرنے کا طریقہ منتخب کریں۔",
+      "continueWith": "اس کے ساتھ جاری رکھیں",
+      "continueWithProvider": "{provider} کے ساتھ جاری رکھیں",
+      "providers": {
+        "google": "گوگل",
+        "github": "GitHub",
+        "apple": "ایپل",
+        "microsoft": "مائیکروسافٹ",
+        "feishu": "Feishu"
+      },
+      "providerLoading": "ری ڈائریکٹ ہو رہا ہے…",
+      "dividerOr": "یا ای میل کے ساتھ جاری رکھیں",
+      "emailLabel": "ای میل",
+      "emailPlaceholder": "you@example.com",
+      "continue": "جاری رکھیں",
+      "back": "واپس",
+      "passwordLabel": "پاس ورڈ",
+      "passwordPlaceholder": "اپنا پاس ورڈ درج کریں",
+      "showPassword": "پاس ورڈ دکھائیں",
+      "hidePassword": "پاس ورڈ چھپائیں",
+      "capsLockOn": "کیپس لاک آن ہے",
+      "forgotPassword": "پاس ورڈ بھول گئے؟",
+      "submit": "لاگ ان کریں",
+      "submitLoading": "لاگ ان ہو رہا ہے…",
+      "useMagicLink": "میرے لیے بجائے اس کے ایک جادوئی لنک بھیجیں",
+      "usePasskey": "پاسکی کے ساتھ لاگ ان کریں",
+      "passkeyTitle": "اپنے پاسکی کے ساتھ لاگ ان کریں",
+      "passkeyDescription": "فیس آئی ڈی، ٹچ آئی ڈی، یا اپنی سیکیورٹی کی استعمال کریں۔ پاس ورڈ کی ضرورت نہیں۔",
+      "passkeyButton": "پاسکی کے ساتھ جاری رکھیں",
+      "passkeyCancelled": "پاسکی پرامپٹ منسوخ کر دیا گیا۔",
+      "passkeyUnsupported": "یہ براؤزر پاسکیز کو سپورٹ نہیں کرتا۔",
+      "passkeyError": "پاسکی لاگ ان ناکام رہا۔ کسی اور طریقے کی کوشش کریں۔",
+      "ssoTitle": "انٹرپرائز ایس ایس او کے ساتھ جاری رکھیں",
+      "ssoDescription": "آپ کو {email} کے لیے {provider} پر بھیجا جا رہا ہے۔",
+      "ssoError": "anٹرپرائز ایس ایس او شروع نہیں ہو سکا۔ کسی اور طریقے کی کوشش کریں۔",
+      "ssoRetry": "دوبارہ کوشش کریں",
+      "newToProduct": "نیبوٹرا میں نئے ہیں؟",
+      "signUpLink": "سائن اپ کریں",
+      "homeLink": "ہوم",
+      "signInFailed": "سائن ان ناکام رہا",
+      "genericError": "ایک خرابی پیش آئی۔ براہ کرم دوبارہ کوشش کریں۔",
+      "captchaError": "بوٹ تصدیق ناکام رہی۔ صفحہ ریفریش کریں اور دوبارہ کوشش کریں۔",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
+      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
+      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
+      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+    },
+    "signUp": {
+      "title": "اپنا Nebutra اکاؤنٹ بنائیں",
+      "subtitle": "ہر Nebutra ایپ کے لیے ایک اکاؤنٹ۔",
+      "firstNameLabel": "پہلا نام",
+      "lastNameLabel": "آخری نام",
+      "firstNamePlaceholder": "پہلا",
+      "lastNamePlaceholder": "آخری",
+      "submit": "اکاؤنٹ بنائیں",
+      "submitLoading": "اکاؤنٹ بنایا جا رہا ہے…",
+      "alreadyHaveAccount": "پہلے سے اکاؤنٹ ہے؟",
+      "signInLink": "لاگ ان کریں",
+      "signUpFailed": "سائن اپ ناکام رہا",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+    },
+    "passkeys": {
+      "title": "پاس کیز",
+      "description": "پاس ورڈ کے بجائے Face ID، Touch ID، Windows Hello، یا سیکیورٹی کی کا استعمال کریں۔ ہر ڈیوائس کا اپنا پاس کی ہوتا ہے۔",
+      "addButton": "پاسکی شامل کریں",
+      "adding": "ترتیب دیا جا رہا ہے…",
+      "namePlaceholder": "مثلاً MacBook Pro",
+      "nameLabel": "نام (اختیاری)",
+      "registerSuccess": "پاسکی شامل کر دیا گیا۔",
+      "registerCancelled": "ترتیب منسوخ کر دی گئی۔",
+      "registerUnsupported": "یہ براؤزر پاسکیز کو سپورٹ نہیں کرتا۔",
+      "registerError": "پاسکی رجسٹر کرنے میں ناکامی۔",
+      "empty": "ابھی تک کوئی پاسکی نہیں۔",
+      "loadError": "پاسکیز لوڈ کرنے میں ناکامی۔",
+      "revoke": "ہٹائیں",
+      "revoking": "ہٹایا جا رہا ہے…",
+      "revokeConfirm": "کیا آپ اس پاسکی کو ہٹانا چاہتے ہیں؟ آپ اب اس کے ساتھ سائن ان نہیں کر پائیں گے۔",
+      "revokeSuccess": "پاسکی ہٹا دیا گیا۔",
+      "revokeError": "پاسکی ہٹانے میں ناکامی۔",
+      "device": {
+        "singleDevice": "ڈیوائس سے منسلک",
+        "multiDevice": "ڈیوائسز پر سِنک شدہ"
+      },
+      "addedOn": "{date} کو شامل کیا گیا"
+    },
+    "magicLink": {
+      "title": "مِجک لنک کے ساتھ سائن ان کریں",
+      "description": "اپنا ای میل درج کریں اور ہم آپ کو سائن ان کے لیے 6 ہندسوں کا کوڈ بھیج دیں گے۔",
+      "emailLabel": "ای میل",
+      "send": "لنک بھیجیں",
+      "codeLabel": "تصدیقی کوڈ",
+      "verify": "تصدیق کریں",
+      "resend": "کوڈ دوبارہ بھیجیں",
+      "resendCooldown": "{seconds} سیکنڈ میں دوبارہ بھیجیں",
+      "sentTo": "ہم نے {email} پر کوڈ بھیج دیا"
+    },
+    "forgotPassword": {
+      "title": "پاس ورڈ بھول گئے؟",
+      "description": "اپنا ای میل درج کریں اور ہم آپ کو پاس ورڈ ری سیٹ کرنے کے لیے لنک بھیج دیں گے۔",
+      "emailLabel": "ای میل",
+      "submit": "ری سیٹ لنک بھیجیں",
+      "successTitle": "اپنا ای میل چیک کریں",
+      "success": "اگر وہ ای میل رجسٹرڈ ہے، تو آپ کو جلد ہی ری سیٹ لنک موصول ہوگا۔"
+    },
+    "resetPassword": {
+      "title": "اپنا پاس ورڈ ری سیٹ کریں",
+      "description": "اپنے اکاؤنٹ کے لیے نیا پاس ورڈ منتخب کریں۔",
+      "newPasswordLabel": "نیا پاس ورڈ",
+      "confirmPasswordLabel": "نیا پاس ورڈ تصدیق کریں",
+      "submit": "پاس ورڈ ری سیٹ کریں",
+      "successTitle": "پاس ورڈ ری سیٹ ہو گیا",
+      "successDescription": "اب آپ اپنے نئے پاس ورڈ سے سائن ان کر سکتے ہیں۔",
+      "signInCta": "سائن ان پر جائیں",
+      "invalidTitle": "ری سیٹ لنک غلط ہے",
+      "invalidDescription": "یہ پاس ورڈ ری سیٹ لنک غائب یا خراب ہے۔ فرگیٹ پاس ورڈ پیج سے نیا درخواست کریں۔"
+    },
+    "verifyEmail": {
+      "successTitle": "ای میل تصدیق شدہ",
+      "successDescription": "آپ کا ای میل ایڈریس تصدیق ہو گیا ہے۔",
+      "failureTitle": "تصدیق ناکام",
+      "failureDescription": "ہم اس لنک کے ساتھ آپ کا ای میل تصدیق نہیں کر سکے۔",
+      "continueCta": "جاری رکھیں",
+      "signInCta": "سائن ان پر جائیں"
+    },
+    "loginSuccess": {
+      "eyebrow": "لاگ ان مکمل",
+      "title": "آپ سائن ان ہو چکے ہیں",
+      "description": "آپ کی سیشن تیار ہے۔ ہم Nebutra ورک اسپیس کھول رہے ہیں اور تصدیق کے عمل سے محفوظ منتقلی کو برقرار رکھ رہے ہیں۔",
+      "session": "سیشن",
+      "verified": "تصدیق شدہ",
+      "workspace": "ورک اسپیس",
+      "preparing": "تیار ہو رہا ہے",
+      "redirecting": "{seconds} سیکنڈ میں ورک اسپیس میں داخل ہو رہے ہیں",
+      "secureHandoff": "محفوظ منتقلی",
+      "continueCta": "ورک اسپیس میں جاری رکھیں",
+      "signInCta": "دوسرا اکاؤنٹ استعمال کریں"
+    },
+    "errors": {
+      "invalidCredentials": "ای میل یا پاس ورڈ غلط ہے۔",
+      "userNotFound": "اس ای میل کے ساتھ کوئی اکاؤنٹ نہیں ملا۔",
+      "userAlreadyExists": "اس ای میل کے ساتھ اکاؤنٹ پہلے سے موجود ہے۔",
+      "weakPassword": "پاس ورڈ بہت کمزور ہے۔ کم از کم 8 حروف استعمال کریں جن میں بڑے اور چھوٹے حروف اور نمبر شامل ہوں۔",
+      "passwordsDontMatch": "پاس ورڈز مماثل نہیں ہیں۔",
+      "passwordTooShort": "پاس ورڈ کم از کم 8 حروف کا ہونا چاہیے۔",
+      "currentPasswordIncorrect": "موجودہ پاس ورڈ غلط ہے۔",
+      "samePassword": "نیا پاس ورڈ آپ کے موجودہ پاس ورڈ سے مختلف ہونا چاہیے۔",
+      "invalidEmail": "ای میل ایڈریس درست نہیں ہے۔",
+      "emailNotVerified": "براہ کرم پہلے اپنا ای میل ایڈریس تصدیق کریں۔",
+      "sessionExpired": "آپ کی سیشن ختم ہو چکی ہے۔ براہ کرم دوبارہ سائن ان کریں۔",
+      "twoFactorRequired": "دو فیکٹر تصدیق درکار ہے۔",
+      "invalidVerificationCode": "تصدیقی کوڈ غلط ہے یا ختم ہو چکا ہے۔",
+      "twoFactorAlreadyEnabled": "دو فیکٹر تصدیق پہلے سے فعال ہے۔",
+      "twoFactorNotEnabled": "دو فیکٹر تصدیق فعال نہیں ہے۔",
+      "tooManyAttempts": "کوششیں بہت زیادہ ہیں۔ براہ کرم بعد میں دوبارہ کوشش کریں۔",
+      "rateLimited": "آپ یہ بہت زیادہ کر رہے ہیں۔ تھوڑا سست ہو جائیں۔",
+      "providerNotSupported": "یہ عمل آپ کے تصدیقی فراہم کنندہ کے ذریعے منظم کیا جاتا ہے۔",
+      "networkError": "نیٹ ورک کی خرابی۔ اپنی کنکشن چیک کریں اور دوبارہ کوشش کریں۔",
+      "unknown": "کچھ غلط ہو گیا۔ براہ کرم دوبارہ کوشش کریں۔"
+    }
+  },
+  "chat": {
+    "suggestions": {
+      "title": "شروع کرنے کے لیے ان میں سے کوئی ایک آزمائیں",
+      "activity": {
+        "title": "حالیہ سرگرمی دکھائیں",
+        "prompt": "مجھے اپنے ورک اسپیس میں گزشتہ 24 گھنٹوں کی تازہ ترین سرگرمی دکھائیں۔"
+      },
+      "debug": {
+        "title": "کسی خرابی کو ڈیبگ کریں",
+        "prompt": "مجھے کسی رن ٹائم خرابی کو ڈیبگ کرنے میں مدد کریں۔ میں اسٹیک ٹریس پیسٹ کروں گا اور آپ مجھے اس کے ذریعے گائیڈ کر سکتے ہیں۔"
+      },
+      "email": {
+        "title": "ایک خلاصہ ای میل تیار کریں",
+        "prompt": "پلیٹ فارم کی پیش رفت کے بارے میں اپنے ٹیم کو بھیجنے کے لیے ایک مختصر ہفتہ وار خلاصہ ای میل تیار کریں۔"
+      },
+      "features": {
+        "title": "پلیٹ فارم کی خصوصیات دریافت کریں",
+        "prompt": "مجھے اس SaaS پلیٹ فارم کی اہم خصوصیات اور ان کا استعمال کیسے کریں اس کے بارے میں بتائیں۔"
+      }
+    }
+  },
+  "billing": {
+    "activePlan": {
+      "title": "فعال پلان",
+      "manage": "سبسکرپشن مینیج کریں",
+      "noPlanTitle": "کوئی فعال پلان نہیں",
+      "noPlanDescription": "پےڈ خصوصیات اور زیادہ استعمال کی حدیں کھولنے کے لیے ایک پلان منتخب کریں۔",
+      "choosePlan": "ایک پلان منتخب کریں",
+      "renewsOn": "{date} کو ری نیو ہوگا",
+      "endsOn": "{date} کو ختم ہوگا",
+      "trialEndsOn": "ٹرائل {date} کو ختم ہوگا",
+      "status": {
+        "active": "فعال",
+        "trialing": "ٹرائل",
+        "past_due": "مقررہ تاریخ گزر گئی",
+        "canceled": "منسوخ",
+        "free": "مفت"
+      },
+      "errors": {
+        "loadFailed": "آپ کی بلنگ کی حیثیت لوڈ نہیں ہو سکی۔"
+      }
+    },
+    "pricing": {
+      "trial": "مفت {days} دن کا ٹرائل",
+      "seat": "{count, plural, one {# سیٹ} other {# سیٹس}}",
+      "perSeat": "/ سیٹ"
+    }
+  },
+  "organizations": {
+    "settings": {
+      "logo": {
+        "title": "آرگنائزیشن کا لوگو",
+        "description": "اپنی آرگنائزیشن کی نمائندگی کے لیے ایک مربع تصویر اپ لوڈ کریں (PNG, JPEG, یا WebP، زیادہ سے زیادہ 2MB)۔",
+        "uploadButton": "لوگو اپ لوڈ کریں",
+        "uploading": "اپ لوڈ ہو رہا ہے…",
+        "fileTooBig": "فائل بہت بڑی ہے۔ زیادہ سے زیادہ سائز 2MB ہے۔",
+        "invalidType": "تصویر کی قسم سپورٹ شدہ نہیں ہے۔ PNG, JPEG, یا WebP استعمال کریں۔",
+        "success": "لوگو اپ ڈیٹ ہو گیا۔",
+        "removeButton": "لوگو ہٹائیں",
+        "removed": "لوگو ہٹا دیا گیا۔"
+      },
+      "name": {
+        "title": "تنظیم کا نام",
+        "description": "اپنی ٹیم اور گاہکوں کو دکھائی جانے والی ظاہری نام کو اپ ڈیٹ کریں۔",
+        "label": "نام",
+        "submit": "محفوظ کریں",
+        "saving": "محفوظ ہو رہا ہے…",
+        "success": "تنظیم کا نام اپ ڈیٹ ہو گیا۔"
+      },
+      "delete": {
+        "title": "تنظیم حذف کریں",
+        "description": "اس تنظیم، تمام اراکین، دعوت ناموں اور متعلقہ ڈیٹا کو مستقل طور پر ہٹائیں۔ یہ عمل واپس نہیں کیا جا سکتا۔",
+        "trigger": "تنظیم حذف کریں",
+        "confirmLabel": "تصدیق کے لیے تنظیم کا نام لکھیں",
+        "submit": "تنظیم حذف کریں",
+        "cancel": "منسوخ کریں",
+        "success": "تنظیم حذف کر دی گئی۔"
+      }
+    },
+    "invitation": {
+      "title": "آپ کو دعوت دی گئی ہے",
+      "heading": "آپ کو {organizationName} میں شامل ہونے کی دعوت دی گئی ہے",
+      "description": "ٹیم کے ساتھ تعاون شروع کرنے کے لیے دعوت قبول کریں۔",
+      "accept": "دعوت قبول کریں",
+      "accepting": "قبول ہو رہا ہے...",
+      "decline": "رد کریں",
+      "declining": "رد ہو رہا ہے...",
+      "declinedView": "دعوت مسترد کی گئی",
+      "success": "ہم نے دعوت دینے والے کو آگاہ کر دیا ہے۔",
+      "backToDashboard": "ڈیش بورڈ پر واپس جائیں",
+      "roleLabel": "کردار: {role}",
+      "errorEmailMismatch": "یہ دعوت کسی دوسرے ای میل پر بھیجی گئی تھی",
+      "errorEmailMismatchDetail": "اسے قبول کرنے کے لیے اس ای میل ایڈریس سے سائن ان کریں جس پر دعوت موصول ہوئی۔",
+      "errorExpired": "دعوت کی میعاد ختم ہو گئی",
+      "errorExpiredDetail": "دعوت دینے والے سے کہیں کہ وہ نئی دعوت بھیجے۔",
+      "errorNotFound": "دعوت نہیں ملی",
+      "errorNotFoundDetail": "انویٹیشن لنک غلط ہے یا اسے منسوخ کر دیا گیا ہے۔",
+      "errorNotAvailable": "انویٹیشن دستیاب نہیں ہے",
+      "errorNotAvailableDetail": "اس انویٹیشن کا پہلے ہی جواب دے دیا گیا ہے اور یہ اب فعال نہیں ہے۔",
+      "role": {
+        "owner": "مالک",
+        "admin": "ایڈمن",
+        "member": "ممبر",
+        "viewer": "ویور"
+      }
+    }
+  },
+  "settings": {
+    "apiKeys": {
+      "title": "API کیز",
+      "description": "Nebutra تک پروگرامیٹک رسائی کے لیے API keys بنائیں اور ان کا انتظام کریں۔",
+      "createButton": "API key بنائیں",
+      "noPermission": "آپ کے پاس API keys دیکھنے کی اجازت نہیں ہے۔",
+      "loading": "لوڈ ہو رہا ہے…",
+      "loadError": "API keys لوڈ کرنے میں ناکامی ہوئی۔",
+      "createError": "API key بنانے میں ناکامی ہوئی۔",
+      "revokeError": "API key منسوخ کرنے میں ناکامی ہوئی۔",
+      "empty": {
+        "title": "ابھی تک کوئی API keys نہیں ہیں",
+        "cta": "اپنا پہلا API کی بنائیں"
+      },
+      "columns": {
+        "name": "نام",
+        "prefix": "پریفکس",
+        "lastUsed": "آخری استعمال",
+        "scopes": "سکوپس",
+        "created": "بنایا گیا",
+        "actions": "عمل",
+        "never": "کبھی نہیں"
+      },
+      "actions": {
+        "revoke": "منسوخ کریں",
+        "revoking": "منسوخ ہو رہا ہے…",
+        "copy": "کاپی کریں",
+        "copied": "کاپی ہو گیا",
+        "close": "بند کریں",
+        "submit": "کی بنائیں",
+        "submitting": "بنایا جا رہا ہے…"
+      },
+      "dialog": {
+        "title": "API کی بنائیں",
+        "description": "API keys allow external systems to communicate with Nebutra on your behalf. Treat them like passwords.",
+        "nameLabel": "نام",
+        "namePlaceholder": "جیسے پروڈکشن بیک اینڈ",
+        "scopesLabel": "سکوپس",
+        "successWarning": "یہ کی صرف ایک بار نظر آئے گی۔ بند کرنے سے پہلے اسے محفوظ کریں۔",
+        "confirmClose": "بند کرنے سے یہ کی ہمیشہ کے لیے چھپ جائے گی۔ یقینی بنائیں کہ یہ محفوظ ہو چکی ہے۔"
+      }
+    },
+    "auditLog": {
+      "title": "آڈٹ لاگ",
+      "description": "اپنے ورک اسپیس میں ہر انتظامی عمل کی نگرانی کریں۔ اداکار، عمل، انٹیٹی، یا وقت کی حد کے لحاظ سے فلٹر کریں۔",
+      "empty": "ابھی تک کوئی آڈٹ ایونٹ نہیں",
+      "loadMore": "مزید لوڈ کریں",
+      "loading": "لوڈ ہو رہا ہے…",
+      "forbidden": "آڈٹ لاگ دیکھنے کے لیے آپ کو ایڈمن رسائی درکار ہے۔",
+      "columns": {
+        "when": "کب",
+        "actor": "اداکار",
+        "action": "عمل",
+        "entity": "انٹیٹی",
+        "outcome": "نتیجہ",
+        "ip": "آئی پی"
+      },
+      "diff": {
+        "oldValue": "پرانا قدر",
+        "newValue": "نیا قدر"
+      },
+      "filters": {
+        "action": "عمل",
+        "actionPlaceholder": "عمل تلاش کریں…",
+        "entityType": "انٹیٹیٹی کی قسم",
+        "outcome": "نتیجہ",
+        "outcomeSuccess": "کامیابی",
+        "outcomeFailure": "ناکامی",
+        "outcomePending": "زیر التوا",
+        "startDate": "شروع کی تاریخ",
+        "endDate": "اختتام کی تاریخ",
+        "range24h": "پچھلے 24 گھنٹے",
+        "range7d": "پچھلے 7 دن",
+        "range30d": "پچھلے 30 دن",
+        "reset": "ری سیٹ",
+        "all": "سب"
+      }
+    },
+    "notifications": {
+      "title": "اطلاعات",
+      "description": "فیصلہ کریں کہ ہر واقعے کی قسم اور ہر ڈیلیوری چینل پر Nebutra آپ تک کیسے پہنچے۔",
+      "actions": {
+        "resetAll": "ڈیفالٹ پر ری سیٹ کریں",
+        "save": "محفوظ کریں"
+      },
+      "status": {
+        "saving": "محفوظ ہو رہا ہے…",
+        "saved": "محفوظ ہو گیا",
+        "error": "محفوظ کرنے میں ناکامی۔ براہ کرم دوبارہ کوشش کریں۔"
+      },
+      "eventTypes": {
+        "security": {
+          "label": "سیکیورٹی الرٹس",
+          "description": "سائن ان الرٹس، پاس ورڈ تبدیلیاں، دو فیکٹر تبدیلیاں۔"
+        },
+        "billing": {
+          "label": "بلنگ",
+          "description": "انوائسز، ادائیگی کی ناکامیاں، اور سبسکرپشن تبدیلیاں۔"
+        },
+        "invitation": {
+          "label": "ٹیم دعوت نامے",
+          "description": "تنظیم میں شامل ہونے کی دعوتیں، قبول یا مسترد۔"
+        },
+        "activity": {
+          "label": "ٹیم سرگرمی",
+          "description": "ممبرز شامل ہوئے، کردار میں تبدیلیاں، اور دیگر ورک اسپیس سرگرمیاں۔"
+        },
+        "updates": {
+          "label": "پروڈکٹ اپڈیٹس",
+          "description": "نئی خصوصیات، تبدیلیوں کی اہم نکات، اور ریلیز نوٹس۔"
+        },
+        "marketing": {
+          "label": "مارکیٹنگ",
+          "description": "نیوز لیٹر اور کبھی کبھار پروموشنز۔ صرف آپشنل۔"
+        }
+      },
+      "channels": {
+        "in_app": {
+          "label": "ایپ میں"
+        },
+        "email": {
+          "label": "ای میل"
+        },
+        "push": {
+          "label": "پش"
+        },
+        "sms": {
+          "label": "ایس ایم ایس"
+        }
+      }
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "اپنے ورک اسپیس کی طرف سے خارج ہونے والے ایونٹس کے لیے سبسکرائب کریں۔ ہم ہر پیڈ لو کو آپ کے اینڈ پوائنٹ کے راز کے ساتھ سائن کرتے ہیں تاکہ آپ اصلیت کی تصدیق کر سکیں۔",
+      "create": {
+        "heading": "نیا اینڈ پوائنٹ",
+        "urlLabel": "اینڈ پوائنٹ یو آر ایل",
+        "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
+        "eventsLegend": "ایونٹس",
+        "submit": "اینڈ پوائنٹ بنائیں",
+        "submitting": "بن رہا ہے…",
+        "selectEvent": "کم از کم ایک ایونٹ منتخب کریں۔",
+        "successTitle": "اینڈ پوائنٹ بن گیا۔ سائننگ سیکرٹ صرف ایک بار ظاہر ہوگا۔",
+        "successWarning": "بند کرنے سے پہلے اسے اپنے ایپلیکیشن کے سیکرٹ مینجر میں محفوظ کریں۔",
+        "copy": "کاپی کریں",
+        "copied": "کاپی ہو گیا"
+      },
+      "list": {
+        "heading": "فعال اینڈ پوائنٹس",
+        "empty": "ابھی تک کوئی ویب ہک اینڈ پوائنٹ نہیں۔ اوپر ایک بنائیں۔",
+        "loading": "لوڈ ہو رہا ہے…",
+        "loadFailed": "ویب ہکس لوڈ کرنے میں ناکامی",
+        "columns": {
+          "url": "یو آر ایل",
+          "events": "ایونٹس",
+          "status": "حالت",
+          "lastDelivered": "آخری ڈیلیوری",
+          "actions": "عمل"
+        },
+        "status": {
+          "active": "فعال",
+          "disabled": "غیر فعال"
+        },
+        "actions": {
+          "edit": "تبدیلی",
+          "enable": "فعال کریں",
+          "disable": "غیر فعال کریں",
+          "viewDeliveries": "ترسیلات دیکھیں",
+          "delete": "حذف کریں"
+        }
+      },
+      "deliveries": {
+        "heading": "حالیہ ترسیلات",
+        "close": "بند کریں",
+        "loading": "لوڈ ہو رہا ہے…",
+        "loadFailed": "ترسیلات لوڈ کرنے میں ناکامی",
+        "empty": "ابھی تک کوئی ترسیلات نہیں۔",
+        "viewPayload": "پی لوڈ دیکھیں",
+        "hidePayload": "پی لوڈ چھپائیں",
+        "replay": "دوبارہ چلائیں",
+        "replaying": "دوبارہ چل رہا ہے…",
+        "status": {
+          "success": "کامیاب",
+          "failed": "ناکام",
+          "retrying": "دوبارہ کوشش جاری ہے"
+        }
+      }
+    },
+    "appearance": {
+      "title": "ظاہری شکل",
+      "theme": {
+        "title": "تھیم",
+        "description": "لائٹ، ڈارک، یا سسٹم کی ترجیح کے مطابق استعمال کریں۔"
+      },
+      "themePreset": {
+        "title": "تھیم پری سیٹ",
+        "description": "پورے ایپ پر Theme Playground کا کوئی بھی تھیم لاگو کریں۔ نیچے دیے گئے کنٹرولز اسے مزید بہتر بنانے کے لیے اوپر تہہ کیے جاتے ہیں۔",
+        "search": "تھیمز تلاش کریں…",
+        "searchLabel": "تھیمز تلاش کریں",
+        "default": "ڈیفالٹ",
+        "defaultMood": "Nebutra base palette",
+        "active": "فعال",
+        "empty": "کوئی تھیم آپ کی تلاش سے مطابقت نہیں رکھتا۔",
+        "count": "{count} تھیمز"
+      },
+      "themeEditor": {
+        "title": "تھیم",
+        "description": "ایک پری سیٹ منتخب کریں، DESIGN.md درآمد کریں، پھر نیچے دیے گئے ٹوکنز کو بہتر بنائیں۔",
+        "selectLabel": "تھیم پری سیٹ",
+        "import": "درآمد کریں",
+        "copy": "تھیم کاپی کریں",
+        "copied": "کاپی ہو گیا",
+        "copyError": "کاپی ناکام رہی",
+        "custom": "حسب ضرورت"
+      },
+      "designMd": {
+        "title": "DESIGN.md درآمد کریں",
+        "description": "DESIGN.md پیسٹ کریں یا اپ لوڈ کریں تاکہ اس کے رنگ، رداس، فونٹس، فاصلے اور سایے پورے ایپ پر لاگو ہوں — دوبارہ لوڈ کرنے پر بھی برقرار رہیں گے۔",
+        "applied": "لاگو ہوا:",
+        "remove": "ہٹائیں"
+      },
+      "themeMode": {
+        "label": "تھیم موڈ",
+        "light": "ہلکا",
+        "dark": "گہرا",
+        "system": "سسٹم"
+      },
+      "accent": {
+        "title": "ایکسینٹ رنگ",
+        "description": "ایک برانڈ ایکسینٹ منتخب کریں جو ایپ بھر میں فعال حالتوں کو رنگ دے۔",
+        "label": "ایکسینٹ رنگ",
+        "options": {
+          "default": "ڈیفالٹ",
+          "blue": "نیلا",
+          "cyan": "سائین",
+          "violet": "جامنی",
+          "pink": "گلابی",
+          "amber": "عنبر",
+          "green": "سبز",
+          "red": "لال"
+        }
+      },
+      "colors": {
+        "title": "رنگ",
+        "description": "ایکسینٹ، بیک گراؤنڈ، اور فار گراؤنڈ۔",
+        "background": {
+          "label": "بیک گراؤنڈ",
+          "description": "سطح کے بیک گراؤنڈ رنگ کو تبدیل کریں۔"
+        },
+        "foreground": {
+          "label": "فار گراؤنڈ",
+          "description": "بڈی ٹیکسٹ کے رنگ کو تبدیل کریں۔"
+        },
+        "resetToDefault": "ڈیفالٹ پر واپس کریں"
+      },
+      "fontFamily": {
+        "uiLabel": "UI فونٹ",
+        "uiDescription": "UI میں استعمال ہونے والا فونٹ فیملی۔",
+        "codeLabel": "کوڈ فونٹ",
+        "codeDescription": "کوڈ سطحوں کے لیے استعمال ہونے والا فونٹ فیملی۔",
+        "options": {
+          "ui": {
+            "theme": "تھیم ڈیفالٹ",
+            "system": "سسٹم",
+            "geist": "Geist",
+            "inter": "Inter",
+            "sf": "SF Pro"
+          },
+          "code": {
+            "theme": "تھیم ڈیفالٹ",
+            "system": "سسٹم مونو",
+            "geist-mono": "Geist Mono",
+            "sf-mono": "SF Mono",
+            "jetbrains-mono": "JetBrains Mono"
+          }
+        }
+      },
+      "contrast": {
+        "title": "کونٹراسٹ",
+        "description": "متن کی کونٹراسٹ کو باریک بنائیں (50 = کوئی تبدیلی نہیں)۔",
+        "label": "کونٹراسٹ کی سطح"
+      },
+      "pointerCursor": {
+        "title": "پوائنٹر کرسر استعمال کریں",
+        "description": "ہاور انٹرایکٹو عناصر پر پوائنٹر کرسر پر سوئچ کریں۔",
+        "label": "انٹرایکٹو عناصر پر پوائنٹر کرسر"
+      },
+      "diffMarkers": {
+        "title": "ڈیف مارکرز",
+        "description": "ہر تبدیل شدہ لائن پر رنگین بینڈز، یا +/- گلیف دکھائیں۔",
+        "label": "ڈیف مارکر اسٹائل",
+        "color": "رنگ",
+        "plusminus": "+/-"
+      },
+      "fontSmoothing": {
+        "title": "فونٹ سموٹھنگ",
+        "description": "macOS نیٹو فونٹ اینٹی الیاسنگ لاگو کریں۔",
+        "label": "نیٹو فونٹ سموٹھنگ"
+      },
+      "typography": {
+        "title": "ٹائپو گرافی",
+        "description": "UI اور کوڈ سطحوں کے لیے بنیادی فونٹ سائز۔",
+        "uiFontSize": "UI فونٹ سائز",
+        "uiFontSizeDescription": "بنیادی UI فونٹ سائز ایڈجسٹ کریں۔",
+        "codeFontSize": "کوڈ فونٹ سائز",
+        "codeFontSizeDescription": "بنیادی کوڈ فونٹ سائز ایڈجسٹ کریں۔"
+      },
+      "fontSize": {
+        "followTheme": "تھیم",
+        "customize": "حسب ضرورت"
+      },
+      "motion": {
+        "title": "حرکت کم کریں",
+        "description": "اینیمیشنز کم کریں یا سسٹم کی ترجیح کے مطابق کریں۔",
+        "label": "حرکت کی ترجیح",
+        "system": "سسٹم",
+        "on": "آن",
+        "off": "آف"
+      },
+      "surface": {
+        "title": "شفاف سائیڈبار",
+        "description": "سائیڈبار پر شفاف مواد لگائیں۔"
+      },
+      "transparency": {
+        "label": "شفاف سائیڈبار",
+        "description": "سائیڈبار پر شفاف مواد لگائیں۔"
+      }
+    }
+  },
+  "legal": {
+    "version": "ورژن",
+    "effective": "مؤثر",
+    "notFound": "یہ دستاویز دستیاب نہیں ہے۔",
+    "backHome": "ہوم پر واپس"
+  },
+  "commandPalette": {
+    "ariaLabel": "کمانڈ پیلیٹ",
+    "placeholder": "کمانڈ ٹائپ کریں یا تلاش کریں…",
+    "empty": "کوئی نتائج نہیں ملے۔",
+    "sections": {
+      "navigation": "نیویگیشن",
+      "actions": "ایکشنز",
+      "settings": "سیٹنگز",
+      "account": "اکاؤنٹ",
+      "admin": "ایڈمن",
+      "help": "مدد"
+    },
+    "commands": {
+      "nav": {
+        "home": "ہوم",
+        "settings": "سیٹنگز",
+        "billing": "بلنگ",
+        "team": "ٹیم",
+        "apiKeys": "API کیز",
+        "notifications": "اطلاعات",
+        "auditLog": "آڈٹ لاگ",
+        "webhooks": "Webhooks",
+        "admin": "ایڈمن"
+      },
+      "action": {
+        "inviteMember": "ٹیم کے ممبر کو دعوت دیں",
+        "createApiKey": "API کی بنائیں",
+        "switchOrganization": "تنظیم تبدیل کریں"
+      },
+      "settings": {
+        "themeLight": "لائٹ تھیم پر سوئچ کریں",
+        "themeDark": "ڈارک تھیم پر سوئچ کریں",
+        "themeSystem": "سسٹم تھیم استعمال کریں"
+      },
+      "account": {
+        "signOut": "سائن آؤٹ"
+      },
+      "help": {
+        "reportIssue": "مسئلہ رپورٹ کریں",
+        "shortcuts": "کی بورڈ شارٹ کٹس"
+      }
+    }
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "آپ کی پرائیویسی کی ترجیحات",
+      "description": "ہم آپ کے تجربے کو بہتر بنانے، سائٹ ٹریفک کا تجزیہ کرنے اور مواد کو ذاتی بنانے کے لیے کوکیز استعمال کرتے ہیں۔ وہ زمرے منتخب کریں جنہیں آپ اجازت دینا چاہتے ہیں۔"
+    },
+    "button": {
+      "acceptAll": "سب قبول کریں",
+      "savePreferences": "ترجیحات محفوظ کریں"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "ضروری",
+        "description": "سائٹ کے کام کرنے کے لیے ضروری۔ غیر فعال نہیں کیا جا سکتا۔"
+      },
+      "functional": {
+        "label": "فنکشنل",
+        "description": "آپ کی ترجیحات (زبان، تھیم، لے آؤٹ) یاد رکھیں۔"
+      },
+      "analytics": {
+        "label": "اینالیٹکس",
+        "description": "پروڈکٹ کو بہتر بنانے کے لیے غیر شناختی استعمال کا ڈیٹا۔"
+      },
+      "marketing": {
+        "label": "مارکیٹنگ",
+        "description": "تھرڈ پارٹی پلیٹ فارمز پر ذاتی نوعیت کی اشتہارات اور ری ٹارگیٹنگ۔"
+      }
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "اطلاعات",
+      "description": "آپ کی تمام اطلاعات ایک ہی جگہ پر۔",
+      "filter": {
+        "all": "سب",
+        "unread": "غیر پڑھی ہوئی"
+      },
+      "actions": {
+        "markAllRead": "سب کو پڑھا ہوا نشان زد کریں",
+        "markRead": "پڑھا ہوا نشان زد کریں",
+        "archive": "آرکائیو کریں",
+        "loadMore": "مزید لوڈ کریں",
+        "loading": "لوڈ ہو رہا ہے...",
+        "selected": "{count} منتخب"
+      },
+      "empty": {
+        "all": "آپ سب کچھ دیکھ چکے ہیں۔",
+        "unread": "کوئی غیر پڑھی گئی نوٹیفکیشن نہیں۔"
+      },
+      "errors": {
+        "load": "نوٹیفکیشنز لوڈ کرنے میں ناکامی۔",
+        "network": "نیٹ ورک کی خرابی۔ براہ کرم دوبارہ کوشش کریں۔",
+        "markRead": "نوٹیفکیشن کو پڑھا ہوا نشان زد کرنے میں ناکامی۔",
+        "archive": "نوٹیفکیشن کو آرکائیو کرنے میں ناکامی۔",
+        "bulkMarkRead": "کچھ نوٹیفکیشنز کو پڑھا ہوا نشان زد نہیں کیا جا سکا۔"
+      },
+      "inbox": {
+        "noBackend": "ان باکس کے لیے مستقل نوٹیفکیشن بیک اینڈ کی ضرورت ہے۔ اپنے پرووائیڈر کی ترتیب چیک کریں۔",
+        "emptyCaughtUp": "ان باکس صاف ہے۔",
+        "emptyChangelog": "چینج لاگ کی اپ ڈیٹس یہاں نظر آئیں گی۔"
+      }
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "صبح بخیر",
+      "afternoon": "شام بخیر",
+      "evening": "شام بخیر"
+    },
+    "home": {
+      "connectorsPill": "کنیکٹرز سے اپنی ایپ کو طاقت دیں",
+      "subtitle": "پرومپٹ ڈراپ کریں، کہیں سے بھی ⌘K دبائیں، یا براہ راست ورک اسپیس سطح پر جائیں۔",
+      "promptPlaceholder": "آپ کے ذہن میں کیا ہے؟",
+      "actions": {
+        "connect": "ایک انٹیگریشن کنیکٹ کریں",
+        "theme": "تھیم پلے گراؤنڈ",
+        "audit": "آڈٹ لاگ",
+        "billing": "بلنگ"
+      }
+    },
+    "commandSurface": {
+      "noAuth": "منتخب پرووائیڈر کے لیے آتھ کنفیگر نہیں ہے۔ صارف سیشنز کو فعال کرنے کے لیے پرووائیڈر سیکرٹس سیٹ کریں۔"
+    },
+    "commandCenter": {
+      "description": "ایک ایکشن سے شروع کریں: سیلر سے پوچھیں، ورک اسپیس سگنلز کا معائنہ کریں، یا کام کو خودکار سطح پر راؤٹ کریں۔",
+      "openSailor": "سیلر AI کھولیں",
+      "viewAnalytics": "اینالیٹکس دیکھیں"
+    },
+    "workspaceSnapshot": {
+      "title": "ورک اسپیس اسنیپ شاٹ",
+      "description": "تازہ ترین ویر ہاؤس دن · {day}",
+      "viewAnalytics": "اینالیٹکس دیکھیں →",
+      "metrics": {
+        "activeUsers": "فعال صارفین",
+        "totalEvents": "کل ایونٹس",
+        "conversions": "کنورژنز",
+        "revenue": "رقم حاصل"
+      },
+      "details": {
+        "activeUsers": "سائن ان صارفین",
+        "totalEvents": "رکاب شدہ واقعات",
+        "conversions": "اہل کارروائیاں",
+        "revenue": "پہچانی گئی آمدنی"
+      },
+      "meta": {
+        "snapshot": "اسنیپ شاٹ",
+        "cadence": "کڈنس",
+        "tenant": "ٹیننٹ",
+        "daily": "روزانہ",
+        "latestDay": "{day}",
+        "users": "ٹیننٹ صارفین",
+        "events": "واقعہ اسٹریم",
+        "funnel": "فنل",
+        "billing": "بلنگ"
+      }
+    },
+    "documentPipeline": {
+      "title": "دستاویز پائپ لائن",
+      "description": "ماخذ فائلوں کو اصل ٹاسک قطار میں بھیجیں۔",
+      "intakeTitle": "دستاویز وصولی",
+      "intakeDescription": "پی ڈی ایف، مارک ڈاؤن، متن، یا ورڈ دستاویز",
+      "chooseDocument": "دستاویز منتخب کریں",
+      "startParseTask": "پارس ٹاسک شروع کریں",
+      "queued": "قطار میں",
+      "fileInputLabel": "دستاویز فائل",
+      "fallbackError": "دستاویز ٹاسک ناکام ہو گیا۔",
+      "taskStatus": "ٹاسک کی حالت",
+      "progressLabel": "ٹاسک کی پیش رفت",
+      "refreshStatus": "تازہ کریں",
+      "cancelTask": "منسوخ کریں",
+      "statusError": "ٹاسک کی حالت تازہ نہیں کی جا سکی۔",
+      "cancelError": "ٹاسک منسوخ نہیں کیا جا سکا۔",
+      "statusQueued": "قطار میں",
+      "statusRunning": "چل رہا ہے",
+      "statusSucceeded": "کامیاب",
+      "statusFailed": "ناکام",
+      "statusCancelled": "منسوخ",
+      "resultReady": "نتیجہ تیار ہے",
+      "taskError": "ٹاسک کی خرابی",
+      "updatedAt": "اپ ڈیٹ شدہ"
+    },
+    "recentSessions": {
+      "title": "جہاں چھوڑا تھا وہاں سے جاری رکھیں",
+      "subtitle": "{count, plural, =0 {کوئی سیشن نہیں} =1 {1 حالیہ سیشن} other {# حالیہ سیشنز}}",
+      "viewAll": "سب دیکھیں →",
+      "newChat": "نیا چیٹ",
+      "untitled": "بغیر عنوان سیشن",
+      "messageCount": "{count, plural, =1 {1 پیغام} other {# پیغامات}}"
+    },
+    "gettingStarted": {
+      "title": "شروع کرنے کا طریقہ",
+      "description": "{total} میں سے {done} مکمل · مکمل ورک اسپیس کھولنے کے لیے سیٹ اپ ختم کریں",
+      "progressLabel": "سیٹ اپ کی پیش رفت",
+      "tasks": {
+        "team": {
+          "label": "ایک ٹیم میٹ کو مدعو کریں",
+          "description": "اپنی ورک اسپیس میں کم از کم ایک شراکت دار لائیں۔"
+        },
+        "api": {
+          "label": "ایک API کی جنریٹ کریں",
+          "description": "اپنی ورک اسپیس اینڈ پوائنٹس تک پروگرامیٹک رسائی۔"
+        },
+        "integration": {
+          "label": "ایک انٹیگریشن جوڑیں",
+          "description": "Stripe، Slack، webhooks، queues، اور مزید۔"
+        },
+        "ai": {
+          "label": "Sailor AI کھولیں",
+          "description": "چٹ، ڈیٹا، یا ورک فلو موڈ آزمائیں۔"
+        }
+      }
+    }
+  },
+  "Sidebar": {
+    "projects": "پروجیکٹس",
+    "noThreads": "کوئی تھریڈز نہیں",
+    "expandAll": "سبھی کھولیں",
+    "collapseAll": "سبھی بند کریں",
+    "sectionMore": "مزید آپشنز",
+    "newProject": "نیا پروجیکٹ",
+    "restoredGroups": "پہلے کھولے گئے گروپس بحال کیے گئے",
+    "newProjectPlaceholder": "پروجیکٹ کا نام",
+    "newProjectDefault": "بغیر عنوان",
+    "newProjectSuccess": "پروجیکٹ بن گیا",
+    "newProjectError": "پروجیکٹ نہیں بن سکا",
+    "sortBy": "ترتیب دیں",
+    "sortRecent": "حالیہ سرگرمی",
+    "sortAlphabetical": "الفabetical",
+    "sortCreated": "تاریخ ایجاد",
+    "archiveAll": "تمام آرشیو کنید",
+    "comingV2": "در نسخه 2 می آید"
+  },
+  "startupOs": {
+    "milestone": {
+      "firstRoom": "اولین اتاق آماده است.",
+      "firstFolder": "بسیاری از شرکت ها به عنوان یک پوشه شروع می شوند.",
+      "firstTable": "اولین میز یک صندلی دوم دارد.",
+      "firstSignal": "دنیای واقعی شروع به صحبت کرده است.",
+      "firstShip": "جهان برای اولین بار آن را می بیند.",
+      "firstBeliever": "از امروز، شما دیگر فقط برای خودتان نمی سازید.",
+      "firstRevenue": "خواب اکنون جریان نقدی دارد.",
+      "firstReturn": "بازگشت مهم تر از بازدید است.",
+      "firstTeam": "سه نفر می توانند شروع به تشکیل یک شرکت کنند.",
+      "firstCrowd": "اولین میز شلوغ می شود.",
+      "firstReset": "شروع مجدد یک شروع صادقانه تر است.",
+      "firstPublic": "یک تکه از آینده را در عمومی قرار دهید.",
+      "firstDemo": "یہ شو نہیں ہے۔ یہ ٹیسٹ ہے۔",
+      "graduation": "آپ بنیادی چیزوں سے آگے نکل چکے ہیں۔ آگے کا راستہ مضبوط ٹولز کا مانگتا ہے۔"
+    },
+    "emptyState": {
+      "default": "بہت سی کمپنیاں ایک فولڈر سے شروع ہوتی ہیں۔",
+      "integrations": "کوئی کنیکٹر سیٹ نہیں کیا گیا۔",
+      "creditActivity": "پہلی درخواست کے بعد کریڈٹ ایکٹیوٹی نظر آئے گی۔",
+      "usageData": "جب آپ کی تنظیم درخواستیں شروع کر دے گی تو استعمال کا ڈیٹا نظر آئے گا۔",
+      "apiKeys": "ابھی تک کوئی کی نہیں۔",
+      "apiKeysCta": "پہلی کی بنائیں",
+      "teamMembers": "ایک شروع کر سکتا ہے۔ کچھ لوگ بن سکتے ہیں۔",
+      "cofounders": "پہلا شخص جو آپ پر یقین کرے ابھی نظر نہیں آیا۔",
+      "cofoundersDescription": "جب آپ اور دوسرا بانی دونوں دلچسپی ظاہر کریں گے، وہ یہاں نظر آئیں گے۔",
+      "cofoundersAction": "کو-بانی تلاش کریں",
+      "growthChart": "جیسے ہی ایکٹیوٹی شروع ہوگی، رجحان کا ڈیٹا نظر آئے گا۔",
+      "revenueChart": "جیسے ہی لین دین شروع ہوگی، آمدنی کا ڈیٹا نظر آئے گا.",
+      "webhookDeliveries": "پہلے ایونٹ کے بعد ڈیلیوری یہاں نظر آئیں گی۔",
+      "webhookEndpoints": "ایونٹس وصولنا شروع کرنے کے لیے اوپر ایک اینڈ پوائنٹ شامل کریں۔",
+      "accessInvites": "کوئی دعوت نامے جاری نہیں ہوئے۔"
+    },
+    "success": "پہلا کمرہ تیار ہے۔",
+    "failure": "دوبارہ شروع کرنا ایک زیادہ سچا آغاز ہے۔",
+    "errors": {
+      "loadMatches": "میچز لوڈ نہیں ہو سکے۔",
+      "loadMatchesDescription": "ہمارے پاس کچھ غلط ہو گیا۔ دوبارہ کوشش کرنے کے لیے ریفریش کریں۔",
+      "loadWebhookDeliveries": "ڈیلیوریز لوڈ نہیں ہو سکیں۔",
+      "replayWebhookDelivery": "ری پلی کامیاب نہیں ہوا۔",
+      "loadWebhookEndpoints": "اینڈ پوائنٹس لوڈ نہیں ہو سکے۔"
+    },
+    "team": "ایک شروع کر سکتا ہے۔ کچھ بن سکتے ہیں۔",
+    "revenue": "اب خواب کی نقد بہاؤ ہے۔",
+    "growth": "سگنل مضبوط ہو رہا ہے۔",
+    "deployment": {
+      "primary": "دنیا اسے پہلی بار دیکھتی ہے۔",
+      "echo": "یہ بالآخر localhost سے نکل گیا۔"
+    },
+    "onboarding": "آپ کو تیار ہونے کی ضرورت نہیں ہے۔ آپ کو شروع کرنے کی ضرورت ہے۔",
+    "graduation": "آپ بنیادیات سے آگے نکل گئے ہیں۔ آگے کے راستے کے لیے {tool} آزمائیں۔",
+    "company": {
+      "emptyTitle": "آپ کا پہلا سیاق و سباق ٹاور یہاں سے شروع ہوتا ہے۔",
+      "emptyDescription": "Startup OS میں کمپنی کو کمپائل کریں تاکہ اس کا context tower دیکھا اور ایڈٹ کیا جا سکے۔",
+      "emptyAction": "Startup OS کھولیں",
+      "notice": {
+        "needsProvider": "فیلڈز کو خودکار طریقے سے بھرنے کے لیے ایک AI provider key جوڑیں۔",
+        "generateFailed": "جنریشن مکمل نہیں ہو سکی۔",
+        "saveFailed": "آپ کی تبدیلیاں محفوظ نہیں ہو سکیں۔"
+      },
+      "action": {
+        "save": "محفوظ کریں",
+        "saving": "محفوظ ہو رہا ہے…",
+        "cancel": "منسوخ کریں",
+        "open": "Startup OS کھولیں"
+      }
+    },
+    "execution": {
+      "noBets": "ابھی تک کوئی bets نہیں۔",
+      "noRuns": "کوئی active runs نہیں۔"
+    },
+    "fileTree": {
+      "empty": "اس project میں ابھی تک کوئی files نہیں ہیں۔"
+    }
+  },
+  "selectOrg": {
+    "invitation": {
+      "emptyTitle": "Workspace تیار ہو رہا ہے۔",
+      "emptyDescription": "Invitation ابھی بھی sync ہو رہی ہو سکتی ہے۔ اس صفحے کو refresh کریں یا ایک الگ workspace بنائیں."
+    },
+    "billing": {
+      "emptyTitle": "Billing سے پہلے ایک workspace بنائیں۔",
+      "emptyDescription": "Billing actions کے لیے ایک active workspace کی ضرورت ہوتی ہے۔ پہلے ایک بنائیں، پھر billing پر واپس آئیں۔"
+    },
+    "default": {
+      "emptyTitle": "پہلا ورک اسپیس یہاں سے شروع ہوتا ہے۔",
+      "emptyDescription": "شروع کرنے کے لیے ایک ورک اسپیس بنائیں۔"
+    }
+  }
+}

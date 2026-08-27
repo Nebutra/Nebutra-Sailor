@@ -1,0 +1,131 @@
+import type { Icon as LucideIcon } from "@nebutra/icons";
+import {
+  Code as Code2,
+  Database,
+  Message as MessageSquare,
+  Plus,
+  MagnifyingGlass as Search,
+  Workflow,
+} from "@nebutra/icons";
+import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+import { getLocale, getTranslations } from "next-intl/server";
+import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
+import { getAuth } from "@/lib/auth";
+import { db } from "@/lib/db";
+
+const MODE_META: Record<string, { label: string; icon: LucideIcon; accent: string }> = {
+  chat: { label: "Chat", icon: MessageSquare, accent: "text-primary dark:text-primary" },
+  data: { label: "Data", icon: Database, accent: "text-cyan-11 dark:text-cyan-9" },
+  workflow: { label: "Workflow", icon: Workflow, accent: "text-[hsl(var(--success-strong))]" },
+  search: { label: "Search", icon: Search, accent: "text-neutral-11" },
+  code: { label: "Code", icon: Code2, accent: "text-[hsl(var(--warning-strong))]" },
+};
+
+function formatSessionTime(date: Date, locale: string): string {
+  return date.toLocaleString(locale, {
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+/**
+ * Server-rendered "continue where you left off" list for the dashboard.
+ *
+ * Honesty contract:
+ * - Only shows sessions that actually exist in the database.
+ * - Returns null when there are zero sessions; the dashboard should not
+ *   fabricate a working queue before the product has real usage data.
+ */
+export async function RecentSessions() {
+  const [auth, locale] = await Promise.all([getAuth().catch(() => null), getLocale()]);
+
+  const orgId = auth?.orgId ?? null;
+  const userId = auth?.userId ?? null;
+  if (!orgId || !userId) return null;
+
+  const sessions = await db.chatSession
+    .findMany({
+      where: { tenantId: orgId, userId },
+      orderBy: { lastMessageAt: "desc" },
+      take: 4,
+      select: {
+        id: true,
+        title: true,
+        mode: true,
+        messageCount: true,
+        lastMessageAt: true,
+      },
+    })
+    .catch(() => []);
+
+  if (sessions.length === 0) return null;
+
+  const t = await getTranslations("dashboard.recentSessions");
+
+  return (
+    <div className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 p-3.5 sm:p-4">
+      <AnimateIn>
+        <div className="mb-3 flex items-center justify-between">
+          <div>
+            <h2 className="text-sm font-semibold text-neutral-12">{t("title")}</h2>
+            <p className="mt-0.5 text-xs text-neutral-10">
+              {t("subtitle", { count: sessions.length })}
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <ViewTransitionLink
+              href="/chat/history"
+              className="text-xs font-medium text-neutral-10 transition-colors hover:text-neutral-12"
+            >
+              {t("viewAll")}
+            </ViewTransitionLink>
+            <ViewTransitionLink
+              href="/chat"
+              className="inline-flex items-center gap-1 text-xs font-medium text-primary transition-colors hover:text-primary dark:text-primary dark:hover:text-primary"
+            >
+              <Plus className="size-3" aria-hidden="true" />
+              {t("newChat")}
+            </ViewTransitionLink>
+          </div>
+        </div>
+      </AnimateIn>
+
+      <AnimateInGroup stagger="fast" className="space-y-2">
+        {sessions.map((session) => {
+          const meta = MODE_META[session.mode] ?? MODE_META.chat;
+          const Icon = meta.icon;
+          const href = `/chat?sessionId=${encodeURIComponent(session.id)}&mode=${encodeURIComponent(session.mode)}`;
+          return (
+            <AnimateIn key={session.id}>
+              <ViewTransitionLink href={href} className="block">
+                <div className="flex min-h-14 items-center justify-between gap-3 rounded-[var(--radius-lg)] border border-neutral-5 bg-neutral-1 px-3 py-2.5 transition-colors duration-150 hover:border-neutral-7 hover:bg-neutral-2">
+                  <div className="min-w-0">
+                    <span
+                      className={`inline-flex items-center gap-1 rounded-full bg-neutral-2 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider ${meta.accent}`}
+                    >
+                      <Icon className="size-3" aria-hidden="true" />
+                      {meta.label}
+                    </span>
+                    <p className="mt-1 truncate text-sm font-medium text-neutral-12">
+                      {session.title || t("untitled")}
+                    </p>
+                  </div>
+                  <div className="shrink-0 text-right">
+                    <p className="text-[11px] tabular-nums text-neutral-10">
+                      {formatSessionTime(session.lastMessageAt, locale)}
+                    </p>
+                    <p className="mt-1 text-[11px] text-neutral-10">
+                      {t("messageCount", { count: session.messageCount })}
+                    </p>
+                  </div>
+                </div>
+              </ViewTransitionLink>
+            </AnimateIn>
+          );
+        })}
+      </AnimateInGroup>
+    </div>
+  );
+}

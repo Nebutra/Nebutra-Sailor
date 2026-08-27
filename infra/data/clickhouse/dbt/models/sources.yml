@@ -1,0 +1,38 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: nebutra
+    tables:
+      - name: events_bronze
+
+models:
+  - name: events_bronze
+    columns:
+      - name: event_id
+        tests:
+          - not_null
+      - name: tenant_id
+        tests:
+          - not_null
+      - name: event_time
+        tests:
+          - not_null
+
+  - name: events_silver
+    columns:
+      - name: event_id
+        tests:
+          - not_null
+      - name: tenant_id
+        tests:
+          - not_null
+
+  - name: growth_metrics_daily
+    columns:
+      - name: tenant_id
+        tests:
+          - not_null
+      - name: day
+        tests:
+          - not_null

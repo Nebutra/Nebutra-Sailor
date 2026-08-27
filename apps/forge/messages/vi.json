@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — Trạm công cụ trực tuyến",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "Công cụ mã hóa, văn bản, băm, tài liệu và hình ảnh trực tuyến."
+  },
+  "nav": {
+    "main": "Điều hướng chính",
+    "homeAria": "Trang chủ {brandName} Forge",
+    "tools": "Công cụ",
+    "wallet": "Ví",
+    "api": "API",
+    "routerAria": "{brandName} Router",
+    "categoriesAria": "Danh mục công cụ",
+    "languageAria": "Đổi ngôn ngữ"
+  },
+  "tool": {
+    "breadcrumbAria": "Breadcrumbs",
+    "workspace": "Không gian làm việc",
+    "workspaceHint": "Cục bộ hoặc máy chủ · cùng đường dẫn như API",
+    "api": "API",
+    "apiHint": "Cùng hợp đồng như trang. Sử dụng khóa đã xác thực trong môi trường sản xuất.",
+    "related": "Công cụ liên quan"
+  },
+  "auth": {
+    "signIn": "Đăng nhập",
+    "signUp": "Đăng ký",
+    "signOut": "Đăng xuất"
+  },
+  "footer": {
+    "navAria": "Chân trang",
+    "blurb": "Trạm công cụ trực tuyến. Hoàn thành tác vụ trong trình duyệt, hoặc tự động hóa qua API / MCP.",
+    "product": "Sản phẩm",
+    "developers": "Nhà phát triển",
+    "company": "Công ty",
+    "docs": "Tài liệu tích hợp",
+    "website": "Trang web",
+    "privacy": "Bảo mật"
+  },
+  "home": {
+    "eyebrow": "Nhìn thấy. Gọi tên.",
+    "title": "Con dao quân đội Thụy Sĩ cho công cụ trực tuyến",
+    "subtitle": "Codec, văn bản, băm, tài liệu và xử lý hình ảnh. Hoàn thành trong trình duyệt, hoặc tự động hóa qua API / MCP — một bộ triển khai duy nhất.",
+    "toolCount": "{count} công cụ",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "Tìm kiếm: đếm từ, base64, json, timestamp…",
+    "aria": "Tìm kiếm công cụ",
+    "emptyTitle": "Không có công cụ nào khớp với “{query}”",
+    "emptyHint": "Thử từ khóa khác, hoặc chọn công cụ từ danh mục bên dưới."
+  },
+  "categories": {
+    "codec": {
+      "label": "Codec",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "Xác thực Trung Quốc",
+      "hint": "ID · SĐT"
+    },
+    "data": {
+      "label": "Dữ liệu",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "Nhà phát triển",
+      "hint": "Regex · SQL · màu · UUID"
+    },
+    "doc": {
+      "label": "Tài liệu",
+      "hint": "Markdown · gộp/tách PDF"
+    },
+    "finance": {
+      "label": "Tài chính",
+      "hint": "Số tiền sang chữ"
+    },
+    "hash": {
+      "label": "Hash & bảo mật",
+      "hint": "MD5 · SHA · HMAC · mật khẩu"
+    },
+    "image": {
+      "label": "Hình ảnh",
+      "hint": "Nén · QR · chuyển đổi"
+    },
+    "life": {
+      "label": "Công cụ tính toán đời sống",
+      "hint": "Vay mua nhà · BMI · quan hệ họ hàng"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "Token · chi phí · schema"
+    },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
+    "security": {
+      "label": "Bảo mật",
+      "hint": "Tạo mật khẩu"
+    },
+    "text": {
+      "label": "Văn bản",
+      "hint": "Đếm từ · CJK · pinyin · Diff"
+    },
+    "time": {
+      "label": "Thời gian",
+      "hint": "Dấu thời gian · múi giờ · Cron · âm lịch"
+    },
+    "unit": {
+      "label": "Đơn vị",
+      "hint": "Chiều dài · khối lượng · nhiệt độ · dữ liệu"
+    },
+    "template": {
+      "label": "Mẫu",
+      "hint": ".gitignore · LICENSE · Dockerfile · README"
+    }
+  },
+  "runners": {
+    "common": {
+      "run": "Chạy",
+      "running": "Đang chạy…",
+      "copy": "Sao chép",
+      "copied": "Đã sao chép",
+      "sameAsApi": "Cùng đường dẫn với API · OSS engine",
+      "mustBeNumber": "{label} phải là một số",
+      "base64Loaded": "Đã tải payload Base64",
+      "workspaceMissing": "Không cấu hình Workspace: {slug}",
+      "yes": "Có",
+      "no": "Không",
+      "text": "Văn bản",
+      "input": "Đầu vào",
+      "output": "Đầu ra",
+      "outputPlaceholder": "Kết quả hiển thị ở đây",
+      "localRun": "Chạy cục bộ",
+      "serverRun": "Chạy trên máy chủ",
+      "serverVerify": "Xác minh máy chủ",
+      "outputPreview": "Xem trước kết quả",
+      "mode": "Chế độ",
+      "encode": "Mã hóa",
+      "decode": "Giải mã",
+      "file": "Tệp",
+      "clear": "Xóa",
+      "length": "Độ dài: {n}",
+      "bytes": "{bytes} bytes",
+      "download": "Tải xuống",
+      "format": "Định dạng",
+      "formatting": "Định dạng…",
+      "dialect": "Phương ngữ",
+      "color": "Màu sắc",
+      "pickColor": "Chọn màu",
+      "content": "Nội dung",
+      "algorithm": "Thuật toán",
+      "encoding": "Mã hóa",
+      "message": "Tin nhắn",
+      "secret": "Bí mật",
+      "password": "Mật khẩu",
+      "direction": "Hướng",
+      "preview": "Xem trước",
+      "query": "Truy vấn",
+      "querying": "Đang truy vấn…",
+      "validate": "Xác thực",
+      "validating": "Đang xác thực…",
+      "processing": "Đang xử lý…",
+      "pretty": "Định dạng",
+      "minify": "Nén",
+      "from": "Từ",
+      "to": "Đến",
+      "timezone": "Múi giờ",
+      "datetime": "Ngày & giờ",
+      "compute": "Tính toán",
+      "computing": "Đang tính toán…",
+      "convertAction": "Chuyển đổi",
+      "count": "Số lượng",
+      "value": "Giá trị",
+      "unit": "Đơn vị",
+      "generateLocal": "Tạo cục bộ",
+      "generateServer": "Tạo trên máy chủ",
+      "copyAll": "Sao chép tất cả",
+      "emptyResult": "Kết quả sẽ hiển thị ở đây",
+      "copyText": "Sao chép văn bản",
+      "quality": "Chất lượng",
+      "original": "Nguyên bản",
+      "result": "Kết quả",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
+    },
+    "base64": {
+      "encodeDir": "Văn bản → Base64",
+      "decodeDir": "Base64 → Văn bản",
+      "localNote": "Web API cục bộ (TextEncoder / atob)",
+      "serverNote": "Buffer máy chủ · cùng đường dẫn với API"
+    },
+    "password": {
+      "uppercase": "Chữ hoa",
+      "lowercase": "Chữ thường",
+      "digits": "Số",
+      "symbols": "Ký tự",
+      "generate": "Tạo mật khẩu",
+      "recent": "Gần đây",
+      "note": "Engine: node:crypto randomInt · an toàn mật mã · cùng đường dẫn như API"
+    },
+    "hash": {
+      "algo": "Thuật toán: {algo}",
+      "md5Warn": " · chỉ dùng checksum/tương thích — không lưu mật khẩu",
+      "md5LocalError": "MD5 yêu cầu chạy trên máy chủ (Web Crypto không hỗ trợ MD5)",
+      "md5ServerHint": "MD5: dùng chạy trên máy chủ (chỉ tương thích, không dùng lưu mật khẩu)",
+      "localNote": "Web Crypto cục bộ · {algo}",
+      "serverNote": "node:crypto trên máy chủ · cùng đường dẫn với API"
+    },
+    "convert": {
+      "converting": "Đang chuyển đổi…",
+      "convert": "Chuyển đổi",
+      "done": "Hoàn tất · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "Kéo thả tệp vào đây, hoặc nhấp để duyệt",
+      "needFile": "Chọn tệp trước",
+      "needAlgo": "Chọn ít nhất một thuật toán",
+      "compute": "Tính tổng kiểm tra",
+      "computing": "Đang tính…",
+      "algorithms": "Thuật toán",
+      "note": "node:crypto · đa thuật toán · cùng đường dẫn với API"
+    },
+    "lorem": {
+      "paragraphs": "Đoạn văn",
+      "wordsPerParagraph": "Số từ mỗi đoạn",
+      "startWithLorem": "Bắt đầu bằng “Lorem ipsum”",
+      "note": "Công cụ tạo Lorem Ipsum · thuần túy"
+    },
+    "emailValidate": {
+      "note": "Trình xác thực email · chỉ định dạng (không tra cứu MX)"
+    },
+    "creditCardLuhn": {
+      "number": "Số thẻ",
+      "note": "Kiểm tra Luhn · ngoại tuyến, không lưu trữ",
+      "digits": "digits",
+      "specimenLabel": "Specimen",
+      "structureOnly": "Luhn structure only",
+      "unknownBrand": "Card"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "Công cụ nén JSON · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "CSS Minifier · nhẹ (an toàn edge)"
+    },
+    "hashCompare": {
+      "a": "Hash A",
+      "b": "Hash B",
+      "ignoreCase": "Bỏ qua chữ hoa/thường",
+      "note": "Hash Comparator · thời gian hằng cho độ dài bằng nhau"
+    },
+    "jsonDiff": {
+      "left": "JSON A",
+      "right": "JSON B",
+      "note": "JSON Diff · thao tác cấp path · hàng tô màu theo loại · song song",
+      "equal": "Giống hệt",
+      "differs": "{count} thay đổi",
+      "colPath": "Path",
+      "colKind": "Loại",
+      "colLeft": "Bên trái",
+      "colRight": "Bên phải",
+      "filtersAria": "Lọc theo loại thay đổi",
+      "filterAll": "Tất cả ({count})",
+      "filterAdd": "Thêm ({count})",
+      "filterRemove": "Xóa ({count})",
+      "filterChange": "Thay đổi ({count})",
+      "filterType": "Kiểu ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "Chế độ",
+      "pretty": "Gọn gàng",
+      "compact": "Gọn",
+      "indent": "Thụt lề",
+      "note": "Trình định dạng YAML · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "Trình định dạng TOML · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "Trình nén XML · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "Trình xác thực URL · WHATWG URL (không lấy mạng)"
+    },
+    "ipValidate": {
+      "note": "Trình xác thực IP · IPv4/IPv6 ngoại tuyến"
+    },
+    "uuidValidate": {
+      "note": "Trình xác thực UUID · định dạng RFC 4122"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "Trình nén HTML · nhẹ (an toàn cho edge)"
+    },
+    "randomString": {
+      "length": "Độ dài",
+      "count": "Số lượng",
+      "charset": "Bảng ký tự",
+      "alphanumeric": "Chữ số và chữ cái",
+      "symbols": "Chữ số, chữ cái + ký hiệu",
+      "hex": "Hex",
+      "base64url": "Base64URL",
+      "note": "Chuỗi ngẫu nhiên · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "Thời gian đọc · Heuristic CJK + Latin"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "Mức tiêu đề tối đa",
+      "note": "Mục lục Markdown · Tiêu đề ATX"
+    },
+    "pdfInfo": {
+      "file": "Tệp PDF",
+      "note": "Thông tin PDF · pdf-lib (trang + metadata)"
+    },
+    "rot13": {
+      "shift": "Dịch chuyển (13 = ROT13)",
+      "note": "ROT13 / Caesar · thuần túy"
+    },
+    "morse": {
+      "note": "Mã Morse · ITU · thuần túy"
+    },
+    "textBinary": {
+      "toBinary": "Văn bản → nhị phân",
+      "fromBinary": "Nhị phân → văn bản",
+      "note": "Văn bản ↔ Nhị phân · bit UTF-8"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "Mã hóa digest",
+      "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "Tóm tắt một lần · sao chép từng cái · node:crypto"
+    },
+    "cssFormat": {
+      "note": "CSS Beautifier · nhẹ"
+    },
+    "htmlFormat": {
+      "note": "HTML Beautifier · nhẹ"
+    },
+    "stringSimilarity": {
+      "a": "Chuỗi A",
+      "b": "Chuỗi B",
+      "note": "Độ tương đồng chuỗi · Levenshtein"
+    },
+    "roman": {
+      "toRoman": "Số → La Mã",
+      "fromRoman": "La Mã → Số",
+      "note": "Số La Mã · 1–3999"
+    },
+    "age": {
+      "birthDate": "Ngày sinh (YYYY-MM-DD)",
+      "asOf": "Tính đến (tùy chọn)",
+      "note": "Tính tuổi · chính xác N/T/Ngày"
+    },
+    "tip": {
+      "bill": "Tổng hóa đơn",
+      "percent": "Tiền boa %",
+      "people": "Người",
+      "note": "Máy tính tip · chia đều"
+    },
+    "aspect": {
+      "width": "Chiều rộng",
+      "height": "Chiều cao",
+      "note": "Tỷ lệ khung hình · rút gọn GCD"
+    },
+    "mime": {
+      "note": "Tra cứu MIME · các loại web phổ biến"
+    },
+    "ua": {
+      "note": "Trình phân tích User-Agent · heuristic (ngoại tuyến)"
+    },
+    "imageMeta": {
+      "file": "Tệp hình ảnh",
+      "note": "Metadata hình ảnh · sharp (dung lượng buffer EXIF)"
+    },
+    "wordFreq": {
+      "top": "Top N",
+      "note": "Tần suất từ · CJK + Latin"
+    },
+    "jsonXml": {
+      "note": "JSON ↔ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "SQL Minifier · chú thích + khoảng trắng"
+    },
+    "lineNum": {
+      "start": "Số bắt đầu",
+      "note": "Thêm Số Dòng · thuần"
+    },
+    "uniqueWords": {
+      "note": "Từ Độc Nhất · thứ tự lần đầu thấy"
+    },
+    "epoch": {
+      "value": "Giá trị",
+      "msToIso": "ms → ISO",
+      "isoToMs": "ISO → ms",
+      "note": "Epoch Milliseconds · Ngày"
+    },
+    "passwordEntropy": {
+      "password": "Mật khẩu",
+      "note": "Entropy Mật khẩu · heuristic bộ ký tự"
+    },
+    "contrast": {
+      "fg": "Màu chữ (#hex)",
+      "bg": "Màu nền (#hex)",
+      "note": "Độ tương phản màu · WCAG 2.x",
+      "sampleHeadline": "Sample text",
+      "pass": "pass",
+      "fail": "fail",
+      "aaNormal": "AA normal",
+      "aaLarge": "AA large",
+      "aaaNormal": "AAA normal",
+      "aaaLarge": "AAA large"
+    },
+    "exif": {
+      "file": "Tệp hình ảnh",
+      "note": "Xem EXIF · exifr + JPEG fallback"
+    },
+    "regex": {
+      "pattern": "Mẫu",
+      "flags": "Cờ",
+      "replacement": "Thay thế",
+      "match": "Khớp",
+      "replace": "Thay thế",
+      "test": "Kiểm tra",
+      "local": "Chạy cục bộ",
+      "server": "Xác minh máy chủ",
+      "count": "{count} kết quả",
+      "sotaNote": "Tô sáng cục bộ tức thì · giới hạn thời gian máy chủ · cùng đường dẫn với API"
+    },
+    "jwt": {
+      "decode": "Giải mã JWT",
+      "sample": "Tải mẫu",
+      "tokenPlaceholder": "Dán JWT",
+      "decodeNote": "{engine} · chỉ giải mã, không xác minh chữ ký",
+      "footerNote": "Engine: jose · không xác minh chữ ký. Xác minh trong production bằng khóa qua jwtVerify trên server.",
+      "generateHint": "Cần ký token?",
+      "secret": "Bí mật",
+      "exp": "Hết hạn (giây)",
+      "payload": "Payload JSON",
+      "note": "Tạo JWT · HS256 (chỉ dev/test)",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "(empty signature segment)"
+    },
+    "rand": {
+      "min": "Tối thiểu",
+      "max": "Tối đa",
+      "count": "Số lượng",
+      "note": "Số ngẫu nhiên · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "Mặt",
+      "count": "Số xúc xắc",
+      "note": "Xúc xắc · RNG mã hóa"
+    },
+    "hexRgb": {
+      "note": "HEX ↔ RGB · thuần túy"
+    },
+    "base64url": {
+      "note": "Base64URL · kiểu JWT"
+    },
+    "hmac": {
+      "message": "Tin nhắn",
+      "secret": "Bí mật",
+      "signature": "Chữ ký",
+      "note": "Xác thực HMAC · SHA-256"
+    },
+    "secret": {
+      "bytes": "Bytes",
+      "count": "Số lượng",
+      "note": "Bộ tạo khóa bí mật · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "Tệp PDF",
+      "note": "Tối ưu hóa PDF nhẹ · viết lại pdf-lib (không nén lại hình ảnh)",
+      "needFile": "Chọn một tệp PDF trước"
+    },
+    "pdfCompress": {
+      "file": "Tệp PDF",
+      "quality": "Chất lượng",
+      "engine": "Công cụ",
+      "qStructural": "Cấu trúc (qpdf, luồng không mất dữ liệu)",
+      "qScreen": "Màn hình (nhỏ nhất, Ghostscript)",
+      "qEbook": "Sách điện tử (cân bằng, Ghostscript)",
+      "qPrinter": "Máy in (chất lượng cao hơn, Ghostscript)",
+      "eAuto": "Tự động (qpdf → Ghostscript → pdf-lib)",
+      "download": "Tải xuống PDF",
+      "needFile": "Chọn một tệp PDF trước",
+      "in": "Đầu vào",
+      "out": "Đầu ra",
+      "saved": "Đã lưu",
+      "note": "Nén PDF · qpdf / Ghostscript trên máy chủ · pdf-lib dự phòng",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+    },
+    "jsonFormat": {
+      "indent": "Thụt lề",
+      "format": "Định dạng",
+      "minify": "Minify",
+      "serverVerify": "Xác minh server",
+      "clear": "Xóa",
+      "sample": "Mẫu",
+      "placeholder": "Dán JSON…",
+      "formatted": "Định dạng",
+      "minified": "Nén",
+      "serverOk": "Máy chủ {mode} · {engine}",
+      "valid": "JSON hợp lệ",
+      "invalid": "JSON không hợp lệ",
+      "line": "dòng",
+      "column": "cột",
+      "note": "Engine: JSON.parse/stringify · xử lý cục bộ ngay lập tức · cùng đường dẫn như API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
+    },
+    "qr": {
+      "size": "Kích thước",
+      "ecl": "Sửa lỗi",
+      "generate": "Tạo",
+      "download": "Tải xuống PNG",
+      "needText": "Nhập văn bản hoặc URL",
+      "note": "QR · qrcode · xem trước trực tiếp · cùng đường dẫn như API"
+    },
+    "pdfText": {
+      "file": "Tệp PDF",
+      "layout": "Bố cục",
+      "needFile": "Chọn một tệp PDF trước",
+      "note": "PDF Text · pdftotext (poppler) trên máy chủ"
+    },
+    "svg": {
+      "optimize": "Tối ưu hóa",
+      "note": "SVG Optimize · minify thuần nhẹ"
+    },
+    "routerTranslate": {
+      "lab": "Lab shell: không dịch ở đây. Mở Router với một prompt — bộ đếm model chỉ trên Router.",
+      "source": "Ngôn ngữ nguồn",
+      "target": "Ngôn ngữ đích",
+      "open": "Chuẩn bị liên kết Router",
+      "deepLink": "Mở trong Router",
+      "note": "bên ngoài · không có sổ LLM Forge im lặng"
+    },
+    "imageCrop": {
+      "needFile": "Chọn ảnh trước",
+      "crop": "Cắt",
+      "note": "Cắt ảnh · kéo vùng · trích xuất sắc nét",
+      "drop": "Thả ảnh hoặc nhấp để duyệt",
+      "dragHint": "Kéo trên ảnh để chọn vùng cắt",
+      "left": "Trái",
+      "top": "Trên",
+      "width": "Chiều rộng",
+      "height": "Chiều cao",
+      "natural": "Tự nhiên {w}×{h}",
+      "source": "Nguồn",
+      "result": "Đã cắt"
+    },
+    "markdown": {
+      "preview": "Xem trước",
+      "html": "HTML",
+      "emptyPreview": "Chạy để xem trước",
+      "emptyHtml": "HTML đã hiển thị",
+      "rendering": "Đang hiển thị…",
+      "toHtml": "Chuyển sang HTML",
+      "copyHtml": "Sao chép HTML",
+      "note": "marked · xem trước iframe trong sandbox · cùng đường dẫn như API"
+    },
+    "pdfMerge": {
+      "files": "Tệp PDF (≥2, thứ tự = thứ tự hợp nhất)",
+      "needFiles": "Chọn ít nhất 2 PDF",
+      "merging": "Đang hợp nhất…",
+      "mergeDownload": "Hợp nhất & tải xuống",
+      "done": "Đã hợp nhất · {pages} trang · {bytes} bytes",
+      "note": "pdf-lib · cùng đường dẫn như API",
+      "merge": "Hợp nhất & tải xuống"
+    },
+    "pdfSplit": {
+      "file": "Tệp PDF",
+      "needFile": "Chọn một PDF",
+      "fromPage": "Từ trang (bắt đầu từ 1)",
+      "toPage": "Đến trang (để trống = trang cuối)",
+      "toPlaceholder": "Trang cuối",
+      "splitting": "Đang tách…",
+      "splitDownload": "Tách & tải xuống",
+      "done": "Tách · nguồn {source} trang → kết quả {pages} trang",
+      "note": "pdf-lib · cùng đường dẫn như API",
+      "split": "Tách & tải xuống"
+    },
+    "passwordStrength": {
+      "check": "Kiểm tra độ mạnh",
+      "checking": "Đang kiểm tra…",
+      "crack": "Ước tính brute-force offline: {time}",
+      "score0": "Rất yếu",
+      "score1": "Yếu",
+      "score2": "Trung bình",
+      "score3": "Mạnh",
+      "score4": "Rất mạnh",
+      "note": "zxcvbn-ts · cùng đường dẫn như API · mật khẩu không được lưu trữ"
+    },
+    "hmacSign": {
+      "compute": "Tính HMAC",
+      "computing": "Đang tính toán…",
+      "note": "node:crypto · cùng đường dẫn như API"
+    },
+    "costEstimate": {
+      "text": "Văn bản đầu vào (để ước tính token đầu vào)",
+      "model": "Mô hình",
+      "outputTokens": "Token đầu ra (ước tính)",
+      "estimate": "Ước tính chi phí",
+      "estimating": "Đang ước tính…",
+      "note": "@nebutra/ai-providers/frontier card + js-tiktoken · ước tính giá niêm yết, không phải hóa đơn"
+    },
+    "jsonSchema": {
+      "data": "Dữ liệu JSON",
+      "schema": "JSON Schema",
+      "validate": "Xác thực",
+      "validating": "Đang xác thực…",
+      "pass": "Đạt",
+      "fail": "Không đạt",
+      "note": "Ajv · cùng đường dẫn như API"
+    },
+    "zhCnTw": {
+      "s2t": "Giản thể → Phồn thể",
+      "t2s": "Phồn thể → Giản thể",
+      "s2tw": "Giản thể → Đài Loan",
+      "tw2s": "Đài Loan → Giản thể",
+      "s2hk": "Giản thể → Hồng Kông",
+      "hk2s": "Hồng Kông → Giản thể",
+      "note": "OpenCC (opencc-js) · cùng đường dẫn như API"
+    },
+    "pinyin": {
+      "tones": "Phong cách thanh điệu",
+      "symbol": "Ký hiệu nǐ",
+      "num": "Số ni3",
+      "none": "Không có ni",
+      "hanzi": "Ký tự Trung Quốc",
+      "convert": "Chuyển sang pinyin",
+      "converting": "Đang chuyển đổi…",
+      "note": "pinyin-pro · cùng đường dẫn với API"
+    },
+    "sqlFormat": {
+      "dialect": "Phương ngữ",
+      "format": "Định dạng",
+      "formatting": "Đang định dạng…",
+      "note": "sql-formatter · cùng đường dẫn như API"
+    },
+    "colorConvert": {
+      "color": "Màu sắc",
+      "pick": "Chọn màu",
+      "convert": "Chuyển đổi",
+      "converting": "Đang chuyển đổi…",
+      "note": "culori · hex / rgb / hsl / oklch · cùng đường dẫn với API"
+    },
+    "qrGen": {
+      "content": "Nội dung",
+      "format": "Định dạng",
+      "pngPreview": "PNG (xem trước)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "Tạo mã QR",
+      "generating": "Đang tạo…",
+      "note": "qrcode · cùng đường dẫn với API"
+    },
+    "qrDecode": {
+      "upload": "Tải lên hình ảnh có mã QR",
+      "parsing": "Đang giải mã…",
+      "note": "jsQR + sharp · cùng đường dẫn với API"
+    },
+    "cron": {
+      "expression": "Biểu thức Cron",
+      "timezone": "Múi giờ",
+      "parse": "Lần chạy tiếp theo",
+      "parsing": "Đang phân tích…",
+      "nextTitle": "Lần chạy tiếp theo (ISO)",
+      "note": "cron-parser · cùng đường dẫn với API"
+    },
+    "timezone": {
+      "datetime": "Ngày & giờ",
+      "from": "Từ",
+      "to": "Đến",
+      "convert": "Chuyển đổi múi giờ",
+      "converting": "Đang chuyển đổi…",
+      "placeholder": "2026-07-24 12:00:00 hoặc ISO / unix",
+      "note": "dayjs timezone · cùng đường dẫn như API"
+    },
+    "csvPreview": {
+      "preview": "Xem trước bảng",
+      "parsing": "Đang phân tích…",
+      "rows": "Xem trước {shown} / {total} hàng",
+      "note": "papaparse · cùng đường dẫn như API"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "Truy vấn",
+      "querying": "Đang truy vấn…",
+      "note": "jsonpath-plus · cùng đường dẫn như API"
+    },
+    "xmlFormat": {
+      "pretty": "Định dạng đẹp",
+      "minify": "Nén",
+      "validate": "Kiểm tra",
+      "validOk": "Hợp lệ",
+      "done": "Hoàn tất · {engine}",
+      "processing": "Đang xử lý…",
+      "note": "fast-xml-parser · cùng đường dẫn như API"
+    },
+    "regexLegacy": {
+      "pattern": "Mẫu",
+      "flags": "Cờ",
+      "mode": "Chế độ",
+      "match": "Khớp",
+      "replace": "Thay thế",
+      "test": "Kiểm tra",
+      "replacement": "Thay thế",
+      "note": "Cục bộ tức thì · giới hạn thời gian máy chủ · cùng đường dẫn như API"
+    },
+    "docxText": {
+      "file": "Tệp DOCX",
+      "needFile": "Chọn tệp .docx trước",
+      "extract": "Trích xuất văn bản",
+      "extracting": "Đang trích xuất…",
+      "note": "DOCX → văn bản · chỉ ZIP + document.xml (không cần bộ Office)"
+    },
+    "uuid": {
+      "count": "Số lượng",
+      "local": "Tạo cục bộ",
+      "server": "Tạo trên máy chủ",
+      "copyAll": "Sao chép tất cả",
+      "empty": "UUID sẽ hiển thị ở đây"
+    },
+    "timestamp": {
+      "nowSec": "Giây Unix",
+      "nowMs": "ms Unix / ISO",
+      "serverNow": "Thời gian máy chủ",
+      "toDate": "Timestamp → ngày",
+      "toUnix": "Ngày → timestamp",
+      "seconds": "Giây",
+      "milliseconds": "Miligiây",
+      "value": "Giá trị",
+      "convert": "Chuyển đổi",
+      "note": "Cùng đường dẫn như API"
+    },
+    "wordCount": {
+      "words": "Từ",
+      "chars": "Ký tự",
+      "noSpaces": "Không có khoảng trắng",
+      "cjk": "CJK",
+      "lines": "Dòng",
+      "paragraphs": "Đoạn",
+      "placeholder": "Dán hoặc gõ văn bản…",
+      "copyText": "Sao chép văn bản",
+      "clear": "Xóa",
+      "verifying": "Đang xác minh…",
+      "serverNote": "Từ trên máy chủ={words} · cùng đường dẫn như API",
+      "note": "Công cụ trực tiếp: {engine} · không cần tải lên · cùng đường dẫn như API"
+    },
+    "bmi": {
+      "height": "Chiều cao (cm)",
+      "weight": "Cân nặng (kg)",
+      "compute": "Tính BMI",
+      "computing": "Đang tính…",
+      "invalid": "Nhập chiều cao (cm) và cân nặng (kg) hợp lệ",
+      "underweight": "Thiếu cân",
+      "normal": "Bình thường",
+      "overweight": "Thừa cân",
+      "obese": "Béo phì",
+      "note": "BMI WHO · cùng đường dẫn như API · không phải lời khuyên y tế"
+    },
+    "percentage": {
+      "mode": "Chế độ",
+      "percentOf": "a% của b",
+      "isWhat": "a là bao nhiêu % của b",
+      "percentA": "Phần trăm a",
+      "valueA": "Giá trị a",
+      "baseB": "Cơ số b",
+      "compute": "Tính toán",
+      "computing": "Đang tính toán…",
+      "invalid": "Nhập số hợp lệ",
+      "note": "Cùng đường dẫn như API"
+    },
+    "dataSize": {
+      "value": "Giá trị",
+      "convert": "Chuyển đổi",
+      "converting": "Đang chuyển đổi…",
+      "invalid": "Nhập số hợp lệ",
+      "binary": "{value} {from} → cơ số 1024",
+      "note": "Đơn vị nhị phân (1 KB = 1024 B) · cùng đường dẫn như API"
+    },
+    "rmb": {
+      "amount": "Số tiền (CNY)",
+      "convert": "Chuyển sang chữ hoa",
+      "converting": "Đang chuyển…",
+      "invalid": "Nhập số tiền không âm",
+      "note": "Số tiền hóa đơn tiếng Trung viết hoa · cùng đường dẫn với API"
+    },
+    "dateDiff": {
+      "from": "Ngày bắt đầu",
+      "to": "Ngày kết thúc",
+      "compute": "Số ngày chênh lệch",
+      "computing": "Đang tính…",
+      "days": "ngày",
+      "note": "ECMAScript Date · cùng đường dẫn với API"
+    },
+    "xlsxText": {
+      "file": "Tệp XLSX",
+      "needFile": "Chọn một tệp .xlsx trước",
+      "extract": "Trích xuất sheet",
+      "extracting": "Đang trích xuất…",
+      "note": "XLSX → CSV · ZIP thuần + sheet1.xml (sheet đầu tiên)"
+    },
+    "mdToPdf": {
+      "drop": "Kéo thả tệp .md vào đây, hoặc dán Markdown bên dưới",
+      "title": "Tiêu đề",
+      "engine": "Engine",
+      "ePlaywright": "playwright (in Chromium)",
+      "eSimple": "đơn giản (không dùng trình duyệt)",
+      "generate": "Tạo PDF",
+      "generating": "Đang tạo…",
+      "download": "Tải xuống PDF",
+      "note": "marked → HTML → Playwright Chromium in. Nếu thiếu Chromium, tự động chuyển sang PDF có cấu trúc đơn giản — kiểm tra renderEngine; chế độ đơn giản không đạt chuẩn in.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
+    },
+    "tokenCount": {
+      "count": "Đếm token",
+      "counting": "Đang đếm…",
+      "chars": "Ký tự {n}",
+      "note": "Engine: js-tiktoken · đếm chính xác phía server · có thể cung cấp cho ước tính chi phí Router"
+    },
+    "codec": {
+      "encodeDir": "Văn bản → mã hóa",
+      "decodeDir": "Mã hóa → văn bản",
+      "localNote": "Chạy cục bộ",
+      "serverNote": "Server · cùng đường dẫn với API",
+      "hexInvalid": "Không phải chuỗi hex hợp lệ",
+      "hexDecodeFail": "Server không thể giải mã dưới dạng UTF-8 (cần hex hợp lệ)",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · cùng đường dẫn như API",
+      "noteHtml": "Bảng mã HTML · cùng đường dẫn như API",
+      "noteHex": "UTF-8 ↔ hex · cùng đường dẫn như API"
+    },
+    "textDiff": {
+      "left": "Bên trái",
+      "right": "Bên phải",
+      "compare": "So sánh",
+      "comparing": "Đang so sánh…"
+    },
+    "imageTool": {
+      "drop": "Thả ảnh vào đây, hoặc nhấp để duyệt",
+      "selected": "Đã chọn: {name} ({kb} KB)",
+      "needFile": "Chọn ảnh trước",
+      "format": "Định dạng đầu ra",
+      "quality": "Chất lượng {n}",
+      "maxW": "Chiều rộng tối đa",
+      "maxH": "Chiều cao tối đa",
+      "optional": "Tùy chọn",
+      "resizeEg": "ví dụ: 1280",
+      "processing": "Đang xử lý…",
+      "compress": "Nén",
+      "resize": "Đổi kích thước",
+      "convert": "Chuyển đổi định dạng",
+      "download": "Tải xuống kết quả",
+      "outMeta": "Đầu ra {kb} KB{dims}{ratio} · {type}",
+      "ratio": " · ~{pct}% so với gốc",
+      "dims": " · {w}×{h}",
+      "original": "Gốc",
+      "result": "Kết quả",
+      "note": "Engine: sharp (libvips) · server-side · cùng đường dẫn như API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+    },
+    "pptxText": {
+      "file": "Tệp PPTX",
+      "needFile": "Chọn tệp .pptx trước",
+      "extract": "Trích xuất dàn ý",
+      "extracting": "Đang trích xuất…",
+      "note": "Dàn ý PPTX · ZIP + slide XML thuần (không cần PowerPoint)"
+    },
+    "shell": {
+      "copyJson": "Sao chép JSON",
+      "sample": "Mẫu",
+      "chars": "{n} ký tự",
+      "largeInput": "Đầu vào lớn — kết quả sẽ cập nhật sau một lúc khi bạn ngừng gõ.",
+      "manualInput": "Dữ liệu đầu vào quá lớn, tính toán trực tiếp sẽ làm treo trang. Nhấn Run.",
+      "options": "Tùy chọn",
+      "regenerateNote": "Kết quả đã tự động cập nhật khi bạn thay đổi tùy chọn.",
+      "fileTab": "Tệp",
+      "pasteTab": "Dán",
+      "browse": "Chọn tệp",
+      "selectedFile": "{name} · {kb} KB",
+      "truncated": "Đọc {kb} KB đầu tiên — đủ để trả lời, phần còn lại không rời khỏi máy của bạn.",
+      "detail": "Chi tiết",
+      "dropIntoPane": "Kéo thả tệp vào đây",
+      "swap": "Đổi bên",
+      "prevChange": "Trước",
+      "nextChange": "Tiếp theo",
+      "changePosition": "{index} / {total}",
+      "result": "Kết quả"
+    },
+    "readmeSkeleton": {
+      "emptyHint": "Chọn ít nhất một phần để tạo README.",
+      "note": "Sử dụng cùng engine với API. Các phần bạn bỏ qua sẽ không xuất hiện — không có tiêu đề trống.",
+      "orderNote": "Các phần luôn hiển thị theo thứ tự cố định này, nên cùng đầu vào sẽ cho cùng một file.",
+      "group": {
+        "core": "Cốt lõi",
+        "docs": "Tài liệu",
+        "community": "Cộng đồng",
+        "meta": "Meta"
+      },
+      "section": {
+        "title": "Tiêu đề & mô tả",
+        "badges": "Badges",
+        "callout": "Lưu ý nổi bật",
+        "toc": "Mục lục",
+        "installation": "Cài đặt",
+        "usage": "Sử dụng",
+        "features": "Tính năng",
+        "api-reference": "Tài liệu tham khảo API",
+        "screenshots": "Ảnh chụp màn hình",
+        "roadmap": "Lộ trình",
+        "contributing": "Đóng góp",
+        "support": "Hỗ trợ",
+        "acknowledgements": "Lời cảm ơn",
+        "license": "Giấy phép",
+        "authors": "Tác giả",
+        "tech-stack": "Công nghệ sử dụng"
+      },
+      "projectName": "Tên dự án",
+      "projectNamePlaceholder": "Tên dự án",
+      "description": "Mô tả",
+      "descriptionPlaceholder": "Một câu về chức năng chính",
+      "badgeLicense": "Huy hiệu giấy phép",
+      "badgeNpm": "npm version",
+      "badgeBuild": "Trạng thái xây dựng",
+      "npmPackage": "npm package",
+      "npmPackagePlaceholder": "@scope/package",
+      "repo": "Kho GitHub",
+      "repoPlaceholder": "chủ_sở_hữu/kho",
+      "calloutKind": "Loại thông báo",
+      "calloutBody": "Văn bản callout",
+      "calloutBodyPlaceholder": "Trước 1.0 — API vẫn đang thay đổi",
+      "fenceLanguage": "Ngôn ngữ",
+      "installCommand": "Lệnh cài đặt",
+      "installCommandPlaceholder": "npm install your-project",
+      "usageExample": "Ví dụ sử dụng",
+      "usageExamplePlaceholder": "Ví dụ nhỏ nhất thể hiện giá trị",
+      "features": "Tính năng",
+      "featuresPlaceholder": "Một tính năng mỗi dòng",
+      "contact": "Liên hệ",
+      "contactPlaceholder": "support@example.com",
+      "license": "Giấy phép",
+      "authors": "Tác giả",
+      "authorsPlaceholder": "@handle, Jane Roe",
+      "techStack": "Công nghệ sử dụng",
+      "techStackPlaceholder": "typescript, postgresql (simple-icons slugs)",
+      "sectionCount": "{n} phần",
+      "charCount": "{n} ký tự",
+      "warningCount": "{n} đã bỏ qua",
+      "omittedTitle": "Những gì đã bị lược bỏ và lý do"
+    },
+    "gitignore": {
+      "searchLabel": "Tìm kiếm stack",
+      "searchPlaceholder": "Tìm kiếm ngôn ngữ, framework, hệ điều hành hoặc trình soạn thảo…",
+      "add": "Thêm {stack}",
+      "remove": "Xóa {stack}",
+      "selected": "Các stack đã chọn",
+      "suggestions": "Các stack phù hợp",
+      "noMatches": "Không có stack nào khớp với “{query}”. Nhấn Enter để gửi — bí danh sẽ được phân giải trên máy chủ.",
+      "catalogFallback": "Danh sách stack không khả dụng — hãy nhập tên stack và nhấn Enter.",
+      "emptyHint": "Chọn ít nhất một ngôn ngữ, framework, hệ điều hành hoặc trình soạn thảo ở trên.",
+      "regenerate": "Tạo lại",
+      "sections": "{n} phần",
+      "lines": "{n} dòng",
+      "deduped": "Đã hợp nhất {n} mẫu trùng lặp",
+      "notFound": "Không có trong kho dữ liệu: {stacks}",
+      "globalScope": "{stacks} là các mục hệ điều hành/trình soạn thảo — nhiều nhà phát triển giữ chúng trong ~/.gitignore_global cá nhân thay vì mỗi repo.",
+      "untrackedNote": "Tệp .gitignore chỉ ảnh hưởng đến các tệp chưa được theo dõi. Đối với tệp git đã theo dõi, hãy chạy git rm -r --cached <path>.",
+      "fileLabel": ".gitignore"
+    },
+    "editorconfig": {
+      "emptyHint": "Đặt ít nhất một thuộc tính để xem tệp.",
+      "note": "Cùng engine với API. Lựa chọn của bạn chỉ lưu trong phiên trình duyệt này; không lưu trữ.",
+      "checks": "Kiểm tra",
+      "presets": "Bắt đầu từ",
+      "preset": {
+        "spaces2": "2 khoảng trắng, LF",
+        "spaces4": "4 khoảng trắng, LF",
+        "tabs": "Tab, độ rộng 4",
+        "repo": "Repo mẫu (+ Markdown, Makefile)"
+      },
+      "rootLabel": "root = true — ngăn editor gộp file .editorconfig của thư mục cha",
+      "glob": "Glob {n}",
+      "addSection": "Thêm một phần",
+      "removeSection": "Xóa",
+      "notSet": "(chưa đặt)",
+      "import": "Nhập một tệp .editorconfig hiện có",
+      "importPlaceholder": "Dán một .editorconfig vào đây để tải nó vào biểu mẫu",
+      "importAction": "Nhập",
+      "importing": "Đang nhập…",
+      "importFailed": "Không thể nhập: {message}"
+    },
+    "robotsTxt": {
+      "emptyHint": "Đặt các tùy chọn ở trên — tệp sẽ hiển thị ở đây",
+      "deployNote": "robots.txt chỉ có hiệu lực ở gốc miền (https://example.com/robots.txt). Mỗi miền con cần một tệp riêng.",
+      "outputLabel": "robots.txt",
+      "defaultAccess": "Quyền truy cập mặc định (User-agent: *)",
+      "defaultAllow": "Cho phép tất cả",
+      "defaultDisallow": "Cấm tất cả",
+      "defaultAccessNote": "\"Cho phép tất cả\" sẽ ghi một \"Disallow:\" rỗng — đó là cách cho phép mọi thứ.",
+      "crawlDelay": "Crawl-delay (giây)",
+      "crawlDelayPlaceholder": "không có",
+      "crawlDelayNote": "Không nằm trong RFC 9309. Google bỏ qua; không bao giờ được ghi vào nhóm Google.",
+      "searchAgents": "Công cụ tìm kiếm",
+      "aiAgents": "Crawler AI",
+      "aiAgentsNote": "Crawler huấn luyện và answer-engine. Chặn chúng không ảnh hưởng đến lập chỉ mục tìm kiếm.",
+      "accessDefault": "Mặc định",
+      "accessAllow": "Cho phép",
+      "accessDisallow": "Từ chối",
+      "rules": "Quy tắc đường dẫn",
+      "rulesNote": "Đường dẫn phân biệt chữ hoa/thường và tương đối với thư mục gốc. Thêm dấu gạch chéo cuối để giới hạn quy tắc cho một thư mục.",
+      "rulePath": "Đường dẫn {n}",
+      "rulePathPlaceholder": "/admin/",
+      "ruleType": "Loại quy tắc",
+      "addRule": "Thêm quy tắc đường dẫn",
+      "removeRule": "Xóa",
+      "sitemaps": "Sitemap",
+      "sitemapsNote": "URL http(s) tuyệt đối. Viết thành các dòng riêng lẻ, bên ngoài mọi nhóm.",
+      "sitemapUrl": "Sitemap {n}",
+      "addSitemap": "Thêm sitemap",
+      "removeSitemap": "Xóa",
+      "groupCount": "{n} nhóm",
+      "lineCount": "{n} dòng",
+      "sitemapCount": "{n} sitemap",
+      "warningsSummary": "Ghi chú về tệp này ({n})"
+    },
+    "encodingDetect": {
+      "drop": "Kéo thả tệp để xác định mã hóa",
+      "privacy": "Chỉ đọc {kb} KB đầu tiên và gửi đến cùng điểm cuối invoke công cộng mà agent sẽ gọi — không ghi gì lên đĩa.",
+      "pasteLabel": "Hoặc dán văn bản",
+      "pastePlaceholder": "Dán văn bản — bao gồm cả mojibake bạn muốn giải thích",
+      "detail": "Ứng viên, ký tự xuống dòng và thống kê byte",
+      "idle": "Kéo thả tệp hoặc dán văn bản — báo cáo sẽ tự điền ngay khi có nội dung để đọc.",
+      "readOnly": "Chỉ đọc: công cụ này xác định mã hóa, không bao giờ ghi đè byte.",
+      "headline": "{encoding} · độ tin cậy {confidence}%",
+      "notText": "Không giống văn bản",
+      "bomPresent": "BOM {bytes}",
+      "bomAbsent": "Không có BOM",
+      "eol": "Kết thúc dòng {kind}",
+      "eolMixed": "Kết thúc dòng hỗn hợp",
+      "language": "Ngôn ngữ {language} · {confidence}%",
+      "sampled": "Phát hiện từ {kb} KB đầu tiên trong {totalKb} KB",
+      "candidates": "Ứng viên xếp hạng",
+      "candidatesNote": "Các mã hóa xếp thứ hai được hiển thị có chủ đích: mẫu ngắn hoặc đối xứng thực sự gây mơ hồ.",
+      "lineEndings": "Kết thúc dòng",
+      "byteStats": "Thống kê byte",
+      "totalBytes": "Tổng",
+      "asciiBytes": "ASCII",
+      "highBytes": "Cao (0x80–0xFF)",
+      "nullBytes": "NUL",
+      "mojibake": "Đã khôi phục lỗi mã hóa"
+    },
+    "dockerfileStarter": {
+      "language": "Ngôn ngữ",
+      "framework": "Framework",
+      "packageManager": "Trình quản lý gói",
+      "baseVariant": "Ảnh cơ bản",
+      "version": "Phiên bản runtime",
+      "workdir": "Thư mục làm việc",
+      "port": "Cổng",
+      "buildCommand": "Lệnh xây dựng",
+      "startCommand": "Lệnh khởi động",
+      "commandPlaceholder": "Để trống = dùng mặc định",
+      "frameworkNone": "Không (runtime thuần)",
+      "pmAuto": "Tự động",
+      "variantSlim": "slim (glibc)",
+      "variantAlpine": "alpine (musl)",
+      "variantFull": "full",
+      "multiStage": "Xây dựng đa giai đoạn",
+      "nonRootUser": "Người dùng không phải root",
+      "includeDockerignore": "Thêm .dockerignore",
+      "includeCompose": "Thêm compose.yaml",
+      "includeHealthcheck": "Thêm HEALTHCHECK",
+      "groupWhat": "Bạn đang xây dựng gì",
+      "groupHow": "Nó nên chạy như thế nào",
+      "emptyHint": "Chọn một ngôn ngữ để xem Dockerfile.",
+      "note": "Chỉ dùng preset — không có gì ngoài các tùy chọn trên rời khỏi trình duyệt của bạn. Đọc kỹ file trước khi phát hành.",
+      "warnings": "{n} mục cần kiểm tra",
+      "stages": "{n} giai đoạn",
+      "badgeNonRoot": "Không phải root",
+      "badgeRoot": "Chạy với quyền root",
+      "badgePort": "Cổng {port}"
+    },
+    "lineEndingDetect": {
+      "dropLabel": "Kéo thả file văn bản để kiểm tra ký tự xuống dòng",
+      "privacy": "Văn bản dán và 256 KB đầu tiên của file thả sẽ được gửi đến Forge API để quét; dữ liệu byte không được lưu trữ.",
+      "pasteLabel": "Hoặc dán văn bản",
+      "pastePlaceholder": "Dán văn bản bạn muốn kiểm tra",
+      "idle": "Dán văn bản hoặc thả file để xem kết quả kiểm tra ký tự xuống dòng.",
+      "detail": "Đếm và kiểm tra",
+      "note": "Chỉ phát hiện — công cụ này không ghi đè tệp của bạn.",
+      "empty": "Đầu vào trống",
+      "noTerminator": "Không có ký tự kết thúc dòng — một dòng chưa kết thúc",
+      "consistent": "{style} — đồng nhất",
+      "mixed": "HỖN HỢP — {parts}",
+      "sharePart": "{pct}% {style}",
+      "style": {
+        "LF": "LF (Unix/Linux/macOS)",
+        "CRLF": "CRLF (Windows)",
+        "CR": "CR (Mac OS 9 và trước đó)"
+      },
+      "lines": "{n} dòng",
+      "bytes": "{n} byte",
+      "trailing": {
+        "present": "Kết thúc bằng ký tự xuống dòng",
+        "absent": "Không có ký tự xuống dòng ở cuối tệp"
+      },
+      "bomUtf8": "BOM UTF-8",
+      "bomNone": "Không có BOM",
+      "countRow": "{style}: {n} ({pct}%)",
+      "colStyle": "Kiểu",
+      "colCount": "Số lượng",
+      "colShare": "Tỷ lệ",
+      "minorityLines": "Các dòng khác với kiểu chủ đạo: {lines}",
+      "andMore": "và hơn nữa",
+      "findings": "Kiểm tra",
+      "level": {
+        "info": "Lưu ý",
+        "warning": "Cảnh báo",
+        "danger": "Gây lỗi"
+      },
+      "sampled": "Đã quét {n} byte đầu tiên trong tổng {total} byte",
+      "encodingLink": "Mở trình phát hiện mã hóa"
+    },
+    "fileTypeDetect": {
+      "drop": "Thả một tệp để xác định loại thực sự của nó",
+      "privacy": "Chỉ phần header đầu tiên {kb} KB được đọc — phần còn lại của tệp không bao giờ rời khỏi thiết bị của bạn.",
+      "hexTab": "Dán hex",
+      "detail": "Hiển thị byte và các ứng viên",
+      "idle": "Thả một tệp, hoặc dán các byte đầu tiên dưới dạng hex.",
+      "note": "Các chữ ký xác định bộ chứa, không phải codec hay nội dung bên trong nó.",
+      "unset": "—",
+      "unknownType": "Không có chữ ký nào khớp",
+      "polyglot": "Polyglot",
+      "tierNone": "Phần mở rộng khớp",
+      "tierBenign": "Không khớp vô hại",
+      "tierMismatch": "Không khớp phần mở rộng",
+      "tierHighRisk": "Rủi ro cao",
+      "confidenceMatch": "Khớp chữ ký",
+      "confidenceContainer": "Chỉ container",
+      "confidenceAmbiguous": "Không rõ ràng",
+      "confidenceNone": "Không khớp",
+      "signalDetected": "MIME phát hiện",
+      "signalReported": "MIME báo cáo",
+      "signalExtension": "Phần mở rộng tên tệp",
+      "drillResolved": "Đã mở container {kind}: {type}",
+      "drillUnresolved": "Container {kind} đã xác nhận; chưa xác định được loại con từ các byte mẫu",
+      "hexDump": "Byte tiêu đề",
+      "bytesRead": "Đã đọc {n} byte",
+      "headerOnly": "chỉ mẫu tiêu đề",
+      "entropy": "Entropy {bits} bit/byte",
+      "signatureCount": "{n} chữ ký trong bảng",
+      "textHints": "Dấu hiệu cấu trúc: {hints}",
+      "candidates": "Tất cả chữ ký khớp",
+      "atOffset": "độ lệch {offset}"
+    },
+    "licenseChooser": {
+      "prompt": "Dự án này cần gì?",
+      "pickScenario": "Chọn dòng mô tả đúng dự án của bạn — câu trả lời và file sẽ hiển thị ngay đây.",
+      "disclaimer": "Kết quả mẫu xác định, không phải tư vấn pháp lý.",
+      "noAnswer": "Không có giấy phép nào phù hợp duy nhất cho trường hợp này",
+      "permissions": "Cho phép",
+      "conditions": "Yêu cầu",
+      "limitations": "Không bao gồm",
+      "alternates": "Các lựa chọn khác cho trường hợp này",
+      "useThis": "Sử dụng cái này",
+      "readCanonical": "Đọc văn bản chính thức trên SPDX",
+      "holder": "Chủ sở hữu bản quyền",
+      "holderPlaceholder": "Tên bạn hoặc công ty bạn",
+      "holderHint": "Thêm chủ sở hữu bản quyền và tệp sẽ tự điền khi bạn gõ.",
+      "year": "Năm",
+      "manifest": "Nơi đặt SPDX id",
+      "verbatim": "{name} phân phối byte-identical cho mọi người — dòng bản quyền sẽ nằm trong thông báo của tệp nguồn thay vì tệp LICENSE.",
+      "noLicense": {
+        "summary": "Nếu tôi không thêm giấy phép nào thì sao?",
+        "body": "Không có giấy phép không đồng nghĩa với phạm vi công cộng. Nếu không có giấy phép, bản quyền mặc định sẽ được áp dụng và không ai được phép sao chép, sửa đổi hoặc phân phối lại mã của bạn — kho lưu trữ công khai chỉ là khả năng hiển thị, không phải sự cho phép."
+      },
+      "artifact": {
+        "header": "Tiêu đề tệp nguồn",
+        "notice": "Thông báo tệp nguồn"
+      },
+      "refine": {
+        "patent": "Vấn đề cấp bằng sáng chế quan trọng ở đây (mã công ty, phần cứng, công việc tiêu chuẩn)",
+        "network": "Nó sẽ chạy như một dịch vụ lưu trữ, không chỉ là bản tải xuống",
+        "library": "Đây là thư viện mà phần mềm khác liên kết tới",
+        "later": "Cho phép các phiên bản sau của giấy phép (giữ cho mã Apache-2.0 tương thích)",
+        "none": "Không có gì cần tinh chỉnh thêm cho trường hợp này."
+      },
+      "scenario": {
+        "permissive": {
+          "label": "Bất kỳ ai cũng có thể sử dụng nó một cách tự do",
+          "detail": "Sử dụng, thay đổi, bán, đóng gói trong sản phẩm đóng — chỉ cần giữ lại thông báo bản quyền."
+        },
+        "copyleft": {
+          "label": "Các cải tiến phải được chia sẻ lại",
+          "detail": "Ai phân phối phiên bản đã sửa đổi cũng phải công bố mã nguồn."
+        },
+        "community": {
+          "label": "Tôi đang đóng góp cho một dự án hiện có",
+          "detail": "Giấy phép đã được xác định — hãy tuân theo dự án bạn đang đóng góp."
+        },
+        "non-software": {
+          "label": "Đây không phải phần mềm",
+          "detail": "Tài liệu, dữ liệu, thiết kế hoặc phương tiện cần giấy phép Creative Commons, không phải giấy phép OSI."
+        },
+        "unsure": {
+          "label": "Tôi chưa biết",
+          "detail": "Nhận lựa chọn mặc định ít hối tiếc cùng hai tùy chọn đáng biết."
+        }
+      },
+      "family": {
+        "permissive": "Cho phép",
+        "weak-copyleft": "Copyleft yếu",
+        "strong-copyleft": "Copyleft mạnh",
+        "public-domain": "Phạm vi công cộng",
+        "content": "Giấy phép nội dung"
+      },
+      "flag": {
+        "commercial-use": "Mục đích thương mại",
+        "modifications": "Sửa đổi",
+        "distribution": "Phân phối",
+        "private-use": "Mục đích cá nhân",
+        "patent-use": "Cấp phép bằng sáng chế",
+        "include-copyright": "Giữ thông báo bản quyền",
+        "document-changes": "Khai báo các thay đổi",
+        "disclose-source": "Công khai mã nguồn",
+        "same-license": "Cùng giấy phép cho toàn bộ tác phẩm",
+        "same-license-file": "Cùng giấy phép, theo từng tệp đã sửa",
+        "same-license-library": "Cùng giấy phép cho thư viện",
+        "network-use-disclose": "Sử dụng qua mạng được tính là phân phối",
+        "liability": "Trách nhiệm",
+        "warranty": "Bảo hành",
+        "trademark-use": "Sử dụng nhãn hiệu"
+      }
+    },
+    "isbn": {
+      "inputLabel": "ISBN",
+      "placeholder": "978-0-306-40615-7 — mỗi dòng một mã, dấu gạch ngang và khoảng trắng sẽ bị bỏ qua",
+      "idle": "Dán một ISBN hoặc cả một cột; kết quả sẽ hiển thị khi bạn nhập.",
+      "scope": "Chỉ kiểm tra toán học chữ số kiểm tra. Một ISBN hợp lệ có tính nhất quán nội bộ — điều này không chứng minh rằng cơ quan nào đã cấp nó cho một cuốn sách thực tế.",
+      "summary": "{valid} trong số {total} hợp lệ",
+      "singleValid": "ISBN hợp lệ",
+      "singleInvalid": "Không phải ISBN hợp lệ",
+      "invalidCount": "{n} không hợp lệ",
+      "convertedTo": "{type}: {value}",
+      "valid": "Hợp lệ",
+      "invalid": "Không hợp lệ",
+      "truncated": "Hiển thị {shown} hàng đầu tiên.",
+      "col": {
+        "input": "Đầu vào",
+        "normalized": "Chuẩn hóa",
+        "type": "Loại",
+        "status": "Trạng thái",
+        "converted": "Đã chuyển đổi",
+        "note": "Ghi chú"
+      },
+      "type": {
+        "isbn10": "ISBN-10",
+        "isbn13": "ISBN-13",
+        "invalidLength": "Độ dài không đúng"
+      },
+      "note": {
+        "checkDigit": "Số kiểm tra phải là {expected}",
+        "invalidLength": "ISBN có đúng 10 hoặc 13 ký tự",
+        "invalidCharacter": "Chứa ký tự không phải chữ số",
+        "xMisplaced": "X chỉ hợp lệ ở ký tự cuối của ISBN-10",
+        "noIsbn10": "Tiền tố 979 không có tương đương ISBN-10",
+        "nonBookland": "ISBN 13 chữ số phải bắt đầu bằng 978 hoặc 979",
+        "ismn": "979-0 là dải ISMN (âm nhạc in), không phải ISBN"
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
+    },
+    "languageDetect": {
+      "inputLabel": "Đoạn mã",
+      "inputPlaceholder": "Dán mã không kèm tên tệp — từ nhật ký chat, ticket, câu trả lời…",
+      "hintLabel": "Tên tệp hoặc phần mở rộng (tùy chọn)",
+      "hintPlaceholder": "main.h · .pl · Dockerfile",
+      "note": "Sử dụng cùng engine như API. Phát hiện chỉ dựa trên nội dung trừ khi bạn cung cấp gợi ý tên tệp; các phần mở rộng mơ hồ (.h .m .pl .fs .ts .cs .r) sẽ được định tuyến qua quy tắc riêng trước.",
+      "idle": "Dán đoạn mã — kết quả sẽ hiển thị khi bạn gõ.",
+      "confidence": {
+        "high": "Độ tin cậy cao",
+        "medium": "Độ tin cậy trung bình",
+        "low": "Độ tin cậy thấp"
+      },
+      "score": "{n}/100",
+      "dataFormat": "Định dạng dữ liệu, không phải ngôn ngữ lập trình",
+      "multiLanguage": "Nghi ngờ nhiều ngôn ngữ",
+      "why": "Tại sao có kết quả này",
+      "signals": "Tín hiệu khớp",
+      "alternates": "Ứng viên khác",
+      "composeNext": "Định dạng {language} này"
+    },
+    "iban": {
+      "inputLabel": "IBAN",
+      "idle": "Dán IBAN — kết quả hiện ngay sau mỗi phím, không cần nút.",
+      "sourceNote": "Checksum và cấu trúc theo ISO 13616-1:2020. Độ dài và định dạng BBAN theo quốc gia lấy từ bản sao công bố của sổ đăng ký IBAN ISO, không phải sổ đăng ký gốc.",
+      "valid": "IBAN hợp lệ",
+      "keepTyping": "Tiếp tục nhập — ngắn hơn IBAN của quốc gia này",
+      "caveat": "Chỉ hợp lệ về hình thức. Checksum đúng không đảm bảo tài khoản tồn tại, đang mở, hoặc thuộc về người nhận.",
+      "printFormat": "Định dạng in",
+      "details": "Phân tích chi tiết",
+      "notEncoded": "Không khớp định dạng của quốc gia này",
+      "coverage": "{n} quốc gia có định dạng IBAN đã đăng ký",
+      "reason": {
+        "bad_charset": "Không phải dạng IBAN — IBAN gồm hai chữ cái, hai chữ số, sau đó chỉ có chữ cái và chữ số",
+        "country_unsupported": "Không có định dạng IBAN đã đăng ký cho mã quốc gia này",
+        "incomplete": "Chưa đầy đủ",
+        "wrong_length_for_country": "Dài hơn chiều dài IBAN của quốc gia này",
+        "structure_mismatch": "Đúng chiều dài, nhưng không khớp cấu trúc định dạng của quốc gia này",
+        "checksum_failed": "Mã kiểm tra không hợp lệ — có lỗi đánh máy trong IBAN này"
+      },
+      "badge": {
+        "country": "{name} ({code})",
+        "unknownCountry": "Mã quốc gia {code}",
+        "length": "{n} trong {expected} ký tự",
+        "bankCode": "Mã ngân hàng {code}",
+        "expectedCheckDigits": "Mã kiểm tra cho số tài khoản này sẽ là {digits}"
+      },
+      "field": {
+        "normalized": "Định dạng điện tử",
+        "country": "Quốc gia",
+        "checkDigits": "Mã kiểm tra",
+        "bban": "BBAN",
+        "bbanFormat": "Định dạng BBAN",
+        "bankCode": "Mã ngân hàng"
+      },
+      "check": {
+        "charset": "Bảng mã",
+        "country": "Quốc gia",
+        "length": "Độ dài",
+        "structure": "Cấu trúc",
+        "checksum": "MOD 97-10"
+      },
+      "state": {
+        "pass": "đạt",
+        "fail": "không đạt",
+        "skipped": "chưa thực hiện"
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
+    },
+    "secretScan": {
+      "pasteLabel": "Dán mã, cấu hình hoặc .env",
+      "pastePlaceholder": "DATABASE_URL=postgres://…\nAPI_KEY=…",
+      "dropLabel": "Kéo thả tệp để quét",
+      "privacy": "Chạy hoàn toàn trong trình duyệt của bạn. Không có dữ liệu nào được gửi đi — kể cả đến chúng tôi.",
+      "scan": "Quét",
+      "scanning": "Đang quét…",
+      "idleTitle": "Dán nội dung và nhấn Quét.",
+      "idleHint": "Kiểm tra các khóa API, token, khóa riêng và bí mật có entropy cao. Giá trị khớp sẽ được che; chỉ hiển thị đầy đủ số dòng.",
+      "clean": "Không tìm thấy bí mật nào",
+      "cleanCaveat": "Không có gì ở đây khớp với định dạng thông tin xác thực đã biết hoặc trông như một bí mật ngẫu nhiên. Việc khớp mẫu không phải là bằng chứng — hãy xem xét bất kỳ thứ gì bạn không chắc chắn.",
+      "found": "{n, plural, one {# bí mật có thể có được tìm thấy} other {# bí mật có thể có được tìm thấy}}",
+      "foundCaveat": "Che đi những thứ này trước khi dán vào bất kỳ đâu. Nếu một khóa là thật, hãy xoay nó.",
+      "countHigh": "{n} độ tin cậy cao",
+      "countMedium": "{n} độ tin cậy trung bình",
+      "countLow": "{n} mức thấp",
+      "confidence": {
+        "high": "Cao",
+        "medium": "Trung bình",
+        "low": "Thấp"
+      },
+      "position": "dòng {line}, cột {column}",
+      "length": "{n} ký tự",
+      "maskedLabel": "Kết quả đã che",
+      "why": "Lý do khớp",
+      "candidates": "Có thể là:",
+      "scanDetail": "Chi tiết quét",
+      "lines": "{n} dòng",
+      "bytes": "{n} byte đã quét",
+      "suppressed": "{n} placeholder bị bỏ qua",
+      "suppressedNote": "Các giá trị demo đã biết (khóa EXAMPLE, your-api-key-here, ký tự lặp) được bỏ qua để file mẫu không báo giả.",
+      "omitted": "{n} mục khác không hiển thị",
+      "truncated": "Đầu vào bị giới hạn — chỉ phần đầu được quét",
+      "reportTitle": "Kết quả quét bí mật (giá trị đã che)",
+      "scopeNote": "Chỉ phát hiện: công cụ này không liên hệ nhà cung cấp để kiểm tra khóa còn sống hay không — điều đó có nghĩa là gửi khóa của bạn cho bên thứ ba."
+    },
+    "eanUpcGtin": {
+      "inputLabel": "Số mã vạch",
+      "placeholder": "Một mã mỗi dòng (dấu phẩy và dấu chấm phẩy cũng tách)",
+      "idle": "Dán một mã hoặc cả cột — kết quả xuất hiện khi bạn gõ.",
+      "operationLabel": "Thao tác",
+      "operationValidate": "Xác thực (mã đã có chữ số kiểm tra)",
+      "operationCalculate": "Tính toán (mã thiếu chữ số kiểm tra)",
+      "typeLabel": "Loại",
+      "typeAuto": "Tự động nhận diện theo độ dài",
+      "total": "{n} mã",
+      "validCount": "{n} hợp lệ",
+      "invalidCount": "{n} không hợp lệ",
+      "calculatedCount": "{n} đã tính toán",
+      "unrecognizedCount": "{n} độ dài không nhận diện",
+      "verdict": {
+        "valid": "Hợp lệ",
+        "invalid": "Không hợp lệ",
+        "calculated": "Đã tính toán",
+        "unrecognized-length": "Độ dài không nhận diện"
+      },
+      "alsoReadsAs": "Cũng đọc được là {type}",
+      "checkDigit": "Số kiểm tra",
+      "corrected": "Nên là",
+      "gtin14": "Dạng GTIN-14",
+      "reason": {
+        "empty": "Không có gì để kiểm tra trên dòng này.",
+        "non-digit-characters": "Chứa các ký tự không phải số và không phải ký tự phân cách.",
+        "unsupported-length": "Không có mã định danh GS1 nào có độ dài này (hỗ trợ 8, 12, 13, 14 và 18 chữ số).",
+        "length-mismatch": "Độ dài không đúng với loại bạn đã chọn.",
+        "check-digit-mismatch": "Chữ số cuối không khớp với yêu cầu của tiêu chuẩn."
+      },
+      "warning": {
+        "separators-stripped": "Dấu cách, dấu gạch ngang và dấu chấm đã được loại bỏ trước khi kiểm tra.",
+        "all-zero": "Tất cả là số 0 — hợp lệ về mặt toán học, nhưng không phải là mã định danh thực tế.",
+        "payload-is-also-a-complete-code": "Đây cũng là độ dài của một mã hoàn chỉnh. Nếu nó đã có số kiểm tra, hãy chuyển sang Validate."
+      },
+      "math": "Hiển thị phép tính",
+      "mathSum": "Tổng {sum} → chữ số kiểm tra {check}",
+      "truncatedRows": "Hiển thị {shown} dòng đầu tiên trong tổng số {total} dòng. Sao chép và tải xuống sẽ bao gồm tất cả.",
+      "privacy": "Mã được gửi đến Forge API để kiểm tra và không được lưu trữ.",
+      "scopeNote": "Chữ số kiểm tra đúng nghĩa là số có cấu trúc hợp lệ. Điều này không có nghĩa là GS1 đã cấp nó cho một sản phẩm, công ty hoặc địa điểm thực tế — chỉ tra cứu trong sổ đăng ký GEPIR mới trả lời được điều đó.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
+    },
+    "vin": {
+      "inputLabel": "VIN (17 ký tự)",
+      "privacy": "Kiểm tra trong trình duyệt của bạn. VIN không bao giờ được gửi đi bất cứ đâu.",
+      "idle": "Dán một VIN — kết quả sẽ hiển thị khi bạn gõ, không cần nút.",
+      "scope": "Chỉ cấu trúc và chữ số kiểm tra (49 CFR 565.15 / ISO 3779). Đây không phải là tra cứu lịch sử xe.",
+      "verdict": {
+        "valid": "Cấu trúc VIN hợp lệ",
+        "keepTyping": "Tiếp tục gõ — còn {remaining} ký tự nữa",
+        "tooLong": "Quá dài — một VIN có đúng 17 ký tự, cái này có {n}",
+        "invalidCharacter": "Không phải ký tự VIN: \"{char}\" ở vị trí {position}",
+        "checkDigitMismatch": "Số kiểm tra không khớp — mong đợi {expected}, tìm thấy {found}"
+      },
+      "hint": {
+        "confusable": "\"{char}\" không bao giờ được dùng trong VIN. Bạn có muốn {suggest} không?"
+      },
+      "notice": {
+        "notProvenance": "Số kiểm tra hợp lệ xác nhận VIN được tạo đúng. Nó không xác nhận xe tồn tại, chưa được sửa đổi, hay có lịch sử sạch — VIN giả mạo cũng vượt qua kiểm tra này.",
+        "pre1981": "Xe sản xuất trước năm 1981 và một số xe nhập khẩu (JDM/Châu Âu) không dùng số kiểm tra này — việc không khớp có thể không có nghĩa là VIN bị gõ sai.",
+        "partial": "Xác thực số kiểm tra cần VIN đầy đủ 17 ký tự. VIN không đầy đủ là công việc giải mã, không phải công việc kiểm tra tổng."
+      },
+      "badge": {
+        "length": "{n} ký tự",
+        "expected": "Số kiểm tra {d}"
+      },
+      "invalidChars": {
+        "more": "Ngoài ra không phải ký tự VIN: {list}"
+      },
+      "segment": {
+        "wmi": "WMI 1-3",
+        "vds": "Mô tả 4-8",
+        "checkDigit": "Số kiểm tra 9",
+        "modelYear": "Năm mẫu 10",
+        "plant": "Nhà máy 11",
+        "serial": "Số sê-ri 12-17"
+      },
+      "math": {
+        "title": "Hiển thị phép tính",
+        "col": {
+          "position": "Vị trí",
+          "char": "Ký tự",
+          "value": "Giá trị",
+          "weight": "Trọng số",
+          "product": "Tích"
+        },
+        "formula": "tổng = {sum};  {sum} mod 11 = {remainder}  →  chữ số kiểm tra {expected}"
+      },
+      "specimenTitle": "VIN · structure specimen"
+    },
+    "envDiff": {
+      "envA": "Môi trường A",
+      "envB": "Môi trường B",
+      "placeholderA": "Dán hoặc thả tệp .env đầu tiên",
+      "placeholderB": "Dán hoặc thả tệp .env thứ hai",
+      "paneNoAssignment": "Không tìm thấy dòng KEY=value",
+      "optIgnoreComments": "Bỏ qua dòng chú thích và dòng trống",
+      "optCaseInsensitive": "So sánh khóa không phân biệt chữ hoa/thường",
+      "optRedactSecrets": "Che dấu thông tin bí mật đã phát hiện",
+      "emptyHint": "Thêm môi trường thứ hai để xem so sánh",
+      "summaryNone": "Không có khác biệt trên {total} khóa",
+      "summaryDiff": "{n} trên {total} khóa khác nhau",
+      "note": {
+        "unchanged": "Giá trị giống nhau ở cả hai bên",
+        "changed": "Giá trị khác nhau",
+        "added": "Chỉ có trong B",
+        "removed": "Chỉ có trong A",
+        "commentedOutInA": "Đã comment trong A, được đặt trong B",
+        "commentedOutInB": "Được đặt trong A, đã comment trong B"
+      },
+      "secretChanged": "secret khác nhau",
+      "secretSame": "secret giống nhau ở cả hai bên",
+      "count": {
+        "unchanged": "{n} không thay đổi",
+        "changed": "{n} đã thay đổi",
+        "added": "{n} đã thêm",
+        "removed": "{n} đã xóa",
+        "commentedOut": "{n} đã comment"
+      },
+      "warnings": "Cảnh báo đầu vào ({n})",
+      "warningType": {
+        "duplicateKey": "{file} · khóa trùng lặp",
+        "quoteMismatch": "{file} · không khớp dấu ngoặc kép",
+        "unparsableLine": "{file} · dòng không thể phân tích"
+      },
+      "showUnchanged": "Hiển thị không đổi ({n})",
+      "commentedIn": {
+        "A": "bình luận trong A",
+        "B": "bình luận trong B",
+        "both": "bình luận trong cả hai"
+      },
+      "redactedNote": "Giá trị bí mật được che bằng heuristic từ khóa tên khóa — không phải trình quét bảo mật. So sánh chạy trên giá trị gốc, nên bí mật đã xoay vẫn hiển thị là đã thay đổi.",
+      "interpolationNote": "Các tham chiếu ${VAR} được so sánh theo nghĩa đen và không bao giờ được giải quyết: việc mở rộng khác nhau tùy theo người dùng.",
+      "truncated": "Chỉ liệt kê 5.000 khóa đầu tiên; số lượng bao gồm mọi khóa.",
+      "colKey": "Khóa",
+      "colA": "A",
+      "colB": "B",
+      "colStatus": "Trạng thái",
+      "privacy": "Cả hai tệp được so sánh trong trình duyệt của bạn. Không có gì được tải lên."
+    },
+    "csvDiff": {
+      "originalLabel": "CSV gốc",
+      "updatedLabel": "CSV đã cập nhật",
+      "originalPlaceholder": "Dán bản xuất gốc, hoặc kéo thả tệp .csv vào đây",
+      "updatedPlaceholder": "Dán bản xuất đã cập nhật, hoặc kéo thả tệp .csv vào đây",
+      "emptyHint": "Dán hoặc kéo thả cả hai tệp — so sánh sẽ chạy ngay khi mỗi bên có nội dung.",
+      "note": "Các hàng được khớp theo danh tính, không theo vị trí, nên một hàng được chèn hoặc sắp xếp lại sẽ không hiển thị như một khối thay đổi. Nội dung được gửi đến API để so sánh và không được lưu trữ.",
+      "columns": "{n} cột",
+      "keyLabel": "Cột khóa",
+      "keyAuto": "Gợi ý tự động",
+      "keyNone": "Không có khóa — so sánh toàn bộ hàng",
+      "joinLabel": "Gộp",
+      "joinFull": "Full outer — mọi hàng",
+      "joinInner": "Inner — hàng có trong cả hai",
+      "joinLeft": "Left — bộ hàng gốc",
+      "ignoreWhitespace": "Bỏ qua khoảng trắng",
+      "ignoreCase": "Bỏ qua chữ hoa/thường",
+      "treatEmptyAsNull": "Trống = NULL = N/A",
+      "noDifferences": "Không có thay đổi",
+      "differences": "{added} đã thêm · {removed} đã xóa · {changed} đã thay đổi",
+      "added": "{n} đã thêm",
+      "removed": "{n} đã xóa",
+      "changed": "{n} đã thay đổi",
+      "unchangedCount": "{n} không thay đổi",
+      "totals": "{original} → {updated} hàng",
+      "matchedBy": "Khớp theo {columns} ({source})",
+      "matchedWholeRow": "Khớp theo nội dung toàn bộ hàng — không sử dụng cột khóa, nên không có gì được báo cáo là đã thay đổi.",
+      "keySource": {
+        "provided": "lựa chọn của bạn",
+        "auto": "gợi ý tự động",
+        "full-row": "toàn bộ hàng"
+      },
+      "keyRejected": "Ứng viên khóa bị từ chối: {items}",
+      "columnMismatch": "Cột chỉ có trong bản gốc: {original} · chỉ có trong bản cập nhật: {updated}",
+      "truncated": "Hiển thị {shown} trong kết quả đầy đủ (bản xem trước giới hạn {limit} hàng) — số lượng ở trên là hoàn chỉnh.",
+      "findings": "Ghi chú ({n})",
+      "level": {
+        "info": "thông tin",
+        "warning": "cảnh báo",
+        "danger": "lỗi"
+      },
+      "wholeRow": "Dòng {n}",
+      "exportChanged": "Các dòng đã thay đổi (CSV)",
+      "exportFull": "Toàn bộ diff (CSV)"
+    },
+    "uscc": {
+      "modeLabel": "Xác minh hoặc tạo",
+      "tab": {
+        "verify": "Xác minh",
+        "generate": "Tạo mã kiểm thử"
+      },
+      "inputLabel": "Mã số tín dụng xã hội thống nhất",
+      "placeholder": "18 ký tự, ví dụ 91500000059926748X",
+      "idle": "Dán mã 18 ký tự. Mã được kiểm tra ngay trong trình duyệt khi bạn gõ — không lưu trữ dữ liệu.",
+      "scope": "Chỉ kiểm tra cấu trúc (GB 32100-2015 + ISO 7064 MOD 31-3). Mã hợp lệ nghĩa là có cấu trúc đúng; điều này không có nghĩa là tổ chức đã đăng ký với mã đó — hãy kiểm tra tại cơ quan đăng ký quốc gia cods.org.cn.",
+      "valid": "Mã số tín dụng xã hội thống nhất hợp lệ",
+      "invalid": "Không phải mã số thuế thống nhất hợp lệ",
+      "incomplete": "{n}/18 ký tự",
+      "invalidCharacters": "Chứa ký tự không được phép theo tiêu chuẩn",
+      "checksumOk": "Số kiểm tra hợp lệ",
+      "checksumBad": "Số kiểm tra không khớp",
+      "expectedDigit": "Số kiểm tra phải là {expected}, không phải {actual}",
+      "illegalAt": "Vị trí {position}: “{char}” không thuộc bảng ký tự mã (I, O, S, V, Z bị loại trừ)",
+      "detail": "Chi tiết trường",
+      "legacyTitle": "Mã tổ chức cũ (GB 11714)",
+      "legacy": {
+        "ok": "Mã tổ chức 9 ký tự nhúng tự nhất quán",
+        "mismatch": "Ký tự kiểm tra cũ sẽ là {expected} — chỉ mang tính tham khảo; không phải mọi lớp đăng ký đều có mã tổ chức GB 11714",
+        "unchecked": "Chưa kiểm tra"
+      },
+      "divisionScope": "Vị trí 3–8 được đối chiếu với bảng tỉnh/thành phố GB/T 2260 và quy tắc lồng nhau của định dạng sáu chữ số; bảng huyện đầy đủ không được lưu trữ.",
+      "field": {
+        "registrationDept": "Cơ quan đăng ký",
+        "orgCategory": "Loại hình tổ chức",
+        "adminDivision": "Đơn vị hành chính",
+        "orgIdentifier": "Mã định danh chủ thể",
+        "checkDigit": "Chữ số kiểm tra"
+      },
+      "depth": {
+        "none": "Chưa xác định",
+        "province": "Cấp tỉnh",
+        "prefecture": "Cấp thành phố",
+        "county": "Cấp huyện"
+      },
+      "note": {
+        "empty": "Chưa có gì để kiểm tra",
+        "incomplete": "Mã số tín dụng xã hội thống nhất có đúng 18 ký tự",
+        "tooLong": "Độ dài hơn 18 ký tự",
+        "illegalCharacter": "Chứa ký tự ngoài bộ ký tự GB 32100-2015 (I, O, S, V và Z bị loại trừ)",
+        "checkDigitMismatch": "Số kiểm tra không khớp với 17 ký tự đầu tiên",
+        "departmentUnknown": "Vị trí 1 không phải là cơ quan đăng ký được tiêu chuẩn định nghĩa (1, 5, 9, Y)",
+        "categoryUnknown": "Vị trí 2 không phải là danh mục tổ chức được định nghĩa cho cơ quan đăng ký này",
+        "divisionNotNumeric": "Vị trí 3–8 phải là sáu chữ số",
+        "divisionUnknownProvince": "Vị trí 3–4 không phải là mã tỉnh theo GB/T 2260",
+        "divisionMalformed": "Một huyện không thuộc địa cấp thị nào, điều mà GB/T 2260 không cho phép"
+      },
+      "gen": {
+        "dept": "Cơ quan đăng ký",
+        "category": "Danh mục tổ chức",
+        "province": "Tỉnh",
+        "count": "Số lượng",
+        "randomProvince": "Bất kỳ tỉnh nào",
+        "regenerate": "Tạo lô mới",
+        "emptyHint": "Chọn các tùy chọn ở trên để tạo mã thử nghiệm.",
+        "testDataBadge": "Dữ liệu thử nghiệm",
+        "seed": "Hạt {seed}",
+        "allCodes": "Tất cả mã",
+        "disclaimer": "Các mã này hợp lệ về cấu trúc nhưng không thuộc bất kỳ tổ chức nào đã đăng ký. Không sử dụng chúng để đại diện cho một thực thể thực tế.",
+        "note": "Việc tạo mã có hạt: cùng các tùy chọn và hạt luôn trả về cùng một lô, nên fixture luôn tái lập được. Mỗi mã đều được đánh dấu isTestData trong JSON cũng như ở đây."
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
+    },
+    "yamlDiff": {
+      "original": "Gốc",
+      "changed": "Đã thay đổi",
+      "originalPlaceholder": "Dán hoặc thả YAML (hoặc JSON) gốc",
+      "changedPlaceholder": "Dán hoặc thả YAML (hoặc JSON) đã thay đổi",
+      "idle": "Điền cả hai khung và so sánh sẽ chạy khi bạn gõ.",
+      "privacy": "Cả hai tài liệu đều được phân tích và so sánh trong trình duyệt này — không có gì được tải lên, điều này rất quan trọng đối với các manifest chứa hostname và tên bí mật.",
+      "modeLabel": "So sánh",
+      "modeSemantic": "Ngữ nghĩa (cấu trúc)",
+      "modeRawText": "Văn bản thô (ký tự)",
+      "resolveAnchors": "Giải quyết anchor và alias thành giá trị của chúng",
+      "valid": "YAML hợp lệ",
+      "validMulti": "YAML hợp lệ · {n} tài liệu",
+      "invalid": "Lỗi phân tích, dòng {line}",
+      "parseFailed": "Một bên không phân tích được — không có gì được so sánh",
+      "equivalent": "Không có sự khác biệt — hai tài liệu giải quyết thành cùng một cấu trúc",
+      "equivalentStructural": "Cùng cấu trúc đã giải quyết · {n} khác biệt về định dạng hoặc anchor",
+      "summary": "{added} đã thêm · {removed} đã xóa · {changed} đã thay đổi · {typeChanged} thay đổi kiểu",
+      "parseErrorAt": "{side} · dòng {line}, cột {column}: {message}",
+      "documentCountMismatch": "Số lượng tài liệu khác nhau: {original} so với {changed} — các tài liệu được ghép theo thứ tự và phần thừa được báo cáo nguyên",
+      "duplicateKeys": "Các khóa trùng lặp trong nguồn",
+      "unified": "Bản vá thống nhất (YAML đã chuẩn hóa)",
+      "howItWorks": "Cách so sánh này hoạt động",
+      "rule": {
+        "keyOrder": "Thứ tự khóa, dấu ngoặc kép và thụt lề của mapping bị bỏ qua; thứ tự của sequence được so sánh vì thứ tự danh sách mang ý nghĩa.",
+        "anchors": "Các bí danh được giải quyết thành giá trị của chúng, nên một chỉnh sửa phía sau anchor chung sẽ hiển thị ở mọi vị trí bí danh; một anchor hoặc bí danh thay đổi trong khi giá trị giữ nguyên sẽ được báo cáo riêng là cấu trúc.",
+        "mergeKeys": "Các khóa hợp nhất (<<) được mở rộng trước khi so sánh, và các khóa riêng của nút sẽ ưu tiên hơn các khóa hợp nhất.",
+        "types": "Kiểu là một phần của giá trị: 8080, \"8080\" và !!str 8080 được báo cáo là thay đổi kiểu, không phải thay đổi chung chung.",
+        "sequences": "Các sequence của mapping được ghép theo tên, id hoặc khóa khi trường đó duy nhất ở cả hai bên, nên một mục chèn không gây lan truyền; việc sắp xếp lại vẫn được báo cáo.",
+        "blockScalars": "Các block scalar được so sánh theo chuỗi đã giải quyết, nên ký tự xuống dòng cuối mà |- cắt bỏ là một thay đổi thực sự; việc thay đổi kiểu với cùng giá trị là cấu trúc.",
+        "comments": "Bình luận không thuộc mô hình dữ liệu YAML và không được so sánh.",
+        "multiDoc": "--- ghép cặp tài liệu từng cái một; nếu số lượng không khớp sẽ báo lỗi thay vì chỉ so sánh tài liệu đầu tiên.",
+        "duplicateKeys": "Khóa ánh xạ trùng lặp trong đầu vào sẽ dùng lần xuất hiện cuối cùng và được báo cáo dưới dạng cảnh báo."
+      },
+      "note": {
+        "raw-text-mode": "Chế độ văn bản thô so sánh ký tự, không phải cấu trúc: thứ tự khóa, dấu ngoặc kép và thụt lề đều được tính.",
+        "parse-error": "Một bên không phân tích được, nên không có gì được so sánh.",
+        "document-count-mismatch": "Hai bên có số lượng tài liệu --- khác nhau; các tài liệu được ghép cặp theo thứ tự và phần thừa được báo cáo nguyên bản.",
+        "merge-keys-expanded": "Các khóa hợp nhất (<<) đã được mở rộng trước khi so sánh.",
+        "anchors-unresolved": "Các bí danh được so sánh dưới dạng tham chiếu *name, không phải giá trị đã phân giải.",
+        "yaml11-ambiguous-scalars": "Các giá trị y/n/yes/no/on/off không có dấu ngoặc kép được đọc là chuỗi ở đây (YAML 1.2 Core) và là boolean theo YAML 1.1 — hãy đặt trong ngoặc kép nếu ý định là boolean.",
+        "sequence-matched-by-identity": "Các dãy ánh xạ được ghép cặp theo trường nhận dạng thay vì theo vị trí.",
+        "duplicate-keys": "Một ánh xạ khai báo cùng một khóa hai lần; lần xuất hiện cuối cùng đã được sử dụng.",
+        "truncated": "Chỉ liệt kê 2000 thay đổi đầu tiên."
+      }
+    },
+    "listSetCompare": {
+      "listA": "Danh sách A",
+      "listB": "Danh sách B",
+      "placeholder": "Dán các mục, mỗi mục một dòng (hoặc kéo thả tệp .txt/.csv)",
+      "emptyHint": "Thêm mục vào cả Danh sách A và Danh sách B để xem so sánh.",
+      "privacy": "Cả hai danh sách được so sánh trong trình duyệt của bạn — không có gì được tải lên. Cùng một công cụ chạy phía máy chủ cho các trình gọi API và MCP.",
+      "delimiter": "Dấu phân cách",
+      "delimiterOption": {
+        "auto": "Tự động phát hiện",
+        "newline": "Xuống dòng",
+        "comma": "Dấu phẩy",
+        "tab": "Tab",
+        "custom": "Tùy chỉnh"
+      },
+      "customDelimiter": "Ký tự phân cách",
+      "customDelimiterPlaceholder": "| hoặc \\t",
+      "sort": "Sắp xếp",
+      "sortOption": {
+        "original": "Thứ tự gốc",
+        "asc": "A→Z",
+        "desc": "Z→A",
+        "byCount": "Theo số lượng"
+      },
+      "optCaseSensitive": "Phân biệt chữ hoa/thường",
+      "optTrim": "Xóa khoảng trắng thừa",
+      "optCollapse": "Gộp khoảng trắng nội bộ",
+      "optIgnoreZeros": "Bỏ qua số 0 đứng đầu",
+      "paneItems": "{n} mục",
+      "paneSingle": "1 mục — kiểm tra dấu phân cách",
+      "items": "{n}",
+      "none": "Không có",
+      "more": "+{n} mục khác — sao chép hoặc tải xuống để xem danh sách đầy đủ",
+      "panel": {
+        "onlyInA": "Chỉ có trong A",
+        "onlyInB": "Chỉ có trong B",
+        "intersection": "Giao (có trong cả hai)",
+        "union": "Hợp (tất cả mục)",
+        "symmetricDifference": "Hiệu đối xứng"
+      },
+      "summaryIdentical": "Tập hợp giống nhau — {n} mục chung",
+      "summaryDiff": "{a} chỉ trong A · {b} chỉ trong B · {shared} chung",
+      "drill": {
+        "symmetricDifference": "Hiệu đối xứng ({n})",
+        "duplicates": "Trùng lặp trong danh sách ({n})",
+        "multiplicities": "Số lượng theo mục ({n})",
+        "warnings": "Thông báo ({n})"
+      },
+      "duplicatesInA": "Lặp trong A",
+      "duplicatesInB": "Lặp trong B",
+      "colValue": "Mục",
+      "colCountA": "Trong A",
+      "colCountB": "Trong B",
+      "detailTruncated": "Số lượng theo mục đã bị cắt — tăng maxDetail trên API để xem bảng đầy đủ.",
+      "reportTitle": "So sánh danh sách"
+    },
+    "loanAmortization": {
+      "principal": "Số tiền vay",
+      "rate": "Lãi suất năm %",
+      "term": "Thời hạn",
+      "termUnit": "Đơn vị thời hạn",
+      "unitYears": "Năm",
+      "unitMonths": "Tháng",
+      "startMonth": "Tháng thanh toán đầu tiên",
+      "startMonthHint": "YYYY-MM. Gán nhãn cho lịch; không làm thay đổi số tiền.",
+      "extraHeading": "Thanh toán thêm",
+      "extraMonthly": "Thanh toán thêm mỗi tháng",
+      "extraYearly": "Thanh toán thêm một lần mỗi năm",
+      "extraYearlyMonth": "Thanh toán thêm hàng năm vào tháng",
+      "extraOneTime": "Thanh toán thêm một lần",
+      "extraOneTimePeriod": "Thanh toán thêm một lần ở kỳ thanh toán #",
+      "extraNote": "Thanh toán thêm sẽ giảm gốc trong kỳ nó được thực hiện, từ đó giảm lãi của mọi kỳ sau. Lãi suất và khoản thanh toán theo lịch không thay đổi.",
+      "monthlyPayment": "Khoản thanh toán hàng tháng",
+      "totalInterest": "Tổng lãi",
+      "totalPaid": "Tổng đã trả",
+      "crossover": "Điểm hòa vốn",
+      "crossoverValue": "Lần trả {n}",
+      "crossoverNone": "Không bao giờ",
+      "payoff": "Trả hết tại lần trả {n}",
+      "monthsSaved": "Sớm hơn {n} tháng",
+      "totalExtra": "Đã trả thêm {amount} ngoài lịch",
+      "viewMonthly": "Mỗi lần trả",
+      "viewAnnual": "Theo năm",
+      "tableCaption": "Lịch hoàn vốn: lần trả, lãi, gốc và số dư còn lại theo kỳ",
+      "colPeriod": "#",
+      "colDate": "Tháng",
+      "colPayment": "Thanh toán",
+      "colInterest": "Lãi suất",
+      "colPrincipal": "Gốc",
+      "colBalance": "Số dư",
+      "colYear": "Năm",
+      "expandRows": "Hiển thị tất cả {total} khoản thanh toán",
+      "collapseRows": "Hiển thị ít khoản thanh toán hơn",
+      "windowNote": "Hiển thị {shown} trong số {total} khoản thanh toán. CSV và API đều chứa đầy đủ.",
+      "emptyHint": "Nhập số tiền vay, lãi suất và kỳ hạn để xem lịch trình.",
+      "note": "Cùng công cụ tính toán như API. Các phép tính chỉ chạy trên điều khoản vay của bạn; không có dữ liệu nào được tải lên hoặc lưu trữ.",
+      "errPrincipal": "Nhập số tiền vay lớn hơn 0.",
+      "errRate": "Nhập lãi suất từ 0 đến 100.",
+      "errTerm": "Nhập kỳ hạn từ 1 tháng đến 100 năm.",
+      "errStartMonth": "Sử dụng định dạng YYYY-MM, ví dụ 2026-01.",
+      "errExtra": "Nhập số tiền từ 0 trở lên.",
+      "errOneTimePeriod": "Nhập số kỳ thanh toán mà khoản một lần rơi vào."
+    },
+    "businessDayShift": {
+      "modeLabel": "Nội dung cần tính toán",
+      "mode": {
+        "shift": "Dịch chuyển ngày",
+        "countBetween": "Đếm giữa các ngày"
+      },
+      "startDate": "Ngày bắt đầu",
+      "days": "Ngày làm việc",
+      "daysHint": "Đếm âm sẽ lùi về trước: −10 là mười ngày làm việc trước ngày bắt đầu.",
+      "daysInvalid": "Số ngày làm việc phải là số nguyên, có thể có dấu trừ ở đầu.",
+      "endDate": "Ngày kết thúc",
+      "includeEndDate": "Đếm cả ngày kết thúc — đây là kết quả mà NETWORKDAYS trong bảng tính trả về",
+      "weekendLabel": "Ngày nghỉ mỗi tuần",
+      "weekendHint": "Mặc định là thứ Bảy và Chủ Nhật. Đặt thành thứ Sáu và thứ Bảy nếu đó là ngày nghỉ cuối tuần.",
+      "weekday": {
+        "sun": "CN",
+        "mon": "T2",
+        "tue": "T3",
+        "wed": "T.Ba",
+        "thu": "T.Năm",
+        "fri": "T.Sáu",
+        "sat": "T.Bảy"
+      },
+      "holidays": "Ngày lễ",
+      "holidaysHint": "Để trống thì kết quả chỉ tính theo quy tắc cuối tuần — không áp dụng lịch quốc gia.",
+      "makeupWorkdays": "Ngày làm bù",
+      "makeupHint": "Các ngày đã làm việc dù rơi vào cuối tuần hoặc ngày lễ — các thứ Bảy làm bù theo chế độ 调休/补班 của Trung Quốc sẽ nằm ở đây.",
+      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesIgnored": "{n, plural, one {# mục không phải ngày định dạng YYYY-MM-DD và không được sử dụng} other {# mục không phải ngày định dạng YYYY-MM-DD và không được sử dụng}}",
+      "pickStart": "Chọn ngày bắt đầu để khởi tạo.",
+      "emptyHintShift": "Chọn ngày bắt đầu và số ngày làm việc.",
+      "emptyHintCount": "Chọn ngày bắt đầu và ngày kết thúc.",
+      "note": "Sử dụng cùng engine với API. Tính toán chạy trên bộ quy tắc hiển thị kèm kết quả; không lưu trữ dữ liệu.",
+      "countHeadline": "{n, plural, one {# ngày làm việc} other {# ngày làm việc}}",
+      "reversedRange": "Ngày kết thúc sớm hơn ngày bắt đầu, nên số lượng trả về là âm.",
+      "classification": {
+        "workday": "Ngày làm việc",
+        "weekend": "Cuối tuần",
+        "holiday": "Ngày lễ",
+        "makeupWorkday": "Ngày làm bù"
+      },
+      "ruleWeekend": "Nghỉ {days}",
+      "ruleNoWeekend": "không có ngày nghỉ hàng tuần",
+      "ruleHolidays": "{n, plural, =0 {không có danh sách ngày lễ} one {# ngày lễ} other {# ngày lễ}}",
+      "ruleMakeups": "{n, plural, =0 {không có ngày làm bù} one {# ngày làm bù} other {# ngày làm bù}}",
+      "ruleEndIncluded": "tính cả ngày kết thúc",
+      "ruleEndExcluded": "không tính ngày kết thúc",
+      "chain": "Tiếp tục từ ngày này"
+    },
+    "retryBackoff": {
+      "strategy": {
+        "exponential": "Hàm mũ",
+        "linear": "Tuyến tính",
+        "fixed": "Cố định"
+      },
+      "initialDelay": "Độ trễ ban đầu (ms)",
+      "factor": "Hệ số giãn cách",
+      "factorHint": "Nhân tử áp dụng cho mỗi lần thử lại. Phải lớn hơn 1.",
+      "increment": "Tăng tuyến tính (ms)",
+      "incrementHint": "Số mili giây được cộng thêm vào độ trễ mỗi lần thử lại.",
+      "maxDelay": "Giới hạn độ trễ tối đa (ms)",
+      "maxDelayHint": "Để trống nếu không giới hạn. Khi đạt giới hạn, mọi độ trễ sau đó sẽ giữ nguyên ở mức đó.",
+      "maxAttempts": "Số lần thử tối đa",
+      "maxAttemptsHint": "Từ 1 đến 100.",
+      "excludeInitial": "Số lần thử tối đa không tính yêu cầu ban đầu",
+      "excludeInitialNote": "Bật: số ở trên chỉ tính số lần thử lại, yêu cầu ban đầu tính riêng. Tắt: tính tổng số lần thử, bao gồm cả yêu cầu ban đầu.",
+      "jitter": {
+        "none": "Không — độ trễ chính xác",
+        "equal": "Bằng nhau — một nửa cố định, một nửa ngẫu nhiên",
+        "full": "Full — bất kỳ giá trị nào từ 0 đến độ trễ"
+      },
+      "callerTimeout": "Thời gian chờ của bạn (ms)",
+      "callerTimeoutHint": "Tùy chọn. Để trống để bỏ qua kiểm tra ngân sách.",
+      "emptyHint": "Sửa trường được đánh dấu để xem lịch trình.",
+      "note": "Tính toán chỉ từ chính sách — không gửi gì đến dịch vụ upstream. Jitter được báo cáo dưới dạng khoảng giá trị mà client thực tế rơi vào, không phải một giá trị mẫu duy nhất.",
+      "headlineExact": "{attempts} lần thử, tổng cộng {wait} thời gian chờ.",
+      "headlineRange": "{attempts} lần thử, trung bình {expected} thời gian chờ, tối đa {max} trong trường hợp xấu nhất.",
+      "finalDelay": "Khoảng chờ cuối cùng, trước lần thử {attempt}, là {delay}.",
+      "noRetries": "Ngân sách này cho phép một lần thử và không có retry, nên không có gì để chờ.",
+      "retryCount": "{count, plural, =0 {không có retry} one {# retry} other {# retries}}",
+      "capFlattened": "Đạt giới hạn ở lần thử {attempt} — mọi độ trễ sau đó đều giữ ở {delay}.",
+      "timeoutExceeded": "Trường hợp xấu nhất chờ {wait}, vượt quá ngân sách {timeout} của bạn.",
+      "timeoutOk": "Trường hợp xấu nhất chờ {wait}, nằm trong ngân sách {timeout} của bạn.",
+      "tableLabel": "Lịch trình thử lại",
+      "colAttempt": "Lần thử",
+      "colDelay": "Độ trễ",
+      "colCumulative": "Tổng thời gian chờ",
+      "average": "trung bình {value}",
+      "formula": {
+        "none": "Độ trễ chính xác — không áp dụng jitter.",
+        "equal": "Jitter đều: một nửa độ trễ cố định, nửa còn lại được lấy ngẫu nhiên đều, nên mỗi lần chờ nằm giữa một nửa độ trễ và toàn bộ độ trễ.",
+        "full": "Jitter đầy đủ: thời gian chờ được lấy ngẫu nhiên đều giữa 0 và độ trễ tính toán."
+      },
+      "errInitialDelay": "Độ trễ ban đầu phải là số nguyên mili giây, ít nhất 1.",
+      "errFactor": "Hệ số phải lớn hơn 1 và tối đa 100. Hệ số 1 là chiến lược cố định.",
+      "errIncrement": "Bước tăng phải là số nguyên mili giây, 0 hoặc nhiều hơn.",
+      "errMaxDelay": "Giới hạn phải là số nguyên mili giây, tối thiểu 1.",
+      "errCapBelowInitial": "Giới hạn phải ít nhất bằng độ trễ ban đầu.",
+      "errMaxAttempts": "Số lần thử phải là số nguyên từ 1 đến 100.",
+      "errCallerTimeout": "Thời gian chờ phải là số nguyên mili giây, tối thiểu 1."
+    },
+    "csvColumns": {
+      "csvLabel": "CSV",
+      "csvPlaceholder": "Dán CSV vào đây, hoặc thả tệp — dòng đầu tiên sẽ được đọc làm tên cột",
+      "sample": "CSV mẫu",
+      "chooseFile": "Chọn tệp",
+      "fileFailed": "Không thể đọc {name}.",
+      "delimiterLabel": "Phân cách",
+      "delimiter": {
+        "comma": "Dấu phẩy  ,",
+        "semicolon": "Dấu chấm phẩy  ;",
+        "tab": "Tab",
+        "pipe": "Pipe  |"
+      },
+      "raggedPolicyLabel": "Các hàng không khớp với tiêu đề",
+      "ragged": {
+        "pad": "Căn chỉnh theo tiêu đề",
+        "truncate": "Cắt hàng dài, giữ nguyên hàng ngắn",
+        "reject": "Dừng và báo cáo"
+      },
+      "columnsTitle": "Cột — giữ {kept} trong số {total}",
+      "columnsHint": "Bỏ chọn để loại bỏ cột, chỉnh sửa hộp để đổi tên, dùng mũi tên để sắp xếp lại. Mọi thứ đều được giải quyết dựa trên tiêu đề gốc.",
+      "reset": "Đặt lại cột",
+      "keep": "Giữ cột {name}",
+      "renameLabel": "{name}",
+      "moveUp": "Di chuyển {name} lên",
+      "moveDown": "Di chuyển {name} xuống",
+      "noneKept": "Tất cả các cột đều bị bỏ chọn — hãy giữ ít nhất một cột.",
+      "emptyHint": "Dán một CSV ở trên để quản lý các cột của nó.",
+      "note": "Chạy trên văn bản bạn dán. Thả, sau đó đổi tên, sau đó sắp xếp lại — theo thứ tự cố định đó, luôn so với tiêu đề gốc.",
+      "columnCount": "{n} cột",
+      "rowCount": "{n} hàng",
+      "duplicateHeaders": "Tiêu đề trùng lặp được sử dụng theo tên: {names}",
+      "raggedCount": "{n}{more} hàng không khớp với chiều rộng tiêu đề",
+      "previewLabel": "CSV đầu ra",
+      "previewTruncated": "Hiển thị {shown} dòng đầu tiên trong tổng số {total} dòng. Sao chép hoặc tải xuống để xem toàn bộ tệp.",
+      "raggedListLabel": "Các hàng không khớp với chiều rộng tiêu đề",
+      "raggedRow": "Dòng {line}: {actual} trường, tiêu đề có {expected}",
+      "unusedRenames": "Đổi tên bị bỏ qua — các cột này không có trong đầu ra: {names}"
+    },
+    "imageRotateFlip": {
+      "drop": "Thả hình ảnh vào đây, hoặc nhấp để duyệt",
+      "browse": "Chọn hình ảnh",
+      "selected": "{name} · {kb} KB",
+      "privacy": "Tệp sẽ được gửi đến Forge API để xử lý và không bao giờ được lưu trữ.",
+      "tooLarge": "Hình ảnh này lớn hơn {mb} MB.",
+      "ccw": "90° trái",
+      "cw": "90° phải",
+      "half": "180°",
+      "reset": "Đặt lại",
+      "flipHorizontal": "Lật ngang",
+      "flipVertical": "Lật dọc",
+      "angle": "Góc",
+      "exactAngle": "Góc chính xác °",
+      "fitMode": "Chế độ vừa",
+      "fitExpand": "Mở rộng khung",
+      "fitCrop": "Cắt để lấp đầy",
+      "fitInside": "Vừa trong khung",
+      "fitNote": "Khi xoay lệch một góc 90 độ, hình ảnh không còn vừa khung cũ: mở rộng giữ nguyên mọi pixel, cắt giữ nguyên kích thước và cắt các góc, vừa thu nhỏ toàn bộ.",
+      "outputFormat": "Định dạng đầu ra",
+      "sameFormat": "Giữ nguyên định dạng",
+      "idle": "Kéo thả hình ảnh để xem kết quả xoay.",
+      "original": "Gốc · {w}×{h}",
+      "originalAlt": "Hình ảnh gốc khi tải lên",
+      "result": "Kết quả · {w}×{h}",
+      "resultAlt": "Hình ảnh sau khi xoay",
+      "badgeLossless": "Không lấy mẫu lại",
+      "badgeResampled": "Đã lấy mẫu lại",
+      "badgeSize": "{kb} KB",
+      "badgeExif": "Đã áp dụng hướng EXIF {orientation} trước",
+      "badgeSnapped": "Làm tròn đến góc quay 90° chính xác",
+      "badgeReencode": "Hình học chính xác; codec mã hóa lại",
+      "download": "Tải xuống",
+      "note": "Xoay 90°, 180° và 270° di chuyển pixel mà không pha trộn. Các góc khác sẽ lấy mẫu lại. GIF động, APNG và WebP động chưa được hỗ trợ."
+    },
+    "exifStrip": {
+      "drop": "Kéo thả JPEG, PNG hoặc WebP để loại bỏ metadata",
+      "privacy": "Xử lý trên máy chủ của chúng tôi và không bao giờ lưu trữ. Tối đa {mb} MB mỗi ảnh.",
+      "idle": "Đã loại bỏ: GPS, thời gian chụp, thông tin máy ảnh và thiết bị, ảnh thu nhỏ nhúng, lịch sử chỉnh sửa. Đã giữ: hướng, hồ sơ màu, kích thước, dữ liệu pixel.",
+      "note": "Chỉ ảnh tĩnh. Video, PDF, HEIC, AVIF và GIF không nằm trong phạm vi, và các manifest nguồn gốc C2PA được giữ nguyên.",
+      "detail": "Những gì đã bị loại bỏ",
+      "optKeepThumbnail": "Giữ ảnh thumbnail nhúng Exif",
+      "verdictStripped": "Đã loại bỏ {fields} trường metadata ({kb} KB)",
+      "verdictClean": "Tệp này không chứa metadata có thể loại bỏ",
+      "strippedCaveat": "Bản thân hình ảnh không thay đổi — cùng pixel, cùng kích thước, không mã hóa lại.",
+      "cleanCaveat": "Trả về nguyên vẹn từng byte như khi nhận.",
+      "badgeOrientationKept": "Hướng được giữ lại",
+      "badgeOrientationLost": "Không thể giữ hướng",
+      "badgeColorProfileKept": "Hồ sơ màu được giữ lại",
+      "badgeThumbnailKept": "Thumbnail được giữ lại",
+      "badgeThumbnailRemoved": "Thumbnail đã bị loại bỏ",
+      "download": "Tải xuống hình ảnh đã làm sạch",
+      "sizes": "{before} KB → {after} KB",
+      "detailFields": "{fields} trường · {kb} KB",
+      "detailNothing": "Không có gì bị xóa khỏi tệp này.",
+      "detailOrientation": "Đã đọc hướng Exif {value} từ tệp và giữ nguyên.",
+      "detailNoOrientation": "Tệp không khai báo hướng Exif nên hiển thị không bị ảnh hưởng.",
+      "segmentExif": "Exif",
+      "segmentIptc": "IPTC",
+      "segmentXmp": "XMP",
+      "segmentComment": "Bình luận",
+      "segmentText": "Dữ liệu văn bản",
+      "segmentTime": "Dấu thời gian",
+      "segmentVendor": "Khối nhà cung cấp",
+      "summaryStripped": "Đã xóa {fields} trường metadata ({families}), {kb} KB. Hình ảnh không thay đổi.",
+      "summaryClean": "Không tìm thấy metadata có thể xóa. Tệp được trả về không thay đổi."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "이름 / 호스트",
+      "type": "레코드 유형",
+      "note": "Forge 호스트 DNS로 해석합니다."
+    },
+    "tls": {
+      "host": "호스트",
+      "expired": "인증서 만료",
+      "validDays": "{n}일 남음",
+      "note": "Forge 호스트에서 연결. 검사용으로 신뢰 검증 완화."
+    },
+    "myIp": {
+      "refresh": "새로고침",
+      "note": "Forge가 본 IP. 라이선스 geo 없음."
+    },
+    "mermaid": {
+      "source": "Mermaid source",
+      "idle": "Valid diagrams render here",
+      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
+      "sample": "Sample",
+      "theme": "Theme",
+      "theme_default": "Default",
+      "theme_dark": "Dark",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "Flowchart",
+      "sample_sequence": "Sequence",
+      "sample_class": "Class",
+      "sample_er": "ER diagram",
+      "sample_state": "State",
+      "sample_gantt": "Gantt",
+      "sample_pie": "Pie",
+      "sample_mindmap": "Mindmap",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "zoomReset": "Reset view",
+      "copySvg": "Copy SVG",
+      "downloadSvg": "Download SVG",
+      "downloadPng": "Download PNG",
+      "previewAria": "Mermaid diagram preview",
+      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
+    },
+    "colorDeltaE": {
+      "note": "culori CIEDE2000. 임계값은 UI 리뷰용."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL 방언",
+      "parseNote": "파싱/목록만. ERD는 별도.",
+      "convertNote": "@dbml/core — API와 동일 경로."
+    },
+    "dnsLeak": {
+      "probeHost": "Compare host (advanced)",
+      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
+      "run": "Start DNS leak check",
+      "retest": "Run again",
+      "showAdvanced": "Advanced options",
+      "hideAdvanced": "Hide advanced",
+      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
+      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
+      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
+      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
+      "edgeIp": "Your edge IP",
+      "authorityHits": "Recursive IPs",
+      "forgePaths": "Forge resolver hits",
+      "dohPaths": "Browser DoH hits",
+      "webrtcCount": "WebRTC IPs",
+      "forgeResolvers": "Forge multi-resolver (server-side)",
+      "forgeNote": "These queries leave from the Forge host — not your laptop.",
+      "browserDoh": "Browser DoH",
+      "webrtc": "WebRTC ICE",
+      "egressMarkers": "Forge egress markers",
+      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
+      "honestyPrefix": "Honesty:",
+      "verdictConsistent": "Paths look consistent on this check",
+      "verdictSplit": "Split answers across DNS paths",
+      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
+      "verdictIncomplete": "Incomplete — browser probes missing",
+      "verdictAuthority": "System DNS recursives captured",
+      "infraOn": "Authority online",
+      "infraOff": "Authority offline — multi-path only",
+      "infraChecking": "Checking…",
+      "authorityResolvers": "System DNS recursive resolvers",
+      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
+      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
+      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
+      "authorityDetail": "Authority session detail",
+      "phaseSession": "Creating session…",
+      "phaseSystemDns": "Triggering system DNS…",
+      "phasePoll": "Listening for recursive hits ({n}/{total})…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "stepSession": "Session",
+      "stepSystemDns": "System DNS",
+      "stepPoll": "Listen",
+      "stepBrowser": "Browser",
+      "stepServer": "Server",
+      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
+      "liveHits": "Live recursive hits",
+      "sectionSystemDns": "System DNS (what you came for)",
+      "sectionComplementary": "Complementary paths",
+      "sectionTech": "Technical session detail",
+      "copyIps": "Copy IPs",
+      "copied": "Copied",
+      "queryCount": "{n} queries",
+      "colPath": "Path",
+      "colAnswers": "Answers",
+      "colMs": "ms",
+      "ipPublic": "public",
+      "ipPrivate": "private",
+      "sig": {
+        "captured": "System DNS captured",
+        "onlineNoHits": "Authority online · no hits yet",
+        "offline": "Authority offline",
+        "forgeSplit": "Forge resolvers disagree",
+        "dohSplit": "Browser DoH disagree",
+        "webrtcMismatch": "WebRTC ≠ edge IP",
+        "webrtcLocal": "Local WebRTC candidates",
+        "noBrowser": "No browser probes"
+      }
+    },
+    "honesty": {
+      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
+      "signatureNotVerified": "{engine} · decode only · signature not verified",
+      "localOnly": "Processed for this request · not stored as a card or credential"
+    },
+    "idCard": {
+      "number": "Resident ID number",
+      "note": "GB 11643 check digit · no household registry lookup · same path as API",
+      "specimenTitle": "Resident ID · structure specimen",
+      "segRegion": "Region",
+      "segBirth": "Birth",
+      "segSeq": "Seq",
+      "segCheck": "Check",
+      "metaBirth": "Birth",
+      "metaGender": "Gender",
+      "metaRegion": "Region code",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "reasonFormat": "Format should be 18 characters (last may be X)",
+      "reasonBirth": "Birth date segment is invalid",
+      "reasonCheck": "Check digit is wrong",
+      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} lines",
+      "chars": "{n} chars",
+      "empty": "(empty file)",
+      "readyToShip": "Ready to drop into the repo"
+    },
+    "textTransform": {
+      "mode": "Mode",
+      "input": "Input",
+      "output": "Output",
+      "emptyResult": "Result appears here",
+      "runLocal": "Run locally",
+      "runServer": "Run on server",
+      "statusLocalLive": "Local · live",
+      "statusLocal": "Local",
+      "statusServer": "Server · same path as API",
+      "noteDefault": "Same path as API"
+    }
+  },
+  "roots": {
+    "hubLabel": "Theo ý định",
+    "tools": "công cụ",
+    "dualSurface": "Trang người dùng + API Agent · cùng một engine",
+    "otherRoots": "Các nguồn nhu cầu khác"
+  }
+}

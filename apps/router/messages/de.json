@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — API-Marktplatz",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "Marktplatz für alle Modelle · Pay-as-you-go · Schlüssel & Wallet verwalten · schnell testen."
+  },
+  "admin": {
+    "dashboard": "Übersicht",
+    "keys": "API-Schlüssel",
+    "wallet": "Wallet",
+    "docs": "Dokumentation",
+    "title": "Admin",
+    "backToMarket": "Zurück zum Marktplatz",
+    "quickUse": "Schnellstart"
+  },
+  "chrome": {
+    "searchPlaceholder": "Was möchten Sie mit KI tun?",
+    "search": "Suche",
+    "locale": "Sprache",
+    "currency": "Währung",
+    "collapseSidebar": "Seitenleiste einklappen",
+    "expandSidebar": "Seitenleiste ausklappen",
+    "home": "Startseite",
+    "adminConsole": "Admin",
+    "quickUse": "Schnellstart",
+    "support": "Support",
+    "apiDocs": "API-Dokumentation",
+    "integrationHelp": "Integrationsanleitung",
+    "aiRecommend": "KI-Empfehlungen",
+    "market": "Markt",
+    "usageTitle": "Schnellzugriff"
+  },
+  "channels": {
+    "app": "App-Markt",
+    "api": "API-Markt",
+    "models": "Modellkatalog",
+    "client": "Client"
+  },
+  "market": {
+    "new": "Neu",
+    "hot": "Beliebt",
+    "forYou": "Für dich",
+    "grid": "Raster",
+    "list": "Liste",
+    "apiShelf": "API-Regal",
+    "toolShelf": "Werkzeug-Regal",
+    "categories": "Kategorien",
+    "apps": "Apps",
+    "newRelease": "Neue Veröffentlichung",
+    "forgeTitle": "Forge-Werkzeugarbeitsbereich",
+    "forgeBlurb": "Texttransformationen, Codecs, Formulare und komponierbare Tools. Der App-Marktplatz führt zu Forge.",
+    "openForge": "Forge öffnen →",
+    "allApi": "Alle APIs →",
+    "all": "Alle →",
+    "viewAll": "Alle {label} anzeigen →",
+    "gridView": "Rasteransicht",
+    "listView": "Listenansicht",
+    "hiTitle": "Unternehmensplattform für KI-Ressourcen",
+    "hiSubtitle": "Jeden Bedarf mit der passenden KI abdecken",
+    "sellable": "Verkäuflich",
+    "walletTopup": "Aufladen"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "Sprachmodelle",
+      "hint": "Chat · Reasoning"
+    },
+    "image-gen": {
+      "label": "Bildgenerierung",
+      "hint": "Text-zu-Bild"
+    },
+    "image-edit": {
+      "label": "Bildbearbeitung",
+      "hint": "Bearbeiten · Freistellen"
+    },
+    "video": {
+      "label": "Videogenerierung",
+      "hint": "Text-zu-Video"
+    },
+    "audio": {
+      "label": "Audio & Video",
+      "hint": "Sprache · Transkription"
+    },
+    "data": {
+      "label": "Informationen",
+      "hint": "Abruf · Extraktion"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "Wissensgestützt"
+    },
+    "tools": {
+      "label": "Tool-APIs",
+      "hint": "Agent · Tools"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "Bots",
+      "chips": "Chat-Bots · Zeichen-Bots · Wissen"
+    },
+    "productivity": {
+      "label": "Produktivität",
+      "chips": "Modell-Arena · KI-Schreiben"
+    },
+    "academic": {
+      "label": "Akademisch",
+      "chips": "PDF-Toolkit · KI-Patent-Suche"
+    },
+    "image": {
+      "label": "Bild-Tools",
+      "chips": "3D-Studio · Canvas"
+    },
+    "audio": {
+      "label": "Audio",
+      "chips": "Sprache · KI-Musik"
+    },
+    "code": {
+      "label": "Code",
+      "chips": "Web-Generator · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "Übersicht",
+    "keys": "Schlüssel",
+    "wallet": "Wallet",
+    "use": "Ausprobieren",
+    "docs": "Dokumentation",
+    "models": "Mehr"
+  }
+}

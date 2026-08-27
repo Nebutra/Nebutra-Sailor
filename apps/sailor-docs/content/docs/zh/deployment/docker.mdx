@@ -1,0 +1,195 @@
+---
+title: Docker 部署
+description: 使用 Docker 和 Docker Compose 对 Nebutra-Sailor 进行自托管部署 — 适合有数据本地化需求或自定义基础设施要求的团队。
+---
+
+## 概览
+
+Docker 部署将所有服务 — 应用、数据库和支撑服务 — 运行在您自己的基础设施上。以下场景推荐采用此方式：
+
+- 需要在特定区域或数据中心实现数据本地化
+- 需要完全掌控基础设施和运行时
+- 本地部署（On-premise）
+- 自定义网络或安全策略
+
+<Warning>
+  **Docker 构建不支持 Turbopack。** 生产 Dockerfile 使用 webpack（Next.js 默认值）进行构建。Turbopack 仅用于本地开发（`pnpm dev`）。这是预期行为 — 不要在 Docker 内部的 `build` 脚本中启用 `--turbopack`。
+</Warning>
+
+## Docker Compose 服务
+
+仓库根目录的 `docker-compose.yml` 定义了完整的生产技术栈：
+
+| 服务 | 镜像 | 端口 | 用途 |
+|------|------|------|------|
+| `web` | `nebutra/web` | 3000 | SaaS 控制台（Next.js） |
+| `api-gateway` | `nebutra/api-gateway` | 3001 | REST API（Hono） |
+| `landing` | `nebutra/landing` | 3002 | 营销网站（Next.js） |
+| `postgres` | `postgres:16-alpine` | 5432 | 主数据库 |
+| `redis` | `redis:7-alpine` | 6379 | 缓存和队列 |
+| `clickhouse` | `clickhouse/clickhouse-server:24` | 8123 | 使用量计量 |
+
+仅含基础设施的技术栈（`docker-compose.infra.yml`）只包含 `postgres`、`redis` 和 `clickhouse` — 这是本地开发时 `pnpm infra:up` 使用的内容。
+
+## 分步部署指南
+
+<Steps>
+  <Step title="创建环境变量文件">
+    复制生产环境示例文件并填写所有必填值：
+    ```bash
+    cp .env.production.example .env.production
+    ```
+    编辑 `.env.production`，填入您的实际密钥。请参阅[环境变量参考](/zh/development/local-dev#环境变量)。
+  </Step>
+  <Step title="构建所有 Docker 镜像">
+    <Tabs>
+      <Tab title="一次性构建所有应用">
+        ```bash
+        docker compose build
+        ```
+      </Tab>
+      <Tab title="单独构建某个应用">
+        ```bash
+        docker build -f apps/web/Dockerfile -t nebutra/web .
+        docker build -f backends/gateway/Dockerfile -t nebutra/api-gateway .
+        docker build -f apps/landing/Dockerfile -t nebutra/landing .
+        ```
+        构建上下文必须是仓库根目录（`.`），以便 Turborepo 能访问共享包。
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="先启动基础设施服务">
+    ```bash
+    docker compose up -d postgres redis clickhouse
+    ```
+    在运行迁移之前，等待数据库变为健康状态。
+  </Step>
+  <Step title="执行数据库迁移">
+    ```bash
+    docker compose run --rm api-gateway pnpm db:migrate
+    ```
+  </Step>
+  <Step title="启动所有应用服务">
+    ```bash
+    docker compose up -d
+    ```
+  </Step>
+  <Step title="验证部署">
+    ```bash
+    docker compose ps        # 所有服务应显示 "healthy" 或 "running"
+    docker compose logs web  # 查看特定服务的日志
+    ```
+  </Step>
+</Steps>
+
+## 多阶段 Dockerfile
+
+每个应用使用多阶段 Dockerfile 以最小化镜像体积：
+
+```dockerfile
+# 第 1 阶段：依赖安装
+FROM node:22-alpine AS deps
+WORKDIR /app
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN corepack enable && pnpm install --frozen-lockfile
+
+# 第 2 阶段：构建
+FROM node:22-alpine AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN pnpm turbo run build --filter=apps/web
+
+# 第 3 阶段：生产运行
+FROM node:22-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=builder /app/apps/web/.next/standalone ./
+COPY --from=builder /app/apps/web/.next/static ./.next/static
+COPY --from=builder /app/apps/web/public ./public
+EXPOSE 3000
+CMD ["node", "server.js"]
+```
+
+<Note>
+  Next.js 的 `output: 'standalone'` 在每个应用的 `next.config.ts` 中配置。这会在 `.next/standalone/` 中生成一个自包含的 Node.js 服务器，运行时无需 `node_modules`。
+</Note>
+
+## 健康检查
+
+每个服务都包含 Docker 健康检查。`api-gateway` 暴露了一个专用的健康检查端点：
+
+```
+GET /health
+```
+
+响应示例：
+
+```json
+{
+  "status": "ok",
+  "timestamp": "2026-03-31T12:00:00Z",
+  "services": {
+    "database": "ok",
+    "redis": "ok",
+    "clickhouse": "ok"
+  }
+}
+```
+
+请配置您的负载均衡器或反向代理来轮询此端点。
+
+## 反向代理
+
+通过单一反向代理（nginx 或 Caddy）提供所有三个应用的服务。示例 Caddy 配置：
+
+```
+yourdomain.com {
+  reverse_proxy web:3000
+}
+
+app.yourdomain.com {
+  reverse_proxy web:3000
+}
+
+api.yourdomain.com {
+  reverse_proxy api-gateway:3001
+}
+```
+
+## 更新运行中的部署
+
+<Steps>
+  <Step title="拉取最新代码">
+    ```bash
+    git pull origin main
+    ```
+  </Step>
+  <Step title="重新构建受影响的镜像">
+    ```bash
+    docker compose build web api-gateway landing
+    ```
+  </Step>
+  <Step title="在发布前执行迁移">
+    ```bash
+    docker compose run --rm api-gateway pnpm db:migrate
+    ```
+  </Step>
+  <Step title="滚动重启">
+    ```bash
+    docker compose up -d --no-deps web api-gateway landing
+    ```
+    `--no-deps` 标志可防止 Docker Compose 重启数据库服务。
+  </Step>
+</Steps>
+
+## 相关内容
+
+<CardGroup cols={2}>
+  <Card title="Vercel 部署" icon="triangle" href="/zh/deployment/vercel">
+    无需管理基础设施的托管部署方案。
+  </Card>
+  <Card title="生产检查清单" icon="circle-check" href="/zh/deployment/production-checklist">
+    上线前验证所有内容。
+  </Card>
+</CardGroup>

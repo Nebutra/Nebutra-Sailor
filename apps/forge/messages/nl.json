@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — Online hulpmiddelenstation",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "Codecs, tekst, hashing, documenten en beeldtools online."
+  },
+  "nav": {
+    "main": "Hoofdnavigatie",
+    "homeAria": "{brandName} Forge startpagina",
+    "tools": "Tools",
+    "wallet": "Wallet",
+    "api": "API",
+    "routerAria": "{brandName} Router",
+    "categoriesAria": "Toolcategorieën",
+    "languageAria": "Taal wijzigen"
+  },
+  "tool": {
+    "breadcrumbAria": "Broodkruimels",
+    "workspace": "Werkruimte",
+    "workspaceHint": "Lokaal of server · zelfde pad als API",
+    "api": "API",
+    "apiHint": "Zelfde contract als de pagina. Gebruik een geauthenticeerde sleutel in productie.",
+    "related": "Gerelateerde tools"
+  },
+  "auth": {
+    "signIn": "Inloggen",
+    "signUp": "Aanmelden",
+    "signOut": "Uitloggen"
+  },
+  "footer": {
+    "navAria": "Voettekst",
+    "blurb": "Online toolstation. Voer taken uit in de browser of automatiseer via API / MCP.",
+    "product": "Product",
+    "developers": "Ontwikkelaars",
+    "company": "Bedrijf",
+    "docs": "Integratiedocumentatie",
+    "website": "Website",
+    "privacy": "Privacy"
+  },
+  "home": {
+    "eyebrow": "Zie het. Roep het aan.",
+    "title": "Zwitserse zakmes voor online tools",
+    "subtitle": "Codecs, tekst, hashing, documenten en beeldverwerking. Klaar in de browser of geautomatiseerd via API / MCP — één implementatie.",
+    "toolCount": "{count} tools",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "Zoeken: woordteller, base64, json, timestamp…",
+    "aria": "Zoek tools",
+    "emptyTitle": "Geen tools gevonden voor “{query}”",
+    "emptyHint": "Probeer een ander trefwoord of kies een tool uit de categorieën hieronder."
+  },
+  "categories": {
+    "codec": {
+      "label": "Codecs",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "China-validatie",
+      "hint": "ID · telefoon"
+    },
+    "data": {
+      "label": "Data",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "Ontwikkelaar",
+      "hint": "Regex · SQL · kleur · UUID"
+    },
+    "doc": {
+      "label": "Documenten",
+      "hint": "Markdown · PDF samenvoegen/splitsen"
+    },
+    "finance": {
+      "label": "Financiën",
+      "hint": "Bedrag naar woorden"
+    },
+    "hash": {
+      "label": "Hash & beveiliging",
+      "hint": "MD5 · SHA · HMAC · wachtwoord"
+    },
+    "image": {
+      "label": "Afbeeldingen",
+      "hint": "Comprimeren · QR · converteren"
+    },
+    "life": {
+      "label": "Levensrekenmachines",
+      "hint": "Hypotheek · BMI · verwantschap"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "Tokens · kosten · schema"
+    },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
+    "security": {
+      "label": "Beveiliging",
+      "hint": "Wachtwoordgenerator"
+    },
+    "text": {
+      "label": "Tekst",
+      "hint": "Woordtelling · CJK · pinyin · Diff"
+    },
+    "time": {
+      "label": "Tijd",
+      "hint": "Tijdstempel · tijdzone · Cron · maantijd"
+    },
+    "unit": {
+      "label": "Eenheden",
+      "hint": "Lengte · gewicht · temperatuur · data"
+    },
+    "template": {
+      "label": "Sjablonen",
+      "hint": ".gitignore · LICENSE · Dockerfile · README"
+    }
+  },
+  "runners": {
+    "common": {
+      "run": "Uitvoeren",
+      "running": "Bezig met uitvoeren…",
+      "copy": "Kopiëren",
+      "copied": "Gekopieerd",
+      "sameAsApi": "Zelfde pad als API · OSS-engine",
+      "mustBeNumber": "{label} moet een getal zijn",
+      "base64Loaded": "Base64-payload geladen",
+      "workspaceMissing": "Workspace niet geconfigureerd: {slug}",
+      "yes": "Ja",
+      "no": "Nee",
+      "text": "Tekst",
+      "input": "Invoer",
+      "output": "Uitvoer",
+      "outputPlaceholder": "Resultaat verschijnt hier",
+      "localRun": "Lokaal uitvoeren",
+      "serverRun": "Op server uitvoeren",
+      "serverVerify": "Server verifiëren",
+      "outputPreview": "Voorbeeld van uitvoer",
+      "mode": "Modus",
+      "encode": "Encoderen",
+      "decode": "Decoderen",
+      "file": "Bestand",
+      "clear": "Wissen",
+      "length": "Lengte: {n}",
+      "bytes": "{bytes} bytes",
+      "download": "Downloaden",
+      "format": "Formaat",
+      "formatting": "Opmaak…",
+      "dialect": "Dialect",
+      "color": "Kleur",
+      "pickColor": "Kies kleur",
+      "content": "Inhoud",
+      "algorithm": "Algoritme",
+      "encoding": "Codering",
+      "message": "Bericht",
+      "secret": "Geheim",
+      "password": "Wachtwoord",
+      "direction": "Richting",
+      "preview": "Voorbeeld",
+      "query": "Query",
+      "querying": "Query uitvoeren…",
+      "validate": "Valideren",
+      "validating": "Valideren…",
+      "processing": "Verwerken…",
+      "pretty": "Opmaak",
+      "minify": "Minimaliseren",
+      "from": "Van",
+      "to": "Naar",
+      "timezone": "Tijdzone",
+      "datetime": "Datum & tijd",
+      "compute": "Berekenen",
+      "computing": "Berekenen…",
+      "convertAction": "Converteren",
+      "count": "Aantal",
+      "value": "Waarde",
+      "unit": "Eenheid",
+      "generateLocal": "Lokaal genereren",
+      "generateServer": "Genereren op server",
+      "copyAll": "Alles kopiëren",
+      "emptyResult": "Resultaten verschijnen hier",
+      "copyText": "Tekst kopiëren",
+      "quality": "Kwaliteit",
+      "original": "Origineel",
+      "result": "Resultaat",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
+    },
+    "base64": {
+      "encodeDir": "Tekst → Base64",
+      "decodeDir": "Base64 → Tekst",
+      "localNote": "Lokale Web API (TextEncoder / atob)",
+      "serverNote": "Server Buffer · zelfde pad als API"
+    },
+    "password": {
+      "uppercase": "Hoofdletters",
+      "lowercase": "Kleine letters",
+      "digits": "Cijfers",
+      "symbols": "Symbolen",
+      "generate": "Wachtwoord genereren",
+      "recent": "Recent",
+      "note": "Engine: node:crypto randomInt · cryptografisch veilig · zelfde pad als API"
+    },
+    "hash": {
+      "algo": "Algoritme: {algo}",
+      "md5Warn": " · alleen checksum/compatibiliteit — sla geen wachtwoorden op",
+      "md5LocalError": "MD5 vereist serveruitvoering (Web Crypto heeft geen MD5)",
+      "md5ServerHint": "MD5: gebruik serveruitvoering (alleen compatibiliteit, niet voor wachtwoordopslag)",
+      "localNote": "Lokaal Web Crypto · {algo}",
+      "serverNote": "Server node:crypto · zelfde pad als API"
+    },
+    "convert": {
+      "converting": "Converteren…",
+      "convert": "Converteren",
+      "done": "Klaar · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "Sleep hier een bestand, of klik om te zoeken",
+      "needFile": "Kies eerst een bestand",
+      "needAlgo": "Selecteer minimaal één algoritme",
+      "compute": "Checksums berekenen",
+      "computing": "Berekenen…",
+      "algorithms": "Algoritmes",
+      "note": "node:crypto · multi-algo · zelfde pad als API"
+    },
+    "lorem": {
+      "paragraphs": "Alinea's",
+      "wordsPerParagraph": "Woorden per alinea",
+      "startWithLorem": "Begin met “Lorem ipsum”",
+      "note": "Lorem Ipsum Generator · puur"
+    },
+    "emailValidate": {
+      "note": "E-mailvalidator · alleen formaat (geen MX-opzoeking)"
+    },
+    "creditCardLuhn": {
+      "number": "Kaartnummer",
+      "note": "Luhn-checker · offline, nooit opgeslagen",
+      "digits": "digits",
+      "specimenLabel": "Specimen",
+      "structureOnly": "Luhn structure only",
+      "unknownBrand": "Card"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "JSON-minifier · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "CSS-minimalisator · lichtgewicht (edge-safe)"
+    },
+    "hashCompare": {
+      "a": "Hash A",
+      "b": "Hash B",
+      "ignoreCase": "Hoofdlettergevoeligheid negeren",
+      "note": "Hash-vergelijker · constant-time bij gelijke lengte"
+    },
+    "jsonDiff": {
+      "left": "JSON A",
+      "right": "JSON B",
+      "note": "JSON Diff · padniveau-operaties · soortgekleurde rijen · naast elkaar",
+      "equal": "Identiek",
+      "differs": "{count} wijziging(en)",
+      "colPath": "Pad",
+      "colKind": "Type",
+      "colLeft": "Links",
+      "colRight": "Rechts",
+      "filtersAria": "Filteren op wijzigingstype",
+      "filterAll": "Alles ({count})",
+      "filterAdd": "Toevoegen ({count})",
+      "filterRemove": "Verwijderen ({count})",
+      "filterChange": "Wijzigen ({count})",
+      "filterType": "Type ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "Modus",
+      "pretty": "Netjes",
+      "compact": "Compact",
+      "indent": "Inspring",
+      "note": "YAML Formatter · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "TOML Formatter · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "XML Minifier · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "URL-validator · WHATWG URL (geen netwerkfetch)"
+    },
+    "ipValidate": {
+      "note": "IP-validator · IPv4/IPv6 offline"
+    },
+    "uuidValidate": {
+      "note": "UUID-validator · RFC 4122-vorm"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "HTML Minifier · lichtgewicht (edge-safe)"
+    },
+    "randomString": {
+      "length": "Lengte",
+      "count": "Aantal",
+      "charset": "Karakterset",
+      "alphanumeric": "Alfanumeriek",
+      "symbols": "Alfanumeriek + symbolen",
+      "hex": "Hex",
+      "base64url": "Base64URL",
+      "note": "Willekeurige tekenreeks · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "Leestijd · CJK + Latijnse heuristiek"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "Max. kopniveau",
+      "note": "Markdown-inhoudsopgave · ATX-koppen"
+    },
+    "pdfInfo": {
+      "file": "PDF-bestand",
+      "note": "PDF-info · pdf-lib (pagina's + metadata)"
+    },
+    "rot13": {
+      "shift": "Verschuiving (13 = ROT13)",
+      "note": "ROT13 / Caesar · puur"
+    },
+    "morse": {
+      "note": "Morsecode · ITU · puur"
+    },
+    "textBinary": {
+      "toBinary": "Tekst → binair",
+      "fromBinary": "Binair → tekst",
+      "note": "Tekst ↔ Binair · UTF-8-bits"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "Digest-codering",
+      "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "Eén keer digesten · elk kopiëren · node:crypto"
+    },
+    "cssFormat": {
+      "note": "CSS-beautifier · lichtgewicht"
+    },
+    "htmlFormat": {
+      "note": "HTML-opmaak · lichtgewicht"
+    },
+    "stringSimilarity": {
+      "a": "String A",
+      "b": "String B",
+      "note": "Stringgelijkenis · Levenshtein"
+    },
+    "roman": {
+      "toRoman": "Getal → Romeins",
+      "fromRoman": "Romeins → Getal",
+      "note": "Romeinse cijfers · 1–3999"
+    },
+    "age": {
+      "birthDate": "Geboortedatum (JJJJ-MM-DD)",
+      "asOf": "Per (optioneel)",
+      "note": "Leeftijdrekenmachine · exact J/M/D"
+    },
+    "tip": {
+      "bill": "Rekeningbedrag",
+      "percent": "Fooi %",
+      "people": "Personen",
+      "note": "Fooienrekenmachine · eerlijk verdelen"
+    },
+    "aspect": {
+      "width": "Breedte",
+      "height": "Hoogte",
+      "note": "Beeldverhouding · GCD vereenvoudigen"
+    },
+    "mime": {
+      "note": "MIME-opzoeking · veelvoorkomende webtypes"
+    },
+    "ua": {
+      "note": "User-Agent-parser · heuristisch (offline)"
+    },
+    "imageMeta": {
+      "file": "Afbeeldingsbestand",
+      "note": "Afbeeldingsmetagegevens · sharp (EXIF-buffergrootte)"
+    },
+    "wordFreq": {
+      "top": "Top N",
+      "note": "Woordfrequentie · CJK + Latijn"
+    },
+    "jsonXml": {
+      "note": "JSON ↔ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "SQL Minifier · opmerkingen + spaties"
+    },
+    "lineNum": {
+      "start": "Startnummer",
+      "note": "Regelnummers toevoegen · puur"
+    },
+    "uniqueWords": {
+      "note": "Unieke woorden · volgorde eerste voorkomen"
+    },
+    "epoch": {
+      "value": "Waarde",
+      "msToIso": "ms → ISO",
+      "isoToMs": "ISO → ms",
+      "note": "Epoch milliseconden · datum"
+    },
+    "passwordEntropy": {
+      "password": "Wachtwoord",
+      "note": "Wachtwoordentropie · charset-heuristiek"
+    },
+    "contrast": {
+      "fg": "Voorgrond (#hex)",
+      "bg": "Achtergrond (#hex)",
+      "note": "Kleurcontrast · WCAG 2.x",
+      "sampleHeadline": "Sample text",
+      "pass": "pass",
+      "fail": "fail",
+      "aaNormal": "AA normal",
+      "aaLarge": "AA large",
+      "aaaNormal": "AAA normal",
+      "aaaLarge": "AAA large"
+    },
+    "exif": {
+      "file": "Afbeeldingsbestand",
+      "note": "EXIF-viewer · exifr + JPEG-fallback"
+    },
+    "regex": {
+      "pattern": "Patroon",
+      "flags": "Vlaggen",
+      "replacement": "Vervanging",
+      "match": "Zoeken",
+      "replace": "Vervangen",
+      "test": "Testen",
+      "local": "Lokaal uitvoeren",
+      "server": "Server verifiëren",
+      "count": "{count} overeenkomsten",
+      "sotaNote": "Directe lokale highlight · server timeout budget · zelfde pad als API"
+    },
+    "jwt": {
+      "decode": "JWT decoderen",
+      "sample": "Voorbeeld laden",
+      "tokenPlaceholder": "JWT plakken",
+      "decodeNote": "{engine} · alleen decoderen, handtekening niet geverifieerd",
+      "footerNote": "Engine: jose · geen handtekeningverificatie. Verifieer in productie met sleutels via jwtVerify op de server.",
+      "generateHint": "Tokens ondertekenen nodig?",
+      "secret": "Sleutel",
+      "exp": "Vervalt (seconden)",
+      "payload": "Payload JSON",
+      "note": "JWT genereren · HS256 (alleen dev/test)",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "(empty signature segment)"
+    },
+    "rand": {
+      "min": "Min",
+      "max": "Max",
+      "count": "Aantal",
+      "note": "Willekeurig getal · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "Zijden",
+      "count": "Aantal dobbelstenen",
+      "note": "Dobbelsteen · crypto RNG"
+    },
+    "hexRgb": {
+      "note": "HEX ↔ RGB · puur"
+    },
+    "base64url": {
+      "note": "Base64URL · JWT-stijl"
+    },
+    "hmac": {
+      "message": "Bericht",
+      "secret": "Geheim",
+      "signature": "Handtekening",
+      "note": "HMAC verifiëren · SHA-256"
+    },
+    "secret": {
+      "bytes": "Bytes",
+      "count": "Aantal",
+      "note": "Geheime sleutelgenerator · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "PDF-bestand",
+      "note": "PDF Light Optimize · pdf-lib herschrijven (geen hercompressie van afbeeldingen)",
+      "needFile": "Kies eerst een PDF-bestand"
+    },
+    "pdfCompress": {
+      "file": "PDF-bestand",
+      "quality": "Kwaliteit",
+      "engine": "Engine",
+      "qStructural": "Structureel (qpdf, verliesvrije streams)",
+      "qScreen": "Scherm (kleinst, Ghostscript)",
+      "qEbook": "Ebook (evenwichtig, Ghostscript)",
+      "qPrinter": "Printer (hogere kwaliteit, Ghostscript)",
+      "eAuto": "Automatisch (qpdf → Ghostscript → pdf-lib)",
+      "download": "PDF downloaden",
+      "needFile": "Kies eerst een PDF-bestand",
+      "in": "Invoer",
+      "out": "Uitvoer",
+      "saved": "Opgeslagen",
+      "note": "PDF Compress · qpdf / Ghostscript op host · pdf-lib terugval",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+    },
+    "jsonFormat": {
+      "indent": "Inspringen",
+      "format": "Opmaak",
+      "minify": "Minimiseren",
+      "serverVerify": "Server verifiëren",
+      "clear": "Wissen",
+      "sample": "Voorbeeld",
+      "placeholder": "Plak JSON…",
+      "formatted": "Opmaak",
+      "minified": "Geminimaliseerd",
+      "serverOk": "Server {mode} · {engine}",
+      "valid": "Geldige JSON",
+      "invalid": "Ongeldige JSON",
+      "line": "regel",
+      "column": "kolom",
+      "note": "Engine: JSON.parse/stringify · direct lokaal · zelfde pad als API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
+    },
+    "qr": {
+      "size": "Grootte",
+      "ecl": "Foutcorrectie",
+      "generate": "Genereren",
+      "download": "PNG downloaden",
+      "needText": "Voer tekst of URL in",
+      "note": "QR · qrcode · live preview · zelfde pad als API"
+    },
+    "pdfText": {
+      "file": "PDF-bestand",
+      "layout": "Lay-out",
+      "needFile": "Kies eerst een PDF",
+      "note": "PDF Text · pdftotext (poppler) op host"
+    },
+    "svg": {
+      "optimize": "Optimaliseren",
+      "note": "SVG Optimaliseren · lichtgewicht pure minify"
+    },
+    "routerTranslate": {
+      "lab": "Lab-shell: vertaalt hier niet. Opent Router met een prompt — modelmeter alleen op Router.",
+      "source": "Bron taal",
+      "target": "Doel taal",
+      "open": "Router-link voorbereiden",
+      "deepLink": "Openen in Router",
+      "note": "extern · geen stille Forge LLM-ledger"
+    },
+    "imageCrop": {
+      "needFile": "Kies eerst een afbeelding",
+      "crop": "Bijsnijden",
+      "note": "Afbeelding bijsnijden · sleep gebied · scherp uitsnijden",
+      "drop": "Afbeelding slepen of klikken om te bladeren",
+      "dragHint": "Sleep op de afbeelding om een bijsnijdgebied te selecteren",
+      "left": "Links",
+      "top": "Boven",
+      "width": "Breedte",
+      "height": "Hoogte",
+      "natural": "Natuurlijk {w}×{h}",
+      "source": "Bron",
+      "result": "Bijgesneden"
+    },
+    "markdown": {
+      "preview": "Voorbeeld",
+      "html": "HTML",
+      "emptyPreview": "Uitvoeren om voorbeeld te zien",
+      "emptyHtml": "Gerenderde HTML",
+      "rendering": "Bezig met renderen…",
+      "toHtml": "Naar HTML",
+      "copyHtml": "HTML kopiëren",
+      "note": "marked · sandboxed iframe preview · zelfde pad als API"
+    },
+    "pdfMerge": {
+      "files": "PDF-bestanden (≥2, volgorde = samenvoegvolgorde)",
+      "needFiles": "Selecteer minimaal 2 PDF's",
+      "merging": "Samenvoegen…",
+      "mergeDownload": "Samenvoegen & downloaden",
+      "done": "Samengevoegd · {pages} pagina's · {bytes} bytes",
+      "note": "pdf-lib · zelfde pad als API",
+      "merge": "Samenvoegenen"
+    },
+    "pdfSplit": {
+      "file": "PDF-bestand",
+      "needFile": "Kies een PDF",
+      "fromPage": "Vanaf pagina (1-gebaseerd)",
+      "toPage": "Tot pagina (leeg = laatste)",
+      "toPlaceholder": "Laatste pagina",
+      "splitting": "Splitsen…",
+      "splitDownload": "Splitsen & downloaden",
+      "done": "Gesplitst · bron {source} pagina's → uitvoer {pages} pagina's",
+      "note": "pdf-lib · zelfde pad als API",
+      "split": "Splitsenen"
+    },
+    "passwordStrength": {
+      "check": "Controleer sterkte",
+      "checking": "Bezig met controleren…",
+      "crack": "Offline slow-hash schatting: {time}",
+      "score0": "Zeer zwak",
+      "score1": "Zwak",
+      "score2": "Redelijk",
+      "score3": "Sterk",
+      "score4": "Zeer sterk",
+      "note": "zxcvbn-ts · zelfde pad als API · wachtwoord nooit opgeslagen"
+    },
+    "hmacSign": {
+      "compute": "Bereken HMAC",
+      "computing": "Berekenen…",
+      "note": "node:crypto · zelfde pad als API"
+    },
+    "costEstimate": {
+      "text": "Invoertekst (voor inschatting invoertokens)",
+      "model": "Model",
+      "outputTokens": "Uitvoertokens (geschat)",
+      "estimate": "Kosten schatten",
+      "estimating": "Schatting…",
+      "note": "@nebutra/ai-providers/frontier kaart + js-tiktoken · lijstprijs-schatting, geen factuur"
+    },
+    "jsonSchema": {
+      "data": "JSON-gegevens",
+      "schema": "JSON Schema",
+      "validate": "Valideren",
+      "validating": "Valideren…",
+      "pass": "Geslaagd",
+      "fail": "Mislukt",
+      "note": "Ajv · zelfde pad als API"
+    },
+    "zhCnTw": {
+      "s2t": "Vereenvoudigd → Traditioneel",
+      "t2s": "Traditioneel → Vereenvoudigd",
+      "s2tw": "Vereenvoudigd → Taiwan",
+      "tw2s": "Taiwan → Vereenvoudigd",
+      "s2hk": "Vereenvoudigd → Hong Kong",
+      "hk2s": "Hong Kong → Vereenvoudigd",
+      "note": "OpenCC (opencc-js) · zelfde pad als API"
+    },
+    "pinyin": {
+      "tones": "Toonstijl",
+      "symbol": "Symbool nǐ",
+      "num": "Nummer ni3",
+      "none": "Geen ni",
+      "hanzi": "Chinese karakters",
+      "convert": "Naar pinyin",
+      "converting": "Bezig met converteren…",
+      "note": "pinyin-pro · zelfde pad als API"
+    },
+    "sqlFormat": {
+      "dialect": "Dialect",
+      "format": "Formaat",
+      "formatting": "Formatteren…",
+      "note": "sql-formatter · zelfde pad als API"
+    },
+    "colorConvert": {
+      "color": "Kleur",
+      "pick": "Kies kleur",
+      "convert": "Converteren",
+      "converting": "Bezig met converteren…",
+      "note": "culori · hex / rgb / hsl / oklch · zelfde pad als API"
+    },
+    "qrGen": {
+      "content": "Inhoud",
+      "format": "Formaat",
+      "pngPreview": "PNG (voorbeeld)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "QR genereren",
+      "generating": "Bezig met genereren…",
+      "note": "qrcode · zelfde pad als API"
+    },
+    "qrDecode": {
+      "upload": "Upload een afbeelding met een QR-code",
+      "parsing": "Decoderen…",
+      "note": "jsQR + sharp · zelfde pad als API"
+    },
+    "cron": {
+      "expression": "Cron-expressie",
+      "timezone": "Tijdzone",
+      "parse": "Volgende uitvoeringen",
+      "parsing": "Parseren…",
+      "nextTitle": "Volgende uitvoeringen (ISO)",
+      "note": "cron-parser · zelfde pad als API"
+    },
+    "timezone": {
+      "datetime": "Datum en tijd",
+      "from": "Van",
+      "to": "Naar",
+      "convert": "Tijdzone converteren",
+      "converting": "Converteren…",
+      "placeholder": "2026-07-24 12:00:00 of ISO / unix",
+      "note": "dayjs timezone · zelfde pad als API"
+    },
+    "csvPreview": {
+      "preview": "Voorbeeldtabel",
+      "parsing": "Parseren…",
+      "rows": "Voorbeeld {shown} / {total} rijen",
+      "note": "papaparse · zelfde pad als API"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "Query",
+      "querying": "Query uitvoeren…",
+      "note": "jsonpath-plus · zelfde pad als API"
+    },
+    "xmlFormat": {
+      "pretty": "Opmaak",
+      "minify": "Verkleinen",
+      "validate": "Valideren",
+      "validOk": "Geldig",
+      "done": "Klaar · {engine}",
+      "processing": "Verwerken…",
+      "note": "fast-xml-parser · zelfde pad als API"
+    },
+    "regexLegacy": {
+      "pattern": "Patroon",
+      "flags": "Vlaggen",
+      "mode": "Modus",
+      "match": "Zoeken",
+      "replace": "Vervangen",
+      "test": "Testen",
+      "replacement": "Vervanging",
+      "note": "Direct lokaal · server-timeout-budget · zelfde pad als API"
+    },
+    "docxText": {
+      "file": "DOCX-bestand",
+      "needFile": "Kies eerst een .docx-bestand",
+      "extract": "Tekst extraheren",
+      "extracting": "Extraheren…",
+      "note": "DOCX → tekst · puur ZIP + document.xml (geen Office-suite)"
+    },
+    "uuid": {
+      "count": "Aantal",
+      "local": "Lokaal genereren",
+      "server": "Op server genereren",
+      "copyAll": "Alles kopiëren",
+      "empty": "UUID's verschijnen hier"
+    },
+    "timestamp": {
+      "nowSec": "Unix-seconden",
+      "nowMs": "Unix ms / ISO",
+      "serverNow": "Server nu",
+      "toDate": "Tijdstempel → datum",
+      "toUnix": "Datum → tijdstempel",
+      "seconds": "Seconden",
+      "milliseconds": "Milliseconden",
+      "value": "Waarde",
+      "convert": "Converteren",
+      "note": "Zelfde pad als API"
+    },
+    "wordCount": {
+      "words": "Woorden",
+      "chars": "Tekens",
+      "noSpaces": "Geen spaties",
+      "cjk": "CJK",
+      "lines": "Regels",
+      "paragraphs": "Alinea's",
+      "placeholder": "Plak of typ tekst…",
+      "copyText": "Tekst kopiëren",
+      "clear": "Wissen",
+      "verifying": "Verifiëren…",
+      "serverNote": "Server woorden={words} · zelfde pad als API",
+      "note": "Live engine: {engine} · geen upload nodig · zelfde pad als API"
+    },
+    "bmi": {
+      "height": "Lengte (cm)",
+      "weight": "Gewicht (kg)",
+      "compute": "BMI berekenen",
+      "computing": "Bezig met berekenen…",
+      "invalid": "Voer geldige lengte (cm) en gewicht (kg) in",
+      "underweight": "Ondergewicht",
+      "normal": "Normaal",
+      "overweight": "Overgewicht",
+      "obese": "Obesitas",
+      "note": "WHO BMI · zelfde pad als API · geen medisch advies"
+    },
+    "percentage": {
+      "mode": "Modus",
+      "percentOf": "a% van b",
+      "isWhat": "a is hoeveel % van b",
+      "percentA": "Percentage a",
+      "valueA": "Waarde a",
+      "baseB": "Basis b",
+      "compute": "Berekenen",
+      "computing": "Bezig met berekenen…",
+      "invalid": "Voer geldige getallen in",
+      "note": "Zelfde pad als API"
+    },
+    "dataSize": {
+      "value": "Waarde",
+      "convert": "Converteren",
+      "converting": "Bezig met converteren…",
+      "invalid": "Voer een geldig getal in",
+      "binary": "{value} {from} → basis-1024",
+      "note": "Binaire eenheden (1 KB = 1024 B) · zelfde pad als API"
+    },
+    "rmb": {
+      "amount": "Bedrag (CNY)",
+      "convert": "Naar hoofdletters",
+      "converting": "Bezig met converteren…",
+      "invalid": "Voer een niet-negatief bedrag in",
+      "note": "Chinees factuurbedrag in hoofdletters · zelfde pad als API"
+    },
+    "dateDiff": {
+      "from": "Startdatum",
+      "to": "Einddatum",
+      "compute": "Dagen verschil",
+      "computing": "Berekenen…",
+      "days": "dagen",
+      "note": "ECMAScript Date · zelfde pad als API"
+    },
+    "xlsxText": {
+      "file": "XLSX-bestand",
+      "needFile": "Kies eerst een .xlsx-bestand",
+      "extract": "Blad extraheren",
+      "extracting": "Extraheren…",
+      "note": "XLSX → CSV · pure ZIP + sheet1.xml (eerste blad)"
+    },
+    "mdToPdf": {
+      "drop": "Sleep hier een .md-bestand, of plak Markdown hieronder",
+      "title": "Titel",
+      "engine": "Engine",
+      "ePlaywright": "playwright (Chromium print)",
+      "eSimple": "simple (geen browser)",
+      "generate": "PDF genereren",
+      "generating": "Genereren…",
+      "download": "PDF downloaden",
+      "note": "marked → HTML → Playwright Chromium print. Als Chromium ontbreekt, wordt automatisch teruggeschakeld naar eenvoudige gestructureerde PDF — controleer renderEngine; eenvoudige is geen print-grade lay-out.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
+    },
+    "tokenCount": {
+      "count": "Tokens tellen",
+      "counting": "Aan het tellen…",
+      "chars": "Tekens {n}",
+      "note": "Engine: js-tiktoken · server-side exacte telling · kan Router kostenraming voeden"
+    },
+    "codec": {
+      "encodeDir": "Tekst → gecodeerd",
+      "decodeDir": "Gecodeerd → tekst",
+      "localNote": "Lokale uitvoering",
+      "serverNote": "Server · zelfde pad als API",
+      "hexInvalid": "Geen geldige hexadecimale tekenreeks",
+      "hexDecodeFail": "Server kon niet decoderen als UTF-8 (geldige hex nodig)",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · zelfde pad als API",
+      "noteHtml": "HTML-entiteitkaart · zelfde pad als API",
+      "noteHex": "UTF-8 ↔ hex · zelfde pad als API"
+    },
+    "textDiff": {
+      "left": "Links",
+      "right": "Rechts",
+      "compare": "Vergelijken",
+      "comparing": "Vergelijken…"
+    },
+    "imageTool": {
+      "drop": "Sleep hier een afbeelding naartoe of klik om te zoeken",
+      "selected": "Geselecteerd: {name} ({kb} KB)",
+      "needFile": "Kies eerst een afbeelding",
+      "format": "Uitvoerformaat",
+      "quality": "Kwaliteit {n}",
+      "maxW": "Max. breedte",
+      "maxH": "Max. hoogte",
+      "optional": "Optioneel",
+      "resizeEg": "bijv. 1280",
+      "processing": "Verwerken…",
+      "compress": "Comprimeren",
+      "resize": "Bijschalen",
+      "convert": "Formaat converteren",
+      "download": "Resultaat downloaden",
+      "outMeta": "Uitvoer {kb} KB{dims}{ratio} · {type}",
+      "ratio": " · ~{pct}% van origineel",
+      "dims": " · {w}×{h}",
+      "original": "Origineel",
+      "result": "Resultaat",
+      "note": "Engine: sharp (libvips) · server-side · zelfde pad als API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+    },
+    "pptxText": {
+      "file": "PPTX-bestand",
+      "needFile": "Kies eerst een .pptx-bestand",
+      "extract": "Overzicht extraheren",
+      "extracting": "Extraheren…",
+      "note": "PPTX-overzicht · puur ZIP + slide XML (geen PowerPoint)"
+    },
+    "shell": {
+      "copyJson": "JSON kopiëren",
+      "sample": "Voorbeeld",
+      "chars": "{n} tekens",
+      "largeInput": "Grote invoer — het resultaat wordt een moment na het stoppen met typen bijgewerkt.",
+      "manualInput": "De invoer is groot genoeg dat live herberekening de pagina zou vertragen. Druk op Uitvoeren.",
+      "options": "Opties",
+      "regenerateNote": "De uitvoer wordt al bijgewerkt terwijl je de opties aanpast.",
+      "fileTab": "Bestand",
+      "pasteTab": "Plakken",
+      "browse": "Bestand kiezen",
+      "selectedFile": "{name} · {kb} KB",
+      "truncated": "Lees de eerste {kb} KB — genoeg om te antwoorden, en de rest verlaat nooit je apparaat.",
+      "detail": "Details",
+      "dropIntoPane": "Sleep hier een bestand naartoe",
+      "swap": "Kanten omwisselen",
+      "prevChange": "Vorige",
+      "nextChange": "Volgende",
+      "changePosition": "{index} van {total}",
+      "result": "Resultaat"
+    },
+    "readmeSkeleton": {
+      "emptyHint": "Vink minstens één sectie aan om een README te maken.",
+      "note": "Gebruikt dezelfde engine als de API. Secties die je niet aanvinkt, verschijnen niet — geen lege koppen.",
+      "orderNote": "Secties worden altijd in deze vaste volgorde weergegeven, zodat dezelfde invoer hetzelfde bestand oplevert.",
+      "group": {
+        "core": "Kern",
+        "docs": "Documentatie",
+        "community": "Community",
+        "meta": "Meta"
+      },
+      "section": {
+        "title": "Titel & beschrijving",
+        "badges": "Badges",
+        "callout": "Opmerking",
+        "toc": "Inhoudsopgave",
+        "installation": "Installatie",
+        "usage": "Gebruik",
+        "features": "Functies",
+        "api-reference": "API-referentie",
+        "screenshots": "Schermopnames",
+        "roadmap": "Wegenkaart",
+        "contributing": "Bijdragen",
+        "support": "Ondersteuning",
+        "acknowledgements": "Dankbetuigingen",
+        "license": "Licentie",
+        "authors": "Auteurs",
+        "tech-stack": "Techstack"
+      },
+      "projectName": "Projectnaam",
+      "projectNamePlaceholder": "Projectnaam",
+      "description": "Beschrijving",
+      "descriptionPlaceholder": "Eén zin over wat het doet",
+      "badgeLicense": "Licentiebadge",
+      "badgeNpm": "npm version",
+      "badgeBuild": "Buildstatus",
+      "npmPackage": "npm package",
+      "npmPackagePlaceholder": "@scope/package",
+      "repo": "GitHub-repo",
+      "repoPlaceholder": "eigenaar/repo",
+      "calloutKind": "Callouttype",
+      "calloutBody": "Callout-tekst",
+      "calloutBodyPlaceholder": "Pre-1.0 — de API verandert nog",
+      "fenceLanguage": "Taal",
+      "installCommand": "Installatiecommando",
+      "installCommandPlaceholder": "npm install your-project",
+      "usageExample": "Gebruiksvoorbeeld",
+      "usageExamplePlaceholder": "Het kleinste voorbeeld dat de waarde laat zien",
+      "features": "Functies",
+      "featuresPlaceholder": "Eén functie per regel",
+      "contact": "Contact",
+      "contactPlaceholder": "support@example.com",
+      "license": "Licentie",
+      "authors": "Auteurs",
+      "authorsPlaceholder": "@handle, Jane Roe",
+      "techStack": "Techstack",
+      "techStackPlaceholder": "typescript, postgresql (simple-icons slugs)",
+      "sectionCount": "{n} secties",
+      "charCount": "{n} tekens",
+      "warningCount": "{n} overgeslagen",
+      "omittedTitle": "Wat is weggelaten en waarom"
+    },
+    "gitignore": {
+      "searchLabel": "Zoeken stacks",
+      "searchPlaceholder": "Zoek talen, frameworks, OS of editors…",
+      "add": "{stack} toevoegen",
+      "remove": "{stack} verwijderen",
+      "selected": "Geselecteerde stacks",
+      "suggestions": "Overeenkomende stacks",
+      "noMatches": "Geen stack komt overeen met “{query}”. Druk op Enter om het toch te verzenden — aliases worden op de server opgelost.",
+      "catalogFallback": "Stacklijst niet beschikbaar — typ een stacknaam en druk op Enter.",
+      "emptyHint": "Kies hierboven minimaal één taal, framework, besturingssysteem of editor.",
+      "regenerate": "Opnieuw genereren",
+      "sections": "{n} secties",
+      "lines": "{n} regels",
+      "deduped": "{n} dubbele patronen samengevoegd",
+      "notFound": "Niet in de corpus: {stacks}",
+      "globalScope": "{stacks} zijn OS/editor-items — veel ontwikkelaars bewaren deze in een persoonlijke ~/.gitignore_global in plaats van in elke repo.",
+      "untrackedNote": "Een .gitignore heeft alleen invloed op niet-gevolgde bestanden. Voor een bestand dat git al volgt, voer git rm -r --cached <path> uit.",
+      "fileLabel": ".gitignore"
+    },
+    "editorconfig": {
+      "emptyHint": "Stel minimaal één eigenschap in om het bestand te zien.",
+      "note": "Zelfde engine als de API. Je keuzes blijven in deze browsersessie; er wordt niets opgeslagen.",
+      "checks": "Controles",
+      "presets": "Starten vanaf",
+      "preset": {
+        "spaces2": "2 spaties, LF",
+        "spaces4": "4 spaties, LF",
+        "tabs": "Tabbladen, breedte 4",
+        "repo": "Repo starter (+ Markdown, Makefile)"
+      },
+      "rootLabel": "root = true — voorkomt dat editors .editorconfig-bestanden van bovenliggende mappen samenvoegen",
+      "glob": "Glob {n}",
+      "addSection": "Sectie toevoegen",
+      "removeSection": "Verwijderen",
+      "notSet": "(niet ingesteld)",
+      "import": "Bestaande .editorconfig importeren",
+      "importPlaceholder": "Plak hier een .editorconfig om deze in het formulier te laden",
+      "importAction": "Importeren",
+      "importing": "Importeren…",
+      "importFailed": "Kon niet importeren: {message}"
+    },
+    "robotsTxt": {
+      "emptyHint": "Stel de bovenstaande opties in — het bestand verschijnt hier",
+      "deployNote": "robots.txt is alleen actief op de domeinroot (https://example.com/robots.txt). Elke subdomein heeft zijn eigen bestand nodig.",
+      "outputLabel": "robots.txt",
+      "defaultAccess": "Standaardtoegang (User-agent: *)",
+      "defaultAllow": "Alles toestaan",
+      "defaultDisallow": "Alles weigeren",
+      "defaultAccessNote": "\"Alles toestaan\" schrijft een lege \"Disallow:\" — dat is wat alles toestaat.",
+      "crawlDelay": "Crawl-vertraging (seconden)",
+      "crawlDelayPlaceholder": "geen",
+      "crawlDelayNote": "Geen onderdeel van RFC 9309. Google negeert het; het wordt nooit in een Google-groep geschreven.",
+      "searchAgents": "Zoekmachines",
+      "aiAgents": "AI-crawlers",
+      "aiAgentsNote": "Crawlers voor training en antwoordmachines. Het blokkeren ervan heeft geen invloed op de zoekindexering.",
+      "accessDefault": "Standaard",
+      "accessAllow": "Toestaan",
+      "accessDisallow": "Weigeren",
+      "rules": "Padregels",
+      "rulesNote": "Paden zijn hoofdlettergevoelig en relatief ten opzichte van de root. Voeg een afsluitende schuine streep toe om een regel te beperken tot een map.",
+      "rulePath": "Pad {n}",
+      "rulePathPlaceholder": "/admin/",
+      "ruleType": "Regeltype",
+      "addRule": "Padregel toevoegen",
+      "removeRule": "Verwijderen",
+      "sitemaps": "Sitemaps",
+      "sitemapsNote": "Absolute http(s)-URL's. Geschreven als aparte regels, buiten elke groep.",
+      "sitemapUrl": "Sitemap {n}",
+      "addSitemap": "Sitemap toevoegen",
+      "removeSitemap": "Verwijderen",
+      "groupCount": "{n} groepen",
+      "lineCount": "{n} regels",
+      "sitemapCount": "{n} sitemaps",
+      "warningsSummary": "Opmerkingen bij dit bestand ({n})"
+    },
+    "encodingDetect": {
+      "drop": "Sleep een bestand om de codering te identificeren",
+      "privacy": "Alleen de eerste {kb} KB wordt gelezen en naar hetzelfde openbare invoke-eindpunt gestuurd dat een agent zou aanroepen — er wordt niets naar schijf geschreven.",
+      "pasteLabel": "Of plak tekst",
+      "pastePlaceholder": "Plak tekst — inclusief mojibake die u uitgelegd wilt hebben",
+      "detail": "Kandidaten, regeleinden en bytestatistieken",
+      "idle": "Sleep een bestand neer of plak tekst — het rapport wordt ingevuld zodra er iets te lezen is.",
+      "readOnly": "Alleen-lezen: dit hulpmiddel herkent een codering, het herschrijft de bytes nooit.",
+      "headline": "{encoding} · {confidence}% zekerheid",
+      "notText": "Dit lijkt geen tekst te zijn",
+      "bomPresent": "BOM {bytes}",
+      "bomAbsent": "Geen BOM",
+      "eol": "{kind}-regelscheidingen",
+      "eolMixed": "Gemengde regelscheidingen",
+      "language": "Taal {language} · {confidence}%",
+      "sampled": "Gedetecteerd uit de eerste {kb} KB van {totalKb} KB",
+      "candidates": "Gerangschikte kandidaten",
+      "candidatesNote": "Tweedekeuzecoderingen worden opzettelijk getoond: korte of symmetrische samples zijn werkelijk dubbelzinnig.",
+      "lineEndings": "Regelscheidingen",
+      "byteStats": "Byte-statistieken",
+      "totalBytes": "Totaal",
+      "asciiBytes": "ASCII",
+      "highBytes": "Hoog (0x80–0xFF)",
+      "nullBytes": "NUL",
+      "mojibake": "Mojibake hersteld"
+    },
+    "dockerfileStarter": {
+      "language": "Taal",
+      "framework": "Framework",
+      "packageManager": "Pakketbeheerder",
+      "baseVariant": "Basisimage",
+      "version": "Runtime-versie",
+      "workdir": "Werkdirectory",
+      "port": "Poort",
+      "buildCommand": "Build-opdracht",
+      "startCommand": "Startopdracht",
+      "commandPlaceholder": "Leeg = vooraf ingesteld standaard",
+      "frameworkNone": "Geen (gewone runtime)",
+      "pmAuto": "Automatisch",
+      "variantSlim": "slim (glibc)",
+      "variantAlpine": "alpine (musl)",
+      "variantFull": "volledig",
+      "multiStage": "Multi-stage build",
+      "nonRootUser": "Gebruiker zonder root-rechten",
+      "includeDockerignore": ".dockerignore toevoegen",
+      "includeCompose": "compose.yaml toevoegen",
+      "includeHealthcheck": "HEALTHCHECK toevoegen",
+      "groupWhat": "Wat je bouwt",
+      "groupHow": "Hoe het moet draaien",
+      "emptyHint": "Kies een taal om de Dockerfile te zien.",
+      "note": "Alleen presets — niets anders dan de bovenstaande opties verlaat je browser. Lees het bestand voordat je het publiceert.",
+      "warnings": "{n} dingen om te controleren",
+      "stages": "{n} fasen",
+      "badgeNonRoot": "Niet-root",
+      "badgeRoot": "Voert uit als root",
+      "badgePort": "Poort {port}"
+    },
+    "lineEndingDetect": {
+      "dropLabel": "Sleep een tekstbestand om de regel-einden te controleren",
+      "privacy": "Plakken tekst en de eerste 256 KB van een gesleept bestand worden naar de Forge API gestuurd om te scannen; de bytes worden niet opgeslagen.",
+      "pasteLabel": "Of plak tekst",
+      "pastePlaceholder": "Plak de tekst die je wilt controleren",
+      "idle": "Plak tekst of sleep een bestand om het oordeel over de regel-einden te zien.",
+      "detail": "Aantallen en controles",
+      "note": "Alleen detectie — deze tool herschrijft je bestand nooit.",
+      "empty": "Lege invoer",
+      "noTerminator": "Geen regelafsluiter — één niet-afgesloten regel",
+      "consistent": "{style} — consistent",
+      "mixed": "GEMENGD — {parts}",
+      "sharePart": "{pct}% {style}",
+      "style": {
+        "LF": "LF (Unix/Linux/macOS)",
+        "CRLF": "CRLF (Windows)",
+        "CR": "CR (klassiek Mac OS 9 en eerder)"
+      },
+      "lines": "{n} regels",
+      "bytes": "{n} bytes",
+      "trailing": {
+        "present": "Eindigt met een nieuwe regel",
+        "absent": "Geen nieuwe regel aan het einde van het bestand"
+      },
+      "bomUtf8": "UTF-8 BOM",
+      "bomNone": "Geen BOM",
+      "countRow": "{style}: {n} ({pct}%)",
+      "colStyle": "Stijl",
+      "colCount": "Aantal",
+      "colShare": "Aandeel",
+      "minorityLines": "Regels die afwijken van de dominante stijl: {lines}",
+      "andMore": "en meer",
+      "findings": "Controles",
+      "level": {
+        "info": "Opmerking",
+        "warning": "Waarschuwing",
+        "danger": "Verbroken"
+      },
+      "sampled": "De eerste {n} van de {total} bytes zijn gescand",
+      "encodingLink": "Open de coderingsdetector"
+    },
+    "fileTypeDetect": {
+      "drop": "Sleep een bestand om te bepalen wat het werkelijk is",
+      "privacy": "Er wordt alleen het eerste {kb} KB-kop gelezen — de rest van het bestand verlaat nooit je apparaat.",
+      "hexTab": "Plak hex",
+      "detail": "Toon bytes en kandidaten",
+      "idle": "Sleep een bestand, of plak de beginbytes als hex.",
+      "note": "Handtekeningen identificeren de container, niet de codec of de inhoud ervan.",
+      "unset": "—",
+      "unknownType": "Geen handtekening gevonden",
+      "polyglot": "Polyglot",
+      "tierNone": "Extensie komt overeen",
+      "tierBenign": "Goedaardige mismatch",
+      "tierMismatch": "Extensie-mismatch",
+      "tierHighRisk": "Hoog risico",
+      "confidenceMatch": "Handtekeningovereenkomst",
+      "confidenceContainer": "Alleen container",
+      "confidenceAmbiguous": "Dubbelzinnig",
+      "confidenceNone": "Geen overeenkomst",
+      "signalDetected": "Gedetecteerde MIME",
+      "signalReported": "Gerapporteerde MIME",
+      "signalExtension": "Bestandsnaamextensie",
+      "drillResolved": "{kind}-container geopend: {type}",
+      "drillUnresolved": "{kind}-container bevestigd; subtype niet opgelost uit de bemonsterde bytes",
+      "hexDump": "Headerbytes",
+      "bytesRead": "{n} bytes gelezen",
+      "headerOnly": "alleen header-sample",
+      "entropy": "Entropie {bits} bits/byte",
+      "signatureCount": "{n} handtekeningen in de tabel",
+      "textHints": "Structurele hints: {hints}",
+      "candidates": "Alle overeenkomende handtekeningen",
+      "atOffset": "offset {offset}"
+    },
+    "licenseChooser": {
+      "prompt": "Wat heeft dit project nodig?",
+      "pickScenario": "Kies de regel die het meest op je project lijkt — het antwoord en het bestand verschijnen hier.",
+      "disclaimer": "Deterministische sjabloonuitvoer, geen juridisch advies.",
+      "noAnswer": "Geen enkele licentie past bij dit geval",
+      "permissions": "Toestaat",
+      "conditions": "Vereist",
+      "limitations": "Dekt niet",
+      "alternates": "Andere opties voor dit geval",
+      "useThis": "Gebruik deze",
+      "readCanonical": "Lees de canonieke tekst op SPDX",
+      "holder": "Auteursrechthouder",
+      "holderPlaceholder": "Jouw naam of je bedrijf",
+      "holderHint": "Voeg de auteursrechthouder toe en het bestand vult zich in terwijl je typt.",
+      "year": "Jaar",
+      "manifest": "Waar de SPDX-id naartoe gaat",
+      "verbatim": "{name} wordt voor iedereen byte-identiek geleverd — de auteursrechtregel komt in de bronbestandsmelding in plaats van in het LICENSE-bestand.",
+      "noLicense": {
+        "summary": "Wat als ik helemaal geen licentie toevoeg?",
+        "body": "Geen licentie is niet hetzelfde als publiek domein. Zonder licentie geldt het standaard auteursrecht en mag niemand je code kopiëren, wijzigen of herverdelen — een openbaar repository is zichtbaarheid, geen toestemming."
+      },
+      "artifact": {
+        "header": "Bronbestandskop",
+        "notice": "Bronbestandmelding"
+      },
+      "refine": {
+        "patent": "Een octrooiverlening is hier relevant (bedrijfscode, hardware, standaardisatiewerk)",
+        "network": "Het zal worden uitgevoerd als een gehoste service, niet alleen als download",
+        "library": "Het is een bibliotheek waartegen andere software linkt",
+        "later": "Later versies van de licentie toestaan (houdt Apache-2.0-code compatibel)",
+        "none": "Er is niets meer te verfijnen voor dit geval."
+      },
+      "scenario": {
+        "permissive": {
+          "label": "Iedereen kan het vrij gebruiken",
+          "detail": "Gebruiken, wijzigen, verkopen, opnemen in gesloten producten — houd alleen de auteursrechtelijke melding."
+        },
+        "copyleft": {
+          "label": "Verbeteringen moeten terugkomen",
+          "detail": "Iedereen die een gewijzigde versie verspreidt, moet ook de broncode publiceren."
+        },
+        "community": {
+          "label": "Ik draag bij aan een bestaand project",
+          "detail": "De licentie is al bepaald — kies dezelfde als het project waaraan je bijdraagt."
+        },
+        "non-software": {
+          "label": "Dit is geen software",
+          "detail": "Documentatie, data, ontwerp of media hebben een Creative Commons-licentie nodig, geen OSI-licentie."
+        },
+        "unsure": {
+          "label": "Ik weet het nog niet",
+          "detail": "Kies de veilige standaard plus de twee opties die je beter kent."
+        }
+      },
+      "family": {
+        "permissive": "Permissief",
+        "weak-copyleft": "Zwak copyleft",
+        "strong-copyleft": "Sterk copyleft",
+        "public-domain": "Publiek domein",
+        "content": "Inhoudslicentie"
+      },
+      "flag": {
+        "commercial-use": "Commercieel gebruik",
+        "modifications": "Aanpassingen",
+        "distribution": "Distributie",
+        "private-use": "Privé-gebruik",
+        "patent-use": "Octrooiverlening",
+        "include-copyright": "Auteursrechtvermelding behouden",
+        "document-changes": "Aanpassingen vermelden",
+        "disclose-source": "Bron openbaar maken",
+        "same-license": "Zelfde licentie voor het volledige werk",
+        "same-license-file": "Zelfde licentie, per aangepast bestand",
+        "same-license-library": "Zelfde licentie voor de bibliotheek",
+        "network-use-disclose": "Netwerkgebruik telt als distributie",
+        "liability": "Aansprakelijkheid",
+        "warranty": "Garantie",
+        "trademark-use": "Gebruik handelsmerk"
+      }
+    },
+    "isbn": {
+      "inputLabel": "ISBN's",
+      "placeholder": "978-0-306-40615-7 — één per regel, koppeltekens en spaties worden genegeerd",
+      "idle": "Plak één ISBN of een hele kolom; resultaten verschijnen terwijl je typt.",
+      "scope": "Alleen controlecijferberekening. Een geldige ISBN is intern consistent — het is geen bewijs dat een instantie hem aan een echt boek heeft toegewezen.",
+      "summary": "{valid} van {total} geldig",
+      "singleValid": "Geldige ISBN",
+      "singleInvalid": "Geen geldige ISBN",
+      "invalidCount": "{n} ongeldig",
+      "convertedTo": "{type}: {value}",
+      "valid": "Geldig",
+      "invalid": "Ongeldig",
+      "truncated": "De eerste {shown} rijen worden weergegeven.",
+      "col": {
+        "input": "Invoer",
+        "normalized": "Genormaliseerd",
+        "type": "Type",
+        "status": "Status",
+        "converted": "Geconverteerd",
+        "note": "Opmerking"
+      },
+      "type": {
+        "isbn10": "ISBN-10",
+        "isbn13": "ISBN-13",
+        "invalidLength": "Onjuiste lengte"
+      },
+      "note": {
+        "checkDigit": "Controlecijfer moet {expected} zijn",
+        "invalidLength": "Een ISBN heeft precies 10 of 13 tekens",
+        "invalidCharacter": "Bevat een teken dat geen cijfer is",
+        "xMisplaced": "X is alleen geldig als laatste teken van een ISBN-10",
+        "noIsbn10": "979-voorvoegsel heeft geen ISBN-10-equivalent",
+        "nonBookland": "13-cijferige ISBN's moeten beginnen met 978 of 979",
+        "ismn": "979-0 is het ISMN-bereik (gedrukte muziek), geen ISBN"
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
+    },
+    "languageDetect": {
+      "inputLabel": "Codefragment",
+      "inputPlaceholder": "Plak code zonder bestandsnaam — uit een chatlog, ticket, antwoord…",
+      "hintLabel": "Bestandsnaam of extensie (optioneel)",
+      "hintPlaceholder": "main.h · .pl · Dockerfile",
+      "note": "Gebruikt dezelfde engine als de API. Detectie is inhoudsgebaseerd, tenzij je een bestandsnaamhint opgeeft; dubbelzinnige extensies (.h .m .pl .fs .ts .cs .r) worden eerst via hun eigen regels gerouteerd.",
+      "idle": "Plak een codefragment — het resultaat verschijnt terwijl je typt.",
+      "confidence": {
+        "high": "Hoge zekerheid",
+        "medium": "Gemiddelde zekerheid",
+        "low": "Lage zekerheid"
+      },
+      "score": "{n}/100",
+      "dataFormat": "Gegevensformaat, geen programmeertaal",
+      "multiLanguage": "Meerdere talen vermoed",
+      "why": "Waarom dit antwoord",
+      "signals": "Gevonden signalen",
+      "alternates": "Andere kandidaten",
+      "composeNext": "Formatteer deze {language}"
+    },
+    "iban": {
+      "inputLabel": "IBAN",
+      "idle": "Plak een IBAN — het oordeel volgt direct, zonder knop.",
+      "sourceNote": "Controlegetal en structuur conform ISO 13616-1:2020. De lengte per land en het BBAN-formaat komen uit een gepubliceerde reproductie van het ISO IBAN-register, niet uit het register zelf.",
+      "valid": "Correct gevormde IBAN",
+      "keepTyping": "Blijf typen — korter dan de IBAN voor dit land",
+      "caveat": "Alleen correct gevormd. Een geldig controlegetal bevestigt niet dat het rekeningnummer bestaat, open is of toebehoort aan de begunstigde.",
+      "printFormat": "Drukformaat",
+      "details": "Geparseerde uitsplitsing",
+      "notEncoded": "Niet gecodeerd volgens het formaat van dit land",
+      "coverage": "{n} landen met een geregistreerd IBAN-formaat",
+      "reason": {
+        "bad_charset": "Geen IBAN-vorm — een IBAN bestaat uit twee letters, twee cijfers, gevolgd door alleen letters en cijfers",
+        "country_unsupported": "Geen geregistreerd IBAN-formaat voor deze landcode",
+        "incomplete": "Onvolledig",
+        "wrong_length_for_country": "Te lang voor het IBAN van dit land",
+        "structure_mismatch": "Goede lengte, maar verkeerde structuur voor het formaat van dit land",
+        "checksum_failed": "Controlesom mislukt — er staat ergens een typefout in dit IBAN"
+      },
+      "badge": {
+        "country": "{name} ({code})",
+        "unknownCountry": "Landcode {code}",
+        "length": "{n} van de {expected} tekens",
+        "bankCode": "Bankcode {code}",
+        "expectedCheckDigits": "De controlesommen voor dit rekeningnummer zouden {digits} zijn"
+      },
+      "field": {
+        "normalized": "Elektronisch formaat",
+        "country": "Land",
+        "checkDigits": "Controlesommen",
+        "bban": "BBAN",
+        "bbanFormat": "BBAN-formaat",
+        "bankCode": "Bankcode"
+      },
+      "check": {
+        "charset": "Tekenset",
+        "country": "Land",
+        "length": "Lengte",
+        "structure": "Structuur",
+        "checksum": "MOD 97-10"
+      },
+      "state": {
+        "pass": "geslaagd",
+        "fail": "mislukt",
+        "skipped": "niet bereikt"
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
+    },
+    "secretScan": {
+      "pasteLabel": "Plak code, config of een .env",
+      "pastePlaceholder": "DATABASE_URL=postgres://…\nAPI_KEY=…",
+      "dropLabel": "Sleep een bestand neer om het te scannen",
+      "privacy": "Wordt volledig in je browser uitgevoerd. Er wordt niets ergens naartoe gestuurd — zelfs niet naar ons.",
+      "scan": "Scannen",
+      "scanning": "Bezig met scannen…",
+      "idleTitle": "Plak iets en druk op Scannen.",
+      "idleHint": "Controleert op vendor API-sleutels, tokens, privésleutels en geheimen met hoge entropie. Gelijkgestelde waarden worden gemaskeerd; alleen regelnummers worden volledig getoond.",
+      "clean": "Geen geheimen gevonden",
+      "cleanCaveat": "Niets hier komt overeen met een bekend referentieformaat of leest als een willekeurig geheim. Patronenmatching is geen bewijs — bekijk alles waar je twijfels over hebt.",
+      "found": "{n, plural, one {# mogelijk geheim gevonden} other {# mogelijke geheimen gevonden}}",
+      "foundCaveat": "Verwijder deze voordat je dit ergens plakt. Als een sleutel echt is, draai hem dan om.",
+      "countHigh": "{n} hoge zekerheid",
+      "countMedium": "{n} gemiddeld",
+      "countLow": "{n} laag",
+      "confidence": {
+        "high": "Hoog",
+        "medium": "Gemiddeld",
+        "low": "Laag"
+      },
+      "position": "regel {line}, kolom {column}",
+      "length": "{n} tekens",
+      "maskedLabel": "Gemaskerde overeenkomst",
+      "why": "Waarom dit overeenkwam",
+      "candidates": "Kan ook zijn:",
+      "scanDetail": "Scandetail",
+      "lines": "{n} regels",
+      "bytes": "{n} bytes gescand",
+      "suppressed": "{n} placeholder(s) genegeerd",
+      "suppressedNote": "Bekende demowaarden (EXAMPLE-sleutels, your-api-key-here, herhaalde tekens) worden genegeerd zodat voorbeeldbestanden geen valse alarmen geven.",
+      "omitted": "nog {n} niet weergegeven",
+      "truncated": "Invoer afgekapt — alleen het eerste deel is gescand",
+      "reportTitle": "Vindplaatsen geheimenscan (waarden gemaskeerd)",
+      "scopeNote": "Alleen detectie: dit hulpmiddel neemt nooit contact op met een leverancier om te controleren of een sleutel nog actief is — dat zou betekenen dat je sleutel naar een derde partij wordt verstuurd."
+    },
+    "eanUpcGtin": {
+      "inputLabel": "Barcode-nummers",
+      "placeholder": "Eén code per regel (komma's en puntkomma's splitsen ook)",
+      "idle": "Plak één code of een hele kolom — het oordeel verschijnt terwijl je typt.",
+      "operationLabel": "Operatie",
+      "operationValidate": "Valideren (code bevat zijn controlecijfer)",
+      "operationCalculate": "Berekenen (code mist zijn controlecijfer)",
+      "typeLabel": "Type",
+      "typeAuto": "Automatisch detecteren op basis van lengte",
+      "total": "{n} codes",
+      "validCount": "{n} geldig",
+      "invalidCount": "{n} ongeldig",
+      "calculatedCount": "{n} berekend",
+      "unrecognizedCount": "{n} onherkende lengte",
+      "verdict": {
+        "valid": "Geldig",
+        "invalid": "Ongeldig",
+        "calculated": "Berekend",
+        "unrecognized-length": "Onherkende lengte"
+      },
+      "alsoReadsAs": "Wordt ook gelezen als {type}",
+      "checkDigit": "Controlecijfer",
+      "corrected": "Zou moeten zijn",
+      "gtin14": "GTIN-14-formaat",
+      "reason": {
+        "empty": "Er is niets te controleren op deze regel.",
+        "non-digit-characters": "Bevat tekens die geen cijfers of scheidingstekens zijn.",
+        "unsupported-length": "Geen GS1-identificatiecode heeft deze lengte (8, 12, 13, 14 en 18 cijfers worden ondersteund).",
+        "length-mismatch": "Onjuiste lengte voor het geselecteerde type.",
+        "check-digit-mismatch": "Het laatste cijfer komt niet overeen met wat de standaard vereist."
+      },
+      "warning": {
+        "separators-stripped": "Spaties, koppeltekens en punten zijn verwijderd vóór het controleren.",
+        "all-zero": "Alleen nullen — wiskundig geldig, maar geen echte identificatiecode.",
+        "payload-is-also-a-complete-code": "Dit is ook een volledige code-lengte. Als het al een controlecijfer heeft, schakel dan over naar Valideren."
+      },
+      "math": "Toon de berekening",
+      "mathSum": "Som {sum} → controlecijfer {check}",
+      "truncatedRows": "De eerste {shown} van de {total} rijen worden weergegeven. Kopiëren en downloaden bevat ze allemaal.",
+      "privacy": "Codes worden naar de Forge API gestuurd om te controleren en worden niet opgeslagen.",
+      "scopeNote": "Een correct controlecijfer betekent dat het nummer correct is opgebouwd. Het betekent niet dat GS1 het ooit heeft toegewezen aan een echt product, bedrijf of locatie — alleen een GEPIR-registeropzoekactie geeft daar antwoord op.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
+    },
+    "vin": {
+      "inputLabel": "VIN (17 tekens)",
+      "privacy": "Gecontroleerd in je browser. De VIN wordt nergens naartoe gestuurd.",
+      "idle": "Plak een VIN — het oordeel verschijnt terwijl je typt, geen knop nodig.",
+      "scope": "Alleen structuur en controlecijfer (49 CFR 565.15 / ISO 3779). Dit is geen voertuighistorieopzoekactie.",
+      "verdict": {
+        "valid": "Geldige VIN-structuur",
+        "keepTyping": "Blijf typen — nog {remaining} tekens te gaan",
+        "tooLong": "Te lang — een VIN heeft precies 17 tekens, dit heeft {n}",
+        "invalidCharacter": "Geen VIN-teken: \"{char}\" op positie {position}",
+        "checkDigitMismatch": "Controlecijfer komt niet overeen — verwacht {expected}, gevonden {found}"
+      },
+      "hint": {
+        "confusable": "\"{char}\" wordt nooit gebruikt in een VIN. Bedoelde je {suggest}?"
+      },
+      "notice": {
+        "notProvenance": "Een geldig controlecijfer bevestigt dat de VIN correct is opgebouwd. Het bevestigt niet dat het voertuig bestaat, ongewijzigd is of een schone geschiedenis heeft — een gekloonde VIN slaat deze controle ook.",
+        "pre1981": "Voertuigen gebouwd vóór 1981 en sommige geïmporteerde (JDM/Europese) voertuigen gebruiken dit controlecijfer niet — een mismatch betekent niet per se dat de VIN verkeerd is ingevoerd.",
+        "partial": "Controlecijfer-validatie vereist de volledige 17-karakter VIN. Een gedeeltelijke VIN is een decodeerklus, geen checksumklus."
+      },
+      "badge": {
+        "length": "{n} tekens",
+        "expected": "Controlecijfer {d}"
+      },
+      "invalidChars": {
+        "more": "Ook geen VIN-tekens: {list}"
+      },
+      "segment": {
+        "wmi": "WMI 1-3",
+        "vds": "Beschrijver 4-8",
+        "checkDigit": "Controlecijfer 9",
+        "modelYear": "Modeljaar 10",
+        "plant": "Fabriek 11",
+        "serial": "Serie 12-17"
+      },
+      "math": {
+        "title": "Toon de berekening",
+        "col": {
+          "position": "Pos",
+          "char": "Teken",
+          "value": "Waarde",
+          "weight": "Gewicht",
+          "product": "Product"
+        },
+        "formula": "som = {sum};  {sum} mod 11 = {remainder}  →  controlecijfer {expected}"
+      },
+      "specimenTitle": "VIN · structure specimen"
+    },
+    "envDiff": {
+      "envA": "Omgeving A",
+      "envB": "Omgeving B",
+      "placeholderA": "Plak of sleep het eerste .env-bestand",
+      "placeholderB": "Plak of sleep het tweede .env-bestand hier",
+      "paneNoAssignment": "Geen KEY=waarde-regel gevonden",
+      "optIgnoreComments": "Negeer opmerkingen en lege regels",
+      "optCaseInsensitive": "Hoofdletterongevoelige sleutelvergelijking",
+      "optRedactSecrets": "Gedetecteerde geheimen maskeren",
+      "emptyHint": "Voeg een tweede omgeving toe om de vergelijking te zien",
+      "summaryNone": "Geen verschillen bij {total} sleutels",
+      "summaryDiff": "{n} van de {total} sleutels verschillen",
+      "note": {
+        "unchanged": "Zelfde waarde aan beide kanten",
+        "changed": "Waarde verschilt",
+        "added": "Alleen ingesteld in B",
+        "removed": "Alleen ingesteld in A",
+        "commentedOutInA": "Uitgecommentarieerd in A, ingesteld in B",
+        "commentedOutInB": "Ingesteld in A, uitgecommentarieerd in B"
+      },
+      "secretChanged": "geheim verschilt",
+      "secretSame": "geheim is aan beide zijden hetzelfde",
+      "count": {
+        "unchanged": "{n} ongewijzigd",
+        "changed": "{n} gewijzigd",
+        "added": "{n} toegevoegd",
+        "removed": "{n} verwijderd",
+        "commentedOut": "{n} uitgecommentarieerd"
+      },
+      "warnings": "Invoerwaarschuwingen ({n})",
+      "warningType": {
+        "duplicateKey": "{file} · dubbele sleutel",
+        "quoteMismatch": "{file} · aanhalingsteken mismatch",
+        "unparsableLine": "{file} · niet te parseren regel"
+      },
+      "showUnchanged": "Toon onveranderd ({n})",
+      "commentedIn": {
+        "A": "uitgecommentarieerd in A",
+        "B": "uitgecommentarieerd in B",
+        "both": "uitgecommentarieerd in beide"
+      },
+      "redactedNote": "Geheime waarden worden gemaskeerd met een sleutelnaam-heuristiek — geen beveiligingsscan. De vergelijking draait op de ruwe waarden, dus een geroteerde sleutel wordt nog steeds als gewijzigd getoond.",
+      "interpolationNote": "${VAR}-verwijzingen worden letterlijk vergeleken en nooit opgelost: uitbreiding verschilt per gebruiker.",
+      "truncated": "Alleen de eerste 5.000 sleutels worden weergegeven; de aantallen omvatten alle sleutels.",
+      "colKey": "Sleutel",
+      "colA": "A",
+      "colB": "B",
+      "colStatus": "Status",
+      "privacy": "Beide bestanden worden in je browser vergeleken. Er wordt niets geüpload."
+    },
+    "csvDiff": {
+      "originalLabel": "Originele CSV",
+      "updatedLabel": "Bijgewerkte CSV",
+      "originalPlaceholder": "Plak de oorspronkelijke export of sleep hier een .csv-bestand",
+      "updatedPlaceholder": "Plak de bijgewerkte export of sleep hier een .csv-bestand",
+      "emptyHint": "Plak of sleep beide bestanden — de vergelijking start zodra beide kanten inhoud bevatten.",
+      "note": "Rijen worden op identiteit vergeleken, niet op positie, zodat een ingevoegde of hersorteerde rij niet als een muur van wijzigingen wordt weergegeven. De inhoud wordt naar de API gestuurd voor de vergelijking en wordt niet opgeslagen.",
+      "columns": "{n} kolommen",
+      "keyLabel": "Sleutelkolom",
+      "keyAuto": "Automatisch voorstellen",
+      "keyNone": "Geen sleutel — hele rijen vergelijken",
+      "joinLabel": "Samenvoegen",
+      "joinFull": "Volledig buiten — elke rij",
+      "joinInner": "Binnen — rijen in beide",
+      "joinLeft": "Links — de oorspronkelijke rijset",
+      "ignoreWhitespace": "Witruimte negeren",
+      "ignoreCase": "Hoofdlettergevoeligheid negeren",
+      "treatEmptyAsNull": "Leeg = NULL = N/A",
+      "noDifferences": "Geen verschillen",
+      "differences": "{added} toegevoegd · {removed} verwijderd · {changed} gewijzigd",
+      "added": "{n} toegevoegd",
+      "removed": "{n} verwijderd",
+      "changed": "{n} gewijzigd",
+      "unchangedCount": "{n} ongewijzigd",
+      "totals": "{original} → {updated} rijen",
+      "matchedBy": "Gelijkaardig op basis van {columns} ({source})",
+      "matchedWholeRow": "Gelijkaardig op basis van volledige rijinhoud — er werd geen sleutelkolom gebruikt, dus er wordt niets gemeld als gewijzigd.",
+      "keySource": {
+        "provided": "jouw keuze",
+        "auto": "automatisch voorgesteld",
+        "full-row": "volledige rij"
+      },
+      "keyRejected": "Afgekeurde sleutelkandidaten: {items}",
+      "columnMismatch": "Kolommen alleen in origineel: {original} · alleen in bijgewerkt: {updated}",
+      "truncated": "{shown} van het volledige resultaat weergegeven (voorbeeld beperkt tot {limit} rijen) — de bovenstaande aantallen zijn compleet.",
+      "findings": "Opmerkingen ({n})",
+      "level": {
+        "info": "info",
+        "warning": "waarschuwing",
+        "danger": "fout"
+      },
+      "wholeRow": "Rij {n}",
+      "exportChanged": "Gewijzigde rijen (CSV)",
+      "exportFull": "Volledig verschil (CSV)"
+    },
+    "uscc": {
+      "modeLabel": "Verifiëren of genereren",
+      "tab": {
+        "verify": "Verifiëren",
+        "generate": "Testcodes genereren"
+      },
+      "inputLabel": "Gecombineerde maatschappelijke code",
+      "placeholder": "18 tekens, bijv. 91500000059926748X",
+      "idle": "Plak een code van 18 tekens. Deze wordt in de browser gecontroleerd terwijl u typt — er wordt niets opgeslagen.",
+      "scope": "Alleen structurele controle (GB 32100-2015 + ISO 7064 MOD 31-3). Een geldige code is correct opgebouwd; dat betekent niet dat er een organisatie onder deze code is geregistreerd — controleer dat bij het nationale register cods.org.cn.",
+      "valid": "Geldige gecombineerde maatschappelijke code",
+      "invalid": "Geen geldige uniforme sociale kredietcode",
+      "incomplete": "{n} van 18 tekens",
+      "invalidCharacters": "Bevat tekens die de standaard uitsluit",
+      "checksumOk": "Controlecijfer OK",
+      "checksumBad": "Controlecijfer komt niet overeen",
+      "expectedDigit": "Controlecijfer moet {expected} zijn, niet {actual}",
+      "illegalAt": "Positie {position}: “{char}” zit niet in de tekenset van de code (I, O, S, V, Z zijn uitgesloten)",
+      "detail": "Velddetails",
+      "legacyTitle": "Verouderde organisatiecode (GB 11714)",
+      "legacy": {
+        "ok": "Ingebedde 9-teken organisatiecode is zelfconsistent",
+        "mismatch": "Verouderd controlekarakter zou {expected} zijn — alleen ter informatie; niet elke registrantklasse heeft een GB 11714 organisatiecode",
+        "unchecked": "Niet gecontroleerd"
+      },
+      "divisionScope": "Posities 3–8 worden vergeleken met de GB/T 2260 provincietabel en de nestregels van de zescijferige vorm; de volledige gemeentetabel wordt niet meegenomen.",
+      "field": {
+        "registrationDept": "Registratieafdeling",
+        "orgCategory": "Organisatiecategorie",
+        "adminDivision": "Bestuurlijke indeling",
+        "orgIdentifier": "Onderwerpidentificatie",
+        "checkDigit": "Controlecijfer"
+      },
+      "depth": {
+        "none": "Niet opgelost",
+        "province": "Provincieniveau",
+        "prefecture": "Prefectuurniveau",
+        "county": "Gemeenteniveau"
+      },
+      "note": {
+        "empty": "Nog niets te controleren",
+        "incomplete": "Een uniforme sociale kredietcode heeft precies 18 tekens",
+        "tooLong": "Meer dan 18 tekens",
+        "illegalCharacter": "Bevat een teken buiten de GB 32100-2015-reeks (I, O, S, V en Z zijn uitgesloten)",
+        "checkDigitMismatch": "Het controlecijfer komt niet overeen met de eerste 17 tekens",
+        "departmentUnknown": "Positie 1 is geen registratieafdeling zoals gedefinieerd in de standaard (1, 5, 9, Y)",
+        "categoryUnknown": "Positie 2 is geen organisatiecategorie die voor deze registratieafdeling is gedefinieerd",
+        "divisionNotNumeric": "Posities 3–8 moeten zes cijfers zijn",
+        "divisionUnknownProvince": "Posities 3–4 zijn geen provinciecode volgens GB/T 2260",
+        "divisionMalformed": "Een district zonder prefectuur, wat GB/T 2260 niet toestaat"
+      },
+      "gen": {
+        "dept": "Registratieafdeling",
+        "category": "Organisatiecategorie",
+        "province": "Provincie",
+        "count": "Hoeveel",
+        "randomProvince": "Elke provincie",
+        "regenerate": "Nieuwe batch",
+        "emptyHint": "Selecteer de opties hierboven om testcodes te genereren.",
+        "testDataBadge": "Testgegevens",
+        "seed": "Seed {seed}",
+        "allCodes": "Alle codes",
+        "disclaimer": "Deze codes zijn structureel geldig, maar behoren niet tot een geregistreerde organisatie. Gebruik ze niet om een echt entiteit te vertegenwoordigen.",
+        "note": "Generatie is gezaaid: dezelfde opties en seed leveren altijd dezelfde batch op, zodat een fixture reproduceerbaar blijft. Elke code is gemarkeerd als isTestData in de JSON en hier."
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
+    },
+    "yamlDiff": {
+      "original": "Oorspronkelijk",
+      "changed": "Gewijzigd",
+      "originalPlaceholder": "Plak of sleep de oorspronkelijke YAML (of JSON)",
+      "changedPlaceholder": "Plak of sleep de gewijzigde YAML (of JSON)",
+      "idle": "Vul beide vensters in en de vergelijking wordt uitgevoerd terwijl je typt.",
+      "privacy": "Beide documenten worden in deze browser geparseerd en vergeleken — er wordt niets geüpload, wat essentieel is voor manifesten met hostnamen en geheimnamen.",
+      "modeLabel": "Vergelijking",
+      "modeSemantic": "Semantisch (structuur)",
+      "modeRawText": "Ruwe tekst (tekens)",
+      "resolveAnchors": "Ankers en aliassen oplossen naar hun waarden",
+      "valid": "Geldige YAML",
+      "validMulti": "Geldige YAML · {n} documenten",
+      "invalid": "Parsefout, regel {line}",
+      "parseFailed": "Eén kant kon niet worden geparsed — er is niets vergeleken",
+      "equivalent": "Geen verschillen — de twee documenten resulteren in dezelfde structuur",
+      "equivalentStructural": "Dezelfde opgeloste structuur · {n} opmaak- of ankerverschillen",
+      "summary": "{added} toegevoegd · {removed} verwijderd · {changed} gewijzigd · {typeChanged} typeveranderingen",
+      "parseErrorAt": "{side} · regel {line}, kolom {column}: {message}",
+      "documentCountMismatch": "Aantal documenten verschilt: {original} vs {changed} — documenten zijn in volgorde gekoppeld en de extra's zijn volledig gemeld",
+      "duplicateKeys": "Dubbele sleutels in de bron",
+      "unified": "Geünificeerde patch (genormaliseerde YAML)",
+      "howItWorks": "Hoe deze vergelijking werkt",
+      "rule": {
+        "keyOrder": "Volgorde van mapping-sleutels, aanhalingstekens en inspringing worden genegeerd; de volgorde van sequenties wordt vergeleken, omdat de volgorde van een lijst betekenis heeft.",
+        "anchors": "Aliassen worden opgelost naar hun waarden, dus een bewerking achter een gedeelde anker wordt op elke alias-locatie getoond; een anker of alias die veranderd is met de waarde intact, wordt apart als structureel gemeld.",
+        "mergeKeys": "Merge-sleutels (<<) worden uitgevouwen voordat ze worden vergeleken, en de eigen sleutels van een node winnen van samengevoegde sleutels.",
+        "types": "Type maakt deel uit van de waarde: 8080, \"8080\" en !!str 8080 worden gemeld als typewijzigingen, niet als een algemene wijziging.",
+        "sequences": "Sequences van mappings worden gekoppeld op naam, id of sleutel wanneer dat veld aan beide zijden uniek is, zodat een ingevoegd item niet doorwerkt; een herordening wordt nog steeds gemeld.",
+        "blockScalars": "Blok-scalars worden vergeleken op basis van de opgeloste string, dus de afsluitende nieuwe regel die |- verwijdert, is een echte wijziging; een herstyling met dezelfde waarde is structureel.",
+        "comments": "Opmerkingen maken geen deel uit van het YAML-gegevensmodel en worden niet vergeleken.",
+        "multiDoc": "--- streams koppelen documenten één op één; een verschil in aantal wordt gemeld in plaats van alleen het eerste document te vergelijken.",
+        "duplicateKeys": "Een dubbele mappingsleutel in de invoer gebruikt het laatste voorkomen en wordt gemeld als waarschuwing."
+      },
+      "note": {
+        "raw-text-mode": "Raw-text-modus vergelijkt tekens, niet structuur: sleutelvolgorde, aanhalingstekens en inspringing tellen allemaal mee.",
+        "parse-error": "Eén kant kon niet worden geparseerd, dus er is niets vergeleken.",
+        "document-count-mismatch": "De twee kanten bevatten een verschillend aantal --- documenten; documenten werden in volgorde gekoppeld en de extra's volledig gerapporteerd.",
+        "merge-keys-expanded": "Samenvoegsleutels (<<) zijn uitgevouwen vóór het vergelijken.",
+        "anchors-unresolved": "Aliassen werden vergeleken als *naamverwijzingen, niet als hun opgeloste waarden.",
+        "yaml11-ambiguous-scalars": "Ongequote y/n/yes/no/on/off worden hier als strings gelezen (YAML 1.2 Core) en als booleans onder YAML 1.1 — quote ze als een boolean bedoeld was.",
+        "sequence-matched-by-identity": "Reeksen van mappings werden gekoppeld op basis van een identiteitsveld in plaats van op positie.",
+        "duplicate-keys": "Een mapping declareert dezelfde sleutel tweemaal; het laatste voorkomen is gebruikt.",
+        "truncated": "Alleen de eerste 2000 wijzigingen worden weergegeven."
+      }
+    },
+    "listSetCompare": {
+      "listA": "Lijst A",
+      "listB": "Lijst B",
+      "placeholder": "Plak items, één per regel (of sleep een .txt/.csv-bestand)",
+      "emptyHint": "Voeg items toe aan zowel Lijst A als Lijst B om de vergelijking te zien.",
+      "privacy": "Beide lijsten worden in je browser vergeleken — er wordt niets geüpload. Dezelfde engine draait server-side voor API- en MCP-aanroepers.",
+      "delimiter": "Scheidingsteken",
+      "delimiterOption": {
+        "auto": "Automatisch detecteren",
+        "newline": "Nieuwe regel",
+        "comma": "Komma",
+        "tab": "Tab",
+        "custom": "Aangepast"
+      },
+      "customDelimiter": "Scheidingsteken",
+      "customDelimiterPlaceholder": "| of \\t",
+      "sort": "Volgorde",
+      "sortOption": {
+        "original": "Oorspronkelijke volgorde",
+        "asc": "A→Z",
+        "desc": "Z→A",
+        "byCount": "Op aantal"
+      },
+      "optCaseSensitive": "Hoofdlettergevoelig",
+      "optTrim": "Witruimte trimmen",
+      "optCollapse": "Interne spaties samenvoegen",
+      "optIgnoreZeros": "Leidende nullen negeren",
+      "paneItems": "{n} items",
+      "paneSingle": "1 item — controleer de scheidingsteken",
+      "items": "{n}",
+      "none": "Geen",
+      "more": "+{n} meer — kopiëren of downloaden voor de volledige lijst",
+      "panel": {
+        "onlyInA": "Alleen in A",
+        "onlyInB": "Alleen in B",
+        "intersection": "Snedepunt (in beide)",
+        "union": "Vereniging (alle items)",
+        "symmetricDifference": "Symmetrisch verschil"
+      },
+      "summaryIdentical": "Zelfde set — {n} gedeelde items",
+      "summaryDiff": "{a} alleen in A · {b} alleen in B · {shared} gedeeld",
+      "drill": {
+        "symmetricDifference": "Symmetrisch verschil ({n})",
+        "duplicates": "Dubbele items binnen een lijst ({n})",
+        "multiplicities": "Aantal per item ({n})",
+        "warnings": "Meldingen ({n})"
+      },
+      "duplicatesInA": "Herhaald in A",
+      "duplicatesInB": "Herhaald in B",
+      "colValue": "Item",
+      "colCountA": "In A",
+      "colCountB": "In B",
+      "detailTruncated": "Aantallen per item afgekapt — verhoog maxDetail in de API voor de volledige tabel.",
+      "reportTitle": "Lijstvergelijking"
+    },
+    "loanAmortization": {
+      "principal": "Leningbedrag",
+      "rate": "Jaarlijkse rente %",
+      "term": "Looptijd",
+      "termUnit": "Looptijdseenheid",
+      "unitYears": "Jaren",
+      "unitMonths": "Maanden",
+      "startMonth": "Eerste betalingsmaand",
+      "startMonthHint": "YYYY-MM. Labelt de planning; verandert geen bedrag.",
+      "extraHeading": "Extra betalingen",
+      "extraMonthly": "Extra elke maand",
+      "extraYearly": "Extra een keer per jaar",
+      "extraYearlyMonth": "Jaarlijkse extra valt in maand",
+      "extraOneTime": "Eenmalige extra",
+      "extraOneTimePeriod": "Eenmalig bij betaling #",
+      "extraNote": "Extra betalingen verlagen het hoofdsom in de periode waarin ze vallen, wat de rente van elke latere periode verlaagt. Het tarief en de geplande betaling blijven hetzelfde.",
+      "monthlyPayment": "Maandelijkse betaling",
+      "totalInterest": "Totale rente",
+      "totalPaid": "Totaal betaald",
+      "crossover": "Overslagpunt",
+      "crossoverValue": "Betaling {n}",
+      "crossoverNone": "Nooit",
+      "payoff": "Afgelost bij betaling {n}",
+      "monthsSaved": "{n} maanden eerder",
+      "totalExtra": "{amount} betaald boven het schema",
+      "viewMonthly": "Elke betaling",
+      "viewAnnual": "Per jaar",
+      "tableCaption": "Aflossingsschema: betaling, rente, hoofdsom en resterend saldo per periode",
+      "colPeriod": "#",
+      "colDate": "Maand",
+      "colPayment": "Betaling",
+      "colInterest": "Rente",
+      "colPrincipal": "Hoofdsom",
+      "colBalance": "Saldo",
+      "colYear": "Jaar",
+      "expandRows": "Alle {total} betalingen tonen",
+      "collapseRows": "Minder betalingen tonen",
+      "windowNote": "{shown} van de {total} betalingen worden getoond. De CSV en de API bevatten ze allemaal.",
+      "emptyHint": "Voer een leningbedrag, een rente en een looptijd in om de aflossingstabel te zien.",
+      "note": "Zelfde engine als de API. De berekening gebruikt alleen jouw leningvoorwaarden; er wordt niets geüpload of opgeslagen.",
+      "errPrincipal": "Voer een leningbedrag in dat hoger is dan 0.",
+      "errRate": "Voer een rente in tussen 0 en 100.",
+      "errTerm": "Voer een looptijd in tussen 1 maand en 100 jaar.",
+      "errStartMonth": "Gebruik YYYY-MM, bijvoorbeeld 2026-01.",
+      "errExtra": "Voer een bedrag in van 0 of meer.",
+      "errOneTimePeriod": "Voer het betalingsnummer in waarop de eenmalige betaling valt."
+    },
+    "businessDayShift": {
+      "modeLabel": "Wat moet er berekend worden",
+      "mode": {
+        "shift": "Verschuif een datum",
+        "countBetween": "Tel tussen datums"
+      },
+      "startDate": "Startdatum",
+      "days": "Werkdagen",
+      "daysHint": "Negatieve aantallen gaan terug: −10 is tien werkdagen voor de startdatum.",
+      "daysInvalid": "Werkdagen moeten een geheel getal zijn, met een optioneel min-teken ervoor.",
+      "endDate": "Einddatum",
+      "includeEndDate": "Reken de einddatum ook mee — dit is wat een spreadsheet NETWORKDAYS teruggeeft",
+      "weekendLabel": "Vrije dagen per week",
+      "weekendHint": "Standaard zaterdag en zondag. Stel in op vrijdag en zaterdag waar dat het weekend is.",
+      "weekday": {
+        "sun": "zo",
+        "mon": "ma",
+        "tue": "di",
+        "wed": "wo",
+        "thu": "do",
+        "fri": "vr",
+        "sat": "za"
+      },
+      "holidays": "Vakantiedagen",
+      "holidaysHint": "Laat leeg voor de zuivere weekend-regel telling — er wordt geen landkalender voor je toegepast.",
+      "makeupWorkdays": "Inhaaldagen",
+      "makeupHint": "Data waarop gewerkt werd ondanks dat het op een weekend of feestdag viel — de Chinese 调休/补班-zaterdagen komen hier.",
+      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesIgnored": "{n, plural, one {# item was geen YYYY-MM-DD datum en wordt niet gebruikt} other {# items waren geen YYYY-MM-DD data en worden niet gebruikt}}",
+      "pickStart": "Kies een startdatum om te beginnen.",
+      "emptyHintShift": "Kies een startdatum en een aantal werkdagen.",
+      "emptyHintCount": "Kies een startdatum en een einddatum.",
+      "note": "Zelfde engine als de API. De berekening wordt uitgevoerd op de weergegeven regelset met het resultaat; er wordt niets opgeslagen.",
+      "countHeadline": "{n, plural, one {# werkdag} other {# werkdagen}}",
+      "reversedRange": "De einddatum ligt voor de startdatum, dus het aantal komt negatief uit.",
+      "classification": {
+        "workday": "Werkdag",
+        "weekend": "Weekend",
+        "holiday": "Feestdag",
+        "makeupWorkday": "Inhaaldag"
+      },
+      "ruleWeekend": "{days} vrij",
+      "ruleNoWeekend": "geen wekelijkse vrije dagen",
+      "ruleHolidays": "{n, plural, =0 {geen feestdagenlijst} one {# feestdag} other {# feestdagen}}",
+      "ruleMakeups": "{n, plural, =0 {geen inhaaldagen} one {# inhaaldag} other {# inhaaldagen}}",
+      "ruleEndIncluded": "einddatum meegeteld",
+      "ruleEndExcluded": "einddatum niet meegeteld",
+      "chain": "Verplaats opnieuw vanaf deze datum"
+    },
+    "retryBackoff": {
+      "strategy": {
+        "exponential": "Exponentieel",
+        "linear": "Lineair",
+        "fixed": "Vast"
+      },
+      "initialDelay": "Initieel uitstel (ms)",
+      "factor": "Terugvalfactor",
+      "factorHint": "Vermenigvuldiger per opnieuw proberen. Moet groter zijn dan 1.",
+      "increment": "Lineaire toename (ms)",
+      "incrementHint": "Milliseconden die bij elke poging opnieuw worden toegevoegd aan de vertraging.",
+      "maxDelay": "Max. vertraging (ms)",
+      "maxDelayHint": "Laat leeg voor geen limiet. Zodra de limiet is bereikt, blijft elke latere vertraging constant op dat niveau.",
+      "maxAttempts": "Max. pogingen",
+      "maxAttemptsHint": "1 tot 100.",
+      "excludeInitial": "Max. pogingen exclusief de initiële aanvraag",
+      "excludeInitialNote": "Aan: het bovenstaande aantal telt alleen opnieuw proberen, de initiële aanvraag is extra. Uit: het telt elke poging, inclusief de initiële aanvraag.",
+      "jitter": {
+        "none": "Geen — exacte vertragingen",
+        "equal": "Gelijk — helft vast, helft willekeurig",
+        "full": "Volledig — ergens tussen nul en de vertraging"
+      },
+      "callerTimeout": "Uw eigen time-out (ms)",
+      "callerTimeoutHint": "Optioneel. Laat leeg om de budgetcontrole over te slaan.",
+      "emptyHint": "Herstel het gemarkeerde veld om het schema te zien.",
+      "note": "Berekend op basis van het beleid alleen — er wordt niets naar een upstream-service gestuurd. Jitter wordt gerapporteerd als het bereik waarin een echte client valt, nooit als één bemonsterde waarde.",
+      "headlineExact": "{attempts} pogingen, {wait} wachten in totaal.",
+      "headlineRange": "{attempts} pogingen, {expected} wachten gemiddeld, tot {max} in het ergste geval.",
+      "finalDelay": "De laatste wachttijd, voor poging {attempt}, is {delay}.",
+      "noRetries": "Deze budget laat één poging toe en geen herhaling, dus er is niets om op te wachten.",
+      "retryCount": "{count, plural, =0 {geen herhalingen} one {# herhaling} other {# herhalingen}}",
+      "capFlattened": "Maximum bereikt bij poging {attempt} — elke latere vertraging blijft op {delay}.",
+      "timeoutExceeded": "In het ergste geval wordt {wait} gewacht, wat uw {timeout}-budget overschrijdt.",
+      "timeoutOk": "In het ergste geval wachttijd {wait}, binnen uw {timeout}-budget.",
+      "tableLabel": "Herhaalplanning",
+      "colAttempt": "Poging",
+      "colDelay": "Vertraging",
+      "colCumulative": "Cumulatieve wachttijd",
+      "average": "gem. {value}",
+      "formula": {
+        "none": "Vertragingen zijn exact — er wordt geen jitter toegepast.",
+        "equal": "Gelijke jitter: de helft van de vertraging is vast, de andere helft wordt uniform getrokken, zodat elke wachttijd tussen de helft en de volledige vertraging valt.",
+        "full": "Volledige jitter: de wachttijd wordt uniform getrokken tussen nul en de berekende vertraging."
+      },
+      "errInitialDelay": "De initiële vertraging moet een geheel aantal milliseconden zijn, minimaal 1.",
+      "errFactor": "De factor moet groter zijn dan 1 en maximaal 100. Een factor van 1 is de vaste strategie.",
+      "errIncrement": "De increment moet een geheel aantal milliseconden zijn, 0 of meer.",
+      "errMaxDelay": "De maximale waarde moet een geheel aantal milliseconden zijn, minimaal 1.",
+      "errCapBelowInitial": "De maximale waarde moet minimaal gelijk zijn aan de initiële vertraging.",
+      "errMaxAttempts": "Pogingen moet een geheel getal zijn van 1 tot 100.",
+      "errCallerTimeout": "De time-out moet een geheel aantal milliseconden zijn, minimaal 1."
+    },
+    "csvColumns": {
+      "csvLabel": "CSV",
+      "csvPlaceholder": "Plak hier CSV, of sleep een bestand — de eerste regel wordt gelezen als de kolomnamen",
+      "sample": "Voorbeeld CSV",
+      "chooseFile": "Bestand kiezen",
+      "fileFailed": "Kan {name} niet lezen.",
+      "delimiterLabel": "Scheidingsteken",
+      "delimiter": {
+        "comma": "Komma  ,",
+        "semicolon": "Puntkomma  ;",
+        "tab": "Tab",
+        "pipe": "Pipe  |"
+      },
+      "raggedPolicyLabel": "Rijen die niet overeenkomen met de koptekst",
+      "ragged": {
+        "pad": "Uitlijnen met de koptekst",
+        "truncate": "Lange rijen afkappen, korte rijen kort laten",
+        "reject": "Stoppen en rapporteren"
+      },
+      "columnsTitle": "Kolommen — {kept} van {total} behouden",
+      "columnsHint": "Vink uit om een kolom te verwijderen, bewerk het vakje om deze te hernoemen, gebruik de pijltjes om de volgorde te wijzigen. Alles wordt opgelost ten opzichte van de oorspronkelijke koptekst.",
+      "reset": "Kolommen resetten",
+      "keep": "Kolom {name} behouden",
+      "renameLabel": "{name}",
+      "moveUp": "{name} omhoog verplaatsen",
+      "moveDown": "{name} omlaag verplaatsen",
+      "noneKept": "Elke kolom is uitgeschakeld — houd er ten minste één aan.",
+      "emptyHint": "Plak hierboven een CSV om de kolommen te beheren.",
+      "note": "Werkt op de tekst die je plakt. Plaats, hernoem, herschik — altijd in die vaste volgorde, altijd ten opzichte van de oorspronkelijke koptekst.",
+      "columnCount": "{n} kolommen",
+      "rowCount": "{n} rijen",
+      "duplicateHeaders": "Dubbele koptekst gebruikt op naam: {names}",
+      "raggedCount": "{n}{more} rijen komen niet overeen met de breedte van de koptekst",
+      "previewLabel": "Uitvoer CSV",
+      "previewTruncated": "De eerste {shown} van de {total} regels worden getoond. Kopieer of download voor het volledige bestand.",
+      "raggedListLabel": "Rijen die niet overeenkomen met de breedte van de koptekst",
+      "raggedRow": "Regel {line}: {actual} velden, koptekst heeft {expected}",
+      "unusedRenames": "Hernoemen genegeerd — deze kolommen zitten niet in de uitvoer: {names}"
+    },
+    "imageRotateFlip": {
+      "drop": "Sleep een afbeelding in of klik om te zoeken",
+      "browse": "Kies een afbeelding",
+      "selected": "{name} · {kb} KB",
+      "privacy": "Het bestand wordt naar de Forge API gestuurd voor de transformatie en wordt nooit opgeslagen.",
+      "tooLarge": "Die afbeelding is groter dan {mb} MB.",
+      "ccw": "90° links",
+      "cw": "90° rechts",
+      "half": "180°",
+      "reset": "Herstel",
+      "flipHorizontal": "Horizontaal spiegelen",
+      "flipVertical": "Verticaal spiegelen",
+      "angle": "Hoek",
+      "exactAngle": "Exacte °",
+      "fitMode": "Canvas",
+      "fitExpand": "Canvas uitbreiden",
+      "fitCrop": "Bijsnijden om te vullen",
+      "fitInside": "Binnen passen",
+      "fitNote": "Na een kwartslag past de geroteerde afbeelding niet meer in het oude frame: uitbreiden behoudt elke pixel, bijsnijden behoudt het originele formaat en snijdt de hoeken weg, binnen passen schaalt het geheel naar beneden.",
+      "outputFormat": "Uitvoerformaat",
+      "sameFormat": "Zelfde als invoer",
+      "idle": "Sleep een afbeelding om deze geheroriënteerd te zien.",
+      "original": "Origineel · {w}×{h}",
+      "originalAlt": "De afbeelding zoals geüpload",
+      "result": "Resultaat · {w}×{h}",
+      "resultAlt": "De geheroriënteerde afbeelding",
+      "badgeLossless": "Geen herberekening",
+      "badgeResampled": "Herberekend",
+      "badgeSize": "{kb} KB",
+      "badgeExif": "EXIF-oriëntatie {orientation} eerst toegepast",
+      "badgeSnapped": "Geklikt op exact kwartslag",
+      "badgeReencode": "Geometrie is exact; de codec hercodeert",
+      "download": "Downloaden",
+      "note": "Rotaties van 90°, 180° en 270° verplaatsen pixels zonder ze te mengen. Elke andere hoek herberekent. Geanimeerde GIF, APNG en geanimeerde WebP worden nog niet ondersteund."
+    },
+    "exifStrip": {
+      "drop": "Sleep een JPEG, PNG of WebP om de metadata te verwijderen",
+      "privacy": "Verwerkt op onze servers en nooit opgeslagen. Maximaal {mb} MB per afbeelding.",
+      "idle": "Verwijderd: GPS, opnametijd, camera- en apparaatinfo, ingesloten miniatuur, bewerkingsgeschiedenis. Behouden: oriëntatie, kleurprofiel, afmetingen, pixelgegevens.",
+      "note": "Alleen stilstaande beelden. Video, PDF, HEIC, AVIF en GIF vallen buiten scope, en C2PA-herkomstmanifesten blijven intact.",
+      "detail": "Wat is verwijderd",
+      "optKeepThumbnail": "Bewaar de ingebedde Exif-miniatuur",
+      "verdictStripped": "{fields} metadata-velden verwijderd ({kb} KB)",
+      "verdictClean": "Dit bestand bevat geen verwijderbare metadata",
+      "strippedCaveat": "De afbeelding zelf is ongewijzigd — dezelfde pixels, dezelfde afmetingen, niets opnieuw gecodeerd.",
+      "cleanCaveat": "Teruggegeven byte voor byte zoals het binnenkwam.",
+      "badgeOrientationKept": "Oriëntatie behouden",
+      "badgeOrientationLost": "Oriëntatie kon niet worden overgenomen",
+      "badgeColorProfileKept": "Kleurprofiel behouden",
+      "badgeThumbnailKept": "Miniatuur behouden",
+      "badgeThumbnailRemoved": "Miniatuur verwijderd",
+      "download": "Gereinigde afbeelding downloaden",
+      "sizes": "{before} KB → {after} KB",
+      "detailFields": "{fields} velden · {kb} KB",
+      "detailNothing": "Er is niets uit dit bestand verwijderd.",
+      "detailOrientation": "Exif-oriëntatie {value} is uit het bestand gelezen en overgenomen.",
+      "detailNoOrientation": "Het bestand gaf geen Exif-oriëntatie aan, dus de weergave blijft ongewijzigd.",
+      "segmentExif": "Exif",
+      "segmentIptc": "IPTC",
+      "segmentXmp": "XMP",
+      "segmentComment": "Opmerking",
+      "segmentText": "Tekstmetagegevens",
+      "segmentTime": "Tijdstempel",
+      "segmentVendor": "Vendorblok",
+      "summaryStripped": "{fields} metadatavelden verwijderd ({families}), {kb} KB. Afbeelding verder ongewijzigd.",
+      "summaryClean": "Geen verwijderbare metadata gevonden. Bestand ongewijzigd teruggegeven."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "Name / host",
+      "type": "Record type",
+      "note": "Resolved by the Forge host DNS resolver — may differ from your local stub or browser DoH."
+    },
+    "tls": {
+      "host": "Host",
+      "expired": "Certificate expired",
+      "validDays": "{n} days remaining",
+      "note": "Connects from the Forge host. Inspection disables trust rejection so you can still read an untrusted leaf."
+    },
+    "myIp": {
+      "refresh": "Refresh",
+      "note": "Shows how this request reached Forge. No ASN/geo without a licensed data feed."
+    },
+    "mermaid": {
+      "source": "Mermaid source",
+      "idle": "Valid diagrams render here",
+      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
+      "sample": "Sample",
+      "theme": "Theme",
+      "theme_default": "Default",
+      "theme_dark": "Dark",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "Flowchart",
+      "sample_sequence": "Sequence",
+      "sample_class": "Class",
+      "sample_er": "ER diagram",
+      "sample_state": "State",
+      "sample_gantt": "Gantt",
+      "sample_pie": "Pie",
+      "sample_mindmap": "Mindmap",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "zoomReset": "Reset view",
+      "copySvg": "Copy SVG",
+      "downloadSvg": "Download SVG",
+      "downloadPng": "Download PNG",
+      "previewAria": "Mermaid diagram preview",
+      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
+    },
+    "colorDeltaE": {
+      "note": "CIEDE2000 via culori. Thresholds are UI review heuristics, not print contracts. color-convert already covers OKLCH."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL dialect",
+      "parseNote": "Hard-correct: parse & inventory only. Visual ERD ships only when layout quality passes the ship gate.",
+      "convertNote": "@dbml/core ModelExporter / importer — same path as the API."
+    },
+    "dnsLeak": {
+      "probeHost": "Compare host (advanced)",
+      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
+      "run": "Start DNS leak check",
+      "retest": "Run again",
+      "showAdvanced": "Advanced options",
+      "hideAdvanced": "Hide advanced",
+      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
+      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
+      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
+      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
+      "edgeIp": "Your edge IP",
+      "authorityHits": "Recursive IPs",
+      "forgePaths": "Forge resolver hits",
+      "dohPaths": "Browser DoH hits",
+      "webrtcCount": "WebRTC IPs",
+      "forgeResolvers": "Forge multi-resolver (server-side)",
+      "forgeNote": "These queries leave from the Forge host — not your laptop.",
+      "browserDoh": "Browser DoH",
+      "webrtc": "WebRTC ICE",
+      "egressMarkers": "Forge egress markers",
+      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
+      "honestyPrefix": "Honesty:",
+      "verdictConsistent": "Paths look consistent on this check",
+      "verdictSplit": "Split answers across DNS paths",
+      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
+      "verdictIncomplete": "Incomplete — browser probes missing",
+      "verdictAuthority": "System DNS recursives captured",
+      "infraOn": "Authority online",
+      "infraOff": "Authority offline — multi-path only",
+      "infraChecking": "Checking…",
+      "authorityResolvers": "System DNS recursive resolvers",
+      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
+      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
+      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
+      "authorityDetail": "Authority session detail",
+      "phaseSession": "Creating session…",
+      "phaseSystemDns": "Triggering system DNS…",
+      "phasePoll": "Listening for recursive hits ({n}/{total})…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "stepSession": "Session",
+      "stepSystemDns": "System DNS",
+      "stepPoll": "Listen",
+      "stepBrowser": "Browser",
+      "stepServer": "Server",
+      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
+      "liveHits": "Live recursive hits",
+      "sectionSystemDns": "System DNS (what you came for)",
+      "sectionComplementary": "Complementary paths",
+      "sectionTech": "Technical session detail",
+      "copyIps": "Copy IPs",
+      "copied": "Copied",
+      "queryCount": "{n} queries",
+      "colPath": "Path",
+      "colAnswers": "Answers",
+      "colMs": "ms",
+      "ipPublic": "public",
+      "ipPrivate": "private",
+      "sig": {
+        "captured": "System DNS captured",
+        "onlineNoHits": "Authority online · no hits yet",
+        "offline": "Authority offline",
+        "forgeSplit": "Forge resolvers disagree",
+        "dohSplit": "Browser DoH disagree",
+        "webrtcMismatch": "WebRTC ≠ edge IP",
+        "webrtcLocal": "Local WebRTC candidates",
+        "noBrowser": "No browser probes"
+      }
+    },
+    "honesty": {
+      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
+      "signatureNotVerified": "{engine} · decode only · signature not verified",
+      "localOnly": "Processed for this request · not stored as a card or credential"
+    },
+    "idCard": {
+      "number": "Resident ID number",
+      "note": "GB 11643 check digit · no household registry lookup · same path as API",
+      "specimenTitle": "Resident ID · structure specimen",
+      "segRegion": "Region",
+      "segBirth": "Birth",
+      "segSeq": "Seq",
+      "segCheck": "Check",
+      "metaBirth": "Birth",
+      "metaGender": "Gender",
+      "metaRegion": "Region code",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "reasonFormat": "Format should be 18 characters (last may be X)",
+      "reasonBirth": "Birth date segment is invalid",
+      "reasonCheck": "Check digit is wrong",
+      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} lines",
+      "chars": "{n} chars",
+      "empty": "(empty file)",
+      "readyToShip": "Ready to drop into the repo"
+    },
+    "textTransform": {
+      "mode": "Mode",
+      "input": "Input",
+      "output": "Output",
+      "emptyResult": "Result appears here",
+      "runLocal": "Run locally",
+      "runServer": "Run on server",
+      "statusLocalLive": "Local · live",
+      "statusLocal": "Local",
+      "statusServer": "Server · same path as API",
+      "noteDefault": "Same path as API"
+    }
+  },
+  "roots": {
+    "hubLabel": "Op intentie",
+    "tools": "tools",
+    "dualSurface": "Human page + Agent API · zelfde engine",
+    "otherRoots": "Andere demand roots"
+  }
+}

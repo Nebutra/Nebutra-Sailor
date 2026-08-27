@@ -1,0 +1,68 @@
+{
+  "name": "@nebutra/browser-control",
+  "version": "0.1.3",
+  "description": "Browser task execution, recording, and deterministic replay ports",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "execution-capability",
+    "requires": [
+      "@nebutra/sandbox-runtime for isolated browser sidecars",
+      "Tenant-scoped recorder/profile storage"
+    ],
+    "gaps": [
+      "Mutating browser actions require a configured browser sidecar",
+      "First-run exploratory executor is injected, not bundled",
+      "Profile persistence is metadata-only until content-store cookie vault wiring lands"
+    ],
+    "featureId": "browser-control",
+    "category": "ai",
+    "summary": "Browser session trait, first-run recording, replay cache, doctor, and debug tools"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/capability-kit": "workspace:*",
+    "@nebutra/errors": "workspace:*",
+    "@nebutra/sandbox-runtime": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/browser-control#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/browser-control"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
+}

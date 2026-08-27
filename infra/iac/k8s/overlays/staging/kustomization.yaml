@@ -1,0 +1,43 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: nebutra-staging
+
+resources:
+  - ../../base
+
+namePrefix: staging-
+
+commonLabels:
+  environment: staging
+
+# ---------------------------------------------------------------------------
+# Staging runs base replica counts (2 per service) which mirrors prod sizing
+# at a smaller scale. No replica patch needed unless you want to reduce cost.
+#
+# If cost reduction is needed, uncomment the patch below to run 1 replica:
+# ---------------------------------------------------------------------------
+# patches:
+#   - patch: |-
+#       apiVersion: apps/v1
+#       kind: Deployment
+#       metadata:
+#         name: placeholder  # replaced by target selector
+#       spec:
+#         replicas: 1
+#     target:
+#       kind: Deployment
+
+# ---------------------------------------------------------------------------
+# ConfigMap patch — override public URLs to point at staging endpoints
+# ---------------------------------------------------------------------------
+configMapGenerator:
+  - name: nebutra-config
+    behavior: merge
+    literals:
+      - NODE_ENV=production
+      - PYTHON_ENV=production
+      - NEXT_PUBLIC_API_URL=https://api.staging.nebutra.com
+      - NEXT_PUBLIC_APP_URL=https://app.staging.nebutra.com
+      - NEXT_PUBLIC_LANDING_URL=https://staging.nebutra.com
+      - LOG_LEVEL=info

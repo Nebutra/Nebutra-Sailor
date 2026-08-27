@@ -1,0 +1,1273 @@
+{
+  "admin": {
+    "title": "관리자",
+    "description": "슈퍼 관리자 패널 — 사용자, 조직, 시스템 상태를 관리합니다.",
+    "nav": {
+      "overview": "개요",
+      "users": "사용자",
+      "organizations": "조직"
+    },
+    "users": {
+      "title": "사용자",
+      "description": "모든 조직의 사용자를 검색하고 관리하며, 해당 사용자로 로그인할 수 있습니다.",
+      "searchPlaceholder": "사용자 검색…",
+      "totalCount": "{count, plural, one {# 명} other {# 명}}",
+      "empty": "사용자를 찾을 수 없습니다.",
+      "loadError": "사용자를 불러올 수 없습니다.",
+      "columns": {
+        "email": "이메일",
+        "name": "이름",
+        "created": "생성됨",
+        "activeOrgs": "활성 조직",
+        "actions": "작업"
+      },
+      "viewOrgs": "조직 보기"
+    },
+    "organizations": {
+      "title": "조직",
+      "description": "시스템의 모든 워크스페이스(최근 순서)입니다.",
+      "searchPlaceholder": "조직 검색…",
+      "totalCount": "{count, plural, one {# 개} other {# 개}}",
+      "empty": "조직을 찾을 수 없습니다.",
+      "loadError": "조직을 불러올 수 없습니다.",
+      "columns": {
+        "name": "이름",
+        "slug": "슬러그",
+        "plan": "플랜",
+        "members": "멤버",
+        "created": "생성됨",
+        "actions": "작업"
+      },
+      "view": "보기"
+    },
+    "impersonate": {
+      "trigger": "사용자로 로그인",
+      "starting": "시작 중…",
+      "stop": "사용자 로그인 중지",
+      "confirm": "{label}(으)로 로그인하시겠습니까? 중지할 때까지 이 사용자로 앱을 볼 수 있습니다.",
+      "error": "사용자 로그인을 시작할 수 없습니다.",
+      "stopError": "사용자 로그인을 중지할 수 없습니다."
+    },
+    "pagination": {
+      "previous": "이전",
+      "next": "다음",
+      "pageOf": "페이지 {page}/{total}"
+    }
+  },
+  "Common": {
+    "hello": "안녕하세요",
+    "dashboard": "대시보드",
+    "actions": {
+      "continue": "계속",
+      "confirm": "확인",
+      "done": "완료",
+      "cancel": "취소"
+    }
+  },
+  "theme": {
+    "light": "밝음",
+    "dark": "어두움",
+    "system": "시스템"
+  },
+  "LocaleSwitcher": {
+    "label": "언어",
+    "ariaLabel": "언어 변경",
+    "searchPlaceholder": "언어 검색…",
+    "noResults": "일치하는 언어가 없습니다",
+    "menuAria": "언어 선택"
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP 레코드 번호",
+      "publicSecurity": "공안 레코드"
+    },
+    "wechat": {
+      "signIn": "WeChat으로 로그인",
+      "notConfigured": "WeChat 로그인이 설정되지 않음"
+    }
+  },
+  "onboarding": {
+    "title": "워크스페이스 설정",
+    "subtitle": "3가지 간단한 단계를 거쳐 준비를 마칩니다.",
+    "steps": {
+      "workspace": "워크스페이스",
+      "invite": "팀 초대",
+      "plan": "플랜 선택"
+    },
+    "progress": {
+      "back": "돌아가기",
+      "stepCounter": "{current}/{total} 단계"
+    },
+    "plan": {
+      "title": "플랜 선택",
+      "description": "무료로 시작하거나 더 많은 용량을 활용하세요. 언제든지 플랜을 변경할 수 있습니다.",
+      "choose": "플랜 선택",
+      "skip": "지금은 건너뛰기"
+    }
+  },
+  "userMenu": {
+    "ariaLabel": "사용자 메뉴 열기",
+    "profile": "프로필",
+    "settings": "설정",
+    "feedback": "피드백",
+    "theme": "테마",
+    "language": "언어",
+    "signOut": "로그아웃",
+    "signedInAs": "로그인된 계정"
+  },
+  "account": {
+    "profile": {
+      "title": "프로필",
+      "description": "개인 정보를 업데이트합니다.",
+      "nameLabel": "이름",
+      "namePlaceholder": "전체 이름",
+      "emailLabel": "이메일",
+      "emailHint": "새 이메일 주소를 확인하기 위해 확인 링크를 보내드립니다.",
+      "languageLabel": "언어",
+      "submit": "변경 사항 저장",
+      "saving": "저장 중…",
+      "verifyEmail": "확인",
+      "verifying": "확인 중…",
+      "success": "프로필이 업데이트되었습니다.",
+      "verificationSent": "확인 이메일이 발송되었습니다.",
+      "errorRequiredName": "이름이 필요합니다.",
+      "errorInvalidEmail": "유효하지 않은 이메일 주소입니다.",
+      "subtitle": "당신의 정체성과 연락처 정보입니다.",
+      "unknown": "이름 없는 사용자",
+      "manageCta": "전체 계정 설정 열기"
+    },
+    "avatar": {
+      "title": "프로필 사진",
+      "description": "정사각형 이미지를 업로드합니다(PNG, JPEG 또는 WebP, 최대 2MB).",
+      "uploadButton": "프로필 사진 업로드",
+      "uploading": "업로드 중…",
+      "fileTooBig": "파일이 너무 큽니다. 최대 크기는 2MB입니다.",
+      "invalidType": "지원하지 않는 이미지 형식입니다. PNG, JPEG 또는 WebP를 사용하세요.",
+      "success": "프로필 사진이 업데이트되었습니다.",
+      "removeButton": "프로필 사진 제거",
+      "removed": "프로필 사진이 제거되었습니다.",
+      "deleteError": "프로필 사진을 삭제할 수 없습니다."
+    },
+    "export": {
+      "title": "내 데이터 내보내기",
+      "description": "계정에 대해 보유한 모든 기록(프로필, 조직, 감사 이벤트, 알림, 초대)의 복사본을 다운로드합니다.",
+      "compliance": "GDPR 제20조(데이터 이동권) 및 PIPL 제45조(개인정보 사본 취득권)에 따라 필요합니다.",
+      "export": "내 데이터 내보내기",
+      "pending": "내보내기 준비 중…",
+      "ready": "내보내기가 준비되었습니다.",
+      "download": "JSON 다운로드",
+      "error": "내보내기를 준비할 수 없습니다. 다시 시도하세요."
+    },
+    "emailChange": {
+      "title": "이메일 주소 변경",
+      "description": "새 주소로 확인 링크를 보내드립니다. 해당 이메일함에서 확인한 후에만 변경이 적용됩니다.",
+      "newEmailLabel": "새 이메일 주소",
+      "newEmailPlaceholder": "you@example.com",
+      "submit": "확인 링크 전송",
+      "submitting": "전송 중…",
+      "verificationSent": "{email}의 받은편지함을 확인하여 변경을 완료하세요.",
+      "errorInvalidEmail": "유효하지 않은 이메일 주소입니다.",
+      "error": "이메일 변경을 요청할 수 없습니다.",
+      "confirm": {
+        "successTitle": "이메일 업데이트됨",
+        "successDescription": "로그인 이메일이 업데이트되었습니다.",
+        "successWithEmail": "로그인 이메일이 {email}(으)로 업데이트되었습니다.",
+        "failureTitle": "해당 링크를 확인할 수 없습니다.",
+        "failureDescription": "확인 링크가 유효하지 않거나 만료되었거나 이미 사용되었습니다. 계정 설정에서 새 링크를 요청하세요.",
+        "errorCode": "원인: {code}",
+        "continueCta": "계정으로 돌아가기",
+        "backCta": "계정으로 돌아가기"
+      }
+    },
+    "title": "계정",
+    "ariaLabel": "계정 설정",
+    "navLabel": "계정 설정 탭",
+    "tip": "{key}를 어디서나 눌러 이 대화를 다시 열 수 있습니다.",
+    "tabs": {
+      "profile": "프로필",
+      "subscription": "구독",
+      "billing": "청구",
+      "preferences": "선호도",
+      "personalization": "개인화"
+    },
+    "subscription": {
+      "title": "구독",
+      "subtitle": "플랜, 할당량, 갱신.",
+      "currentPlan": "현재 플랜",
+      "upgradeCta": "플랜 비교",
+      "manageCta": "구독 관리"
+    },
+    "billing": {
+      "title": "청구",
+      "subtitle": "청구서 기록 및 결제 방법.",
+      "empty": {
+        "title": "아직 기록 없음",
+        "description": "첫 번째 결제 기간이 시작한 후 청구서와 요금이 여기에 나타납니다.",
+        "cta": "전체 청구 열기"
+      }
+    },
+    "preferences": {
+      "title": "선호도",
+      "subtitle": "테마 및 접근성.",
+      "theme": "테마",
+      "light": "밝음",
+      "dark": "어두움",
+      "system": "시스템",
+      "help": "도움말",
+      "reportIssue": "문제 보고",
+      "shortcuts": "키보드 단축키"
+    },
+    "personalization": {
+      "title": "개인화",
+      "subtitle": "Sailor에게 당신이 누구인지, 어떻게 반응해야 하는지 알려주세요."
+    }
+  },
+  "impact": {
+    "hero_title": "패러다임 재정의",
+    "hero_subtitle": "세상에 어려운 사업이 없게 하겠습니다.",
+    "social_title": "사회",
+    "social_headline": "절대적 기술 평등",
+    "social_description": "엣지 혁신가를 赋能합니다. 전통적 필터를 깨고 솔로 창업자에게 즉시 사용 가능한 인프라를 제공합니다.",
+    "governance_title": "거버넌스",
+    "governance_headline": "코드는 법칙",
+    "governance_description": "업무 증명과 실제 사업 성과에 기반한 알고리즘 거버넌스가 불투명한 관료제를 대체합니다.",
+    "environment_title": "환경",
+    "environment_headline": "디지털 미니멀리즘",
+    "environment_description": "극단적인 SaaS 통합과 자원 효율성을 통해 클라우드 발자국 감소를 추진합니다."
+  },
+  "auth": {
+    "security": {
+      "title": "보안",
+      "description": "비밀번호, 다중 인증, 활성 세션을 관리합니다.",
+      "managedByProvider": "보안 설정은 인증 제공자가 관리합니다.",
+      "openProviderProfile": "프로필 열기",
+      "changePassword": {
+        "title": "비밀번호 변경",
+        "description": "다른 사이트에서 재사용하지 않는 강력한 비밀번호를 사용하세요.",
+        "currentPasswordLabel": "현재 비밀번호",
+        "newPasswordLabel": "새 비밀번호",
+        "confirmPasswordLabel": "새 비밀번호 확인",
+        "revokeOtherSessions": "다른 기기에서 로그아웃",
+        "submit": "비밀번호 업데이트",
+        "pending": "비밀번호 업데이트 중…",
+        "success": "비밀번호가 업데이트되었습니다."
+      },
+      "twoFactor": {
+        "title": "2단계 인증",
+        "description": "인증자 앱을 사용하여 두 번째 확인 단계를 추가합니다.",
+        "enabled": "활성화됨",
+        "disabled": "비활성화됨",
+        "enabledHelp": "계정은 비밀번호 로그인 후 인증자 앱의 6자리 코드를 요청합니다.",
+        "disabledHelp": "인증자 앱의 6자리 코드로 계정을 보호하세요.",
+        "enable": "2단계 인증 활성화",
+        "disable": "2단계 인증 비활성화",
+        "passwordPrompt": "비밀번호를 입력하여 확인",
+        "scanQrCode": "인증자 앱으로 이 QR 코드를 스캔한 다음 아래에 6자리 코드를 입력하세요.",
+        "secretKeyLabel": "또는 이 비밀을 수동으로 입력",
+        "verificationCodeLabel": "확인 코드",
+        "verify": "확인 및 활성화",
+        "backupCodesTitle": "백업 코드",
+        "backupCodesDescription": "이 코드를 안전한 곳에 저장하세요. 각 코드는 인증자에 대한 접근 권한을 잃었을 경우 한 번만 사용할 수 있습니다.",
+        "copyBackupCodes": "코드 복사",
+        "finishSetup": "설정 완료",
+        "successEnabled": "2단계 인증이 활성화되었습니다.",
+        "successDisabled": "2단계 인증이 비활성화되었습니다."
+      },
+      "sessions": {
+        "title": "활성 세션",
+        "description": "현재 계정에 로그인된 기기 및 브라우저입니다.",
+        "currentSession": "(현재)",
+        "ipLabel": "IP 주소",
+        "lastActiveLabel": "마지막 활동",
+        "revoke": "로그아웃",
+        "revokeAll": "다른 모든 기기에서 로그아웃",
+        "empty": "활성 세션이 없습니다.",
+        "successRevoked": "세션이 로그아웃되었습니다.",
+        "successRevokedAll": "다른 모든 세션이 로그아웃되었습니다."
+      },
+      "deleteAccount": {
+        "title": "계정 삭제",
+        "description": "계정과 모든 관련 데이터를 영구적으로 제거합니다. 이 작업은 되돌릴 수 없습니다.",
+        "passwordPrompt": "확인하려면 비밀번호 입력",
+        "confirmTextLabel": "DELETE를 입력하여 확인",
+        "submit": "계정 삭제",
+        "cancel": "취소",
+        "success": "계정이 삭제되었습니다."
+      },
+      "connectedAccounts": {
+        "title": "연결된 계정",
+        "description": "Nebutra 계정에 연결된 OAuth 로그인 방법을 검토합니다.",
+        "connected": "연결됨",
+        "connect": "연결",
+        "help": "공급자를 연결 해제하기 전에 신뢰할 수 있는 로그인 방법을 최소 하나 유지하세요.",
+        "unlink": "연결 해제",
+        "notLinked": "연결되지 않음"
+      },
+      "passkeys": {
+        "title": "패스키",
+        "description": "기기에 종속된 자격 증명을 사용하여 피싱 방지 로그인을 합니다.",
+        "empty": "등록된 패스키가 없습니다.",
+        "addPasskey": "패스키 추가",
+        "cancelAdd": "취소",
+        "cancelled": "패스키 설정이 취소되었습니다. 변경 사항이 없습니다.",
+        "defaultName": "패스키 {number}",
+        "nameHelp": "브라우저가 확인을 요청하기 전에 이 패스키에 인식 가능한 이름을 지정하세요.",
+        "nameLabel": "패스키 이름",
+        "rename": "이름 바꾸기",
+        "saveRename": "이름 저장",
+        "remove": "제거",
+        "successAdded": "패스키가 추가되었습니다.",
+        "successRemoved": "패스키가 제거되었습니다.",
+        "unavailableBadge": "사용 불가"
+      },
+      "setPassword": {
+        "title": "비밀번호 설정",
+        "description": "OAuth 제공자 없이 로그인할 수 있도록 계정에 비밀번호를 추가합니다.",
+        "submit": "비밀번호 설정",
+        "pending": "비밀번호 설정 링크 전송 중…",
+        "sentMessage": "비밀번호 설정 링크를 이메일로 보내드렸습니다."
+      }
+    },
+    "banner": {
+      "logoAlt": "Nebutra",
+      "slogan": "스타트업을 출시하세요. 첫날부터 관리합니다.",
+      "tagline": "멀티 리전 에이전트, 멀티 테넌트 기본값. 플랫폼 팀이 필요 없습니다."
+    },
+    "signIn": {
+      "title": "Nebutra에 로그인",
+      "subtitle": "로그인 방법을 선택하세요.",
+      "continueWith": "다음으로 계속",
+      "continueWithProvider": "{provider}(으)로 계속",
+      "providers": {
+        "google": "Google",
+        "github": "GitHub",
+        "apple": "Apple",
+        "microsoft": "Microsoft",
+        "feishu": "Feishu"
+      },
+      "providerLoading": "리디렉션 중…",
+      "dividerOr": "또는 이메일로 계속",
+      "emailLabel": "이메일",
+      "emailPlaceholder": "you@example.com",
+      "continue": "계속",
+      "back": "돌아가기",
+      "passwordLabel": "비밀번호",
+      "passwordPlaceholder": "비밀번호 입력",
+      "showPassword": "비밀번호 표시",
+      "hidePassword": "비밀번호 숨기기",
+      "capsLockOn": "Caps Lock이 켜져 있습니다.",
+      "forgotPassword": "비밀번호를 잊으셨나요?",
+      "submit": "로그인",
+      "submitLoading": "로그인 중…",
+      "useMagicLink": "대신 매직 링크를 사용",
+      "usePasskey": "패스키로 로그인",
+      "passkeyTitle": "패스키로 로그인",
+      "passkeyDescription": "Face ID, Touch ID 또는 보안 키를 사용합니다. 비밀번호가 필요 없습니다.",
+      "passkeyButton": "패스키로 계속",
+      "passkeyCancelled": "패스키 프롬프트가 취소되었습니다.",
+      "passkeyUnsupported": "이 브라우저는 패스키를 지원하지 않습니다.",
+      "passkeyError": "패스키 로그인이 실패했습니다. 다른 방법을 시도하세요.",
+      "ssoTitle": "Enterprise SSO로 계속",
+      "ssoDescription": "{email}을(를) {provider}(으)로 리디렉션합니다.",
+      "ssoError": "Enterprise SSO를 시작할 수 없습니다. 다른 방법을 시도하세요.",
+      "ssoRetry": "다시 시도",
+      "newToProduct": "Nebutra가 처음이신가요?",
+      "signUpLink": "가입",
+      "homeLink": "홈",
+      "signInFailed": "로그인 실패",
+      "genericError": "오류가 발생했습니다. 다시 시도하세요.",
+      "captchaError": "봇 확인이 실패했습니다. 페이지를 새로고침하고 다시 시도하세요.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "계속 진행하면 {brandName}의 <terms>서비스 약관</terms> 및 <privacy>개인정보 처리방침</privacy>에 동의하는 것으로 간주됩니다.",
+      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
+      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
+      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
+      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+    },
+    "signUp": {
+      "title": "Nebutra 계정 만들기",
+      "subtitle": "모든 Nebutra 앱에 하나의 계정으로 로그인하세요.",
+      "firstNameLabel": "이름",
+      "lastNameLabel": "성",
+      "firstNamePlaceholder": "이름",
+      "lastNamePlaceholder": "성",
+      "submit": "계정 만들기",
+      "submitLoading": "만드는 중…",
+      "alreadyHaveAccount": "이미 계정이 있나요?",
+      "signInLink": "로그인",
+      "signUpFailed": "가입에 실패했습니다",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+    },
+    "passkeys": {
+      "title": "패스키",
+      "description": "비밀번호 대신 Face ID, Touch ID, Windows Hello 또는 보안 키를 사용하세요. 각 기기는 자체 패스키를 가집니다.",
+      "addButton": "패스키 추가",
+      "adding": "설정 중…",
+      "namePlaceholder": "예: MacBook Pro",
+      "nameLabel": "이름(선택 사항)",
+      "registerSuccess": "패스키가 추가되었습니다.",
+      "registerCancelled": "설정이 취소되었습니다.",
+      "registerUnsupported": "이 브라우저는 패스키를 지원하지 않습니다.",
+      "registerError": "패스키 등록이 실패했습니다.",
+      "empty": "패스키가 없습니다.",
+      "loadError": "패스키를 불러올 수 없습니다.",
+      "revoke": "제거",
+      "revoking": "제거 중…",
+      "revokeConfirm": "이 패스키를 제거하시겠습니까? 더 이상 이를 사용하여 로그인할 수 없습니다.",
+      "revokeSuccess": "패스키가 제거되었습니다.",
+      "revokeError": "패스키를 제거할 수 없습니다.",
+      "device": {
+        "singleDevice": "기기에 종속됨",
+        "multiDevice": "기기 간 동기화됨"
+      },
+      "addedOn": "{date}에 추가됨"
+    },
+    "magicLink": {
+      "title": "매직 링크로 로그인",
+      "description": "이메일을 입력하면 로그인할 6자리 코드를 보내드립니다.",
+      "emailLabel": "이메일",
+      "send": "링크 전송",
+      "codeLabel": "확인 코드",
+      "verify": "확인",
+      "resend": "코드 다시 전송",
+      "resendCooldown": "{seconds}초 후 다시 전송 가능",
+      "sentTo": "{email}에 코드를 보냈습니다."
+    },
+    "forgotPassword": {
+      "title": "비밀번호를 잊으셨나요?",
+      "description": "이메일을 입력하면 비밀번호 재설정 링크를 보내드립니다.",
+      "emailLabel": "이메일",
+      "submit": "재설정 링크 전송",
+      "successTitle": "이메일을 확인하세요.",
+      "success": "해당 이메일이 등록되어 있으면 곧 재설정 링크를 받으실 수 있습니다."
+    },
+    "resetPassword": {
+      "title": "비밀번호 재설정",
+      "description": "계정의 새 비밀번호를 선택합니다.",
+      "newPasswordLabel": "새 비밀번호",
+      "confirmPasswordLabel": "새 비밀번호 확인",
+      "submit": "비밀번호 재설정",
+      "successTitle": "비밀번호 재설정됨",
+      "successDescription": "새 비밀번호로 로그인할 수 있습니다.",
+      "signInCta": "로그인으로 이동",
+      "invalidTitle": "유효하지 않은 재설정 링크",
+      "invalidDescription": "비밀번호 재설정 링크가 누락되었거나 형식이 잘못되었습니다. 비밀번호 잊음 페이지에서 새 링크를 요청하세요."
+    },
+    "verifyEmail": {
+      "successTitle": "이메일 확인됨",
+      "successDescription": "이메일 주소가 확인되었습니다.",
+      "failureTitle": "확인 실패",
+      "failureDescription": "해당 링크로 이메일을 확인할 수 없습니다.",
+      "continueCta": "계속",
+      "signInCta": "로그인으로 이동"
+    },
+    "loginSuccess": {
+      "eyebrow": "로그인 완료",
+      "title": "로그인되었습니다.",
+      "description": "세션이 준비되었습니다. Nebutra 워크스페이스를 열고 인증 흐름에서 안전한 이동을 보존합니다.",
+      "session": "세션",
+      "verified": "확인됨",
+      "workspace": "워크스페이스",
+      "preparing": "준비 중",
+      "redirecting": "{seconds}초 후 워크스페이스 입장",
+      "secureHandoff": "안전한 이동",
+      "continueCta": "워크스페이스로 계속",
+      "signInCta": "다른 계정 사용"
+    },
+    "errors": {
+      "invalidCredentials": "이메일 또는 비밀번호가 올바르지 않습니다.",
+      "userNotFound": "해당 이메일로 등록된 계정이 없습니다.",
+      "userAlreadyExists": "해당 이메일로 이미 등록된 계정이 있습니다.",
+      "weakPassword": "비밀번호가 약합니다. 최소 8자이며 대소문자와 숫자를 포함하세요.",
+      "passwordsDontMatch": "비밀번호가 일치하지 않습니다.",
+      "passwordTooShort": "비밀번호는 최소 8자입니다.",
+      "currentPasswordIncorrect": "현재 비밀번호가 올바르지 않습니다.",
+      "samePassword": "새 비밀번호는 현재 비밀번호와 달라야 합니다.",
+      "invalidEmail": "유효하지 않은 이메일 주소입니다.",
+      "emailNotVerified": "먼저 이메일 주소를 확인하세요.",
+      "sessionExpired": "세션이 만료되었습니다. 다시 로그인하세요.",
+      "twoFactorRequired": "2단계 인증이 필요합니다.",
+      "invalidVerificationCode": "확인 코드가 올바르지 않거나 만료되었습니다.",
+      "twoFactorAlreadyEnabled": "2단계 인증이 이미 활성화되었습니다.",
+      "twoFactorNotEnabled": "2단계 인증이 활성화되지 않았습니다.",
+      "tooManyAttempts": "시도 횟수가 너무 많습니다. 나중에 다시 시도하세요.",
+      "rateLimited": "너무 자주 작업하고 있습니다. 속도를 낮추세요.",
+      "providerNotSupported": "이 작업은 인증 제공자가 관리합니다.",
+      "networkError": "네트워크 오류입니다. 연결을 확인하고 다시 시도하세요.",
+      "unknown": "오류가 발생했습니다. 다시 시도하세요."
+    }
+  },
+  "chat": {
+    "suggestions": {
+      "title": "시작하려면 다음 중 하나를 시도하세요.",
+      "activity": {
+        "title": "최근 활동 보기",
+        "prompt": "지난 24시간 동안 워크스페이스의 최근 활동을 보여주세요."
+      },
+      "debug": {
+        "title": "오류 디버깅",
+        "prompt": "런타임 오류를 디버깅하는 데 도움을 주세요. 스택 추적을 붙여넣으면 해결 방법을 안내해주겠습니다."
+      },
+      "email": {
+        "title": "요약 이메일 작성",
+        "prompt": "팀에 플랫폼 진행 상황을 알릴 수 있는 간결한 주간 요약 이메일을 작성해주세요."
+      },
+      "features": {
+        "title": "플랫폼 기능 살펴보기",
+        "prompt": "이 SaaS 플랫폼의 주요 기능과 사용 방법을 안내해주세요."
+      }
+    }
+  },
+  "billing": {
+    "activePlan": {
+      "title": "활성 플랜",
+      "manage": "구독 관리",
+      "noPlanTitle": "활성 플랜 없음",
+      "noPlanDescription": "플랜을 선택하여 유료 기능과 더 높은 사용 한도를 활용하세요.",
+      "choosePlan": "플랜 선택",
+      "renewsOn": "{date}에 갱신됨",
+      "endsOn": "{date}에 종료됨",
+      "trialEndsOn": "평가판 {date}에 종료됨",
+      "status": {
+        "active": "활성",
+        "trialing": "평가 중",
+        "past_due": "연체됨",
+        "canceled": "취소됨",
+        "free": "무료"
+      },
+      "errors": {
+        "loadFailed": "청구 상태를 불러올 수 없습니다."
+      }
+    },
+    "pricing": {
+      "trial": "무료 {days}일 평가판",
+      "seat": "{count, plural, one {# 석} other {# 석}}",
+      "perSeat": "/ 석"
+    }
+  },
+  "organizations": {
+    "settings": {
+      "logo": {
+        "title": "조직 로고",
+        "description": "정사각형 이미지를 업로드하여 조직을 나타냅니다(PNG, JPEG 또는 WebP, 최대 2MB).",
+        "uploadButton": "로고 업로드",
+        "uploading": "업로드 중…",
+        "fileTooBig": "파일이 너무 큽니다. 최대 크기는 2MB입니다.",
+        "invalidType": "지원하지 않는 이미지 형식입니다. PNG, JPEG 또는 WebP를 사용하세요.",
+        "success": "로고가 업데이트되었습니다.",
+        "removeButton": "로고 제거",
+        "removed": "로고가 제거되었습니다."
+      },
+      "name": {
+        "title": "조직 이름",
+        "description": "팀 및 고객에게 표시되는 조직 이름을 업데이트합니다.",
+        "label": "이름",
+        "submit": "저장",
+        "saving": "저장 중…",
+        "success": "조직 이름이 업데이트되었습니다."
+      },
+      "delete": {
+        "title": "조직 삭제",
+        "description": "조직, 모든 멤버, 초대 및 관련 데이터를 영구적으로 제거합니다. 이 작업은 되돌릴 수 없습니다.",
+        "trigger": "조직 삭제",
+        "confirmLabel": "조직 이름을 입력하여 확인",
+        "submit": "조직 삭제",
+        "cancel": "취소",
+        "success": "조직이 삭제되었습니다."
+      }
+    },
+    "invitation": {
+      "title": "초대되셨습니다.",
+      "heading": "{organizationName}(으)로 초대되셨습니다.",
+      "description": "초대를 수락하여 팀과 협업을 시작하세요.",
+      "accept": "초대 수락",
+      "accepting": "수락 중...",
+      "decline": "거절",
+      "declining": "거절 중...",
+      "declinedView": "초대 거절됨",
+      "success": "초대자에게 알렸습니다.",
+      "backToDashboard": "대시보드로 돌아가기",
+      "roleLabel": "역할: {role}",
+      "errorEmailMismatch": "이 초대는 다른 이메일로 발송되었습니다.",
+      "errorEmailMismatchDetail": "초대를 받은 이메일 주소로 로그인한 후 수락하세요.",
+      "errorExpired": "초대가 만료되었습니다.",
+      "errorExpiredDetail": "초대자에게 새 초대를 보내달라고 요청하세요.",
+      "errorNotFound": "초대를 찾을 수 없습니다.",
+      "errorNotFoundDetail": "초대 링크가 유효하지 않거나 취소되었습니다.",
+      "errorNotAvailable": "초대를 사용할 수 없습니다.",
+      "errorNotAvailableDetail": "이 초대는 이미 처리되었으며 더 이상 활성화되지 않습니다.",
+      "role": {
+        "owner": "소유자",
+        "admin": "관리자",
+        "member": "멤버",
+        "viewer": "보기 권한"
+      }
+    }
+  },
+  "settings": {
+    "apiKeys": {
+      "title": "API 키",
+      "description": "Nebutra에 프로그래밍 방식으로 접근하기 위한 API 키를 생성하고 관리합니다.",
+      "createButton": "API 키 생성",
+      "noPermission": "API 키를 볼 권한이 없습니다.",
+      "loading": "로드 중…",
+      "loadError": "API 키를 불러올 수 없습니다.",
+      "createError": "API 키를 생성할 수 없습니다.",
+      "revokeError": "API 키를 취소할 수 없습니다.",
+      "empty": {
+        "title": "아직 API 키가 없습니다.",
+        "cta": "첫 번째 API 키 생성"
+      },
+      "columns": {
+        "name": "이름",
+        "prefix": "접두어",
+        "lastUsed": "마지막 사용",
+        "scopes": "범위",
+        "created": "생성됨",
+        "actions": "작업",
+        "never": "없음"
+      },
+      "actions": {
+        "revoke": "취소",
+        "revoking": "취소 중…",
+        "copy": "복사",
+        "copied": "복사됨",
+        "close": "닫기",
+        "submit": "키 생성",
+        "submitting": "생성 중…"
+      },
+      "dialog": {
+        "title": "API 키 생성",
+        "description": "API 키를 사용하면 외부 시스템이 당신을 대신하여 Nebutra에 접근할 수 있습니다. 비밀번호처럼 취급하세요.",
+        "nameLabel": "이름",
+        "namePlaceholder": "예: 프로덕션 백엔드",
+        "scopesLabel": "범위",
+        "successWarning": "이 키는 한 번만 표시됩니다. 닫기 전에 저장하세요.",
+        "confirmClose": "닫으면 이 키를 다시 볼 수 없습니다. 저장되었는지 확인하세요."
+      }
+    },
+    "auditLog": {
+      "title": "감사 로그",
+      "description": "워크스페이스의 모든 관리 작업을 추적합니다. 작업자, 작업, 엔티티 또는 시간 범위로 필터링합니다.",
+      "empty": "감사 이벤트가 없습니다.",
+      "loadMore": "더 불러오기",
+      "loading": "로드 중…",
+      "forbidden": "감사 로그를 보려면 관리자 접근이 필요합니다.",
+      "columns": {
+        "when": "시간",
+        "actor": "작업자",
+        "action": "작업",
+        "entity": "엔티티",
+        "outcome": "결과",
+        "ip": "IP"
+      },
+      "diff": {
+        "oldValue": "이전 값",
+        "newValue": "새로운 값"
+      },
+      "filters": {
+        "action": "작업",
+        "actionPlaceholder": "작업 검색…",
+        "entityType": "엔티티 유형",
+        "outcome": "결과",
+        "outcomeSuccess": "성공",
+        "outcomeFailure": "실패",
+        "outcomePending": "대기 중",
+        "startDate": "시작 날짜",
+        "endDate": "종료 날짜",
+        "range24h": "지난 24시간",
+        "range7d": "지난 7일",
+        "range30d": "지난 30일",
+        "reset": "초기화",
+        "all": "전체"
+      }
+    },
+    "notifications": {
+      "title": "알림",
+      "description": "각 이벤트 유형에 대해 Nebutra가 어떻게 연락할지 선택합니다.",
+      "actions": {
+        "resetAll": "기본값으로 재설정",
+        "save": "저장"
+      },
+      "status": {
+        "saving": "저장 중…",
+        "saved": "저장됨",
+        "error": "저장에 실패했습니다. 다시 시도하세요."
+      },
+      "eventTypes": {
+        "security": {
+          "label": "보안 경고",
+          "description": "로그인 경고, 비밀번호 변경, 2단계 변경."
+        },
+        "billing": {
+          "label": "청구",
+          "description": "청구서, 결제 실패, 구독 변경."
+        },
+        "invitation": {
+          "label": "팀 초대",
+          "description": "조직 초대, 수락 또는 거절."
+        },
+        "activity": {
+          "label": "팀 활동",
+          "description": "멤버 추가, 역할 변경 및 기타 워크스페이스 활동."
+        },
+        "updates": {
+          "label": "제품 업데이트",
+          "description": "새로운 기능, 변경 로그 하이라이트 및 릴리스 노트."
+        },
+        "marketing": {
+          "label": "마케팅",
+          "description": "뉴스레터 및 가끔 프로모션. 옵트인 전용."
+        }
+      },
+      "channels": {
+        "in_app": {
+          "label": "인앱"
+        },
+        "email": {
+          "label": "이메일"
+        },
+        "push": {
+          "label": "푸시"
+        },
+        "sms": {
+          "label": "SMS"
+        }
+      }
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "워크스페이스에서 내보낸 이벤트를 구독합니다. 모든 페이로드에 엔드포인트의 시크릿으로 서명하므로 진정성을 확인할 수 있습니다.",
+      "create": {
+        "heading": "새 엔드포인트",
+        "urlLabel": "엔드포인트 URL",
+        "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
+        "eventsLegend": "이벤트",
+        "submit": "엔드포인트 생성",
+        "submitting": "생성 중…",
+        "selectEvent": "최소 하나의 이벤트를 선택하세요.",
+        "successTitle": "엔드포인트가 생성되었습니다. 서명 시크릿은 한 번만 표시됩니다.",
+        "successWarning": "닫기 전에 애플리케이션의 시크릿 관리자에 저장하세요.",
+        "copy": "복사",
+        "copied": "복사됨"
+      },
+      "list": {
+        "heading": "활성 엔드포인트",
+        "empty": "웹훅 엔드포인트가 없습니다. 위에서 생성하세요.",
+        "loading": "로드 중…",
+        "loadFailed": "웹훅을 불러올 수 없습니다.",
+        "columns": {
+          "url": "URL",
+          "events": "이벤트",
+          "status": "상태",
+          "lastDelivered": "마지막 전달",
+          "actions": "작업"
+        },
+        "status": {
+          "active": "활성",
+          "disabled": "비활성"
+        },
+        "actions": {
+          "edit": "편집",
+          "enable": "활성화",
+          "disable": "비활성화",
+          "viewDeliveries": "전달 보기",
+          "delete": "삭제"
+        }
+      },
+      "deliveries": {
+        "heading": "최근 전달",
+        "close": "닫기",
+        "loading": "로드 중…",
+        "loadFailed": "전달을 불러올 수 없습니다.",
+        "empty": "전달이 없습니다.",
+        "viewPayload": "페이로드 보기",
+        "hidePayload": "페이로드 숨기기",
+        "replay": "재전송",
+        "replaying": "재전송 중…",
+        "status": {
+          "success": "성공",
+          "failed": "실패",
+          "retrying": "재시도 중"
+        }
+      }
+    },
+    "appearance": {
+      "title": "외관",
+      "theme": {
+        "title": "테마",
+        "description": "밝음, 어두움 또는 시스템 설정과 일치합니다."
+      },
+      "themePreset": {
+        "title": "테마 프리셋",
+        "description": "Theme Playground의 모든 테마를 전체 앱에 적용합니다. 아래의 컨트롤이 이를 통해 세밀하게 조정됩니다.",
+        "search": "테마 검색…",
+        "searchLabel": "테마 검색",
+        "default": "기본",
+        "defaultMood": "Nebutra 기본 팔레트",
+        "active": "활성",
+        "empty": "검색 결과가 없습니다.",
+        "count": "{count}개 테마"
+      },
+      "themeEditor": {
+        "title": "테마",
+        "description": "프리셋을 선택하고 DESIGN.md를 가져온 후 아래의 토큰을 세밀하게 조정합니다.",
+        "selectLabel": "테마 프리셋",
+        "import": "가져오기",
+        "copy": "테마 복사",
+        "copied": "복사됨",
+        "copyError": "복사 실패",
+        "custom": "사용자 정의"
+      },
+      "designMd": {
+        "title": "DESIGN.md 가져오기",
+        "description": "DESIGN.md를 붙여넣거나 업로드하여 색상, 반경, 글꼴, 간격 및 그림자를 전체 앱에 적용하고 재로드 후에도 유지합니다.",
+        "applied": "적용됨:",
+        "remove": "제거"
+      },
+      "themeMode": {
+        "label": "테마 모드",
+        "light": "밝음",
+        "dark": "어두움",
+        "system": "시스템"
+      },
+      "accent": {
+        "title": "강조색",
+        "description": "앱 전체의 활성 상태에 색상을 입히는 브랜드 강조색을 선택합니다.",
+        "label": "강조색",
+        "options": {
+          "default": "기본",
+          "blue": "파란색",
+          "cyan": "시안",
+          "violet": "보라색",
+          "pink": "분홍색",
+          "amber": "호박색",
+          "green": "녹색",
+          "red": "빨간색"
+        }
+      },
+      "colors": {
+        "title": "색상",
+        "description": "강조, 배경 및 전경.",
+        "background": {
+          "label": "배경",
+          "description": "표면 배경색을 재정의합니다."
+        },
+        "foreground": {
+          "label": "전경",
+          "description": "본문 텍스트 색을 재정의합니다."
+        },
+        "resetToDefault": "기본값으로 재설정"
+      },
+      "fontFamily": {
+        "uiLabel": "UI 글꼴",
+        "uiDescription": "UI 전체에서 사용되는 글꼴 모음입니다.",
+        "codeLabel": "코드 글꼴",
+        "codeDescription": "코드 표면에서 사용되는 글꼴 모음입니다.",
+        "options": {
+          "ui": {
+            "theme": "테마 기본",
+            "system": "시스템",
+            "geist": "Geist",
+            "inter": "Inter",
+            "sf": "SF Pro"
+          },
+          "code": {
+            "theme": "테마 기본",
+            "system": "시스템 모노",
+            "geist-mono": "Geist Mono",
+            "sf-mono": "SF Mono",
+            "jetbrains-mono": "JetBrains Mono"
+          }
+        }
+      },
+      "contrast": {
+        "title": "명암비",
+        "description": "텍스트 명암비를 미세 조정합니다(50 = 변경 없음).",
+        "label": "명암비 수준"
+      },
+      "pointerCursor": {
+        "title": "포인터 커서 사용",
+        "description": "호버-대화형 요소에서 포인터 커서로 전환합니다.",
+        "label": "대화형 요소에 포인터 커서"
+      },
+      "diffMarkers": {
+        "title": "차이 표시자",
+        "description": "색상 밴드 또는 각 변경된 줄의 +/- 문자를 표시합니다.",
+        "label": "차이 표시자 스타일",
+        "color": "색상",
+        "plusminus": "+/-"
+      },
+      "fontSmoothing": {
+        "title": "글꼴 부드러움",
+        "description": "macOS 기본 글꼴 안티앨리어싱을 적용합니다.",
+        "label": "기본 글꼴 부드러움"
+      },
+      "typography": {
+        "title": "활자",
+        "description": "UI 및 코드 표면의 기본 글꼴 크기입니다.",
+        "uiFontSize": "UI 글꼴 크기",
+        "uiFontSizeDescription": "기본 UI 글꼴 크기를 조정합니다.",
+        "codeFontSize": "코드 글꼴 크기",
+        "codeFontSizeDescription": "기본 코드 글꼴 크기를 조정합니다."
+      },
+      "fontSize": {
+        "followTheme": "테마",
+        "customize": "사용자 정의"
+      },
+      "motion": {
+        "title": "동작 감소",
+        "description": "애니메이션을 줄이거나 시스템 설정과 일치합니다.",
+        "label": "동작 설정",
+        "system": "시스템",
+        "on": "켜짐",
+        "off": "꺼짐"
+      },
+      "surface": {
+        "title": "반투명 사이드바",
+        "description": "사이드바에 반투명 재료를 적용합니다."
+      },
+      "transparency": {
+        "label": "반투명 사이드바",
+        "description": "사이드바에 반투명 재료를 적용합니다."
+      }
+    }
+  },
+  "legal": {
+    "version": "버전",
+    "effective": "유효",
+    "notFound": "이 문서를 사용할 수 없습니다.",
+    "backHome": "홈으로 돌아가기"
+  },
+  "commandPalette": {
+    "ariaLabel": "명령 팔레트",
+    "placeholder": "명령을 입력하거나 검색…",
+    "empty": "결과를 찾을 수 없습니다.",
+    "sections": {
+      "navigation": "탐색",
+      "actions": "작업",
+      "settings": "설정",
+      "account": "계정",
+      "admin": "관리자",
+      "help": "도움말"
+    },
+    "commands": {
+      "nav": {
+        "home": "홈",
+        "settings": "설정",
+        "billing": "청구",
+        "team": "팀",
+        "apiKeys": "API 키",
+        "notifications": "알림",
+        "auditLog": "감사 로그",
+        "webhooks": "Webhooks",
+        "admin": "관리자"
+      },
+      "action": {
+        "inviteMember": "팀 멤버 초대",
+        "createApiKey": "API 키 생성",
+        "switchOrganization": "조직 전환"
+      },
+      "settings": {
+        "themeLight": "밝은 테마로 전환",
+        "themeDark": "어두운 테마로 전환",
+        "themeSystem": "시스템 테마 사용"
+      },
+      "account": {
+        "signOut": "로그아웃"
+      },
+      "help": {
+        "reportIssue": "문제 보고",
+        "shortcuts": "키보드 단축키"
+      }
+    }
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "개인정보 선택사항",
+      "description": "쿠키를 사용하여 경험을 개선하고, 사이트 트래픽을 분석하며, 콘텐츠를 개인화합니다. 허용할 범주를 선택하세요."
+    },
+    "button": {
+      "acceptAll": "모두 수락",
+      "savePreferences": "선호도 저장"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "필수",
+        "description": "사이트 작동에 필요합니다. 비활성화할 수 없습니다."
+      },
+      "functional": {
+        "label": "기능",
+        "description": "선호도(언어, 테마, 레이아웃)를 기억합니다."
+      },
+      "analytics": {
+        "label": "분석",
+        "description": "제품을 개선할 수 있도록 익명 사용 데이터를 수집합니다."
+      },
+      "marketing": {
+        "label": "마케팅",
+        "description": "제3자 플랫폼의 개인화된 광고 및 리타게팅."
+      }
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "알림",
+      "description": "모든 알림을 한 곳에서 관리합니다.",
+      "filter": {
+        "all": "전체",
+        "unread": "읽지 않음"
+      },
+      "actions": {
+        "markAllRead": "모두 읽음으로 표시",
+        "markRead": "읽음으로 표시",
+        "archive": "보관",
+        "loadMore": "더 불러오기",
+        "loading": "로드 중...",
+        "selected": "{count}개 선택됨"
+      },
+      "empty": {
+        "all": "모두 처리했습니다.",
+        "unread": "읽지 않은 알림이 없습니다."
+      },
+      "errors": {
+        "load": "알림을 불러올 수 없습니다.",
+        "network": "네트워크 오류입니다. 다시 시도하세요.",
+        "markRead": "알림을 읽음으로 표시할 수 없습니다.",
+        "archive": "알림을 보관할 수 없습니다.",
+        "bulkMarkRead": "일부 알림을 읽음으로 표시할 수 없습니다."
+      },
+      "inbox": {
+        "noBackend": "받은편지함에는 지속적인 알림 백엔드가 필요합니다. 공급자 구성을 확인하세요.",
+        "emptyCaughtUp": "받은편지함이 비어 있습니다.",
+        "emptyChangelog": "변경 로그 업데이트가 여기에 표시됩니다."
+      }
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "좋은 아침",
+      "afternoon": "좋은 오후",
+      "evening": "좋은 저녁"
+    },
+    "home": {
+      "connectorsPill": "커넥터로 앱을 강화하세요.",
+      "subtitle": "프롬프트를 입력하거나 어디서나 ⌘K를 누르거나 워크스페이스 표면으로 바로 이동합니다.",
+      "promptPlaceholder": "뭔가 궁금한가요?",
+      "actions": {
+        "connect": "통합 연결",
+        "theme": "테마 플레이그라운드",
+        "audit": "감사 로그",
+        "billing": "청구"
+      }
+    },
+    "commandSurface": {
+      "noAuth": "선택한 제공자에 대해 인증이 설정되지 않았습니다. 사용자 세션을 활성화하려면 제공자 시크릿을 설정하세요."
+    },
+    "commandCenter": {
+      "description": "한 가지 작업으로 시작하세요: Sailor에게 묻거나, 워크스페이스 신호를 검사하거나, 작업을 자동화 표면으로 라우팅합니다.",
+      "openSailor": "Sailor AI 열기",
+      "viewAnalytics": "분석 보기"
+    },
+    "workspaceSnapshot": {
+      "title": "워크스페이스 스냅샷",
+      "description": "최신 웨어하우스 일 · {day}",
+      "viewAnalytics": "분석 보기 →",
+      "metrics": {
+        "activeUsers": "활성 사용자",
+        "totalEvents": "전체 이벤트",
+        "conversions": "전환",
+        "revenue": "수익"
+      },
+      "details": {
+        "activeUsers": "로그인한 사용자",
+        "totalEvents": "캡처된 이벤트",
+        "conversions": "정규 작업",
+        "revenue": "인식된 수익"
+      },
+      "meta": {
+        "snapshot": "스냅샷",
+        "cadence": "빈도",
+        "tenant": "테넌트",
+        "daily": "매일",
+        "latestDay": "{day}",
+        "users": "테넌트 사용자",
+        "events": "이벤트 스트림",
+        "funnel": "퍼널",
+        "billing": "청구"
+      }
+    },
+    "documentPipeline": {
+      "title": "문서 파이프라인",
+      "description": "소스 파일을 Origin 작업 큐로 보냅니다.",
+      "intakeTitle": "문서 접수",
+      "intakeDescription": "PDF, Markdown, 텍스트 또는 Word 문서",
+      "chooseDocument": "문서 선택",
+      "startParseTask": "파싱 작업 시작",
+      "queued": "대기 중",
+      "fileInputLabel": "문서 파일",
+      "fallbackError": "문서 작업이 실패했습니다.",
+      "taskStatus": "작업 상태",
+      "progressLabel": "작업 진행률",
+      "refreshStatus": "새로고침",
+      "cancelTask": "취소",
+      "statusError": "작업 상태를 새로고칠 수 없습니다.",
+      "cancelError": "작업을 취소할 수 없습니다.",
+      "statusQueued": "대기 중",
+      "statusRunning": "실행 중",
+      "statusSucceeded": "성공",
+      "statusFailed": "실패",
+      "statusCancelled": "취소됨",
+      "resultReady": "결과 준비됨",
+      "taskError": "작업 오류",
+      "updatedAt": "업데이트됨"
+    },
+    "recentSessions": {
+      "title": "이전 작업 계속하기",
+      "subtitle": "{count, plural, =0 {세션 없음} other {최근 # 개 세션}}",
+      "viewAll": "모두 보기 →",
+      "newChat": "새 대화",
+      "untitled": "제목 없는 세션",
+      "messageCount": "{count, plural, =1 {1개 메시지} other {# 개 메시지}}"
+    },
+    "gettingStarted": {
+      "title": "시작하기",
+      "description": "{done}/{total} 완료됨 · 설정을 완료하여 전체 워크스페이스 잠금 해제",
+      "progressLabel": "설정 진행률",
+      "tasks": {
+        "team": {
+          "label": "팀 멤버 초대",
+          "description": "워크스페이스에 최소 한 명의 협력자를 초대합니다."
+        },
+        "api": {
+          "label": "API 키 생성",
+          "description": "워크스페이스 엔드포인트에 프로그래밍 방식으로 접근합니다."
+        },
+        "integration": {
+          "label": "통합 연결",
+          "description": "Stripe, Slack, 웹훅, 큐 등."
+        },
+        "ai": {
+          "label": "Sailor AI 열기",
+          "description": "Chat, Data 또는 Workflow 모드를 시도합니다."
+        }
+      }
+    }
+  },
+  "Sidebar": {
+    "projects": "프로젝트",
+    "noThreads": "대화 없음",
+    "expandAll": "모두 확장",
+    "collapseAll": "모두 축소",
+    "sectionMore": "더 많은 옵션",
+    "newProject": "새 프로젝트",
+    "restoredGroups": "이전에 확장된 그룹을 복원했습니다.",
+    "newProjectPlaceholder": "프로젝트 이름",
+    "newProjectDefault": "제목 없음",
+    "newProjectSuccess": "프로젝트가 생성되었습니다.",
+    "newProjectError": "프로젝트를 만들 수 없습니다.",
+    "sortBy": "정렬 기준",
+    "sortRecent": "최근 활동",
+    "sortAlphabetical": "사전순",
+    "sortCreated": "생성 날짜",
+    "archiveAll": "모두 보관",
+    "comingV2": "v2에서 제공 예정"
+  },
+  "startupOs": {
+    "milestone": {
+      "firstRoom": "첫 번째 방이 준비되었습니다.",
+      "firstFolder": "많은 회사가 폴더로 시작됩니다.",
+      "firstTable": "첫 번째 테이블에 두 번째 의자가 있습니다.",
+      "firstSignal": "실제 세계가 말하기 시작했습니다.",
+      "firstShip": "세상이 처음으로 봤습니다.",
+      "firstBeliever": "오늘부터 당신은 더 이상 자신만을 위해 만들지 않습니다.",
+      "firstRevenue": "꿈이 현금 흐름을 가지고 있습니다.",
+      "firstReturn": "재방문이 방문보다 중요합니다.",
+      "firstTeam": "세 사람이 회사를 형성할 수 있습니다.",
+      "firstCrowd": "첫 번째 테이블이 비좁아집니다.",
+      "firstReset": "재시작이 더 정직한 시작입니다.",
+      "firstPublic": "미래의 일부를 공개합니다.",
+      "firstDemo": "이것은 쇼가 아닙니다. 시험입니다.",
+      "graduation": "당신은 기초에서 벗어났습니다. 앞의 길은 더 강한 도구가 필요합니다."
+    },
+    "emptyState": {
+      "default": "많은 회사가 폴더로 시작됩니다.",
+      "integrations": "설정된 커넥터가 없습니다.",
+      "creditActivity": "첫 번째 요청 후 적립 활동이 표시됩니다.",
+      "usageData": "조직이 요청하기 시작하면 사용 데이터가 표시됩니다.",
+      "apiKeys": "아직 키가 없습니다.",
+      "apiKeysCta": "첫 번째 키 생성",
+      "teamMembers": "한 명은 시작할 수 있고 몇 명이 만들 수 있습니다.",
+      "cofounders": "당신을 믿는 첫 번째 사람이 아직 나타나지 않았습니다.",
+      "cofoundersDescription": "당신과 다른 창업자가 모두 관심 신호를 보내면 여기에 나타납니다.",
+      "cofoundersAction": "공동 창업자 찾기",
+      "growthChart": "활동이 시작되면 추세 데이터가 표시됩니다.",
+      "revenueChart": "거래가 시작되면 수익 데이터가 표시됩니다.",
+      "webhookDeliveries": "첫 번째 이벤트 후 전달이 표시됩니다.",
+      "webhookEndpoints": "위에 엔드포인트를 추가하여 이벤트 수신을 시작합니다.",
+      "accessInvites": "발급된 초대 코드가 없습니다."
+    },
+    "success": "첫 번째 방이 준비되었습니다.",
+    "failure": "재시작이 더 정직한 시작입니다.",
+    "errors": {
+      "loadMatches": "매치를 불러올 수 없습니다.",
+      "loadMatchesDescription": "문제가 발생했습니다. 새로고침하여 다시 시도하세요.",
+      "loadWebhookDeliveries": "전달을 불러올 수 없습니다.",
+      "replayWebhookDelivery": "재전송이 진행되지 않았습니다.",
+      "loadWebhookEndpoints": "엔드포인트를 불러올 수 없습니다."
+    },
+    "team": "한 명은 시작할 수 있고 몇 명이 만들 수 있습니다.",
+    "revenue": "꿈이 현금 흐름을 가지고 있습니다.",
+    "growth": "신호가 더 강해지고 있습니다.",
+    "deployment": {
+      "primary": "세상이 처음으로 봤습니다.",
+      "echo": "마침내 localhost를 떠났습니다."
+    },
+    "onboarding": "준비가 필요 없습니다. 시작하면 됩니다.",
+    "graduation": "당신은 기초에서 벗어났습니다. {tool}을 시도해 앞의 길을 나아가세요.",
+    "company": {
+      "emptyTitle": "첫 번째 컨텍스트 타워가 여기서 시작됩니다.",
+      "emptyDescription": "Startup OS에서 회사를 컴파일하여 컨텍스트 타워를 보고 편집합니다.",
+      "emptyAction": "Startup OS 열기",
+      "notice": {
+        "needsProvider": "AI 제공자 키를 연결하여 필드를 자동 채웁니다.",
+        "generateFailed": "생성이 완료되지 않았습니다.",
+        "saveFailed": "변경 사항이 저장되지 않았습니다."
+      },
+      "action": {
+        "save": "저장",
+        "saving": "저장 중…",
+        "cancel": "취소",
+        "open": "Startup OS 열기"
+      }
+    },
+    "execution": {
+      "noBets": "아직 내기가 없습니다.",
+      "noRuns": "활성 실행이 없습니다."
+    },
+    "fileTree": {
+      "empty": "이 프로젝트에는 아직 파일이 없습니다."
+    }
+  },
+  "selectOrg": {
+    "invitation": {
+      "emptyTitle": "워크스페이스가 진행 중입니다.",
+      "emptyDescription": "초대가 계속 동기화 중일 수 있습니다. 이 페이지를 새로고침하거나 별도의 워크스페이스를 생성합니다."
+    },
+    "billing": {
+      "emptyTitle": "청구하기 전에 워크스페이스를 생성합니다.",
+      "emptyDescription": "청구 작업에는 활성 워크스페이스가 필요합니다. 먼저 생성한 후 청구로 돌아옵니다."
+    },
+    "default": {
+      "emptyTitle": "첫 번째 워크스페이스가 여기서 시작됩니다.",
+      "emptyDescription": "워크스페이스를 생성하여 시작합니다."
+    }
+  }
+}

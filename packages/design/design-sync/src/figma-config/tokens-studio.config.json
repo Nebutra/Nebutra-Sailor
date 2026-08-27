@@ -1,0 +1,34 @@
+{
+  "$schema": "https://raw.githubusercontent.com/tokens-studio/figma-plugin/main/schemas/tokens-studio-config.schema.json",
+  "name": "Nebutra Design Tokens",
+  "version": "0.1.0",
+  "description": "Bidirectional sync between Tokens Studio for Figma and packages/design-tokens (W3C DTCG). Owned by @nebutra/design-sync's figma provider.",
+  "syncProvider": "github",
+  "git": {
+    "repository": "Nebutra/Nebutra-Sailor",
+    "defaultBranch": "main",
+    "syncBranchPrefix": "tokens-studio/",
+    "tokenPath": "packages/design/design-tokens/tokens",
+    "themesPath": ".tokens-studio/themes.json",
+    "metadataPath": ".tokens-studio/metadata.json"
+  },
+  "format": {
+    "spec": "dtcg",
+    "indent": 2,
+    "trailingNewline": true,
+    "useUiCompatibleTypes": true
+  },
+  "storage": {
+    "multiFile": true,
+    "tokenSetSeparator": "/"
+  },
+  "permissions": {
+    "allowDestructiveSync": false,
+    "requirePullRequest": true,
+    "protectedSets": ["core", "semantic"]
+  },
+  "ui": {
+    "language": "en",
+    "showThemeMatrix": true
+  }
+}

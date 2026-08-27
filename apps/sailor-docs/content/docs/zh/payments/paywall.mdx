@@ -1,0 +1,156 @@
+---
+title: 付费墙
+description: 使用 requirePlan 和 PlanGate 组件按计划限制 UI 功能和 API 路由的访问。
+---
+
+## 概览
+
+Nebutra 提供两种互补的计划访问控制机制：
+
+| 机制 | 适用场景 |
+|------|---------|
+| `requirePlan(planId)` | 服务端：API 路由中间件、Server Components、Server Actions |
+| `<PlanGate require="plan">` | 客户端：React 组件、条件式 UI 渲染 |
+
+两者均从数据库读取当前租户的有效计划——不依赖客户端状态，无法被伪造。
+
+## Server Component 付费墙
+
+在 Next.js Server Component 中使用 `requirePlan`，对不满足计划要求的用户进行重定向：
+
+```typescript apps/web/src/app/dashboard/analytics/page.tsx
+import { requirePlan } from "@nebutra/billing";
+import { getCurrentTenant } from "@nebutra/tenant";
+
+export default async function AnalyticsPage() {
+  const tenant = getCurrentTenant();
+
+  // 如果租户不是 PRO 或更高计划，则重定向至 /billing/upgrade
+  await requirePlan("pro", tenant.tenantId);
+
+  return <AnalyticsDashboard />;
+}
+```
+
+### `requirePlan` 行为说明
+
+| 租户计划 | 要求计划 | 结果 |
+|---------|---------|------|
+| `free` | `pro` | 重定向至 `/billing/upgrade` |
+| `pro` | `pro` | 通过 |
+| `enterprise` | `pro` | 通过（enterprise ≥ pro） |
+| `pro` | `enterprise` | 重定向至 `/billing/upgrade` |
+
+<Note>
+计划层级关系为 `free < pro < enterprise`。`requirePlan("pro")` 允许 `pro` 和 `enterprise` 租户通过。
+</Note>
+
+## API 路由门控
+
+使用 `requirePlan` 作为中间件保护 API 路由：
+
+```typescript backends/gateway/src/routes/exports.ts
+import { requirePlan } from "@nebutra/billing";
+import { getCurrentTenant } from "@nebutra/tenant";
+
+app.post("/api/v1/exports", async (c) => {
+  const tenant = getCurrentTenant();
+
+  // 如果计划不满足要求，返回 403 Forbidden 和结构化错误
+  await requirePlan("pro", tenant.tenantId, { throwOnFail: true });
+
+  // ... 处理导出逻辑
+});
+```
+
+当 `throwOnFail: true` 时，`requirePlan` 抛出结构化错误，由 API 网关错误处理器转换为：
+
+```json
+HTTP 403 Forbidden
+
+{
+  "success": false,
+  "error": {
+    "code": "PLAN_REQUIRED",
+    "message": "此功能需要 PRO 计划。",
+    "details": {
+      "requiredPlan": "pro",
+      "currentPlan": "free",
+      "upgradeUrl": "https://app.nebutra.com/billing/upgrade"
+    }
+  }
+}
+```
+
+## React `<PlanGate>` 组件
+
+使用 `<PlanGate>` 根据当前租户的计划条件渲染 UI。这是一个 Server Component——计划数据不会暴露给客户端。
+
+```typescript
+import { PlanGate } from "@nebutra/billing/react";
+
+// 硬拦截 — 计划不满足时显示升级提示
+<PlanGate require="pro">
+  <AdvancedAnalytics />
+</PlanGate>
+
+// 自定义降级内容 — 显示自定义升级 UI
+<PlanGate require="pro" fallback={<UpgradeBanner feature="高级分析" />}>
+  <AdvancedAnalytics />
+</PlanGate>
+
+// 静默隐藏 — 计划不满足时不渲染任何内容（无升级提示）
+<PlanGate require="pro" fallback={null}>
+  <ExportButton />
+</PlanGate>
+```
+
+### 默认升级提示
+
+未提供 `fallback` 时，`<PlanGate>` 渲染内置升级提示：
+
+```
+┌────────────────────────────────────────────────┐
+│  🔒  此功能需要 PRO 计划。                        │
+│                                                  │
+│  [升级至 PRO →]                                  │
+└────────────────────────────────────────────────┘
+```
+
+按钮链接至 `/billing/upgrade`。
+
+## 升级重定向目标
+
+`/billing/upgrade` 路由会创建 Stripe 结账会话并重定向用户。该路由已内置，仅需配置环境变量，无需额外设置。
+
+如需自定义升级页面（例如在重定向前展示计划对比表），请编辑：
+
+```
+apps/web/src/app/billing/upgrade/page.tsx
+```
+
+## 升级提示与硬拦截的选择
+
+参考以下原则选择软提示或硬拦截：
+
+| 场景 | 建议 |
+|------|------|
+| 功能可被发现但需付费解锁（如导出按钮） | 软提示 — 使用带升级 CTA 的 `<PlanGate>` |
+| 路由仅对付费计划有意义（如 SSO 设置） | 在 Server Component 中通过 `requirePlan` 硬重定向 |
+| 敏感数据绝对不能被 FREE 用户访问 | 同时在 Server Component **和** API 路由上进行硬拦截 |
+| 功能预览 / 预告 | 通过 `<PlanGate fallback={...}>` 渲染带提示的禁用/锁定版本 |
+
+<Warning>
+切勿仅依赖客户端的计划检查。务必在服务端使用 `requirePlan` 执行访问控制。有经验的用户可以绕过任何客户端守卫。
+</Warning>
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="订阅" icon="refresh-cw" href="/zh/payments/subscriptions">
+    结账流程与订阅生命周期状态。
+  </Card>
+  <Card title="管理计划" icon="sliders" href="/zh/payments/manage-plans">
+    定义计划限额并添加新的账单层级。
+  </Card>
+</CardGroup>

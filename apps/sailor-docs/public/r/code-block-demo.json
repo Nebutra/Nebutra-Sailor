@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "code-block-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@/components",
+    "@nebutra/ui",
+    "tailwindcss"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/code-block-demo.tsx",
+      "content": "import { CodeBlock } from \"@nebutra/ui/primitives\";\n\nexport function CodeBlockDemo() {\n  const codeFiles = [\n    {\n      title: \"button.tsx\",\n      language: \"tsx\",\n      code: `import { Button } from \"@/components/ui/button\"\n\nexport function ButtonDemo() {\n  return (\n    <Button variant=\"default\" size=\"lg\">\n      Click me\n    </Button>\n  )\n}`,\n      highlightedLines: [4, 5, 6],\n    },\n    {\n      title: \"tailwind.config.ts\",\n      language: \"typescript\",\n      code: `import type { Config } from \"tailwindcss\"\n\nconst config = {\n  darkMode: [\"class\"],\n  content: [\n    './pages/**/*.{ts,tsx}',\n    './components/**/*.{ts,tsx}',\n    './app/**/*.{ts,tsx}',\n    './src/**/*.{ts,tsx}',\n  ],\n  prefix: \"\",\n  theme: {\n    extend: {},\n  },\n  plugins: [require(\"tailwindcss-animate\")],\n} satisfies Config\n\nexport default config`,\n      addedLines: [15],\n      removedLines: [11],\n    },\n  ];\n\n  return (\n    <div className=\"max-w-3xl p-8 mx-auto w-full\">\n      <CodeBlock\n        files={codeFiles}\n        defaultTitle=\"button.tsx\"\n        showLineNumbers={true}\n        showLanguageSwitcher={true}\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/tabs-demo.tsx",
+      "content": "\"use client\";\n\nimport { Tabs } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nconst tabs = [\n  { title: \"Apple\", value: \"apple\" },\n  { title: \"Orange\", value: \"orange\" },\n  { title: \"Mango\", value: \"mango\" },\n] as const;\n\nexport function TabsDemo() {\n  const [selected, setSelected] = useState(\"apple\");\n\n  return (\n    <Tabs\n      aria-label=\"Fruit views\"\n      selected={selected}\n      setSelected={setSelected}\n      tabs={tabs}\n      className=\"w-full max-w-md\"\n    />\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

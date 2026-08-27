@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "label-3-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/label-3-demo.tsx",
+      "content": "\"use client\";\n\nimport { Label, Textarea } from \"@nebutra/ui/primitives\";\nexport function Label3Demo() {\n  return (\n    <div className=\"space-y-1 max-w-sm w-full\">\n      <Label htmlFor=\"bio\">Bio</Label>\n      <p id=\"bio-hint\" className=\"text-xs mb-2 text-muted-foreground\">\n        Tell us a bit about yourself. Max 200 characters.\n      </p>\n      <Textarea id=\"bio\" aria-describedby=\"bio-hint\" maxLength={200} />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

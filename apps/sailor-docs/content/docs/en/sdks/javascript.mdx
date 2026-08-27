@@ -1,0 +1,226 @@
+---
+title: JavaScript / TypeScript SDK
+description: Official @nebutra/sdk reference — installation, initialization, and full method reference.
+---
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npm install @nebutra/sdk
+```
+
+```bash pnpm
+pnpm add @nebutra/sdk
+```
+
+```bash yarn
+yarn add @nebutra/sdk
+```
+
+</CodeGroup>
+
+## Initialize the client
+
+```typescript
+import { createClient } from "@nebutra/sdk";
+
+const nebutra = createClient({
+  apiKey: process.env.NEBUTRA_API_KEY!,
+  orgId: process.env.NEBUTRA_ORG_ID!,
+  // Optional
+  baseUrl: "https://api.nebutra.com",  // override for self-hosted
+  timeout: 30000,                       // ms, default 30000
+  retry: {
+    maxAttempts: 3,
+    backoff: "exponential",
+  },
+});
+```
+
+## Authentication
+
+### Verify a JWT token
+
+```typescript
+import { verifyToken } from "@nebutra/sdk/server";
+
+const payload = await verifyToken(bearerToken, {
+  apiKey: process.env.NEBUTRA_API_KEY!,
+});
+// { userId, orgId, scopes, plan }
+```
+
+### Create an API key
+
+```typescript
+const key = await nebutra.apiKeys.create({
+  name: "CI/CD Pipeline",
+  scopes: ["project:read"],
+  expiresAt: new Date("2027-01-01"),
+});
+// key.secret is shown ONCE
+```
+
+## Organizations
+
+```typescript
+// Get current org
+const org = await nebutra.orgs.get(orgId);
+
+// Update org
+await nebutra.orgs.update(orgId, { name: "New Name" });
+
+// List members
+const members = await nebutra.members.list({ orgId });
+
+// Invite a member
+await nebutra.members.invite({
+  orgId,
+  email: "alice@example.com",
+  role: "MEMBER",
+});
+
+// Remove a member
+await nebutra.members.remove({ orgId, userId });
+```
+
+## Projects
+
+```typescript
+// List projects (scoped to org automatically)
+const { data, meta } = await nebutra.projects.list({
+  limit: 20,
+  cursor: meta.next_cursor,
+});
+
+// Get a project
+const project = await nebutra.projects.get("proj_123");
+
+// Create a project
+const project = await nebutra.projects.create({
+  name: "My Project",
+  description: "Optional description",
+});
+
+// Update a project
+await nebutra.projects.update("proj_123", { name: "New Name" });
+
+// Delete a project
+await nebutra.projects.delete("proj_123");
+```
+
+## Permissions
+
+```typescript
+import { can, requirePermission } from "@nebutra/sdk/permissions";
+
+// Check a permission
+const allowed = await can(userId, "project:delete", { orgId });
+
+// Throw 403 if not allowed
+await requirePermission("project:delete");
+```
+
+## Metering & quotas
+
+```typescript
+// Get quota usage
+const quota = await nebutra.metering.getQuota("api_calls");
+// { limit, used, remaining, percentage, reset_at }
+
+// Ingest a usage event
+await nebutra.metering.ingest({
+  metricId: "api_calls",
+  tenantId: orgId,
+  quantity: 1,
+});
+```
+
+## Webhooks
+
+```typescript
+// Create a webhook endpoint
+const endpoint = await nebutra.webhooks.createEndpoint({
+  url: "https://your-app.com/webhooks",
+  events: ["project.created", "invoice.paid"],
+});
+
+// List endpoints
+const endpoints = await nebutra.webhooks.listEndpoints();
+
+// Delete an endpoint
+await nebutra.webhooks.deleteEndpoint("wh_123");
+
+// Send a custom event
+await nebutra.webhooks.sendEvent({
+  id: crypto.randomUUID(),
+  eventType: "custom.event",
+  payload: { ... },
+  tenantId: orgId,
+});
+```
+
+## Error handling
+
+```typescript
+import {
+  NebutraError,
+  NotFoundError,
+  ValidationError,
+  ForbiddenError,
+  RateLimitError,
+} from "@nebutra/sdk";
+
+try {
+  await nebutra.projects.get("proj_123");
+} catch (error) {
+  if (error instanceof NotFoundError) {
+    // 404 — resource not found
+  } else if (error instanceof ForbiddenError) {
+    // 403 — insufficient permissions
+  } else if (error instanceof ValidationError) {
+    console.error(error.fields); // Field-level errors
+  } else if (error instanceof RateLimitError) {
+    // Wait error.retryAfter seconds
+    await sleep(error.retryAfter * 1000);
+  } else if (error instanceof NebutraError) {
+    console.error(error.code, error.requestId);
+  }
+}
+```
+
+## TypeScript types
+
+```typescript
+import type {
+  Organization,
+  Member,
+  Project,
+  ApiKey,
+  Role,
+  Plan,
+  Scope,
+} from "@nebutra/sdk/types";
+```
+
+## React hooks
+
+For React/Next.js, install `@nebutra/react`:
+
+```bash
+npm install @nebutra/react
+```
+
+```typescript
+import {
+  useNebutraUser,
+  useNebutraOrg,
+  useNebutraToken,
+  Can,
+  NebutraProvider,
+} from "@nebutra/react";
+```
+
+See the [React Quickstart](/quickstart/react) for usage examples.

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "reaction-chip-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/reaction-chip-demo.tsx",
+      "content": "\"use client\";\n\nimport { Avatar, AvatarFallback, AvatarImage, MessageWithReactions } from \"@nebutra/ui/primitives\";\n\nexport function ReactionChipDemo() {\n  return (\n    <div className=\"gap-6 p-8 flex min-h-[400px] w-full flex-col items-center justify-center bg-muted/20\">\n      <div className=\"gap-4 max-w-md flex w-full items-start\">\n        <Avatar className=\"mt-1\">\n          <AvatarImage src=\"https://github.com/shadcn.png\" />\n          <AvatarFallback>CN</AvatarFallback>\n        </Avatar>\n        <div className=\"gap-1 flex w-full flex-col\">\n          <div className=\"gap-2 flex items-baseline\">\n            <span className=\"font-semibold text-sm\">Designer Bob</span>\n            <span className=\"text-xs text-muted-foreground\">11:34 AM</span>\n          </div>\n          <MessageWithReactions\n            text=\"I just updated the Figma file with the new hero section designs. Everyone, please take a look!\"\n            reactionOptions={[\"👀\", \"🔥\", \"🙌\", \"❤️\", \"👍\"]}\n          />\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

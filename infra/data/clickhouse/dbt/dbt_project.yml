@@ -1,0 +1,28 @@
+name: nebutra_clickhouse
+version: 1.0.0
+config-version: 2
+
+profile: nebutra_clickhouse
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+analysis-paths: ["analysis"]
+macro-paths: ["macros"]
+
+target-path: target
+clean-targets:
+  - target
+  - dbt_packages
+
+models:
+  nebutra_clickhouse:
+    +materialized: table
+    bronze:
+      +schema: bronze
+      +ttl: "event_time + INTERVAL 90 DAY DELETE"
+    silver:
+      +schema: silver
+      +ttl: "event_time + INTERVAL 180 DAY DELETE"
+    gold:
+      +schema: gold
+      +ttl: "event_date + INTERVAL 365 DAY DELETE"

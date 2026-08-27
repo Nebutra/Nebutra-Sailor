@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — Stesen alat dalam talian",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "Alat codec, teks, hashing, dokumen, dan imej dalam talian."
+  },
+  "nav": {
+    "main": "Navigasi utama",
+    "homeAria": "Laman utama {brandName} Forge",
+    "tools": "Alat",
+    "wallet": "Dompet",
+    "api": "API",
+    "routerAria": "Router {brandName}",
+    "categoriesAria": "Kategori alat",
+    "languageAria": "Tukar bahasa"
+  },
+  "tool": {
+    "breadcrumbAria": "Jejak roti",
+    "workspace": "Ruang kerja",
+    "workspaceHint": "Tempatan atau pelayan · laluan sama seperti API",
+    "api": "API",
+    "apiHint": "Kontrak sama seperti halaman. Gunakan kunci yang disahkan dalam pengeluaran.",
+    "related": "Alat berkaitan"
+  },
+  "auth": {
+    "signIn": "Log masuk",
+    "signUp": "Daftar",
+    "signOut": "Log keluar"
+  },
+  "footer": {
+    "navAria": "Pengek",
+    "blurb": "Stesen alat dalam talian. Selesaikan tugas dalam pelayar, atau automasi melalui API / MCP.",
+    "product": "Produk",
+    "developers": "Pembangun",
+    "company": "Syarikat",
+    "docs": "Dokumen integrasi",
+    "website": "Laman web",
+    "privacy": "Privasi"
+  },
+  "home": {
+    "eyebrow": "Lihat. Panggil.",
+    "title": "Kunci Swiss untuk alat dalam talian",
+    "subtitle": "Pengekodan, teks, pengekodan, dokumen, dan pemprosesan imej. Selesaikan dalam pelayar, atau automasi melalui API / MCP — satu pelaksanaan.",
+    "toolCount": "{count} alat",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "Cari: kiraan perkataan, base64, json, cap masa…",
+    "aria": "Cari alat",
+    "emptyTitle": "Tiada alat sepadan “{query}”",
+    "emptyHint": "Cuba kata kunci lain, atau pilih alat dari kategori di bawah."
+  },
+  "categories": {
+    "codec": {
+      "label": "Pengekodan",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "Pengesahan China",
+      "hint": "ID · telefon"
+    },
+    "data": {
+      "label": "Data",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "Pembangun",
+      "hint": "Regex · SQL · warna · UUID"
+    },
+    "doc": {
+      "label": "Dokumen",
+      "hint": "Markdown · PDF gabung/pisah"
+    },
+    "finance": {
+      "label": "Kewangan",
+      "hint": "Jumlah kepada perkataan"
+    },
+    "hash": {
+      "label": "Hash & keselamatan",
+      "hint": "MD5 · SHA · HMAC · kata laluan"
+    },
+    "image": {
+      "label": "Imej",
+      "hint": "Mampatkan · QR · tukar"
+    },
+    "life": {
+      "label": "Kalkulator kehidupan",
+      "hint": "Rumah · BMI · hubungan keluarga"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "Token · kos · skema"
+    },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
+    "security": {
+      "label": "Keselamatan",
+      "hint": "Penjana kata laluan"
+    },
+    "text": {
+      "label": "Teks",
+      "hint": "Kiraan perkataan · CJK · pinyin · Perbezaan"
+    },
+    "time": {
+      "label": "Masa",
+      "hint": "Matercapaian · zon masa · Cron · lunar"
+    },
+    "unit": {
+      "label": "Unit",
+      "hint": "Panjang · berat · suhu · data"
+    },
+    "template": {
+      "label": "Templat",
+      "hint": ".gitignore · LICENSE · Dockerfile · README"
+    }
+  },
+  "runners": {
+    "common": {
+      "run": "Jalankan",
+      "running": "Sedang berjalan…",
+      "copy": "Salin",
+      "copied": "Disalin",
+      "sameAsApi": "Laluan sama seperti API · enjin OSS",
+      "mustBeNumber": "{label} mesti nombor",
+      "base64Loaded": "Beban Base64 dimuat",
+      "workspaceMissing": "Ruang kerja tidak dikonfigurasi: {slug}",
+      "yes": "Ya",
+      "no": "Tidak",
+      "text": "Teks",
+      "input": "Input",
+      "output": "Output",
+      "outputPlaceholder": "Hasil muncul di sini",
+      "localRun": "Jalankan setempat",
+      "serverRun": "Jalankan pada pelayan",
+      "serverVerify": "Pengesahan pelayan",
+      "outputPreview": "Pratonton output",
+      "mode": "Mod",
+      "encode": "Encode",
+      "decode": "Decode",
+      "file": "Fail",
+      "clear": "Kosongkan",
+      "length": "Panjang: {n}",
+      "bytes": "{bytes} bait",
+      "download": "Muat turun",
+      "format": "Format",
+      "formatting": "Pemformatan…",
+      "dialect": "Dialek",
+      "color": "Warna",
+      "pickColor": "Pilih warna",
+      "content": "Kandungan",
+      "algorithm": "Algoritma",
+      "encoding": "Pengekodan",
+      "message": "Mesej",
+      "secret": "Rahsia",
+      "password": "Kata laluan",
+      "direction": "Arah",
+      "preview": "Pratonton",
+      "query": "Pertanyaan",
+      "querying": "Memproses pertanyaan…",
+      "validate": "Sahkan",
+      "validating": "Menyahkan…",
+      "processing": "Memproses…",
+      "pretty": "Rapi",
+      "minify": "Padatkan",
+      "from": "Dari",
+      "to": "Ke",
+      "timezone": "Zon masa",
+      "datetime": "Tarikh & masa",
+      "compute": "Kira",
+      "computing": "Mengira…",
+      "convertAction": "Tukar",
+      "count": "Kiraan",
+      "value": "Nilai",
+      "unit": "Unit",
+      "generateLocal": "Jana setempat",
+      "generateServer": "Jana pada pelayan",
+      "copyAll": "Salin semua",
+      "emptyResult": "Keputusan muncul di sini",
+      "copyText": "Salin teks",
+      "quality": "Kualiti",
+      "original": "Asal",
+      "result": "Hasil",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
+    },
+    "base64": {
+      "encodeDir": "Teks → Base64",
+      "decodeDir": "Base64 → Teks",
+      "localNote": "Web API tempatan (TextEncoder / atob)",
+      "serverNote": "Buffer pelayan · laluan sama seperti API"
+    },
+    "password": {
+      "uppercase": "Huruf besar",
+      "lowercase": "Huruf kecil",
+      "digits": "Digit",
+      "symbols": "Simbol",
+      "generate": "Jana kata laluan",
+      "recent": "Terbaru",
+      "note": "Enjin: node:crypto randomInt · selamat secara kriptografi · laluan sama seperti API"
+    },
+    "hash": {
+      "algo": "Algoritma: {algo}",
+      "md5Warn": " · checksum/serasi sahaja — jangan simpan kata laluan",
+      "md5LocalError": "MD5 memerlukan larian pelayan (Web Crypto tiada MD5)",
+      "md5ServerHint": "MD5: guna larian pelayan (serasi sahaja, bukan untuk simpan kata laluan)",
+      "localNote": "Web Crypto setempat · {algo}",
+      "serverNote": "node:crypto pelayan · laluan sama seperti API"
+    },
+    "convert": {
+      "converting": "Menukar…",
+      "convert": "Tukar",
+      "done": "Selesai · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "Lepaskan fail di sini, atau klik untuk semak",
+      "needFile": "Pilih fail dahulu",
+      "needAlgo": "Pilih sekurang-kurangnya satu algoritma",
+      "compute": "Kira checksum",
+      "computing": "Mengira…",
+      "algorithms": "Algoritma",
+      "note": "node:crypto · multi-algo · laluan sama seperti API"
+    },
+    "lorem": {
+      "paragraphs": "Perenggan",
+      "wordsPerParagraph": "Perkataan per perenggan",
+      "startWithLorem": "Mula dengan “Lorem ipsum”",
+      "note": "Penjana Lorem Ipsum · tulen"
+    },
+    "emailValidate": {
+      "note": "Pengesah Email · format sahaja (tiada carian MX)"
+    },
+    "creditCardLuhn": {
+      "number": "Nombor kad",
+      "note": "Pemeriksa Luhn · luar talian, tidak disimpan",
+      "digits": "digits",
+      "specimenLabel": "Specimen",
+      "structureOnly": "Luhn structure only",
+      "unknownBrand": "Card"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "Penyusut JSON · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "Penipis CSS · ringan (selamat tepi)"
+    },
+    "hashCompare": {
+      "a": "Hash A",
+      "b": "Hash B",
+      "ignoreCase": "Abaikan kes",
+      "note": "Perbandingan Hash · masa malar untuk panjang sama"
+    },
+    "jsonDiff": {
+      "left": "JSON A",
+      "right": "JSON B",
+      "note": "Perbezaan JSON · operasi peringkat laluan · bar berwarna jenis · bersebelahan",
+      "equal": "Sama",
+      "differs": "{count} perubahan",
+      "colPath": "Laluan",
+      "colKind": "Jenis",
+      "colLeft": "Kiri",
+      "colRight": "Kanan",
+      "filtersAria": "Tapis mengikut jenis perubahan",
+      "filterAll": "Semua ({count})",
+      "filterAdd": "Tambah ({count})",
+      "filterRemove": "Buang ({count})",
+      "filterChange": "Ubah ({count})",
+      "filterType": "Jenis ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "Mod",
+      "pretty": "Kemas",
+      "compact": "Padat",
+      "indent": "Selerak",
+      "note": "Pemformat YAML · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "Pemformat TOML · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "Pemampat XML · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "Pengesah URL · WHATWG URL (tanpa pengambilan rangkaian)"
+    },
+    "ipValidate": {
+      "note": "Pengesah IP · IPv4/IPv6 luar talian"
+    },
+    "uuidValidate": {
+      "note": "Pengesah UUID · bentuk RFC 4122"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "Pemampat HTML · ringan (selamat tepi)"
+    },
+    "randomString": {
+      "length": "Panjang",
+      "count": "Kiraan",
+      "charset": "Set aksara",
+      "alphanumeric": "Alfanumerik",
+      "symbols": "Alfanumerik + simbol",
+      "hex": "Hex",
+      "base64url": "Base64URL",
+      "note": "Rentetan Rawak · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "Masa baca · heuristik CJK + Latin"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "Tahap tajuk maksimum",
+      "note": "TOC Markdown · tajuk ATX"
+    },
+    "pdfInfo": {
+      "file": "Fail PDF",
+      "note": "Maklumat PDF · pdf-lib (halaman + metadata)"
+    },
+    "rot13": {
+      "shift": "Anjakan (13 = ROT13)",
+      "note": "ROT13 / Caesar · tulen"
+    },
+    "morse": {
+      "note": "Kod Morse · ITU · tulen"
+    },
+    "textBinary": {
+      "toBinary": "Teks → binari",
+      "fromBinary": "Binari → teks",
+      "note": "Teks ↔ Binari · bit UTF-8"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "Penyulitan ringkasan",
+      "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "Digest sekali sahaja · salin setiap satu · node:crypto"
+    },
+    "cssFormat": {
+      "note": "Penyusun CSS · ringan"
+    },
+    "htmlFormat": {
+      "note": "Penyusun HTML · ringan"
+    },
+    "stringSimilarity": {
+      "a": "Rentetan A",
+      "b": "Rentetan B",
+      "note": "Keserupaan Rentetan · Levenshtein"
+    },
+    "roman": {
+      "toRoman": "Nombor → Rumi",
+      "fromRoman": "Rumi → Nombor",
+      "note": "Nombor Rumi · 1–3999"
+    },
+    "age": {
+      "birthDate": "Tarikh lahir (YYYY-MM-DD)",
+      "asOf": "Sehingga (pilihan)",
+      "note": "Pengira Umur · tepat Y/B/H"
+    },
+    "tip": {
+      "bill": "Jumlah bil",
+      "percent": "Tip %",
+      "people": "Orang",
+      "note": "Kalkulator Tip · bahagi mesra"
+    },
+    "aspect": {
+      "width": "Lebar",
+      "height": "Tinggi",
+      "note": "Nisbah Aspek · permudahkan GCD"
+    },
+    "mime": {
+      "note": "Carian MIME · jenis web biasa"
+    },
+    "ua": {
+      "note": "Penyahkod User-Agent · heuristik (larian luar talian)"
+    },
+    "imageMeta": {
+      "file": "Fail imej",
+      "note": "Metadata Imej · sharp (saiz buffer EXIF)"
+    },
+    "wordFreq": {
+      "top": "Top N",
+      "note": "Kekerapan Perkataan · CJK + Latin"
+    },
+    "jsonXml": {
+      "note": "JSON ↔ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "Penyusun SQL · komen + ruang putih"
+    },
+    "lineNum": {
+      "start": "Nombor mula",
+      "note": "Tambah Nombor Baris · tulen"
+    },
+    "uniqueWords": {
+      "note": "Perkataan Unik · tertib pertama dilihat"
+    },
+    "epoch": {
+      "value": "Nilai",
+      "msToIso": "ms → ISO",
+      "isoToMs": "ISO → ms",
+      "note": "Saat Epoch · Tarikh"
+    },
+    "passwordEntropy": {
+      "password": "Kata Laluan",
+      "note": "Entropi Kata Laluan · heuristik set aksara"
+    },
+    "contrast": {
+      "fg": "Latar Depan (#hex)",
+      "bg": "Latar Belakang (#hex)",
+      "note": "Kontras Warna · WCAG 2.x",
+      "sampleHeadline": "Sample text",
+      "pass": "pass",
+      "fail": "fail",
+      "aaNormal": "AA normal",
+      "aaLarge": "AA large",
+      "aaaNormal": "AAA normal",
+      "aaaLarge": "AAA large"
+    },
+    "exif": {
+      "file": "Fail imej",
+      "note": "Pemerhati EXIF · exifr + JPEG fallback"
+    },
+    "regex": {
+      "pattern": "Corak",
+      "flags": "Bendera",
+      "replacement": "Penggantian",
+      "match": "Padankan",
+      "replace": "Ganti",
+      "test": "Uji",
+      "local": "Jalankan tempatan",
+      "server": "Pengesahan pelayan",
+      "count": "{count} padanan",
+      "sotaNote": "Sorotan tempatan serta-merta · bajet had masa pelayan · laluan sama seperti API"
+    },
+    "jwt": {
+      "decode": "Tafsir JWT",
+      "sample": "Muat sampel",
+      "tokenPlaceholder": "Tampal JWT",
+      "decodeNote": "{engine} · tafsir sahaja, tandatangan tidak disahkan",
+      "footerNote": "Enjin: jose · tiada pengesahan tandatangan. Sahkan pengeluaran dengan kunci melalui jwtVerify pada pelayan.",
+      "generateHint": "Perlu menandatangani token?",
+      "secret": "Rahsia",
+      "exp": "Tamat (saat)",
+      "payload": "Payload JSON",
+      "note": "Jana JWT · HS256 (dev/test sahaja)",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "(empty signature segment)"
+    },
+    "rand": {
+      "min": "Min",
+      "max": "Maks",
+      "count": "Kiraan",
+      "note": "Nombor Rawak · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "Sisi",
+      "count": "Kiraan dadu",
+      "note": "Pengocok Dadu · crypto RNG"
+    },
+    "hexRgb": {
+      "note": "HEX ↔ RGB · tulen"
+    },
+    "base64url": {
+      "note": "Base64URL · gaya JWT"
+    },
+    "hmac": {
+      "message": "Mesej",
+      "secret": "Rahsia",
+      "signature": "Tandatangan",
+      "note": "Pengesahan HMAC · SHA-256"
+    },
+    "secret": {
+      "bytes": "Bait",
+      "count": "Kiraan",
+      "note": "Penjana Kunci Rahsia · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "Fail PDF",
+      "note": "Pengoptimuman PDF Ringan · tulis semula pdf-lib (bukan mampatan semula imej)",
+      "needFile": "Pilih fail PDF terlebih dahulu"
+    },
+    "pdfCompress": {
+      "file": "Fail PDF",
+      "quality": "Kualiti",
+      "engine": "Enjin",
+      "qStructural": "Struktural (qpdf, aliran tanpa kehilangan)",
+      "qScreen": "Skrin (paling kecil, Ghostscript)",
+      "qEbook": "Ebook (seimbang, Ghostscript)",
+      "qPrinter": "Pencetak (kualiti lebih tinggi, Ghostscript)",
+      "eAuto": "Auto (qpdf → Ghostscript → pdf-lib)",
+      "download": "Muat turun PDF",
+      "needFile": "Pilih fail PDF terlebih dahulu",
+      "in": "Input",
+      "out": "Output",
+      "saved": "Disimpan",
+      "note": "PDF Compress · qpdf / Ghostscript pada hos · pdf-lib fallback",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+    },
+    "jsonFormat": {
+      "indent": "Sisipan",
+      "format": "Format",
+      "minify": "Padatkan",
+      "serverVerify": "Sahkan pelayan",
+      "clear": "Kosongkan",
+      "sample": "Sampel",
+      "placeholder": "Tampal JSON…",
+      "formatted": "Tersusun",
+      "minified": "Dipadatkan",
+      "serverOk": "Pelayan {mode} · {engine}",
+      "valid": "JSON sah",
+      "invalid": "JSON tidak sah",
+      "line": "baris",
+      "column": "kolum",
+      "note": "Enjin: JSON.parse/stringify · setempat serta-merta · laluan sama seperti API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
+    },
+    "qr": {
+      "size": "Saiz",
+      "ecl": "Pembetulan ralat",
+      "generate": "Jana",
+      "download": "Muat turun PNG",
+      "needText": "Masukkan teks atau URL",
+      "note": "QR · qrcode · pratonton langsung · laluan sama seperti API"
+    },
+    "pdfText": {
+      "file": "Fail PDF",
+      "layout": "Susun atur",
+      "needFile": "Pilih PDF terlebih dahulu",
+      "note": "Teks PDF · pdftotext (poppler) pada hos"
+    },
+    "svg": {
+      "optimize": "Optimumkan",
+      "note": "Optimumkan SVG · minify tulen ringan"
+    },
+    "routerTranslate": {
+      "lab": "Lab shell: tidak menerjemah di sini. Membuka Router dengan arahan — meter model pada Router sahaja.",
+      "source": "Bahasa sumber",
+      "target": "Bahasa sasaran",
+      "open": "Sediakan pautan Router",
+      "deepLink": "Buka dalam Router",
+      "note": "luar · tiada buku besar Forge LLM senyap"
+    },
+    "imageCrop": {
+      "needFile": "Pilih imej dahulu",
+      "crop": "Potong",
+      "note": "Potong Imej · seret kawasan · ekstrak tajam",
+      "drop": "Lepaskan imej atau klik untuk semak imbas",
+      "dragHint": "Seret pada imej untuk memilih kawasan potong",
+      "left": "Kiri",
+      "top": "Atas",
+      "width": "Lebar",
+      "height": "Tinggi",
+      "natural": "Semula jadi {w}×{h}",
+      "source": "Sumber",
+      "result": "Dipotong"
+    },
+    "markdown": {
+      "preview": "Pratonton",
+      "html": "HTML",
+      "emptyPreview": "Jalankan untuk melihat pratonton",
+      "emptyHtml": "HTML yang dirender",
+      "rendering": "Sedang merender…",
+      "toHtml": "Ke HTML",
+      "copyHtml": "Salin HTML",
+      "note": "ditanda · pratonton iframe berpasung · laluan sama seperti API"
+    },
+    "pdfMerge": {
+      "files": "Fail PDF (≥2, susunan = susunan gabung)",
+      "needFiles": "Pilih sekurang-kurangnya 2 PDF",
+      "merging": "Sedang menggabungkan…",
+      "mergeDownload": "Gabung & muat turun",
+      "done": "Digabungkan · {pages} halaman · {bytes} bait",
+      "note": "pdf-lib · laluan sama seperti API",
+      "merge": "Gabung & muat turun"
+    },
+    "pdfSplit": {
+      "file": "Fail PDF",
+      "needFile": "Pilih satu PDF",
+      "fromPage": "Dari halaman (bermula 1)",
+      "toPage": "Hingga halaman (kosong = terakhir)",
+      "toPlaceholder": "Halaman terakhir",
+      "splitting": "Sedang membahagi…",
+      "splitDownload": "Bahagi & muat turun",
+      "done": "Pecah · sumber {source} halaman → output {pages} halaman",
+      "note": "pdf-lib · laluan sama seperti API",
+      "split": "Bahagi & muat turun"
+    },
+    "passwordStrength": {
+      "check": "Semak kekuatan",
+      "checking": "Sedang memeriksa…",
+      "crack": "Anggaran slow-hash luar talian: {time}",
+      "score0": "Sangat lemah",
+      "score1": "Lemah",
+      "score2": "Sederhana",
+      "score3": "Kuat",
+      "score4": "Sangat kuat",
+      "note": "zxcvbn-ts · laluan sama seperti API · kata laluan tidak pernah disimpan"
+    },
+    "hmacSign": {
+      "compute": "Kira HMAC",
+      "computing": "Mengira…",
+      "note": "node:crypto · laluan yang sama dengan API"
+    },
+    "costEstimate": {
+      "text": "Teks input (untuk anggaran token input)",
+      "model": "Model",
+      "outputTokens": "Token output (ang.)",
+      "estimate": "Anggaran kos",
+      "estimating": "Menganggar…",
+      "note": "kad @nebutra/ai-providers/frontier + js-tiktoken · anggaran harga senarai, bukan bil"
+    },
+    "jsonSchema": {
+      "data": "Data JSON",
+      "schema": "Skema JSON",
+      "validate": "Validasi",
+      "validating": "Mengesahkan…",
+      "pass": "Lulus",
+      "fail": "Gagal",
+      "note": "Ajv · laluan yang sama dengan API"
+    },
+    "zhCnTw": {
+      "s2t": "Ringkas → Tradisional",
+      "t2s": "Tradisional → Ringkas",
+      "s2tw": "Ringkas → Taiwan",
+      "tw2s": "Taiwan → Ringkas",
+      "s2hk": "Ringkas → Hong Kong",
+      "hk2s": "Hong Kong → Ringkas",
+      "note": "OpenCC (opencc-js) · laluan yang sama dengan API"
+    },
+    "pinyin": {
+      "tones": "Gaya nada",
+      "symbol": "Simbol nǐ",
+      "num": "Nombor ni3",
+      "none": "Tiada ni",
+      "hanzi": "Aksara Cina",
+      "convert": "Ke pinyin",
+      "converting": "Menukar…",
+      "note": "pinyin-pro · laluan sama seperti API"
+    },
+    "sqlFormat": {
+      "dialect": "Dialek",
+      "format": "Format",
+      "formatting": "Pembentukan…",
+      "note": "sql-formatter · laluan sama seperti API"
+    },
+    "colorConvert": {
+      "color": "Warna",
+      "pick": "Pilih warna",
+      "convert": "Tukar",
+      "converting": "Menukar…",
+      "note": "culori · hex / rgb / hsl / oklch · laluan sama seperti API"
+    },
+    "qrGen": {
+      "content": "Kandungan",
+      "format": "Format",
+      "pngPreview": "PNG (pratonton)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "Jana QR",
+      "generating": "Mengjana…",
+      "note": "qrcode · laluan sama seperti API"
+    },
+    "qrDecode": {
+      "upload": "Muat naik imej dengan kod QR",
+      "parsing": "Menyahkod…",
+      "note": "jsQR + sharp · laluan sama seperti API"
+    },
+    "cron": {
+      "expression": "Ungkapan Cron",
+      "timezone": "Zon masa",
+      "parse": "Jalankan seterusnya",
+      "parsing": "Menganalisis…",
+      "nextTitle": "Jalankan seterusnya (ISO)",
+      "note": "cron-parser · laluan sama seperti API"
+    },
+    "timezone": {
+      "datetime": "Tarikh & masa",
+      "from": "Dari",
+      "to": "Ke",
+      "convert": "Tukar zon masa",
+      "converting": "Menukar…",
+      "placeholder": "2026-07-24 12:00:00 atau ISO / unix",
+      "note": "dayjs timezone · laluan sama seperti API"
+    },
+    "csvPreview": {
+      "preview": "Pratonton jadual",
+      "parsing": "Menganalisis…",
+      "rows": "Pratonton {shown} / {total} baris",
+      "note": "papaparse · laluan sama seperti API"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "Pertanyaan",
+      "querying": "Mempertanyakan…",
+      "note": "jsonpath-plus · laluan sama seperti API"
+    },
+    "xmlFormat": {
+      "pretty": "Kemas",
+      "minify": "Padatkan",
+      "validate": "Sahkan",
+      "validOk": "Sah",
+      "done": "Selesai · {engine}",
+      "processing": "Memproses…",
+      "note": "fast-xml-parser · sama laluan seperti API"
+    },
+    "regexLegacy": {
+      "pattern": "Corak",
+      "flags": "Bendera",
+      "mode": "Mod",
+      "match": "Padanan",
+      "replace": "Ganti",
+      "test": "Uji",
+      "replacement": "Penggantian",
+      "note": "Tempatan serta-merta · bajet had masa pelayan · laluan sama seperti API"
+    },
+    "docxText": {
+      "file": "Fail DOCX",
+      "needFile": "Pilih fail .docx terlebih dahulu",
+      "extract": "Eksktrak teks",
+      "extracting": "Mengekstrak…",
+      "note": "DOCX → teks · ZIP tulen + document.xml (tanpa suite Office)"
+    },
+    "uuid": {
+      "count": "Kiraan",
+      "local": "Jana tempatan",
+      "server": "Jana pada pelayan",
+      "copyAll": "Salin semua",
+      "empty": "UUID muncul di sini"
+    },
+    "timestamp": {
+      "nowSec": "Saat Unix",
+      "nowMs": "ms Unix / ISO",
+      "serverNow": "Sekarang pelayan",
+      "toDate": "Cap masa → tarikh",
+      "toUnix": "Tarikh → cap masa",
+      "seconds": "Saat",
+      "milliseconds": "Milisaat",
+      "value": "Nilai",
+      "convert": "Tukar",
+      "note": "Laluan sama seperti API"
+    },
+    "wordCount": {
+      "words": "Perkataan",
+      "chars": "Aksara",
+      "noSpaces": "Tiada ruang",
+      "cjk": "CJK",
+      "lines": "Baris",
+      "paragraphs": "Perenggan",
+      "placeholder": "Tampal atau taip teks…",
+      "copyText": "Salin teks",
+      "clear": "Kosongkan",
+      "verifying": "Memeriksa…",
+      "serverNote": "Perkataan pelayan={words} · laluan sama seperti API",
+      "note": "Enjin langsung: {engine} · tiada muat naik diperlukan · laluan sama seperti API"
+    },
+    "bmi": {
+      "height": "Ketinggian (cm)",
+      "weight": "Berat (kg)",
+      "compute": "Kira BMI",
+      "computing": "Mengira…",
+      "invalid": "Masukkan ketinggian (cm) dan berat (kg) yang sah",
+      "underweight": "Berat badan kurang",
+      "normal": "Normal",
+      "overweight": "Berat badan berlebihan",
+      "obese": "Obesiti",
+      "note": "BMI WHO · laluan sama seperti API · bukan nasihat perubatan"
+    },
+    "percentage": {
+      "mode": "Mod",
+      "percentOf": "a% daripada b",
+      "isWhat": "a ialah berapa % daripada b",
+      "percentA": "Peratus a",
+      "valueA": "Nilai a",
+      "baseB": "Asas b",
+      "compute": "Kira",
+      "computing": "Mengira…",
+      "invalid": "Masukkan nombor yang sah",
+      "note": "Laluan sama seperti API"
+    },
+    "dataSize": {
+      "value": "Nilai",
+      "convert": "Tukar",
+      "converting": "Menukar…",
+      "invalid": "Masukkan nombor yang sah",
+      "binary": "{value} {from} → asas-1024",
+      "note": "Unit binari (1 KB = 1024 B) · laluan sama seperti API"
+    },
+    "rmb": {
+      "amount": "Jumlah (CNY)",
+      "convert": "Ke huruf besar",
+      "converting": "Menukar…",
+      "invalid": "Masukkan jumlah bukan negatif",
+      "note": "Jumlah invois Cina huruf besar · laluan sama seperti API"
+    },
+    "dateDiff": {
+      "from": "Tarikh mula",
+      "to": "Tarikh tamat",
+      "compute": "Perbezaan hari",
+      "computing": "Mengira…",
+      "days": "hari",
+      "note": "ECMAScript Date · laluan sama seperti API"
+    },
+    "xlsxText": {
+      "file": "Fail XLSX",
+      "needFile": "Pilih fail .xlsx terlebih dahulu",
+      "extract": "Eksport helaian",
+      "extracting": "Sedang mengekstrak…",
+      "note": "XLSX → CSV · ZIP tulen + sheet1.xml (helaian pertama)"
+    },
+    "mdToPdf": {
+      "drop": "Seret fail .md ke sini, atau tampal Markdown di bawah",
+      "title": "Tajuk",
+      "engine": "Enjin",
+      "ePlaywright": "playwright (cetak Chromium)",
+      "eSimple": "simple (tanpa pelayar)",
+      "generate": "Jana PDF",
+      "generating": "Sedang menjana…",
+      "download": "Muat turun PDF",
+      "note": "marked → HTML → Playwright Chromium print. Jika Chromium tiada, auto kembali ke PDF struktur mudah — semak renderEngine; mudah bukan susun atur gred cetakan.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
+    },
+    "tokenCount": {
+      "count": "Kira token",
+      "counting": "Mengira…",
+      "chars": "Aksara {n}",
+      "note": "Engine: js-tiktoken · kiraan tepat sisi pelayan · boleh beri anggaran kos Router"
+    },
+    "codec": {
+      "encodeDir": "Teks → ditukarkan",
+      "decodeDir": "Ditukarkan → teks",
+      "localNote": "Jalankan tempatan",
+      "serverNote": "Pelayan · sama laluan seperti API",
+      "hexInvalid": "Bukan rentetan hex yang sah",
+      "hexDecodeFail": "Pelayan tidak dapat menyahkod sebagai UTF-8 (perlu hex yang sah)",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · laluan sama seperti API",
+      "noteHtml": "Peta entiti HTML · laluan sama seperti API",
+      "noteHex": "UTF-8 ↔ hex · laluan sama seperti API"
+    },
+    "textDiff": {
+      "left": "Kiri",
+      "right": "Kanan",
+      "compare": "Bandingkan",
+      "comparing": "Membandingkan…"
+    },
+    "imageTool": {
+      "drop": "Lepaskan imej di sini, atau klik untuk semak",
+      "selected": "Dipilih: {name} ({kb} KB)",
+      "needFile": "Pilih imej terlebih dahulu",
+      "format": "Format output",
+      "quality": "Kualiti {n}",
+      "maxW": "Lebar maksimum",
+      "maxH": "Tinggi maksimum",
+      "optional": "Pilihan",
+      "resizeEg": "cth. 1280",
+      "processing": "Memproses…",
+      "compress": "Mampatkan",
+      "resize": "Saiz semula",
+      "convert": "Tukar format",
+      "download": "Muat turun hasil",
+      "outMeta": "Output {kb} KB{dims}{ratio} · {type}",
+      "ratio": " · ~{pct}% daripada asal",
+      "dims": " · {w}×{h}",
+      "original": "Asal",
+      "result": "Hasil",
+      "note": "Enjin: sharp (libvips) · sisi pelayan · laluan sama seperti API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+    },
+    "pptxText": {
+      "file": "Fail PPTX",
+      "needFile": "Pilih fail .pptx terlebih dahulu",
+      "extract": "Eksstrak rangka",
+      "extracting": "Sedang mengekstrak…",
+      "note": "Rangka PPTX · ZIP tulen + XML slaid (tanpa PowerPoint)"
+    },
+    "shell": {
+      "copyJson": "Salin JSON",
+      "sample": "Contoh",
+      "chars": "{n} aksara",
+      "largeInput": "Input besar — hasil akan dikemas kini sebentar selepas anda berhenti menaip.",
+      "manualInput": "Input terlalu besar sehingga pengiraan semula langsung akan melumpuhkan halaman. Tekan Jalankan.",
+      "options": "Pilihan",
+      "regenerateNote": "Output sudah dikemas kini apabila anda mengubah pilihan.",
+      "fileTab": "Fail",
+      "pasteTab": "Tampal",
+      "browse": "Pilih fail",
+      "selectedFile": "{name} · {kb} KB",
+      "truncated": "Baca {kb} KB pertama — cukup untuk menjawab, dan selebihnya tidak pernah meninggalkan peranti anda.",
+      "detail": "Butiran",
+      "dropIntoPane": "Lepaskan fail di sini",
+      "swap": "Tukar sisi",
+      "prevChange": "Sebelumnya",
+      "nextChange": "Seterusnya",
+      "changePosition": "{index} daripada {total}",
+      "result": "Hasil"
+    },
+    "readmeSkeleton": {
+      "emptyHint": "Tanda sekurang-kurangnya satu bahagian untuk membina README.",
+      "note": "Menggunakan enjin yang sama seperti API. Bahagian yang tidak dipilih tidak akan muncul — tiada tajuk kosong.",
+      "orderNote": "Bahagian sentiasa dirender mengikut susunan tetap ini, jadi input yang sama menghasilkan fail yang sama.",
+      "group": {
+        "core": "Teras",
+        "docs": "Dokumen",
+        "community": "Komuniti",
+        "meta": "Meta"
+      },
+      "section": {
+        "title": "Tajuk & penerangan",
+        "badges": "Lencana",
+        "callout": "Nota panggilan",
+        "toc": "Kandungan",
+        "installation": "Pemasangan",
+        "usage": "Penggunaan",
+        "features": "Ciri-ciri",
+        "api-reference": "Rujukan API",
+        "screenshots": "Tangkapan skrin",
+        "roadmap": "Peta jalan",
+        "contributing": "Sumbangan",
+        "support": "Sokongan",
+        "acknowledgements": "Pengiktirafan",
+        "license": "Lesen",
+        "authors": "Pengarang",
+        "tech-stack": "Tindanan teknologi"
+      },
+      "projectName": "Nama projek",
+      "projectNamePlaceholder": "Nama projek",
+      "description": "Penerangan",
+      "descriptionPlaceholder": "Satu ayat tentang apa yang ia lakukan",
+      "badgeLicense": "Lencana lesen",
+      "badgeNpm": "npm version",
+      "badgeBuild": "Status binaan",
+      "npmPackage": "npm package",
+      "npmPackagePlaceholder": "@scope/package",
+      "repo": "Repo GitHub",
+      "repoPlaceholder": "owner/repo",
+      "calloutKind": "Seruan",
+      "calloutBody": "Teks callout",
+      "calloutBodyPlaceholder": "Pra-1.0 — API masih berubah",
+      "fenceLanguage": "Bahasa",
+      "installCommand": "Arahan pemasangan",
+      "installCommandPlaceholder": "npm install your-project",
+      "usageExample": "Contoh penggunaan",
+      "usageExamplePlaceholder": "Contoh terkecil yang menunjukkan nilai",
+      "features": "Ciri-ciri",
+      "featuresPlaceholder": "Satu ciri setiap baris",
+      "contact": "Hubungi",
+      "contactPlaceholder": "support@example.com",
+      "license": "Lesen",
+      "authors": "Penulis",
+      "authorsPlaceholder": "@handle, Jane Roe",
+      "techStack": "Timbunan teknologi",
+      "techStackPlaceholder": "typescript, postgresql (slug simple-icons)",
+      "sectionCount": "{n} bahagian",
+      "charCount": "{n} aksara",
+      "warningCount": "{n} dilangkau",
+      "omittedTitle": "Apa yang ditinggalkan, dan mengapa"
+    },
+    "gitignore": {
+      "searchLabel": "Cari timbunan",
+      "searchPlaceholder": "Cari bahasa, rangka kerja, OS, atau penyunting…",
+      "add": "Tambah {stack}",
+      "remove": "Buang {stack}",
+      "selected": "Timbunan dipilih",
+      "suggestions": "Timbunan sepadan",
+      "noMatches": "Tiada timbunan sepadan dengan “{query}”. Tekan Enter untuk hantar juga — alias akan diselesaikan di pelayan.",
+      "catalogFallback": "Senarai timbunan tidak tersedia — taip nama timbunan dan tekan Enter.",
+      "emptyHint": "Pilih sekurang-kurangnya satu bahasa, rangka kerja, OS atau editor di atas.",
+      "regenerate": "Hasilkan Semula",
+      "sections": "{n} bahagian",
+      "lines": "{n} baris",
+      "deduped": "{n} corak pendua digabungkan",
+      "notFound": "Tidak dalam korpus: {stacks}",
+      "globalScope": "{stacks} adalah entri OS/editor — ramai pembangun menyimpannya dalam ~/.gitignore_global peribadi dan bukannya setiap repositori.",
+      "untrackedNote": "A .gitignore hanya mempengaruhi fail yang tidak dijejaki. Untuk fail yang sudah dijejaki git, jalankan git rm -r --cached <path>.",
+      "fileLabel": ".gitignore"
+    },
+    "editorconfig": {
+      "emptyHint": "Tetapkan sekurang-kurangnya satu sifat untuk melihat fail.",
+      "note": "Enjin yang sama seperti API. Pilihan anda kekal dalam sesi pelayar ini; tiada apa yang disimpan.",
+      "checks": "Semakan",
+      "presets": "Mula dari",
+      "preset": {
+        "spaces2": "2 ruang, LF",
+        "spaces4": "4 ruang, LF",
+        "tabs": "Tab, lebar 4",
+        "repo": "Pemula repo (+ Markdown, Makefile)"
+      },
+      "rootLabel": "root = true — hentikan penyunting daripada menggabungkan fail .editorconfig induk",
+      "glob": "Glob {n}",
+      "addSection": "Tambah bahagian",
+      "removeSection": "Buang",
+      "notSet": "(tidak ditetapkan)",
+      "import": "Import .editorconfig sedia ada",
+      "importPlaceholder": "Tampal .editorconfig di sini untuk memuatkannya ke dalam borang",
+      "importAction": "Import",
+      "importing": "Mengimport…",
+      "importFailed": "Tidak dapat mengimport: {message}"
+    },
+    "robotsTxt": {
+      "emptyHint": "Tetapkan pilihan di atas — fail akan muncul di sini",
+      "deployNote": "robots.txt hanya berkuat kuasa di punca domain (https://example.com/robots.txt). Setiap subdomain memerlukan failnya sendiri.",
+      "outputLabel": "robots.txt",
+      "defaultAccess": "Akses lalai (User-agent: *)",
+      "defaultAllow": "Benarkan semua",
+      "defaultDisallow": "Larang semua",
+      "defaultAccessNote": "\"Benarkan semua\" menulis \"Disallow:\" kosong — itulah cara membenarkan semuanya.",
+      "crawlDelay": "Kelewatan rayapan (saat)",
+      "crawlDelayPlaceholder": "tiada",
+      "crawlDelayNote": "Bukan sebahagian daripada RFC 9309. Google mengabaikannya; ia tidak pernah ditulis dalam kumpulan Google.",
+      "searchAgents": "Enjin carian",
+      "aiAgents": "Perayap AI",
+      "aiAgentsNote": "Perayap latihan dan enjin jawapan. Menyekatnya tidak menjejaskan pengindeksan carian.",
+      "accessDefault": "Lalai",
+      "accessAllow": "Benarkan",
+      "accessDisallow": "Larangan",
+      "rules": "Peraturan laluan",
+      "rulesNote": "Laluan peka huruf besar/kecil dan relatif kepada root. Tambah garis miring akhir untuk mengehadkan peraturan kepada satu direktori.",
+      "rulePath": "Laluan {n}",
+      "rulePathPlaceholder": "/admin/",
+      "ruleType": "Jenis peraturan",
+      "addRule": "Tambah peraturan laluan",
+      "removeRule": "Buang",
+      "sitemaps": "Peta laman",
+      "sitemapsNote": "URL http(s) mutlak. Ditulis sebagai baris berasingan, di luar setiap kumpulan.",
+      "sitemapUrl": "Sitemap {n}",
+      "addSitemap": "Tambah sitemap",
+      "removeSitemap": "Buang",
+      "groupCount": "{n} kumpulan",
+      "lineCount": "{n} baris",
+      "sitemapCount": "{n} sitemap",
+      "warningsSummary": "Nota tentang fail ini ({n})"
+    },
+    "encodingDetect": {
+      "drop": "Letakkan fail untuk mengenal pasti pengekodannya",
+      "privacy": "Hanya {kb} KB pertama dibaca, dan ia dihantar ke titik akhir panggilan awam yang sama yang akan dipanggil oleh ejen — tiada apa-apa ditulis ke cakera.",
+      "pasteLabel": "Atau tampal teks",
+      "pastePlaceholder": "Tampal teks — termasuk mojibake yang anda mahu dijelaskan",
+      "detail": "Calon, pengakhiran baris dan statistik bait",
+      "idle": "Seret fail atau tampal teks — laporan akan diisi sebaik sahaja ada kandungan untuk dibaca.",
+      "readOnly": "Sahaja baca: alat ini mengenal pasti pengekodan, ia tidak akan menulis semula bait.",
+      "headline": "{encoding} · keyakinan {confidence}%",
+      "notText": "Ini tidak kelihatan seperti teks",
+      "bomPresent": "BOM {bytes}",
+      "bomAbsent": "Tiada BOM",
+      "eol": "Akhir baris {kind}",
+      "eolMixed": "Akhir baris bercampur",
+      "language": "Bahasa {language} · {confidence}%",
+      "sampled": "Dikesan daripada {kb} KB pertama daripada {totalKb} KB",
+      "candidates": "Calon yang disusunkan",
+      "candidatesNote": "Pengekodan naib juara dipaparkan secara sengaja: sampel pendek atau simetri memang samar.",
+      "lineEndings": "Akhir baris",
+      "byteStats": "Statistik bait",
+      "totalBytes": "Jumlah",
+      "asciiBytes": "ASCII",
+      "highBytes": "Tinggi (0x80–0xFF)",
+      "nullBytes": "NUL",
+      "mojibake": "Mojibake dipulihkan"
+    },
+    "dockerfileStarter": {
+      "language": "Bahasa",
+      "framework": "Rangka kerja",
+      "packageManager": "Pengurus pakej",
+      "baseVariant": "Imej asas",
+      "version": "Versi masa jalan",
+      "workdir": "Direktori kerja",
+      "port": "Port",
+      "buildCommand": "Arahan bina",
+      "startCommand": "Arahan mula",
+      "commandPlaceholder": "Kosong = lalai pratetap",
+      "frameworkNone": "Tiada (masa jalan biasa)",
+      "pmAuto": "Auto",
+      "variantSlim": "slim (glibc)",
+      "variantAlpine": "alpine (musl)",
+      "variantFull": "penuh",
+      "multiStage": "Binaan berbilang peringkat",
+      "nonRootUser": "Pengguna bukan root",
+      "includeDockerignore": "Tambah .dockerignore",
+      "includeCompose": "Tambah compose.yaml",
+      "includeHealthcheck": "Tambah HEALTHCHECK",
+      "groupWhat": "Apa yang dibina",
+      "groupHow": "Cara ia perlu berjalan",
+      "emptyHint": "Pilih bahasa untuk melihat Dockerfile.",
+      "note": "Hanya praset — tiada apa-apa selain pilihan di atas meninggalkan pelayar anda. Baca fail sebelum anda menghantarnya.",
+      "warnings": "{n} perkara untuk diperiksa",
+      "stages": "{n} peringkat",
+      "badgeNonRoot": "Bukan root",
+      "badgeRoot": "Berjalan sebagai root",
+      "badgePort": "Port {port}"
+    },
+    "lineEndingDetect": {
+      "dropLabel": "Lepaskan fail teks untuk memeriksa hujung baris",
+      "privacy": "Teks yang dilekatkan, dan 256 KB pertama fail yang dilepaskan, dihantar ke API Forge untuk disimulasi; bait tidak disimpan.",
+      "pasteLabel": "Atau lekatkan teks",
+      "pastePlaceholder": "Lekatkan teks yang ingin anda periksa",
+      "idle": "Lekatkan teks atau lepaskan fail untuk melihat keputusan hujung baris.",
+      "detail": "Kiraan dan pemeriksaan",
+      "note": "Pengesanan sahaja — alat ini tidak akan menulis semula fail anda.",
+      "empty": "Input kosong",
+      "noTerminator": "Tiada penamat baris — satu baris tidak ditamatkan",
+      "consistent": "{style} — konsisten",
+      "mixed": "CAMPURAN — {parts}",
+      "sharePart": "{pct}% {style}",
+      "style": {
+        "LF": "LF (Unix/Linux/macOS)",
+        "CRLF": "CRLF (Windows)",
+        "CR": "CR (classic Mac OS 9 dan sebelumnya)"
+      },
+      "lines": "{n} baris",
+      "bytes": "{n} bait",
+      "trailing": {
+        "present": "Berakhir dengan baris baru",
+        "absent": "Tiada baris baharu di akhir fail"
+      },
+      "bomUtf8": "UTF-8 BOM",
+      "bomNone": "Tiada BOM",
+      "countRow": "{style}: {n} ({pct}%)",
+      "colStyle": "Gaya",
+      "colCount": "Kiraan",
+      "colShare": "Perkongsian",
+      "minorityLines": "Baris yang berbeza daripada gaya dominan: {lines}",
+      "andMore": "dan lagi",
+      "findings": "Semakan",
+      "level": {
+        "info": "Nota",
+        "warning": "Amaran",
+        "danger": "Rusak"
+      },
+      "sampled": "Imbas {n} pertama daripada {total} bait",
+      "encodingLink": "Buka pengesan pengecodan"
+    },
+    "fileTypeDetect": {
+      "drop": "Lepaskan fail untuk mengenal pasti apa yang sebenarnya",
+      "privacy": "Hanya {kb} KB pengepala pertama dibaca — baki fail tidak pernah meninggalkan peranti anda.",
+      "hexTab": "Tampal heksa",
+      "detail": "Paparkan bait dan calon",
+      "idle": "Seret fail, atau tampal bait permulaannya sebagai heksa.",
+      "note": "Tandatangan mengenal pasti bekas, bukan codec atau kandungan di dalamnya.",
+      "unset": "—",
+      "unknownType": "Tiada tandatangan sepadan",
+      "polyglot": "Poliglot",
+      "tierNone": "Sufik sepadan",
+      "tierBenign": "Padanan jinak",
+      "tierMismatch": "Padanan sambungan",
+      "tierHighRisk": "Risiko tinggi",
+      "confidenceMatch": "Padanan tandatangan",
+      "confidenceContainer": "Kontena sahaja",
+      "confidenceAmbiguous": "Samar-samar",
+      "confidenceNone": "Tiada padanan",
+      "signalDetected": "MIME dikesan",
+      "signalReported": "MIME dilaporkan",
+      "signalExtension": "Sambungan nama fail",
+      "drillResolved": "Membuka bekas {kind}: {type}",
+      "drillUnresolved": "Bekas {kind} disahkan; subtipe tidak diselesaikan daripada bait yang disampel",
+      "hexDump": "Bait pengepala",
+      "bytesRead": "{n} bait dibaca",
+      "headerOnly": "sampel pengepala sahaja",
+      "entropy": "Entropi {bits} bit/bait",
+      "signatureCount": "{n} tandatangan dalam jadual",
+      "textHints": "Petunjuk struktur: {hints}",
+      "candidates": "Semua tandatangan padanan",
+      "atOffset": "offset {offset}"
+    },
+    "licenseChooser": {
+      "prompt": "Apa yang diperlukan projek ini?",
+      "pickScenario": "Pilih baris yang paling sesuai dengan projek anda — jawapan dan fail akan muncul di sini.",
+      "disclaimer": "Output templat deterministik, bukan nasihat undang-undang.",
+      "noAnswer": "Tiada satu lesen yang sesuai untuk kes ini",
+      "permissions": "Membenarkan",
+      "conditions": "Memerlukan",
+      "limitations": "Tidak merangkumi",
+      "alternates": "Pilihan lain untuk kes ini",
+      "useThis": "Gunakan ini",
+      "readCanonical": "Baca teks asal di SPDX",
+      "holder": "Pemegang hak cipta",
+      "holderPlaceholder": "Nama anda atau syarikat anda",
+      "holderHint": "Tambahkan pemegang hak cipta dan fail akan diisi semasa anda menaip.",
+      "year": "Tahun",
+      "manifest": "Di mana ID SPDX diletakkan",
+      "verbatim": "{name} diedarkan secara identik untuk semua orang — baris hak cipta diletakkan dalam notis fail sumber, bukan dalam fail LICENSE.",
+      "noLicense": {
+        "summary": "Bagaimana jika saya tidak menambah sebarang lesen?",
+        "body": "Tiada lesen bukanlah sama dengan domain awam. Tanpanya, hak cipta lalai terpakai dan sesiapa pun tidak boleh menyalin, mengubah suai atau mengagihkan semula kod anda — repositori awam ialah keterlihatan, bukan kebenaran."
+      },
+      "artifact": {
+        "header": "Pengepala fail sumber",
+        "notice": "Notis fail sumber"
+      },
+      "refine": {
+        "patent": "Kebenaran paten penting di sini (kod syarikat, perkakasan, kerja piawaian)",
+        "network": "Ia akan dijalankan sebagai perkhidmatan hos, bukan sekadar muat turun",
+        "library": "Ia adalah perpustakaan yang dilink oleh perisian lain",
+        "later": "Benarkan versi kemudian lesen (kekalkan kod Apache-2.0 serasi)",
+        "none": "Tiada lagi yang perlu disempurnakan untuk kes ini."
+      },
+      "scenario": {
+        "permissive": {
+          "label": "Sesiapa pun boleh menggunakannya, secara bebas",
+          "detail": "Gunakan, ubah, jual, hantar dalam produk tertutup — cuma kekalkan notis hak cipta."
+        },
+        "copyleft": {
+          "label": "Peningkatan mesti dikembalikan",
+          "detail": "Sesiapa yang mengedarkan versi yang diubah mesti menerbitkan sumbernya juga."
+        },
+        "community": {
+          "label": "Saya menyumbang kepada projek sedia ada",
+          "detail": "Lesen sudah ditentukan — padankan dengan projek yang anda sumbangkan."
+        },
+        "non-software": {
+          "label": "Ini bukan perisian",
+          "detail": "Dokumen, data, reka bentuk atau media memerlukan lesen Creative Commons, bukan OSI."
+        },
+        "unsure": {
+          "label": "Saya belum tahu",
+          "detail": "Dapatkan lalai rendah-kesesalan serta dua pilihan yang perlu diketahui."
+        }
+      },
+      "family": {
+        "permissive": "Permissive",
+        "weak-copyleft": "Copyleft lemah",
+        "strong-copyleft": "Copyleft kuat",
+        "public-domain": "Domain awam",
+        "content": "Lesen kandungan"
+      },
+      "flag": {
+        "commercial-use": "Kegunaan komersial",
+        "modifications": "Pindaan",
+        "distribution": "Pengagihan",
+        "private-use": "Kegunaan peribadi",
+        "patent-use": "Kelonggaran paten",
+        "include-copyright": "Simpan notis hak cipta",
+        "document-changes": "Nyatakan pindaan anda",
+        "disclose-source": "Tunjukkan sumber",
+        "same-license": "Lesen sama untuk keseluruhan karya",
+        "same-license-file": "Lesen sama, setiap fail yang dipinda",
+        "same-license-library": "Lesen sama untuk perpustakaan",
+        "network-use-disclose": "Kegunaan rangkaian dikira sebagai pengagihan",
+        "liability": "Liabiliti",
+        "warranty": "Jaminan",
+        "trademark-use": "Penggunaan tanda dagangan"
+      }
+    },
+    "isbn": {
+      "inputLabel": "ISBN",
+      "placeholder": "978-0-306-40615-7 — satu setiap baris, tanda sempang dan ruang diabaikan",
+      "idle": "Tampal satu ISBN atau keseluruhan lajur; keputusan muncul semasa anda menaip.",
+      "scope": "Kiraan digit semakan sahaja. ISBN yang sah adalah konsisten secara dalaman — ia bukan bukti bahawa agensi telah melantiknya untuk buku sebenar.",
+      "summary": "{valid} daripada {total} sah",
+      "singleValid": "ISBN sah",
+      "singleInvalid": "Bukan ISBN yang sah",
+      "invalidCount": "{n} tidak sah",
+      "convertedTo": "{type}: {value}",
+      "valid": "Sah",
+      "invalid": "Tidak sah",
+      "truncated": "Menunjukkan {shown} baris pertama.",
+      "col": {
+        "input": "Input",
+        "normalized": "Dinormalkan",
+        "type": "Jenis",
+        "status": "Status",
+        "converted": "Ditukar",
+        "note": "Nota"
+      },
+      "type": {
+        "isbn10": "ISBN-10",
+        "isbn13": "ISBN-13",
+        "invalidLength": "Panjang salah"
+      },
+      "note": {
+        "checkDigit": "Digit semakan sepatutnya {expected}",
+        "invalidLength": "ISBN mempunyai tepat 10 atau 13 aksara",
+        "invalidCharacter": "Mengandungi aksara yang bukan digit",
+        "xMisplaced": "X hanya sah sebagai aksara terakhir ISBN-10",
+        "noIsbn10": "Awalan 979 tiada padanan ISBN-10",
+        "nonBookland": "ISBN 13 digit mesti bermula dengan 978 atau 979",
+        "ismn": "979-0 ialah julat ISMN (muzik cetakan), bukan ISBN"
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
+    },
+    "languageDetect": {
+      "inputLabel": "Potongan kod",
+      "inputPlaceholder": "Tampal kod tanpa nama fail — daripada log sembang, tiket, jawapan…",
+      "hintLabel": "Nama fail atau sambungan (pilihan)",
+      "hintPlaceholder": "main.h · .pl · Dockerfile",
+      "note": "Menggunakan enjin yang sama seperti API. Pengesanan berasaskan kandungan sahaja kecuali anda berikan petunjuk nama fail; sambungan yang samar (.h .m .pl .fs .ts .cs .r) dialihkan melalui peraturan masing-masing terlebih dahulu.",
+      "idle": "Tampal coretan — keputusan akan muncul semasa anda menaip.",
+      "confidence": {
+        "high": "Keyakinan tinggi",
+        "medium": "Keyakinan sederhana",
+        "low": "Keyakinan rendah"
+      },
+      "score": "{n}/100",
+      "dataFormat": "Format data, bukan bahasa pengaturcaraan",
+      "multiLanguage": "Pelbagai bahasa disyaki",
+      "why": "Mengapa jawapan ini",
+      "signals": "Isyarat padanan",
+      "alternates": "Calon lain",
+      "composeNext": "Formatkan {language} ini"
+    },
+    "iban": {
+      "inputLabel": "IBAN",
+      "idle": "Tampal IBAN — keputusan mengikuti setiap taip, tanpa butang.",
+      "sourceNote": "Checksum dan struktur mengikut ISO 13616-1:2020. Panjang dan format BBAN mengikut negara berasal daripada reproduksi yang diterbitkan bagi daftar IBAN ISO, bukan daftar itu sendiri.",
+      "valid": "IBAN terbentuk dengan baik",
+      "keepTyping": "Teruskan taip — lebih pendek daripada IBAN negara ini",
+      "caveat": "Hanya terbentuk dengan baik. Checksum yang lulus tidak mengesahkan akaun wujud, dibuka, atau milik penerima bayaran.",
+      "printFormat": "Format cetakan",
+      "details": "Perincian yang dipisahkan",
+      "notEncoded": "Tidak dikodkan oleh format negara ini",
+      "coverage": "{n} negara dengan format IBAN berdaftar",
+      "reason": {
+        "bad_charset": "Bentuk bukan IBAN — IBAN ialah dua huruf, dua digit, kemudian huruf dan digit sahaja",
+        "country_unsupported": "Tiada format IBAN berdaftar untuk kod negara ini",
+        "incomplete": "Tidak lengkap",
+        "wrong_length_for_country": "Terlalu panjang untuk IBAN negara ini",
+        "structure_mismatch": "Panjang betul, tetapi format tidak mengikut struktur negara ini",
+        "checksum_failed": "Semakan checksum gagal — terdapat kesalahan ejaan dalam IBAN ini"
+      },
+      "badge": {
+        "country": "{name} ({code})",
+        "unknownCountry": "Kod negara {code}",
+        "length": "{n} daripada {expected} aksara",
+        "bankCode": "Kod bank {code}",
+        "expectedCheckDigits": "Digit semak untuk nombor akaun ini ialah {digits}"
+      },
+      "field": {
+        "normalized": "Format elektronik",
+        "country": "Negara",
+        "checkDigits": "Digit semak",
+        "bban": "BBAN",
+        "bbanFormat": "Format BBAN",
+        "bankCode": "Kod bank"
+      },
+      "check": {
+        "charset": "Set aksara",
+        "country": "Negara",
+        "length": "Panjang",
+        "structure": "Struktur",
+        "checksum": "MOD 97-10"
+      },
+      "state": {
+        "pass": "lulus",
+        "fail": "gagal",
+        "skipped": "tidak dicapai"
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
+    },
+    "secretScan": {
+      "pasteLabel": "Tampal kod, konfigurasi atau .env",
+      "pastePlaceholder": "DATABASE_URL=postgres://…\nAPI_KEY=…",
+      "dropLabel": "Seret fail untuk imbas",
+      "privacy": "Berjalan sepenuhnya dalam pelayar anda. Tiada apa-apa dihantar ke mana-mana — malah tidak kepada kami.",
+      "scan": "Imbas",
+      "scanning": "Mengimbas…",
+      "idleTitle": "Tampal sesuatu dan tekan Imbas.",
+      "idleHint": "Memeriksa kunci API pembekal, token, kunci peribadi dan rahsia entropi tinggi. Nilai yang sepadan akan disorokkan; hanya nombor baris yang dipaparkan sepenuhnya.",
+      "clean": "Tiada rahsia ditemui",
+      "cleanCaveat": "Tiada apa-apa di sini sepadan dengan format kelayakan yang diketahui atau kelihatan seperti rahsia rawak. Padanan corak bukan bukti — semak apa-apa yang anda tidak pasti.",
+      "found": "{n, plural, one {# rahsia mungkin ditemui} other {# rahsia mungkin ditemui}}",
+      "foundCaveat": "Sorokkan ini sebelum anda tampal di mana-mana. Jika kunci adalah nyata, putarkan ia.",
+      "countHigh": "{n} keyakinan tinggi",
+      "countMedium": "{n} sederhana",
+      "countLow": "{n} rendah",
+      "confidence": {
+        "high": "Tinggi",
+        "medium": "Sederhana",
+        "low": "Rendah"
+      },
+      "position": "baris {line}, kolum {column}",
+      "length": "{n} aksara",
+      "maskedLabel": "Padanan tersorok",
+      "why": "Mengapa ini dipadankan",
+      "candidates": "Boleh juga menjadi:",
+      "scanDetail": "Butiran imbasan",
+      "lines": "{n} baris",
+      "bytes": "{n} bait diimbas",
+      "suppressed": "{n} placeholder diabaikan",
+      "suppressedNote": "Nilai demo yang diketahui (kunci EXAMPLE, your-api-key-here, aksara berulang) diabaikan supaya fail contoh tidak memberi amaran palsu.",
+      "omitted": "{n} lagi tidak dipaparkan",
+      "truncated": "Input terhad — hanya bahagian pertama yang discan",
+      "reportTitle": "Temuan scan rahsia (nilai disekat)",
+      "scopeNote": "Pengesanan sahaja: alat ini tidak pernah menghubungi pembekal untuk menyemak sama ada kunci masih aktif — itu bermaksud menghantar kunci anda kepada pihak ketiga."
+    },
+    "eanUpcGtin": {
+      "inputLabel": "Nombor kod bar",
+      "placeholder": "Satu kod setiap baris (koma dan titik koma juga memisahkan)",
+      "idle": "Tampal satu kod atau keseluruhan lajur — keputusan muncul semasa anda menaip.",
+      "operationLabel": "Operasi",
+      "operationValidate": "Sahkan (kod termasuk digit semakan)",
+      "operationCalculate": "Kira (kod tidak mempunyai digit semakan)",
+      "typeLabel": "Jenis",
+      "typeAuto": "Kesan mengikut panjang",
+      "total": "{n} kod",
+      "validCount": "{n} sah",
+      "invalidCount": "{n} tidak sah",
+      "calculatedCount": "{n} dikira",
+      "unrecognizedCount": "{n} panjang tidak dikenali",
+      "verdict": {
+        "valid": "Sah",
+        "invalid": "Tidak sah",
+        "calculated": "Dikira",
+        "unrecognized-length": "Panjang tidak dikenali"
+      },
+      "alsoReadsAs": "Juga dibaca sebagai {type}",
+      "checkDigit": "Digit semakan",
+      "corrected": "Sepatutnya",
+      "gtin14": "Bentuk GTIN-14",
+      "reason": {
+        "empty": "Tiada apa-apa untuk diperiksa pada baris ini.",
+        "non-digit-characters": "Mengandungi aksara yang bukan nombor atau pemisah.",
+        "unsupported-length": "Tiada pengenal GS1 mempunyai panjang ini (8, 12, 13, 14 dan 18 digit disokong).",
+        "length-mismatch": "Panjang salah untuk jenis yang anda pilih.",
+        "check-digit-mismatch": "Digit terakhir tidak sepadan dengan yang diperlukan oleh piawaian."
+      },
+      "warning": {
+        "separators-stripped": "Ruang, tanda tolak dan titik telah dibuang sebelum pemeriksaan.",
+        "all-zero": "Semua sifar — sah secara matematik, tetapi bukan pengenal sebenar.",
+        "payload-is-also-a-complete-code": "Ini juga merupakan panjang kod lengkap. Jika ia sudah mempunyai digit semakan, tukar kepada Sahkan."
+      },
+      "math": "Tunjukkan aritmetik",
+      "mathSum": "Jumlah {sum} → digit semakan {check}",
+      "truncatedRows": "Menunjukkan {shown} baris pertama daripada {total}. Salin dan muat turun untuk membawa kesemuanya.",
+      "privacy": "Kod dihantar ke API Forge untuk diperiksa dan tidak disimpan.",
+      "scopeNote": "Digit semakan yang betul bermaksud nombor itu terbentuk dengan baik. Ia tidak bermaksud GS1 pernah melantiknya kepada produk, syarikat atau lokasi sebenar — hanya carian daftar GEPIR yang menjawab itu.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
+    },
+    "vin": {
+      "inputLabel": "VIN (17 aksara)",
+      "privacy": "Diperiksa di pelayar anda. VIN tidak pernah dihantar ke mana-mana.",
+      "idle": "Tampal VIN — keputusan muncul semasa anda menaip, tiada butang.",
+      "scope": "Struktur dan digit semakan sahaja (49 CFR 565.15 / ISO 3779). Ini bukan carian sejarah kenderaan.",
+      "verdict": {
+        "valid": "Struktur VIN sah",
+        "keepTyping": "Teruskan menaip — {remaining} lagi aksara lagi",
+        "tooLong": "Terlalu panjang — VIN mempunyai tepat 17 aksara, ini mempunyai {n}",
+        "invalidCharacter": "Bukan aksara VIN: \"{char}\" pada kedudukan {position}",
+        "checkDigitMismatch": "Digit semakan tidak sepadan — dijangka {expected}, ditemui {found}"
+      },
+      "hint": {
+        "confusable": "\"{char}\" tidak pernah digunakan dalam VIN. Maksud anda {suggest}?"
+      },
+      "notice": {
+        "notProvenance": "Digit semakan yang sah mengesahkan VIN dibentuk dengan betul. Ia tidak mengesahkan kenderaan wujud, tidak diubah suai, atau mempunyai sejarah bersih — VIN yang diklon juga lulus semakan ini.",
+        "pre1981": "Kenderaan yang dibina sebelum 1981, dan sesetengah kenderaan import (JDM/Eropah), tidak menggunakan digit semakan ini — ketidaksepadanan mungkin tidak bermaksud VIN salah taip.",
+        "partial": "Pengesahan digit semakan memerlukan VIN 17 aksara penuh. VIN separa adalah kerja decode, bukan kerja checksum."
+      },
+      "badge": {
+        "length": "{n} aksara",
+        "expected": "Digit semakan {d}"
+      },
+      "invalidChars": {
+        "more": "Juga bukan aksara VIN: {list}"
+      },
+      "segment": {
+        "wmi": "WMI 1-3",
+        "vds": "Penerangan 4-8",
+        "checkDigit": "Digit semakan 9",
+        "modelYear": "Tahun model 10",
+        "plant": "Tumbuhan 11",
+        "serial": "Siri 12-17"
+      },
+      "math": {
+        "title": "Tunjukkan pengiraan",
+        "col": {
+          "position": "Pos",
+          "char": "Aksara",
+          "value": "Nilai",
+          "weight": "Berat",
+          "product": "Hasil"
+        },
+        "formula": "jumlah = {sum};  {sum} mod 11 = {remainder}  →  digit semakan {expected}"
+      },
+      "specimenTitle": "VIN · structure specimen"
+    },
+    "envDiff": {
+      "envA": "Persekitaran A",
+      "envB": "Persekitaran B",
+      "placeholderA": "Tampal atau seret fail .env pertama",
+      "placeholderB": "Tampal atau letakkan fail .env kedua",
+      "paneNoAssignment": "Tiada baris KEY=value ditemui",
+      "optIgnoreComments": "Abaikan baris komen dan kosong",
+      "optCaseInsensitive": "Perbandingan kunci tidak peka huruf besar-kecil",
+      "optRedactSecrets": "Sembunyikan rahsia yang dikesan",
+      "emptyHint": "Tambah persekitaran kedua untuk melihat perbandingan",
+      "summaryNone": "Tiada perbezaan merentas {total} kunci",
+      "summaryDiff": "{n} daripada {total} kunci berbeza",
+      "note": {
+        "unchanged": "Nilai sama di kedua-dua belah",
+        "changed": "Nilai berbeza",
+        "added": "Ditetapkan di B sahaja",
+        "removed": "Ditetapkan di A sahaja",
+        "commentedOutInA": "Dikomen dalam A, ditetapkan dalam B",
+        "commentedOutInB": "Ditetapkan dalam A, dikomen dalam B"
+      },
+      "secretChanged": "rahsia berbeza",
+      "secretSame": "rahsia sama di kedua-dua belah",
+      "count": {
+        "unchanged": "{n} tidak berubah",
+        "changed": "{n} berubah",
+        "added": "{n} ditambah",
+        "removed": "{n} dibuang",
+        "commentedOut": "{n} dikomen"
+      },
+      "warnings": "Amaran input ({n})",
+      "warningType": {
+        "duplicateKey": "{file} · kunci duplikat",
+        "quoteMismatch": "{file} · petikan tidak sepadan",
+        "unparsableLine": "{file} · baris tidak boleh ditafsir"
+      },
+      "showUnchanged": "Papar tidak berubah ({n})",
+      "commentedIn": {
+        "A": "dikecualikan dalam A",
+        "B": "dikecualikan dalam B",
+        "both": "dikecualikan dalam kedua-duanya"
+      },
+      "redactedNote": "Nilai rahsia disorokkan menggunakan heuristik kata kunci nama kunci — bukan pengimbas keselamatan. Perbandingan dijalankan pada nilai asal, jadi rahsia yang diputar masih dipaparkan sebagai berubah.",
+      "interpolationNote": "Rujukan ${VAR} dibandingkan secara literal dan tidak pernah diselesaikan: pengembangan berbeza mengikut pengguna.",
+      "truncated": "Hanya 5,000 kunci pertama disenaraikan; kiraan merangkumi setiap kunci.",
+      "colKey": "Kunci",
+      "colA": "A",
+      "colB": "B",
+      "colStatus": "Status",
+      "privacy": "Kedua fail dibandingkan dalam pelayar anda. Tiada apa-apa dimuat naik."
+    },
+    "csvDiff": {
+      "originalLabel": "CSV Asal",
+      "updatedLabel": "CSV Dikemaskini",
+      "originalPlaceholder": "Tampal eksport asal, atau letakkan fail .csv di sini",
+      "updatedPlaceholder": "Tampal eksport yang dikemaskini, atau letakkan fail .csv di sini",
+      "emptyHint": "Tampal atau letakkan kedua-dua fail — perbandingan akan dijalankan sebaik sahaja setiap sisi mempunyai kandungan.",
+      "note": "Baris dipadankan mengikut identiti, bukan kedudukan, jadi baris yang disisipkan atau diurut semula tidak akan kelihatan seperti dinding perubahan. Kandungan dihantar ke API untuk perbandingan dan tidak disimpan.",
+      "columns": "{n} lajur",
+      "keyLabel": "Lajur kunci",
+      "keyAuto": "Cadangan automatik",
+      "keyNone": "Tiada kunci — bandingkan keseluruhan baris",
+      "joinLabel": "Sambung",
+      "joinFull": "Luar penuh — setiap baris",
+      "joinInner": "Dalam — baris dalam kedua-dua",
+      "joinLeft": "Kiri — set baris asal",
+      "ignoreWhitespace": "Abaikan ruang putih",
+      "ignoreCase": "Abaikan huruf besar/kecil",
+      "treatEmptyAsNull": "Kosong = NULL = N/A",
+      "noDifferences": "Tiada perbezaan",
+      "differences": "{added} ditambah · {removed} dikeluarkan · {changed} diubah",
+      "added": "{n} ditambah",
+      "removed": "{n} dikeluarkan",
+      "changed": "{n} diubah",
+      "unchangedCount": "{n} tidak berubah",
+      "totals": "{original} → {updated} baris",
+      "matchedBy": "Dipadankan oleh {columns} ({source})",
+      "matchedWholeRow": "Dipadankan oleh kandungan baris penuh — tiada lajur kunci digunakan, jadi tiada perubahan dilaporkan.",
+      "keySource": {
+        "provided": "pilihan anda",
+        "auto": "cadangan automatik",
+        "full-row": "baris penuh"
+      },
+      "keyRejected": "Calon kunci ditolak: {items}",
+      "columnMismatch": "Lajur hanya dalam asal: {original} · hanya dalam kemas kini: {updated}",
+      "truncated": "Menunjukkan {shown} daripada {limit} baris hasil penuh (pratonton dihadkan) — kiraan di atas adalah lengkap.",
+      "findings": "Nota ({n})",
+      "level": {
+        "info": "maklumat",
+        "warning": "amaran",
+        "danger": "ralat"
+      },
+      "wholeRow": "Baris {n}",
+      "exportChanged": "Baris yang diubah (CSV)",
+      "exportFull": "Perbezaan penuh (CSV)"
+    },
+    "uscc": {
+      "modeLabel": "Sahkan atau jana",
+      "tab": {
+        "verify": "Sahkan",
+        "generate": "Jana kod ujian"
+      },
+      "inputLabel": "Kod kredit sosial bersatu",
+      "placeholder": "18 aksara, cth. 91500000059926748X",
+      "idle": "Tampal kod 18 aksara. Ia disemak dalam pelayar semasa anda menaip — tiada yang disimpan.",
+      "scope": "Pemeriksaan struktur sahaja (GB 32100-2015 + ISO 7064 MOD 31-3). Kod yang lulus adalah terbentuk dengan baik; ia tidak bermaksud organisasi didaftarkan di bawahnya — semak di pendaftaran nasional cods.org.cn.",
+      "valid": "Kod kredit sosial bersatu yang sah",
+      "invalid": "Bukan kod kredit sosial bersatu yang sah",
+      "incomplete": "{n} daripada 18 aksara",
+      "invalidCharacters": "Mengandungi aksara yang dikecualikan oleh piawaian",
+      "checksumOk": "Digit semakan OK",
+      "checksumBad": "Digit semakan tidak sepadan",
+      "expectedDigit": "Digit semakan sepatutnya {expected}, bukan {actual}",
+      "illegalAt": "Kedudukan {position}: “{char}” tidak dalam set aksara kod (I, O, S, V, Z dikecualikan)",
+      "detail": "Butiran medan",
+      "legacyTitle": "Kod organisasi lama (GB 11714)",
+      "legacy": {
+        "ok": "Kod organisasi 9 aksara yang tertanam adalah konsisten",
+        "mismatch": "Aksara semakan lama sepatutnya {expected} — nasihat sahaja; tidak semua kelas pendaftaran mempunyai kod organisasi GB 11714",
+        "unchecked": "Tidak disemak"
+      },
+      "divisionScope": "Jawatan 3–8 dipadankan dengan jadual wilayah GB/T 2260 dan peraturan bersarang bentuk enam digit; jadual daerah penuh tidak dibawa.",
+      "field": {
+        "registrationDept": "Jabatan pendaftaran",
+        "orgCategory": "Kategori organisasi",
+        "adminDivision": "Bahagian pentadbiran",
+        "orgIdentifier": "Pengecam subjek",
+        "checkDigit": "Digit semakan"
+      },
+      "depth": {
+        "none": "Tidak diselesaikan",
+        "province": "Tahap wilayah",
+        "prefecture": "Tahap prefecture",
+        "county": "Tahap daerah"
+      },
+      "note": {
+        "empty": "Tiada apa-apa untuk diperiksa lagi",
+        "incomplete": "Kod kredit sosial bersatu mempunyai tepat 18 aksara",
+        "tooLong": "Lebih daripada 18 aksara",
+        "illegalCharacter": "Mengandungi aksara di luar set GB 32100-2015 (I, O, S, V dan Z tidak termasuk)",
+        "checkDigitMismatch": "Digit semakan tidak sepadan dengan 17 aksara pertama",
+        "departmentUnknown": "Kedudukan 1 bukan jabatan pendaftaran yang ditakrifkan oleh piawaian (1, 5, 9, Y)",
+        "categoryUnknown": "Kedudukan 2 bukan kategori organisasi yang ditakrifkan untuk jabatan pendaftaran ini",
+        "divisionNotNumeric": "Kedudukan 3–8 mesti enam digit",
+        "divisionUnknownProvince": "Kedudukan 3–4 bukan kod negeri GB/T 2260",
+        "divisionMalformed": "Daerah tanpa prefecture, yang tidak dibenarkan oleh GB/T 2260"
+      },
+      "gen": {
+        "dept": "Jabatan pendaftaran",
+        "category": "Kategori organisasi",
+        "province": "Negeri",
+        "count": "Berapa banyak",
+        "randomProvince": "Mana-mana negeri",
+        "regenerate": "Luaran baharu",
+        "emptyHint": "Pilih pilihan di atas untuk menjana kod ujian.",
+        "testDataBadge": "Data ujian",
+        "seed": "Benih {seed}",
+        "allCodes": "Semua kod",
+        "disclaimer": "Kod ini sah dari segi struktur tetapi tidak dimiliki oleh mana-mana organisasi berdaftar. Jangan gunakan untuk mewakili entiti sebenar.",
+        "note": "Janaan menggunakan benih: pilihan dan benih yang sama sentiasa mengembalikan luaran yang sama, jadi fixture kekal boleh diulang. Setiap kod ditandakan isTestData dalam JSON serta di sini."
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
+    },
+    "yamlDiff": {
+      "original": "Asal",
+      "changed": "Tukar",
+      "originalPlaceholder": "Tampal atau seret YAML (atau JSON) asal",
+      "changedPlaceholder": "Tampal atau seret YAML (atau JSON) yang diubah",
+      "idle": "Isi kedua-dua panel dan perbandingan akan berjalan semasa anda menaip.",
+      "privacy": "Kedua-dua dokumen ditafsir dan dibandingkan dalam pelayar ini — tiada apa yang dimuat naik, itulah tujuannya untuk manifest yang membawa nama hos dan nama rahsia.",
+      "modeLabel": "Perbandingan",
+      "modeSemantic": "Semantik (struktur)",
+      "modeRawText": "Teks mentah (aksara)",
+      "resolveAnchors": "Selesaikan jangkar dan alias kepada nilai mereka",
+      "valid": "YAML sah",
+      "validMulti": "YAML sah · {n} dokumen",
+      "invalid": "Ralat tafsiran, baris {line}",
+      "parseFailed": "Satu pihak tidak dapat ditafsir — tiada apa yang dibandingkan",
+      "equivalent": "Tiada perbezaan — kedua-dua dokumen diselesaikan kepada struktur yang sama",
+      "equivalentStructural": "Struktur yang diselesaikan sama · {n} perbezaan format atau jangkar",
+      "summary": "{added} ditambah · {removed} dibuang · {changed} diubah · {typeChanged} perubahan jenis",
+      "parseErrorAt": "{side} · baris {line}, kolum {column}: {message}",
+      "documentCountMismatch": "Bilangan dokumen berbeza: {original} vs {changed} — dokumen dipadankan mengikut susunan dan baki dilaporkan keseluruhan",
+      "duplicateKeys": "Kunci bertindih dalam sumber",
+      "unified": "Patched bersatu (YAML dinormalisasi)",
+      "howItWorks": "Cara perbandingan ini berfungsi",
+      "rule": {
+        "keyOrder": "Susunan kunci pemetaan, petikan dan indentasi diabaikan; susunan jujukan dibandingkan kerana susunan senarai membawa maksud.",
+        "anchors": "Alias diselesaikan kepada nilainya, jadi suntingan di sebalik jangkar kongsi muncul di setiap tapak alias; jangkar atau alias yang berubah dengan nilai yang utuh dilaporkan secara berasingan sebagai struktur.",
+        "mergeKeys": "Kunci penggabungan (<<) dikembangkan sebelum dibandingkan, dan kunci nod sendiri mengatasi yang digabungkan.",
+        "types": "Jenis adalah sebahagian daripada nilai: 8080, \"8080\" dan !!str 8080 dilaporkan sebagai perubahan jenis, bukan perubahan umum.",
+        "sequences": "Jujukan pemetaan dipadankan mengikut nama, id atau kunci apabila medan itu unik di kedua-dua belah, jadi satu item yang dimasukkan tidak berantai; susunan semula masih dilaporkan.",
+        "blockScalars": "Skalar blok dibandingkan mengikut string yang diselesaikan, jadi baris baru akhir yang dipotong oleh |- adalah perubahan sebenar; gaya semula dengan nilai yang sama adalah struktur.",
+        "comments": "Komen bukan sebahagian daripada model data YAML dan tidak dibandingkan.",
+        "multiDoc": "--- memetakan dokumen secara berpasangan; ketidakpadanan bilangan dilaporkan berbanding hanya membandingkan yang pertama.",
+        "duplicateKeys": "Kunci pemetaan duplikat dalam input menggunakan kejadian terakhir dan dilaporkan sebagai amaran."
+      },
+      "note": {
+        "raw-text-mode": "Mod teks mentah membandingkan aksara, bukan struktur: susunan kunci, petikan dan indentasi semua dikira.",
+        "parse-error": "Satu pihak tidak berjaya diparsing, jadi tiada apa yang dibandingkan.",
+        "document-count-mismatch": "Kedua-dua pihak mempunyai bilangan dokumen --- yang berbeza; dokumen dipasangkan mengikut susunan dan yang berlebihan dilaporkan sepenuhnya.",
+        "merge-keys-expanded": "Kunci penggabungan (<<) dikembangkan sebelum dibandingkan.",
+        "anchors-unresolved": "Alias dibandingkan sebagai rujukan *name, bukan sebagai nilai yang diselesaikan.",
+        "yaml11-ambiguous-scalars": "y/n/yes/no/on/off tanpa petikan dibaca sebagai rentetan di sini (YAML 1.2 Core) dan sebagai boolean di bawah YAML 1.1 — petik jika boolean dimaksudkan.",
+        "sequence-matched-by-identity": "Jujukan pemetaan dipasangkan mengikut medan identiti, bukan mengikut kedudukan.",
+        "duplicate-keys": "Satu pemetaan menyatakan kunci yang sama dua kali; kejadian terakhir digunakan.",
+        "truncated": "Hanya 2000 perubahan pertama disenaraikan."
+      }
+    },
+    "listSetCompare": {
+      "listA": "Senarai A",
+      "listB": "Senarai B",
+      "placeholder": "Tampal item, satu setiap baris (atau lemparkan fail .txt/.csv)",
+      "emptyHint": "Tambah item ke kedua-dua Senarai A dan Senarai B untuk melihat perbandingan.",
+      "privacy": "Kedua-dua senarai dibandingkan dalam pelayar anda — tiada apa yang dimuat naik. Enjin yang sama berjalan di sisi pelayan untuk pemanggil API dan MCP.",
+      "delimiter": "Pemisah",
+      "delimiterOption": {
+        "auto": "Kesan automatik",
+        "newline": "Baris baru",
+        "comma": "Koma",
+        "tab": "Tab",
+        "custom": "Tersuai"
+      },
+      "customDelimiter": "Pemisah",
+      "customDelimiterPlaceholder": "| atau \\t",
+      "sort": "Susunan",
+      "sortOption": {
+        "original": "Susunan asal",
+        "asc": "A→Z",
+        "desc": "Z→A",
+        "byCount": "Mengikut bilangan"
+      },
+      "optCaseSensitive": "Sensitif huruf besar/kecil",
+      "optTrim": "Buang ruang putih",
+      "optCollapse": "Padatkan ruang dalaman",
+      "optIgnoreZeros": "Abaikan sifar terasul",
+      "paneItems": "{n} item",
+      "paneSingle": "1 item — semak pemisah",
+      "items": "{n}",
+      "none": "Tiada",
+      "more": "+{n} lagi — salin atau muat turun untuk senarai penuh",
+      "panel": {
+        "onlyInA": "Hanya dalam A",
+        "onlyInB": "Hanya dalam B",
+        "intersection": "Persilangan (dalam kedua-dua)",
+        "union": "Gabungan (semua item)",
+        "symmetricDifference": "Perbezaan simetri"
+      },
+      "summaryIdentical": "Set sama — {n} item dikongsi",
+      "summaryDiff": "{a} hanya dalam A · {b} hanya dalam B · {shared} dikongsi",
+      "drill": {
+        "symmetricDifference": "Perbezaan simetri ({n})",
+        "duplicates": "Duplikat dalam senarai ({n})",
+        "multiplicities": "Kiraan per item ({n})",
+        "warnings": "Notis ({n})"
+      },
+      "duplicatesInA": "Berulang dalam A",
+      "duplicatesInB": "Berulang dalam B",
+      "colValue": "Item",
+      "colCountA": "Dalam A",
+      "colCountB": "Dalam B",
+      "detailTruncated": "Kiraan setiap item dipotong — tingkatkan maxDetail pada API untuk jadual penuh.",
+      "reportTitle": "Perbandingan senarai"
+    },
+    "loanAmortization": {
+      "principal": "Jumlah pinjaman",
+      "rate": "Kadar tahunan %",
+      "term": "Tempoh",
+      "termUnit": "Unit tempoh",
+      "unitYears": "Tahun",
+      "unitMonths": "Bulan",
+      "startMonth": "Bulan bayaran pertama",
+      "startMonthHint": "YYYY-MM. Menandakan jadual; tidak mengubah jumlah.",
+      "extraHeading": "Bayaran tambahan",
+      "extraMonthly": "Tambahan setiap bulan",
+      "extraYearly": "Tambahan sekali setahun",
+      "extraYearlyMonth": "Tambahan tahunan jatuh pada bulan",
+      "extraOneTime": "Tambahan sekali sahaja",
+      "extraOneTimePeriod": "Tambahan sekali sahaja pada bayaran #",
+      "extraNote": "Bayaran tambahan mengurangkan modal pada tempoh ia jatuh, yang mengurangkan faedah setiap tempoh seterusnya. Kadar dan bayaran jadual kekal sama.",
+      "monthlyPayment": "Bayaran bulanan",
+      "totalInterest": "Jumlah faedah",
+      "totalPaid": "Jumlah dibayar",
+      "crossover": "Titik silang",
+      "crossoverValue": "Bayaran {n}",
+      "crossoverNone": "Tidak pernah",
+      "payoff": "Dibayar penuh pada bayaran {n}",
+      "monthsSaved": "{n} bulan lebih awal",
+      "totalExtra": "{amount} dibayar melebihi jadual",
+      "viewMonthly": "Setiap bayaran",
+      "viewAnnual": "Mengikut tahun",
+      "tableCaption": "Jadual amortisasi: bayaran, faedah, modal dan baki baki setiap tempoh",
+      "colPeriod": "#",
+      "colDate": "Bulan",
+      "colPayment": "Bayaran",
+      "colInterest": "Faedah",
+      "colPrincipal": "Pokok",
+      "colBalance": "Baki",
+      "colYear": "Tahun",
+      "expandRows": "Tunjukkan semua {total} bayaran",
+      "collapseRows": "Tunjukkan lebih sedikit bayaran",
+      "windowNote": "Menunjukkan {shown} daripada {total} bayaran. CSV dan API mengandungi kesemuanya.",
+      "emptyHint": "Masukkan jumlah pinjaman, kadar dan tempoh untuk melihat jadual.",
+      "note": "Enjin yang sama seperti API. Kiraan dijalankan berdasarkan terma pinjaman anda sahaja; tiada apa yang dimuat naik atau disimpan.",
+      "errPrincipal": "Masukkan jumlah pinjaman melebihi 0.",
+      "errRate": "Masukkan kadar antara 0 dan 100.",
+      "errTerm": "Masukkan tempoh antara 1 bulan dan 100 tahun.",
+      "errStartMonth": "Gunakan YYYY-MM, contohnya 2026-01.",
+      "errExtra": "Masukkan jumlah 0 atau lebih.",
+      "errOneTimePeriod": "Masukkan nombor bayaran yang satu kali ini jatuh padanya."
+    },
+    "businessDayShift": {
+      "modeLabel": "Apa yang hendak dikira",
+      "mode": {
+        "shift": "Pindah tarikh",
+        "countBetween": "Kira antara tarikh"
+      },
+      "startDate": "Tarikh mula",
+      "days": "Hari bekerja",
+      "daysHint": "Kiraan negatif pergi ke belakang: −10 ialah sepuluh hari bekerja sebelum tarikh mula.",
+      "daysInvalid": "Hari bekerja mesti nombor bulat, dengan tanda tolak permulaan yang boleh diabaikan.",
+      "endDate": "Tarikh tamat",
+      "includeEndDate": "Kira tarikh akhir juga — ini yang dikembalikan oleh NETWORKDAYS spreadsheet",
+      "weekendLabel": "Hari cuti setiap minggu",
+      "weekendHint": "Secara lalai Sabtu dan Ahad. Tetapkan Jumaat dan Sabtu jika itu hujung minggu.",
+      "weekday": {
+        "sun": "Ahd",
+        "mon": "Isn",
+        "tue": "Sel",
+        "wed": "Rab",
+        "thu": "Kha",
+        "fri": "Jum",
+        "sat": "Sab"
+      },
+      "holidays": "Cuti umum",
+      "holidaysHint": "Kosongkan jika mahu kiraan berdasarkan hujung minggu sahaja — tiada kalendar negara digunakan.",
+      "makeupWorkdays": "Hari kerja ganti",
+      "makeupHint": "Tarikh yang bekerja walaupun jatuh pada hujung minggu atau cuti — Sabtu 调休/补班 China masuk di sini.",
+      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesIgnored": "{n, plural, one {# entri bukan tarikh YYYY-MM-DD dan tidak digunakan} other {# entri bukan tarikh YYYY-MM-DD dan tidak digunakan}}",
+      "pickStart": "Pilih tarikh mula untuk memulakan.",
+      "emptyHintShift": "Pilih tarikh mula dan bilangan hari kerja.",
+      "emptyHintCount": "Pilih tarikh mula dan tarikh tamat.",
+      "note": "Enjin yang sama seperti API. Pengiraan dijalankan pada set peraturan yang ditunjukkan bersama keputusan; tiada apa yang disimpan.",
+      "countHeadline": "{n, plural, one {# hari kerja} other {# hari kerja}}",
+      "reversedRange": "Tarikh tamat sebelum tarikh mula, jadi kiraan kembali negatif.",
+      "classification": {
+        "workday": "Hari kerja",
+        "weekend": "Hujung minggu",
+        "holiday": "Cuti",
+        "makeupWorkday": "Hari kerja ganti"
+      },
+      "ruleWeekend": "{days} cuti",
+      "ruleNoWeekend": "tiada hari cuti mingguan",
+      "ruleHolidays": "{n, plural, =0 {tiada senarai cuti} one {# cuti} other {# cuti}}",
+      "ruleMakeups": "{n, plural, =0 {tiada hari kerja ganti} one {# hari kerja ganti} other {# hari kerja ganti}}",
+      "ruleEndIncluded": "tarikh akhir dikira",
+      "ruleEndExcluded": "tarikh akhir tidak dikira",
+      "chain": "Pindah semula dari tarikh ini"
+    },
+    "retryBackoff": {
+      "strategy": {
+        "exponential": "Eksponen",
+        "linear": "Linear",
+        "fixed": "Tetap"
+      },
+      "initialDelay": "Kelewatan awal (ms)",
+      "factor": "Faktor backoff",
+      "factorHint": "Pengganda yang digunakan setiap percubaan semula. Mesti lebih besar daripada 1.",
+      "increment": "Kenaikan linear (ms)",
+      "incrementHint": "Milisaat ditambah pada kelewatan setiap percubaan semula.",
+      "maxDelay": "Had kelewatan maksimum (ms)",
+      "maxDelayHint": "Biarkan kosong untuk tiada had. Setelah had dicapai, setiap kelewatan seterusnya kekal pada had tersebut.",
+      "maxAttempts": "Percubaan maksimum",
+      "maxAttemptsHint": "1 hingga 100.",
+      "excludeInitial": "Percubaan maksimum tidak termasuk permintaan awal",
+      "excludeInitialNote": "Hidup: nombor di atas hanya mengira percubaan semula, permintaan awal adalah tambahan. Mati: ia mengira setiap percubaan, termasuk permintaan awal.",
+      "jitter": {
+        "none": "Tiada — kelewatan tepat",
+        "equal": "Sama — separuh tetap, separuh rawak",
+        "full": "Penuh — dari sifar hingga kelewatan"
+      },
+      "callerTimeout": "Had masa anda sendiri (ms)",
+      "callerTimeoutHint": "Pilihan. Biarkan kosong untuk skip semakan bajet.",
+      "emptyHint": "Betulkan medan yang disorot untuk melihat jadual.",
+      "note": "Dihitung daripada polisi sahaja — tiada apa yang dihantar ke mana-mana perkhidmatan hulu. Jitter dilaporkan sebagai julat di mana klien sebenar jatuh, bukan sebagai satu sampel.",
+      "headlineExact": "{attempts} percubaan, {wait} menunggu secara keseluruhan.",
+      "headlineRange": "{attempts} percubaan, purata menunggu {expected}, sehingga {max} dalam kes terburuk.",
+      "finalDelay": "Tunggu terakhir, sebelum percubaan {attempt}, ialah {delay}.",
+      "noRetries": "Bajet ini membenarkan satu percubaan dan tiada percubaan semula, jadi tiada apa yang perlu ditunggu.",
+      "retryCount": "{count, plural, =0 {tiada percubaan semula} one {# percubaan semula} other {# percubaan semula}}",
+      "capFlattened": "Had dicapai pada percubaan {attempt} — setiap kelewatan kemudian kekal pada {delay}.",
+      "timeoutExceeded": "Kes terburuk menunggu {wait}, yang melebihi bajet {timeout} anda.",
+      "timeoutOk": "Kes terburuk menunggu {wait}, dalam belanjawan {timeout} anda.",
+      "tableLabel": "Jadual percubaan semula",
+      "colAttempt": "Percubaan",
+      "colDelay": "Kelewatan",
+      "colCumulative": "Tunggu kumulatif",
+      "average": "purata {value}",
+      "formula": {
+        "none": "Kelewatan adalah tepat — tiada jitter digunakan.",
+        "equal": "Jitter sama rata: separuh kelewatan adalah tetap, separuh lagi diambil secara seragam, jadi setiap masa menunggu berada di antara separuh kelewatan dan kelewatan penuh.",
+        "full": "Jitter penuh: masa menunggu diambil secara seragam antara sifar dan kelewatan yang dikira."
+      },
+      "errInitialDelay": "Kelewatan awal mestilah nombor bulat dalam milisaat, sekurang-kurangnya 1.",
+      "errFactor": "Faktor mestilah lebih besar daripada 1 dan paling banyak 100. Faktor 1 adalah strategi tetap.",
+      "errIncrement": "Kenaikan mestilah nombor bulat dalam milisaat, 0 atau lebih.",
+      "errMaxDelay": "Had mesti menjadi nombor bulat milisaat, sekurang-kurangnya 1.",
+      "errCapBelowInitial": "Had mesti sekurang-kurangnya sama dengan kelewatan awal.",
+      "errMaxAttempts": "Cubaan mesti menjadi nombor bulat dari 1 hingga 100.",
+      "errCallerTimeout": "Had masa mesti menjadi nombor bulat milisaat, sekurang-kurangnya 1."
+    },
+    "csvColumns": {
+      "csvLabel": "CSV",
+      "csvPlaceholder": "Tampal CSV di sini, atau letakkan fail — baris pertama dibaca sebagai nama lajur",
+      "sample": "CSV Contoh",
+      "chooseFile": "Pilih fail",
+      "fileFailed": "Tidak dapat membaca {name}.",
+      "delimiterLabel": "Pemisah",
+      "delimiter": {
+        "comma": "Koma  ,",
+        "semicolon": "Titik koma  ;",
+        "tab": "Tab",
+        "pipe": "Paip  |"
+      },
+      "raggedPolicyLabel": "Baris yang tidak sepadan dengan tajuk",
+      "ragged": {
+        "pad": "Selaraskan dengan tajuk",
+        "truncate": "Potong baris panjang, biarkan baris pendek tetap pendek",
+        "reject": "Berhenti dan laporkan"
+      },
+      "columnsTitle": "Lajur — {kept} daripada {total} dikekalkan",
+      "columnsHint": "Nyahcentang untuk buang lajur, edit kotak untuk namakan semula, guna anak panah untuk susun semula. Semua diselesaikan terhadap tajuk asal.",
+      "reset": "Set semula lajur",
+      "keep": "Kekalkan lajur {name}",
+      "renameLabel": "{name}",
+      "moveUp": "Pindahkan {name} ke atas",
+      "moveDown": "Pindahkan {name} ke bawah",
+      "noneKept": "Setiap lajur tidak ditanda — simpan sekurang-kurangnya satu.",
+      "emptyHint": "Tampal CSV di atas untuk menguruskan lajurnya.",
+      "note": "Berjalan pada teks yang anda tampal. Lepas, kemudian namakan semula, kemudian susun semula — dalam susunan tetap itu, sentiasa terhadap tajuk asal.",
+      "columnCount": "{n} lajur",
+      "rowCount": "{n} baris",
+      "duplicateHeaders": "Tajuk duplikat digunakan oleh nama: {names}",
+      "raggedCount": "{n}{more} baris tidak sepadan dengan lebar tajuk",
+      "previewLabel": "CSV Output",
+      "previewTruncated": "Memaparkan {shown} baris pertama daripada {total}. Salin atau muat turun untuk keseluruhan fail.",
+      "raggedListLabel": "Baris yang tidak sepadan dengan lebar tajuk",
+      "raggedRow": "Baris {line}: {actual} medan, tajuk mempunyai {expected}",
+      "unusedRenames": "Penamaan semula diabaikan — lajur ini tidak dalam output: {names}"
+    },
+    "imageRotateFlip": {
+      "drop": "Lepaskan imej, atau klik untuk semak imbas",
+      "browse": "Pilih imej",
+      "selected": "{name} · {kb} KB",
+      "privacy": "Fail dihantar ke API Forge untuk transformasi dan tidak pernah disimpan.",
+      "tooLarge": "Imej itu lebih besar daripada {mb} MB.",
+      "ccw": "90° kiri",
+      "cw": "90° kanan",
+      "half": "180°",
+      "reset": "Set semula",
+      "flipHorizontal": "Balikkan mendatar",
+      "flipVertical": "Balikkan menegak",
+      "angle": "Sudut",
+      "exactAngle": "Sudut tepat °",
+      "fitMode": "Moda padanan",
+      "fitExpand": "Kembangkan kanvas",
+      "fitCrop": "Potong untuk memenuhi",
+      "fitInside": "Muat di dalam",
+      "fitNote": "Selepas putaran seperempat, imej yang diputar tidak lagi muat dalam bingkai lama: kembangkan mengekalkan setiap piksel, potong mengekalkan saiz asal dan memotong sudut, muat mengecilkan keseluruhan imej.",
+      "outputFormat": "Format output",
+      "sameFormat": "Sama seperti input",
+      "idle": "Lepaskan imej untuk melihatnya diorientasikan semula.",
+      "original": "Asal · {w}×{h}",
+      "originalAlt": "Imej seperti yang dimuat naik",
+      "result": "Hasil · {w}×{h}",
+      "resultAlt": "Imej yang diorientasikan semula",
+      "badgeLossless": "Tiada pensampelan semula",
+      "badgeResampled": "Disampel semula",
+      "badgeSize": "{kb} KB",
+      "badgeExif": "Orientasi EXIF {orientation} digunakan dahulu",
+      "badgeSnapped": "Diselaraskan ke putaran suku tepat",
+      "badgeReencode": "Geometri tepat; codec menyahkod semula",
+      "download": "Muat turun",
+      "note": "Putaran 90°, 180° dan 270° menggerakkan piksel tanpa mencampurkannya. Sudut lain akan disampel semula. GIF animasi, APNG dan WebP animasi belum disokong."
+    },
+    "exifStrip": {
+      "drop": "Lepaskan JPEG, PNG atau WebP untuk menanggalkan metadata",
+      "privacy": "Diproses pada pelayan kami dan tidak pernah disimpan. Sehingga {mb} MB per imej.",
+      "idle": "Dibuang: GPS, masa tangkapan, maklumat kamera dan peranti, pratonton tertanam, sejarah penyuntingan. Dipelihara: orientasi, profil warna, dimensi, data piksel.",
+      "note": "Imej statik sahaja. Video, PDF, HEIC, AVIF dan GIF tidak termasuk, dan manifest asal C2PA dibiarkan utuh.",
+      "detail": "Apa yang telah dibuang",
+      "optKeepThumbnail": "Kekalkan thumbnail Exif yang tertanam",
+      "verdictStripped": "Membuang {fields} medan metadata ({kb} KB)",
+      "verdictClean": "Fail ini tidak membawa metadata yang boleh dibuang",
+      "strippedCaveat": "Imej itu sendiri tidak berubah — piksel sama, dimensi sama, tiada pengekodan semula.",
+      "cleanCaveat": "Dikembalikan byte demi byte seperti asalnya.",
+      "badgeOrientationKept": "Orientasi dikekalkan",
+      "badgeOrientationLost": "Orientasi tidak dapat dibawa",
+      "badgeColorProfileKept": "Profil warna dikekalkan",
+      "badgeThumbnailKept": "Thumbnail dikekalkan",
+      "badgeThumbnailRemoved": "Thumbnail dibuang",
+      "download": "Muat turun imej yang dibersihkan",
+      "sizes": "{before} KB → {after} KB",
+      "detailFields": "{fields} medan · {kb} KB",
+      "detailNothing": "Tiada apa-apa yang dikeluarkan daripada fail ini.",
+      "detailOrientation": "Orientasi Exif {value} telah dibaca daripada fail dan dibawa bersama.",
+      "detailNoOrientation": "Fail ini tidak menyatakan orientasi Exif, jadi paparan tidak terjejas.",
+      "segmentExif": "Exif",
+      "segmentIptc": "IPTC",
+      "segmentXmp": "XMP",
+      "segmentComment": "Komen",
+      "segmentText": "Metadata teks",
+      "segmentTime": "Cap masa",
+      "segmentVendor": "Blok pembekal",
+      "summaryStripped": "{fields} medan metadata telah dibuang ({families}), {kb} KB. Imej tidak berubah selain itu.",
+      "summaryClean": "Tiada metadata yang boleh dibuang ditemui. Fail dikembalikan tanpa perubahan."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "Name / host",
+      "type": "Record type",
+      "note": "Resolved by the Forge host DNS resolver — may differ from your local stub or browser DoH."
+    },
+    "tls": {
+      "host": "Host",
+      "expired": "Certificate expired",
+      "validDays": "{n} days remaining",
+      "note": "Connects from the Forge host. Inspection disables trust rejection so you can still read an untrusted leaf."
+    },
+    "myIp": {
+      "refresh": "Refresh",
+      "note": "Shows how this request reached Forge. No ASN/geo without a licensed data feed."
+    },
+    "mermaid": {
+      "source": "Mermaid source",
+      "idle": "Valid diagrams render here",
+      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
+      "sample": "Sample",
+      "theme": "Theme",
+      "theme_default": "Default",
+      "theme_dark": "Dark",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "Flowchart",
+      "sample_sequence": "Sequence",
+      "sample_class": "Class",
+      "sample_er": "ER diagram",
+      "sample_state": "State",
+      "sample_gantt": "Gantt",
+      "sample_pie": "Pie",
+      "sample_mindmap": "Mindmap",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "zoomReset": "Reset view",
+      "copySvg": "Copy SVG",
+      "downloadSvg": "Download SVG",
+      "downloadPng": "Download PNG",
+      "previewAria": "Mermaid diagram preview",
+      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
+    },
+    "colorDeltaE": {
+      "note": "CIEDE2000 via culori. Thresholds are UI review heuristics, not print contracts. color-convert already covers OKLCH."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL dialect",
+      "parseNote": "Hard-correct: parse & inventory only. Visual ERD ships only when layout quality passes the ship gate.",
+      "convertNote": "@dbml/core ModelExporter / importer — same path as the API."
+    },
+    "dnsLeak": {
+      "probeHost": "Compare host (advanced)",
+      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
+      "run": "Start DNS leak check",
+      "retest": "Run again",
+      "showAdvanced": "Advanced options",
+      "hideAdvanced": "Hide advanced",
+      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
+      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
+      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
+      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
+      "edgeIp": "Your edge IP",
+      "authorityHits": "Recursive IPs",
+      "forgePaths": "Forge resolver hits",
+      "dohPaths": "Browser DoH hits",
+      "webrtcCount": "WebRTC IPs",
+      "forgeResolvers": "Forge multi-resolver (server-side)",
+      "forgeNote": "These queries leave from the Forge host — not your laptop.",
+      "browserDoh": "Browser DoH",
+      "webrtc": "WebRTC ICE",
+      "egressMarkers": "Forge egress markers",
+      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
+      "honestyPrefix": "Honesty:",
+      "verdictConsistent": "Paths look consistent on this check",
+      "verdictSplit": "Split answers across DNS paths",
+      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
+      "verdictIncomplete": "Incomplete — browser probes missing",
+      "verdictAuthority": "System DNS recursives captured",
+      "infraOn": "Authority online",
+      "infraOff": "Authority offline — multi-path only",
+      "infraChecking": "Checking…",
+      "authorityResolvers": "System DNS recursive resolvers",
+      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
+      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
+      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
+      "authorityDetail": "Authority session detail",
+      "phaseSession": "Creating session…",
+      "phaseSystemDns": "Triggering system DNS…",
+      "phasePoll": "Listening for recursive hits ({n}/{total})…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "stepSession": "Session",
+      "stepSystemDns": "System DNS",
+      "stepPoll": "Listen",
+      "stepBrowser": "Browser",
+      "stepServer": "Server",
+      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
+      "liveHits": "Live recursive hits",
+      "sectionSystemDns": "System DNS (what you came for)",
+      "sectionComplementary": "Complementary paths",
+      "sectionTech": "Technical session detail",
+      "copyIps": "Copy IPs",
+      "copied": "Copied",
+      "queryCount": "{n} queries",
+      "colPath": "Path",
+      "colAnswers": "Answers",
+      "colMs": "ms",
+      "ipPublic": "public",
+      "ipPrivate": "private",
+      "sig": {
+        "captured": "System DNS captured",
+        "onlineNoHits": "Authority online · no hits yet",
+        "offline": "Authority offline",
+        "forgeSplit": "Forge resolvers disagree",
+        "dohSplit": "Browser DoH disagree",
+        "webrtcMismatch": "WebRTC ≠ edge IP",
+        "webrtcLocal": "Local WebRTC candidates",
+        "noBrowser": "No browser probes"
+      }
+    },
+    "honesty": {
+      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
+      "signatureNotVerified": "{engine} · decode only · signature not verified",
+      "localOnly": "Processed for this request · not stored as a card or credential"
+    },
+    "idCard": {
+      "number": "Resident ID number",
+      "note": "GB 11643 check digit · no household registry lookup · same path as API",
+      "specimenTitle": "Resident ID · structure specimen",
+      "segRegion": "Region",
+      "segBirth": "Birth",
+      "segSeq": "Seq",
+      "segCheck": "Check",
+      "metaBirth": "Birth",
+      "metaGender": "Gender",
+      "metaRegion": "Region code",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "reasonFormat": "Format should be 18 characters (last may be X)",
+      "reasonBirth": "Birth date segment is invalid",
+      "reasonCheck": "Check digit is wrong",
+      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} lines",
+      "chars": "{n} chars",
+      "empty": "(empty file)",
+      "readyToShip": "Ready to drop into the repo"
+    },
+    "textTransform": {
+      "mode": "Mode",
+      "input": "Input",
+      "output": "Output",
+      "emptyResult": "Result appears here",
+      "runLocal": "Run locally",
+      "runServer": "Run on server",
+      "statusLocalLive": "Local · live",
+      "statusLocal": "Local",
+      "statusServer": "Server · same path as API",
+      "noteDefault": "Same path as API"
+    }
+  },
+  "roots": {
+    "hubLabel": "Mengikut niat",
+    "tools": "alat",
+    "dualSurface": "Laman manusia + API Ejen · enjin sama",
+    "otherRoots": "Akar permintaan lain"
+  }
+}
