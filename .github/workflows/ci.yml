@@ -848,13 +848,20 @@ jobs:
         # The committed migration history starts at enable_rls and is not
         # replayable from empty (P3006 / P1014: organizations is never created).
         # Apply the current schema to the job-local Postgres, then confirm the
-        # live datasource still matches schema.prisma. Do not point DATABASE_URL
-        # at secrets.SHADOW_DATABASE_URL — db push would mutate a remote DB.
+        # live datasource still matches schema.prisma. Prisma 7 also refuses a
+        # shadow URL that equals DATABASE_URL, so create a second empty DB.
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/shadow_nebutra
           DIRECT_URL: postgresql://postgres:postgres@localhost:5432/shadow_nebutra
-          SHADOW_DATABASE_URL: ${{ secrets.SHADOW_DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/shadow_nebutra' }}
+          SHADOW_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/shadow_nebutra_diff
         run: |
+          node --input-type=module -e '
+            import pg from "pg";
+            const client = new pg.Client({ connectionString: process.env.DATABASE_URL });
+            await client.connect();
+            await client.query("CREATE DATABASE shadow_nebutra_diff");
+            await client.end();
+          '
           pnpm exec prisma db push --accept-data-loss
           pnpm exec prisma migrate diff \
             --from-config-datasource \

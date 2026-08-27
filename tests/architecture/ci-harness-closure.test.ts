@@ -137,9 +137,6 @@ describe("ci harness dependency closure", () => {
 
   it("backs database migration checks with a local Postgres shadow service", async () => {
     const workflow = await readFile(join(process.cwd(), ".github/workflows/ci.yml"), "utf8");
-    const shadowDatabaseUrl =
-      "$" +
-      "{{ secrets.SHADOW_DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/shadow_nebutra' }}";
 
     expect(workflow).toContain("  db-check:");
     expect(workflow).toContain("    services:");
@@ -147,9 +144,12 @@ describe("ci harness dependency closure", () => {
     expect(workflow).toContain("        image: postgres:16");
     expect(workflow).toContain("          POSTGRES_DB: shadow_nebutra");
     expect(workflow).toContain('          --health-cmd "pg_isready -U postgres -d shadow_nebutra"');
-    // Prisma 7 dropped the CLI flag; the shadow URL is injected as env for
-    // packages/platform/db/prisma.config.ts datasource.shadowDatabaseUrl.
-    expect(workflow).toContain(`SHADOW_DATABASE_URL: ${shadowDatabaseUrl}`);
+    // Prisma 7 dropped the CLI flag and rejects url === shadowDatabaseUrl.
+    // The job creates a second empty DB and injects it via prisma.config.ts.
+    expect(workflow).toContain("CREATE DATABASE shadow_nebutra_diff");
+    expect(workflow).toContain(
+      "SHADOW_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/shadow_nebutra_diff",
+    );
     expect(workflow).toContain("prisma db push --accept-data-loss");
     expect(workflow).toContain("--from-config-datasource");
     expect(workflow).toContain("--to-schema ./prisma/schema.prisma");
