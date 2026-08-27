@@ -52,24 +52,36 @@ describe("aiGatewayMiddleware", () => {
       }),
     );
 
-    const res = await app.request("http://localhost/v1/chat/completions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ model: "gpt-5.5", messages: [{ role: "user", content: "hi" }] }),
-    });
+    const previousBaseUrl = process.env.OPENAI_BASE_URL;
+    delete process.env.OPENAI_BASE_URL;
+    try {
+      const res = await app.request("http://localhost/v1/chat/completions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "gpt-5.5",
+          messages: [{ role: "user", content: "hi" }],
+        }),
+      });
 
-    expect(mockGlobalFetch).toHaveBeenCalledTimes(1);
-    const fetchArgs = mockGlobalFetch.mock.calls[0];
-    expect(fetchArgs[0]).toContain("api.openai.com");
+      expect(mockGlobalFetch).toHaveBeenCalledTimes(1);
+      const fetchArgs = mockGlobalFetch.mock.calls[0];
+      expect(fetchArgs[0]).toContain("api.openai.com");
 
-    // Check Authorization header logic
-    const reqHeaders = fetchArgs[1]?.headers as Record<string, string>;
-    expect(reqHeaders.Authorization).toBeDefined();
+      // Check Authorization header logic
+      const reqHeaders = fetchArgs[1]?.headers as Record<string, string>;
+      expect(reqHeaders.Authorization).toBeDefined();
 
-    expect(res.status).toBe(200);
-    expect(await res.json()).toEqual({ id: "chatcmpl-123", choices: [] });
-
-    mockGlobalFetch.mockRestore();
+      expect(res.status).toBe(200);
+      expect(await res.json()).toEqual({ id: "chatcmpl-123", choices: [] });
+    } finally {
+      if (previousBaseUrl === undefined) {
+        delete process.env.OPENAI_BASE_URL;
+      } else {
+        process.env.OPENAI_BASE_URL = previousBaseUrl;
+      }
+      mockGlobalFetch.mockRestore();
+    }
   });
 
   it("should handle SSE streams correctly and accumulate tokens", async () => {
