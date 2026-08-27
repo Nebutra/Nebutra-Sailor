@@ -5,7 +5,6 @@ export {
   type Stripe,
   type StripeConfig,
 } from "./client";
-
 export {
   type CreateCustomerInput,
   createBillingPortalSession,
@@ -17,3 +16,16 @@ export {
   type UpdateCustomerInput,
   updateCustomer,
 } from "./customers";
+export {
+  advanceStripeTestClock,
+  type ClockWebhookInboxState,
+  clockAdvanceCrossesPeriodEnd,
+  createStripeTestClock,
+  decideClockWebhookReplay,
+  invoiceEventsAfterClockAdvance,
+  isStripeTestModeSecret,
+  requireStripeTestClockSecret,
+  STRIPE_TEST_CLOCK_IN_FLIGHT_MS,
+  type StripeTestClock,
+  type StripeTestClockApi,
+} from "./test-clock";

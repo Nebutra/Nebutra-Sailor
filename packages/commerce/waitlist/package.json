@@ -5,6 +5,7 @@
   "description": "Pre-launch waitlist with position tracking, referral codes, and admin management",
   "type": "module",
   "nebutra": {
+    "graph": "core",
     "status": "foundation",
     "productionReady": false,
     "requires": [

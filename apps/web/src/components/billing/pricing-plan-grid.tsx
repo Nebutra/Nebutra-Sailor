@@ -106,7 +106,6 @@ async function defaultOnSelectPlan(
   interval: BillingInterval,
   orgId: string | undefined,
 ) {
-  const price = findPriceForInterval(plan, interval);
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const returnPath = orgId
     ? `${origin}/checkout-return?organizationId=${encodeURIComponent(orgId)}`
@@ -119,8 +118,6 @@ async function defaultOnSelectPlan(
       planId: plan.id,
       interval,
       redirectUrl: returnPath,
-      ...(price?.trialPeriodDays ? { trialPeriodDays: price.trialPeriodDays } : {}),
-      ...(price?.seatBased || plan.perSeat ? { seatBased: true } : {}),
     }),
   });
 

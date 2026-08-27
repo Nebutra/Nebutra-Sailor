@@ -2,6 +2,11 @@
   "name": "@nebutra/studio",
   "version": "0.1.0",
   "private": true,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "scripts": {
     "dev": "sanity dev",
     "build": "sanity build",

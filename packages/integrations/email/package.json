@@ -6,6 +6,8 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "status": "foundation",
+    "graph": "core",
     "featureId": "email",
     "category": "integrations",
     "summary": "Multi-provider transactional email (Resend, Nodemailer, Console)"

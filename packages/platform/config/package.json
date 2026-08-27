@@ -2,6 +2,11 @@
   "name": "@nebutra/config",
   "version": "0.1.0",
   "private": true,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "description": "Type-safe configuration management with Zod",
   "main": "./src/index.ts",
   "types": "./src/index.ts",

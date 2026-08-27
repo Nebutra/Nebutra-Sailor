@@ -48,7 +48,8 @@ describe("billing API routes", () => {
   it("preserves localized billing return URLs for checkout callbacks", async () => {
     fetchMock.mockResolvedValue(createJsonResponse({ url: "https://stripe.example/checkout" }));
     const formData = new FormData();
-    formData.set("priceId", "price_pro_monthly");
+    formData.set("plan", "pro");
+    formData.set("interval", "monthly");
 
     const { POST } = await loadCheckoutRoute();
     const response = await POST(
@@ -65,9 +66,8 @@ describe("billing API routes", () => {
       "http://api.local/api/v1/billing/checkout",
       expect.objectContaining({
         body: JSON.stringify({
-          priceId: "price_pro_monthly",
-          successUrl: "https://app.example/zh/billing?from=settings&billing=checkout-success",
-          cancelUrl: "https://app.example/zh/billing?from=settings&billing=checkout-canceled",
+          plan: "pro",
+          interval: "monthly",
         }),
       }),
     );
@@ -80,7 +80,8 @@ describe("billing API routes", () => {
       createJsonResponse({ error: "Checkout unavailable" }, { status: 503 }),
     );
     const formData = new FormData();
-    formData.set("priceId", "price_pro_monthly");
+    formData.set("plan", "pro");
+    formData.set("interval", "monthly");
 
     const { POST } = await loadCheckoutRoute();
     const response = await POST(

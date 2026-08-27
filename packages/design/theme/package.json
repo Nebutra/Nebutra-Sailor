@@ -4,6 +4,11 @@
   "type": "module",
   "description": "Design-language catalog for global product chrome swap (Brand Packages). Multi-mood oklch catalog removed.",
   "private": false,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "license": "MIT",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

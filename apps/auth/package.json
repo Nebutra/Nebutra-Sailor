@@ -2,6 +2,11 @@
   "name": "@nebutra/auth-center",
   "version": "0.1.1",
   "private": true,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "scripts": {
     "dev": "next dev --port 3101",
     "build": "pnpm --filter @nebutra/brand sync && next build",

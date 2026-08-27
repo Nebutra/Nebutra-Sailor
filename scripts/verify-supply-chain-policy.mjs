@@ -96,32 +96,32 @@ function assertRootPackagePolicy() {
     fail("package.json must require pnpm >=10.32.0 so supply-chain settings are available");
   }
 
-  const allowedBuilds = pkg.pnpm?.onlyBuiltDependencies;
-  if (!Array.isArray(allowedBuilds) || allowedBuilds.length === 0) {
+  if (pkg.pnpm) {
     fail(
-      "package.json must define pnpm.onlyBuiltDependencies as a reviewed install-script allowlist",
+      "package.json#pnpm is no longer read by current pnpm; move overrides, onlyBuiltDependencies, and audit settings to pnpm-workspace.yaml",
     );
-    return;
   }
+}
 
-  for (const dependency of allowedBuilds) {
-    if (dependency.includes("*")) {
-      fail(`pnpm.onlyBuiltDependencies may not contain wildcard entry "${dependency}"`);
-    }
-    if (!approvedBuildScripts.has(dependency)) {
-      fail(`pnpm.onlyBuiltDependencies contains unreviewed install-script package "${dependency}"`);
-    }
-  }
+function parseYamlStringList(workspace, key) {
+  const header = new RegExp(`^(?:${key}|"${key}"):\\s*$`, "m");
+  const headerMatch = header.exec(workspace);
+  if (!headerMatch) return [];
 
-  for (const dependency of approvedBuildScripts) {
-    if (!allowedBuilds.includes(dependency)) {
-      fail(`pnpm.onlyBuiltDependencies is missing approved install-script package "${dependency}"`);
+  const lines = workspace.slice(headerMatch.index + headerMatch[0].length).split(/\r?\n/);
+  const values = [];
+  for (const rawLine of lines) {
+    if (rawLine === "") {
+      if (values.length === 0) continue;
+      break;
     }
+    if (/^\S/.test(rawLine)) break;
+    const item = rawLine.match(/^\s+-\s+(".*"|'.*'|\S+)\s*$/);
+    if (!item) continue;
+    const token = item[1];
+    values.push(token.startsWith('"') || token.startsWith("'") ? JSON.parse(token) : token);
   }
-
-  if (pkg.pnpm?.dangerouslyAllowAllBuilds === true) {
-    fail("package.json must not set pnpm.dangerouslyAllowAllBuilds=true");
-  }
+  return values;
 }
 
 function assertPnpmWorkspacePolicy() {
@@ -142,6 +142,32 @@ function assertPnpmWorkspacePolicy() {
   }
   if (/^dangerouslyAllowAllBuilds:\s*true\s*$/m.test(workspace)) {
     fail("pnpm-workspace.yaml must not set dangerouslyAllowAllBuilds: true");
+  }
+  if (!/^(?:overrides|"overrides"):\s*$/m.test(workspace)) {
+    fail("pnpm-workspace.yaml must define overrides so security pins are actually applied");
+  }
+
+  const allowedBuilds = parseYamlStringList(workspace, "onlyBuiltDependencies");
+  if (allowedBuilds.length === 0) {
+    fail(
+      "pnpm-workspace.yaml must define onlyBuiltDependencies as a reviewed install-script allowlist",
+    );
+    return;
+  }
+
+  for (const dependency of allowedBuilds) {
+    if (dependency.includes("*")) {
+      fail(`onlyBuiltDependencies may not contain wildcard entry "${dependency}"`);
+    }
+    if (!approvedBuildScripts.has(dependency)) {
+      fail(`onlyBuiltDependencies contains unreviewed install-script package "${dependency}"`);
+    }
+  }
+
+  for (const dependency of approvedBuildScripts) {
+    if (!allowedBuilds.includes(dependency)) {
+      fail(`onlyBuiltDependencies is missing approved install-script package "${dependency}"`);
+    }
   }
 }
 

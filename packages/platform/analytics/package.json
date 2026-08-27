@@ -2,6 +2,11 @@
   "name": "@nebutra/analytics",
   "version": "0.0.4",
   "private": true,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "description": "Link attribution, conversion tracking, and product analytics (Dub + PostHog)",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

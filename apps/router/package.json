@@ -2,6 +2,11 @@
   "name": "@nebutra/router",
   "version": "0.1.1",
   "private": true,
+  "nebutra": {
+    "status": "wip",
+    "graph": "labs",
+    "productionReady": false
+  },
   "scripts": {
     "dev": "next dev --port 3106",
     "build": "pnpm --filter @nebutra/brand sync && next build",

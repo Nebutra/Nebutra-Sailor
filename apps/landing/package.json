@@ -2,6 +2,11 @@
   "name": "@nebutra/landing",
   "version": "0.1.3",
   "private": true,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "scripts": {
     "dev": "next dev --port 3000 --webpack",
     "build": "pnpm --filter @nebutra/brand sync && next build --webpack",
