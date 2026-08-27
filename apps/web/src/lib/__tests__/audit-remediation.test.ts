@@ -108,7 +108,7 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("uses LazyMotion wrappers in shared animation primitives", () => {
-    const animateIn = readFromRepo("packages/design/ui/src/components/animate-in.tsx");
+    const animateIn = readFromRepo("packages/design/ui/src/primitives/animate-in.tsx");
 
     expect(animateIn).toContain("LazyMotion");
     expect(animateIn).toContain("domAnimation");
