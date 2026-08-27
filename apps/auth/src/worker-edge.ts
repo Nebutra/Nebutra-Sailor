@@ -19,7 +19,14 @@
 import { brand } from "@nebutra/brand/metadata";
 import { betterAuth } from "better-auth";
 import { Pool } from "pg";
+import {
+  asBrowserOAuthRedirect,
+  finalizeOAuthCallback,
+  isOAuthCallbackPath,
+  socialStartToRedirect,
+} from "./lib/auth-edge-oauth";
 import { attachPoolErrorGuard, isPgConnectFailure, withConnectRetry } from "./lib/auth-edge-pool";
+import { applySessionHint } from "./lib/session-hint";
 
 interface HyperdriveBinding {
   connectionString: string;
@@ -346,7 +353,7 @@ async function handleHealth(request: Request, env: AuthEdgeEnv): Promise<Respons
     role: "login-center-edge",
     deploy: "cloudflare-workers-edge",
     // Bump when shipping edge fixes so /health proves the new script is live.
-    edgeBuild: "2026-08-27-pg-pool-per-request",
+    edgeBuild: "2026-08-27-oauth-continue",
     features: {
       authApi: true,
       // ORIGIN_URL is the preferred pass-through; ORIGIN_IP alone is legacy.
@@ -409,79 +416,6 @@ async function probeDatabase(env: AuthEdgeEnv): Promise<Record<string, unknown>>
   } finally {
     await client.end().catch(() => undefined);
   }
-}
-
-/**
- * Better Auth social start often returns **200 + JSON** `{ url, redirect: true }`
- * with a `Location` header and state cookie. Top-level browser navigation only
- * follows 3xx — a 200 body is rendered as raw JSON (what users saw). Convert
- * to 302 while preserving every Set-Cookie (state cookie is required).
- */
-async function asBrowserOAuthRedirect(res: Response): Promise<Response> {
-  let location = res.headers.get("location");
-  if (!location) {
-    try {
-      const data = (await res.clone().json()) as { url?: string; redirect?: boolean };
-      if (typeof data?.url === "string" && data.url.startsWith("http")) {
-        location = data.url;
-      }
-    } catch {
-      // not JSON
-    }
-  }
-  if (!location) return res;
-
-  // Already a real redirect status — keep as-is.
-  if (res.status >= 300 && res.status < 400) return res;
-
-  const headers = new Headers();
-  headers.set("Location", location);
-  const getSetCookie = (
-    res.headers as Headers & { getSetCookie?: () => string[] }
-  ).getSetCookie?.bind(res.headers);
-  if (typeof getSetCookie === "function") {
-    for (const cookie of getSetCookie()) {
-      if (cookie) headers.append("Set-Cookie", cookie);
-    }
-  } else {
-    const single = res.headers.get("set-cookie");
-    if (single) headers.append("Set-Cookie", single);
-  }
-  return new Response(null, { status: 302, headers });
-}
-
-function socialStartToRedirect(raw: unknown): Response {
-  const record = raw && typeof raw === "object" ? (raw as Record<string, unknown>) : null;
-  const nested =
-    record?.response && typeof record.response === "object"
-      ? (record.response as Record<string, unknown>)
-      : null;
-  const authorizeUrl =
-    (typeof nested?.url === "string" ? nested.url : undefined) ??
-    (typeof record?.url === "string" ? record.url : undefined) ??
-    (typeof nested?.redirect === "string" ? nested.redirect : undefined) ??
-    (typeof record?.redirect === "string" ? record.redirect : undefined);
-  if (!authorizeUrl || !authorizeUrl.startsWith("http")) {
-    throw new Error("OAuth start did not return an authorize URL");
-  }
-
-  const headers = new Headers();
-  headers.set("Location", authorizeUrl);
-  const rawHeaders = record?.headers;
-  if (rawHeaders instanceof Headers) {
-    const getSetCookie = (
-      rawHeaders as Headers & { getSetCookie?: () => string[] }
-    ).getSetCookie?.bind(rawHeaders);
-    if (typeof getSetCookie === "function") {
-      for (const cookie of getSetCookie()) {
-        if (cookie) headers.append("Set-Cookie", cookie);
-      }
-    } else {
-      const single = rawHeaders.get("set-cookie");
-      if (single) headers.append("Set-Cookie", single);
-    }
-  }
-  return new Response(null, { status: 302, headers });
 }
 
 /**
@@ -589,6 +523,11 @@ async function handleAuthApi(request: Request, env: AuthEdgeEnv): Promise<Respon
             path.includes("/oauth/")
           ) {
             return asBrowserOAuthRedirect(res);
+          }
+          if (isOAuthCallbackPath(path)) {
+            const normalized = await asBrowserOAuthRedirect(res);
+            const continued = finalizeOAuthCallback(normalized, request);
+            return applySessionHint(continued, path, continued.status);
           }
           return res;
         }),
