@@ -12,9 +12,9 @@ const PRODUCTION_AUTH_ORIGIN = "https://auth.nebutra.com";
  * Default relative path after successful sign-in on the product app
  * (`app.nebutra.com`).
  *
- * Product home converged into Startup OS; `/workspace` is the stable alias
- * that redirects to `/startup-os`. Do **not** use `/dashboard` — that route
- * was removed and 404s, which made OAuth look like "login did nothing".
+ * Product home is `/workspace` (Startup OS when the prototype is on,
+ * Connectors otherwise). Do **not** use `/dashboard` — that route is only an
+ * alias, and sending OAuth there used to 404 and look like "login did nothing".
  */
 export const DEFAULT_POST_LOGIN_PATH = "/workspace" as const;
 
