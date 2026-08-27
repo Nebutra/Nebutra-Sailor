@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — онлайн-станция инструментов",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "Онлайн-инструменты для кодеков, текста, хеширования, документов и изображений."
+  },
+  "nav": {
+    "main": "Главная навигация",
+    "homeAria": "Главная {brandName} Forge",
+    "tools": "Инструменты",
+    "wallet": "Кошелёк",
+    "api": "API",
+    "routerAria": "{brandName} Router",
+    "categoriesAria": "Категории инструментов",
+    "languageAria": "Изменить язык"
+  },
+  "tool": {
+    "breadcrumbAria": "Навигационная цепочка",
+    "workspace": "Рабочая область",
+    "workspaceHint": "Локально или на сервере · тот же путь, что и в API",
+    "api": "API",
+    "apiHint": "Тот же контракт, что и на странице. В продакшене используйте ключ с аутентификацией.",
+    "related": "Похожие инструменты"
+  },
+  "auth": {
+    "signIn": "Войти",
+    "signUp": "Зарегистрироваться",
+    "signOut": "Выйти"
+  },
+  "footer": {
+    "navAria": "Подвал",
+    "blurb": "Онлайн-станция инструментов. Выполняйте задачи в браузере или автоматизируйте через API / MCP.",
+    "product": "Продукт",
+    "developers": "Разработчикам",
+    "company": "Компания",
+    "docs": "Документация по интеграции",
+    "website": "Сайт",
+    "privacy": "Конфиденциальность"
+  },
+  "home": {
+    "eyebrow": "Увидели. Назовите.",
+    "title": "Швейцарский нож для онлайн-инструментов",
+    "subtitle": "Кодеки, текст, хеширование, документы и обработка изображений. Выполняйте в браузере или автоматизируйте через API / MCP — единая реализация.",
+    "toolCount": "{count} инструментов",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "Поиск: счётчик слов, base64, json, timestamp…",
+    "aria": "Поиск инструментов",
+    "emptyTitle": "Нет инструментов по запросу «{query}»",
+    "emptyHint": "Попробуйте другой ключевой термин или выберите инструмент из категорий ниже."
+  },
+  "categories": {
+    "codec": {
+      "label": "Кодеки",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "Проверка для Китая",
+      "hint": "ID · телефон"
+    },
+    "data": {
+      "label": "Данные",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "Для разработчиков",
+      "hint": "Regex · SQL · цвет · UUID"
+    },
+    "doc": {
+      "label": "Документы",
+      "hint": "Markdown · объединение/разделение PDF"
+    },
+    "finance": {
+      "label": "Финансы",
+      "hint": "Сумма прописью"
+    },
+    "hash": {
+      "label": "Хеши и безопасность",
+      "hint": "MD5 · SHA · HMAC · пароль"
+    },
+    "image": {
+      "label": "Изображения",
+      "hint": "Сжатие · QR · конвертация"
+    },
+    "life": {
+      "label": "Жизненные калькуляторы",
+      "hint": "Ипотека · ИМТ · родство"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "Токены · стоимость · схема"
+    },
+    "net": {
+      "label": "Сеть",
+      "hint": "DNS · TLS · IP · утечки"
+    },
+    "security": {
+      "label": "Безопасность",
+      "hint": "Генератор паролей"
+    },
+    "text": {
+      "label": "Текст",
+      "hint": "Символы · CJK · пиньинь · Diff"
+    },
+    "time": {
+      "label": "Время",
+      "hint": "Временная метка · часовой пояс · Cron · лунный календарь"
+    },
+    "unit": {
+      "label": "Единицы",
+      "hint": "Длина · вес · температура · данные"
+    },
+    "template": {
+      "label": "Шаблоны",
+      "hint": ".gitignore · LICENSE · Dockerfile · README"
+    }
+  },
+  "runners": {
+    "common": {
+      "run": "Запустить",
+      "running": "Выполняется…",
+      "copy": "Копировать",
+      "copied": "Скопировано",
+      "sameAsApi": "Тот же путь, что и у API · OSS-движок",
+      "mustBeNumber": "{label} должно быть числом",
+      "base64Loaded": "Нагрузка Base64 загружена",
+      "workspaceMissing": "Рабочее пространство не настроено: {slug}",
+      "yes": "Да",
+      "no": "Нет",
+      "text": "Текст",
+      "input": "Ввод",
+      "output": "Вывод",
+      "outputPlaceholder": "Результат появится здесь",
+      "localRun": "Запустить локально",
+      "serverRun": "Запустить на сервере",
+      "serverVerify": "Проверка на сервере",
+      "outputPreview": "Предпросмотр вывода",
+      "mode": "Режим",
+      "encode": "Кодировать",
+      "decode": "Декодировать",
+      "file": "Файл",
+      "clear": "Очистить",
+      "length": "Длина: {n}",
+      "bytes": "{bytes} байт",
+      "download": "Скачать",
+      "format": "Формат",
+      "formatting": "Форматирование…",
+      "dialect": "Диалект",
+      "color": "Цвет",
+      "pickColor": "Выбрать цвет",
+      "content": "Содержимое",
+      "algorithm": "Алгоритм",
+      "encoding": "Кодировка",
+      "message": "Сообщение",
+      "secret": "Секрет",
+      "password": "Пароль",
+      "direction": "Направление",
+      "preview": "Предпросмотр",
+      "query": "Запрос",
+      "querying": "Выполнение запроса…",
+      "validate": "Проверить",
+      "validating": "Проверка…",
+      "processing": "Обработка…",
+      "pretty": "Форматировать",
+      "minify": "Минифицировать",
+      "from": "От",
+      "to": "До",
+      "timezone": "Часовой пояс",
+      "datetime": "Дата и время",
+      "compute": "Вычислить",
+      "computing": "Вычисление…",
+      "convertAction": "Конвертировать",
+      "count": "Количество",
+      "value": "Значение",
+      "unit": "Единица",
+      "generateLocal": "Сгенерировать локально",
+      "generateServer": "Сгенерировать на сервере",
+      "copyAll": "Копировать всё",
+      "emptyResult": "Результаты появятся здесь",
+      "copyText": "Копировать текст",
+      "quality": "Качество",
+      "original": "Оригинал",
+      "result": "Результат",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
+    },
+    "base64": {
+      "encodeDir": "Текст → Base64",
+      "decodeDir": "Base64 → Текст",
+      "localNote": "Локальный Web API (TextEncoder / atob)",
+      "serverNote": "Серверный буфер · тот же путь, что и API"
+    },
+    "password": {
+      "uppercase": "Заглавные буквы",
+      "lowercase": "Строчные буквы",
+      "digits": "Цифры",
+      "symbols": "Символы",
+      "generate": "Сгенерировать пароль",
+      "recent": "Недавние",
+      "note": "Движок: node:crypto randomInt · криптографически стойкий · тот же путь, что и API"
+    },
+    "hash": {
+      "algo": "Алгоритм: {algo}",
+      "md5Warn": " · только для контрольной суммы/совместимости — не храните пароли",
+      "md5LocalError": "MD5 требует выполнения на сервере (Web Crypto не поддерживает MD5)",
+      "md5ServerHint": "MD5: используйте выполнение на сервере (только для совместимости, не для хранения паролей)",
+      "localNote": "Локальный Web Crypto · {algo}",
+      "serverNote": "Сервер node:crypto · тот же путь, что и API"
+    },
+    "convert": {
+      "converting": "Конвертация…",
+      "convert": "Конвертировать",
+      "done": "Готово · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "Перетащите файл сюда или нажмите для выбора",
+      "needFile": "Сначала выберите файл",
+      "needAlgo": "Выберите хотя бы один алгоритм",
+      "compute": "Вычислить контрольные суммы",
+      "computing": "Вычисление…",
+      "algorithms": "Алгоритмы",
+      "note": "node:crypto · несколько алгоритмов · тот же путь, что и в API"
+    },
+    "lorem": {
+      "paragraphs": "Абзацы",
+      "wordsPerParagraph": "Слов в абзаце",
+      "startWithLorem": "Начинать с «Lorem ipsum»",
+      "note": "Генератор Lorem Ipsum · чистый"
+    },
+    "emailValidate": {
+      "note": "Валидатор email · только формат (без MX-запроса)"
+    },
+    "creditCardLuhn": {
+      "number": "Номер карты",
+      "note": "Проверка Luhn · офлайн, данные не сохраняются",
+      "digits": "digits",
+      "specimenLabel": "Specimen",
+      "structureOnly": "Luhn structure only",
+      "unknownBrand": "Card"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "Минификатор JSON · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "Минификатор CSS · лёгкий (безопасный для edge)"
+    },
+    "hashCompare": {
+      "a": "Хэш A",
+      "b": "Хэш B",
+      "ignoreCase": "Игнорировать регистр",
+      "note": "Компаратор хэшей · константное время для равной длины"
+    },
+    "jsonDiff": {
+      "left": "JSON A",
+      "right": "JSON B",
+      "note": "Сравнение JSON · операции на уровне путей · строки с цветовой маркировкой · рядом",
+      "equal": "Идентичны",
+      "differs": "{count} изменение(я)",
+      "colPath": "Путь",
+      "colKind": "Тип",
+      "colLeft": "Слева",
+      "colRight": "Справа",
+      "filtersAria": "Фильтр по типу изменений",
+      "filterAll": "Все ({count})",
+      "filterAdd": "Добавлено ({count})",
+      "filterRemove": "Удалено ({count})",
+      "filterChange": "Изменено ({count})",
+      "filterType": "Тип ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "Режим",
+      "pretty": "Красивый",
+      "compact": "Компактный",
+      "indent": "С отступом",
+      "note": "Форматтер YAML · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "Форматтер TOML · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "Минификатор XML · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "Валидатор URL · WHATWG URL (без сетевых запросов)"
+    },
+    "ipValidate": {
+      "note": "Валидатор IP · IPv4/IPv6 офлайн"
+    },
+    "uuidValidate": {
+      "note": "Валидатор UUID · формат RFC 4122"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "Минификатор HTML · лёгкий (безопасный для edge)"
+    },
+    "randomString": {
+      "length": "Длина",
+      "count": "Количество",
+      "charset": "Набор символов",
+      "alphanumeric": "Буквенно-цифровые",
+      "symbols": "Буквенно-цифровые + символы",
+      "hex": "Шестнадцатеричные",
+      "base64url": "Base64URL",
+      "note": "Случайная строка · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "Время чтения · эвристика CJK + Latin"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "Максимальный уровень заголовка",
+      "note": "Оглавление Markdown · заголовки ATX"
+    },
+    "pdfInfo": {
+      "file": "Файл PDF",
+      "note": "Информация о PDF · pdf-lib (страницы + метаданные)"
+    },
+    "rot13": {
+      "shift": "Сдвиг (13 = ROT13)",
+      "note": "ROT13 / Цезарь · чистый"
+    },
+    "morse": {
+      "note": "Азбука Морзе · ITU · чистый"
+    },
+    "textBinary": {
+      "toBinary": "Текст → двоичный",
+      "fromBinary": "Двоичный → текст",
+      "note": "Текст ↔ двоичный · биты UTF-8"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "Кодирование дайджеста",
+      "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "Одношаговые дайджесты · скопировать каждый · node:crypto"
+    },
+    "cssFormat": {
+      "note": "Форматирование CSS · лёгкий"
+    },
+    "htmlFormat": {
+      "note": "HTML Beautifier · лёгкий"
+    },
+    "stringSimilarity": {
+      "a": "Строка A",
+      "b": "Строка B",
+      "note": "Сходство строк · Левенштейн"
+    },
+    "roman": {
+      "toRoman": "Число → Римское",
+      "fromRoman": "Римское → Число",
+      "note": "Римские цифры · 1–3999"
+    },
+    "age": {
+      "birthDate": "Дата рождения (ГГГГ-ММ-ДД)",
+      "asOf": "Дата расчёта (необязательно)",
+      "note": "Калькулятор возраста · точный Г/М/Д"
+    },
+    "tip": {
+      "bill": "Сумма счёта",
+      "percent": "Чаевые %",
+      "people": "Люди",
+      "note": "Калькулятор чаевых · удобно делить"
+    },
+    "aspect": {
+      "width": "Ширина",
+      "height": "Высота",
+      "note": "Соотношение сторон · упрощение НОД"
+    },
+    "mime": {
+      "note": "Поиск MIME · распространённые веб-типы"
+    },
+    "ua": {
+      "note": "Парсер User-Agent · эвристический (офлайн)"
+    },
+    "imageMeta": {
+      "file": "Файл изображения",
+      "note": "Метаданные изображения · sharp (размер буфера EXIF)"
+    },
+    "wordFreq": {
+      "top": "Топ N",
+      "note": "Частота слов · CJK + латиница"
+    },
+    "jsonXml": {
+      "note": "JSON ↔ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "Минификация SQL · комментарии и пробелы"
+    },
+    "lineNum": {
+      "start": "Начальный номер",
+      "note": "Нумерация строк · без зависимостей"
+    },
+    "uniqueWords": {
+      "note": "Уникальные слова · порядок первого появления"
+    },
+    "epoch": {
+      "value": "Значение",
+      "msToIso": "мс → ISO",
+      "isoToMs": "ISO → мс",
+      "note": "Эпоха в миллисекундах · Дата"
+    },
+    "passwordEntropy": {
+      "password": "Пароль",
+      "note": "Энтропия пароля · эвристика набора символов"
+    },
+    "contrast": {
+      "fg": "Текст (#hex)",
+      "bg": "Фон (#hex)",
+      "note": "Контраст цветов · WCAG 2.x",
+      "sampleHeadline": "Sample text",
+      "pass": "pass",
+      "fail": "fail",
+      "aaNormal": "AA normal",
+      "aaLarge": "AA large",
+      "aaaNormal": "AAA normal",
+      "aaaLarge": "AAA large"
+    },
+    "exif": {
+      "file": "Файл изображения",
+      "note": "Просмотр EXIF · exifr + JPEG fallback"
+    },
+    "regex": {
+      "pattern": "Шаблон",
+      "flags": "Флаги",
+      "replacement": "Замена",
+      "match": "Совпадение",
+      "replace": "Заменить",
+      "test": "Проверить",
+      "local": "Запустить локально",
+      "server": "Проверка на сервере",
+      "count": "{count} совпадений",
+      "sotaNote": "Мгновенная локальная подсветка · лимит таймаута сервера · тот же путь, что и API"
+    },
+    "jwt": {
+      "decode": "Расшифровать JWT",
+      "sample": "Загрузить пример",
+      "tokenPlaceholder": "Вставьте JWT",
+      "decodeNote": "{engine} · только расшифровка, подпись не проверяется",
+      "footerNote": "Движок: jose · подпись не проверяется. В продакшене проверяйте ключами через jwtVerify на сервере.",
+      "generateHint": "Нужно подписывать токены?",
+      "secret": "Секрет",
+      "exp": "Истекает (секунды)",
+      "payload": "Payload JSON",
+      "note": "Генерация JWT · HS256 (только для dev/test)",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "(empty signature segment)"
+    },
+    "rand": {
+      "min": "Мин",
+      "max": "Максимум",
+      "count": "Количество",
+      "note": "Случайное число · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "Грани",
+      "count": "Количество кубиков",
+      "note": "Бросок кубиков · криптографический ГСЧ"
+    },
+    "hexRgb": {
+      "note": "HEX ↔ RGB · чистый"
+    },
+    "base64url": {
+      "note": "Base64URL · стиль JWT"
+    },
+    "hmac": {
+      "message": "Сообщение",
+      "secret": "Секрет",
+      "signature": "Подпись",
+      "note": "Проверка HMAC · SHA-256"
+    },
+    "secret": {
+      "bytes": "Байты",
+      "count": "Количество",
+      "note": "Генератор секретных ключей · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "PDF-файл",
+      "note": "PDF Light Optimize · переписывание через pdf-lib (без перекомпрессии изображений)",
+      "needFile": "Сначала выберите PDF-файл"
+    },
+    "pdfCompress": {
+      "file": "PDF-файл",
+      "quality": "Качество",
+      "engine": "Движок",
+      "qStructural": "Структурное (qpdf, потоки без потерь)",
+      "qScreen": "Экранное (минимальный размер, Ghostscript)",
+      "qEbook": "Электронная книга (баланс, Ghostscript)",
+      "qPrinter": "Для печати (высокое качество, Ghostscript)",
+      "eAuto": "Авто (qpdf → Ghostscript → pdf-lib)",
+      "download": "Скачать PDF",
+      "needFile": "Сначала выберите PDF-файл",
+      "in": "Вход",
+      "out": "Выход",
+      "saved": "Сохранено",
+      "note": "Сжатие PDF · qpdf / Ghostscript на хосте · pdf-lib как запасной вариант",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+    },
+    "jsonFormat": {
+      "indent": "Отступ",
+      "format": "Форматировать",
+      "minify": "Минифицировать",
+      "serverVerify": "Проверка на сервере",
+      "clear": "Очистить",
+      "sample": "Пример",
+      "placeholder": "Вставьте JSON…",
+      "formatted": "Форматировать",
+      "minified": "Минифицировать",
+      "serverOk": "Сервер {mode} · {engine}",
+      "valid": "Валидный JSON",
+      "invalid": "Невалидный JSON",
+      "line": "строка",
+      "column": "столбец",
+      "note": "Движок: JSON.parse/stringify · мгновенно локально · тот же путь, что и API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
+    },
+    "qr": {
+      "size": "Размер",
+      "ecl": "Коррекция ошибок",
+      "generate": "Создать",
+      "download": "Скачать PNG",
+      "needText": "Введите текст или URL",
+      "note": "QR · qrcode · предпросмотр в реальном времени · тот же путь, что и API"
+    },
+    "pdfText": {
+      "file": "Файл PDF",
+      "layout": "Макет",
+      "needFile": "Сначала выберите PDF",
+      "note": "PDF Text · pdftotext (poppler) на хосте"
+    },
+    "svg": {
+      "optimize": "Оптимизировать",
+      "note": "SVG Optimize · лёгкий чистый минифай"
+    },
+    "routerTranslate": {
+      "lab": "Lab shell: перевод здесь не выполняется. Открывает Router с запросом — счётчик модели только в Router.",
+      "source": "Исходный язык",
+      "target": "Целевой язык",
+      "open": "Подготовить ссылку Router",
+      "deepLink": "Открыть в Router",
+      "note": "внешний · без тихого Forge LLM-журнала"
+    },
+    "imageCrop": {
+      "needFile": "Сначала выберите изображение",
+      "crop": "Обрезать",
+      "note": "Обрезка изображения · перетащите область · точное выделение",
+      "drop": "Перетащите изображение или нажмите для выбора",
+      "dragHint": "Перетащите по изображению, чтобы выбрать область обрезки",
+      "left": "Слева",
+      "top": "Сверху",
+      "width": "Ширина",
+      "height": "Высота",
+      "natural": "Исходный {w}×{h}",
+      "source": "Источник",
+      "result": "Обрезано"
+    },
+    "markdown": {
+      "preview": "Предпросмотр",
+      "html": "HTML",
+      "emptyPreview": "Запустите для предпросмотра",
+      "emptyHtml": "Сгенерированный HTML",
+      "rendering": "Рендеринг…",
+      "toHtml": "В HTML",
+      "copyHtml": "Копировать HTML",
+      "note": "marked · изолированный iframe предпросмотр · тот же путь, что и API"
+    },
+    "pdfMerge": {
+      "files": "PDF файлы (≥2, порядок = порядок слияния)",
+      "needFiles": "Выберите как минимум 2 PDF-файла",
+      "merging": "Объединение…",
+      "mergeDownload": "Объединить и скачать",
+      "done": "Объединено · {pages} страниц · {bytes} байт",
+      "note": "pdf-lib · тот же путь, что и API",
+      "merge": "Объединить и скачать"
+    },
+    "pdfSplit": {
+      "file": "PDF-файл",
+      "needFile": "Выберите PDF-файл",
+      "fromPage": "С страницы (нумерация с 1)",
+      "toPage": "По страницу (пусто = последняя)",
+      "toPlaceholder": "Последняя страница",
+      "splitting": "Разделение…",
+      "splitDownload": "Разделить и скачать",
+      "done": "Разделение · исходник {source} стр. → результат {pages} стр.",
+      "note": "pdf-lib · тот же путь, что и API",
+      "split": "Разделить и скачать"
+    },
+    "passwordStrength": {
+      "check": "Проверить надёжность",
+      "checking": "Проверка…",
+      "crack": "Оценка офлайн-взлома (медленный хеш): {time}",
+      "score0": "Очень слабый",
+      "score1": "Слабый",
+      "score2": "Средний",
+      "score3": "Надёжный",
+      "score4": "Очень надёжный",
+      "note": "zxcvbn-ts · тот же путь, что и API · пароль не сохраняется"
+    },
+    "hmacSign": {
+      "compute": "Вычислить HMAC",
+      "computing": "Вычисление…",
+      "note": "node:crypto · тот же путь, что и API"
+    },
+    "costEstimate": {
+      "text": "Текст ввода (для оценки токенов ввода)",
+      "model": "Модель",
+      "outputTokens": "Токены вывода (оценка)",
+      "estimate": "Оценить стоимость",
+      "estimating": "Оценка…",
+      "note": "@nebutra/ai-providers/frontier card + js-tiktoken · оценка по прейскурантной цене, не счёт"
+    },
+    "jsonSchema": {
+      "data": "Данные JSON",
+      "schema": "JSON Schema",
+      "validate": "Проверить",
+      "validating": "Проверка…",
+      "pass": "Пройдено",
+      "fail": "Не пройдено",
+      "note": "Ajv · тот же путь, что и API"
+    },
+    "zhCnTw": {
+      "s2t": "Упрощённый → Традиционный",
+      "t2s": "Традиционный → Упрощённый",
+      "s2tw": "Упрощённый → Тайвань",
+      "tw2s": "Тайвань → Упрощённый",
+      "s2hk": "Упрощённый → Гонконг",
+      "hk2s": "Гонконг → Упрощённый",
+      "note": "OpenCC (opencc-js) · тот же путь, что и API"
+    },
+    "pinyin": {
+      "tones": "Стиль тонов",
+      "symbol": "Символ nǐ",
+      "num": "Число ni3",
+      "none": "Нет ni",
+      "hanzi": "Китайские иероглифы",
+      "convert": "В пиньинь",
+      "converting": "Конвертация…",
+      "note": "pinyin-pro · тот же путь, что и API"
+    },
+    "sqlFormat": {
+      "dialect": "Диалект",
+      "format": "Формат",
+      "formatting": "Форматирование…",
+      "note": "sql-formatter · тот же путь, что и API"
+    },
+    "colorConvert": {
+      "color": "Цвет",
+      "pick": "Выбрать цвет",
+      "convert": "Конвертировать",
+      "converting": "Конвертация…",
+      "note": "culori · hex / rgb / hsl / oklch · тот же путь, что и в API"
+    },
+    "qrGen": {
+      "content": "Содержимое",
+      "format": "Формат",
+      "pngPreview": "PNG (предпросмотр)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "Создать QR",
+      "generating": "Создание…",
+      "note": "qrcode · тот же путь, что и API"
+    },
+    "qrDecode": {
+      "upload": "Загрузите изображение с QR-кодом",
+      "parsing": "Декодирование…",
+      "note": "jsQR + sharp · тот же путь, что и в API"
+    },
+    "cron": {
+      "expression": "Cron-выражение",
+      "timezone": "Часовой пояс",
+      "parse": "Следующие запуски",
+      "parsing": "Разбор…",
+      "nextTitle": "Следующие запуски (ISO)",
+      "note": "cron-parser · тот же путь, что и API"
+    },
+    "timezone": {
+      "datetime": "Дата и время",
+      "from": "С",
+      "to": "По",
+      "convert": "Преобразовать часовой пояс",
+      "converting": "Преобразование…",
+      "placeholder": "2026-07-24 12:00:00 или ISO / unix",
+      "note": "dayjs timezone · тот же путь, что и API"
+    },
+    "csvPreview": {
+      "preview": "Предпросмотр таблицы",
+      "parsing": "Разбор…",
+      "rows": "Предпросмотр {shown} / {total} строк",
+      "note": "papaparse · тот же путь, что и API"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "Запрос",
+      "querying": "Выполняется запрос…",
+      "note": "jsonpath-plus · тот же путь, что и API"
+    },
+    "xmlFormat": {
+      "pretty": "Красивый",
+      "minify": "Сжать",
+      "validate": "Проверить",
+      "validOk": "Валидно",
+      "done": "Готово · {engine}",
+      "processing": "Обработка…",
+      "note": "fast-xml-parser · тот же путь, что и API"
+    },
+    "regexLegacy": {
+      "pattern": "Шаблон",
+      "flags": "Флаги",
+      "mode": "Режим",
+      "match": "Найти",
+      "replace": "Заменить",
+      "test": "Тест",
+      "replacement": "Замена",
+      "note": "Мгновенно локально · лимит таймаута сервера · тот же путь, что и API"
+    },
+    "docxText": {
+      "file": "Файл DOCX",
+      "needFile": "Сначала выберите файл .docx",
+      "extract": "Извлечь текст",
+      "extracting": "Извлечение…",
+      "note": "DOCX → текст · чистый ZIP + document.xml (без Office)"
+    },
+    "uuid": {
+      "count": "Количество",
+      "local": "Сгенерировать локально",
+      "server": "Сгенерировать на сервере",
+      "copyAll": "Копировать все",
+      "empty": "UUID появятся здесь"
+    },
+    "timestamp": {
+      "nowSec": "Секунды Unix",
+      "nowMs": "Миллисекунды Unix / ISO",
+      "serverNow": "Текущее время сервера",
+      "toDate": "Метка времени → дата",
+      "toUnix": "Дата → метка времени",
+      "seconds": "Секунды",
+      "milliseconds": "Миллисекунды",
+      "value": "Значение",
+      "convert": "Преобразовать",
+      "note": "Тот же путь, что и у API"
+    },
+    "wordCount": {
+      "words": "Слова",
+      "chars": "Символы",
+      "noSpaces": "Без пробелов",
+      "cjk": "Китайские/японские/корейские",
+      "lines": "Строки",
+      "paragraphs": "Абзацы",
+      "placeholder": "Вставьте или введите текст…",
+      "copyText": "Копировать текст",
+      "clear": "Очистить",
+      "verifying": "Проверка…",
+      "serverNote": "Слова на сервере={words} · тот же путь, что и API",
+      "note": "Живой движок: {engine} · загрузка не требуется · тот же путь, что и API"
+    },
+    "bmi": {
+      "height": "Рост (см)",
+      "weight": "Вес (кг)",
+      "compute": "Рассчитать ИМТ",
+      "computing": "Вычисление…",
+      "invalid": "Введите корректный рост (см) и вес (кг)",
+      "underweight": "Недостаточный вес",
+      "normal": "Норма",
+      "overweight": "Избыточный вес",
+      "obese": "Ожирение",
+      "note": "ИМТ ВОЗ · тот же путь, что и API · не является медицинской рекомендацией"
+    },
+    "percentage": {
+      "mode": "Режим",
+      "percentOf": "a% от b",
+      "isWhat": "a — это сколько % от b",
+      "percentA": "Процент a",
+      "valueA": "Значение a",
+      "baseB": "База b",
+      "compute": "Вычислить",
+      "computing": "Вычисление…",
+      "invalid": "Введите корректные числа",
+      "note": "Тот же путь, что и у API"
+    },
+    "dataSize": {
+      "value": "Значение",
+      "convert": "Преобразовать",
+      "converting": "Преобразование…",
+      "invalid": "Введите корректное число",
+      "binary": "{value} {from} → база-1024",
+      "note": "Двоичные единицы (1 КБ = 1024 Б) · тот же путь, что и у API"
+    },
+    "rmb": {
+      "amount": "Сумма (юань)",
+      "convert": "В прописи",
+      "converting": "Преобразование…",
+      "invalid": "Введите неотрицательную сумму",
+      "note": "Сумма китайского счета прописью · тот же путь, что и API"
+    },
+    "dateDiff": {
+      "from": "Дата начала",
+      "to": "Дата окончания",
+      "compute": "Разница дней",
+      "computing": "Вычисление…",
+      "days": "дней",
+      "note": "ECMAScript Date · тот же путь, что и API"
+    },
+    "xlsxText": {
+      "file": "Файл XLSX",
+      "needFile": "Сначала выберите файл .xlsx",
+      "extract": "Извлечь лист",
+      "extracting": "Извлечение…",
+      "note": "XLSX → CSV · чистый ZIP + sheet1.xml (первый лист)"
+    },
+    "mdToPdf": {
+      "drop": "Перетащите файл .md сюда или вставьте Markdown ниже",
+      "title": "Заголовок",
+      "engine": "Движок",
+      "ePlaywright": "playwright (печать в Chromium)",
+      "eSimple": "простой (без браузера)",
+      "generate": "Создать PDF",
+      "generating": "Создание…",
+      "download": "Скачать PDF",
+      "note": "marked → HTML → печать в Playwright Chromium. Если Chromium отсутствует, автоматически используется простой структурированный PDF — проверьте renderEngine; простой вариант не обеспечивает верстку уровня печати.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
+    },
+    "tokenCount": {
+      "count": "Подсчитать токены",
+      "counting": "Подсчёт…",
+      "chars": "Символов {n}",
+      "note": "Движок: js-tiktoken · точный подсчёт на сервере · можно передать Router для оценки стоимости"
+    },
+    "codec": {
+      "encodeDir": "Текст → закодировано",
+      "decodeDir": "Закодировано → текст",
+      "localNote": "Локальный запуск",
+      "serverNote": "Сервер · тот же путь, что и API",
+      "hexInvalid": "Некорректная шестнадцатеричная строка",
+      "hexDecodeFail": "Сервер не смог декодировать как UTF-8 (требуется корректный hex)",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · тот же путь, что и API",
+      "noteHtml": "Карта HTML-сущностей · тот же путь, что и API",
+      "noteHex": "UTF-8 ↔ hex · тот же путь, что и API"
+    },
+    "textDiff": {
+      "left": "Слева",
+      "right": "Справа",
+      "compare": "Сравнить",
+      "comparing": "Сравнение…"
+    },
+    "imageTool": {
+      "drop": "Перетащите изображение сюда или нажмите для выбора",
+      "selected": "Выбрано: {name} ({kb} КБ)",
+      "needFile": "Сначала выберите изображение",
+      "format": "Формат вывода",
+      "quality": "Качество {n}",
+      "maxW": "Макс. ширина",
+      "maxH": "Макс. высота",
+      "optional": "Необязательно",
+      "resizeEg": "например 1280",
+      "processing": "Обработка…",
+      "compress": "Сжать",
+      "resize": "Изменить размер",
+      "convert": "Конвертировать формат",
+      "download": "Скачать результат",
+      "outMeta": "Вывод {kb} КБ{dims}{ratio} · {type}",
+      "ratio": " · ~{pct}% от оригинала",
+      "dims": " · {w}×{h}",
+      "original": "Исходное",
+      "result": "Результат",
+      "note": "Движок: sharp (libvips) · серверная обработка · тот же путь, что и API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+    },
+    "pptxText": {
+      "file": "Файл PPTX",
+      "needFile": "Сначала выберите файл .pptx",
+      "extract": "Извлечь структуру",
+      "extracting": "Извлечение…",
+      "note": "Структура PPTX · чистый ZIP + XML слайдов (без PowerPoint)"
+    },
+    "shell": {
+      "copyJson": "Копировать JSON",
+      "sample": "Пример",
+      "chars": "{n} символов",
+      "largeInput": "Большой ввод — результат обновится через мгновение после того, как вы закончите печатать.",
+      "manualInput": "Ввод слишком велик, и живое пересчитывание замедлит страницу. Нажмите «Выполнить».",
+      "options": "Параметры",
+      "regenerateNote": "Результат обновляется автоматически при изменении параметров.",
+      "fileTab": "Файл",
+      "pasteTab": "Вставить",
+      "browse": "Выбрать файл",
+      "selectedFile": "{name} · {kb} КБ",
+      "truncated": "Прочитано первые {kb} КБ — достаточно для ответа, остальное не покидает ваш компьютер.",
+      "detail": "Подробности",
+      "dropIntoPane": "Перетащите файл сюда",
+      "swap": "Поменять местами",
+      "prevChange": "Предыдущее",
+      "nextChange": "Далее",
+      "changePosition": "{index} из {total}",
+      "result": "Результат"
+    },
+    "readmeSkeleton": {
+      "emptyHint": "Отметьте хотя бы один раздел, чтобы создать README.",
+      "note": "Используется тот же движок, что и в API. Разделы, которые вы не включите, не появятся — никаких пустых заголовков.",
+      "orderNote": "Разделы всегда отображаются в этом фиксированном порядке, поэтому одинаковый ввод даёт одинаковый файл.",
+      "group": {
+        "core": "Основное",
+        "docs": "Документация",
+        "community": "Сообщество",
+        "meta": "Мета"
+      },
+      "section": {
+        "title": "Название и описание",
+        "badges": "Бейджи",
+        "callout": "Блок с примечанием",
+        "toc": "Содержание",
+        "installation": "Установка",
+        "usage": "Использование",
+        "features": "Возможности",
+        "api-reference": "Справочник по API",
+        "screenshots": "Скриншоты",
+        "roadmap": "Дорожная карта",
+        "contributing": "Участие в разработке",
+        "support": "Поддержка",
+        "acknowledgements": "Благодарности",
+        "license": "Лицензия",
+        "authors": "Авторы",
+        "tech-stack": "Стек технологий"
+      },
+      "projectName": "Название проекта",
+      "projectNamePlaceholder": "Название проекта",
+      "description": "Описание",
+      "descriptionPlaceholder": "Одно предложение о том, что это делает",
+      "badgeLicense": "Бейдж лицензии",
+      "badgeNpm": "npm version",
+      "badgeBuild": "Статус сборки",
+      "npmPackage": "npm package",
+      "npmPackagePlaceholder": "@scope/package",
+      "repo": "Репозиторий GitHub",
+      "repoPlaceholder": "owner/repo",
+      "calloutKind": "Тип вызова",
+      "calloutBody": "Текст вызова",
+      "calloutBodyPlaceholder": "До 1.0 — API ещё меняется",
+      "fenceLanguage": "Язык",
+      "installCommand": "Команда установки",
+      "installCommandPlaceholder": "npm install your-project",
+      "usageExample": "Пример использования",
+      "usageExamplePlaceholder": "Минимальный пример, показывающий ценность",
+      "features": "Возможности",
+      "featuresPlaceholder": "Одна возможность на строку",
+      "contact": "Контакты",
+      "contactPlaceholder": "support@example.com",
+      "license": "Лицензия",
+      "authors": "Авторы",
+      "authorsPlaceholder": "@handle, Jane Roe",
+      "techStack": "Стек технологий",
+      "techStackPlaceholder": "typescript, postgresql (слэги simple-icons)",
+      "sectionCount": "{n} разделов",
+      "charCount": "{n} символов",
+      "warningCount": "{n} пропущено",
+      "omittedTitle": "Что было опущено и почему"
+    },
+    "gitignore": {
+      "searchLabel": "Поиск стеков",
+      "searchPlaceholder": "Языки, фреймворки, ОС или редакторы…",
+      "add": "Добавить {stack}",
+      "remove": "Удалить {stack}",
+      "selected": "Выбранные стеки",
+      "suggestions": "Подходящие стеки",
+      "noMatches": "Нет стеков, подходящих под «{query}». Нажмите Enter, чтобы отправить запрос — алиасы будут разрешены на сервере.",
+      "catalogFallback": "Список стеков недоступен — введите название стека и нажмите Enter.",
+      "emptyHint": "Выберите хотя бы один язык, фреймворк, ОС или редактор выше.",
+      "regenerate": "Перегенерировать",
+      "sections": "{n} разделов",
+      "lines": "{n} строк",
+      "deduped": "объединено {n} дубликатов",
+      "notFound": "Нет в корпусе: {stacks}",
+      "globalScope": "{stacks} — это записи для ОС/редактора. Многие разработчики хранят их в личном ~/.gitignore_global, а не в каждом репозитории.",
+      "untrackedNote": ".gitignore влияет только на неотслеживаемые файлы. Для файла, который git уже отслеживает, выполните git rm -r --cached <path>.",
+      "fileLabel": ".gitignore"
+    },
+    "editorconfig": {
+      "emptyHint": "Установите хотя бы одно свойство, чтобы увидеть файл.",
+      "note": "Тот же движок, что и в API. Ваши настройки сохраняются только в текущей сессии браузера; ничего не записывается.",
+      "checks": "Проверки",
+      "presets": "Начать с",
+      "preset": {
+        "spaces2": "2 пробела, LF",
+        "spaces4": "4 пробела, LF",
+        "tabs": "Табуляции, ширина 4",
+        "repo": "Шаблон репозитория (+ Markdown, Makefile)"
+      },
+      "rootLabel": "root = true — запретить редакторам объединять родительские файлы .editorconfig",
+      "glob": "Глоб {n}",
+      "addSection": "Добавить раздел",
+      "removeSection": "Удалить",
+      "notSet": "(не задано)",
+      "import": "Импортировать существующий .editorconfig",
+      "importPlaceholder": "Вставьте .editorconfig сюда, чтобы загрузить его в форму",
+      "importAction": "Импортировать",
+      "importing": "Импорт…",
+      "importFailed": "Не удалось импортировать: {message}"
+    },
+    "robotsTxt": {
+      "emptyHint": "Настройте параметры выше — файл появится здесь",
+      "deployNote": "robots.txt действует только в корне домена (https://example.com/robots.txt). Для каждого поддомена нужен отдельный файл.",
+      "outputLabel": "robots.txt",
+      "defaultAccess": "Доступ по умолчанию (User-agent: *)",
+      "defaultAllow": "Разрешить всё",
+      "defaultDisallow": "Запретить всё",
+      "defaultAccessNote": "«Разрешить всё» записывает пустую строку «Disallow:» — именно так разрешается доступ ко всему.",
+      "crawlDelay": "Задержка сканирования (секунды)",
+      "crawlDelayPlaceholder": "нет",
+      "crawlDelayNote": "Не входит в RFC 9309. Google его игнорирует; в группу Google он никогда не записывается.",
+      "searchAgents": "Поисковые системы",
+      "aiAgents": "AI-сканеры",
+      "aiAgentsNote": "Сканеры для обучения и поисковых движков. Их блокировка не влияет на индексацию.",
+      "accessDefault": "По умолчанию",
+      "accessAllow": "Разрешить",
+      "accessDisallow": "Запретить",
+      "rules": "Правила путей",
+      "rulesNote": "Пути чувствительны к регистру и относительны к корню. Добавьте завершающий слэш, чтобы ограничить правило директорией.",
+      "rulePath": "Путь {n}",
+      "rulePathPlaceholder": "/admin/",
+      "ruleType": "Тип правила",
+      "addRule": "Добавить правило пути",
+      "removeRule": "Удалить",
+      "sitemaps": "Sitemaps",
+      "sitemapsNote": "Абсолютные http(s)-URL. Записываются отдельными строками вне групп.",
+      "sitemapUrl": "Sitemap {n}",
+      "addSitemap": "Добавить sitemap",
+      "removeSitemap": "Удалить",
+      "groupCount": "{n} группы",
+      "lineCount": "{n} строки",
+      "sitemapCount": "{n} карта сайта",
+      "warningsSummary": "Примечания к этому файлу ({n})"
+    },
+    "encodingDetect": {
+      "drop": "Перетащите файл, чтобы определить его кодировку",
+      "privacy": "Считывается только первые {kb} КБ, и они отправляются на тот же публичный invoke-эндпоинт, который вызывал бы агент — ничего не записывается на диск.",
+      "pasteLabel": "Или вставьте текст",
+      "pastePlaceholder": "Вставьте текст — включая моджибаке, который нужно объяснить",
+      "detail": "Кандидаты, окончания строк и статистика байтов",
+      "idle": "Перетащите файл или вставьте текст — отчёт заполнится, как только появится что-то для чтения.",
+      "readOnly": "Только чтение: этот инструмент определяет кодировку, он никогда не переписывает байты.",
+      "headline": "{encoding} · уверенность {confidence}%",
+      "notText": "Это не похоже на текст",
+      "bomPresent": "BOM {bytes}",
+      "bomAbsent": "BOM отсутствует",
+      "eol": "Окончания строк: {kind}",
+      "eolMixed": "Смешанные окончания строк",
+      "language": "Язык {language} · {confidence}%",
+      "sampled": "Обнаружено по первым {kb} КБ из {totalKb} КБ",
+      "candidates": "Кандидаты по рангу",
+      "candidatesNote": "Кодировки-кандидаты показаны намеренно: короткие или симметричные образцы действительно неоднозначны.",
+      "lineEndings": "Окончания строк",
+      "byteStats": "Статистика байтов",
+      "totalBytes": "Всего",
+      "asciiBytes": "ASCII",
+      "highBytes": "Высокие (0x80–0xFF)",
+      "nullBytes": "NUL",
+      "mojibake": "Модзибаке восстановлен"
+    },
+    "dockerfileStarter": {
+      "language": "Язык",
+      "framework": "Фреймворк",
+      "packageManager": "Менеджер пакетов",
+      "baseVariant": "Базовый образ",
+      "version": "Версия рантайма",
+      "workdir": "Рабочая директория",
+      "port": "Порт",
+      "buildCommand": "Команда сборки",
+      "startCommand": "Команда запуска",
+      "commandPlaceholder": "Пусто = предустановленное значение",
+      "frameworkNone": "Нет (чистый рантайм)",
+      "pmAuto": "Авто",
+      "variantSlim": "slim (glibc)",
+      "variantAlpine": "alpine (musl)",
+      "variantFull": "полный",
+      "multiStage": "Многоэтапная сборка",
+      "nonRootUser": "Пользователь без прав root",
+      "includeDockerignore": "Добавить .dockerignore",
+      "includeCompose": "Добавить compose.yaml",
+      "includeHealthcheck": "Добавить HEALTHCHECK",
+      "groupWhat": "Что вы разрабатываете",
+      "groupHow": "Как это должно работать",
+      "emptyHint": "Выберите язык, чтобы увидеть Dockerfile.",
+      "note": "Только пресеты — из браузера уходит только то, что выбрано выше. Проверьте файл перед отправкой.",
+      "warnings": "{n} пунктов для проверки",
+      "stages": "{n} этапов",
+      "badgeNonRoot": "Не root",
+      "badgeRoot": "Запуск от root",
+      "badgePort": "Порт {port}"
+    },
+    "lineEndingDetect": {
+      "dropLabel": "Перетащите текстовый файл, чтобы проверить окончания строк",
+      "privacy": "Вставленный текст и первые 256 КБ перетащенного файла отправляются в API Forge для проверки; байты не сохраняются.",
+      "pasteLabel": "Или вставьте текст",
+      "pastePlaceholder": "Вставьте текст для проверки",
+      "idle": "Вставьте текст или перетащите файл, чтобы увидеть результат проверки окончаний строк.",
+      "detail": "Подсчет и проверка",
+      "note": "Только определение — этот инструмент никогда не перезаписывает ваш файл.",
+      "empty": "Пустой ввод",
+      "noTerminator": "Нет разделителя строк — одна незавершённая строка",
+      "consistent": "{style} — единообразно",
+      "mixed": "СМЕШАННО — {parts}",
+      "sharePart": "{pct}% {style}",
+      "style": {
+        "LF": "LF (Unix/Linux/macOS)",
+        "CRLF": "CRLF (Windows)",
+        "CR": "CR (классический Mac OS 9 и старше)"
+      },
+      "lines": "{n} строк",
+      "bytes": "{n} байт",
+      "trailing": {
+        "present": "Заканчивается новой строкой",
+        "absent": "Нет новой строки в конце файла"
+      },
+      "bomUtf8": "UTF-8 BOM",
+      "bomNone": "Без BOM",
+      "countRow": "{style}: {n} ({pct}%)",
+      "colStyle": "Стиль",
+      "colCount": "Количество",
+      "colShare": "Доля",
+      "minorityLines": "Строки, отличающиеся от основного стиля: {lines}",
+      "andMore": "и другие",
+      "findings": "Проверки",
+      "level": {
+        "info": "Примечание",
+        "warning": "Предупреждение",
+        "danger": "Нарушения"
+      },
+      "sampled": "Проверено первые {n} из {total} байт",
+      "encodingLink": "Открыть детектор кодировки"
+    },
+    "fileTypeDetect": {
+      "drop": "Перетащите файл, чтобы определить его тип",
+      "privacy": "Считывается только заголовок размером {kb} КБ — остальная часть файла остаётся на вашем устройстве.",
+      "hexTab": "Вставить hex",
+      "detail": "Показать байты и варианты",
+      "idle": "Перетащите файл или вставьте его начальные байты в hex.",
+      "note": "Сигнатуры определяют контейнер, а не кодек или содержимое внутри него.",
+      "unset": "—",
+      "unknownType": "Сигнатура не найдена",
+      "polyglot": "Полиглот",
+      "tierNone": "Расширение совпадает",
+      "tierBenign": "Незначительное несоответствие",
+      "tierMismatch": "Несоответствие расширения",
+      "tierHighRisk": "Высокий риск",
+      "confidenceMatch": "Совпадение сигнатуры",
+      "confidenceContainer": "Только контейнер",
+      "confidenceAmbiguous": "Неоднозначно",
+      "confidenceNone": "Совпадений нет",
+      "signalDetected": "Определённый MIME",
+      "signalReported": "Указанный MIME",
+      "signalExtension": "Расширение файла",
+      "drillResolved": "Открыт контейнер {kind}: {type}",
+      "drillUnresolved": "Контейнер {kind} подтверждён; подтип не определён из выборки байтов",
+      "hexDump": "Байты заголовка",
+      "bytesRead": "Прочитано {n} байт",
+      "headerOnly": "только образец заголовка",
+      "entropy": "Энтропия {bits} бит/байт",
+      "signatureCount": "{n} сигнатур в таблице",
+      "textHints": "Структурные подсказки: {hints}",
+      "candidates": "Все совпадающие сигнатуры",
+      "atOffset": "смещение {offset}"
+    },
+    "licenseChooser": {
+      "prompt": "Что нужно этому проекту?",
+      "pickScenario": "Выберите строку, которая описывает ваш проект — ответ и файл появятся прямо здесь.",
+      "disclaimer": "Детерминированный шаблон, не юридическая консультация.",
+      "noAnswer": "Ни одна лицензия не подходит для этого случая",
+      "permissions": "Разрешает",
+      "conditions": "Требует",
+      "limitations": "Не покрывает",
+      "alternates": "Другие варианты для этого случая",
+      "useThis": "Использовать этот",
+      "readCanonical": "Читать канонический текст на SPDX",
+      "holder": "Правообладатель",
+      "holderPlaceholder": "Ваше имя или название компании",
+      "holderHint": "Добавьте правообладателя, и файл будет заполняться по мере ввода.",
+      "year": "Год",
+      "manifest": "Где размещается идентификатор SPDX",
+      "verbatim": "{name} поставляется в идентичном виде для всех — строка авторских прав размещается в уведомлении исходного файла вместо файла LICENSE.",
+      "noLicense": {
+        "summary": "Что, если не добавлять лицензию вообще?",
+        "body": "Отсутствие лицензии — это не то же самое, что общественное достояние. Без лицензии действуют стандартные авторские права: никто не может копировать, изменять или распространять ваш код. Публичный репозиторий — это видимость, а не разрешение."
+      },
+      "artifact": {
+        "header": "Заголовок исходного файла",
+        "notice": "Уведомление в исходном файле"
+      },
+      "refine": {
+        "patent": "Здесь важна патентная лицензия (корпоративный код, оборудование, работа со стандартами)",
+        "network": "Это будет работать как хостинг-сервис, а не только как загрузка",
+        "library": "Это библиотека, к которой подключается другое ПО",
+        "later": "Разрешить более поздние версии лицензии (сохраняет совместимость с кодом Apache-2.0)",
+        "none": "Больше ничего уточнять не нужно."
+      },
+      "scenario": {
+        "permissive": {
+          "label": "Любой может использовать свободно",
+          "detail": "Использовать, изменять, продавать, включать в закрытые продукты — главное сохранить уведомление об авторских правах."
+        },
+        "copyleft": {
+          "label": "Улучшения должны возвращаться",
+          "detail": "Любой, кто распространяет изменённую версию, также обязан публиковать исходный код."
+        },
+        "community": {
+          "label": "Я участвую в существующем проекте",
+          "detail": "Лицензия уже определена — следуйте лицензии проекта, в который вы вносите вклад."
+        },
+        "non-software": {
+          "label": "Это не программное обеспечение",
+          "detail": "Документация, данные, дизайн или медиа требуют лицензии Creative Commons, а не OSI."
+        },
+        "unsure": {
+          "label": "Я пока не знаю",
+          "detail": "Получите безопасный вариант по умолчанию и два варианта, о которых стоит знать."
+        }
+      },
+      "family": {
+        "permissive": "Разрешительная",
+        "weak-copyleft": "Слабое копилефт",
+        "strong-copyleft": "Сильное копилефт",
+        "public-domain": "Общественное достояние",
+        "content": "Лицензия на контент"
+      },
+      "flag": {
+        "commercial-use": "Коммерческое использование",
+        "modifications": "Модификация",
+        "distribution": "Распространение",
+        "private-use": "Личное использование",
+        "patent-use": "Патентная лицензия",
+        "include-copyright": "Сохранение уведомления об авторских правах",
+        "document-changes": "Указание внесённых изменений",
+        "disclose-source": "Раскрытие исходного кода",
+        "same-license": "Та же лицензия для всей работы",
+        "same-license-file": "Та же лицензия для каждого изменённого файла",
+        "same-license-library": "Та же лицензия для библиотеки",
+        "network-use-disclose": "Сетевое использование считается распространением",
+        "liability": "Ответственность",
+        "warranty": "Гарантия",
+        "trademark-use": "Использование товарного знака"
+      }
+    },
+    "isbn": {
+      "inputLabel": "ISBN",
+      "placeholder": "978-0-306-40615-7 — по одному на строку, дефисы и пробелы игнорируются",
+      "idle": "Вставьте один ISBN или целый столбец; результаты появятся по мере ввода.",
+      "scope": "Только проверка контрольной цифры. Действительный ISBN внутренне согласован — это не доказательство того, что агентство присвоило его реальной книге.",
+      "summary": "{valid} из {total} действительных",
+      "singleValid": "Действительный ISBN",
+      "singleInvalid": "Недействительный ISBN",
+      "invalidCount": "{n} недействительных",
+      "convertedTo": "{type}: {value}",
+      "valid": "Действительный",
+      "invalid": "Недействительный",
+      "truncated": "Показаны первые {shown} строк.",
+      "col": {
+        "input": "Ввод",
+        "normalized": "Нормализованный",
+        "type": "Тип",
+        "status": "Статус",
+        "converted": "Преобразованный",
+        "note": "Примечание"
+      },
+      "type": {
+        "isbn10": "ISBN-10",
+        "isbn13": "ISBN-13",
+        "invalidLength": "Неверная длина"
+      },
+      "note": {
+        "checkDigit": "Контрольная цифра должна быть {expected}",
+        "invalidLength": "ISBN содержит ровно 10 или 13 символов",
+        "invalidCharacter": "Содержит символ, который не является цифрой",
+        "xMisplaced": "X допустим только в качестве последнего символа ISBN-10",
+        "noIsbn10": "Префикс 979 не имеет аналога в ISBN-10",
+        "nonBookland": "13-значные ISBN должны начинаться с 978 или 979",
+        "ismn": "979-0 — это диапазон ISMN (печатная музыка), а не ISBN"
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
+    },
+    "languageDetect": {
+      "inputLabel": "Фрагмент кода",
+      "inputPlaceholder": "Вставьте код без имени файла — из чата, тикета, ответа…",
+      "hintLabel": "Имя файла или расширение (необязательно)",
+      "hintPlaceholder": "main.h · .pl · Dockerfile",
+      "note": "Используется тот же движок, что и в API. Определение основано только на содержимом, если не указано имя файла; неоднозначные расширения (.h .m .pl .fs .ts .cs .r) обрабатываются по своим правилам в первую очередь.",
+      "idle": "Вставьте фрагмент — результат появится по мере ввода.",
+      "confidence": {
+        "high": "Высокая уверенность",
+        "medium": "Средняя уверенность",
+        "low": "Низкая уверенность"
+      },
+      "score": "{n}/100",
+      "dataFormat": "Формат данных, а не язык программирования",
+      "multiLanguage": "Подозрение на несколько языков",
+      "why": "Почему такой ответ",
+      "signals": "Совпавшие сигналы",
+      "alternates": "Другие варианты",
+      "composeNext": "Форматировать этот {language}"
+    },
+    "iban": {
+      "inputLabel": "IBAN",
+      "idle": "Вставьте IBAN — результат появится сразу, без кнопки.",
+      "sourceNote": "Контрольная сумма и структура по ISO 13616-1:2020. Длина и формат BBAN для каждой страны взяты из опубликованной копии реестра IBAN ISO, а не из самого реестра.",
+      "valid": "Корректный IBAN",
+      "keepTyping": "Продолжайте вводить — короче IBAN для этой страны",
+      "caveat": "Только корректная форма. Прошедшая проверка контрольной суммы не гарантирует, что счёт существует, открыт или принадлежит получателю.",
+      "printFormat": "Формат для печати",
+      "details": "Разбор структуры",
+      "notEncoded": "Не соответствует формату этой страны",
+      "coverage": "{n} стран с зарегистрированным форматом IBAN",
+      "reason": {
+        "bad_charset": "Не похоже на IBAN — IBAN состоит из двух букв, двух цифр, а затем только букв и цифр",
+        "country_unsupported": "Для этого кода страны нет зарегистрированного формата IBAN",
+        "incomplete": "Неполный",
+        "wrong_length_for_country": "Слишком длинный для IBAN этой страны",
+        "structure_mismatch": "Длина верная, но структура не соответствует формату этой страны",
+        "checksum_failed": "Контрольная сумма не совпадает — в этом IBAN есть опечатка"
+      },
+      "badge": {
+        "country": "{name} ({code})",
+        "unknownCountry": "Код страны {code}",
+        "length": "{n} из {expected} символов",
+        "bankCode": "Код банка {code}",
+        "expectedCheckDigits": "Контрольные цифры для этого номера счёта должны быть {digits}"
+      },
+      "field": {
+        "normalized": "Электронный формат",
+        "country": "Страна",
+        "checkDigits": "Контрольные цифры",
+        "bban": "BBAN",
+        "bbanFormat": "Формат BBAN",
+        "bankCode": "Код банка"
+      },
+      "check": {
+        "charset": "Кодировка",
+        "country": "Страна",
+        "length": "Длина",
+        "structure": "Структура",
+        "checksum": "MOD 97-10"
+      },
+      "state": {
+        "pass": "пройден",
+        "fail": "не пройден",
+        "skipped": "не достигнут"
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
+    },
+    "secretScan": {
+      "pasteLabel": "Вставьте код, конфигурацию или .env",
+      "pastePlaceholder": "DATABASE_URL=postgres://…\nAPI_KEY=…",
+      "dropLabel": "Перетащите файл для проверки",
+      "privacy": "Работает полностью в вашем браузере. Ничего никуда не отправляется — даже нам.",
+      "scan": "Проверить",
+      "scanning": "Проверка…",
+      "idleTitle": "Вставьте текст и нажмите Проверить.",
+      "idleHint": "Ищет ключи API, токены, закрытые ключи и секреты с высокой энтропией. Найденные значения маскируются; полностью показываются только номера строк.",
+      "clean": "Секреты не найдены",
+      "cleanCaveat": "Ничего не соответствует известным форматам учетных данных и не выглядит как случайный секрет. Совпадение по шаблону — не доказательство; перепроверьте всё, что вызывает сомнения.",
+      "found": "{n, plural, one {# возможный секрет найден} few {# возможных секрета найдено} many {# возможных секретов найдено} other {# возможный секрет найден}}",
+      "foundCaveat": "Удалите их перед вставкой куда-либо. Если ключ настоящий, смените его.",
+      "countHigh": "{n} с высокой уверенностью",
+      "countMedium": "{n} со средней уверенностью",
+      "countLow": "{n} низк.",
+      "confidence": {
+        "high": "Высокая",
+        "medium": "Средняя",
+        "low": "Низкая"
+      },
+      "position": "строка {line}, столбец {column}",
+      "length": "{n} симв.",
+      "maskedLabel": "Сокрытие совпадения",
+      "why": "Почему это совпало",
+      "candidates": "Также может быть:",
+      "scanDetail": "Детали сканирования",
+      "lines": "{n} строк",
+      "bytes": "{n} байт просканировано",
+      "suppressed": "{n} заполнитель(и) проигнорировано",
+      "suppressedNote": "Известные демо-значения (ключи EXAMPLE, your-api-key-here, повторяющиеся символы) игнорируются, чтобы в примерах не было ложных срабатываний.",
+      "omitted": "ещё {n} не показано",
+      "truncated": "Ввод обрезан — проверена только первая часть",
+      "reportTitle": "Результаты сканирования секретов (значения скрыты)",
+      "scopeNote": "Только обнаружение: этот инструмент никогда не обращается к поставщику, чтобы проверить, активен ли ключ — это означало бы отправку вашего ключа третьей стороне."
+    },
+    "eanUpcGtin": {
+      "inputLabel": "Номера штрих-кодов",
+      "placeholder": "По одному коду в строку (запятые и точки с запятой тоже разделяют)",
+      "idle": "Вставьте один код или целый столбец — результат появится по мере ввода.",
+      "operationLabel": "Операция",
+      "operationValidate": "Проверить (код включает контрольную цифру)",
+      "operationCalculate": "Рассчитать (в коде отсутствует контрольная цифра)",
+      "typeLabel": "Тип",
+      "typeAuto": "Определить по длине",
+      "total": "{n} кодов",
+      "validCount": "{n} действительных",
+      "invalidCount": "{n} недействительных",
+      "calculatedCount": "{n} рассчитанных",
+      "unrecognizedCount": "{n} нераспознанной длины",
+      "verdict": {
+        "valid": "Действительный",
+        "invalid": "Недействительный",
+        "calculated": "Рассчитанный",
+        "unrecognized-length": "Нераспознанная длина"
+      },
+      "alsoReadsAs": "Также читается как {type}",
+      "checkDigit": "Контрольная цифра",
+      "corrected": "Должно быть",
+      "gtin14": "Формат GTIN-14",
+      "reason": {
+        "empty": "На этой строке нечего проверять.",
+        "non-digit-characters": "Содержит символы, которые не являются цифрами или разделителями.",
+        "unsupported-length": "Идентификатор GS1 такой длины не существует (поддерживаются 8, 12, 13, 14 и 18 цифр).",
+        "length-mismatch": "Неверная длина для выбранного типа.",
+        "check-digit-mismatch": "Последняя цифра не совпадает с требуемой стандартом."
+      },
+      "warning": {
+        "separators-stripped": "Перед проверкой были удалены пробелы, дефисы и точки.",
+        "all-zero": "Все нули — математически корректно, но не является реальным идентификатором.",
+        "payload-is-also-a-complete-code": "Это также длина полного кода. Если контрольная цифра уже есть, переключитесь на Проверить."
+      },
+      "math": "Показать вычисления",
+      "mathSum": "Сумма {sum} → контрольная цифра {check}",
+      "truncatedRows": "Показаны первые {shown} из {total} строк. Копирование и загрузка включают все строки.",
+      "privacy": "Коды отправляются в Forge API для проверки и не сохраняются.",
+      "scopeNote": "Правильная контрольная цифра означает, что номер сформирован верно. Это не означает, что GS1 когда-либо присваивал его реальному продукту, компании или месту — на это отвечает только поиск в реестре GEPIR.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
+    },
+    "vin": {
+      "inputLabel": "VIN (17 символов)",
+      "privacy": "Проверка выполняется в вашем браузере. VIN никуда не отправляется.",
+      "idle": "Вставьте VIN — результат появится по мере ввода, кнопка не нужна.",
+      "scope": "Только структура и контрольная цифра (49 CFR 565.15 / ISO 3779). Это не поиск истории автомобиля.",
+      "verdict": {
+        "valid": "Структура VIN верна",
+        "keepTyping": "Продолжайте ввод — осталось {remaining} символов",
+        "tooLong": "Слишком длинно — VIN содержит ровно 17 символов, здесь {n}",
+        "invalidCharacter": "Не символ VIN: \"{char}\" на позиции {position}",
+        "checkDigitMismatch": "Контрольная цифра не совпадает — ожидалась {expected}, найдена {found}"
+      },
+      "hint": {
+        "confusable": "Символ \"{char}\" никогда не используется в VIN. Возможно, вы имели в виду {suggest}?"
+      },
+      "notice": {
+        "notProvenance": "Правильная контрольная цифра подтверждает корректное формирование VIN. Она не гарантирует, что автомобиль существует, не модифицирован или имеет чистую историю — клонированный VIN тоже проходит эту проверку.",
+        "pre1981": "Автомобили, выпущенные до 1981 года, и некоторые импортные (JDM/европейские) автомобили не используют эту контрольную цифру — несовпадение может означать не ошибку ввода VIN.",
+        "partial": "Для проверки контрольной цифры нужен полный VIN из 17 символов. Частичный VIN — это задача декодирования, а не проверки контрольной суммы."
+      },
+      "badge": {
+        "length": "{n} символов",
+        "expected": "Контрольная цифра {d}"
+      },
+      "invalidChars": {
+        "more": "Также не являются символами VIN: {list}"
+      },
+      "segment": {
+        "wmi": "WMI 1-3",
+        "vds": "Дескриптор 4-8",
+        "checkDigit": "Контрольная цифра 9",
+        "modelYear": "Год модели 10",
+        "plant": "Завод 11",
+        "serial": "Серия 12-17"
+      },
+      "math": {
+        "title": "Показать расчёт",
+        "col": {
+          "position": "Поз.",
+          "char": "Символ",
+          "value": "Значение",
+          "weight": "Вес",
+          "product": "Произведение"
+        },
+        "formula": "сумма = {sum};  {sum} mod 11 = {remainder}  →  контрольная цифра {expected}"
+      },
+      "specimenTitle": "VIN · structure specimen"
+    },
+    "envDiff": {
+      "envA": "Окружение A",
+      "envB": "Окружение B",
+      "placeholderA": "Вставьте или перетащите первый файл .env",
+      "placeholderB": "Вставьте или перетащите второй .env файл",
+      "paneNoAssignment": "Строка KEY=value не найдена",
+      "optIgnoreComments": "Игнорировать комментарии и пустые строки",
+      "optCaseInsensitive": "Сравнение ключей без учёта регистра",
+      "optRedactSecrets": "Скрывать обнаруженные секреты",
+      "emptyHint": "Добавьте второе окружение, чтобы увидеть сравнение",
+      "summaryNone": "Нет различий среди {total} ключей",
+      "summaryDiff": "{n} из {total} ключей различаются",
+      "note": {
+        "unchanged": "Одинаковое значение с обеих сторон",
+        "changed": "Значение отличается",
+        "added": "Установлено только в B",
+        "removed": "Установлено только в A",
+        "commentedOutInA": "Закомментировано в A, установлено в B",
+        "commentedOutInB": "Установлено в A, закомментировано в B"
+      },
+      "secretChanged": "секреты различаются",
+      "secretSame": "секреты совпадают",
+      "count": {
+        "unchanged": "{n} без изменений",
+        "changed": "{n} изменено",
+        "added": "{n} добавлено",
+        "removed": "{n} удалено",
+        "commentedOut": "{n} закомментировано"
+      },
+      "warnings": "Предупреждения ввода ({n})",
+      "warningType": {
+        "duplicateKey": "{file} · дублирование ключа",
+        "quoteMismatch": "{file} · несовпадение кавычек",
+        "unparsableLine": "{file} · строка не распознана"
+      },
+      "showUnchanged": "Показать без изменений ({n})",
+      "commentedIn": {
+        "A": "закомментировано в A",
+        "B": "закомментировано в B",
+        "both": "закомментировано в обоих"
+      },
+      "redactedNote": "Секреты маскируются по ключевым словам в именах ключей — это не сканер безопасности. Сравнение выполняется по исходным значениям, поэтому обновлённый секрет всё равно будет показан как изменённый.",
+      "interpolationNote": "Ссылки ${VAR} сравниваются буквально и никогда не разрешаются: результат раскрытия зависит от потребителя.",
+      "truncated": "Перечислены только первые 5000 ключей; подсчёт включает все ключи.",
+      "colKey": "Ключ",
+      "colA": "A",
+      "colB": "B",
+      "colStatus": "Статус",
+      "privacy": "Оба файла сравниваются в вашем браузере. Ничего не загружается."
+    },
+    "csvDiff": {
+      "originalLabel": "Исходный CSV",
+      "updatedLabel": "Обновлённый CSV",
+      "originalPlaceholder": "Вставьте исходный экспорт или перетащите сюда файл .csv",
+      "updatedPlaceholder": "Вставьте обновлённый экспорт или перетащите сюда файл .csv",
+      "emptyHint": "Вставьте или перетащите оба файла — сравнение начнётся, как только обе стороны будут содержать данные.",
+      "note": "Строки сопоставляются по идентификатору, а не по позиции, поэтому вставленная или пересортированная строка не воспринимается как стена изменений. Содержимое отправляется в API для сравнения и не сохраняется.",
+      "columns": "{n} столбцов",
+      "keyLabel": "Ключевой столбец",
+      "keyAuto": "Автоподсказка",
+      "keyNone": "Без ключа — сравнивать целые строки",
+      "joinLabel": "Объединение",
+      "joinFull": "Полное внешнее — все строки",
+      "joinInner": "Внутреннее — строки в обоих",
+      "joinLeft": "Левое — исходный набор строк",
+      "ignoreWhitespace": "Игнорировать пробелы",
+      "ignoreCase": "Игнорировать регистр",
+      "treatEmptyAsNull": "Пустое = NULL = N/A",
+      "noDifferences": "Без различий",
+      "differences": "{added} добавлено · {removed} удалено · {changed} изменено",
+      "added": "{n} добавлено",
+      "removed": "{n} удалено",
+      "changed": "{n} изменено",
+      "unchangedCount": "{n} без изменений",
+      "totals": "{original} → {updated} строк",
+      "matchedBy": "Сопоставлено по {columns} ({source})",
+      "matchedWholeRow": "Сопоставлено по содержимому всей строки — столбец-ключ не использовался, поэтому изменений не отображается.",
+      "keySource": {
+        "provided": "ваш выбор",
+        "auto": "предложено автоматически",
+        "full-row": "вся строка"
+      },
+      "keyRejected": "Отклонённые кандидаты на ключ: {items}",
+      "columnMismatch": "Столбцы только в исходном файле: {original} · только в обновлённом: {updated}",
+      "truncated": "Показано {shown} из полного результата (превью ограничено {limit} строками) — счётчики выше полные.",
+      "findings": "Примечания ({n})",
+      "level": {
+        "info": "информация",
+        "warning": "предупреждение",
+        "danger": "ошибка"
+      },
+      "wholeRow": "Строка {n}",
+      "exportChanged": "Изменённые строки (CSV)",
+      "exportFull": "Полный дифф (CSV)"
+    },
+    "uscc": {
+      "modeLabel": "Проверить или сгенерировать",
+      "tab": {
+        "verify": "Проверить",
+        "generate": "Сгенерировать тестовые коды"
+      },
+      "inputLabel": "Единый государственный регистрационный номер",
+      "placeholder": "18 символов, например 91500000059926748X",
+      "idle": "Вставьте код из 18 символов. Проверка выполняется в браузере по мере ввода — ничего не сохраняется.",
+      "scope": "Только структурная проверка (GB 32100-2015 + ISO 7064 MOD 31-3). Пройденный код корректно сформирован; это не означает, что организация зарегистрирована под ним — проверьте это в национальном реестре cods.org.cn.",
+      "valid": "Корректный единый государственный регистрационный номер",
+      "invalid": "Недействительный единый социальный кредитный код",
+      "incomplete": "{n} из 18 символов",
+      "invalidCharacters": "Содержит символы, исключённые стандартом",
+      "checksumOk": "Контрольная цифра верна",
+      "checksumBad": "Контрольная цифра не совпадает",
+      "expectedDigit": "Контрольная цифра должна быть {expected}, а не {actual}",
+      "illegalAt": "Позиция {position}: «{char}» отсутствует в наборе символов кода (I, O, S, V, Z исключены)",
+      "detail": "Детали поля",
+      "legacyTitle": "Устаревший код организации (GB 11714)",
+      "legacy": {
+        "ok": "Встроенный 9-символьный код организации самосогласован",
+        "mismatch": "Контрольный символ устаревшего кода должен быть {expected} — только для справки; не все классы регистрантов имеют код организации GB 11714",
+        "unchecked": "Не проверено"
+      },
+      "divisionScope": "Позиции 3–8 сопоставляются с таблицей провинций GB/T 2260 и правилами вложенности шестизначной формы; полная таблица уездов не используется.",
+      "field": {
+        "registrationDept": "Орган регистрации",
+        "orgCategory": "Категория организации",
+        "adminDivision": "Административное деление",
+        "orgIdentifier": "Идентификатор субъекта",
+        "checkDigit": "Контрольная цифра"
+      },
+      "depth": {
+        "none": "Не определено",
+        "province": "Уровень провинции",
+        "prefecture": "Уровень префектуры",
+        "county": "Уровень уезда"
+      },
+      "note": {
+        "empty": "Нечего проверять",
+        "incomplete": "Единый социальный кредитный код содержит ровно 18 символов",
+        "tooLong": "Более 18 символов",
+        "illegalCharacter": "Содержит символ вне набора GB 32100-2015 (исключены I, O, S, V и Z)",
+        "checkDigitMismatch": "Контрольная цифра не совпадает с первыми 17 символами",
+        "departmentUnknown": "Позиция 1 — не отдел регистрации, определённый стандартом (1, 5, 9, Y)",
+        "categoryUnknown": "Позиция 2 — не категория организации, определённая для этого отдела регистрации",
+        "divisionNotNumeric": "Позиции 3–8 должны быть шестью цифрами",
+        "divisionUnknownProvince": "Позиции 3–4 — не код провинции по GB/T 2260",
+        "divisionMalformed": "Уезд без префектуры, что не допускается GB/T 2260"
+      },
+      "gen": {
+        "dept": "Отдел регистрации",
+        "category": "Категория организации",
+        "province": "Провинция",
+        "count": "Сколько",
+        "randomProvince": "Любая провинция",
+        "regenerate": "Новый набор",
+        "emptyHint": "Выберите параметры выше, чтобы сгенерировать тестовые коды.",
+        "testDataBadge": "Тестовые данные",
+        "seed": "Seed {seed}",
+        "allCodes": "Все коды",
+        "disclaimer": "Эти коды структурно валидны, но не принадлежат ни одной зарегистрированной организации. Не используйте их для обозначения реального субъекта.",
+        "note": "Генерация детерминирована: одинаковые параметры и seed всегда дают одинаковый набор, поэтому фикстура остаётся воспроизводимой. Каждый код помечен isTestData как в JSON, так и здесь."
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
+    },
+    "yamlDiff": {
+      "original": "Оригинал",
+      "changed": "Изменённый",
+      "originalPlaceholder": "Вставьте или перетащите оригинальный YAML (или JSON)",
+      "changedPlaceholder": "Вставьте или перетащите изменённый YAML (или JSON)",
+      "idle": "Заполните оба поля — сравнение запустится автоматически по мере ввода.",
+      "privacy": "Оба документа парсятся и сравниваются прямо в браузере — ничего не загружается, что особенно важно для манифестов с хостнеймами и именами секретов.",
+      "modeLabel": "Сравнение",
+      "modeSemantic": "Семантическое (структура)",
+      "modeRawText": "Сырой текст (символы)",
+      "resolveAnchors": "Разрешать якоря и алиасы до их значений",
+      "valid": "Допустимый YAML",
+      "validMulti": "Допустимый YAML · {n} документов",
+      "invalid": "Ошибка разбора, строка {line}",
+      "parseFailed": "Одна сторона не разобрана — сравнение не выполнено",
+      "equivalent": "Различий нет — оба документа приводят к одной структуре",
+      "equivalentStructural": "Одинаковая структура · {n} различий в форматировании или якорях",
+      "summary": "{added} добавлено · {removed} удалено · {changed} изменено · {typeChanged} изменений типов",
+      "parseErrorAt": "{side} · строка {line}, столбец {column}: {message}",
+      "documentCountMismatch": "Количество документов различается: {original} против {changed} — документы были сопоставлены по порядку, а лишние сообщены целиком",
+      "duplicateKeys": "Дублирующиеся ключи в исходном коде",
+      "unified": "Объединённый патч (нормализованный YAML)",
+      "howItWorks": "Как работает это сравнение",
+      "rule": {
+        "keyOrder": "Порядок ключей отображения, кавычки и отступы игнорируются; порядок последовательностей сравнивается, так как порядок в списке имеет значение.",
+        "anchors": "Псевдонимы разрешаются в их значения, поэтому правка за общим якорем отображается на каждом месте псевдонима; якорь или псевдоним, изменившиеся с сохранением значения, сообщаются отдельно как структурные.",
+        "mergeKeys": "Ключи слияния (<<) раскрываются перед сравнением, и собственные ключи узла имеют приоритет над объединёнными.",
+        "types": "Тип является частью значения: 8080, \"8080\" и !!str 8080 сообщаются как изменения типа, а не как общее изменение.",
+        "sequences": "Последовательности отображений сопоставляются по имени, id или ключу, когда это поле уникально с обеих сторон, поэтому вставка одного элемента не вызывает каскад; перестановка всё равно сообщается.",
+        "blockScalars": "Блочные скаляры сравниваются по разрешённой строке, поэтому завершающий перевод строки, который удаляет |-, является реальным изменением; переформатирование с тем же значением считается структурным.",
+        "comments": "Комментарии не входят в модель данных YAML и не сравниваются.",
+        "multiDoc": "--- сопоставляет документы попарно; при несовпадении количества документов выводится сообщение об этом, а не сравнение только первого.",
+        "duplicateKeys": "Дублирующийся ключ отображения в входных данных использует последнее вхождение и регистрируется как предупреждение."
+      },
+      "note": {
+        "raw-text-mode": "Режим сырого текста сравнивает символы, а не структуру: учитываются порядок ключей, кавычки и отступы.",
+        "parse-error": "Одна сторона не распарсилась, поэтому ничего не сравнивалось.",
+        "document-count-mismatch": "Стороны содержат разное количество документов ---; документы были сопоставлены по порядку, а лишние выведены целиком.",
+        "merge-keys-expanded": "Ключи слияния (<<) были раскрыты перед сравнением.",
+        "anchors-unresolved": "Псевдонимы сравнивались как ссылки *name, а не как их разрешённые значения.",
+        "yaml11-ambiguous-scalars": "Незакавыченные y/n/yes/no/on/off здесь считываются как строки (YAML 1.2 Core), а в YAML 1.1 — как логические значения. Если подразумевался булеан, заключите их в кавычки.",
+        "sequence-matched-by-identity": "Последовательности отображений были сопоставлены по полю идентичности, а не по позиции.",
+        "duplicate-keys": "В отображении один и тот же ключ объявлен дважды; использовано последнее вхождение.",
+        "truncated": "Перечислены только первые 2000 изменений."
+      }
+    },
+    "listSetCompare": {
+      "listA": "Список A",
+      "listB": "Список B",
+      "placeholder": "Вставьте элементы по одному на строку (или перетащите файл .txt/.csv)",
+      "emptyHint": "Добавьте элементы в Список A и Список B, чтобы увидеть сравнение.",
+      "privacy": "Оба списка сравниваются в вашем браузере — ничего не загружается. Тот же движок работает на сервере для вызовов API и MCP.",
+      "delimiter": "Разделитель",
+      "delimiterOption": {
+        "auto": "Автоопределение",
+        "newline": "Новая строка",
+        "comma": "Запятая",
+        "tab": "Табуляция",
+        "custom": "Своя"
+      },
+      "customDelimiter": "Разделитель",
+      "customDelimiterPlaceholder": "| или \\t",
+      "sort": "Порядок",
+      "sortOption": {
+        "original": "Исходный порядок",
+        "asc": "А→Я",
+        "desc": "Я→А",
+        "byCount": "По количеству"
+      },
+      "optCaseSensitive": "С учётом регистра",
+      "optTrim": "Убрать пробелы",
+      "optCollapse": "Схлопнуть внутренние пробелы",
+      "optIgnoreZeros": "Игнорировать ведущие нули",
+      "paneItems": "{n} элементов",
+      "paneSingle": "1 элемент — проверьте разделитель",
+      "items": "{n}",
+      "none": "Нет",
+      "more": "+{n} ещё — скопируйте или скачайте полный список",
+      "panel": {
+        "onlyInA": "Только в A",
+        "onlyInB": "Только в B",
+        "intersection": "Пересечение (в обоих)",
+        "union": "Объединение (все элементы)",
+        "symmetricDifference": "Симметрическая разность"
+      },
+      "summaryIdentical": "Одинаковые наборы — {n} общих элементов",
+      "summaryDiff": "Только в A: {a} · Только в B: {b} · Общие: {shared}",
+      "drill": {
+        "symmetricDifference": "Симметрическая разность ({n})",
+        "duplicates": "Дубликаты в списке ({n})",
+        "multiplicities": "Количество вхождений ({n})",
+        "warnings": "Уведомления ({n})"
+      },
+      "duplicatesInA": "Повторы в A",
+      "duplicatesInB": "Повторы в B",
+      "colValue": "Элемент",
+      "colCountA": "В A",
+      "colCountB": "В B",
+      "detailTruncated": "Количество по элементам обрезано — увеличьте maxDetail в API для полной таблицы.",
+      "reportTitle": "Сравнение списков"
+    },
+    "loanAmortization": {
+      "principal": "Сумма кредита",
+      "rate": "Годовая ставка %",
+      "term": "Срок",
+      "termUnit": "Единица срока",
+      "unitYears": "Годы",
+      "unitMonths": "Месяцы",
+      "startMonth": "Месяц первого платежа",
+      "startMonthHint": "ГГГГ-ММ. Метка для графика; сумма не меняется.",
+      "extraHeading": "Дополнительные платежи",
+      "extraMonthly": "Дополнительно каждый месяц",
+      "extraYearly": "Дополнительный платеж раз в год",
+      "extraYearlyMonth": "Месяц дополнительного платежа",
+      "extraOneTime": "Разовый дополнительный платеж",
+      "extraOneTimePeriod": "Разовый платеж в период №",
+      "extraNote": "Дополнительные платежи уменьшают основной долг в том периоде, когда они вносятся, что снижает проценты во всех последующих периодах. Ставка и размер планового платежа остаются прежними.",
+      "monthlyPayment": "Ежемесячный платеж",
+      "totalInterest": "Общие проценты",
+      "totalPaid": "Общая сумма выплат",
+      "crossover": "Точка пересечения",
+      "crossoverValue": "Платёж {n}",
+      "crossoverNone": "Никогда",
+      "payoff": "Погашен на платёже {n}",
+      "monthsSaved": "На {n} мес. раньше",
+      "totalExtra": "{amount} сверх графика",
+      "viewMonthly": "Каждый платёж",
+      "viewAnnual": "По годам",
+      "tableCaption": "График амортизации: платёж, проценты, основной долг и остаток по каждому периоду",
+      "colPeriod": "#",
+      "colDate": "Месяц",
+      "colPayment": "Платёж",
+      "colInterest": "Проценты",
+      "colPrincipal": "Основной долг",
+      "colBalance": "Остаток",
+      "colYear": "Год",
+      "expandRows": "Показать все {total} платежей",
+      "collapseRows": "Показать меньше платежей",
+      "windowNote": "Показано {shown} из {total} платежей. В CSV и API — все платежи.",
+      "emptyHint": "Введите сумму кредита, ставку и срок, чтобы увидеть график.",
+      "note": "Тот же движок, что и в API. Расчёты выполняются только по вашим условиям кредита; ничего не загружается и не сохраняется.",
+      "errPrincipal": "Введите сумму кредита больше 0.",
+      "errRate": "Введите ставку от 0 до 100.",
+      "errTerm": "Введите срок от 1 месяца до 100 лет.",
+      "errStartMonth": "Используйте формат ГГГГ-ММ, например 2026-01.",
+      "errExtra": "Введите сумму 0 или больше.",
+      "errOneTimePeriod": "Введите номер платежа, на который приходится разовый платёж."
+    },
+    "businessDayShift": {
+      "modeLabel": "Что рассчитать",
+      "mode": {
+        "shift": "Сдвинуть дату",
+        "countBetween": "Подсчитать между датами"
+      },
+      "startDate": "Дата начала",
+      "days": "Рабочих дней",
+      "daysHint": "Отрицательные значения сдвигают назад: −10 — это десять рабочих дней до даты начала.",
+      "daysInvalid": "Рабочих дней должно быть целым числом, с необязательным знаком минус в начале.",
+      "endDate": "Дата окончания",
+      "includeEndDate": "Включать конечную дату — так считает NETWORKDAYS в таблицах",
+      "weekendLabel": "Выходные дни в неделю",
+      "weekendHint": "По умолчанию суббота и воскресенье. Установите пятницу и субботу, если это выходные в вашем регионе.",
+      "weekday": {
+        "sun": "Вс",
+        "mon": "Пн",
+        "tue": "Вт",
+        "wed": "Ср",
+        "thu": "Чт",
+        "fri": "Пт",
+        "sat": "Сб"
+      },
+      "holidays": "Праздники",
+      "holidaysHint": "Если оставить пустым, будет использоваться только правило выходных — календарь страны применяться не будет.",
+      "makeupWorkdays": "Выходные дни, перенесённые на работу",
+      "makeupHint": "Дни, которые считаются рабочими, хотя приходятся на выходные или праздник — сюда относятся субботы в рамках китайской системы 调休/补班.",
+      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesIgnored": "{n, plural, one {# запись не является датой в формате YYYY-MM-DD и не используется} other {# записей не являются датами в формате YYYY-MM-DD и не используются}}",
+      "pickStart": "Выберите начальную дату, чтобы начать.",
+      "emptyHintShift": "Выберите начальную дату и количество рабочих дней.",
+      "emptyHintCount": "Выберите начальную и конечную даты.",
+      "note": "Используется тот же движок, что и в API. Расчёт выполняется по правилам, показанным вместе с результатом; ничего не сохраняется.",
+      "countHeadline": "{n, plural, one {# рабочий день} other {# рабочих дня}}",
+      "reversedRange": "Конечная дата раньше начальной, поэтому результат отрицательный.",
+      "classification": {
+        "workday": "Рабочий день",
+        "weekend": "Выходной",
+        "holiday": "Праздник",
+        "makeupWorkday": "Восстановительный рабочий день"
+      },
+      "ruleWeekend": "{days} выходных",
+      "ruleNoWeekend": "без еженедельных выходных",
+      "ruleHolidays": "{n, plural, =0 {нет списка праздников} one {# праздник} other {# праздника}}",
+      "ruleMakeups": "{n, plural, =0 {нет восстановительных дней} one {# восстановительный день} other {# восстановительных дня}}",
+      "ruleEndIncluded": "дата окончания включена",
+      "ruleEndExcluded": "дата окончания не включена",
+      "chain": "Сдвиг с этой даты"
+    },
+    "retryBackoff": {
+      "strategy": {
+        "exponential": "Экспоненциальная",
+        "linear": "Линейная",
+        "fixed": "Фиксированная"
+      },
+      "initialDelay": "Начальная задержка (мс)",
+      "factor": "Коэффициент отката",
+      "factorHint": "Множитель, применяемый при каждой попытке. Должен быть больше 1.",
+      "increment": "Линейный прирост (мс)",
+      "incrementHint": "Миллисекунды, добавляемые к задержке при каждой попытке.",
+      "maxDelay": "Максимальная задержка (мс)",
+      "maxDelayHint": "Оставьте пустым, чтобы не ограничивать. После достижения предела все последующие задержки остаются на этом уровне.",
+      "maxAttempts": "Максимальное число попыток",
+      "maxAttemptsHint": "От 1 до 100.",
+      "excludeInitial": "Максимальное число попыток не включает начальный запрос",
+      "excludeInitialNote": "Вкл.: число выше считает только повторные попытки, начальный запрос не входит. Выкл.: считается каждая попытка, включая начальный запрос.",
+      "jitter": {
+        "none": "Нет — точные задержки",
+        "equal": "Равномерный — половина фиксированная, половина случайная",
+        "full": "Полная — от нуля до задержки"
+      },
+      "callerTimeout": "Ваш таймаут (мс)",
+      "callerTimeoutHint": "Необязательно. Оставьте пустым, чтобы пропустить проверку лимита.",
+      "emptyHint": "Исправьте выделенное поле, чтобы увидеть расписание.",
+      "note": "Вычисляется только на основе политики — ничего не отправляется в сторонние сервисы. Jitter показывается как диапазон, в который попадает реальный клиент, а не как одно случайное значение.",
+      "headlineExact": "{attempts} попыток, {wait} ожидания в сумме.",
+      "headlineRange": "{attempts} попыток, {expected} ожидания в среднем, до {max} в худшем случае.",
+      "finalDelay": "Последнее ожидание перед попыткой {attempt} составляет {delay}.",
+      "noRetries": "Этот лимит позволяет одну попытку без повторных, поэтому ждать нечего.",
+      "retryCount": "{count, plural, =0 {повторных попыток нет} one {# повторная попытка} other {# повторных попытки}}",
+      "capFlattened": "Лимит достигнут на попытке {attempt} — все последующие задержки остаются на уровне {delay}.",
+      "timeoutExceeded": "В худшем случае ожидание {wait}, что превышает ваш лимит {timeout}.",
+      "timeoutOk": "В худшем случае ожидание {wait}, укладывается в ваш лимит {timeout}.",
+      "tableLabel": "Расписание повторных попыток",
+      "colAttempt": "Попытка",
+      "colDelay": "Задержка",
+      "colCumulative": "Накопительное ожидание",
+      "average": "в ср. {value}",
+      "formula": {
+        "none": "Задержки точные — джиттер не применяется.",
+        "equal": "Равномерный джиттер: половина задержки фиксированная, другая половина выбирается равномерно, поэтому каждое ожидание попадает между половиной задержки и полной задержкой.",
+        "full": "Полный джиттер: ожидание выбирается равномерно между нулём и вычисленной задержкой."
+      },
+      "errInitialDelay": "Начальная задержка должна быть целым числом миллисекунд, не менее 1.",
+      "errFactor": "Коэффициент должен быть больше 1 и не более 100. Коэффициент 1 соответствует фиксированной стратегии.",
+      "errIncrement": "Приращение должно быть целым числом миллисекунд, 0 или больше.",
+      "errMaxDelay": "Лимит должен быть целым числом миллисекунд, не менее 1.",
+      "errCapBelowInitial": "Лимит должен быть не меньше начальной задержки.",
+      "errMaxAttempts": "Попытки должны быть целым числом от 1 до 100.",
+      "errCallerTimeout": "Таймаут должен быть целым числом миллисекунд, не менее 1."
+    },
+    "csvColumns": {
+      "csvLabel": "CSV",
+      "csvPlaceholder": "Вставьте CSV сюда или перетащите файл — первая строка считывается как названия столбцов",
+      "sample": "Пример CSV",
+      "chooseFile": "Выбрать файл",
+      "fileFailed": "Не удалось прочитать {name}.",
+      "delimiterLabel": "Разделитель",
+      "delimiter": {
+        "comma": "Запятая  ,",
+        "semicolon": "Точка с запятой  ;",
+        "tab": "Tab",
+        "pipe": "Pipe  |"
+      },
+      "raggedPolicyLabel": "Строки, не совпадающие с заголовком",
+      "ragged": {
+        "pad": "Выровнять по заголовку",
+        "truncate": "Обрезать длинные строки, короткие оставить как есть",
+        "reject": "Остановить и сообщить"
+      },
+      "columnsTitle": "Столбцы — сохранено {kept} из {total}",
+      "columnsHint": "Снимите галочку, чтобы удалить столбец, отредактируйте поле для переименования, используйте стрелки для изменения порядка. Всё сопоставляется с исходным заголовком.",
+      "reset": "Сбросить столбцы",
+      "keep": "Сохранить столбец {name}",
+      "renameLabel": "{name}",
+      "moveUp": "Переместить {name} вверх",
+      "moveDown": "Переместить {name} вниз",
+      "noneKept": "Все столбцы сняты — оставьте хотя бы один.",
+      "emptyHint": "Вставьте CSV выше, чтобы управлять его столбцами.",
+      "note": "Работает с вставленным текстом. Удалите, затем переименуйте, затем измените порядок — в таком фиксированном порядке, всегда относительно исходного заголовка.",
+      "columnCount": "{n} столбцов",
+      "rowCount": "{n} строк",
+      "duplicateHeaders": "Повторяющийся заголовок используется по имени: {names}",
+      "raggedCount": "{n}{more} строк не соответствуют ширине заголовка",
+      "previewLabel": "CSV-вывод",
+      "previewTruncated": "Показаны первые {shown} из {total} строк. Скопируйте или скачайте, чтобы получить весь файл.",
+      "raggedListLabel": "Строки, не соответствующие ширине заголовка",
+      "raggedRow": "Строка {line}: {actual} полей, в заголовке {expected}",
+      "unusedRenames": "Переименование проигнорировано — эти столбцы отсутствуют в выводе: {names}"
+    },
+    "imageRotateFlip": {
+      "drop": "Перетащите изображение или нажмите, чтобы выбрать",
+      "browse": "Выберите изображение",
+      "selected": "{name} · {kb} КБ",
+      "privacy": "Файл отправляется в Forge API для преобразования и не сохраняется.",
+      "tooLarge": "Это изображение больше {mb} МБ.",
+      "ccw": "90° влево",
+      "cw": "90° вправо",
+      "half": "180°",
+      "reset": "Сбросить",
+      "flipHorizontal": "Отразить по горизонтали",
+      "flipVertical": "Отразить по вертикали",
+      "angle": "Угол",
+      "exactAngle": "Точный °",
+      "fitMode": "Холст",
+      "fitExpand": "Расширить холст",
+      "fitCrop": "Обрезать до заполнения",
+      "fitInside": "Вписать внутрь",
+      "fitNote": "При повороте на четверть оборота повёрнутое изображение больше не помещается в старую рамку: расширение сохраняет каждый пиксель, обрезка сохраняет исходный размер и обрезает углы, а вписывание уменьшает всё целиком.",
+      "outputFormat": "Формат вывода",
+      "sameFormat": "Как у исходного",
+      "idle": "Перетащите изображение, чтобы увидеть его переориентацию.",
+      "original": "Исходное · {w}×{h}",
+      "originalAlt": "Изображение в исходном виде",
+      "result": "Результат · {w}×{h}",
+      "resultAlt": "Переориентированное изображение",
+      "badgeLossless": "Без ресемплинга",
+      "badgeResampled": "Ресемплинг",
+      "badgeSize": "{kb} КБ",
+      "badgeExif": "Сначала применён ориентации EXIF {orientation}",
+      "badgeSnapped": "Выровнено по точному четверть-повороту",
+      "badgeReencode": "Геометрия точная; кодек перекодирует",
+      "download": "Скачать",
+      "note": "Повороты на 90°, 180° и 270° перемещают пиксели без смешивания. Любые другие углы требуют ресемплинга. Анимированные GIF, APNG и анимированные WebP пока не поддерживаются."
+    },
+    "exifStrip": {
+      "drop": "Перетащите JPEG, PNG или WebP, чтобы удалить метаданные",
+      "privacy": "Обрабатывается на наших серверах и никогда не сохраняется. До {mb} МБ на изображение.",
+      "idle": "Удалено: GPS, время съёмки, данные камеры и устройства, встроенный миниатюрный кадр, история редактирования. Сохранено: ориентация, цветовая схема, размеры, пиксельные данные.",
+      "note": "Только статические изображения. Видео, PDF, HEIC, AVIF и GIF не поддерживаются, манифесты происхождения C2PA остаются нетронутыми.",
+      "detail": "Что было удалено",
+      "optKeepThumbnail": "Сохранить встроенный Exif-превью",
+      "verdictStripped": "Удалено {fields} полей метаданных ({kb} КБ)",
+      "verdictClean": "В этом файле нет удаляемых метаданных",
+      "strippedCaveat": "Само изображение не изменилось — те же пиксели, те же размеры, без перекодирования.",
+      "cleanCaveat": "Возвращено побайтово, как было получено.",
+      "badgeOrientationKept": "Ориентация сохранена",
+      "badgeOrientationLost": "Ориентацию не удалось сохранить",
+      "badgeColorProfileKept": "Цветовой профиль сохранён",
+      "badgeThumbnailKept": "Превью сохранено",
+      "badgeThumbnailRemoved": "Превью удалено",
+      "download": "Скачать очищенное изображение",
+      "sizes": "{before} КБ → {after} КБ",
+      "detailFields": "{fields} поля · {kb} КБ",
+      "detailNothing": "Из этого файла ничего не было удалено.",
+      "detailOrientation": "Ориентация Exif {value} была прочитана из файла и сохранена.",
+      "detailNoOrientation": "В файле не указана ориентация Exif, поэтому отображение не изменилось.",
+      "segmentExif": "Exif",
+      "segmentIptc": "IPTC",
+      "segmentXmp": "XMP",
+      "segmentComment": "Комментарий",
+      "segmentText": "Текстовые метаданные",
+      "segmentTime": "Временная метка",
+      "segmentVendor": "Блок вендора",
+      "summaryStripped": "Удалено {fields} полей метаданных ({families}), {kb} КБ. Изображение в остальном не изменено.",
+      "summaryClean": "Удаляемых метаданных не найдено. Файл возвращён без изменений."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "Name / Host",
+      "type": "Record-Typ",
+      "note": "Auflösung über den Forge-Host-DNS — kann vom lokalen Stub abweichen."
+    },
+    "tls": {
+      "host": "Host",
+      "expired": "Zertifikat abgelaufen",
+      "validDays": "Noch {n} Tage",
+      "note": "Verbindung vom Forge-Host. Trust-Prüfung deaktiviert nur zur Inspektion."
+    },
+    "myIp": {
+      "refresh": "Aktualisieren",
+      "note": "IP wie vom Forge-Edge gesehen. Kein Geo ohne Lizenzdaten."
+    },
+    "mermaid": {
+      "source": "Mermaid source",
+      "idle": "Valid diagrams render here",
+      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
+      "sample": "Sample",
+      "theme": "Theme",
+      "theme_default": "Default",
+      "theme_dark": "Dark",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "Flowchart",
+      "sample_sequence": "Sequence",
+      "sample_class": "Class",
+      "sample_er": "ER diagram",
+      "sample_state": "State",
+      "sample_gantt": "Gantt",
+      "sample_pie": "Pie",
+      "sample_mindmap": "Mindmap",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "zoomReset": "Reset view",
+      "copySvg": "Copy SVG",
+      "downloadSvg": "Download SVG",
+      "downloadPng": "Download PNG",
+      "previewAria": "Mermaid diagram preview",
+      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
+    },
+    "colorDeltaE": {
+      "note": "CIEDE2000 via culori. Schwellen nur für UI-Review."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL-Dialekt",
+      "parseNote": "Nur Parse/Inventar. ERD-Canvas separat.",
+      "convertNote": "@dbml/core — gleicher Pfad wie die API."
+    },
+    "dnsLeak": {
+      "probeHost": "Compare host (advanced)",
+      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
+      "run": "Start DNS leak check",
+      "retest": "Run again",
+      "showAdvanced": "Advanced options",
+      "hideAdvanced": "Hide advanced",
+      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
+      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
+      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
+      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
+      "edgeIp": "Your edge IP",
+      "authorityHits": "Recursive IPs",
+      "forgePaths": "Forge resolver hits",
+      "dohPaths": "Browser DoH hits",
+      "webrtcCount": "WebRTC IPs",
+      "forgeResolvers": "Forge multi-resolver (server-side)",
+      "forgeNote": "These queries leave from the Forge host — not your laptop.",
+      "browserDoh": "Browser DoH",
+      "webrtc": "WebRTC ICE",
+      "egressMarkers": "Forge egress markers",
+      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
+      "honestyPrefix": "Honesty:",
+      "verdictConsistent": "Paths look consistent on this check",
+      "verdictSplit": "Split answers across DNS paths",
+      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
+      "verdictIncomplete": "Incomplete — browser probes missing",
+      "verdictAuthority": "System DNS recursives captured",
+      "infraOn": "Authority online",
+      "infraOff": "Authority offline — multi-path only",
+      "infraChecking": "Checking…",
+      "authorityResolvers": "System DNS recursive resolvers",
+      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
+      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
+      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
+      "authorityDetail": "Authority session detail",
+      "phaseSession": "Creating session…",
+      "phaseSystemDns": "Triggering system DNS…",
+      "phasePoll": "Listening for recursive hits ({n}/{total})…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "stepSession": "Session",
+      "stepSystemDns": "System DNS",
+      "stepPoll": "Listen",
+      "stepBrowser": "Browser",
+      "stepServer": "Server",
+      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
+      "liveHits": "Live recursive hits",
+      "sectionSystemDns": "System DNS (what you came for)",
+      "sectionComplementary": "Complementary paths",
+      "sectionTech": "Technical session detail",
+      "copyIps": "Copy IPs",
+      "copied": "Copied",
+      "queryCount": "{n} queries",
+      "colPath": "Path",
+      "colAnswers": "Answers",
+      "colMs": "ms",
+      "ipPublic": "public",
+      "ipPrivate": "private",
+      "sig": {
+        "captured": "System DNS captured",
+        "onlineNoHits": "Authority online · no hits yet",
+        "offline": "Authority offline",
+        "forgeSplit": "Forge resolvers disagree",
+        "dohSplit": "Browser DoH disagree",
+        "webrtcMismatch": "WebRTC ≠ edge IP",
+        "webrtcLocal": "Local WebRTC candidates",
+        "noBrowser": "No browser probes"
+      }
+    },
+    "honesty": {
+      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
+      "signatureNotVerified": "{engine} · decode only · signature not verified",
+      "localOnly": "Processed for this request · not stored as a card or credential"
+    },
+    "idCard": {
+      "number": "Resident ID number",
+      "note": "GB 11643 check digit · no household registry lookup · same path as API",
+      "specimenTitle": "Resident ID · structure specimen",
+      "segRegion": "Region",
+      "segBirth": "Birth",
+      "segSeq": "Seq",
+      "segCheck": "Check",
+      "metaBirth": "Birth",
+      "metaGender": "Gender",
+      "metaRegion": "Region code",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "reasonFormat": "Format should be 18 characters (last may be X)",
+      "reasonBirth": "Birth date segment is invalid",
+      "reasonCheck": "Check digit is wrong",
+      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} lines",
+      "chars": "{n} chars",
+      "empty": "(empty file)",
+      "readyToShip": "Ready to drop into the repo"
+    },
+    "textTransform": {
+      "mode": "Mode",
+      "input": "Input",
+      "output": "Output",
+      "emptyResult": "Result appears here",
+      "runLocal": "Run locally",
+      "runServer": "Run on server",
+      "statusLocalLive": "Local · live",
+      "statusLocal": "Local",
+      "statusServer": "Server · same path as API",
+      "noteDefault": "Same path as API"
+    }
+  },
+  "roots": {
+    "hubLabel": "По намерению",
+    "tools": "инструменты",
+    "dualSurface": "Страница для человека + API для агента · один движок",
+    "otherRoots": "Другие источники спроса"
+  }
+}

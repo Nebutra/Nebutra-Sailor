@@ -1,0 +1,70 @@
+# Dockerfile for Python FastAPI services
+# Usage: docker build -f infra/runtime/docker/Dockerfile.python -t nebutra-SERVICE --build-arg SERVICE=ai .
+
+# Pin to exact digest for reproducible builds.
+# Update monthly via: docker manifest inspect python:3.11-slim --verbose
+FROM python:3.11-slim@sha256:06fa338add3c2ab8daeff7304a6bb204c68f67743b13553a8999605fc8097c58 AS base
+
+# Prevent Python from writing pyc files
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user
+RUN addgroup --system --gid 1001 appgroup \
+    && adduser --system --uid 1001 --gid 1001 appuser
+
+# ============================================
+# Builder stage
+# ============================================
+FROM base AS builder
+
+ARG SERVICE
+
+# Copy requirements
+COPY backends/python/${SERVICE}/requirements.txt ./requirements.txt
+COPY backends/python/${SERVICE}/pyproject.toml ./pyproject.toml
+
+# Install Python dependencies using uv for faster installs
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+ENV UV_COMPILE_BYTECODE=1
+RUN uv pip install --system --no-cache -r requirements.txt
+
+# ============================================
+# Production stage
+# ============================================
+FROM base AS production
+
+ARG SERVICE
+ENV SERVICE=${SERVICE}
+
+# Copy installed packages from builder
+COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=builder /usr/local/bin /usr/local/bin
+
+# Copy application code
+COPY backends/python/${SERVICE}/ ./
+
+# Change ownership to non-root user
+RUN chown -R appuser:appgroup /app
+
+# Switch to non-root user
+USER appuser
+
+# Expose port (default FastAPI port)
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+# Start the application
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

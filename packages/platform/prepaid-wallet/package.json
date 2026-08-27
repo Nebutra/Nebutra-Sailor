@@ -1,0 +1,63 @@
+{
+  "name": "@nebutra/prepaid-wallet",
+  "version": "0.1.1",
+  "description": "Prepaid wallet, API key product helpers, and dual-ledger usage envelopes for Nebutra Router & Forge",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "graph": "labs",
+    "status": "wip",
+    "productionReady": false,
+    "surface": "support-contract",
+    "featureId": "prepaid-wallet",
+    "category": "platform",
+    "summary": "Product control-plane contracts: prepaid balance, API key scopes, customer vs supply usage envelope",
+    "gaps": [
+      "No Prisma adapter yet — host must wire PrepaidWallet to CreditBalance",
+      "Gateway dual-ledger envelope not production-defaulted",
+      "Billing UI surfaces for top-up/refund still app-owned"
+    ]
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "build": "tsup"
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "tsup": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/platform/prepaid-wallet#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/platform/prepaid-wallet"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
+}

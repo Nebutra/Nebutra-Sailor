@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — オンラインツールステーション",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "コーデック、テキスト、ハッシュ、ドキュメント、画像ツールをオンラインで。"
+  },
+  "nav": {
+    "main": "メインナビゲーション",
+    "homeAria": "{brandName} Forge ホーム",
+    "tools": "ツール",
+    "wallet": "ウォレット",
+    "api": "API",
+    "routerAria": "{brandName} Router",
+    "categoriesAria": "ツールカテゴリ",
+    "languageAria": "言語を変更"
+  },
+  "tool": {
+    "breadcrumbAria": "パンくずリスト",
+    "workspace": "ワークスペース",
+    "workspaceHint": "ローカルまたはサーバー · APIと同じパス",
+    "api": "API",
+    "apiHint": "ページと同じコントラクトです。本番環境では認証キーを使用してください。",
+    "related": "関連ツール"
+  },
+  "auth": {
+    "signIn": "サインイン",
+    "signUp": "サインアップ",
+    "signOut": "サインアウト"
+  },
+  "footer": {
+    "navAria": "フッター",
+    "blurb": "オンラインツールステーション。ブラウザでタスクを完了するか、API / MCP で自動化。",
+    "product": "プロダクト",
+    "developers": "開発者",
+    "company": "会社情報",
+    "docs": "統合ドキュメント",
+    "website": "ウェブサイト",
+    "privacy": "プライバシー"
+  },
+  "home": {
+    "eyebrow": "見て、呼んで。",
+    "title": "オンラインツールのスイスアーミーナイフ",
+    "subtitle": "コーデック、テキスト、ハッシュ、ドキュメント、画像処理。ブラウザで完了するか、API / MCP で自動化——1つの実装で。",
+    "toolCount": "{count} ツール",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "検索: 文字数、base64、json、タイムスタンプ…",
+    "aria": "ツールを検索",
+    "emptyTitle": "「{query}」に一致するツールはありません",
+    "emptyHint": "別のキーワードを試すか、以下のカテゴリからツールを選択してください。"
+  },
+  "categories": {
+    "codec": {
+      "label": "コーデック",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "中国検証",
+      "hint": "ID · 電話番号"
+    },
+    "data": {
+      "label": "データ",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "開発者",
+      "hint": "正規表現 · SQL · 色 · UUID"
+    },
+    "doc": {
+      "label": "ドキュメント",
+      "hint": "Markdown · PDF 結合/分割"
+    },
+    "finance": {
+      "label": "ファイナンス",
+      "hint": "金額を文字列に変換"
+    },
+    "hash": {
+      "label": "ハッシュとセキュリティ",
+      "hint": "MD5 · SHA · HMAC · パスワード"
+    },
+    "image": {
+      "label": "画像",
+      "hint": "圧縮 · QR · 変換"
+    },
+    "life": {
+      "label": "生活計算ツール",
+      "hint": "住宅ローン · BMI · 親族関係"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "トークン · コスト · スキーマ"
+    },
+    "net": {
+      "label": "ネットワーク",
+      "hint": "DNS · TLS · IP · 漏洩確認"
+    },
+    "security": {
+      "label": "セキュリティ",
+      "hint": "パスワード生成"
+    },
+    "text": {
+      "label": "テキスト",
+      "hint": "文字数 · CJK · 拼音 · 差分"
+    },
+    "time": {
+      "label": "時刻",
+      "hint": "タイムスタンプ · タイムゾーン · Cron · 旧暦"
+    },
+    "unit": {
+      "label": "単位",
+      "hint": "長さ · 重量 · 温度 · データ"
+    },
+    "template": {
+      "label": "テンプレート",
+      "hint": ".gitignore · LICENSE · Dockerfile · README"
+    }
+  },
+  "runners": {
+    "common": {
+      "run": "実行",
+      "running": "実行中…",
+      "copy": "コピー",
+      "copied": "コピーしました",
+      "sameAsApi": "APIと同じパス · OSSエンジン",
+      "mustBeNumber": "{label}は数値である必要があります",
+      "base64Loaded": "Base64ペイロードを読み込みました",
+      "workspaceMissing": "ワークスペースが設定されていません: {slug}",
+      "yes": "はい",
+      "no": "いいえ",
+      "text": "テキスト",
+      "input": "入力",
+      "output": "出力",
+      "outputPlaceholder": "結果がここに表示されます",
+      "localRun": "ローカルで実行",
+      "serverRun": "サーバーで実行",
+      "serverVerify": "サーバー検証",
+      "outputPreview": "出力プレビュー",
+      "mode": "モード",
+      "encode": "エンコード",
+      "decode": "デコード",
+      "file": "ファイル",
+      "clear": "クリア",
+      "length": "長さ: {n}",
+      "bytes": "{bytes} バイト",
+      "download": "ダウンロード",
+      "format": "フォーマット",
+      "formatting": "フォーマット中…",
+      "dialect": "方言",
+      "color": "色",
+      "pickColor": "色を選択",
+      "content": "コンテンツ",
+      "algorithm": "アルゴリズム",
+      "encoding": "エンコーディング",
+      "message": "メッセージ",
+      "secret": "シークレット",
+      "password": "パスワード",
+      "direction": "方向",
+      "preview": "プレビュー",
+      "query": "クエリ",
+      "querying": "クエリ中…",
+      "validate": "検証",
+      "validating": "検証中…",
+      "processing": "処理中…",
+      "pretty": "見栄え",
+      "minify": "ミニファイ",
+      "from": "開始",
+      "to": "終了",
+      "timezone": "タイムゾーン",
+      "datetime": "日付と時刻",
+      "compute": "コンピューティング",
+      "computing": "コンピューティング中…",
+      "convertAction": "変換",
+      "count": "件数",
+      "value": "値",
+      "unit": "単位",
+      "generateLocal": "ローカルで生成",
+      "generateServer": "サーバーで生成",
+      "copyAll": "すべてコピー",
+      "emptyResult": "結果がここに表示されます",
+      "copyText": "テキストをコピー",
+      "quality": "品質",
+      "original": "原文",
+      "result": "結果",
+      "downloadPdf": "PDFをダウンロード",
+      "openTab": "新しいタブで開く",
+      "pdfPreview": "PDFプレビュー",
+      "pdfPreviewTitle": "PDFプレビュー",
+      "pdfPreviewHint": "ブラウザ標準のPDFビューアです。一部のモバイルではダウンロードのみ対応します。",
+      "single": "単体",
+      "batch": "一括",
+      "privacyUpload": "ファイルは処理のためForgeホストに送信され、リクエスト後は保持されません。",
+      "dragDrop": "ファイルをドロップするかクリックして選択",
+      "resultMeta": "結果",
+      "before": "処理前",
+      "after": "処理後",
+      "liveHint": "入力すると更新されます",
+      "tablePreview": "表プレビュー",
+      "sourcePreview": "ソースプレビュー",
+      "metrics": "指標",
+      "thumbnail": "プレビュー"
+    },
+    "base64": {
+      "encodeDir": "テキスト → Base64",
+      "decodeDir": "Base64 → テキスト",
+      "localNote": "ローカル Web API (TextEncoder / atob)",
+      "serverNote": "サーバーバッファ · API と同じパス"
+    },
+    "password": {
+      "uppercase": "大文字",
+      "lowercase": "小文字",
+      "digits": "数字",
+      "symbols": "記号",
+      "generate": "パスワードを生成",
+      "recent": "最近",
+      "note": "エンジン: node:crypto randomInt · 暗号学的に安全 · API と同じパス"
+    },
+    "hash": {
+      "algo": "アルゴリズム: {algo}",
+      "md5Warn": " · チェックサム/互換性のみ — パスワードの保存には使用しないでください",
+      "md5LocalError": "MD5 はサーバー実行が必要です（Web Crypto には MD5 がありません）",
+      "md5ServerHint": "MD5: サーバー実行を使用してください（互換性のみ、パスワード保存には使用しないでください）",
+      "localNote": "ローカル Web Crypto · {algo}",
+      "serverNote": "サーバーノード：crypto · APIと同じパス"
+    },
+    "convert": {
+      "converting": "変換中…",
+      "convert": "変換",
+      "done": "完了 · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "ここにファイルをドロップするか、クリックして参照",
+      "needFile": "まずファイルを選択してください",
+      "needAlgo": "少なくとも1つのアルゴリズムを選択してください",
+      "compute": "チェックサムを計算",
+      "computing": "計算中…",
+      "algorithms": "アルゴリズム",
+      "note": "node:crypto · 複数アルゴリズム対応 · API と同じパス"
+    },
+    "lorem": {
+      "paragraphs": "段落数",
+      "wordsPerParagraph": "段落あたりの単語数",
+      "startWithLorem": "「Lorem ipsum」で開始",
+      "note": "Lorem Ipsum ジェネレーター · pure"
+    },
+    "emailValidate": {
+      "note": "メール検証ツール · フォーマットのみ（MX ルックアップなし）"
+    },
+    "creditCardLuhn": {
+      "number": "カード番号",
+      "note": "Luhn チェッカー · オフライン、保存なし",
+      "digits": "桁",
+      "specimenLabel": "見本",
+      "structureOnly": "Luhn構造のみ",
+      "unknownBrand": "カード"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "JSON ミニファイア · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "CSS Minifier · lightweight (edge-safe)"
+    },
+    "hashCompare": {
+      "a": "ハッシュ A",
+      "b": "ハッシュ B",
+      "ignoreCase": "大文字小文字を区別しない",
+      "note": "Hash Comparator · 等長時の定数時間比較"
+    },
+    "jsonDiff": {
+      "left": "JSON A",
+      "right": "JSON B",
+      "note": "JSON Diff · パス単位操作 · 種類別カラー行 · 並列表示",
+      "equal": "同一",
+      "differs": "{count} 件の変更",
+      "colPath": "パス",
+      "colKind": "種類",
+      "colLeft": "左側",
+      "colRight": "右側",
+      "filtersAria": "変更の種類でフィルター",
+      "filterAll": "すべて ({count})",
+      "filterAdd": "追加 ({count})",
+      "filterRemove": "削除 ({count})",
+      "filterChange": "変更 ({count})",
+      "filterType": "タイプ ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "モード",
+      "pretty": "整形表示",
+      "compact": "コンパクト",
+      "indent": "インデント",
+      "note": "YAML フォーマッター · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "TOML フォーマッター · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "XML ミニファイア · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "URL バリデーター · WHATWG URL（ネットワーク取得なし）"
+    },
+    "ipValidate": {
+      "note": "IP バリデーター · IPv4/IPv6 オフライン"
+    },
+    "uuidValidate": {
+      "note": "UUID バリデーター · RFC 4122 形式"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "HTML ミニファイア · ライトウェイト（エッジ対応）"
+    },
+    "randomString": {
+      "length": "長さ",
+      "count": "件数",
+      "charset": "文字セット",
+      "alphanumeric": "英数字",
+      "symbols": "英数字 + 記号",
+      "hex": "16進数",
+      "base64url": "Base64URL",
+      "note": "ランダム文字列 · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "読書時間 · CJK + ラテン語推定"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "見出し最大レベル",
+      "note": "Markdown目次 · ATX見出し"
+    },
+    "pdfInfo": {
+      "file": "PDF ファイル",
+      "note": "PDF Info · pdf-lib（ページ数 + メタデータ）"
+    },
+    "rot13": {
+      "shift": "シフト（13 = ROT13）",
+      "note": "ROT13 / Caesar · pure"
+    },
+    "morse": {
+      "note": "モールス符号 · ITU · pure"
+    },
+    "textBinary": {
+      "toBinary": "テキスト → バイナリ",
+      "fromBinary": "バイナリ → テキスト",
+      "note": "テキスト ↔ バイナリ · UTF-8 ビット"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "ダイジェストエンコーディング",
+      "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "ワンショットダイジェスト · 個別コピー可能 · node:crypto"
+    },
+    "cssFormat": {
+      "note": "CSS Beautifier · lightweight"
+    },
+    "htmlFormat": {
+      "note": "HTML Beautifier · ライトウェイト"
+    },
+    "stringSimilarity": {
+      "a": "文字列 A",
+      "b": "文字列 B",
+      "note": "文字列類似度 · Levenshtein"
+    },
+    "roman": {
+      "toRoman": "数字 → ローマ数字",
+      "fromRoman": "ローマ数字 → 数字",
+      "note": "ローマ数字 · 1–3999"
+    },
+    "age": {
+      "birthDate": "生年月日 (YYYY-MM-DD)",
+      "asOf": "基準日 (任意)",
+      "note": "年齢計算機 · 正確な年/月/日"
+    },
+    "tip": {
+      "bill": "請求額",
+      "percent": "チップ %",
+      "people": "人数",
+      "note": "チップ計算機 · 割り勘対応"
+    },
+    "aspect": {
+      "width": "幅",
+      "height": "高さ",
+      "note": "アスペクト比 · 最大公約数で簡略化"
+    },
+    "mime": {
+      "note": "MIME 種別確認 · 一般的な Web タイプ"
+    },
+    "ua": {
+      "note": "User-Agent パーサー · 推論ベース（オフライン）"
+    },
+    "imageMeta": {
+      "file": "画像ファイル",
+      "note": "画像メタデータ · sharp（EXIF バッファサイズ）"
+    },
+    "wordFreq": {
+      "top": "上位 N",
+      "note": "単語頻度 · CJK + ラテン文字"
+    },
+    "jsonXml": {
+      "note": "JSON ↔ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "SQL Minifier · コメントと空白の削除"
+    },
+    "lineNum": {
+      "start": "開始番号",
+      "note": "行番号を追加 · 純粋な実装"
+    },
+    "uniqueWords": {
+      "note": "重複なしの単語一覧 · 初出順"
+    },
+    "epoch": {
+      "value": "値",
+      "msToIso": "ms → ISO",
+      "isoToMs": "ISO → ms",
+      "note": "エポックミリ秒 · 日付"
+    },
+    "passwordEntropy": {
+      "password": "パスワード",
+      "note": "パスワードエントロピー · 文字種推定"
+    },
+    "contrast": {
+      "fg": "前景色 (#hex)",
+      "bg": "背景色 (#hex)",
+      "note": "色相対比 · WCAG 2.x",
+      "sampleHeadline": "サンプルテキスト",
+      "pass": "合格",
+      "fail": "不合格",
+      "aaNormal": "AA 通常",
+      "aaLarge": "AA 大",
+      "aaaNormal": "AAA 通常",
+      "aaaLarge": "AAA 大"
+    },
+    "exif": {
+      "file": "画像ファイル",
+      "note": "EXIF ビューア · exifr + JPEG フォールバック"
+    },
+    "regex": {
+      "pattern": "パターン",
+      "flags": "フラグ",
+      "replacement": "置換文字列",
+      "match": "一致",
+      "replace": "置換",
+      "test": "テスト",
+      "local": "ローカルで実行",
+      "server": "サーバー検証",
+      "count": "{count} 件の一致",
+      "sotaNote": "ローカルで即座にハイライト表示 · サーバータイムアウト予算 · API と同じパス"
+    },
+    "jwt": {
+      "decode": "JWT をデコード",
+      "sample": "サンプルを読み込む",
+      "tokenPlaceholder": "JWT を貼り付け",
+      "decodeNote": "{engine} · デコードのみ、署名は検証しません",
+      "footerNote": "エンジン: jose · 署名検証なし。本番環境ではサーバー側で jwtVerify を使用し、キーで検証してください。",
+      "generateHint": "トークンに署名する必要がありますか？",
+      "secret": "シークレット",
+      "exp": "有効期限（秒）",
+      "payload": "ペイロード JSON",
+      "note": "JWT 生成 · HS256（開発/テスト用）",
+      "header": "ヘッダー",
+      "payloadLabel": "ペイロード",
+      "signature": "署名",
+      "emptySignature": "（空の署名）"
+    },
+    "rand": {
+      "min": "最小値",
+      "max": "最大値",
+      "count": "個数",
+      "note": "乱数生成 · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "面数",
+      "count": "サイコロ数",
+      "note": "サイコロロール · crypto RNG"
+    },
+    "hexRgb": {
+      "note": "HEX ↔ RGB · pure"
+    },
+    "base64url": {
+      "note": "Base64URL · JWTスタイル"
+    },
+    "hmac": {
+      "message": "メッセージ",
+      "secret": "シークレット",
+      "signature": "署名",
+      "note": "HMAC検証 · SHA-256"
+    },
+    "secret": {
+      "bytes": "バイト数",
+      "count": "件数",
+      "note": "シークレットキー生成器 · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "PDF ファイル",
+      "note": "PDF ライト最適化 · pdf-lib 書き換え（画像再圧縮なし）",
+      "needFile": "まずPDFファイルを選択してください"
+    },
+    "pdfCompress": {
+      "file": "PDF ファイル",
+      "quality": "品質",
+      "engine": "エンジン",
+      "qStructural": "構造化（qpdf、ロスレスストリーム）",
+      "qScreen": "スクリーン（最小、Ghostscript）",
+      "qEbook": "電子書籍（バランス、Ghostscript）",
+      "qPrinter": "プリンター（高品質、Ghostscript）",
+      "eAuto": "自動 (qpdf → Ghostscript → pdf-lib)",
+      "download": "PDFをダウンロード",
+      "needFile": "まずPDFファイルを選択してください",
+      "in": "入力",
+      "out": "出力",
+      "saved": "保存済み",
+      "note": "PDF圧縮 · ホスト上のqpdf / Ghostscript · pdf-libフォールバック",
+      "drop": "PDFをドロップまたは選択",
+      "needPdf": "PDFファイルを選択してください",
+      "privacy": "PDFは圧縮のためホストに送信され、保存されません。",
+      "barHint": "バーは出力サイズの相対値です"
+    },
+    "jsonFormat": {
+      "indent": "インデント",
+      "format": "フォーマット",
+      "minify": "ミニファイ",
+      "serverVerify": "サーバー検証",
+      "clear": "クリア",
+      "sample": "サンプル",
+      "placeholder": "JSON を貼り付け…",
+      "formatted": "整形済み",
+      "minified": "最小化",
+      "serverOk": "サーバー {mode} · {engine}",
+      "valid": "JSON は有効です",
+      "invalid": "JSON が無効です",
+      "line": "行",
+      "column": "列",
+      "note": "エンジン: JSON.parse/stringify · ローカルで即時処理 · API と同じパス",
+      "sortKeys": "キーを並べ替え",
+      "stats": "{chars} 文字 · {lines} 行",
+      "liveOff": "ライブオフ"
+    },
+    "qr": {
+      "size": "サイズ",
+      "ecl": "誤り訂正レベル",
+      "generate": "生成",
+      "download": "PNGをダウンロード",
+      "needText": "テキストまたはURLを入力",
+      "note": "QR · qrcode · ライブプレビュー · API と同じパス"
+    },
+    "pdfText": {
+      "file": "PDF ファイル",
+      "layout": "レイアウト",
+      "needFile": "まずPDFを選択",
+      "note": "PDFテキスト · ホスト上のpdftotext (poppler)"
+    },
+    "svg": {
+      "optimize": "最適化",
+      "note": "SVG最適化 · 軽量な純粋ミニファイ"
+    },
+    "routerTranslate": {
+      "lab": "ラボシェル：ここでは翻訳しません。プロンプトでRouterを開きます — モデルメーターはRouterのみに表示されます。",
+      "source": "ソース言語",
+      "target": "ターゲット言語",
+      "open": "Routerリンクを準備",
+      "deepLink": "Routerで開く",
+      "note": "外部リンク · Forge LLM台帳は記録されません"
+    },
+    "imageCrop": {
+      "needFile": "まず画像を選択",
+      "crop": "切り取り",
+      "note": "画像トリミング · ドラッグで領域選択 · 高精度抽出",
+      "drop": "画像をドロップまたはクリックして選択",
+      "dragHint": "画像をドラッグして切り抜き領域を選択",
+      "left": "左",
+      "top": "上",
+      "width": "幅",
+      "height": "高さ",
+      "natural": "原寸 {w}×{h}",
+      "source": "元画像",
+      "result": "切り抜き"
+    },
+    "markdown": {
+      "preview": "プレビュー",
+      "html": "HTML",
+      "emptyPreview": "実行するとプレビューが表示されます",
+      "emptyHtml": "レンダリングされた HTML",
+      "rendering": "レンダリング中…",
+      "toHtml": "HTMLに変換",
+      "copyHtml": "HTMLをコピー",
+      "note": "marked · サンドボックスiframeプレビュー · APIと同じパス"
+    },
+    "pdfMerge": {
+      "files": "PDFファイル（2つ以上、順序＝結合順）",
+      "needFiles": "少なくとも2つのPDFを選択してください",
+      "merging": "結合中…",
+      "mergeDownload": "結合してダウンロード",
+      "done": "結合完了 · {pages}ページ · {bytes}バイト",
+      "note": "pdf-lib · APIと同じパス",
+      "merge": "結合してダウンロード"
+    },
+    "pdfSplit": {
+      "file": "PDFファイル",
+      "needFile": "PDFを選択",
+      "fromPage": "開始ページ（1始まり）",
+      "toPage": "終了ページ（空欄＝最終ページ）",
+      "toPlaceholder": "最終ページ",
+      "splitting": "分割中…",
+      "splitDownload": "分割してダウンロード",
+      "done": "分割完了 · 元ファイル {source} ページ → 出力 {pages} ページ",
+      "note": "pdf-lib · APIと同じパス",
+      "split": "分割してダウンロード"
+    },
+    "passwordStrength": {
+      "check": "強度を確認",
+      "checking": "確認中…",
+      "crack": "オフライン低速ハッシュ推定: {time}",
+      "score0": "非常に弱い",
+      "score1": "弱い",
+      "score2": "普通",
+      "score3": "強い",
+      "score4": "非常に強い",
+      "note": "zxcvbn-ts · APIと同じパス · パスワードは保存されません"
+    },
+    "hmacSign": {
+      "compute": "HMACを計算",
+      "computing": "計算中…",
+      "note": "node:crypto · APIと同じパス"
+    },
+    "costEstimate": {
+      "text": "入力テキスト（入力トークン見積もり用）",
+      "model": "モデル",
+      "outputTokens": "出力トークン（推定）",
+      "estimate": "コスト見積もり",
+      "estimating": "見積もり中…",
+      "note": "@nebutra/ai-providers/frontier カード + js-tiktoken · リスト価格の見積もりであり、請求ではありません"
+    },
+    "jsonSchema": {
+      "data": "JSON データ",
+      "schema": "JSON Schema",
+      "validate": "検証",
+      "validating": "検証中…",
+      "pass": "合格",
+      "fail": "不合格",
+      "note": "Ajv · API と同じパス"
+    },
+    "zhCnTw": {
+      "s2t": "简体 → 繁體",
+      "t2s": "繁體 → 簡體",
+      "s2tw": "简体 → 台湾",
+      "tw2s": "台湾 → 简体",
+      "s2hk": "简体中文 → 香港",
+      "hk2s": "香港 → 简体",
+      "note": "OpenCC (opencc-js) · API と同じパス"
+    },
+    "pinyin": {
+      "tones": "声調スタイル",
+      "symbol": "記号 nǐ",
+      "num": "数字 ni3",
+      "none": "なし",
+      "hanzi": "汉字",
+      "convert": "ピンインに変換",
+      "converting": "変換中…",
+      "note": "pinyin-pro · APIと同じパス"
+    },
+    "sqlFormat": {
+      "dialect": "方言",
+      "format": "フォーマット",
+      "formatting": "フォーマット中…",
+      "note": "sql-formatter · APIと同じパス"
+    },
+    "colorConvert": {
+      "color": "色",
+      "pick": "色を選択",
+      "convert": "转换",
+      "converting": "変換中…",
+      "note": "culori · hex / rgb / hsl / oklch · APIと同じパス"
+    },
+    "qrGen": {
+      "content": "コンテンツ",
+      "format": "格式",
+      "pngPreview": "PNG（预览）",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "QRコードを生成",
+      "generating": "生成中…",
+      "note": "qrcode · APIと同じパス"
+    },
+    "qrDecode": {
+      "upload": "QRコードを含む画像をアップロード",
+      "parsing": "デコード中…",
+      "note": "jsQR + sharp · APIと同じパス"
+    },
+    "cron": {
+      "expression": "Cron式",
+      "timezone": "タイムゾーン",
+      "parse": "次の実行",
+      "parsing": "解析中…",
+      "nextTitle": "次の実行 (ISO)",
+      "note": "cron-parser · APIと同じパス"
+    },
+    "timezone": {
+      "datetime": "日時",
+      "from": "変換元",
+      "to": "変換先",
+      "convert": "タイムゾーン変換",
+      "converting": "変換中…",
+      "placeholder": "2026-07-24 12:00:00 または ISO / unix",
+      "note": "dayjs timezone · API と同じパス"
+    },
+    "csvPreview": {
+      "preview": "プレビューテーブル",
+      "parsing": "解析中…",
+      "rows": "プレビュー {shown} / {total} 行",
+      "note": "papaparse · API と同じパス"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "查询",
+      "querying": "クエリ実行中…",
+      "note": "jsonpath-plus · API と同じパス"
+    },
+    "xmlFormat": {
+      "pretty": "美化",
+      "minify": "圧縮",
+      "validate": "検証",
+      "validOk": "有効",
+      "done": "完成 · {engine}",
+      "processing": "処理中…",
+      "note": "fast-xml-parser · API と同じパス"
+    },
+    "regexLegacy": {
+      "pattern": "パターン",
+      "flags": "フラグ",
+      "mode": "モード",
+      "match": "匹配",
+      "replace": "置換",
+      "test": "テスト",
+      "replacement": "置換文字列",
+      "note": "ローカル即時処理 · サーバータイムアウト予算 · APIと同じパス"
+    },
+    "docxText": {
+      "file": "DOCXファイル",
+      "needFile": "まず .docx ファイルを選択してください",
+      "extract": "テキストを抽出",
+      "extracting": "提取中…",
+      "note": "DOCX → テキスト · ZIP + document.xml のみ（Office スイート不要）"
+    },
+    "uuid": {
+      "count": "件数",
+      "local": "ローカルで生成",
+      "server": "サーバーで生成",
+      "copyAll": "すべてコピー",
+      "empty": "UUID がここに表示されます"
+    },
+    "timestamp": {
+      "nowSec": "Unix 秒",
+      "nowMs": "Unix ms / ISO",
+      "serverNow": "サーバー現在時刻",
+      "toDate": "タイムスタンプ → 日付",
+      "toUnix": "日付 → タイムスタンプ",
+      "seconds": "秒",
+      "milliseconds": "ミリ秒",
+      "value": "値",
+      "convert": "変換",
+      "note": "API と同じパス"
+    },
+    "wordCount": {
+      "words": "単語数",
+      "chars": "文字数",
+      "noSpaces": "スペースなし",
+      "cjk": "CJK",
+      "lines": "行数",
+      "paragraphs": "段落数",
+      "placeholder": "テキストを貼り付けたり入力したり…",
+      "copyText": "テキストをコピー",
+      "clear": "クリア",
+      "verifying": "確認中…",
+      "serverNote": "サーバー語数={words} · APIと同じパス",
+      "note": "ライブエンジン: {engine} · アップロード不要 · APIと同じパス"
+    },
+    "bmi": {
+      "height": "身長 (cm)",
+      "weight": "体重 (kg)",
+      "compute": "BMIを計算",
+      "computing": "計算中…",
+      "invalid": "有効な身長（cm）と体重（kg）を入力してください",
+      "underweight": "低体重",
+      "normal": "標準",
+      "overweight": "肥満",
+      "obese": "肥満",
+      "note": "WHO BMI · API と同じパス · 医療アドバイスではありません"
+    },
+    "percentage": {
+      "mode": "モード",
+      "percentOf": "b の a%",
+      "isWhat": "a は b の何 % か",
+      "percentA": "パーセント a",
+      "valueA": "値 a",
+      "baseB": "基準 b",
+      "compute": "計算",
+      "computing": "計算中…",
+      "invalid": "有効な数値を入力してください",
+      "note": "APIと同じパス"
+    },
+    "dataSize": {
+      "value": "値",
+      "convert": "変換",
+      "converting": "変換中…",
+      "invalid": "有効な数値を入力してください",
+      "binary": "{value} {from} → 1024 進法",
+      "note": "バイナリ単位 (1 KB = 1024 B) · API と同じパス"
+    },
+    "rmb": {
+      "amount": "金額 (CNY)",
+      "convert": "大文字に変換",
+      "converting": "変換中…",
+      "invalid": "負でない金額を入力してください",
+      "note": "中国の領収書金額大文字表記 · API と同じパス"
+    },
+    "dateDiff": {
+      "from": "開始日",
+      "to": "終了日",
+      "compute": "日数差",
+      "computing": "計算中…",
+      "days": "日",
+      "note": "ECMAScript Date · APIと同じパス"
+    },
+    "xlsxText": {
+      "file": "XLSXファイル",
+      "needFile": "先に.xlsxファイルを選択してください",
+      "extract": "シートを抽出",
+      "extracting": "抽出中…",
+      "note": "XLSX → CSV · ZIP + sheet1.xml（最初のシートのみ）"
+    },
+    "mdToPdf": {
+      "drop": ".md ファイルをここにドロップするか、下に Markdown を貼り付けてください",
+      "title": "タイトル",
+      "engine": "エンジン",
+      "ePlaywright": "Playwright（Chromium 印刷）",
+      "eSimple": "シンプル（ブラウザなし）",
+      "generate": "PDF を生成",
+      "generating": "生成中…",
+      "download": "PDF をダウンロード",
+      "note": "marked → HTML → Playwright Chromium 印刷。Chromium が利用できない場合、自動はシンプルな構造化 PDF にフォールバックします。renderEngine を確認してください。シンプルは印刷品質のレイアウトではありません。",
+      "openTab": "新しいタブで開く",
+      "preview": "PDFプレビュー",
+      "previewTitle": "PDFプレビュー",
+      "previewHint": "ブラウザ標準のPDFビューア。一部のモバイルはダウンロードのみです。",
+      "noPayload": "PDFペイロードが返されませんでした"
+    },
+    "tokenCount": {
+      "count": "トークンをカウント",
+      "counting": "カウント中…",
+      "chars": "文字数 {n}",
+      "note": "エンジン: js-tiktoken · サーバー側正確カウント · Router のコスト見積りに使用可能"
+    },
+    "codec": {
+      "encodeDir": "テキスト → エンコード",
+      "decodeDir": "エンコード → テキスト",
+      "localNote": "ローカル実行",
+      "serverNote": "サーバー · API と同じパス",
+      "hexInvalid": "有効な16進数文字列ではありません",
+      "hexDecodeFail": "サーバーがUTF-8としてデコードできませんでした（有効な16進数が必要です）",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · APIと同じパス",
+      "noteHtml": "HTML エンティティマップ · API と同じパス",
+      "noteHex": "UTF-8 ↔ hex · API と同じパス"
+    },
+    "textDiff": {
+      "left": "左",
+      "right": "右",
+      "compare": "比較",
+      "comparing": "比較中…"
+    },
+    "imageTool": {
+      "drop": "ここに画像をドロップするか、クリックして選択",
+      "selected": "選択中: {name} ({kb} KB)",
+      "needFile": "まず画像を選択してください",
+      "format": "出力形式",
+      "quality": "品質 {n}",
+      "maxW": "最大幅",
+      "maxH": "最大高",
+      "optional": "任意",
+      "resizeEg": "例: 1280",
+      "processing": "処理中…",
+      "compress": "圧縮",
+      "resize": "サイズ変更",
+      "convert": "形式変換",
+      "download": "結果をダウンロード",
+      "outMeta": "出力 {kb} KB{dims}{ratio} · {type}",
+      "ratio": " · 元の約{pct}%",
+      "dims": " · {w}×{h}",
+      "original": "オリジナル",
+      "result": "結果",
+      "note": "エンジン: sharp (libvips) · サーバー側処理 · APIと同じパス (imageBase64)",
+      "privacy": "画像は処理のためホストに送信され、保存されません。"
+    },
+    "pptxText": {
+      "file": "PPTX ファイル",
+      "needFile": "まず .pptx ファイルを選択してください",
+      "extract": "アウトラインを抽出",
+      "extracting": "抽出中…",
+      "note": "PPTX アウトライン · 純粋な ZIP + スライド XML（PowerPoint なし）"
+    },
+    "shell": {
+      "copyJson": "JSONをコピー",
+      "sample": "サンプル",
+      "chars": "{n} 文字",
+      "largeInput": "入力内容が大きいため、入力を停止してからしばらくすると結果が更新されます。",
+      "manualInput": "入力内容が大きいため、リアルタイム再計算ではページが停止します。Runを押してください。",
+      "options": "オプション",
+      "regenerateNote": "オプションを変更すると、出力は自動的に更新されます。",
+      "fileTab": "ファイル",
+      "pasteTab": "貼り付け",
+      "browse": "ファイルを選択",
+      "selectedFile": "{name} · {kb} KB",
+      "truncated": "最初の {kb} KB を読み込みました。回答に必要な情報は十分で、残りはローカルに留まります。",
+      "detail": "詳細",
+      "dropIntoPane": "ファイルをここにドロップ",
+      "swap": "左右を入れ替え",
+      "prevChange": "前へ",
+      "nextChange": "次へ",
+      "changePosition": "{total}件中{index}件目",
+      "result": "結果"
+    },
+    "readmeSkeleton": {
+      "emptyHint": "README を生成するには、少なくとも1つのセクションにチェックを入れてください。",
+      "note": "APIと同じエンジンを実行します。省略したセクションは表示されず、空のヘッダーは生成されません。",
+      "orderNote": "セクションはこの固定された順序で常にレンダリングされるため、同じ入力から同じファイルが生成されます。",
+      "group": {
+        "core": "コア",
+        "docs": "ドキュメント",
+        "community": "コミュニティ",
+        "meta": "メタ情報"
+      },
+      "section": {
+        "title": "タイトルと説明",
+        "badges": "バッジ",
+        "callout": "注意書き",
+        "toc": "目次",
+        "installation": "インストール",
+        "usage": "使い方",
+        "features": "機能",
+        "api-reference": "API リファレンス",
+        "screenshots": "スクリーンショット",
+        "roadmap": "ロードマップ",
+        "contributing": "コントリビューション",
+        "support": "サポート",
+        "acknowledgements": "謝辞",
+        "license": "ライセンス",
+        "authors": "著者",
+        "tech-stack": "技術スタック"
+      },
+      "projectName": "プロジェクト名",
+      "projectNamePlaceholder": "プロジェクト名",
+      "description": "説明",
+      "descriptionPlaceholder": "何をするか一文で説明",
+      "badgeLicense": "ライセンスバッジ",
+      "badgeNpm": "npm バージョン",
+      "badgeBuild": "ビルド状況",
+      "npmPackage": "npm パッケージ",
+      "npmPackagePlaceholder": "@scope/package",
+      "repo": "GitHub リポジトリ",
+      "repoPlaceholder": "owner/repo",
+      "calloutKind": "コールアウト",
+      "calloutBody": "コールアウトテキスト",
+      "calloutBodyPlaceholder": "Pre-1.0 — APIはまだ変更中",
+      "fenceLanguage": "言語",
+      "installCommand": "インストールコマンド",
+      "installCommandPlaceholder": "npm install your-project",
+      "usageExample": "使用例",
+      "usageExamplePlaceholder": "価値を示す最小の例",
+      "features": "機能",
+      "featuresPlaceholder": "1行につき1機能",
+      "contact": "お問い合わせ",
+      "contactPlaceholder": "you@example.com",
+      "license": "ライセンス",
+      "authors": "著者",
+      "authorsPlaceholder": "@handle, Jane Roe",
+      "techStack": "技術スタック",
+      "techStackPlaceholder": "typescript, postgresql (simple-icons slugs)",
+      "sectionCount": "{n} セクション",
+      "charCount": "{n} 文字",
+      "warningCount": "{n} 件スキップ",
+      "omittedTitle": "省略した項目とその理由"
+    },
+    "gitignore": {
+      "searchLabel": "スタックを検索",
+      "searchPlaceholder": "言語、フレームワーク、OS、エディタを検索…",
+      "add": "{stack}を追加",
+      "remove": "{stack} を削除",
+      "selected": "選択中のスタック",
+      "suggestions": "一致するスタック",
+      "noMatches": "「{query}」に一致するスタックがありません。Enterキーを押すとそのまま送信されます。エイリアスはサーバー側で解決されます。",
+      "catalogFallback": "スタック一覧が利用できません。スタック名を入力してEnterキーを押してください。",
+      "emptyHint": "上記から言語、フレームワーク、OS、またはエディタを1つ以上選択してください。",
+      "regenerate": "再生成",
+      "sections": "{n} セクション",
+      "lines": "{n} 行",
+      "deduped": "{n} 重複パターンを統合",
+      "notFound": "コーパスにありません: {stacks}",
+      "globalScope": "{stacks} は OS/エディタ向けのエントリです。多くの開発者は、各リポジトリに含めるのではなく、個人用の ~/.gitignore_global に保存しています。",
+      "untrackedNote": ".gitignore は未追跡ファイルにのみ影響します。git が既に追跡しているファイルについては、git rm -r --cached <path> を実行してください。",
+      "fileLabel": ".gitignore"
+    },
+    "editorconfig": {
+      "emptyHint": "ファイルを表示するには、少なくとも1つのプロパティを設定してください。",
+      "note": "API と同じエンジンを使用しています。選択内容はブラウザセッション内のみ保持され、保存されません。",
+      "checks": "チェック項目",
+      "presets": "開始するプリセット",
+      "preset": {
+        "spaces2": "2 スペース、LF",
+        "spaces4": "4 スペース、LF",
+        "tabs": "タブ、幅 4",
+        "repo": "リポジトリスターター（Markdown、Makefile 付き）"
+      },
+      "rootLabel": "root = true — エディターが親の .editorconfig ファイルをマージするのを防ぎます",
+      "glob": "グロブ {n}",
+      "addSection": "セクションを追加",
+      "removeSection": "削除",
+      "notSet": "(未設定)",
+      "import": "既存の .editorconfig をインポート",
+      "importPlaceholder": ".editorconfig をここに貼り付けてフォームに読み込みます",
+      "importAction": "インポート",
+      "importing": "インポート中…",
+      "importFailed": "インポートできませんでした: {message}"
+    },
+    "robotsTxt": {
+      "emptyHint": "上記のオプションを設定すると、ここにファイルが表示されます",
+      "deployNote": "robots.txt はドメインのルート (https://example.com/robots.txt) でのみ有効です。サブドメインごとに個別のファイルが必要です。",
+      "outputLabel": "robots.txt",
+      "defaultAccess": "デフォルトのアクセス (User-agent: *)",
+      "defaultAllow": "すべて許可",
+      "defaultDisallow": "すべて拒否",
+      "defaultAccessNote": "「すべて許可」は空の「Disallow:」を書き込みます。これによりすべてが許可されます。",
+      "crawlDelay": "クロール遅延（秒）",
+      "crawlDelayPlaceholder": "なし",
+      "crawlDelayNote": "RFC 9309 には含まれません。Google はこれを無視し、Google グループには書き込まれません。",
+      "searchAgents": "検索エンジン",
+      "aiAgents": "AIクローラー",
+      "aiAgentsNote": "トレーニングおよび回答エンジンのクローラー。これらをブロックしても検索インデックスには影響しません。",
+      "accessDefault": "デフォルト",
+      "accessAllow": "許可",
+      "accessDisallow": "拒否",
+      "rules": "パスルール",
+      "rulesNote": "パスは大文字小文字を区別し、ルート相対です。ディレクトリにルールを制限する場合は末尾にスラッシュを追加してください。",
+      "rulePath": "パス {n}",
+      "rulePathPlaceholder": "/admin/",
+      "ruleType": "ルールタイプ",
+      "addRule": "パスルールを追加",
+      "removeRule": "削除",
+      "sitemaps": "サイトマップ",
+      "sitemapsNote": "絶対 http(s) URL。グループ外に独立した行として記述します。",
+      "sitemapUrl": "サイトマップ {n}",
+      "addSitemap": "サイトマップを追加",
+      "removeSitemap": "削除",
+      "groupCount": "{n} グループ",
+      "lineCount": "{n} 行",
+      "sitemapCount": "{n} 個のサイトマップ",
+      "warningsSummary": "このファイルに関する注意事項 ({n})"
+    },
+    "encodingDetect": {
+      "drop": "ファイルをドロップしてエンコーディングを判別",
+      "privacy": "最初の {kb} KB だけが読み取られ、エージェントが呼び出すのと同じ公開インボークエンドポイントに送信されます。ディスクへの書き込みは行われません。",
+      "pasteLabel": "またはテキストを貼り付け",
+      "pastePlaceholder": "テキストを貼り付け — 説明したい文字化けも含めて",
+      "detail": "候補、改行コード、バイト統計",
+      "idle": "ファイルをドロップするかテキストを貼り付けてください。読み取り可能な内容があれば、レポートが自動で表示されます。",
+      "readOnly": "読み取り専用：このツールはエンコーディングを識別するもので、バイトを書き換えることはありません。",
+      "headline": "{encoding} · 信頼度 {confidence}%",
+      "notText": "これはテキストではないようです",
+      "bomPresent": "BOM {bytes}",
+      "bomAbsent": "BOMなし",
+      "eol": "{kind} 改行コード",
+      "eolMixed": "改行コードが混在しています",
+      "language": "言語 {language} · {confidence}%",
+      "sampled": "{totalKb} KB のうち最初の {kb} KB から検出",
+      "candidates": "候補の順位",
+      "candidatesNote": "2位以下のエンコーディングはあえて表示しています。短いサンプルや対称的なサンプルは本質的に曖昧です。",
+      "lineEndings": "改行コード",
+      "byteStats": "バイト統計",
+      "totalBytes": "合計",
+      "asciiBytes": "ASCII",
+      "highBytes": "高バイト (0x80–0xFF)",
+      "nullBytes": "NUL",
+      "mojibake": "文字化けを復元しました"
+    },
+    "dockerfileStarter": {
+      "language": "言語",
+      "framework": "フレームワーク",
+      "packageManager": "パッケージマネージャー",
+      "baseVariant": "ベースイメージ",
+      "version": "ランタイムバージョン",
+      "workdir": "作業ディレクトリ",
+      "port": "ポート",
+      "buildCommand": "ビルドコマンド",
+      "startCommand": "起動コマンド",
+      "commandPlaceholder": "空欄 = プリセットのデフォルト",
+      "frameworkNone": "なし（プレーンランタイム）",
+      "pmAuto": "自動",
+      "variantSlim": "slim（glibc）",
+      "variantAlpine": "alpine（musl）",
+      "variantFull": "フル",
+      "multiStage": "マルチステージビルド",
+      "nonRootUser": "非ルートユーザー",
+      "includeDockerignore": ".dockerignore を追加",
+      "includeCompose": "compose.yaml を追加",
+      "includeHealthcheck": "HEALTHCHECKを追加",
+      "groupWhat": "ビルド内容",
+      "groupHow": "実行方法",
+      "emptyHint": "言語を選択するとDockerfileが表示されます。",
+      "note": "プリセットのみです。上記のオプション以外がブラウザから送信されることはありません。公開前にファイルを確認してください。",
+      "warnings": "{n}項目を確認",
+      "stages": "{n}ステージ",
+      "badgeNonRoot": "非root",
+      "badgeRoot": "rootで実行",
+      "badgePort": "ポート {port}"
+    },
+    "lineEndingDetect": {
+      "dropLabel": "テキストファイルをドロップして改行コードを確認",
+      "privacy": "貼り付けたテキスト、およびドロップされたファイルの最初の256KBは、Forge APIに送信されてスキャンされますが、バイトデータは保存されません。",
+      "pasteLabel": "またはテキストを貼り付け",
+      "pastePlaceholder": "確認したいテキストを貼り付けてください",
+      "idle": "テキストを貼り付けるかファイルをドロップすると、改行コードの判定結果が表示されます。",
+      "detail": "カウントとチェック",
+      "note": "検出のみです。このツールはファイルを再書き込みしません。",
+      "empty": "入力が空です",
+      "noTerminator": "改行ターミネータなし — 1行が終端されていません",
+      "consistent": "{style} — 一貫しています",
+      "mixed": "混在 — {parts}",
+      "sharePart": "{pct}% {style}",
+      "style": {
+        "LF": "LF (Unix/Linux/macOS)",
+        "CRLF": "CRLF (Windows)",
+        "CR": "CR (Mac OS 9 以前のクラシック Mac)"
+      },
+      "lines": "{n} 行",
+      "bytes": "{n} バイト",
+      "trailing": {
+        "present": "末尾に改行あり",
+        "absent": "ファイル末尾に改行なし"
+      },
+      "bomUtf8": "UTF-8 BOM",
+      "bomNone": "BOM なし",
+      "countRow": "{style}: {n} ({pct}%)",
+      "colStyle": "形式",
+      "colCount": "件数",
+      "colShare": "割合",
+      "minorityLines": "支配的形式と異なる行: {lines}",
+      "andMore": "など",
+      "findings": "チェック項目",
+      "level": {
+        "info": "備考",
+        "warning": "警告",
+        "danger": "破綻"
+      },
+      "sampled": "{total} バイト中最初の {n} バイトをスキャン",
+      "encodingLink": "エンコーディング検出ツールを開く"
+    },
+    "fileTypeDetect": {
+      "drop": "ファイルをドロップして実際の種類を判別",
+      "privacy": "先頭の {kb} KB ヘッダーのみを読み取り、残りのファイルはデバイスから出ません。",
+      "hexTab": "16 進数貼り付け",
+      "detail": "バイトと候補を表示",
+      "idle": "ファイルをドロップするか、先頭バイトを 16 進数で貼り付けます。",
+      "note": "シグネチャはコンテナを識別しますが、コーデックや内部コンテンツではありません。",
+      "unset": "—",
+      "unknownType": "一致するシグネチャなし",
+      "polyglot": "Polyglot",
+      "tierNone": "拡張子が一致",
+      "tierBenign": "無害な不一致",
+      "tierMismatch": "拡張子の不一致",
+      "tierHighRisk": "高リスク",
+      "confidenceMatch": "シグネチャ一致",
+      "confidenceContainer": "コンテナのみ",
+      "confidenceAmbiguous": "曖昧",
+      "confidenceNone": "一致なし",
+      "signalDetected": "MIMEを検出",
+      "signalReported": "報告されたMIME",
+      "signalExtension": "ファイル名拡張子",
+      "drillResolved": "{kind}コンテナを開きました: {type}",
+      "drillUnresolved": "{kind}コンテナを確認しましたが、サンプリングされたバイトからサブタイプを特定できませんでした",
+      "hexDump": "ヘッダーバイト",
+      "bytesRead": "{n} バイト読み取り",
+      "headerOnly": "ヘッダーサンプルのみ",
+      "entropy": "エントロピー {bits} bits/byte",
+      "signatureCount": "テーブルに{n}件のシグネチャ",
+      "textHints": "構造的ヒント: {hints}",
+      "candidates": "一致するすべてのシグネチャ",
+      "atOffset": "オフセット {offset}"
+    },
+    "licenseChooser": {
+      "prompt": "このプロジェクトには何が必要ですか？",
+      "pickScenario": "あなたのプロジェクトに合った行を選んでください。回答とファイルがここに表示されます。",
+      "disclaimer": "決定論的なテンプレート出力であり、法的助言ではありません。",
+      "noAnswer": "このケースに合う単一のライセンスはありません",
+      "permissions": "許可",
+      "conditions": "条件",
+      "limitations": "対象外",
+      "alternates": "このケースの他のオプション",
+      "useThis": "これを使う",
+      "readCanonical": "SPDXの正規テキストを読む",
+      "holder": "著作権者",
+      "holderPlaceholder": "あなたの名前または会社名",
+      "holderHint": "著作権者を追加すると、入力に応じてファイルが自動入力されます。",
+      "year": "年",
+      "manifest": "SPDX IDの配置場所",
+      "verbatim": "{name}は全ユーザーに同一のバイト列で提供されます。著作権表示はLICENSEファイルではなく、ソースファイルのヘッダーに記述します。",
+      "noLicense": {
+        "summary": "ライセンスをまったく追加しない場合は？",
+        "body": "ライセンスなしはパブリックドメインとは異なります。ライセンスがない場合、デフォルトの著作権が適用され、誰もコードを複製、変更、再配布できません。公開リポジトリは可視性を提供するものであり、許可を与えるものではありません。"
+      },
+      "artifact": {
+        "header": "ソースファイルのヘッダー",
+        "notice": "ソースファイルの著作権表示"
+      },
+      "refine": {
+        "patent": "特許許諾が重要（企業コード、ハードウェア、標準化活動）",
+        "network": "ダウンロード提供だけでなく、ホスティングサービスとしても実行される",
+        "library": "他のソフトウェアがリンクするライブラリである",
+        "later": "ライセンスの将来バージョンを許可する（Apache-2.0コードとの互換性を維持）",
+        "none": "このケースでさらに調整する項目はありません。"
+      },
+      "scenario": {
+        "permissive": {
+          "label": "誰でも自由に使用可能",
+          "detail": "使用、変更、販売、クローズド製品への組み込みが可能。著作権表示のみ保持してください。"
+        },
+        "copyleft": {
+          "label": "改良版の公開が必要",
+          "detail": "変更版を配布する場合は、ソースコードも公開する必要があります。"
+        },
+        "community": {
+          "label": "既存のプロジェクトにコントリビューションしています",
+          "detail": "ライセンスはすでに決まっています。コントリビューション先のプロジェクトに合わせてください。"
+        },
+        "non-software": {
+          "label": "ソフトウェアではありません",
+          "detail": "ドキュメント、データ、デザイン、メディアにはOSIライセンスではなくクリエイティブ・コモンズライセンスが必要です。"
+        },
+        "unsure": {
+          "label": "まだわかりません",
+          "detail": "後悔の少ないデフォルトと、知っておく価値のある2つの選択肢をご紹介します。"
+        }
+      },
+      "family": {
+        "permissive": "パーミッション型",
+        "weak-copyleft": "弱コピーレフト",
+        "strong-copyleft": "強コピーレフト",
+        "public-domain": "パブリックドメイン",
+        "content": "コンテンツライセンス"
+      },
+      "flag": {
+        "commercial-use": "商用利用",
+        "modifications": "改変",
+        "distribution": "配布",
+        "private-use": "私的使用",
+        "patent-use": "特許許諾",
+        "include-copyright": "著作権表示を保持",
+        "document-changes": "変更内容を明記",
+        "disclose-source": "ソース開示",
+        "same-license": "全作品に同一ライセンスを適用",
+        "same-license-file": "同一ライセンス（変更ファイルごとに適用）",
+        "same-license-library": "ライブラリに同一ライセンスを適用",
+        "network-use-disclose": "ネットワーク利用は頒布とみなす",
+        "liability": "責任制限",
+        "warranty": "保証",
+        "trademark-use": "商標使用"
+      }
+    },
+    "isbn": {
+      "inputLabel": "ISBN",
+      "placeholder": "978-0-306-40615-7 — 1行に1つ、ハイフンとスペースは無視されます",
+      "idle": "1つのISBNまたは列全体を貼り付けてください。入力すると結果が表示されます。",
+      "scope": "チェックディジットの計算のみ。有効なISBNは内部整合性がありますが、それが実際に存在する書籍に機関によって割り当てられたことを証明するものではありません。",
+      "summary": "{total}件中{valid}件が有効",
+      "singleValid": "有効なISBN",
+      "singleInvalid": "有効なISBNではありません",
+      "invalidCount": "{n} 件が無効",
+      "convertedTo": "{type}: {value}",
+      "valid": "有効",
+      "invalid": "無効",
+      "truncated": "最初の {shown} 行を表示しています。",
+      "col": {
+        "input": "入力",
+        "normalized": "正規化",
+        "type": "タイプ",
+        "status": "ステータス",
+        "converted": "変換済み",
+        "note": "備考"
+      },
+      "type": {
+        "isbn10": "ISBN-10",
+        "isbn13": "ISBN-13",
+        "invalidLength": "長さが正しくありません"
+      },
+      "note": {
+        "checkDigit": "チェックディジットは {expected} である必要があります",
+        "invalidLength": "ISBNは正確に10桁または13桁です",
+        "invalidCharacter": "数字以外の文字が含まれています",
+        "xMisplaced": "X は ISBN-10 の末尾文字としてのみ有効です",
+        "noIsbn10": "979 プレフィックスには ISBN-10 相当がありません",
+        "nonBookland": "13桁のISBNは 978 または 979 で始まる必要があります",
+        "ismn": "979-0 は ISMN の範囲（印刷楽譜）であり、ISBN ではありません"
+      },
+      "specimenTitle": "ISBN · 構造見本",
+      "segPrefix": "接頭",
+      "segBody": "本体",
+      "segCheck": "検査"
+    },
+    "languageDetect": {
+      "inputLabel": "コードスニペット",
+      "inputPlaceholder": "ファイル名なしでコードを貼り付け — チャットログ、チケット、回答などから",
+      "hintLabel": "ファイル名または拡張子（オプション）",
+      "hintPlaceholder": "main.h · .pl · Dockerfile",
+      "note": "API と同じエンジンを使用します。検出はコンテンツのみに基づきますが、ファイル名のヒントを指定すると拡張子があいまいな場合（.h .m .pl .fs .ts .cs .r）は独自のルールで処理されます。",
+      "idle": "スニペットを貼り付けてください。入力に合わせて判定結果が表示されます。",
+      "confidence": {
+        "high": "高確度",
+        "medium": "中程度の信頼度",
+        "low": "低い信頼度"
+      },
+      "score": "{n}/100",
+      "dataFormat": "データ形式であり、プログラミング言語ではありません",
+      "multiLanguage": "複数の言語が検出されました",
+      "why": "この回答の理由",
+      "signals": "一致したシグナル",
+      "alternates": "他の候補",
+      "composeNext": "この {language} をフォーマット"
+    },
+    "iban": {
+      "inputLabel": "IBAN",
+      "idle": "IBAN を貼り付けてください — キー入力ごとに判定が表示され、ボタンは不要です。",
+      "sourceNote": "チェックサムと構造は ISO 13616-1:2020 に準拠。国別の長さと BBAN 形式は、ISO IBAN レジストリの公開された複製（レジストリ自体ではありません）に基づいています。",
+      "valid": "正しい形式の IBAN",
+      "keepTyping": "入力を続けてください — この国の IBAN としては短すぎます",
+      "caveat": "形式のみの検証です。チェックサムが正しくても、口座が存在する、有効である、または受取人のものであることを保証するものではありません。",
+      "printFormat": "印刷形式",
+      "details": "解析結果",
+      "notEncoded": "この国の形式ではエンコードされていません",
+      "coverage": "IBAN形式が登録されている{n}カ国",
+      "reason": {
+        "bad_charset": "IBANの形式ではありません。IBANは2文字、2桁の数字、その後ろに英数字のみで構成されます",
+        "country_unsupported": "この国コードに対応するIBAN形式は登録されていません",
+        "incomplete": "不完全です",
+        "wrong_length_for_country": "この国のIBANとして長すぎます",
+        "structure_mismatch": "長さは正しいが、この国の形式と形状が一致しません",
+        "checksum_failed": "チェックサムが一致しません — このIBANのどこかにタイプミスがあります"
+      },
+      "badge": {
+        "country": "{name} ({code})",
+        "unknownCountry": "国コード {code}",
+        "length": "{expected} 文字中 {n} 文字",
+        "bankCode": "銀行コード {code}",
+        "expectedCheckDigits": "この口座番号のチェックデジットは {digits} になります"
+      },
+      "field": {
+        "normalized": "電子形式",
+        "country": "国",
+        "checkDigits": "チェックディジット",
+        "bban": "BBAN",
+        "bbanFormat": "BBAN形式",
+        "bankCode": "銀行コード"
+      },
+      "check": {
+        "charset": "文字コード",
+        "country": "国",
+        "length": "長さ",
+        "structure": "構造",
+        "checksum": "MOD 97-10"
+      },
+      "state": {
+        "pass": "合格",
+        "fail": "不合格",
+        "skipped": "未到達"
+      },
+      "specimenTitle": "IBAN · 構造見本",
+      "segCountry": "国",
+      "segCheck": "検査",
+      "segBban": "BBAN（口座）"
+    },
+    "secretScan": {
+      "pasteLabel": "コード、設定、.env を貼り付け",
+      "pastePlaceholder": "DATABASE_URL=postgres://…\nAPI_KEY=…",
+      "dropLabel": "ファイルをドロップしてスキャン",
+      "privacy": "ブラウザ内で完結します。どこにも送信されません — 当社にも送信されません。",
+      "scan": "スキャン",
+      "scanning": "スキャン中…",
+      "idleTitle": "何かを貼り付けて「スキャン」を押してください。",
+      "idleHint": "ベンダーのAPIキー、トークン、秘密鍵、高エントロピーシークレットをチェックします。一致した値はマスクされ、行番号のみが完全に表示されます。",
+      "clean": "シークレットは見つかりませんでした",
+      "cleanCaveat": "既知の認証情報形式に一致するものや、ランダムなシークレットと判断されるものはありません。パターンマッチングは確実な証明ではありません — 不明な点は確認してください。",
+      "found": "{n, plural, one {# 件のシークレットが見つかりました} other {# 件のシークレットが見つかりました}}",
+      "foundCaveat": "これらをどこかに貼り付ける前に編集してください。キーが本物の場合はローテーションしてください。",
+      "countHigh": "{n} 高信頼度",
+      "countMedium": "{n} 中程度",
+      "countLow": "{n} 件（低）",
+      "confidence": {
+        "high": "高",
+        "medium": "中",
+        "low": "低"
+      },
+      "position": "{line}行 {column}列",
+      "length": "{n} 文字",
+      "maskedLabel": "マスク済み一致",
+      "why": "一致した理由",
+      "candidates": "以下の可能性もあります：",
+      "scanDetail": "スキャン詳細",
+      "lines": "{n} 行",
+      "bytes": "{n} バイトスキャン済み",
+      "suppressed": "{n} 個のプレースホルダーを無視",
+      "suppressedNote": "既知のデモ値（EXAMPLEキー、your-api-key-here、繰り返し文字）は無視されるため、サンプルファイルが誤検出を起こしません。",
+      "omitted": "他 {n} 件は非表示",
+      "truncated": "入力が制限されました — 先頭部分のみスキャンしました",
+      "reportTitle": "シークレットスキャンの結果（値はマスク済み）",
+      "scopeNote": "検出のみ：このツールはベンダーに連絡してキーがまだ有効かどうかを確認することはありません。つまり、キーを第三者に送信することはありません。"
+    },
+    "eanUpcGtin": {
+      "inputLabel": "バーコード番号",
+      "placeholder": "1行に1つのコード（カンマとセミコロンでも分割）",
+      "idle": "1つのコードまたは列全体を貼り付けてください。入力中に判定結果が表示されます。",
+      "operationLabel": "操作",
+      "operationValidate": "検証（コードにチェック桁を含む）",
+      "operationCalculate": "計算（コードにチェック桁がない場合）",
+      "typeLabel": "タイプ",
+      "typeAuto": "桁数で自動検出",
+      "total": "{n} コード",
+      "validCount": "{n} 件有効",
+      "invalidCount": "{n} 件が無効",
+      "calculatedCount": "{n} 件計算",
+      "unrecognizedCount": "{n} 件の長さが認識できません",
+      "verdict": {
+        "valid": "有効",
+        "invalid": "無効",
+        "calculated": "計算値",
+        "unrecognized-length": "長さが認識できません"
+      },
+      "alsoReadsAs": "{type} としても認識",
+      "checkDigit": "チェックディジット",
+      "corrected": "正しい値は",
+      "gtin14": "GTIN-14 形式",
+      "reason": {
+        "empty": "この行には検証対象がありません。",
+        "non-digit-characters": "数字または区切り文字以外の文字が含まれています。",
+        "unsupported-length": "この桁数のGS1識別子は存在しません（8桁、12桁、13桁、14桁、18桁がサポートされています）。",
+        "length-mismatch": "選択したタイプに対して桁数が正しくありません。",
+        "check-digit-mismatch": "末尾の桁が標準で要求されるものと一致しません。"
+      },
+      "warning": {
+        "separators-stripped": "検証前にスペース、ハイフン、ドットは削除されました。",
+        "all-zero": "すべてゼロです。数学的には有効ですが、実際の識別子ではありません。",
+        "payload-is-also-a-complete-code": "これは完全なコードの桁数でもあります。すでにチェック桁が含まれている場合は、Validateに切り替えてください。"
+      },
+      "math": "計算式を表示",
+      "mathSum": "合計 {sum} → チェック桁 {check}",
+      "truncatedRows": "{total}行中、最初の{shown}行を表示しています。コピーとダウンロードではすべてが対象になります。",
+      "privacy": "コードはForge APIに送信されて検証されますが、保存されません。",
+      "scopeNote": "正しいチェック桁は、番号が形式として正しいことを意味します。GS1が実際の製品、企業、または場所に割り当てたことを意味するわけではありません。その確認にはGEPIRレジストリの照会が必要です。",
+      "specimenTitle": "GTIN · 構造見本",
+      "segPayload": "ペイロード",
+      "segCheck": "検査"
+    },
+    "vin": {
+      "inputLabel": "VIN（17文字）",
+      "privacy": "ブラウザ内で検証されます。VINはどこにも送信されません。",
+      "idle": "VINを貼り付けてください。入力中に結果が表示され、ボタンは不要です。",
+      "scope": "構造とチェック桁のみ（49 CFR 565.15 / ISO 3779）。車両履歴の照会は行いません。",
+      "verdict": {
+        "valid": "有効なVIN構造",
+        "keepTyping": "続けて入力してください — あと{remaining}文字",
+        "tooLong": "長すぎます — VINは正確に17文字ですが、これは{n}文字です",
+        "invalidCharacter": "VINの文字ではありません: 位置{position}の\"{char}\"",
+        "checkDigitMismatch": "チェックディジットが一致しません — 期待値: {expected}、実際: {found}"
+      },
+      "hint": {
+        "confusable": "「{char}」は VIN には使用されません。{suggest} のことではありませんか？"
+      },
+      "notice": {
+        "notProvenance": "有効なチェックディジットは、VIN が正しく形成されていることを確認するものです。車両の存在、未改造、クリーンな履歴を保証するものではありません — 複製された VIN もこのチェックには合格します。",
+        "pre1981": "1981年以前に製造された車両や、一部の輸入車（JDM/欧州車）はこのチェックディジットを使用しないため、不一致がVINの誤入力を意味するわけではありません。",
+        "partial": "チェックディジットの検証には、17桁の完全なVINが必要です。部分的なVINはデコード作業であり、チェックサム作業ではありません。"
+      },
+      "badge": {
+        "length": "{n} 文字",
+        "expected": "チェックディジット {d}"
+      },
+      "invalidChars": {
+        "more": "VIN 文字ではないもの: {list}"
+      },
+      "segment": {
+        "wmi": "WMI 1-3",
+        "vds": "記述子 4-8",
+        "checkDigit": "チェックディジット 9",
+        "modelYear": "モデル年 10",
+        "plant": "工場 11",
+        "serial": "シリアル 12-17"
+      },
+      "math": {
+        "title": "計算式を表示",
+        "col": {
+          "position": "位置",
+          "char": "文字",
+          "value": "値",
+          "weight": "重み",
+          "product": "積"
+        },
+        "formula": "合計 = {sum};  {sum} mod 11 = {remainder}  →  チェックディジット {expected}"
+      },
+      "specimenTitle": "VIN · 構造見本"
+    },
+    "envDiff": {
+      "envA": "環境 A",
+      "envB": "環境 B",
+      "placeholderA": "最初の .env ファイルを貼り付けるかドロップしてください",
+      "placeholderB": "2 番目の .env ファイルを貼り付けるかドロップしてください",
+      "paneNoAssignment": "KEY=value の行が見つかりません",
+      "optIgnoreComments": "コメント行と空行を無視",
+      "optCaseInsensitive": "キーの大文字小文字を区別しない",
+      "optRedactSecrets": "検出されたシークレットをマスク",
+      "emptyHint": "比較するには別の環境を追加してください",
+      "summaryNone": "{total} 件のキーに差異なし",
+      "summaryDiff": "{total} 件中 {n} 件のキーに差異あり",
+      "note": {
+        "unchanged": "両側で値が同じ",
+        "changed": "値が異なる",
+        "added": "B 側のみ設定済み",
+        "removed": "Aのみに設定",
+        "commentedOutInA": "Aではコメントアウト、Bでは設定",
+        "commentedOutInB": "Aでは設定、Bではコメントアウト"
+      },
+      "secretChanged": "シークレットが異なります",
+      "secretSame": "両方のシークレットは同一です",
+      "count": {
+        "unchanged": "{n} 件変更なし",
+        "changed": "{n} 件変更あり",
+        "added": "{n} 件追加",
+        "removed": "{n} 削除",
+        "commentedOut": "{n} 件コメントアウト"
+      },
+      "warnings": "入力警告 ({n})",
+      "warningType": {
+        "duplicateKey": "{file} · 重複キー",
+        "quoteMismatch": "{file} · 引用符不一致",
+        "unparsableLine": "{file} · 解析できない行"
+      },
+      "showUnchanged": "変更なしを表示 ({n})",
+      "commentedIn": {
+        "A": "A でコメントアウト",
+        "B": "B でコメントアウト",
+        "both": "両方でコメントアウト"
+      },
+      "redactedNote": "秘密値はキー名のキーワードヒューリスティックでマスクされます — セキュリティスキャナーではありません。比較は生の値に対して実行されるため、ローテーションされた秘密は変更されたものとして表示されます。",
+      "interpolationNote": "${VAR} 参照はリテラルで比較され、展開されることはありません。展開はコンシューマーによって異なります。",
+      "truncated": "最初の5,000キーのみ表示しています。カウントはすべてのキーを対象としています。",
+      "colKey": "キー",
+      "colA": "A",
+      "colB": "B",
+      "colStatus": "ステータス",
+      "privacy": "両方のファイルはブラウザ内で比較されます。アップロードは行われません。"
+    },
+    "csvDiff": {
+      "originalLabel": "元の CSV",
+      "updatedLabel": "更新後の CSV",
+      "originalPlaceholder": "元のエクスポートを貼り付け、または .csv ファイルをここにドロップ",
+      "updatedPlaceholder": "更新後のエクスポートを貼り付け、または .csv ファイルをここにドロップ",
+      "emptyHint": "両方のファイルを貼り付けたりドロップしたりしてください。両側にコンテンツが入ると比較が自動で実行されます。",
+      "note": "行は位置ではなく同一性で一致させるため、行の挿入や並び替えが大量の変更として表示されることはありません。比較のためコンテンツは API に送信されますが、保存されません。",
+      "columns": "{n} 列",
+      "keyLabel": "キー列",
+      "keyAuto": "自動提案",
+      "keyNone": "キーなし — 全行を比較",
+      "joinLabel": "結合",
+      "joinFull": "外部結合 — 全行",
+      "joinInner": "内部結合 — 両方に存在する行",
+      "joinLeft": "左結合 — 元の行セット",
+      "ignoreWhitespace": "空白を無視",
+      "ignoreCase": "大文字小文字を区別しない",
+      "treatEmptyAsNull": "空 = NULL = N/A",
+      "noDifferences": "差分なし",
+      "differences": "{added} 追加 · {removed} 削除 · {changed} 変更",
+      "added": "{n} 件追加",
+      "removed": "{n} 件削除",
+      "changed": "{n} 件変更",
+      "unchangedCount": "{n} 件変更なし",
+      "totals": "{original} → {updated} 行",
+      "matchedBy": "{columns} で一致 ({source})",
+      "matchedWholeRow": "全行の内容で一致 — キー列は使用されなかったため、変更は報告されません。",
+      "keySource": {
+        "provided": "指定されたもの",
+        "auto": "自動提案",
+        "full-row": "全行"
+      },
+      "keyRejected": "拒否されたキー候補: {items}",
+      "columnMismatch": "元のみの列: {original} · 更新のみの列: {updated}",
+      "truncated": "全結果のうち{shown}件を表示中（プレビューは{limit}行まで）— 上記の件数は完全なものです。",
+      "findings": "メモ ({n})",
+      "level": {
+        "info": "情報",
+        "warning": "警告",
+        "danger": "エラー"
+      },
+      "wholeRow": "行 {n}",
+      "exportChanged": "変更行 (CSV)",
+      "exportFull": "差分全体 (CSV)"
+    },
+    "uscc": {
+      "modeLabel": "検証または生成",
+      "tab": {
+        "verify": "検証",
+        "generate": "テストコードを生成"
+      },
+      "inputLabel": "統一社会信用コード",
+      "placeholder": "18桁、例: 91500000059926748X",
+      "idle": "18桁のコードを貼り付けてください。入力中にブラウザ上でチェックされ、データは保存されません。",
+      "scope": "構造的チェックのみ（GB 32100-2015 + ISO 7064 MOD 31-3）。合格したコードは形式が正しいことを意味しますが、組織が登録されていることを保証するものではありません。登録状況は国家登録機関 cods.org.cn でご確認ください。",
+      "valid": "有効な統一社会信用コード",
+      "invalid": "有効な統一社会信用コードではありません",
+      "incomplete": "18桁中{n}桁",
+      "invalidCharacters": "標準で除外されている文字が含まれています",
+      "checksumOk": "チェックディジット正常",
+      "checksumBad": "チェックディジット不一致",
+      "expectedDigit": "チェックディジットは {actual} ではなく {expected} である必要があります",
+      "illegalAt": "位置 {position}: 「{char}」はコード文字セットに含まれていません（I、O、S、V、Z は除外）",
+      "detail": "フィールド詳細",
+      "legacyTitle": "レガシー組織コード (GB 11714)",
+      "legacy": {
+        "ok": "埋め込みの9文字組織コードは自己整合的です",
+        "mismatch": "レガシーチェック文字は {expected} になります — 参考情報のみです。すべての登録者区分がGB 11714組織コードを持つわけではありません。",
+        "unchecked": "未確認"
+      },
+      "divisionScope": "3〜8桁はGB/T 2260の都道府県表と6桁形式の階層ルールと照合されます。全県表は保持されません。",
+      "field": {
+        "registrationDept": "登記機関",
+        "orgCategory": "組織区分",
+        "adminDivision": "行政区画",
+        "orgIdentifier": "主体識別番号",
+        "checkDigit": "チェックディジット"
+      },
+      "depth": {
+        "none": "未解決",
+        "province": "都道府県レベル",
+        "prefecture": "県レベル",
+        "county": "郡レベル"
+      },
+      "note": {
+        "empty": "まだ確認するものはありません",
+        "incomplete": "統一社会信用コードは正確に18文字です",
+        "tooLong": "18文字を超えています",
+        "illegalCharacter": "GB 32100-2015 準拠の文字セットに含まれない文字が含まれています（I、O、S、V、Z は使用不可）",
+        "checkDigitMismatch": "チェックディジットが最初の17文字と一致しません",
+        "departmentUnknown": "位置1は、規格で定義された登録部門（1、5、9、Y）ではありません",
+        "categoryUnknown": "位置2は、この登録部門に定義された組織カテゴリではありません",
+        "divisionNotNumeric": "位置3～8は6桁の数字でなければなりません",
+        "divisionUnknownProvince": "位置3～4はGB/T 2260の都道府県コードではありません",
+        "divisionMalformed": "GB/T 2260で許可されていない、どの地区にも属さない県です"
+      },
+      "gen": {
+        "dept": "登記主管部門",
+        "category": "組織分類",
+        "province": "省",
+        "count": "生成数",
+        "randomProvince": "ランダム",
+        "regenerate": "新しいバッチ",
+        "emptyHint": "上記のオプションを選択してテストコードを生成してください。",
+        "testDataBadge": "テストデータ",
+        "seed": "シード {seed}",
+        "allCodes": "すべてのコード",
+        "disclaimer": "これらのコードは構造上は有効ですが、登録された組織には属しません。実在のエンティティを表すために使用しないでください。",
+        "note": "生成はシードされています。同じオプションとシードを使用すると常に同じバッチが返されるため、フィクスチャは再現可能です。すべてのコードは JSON およびここでは isTestData としてフラグが付けられています。"
+      },
+      "specimenTitle": "統一社会信用コード · 構造見本"
+    },
+    "yamlDiff": {
+      "original": "元",
+      "changed": "変更後",
+      "originalPlaceholder": "元の YAML（または JSON）を貼り付けたりドロップしたり",
+      "changedPlaceholder": "変更後の YAML（または JSON）を貼り付けたりドロップしたり",
+      "idle": "両方のペインに記入すると、入力に合わせて比較が実行されます。",
+      "privacy": "両方のドキュメントはこのブラウザ内で解析・比較されます。アップロードは行われません。ホスト名やシークレット名を含むマニフェストにはこれが重要です。",
+      "modeLabel": "比較",
+      "modeSemantic": "セマンティック（構造）",
+      "modeRawText": "プレーンテキスト（文字）",
+      "resolveAnchors": "アンカーとエイリアスを値に解決する",
+      "valid": "有効な YAML",
+      "validMulti": "有効な YAML · {n} ドキュメント",
+      "invalid": "解析エラー、{line} 行目",
+      "parseFailed": "片側が解析できませんでした — 比較できませんでした",
+      "equivalent": "差分なし — 2 つのドキュメントは同じ構造に解決されます",
+      "equivalentStructural": "解決後の構造は同じ · {n} のフォーマットまたはアンカーの差分",
+      "summary": "{added} 追加 · {removed} 削除 · {changed} 変更 · {typeChanged} タイプ変更",
+      "parseErrorAt": "{side} · {line} 行目、{column} 列目: {message}",
+      "documentCountMismatch": "ドキュメント数が異なります: {original} vs {changed} — ドキュメントは順番にペアリングされ、余分なものは全体として報告されます",
+      "duplicateKeys": "ソースに重複キーがあります",
+      "unified": "統一パッチ（正規化された YAML）",
+      "howItWorks": "この比較の仕組み",
+      "rule": {
+        "keyOrder": "マッピングのキー順序、引用符、インデントは無視されます。シーケンスの順序は比較されます。リストの順序には意味があるためです。",
+        "anchors": "エイリアスは値に解決されるため、共有アンカー背後の編集はすべてのエイリアス箇所に反映されます。値はそのままなのにアンカーやエイリアスが変わった場合は、構造差分として別途報告されます。",
+        "mergeKeys": "マージキー (<<) は比較前に展開され、ノード自身のキーがマージされたキーよりも優先されます。",
+        "types": "タイプは値の一部です。8080、\"8080\"、!!str 8080 は一般的な変更ではなく、タイプ変更として報告されます。",
+        "sequences": "マッピングのシーケンスは、両側で name、id、key のフィールドが一意の場合にそれらでペアリングされるため、1 つの項目の挿入が連鎖しません。順序変更は依然として報告されます。",
+        "blockScalars": "ブロックスカラーは解決後の文字列で比較されるため、|- が取り除く末尾の改行は実際の差分です。値が同じでスタイルだけ変わった場合は構造差分です。",
+        "comments": "コメントは YAML データモデルの一部ではないため、比較対象にはなりません。",
+        "multiDoc": "--- はドキュメントを1つずつペアでストリーミングします。ドキュメント数が一致しない場合は、最初のものだけを比較するのではなく、不一致として報告されます。",
+        "duplicateKeys": "入力に重複するマッピングキーがある場合は、最後の出現箇所が使用され、警告として報告されます。"
+      },
+      "note": {
+        "raw-text-mode": "Raw-text モードでは構造ではなく文字を比較します。キーの順序、引用符、インデントはすべて比較対象になります。",
+        "parse-error": "片側がパースできなかったため、比較は行われませんでした。",
+        "document-count-mismatch": "両者の --- ドキュメント数が異なります。ドキュメントは順序でペアリングされ、余剰分はそのまま報告されます。",
+        "merge-keys-expanded": "比較前にマージキー (<<) を展開しました。",
+        "anchors-unresolved": "エイリアスは解決された値ではなく、*name 参照として比較されました。",
+        "yaml11-ambiguous-scalars": "YAML 1.2 Core では y/n/yes/no/on/off の未引用値は文字列として解釈されますが、YAML 1.1 ではブール値として解釈されます。ブール値を意図している場合は引用符で囲んでください。",
+        "sequence-matched-by-identity": "マッピングのシーケンスは、位置ではなく同一性フィールドでペアリングされました。",
+        "duplicate-keys": "マッピングで同じキーが2回宣言されています。最後の出現が使用されました。",
+        "truncated": "最初の2000件の変更のみが表示されています。"
+      }
+    },
+    "listSetCompare": {
+      "listA": "リストA",
+      "listB": "リストB",
+      "placeholder": "項目を1行に1つ貼り付けてください（.txt/.csvファイルをドロップすることも可能）",
+      "emptyHint": "リストAとリストBの両方に項目を追加すると、比較結果が表示されます。",
+      "privacy": "両方のリストはブラウザ内で比較されます — アップロードは行われません。APIおよびMCP呼び出し元に対しては、同じエンジンがサーバーサイドで動作します。",
+      "delimiter": "区切り文字",
+      "delimiterOption": {
+        "auto": "自動検出",
+        "newline": "改行",
+        "comma": "カンマ",
+        "tab": "タブ",
+        "custom": "カスタム"
+      },
+      "customDelimiter": "区切り文字",
+      "customDelimiterPlaceholder": "| または \\t",
+      "sort": "並び替え",
+      "sortOption": {
+        "original": "元の順序",
+        "asc": "A→Z",
+        "desc": "Z→A",
+        "byCount": "件数順"
+      },
+      "optCaseSensitive": "大文字小文字を区別",
+      "optTrim": "前後の空白を削除",
+      "optCollapse": "内部の空白を統合",
+      "optIgnoreZeros": "先頭のゼロを無視",
+      "paneItems": "{n} 件",
+      "paneSingle": "1 アイテム — 区切り文字を確認",
+      "items": "{n}",
+      "none": "なし",
+      "more": "+{n} 件あります — 全リストはコピーまたはダウンロード",
+      "panel": {
+        "onlyInA": "Aのみ",
+        "onlyInB": "B のみ",
+        "intersection": "共通項目（両方に含まれる）",
+        "union": "和集合（すべての項目）",
+        "symmetricDifference": "対称差"
+      },
+      "summaryIdentical": "同一のセット — {n} 件の共通項目",
+      "summaryDiff": "A だけに {a} 件 · B だけに {b} 件 · 共通 {shared} 件",
+      "drill": {
+        "symmetricDifference": "対称差 ({n})",
+        "duplicates": "リスト内の重複 ({n})",
+        "multiplicities": "項目ごとの出現回数 ({n})",
+        "warnings": "通知 ({n})"
+      },
+      "duplicatesInA": "A に重複",
+      "duplicatesInB": "B に重複",
+      "colValue": "項目",
+      "colCountA": "A にのみ",
+      "colCountB": "B にのみ",
+      "detailTruncated": "項目ごとの件数が省略されています。完全なテーブルを確認するには、API の maxDetail を増やしてください。",
+      "reportTitle": "リスト比較"
+    },
+    "loanAmortization": {
+      "principal": "融資額",
+      "rate": "年利回り %",
+      "term": "期間",
+      "termUnit": "期間単位",
+      "unitYears": "年",
+      "unitMonths": "ヶ月",
+      "startMonth": "初回返済月",
+      "startMonthHint": "YYYY-MM。返済予定表のラベルとして使用され、金額には影響しません。",
+      "extraHeading": "追加返済",
+      "extraMonthly": "毎月追加",
+      "extraYearly": "年1回追加",
+      "extraYearlyMonth": "年次追加の適用月",
+      "extraOneTime": "一括追加返済",
+      "extraOneTimePeriod": "第#回払い時に一括追加",
+      "extraNote": "追加返済は適用された期間の元本を減らし、それ以降の期間の利息を削減します。金利と予定返済額は変更されません。",
+      "monthlyPayment": "月々の返済額",
+      "totalInterest": "総利息",
+      "totalPaid": "総支払額",
+      "crossover": "クロスオーバー",
+      "crossoverValue": "第{n}回払い",
+      "crossoverNone": "なし",
+      "payoff": "第{n}回払いで完済",
+      "monthsSaved": "{n}ヶ月早まる",
+      "totalExtra": "予定より{amount}多く支払う",
+      "viewMonthly": "回払いごと",
+      "viewAnnual": "年ごと",
+      "tableCaption": "償還表：各期間の払い込み額、利息、元本、残高",
+      "colPeriod": "#",
+      "colDate": "月",
+      "colPayment": "払い込み額",
+      "colInterest": "利息",
+      "colPrincipal": "元本",
+      "colBalance": "残高",
+      "colYear": "年",
+      "expandRows": "全 {total} 回の支払いを表示",
+      "collapseRows": "支払いを折りたたむ",
+      "windowNote": "全 {total} 回中 {shown} 回の支払いを表示しています。CSV と API にはすべて含まれています。",
+      "emptyHint": "ローンの金額、金利、期間を入力すると返済予定表が表示されます。",
+      "note": "API と同じエンジンを使用しています。計算はローンの条件のみで行われ、アップロードや保存は行われません。",
+      "errPrincipal": "0 より大きいローンの金額を入力してください。",
+      "errRate": "0 から 100 の間の金利を入力してください。",
+      "errTerm": "1 ヶ月から 100 年の間の期間を入力してください。",
+      "errStartMonth": "YYYY-MM の形式で入力してください。例：2026-01",
+      "errExtra": "0 以上の金額を入力してください。",
+      "errOneTimePeriod": "一括支払いが発生する回数を指定してください。"
+    },
+    "businessDayShift": {
+      "modeLabel": "計算内容",
+      "mode": {
+        "shift": "日付をずらす",
+        "countBetween": "日付間の営業日数をカウント"
+      },
+      "startDate": "開始日",
+      "days": "営業日数",
+      "daysHint": "負の値は過去方向にカウントされます。例: −10 は開始日の 10 営業日前。",
+      "daysInvalid": "営業日数は整数を入力してください。先頭にマイナス記号を付けることも可能です。",
+      "endDate": "終了日",
+      "includeEndDate": "終了日もカウント対象にする — スプレッドシートの NETWORKDAYS と同じ挙動",
+      "weekendLabel": "週ごとの休業日",
+      "weekendHint": "デフォルトは土曜日と日曜日です。土曜日が休日の場合は、金曜日と土曜日に設定してください。",
+      "weekday": {
+        "sun": "日",
+        "mon": "月",
+        "tue": "火",
+        "wed": "水",
+        "thu": "木",
+        "fri": "金",
+        "sat": "土"
+      },
+      "holidays": "祝日",
+      "holidaysHint": "空欄の場合、祝日カレンダーは適用されず、純粋な週末ルールに基づくカウントになります。",
+      "makeupWorkdays": "振替出勤日",
+      "makeupHint": "週末や祝日にもかかわらず出勤する日付を指定します。中国の調休/補班による土曜出勤日もここに設定します。",
+      "datesPlaceholder": "YYYY-MM-DD（1行に1つ）",
+      "datesIgnored": "{n, plural, one {# エントリが YYYY-MM-DD 形式の日付ではないため使用されません} other {# エントリが YYYY-MM-DD 形式の日付ではないため使用されません}}",
+      "pickStart": "開始日を選択してください。",
+      "emptyHintShift": "開始日と営業日の数を選択してください。",
+      "emptyHintCount": "開始日と終了日を選択してください。",
+      "note": "API と同じエンジンを使用しています。計算は結果に表示されるルールセットに基づいて実行され、データは保存されません。",
+      "countHeadline": "{n, plural, one {# 営業日} other {# 営業日}}",
+      "reversedRange": "終了日が開始日より前であるため、カウントは負の値になります。",
+      "classification": {
+        "workday": "営業日",
+        "weekend": "週末",
+        "holiday": "祝日",
+        "makeupWorkday": "振替休日"
+      },
+      "ruleWeekend": "{days} 休み",
+      "ruleNoWeekend": "週休なし",
+      "ruleHolidays": "{n, plural, =0 {祝日なし} one {# 件の祝日} other {# 件の祝日}}",
+      "ruleMakeups": "{n, plural, =0 {振替休日なし} one {# 件の振替休日} other {# 件の振替休日}}",
+      "ruleEndIncluded": "終了日を含む",
+      "ruleEndExcluded": "終了日を含まない",
+      "chain": "この日付から再度シフト"
+    },
+    "retryBackoff": {
+      "strategy": {
+        "exponential": "指数",
+        "linear": "線形",
+        "fixed": "固定"
+      },
+      "initialDelay": "初期待機時間 (ms)",
+      "factor": "バックオフ係数",
+      "factorHint": "リトライごとに適用される倍率。1 より大きい値を指定してください。",
+      "increment": "線形インクリメント (ms)",
+      "incrementHint": "リトライごとに遅延に追加されるミリ秒数です。",
+      "maxDelay": "最大遅延上限 (ms)",
+      "maxDelayHint": "上限なしにする場合は空のままにしてください。上限に達すると、以降の遅延はすべてその値で固定されます。",
+      "maxAttempts": "最大試行回数",
+      "maxAttemptsHint": "1〜100。",
+      "excludeInitial": "最大試行回数に初期リクエストは含まない",
+      "excludeInitialNote": "オン: 上記の数はリトライのみをカウントし、初期リクエストは別途カウントされます。オフ: 初期リクエストを含むすべての試行をカウントします。",
+      "jitter": {
+        "none": "なし — 正確な遅延",
+        "equal": "等分 — 半分固定、半分ランダム",
+        "full": "フル — 0 から遅延値まで"
+      },
+      "callerTimeout": "独自タイムアウト (ms)",
+      "callerTimeoutHint": "オプション。予算チェックをスキップする場合は空のままにしてください。",
+      "emptyHint": "スケジュールを表示するには、ハイライトされたフィールドを修正してください。",
+      "note": "ポリシーのみから計算されます。アップストリームサービスには何も送信されません。ジッターは、実際のクライアントが収まる範囲として報告され、単一のサンプリング結果として報告されることはありません。",
+      "headlineExact": "{attempts}回の試行、合計{wait}の待機。",
+      "headlineRange": "{attempts}回の試行、平均{expected}の待機、最悪の場合{max}まで。",
+      "finalDelay": "{attempt}回目の試行前の最後の待機は{delay}です。",
+      "noRetries": "この予算は1回の試行のみを許可し、再試行は行われないため、待機するものはありません。",
+      "retryCount": "{count, plural, =0 {再試行なし} one {#回の再試行} other {#回の再試行}}",
+      "capFlattened": "{attempt}回目の試行で上限に達しました。以降のすべての待機時間は{delay}のままです。",
+      "timeoutExceeded": "最悪の場合{wait}待機し、{timeout}の予算を超えています。",
+      "timeoutOk": "最悪の場合{wait}待機し、{timeout}の予算内に収まります。",
+      "tableLabel": "再試行スケジュール",
+      "colAttempt": "試行",
+      "colDelay": "遅延",
+      "colCumulative": "累積待機",
+      "average": "平均 {value}",
+      "formula": {
+        "none": "遅延は正確に適用され、ジッターは使用されません。",
+        "equal": "等価ジッター：遅延の半分は固定され、もう半分は一様に抽出されるため、各待機時間は遅延の半分と全遅延の間に収まります。",
+        "full": "完全ジッター：待機時間は0から計算された遅延の間で一様に抽出されます。"
+      },
+      "errInitialDelay": "初期遅延は1ミリ秒以上の整数で指定してください。",
+      "errFactor": "係数は1より大きく、最大100までです。係数1は固定戦略です。",
+      "errIncrement": "増分は0ミリ秒以上の整数で指定してください。",
+      "errMaxDelay": "上限は1ミリ秒以上の整数で指定してください。",
+      "errCapBelowInitial": "上限は初期遅延以上である必要があります。",
+      "errMaxAttempts": "試行回数は1〜100の整数で指定してください。",
+      "errCallerTimeout": "タイムアウトは1以上のミリ秒単位の整数で指定してください。"
+    },
+    "csvColumns": {
+      "csvLabel": "CSV",
+      "csvPlaceholder": "ここにCSVを貼り付けるか、ファイルをドロップしてください。1行目は列名として読み込まれます。",
+      "sample": "CSVサンプル",
+      "chooseFile": "ファイルを選択",
+      "fileFailed": "{name}を読み込めませんでした。",
+      "delimiterLabel": "区切り文字",
+      "delimiter": {
+        "comma": "カンマ  ,",
+        "semicolon": "セミコロン  ;",
+        "tab": "タブ",
+        "pipe": "パイプ  |"
+      },
+      "raggedPolicyLabel": "ヘッダーと一致しない行",
+      "ragged": {
+        "pad": "ヘッダーに合わせる",
+        "truncate": "長い行は切り詰め、短い行はそのままにする",
+        "reject": "停止して報告"
+      },
+      "columnsTitle": "列 — {kept}/{total} を保持",
+      "columnsHint": "チェックを外すと列を削除、ボックスを編集すると名前変更、矢印で並べ替え。すべて元のヘッダーに対して解決されます。",
+      "reset": "列をリセット",
+      "keep": "列 {name} を保持",
+      "renameLabel": "{name}",
+      "moveUp": "{name} を上に移動",
+      "moveDown": "{name} を下に移動",
+      "noneKept": "すべての列のチェックが外れています — 少なくとも1つは保持してください。",
+      "emptyHint": "上にCSVを貼り付けて、列を管理します。",
+      "note": "貼り付けたテキストに対して実行します。ドロップ、リネーム、並び替えの順で固定。常に元のヘッダーを基準とします。",
+      "columnCount": "{n} 列",
+      "rowCount": "{n} 行",
+      "duplicateHeaders": "重複するヘッダー名が使用されています: {names}",
+      "raggedCount": "{n}{more} 行がヘッダーの幅と一致しません",
+      "previewLabel": "出力 CSV",
+      "previewTruncated": "全 {total} 行中、最初の {shown} 行を表示しています。コピーまたはダウンロードして全ファイルを取得してください。",
+      "raggedListLabel": "ヘッダーの幅と一致しない行",
+      "raggedRow": "{line} 行目: {actual} フィールド、ヘッダーは {expected}",
+      "unusedRenames": "リネームは無視されました — これらの列は出力に含まれません: {names}"
+    },
+    "imageRotateFlip": {
+      "drop": "画像をドロップするか、クリックして選択",
+      "browse": "画像を選択",
+      "selected": "{name} · {kb} KB",
+      "privacy": "ファイルは変換のためにForge APIに送信され、保存されることはありません。",
+      "tooLarge": "その画像は{mb} MBより大きいです。",
+      "ccw": "90°左回転",
+      "cw": "90°右回転",
+      "half": "180°",
+      "reset": "リセット",
+      "flipHorizontal": "水平反転",
+      "flipVertical": "垂直反転",
+      "angle": "角度",
+      "exactAngle": "正確な°",
+      "fitMode": "キャンバス",
+      "fitExpand": "キャンバスを拡張",
+      "fitCrop": "切り抜き",
+      "fitInside": "内側に収める",
+      "fitNote": "回転した画像は元のフレームに収まらなくなります。「拡大」は全ピクセルを保持、「切り抜き」は元のサイズを維持して角をカット、「内側に収める」は全体を縮小します。",
+      "outputFormat": "出力形式",
+      "sameFormat": "入力と同じ",
+      "idle": "画像をドロップすると向きが変わります。",
+      "original": "元画像 · {w}×{h}",
+      "originalAlt": "アップロードされた画像",
+      "result": "結果 · {w}×{h}",
+      "resultAlt": "向きを変えた画像",
+      "badgeLossless": "リサンプリングなし",
+      "badgeResampled": "リサンプリング済み",
+      "badgeSize": "{kb} KB",
+      "badgeExif": "EXIF 向き {orientation} を最初に適用",
+      "badgeSnapped": "正確な90度回転にスナップ",
+      "badgeReencode": "ジオメトリは正確です。コーデックが再エンコードします",
+      "download": "ダウンロード",
+      "note": "90°、180°、270°の回転はピクセルを移動するだけでブレンドしません。その他の角度はリサンプリングされます。アニメーションGIF、APNG、アニメーションWebPは未対応です。"
+    },
+    "exifStrip": {
+      "drop": "JPEG、PNG、WebPをドロップしてメタデータを削除",
+      "privacy": "サーバー上で処理され、保存されません。画像1枚あたり最大 {mb} MB。",
+      "idle": "削除済み: GPS、撮影時刻、カメラ・デバイス情報、埋め込みサムネイル、編集履歴。保持済み: 向き、カラープロファイル、サイズ、ピクセルデータ。",
+      "note": "静止画のみ対応。動画、PDF、HEIC、AVIF、GIFは対象外です。C2PA出典マニフェストはそのまま残します。",
+      "detail": "削除した内容",
+      "optKeepThumbnail": "埋め込みExifサムネイルを保持",
+      "verdictStripped": "{fields}件のメタデータフィールドを削除しました（{kb} KB）",
+      "verdictClean": "このファイルには削除可能なメタデータはありません",
+      "strippedCaveat": "画像そのものは変更されていません。ピクセルもサイズも同じで、再エンコードも行っていません。",
+      "cleanCaveat": "受信時のまま、バイト単位でそのまま返却しました。",
+      "badgeOrientationKept": "向きを保持",
+      "badgeOrientationLost": "向きは保持できませんでした",
+      "badgeColorProfileKept": "カラープロファイル保持",
+      "badgeThumbnailKept": "サムネイル保持",
+      "badgeThumbnailRemoved": "サムネイル削除",
+      "download": "クリーニング済みの画像をダウンロード",
+      "sizes": "{before} KB → {after} KB",
+      "detailFields": "{fields}フィールド · {kb} KB",
+      "detailNothing": "このファイルから削除されたデータはありません。",
+      "detailOrientation": "Exif 向き情報 {value} を読み取り、保持しました。",
+      "detailNoOrientation": "ファイルに Exif 向き情報が含まれていないため、表示に影響はありません。",
+      "segmentExif": "Exif",
+      "segmentIptc": "IPTC",
+      "segmentXmp": "XMP",
+      "segmentComment": "コメント",
+      "segmentText": "テキストメタデータ",
+      "segmentTime": "タイムスタンプ",
+      "segmentVendor": "ベンダーブロック",
+      "summaryStripped": "{fields} 件のメタデータフィールド ({families}) を削除しました ({kb} KB)。画像自体は変更していません。",
+      "summaryClean": "削除可能なメタデータが見つかりませんでした。ファイルは変更せずに返却します。"
+    },
+    "validate": {
+      "valid": "有効",
+      "invalid": "無効",
+      "summary": "{valid} / {total} 有効",
+      "match": "一致",
+      "mismatch": "不一致",
+      "luhnCaveat": "Luhnは桁構造のみ確認します。カードの実在や残高は保証しません。",
+      "luhnReason": {
+        "length_or_digits": "12–19桁が必要です",
+        "luhn_failed": "Luhnチェックサム失敗"
+      }
+    },
+    "worldClock": {
+      "zones": "タイムゾーン（1行に1つ）",
+      "at": "時点（任意のISO / unix）"
+    },
+    "dns": {
+      "name": "名前 / ホスト",
+      "type": "レコード種別",
+      "note": "ForgeホストのDNSリゾルバで解決します。"
+    },
+    "tls": {
+      "host": "ホスト",
+      "expired": "証明書期限切れ",
+      "validDays": "残り {n} 日",
+      "note": "Forgeホストから接続。検査用に信頼検証を緩和。"
+    },
+    "myIp": {
+      "refresh": "更新",
+      "note": "Forgeから見たIP。ライセンス済みGeoなし。"
+    },
+    "mermaid": {
+      "source": "Mermaidソース",
+      "idle": "有効な図がここに表示されます",
+      "note": "公式 mermaid 11（securityLevel=strict）。ブラウザ live プレビュー · Agent は Playwright SVG。DBML ERD ではありません。",
+      "sample": "サンプル",
+      "theme": "テーマ",
+      "theme_default": "デフォルト",
+      "theme_dark": "ダーク",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "フローチャート",
+      "sample_sequence": "シーケンス",
+      "sample_class": "クラス図",
+      "sample_er": "ER図",
+      "sample_state": "状態図",
+      "sample_gantt": "ガント",
+      "sample_pie": "円グラフ",
+      "sample_mindmap": "マインドマップ",
+      "zoomIn": "拡大",
+      "zoomOut": "縮小",
+      "zoomReset": "表示をリセット",
+      "copySvg": "SVGをコピー",
+      "downloadSvg": "SVGをダウンロード",
+      "downloadPng": "PNGをダウンロード",
+      "previewAria": "Mermaid図のプレビュー",
+      "canvasHint": "ドラッグで移動 · ⌘/Ctrl+スクロールでズーム"
+    },
+    "colorDeltaE": {
+      "note": "culoriのCIEDE2000。しきい値はUIレビュー用。"
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL方言",
+      "parseNote": "解析と一覧のみ。ER図は別途。",
+      "convertNote": "@dbml/core — APIと同じ経路。"
+    },
+    "dnsLeak": {
+      "probeHost": "Compare host (advanced)",
+      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
+      "run": "Start DNS leak check",
+      "retest": "Run again",
+      "showAdvanced": "Advanced options",
+      "hideAdvanced": "Hide advanced",
+      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
+      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
+      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
+      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
+      "edgeIp": "Your edge IP",
+      "authorityHits": "Recursive IPs",
+      "forgePaths": "Forge resolver hits",
+      "dohPaths": "Browser DoH hits",
+      "webrtcCount": "WebRTC IPs",
+      "forgeResolvers": "Forge multi-resolver (server-side)",
+      "forgeNote": "These queries leave from the Forge host — not your laptop.",
+      "browserDoh": "Browser DoH",
+      "webrtc": "WebRTC ICE",
+      "egressMarkers": "Forge egress markers",
+      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
+      "honestyPrefix": "Honesty:",
+      "verdictConsistent": "Paths look consistent on this check",
+      "verdictSplit": "Split answers across DNS paths",
+      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
+      "verdictIncomplete": "Incomplete — browser probes missing",
+      "verdictAuthority": "System DNS recursives captured",
+      "infraOn": "Authority online",
+      "infraOff": "Authority offline — multi-path only",
+      "infraChecking": "Checking…",
+      "authorityResolvers": "System DNS recursive resolvers",
+      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
+      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
+      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
+      "authorityDetail": "Authority session detail",
+      "phaseSession": "Creating session…",
+      "phaseSystemDns": "Triggering system DNS…",
+      "phasePoll": "Listening for recursive hits ({n}/{total})…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "stepSession": "Session",
+      "stepSystemDns": "System DNS",
+      "stepPoll": "Listen",
+      "stepBrowser": "Browser",
+      "stepServer": "Server",
+      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
+      "liveHits": "Live recursive hits",
+      "sectionSystemDns": "System DNS (what you came for)",
+      "sectionComplementary": "Complementary paths",
+      "sectionTech": "Technical session detail",
+      "copyIps": "Copy IPs",
+      "copied": "Copied",
+      "queryCount": "{n} queries",
+      "colPath": "Path",
+      "colAnswers": "Answers",
+      "colMs": "ms",
+      "ipPublic": "public",
+      "ipPrivate": "private",
+      "sig": {
+        "captured": "System DNS captured",
+        "onlineNoHits": "Authority online · no hits yet",
+        "offline": "Authority offline",
+        "forgeSplit": "Forge resolvers disagree",
+        "dohSplit": "Browser DoH disagree",
+        "webrtcMismatch": "WebRTC ≠ edge IP",
+        "webrtcLocal": "Local WebRTC candidates",
+        "noBrowser": "No browser probes"
+      }
+    },
+    "honesty": {
+      "algorithmOnly": "アルゴリズムのみ · 台帳照会なし",
+      "signatureNotVerified": "{engine} · デコードのみ · 署名未検証",
+      "localOnly": "このリクエストのみ · 保存しません"
+    },
+    "idCard": {
+      "number": "身分証番号",
+      "note": "GB 11643 検査桁 · 台帳照会なし · API 同一",
+      "specimenTitle": "身分証 · 構造見本",
+      "segRegion": "区划",
+      "segBirth": "生年月日",
+      "segSeq": "順序",
+      "segCheck": "検査",
+      "metaBirth": "生年月日",
+      "metaGender": "性別",
+      "metaRegion": "行政区划码",
+      "genderMale": "男",
+      "genderFemale": "女",
+      "reasonFormat": "18桁（末尾はX可）",
+      "reasonBirth": "生年月日が無効",
+      "reasonCheck": "検査桁が誤り",
+      "reasonCheckExpected": "検査桁が誤り · 期待 {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} 行",
+      "chars": "{n} 文字",
+      "empty": "（空ファイル）",
+      "readyToShip": "リポジトリに投入可能"
+    },
+    "textTransform": {
+      "mode": "モード",
+      "input": "入力",
+      "output": "出力",
+      "emptyResult": "結果はここに表示されます",
+      "runLocal": "ローカル実行",
+      "runServer": "サーバー実行",
+      "statusLocalLive": "ローカル · ライブ",
+      "statusLocal": "ローカル",
+      "statusServer": "サーバー · API 同一",
+      "noteDefault": "API 同一パス"
+    }
+  },
+  "roots": {
+    "hubLabel": "インテント別",
+    "tools": "ツール",
+    "dualSurface": "Human page + Agent API · 同一エンジン",
+    "otherRoots": "その他の需要ルート"
+  }
+}

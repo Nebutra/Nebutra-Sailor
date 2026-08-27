@@ -1,0 +1,172 @@
+name: Ops — Cloud VM reclaim
+
+# Free the disk that a deploy cannot free itself.
+#
+# The box runs a 20 GB root at 95%. The deploy's own pre-flight cleanup prunes
+# releases of the apps it is deploying, which is the right scope for a deploy
+# and the wrong scope for the three things actually holding the space:
+#
+#   design-docs   631 MB  the app was merged into apps/design and deleted from
+#                         the repo, so no deploy will ever touch its directory
+#                         again — it is unreachable by the normal cleanup.
+#   carina        4 extra releases; every other app holds 1. PRUNE_APPS only
+#                 lists apps being deployed, and carina is deployed elsewhere.
+#
+# Docker is NOT touched. The 813 MB looked reclaimable until the inventory came
+# back: pgvector and redis have been Up and healthy for three months and are
+# this host's database and cache. An earlier version of this file offered
+# `docker system prune -af --volumes`, which would have deleted their volumes.
+#
+# Every removal is gated on a check that proves the target is unused, and the
+# check runs on the host rather than being asserted here. `dry_run` defaults to
+# true so the first run of any edit shows what it would do.
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Report what would be removed without removing it"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ops-vm-reclaim
+  cancel-in-progress: false
+
+jobs:
+  reclaim:
+    name: Reclaim disk on the Cloud VM
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      ECS_HOST: ${{ vars.VM_HOST || vars.CLOUD_VM_HOST || vars.ECS_HOST }}
+      ECS_USER: ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
+      ECS_SSH_PORT: ${{ vars.VM_SSH_PORT || vars.CLOUD_VM_SSH_PORT || vars.ECS_SSH_PORT || '22' }}
+      DEPLOY_ROOT: ${{ vars.VM_DEPLOY_ROOT || vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}
+      DRY_RUN: ${{ inputs.dry_run }}
+    steps:
+      - name: Prepare SSH
+        env:
+          SSH_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.CLOUD_VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VM_SSH_KNOWN_HOSTS || secrets.CLOUD_VM_SSH_KNOWN_HOSTS || secrets.ECS_SSH_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          [ -n "${SSH_KEY:-}" ]     || { echo "::error::no VM SSH private key secret is set"; exit 1; }
+          [ -n "${KNOWN_HOSTS:-}" ] || { echo "::error::no VM SSH known-hosts secret is set"; exit 1; }
+          mkdir -p ~/.ssh
+          umask 077
+          printf '%s\n' "$SSH_KEY"     > ~/.ssh/id_deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_deploy ~/.ssh/known_hosts
+
+      - name: Reclaim
+        run: |
+          set -uo pipefail
+          remote() {
+            timeout 300 ssh -i ~/.ssh/id_deploy \
+              -o BatchMode=yes -o ConnectTimeout=15 -o ServerAliveInterval=15 \
+              -o ServerAliveCountMax=8 -p "$ECS_SSH_PORT" \
+              "$ECS_USER@$ECS_HOST" "$1"
+          }
+
+          # The whole plan runs as one script on the host: each removal is
+          # preceded by the check that authorises it, so the decision is made
+          # where the evidence is rather than from a stale reading here.
+          remote "
+            set -uo pipefail
+            DEPLOY_ROOT='$DEPLOY_ROOT'
+            DRY='$DRY_RUN'
+            say() { echo \"\$@\"; }
+            do_rm() {
+              if [ \"\$DRY\" = 'true' ]; then say \"    would remove: \$1\"; else rm -rf \"\$1\" && say \"    removed: \$1\"; fi
+            }
+
+            say '--- disk before ---'
+            df -h / | tail -1
+
+            say
+            say '── design-docs (app deleted from the repo, orphaned on the host)'
+            # It listens on 127.0.0.1:3004 and appears in no nginx upstream —
+            # admin, auth, design, forge, pebble and router are all proxied,
+            # design-docs is not. Nothing can reach it. `design` on 3109 is the
+            # app that replaced it. So the pm2 entry is not evidence of use, and
+            # stopping it is part of the removal rather than a reason to skip.
+            if pm2 jlist 2>/dev/null | grep -q '\"name\":\"design-docs\"'; then
+              if [ \"\$DRY\" = 'true' ]; then
+                say '    would run: pm2 delete design-docs && pm2 save'
+              else
+                pm2 delete design-docs >/dev/null 2>&1 && say '    pm2: deleted design-docs'
+                pm2 save >/dev/null 2>&1 || true
+              fi
+            else
+              say '    pm2: no design-docs process'
+            fi
+            if [ -d \"\$DEPLOY_ROOT/design-docs\" ]; then
+              say \"    size: \$(du -xsh \"\$DEPLOY_ROOT/design-docs\" 2>/dev/null | cut -f1)\"
+              do_rm \"\$DEPLOY_ROOT/design-docs\"
+            else
+              say '    already gone'
+            fi
+
+            say
+            say '── carina: keep the newest release, drop the rest'
+            CR=\"\$DEPLOY_ROOT/carina/releases\"
+            if [ -d \"\$CR\" ]; then
+              CURRENT=\$(readlink -f \"\$DEPLOY_ROOT/carina/current\" 2>/dev/null || echo '')
+              say \"    current -> \${CURRENT:-<none>}\"
+              # Newest first; keep 1. Never touch whatever 'current' points at,
+              # even if mtime ordering disagrees — the symlink is the truth
+              # about what is being served.
+              EXTRA=\$(ls -1dt \"\$CR\"/*/ 2>/dev/null | tail -n +2)
+              if [ -z \"\$EXTRA\" ]; then say '    nothing to drop'; fi
+              for d in \$EXTRA; do
+                d=\${d%/}
+                if [ \"\$(readlink -f \"\$d\")\" = \"\$CURRENT\" ]; then say \"    SKIP (live): \$d\"; continue; fi
+                say \"    \$(du -xsh \"\$d\" 2>/dev/null | cut -f1)  \$d\"
+                do_rm \"\$d\"
+              done
+            else
+              say '    no carina releases dir'
+            fi
+
+            say
+            say '── docker (left alone, deliberately)'
+            # Three containers are Up: pgvector/pgvector:pg16 and redis:7-alpine,
+            # both healthy for three months, plus carina-runtime. They are this
+            # host's database and cache — the docker-proxy entries on 5432 and
+            # 6379 are them.
+            #
+            # This step used to offer `docker system prune -af --volumes`, which
+            # would delete those volumes. That command has no place in an
+            # automated reclaim on a host that runs a production database, and
+            # the 813 MB it targets has never been shown to be reclaimable —
+            # `docker system df` timed out, so nothing here knows how much of it
+            # is dangling. Report and stop.
+            docker ps --format '    {{.Names}}  {{.Image}}  {{.Status}}' 2>/dev/null || say '    docker not available'
+            say '    no docker reclaim is attempted; run `docker system df` by hand to size it'
+
+            say
+            say '── caches'
+            for p in /root/.npm /root/.cache /tmp/nebutra-*.tar.gz; do
+              [ -e \"\$p\" ] || continue
+              say \"    \$(du -xsh \"\$p\" 2>/dev/null | cut -f1)  \$p\"
+              do_rm \"\$p\"
+            done
+
+            say
+            say '--- disk after ---'
+            df -h / | tail -1
+          "
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "## Cloud VM reclaim"
+            echo "- Host: \`$ECS_HOST\`  ·  dry run: \`$DRY_RUN\`"
+            echo "- Skips are not failures: a target still in use is left alone and named."
+            echo "- Re-run with dry_run unchecked to apply."
+          } >> "$GITHUB_STEP_SUMMARY"

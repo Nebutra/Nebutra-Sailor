@@ -1,0 +1,78 @@
+---
+title: 邮件提供商
+description: 为 @nebutra/email 配置 Resend 凭证和已验证发件域名。
+---
+
+`@nebutra/email` 当前通过 **Resend** 投递。测试和预览校验可以无凭证导入包；只有发送函数真正投递邮件时才需要 `RESEND_API_KEY`。
+
+<Note>
+后续可以在相同公开发送函数后面增加其他 provider。调用方不要感知 provider 私有逻辑。
+</Note>
+
+## Resend 配置
+
+<Steps>
+  <Step title="创建 Resend 账号">
+    在 [resend.com](https://resend.com) 注册账号。免费额度足够本地开发和早期 staging 验证。
+  </Step>
+
+  <Step title="添加并验证发件域名">
+    进入 **Resend dashboard → Domains → Add Domain**。
+
+    建议使用 `mail.nebutra.com` 这类子域名，把邮件信誉和主产品域名隔离。
+  </Step>
+
+  <Step title="创建 API key">
+    进入 **Resend dashboard → API Keys → Create API Key**。
+
+    - **Name:** `nebutra-production` 或 `nebutra-staging`
+    - **Permission:** sending access
+    - **Domain:** 限制到已验证发件域名
+  </Step>
+
+  <Step title="设置环境变量">
+    ```bash
+    RESEND_API_KEY=re_...
+    EMAIL_FROM=Nebutra <noreply@nebutra.com>
+    ```
+  </Step>
+
+  <Step title="真实投递前验证">
+    ```bash
+    pnpm --filter @nebutra/email test
+    pnpm mail:check
+    ```
+
+    然后使用 Resend test key 做受控投递日志验证。
+  </Step>
+</Steps>
+
+## Resend test key
+
+```bash
+# .env.local — 仅开发环境
+RESEND_API_KEY=re_test_...
+EMAIL_FROM=Nebutra <noreply@nebutra.com>
+```
+
+<Warning>
+不要在生产环境使用 test key。测试邮件不会投递给真实收件人。
+</Warning>
+
+## 域名排错
+
+| 现象 | 可能原因 | 处理方式 |
+|------|----------|----------|
+| 域名一直未验证 | DNS 记录缺失或还在传播 | 检查 DNS 记录并等待传播 |
+| 邮件进垃圾箱 | SPF、DKIM 或 DMARC 不完整 | 按 Resend 给出的记录补齐 |
+| 运行时发送失败 | `RESEND_API_KEY` 缺失或无效 | 检查环境变量和 key 权限 |
+| 发件人不对 | `EMAIL_FROM` 不属于已验证域名 | 使用已验证域名下的地址 |
+
+<CardGroup cols={2}>
+  <Card title="Email Overview" icon="mail" href="/email/overview">
+    包架构和目录流程
+  </Card>
+  <Card title="Testing" icon="flask" href="/email/testing">
+    预览校验和安全投递测试
+  </Card>
+</CardGroup>

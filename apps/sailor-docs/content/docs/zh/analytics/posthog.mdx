@@ -1,0 +1,228 @@
+---
+title: "PostHog"
+description: "在 Nebutra 中配置 PostHog，用于产品分析、功能开关、会话录制和漏斗分析。"
+---
+
+PostHog 是 Nebutra 的核心产品分析工具。它追踪产品内的用户行为，驱动与计费方案绑定的功能开关，并录制会话以辅助 UX 调试。
+
+## 前提条件
+
+- 一个 PostHog 账户——[posthog.com](https://posthog.com)（云端）或自托管实例
+- 一个可访问环境变量的 Nebutra 项目
+
+## 配置步骤
+
+<Steps>
+  <Step title="创建 PostHog 项目">
+    登录 [app.posthog.com](https://app.posthog.com)（或你的自托管实例），为你的 Nebutra 部署创建一个新项目。平台选择 **Web**。
+  </Step>
+  <Step title="复制 API 密钥">
+    在 PostHog 项目设置中，复制**项目 API 密钥**，它以 `phc_` 开头。
+  </Step>
+  <Step title="设置环境变量">
+    将以下内容添加到你的 `.env.local`（开发环境）和部署环境（生产环境）：
+
+    ```bash
+    POSTHOG_KEY=phc_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    POSTHOG_HOST=https://app.posthog.com
+    NEXT_PUBLIC_POSTHOG_KEY=phc_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    NEXT_PUBLIC_POSTHOG_HOST=https://app.posthog.com
+    ```
+
+    `POSTHOG_KEY` 用于服务端产品事件，`NEXT_PUBLIC_POSTHOG_KEY` 用于浏览器 SDK。
+    如需欧盟数据驻留，请使用 `https://eu.posthog.com`。
+    如使用自托管实例，请填写你自己的 URL（例如 `https://posthog.yourcompany.com`）。
+  </Step>
+  <Step title="验证事件是否到达">
+    启动开发服务器并执行任意操作（注册、创建项目等）。打开 PostHog → **实时事件**，确认事件在几秒内出现。
+  </Step>
+</Steps>
+
+## PostHog 云端 vs 自托管
+
+| | PostHog 云端 | 自托管 |
+|---|---|---|
+| 配置难度 | 最低 | 需要基础设施 |
+| 数据驻留 | 美国或欧盟区域 | 你自己的服务器 |
+| 费用 | 每月 100 万事件以内免费 | 仅基础设施成本 |
+| 维护 | 托管服务 | 自行管理升级 |
+| HIPAA / SOC 2 | 付费计划可用 | 由你负责 |
+
+<Tip>
+对于大多数早期阶段的 Nebutra 部署，PostHog 云端（欧盟区域）是在无需基础设施开销的情况下快速达到合规要求的最佳选择。
+</Tip>
+
+## 自定义事件追踪
+
+### 客户端（Next.js）
+
+```typescript
+import { useAnalytics } from "@nebutra/analytics";
+
+export function CreateProjectButton() {
+  const { track } = useAnalytics();
+
+  const handleCreate = async () => {
+    const project = await createProject();
+
+    track("project_created", {
+      projectId: project.id,
+      plan: subscription.plan,
+      tenantId: org.id,
+    });
+  };
+
+  return <button type="button" onClick={handleCreate}>创建项目</button>;
+}
+```
+
+### 服务端（API Gateway）
+
+对于源自 Hono API 层且没有浏览器上下文的事件，使用 `createProductAnalyticsClientFromEnv`：
+
+```typescript
+import { createProductAnalyticsClientFromEnv } from "@nebutra/analytics";
+
+app.post("/api/v1/checkout/complete", async (c) => {
+  const { organizationId, userId, plan } = c.get("tenantContext");
+  const analytics = createProductAnalyticsClientFromEnv();
+
+  const checkout = await completeCheckout(c.req);
+
+  await analytics.track("checkout", {
+    action: "completed",
+    userId,
+    organizationId,
+    tier: plan,
+  });
+
+  return c.json({ success: true, data: checkout });
+});
+```
+
+## 用户身份识别
+
+在用户登录后调用 `identify`，这样 PostHog 就可以将登录前的匿名事件关联到已认证用户：
+
+```typescript
+import { useAnalytics } from "@nebutra/analytics";
+
+export function useAuthEffect(user: User, subscription: Subscription, org: Org) {
+  const { identify } = useAnalytics();
+
+  useEffect(() => {
+    if (!user) return;
+
+    identify(user.id, {
+      email: user.email,
+      name: user.name,
+      plan: subscription.plan,
+      orgId: org.id,
+      createdAt: user.createdAt,
+    });
+  }, [user.id]);
+}
+```
+
+<Note>
+`identify` 已由 Nebutra 的认证钩子在会话开始时自动调用。只有在需要更新用户属性时（例如套餐升级后），才需要手动调用。
+</Note>
+
+## 功能开关
+
+功能开关决策归 `@nebutra/feature-flags` 管，不归 `@nebutra/analytics` 管。PostHog 将来可以作为功能开关 provider，但产品事件采集和功能开关评估保持分离。
+
+```typescript
+import { useFeatureFlag } from "@nebutra/feature-flags";
+
+export function AiChatButton() {
+  const { enabled, loading } = useFeatureFlag("ai_chat");
+
+  if (loading) return <Skeleton />;
+  if (!enabled) return <UpgradePrompt feature="AI Chat" />;
+
+  return <button type="button">打开 AI 对话</button>;
+}
+```
+
+在 API 路由中通过 feature-flags 包进行服务端功能开关评估：
+
+```typescript
+import { isFeatureEnabled } from "@nebutra/feature-flags";
+
+const enabled = await isFeatureEnabled("ai_chat", {
+  userId,
+  tenantId,
+});
+```
+
+<Info>
+功能开关的负载（如模型名称、速率限制）在 PostHog 界面的**功能开关**中管理，无需重新部署代码即可更新。
+</Info>
+
+## 会话录制
+
+会话录制默认启用，可通过回放用户的精确交互操作来调试 UX 问题。
+
+### 禁用会话录制
+
+如需全局禁用，在 PostHog 项目设置中找到**会话录制** → 关闭**录制用户会话**。
+
+如需针对特定用户禁用（例如，对要求不采集任何数据的企业客户）：
+
+```typescript
+import { useAnalytics } from "@nebutra/analytics";
+
+const { optOut } = useAnalytics();
+
+// 当用户在账户设置中选择退出分析时调用
+optOut();
+```
+
+<Warning>
+会话录制会捕获所有 DOM 交互，包括表单输入。请确保敏感字段（密码、卡号）已被遮罩。Nebutra 会自动遮罩 `[type="password"]` 和 Stripe iframe 元素，但请务必验证任何自定义支付流程。
+</Warning>
+
+## 漏斗分析
+
+PostHog 漏斗功能可帮助你衡量核心流程中每个步骤的转化率。建议在你的 PostHog 项目中创建以下漏斗：
+
+### 激活漏斗
+
+1. `user_signed_up`
+2. `org_created`
+3. `project_created`
+4. `api_key_created`
+
+### 升级漏斗
+
+1. `quota_warning`
+2. 定价页面浏览
+3. `plan_upgraded`
+
+### AI 功能使用漏斗
+
+1. `project_created`
+2. `ai_chat_started`
+3. `ai_chat_completed`
+
+<Tip>
+激活漏斗的**转化窗口**建议设为 7 天，升级漏斗建议设为 30 天，以捕获典型的用户行为模式。
+</Tip>
+
+---
+
+<CardGroup cols={2}>
+  <Card title="分析概览" icon="chart-line" href="/zh/analytics/overview">
+    查看所有内置追踪事件和完整的分析架构。
+  </Card>
+  <Card title="Dub.co" icon="link" href="/zh/analytics/dub">
+    使用 Dub.co 追踪营销链接表现和 UTM 活动。
+  </Card>
+  <Card title="功能开关" icon="flag" href="/zh/configuration/feature-flags">
+    管理功能开关定义和套餐控制规则。
+  </Card>
+  <Card title="计费方案" icon="credit-card" href="/zh/payments/overview">
+    了解计费方案如何与 PostHog 功能开关集成。
+  </Card>
+</CardGroup>

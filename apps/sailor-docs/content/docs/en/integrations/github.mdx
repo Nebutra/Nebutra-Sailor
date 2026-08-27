@@ -1,0 +1,130 @@
+---
+title: GitHub
+description: Trigger Nebutra workflows on GitHub events and sync issues, PRs, and deployments.
+---
+
+## Overview
+
+The GitHub integration lets you:
+
+- Trigger workflows when GitHub events occur (push, PR opened, issue created)
+- Create Linear issues or send Slack notifications from GitHub webhook events
+- Link deployments to commits for traceability
+
+## Step 1: Create a GitHub App
+
+1. Go to **GitHub → Settings → Developer settings → GitHub Apps → New GitHub App**
+2. Set the webhook URL to: `https://api.nebutra.com/api/webhooks/github`
+3. Generate a webhook secret and copy it
+4. Subscribe to these events:
+   - Push
+   - Pull request
+   - Issues
+   - Deployment status
+5. Install the app on your repository
+
+## Step 2: Configure environment variables
+
+```bash
+GITHUB_APP_ID=123456
+GITHUB_APP_PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----\n..."
+GITHUB_WEBHOOK_SECRET=your_webhook_secret
+```
+
+## Step 3: Register the integration
+
+In **Settings → Integrations → GitHub → Connect**, or via API:
+
+```typescript
+await nebutra.integrations.github.configure({
+  orgId: "org_123",
+  repoOwner: "your-org",
+  repoName: "your-repo",
+  events: ["push", "pull_request", "deployment_status"],
+});
+```
+
+## Step 4: Handle GitHub events
+
+```typescript app/api/webhooks/github/route.ts
+import { createHmac } from "crypto";
+
+export async function POST(req: Request) {
+  const body = await req.text();
+  const sig = req.headers.get("x-hub-signature-256")!;
+  const event = req.headers.get("x-github-event")!;
+
+  // Verify signature
+  const expectedSig = `sha256=${createHmac("sha256", process.env.GITHUB_WEBHOOK_SECRET!)
+    .update(body)
+    .digest("hex")}`;
+
+  if (sig !== expectedSig) {
+    return new Response("Invalid signature", { status: 400 });
+  }
+
+  const payload = JSON.parse(body);
+
+  switch (event) {
+    case "push":
+      await handlePush(payload);
+      break;
+    case "pull_request":
+      if (payload.action === "opened") {
+        await handlePROpened(payload);
+      }
+      break;
+    case "deployment_status":
+      await handleDeploymentStatus(payload);
+      break;
+  }
+
+  return new Response("OK", { status: 200 });
+}
+```
+
+## Use cases
+
+### Auto-create issues on deploy failure
+
+```typescript
+async function handleDeploymentStatus(payload: any) {
+  if (payload.deployment_status.state !== "failure") return;
+
+  await nebutra.webhooks.sendEvent({
+    id: crypto.randomUUID(),
+    eventType: "deployment.failed",
+    payload: {
+      repo: payload.repository.full_name,
+      environment: payload.deployment.environment,
+      sha: payload.deployment.sha,
+    },
+    tenantId: "org_123",
+    timestamp: new Date().toISOString(),
+  });
+}
+```
+
+### Notify Slack on PR merged
+
+```typescript
+async function handlePROpened(payload: any) {
+  if (payload.action !== "closed" || !payload.pull_request.merged) return;
+
+  await slack.send({
+    channel: process.env.SLACK_CHANNEL_ID!,
+    text: `✅ PR merged: ${payload.pull_request.title} by @${payload.pull_request.user.login}`,
+  });
+}
+```
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Webhooks Guide" icon="webhook" href="/guides/webhooks">
+    Full webhook setup and signature verification.
+  </Card>
+  <Card title="Linear Integration" icon="pencil" href="/integrations/linear">
+    Sync GitHub PRs and issues with Linear.
+  </Card>
+</CardGroup>

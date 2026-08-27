@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-otp-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/input-otp-demo.tsx",
+      "content": "\"use client\";\n\nimport { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@nebutra/ui/primitives\";\n\nexport function InputOtpDemo() {\n  return (\n    <InputOTP maxLength={6}>\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n      </InputOTPGroup>\n      <InputOTPSeparator />\n      <InputOTPGroup>\n        <InputOTPSlot index={3} />\n        <InputOTPSlot index={4} />\n        <InputOTPSlot index={5} />\n      </InputOTPGroup>\n    </InputOTP>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

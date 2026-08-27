@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: studio
+  namespace: nebutra
+  labels:
+    app.kubernetes.io/name: studio
+    app.kubernetes.io/component: cms
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: studio
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+      protocol: TCP

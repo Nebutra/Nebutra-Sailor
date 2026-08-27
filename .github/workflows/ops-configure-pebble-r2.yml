@@ -1,0 +1,135 @@
+name: Configure Pebble R2 on ECS
+
+# Writes R2 credentials into /var/www/nebutra/api/.env and restarts api-gateway.
+# Secrets (create once after CF R2 S3 API token):
+#   R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY
+# Optional secrets/vars:
+#   R2_ACCOUNT_ID / CLOUDFLARE_ACCOUNT_ID
+#   PEBBLE_DIAGNOSTICS_BUCKET (default nebutra-pebble-diagnostics)
+#
+# SSH secrets: VM_SSH_PRIVATE_KEY (or ECS_SSH_*), VM_HOST / ECS_HOST, VM_USER / ECS_USER
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Why (run summary)"
+        required: false
+        default: "configure pebble diagnostics R2"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ops-configure-pebble-r2
+  cancel-in-progress: false
+
+jobs:
+  provision-bucket:
+    name: Ensure R2 bucket exists
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Create nebutra-pebble-diagnostics if missing
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFLARE_WORKERS_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID || 'a4248a5738df319996a70092fe598d37' }}
+          PEBBLE_DIAGNOSTICS_BUCKET: ${{ vars.PEBBLE_DIAGNOSTICS_BUCKET || 'nebutra-pebble-diagnostics' }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
+            echo "::warning::No CLOUDFLARE_API_TOKEN — skip bucket create (create manually in dashboard)."
+            exit 0
+          fi
+          bash infra/ops/scripts/provision-pebble-diagnostics-r2.sh || {
+            echo "::warning::Bucket provision failed (token may lack R2 Admin). Create bucket in dashboard if needed."
+            exit 0
+          }
+
+  configure:
+    name: SSH + merge R2 env
+    needs: [provision-bucket]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Require R2 secrets
+        env:
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          if [ -z "${R2_ACCESS_KEY_ID:-}" ] || [ -z "${R2_SECRET_ACCESS_KEY:-}" ]; then
+            echo "::error::Set repository secrets R2_ACCESS_KEY_ID and R2_SECRET_ACCESS_KEY (CF R2 S3 API token)."
+            echo "Dashboard: https://dash.cloudflare.com → R2 → Manage R2 API Tokens"
+            echo "Then: printf '%s' \"\$KEY\" | gh secret set R2_ACCESS_KEY_ID -R Nebutra/Nebutra-Sailor"
+            echo "Docs: docs/ops/pebble-support-intake.md"
+            exit 1
+          fi
+
+      - name: Configure SSH
+        env:
+          KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY || secrets.CLOUD_VM_SSH_PRIVATE_KEY }}
+          KNOWN: ${{ secrets.VM_SSH_KNOWN_HOSTS || secrets.ECS_SSH_KNOWN_HOSTS || secrets.CLOUD_VM_SSH_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          if [ -z "${KEY:-}" ]; then
+            echo "::error::Missing VM_SSH_PRIVATE_KEY (or ECS_SSH_PRIVATE_KEY)"
+            exit 1
+          fi
+          mkdir -p ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          if [ -n "${KNOWN:-}" ]; then
+            printf '%s\n' "$KNOWN" > ~/.ssh/known_hosts
+          else
+            HOST="${{ vars.VM_HOST || vars.ECS_HOST || secrets.ECS_HOST }}"
+            ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+          fi
+
+      - name: Push script and apply env on VM
+        env:
+          HOST: ${{ vars.VM_HOST || vars.ECS_HOST }}
+          USER: ${{ vars.VM_USER || vars.ECS_USER || 'root' }}
+          PORT: ${{ vars.VM_SSH_PORT || '22' }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID || 'a4248a5738df319996a70092fe598d37' }}
+          PEBBLE_DIAGNOSTICS_BUCKET: ${{ vars.PEBBLE_DIAGNOSTICS_BUCKET || 'nebutra-pebble-diagnostics' }}
+        run: |
+          set -euo pipefail
+          if [ -z "${HOST:-}" ]; then
+            echo "::error::Set vars.VM_HOST or vars.ECS_HOST"
+            exit 1
+          fi
+          scp -i ~/.ssh/id_deploy -P "$PORT" -o StrictHostKeyChecking=yes \
+            infra/ops/scripts/configure-api-r2-env.sh \
+            "${USER}@${HOST}:/tmp/configure-api-r2-env.sh"
+          ssh -i ~/.ssh/id_deploy -p "$PORT" -o StrictHostKeyChecking=yes \
+            "${USER}@${HOST}" \
+            "R2_ACCESS_KEY_ID=$(printf %q "$R2_ACCESS_KEY_ID") \
+             R2_SECRET_ACCESS_KEY=$(printf %q "$R2_SECRET_ACCESS_KEY") \
+             R2_ACCOUNT_ID=$(printf %q "$R2_ACCOUNT_ID") \
+             PEBBLE_DIAGNOSTICS_BUCKET=$(printf %q "$PEBBLE_DIAGNOSTICS_BUCKET") \
+             bash /tmp/configure-api-r2-env.sh && rm -f /tmp/configure-api-r2-env.sh"
+
+      - name: Smoke diagnostics upload
+        run: |
+          set -euo pipefail
+          BODY=$(printf '%s\n' '{"event":"r2-config-smoke"}')
+          LEN=$(printf '%s' "$BODY" | wc -c | tr -d ' ')
+          RESP=$(curl -sS -X POST 'https://api.nebutra.com/pebble/diagnostics/token' \
+            -H 'Content-Type: application/json' \
+            -d "{\"bundle_submission_id\":\"r2-smoke-$(date +%s)\",\"bytes\":$LEN}")
+          echo "$RESP"
+          URL=$(echo "$RESP" | python3 -c 'import json,sys; print(json.load(sys.stdin)["upload_url"])')
+          TOKEN=$(echo "$RESP" | python3 -c 'import json,sys; print(json.load(sys.stdin)["token"])')
+          test "$URL" = "https://api.nebutra.com/pebble/diagnostics/upload"
+          code=$(curl -sS -o /tmp/up.json -w '%{http_code}' -X POST "$URL" \
+            -H "Authorization: Bearer $TOKEN" \
+            -H 'Content-Type: application/x-ndjson' \
+            -H "Content-Length: $LEN" \
+            --data-binary "$BODY")
+          echo "upload HTTP $code $(cat /tmp/up.json)"
+          test "$code" = "200"

@@ -1,0 +1,5 @@
+content="Update your billing details and preferences."
+      tooltip="We accept all major credit cards and PayPal."
+    />
+  );
+}

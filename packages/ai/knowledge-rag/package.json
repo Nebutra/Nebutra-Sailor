@@ -1,0 +1,69 @@
+{
+  "name": "@nebutra/knowledge-rag",
+  "version": "0.2.2",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "graph": "core",
+    "status": "foundation",
+    "productionReady": false,
+    "requires": [
+      "(none) — zero-config: in-memory vector store + deterministic local embedder",
+      "optional: OPENAI_API_KEY or OPENROUTER_API_KEY (real embeddings via @nebutra/agents)",
+      "optional: MEILISEARCH_URL / TYPESENSE_URL / ALGOLIA_APP_ID (keyword leg via @nebutra/search)",
+      "optional: DATABASE_URL (pgvector store)"
+    ],
+    "gaps": [
+      "pgvector store is interface-only (Prisma snippet in README, not migrated)",
+      "reranker interface ships with identity impl only"
+    ],
+    "featureId": "knowledge-rag",
+    "category": "ai",
+    "surface": "semantic-index",
+    "summary": "Knowledge retrieval grammar with zero-config local embedder and pluggable vector/keyword/rerank ports"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@nebutra/ai-primitives": "workspace:*",
+    "@nebutra/agents": "workspace:*",
+    "@nebutra/errors": "workspace:*",
+    "@nebutra/local-embedding": "workspace:*",
+    "@nebutra/logger": "workspace:*",
+    "@nebutra/search": "workspace:*",
+    "@nebutra/tenant-store": "workspace:*",
+    "p-timeout": "^7.0.1",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "@vitest/coverage-v8": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/knowledge-rag#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/knowledge-rag"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

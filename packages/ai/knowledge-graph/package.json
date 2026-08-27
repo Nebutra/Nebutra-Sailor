@@ -1,0 +1,68 @@
+{
+  "name": "@nebutra/knowledge-graph",
+  "version": "0.2.3",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "graph": "labs",
+    "status": "wip",
+    "productionReady": false,
+    "surface": "semantic-index",
+    "requires": [
+      "A GraphStore adapter (Postgres + recursive CTE, or any edge store)",
+      "A VectorRetriever adapter (e.g. @nebutra/code-index or any vector backend) — injected, not bundled",
+      "Caller-supplied tenantId + source values for fail-closed SourceScope derivation"
+    ],
+    "gaps": [
+      "Ships the zero-LLM typed-edge extractor, markdown-canonical temporal-fact model, idempotent consolidate, and graph/backlink-boosted fusion as pure logic over injected GraphStore/VectorRetriever ports; concrete stores are host-injected, not bundled",
+      "Verb/role inference rule tables are config-overridable (default tables are corpus-tuned heuristics, accuracy unverified)"
+    ],
+    "featureId": "knowledge-graph",
+    "category": "ai",
+    "summary": "Multi-tenant self-wiring knowledge-graph substrate: zero-LLM typed entity-edge extraction, markdown-canonical bitemporal typed-fact model with supersession + trajectory, idempotent consolidation, and graph/backlink-boosted hybrid fusion — all behind injected GraphStore/VectorRetriever ports"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/ai-primitives": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "^4.0.18"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/knowledge-graph#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/knowledge-graph"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
+}

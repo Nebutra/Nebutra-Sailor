@@ -1,0 +1,1273 @@
+{
+  "admin": {
+    "title": "Admin",
+    "description": "Superadmin-panel — administrer brukere, organisasjoner og systemhelse.",
+    "nav": {
+      "overview": "Oversikt",
+      "users": "Brukere",
+      "organizations": "Organisasjoner"
+    },
+    "users": {
+      "title": "Brukere",
+      "description": "Bla gjennom, søk og utgi deg for hvilken som helst bruker i alle organisasjoner.",
+      "searchPlaceholder": "Søk etter brukere…",
+      "totalCount": "{count, plural, one {# bruker} other {# brukere}}",
+      "empty": "Ingen brukere funnet.",
+      "loadError": "Kunne ikke laste inn brukere.",
+      "columns": {
+        "email": "E-post",
+        "name": "Navn",
+        "created": "Opprettet",
+        "activeOrgs": "Aktive organisasjoner",
+        "actions": "Handlinger"
+      },
+      "viewOrgs": "Vis organisasjoner"
+    },
+    "organizations": {
+      "title": "Organisasjoner",
+      "description": "Alle arbeidsområder i systemet, rangert etter nyhet.",
+      "searchPlaceholder": "Søk etter organisasjoner…",
+      "totalCount": "{count, plural, one {# organisasjon} other {# organisasjoner}}",
+      "empty": "Ingen organisasjoner funnet.",
+      "loadError": "Kunne ikke laste organisasjoner.",
+      "columns": {
+        "name": "Navn",
+        "slug": "Slug",
+        "plan": "Plan",
+        "members": "Medlemmer",
+        "created": "Opprettet",
+        "actions": "Handlinger"
+      },
+      "view": "Vis"
+    },
+    "impersonate": {
+      "trigger": "Utgi deg som",
+      "starting": "Starter…",
+      "stop": "Stopp utgivelse",
+      "confirm": "Utgiv {label}? Du vil se appen som denne brukeren til du stopper.",
+      "error": "Kunne ikke starte utgivelse.",
+      "stopError": "Kunne ikke stoppe utgivelse."
+    },
+    "pagination": {
+      "previous": "Forrige",
+      "next": "Neste",
+      "pageOf": "Side {page} av {total}"
+    }
+  },
+  "Common": {
+    "hello": "Hei verden",
+    "dashboard": "Dashbord",
+    "actions": {
+      "continue": "Fortsett",
+      "confirm": "Bekreft",
+      "done": "Ferdig",
+      "cancel": "Avbryt"
+    }
+  },
+  "theme": {
+    "light": "Lys",
+    "dark": "Mørk",
+    "system": "System"
+  },
+  "LocaleSwitcher": {
+    "label": "Språk",
+    "ariaLabel": "Endre språk",
+    "searchPlaceholder": "Søk etter språk…",
+    "noResults": "Ingen språk matcher",
+    "menuAria": "Velg språk"
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP-registreringsnummer",
+      "publicSecurity": "Registrering hos offentlige sikkerhetsmyndigheter"
+    },
+    "wechat": {
+      "signIn": "Logg inn med WeChat",
+      "notConfigured": "WeChat-innlogging er ikke konfigurert"
+    }
+  },
+  "onboarding": {
+    "title": "Sett opp arbeidsområdet ditt",
+    "subtitle": "Tre raske steg, så er du klar til å lansere.",
+    "steps": {
+      "workspace": "Arbeidsområde",
+      "invite": "Inviter team",
+      "plan": "Velg plan"
+    },
+    "progress": {
+      "back": "Tilbake",
+      "stepCounter": "Steg {current} av {total}"
+    },
+    "plan": {
+      "title": "Velg en plan",
+      "description": "Start gratis eller lås opp mer kapasitet. Du kan endre plan når som helst.",
+      "choose": "Velg en plan",
+      "skip": "Hopp over nå"
+    }
+  },
+  "userMenu": {
+    "ariaLabel": "Åpne brukermeny",
+    "profile": "Profil",
+    "settings": "Innstillinger",
+    "feedback": "Tilbakemelding",
+    "theme": "Tema",
+    "language": "Språk",
+    "signOut": "Logg ut",
+    "signedInAs": "Logget inn som"
+  },
+  "account": {
+    "profile": {
+      "title": "Profil",
+      "description": "Oppdater personlig informasjon.",
+      "nameLabel": "Navn",
+      "namePlaceholder": "Ditt fulle navn",
+      "emailLabel": "E-post",
+      "emailHint": "Vi sender en bekreftelseslenke for å bekrefte en ny e-postadresse.",
+      "languageLabel": "Språk",
+      "submit": "Lagre endringer",
+      "saving": "Lagrer…",
+      "verifyEmail": "Bekreft",
+      "verifying": "Sender bekreftelse…",
+      "success": "Profil oppdatert.",
+      "verificationSent": "Bekreftelses-e-post sendt.",
+      "errorRequiredName": "Navn er påkrevd.",
+      "errorInvalidEmail": "E-postadressen er ikke gyldig.",
+      "subtitle": "Din identitet og kontaktinformasjon.",
+      "unknown": "Ubenyttet bruker",
+      "manageCta": "Åpne fullstendige kontoinnstillinger"
+    },
+    "avatar": {
+      "title": "Profilbilde",
+      "description": "Last opp et kvadratisk bilde (PNG, JPEG eller WebP, maks 2 MB).",
+      "uploadButton": "Last opp profilbilde",
+      "uploading": "Laster opp…",
+      "fileTooBig": "Filen er for stor. Maks størrelse er 2 MB.",
+      "invalidType": "Ustøttet bildetype. Bruk PNG, JPEG eller WebP.",
+      "success": "Profilbildet er oppdatert.",
+      "removeButton": "Fjern profilbilde",
+      "removed": "Profilbildet er fjernet.",
+      "deleteError": "Kunne ikke slette profilbildet."
+    },
+    "export": {
+      "title": "Eksporter mine data",
+      "description": "Last ned en kopi av alle poster vi har for din konto, inkludert profil, organisasjoner, revisjons hendelser, varsler og invitasjoner.",
+      "compliance": "Krevd av GDPR artikkel 20 (rett til dataportabilitet) og PIPL artikkel 45 (rett til å få en kopi av personopplysninger).",
+      "export": "Eksporter mine data",
+      "pending": "Forbereder eksport…",
+      "ready": "Eksporten din er klar.",
+      "download": "Last ned JSON",
+      "error": "Kunne ikke forberede eksporten din. Prøv igjen."
+    },
+    "emailChange": {
+      "title": "Endre e-postadresse",
+      "description": "Vi sender en bekreftelseslenke til den nye adressen. Endringen trer først i kraft når du bekrefter den fra den postboksen.",
+      "newEmailLabel": "Ny e-postadresse",
+      "newEmailPlaceholder": "you@example.com",
+      "submit": "Send bekreftelseslenke",
+      "submitting": "Sender…",
+      "verificationSent": "Sjekk innboksen din på {email} for å bekrefte endringen.",
+      "errorInvalidEmail": "E-postadressen er ikke gyldig.",
+      "error": "Kunne ikke be om e-postendring.",
+      "confirm": {
+        "successTitle": "E-post oppdatert",
+        "successDescription": "Innloggings-e-posten din er oppdatert.",
+        "successWithEmail": "Innloggings-e-posten din er nå {email}.",
+        "failureTitle": "Vi kunne ikke bekrefte den lenken",
+        "failureDescription": "Denne verifiseringslenken er ugyldig, utløpt eller allerede brukt. Be om en ny fra kontoinnstillingene.",
+        "errorCode": "Årsak: {code}",
+        "continueCta": "Tilbake til konto",
+        "backCta": "Tilbake til konto"
+      }
+    },
+    "title": "Konto",
+    "ariaLabel": "Kontoinnstillinger",
+    "navLabel": "Faner for kontoinnstillinger",
+    "tip": "Trykk {key} hvor som helst for å åpne denne dialogboksen igjen.",
+    "tabs": {
+      "profile": "Profil",
+      "subscription": "Abonnement",
+      "billing": "Faktura",
+      "preferences": "Innstillinger",
+      "personalization": "Personlig tilpasning"
+    },
+    "subscription": {
+      "title": "Abonnement",
+      "subtitle": "Plan, kvote og fornyelse.",
+      "currentPlan": "Gjeldende plan",
+      "upgradeCta": "Sammenlign planer",
+      "manageCta": "Administrer abonnement"
+    },
+    "billing": {
+      "title": "Fakturering",
+      "subtitle": "Fakturahistorikk og betalingsmåte.",
+      "empty": {
+        "title": "Ingen historikk ennå",
+        "description": "Belastninger og fakturaer vises her etter din første betalte periode.",
+        "cta": "Åpne full fakturering"
+      }
+    },
+    "preferences": {
+      "title": "Innstillinger",
+      "subtitle": "Tema og tilgjengelighet.",
+      "theme": "Tema",
+      "light": "Lyst",
+      "dark": "Mørkt",
+      "system": "System",
+      "help": "Hjelp",
+      "reportIssue": "Rapporter et problem",
+      "shortcuts": "Tastatursnarveier"
+    },
+    "personalization": {
+      "title": "Personalisering",
+      "subtitle": "Fortell Sailor hvem du er og hvordan du vil bli svart."
+    }
+  },
+  "impact": {
+    "hero_title": "Omdefinering av paradigmet",
+    "hero_subtitle": "La det ikke være noen vanskelige forretninger i verden.",
+    "social_title": "Sosialt",
+    "social_headline": "Absolutt teknisk likhet",
+    "social_description": "Gir innovatører i kanten makt. Bryter tradisjonelle filtre og gir enkeltgründere infrastruktur utenfor boksen.",
+    "governance_title": "Styring",
+    "governance_headline": "Kode er lov",
+    "governance_description": "Algoritmisk styring bygget på Proof of Work og reelle forretningsresultater, som erstatter ugjennomsiktig byråkrati.",
+    "environment_title": "Miljø",
+    "environment_headline": "Digital minimalisme",
+    "environment_description": "Driver reduksjon av skyavtrykk gjennom ekstrem SaaS-integrasjon og ressurs effektivitet."
+  },
+  "auth": {
+    "security": {
+      "title": "Sikkerhet",
+      "description": "Administrer passord, multifaktorautentisering og aktive økter.",
+      "managedByProvider": "Sikkerhetsinnstillinger administreres av autentiseringsleverandøren din.",
+      "openProviderProfile": "Åpne profil",
+      "changePassword": {
+        "title": "Endre passord",
+        "description": "Bruk et sterkt passord du ikke gjenbruker på andre nettsteder.",
+        "currentPasswordLabel": "Nåværende passord",
+        "newPasswordLabel": "Nytt passord",
+        "confirmPasswordLabel": "Bekreft nytt passord",
+        "revokeOtherSessions": "Logg ut fra andre enheter",
+        "submit": "Oppdater passord",
+        "pending": "Oppdaterer passord…",
+        "success": "Passordet er oppdatert."
+      },
+      "twoFactor": {
+        "title": "To-faktor-autentisering",
+        "description": "Legg til et ekstra verifiseringssteg med en autentiseringsapp.",
+        "enabled": "Aktivert",
+        "disabled": "Deaktivert",
+        "enabledHelp": "Kontoen din ber om en 6-sifret autentiseringskode etter pålogging med passord.",
+        "disabledHelp": "Beskytt kontoen din med en 6-sifret kode fra en autentiseringsapp.",
+        "enable": "Aktiver tofaktorautentisering",
+        "disable": "Deaktiver tofaktorautentisering",
+        "passwordPrompt": "Bekreft passordet ditt",
+        "scanQrCode": "Skann denne QR-koden med autentiseringsappen din, og skriv inn 6-sifret koden nedenfor.",
+        "secretKeyLabel": "Eller skriv inn denne hemmeligheten manuelt",
+        "verificationCodeLabel": "Verifiseringskode",
+        "verify": "Verifiser og aktiver",
+        "backupCodesTitle": "Reservekoder",
+        "backupCodesDescription": "Lagre disse kodene et trygt sted. Hver kan brukes én gang hvis du mister tilgangen til autentiseringsappen.",
+        "copyBackupCodes": "Kopier koder",
+        "finishSetup": "Fullfør oppsett",
+        "successEnabled": "Tofaktorautentisering er aktivert.",
+        "successDisabled": "Tofaktorautentisering er deaktivert."
+      },
+      "sessions": {
+        "title": "Aktive økter",
+        "description": "Enheter og nettlesere som for øyeblikket er logget inn på kontoen din.",
+        "currentSession": "(gjeldende)",
+        "ipLabel": "IP-adresse",
+        "lastActiveLabel": "Sist aktiv",
+        "revoke": "Logg ut",
+        "revokeAll": "Logg ut fra alle andre enheter",
+        "empty": "Ingen andre aktive økter.",
+        "successRevoked": "Økten er logget ut.",
+        "successRevokedAll": "Alle andre økter er logget ut."
+      },
+      "deleteAccount": {
+        "title": "Slett konto",
+        "description": "Fjern kontoen din og alle tilknyttede data permanent. Dette kan ikke angres.",
+        "passwordPrompt": "Skriv inn passordet ditt for å bekrefte",
+        "confirmTextLabel": "Skriv SLETT for å bekrefte",
+        "submit": "Slett konto",
+        "cancel": "Avbryt",
+        "success": "Kontoen er slettet."
+      },
+      "connectedAccounts": {
+        "title": "Tilkoblede kontoer",
+        "description": "Se gjennom OAuth-innloggingsmetoder som er knyttet til Nebutra-identiteten din.",
+        "connected": "Tilkoblet",
+        "connect": "Koble til",
+        "help": "Hold minst én pålitelig påloggingsmetode tilgjengelig før du kobler fra en leverandør.",
+        "unlink": "Koble fra",
+        "notLinked": "Ikke koblet"
+      },
+      "passkeys": {
+        "title": "Passnøkler",
+        "description": "Bruk enhetsbundne legitimasjon for pålogging som er motstandsdyktig mot phishing.",
+        "empty": "Ingen passnøkler er registrert ennå",
+        "addPasskey": "Legg til passnøkkel",
+        "cancelAdd": "Avbryt",
+        "cancelled": "Oppsett av passnøkkel ble avbrutt. Ingen endringer.",
+        "defaultName": "Passnøkkel {number}",
+        "nameHelp": "Gi denne passnøkkelen et gjenkjennelig navn før nettleseren din ber om bekreftelse.",
+        "nameLabel": "Passnøkkelnavn",
+        "rename": "Gi nytt navn",
+        "saveRename": "Lagre navn",
+        "remove": "Fjern",
+        "successAdded": "Passnøkkel lagt til.",
+        "successRemoved": "Passnøkkel fjernet.",
+        "unavailableBadge": "Utilgjengelig"
+      },
+      "setPassword": {
+        "title": "Sett et passord",
+        "description": "Legg til et passord for å logge inn uten OAuth-leverandøren din.",
+        "submit": "Sett passord",
+        "pending": "Sender lenke for passordoppsett…",
+        "sentMessage": "Vi har sendt en lenke for passordoppsett til e-posten din."
+      }
+    },
+    "banner": {
+      "logoAlt": "Nebutra",
+      "slogan": "Lanser startuppen din, styrt fra dag én.",
+      "tagline": "Multi-region agenter, multi-tenant som standard. Ingen plattformteam nødvendig."
+    },
+    "signIn": {
+      "title": "Logg inn på Nebutra",
+      "subtitle": "Velg hvordan du vil logge inn.",
+      "continueWith": "Fortsett med",
+      "continueWithProvider": "Fortsett med {provider}",
+      "providers": {
+        "google": "Google",
+        "github": "GitHub",
+        "apple": "Apple",
+        "microsoft": "Microsoft",
+        "feishu": "Feishu"
+      },
+      "providerLoading": "Viderer…",
+      "dividerOr": "Eller fortsett med e-post",
+      "emailLabel": "E-post",
+      "emailPlaceholder": "you@example.com",
+      "continue": "Fortsett",
+      "back": "Tilbage",
+      "passwordLabel": "Passord",
+      "passwordPlaceholder": "Skriv inn passordet ditt",
+      "showPassword": "Vis passord",
+      "hidePassword": "Skjul passord",
+      "capsLockOn": "Caps Lock er på",
+      "forgotPassword": "Glemt passord?",
+      "submit": "Logg inn",
+      "submitLoading": "Logger inn…",
+      "useMagicLink": "Send meg en magisk lenke i stedet",
+      "usePasskey": "Logg inn med passnøkkel",
+      "passkeyTitle": "Logg inn med passnøkkel",
+      "passkeyDescription": "Bruk Face ID, Touch ID eller sikkerhetsnøkkelen din. Ingen passord nødvendig.",
+      "passkeyButton": "Fortsett med passnøkkel",
+      "passkeyCancelled": "Passnøkkel-forespørsel avbrutt.",
+      "passkeyUnsupported": "Denne nettleseren støtter ikke passnøkler.",
+      "passkeyError": "Innlogging med passnøkkel mislyktes. Prøv en annen metode.",
+      "ssoTitle": "Fortsett med Enterprise SSO",
+      "ssoDescription": "Videresender deg til {provider} for {email}.",
+      "ssoError": "Enterprise SSO kunne ikke startes. Prøv en annen metode.",
+      "ssoRetry": "Prøv igjen",
+      "newToProduct": "Ny i Nebutra?",
+      "signUpLink": "Registrer deg",
+      "homeLink": "Hjem",
+      "signInFailed": "Logg inn mislyktes",
+      "genericError": "En feil oppstod. Vennligst prøv igjen.",
+      "captchaError": "Bot-verifisering mislyktes. Oppdater siden og prøv igjen.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
+      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
+      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
+      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+    },
+    "signUp": {
+      "title": "Opprett din Nebutra-konto",
+      "subtitle": "Én konto for alle Nebutra-appene.",
+      "firstNameLabel": "Fornavn",
+      "lastNameLabel": "Etternavn",
+      "firstNamePlaceholder": "Fornavn",
+      "lastNamePlaceholder": "Etternavn",
+      "submit": "Opprett konto",
+      "submitLoading": "Oppretter konto…",
+      "alreadyHaveAccount": "Har du allerede en konto?",
+      "signInLink": "Logg inn",
+      "signUpFailed": "Registrering mislyktes",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+    },
+    "passkeys": {
+      "title": "Passnøkler",
+      "description": "Bruk Face ID, Touch ID, Windows Hello eller en sikkerhetsnøkkel i stedet for passord. Hver enhet har sin egen passnøkkel.",
+      "addButton": "Legg til en passnøkkel",
+      "adding": "Setter opp…",
+      "namePlaceholder": "f.eks. MacBook Pro",
+      "nameLabel": "Navn (valgfritt)",
+      "registerSuccess": "Passnøkkel lagt til.",
+      "registerCancelled": "Oppsett avbrutt.",
+      "registerUnsupported": "Denne nettleseren støtter ikke passnøkler.",
+      "registerError": "Kunne ikke registrere passnøkkel.",
+      "empty": "Ingen passnøkler ennå.",
+      "loadError": "Kunne ikke laste inn passnøkler.",
+      "revoke": "Fjern",
+      "revoking": "Fjerner…",
+      "revokeConfirm": "Fjerne denne passnøkkelen? Du kan ikke lenger logge inn med den.",
+      "revokeSuccess": "Passnøkkel fjernet.",
+      "revokeError": "Kunne ikke fjerne passnøkkel.",
+      "device": {
+        "singleDevice": "Tilknyttet enhet",
+        "multiDevice": "Synkronisert mellom enheter"
+      },
+      "addedOn": "Lagt til {date}"
+    },
+    "magicLink": {
+      "title": "Logg inn med en magisk lenke",
+      "description": "Skriv inn e-postadressen din, så sender vi deg en 6-sifret kode for å logge inn.",
+      "emailLabel": "E-post",
+      "send": "Send lenke",
+      "codeLabel": "Verifiseringskode",
+      "verify": "Bekreft",
+      "resend": "Send koden på nytt",
+      "resendCooldown": "Send på nytt om {seconds}s",
+      "sentTo": "Vi sendte en kode til {email}"
+    },
+    "forgotPassword": {
+      "title": "Glemt passord?",
+      "description": "Skriv inn e-postadressen din, så sender vi en lenke for å tilbakestille passordet ditt.",
+      "emailLabel": "E-post",
+      "submit": "Send tilbakestillingslenke",
+      "successTitle": "Sjekk e-posten din",
+      "success": "Hvis den e-postadressen er registrert, vil du snart motta en lenke for tilbakestilling."
+    },
+    "resetPassword": {
+      "title": "Tilbakestill passordet ditt",
+      "description": "Velg et nytt passord for kontoen din.",
+      "newPasswordLabel": "Nytt passord",
+      "confirmPasswordLabel": "Bekreft nytt passord",
+      "submit": "Tilbakestill passord",
+      "successTitle": "Passord tilbakestilt",
+      "successDescription": "Du kan nå logge inn med det nye passordet ditt.",
+      "signInCta": "Gå til pålogging",
+      "invalidTitle": "Ugyldig tilbakestillingslenke",
+      "invalidDescription": "Denne lenken for tilbakestilling av passord mangler eller er feilformatert. Be om en ny fra siden for glemt passord."
+    },
+    "verifyEmail": {
+      "successTitle": "E-post bekreftet",
+      "successDescription": "E-postadressen din er nå bekreftet.",
+      "failureTitle": "Bekreftelse mislyktes",
+      "failureDescription": "Vi kunne ikke bekrefte e-posten din med den lenken.",
+      "continueCta": "Fortsett",
+      "signInCta": "Gå til pålogging"
+    },
+    "loginSuccess": {
+      "eyebrow": "Innlogging fullført",
+      "title": "Du er logget inn",
+      "description": "Økten din er klar. Vi åpner Nebutra-arbeidsområdet og sikrer en trygg overgang fra autentiseringsflyten.",
+      "session": "Økt",
+      "verified": "Verifisert",
+      "workspace": "Arbeidsområde",
+      "preparing": "Forbereder",
+      "redirecting": "Går inn i arbeidsområdet om {seconds}s",
+      "secureHandoff": "Trygg overgang",
+      "continueCta": "Fortsett til arbeidsområde",
+      "signInCta": "Bruk en annen konto"
+    },
+    "errors": {
+      "invalidCredentials": "E-post eller passord er feil.",
+      "userNotFound": "Ingen konto funnet med den e-postadressen.",
+      "userAlreadyExists": "En konto med den e-postadressen finnes allerede.",
+      "weakPassword": "Passordet er for svakt. Bruk minst 8 tegn med blandet store/små bokstaver og tall.",
+      "passwordsDontMatch": "Passordene er ikke like.",
+      "passwordTooShort": "Passordet må være minst 8 tegn.",
+      "currentPasswordIncorrect": "Nåværende passord er feil.",
+      "samePassword": "Nytt passord må være forskjellig fra nåværende passord.",
+      "invalidEmail": "E-postadressen er ikke gyldig.",
+      "emailNotVerified": "Vennligst bekreft e-postadressen din først.",
+      "sessionExpired": "Økten din har utløpt. Vennligst logg inn igjen.",
+      "twoFactorRequired": "To-faktorautentisering kreves.",
+      "invalidVerificationCode": "Verifiseringskoden er feil eller utløpt.",
+      "twoFactorAlreadyEnabled": "To-faktorautentisering er allerede aktivert.",
+      "twoFactorNotEnabled": "To-faktorautentisering er ikke aktivert.",
+      "tooManyAttempts": "For mange forsøk. Vennligst prøv igjen senere.",
+      "rateLimited": "Du gjør dette for ofte. Ta det rolig.",
+      "providerNotSupported": "Denne handlingen håndteres av autentiseringsleverandøren din.",
+      "networkError": "Nettverksfeil. Sjekk tilkoblingen din og prøv igjen.",
+      "unknown": "Noe gikk galt. Vennligst prøv igjen."
+    }
+  },
+  "chat": {
+    "suggestions": {
+      "title": "Prøv en av disse for å komme i gang",
+      "activity": {
+        "title": "Vis nylig aktivitet",
+        "prompt": "Vis meg den nyeste aktiviteten i arbeidsområdet mitt fra de siste 24 timene."
+      },
+      "debug": {
+        "title": "Feilsøk en feil",
+        "prompt": "Hjelp meg med å feilsøke en kjøretidsfeil. Jeg limer inn stakksporet, og du kan guide meg gjennom det."
+      },
+      "email": {
+        "title": "Utkast et sammendragsemail",
+        "prompt": "Utkast en kort ukesamendragsmail jeg kan sende til teamet mitt om plattformens fremgang."
+      },
+      "features": {
+        "title": "Utforsk plattformens funksjoner",
+        "prompt": "Gå gjennom de viktigste funksjonene i denne SaaS-plattformen og hvordan jeg kan bruke dem."
+      }
+    }
+  },
+  "billing": {
+    "activePlan": {
+      "title": "Aktiv plan",
+      "manage": "Administrer abonnement",
+      "noPlanTitle": "Ingen aktiv plan",
+      "noPlanDescription": "Velg en plan for å låse opp betalte funksjoner og høyere bruksgrenser.",
+      "choosePlan": "Velg en plan",
+      "renewsOn": "Fornyer {date}",
+      "endsOn": "Utløper {date}",
+      "trialEndsOn": "Prøveperiode slutter {date}",
+      "status": {
+        "active": "Aktiv",
+        "trialing": "Prøveperiode",
+        "past_due": "Forfalt",
+        "canceled": "Avsluttet",
+        "free": "Gratis"
+      },
+      "errors": {
+        "loadFailed": "Kunne ikke laste faktureringsstatusen din."
+      }
+    },
+    "pricing": {
+      "trial": "Gratis {days}-dagers prøveperiode",
+      "seat": "{count, plural, one {# sete} other {# seter}}",
+      "perSeat": "/ sete"
+    }
+  },
+  "organizations": {
+    "settings": {
+      "logo": {
+        "title": "Organisasjonslogo",
+        "description": "Last opp et kvadratisk bilde (PNG, JPEG eller WebP, maks 2 MB) som representerer organisasjonen din.",
+        "uploadButton": "Last opp logo",
+        "uploading": "Laster opp…",
+        "fileTooBig": "Filen er for stor. Maks størrelse er 2 MB.",
+        "invalidType": "Ustøttet bildetype. Bruk PNG, JPEG eller WebP.",
+        "success": "Logo oppdatert.",
+        "removeButton": "Fjern logo",
+        "removed": "Logo fjernet."
+      },
+      "name": {
+        "title": "Organisasjonsnavn",
+        "description": "Oppdater visningsnavnet som vises til teamet ditt og kundene.",
+        "label": "Navn",
+        "submit": "Lagre",
+        "saving": "Lagrer…",
+        "success": "Organisasjonsnavn oppdatert."
+      },
+      "delete": {
+        "title": "Slett organisasjon",
+        "description": "Fjern denne organisasjonen, alle medlemmer, invitasjoner og tilknyttet data permanent. Denne handlingen kan ikke angres.",
+        "trigger": "Slett organisasjon",
+        "confirmLabel": "Skriv inn organisasjonsnavnet for å bekrefte",
+        "submit": "Slett organisasjon",
+        "cancel": "Avbryt",
+        "success": "Organisasjon slettet."
+      }
+    },
+    "invitation": {
+      "title": "Du har blitt invitert",
+      "heading": "Du har blitt invitert til å bli med i {organizationName}",
+      "description": "Godta invitasjonen for å begynne å samarbeide med teamet.",
+      "accept": "Godta invitasjon",
+      "accepting": "Godtar...",
+      "decline": "Avslå",
+      "declining": "Avslår...",
+      "declinedView": "Invitasjon avslått",
+      "success": "Vi har informert den som inviterte.",
+      "backToDashboard": "Tilbake til dashbord",
+      "roleLabel": "Rolle: {role}",
+      "errorEmailMismatch": "Denne invitasjonen ble sendt til en annen e-postadresse",
+      "errorEmailMismatchDetail": "Logg inn med e-postadressen som mottok invitasjonen for å godta den.",
+      "errorExpired": "Invitasjonen har utløpt",
+      "errorExpiredDetail": "Be den som inviterte om å sende en ny invitasjon.",
+      "errorNotFound": "Invitasjonen ble ikke funnet",
+      "errorNotFoundDetail": "Invitasjonslenken er ugyldig eller er blitt tilbakekalt.",
+      "errorNotAvailable": "Invitasjon er ikke tilgjengelig",
+      "errorNotAvailableDetail": "Denne invitasjonen er allerede besvart og er ikke lenger aktiv.",
+      "role": {
+        "owner": "Eier",
+        "admin": "Administrator",
+        "member": "Medlem",
+        "viewer": "Seer"
+      }
+    }
+  },
+  "settings": {
+    "apiKeys": {
+      "title": "API-nøkler",
+      "description": "Generer og administrer API-nøkler for programmatisk tilgang til Nebutra.",
+      "createButton": "Opprett API-nøkkel",
+      "noPermission": "Du har ikke tillatelse til å se API-nøkler.",
+      "loading": "Laster inn…",
+      "loadError": "Kunne ikke laste inn API-nøkler.",
+      "createError": "Kunne ikke opprette API-nøkkel.",
+      "revokeError": "Kunne ikke tilbakekalle API-nøkkel.",
+      "empty": {
+        "title": "Ingen API-nøkler ennå",
+        "cta": "Opprett din første API-nøkkel"
+      },
+      "columns": {
+        "name": "Navn",
+        "prefix": "Prefiks",
+        "lastUsed": "Sist brukt",
+        "scopes": "Områder",
+        "created": "Opprettet",
+        "actions": "Handlinger",
+        "never": "Aldri"
+      },
+      "actions": {
+        "revoke": "Inndra",
+        "revoking": "Inndrar…",
+        "copy": "Kopier",
+        "copied": "Kopiert",
+        "close": "Lukk",
+        "submit": "Opprett nøkkel",
+        "submitting": "Oppretter…"
+      },
+      "dialog": {
+        "title": "Opprett API-nøkkel",
+        "description": "API-nøkler lar eksterne systemer kommunisere med Nebutra på dine vegne. Behandle dem som passord.",
+        "nameLabel": "Navn",
+        "namePlaceholder": "f.eks. Produksjonsbackend",
+        "scopesLabel": "Områder",
+        "successWarning": "Denne nøkkelen vises kun én gang. Lagre den før du lukker.",
+        "confirmClose": "Å lukke skjuler denne nøkkelen for alltid. Sørg for at den er lagret."
+      }
+    },
+    "auditLog": {
+      "title": "Revisjonslogg",
+      "description": "Spor alle administrative handlinger i arbeidsområdet ditt. Filtrer etter aktør, handling, enhet eller tidsrom.",
+      "empty": "Ingen revisjonshendelser ennå",
+      "loadMore": "Last inn flere",
+      "loading": "Laster inn…",
+      "forbidden": "Du trenger administratoradgang for å se revisjonsloggen.",
+      "columns": {
+        "when": "Når",
+        "actor": "Aktør",
+        "action": "Handling",
+        "entity": "Enhet",
+        "outcome": "Resultat",
+        "ip": "IP"
+      },
+      "diff": {
+        "oldValue": "Gammel verdi",
+        "newValue": "Ny verdi"
+      },
+      "filters": {
+        "action": "Handling",
+        "actionPlaceholder": "Søk etter handling…",
+        "entityType": "Entitetstype",
+        "outcome": "Resultat",
+        "outcomeSuccess": "Vellykket",
+        "outcomeFailure": "Mislykket",
+        "outcomePending": "Venter",
+        "startDate": "Startdato",
+        "endDate": "Sluttdato",
+        "range24h": "Siste 24 timer",
+        "range7d": "Siste 7 dager",
+        "range30d": "Siste 30 dager",
+        "reset": "Tilbakestill",
+        "all": "Alle"
+      }
+    },
+    "notifications": {
+      "title": "Varsler",
+      "description": "Velg hvordan Nebutra kontakter deg for hver hendelsestype, på hver leveringskanal.",
+      "actions": {
+        "resetAll": "Tilbakestill til standardverdier",
+        "save": "Lagre"
+      },
+      "status": {
+        "saving": "Lagrer…",
+        "saved": "Lagret",
+        "error": "Lagring mislyktes. Vennligst prøv igjen."
+      },
+      "eventTypes": {
+        "security": {
+          "label": "Sikkerhetsvarsler",
+          "description": "Innloggingsvarsler, passordendringer, endringer i tofaktorautentisering."
+        },
+        "billing": {
+          "label": "Fakturering",
+          "description": "Fakturaer, betalingsfeil og abonnementendringer."
+        },
+        "invitation": {
+          "label": "Laginvitasjoner",
+          "description": "Invitasjoner til å bli med i en organisasjon, akseptert eller avslått."
+        },
+        "activity": {
+          "label": "Lagaktivitet",
+          "description": "Medlemmer som har meldt seg på, rolleendringer og annen arbeidsområdeaktivitet."
+        },
+        "updates": {
+          "label": "Produktoppdateringer",
+          "description": "Nye funksjoner, fremhevede endringer og versjonsnotater."
+        },
+        "marketing": {
+          "label": "Markedsføring",
+          "description": "Nyhetsbrev og av og til kampanjer. Kun ved påmelding."
+        }
+      },
+      "channels": {
+        "in_app": {
+          "label": "I appen"
+        },
+        "email": {
+          "label": "E-post"
+        },
+        "push": {
+          "label": "Push"
+        },
+        "sms": {
+          "label": "SMS"
+        }
+      }
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "Abonner på hendelser som sendes fra arbeidsområdet ditt. Vi signerer hver last med sluttpunktets hemmelighet slik at du kan verifisere autenticiteten.",
+      "create": {
+        "heading": "Nytt sluttpunkt",
+        "urlLabel": "Sluttpunkt-URL",
+        "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
+        "eventsLegend": "Hendelser",
+        "submit": "Opprett sluttpunkt",
+        "submitting": "Oppretter…",
+        "selectEvent": "Velg minst én hendelse.",
+        "successTitle": "Endepunkt opprettet. Signeringshemmeligheten vises kun én gang.",
+        "successWarning": "Lagre den i applikasjonens hemmelighetsbehandler før du lukker.",
+        "copy": "Kopier",
+        "copied": "Kopiert"
+      },
+      "list": {
+        "heading": "Aktive endepunkter",
+        "empty": "Ingen webhook-endepunkter ennå. Opprett ett ovenfor.",
+        "loading": "Laster inn…",
+        "loadFailed": "Kunne ikke laste inn webhooks",
+        "columns": {
+          "url": "URL",
+          "events": "Hendelser",
+          "status": "Status",
+          "lastDelivered": "Sist levert",
+          "actions": "Handlinger"
+        },
+        "status": {
+          "active": "Aktiv",
+          "disabled": "Deaktivert"
+        },
+        "actions": {
+          "edit": "Rediger",
+          "enable": "Aktiver",
+          "disable": "Deaktiver",
+          "viewDeliveries": "Vis leveringer",
+          "delete": "Slett"
+        }
+      },
+      "deliveries": {
+        "heading": "Siste leveringer",
+        "close": "Lukk",
+        "loading": "Laster…",
+        "loadFailed": "Kunne ikke laste leveringer",
+        "empty": "Ingen leveringer ennå.",
+        "viewPayload": "Vis last",
+        "hidePayload": "Skjul last",
+        "replay": "Spill av på nytt",
+        "replaying": "Spiller av på nytt…",
+        "status": {
+          "success": "lyktes",
+          "failed": "mislyktes",
+          "retrying": "prøver igjen"
+        }
+      }
+    },
+    "appearance": {
+      "title": "Utseende",
+      "theme": {
+        "title": "Tema",
+        "description": "Bruk lyst, mørkt eller følg systemets innstilling."
+      },
+      "themePreset": {
+        "title": "Temamal",
+        "description": "Bruk et tema fra Theme Playground i hele appen. Kontrollene nedenfor lar deg finjustere det.",
+        "search": "Søk etter temaer…",
+        "searchLabel": "Søk etter temaer",
+        "default": "Standard",
+        "defaultMood": "Nebutra base palette",
+        "active": "Aktiv",
+        "empty": "Ingen temaer matcher søket ditt.",
+        "count": "{count} temaer"
+      },
+      "themeEditor": {
+        "title": "Tema",
+        "description": "Velg en mal, importer en DESIGN.md, og finjuster deretter tokenene nedenfor.",
+        "selectLabel": "Temamal",
+        "import": "Importer",
+        "copy": "Kopier tema",
+        "copied": "Kopiert",
+        "copyError": "Kopiering mislyktes",
+        "custom": "Egendefinert"
+      },
+      "designMd": {
+        "title": "Importer DESIGN.md",
+        "description": "Lim inn eller last opp en DESIGN.md for å bruke farger, radius, skrifttyper, avstander og skygger over hele appen — lagret over gjennombelastninger.",
+        "applied": "Brukt:",
+        "remove": "Fjern"
+      },
+      "themeMode": {
+        "label": "Temamodus",
+        "light": "Lys",
+        "dark": "Mørk",
+        "system": "System"
+      },
+      "accent": {
+        "title": "Accentfarge",
+        "description": "Velg en merkevareaccent som farger aktive tilstander over hele appen.",
+        "label": "Accentfarge",
+        "options": {
+          "default": "Standard",
+          "blue": "Blå",
+          "cyan": "Cyan",
+          "violet": "Violet",
+          "pink": "Rosa",
+          "amber": "Amber",
+          "green": "Grønn",
+          "red": "Rød"
+        }
+      },
+      "colors": {
+        "title": "Farger",
+        "description": "Accent, bakgrunn og forgrunn.",
+        "background": {
+          "label": "Bakgrunn",
+          "description": "Overstyr bakgrunnsfargen på overflaten."
+        },
+        "foreground": {
+          "label": "Forgrunn",
+          "description": "Overstyr tekstfargen i hovedinnholdet."
+        },
+        "resetToDefault": "Tilbakestill til standard"
+      },
+      "fontFamily": {
+        "uiLabel": "Skrifttype for grensesnitt",
+        "uiDescription": "Skrifttype som brukes i hele grensesnittet.",
+        "codeLabel": "Skrifttype for kode",
+        "codeDescription": "Skriftfamilie som brukes for kodeflater.",
+        "options": {
+          "ui": {
+            "theme": "Tema standard",
+            "system": "System",
+            "geist": "Geist",
+            "inter": "Inter",
+            "sf": "SF Pro"
+          },
+          "code": {
+            "theme": "Tema standard",
+            "system": "System mono",
+            "geist-mono": "Geist Mono",
+            "sf-mono": "SF Mono",
+            "jetbrains-mono": "JetBrains Mono"
+          }
+        }
+      },
+      "contrast": {
+        "title": "Kontrast",
+        "description": "Juster tekstkontrast (50 = ingen endring).",
+        "label": "Kontrastnivå"
+      },
+      "pointerCursor": {
+        "title": "Bruk pekermarkør",
+        "description": "Bytt til pekermarkør på elementer som reagerer på hover.",
+        "label": "Pekermarkør på interaktive elementer"
+      },
+      "diffMarkers": {
+        "title": "Diff-markører",
+        "description": "Vis fargebånd eller +/--symboler på hver endret linje.",
+        "label": "Diff-markørstil",
+        "color": "Farge",
+        "plusminus": "+/-"
+      },
+      "fontSmoothing": {
+        "title": "Skriftglating",
+        "description": "Bruk macOS-native skriftantialiasing.",
+        "label": "Native skriftglating"
+      },
+      "typography": {
+        "title": "Typografi",
+        "description": "Baseskriftstørrelser for UI og kodeflater.",
+        "uiFontSize": "UI-skriftstørrelse",
+        "uiFontSizeDescription": "Juster baseskriftstørrelsen for UI.",
+        "codeFontSize": "Kodeskriftstørrelse",
+        "codeFontSizeDescription": "Juster baseskriftstørrelsen for kode."
+      },
+      "fontSize": {
+        "followTheme": "Tema",
+        "customize": "Tilpass"
+      },
+      "motion": {
+        "title": "Reduser bevegelse",
+        "description": "Reduser animasjoner eller følg systempreferanse.",
+        "label": "Bevegelsespreferanse",
+        "system": "System",
+        "on": "På",
+        "off": "Av"
+      },
+      "surface": {
+        "title": "Gjennomsiktig sidepanel",
+        "description": "Bruk et gjennomsiktig materiale på sidepanelet."
+      },
+      "transparency": {
+        "label": "Gjennomsiktig sidepanel",
+        "description": "Bruk et gjennomsiktig materiale på sidepanelet."
+      }
+    }
+  },
+  "legal": {
+    "version": "Versjon",
+    "effective": "Gjeldende",
+    "notFound": "Dette dokumentet er ikke tilgjengelig.",
+    "backHome": "Tilbake til start"
+  },
+  "commandPalette": {
+    "ariaLabel": "Kommandopalette",
+    "placeholder": "Skriv en kommando eller søk…",
+    "empty": "Ingen resultater funnet.",
+    "sections": {
+      "navigation": "Navigasjon",
+      "actions": "Handlinger",
+      "settings": "Innstillinger",
+      "account": "Konto",
+      "admin": "Admin",
+      "help": "Hjelp"
+    },
+    "commands": {
+      "nav": {
+        "home": "Hjem",
+        "settings": "Innstillinger",
+        "billing": "Faktura",
+        "team": "Team",
+        "apiKeys": "API-nøkler",
+        "notifications": "Varsler",
+        "auditLog": "Revisjonslogg",
+        "webhooks": "Webhooks",
+        "admin": "Admin"
+      },
+      "action": {
+        "inviteMember": "Inviter teammedlem",
+        "createApiKey": "Opprett API-nøkkel",
+        "switchOrganization": "Bytt organisasjon"
+      },
+      "settings": {
+        "themeLight": "Bytt til lyst tema",
+        "themeDark": "Bytt til mørkt tema",
+        "themeSystem": "Bruk systemtema"
+      },
+      "account": {
+        "signOut": "Logg ut"
+      },
+      "help": {
+        "reportIssue": "Rapporter et problem",
+        "shortcuts": "Tastatursnarveier"
+      }
+    }
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "Dine personvernvalg",
+      "description": "Vi bruker cookies for å forbedre opplevelsen din, analysere nettstedstrafikk og tilpasse innhold. Velg hvilke kategorier du vil tillate."
+    },
+    "button": {
+      "acceptAll": "Godta alle",
+      "savePreferences": "Lagre preferanser"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "Nødvendige",
+        "description": "Påkrevd for at nettstedet skal fungere. Kan ikke deaktiveres."
+      },
+      "functional": {
+        "label": "Funksjonelle",
+        "description": "Husk preferansene dine (språk, tema, visning)."
+      },
+      "analytics": {
+        "label": "Analyse",
+        "description": "Anonym bruksdata slik at vi kan forbedre produktet."
+      },
+      "marketing": {
+        "label": "Markedsføring",
+        "description": "Personlig tilpassede annonser og retargeting på tredjepartsplattformer."
+      }
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "Varsler",
+      "description": "Alle varsler på ett sted.",
+      "filter": {
+        "all": "Alle",
+        "unread": "Uleste"
+      },
+      "actions": {
+        "markAllRead": "Merk alle som lest",
+        "markRead": "Merk som lest",
+        "archive": "Arkiver",
+        "loadMore": "Last inn flere",
+        "loading": "Laster...",
+        "selected": "{count} valgt"
+      },
+      "empty": {
+        "all": "Du er helt oppdatert.",
+        "unread": "Ingen uleste varsler."
+      },
+      "errors": {
+        "load": "Kunne ikke laste varsler.",
+        "network": "Nettverksfeil. Vennligst prøv igjen.",
+        "markRead": "Kunne ikke merke varsel som lest.",
+        "archive": "Kunne ikke arkivere varsel.",
+        "bulkMarkRead": "Noen varsler kunne ikke merkes som lest."
+      },
+      "inbox": {
+        "noBackend": "Innboks krever en varig varselsbackend. Sjekk leverandørkonfigurasjonen din.",
+        "emptyCaughtUp": "Innboksen er tom.",
+        "emptyChangelog": "Endringsloggoppdateringer vises her."
+      }
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "God morgen",
+      "afternoon": "God ettermiddag",
+      "evening": "God kveld"
+    },
+    "home": {
+      "connectorsPill": "Kraftgi appen din med tilkoblinger",
+      "subtitle": "Slipp inn en prompt, trykk ⌘K hvor som helst, eller hopp rett inn i et arbeidsområde.",
+      "promptPlaceholder": "Hva tenker du på?",
+      "actions": {
+        "connect": "Koble til en integrering",
+        "theme": "Tema-lekeplass",
+        "audit": "Revisjonslogg",
+        "billing": "Fakturering"
+      }
+    },
+    "commandSurface": {
+      "noAuth": "Autentisering er ikke konfigurert for den valgte leverandøren. Sett leverandørens hemmeligheter for å aktivere brukersesjoner."
+    },
+    "commandCenter": {
+      "description": "Start med én handling: spør Sailor, inspiser arbeidsområdesignaler eller diriger arbeid til en automatiseringsflate.",
+      "openSailor": "Åpne Sailor AI",
+      "viewAnalytics": "Vis analyse"
+    },
+    "workspaceSnapshot": {
+      "title": "Arbeidsområdeoversikt",
+      "description": "Siste lagerdag · {day}",
+      "viewAnalytics": "Vis analyse →",
+      "metrics": {
+        "activeUsers": "Aktive brukere",
+        "totalEvents": "Totalt antall hendelser",
+        "conversions": "Konverteringer",
+        "revenue": "Inntekt"
+      },
+      "details": {
+        "activeUsers": "Innloggede brukere",
+        "totalEvents": "Hendelser registrert",
+        "conversions": "Kvalifiserte handlinger",
+        "revenue": "Inntekter registrert"
+      },
+      "meta": {
+        "snapshot": "Øyeblikksbilde",
+        "cadence": "Rytme",
+        "tenant": "Leietaker",
+        "daily": "Daglig",
+        "latestDay": "{day}",
+        "users": "Leietakerbrukere",
+        "events": "Hendelsesstrøm",
+        "funnel": "Trakt",
+        "billing": "Fakturering"
+      }
+    },
+    "documentPipeline": {
+      "title": "Dokumentrørledning",
+      "description": "Send kildefiler til oppgavekøen.",
+      "intakeTitle": "Dokumentopptak",
+      "intakeDescription": "PDF, Markdown, tekst eller Word-dokument",
+      "chooseDocument": "Velg dokument",
+      "startParseTask": "Start parse task",
+      "queued": "Køet",
+      "fileInputLabel": "Dokumentfil",
+      "fallbackError": "Dokumentoppgaven mislyktes.",
+      "taskStatus": "Oppgavestatus",
+      "progressLabel": "Oppgavefremgang",
+      "refreshStatus": "Oppdater",
+      "cancelTask": "Avbryt",
+      "statusError": "Kunne ikke oppdatere oppgavestatus.",
+      "cancelError": "Kunne ikke avbryte oppgaven.",
+      "statusQueued": "Køet",
+      "statusRunning": "Kjører",
+      "statusSucceeded": "Fullført",
+      "statusFailed": "Mislyktes",
+      "statusCancelled": "Avbrutt",
+      "resultReady": "Resultat klart",
+      "taskError": "Oppgavefeil",
+      "updatedAt": "Oppdatert"
+    },
+    "recentSessions": {
+      "title": "Fortsett der du slapp",
+      "subtitle": "{count, plural, =0 {Ingen økter} =1 {1 nylig økt} other {# nylige økter}}",
+      "viewAll": "Vis alle →",
+      "newChat": "Ny chat",
+      "untitled": "Uten tittel",
+      "messageCount": "{count, plural, =1 {1 melding} other {# meldinger}}"
+    },
+    "gettingStarted": {
+      "title": "Kom i gang",
+      "description": "{done} av {total} fullført · fullfør oppsettet for å låse opp hele arbeidsområdet",
+      "progressLabel": "Oppsettfremskritt",
+      "tasks": {
+        "team": {
+          "label": "Inviter en kollega",
+          "description": "Ta med minst én samarbeidspartner til arbeidsområdet ditt."
+        },
+        "api": {
+          "label": "Generer en API-nøkkel",
+          "description": "Programmatisk tilgang til arbeidsområdets endepunkter."
+        },
+        "integration": {
+          "label": "Koble til en integrering",
+          "description": "Stripe, Slack, webhooks, køer og mer."
+        },
+        "ai": {
+          "label": "Åpne Sailor AI",
+          "description": "Prøv chat, data eller arbeidsflytmodus."
+        }
+      }
+    }
+  },
+  "Sidebar": {
+    "projects": "Prosjekter",
+    "noThreads": "Ingen tråder",
+    "expandAll": "Vis alle",
+    "collapseAll": "Skjul alle",
+    "sectionMore": "Flere alternativer",
+    "newProject": "Nytt prosjekt",
+    "restoredGroups": "Tidligere utvidede grupper gjenopprettet",
+    "newProjectPlaceholder": "Prosjektnavn",
+    "newProjectDefault": "Uten navn",
+    "newProjectSuccess": "Prosjekt opprettet",
+    "newProjectError": "Kunne ikke opprette prosjekt",
+    "sortBy": "Sorter etter",
+    "sortRecent": "Sist aktive",
+    "sortAlphabetical": "Alfabetisk",
+    "sortCreated": "Opprettelsesdato",
+    "archiveAll": "Arkiver alle",
+    "comingV2": "Kommer i v2"
+  },
+  "startupOs": {
+    "milestone": {
+      "firstRoom": "Det første rommet er klart.",
+      "firstFolder": "Mange selskaper starter som en mappe.",
+      "firstTable": "Den første tabellen har en andre seteplass.",
+      "firstSignal": "Den virkelige verden har begynt å snakke.",
+      "firstShip": "Verden ser det for første gang.",
+      "firstBeliever": "Fra i dag bygger du ikke lenger bare for deg selv.",
+      "firstRevenue": "Drømmen har nå kontantstrøm.",
+      "firstReturn": "Å komme tilbake betyr mer enn å besøke.",
+      "firstTeam": "Tre personer kan begynne å danne et selskap.",
+      "firstCrowd": "Den første tabellen blir trang.",
+      "firstReset": "En omstart er et ærligere begynnelse.",
+      "firstPublic": "Legg et stykke av fremtiden ut i det offentlige.",
+      "firstDemo": "Dette er ikke en show. Det er en test.",
+      "graduation": "Du har vokst deg fra grunnleggende. Veien fremover krever sterkere verktøy."
+    },
+    "emptyState": {
+      "default": "Mange selskaper starter som en mappe.",
+      "integrations": "Ingen tilkoblinger er konfigurert.",
+      "creditActivity": "Kredittaktivitet vises etter første forespørsel.",
+      "usageData": "Bruksdata vises når organisasjonen din begynner å sende forespørsler.",
+      "apiKeys": "Ingen nøkler ennå.",
+      "apiKeysCta": "Opprett din første nøkkel",
+      "teamMembers": "En kan starte. Få kan bygge.",
+      "cofounders": "Den første som tror på deg har ikke dukket opp ennå.",
+      "cofoundersDescription": "Når du og en annen grunnlegger begge signaliserer interesse, vises de her.",
+      "cofoundersAction": "Finn medgrunnleggere",
+      "growthChart": "Trenddata vises når aktiviteten begynner.",
+      "revenueChart": "Inntektsdata vises når transaksjoner begynner.",
+      "webhookDeliveries": "Leveranser vises her etter første hendelse.",
+      "webhookEndpoints": "Legg til en endepunkt ovenfor for å begynne å motta hendelser.",
+      "accessInvites": "Ingen invitasjonskoder er utstedt."
+    },
+    "success": "Det første rommet er klart.",
+    "failure": "En omstart er et ærligere begynnelse.",
+    "errors": {
+      "loadMatches": "Kunne ikke laste inn matcher.",
+      "loadMatchesDescription": "Noe gikk galt på vår side. Oppdater for å prøve igjen.",
+      "loadWebhookDeliveries": "Kunne ikke laste inn leveringer.",
+      "replayWebhookDelivery": "Gjentakelsen gikk ikke gjennom.",
+      "loadWebhookEndpoints": "Kunne ikke laste inn endepunkter."
+    },
+    "team": "En kan starte. Få kan bygge.",
+    "revenue": "Drømmen har nå kontantstrøm.",
+    "growth": "Signalet blir sterkere.",
+    "deployment": {
+      "primary": "Verden ser det for første gang.",
+      "echo": "Det forlot endelig localhost."
+    },
+    "onboarding": "Du trenger ikke være klar. Du trenger å begynne.",
+    "graduation": "Du har vokst ut av grunnleggende. Prøv {tool} for veien videre.",
+    "company": {
+      "emptyTitle": "Din første konteksttårn starter her.",
+      "emptyDescription": "Samle et selskap i Startup OS for å se og redigere konteksttårnet.",
+      "emptyAction": "Åpne Startup OS",
+      "notice": {
+        "needsProvider": "Koble til en AI-leverandørnøkkel for å fylle ut feltene automatisk.",
+        "generateFailed": "Genereringen ble ikke fullført.",
+        "saveFailed": "Endringene dine ble ikke lagret."
+      },
+      "action": {
+        "save": "Lagre",
+        "saving": "Lagrer…",
+        "cancel": "Avbryt",
+        "open": "Åpne Startup OS"
+      }
+    },
+    "execution": {
+      "noBets": "Ingen innsatser ennå.",
+      "noRuns": "Ingen aktive kjøringar."
+    },
+    "fileTree": {
+      "empty": "Dette prosjektet har ingen filer ennå."
+    }
+  },
+  "selectOrg": {
+    "invitation": {
+      "emptyTitle": "Arbeidsområdet er underveis.",
+      "emptyDescription": "Invitasjonen kan fortsatt synkroniseres. Oppdater denne siden eller opprett et eget arbeidsområde."
+    },
+    "billing": {
+      "emptyTitle": "Opprett et arbeidsområde før fakturering.",
+      "emptyDescription": "Fakturering krever et aktivt arbeidsområde. Opprett ett først, og gå tilbake til fakturering."
+    },
+    "default": {
+      "emptyTitle": "Den første arbeidsområdet starter her.",
+      "emptyDescription": "Opprett et arbeidsområde for å komme i gang."
+    }
+  }
+}

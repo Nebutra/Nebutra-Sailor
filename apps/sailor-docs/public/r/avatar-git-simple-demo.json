@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "avatar-git-simple-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/avatar-git-simple-demo.tsx",
+      "content": "\"use client\";\n\nimport { Avatar, AvatarFallback, AvatarImage } from \"@nebutra/ui/primitives\";\n\nexport function AvatarGitSimpleDemo() {\n  return (\n    <div className=\"gap-4 flex items-center\">\n      <GitHubAvatar username=\"rauchg\" />\n      <GitLabAvatar username=\"leerob\" />\n      <BitbucketAvatar username=\"evilrabbit\" />\n    </div>\n  );\n}\n\nfunction GitHubAvatar({ username }: { username: string }) {\n  return (\n    <Avatar>\n      <AvatarImage src={`https://github.com/${username}.png`} alt={`@${username}`} />\n      <AvatarFallback>{username.slice(0, 2).toUpperCase()}</AvatarFallback>\n    </Avatar>\n  );\n}\n\nfunction GitLabAvatar({ username }: { username: string }) {\n  return (\n    <Avatar>\n      <AvatarImage src={`https://gitlab.com/${username}.png`} alt={`@${username}`} />\n      <AvatarFallback>{username.slice(0, 2).toUpperCase()}</AvatarFallback>\n    </Avatar>\n  );\n}\n\nfunction BitbucketAvatar({ username }: { username: string }) {\n  return (\n    <Avatar>\n      <AvatarImage src={`https://bitbucket.org/${username}.png`} alt={`@${username}`} />\n      <AvatarFallback>{username.slice(0, 2).toUpperCase()}</AvatarFallback>\n    </Avatar>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

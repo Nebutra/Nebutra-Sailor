@@ -1,0 +1,60 @@
+{
+  "name": "@nebutra/router-supply",
+  "version": "0.1.2",
+  "description": "Nebutra Router supply orchestration: model aliases, engine endpoints, upstream resolution for New-API/Sub2API sidecars",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "graph": "labs",
+    "status": "wip",
+    "productionReady": false,
+    "surface": "support-contract",
+    "featureId": "router-supply",
+    "category": "platform",
+    "summary": "Supply fabric for router.nebutra.com — alias map + engine upstream resolution",
+    "gaps": [
+      "New-API / Sub2API production health probes not wired in CI",
+      "Alias table defaults need product review against frontier SSOT",
+      "Multi-tenant engine credentials store is host-injected only"
+    ]
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@nebutra/prepaid-wallet": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "tsup": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/platform/router-supply#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/platform/router-supply"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
+}

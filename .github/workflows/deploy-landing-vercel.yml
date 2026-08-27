@@ -1,0 +1,152 @@
+name: Deploy Landing (Vercel)
+
+# The landing project had no deploy workflow, and its dashboard Root Directory
+# still pointed at apps/landing-page — renamed to apps/landing in 3182cbcb. Every
+# build since failed before compiling, so nothing shipped for days and the cause
+# was invisible from the repository: the stale value lives in Vercel, not here.
+#
+# This reconciles that setting from CI before deploying, so the same drift cannot
+# silently stop deployments again. Looking the project up by name also means
+# there is no project id to add to repository variables and later forget.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/landing/**"
+      - "packages/commerce/marketing/**"
+      - "packages/design/ui/**"
+      - "packages/design/tokens/**"
+      - "packages/platform/i18n/**"
+      - ".github/workflows/deploy-landing-vercel.yml"
+  # Retries a deploy that the daily cap refused. Without it a deferral is a
+  # silent loss: the commit is on main, the check is green, and the site keeps
+  # serving the previous build until someone happens to push again.
+  schedule:
+    - cron: "17 19 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-landing-vercel
+  cancel-in-progress: true
+
+jobs:
+  vercel:
+    name: Deploy landing to Vercel
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Reconcile Root Directory and deploy
+        id: deploy
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
+          EXPECTED_ROOT: apps/landing
+        run: |
+          set -euo pipefail
+          if [ -z "${VERCEL_TOKEN:-}" ]; then
+            echo "::error::VERCEL_TOKEN is not set"; exit 1
+          fi
+
+          api() { curl -sS -H "Authorization: Bearer $VERCEL_TOKEN" "$@"; }
+
+          # Resolve by name rather than a stored id. The project this deploys is
+          # whichever one serves nebutra.com; hardcoding an id in repository
+          # variables is one more thing that can go stale unnoticed.
+          api "https://api.vercel.com/v9/projects?teamId=${VERCEL_ORG_ID}&limit=100" > projects.json
+          cat > resolve.py <<'PYEOF'
+          import json, sys
+          data = json.load(open(sys.argv[1]))
+          names = {p["name"]: p for p in data.get("projects", [])}
+          for candidate in ("nebutra-landing", "landing", "nebutra-landing-page", "landing-page"):
+              if candidate in names:
+                  p = names[candidate]
+                  print("PROJECT_ID=" + p["id"])
+                  print("CURRENT_ROOT=" + (p.get("rootDirectory") or "(none)"))
+                  break
+          else:
+              print("Projects found: " + ", ".join(sorted(names)), file=sys.stderr)
+          PYEOF
+          # The heredoc carries the YAML block indentation into the file; strip it
+          # or python refuses the first line.
+          sed -i 's/^          //' resolve.py
+          python3 resolve.py projects.json > resolved.env
+          cat resolved.env
+          set -a; . ./resolved.env 2>/dev/null || true; set +a
+
+          if [ -z "${PROJECT_ID:-}" ]; then
+            echo "::error::Could not find the landing project by name — see the list above"
+            exit 1
+          fi
+          echo "project=$PROJECT_ID rootDirectory=$CURRENT_ROOT"
+
+          if [ "$CURRENT_ROOT" != "$EXPECTED_ROOT" ]; then
+            echo "::warning::Root Directory was '$CURRENT_ROOT', correcting to '$EXPECTED_ROOT'"
+            api -X PATCH -H 'Content-Type: application/json' \
+              "https://api.vercel.com/v9/projects/${PROJECT_ID}?teamId=${VERCEL_ORG_ID}" \
+              -d "{\"rootDirectory\":\"${EXPECTED_ROOT}\"}" > /dev/null
+          fi
+
+          npm i -g vercel@56.5.0
+          # Deploy from the repository root: the project's Root Directory (just
+          # reconciled above) selects apps/landing. Passing --cwd as well would
+          # double the path.
+          mkdir -p .vercel
+          printf '{"projectId":"%s","orgId":"%s"}\n' "$PROJECT_ID" "${VERCEL_ORG_ID:-}" > .vercel/project.json
+          # The CLI reads VERCEL_ORG_ID/VERCEL_PROJECT_ID from the environment in
+          # preference to .vercel/project.json, and refuses to run with only one
+          # of the pair set. VERCEL_ORG_ID comes from the step env, so the id
+          # resolved above has to be exported alongside it.
+          export VERCEL_PROJECT_ID="$PROJECT_ID"
+
+          set +e
+          # --archive=tgz: one tarball upload (Hobby monorepo + 15k-file CLI limit).
+          out=$(vercel deploy --prod --yes --archive=tgz --token="$VERCEL_TOKEN" --scope "${VERCEL_ORG_ID:-}" 2>&1)
+          code=$?
+          set -e
+          echo "$out"
+          if [ "$code" -ne 0 ]; then
+            # The daily deployment cap is account-wide, so a busy day on any one
+            # project exhausts it for all of them. Deferring keeps main green,
+            # because a full quota is not a defect in the commit — but it must
+            # not read as a deploy. This branch used to claim "the Git
+            # integration still ships the same commit"; it does not, and a green
+            # check over an unchanged site cost an hour of chasing a fix that
+            # had never shipped. The run summary now says so outright, and the
+            # scheduled run retries once the cap resets.
+            if echo "$out" | grep -qiE 'api-deployments-free-per-day|Resource is limited|try again in 24 hours|Upload aborted'; then
+              echo "deployed=false" >> "$GITHUB_OUTPUT"
+              {
+                echo "### Not deployed"
+                echo
+                echo "Vercel refused the deployment, so **nebutra.com still serves the previous build**."
+                echo "This job is green because the commit is fine — but nothing shipped."
+                echo
+                echo '```'
+                echo "$out" | tail -3
+                echo '```'
+              } >> "$GITHUB_STEP_SUMMARY"
+              echo "::warning::Vercel deploy deferred — nebutra.com still serves the previous build"
+              exit 0
+            fi
+            exit "$code"
+          fi
+          echo "deployed=true" >> "$GITHUB_OUTPUT"
+
+      # Skipped when the deploy was deferred: the check only asserts HTTP 200,
+      # which the build that is already live answers just as well, so running it
+      # would certify the previous release as this one.
+      - name: Smoke nebutra.com
+        if: steps.deploy.outputs.deployed != 'false'
+        run: |
+          set -euo pipefail
+          # Cache-busting path: the marketing pages are statically cached, so a
+          # plain request can return the previous build and look like success.
+          code=$(curl -sS -o /dev/null -w '%{http_code}' "https://nebutra.com/?ci=${GITHUB_SHA}")
+          echo "nebutra.com → HTTP $code"
+          [ "$code" = "200" ]

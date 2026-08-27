@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — Marketplace d'API",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "Marketplace d'API multi-modèles · payez à l'usage · gérez clés et portefeuille · test rapide."
+  },
+  "admin": {
+    "dashboard": "Tableau de bord",
+    "keys": "Clés API",
+    "wallet": "Portefeuille",
+    "docs": "Documentation",
+    "title": "Admin",
+    "backToMarket": "Retour au marketplace",
+    "quickUse": "Utilisation rapide"
+  },
+  "chrome": {
+    "searchPlaceholder": "Que souhaitez-vous faire avec l'IA ?",
+    "search": "Rechercher",
+    "locale": "Langue",
+    "currency": "Devise",
+    "collapseSidebar": "Réduire la barre latérale",
+    "expandSidebar": "Développer la barre latérale",
+    "home": "Accueil",
+    "adminConsole": "Administration",
+    "quickUse": "Utilisation rapide",
+    "support": "Assistance",
+    "apiDocs": "Docs API",
+    "integrationHelp": "Guide d'intégration",
+    "aiRecommend": "Sélections IA",
+    "market": "Marché",
+    "usageTitle": "Utilisation rapide"
+  },
+  "channels": {
+    "app": "Marché d'applications",
+    "api": "Marché d'API",
+    "models": "Catalogue de modèles",
+    "client": "Client"
+  },
+  "market": {
+    "new": "Nouveau",
+    "hot": "Populaire",
+    "forYou": "Pour vous",
+    "grid": "Grille",
+    "list": "Liste",
+    "apiShelf": "Étagère d'API",
+    "toolShelf": "Étagère d'outils",
+    "categories": "Catégories",
+    "apps": "Applications",
+    "newRelease": "Nouvelle version",
+    "forgeTitle": "Espace de travail d'outils Forge",
+    "forgeBlurb": "Transformations de texte, codecs, formulaires et outils composables. Le laboratoire du marché de l'application pointe vers Forge.",
+    "openForge": "Ouvrir Forge →",
+    "allApi": "Toutes les API →",
+    "all": "Tout →",
+    "viewAll": "Voir tout {label} →",
+    "gridView": "Vue en grille",
+    "listView": "Vue en liste",
+    "hiTitle": "Plateforme de ressources IA d'entreprise",
+    "hiSubtitle": "Correspondre à chaque besoin avec la bonne IA",
+    "sellable": "Vendable",
+    "walletTopup": "Recharger"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "Modèles de langage",
+      "hint": "Chat · raisonnement"
+    },
+    "image-gen": {
+      "label": "Génération d'images",
+      "hint": "Texte vers image"
+    },
+    "image-edit": {
+      "label": "Édition d'images",
+      "hint": "Modifier · détourage"
+    },
+    "video": {
+      "label": "Génération vidéo",
+      "hint": "Texte vers vidéo"
+    },
+    "audio": {
+      "label": "Audio et vidéo",
+      "hint": "Voix · transcription"
+    },
+    "data": {
+      "label": "Informations",
+      "hint": "Récupération · extraction"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "Augmentation par la connaissance"
+    },
+    "tools": {
+      "label": "API d'outils",
+      "hint": "Agent · outils"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "Bots",
+      "chips": "Bots de chat · bots de dessin · connaissances"
+    },
+    "productivity": {
+      "label": "Productivité",
+      "chips": "Arène de modèles · rédaction IA"
+    },
+    "academic": {
+      "label": "Académique",
+      "chips": "Kit PDF · Recherche de brevets IA"
+    },
+    "image": {
+      "label": "Outils image",
+      "chips": "Studio 3D · Canvas"
+    },
+    "audio": {
+      "label": "Audio",
+      "chips": "Voix · Musique IA"
+    },
+    "code": {
+      "label": "Code",
+      "chips": "Générateur Web · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "Vue d'ensemble",
+    "keys": "Clés",
+    "wallet": "Portefeuille",
+    "use": "Essayer",
+    "docs": "Documentation",
+    "models": "Plus"
+  }
+}

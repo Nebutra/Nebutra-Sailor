@@ -1,0 +1,92 @@
+{
+  "name": "create-sailor",
+  "version": "1.9.6",
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
+  "description": "Governed AI-native SaaS scaffolder for Nebutra Sailor. Bootstrap a production-ready Next.js + Hono + Prisma monorepo with multi-tenant foundations, region-aware defaults, and AI integrations.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "create-sailor": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "templates",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "prepare": "mkdir -p dist && test -f dist/index.js || echo '#!/usr/bin/env node' > dist/index.js",
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "prepublishOnly": "pnpm run build",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.5.0",
+    "@mrleebo/prisma-ast": "^0.16.0",
+    "cfonts": "^3.3.0",
+    "commander": "^15.0.0",
+    "gradient-string": "^3.0.0",
+    "ignore": "^7.0.5",
+    "picocolors": "^1.1.0",
+    "update-notifier": "^7.3.1"
+  },
+  "devDependencies": {
+    "@nebutra/brand": "workspace:*",
+    "@nebutra/preset": "workspace:*",
+    "@types/node": "catalog:",
+    "@types/update-notifier": "^6.0.8",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "keywords": [
+    "sailor",
+    "nebutra",
+    "saas",
+    "scaffold",
+    "starter",
+    "ai",
+    "ai-native",
+    "agents",
+    "mcp",
+    "platform",
+    "infrastructure",
+    "multi-tenant",
+    "nextjs",
+    "hono",
+    "prisma",
+    "tailwind",
+    "monorepo",
+    "turbo",
+    "cli",
+    "bootstrap",
+    "auth",
+    "billing",
+    "registry"
+  ],
+  "author": "Nebutra <contact@nebutra.com> (https://nebutra.com)",
+  "license": "MIT",
+  "homepage": "https://nebutra.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ops/create-sailor"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

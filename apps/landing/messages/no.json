@@ -1,0 +1,1781 @@
+{
+  "nav": {
+    "features": "Funksjoner",
+    "solutions": "Løsninger",
+    "pricing": "Priser",
+    "docs": "Dokumentasjon",
+    "github": "GitHub",
+    "npm": "npm",
+    "about": "Om oss",
+    "ideas": "Ideer",
+    "opc": "Plattform",
+    "roadmap": "Veiutvikling",
+    "resources": "Ressurser",
+    "signIn": "Logg inn",
+    "getStarted": "Kom i gang",
+    "changelog": "Endringslogg",
+    "news": "Nyheter",
+    "designDocs": "Designsystem",
+    "avatarMenu": {
+      "ariaLabel": "Kontomeny",
+      "loadingName": "Laster…",
+      "dashboard": "Dashbord",
+      "account": "Konto",
+      "billing": "Fakturering",
+      "docs": "Dokumentasjon",
+      "signOut": "Logg ut"
+    }
+  },
+  "refer": {
+    "metadataTitle": "Bli med i {brandName}-gründerreferansesløkken",
+    "metadataDescription": "Bli med på {brandName}-ventelisten, behold referanseattribusjon og lås opp din egen delingslenke i én lukket produktstyrt sløyfe.",
+    "eyebrow": "Gründerreferansesløkke",
+    "title": "Bli med i neste gründerkull og få din egen delingslenke.",
+    "description": "Kom inn med hvilken som helst invitasjonskode eller meld deg på direkte. Vi vil bevare attribusjon når koden finnes, plassere deg på ventelisten og gi deg en privat referanse-URL du kan dele med en gang.",
+    "signal": {
+      "waitlist": "Varig venteliste",
+      "codeDetected": "Kode {code} oppdaget",
+      "direct": "Direkte registrering"
+    },
+    "form": {
+      "emailLabel": "Arbeids-e-post",
+      "emailPlaceholder": "you@example.com",
+      "codeLabel": "Referansekode",
+      "codePlaceholder": "Valgfri kode",
+      "submit": "Bli med på ventelisten",
+      "submitting": "Bli med",
+      "invalidEmail": "Skriv inn en gyldig e-postadresse.",
+      "error": "Kunne ikke bli med akkurat nå. Vennligst prøv igjen.",
+      "successTitle": "Du er på listen",
+      "successDescription": "Din private delingslenke er klar.",
+      "positionLabel": "Køposisjon",
+      "referralCodeLabel": "Din kode",
+      "referralUrlLabel": "Din delingslenke",
+      "copyLink": "Kopier lenke",
+      "copied": "Kopiert",
+      "share": "Del",
+      "shareTitle": "Bli med i {brandName} grunnleggerløkken",
+      "shareText": "Bruk invitasjonslenken min for å bli med på {brandName} grunnlegger-ventelisten.",
+      "directMode": "Ingen henvisningskode nødvendig",
+      "codeMode": "Henleggelse av henvisning er aktivert"
+    },
+    "proof": {
+      "peerLoop": {
+        "title": "Gründer-til-gründer-løkke",
+        "description": "Hver godkjente registrering mottar en kode og en URL, så neste henvisning starter uten manuell overlevering."
+      },
+      "attribution": {
+        "title": "Ærlig henleggelse",
+        "description": "Ukjente koder lagres som forsøkt henleggelse, mens gyldige koder øker antall for henviseren og holder registreringen ren."
+      },
+      "shareLink": {
+        "title": "Klar til deling – tilstandsvisning",
+        "description": "Bekreftelsestilstanden viser posisjon, kode, kopiering og innebygde delingshandlinger, slik at løkken fullføres på siden."
+      }
+    },
+    "infrastructure": {
+      "eyebrow": "Produktledet infrastruktur",
+      "title": "Designet som varig SaaS-infrastruktur, ikke en engangsbruksskjema.",
+      "description": "Henvisningsgrensesnittet støttes av et domene-pakke, en vedvarende Prisma-modell, en typet Next.js-rute og offentlige røyktester som kan kjøres etter ECS-utplasseringer.",
+      "data": {
+        "eyebrow": "Data",
+        "title": "En varig venteliste-tabell",
+        "description": "E-post-unikhet, automatisk inkrementert posisjon, henvisningskode-indekser, metadata for forsøkt henleggelse og statusoverganger finnes i plattformens database."
+      },
+      "api": {
+        "eyebrow": "API",
+        "title": "Typet sluttpunkt for påmelding",
+        "description": "Siden poster til `/api/waitlist`, normaliserer vilkårlige koder, returnerer eksisterende oppføringer idempotent og er aldri avhengig av en eksempelkode."
+      },
+      "cicd": {
+        "eyebrow": "CI/CD",
+        "title": "Offentlig røyktesting ved utlevering",
+        "description": "Kanoniske og alias-URL-er er klare for automatiske sjekker, slik at ECS-levering fanger opp regresjoner i ruter, DNS og helse."
+      }
+    }
+  },
+  "hero": {
+    "headline1": "Lanser din startup,",
+    "headline2": "drevet av {brandName} Agent OS.",
+    "subheadline": "Hopp over uker med plattformarbeid på et <highlight>produksjonsklart</highlight> grunnlag med styrt arkitektur, bygget for AI-kodingsagenter og gründere som går globalt.",
+    "copyLabel": "Kopier kommando",
+    "copiedLabel": "Kopiert",
+    "ctaGetAccess": "Lanser din startup",
+    "ctaExploreDemo": "Utforsk demo",
+    "pillCopied": "Kopiert"
+  },
+  "features": {
+    "sectionTitle": "Infrastruktur klar til bruk, fra prototype til skala.",
+    "item0": {
+      "title": "Infrastruktur for AI-applikasjoner",
+      "description": "Innebygde, produksjonstestede agentrammeverk og LLM-koordineringsmotorer. Omgå komplekse underliggende abstraksjoner og samhandle direkte med strukturerte intelligens-API-er."
+    },
+    "item1": {
+      "title": "Styrt plattformgrunnlag",
+      "description": "Et styrt plattformgrunnlag for team som leverer AI-native SaaS. Samordn skjelett, kjøretidsprimitiver og leveringsflater uten å sette sammen ad-hoc-verktøy."
+    },
+    "item2": {
+      "title": "Enterprise SaaS-automatisering",
+      "description": "Dyp integrasjon av moderne teknologistack med Vercel, Supabase og Stripe. Leverer ferdig konfigurert radnivå-sikkerhet, kompleks multi-tenant-isolering og global abonnementsfakturering."
+    }
+  },
+  "cta": {
+    "heading": "Klar til å distribuere ditt neste AI-produkt?",
+    "subheading": "Initialiser en komplett, sky-native SaaS-arkitektur lokalt med ett enkelt terminalkommando.",
+    "copyLabel": "Kopier kommando",
+    "copiedLabel": "Kopiert",
+    "startBuilding": "Kom i gang"
+  },
+  "footer": {
+    "brandDescription": "Lanser din startup med {brandName} Agent OS. Multi-tenancy, fakturering, autentisering og AI — produksjonsklar fra dag én.",
+    "columns": {
+      "product": "Produkt",
+      "resources": "Ressurser",
+      "legal": "Juridisk",
+      "community": "Samfunn"
+    },
+    "links": {
+      "product": "Produkt",
+      "features": "Funksjoner",
+      "forge": "Forge",
+      "pricing": "Priser",
+      "about": "Om oss",
+      "showcase": "Visning",
+      "blog": "Blogg",
+      "playbook": "Håndbok",
+      "changelog": "Endringslogg",
+      "roadmap": "Veikart",
+      "docs": "Dokumentasjon",
+      "ideas": "Ideer",
+      "opc": "Plattform",
+      "careers": "Karriere",
+      "security": "Sikkerhet",
+      "dpa": "DPA",
+      "privacy": "Personvern",
+      "terms": "Vilkår",
+      "cookies": "Cookies",
+      "refund": "Refusjon",
+      "licensing": "Lisensiering",
+      "contact": "Kontakt",
+      "faq": "FAQ",
+      "github": "GitHub",
+      "discord": "Discord",
+      "twitter": "X (Twitter)"
+    },
+    "copyright": "© 2026 {brandName} Intelligence. Alle rettigheter reservert.",
+    "statusOnline": "Alle systemer operative",
+    "newsletterTitle": "Hold deg oppdatert",
+    "newsletterPlaceholder": "you@example.com",
+    "newsletterSubscribe": "Abonner",
+    "newsletterSuccess": "Takk for at du abonnerte!",
+    "newsletterError": "Noe gikk galt",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
+  },
+  "logoStrip": {
+    "tagline": "Kjører på"
+  },
+  "monorepoTree": {
+    "badge": "TURBOREPO-STRUKTUR",
+    "title": "15 apper. 113 pakker. 4 bakendspor.",
+    "description": "Delt kode, parallelle bygginger, null duplisering. Full end-to-end-typing fra database til frontend.",
+    "metricApps": "apper",
+    "metricBackends": "backend-sporer",
+    "metricPackages": "pakker",
+    "verifiedPaths": "Stier verifisert mot gjeldende arbeidsområde",
+    "cta": "Utforsk monorepo-arkitekturen"
+  },
+  "stats": {
+    "title": "I tall",
+    "github": "GitHub-stjerner",
+    "discord": "Discord-medlemmer",
+    "setup": "Gj.snitt oppsettstid",
+    "packages": "Monorepo-pakker",
+    "ctaStar": "Gi stjerner →",
+    "ctaJoin": "Bli med →",
+    "ctaStart": "Kom i gang →",
+    "ctaExplore": "Utforsk →"
+  },
+  "legalPages": {
+    "about": {
+      "title": "Om oss — Den styrte AI-plattformen",
+      "description": "Oppdag den kommersielle visjonen og ingeniørprinsippene bak {brandName}s styrte AI-plattform.",
+      "heading": "Tiden for slanke produktlag",
+      "subheading": "Erstatt gjentatt plattformarbeid med styrt infrastruktur, sterk automatisering og varig ingeniørmessig leverage.",
+      "missionTitle": "En ny orden som motstår administrativt forfall",
+      "missionP1": "{brandName} bygger en styrt AI-plattform for team som trenger varig infrastruktur i stedet for kortlivede starter-stacks. Tradisjonell skala kommer ofte med byråkrati og entropi; vi svarer med kode-styring, automatisering og en plattform-baseline som forblir reviserbar mens den vokser.",
+      "missionP2": "Handelen lider fortsatt av koordineringsomkostninger, fragmentert verktøybruk og svake oppgraderingsveier. Vi bryr oss om å redusere disse friksjonene gjennom klarere plattform-kontrakter, sterkere leveringsprimitiver og runtime-atferd team faktisk kan observere og stole på.",
+      "missionP3": "Vi forkaster vanen med å løse skaleringsproblemer med mer organisatorisk drag. Automatisering, tester og styring bør absorbere gjentatt operativt arbeid slik at team kan holde fokus på produkt, arkitektur og kundeutfall.",
+      "missionP4": "",
+      "valuesTitle": "De fire søylene",
+      "values": {
+        "0": {
+          "title": "Styrt skala (filosofi)",
+          "description": "Skala bør komme fra sterkere systemer, bedre leverage og klarere driftsregler – ikke fra å stable på mer organisatorisk vekt."
+        },
+        "1": {
+          "title": "Byggerkjernen (infrastruktur)",
+          "description": "En gjenbrukbar plattform-baseline for multi-tenancy, fakturering, auth, compliance og AI-integrasjoner som team kan revidere, utvide og levere på gjentatte ganger."
+        },
+        "2": {
+          "title": "Oppgraderingsdisiplin (routing)",
+          "description": "Friske systemer vokser gjennom kompatibilitetssjekker, migreringer og observerbare runtime-kontrakter i stedet for drift, heltedåd og engangs-omskrivinger."
+        },
+        "3": {
+          "title": "Kode er lov (organisasjon)",
+          "description": "Operativ disiplin bør være kodet i tester, arbeidsflyter og styringsregler slik at team kan forbedre plattformen uten å stole på politikk eller institusjonell hukommelse."
+        }
+      },
+      "jobsTitle": "Ingeniør-signaler fremfor referanser",
+      "jobsDescription": "Vi bryr oss mer om verifiserbar ingeniørutdata, klarhet i tenkning og systemdom enn om bakgrunn eller tittel-inflasjon.",
+      "jobsButton": "Send inn GitHub-profil",
+      "companyInfoTitle": "Organisasjonsmessig samsvar",
+      "companyInfo": {
+        "legalName": "Registrert selskapsnavn",
+        "founded": "Registreringsdato",
+        "headquarters": "Globalt operasjonssenter",
+        "jurisdiction": "Gjeldende jurisdiksjon"
+      },
+      "ctaHeading": "Trenger du en dypere teknisk vurdering?",
+      "ctaDescription": "Kontakt våre ingeniørspesialister for en bedriftsintegreringsvurdering eller se gjennom dokumentasjonen for utplassering.",
+      "ctaButton": "Ta kontakt"
+    },
+    "contact": {
+      "title": "Teknisk og kommersiell henvendelse — {brandName} Intelligence",
+      "description": "Den dedikerte kommunikasjonskanalen for kommersielle lisenser, bedriftsintern selvhosting og avansert teknisk support.",
+      "heading": "Opprett supportkontakt",
+      "subheading": "Vi sender en dedikert teknisk spesialist eller arkitekt for å vurdere dine eksplisitte behov.",
+      "contacts": {
+        "founder": {
+          "title": "Direkte kontakt med grunnlegger",
+          "description": "Direkte kommunikasjonskanal for sentrale strategiske avklaringer og henvendelser på ledelsesnivå."
+        },
+        "general": {
+          "title": "Bedriftskonsultasjon",
+          "description": "Preliminære diskusjoner om økologiske strategiske partnerskap og overordnede arkitekturendringer."
+        },
+        "sales": {
+          "title": "Kommerciell implementering",
+          "description": "Forhandlinger om lisensiering av lukket kildekode og detaljer knyttet til implementering i private kluster-miljøer."
+        },
+        "support": {
+          "title": "Ekspertstøtte",
+          "description": "Retningslinjer for arkitektur og feilsøkings tjenester for aktive forretningsintegrasjoner og feilsøking av kjerne-systemer."
+        },
+        "legal": {
+          "title": "Juridisk & samsvar",
+          "description": "Henvendelser om definisjoner av grenser for åpen kildekode, samsvarssjekker for bedrifter og kontraktsvilkår."
+        },
+        "privacy": {
+          "title": "Datasenter-personvern",
+          "description": "Teknisk verifisering og samsvarsdirektiver vedrørende GDPR og etterfølgende internasjonale datavern lover."
+        },
+        "security": {
+          "title": "Sikkerhetsrapportering",
+          "description": "Send trygt tekniske reproduseringsrapporter om potensielle programvaresårbarheter direkte til vårt infrastrukturteam."
+        }
+      },
+      "formTitle": "Innsendingsportal",
+      "form": {
+        "name": "Innsenders navn",
+        "email": "Offisiell e-postadresse",
+        "company": "Tilknyttet organisasjon",
+        "category": "Område for behov",
+        "categories": {
+          "general": "Virksomhetskonsultasjon",
+          "sales": "Lisensiering & Arkitektur",
+          "support": "Utviklerstøtte",
+          "legal": "Juridiske & Samsvarsrammer",
+          "privacy": "Databehandlingsretningslinjer",
+          "partnership": "Økosystemintegrasjoner",
+          "press": "Økonomisk Presse"
+        },
+        "subject": "Kjerneproblemoppsummering",
+        "message": "Detaljerte Tekniske/Kommersielle Spesifikasjoner",
+        "submit": "Overfør til Backend",
+        "privacyNotice": "Utføring av denne nettverksforespørselen indikerer lesing og samtykke til våre",
+        "privacyLink": "Systemiske Personverninfrastruktur",
+        "submitting": "Inngår i behandlingskø...",
+        "successMessage": "Data overført vellykket. Den ansvarlige operasjonelle teamet vil gi en detaljert respons innen 1-2 standard forretningsdager."
+      },
+      "companyInfoTitle": "Operasjonell Telemetri",
+      "companyNameChinese": "{companyLegal}",
+      "companyNameEnglish": "{companyLegalEn}",
+      "companyAddress": "Wuxi, Jiangsu-provinsen, Kina",
+      "socialMedia": "Hovednettverkslenker"
+    },
+    "cookies": {
+      "title": "Cookiepolicy — {brandName}",
+      "description": "Hvordan {brandName} bruker cookies og lignende sporingsteknologier på nettstedet og tjenestene våre.",
+      "heading": "Cookiepolicy",
+      "effectiveDate": "Gjeldende fra",
+      "lastUpdated": "Sist oppdatert",
+      "dates": {
+        "effective": "1. januar 2025",
+        "updated": "1. januar 2025"
+      },
+      "intro": "Denne cookiepolicyen forklarer hvordan {brandName} Co., Ltd. (\"{brandName}\", \"vi\", \"oss\" eller \"vår\") bruker cookies og lignende sporingsteknologier på nettstedet og tjenestene våre.",
+      "whatAreCookies": {
+        "title": "Hva er cookies?",
+        "content": "Cookies er små tekstfiler som plasseres på enheten din når du besøker et nettsted. De brukes mye for å gjøre nettsteder mer effektive og gi informasjon til nettstedseiere."
+      },
+      "howWeUse": {
+        "title": "Hvordan vi bruker cookies",
+        "intro": "Vi bruker cookies for å:",
+        "items": {
+          "0": {
+            "label": "Aktivere grunnleggende funksjoner",
+            "desc": "Tilby grunnleggende funksjonalitet som brukerautentisering og sikkerhet"
+          },
+          "1": {
+            "label": "Husk preferanser",
+            "desc": "Lagre språk, tema og andre innstillinger"
+          },
+          "2": {
+            "label": "Forbedre ytelse",
+            "desc": "Forstå hvordan besøkende bruker tjenestene våre"
+          },
+          "3": {
+            "label": "Tilpass opplevelsen",
+            "desc": "Lever relevant innhold og anbefalninger"
+          },
+          "4": {
+            "label": "Mål markedsføring",
+            "desc": "Spor effektiviteten til markedsføringskampanjene våre"
+          }
+        }
+      },
+      "typesTitle": "Typer cookies vi bruker",
+      "tableHeaders": {
+        "cookie": "Cookie",
+        "provider": "Leverandør",
+        "purpose": "Formål",
+        "duration": "Varighet"
+      },
+      "necessary": {
+        "title": "Strengt nødvendige cookies",
+        "description": "Disse cookies er nødvendige for at nettsiden skal fungere som den skal. De kan ikke deaktiveres.",
+        "cookies": {
+          "0": {
+            "name": "__session",
+            "provider": "{brandName}",
+            "purpose": "Brukerautentiseringsøkt",
+            "duration": "Økt"
+          },
+          "1": {
+            "name": "__clerk_db_jwt",
+            "provider": "Clerk",
+            "purpose": "Autentiseringstoken",
+            "duration": "7 dager"
+          },
+          "2": {
+            "name": "cookie_consent",
+            "provider": "{brandName}",
+            "purpose": "Lagrer innstillinger for cookie-samtykke",
+            "duration": "1 år"
+          }
+        }
+      },
+      "functional": {
+        "title": "Funksjonelle cookies",
+        "description": "Disse cookieene gjør det mulig å tilpasse funksjoner og huske dine preferanser.",
+        "cookies": {
+          "0": {
+            "name": "locale",
+            "provider": "{brandName}",
+            "purpose": "Lagrer språkpreferanse",
+            "duration": "1 år"
+          },
+          "1": {
+            "name": "theme",
+            "provider": "{brandName}",
+            "purpose": "Lagrer tema-preferanse",
+            "duration": "1 år"
+          }
+        }
+      },
+      "analyticsType": {
+        "title": "Analytisk informasjonskapsler",
+        "description": "Disse informasjonskapslene hjelper oss med å forstå hvordan besøkende samhandler med nettstedet vårt.",
+        "cookies": {
+          "0": {
+            "name": "_ga",
+            "provider": "Google Analytics",
+            "purpose": "Skjermer unike brukere",
+            "duration": "2 år"
+          },
+          "1": {
+            "name": "ph_*",
+            "provider": "PostHog",
+            "purpose": "Produktanalyse",
+            "duration": "1 år"
+          }
+        }
+      },
+      "marketingType": {
+        "title": "Markedsføringsinformasjonskapsler",
+        "description": "Disse informasjonskapslene brukes til reklame og sporing av reklamekampanjenes ytelse.",
+        "cookies": {
+          "0": {
+            "name": "_fbp",
+            "provider": "Facebook",
+            "purpose": "Sporer besøk for Facebook-annonser",
+            "duration": "3 måneder"
+          },
+          "1": {
+            "name": "_gcl_au",
+            "provider": "Google Ads",
+            "purpose": "Konverteringssporing",
+            "duration": "3 måneder"
+          }
+        }
+      },
+      "managingTitle": "Administrere dine cookie-preferanser",
+      "consentBanner": {
+        "title": "Cookie-samtykkebanner",
+        "intro": "Når du besøker nettstedet vårt første gang, vil du se et cookie-samtykkebanner som lar deg:",
+        "items": {
+          "0": {
+            "label": "Godta alle",
+            "desc": "Aktiver alle cookie-kategorier"
+          },
+          "1": {
+            "label": "Avvis alle",
+            "desc": "Deaktiver alle valgfrie cookies (nødvendige cookies beholdes)"
+          },
+          "2": {
+            "label": "Tilpass",
+            "desc": "Velg spesifikke cookie-kategorier å aktivere"
+          }
+        },
+        "changeNote": "Du kan endre preferansene dine når som helst ved å klikke på \"Cookie-innstillinger\" i bunnteksten."
+      },
+      "browserSettings": {
+        "title": "Browserinnstillinger",
+        "intro": "De fleste nettlesere lar deg kontrollere cookies gjennom innstillingene:",
+        "browsers": {
+          "0": {
+            "name": "Chrome",
+            "path": "Innstillinger > Personvern og sikkerhet > Cookies"
+          },
+          "1": {
+            "name": "Firefox",
+            "path": "Innstillinger > Personvern og sikkerhet > Cookies"
+          },
+          "2": {
+            "name": "Safari",
+            "path": "Preferanser > Personvern > Cookies"
+          },
+          "3": {
+            "name": "Edge",
+            "path": "Innstillinger > Personvern, søk og tjenester > Cookies"
+          }
+        },
+        "note": "Å blokkere visse cookies kan påvirke nettsidens funksjonalitet."
+      },
+      "similarTech": {
+        "title": "Lignende teknologier",
+        "intro": "I tillegg til cookies kan vi bruke:",
+        "items": {
+          "0": {
+            "label": "Lokal lagring",
+            "desc": "For å lagre preferanser og mellomlagre data lokalt"
+          },
+          "1": {
+            "label": "Øktlagring",
+            "desc": "For midlertidige data under nettleserøkten din"
+          },
+          "2": {
+            "label": "Pikselmerker",
+            "desc": "Små bilder for å spore e-poståpninger og nettsidebesøk"
+          }
+        },
+        "noFingerprinting": "Vi bruker IKKE browserfingerprinting for sporing."
+      },
+      "updates": {
+        "title": "Oppdateringer av denne politikken",
+        "content": "Vi kan oppdatere denne cookiepolitikken fra tid til annen. Vi vil varsle deg om vesentlige endringer ved å publisere den oppdaterte politikken på nettstedet vårt."
+      },
+      "contactUs": {
+        "title": "Kontakt oss",
+        "intro": "Hvis du har spørsmål om bruken av cookies, vennligst kontakt oss:",
+        "company": "{brandName} Co., Ltd.",
+        "privacyNote": "For mer informasjon om hvordan vi samler inn og behandler dataene dine, vennligst se vår",
+        "privacyLink": "Personvernpolitikk"
+      }
+    },
+    "faq": {
+      "title": "Ingeniørveiledning & FAQ — {brandName}",
+      "description": "Utviklet analyse av rammeverksarkitektur, grunnleggende topologier og kommersielle implementeringsstrategier.",
+      "heading": "Dypdykk for ledelsen",
+      "subheading": "Støttedokumentasjon optimalisert for systemintegrering og kommersielle beslutninger.",
+      "categories": {
+        "0": {
+          "name": "Arkitekturoversikt",
+          "questions": {
+            "0": {
+              "q": "Hva er den eksplisitte operative formålet med {productName}?",
+              "a": "{productName} er et høyt strukturert, produksjonsklar Next.js AI SaaS-rammeverk. Det samler bedriftsfakturering, multifaktorautentisering og multi-tenant-isolering i en styrt plattformbase, slik at team kan fokusere på produktspesifikk AI-implementering."
+            },
+            "1": {
+              "q": "Hvordan er lisensieringen av repositoriet strukturert?",
+              "a": "Den underliggende infrastrukturen håndhever strengt OSS AGPLv3-avtalen, og garanterer transparens og kostnadsfri bruk. For organisasjoner som krever proprietær obskurering og forhøyede omskrivingsgarantier, er eksplisitte lukkede kommersielle kontrakter tilgjengelige."
+            },
+            "2": {
+              "q": "Hva er hastigheten på den innledende kommersielle evalueringen?",
+              "a": "Ekstremt høy hastighet. Ved hjelp av vår tilpassede Node CLI-verktøykjede sammen med den presise tekniske spesifikasjonen, kan en junioringeniør sette opp en autonom lokal Minimum Viable Product (MVP)-instans på få minutter."
+            }
+          }
+        },
+        "1": {
+          "name": "Kommersiell drift",
+          "questions": {
+            "0": {
+              "q": "Hvor stor er toleransen for kommersiell skalering?",
+              "a": "Designet er tungt basert på mikrokomponentparadigmer, og strukturell lastekapasitet kartlegges sømløst fra null-etterspørsels Free Tiers dynamisk opp til Enterprise-termer som håndterer flere millioner månedlige forespørsler, helt konfigurert via dashboard-begrensninger."
+            },
+            "1": {
+              "q": "Hvordan påvirker abonnementsvolatilitet standardregnskapet?",
+              "a": "Vi opererer med presis, sekundnivå-strukturell logging av ressurser og API-gjennomstrømning. Endringer i begrensninger forsones umiddelbart mot regnskapslaget – enten ved å refundere prorate differanser eller utstede automatiske kreditter. Det er absolutt ingen tier-fryseperiode."
+            },
+            "2": {
+              "q": "Hvilken prosesseringsinfrastruktur isolerer betalingsvektorer?",
+              "a": "Global kontant-routing deferrer fundamentalt til Stripe-servergrensesnitt, og garanterer streng PCI-DSS-telemetri og prosesseringsintegritet. Enterprise-utplasseringer kan integrere private finansielle revisjonsrørledninger styrt av tilpassede SLA-forpliktelser."
+            }
+          }
+        },
+        "2": {
+          "name": "Systemingeniør-lag",
+          "questions": {
+            "0": {
+              "q": "Hvilke grunnleggende intelligensabstraksjoner støttes innfødt?",
+              "a": "Den primære interaksjonslogikken dikterer innfødt interoperabilitet over OpenAI-, Anthropic- og Gemini-standardspesifikasjoner. Dette gir enorm fleksibilitet til å bytte ut resonneringsendepunkter effektivt via variabelkartlegging uten nedgang i den oppstrøms kommersielle logikken."
+            },
+            "1": {
+              "q": "Hvordan håndteres risikoen for databaseobskurering?",
+              "a": "Implementeringen standardiserer intrinsisk utplassering av Postgres Row-Level Security (RLS)-policyer tett koblet til våre serverless Tenant Resolution Routing-primitiver. Dette sikrer at harde partisjoner aktivt forhindrer kritisk applikasjonsnivå-dataforurensning og utførelsesoverlapp."
+            },
+            "2": {
+              "q": "Er det arkitektoniske begrensninger for selvadministrerte distribusjoner?",
+              "a": "Absolutt ingen. Topologien er fullt utkoblet. Hvis miljøet kjører uavhengige Node.js-kjøretidsmiljøer sammen med sunne PostgreSQL-kluster, bevares full funksjonalitet av seg selv."
+            }
+          }
+        },
+        "3": {
+          "name": "Systematisk integritet",
+          "questions": {
+            "0": {
+              "q": "Hvilke protokoller bestemmer perimeters mekaniske forsvar?",
+              "a": "Mekanismer utfører obligatorisk TLS-kryptering gjennom overføring, deterministiske hashing-algoritmer for hemmelighetskartlegging og den allgegenwärtige opptak av mutasjonshendelser som skrives strengt inn i interne tidsserietracking-registre."
+            },
+            "1": {
+              "q": "Respekterer topologien store internasjonale personvernlover?",
+              "a": "Ja, dypt. Forretningsmoduler leverer algoritmeimplementeringer klar til bruk som retter seg mot samtykketilbakekallstater, hard-slettingslogikk og dype eksportforespørsler som optimalt samsvarer med GDPR og lokale regelverk."
+            },
+            "2": {
+              "q": "Hva utføres ved en anomalt katastrofalt hendelse?",
+              "a": "Automatiserte vakter varsler øyeblikkelig kjerneingeniørvektorer som tvinger kretsblokkeringer og implementerer rask triage. Styrt av en avansert løsningshåndbok, distribueres fullt transparente hendelsespostmortemer universelt innen et absolutt 72-timers vindu."
+            }
+          }
+        },
+        "4": {
+          "name": "Tekniske assistanseinstruksjoner",
+          "questions": {
+            "0": {
+              "q": "Hvordan løses operasjonelle flaskehalsfeilsøking?",
+              "a": "Innledende triagevektorer retter seg mot det nøye vedlikeholdte og fagfellevurderte dokumentasjonsmatrisen og verifiserte samfunnsinteraksjoner. Å skaffe en standard- eller enterprise-lisens dekrypterer tilgang til private eskaleringskøer som løses gjennom direkte interne ingeniørnoder."
+            },
+            "1": {
+              "q": "Utvider dere fysiske eller spesialiserte miljøintegrasjonsoperasjoner?",
+              "a": "Dette faller under vår skreddersømte premiumutførelsesnivå for toppsjiktets konsernkonglomerater. Våre mest erfarne arkitekter deployerer outly for å utføre kodeaudit mot eldre arkitektur, håndtere delikate skyflyttinger og validere høyt isolerte nettverkspartisjoner."
+            }
+          }
+        }
+      },
+      "ctaHeading": "Trenger du umiddelbar teknisk synkronisering?",
+      "ctaDescription": "Uansett om du validerer en spesifikk API-opførselsskjema eller utfører langsiktige integreringsavtaler, grensesnitt direkte med ingeniørhierarkiet.",
+      "ctaButton": "Motta integrasjonsinstruksjoner",
+      "ctaEmail": "Send direkte melding"
+    },
+    "privacy": {
+      "title": "Personvern- og informasjonsvernprotokoll — {brandName}",
+      "description": "Utdypende dokumentasjon av hvordan infrastrukturmekanismene styrer brukerens selvbestemmelse og maskindataisolasjon.",
+      "heading": "Informasjonsverndirektiver",
+      "effectiveDate": "Gjeldende fra",
+      "lastUpdated": "Sist oppdatert",
+      "dates": {
+        "effective": "1. januar 2025",
+        "updated": "1. januar 2025"
+      },
+      "intro": "Hos {brandName} (\"Selskapet\", \"vi\", \"oss\" eller \"vår\") er vi forpliktet til å beskytte din personvern. Denne personvernerklæringen forklarer hvordan vi samler inn, bruker, avslører og beskytter informasjonen din når du bruker nettstedet vårt, applikasjonene og tjenestene (samlet kalt \"Tjenestene\").",
+      "infoWeCollect": {
+        "title": "1. Informasjon vi samler inn",
+        "youProvide": {
+          "title": "1.1 Informasjon du oppgir",
+          "intro": "Vi samler inn informasjon du direkte oppgir til oss, inkludert:",
+          "items": {
+            "0": {
+              "label": "Kontoinformasjon",
+              "desc": "Navn, e-postadresse, passord og organisasjonsdetaljer når du oppretter en konto."
+            },
+            "1": {
+              "label": "Profilinformasjon",
+              "desc": "Profilbilde, stillingstitel, selskapsnavn og annen valgfri informasjon."
+            },
+            "2": {
+              "label": "Betalingsinformasjon",
+              "desc": "Faktureringsadresse og detaljer om betalingsmåte (behandles sikkert gjennom Stripe)."
+            },
+            "3": {
+              "label": "Kommunikasjon",
+              "desc": "Meldinger, tilbakemeldinger og annen kommunikasjon du sender til oss."
+            },
+            "4": {
+              "label": "Innhold",
+              "desc": "Alt innhold du oppretter, laster opp eller lagrer ved hjelp av tjenestene våre."
+            }
+          }
+        },
+        "automatic": {
+          "title": "1.2 Informasjon som samles inn automatisk",
+          "intro": "Når du bruker tjenestene våre, samler vi automatisk inn visse opplysninger:",
+          "items": {
+            "0": {
+              "label": "Enhetsinformasjon",
+              "desc": "Enhetstype, operativsystem, nettlesertype og unike enhetsidentifikatorer."
+            },
+            "1": {
+              "label": "Bruksinformasjon",
+              "desc": "Sider som er vist, funksjoner som er brukt, handlinger som er utført og tid brukt på tjenestene."
+            },
+            "2": {
+              "label": "Loggdata",
+              "desc": "IP-adresse, tilgangstidspunkter, henvisnings-URL-er og systemaktivitetslogger."
+            },
+            "3": {
+              "label": "Lokasjonsinformasjon",
+              "desc": "Generell lokasjon basert på IP-adresse (vi samler ikke inn nøyaktig geolokasjon)."
+            }
+          }
+        }
+      },
+      "howWeUse": {
+        "title": "2. Hvordan vi bruker informasjonen din",
+        "intro": "Vi bruker informasjonen vi samler inn til å:",
+        "items": {
+          "0": {
+            "label": "Tilby tjenester",
+            "desc": "Drifte, vedlikeholde og forbedre tjenestene våre."
+          },
+          "1": {
+            "label": "Behandle transaksjoner",
+            "desc": "Håndtere betalings-, fakturerings- og relaterte operasjoner."
+          },
+          "2": {
+            "label": "Kommunisere",
+            "desc": "Sende tjenestemeldinger, oppdateringer og markedsføringskommunikasjon (med samtykke)."
+          },
+          "3": {
+            "label": "Tilpasse",
+            "desc": "Tilpasse opplevelsen din og gi relevante anbefalninger."
+          },
+          "4": {
+            "label": "Analysere",
+            "desc": "Forstå bruksmønstre og forbedre tjenestene våre."
+          },
+          "5": {
+            "label": "Beskytte",
+            "desc": "Oppdage, forebygge og håndtere svindel, misbruk og sikkerhets hendelser."
+          }
+        }
+      },
+      "howWeShare": {
+        "title": "3. Hvordan vi deler informasjonen din",
+        "intro": "Vi kan dele informasjonen din i følgende situasjoner:",
+        "serviceProviders": {
+          "title": "3.1 Tjenesteleverandører",
+          "intro": "Vi deler informasjon med tredjepartsleverandører som tilbyr tjenester på vegne av oss, inkludert:",
+          "items": {
+            "0": {
+              "label": "Infrastruktur",
+              "desc": "Skyhosting (Vercel, Supabase), databasetjenester"
+            },
+            "1": {
+              "label": "Betalingshåndtering",
+              "desc": "Stripe for sikker betalingshåndtering"
+            },
+            "2": {
+              "label": "Autentisering",
+              "desc": "Clerk for identitetsadministrasjon"
+            },
+            "3": {
+              "label": "Analyse",
+              "desc": "PostHog, Vercel Analytics for bruksinnsikt"
+            }
+          }
+        },
+        "businessTransfers": {
+          "title": "3.2 Virksomhetsoverdragelser",
+          "content": "Hvis vi er involvert i en fusjon, oppkjøp eller salg av eiendeler, kan informasjonen din overføres som en del av transaksjonen."
+        },
+        "legalRequirements": {
+          "title": "3.3 Juridiske krav",
+          "content": "Vi kan avsløre informasjon når det kreves av lov, juridisk prosess eller forespørsel fra myndigheter, eller for å beskytte våre rettigheter, personvern, sikkerhet eller eiendeler."
+        }
+      },
+      "yourRights": {
+        "title": "4. Dine rettigheter og valg",
+        "accessPortability": {
+          "title": "4.1 Tilgang og overførbarhet",
+          "content": "Du kan få tilgang til din personlige informasjon gjennom kontoinnstillingene og be om en kopi av dataene dine i et overførbart format."
+        },
+        "correction": {
+          "title": "4.2 Rettelse",
+          "content": "Du kan oppdatere kontoopplysningene dine når som helst gjennom dashbordet."
+        },
+        "deletion": {
+          "title": "4.3 Sletting",
+          "content": "Du kan be om sletting av kontoen din og tilknyttet data gjennom innstillingene eller ved å kontakte oss."
+        },
+        "marketing": {
+          "title": "4.4 Markedsføringskommunikasjon",
+          "content": "Du kan melde deg av markedsføringse-poster ved å klikke på «avmeld» i enhver markedsføringse-post eller ved å oppdatere preferansene dine."
+        }
+      },
+      "dataSecurity": {
+        "title": "5._datasikkerhet",
+        "intro": "Vi implementerer passende tekniske og organisatoriske tiltak for å beskytte informasjonen din, inkludert:",
+        "items": {
+          "0": "Kryptering av data under overføring (TLS) og i hvile",
+          "1": "Regelmessige sikkerhetsvurderinger og penetrasjonstesting",
+          "2": "Tilgangskontroll og autentiseringskrav",
+          "3": "Overvåking og logging av systemaktivitet"
+        }
+      },
+      "ccpa": {
+        "title": "6. California-privatlivsrettigheter (CCPA)",
+        "intro": "Hvis du er bosatt i California, har du spesifikke rettigheter når det gjelder din personlige informasjon:",
+        "items": {
+          "0": {
+            "label": "Retten til å vite",
+            "desc": "Be om opplysning om informasjon vi samler inn, bruker og deler."
+          },
+          "1": {
+            "label": "Retten til sletting",
+            "desc": "Be om sletting av dine personlige opplysninger."
+          },
+          "2": {
+            "label": "Retten til å melde seg ut",
+            "desc": "Meld deg ut fra salg av personlige opplysninger (vi selger ikke dataene dine)."
+          },
+          "3": {
+            "label": "Retten til ikke-diskriminering",
+            "desc": "Vi vil ikke diskriminere deg for å utøve dine rettigheter."
+          }
+        }
+      },
+      "gdpr": {
+        "title": "7. Europeiske personvernrettigheter (GDPR)",
+        "intro": "Hvis du befinner deg i EØS, Storbritannia eller Sveits, har du ytterligere rettigheter i henhold til GDPR:",
+        "items": {
+          "0": {
+            "label": "Rettslig grunnlag",
+            "desc": "Vi behandler dataene dine basert på kontraktsoppfyllelse, berettiget interesse eller samtykke."
+          },
+          "1": {
+            "label": "Rettigheter",
+            "desc": "Innsyn, retting, sletting, overførbarhet, begrensning og innsigelse."
+          },
+          "2": {
+            "label": "DPO",
+            "desc": "Du kan kontakte vår personvernombud (DPO) på dpo@nebutra.com."
+          }
+        }
+      },
+      "contactUs": {
+        "title": "8. Kontakt oss",
+        "intro": "Hvis du har spørsmål om denne personvernerklæringen, vennligst kontakt oss:",
+        "company": "{brandName} Co., Ltd."
+      }
+    },
+    "refund": {
+      "title": "Protokoller for transaksjonsavvik — {brandName}",
+      "description": "Nøyaktig avklaring av parametre for kapitaltilbakeføring over ulike strukturelle engasjementsmodeller.",
+      "heading": "Rammeverk for tvisteløsning",
+      "effectiveDate": "Dato for gjennomføring",
+      "lastUpdated": "Tidspunkt for revisjon",
+      "dates": {
+        "effective": "1. januar 2025",
+        "updated": "1. januar 2025"
+      },
+      "intro": "Hos {brandName} ønsker vi at du skal være helt fornøyd med tjenestene våre. Denne refusjonspolitikken beskriver situasjoner der refusjon er tilgjengelig og prosessen for å be om den.",
+      "subscriptionPlans": {
+        "title": "Abonnementsplaner",
+        "monthly": {
+          "title": "Månedlige abonnementer",
+          "items": {
+            "0": {
+              "label": "Kansellering",
+              "desc": "Du kan kansellere det månedlige abonnementet ditt når som helst"
+            },
+            "1": {
+              "label": "Pro-rata refusjoner",
+              "desc": "Vi tilbyr ikke pro-rata refusjoner for delvise måneder"
+            },
+            "2": {
+              "label": "Tilgang",
+              "desc": "Du beholder tilgang til betalte funksjoner til slutten av faktureringsperioden din"
+            },
+            "3": {
+              "label": "Automatisk fornyelse",
+              "desc": "Abonnementer fornyes automatisk med mindre de blir kansellert"
+            }
+          }
+        },
+        "annual": {
+          "title": "Årlige abonnementer",
+          "items": {
+            "0": {
+              "label": "14 dagers pengene-tilbake-garanti",
+              "desc": "Nye årlige abonnenter kan be om full refusjon innen 14 dager etter første kjøp"
+            },
+            "1": {
+              "label": "Etter 14 dager",
+              "desc": "Refusjoner er generelt ikke tilgjengelige etter 14-dagers perioden"
+            },
+            "2": {
+              "label": "Kansellering",
+              "desc": "Du kan kansellere når som helst, men abonnementet ditt vil forbli aktivt til slutten av den årlige perioden"
+            },
+            "3": {
+              "label": "Ingen pro-rata refusjoner",
+              "desc": "Vi tilbyr ikke delvise refusjoner for ubrukte måneder"
+            }
+          }
+        }
+      },
+      "eligibleScenarios": {
+        "title": "Kvalifiserende refusjonsscenarier",
+        "intro": "Vi vil vurdere refusjonsforespørsler i følgende tilfeller:",
+        "serviceIssues": {
+          "title": "1. Tjenesteavbrudd",
+          "items": {
+            "0": "Betydelige tjenesteavbrudd som påvirker din evne til å bruke kjernefunksjoner",
+            "1": "Tekniske problemer vi ikke klarer å løse innen en rimelig tidsramme",
+            "2": "Funksjoner som avviker betydelig fra det som ble annonsert"
+          }
+        },
+        "billingErrors": {
+          "title": "2. Faktureringsfeil",
+          "items": {
+            "0": "Dobbel fakturering",
+            "1": "Feil faktureringsbeløp",
+            "2": "Uautoriserte belastninger (etter verifisering)"
+          }
+        },
+        "exceptionalCircumstances": {
+          "title": "3. Unntakstilfeller",
+          "items": {
+            "0": "Dokumenterte medisinske nødsituasjoner",
+            "1": "Naturlige katastrofer som påvirker virksomheten din",
+            "2": "Andre omstendigheter som vurderes fra tilfelle til tilfelle"
+          }
+        }
+      },
+      "nonRefundable": {
+        "title": "Ikke-refunderbare elementer",
+        "intro": "Følgende er generelt ikke berettiget til refusjon:",
+        "items": {
+          "0": {
+            "label": "Bruksbaserte avgifter",
+            "desc": "API-kall, AI-tokenforbruk eller lagring brukt"
+          },
+          "1": {
+            "label": "Tillegg og ekstrautstyr",
+            "desc": "Engangskjøp eller tilleggstjenester"
+          },
+          "2": {
+            "label": "Enterprise-avtaler",
+            "desc": "Tilpassede avtaler har egne vilkår"
+          },
+          "3": {
+            "label": "Frivillige avslutninger",
+            "desc": "Etter refusjonsperioden"
+          },
+          "4": {
+            "label": "Vilkårsovertradelser",
+            "desc": "Kontoer avsluttet på grunn av regelbrudd"
+          }
+        }
+      },
+      "howToRequest": {
+        "title": "Slik ber du om refusjon",
+        "step1": {
+          "title": "Steg 1: Kontakt support",
+          "intro": "Send e-post til billing@nebutra.com med følgende informasjon:",
+          "items": {
+            "0": "E-postadressen til kontoen din",
+            "1": "Abonnementsplan og faktureringsperiode",
+            "2": "Årsak til refusjonsforespørselen",
+            "3": "Eventuell relevant dokumentasjon"
+          }
+        },
+        "step2": {
+          "title": "Steg 2: Gjennomgangsprosess",
+          "items": {
+            "0": "Vi vil gjennomgå forespørselen din innen 5 virkedager",
+            "1": "Vi kan be om ytterligere informasjon",
+            "2": "Du vil motta en skriftlig avgjørelse via e-post"
+          }
+        },
+        "step3": {
+          "title": "Steg 3: Refundering",
+          "intro": "Hvis godkjent:",
+          "items": {
+            "0": "Refunderinger behandles til den opprinnelige betalingsmetoden",
+            "1": "Kortrefunderinger vises vanligvis innen 5-10 virkedager",
+            "2": "Bankens behandlingstid kan variere"
+          }
+        }
+      },
+      "planChanges": {
+        "title": "Planendringer",
+        "upgrades": {
+          "title": "Oppgraderinger",
+          "items": {
+            "0": "Oppgraderinger treffer umiddelbart",
+            "1": "Du blir belastet den pro-rata differansen for resten av faktureringsperioden",
+            "2": "Ingen refundering gis for den tidligere planen"
+          }
+        },
+        "downgrades": {
+          "title": "Nedgraderinger",
+          "items": {
+            "0": "Nedgraderinger treffer ved neste faktureringsperiode",
+            "1": "Du beholder tilgang til nåværende funksjoner til da",
+            "2": "Ingen delvis refusjon for gjeldende periode"
+          }
+        }
+      },
+      "freeTrial": {
+        "title": "Gratis prøveperiode",
+        "items": {
+          "0": "Gratis prøveperioder krever ikke betalingsinformasjon",
+          "1": "Ingen avgifter påløper under prøveperioden",
+          "2": "Du blir varslet før eventuelle avgifter starter"
+        }
+      },
+      "disputeResolution": {
+        "title": "Tvisteløsning",
+        "intro": "Hvis du er uenig i vår refusjonsavgjørelse:",
+        "steps": {
+          "0": "Svar på avgjørelses-e-posten med ytterligere informasjon",
+          "1": "Be om eskalering til en leder",
+          "2": "Kontakt oss på legal@nebutra.com for videre gjennomgang"
+        }
+      },
+      "contactUs": {
+        "title": "Kontakt oss",
+        "intro": "For refusjonsforespørsler eller spørsmål om denne politikken:",
+        "company": "{brandName} Co., Ltd.",
+        "billingLabel": "Faktura",
+        "supportLabel": "Support",
+        "legalLabel": "Juridisk",
+        "responseNote": "Vi tar sikte på å svare på alle refusjonsforespørsler innen 5 virkedager.",
+        "termsNote": "Denne politikken er en del av våre",
+        "termsLink": "Tjenestevilkår",
+        "termsAgreement": "Ved å bruke {brandName} godtar du disse refusjonsvilkårene."
+      }
+    },
+    "terms": {
+      "title": "Tjenestevilkår — {brandName}",
+      "description": "Tjenestevilkårene som regulerer din tilgang til og bruk av {brandName}s nettsider, applikasjoner, API-er og tjenester.",
+      "heading": "Tjenestevilkår",
+      "effectiveDate": "Gjeldende fra",
+      "lastUpdated": "Sist oppdatert",
+      "dates": {
+        "effective": "1. januar 2025",
+        "updated": "1. januar 2025"
+      },
+      "intro1": "Velkommen til {brandName}! Disse tjenestevilkårene (\"Vilkårene\") regulerer din tilgang til og bruk av {brandName}s nettsider, applikasjoner, API-er og tjenester (samlet kalt \"Tjenestene\") som tilbys av {brandName} Co., Ltd. (\"{brandName}\", \"Selskapet\", \"vi\", \"oss\" eller \"vår\").",
+      "intro2": "Ved å få tilgang til eller bruke tjenestene våre, godtar du å være bundet av disse vilkårene og vår",
+      "intro2PrivacyLink": "Personvernpolitikk",
+      "intro2End": ". Hvis du ikke godtar disse vilkårene, må du ikke bruke tjenestene våre.",
+      "acceptance": {
+        "title": "1. Godkjennelse av vilkår",
+        "eligibility": {
+          "title": "1.1 Kvalifikasjon",
+          "intro": "For å bruke tjenestene våre må du:",
+          "items": {
+            "0": "Være minst 18 år gammel eller ha alder for fullt rettslig myndighet i din jurisdiksjon",
+            "1": "Ha myndighet til å inngå disse vilkårene på vegne av deg selv eller din organisasjon",
+            "2": "Ikke være forbudt fra å bruke tjenestene våre i henhold til gjeldende lov"
+          }
+        },
+        "orgAccounts": {
+          "title": "1.2 Organisasjonskontoer",
+          "content": "Hvis du bruker tjenestene våre på vegne av en organisasjon, erklærer du at du har myndighet til å binde organisasjonen til disse vilkårene."
+        }
+      },
+      "services": {
+        "title": "2. Beskrivelse av tjenester",
+        "intro": "{brandName} tilbyr en SaaS-plattform som inkluderer:",
+        "items": {
+          "0": "AI-drevne funksjoner og innholdsgenerering",
+          "1": "Innholdsadministrasjon og samfunnsværktøy",
+          "2": "Anbefalingssystemer",
+          "3": "E-handelsintegrasjoner",
+          "4": "Web3-funksjonalitet",
+          "5": "Analyse og rapportering"
+        }
+      },
+      "account": {
+        "title": "3. Kontoregistrering",
+        "creation": {
+          "title": "3.1 Opprettelse av konto",
+          "intro": "For å få tilgang til visse funksjoner må du opprette en konto. Du samtykker til å:",
+          "items": {
+            "0": "Oppgi nøyaktig og fullstendig informasjon",
+            "1": "Vedlikeholde sikkerheten på kontoens påloggingsdetaljer",
+            "2": "Oppdatere informasjonen din raskt hvis den endres",
+            "3": "Ta ansvar for all aktivitet under kontoen din"
+          }
+        }
+      },
+      "billing": {
+        "title": "4. Abonnement og fakturering",
+        "pricing": {
+          "title": "4.1 Priser",
+          "content": "Tjenestene våre tilbys under ulike abonnementsplaner som beskrevet på prissiden vår. Priser kan endres med 30 dagers varsel."
+        },
+        "payment": {
+          "title": "4.2 Betaling",
+          "items": {
+            "0": "Abonnementer faktureres på forhånd månedlig eller årlig",
+            "1": "Alle gebyrer er ikke-refunderbare med mindre annet er angitt i vår",
+            "2": "Du gir oss tillatelse til å belaste betalingsmetoden din for gjeldende gebyrer",
+            "3": "Vi bruker Stripe for sikker betalingsbehandling",
+            "1RefundLink": "Refunderingspolicy"
+          }
+        }
+      },
+      "acceptableUse": {
+        "title": "5. Akseptabel bruk",
+        "prohibited": {
+          "title": "5.1 Forbudte aktiviteter",
+          "intro": "Du samtykker i IKKE å:",
+          "items": {
+            "0": "Overtre noen gjeldende lover, forskrifter eller tredjeparts rettigheter",
+            "1": "Bruke tjenestene til å overføre skadelig programvare, spam eller skadelig innhold",
+            "2": "Forsøke å få uautorisert tilgang til våre systemer",
+            "3": "Forstyrre eller påvirke integriteten eller ytelsen til tjenestene våre",
+            "4": "Bruke automatiserte verktøy til å skrape, kopiere eller hente ut data uten tillatelse",
+            "5": "Reverse-engineere, dekompilere eller demontere tjenestene våre",
+            "6": "Bruke AI-funksjonene våre til å generere ulovlig, skadelig eller villedende innhold"
+          }
+        }
+      },
+      "ip": {
+        "title": "6. Åndsverk",
+        "ours": {
+          "title": "6.1 Våre åndsverk",
+          "content": "{brandName} og dets lisensgivere eier alle rettigheter, tittel og interesse i tjenestene, inkludert all programvare, design, varemerker og innhold som er opprettet av oss."
+        },
+        "yours": {
+          "title": "6.2 Ditt innhold",
+          "content": "Du beholder eierskapet til innhold du oppretter eller laster opp (\"Ditt innhold\"). Ved å bruke tjenestene våre gir du oss en verdensomspennende, ikke-eksklusiv, royaltyfri lisens til å bruke, lagre, behandle og vise Ditt innhold utelukkende for å levere tjenestene til deg."
+        }
+      },
+      "warranties": {
+        "title": "7. Fraskrivelse av garantier",
+        "content": "TJENESTENE LEVERES \"SOM DE ER\" OG \"SOM TILGJENGELIG\" UTEN GARANTIER AV NOEN SLAG, UANSETT OM DE ER UTTRYKTLIGE ELLER UNDERFORSTÅTTE, INKLUDERT MEN IKKE BEGRENSET TIL UNDERFORSTÅTTE GARANTIER OM SALGBARHET, EGNETHET FOR ET BESTEMT FORMÅL, TITTEL OG IKKE-ULOVLIGHET."
+      },
+      "liability": {
+        "title": "8. Begrensning av ansvar",
+        "para1": "I DET OMFATTET LOVEN TILLATER, ER NEBUTRA IKKE ANSVARLIG FOR INDIREKTE, TILFELDIGE, SPESIELLE, FØLGE- ELLER STRAFFESKADER, ELLER TAP AV GEWINST, DATA, BRUK ELLER GODKJENNING.",
+        "para2": "UNDER INGEN OMLSTENDIGHETER SKAL VÅR TOTALE ANSVAR OVERTREFFE DET HØYESTE AV (A) BELØPET DU HAR BETALT OSS I DE 12 MÅNEDENE FØR KRAVET, ELLER (B) 100 USD."
+      },
+      "termination": {
+        "title": "9. Oppsigelse",
+        "byYou": {
+          "title": "9.1 Av deg",
+          "content": "Du kan avslutte kontoen din når som helst via kontoinnstillingene dine. Ved avslutning mister du tilgang til tjenestene."
+        },
+        "byUs": {
+          "title": "9.2 Av oss",
+          "intro": "Vi kan suspendere eller avslutte kontoen din hvis du:",
+          "items": {
+            "0": "Bryter disse vilkårene",
+            "1": "Driver med svindel eller ulovlig aktivitet",
+            "2": "Ikke betaler gjeldende gebyrer",
+            "3": "Skaper risiko eller juridisk eksponering for oss"
+          }
+        }
+      },
+      "disputes": {
+        "title": "10. Tvisteløsning",
+        "informal": {
+          "title": "10.1 Uformell løsning",
+          "content": "Før du starter formelle prosedyrer, samtykker du i å kontakte oss på legal@nebutra.com for å prøve å løse tvister uformelt."
+        },
+        "governingLaw": {
+          "title": "10.2 Gjeldende lov",
+          "content": "Disse vilkår er underlagt lovene i delstaten Delaware, uten hensyn til kollisjonsprinsipper."
+        }
+      },
+      "contactUs": {
+        "title": "11. Kontakt oss",
+        "intro": "Hvis du har spørsmål om disse vilkårene, vennligst kontakt oss:",
+        "company": "{brandName} Co., Ltd.",
+        "emailLabel": "E-post",
+        "supportLabel": "Støtte"
+      },
+      "acknowledgement": "Ved å bruke {brandName} bekrefter du at du har lest, forstått og er enig i å være bundet av disse tjenestevilkårene."
+    }
+  },
+  "metadata": {
+    "title": "{brandName} Agent OS | Startup Agent OS",
+    "description": "The Startup Agent OS for gründere som går globalt. Production-ready Next.js-grunnlag med styrt arkitektur, auth, fakturering, agenter og i18n — bygget for AI-kodingssagenter og seriøse team."
+  },
+  "microLanding": {
+    "architecture": {
+      "badge": "SYSTEMTOPOLOGI",
+      "title": "Transparent arkitektur, ingen svart boks.",
+      "description": "{productName} er designet med en hyper-modulær Turborepo-struktur, som gir deg full eierskap over hele din programvare-livssyklus.",
+      "database": {
+        "title": "PostgreSQL + Prisma v7",
+        "desc": "Fullt typet ORM med Row-Level Security (RLS)-policyer innebygget natively."
+      },
+      "auth": {
+        "title": "Clerk Multi-Tenant / Custom Identity",
+        "desc": "SOC2-ready autentiseringsgateway som støtter B2B-organisasjonsbytte og RBAC."
+      }
+    },
+    "pricing": {
+      "title": "Gratis å bygge på. Betal bare hvis du trenger at vi står ansvarlig.",
+      "description": "Å bygge et kommersielt produkt på {brandName} koster ingenting — ingen avgift, ingen lisensnøkkel, ingen registrering, ingen copyleft. Betalte nivåer selger support, SLA-er, skadesløsholdelse og varemerkerettigheter, aldri tillatelse.",
+      "socialProofText": "MIT på npm · FSL-1.1-ALv2 i repoet, går over til Apache-2.0 etter to år · kommersiell bruk gratis i enhver størrelse.",
+      "community": {
+        "badge": "COMMUNITY",
+        "price": "Gratis",
+        "period": "for alltid",
+        "desc": "For alle. Enhver teamstørrelse, enhver omsetning. Kommersiell bruk med lukket kildekode er inkludert, uten registrering og uten krav om kreditering.",
+        "cta": "npx create-sailor",
+        "f1": "Komplett Next.js 16-SaaS-kjerne, alle pakker inkludert",
+        "f2": "Kommersiell bruk med lukket kildekode uansett størrelse eller omsetning",
+        "f3": "Hele stacken: Auth, Betalinger, Organisasjoner, API, E-post, i18n, Bakgrunnsjobber, Lagring og mer",
+        "f4": "Markedsføringsfunksjoner: Blogg, landingsside, SEO, Analytics",
+        "f5": "Offentlige issues, Discussions og Discord — etter beste evne, ingen svargaranti"
+      },
+      "team": {
+        "badge": "TEAM",
+        "price": "2 000 $",
+        "period": "år",
+        "desc": "For teamer som ikke kan sette en kritisk vei på community-svarstider.",
+        "cta": "Skaff {brandName}-support",
+        "f1": "Privat supportkanal (e-post + delt Slack eller Discord)",
+        "f2": "Første svar garantert innen to virkedager",
+        "f3": "Prioritert feiltriage foran community-issues",
+        "f4": "Oppgraderingshjelp og forvarsel om brytende endringer",
+        "f5": "Alt i Community"
+      },
+      "enterprise": {
+        "badge": "ENTERPRISE",
+        "price": "Fra 30 000 $",
+        "period": "år",
+        "desc": "For organisasjoner der innkjøp, juridisk eller sikkerhetsgjennomgang krever en motpart som signerer.",
+        "cta": "Kontakt salg",
+        "f1": "Svar-SLA — 4 arbeidstimer som standard, 1 time ved produksjonsstans",
+        "f2": "Skadesløsholdelse og kontraktfestet forpliktelse om sikkerhetsoppdateringer",
+        "f3": "Signert databehandleravtale, compliancepakke og kontinuitetsforpliktelse",
+        "f4": "Varemerke- og white label-rettigheter, samt fritak fra konkurranseklausulen",
+        "f5": "Long term support-gren og teknisk støtte for privat utrulling",
+        "f6": "Alt i Team"
+      }
+    },
+    "faq": {
+      "title": "FAQ om priser og lisensiering",
+      "description": "Spørsmål om lisensnivåer, refusjoner og rettigheter til kommersiell bruk.",
+      "q1": {
+        "q": "Er Sailor et månedlig SaaS-abonnement?",
+        "a": "Nei. Denne prisen gjelder Sailor-kjeldekodelisenser: Independent er gratis, Startup faktureres årlig, og Enterprise er tilpasset."
+      },
+      "q2": {
+        "q": "Tilbyr dere refusjoner?",
+        "a": "Startup-kommersiellisenser inkluderer et 14 dagers refusjonsvindu for første kjøp. Enterprise-vilkår håndteres i den signerte kontrakten."
+      },
+      "q3": {
+        "q": "Kan jeg bruke Sailor til klientarbeid?",
+        "a": "Ja. En kommersiell lisens lar teamet ditt levere lukket kildekode for klienter eller interne produkter innenfor det lisensierte omfanget; white-label-rettigheter krever Enterprise-godkjenning."
+      },
+      "contactNudge": "Har du fortsatt spørsmål? Snakk med {brandName}-teamet →"
+    },
+    "cta": {
+      "eyebrow": "Kom i gang",
+      "title": "Slutt å konfigurere. Begynn å bygge.",
+      "description": "Initialiser en skalerbar SaaS-arkitektur lokalt med {brandName} CLI.",
+      "button": "Utrull arkitektur",
+      "license": "Åpen kildekode under AGPL-3.0-lisens. Ingen kredittkort kreves."
+    },
+    "capability": {
+      "badge": "Enterprise-funksjoner",
+      "title": "En fullt typet, utvidbar kjerne.",
+      "multiTenant": {
+        "title": "Innebygd radnivå-sikkerhet",
+        "desc": "Hver databaseforespørsel er strengt begrenset til gjeldende tenant-kontekst.",
+        "cta": "Les om databasefilosofien"
+      },
+      "aiGateway": {
+        "title": "Universell AI-gateway",
+        "desc": "Ruter prompter sømløst til OpenAI, Anthropic eller open-source-modeller.",
+        "cta": "Utforsk AI SDK-håndtereren"
+      },
+      "rbac": {
+        "title": "Detaljert tilgangskontroll",
+        "desc": "Definer roller for administrator, medlem og betrakter med innebygd policy-struktur.",
+        "cta": "Se RBAC-dokumentasjon"
+      },
+      "billing": {
+        "title": "Faktureringsinfrastruktur for flere leverandører",
+        "desc": "Målt bruk, abonnement-webhooks og selvbetjeningsportaler for kunder.",
+        "cta": "Se faktureringsarkitektur"
+      }
+    },
+    "productDemo": {
+      "badge": "Interaktiv demo",
+      "title": "The local loop, end to end.",
+      "description": "Få en følelse av kommandolinjegrensesnittet, Stripe-webhook-tunneling og lokal multi-tenant database-provisioning.",
+      "analytics": {
+        "label": "Sanntidsmåling",
+        "desc": "Strøm produksjonsbruksdata direkte til terminalen din."
+      },
+      "billing": {
+        "label": "Faktureringshendelser",
+        "desc": "Se Stripe-webhooks utføres via lokal tunneling."
+      },
+      "workspaces": {
+        "label": "Arbeidsområde-initiering",
+        "desc": "Sett opp isolerte B2B PostgreSQL-skjemaer øyeblikkelig."
+      }
+    },
+    "workflow": {
+      "badge": "Hastighet",
+      "title": "Fra null til produksjon på rekordtid.",
+      "step1": {
+        "title": "1. Klon",
+        "desc": "Klon {brandName}-monorepoet øyeblikkelig og kjør pnpm install."
+      },
+      "step2": {
+        "title": "2. Konfigurer",
+        "desc": "Sett opp Prisma, Clerk og Stripe via den interaktive CLI-en på minutter."
+      },
+      "step3": {
+        "title": "3. Bygg",
+        "desc": "Fokuser på produktlogikk og UI mens plattformgrunnlaget allerede er koblet."
+      },
+      "step4": {
+        "title": "4. Distribuer",
+        "desc": "Push til Vercel og AWS for øyeblikkelig global distribusjon."
+      },
+      "speedometer": {
+        "number": "10",
+        "unit": "min",
+        "subtitle": "TID TIL MARKED",
+        "comparison": "Hopp over måneder med plattformarbeid.",
+        "phases": {
+          "scaffold": "Init",
+          "wire": "Kjerne",
+          "ship": "Utlever",
+          "scale": "Skaler",
+          "ongoing": "∞"
+        },
+        "cta": "Start timeren din"
+      },
+      "presetHint": {
+        "badge": "Forhåndsinnstilt system",
+        "message": "Én konfigurasjon. Alle funksjoner. Velg din forhåndsinnstilling og lever.",
+        "detail": "Konfigurer én gang, generer alt — fakturering, autentisering, AI, i18n — fra én enkelt forhåndsinnstilt konfigurasjon.",
+        "readyStatus": "Forhåndsinnstilt system klart"
+      }
+    }
+  },
+  "featuresPage": {
+    "hero": {
+      "badge": "Plattformfunksjoner",
+      "headlinePrefix": "Alt du trenger for å ",
+      "headlineHighlight": "levere med trygghet.",
+      "description": "{brandName} er en fullstack SaaS-plattform – AI, fakturering, multi-tenancy, observability og sikkerhet innebygd fra dag én. Slutt å bygge plattformlaget på nytt."
+    },
+    "sections": {
+      "exploreFeature": "Utforsk funksjon",
+      "ai_category": "AI & intelligens",
+      "ai_f1_title": "Multi-modell chat-kompletteringer",
+      "ai_f1_desc": "Ruter forespørsler til Anthropic, OpenAI, Google eller dine egne finjusterte modeller. Streaming, visjon og funksjonskall støttes fra start.",
+      "ai_f2_title": "Semantiske innleiringer",
+      "ai_f2_desc": "Generer og lagre vektorinnleiringer med pgvector. Støtt semantisk søk, RAG-pipelines og anbefalingssystemer.",
+      "ai_f3_title": "AI-bruksmåling",
+      "ai_f3_desc": "Kvoter per plan med brukssporing — mål AI-tokens, API-kall og lagring mot sanntidsaggregater basert på ClickHouse.",
+      "multi_category": "Plattform for flere leietakere",
+      "multi_f1_title": "Organisasjonsnivå-isolering",
+      "multi_f1_desc": "Radnivå-sikkerhet i Postgres sikrer at leietakere aldri kan få tilgang til hverandres data — håndhevet på databaselag, ikke bare applikasjonen.",
+      "multi_f2_title": "Multi-leverandør-autentisering (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_desc": "Multi-leverandør-OAuth (Google, GitHub osv.) pluss e-post/passord og magisk lenke — bytt mellom Clerk, Better Auth, NextAuth eller Supabase Auth via én miljøvariabel.",
+      "multi_f3_title": "Automatisk leietaker-provisionering",
+      "multi_f3_desc": "Når en ny organisasjon registrerer seg via Clerk, genererer vi automatisk deres første API-nøkkel og sender en merkevaremerket velkomst-e-post — ingen manuelle steg.",
+      "dx_category": "Utvikleropplevelse",
+      "dx_f1_title": "Hashede API-nøkler",
+      "dx_f1_desc": "SHA-256-hashede nøkler med prefiksvisning (nbtr_live_…). Vises i klartekst nøyaktig én gang ved opprettelse — sikkerhet uten friksjon.",
+      "dx_f2_title": "Idempotens-middleware",
+      "dx_f2_desc": "Send en Idempotency-Key-overskrift, og alle POST-forespørsler blir trygge å gjenta. Redis-basert, 24-timers cache, IETF-utkast-kompatibel.",
+      "dx_f3_title": "Multi-protokoll-API (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI for offentlige API-er, oRPC for typesikre frontend-kall, tRPC for T3-stack-kompatibilitet. Alle protokoller deler samme Zod-kontrakter og middleware-stakk. Aktiver per protokoll via forhåndsinnstilling.",
+      "billing_category": "Fakturering & Monetarisering",
+      "billing_f1_title": "Stripe, LemonSqueezy, Polar og Kina-betaling",
+      "billing_f1_desc": "Velg betalingsleverandør: Stripe for globalt enterprise, LemonSqueezy for indie-utviklere, Polar for OSS, eller Alipay/WeChat Pay for kinesisk marked. Én-klikks checkout og selvbetjent faktureringsportal.",
+      "billing_f2_title": "Bruksbasert kvotehåndhevelse",
+      "billing_f2_desc": "Sanntids Redis-tellere sporer API-kall og token-bruk per leietaker. Forespørsler blokkeres i gateway når grenser nås.",
+      "billing_f3_title": "Webhook-livssyklus-synkronisering",
+      "billing_f3_desc": "Stripe-abonnementshendelser oppdaterer automatisk organisasjonsplaner i databasen din via Inngest — ingen cron-jobber, ingen polling.",
+      "rel_category": "Pålitelighet",
+      "rel_f1_title": "Sikringsbryter + gjenforsøk",
+      "rel_f1_desc": "Gateway og AI-tjeneste bruker en CLOSED/OPEN/HALF_OPEN-sikringsbryter med eksponentiell backoff og jitter — ingen kaskaderende feil.",
+      "rel_f2_title": "Død brev-kø",
+      "rel_f2_desc": "Hendelseshåndterere som bruker opp 3 gjenforsøk, havner i DLQ. Spill dem av enkeltvis fra admin-API uten å re-deploye.",
+      "rel_f3_title": "SLO-forbruksvarsler",
+      "rel_f3_desc": "Flervindusvarsler i Google SRE-stil utløses ved 14,4×, 6× og 3× forbruksrate før feilbudsjettet er brukt opp.",
+      "sec_category": "Sikkerhet",
+      "sec_f1_title": "CSP-headers basert på nonce",
+      "sec_f1_desc": "Strict-dynamic Content Security Policy med per-forespørsel nonces generert i Clerk-middleware — ingen unsafe-inline.",
+      "sec_f2_title": "ModSecurity WAF",
+      "sec_f2_desc": "OWASP Core Rule Set i DetectionOnly-modus på hver ingress. Hastighetsbegrensning på 30 RPS med burst-toleranse via nginx-annotasjoner.",
+      "sec_f3_title": "SBOM + SLSA-proveniens",
+      "sec_f3_desc": "Hver utgivelse genererer en CycloneDX software bill of materials og SLSA-proveniensattest, som lastes opp til GitHub Release.",
+      "obs_category": "Observabilitet",
+      "obs_f1_title": "OpenTelemetry-sporing",
+      "obs_f1_desc": "Distribuerte spor strømmer fra Next.js → Hono → Python-mikrotjenester via OTLP. Eksportert til Jaeger (dev) og Grafana Tempo (prod).",
+      "obs_f2_title": "Grafana-dashboards",
+      "obs_f2_desc": "Flerpaneloversikt for plattformen: SLO-tilgjengelighet, gjenværende feilbudsjett, HPA-metning, pod-omstarter og CPU-throttling.",
+      "obs_f3_title": "Sentry-feilsporing",
+      "obs_f3_desc": "Server- og klientfeil fanges med tenant-kontekst, forespørsels-ID og spor-ID for tverrsystemkorrelasjon.",
+      "data_category": "Data og analyse",
+      "data_f1_title": "ClickHouse OLAP-lager",
+      "data_f1_desc": "Hendelser lander i ClickHouse for raske analytiske spørringer. dbt transformerer rå hendelser til gold-lags vekstmålinger som vises i dashbordet.",
+      "data_f2_title": "Traktanalyse",
+      "data_f2_desc": "Spor registreringer → aktiveringer → konverteringer med kohortnivå-tilskrivning. Inntekt per aktiv bruker beregnes fra gold-laget.",
+      "data_f3_title": "Kafka / hendelsesinnsamling",
+      "data_f3_desc": "Høykapasitets hendelsesinnsamling via Inngest til ClickHouse bronze, med deduplisering i minne og skjema-validering ved gateway-kanten.",
+      "infra_category": "Infrastruktur",
+      "infra_f1_title": "GitOps med ArgoCD",
+      "infra_f1_desc": "Endringer i hovedgrenen blir automatisk forsonet med klusteret. Selvhealing reverserer manuelle kubectl-redigeringer. Synkroniseringsvinduer håndhever sikre deploy-timer.",
+      "infra_f2_title": "PgBouncer tilkoblingspooling",
+      "infra_f2_desc": "Transaksjonsmodus PgBouncer foran Supabase håndterer 1 000 app-tilkoblinger på 20 Postgres-tilkoblinger. HA med 2 replikaer.",
+      "infra_f3_title": "Horisontal + vertikal autoskalering",
+      "infra_f3_desc": "HPA skalerer basert på CPU/minne. VPA kjører i Off-modus og gir anbefalninger for riktig størrelse. KEDA tilpassede metrikker planlagt for v2."
+    }
+  },
+  "comingSoon": {
+    "badge": "🚧 Under konstruksjon",
+    "description": {
+      "ideas": "Vi lager for tiden en fantastisk geek-drevet opplevelse for denne seksjonen. Den vil bli lansert sammen med neste store arkitektur-pipeline-oppdatering.",
+      "opc": "En dypere plattformoversikt er under arbeid. Følg endringsloggen og veiskriften for kommende utgivelser.",
+      "roadmap": "Fra infrastrukturgrunnlag til enterprise-skala — våre produktfaser, versjonsmilepæler og finansieringsvisjon."
+    },
+    "returnBtn": "Tilbake til Hub"
+  },
+  "blogShowcase": {
+    "badge": "FRA BLOGGEN",
+    "title": "Ingeniørinnsikter",
+    "subtitle": "Dypdykk i SaaS-arkitektur, AI-infrastruktur og produksjonsingeniørfag.",
+    "readMore": "Les mer"
+  },
+  "useCases": {
+    "badge": "SKALERBARE SCENARIER",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
+    "tabs": {
+      "opc": "Agentic-drift",
+      "ip": "Personlig IP-matrise",
+      "multimodal": "Multimodal AI SaaS",
+      "enterprise": "Moderne enterprise (CN)",
+      "export": "Global programvareeksport",
+      "design": "Designsystemmotor",
+      "edam": "Enterprise Digital Assets"
+    },
+    "content": {
+      "opc": {
+        "title": "AI-Native Operations Hub",
+        "desc": "Kjør agent-workflows, intern verktøy og integrasjonsflater på én styrt plattform. Registry-drevne utvidelser, operatørportaler og gjenbrukbare runtime-mønstre holder seg i takt mens systemet skalerer.",
+        "features": {
+          "f1": "Tool Registry & Integration Surface",
+          "f2": "Operator Portal & Internal Console"
+        }
+      },
+      "ip": {
+        "title": "Personal IP Growth & Portfolio Matrix",
+        "desc": "Bygg en verdensklasse gründerprofil med høykonverterende MDX-blogg, portefølje og profilside. Innbygget nyhetsbrev, analyse og SEO sørger for at din personlige merkevare vokser.",
+        "features": {
+          "f1": "MDX Blog + Newsletter Engine",
+          "f2": "SEO & Social Graph Optimized"
+        }
+      },
+      "multimodal": {
+        "title": "Innovative Multimodal AI SaaS",
+        "desc": "Lansér Multi-Agent-orchestrering, Chatbot, Text-to-Image, Image-to-Text og Text-to-Video SaaS-produkter med førsteklasses streaming-UI, intelligent modellrouting og bruksmåling.",
+        "features": {
+          "f1": "Multi-Agent Streaming UI",
+          "f2": "Model Router + Usage Metering"
+        }
+      },
+      "enterprise": {
+        "title": "Modern Enterprise Website (CN)",
+        "desc": "Tilpasset for kinesiske forretningsmiljøer — ultra-rask lokal CDN, WeChat-økosystem-integrasjon, mobile-first responsivt design og lokalisert compliance fra start.",
+        "features": {
+          "f1": "Lokal CDN + samsvar",
+          "f2": "Klar for WeChat-økosystemet"
+        }
+      },
+      "export": {
+        "title": "Globale landingssider for programvareeksport",
+        "desc": "Bygget for SaaS som går globalt. Stripe-kassa med flere valutaer, next-intl i18n-autorouting på 7 språk, GDPR/CCPA-samsvar og geografisk målrettet innhold.",
+        "features": {
+          "f1": "Globale betalinger i flere valutaer",
+          "f2": "7 språk + GDPR-klar"
+        }
+      },
+      "design": {
+        "title": "Førende designsystem og komponentbibliotek",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "features": {
+          "f1": "4-lags token-styring",
+          "f2": "Seven design languages + Storybook"
+        }
+      },
+      "edam": {
+        "title": "Enterprise Digital Asset Management",
+        "desc": "Strukturerte datalag og komplekse dashboardtologier som utnytter skalerbare PostgreSQL-arkitekturer og granular RBAC.",
+        "features": {
+          "f1": "Rad-nivå sikkerhet",
+          "f2": "Komplekse spørringer",
+          "f3": "Rolleadministrasjon"
+        }
+      }
+    }
+  },
+  "designSystem": {
+    "badge": "DESIGNSYSTEM",
+    "headline": "4 lag med designstyring.",
+    "subheadline": "Fra merkevareprinsipper til kjøretidstokens til flertema-motor til styrte komponenter — ikke bare shadcn med Tailwind.",
+    "flowBrand": "Merkevare",
+    "flowBrandDesc": "Fargeprinsipper, gradienter, bevegelsesspråk",
+    "flowTokens": "Token",
+    "flowTokensDesc": "CSS-variabler, 12-trinns skalaer, mørk modus",
+    "flowTheme": "Tema",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
+    "flowUI": "UI",
+    "flowUIDesc": "Komponenter, Storybook, Chromatic",
+    "card1Title": "12-trinns fargeskalaer",
+    "card1Desc": "Geist-tilpasset semantisk skala: bakgrunner (1-2), tilstander (3-5), rammer (6-8), fyll (9-10), tekst (11-12).",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
+    "card3Title": "Visuell regresjon",
+    "card3Desc": "Chromatic fanger hver pikselendring. Storybook dokumenterer hver komponent. Arkitekturtester håndhever story-dekning.",
+    "card4Title": "Tokenstyring",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
+    "card5Title": "Interaktiv dokumentasjon",
+    "card5Desc": "Fullt designdokumentasjonssted drevet av Fumadocs med tospråklig (EN/ZH) komponent-API-dokumentasjon, token-gallerier, layoutmønsterveiledninger og live kodeeksempler.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
+  },
+  "notFound": {
+    "title": "Siden ble ikke funnet",
+    "desc": "Lenken kan være utdatert, eller siden kan ha blitt flyttet.",
+    "home": "Tilbake til {brandName}",
+    "docs": "Åpne dokumentasjon"
+  },
+  "ui": {
+    "search": {
+      "placeholder": "Søk etter utgivelser..."
+    },
+    "nav": {
+      "toggleMenu": "Vis/skjul meny"
+    },
+    "actions": {
+      "showFullRelease": "Vis full utgivelse",
+      "copyLinkToRelease": "Kopier lenke til utgivelse",
+      "copyLink": "Kopier lenke",
+      "openInNewTab": "Åpne i ny fane"
+    },
+    "status": {
+      "comingSoon": "Kommer snart"
+    }
+  },
+  "licensing": {
+    "hero": {
+      "title": "Gratis å <hl>bygge på</hl>",
+      "description": "{brandName}-Sailor koster ingenting å bruke kommersielt — MIT på npm, FSL-1.1-ALv2 på repositoryet, og konverteres til Apache-2.0 etter to år. Betalte nivåer selger støtte og kontraktuelle forpliktelser, aldri tillatelse."
+    },
+    "plans": {
+      "community": {
+        "badge": "Alltid gratis",
+        "title": "Community",
+        "subtitle": "Alle",
+        "description": "Uansett teamstørrelse eller inntekt. Lukket kildekode for kommersielle produkter inkludert.",
+        "features": {
+          "fullSource": "Full kildekode, alle pakker",
+          "closedSourceOk": "Kommersiell bruk med lukket kildekode — ingen copyleft",
+          "noAttribution": "Ingen registrering, ingen kreditering påkrevd",
+          "communitySupport": "Community-støtte — best effort"
+        },
+        "cta": "Se på GitHub"
+      },
+      "team": {
+        "badge": "Fra {price}/år",
+        "title": "Team",
+        "subtitle": "Støtteabonnement",
+        "description": "For teamer som ikke kan sette en kritisk vei på community-svarstider.",
+        "features": {
+          "privateChannel": "Privat støttekanal",
+          "firstResponse": "Første svar innen to virkedager, garantert",
+          "priorityTriage": "Prioritert feiltriage",
+          "upgradeHelp": "Oppgraderingshjelp og varsler om brytende endringer"
+        },
+        "cta": "Få støtte"
+      },
+      "enterprise": {
+        "badge": "Fra $30 000/år",
+        "title": "Enterprise",
+        "subtitle": "Klar for innkjøp",
+        "description": "For organisasjoner der juridisk, sikkerhets- eller innkjøpsgjennomgang krever en motpart som signerer.",
+        "features": {
+          "sla": "Respons-SLA — 4 forretningsdager, 1 time ved produksjonsnedetid",
+          "indemnity": "Erstatningsansvar og forpliktelse til sikkerhetsoppdateringer",
+          "compliance": "Signert DPA, compliance-pakke, kontinuitetsforpliktelse",
+          "trademark": "Varemerke- og white-label-rettigheter"
+        },
+        "cta": "Kontakt salg"
+      }
+    },
+    "faq": {
+      "title": "Ofte stilte spørsmål",
+      "description": "Kort versjon: å bruke det er gratis. Betaling gjelder når du trenger oss kontraktuelt ansvarlig.",
+      "items": {
+        "whyFsl": {
+          "q": "Hvorfor FSL i stedet for MIT eller AGPL?",
+          "a": "FSL tillater all bruk bortsett fra å selge en erstatning for Sailor selv, og hver versjon blir Apache-2.0 to år etter utgivelse — en tillatelse gitt uopprekallelig på forhånd. Den klarer bedriftens juridiske gjennomgang lettere enn AGPL."
+        },
+        "reallyFree": {
+          "q": "Er kommersiell bruk virkelig gratis?",
+          "a": "Ja. Ingen avgift, ingen lisensnøkkel, ingen registrering, ingen inntekts- eller ansattgrense, ingen henvisning. Bygg et lukket kildekodesprodukt og selg det."
+        },
+        "competingUse": {
+          "q": "Hva regnes som konkurrerende bruk?",
+          "a": "Å tilby Sailor selv — en vertsført Sailor-tjeneste, eller en ompakkert konkurrerende plattform. Å bygge en vertikal SaaS, et internt verktøy eller klientprosjekter på Sailor er ikke konkurrerende bruk. Hvis modellen din krever det, kan en Enterprise-avtale inkludere en skriftlig fritak."
+        },
+        "upgrade": {
+          "q": "Hva kjøper de betalte nivåene egentlig?",
+          "a": "Støtteforpliktelser, respons-SLA-er, erstatningsansvar, compliance-dokumentasjon og varemerkerettigheter. Aldri tillatelse til å bruke programvaren — det er allerede ditt."
+        },
+        "contributions": {
+          "q": "Hva med bidrag til åpen kildekode?",
+          "a": "Alle bidrag krever en CLA. Se CONTRIBUTING.md."
+        }
+      }
+    },
+    "meta": {
+      "title": "Lisensiering — {brandName}",
+      "description": "Gratis for kommersiell bruk. MIT på npm, FSL-1.1-ALv2 på lageret, konverteres til Apache-2.0."
+    }
+  },
+  "licenseWizard": {
+    "tiers": {
+      "individualFree": "Individuell gratis lisens",
+      "opcFree": "Enkelteier-selskapslisens",
+      "startupCommercial": "Startup-kommersiell lisens",
+      "enterprise": "Enterprise-lisens"
+    },
+    "referralSource": {
+      "selectPlaceholder": "Velg et alternativ...",
+      "productHunt": "Product Hunt"
+    }
+  },
+  "changelogMeta": {
+    "title": "Endringslogg — {brandName}",
+    "description": "Hver utgivelse leveres med obsesjon for detaljer.",
+    "versionTitleSuffix": "{brandName} Endringslogg"
+  },
+  "roadmapMeta": {
+    "title": "Plattformveiskild — {brandName}",
+    "description": "Veiskild for {brandName}s styrte plattformgrunnlag, Harness-runtime og oppgraderingssti."
+  },
+  "blogMeta": {
+    "title": "Blogg — {brandName}",
+    "description": "Innsikt fra ingeniørene, produktoppdateringer og SaaS-best practices fra {brandName}-teamet."
+  },
+  "getLicenseMeta": {
+    "title": "Hent lisensen din — {brandName}",
+    "description": "Hent {brandName}-lisensen din og plattformtilgang på 2 minutter."
+  },
+  "landing": {
+    "faq": {
+      "badge": "FAQ",
+      "title": "Spørsmål, besvart rett ut",
+      "subtitle": "Alt du trenger å vite før du leverer.",
+      "items": {
+        "what-is-sailor": {
+          "question": "Hva er egentlig {productName}?",
+          "answer": "Sailor er en meningsfull Next.js + Tailwind v4 SaaS-grunnmur med auth, fakturering, multi-tenancy, AI, køer, søk og e-post allerede koblet til. Du kloner den, konfigurerer leverandører og leverer – vanligvis innen en uke."
+        },
+        "who-is-it-for": {
+          "question": "Hvem er Sailor bygget for?",
+          "answer": "Gründere og produkt-ingeniører som vil bruke tiden sin på det som skiller seg ut – ikke på å bygge om den samme auth/fakturering/tenancy-rørleggingen for femte gang."
+        },
+        "free-or-paid": {
+          "question": "Er det gratis eller betalt?",
+          "answer": "Hele kildekoden leveres under AGPL-3.0 — gratis for personlige prosjekter, intern verktøyutvikling og AGPL-kompatibelt åpen kildekodearbeid. En kommersiell lisens gir rett til å levere Sailor i lukket kildekode i proprietær SaaS. Alle planer inkluderer hele funksjonssettet (autentisering, fakturering, multi-tenancy, AI, revisjon); nivåer skiller seg i lisensvilkår og support-SLA, ikke i funksjoner."
+        },
+        "china-friendly": {
+          "question": "Fungerer det i Kina?",
+          "answer": "Ja. Vi leverer en parallell infrastrukturkonfigurasjon (Aliyun-kompatibel CDN, ICP-vennlige domener, valgfritt Penpot i stedet for Figma) slik at samme kodebase kan distribueres rent innenfor Great Firewall."
+        },
+        "deployment": {
+          "question": "Hvor kan jeg distribuere det?",
+          "answer": "Overalt der Node 22+ kjører. Markedsføringssiden distribueres til Vercel; dashbordet, gatewayen og Python-tjenestene kjører på Docker / PM2 (vi kjører dem på Aliyun ECS i dag, med fulle Kubernetes-manifest under infra/iac/k8s/ for klustre). Enterprise-kunder distribuerer også innenfor sine egne VPC-er."
+        },
+        "security": {
+          "question": "Hvordan håndteres sikkerhet?",
+          "answer": "Programlagets envelope-kryptering for hemmeligheter (@nebutra/vault), Postgres RLS for tenant-isolasjon, RBAC/ABAC via CASL eller OpenFGA (@nebutra/permissions), HMAC-signerte inter-service-tokens, signerte utgående webhooks og en SOC 2-tilpasset revisjonsrørledning (@nebutra/audit) inkludert i alle planer. Pro og Enterprise legger til SOC 2-attesteringsstøtte, dedikert hendelsesrespons og lengre beholdning av revisjonslogger."
+        },
+        "support": {
+          "question": "Hvilken support får jeg?",
+          "answer": "Gratis kunder får community Discord + GitHub Issues. Pro legger til prioritert e-post med 1 virkedags svar-SLA. Enterprise får en dedikert Slack-kanal og en onboarding-ingeniør."
+        },
+        "byo-provider": {
+          "question": "Kan jeg bruke min egen leverandør?",
+          "answer": "Ja. Hver integrasjon (autentisering, kø, søk, e-post, betalinger, lagring, fakturering) er leverandøragnostisk. Fabrikken i hvert pakken velger riktig adapter fra én enkelt miljøvariabel — bytt Clerk til Better Auth, NextAuth eller Supabase Auth, QStash til BullMQ, Resend til SES, Stripe til Polar / LemonSqueezy / ChinaPay — uten å røre applikasjonskoden."
+        },
+        "tech-stack": {
+          "question": "Hva er teknologistakken?",
+          "answer": "Next.js 16 (App Router) på React 19, TypeScript 5.9, Tailwind v4, Prisma 7 over Postgres (med pgvector + RLS), Hono for BFF-gatewayen, FastAPI for ML/tunge tjenester og en kurert komponentbibliotek på Radix, {brandName} UI-primitiver og det delte Motion-laget. AI-funksjoner går gjennom Vercel AI SDK med leverandørportabilitet (OpenAI / OpenRouter / SiliconFlow / Azure / lokal)."
+        },
+        "license": {
+          "question": "Hva er lisensen?",
+          "answer": "AGPL-3.0 med kommersiell unntak. Gratis for personlig bruk, intern verktøyutvikling og AGPL-kompatibel OSS. En betalt kommersiell lisens gir rett til å levere Sailor som den er i proprietær SaaS. Full kildekode er inkludert i alle planer."
+        },
+        "paid-updates": {
+          "question": "Må jeg betale for oppdateringer?",
+          "answer": "Nei. Kildeoppdateringer er inkludert i alle kommersielle lisenser – hent fra main når du vil og rebasér din fork. Den betalte planen er retten til å bruke Sailor i kommersiell produksjon, ikke retten til å motta kode. Hver mindre utgivelse leveres med en CHANGELOG og en oppgraderingsguide for eventuelle brytende endringer."
+        },
+        "why-turborepo": {
+          "question": "Hvorfor Turborepo fremfor en standard Next.js-app?",
+          "answer": "Sailor består av 10 apper + 104 delte pakker under packages/*/* + 4 bakendspor (Hono-gateway, FastAPI/Python, Go, Rust) – langt forbi det punktet der en enkelt Next.js-megaapp fortsatt er vedlikeholdbar. Turborepo gir oss bygging kun av berørte deler, gjennomsiktig fjernbuffer og en enkelt sannhetskilde for delte designtokens, autentisering, fakturering og observabilitet – uten å tvinge alle team inn i samme Next.js-prosess."
+        },
+        "multi-tenancy": {
+          "question": "Hvordan håndteres multi-tenancy?",
+          "answer": "To lag. Forespørselsområdig tenant-kontekst via @nebutra/tenant (AsyncLocalStorage propagerer den aktive organisasjonen gjennom alle serverkall, inkludert DB-spørringer og utgående webhooks), og database-tvunget isolering via Postgres Row-Level Security-policyer (infra/data/database/policies/rls.sql) bundet til en sesjonslokal app.current_tenant_id. Tjenesterolle-forbindelser omgår RLS kun inne i betroede interne tjenester; alle brukerrettede ruter går gjennom den tenant-områdig klienten."
+        },
+        "swap-clerk": {
+          "question": "Kan jeg bytte Clerk mot en annen autentiseringsleverandør?",
+          "answer": "Ja. @nebutra/auth leveres med førsteklasses adaptere for Clerk, Better Auth, NextAuth (Auth.js v5) og Supabase Auth. Bytt via AUTH_PROVIDER-omgivelsesvariabelen eller velg ved skjelettgenerering med create-sailor --auth=... – server, React og mellomvareoverflater forblir identiske uavhengig av leverandør. Å legge til en femte adapter betyr å implementere et enkelt grensesnitt (~80 LOC); ingenting i den omkringliggende koden er koblet til en spesifikk leverandør."
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "Elsket av byggerne",
+      "title": "Hva gründere sier etter å ha lansert med Sailor",
+      "subtitle": "Kundehistorier fra vår beta-kohort kommer snart – vær blant de første."
+    },
+    "comparison": {
+      "badge": "Sammenlign nivåer",
+      "title": "Alt er gratis. Velg hvor mye forpliktelse du trenger.",
+      "subtitle": "Alle nivåer leverer hele kildekoden og tillater kommersiell bruk med lukket kildekode uten kostnad. Forskjellene er support, kontraktfestede forpliktelser og varemerkerettigheter.",
+      "plan": {
+        "community": "Community",
+        "team": "Team",
+        "enterprise": "Enterprise"
+      },
+      "feature": {
+        "license": {
+          "label": "Lisens",
+          "type": "Lisens",
+          "commercial-use": "Kommersiell bruk med lukket kildekode",
+          "registration": "Registrering",
+          "trademark": "Varemerkerettigheter"
+        },
+        "source": {
+          "label": "Kildekode",
+          "full-source": "Full kildekode",
+          "all-packages": "Alle pakker og moduler",
+          "update-window": "Oppdateringer"
+        },
+        "support": {
+          "label": "Support",
+          "channel": "Supportkanal",
+          "first-response": "Garantert første svar",
+          "security-patch": "Forpliktelse om sikkerhetsoppdateringer"
+        },
+        "procurement": {
+          "label": "Innkjøp",
+          "indemnification": "Skadesløsholdelse",
+          "dpa": "Signert databehandleravtale og compliancepakke",
+          "continuity": "Kontinuitetsforpliktelse"
+        }
+      },
+      "ariaTable": "Sammenligning av nivåer og funksjoner",
+      "value": {
+        "included": "Inkludert",
+        "notIncluded": "Ikke inkludert",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Ikke nødvendig",
+        "whiteLabelRights": "White label-rettigheter",
+        "unlimited": "Ubegrenset",
+        "unlimitedPlusNotice": "Ubegrenset + forvarsel om brytende endringer",
+        "unlimitedPlusLts": "Ubegrenset + long term support-gren",
+        "publicChannels": "Offentlige issues og Discord",
+        "privateChannel": "Privat kanal",
+        "namedContact": "Fast kontaktperson",
+        "twoBusinessDays": "2 virkedager",
+        "fourBusinessHours": "4 arbeidstimer",
+        "bestEffort": "Etter beste evne",
+        "contractual": "Kontraktfestet"
+      }
+    },
+    "socialProof": {
+      "title": "Bygget på en stack du kan stole på",
+      "logosLabel": "Integrasjonspartnere",
+      "metrics": {
+        "developers": {
+          "value": "47+",
+          "label": "AI-leverandører støttet"
+        },
+        "projects": {
+          "value": "104",
+          "label": "monorepo-pakker"
+        },
+        "uptime": {
+          "value": "7",
+          "label": "i18n-lokaler klar til bruk"
+        }
+      }
+    }
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP-registreringsnummer",
+      "publicSecurity": "Offentlig sikkerhet"
+    }
+  },
+  "icpFooter": {
+    "recordNumber": "ICP-registrering",
+    "publicSecurity": "Offentlig sikkerhetsregistrering"
+  },
+  "MarketLocalePicker": {
+    "title": "Regioner og språk",
+    "description": "Velg region og språk for markedsføringssiden.",
+    "triggerAria": "Velg region og språk",
+    "searchPlaceholder": "Søk etter regioner…",
+    "plannedHint": "Grensesnittet faller tilbake til engelsk inntil dette språket er tilgjengelig",
+    "noResults": "Ingen regioner matcher",
+    "menuAria": "Regioner og språk"
+  }
+}

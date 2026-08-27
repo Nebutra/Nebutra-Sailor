@@ -1,0 +1,25 @@
+---
+title: The `add` Command
+description: Inject new features into your environment dynamically.
+---
+
+# `nebutra add`
+
+The `nebutra add` command enables you to dynamically push remote features or UI components into your existing Monolithic boilerplate seamlessly.
+
+```bash
+npx nebutra add search queue --provider=upstash
+```
+
+### Options
+
+| Flag | Description |
+|------|-------------|
+| `--21st <id>` | Install a component generated via 21st.dev UI generation. |
+| `--v0 <url>`  | Install a component layout via v0.dev. |
+| `--provider`  | Attach a specific infrastructure backend to a system feature installation. |
+| `--dry-run`   | Preview the dependency modifications and file overwrites. |
+
+## Feature Registry
+
+The Nebutra CLI references `registry.nebutra.com` via our custom JSON schema to scaffold logic seamlessly.

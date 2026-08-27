@@ -1,0 +1,114 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nebutra-ingress
+  namespace: nebutra
+  labels:
+    app.kubernetes.io/name: nebutra-ingress
+    app.kubernetes.io/component: ingress
+  annotations:
+    # Force HTTP → HTTPS redirect for all routes
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+
+    # Increase proxy timeouts for slow AI/recsys responses
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "120"
+
+    # Increase body size limit for content uploads via api-gateway
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+
+    # ── WAF (ModSecurity / OWASP CRS) ─────────────────────────────────────
+    # Enable ModSecurity with OWASP Core Rule Set (CRS) in DetectionOnly mode.
+    # Switch to "On" after reviewing violation logs (~2 weeks of traffic).
+    # Requires nginx-ingress built with ModSecurity support (default in ingress-nginx ≥1.9)
+    nginx.ingress.kubernetes.io/enable-modsecurity: "true"
+    nginx.ingress.kubernetes.io/enable-owasp-core-rules: "true"
+    nginx.ingress.kubernetes.io/modsecurity-snippet: |
+      SecRuleEngine DetectionOnly
+      SecAuditLog /var/log/modsecurity/audit.log
+      SecAuditLogParts ABIJDEFHZ
+      SecRequestBodyLimit 10485760
+      SecRequestBodyNoFilesLimit 131072
+
+    # ── Rate limiting ──────────────────────────────────────────────────────
+    # Limit per-IP: 30 req/s on API, 60 req/s on landing page.
+    # Burst is 5x the rate to allow short spikes without dropping legitimate traffic.
+    # limit-connections: concurrent open connections per IP.
+    nginx.ingress.kubernetes.io/limit-rps: "30"
+    nginx.ingress.kubernetes.io/limit-burst-multiplier: "5"
+    nginx.ingress.kubernetes.io/limit-connections: "20"
+
+    # ── Security headers added at ingress level ────────────────────────────
+    # These supplement headers set by the application.
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "Strict-Transport-Security: max-age=63072000; includeSubDomains; preload";
+      more_set_headers "X-Content-Type-Options: nosniff";
+      more_set_headers "X-Frame-Options: DENY";
+      more_set_headers "Referrer-Policy: strict-origin-when-cross-origin";
+
+    # cert-manager will provision and renew the TLS certificate automatically
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: nginx
+  tls:
+    # Single wildcard cert covers all nebutra.com subdomains.
+    # cert-manager renews this automatically via the cluster issuer above.
+    - hosts:
+        - nebutra.com
+        - www.nebutra.com
+        - app.nebutra.com
+        - api.nebutra.com
+      secretName: nebutra-tls
+  rules:
+    # -------------------------------------------------------------------------
+    # Main application (authenticated SaaS dashboard)
+    # -------------------------------------------------------------------------
+    - host: app.nebutra.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web
+                port:
+                  number: 80
+
+    # -------------------------------------------------------------------------
+    # Marketing / landing page (apex + www)
+    # -------------------------------------------------------------------------
+    - host: nebutra.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: landing
+                port:
+                  number: 80
+
+    - host: www.nebutra.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: landing
+                port:
+                  number: 80
+
+    # -------------------------------------------------------------------------
+    # API gateway (all microservice traffic from external clients)
+    # -------------------------------------------------------------------------
+    - host: api.nebutra.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api-gateway
+                port:
+                  number: 80

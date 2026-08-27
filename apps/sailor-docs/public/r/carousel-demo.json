@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "carousel-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/carousel-demo.tsx",
+      "content": "\"use client\";\n\nimport { Card } from \"@nebutra/ui/patterns\";\nimport {\n  CardContent,\n  Carousel,\n  CarouselContent,\n  CarouselItem,\n  CarouselNext,\n  CarouselPrevious,\n} from \"@nebutra/ui/primitives\";\n\nexport function CarouselDemo() {\n  return (\n    <Carousel className=\"max-w-xs w-full\">\n      <CarouselContent>\n        {Array.from({ length: 5 }).map((_, index) => (\n          <CarouselItem key={index}>\n            <div className=\"p-1\">\n              <Card>\n                <CardContent className=\"p-6 flex aspect-square items-center justify-center\">\n                  <span className=\"text-4xl font-semibold\">{index + 1}</span>\n                </CardContent>\n              </Card>\n            </div>\n          </CarouselItem>\n        ))}\n      </CarouselContent>\n      <CarouselPrevious />\n      <CarouselNext />\n    </Carousel>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

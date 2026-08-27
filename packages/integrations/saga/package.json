@@ -1,0 +1,48 @@
+{
+  "name": "@nebutra/saga",
+  "version": "0.1.3",
+  "private": true,
+  "type": "module",
+  "nebutra": {
+    "graph": "labs",
+    "status": "wip",
+    "productionReady": false,
+    "requires": [
+      "@nebutra/auth",
+      "@nebutra/billing",
+      "@nebutra/email",
+      "@nebutra/event-bus",
+      "@nebutra/logger"
+    ],
+    "gaps": [
+      "No production app integrations",
+      "Orchestrator durability not guaranteed (no persistent journal)",
+      "Compensation logic scaffolded only"
+    ],
+    "featureId": "saga",
+    "category": "integrations",
+    "summary": "Distributed transactions (WIP — not yet integrated)"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@nebutra/auth": "workspace:*",
+    "@nebutra/billing": "workspace:*",
+    "@nebutra/email": "workspace:*",
+    "@nebutra/event-bus": "workspace:*",
+    "@nebutra/logger": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "^4.0.18"
+  },
+  "license": "AGPL-3.0-only"
+}

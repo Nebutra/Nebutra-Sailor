@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hover-card-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/hover-card-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Avatar,\n  AvatarFallback,\n  AvatarImage,\n  HoverCard,\n  HoverCardContent,\n  HoverCardTrigger,\n} from \"@nebutra/ui/primitives\";\nexport function HoverCardDemo() {\n  return (\n    <HoverCard>\n      <HoverCardTrigger className=\"text-sm font-medium cursor-pointer underline underline-offset-4\">\n        @johndoe\n      </HoverCardTrigger>\n      <HoverCardContent className=\"w-80\">\n        <div className=\"gap-4 flex\">\n          <Avatar>\n            <AvatarImage src=\"https://github.com/johndoe.png\" />\n            <AvatarFallback>JD</AvatarFallback>\n          </Avatar>\n          <div className=\"space-y-1\">\n            <h4 className=\"text-sm font-semibold\">@johndoe</h4>\n            <p className=\"text-sm text-muted-foreground\">\n              Full-stack engineer. Building great products.\n            </p>\n            <p className=\"text-xs text-muted-foreground\">Joined January 2022</p>\n          </div>\n        </div>\n      </HoverCardContent>\n    </HoverCard>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

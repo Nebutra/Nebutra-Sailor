@@ -1,0 +1,65 @@
+# CodeQL analysis configuration
+# Referenced by .github/workflows/codeql.yml
+#
+# Design principles:
+#   - Exclude generated code (Prisma, protobuf, etc.) — CodeQL can't fix it and
+#     it produces noise that trains engineers to dismiss real alerts.
+#   - Downgrade high-noise rules to note-level for build tooling paths so the
+#     security dashboard stays signal-rich. TOCTOU and temp-file races are
+#     acceptable in ops/CLI code; they are not acceptable in request handlers.
+#   - Keep security-extended + security-and-quality suites; experimental excluded.
+#
+# Governance contract:
+#   - "dismissed" alerts must have a written reason (enforced by branch protection
+#     requiring CodeQL to pass before merge).
+#   - New dismissals require PR review — they cannot be added by force push.
+#   - This file is reviewed quarterly alongside the Dependabot update PRs.
+
+name: "Nebutra CodeQL Config"
+
+paths-ignore:
+  # Build outputs and third-party
+  - "**/node_modules/**"
+  - "**/.next/**"
+  - "**/dist/**"
+  - "**/build/**"
+  - "**/*.min.js"
+  - "**/coverage/**"
+
+  # Auto-generated files — never manually authored, cannot be fixed here
+  - "**/prisma/generated/**"
+  - "**/src/generated/**"
+  - "**/__generated__/**"
+
+  # Dev-only tooling: Storybook, docs preview, mail preview, test fixtures
+  - "apps/storybook/**"
+  - "apps/design-docs/**"
+  - "apps/sailor-docs/**"
+  - "apps/mail-preview/**"
+
+  # Infrastructure shell scripts — TOCTOU / curl|bash patterns are standard
+  # ops tooling, not production request handlers
+  - "infra/ops/scripts/**"
+  - "infra/data/**"
+
+query-filters:
+  # Exclude experimental queries — too many false positives, not production-ready
+  - exclude:
+      tags contain: experimental
+
+  # TOCTOU (file-system-race): exclude build tooling and CLI utilities
+  # where race conditions are an accepted risk (not in production HTTP handlers)
+  - exclude:
+      id: js/file-system-race
+      paths:
+        - "packages/ops/**"
+        - "apps/*/scripts/**"
+        - "scripts/**"
+
+  # Insecure temp files: exclude test harnesses and CLI installers
+  - exclude:
+      id: js/insecure-temporary-file
+      paths:
+        - "**/*.test.ts"
+        - "**/*.test.js"
+        - "packages/ops/**"

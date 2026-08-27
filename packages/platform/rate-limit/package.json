@@ -1,0 +1,40 @@
+{
+  "name": "@nebutra/rate-limit",
+  "version": "0.1.0",
+  "private": true,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.0.18",
+    "typescript": "catalog:",
+    "vitest": "^4.0.18"
+  },
+  "dependencies": {
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.36.3"
+  },
+  "license": "AGPL-3.0-only"
+}

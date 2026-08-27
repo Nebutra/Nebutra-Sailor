@@ -1,0 +1,174 @@
+---
+title: "Sentry"
+description: "在 Nebutra 中配置 Sentry，用于错误追踪、性能监控和发布追踪。"
+---
+
+Sentry 为 Nebutra 提供实时错误追踪、分布式性能追踪以及与发布版本关联的调试能力。Next.js 前端和 Hono API Gateway 均已开箱即用地完成了埋点。
+
+## 前提条件
+
+- 一个 Sentry 账户——[sentry.io](https://sentry.io)（云端）或自托管
+- 一个准备好部署的 Nebutra 项目
+- 访问 CI/CD 环境密钥的权限（GitHub Actions 或 Vercel）
+
+## 配置步骤
+
+<Steps>
+  <Step title="创建 Sentry 项目">
+    在你的 Sentry 组织中创建一个新项目。落地页和 Web 应用选择 **Next.js** 平台。如果希望单独追踪 API 错误流，可为 **Node.js** API Gateway 再创建一个项目。
+  </Step>
+  <Step title="复制 DSN">
+    从**项目设置** → **客户端密钥（DSN）**中复制 DSN，格式如下：
+
+    ```
+    https://abc123@o987654.ingest.sentry.io/123456
+    ```
+  </Step>
+  <Step title="设置环境变量">
+    将以下内容添加到你的部署环境。在 Vercel 中，使用**环境变量**并设置正确的作用域（预览 / 生产）：
+
+    ```bash
+    # 服务端（Next.js 服务端 + API Gateway）
+    SENTRY_DSN=https://xxxx@oXXX.ingest.sentry.io/XXXX
+    SENTRY_ORG=your-org-slug
+    SENTRY_PROJECT=nebutra
+    SENTRY_AUTH_TOKEN=sntrys_xxxxxxxxxxxx
+
+    # 客户端（浏览器 SDK — 必须加前缀）
+    NEXT_PUBLIC_SENTRY_DSN=https://xxxx@oXXX.ingest.sentry.io/XXXX
+    ```
+  </Step>
+  <Step title="将 SENTRY_AUTH_TOKEN 添加到 CI">
+    认证令牌用于在构建时上传源码映射。将其添加为名为 `SENTRY_AUTH_TOKEN` 的 GitHub Actions 密钥，或添加为仅限**构建**作用域的 Vercel 环境变量。
+  </Step>
+  <Step title="验证错误是否被捕获">
+    部署到预发布环境并触发一个测试错误：
+
+    ```typescript
+    // 临时代码 — 验证后请删除
+    throw new Error("Sentry 连接测试");
+    ```
+
+    在 30 秒内检查 Sentry → **问题**，确认事件已出现。
+  </Step>
+</Steps>
+
+## 源码映射
+
+源码映射在 `next build` 期间由 `@sentry/nextjs` Webpack 插件自动上传。这需要在构建时设置 `SENTRY_AUTH_TOKEN`、`SENTRY_ORG` 和 `SENTRY_PROJECT`。
+
+正确配置源码映射后，Sentry 的堆栈跟踪将显示原始 TypeScript 源码，而非压缩后的 JS。
+
+<Note>
+源码映射在上传后会从部署包中删除。最终用户无法下载它们。
+</Note>
+
+## 性能监控
+
+以下内容已自动完成性能监控埋点：
+
+- **Next.js**：所有页面导航、服务端组件和 API 路由处理器
+- **Hono**：通过 `@sentry/node` HTTP 集成覆盖所有 HTTP 路由
+- **数据库查询**：通过 Sentry Prisma 集成实现 Prisma spans
+
+追踪采样率由 `tracesSampleRate` 选项控制。Nebutra 在生产环境的默认值为 `0.1`（即采样 10% 的请求）：
+
+```typescript
+// sentry.server.config.ts（由 @sentry/nextjs 自动生成）
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  tracesSampleRate: process.env.NODE_ENV === "production" ? 0.1 : 1.0,
+  environment: process.env.NODE_ENV,
+});
+```
+
+<Tip>
+在调试性能退化问题时，可临时提高 `tracesSampleRate`，问题确认后再降回以控制事件量和成本。
+</Tip>
+
+## 租户上下文注入
+
+Nebutra 会自动将组织和用户上下文附加到每个 Sentry 事件，方便你按租户筛选问题：
+
+```typescript
+import * as Sentry from "@sentry/nextjs";
+import { getCurrentTenant } from "@nebutra/tenant";
+
+// 在租户解析后的中间件中调用
+export function setSentryTenantContext() {
+  const tenant = getCurrentTenant();
+  if (!tenant) return;
+
+  Sentry.setUser({ id: tenant.userId });
+  Sentry.setTag("tenantId", tenant.tenantId);
+  Sentry.setTag("plan", tenant.plan);
+}
+```
+
+这已集成到 Nebutra 的中间件链中，无需在应用代码中手动调用。
+
+## 告警规则
+
+在 Sentry → **告警** → **创建告警规则**中配置以下规则：
+
+### 新错误类型（首次出现）
+
+- **条件**：创建了一个新问题
+- **操作**：通知 Slack `#eng-alerts`
+
+### 错误激增
+
+- **条件**：某个问题在 1 小时内的事件数超过 10
+- **操作**：通知 Slack `#eng-alerts` + 发送邮件给值班人员
+
+### 未处理的 Promise 拒绝激增
+
+- **条件**：`mechanism.type:unhandledrejection` 事件 > 5 个/分钟
+- **操作**：创建 PagerDuty 事件
+
+### 性能退化
+
+- **条件**：p75 事务耗时超过 2000ms
+- **操作**：通知 Slack `#eng-perf`
+
+## 发布追踪
+
+Sentry 将错误与导致它们的确切代码版本关联起来。当 `SENTRY_AUTH_TOKEN` 在构建时设置后，Sentry Webpack 插件会在 CI 期间自动创建发布记录。
+
+如需手动创建发布（例如通过自定义部署脚本）：
+
+```bash
+npx @sentry/cli releases new "$RELEASE_VERSION"
+npx @sentry/cli releases set-commits "$RELEASE_VERSION" --auto
+npx @sentry/cli releases finalize "$RELEASE_VERSION"
+npx @sentry/cli releases deploys "$RELEASE_VERSION" new -e production
+```
+
+<Info>
+将 `RELEASE_VERSION` 设置为你的 git SHA 或语义化版本标签。Sentry 会使用此信息来标识引入退化的提交。
+</Info>
+
+## GitHub 集成
+
+在 **Sentry 设置** → **集成** → **GitHub** 中将 Sentry 连接到你的 GitHub 仓库，这将启用：
+
+- 自动识别新问题的疑似提交
+- 从 Sentry 问题界面触发"在提交中解决"工作流
+- 与 GitHub 发布关联的部署追踪
+
+---
+
+<CardGroup cols={2}>
+  <Card title="监控概览" icon="bell" href="/zh/monitoring/overview">
+    完整监控栈的架构、告警渠道和关键指标。
+  </Card>
+  <Card title="结构化日志" icon="list" href="/zh/monitoring/logs">
+    使用 @nebutra/logger 进行结构化的、与 Sentry 集成的日志记录。
+  </Card>
+  <Card title="部署" icon="rocket" href="/zh/deployment/overview">
+    CI/CD 流水线配置，包括源码映射上传和发布创建。
+  </Card>
+  <Card title="故障排查" icon="wrench" href="/zh/troubleshooting/overview">
+    常见错误模式以及如何使用 Sentry 进行诊断。
+  </Card>
+</CardGroup>

@@ -1,0 +1,211 @@
+{
+  "name": "E-commerce Inventory Sync",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Every 15 Minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [240, 300],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "resource": "product",
+        "operation": "getAll",
+        "limit": 250,
+        "options": {
+          "fields": "id,title,variants,inventory_quantity,updated_at"
+        }
+      },
+      "id": "shopify-products",
+      "name": "Get Shopify Products",
+      "type": "n8n-nodes-base.shopify",
+      "position": [460, 300],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "query": "SELECT product_id, inventory_quantity, updated_at FROM products WHERE source = 'shopify'",
+        "options": {}
+      },
+      "id": "get-local-products",
+      "name": "Get Local Products",
+      "type": "n8n-nodes-base.postgres",
+      "position": [680, 300],
+      "typeVersion": 2.3
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "id",
+              "field2": "product_id"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "merge-compare",
+      "name": "Compare Products",
+      "type": "n8n-nodes-base.merge",
+      "position": [900, 300],
+      "typeVersion": 2.1
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.shopify_quantity }}",
+              "operation": "notEqual",
+              "value2": "={{ $json.local_quantity }}"
+            }
+          ]
+        }
+      },
+      "id": "filter-changed",
+      "name": "Filter Changed",
+      "type": "n8n-nodes-base.filter",
+      "position": [1120, 300],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "table": "products",
+        "columns": "inventory_quantity,updated_at",
+        "values": "={{ $json.shopify_quantity }},={{ $now.toISO() }}",
+        "where": "product_id = '{{ $json.product_id }}'"
+      },
+      "id": "update-inventory",
+      "name": "Update Local Inventory",
+      "type": "n8n-nodes-base.postgres",
+      "position": [1340, 200],
+      "typeVersion": 2.3
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://recsys:8003/v1/refresh",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "product_ids",
+              "value": "={{ $json.product_id }}"
+            }
+          ]
+        }
+      },
+      "id": "trigger-recsys",
+      "name": "Trigger RecSys Refresh",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [1340, 400],
+      "typeVersion": 4.1
+    },
+    {
+      "parameters": {
+        "channel": "#ecommerce-sync",
+        "text": "=Inventory sync complete. Updated {{ $itemIndex + 1 }} products.",
+        "otherOptions": {}
+      },
+      "id": "notify-complete",
+      "name": "Notify Complete",
+      "type": "n8n-nodes-base.slack",
+      "position": [1560, 300],
+      "typeVersion": 2.1
+    }
+  ],
+  "connections": {
+    "Every 15 Minutes": {
+      "main": [
+        [
+          {
+            "node": "Get Shopify Products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Shopify Products": {
+      "main": [
+        [
+          {
+            "node": "Compare Products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Local Products": {
+      "main": [
+        [
+          {
+            "node": "Compare Products",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Compare Products": {
+      "main": [
+        [
+          {
+            "node": "Filter Changed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Changed": {
+      "main": [
+        [
+          {
+            "node": "Update Local Inventory",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Trigger RecSys Refresh",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Local Inventory": {
+      "main": [
+        [
+          {
+            "node": "Notify Complete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": ["ecommerce", "sync", "shopify"],
+  "triggerCount": 1
+}

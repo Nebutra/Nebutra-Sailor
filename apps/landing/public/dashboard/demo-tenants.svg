@@ -1,0 +1,15 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0033FE"/>
+      <stop offset="1" stop-color="#0BF1C3"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" rx="28" fill="#071426"/>
+  <rect x="48" y="48" width="1104" height="804" rx="20" fill="#10203C" stroke="#224170"/>
+  <rect x="92" y="110" width="280" height="40" rx="10" fill="url(#g3)"/>
+  <rect x="92" y="184" width="300" height="612" rx="18" fill="#15315E"/>
+  <rect x="422" y="184" width="686" height="180" rx="18" fill="#15315E"/>
+  <rect x="422" y="392" width="686" height="404" rx="18" fill="#15315E"/>
+  <text x="92" y="86" fill="#B2C8E8" font-family="Inter, sans-serif" font-size="28">Multi-tenant Workspace Preview</text>
+</svg>

@@ -1,0 +1,114 @@
+{
+  "id": "vanta",
+  "name": "Vanta",
+  "darkDefault": false,
+  "version": "1.0.0",
+  "roles": {
+    "canvas": "220 23% 97%",
+    "canvasForeground": "240 17% 11%",
+    "surface": "0 0% 100%",
+    "surfaceForeground": "240 17% 11%",
+    "action": "268 95% 39%",
+    "actionForeground": "0 0% 100%",
+    "quiet": "250 100% 92%",
+    "quietForeground": "272 100% 14%",
+    "muted": "240 20% 93%",
+    "mutedForeground": "238 11% 48%",
+    "border": "240 17% 11%",
+    "ring": "268 95% 39%",
+    "destructive": "0 72% 51%",
+    "destructiveForeground": "0 0% 100%",
+    "brand": "272 100% 14%",
+    "brandForeground": "0 0% 100%",
+    "warning": "44 100% 53%",
+    "warningForeground": "240 17% 11%",
+    "info": "270 63% 56%",
+    "infoForeground": "0 0% 100%"
+  },
+  "semantic": {
+    "background": "220 23% 97%",
+    "foreground": "240 17% 11%",
+    "card": "0 0% 100%",
+    "cardForeground": "240 17% 11%",
+    "popover": "0 0% 100%",
+    "popoverForeground": "240 17% 11%",
+    "primary": "268 95% 39%",
+    "primaryForeground": "0 0% 100%",
+    "secondary": "250 100% 92%",
+    "secondaryForeground": "272 100% 14%",
+    "muted": "240 20% 93%",
+    "mutedForeground": "238 11% 48%",
+    "accent": "272 100% 14%",
+    "accentForeground": "0 0% 100%",
+    "destructive": "0 72% 51%",
+    "destructiveForeground": "0 0% 100%",
+    "border": "240 17% 11%",
+    "ring": "268 95% 39%",
+    "warning": "44 100% 53%",
+    "warningForeground": "240 17% 11%",
+    "info": "270 63% 56%",
+    "infoForeground": "0 0% 100%"
+  },
+  "recipe": {
+    "buttonDefault": "solid",
+    "density": "comfortable",
+    "badgeDefault": "muted",
+    "radii": {
+      "button": "999px",
+      "card": "16px",
+      "badge": "999px",
+      "input": "999px",
+      "pill": "9999px"
+    },
+    "elevationTokens": {
+      "card": "0 0 #0000",
+      "control": "0 0 #0000",
+      "raised": "0 0 #0000"
+    },
+    "outlineBorder": "#181822"
+  },
+  "typography": {
+    "fontSans": "'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif",
+    "fontDisplay": "'Reckless', 'Source Serif 4', 'Lora', ui-serif, Georgia, serif",
+    "headingWeight": 500
+  },
+  "motion": {
+    "easeOut": "cubic-bezier(0.33, 1, 0.68, 1)",
+    "easeInOut": "cubic-bezier(0.37, 0, 0.63, 1)",
+    "micro": 120,
+    "flow": 240,
+    "reveal": 380,
+    "cinematic": 620
+  },
+  "spacing": {
+    "xs": "0.75rem",
+    "sm": "1.125rem",
+    "md": "1.75rem",
+    "lg": "2.5rem",
+    "xl": "3.5rem",
+    "2xl": "5rem"
+  },
+  "extensions": {
+    "categories": {
+      "brand": "#260048",
+      "action": "#5e05c4",
+      "link": "#8f47d5",
+      "heroWash": "#ddd6ff",
+      "warning": "#ffbe0f",
+      "steel": "#9e9fb7",
+      "ash": "#dfdfe9"
+    },
+    "decorative": {
+      "hero-wash": "#ddd6ff"
+    },
+    "sourceUrl": "https://www.vanta.com",
+    "notes": [
+      "roles.action = Vivid Violet (filled CTA only).",
+      "roles.brand = Indigo Ink (logo / wordmark / brand-mark).",
+      "Elevation none \u2014 1px carbon borders frame cards; no drop-shadow.",
+      "Full-pill controls (999px); cards 16px.",
+      "UI = Inter Variable; marketing display = Reckless serif.",
+      "Lavender wash is marketing hero surface (decorative), not product chrome fill."
+    ]
+  }
+}

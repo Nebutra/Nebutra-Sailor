@@ -1,0 +1,105 @@
+{
+  "id": "raycast",
+  "name": "Raycast",
+  "darkDefault": true,
+  "version": "1.0.0",
+  "semantic": {
+    "background": "210 20% 2%",
+    "foreground": "0 0% 100%",
+    "card": "220 18% 3%",
+    "cardForeground": "0 0% 100%",
+    "popover": "220 18% 3%",
+    "popoverForeground": "0 0% 100%",
+    "primary": "0 0% 90%",
+    "primaryForeground": "210 1% 27%",
+    "secondary": "220 5% 11%",
+    "secondaryForeground": "0 0% 100%",
+    "muted": "220 8% 7%",
+    "mutedForeground": "210 1% 42%",
+    "accent": "0 100% 69%",
+    "accentForeground": "210 1% 27%",
+    "destructive": "0 72% 51%",
+    "destructiveForeground": "0 0% 100%",
+    "border": "210 2% 19%",
+    "ring": "240 1% 61%",
+    "success": "151 59% 59%",
+    "successForeground": "210 20% 2%",
+    "info": "202 100% 67%",
+    "infoForeground": "210 20% 2%"
+  },
+  "recipe": {
+    "buttonDefault": "solid",
+    "density": "compact",
+    "badgeDefault": "muted",
+    "radii": {
+      "button": "8px",
+      "card": "16px",
+      "badge": "6px",
+      "input": "8px",
+      "pill": "9999px"
+    },
+    "elevationTokens": {
+      "card": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.25) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset",
+      "control": "0 0 #0000",
+      "raised": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.25) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset"
+    }
+  },
+  "typography": {
+    "fontSans": "'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif",
+    "fontMono": "'Geist Mono', 'GeistMono', ui-monospace, Menlo, monospace",
+    "fontDisplay": "'Inter', ui-sans-serif, system-ui, sans-serif",
+    "headingWeight": 400
+  },
+  "motion": {
+    "easeOut": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "easeSpring": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+    "micro": 90,
+    "flow": 160,
+    "reveal": 220,
+    "cinematic": 340
+  },
+  "spacing": {
+    "xs": "0.375rem",
+    "sm": "0.5rem",
+    "md": "0.75rem",
+    "lg": "1rem",
+    "xl": "1.375rem",
+    "2xl": "2rem"
+  },
+  "extensions": {
+    "categories": {
+      "brand": "#ff6363",
+      "ember": "#452324",
+      "sky": "#63a1ff"
+    },
+    "sourceUrl": "https://raycast.com",
+    "notes": [
+      "Primary CTA = Mist fill + Iron text (neutral solid).",
+      "Coral Pulse is brand mark only \u2014 do not use for general product chrome CTAs.",
+      "Cards use elevation=key (keyboard-key inset shadow stack)."
+    ]
+  },
+  "roles": {
+    "canvas": "210 20% 2%",
+    "canvasForeground": "0 0% 100%",
+    "surface": "220 18% 3%",
+    "surfaceForeground": "0 0% 100%",
+    "action": "0 0% 90%",
+    "actionForeground": "210 1% 27%",
+    "quiet": "220 5% 11%",
+    "quietForeground": "0 0% 100%",
+    "muted": "220 8% 7%",
+    "mutedForeground": "210 1% 48%",
+    "border": "210 2% 19%",
+    "ring": "240 1% 61%",
+    "destructive": "0 72% 51%",
+    "destructiveForeground": "0 0% 100%",
+    "brand": "0 100% 69%",
+    "brandForeground": "210 1% 27%",
+    "success": "151 59% 59%",
+    "successForeground": "210 20% 2%",
+    "info": "202 100% 67%",
+    "infoForeground": "210 20% 2%"
+  }
+}

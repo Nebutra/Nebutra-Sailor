@@ -1,0 +1,179 @@
+---
+title: Webhooks
+description: Send and receive real-time events between Nebutra and your external systems.
+---
+
+## Overview
+
+Nebutra's webhook system (`@nebutra/webhooks`) allows you to:
+
+1. **Receive** events from Nebutra (inbound webhooks — e.g. Stripe, Clerk, GitHub)
+2. **Send** events to your customers' systems (outbound webhooks — when things happen in your product)
+
+## Outbound webhooks
+
+### Register an endpoint
+
+Customers register webhook endpoints from **Settings → Webhooks → Add Endpoint**.
+
+Programmatically:
+
+```typescript
+const endpoint = await nebutra.webhooks.createEndpoint({
+  url: "https://your-app.com/webhooks/nebutra",
+  events: ["project.created", "invoice.paid", "member.invited"],
+  orgId: "org_123",
+});
+```
+
+### Send an event
+
+```typescript
+import { getWebhooks } from "@nebutra/webhooks";
+
+const webhooks = await getWebhooks();
+
+await webhooks.sendEvent({
+  id: crypto.randomUUID(),
+  eventType: "invoice.paid",
+  payload: {
+    invoiceId: "inv_123",
+    amount: 9900,
+    currency: "usd",
+  },
+  timestamp: new Date().toISOString(),
+  tenantId: "org_123",
+});
+```
+
+Nebutra handles delivery, retries (with exponential backoff), and signature signing automatically.
+
+### Event delivery guarantees
+
+| Property | Value |
+|----------|-------|
+| Delivery | At-least-once |
+| Retry attempts | 3 (with exponential backoff: 1s, 10s, 60s) |
+| Signature | HMAC-SHA256 |
+| Payload format | JSON |
+| Timeout per attempt | 30 seconds |
+
+## Inbound webhooks (receiving events)
+
+### Verifying signatures
+
+Always verify webhook signatures before processing events:
+
+```typescript app/api/webhooks/stripe/route.ts
+import { NextRequest } from "next/server";
+import Stripe from "stripe";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+
+export async function POST(req: NextRequest) {
+  const body = await req.text();
+  const sig = req.headers.get("stripe-signature")!;
+
+  let event: Stripe.Event;
+
+  try {
+    event = stripe.webhooks.constructEvent(
+      body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET!
+    );
+  } catch {
+    return new Response("Invalid signature", { status: 400 });
+  }
+
+  switch (event.type) {
+    case "invoice.paid":
+      await handleInvoicePaid(event.data.object as Stripe.Invoice);
+      break;
+    case "customer.subscription.deleted":
+      await handleSubscriptionCancelled(event.data.object as Stripe.Subscription);
+      break;
+  }
+
+  return new Response("OK", { status: 200 });
+}
+```
+
+### Clerk webhooks
+
+```typescript app/api/webhooks/clerk/route.ts
+import { Webhook } from "svix";
+import { headers } from "next/headers";
+
+export async function POST(req: Request) {
+  const body = await req.text();
+  const headerPayload = await headers();
+  const svixId = headerPayload.get("svix-id")!;
+  const svixTimestamp = headerPayload.get("svix-timestamp")!;
+  const svixSignature = headerPayload.get("svix-signature")!;
+
+  const wh = new Webhook(process.env.CLERK_WEBHOOK_SECRET!);
+
+  const event = wh.verify(body, {
+    "svix-id": svixId,
+    "svix-timestamp": svixTimestamp,
+    "svix-signature": svixSignature,
+  });
+
+  switch (event.type) {
+    case "organization.created":
+      await provisionTenant(event.data);
+      break;
+    case "organizationMembership.created":
+      await addMember(event.data);
+      break;
+  }
+
+  return new Response("OK", { status: 200 });
+}
+```
+
+## Webhook events reference
+
+| Event | When it fires |
+|-------|---------------|
+| `org.created` | A new organization is created |
+| `org.updated` | Org name or settings change |
+| `org.deleted` | Organization is deleted |
+| `member.invited` | A member invitation is sent |
+| `member.joined` | A member accepts an invitation |
+| `member.removed` | A member is removed from the org |
+| `api_key.created` | An API key is created |
+| `api_key.revoked` | An API key is revoked |
+| `project.created` | A new project is created |
+| `project.deleted` | A project is deleted |
+| `invoice.paid` | A billing invoice is paid |
+| `subscription.changed` | Plan upgrade or downgrade |
+| `quota.warning` | Usage reaches 80% of quota |
+| `quota.exceeded` | Usage exceeds 100% of quota |
+
+## Testing webhooks locally
+
+Use the Stripe CLI to forward events to your local server:
+
+```bash
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+```
+
+Or use [ngrok](https://ngrok.com) to expose your local server:
+
+```bash
+ngrok http 3000
+# Copy the HTTPS URL → paste into your webhook endpoint settings
+```
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Error Handling" icon="triangle-alert" href="/guides/error-handling">
+    How to handle failed webhook deliveries.
+  </Card>
+  <Card title="Stripe Integration" icon="credit-card" href="/integrations/stripe">
+    Stripe webhook setup guide.
+  </Card>
+</CardGroup>

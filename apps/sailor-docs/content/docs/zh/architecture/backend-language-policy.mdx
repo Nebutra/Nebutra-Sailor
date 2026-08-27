@@ -1,0 +1,95 @@
+---
+title: 后端语言策略
+description: TS-by-Default —— 新增后端工作默认进入 TypeScript（backends/gateway/）。Python 仅保留给批处理 / ML / 专用库场景。
+---
+
+本页对 **ADR 2026-05-10 —— TS-by-Default, Python Only When Justified** 进行精简陈述，是 Nebutra-Sailor 后端语言选择的唯一权威来源。
+
+## 规则
+
+> **新增后端默认进入 TypeScript**（`backends/gateway/` —— Hono —— 或 `packages/<category>/<name>/`）。
+
+新建 Python 服务的前提是其 `README.md` 至少引用以下一条：
+
+1. **批处理 / 队列任务**，时长超过 Edge Runtime 容忍范围（>5s）
+2. **ML / 科学计算**，依赖 Python 生态（transformers、vLLM、scikit-learn 等）
+3. **专用库**，没有可比拟的 TypeScript 端口
+
+CRUD、Webhook、计费、内容管理、区块链 RPC 读取、第三方 API 代理 —— 全部走 TypeScript，**无例外**。
+
+## 权威实现表
+
+在动手写 Python 之前，请先确认是否已经存在权威的 TypeScript 实现。**不要在 Python 端重复**这些能力：
+
+| 领域 | 权威实现（使用它） | 禁止在哪里重复 |
+|------|-------------------|---------------|
+| 计费 / 订阅 | `packages/commerce/billing`（多服务商，完整能力面） | ❌ Python |
+| 内容管理 | `apps/studio`（Sanity Studio v4） | ❌ Python |
+| 认证 / 身份 | `packages/iam/auth` + `apps/idp` | ❌ Python |
+| 出站 Webhook | `packages/integrations/webhooks` | ❌ Python |
+| Edge AI（交互式） | `packages/ai/agents`（Vercel AI SDK） | Python 仅用于批处理 / 重翻译 |
+| BFF / REST 网关 | `backends/gateway`（Hono） | ❌ Python |
+
+如果你即将写的 Python 代码做的事情上面已有 —— 请停下并查阅 ADR。
+
+## 模块三层生命周期
+
+`backends/python/` 与 `packages/` 下每个模块都恰好属于三层之一：
+
+| 层级 | 含义 | CI 状态 |
+|------|------|---------|
+| `active` | 有真实调用者（非状态探针 / MCP 注册存根） | 参与 build / typecheck / test |
+| `stub` | 概念保留：`README.md` + 接口存在，但 `src/` 为空 | 不参与 build，仅作为占位 |
+| `incubator` | 移入 `incubator/`，实验性，无调用者 | 完全从 workspaces 和 CI 中剔除 |
+
+### 升级 / 降级规则
+
+- **`stub → active`** —— 必须在**同一 PR**中加入真实消费者，禁止「以后再接」。
+- **`active → stub`** —— 一个季度内 0 调用（按调用图审计），从 CI 剔除以保持构建绿。
+- **`stub → incubator`** —— 两个季度未被触碰。
+
+### 调用图审计
+
+判断某个 Python 服务是否仍有真实调用者（状态探针与 MCP 注册条目**不算**）：
+
+```bash
+# 通过环境变量 URL 找该后端的外部调用者
+rg "<SERVICE_NAME>_SERVICE_URL" --type ts \
+  -g '!**/node_modules/**' \
+  -g '!**/dist/**'
+```
+
+## `backends/python/` 当前状态
+
+截至 2026-05-12（跟进审计后），`backends/python/` 仅包含：
+
+- `_shared/` —— `active`（跨服务工具）
+- `ai/` —— `active`（LLM、Embedding、Agent 编排，有真实调用者）
+
+历史上存在、现已移除的模块：`recsys`、`ecommerce`（mock 数据、无调用者）、`event-ingest`（迁回 `backends/gateway` 进程内）、以及 `content`、`web3`、`third-party` 下的空 stub。
+
+三层生命周期目前已经**结构化强制**，不再仅是文档约定。
+
+## 如何启动一个合规的 Python 服务
+
+```bash
+# 交互模式：提示输入服务名
+nebutra backend init py
+
+# 非交互模式
+nebutra backend init py --name translator
+nebutra backend init py --name translator --dry-run
+```
+
+生成的 `backends/python/<name>/README.md` 中带有一条**占位行**，必须替换为具体的例外理由（引用上文规则中的 1、2 或 3）。PR Review 会拒绝仍保留占位行的服务。
+
+## 相关内容
+
+<CardGroup cols={2}>
+  <Card title="Python 快速开始" icon="python" href="/zh/docs/quickstart/python">
+    SDK 消费者指南 —— 面向已存在的、需要调用 Nebutra 的 Python 服务。
+  </Card>
+  <Card title="nebutra backend" icon="terminal" href="/zh/docs/cli/nebutra-cli">
+    `nebutra backend init` 的 CLI 参考。
+  </Card>
+</CardGroup>

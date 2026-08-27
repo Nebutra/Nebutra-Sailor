@@ -1,0 +1,1281 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # Cancel in-flight runs on PR branches to save runner minutes. The public
+  # template mirror is also cancelable on main because every sync is a complete
+  # mirror snapshot and older template CI runs only block fresher evidence.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' || github.repository == 'Nebutra/Sailor-Template' }}
+
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+  npm_config_verify_deps_before_run: "false"
+
+jobs:
+  # ── Detect which apps/packages changed ──────────────────────────────────
+  detect-changes:
+    name: Detect Changed Apps
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      template: ${{ steps.profile.outputs.template }}
+      web: ${{ steps.filter.outputs.web }}
+      api-gateway: ${{ steps.filter.outputs.api-gateway }}
+      landing: ${{ steps.filter.outputs.landing }}
+      studio: ${{ steps.filter.outputs.studio }}
+      docs-hub: ${{ steps.filter.outputs.docs-hub }}
+      packages: ${{ steps.filter.outputs.packages }}
+      db: ${{ steps.filter.outputs.db }}
+      services: ${{ steps.filter.outputs.services }}
+      openapi: ${{ steps.filter.outputs.openapi }}
+      e2e: ${{ steps.filter.outputs.e2e }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Detect repository profile
+        id: profile
+        run: |
+          if [ -f ".sailor-template.json" ]; then
+            echo "template=true" >> "$GITHUB_OUTPUT"
+            echo "Repository profile: sailor-template"
+          else
+            echo "template=false" >> "$GITHUB_OUTPUT"
+            echo "Repository profile: source"
+          fi
+
+      - uses: dorny/paths-filter@d1c1ffe0248fe513906c8e24db8ea791d46f8590 # v3
+        id: filter
+        with:
+          filters: |
+            web:
+              - 'apps/web/**'
+              - 'packages/**'
+              - 'scripts/verify-web-release.mjs'
+              - '.github/workflows/ci.yml'
+            api-gateway:
+              - 'backends/gateway/**'
+              - 'packages/**'
+            landing:
+              - 'apps/landing/**'
+              - 'packages/**'
+            studio:
+              - 'apps/studio/**'
+              - 'packages/**'
+            docs-hub:
+              - 'apps/sailor-docs/**'
+              - 'packages/**'
+            packages:
+              - 'packages/**'
+            db:
+              - 'packages/platform/db/**'
+            services:
+              - 'backends/python/**'
+            openapi:
+              - 'backends/gateway/**'
+              - 'backends/gateway/scripts/export-spec.ts'
+              - 'apps/web/package.json'
+              - 'apps/web/src/lib/api/**'
+              - 'scripts/generate-api-types.ts'
+              - '.github/workflows/ci.yml'
+              - 'packages/commerce/contracts/**'
+              - 'packages/platform/gateway-core/**'
+            e2e:
+              - 'e2e/**'
+              - 'backends/gateway/**'
+              - 'apps/landing/**'
+              - 'apps/sleptons/**'
+              - 'apps/web/**'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - 'scripts/check-e2e-prereqs.mjs'
+              - '.github/workflows/ci.yml'
+              - 'packages/design/brand/**'
+              - 'packages/design/theme/**'
+              - 'packages/design/tokens/**'
+              - 'packages/design/ui/**'
+
+  # ── Sailor-Template contract ─────────────────────────────────────────────
+  # The public template mirror is a stripped repository profile. It should not
+  # run the full Nebutra-Sailor monorepo CI surface on every sync; that makes
+  # template pushes slow and exposes source-only drift after the mirror step.
+  # This contract proves the template-specific invariants that matter instead.
+  template-contract:
+    name: Template Contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: detect-changes
+    if: needs.detect-changes.outputs.template == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          verify-supply-chain: "true"
+          install-command: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Assert template mirror shape
+        run: |
+          node <<'NODE'
+          const fs = require("fs");
+          const path = require("path");
+          const marker = JSON.parse(fs.readFileSync(".sailor-template.json", "utf8"));
+          if (marker.type !== "sailor-template-mirror") {
+            console.error("Invalid template marker type: " + marker.type);
+            process.exit(1);
+          }
+
+          // Source-only paths that must never land in the public skeleton.
+          const forbidden = [
+            ".templateignore",
+            "TEMPLATE.md",
+            ".github/workflows/sync-template.yml",
+            ".github/workflows/sync-subrepo-mirrors.yml",
+            ".github/workflows/deploy-ecs.yml",
+            ".github/workflows/deploy.yml",
+            ".github/workflows/deploy-pebble-vercel.yml",
+            ".github/workflows/deploy-carina-ecs.yml",
+            ".github/workflows/point-forge-dns.yml",
+            ".github/workflows/chromatic.yml",
+            ".github/workflows/visual-acceptance.yml",
+            "apps/forge",
+            "apps/router",
+            "apps/pebble",
+            "apps/typelens",
+            "apps/design",
+            "apps/admin",
+            "apps/auth",
+            "apps/sleptons",
+            "apps/studio",
+            "backends/go",
+            "backends/rust",
+            "infra/nebutra-router",
+            "backends/gateway/src/routes/pebble",
+            "backends/gateway/src/routes/startup-os",
+          ];
+          for (const file of forbidden) {
+            if (fs.existsSync(file)) {
+              console.error("Source-only path leaked into template: " + file);
+              process.exit(1);
+            }
+          }
+
+          // Skeleton apps that create-sailor consumers should always receive.
+          const required = [
+            "apps/web/package.json",
+            "apps/landing/package.json",
+            "apps/idp/package.json",
+            "backends/gateway/package.json",
+            "packages/design/ui/package.json",
+            "packages/ops/create-sailor/package.json",
+          ];
+          for (const file of required) {
+            if (!fs.existsSync(file)) {
+              console.error("Required skeleton path missing from template: " + file);
+              process.exit(1);
+            }
+          }
+
+          // Landing sitemap is stripped with marketing content; the index route
+          // must not remain as a dangling import.
+          if (fs.existsSync("apps/landing/src/app/sitemap-index.xml")) {
+            console.error("Dangling landing sitemap-index leaked into template");
+            process.exit(1);
+          }
+
+          console.log("Template mirror shape OK");
+          NODE
+
+      - name: Check template governance files
+        run: |
+          pnpm exec biome check \
+            e2e/playwright.config.ts \
+            apps/web/src/lib/api/types.generated.ts \
+            backends/gateway/openapi.json \
+            package.json \
+            pnpm-lock.yaml
+
+      - name: Assert template CI profile gates
+        run: |
+          node <<'NODE'
+          const fs = require("fs");
+          const workflow = fs.readFileSync(".github/workflows/ci.yml", "utf8");
+          const required = [
+            "template-contract:",
+            ".sailor-template.json",
+            "needs.detect-changes.outputs.template != 'true'",
+            "needs.detect-changes.outputs.template == 'true'",
+            "typecheck-full:",
+          ];
+          for (const marker of required) {
+            if (!workflow.includes(marker)) {
+              console.error("Missing template CI guard: " + marker);
+              process.exit(1);
+            }
+          }
+          // Full-graph canary must stay off Sailor-Template profile.
+          const full = workflow.match(/typecheck-full:[\s\S]*?(?=\n  [a-z-]+:|$)/);
+          if (!full || !full[0].includes("needs.detect-changes.outputs.template != 'true'")) {
+            console.error("typecheck-full must be gated off the template profile");
+            process.exit(1);
+          }
+          console.log("Template CI gates OK");
+          NODE
+
+      - name: Validate API artifacts are readable
+        run: |
+          node -e "const fs = require('fs'); const spec = JSON.parse(fs.readFileSync('backends/gateway/openapi.json', 'utf8')); if (!String(spec.openapi).startsWith('3.')) { console.error('Unexpected OpenAPI version: ' + spec.openapi); process.exit(1); } const types = fs.readFileSync('apps/web/src/lib/api/types.generated.ts', 'utf8'); for (const marker of ['export interface paths', '/api/misc/health', '/api/v1/integrations/admin/overview']) { if (!types.includes(marker)) { console.error('Generated API types missing marker: ' + marker); process.exit(1); } }"
+
+      - name: Validate Playwright template config
+        run: pnpm exec playwright test --config=e2e/playwright.config.ts --list
+        env:
+          CI: true
+          DATABASE_URL: "postgresql://stub:stub@localhost:5432/stub"
+          CLERK_SECRET_KEY: "sk_test_placeholder"
+
+  # ── License compliance ───────────────────────────────────────────────────
+  # Ensures no production dependency uses a copyleft license incompatible
+  # with the project's AGPL-3.0 license.  Runs on every push/PR.
+  license-check:
+    name: License Compliance
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: detect-changes
+    # Useful on both source and template; cheap enough to always run after profile detect.
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Check production dependency licenses
+        run: npx license-checker --production --failOn 'GPL-2.0;GPL-3.0;SSPL-1.0;EUPL-1.1;EUPL-1.2;AGPL-1.0' --excludePackages '@nebutra/*' --summary
+
+  # ── Full-graph typecheck (post-merge canary) ────────────────────────────
+  # Every other typecheck in this repo — CI and the pre-push hook alike — runs
+  # the *affected* graph. That makes breakage on main invisible: apps/design
+  # landed not compiling and stayed red for days, because no push happened to
+  # touch it, until an unrelated i18n change widened someone's graph and they
+  # paid for it.
+  #
+  # This runs the whole graph, but only after merge, so PR feedback stays fast
+  # and a break is attributable to the commit that caused it instead of to
+  # whoever trips over it next.
+  typecheck-full:
+    name: Typecheck (full graph)
+    # Source monorepo only. Sailor-Template is a stripped skeleton — full-graph
+    # typecheck fails after product apps/pages are mirror-stripped (e.g. landing
+    # sitemap). Template health is the `template-contract` job.
+    needs: detect-changes
+    if: github.event_name == 'push' && needs.detect-changes.outputs.template != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      # setup-node-pnpm rather than setup-node plus a hand-rolled corepack and
+      # install: it already installs pnpm at the root packageManager version,
+      # caches the store and runs the frozen install, and keeping one shared
+      # setup is what ci-harness-closure asks for.
+      - uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version: "24"
+      - name: Typecheck (every package)
+        run: pnpm turbo typecheck
+
+  # ── Lint & type-check (affected packages only) ──────────────────────────
+  lint-typecheck:
+    name: Lint & Typecheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: detect-changes
+    if: needs.detect-changes.outputs.template != 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          verify-supply-chain: "true"
+
+      - name: Verify Turbo build contract
+        run: pnpm --config.verify-deps-before-run=false ci:verify-turbo-contract
+
+      - name: Verify cloud portability contract
+        run: pnpm --config.verify-deps-before-run=false cloud:verify
+
+      - name: Architecture smoke checks
+        run: |
+          pnpm test:arch
+
+      - name: Verify animation governance
+        run: pnpm --config.verify-deps-before-run=false animation:governance
+
+      - name: Generate Prisma Client
+        run: pnpm db:generate
+
+      - name: Resolve Turbo base ref
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE_SHA="${{ github.event.before }}"
+          fi
+
+          if [ -z "$BASE_SHA" ] || [ "$BASE_SHA" = "0000000000000000000000000000000000000000" ]; then
+            BASE_SHA="$(git rev-parse HEAD~1)"
+          fi
+
+          echo "TURBO_BASE_REF=$BASE_SHA" >> "$GITHUB_ENV"
+          echo "Using TURBO_BASE_REF=$BASE_SHA"
+
+      - name: Lint changed files (Biome)
+        run: |
+          mapfile -t BIOME_FILES < <(
+            git diff --name-only --diff-filter=ACMRT "$TURBO_BASE_REF"...HEAD \
+              | grep -E '\.(js|jsx|ts|tsx|json|jsonc|css|md|mdx|yml|yaml)$' \
+              || true
+          )
+
+          if [ "${#BIOME_FILES[@]}" -eq 0 ]; then
+            echo "No Biome-supported changed files."
+            exit 0
+          fi
+
+          # --no-errors-on-unmatched: when the changed-file set contains only
+          # paths Biome ignores (e.g. README*.md after a docs-only commit),
+          # Biome would otherwise exit 1 with "No files were processed".
+          pnpm biome ci --no-errors-on-unmatched "${BIOME_FILES[@]}"
+
+      - name: Typecheck (affected)
+        run: pnpm turbo typecheck --filter="...[${TURBO_BASE_REF}]..."
+
+      # ── i18n integrity (every catalog) ──────────────────────────────
+      # Key parity + ICU placeholder consistency + critical-namespace
+      # untranslated detection. Catalog-driven from scripts/i18n-catalogs.mjs,
+      # so landing, web, forge and router are all covered — checking only
+      # landing while translation covered four catalogs is how Forge shipped
+      # 702 English strings into a Chinese surface with CI green.
+      - name: i18n integrity (all catalogs)
+        run: pnpm i18n:check
+
+      # ── SEO / locale closure unit tests ──────────────────────────────────
+      # tests/architecture (run above) covers cross-app drift, but the sharded
+      # sitemap, hreflang clusters, docs-routing seam and the locale SSOT
+      # derivations are asserted by colocated unit tests that NO workflow ran —
+      # which is how a red locale migration reached main. Deliberately no
+      # landing `next build`: that has a known 8GB compile OOM.
+      #
+      # Scope note: this gate runs the SEO/locale files it is named for, not
+      # the whole landing suite. `pnpm turbo test` in the affected-tests job
+      # already owns the full suite; pointing a second, always-on gate at it
+      # would only make unrelated pre-existing failures block SEO work.
+      - name: Unit tests (landing SEO + i18n locales)
+        if: needs.detect-changes.outputs.landing == 'true' || needs.detect-changes.outputs.packages == 'true'
+        run: |
+          # Build the workspace deps these tests import before running them.
+          # sitemap.ts imports @nebutra/sanity/queries, whose exports map points
+          # at ./dist/queries.js — so the test needs that package built. Locally
+          # dist/ already exists from some earlier build and the test has always
+          # passed; on a clean CI checkout it failed with ERR_MODULE_NOT_FOUND,
+          # which is why this suite was red while the same command was green on
+          # every developer machine.
+          #
+          # turbo.json already declares `test` as dependsOn: ["^build"]. The
+          # previous form called vitest through `pnpm exec` and therefore skipped
+          # that contract entirely. Building explicitly here keeps the step's
+          # narrow file list — the point of this gate is SEO and locale coverage,
+          # not the whole landing suite — while honouring the dependency.
+          pnpm turbo build --filter=@nebutra/sanity --filter=@nebutra/i18n \
+            --filter=@nebutra/brand --filter=@nebutra/tokens
+          pnpm --filter @nebutra/landing exec vitest run \
+            src/lib/seo \
+            src/lib/docs-routing.test.ts \
+            src/app/__tests__/sitemap.test.ts \
+            'src/app/[lang]/(marketing)/marketing-client-providers.test.ts'
+          pnpm --filter @nebutra/i18n test
+
+      # ── Governance lint guards (full node-script chain) ──────────────────
+      # Runs the complete pnpm lint chain: biome check + all 9 node scripts
+      # (raw-inputs, dark-overrides, spacing-opacity, arbitrary-breakpoints,
+      # phosphor-marketing-only, repository-seam, i18n-brand-literals,
+      # brand-literals, microcopy). All are shrink-only ratchets — new
+      # violations fail immediately; allowlisted entries migrate on-touch.
+      - name: Governance lint guards
+        run: pnpm lint
+
+  # ── Python services — lint + test (matrix, parallel) ──────────────────────
+  python-ci:
+    name: Python CI (${{ matrix.service }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: detect-changes
+    if: needs.detect-changes.outputs.template != 'true' && needs.detect-changes.outputs.services == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        service: [ai]
+    defaults:
+      run:
+        working-directory: backends/python/${{ matrix.service }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.11
+
+      - name: Create virtual environment and install dependencies
+        # Use .venv/bin/pip directly (not uv pip) to avoid uv's project detection
+        # which would trigger an editable install of the service (requiring hatchling).
+        # --seed ensures pip is installed in the venv (uv venv without --seed omits pip).
+        run: |
+          uv venv --seed
+          .venv/bin/pip install -r requirements.txt ruff pytest pytest-asyncio pytest-cov mypy bandit
+
+      - name: Lint (ruff)
+        run: .venv/bin/ruff check . --output-format=github
+
+      - name: Format check (ruff)
+        run: .venv/bin/ruff format --check .
+
+      - name: Type check (mypy)
+        run: .venv/bin/mypy . --ignore-missing-imports --no-error-summary
+
+      - name: Security check (bandit)
+        run: |
+          # Collect Python source directories (avoid scanning .venv installed packages)
+          SCAN_DIRS=()
+          for d in app providers services utils adapters sync features rank recall indexer listener producers subscribers; do
+            [ -d "$d" ] && SCAN_DIRS+=("$d")
+          done
+          .venv/bin/bandit -r "${SCAN_DIRS[@]}" -f json -o bandit-report.json --severity-level medium || true
+          # Fail only on high-severity findings
+          .venv/bin/bandit -r "${SCAN_DIRS[@]}" --severity-level high -q
+
+      - name: Run tests
+        run: |
+          if [ -d "tests" ]; then
+            .venv/bin/pytest --tb=short -q
+          else
+            echo "No tests directory — skipping"
+          fi
+
+  # ── Build (affected packages only) ──────────────────────────────────────
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: [detect-changes, lint-typecheck]
+    if: needs.detect-changes.outputs.template != 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          verify-supply-chain: "true"
+
+      - name: Generate Prisma Client
+        run: pnpm db:generate
+
+      - name: Resolve Turbo base ref
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE_SHA="${{ github.event.before }}"
+          fi
+
+          if [ -z "$BASE_SHA" ] || [ "$BASE_SHA" = "0000000000000000000000000000000000000000" ]; then
+            BASE_SHA="$(git rev-parse HEAD~1)"
+          fi
+
+          echo "TURBO_BASE_REF=$BASE_SHA" >> "$GITHUB_ENV"
+          echo "Using TURBO_BASE_REF=$BASE_SHA"
+
+      - name: Build (affected)
+        run: |
+          filters=(--filter="...[${TURBO_BASE_REF}]...")
+          # Labs / sidecar apps are pulled in by token diffs and fail this job
+          # on their own seams (Google fonts, brand:sync). They keep their
+          # dedicated deploy workflows.
+          for app in apps/sailor-docs apps/storybook apps/studio apps/typelens apps/router apps/forge apps/pebble apps/design apps/sleptons; do
+            if [ -d "$app" ]; then
+              filters+=(--filter="!./$app")
+            fi
+          done
+
+          pnpm turbo build "${filters[@]}"
+        env:
+          SKIP_ENV_VALIDATION: "true"
+          AUTH_PROVIDER: "clerk"
+          NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
+          NEXT_TELEMETRY_DISABLED: "1"
+          # Dummy DATABASE_URL so Next.js collect-page-data doesn't fail env
+          # validation when SKIP_ENV_VALIDATION isn't honored inside the build
+          # worker (t3-env reads process.env at module load, build workers may
+          # not inherit env reliably).
+          DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci"
+
+      # The css-var-types job below audits BUILT stylesheets — Tailwind
+      # arbitrary values do not exist before a build — so it consumes what this
+      # job already produced instead of building the apps a second time.
+      # Collecting is a copy of a few hundred KB; the audit itself is seconds.
+      #
+      # One sheet per app, not one per chunk. Next.js splits the app's CSS: the
+      # token :root block lands in one chunk and the utilities that read those
+      # tokens land in another. The audit resolves each var() against the values
+      # the stylesheet it was handed defines, and skips any name it cannot
+      # resolve — so auditing chunk-by-chunk silently skips every cross-chunk
+      # reference, which is most of them. Measured on apps/landing: two chunks,
+      # tokens in one and component classes in the other, and a var-type error
+      # injected into the component chunk was NOT reported per-chunk and WAS
+      # reported once the chunks were concatenated. The glob is sorted, so the
+      # concatenation order is deterministic.
+      - name: Collect built app stylesheets
+        run: |
+          mkdir -p artifacts/built-css
+          : > artifacts/built-css/manifest.txt
+          for app in landing web; do
+            next_dir="apps/$app/.next"
+            # BUILD_ID, not the directory: `next dev` also creates .next but
+            # never emits .next/static/css, so a bare directory check would fail
+            # this step for an app that was never production-built.
+            if [ ! -f "$next_dir/BUILD_ID" ]; then
+              echo "apps/$app: not built by the affected filter — nothing to collect"
+              continue
+            fi
+            count=$(find "$next_dir/static/css" -maxdepth 1 -name '*.css' 2>/dev/null | wc -l | tr -d ' ')
+            if [ "$count" -eq 0 ]; then
+              echo "::error file=.github/workflows/ci.yml::[css-var-types] apps/$app was built but produced no stylesheets at $next_dir/static/css. The collector's assumption about the Next.js CSS output path has broken, which would make the CSS Var Type Audit pass without checking anything. Fix the path here — do not delete the check."
+              exit 1
+            fi
+            cat "$next_dir"/static/css/*.css > "artifacts/built-css/$app.css"
+            echo "$app $count" >> artifacts/built-css/manifest.txt
+          done
+          echo "collected stylesheets (app, chunk count):"
+          cat artifacts/built-css/manifest.txt
+
+      - name: Upload built app stylesheets
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: built-app-css-${{ github.run_id }}
+          path: artifacts/built-css
+          retention-days: 3
+
+  # ── CSS var-type audit (declarations the browser throws away) ─────────────
+  # scripts/audit-css-var-types.mjs resolves every var() in a BUILT stylesheet
+  # against the values that stylesheet defines and asks the browser's own parser
+  # whether the declaration survives. Its failure class has no other signal: the
+  # build is green, the class is in the stylesheet, the element carries it, and
+  # nothing paints. It shipped once as every default Button rendering with no
+  # fill, and it has only ever run when a human remembered.
+  #
+  # This job does NOT build. It downloads the stylesheets the `build` job
+  # produced, so a one-line CSS error comes back in a couple of minutes instead
+  # of behind a full app build. apps/design is audited in
+  # ui-governance.yml, which already builds it.
+  css-var-types:
+    name: CSS Var Type Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [detect-changes, build]
+    if: needs.detect-changes.outputs.template != 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Download built app stylesheets
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: built-app-css-${{ github.run_id }}
+          path: artifacts/built-css
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
+
+      - name: Install Playwright chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Audit built stylesheets for dropped declarations
+        run: |
+          if [ ! -s artifacts/built-css/manifest.txt ]; then
+            echo "The affected build produced no landing/web stylesheets, so there is nothing to audit."
+            echo "apps/landing and apps/web are audited whenever the affected filter builds them;"
+            echo "apps/design is audited in .github/workflows/ui-governance.yml."
+            exit 0
+          fi
+          echo "collected stylesheets (app, chunk count):"
+          cat artifacts/built-css/manifest.txt
+          # Every app the collector recorded must have arrived. Checking the
+          # manifest against the files, rather than just counting files, is what
+          # keeps this from passing quietly when one app's sheet goes missing in
+          # transit and another app's is still there.
+          sheets=()
+          while read -r app _; do
+            sheet="artifacts/built-css/$app.css"
+            if [ ! -s "$sheet" ]; then
+              echo "::error file=.github/workflows/ci.yml::[css-var-types] The collector recorded a stylesheet for apps/$app but $sheet did not arrive in the built-app-css artifact, so that app would go unaudited. Fix the artifact plumbing — do not delete the check."
+              exit 1
+            fi
+            sheets+=("$sheet")
+          done < artifacts/built-css/manifest.txt
+          printf 'auditing %s\n' "${sheets[@]}"
+          node scripts/audit-css-var-types.mjs "${sheets[@]}"
+
+  # ── Web release verification ─────────────────────────────────────────────
+  # Production-like web gate: validates generated types, TS, webpack build, and
+  # fails on new unclassified dependency warnings.
+  web-release-verification:
+    name: Web Release Verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: [detect-changes, build]
+    if: |
+      needs.detect-changes.outputs.template != 'true' &&
+      (needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.packages == 'true')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Generate Prisma Client
+        run: pnpm db:generate
+
+      - name: Build web app dependency closure
+        run: pnpm turbo build --filter="@nebutra/web^..."
+        env:
+          SKIP_ENV_VALIDATION: "true"
+          AUTH_PROVIDER: "clerk"
+          NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
+          NEXT_TELEMETRY_DISABLED: "1"
+          DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci"
+
+      - name: Verify web release
+        run: pnpm verify:web-release
+        env:
+          AUTH_PROVIDER: "clerk"
+          NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
+          NEXT_TELEMETRY_DISABLED: "1"
+          DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci"
+
+      - name: Upload web release logs
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: web-release-${{ github.run_id }}
+          path: artifacts/web-release-build.log
+          retention-days: 14
+
+  # ── Tests (affected packages only) ──────────────────────────────────────
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [detect-changes, lint-typecheck]
+    if: needs.detect-changes.outputs.template != 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Resolve Turbo base ref
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE_SHA="${{ github.event.before }}"
+          fi
+
+          if [ -z "$BASE_SHA" ] || [ "$BASE_SHA" = "0000000000000000000000000000000000000000" ]; then
+            BASE_SHA="$(git rev-parse HEAD~1)"
+          fi
+
+          echo "TURBO_BASE_REF=$BASE_SHA" >> "$GITHUB_ENV"
+          echo "Using TURBO_BASE_REF=$BASE_SHA"
+
+      - name: Run tests (affected)
+        run: pnpm turbo test --filter="...[${TURBO_BASE_REF}]..."
+        env:
+          CI: true
+
+  coverage:
+    name: Coverage Gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [detect-changes, test]
+    if: needs.detect-changes.outputs.template != 'true' && needs.detect-changes.outputs.packages == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Resolve coverage base ref
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE_SHA="${{ github.event.before }}"
+          fi
+
+          if [ -z "$BASE_SHA" ] || [ "$BASE_SHA" = "0000000000000000000000000000000000000000" ]; then
+            BASE_SHA="$(git rev-parse HEAD~1)"
+          fi
+
+          echo "COVERAGE_BASE_REF=$BASE_SHA" >> "$GITHUB_ENV"
+          echo "Using COVERAGE_BASE_REF=$BASE_SHA"
+
+      - name: Run coverage for core utility packages
+        run: |
+          node scripts/ci/advisory-gate.mjs coverage \
+            --base "$COVERAGE_BASE_REF" \
+            --out artifacts/advisory/coverage-gate.json
+        env:
+          CI: true
+
+      - name: Upload coverage advisory evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: coverage-advisory-${{ github.run_id }}
+          path: artifacts/advisory/coverage-gate.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  # ── Bundle size budget ───────────────────────────────────────────────────
+  # Measures built package sizes against .size-limit.json thresholds.
+  # Runs only when shared packages change (avoids expensive builds on app-only changes).
+  bundle-size:
+    name: Bundle Size Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [detect-changes, build]
+    if: needs.detect-changes.outputs.template != 'true' && needs.detect-changes.outputs.packages == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Build shared packages
+        run: pnpm turbo build --filter="./packages/*/*"
+        env:
+          SKIP_ENV_VALIDATION: true
+
+      - name: Check bundle sizes
+        run: pnpm size
+
+  # ── Database schema validation (only when db/ changed) ──────────────────
+  db-check:
+    name: Database Schema Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: detect-changes
+    if: needs.detect-changes.outputs.template != 'true' && needs.detect-changes.outputs.db == 'true'
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_DB: shadow_nebutra
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d shadow_nebutra"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Validate Prisma schema
+        run: pnpm --filter @nebutra/db db:generate
+
+      - name: Validate Prisma schema syntax
+        working-directory: packages/platform/db
+        run: pnpm exec prisma validate
+
+      - name: Check migration history is consistent
+        working-directory: packages/platform/db
+        # Prisma 7 dropped --to-schema-datamodel and --shadow-database-url.
+        # The committed migration history starts at enable_rls and is not
+        # replayable from empty (P3006 / P1014: organizations is never created).
+        # Apply the current schema to the job-local Postgres, then confirm the
+        # live datasource still matches schema.prisma. Prisma 7 also refuses a
+        # shadow URL that equals DATABASE_URL, so create a second empty DB.
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/shadow_nebutra
+          DIRECT_URL: postgresql://postgres:postgres@localhost:5432/shadow_nebutra
+          SHADOW_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/shadow_nebutra_diff
+        run: |
+          node --input-type=module -e '
+            import pg from "pg";
+            const client = new pg.Client({ connectionString: process.env.DATABASE_URL });
+            await client.connect();
+            await client.query("CREATE DATABASE shadow_nebutra_diff");
+            await client.end();
+          '
+          pnpm exec prisma db push --accept-data-loss
+          pnpm exec prisma migrate diff \
+            --from-config-datasource \
+            --to-schema ./prisma/schema.prisma \
+            --exit-code
+
+  # ── Security scanning ────────────────────────────────────────────────────
+  # Source monorepo only. Sailor-Template is a stripped scaffold mirror; its
+  # security surface is covered by Template Contract + consumer installs, not
+  # a full prod audit on every sync push (which always lags advisory patches).
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: detect-changes
+    if: needs.detect-changes.outputs.template != 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          verify-supply-chain: "true"
+
+      - name: Audit production dependencies
+        run: |
+          set -euo pipefail
+          # Registry occasionally returns non-JSON / gzip garbage; do not red the
+          # whole CI run on transport flakes. Real high vulns still fail.
+          set +e
+          pnpm audit --prod --audit-level=high > /tmp/pnpm-audit.txt 2>&1
+          code=$?
+          set -e
+          cat /tmp/pnpm-audit.txt
+          if grep -qiE 'Unexpected token|is not valid JSON|ECONNRESET|ETIMEDOUT|socket hang up|503|502' /tmp/pnpm-audit.txt; then
+            echo "::warning::pnpm audit failed due to registry/transport flake — advisory only"
+            exit 0
+          fi
+          # Judge on the high count, not on pnpm's exit code.
+          #
+          # `pnpm audit` exits non-zero whenever anything at all is found, so
+          # --audit-level=high never reached the decision: a repo with only
+          # moderate advisories failed this gate exactly like one with a high.
+          # It also means auditConfig.ignoreGhsas had no effect here — pnpm
+          # subtracts ignored entries from the report and still exits non-zero.
+          #
+          # The line reads: "Severity: 2 low | 11 moderate | 2 high (2 ignored)".
+          # What matters is high-minus-ignored.
+          sev=$(grep -oE '[0-9]+ high( \([0-9]+ ignored\))?' /tmp/pnpm-audit.txt | tail -1)
+          high=$(echo "$sev" | grep -oE '^[0-9]+' || echo 0)
+          ignored=$(echo "$sev" | grep -oE '\(([0-9]+) ignored' | grep -oE '[0-9]+' || echo 0)
+          unignored=$(( ${high:-0} - ${ignored:-0} ))
+          echo "high=$high ignored=$ignored unignored=$unignored"
+          if [ "$unignored" -gt 0 ]; then
+            echo "::error::$unignored unignored high advisory(ies) in the production graph"
+            exit 1
+          fi
+          exit 0
+
+      - name: Generate SBOM
+        id: sbom
+        continue-on-error: true
+        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0
+        with:
+          path: .
+          format: cyclonedx-json
+          output-file: sbom.cdx.json
+          upload-artifact: false
+
+      - name: Validate SBOM evidence
+        if: hashFiles('sbom.cdx.json') != ''
+        run: |
+          node scripts/ci/advisory-gate.mjs sbom \
+            --file sbom.cdx.json \
+            --out artifacts/advisory/sbom-gate.json
+
+      - name: Upload SBOM
+        if: always() && hashFiles('sbom.cdx.json') != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sbom-ci
+          path: |
+            sbom.cdx.json
+            artifacts/advisory/sbom-gate.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  # ── Deploy jobs ──────────────────────────────────────────────────────────
+  # Add a deploy job per app here, gated by detect-changes output.
+  # Each job only runs when its own app directory (or shared packages) changed.
+  #
+  # Template:
+  #
+  #   deploy-web:
+  #     name: Deploy Web
+  #     runs-on: ubuntu-latest
+  #     needs: [detect-changes, build]
+  #     if: needs.detect-changes.outputs.web == 'true'
+  #     environment: production
+  #     steps:
+  #       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+  #         run: <your deploy command>
+  #
+  #   deploy-api-gateway:
+  #     name: Deploy API Gateway
+  #     runs-on: ubuntu-latest
+  #     needs: [detect-changes, build]
+  #     if: needs.detect-changes.outputs.api-gateway == 'true'
+  #     steps: ...
+
+  # ── Lighthouse CI (landing page, PRs only) ───────────────────────────────
+  # Audits the public marketing site for performance, accessibility,
+  # best-practices, and SEO.
+  #
+  # Thresholds (defined in lighthouserc.json at repo root):
+  #   accessibility  ≥ 0.95  → "error"  — BLOCKS the PR on failure
+  #   performance    ≥ 0.80  → "warn"   — reports but does not block
+  #   best-practices ≥ 0.90  → "warn"   — reports but does not block
+  #   seo            ≥ 0.90  → "warn"   — reports but does not block
+  lighthouse:
+    name: Lighthouse CI (landing page)
+    runs-on: ubuntu-latest
+    needs: [detect-changes, build]
+    # Only run on PRs and only when landing or shared packages changed
+    if: |
+      needs.detect-changes.outputs.template != 'true' &&
+      github.event_name == 'pull_request' &&
+      (needs.detect-changes.outputs.landing == 'true' || needs.detect-changes.outputs.packages == 'true')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Build landing page dependency closure
+        run: pnpm turbo build --filter="@nebutra/landing^..."
+        env:
+          SKIP_ENV_VALIDATION: true
+
+      - name: Build landing page
+        run: pnpm --filter @nebutra/landing build
+        env:
+          SKIP_ENV_VALIDATION: true
+
+      - name: Run Lighthouse CI
+        run: npx @lhci/cli@0.14.0 autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+  # ── E2E Tests (sharded 4× for parallelism) ───────────────────────────────
+  e2e:
+    name: E2E Tests (shard ${{ matrix.shard }}/4)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    needs: [detect-changes, build]
+    if: needs.detect-changes.outputs.template != 'true' && needs.detect-changes.outputs.e2e == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+      - name: Build workspace packages (required by landing webServer)
+        run: pnpm turbo build --filter="./packages/*/*"
+        env:
+          SKIP_ENV_VALIDATION: true
+      - name: Sync brand assets to app public directories
+        run: pnpm brand:sync
+      - name: Cache Playwright browsers
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Generate Prisma Client
+        run: pnpm db:generate
+
+      - name: Preflight Playwright runtime
+        run: pnpm check:e2e-env
+        env:
+          AUTH_PROVIDER: "clerk"
+          NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
+          NEXT_TELEMETRY_DISABLED: "1"
+          PLAYWRIGHT_BASE_URL: "http://127.0.0.1:3100"
+          APP_BASE_URL: "http://127.0.0.1:3101"
+          API_BASE_URL: "http://127.0.0.1:3102"
+          SLEPTONS_BASE_URL: "http://127.0.0.1:3103"
+          E2E_LANDING_PORT: "3100"
+          E2E_WEB_PORT: "3101"
+          E2E_API_PORT: "3102"
+          E2E_SLEPTONS_PORT: "3103"
+          E2E_AUTH_SMOKE: "0"
+
+      - name: Run E2E tests (shard ${{ matrix.shard }}/4)
+        run: pnpm exec playwright test --config=e2e/playwright.config.ts --shard=${{ matrix.shard }}/4
+        env:
+          CI: true
+          PLAYWRIGHT_BASE_URL: "http://127.0.0.1:3100"
+          APP_BASE_URL: "http://127.0.0.1:3101"
+          API_BASE_URL: "http://127.0.0.1:3102"
+          SLEPTONS_BASE_URL: "http://127.0.0.1:3103"
+          E2E_LANDING_PORT: "3100"
+          E2E_WEB_PORT: "3101"
+          E2E_API_PORT: "3102"
+          E2E_SLEPTONS_PORT: "3103"
+          E2E_AUTH_SMOKE: "0"
+          SKIP_ENV_VALIDATION: "true"
+          AUTH_PROVIDER: "clerk"
+          NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
+          NEXT_TELEMETRY_DISABLED: "1"
+          DATABASE_URL: ${{ secrets.CI_DATABASE_URL || 'postgresql://stub:stub@localhost:5432/stub' }}
+          CLERK_SECRET_KEY: ${{ secrets.CI_CLERK_SECRET_KEY || 'sk_test_placeholder' }}
+
+      - name: Upload Playwright blob report
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: playwright-blob-report-shard-${{ matrix.shard }}-${{ github.run_id }}
+          path: blob-report/
+          compression-level: 0
+          retention-days: 7
+
+      - name: Upload Playwright failure diagnostics
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: failure()
+        with:
+          name: playwright-failure-diagnostics-shard-${{ matrix.shard }}-${{ github.run_id }}
+          path: test-results/
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+
+  # ── OpenAPI spec validation + client type generation ─────────────────────
+  # Exports the live spec from the Hono app, validates it with Redocly,
+  # and regenerates the openapi-fetch types to catch spec/client drift.
+  # Runs only when api-gateway or web changed.
+  openapi-validate:
+    name: OpenAPI Spec Validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [detect-changes, build]
+    if: needs.detect-changes.outputs.template != 'true' && needs.detect-changes.outputs.openapi == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Build api-gateway dependency closure
+        run: pnpm turbo build --filter="@nebutra/gateway^..."
+        env:
+          SKIP_ENV_VALIDATION: true
+
+      - name: Build api-gateway
+        run: pnpm --filter @nebutra/gateway build
+        env:
+          SKIP_ENV_VALIDATION: true
+
+      - name: Export OpenAPI spec
+        run: pnpm --filter @nebutra/gateway generate:spec
+        env:
+          DATABASE_URL: "postgresql://stub:stub@localhost:5432/stub"
+          REDIS_URL: "redis://localhost:6379"
+          CLERK_SECRET_KEY: "sk_test_stub"
+
+      - name: Validate spec with Redocly
+        run: pnpm --filter @nebutra/gateway lint:spec
+
+      - name: Check API backward compatibility
+        if: github.event_name == 'pull_request'
+        run: |
+          mkdir -p artifacts/advisory
+
+          git fetch origin ${{ github.base_ref }} --depth=1
+          if git show origin/${{ github.base_ref }}:backends/gateway/openapi.json > openapi-base.json 2>/dev/null; then
+            set -o pipefail
+            npx oasdiff breaking openapi-base.json backends/gateway/openapi.json --format text 2>&1 \
+              | tee artifacts/advisory/openapi-breaking-diff.txt
+          else
+            echo "Base branch has no checked-in OpenAPI spec; skipping breaking diff." \
+              | tee artifacts/advisory/openapi-breaking-diff.txt
+          fi
+
+      - name: Generate typed API client
+        run: pnpm --filter @nebutra/web generate:api-types
+
+      - name: Check generated API client is up to date
+        run: git diff --exit-code -- apps/web/src/lib/api/types.generated.ts
+
+      - name: Build web app dependencies
+        run: pnpm turbo build --filter "@nebutra/web^..."
+        env:
+          SKIP_ENV_VALIDATION: true
+
+      - name: Typecheck web with generated types
+        run: pnpm --filter @nebutra/web typecheck
+        env:
+          SKIP_ENV_VALIDATION: true
+
+      - name: Upload spec artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: openapi-spec-${{ github.run_id }}
+          path: |
+            backends/gateway/openapi.json
+            openapi-base.json
+            artifacts/advisory/openapi-breaking-diff.txt
+          if-no-files-found: warn
+          retention-days: 7
+
+  # ── Web app bundle analysis (PRs only) ───────────────────────────────────
+  # Builds the web app with @next/bundle-analyzer and uploads the report.
+  # Does NOT block the PR — purely informational for size regression tracking.
+  bundle-analysis:
+    name: Web Bundle Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [detect-changes, build]
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    if: |
+      needs.detect-changes.outputs.template != 'true' &&
+      github.event_name == 'pull_request' &&
+      (needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.packages == 'true')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Build web app dependency closure
+        run: pnpm turbo build --filter="@nebutra/web^..."
+        env:
+          SKIP_ENV_VALIDATION: true
+
+      - name: Build web app with bundle analyzer
+        run: pnpm --filter @nebutra/web analyze
+        env:
+          ANALYZE: "true"
+          DATABASE_URL: "postgresql://stub:stub@localhost:5432/stub"
+          NODE_OPTIONS: "--max-old-space-size=6144"
+          SKIP_ENV_VALIDATION: true
+
+      - name: Upload bundle analysis report
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: bundle-analysis-${{ github.run_id }}
+          path: apps/web/.next/analyze/
+          retention-days: 30
+
+      - name: Comment PR with bundle analysis link
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
+        with:
+          script: |
+            const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## Bundle Analysis\n\nBundle analysis report uploaded. [View artifacts](${runUrl})\n\n> \`client.html\` — client bundle treemap\n> \`edge.html\` — edge runtime bundle`,
+            });
+
+  # ── Merge E2E shard reports ───────────────────────────────────────────────
+  e2e-report:
+    name: Merge E2E Reports
+    runs-on: ubuntu-latest
+    needs: [e2e]
+    if: always() && needs.e2e.result != 'skipped'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+      - name: Download all shard reports
+        id: download
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: playwright-blob-report-shard-*-${{ github.run_id }}
+          path: all-blob-reports
+          merge-multiple: true
+      - name: Merge into single HTML report
+        run: |
+          set -euo pipefail
+
+          REPORT_DIR="./all-blob-reports/blob-report"
+          if [ ! -d "$REPORT_DIR" ]; then
+            REPORT_DIR="./all-blob-reports"
+          fi
+
+          if [ -d "$REPORT_DIR" ] && find "$REPORT_DIR" -maxdepth 1 -type f -name "*.zip" -print -quit | grep -q .; then
+            pnpm exec playwright merge-reports --reporter html "$REPORT_DIR"
+          else
+            echo "::error::No shard blob reports found; the E2E report evidence is incomplete."
+            find ./all-blob-reports -maxdepth 3 -type f -print || true
+            exit 1
+          fi
+      - name: Upload merged report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: playwright-report-merged-${{ github.run_id }}
+          path: playwright-report/
+          if-no-files-found: error
+          retention-days: 30

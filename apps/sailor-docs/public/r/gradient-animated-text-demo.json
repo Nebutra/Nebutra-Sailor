@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gradient-animated-text-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/gradient-animated-text-demo.tsx",
+      "content": "import { GradientAnimatedText } from \"@nebutra/ui/primitives\";\n\nexport default function GradientAnimatedTextDemo() {\n  return (\n    <div className=\"gap-4 bg-black/95 flex h-[300px] flex-col items-center justify-center\">\n      <div className=\"gap-2 text-5xl font-black flex\">\n        <GradientAnimatedText variant={1} theme=\"neon\">\n          Build.\n        </GradientAnimatedText>\n        <GradientAnimatedText variant={2} theme=\"neon\">\n          Ship.\n        </GradientAnimatedText>\n        <GradientAnimatedText variant={3} theme=\"neon\">\n          Scale.\n        </GradientAnimatedText>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

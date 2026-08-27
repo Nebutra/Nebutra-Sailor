@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs-button-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/icons",
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/tabs-button-demo.tsx",
+      "content": "\"use client\";\n\nimport { GridSquare, ListUnordered } from \"@nebutra/icons\";\nimport { Tabs, TabsList, TabsTrigger } from \"@nebutra/ui/primitives\";\n\nexport function TabsButtonDemo() {\n  return (\n    <Tabs defaultValue=\"grid\" className=\"w-full max-w-sm\">\n      <TabsList aria-label=\"View mode\" variant=\"button\" className=\"grid grid-cols-2\">\n        <TabsTrigger value=\"grid\" icon={<GridSquare aria-hidden />}>\n          Grid\n        </TabsTrigger>\n        <TabsTrigger value=\"list\" icon={<ListUnordered aria-hidden />}>\n          List\n        </TabsTrigger>\n      </TabsList>\n    </Tabs>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

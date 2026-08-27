@@ -1,0 +1,192 @@
+# SLO Burn-Rate Alerts (Multi-Window, Multi-Burn-Rate)
+#
+# Based on Google SRE Workbook Chapter 5 alert strategy.
+# Two SLO targets are defined:
+#
+#   availability: 99.9% (allows 8.7 h downtime/year)
+#   latency:      95% of requests complete within 500ms
+#
+# Burn rates are calibrated so:
+#   - Fast burn (14.4×) fires in 1h with 5 min look-back  → page immediately
+#   - Slow burn (6×)   fires in 6h with 30 min look-back  → page business hours
+#   - Long burn (3×)   fires in 3d with 6 h look-back     → ticket (warning)
+#
+# Requires:
+#   kube-prometheus-stack + Prometheus recording rules enabled
+#   http_requests_total{status, job, namespace} counter from prom-client / FastAPI instrumentator
+#   http_request_duration_seconds_bucket histogram
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: nebutra-slo-rules
+  namespace: nebutra
+  labels:
+    release: kube-prometheus-stack
+spec:
+  groups:
+    # ── Recording rules ─────────────────────────────────────────────────────
+    - name: nebutra.slo.recording
+      interval: 30s
+      rules:
+        # Error ratio — 5-minute window
+        - record: nebutra:http_error_ratio:5m
+          expr: |
+            sum(rate(http_requests_total{namespace="nebutra", status=~"5.."}[5m]))
+            /
+            sum(rate(http_requests_total{namespace="nebutra"}[5m]))
+
+        # Error ratio — 30-minute window
+        - record: nebutra:http_error_ratio:30m
+          expr: |
+            sum(rate(http_requests_total{namespace="nebutra", status=~"5.."}[30m]))
+            /
+            sum(rate(http_requests_total{namespace="nebutra"}[30m]))
+
+        # Error ratio — 1-hour window
+        - record: nebutra:http_error_ratio:1h
+          expr: |
+            sum(rate(http_requests_total{namespace="nebutra", status=~"5.."}[1h]))
+            /
+            sum(rate(http_requests_total{namespace="nebutra"}[1h]))
+
+        # Error ratio — 6-hour window
+        - record: nebutra:http_error_ratio:6h
+          expr: |
+            sum(rate(http_requests_total{namespace="nebutra", status=~"5.."}[6h]))
+            /
+            sum(rate(http_requests_total{namespace="nebutra"}[6h]))
+
+        # Latency ratio — fraction of requests exceeding 500ms (5m)
+        - record: nebutra:http_latency_above_500ms_ratio:5m
+          expr: |
+            1 - (
+              sum(rate(http_request_duration_seconds_bucket{namespace="nebutra", le="0.5"}[5m]))
+              /
+              sum(rate(http_request_duration_seconds_count{namespace="nebutra"}[5m]))
+            )
+
+        # Latency ratio — 30-minute window
+        - record: nebutra:http_latency_above_500ms_ratio:30m
+          expr: |
+            1 - (
+              sum(rate(http_request_duration_seconds_bucket{namespace="nebutra", le="0.5"}[30m]))
+              /
+              sum(rate(http_request_duration_seconds_count{namespace="nebutra"}[30m]))
+            )
+
+    # ── Availability SLO alerts ─────────────────────────────────────────────
+    # SLO: 99.9% availability (error budget = 0.1%)
+    - name: nebutra.slo.availability
+      rules:
+        # Page: fast burn — consumes 14.4× budget → 1h to exhaust monthly budget
+        - alert: NebutraSLOAvailabilityFastBurn
+          expr: |
+            nebutra:http_error_ratio:5m  > (14.4 * 0.001)
+            and
+            nebutra:http_error_ratio:1h  > (14.4 * 0.001)
+          for: 2m
+          labels:
+            severity: critical
+            team: platform
+            slo: availability
+            window: fast
+          annotations:
+            summary: "SLO CRITICAL: Availability fast burn (14.4×)"
+            description: |
+              Error rate is {{ humanizePercentage $value }} (threshold 1.44%).
+              At this rate, the monthly error budget will be exhausted in ~1 hour.
+              Runbook: https://docs.nebutra.com/runbooks/slo-availability
+
+        # Page: slow burn — consumes 6× budget → 6h to exhaust
+        - alert: NebutraSLOAvailabilitySlowBurn
+          expr: |
+            nebutra:http_error_ratio:30m > (6 * 0.001)
+            and
+            nebutra:http_error_ratio:6h  > (6 * 0.001)
+          for: 15m
+          labels:
+            severity: warning
+            team: platform
+            slo: availability
+            window: slow
+          annotations:
+            summary: "SLO WARNING: Availability slow burn (6×)"
+            description: |
+              Error rate is {{ humanizePercentage $value }} (threshold 0.6%).
+              At this rate, the monthly error budget will be exhausted in ~6 hours.
+              Runbook: https://docs.nebutra.com/runbooks/slo-availability
+
+        # Ticket: long burn — consumes 3× budget → 3 days to exhaust
+        - alert: NebutraSLOAvailabilityLongBurn
+          expr: |
+            nebutra:http_error_ratio:6h > (3 * 0.001)
+          for: 1h
+          labels:
+            severity: info
+            team: platform
+            slo: availability
+            window: long
+          annotations:
+            summary: "SLO INFO: Availability long burn (3×)"
+            description: |
+              Error rate is {{ humanizePercentage $value }} (threshold 0.3%).
+              Error budget is being consumed slowly — investigate before it becomes critical.
+
+    # ── Latency SLO alerts ──────────────────────────────────────────────────
+    # SLO: 95% of requests complete within 500ms (error budget = 5%)
+    - name: nebutra.slo.latency
+      rules:
+        - alert: NebutraSLOLatencyFastBurn
+          expr: |
+            nebutra:http_latency_above_500ms_ratio:5m  > (14.4 * 0.05)
+            and
+            nebutra:http_latency_above_500ms_ratio:30m > (14.4 * 0.05)
+          for: 2m
+          labels:
+            severity: critical
+            team: platform
+            slo: latency
+          annotations:
+            summary: "SLO CRITICAL: Latency fast burn"
+            description: |
+              {{ humanizePercentage $value }} of requests exceed 500ms (budget: 5%, threshold 72%).
+              Runbook: https://docs.nebutra.com/runbooks/slo-latency
+
+        - alert: NebutraSLOLatencySlowBurn
+          expr: |
+            nebutra:http_latency_above_500ms_ratio:30m > (6 * 0.05)
+          for: 15m
+          labels:
+            severity: warning
+            team: platform
+            slo: latency
+          annotations:
+            summary: "SLO WARNING: Latency slow burn"
+            description: |
+              {{ humanizePercentage $value }} of requests exceed 500ms (threshold 30%).
+
+    # ── Error budget remaining ──────────────────────────────────────────────
+    - name: nebutra.slo.budget
+      interval: 300s
+      rules:
+        # Record remaining monthly error budget (resets to 1.0 at month start)
+        - record: nebutra:availability_error_budget_remaining
+          expr: |
+            1 - (
+              sum_over_time(nebutra:http_error_ratio:5m[30d]) * 5
+              /
+              (30 * 24 * 60)
+            ) / 0.001
+
+        - alert: NebutraErrorBudgetBurnedOut
+          expr: nebutra:availability_error_budget_remaining < 0.1
+          for: 5m
+          labels:
+            severity: critical
+            team: platform
+          annotations:
+            summary: "Error budget nearly exhausted ({{ humanizePercentage $value }} remaining)"
+            description: |
+              Less than 10% of the monthly availability error budget remains.
+              Feature freezes and engineering focus on reliability are recommended.

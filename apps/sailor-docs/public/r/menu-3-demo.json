@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "menu-3-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/menu-3-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Button,\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuItem,\n  DropdownMenuTrigger,\n} from \"@nebutra/ui/primitives\";\n\nexport function Menu3Demo() {\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger asChild>\n        <Button variant=\"outline\">Actions</Button>\n      </DropdownMenuTrigger>\n      <DropdownMenuContent align=\"center\" className=\"w-[180px]\">\n        <DropdownMenuItem>Duplicate</DropdownMenuItem>\n        <DropdownMenuItem disabled>Rename...</DropdownMenuItem>\n        <DropdownMenuItem disabled>Delete</DropdownMenuItem>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

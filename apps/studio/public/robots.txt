@@ -1,0 +1,8 @@
+# Nebutra Studio - CMS Admin
+# https://studio.nebutra.com
+# Admin interface - do not index
+
+User-agent: *
+Disallow: /
+
+# No sitemap - admin interface

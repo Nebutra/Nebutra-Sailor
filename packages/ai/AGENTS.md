@@ -1,0 +1,228 @@
+# AGENTS.md — packages/ai
+
+Parent execution contract for Nebutra AI packages. Package-local `AGENTS.md`
+files may add stricter rules; this file owns the cross-package boundaries.
+
+## Layering
+
+`packages/ai` is split by responsibility, not by upstream project names:
+
+| Role | Canonical package | Boundary |
+| --- | --- | --- |
+| Model execution runtime | `@nebutra/agents` | The canonical model-execution runtime. It owns Vercel AI SDK integration, provider selection, fallback, embeddings, generation helpers, and observability hooks. |
+| Provider metadata | `@nebutra/ai-providers` | Metadata only. It owns provider IDs, categories, status flags, env-var requirements, and scaffolding templates. Do not add runtime SDK calls here. |
+| Public API gateway | `backends/gateway` + `@nebutra/gateway-core` | External `sk-sailor-*` auth, tenant usage metering, upstream pool routing, and response accounting. |
+| Agent protocol/runtime grammar | `@nebutra/agent-runtime` | Thread/turn/item model, policy, tool/MCP bridge, rollout, sandbox seam. It must not own provider SDK execution. |
+| Tool integration | `@nebutra/mcp`, `@nebutra/tool-registry`, `@nebutra/sandbox-runtime` | MCP/tool discovery, SKILL.md parsing/loading, consent, audit, and sandbox routing boundaries. |
+| Execution capability tools | `@nebutra/browser-control`, `@nebutra/code-execution`, `@nebutra/document-pipeline` | Deterministic or semi-deterministic tool execution. They must not own Thread/Turn/Item state, prompt generation, model/provider execution, sub-agent scheduling, or approval lifecycle. |
+| Generation capability tools | `@nebutra/image-pipeline`, `@nebutra/video-pipeline`, `@nebutra/audio-pipeline`, `@nebutra/voice-realtime`, `@nebutra/3d-pipeline` | BrandContext-first media generation surfaces. They may expose local deterministic fallbacks and sidecar adapter ports, but must not own Thread/Turn/Item state, prompt orchestration, model/provider routing, or approval lifecycle. |
+| Shared support contracts | `@nebutra/generation-context`, `@nebutra/execution-policy`, `@nebutra/local-embedding`, `@nebutra/ai-primitives`, `@nebutra/ecosystem-safety` | Single TypeScript owners for facts consumed across surfaces: `BrandContext`, command permission/approval primitives, deterministic local embeddings, pure AI support primitives, and public-disclosure safety checks. |
+| Persistence contracts | `@nebutra/content-store` | File truth, frontmatter parsing/serialization, paragraph chunk helpers, and rebuildable indexes. Parser packages consume these helpers rather than defining file-truth grammar. |
+| Capability DX primitives | `@nebutra/capability-kit` | Platform package outside `packages/ai` that owns suggestion-bearing capability errors, doctor/debug CLI switching, package-local tenant fallback selection, and `.nebutra/debug/<capability>.jsonl` helpers. AI packages must import these primitives instead of re-implementing them. |
+| RAG/indexing/dataflow | `@nebutra/knowledge-rag`, `@nebutra/knowledge-graph`, `@nebutra/code-index`, `@nebutra/reel`, `@nebutra/atelier-canvas`, `@nebutra/cinema` | Product capabilities built on injected model/vector/store/tool/graph ports. |
+| Knowledge product layer | `@nebutra/knowledge-base` | Company cognition over connectors, memory, graph, citations, and explainable search. It consumes lower retrieval/ingestion primitives and must not redefine them. |
+| Play product layer | `@nebutra/brand-genesis`, `@nebutra/landing-builder`, `@nebutra/outreach-engine`, `@nebutra/support-deflector` | Complete user-story Plays over lower capabilities. Owns orchestration and SKILL.md assets only. |
+| Ecosystem product layer | `@nebutra/time-machine`, `@nebutra/idea-plaza`, `@nebutra/founder-cemetery`, `@nebutra/cofounder-match`, `@nebutra/play-marketplace` | Network-effect product surfaces over lower persistence, knowledge, and Play primitives. They own explicit opt-in workflows, lineage, annotations, marketplace records, and consent gates, not event truth, content truth, runtime loops, transports, or billing credentials. |
+
+The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
+`@nebutra/*` package under `packages/ai` must declare `nebutra.featureId` and
+`nebutra.surface` in `package.json`.
+
+## Consolidation Rules
+
+1. Do not merge packages across surfaces. A runtime grammar package and a
+   deterministic tool package have different owners even when both are small.
+2. If two packages in the same surface own the same fact or public concept,
+   choose one owner and move the other behind a subpath export or delete it.
+3. Shared facts used by multiple capability families must live in a
+   `support-contract` package. Do not duplicate those types in each capability.
+4. Capability packages expose adapters and deterministic APIs; they do not own
+   prompts, provider routing, tenant billing, approval lifecycle, or runtime
+   state.
+5. Capability debug storage, CLI command dispatch, and suggestion-bearing base
+   errors belong to `@nebutra/capability-kit`; do not hand-roll debug JSONL
+   path, append, or tail-read helpers inside individual AI packages.
+6. Capability package tenant selection belongs to `@nebutra/capability-kit`.
+   This means the local explicit `tenantId` vs constructor/open default fallback
+   primitive. It is intentionally not `@nebutra/tenant`, which owns
+   request-scoped tenant context, tenant resolution strategies, DB/RLS
+   isolation, and identity-facing tenancy contracts.
+7. Media graph facts belong to `@nebutra/reel` subpaths. Video/image/audio
+   pipelines may render or adapt media, but shared storyboard shot/scene/plan
+   types must come from `@nebutra/reel/storyboard`.
+8. Command permission and shell approval defaults belong to
+   `@nebutra/execution-policy`. Runtime packages may decide when to ask a
+   human; execution packages only evaluate that shared contract.
+9. File-truth frontmatter parsing, frontmatter serialization, and paragraph
+   chunk helpers belong to `@nebutra/content-store`. Document ingestion
+   packages may parse external formats, but must not define a parallel
+   frontmatter grammar.
+10. Deterministic zero-config embeddings belong to `@nebutra/local-embedding`.
+   Persistence and RAG packages may choose different dimensions, but must not
+   define parallel local hashing/tokenization algorithms.
+11. Pure AI support primitives belong to `@nebutra/ai-primitives`: `sha256`,
+   numeric `clamp`, policy-parameterized cosine similarity, tenant/source
+   scoped-key derivation, and cheap token estimates. Domain packages may keep
+   branded types and fail-loud public wrappers, but must not re-own the pure
+   helper logic.
+12. Public-disclosure PII and secret scanning belongs to
+   `@nebutra/ecosystem-safety`. Ecosystem packages may decide whether an action
+   is publishable, cloneable, or memorialized, but they must not define local
+   email/secret regexes or parallel sensitive-field scanners.
+13. SKILL.md frontmatter parsing belongs to `@nebutra/tool-registry`.
+   `@nebutra/play-loader` extends the parsed document into Play metadata; it
+   must not parse YAML/frontmatter independently. `@nebutra/agent-runtime`
+   definitions are a separate runtime grammar with source tiers, invocation
+   gates, and tenant merge semantics, so do not merge them into SKILL.md without
+   an RFC.
+14. Runtime tool dispatch belongs to `@nebutra/agent-runtime` as
+   `RuntimeToolRegistry`. Do not confuse it with the SKILL.md package registry
+   in `@nebutra/tool-registry`.
+15. Company knowledge cognition belongs to `@nebutra/knowledge-base`.
+   It may own connector sync state, memory classes, entity/relation records,
+   citations, and explain output. It must consume `@nebutra/content-store`,
+   `@nebutra/document-pipeline`, `@nebutra/knowledge-rag`, and
+   `@nebutra/knowledge-graph` rather than defining another parser, chunker,
+   embedder, vector store, reranker, or deterministic graph/entity-edge
+   extractor.
+16. Complete Play products belong to play product packages such as
+   `@nebutra/brand-genesis`, `@nebutra/landing-builder`,
+   `@nebutra/outreach-engine`, and `@nebutra/support-deflector`. These packages
+   may coordinate lower capabilities, store SKILL.md declarations, and produce
+   user-story bundles. They must not own agent-loop internals, media generation
+   providers, deploy credentials, sender credentials, channel transports,
+   BrandContext schemas, or prompt islands outside SKILL.md.
+17. Ecosystem product packages such as `@nebutra/time-machine`,
+   `@nebutra/idea-plaza`, `@nebutra/founder-cemetery`,
+   `@nebutra/cofounder-match`, and `@nebutra/play-marketplace` may project
+   lower-layer data into network-effect workflows. They must not redefine
+   event-log, content-store, SKILL.md parsing, auth, billing, chat transport,
+   public registry transport, or global moderation systems.
+18. Similar ecosystem words are not automatically the same primitive. Plaza
+   publish levels are fork visibility depth (`surface` / `detail` /
+   `cloneable`); Cemetery publish levels are audience and permanence (`private`
+   / `community` / `public`); Match consent is bilateral interest. Do not merge
+   them into a generic `PublishLevel` or `Consent` type without a real shared
+   state machine.
+19. Legacy experiments stay WIP and blocked from new production consumers until
+   they are either retired or promoted through a separate RFC.
+
+## 2026 AI SaaS Defaults
+
+1. Use production-proven provider surfaces first: Vercel AI SDK for app/runtime
+   model calls, provider SDKs for direct integrations, and managed/self-hosted
+   gateway layers such as Vercel AI Gateway, LiteLLM, Portkey, OpenRouter, or a
+   Nebutra gateway adapter for tenant metering.
+2. Keep key material out of checked-in configuration. Package APIs should accept
+   injected clients, env-var names, or vault-backed resolvers rather than raw
+   secrets.
+3. Runtime packages must emit tenant/user/request/provider metadata where the
+   boundary allows it. Usage accounting and audit events belong at gateway or
+   runtime adapter seams, not scattered through product packages.
+4. RAG, code indexing, canvas, media, and tool packages should depend on ports
+   and injected adapters. They may call `@nebutra/agents` helpers only through
+   explicit provider adapters.
+5. New packages must declare whether they are runtime, metadata, tool,
+   persistence, product-capability, or legacy/compatibility surfaces before
+   exposing public exports.
+
+## Import Rules
+
+- New model execution code imports from `@nebutra/agents`. The local
+  `@nebutra/llm-gateway` and `@nebutra/provider-registry` experiments have been
+  retired; route through `@nebutra/agents` and the production gateway instead.
+- `@nebutra/ai-providers` must remain metadata only and dependency-light.
+- `@nebutra/agent-runtime` may bridge to MCP/tool/sandbox contracts, but model
+  calls stay injected or delegated to `@nebutra/agents`.
+- Execution capability packages must not import `@nebutra/agent-runtime`,
+  `@nebutra/agents`, or `ai` from production source. They expose tool-shaped
+  ports; the runtime decides when to call them.
+- `@nebutra/agent-runtime` must not hard-import concrete execution capability
+  packages. Composition happens through tool registry/adapters so execution
+  capabilities remain replaceable.
+- Generation capability packages must import `BrandContext` from
+  `@nebutra/generation-context`; do not define parallel brand schemas inside
+  individual media packages.
+- AI packages must import debug JSONL helpers
+  from `@nebutra/capability-kit/debug`; do not define local `debugPath`,
+  `appendDebug`, `.nebutra/debug` path joins, or `readFile(debugPath(...))`
+  variants. Package-specific `readXDebug` compatibility wrappers are allowed
+  only when they delegate directly to `readCapabilityDebug`.
+- Capability, Play product, Knowledge product, and Ecosystem product packages
+  must import `requireCapabilityTenant` from `@nebutra/capability-kit` when
+  selecting between an explicit request tenant and a constructor/open default
+  tenant. `@nebutra/agent-runtime` may keep runtime-local tenant admission
+  validation because it guards channel dispatch and invocation boundaries, not
+  package-local fallback selection.
+- Generation capability packages must not import `@nebutra/agent-runtime`,
+  `@nebutra/agents`, or `ai` from production source.
+- `@nebutra/video-pipeline` must consume storyboard plan primitives from
+  `@nebutra/reel/storyboard`; it should not define a parallel Storyboard model.
+- `@nebutra/code-execution` must consume command approval rules from
+  `@nebutra/execution-policy`; it should not define a parallel default safety
+  policy.
+- `@nebutra/document-pipeline` must consume frontmatter and paragraph helpers
+  from `@nebutra/content-store`; file-truth schema parsing belongs to
+  persistence, not parser adapters.
+- `@nebutra/content-store` and `@nebutra/knowledge-rag` must consume
+  deterministic local embedding helpers from `@nebutra/local-embedding`; do not
+  duplicate FNV/hash embedding logic inside either package.
+- `@nebutra/code-index`, `@nebutra/knowledge-graph`, `@nebutra/knowledge-rag`,
+  and `@nebutra/agent-runtime` must consume pure hash, numeric, scoped-key, and
+  token-estimate helpers from `@nebutra/ai-primitives`. Keep package-specific
+  branded keys and domain errors as wrappers; do not copy the primitive bodies.
+- `@nebutra/idea-plaza` and `@nebutra/founder-cemetery` must consume
+  public-disclosure checks from `@nebutra/ecosystem-safety`; do not define local
+  email/secret regexes or sensitive-field scanner types.
+- `@nebutra/play-loader` must consume parsed SKILL.md documents from
+  `@nebutra/tool-registry`; do not import YAML parsers or call
+  `parseSkillFrontmatter(markdown)` after `parseSkillMarkdown(markdown)`.
+- New runtime code should use `RuntimeToolRegistry` for in-memory tool
+  dispatch. `ToolRegistry` remains a compatibility alias in
+  `@nebutra/agent-runtime`, while `@nebutra/tool-registry` remains the package
+  name for SKILL.md registry semantics.
+- `@nebutra/knowledge-base` must not import or define local embedding/chunking
+  implementations. Use `@nebutra/knowledge-rag` for retrieval, `@nebutra/content-store`
+  for file truth, `@nebutra/document-pipeline` for source parsing, and
+  `@nebutra/knowledge-graph` for deterministic entity-edge derivation.
+- `@nebutra/brand-genesis` must not import `@nebutra/agent-runtime` or define
+  media primitives. It composes `@nebutra/generation-context`, content/event
+  persistence, and generation capability packages through a SKILL.md Play.
+- `@nebutra/landing-builder` must not own deploy credentials or sandbox
+  preview execution. It writes brand-aware site artifacts and deploy handoff
+  manifests; real preview/deploy adapters stay in lower capability/integration
+  packages.
+- `@nebutra/outreach-engine` must never send directly from a Play run. It
+  produces compliance-gated campaign drafts; sender, lead-source, CRM, and
+  vault adapters stay outside the package.
+- `@nebutra/support-deflector` must not own customer channel transports. It
+  owns confidence-gated ticket decisions only; support-channel bridges remain
+  adapter seams.
+- `@nebutra/time-machine` must not own event or content truth. It consumes
+  `@nebutra/event-log` and `@nebutra/content-store`, and rollback apply remains
+  outside the package.
+- `@nebutra/idea-plaza` and `@nebutra/founder-cemetery` must default to private
+  data, require explicit publication intent, and write audit-friendly snapshots
+  rather than exposing cross-tenant source stores.
+- `@nebutra/cofounder-match` must not own identity providers or chat transport.
+  It owns activity-derived profiles, explainable matching, and mutual-consent
+  handoff artifacts.
+- `@nebutra/play-marketplace` must validate Plays through `@nebutra/play-loader`.
+  It must not parse SKILL.md locally, own payment credentials, or mark quality
+  metrics as production stats before telemetry exists.
+- Product capability packages should not own billing deduction, gateway auth, or
+  provider-key selection.
+- Examples may import legacy packages to demonstrate migration, but production
+  source must not create new runtime dependencies on them.
+
+## Validation
+
+Run the cross-package boundary test after changing package exports, dependency
+edges, provider routing, or package status metadata:
+
+```bash
+pnpm exec vitest run tests/architecture/ai-package-governance.test.ts
+```
+
+Run the touched package's own tests/typecheck next. Do not update generated
+`dist/` output by hand.

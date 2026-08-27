@@ -1,0 +1,78 @@
+---
+title: API 认证
+description: 如何使用 API 密钥或 Bearer Token 对 Nebutra REST API 请求进行认证。
+---
+
+## 认证方式
+
+Nebutra API 支持两种认证方式：
+
+| 方式 | 使用场景 |
+|------|---------|
+| **API 密钥** | 服务器间通信、CLI 工具、CI/CD 管道 |
+| **Bearer Token（JWT）** | 来自前端或移动应用的面向用户的请求 |
+
+## API 密钥认证
+
+API 密钥是绑定到组织（非用户）的长期凭证。生产环境以 `nbk_live_` 为前缀，测试模式以 `nbk_test_` 为前缀。
+
+在 `Authorization` 头中传递 API 密钥：
+
+```http
+GET /api/v1/projects HTTP/1.1
+Authorization: Bearer nbk_live_xxxxxxxxxxxxxxxxxxxx
+```
+
+### 创建 API 密钥
+
+在仪表板中：**设置 → API 密钥 → 创建密钥**
+
+或通过 API：
+
+```typescript
+const key = await nebutra.apiKeys.create({
+  orgId: "org_123",
+  name: "生产 CI",
+  scopes: ["project:read"],
+  expiresAt: new Date("2027-01-01"),
+});
+// key.secret 只显示一次，请安全存储
+```
+
+### 撤销 API 密钥
+
+```typescript
+await nebutra.apiKeys.delete("key_123");
+```
+
+已撤销的密钥立即返回 `401 Unauthorized`。
+
+## Bearer Token（JWT）认证
+
+JWT 由你的认证提供商（Clerk 或 Better Auth）在用户登录后签发。它们短期有效（通常 1 小时），客户端侧自动刷新。
+
+```http
+GET /api/v1/projects HTTP/1.1
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+## 安全最佳实践
+
+<Warning>
+  - 切勿在客户端代码、浏览器 URL 或版本控制中暴露 API 密钥
+  - 所有密钥使用环境变量
+  - 定期轮换 API 密钥（至少每年一次）
+  - 使用范围限制的密钥——除非必要，永远不要给密钥 `OWNER` 级别的访问权限
+  - 为自动化工作流中使用的 API 密钥设置过期日期
+</Warning>
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="权限" icon="lock" href="/zh/concepts/permissions">
+    权限范围参考和 RBAC 模型。
+  </Card>
+  <Card title="认证指南" icon="shield-check" href="/zh/guides/authentication">
+    完整的认证提供商配置指南。
+  </Card>
+</CardGroup>

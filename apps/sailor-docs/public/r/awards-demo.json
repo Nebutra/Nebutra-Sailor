@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "awards-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/awards-demo.tsx",
+      "content": "import { Awards } from \"@nebutra/ui/primitives\";\n\nexport function AwardsDemo() {\n  return (\n    <div className=\"gap-12 p-8 flex w-full flex-col items-center justify-center overflow-hidden rounded-xl border bg-muted/20\">\n      <div className=\"md:scale-100 flex scale-90 items-center justify-center\">\n        <Awards\n          title=\"Top Contributor\"\n          subtitle=\"Community Award\"\n          date=\"2026 Season\"\n          recipient=\"Nebutra Engineer\"\n          level=\"platinum\"\n          variant=\"award\"\n        />\n      </div>\n\n      <div className=\"md:grid-cols-2 gap-8 max-w-3xl grid w-full grid-cols-1 items-center\">\n        <Awards\n          title=\"Certified\"\n          subtitle=\"Frontend Engineer\"\n          date=\"Oct 2026\"\n          recipient=\"Jane Doe\"\n          level=\"gold\"\n          variant=\"certificate\"\n        />\n\n        <Awards\n          title=\"Verified\"\n          subtitle=\"Top Seller\"\n          date=\"Store Badge\"\n          level=\"bronze\"\n          variant=\"stamp\"\n        />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

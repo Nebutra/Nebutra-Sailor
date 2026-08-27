@@ -1,0 +1,11 @@
+[Unit]
+Description=Run landing health probe every minute
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=60s
+AccuracySec=5s
+Unit=healthcheck-landing.service
+
+[Install]
+WantedBy=timers.target

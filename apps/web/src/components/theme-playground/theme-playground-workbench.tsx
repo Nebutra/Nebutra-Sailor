@@ -1,0 +1,1158 @@
+"use client";
+
+import {
+  BarChart,
+  ChartActivity,
+  Check,
+  ChevronDown,
+  Clipboard,
+  CloudUpload,
+  Command,
+  CreditCard,
+  GridSquare,
+  Layout,
+  Moon,
+  Plus,
+  MagnifyingGlass as Search,
+  SettingsSliders,
+  ShieldCheck,
+  Sparkles,
+  Sun,
+} from "@nebutra/icons";
+import {
+  DEFAULT_LANGUAGE,
+  type DesignLanguageEntry,
+  LANGUAGE_REGISTRY,
+} from "@nebutra/theme/languages";
+import {
+  Badge,
+  Button,
+  CopyButton,
+  Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@nebutra/ui/primitives";
+import { cn } from "@nebutra/ui/utils";
+import { type CSSProperties, type ReactNode, useMemo, useState } from "react";
+import { DesignMdExport } from "./design-md-export";
+import { DesignMdImport } from "./design-md-import";
+import type { ImportedTheme } from "./design-md-types";
+import {
+  getPreviewStyleFromTokenSet,
+  getSwatchesFromTokenSet,
+  getThemePreviewStyle,
+  getThemeSwatches,
+  getTokenRows,
+  type ThemeMode,
+} from "./theme-token-data";
+
+type Density = "compact" | "comfortable";
+type Surface = "neutral" | "brand" | "product";
+type PreviewSuite = "forms" | "pricing" | "dashboard" | "ai-chat" | "charts";
+type ViewportId = "1280x800" | "1440x1024" | "390x844";
+
+const viewportSpec: Record<ViewportId, { width: number; height: number; label: string }> = {
+  "1280x800": { width: 1280, height: 800, label: "1280 × 800" },
+  "1440x1024": { width: 1440, height: 1024, label: "1440 × 1024" },
+  "390x844": { width: 390, height: 844, label: "390 × 844" },
+};
+
+const suites: Array<{ id: PreviewSuite; label: string; icon: ReactNode }> = [
+  { id: "forms", label: "Forms", icon: <Sparkles /> },
+  { id: "pricing", label: "Pricing", icon: <CreditCard /> },
+  { id: "dashboard", label: "Dashboard", icon: <Layout /> },
+  { id: "ai-chat", label: "AI Chat", icon: <Command /> },
+  { id: "charts", label: "Charts", icon: <BarChart /> },
+];
+
+const surfaceLabels: Record<Surface, string> = {
+  neutral: "Neutral",
+  brand: "Brand",
+  product: "Product",
+};
+
+const densityScale: Record<Density, string> = {
+  compact: "text-[13px] [--playground-gap:0.875rem] [--playground-pad:1rem]",
+  comfortable: "text-sm [--playground-gap:1.125rem] [--playground-pad:1.25rem]",
+};
+
+/**
+ * Shared chrome for the inspector's copy affordances. Was a local `CopyButton`
+ * wrapper; the behaviour now comes from the library primitive and only the
+ * styling stays here.
+ */
+const inspectorCopyProps = {
+  label: "Copy",
+  variant: "tertiary",
+  size: "tiny",
+  showToast: false,
+  timeout: 1200,
+  className: "h-7 border-border/70 bg-card/70 px-2 text-[11px]",
+} as const;
+
+function ThemeSwatches({
+  themeId,
+  size = "md",
+  swatchColors,
+}: {
+  themeId: string;
+  size?: "sm" | "md";
+  swatchColors?: string[];
+}) {
+  const colors = swatchColors ?? getThemeSwatches(themeId);
+  return (
+    <div className="flex items-center gap-1.5" aria-hidden="true">
+      {colors.map((color, i) => (
+        <span
+          key={`${themeId}-${i}-${color}`}
+          className={cn(
+            "rounded-[var(--radius-sm)] border border-neutral-6 shadow-sm",
+            size === "sm" ? "size-4" : "size-5",
+          )}
+          style={{ background: color }}
+        />
+      ))}
+    </div>
+  );
+}
+
+/** Sentinel ID for the transient imported theme. */
+/** Playground list row — design language or imported DESIGN.md shell. */
+type PlaygroundTheme = {
+  id: string;
+  name: string;
+  description: string;
+  kind: string;
+  proves: string[];
+};
+
+function languageToPlaygroundTheme(lang: DesignLanguageEntry): PlaygroundTheme {
+  return {
+    id: lang.id,
+    name: lang.name,
+    description: lang.description,
+    kind: lang.kind,
+    proves: lang.proves,
+  };
+}
+
+const DESIGN_LANGUAGES: PlaygroundTheme[] =
+  LANGUAGE_REGISTRY.languages.map(languageToPlaygroundTheme);
+
+const IMPORTED_THEME_ID = "__imported__";
+
+function ThemeRegistryPanel({
+  themes,
+  selectedTheme,
+  onSelect,
+  importedEntry,
+  importedSwatches,
+  showImport,
+  onImportToggle,
+  onImported,
+}: {
+  themes: PlaygroundTheme[];
+  selectedTheme: PlaygroundTheme;
+  onSelect: (theme: PlaygroundTheme) => void;
+  importedEntry: PlaygroundTheme | null;
+  importedSwatches: string[];
+  showImport: boolean;
+  onImportToggle: () => void;
+  onImported: (theme: ImportedTheme) => void;
+}) {
+  const [query, setQuery] = useState("");
+  const filteredThemes = useMemo(() => {
+    const normalized = query.trim().toLowerCase();
+    if (!normalized) return themes;
+    return themes.filter((theme) =>
+      `${theme.name} ${theme.id} ${theme.kind} ${theme.description} ${theme.proves.join(" ")}`
+        .toLowerCase()
+        .includes(normalized),
+    );
+  }, [query, themes]);
+
+  return (
+    <aside className="theme-playground-registry flex min-h-0 flex-col border-border/80 border-r bg-card">
+      <div className="border-border/70 border-b p-4">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <div>
+            <h2 className="font-semibold text-foreground text-sm">Theme Registry</h2>
+            <p className="mt-1 text-muted-foreground text-xs">Built-in ecosystem themes</p>
+          </div>
+          <Button
+            size="sm"
+            variant={showImport ? "secondary" : "outline"}
+            className="h-8 border-border/80 bg-background/60"
+            prefix={<Plus />}
+            type="button"
+            onClick={onImportToggle}
+            aria-expanded={showImport}
+            aria-label="Import DESIGN.md theme"
+          >
+            {showImport ? "Cancel" : "New"}
+          </Button>
+        </div>
+
+        {showImport && (
+          <div className="mb-3 rounded-[var(--radius-lg)] border border-border bg-background/60 p-3">
+            <p className="mb-2 font-medium text-foreground text-xs">Import DESIGN.md</p>
+            <DesignMdImport onImported={onImported} />
+          </div>
+        )}
+
+        <Input
+          aria-label="Search themes"
+          placeholder="Search themes..."
+          value={query}
+          onValueChange={setQuery}
+          prefix={<Search className="size-4" />}
+          shortcut="K"
+          size="sm"
+        />
+      </div>
+
+      <div className="min-h-0 flex-1 space-y-3 overflow-y-auto p-4">
+        {/* Transient imported theme — shown at the top when present */}
+        {importedEntry !== null && (
+          <button
+            key={importedEntry.id}
+            type="button"
+            className={cn(
+              "w-full rounded-[var(--radius-lg)] border p-3 text-left transition",
+              "bg-background/55 hover:border-primary/50 hover:bg-background/80",
+              selectedTheme.id === IMPORTED_THEME_ID
+                ? "border-primary/70 shadow-[0_0_0_1px_color-mix(in_oklch,var(--color-primary),transparent_35%)]"
+                : "border-border/75",
+            )}
+            onClick={() => onSelect(importedEntry)}
+          >
+            <div className="mb-3 flex items-start justify-between gap-3">
+              <div>
+                <div className="flex items-center gap-2 font-semibold text-foreground text-sm">
+                  {importedEntry.name}
+                  <Badge variant="blue-subtle" size="sm">
+                    imported
+                  </Badge>
+                </div>
+                <div className="mt-1 text-muted-foreground text-xs">Imported via DESIGN.md</div>
+              </div>
+              {selectedTheme.id === IMPORTED_THEME_ID && (
+                <span className="grid size-5 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground">
+                  <Check className="size-3" />
+                </span>
+              )}
+            </div>
+            <ThemeSwatches themeId={importedEntry.id} swatchColors={importedSwatches} />
+          </button>
+        )}
+
+        {filteredThemes.map((theme) => {
+          const active = theme.id === selectedTheme.id;
+          return (
+            <button
+              key={theme.id}
+              type="button"
+              className={cn(
+                "w-full rounded-[var(--radius-lg)] border p-3 text-left transition",
+                "bg-background/55 hover:border-primary/50 hover:bg-background/80",
+                active
+                  ? "border-primary/70 shadow-[0_0_0_1px_color-mix(in_oklch,var(--color-primary),transparent_35%)]"
+                  : "border-border/75",
+              )}
+              onClick={() => onSelect(theme)}
+            >
+              <div className="mb-3 flex items-start justify-between gap-3">
+                <div>
+                  <div className="font-semibold text-foreground text-sm">{theme.name}</div>
+                  <div className="mt-1 line-clamp-2 text-muted-foreground text-xs">
+                    {theme.description}
+                  </div>
+                </div>
+                {active && (
+                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground">
+                    <Check className="size-3" />
+                  </span>
+                )}
+              </div>
+              <div className="mt-3">
+                <ThemeSwatches themeId={theme.id} />
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="flex items-center justify-between border-border/70 border-t p-4 text-muted-foreground text-xs">
+        <span>{themes.length} themes</span>
+        <Button
+          variant="tertiary"
+          size="tiny"
+          shape="square"
+          aria-label="Registry settings"
+          type="button"
+        >
+          <SettingsSliders />
+        </Button>
+      </div>
+    </aside>
+  );
+}
+
+function TopBar({
+  mode,
+  density,
+  surface,
+  selectedTheme,
+  viewingImported,
+  onModeChange,
+  onDensityChange,
+  onSurfaceChange,
+}: {
+  mode: ThemeMode;
+  density: Density;
+  surface: Surface;
+  selectedTheme: PlaygroundTheme;
+  viewingImported: boolean;
+  onModeChange: (mode: ThemeMode) => void;
+  onDensityChange: (density: Density) => void;
+  onSurfaceChange: (surface: Surface) => void;
+}) {
+  return (
+    <header className="flex flex-col gap-3 border-border/80 border-b bg-background/85 p-3 backdrop-blur-xl sm:p-4 lg:flex-row lg:items-center lg:justify-between lg:gap-4">
+      <div className="flex shrink-0 items-center gap-3">
+        <div className="min-w-0">
+          <h1 className="font-semibold text-base text-foreground">Theme Playground</h1>
+          <p className="mt-0.5 hidden text-muted-foreground text-xs sm:block">
+            Token governance workbench
+          </p>
+        </div>
+        <Badge variant="outline" className="hidden bg-card/70 font-mono text-[11px] sm:inline-flex">
+          <Command className="size-3" /> K
+        </Badge>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2 sm:gap-3 lg:justify-end">
+        <SegmentedControl
+          label="Theme Mode"
+          value={mode}
+          options={[
+            { value: "light", label: "Light", icon: <Sun /> },
+            { value: "dark", label: "Dark", icon: <Moon /> },
+          ]}
+          onChange={onModeChange}
+        />
+        <SegmentedControl
+          label="Density"
+          value={density}
+          options={[
+            { value: "compact", label: "Compact" },
+            { value: "comfortable", label: "Comfortable" },
+          ]}
+          onChange={onDensityChange}
+        />
+        <label className="flex shrink-0 items-center gap-2 text-muted-foreground text-xs">
+          <span className="whitespace-nowrap">Surface</span>
+          <Select value={surface} onValueChange={(value) => onSurfaceChange(value as Surface)}>
+            <SelectTrigger size="small" className="h-8 min-w-[120px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {(Object.keys(surfaceLabels) as Surface[]).map((key) => (
+                <SelectItem key={key} value={key}>
+                  {surfaceLabels[key]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </label>
+
+        <div className="flex items-center gap-2 sm:border-border/60 sm:border-l sm:pl-2 md:pl-3">
+          {!viewingImported && (
+            <DesignMdExport themeId={selectedTheme.id} themeName={selectedTheme.name} />
+          )}
+          <Button size="sm" className="h-8" prefix={<CloudUpload />} type="button">
+            Publish Theme
+          </Button>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+function SegmentedControl<T extends string>({
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  label: string;
+  value: T;
+  options: Array<{ value: T; label: string; icon?: ReactNode }>;
+  onChange: (value: T) => void;
+}) {
+  return (
+    <div className="flex items-center gap-2">
+      <span className="text-muted-foreground text-xs">{label}</span>
+      <ToggleGroup
+        type="single"
+        aria-label={label}
+        value={value}
+        onValueChange={(next) => onChange(next as T)}
+        className="rounded-[var(--radius-md)] border border-border bg-muted p-0.5"
+      >
+        {options.map((option) => (
+          <ToggleGroupItem
+            key={option.value}
+            value={option.value}
+            className="h-7 gap-1.5 rounded-[calc(var(--radius-md)-2px)] px-2.5 text-xs hover:text-foreground"
+          >
+            {option.icon}
+            {option.label}
+          </ToggleGroupItem>
+        ))}
+      </ToggleGroup>
+    </div>
+  );
+}
+
+function CanvasHeader({
+  activeSuite,
+  onSuiteChange,
+  viewport,
+  onViewportChange,
+}: {
+  activeSuite: PreviewSuite;
+  onSuiteChange: (suite: PreviewSuite) => void;
+  viewport: ViewportId;
+  onViewportChange: (viewport: ViewportId) => void;
+}) {
+  return (
+    <div className="flex flex-col gap-3 border-border/70 border-b px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="min-w-0">
+        <h2 className="font-semibold text-foreground text-sm">Live Preview Canvas</h2>
+        <p className="mt-0.5 text-muted-foreground text-xs">
+          One suite at a time. Tokens stay the same.
+        </p>
+      </div>
+      <div className="flex min-w-0 items-center gap-2">
+        <div className="min-w-0 flex-1 overflow-x-auto">
+          <Tabs
+            value={activeSuite}
+            size="sm"
+            onValueChange={(value) => onSuiteChange(value as PreviewSuite)}
+          >
+            <TabsList className="min-w-max border border-border bg-card/80">
+              {suites.map((suite) => (
+                <TabsTrigger key={suite.id} value={suite.id}>
+                  <span className="inline-flex items-center gap-1.5">
+                    {suite.icon}
+                    {suite.label}
+                  </span>
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
+        </div>
+        <Select value={viewport} onValueChange={(v) => onViewportChange(v as ViewportId)}>
+          <SelectTrigger size="small" className="h-8 w-[8.5rem] shrink-0">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {(Object.keys(viewportSpec) as ViewportId[]).map((id) => (
+              <SelectItem key={id} value={id}>
+                {viewportSpec[id].label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+    </div>
+  );
+}
+
+function PreviewCanvas({
+  theme,
+  mode,
+  density,
+  surface,
+  activeSuite,
+  onSuiteChange,
+  viewport,
+  onViewportChange,
+  styleOverride,
+}: {
+  theme: PlaygroundTheme;
+  mode: ThemeMode;
+  density: Density;
+  surface: Surface;
+  activeSuite: PreviewSuite;
+  onSuiteChange: (suite: PreviewSuite) => void;
+  viewport: ViewportId;
+  onViewportChange: (viewport: ViewportId) => void;
+  styleOverride?: CSSProperties;
+}) {
+  const style = styleOverride ?? getThemePreviewStyle(theme.id, mode);
+  const { width: viewportWidth, height: viewportHeight } = viewportSpec[viewport];
+
+  // Tailwind v4 in this app uses `@theme inline { --color-*: hsl(var(--*)) }`,
+  // which inlines the value into the utility — so `bg-background` reads `--background`
+  // directly, NOT `--color-background`. Theme JSON stores oklch values that can't live
+  // inside `hsl(...)`. Solution: inside the preview, bypass the indirection and read
+  // `var(--color-*)` straight from the wrapper's inline style.
+  return (
+    <section className="theme-preview-canvas flex h-full min-h-0 min-w-0 flex-col overflow-hidden bg-background/55">
+      <CanvasHeader
+        activeSuite={activeSuite}
+        onSuiteChange={onSuiteChange}
+        viewport={viewport}
+        onViewportChange={onViewportChange}
+      />
+      <div className="min-h-0 flex-1 overflow-auto p-4">
+        {/* Viewport frame — centered, max-width/min-height follow the selected device.
+            The pane scrolls when that artboard is taller than the remaining slot. */}
+        <div
+          data-brand={theme.id === "factory" ? undefined : theme.id}
+          data-mode={mode}
+          data-surface={surface}
+          style={{
+            ...style,
+            maxWidth: `${viewportWidth}px`,
+            minHeight: `${viewportHeight}px`,
+          }}
+          className={cn(
+            "theme-preview-artboard mx-auto w-full overflow-hidden rounded-[var(--radius-lg)] bg-[var(--color-background)] text-[color:var(--color-foreground)] transition-[max-width] duration-200",
+            // Force theme fonts onto ALL descendants, beating any intermediate CSS
+            // rule (e.g. globals.css @layer base h1-h6 / body font-family) that
+            // would otherwise re-declare font-family and break inheritance from
+            // the --font-sans / --font-heading vars we emit in the inline style.
+            // code/pre/kbd/samp are excluded so monospace stays intact.
+            "[&_:not(:is(h1,h2,h3,h4,h5,h6,code,pre,kbd,samp))]:![font-family:var(--font-sans,ui-sans-serif,system-ui,sans-serif)]",
+            "[&_:is(h1,h2,h3,h4,h5,h6)]:![font-family:var(--font-heading,var(--font-sans,ui-sans-serif,system-ui,sans-serif))]",
+            // Body font-size: apply --text-base to all <p> elements so an import
+            // with fontSize.base (e.g. 1.125rem) visibly scales body copy.
+            // Fallback 0.875rem matches the comfortable density text-sm baseline.
+            "[&_p]:[font-size:var(--text-base,0.875rem)]",
+            densityScale[density],
+          )}
+        >
+          <div className="theme-preview-grid gap-[var(--space-source-md,var(--playground-gap))] p-[var(--space-source-lg,var(--playground-pad))]">
+            {activeSuite === "forms" ? <FormsPanel /> : null}
+            {activeSuite === "pricing" ? <PricingPanel /> : null}
+            {activeSuite === "dashboard" ? <DashboardPanel /> : null}
+            {activeSuite === "ai-chat" ? <AiChatPanel /> : null}
+            {activeSuite === "charts" ? <ChartsPanel /> : null}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PreviewCard({
+  title,
+  className,
+  children,
+}: {
+  title: string;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <section
+      className={cn(
+        // Single-layer ring using pre-computed --edge-soft token (mode-aware).
+        // Replaced earlier 3-layer 24px-blur halo: that was perf-expensive
+        // (multiple GPU paints + 2 runtime color-mix calls per paint) AND
+        // contributed to overall "blur soup" subjective perception. One
+        // crisp ring + slight drop shadow reads as defined card without
+        // softening the whole UI.
+        // The theme's --shadow-md is layered on top of the hairline ring so
+        // an imported/built-in elevation token visibly takes effect on cards.
+        // Fallback mirrors the original soft drop so themes without shadow tokens look unchanged.
+        "rounded-[var(--radius-lg)] bg-[var(--color-card)] p-[var(--space-source-lg,var(--playground-pad))] text-[color:var(--color-card-foreground)]",
+        "shadow-[0_0_0_1px_var(--edge-soft),var(--shadow-md,0_2px_8px_-2px_rgb(0_0_0/0.08))]",
+        className,
+      )}
+    >
+      <div className="mb-4">
+        {/* --font-weight-heading: an import with fontWeight.heading 300 visibly lightens titles.
+            --text-heading size is intentionally NOT applied here — card <h3>s are section labels,
+            not page-h1s. A 3rem import value would distort the card layout. */}
+        <h3 className="text-sm" style={{ fontWeight: "var(--font-weight-heading, 600)" }}>
+          {title}
+        </h3>
+      </div>
+      {children}
+    </section>
+  );
+}
+
+function FormInput({
+  label,
+  value,
+  type = "text",
+}: {
+  label: string;
+  value: string;
+  type?: string;
+}) {
+  return (
+    <label className="grid gap-1.5">
+      <span className="font-medium text-[11px] text-[color:var(--color-foreground)]">{label}</span>
+      {/* theme preview: bespoke recessed-well style, must bypass primitive */}
+      <input
+        data-allow-native
+        type={type}
+        readOnly
+        value={value}
+        // Recessed well, not an outlined box — inset 1px hint + a tiny top inset
+        // shadow simulates "input pressed into the surface". Reads as soft and
+        // affordant; no hard outline anywhere.
+        // Input bg matches the card so there's NO color step at the edge —
+        // the inset top shadow alone signals "pressed well". Top shadow is
+        // visible on light (black on white) and reads as subtle depression on
+        // dark (black-on-dark gives a faint inner darkening at the top edge).
+        className="h-9 rounded-[var(--radius-md)] bg-[var(--color-card)] px-3 text-[color:var(--color-foreground)] text-xs outline-none shadow-[inset_0_1px_2px_0_rgb(0_0_0/0.18)]"
+      />
+    </label>
+  );
+}
+
+function FormsPanel() {
+  return (
+    <PreviewCard title="Create an account" className="mx-auto max-w-md">
+      <p className="mb-5 text-[color:var(--color-muted-foreground)] text-xs">
+        Start building in seconds.
+      </p>
+      <div className="grid gap-4">
+        <FormInput label="Full name" value="Ava Johnson" />
+        <FormInput label="Email" value="ava.johnson@example.com" />
+        <FormInput label="Password" value="************" type="password" />
+        <div className="flex items-center gap-2 text-[color:var(--color-muted-foreground)] text-xs">
+          <span className="grid size-4 place-items-center rounded-[var(--radius-sm)] bg-[var(--color-primary)] text-[color:var(--color-primary-foreground)]">
+            <Check className="size-3" />
+          </span>
+          I agree to the Terms of Service and Privacy Policy
+        </div>
+        <button
+          className="h-10 rounded-[var(--radius-md)] bg-[var(--color-primary)] px-4 font-medium text-[color:var(--color-primary-foreground)] text-sm shadow-[var(--shadow-md)]"
+          type="button"
+        >
+          Create account
+        </button>
+      </div>
+    </PreviewCard>
+  );
+}
+
+function PricingPanel() {
+  const plans = [
+    {
+      name: "Starter",
+      price: "$0",
+      items: ["Up to 3 projects", "Basic templates", "Community support"],
+    },
+    {
+      name: "Pro",
+      price: "$19",
+      items: ["Unlimited projects", "Priority support", "Custom branding"],
+      popular: true,
+    },
+    { name: "Team", price: "$49", items: ["Team collaboration", "Admin dashboard", "API access"] },
+  ];
+
+  return (
+    <PreviewCard title="Choose your plan">
+      <div className="theme-pricing-grid gap-4">
+        {plans.map((plan) => (
+          <div
+            key={plan.name}
+            className={cn(
+              // Same edge recipe as outer PreviewCard: single 1px ring via
+              // --edge-soft (mode-aware) + soft drop shadow on the popular
+              // plan. NO bg-tier step (bg-popover on bg-card was the
+              // "rectangle 白线" — 0.05 L transition reads as visible edge
+              // step regardless of border alpha). Card stays same bg as
+              // parent; the ring + popular-shadow do the layering work.
+              "flex h-full min-w-0 flex-col rounded-[var(--radius-lg)] p-4 shadow-[0_0_0_1px_var(--edge-soft)]",
+              plan.popular &&
+                "shadow-[0_0_0_1px_var(--edge-medium),0_4px_12px_-4px_rgb(0_0_0/0.18)]",
+            )}
+          >
+            <div className="mb-2 flex min-h-5 items-center">
+              {plan.popular ? <Badge size="sm">Most popular</Badge> : null}
+            </div>
+            <div className="font-semibold text-sm">{plan.name}</div>
+            <div className="mt-3 flex items-end gap-1">
+              <span className="font-bold text-2xl">{plan.price}</span>
+              <span className="text-[color:var(--color-muted-foreground)] text-xs">/month</span>
+            </div>
+            <ul className="mt-4 flex-1 space-y-2 text-xs">
+              {plan.items.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[color:var(--color-muted-foreground)]"
+                >
+                  <Check className="mt-0.5 size-3 shrink-0 text-[color:var(--color-primary)]" />
+                  <span className="min-w-0 leading-5">{item}</span>
+                </li>
+              ))}
+            </ul>
+            <button
+              className={cn(
+                "mt-auto pt-5 min-h-9 w-full rounded-[var(--radius-md)] px-2 py-1.5 text-center font-medium text-xs leading-tight",
+                plan.popular
+                  ? "bg-[var(--color-primary)] text-[color:var(--color-primary-foreground)]"
+                  : "border border-[color:var(--edge-soft)] bg-[var(--color-card)] text-[color:var(--color-card-foreground)]",
+              )}
+              type="button"
+            >
+              {plan.popular ? "Choose Pro" : "Get started"}
+            </button>
+          </div>
+        ))}
+      </div>
+    </PreviewCard>
+  );
+}
+
+function DashboardPanel() {
+  const stats = [
+    ["Total Projects", "24", "12%"],
+    ["Active Users", "1,248", "8%"],
+    ["API Requests", "98.4K", "15%"],
+    ["Revenue", "$12.6K", "18%"],
+  ];
+
+  return (
+    <PreviewCard title="Project Overview">
+      {/* Stat tiles: no own bg — blend into parent card. Spacing + typography hierarchy alone. */}
+      <div className="theme-stats-grid gap-x-6 gap-y-3">
+        {stats.map(([label, value, delta]) => (
+          <div key={label} className="p-1">
+            <div className="text-[color:var(--color-muted-foreground)] text-[11px]">{label}</div>
+            <div className="mt-1 font-bold text-lg">{value}</div>
+            <div className="mt-1 text-[11px] text-[color:var(--color-success)]">
+              +{delta} vs last 7 days
+            </div>
+          </div>
+        ))}
+      </div>
+      {/* Project list: no own bg — rows separated by faint divider lines only. */}
+      <div className="mt-4">
+        {["Nebutra Marketing", "Design System v2", "AI Assistant", "Analytics Pipeline"].map(
+          (project, index) => (
+            <div key={project} className="grid grid-cols-[1fr_auto_auto] items-center gap-3 py-2.5">
+              <span className="font-medium text-xs">{project}</span>
+              <Badge variant={index === 3 ? "purple-subtle" : "green-subtle"} size="sm">
+                {index === 3 ? "Paused" : "Active"}
+              </Badge>
+              <span className="text-[color:var(--color-muted-foreground)] text-[11px]">
+                {index + 1}d ago
+              </span>
+            </div>
+          ),
+        )}
+      </div>
+    </PreviewCard>
+  );
+}
+
+function AiChatPanel() {
+  return (
+    <PreviewCard title="AI Assistant" className="mx-auto max-w-lg">
+      <div className="mb-4 flex items-center gap-2">
+        <span className="grid size-7 place-items-center rounded-full bg-[color-mix(in_oklch,var(--color-primary),transparent_85%)] text-[color:var(--color-primary)]">
+          <Sparkles className="size-4" />
+        </span>
+        <div>
+          <div className="font-medium text-xs">Nebutra Agent</div>
+          <div className="text-[11px] text-[color:var(--color-success)]">Online</div>
+        </div>
+      </div>
+      <div className="ml-auto max-w-[72%] rounded-[var(--radius-lg)] bg-[var(--color-primary)] p-3 text-[color:var(--color-primary-foreground)] text-xs">
+        Can you help me analyze last month's growth?
+      </div>
+      {/* Assistant message bubble: foreground-mix at 6% — barely visible halo
+          that hints "this is a bubble" without forming a hard rectangle. */}
+      <div className="mt-3 max-w-[78%] rounded-[var(--radius-lg)] bg-[var(--edge-faint)] p-3 text-xs">
+        Sure. Growth improved across activation and retention. I attached the report.
+        <div className="mt-3 flex items-center justify-between rounded-[var(--radius-md)] bg-[var(--edge-soft)] p-2">
+          <span className="font-mono text-[11px]">growth-report.pdf</span>
+          <Clipboard className="size-3 text-[color:var(--color-muted-foreground)]" />
+        </div>
+      </div>
+      <div className="mt-4 flex gap-2">
+        {["Retention", "Region", "Revenue"].map((item) => (
+          <button
+            key={item}
+            className="rounded-full bg-[var(--edge-faint)] px-3 py-1 text-[color:var(--color-muted-foreground)] text-[11px]"
+            type="button"
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+    </PreviewCard>
+  );
+}
+
+function ChartsPanel() {
+  return (
+    <PreviewCard title="Charts">
+      <div className="theme-charts-grid gap-3">
+        <MiniChart title="User Growth" value="1,248" variant="line" />
+        <MiniChart title="Revenue" value="$12,426" variant="bar" />
+        <MiniChart title="API Requests" value="98,426" variant="area" />
+      </div>
+    </PreviewCard>
+  );
+}
+
+function MiniChart({
+  title,
+  value,
+  variant,
+}: {
+  title: string;
+  value: string;
+  variant: "line" | "bar" | "area";
+}) {
+  const bars = [42, 58, 46, 72, 64, 55];
+  // Flat mini chart — no nested card frame, no inner well bg. Numbers +
+  // sparkline sit directly on the parent Charts card.
+  return (
+    <div className="min-w-0 p-1">
+      <div className="mb-4 flex flex-wrap items-start justify-between gap-2">
+        <div className="min-w-0">
+          <div className="font-medium text-xs leading-4">{title}</div>
+          <div className="mt-1 font-bold text-lg tabular-nums">{value}</div>
+        </div>
+        <Badge variant="green-subtle" size="sm" className="shrink-0">
+          +12.5%
+        </Badge>
+      </div>
+      <div className="relative h-28 overflow-hidden p-1">
+        {variant === "bar" ? (
+          <div className="flex h-full items-end gap-3">
+            {bars.map((height) => (
+              <span
+                key={`${title}-${height}`}
+                className="flex-1 rounded-t-[var(--radius-sm)] bg-[color-mix(in_oklch,var(--color-primary),transparent_20%)]"
+                style={{ height: `${height}%` }}
+              />
+            ))}
+          </div>
+        ) : (
+          <>
+            <div className="absolute inset-x-3 bottom-3 h-[38%] rounded-t-full bg-[color-mix(in_oklch,var(--color-primary),transparent_85%)] blur-sm" />
+            <svg
+              className="absolute inset-3 size-[calc(100%-1.5rem)]"
+              viewBox="0 0 320 120"
+              role="img"
+              aria-label={`${title} trend`}
+            >
+              <path
+                d="M0 88 C42 74 56 48 98 54 C146 60 156 28 204 38 C250 47 258 20 320 24"
+                fill="none"
+                stroke="var(--color-primary)"
+                strokeLinecap="round"
+                strokeWidth="5"
+              />
+              {variant === "area" && (
+                <path
+                  d="M0 88 C42 74 56 48 98 54 C146 60 156 28 204 38 C250 47 258 20 320 24 L320 120 L0 120 Z"
+                  fill="color-mix(in oklch, var(--color-primary), transparent 78%)"
+                />
+              )}
+            </svg>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function TokenInspector({
+  theme,
+  mode,
+  onThemeChange,
+}: {
+  theme: PlaygroundTheme;
+  mode: ThemeMode;
+  onThemeChange: (theme: PlaygroundTheme) => void;
+}) {
+  const rows = getTokenRows(theme.id, mode);
+  const cliCommand = `nebutra theme inspect ${theme.id} --format json`;
+
+  return (
+    <aside className="theme-playground-inspector flex min-h-0 flex-col border-border/80 border-l bg-card">
+      <div className="flex items-center justify-between border-border/70 border-b p-4">
+        <div>
+          <h2 className="font-semibold text-foreground text-sm">Token Inspector</h2>
+          <p className="mt-1 text-muted-foreground text-xs">Registry, CLI and Figma governance</p>
+        </div>
+        <Button
+          variant="tertiary"
+          size="tiny"
+          shape="square"
+          aria-label="Close inspector"
+          type="button"
+        >
+          <ChevronDown />
+        </Button>
+      </div>
+
+      <div className="min-h-0 flex-1 space-y-4 overflow-y-auto p-4">
+        <label className="grid gap-2 text-xs">
+          <span className="font-medium text-muted-foreground">Theme</span>
+          <Select
+            value={theme.id}
+            onValueChange={(value) => {
+              const nextTheme = DESIGN_LANGUAGES.find((item) => item.id === value);
+              if (nextTheme) onThemeChange(nextTheme);
+            }}
+          >
+            <SelectTrigger className="h-9">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {DESIGN_LANGUAGES.map((item) => (
+                <SelectItem key={item.id} value={item.id}>
+                  {item.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </label>
+
+        <InspectorBlock
+          title="CSS Variables"
+          action={
+            <CopyButton
+              {...inspectorCopyProps}
+              value={rows.map((row) => `${row.name}: ${row.value};`).join("\n")}
+              label="Copy all"
+            />
+          }
+        >
+          <div className="space-y-2">
+            {rows.slice(0, 9).map((row) => (
+              <div
+                key={row.name}
+                className="grid grid-cols-[1rem_minmax(0,1fr)] items-center gap-2 text-xs"
+              >
+                <span
+                  className="size-4 rounded-[var(--radius-sm)] border border-border"
+                  style={{ background: row.value }}
+                />
+                <div className="min-w-0">
+                  <div className="truncate font-mono text-foreground">{row.name}</div>
+                  <div className="truncate font-mono text-muted-foreground text-[11px]">
+                    {row.value}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </InspectorBlock>
+
+        <InspectorBlock
+          title="Brand path"
+          action={
+            <CopyButton
+              {...inspectorCopyProps}
+              value={
+                theme.id === "factory" || theme.id === IMPORTED_THEME_ID
+                  ? "(factory SSOT)"
+                  : `brands/${theme.id}/brand.json`
+              }
+            />
+          }
+        >
+          <code className="block rounded-[var(--radius-md)] border border-border bg-background p-3 font-mono text-[11px] text-muted-foreground">
+            {theme.id === "factory" || theme.id === IMPORTED_THEME_ID
+              ? "@nebutra/tokens product chrome"
+              : `brands/${theme.id}/brand.json`}
+          </code>
+        </InspectorBlock>
+
+        <InspectorBlock
+          title="CLI"
+          action={<CopyButton {...inspectorCopyProps} value={cliCommand} />}
+        >
+          <code className="block rounded-[var(--radius-md)] border border-border bg-background p-3 font-mono text-[11px] text-muted-foreground">
+            {cliCommand}
+          </code>
+        </InspectorBlock>
+
+        <div className="rounded-[var(--radius-lg)] border border-border bg-background p-4">
+          <div className="mb-3 flex items-center justify-between">
+            <div>
+              <div className="font-semibold text-sm">Contrast Score</div>
+              <div className="text-muted-foreground text-xs">Normal text baseline</div>
+            </div>
+            <Badge variant="green-subtle" icon={<ShieldCheck />}>
+              WCAG 2.1 AA
+            </Badge>
+          </div>
+          <div className="flex items-end gap-2">
+            <span className="font-bold text-2xl text-success">AA</span>
+            <span className="font-semibold text-lg">6.21:1</span>
+            <Badge variant="success" size="sm">
+              Pass
+            </Badge>
+          </div>
+        </div>
+
+        <div className="rounded-[var(--radius-lg)] border border-border bg-background p-4">
+          <div className="mb-4 flex items-center gap-3">
+            <span className="grid size-8 place-items-center rounded-[var(--radius-md)] bg-primary/15 text-primary">
+              <GridSquare className="size-4" />
+            </span>
+            <div>
+              <div className="font-semibold text-sm">Figma Sync</div>
+              <div className="text-muted-foreground text-xs">Synced 2 minutes ago</div>
+            </div>
+          </div>
+          <div className="space-y-2 text-xs">
+            {["Tokens updated", "Styles generated", "Variables synced"].map((item) => (
+              <div key={item} className="flex items-center gap-2 text-muted-foreground">
+                <Check className="size-3 text-success" />
+                {item}
+              </div>
+            ))}
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            className="mt-4 w-full border-border bg-card"
+            prefix={<ChartActivity />}
+            type="button"
+          >
+            Sync now
+          </Button>
+        </div>
+      </div>
+    </aside>
+  );
+}
+
+function InspectorBlock({
+  title,
+  action,
+  children,
+}: {
+  title: string;
+  action?: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <div className="rounded-[var(--radius-lg)] border border-border bg-background p-4">
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <h3 className="font-medium text-muted-foreground text-xs">{title}</h3>
+        {action}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+/** Build a PlaygroundTheme shell from an ImportedTheme so the panel can render swatches. */
+function makeImportedRegistryEntry(imported: ImportedTheme): PlaygroundTheme {
+  return {
+    id: IMPORTED_THEME_ID,
+    name: `Imported · ${imported.name}`,
+    description: "Imported via DESIGN.md",
+    kind: "imported",
+    proves: [],
+  };
+}
+
+export function ThemePlaygroundWorkbench() {
+  const [selectedTheme, setSelectedTheme] = useState<PlaygroundTheme>(() => {
+    const defaultTheme =
+      DESIGN_LANGUAGES.find((theme) => theme.id === DEFAULT_LANGUAGE) ?? DESIGN_LANGUAGES[0];
+    if (!defaultTheme) {
+      throw new Error("Theme registry is empty.");
+    }
+    return defaultTheme;
+  });
+  const [mode, setMode] = useState<ThemeMode>("dark");
+  const [density, setDensity] = useState<Density>("comfortable");
+  const [surface, setSurface] = useState<Surface>("neutral");
+  const [activeSuite, setActiveSuite] = useState<PreviewSuite>("forms");
+  const [viewport, setViewport] = useState<ViewportId>("1280x800");
+
+  // DESIGN.md import state
+  const [importedTheme, setImportedTheme] = useState<ImportedTheme | null>(null);
+  const [showImport, setShowImport] = useState(false);
+
+  const viewingImported = selectedTheme.id === IMPORTED_THEME_ID;
+
+  const importedEntry = importedTheme !== null ? makeImportedRegistryEntry(importedTheme) : null;
+
+  const importedSwatches =
+    importedTheme !== null ? getSwatchesFromTokenSet(importedTheme.tokenSet) : [];
+
+  // Compute override style when the imported theme is selected
+  const importedPreviewStyle =
+    viewingImported && importedTheme !== null
+      ? getPreviewStyleFromTokenSet(importedTheme.tokenSet, mode)
+      : undefined;
+
+  function handleImported(theme: ImportedTheme) {
+    setImportedTheme(theme);
+    setSelectedTheme(makeImportedRegistryEntry(theme));
+    // Do NOT close the import panel — the report (missingRequired / unmapped /
+    // warnings) must remain visible so the user knows what was dropped.
+    // The user closes the panel manually via the "Cancel" / "New" toggle.
+  }
+
+  return (
+    <div className="theme-playground-frame flex h-full min-h-0 flex-1 flex-col overflow-hidden bg-background text-foreground">
+      <TopBar
+        mode={mode}
+        density={density}
+        surface={surface}
+        selectedTheme={selectedTheme}
+        viewingImported={viewingImported}
+        onModeChange={setMode}
+        onDensityChange={setDensity}
+        onSurfaceChange={setSurface}
+      />
+      <main className="theme-playground-layout min-h-0 flex-1 overflow-hidden border-border/70 border-t">
+        <ThemeRegistryPanel
+          themes={DESIGN_LANGUAGES}
+          selectedTheme={selectedTheme}
+          onSelect={setSelectedTheme}
+          importedEntry={importedEntry}
+          importedSwatches={importedSwatches}
+          showImport={showImport}
+          onImportToggle={() => setShowImport((v) => !v)}
+          onImported={handleImported}
+        />
+        <PreviewCanvas
+          theme={selectedTheme}
+          mode={mode}
+          density={density}
+          surface={surface}
+          activeSuite={activeSuite}
+          onSuiteChange={setActiveSuite}
+          viewport={viewport}
+          onViewportChange={setViewport}
+          styleOverride={importedPreviewStyle}
+        />
+        <TokenInspector theme={selectedTheme} mode={mode} onThemeChange={setSelectedTheme} />
+      </main>
+    </div>
+  );
+}

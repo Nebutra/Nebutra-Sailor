@@ -1,0 +1,132 @@
+{
+  "name": "@nebutra/agent-runtime",
+  "version": "0.2.2",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "graph": "runtime",
+    "status": "wip",
+    "productionReady": false,
+    "requires": [
+      "@nebutra/agents for model execution",
+      "@nebutra/tenant for tenant scoping"
+    ],
+    "gaps": [
+      "Track-B kernel sidecar transport not yet wired",
+      "Durable-turn queue binding is interface-only",
+      "Rollout store backed by in-memory reference impl only",
+      "Pulsar facade is runnable but still delegates model execution through injected ports"
+    ],
+    "featureId": "agent-runtime",
+    "category": "ai",
+    "surface": "agent-runtime",
+    "summary": "Multi-tenant agent-runtime grammar: thread/turn/item model, approval+capability policy, tool/MCP abstraction, event-sourced rollout, external-sandbox delegation seam"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./model": {
+      "types": "./dist/model.d.ts",
+      "import": "./dist/model.js",
+      "default": "./dist/model.js"
+    },
+    "./protocol": {
+      "types": "./dist/protocol.d.ts",
+      "import": "./dist/protocol.js",
+      "default": "./dist/protocol.js"
+    },
+    "./pulsar": {
+      "types": "./dist/pulsar.d.ts",
+      "import": "./dist/pulsar.js",
+      "default": "./dist/pulsar.js"
+    },
+    "./orchestration": {
+      "types": "./dist/orchestration.d.ts",
+      "import": "./dist/orchestration.js",
+      "default": "./dist/orchestration.js"
+    },
+    "./policy": {
+      "types": "./dist/policy.d.ts",
+      "import": "./dist/policy.js",
+      "default": "./dist/policy.js"
+    },
+    "./tools": {
+      "types": "./dist/tools.d.ts",
+      "import": "./dist/tools.js",
+      "default": "./dist/tools.js"
+    },
+    "./rollout": {
+      "types": "./dist/rollout.d.ts",
+      "import": "./dist/rollout.js",
+      "default": "./dist/rollout.js"
+    },
+    "./sandbox": {
+      "types": "./dist/sandbox.d.ts",
+      "import": "./dist/sandbox.js",
+      "default": "./dist/sandbox.js"
+    },
+    "./adapters": {
+      "types": "./dist/adapters/index.d.ts",
+      "import": "./dist/adapters/index.js",
+      "default": "./dist/adapters/index.js"
+    },
+    "./adapters/mcp-catalog": {
+      "types": "./dist/adapters/mcp-catalog.d.ts",
+      "import": "./dist/adapters/mcp-catalog.js",
+      "default": "./dist/adapters/mcp-catalog.js"
+    },
+    "./adapters/dispatcher-sse": {
+      "types": "./dist/adapters/dispatcher-sse.d.ts",
+      "import": "./dist/adapters/dispatcher-sse.js",
+      "default": "./dist/adapters/dispatcher-sse.js"
+    },
+    "./adapters/prisma-rollout": {
+      "types": "./dist/adapters/prisma-rollout.d.ts",
+      "import": "./dist/adapters/prisma-rollout.js",
+      "default": "./dist/adapters/prisma-rollout.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/agents": "workspace:*",
+    "@nebutra/ai-primitives": "workspace:*",
+    "@nebutra/capability-kit": "workspace:*",
+    "@nebutra/execution-policy": "workspace:*",
+    "@nebutra/graph-model": "workspace:*",
+    "@nebutra/mcp": "workspace:*",
+    "p-limit": "^7.3.0",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "^4.0.18"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/agent-runtime#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/agent-runtime"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ]
+}

@@ -1,0 +1,96 @@
+name: Deploy Gateway
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_target:
+        description: "Gateway deploy target to activate"
+        required: true
+        default: "cloudflare-workers"
+        type: choice
+        options:
+          - cloudflare-workers
+          - vercel-functions
+          - ecs-docker
+          - k8s
+          - aws
+          - gcp
+          - railway
+  workflow_run:
+    workflows: ["CI"]
+    branches: [main]
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-gateway-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cloudflare-workers:
+    name: Cloudflare Workers edge gateway
+    runs-on: ubuntu-latest
+    if: >-
+      (github.event_name == 'workflow_dispatch' && inputs.deploy_target == 'cloudflare-workers') ||
+      (github.event_name == 'workflow_run' &&
+        github.event.workflow_run.conclusion == 'success' &&
+        vars.DEPLOY_TARGET_GATEWAY == 'cloudflare-workers')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Typecheck gateway
+        run: pnpm --filter @nebutra/gateway typecheck
+
+      - name: Validate Cloudflare secrets
+        run: |
+          [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ] || { echo "::error::CLOUDFLARE_API_TOKEN secret is not set"; exit 1; }
+          [ -n "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" ] || { echo "::error::CLOUDFLARE_ACCOUNT_ID secret is not set"; exit 1; }
+          # The edge Worker carries no business logic, so it needs none of the
+          # gateway's service credentials. Upstash is the one exception: the
+          # per-IP flood limit counts there so every colo shares one budget.
+          [ -n "${{ secrets.UPSTASH_REDIS_REST_URL }}" ] || { echo "::error::UPSTASH_REDIS_REST_URL secret is not set"; exit 1; }
+          [ -n "${{ secrets.UPSTASH_REDIS_REST_TOKEN }}" ] || { echo "::error::UPSTASH_REDIS_REST_TOKEN secret is not set"; exit 1; }
+
+      - name: Prepare Worker runtime bindings
+        env:
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+        run: |
+          node <<'EOF'
+          const fs = require("node:fs");
+
+          // Only what the edge actually reads. ORIGIN_URL and the IP limit are
+          // vars in wrangler.edge.toml, not secrets — a hostname and a number
+          // belong in config where they are visible.
+          fs.writeFileSync(
+            "backends/gateway/.wrangler-secrets.json",
+            JSON.stringify({
+              UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
+              UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
+            }),
+          );
+          EOF
+
+      - name: Sync Worker runtime bindings
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: backends/gateway
+          command: secret bulk .wrangler-secrets.json --config wrangler.edge.toml
+
+      - name: Deploy Worker
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: backends/gateway
+          command: deploy --config wrangler.edge.toml

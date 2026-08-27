@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "label-description-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/label-description-demo.tsx",
+      "content": "\"use client\";\n\nimport { Label, Textarea } from \"@nebutra/ui/primitives\";\n\nexport function LabelDescriptionDemo() {\n  return (\n    <div className=\"space-y-1 max-w-sm w-full\">\n      <Label htmlFor=\"bio\">个人简介 (Bio)</Label>\n      <p id=\"bio-hint\" className=\"text-xs mb-2 text-muted-foreground\">\n        请简要介绍一下您自己。最多 200 个字符。 (Tell us a bit about yourself. Max 200 characters.)\n      </p>\n      <Textarea id=\"bio\" aria-describedby=\"bio-hint\" maxLength={200} />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

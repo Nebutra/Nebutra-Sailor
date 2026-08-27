@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dotted-world-map-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/dotted-world-map-demo.tsx",
+      "content": "import { DottedWorldMap } from \"@nebutra/ui/primitives\";\n\nexport function DottedWorldMapDemo() {\n  return (\n    <div className=\"max-w-4xl p-4 gap-8 mx-auto flex min-h-[400px] w-full flex-col items-center justify-center\">\n      <div className=\"p-8 relative flex h-auto w-full items-center justify-center overflow-hidden rounded-xl border bg-background\">\n        <div className=\"top-4 left-4 text-sm font-medium px-3 py-1.5 gap-2 backdrop-blur absolute z-10 flex items-center rounded-full border bg-background/80 shadow-sm\">\n          Global Reach\n        </div>\n\n        <DottedWorldMap\n          className=\"max-wfull opacity-70\"\n          dotColor=\"currentColor\"\n          dotRadius={0.2}\n          backgroundColor=\"transparent\"\n        />\n\n        {/* Subtle decorative elements over the map */}\n        <div className=\"size-4 bg-blue-500 blur-xl animate-pulse absolute top-1/2 left-[25%] rounded-full opacity-50\"></div>\n        <div className=\"size-6 bg-purple-500 blur-xl animate-pulse absolute top-[40%] right-[30%] rounded-full opacity-50 delay-1000\"></div>\n        <div className=\"size-3 bg-green-500 blur-xl animate-pulse absolute bottom-[30%] left-[60%] rounded-full opacity-50 delay-500\"></div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

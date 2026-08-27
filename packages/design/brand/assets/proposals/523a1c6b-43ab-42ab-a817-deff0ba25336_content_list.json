@@ -1,0 +1,326 @@
+[
+  {
+    "type": "text",
+    "text": "Nebutra ",
+    "text_level": 1,
+    "bbox": [368, 287, 626, 396],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "品牌标志设计提案",
+    "text_level": 1,
+    "bbox": [250, 414, 750, 535],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "Nebutra Brand logo design proposal ",
+    "bbox": [289, 575, 708, 632],
+    "page_idx": 0
+  },
+  {
+    "type": "image",
+    "img_path": "images/572e43d2a4fc2721de1eb007523aab86e720298d05a9a31fa5c7dffe43ed86c7.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [217, 289, 343, 494],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "Nebutra ",
+    "text_level": 1,
+    "bbox": [383, 319, 783, 466],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "logo以首字母N的基础造型概念为主要设计框架，但又不直白的体现首字母的造型，通过几何正负空间构建隐形“N”，通过对基础图形的旋转变换，形成一个近似六边形的稳定结构。",
+    "bbox": [241, 733, 754, 787],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "色彩上使用清新明快的蓝绿渐变，通过线性渐变与角度渐变的方式填充其中，让整体更具未来感与科技的锋芒。整体表达品牌探索与引领未来，创建智能化连接的理念",
+    "bbox": [240, 798, 751, 860],
+    "page_idx": 1
+  },
+  {
+    "type": "header",
+    "text": "VISUAL IDENTITY ",
+    "bbox": [37, 58, 286, 107],
+    "page_idx": 1
+  },
+  {
+    "type": "header",
+    "text": "BRANDING ",
+    "bbox": [37, 116, 86, 133],
+    "page_idx": 1
+  },
+  {
+    "type": "header",
+    "text": "Nebutra品牌视觉设计",
+    "bbox": [37, 139, 137, 161],
+    "page_idx": 1
+  },
+  {
+    "type": "page_number",
+    "text": "2025 ",
+    "bbox": [925, 65, 953, 87],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "VISUAL IDENTITY ",
+    "text_level": 1,
+    "bbox": [34, 57, 282, 107],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "BRANDING ",
+    "bbox": [34, 115, 82, 133],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "Nebutra品牌视觉设计",
+    "bbox": [34, 139, 134, 161],
+    "page_idx": 2
+  },
+  {
+    "type": "image",
+    "img_path": "images/54f5a59c6e754f2576be69f74daff701d9bacedd3e7bd80325f7d1c6651bedd5.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [141, 357, 331, 671],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "Nebula ",
+    "bbox": [710, 110, 780, 150],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "Nurture ",
+    "bbox": [707, 255, 783, 292],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "Nebutra ",
+    "text_level": 1,
+    "bbox": [579, 434, 916, 562],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "Ultra ",
+    "bbox": [720, 700, 769, 739],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "Future ",
+    "bbox": [713, 843, 776, 883],
+    "page_idx": 2
+  },
+  {
+    "type": "page_number",
+    "text": "2025 ",
+    "bbox": [42, 915, 67, 934],
+    "page_idx": 2
+  },
+  {
+    "type": "image",
+    "img_path": "images/c7aaec07e93b8958f5a368da15df7165cee3bf44d6d8786cbd0ade7591544d36.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [230, 100, 767, 398],
+    "page_idx": 3
+  },
+  {
+    "type": "image",
+    "img_path": "images/6fa28c6d8871660c17d771d32a2b04e9836a5f72d5ed42cb4af58d53307c8676.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [187, 597, 311, 801],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "Nebutra ",
+    "bbox": [148, 825, 347, 901],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "云端聚合·引领未来 ",
+    "bbox": [632, 684, 865, 738],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "Cloud Aggregation Leads the Future ",
+    "bbox": [595, 771, 902, 812],
+    "page_idx": 3
+  },
+  {
+    "type": "image",
+    "img_path": "images/05342504f4807d7d49e03292c9852334dc8507e5d072d9ffe946156c5ce20668.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [387, 402, 443, 489],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "Nebutra ",
+    "text_level": 1,
+    "bbox": [453, 411, 615, 475],
+    "page_idx": 4
+  },
+  {
+    "type": "image",
+    "img_path": "images/cb0704ec40a3888556235aeab82a0cbaaeaacf5c23e85fcbfec9729e078a595c.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [141, 313, 164, 351],
+    "page_idx": 5
+  },
+  {
+    "type": "image",
+    "img_path": "images/2d9415e6b3c973a5f090e9cbd125522d2c86d6ff4cb5446759dd70b8a1b52d99.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [170, 315, 192, 351],
+    "page_idx": 5
+  },
+  {
+    "type": "image",
+    "img_path": "images/5f44dbd09ec550bce5c29bb864aee53492199b2aeda19be74de2e59e04fc369f.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [196, 315, 219, 351],
+    "page_idx": 5
+  },
+  {
+    "type": "image",
+    "img_path": "images/af8631834fe05cb01163f2338fe74e7faeae3efb9e9b23686b7d54437f8cb7cc.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [225, 315, 247, 351],
+    "page_idx": 5
+  },
+  {
+    "type": "image",
+    "img_path": "images/5116eca85affc0e71ed495b81199e3d23944c9852883242bd52222afefbaa668.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [252, 307, 282, 358],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "Nebutra ",
+    "bbox": [287, 315, 355, 351],
+    "page_idx": 5
+  },
+  {
+    "type": "image",
+    "img_path": "images/c897514f6ef577a53f0d82361883d405699e1e7d8623d04394da2949c893a2ed.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [134, 419, 159, 457],
+    "page_idx": 5
+  },
+  {
+    "type": "image",
+    "img_path": "images/996f68953cec8b6c647df3c109729e2684436c4723b57cfe28e9269b52000bc2.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [184, 419, 206, 457],
+    "page_idx": 5
+  },
+  {
+    "type": "image",
+    "img_path": "images/9bf0d62ce2613104bd6dbeb2d1a3d358a6c65e535ca5554c2a2f134157d4e422.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [235, 418, 258, 457],
+    "page_idx": 5
+  },
+  {
+    "type": "image",
+    "img_path": "images/12b61acb77b8fa9ecd512b053a71ae48a43545807c5b3531433d5beb65d3cb31.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [293, 419, 316, 456],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "Nebutra.com ",
+    "bbox": [330, 419, 446, 455],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "9:41 ",
+    "bbox": [698, 187, 780, 251],
+    "page_idx": 5
+  },
+  {
+    "type": "image",
+    "img_path": "images/5872db72c6dfe94df95e77abb82fa76cc1b9c3943fc80a70cc98e1d3eca23647.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [710, 375, 868, 582],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "Nebutra ",
+    "bbox": [770, 583, 875, 630],
+    "page_idx": 5
+  },
+  {
+    "type": "image",
+    "img_path": "images/8f897b325e60721bb2b01a67fac7c0a249e603867cbf35040077f1ee2e080c14.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [790, 668, 945, 876],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "Mail ",
+    "bbox": [875, 876, 928, 922],
+    "page_idx": 5
+  },
+  {
+    "type": "image",
+    "img_path": "images/3104b3ceb9958510bf6f39a4f2cebad083a55dbdc4e131dfc6c83e5fd63b9f6e.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [450, 482, 492, 591],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "Nebutra ",
+    "text_level": 1,
+    "bbox": [500, 415, 612, 547],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "THANK YOU ",
+    "text_level": 1,
+    "bbox": [301, 462, 700, 572],
+    "page_idx": 7
+  }
+]

@@ -1,0 +1,11 @@
+[Unit]
+Description=Landing page health probe (one-shot, fired by timer)
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/healthcheck-landing.sh
+# Inherit pm2 from root
+User=root
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+StandardOutput=journal
+StandardError=journal

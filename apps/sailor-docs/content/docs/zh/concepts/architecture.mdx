@@ -1,0 +1,65 @@
+---
+title: 架构概览
+description: Nebutra 的构建方式——monorepo 结构、请求流程和平台核心层次。
+---
+
+## 概述
+
+Nebutra 是 **Turborepo monorepo**：多应用 + 共享 packages（设计系统、类型安全 API、运行时 token）。组件可独立部署。
+
+```
+浏览器 / 移动客户端
+        │
+        ▼
+┌─────────────────────────────┐
+│  Cloudflare DNS + CDN/WAF   │
+└─────────────┬───────────────┘
+              │
+   ┌──────────┼──────────┬──────────────┐
+   ▼          ▼          ▼              ▼
+营销站      文档      web + auth      API 网关
+(Vercel)   (Vercel)   (ECS Next)      (ECS Hono)
+```
+
+## 应用一览
+
+| 应用 | URL | 框架 | 稳态源站 |
+|-----|-----|------|----------|
+| `landing` | `nebutra.com` | Next.js 16 | Vercel |
+| `sailor-docs` | `docs.nebutra.com` | Fumadocs | Vercel |
+| `web` | `app.nebutra.com` | Next.js 16 | ECS |
+| `auth` | `auth.nebutra.com` | Next.js 16 | ECS 登录中心 |
+| `backends/gateway` | `api.nebutra.com` | Hono | ECS（`@nebutra/gateway`） |
+| `idp` | `sso.nebutra.com` | Next.js | ECS OIDC |
+| `studio` / `design-docs` / `storybook` | 视部署而定 | — | 可选 |
+
+## 核心 Packages
+
+| Package | 描述 |
+|---------|------|
+| `@nebutra/ui` | 组件库 |
+| `@nebutra/auth` | 认证适配 + **JWT S2S** |
+| `@nebutra/permissions` | RBAC |
+| `@nebutra/db` | Prisma / 多租户 |
+| `@nebutra/metering` | 用量计量 → ClickHouse |
+| `@nebutra/webhooks` | 出站 Webhook（投递签名 HMAC，≠ S2S） |
+
+## 请求流程
+
+```
+请求 → Cloudflare → 源站（Vercel 或 ECS）
+  → Gateway 中间件：CORS / 会话或 S2S JWT / 租户 / RBAC / 限流
+  → 业务路由 → { success, data, error }
+```
+
+服务间令牌为短时 **HS256 JWT**，不再接受遗留 hex-HMAC。
+
+## 提供商替换
+
+```bash
+AUTH_PROVIDER=better-auth          # 生产默认
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
+# 可选：clerk | next-auth | supabase | dev
+```
+
+auth 中心、web、落地页的 provider 配置必须一致。

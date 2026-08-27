@@ -1,0 +1,146 @@
+{
+  "id": "linear",
+  "name": "Linear",
+  "darkDefault": true,
+  "version": "1.0.0",
+  "semantic": {
+    "background": "210 11% 4%",
+    "foreground": "0 0% 100%",
+    "card": "210 6% 6%",
+    "cardForeground": "0 0% 100%",
+    "popover": "210 6% 6%",
+    "popoverForeground": "0 0% 100%",
+    "primary": "64 89% 54%",
+    "primaryForeground": "210 11% 4%",
+    "secondary": "223 9% 15%",
+    "secondaryForeground": "218 21% 85%",
+    "muted": "210 4% 9%",
+    "mutedForeground": "218 5% 41%",
+    "accent": "223 9% 15%",
+    "accentForeground": "218 21% 85%",
+    "destructive": "0 79% 63%",
+    "destructiveForeground": "0 0% 100%",
+    "border": "223 9% 15%",
+    "ring": "64 89% 54%",
+    "success": "134 62% 40%",
+    "successForeground": "0 0% 100%",
+    "info": "186 98% 40%",
+    "infoForeground": "0 0% 100%"
+  },
+  "recipe": {
+    "buttonDefault": "solid",
+    "density": "compact",
+    "badgeDefault": "match-action",
+    "radii": {
+      "button": "6px",
+      "card": "12px",
+      "badge": "9999px",
+      "input": "6px",
+      "pill": "9999px"
+    },
+    "elevationTokens": {
+      "card": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+      "control": "0 1px 2px 0 rgb(0 0 0 / 0.04)",
+      "raised": "0 4px 6px -1px rgb(0 0 0 / 0.1)"
+    }
+  },
+  "typography": {
+    "fontSans": "'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif",
+    "fontMono": "'Berkeley Mono', 'JetBrains Mono', ui-monospace, monospace",
+    "headingWeight": 510
+  },
+  "motion": {
+    "easeOut": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "micro": 80,
+    "flow": 140,
+    "reveal": 200,
+    "cinematic": 320
+  },
+  "spacing": {
+    "xs": "0.375rem",
+    "sm": "0.5rem",
+    "md": "0.75rem",
+    "lg": "1rem",
+    "xl": "1.5rem",
+    "2xl": "2rem"
+  },
+  "extensions": {
+    "sourceUrl": "https://linear.app",
+    "notes": ["Dual-mode: dark void default + light paper; acid-lime solid CTA in both modes."]
+  },
+  "roles": {
+    "canvas": "210 11% 4%",
+    "canvasForeground": "0 0% 100%",
+    "surface": "210 6% 6%",
+    "surfaceForeground": "0 0% 100%",
+    "action": "64 89% 54%",
+    "actionForeground": "210 11% 4%",
+    "quiet": "223 9% 15%",
+    "quietForeground": "218 21% 85%",
+    "muted": "210 4% 9%",
+    "mutedForeground": "218 5% 49%",
+    "border": "223 9% 15%",
+    "ring": "64 89% 54%",
+    "destructive": "0 79% 63%",
+    "destructiveForeground": "0 0% 100%",
+    "success": "134 62% 40%",
+    "successForeground": "0 0% 100%",
+    "info": "186 98% 40%",
+    "infoForeground": "0 0% 100%"
+  },
+  "modes": {
+    "dark": {
+      "semantic": {
+        "background": "210 11% 4%",
+        "foreground": "0 0% 100%",
+        "card": "210 6% 6%",
+        "cardForeground": "0 0% 100%",
+        "popover": "210 6% 6%",
+        "popoverForeground": "0 0% 100%",
+        "primary": "64 89% 54%",
+        "primaryForeground": "210 11% 4%",
+        "secondary": "223 9% 15%",
+        "secondaryForeground": "218 21% 85%",
+        "muted": "210 4% 9%",
+        "mutedForeground": "218 5% 41%",
+        "accent": "223 9% 15%",
+        "accentForeground": "218 21% 85%",
+        "destructive": "0 79% 63%",
+        "destructiveForeground": "0 0% 100%",
+        "border": "223 9% 15%",
+        "ring": "64 89% 54%",
+        "success": "134 62% 40%",
+        "successForeground": "0 0% 100%",
+        "info": "186 98% 40%",
+        "infoForeground": "0 0% 100%"
+      }
+    },
+    "light": {
+      "semantic": {
+        "background": "0 0% 100%",
+        "foreground": "210 11% 4%",
+        "card": "0 0% 98%",
+        "cardForeground": "210 11% 4%",
+        "popover": "0 0% 100%",
+        "popoverForeground": "210 11% 4%",
+        "primary": "64 89% 54%",
+        "primaryForeground": "210 11% 4%",
+        "secondary": "220 14% 96%",
+        "secondaryForeground": "210 11% 4%",
+        "muted": "220 14% 96%",
+        "mutedForeground": "218 5% 41%",
+        "accent": "220 14% 96%",
+        "accentForeground": "210 11% 4%",
+        "destructive": "0 79% 63%",
+        "destructiveForeground": "0 0% 100%",
+        "border": "220 13% 91%",
+        "ring": "64 89% 54%",
+        "success": "134 62% 40%",
+        "successForeground": "0 0% 100%",
+        "info": "186 98% 40%",
+        "infoForeground": "0 0% 100%"
+      }
+    }
+  }
+}

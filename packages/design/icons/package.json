@@ -1,0 +1,60 @@
+{
+  "name": "@nebutra/icons",
+  "version": "0.1.2",
+  "description": "Geist icon set (541 icons) packaged as TypeScript React components",
+  "private": false,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
+  "license": "MIT",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "generate": "tsx scripts/generate.ts",
+    "build": "tsup src/index.ts --format cjs,esm --out-dir dist && tsc -p tsconfig.build.json",
+    "dev": "tsup src/index.ts --format cjs,esm --out-dir dist --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@types/react": ">=18.0.0",
+    "react": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@svgr/plugin-prettier": "^8.1.0",
+    "@svgr/plugin-svgo": "^8.1.0",
+    "@types/node": "^22.19.15",
+    "tsup": "^8.5.1",
+    "tsx": "^4.21.0",
+    "typescript": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/design/icons#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/design/icons"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

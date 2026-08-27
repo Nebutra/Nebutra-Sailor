@@ -1,0 +1,19 @@
+---
+title: Privacy & telemetry
+description: What anonymous usage data Pebble collects and how to opt out
+---
+
+# Privacy & telemetry
+
+Pebble's desktop telemetry is designed to be **anonymous product analytics** (PostHog Cloud) plus **error/crash reporting** (Sentry Cloud). Ordinary product feedback is private support data.
+
+| Channel | Destination |
+|---------|-------------|
+| Product analytics | PostHog Cloud (opt-out in settings) |
+| Errors / crashes | Sentry Cloud |
+| In-app feedback | `POST https://api.nebutra.com/pebble/v1/feedback` |
+| Diagnostics bundles | `POST https://api.nebutra.com/pebble/diagnostics/*` |
+
+Diagnostics uploads are capped (4 MiB), tokenized (short-lived, single-use), rate-limited per IP, and retained for 30 days unless deleted earlier. Feedback messages are not written into public issue trackers or analytics events.
+
+Opt out of product analytics in **Settings → Privacy**. Set `PEBBLE_DIAGNOSTICS_DISABLED=1` to disable diagnostic bundle collection entirely.

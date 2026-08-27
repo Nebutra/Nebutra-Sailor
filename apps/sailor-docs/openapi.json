@@ -1,0 +1,1072 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Nebutra API",
+    "version": "1.0.0",
+    "description": "Nebutra SaaS Platform API Gateway — powers consent management, event ingestion, system monitoring, and webhook integrations.",
+    "contact": {
+      "name": "Nebutra Engineering",
+      "url": "https://nebutra.com"
+    },
+    "license": {
+      "name": "Proprietary"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.nebutra.com",
+      "description": "Production"
+    },
+    {
+      "url": "http://localhost:3002",
+      "description": "Local development"
+    }
+  ],
+  "tags": [
+    {
+      "name": "System",
+      "description": "Health checks, readiness, liveness and status endpoints"
+    },
+    {
+      "name": "Legal",
+      "description": "Consent management, cookie preferences, and legal documents"
+    },
+    {
+      "name": "Events",
+      "description": "Event ingestion pipeline"
+    },
+    {
+      "name": "Webhooks",
+      "description": "Incoming webhook handlers (Stripe, Clerk)"
+    }
+  ],
+  "paths": {
+    "/api/misc/health": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Health check",
+        "description": "Returns health status of the API gateway and its dependencies. Returns 200 for healthy/degraded, 503 for unhealthy.",
+        "operationId": "getHealth",
+        "responses": {
+          "200": {
+            "description": "Service is healthy or degraded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service is unhealthy — all dependencies are down",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/system/status": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Comprehensive system status",
+        "description": "Returns detailed status of all system components including database, Redis, and microservices. Used by OpenStatus monitoring.",
+        "operationId": "getStatus",
+        "responses": {
+          "200": {
+            "description": "System is healthy or degraded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "System is unhealthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/system/ready": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Kubernetes readiness probe",
+        "description": "Returns whether the service is ready to accept traffic",
+        "operationId": "getReady",
+        "responses": {
+          "200": {
+            "description": "Service is ready",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ready": {
+                      "type": "boolean",
+                      "enum": [true]
+                    }
+                  },
+                  "required": ["ready"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service is not ready",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ready": {
+                      "type": "boolean",
+                      "enum": [false]
+                    },
+                    "reason": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["ready", "reason"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/system/live": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Kubernetes liveness probe",
+        "description": "Returns whether the service process is alive",
+        "operationId": "getLive",
+        "responses": {
+          "200": {
+            "description": "Service is alive",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "live": {
+                      "type": "boolean",
+                      "enum": [true]
+                    }
+                  },
+                  "required": ["live"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/system/ping": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Simple uptime ping",
+        "description": "Returns 'pong' for uptime monitoring services",
+        "operationId": "getPing",
+        "responses": {
+          "200": {
+            "description": "pong",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "enum": ["pong"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/legal/consent": {
+      "post": {
+        "tags": ["Legal"],
+        "summary": "Record document consent",
+        "description": "Record user consent for a legal document (e.g. terms of service, privacy policy)",
+        "operationId": "recordConsent",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecordConsentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Consent recorded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecordConsentResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Legal document not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Database error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Legal"],
+        "summary": "Withdraw consent",
+        "description": "Withdraw previously given consent for a legal document",
+        "operationId": "withdrawConsent",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "documentSlug",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "visitorId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consent withdrawn",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "const": true
+                    },
+                    "withdrawnCount": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": ["success", "withdrawnCount"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Database error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/legal/consent/status": {
+      "get": {
+        "tags": ["Legal"],
+        "summary": "Get consent status",
+        "description": "Check whether a user has consented to a specific legal document and whether re-consent is needed",
+        "operationId": "getConsentStatus",
+        "parameters": [
+          {
+            "name": "documentSlug",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "visitorId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consent status retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConsentStatus"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Legal document not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/legal/cookie-consent": {
+      "post": {
+        "tags": ["Legal"],
+        "summary": "Record cookie consent",
+        "description": "Record or update cookie consent preferences for a visitor",
+        "operationId": "recordCookieConsent",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CookieConsentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cookie consent recorded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CookieConsentResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Database error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Legal"],
+        "summary": "Get cookie consent preferences",
+        "description": "Retrieve current cookie consent preferences for a visitor or user",
+        "operationId": "getCookieConsent",
+        "parameters": [
+          {
+            "name": "visitorId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cookie consent preferences",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CookieConsentPreferences"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required parameter",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/legal/documents": {
+      "get": {
+        "tags": ["Legal"],
+        "summary": "List legal documents",
+        "description": "List all active legal documents, optionally filtered by locale and type",
+        "operationId": "listDocuments",
+        "parameters": [
+          {
+            "name": "locale",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of legal documents",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/legal/documents/{slug}": {
+      "get": {
+        "tags": ["Legal"],
+        "summary": "Get legal document",
+        "description": "Retrieve a specific legal document by its slug",
+        "operationId": "getDocument",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Legal document found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "document": {
+                      "$ref": "#/components/schemas/DocumentItem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Legal document not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/events/ingest": {
+      "post": {
+        "tags": ["Events"],
+        "summary": "Ingest events",
+        "description": "Accepts a batch of events (1-1000) and forwards them to the event ingest service for processing.",
+        "operationId": "ingestEvents",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IngestRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Events accepted for processing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "const": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Event ingest service unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Clerk-issued JWT token"
+      }
+    },
+    "schemas": {
+      "HealthResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["healthy", "degraded", "unhealthy"]
+          },
+          "version": {
+            "type": "string"
+          },
+          "uptime": {
+            "type": "number"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dependencies": {
+            "type": "object",
+            "properties": {
+              "database": {
+                "$ref": "#/components/schemas/DependencyStatus"
+              }
+            }
+          }
+        },
+        "required": ["status", "version", "uptime", "timestamp", "dependencies"]
+      },
+      "DependencyStatus": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["up", "down"]
+          },
+          "latencyMs": {
+            "type": "number"
+          }
+        },
+        "required": ["status", "latencyMs"]
+      },
+      "StatusResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["healthy", "degraded", "unhealthy"]
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "version": {
+            "type": "string"
+          },
+          "database": {
+            "type": "string",
+            "enum": ["connected", "disconnected"]
+          },
+          "redis": {
+            "type": "string",
+            "enum": ["connected", "disconnected"]
+          },
+          "services": {
+            "type": "object",
+            "properties": {
+              "ai": {
+                "type": "string",
+                "enum": ["available", "unavailable", "unknown"]
+              },
+              "content": {
+                "type": "string",
+                "enum": ["available", "unavailable", "unknown"]
+              },
+              "recsys": {
+                "type": "string",
+                "enum": ["available", "unavailable", "unknown"]
+              },
+              "ecommerce": {
+                "type": "string",
+                "enum": ["available", "unavailable", "unknown"]
+              },
+              "web3": {
+                "type": "string",
+                "enum": ["available", "unavailable", "unknown"]
+              },
+              "billing": {
+                "type": "string",
+                "enum": ["available", "unavailable", "unknown"]
+              },
+              "eventIngest": {
+                "type": "string",
+                "enum": ["available", "unavailable", "unknown"]
+              }
+            }
+          },
+          "uptime": {
+            "type": "number"
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Check"
+            }
+          }
+        },
+        "required": [
+          "status",
+          "timestamp",
+          "version",
+          "database",
+          "redis",
+          "services",
+          "uptime",
+          "checks"
+        ]
+      },
+      "Check": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pass", "fail"]
+          },
+          "latency": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "status"]
+      },
+      "RecordConsentRequest": {
+        "type": "object",
+        "properties": {
+          "documentSlug": {
+            "type": "string",
+            "minLength": 1
+          },
+          "documentVersion": {
+            "type": "string"
+          },
+          "consentType": {
+            "type": "string",
+            "enum": ["EXPLICIT", "IMPLICIT", "OPT_IN", "OPT_OUT"],
+            "default": "EXPLICIT"
+          },
+          "context": {
+            "type": "string"
+          },
+          "visitorId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "required": ["documentSlug", "visitorId"]
+      },
+      "RecordConsentResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "const": true
+          },
+          "consentId": {
+            "type": "string"
+          },
+          "documentSlug": {
+            "type": "string"
+          },
+          "documentVersion": {
+            "type": "string"
+          },
+          "consentedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["success", "consentId", "documentSlug", "documentVersion", "consentedAt"]
+      },
+      "ConsentStatus": {
+        "type": "object",
+        "properties": {
+          "hasConsented": {
+            "type": "boolean"
+          },
+          "consentedVersion": {
+            "type": ["string", "null"]
+          },
+          "currentVersion": {
+            "type": "string"
+          },
+          "needsReconsent": {
+            "type": "boolean"
+          },
+          "lastConsentedAt": {
+            "type": ["string", "null"],
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "hasConsented",
+          "consentedVersion",
+          "currentVersion",
+          "needsReconsent",
+          "lastConsentedAt"
+        ]
+      },
+      "CookieConsentRequest": {
+        "type": "object",
+        "properties": {
+          "visitorId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "preferences": {
+            "type": "object",
+            "properties": {
+              "functional": {
+                "type": "boolean",
+                "default": false
+              },
+              "analytics": {
+                "type": "boolean",
+                "default": false
+              },
+              "marketing": {
+                "type": "boolean",
+                "default": false
+              },
+              "thirdParty": {
+                "type": "boolean",
+                "default": false
+              }
+            }
+          }
+        },
+        "required": ["visitorId", "preferences"]
+      },
+      "CookieConsentResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "const": true
+          },
+          "consentId": {
+            "type": "string"
+          },
+          "preferences": {
+            "type": "object",
+            "properties": {
+              "necessary": {
+                "type": "boolean"
+              },
+              "functional": {
+                "type": "boolean"
+              },
+              "analytics": {
+                "type": "boolean"
+              },
+              "marketing": {
+                "type": "boolean"
+              },
+              "thirdParty": {
+                "type": "boolean"
+              }
+            }
+          },
+          "consentedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["success", "consentId", "preferences", "consentedAt", "expiresAt"]
+      },
+      "CookieConsentPreferences": {
+        "type": "object",
+        "properties": {
+          "hasConsent": {
+            "type": "boolean"
+          },
+          "preferences": {
+            "type": ["object", "null"],
+            "properties": {
+              "necessary": {
+                "type": "boolean"
+              },
+              "functional": {
+                "type": "boolean"
+              },
+              "analytics": {
+                "type": "boolean"
+              },
+              "marketing": {
+                "type": "boolean"
+              },
+              "thirdParty": {
+                "type": "boolean"
+              }
+            }
+          },
+          "consentedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["hasConsent", "preferences"]
+      },
+      "DocumentList": {
+        "type": "object",
+        "properties": {
+          "documents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentItem"
+            }
+          }
+        },
+        "required": ["documents"]
+      },
+      "DocumentItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "locale": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "summary": {
+            "type": ["string", "null"]
+          },
+          "effectiveAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isRequired": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "type",
+          "locale",
+          "version",
+          "title",
+          "effectiveAt",
+          "isRequired"
+        ]
+      },
+      "IngestRequest": {
+        "type": "object",
+        "properties": {
+          "events": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 1000,
+            "items": {
+              "type": "object",
+              "properties": {
+                "eventName": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "context": {
+                  "type": "object",
+                  "properties": {
+                    "tenantId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "occurredAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": ["tenantId", "occurredAt"]
+                },
+                "payload": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "eventId": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "string",
+                  "default": "web"
+                }
+              },
+              "required": ["eventName", "context"]
+            }
+          }
+        },
+        "required": ["events"]
+      },
+      "ApiError": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "details": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            },
+            "required": ["code", "message"]
+          },
+          "requestId": {
+            "type": "string"
+          }
+        },
+        "required": ["error"]
+      }
+    }
+  }
+}

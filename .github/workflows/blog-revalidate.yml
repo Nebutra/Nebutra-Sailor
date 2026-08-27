@@ -1,0 +1,62 @@
+name: Blog Revalidate
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "Blog post slug to revalidate"
+        required: true
+        type: string
+      language:
+        description: "Post language"
+        required: true
+        default: "en"
+        type: choice
+        options:
+          - en
+          - zh
+      site_url:
+        description: "Production site URL"
+        required: true
+        default: "https://nebutra.com"
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: blog-revalidate-${{ github.event.inputs.language }}-${{ github.event.inputs.slug }}
+  cancel-in-progress: true
+
+jobs:
+  revalidate:
+    name: Revalidate Blog Cache
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Call blog revalidation webhook
+        env:
+          LANGUAGE: ${{ github.event.inputs.language }}
+          SANITY_WEBHOOK_SECRET: ${{ secrets.SANITY_WEBHOOK_SECRET }}
+          SITE_URL: ${{ github.event.inputs.site_url }}
+          SLUG: ${{ github.event.inputs.slug }}
+        run: |
+          set -euo pipefail
+
+          payload="$(node -e 'const payload={_type:"post",slug:{current:process.env.SLUG},language:process.env.LANGUAGE}; process.stdout.write(JSON.stringify(payload));')"
+          signature="$(node -e 'const crypto=require("node:crypto"); const secret=process.env.SANITY_WEBHOOK_SECRET || ""; const payload=process.argv[1]; if (secret) process.stdout.write(crypto.createHmac("sha256", secret).update(payload).digest("hex"));' "$payload")"
+
+          headers=(-H "content-type: application/json")
+          if [ -n "$signature" ]; then
+            headers+=(-H "sanity-webhook-signature: $signature")
+          fi
+
+          response="$(curl -sS -w "\n%{http_code}" -X POST "${SITE_URL%/}/api/blog/webhook" "${headers[@]}" --data "$payload")"
+          body="$(printf '%s' "$response" | sed '$d')"
+          status="$(printf '%s' "$response" | tail -n 1)"
+
+          echo "$body"
+          if [ "$status" -lt 200 ] || [ "$status" -ge 300 ]; then
+            echo "::error::Blog revalidation failed with HTTP $status"
+            exit 1
+          fi

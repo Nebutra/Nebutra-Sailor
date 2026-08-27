@@ -1,0 +1,139 @@
+// Card compound component
+
+// ArtifactShiftCard — textured hover artifact surface for product capability cards
+export {
+  ArtifactShiftCard,
+  ArtifactShiftCardFooter,
+  type ArtifactShiftCardFooterProps,
+  ArtifactShiftCardPreview,
+  type ArtifactShiftCardPreviewProps,
+  type ArtifactShiftCardProps,
+} from "./artifact-shift-card";
+export type {
+  CardBodyProps,
+  CardDescriptionProps,
+  CardFooterProps,
+  CardHeaderProps,
+  CardIconProps,
+  CardProps,
+  CardTitleProps,
+} from "./Card";
+export {
+  Card,
+  CardBody,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardIcon,
+  CardRoot,
+  CardTitle,
+} from "./Card";
+export type { CommandBoxProps } from "./CommandBox";
+// CommandBox
+export { CommandBox } from "./CommandBox";
+
+// Dashboard surfaces — dense SaaS command, panel, and metric primitives
+export {
+  DashboardCommandSurface,
+  type DashboardCommandSurfaceProps,
+  DashboardMetricTile,
+  type DashboardMetricTileProps,
+  DashboardPanel,
+  type DashboardPanelProps,
+} from "./dashboard-surfaces";
+
+// GalleryCard — content discovery cards (MiniMax / GPT Store style)
+export {
+  GalleryCard,
+  type GalleryCardAction,
+  type GalleryCardBadge,
+  type GalleryCardBadgeTone,
+  type GalleryCardIconTone,
+  type GalleryCardMetadata,
+  type GalleryCardProps,
+  type GalleryCardRenderLinkProps,
+} from "./gallery-card";
+
+// Kinetic marketing patterns — Cult-inspired texture, terminal, and beam surfaces
+export {
+  KineticCodePreview,
+  type KineticCodePreviewProps,
+  KineticCommandBox,
+  type KineticCommandBoxProps,
+  KineticConsoleFrame,
+  type KineticConsoleFrameProps,
+  KineticFeatureCard,
+  type KineticFeatureCardProps,
+  KineticMorphSurface,
+  type KineticMorphSurfaceProps,
+  KineticSignalMarquee,
+  type KineticSignalMarqueeProps,
+  KineticStep,
+  type KineticStepProps,
+  KineticStepRail,
+  type KineticStepRailProps,
+} from "./kinetic-marketing";
+
+// QAPage — Stack Overflow-style question + answers surface. react-markdown +
+// remark-gfm for post rendering; @nebutra/icons (Geist) for all toolbar /
+// vote / action chrome. Composed from Card / Button / Badge / Separator
+// primitives + sibling MarkdownEditor / MarkdownRenderer / VoteButtons /
+// UserInfo pieces.
+export {
+  type AnswerType,
+  type Author,
+  MarkdownEditor,
+  type MarkdownEditorProps,
+  MarkdownRenderer,
+  type MarkdownRendererProps,
+  QAPage,
+  type QAPageProps,
+  type QuestionType,
+  UserInfo,
+  type UserInfoProps,
+  VoteButtons,
+  type VoteButtonsProps,
+  type VoteType,
+} from "./qa-page";
+
+// SidebarNav — grouped app sidebar with badges, nested children, collapsed mode
+export {
+  SidebarNav,
+  type SidebarNavBadge,
+  type SidebarNavBadgeTone,
+  type SidebarNavIcon,
+  type SidebarNavItem,
+  type SidebarNavProps,
+  type SidebarNavRenderLinkProps,
+  type SidebarNavSection,
+  type SidebarNavSectionAction,
+} from "./sidebar-nav";
+export type {
+  TerminalBodyProps,
+  TerminalHeaderProps,
+  TerminalLineProps,
+  TerminalProps,
+} from "./Terminal";
+// Terminal compound component
+export {
+  Terminal,
+  TerminalBody,
+  TerminalHeader,
+  TerminalLine,
+  TerminalRoot,
+} from "./Terminal";
+// UserMenu — avatar dropdown with workspace slot + grouped action items
+export {
+  UserMenu,
+  type UserMenuGroup,
+  type UserMenuItem,
+  type UserMenuProps,
+  type UserMenuUser,
+} from "./user-menu";
+// WorkspaceSwitcher — team/org switcher with Owner badge
+export {
+  type Workspace,
+  type WorkspaceRole,
+  WorkspaceSwitcher,
+  type WorkspaceSwitcherProps,
+} from "./workspace-switcher";

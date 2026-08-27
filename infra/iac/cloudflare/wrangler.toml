@@ -1,0 +1,82 @@
+# Cloudflare Wrangler Configuration
+# https://developers.cloudflare.com/workers/wrangler/configuration/
+
+name = "nebutra-worker"
+main = "workers/src/index.ts"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Account settings (set via environment or wrangler login)
+# account_id = ""
+
+# ============================================
+# R2 Buckets
+# ============================================
+
+[[r2_buckets]]
+binding = "ASSETS"
+bucket_name = "nebutra-assets"
+preview_bucket_name = "nebutra-assets-preview"
+
+[[r2_buckets]]
+binding = "UPLOADS"
+bucket_name = "nebutra-uploads"
+preview_bucket_name = "nebutra-uploads-preview"
+
+# ============================================
+# KV Namespaces (optional, for edge caching)
+# ============================================
+
+# [[kv_namespaces]]
+# binding = "CACHE"
+# id = ""
+# preview_id = ""
+
+# ============================================
+# Environment Variables
+# ============================================
+
+[vars]
+ENVIRONMENT = "production"
+
+# ============================================
+# Environment-specific settings
+# ============================================
+
+[env.staging]
+name = "nebutra-worker-staging"
+vars = { ENVIRONMENT = "staging" }
+
+[[env.staging.r2_buckets]]
+binding = "ASSETS"
+bucket_name = "nebutra-assets-staging"
+
+[[env.staging.r2_buckets]]
+binding = "UPLOADS"
+bucket_name = "nebutra-uploads-staging"
+
+[env.development]
+name = "nebutra-worker-dev"
+vars = { ENVIRONMENT = "development" }
+
+# ============================================
+# Build settings
+# ============================================
+
+[build]
+command = "npm run build"
+
+# ============================================
+# Custom domains (optional)
+# ============================================
+
+# routes = [
+#   { pattern = "cdn.nebutra.com/*", zone_name = "nebutra.com" }
+# ]
+
+# ============================================
+# Observability
+# ============================================
+
+[observability]
+enabled = true

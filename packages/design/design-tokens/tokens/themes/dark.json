@@ -1,0 +1,701 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Dark mode theme — 12-step scales inverted (1=darkest, 12=lightest) + shadcn HSL semantics + dark-mode brand alias overrides. Mirrors .dark in @nebutra/tokens/styles.css.",
+  "brand": {
+    "$description": "Dark-mode brand alias overrides. In dark mode the visible brand fills shift to lighter steps for AA contrast on dark surfaces.",
+    "primary": {
+      "$value": "{color.nebutra-blue.400}",
+      "$type": "color",
+      "$description": "Dark-mode brand primary — the identity blue lifted to nebutra-blue-400 so it stays visible on dark surfaces. This is the identity alias, not the functional fill: the dark solid fill is --blue-9 (#396ae2, white label 4.85:1). The two are deliberately separate now that the VI hex is no longer pinned into ramp slot 9."
+    },
+    "accent": {
+      "$value": "{color.nebutra-cyan.400}",
+      "$type": "color",
+      "$description": "Dark-mode brand accent — nebutra-cyan-400 (L* 87.1). The functional bright fill is --cyan-9 (#0bf1c3, L* 85.41), the same hex in both modes; dark ink for it is --cyan-contrast at 10.35:1."
+    }
+  },
+  "status": {
+    "info": {
+      "$value": "{color.nebutra-blue.400}",
+      "$type": "color",
+      "$description": "Dark-mode info color — equals dark brand-primary."
+    }
+  },
+  "ring": {
+    "hairline": {
+      "$value": "inset 0 0 0 1px rgb(255 255 255 / 0.06)",
+      "$type": "string",
+      "$description": "Hairline override — more visible on dark background"
+    }
+  },
+  "overlay": {
+    "faint": {
+      "$value": "rgb(255 255 255 / 0.06)",
+      "$type": "color",
+      "$description": "Dark-mode faint overlay (6% white) — inverted from light"
+    }
+  },
+  "scale": {
+    "neutral": {
+      "1": {
+        "$value": "{color.nebutra-neutral.950}",
+        "$type": "color"
+      },
+      "2": {
+        "$value": "{color.nebutra-neutral.900}",
+        "$type": "color"
+      },
+      "3": {
+        "$value": "{color.nebutra-neutral.800}",
+        "$type": "color"
+      },
+      "4": {
+        "$value": "{color.nebutra-neutral.700}",
+        "$type": "color"
+      },
+      "5": {
+        "$value": "{color.nebutra-neutral.600}",
+        "$type": "color"
+      },
+      "6": {
+        "$value": "{scale.neutral.5}",
+        "$type": "color",
+        "$description": "subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25, chroma forced to 0. The achromatic result is deliberate and preserves the documented intent of color.nebutra-gray ('used where blue undertone clashes — primarily dark-mode borders, dividers, elevation hairlines'). What was broken was the LIGHTNESS: gray-900/800/700 are darker than the slate background tier they sit above, so the border read as a hole rather than a hairline.",
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border",
+            "chroma": 0
+          }
+        }
+      },
+      "7": {
+        "$value": "{scale.neutral.5}",
+        "$type": "color",
+        "$description": "default border — DERIVED: OKLab lerp step5 → step9 at t=0.50, chroma 0.",
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border",
+            "chroma": 0
+          }
+        }
+      },
+      "8": {
+        "$value": "{scale.neutral.5}",
+        "$type": "color",
+        "$description": "hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75, chroma 0.",
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border",
+            "chroma": 0
+          }
+        }
+      },
+      "9": {
+        "$value": "{color.nebutra-neutral.400}",
+        "$type": "color"
+      },
+      "10": {
+        "$value": "{color.nebutra-neutral.300}",
+        "$type": "color"
+      },
+      "11": {
+        "$value": "{color.nebutra-neutral.200}",
+        "$type": "color"
+      },
+      "12": {
+        "$value": "{color.nebutra-neutral.50}",
+        "$type": "color"
+      }
+    },
+    "blue": {
+      "1": {
+        "$value": "#030815",
+        "$type": "color",
+        "$description": "app tint — L* 13.59, C 0.031, hue 264."
+      },
+      "2": {
+        "$value": "#060f25",
+        "$type": "color",
+        "$description": "subtle background — L* 17.43, C 0.048."
+      },
+      "3": {
+        "$value": "#09183b",
+        "$type": "color",
+        "$description": "component background default — L* 22.04, C 0.071."
+      },
+      "4": {
+        "$value": "#0d2254",
+        "$type": "color",
+        "$description": "component background hover — L* 26.99, C 0.095."
+      },
+      "5": {
+        "$value": "#132e6f",
+        "$type": "color",
+        "$description": "component background active — L* 32.46, C 0.118. Anchor for the derived border tier."
+      },
+      "6": {
+        "$value": "{scale.blue.5}",
+        "$type": "color",
+        "$description": "subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 23.5 L*) at t=0.25. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 38.25, C 0.136.",
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
+      },
+      "7": {
+        "$value": "{scale.blue.5}",
+        "$type": "color",
+        "$description": "default border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 23.5 L*) at t=0.50. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 44.21, C 0.155.",
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
+      },
+      "8": {
+        "$value": "{scale.blue.5}",
+        "$type": "color",
+        "$description": "hovered border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 23.5 L*) at t=0.75. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 50.01, C 0.173.",
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
+      },
+      "9": {
+        "$value": "#396ae2",
+        "$type": "color",
+        "$description": "solid fill — L* 55.92, C 0.191, hue 264.3. White label 4.85:1. Same value as the dark shadcn --primary, so light and dark both take their deep fill from one source. Chroma ceiling for dark is 0.190; this is 0.191."
+      },
+      "10": {
+        "$value": "#3f70e3",
+        "$type": "color",
+        "$description": "solid fill hover — L* 57.44, C 0.183. White label 4.53:1. The hover has to move UP in a dark ramp, which costs contrast, so the step is deliberately small (1.52 L*) to keep white above 4.5:1."
+      },
+      "11": {
+        "$value": "#89aaee",
+        "$type": "color",
+        "$description": "secondary text — L* 74.01, C 0.106. 8.62:1 on step 1."
+      },
+      "12": {
+        "$value": "#d2e0fd",
+        "$type": "color",
+        "$description": "primary text — L* 90.52, C 0.043. 15.08:1 on step 1."
+      },
+      "contrast": {
+        "$value": "#ffffff",
+        "$type": "color",
+        "$description": "Label ink for the solid fill tier. Absolute value, identical in both modes. 4.85:1 on step 9, 4.53:1 on step 10."
+      }
+    },
+    "cyan": {
+      "1": {
+        "$value": "#04100c",
+        "$type": "color",
+        "$description": "app tint — L* 15.90, C 0.021, hue 172."
+      },
+      "2": {
+        "$value": "#091e18",
+        "$type": "color",
+        "$description": "subtle background — L* 21.54, C 0.030."
+      },
+      "3": {
+        "$value": "#0f2e25",
+        "$type": "color",
+        "$description": "component background default — L* 27.46, C 0.041."
+      },
+      "4": {
+        "$value": "#1c4035",
+        "$type": "color",
+        "$description": "component background hover — L* 34.10, C 0.046."
+      },
+      "5": {
+        "$value": "#2b5347",
+        "$type": "color",
+        "$description": "component background active — L* 40.88, C 0.050. Anchor for the derived border tier."
+      },
+      "6": {
+        "$value": "{scale.cyan.5}",
+        "$type": "color",
+        "$description": "subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (span 44.5 L*) at t=0.25. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 52.12, C 0.079.",
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
+      },
+      "7": {
+        "$value": "{scale.cyan.5}",
+        "$type": "color",
+        "$description": "default border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (span 44.5 L*) at t=0.50. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 63.04, C 0.107.",
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
+      },
+      "8": {
+        "$value": "{scale.cyan.5}",
+        "$type": "color",
+        "$description": "hovered border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (span 44.5 L*) at t=0.75. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 74.30, C 0.136.",
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
+      },
+      "9": {
+        "$value": "#0bf1c3",
+        "$type": "color",
+        "$description": "solid fill — same bright value as light mode, the way Radix ships one hex for mint-9 in both modes: L* 85.41, C 0.164. Ink 10.35:1 against --cyan-contrast."
+      },
+      "10": {
+        "$value": "#5af8ce",
+        "$type": "color",
+        "$description": "solid fill hover — L* 88.53, C 0.145, 3.12 L* above step 9 (Radix mint dark moves up 4.60 L*). Ink 11.34:1."
+      },
+      "11": {
+        "$value": "#90fbdb",
+        "$type": "color",
+        "$description": "secondary text — L* 91.46, C 0.110. 15.68:1 on step 1."
+      },
+      "12": {
+        "$value": "#bdfde8",
+        "$type": "color",
+        "$description": "primary text — L* 94.54, C 0.070. 16.95:1 on step 1."
+      },
+      "contrast": {
+        "$value": "#0d2b25",
+        "$type": "color",
+        "$description": "Label ink for the bright fill tier. Absolute near-black, identical in both modes. 10.35:1 on step 9, 11.34:1 on step 10."
+      }
+    }
+  },
+  "shadcn": {
+    "background": {
+      "$value": "222 14% 9%",
+      "$type": "string"
+    },
+    "foreground": {
+      "$value": "210 18% 96%",
+      "$type": "string"
+    },
+    "card": {
+      "$value": "222 12% 13%",
+      "$type": "string"
+    },
+    "card-foreground": {
+      "$value": "210 18% 96%",
+      "$type": "string"
+    },
+    "popover": {
+      "$value": "222 12% 13%",
+      "$type": "string"
+    },
+    "popover-foreground": {
+      "$value": "210 18% 96%",
+      "$type": "string"
+    },
+    "primary": {
+      "$value": "222.6 74.4% 55.5%",
+      "$type": "string",
+      "$description": "Dark-mode action blue, paired with the near-black --primary-foreground, not white. #396ae2 keeps the VI hue and sits at L*55.9 C0.191."
+    },
+    "primary-foreground": {
+      "$value": "0 0% 100%",
+      "$type": "string",
+      "$description": "White, matching light mode and matching --blue-contrast. It was near-black (222 14% 9%) when --primary was a LIGHT fill at L* 68.3, where dark ink read 6.20:1. Once --primary became a deep fill at L* 55.9 the pairing inverted and measured 3.74:1, below AA — the fill moved and the ink did not. The deep-fill tier takes white in both modes; --blue-contrast says the same thing, and they must agree because --primary and --blue-9 are now the same value."
+    },
+    "secondary": {
+      "$value": "222 10% 18%",
+      "$type": "string"
+    },
+    "secondary-foreground": {
+      "$value": "210 18% 96%",
+      "$type": "string"
+    },
+    "muted": {
+      "$value": "222 10% 17%",
+      "$type": "string"
+    },
+    "muted-foreground": {
+      "$value": "220 8% 65%",
+      "$type": "string"
+    },
+    "accent": {
+      "$value": "228 38% 22%",
+      "$type": "string"
+    },
+    "accent-foreground": {
+      "$value": "228 95% 80%",
+      "$type": "string"
+    },
+    "destructive": {
+      "$value": "0 63% 38%",
+      "$type": "string"
+    },
+    "destructive-foreground": {
+      "$value": "210 18% 96%",
+      "$type": "string"
+    },
+    "destructive-strong": {
+      "$value": "0 80% 66%",
+      "$type": "string",
+      "$description": "Red as FOREGROUND on a dark surface. --destructive (0 63% 38%) is 2.15:1 on --card here — a fill only. Lightened to 5.18:1 on --card / 5.61:1 on --neutral-1, which sits alongside the light-mode 5.42:1 so red reads with the same weight in both themes. Use --destructive for fills with --destructive-foreground on top; use this for red text and icons."
+    },
+    "success": {
+      "$value": "142 60% 42%",
+      "$type": "string"
+    },
+    "success-foreground": {
+      "$value": "222 14% 9%",
+      "$type": "string"
+    },
+    "success-strong": {
+      "$value": "142 60% 42%",
+      "$type": "string",
+      "$description": "Green as foreground on a dark surface. Needs no adjustment — 142 60% 42% is already 4.83:1 as ink on its own 10% tint — so it deliberately equals --success, matching how --warning-strong behaves in this theme."
+    },
+    "warning": {
+      "$value": "38 80% 52%",
+      "$type": "string"
+    },
+    "warning-foreground": {
+      "$value": "222 14% 9%",
+      "$type": "string"
+    },
+    "warning-strong": {
+      "$value": "38 80% 52%",
+      "$type": "string",
+      "$description": "Amber as foreground on a dark surface. Unlike light mode this needs no adjustment — 38 80% 52% is already 7.98:1 against --neutral-1 — so it deliberately equals --warning. The token exists in both themes so consumers can reference one name."
+    },
+    "info": {
+      "$value": "228 95% 72%",
+      "$type": "string"
+    },
+    "info-foreground": {
+      "$value": "222 14% 9%",
+      "$type": "string"
+    },
+    "border": {
+      "$value": "220 8% 22%",
+      "$type": "string"
+    },
+    "input": {
+      "$value": "220 8% 22%",
+      "$type": "string"
+    },
+    "ring": {
+      "$value": "0 0% 88%",
+      "$type": "string",
+      "$description": "Focus ring (dark mode) — neutral light gray. Mirrors light-mode neutral foreground choice."
+    },
+    "sidebar": {
+      "$value": "222 16% 8%",
+      "$type": "string"
+    },
+    "sidebar-foreground": {
+      "$value": "210 18% 94%",
+      "$type": "string"
+    },
+    "sidebar-primary": {
+      "$value": "228 95% 72%",
+      "$type": "string"
+    },
+    "sidebar-primary-foreground": {
+      "$value": "222 14% 9%",
+      "$type": "string"
+    },
+    "sidebar-accent": {
+      "$value": "228 38% 22%",
+      "$type": "string"
+    },
+    "sidebar-accent-foreground": {
+      "$value": "228 95% 80%",
+      "$type": "string"
+    },
+    "sidebar-border": {
+      "$value": "220 8% 18%",
+      "$type": "string"
+    },
+    "sidebar-ring": {
+      "$value": "228 95% 72%",
+      "$type": "string"
+    },
+    "chart-1": {
+      "$value": "228 95% 67%",
+      "$type": "string"
+    },
+    "chart-2": {
+      "$value": "168 96% 54%",
+      "$type": "string"
+    },
+    "chart-3": {
+      "$value": "228 100% 82%",
+      "$type": "string"
+    },
+    "chart-4": {
+      "$value": "168 100% 75%",
+      "$type": "string"
+    },
+    "chart-5": {
+      "$value": "228 100% 50%",
+      "$type": "string"
+    }
+  },
+  "ds": {
+    "blue-200": {
+      "$value": "oklch(25.45% 0.0811 255.8)",
+      "$type": "color"
+    },
+    "blue-700": {
+      "$value": "oklch(57.61% 0.2321 258.23)",
+      "$type": "color"
+    },
+    "blue-900": {
+      "$value": "oklch(71.7% 0.1648 250.79360374054167)",
+      "$type": "color"
+    },
+    "red-200": {
+      "$value": "oklch(25.93% 0.0834 19.02)",
+      "$type": "color"
+    },
+    "red-700": {
+      "$value": "oklch(62.56% 0.2234 23.03)",
+      "$type": "color"
+    },
+    "red-900": {
+      "$value": "oklch(69.96% 0.2136 22.03)",
+      "$type": "color"
+    },
+    "amber-200": {
+      "$value": "oklch(24.95% 0.0642 64.78)",
+      "$type": "color"
+    },
+    "amber-700": {
+      "$value": "oklch(81.87% 0.1969 76.46)",
+      "$type": "color"
+    },
+    "amber-900": {
+      "$value": "oklch(77.21% 0.1991 64.28)",
+      "$type": "color"
+    },
+    "green-200": {
+      "$value": "oklch(27.12% 0.0895 150.09)",
+      "$type": "color"
+    },
+    "green-700": {
+      "$value": "oklch(64.58% 0.199 147.27)",
+      "$type": "color"
+    },
+    "green-900": {
+      "$value": "oklch(73.1% 0.2158 148.29)",
+      "$type": "color"
+    },
+    "teal-300": {
+      "$value": "oklch(31.5% 0.0767 180.99)",
+      "$type": "color"
+    },
+    "teal-700": {
+      "$value": "oklch(64.92% 0.1403 181.95)",
+      "$type": "color"
+    },
+    "teal-900": {
+      "$value": "oklch(74.56% 0.1765 182.8)",
+      "$type": "color"
+    },
+    "purple-200": {
+      "$value": "oklch(25.91% 0.0921 314.41)",
+      "$type": "color"
+    },
+    "purple-700": {
+      "$value": "oklch(55.5% 0.2186 306.12)",
+      "$type": "color"
+    },
+    "purple-900": {
+      "$value": "oklch(69.87% 0.2037 309.51)",
+      "$type": "color"
+    },
+    "pink-300": {
+      "$value": "oklch(31.15% 0.1067 355.93)",
+      "$type": "color"
+    },
+    "pink-700": {
+      "$value": "oklch(63.52% 0.2346 1.01)",
+      "$type": "color"
+    },
+    "pink-900": {
+      "$value": "oklch(69.36% 0.2223 3.91)",
+      "$type": "color"
+    },
+    "gray-100": {
+      "$value": "hsla(0, 0%, 10%, 1)",
+      "$type": "color",
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.232 0 0)"
+      }
+    },
+    "gray-200": {
+      "$value": "hsla(0, 0%, 12%, 1)",
+      "$type": "color",
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.259 0 0)"
+      }
+    },
+    "gray-500": {
+      "$value": "hsla(0, 0%, 27%, 1)",
+      "$type": "color",
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.409 0 0)"
+      }
+    },
+    "gray-600": {
+      "$value": "hsla(0, 0%, 53%, 1)",
+      "$type": "color",
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.59 0 0)"
+      }
+    },
+    "gray-700": {
+      "$value": "hsla(0, 0%, 56%, 1)",
+      "$type": "color",
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.598 0 0)"
+      }
+    },
+    "gray-1000": {
+      "$value": "hsla(0, 0%, 93%, 1)",
+      "$type": "color",
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.94 0 0)"
+      }
+    },
+    "background-100": {
+      "$value": "hsla(0, 0%, 4%, 1)",
+      "$type": "color",
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.143 0 0)"
+      }
+    },
+    "trial-start": {
+      "$value": "rgb(0, 112, 243)",
+      "$type": "color"
+    },
+    "trial-end": {
+      "$value": "rgb(248, 28, 229)",
+      "$type": "color"
+    },
+    "turbo-start": {
+      "$value": "#ff1e56",
+      "$type": "color"
+    },
+    "turbo-end": {
+      "$value": "#0096ff",
+      "$type": "color"
+    }
+  },
+  "elevation": {
+    "xs": {
+      "$value": "0 1px 2px 0 rgb(0 0 0 / 0.3)",
+      "$type": "shadow"
+    },
+    "sm": {
+      "$value": "0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4)",
+      "$type": "shadow"
+    },
+    "md": {
+      "$value": "0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4)",
+      "$type": "shadow"
+    },
+    "lg": {
+      "$value": "0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5)",
+      "$type": "shadow"
+    },
+    "xl": {
+      "$value": "0 20px 25px -5px rgb(0 0 0 / 0.6), 0 8px 10px -6px rgb(0 0 0 / 0.6)",
+      "$type": "shadow"
+    },
+    "2xl": {
+      "$value": "0 25px 50px -12px rgb(0 0 0 / 0.8)",
+      "$type": "shadow"
+    },
+    "brand": {
+      "$value": "0 0 0 1px rgb(92 124 250 / 0.25), 0 4px 20px -2px rgb(92 124 250 / 0.3)",
+      "$type": "shadow"
+    },
+    "brand-lg": {
+      "$value": "0 0 0 1px rgb(92 124 250 / 0.3), 0 8px 40px -4px rgb(92 124 250 / 0.4)",
+      "$type": "shadow"
+    },
+    "ambient-sm": {
+      "$value": "0 1px 2px -1px rgb(0 0 0 / 0.4), 0 6px 16px -6px rgb(0 0 0 / 0.5)",
+      "$type": "shadow",
+      "$description": "Ambient elevation, small. Contact layer plus a wide soft pool — the marketing-surface counterpart to the tight xs..2xl product ramp."
+    },
+    "ambient-md": {
+      "$value": "0 2px 4px -2px rgb(0 0 0 / 0.4), 0 12px 32px -10px rgb(0 0 0 / 0.55)",
+      "$type": "shadow",
+      "$description": "Ambient elevation, medium. Default resting depth for a floating marketing card."
+    },
+    "ambient-lg": {
+      "$value": "0 4px 8px -4px rgb(0 0 0 / 0.4), 0 24px 56px -18px rgb(0 0 0 / 0.6)",
+      "$type": "shadow",
+      "$description": "Ambient elevation, large. One step up from md; use for hover of a md surface, not as a resting default."
+    },
+    "glass-sm": {
+      "$value": "inset 0 1px 0 rgb(255 255 255 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.4), 0 6px 16px -6px rgb(0 0 0 / 0.5)",
+      "$type": "shadow",
+      "$description": "Ambient-sm plus a lit top edge, for translucent panels over a blurred backdrop."
+    },
+    "glass-md": {
+      "$value": "inset 0 1px 0 rgb(255 255 255 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.4), 0 12px 32px -10px rgb(0 0 0 / 0.55)",
+      "$type": "shadow",
+      "$description": "Ambient-md plus a lit top edge."
+    },
+    "glass-lg": {
+      "$value": "inset 0 1px 0 rgb(255 255 255 / 0.08), 0 4px 8px -4px rgb(0 0 0 / 0.4), 0 24px 56px -18px rgb(0 0 0 / 0.6)",
+      "$type": "shadow",
+      "$description": "Ambient-lg plus a lit top edge."
+    },
+    "sheen": {
+      "$value": "inset 0 1px 0 rgb(0 0 0 / 0.12)",
+      "$type": "shadow",
+      "$description": "Top-edge sheen for solid inverted fills (bg-foreground). Lifts with light on a dark fill, with shade on a light one."
+    },
+    "ambient-glow": {
+      "$value": "0 0 80px rgb(255 255 255 / 0.06)",
+      "$type": "shadow",
+      "$description": "Centred offsetless halo — the only non-directional step on the ramp. Inverted from the light value: a black halo has nothing to darken against a dark surround, so the halo becomes light. Keep the alpha low; this is separation, not a bloom."
+    },
+    "glow-accent": {
+      "$value": "0 8px 32px rgb(0 0 0 / 0.4), 0 0 60px color-mix(in srgb, var(--brand-accent) 8%, transparent)",
+      "$type": "shadow",
+      "$description": "Identical to the light value by design. The pool is theme-invariant black because glow-accent surfaces are fixed dark glass in both themes; only the accent halo shifts, via --brand-accent."
+    },
+    "glow-accent-lg": {
+      "$value": "0 12px 48px rgb(0 0 0 / 0.5), 0 0 80px color-mix(in srgb, var(--brand-accent) 12%, transparent)",
+      "$type": "shadow",
+      "$description": "Hover escalation of glow-accent. Identical to the light value by design."
+    },
+    "glow-accent-sm": {
+      "$value": "0 0 20px color-mix(in srgb, var(--brand-accent) 10%, transparent)",
+      "$type": "shadow",
+      "$description": "Accent halo alone, no pool. Identical to the light value by design."
+    },
+    "glow-primary": {
+      "$value": "0 20px 25px -5px hsl(var(--primary) / 0.05), 0 8px 10px -6px hsl(var(--primary) / 0.05)",
+      "$type": "shadow",
+      "$description": "xl geometry tinted with the action fill at 5 percent. Same reference as light; --primary carries the dark channels."
+    }
+  }
+}

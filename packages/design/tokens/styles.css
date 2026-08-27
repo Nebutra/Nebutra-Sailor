@@ -1,0 +1,1815 @@
+/* biome-ignore-all lint/suspicious/noDuplicateCustomProperties: auto-generated from W3C DTCG tokens — primitive + semantic blocks intentionally redeclare aliases. Fix in tokens/*.json source if real, then re-run pnpm --filter @nebutra/design-tokens build. */
+
+/**
+ * @nebutra/design-tokens — styles.generated.css
+ * AUTO-GENERATED from packages/design/design-tokens/tokens/*.json — DO NOT EDIT.
+ * Run `pnpm --filter @nebutra/design-tokens build` after editing tokens.
+ *
+ * SSOT Architecture:
+ *   tokens/core.json        primitive scales (colors, sizes, durations, fonts)
+ *   tokens/semantic.json    semantic aliases (brand.primary, status.danger, gradients)
+ *   tokens/themes/light.json 12-step scales + shadcn HSL + Geist DS + elevation
+ *   tokens/themes/dark.json  same shape, dark-mode values
+ *
+ * Modeling extensions:
+ *   - Display-P3 wide-gamut overrides (`@supports (color: color(display-p3 ...))`)
+ *   - oklch fallbacks for ds-gray-* (`@supports (color: oklch(0 0 0))`)
+ *   - Composite shorthand tokens (`--transition`, `--focus-ring`)
+ *   - Tailwind v4 `@theme inline` block
+ *   - Dark-mode brand alias overrides (`--brand-primary` → `--blue-9` in .dark)
+ */
+
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+:root {
+  --nebutra-blue-50: #f0f4ff;
+  --nebutra-blue-100: #dbe4ff;
+  --nebutra-blue-200: #bac8ff;
+  --nebutra-blue-300: #91a7ff;
+  --nebutra-blue-400: #5c7cfa;
+  --nebutra-blue-500: #0033fe; /** Base brand color — 云毓蓝 */
+  --nebutra-blue-600: #002ad4;
+  --nebutra-blue-700: #0021ab;
+  --nebutra-blue-800: #001882;
+  --nebutra-blue-900: #000f59;
+  --nebutra-blue-950: #000830;
+  --nebutra-cyan-50: #e6fff8;
+  --nebutra-cyan-100: #b3ffec;
+  --nebutra-cyan-200: #80ffe0;
+  --nebutra-cyan-300: #4dfcd4;
+  --nebutra-cyan-400: #1af7c8;
+  --nebutra-cyan-500: #0bf1c3; /** Base brand accent — 云毓青 */
+  --nebutra-cyan-600: #09c9a3;
+  --nebutra-cyan-700: #07a183;
+  --nebutra-cyan-800: #057963;
+  --nebutra-cyan-900: #035143;
+  --nebutra-cyan-950: #012923;
+  --nebutra-neutral-50: #f8fafc;
+  --nebutra-neutral-100: #f1f5f9;
+  --nebutra-neutral-200: #e2e8f0;
+  --nebutra-neutral-300: #cbd5e1;
+  --nebutra-neutral-400: #94a3b8;
+  --nebutra-neutral-500: #64748b;
+  --nebutra-neutral-600: #475569;
+  --nebutra-neutral-700: #334155;
+  --nebutra-neutral-800: #1e293b;
+  --nebutra-neutral-900: #0f172a;
+  --nebutra-neutral-950: #020617;
+  --nebutra-gray-50: #fafafa;
+  --nebutra-gray-100: #f5f5f5;
+  --nebutra-gray-200: #e5e5e5;
+  --nebutra-gray-300: #d4d4d4;
+  --nebutra-gray-400: #a3a3a3;
+  --nebutra-gray-500: #737373;
+  --nebutra-gray-600: #525252;
+  --nebutra-gray-700: #404040;
+  --nebutra-gray-800: #262626;
+  --nebutra-gray-900: #171717;
+  --nebutra-gray-950: #0a0a0a;
+  --breakpoint-xs: 26.25rem; /** 420px — narrow-phone grid flip */
+  --breakpoint-tight: 67.5rem; /** 1080px — dense dashboard header horizontal */
+  --breakpoint-shell: 73.75rem; /** 1180px — three-pane shell threshold */
+  --breakpoint-3xl: 112.5rem; /** 1800px — 4K / Studio Display friendliness */
+  --radius-none: 0; /** Job: flush. Edge-to-edge surfaces — a full-bleed table row, a segment welded to its neighbour, an inset that must not round twice. */
+  --radius-xs: 0.125rem; /** Job: swatch. The smallest corner that still reads as intentional at 8-12px: chart legend keys, mark highlights, progress and sparkline bar caps. Added because 18 call sites had hand-written 1px, 2px and 3px corners with no step to reach for. Matches the bottom of the Tailwind scale, so rounded-xs and var(--radius-xs) agree. */
+  --radius-sm: 0.25rem; /** Job: inner. The corner of something nested inside a control — a thumbnail inside a chip, a swatch inside a tile, a code span inside a paragraph. One step inside md. */
+  --radius-md: 0.375rem; /** Job: control. The default for anything you can click or type into at text height: input, select trigger, small button, menu item, badge with square corners. The most-used step on the ladder. */
+  --radius-lg: 0.5rem; /** Job: container. Things that hold controls rather than being one: popover, dropdown surface, tooltip, toolbar, inline code block. Aliased as radius-button. */
+  --radius-xl: 0.75rem; /** Job: card. A discrete surface in a list or grid that carries its own padding and elevation. Aliased as radius-card. */
+  --radius-2xl: 1rem; /** Job: panel. A region that holds cards — bento cell, dialog, sheet, dashboard section. Aliased as radius-panel. */
+  --radius-3xl: 1.5rem; /** Job: frame. The outermost shell of a marketing or docs composition — mockup window, hero frame, screenshot chrome. The top of the ladder. */
+  --radius-full: 9999px; /** Job: pill. Fully round by intent, not by size: avatar, dot, toggle track, tag. Kept as one step, not a pair, so there is exactly one way to say round. */
+  --radius-button: 0.5rem; /** Intent alias for the container step. Reach for this in product code instead of lg so the shape can be re-tuned in one place. */
+  --radius-card: 0.75rem; /** Intent alias for the card step. Reach for this in product code instead of xl. */
+  --radius-panel: 1rem; /** Intent alias for the panel step. Reach for this in product code instead of 2xl. */
+  --duration-micro: 100ms; /** Micro-feedback: hover, focus, toggle, button press */
+  --duration-flow: 200ms; /** State flow: modal open, dropdown reveal, tab switch, default page transition */
+  --duration-reveal: 300ms; /** Content unveil: slide-in, expand, accordion, drawer */
+  --duration-cinematic: 500ms; /** Hero-grade entrance: landing reveal, large delight moments */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --tracking-display: -0.04em; /** Hero H1 */
+  --tracking-heading: -0.03em; /** Section H2/H3 */
+  --tracking-tight: -0.015em; /** Body emphasis */
+  --leading-display: 1.05;
+  --leading-heading: 1.15;
+  --ring-hairline: inset 0 0 0 1px rgb(255 255 255 / 0.04); /** Etched-glass hairline (light mode value, dark mode override in themes/dark.json) */
+  --overlay-faint: rgb(0 0 0 / 0.06); /** Light-mode faint overlay (6% black) */
+  --font-sans:
+    var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC",
+    "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-cn:
+    var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC",
+    "Microsoft YaHei", sans-serif; /** CJK-locale stack — same order as sans, minus the Latin-only system faces */
+  --font-display:
+    var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), sans-serif;
+  --font-heading:
+    var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), sans-serif;
+  --font-mono:
+    var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  --brand-primary: #0033fe; /** Brand primary — 云毓蓝 */
+  --brand-accent: #0bf1c3; /** Brand accent — 云毓青 */
+  --brand-tertiary: #8b5cf6;
+  --brand-gradient-start: hsl(
+    var(--primary)
+  ); /** Legacy alias of --primary (shadcn product blue). Prefer bg-primary / Button default. */
+  --brand-gradient-end: hsl(
+    var(--primary)
+  ); /** Legacy alias of --primary. Prefer hover:bg-primary/90. */
+  --brand-gradient: hsl(
+    var(--primary)
+  ); /** Legacy --brand-gradient. Same color as --primary — not a second palette. App CTAs should use Button / bg-primary. */
+  --brand-gradient-reverse: hsl(var(--primary)); /** Legacy alias of --primary. */
+  --brand-gradient-vertical: hsl(var(--primary)); /** Legacy alias of --primary. */
+  --brand-gradient-radial: hsl(var(--primary)); /** Legacy alias of --primary. */
+  --brand-gradient-logo: linear-gradient(
+    135deg,
+    #0033fe 0%,
+    #00a2e9 50%,
+    #0bf1c3 100%
+  ); /** Logo/VI gradient (云毓蓝→云毓青). Mid stop #00a2e9 is the OKLab perceptual midpoint (avoids sRGB mid-path soft spots). Brand assets only — not product CTAs. */
+  --brand-gradient-logo-reverse: linear-gradient(
+    135deg,
+    #0bf1c3 0%,
+    #00a2e9 50%,
+    #0033fe 100%
+  ); /** Logo/VI reverse gradient with same OKLab mid stop. */
+  --status-danger: #ef4444;
+  --status-warning: #f59e0b;
+  --status-success: #22c55e;
+  --status-info: #0033fe; /** VI: Info = Brand Blue */
+  --container-text: 896px;
+  --container-content: 1152px;
+  --container-wide: 1400px;
+  --radius: 0.375rem; /** Geist-matching 6px */
+  --motion-duration-micro: 100ms;
+  --motion-duration-flow: 200ms;
+  --motion-duration-reveal: 300ms;
+  --motion-duration-cinematic: 500ms;
+  --focus-ring: 0 0 0 2px hsl(var(--ring) / 0.4); /** Single-layer translucent focus ring (2026 pattern). Legacy box-shadow consumers stay compatible; modern surfaces should prefer the global :focus-visible outline rule in static/base.css. */
+  --neutral-1: #ffffff; /** app background */
+  --neutral-2: #f8fafc; /** subtle background */
+  --neutral-3: #f1f5f9; /** component bg default */
+  --neutral-4: #e2e8f0; /** component bg hover */
+  --neutral-5: #cbd5e1; /** component bg active */
+  --neutral-6: #b0bccb; /** subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp step5 → step9 at t=0.25. The $value here is a placeholder anchor only; the preprocessor overwrites it. */
+  --neutral-7: #96a3b5; /** default border — DERIVED: OKLab lerp step5 → step9 at t=0.50. */
+  --neutral-8: #7d8ba0; /** hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75. */
+  --neutral-9: #64748b; /** solid fill */
+  --neutral-10: #475569; /** solid fill hover */
+  --neutral-11: #334155; /** secondary text */
+  --neutral-12: #0f172a; /** primary text */
+  --blue-1: #fafcfe; /** app tint — L* 99.01, C 0.003, hue 264. Radix blue-1 sits at L* 99.31 C 0.003. */
+  --blue-2: #f2f6fd; /** subtle background — L* 97.21, C 0.010. */
+  --blue-3: #e7eefc; /** component background default — L* 94.79, C 0.020. */
+  --blue-4: #d8e4fb; /** component background hover — L* 91.69, C 0.034. */
+  --blue-5: #c6d7fa; /** component background active — L* 87.77, C 0.052. Anchor for the derived border tier. */
+  --blue-6: #9fbcf9; /** subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 32.3 L*) at t=0.25. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 79.61, C 0.093. */
+  --blue-7: #79a1f7; /** default border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 32.3 L*) at t=0.50. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 71.63, C 0.134. */
+  --blue-8: #5384f3; /** hovered border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 32.3 L*) at t=0.75. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 63.47, C 0.175. */
+  --blue-9: #2e65ee; /** solid fill — L* 55.50, C 0.215, hue 264.0. White label 4.99:1, inside the 4.7-5.4 band comparable products ship. Same value as shadcn --primary so the deep solid fill has one source, not two. The VI hex #0033FE (C 0.290, L* 48.4) stays the identity token --brand-primary and is deliberately NOT pinned into this ramp slot: pinning it left steps 6-9 only 3.5 L* apart with chroma climbing to 0.290. */
+  --blue-10: #2253d4; /** solid fill hover — L* 49.52, C 0.205. White label 6.45:1. */
+  --blue-11: #1740ad; /** secondary text — L* 42.04, C 0.180. 8.60:1 on step 1. */
+  --blue-12: #031654; /** primary text — L* 23.91, C 0.115. 16.38:1 on step 1. */
+  --blue-contrast: #ffffff; /** Label ink for the solid fill tier. Absolute value, identical in both modes: a deep fill always takes white, never the scale's own step 12, which is light in dark mode. 4.99:1 on step 9, 6.45:1 on step 10. */
+  --cyan-1: #f9fdfb; /** app tint — L* 99.05, C 0.005, hue 172. */
+  --cyan-2: #effbf7; /** subtle background — L* 97.81, C 0.014. */
+  --cyan-3: #daf9ee; /** component background default — L* 95.68, C 0.035. */
+  --cyan-4: #c3f6e4; /** component background hover — L* 93.29, C 0.058. */
+  --cyan-5: #a3f2d8; /** component background active — L* 90.27, C 0.086. Anchor for the derived border tier. */
+  --cyan-6: #8eefd1; /** subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step10 (bright scale: |L9-L5| = 4.9 L* < 6.0, so the tier continues toward step 10) at t=0.25. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 88.38, C 0.102. */
+  --cyan-7: #77ecc9; /** default border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step10 (bright scale: |L9-L5| = 4.9 L* < 6.0, so the tier continues toward step 10) at t=0.50. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 86.50, C 0.119. */
+  --cyan-8: #5be8c2; /** hovered border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step10 (bright scale: |L9-L5| = 4.9 L* < 6.0, so the tier continues toward step 10) at t=0.75. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 84.42, C 0.134. */
+  --cyan-9: #0bf1c3; /** solid fill — bright scale, so the fill is LIGHT and takes dark ink: L* 85.41, C 0.164, hue 172.1. Ink 10.35:1 against --cyan-contrast. Step 9 legitimately sits above step 8 on a bright scale, exactly as Radix mint does (8 at L* 72.2, 9 at L* 87.0). */
+  --cyan-10: #33e5bb; /** solid fill hover — L* 82.61, C 0.150. 2.80 L* below step 9, matching Radix mint's own 2.95 L* step9-to-step10 drop, so hovering the bright fill deepens it slightly instead of collapsing past its own border tier. The previous value was 10.87 L* below step 9 and landed DARKER than step 8. Ink 9.40:1. */
+  --cyan-11: #027a61; /** secondary text — L* 51.64, C 0.100. 5.17:1 on step 1. */
+  --cyan-12: #004133; /** primary text — L* 33.45, C 0.065. 11.35:1 on step 1. */
+  --cyan-contrast: #0d2b25; /** Label ink for the bright fill tier. Absolute near-black, identical in both modes, carrying a trace of the scale hue. A bright fill needs an explicit dark ink; comparing white against the scale's own step 12 picks white in dark mode, where step 12 is light, and measures 1.52:1. 10.35:1 on step 9, 9.40:1 on step 10. */
+  --background: 0 0% 100%; /** HSL channel triple — consume via hsl(var(--background)) */
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --primary: 222.8 85% 55.7%; /** Product action blue. Derived, not borrowed: hue 264 is the VI hue, L* and C were chosen inside the band the industry actually ships (measured OKLCH C 0.167-0.235, L* 54-67 across Vercel, Stripe, Linear, GitHub, Tailwind, Radix, Figma, Notion). #2e65ee = L*55.5 C0.215, white label 4.99:1. The previous 228 85% 56% (#2f56ee, C0.232) also passed at 5.70:1 — this trims it to the middle of the band rather than its top edge. The VI lock --blue-9 (#0033FE, C0.290) is 23% above anything in that band and must never surface on a component. */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 25% 45%;
+  --accent: 228 100% 97%;
+  --accent-foreground: 228 85% 56%; /** Softer brand blue — desaturated to match --primary, avoids 100% saturation glare on focus/accent */
+  --destructive: 0 84% 45%;
+  --destructive-foreground: 0 0% 100%;
+  --destructive-strong: 0 84% 45%; /** Red as FOREGROUND. In light mode --destructive already passes (5.42:1 on white), so this equals it; the token exists so consumers reference one name across themes. In DARK, --destructive is 0 63% 38% = 2.15:1 on --card, unreadable as text — see dark.json. Mirrors --warning-strong. */
+  --success: 142 71% 29%;
+  --success-foreground: 0 0% 100%;
+  --success-strong: 142 71% 27%; /** Green as FOREGROUND. --success (142 71% 29%) is 5.15:1 on white but only 4.49:1 as ink on its own 10% tint — one hundredth under AA, which is where badge green-subtle sat. Darkened two points: 5.71:1 on white, 4.99:1 on the tint, alongside --warning-strong (5.40) and --destructive-strong (5.42) so the three status foregrounds read with the same weight. Completes the trio; use --success for fills with --success-foreground on top. */
+  --warning: 38 92% 50%;
+  --warning-foreground: 222 47% 11%;
+  --warning-strong: 38 92% 30%; /** Amber as FOREGROUND on a light surface. --warning is a fill: at 38 92% 50% it is 2.04:1 against --neutral-2, so it is unreadable as text or as an icon stroke. This darkened step is 5.17:1, which sits between --success (4.92) and --destructive (5.19) so the three status colours read with the same weight. Use --warning for fills with --warning-foreground on top; use this for amber text and icons. Destructive and success need no equivalent — they already pass AA as foreground. */
+  --info: 228 85% 56%;
+  --info-foreground: 0 0% 100%;
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+  --ring: 222 47% 11%; /** Focus ring — neutral foreground (Vercel/Linear/Cursor 2026 pattern). Brand blue is reserved for selected/active states; focus indication is chrome and stays neutral. Consumed by global :focus-visible outline as hsl(var(--ring) / 0.5). */
+  --sidebar: 210 40% 98%;
+  --sidebar-foreground: 215 25% 27%;
+  --sidebar-primary: 228 85% 56%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 228 100% 97%;
+  --sidebar-accent-foreground: 228 85% 56%;
+  --sidebar-border: 214 32% 91%;
+  --sidebar-ring: 228 85% 56%;
+  --chart-1: 228 100% 50%;
+  --chart-2: 168 91% 49%;
+  --chart-3: 263 70% 66%;
+  --chart-4: 168 91% 70%;
+  --chart-5: 228 100% 35%;
+  --ds-blue-200: oklch(96.29% 0.0195 250.59);
+  --ds-blue-700: oklch(57.61% 0.2508 258.23);
+  --ds-blue-900: oklch(53.18% 0.2399 256.9900584162342);
+  --ds-red-200: oklch(95.41% 0.0299 14.252646656611997);
+  --ds-red-700: oklch(62.56% 0.2524 23.03);
+  --ds-red-900: oklch(54.99% 0.232 25.29);
+  --ds-amber-200: oklch(96.81% 0.0495 90.24227879900472);
+  --ds-amber-700: oklch(81.87% 0.1969 76.46);
+  --ds-amber-900: oklch(52.79% 0.1496 54.65);
+  --ds-green-200: oklch(96.92% 0.037 147.15);
+  --ds-green-700: oklch(64.58% 0.1746 147.27);
+  --ds-green-900: oklch(51.75% 0.1453 147.65);
+  --ds-teal-300: oklch(94.92% 0.0478 182.07);
+  --ds-teal-700: oklch(64.92% 0.1572 181.95);
+  --ds-teal-900: oklch(52.08% 0.1251 182.93);
+  --ds-purple-200: oklch(96.73% 0.0228 309.8);
+  --ds-purple-700: oklch(55.5% 0.3008 306.12);
+  --ds-purple-900: oklch(47.18% 0.2579 304);
+  --ds-pink-300: oklch(93.83% 0.0451 356.29);
+  --ds-pink-700: oklch(63.52% 0.238 1.01);
+  --ds-pink-900: oklch(53.5% 0.2058 2.84);
+  --ds-gray-100: hsla(0, 0%, 95%, 1);
+  --ds-gray-200: hsla(0, 0%, 92%, 1);
+  --ds-gray-500: hsla(0, 0%, 79%, 1);
+  --ds-gray-600: hsla(0, 0%, 66%, 1);
+  --ds-gray-700: hsla(0, 0%, 56%, 1);
+  --ds-gray-1000: hsla(0, 0%, 9%, 1);
+  --ds-background-100: hsla(0, 0%, 100%, 1);
+  --ds-trial-start: rgb(0, 112, 243);
+  --ds-trial-end: rgb(248, 28, 229);
+  --ds-turbo-start: #ff1e56;
+  --ds-turbo-end: #0096ff;
+  --elevation-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --elevation-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --elevation-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --elevation-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --elevation-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --elevation-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --elevation-brand: 0 0 0 1px rgb(0 51 254 / 0.15), 0 4px 20px -2px rgb(0 51 254 / 0.2);
+  --elevation-brand-lg: 0 0 0 1px rgb(0 51 254 / 0.2), 0 8px 40px -4px rgb(0 51 254 / 0.3);
+  --elevation-ambient-sm:
+    0 1px 2px -1px hsl(222 47% 11% / 0.06), 0 6px 16px -6px hsl(222 47% 11% / 0.12); /** Ambient elevation, small. Contact layer plus a wide soft pool — the marketing-surface counterpart to the tight xs..2xl product ramp. */
+  --elevation-ambient-md:
+    0 2px 4px -2px hsl(222 47% 11% / 0.06), 0 12px 32px -10px hsl(222 47% 11% / 0.14); /** Ambient elevation, medium. Default resting depth for a floating marketing card. */
+  --elevation-ambient-lg:
+    0 4px 8px -4px hsl(222 47% 11% / 0.06), 0 24px 56px -18px hsl(222 47% 11% / 0.16); /** Ambient elevation, large. One step up from md; use for hover of a md surface, not as a resting default. */
+  --elevation-glass-sm:
+    inset 0 1px 0 rgb(255 255 255 / 0.5), 0 1px 2px -1px hsl(222 47% 11% / 0.06),
+    0 6px 16px -6px hsl(222 47% 11% / 0.12); /** Ambient-sm plus a lit top edge, for translucent panels over a blurred backdrop. */
+  --elevation-glass-md:
+    inset 0 1px 0 rgb(255 255 255 / 0.5), 0 2px 4px -2px hsl(222 47% 11% / 0.06),
+    0 12px 32px -10px hsl(222 47% 11% / 0.14); /** Ambient-md plus a lit top edge. */
+  --elevation-glass-lg:
+    inset 0 1px 0 rgb(255 255 255 / 0.5), 0 4px 8px -4px hsl(222 47% 11% / 0.06),
+    0 24px 56px -18px hsl(222 47% 11% / 0.16); /** Ambient-lg plus a lit top edge. */
+  --elevation-sheen: inset 0 1px 0 rgb(255 255 255 / 0.2); /** Top-edge sheen for solid inverted fills (bg-foreground). Lifts with light on a dark fill, with shade on a light one. */
+  --elevation-ambient-glow: 0 0 80px hsl(222 47% 11% / 0.1); /** Centred offsetless halo — the only non-directional step on the ramp. For a translucent panel that needs separation from its backdrop without reading as lifted off a surface. In dark mode this inverts to a low-alpha light halo, because a black halo cannot read against a dark surround. */
+  --elevation-glow-accent:
+    0 8px 32px rgb(0 0 0 / 0.4), 0 0 60px color-mix(in srgb, var(--brand-accent) 8%, transparent); /** Directional pool plus a wide brand-accent halo, for fixed dark-glass surfaces. The pool is theme-invariant black on purpose: the surfaces that carry an accent halo present the same dark glass in both themes, so a theme-flipping pool would lighten in light mode exactly where the panel needs the most separation. Accent sourced from --brand-accent, so it follows the light and dark accent values. */
+  --elevation-glow-accent-lg:
+    0 12px 48px rgb(0 0 0 / 0.5), 0 0 80px color-mix(in srgb, var(--brand-accent) 12%, transparent); /** Hover escalation of glow-accent. Deeper pool, wider and stronger accent halo. */
+  --elevation-glow-accent-sm: 0 0 20px color-mix(in srgb, var(--brand-accent) 10%, transparent); /** Accent halo alone, no pool. For a small accent-tinted chip or icon plate inside a glow-accent surface. */
+  --elevation-glow-primary:
+    0 20px 25px -5px hsl(var(--primary) / 0.05), 0 8px 10px -6px hsl(var(--primary) / 0.05); /** xl geometry tinted with the action fill at 5 percent. For the emphasised card in a set (a highlighted plan) where the lift should read as coloured rather than neutral. */
+}
+
+:root {
+  /* Wide-gamut bridge: default to sRGB, upgrade to Display-P3 when available. */
+  --nebutra-brand-blue: var(--nebutra-blue-500);
+  --nebutra-brand-cyan: var(--nebutra-cyan-500);
+}
+
+:root {
+  /* Gradient aliases — both --brand-gradient-* (canonical, CLAUDE.md) and --gradient-brand-* (legacy) are emitted. */
+  --gradient-brand: var(--brand-gradient);
+  --gradient-brand-hover: var(--brand-gradient-reverse);
+  --gradient-brand-vertical: var(--brand-gradient-vertical);
+  --gradient-brand-reverse: var(--brand-gradient-reverse);
+  --gradient-brand-radial: var(--brand-gradient-radial);
+  --gradient-brand-glow: var(--brand-gradient-radial);
+  --gradient-brand-logo: var(--brand-gradient-logo);
+  --gradient-brand-logo-reverse: var(--brand-gradient-logo-reverse);
+  --gradient-section: var(--brand-gradient-vertical);
+  --gradient-glow: var(--brand-gradient-radial);
+}
+
+:root {
+  /* Composite tokens — combine duration + easing for shorthand use. */
+  --transition: 150ms ease-out;
+  --focus-ring: 0 0 0 2px hsl(var(--ring) / 0.4);
+}
+
+@supports (color: color(display-p3 1 1 1)) {
+  :root {
+    /* Richer brand values on Display-P3 hardware; sRGB fallback above. */
+    --nebutra-blue-500: color(display-p3 0.03 0.19 0.99);
+    --nebutra-cyan-500: color(display-p3 0.07 0.94 0.79);
+    --nebutra-brand-blue: color(display-p3 0.03 0.19 0.99);
+    --nebutra-brand-cyan: color(display-p3 0.07 0.94 0.79);
+  }
+}
+
+@supports (color: oklch(0 0 0)) {
+  :root {
+    /* oklch values for modern engines (2024+); sRGB hsla() fallback above. */
+    --ds-gray-100: oklch(0.953 0 0);
+    --ds-gray-200: oklch(0.929 0 0);
+    --ds-gray-500: oklch(0.81 0 0);
+    --ds-gray-600: oklch(0.69 0 0);
+    --ds-gray-700: oklch(0.598 0 0);
+    --ds-gray-1000: oklch(0.215 0 0);
+    --ds-background-100: oklch(1 0 0);
+  }
+}
+
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+.dark {
+  --nebutra-blue-50: #f0f4ff;
+  --nebutra-blue-100: #dbe4ff;
+  --nebutra-blue-200: #bac8ff;
+  --nebutra-blue-300: #91a7ff;
+  --nebutra-blue-400: #5c7cfa;
+  --nebutra-blue-500: #0033fe; /** Base brand color — 云毓蓝 */
+  --nebutra-blue-600: #002ad4;
+  --nebutra-blue-700: #0021ab;
+  --nebutra-blue-800: #001882;
+  --nebutra-blue-900: #000f59;
+  --nebutra-blue-950: #000830;
+  --nebutra-cyan-50: #e6fff8;
+  --nebutra-cyan-100: #b3ffec;
+  --nebutra-cyan-200: #80ffe0;
+  --nebutra-cyan-300: #4dfcd4;
+  --nebutra-cyan-400: #1af7c8;
+  --nebutra-cyan-500: #0bf1c3; /** Base brand accent — 云毓青 */
+  --nebutra-cyan-600: #09c9a3;
+  --nebutra-cyan-700: #07a183;
+  --nebutra-cyan-800: #057963;
+  --nebutra-cyan-900: #035143;
+  --nebutra-cyan-950: #012923;
+  --nebutra-neutral-50: #f8fafc;
+  --nebutra-neutral-100: #f1f5f9;
+  --nebutra-neutral-200: #e2e8f0;
+  --nebutra-neutral-300: #cbd5e1;
+  --nebutra-neutral-400: #94a3b8;
+  --nebutra-neutral-500: #64748b;
+  --nebutra-neutral-600: #475569;
+  --nebutra-neutral-700: #334155;
+  --nebutra-neutral-800: #1e293b;
+  --nebutra-neutral-900: #0f172a;
+  --nebutra-neutral-950: #020617;
+  --nebutra-gray-50: #fafafa;
+  --nebutra-gray-100: #f5f5f5;
+  --nebutra-gray-200: #e5e5e5;
+  --nebutra-gray-300: #d4d4d4;
+  --nebutra-gray-400: #a3a3a3;
+  --nebutra-gray-500: #737373;
+  --nebutra-gray-600: #525252;
+  --nebutra-gray-700: #404040;
+  --nebutra-gray-800: #262626;
+  --nebutra-gray-900: #171717;
+  --nebutra-gray-950: #0a0a0a;
+  --breakpoint-xs: 26.25rem; /** 420px — narrow-phone grid flip */
+  --breakpoint-tight: 67.5rem; /** 1080px — dense dashboard header horizontal */
+  --breakpoint-shell: 73.75rem; /** 1180px — three-pane shell threshold */
+  --breakpoint-3xl: 112.5rem; /** 1800px — 4K / Studio Display friendliness */
+  --radius-none: 0; /** Job: flush. Edge-to-edge surfaces — a full-bleed table row, a segment welded to its neighbour, an inset that must not round twice. */
+  --radius-xs: 0.125rem; /** Job: swatch. The smallest corner that still reads as intentional at 8-12px: chart legend keys, mark highlights, progress and sparkline bar caps. Added because 18 call sites had hand-written 1px, 2px and 3px corners with no step to reach for. Matches the bottom of the Tailwind scale, so rounded-xs and var(--radius-xs) agree. */
+  --radius-sm: 0.25rem; /** Job: inner. The corner of something nested inside a control — a thumbnail inside a chip, a swatch inside a tile, a code span inside a paragraph. One step inside md. */
+  --radius-md: 0.375rem; /** Job: control. The default for anything you can click or type into at text height: input, select trigger, small button, menu item, badge with square corners. The most-used step on the ladder. */
+  --radius-lg: 0.5rem; /** Job: container. Things that hold controls rather than being one: popover, dropdown surface, tooltip, toolbar, inline code block. Aliased as radius-button. */
+  --radius-xl: 0.75rem; /** Job: card. A discrete surface in a list or grid that carries its own padding and elevation. Aliased as radius-card. */
+  --radius-2xl: 1rem; /** Job: panel. A region that holds cards — bento cell, dialog, sheet, dashboard section. Aliased as radius-panel. */
+  --radius-3xl: 1.5rem; /** Job: frame. The outermost shell of a marketing or docs composition — mockup window, hero frame, screenshot chrome. The top of the ladder. */
+  --radius-full: 9999px; /** Job: pill. Fully round by intent, not by size: avatar, dot, toggle track, tag. Kept as one step, not a pair, so there is exactly one way to say round. */
+  --radius-button: 0.5rem; /** Intent alias for the container step. Reach for this in product code instead of lg so the shape can be re-tuned in one place. */
+  --radius-card: 0.75rem; /** Intent alias for the card step. Reach for this in product code instead of xl. */
+  --radius-panel: 1rem; /** Intent alias for the panel step. Reach for this in product code instead of 2xl. */
+  --duration-micro: 100ms; /** Micro-feedback: hover, focus, toggle, button press */
+  --duration-flow: 200ms; /** State flow: modal open, dropdown reveal, tab switch, default page transition */
+  --duration-reveal: 300ms; /** Content unveil: slide-in, expand, accordion, drawer */
+  --duration-cinematic: 500ms; /** Hero-grade entrance: landing reveal, large delight moments */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --tracking-display: -0.04em; /** Hero H1 */
+  --tracking-heading: -0.03em; /** Section H2/H3 */
+  --tracking-tight: -0.015em; /** Body emphasis */
+  --leading-display: 1.05;
+  --leading-heading: 1.15;
+  --ring-hairline: inset 0 0 0 1px rgb(255 255 255 / 0.06); /** Hairline override — more visible on dark background */
+  --overlay-faint: rgb(
+    255 255 255 / 0.06
+  ); /** Dark-mode faint overlay (6% white) — inverted from light */
+  --font-sans:
+    var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC",
+    "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-cn:
+    var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC",
+    "Microsoft YaHei", sans-serif; /** CJK-locale stack — same order as sans, minus the Latin-only system faces */
+  --font-display:
+    var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), sans-serif;
+  --font-heading:
+    var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), sans-serif;
+  --font-mono:
+    var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  --brand-primary: #5c7cfa; /** Dark-mode brand primary — the identity blue lifted to nebutra-blue-400 so it stays visible on dark surfaces. This is the identity alias, not the functional fill: the dark solid fill is --blue-9 (#396ae2, white label 4.85:1). The two are deliberately separate now that the VI hex is no longer pinned into ramp slot 9. */
+  --brand-accent: #1af7c8; /** Dark-mode brand accent — nebutra-cyan-400 (L* 87.1). The functional bright fill is --cyan-9 (#0bf1c3, L* 85.41), the same hex in both modes; dark ink for it is --cyan-contrast at 10.35:1. */
+  --brand-tertiary: #8b5cf6;
+  --brand-gradient-start: hsl(
+    var(--primary)
+  ); /** Legacy alias of --primary (shadcn product blue). Prefer bg-primary / Button default. */
+  --brand-gradient-end: hsl(
+    var(--primary)
+  ); /** Legacy alias of --primary. Prefer hover:bg-primary/90. */
+  --brand-gradient: hsl(
+    var(--primary)
+  ); /** Legacy --brand-gradient. Same color as --primary — not a second palette. App CTAs should use Button / bg-primary. */
+  --brand-gradient-reverse: hsl(var(--primary)); /** Legacy alias of --primary. */
+  --brand-gradient-vertical: hsl(var(--primary)); /** Legacy alias of --primary. */
+  --brand-gradient-radial: hsl(var(--primary)); /** Legacy alias of --primary. */
+  --brand-gradient-logo: linear-gradient(
+    135deg,
+    #0033fe 0%,
+    #00a2e9 50%,
+    #0bf1c3 100%
+  ); /** Logo/VI gradient (云毓蓝→云毓青). Mid stop #00a2e9 is the OKLab perceptual midpoint (avoids sRGB mid-path soft spots). Brand assets only — not product CTAs. */
+  --brand-gradient-logo-reverse: linear-gradient(
+    135deg,
+    #0bf1c3 0%,
+    #00a2e9 50%,
+    #0033fe 100%
+  ); /** Logo/VI reverse gradient with same OKLab mid stop. */
+  --status-danger: #ef4444;
+  --status-warning: #f59e0b;
+  --status-success: #22c55e;
+  --status-info: #5c7cfa; /** Dark-mode info color — equals dark brand-primary. */
+  --container-text: 896px;
+  --container-content: 1152px;
+  --container-wide: 1400px;
+  --radius: 0.375rem; /** Geist-matching 6px */
+  --motion-duration-micro: 100ms;
+  --motion-duration-flow: 200ms;
+  --motion-duration-reveal: 300ms;
+  --motion-duration-cinematic: 500ms;
+  --focus-ring: 0 0 0 2px hsl(var(--ring) / 0.4); /** Single-layer translucent focus ring (2026 pattern). Legacy box-shadow consumers stay compatible; modern surfaces should prefer the global :focus-visible outline rule in static/base.css. */
+  --neutral-1: #020617;
+  --neutral-2: #0f172a;
+  --neutral-3: #1e293b;
+  --neutral-4: #334155;
+  --neutral-5: #475569;
+  --neutral-6: #666666; /** subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25, chroma forced to 0. The achromatic result is deliberate and preserves the documented intent of color.nebutra-gray ('used where blue undertone clashes — primarily dark-mode borders, dividers, elevation hairlines'). What was broken was the LIGHTNESS: gray-900/800/700 are darker than the slate background tier they sit above, so the border read as a hole rather than a hairline. */
+  --neutral-7: #7a7a7a; /** default border — DERIVED: OKLab lerp step5 → step9 at t=0.50, chroma 0. */
+  --neutral-8: #8d8d8d; /** hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75, chroma 0. */
+  --neutral-9: #94a3b8;
+  --neutral-10: #cbd5e1;
+  --neutral-11: #e2e8f0;
+  --neutral-12: #f8fafc;
+  --blue-1: #030815; /** app tint — L* 13.59, C 0.031, hue 264. */
+  --blue-2: #060f25; /** subtle background — L* 17.43, C 0.048. */
+  --blue-3: #09183b; /** component background default — L* 22.04, C 0.071. */
+  --blue-4: #0d2254; /** component background hover — L* 26.99, C 0.095. */
+  --blue-5: #132e6f; /** component background active — L* 32.46, C 0.118. Anchor for the derived border tier. */
+  --blue-6: #1c3c8a; /** subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 23.5 L*) at t=0.25. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 38.25, C 0.136. */
+  --blue-7: #254ba7; /** default border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 23.5 L*) at t=0.50. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 44.21, C 0.155. */
+  --blue-8: #2f5ac4; /** hovered border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 23.5 L*) at t=0.75. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 50.01, C 0.173. */
+  --blue-9: #396ae2; /** solid fill — L* 55.92, C 0.191, hue 264.3. White label 4.85:1. Same value as the dark shadcn --primary, so light and dark both take their deep fill from one source. Chroma ceiling for dark is 0.190; this is 0.191. */
+  --blue-10: #3f70e3; /** solid fill hover — L* 57.44, C 0.183. White label 4.53:1. The hover has to move UP in a dark ramp, which costs contrast, so the step is deliberately small (1.52 L*) to keep white above 4.5:1. */
+  --blue-11: #89aaee; /** secondary text — L* 74.01, C 0.106. 8.62:1 on step 1. */
+  --blue-12: #d2e0fd; /** primary text — L* 90.52, C 0.043. 15.08:1 on step 1. */
+  --blue-contrast: #ffffff; /** Label ink for the solid fill tier. Absolute value, identical in both modes. 4.85:1 on step 9, 4.53:1 on step 10. */
+  --cyan-1: #04100c; /** app tint — L* 15.90, C 0.021, hue 172. */
+  --cyan-2: #091e18; /** subtle background — L* 21.54, C 0.030. */
+  --cyan-3: #0f2e25; /** component background default — L* 27.46, C 0.041. */
+  --cyan-4: #1c4035; /** component background hover — L* 34.10, C 0.046. */
+  --cyan-5: #2b5347; /** component background active — L* 40.88, C 0.050. Anchor for the derived border tier. */
+  --cyan-6: #307864; /** subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (span 44.5 L*) at t=0.25. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 52.12, C 0.079. */
+  --cyan-7: #309e82; /** default border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (span 44.5 L*) at t=0.50. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 63.04, C 0.107. */
+  --cyan-8: #28c7a2; /** hovered border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (span 44.5 L*) at t=0.75. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 74.30, C 0.136. */
+  --cyan-9: #0bf1c3; /** solid fill — same bright value as light mode, the way Radix ships one hex for mint-9 in both modes: L* 85.41, C 0.164. Ink 10.35:1 against --cyan-contrast. */
+  --cyan-10: #5af8ce; /** solid fill hover — L* 88.53, C 0.145, 3.12 L* above step 9 (Radix mint dark moves up 4.60 L*). Ink 11.34:1. */
+  --cyan-11: #90fbdb; /** secondary text — L* 91.46, C 0.110. 15.68:1 on step 1. */
+  --cyan-12: #bdfde8; /** primary text — L* 94.54, C 0.070. 16.95:1 on step 1. */
+  --cyan-contrast: #0d2b25; /** Label ink for the bright fill tier. Absolute near-black, identical in both modes. 10.35:1 on step 9, 11.34:1 on step 10. */
+  --background: 222 14% 9%;
+  --foreground: 210 18% 96%;
+  --card: 222 12% 13%;
+  --card-foreground: 210 18% 96%;
+  --popover: 222 12% 13%;
+  --popover-foreground: 210 18% 96%;
+  --primary: 222.6 74.4% 55.5%; /** Dark-mode action blue, paired with the near-black --primary-foreground, not white. #396ae2 keeps the VI hue and sits at L*55.9 C0.191. */
+  --primary-foreground: 0 0% 100%; /** White, matching light mode and matching --blue-contrast. It was near-black (222 14% 9%) when --primary was a LIGHT fill at L* 68.3, where dark ink read 6.20:1. Once --primary became a deep fill at L* 55.9 the pairing inverted and measured 3.74:1, below AA — the fill moved and the ink did not. The deep-fill tier takes white in both modes; --blue-contrast says the same thing, and they must agree because --primary and --blue-9 are now the same value. */
+  --secondary: 222 10% 18%;
+  --secondary-foreground: 210 18% 96%;
+  --muted: 222 10% 17%;
+  --muted-foreground: 220 8% 65%;
+  --accent: 228 38% 22%;
+  --accent-foreground: 228 95% 80%;
+  --destructive: 0 63% 38%;
+  --destructive-foreground: 210 18% 96%;
+  --destructive-strong: 0 80% 66%; /** Red as FOREGROUND on a dark surface. --destructive (0 63% 38%) is 2.15:1 on --card here — a fill only. Lightened to 5.18:1 on --card / 5.61:1 on --neutral-1, which sits alongside the light-mode 5.42:1 so red reads with the same weight in both themes. Use --destructive for fills with --destructive-foreground on top; use this for red text and icons. */
+  --success: 142 60% 42%;
+  --success-foreground: 222 14% 9%;
+  --success-strong: 142 60% 42%; /** Green as foreground on a dark surface. Needs no adjustment — 142 60% 42% is already 4.83:1 as ink on its own 10% tint — so it deliberately equals --success, matching how --warning-strong behaves in this theme. */
+  --warning: 38 80% 52%;
+  --warning-foreground: 222 14% 9%;
+  --warning-strong: 38 80% 52%; /** Amber as foreground on a dark surface. Unlike light mode this needs no adjustment — 38 80% 52% is already 7.98:1 against --neutral-1 — so it deliberately equals --warning. The token exists in both themes so consumers can reference one name. */
+  --info: 228 95% 72%;
+  --info-foreground: 222 14% 9%;
+  --border: 220 8% 22%;
+  --input: 220 8% 22%;
+  --ring: 0 0% 88%; /** Focus ring (dark mode) — neutral light gray. Mirrors light-mode neutral foreground choice. */
+  --sidebar: 222 16% 8%;
+  --sidebar-foreground: 210 18% 94%;
+  --sidebar-primary: 228 95% 72%;
+  --sidebar-primary-foreground: 222 14% 9%;
+  --sidebar-accent: 228 38% 22%;
+  --sidebar-accent-foreground: 228 95% 80%;
+  --sidebar-border: 220 8% 18%;
+  --sidebar-ring: 228 95% 72%;
+  --chart-1: 228 95% 67%;
+  --chart-2: 168 96% 54%;
+  --chart-3: 228 100% 82%;
+  --chart-4: 168 100% 75%;
+  --chart-5: 228 100% 50%;
+  --ds-blue-200: oklch(25.45% 0.0811 255.8);
+  --ds-blue-700: oklch(57.61% 0.2321 258.23);
+  --ds-blue-900: oklch(71.7% 0.1648 250.79360374054167);
+  --ds-red-200: oklch(25.93% 0.0834 19.02);
+  --ds-red-700: oklch(62.56% 0.2234 23.03);
+  --ds-red-900: oklch(69.96% 0.2136 22.03);
+  --ds-amber-200: oklch(24.95% 0.0642 64.78);
+  --ds-amber-700: oklch(81.87% 0.1969 76.46);
+  --ds-amber-900: oklch(77.21% 0.1991 64.28);
+  --ds-green-200: oklch(27.12% 0.0895 150.09);
+  --ds-green-700: oklch(64.58% 0.199 147.27);
+  --ds-green-900: oklch(73.1% 0.2158 148.29);
+  --ds-teal-300: oklch(31.5% 0.0767 180.99);
+  --ds-teal-700: oklch(64.92% 0.1403 181.95);
+  --ds-teal-900: oklch(74.56% 0.1765 182.8);
+  --ds-purple-200: oklch(25.91% 0.0921 314.41);
+  --ds-purple-700: oklch(55.5% 0.2186 306.12);
+  --ds-purple-900: oklch(69.87% 0.2037 309.51);
+  --ds-pink-300: oklch(31.15% 0.1067 355.93);
+  --ds-pink-700: oklch(63.52% 0.2346 1.01);
+  --ds-pink-900: oklch(69.36% 0.2223 3.91);
+  --ds-gray-100: hsla(0, 0%, 10%, 1);
+  --ds-gray-200: hsla(0, 0%, 12%, 1);
+  --ds-gray-500: hsla(0, 0%, 27%, 1);
+  --ds-gray-600: hsla(0, 0%, 53%, 1);
+  --ds-gray-700: hsla(0, 0%, 56%, 1);
+  --ds-gray-1000: hsla(0, 0%, 93%, 1);
+  --ds-background-100: hsla(0, 0%, 4%, 1);
+  --ds-trial-start: rgb(0, 112, 243);
+  --ds-trial-end: rgb(248, 28, 229);
+  --ds-turbo-start: #ff1e56;
+  --ds-turbo-end: #0096ff;
+  --elevation-xs: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --elevation-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --elevation-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  --elevation-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
+  --elevation-xl: 0 20px 25px -5px rgb(0 0 0 / 0.6), 0 8px 10px -6px rgb(0 0 0 / 0.6);
+  --elevation-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.8);
+  --elevation-brand: 0 0 0 1px rgb(92 124 250 / 0.25), 0 4px 20px -2px rgb(92 124 250 / 0.3);
+  --elevation-brand-lg: 0 0 0 1px rgb(92 124 250 / 0.3), 0 8px 40px -4px rgb(92 124 250 / 0.4);
+  --elevation-ambient-sm:
+    0 1px 2px -1px rgb(0 0 0 / 0.4), 0 6px 16px -6px rgb(0 0 0 / 0.5); /** Ambient elevation, small. Contact layer plus a wide soft pool — the marketing-surface counterpart to the tight xs..2xl product ramp. */
+  --elevation-ambient-md:
+    0 2px 4px -2px rgb(0 0 0 / 0.4), 0 12px 32px -10px rgb(0 0 0 / 0.55); /** Ambient elevation, medium. Default resting depth for a floating marketing card. */
+  --elevation-ambient-lg:
+    0 4px 8px -4px rgb(0 0 0 / 0.4), 0 24px 56px -18px rgb(0 0 0 / 0.6); /** Ambient elevation, large. One step up from md; use for hover of a md surface, not as a resting default. */
+  --elevation-glass-sm:
+    inset 0 1px 0 rgb(255 255 255 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.4),
+    0 6px 16px -6px rgb(0 0 0 / 0.5); /** Ambient-sm plus a lit top edge, for translucent panels over a blurred backdrop. */
+  --elevation-glass-md:
+    inset 0 1px 0 rgb(255 255 255 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.4),
+    0 12px 32px -10px rgb(0 0 0 / 0.55); /** Ambient-md plus a lit top edge. */
+  --elevation-glass-lg:
+    inset 0 1px 0 rgb(255 255 255 / 0.08), 0 4px 8px -4px rgb(0 0 0 / 0.4),
+    0 24px 56px -18px rgb(0 0 0 / 0.6); /** Ambient-lg plus a lit top edge. */
+  --elevation-sheen: inset 0 1px 0 rgb(0 0 0 / 0.12); /** Top-edge sheen for solid inverted fills (bg-foreground). Lifts with light on a dark fill, with shade on a light one. */
+  --elevation-ambient-glow: 0 0 80px rgb(255 255 255 / 0.06); /** Centred offsetless halo — the only non-directional step on the ramp. Inverted from the light value: a black halo has nothing to darken against a dark surround, so the halo becomes light. Keep the alpha low; this is separation, not a bloom. */
+  --elevation-glow-accent:
+    0 8px 32px rgb(0 0 0 / 0.4), 0 0 60px color-mix(in srgb, var(--brand-accent) 8%, transparent); /** Identical to the light value by design. The pool is theme-invariant black because glow-accent surfaces are fixed dark glass in both themes; only the accent halo shifts, via --brand-accent. */
+  --elevation-glow-accent-lg:
+    0 12px 48px rgb(0 0 0 / 0.5), 0 0 80px color-mix(in srgb, var(--brand-accent) 12%, transparent); /** Hover escalation of glow-accent. Identical to the light value by design. */
+  --elevation-glow-accent-sm: 0 0 20px color-mix(in srgb, var(--brand-accent) 10%, transparent); /** Accent halo alone, no pool. Identical to the light value by design. */
+  --elevation-glow-primary:
+    0 20px 25px -5px hsl(var(--primary) / 0.05), 0 8px 10px -6px hsl(var(--primary) / 0.05); /** xl geometry tinted with the action fill at 5 percent. Same reference as light; --primary carries the dark channels. */
+}
+
+.dark {
+  /* Gradient aliases — both --brand-gradient-* (canonical, CLAUDE.md) and --gradient-brand-* (legacy) are emitted. */
+  --gradient-brand: var(--brand-gradient);
+  --gradient-brand-hover: var(--brand-gradient-reverse);
+  --gradient-brand-vertical: var(--brand-gradient-vertical);
+  --gradient-brand-reverse: var(--brand-gradient-reverse);
+  --gradient-brand-radial: var(--brand-gradient-radial);
+  --gradient-brand-glow: var(--brand-gradient-radial);
+  --gradient-brand-logo: var(--brand-gradient-logo);
+  --gradient-brand-logo-reverse: var(--brand-gradient-logo-reverse);
+  --gradient-section: var(--brand-gradient-vertical);
+  --gradient-glow: var(--brand-gradient-radial);
+}
+
+@supports (color: oklch(0 0 0)) {
+  .dark {
+    /* oklch values for modern engines (2024+); sRGB hsla() fallback above. */
+    --ds-gray-100: oklch(0.232 0 0);
+    --ds-gray-200: oklch(0.259 0 0);
+    --ds-gray-500: oklch(0.409 0 0);
+    --ds-gray-600: oklch(0.59 0 0);
+    --ds-gray-700: oklch(0.598 0 0);
+    --ds-gray-1000: oklch(0.94 0 0);
+    --ds-background-100: oklch(0.143 0 0);
+  }
+}
+
+/* ============================================
+   Tailwind CSS 4 Theme Configuration (auto-generated)
+   ============================================ */
+@theme inline {
+  /* Nebutra Brand Color Palette */
+  --color-nebutra-blue-50: var(--nebutra-blue-50);
+  --color-nebutra-blue-100: var(--nebutra-blue-100);
+  --color-nebutra-blue-200: var(--nebutra-blue-200);
+  --color-nebutra-blue-300: var(--nebutra-blue-300);
+  --color-nebutra-blue-400: var(--nebutra-blue-400);
+  --color-nebutra-blue-500: var(--nebutra-blue-500);
+  --color-nebutra-blue-600: var(--nebutra-blue-600);
+  --color-nebutra-blue-700: var(--nebutra-blue-700);
+  --color-nebutra-blue-800: var(--nebutra-blue-800);
+  --color-nebutra-blue-900: var(--nebutra-blue-900);
+  --color-nebutra-blue-950: var(--nebutra-blue-950);
+
+  --color-nebutra-cyan-50: var(--nebutra-cyan-50);
+  --color-nebutra-cyan-100: var(--nebutra-cyan-100);
+  --color-nebutra-cyan-200: var(--nebutra-cyan-200);
+  --color-nebutra-cyan-300: var(--nebutra-cyan-300);
+  --color-nebutra-cyan-400: var(--nebutra-cyan-400);
+  --color-nebutra-cyan-500: var(--nebutra-cyan-500);
+  --color-nebutra-cyan-600: var(--nebutra-cyan-600);
+  --color-nebutra-cyan-700: var(--nebutra-cyan-700);
+  --color-nebutra-cyan-800: var(--nebutra-cyan-800);
+  --color-nebutra-cyan-900: var(--nebutra-cyan-900);
+  --color-nebutra-cyan-950: var(--nebutra-cyan-950);
+
+  --color-nebutra-neutral-50: var(--nebutra-neutral-50);
+  --color-nebutra-neutral-100: var(--nebutra-neutral-100);
+  --color-nebutra-neutral-200: var(--nebutra-neutral-200);
+  --color-nebutra-neutral-300: var(--nebutra-neutral-300);
+  --color-nebutra-neutral-400: var(--nebutra-neutral-400);
+  --color-nebutra-neutral-500: var(--nebutra-neutral-500);
+  --color-nebutra-neutral-600: var(--nebutra-neutral-600);
+  --color-nebutra-neutral-700: var(--nebutra-neutral-700);
+  --color-nebutra-neutral-800: var(--nebutra-neutral-800);
+  --color-nebutra-neutral-900: var(--nebutra-neutral-900);
+  --color-nebutra-neutral-950: var(--nebutra-neutral-950);
+
+  /* Semantic Theme Colors */
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-success: hsl(var(--success));
+  --color-success-foreground: hsl(var(--success-foreground));
+  --color-warning: hsl(var(--warning));
+  --color-warning-foreground: hsl(var(--warning-foreground));
+  --color-info: hsl(var(--info));
+  --color-info-foreground: hsl(var(--info-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  /* Sidebar */
+  --color-sidebar: hsl(var(--sidebar));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+
+  /* Brand aliases */
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-tertiary: var(--brand-tertiary);
+
+  /* Chart colors */
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  /* 12-Step Functional Scales */
+  --color-neutral-1: var(--neutral-1);
+  --color-neutral-2: var(--neutral-2);
+  --color-neutral-3: var(--neutral-3);
+  --color-neutral-4: var(--neutral-4);
+  --color-neutral-5: var(--neutral-5);
+  --color-neutral-6: var(--neutral-6);
+  --color-neutral-7: var(--neutral-7);
+  --color-neutral-8: var(--neutral-8);
+  --color-neutral-9: var(--neutral-9);
+  --color-neutral-10: var(--neutral-10);
+  --color-neutral-11: var(--neutral-11);
+  --color-neutral-12: var(--neutral-12);
+
+  --color-blue-1: var(--blue-1);
+  --color-blue-2: var(--blue-2);
+  --color-blue-3: var(--blue-3);
+  --color-blue-4: var(--blue-4);
+  --color-blue-5: var(--blue-5);
+  --color-blue-6: var(--blue-6);
+  --color-blue-7: var(--blue-7);
+  --color-blue-8: var(--blue-8);
+  --color-blue-9: var(--blue-9);
+  --color-blue-10: var(--blue-10);
+  --color-blue-11: var(--blue-11);
+  --color-blue-12: var(--blue-12);
+
+  --color-cyan-1: var(--cyan-1);
+  --color-cyan-2: var(--cyan-2);
+  --color-cyan-3: var(--cyan-3);
+  --color-cyan-4: var(--cyan-4);
+  --color-cyan-5: var(--cyan-5);
+  --color-cyan-6: var(--cyan-6);
+  --color-cyan-7: var(--cyan-7);
+  --color-cyan-8: var(--cyan-8);
+  --color-cyan-9: var(--cyan-9);
+  --color-cyan-10: var(--cyan-10);
+  --color-cyan-11: var(--cyan-11);
+  --color-cyan-12: var(--cyan-12);
+
+  /* Geist DS color scale */
+  --color-blue-700: var(--ds-blue-700);
+  --color-blue-900: var(--ds-blue-900);
+  --color-red-200: var(--ds-red-200);
+  --color-red-700: var(--ds-red-700);
+  --color-red-900: var(--ds-red-900);
+  --color-amber-200: var(--ds-amber-200);
+  --color-amber-700: var(--ds-amber-700);
+  --color-amber-900: var(--ds-amber-900);
+  --color-green-200: var(--ds-green-200);
+  --color-green-700: var(--ds-green-700);
+  --color-green-900: var(--ds-green-900);
+  --color-teal-300: var(--ds-teal-300);
+  --color-teal-700: var(--ds-teal-700);
+  --color-teal-900: var(--ds-teal-900);
+  --color-purple-200: var(--ds-purple-200);
+  --color-purple-700: var(--ds-purple-700);
+  --color-purple-900: var(--ds-purple-900);
+  --color-pink-300: var(--ds-pink-300);
+  --color-pink-700: var(--ds-pink-700);
+  --color-pink-900: var(--ds-pink-900);
+  --color-gray-100: var(--ds-gray-100);
+  --color-gray-200: var(--ds-gray-200);
+  --color-gray-700: var(--ds-gray-700);
+  --color-gray-1000: var(--ds-gray-1000);
+  --color-trial-start: var(--ds-trial-start);
+  --color-trial-end: var(--ds-trial-end);
+  --color-turbo-start: var(--ds-turbo-start);
+  --color-turbo-end: var(--ds-turbo-end);
+  --color-geist-gray-100: var(--ds-gray-100);
+  --color-geist-gray-200: var(--ds-gray-200);
+  --color-geist-gray-500: var(--ds-gray-500);
+  --color-geist-gray-600: var(--ds-gray-600);
+  --color-geist-gray-700: var(--ds-gray-700);
+  --color-geist-gray-1000: var(--ds-gray-1000);
+  --color-geist-background-100: var(--ds-background-100);
+
+  /* Border Radius */
+  --radius-none: 0;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-xs: var(--elevation-xs);
+  --shadow-sm: var(--elevation-sm);
+  --shadow-md: var(--elevation-md);
+  --shadow-lg: var(--elevation-lg);
+  --shadow-xl: var(--elevation-xl);
+  --shadow-2xl: var(--elevation-2xl);
+  --shadow-brand: var(--elevation-brand);
+  --shadow-brand-lg: var(--elevation-brand-lg);
+
+  /* shadow-ambient-md / shadow-glass-lg / shadow-sheen — so marketing surfaces
+     reach for a step on the ramp instead of spelling out a blur and a spread.
+     Aliased to var() rather than inlined so the dark theme's values apply. */
+  --shadow-ambient-sm: var(--elevation-ambient-sm);
+  --shadow-ambient-md: var(--elevation-ambient-md);
+  --shadow-ambient-lg: var(--elevation-ambient-lg);
+  --shadow-glass-sm: var(--elevation-glass-sm);
+  --shadow-glass-md: var(--elevation-glass-md);
+  --shadow-glass-lg: var(--elevation-glass-lg);
+  --shadow-sheen: var(--elevation-sheen);
+
+  /* Coloured and centred elevation. shadow-ambient-glow is the one
+     non-directional step; shadow-glow-accent|-lg|-sm carry a brand-accent halo
+     so a glass card never hand-types the accent as raw rgba; shadow-glow-primary
+     tints the xl geometry with the action fill. */
+  --shadow-ambient-glow: var(--elevation-ambient-glow);
+  --shadow-glow-accent: var(--elevation-glow-accent);
+  --shadow-glow-accent-lg: var(--elevation-glow-accent-lg);
+  --shadow-glow-accent-sm: var(--elevation-glow-accent-sm);
+  --shadow-glow-primary: var(--elevation-glow-primary);
+
+  /* Motion — Easing curves.
+     Indirect, like the shadows above: an @theme entry holding a literal is
+     inlined into the utility, so the ease-out class compiled to a fixed
+     cubic-bezier and no Brand Package could move it. Pointing at the runtime
+     rail in static/base.css makes it follow the language the page is under.
+     (No backticks in this block — it is inside a JS template literal.) */
+  --ease-in: var(--motion-ease-in);
+  --ease-out: var(--motion-ease-out);
+  --ease-brand: var(--motion-ease-brand);
+  --ease-in-out: var(--motion-ease-in-out);
+  --ease-spring: var(--motion-ease-spring);
+
+  /* Motion — Durations (four-rail; see core.json:duration). Names denote intent, not relative speed. */
+  --duration-micro: var(--motion-duration-micro);
+  --duration-flow: var(--motion-duration-flow);
+  --duration-reveal: var(--motion-duration-reveal);
+  --duration-cinematic: var(--motion-duration-cinematic);
+
+  /* The same four rails on the namespace Tailwind reads for duration-*.
+     --duration-* is the variable other CSS consumes; the utility class is built
+     from --transition-duration-*, and only that one. Without these,
+     duration-micro and duration-reveal are class names that generate nothing:
+     they were in use in the component library and on the marketing site, and
+     every one of them silently fell back to the 150ms default. */
+  --transition-duration-micro: var(--motion-duration-micro);
+  --transition-duration-flow: var(--motion-duration-flow);
+  --transition-duration-reveal: var(--motion-duration-reveal);
+  --transition-duration-cinematic: var(--motion-duration-cinematic);
+
+  /* Likewise for ease-*: the utility namespace is --ease-* already, so the four
+     above are reachable as ease-brand / ease-spring without further mapping. */
+
+  /* Spacing — DO NOT register --spacing-sm|md|lg|xl|2xl here.
+     Tailwind v4 puts every --spacing-{key} on the shared size rail, so
+     max-w-sm / max-w-2xl (and width/height/gap utilities with the same keys)
+     resolve to the breathing-room lengths (0.75rem to 3rem) instead of the
+     container scale (24rem to 42rem). That shipped as one-word-per-line prose
+     and a 32px install box on nebutra.com (measured 2026-08-03).
+     Brand Packages still override --space-source-*; consumers must read
+     those vars directly (var(--space-source-md, ...)), never via a @theme
+     --spacing-{step} alias. --spacing itself (0.25rem arithmetic base) stays
+     untouched. See static/base.css. */
+
+  /* Font family — Geist keeps Latin + numerals, self-hosted Noto Sans SC takes
+     CJK, system CJK faces behind it. Order is the design decision; see the
+     fontFamily $description in tokens/core.json. Mirror of those tokens — keep
+     the two in sync (verify:parity compares them). */
+  --font-sans:
+    var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC",
+    "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-cn:
+    var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC",
+    "Microsoft YaHei", sans-serif;
+  --font-display:
+    var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), sans-serif;
+  --font-heading:
+    var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), sans-serif;
+  --font-mono:
+    var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+}
+
+/* ============================================
+   Base Styles — non-token CSS that complements the design-tokens output.
+   This file is concatenated into styles.generated.css after the @theme block.
+   ============================================ */
+
+/* ─── Edge tokens (2026-05 perf governance) ─────────────────
+   Pre-computed alpha values for borders / hairlines / outer glows.
+   Replaces ~70 runtime `color-mix(foreground, transparent N%)` calls per
+   page that re-evaluated on every paint. Mode-aware via CSS cascade.
+   Lives in static/ so it survives Style Dictionary rebuilds.
+   ─────────────────────────────────────────────────────────── */
+/* ─── Motion source rail ────────────────────────────────────
+   The runtime half of the motion tokens, and the reason it exists under a
+   second name: a theme entry cannot point at itself, so the utility layer
+   needs a source that is not the same property. Durations already had that
+   pair; the curves did not, which is why the ease utilities compiled to a
+   literal cubic-bezier and stayed on the default ramp no matter which brand
+   package was applied.
+
+   Same shape as elevation, where `--shadow-*: var(--elevation-*)` has always
+   given the utilities something a skin can move. A Brand Package overrides
+   these; nothing else should.
+   ─────────────────────────────────────────────────────────── */
+:root {
+  --motion-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  /* The signature: a long, strong deceleration — most of the distance is
+     covered in the first fifth of the time, then it settles. It has existed as
+     `brandEasing.brand` in @nebutra/brand since the motion language was
+     written, usable only from JS, so every CSS transition on every marketing
+     surface fell back to Tailwind's default curve instead. That default is
+     what "the hovers feel stiff" is: a near-linear ramp at 150ms. */
+  --motion-ease-brand: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── Category rail ──────────────────────────────────────────
+   Four accents for taxonomy — the monorepo tree's four lanes, and
+   anywhere else a small set of peers has to be told apart.
+
+   Derived, not picked. Hand-picking is how the file tree ended up
+   with fifteen hues across twenty-five rows, three of them reused
+   on unrelated rows: a colour that encodes nothing a reader can
+   learn and follows no design language.
+
+   Each accent is a position on the background→foreground axis,
+   tinted a quarter of the way toward the action fill rotated by
+   72°. Two axes, both always live:
+
+     • the position carries contrast. That axis is non-degenerate
+       in every language by definition — it is the axis that makes
+       body text readable — so a monochrome language still gets
+       four distinct tones. Vercel and Notion anchor on black,
+       where rotating hue returns the same colour four times.
+     • the rotation carries hue separation for the languages that
+       have chroma to give.
+
+   Two earlier constructions failed here and are worth naming.
+   Offsetting lightness from the anchor and clamping collapses when
+   the anchor already sits near the band edge — Raycast's fill is
+   near-white, so all four pinned to one value. A fixed lightness
+   ladder cannot serve both canvases: Raycast and GSAP are dark by
+   default in light mode, so the `.dark` class is not set and an
+   absolute ladder is upside down for them.
+
+   Measured across all seven languages plus factory: lowest contrast
+   3.50:1 against each canvas, closest pair 30/255 apart.
+   ─────────────────────────────────────────────────────────── */
+:root {
+  --category-1: color-mix(
+    in oklab,
+    color-mix(in oklab, hsl(var(--foreground)) 55%, hsl(var(--background))) 75%,
+    oklch(from hsl(var(--primary)) l c h)
+  );
+  --category-2: color-mix(
+    in oklab,
+    color-mix(in oklab, hsl(var(--foreground)) 67%, hsl(var(--background))) 75%,
+    oklch(from hsl(var(--primary)) l c calc(h + 72))
+  );
+  --category-3: color-mix(
+    in oklab,
+    color-mix(in oklab, hsl(var(--foreground)) 79%, hsl(var(--background))) 75%,
+    oklch(from hsl(var(--primary)) l c calc(h + 144))
+  );
+  --category-4: color-mix(
+    in oklab,
+    color-mix(in oklab, hsl(var(--foreground)) 91%, hsl(var(--background))) 75%,
+    oklch(from hsl(var(--primary)) l c calc(h + 216))
+  );
+}
+
+/* ─── Spacing source rail ────────────────────────────────────
+   A second, named scale — NOT Tailwind's own `--spacing` multiplier.
+   `--spacing` (0.25rem) is shared arithmetic for width, height and
+   line-height as well as padding/gap; repointing it per brand would rescale
+   icons and text along with whitespace.
+
+   Brand Packages override `--space-source-*`. Consumers MUST read these
+   vars directly (`var(--space-source-md, ...)`). Do NOT bridge them into
+   `@theme --spacing-sm|md|xl|2xl`: Tailwind v4 maps every --spacing-{key}
+   onto max-width / width / height utilities as well as padding / gap, so
+   those keys hijack the container max-width scale (max-w-2xl became 48px
+   on production 2026-08-03).
+   ─────────────────────────────────────────────────────────── */
+:root {
+  --space-source-xs: 0.5rem;
+  --space-source-sm: 0.75rem;
+  --space-source-md: 1rem;
+  --space-source-lg: 1.5rem;
+  --space-source-xl: 2rem;
+  --space-source-2xl: 3rem;
+}
+
+:root {
+  --edge-faint: rgb(0 0 0 / 0.04);
+  --edge-soft: rgb(0 0 0 / 0.07);
+  --edge-medium: rgb(0 0 0 / 0.12);
+  --halo-faint: rgb(0 0 0 / 0.03);
+}
+.dark {
+  --edge-faint: rgb(255 255 255 / 0.04);
+  --edge-soft: rgb(255 255 255 / 0.06);
+  --edge-medium: rgb(255 255 255 / 0.1);
+  --halo-faint: rgb(255 255 255 / 0.03);
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    /* Token-aware default border — resolves via cascade:
+       :root → light (hsl 240 5.9% 90% ≈ #e4e4e7)
+       .dark → dark  (hsl 0 0% 14.9%  ≈ #262626)
+       Previously hardcoded to the light value, which leaked a near-white border
+       into every element in dark mode regardless of component. See ADR 2026-05-11.
+
+       Keep this in Tailwind's base layer so component utilities such as
+       border-r-transparent can override it. */
+    border-color: hsl(var(--border));
+  }
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+  font-feature-settings:
+    "rlig" 1,
+    "calt" 1;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/*
+ * MUST STAY UNLAYERED. Do not wrap this rule in `@layer base` (or any layer).
+ *
+ * Tailwind v4's `@import "tailwindcss"` puts every generated utility — including
+ * every `outline-none` / `focus-visible:outline-none` a component might carry —
+ * inside `@layer utilities`. Per the cascade-layers spec, unlayered rules beat
+ * layered ones regardless of specificity or source order, which is the only
+ * reason this single declaration can supply the keyboard focus ring for the
+ * whole design system without each component opting in.
+ *
+ * Move it into a layer and keyboard focus indication disappears library-wide,
+ * silently: nothing throws, nothing looks wrong until someone tabs.
+ *
+ * Verified against apps/landing's built CSS (2026-07-30): this rule emits
+ * unlayered, `.outline-none` emits inside `@layer components;@layer utilities`.
+ */
+:focus-visible:not(
+    :where(input, textarea, select, [cmdk-input], [role="textbox"], [contenteditable="true"])
+  ) {
+  outline: 2px solid hsl(var(--ring) / 0.5);
+  outline-offset: 2px;
+  border-radius: inherit;
+}
+
+::selection {
+  background-color: hsl(var(--primary) / 0.2);
+  color: hsl(var(--primary));
+}
+
+/* ============================================
+   Animation Utilities
+   ============================================ */
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in-from-top {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-from-bottom {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-from-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-from-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+/* ============================================
+   Named Typography Utility Classes
+   Geist-style: size encoded in class name,
+   state variants as suffixes (-strong/-mono/-tabular)
+   ============================================ */
+
+@utility text-heading-72 {
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+
+@utility text-heading-64 {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+
+@utility text-heading-56 {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+}
+
+@utility text-heading-48 {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+@utility text-heading-40 {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+@utility text-heading-32 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  font-weight: 600;
+}
+
+@utility text-heading-24 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+@utility text-heading-20 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+@utility text-heading-16 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+  font-weight: 600;
+}
+
+@utility text-heading-14 {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-button-16 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-button-14 {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-button-12 {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+
+@utility text-label-20 {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-18 {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-16 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-14 {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-13 {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-12 {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+
+@utility text-label-20-strong {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-label-18-strong {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-label-16-strong {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-label-14-strong {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-label-13-strong {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-label-12-strong {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  font-weight: 600;
+}
+
+@utility text-label-20-mono {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-18-mono {
+  font-family: var(--font-mono);
+  font-size: 1.125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-16-mono {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-14-mono {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-13-mono {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-label-12-mono {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+
+@utility text-label-20-tabular {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility text-label-18-tabular {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility text-label-16-tabular {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility text-label-14-tabular {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility text-label-13-tabular {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility text-label-12-tabular {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility text-copy-24 {
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+}
+
+@utility text-copy-20 {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+}
+
+@utility text-copy-18 {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-16 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-14 {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-13 {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-24-strong {
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  font-weight: 600;
+}
+
+@utility text-copy-20-strong {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  font-weight: 600;
+}
+
+@utility text-copy-18-strong {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-copy-16-strong {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-copy-14-strong {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-copy-13-strong {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility text-copy-24-mono {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+}
+
+@utility text-copy-20-mono {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+}
+
+@utility text-copy-18-mono {
+  font-family: var(--font-mono);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-16-mono {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-14-mono {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-copy-13-mono {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility font-cn {
+  font-family: var(--font-cn);
+  line-height: 1.75;
+  /* Never use word-break: break-all on CJK chrome — see CJK layout note below. */
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+/* ─── CJK Auto-Activation via :lang() ───────────────────────
+   When <html lang="zh|ja|ko"> is set by app layouts, body
+   automatically switches to the CJK font stack.
+
+   Layout note (2026-08): CJK soft-wrap offers a break between almost every
+   glyph, so the CSS *min-content* size of a text run is often one character.
+   Combined with:
+     • flex-col + items-center  (children size to fit-content/min-content)
+     • grid tracks minmax(0, fr) (tracks may size from that min-content)
+   prose collapses into a vertical one-glyph strip (forge/landing heroes &
+   footers). Do NOT "fix" this with a global min-width on all p/h* — that
+   breaks responsive cards. Prefer stretch rules below + local w-full.
+   ─────────────────────────────────────────────────────────── */
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) body {
+  font-family: var(--font-cn);
+  line-height: 1.75;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+/*
+ * flex-col + items-center:
+ * 1) Direct children (incl. AnimateIn wrappers) get a sane box — max 100% of
+ *    the column, min-width 0 so they can wrap instead of forcing the column
+ *    to min-content.
+ * 2) Nested prose (p/h*) under those columns takes width:100% so Chinese
+ *    copy does not collapse to a 1-glyph strip. We deliberately do NOT set
+ *    max-width here — leave Tailwind max-w-* / max-w-[…] in control.
+ */
+:is(html:lang(zh), html:lang(ja), html:lang(ko))
+  :is(.flex.flex-col.items-center, .inline-flex.flex-col.items-center)
+  > * {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+
+:is(html:lang(zh), html:lang(ja), html:lang(ko))
+  :is(.flex.flex-col.items-center, .inline-flex.flex-col.items-center)
+  :is(p, h1, h2, h3, h4, h5, h6, blockquote) {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+}
+
+/*
+ * Brand blurbs that only set max-w-*: give an explicit width so flex/grid
+ * parents don't size them to 1-glyph min-content. min(100%, …) stays mobile-safe.
+ */
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-xs {
+  width: min(100%, 20rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-sm {
+  width: min(100%, 24rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-md {
+  width: min(100%, 28rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-lg {
+  width: min(100%, 32rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-xl {
+  width: min(100%, 36rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-2xl {
+  width: min(100%, 42rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-3xl {
+  width: min(100%, 48rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-4xl {
+  width: min(100%, 56rem);
+  min-width: 0;
+}
+
+/* Opt-in for wrappers (div/section) that hold CJK prose in flex/grid tracks */
+@utility cjk-prose {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+/*
+ * Mobile: kill horizontal page scroll from 100vw / wide tables / marquees.
+ * clip (not hidden) preserves sticky headers.
+ */
+@media (max-width: 767px) {
+  html {
+    overflow-x: clip;
+  }
+
+  body {
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
+  /* Grid/flex children should be allowed to shrink below min-content */
+  .grid > *,
+  .flex > *,
+  .inline-flex > * {
+    min-width: 0;
+  }
+}
+
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(code, kbd, pre, samp) {
+  font-family: var(--font-mono);
+  word-break: normal;
+  min-width: 0;
+}
+
+/* ─── Reduced Motion ─────────────────────────────────────── */
+/* Honors OS preference EXCEPT for functional progress indicators
+ * (spinners / pulses / pings). Per WCAG 2.3.3, those are excluded
+ * from the "animation from interactions" reduction requirement. */
+@media (prefers-reduced-motion: reduce) {
+  *:not(.animate-spin):not(.animate-pulse):not(.animate-ping),
+  *:not(.animate-spin):not(.animate-pulse):not(.animate-ping)::before,
+  *:not(.animate-spin):not(.animate-pulse):not(.animate-ping)::after {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.01ms;
+    scroll-behavior: auto;
+  }
+}

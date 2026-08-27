@@ -1,0 +1,23 @@
+"use client";
+
+import { User } from "@nebutra/icons";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@nebutra/ui/primitives";
+
+export function Menu5Demo() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger className="h-10 w-10 p-0 flex shrink-0 items-center justify-center rounded-full bg-muted text-foreground select-none">
+        <User className="h-5 w-5" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-[200px]">
+        <DropdownMenuItem>Profile</DropdownMenuItem>
+        <DropdownMenuItem>Preferences</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}

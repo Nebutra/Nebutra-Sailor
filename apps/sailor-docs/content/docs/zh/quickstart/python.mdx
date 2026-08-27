@@ -1,0 +1,72 @@
+---
+title: Python 快速开始
+description: 在 FastAPI、Django 或任意 Python 后端中使用 Nebutra Python SDK。
+---
+
+<Warning>
+  **Python 仅保留用于批处理 / ML / 专用库场景**（参考 ADR 2026-05-10，[TS-by-Default 后端语言策略](/zh/docs/architecture/backend-language-policy)）。
+
+  CRUD、Webhook、计费、内容管理、第三方 API 代理 —— 一律使用 **`backends/gateway/`**（TypeScript + Hono）。新建 Python 服务的前提是至少满足以下一条：
+
+  1. 批处理 / 队列任务，时长超过 Edge Runtime 容忍范围（>5s）
+  2. 依赖 Python 生态（transformers、vLLM 等）的 ML / 科学计算
+  3. 没有可比拟 TS 端口的专用库
+
+  本页面面向**已有 Python 服务（FastAPI / Django）中调用 `nebutra-sdk` 的消费者**，不是鼓励为通用业务启动 Python 服务。
+</Warning>
+
+## 安装
+
+```bash
+pip install nebutra-sdk
+```
+
+## 初始化客户端
+
+```python
+import os
+from nebutra import Client
+
+nebutra = Client(
+    api_key=os.environ["NEBUTRA_API_KEY"],
+    org_id=os.environ["NEBUTRA_ORG_ID"],
+)
+```
+
+## 验证 JWT 令牌（FastAPI）
+
+```python
+from fastapi import HTTPException, Header
+from nebutra import verify_token
+import os
+
+async def require_auth(authorization: str = Header(...)):
+    token = authorization.removeprefix("Bearer ")
+    try:
+        return await verify_token(token, api_key=os.environ["NEBUTRA_API_KEY"])
+    except Exception:
+        raise HTTPException(status_code=401, detail="无效令牌")
+```
+
+## 检查权限
+
+```python
+allowed = await nebutra.permissions.check(
+    user_id=user_id,
+    action="delete",
+    resource="Project",
+)
+if not allowed:
+    raise HTTPException(status_code=403, detail="权限不足")
+```
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="Python SDK 参考" icon="python" href="/zh/sdks/python">
+    完整的 SDK 方法参考。
+  </Card>
+  <Card title="API 参考" icon="code" href="/zh/api-reference/overview">
+    REST API 文档。
+  </Card>
+</CardGroup>

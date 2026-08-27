@@ -1,0 +1,576 @@
+/* Pebble brand front — colors from resources/brand/pebble-visual-identity.md */
+:root {
+  color-scheme: light;
+  --mist: #f4f0ea;
+  --stone: #d8d0c4;
+  --shell: #f6d7d2;
+  --clay: #e8a7a1;
+  --moss: #aab8a5;
+  --tide: #9cb7c8;
+  --ink: #2d3033;
+  --ink-muted: #5c5a56;
+  --paper: #fbf8f4;
+  --surface: rgba(255, 255, 255, 0.72);
+  /* Named for this palette rather than --border, which is a semantic token
+     elsewhere in the monorepo and holds bare HSL channels there. Two meanings
+     under one name is a trap for whoever first imports @nebutra/tokens here:
+     every `1px solid var(--border)` would silently stop painting, because a
+     channel triple in a colour slot voids the whole declaration. */
+  --hairline: rgba(45, 48, 51, 0.1);
+  --shadow: 0 24px 60px -36px rgba(45, 48, 51, 0.28);
+  --radius: 18px;
+  --font:
+    "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, ui-serif, serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  /* Why: short pages (e.g. /download) used to leave a dead band under the
+     footer. Flex column + flex:1 main pins the footer to the viewport bottom. */
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(
+      900px 480px at 12% -8%,
+      color-mix(in srgb, var(--shell) 55%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      700px 420px at 92% 8%,
+      color-mix(in srgb, var(--tide) 28%, transparent),
+      transparent 65%
+    ),
+    linear-gradient(
+      180deg,
+      var(--paper) 0%,
+      var(--mist) 55%,
+      color-mix(in srgb, var(--stone) 35%, var(--mist)) 100%
+    );
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ── Nav ─────────────────────────────────────────────────────────── */
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: min(1080px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 1.1rem 0;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--font);
+  font-weight: 650;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+}
+
+.brand img {
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 0.55rem;
+  display: block;
+}
+
+.brand-zh {
+  color: var(--ink-muted);
+  font-weight: 500;
+  font-size: 0.92rem;
+  margin-left: 0.15rem;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.15rem;
+  align-items: center;
+  color: var(--ink-muted);
+  font-size: 0.92rem;
+}
+
+.nav-links a {
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
+  transition:
+    background 140ms ease,
+    color 140ms ease;
+}
+
+.nav-links a:hover {
+  background: color-mix(in srgb, var(--stone) 40%, transparent);
+  color: var(--ink);
+}
+
+.nav-cta {
+  background: var(--ink) !important;
+  color: var(--mist) !important;
+  font-weight: 600;
+  margin-left: 0.35rem;
+}
+
+.nav-cta:hover {
+  background: color-mix(in srgb, var(--ink) 88%, white) !important;
+  color: var(--mist) !important;
+}
+
+/* ── Layout ──────────────────────────────────────────────────────── */
+
+main {
+  width: min(1080px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 1.25rem 0 4rem;
+  flex: 1 0 auto;
+}
+
+/* ── Hero ────────────────────────────────────────────────────────── */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 2.5rem 2rem;
+  align-items: center;
+  padding: 1.5rem 0 2rem;
+}
+
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--shell) 55%, white);
+  border: 1px solid color-mix(in srgb, var(--clay) 25%, transparent);
+  color: color-mix(in srgb, var(--ink) 78%, var(--clay));
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 0;
+  font-family: var(--font);
+  font-size: clamp(2.4rem, 5vw, 3.55rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  font-weight: 650;
+}
+
+.hero h1 em {
+  font-style: italic;
+  font-weight: 550;
+  color: color-mix(in srgb, var(--ink) 78%, var(--clay));
+}
+
+.lead {
+  margin: 1.1rem 0 0;
+  max-width: 36rem;
+  color: var(--ink-muted);
+  font-size: 1.08rem;
+  line-height: 1.65;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.85rem;
+  padding: 0.7rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  backdrop-filter: blur(10px);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    border-color 120ms ease;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--tide) 45%, var(--hairline));
+  box-shadow: var(--shadow);
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--mist);
+  border-color: transparent;
+  box-shadow: 0 12px 28px -16px rgba(45, 48, 51, 0.55);
+}
+
+.btn-primary:hover {
+  background: color-mix(in srgb, var(--ink) 90%, white);
+  border-color: transparent;
+  color: var(--mist);
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-top: 1.35rem;
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+}
+
+.meta-row code {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--stone) 35%, transparent);
+}
+
+/* ── Hero visual ─────────────────────────────────────────────────── */
+
+.hero-visual {
+  position: relative;
+}
+
+.hero-frame {
+  position: relative;
+  border-radius: calc(var(--radius) + 6px);
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow);
+  background: var(--stone);
+  aspect-ratio: 16 / 11;
+}
+
+.hero-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Why: mark sits over a soft rounded product frame — hard white square edges
+   read as a sticker. Match hero-frame radius/hairline and warm paper fill so
+   the badge feels like part of the same material language. */
+.hero-float {
+  position: absolute;
+  right: 0.55rem;
+  bottom: 0.45rem;
+  width: min(6.75rem, 28%);
+  border-radius: calc(var(--radius) + 2px);
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  background: color-mix(in srgb, var(--paper) 88%, white);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 16px 40px -28px rgba(45, 48, 51, 0.35);
+}
+
+.hero-float img {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* Soften any baked-in hard white edges of mark.png against the card fill. */
+  border-radius: inherit;
+}
+
+/* ── Feature cards ───────────────────────────────────────────────── */
+
+.section-title {
+  margin: 3rem 0 1rem;
+  font-family: var(--font);
+  font-size: 1.55rem;
+  letter-spacing: -0.03em;
+  font-weight: 650;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 800px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  padding: 1.25rem 1.2rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--surface);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset;
+}
+
+.card h2,
+.card h3 {
+  margin: 0 0 0.45rem;
+  font-family: var(--font);
+  font-size: 1.12rem;
+  letter-spacing: -0.02em;
+  font-weight: 650;
+}
+
+.card p {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+.card-index {
+  display: inline-block;
+  margin-bottom: 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: color-mix(in srgb, var(--ink-muted) 80%, var(--tide));
+}
+
+/* ── Lists / download ────────────────────────────────────────────── */
+
+.list {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--surface);
+  backdrop-filter: blur(10px);
+  transition:
+    border-color 120ms ease,
+    transform 120ms ease;
+}
+
+.list a:hover {
+  border-color: color-mix(in srgb, var(--tide) 40%, var(--hairline));
+  transform: translateY(-1px);
+}
+
+.badge {
+  color: var(--ink-muted);
+  font-size: 0.82rem;
+  font-family: var(--font-mono);
+}
+
+.muted {
+  color: var(--ink-muted);
+}
+
+code.inline {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 0.12rem 0.35rem;
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--stone) 40%, transparent);
+}
+
+/* ── Footer ──────────────────────────────────────────────────────── */
+
+.footer {
+  width: min(1080px, calc(100% - 2rem));
+  margin: 2rem auto 0;
+  padding: 1.25rem 0 2rem;
+  border-top: 1px solid var(--hairline);
+  color: var(--ink-muted);
+  font-size: 0.88rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.footer a:hover {
+  color: var(--ink);
+}
+
+/* ── Docs shell (self-hosted until docs.nebutra.com Worker is redeployed) ─ */
+
+.docs-shell {
+  width: min(1080px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 1rem 0 3.5rem;
+  display: grid;
+  grid-template-columns: 13.5rem 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .docs-shell {
+    grid-template-columns: 1fr;
+  }
+}
+
+.docs-nav {
+  position: sticky;
+  top: 1rem;
+  padding: 1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  backdrop-filter: blur(10px);
+}
+
+.docs-nav-title {
+  margin: 0 0 0.75rem;
+  font-family: var(--font);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.docs-nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.docs-nav a {
+  display: block;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.45rem;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
+.docs-nav a:hover {
+  background: color-mix(in srgb, var(--stone) 35%, transparent);
+  color: var(--ink);
+}
+
+.docs-nav-note {
+  margin: 1rem 0 0;
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  line-height: 1.45;
+}
+
+.docs-article {
+  min-width: 0;
+  padding: 0.25rem 0 2rem;
+}
+
+.docs-article h1 {
+  margin: 0 0 0.85rem;
+  font-family: var(--font);
+  font-size: clamp(1.8rem, 3vw, 2.3rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.docs-article h2 {
+  margin: 1.75rem 0 0.65rem;
+  font-family: var(--font);
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.docs-article p,
+.docs-article li {
+  color: var(--ink-muted);
+  line-height: 1.65;
+}
+
+.docs-article a {
+  color: color-mix(in srgb, var(--ink) 70%, var(--tide));
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.docs-article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.92rem;
+}
+
+.docs-article th,
+.docs-article td {
+  border: 1px solid var(--hairline);
+  padding: 0.55rem 0.7rem;
+  text-align: left;
+}
+
+.docs-article th {
+  background: color-mix(in srgb, var(--stone) 30%, transparent);
+  color: var(--ink);
+}
+
+.docs-article pre {
+  margin: 1rem 0;
+  padding: 0.9rem 1rem;
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--ink) 92%, var(--mist));
+  color: var(--mist);
+  overflow-x: auto;
+  font-size: 0.85rem;
+}
+
+.docs-article code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+
+.docs-article :not(pre) > code {
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--stone) 40%, transparent);
+  color: var(--ink);
+}

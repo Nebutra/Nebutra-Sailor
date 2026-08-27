@@ -1,0 +1,77 @@
+{
+  "name": "@nebutra/workflow-runtime",
+  "version": "0.1.1",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "graph": "labs",
+    "status": "wip",
+    "productionReady": false,
+    "requires": [
+      "@nebutra/agent-runtime for NodeModelSpec + orchestration grammar",
+      "@nebutra/agents for model execution (injected by the host)"
+    ],
+    "gaps": [
+      "QuickJS sandbox adapter is the only safe executor; the default seam refuses to run",
+      "Inngest workflowRunner + gateway /api/v1/workflows not yet wired",
+      "SSE streaming + the agent-callable run_workflow tool are deferred"
+    ],
+    "featureId": "workflow-runtime",
+    "category": "ai",
+    "surface": "product-orchestration",
+    "summary": "Tenant-authored workflow orchestration (agent/parallel/phase JS) executed inside a fail-closed QuickJS sandbox, layered on @nebutra/agents + @nebutra/agent-runtime"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./sandbox": {
+      "types": "./dist/sandbox.d.ts",
+      "import": "./dist/sandbox.js",
+      "default": "./dist/sandbox.js"
+    },
+    "./quickjs": {
+      "types": "./dist/quickjs-sandbox.d.ts",
+      "import": "./dist/quickjs-sandbox.js",
+      "default": "./dist/quickjs-sandbox.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/agent-runtime": "workspace:*",
+    "@nebutra/logger": "workspace:*",
+    "p-limit": "^7.3.0",
+    "quickjs-emscripten": "^0.32.0"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "^4.0.18"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/workflow-runtime#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/workflow-runtime"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ]
+}

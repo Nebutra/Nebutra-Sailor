@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — ตลาด API",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "ตลาด API ครอบคลุมทุกโมเดล · จ่ายตามการใช้งาน · จัดการคีย์และกระเป๋าเงิน · ทดลองได้ทันที"
+  },
+  "admin": {
+    "dashboard": "ภาพรวม",
+    "keys": "คีย์ API",
+    "wallet": "กระเป๋าเงิน",
+    "docs": "เอกสาร",
+    "title": "ผู้ดูแลระบบ",
+    "backToMarket": "กลับสู่ตลาด",
+    "quickUse": "ใช้งานด่วน"
+  },
+  "chrome": {
+    "searchPlaceholder": "คุณอยากทำอะไรกับ AI?",
+    "search": "ค้นหา",
+    "locale": "ภาษา",
+    "currency": "สกุลเงิน",
+    "collapseSidebar": "ยุบแถบด้านข้าง",
+    "expandSidebar": "ขยายแถบด้านข้าง",
+    "home": "หน้าแรก",
+    "adminConsole": "ผู้ดูแลระบบ",
+    "quickUse": "ใช้งานด่วน",
+    "support": "ช่วยเหลือ",
+    "apiDocs": "เอกสาร API",
+    "integrationHelp": "คู่มือการผสานรวม",
+    "aiRecommend": "AI เลือกให้",
+    "market": "มาร์เก็ต",
+    "usageTitle": "ใช้งานด่วน"
+  },
+  "channels": {
+    "app": "แอปมาร์เก็ต",
+    "api": "API มาร์เก็ต",
+    "models": "แคตตาล็อกโมเดล",
+    "client": "ไคลเอนต์"
+  },
+  "market": {
+    "new": "ใหม่",
+    "hot": "ยอดนิยม",
+    "forYou": "สำหรับคุณ",
+    "grid": "ตาราง",
+    "list": "รายการ",
+    "apiShelf": "ชั้นวาง API",
+    "toolShelf": "ชั้นวางเครื่องมือ",
+    "categories": "หมวดหมู่",
+    "apps": "แอป",
+    "newRelease": "ปล่อยใหม่",
+    "forgeTitle": "Forge workspace เครื่องมือ",
+    "forgeBlurb": "การแปลงข้อความ โค้ดดิ้ง ฟอร์ม และเครื่องมือประกอบได้ ตลาดแอปชี้ไปที่ Forge",
+    "openForge": "เปิด Forge →",
+    "allApi": "API ทั้งหมด →",
+    "all": "ทั้งหมด →",
+    "viewAll": "ดูทั้งหมด {label} →",
+    "gridView": "มุมมองตาราง",
+    "listView": "มุมมองรายการ",
+    "hiTitle": "แพลตฟอร์มทรัพยากร AI สำหรับองค์กร",
+    "hiSubtitle": "ตอบโจทย์ทุกความต้องการด้วย AI ที่เหมาะสม",
+    "sellable": "พร้อมขาย",
+    "walletTopup": "เติมเงิน"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "โมเดลภาษา",
+      "hint": "แชท · การให้เหตุผล"
+    },
+    "image-gen": {
+      "label": "การสร้างภาพ",
+      "hint": "ข้อความเป็นภาพ"
+    },
+    "image-edit": {
+      "label": "การแก้ไขภาพ",
+      "hint": "แก้ไข · ตัดพื้นหลัง"
+    },
+    "video": {
+      "label": "สร้างวิดีโอ",
+      "hint": "ข้อความเป็นวิดีโอ"
+    },
+    "audio": {
+      "label": "เสียงและวิดีโอ",
+      "hint": "เสียงพูด · ตีความ"
+    },
+    "data": {
+      "label": "ข้อมูล",
+      "hint": "ดึงข้อมูล · แยกข้อมูล"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "เสริมด้วยความรู้"
+    },
+    "tools": {
+      "label": "Tool APIs",
+      "hint": "Agent · เครื่องมือ"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "บอท",
+      "chips": "บอทแชท · บอทวาด · ความรู้"
+    },
+    "productivity": {
+      "label": "ประสิทธิภาพ",
+      "chips": "สนามทดสอบโมเดล · เขียนด้วย AI"
+    },
+    "academic": {
+      "label": "วิชาการ",
+      "chips": "ชุดเครื่องมือ PDF · ค้นหาสิทธิบัตรด้วย AI"
+    },
+    "image": {
+      "label": "เครื่องมือภาพ",
+      "chips": "สตูดิโอ 3D · แคนวาส"
+    },
+    "audio": {
+      "label": "เสียง",
+      "chips": "การพูด · เพลง AI"
+    },
+    "code": {
+      "label": "โค้ด",
+      "chips": "ตัวสร้างเว็บ · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "ภาพรวม",
+    "keys": "คีย์",
+    "wallet": "กระเป๋าเงิน",
+    "use": "ลองใช้",
+    "docs": "เอกสาร",
+    "models": "เพิ่มเติม"
+  }
+}

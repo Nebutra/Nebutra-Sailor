@@ -1,0 +1,39 @@
+{
+  "name": "@nebutra/oauth",
+  "version": "0.1.2",
+  "private": true,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run --passWithNoTests",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/contracts": "workspace:*",
+    "@nebutra/db": "workspace:*",
+    "@nebutra/identity": "workspace:*",
+    "@nebutra/vault": "workspace:*",
+    "ioredis": "^5.4.2",
+    "oidc-provider": "^9.1.0"
+  },
+  "devDependencies": {
+    "tsx": "catalog:",
+    "tsup": "^8.4.0",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "@types/oidc-provider": "^9.1.0"
+  },
+  "license": "AGPL-3.0-only"
+}

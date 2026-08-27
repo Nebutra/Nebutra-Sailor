@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox-indeterminate-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/checkbox-indeterminate-demo.tsx",
+      "content": "\"use client\";\n\nimport { Checkbox, Label } from \"@nebutra/ui/primitives\";\n\nexport function CheckboxIndeterminateDemo() {\n  return (\n    <div className=\"gap-2 flex items-center\">\n      <Checkbox indeterminate id=\"i1\" />\n      <Label htmlFor=\"i1\">选项 1 (Option 1)</Label>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

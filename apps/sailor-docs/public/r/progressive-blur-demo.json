@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "progressive-blur-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/progressive-blur-demo.tsx",
+      "content": "\"use client\";\n\nimport { ProgressiveBlur } from \"@nebutra/ui/primitives\";\n\nexport function ProgressiveBlurDemo() {\n  const items = Array.from({ length: 8 }).map((_, i) => (\n    <div\n      key={i}\n      className=\"p-4 gap-4 flex items-center rounded-lg border bg-card text-card-foreground shadow-sm\"\n    >\n      <div className=\"w-10 h-10 flex-shrink-0 rounded-full bg-muted\" />\n      <div className=\"space-y-2 flex-grow\">\n        <div className=\"h-4 rounded w-1/3 bg-muted\" />\n        <div className=\"h-3 rounded w-2/3 bg-muted/60\" />\n      </div>\n    </div>\n  ));\n\n  return (\n    <div className=\"max-w-2xl p-4 md:p-8 md:flex-row gap-8 mx-auto flex w-full flex-col\">\n      {/* Example 1: Bottom Blur */}\n      <div className=\"gap-2 flex flex-1 flex-col\">\n        <h3 className=\"text-sm font-medium mb-2 text-muted-foreground\">Bottom Blur</h3>\n        <div className=\"relative h-[300px] w-full overflow-hidden rounded-xl border bg-background\">\n          <div className=\"inset-0 p-4 space-y-4 absolute overflow-y-auto\">\n            {items}\n            {items}\n          </div>\n          <ProgressiveBlur position=\"bottom\" height=\"100px\" />\n        </div>\n      </div>\n\n      {/* Example 2: Top Blur */}\n      <div className=\"gap-2 flex flex-1 flex-col\">\n        <h3 className=\"text-sm font-medium mb-2 text-muted-foreground\">Top & Bottom Blur</h3>\n        <div className=\"bg-dot-pattern relative h-[300px] w-full overflow-hidden rounded-xl border bg-background\">\n          <div className=\"inset-0 p-4 space-y-4 pt-16 pb-16 absolute overflow-y-auto\">\n            <h4 className=\"font-bold text-xl mb-4 text-center\">Terms of Service</h4>\n            <p className=\"text-sm leading-relaxed mb-4 text-foreground/80\">\n              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor\n              incididunt ut labore et dolore magna aliqua.\n            </p>\n            <p className=\"text-sm leading-relaxed mb-4 text-foreground/80\">\n              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex\n              ea commodo consequat.\n            </p>\n            <p className=\"text-sm leading-relaxed mb-4 text-foreground/80\">\n              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat\n              nulla pariatur. Excepteur sint occaecat cupidatat non proident.\n            </p>\n            <p className=\"text-sm leading-relaxed text-foreground/80\">\n              Sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit\n              amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et\n              dolore magna aliqua.\n            </p>\n          </div>\n          <ProgressiveBlur position=\"both\" />\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

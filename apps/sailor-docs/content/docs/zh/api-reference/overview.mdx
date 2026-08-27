@@ -1,0 +1,112 @@
+---
+title: API 概览
+description: Nebutra REST API 的基础 URL、版本控制、请求格式和响应封装。
+---
+
+## 基础 URL
+
+```
+https://api.nebutra.com
+```
+
+所有 API 请求均通过 HTTPS 发起。
+
+## 版本控制
+
+API 通过 URL 路径前缀进行版本控制：
+
+```
+https://api.nebutra.com/api/v1/...
+```
+
+当前稳定版本为 `v1`。破坏性变更将在新主版本中引入，并提供至少 6 个月的弃用通知。
+
+## 请求格式
+
+所有 `POST`、`PUT` 和 `PATCH` 请求接受 JSON 请求体：
+
+```http
+POST /api/v1/projects HTTP/1.1
+Host: api.nebutra.com
+Authorization: Bearer nbk_live_xxxxxxxxxxxxxxxxxxxx
+Content-Type: application/json
+
+{
+  "name": "我的项目",
+  "description": "一个新项目"
+}
+```
+
+## 响应封装
+
+所有响应遵循此封装格式：
+
+```json
+{
+  "success": true,
+  "data": { ... },
+  "meta": {
+    "total": 142,
+    "page": 1,
+    "limit": 20
+  }
+}
+```
+
+错误响应使用相同封装，但 `success: false`：
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "RESOURCE_NOT_FOUND",
+    "message": "项目 proj_123 未找到。",
+    "request_id": "req_2a8bXXXXXXXXX"
+  }
+}
+```
+
+## 分页
+
+列表端点支持通过 `limit` 和 `cursor` 参数进行基于游标的分页：
+
+```http
+GET /api/v1/projects?limit=20&cursor=crs_xxxx
+```
+
+响应：
+
+```json
+{
+  "success": true,
+  "data": [...],
+  "meta": {
+    "total": 142,
+    "limit": 20,
+    "next_cursor": "crs_yyyy",
+    "has_more": true
+  }
+}
+```
+
+## 幂等性
+
+对于变更请求，传递 `Idempotency-Key` 以防止重复操作：
+
+```http
+POST /api/v1/invoices
+Idempotency-Key: inv-2026-03-31-01
+```
+
+24 小时内相同密钥的请求将返回缓存的响应。
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="认证" icon="shield-check" href="/zh/api-reference/authentication">
+    API 密钥和 Bearer Token 认证。
+  </Card>
+  <Card title="错误码" icon="triangle-alert" href="/zh/api-reference/errors">
+    完整错误码参考。
+  </Card>
+</CardGroup>

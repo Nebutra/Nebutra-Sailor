@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "line-shadow-text-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/line-shadow-text-demo.tsx",
+      "content": "import { LineShadowText } from \"@nebutra/ui/primitives\";\n\nexport default function LineShadowTextDemo() {\n  return (\n    <div className=\"gap-8 bg-zinc-950 flex h-[300px] flex-col items-center justify-center\">\n      <LineShadowText\n        as=\"h2\"\n        shadowColor=\"#3b82f6\"\n        className=\"text-6xl font-black text-white\"\n        initial={{ opacity: 0, y: 20 }}\n        animate={{ opacity: 1, y: 0 }}\n        transition={{ duration: 0.6 }}\n      >\n        Blue Shadow\n      </LineShadowText>\n      <LineShadowText\n        as=\"h2\"\n        shadowColor=\"#a855f7\"\n        className=\"text-6xl font-black text-white\"\n        initial={{ opacity: 0, y: 20 }}\n        animate={{ opacity: 1, y: 0 }}\n        transition={{ duration: 0.6, delay: 0.2 }}\n      >\n        Purple Effect\n      </LineShadowText>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

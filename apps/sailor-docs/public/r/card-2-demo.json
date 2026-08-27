@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card-2-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/card-2-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Card,\n  CardBody,\n  CardDescription,\n  CardFooter,\n  CardHeader,\n  CardTitle,\n} from \"@nebutra/ui/patterns\";\nimport { Button } from \"@nebutra/ui/primitives\";\nexport function Card2Demo() {\n  return (\n    <Card variant=\"gradient\" padding=\"lg\">\n      <CardHeader>\n        <CardTitle>Pro Plan</CardTitle>\n        <CardDescription>Everything you need to ship faster.</CardDescription>\n      </CardHeader>\n      <CardBody>\n        <p className=\"text-3xl font-bold\">\n          $49\n          <span className=\"text-base font-normal text-muted-foreground\">/mo</span>\n        </p>\n      </CardBody>\n      <CardFooter>\n        <Button className=\"w-full\">Get started</Button>\n      </CardFooter>\n    </Card>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

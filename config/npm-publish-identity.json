@@ -1,0 +1,21 @@
+{
+  "repository": "Nebutra/Nebutra-Sailor",
+  "workflowFile": "release.yml",
+  "scoped": {
+    "prefix": "@nebutra/",
+    "publishIdentity": "org-granular-token",
+    "notes": "secrets.NPM_TOKEN is a granular access token scoped to the nebutra npm org. It can publish @nebutra/* and cannot PUT unscoped names."
+  },
+  "unscoped": [
+    {
+      "name": "create-sailor",
+      "publishIdentity": "trusted-publishing",
+      "reason": "npm create sailor requires the unscoped name. An org-scoped granular token returns E404 on PUT https://registry.npmjs.org/create-sailor."
+    },
+    {
+      "name": "nebutra",
+      "publishIdentity": "trusted-publishing",
+      "reason": "CLI binary name. Same identity split as create-sailor."
+    }
+  ]
+}

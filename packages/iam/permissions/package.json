@@ -1,0 +1,92 @@
+{
+  "name": "@nebutra/permissions",
+  "version": "0.1.3",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "graph": "core",
+    "status": "foundation",
+    "productionReady": false,
+    "requires": [
+      "CASL (in-process, no external creds)",
+      "or OPENFGA_API_URL + OPENFGA_STORE_ID for Zanzibar-style"
+    ],
+    "gaps": [
+      "OpenFGA model and tuple lifecycle management remain external"
+    ],
+    "featureId": "permissions",
+    "category": "iam",
+    "summary": "RBAC/ABAC engine — CASL (in-process) + OpenFGA (Zanzibar)"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./casl": {
+      "types": "./dist/providers/casl.d.ts",
+      "import": "./dist/providers/casl.js"
+    },
+    "./openfga": {
+      "types": "./dist/providers/openfga.d.ts",
+      "import": "./dist/providers/openfga.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js"
+    },
+    "./middleware": {
+      "types": "./dist/middleware.d.ts",
+      "import": "./dist/middleware.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@casl/ability": "^6.7.0",
+    "@casl/prisma": "^1.5.1",
+    "@nebutra/logger": "workspace:*",
+    "zod": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "hono": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "react": "^19.0.0",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/iam/permissions#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/iam/permissions"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependenciesOptional": {
+    "hono": true,
+    "react": true
+  }
+}

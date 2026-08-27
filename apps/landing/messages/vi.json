@@ -1,0 +1,1781 @@
+{
+  "nav": {
+    "features": "Tính năng",
+    "solutions": "Giải pháp",
+    "pricing": "Bảng giá",
+    "docs": "Tài liệu",
+    "github": "GitHub",
+    "npm": "npm",
+    "about": "Về chúng tôi",
+    "ideas": "Ý tưởng",
+    "opc": "Nền tảng",
+    "roadmap": "Lộ trình",
+    "resources": "Tài nguyên",
+    "signIn": "Đăng nhập",
+    "getStarted": "Bắt đầu",
+    "changelog": "Nhật ký thay đổi",
+    "news": "Tin tức",
+    "designDocs": "Hệ thống thiết kế",
+    "avatarMenu": {
+      "ariaLabel": "Menu tài khoản",
+      "loadingName": "Đang tải…",
+      "dashboard": "Bảng điều khiển",
+      "account": "Tài khoản",
+      "billing": "Thanh toán",
+      "docs": "Tài liệu",
+      "signOut": "Đăng xuất"
+    }
+  },
+  "refer": {
+    "metadataTitle": "Tham gia vòng giới thiệu founder của {brandName}",
+    "metadataDescription": "Tham gia danh sách chờ của {brandName}, giữ lại nguồn giới thiệu và mở khóa liên kết chia sẻ riêng của bạn trong một vòng lặp sản phẩm khép kín.",
+    "eyebrow": "Vòng giới thiệu founder",
+    "title": "Tham gia nhóm founder tiếp theo và nhận liên kết chia sẻ riêng của bạn.",
+    "description": "Nhập bất kỳ mã mời nào hoặc tham gia trực tiếp. Chúng tôi sẽ giữ lại nguồn giới thiệu khi mã tồn tại, đưa bạn vào danh sách chờ và cấp một URL giới thiệu riêng tư để bạn có thể chia sẻ ngay lập tức.",
+    "signal": {
+      "waitlist": "Danh sách chờ bền vững",
+      "codeDetected": "Đã phát hiện mã {code}",
+      "direct": "Đăng ký trực tiếp"
+    },
+    "form": {
+      "emailLabel": "Email công việc",
+      "emailPlaceholder": "you@example.com",
+      "codeLabel": "Mã giới thiệu",
+      "codePlaceholder": "Mã tùy chọn",
+      "submit": "Tham gia danh sách chờ",
+      "submitting": "Đang tham gia",
+      "invalidEmail": "Nhập một email hợp lệ.",
+      "error": "Không thể tham gia lúc này. Vui lòng thử lại.",
+      "successTitle": "Bạn đã có trong danh sách",
+      "successDescription": "Liên kết chia sẻ riêng của bạn đã sẵn sàng.",
+      "positionLabel": "Vị trí trong hàng chờ",
+      "referralCodeLabel": "Mã của bạn",
+      "referralUrlLabel": "Liên kết chia sẻ của bạn",
+      "copyLink": "Sao chép liên kết",
+      "copied": "Đã sao chép",
+      "share": "Chia sẻ",
+      "shareTitle": "Tham gia vòng kết nối sáng lập viên {brandName}",
+      "shareText": "Dùng liên kết mời của tôi để tham gia danh sách chờ sáng lập viên {brandName}.",
+      "directMode": "Không cần mã giới thiệu",
+      "codeMode": "Đã bật xác định nguồn giới thiệu"
+    },
+    "proof": {
+      "peerLoop": {
+        "title": "Vòng kết nối sáng lập viên",
+        "description": "Mỗi đăng ký được chấp nhận đều nhận mã và URL, nên lượt giới thiệu tiếp theo bắt đầu mà không cần chuyển giao thủ công."
+      },
+      "attribution": {
+        "title": "Xác định nguồn minh bạch",
+        "description": "Mã không xác định được lưu dưới dạng xác định nguồn đã thử, trong khi mã hợp lệ sẽ tăng lượt cho người giới thiệu và giữ đăng ký sạch sẽ."
+      },
+      "shareLink": {
+        "title": "Trạng thái thành công sẵn sàng chia sẻ",
+        "description": "Trạng thái xác nhận hiển thị vị trí, mã, sao chép và các hành động chia sẻ gốc để hoàn tất vòng kết nối ngay trên trang."
+      }
+    },
+    "infrastructure": {
+      "eyebrow": "Hạ tầng dẫn dắt bởi sản phẩm",
+      "title": "Thiết kế như hạ tầng SaaS bền vững, không phải mẫu đơn dùng một lần.",
+      "description": "Bề mặt giới thiệu được hỗ trợ bởi gói miền, mô hình Prisma bền vững, route Next.js có kiểu và các kiểm tra smoke công khai có thể chạy sau khi triển khai ECS.",
+      "data": {
+        "eyebrow": "Dữ liệu",
+        "title": "Một bảng danh sách chờ bền vững",
+        "description": "Tính duy nhất email, vị trí tự động tăng, chỉ mục mã giới thiệu, metadata xác định nguồn đã thử và chuyển đổi trạng thái đều nằm trong cơ sở dữ liệu nền tảng."
+      },
+      "api": {
+        "eyebrow": "API",
+        "title": "Điểm cuối join có kiểu",
+        "description": "Trang gửi đến `/api/waitlist`, chuẩn hóa các mã tùy ý, trả về các mục hiện có một cách idempotent, và không bao giờ phụ thuộc vào mã mẫu."
+      },
+      "cicd": {
+        "eyebrow": "CI/CD",
+        "title": "Kiểm tra smoke công khai khi triển khai",
+        "description": "Các URL chính thức và bí danh đã sẵn sàng cho kiểm tra tự động để ECS phát hiện các hồi quy về route, DNS và sức khỏe."
+      }
+    }
+  },
+  "hero": {
+    "headline1": "Phát hành Startup của bạn,",
+    "headline2": "động lực bởi {brandName} Agent OS.",
+    "subheadline": "Bỏ qua hàng tuần công việc nền tảng với nền tảng <highlight>sẵn sàng sản xuất</highlight> và kết cấu được quản trị, xây dựng cho AI coding agents & founders vươn ra toàn cầu.",
+    "copyLabel": "Sao chép lệnh",
+    "copiedLabel": "Đã sao chép",
+    "ctaGetAccess": "Khởi động Startup của bạn",
+    "ctaExploreDemo": "Khám phá bản demo",
+    "pillCopied": "Đã sao chép"
+  },
+  "features": {
+    "sectionTitle": "Hạ tầng sẵn sàng ngay, từ nguyên mẫu đến quy mô lớn.",
+    "item0": {
+      "title": "Hạ tầng ứng dụng AI",
+      "description": "Khung Agent và công cụ điều phối LLM tích hợp sẵn, đã được kiểm thử trong môi trường sản xuất. Bỏ qua các lớp trừu tượng phức tạp bên dưới và tương tác trực tiếp với các API trí tuệ có cấu trúc."
+    },
+    "item1": {
+      "title": "Nền tảng cơ sở được quản trị",
+      "description": "Nền tảng cơ sở được quản trị cho các đội phát triển SaaS bản địa AI. Đồng bộ hóa khung dựng, các nguyên thủy runtime và bề mặt phân phối mà không cần ghép nối các công cụ ad-hoc."
+    },
+    "item2": {
+      "title": "Tự động hóa SaaS doanh nghiệp",
+      "description": "Tích hợp sâu với bộ công nghệ hiện đại gồm Vercel, Supabase và Stripe. Cung cấp sẵn bảo mật cấp hàng, cách ly đa thuê bao phức tạp và thanh toán đăng ký toàn cầu."
+    }
+  },
+  "cta": {
+    "heading": "Sẵn sàng triển khai sản phẩm AI tiếp theo của bạn?",
+    "subheading": "Khởi tạo toàn bộ kiến trúc SaaS cloud-native cục bộ chỉ với một lệnh terminal.",
+    "copyLabel": "Sao chép lệnh",
+    "copiedLabel": "Đã sao chép",
+    "startBuilding": "Bắt đầu xây dựng"
+  },
+  "footer": {
+    "brandDescription": "Phát hành Startup của bạn với Agent OS {brandName}. Đa thuê bao, thanh toán, xác thực và AI — sẵn sàng sản xuất ngay từ ngày đầu.",
+    "columns": {
+      "product": "Sản phẩm",
+      "resources": "Tài nguyên",
+      "legal": "Pháp lý",
+      "community": "Cộng đồng"
+    },
+    "links": {
+      "product": "Sản phẩm",
+      "features": "Tính năng",
+      "forge": "Forge",
+      "pricing": "Bảng giá",
+      "about": "Giới thiệu",
+      "showcase": "Trưng bày",
+      "blog": "Blog",
+      "playbook": "Hướng dẫn",
+      "changelog": "Nhật ký thay đổi",
+      "roadmap": "Lộ trình",
+      "docs": "Tài liệu",
+      "ideas": "Ý tưởng",
+      "opc": "Nền tảng",
+      "careers": "Tuyển dụng",
+      "security": "Bảo mật",
+      "dpa": "DPA",
+      "privacy": "Chính sách bảo mật",
+      "terms": "Điều khoản",
+      "cookies": "Cookies",
+      "refund": "Hoàn tiền",
+      "licensing": "Giấy phép",
+      "contact": "Liên hệ",
+      "faq": "Câu hỏi thường gặp",
+      "github": "GitHub",
+      "discord": "Discord",
+      "twitter": "X (Twitter)"
+    },
+    "copyright": "© 2026 {brandName} Intelligence. Bảo lưu mọi quyền.",
+    "statusOnline": "Tất cả hệ thống hoạt động bình thường",
+    "newsletterTitle": "Cập nhật tin tức",
+    "newsletterPlaceholder": "you@example.com",
+    "newsletterSubscribe": "Đăng ký",
+    "newsletterSuccess": "Cảm ơn bạn đã đăng ký!",
+    "newsletterError": "Đã xảy ra lỗi",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
+  },
+  "logoStrip": {
+    "tagline": "Chạy trên"
+  },
+  "monorepoTree": {
+    "badge": "CẤU TRÚC TURBOREPO",
+    "title": "15 ứng dụng. 113 gói. 4 luồng backend.",
+    "description": "Mã nguồn chung, xây dựng song song, không trùng lặp. Typing đầu cuối hoàn chỉnh từ cơ sở dữ liệu đến frontend.",
+    "metricApps": "ứng dụng",
+    "metricBackends": "luồng backend",
+    "metricPackages": "gói",
+    "verifiedPaths": "Đã xác thực đường dẫn với workspace hiện tại",
+    "cta": "Khám phá kiến trúc monorepo"
+  },
+  "stats": {
+    "title": "Con Số Nói Lên",
+    "github": "Sao GitHub",
+    "discord": "Thành viên Discord",
+    "setup": "Thời gian thiết lập trung bình",
+    "packages": "Gói Monorepo",
+    "ctaStar": "Yêu thích →",
+    "ctaJoin": "Tham gia →",
+    "ctaStart": "Bắt đầu →",
+    "ctaExplore": "Khám phá →"
+  },
+  "legalPages": {
+    "about": {
+      "title": "Về Chúng Tôi — Nền Tảng AI Được Quản Trị",
+      "description": "Khám phá tầm nhìn thương mại và các nguyên tắc kỹ thuật đằng sau nền tảng AI được quản trị của {brandName}.",
+      "heading": "Kỷ Nguyên Của Các Đội Nhóm Sản Phẩm Tinh Gọn",
+      "subheading": "Thay thế công việc nền tảng lặp lại bằng hạ tầng được quản trị, tự động hóa mạnh mẽ và đòn bẩy kỹ thuật bền vững.",
+      "missionTitle": "Một Trật Tự Mới Chống Lại Sự Suy Thoái Hành Chính",
+      "missionP1": "{brandName} đang xây dựng một nền tảng AI được quản trị cho các đội nhóm cần hạ tầng bền vững thay vì các bộ khung khởi đầu ngắn hạn. Quy mô truyền thống thường đi kèm với quan liêu và rối loạn; chúng tôi phản ứng bằng quản trị mã nguồn, tự động hóa và một nền tảng cơ bản vẫn có thể kiểm toán khi phát triển.",
+      "missionP2": "Thương mại vẫn chịu tổn thất từ chi phí phối hợp, công cụ phân mảnh và các lộ trình nâng cấp yếu kém. Chúng tôi quan tâm đến việc giảm những ma sát này thông qua các hợp đồng nền tảng rõ ràng hơn, các nguyên thủy giao hàng mạnh mẽ hơn và hành vi thời gian chạy mà các đội nhóm thực sự có thể quan sát và tin tưởng.",
+      "missionP3": "Chúng tôi từ chối thói quen giải quyết vấn đề quy mô bằng cách tăng thêm sự cồng kềnh tổ chức. Tự động hóa, kiểm thử và quản trị nên hấp thụ công việc vận hành lặp lại để các đội nhóm có thể tập trung vào sản phẩm, kiến trúc và kết quả khách hàng.",
+      "missionP4": "",
+      "valuesTitle": "Bốn Trụ Cột",
+      "values": {
+        "0": {
+          "title": "Quy Mô Được Quản Trị (Triết Lý)",
+          "description": "Quy mô nên đến từ các hệ thống mạnh mẽ hơn, đòn bẩy tốt hơn và các quy tắc vận hành rõ ràng hơn — không phải từ việc chất chồng thêm trọng lượng tổ chức."
+        },
+        "1": {
+          "title": "Lõi Người Xây Dựng (Hạ Tầng)",
+          "description": "Một nền tảng cơ bản có thể tái sử dụng cho đa thuê bao, thanh toán, xác thực, tuân thủ và tích hợp AI mà các đội nhóm có thể kiểm toán, mở rộng và phát hành lặp đi lặp lại."
+        },
+        "2": {
+          "title": "Kỷ Luật Nâng Cấp (Định Tuyến)",
+          "description": "Các hệ thống lành mạnh phát triển thông qua các kiểm tra tương thích, di chuyển và các hợp đồng thời gian chạy có thể quan sát được thay vì sự lệch lạc, nỗ lực anh hùng và các bản viết lại một lần."
+        },
+        "3": {
+          "title": "Mã Nguồn Là Pháp Luật (Tổ Chức)",
+          "description": "Kỷ luật vận hành nên được mã hóa trong các kiểm thử, quy trình làm việc và các quy tắc quản trị để các đội nhóm có thể cải thiện nền tảng mà không cần dựa vào chính trị hay ký ức tổ chức."
+        }
+      },
+      "jobsTitle": "Tín Hiệu Kỹ Thuật Hơn Bằng Cấp",
+      "jobsDescription": "Chúng tôi quan tâm nhiều hơn đến kết quả kỹ thuật có thể xác minh, sự rõ ràng trong tư duy và phán đoán hệ thống hơn là xuất thân hay sự lạm phát chức danh.",
+      "jobsButton": "Gửi Hồ Sơ Github",
+      "companyInfoTitle": "Tuân thủ tổ chức",
+      "companyInfo": {
+        "legalName": "Đăng ký pháp nhân",
+        "founded": "Ngày đăng ký",
+        "headquarters": "Trung tâm vận hành toàn cầu",
+        "jurisdiction": "Phạm vi pháp lý điều chỉnh"
+      },
+      "ctaHeading": "Cần đánh giá kỹ thuật chuyên sâu hơn?",
+      "ctaDescription": "Liên hệ với các chuyên gia kỹ thuật của chúng tôi để được đánh giá tích hợp doanh nghiệp hoặc xem tài liệu triển khai.",
+      "ctaButton": "Thiết lập liên lạc"
+    },
+    "contact": {
+      "title": "Yêu cầu kỹ thuật & thương mại — {brandName} Intelligence",
+      "description": "Kênh giao tiếp chuyên dụng cho cấp phép thương mại, tự lưu trữ doanh nghiệp và hỗ trợ kỹ thuật nâng cao.",
+      "heading": "Thiết lập kết nối hỗ trợ",
+      "subheading": "Chúng tôi sẽ điều động một chuyên gia kỹ thuật hoặc kiến trúc sư chuyên dụng để đánh giá các yêu cầu cụ thể của bạn.",
+      "contacts": {
+        "founder": {
+          "title": "Liên hệ trực tiếp Founder",
+          "description": "Kênh giao tiếp trực tiếp cho các định hướng chiến lược cốt lõi và các yêu cầu cấp điều hành."
+        },
+        "general": {
+          "title": "Tư vấn doanh nghiệp",
+          "description": "Thảo luận sơ bộ về các đối tác chiến lược sinh thái và sự phát triển kiến trúc tổng thể."
+        },
+        "sales": {
+          "title": "Triển khai thương mại",
+          "description": "Đàm phán về cấp phép mã nguồn đóng và các chi tiết liên quan đến triển khai trong môi trường cụm riêng."
+        },
+        "support": {
+          "title": "Hỗ trợ chuyên gia",
+          "description": "Hướng dẫn kiến trúc mục tiêu và dịch vụ khắc phục sự cố cho các tích hợp kinh doanh đang hoạt động và gỡ lỗi hệ thống cốt lõi."
+        },
+        "legal": {
+          "title": "Pháp lý & Tuân thủ",
+          "description": "Các thắc mắc liên quan đến định nghĩa ranh giới mã nguồn mở, kiểm toán tuân thủ doanh nghiệp và điều khoản hợp đồng."
+        },
+        "privacy": {
+          "title": "Bảo mật Trung tâm Dữ liệu",
+          "description": "Xác minh kỹ thuật và chỉ thị tuân thủ liên quan đến GDPR và các luật bảo vệ dữ liệu quốc tế tiếp theo."
+        },
+        "security": {
+          "title": "Tiết lộ Bảo mật",
+          "description": "Gửi an toàn các báo cáo tái hiện kỹ thuật về lỗ hổng phần mềm tiềm ẩn trực tiếp đến đội ngũ hạ tầng của chúng tôi."
+        }
+      },
+      "formTitle": "Cổng Gửi yêu cầu",
+      "form": {
+        "name": "Tên Người gửi",
+        "email": "Địa chỉ Email Chính thức",
+        "company": "Tổ chức Liên kết",
+        "category": "Lĩnh vực Yêu cầu",
+        "categories": {
+          "general": "Tư vấn Doanh nghiệp",
+          "sales": "Giấy phép & Kiến trúc",
+          "support": "Hỗ trợ Nhà phát triển",
+          "legal": "Ranh giới Pháp lý & Tuân thủ",
+          "privacy": "Chính sách Xử lý Dữ liệu",
+          "partnership": "Tích hợp Hệ sinh thái",
+          "press": "Quan hệ Công chúng"
+        },
+        "subject": "Tóm tắt Vấn đề Cốt lõi",
+        "message": "Chi tiết Kỹ thuật/Thương mại",
+        "submit": "Gửi đến Backend",
+        "privacyNotice": "Thực hiện yêu cầu mạng này đồng nghĩa với việc bạn đã đọc và đồng ý với",
+        "privacyLink": "Hạ tầng Quyền riêng tư Hệ thống",
+        "submitting": "Đang đưa vào hàng đợi xử lý...",
+        "successMessage": "Dữ liệu đã được truyền đi thành công. Đội ngũ vận hành có trách nhiệm sẽ phản hồi chi tiết trong vòng 1-2 ngày làm việc tiêu chuẩn."
+      },
+      "companyInfoTitle": "Telemetry Vận hành",
+      "companyNameChinese": "{companyLegal}",
+      "companyNameEnglish": "{companyLegalEn}",
+      "companyAddress": "Wuxi, Tỉnh Giang Tô, Trung Quốc",
+      "socialMedia": "Liên kết Mạng chính"
+    },
+    "cookies": {
+      "title": "Chính sách Cookie — {brandName}",
+      "description": "Cách {brandName} sử dụng cookie và các công nghệ theo dõi tương tự trên trang web và dịch vụ của chúng tôi.",
+      "heading": "Chính sách Cookie",
+      "effectiveDate": "Ngày có hiệu lực",
+      "lastUpdated": "Cập nhật lần cuối",
+      "dates": {
+        "effective": "Ngày 1 tháng 1 năm 2025",
+        "updated": "Ngày 1 tháng 1 năm 2025"
+      },
+      "intro": "Chính sách Cookie này giải thích cách {brandName} Co., Ltd. (\"{brandName},\" \"chúng tôi,\" \"chúng ta,\" hoặc \"của chúng tôi\") sử dụng cookie và các công nghệ theo dõi tương tự trên trang web và dịch vụ của chúng tôi.",
+      "whatAreCookies": {
+        "title": "Cookie là gì?",
+        "content": "Cookie là các tệp văn bản nhỏ được đặt trên thiết bị của bạn khi bạn truy cập một trang web. Chúng được sử dụng rộng rãi để làm cho trang web hoạt động hiệu quả hơn và cung cấp thông tin cho chủ sở hữu trang web."
+      },
+      "howWeUse": {
+        "title": "Cách chúng tôi sử dụng Cookie",
+        "intro": "Chúng tôi sử dụng cookie để:",
+        "items": {
+          "0": {
+            "label": "Bật tính năng cốt lõi",
+            "desc": "Cung cấp các chức năng cơ bản như xác thực người dùng và bảo mật"
+          },
+          "1": {
+            "label": "Ghi nhớ tùy chọn",
+            "desc": "Lưu ngôn ngữ, giao diện và các cài đặt khác của bạn"
+          },
+          "2": {
+            "label": "Tối ưu hiệu suất",
+            "desc": "Hiểu cách khách truy cập tương tác với dịch vụ của chúng tôi"
+          },
+          "3": {
+            "label": "Cá nhân hóa trải nghiệm",
+            "desc": "Cung cấp nội dung và gợi ý phù hợp"
+          },
+          "4": {
+            "label": "Đo lường tiếp thị",
+            "desc": "Theo dõi hiệu quả của các chiến dịch tiếp thị"
+          }
+        }
+      },
+      "typesTitle": "Các loại cookie chúng tôi sử dụng",
+      "tableHeaders": {
+        "cookie": "Cookie",
+        "provider": "Nhà cung cấp",
+        "purpose": "Mục đích",
+        "duration": "Thời hạn"
+      },
+      "necessary": {
+        "title": "Cookie bắt buộc",
+        "description": "Những cookie này cần thiết để trang web hoạt động đúng cách. Chúng không thể bị tắt.",
+        "cookies": {
+          "0": {
+            "name": "__session",
+            "provider": "{brandName}",
+            "purpose": "Phiên xác thực người dùng",
+            "duration": "Phiên"
+          },
+          "1": {
+            "name": "__clerk_db_jwt",
+            "provider": "Clerk",
+            "purpose": "Mã xác thực",
+            "duration": "7 ngày"
+          },
+          "2": {
+            "name": "cookie_consent",
+            "provider": "{brandName}",
+            "purpose": "Lưu tùy chọn đồng ý cookie",
+            "duration": "1 năm"
+          }
+        }
+      },
+      "functional": {
+        "title": "Cookie chức năng",
+        "description": "Những cookie này cho phép các tính năng cá nhân hóa và ghi nhớ tùy chọn của bạn.",
+        "cookies": {
+          "0": {
+            "name": "locale",
+            "provider": "{brandName}",
+            "purpose": "Lưu tùy chọn ngôn ngữ",
+            "duration": "1 năm"
+          },
+          "1": {
+            "name": "theme",
+            "provider": "{brandName}",
+            "purpose": "Lưu tùy chọn giao diện",
+            "duration": "1 năm"
+          }
+        }
+      },
+      "analyticsType": {
+        "title": "Cookie phân tích",
+        "description": "Những cookie này giúp chúng tôi hiểu cách khách truy cập tương tác với trang web của chúng tôi.",
+        "cookies": {
+          "0": {
+            "name": "_ga",
+            "provider": "Google Analytics",
+            "purpose": "Phân biệt người dùng duy nhất",
+            "duration": "2 năm"
+          },
+          "1": {
+            "name": "ph_*",
+            "provider": "PostHog",
+            "purpose": "Phân tích sản phẩm",
+            "duration": "1 năm"
+          }
+        }
+      },
+      "marketingType": {
+        "title": "Cookie Marketing",
+        "description": "Những cookie này được sử dụng cho quảng cáo và theo dõi hiệu suất chiến dịch quảng cáo.",
+        "cookies": {
+          "0": {
+            "name": "_fbp",
+            "provider": "Facebook",
+            "purpose": "Theo dõi lượt truy cập cho quảng cáo Facebook",
+            "duration": "3 tháng"
+          },
+          "1": {
+            "name": "_gcl_au",
+            "provider": "Google Ads",
+            "purpose": "Theo dõi chuyển đổi",
+            "duration": "3 tháng"
+          }
+        }
+      },
+      "managingTitle": "Quản lý Tùy chọn Cookie",
+      "consentBanner": {
+        "title": "Banner Đồng ý Cookie",
+        "intro": "Khi bạn truy cập trang web của chúng tôi lần đầu, bạn sẽ thấy một banner đồng ý cookie cho phép bạn:",
+        "items": {
+          "0": {
+            "label": "Chấp nhận Tất cả",
+            "desc": "Bật tất cả các danh mục cookie"
+          },
+          "1": {
+            "label": "Từ chối tất cả",
+            "desc": "Tắt tất cả cookie tùy chọn (cookie cần thiết vẫn được giữ)"
+          },
+          "2": {
+            "label": "Tùy chỉnh",
+            "desc": "Chọn các danh mục cookie cụ thể để bật"
+          }
+        },
+        "changeNote": "Bạn có thể thay đổi tùy chọn bất cứ lúc nào bằng cách nhấp vào \"Cài đặt Cookie\" ở chân trang."
+      },
+      "browserSettings": {
+        "title": "Cài đặt trình duyệt",
+        "intro": "Hầu hết các trình duyệt web cho phép bạn kiểm soát cookie thông qua cài đặt của chúng:",
+        "browsers": {
+          "0": {
+            "name": "Chrome",
+            "path": "Cài đặt > Quyền riêng tư và bảo mật > Cookie"
+          },
+          "1": {
+            "name": "Firefox",
+            "path": "Cài đặt > Quyền riêng tư & Bảo mật > Cookie"
+          },
+          "2": {
+            "name": "Safari",
+            "path": "Tùy chọn > Quyền riêng tư > Cookie"
+          },
+          "3": {
+            "name": "Edge",
+            "path": "Cài đặt > Quyền riêng tư, tìm kiếm và dịch vụ > Cookie"
+          }
+        },
+        "note": "Chặn một số cookie có thể ảnh hưởng đến chức năng của trang web."
+      },
+      "similarTech": {
+        "title": "Công nghệ tương tự",
+        "intro": "Ngoài cookie, chúng tôi có thể sử dụng:",
+        "items": {
+          "0": {
+            "label": "Bộ nhớ cục bộ",
+            "desc": "Để lưu trữ tùy chọn và bộ nhớ đệm dữ liệu cục bộ"
+          },
+          "1": {
+            "label": "Lưu trữ Phiên",
+            "desc": "Dùng cho dữ liệu tạm thời trong phiên duyệt của bạn"
+          },
+          "2": {
+            "label": "Thẻ Pixel",
+            "desc": "Hình ảnh nhỏ để theo dõi việc mở email và truy cập trang web"
+          }
+        },
+        "noFingerprinting": "Chúng tôi KHÔNG sử dụng nhận dạng trình duyệt để theo dõi."
+      },
+      "updates": {
+        "title": "Cập nhật Chính sách này",
+        "content": "Chúng tôi có thể cập nhật Chính sách Cookie này định kỳ. Chúng tôi sẽ thông báo cho bạn về các thay đổi quan trọng bằng cách đăng chính sách đã cập nhật trên trang web của chúng tôi."
+      },
+      "contactUs": {
+        "title": "Liên hệ với chúng tôi",
+        "intro": "Nếu bạn có câu hỏi về việc sử dụng cookie của chúng tôi, vui lòng liên hệ:",
+        "company": "{brandName} Co., Ltd.",
+        "privacyNote": "Để biết thêm thông tin về cách chúng tôi thu thập và xử lý dữ liệu của bạn, vui lòng xem",
+        "privacyLink": "Chính sách Bảo mật"
+      }
+    },
+    "faq": {
+      "title": "Hướng dẫn Kỹ thuật & FAQ — {brandName}",
+      "description": "Phân tích toàn diện về kiến trúc framework, các topology cơ bản và chiến lược triển khai thương mại.",
+      "heading": "Đi sâu vào Chi tiết",
+      "subheading": "Tài liệu hỗ trợ được tối ưu hóa cho tích hợp kỹ thuật hệ thống và ra quyết định thương mại cấp điều hành.",
+      "categories": {
+        "0": {
+          "name": "Tổng quan Kiến trúc",
+          "questions": {
+            "0": {
+              "q": "Mục đích vận hành rõ ràng của {productName} là gì?",
+              "a": "{productName} là một framework AI SaaS Next.js có cấu trúc chặt chẽ, sẵn sàng cho sản xuất. Nó gói gọn hóa đơn doanh nghiệp, xác thực đa yếu tố và cách ly đa thuê bao vào một nền tảng cơ bản được quản trị, giúp các đội tập trung vào triển khai AI cụ thể cho sản phẩm."
+            },
+            "1": {
+              "q": "Cấu trúc cấp phép của kho lưu trữ là như thế nào?",
+              "a": "Hạ tầng nền tảng tuân thủ nghiêm ngặt thỏa thuận OSS AGPLv3, đảm bảo tính minh bạch và sử dụng miễn phí. Đối với các tổ chức cần che giấu mã nguồn độc quyền và cam kết viết lại nâng cao, các hợp đồng thương mại đóng nguồn rõ ràng có sẵn."
+            },
+            "2": {
+              "q": "Tốc độ đánh giá thương mại ban đầu là bao nhiêu?",
+              "a": "Cực kỳ nhanh. Sử dụng bộ công cụ Node CLI tùy chỉnh cùng với đặc tả kỹ thuật chính xác, một kỹ sư cấp dưới có thể triển khai một phiên bản MVP (Sản phẩm khả thi tối thiểu) cục bộ tự động trong vài phút."
+            }
+          }
+        },
+        "1": {
+          "name": "Hoạt động Thương mại",
+          "questions": {
+            "0": {
+              "q": "Độ dung sai cho việc mở rộng thương mại là bao nhiêu?",
+              "a": "Được thiết kế dựa trên các mô hình thành phần vi mô, khả năng chịu tải cấu trúc có thể mở rộng mượt mà từ các gói Miễn phí không yêu cầu lên đến ngưỡng Doanh nghiệp phục vụ hàng triệu yêu cầu mỗi tháng, hoàn toàn được cấu hình qua các ràng buộc trên bảng điều khiển."
+            },
+            "1": {
+              "q": "Sự biến động của gói đăng ký ảnh hưởng thế nào đến kế toán tiêu chuẩ?",
+              "a": "Chúng tôi vận hành bằng cách ghi nhật ký cấu trúc chính xác theo giây về tài nguyên và thông lượng API. Việc thay đổi ràng buộc sẽ được điều chỉnh ngay lập tức với lớp kế toán—hoặc hoàn tiền chênh lệch theo tỷ lệ hoặc phát hành tín dụng tự động. Không có thời kỳ đóng băng gói nào."
+            },
+            "2": {
+              "q": "Hạ tầng xử lý nào cô lập các vector thanh toán?",
+              "a": "Định tuyến tiền tệ toàn cầu về cơ bản ủy thác cho các giao diện máy chủ Stripe, đảm bảo giám sát PCI-DSS nghiêm ngặt và tính toàn vẹn xử lý. Các triển khai Doanh nghiệp có thể tích hợp các đường ống kiểm toán tài chính riêng được quản lý bởi các cam kết SLA tùy chỉnh."
+            }
+          }
+        },
+        "2": {
+          "name": "Lớp Kỹ thuật Hệ thống",
+          "questions": {
+            "0": {
+              "q": "Những trừu tượng trí tuệ cơ bản nào được hỗ trợ bản địa?",
+              "a": "Logic tương tác chính xác định khả năng tương tác bản địa qua các đặc tả tiêu chuẩn của OpenAI, Anthropic và Gemini. Điều này mang lại sự linh hoạt lớn để thay đổi nhanh các điểm cuối suy luận một cách hiệu quả thông qua ánh xạ biến mà không làm suy giảm logic thương mại nguồn."
+            },
+            "1": {
+              "q": "Nguy cơ che giấu cơ sở dữ liệu được giải quyết như thế nào?",
+              "a": "Triển khai mặc định nội tại áp dụng các chính sách Bảo mật Cấp hàng (RLS) của Postgres được gắn chặt với các nguyên thủy Định tuyến Giải quyết Người thuê không máy chủ của chúng tôi. Điều này đảm bảo các phân vùng cứng chủ động ngăn chặn sự ô nhiễm dữ liệu và chồng chéo thực thi ở cấp ứng dụng."
+            },
+            "2": {
+              "q": "Có hạn chế kiến trúc nào đối với các triển khai tự quản lý không?",
+              "a": "Hoàn toàn không. Kiến trúc hoàn toàn tách rời. Nếu môi trường thực thi các runtime Node.js độc lập cùng với các cụm PostgreSQL khỏe mạnh, toàn bộ chức năng sẽ được bảo toàn."
+            }
+          }
+        },
+        "3": {
+          "name": "Tính Toàn vẹn Hệ thống",
+          "questions": {
+            "0": {
+              "q": "Những giao thức nào xác định phòng thủ cơ học của biên giới?",
+              "a": "Các cơ chế thực thi mã hóa TLS bắt buộc trong quá trình truyền tải, các thuật toán băm xác định cho ánh xạ bí mật, và việc ghi lại phổ biến các sự kiện biến đổi được viết nghiêm ngặt vào các sổ theo dõi chuỗi thời gian nội bộ."
+            },
+            "1": {
+              "q": "Kiến trúc có tuân thủ các luật bảo mật quốc tế lớn không?",
+              "a": "Có, hoàn toàn. Các module doanh nghiệp cung cấp sẵn các triển khai thuật toán hướng đến trạng thái thu hồi đồng ý, logic xóa cứng và truy vấn xuất chi tiết, tuân thủ tối ưu GDPR và các khung quy định địa phương."
+            },
+            "2": {
+              "q": "Điều gì xảy ra khi có sự cố thảm họa bất thường?",
+              "a": "Các sentinel tự động lập tức cảnh báo các vector kỹ thuật cốt lõi, họ sẽ kích hoạt chặn mạch và triển khai phân loại nhanh. Được điều hành bởi sổ tay giải quyết tiên tiến, các Postmortem Sự cố hoàn toàn minh bạch được công bố rộng rãi trong vòng 72 giờ tuyệt đối."
+            }
+          }
+        },
+        "4": {
+          "name": "Hướng dẫn Hỗ trợ Kỹ thuật",
+          "questions": {
+            "0": {
+              "q": "Làm thế nào để giải quyết sự cố nghẽn vận hành?",
+              "a": "Các vector phân loại ban đầu hướng đến ma trận tài liệu được duy trì nghiêm ngặt và đã được đồng nghiệp xem xét, cùng các tương tác cộng đồng đã xác minh. Mua giấy phép tiêu chuẩn hoặc cấp doanh nghiệp sẽ mở khóa truy cập vào hàng đợi leo thang riêng tư, được giải quyết thông qua các nút kỹ thuật nội bộ trực tiếp."
+            },
+            "1": {
+              "q": "Các bạn có cung cấp các hoạt động tích hợp môi trường vật lý hoặc chuyên biệt không?",
+              "a": "Điều này thuộc gói thực thi cao cấp tùy chỉnh của chúng tôi dành cho các tập đoàn hàng đầu. Các kiến trúc sư cấp cao nhất của chúng tôi sẽ triển khai outly để thực hiện kiểm toán mã đối với kiến trúc cũ, quản lý di chuyển đám mây tinh tế và xác thực các phân vùng mạng cô lập cao độ."
+            }
+          }
+        }
+      },
+      "ctaHeading": "Cần đồng bộ kỹ thuật ngay lập tức?",
+      "ctaDescription": "Dù là xác thực lược đồ hành vi API cụ thể hay thực thi các thỏa thuận tích hợp dài hạn, hãy giao diện trực tiếp với hệ thống kỹ thuật.",
+      "ctaButton": "Nhận Hướng dẫn Tích hợp",
+      "ctaEmail": "Gửi Tin nhắn Trực tiếp"
+    },
+    "privacy": {
+      "title": "Giao thức Bảo vệ Quyền riêng tư & Thông tin — {brandName}",
+      "description": "Tài liệu hóa chi tiết cách cơ chế hạ tầng điều hành quyền tự chủ người dùng và cách ly dữ liệu máy.",
+      "heading": "Hướng dẫn Bảo vệ Thông tin",
+      "effectiveDate": "Ngày có hiệu lực",
+      "lastUpdated": "Cập nhật lần cuối",
+      "dates": {
+        "effective": "Ngày 1 tháng 1 năm 2025",
+        "updated": "Ngày 1 tháng 1 năm 2025"
+      },
+      "intro": "Tại {brandName} (\"Công ty,\" \"chúng tôi,\" \"chúng ta,\" hoặc \"của chúng tôi\"), chúng tôi cam kết bảo vệ quyền riêng tư của bạn. Chính sách Quyền riêng tư này giải thích cách chúng tôi thu thập, sử dụng, tiết lộ và bảo vệ thông tin của bạn khi bạn sử dụng trang web, ứng dụng và dịch vụ của chúng tôi (gọi chung là \"Dịch vụ\").",
+      "infoWeCollect": {
+        "title": "1. Thông tin Chúng tôi Thu thập",
+        "youProvide": {
+          "title": "1.1 Thông tin Bạn Cung cấp",
+          "intro": "Chúng tôi thu thập thông tin mà bạn trực tiếp cung cấp cho chúng tôi, bao gồm:",
+          "items": {
+            "0": {
+              "label": "Thông tin Tài khoản",
+              "desc": "Họ tên, địa chỉ email, mật khẩu và chi tiết tổ chức khi bạn tạo tài khoản."
+            },
+            "1": {
+              "label": "Thông tin Hồ sơ",
+              "desc": "Ảnh đại diện, chức danh, tên công ty và các thông tin tùy chọn khác."
+            },
+            "2": {
+              "label": "Thông tin Thanh toán",
+              "desc": "Địa chỉ hóa đơn và chi tiết phương thức thanh toán (được xử lý an toàn qua Stripe)."
+            },
+            "3": {
+              "label": "Giao tiếp",
+              "desc": "Tin nhắn, phản hồi và các giao tiếp khác bạn gửi cho chúng tôi."
+            },
+            "4": {
+              "label": "Nội dung",
+              "desc": "Bất kỳ nội dung nào bạn tạo, tải lên hoặc lưu trữ bằng Dịch vụ của chúng tôi."
+            }
+          }
+        },
+        "automatic": {
+          "title": "1.2 Thông tin Thu thập Tự động",
+          "intro": "Khi bạn sử dụng Dịch vụ của chúng tôi, chúng tôi tự động thu thập một số thông tin:",
+          "items": {
+            "0": {
+              "label": "Thông tin Thiết bị",
+              "desc": "Loại thiết bị, hệ điều hành, trình duyệt và mã định danh thiết bị duy nhất."
+            },
+            "1": {
+              "label": "Thông tin Sử dụng",
+              "desc": "Trang đã xem, tính năng đã dùng, hành động thực hiện và thời gian sử dụng Dịch vụ."
+            },
+            "2": {
+              "label": "Dữ liệu nhật ký",
+              "desc": "Địa chỉ IP, thời gian truy cập, URL giới thiệu và nhật ký hoạt động hệ thống."
+            },
+            "3": {
+              "label": "Thông tin vị trí",
+              "desc": "Vị trí chung dựa trên địa chỉ IP (chúng tôi không thu thập vị trí địa lý chính xác)."
+            }
+          }
+        }
+      },
+      "howWeUse": {
+        "title": "2. Cách chúng tôi sử dụng thông tin của bạn",
+        "intro": "Chúng tôi sử dụng thông tin thu thập được để:",
+        "items": {
+          "0": {
+            "label": "Cung cấp dịch vụ",
+            "desc": "Vận hành, duy trì và cải thiện Dịch vụ của chúng tôi."
+          },
+          "1": {
+            "label": "Xử lý giao dịch",
+            "desc": "Xử lý thanh toán, hóa đơn và các hoạt động liên quan."
+          },
+          "2": {
+            "label": "Liên lạc",
+            "desc": "Gửi thông báo dịch vụ, cập nhật và thông tin tiếp thị (với sự đồng ý)."
+          },
+          "3": {
+            "label": "Cá nhân hóa",
+            "desc": "Tùy chỉnh trải nghiệm và cung cấp các đề xuất phù hợp."
+          },
+          "4": {
+            "label": "Phân tích",
+            "desc": "Hiểu các mẫu sử dụng và cải thiện Dịch vụ của chúng tôi."
+          },
+          "5": {
+            "label": "Bảo vệ",
+            "desc": "Phát hiện, ngăn chặn và xử lý gian lận, lạm dụng và sự cố bảo mật."
+          }
+        }
+      },
+      "howWeShare": {
+        "title": "3. Cách chúng tôi chia sẻ thông tin của bạn",
+        "intro": "Chúng tôi có thể chia sẻ thông tin của bạn trong các trường hợp sau:",
+        "serviceProviders": {
+          "title": "3.1 Nhà cung cấp dịch vụ",
+          "intro": "Chúng tôi chia sẻ thông tin với các nhà cung cấp bên thứ ba thực hiện dịch vụ thay mặt chúng tôi, bao gồm:",
+          "items": {
+            "0": {
+              "label": "Hạ tầng",
+              "desc": "Lưu trữ đám mây (Vercel, Supabase), dịch vụ cơ sở dữ liệu"
+            },
+            "1": {
+              "label": "Xử lý thanh toán",
+              "desc": "Stripe để xử lý thanh toán an toàn"
+            },
+            "2": {
+              "label": "Xác thực",
+              "desc": "Clerk để quản lý danh tính"
+            },
+            "3": {
+              "label": "Phân tích",
+              "desc": "PostHog, Vercel Analytics để thu thập thông tin sử dụng"
+            }
+          }
+        },
+        "businessTransfers": {
+          "title": "3.2 Chuyển giao doanh nghiệp",
+          "content": "Nếu chúng tôi tham gia vào việc sáp nhập, mua lại hoặc bán tài sản, thông tin của bạn có thể được chuyển giao như một phần của giao dịch đó."
+        },
+        "legalRequirements": {
+          "title": "3.3 Yêu cầu pháp lý",
+          "content": "Chúng tôi có thể tiết lộ thông tin khi được yêu cầu bởi luật pháp, quy trình pháp lý hoặc yêu cầu của chính phủ, hoặc để bảo vệ quyền lợi, quyền riêng tư, an toàn hoặc tài sản của chúng tôi."
+        }
+      },
+      "yourRights": {
+        "title": "4. Quyền và Lựa chọn của bạn",
+        "accessPortability": {
+          "title": "4.1 Truy cập và Khả năng di chuyển",
+          "content": "Bạn có thể truy cập thông tin cá nhân của mình qua cài đặt tài khoản và yêu cầu bản sao dữ liệu ở định dạng có thể di chuyển."
+        },
+        "correction": {
+          "title": "4.2 Sửa đổi",
+          "content": "Bạn có thể cập nhật thông tin tài khoản bất cứ lúc nào qua bảng điều khiển."
+        },
+        "deletion": {
+          "title": "4.3 Xóa",
+          "content": "Bạn có thể yêu cầu xóa tài khoản và dữ liệu liên quan thông qua cài đặt hoặc liên hệ với chúng tôi."
+        },
+        "marketing": {
+          "title": "4.4 Thông tin tiếp thị",
+          "content": "Bạn có thể hủy nhận email tiếp thị bằng cách nhấp \"hủy đăng ký\" trong bất kỳ email tiếp thị nào hoặc cập nhật tùy chọn của mình."
+        }
+      },
+      "dataSecurity": {
+        "title": "5. Bảo mật dữ liệu",
+        "intro": "Chúng tôi áp dụng các biện pháp kỹ thuật và tổ chức phù hợp để bảo vệ thông tin của bạn, bao gồm:",
+        "items": {
+          "0": "Mã hóa dữ liệu khi truyền (TLS) và khi lưu trữ",
+          "1": "Đánh giá bảo mật và kiểm thử xâm nhập định kỳ",
+          "2": "Kiểm soát truy cập và yêu cầu xác thực",
+          "3": "Giám sát và ghi nhật ký hoạt động hệ thống"
+        }
+      },
+      "ccpa": {
+        "title": "6. Quyền riêng tư California (CCPA)",
+        "intro": "Nếu bạn là cư dân California, bạn có các quyền cụ thể liên quan đến thông tin cá nhân của mình:",
+        "items": {
+          "0": {
+            "label": "Quyền được biết",
+            "desc": "Yêu cầu tiết lộ thông tin chúng tôi thu thập, sử dụng và chia sẻ."
+          },
+          "1": {
+            "label": "Quyền xóa",
+            "desc": "Yêu cầu xóa thông tin cá nhân của bạn."
+          },
+          "2": {
+            "label": "Quyền từ chối",
+            "desc": "Từ chối việc bán thông tin cá nhân (chúng tôi không bán dữ liệu của bạn)."
+          },
+          "3": {
+            "label": "Quyền không bị phân biệt đối xử",
+            "desc": "Chúng tôi sẽ không phân biệt đối xử với bạn khi bạn thực hiện quyền của mình."
+          }
+        }
+      },
+      "gdpr": {
+        "title": "7. Quyền riêng tư châu Âu (GDPR)",
+        "intro": "Nếu bạn ở EEA, UK hoặc Thụy Sĩ, bạn có thêm quyền theo GDPR:",
+        "items": {
+          "0": {
+            "label": "Căn cứ pháp lý",
+            "desc": "Chúng tôi xử lý dữ liệu của bạn dựa trên việc thực hiện hợp đồng, lợi ích hợp pháp hoặc sự đồng ý."
+          },
+          "1": {
+            "label": "Quyền",
+            "desc": "Truy cập, sửa đổi, xóa, di chuyển, hạn chế và phản đối."
+          },
+          "2": {
+            "label": "DPO",
+            "desc": "Bạn có thể liên hệ với Cán bộ Bảo vệ Dữ liệu của chúng tôi tại dpo@nebutra.com."
+          }
+        }
+      },
+      "contactUs": {
+        "title": "8. Liên hệ với chúng tôi",
+        "intro": "Nếu bạn có câu hỏi về Chính sách Bảo mật này, vui lòng liên hệ với chúng tôi:",
+        "company": "{brandName} Co., Ltd."
+      }
+    },
+    "refund": {
+      "title": "Quy trình Xử lý Giao dịch Bất thường — {brandName}",
+      "description": "Phân định nghiêm ngặt về các thông số hoàn vốn chính xác trên các mô hình tham gia cấu trúc đa dạng.",
+      "heading": "Khung Thực thi Tranh chấp",
+      "effectiveDate": "Ngày Áp dụng Thực thi",
+      "lastUpdated": "Thời điểm Theo dõi Cập nhật",
+      "dates": {
+        "effective": "Ngày 1 tháng 1 năm 2025",
+        "updated": "Ngày 1 tháng 1 năm 2025"
+      },
+      "intro": "Tại {brandName}, chúng tôi muốn bạn hoàn toàn hài lòng với dịch vụ của chúng tôi. Chính sách Hoàn tiền này nêu rõ các trường hợp có thể hoàn tiền và quy trình yêu cầu hoàn tiền.",
+      "subscriptionPlans": {
+        "title": "Gói Đăng ký",
+        "monthly": {
+          "title": "Đăng ký Hàng tháng",
+          "items": {
+            "0": {
+              "label": "Hủy đăng ký",
+              "desc": "Bạn có thể hủy gói đăng ký hàng tháng bất cứ lúc nào"
+            },
+            "1": {
+              "label": "Hoàn tiền theo tỷ lệ",
+              "desc": "Chúng tôi không hoàn tiền theo tỷ lệ cho các tháng chưa sử dụng hết"
+            },
+            "2": {
+              "label": "Quyền truy cập",
+              "desc": "Bạn vẫn được truy cập các tính năng trả phí cho đến hết kỳ thanh toán"
+            },
+            "3": {
+              "label": "Gia hạn tự động",
+              "desc": "Gói đăng ký sẽ tự động gia hạn trừ khi bạn hủy"
+            }
+          }
+        },
+        "annual": {
+          "title": "Gói đăng ký hàng năm",
+          "items": {
+            "0": {
+              "label": "Bảo hành hoàn tiền 14 ngày",
+              "desc": "Người đăng ký hàng năm mới có thể yêu cầu hoàn tiền toàn bộ trong vòng 14 ngày kể từ ngày mua"
+            },
+            "1": {
+              "label": "Sau 14 ngày",
+              "desc": "Thông thường không hỗ trợ hoàn tiền sau khoảng thời gian 14 ngày"
+            },
+            "2": {
+              "label": "Hủy đăng ký",
+              "desc": "Bạn có thể hủy bất cứ lúc nào, nhưng gói đăng ký sẽ vẫn hoạt động cho đến hết kỳ hàng năm"
+            },
+            "3": {
+              "label": "Không hoàn tiền theo tỷ lệ",
+              "desc": "Chúng tôi không hoàn tiền một phần cho các tháng chưa sử dụng"
+            }
+          }
+        }
+      },
+      "eligibleScenarios": {
+        "title": "Các trường hợp đủ điều kiện hoàn tiền",
+        "intro": "Chúng tôi sẽ xem xét yêu cầu hoàn tiền trong các trường hợp sau:",
+        "serviceIssues": {
+          "title": "1. Sự cố dịch vụ",
+          "items": {
+            "0": "Sự cố dịch vụ nghiêm trọng ảnh hưởng đến khả năng sử dụng các tính năng cốt lõi của bạn",
+            "1": "Vấn đề kỹ thuật mà chúng tôi không thể khắc phục trong thời gian hợp lý",
+            "2": "Các tính năng khác biệt đáng kể so với những gì đã quảng cáo"
+          }
+        },
+        "billingErrors": {
+          "title": "2. Lỗi thanh toán",
+          "items": {
+            "0": "Thanh toán trùng lặp",
+            "1": "Số tiền thanh toán không chính xác",
+            "2": "Thanh toán trái phép (sau khi xác minh)"
+          }
+        },
+        "exceptionalCircumstances": {
+          "title": "3. Hoàn cảnh đặc biệt",
+          "items": {
+            "0": "Khẩn cấp y tế có giấy tờ chứng minh",
+            "1": "Thiên tai ảnh hưởng đến doanh nghiệp của bạn",
+            "2": "Các hoàn cảnh khác được xem xét từng trường hợp cụ thể"
+          }
+        }
+      },
+      "nonRefundable": {
+        "title": "Các mục không hoàn tiền",
+        "intro": "Các mục sau đây thường không đủ điều kiện hoàn tiền:",
+        "items": {
+          "0": {
+            "label": "Phí theo mức sử dụng",
+            "desc": "Lượt gọi API, tiêu thụ token AI hoặc dung lượng lưu trữ đã sử dụng"
+          },
+          "1": {
+            "label": "Gói bổ sung và tiện ích",
+            "desc": "Mua một lần hoặc dịch vụ bổ sung"
+          },
+          "2": {
+            "label": "Hợp đồng doanh nghiệp",
+            "desc": "Các thỏa thuận tùy chỉnh có điều khoản riêng"
+          },
+          "3": {
+            "label": "Hủy đăng ký tự nguyện",
+            "desc": "Sau khi hết thời gian đủ điều kiện hoàn tiền"
+          },
+          "4": {
+            "label": "Vi phạm điều khoản",
+            "desc": "Tài khoản bị chấm dứt do vi phạm chính sách"
+          }
+        }
+      },
+      "howToRequest": {
+        "title": "Cách Yêu Cầu Hoàn Tiền",
+        "step1": {
+          "title": "Bước 1: Liên Hệ Hỗ Trợ",
+          "intro": "Gửi email cho chúng tôi tại billing@nebutra.com với nội dung:",
+          "items": {
+            "0": "Địa chỉ email tài khoản của bạn",
+            "1": "Gói đăng ký và chu kỳ thanh toán",
+            "2": "Lý do yêu cầu hoàn tiền",
+            "3": "Bất kỳ tài liệu liên quan nào"
+          }
+        },
+        "step2": {
+          "title": "Bước 2: Quy Trình Xem Xét",
+          "items": {
+            "0": "Chúng tôi sẽ xem xét yêu cầu của bạn trong vòng 5 ngày làm việc",
+            "1": "Chúng tôi có thể yêu cầu thêm thông tin",
+            "2": "Bạn sẽ nhận được quyết định bằng văn bản qua email"
+          }
+        },
+        "step3": {
+          "title": "Bước 3: Xử Lý Hoàn Tiền",
+          "intro": "Nếu được phê duyệt:",
+          "items": {
+            "0": "Hoàn tiền được xử lý về phương thức thanh toán ban đầu",
+            "1": "Hoàn tiền thẻ tín dụng thường xuất hiện trong vòng 5-10 ngày làm việc",
+            "2": "Thời gian xử lý của ngân hàng có thể khác nhau"
+          }
+        }
+      },
+      "planChanges": {
+        "title": "Thay Đổi Gói",
+        "upgrades": {
+          "title": "Nâng cấp",
+          "items": {
+            "0": "Nâng cấp có hiệu lực ngay lập tức",
+            "1": "Bạn sẽ được tính phí phần chênh lệch theo tỷ lệ cho thời gian còn lại của chu kỳ thanh toán",
+            "2": "Không hoàn tiền cho gói trước đó"
+          }
+        },
+        "downgrades": {
+          "title": "Hạ cấp",
+          "items": {
+            "0": "Hạ cấp có hiệu lực từ chu kỳ thanh toán tiếp theo",
+            "1": "Bạn vẫn được sử dụng các tính năng hiện tại cho đến khi đó",
+            "2": "Không hoàn tiền một phần cho chu kỳ hiện tại"
+          }
+        }
+      },
+      "freeTrial": {
+        "title": "Dùng thử miễn phí",
+        "items": {
+          "0": "Dùng thử miễn phí không yêu cầu thông tin thanh toán",
+          "1": "Không phát sinh phí trong thời gian dùng thử",
+          "2": "Bạn sẽ được thông báo trước khi có bất kỳ khoản phí nào"
+        }
+      },
+      "disputeResolution": {
+        "title": "Giải quyết tranh chấp",
+        "intro": "Nếu bạn không đồng ý với quyết định hoàn tiền của chúng tôi:",
+        "steps": {
+          "0": "Trả lời email quyết định kèm thông tin bổ sung",
+          "1": "Yêu cầu chuyển lên cấp quản lý",
+          "2": "Liên hệ chúng tôi qua legal@nebutra.com để xem xét thêm"
+        }
+      },
+      "contactUs": {
+        "title": "Liên hệ",
+        "intro": "Đối với yêu cầu hoàn tiền hoặc câu hỏi về chính sách này:",
+        "company": "{brandName} Co., Ltd.",
+        "billingLabel": "Thanh toán",
+        "supportLabel": "Hỗ trợ",
+        "legalLabel": "Pháp lý",
+        "responseNote": "Chúng tôi cam kết phản hồi mọi yêu cầu hoàn tiền trong vòng 5 ngày làm việc.",
+        "termsNote": "Chính sách này là một phần của",
+        "termsLink": "Điều khoản dịch vụ",
+        "termsAgreement": "Bằng việc sử dụng {brandName}, bạn đồng ý với các điều khoản hoàn tiền này."
+      }
+    },
+    "terms": {
+      "title": "Điều khoản dịch vụ — {brandName}",
+      "description": "Điều khoản dịch vụ điều chỉnh việc truy cập và sử dụng trang web, ứng dụng, API và dịch vụ của {brandName}.",
+      "heading": "Điều khoản dịch vụ",
+      "effectiveDate": "Ngày có hiệu lực",
+      "lastUpdated": "Cập nhật lần cuối",
+      "dates": {
+        "effective": "Ngày 1 tháng 1 năm 2025",
+        "updated": "Ngày 1 tháng 1 năm 2025"
+      },
+      "intro1": "Chào mừng bạn đến với {brandName}! Điều khoản dịch vụ này (\"Điều khoản\") điều chỉnh việc truy cập và sử dụng trang web, ứng dụng, API và dịch vụ (gọi chung là \"Dịch vụ\") của {brandName} do {brandName} Co., Ltd. (\"{brandName},\" \"Công ty,\" \"chúng tôi,\" \"bên chúng tôi,\" hoặc \"của chúng tôi\") cung cấp.",
+      "intro2": "Bằng việc truy cập hoặc sử dụng Dịch vụ của chúng tôi, bạn đồng ý tuân thủ các Điều khoản này và",
+      "intro2PrivacyLink": "Chính sách bảo mật",
+      "intro2End": " của chúng tôi. Nếu bạn không đồng ý với các Điều khoản này, vui lòng không sử dụng Dịch vụ của chúng tôi.",
+      "acceptance": {
+        "title": "1. Chấp nhận điều khoản",
+        "eligibility": {
+          "title": "1.1 Điều kiện đủ tư cách",
+          "intro": "Để sử dụng Dịch vụ của chúng tôi, bạn phải:",
+          "items": {
+            "0": "Đủ 18 tuổi hoặc đủ tuổi thành niên theo pháp luật tại khu vực của bạn",
+            "1": "Có thẩm quyền ký kết các Điều khoản này thay cho bản thân hoặc tổ chức của bạn",
+            "2": "Không bị cấm sử dụng Dịch vụ của chúng tôi theo luật hiện hành"
+          }
+        },
+        "orgAccounts": {
+          "title": "1.2 Tài khoản Tổ chức",
+          "content": "Nếu bạn sử dụng Dịch vụ của chúng tôi thay mặt một tổ chức, bạn xác nhận rằng bạn có thẩm quyền ràng buộc tổ chức đó với các Điều khoản này."
+        }
+      },
+      "services": {
+        "title": "2. Mô tả Dịch vụ",
+        "intro": "{brandName} cung cấp nền tảng SaaS bao gồm:",
+        "items": {
+          "0": "Tính năng và tạo nội dung bằng AI",
+          "1": "Công cụ quản lý nội dung và cộng đồng",
+          "2": "Hệ thống gợi ý",
+          "3": "Tích hợp thương mại điện tử",
+          "4": "Khả năng Web3",
+          "5": "Phân tích và báo cáo"
+        }
+      },
+      "account": {
+        "title": "3. Đăng ký Tài khoản",
+        "creation": {
+          "title": "3.1 Tạo Tài khoản",
+          "intro": "Để truy cập một số tính năng, bạn phải tạo tài khoản. Bạn đồng ý:",
+          "items": {
+            "0": "Cung cấp thông tin chính xác và đầy đủ",
+            "1": "Duy trì bảo mật thông tin đăng nhập tài khoản của bạn",
+            "2": "Cập nhật thông tin của bạn kịp thời nếu có thay đổi",
+            "3": "Chịu trách nhiệm cho mọi hoạt động dưới tài khoản của bạn"
+          }
+        }
+      },
+      "billing": {
+        "title": "4. Đăng ký và Thanh toán",
+        "pricing": {
+          "title": "4.1 Giá cả",
+          "content": "Dịch vụ của chúng tôi được cung cấp theo các gói đăng ký khác nhau như mô tả trên trang Giá cả. Giá có thể thay đổi với thông báo trước 30 ngày."
+        },
+        "payment": {
+          "title": "4.2 Thanh toán",
+          "items": {
+            "0": "Đăng ký được thanh toán trước theo tháng hoặc năm",
+            "1": "Tất cả phí đều không hoàn lại trừ khi được nêu trong",
+            "2": "Bạn ủy quyền cho chúng tôi tính phí phương thức thanh toán của bạn cho các khoản phí áp dụng",
+            "3": "Chúng tôi sử dụng Stripe để xử lý thanh toán an toàn",
+            "1RefundLink": "Chính sách hoàn tiền"
+          }
+        }
+      },
+      "acceptableUse": {
+        "title": "5. Sử dụng hợp lý",
+        "prohibited": {
+          "title": "5.1 Hoạt động bị cấm",
+          "intro": "Bạn đồng ý KHÔNG được:",
+          "items": {
+            "0": "Vi phạm bất kỳ luật, quy định hoặc quyền của bên thứ ba nào",
+            "1": "Sử dụng Dịch vụ để truyền tải mã độc, thư rác hoặc nội dung có hại",
+            "2": "Thử truy cập trái phép vào hệ thống của chúng tôi",
+            "3": "Can thiệp hoặc làm gián đoạn tính toàn vẹn hoặc hiệu suất của Dịch vụ",
+            "4": "Sử dụng công cụ tự động để thu thập, sao chép hoặc trích xuất dữ liệu mà không có sự cho phép",
+            "5": "Đảo ngược kỹ thuật, giải biên dịch hoặc tháo rời Dịch vụ của chúng tôi",
+            "6": "Sử dụng tính năng AI của chúng tôi để tạo nội dung bất hợp pháp, có hại hoặc lừa dối"
+          }
+        }
+      },
+      "ip": {
+        "title": "6. Sở hữu trí tuệ",
+        "ours": {
+          "title": "6.1 Sở hữu trí tuệ của chúng tôi",
+          "content": "{brandName} và các bên cấp phép của chúng tôi sở hữu mọi quyền, quyền sở hữu và lợi ích đối với Dịch vụ, bao gồm tất cả phần mềm, thiết kế, nhãn hiệu và nội dung do chúng tôi tạo ra."
+        },
+        "yours": {
+          "title": "6.2 Nội dung của bạn",
+          "content": "Bạn vẫn giữ quyền sở hữu đối với nội dung bạn tạo ra hoặc tải lên (\"Nội dung của bạn\"). Bằng cách sử dụng Dịch vụ của chúng tôi, bạn cấp cho chúng tôi một giấy phép toàn cầu, không độc quyền, miễn phí bản quyền để sử dụng, lưu trữ, xử lý và hiển thị Nội dung của bạn chỉ để cung cấp Dịch vụ cho bạn."
+        }
+      },
+      "warranties": {
+        "title": "7. Miễn trừ bảo hành",
+        "content": "DỊCH VỤ ĐƯỢC CUNG CẤP \"NGUYÊN TRẠNG\" VÀ \"NGUYÊN TRẠNG CÓ SẴN\" MÀ KHÔNG CÓ BẢO HÀNH NÀO, DÙ LÀ RÕ RÀNG HAY NGẦM ĐỊNH, BAO GỒM NHƯNG KHÔNG GIỚI HẠN Ở CÁC BẢO HÀNH NGẦM ĐỊNH VỀ KHẢ NĂNG THƯƠNG MẠI, PHÙ HỢP VỚI MỘT MỤC ĐÍCH CỤ THỂ, QUYỀN SỞ HỮU VÀ KHÔNG XÂM PHẠM QUYỀN."
+      },
+      "liability": {
+        "title": "8. Giới hạn trách nhiệm",
+        "para1": "TRONG PHẠM VI TỐI ĐA ĐƯỢC PHÁP LUẬT CHO PHÉP, NEBUTRA SẼ KHÔNG CHỊU TRÁCH NHIỆM VỀ CÁC THIỆT HẠI GIÁN TIẾP, NGẪU NHIÊN, ĐẶC BIỆT, TIẾP THEO HOẶC HÌNH PHẠT, HOẶC MẤT LỢI NHUẬN, DỮ LIỆU, SỰ SỬ DỤNG HOẶC UY TÍN.",
+        "para2": "TRONG MỌI TRƯỜNG HỢP, TỔNG TRÁCH NHIỆM CỦA CHÚNG TÔI SẼ KHÔNG VƯỢT QUÁ MỨC CAO HƠN GIỮA (A) SỐ TIỀN BẠN ĐÃ THANH TOÁN CHO CHÚNG TÔI TRONG 12 THÁNG TRƯỚC KHI ĐỀ NGHỊ, HOẶC (B) 100 USD."
+      },
+      "termination": {
+        "title": "9. Chấm dứt",
+        "byYou": {
+          "title": "9.1 Do bạn",
+          "content": "Bạn có thể chấm dứt tài khoản của mình bất cứ lúc nào thông qua cài đặt tài khoản. Khi chấm dứt, bạn sẽ mất quyền truy cập vào Dịch vụ."
+        },
+        "byUs": {
+          "title": "9.2 Do chúng tôi",
+          "intro": "Chúng tôi có thể tạm ngưng hoặc chấm dứt tài khoản của bạn nếu bạn:",
+          "items": {
+            "0": "Vi phạm các Điều khoản này",
+            "1": "Tham gia vào hoạt động gian lận hoặc bất hợp pháp",
+            "2": "Không thanh toán các khoản phí áp dụng",
+            "3": "Tạo rủi ro hoặc phơi nhiễm pháp lý cho chúng tôi"
+          }
+        }
+      },
+      "disputes": {
+        "title": "10. Giải quyết tranh chấp",
+        "informal": {
+          "title": "10.1 Giải quyết không chính thức",
+          "content": "Trước khi khởi động thủ tục chính thức, bạn đồng ý liên hệ với chúng tôi qua legal@nebutra.com để cố gắng giải quyết tranh chấp một cách không chính thức."
+        },
+        "governingLaw": {
+          "title": "10.2 Luật điều chỉnh",
+          "content": "Các Điều khoản này được điều chỉnh bởi luật của bang Delaware, không xét đến các nguyên tắc xung đột pháp luật."
+        }
+      },
+      "contactUs": {
+        "title": "11. Liên hệ với chúng tôi",
+        "intro": "Nếu bạn có câu hỏi về các Điều khoản này, vui lòng liên hệ với chúng tôi:",
+        "company": "{brandName} Co., Ltd.",
+        "emailLabel": "Email",
+        "supportLabel": "Hỗ trợ"
+      },
+      "acknowledgement": "Bằng cách sử dụng {brandName}, bạn xác nhận rằng bạn đã đọc, hiểu và đồng ý bị ràng buộc bởi các Điều khoản Dịch vụ này."
+    }
+  },
+  "metadata": {
+    "title": "{brandName} Agent OS | Hệ điều hành Agent cho Startup",
+    "description": "Hệ điều hành Agent cho startup hướng tới toàn cầu. Nền tảng Next.js sẵn sàng sản xuất với kiến trúc được quản trị, xác thực, thanh toán, agent và i18n — xây dựng cho agent lập trình AI và các đội ngũ nghiêm túc."
+  },
+  "microLanding": {
+    "architecture": {
+      "badge": "TOPOLOGY HỆ THỐNG",
+      "title": "Kiến trúc minh bạch, không hộp đen.",
+      "description": "{productName} được thiết kế với cấu trúc Turborepo siêu mô-đun, giúp bạn kiểm soát hoàn toàn toàn bộ vòng đời phần mềm.",
+      "database": {
+        "title": "PostgreSQL + Prisma v7",
+        "desc": "ORM hoàn toàn có kiểu với chính sách Row-Level Security (RLS) tích hợp sẵn."
+      },
+      "auth": {
+        "title": "Clerk Multi-Tenant / Custom Identity",
+        "desc": "Cổng xác thực chuẩn SOC2 hỗ trợ chuyển đổi tổ chức B2B và RBAC."
+      }
+    },
+    "pricing": {
+      "title": "Xây dựng miễn phí. Chỉ trả tiền khi bạn cần chúng tôi chịu trách nhiệm.",
+      "description": "Xây dựng sản phẩm thương mại trên {brandName} không tốn gì — không phí, không khóa giấy phép, không đăng ký, không copyleft. Các gói trả phí bán hỗ trợ, SLA, bồi thường và quyền thương hiệu, chứ không bao giờ bán quyền sử dụng.",
+      "socialProofText": "MIT trên npm · FSL-1.1-ALv2 trên kho mã, chuyển sang Apache-2.0 sau hai năm · sử dụng thương mại miễn phí ở mọi quy mô.",
+      "community": {
+        "badge": "CỘNG ĐỒNG",
+        "price": "Miễn phí",
+        "period": "vĩnh viễn",
+        "desc": "Dành cho tất cả. Mọi quy mô đội ngũ, mọi mức doanh thu. Bao gồm sử dụng thương mại mã nguồn đóng, không cần đăng ký và không bắt buộc ghi công.",
+        "cta": "npx create-sailor",
+        "f1": "Lõi SaaS Next.js 16 đầy đủ, kèm tất cả gói",
+        "f2": "Sử dụng thương mại mã nguồn đóng ở mọi quy mô và doanh thu",
+        "f3": "Toàn bộ stack: Auth, Thanh toán, Tổ chức, API, Email, i18n, Tác vụ nền, Lưu trữ và hơn thế",
+        "f4": "Tính năng tiếp thị: Blog, trang đích, SEO, Analytics",
+        "f5": "Issue công khai, Discussions và Discord — theo khả năng, không đảm bảo phản hồi"
+      },
+      "team": {
+        "badge": "NHÓM",
+        "price": "2.000 $",
+        "period": "năm",
+        "desc": "Dành cho các đội nhóm không thể để thời gian phản hồi cộng đồng ảnh hưởng đến tiến độ quan trọng.",
+        "cta": "Nhận hỗ trợ {brandName}",
+        "f1": "Kênh hỗ trợ riêng (email + Slack hoặc Discord dùng chung)",
+        "f2": "Đảm bảo phản hồi đầu tiên trong hai ngày làm việc",
+        "f3": "Ưu tiên phân loại lỗi, trước các issue của cộng đồng",
+        "f4": "Hỗ trợ nâng cấp và báo trước về thay đổi phá vỡ tương thích",
+        "f5": "Mọi thứ trong gói Cộng đồng"
+      },
+      "enterprise": {
+        "badge": "DOANH NGHIỆP",
+        "price": "Từ 30.000 $",
+        "period": "năm",
+        "desc": "Dành cho tổ chức mà bộ phận mua sắm, pháp lý hoặc rà soát bảo mật yêu cầu một đối tác ký kết.",
+        "cta": "Liên hệ bộ phận kinh doanh",
+        "f1": "SLA phản hồi — 4 giờ làm việc tiêu chuẩn, 1 giờ khi ngừng sản xuất",
+        "f2": "Bồi thường và cam kết hợp đồng về bản vá bảo mật",
+        "f3": "DPA đã ký, gói tuân thủ và cam kết duy trì hoạt động",
+        "f4": "Quyền thương hiệu và white-label, kèm miễn trừ điều khoản sử dụng cạnh tranh",
+        "f5": "Nhánh hỗ trợ dài hạn và kỹ thuật triển khai riêng",
+        "f6": "Mọi thứ trong gói Nhóm"
+      }
+    },
+    "faq": {
+      "title": "Câu hỏi thường gặp về giá & giấy phép",
+      "description": "Các câu hỏi về cấp độ giấy phép, hoàn tiền và quyền sử dụng thương mại.",
+      "q1": {
+        "q": "Sailor có phải là gói đăng ký SaaS hàng tháng không?",
+        "a": "Không. Giá này dành cho giấy phép mã nguồn Sailor: Independent miễn phí, Startup tính phí hàng năm, và Enterprise tùy chỉnh."
+      },
+      "q2": {
+        "q": "Bạn có hỗ trợ hoàn tiền không?",
+        "a": "Giấy phép thương mại Startup bao gồm cửa sổ hoàn tiền 14 ngày cho lần mua đầu tiên. Điều khoản Enterprise được xử lý trong hợp đồng đã ký."
+      },
+      "q3": {
+        "q": "Tôi có thể dùng Sailor cho công việc khách hàng không?",
+        "a": "Có. Giấy phép thương mại cho phép đội ngũ bạn phát hành sản phẩm mã nguồn đóng cho khách hàng hoặc nội bộ trong phạm vi giấy phép; quyền white-label cần phê duyệt Enterprise."
+      },
+      "contactNudge": "Vẫn còn thắc mắc? Hãy liên hệ đội ngũ {brandName} →"
+    },
+    "cta": {
+      "eyebrow": "Bắt đầu ngay",
+      "title": "Dừng cấu hình. Bắt đầu xây dựng.",
+      "description": "Khởi tạo kiến trúc SaaS có thể mở rộng cục bộ với CLI {brandName}.",
+      "button": "Triển khai kiến trúc",
+      "license": "Mã nguồn mở theo giấy phép AGPL-3.0. Không yêu cầu thẻ tín dụng."
+    },
+    "capability": {
+      "badge": "Khả năng doanh nghiệp",
+      "title": "Lõi hoàn toàn có kiểu và có thể mở rộng.",
+      "multiTenant": {
+        "title": "Bảo mật cấp hàng bản địa",
+        "desc": "Mỗi truy vấn cơ sở dữ liệu đều được giới hạn nghiêm ngặt theo ngữ cảnh tenant hiện tại.",
+        "cta": "Đọc triết lý cơ sở dữ liệu"
+      },
+      "aiGateway": {
+        "title": "Cổng AI phổ quát",
+        "desc": "Định tuyến prompt mượt mà đến OpenAI, Anthropic hoặc các mô hình mã nguồn mở.",
+        "cta": "Khám phá trình xử lý SDK AI"
+      },
+      "rbac": {
+        "title": "Kiểm soát truy cập chi tiết",
+        "desc": "Định nghĩa vai trò admin, thành viên và người xem với cấu trúc chính sách tích hợp sẵn.",
+        "cta": "Xem tài liệu RBAC"
+      },
+      "billing": {
+        "title": "Hạ tầng thanh toán đa nhà cung cấp",
+        "desc": "Đo lường sử dụng, webhook đăng ký và cổng khách hàng tự phục vụ.",
+        "cta": "Xem kiến trúc thanh toán"
+      }
+    },
+    "productDemo": {
+      "badge": "Demo tương tác",
+      "title": "The local loop, end to end.",
+      "description": "Cảm nhận giao diện dòng lệnh, đường hầm webhook Stripe và việc cấp phát cơ sở dữ liệu đa tenant cục bộ.",
+      "analytics": {
+        "label": "Telemetry trực tiếp",
+        "desc": "Truyền dữ liệu sử dụng sản xuất trực tiếp vào terminal của bạn."
+      },
+      "billing": {
+        "label": "Sự kiện thanh toán",
+        "desc": "Xem Stripe webhooks thực thi qua đường hầm cục bộ."
+      },
+      "workspaces": {
+        "label": "Khởi tạo không gian làm việc",
+        "desc": "Cung cấp ngay lập tức các lược đồ PostgreSQL B2B biệt lập."
+      }
+    },
+    "workflow": {
+      "badge": "Tốc độ",
+      "title": "Từ con số 0 đến sản xuất trong thời gian kỷ lục.",
+      "step1": {
+        "title": "1. Sao chép",
+        "desc": "Sao chép ngay lập tức monorepo {brandName} và chạy pnpm install."
+      },
+      "step2": {
+        "title": "2. Cấu hình",
+        "desc": "Thiết lập Prisma, Clerk và Stripe qua CLI tương tác trong vài phút."
+      },
+      "step3": {
+        "title": "3. Xây dựng",
+        "desc": "Tập trung vào logic sản phẩm và UI trong khi nền tảng cơ bản đã được kết nối sẵn."
+      },
+      "step4": {
+        "title": "4. Triển khai",
+        "desc": "Push lên Vercel và AWS để phân phối toàn cầu ngay lập tức."
+      },
+      "speedometer": {
+        "number": "10",
+        "unit": "phút",
+        "subtitle": "THỜI GIAN ĐẾN THỊ TRƯỜNG",
+        "comparison": "Bỏ qua hàng tháng công việc nền tảng.",
+        "phases": {
+          "scaffold": "Khởi tạo",
+          "wire": "Lõi",
+          "ship": "Triển khai",
+          "scale": "Mở rộng",
+          "ongoing": "∞"
+        },
+        "cta": "Bắt đầu bộ hẹn giờ"
+      },
+      "presetHint": {
+        "badge": "Hệ thống Preset",
+        "message": "Một cấu hình. Mọi tính năng. Chọn preset và phát hành.",
+        "detail": "Cấu hình một lần, tạo mọi thứ — thanh toán, xác thực, AI, i18n — từ một cấu hình preset duy nhất.",
+        "readyStatus": "Hệ thống preset đã sẵn sàng"
+      }
+    }
+  },
+  "featuresPage": {
+    "hero": {
+      "badge": "Khả năng nền tảng",
+      "headlinePrefix": "Tất cả những gì bạn cần để ",
+      "headlineHighlight": "phát hành tự tin.",
+      "description": "{brandName} là nền tảng SaaS full-stack — AI, thanh toán, đa thuê bao, quan sát và bảo mật được tích hợp ngay từ ngày đầu. Đừng xây dựng lại lớp nền tảng."
+    },
+    "sections": {
+      "exploreFeature": "Khám phá tính năng",
+      "ai_category": "AI & Trí tuệ",
+      "ai_f1_title": "Hoàn thành trò chuyện đa mô hình",
+      "ai_f1_desc": "Định tuyến yêu cầu đến Anthropic, OpenAI, Google hoặc các mô hình tinh chỉnh của riêng bạn. Hỗ trợ streaming, vision và function calling ngay lập tức.",
+      "ai_f2_title": "Nhúng ngữ nghĩa",
+      "ai_f2_desc": "Tạo và lưu trữ vector embeddings với pgvector. Hỗ trợ tìm kiếm ngữ nghĩa, pipeline RAG và bộ máy đề xuất.",
+      "ai_f3_title": "Đo lường sử dụng AI",
+      "ai_f3_desc": "Hạn mức theo gói với theo dõi sử dụng — đo lường token AI, cuộc gọi API và lưu trữ dựa trên tổng hợp thời gian thực từ ClickHouse.",
+      "multi_category": "Nền tảng đa thuê bao",
+      "multi_f1_title": "Cách ly cấp tổ chức",
+      "multi_f1_desc": "Bảo mật cấp hàng trong Postgres đảm bảo các thuê bao không bao giờ truy cập dữ liệu của nhau — thực thi ở lớp cơ sở dữ liệu, không chỉ ứng dụng.",
+      "multi_f2_title": "Xác thực đa nhà cung cấp (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_desc": "OAuth đa nhà cung cấp (Google, GitHub, v.v.) cùng email/mật khẩu và magic-link — chuyển đổi giữa Clerk, Better Auth, NextAuth hoặc Supabase Auth qua một biến môi trường duy nhất.",
+      "multi_f3_title": "Cung cấp thuê bao tự động",
+      "multi_f3_desc": "Khi một tổ chức mới đăng ký qua Clerk, chúng tôi tự động tạo khóa API đầu tiên và gửi email chào mừng có thương hiệu — không cần thao tác thủ công.",
+      "dx_category": "Trải nghiệm nhà phát triển",
+      "dx_f1_title": "Khóa API đã băm",
+      "dx_f1_desc": "Khóa đã băm SHA-256 với hiển thị tiền tố (nbtr_live_…). Hiển thị dạng văn bản thuần túy đúng một lần khi tạo — bảo mật mà không gây cản trở.",
+      "dx_f2_title": "Middleware idempotency",
+      "dx_f2_desc": "Truyền header Idempotency-Key và mọi yêu cầu POST đều an toàn để thử lại. Dựa trên Redis, bộ nhớ đệm 24 giờ, tuân thủ dự thảo IETF.",
+      "dx_f3_title": "API đa giao thức (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI cho API công khai, oRPC cho các cuộc gọi frontend an toàn kiểu, tRPC cho khả năng tương thích T3-stack. Tất cả giao thức chia sẻ cùng hợp đồng Zod và stack middleware. Bật theo giao thức qua cấu hình preset.",
+      "billing_category": "Thanh toán & Monetisation",
+      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
+      "billing_f1_desc": "Chọn nhà cung cấp thanh toán: Stripe cho doanh nghiệp toàn cầu, LemonSqueezy cho dev indie, Polar cho OSS, hoặc Alipay/WeChat Pay cho thị trường Trung Quốc. Thanh toán một chạm và cổng thanh toán tự phục vụ.",
+      "billing_f2_title": "Thực thi hạn ngạch theo mức sử dụng",
+      "billing_f2_desc": "Bộ đếm Redis thời gian thực theo dõi cuộc gọi API và mức sử dụng token theo tenant. Yêu cầu bị chặn tại gateway khi đạt giới hạn.",
+      "billing_f3_title": "Đồng bộ vòng đời webhook",
+      "billing_f3_desc": "Sự kiện đăng ký Stripe tự động cập nhật gói org trong cơ sở dữ liệu của bạn qua Inngest — không cần cron job, không cần polling.",
+      "rel_category": "Độ tin cậy",
+      "rel_f1_title": "Circuit breaker + retry",
+      "rel_f1_desc": "Gateway và dịch vụ AI sử dụng circuit breaker CLOSED/OPEN/HALF_OPEN với exponential backoff và jitter — không có lỗi lan truyền.",
+      "rel_f2_title": "Hàng đợi dead letter",
+      "rel_f2_desc": "Các handler sự kiện cạn kiệt 3 lần thử lại sẽ vào DLQ. Phát lại từng cái từ admin API mà không cần triển khai lại.",
+      "rel_f3_title": "Cảnh báo tỷ lệ đốt SLO",
+      "rel_f3_desc": "Cảnh báo đa cửa sổ theo phong cách Google SRE kích hoạt ở tỷ lệ đốt 14.4×, 6× và 3× trước khi ngân sách lỗi của bạn cạn kiệt.",
+      "sec_category": "Bảo mật",
+      "sec_f1_title": "Tiêu đề dựa trên nonce CSP",
+      "sec_f1_desc": "Chính sách bảo mật nội dung Strict-dynamic với nonce tạo theo mỗi yêu cầu trong middleware Clerk — không có unsafe-inline ở bất kỳ đâu.",
+      "sec_f2_title": "WAF ModSecurity",
+      "sec_f2_desc": "Bộ quy tắc cốt lõi OWASP ở chế độ DetectionOnly trên mọi điểm vào. Giới hạn tốc độ ở 30 RPS với khả năng chịu xung đột qua chú thích nginx.",
+      "sec_f3_title": "SBOM + nguồn gốc SLSA",
+      "sec_f3_desc": "Mỗi bản phát hành tạo hóa đơn vật liệu phần mềm CycloneDX và xác nhận nguồn gốc SLSA, tải lên bản phát hành GitHub.",
+      "obs_category": "Khả năng quan sát",
+      "obs_f1_title": "Truy vết OpenTelemetry",
+      "obs_f1_desc": "Truy vết phân tán chạy từ Next.js → Hono → microservice Python qua OTLP. Xuất ra Jaeger (dev) và Grafana Tempo (prod).",
+      "obs_f2_title": "Bảng điều khiển Grafana",
+      "obs_f2_desc": "Tổng quan nền tảng nhiều panel: khả dụng SLO, ngân sách lỗi còn lại, độ bão hòa HPA, khởi động lại pod và giới hạn CPU.",
+      "obs_f3_title": "Theo dõi lỗi Sentry",
+      "obs_f3_desc": "Lỗi phía máy chủ và phía máy khách được ghi lại với ngữ cảnh tenant, ID yêu cầu và ID truy vết để tương quan xuyên hệ thống.",
+      "data_category": "Dữ liệu & Phân tích",
+      "data_f1_title": "Kho OLAP ClickHouse",
+      "data_f1_desc": "Sự kiện được lưu vào ClickHouse để truy vấn phân tích nhanh. dbt chuyển đổi sự kiện thô thành chỉ số tăng trưởng lớp vàng hiển thị trong bảng điều khiển.",
+      "data_f2_title": "Phân tích phễu",
+      "data_f2_desc": "Theo dõi đăng ký → kích hoạt → chuyển đổi với quy kết theo nhóm. Doanh thu trên mỗi người dùng hoạt động được tính từ lớp vàng.",
+      "data_f3_title": "Tiêu thụ sự kiện Kafka",
+      "data_f3_desc": "Tiếp nhận sự kiện thông lượng cao qua Inngest vào ClickHouse bronze, với loại bỏ trùng lặp trong bộ nhớ và xác thực lược đồ tại gateway edge.",
+      "infra_category": "Hạ tầng",
+      "infra_f1_title": "GitOps với ArgoCD",
+      "infra_f1_desc": "Các thay đổi trên nhánh chính được tự động điều hòa với cụm. Tự phục hồi sẽ hoàn tác các chỉnh sửa kubectl thủ công. Cửa sổ đồng bộ thực thi giờ triển khai an toàn.",
+      "infra_f2_title": "Gộp kết nối PgBouncer",
+      "infra_f2_desc": "PgBouncer chế độ giao dịch phía trước Supabase xử lý 1.000 kết nối ứng dụng trên 20 kết nối Postgres. HA với 2 bản sao.",
+      "infra_f3_title": "Tự động mở rộng ngang + dọc",
+      "infra_f3_desc": "HPA mở rộng theo CPU/bộ nhớ. VPA chạy ở chế độ Off cung cấp đề xuất điều chỉnh kích thước. KEDA chỉ số tùy chỉnh dự kiến cho v2."
+    }
+  },
+  "comingSoon": {
+    "badge": "🚧 Đang Xây Dựng",
+    "description": {
+      "ideas": "Chúng tôi đang xây dựng một trải nghiệm tuyệt vời dành cho giới geek trong phần này. Nó sẽ được phát hành cùng với bản cập nhật đường ống kiến trúc lớn tiếp theo.",
+      "opc": "Tổng quan nền tảng chi tiết hơn đang được thực hiện. Theo dõi nhật ký thay đổi và lộ trình cho các bản phát hành sắp tới.",
+      "roadmap": "Từ nền tảng hạ tầng đến quy mô doanh nghiệp — các giai đoạn sản phẩm, cột mốc phiên bản và tầm nhìn tài trợ của chúng tôi."
+    },
+    "returnBtn": "Quay lại Hub"
+  },
+  "blogShowcase": {
+    "badge": "TỪ BLOG",
+    "title": "Nhìn Nhận Kỹ Thuật",
+    "subtitle": "Đi sâu vào kiến trúc SaaS, hạ tầng AI và kỹ thuật vận hành sản phẩm.",
+    "readMore": "Đọc thêm"
+  },
+  "useCases": {
+    "badge": "KỊCH BẢN MỞ RỘNG",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
+    "tabs": {
+      "opc": "Vận hành Agentic",
+      "ip": "Ma trận IP Cá nhân",
+      "multimodal": "SaaS AI Đa phương thức",
+      "enterprise": "Doanh nghiệp Hiện đại (CN)",
+      "export": "Xuất khẩu Phần mềm Toàn cầu",
+      "design": "Động cơ Hệ thống Thiết kế",
+      "edam": "Tài sản Số Doanh nghiệp"
+    },
+    "content": {
+      "opc": {
+        "title": "Trung tâm Vận hành AI-Native",
+        "desc": "Chạy các luồng công việc agent, công cụ nội bộ và bề mặt tích hợp trên một nền tảng cơ sở được quản lý. Các tiện ích mở rộng dựa trên registry, cổng người vận hành và các mẫu runtime có thể tái sử dụng luôn đồng bộ khi hệ thống mở rộng.",
+        "features": {
+          "f1": "Registry Công cụ & Bề mặt Tích hợp",
+          "f2": "Cổng Người vận hành & Bảng điều khiển Nội bộ"
+        }
+      },
+      "ip": {
+        "title": "Ma trận Danh mục & Phát triển IP Cá nhân",
+        "desc": "Xây dựng sự hiện diện của founder đẳng cấp thế giới với blog MDX, danh mục và trang hồ sơ có tỷ lệ chuyển đổi cao. Newsletter, phân tích và SEO tích hợp đảm bảo thương hiệu cá nhân của bạn không ngừng gia tăng.",
+        "features": {
+          "f1": "Blog MDX + Động cơ Newsletter",
+          "f2": "Tối ưu SEO & Mạng xã hội"
+        }
+      },
+      "multimodal": {
+        "title": "SaaS AI Đa phương thức Đột phá",
+        "desc": "Phát hành các sản phẩm SaaS Multi-Agent orchestration, Chatbot, Text-to-Image, Image-to-Text và Text-to-Video với giao diện streaming dẫn đầu về UX, định tuyến mô hình thông minh và đo lường sử dụng.",
+        "features": {
+          "f1": "Giao diện Streaming đa Agent",
+          "f2": "Router mô hình + Đo lường sử dụng"
+        }
+      },
+      "enterprise": {
+        "title": "Website doanh nghiệp hiện đại (CN)",
+        "desc": "Tinh chỉnh cho các tình huống kinh doanh tại Trung Quốc — CDN trong nước siêu tốc, tích hợp hệ sinh thái WeChat, thiết kế responsive ưu tiên di động và tuân thủ bản địa hóa sẵn có.",
+        "features": {
+          "f1": "CDN nội địa + Tuân thủ",
+          "f2": "Sẵn sàng hệ sinh thái WeChat"
+        }
+      },
+      "export": {
+        "title": "Trang đích xuất khẩu phần mềm toàn cầu",
+        "desc": "Xây dựng chuyên biệt cho SaaS vươn ra toàn cầu. Thanh toán Stripe đa tiền tệ, tự động định tuyến i18n next-intl qua 7 ngôn ngữ, tuân thủ GDPR/CCPA và nội dung nhắm mục tiêu theo khu vực.",
+        "features": {
+          "f1": "Thanh toán toàn cầu đa tiền tệ",
+          "f2": "7 ngôn ngữ + Sẵn sàng GDPR"
+        }
+      },
+      "design": {
+        "title": "Hệ thống thiết kế & thư viện thành phần hàng đầu",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "features": {
+          "f1": "Quản trị token 4 lớp",
+          "f2": "Seven design languages + Storybook"
+        }
+      },
+      "edam": {
+        "title": "Quản lý tài sản kỹ thuật số doanh nghiệp",
+        "desc": "Hồ dữ liệu có cấu trúc và các topo bảng điều khiển phức tạp sử dụng kiến trúc PostgreSQL có thể mở rộng và RBAC chi tiết.",
+        "features": {
+          "f1": "Bảo mật cấp hàng",
+          "f2": "Truy vấn phức tạp",
+          "f3": "Quản lý vai trò"
+        }
+      }
+    }
+  },
+  "designSystem": {
+    "badge": "HỆ THỐNG THIẾT KẾ",
+    "headline": "4 lớp quản trị thiết kế.",
+    "subheadline": "Từ nguyên tố thương hiệu đến token runtime, đến engine đa theme, đến component được quản trị — không chỉ là shadcn với Tailwind.",
+    "flowBrand": "Thương hiệu",
+    "flowBrandDesc": "Nguyên tố màu, gradient, ngôn ngữ chuyển động",
+    "flowTokens": "Token",
+    "flowTokensDesc": "Biến CSS, thang 12 bước, chế độ tối",
+    "flowTheme": "Giao diện",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
+    "flowUI": "Giao diện người dùng",
+    "flowUIDesc": "Component, Storybook, Chromatic",
+    "card1Title": "Thang Màu 12 Bước",
+    "card1Desc": "Thang ngữ nghĩa theo Geist: nền (1-2), trạng thái (3-5), viền (6-8), điền (9-10), văn bản (11-12).",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
+    "card3Title": "Hồi quy Trực quan",
+    "card3Desc": "Chromatic phát hiện mọi thay đổi pixel. Storybook tài liệu hóa mọi component. Kiểm tra kiến trúc đảm bảo độ phủ story.",
+    "card4Title": "Quản trị Token",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
+    "card5Title": "Tài liệu Tương tác",
+    "card5Desc": "Trang tài liệu thiết kế hoàn chỉnh chạy trên Fumadocs, bao gồm tài liệu API thành phần song ngữ (EN/ZH), thư viện token, hướng dẫn mẫu bố cục và ví dụ mã trực tiếp.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
+  },
+  "notFound": {
+    "title": "Không tìm thấy trang",
+    "desc": "Liên kết có thể đã lỗi thời hoặc trang đã được di chuyển.",
+    "home": "Quay lại {brandName}",
+    "docs": "Mở tài liệu"
+  },
+  "ui": {
+    "search": {
+      "placeholder": "Tìm kiếm bản phát hành..."
+    },
+    "nav": {
+      "toggleMenu": "Bật/tắt menu"
+    },
+    "actions": {
+      "showFullRelease": "Hiển thị bản phát hành đầy đủ",
+      "copyLinkToRelease": "Sao chép liên kết bản phát hành",
+      "copyLink": "Sao chép liên kết",
+      "openInNewTab": "Mở trong tab mới"
+    },
+    "status": {
+      "comingSoon": "Sắp ra mắt"
+    }
+  },
+  "licensing": {
+    "hero": {
+      "title": "Miễn phí để <hl>Xây Dựng Trên</hl>",
+      "description": "{brandName}-Sailor hoàn toàn miễn phí để sử dụng thương mại — MIT trên npm, FSL-1.1-ALv2 trên kho mã nguồn, chuyển sang Apache-2.0 sau hai năm. Các gói trả phí bán hỗ trợ và cam kết hợp đồng, không bao giờ bán quyền sử dụng."
+    },
+    "plans": {
+      "community": {
+        "badge": "Luôn Miễn Phí",
+        "title": "Cộng Đồng",
+        "subtitle": "Dành Cho Mọi Người",
+        "description": "Mọi quy mô đội nhóm, mọi doanh thu. Bao gồm cả sản phẩm thương mại mã nguồn đóng.",
+        "features": {
+          "fullSource": "Toàn bộ mã nguồn, mọi gói",
+          "closedSourceOk": "Sử dụng thương mại mã nguồn đóng — không copyleft",
+          "noAttribution": "Không cần đăng ký, không cần ghi công",
+          "communitySupport": "Hỗ trợ cộng đồng — nỗ lực tốt nhất"
+        },
+        "cta": "Xem trên GitHub"
+      },
+      "team": {
+        "badge": "Từ {price}/năm",
+        "title": "Đội Nhóm",
+        "subtitle": "Gói hỗ trợ",
+        "description": "Dành cho các đội nhóm không thể phụ thuộc vào thời gian phản hồi của cộng đồng cho các công việc quan trọng.",
+        "features": {
+          "privateChannel": "Kênh hỗ trợ riêng",
+          "firstResponse": "Phản hồi lần đầu trong hai ngày làm việc, được đảm bảo",
+          "priorityTriage": "Ưu tiên phân loại lỗi",
+          "upgradeHelp": "Hỗ trợ nâng cấp và thông báo thay đổi không tương thích"
+        },
+        "cta": "Nhận hỗ trợ"
+      },
+      "enterprise": {
+        "badge": "Từ $30.000/năm",
+        "title": "Doanh nghiệp",
+        "subtitle": "Sẵn sàng cho mua sắm",
+        "description": "Dành cho các tổ chức mà bộ phận pháp lý, bảo mật hoặc mua sắm cần một đối tác ký kết hợp đồng.",
+        "features": {
+          "sla": "SLA phản hồi — 4 giờ làm việc, 1 giờ khi sản xuất ngừng",
+          "indemnity": "Cam kết bồi thường và vá lỗi bảo mật",
+          "compliance": "DPA đã ký, bộ tài liệu tuân thủ, cam kết duy trì hoạt động",
+          "trademark": "Quyền nhãn hiệu và white-label"
+        },
+        "cta": "Liên hệ bộ phận kinh doanh"
+      }
+    },
+    "faq": {
+      "title": "Câu hỏi thường gặp",
+      "description": "Phiên bản ngắn: sử dụng miễn phí. Trả phí khi bạn cần chúng tôi chịu trách nhiệm hợp đồng.",
+      "items": {
+        "whyFsl": {
+          "q": "Tại sao là FSL thay vì MIT hoặc AGPL?",
+          "a": "FSL cho phép mọi mục đích sử dụng trừ việc bán sản phẩm thay thế cho chính Sailor, và mỗi phiên bản sẽ chuyển sang Apache-2.0 sau hai năm phát hành — một quyền được cấp trước và không thể thu hồi. FSL dễ dàng vượt qua kiểm duyệt pháp lý doanh nghiệp hơn so với AGPL."
+        },
+        "reallyFree": {
+          "q": "Sử dụng thương mại có thực sự miễn phí không?",
+          "a": "Có. Không phí, không khóa giấy phép, không đăng ký, không ngưỡng doanh thu hay số lượng nhân sự, không yêu cầu ghi công. Xây dựng sản phẩm mã nguồn đóng và bán nó."
+        },
+        "competingUse": {
+          "q": "Điều gì được coi là sử dụng cạnh tranh?",
+          "a": "Cung cấp chính Sailor — một dịch vụ Sailor được lưu trữ, hoặc một nền tảng cạnh tranh đóng gói lại. Xây dựng SaaS dọc, công cụ nội bộ, hoặc dự án khách hàng trên Sailor không phải là sử dụng cạnh tranh. Nếu mô hình của bạn cần, hợp đồng Enterprise có thể bao gồm một bản miễn trừ bằng văn bản."
+        },
+        "upgrade": {
+          "q": "Các gói trả phí thực sự mua được gì?",
+          "a": "Cam kết hỗ trợ, SLA phản hồi, bồi thường, giấy tờ tuân thủ, và quyền nhãn hiệu. Không bao giờ là quyền sử dụng phần mềm — điều đó đã thuộc về bạn."
+        },
+        "contributions": {
+          "q": "Còn đóng góp mã nguồn mở thì sao?",
+          "a": "Tất cả các đóng góp đều yêu cầu CLA. Xem CONTRIBUTING.md."
+        }
+      }
+    },
+    "meta": {
+      "title": "Giấy phép — {brandName}",
+      "description": "Miễn phí sử dụng thương mại. MIT trên npm, FSL-1.1-ALv2 trên kho lưu trữ, chuyển đổi sang Apache-2.0."
+    }
+  },
+  "licenseWizard": {
+    "tiers": {
+      "individualFree": "Giấy phép cá nhân miễn phí",
+      "opcFree": "Giấy phép công ty một chủ sở hữu",
+      "startupCommercial": "Giấy phép thương mại cho startup",
+      "enterprise": "Giấy phép doanh nghiệp"
+    },
+    "referralSource": {
+      "selectPlaceholder": "Chọn một tùy chọn...",
+      "productHunt": "Product Hunt"
+    }
+  },
+  "changelogMeta": {
+    "title": "Nhật ký thay đổi — {brandName}",
+    "description": "Mỗi bản phát hành đều được thực hiện với sự chú ý tỉ mỉ đến từng chi tiết.",
+    "versionTitleSuffix": "Nhật ký thay đổi {brandName}"
+  },
+  "roadmapMeta": {
+    "title": "Lộ trình nền tảng — {brandName}",
+    "description": "Lộ trình cho nền tảng cơ bản được quản lý của {brandName}, thời gian chạy Harness và lộ trình nâng cấp."
+  },
+  "blogMeta": {
+    "title": "Blog — {brandName}",
+    "description": "Nhìn nhận kỹ thuật, cập nhật sản phẩm và thực hành tốt nhất về SaaS từ đội ngũ {brandName}."
+  },
+  "getLicenseMeta": {
+    "title": "Nhận Giấy Phép Của Bạn — {brandName}",
+    "description": "Nhận giấy phép {brandName} và quyền truy cập nền tảng trong 2 phút."
+  },
+  "landing": {
+    "faq": {
+      "badge": "Câu hỏi thường gặp",
+      "title": "Câu hỏi, trả lời thẳng",
+      "subtitle": "Tất cả những gì bạn cần biết trước khi ra mắt.",
+      "items": {
+        "what-is-sailor": {
+          "question": "{productName} chính xác là gì?",
+          "answer": "Sailor là nền tảng SaaS có quan điểm rõ ràng dựa trên Next.js + Tailwind v4, đã tích hợp sẵn xác thực, thanh toán, đa thuê bao, AI, hàng đợi, tìm kiếm và email. Bạn chỉ cần clone, cấu hình nhà cung cấp và ra mắt — thường trong vòng một tuần."
+        },
+        "who-is-it-for": {
+          "question": "Sailor được xây dựng cho ai?",
+          "answer": "Dành cho founder và kỹ sư sản phẩm muốn dành thời gian cho yếu tố khác biệt — thay vì phải xây dựng lại hệ thống xác thực/thanh toán/đa thuê bao lần thứ năm."
+        },
+        "free-or-paid": {
+          "question": "Có miễn phí hay phải trả phí?",
+          "answer": "Mã nguồn đầy đủ được phát hành theo AGPL-3.0 — miễn phí cho dự án cá nhân, công cụ nội bộ và các dự án mã nguồn mở tương thích AGPL. Giấy phép thương mại mở khóa quyền phát hành Sailor trong SaaS độc quyền đóng mã nguồn. Mọi gói đều bao gồm đầy đủ tính năng (xác thực, thanh toán, đa thuê bao, AI, kiểm toán); các cấp độ khác nhau về điều khoản cấp phép và SLA hỗ trợ, không phải về tính năng."
+        },
+        "china-friendly": {
+          "question": "Có hoạt động được ở Trung Quốc không?",
+          "answer": "Có. Chúng tôi cung cấp cấu hình hạ tầng song song (CDN tương thích Aliyun, tên miền thân thiện với ICP, tùy chọn Penpot thay cho Figma) để cùng một mã nguồn có thể triển khai sạch sẽ bên trong Great Firewall."
+        },
+        "deployment": {
+          "question": "Tôi có thể triển khai ở đâu?",
+          "answer": "Bất cứ nơi nào Node 22+ chạy được. Trang marketing được phát hành lên Vercel; dashboard, gateway và dịch vụ Python chạy trên Docker / PM2 (hiện chúng tôi chạy trên Aliyun ECS, với đầy đủ manifest Kubernetes trong infra/iac/k8s/ cho cụm). Khách hàng doanh nghiệp cũng có thể triển khai bên trong VPC riêng của họ."
+        },
+        "security": {
+          "question": "Bảo mật được xử lý như thế nào?",
+          "answer": "Mã hóa envelope ở lớp ứng dụng cho bí mật (@nebutra/vault), Postgres RLS cho cách ly thuê bao, RBAC/ABAC qua CASL hoặc OpenFGA (@nebutra/permissions), token liên dịch vụ ký HMAC, webhook ra ngoài đã ký và pipeline kiểm toán theo chuẩn SOC 2 (@nebutra/audit) được bao gồm trong mọi gói. Gói Pro và Enterprise bổ sung hỗ trợ xác nhận SOC 2, phản ứng sự cố chuyên dụng và thời gian lưu trữ nhật ký kiểm toán dài hơn."
+        },
+        "support": {
+          "question": "Tôi nhận được hỗ trợ gì?",
+          "answer": "Khách hàng miễn phí nhận được cộng đồng Discord + GitHub Issues. Gói Pro bổ sung email ưu tiên với SLA phản hồi trong 1 ngày làm việc. Gói Enterprise nhận được kênh Slack chuyên dụng và kỹ sư hướng dẫn sử dụng."
+        },
+        "byo-provider": {
+          "question": "Tôi có thể sử dụng nhà cung cấp của riêng mình không?",
+          "answer": "Có. Mọi tích hợp (xác thực, hàng đợi, tìm kiếm, email, thanh toán, lưu trữ, hóa đơn) đều không phụ thuộc nhà cung cấp. Factory trong mỗi gói chọn adapter phù hợp từ một biến môi trường duy nhất — thay Clerk bằng Better Auth, NextAuth hoặc Supabase Auth, QStash bằng BullMQ, Resend bằng SES, Stripe bằng Polar / LemonSqueezy / ChinaPay — mà không cần chạm vào mã ứng dụng."
+        },
+        "tech-stack": {
+          "question": "Công nghệ sử dụng là gì?",
+          "answer": "Next.js 16 (App Router) trên React 19, TypeScript 5.9, Tailwind v4, Prisma 7 trên Postgres (với pgvector + RLS), Hono cho gateway BFF, FastAPI cho dịch vụ ML/nặng, và thư viện component được tuyển chọn trên Radix, nguyên tố UI {brandName}, cùng lớp Motion chung. Tính năng AI chạy qua Vercel AI SDK với khả năng di chuyển nhà cung cấp (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
+        },
+        "license": {
+          "question": "Giấy phép là gì?",
+          "answer": "AGPL-3.0 kèm Ngoại lệ Thương mại. Miễn phí cho mục đích cá nhân, công cụ nội bộ và OSS tương thích AGPL. Giấy phép thương mại trả phí mở khóa quyền phát hành Sailor nguyên bản trong SaaS độc quyền. Mã nguồn đầy đủ được bao gồm trong mọi gói."
+        },
+        "paid-updates": {
+          "question": "Tôi có cần trả phí cho bản cập nhật không?",
+          "answer": "Không. Cập nhật mã nguồn được bao gồm trong mọi giấy phép thương mại — kéo từ nhánh main bất cứ khi nào bạn muốn và rebase fork của mình. Gói trả phí là quyền sử dụng Sailor trong sản xuất thương mại, không phải quyền nhận mã. Mỗi bản phát hành phụ đều kèm CHANGELOG và hướng dẫn nâng cấp cho bất kỳ thay đổi nào làm hỏng tương thích."
+        },
+        "why-turborepo": {
+          "question": "Tại sao dùng Turborepo thay vì ứng dụng Next.js tiêu chuẩn?",
+          "answer": "Sailor gồm 10 ứng dụng + 104 gói chung dưới packages/*/* + 4 làn đường backend (Hono gateway, FastAPI/Python, Go, Rust) — vượt xa giới hạn mà một mega-app Next.js duy nhất vẫn duy trì được. Turborepo mang lại cho chúng tôi bản dựng chỉ ảnh hưởng, bộ nhớ đệm remote minh bạch, và một nguồn sự thật duy nhất cho design token, auth, billing và observability chung — mà không ép mọi team vào cùng một tiến trình Next.js."
+        },
+        "multi-tenancy": {
+          "question": "Đa thuê bao được xử lý như thế nào?",
+          "answer": "Hai lớp. Bối cảnh tenant theo phạm vi request qua @nebutra/tenant (AsyncLocalStorage truyền org đang hoạt động qua mọi cuộc gọi server, bao gồm truy vấn DB và webhook ra ngoài), và cách ly được thực thi ở cơ sở dữ liệu qua chính sách Row-Level Security của Postgres (infra/data/database/policies/rls.sql) ràng buộc với app.current_tenant_id cục bộ theo phiên. Kết nối vai trò dịch vụ bỏ qua RLS chỉ bên trong dịch vụ nội bộ đáng tin; mọi route hướng người dùng đều đi qua client theo phạm vi tenant."
+        },
+        "swap-clerk": {
+          "question": "Tôi có thể thay Clerk bằng nhà cung cấp auth khác không?",
+          "answer": "Có. @nebutra/auth cung cấp adapter cấp một cho Clerk, Better Auth, NextAuth (Auth.js v5) và Supabase Auth. Chuyển đổi qua biến môi trường AUTH_PROVIDER hoặc chọn lúc scaffold với create-sailor --auth=... — bề mặt server, React và middleware giữ nguyên bất kể nhà cung cấp. Thêm adapter thứ năm chỉ cần triển khai một interface (~80 LOC); không có gì trong mã xung quanh gắn cứng với nhà cung cấp cụ thể."
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "Được các nhà xây dựng yêu thích",
+      "title": "Những gì founder nói sau khi phát hành với Sailor",
+      "subtitle": "Câu chuyện khách hàng từ nhóm beta của chúng tôi sẽ ra mắt sớm — hãy là một trong những người đầu tiên."
+    },
+    "comparison": {
+      "badge": "So sánh các gói",
+      "title": "Tất cả đều miễn phí. Hãy chọn mức cam kết bạn cần.",
+      "subtitle": "Mọi gói đều cung cấp toàn bộ mã nguồn và cho phép sử dụng thương mại mã nguồn đóng miễn phí. Khác biệt nằm ở hỗ trợ, cam kết hợp đồng và quyền thương hiệu.",
+      "plan": {
+        "community": "Cộng đồng",
+        "team": "Nhóm",
+        "enterprise": "Doanh nghiệp"
+      },
+      "feature": {
+        "license": {
+          "label": "Giấy phép",
+          "type": "Giấy phép",
+          "commercial-use": "Sử dụng thương mại mã nguồn đóng",
+          "registration": "Đăng ký",
+          "trademark": "Quyền thương hiệu"
+        },
+        "source": {
+          "label": "Mã nguồn",
+          "full-source": "Toàn bộ mã nguồn",
+          "all-packages": "Tất cả gói và mô-đun",
+          "update-window": "Cập nhật"
+        },
+        "support": {
+          "label": "Hỗ trợ",
+          "channel": "Kênh hỗ trợ",
+          "first-response": "Đảm bảo phản hồi đầu tiên",
+          "security-patch": "Cam kết bản vá bảo mật"
+        },
+        "procurement": {
+          "label": "Mua sắm",
+          "indemnification": "Bồi thường",
+          "dpa": "DPA đã ký và gói tuân thủ",
+          "continuity": "Cam kết duy trì hoạt động"
+        }
+      },
+      "ariaTable": "So sánh gói và tính năng",
+      "value": {
+        "included": "Có",
+        "notIncluded": "Không",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Không cần",
+        "whiteLabelRights": "Quyền white-label",
+        "unlimited": "Không giới hạn",
+        "unlimitedPlusNotice": "Không giới hạn + báo trước thay đổi phá vỡ tương thích",
+        "unlimitedPlusLts": "Không giới hạn + nhánh hỗ trợ dài hạn",
+        "publicChannels": "Issue công khai và Discord",
+        "privateChannel": "Kênh riêng",
+        "namedContact": "Đầu mối chỉ định",
+        "twoBusinessDays": "2 ngày làm việc",
+        "fourBusinessHours": "4 giờ làm việc",
+        "bestEffort": "Theo khả năng",
+        "contractual": "Theo hợp đồng"
+      }
+    },
+    "socialProof": {
+      "title": "Xây dựng trên stack bạn có thể tin tưởng",
+      "logosLabel": "Đối tác tích hợp",
+      "metrics": {
+        "developers": {
+          "value": "47+",
+          "label": "Nhà cung cấp AI được hỗ trợ"
+        },
+        "projects": {
+          "value": "104",
+          "label": "gói monorepo"
+        },
+        "uptime": {
+          "value": "7",
+          "label": "locale i18n sẵn có"
+        }
+      }
+    }
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "Số đăng ký ICP",
+      "publicSecurity": "Công an"
+    }
+  },
+  "icpFooter": {
+    "recordNumber": "Mã số ICP",
+    "publicSecurity": "Mã số công an"
+  },
+  "MarketLocalePicker": {
+    "title": "Khu vực và ngôn ngữ",
+    "description": "Chọn khu vực và ngôn ngữ cho trang marketing.",
+    "triggerAria": "Chọn khu vực và ngôn ngữ",
+    "searchPlaceholder": "Tìm kiếm khu vực…",
+    "plannedHint": "Giao diện sẽ tạm thời sử dụng tiếng Anh cho đến khi ngôn ngữ này được phát hành",
+    "noResults": "Không có khu vực nào phù hợp",
+    "menuAria": "Khu vực và ngôn ngữ"
+  }
+}

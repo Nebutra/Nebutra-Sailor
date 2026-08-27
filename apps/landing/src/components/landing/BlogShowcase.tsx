@@ -1,0 +1,99 @@
+"use client";
+
+import { ArrowRight } from "@nebutra/icons";
+import Image from "next/image";
+import { useFormatter, useTranslations } from "next-intl";
+import type { BlogPost } from "@/lib/blog-fallback";
+import { AnimateIn, AnimateInGroup } from "./AnimateIn";
+
+export interface BlogShowcaseProps {
+  posts: BlogPost[];
+}
+
+export function BlogShowcase({ posts }: BlogShowcaseProps) {
+  const t = useTranslations("blogShowcase");
+  const format = useFormatter();
+
+  if (posts.length === 0) return null;
+
+  return (
+    <section className="w-full py-24 md:py-32">
+      <div className="mx-auto max-w-[1400px] px-4 md:px-6">
+        {/* Section header */}
+        <AnimateIn inView preset="emerge" className="mx-auto max-w-3xl text-center">
+          <p className="mb-4 text-sm font-bold tracking-[0.2em] text-primary uppercase">
+            {t("badge")}
+          </p>
+          <h2
+            className="text-3xl font-semibold text-foreground md:text-4xl lg:text-5xl text-balance"
+            style={{ letterSpacing: "var(--tracking-heading)" }}
+          >
+            {t("title")}
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">{t("subtitle")}</p>
+        </AnimateIn>
+
+        {/* Post cards */}
+        <AnimateInGroup inView stagger="normal" className="mt-16 grid gap-6 md:grid-cols-3">
+          {posts.slice(0, 3).map((post) => (
+            <AnimateIn key={post.slug} preset="fadeUp">
+              <a
+                href={`/blog/${post.slug}`}
+                className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-border bg-background/50 transition-colors hover:bg-muted/40 hover:border-primary/20"
+                style={{ boxShadow: "var(--ring-hairline)" }}
+              >
+                {/* Thumbnail */}
+                {post.imageUrl ? (
+                  <div className="relative h-48 w-full overflow-hidden bg-muted">
+                    <Image
+                      src={post.imageUrl}
+                      alt={post.title}
+                      fill
+                      className="object-cover transition-transform duration-150 group-hover:-translate-y-px"
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className="h-48 w-full transition-opacity group-hover:opacity-90"
+                    style={{ background: "hsl(var(--primary))" }}
+                    aria-hidden="true"
+                  />
+                )}
+
+                <div className="flex flex-1 flex-col p-6">
+                  <time
+                    dateTime={post.date}
+                    className="text-xs font-medium text-muted-foreground/80"
+                  >
+                    {Number.isNaN(new Date(post.date).getTime())
+                      ? post.date
+                      : format.dateTime(new Date(post.date), {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                  </time>
+
+                  <h3 className="mt-2 text-base font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                    {post.title}
+                  </h3>
+
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground line-clamp-3">
+                    {post.excerpt}
+                  </p>
+
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary">
+                    {t("readMore")}
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </div>
+              </a>
+            </AnimateIn>
+          ))}
+        </AnimateInGroup>
+      </div>
+    </section>
+  );
+}
+
+BlogShowcase.displayName = "BlogShowcase";

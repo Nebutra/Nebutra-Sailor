@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommerce-service
+  namespace: nebutra
+  labels:
+    app.kubernetes.io/name: ecommerce-service
+    app.kubernetes.io/component: service
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ecommerce-service
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ecommerce-service
+        app.kubernetes.io/component: service
+    spec:
+      serviceAccountName: ecommerce-service
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: ecommerce-service
+          # CI pipeline overrides this tag via kustomize image transforms
+          image: nebutra/ecommerce-service:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8004
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: nebutra-config
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: DATABASE_URL
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: REDIS_URL
+            - name: STRIPE_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: STRIPE_SECRET_KEY
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 15
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 1000
+            readOnlyRootFilesystem: true
+      securityContext:
+        fsGroup: 1000

@@ -1,0 +1,102 @@
+/**
+ * @nebutra/auth — Provider-agnostic auth abstraction layer.
+ *
+ * Unified interface for Clerk and Better Auth.
+ *
+ * For server-side use:
+ * ```ts
+ * import { createAuth } from "@nebutra/auth";
+ * const auth = await createAuth({ provider: "better-auth" });
+ * const session = await auth.getSession(request);
+ * ```
+ *
+ * For client-side use:
+ * ```ts
+ * import { useAuth } from "@nebutra/auth/client";
+ * const { user, signOut } = useAuth();
+ * ```
+ *
+ * For setting up providers:
+ * ```tsx
+ * import { AuthProvider } from "@nebutra/auth/react";
+ * <AuthProvider provider="better-auth">
+ *   <App />
+ * </AuthProvider>
+ * ```
+ */
+
+// Auditable context resolver (used by @nebutra/audit consumers)
+export type { AuditableActor, AuditableContext } from "./audit-context";
+export { getAuditableContext } from "./audit-context";
+// Auth.js session JWT (apps must not import next-auth/jwt directly)
+export type {
+  AuthJsSessionTokenClaims,
+  DecodeAuthJsSessionTokenInput,
+  EncodeAuthJsSessionTokenInput,
+} from "./authjs-session-token";
+export { decodeAuthJsSessionToken, encodeAuthJsSessionToken } from "./authjs-session-token";
+// Provider config helpers (single source of truth for env-driven selection)
+export { getConfiguredAuthProvider, isClerkProvider } from "./config";
+// Feature-flag layer (dual-source: env + @nebutra/feature-flags)
+export type { AuthFeature, AuthFeatureContext } from "./features";
+export { isAuthFeatureEnabled, isAuthFeatureEnabledSync } from "./features";
+// Middleware factory
+export { createAuthMiddleware } from "./middleware";
+// OAuth start: preserve BA state cookies on 302 (do not use bare Response.redirect)
+export {
+  appendSetCookieHeaders,
+  buildOAuthStartRedirectResponse,
+} from "./oauth-start-response";
+// Static multi-provider matrix (declared support + product tier)
+export type { AuthProviderProfile, AuthProviderTier } from "./provider-matrix";
+export {
+  AUTH_PROVIDER_MATRIX,
+  getAuthProviderProfile,
+  isCapabilityDeclared,
+  isCapabilityEffective,
+  listFirstClassAuthProviders,
+} from "./provider-matrix";
+// Multi-app SSO: trusted origins for Better Auth CORS / CSRF checks
+export {
+  MULTI_APP_SSO_DEFAULT_ORIGINS,
+  resolveBetterAuthTrustedOrigins,
+} from "./providers/better-auth/trusted-origins";
+// Service-to-service HMAC helpers
+export type { ServiceTokenContext } from "./s2s";
+export { signServiceToken, verifyServiceToken } from "./s2s";
+// Server-side factory
+export { createAuth } from "./server";
+
+// Canonical types (shared across all layers)
+export type {
+  AuthConfig,
+  AuthProvider,
+  AuthProviderId,
+  CreateOrgInput,
+  CreateUserInput,
+  Organization,
+  Session,
+  SetActiveResult,
+  SignInMethod,
+  SignInResult,
+  User,
+} from "./types";
+// Utilities: login-center URLs, returnUrl sanitization, Turnstile
+export type {
+  SanitizeReturnUrlOptions,
+  VerifyTurnstileOptions,
+  VerifyTurnstileResult,
+} from "./utils";
+export {
+  buildAuthCenterSignInUrl,
+  buildAuthCenterSignUpUrl,
+  buildDefaultPostLoginUrl,
+  DEFAULT_POST_LOGIN_PATH,
+  getAuthCenterOrigin,
+  getAuthReturnAllowedHosts,
+  getSanitizedReturnUrl,
+  isTurnstileConfigured,
+  sanitizeReturnUrl,
+  verifyTurnstileOrThrow,
+  verifyTurnstileToken,
+} from "./utils";

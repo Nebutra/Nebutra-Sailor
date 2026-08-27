@@ -1,0 +1,455 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Nebutra primitive (core) tokens — W3C DTCG draft. Style Dictionary generates build/css/* for parity checks against runtime @nebutra/tokens/styles.css and @nebutra/theme/keyframes.css.",
+  "color": {
+    "nebutra-blue": {
+      "50": {
+        "$value": "#f0f4ff",
+        "$type": "color"
+      },
+      "100": {
+        "$value": "#dbe4ff",
+        "$type": "color"
+      },
+      "200": {
+        "$value": "#bac8ff",
+        "$type": "color"
+      },
+      "300": {
+        "$value": "#91a7ff",
+        "$type": "color"
+      },
+      "400": {
+        "$value": "#5c7cfa",
+        "$type": "color"
+      },
+      "500": {
+        "$value": "#0033fe",
+        "$type": "color",
+        "$description": "Base brand color — 云毓蓝",
+        "$extensions": {
+          "com.nebutra.display-p3": "color(display-p3 0.03 0.19 0.99)"
+        }
+      },
+      "600": {
+        "$value": "#002ad4",
+        "$type": "color"
+      },
+      "700": {
+        "$value": "#0021ab",
+        "$type": "color"
+      },
+      "800": {
+        "$value": "#001882",
+        "$type": "color"
+      },
+      "900": {
+        "$value": "#000f59",
+        "$type": "color"
+      },
+      "950": {
+        "$value": "#000830",
+        "$type": "color"
+      }
+    },
+    "nebutra-cyan": {
+      "50": {
+        "$value": "#e6fff8",
+        "$type": "color"
+      },
+      "100": {
+        "$value": "#b3ffec",
+        "$type": "color"
+      },
+      "200": {
+        "$value": "#80ffe0",
+        "$type": "color"
+      },
+      "300": {
+        "$value": "#4dfcd4",
+        "$type": "color"
+      },
+      "400": {
+        "$value": "#1af7c8",
+        "$type": "color"
+      },
+      "500": {
+        "$value": "#0bf1c3",
+        "$type": "color",
+        "$description": "Base brand accent — 云毓青",
+        "$extensions": {
+          "com.nebutra.display-p3": "color(display-p3 0.07 0.94 0.79)"
+        }
+      },
+      "600": {
+        "$value": "#09c9a3",
+        "$type": "color"
+      },
+      "700": {
+        "$value": "#07a183",
+        "$type": "color"
+      },
+      "800": {
+        "$value": "#057963",
+        "$type": "color"
+      },
+      "900": {
+        "$value": "#035143",
+        "$type": "color"
+      },
+      "950": {
+        "$value": "#012923",
+        "$type": "color"
+      }
+    },
+    "nebutra-neutral": {
+      "50": {
+        "$value": "#f8fafc",
+        "$type": "color"
+      },
+      "100": {
+        "$value": "#f1f5f9",
+        "$type": "color"
+      },
+      "200": {
+        "$value": "#e2e8f0",
+        "$type": "color"
+      },
+      "300": {
+        "$value": "#cbd5e1",
+        "$type": "color"
+      },
+      "400": {
+        "$value": "#94a3b8",
+        "$type": "color"
+      },
+      "500": {
+        "$value": "#64748b",
+        "$type": "color"
+      },
+      "600": {
+        "$value": "#475569",
+        "$type": "color"
+      },
+      "700": {
+        "$value": "#334155",
+        "$type": "color"
+      },
+      "800": {
+        "$value": "#1e293b",
+        "$type": "color"
+      },
+      "900": {
+        "$value": "#0f172a",
+        "$type": "color"
+      },
+      "950": {
+        "$value": "#020617",
+        "$type": "color"
+      },
+      "$description": "Slate (Tailwind) — cool blue-undertone gray. SSOT decision: Slate over Zinc. See docs/design-system/token-drift-audit.md."
+    },
+    "nebutra-gray": {
+      "50": {
+        "$value": "#fafafa",
+        "$type": "color"
+      },
+      "100": {
+        "$value": "#f5f5f5",
+        "$type": "color"
+      },
+      "200": {
+        "$value": "#e5e5e5",
+        "$type": "color"
+      },
+      "300": {
+        "$value": "#d4d4d4",
+        "$type": "color"
+      },
+      "400": {
+        "$value": "#a3a3a3",
+        "$type": "color"
+      },
+      "500": {
+        "$value": "#737373",
+        "$type": "color"
+      },
+      "600": {
+        "$value": "#525252",
+        "$type": "color"
+      },
+      "700": {
+        "$value": "#404040",
+        "$type": "color"
+      },
+      "800": {
+        "$value": "#262626",
+        "$type": "color"
+      },
+      "900": {
+        "$value": "#171717",
+        "$type": "color"
+      },
+      "950": {
+        "$value": "#0a0a0a",
+        "$type": "color"
+      },
+      "$description": "Pure neutral (Tailwind neutral) — zero hue, zero saturation. Used where blue undertone clashes — primarily dark-mode borders, dividers, and elevation hairlines."
+    },
+    "white": {
+      "$value": "#ffffff",
+      "$type": "color"
+    },
+    "black": {
+      "$value": "#000000",
+      "$type": "color"
+    },
+    "tertiary-purple": {
+      "$value": "#8b5cf6",
+      "$type": "color",
+      "$description": "Tertiary accent — data viz, infrastructure tags"
+    },
+    "status": {
+      "danger": {
+        "$value": "#ef4444",
+        "$type": "color"
+      },
+      "warning": {
+        "$value": "#f59e0b",
+        "$type": "color"
+      },
+      "success": {
+        "$value": "#22c55e",
+        "$type": "color",
+        "$description": "Tailwind green-500 — VI manual canonical success color (replaces drifted #10b981 emerald)."
+      }
+    }
+  },
+  "size": {
+    "container": {
+      "text": {
+        "$value": "896px",
+        "$type": "dimension",
+        "$description": "Reading-focused (hero copy, FAQ)"
+      },
+      "content": {
+        "$value": "1152px",
+        "$type": "dimension",
+        "$description": "Pricing, blog"
+      },
+      "wide": {
+        "$value": "1400px",
+        "$type": "dimension",
+        "$description": "Feature bento, navbar"
+      }
+    },
+    "breakpoint": {
+      "$description": "Named responsive breakpoints (2026-05 governance). xs/tight/shell/3xl supplement Tailwind defaults; lint-no-arbitrary-breakpoints.mjs bans inline min-[Npx]: usage.",
+      "xs": {
+        "$value": "26.25rem",
+        "$type": "dimension",
+        "$description": "420px — narrow-phone grid flip"
+      },
+      "tight": {
+        "$value": "67.5rem",
+        "$type": "dimension",
+        "$description": "1080px — dense dashboard header horizontal"
+      },
+      "shell": {
+        "$value": "73.75rem",
+        "$type": "dimension",
+        "$description": "1180px — three-pane shell threshold"
+      },
+      "3xl": {
+        "$value": "112.5rem",
+        "$type": "dimension",
+        "$description": "1800px — 4K / Studio Display friendliness"
+      }
+    },
+    "radius": {
+      "$description": "Radius ladder. Every step names a job; nothing on the ladder exists only because a t-shirt scale has that size. Steps below 1rem climb by 2px so a nested corner can sit one step inside its parent without looking loose; above 1rem the ladder jumps, because a large panel does not read a 2px difference. The three intent aliases (button, card, panel) are the names product code should reach for — they resolve onto lg/xl/2xl today and exist so a future re-shape moves one value instead of a thousand call sites. Nothing above 3xl: a corner larger than 24px is a composition, not a surface, and belongs in the component that draws it.",
+      "none": {
+        "$value": "0",
+        "$type": "dimension",
+        "$description": "Job: flush. Edge-to-edge surfaces — a full-bleed table row, a segment welded to its neighbour, an inset that must not round twice."
+      },
+      "xs": {
+        "$value": "0.125rem",
+        "$type": "dimension",
+        "$description": "Job: swatch. The smallest corner that still reads as intentional at 8-12px: chart legend keys, mark highlights, progress and sparkline bar caps. Added because 18 call sites had hand-written 1px, 2px and 3px corners with no step to reach for. Matches the bottom of the Tailwind scale, so rounded-xs and var(--radius-xs) agree."
+      },
+      "sm": {
+        "$value": "0.25rem",
+        "$type": "dimension",
+        "$description": "Job: inner. The corner of something nested inside a control — a thumbnail inside a chip, a swatch inside a tile, a code span inside a paragraph. One step inside md."
+      },
+      "md": {
+        "$value": "0.375rem",
+        "$type": "dimension",
+        "$description": "Job: control. The default for anything you can click or type into at text height: input, select trigger, small button, menu item, badge with square corners. The most-used step on the ladder."
+      },
+      "lg": {
+        "$value": "0.5rem",
+        "$type": "dimension",
+        "$description": "Job: container. Things that hold controls rather than being one: popover, dropdown surface, tooltip, toolbar, inline code block. Aliased as radius-button."
+      },
+      "xl": {
+        "$value": "0.75rem",
+        "$type": "dimension",
+        "$description": "Job: card. A discrete surface in a list or grid that carries its own padding and elevation. Aliased as radius-card."
+      },
+      "2xl": {
+        "$value": "1rem",
+        "$type": "dimension",
+        "$description": "Job: panel. A region that holds cards — bento cell, dialog, sheet, dashboard section. Aliased as radius-panel."
+      },
+      "3xl": {
+        "$value": "1.5rem",
+        "$type": "dimension",
+        "$description": "Job: frame. The outermost shell of a marketing or docs composition — mockup window, hero frame, screenshot chrome. The top of the ladder."
+      },
+      "full": {
+        "$value": "9999px",
+        "$type": "dimension",
+        "$description": "Job: pill. Fully round by intent, not by size: avatar, dot, toggle track, tag. Kept as one step, not a pair, so there is exactly one way to say round."
+      },
+      "button": {
+        "$value": "0.5rem",
+        "$type": "dimension",
+        "$description": "Intent alias for the container step. Reach for this in product code instead of lg so the shape can be re-tuned in one place."
+      },
+      "card": {
+        "$value": "0.75rem",
+        "$type": "dimension",
+        "$description": "Intent alias for the card step. Reach for this in product code instead of xl."
+      },
+      "panel": {
+        "$value": "1rem",
+        "$type": "dimension",
+        "$description": "Intent alias for the panel step. Reach for this in product code instead of 2xl."
+      }
+    }
+  },
+  "duration": {
+    "$description": "Four-rail motion duration scale (2026-05-14 governance). Names denote intent, not relative speed: micro = momentary feedback, flow = state transition, reveal = content unveil, cinematic = hero entrance.",
+    "micro": {
+      "$value": "100ms",
+      "$type": "duration",
+      "$description": "Micro-feedback: hover, focus, toggle, button press"
+    },
+    "flow": {
+      "$value": "200ms",
+      "$type": "duration",
+      "$description": "State flow: modal open, dropdown reveal, tab switch, default page transition"
+    },
+    "reveal": {
+      "$value": "300ms",
+      "$type": "duration",
+      "$description": "Content unveil: slide-in, expand, accordion, drawer"
+    },
+    "cinematic": {
+      "$value": "500ms",
+      "$type": "duration",
+      "$description": "Hero-grade entrance: landing reveal, large delight moments"
+    }
+  },
+  "easing": {
+    "in": {
+      "$value": "cubic-bezier(0.4, 0, 1, 1)",
+      "$type": "cubicBezier"
+    },
+    "out": {
+      "$value": "cubic-bezier(0.16, 1, 0.3, 1)",
+      "$type": "cubicBezier"
+    },
+    "in-out": {
+      "$value": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "$type": "cubicBezier"
+    },
+    "spring": {
+      "$value": "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+      "$type": "cubicBezier"
+    }
+  },
+  "tracking": {
+    "$description": "Letter-spacing tokens — 2026 SaaS hero typography (Vercel Geist consensus).",
+    "display": {
+      "$value": "-0.04em",
+      "$type": "string",
+      "$description": "Hero H1"
+    },
+    "heading": {
+      "$value": "-0.03em",
+      "$type": "string",
+      "$description": "Section H2/H3"
+    },
+    "tight": {
+      "$value": "-0.015em",
+      "$type": "string",
+      "$description": "Body emphasis"
+    }
+  },
+  "leading": {
+    "$description": "Line-height tokens.",
+    "display": {
+      "$value": "1.05",
+      "$type": "string"
+    },
+    "heading": {
+      "$value": "1.15",
+      "$type": "string"
+    }
+  },
+  "ring": {
+    "$description": "Inset ring shorthand recipes — replaces shadow-2xl elevation per 2026 convention.",
+    "hairline": {
+      "$value": "inset 0 0 0 1px rgb(255 255 255 / 0.04)",
+      "$type": "string",
+      "$description": "Etched-glass hairline (light mode value, dark mode override in themes/dark.json)"
+    }
+  },
+  "overlay": {
+    "$description": "Translucent surface overlays — used for dot patterns, subtle mesh tints, glass effects. Already-resolved color values (not aliases) so they work in any rgb()/rgba()/style context.",
+    "faint": {
+      "$value": "rgb(0 0 0 / 0.06)",
+      "$type": "color",
+      "$description": "Light-mode faint overlay (6% black)"
+    }
+  },
+  "fontFamily": {
+    "$description": "Geist + Geist Mono for Latin, self-hosted Noto Sans SC (SIL OFL) for CJK, system CJK faces (PingFang SC / Microsoft YaHei) as the fallback behind it. ORDER IS THE DESIGN DECISION: Geist comes first so it keeps Latin and the numerals (tabular figures, tighter x-height — what dense dashboard tables need, and the locked UI face); Noto Sans SC follows so only CJK falls through to it. Reversed, Noto would take the Latin too and its Latin is not as good as Geist's for UI. Each stack prefixes the next/font variable (--font-geist-sans / --font-geist-mono / --font-noto-sans-sc) so the actual loaded face wins over the literal family name, which the browser cannot resolve directly once next/font assigns a generated unique font-family identifier. The Noto entry carries a literal fallback inside var() so a surface that never applies cjkFontClassName degrades to the family name instead of making the whole declaration invalid at computed-value time. `cn` is kept rather than deleted because it still has a job: the `font-cn` utility and the `html:lang(zh|ja|ko) body` auto-activation rule in static/base.css both set font-family to that token ALONE (they exist for the CJK line-height / word-break metrics), so it governs Chinese pages entirely — including their Latin.",
+    "sans": {
+      "$value": "var(--font-geist-sans), \"Geist\", var(--font-noto-sans-sc, \"Noto Sans SC\"), \"PingFang SC\", \"Microsoft YaHei\", -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+      "$type": "fontFamily"
+    },
+    "cn": {
+      "$value": "var(--font-geist-sans), \"Geist\", var(--font-noto-sans-sc, \"Noto Sans SC\"), \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "$type": "fontFamily",
+      "$description": "CJK-locale stack — same order as sans, minus the Latin-only system faces"
+    },
+    "display": {
+      "$value": "var(--font-geist-sans), \"Geist\", var(--font-noto-sans-sc, \"Noto Sans SC\"), sans-serif",
+      "$type": "fontFamily"
+    },
+    "heading": {
+      "$value": "var(--font-geist-sans), \"Geist\", var(--font-noto-sans-sc, \"Noto Sans SC\"), sans-serif",
+      "$type": "fontFamily"
+    },
+    "mono": {
+      "$value": "var(--font-geist-mono), \"Geist Mono\", ui-monospace, SFMono-Regular, \"SF Mono\", Menlo, monospace",
+      "$type": "fontFamily"
+    }
+  },
+  "transition": {
+    "$description": "Composite tokens (W3C DTCG composite type). Combine duration + easing into a single value for the `transition` shorthand and a multi-stop `focus-ring` recipe.",
+    "default": {
+      "$type": "transition",
+      "$value": {
+        "duration": "200ms",
+        "timingFunction": "ease-out",
+        "delay": "0ms"
+      },
+      "$description": "Default state-flow transition — 200ms ease-out (matches {duration.flow}). Used by --transition shorthand."
+    }
+  }
+}

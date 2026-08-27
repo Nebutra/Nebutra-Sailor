@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — สถานีเครื่องมือออนไลน์",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "เครื่องมือโค้ด,text,แฮช,เอกสาร และภาพออนไลน์"
+  },
+  "nav": {
+    "main": "การนำทางหลัก",
+    "homeAria": "หน้าหลัก {brandName} Forge",
+    "tools": "เครื่องมือ",
+    "wallet": "กระเป๋าเงิน",
+    "api": "API",
+    "routerAria": "{brandName} Router",
+    "categoriesAria": "หมวดหมู่เครื่องมือ",
+    "languageAria": "เปลี่ยนภาษา"
+  },
+  "tool": {
+    "breadcrumbAria": "เส้นทางนำทาง",
+    "workspace": "พื้นที่ทำงาน",
+    "workspaceHint": "เครื่องท้องถิ่นหรือเซิร์ฟเวอร์ · เส้นทางเดียวกับ API",
+    "api": "API",
+    "apiHint": "สัญญาเดียวกันกับหน้าเว็บ ใช้คีย์ที่ผ่านการยืนยันในสภาพแวดล้อมจริง",
+    "related": "เครื่องมือที่เกี่ยวข้อง"
+  },
+  "auth": {
+    "signIn": "เข้าสู่ระบบ",
+    "signUp": "สมัครสมาชิก",
+    "signOut": "ออกจากระบบ"
+  },
+  "footer": {
+    "navAria": "ส่วนท้าย",
+    "blurb": "สถานีเครื่องมือออนไลน์ ทำงานเสร็จในเบราว์เซอร์ หรืออัตโนมัติผ่าน API / MCP",
+    "product": "ผลิตภัณฑ์",
+    "developers": "นักพัฒนา",
+    "company": "บริษัท",
+    "docs": "เอกสารการผสาน",
+    "website": "เว็บไซต์",
+    "privacy": "ความเป็นส่วนตัว"
+  },
+  "home": {
+    "eyebrow": "เห็นมัน เรียกมัน",
+    "title": "มีดอเนกประสงค์สำหรับเครื่องมือออนไลน์",
+    "subtitle": "Codec ข้อความ แฮช เอกสาร และประมวลผลภาพ ทำงานเสร็จในเบราว์เซอร์ หรืออัตโนมัติผ่าน API / MCP — หนึ่งการนำไปใช้",
+    "toolCount": "{count} เครื่องมือ",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "ค้นหา: นับคำ base64 json timestamp…",
+    "aria": "ค้นหาเครื่องมือ",
+    "emptyTitle": "ไม่มีเครื่องมือตรงกับ “{query}”",
+    "emptyHint": "ลองคีย์เวิร์ดอื่น หรือเลือกเครื่องมือจากหมวดหมู่ด้านล่าง"
+  },
+  "categories": {
+    "codec": {
+      "label": "Codec",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "การตรวจสอบจีน",
+      "hint": "ID · เบอร์โทร"
+    },
+    "data": {
+      "label": "ข้อมูล",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "นักพัฒนา",
+      "hint": "Regex · SQL · สี · UUID"
+    },
+    "doc": {
+      "label": "เอกสาร",
+      "hint": "Markdown · รวม/แยก PDF"
+    },
+    "finance": {
+      "label": "การเงิน",
+      "hint": "แปลงจำนวนเป็นตัวหนังสือ"
+    },
+    "hash": {
+      "label": "แฮช & ความปลอดภัย",
+      "hint": "MD5 · SHA · HMAC · รหัสผ่าน"
+    },
+    "image": {
+      "label": "รูปภาพ",
+      "hint": "บีบอัด · QR · แปลง"
+    },
+    "life": {
+      "label": "เครื่องคำนวณชีวิต",
+      "hint": "เงินกู้ · BMI · ความสัมพันธ์"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "โทเค็น · ค่าใช้จ่าย · schema"
+    },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
+    "security": {
+      "label": "ความปลอดภัย",
+      "hint": "สร้างรหัสผ่าน"
+    },
+    "text": {
+      "label": "ข้อความ",
+      "hint": "จำนวนคำ · CJK · พินอิน · Diff"
+    },
+    "time": {
+      "label": "เวลา",
+      "hint": "Timestamp · timezone · Cron · lunar"
+    },
+    "unit": {
+      "label": "หน่วย",
+      "hint": "ความยาว · น้ำหนัก · อุณหภูมิ · ข้อมูล"
+    },
+    "template": {
+      "label": "เทมเพลต",
+      "hint": ".gitignore · LICENSE · Dockerfile · README"
+    }
+  },
+  "runners": {
+    "common": {
+      "run": "เรียกใช้",
+      "running": "กำลังเรียกใช้…",
+      "copy": "คัดลอก",
+      "copied": "คัดลอกแล้ว",
+      "sameAsApi": "เส้นทางเดียวกับ API · OSS engine",
+      "mustBeNumber": "{label} ต้องเป็นตัวเลข",
+      "base64Loaded": "โหลด payload Base64 แล้ว",
+      "workspaceMissing": "ยังไม่ได้กำหนดค่า Workspace: {slug}",
+      "yes": "ใช่",
+      "no": "ไม่ใช่",
+      "text": "ข้อความ",
+      "input": "ข้อมูลเข้า",
+      "output": "ข้อมูลออก",
+      "outputPlaceholder": "ผลลัพธ์จะแสดงที่นี่",
+      "localRun": "รันบนเครื่อง",
+      "serverRun": "รันบนเซิร์ฟเวอร์",
+      "serverVerify": "ตรวจสอบเซิร์ฟเวอร์",
+      "outputPreview": "ตัวอย่างผลลัพธ์",
+      "mode": "โหมด",
+      "encode": "เข้ารหัส",
+      "decode": "ถอดรหัส",
+      "file": "ไฟล์",
+      "clear": "ล้าง",
+      "length": "ความยาว: {n}",
+      "bytes": "{bytes} ไบต์",
+      "download": "ดาวน์โหลด",
+      "format": "รูปแบบ",
+      "formatting": "กำลังจัดรูปแบบ…",
+      "dialect": "รูปแบบภาษา",
+      "color": "สี",
+      "pickColor": "เลือกสี",
+      "content": "เนื้อหา",
+      "algorithm": "อัลกอริทึม",
+      "encoding": "การเข้ารหัส",
+      "message": "ข้อความ",
+      "secret": "รหัสลับ",
+      "password": "รหัสผ่าน",
+      "direction": "ทิศทาง",
+      "preview": "ตัวอย่าง",
+      "query": "ค้นหา",
+      "querying": "กำลังค้นหา…",
+      "validate": "ตรวจสอบ",
+      "validating": "กำลังตรวจสอบ…",
+      "processing": "กำลังประมวลผล…",
+      "pretty": "จัดรูปแบบ",
+      "minify": "ย่อขนาด",
+      "from": "จาก",
+      "to": "ถึง",
+      "timezone": "เขตเวลา",
+      "datetime": "วันที่ & เวลา",
+      "compute": "ประมวลผล",
+      "computing": "กำลังคำนวณ…",
+      "convertAction": "แปลง",
+      "count": "จำนวน",
+      "value": "ค่า",
+      "unit": "หน่วย",
+      "generateLocal": "สร้างในเครื่อง",
+      "generateServer": "สร้างบนเซิร์ฟเวอร์",
+      "copyAll": "คัดลอกทั้งหมด",
+      "emptyResult": "ผลลัพธ์จะแสดงที่นี่",
+      "copyText": "คัดลอกข้อความ",
+      "quality": "คุณภาพ",
+      "original": "ต้นฉบับ",
+      "result": "ผลลัพธ์",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
+    },
+    "base64": {
+      "encodeDir": "ข้อความ → Base64",
+      "decodeDir": "Base64 → ข้อความ",
+      "localNote": "Local Web API (TextEncoder / atob)",
+      "serverNote": "Server Buffer · เส้นทางเดียวกับ API"
+    },
+    "password": {
+      "uppercase": "ตัวพิมพ์ใหญ่",
+      "lowercase": "ตัวพิมพ์เล็ก",
+      "digits": "ตัวเลข",
+      "symbols": "สัญลักษณ์",
+      "generate": "สร้างรหัสผ่าน",
+      "recent": "ล่าสุด",
+      "note": "เอนจิน: node:crypto randomInt · ปลอดภัยทางเข้ารหัส · เส้นทางเดียวกับ API"
+    },
+    "hash": {
+      "algo": "อัลกอริทึม: {algo}",
+      "md5Warn": " · ใช้สำหรับ checksum/compat เท่านั้น — ห้ามเก็บรหัสผ่าน",
+      "md5LocalError": "MD5 ต้องรันบนเซิร์ฟเวอร์ (Web Crypto ไม่มี MD5)",
+      "md5ServerHint": "MD5: ใช้รันบนเซิร์ฟเวอร์ (compat เท่านั้น ไม่ใช้เก็บรหัสผ่าน)",
+      "localNote": "Web Crypto ฝั่งเครื่อง · {algo}",
+      "serverNote": "node:crypto ฝั่งเซิร์ฟเวอร์ · ใช้ path เดียวกับ API"
+    },
+    "convert": {
+      "converting": "กำลังแปลง…",
+      "convert": "แปลง",
+      "done": "เสร็จสิ้น · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "วางไฟล์ที่นี่ หรือคลิกเพื่อเลือก",
+      "needFile": "เลือกไฟล์ก่อน",
+      "needAlgo": "เลือกอัลกอริทึมอย่างน้อยหนึ่งตัว",
+      "compute": "คำนวณเช็คซัม",
+      "computing": "กำลังคำนวณ…",
+      "algorithms": "อัลกอริทึม",
+      "note": "node:crypto · หลายอัลกอริทึม · เส้นทางเดียวกับ API"
+    },
+    "lorem": {
+      "paragraphs": "ย่อหน้า",
+      "wordsPerParagraph": "คำต่อย่อหน้า",
+      "startWithLorem": "เริ่มต้นด้วย “Lorem ipsum”",
+      "note": "เครื่องสร้าง Lorem Ipsum · แบบ pure"
+    },
+    "emailValidate": {
+      "note": "ตัวตรวจสอบอีเมล · ตรวจสอบรูปแบบเท่านั้น (ไม่ค้นหา MX)"
+    },
+    "creditCardLuhn": {
+      "number": "หมายเลขบัตร",
+      "note": "ตัวตรวจสอบ Luhn · แบบออฟไลน์ ไม่มีการเก็บข้อมูล",
+      "digits": "digits",
+      "specimenLabel": "Specimen",
+      "structureOnly": "Luhn structure only",
+      "unknownBrand": "Card"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "ตัวย่อ JSON · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "CSS Minifier · เบา (ปลอดภัยกับ edge)"
+    },
+    "hashCompare": {
+      "a": "Hash A",
+      "b": "Hash B",
+      "ignoreCase": "ไม่สนใจตัวพิมพ์",
+      "note": "Hash Comparator · constant-time สำหรับความยาวเท่ากัน"
+    },
+    "jsonDiff": {
+      "left": "JSON A",
+      "right": "JSON B",
+      "note": "JSON Diff · การดำเนินการระดับ path · แถวแยกสีตามชนิด · แสดงเคียงข้าง",
+      "equal": "เหมือนกัน",
+      "differs": "{count} การเปลี่ยนแปลง",
+      "colPath": "Path",
+      "colKind": "ประเภท",
+      "colLeft": "ซ้าย",
+      "colRight": "ขวา",
+      "filtersAria": "กรองตามประเภทการเปลี่ยนแปลง",
+      "filterAll": "ทั้งหมด ({count})",
+      "filterAdd": "เพิ่ม ({count})",
+      "filterRemove": "ลบ ({count})",
+      "filterChange": "เปลี่ยนแปลง ({count})",
+      "filterType": "ประเภท ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "โหมด",
+      "pretty": "สวยงาม",
+      "compact": "กะทัดรัด",
+      "indent": "ย่อหน้า",
+      "note": "YAML Formatter · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "TOML Formatter · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "XML Minifier · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "URL Validator · WHATWG URL (ไม่มีการดึงข้อมูลเครือข่าย)"
+    },
+    "ipValidate": {
+      "note": "IP Validator · IPv4/IPv6 ออฟไลน์"
+    },
+    "uuidValidate": {
+      "note": "UUID Validator · รูปแบบ RFC 4122"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "HTML Minifier · เบา (ปลอดภัยสำหรับ edge)"
+    },
+    "randomString": {
+      "length": "ความยาว",
+      "count": "จำนวน",
+      "charset": "ชุดตัวอักษร",
+      "alphanumeric": "ตัวอักษรและตัวเลข",
+      "symbols": "ตัวอักษร ตัวเลข + สัญลักษณ์",
+      "hex": "เลขฐานสิบหก",
+      "base64url": "Base64URL",
+      "note": "สตริงสุ่ม · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "เวลาอ่าน · Heuristic สำหรับ CJK + Latin"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "ระดับหัวข้อสูงสุด",
+      "note": "สารบัญ Markdown · หัวข้อ ATX"
+    },
+    "pdfInfo": {
+      "file": "ไฟล์ PDF",
+      "note": "ข้อมูล PDF · pdf-lib (หน้า + metadata)"
+    },
+    "rot13": {
+      "shift": "เลื่อน (13 = ROT13)",
+      "note": "ROT13 / Caesar · pure"
+    },
+    "morse": {
+      "note": "รหัสโม尔斯 · ITU · pure"
+    },
+    "textBinary": {
+      "toBinary": "ข้อความ → ไบนารี",
+      "fromBinary": "ไบนารี → ข้อความ",
+      "note": "ข้อความ ↔ ไบนารี · UTF-8 bits"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "การเข้ารหัส Digest",
+      "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "ย่อยครั้งเดียว · คัดลอกแต่ละอัน · node:crypto"
+    },
+    "cssFormat": {
+      "note": "CSS Beautifier · lightweight"
+    },
+    "htmlFormat": {
+      "note": "HTML Beautifier · เบาและรวดเร็ว"
+    },
+    "stringSimilarity": {
+      "a": "สตริง A",
+      "b": "สตริง B",
+      "note": "ความคล้ายคลึงของสตริง · Levenshtein"
+    },
+    "roman": {
+      "toRoman": "ตัวเลข → เลขโรมัน",
+      "fromRoman": "เลขโรมัน → ตัวเลข",
+      "note": "เลขโรมัน · 1–3999"
+    },
+    "age": {
+      "birthDate": "วันเกิด (YYYY-MM-DD)",
+      "asOf": "นับถึง (ไม่บังคับ)",
+      "note": "เครื่องคำนวณอายุ · แม่นยำถึงปี/เดือน/วัน"
+    },
+    "tip": {
+      "bill": "ยอดบิล",
+      "percent": "ทิป %",
+      "people": "ผู้คน",
+      "note": "เครื่องคำนวณทิป · แบ่งจ่ายง่าย"
+    },
+    "aspect": {
+      "width": "ความกว้าง",
+      "height": "ความสูง",
+      "note": "อัตราส่วนภาพ · ลดทอนด้วย GCD"
+    },
+    "mime": {
+      "note": "ค้นหา MIME · ประเภทเว็บทั่วไป"
+    },
+    "ua": {
+      "note": "ตัวแยก User-Agent · แบบ heuristic (ออฟไลน์)"
+    },
+    "imageMeta": {
+      "file": "ไฟล์ภาพ",
+      "note": "ข้อมูลภาพ · sharp (ขนาดบัฟเฟอร์ EXIF)"
+    },
+    "wordFreq": {
+      "top": "Top N",
+      "note": "ความถี่คำ · CJK + Latin"
+    },
+    "jsonXml": {
+      "note": "JSON ↔ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "SQL Minifier · คอมเมนต์ + ช่องว่าง"
+    },
+    "lineNum": {
+      "start": "เลขเริ่มต้น",
+      "note": "เพิ่มเลขบรรทัด · แบบบริสุทธิ์"
+    },
+    "uniqueWords": {
+      "note": "คำที่ไม่ซ้ำ · ตามลำดับที่พบ"
+    },
+    "epoch": {
+      "value": "ค่า",
+      "msToIso": "ms → ISO",
+      "isoToMs": "ISO → ms",
+      "note": "Epoch Milliseconds · วันที่"
+    },
+    "passwordEntropy": {
+      "password": "รหัสผ่าน",
+      "note": "Password Entropy · การประมาณ charset"
+    },
+    "contrast": {
+      "fg": "พื้นหน้า (#hex)",
+      "bg": "พื้นหลัง (#hex)",
+      "note": "ความคมชัดของสี · WCAG 2.x",
+      "sampleHeadline": "Sample text",
+      "pass": "pass",
+      "fail": "fail",
+      "aaNormal": "AA normal",
+      "aaLarge": "AA large",
+      "aaaNormal": "AAA normal",
+      "aaaLarge": "AAA large"
+    },
+    "exif": {
+      "file": "ไฟล์รูปภาพ",
+      "note": "ตัวดู EXIF · exifr + JPEG fallback"
+    },
+    "regex": {
+      "pattern": "รูปแบบ",
+      "flags": "Flags",
+      "replacement": "ข้อความแทนที่",
+      "match": "จับคู่",
+      "replace": "แทนที่",
+      "test": "ทดสอบ",
+      "local": "รันในเครื่อง",
+      "server": "ตรวจสอบเซิร์ฟเวอร์",
+      "count": "{count} รายการที่ตรงกัน",
+      "sotaNote": "ไฮไลต์ในเครื่องทันที · กำหนดเวลาหมดเวลาของเซิร์ฟเวอร์ · เส้นทางเดียวกับ API"
+    },
+    "jwt": {
+      "decode": "ถอดรหัส JWT",
+      "sample": "โหลดตัวอย่าง",
+      "tokenPlaceholder": "วาง JWT",
+      "decodeNote": "{engine} · ถอดรหัสเท่านั้น ไม่ได้ตรวจสอบลายเซ็น",
+      "footerNote": "Engine: jose · ไม่มีการตรวจสอบลายเซ็น สำหรับการใช้งานจริง ตรวจสอบด้วยคีย์ผ่าน jwtVerify บนเซิร์ฟเวอร์",
+      "generateHint": "ต้องการสร้างโทเค็นหรือไม่?",
+      "secret": "Secret",
+      "exp": "หมดอายุ (วินาที)",
+      "payload": "Payload JSON",
+      "note": "สร้าง JWT · HS256 (สำหรับ dev/test เท่านั้น)",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "(empty signature segment)"
+    },
+    "rand": {
+      "min": "ค่าต่ำสุด",
+      "max": "สูงสุด",
+      "count": "จำนวน",
+      "note": "ตัวเลขสุ่ม · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "ด้าน",
+      "count": "จำนวนลูกเต๋า",
+      "note": "ทอยลูกเต๋า · crypto RNG"
+    },
+    "hexRgb": {
+      "note": "HEX ↔ RGB · pure"
+    },
+    "base64url": {
+      "note": "Base64URL · JWT-style"
+    },
+    "hmac": {
+      "message": "ข้อความ",
+      "secret": "รหัสลับ",
+      "signature": "ลายเซ็น",
+      "note": "ตรวจสอบ HMAC · SHA-256"
+    },
+    "secret": {
+      "bytes": "ไบต์",
+      "count": "จำนวน",
+      "note": "ตัวสร้างคีย์ลับ · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "ไฟล์ PDF",
+      "note": "PDF Light Optimize · pdf-lib rewrite (ไม่ recompress ภาพ)",
+      "needFile": "เลือกไฟล์ PDF ก่อน"
+    },
+    "pdfCompress": {
+      "file": "ไฟล์ PDF",
+      "quality": "คุณภาพ",
+      "engine": "Engine",
+      "qStructural": "Structural (qpdf, lossless streams)",
+      "qScreen": "Screen (เล็กที่สุด, Ghostscript)",
+      "qEbook": "Ebook (สมดุล, Ghostscript)",
+      "qPrinter": "Printer (คุณภาพสูงกว่า, Ghostscript)",
+      "eAuto": "อัตโนมัติ (qpdf → Ghostscript → pdf-lib)",
+      "download": "ดาวน์โหลด PDF",
+      "needFile": "เลือกไฟล์ PDF ก่อน",
+      "in": "นำเข้า",
+      "out": "ส่งออก",
+      "saved": "บันทึกแล้ว",
+      "note": "PDF Compress · qpdf / Ghostscript บนโฮสต์ · pdf-lib เป็นทางเลือกสำรอง",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+    },
+    "jsonFormat": {
+      "indent": "ย่อหน้า",
+      "format": "จัดรูปแบบ",
+      "minify": "ย่อขนาด",
+      "serverVerify": "ตรวจสอบเซิร์ฟเวอร์",
+      "clear": "ล้าง",
+      "sample": "ตัวอย่าง",
+      "placeholder": "วาง JSON…",
+      "formatted": "จัดรูปแบบ",
+      "minified": "ย่อขนาด",
+      "serverOk": "เซิร์ฟเวอร์ {mode} · {engine}",
+      "valid": "JSON ถูกต้อง",
+      "invalid": "JSON ไม่ถูกต้อง",
+      "line": "บรรทัด",
+      "column": "คอลัมน์",
+      "note": "Engine: JSON.parse/stringify · instant local · same path as API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
+    },
+    "qr": {
+      "size": "ขนาด",
+      "ecl": "การแก้ไขข้อผิดพลาด",
+      "generate": "สร้าง",
+      "download": "ดาวน์โหลด PNG",
+      "needText": "กรอกข้อความหรือ URL",
+      "note": "QR · qrcode · ตัวอย่างแบบเรียลไทม์ · ใช้เส้นทางเดียวกับ API"
+    },
+    "pdfText": {
+      "file": "ไฟล์ PDF",
+      "layout": "เลย์เอาต์",
+      "needFile": "เลือกไฟล์ PDF ก่อน",
+      "note": "PDF Text · pdftotext (poppler) บนโฮสต์"
+    },
+    "svg": {
+      "optimize": "ปรับปรุง",
+      "note": "SVG Optimize · minify เบาๆ แบบ pure"
+    },
+    "routerTranslate": {
+      "lab": "Lab shell: ไม่แปลที่นี่ เปิด Router พร้อม prompt — model meter ปรากฏเฉพาะบน Router",
+      "source": "ภาษาต้นทาง",
+      "target": "ภาษาปลายทาง",
+      "open": "เตรียมลิงก์ Router",
+      "deepLink": "เปิดใน Router",
+      "note": "ภายนอก · ไม่มี Forge LLM ledger แบบเงียบ"
+    },
+    "imageCrop": {
+      "needFile": "เลือกภาพก่อน",
+      "crop": "ครอบ",
+      "note": "ครอบภาพ · ลากพื้นที่ · ตัดคมชัด",
+      "drop": "วางภาพหรือคลิกเพื่อเรียกดู",
+      "dragHint": "ลากบนภาพเพื่อเลือกบริเวณที่จะครอบ",
+      "left": "ซ้าย",
+      "top": "บน",
+      "width": "ความกว้าง",
+      "height": "ความสูง",
+      "natural": "ธรรมชาติ {w}×{h}",
+      "source": "ต้นฉบับ",
+      "result": "ที่ครอบแล้ว"
+    },
+    "markdown": {
+      "preview": "ตัวอย่าง",
+      "html": "HTML",
+      "emptyPreview": "รันเพื่อดูตัวอย่าง",
+      "emptyHtml": "HTML ที่เรนเดอร์แล้ว",
+      "rendering": "กำลังเรนเดอร์…",
+      "toHtml": "เป็น HTML",
+      "copyHtml": "คัดลอก HTML",
+      "note": "marked · ตัวอย่าง iframe แบบ sandboxed · เส้นทางเดียวกับ API"
+    },
+    "pdfMerge": {
+      "files": "ไฟล์ PDF (≥2, ลำดับ = ลำดับการรวม)",
+      "needFiles": "เลือก PDF อย่างน้อย 2 ไฟล์",
+      "merging": "กำลังรวมไฟล์…",
+      "mergeDownload": "รวมและดาวน์โหลด",
+      "done": "รวมเสร็จ · {pages} หน้า · {bytes} ไบต์",
+      "note": "pdf-lib · ใช้ path เดียวกับ API",
+      "merge": "รวมและดาวน์โหลด"
+    },
+    "pdfSplit": {
+      "file": "ไฟล์ PDF",
+      "needFile": "เลือกไฟล์ PDF",
+      "fromPage": "จากหน้า (เริ่มที่ 1)",
+      "toPage": "ถึงหน้า (เว้นว่าง = หน้าสุดท้าย)",
+      "toPlaceholder": "หน้าสุดท้าย",
+      "splitting": "กำลังแยกไฟล์…",
+      "splitDownload": "แยกและดาวน์โหลด",
+      "done": "แยก · แหล่ง {source} หน้า → ผลลัพธ์ {pages} หน้า",
+      "note": "pdf-lib · ใช้เส้นทางเดียวกับ API",
+      "split": "แยกและดาวน์โหลด"
+    },
+    "passwordStrength": {
+      "check": "ตรวจสอบความแข็งแรง",
+      "checking": "กำลังตรวจสอบ…",
+      "crack": "ประมาณการแฮชช้าแบบออฟไลน์: {time}",
+      "score0": "อ่อนมาก",
+      "score1": "อ่อน",
+      "score2": "พอใช้",
+      "score3": "แข็งแรง",
+      "score4": "แข็งแรงมาก",
+      "note": "zxcvbn-ts · ใช้เส้นทางเดียวกับ API · ไม่เก็บรหัสผ่าน"
+    },
+    "hmacSign": {
+      "compute": "คำนวณ HMAC",
+      "computing": "กำลังคำนวณ…",
+      "note": "node:crypto · ใช้เส้นทางเดียวกับ API"
+    },
+    "costEstimate": {
+      "text": "ข้อความนำเข้า (สำหรับประมาณการโทเค็นนำเข้า)",
+      "model": "โมเดล",
+      "outputTokens": "โทเค็นส่งออก (ประมาณ)",
+      "estimate": "ประมาณค่าใช้จ่าย",
+      "estimating": "กำลังประมาณ…",
+      "note": "การ์ด @nebutra/ai-providers/frontier + js-tiktoken · ประมาณราคาในรายการ ไม่ใช่บิล"
+    },
+    "jsonSchema": {
+      "data": "ข้อมูล JSON",
+      "schema": "JSON Schema",
+      "validate": "ตรวจสอบความถูกต้อง",
+      "validating": "กำลังตรวจสอบ…",
+      "pass": "ผ่าน",
+      "fail": "ไม่ผ่าน",
+      "note": "Ajv · ใช้เส้นทางเดียวกับ API"
+    },
+    "zhCnTw": {
+      "s2t": "แบบย่อ → แบบดั้งเดิม",
+      "t2s": "แบบดั้งเดิม → แบบย่อ",
+      "s2tw": "แบบย่อ → ไต้หวัน",
+      "tw2s": "ไต้หวัน → แบบย่อ",
+      "s2hk": "แบบย่อ → ฮ่องกง",
+      "hk2s": "ฮ่องกง → แบบย่อ",
+      "note": "OpenCC (opencc-js) · ใช้เส้นทางเดียวกับ API"
+    },
+    "pinyin": {
+      "tones": "รูปแบบเสียงวรรณยุกต์",
+      "symbol": "สัญลักษณ์ nǐ",
+      "num": "หมายเลข",
+      "none": "ไม่มี",
+      "hanzi": "อักษรจีน",
+      "convert": "แปลงเป็นพินอิน",
+      "converting": "กำลังแปลง…",
+      "note": "pinyin-pro · เส้นทางเดียวกับ API"
+    },
+    "sqlFormat": {
+      "dialect": "ภาษาถิ่น",
+      "format": "จัดรูปแบบ",
+      "formatting": "กำลังจัดรูปแบบ…",
+      "note": "sql-formatter · เส้นทางเดียวกับ API"
+    },
+    "colorConvert": {
+      "color": "สี",
+      "pick": "เลือกสี",
+      "convert": "แปลง",
+      "converting": "กำลังแปลง…",
+      "note": "culori · hex / rgb / hsl / oklch · เส้นทางเดียวกับ API"
+    },
+    "qrGen": {
+      "content": "เนื้อหา",
+      "format": "รูปแบบ",
+      "pngPreview": "PNG (ตัวอย่าง)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "สร้าง QR",
+      "generating": "กำลังสร้าง…",
+      "note": "qrcode · เส้นทางเดียวกับ API"
+    },
+    "qrDecode": {
+      "upload": "อัปโหลดรูปภาพที่มีรหัส QR",
+      "parsing": "กำลังถอดรหัส…",
+      "note": "jsQR + sharp · เส้นทางเดียวกับ API"
+    },
+    "cron": {
+      "expression": "นิพจน์ Cron",
+      "timezone": "เขตเวลา",
+      "parse": "การทำงานครั้งถัดไป",
+      "parsing": "กำลังวิเคราะห์…",
+      "nextTitle": "การทำงานครั้งถัดไป (ISO)",
+      "note": "cron-parser · เส้นทางเดียวกับ API"
+    },
+    "timezone": {
+      "datetime": "วันที่และเวลา",
+      "from": "จาก",
+      "to": "ถึง",
+      "convert": "แปลงเขตเวลา",
+      "converting": "กำลังแปลง…",
+      "placeholder": "2026-07-24 12:00:00 หรือ ISO / unix",
+      "note": "dayjs timezone · ใช้ path เดียวกับ API"
+    },
+    "csvPreview": {
+      "preview": "แสดงตัวอย่างตาราง",
+      "parsing": "กำลังวิเคราะห์…",
+      "rows": "แสดงตัวอย่าง {shown} / {total} แถว",
+      "note": "papaparse · ใช้ path เดียวกับ API"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "Query",
+      "querying": "กำลัง query…",
+      "note": "jsonpath-plus · ใช้ path เดียวกับ API"
+    },
+    "xmlFormat": {
+      "pretty": "Pretty",
+      "minify": "ย่อขนาด",
+      "validate": "ตรวจสอบความถูกต้อง",
+      "validOk": "ถูกต้อง",
+      "done": "เสร็จสิ้น · {engine}",
+      "processing": "กำลังประมวลผล…",
+      "note": "fast-xml-parser · ใช้เส้นทางเดียวกับ API"
+    },
+    "regexLegacy": {
+      "pattern": "รูปแบบ",
+      "flags": "แฟล็ก",
+      "mode": "โหมด",
+      "match": "จับคู่",
+      "replace": "แทนที่",
+      "test": "ทดสอบ",
+      "replacement": "การแทนที่",
+      "note": "ทำงานทันทีในเครื่อง · งบประมาณเวลาหมดของเซิร์ฟเวอร์ · เส้นทางเดียวกับ API"
+    },
+    "docxText": {
+      "file": "ไฟล์ DOCX",
+      "needFile": "เลือกไฟล์ .docx ก่อน",
+      "extract": "แยกข้อความ",
+      "extracting": "กำลังแยกข้อความ…",
+      "note": "DOCX → ข้อความ · ZIP + document.xml ล้วน (ไม่ต้องใช้ Office)"
+    },
+    "uuid": {
+      "count": "จำนวน",
+      "local": "สร้างในเครื่อง",
+      "server": "สร้างบนเซิร์ฟเวอร์",
+      "copyAll": "คัดลอกทั้งหมด",
+      "empty": "UUID จะแสดงที่นี่"
+    },
+    "timestamp": {
+      "nowSec": "วินาที Unix",
+      "nowMs": "มิลลิวินาที Unix / ISO",
+      "serverNow": "เวลาปัจจุบันของเซิร์ฟเวอร์",
+      "toDate": "Timestamp → วันที่",
+      "toUnix": "วันที่ → timestamp",
+      "seconds": "วินาที",
+      "milliseconds": "มิลลิวินาที",
+      "value": "ค่า",
+      "convert": "แปลง",
+      "note": "เส้นทางเดียวกับ API"
+    },
+    "wordCount": {
+      "words": "คำ",
+      "chars": "ตัวอักษร",
+      "noSpaces": "ไม่รวมช่องว่าง",
+      "cjk": "CJK",
+      "lines": "บรรทัด",
+      "paragraphs": "ย่อหน้า",
+      "placeholder": "วางหรือพิมพ์ข้อความ…",
+      "copyText": "คัดลอกข้อความ",
+      "clear": "ล้าง",
+      "verifying": "กำลังตรวจสอบ…",
+      "serverNote": "เซิร์ฟเวอร์คำ={words} · เส้นทางเดียวกับ API",
+      "note": "เอนจินสด: {engine} · ไม่ต้องอัปโหลด · เส้นทางเดียวกับ API"
+    },
+    "bmi": {
+      "height": "ส่วนสูง (ซม.)",
+      "weight": "น้ำหนัก (กก.)",
+      "compute": "คำนวณ BMI",
+      "computing": "กำลังคำนวณ…",
+      "invalid": "กรุณากรอกส่วนสูง (ซม.) และน้ำหนัก (กก.) ที่ถูกต้อง",
+      "underweight": "น้ำหนักน้อย",
+      "normal": "ปกติ",
+      "overweight": "น้ำหนักเกิน",
+      "obese": "อ้วน",
+      "note": "WHO BMI · ใช้เส้นทางเดียวกับ API · ไม่ใช่คำแนะนำทางการแพทย์"
+    },
+    "percentage": {
+      "mode": "โหมด",
+      "percentOf": "a% ของ b",
+      "isWhat": "a เป็นกี่ % ของ b",
+      "percentA": "เปอร์เซ็นต์ a",
+      "valueA": "ค่า A",
+      "baseB": "ฐาน B",
+      "compute": "คำนวณ",
+      "computing": "กำลังคำนวณ…",
+      "invalid": "ป้อนตัวเลขที่ถูกต้อง",
+      "note": "เส้นทางเดียวกับ API"
+    },
+    "dataSize": {
+      "value": "ค่า",
+      "convert": "แปลง",
+      "converting": "กำลังแปลง…",
+      "invalid": "ป้อนตัวเลขที่ถูกต้อง",
+      "binary": "{value} {from} → ฐาน-1024",
+      "note": "หน่วยไบนารี (1 KB = 1024 B) · เส้นทางเดียวกับ API"
+    },
+    "rmb": {
+      "amount": "จำนวนเงิน (หยวน)",
+      "convert": "แปลงเป็นตัวอักษร",
+      "converting": "กำลังแปลง…",
+      "invalid": "กรุณากรอกจำนวนเงินที่ไม่ติดลบ",
+      "note": "จำนวนเงินบนใบแจ้งหนี้จีนเป็นตัวอักษร · ใช้เส้นทางเดียวกับ API"
+    },
+    "dateDiff": {
+      "from": "วันที่เริ่มต้น",
+      "to": "วันที่สิ้นสุด",
+      "compute": "หาผลต่างวัน",
+      "computing": "กำลังคำนวณ…",
+      "days": "วัน",
+      "note": "ECMAScript Date · ใช้เส้นทางเดียวกับ API"
+    },
+    "xlsxText": {
+      "file": "ไฟล์ XLSX",
+      "needFile": "เลือกไฟล์ .xlsx ก่อน",
+      "extract": "แยกชีท",
+      "extracting": "กำลังแยก…",
+      "note": "XLSX → CSV · ZIP บริสุทธิ์ + sheet1.xml (ชีทแรก)"
+    },
+    "mdToPdf": {
+      "drop": "วางไฟล์ .md ที่นี่ หรือวาง Markdown ด้านล่าง",
+      "title": "ชื่อเรื่อง",
+      "engine": "เอนจิน",
+      "ePlaywright": "playwright (พิมพ์ด้วย Chromium)",
+      "eSimple": "simple (ไม่ใช้เบราว์เซอร์)",
+      "generate": "สร้าง PDF",
+      "generating": "กำลังสร้าง…",
+      "download": "ดาวน์โหลด PDF",
+      "note": "marked → HTML → Playwright Chromium print หากไม่มี Chromium จะใช้ PDF แบบโครงสร้างง่ายโดยอัตโนมัติ — ตรวจสอบ renderEngine; แบบง่ายไม่ใช่เลย์เอาต์ระดับ print",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
+    },
+    "tokenCount": {
+      "count": "นับโทเค็น",
+      "counting": "กำลังนับ…",
+      "chars": "ตัวอักษร {n}",
+      "note": "Engine: js-tiktoken · นับแบบแม่นยำฝั่งเซิร์ฟเวอร์ · สามารถป้อน Router cost estimate ได้"
+    },
+    "codec": {
+      "encodeDir": "ข้อความ → เข้ารหัส",
+      "decodeDir": "เข้ารหัส → ข้อความ",
+      "localNote": "รันในเครื่อง",
+      "serverNote": "เซิร์ฟเวอร์ · เส้นทางเดียวกับ API",
+      "hexInvalid": "ไม่ใช่สตริง hex ที่ถูกต้อง",
+      "hexDecodeFail": "เซิร์ฟเวอร์ไม่สามารถถอดรหัสเป็น UTF-8 ได้ (ต้องใช้ hex ที่ถูกต้อง)",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · ใช้ path เดียวกับ API",
+      "noteHtml": "HTML entity map · ใช้ path เดียวกับ API",
+      "noteHex": "UTF-8 ↔ hex · ใช้ path เดียวกับ API"
+    },
+    "textDiff": {
+      "left": "ซ้าย",
+      "right": "ขวา",
+      "compare": "เปรียบเทียบ",
+      "comparing": "กำลังเปรียบเทียบ…"
+    },
+    "imageTool": {
+      "drop": "วางรูปภาพที่นี่ หรือคลิกเพื่อเลือก",
+      "selected": "เลือกแล้ว: {name} ({kb} KB)",
+      "needFile": "เลือกรูปภาพก่อน",
+      "format": "รูปแบบผลลัพธ์",
+      "quality": "คุณภาพ {n}",
+      "maxW": "ความกว้างสูงสุด",
+      "maxH": "ความสูงสูงสุด",
+      "optional": "ไม่บังคับ",
+      "resizeEg": "เช่น 1280",
+      "processing": "กำลังประมวลผล…",
+      "compress": "บีบอัด",
+      "resize": "ปรับขนาด",
+      "convert": "แปลงรูปแบบ",
+      "download": "ดาวน์โหลดผลลัพธ์",
+      "outMeta": "ผลลัพธ์ {kb} KB{dims}{ratio} · {type}",
+      "ratio": " · ~{pct}% ของต้นฉบับ",
+      "dims": " · {w}×{h}",
+      "original": "ต้นฉบับ",
+      "result": "ผลลัพธ์",
+      "note": "Engine: sharp (libvips) · server-side · same path as API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+    },
+    "pptxText": {
+      "file": "ไฟล์ PPTX",
+      "needFile": "เลือกไฟล์ .pptx ก่อน",
+      "extract": "ดึงโครงร่าง",
+      "extracting": "กำลังดึง…",
+      "note": "PPTX outline · pure ZIP + slide XML (no PowerPoint)"
+    },
+    "shell": {
+      "copyJson": "คัดลอก JSON",
+      "sample": "ตัวอย่าง",
+      "chars": "{n} ตัวอักษร",
+      "largeInput": "ข้อมูลเข้าขนาดใหญ่ — ผลลัพธ์จะอัปเดตหลังจากหยุดพิมพ์สักครู่",
+      "manualInput": "ข้อมูลมีขนาดใหญ่เกินไป การคำนวณสดจะทำให้หน้าเว็บช้าลง กด Run",
+      "options": "ตัวเลือก",
+      "regenerateNote": "ผลลัพธ์จะอัปเดตโดยอัตโนมัติเมื่อคุณเปลี่ยนตัวเลือก",
+      "fileTab": "ไฟล์",
+      "pasteTab": "วาง",
+      "browse": "เลือกไฟล์",
+      "selectedFile": "{name} · {kb} KB",
+      "truncated": "อ่าน {kb} KB แรก — เพียงพอที่จะตอบ และส่วนที่เหลือจะไม่ออกจากเครื่องของคุณ",
+      "detail": "รายละเอียด",
+      "dropIntoPane": "วางไฟล์ที่นี่",
+      "swap": "สลับด้าน",
+      "prevChange": "ก่อนหน้า",
+      "nextChange": "ถัดไป",
+      "changePosition": "{index} จาก {total}",
+      "result": "ผลลัพธ์"
+    },
+    "readmeSkeleton": {
+      "emptyHint": "เลือกอย่างน้อยหนึ่งส่วนเพื่อสร้าง README",
+      "note": "ทำงานด้วยเอนจินเดียวกับ API ส่วนที่คุณไม่เลือกจะไม่ปรากฏ — ไม่มีหัวข้อว่าง",
+      "orderNote": "ส่วนต่างๆ จะแสดงตามลำดับที่กำหนดนี้เสมอ ดังนั้นอินพุตเดียวกันจะให้ไฟล์เดียวกัน",
+      "group": {
+        "core": "หลัก",
+        "docs": "เอกสาร",
+        "community": "ชุมชน",
+        "meta": "ข้อมูลเสริม"
+      },
+      "section": {
+        "title": "ชื่อและคำอธิบาย",
+        "badges": "ป้ายกำกับ",
+        "callout": "หมายเหตุสำคัญ",
+        "toc": "สารบัญ",
+        "installation": "การติดตั้ง",
+        "usage": "การใช้งาน",
+        "features": "ฟีเจอร์",
+        "api-reference": "เอกสารอ้างอิง API",
+        "screenshots": "ภาพหน้าจอ",
+        "roadmap": "แผนงาน",
+        "contributing": "การมีส่วนร่วม",
+        "support": "การสนับสนุน",
+        "acknowledgements": "คำขอบคุณ",
+        "license": "ใบอนุญาต",
+        "authors": "ผู้เขียน",
+        "tech-stack": "เทคโนโลยีที่ใช้"
+      },
+      "projectName": "ชื่อโปรเจกต์",
+      "projectNamePlaceholder": "ชื่อโปรเจกต์",
+      "description": "คำอธิบาย",
+      "descriptionPlaceholder": "ประโยคเดียวอธิบายว่าทำอะไร",
+      "badgeLicense": "ป้ายใบอนุญาต",
+      "badgeNpm": "npm version",
+      "badgeBuild": "สถานะการ Build",
+      "npmPackage": "npm package",
+      "npmPackagePlaceholder": "@scope/package",
+      "repo": "GitHub repo",
+      "repoPlaceholder": "owner/repo",
+      "calloutKind": "ประเภท Callout",
+      "calloutBody": "ข้อความแจ้งเตือน",
+      "calloutBodyPlaceholder": "ก่อนเวอร์ชัน 1.0 — API ยังมีการเปลี่ยนแปลง",
+      "fenceLanguage": "ภาษา",
+      "installCommand": "คำสั่งติดตั้ง",
+      "installCommandPlaceholder": "npm install your-project",
+      "usageExample": "ตัวอย่างการใช้งาน",
+      "usageExamplePlaceholder": "ตัวอย่างที่เล็กที่สุดที่แสดงคุณค่า",
+      "features": "ฟีเจอร์",
+      "featuresPlaceholder": "หนึ่งฟีเจอร์ต่อหนึ่งบรรทัด",
+      "contact": "ติดต่อ",
+      "contactPlaceholder": "support@example.com",
+      "license": "ใบอนุญาต",
+      "authors": "ผู้เขียน",
+      "authorsPlaceholder": "@handle, Jane Roe",
+      "techStack": "เทคโนโลยีที่ใช้",
+      "techStackPlaceholder": "typescript, postgresql (simple-icons slugs)",
+      "sectionCount": "{n} ส่วน",
+      "charCount": "{n} ตัวอักษร",
+      "warningCount": "ข้าม {n} รายการ",
+      "omittedTitle": "สิ่งที่ถูกตัดออก และเหตุผล"
+    },
+    "gitignore": {
+      "searchLabel": "ค้นหาสแต็ก",
+      "searchPlaceholder": "ค้นหาภาษา เฟรมเวิร์ก ระบบปฏิบัติการ หรือโปรแกรมแก้ไข…",
+      "add": "เพิ่ม {stack}",
+      "remove": "ลบ {stack}",
+      "selected": "สแต็กที่เลือก",
+      "suggestions": "สแต็กที่ตรงกัน",
+      "noMatches": "ไม่พบ stack ที่ตรงกับ “{query}” กด Enter เพื่อส่งต่อไป — alias จะถูกแก้ไขบนเซิร์ฟเวอร์",
+      "catalogFallback": "ไม่สามารถแสดงรายการ stack ได้ — พิมพ์ชื่อ stack แล้วกด Enter",
+      "emptyHint": "เลือกภาษา เฟรมเวิร์ก ระบบปฏิบัติการ หรือ editor อย่างน้อยหนึ่งอย่างด้านบน",
+      "regenerate": "สร้างใหม่",
+      "sections": "{n} ส่วน",
+      "lines": "{n} บรรทัด",
+      "deduped": "รวมรูปแบบซ้ำ {n} รายการ",
+      "notFound": "ไม่มีในฐานข้อมูล: {stacks}",
+      "globalScope": "{stacks} เป็นรายการระบบปฏิบัติการ/editor — นักพัฒนาหลายคนเก็บไว้ใน ~/.gitignore_global ส่วนตัว แทนที่จะใส่ในทุก repo",
+      "untrackedNote": ".gitignore มีผลเฉพาะไฟล์ที่ยังไม่ได้ติดตาม หาก git ติดตามไฟล์อยู่แล้ว ให้รัน git rm -r --cached <path>",
+      "fileLabel": ".gitignore"
+    },
+    "editorconfig": {
+      "emptyHint": "ตั้งค่าอย่างน้อยหนึ่งคุณสมบัติเพื่อดูไฟล์",
+      "note": "ใช้ engine เดียวกับ API การตั้งค่าของคุณจะอยู่ใน session ของเบราว์เซอร์นี้เท่านั้น ไม่มีการบันทึก",
+      "checks": "การตรวจสอบ",
+      "presets": "เริ่มต้นจาก",
+      "preset": {
+        "spaces2": "2 ช่องว่าง, LF",
+        "spaces4": "4 ช่องว่าง, LF",
+        "tabs": "Tab, ความกว้าง 4",
+        "repo": "เริ่มต้นจาก Repo (+ Markdown, Makefile)"
+      },
+      "rootLabel": "root = true — ป้องกันไม่ให้ editor รวมไฟล์ .editorconfig ของ parent",
+      "glob": "Glob {n}",
+      "addSection": "เพิ่มส่วน",
+      "removeSection": "ลบ",
+      "notSet": "(ไม่ได้ตั้งค่า)",
+      "import": "นำเข้าไฟล์ .editorconfig ที่มีอยู่แล้ว",
+      "importPlaceholder": "วางไฟล์ .editorconfig ที่นี่เพื่อโหลดลงในฟอร์ม",
+      "importAction": "นำเข้า",
+      "importing": "กำลังนำเข้า…",
+      "importFailed": "ไม่สามารถนำเข้าได้: {message}"
+    },
+    "robotsTxt": {
+      "emptyHint": "ตั้งค่าตัวเลือกด้านบน — ไฟล์จะปรากฏที่นี่",
+      "deployNote": "robots.txt มีผลเฉพาะที่รากของโดเมน (https://example.com/robots.txt) แต่ละซับโดเมนต้องมีไฟล์ของตัวเอง",
+      "outputLabel": "robots.txt",
+      "defaultAccess": "การเข้าถึงเริ่มต้น (User-agent: *)",
+      "defaultAllow": "อนุญาตทั้งหมด",
+      "defaultDisallow": "ปฏิเสธทั้งหมด",
+      "defaultAccessNote": "\"อนุญาตทั้งหมด\" จะเขียน \"Disallow:\" ว่าง — นั่นคือสิ่งที่อนุญาตทุกอย่าง",
+      "crawlDelay": "Crawl-delay (วินาที)",
+      "crawlDelayPlaceholder": "ไม่มี",
+      "crawlDelayNote": "ไม่อยู่ใน RFC 9309 Google ไม่สนใจและไม่เขียนลงในกลุ่มของ Google",
+      "searchAgents": "เครื่องมือค้นหา",
+      "aiAgents": "AI crawlers",
+      "aiAgentsNote": "Crawlers สำหรับฝึกโมเดลและ answer-engine การบล็อกไม่กระทบการจัดทำดัชนีค้นหา",
+      "accessDefault": "ค่าเริ่มต้น",
+      "accessAllow": "อนุญาต",
+      "accessDisallow": "ห้าม",
+      "rules": "กฎเส้นทาง",
+      "rulesNote": "เส้นทางแยกตัวพิมพ์ใหญ่-เล็ก และอ้างอิงจาก root เพิ่มเครื่องหมายทับท้ายเพื่อจำกัดกฎให้เฉพาะโฟลเดอร์",
+      "rulePath": "เส้นทาง {n}",
+      "rulePathPlaceholder": "/admin/",
+      "ruleType": "ประเภทกฎ",
+      "addRule": "เพิ่มกฎเส้นทาง",
+      "removeRule": "ลบ",
+      "sitemaps": "แผนผังเว็บไซต์",
+      "sitemapsNote": "URL http(s) แบบสัมบูรณ์ เขียนเป็นบรรทัดเดี่ยว อยู่นอกทุกกลุ่ม",
+      "sitemapUrl": "Sitemap {n}",
+      "addSitemap": "เพิ่ม sitemap",
+      "removeSitemap": "ลบ",
+      "groupCount": "{n} กลุ่ม",
+      "lineCount": "{n} บรรทัด",
+      "sitemapCount": "{n} sitemap",
+      "warningsSummary": "หมายเหตุเกี่ยวกับไฟล์นี้ ({n})"
+    },
+    "encodingDetect": {
+      "drop": "ลากไฟล์มาที่นี่เพื่อระบุการเข้ารหัส",
+      "privacy": "อ่านเฉพาะ {kb} KB แรกเท่านั้น และส่งไปยัง invoke endpoint สาธารณะเดียวกับที่ agent จะเรียก — ไม่มีการเขียนลงดิสก์",
+      "pasteLabel": "หรือวางข้อความ",
+      "pastePlaceholder": "วางข้อความ — รวมถึง mojibake ที่คุณต้องการให้อธิบาย",
+      "detail": "ตัวเลือก, การขึ้นบรรทัดใหม่ และสถิติไบต์",
+      "idle": "วางไฟล์หรือวางข้อความ — รายงานจะแสดงทันทีเมื่อมีข้อมูลให้วิเคราะห์",
+      "readOnly": "อ่านอย่างเดียว: เครื่องมือนี้ระบุการเข้ารหัสเท่านั้น ไม่มีการเขียนทับข้อมูล",
+      "headline": "{encoding} · ความมั่นใจ {confidence}%",
+      "notText": "ไม่ดูเหมือนข้อความ",
+      "bomPresent": "BOM {bytes}",
+      "bomAbsent": "ไม่มี BOM",
+      "eol": "ตัวลงบรรทัด {kind}",
+      "eolMixed": "ตัวลงบรรทัดผสม",
+      "language": "ภาษา {language} · {confidence}%",
+      "sampled": "ตรวจพบจากข้อมูล {kb} KB แรกของ {totalKb} KB",
+      "candidates": "ตัวเลือกที่จัดอันดับ",
+      "candidatesNote": "แสดงการเข้ารหัสอันดับรองไว้ด้วย: ตัวอย่างสั้นหรือสมมาตรอาจกำกวมได้จริง",
+      "lineEndings": "ตัวลงบรรทัด",
+      "byteStats": "สถิติไบต์",
+      "totalBytes": "รวม",
+      "asciiBytes": "ASCII",
+      "highBytes": "สูง (0x80–0xFF)",
+      "nullBytes": "NUL",
+      "mojibake": "กู้คืนข้อความที่อ่านไม่ออกแล้ว"
+    },
+    "dockerfileStarter": {
+      "language": "ภาษา",
+      "framework": "เฟรมเวิร์ก",
+      "packageManager": "ตัวจัดการแพ็กเกจ",
+      "baseVariant": "อิมเมจฐาน",
+      "version": "เวอร์ชันรันไทม์",
+      "workdir": "ไดเรกทอรีทำงาน",
+      "port": "พอร์ต",
+      "buildCommand": "คำสั่งสร้าง",
+      "startCommand": "คำสั่งเริ่มต้น",
+      "commandPlaceholder": "ว่าง = ค่าเริ่มต้นที่กำหนดไว้",
+      "frameworkNone": "ไม่มี (รันไทม์ธรรมดา)",
+      "pmAuto": "อัตโนมัติ",
+      "variantSlim": "slim (glibc)",
+      "variantAlpine": "alpine (musl)",
+      "variantFull": "full",
+      "multiStage": "Multi-stage build",
+      "nonRootUser": "Non-root user",
+      "includeDockerignore": "เพิ่ม .dockerignore",
+      "includeCompose": "เพิ่ม compose.yaml",
+      "includeHealthcheck": "เพิ่ม HEALTHCHECK",
+      "groupWhat": "สิ่งที่คุณกำลังสร้าง",
+      "groupHow": "วิธีการทำงาน",
+      "emptyHint": "เลือกภาษาเพื่อดู Dockerfile",
+      "note": "ใช้เฉพาะค่าเริ่มต้น — ข้อมูลที่ส่งออกจากเบราว์เซอร์ของคุณมีเพียงตัวเลือกด้านบนเท่านั้น กรุณาอ่านไฟล์ก่อนนำไปใช้งาน",
+      "warnings": "{n} รายการที่ต้องตรวจสอบ",
+      "stages": "{n} ขั้นตอน",
+      "badgeNonRoot": "ไม่ใช่ root",
+      "badgeRoot": "ทำงานด้วย root",
+      "badgePort": "พอร์ต {port}"
+    },
+    "lineEndingDetect": {
+      "dropLabel": "วางไฟล์ข้อความเพื่อตรวจสอบการขึ้นบรรทัดใหม่",
+      "privacy": "ข้อความที่วาง และ 256 KB แรกของไฟล์ที่วาง จะถูกส่งไปยัง Forge API เพื่อสแกน; ไบต์ข้อมูลจะไม่ถูกเก็บไว้",
+      "pasteLabel": "หรือวางข้อความ",
+      "pastePlaceholder": "วางข้อความที่ต้องการตรวจสอบ",
+      "idle": "วางข้อความหรือวางไฟล์เพื่อดูผลการตรวจสอบการขึ้นบรรทัดใหม่",
+      "detail": "จำนวนและการตรวจสอบ",
+      "note": "ตรวจจับเท่านั้น — เครื่องมือนี้จะไม่เขียนทับไฟล์ของคุณ",
+      "empty": "ข้อมูลว่าง",
+      "noTerminator": "ไม่มีตัวจบบรรทัด — มีบรรทัดเดียวที่ไม่ได้จบ",
+      "consistent": "{style} — สม่ำเสมอ",
+      "mixed": "ผสม — {parts}",
+      "sharePart": "{pct}% {style}",
+      "style": {
+        "LF": "LF (Unix/Linux/macOS)",
+        "CRLF": "CRLF (Windows)",
+        "CR": "CR (classic Mac OS 9 และก่อนหน้า)"
+      },
+      "lines": "{n} บรรทัด",
+      "bytes": "{n} ไบต์",
+      "trailing": {
+        "present": "จบด้วยบรรทัดใหม่",
+        "absent": "ไม่มีบรรทัดใหม่ที่ท้ายไฟล์"
+      },
+      "bomUtf8": "UTF-8 BOM",
+      "bomNone": "ไม่มี BOM",
+      "countRow": "{style}: {n} ({pct}%)",
+      "colStyle": "รูปแบบ",
+      "colCount": "จำนวน",
+      "colShare": "สัดส่วน",
+      "minorityLines": "บรรทัดที่แตกต่างจากรูปแบบหลัก: {lines}",
+      "andMore": "และอื่นๆ",
+      "findings": "การตรวจสอบ",
+      "level": {
+        "info": "หมายเหตุ",
+        "warning": "คำเตือน",
+        "danger": "ขัดขวาง"
+      },
+      "sampled": "สแกน {n} ไบต์แรกจาก {total} ไบต์",
+      "encodingLink": "เปิดตัวตรวจจับการเข้ารหัส"
+    },
+    "fileTypeDetect": {
+      "drop": "วางไฟล์เพื่อระบุประเภทที่แท้จริง",
+      "privacy": "อ่านเฉพาะส่วนหัว {kb} KB แรก — ไฟล์ส่วนที่เหลือจะไม่ออกจากอุปกรณ์ของคุณ",
+      "hexTab": "วางค่า hex",
+      "detail": "แสดงไบต์และตัวเลือก",
+      "idle": "วางไฟล์ หรือวางไบต์นำหน้าเป็นค่า hex",
+      "note": "ลายเซ็นระบุคอนเทนเนอร์ ไม่ใช่โค้กหรือเนื้อหาภายใน",
+      "unset": "—",
+      "unknownType": "ไม่พบลายเซ็นที่ตรงกัน",
+      "polyglot": "Polyglot",
+      "tierNone": "นามสกุลไฟล์ตรงกัน",
+      "tierBenign": "ความไม่ตรงกันเล็กน้อย",
+      "tierMismatch": "นามสกุลไม่ตรงกัน",
+      "tierHighRisk": "ความเสี่ยงสูง",
+      "confidenceMatch": "ตรงตามลายเซ็น",
+      "confidenceContainer": "เฉพาะคอนเทนเนอร์",
+      "confidenceAmbiguous": "ไม่ชัดเจน",
+      "confidenceNone": "ไม่ตรงกัน",
+      "signalDetected": "MIME ที่ตรวจจับได้",
+      "signalReported": "MIME ที่รายงาน",
+      "signalExtension": "นามสกุลไฟล์",
+      "drillResolved": "เปิดคอนเทนเนอร์ {kind}: {type}",
+      "drillUnresolved": "ยืนยันคอนเทนเนอร์ {kind} แล้ว; ไม่สามารถระบุชนิดย่อยจากไบต์ที่สุ่มได้",
+      "hexDump": "ไบต์ส่วนหัว",
+      "bytesRead": "อ่าน {n} ไบต์",
+      "headerOnly": "ตัวอย่างส่วนหัวเท่านั้น",
+      "entropy": "เอนโทรปี {bits} บิต/ไบต์",
+      "signatureCount": "{n} ลายเซ็นในตาราง",
+      "textHints": "เบาะแสโครงสร้าง: {hints}",
+      "candidates": "ลายเซ็นที่ตรงทั้งหมด",
+      "atOffset": "ออฟเซ็ต {offset}"
+    },
+    "licenseChooser": {
+      "prompt": "โปรเจกต์นี้ต้องการอะไร",
+      "pickScenario": "เลือกบรรทัดที่ตรงกับโปรเจกต์ของคุณ — คำตอบและไฟล์จะปรากฏที่นี่",
+      "disclaimer": "ผลลัพธ์จากเทมเพลตแบบกำหนดได้ ไม่ใช่คำแนะนำทางกฎหมาย",
+      "noAnswer": "ไม่มีใบอนุญาตใดที่เหมาะกับกรณีนี้",
+      "permissions": "อนุญาตให้",
+      "conditions": "ต้องมี",
+      "limitations": "ไม่ครอบคลุม",
+      "alternates": "ตัวเลือกอื่นสำหรับกรณีนี้",
+      "useThis": "ใช้ตัวนี้",
+      "readCanonical": "อ่านข้อความต้นฉบับบน SPDX",
+      "holder": "ผู้ถือลิขสิทธิ์",
+      "holderPlaceholder": "ชื่อของคุณหรือบริษัทของคุณ",
+      "holderHint": "เพิ่มผู้ถือลิขสิทธิ์ ไฟล์จะกรอกอัตโนมัติขณะพิมพ์",
+      "year": "ปี",
+      "manifest": "ตำแหน่งที่ใส่ SPDX id",
+      "verbatim": "{name} ส่งมอบแบบ byte-identical สำหรับทุกคน — บรรทัดลิขสิทธิ์จะอยู่ใน notice ของไฟล์ต้นฉบับแทนที่จะอยู่ในไฟล์ LICENSE",
+      "noLicense": {
+        "summary": "จะเกิดอะไรขึ้นถ้าฉันไม่เพิ่มใบอนุญาตเลย?",
+        "body": "การไม่มีใบอนุญาตไม่เหมือนกับสาธารณสมบัติ หากไม่มีใบอนุญาต ลิขสิทธิ์เริ่มต้นจะมีผล และไม่มีใครสามารถคัดลอก ดัดแปลง หรือแจกจ่ายโค้ดของคุณได้ — การทำให้เป็นพื้นที่สาธารณะเป็นเพียงการมองเห็น ไม่ใช่การอนุญาต"
+      },
+      "artifact": {
+        "header": "ส่วนหัวของไฟล์ต้นฉบับ",
+        "notice": "ประกาศในไฟล์ต้นฉบับ"
+      },
+      "refine": {
+        "patent": "การให้สิทธิ์สิทธิบัตรมีความสำคัญที่นี่ (โค้ดของบริษัท ฮาร์ดแวร์ งานมาตรฐาน)",
+        "network": "มันจะทำงานเป็นบริการโฮสต์ ไม่ใช่แค่ดาวน์โหลด",
+        "library": "มันเป็นไลบรารีที่ซอฟต์แวร์อื่นเชื่อมโยงด้วย",
+        "later": "อนุญาตให้ใช้ใบอนุญาตรุ่นหลัง (ทำให้โค้ด Apache-2.0 เข้ากันได้)",
+        "none": "ไม่มีอะไรต้องปรับปรุงเพิ่มเติมสำหรับกรณีนี้"
+      },
+      "scenario": {
+        "permissive": {
+          "label": "ใครก็ได้สามารถใช้ได้อย่างอิสระ",
+          "detail": "ใช้ เปลี่ยนแปลง ขาย ส่งในผลิตภัณฑ์ปิด — เพียงแค่คงประกาศลิขสิทธิ์ไว้"
+        },
+        "copyleft": {
+          "label": "การปรับปรุงต้องถูกส่งกลับคืน",
+          "detail": "ผู้ที่แจกจ่ายเวอร์ชันที่แก้ไขแล้วจะต้องเผยแพร่ซอร์สโค้ดด้วย"
+        },
+        "community": {
+          "label": "ฉันกำลังมีส่วนร่วมในโปรเจกต์ที่มีอยู่",
+          "detail": "ใบอนุญาตถูกกำหนดไว้แล้ว — ให้ตรงกับโปรเจกต์ที่คุณกำลังมีส่วนร่วม"
+        },
+        "non-software": {
+          "label": "นี่ไม่ใช่ซอฟต์แวร์",
+          "detail": "เอกสาร ข้อมูล การออกแบบ หรือสื่อต้องใช้ใบอนุญาต Creative Commons ไม่ใช่ OSI"
+        },
+        "unsure": {
+          "label": "ฉันยังไม่รู้",
+          "detail": "รับค่าเริ่มต้นที่เสียใจน้อยที่สุด พร้อมตัวเลือกสองแบบที่ควรรู้"
+        }
+      },
+      "family": {
+        "permissive": "แบบอนุญาต",
+        "weak-copyleft": "Copyleft แบบอ่อน",
+        "strong-copyleft": "Copyleft แบบเข้ม",
+        "public-domain": "สาธารณสมบัติ",
+        "content": "ใบอนุญาตเนื้อหา"
+      },
+      "flag": {
+        "commercial-use": "ใช้เชิงพาณิชย์",
+        "modifications": "การแก้ไข",
+        "distribution": "การแจกจ่าย",
+        "private-use": "ใช้ส่วนตัว",
+        "patent-use": "การอนุญาตสิทธิบัตร",
+        "include-copyright": "คงไว้ซึ่งประกาศลิขสิทธิ์",
+        "document-changes": "ระบุการเปลี่ยนแปลงของคุณ",
+        "disclose-source": "เปิดเผยซอร์สโค้ด",
+        "same-license": "สัญญาอนุญาตเดียวกันสำหรับทั้งงาน",
+        "same-license-file": "สัญญาอนุญาตเดียวกัน ต่อไฟล์ที่แก้ไข",
+        "same-license-library": "สัญญาอนุญาตเดียวกันสำหรับไลบรารี",
+        "network-use-disclose": "การใช้งานผ่านเครือข่ายถือเป็นการแจกจ่าย",
+        "liability": "ความรับผิด",
+        "warranty": "การรับประกัน",
+        "trademark-use": "การใช้เครื่องหมายการค้า"
+      }
+    },
+    "isbn": {
+      "inputLabel": "ISBN",
+      "placeholder": "978-0-306-40615-7 — หนึ่งรายการต่อบรรทัด ไม่สนใจขีดและช่องว่าง",
+      "idle": "วาง ISBN หนึ่งรายการหรือทั้งคอลัมน์ ผลลัพธ์จะแสดงขณะพิมพ์",
+      "scope": "ตรวจสอบเฉพาะคณิตศาสตร์ของเลขตรวจสอบ ISBN ที่ถูกต้องมีความสอดคล้องภายใน แต่ไม่ได้พิสูจน์ว่าหน่วยงานใดมอบหมายให้หนังสือจริง",
+      "summary": "{valid} จาก {total} ถูกต้อง",
+      "singleValid": "ISBN ถูกต้อง",
+      "singleInvalid": "ไม่ใช่ ISBN ที่ถูกต้อง",
+      "invalidCount": "{n} ไม่ถูกต้อง",
+      "convertedTo": "{type}: {value}",
+      "valid": "ถูกต้อง",
+      "invalid": "ไม่ถูกต้อง",
+      "truncated": "แสดง {shown} แถวแรก",
+      "col": {
+        "input": "ข้อมูลเข้า",
+        "normalized": "มาตรฐาน",
+        "type": "ประเภท",
+        "status": "สถานะ",
+        "converted": "แปลงแล้ว",
+        "note": "หมายเหตุ"
+      },
+      "type": {
+        "isbn10": "ISBN-10",
+        "isbn13": "ISBN-13",
+        "invalidLength": "ความยาวไม่ถูกต้อง"
+      },
+      "note": {
+        "checkDigit": "เลขตรวจสอบควรเป็น {expected}",
+        "invalidLength": "ISBN ต้องมี 10 หรือ 13 ตัวอักษรพอดี",
+        "invalidCharacter": "มีตัวอักษรที่ไม่ใช่ตัวเลข",
+        "xMisplaced": "X ใช้ได้เฉพาะเป็นตัวสุดท้ายของ ISBN-10",
+        "noIsbn10": "รหัส 979 ไม่มี ISBN-10 ที่เทียบเท่า",
+        "nonBookland": "ISBN 13 หลักต้องขึ้นต้นด้วย 978 หรือ 979",
+        "ismn": "979-0 เป็นช่วงของ ISMN (ดนตรีพิมพ์) ไม่ใช่ ISBN"
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
+    },
+    "languageDetect": {
+      "inputLabel": "โค้ดตัวอย่าง",
+      "inputPlaceholder": "วางโค้ดโดยไม่ใส่ชื่อไฟล์ — จากแชท, ตั๋ว, คำตอบ…",
+      "hintLabel": "ชื่อไฟล์หรือส่วนขยาย (ไม่บังคับ)",
+      "hintPlaceholder": "main.h · .pl · Dockerfile",
+      "note": "ใช้เครื่องยนต์เดียวกับ API การตรวจจับจะพิจารณาจากเนื้อหาเท่านั้น เว้นแต่คุณจะใส่ชื่อไฟล์เป็นเบาะแส ส่วนขยายที่คลุมเครือ (.h .m .pl .fs .ts .cs .r) จะถูกส่งผ่านกฎเฉพาะของตัวเองก่อน",
+      "idle": "วางโค้ดตัวอย่าง — ผลการวิเคราะห์จะแสดงขณะพิมพ์",
+      "confidence": {
+        "high": "ความมั่นใจสูง",
+        "medium": "ความมั่นใจปานกลาง",
+        "low": "ความมั่นใจต่ำ"
+      },
+      "score": "{n}/100",
+      "dataFormat": "รูปแบบข้อมูล ไม่ใช่ภาษาโปรแกรม",
+      "multiLanguage": "พบหลายภาษาร่วมกัน",
+      "why": "ทำไมถึงได้คำตอบนี้",
+      "signals": "สัญญาณที่ตรงกัน",
+      "alternates": "ตัวเลือกอื่น",
+      "composeNext": "จัดรูปแบบ {language} นี้"
+    },
+    "iban": {
+      "inputLabel": "IBAN",
+      "idle": "วาง IBAN — ผลการตรวจสอบจะปรากฏทันที ไม่ต้องกดปุ่ม",
+      "sourceNote": "Checksum และโครงสร้างตาม ISO 13616-1:2020 ความยาวและรูปแบบ BBAN ของแต่ละประเทศมาจากสำเนาที่เผยแพร่ของทะเบียน ISO IBAN ไม่ใช่ทะเบียนต้นฉบับ",
+      "valid": "IBAN มีรูปแบบถูกต้อง",
+      "keepTyping": "พิมพ์ต่อ — ยังสั้นกว่าความยาว IBAN ของประเทศนี้",
+      "caveat": "ตรวจสอบเฉพาะรูปแบบเท่านั้น Checksum ผ่านไม่ได้ยืนยันว่าบัญชีมีอยู่ เปิดใช้งาน หรือเป็นของผู้รับ",
+      "printFormat": "รูปแบบพิมพ์",
+      "details": "รายละเอียดที่แยกวิเคราะห์",
+      "notEncoded": "ไม่เข้ารหัสตามรูปแบบของประเทศนี้",
+      "coverage": "{n} ประเทศที่มีรูปแบบ IBAN ที่ลงทะเบียน",
+      "reason": {
+        "bad_charset": "ไม่ใช่รูปแบบ IBAN — IBAN ประกอบด้วยตัวอักษร 2 ตัว ตามด้วยตัวเลข 2 ตัว และตัวอักษรกับตัวเลขเท่านั้น",
+        "country_unsupported": "ไม่มีรูปแบบ IBAN ที่ลงทะเบียนสำหรับรหัสประเทศนี้",
+        "incomplete": "ไม่สมบูรณ์",
+        "wrong_length_for_country": "ยาวเกินไปสำหรับ IBAN ของประเทศนี้",
+        "structure_mismatch": "ความยาวถูกต้อง แต่รูปแบบไม่ตรงกับประเทศนี้",
+        "checksum_failed": "Checksum ล้มเหลว — มีตัวพิมพ์ผิดใน IBAN นี้"
+      },
+      "badge": {
+        "country": "{name} ({code})",
+        "unknownCountry": "รหัสประเทศ {code}",
+        "length": "{n} จาก {expected} ตัวอักษร",
+        "bankCode": "รหัสธนาคาร {code}",
+        "expectedCheckDigits": "Check digits สำหรับเลขบัญชีนี้ควรเป็น {digits}"
+      },
+      "field": {
+        "normalized": "รูปแบบอิเล็กทรอนิกส์",
+        "country": "ประเทศ",
+        "checkDigits": "Check digits",
+        "bban": "BBAN",
+        "bbanFormat": "รูปแบบ BBAN",
+        "bankCode": "รหัสธนาคาร"
+      },
+      "check": {
+        "charset": "ชุดตัวอักษร",
+        "country": "ประเทศ",
+        "length": "ความยาว",
+        "structure": "โครงสร้าง",
+        "checksum": "MOD 97-10"
+      },
+      "state": {
+        "pass": "ผ่าน",
+        "fail": "ไม่ผ่าน",
+        "skipped": "ไม่ได้ตรวจสอบ"
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
+    },
+    "secretScan": {
+      "pasteLabel": "วางโค้ด การตั้งค่า หรือไฟล์ .env",
+      "pastePlaceholder": "DATABASE_URL=postgres://…\nAPI_KEY=…",
+      "dropLabel": "วางไฟล์เพื่อสแกน",
+      "privacy": "ทำงานทั้งหมดในเบราว์เซอร์ของคุณ ไม่มีการส่งข้อมูลไปไหนเลย — แม้แต่เรา",
+      "scan": "สแกน",
+      "scanning": "กำลังสแกน…",
+      "idleTitle": "วางข้อความแล้วกดสแกน",
+      "idleHint": "ตรวจสอบคีย์ API ของผู้ให้บริการ, โทเค็น, คีย์ส่วนตัว และข้อมูลลับที่มีเอนโทรปีสูง ค่าที่ตรงจะถูกปิดบัง; แสดงเฉพาะหมายเลขบรรทัดแบบเต็ม",
+      "clean": "ไม่พบข้อมูลลับ",
+      "cleanCaveat": "ไม่มีอะไรตรงตามรูปแบบข้อมูลประจำตัวที่รู้จักหรือดูเหมือนข้อมูลลับแบบสุ่ม การจับคู่รูปแบบไม่ใช่การยืนยัน — ตรวจสอบสิ่งที่คุณไม่แน่ใจ",
+      "found": "{n, plural, one {พบข้อมูลลับที่เป็นไปได้ # รายการ} other {พบข้อมูลลับที่เป็นไปได้ # รายการ}}",
+      "foundCaveat": "ลบข้อมูลเหล่านี้ออกก่อนวางในที่อื่น หากคีย์นี้ของจริง ให้เปลี่ยนใหม่",
+      "countHigh": "ความมั่นใจสูง {n} รายการ",
+      "countMedium": "ความมั่นใจปานกลาง {n} รายการ",
+      "countLow": "{n} ระดับต่ำ",
+      "confidence": {
+        "high": "สูง",
+        "medium": "ปานกลาง",
+        "low": "ต่ำ"
+      },
+      "position": "บรรทัด {line}, คอลัมน์ {column}",
+      "length": "{n} ตัวอักษร",
+      "maskedLabel": "การจับคู่ที่ปิดบัง",
+      "why": "ทำไมถึงจับคู่",
+      "candidates": "อาจเป็นได้เช่นกัน:",
+      "scanDetail": "รายละเอียดการสแกน",
+      "lines": "{n} บรรทัด",
+      "bytes": "สแกน {n} ไบต์",
+      "suppressed": "ละเว้น placeholder {n} ตัว",
+      "suppressedNote": "ค่าตัวอย่างที่รู้จัก (คีย์ EXAMPLE, your-api-key-here, ตัวอักษรซ้ำ) จะถูกละเว้น เพื่อให้ไฟล์ตัวอย่างไม่แจ้งเตือนผิดพลาด",
+      "omitted": "อีก {n} รายการไม่แสดง",
+      "truncated": "จำกัดขนาดอินพุต — สแกนเฉพาะส่วนแรก",
+      "reportTitle": "ผลการสแกน Secret (ค่าถูกปิดบัง)",
+      "scopeNote": "ตรวจจับเท่านั้น: เครื่องมือนี้จะไม่ติดต่อผู้ให้บริการเพื่อตรวจสอบว่าคีย์ยังใช้งานได้ — ซึ่งหมายถึงการส่งคีย์ของคุณไปยังบุคคลที่สาม"
+    },
+    "eanUpcGtin": {
+      "inputLabel": "หมายเลขบาร์โค้ด",
+      "placeholder": "รหัสละบรรทัด (เครื่องหมายจุลภาคและเซมิโคลอนก็แยกได้)",
+      "idle": "วางรหัสเดียวหรือทั้งคอลัมน์ — ผลการตัดสินจะแสดงขณะพิมพ์",
+      "operationLabel": "การดำเนินการ",
+      "operationValidate": "ตรวจสอบความถูกต้อง (รหัสรวมเลขตรวจสอบ)",
+      "operationCalculate": "คำนวณ (รหัสขาดเลขตรวจสอบ)",
+      "typeLabel": "ประเภท",
+      "typeAuto": "ตรวจจับจากความยาว",
+      "total": "{n} รหัส",
+      "validCount": "{n} ถูกต้อง",
+      "invalidCount": "{n} ไม่ถูกต้อง",
+      "calculatedCount": "{n} คำนวณแล้ว",
+      "unrecognizedCount": "{n} ความยาวไม่รู้จัก",
+      "verdict": {
+        "valid": "ถูกต้อง",
+        "invalid": "ไม่ถูกต้อง",
+        "calculated": "คำนวณแล้ว",
+        "unrecognized-length": "ความยาวไม่รู้จัก"
+      },
+      "alsoReadsAs": "อ่านได้ว่าเป็น {type} ด้วย",
+      "checkDigit": "หลักตรวจสอบ",
+      "corrected": "ควรเป็น",
+      "gtin14": "รูปแบบ GTIN-14",
+      "reason": {
+        "empty": "ไม่มีอะไรให้ตรวจสอบในบรรทัดนี้",
+        "non-digit-characters": "มีตัวอักษรที่ไม่ใช่ตัวเลขหรือตัวคั่น",
+        "unsupported-length": "ไม่มีรหัส GS1 ใดมีความยาวนี้ (รองรับ 8, 12, 13, 14 และ 18 หลัก)",
+        "length-mismatch": "ความยาวไม่ตรงกับประเภทที่คุณเลือก",
+        "check-digit-mismatch": "หลักสุดท้ายไม่ตรงกับที่มาตรฐานกำหนด"
+      },
+      "warning": {
+        "separators-stripped": "ลบช่องว่าง เครื่องหมายขีด และจุดออกก่อนตรวจสอบ",
+        "all-zero": "เป็นศูนย์ทั้งหมด — ถูกต้องทางคณิตศาสตร์ แต่ไม่ใช่รหัสจริง",
+        "payload-is-also-a-complete-code": "นี่คือความยาวของรหัสที่สมบูรณ์ด้วย หากมีหลักตรวจสอบอยู่แล้ว ให้เปลี่ยนเป็น Validate"
+      },
+      "math": "แสดงการคำนวณ",
+      "mathSum": "ผลรวม {sum} → หลักตรวจสอบ {check}",
+      "truncatedRows": "แสดง {shown} จาก {total} แถวแรก คัดลอกและดาวน์โหลดเพื่อรับข้อมูลทั้งหมด",
+      "privacy": "รหัสจะถูกส่งไปยัง Forge API เพื่อตรวจสอบและไม่มีการเก็บไว้",
+      "scopeNote": "หลักตรวจสอบที่ถูกต้องหมายความว่าหมายเลขมีรูปแบบถูกต้อง ไม่ได้หมายความว่า GS1 เคยมอบหมายให้ผลิตภัณฑ์ บริษัท หรือสถานที่จริง — มีเพียงการค้นหาในทะเบียน GEPIR เท่านั้นที่จะตอบคำถามนั้น",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
+    },
+    "vin": {
+      "inputLabel": "VIN (17 ตัวอักษร)",
+      "privacy": "ตรวจสอบในเบราว์เซอร์ของคุณ VIN จะไม่ถูกส่งไปที่ใด",
+      "idle": "วาง VIN — ผลการตรวจสอบจะปรากฏขณะพิมพ์ ไม่ต้องกดปุ่ม",
+      "scope": "โครงสร้างและหลักตรวจสอบเท่านั้น (49 CFR 565.15 / ISO 3779) นี่ไม่ใช่การค้นหาประวัติยานพาหนะ",
+      "verdict": {
+        "valid": "โครงสร้าง VIN ถูกต้อง",
+        "keepTyping": "พิมพ์ต่อ — เหลืออีก {remaining} ตัวอักษร",
+        "tooLong": "ยาวเกินไป — VIN มี 17 ตัวอักษรพอดี แต่ตัวนี้มี {n}",
+        "invalidCharacter": "ไม่ใช่ตัวอักษร VIN: \"{char}\" ที่ตำแหน่ง {position}",
+        "checkDigitMismatch": "เลขตรวจสอบไม่ตรงกัน — คาดว่า {expected} แต่พบ {found}"
+      },
+      "hint": {
+        "confusable": "“{char}” ไม่เคยใช้ใน VIN คุณหมายถึง {suggest} หรือไม่?"
+      },
+      "notice": {
+        "notProvenance": "เลขตรวจสอบที่ถูกต้องยืนยันว่า VIN มีรูปแบบที่ถูกต้อง แต่ไม่ได้ยืนยันว่ารถมีอยู่จริง ไม่ได้ดัดแปลง หรือมีประวัติที่สะอาด — VIN ที่ถูกโคลนก็ผ่านการตรวจสอบนี้เช่นกัน",
+        "pre1981": "รถที่ผลิตก่อนปี 1981 และรถนำเข้าบางรุ่น (JDM/ยุโรป) ไม่ใช้เลขตรวจสอบนี้ — การไม่ตรงกันอาจไม่ได้หมายความว่า VIN พิมพ์ผิด",
+        "partial": "การตรวจสอบเลขตรวจสอบต้องใช้ VIN ครบ 17 ตัวอักษร VIN ที่ไม่สมบูรณ์เป็นงานถอดรหัส ไม่ใช่การตรวจสอบผลรวม"
+      },
+      "badge": {
+        "length": "{n} ตัวอักษร",
+        "expected": "เลขตรวจสอบ {d}"
+      },
+      "invalidChars": {
+        "more": "นอกจากนี้ยังมีอักขระที่ไม่ใช่ VIN: {list}"
+      },
+      "segment": {
+        "wmi": "WMI 1-3",
+        "vds": "Descriptor 4-8",
+        "checkDigit": "เลขตรวจสอบ 9",
+        "modelYear": "รุ่นปี 10",
+        "plant": "โรงงาน 11",
+        "serial": "หมายเลขซีเรียล 12-17"
+      },
+      "math": {
+        "title": "แสดงการคำนวณ",
+        "col": {
+          "position": "ตำแหน่ง",
+          "char": "อักขระ",
+          "value": "ค่า",
+          "weight": "น้ำหนัก",
+          "product": "ผลคูณ"
+        },
+        "formula": "ผลรวม = {sum};  {sum} mod 11 = {remainder}  →  หลักตรวจสอบ {expected}"
+      },
+      "specimenTitle": "VIN · structure specimen"
+    },
+    "envDiff": {
+      "envA": "สภาพแวดล้อม A",
+      "envB": "สภาพแวดล้อม B",
+      "placeholderA": "วางหรือลากไฟล์ .env แรกมาที่นี่",
+      "placeholderB": "วางหรือลากไฟล์ .env ที่สองมาที่นี่",
+      "paneNoAssignment": "ไม่พบบรรทัด KEY=value",
+      "optIgnoreComments": "ไม่สนใจบรรทัดความคิดเห็นและบรรทัดว่าง",
+      "optCaseInsensitive": "เปรียบเทียบคีย์แบบไม่คำนึงถึงตัวพิมพ์เล็ก-ใหญ่",
+      "optRedactSecrets": "ปกปิดข้อมูลลับที่ตรวจพบ",
+      "emptyHint": "เพิ่มสภาพแวดล้อมที่สองเพื่อดูการเปรียบเทียบ",
+      "summaryNone": "ไม่มีความแตกต่างใน {total} คีย์",
+      "summaryDiff": "{n} จาก {total} คีย์แตกต่างกัน",
+      "note": {
+        "unchanged": "ค่าเหมือนกันทั้งสองฝั่ง",
+        "changed": "ค่าแตกต่างกัน",
+        "added": "กำหนดใน B เท่านั้น",
+        "removed": "กำหนดใน A เท่านั้น",
+        "commentedOutInA": "ถูกคอมเมนต์ใน A, ตั้งค่าใน B",
+        "commentedOutInB": "ตั้งค่าใน A, ถูกคอมเมนต์ใน B"
+      },
+      "secretChanged": "secret แตกต่างกัน",
+      "secretSame": "secret เหมือนกันทั้งสองด้าน",
+      "count": {
+        "unchanged": "{n} ไม่เปลี่ยนแปลง",
+        "changed": "{n} เปลี่ยนแปลง",
+        "added": "เพิ่ม {n} รายการ",
+        "removed": "ลบ {n} รายการ",
+        "commentedOut": "คอมเมนต์ {n} รายการ"
+      },
+      "warnings": "คำเตือนในข้อมูล ({n})",
+      "warningType": {
+        "duplicateKey": "{file} · คีย์ซ้ำ",
+        "quoteMismatch": "{file} · เครื่องหมายคำพูดไม่ตรงกัน",
+        "unparsableLine": "{file} · บรรทัดที่อ่านค่าไม่ได้"
+      },
+      "showUnchanged": "แสดงรายการที่ไม่ได้เปลี่ยนแปลง ({n})",
+      "commentedIn": {
+        "A": "ถูกคอมเมนต์ใน A",
+        "B": "ถูกคอมเมนต์ใน B",
+        "both": "ถูกคอมเมนต์ในทั้งสอง"
+      },
+      "redactedNote": "ค่า Secret ถูกปิดบังด้วยวิธีประมาณการจากคีย์เวิร์ดชื่อคีย์ — ไม่ใช่เครื่องมือสแกนความปลอดภัย การเปรียบเทียบทำงานบนค่าดิบ ดังนั้น Secret ที่หมุนเวียนใหม่จะยังคงแสดงว่ามีการเปลี่ยนแปลง",
+      "interpolationNote": "การอ้างอิง ${VAR} จะถูกเปรียบเทียบแบบตัวอักษรและไม่ได้รับการแก้ไข: การขยายผลจะแตกต่างกันไปตามผู้ใช้งาน",
+      "truncated": "แสดงเฉพาะ 5,000 คีย์แรก; จำนวนครอบคลุมทุกคีย์",
+      "colKey": "คีย์",
+      "colA": "A",
+      "colB": "B",
+      "colStatus": "สถานะ",
+      "privacy": "เปรียบเทียบไฟล์ทั้งสองในเบราว์เซอร์ของคุณ ไม่มีการอัปโหลดข้อมูล"
+    },
+    "csvDiff": {
+      "originalLabel": "CSV เดิม",
+      "updatedLabel": "CSV ที่อัปเดต",
+      "originalPlaceholder": "วางข้อมูลส่งออกเดิม หรือวางไฟล์ .csv ที่นี่",
+      "updatedPlaceholder": "วางข้อมูลส่งออกที่อัปเดต หรือวางไฟล์ .csv ที่นี่",
+      "emptyHint": "วางหรือลากไฟล์ทั้งสอง — การเปรียบเทียบจะเริ่มทันทีเมื่อแต่ละฝั่งมีเนื้อหา",
+      "note": "แถวจะถูกจับคู่ตามตัวตน ไม่ใช่ตามตำแหน่ง ดังนั้นแถวที่แทรกหรือเรียงลำดับใหม่จะไม่ปรากฏเป็นกำแพงของการเปลี่ยนแปลง เนื้อหาจะถูกส่งไปยัง API เพื่อเปรียบเทียบและไม่ถูกเก็บไว้",
+      "columns": "{n} คอลัมน์",
+      "keyLabel": "คอลัมน์หลัก",
+      "keyAuto": "แนะนำอัตโนมัติ",
+      "keyNone": "ไม่มีคีย์ — เปรียบเทียบทั้งแถว",
+      "joinLabel": "รวม",
+      "joinFull": "Full outer — ทุกแถว",
+      "joinInner": "Inner — แถวที่ปรากฏทั้งสอง",
+      "joinLeft": "Left — ชุดแถวต้นฉบับ",
+      "ignoreWhitespace": "ละเว้นช่องว่าง",
+      "ignoreCase": "ละเว้นตัวพิมพ์ใหญ่-เล็ก",
+      "treatEmptyAsNull": "ว่าง = NULL = N/A",
+      "noDifferences": "ไม่พบความแตกต่าง",
+      "differences": "เพิ่ม {added} · ลบ {removed} · เปลี่ยน {changed}",
+      "added": "เพิ่ม {n}",
+      "removed": "ลบ {n}",
+      "changed": "เปลี่ยน {n}",
+      "unchangedCount": "ไม่เปลี่ยนแปลง {n}",
+      "totals": "{original} → {updated} แถว",
+      "matchedBy": "จับคู่ตาม {columns} ({source})",
+      "matchedWholeRow": "จับคู่ตามเนื้อหาทั้งแถว — ไม่ได้ใช้คอลัมน์หลัก จึงไม่มีรายการใดถูกรายงานว่ามีการเปลี่ยนแปลง",
+      "keySource": {
+        "provided": "ตัวเลือกของคุณ",
+        "auto": "แนะนำอัตโนมัติ",
+        "full-row": "ทั้งแถว"
+      },
+      "keyRejected": "ตัวเลือกคีย์ที่ถูกปฏิเสธ: {items}",
+      "columnMismatch": "คอลัมน์ที่มีเฉพาะในต้นฉบับ: {original} · มีเฉพาะในเวอร์ชันอัปเดต: {updated}",
+      "truncated": "แสดง {shown} จากผลลัพธ์ทั้งหมด (ตัวอย่างจำกัดที่ {limit} แถว) — จำนวนด้านบนครบถ้วน",
+      "findings": "หมายเหตุ ({n})",
+      "level": {
+        "info": "ข้อมูล",
+        "warning": "คำเตือน",
+        "danger": "ข้อผิดพลาด"
+      },
+      "wholeRow": "แถว {n}",
+      "exportChanged": "แถวที่เปลี่ยนแปลง (CSV)",
+      "exportFull": "ความแตกต่างทั้งหมด (CSV)"
+    },
+    "uscc": {
+      "modeLabel": "ตรวจสอบหรือสร้าง",
+      "tab": {
+        "verify": "ตรวจสอบ",
+        "generate": "สร้างรหัสทดสอบ"
+      },
+      "inputLabel": "รหัสเครดิตสังคมแบบรวม",
+      "placeholder": "18 ตัวอักษร เช่น 91500000059926748X",
+      "idle": "วางรหัส 18 ตัวอักษร ระบบจะตรวจสอบในเบราว์เซอร์ขณะพิมพ์ — ไม่มีการเก็บข้อมูล",
+      "scope": "ตรวจสอบโครงสร้างเท่านั้น (GB 32100-2015 + ISO 7064 MOD 31-3) รหัสที่ผ่านคือรหัสที่มีรูปแบบถูกต้อง ไม่ได้หมายความว่าองค์กรได้ลงทะเบียนภายใต้รหัสนั้น — ตรวจสอบที่ทะเบียนแห่งชาติ cods.org.cn",
+      "valid": "รหัสเครดิตสังคมแบบรวมถูกต้อง",
+      "invalid": "ไม่ใช่รหัสเครดิตสังคมแบบรวมที่ถูกต้อง",
+      "incomplete": "{n} จาก 18 ตัวอักษร",
+      "invalidCharacters": "มีตัวอักษรที่มาตรฐานกำหนดห้ามใช้",
+      "checksumOk": "เลขตรวจสอบถูกต้อง",
+      "checksumBad": "เลขตรวจสอบไม่ตรงกัน",
+      "expectedDigit": "เลขตรวจสอบควรเป็น {expected} ไม่ใช่ {actual}",
+      "illegalAt": "ตำแหน่ง {position}: “{char}” ไม่อยู่ในชุดตัวอักษรของรหัส (ห้ามใช้ I, O, S, V, Z)",
+      "detail": "รายละเอียดฟิลด์",
+      "legacyTitle": "รหัสองค์กรแบบเดิม (GB 11714)",
+      "legacy": {
+        "ok": "รหัสองค์กร 9 ตัวที่ฝังอยู่มีความสอดคล้องในตัวเอง",
+        "mismatch": "ตัวอักษรตรวจสอบแบบเดิมควรเป็น {expected} — เป็นคำแนะนำเท่านั้น; ไม่ใช่ทุกประเภทผู้จดทะเบียนจะมีรหัสองค์กร GB 11714",
+        "unchecked": "ไม่ได้ตรวจสอบ"
+      },
+      "divisionScope": "ตำแหน่งที่ 3–8 จะถูกจับคู่กับตารางจังหวัด GB/T 2260 และกฎการซ้อนของรูปแบบหกหลัก ไม่รวมตารางอำเภอทั้งหมด",
+      "field": {
+        "registrationDept": "หน่วยงานที่ลงทะเบียน",
+        "orgCategory": "ประเภทองค์กร",
+        "adminDivision": "เขตการปกครอง",
+        "orgIdentifier": "ตัวระบุหัวข้อ",
+        "checkDigit": "เลขตรวจสอบ"
+      },
+      "depth": {
+        "none": "ไม่ได้รับการแก้ไข",
+        "province": "ระดับจังหวัด",
+        "prefecture": "ระดับเขตปกครอง",
+        "county": "ระดับอำเภอ"
+      },
+      "note": {
+        "empty": "ยังไม่มีอะไรให้ตรวจสอบ",
+        "incomplete": "รหัสเครดิตสังคมแบบรวมต้องมี 18 ตัวอักษรพอดี",
+        "tooLong": "เกิน 18 ตัวอักษร",
+        "illegalCharacter": "มีอักขระที่ไม่อยู่ในชุด GB 32100-2015 (ไม่รวม I, O, S, V และ Z)",
+        "checkDigitMismatch": "เลขตรวจสอบไม่ตรงกับ 17 ตัวอักษรแรก",
+        "departmentUnknown": "ตำแหน่งที่ 1 ไม่ใช่หน่วยงานทะเบียนตามมาตรฐาน (1, 5, 9, Y)",
+        "categoryUnknown": "ตำแหน่งที่ 2 ไม่ใช่ประเภทองค์กรที่กำหนดสำหรับหน่วยงานทะเบียนนี้",
+        "divisionNotNumeric": "ตำแหน่งที่ 3–8 ต้องเป็นตัวเลข 6 หลัก",
+        "divisionUnknownProvince": "ตำแหน่งที่ 3–4 ไม่ใช่รหัสจังหวัดตาม GB/T 2260",
+        "divisionMalformed": "อำเภอที่ไม่อยู่ภายใต้จังหวัดใด ซึ่ง GB/T 2260 ไม่อนุญาต"
+      },
+      "gen": {
+        "dept": "หน่วยงานทะเบียน",
+        "category": "ประเภทองค์กร",
+        "province": "จังหวัด",
+        "count": "จำนวน",
+        "randomProvince": "จังหวัดใดก็ได้",
+        "regenerate": "ชุดใหม่",
+        "emptyHint": "เลือกตัวเลือกด้านบนเพื่อสร้างรหัสทดสอบ",
+        "testDataBadge": "ข้อมูลทดสอบ",
+        "seed": "Seed {seed}",
+        "allCodes": "รหัสทั้งหมด",
+        "disclaimer": "รหัสเหล่านี้มีโครงสร้างที่ถูกต้อง แต่ไม่ได้เป็นขององค์กรที่จดทะเบียนจริง ห้ามใช้เพื่อแสดงถึงหน่วยงานจริง",
+        "note": "การสร้างใช้ Seed: ตัวเลือกและ Seed เดียวกันจะให้ชุดผลลัพธ์เดิมเสมอ ทำให้ข้อมูลทดสอบสามารถทำซ้ำได้ ทุกโค้ดจะถูกทำเครื่องหมาย isTestData ใน JSON และที่นี่"
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
+    },
+    "yamlDiff": {
+      "original": "ต้นฉบับ",
+      "changed": "ที่เปลี่ยนแปลง",
+      "originalPlaceholder": "วางหรือลาก YAML (หรือ JSON) ต้นฉบับ",
+      "changedPlaceholder": "วางหรือลาก YAML (หรือ JSON) ที่เปลี่ยนแปลง",
+      "idle": "กรอกทั้งสองช่อง การเปรียบเทียบจะทำงานไปพร้อมกับการพิมพ์",
+      "privacy": "เอกสารทั้งสองจะถูกวิเคราะห์และเปรียบเทียบในเบราว์เซอร์นี้ — ไม่มีการอัปโหลดข้อมูล ซึ่งสำคัญมากสำหรับ manifests ที่มี hostname และชื่อ secret",
+      "modeLabel": "การเปรียบเทียบ",
+      "modeSemantic": "เชิงความหมาย (โครงสร้าง)",
+      "modeRawText": "ข้อความดิบ (ตัวอักษร)",
+      "resolveAnchors": "แก้ไข anchors และ aliases ให้เป็นค่าของมัน",
+      "valid": "YAML ถูกต้อง",
+      "validMulti": "YAML ถูกต้อง · {n} เอกสาร",
+      "invalid": "ข้อผิดพลาดในการวิเคราะห์ บรรทัด {line}",
+      "parseFailed": "ด้านหนึ่งไม่สามารถวิเคราะห์ได้ — ไม่มีการเปรียบเทียบ",
+      "equivalent": "ไม่มีความแตกต่าง — เอกสารทั้งสองให้โครงสร้างเดียวกัน",
+      "equivalentStructural": "โครงสร้างเดียวกัน · {n} ความแตกต่างด้านรูปแบบหรือ anchor",
+      "summary": "เพิ่ม {added} · ลบ {removed} · เปลี่ยน {changed} · เปลี่ยนประเภท {typeChanged}",
+      "parseErrorAt": "{side} · บรรทัด {line} คอลัมน์ {column}: {message}",
+      "documentCountMismatch": "จำนวนเอกสารไม่ตรงกัน: {original} vs {changed} — จับคู่เอกสารตามลำดับและรายงานส่วนเกินทั้งหมด",
+      "duplicateKeys": "มีคีย์ซ้ำในแหล่งข้อมูล",
+      "unified": "แพตช์แบบรวม (YAML ที่ปรับมาตรฐาน)",
+      "howItWorks": "วิธีการเปรียบเทียบนี้ทำงาน",
+      "rule": {
+        "keyOrder": "ลำดับคีย์ การใส่เครื่องหมายคำพูด และการเยื้องบรรทัดจะถูกละเว้น; ลำดับของลำดับจะถูกเปรียบเทียบ เนื่องจากลำดับของรายการมีความหมาย",
+        "anchors": "Aliases จะถูกแก้ไขเป็นค่าจริง ดังนั้นการแก้ไขที่อยู่หลัง anchor ร่วมจะแสดงที่ทุกตำแหน่ง alias; anchor หรือ alias ที่เปลี่ยนแปลงโดยที่ค่ายังคงเดิมจะถูกรายงานแยกต่างหากว่าเป็นการเปลี่ยนแปลงเชิงโครงสร้าง",
+        "mergeKeys": "Merge keys (<<) จะถูกขยายก่อนเปรียบเทียบ และคีย์ของโหนดเองจะมีลำดับความสำคัญสูงกว่าคีย์ที่ merge มา",
+        "types": "Type เป็นส่วนหนึ่งของค่า: 8080, \"8080\" และ !!str 8080 จะถูกรายงานว่าเป็นการเปลี่ยนแปลง type ไม่ใช่การเปลี่ยนแปลงทั่วไป",
+        "sequences": "Sequences ของ mappings จะจับคู่ตาม name, id หรือ key เมื่อฟิลด์นั้นเป็นค่าที่ไม่ซ้ำกันทั้งสองด้าน ดังนั้นการเพิ่มรายการหนึ่งรายการจะไม่เกิดการเปลี่ยนแปลงต่อเนื่อง; การเรียงลำดับใหม่ยังคงถูกรายงาน",
+        "blockScalars": "Block scalars เปรียบเทียบตาม string ที่แก้ไขแล้ว ดังนั้น trailing newline ที่ |- ตัดออกจะเป็นการเปลี่ยนแปลงจริง; การเปลี่ยนรูปแบบโดยที่ค่ายังคงเดิมเป็นการเปลี่ยนแปลงเชิงโครงสร้าง",
+        "comments": "คอมเมนต์ไม่ได้อยู่ในโมเดลข้อมูล YAML และไม่ถูกนำมาเปรียบเทียบ",
+        "multiDoc": "--- จะจับคู่เอกสารทีละเอกสาร หากจำนวนไม่ตรงกันจะรายงานความแตกต่างแทนการเปรียบเทียบเฉพาะเอกสารแรก",
+        "duplicateKeys": "หากมีคีย์การทำแผนที่ซ้ำในข้อมูลนำเข้า ระบบจะใช้การปรากฏตัวล่าสุดและรายงานเป็นคำเตือน"
+      },
+      "note": {
+        "raw-text-mode": "โหมดข้อความดิบจะเปรียบเทียบตัวอักษร ไม่ใช่โครงสร้าง: ลำดับคีย์ การใส่เครื่องหมายคำพูด และการเยื้องบรรทัด ล้วนถูกนับรวม",
+        "parse-error": "ฝั่งหนึ่งไม่สามารถวิเคราะห์ได้ จึงไม่มีการเปรียบเทียบ",
+        "document-count-mismatch": "ทั้งสองฝั่งมีจำนวนเอกสาร --- ไม่เท่ากัน เอกสารถูกจับคู่ตามลำดับและส่วนเกินถูกรายงานทั้งหมด",
+        "merge-keys-expanded": "Merge keys (<<) ถูกขยายก่อนเปรียบเทียบ",
+        "anchors-unresolved": "Aliases ถูกเปรียบเทียบเป็น *name references ไม่ใช่ค่าที่ resolve แล้ว",
+        "yaml11-ambiguous-scalars": "y/n/yes/no/on/off ที่ไม่ใส่เครื่องหมายอ่านเป็น string ที่นี่ (YAML 1.2 Core) และอ่านเป็น boolean ภายใต้ YAML 1.1 — ใส่เครื่องหมายหากต้องการให้เป็น boolean",
+        "sequence-matched-by-identity": "Sequences ของ mappings ถูกจับคู่ด้วย identity field แทนที่จะจับคู่ตามตำแหน่ง",
+        "duplicate-keys": "Mapping ประกาศ key เดียวกันสองครั้ง ใช้การปรากฏครั้งสุดท้าย",
+        "truncated": "แสดงเฉพาะการเปลี่ยนแปลง 2000 รายการแรก"
+      }
+    },
+    "listSetCompare": {
+      "listA": "รายการ A",
+      "listB": "รายการ B",
+      "placeholder": "วางรายการทีละบรรทัด (หรือลากไฟล์ .txt/.csv)",
+      "emptyHint": "เพิ่มรายการลงใน List A และ List B เพื่อเริ่มเปรียบเทียบ",
+      "privacy": "เปรียบเทียบทั้งสองรายการในเบราว์เซอร์ของคุณ — ไม่มีการอัปโหลดข้อมูล เครื่องมือเดียวกันนี้ทำงานฝั่งเซิร์ฟเวอร์สำหรับ API และ MCP",
+      "delimiter": "ตัวคั่น",
+      "delimiterOption": {
+        "auto": "ตรวจจับอัตโนมัติ",
+        "newline": "บรรทัดใหม่",
+        "comma": "เครื่องหมายจุลภาค",
+        "tab": "แท็บ",
+        "custom": "กำหนดเอง"
+      },
+      "customDelimiter": "ตัวคั่น",
+      "customDelimiterPlaceholder": "| หรือ \\t",
+      "sort": "เรียงลำดับ",
+      "sortOption": {
+        "original": "ลำดับเดิม",
+        "asc": "ก→ฮ",
+        "desc": "ฮ→ก",
+        "byCount": "เรียงตามจำนวน"
+      },
+      "optCaseSensitive": "แยกตัวพิมพ์ใหญ่-เล็ก",
+      "optTrim": "ตัดช่องว่างส่วนเกิน",
+      "optCollapse": "ยุบช่องว่างภายใน",
+      "optIgnoreZeros": "ละเว้นเลขศูนย์นำหน้า",
+      "paneItems": "{n} รายการ",
+      "paneSingle": "1 รายการ — ตรวจสอบตัวคั่น",
+      "items": "{n}",
+      "none": "ไม่มี",
+      "more": "+{n} รายการ — คัดลอกหรือดาวน์โหลดเพื่อดูรายการทั้งหมด",
+      "panel": {
+        "onlyInA": "มีเฉพาะใน A",
+        "onlyInB": "มีเฉพาะใน B",
+        "intersection": "ส่วนร่วม (มีทั้งสอง)",
+        "union": "ยูเนียน (ทุกรายการ)",
+        "symmetricDifference": "ความแตกต่างแบบสมมาตร"
+      },
+      "summaryIdentical": "เซตเดียวกัน — รายการร่วมกัน {n} รายการ",
+      "summaryDiff": "{a} มีเฉพาะใน A · {b} มีเฉพาะใน B · {shared} ร่วมกัน",
+      "drill": {
+        "symmetricDifference": "ความแตกต่างแบบสมมาตร ({n})",
+        "duplicates": "รายการซ้ำในรายการเดียว ({n})",
+        "multiplicities": "จำนวนต่อรายการ ({n})",
+        "warnings": "ประกาศ ({n})"
+      },
+      "duplicatesInA": "ซ้ำใน A",
+      "duplicatesInB": "ซ้ำใน B",
+      "colValue": "รายการ",
+      "colCountA": "ใน A",
+      "colCountB": "ใน B",
+      "detailTruncated": "จำนวนต่อรายการถูกตัดทอน — เพิ่ม maxDetail บน API เพื่อดูตารางเต็ม",
+      "reportTitle": "การเปรียบเทียบรายการ"
+    },
+    "loanAmortization": {
+      "principal": "จำนวนเงินกู้",
+      "rate": "อัตราดอกเบี้ยต่อปี %",
+      "term": "ระยะเวลา",
+      "termUnit": "หน่วยระยะเวลา",
+      "unitYears": "ปี",
+      "unitMonths": "เดือน",
+      "startMonth": "เดือนชำระเงินแรก",
+      "startMonthHint": "YYYY-MM ใช้เป็นป้ายตาราง ไม่กระทบยอดเงิน",
+      "extraHeading": "การชำระเงินเพิ่ม",
+      "extraMonthly": "ชำระเพิ่มทุกเดือน",
+      "extraYearly": "ชำระเพิ่มปีละครั้ง",
+      "extraYearlyMonth": "ชำระเพิ่มปีละครั้งในเดือน",
+      "extraOneTime": "ชำระเพิ่มครั้งเดียว",
+      "extraOneTimePeriod": "ชำระเพิ่มครั้งเดียวที่งวดที่",
+      "extraNote": "การชำระเงินเพิ่มจะลดเงินต้นในงวดที่ชำระ ซึ่งช่วยลดดอกเบี้ยของงวดถัดไปทั้งหมด อัตราดอกเบี้ยและยอดชำระตามตารางยังคงเดิม",
+      "monthlyPayment": "ยอดชำระรายเดือน",
+      "totalInterest": "ดอกเบี้ยรวม",
+      "totalPaid": "ชำระรวม",
+      "crossover": "จุดตัด",
+      "crossoverValue": "งวดที่ {n}",
+      "crossoverNone": "ไม่มี",
+      "payoff": "ชำระหมดที่งวดที่ {n}",
+      "monthsSaved": "เร็วขึ้น {n} เดือน",
+      "totalExtra": "ชำระเกินแผน {amount}",
+      "viewMonthly": "ทุกงวด",
+      "viewAnnual": "รายปี",
+      "tableCaption": "ตารางการผ่อนชำระ: งวด, ดอกเบี้ย, เงินต้น และยอดคงเหลือในแต่ละงวด",
+      "colPeriod": "#",
+      "colDate": "เดือน",
+      "colPayment": "การชำระเงิน",
+      "colInterest": "ดอกเบี้ย",
+      "colPrincipal": "เงินต้น",
+      "colBalance": "ยอดคงเหลือ",
+      "colYear": "ปี",
+      "expandRows": "แสดงการชำระเงินทั้งหมด {total} รายการ",
+      "collapseRows": "แสดงการชำระเงินน้อยลง",
+      "windowNote": "แสดง {shown} จาก {total} รายการ การชำระเงิน CSV และ API มีข้อมูลครบทุกรายการ",
+      "emptyHint": "กรอกยอดเงินกู้ อัตราดอกเบี้ย และระยะเวลาเพื่อดูตาราง",
+      "note": "ใช้เครื่องยนต์เดียวกับ API การคำนวณใช้เฉพาะเงื่อนไขเงินกู้ของคุณ ไม่มีการอัปโหลดหรือจัดเก็บข้อมูล",
+      "errPrincipal": "กรอกยอดเงินกู้มากกว่า 0",
+      "errRate": "กรอกอัตราดอกเบี้ยระหว่าง 0 ถึง 100",
+      "errTerm": "ป้อนระยะเวลาระหว่าง 1 เดือนถึง 100 ปี",
+      "errStartMonth": "ใช้รูปแบบ YYYY-MM เช่น 2026-01",
+      "errExtra": "ป้อนจำนวนเงินตั้งแต่ 0 ขึ้นไป",
+      "errOneTimePeriod": "ป้อนหมายเลขงวดที่ชำระครั้งเดียวตรงกับ"
+    },
+    "businessDayShift": {
+      "modeLabel": "สิ่งที่ต้องการคำนวณ",
+      "mode": {
+        "shift": "เลื่อนวันที่",
+        "countBetween": "นับจำนวนระหว่างวันที่"
+      },
+      "startDate": "วันที่เริ่มต้น",
+      "days": "วันทำการ",
+      "daysHint": "จำนวนติดลบจะนับย้อนหลัง: −10 คือสิบวันทำการก่อนวันที่เริ่มต้น",
+      "daysInvalid": "วันทำการต้องเป็นจำนวนเต็ม โดยอาจมีเครื่องหมายลบนำหน้า",
+      "endDate": "วันที่สิ้นสุด",
+      "includeEndDate": "นับรวมวันสิ้นสุดด้วย — ซึ่งเป็นสิ่งที่ฟังก์ชัน NETWORKDAYS ในสเปรดชีตส่งคืน",
+      "weekendLabel": "วันหยุดประจำสัปดาห์",
+      "weekendHint": "ค่าเริ่มต้นคือวันเสาร์และอาทิตย์ ตั้งเป็นวันศุกร์และเสาร์แทนในกรณีที่วันหยุดคือวันดังกล่าว",
+      "weekday": {
+        "sun": "อา.",
+        "mon": "จ.",
+        "tue": "อ.",
+        "wed": "พ.",
+        "thu": "พฤ.",
+        "fri": "ศ.",
+        "sat": "ส."
+      },
+      "holidays": "วันหยุดนักขัตฤกษ์",
+      "holidaysHint": "หากปล่อยว่าง คำตอบจะเป็นการนับตามกฎวันหยุดประจำสัปดาห์เท่านั้น — ไม่มีการใช้ปฏิทินของประเทศใด ๆ ให้คุณ",
+      "makeupWorkdays": "補班日",
+      "makeupHint": "วันที่ทำงานแม้จะตรงกับวันหยุดสุดสัปดาห์หรือวันหยุดราชการ — วันเสาร์ที่ชดเชยการทำงาน (调休/补班) ของจีนจะอยู่ในนี้",
+      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesIgnored": "{n, plural, one {รายการ # ไม่ใช่รูปแบบวันที่ YYYY-MM-DD จึงไม่ถูกใช้งาน} other {รายการ # ไม่ใช่รูปแบบวันที่ YYYY-MM-DD จึงไม่ถูกใช้งาน}}",
+      "pickStart": "เลือกวันที่เริ่มต้นเพื่อเริ่มใช้งาน",
+      "emptyHintShift": "เลือกวันที่เริ่มต้นและจำนวนวันทำการ",
+      "emptyHintCount": "เลือกวันที่เริ่มต้นและวันที่สิ้นสุด",
+      "note": "ใช้ engine เดียวกับ API การคำนวณจะทำงานบนชุดกฎที่แสดงพร้อมกับผลลัพธ์ และไม่มีการบันทึกข้อมูล",
+      "countHeadline": "{n, plural, one {# 個工作日} other {# 個工作日}}",
+      "reversedRange": "วันที่สิ้นสุดอยู่ก่อนวันที่เริ่มต้น จึงได้จำนวนเป็นลบ",
+      "classification": {
+        "workday": "工作日",
+        "weekend": "週末",
+        "holiday": "假日",
+        "makeupWorkday": "วันชดเชย"
+      },
+      "ruleWeekend": "หยุด {days}",
+      "ruleNoWeekend": "ไม่มีวันหยุดประจำสัปดาห์",
+      "ruleHolidays": "{n, plural, =0 {ไม่มีรายการวันหยุด} one {วันหยุด # วัน} other {วันหยุด # วัน}}",
+      "ruleMakeups": "{n, plural, =0 {ไม่มีวันชดเชย} one {วันชดเชย # วัน} other {วันชดเชย # วัน}}",
+      "ruleEndIncluded": "นับรวมวันสิ้นสุด",
+      "ruleEndExcluded": "ไม่รวมวันที่สิ้นสุด",
+      "chain": "เลื่อนต่อจากวันที่นี้"
+    },
+    "retryBackoff": {
+      "strategy": {
+        "exponential": "แบบเอกซ์โพเนนเชียล",
+        "linear": "แบบเชิงเส้น",
+        "fixed": "แบบคงที่"
+      },
+      "initialDelay": "ดีเลย์เริ่มต้น (มิลลิวินาที)",
+      "factor": "ปัจจัยถอยหลัง",
+      "factorHint": "ตัวคูณที่ใช้ในการลองซ้ำแต่ละครั้ง ต้องมากกว่า 1",
+      "increment": "เพิ่มเชิงเส้น (มิลลิวินาที)",
+      "incrementHint": "มิลลิวินาทีที่เพิ่มเข้าไปในความล่าช้าในการลองซ้ำแต่ละครั้ง",
+      "maxDelay": "ขีดจำกัดความล่าช้าสูงสุด (มิลลิวินาที)",
+      "maxDelayHint": "เว้นว่างไว้หากไม่มีขีดจำกัด เมื่อถึงขีดจำกัดแล้ว ความล่าช้าที่ตามมาทั้งหมดจะคงที่",
+      "maxAttempts": "จำนวนครั้งสูงสุด",
+      "maxAttemptsHint": "1 ถึง 100",
+      "excludeInitial": "จำนวนครั้งสูงสุดไม่รวมคำขอเริ่มต้น",
+      "excludeInitialNote": "เปิด: จำนวนด้านบนนับเฉพาะการลองซ้ำ คำขอเริ่มต้นเป็นส่วนเพิ่ม ปิด: นับทุกครั้ง รวมถึงคำขอเริ่มต้น",
+      "jitter": {
+        "none": "ไม่มี — ความล่าช้าที่แน่นอน",
+        "equal": "เท่ากัน — ครึ่งคงที่ ครึ่งสุ่ม",
+        "full": "Full — ตั้งแต่ศูนย์ถึงค่าดีเลย์"
+      },
+      "callerTimeout": "Timeout ของคุณ (มิลลิวินาที)",
+      "callerTimeoutHint": "ไม่บังคับ ปล่อยว่างเพื่อข้ามการตรวจสอบงบประมาณ",
+      "emptyHint": "แก้ไขฟิลด์ที่เน้นเพื่อดูตารางเวลา",
+      "note": "คำนวณจากนโยบายเพียงอย่างเดียว — ไม่มีการส่งข้อมูลไปยังบริการ upstream ใดๆ Jitter จะแสดงเป็นช่วงที่ไคลเอนต์จริงจะตกอยู่ภายใน ไม่ใช่ค่าจากการสุ่มตัวอย่าง",
+      "headlineExact": "{attempts} ครั้ง, รอรวม {wait}",
+      "headlineRange": "{attempts} ครั้ง โดยเฉลี่ยรอ {expected} สูงสุด {max} ในกรณีเลวร้ายที่สุด",
+      "finalDelay": "การรอครั้งสุดท้ายก่อนครั้งที่ {attempt} คือ {delay}",
+      "noRetries": "งบประมาณนี้อนุญาตให้ลองได้ 1 ครั้ง และไม่มีการลองใหม่ จึงไม่มีอะไรต้องรอ",
+      "retryCount": "{count, plural, =0 {ไม่มีการลองใหม่} one {ลองใหม่ # ครั้ง} other {ลองใหม่ # ครั้ง}}",
+      "capFlattened": "ถึงขีดจำกัดที่ครั้งที่ {attempt} — การหน่วงเวลาทั้งหมดหลังจากนี้จะคงที่ที่ {delay}",
+      "timeoutExceeded": "กรณีเลวร้ายที่สุดรอ {wait} ซึ่งเกินงบประมาณ {timeout} ของคุณ",
+      "timeoutOk": "กรณีเลวร้ายที่สุดจะรอ {wait} อยู่ภายในงบประมาณ {timeout} ของคุณ",
+      "tableLabel": "ตารางการลองใหม่",
+      "colAttempt": "ครั้งที่",
+      "colDelay": "หน่วงเวลา",
+      "colCumulative": "เวลารอรวม",
+      "average": "เฉลี่ย {value}",
+      "formula": {
+        "none": "หน่วงเวลาเป็นค่าที่แน่นอน — ไม่มีการใช้ jitter",
+        "equal": "Equal jitter: ครึ่งหนึ่งของหน่วงเวลาเป็นค่าคงที่ อีกครึ่งหนึ่งสุ่มแบบสม่ำเสมอ ทำให้เวลารอแต่ละครั้งอยู่ระหว่างครึ่งหนึ่งของหน่วงเวลาและหน่วงเวลาเต็ม",
+        "full": "Full jitter: เวลารอสุ่มแบบสม่ำเสมอระหว่างศูนย์และหน่วงเวลาที่คำนวณได้"
+      },
+      "errInitialDelay": "หน่วงเวลาเริ่มต้นต้องเป็นจำนวนเต็มของมิลลิวินาที อย่างน้อย 1",
+      "errFactor": "ตัวคูณต้องมากกว่า 1 และไม่เกิน 100 ตัวคูณ 1 คือกลยุทธ์แบบคงที่",
+      "errIncrement": "การเพิ่มต้องเป็นจำนวนเต็มของมิลลิวินาที 0 ขึ้นไป",
+      "errMaxDelay": "ค่าสูงสุดต้องเป็นจำนวนเต็มของมิลลิวินาที อย่างน้อย 1",
+      "errCapBelowInitial": "ค่าสูงสุดต้องไม่น้อยกว่าค่าดีเลย์เริ่มต้น",
+      "errMaxAttempts": "จำนวนครั้งต้องเป็นจำนวนเต็มระหว่าง 1 ถึง 100",
+      "errCallerTimeout": "Timeout ต้องเป็นจำนวนเต็มของมิลลิวินาที อย่างน้อย 1"
+    },
+    "csvColumns": {
+      "csvLabel": "CSV",
+      "csvPlaceholder": "วาง CSV ที่นี่ หรือลากไฟล์มาวาง — บรรทัดแรกจะถูกอ่านเป็นชื่อคอลัมน์",
+      "sample": "ตัวอย่าง CSV",
+      "chooseFile": "เลือกไฟล์",
+      "fileFailed": "ไม่สามารถอ่าน {name} ได้",
+      "delimiterLabel": "ตัวคั่น",
+      "delimiter": {
+        "comma": "คอมมา  ,",
+        "semicolon": "เซมิโคลอน  ;",
+        "tab": "แท็บ",
+        "pipe": "ไปป์  |"
+      },
+      "raggedPolicyLabel": "แถวที่ไม่ตรงกับส่วนหัว",
+      "ragged": {
+        "pad": "จัดให้ตรงกับส่วนหัว",
+        "truncate": "ตัดแถวยาวออก ปล่อยแถวสั้นไว้ตามเดิม",
+        "reject": "หยุดและรายงาน"
+      },
+      "columnsTitle": "คอลัมน์ — เก็บไว้ {kept} จาก {total}",
+      "columnsHint": "ยกเลิกเลือกเพื่อลบคอลัมน์ แก้ไขกล่องข้อความเพื่อเปลี่ยนชื่อ ใช้ลูกศรเพื่อเรียงลำดับใหม่ ทุกอย่างจะอ้างอิงตามส่วนหัวเดิม",
+      "reset": "รีเซ็ตคอลัมน์",
+      "keep": "เก็บคอลัมน์ {name}",
+      "renameLabel": "{name}",
+      "moveUp": "เลื่อน {name} ขึ้น",
+      "moveDown": "เลื่อน {name} ลง",
+      "noneKept": "ยกเลิกการเลือกทุกคอลัมน์ — กรุณาเลือกอย่างน้อยหนึ่งคอลัมน์",
+      "emptyHint": "วาง CSV ด้านบนเพื่อจัดการคอลัมน์",
+      "note": "ทำงานกับข้อความที่คุณวาง ลากวาง เปลี่ยนชื่อ แล้วเรียงลำดับ — ตามลำดับนี้เสมอ โดยอ้างอิงจากหัวคอลัมน์เดิม",
+      "columnCount": "{n} คอลัมน์",
+      "rowCount": "{n} แถว",
+      "duplicateHeaders": "ใช้ชื่อหัวคอลัมน์ซ้ำ: {names}",
+      "raggedCount": "แถว {n}{more} ไม่ตรงกับจำนวนคอลัมน์ในหัว",
+      "previewLabel": "CSV ผลลัพธ์",
+      "previewTruncated": "แสดง {shown} จาก {total} บรรทัดแรก คัดลอกหรือดาวน์โหลดเพื่อดูไฟล์ทั้งหมด",
+      "raggedListLabel": "แถวที่ไม่ตรงกับจำนวนคอลัมน์ในหัว",
+      "raggedRow": "บรรทัด {line}: มี {actual} ฟิลด์ หัวคอลัมน์มี {expected}",
+      "unusedRenames": "การเปลี่ยนชื่อไม่ถูกใช้ — คอลัมน์เหล่านี้ไม่อยู่ในผลลัพธ์: {names}"
+    },
+    "imageRotateFlip": {
+      "drop": "วางรูปภาพ หรือคลิกเพื่อเรียกดู",
+      "browse": "เลือกรูปภาพ",
+      "selected": "{name} · {kb} KB",
+      "privacy": "ไฟล์จะถูกส่งไปยัง Forge API เพื่อแปลงและจะไม่ถูกเก็บไว้",
+      "tooLarge": "รูปภาพนี้มีขนาดใหญ่กว่า {mb} MB",
+      "ccw": "90° ซ้าย",
+      "cw": "90° ขวา",
+      "half": "180°",
+      "reset": "รีเซ็ต",
+      "flipHorizontal": "พลิกแนวนอน",
+      "flipVertical": "พลิกแนวตั้ง",
+      "angle": "มุม",
+      "exactAngle": "มุมที่แน่นอน °",
+      "fitMode": "ผืนผ้าใบ",
+      "fitExpand": "ขยายผืนผ้าใบ",
+      "fitCrop": "ครอบตัดให้เต็ม",
+      "fitInside": "พอดีภายใน",
+      "fitNote": "เมื่อหมุนภาพหนึ่งในสี่รอบ ภาพที่หมุนจะไม่พอดีกับกรอบเดิมอีกต่อไป: การขยายจะเก็บทุกพิกเซล การครอบตัดจะคงขนาดเดิมและตัดมุมออก การพอดีจะย่อขนาดทั้งภาพลง",
+      "outputFormat": "รูปแบบผลลัพธ์",
+      "sameFormat": "เหมือนต้นฉบับ",
+      "idle": "วางรูปภาพเพื่อดูการปรับทิศทาง",
+      "original": "ต้นฉบับ · {w}×{h}",
+      "originalAlt": "รูปภาพที่อัปโหลด",
+      "result": "ผลลัพธ์ · {w}×{h}",
+      "resultAlt": "รูปภาพที่ปรับทิศทางแล้ว",
+      "badgeLossless": "ไม่มีการสุ่มตัวอย่างใหม่",
+      "badgeResampled": "สุ่มตัวอย่างใหม่แล้ว",
+      "badgeSize": "{kb} KB",
+      "badgeExif": "ใช้การวางแนว EXIF {orientation} ก่อน",
+      "badgeSnapped": "จัดให้ตรงกับมุมหมุนที่แน่นอน",
+      "badgeReencode": "รูปทรงเรขาคณิตถูกต้อง; ตัวแปลงสัญญาณเข้ารหัสใหม่",
+      "download": "ดาวน์โหลด",
+      "note": "การหมุน 90°, 180° และ 270° จะย้ายพิกเซลโดยไม่ผสมสี มุมอื่นๆ จะทำการรีแซมเพลย์ ยังไม่รองรับ Animated GIF, APNG และ animated WebP"
+    },
+    "exifStrip": {
+      "drop": "วางไฟล์ JPEG, PNG หรือ WebP เพื่อลบข้อมูลเมตา",
+      "privacy": "ประมวลผลบนเซิร์ฟเวอร์ของเราและไม่เก็บข้อมูล ภาพละสูงสุด {mb} MB",
+      "idle": "ลบ: GPS, เวลาถ่ายภาพ, ข้อมูลกล้องและอุปกรณ์, ภาพขนาดย่อที่ฝังอยู่, ประวัติการแก้ไข เก็บไว้: การวางแนว, โปรไฟล์สี, ขนาด, ข้อมูลพิกเซล",
+      "note": "รองรับเฉพาะภาพนิ่ง วิดีโอ, PDF, HEIC, AVIF และ GIF ไม่อยู่ในขอบเขต และจะคง C2PA provenance manifests ไว้ตามเดิม",
+      "detail": "สิ่งที่ถูกลบออก",
+      "optKeepThumbnail": "เก็บภาพขนาดย่อ Exif ที่ฝังไว้",
+      "verdictStripped": "ลบฟิลด์ข้อมูลเมตา {fields} ออก ({kb} KB)",
+      "verdictClean": "ไฟล์นี้ไม่มีข้อมูลเมตาที่สามารถลบได้",
+      "strippedCaveat": "ภาพต้นฉบับไม่มีการเปลี่ยนแปลง — พิกเซลเท่าเดิม ขนาดเท่าเดิม ไม่มีการเข้ารหัสใหม่",
+      "cleanCaveat": "ส่งคืนแบบไบต์ต่อไบต์ตามที่ได้รับ",
+      "badgeOrientationKept": "รักษาการวางแนวไว้",
+      "badgeOrientationLost": "ไม่สามารถรักษาการวางแนวได้",
+      "badgeColorProfileKept": "รักษาโปรไฟล์สีไว้",
+      "badgeThumbnailKept": "รักษาภาพขนาดย่อไว้",
+      "badgeThumbnailRemoved": "ลบภาพขนาดย่อ",
+      "download": "ดาวน์โหลดภาพที่ทำความสะอาดแล้ว",
+      "sizes": "{before} KB → {after} KB",
+      "detailFields": "{fields} ฟิลด์ · {kb} KB",
+      "detailNothing": "ไม่มีการลบข้อมูลออกจากไฟล์นี้",
+      "detailOrientation": "อ่านค่า Exif orientation {value} จากไฟล์และคงไว้",
+      "detailNoOrientation": "ไฟล์ไม่ได้ระบุ Exif orientation ดังนั้นการแสดงผลไม่ได้รับผลกระทบ",
+      "segmentExif": "Exif",
+      "segmentIptc": "IPTC",
+      "segmentXmp": "XMP",
+      "segmentComment": "Comment",
+      "segmentText": "Text metadata",
+      "segmentTime": "Timestamp",
+      "segmentVendor": "Vendor block",
+      "summaryStripped": "ลบฟิลด์ข้อมูล {fields} ({families}) แล้ว {kb} KB รูปภาพไม่มีการเปลี่ยนแปลงอื่น",
+      "summaryClean": "ไม่พบข้อมูลที่สามารถลบได้ ส่งคืนไฟล์โดยไม่มีการเปลี่ยนแปลง"
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "이름 / 호스트",
+      "type": "레코드 유형",
+      "note": "Forge 호스트 DNS로 해석합니다."
+    },
+    "tls": {
+      "host": "호스트",
+      "expired": "인증서 만료",
+      "validDays": "{n}일 남음",
+      "note": "Forge 호스트에서 연결. 검사용으로 신뢰 검증 완화."
+    },
+    "myIp": {
+      "refresh": "새로고침",
+      "note": "Forge가 본 IP. 라이선스 geo 없음."
+    },
+    "mermaid": {
+      "source": "Mermaid source",
+      "idle": "Valid diagrams render here",
+      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
+      "sample": "Sample",
+      "theme": "Theme",
+      "theme_default": "Default",
+      "theme_dark": "Dark",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "Flowchart",
+      "sample_sequence": "Sequence",
+      "sample_class": "Class",
+      "sample_er": "ER diagram",
+      "sample_state": "State",
+      "sample_gantt": "Gantt",
+      "sample_pie": "Pie",
+      "sample_mindmap": "Mindmap",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "zoomReset": "Reset view",
+      "copySvg": "Copy SVG",
+      "downloadSvg": "Download SVG",
+      "downloadPng": "Download PNG",
+      "previewAria": "Mermaid diagram preview",
+      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
+    },
+    "colorDeltaE": {
+      "note": "culori CIEDE2000. 임계값은 UI 리뷰용."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL 방언",
+      "parseNote": "파싱/목록만. ERD는 별도.",
+      "convertNote": "@dbml/core — API와 동일 경로."
+    },
+    "dnsLeak": {
+      "probeHost": "Compare host (advanced)",
+      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
+      "run": "Start DNS leak check",
+      "retest": "Run again",
+      "showAdvanced": "Advanced options",
+      "hideAdvanced": "Hide advanced",
+      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
+      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
+      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
+      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
+      "edgeIp": "Your edge IP",
+      "authorityHits": "Recursive IPs",
+      "forgePaths": "Forge resolver hits",
+      "dohPaths": "Browser DoH hits",
+      "webrtcCount": "WebRTC IPs",
+      "forgeResolvers": "Forge multi-resolver (server-side)",
+      "forgeNote": "These queries leave from the Forge host — not your laptop.",
+      "browserDoh": "Browser DoH",
+      "webrtc": "WebRTC ICE",
+      "egressMarkers": "Forge egress markers",
+      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
+      "honestyPrefix": "Honesty:",
+      "verdictConsistent": "Paths look consistent on this check",
+      "verdictSplit": "Split answers across DNS paths",
+      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
+      "verdictIncomplete": "Incomplete — browser probes missing",
+      "verdictAuthority": "System DNS recursives captured",
+      "infraOn": "Authority online",
+      "infraOff": "Authority offline — multi-path only",
+      "infraChecking": "Checking…",
+      "authorityResolvers": "System DNS recursive resolvers",
+      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
+      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
+      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
+      "authorityDetail": "Authority session detail",
+      "phaseSession": "Creating session…",
+      "phaseSystemDns": "Triggering system DNS…",
+      "phasePoll": "Listening for recursive hits ({n}/{total})…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "stepSession": "Session",
+      "stepSystemDns": "System DNS",
+      "stepPoll": "Listen",
+      "stepBrowser": "Browser",
+      "stepServer": "Server",
+      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
+      "liveHits": "Live recursive hits",
+      "sectionSystemDns": "System DNS (what you came for)",
+      "sectionComplementary": "Complementary paths",
+      "sectionTech": "Technical session detail",
+      "copyIps": "Copy IPs",
+      "copied": "Copied",
+      "queryCount": "{n} queries",
+      "colPath": "Path",
+      "colAnswers": "Answers",
+      "colMs": "ms",
+      "ipPublic": "public",
+      "ipPrivate": "private",
+      "sig": {
+        "captured": "System DNS captured",
+        "onlineNoHits": "Authority online · no hits yet",
+        "offline": "Authority offline",
+        "forgeSplit": "Forge resolvers disagree",
+        "dohSplit": "Browser DoH disagree",
+        "webrtcMismatch": "WebRTC ≠ edge IP",
+        "webrtcLocal": "Local WebRTC candidates",
+        "noBrowser": "No browser probes"
+      }
+    },
+    "honesty": {
+      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
+      "signatureNotVerified": "{engine} · decode only · signature not verified",
+      "localOnly": "Processed for this request · not stored as a card or credential"
+    },
+    "idCard": {
+      "number": "Resident ID number",
+      "note": "GB 11643 check digit · no household registry lookup · same path as API",
+      "specimenTitle": "Resident ID · structure specimen",
+      "segRegion": "Region",
+      "segBirth": "Birth",
+      "segSeq": "Seq",
+      "segCheck": "Check",
+      "metaBirth": "Birth",
+      "metaGender": "Gender",
+      "metaRegion": "Region code",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "reasonFormat": "Format should be 18 characters (last may be X)",
+      "reasonBirth": "Birth date segment is invalid",
+      "reasonCheck": "Check digit is wrong",
+      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} lines",
+      "chars": "{n} chars",
+      "empty": "(empty file)",
+      "readyToShip": "Ready to drop into the repo"
+    },
+    "textTransform": {
+      "mode": "Mode",
+      "input": "Input",
+      "output": "Output",
+      "emptyResult": "Result appears here",
+      "runLocal": "Run locally",
+      "runServer": "Run on server",
+      "statusLocalLive": "Local · live",
+      "statusLocal": "Local",
+      "statusServer": "Server · same path as API",
+      "noteDefault": "Same path as API"
+    }
+  },
+  "roots": {
+    "hubLabel": "ตามเจตนา",
+    "tools": "เครื่องมือ",
+    "dualSurface": "หน้ามนุษย์ + API ตัวแทน · ใช้เครื่องยนต์เดียวกัน",
+    "otherRoots": "รากความต้องการอื่นๆ"
+  }
+}

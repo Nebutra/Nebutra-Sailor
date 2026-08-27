@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "avatar-smart-group-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/avatar-smart-group-demo.tsx",
+      "content": "\"use client\";\n\nimport { AvatarSmartGroup } from \"@nebutra/ui/primitives\"; // Adjust if necessary\n\nexport function AvatarSmartGroupDemo() {\n  return (\n    <div className=\"gap-8 flex flex-col\">\n      <AvatarSmartGroup\n        users={[\n          { name: \"Olivia Anderson\", role: \"UI/UX Designer\", image: \"\" },\n          { name: \"Liam Patel\", role: \"Frontend Developer\", image: \"\" },\n          { name: \"Sophia Nguyen\", role: \"Project Manager\", image: \"\" },\n          { name: \"Ethan Rodriguez\", role: \"Marketing Lead\", image: \"\" },\n          { name: \"Ava Thompson\", role: \"Quality Engineer\", image: \"\" },\n        ]}\n        variant=\"uniform\"\n        size={56}\n        overlap={-12}\n      />\n\n      <AvatarSmartGroup\n        users={[\n          { name: \"Olivia Anderson\", role: \"UI/UX Designer\", image: \"\" },\n          { name: \"Liam Patel\", role: \"Frontend Developer\", image: \"\" },\n          { name: \"Sophia Nguyen\", role: \"Project Manager\", image: \"\" },\n        ]}\n        variant=\"centered\"\n        size={56}\n        sizeStep={12}\n        overlap={-14}\n        ringColor=\"ring-background\"\n        hoverScale={1.15}\n        tooltipBg=\"bg-primary text-primary-foreground\"\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

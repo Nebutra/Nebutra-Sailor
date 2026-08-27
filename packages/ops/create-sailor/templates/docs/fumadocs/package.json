@@ -1,0 +1,33 @@
+{
+  "name": "@nebutra/docs",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "predev": "fumadocs-mdx",
+    "dev": "next dev -p 3001",
+    "prebuild": "fumadocs-mdx",
+    "build": "_FUMADOCS_MDX=1 next build",
+    "start": "next start -p 3001",
+    "typecheck": "fumadocs-mdx && _FUMADOCS_MDX=1 next typegen && tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/tokens": "^0.1.0",
+    "@nebutra/ui": "^0.1.0",
+    "fumadocs-core": "^16.6.12",
+    "fumadocs-mdx": "^14.2.9",
+    "fumadocs-ui": "^16.6.12",
+    "next": "^16.2.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.1",
+    "@types/mdx": "^2.0.13",
+    "@types/node": "^22.19.15",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "tailwindcss": "^4.2.1",
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT"
+}

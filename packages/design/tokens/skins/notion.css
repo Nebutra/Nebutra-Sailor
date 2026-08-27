@@ -1,0 +1,169 @@
+/**
+ * Brand carrier skin: Notion (notion) v1.0.0
+ * darkDefault=false dualMode=false button=solid
+ * fonts=0 mode=global
+ * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
+ */
+
+:root,
+html[data-brand="notion"] {
+  /* ── Color roles (carrier) ── */
+  --role-canvas: 30 10% 96%;
+  --role-canvas-fg: 0 0% 0%;
+  --role-surface: 0 0% 100%;
+  --role-surface-fg: 0 0% 0%;
+  --role-action: 208 100% 44%;
+  --role-action-fg: 0 0% 100%;
+  --role-quiet: 208 92% 95%;
+  --role-quiet-fg: 208 100% 44%;
+  --role-muted: 208 92% 95%;
+  --role-muted-fg: 0 0% 43%;
+  --role-border: 30 5% 88%;
+  --role-input: 30 5% 88%;
+  --role-ring: 208 100% 44%;
+  --role-brand: 0 0% 0%;
+  --role-brand-fg: 0 0% 100%;
+  --brand-mark: 0 0% 0%;
+  --brand-mark-foreground: 0 0% 100%;
+
+  /* ── shadcn bridge (primary = action CTA) ── */
+  --background: 30 10% 96%;
+  --foreground: 0 0% 0%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 0%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 0%;
+  --primary: 208 100% 44%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 208 92% 95%;
+  --secondary-foreground: 208 100% 44%;
+  --muted: 208 92% 95%;
+  --muted-foreground: 0 0% 43%;
+  --accent: 0 0% 0%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 7 92% 58%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 30 5% 88%;
+  --input: 30 5% 88%;
+  --ring: 208 100% 44%;
+  --warning: 40 100% 53%;
+  --warning-foreground: 0 0% 0%;
+  --info: 208 93% 47%;
+  --info-foreground: 0 0% 100%;
+  --sidebar: 0 0% 100%;
+  --sidebar-foreground: 0 0% 0%;
+  --sidebar-primary: 208 100% 44%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 0 0% 0%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-border: 30 5% 88%;
+  --sidebar-ring: 208 100% 44%;
+  --brand-primary: hsl(0 0% 0%);
+  --brand-accent: hsl(208 100% 44%);
+  --brand-accent-foreground: hsl(0 0% 100%);
+  --brand-tertiary: hsl(208 100% 44%);
+  --brand-gradient: hsl(var(--primary));
+  --brand-gradient-reverse: hsl(var(--primary));
+  --brand-gradient-vertical: hsl(var(--primary));
+  --brand-gradient-radial: hsl(var(--primary));
+
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(30 10% 96%);
+  --neutral-2: hsl(0 0% 100%);
+  --neutral-3: color-mix(in oklab, hsl(30 5% 88%) 20%, hsl(0 0% 100%));
+  --neutral-4: color-mix(in oklab, hsl(30 5% 88%) 40%, hsl(0 0% 100%));
+  --neutral-5: color-mix(in oklab, hsl(30 5% 88%) 60%, hsl(0 0% 100%));
+  --neutral-6: color-mix(in oklab, hsl(30 5% 88%) 80%, hsl(0 0% 100%));
+  --neutral-7: hsl(30 5% 88%);
+  --neutral-8: color-mix(in oklab, hsl(0 0% 43%) 25%, hsl(30 5% 88%));
+  --neutral-9: color-mix(in oklab, hsl(0 0% 43%) 50%, hsl(30 5% 88%));
+  --neutral-10: color-mix(in oklab, hsl(0 0% 43%) 75%, hsl(30 5% 88%));
+  --neutral-11: hsl(0 0% 43%);
+  --neutral-12: hsl(0 0% 0%);
+
+  /* Recipe (action language + free elev/radii) */
+  /* Shape slots */
+  --btn-default-radius: 8px;
+  --radius-button: 8px;
+  --radius-buttons: 8px;
+  --radius-md: min(8px, 12px);
+  --radius-card: 12px;
+  --radius-lg: 12px;
+  --radius-badge: 9999px;
+  --badge-default-radius: 9999px;
+  --radius-inputs: 8px;
+  --input-radius: 8px;
+  --radius-pill: 9999px;
+
+  /* Free elevation (carrier-provided CSS shadows) */
+  --elevation-card: 0 0 #0000;
+  --elevation-control: 0 0 #0000;
+  --elevation-raised: 0px 0.7px 1.462px 0px rgb(0 0 0 / 0.015), 0px 3px 9px 0px rgb(0 0 0 / 0.03);
+  --elevation-xs: 0 0 #0000;
+  --elevation-sm: 0 0 #0000;
+  --elevation-md: 0px 0.7px 1.462px 0px rgb(0 0 0 / 0.015), 0px 3px 9px 0px rgb(0 0 0 / 0.03);
+  --elevation-lg: 0px 0.7px 1.462px 0px rgb(0 0 0 / 0.015), 0px 3px 9px 0px rgb(0 0 0 / 0.03);
+  --btn-default-shadow: 0 0 #0000;
+  --btn-default-bg: hsl(var(--primary));
+  --btn-default-fg: hsl(var(--primary-foreground));
+  --btn-default-border-width: 0px;
+  --btn-default-border: transparent;
+  --btn-default-stroke-gradient: linear-gradient(transparent, transparent);
+  --btn-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 90%, transparent);
+  --badge-default-bg: hsl(var(--secondary));
+  --badge-default-fg: hsl(var(--secondary-foreground));
+  --badge-default-border: transparent;
+  --badge-default-hover-bg: color-mix(in srgb, hsl(var(--secondary)) 90%, white);
+
+  /* Typography */
+  --font-sans:
+    var(--font-inter), "NotionInter", "Inter", var(--font-noto-sans-sc, "Noto Sans SC"),
+    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-cn:
+    var(--font-inter), "NotionInter", "Inter", var(--font-noto-sans-sc, "Noto Sans SC"),
+    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-heading:
+    var(--font-inter), "NotionInter", "Inter", var(--font-noto-sans-sc, "Noto Sans SC"),
+    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    var(--font-inter), "NotionInter", "Inter", var(--font-noto-sans-sc, "Noto Sans SC"),
+    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-weight-heading: 700;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --motion-ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-micro: 120ms;
+  --motion-duration-micro: 120ms;
+  --duration-flow: 200ms;
+  --motion-duration-flow: 200ms;
+  --duration-reveal: 280ms;
+  --motion-duration-reveal: 280ms;
+  --duration-cinematic: 460ms;
+  --motion-duration-cinematic: 460ms;
+
+  /* Spacing */
+  --space-source-xs: 0.625rem;
+  --space-source-sm: 1rem;
+  --space-source-md: 1.5rem;
+  --space-source-lg: 2rem;
+  --space-source-xl: 2.75rem;
+  --space-source-2xl: 3.75rem;
+
+  /* Taxonomy / decorative (not product CTA) */
+  --brand-category-brand: #000000;
+  --brand-category-action: #0075de;
+  --brand-category-ghost: #e6f3fe;
+  --brand-category-marigold: #ffb110;
+  --brand-category-coral: #f64932;
+  --brand-category-midnight: #02093a;
+  --brand-category-charcoal: #111111;
+  --brand-category-graphite: #615d59;
+  --brand-decorative-marigold: #ffb110;
+  --brand-decorative-coral: #f64932;
+  --brand-decorative-saffron: #e89d01;
+  --brand-decorative-sky-wash: #62aef0;
+  --brand-decorative-midnight: #02093a;
+}

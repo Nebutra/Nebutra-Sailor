@@ -1,0 +1,52 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "group:monorepos",
+    "group:recommended",
+    ":separateMajorReleases",
+    ":automergeMinor",
+    ":automergeDigest"
+  ],
+  "labels": ["dependencies"],
+  "rangeStrategy": "bump",
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Carina co-deploy binary pin (infra/ops/carina.pin)",
+      "fileMatch": ["^infra/ops/carina\\.pin$"],
+      "matchStrings": ["(?m)^version=(?<currentValue>\\d+\\.\\d+\\.\\d+)\\s*$"],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "Nebutra/carina",
+      "packageNameTemplate": "Nebutra/carina",
+      "extractVersionTemplate": "^v?(?<version>\\d+\\.\\d+\\.\\d+)$"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["patch"],
+      "automerge": true
+    },
+    {
+      "description": "Carina co-deploy: auto-merge patch within 0.8.x; open PR for minor/major",
+      "matchDepNames": ["Nebutra/carina"],
+      "matchUpdateTypes": ["patch"],
+      "automerge": true,
+      "labels": ["dependencies", "ops", "carina"]
+    },
+    {
+      "matchDepNames": ["Nebutra/carina"],
+      "matchUpdateTypes": ["minor", "major"],
+      "automerge": false,
+      "labels": ["dependencies", "ops", "carina"]
+    },
+    {
+      "matchPackagePatterns": ["@nebutra/*"],
+      "enabled": false
+    },
+    {
+      "matchManagers": ["pip_requirements"],
+      "groupName": "python dependencies"
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "name": "@nebutra/design-sync",
+  "version": "0.1.2",
+  "description": "Provider-agnostic design-tool sync. Figma + Tokens Studio | Penpot | git-only | design-md | memory.",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "graph": "core",
+    "status": "foundation",
+    "productionReady": false,
+    "requires": [
+      "FIGMA_PERSONAL_ACCESS_TOKEN + FIGMA_FILE_ID for Figma + Tokens Studio",
+      "or PENPOT_API_URL + PENPOT_TOKEN for Penpot (self-hostable, China-friendly)",
+      "or nothing — git-only is the zero-config default"
+    ],
+    "gaps": [
+      "Figma push (Variables REST API) is dry-run; manual enable required",
+      "Penpot adapter implements healthcheck + pull; push is dry-run scaffolding",
+      "No real-time webhook listeners (manual pull/push only)",
+      "design-md provider depends on @google/design.md (alpha v0.x); pinned exactly — a 0.x bump may change linter rules and require re-validating the serializer output"
+    ],
+    "featureId": "design-sync",
+    "category": "design",
+    "summary": "Provider-agnostic design-tool sync (Figma | Penpot | git-only | design-md)"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./design-md": {
+      "types": "./dist/providers/design-md.d.ts",
+      "import": "./dist/providers/design-md.js"
+    },
+    "./serialize/from-design-md": {
+      "types": "./dist/serialize/from-design-md.d.ts",
+      "import": "./dist/serialize/from-design-md.js"
+    },
+    "./figma": {
+      "types": "./dist/providers/figma.d.ts",
+      "import": "./dist/providers/figma.js"
+    },
+    "./penpot": {
+      "types": "./dist/providers/penpot.d.ts",
+      "import": "./dist/providers/penpot.js"
+    },
+    "./git-only": {
+      "types": "./dist/providers/git-only.d.ts",
+      "import": "./dist/providers/git-only.js"
+    },
+    "./memory": {
+      "types": "./dist/providers/memory.d.ts",
+      "import": "./dist/providers/memory.js"
+    },
+    "./cli": {
+      "types": "./dist/cli/index.d.ts",
+      "import": "./dist/cli/index.js"
+    },
+    "./to-brand-package": {
+      "types": "./dist/serialize/to-brand-package.d.ts",
+      "import": "./dist/serialize/to-brand-package.js"
+    }
+  },
+  "bin": {
+    "design-sync": "./src/cli/index.ts"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@google/design.md": "0.2.0",
+    "@nebutra/logger": "workspace:*",
+    "@nebutra/tokens": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/design/design-sync#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/design/design-sync"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

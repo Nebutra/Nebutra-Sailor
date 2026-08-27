@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "error-message-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/error-message-demo.tsx",
+      "content": "import { Error as ErrorSurface } from \"@nebutra/ui/primitives\";\n\nexport function ErrorMessageDemo() {\n  return (\n    <div className=\"relative w-full max-w-lg px-4 py-8\">\n      <ErrorSurface title=\"Couldn’t Load Deployments\" errorId=\"iad1::r7h2p-1712f9cda5d8\">\n        The deployments list failed to load. Try again or check the request details.\n      </ErrorSurface>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

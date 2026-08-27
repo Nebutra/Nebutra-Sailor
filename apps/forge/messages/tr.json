@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — Çevrimiçi araç istasyonu",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "Kodlayıcılar, metin, karma oluşturma, belgeler ve görsel araçları çevrimiçi."
+  },
+  "nav": {
+    "main": "Ana navigasyon",
+    "homeAria": "{brandName} Forge ana sayfa",
+    "tools": "Araçlar",
+    "wallet": "Cüzdan",
+    "api": "API",
+    "routerAria": "{brandName} Router",
+    "categoriesAria": "Araç kategorileri",
+    "languageAria": "Dili değiştir"
+  },
+  "tool": {
+    "breadcrumbAria": "Gezinme Çıtırması",
+    "workspace": "Çalışma Alanı",
+    "workspaceHint": "Yerel veya sunucu · API ile aynı yol",
+    "api": "API",
+    "apiHint": "Sayfa ile aynı sözleşme. Üretim ortamında kimlik doğrulaması yapılmış bir anahtar kullanın.",
+    "related": "İlgili araçlar"
+  },
+  "auth": {
+    "signIn": "Giriş yap",
+    "signUp": "Kayıt ol",
+    "signOut": "Çıkış yap"
+  },
+  "footer": {
+    "navAria": "Alt bilgi",
+    "blurb": "Çevrimiçi araç istasyonu. Görevleri tarayıcıda tamamlayın veya API / MCP üzerinden otomatikleştirin.",
+    "product": "Ürün",
+    "developers": "Geliştiriciler",
+    "company": "Şirket",
+    "docs": "Entegrasyon belgeleri",
+    "website": "Web sitesi",
+    "privacy": "Gizlilik"
+  },
+  "home": {
+    "eyebrow": "Görün. Çağırın.",
+    "title": "Çevrimiçi araçlar için çok amaçlı çakı",
+    "subtitle": "Kodlayıcılar, metin, karma, belgeler ve görüntü işleme. Tarayıcıda tamamlayın veya API / MCP üzerinden otomatikleştirin — tek bir uygulama.",
+    "toolCount": "{count} araç",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "Ara: kelime sayısı, base64, json, zaman damgası…",
+    "aria": "Araçları ara",
+    "emptyTitle": "“{query}” ile eşleşen araç yok",
+    "emptyHint": "Başka bir anahtar kelime deneyin veya aşağıdaki kategorilerden bir araç seçin."
+  },
+  "categories": {
+    "codec": {
+      "label": "Kodlayıcılar",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "Çin doğrulama",
+      "hint": "ID · telefon"
+    },
+    "data": {
+      "label": "Veri",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "Geliştirici",
+      "hint": "Regex · SQL · renk · UUID"
+    },
+    "doc": {
+      "label": "Belgeler",
+      "hint": "Markdown · PDF birleştir/böl"
+    },
+    "finance": {
+      "label": "Finans",
+      "hint": "Tutarı yazıyla"
+    },
+    "hash": {
+      "label": "Karma ve güvenlik",
+      "hint": "MD5 · SHA · HMAC · şifre"
+    },
+    "image": {
+      "label": "Görseller",
+      "hint": "Sıkıştır · QR · dönüştür"
+    },
+    "life": {
+      "label": "Hayat hesaplayıcıları",
+      "hint": "Konut kredisi · BMI · akrabalık"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "Token · maliyet · şema"
+    },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
+    "security": {
+      "label": "Güvenlik",
+      "hint": "Şifre oluşturucu"
+    },
+    "text": {
+      "label": "Metin",
+      "hint": "Kelime sayısı · CJK · pinyin · Fark"
+    },
+    "time": {
+      "label": "Zaman",
+      "hint": "Zaman damgası · saat dilimi · Cron · ay takvimi"
+    },
+    "unit": {
+      "label": "Birimler",
+      "hint": "Uzunluk · ağırlık · sıcaklık · veri"
+    },
+    "template": {
+      "label": "Şablonlar",
+      "hint": ".gitignore · LICENSE · Dockerfile · README"
+    }
+  },
+  "runners": {
+    "common": {
+      "run": "Çalıştır",
+      "running": "Çalışıyor…",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı",
+      "sameAsApi": "API ile aynı yol · OSS motoru",
+      "mustBeNumber": "{label} bir sayı olmalı",
+      "base64Loaded": "Base64 yükü yüklendi",
+      "workspaceMissing": "Çalışma alanı yapılandırılmadı: {slug}",
+      "yes": "Evet",
+      "no": "Hayır",
+      "text": "Metin",
+      "input": "Girdi",
+      "output": "Çıktı",
+      "outputPlaceholder": "Sonuç burada görünür",
+      "localRun": "Yerel çalıştır",
+      "serverRun": "Sunucuda çalıştır",
+      "serverVerify": "Sunucu doğrula",
+      "outputPreview": "Çıktı önizlemesi",
+      "mode": "Mod",
+      "encode": "Şifrele",
+      "decode": "Şifre Çöz",
+      "file": "Dosya",
+      "clear": "Temizle",
+      "length": "Uzunluk: {n}",
+      "bytes": "{bytes} bayt",
+      "download": "İndir",
+      "format": "Biçim",
+      "formatting": "Biçimlendirme…",
+      "dialect": "Diyalekt",
+      "color": "Renk",
+      "pickColor": "Renk seç",
+      "content": "İçerik",
+      "algorithm": "Algoritma",
+      "encoding": "Kodlama",
+      "message": "Mesaj",
+      "secret": "Gizli Anahtar",
+      "password": "Şifre",
+      "direction": "Yön",
+      "preview": "Önizleme",
+      "query": "Sorgu",
+      "querying": "Sorgulanıyor…",
+      "validate": "Doğrula",
+      "validating": "Doğrulanıyor…",
+      "processing": "İşleniyor…",
+      "pretty": "Düzenle",
+      "minify": "Sıkıştır",
+      "from": "Başlangıç",
+      "to": "Bitiş",
+      "timezone": "Saat dilimi",
+      "datetime": "Tarih & saat",
+      "compute": "Hesapla",
+      "computing": "Hesaplanıyor…",
+      "convertAction": "Dönüştür",
+      "count": "Sayı",
+      "value": "Değer",
+      "unit": "Birim",
+      "generateLocal": "Yerel oluştur",
+      "generateServer": "Sunucuda oluştur",
+      "copyAll": "Tümünü kopyala",
+      "emptyResult": "Sonuçlar burada görünecek",
+      "copyText": "Metni kopyala",
+      "quality": "Kalite",
+      "original": "Orijinal",
+      "result": "Sonuç",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
+    },
+    "base64": {
+      "encodeDir": "Metin → Base64",
+      "decodeDir": "Base64 → Metin",
+      "localNote": "Yerel Web API (TextEncoder / atob)",
+      "serverNote": "Sunucu Buffer · API ile aynı yol"
+    },
+    "password": {
+      "uppercase": "Büyük Harf",
+      "lowercase": "Küçük Harf",
+      "digits": "Rakam",
+      "symbols": "Sembol",
+      "generate": "Şifre oluştur",
+      "recent": "Son Kullanılanlar",
+      "note": "Motor: node:crypto randomInt · kriptografik olarak güvenli · API ile aynı yol"
+    },
+    "hash": {
+      "algo": "Algoritma: {algo}",
+      "md5Warn": " · yalnızca checksum/uyumluluk — şifreleri saklamayın",
+      "md5LocalError": "MD5 sunucu çalıştırmasını gerektirir (Web Crypto'da MD5 yok)",
+      "md5ServerHint": "MD5: sunucu çalıştırmasını kullanın (yalnızca uyumluluk, şifre saklama için değil)",
+      "localNote": "Yerel Web Crypto · {algo}",
+      "serverNote": "Sunucu node:crypto · API ile aynı yol"
+    },
+    "convert": {
+      "converting": "Dönüştürülüyor…",
+      "convert": "Dönüştür",
+      "done": "Tamamlandı · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "Bir dosya buraya bırakın veya göz atmak için tıklayın",
+      "needFile": "Önce bir dosya seçin",
+      "needAlgo": "En az bir algoritma seçin",
+      "compute": "Karmaşıkları hesapla",
+      "computing": "Hesaplanıyor…",
+      "algorithms": "Algoritmalar",
+      "note": "node:crypto · çoklu-algoritma · API ile aynı yol"
+    },
+    "lorem": {
+      "paragraphs": "Paragraflar",
+      "wordsPerParagraph": "Paragraf başına kelime",
+      "startWithLorem": "“Lorem ipsum” ile başla",
+      "note": "Lorem Ipsum Oluşturucu · saf"
+    },
+    "emailValidate": {
+      "note": "E-posta Doğrulayıcı · yalnızca biçim (MX sorgusu yok)"
+    },
+    "creditCardLuhn": {
+      "number": "Kart numarası",
+      "note": "Luhn Denetleyici · çevrimdışı, asla saklanmaz",
+      "digits": "digits",
+      "specimenLabel": "Specimen",
+      "structureOnly": "Luhn structure only",
+      "unknownBrand": "Card"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "JSON Sıkıştırıcı · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "CSS Minifier · hafif (edge-safe)"
+    },
+    "hashCompare": {
+      "a": "Hash A",
+      "b": "Hash B",
+      "ignoreCase": "Büyük/küçük harf duyarsız",
+      "note": "Hash Comparator · eşit uzunlukta sabit süre"
+    },
+    "jsonDiff": {
+      "left": "JSON A",
+      "right": "JSON B",
+      "note": "JSON Diff · yol düzeyi işlemler · tür renkli satırlar · yan yana",
+      "equal": "Eşit",
+      "differs": "{count} değişiklik",
+      "colPath": "Yol",
+      "colKind": "Tür",
+      "colLeft": "Sol",
+      "colRight": "Sağ",
+      "filtersAria": "Değişiklik türüne göre filtrele",
+      "filterAll": "Tümü ({count})",
+      "filterAdd": "Ekleme ({count})",
+      "filterRemove": "Silme ({count})",
+      "filterChange": "Değişiklik ({count})",
+      "filterType": "Tür ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "Mod",
+      "pretty": "Düzenli",
+      "compact": "Kompakt",
+      "indent": "Girinti",
+      "note": "YAML Biçimlendirici · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "TOML Biçimlendirici · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "XML Sıkıştırıcı · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "URL Doğrulayıcı · WHATWG URL (ağ isteği yok)"
+    },
+    "ipValidate": {
+      "note": "IP Doğrulayıcı · IPv4/IPv6 çevrimdışı"
+    },
+    "uuidValidate": {
+      "note": "UUID Doğrulayıcı · RFC 4122 yapısı"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "HTML Sıkıştırıcı · hafif (edge-uyumlu)"
+    },
+    "randomString": {
+      "length": "Uzunluk",
+      "count": "Adet",
+      "charset": "Karakter Seti",
+      "alphanumeric": "Alfanümerik",
+      "symbols": "Alfanümerik + semboller",
+      "hex": "Hex",
+      "base64url": "Base64URL",
+      "note": "Rastgele Dize · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "Okuma süresi · CJK + Latin heuristik"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "Maks. başlık seviyesi",
+      "note": "Markdown TOC · ATX başlıkları"
+    },
+    "pdfInfo": {
+      "file": "PDF dosyası",
+      "note": "PDF Bilgisi · pdf-lib (sayfalar + meta veri)"
+    },
+    "rot13": {
+      "shift": "Kaydırma (13 = ROT13)",
+      "note": "ROT13 / Caesar · saf"
+    },
+    "morse": {
+      "note": "Morse Kodu · ITU · saf"
+    },
+    "textBinary": {
+      "toBinary": "Metin → ikili",
+      "fromBinary": "İkili → metin",
+      "note": "Metin ↔ İkili · UTF-8 bitleri"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "Özet kodlaması",
+      "note": "Çoklu-Özet · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "Tek seferde özetler · her birini kopyala · node:crypto"
+    },
+    "cssFormat": {
+      "note": "CSS Güzelleştirici · hafif"
+    },
+    "htmlFormat": {
+      "note": "HTML Güzelleştirici · hafif"
+    },
+    "stringSimilarity": {
+      "a": "Dize A",
+      "b": "Dize B",
+      "note": "Dize Benzerliği · Levenshtein"
+    },
+    "roman": {
+      "toRoman": "Sayı → Roma",
+      "fromRoman": "Roma → Sayı",
+      "note": "Roma Rakamları · 1–3999"
+    },
+    "age": {
+      "birthDate": "Doğum tarihi (YYYY-AA-GG)",
+      "asOf": "Tarihine göre (isteğe bağlı)",
+      "note": "Yaş Hesaplayıcı · tam Y/A/G"
+    },
+    "tip": {
+      "bill": "Fatura tutarı",
+      "percent": "Bahşiş %",
+      "people": "Kişi Sayısı",
+      "note": "Bahşiş Hesaplayıcı · kolay paylaşım"
+    },
+    "aspect": {
+      "width": "Genişlik",
+      "height": "Yükseklik",
+      "note": "En Boy Oranı · OEB sadeleştirme"
+    },
+    "mime": {
+      "note": "MIME Sorgulama · yaygın web türleri"
+    },
+    "ua": {
+      "note": "User-Agent Ayrıştırıcı · heuristik (çevrimdışı)"
+    },
+    "imageMeta": {
+      "file": "Görsel dosyası",
+      "note": "Görsel Meta Verileri · sharp (EXIF tampon boyutu)"
+    },
+    "wordFreq": {
+      "top": "İlk N",
+      "note": "Kelime Sıklığı · CJK + Latin"
+    },
+    "jsonXml": {
+      "note": "JSON ↔ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "SQL Minifier · yorumlar + boşluklar"
+    },
+    "lineNum": {
+      "start": "Başlangıç numarası",
+      "note": "Satır Numaraları Ekle · saf"
+    },
+    "uniqueWords": {
+      "note": "Benzersiz Kelimeler · ilk görüldüğü sıra"
+    },
+    "epoch": {
+      "value": "Değer",
+      "msToIso": "ms → ISO",
+      "isoToMs": "ISO → ms",
+      "note": "Epoch Milisaniye · Tarih"
+    },
+    "passwordEntropy": {
+      "password": "Şifre",
+      "note": "Şifre Entropisi · karakter kümesi heuristik"
+    },
+    "contrast": {
+      "fg": "Ön plan (#hex)",
+      "bg": "Arka plan (#hex)",
+      "note": "Renk Kontrastı · WCAG 2.x",
+      "sampleHeadline": "Sample text",
+      "pass": "pass",
+      "fail": "fail",
+      "aaNormal": "AA normal",
+      "aaLarge": "AA large",
+      "aaaNormal": "AAA normal",
+      "aaaLarge": "AAA large"
+    },
+    "exif": {
+      "file": "Görsel dosyası",
+      "note": "EXIF Görüntüleyici · exifr + JPEG yedekleme"
+    },
+    "regex": {
+      "pattern": "Desen",
+      "flags": "Bayraklar",
+      "replacement": "Değiştirme",
+      "match": "Eşleştir",
+      "replace": "Değiştir",
+      "test": "Test et",
+      "local": "Yerel çalıştır",
+      "server": "Sunucu doğrula",
+      "count": "{count} eşleşme",
+      "sotaNote": "Anında yerel vurgulama · sunucu zaman aşımı bütçesi · API ile aynı yol"
+    },
+    "jwt": {
+      "decode": "JWT'yi Çöz",
+      "sample": "Örnek Yükle",
+      "tokenPlaceholder": "JWT'yi Yapıştır",
+      "decodeNote": "{engine} · yalnızca çözümleme, imza doğrulanmadı",
+      "footerNote": "Motor: jose · imza doğrulaması yok. Üretimde sunucuda jwtVerify ile anahtarlar aracılığıyla doğrulayın.",
+      "generateHint": "Tokenları imzalamak mı gerekiyor?",
+      "secret": "Gizli Anahtar",
+      "exp": "Son Kullanma (saniye)",
+      "payload": "Yük JSON",
+      "note": "JWT Oluştur · HS256 (sadece geliştirme/test)",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "(empty signature segment)"
+    },
+    "rand": {
+      "min": "Min",
+      "max": "Maksimum",
+      "count": "Adet",
+      "note": "Rastgele Sayı · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "Yüz",
+      "count": "Zar sayısı",
+      "note": "Zar Atma · crypto RNG"
+    },
+    "hexRgb": {
+      "note": "HEX ↔ RGB · safi"
+    },
+    "base64url": {
+      "note": "Base64URL · JWT tarzı"
+    },
+    "hmac": {
+      "message": "Mesaj",
+      "secret": "Gizli Anahtar",
+      "signature": "İmza",
+      "note": "HMAC Doğrulama · SHA-256"
+    },
+    "secret": {
+      "bytes": "Bayt",
+      "count": "Adet",
+      "note": "Gizli Anahtar Oluşturucu · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "PDF dosyası",
+      "note": "PDF Hafif Optimizasyon · pdf-lib yeniden yazma (görüntü yeniden sıkıştırma değil)",
+      "needFile": "Önce bir PDF dosyası seçin"
+    },
+    "pdfCompress": {
+      "file": "PDF dosyası",
+      "quality": "Kalite",
+      "engine": "Motor",
+      "qStructural": "Yapısal (qpdf, kayıpsız akışlar)",
+      "qScreen": "Ekran (en küçük, Ghostscript)",
+      "qEbook": "E-kitap (dengeli, Ghostscript)",
+      "qPrinter": "Yazıcı (daha yüksek kalite, Ghostscript)",
+      "eAuto": "Otomatik (qpdf → Ghostscript → pdf-lib)",
+      "download": "PDF İndir",
+      "needFile": "Önce bir PDF dosyası seçin",
+      "in": "Giriş",
+      "out": "Çıkış",
+      "saved": "Kaydedildi",
+      "note": "PDF Sıkıştırma · ana bilgisayarda qpdf / Ghostscript · pdf-lib yedek",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+    },
+    "jsonFormat": {
+      "indent": "Girinti",
+      "format": "Biçimlendir",
+      "minify": "Küçült",
+      "serverVerify": "Sunucu doğrulaması",
+      "clear": "Temizle",
+      "sample": "Örnek",
+      "placeholder": "JSON yapıştırın…",
+      "formatted": "Biçimlendirilmiş",
+      "minified": "Sıkıştırılmış",
+      "serverOk": "Sunucu {mode} · {engine}",
+      "valid": "Geçerli JSON",
+      "invalid": "Geçersiz JSON",
+      "line": "satır",
+      "column": "sütun",
+      "note": "Motor: JSON.parse/stringify · anında yerel · API ile aynı yol",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
+    },
+    "qr": {
+      "size": "Boyut",
+      "ecl": "Hata düzeltme",
+      "generate": "Oluştur",
+      "download": "PNG İndir",
+      "needText": "Metin veya URL girin",
+      "note": "QR · qrcode · canlı önizleme · API ile aynı yol"
+    },
+    "pdfText": {
+      "file": "PDF dosyası",
+      "layout": "Düzen",
+      "needFile": "Önce bir PDF seçin",
+      "note": "PDF Metin · pdftotext (poppler) ana makinede"
+    },
+    "svg": {
+      "optimize": "Optimize Et",
+      "note": "SVG Optimize · hafif saf minify"
+    },
+    "routerTranslate": {
+      "lab": "Lab kabuğu: burada çeviri yapmaz. Router'ı bir istemle açar — model ölçer yalnızca Router'da çalışır.",
+      "source": "Kaynak dil",
+      "target": "Hedef dil",
+      "open": "Router bağlantısını hazırla",
+      "deepLink": "Router'da aç",
+      "note": "harici · sessiz Forge LLM defteri yok"
+    },
+    "imageCrop": {
+      "needFile": "Önce bir resim seçin",
+      "crop": "Kırp",
+      "note": "Resim Kırp · bölge sürükle · keskin çıkar",
+      "drop": "Resim bırakın veya göz atmak için tıklayın",
+      "dragHint": "Kırpma bölgesi seçmek için resmin üzerinde sürükleyin",
+      "left": "Sol",
+      "top": "Üst",
+      "width": "Genişlik",
+      "height": "Yükseklik",
+      "natural": "Doğal {w}×{h}",
+      "source": "Kaynak",
+      "result": "Kırpılmış"
+    },
+    "markdown": {
+      "preview": "Önizleme",
+      "html": "HTML",
+      "emptyPreview": "Önizlemeyi görmek için çalıştırın",
+      "emptyHtml": "HTML olarak oluşturuldu",
+      "rendering": "Oluşturuluyor…",
+      "toHtml": "HTML'ye Dönüştür",
+      "copyHtml": "HTML'yi Kopyala",
+      "note": "marked · kumandalı iframe önizleme · API ile aynı yol"
+    },
+    "pdfMerge": {
+      "files": "PDF dosyaları (≥2, sıra = birleştirme sırası)",
+      "needFiles": "En az 2 PDF seçin",
+      "merging": "Birleştiriliyor…",
+      "mergeDownload": "Birleştir ve indir",
+      "done": "Birleştirildi · {pages} sayfa · {bytes} bayt",
+      "note": "pdf-lib · API ile aynı yol",
+      "merge": "Birleştir ve indir"
+    },
+    "pdfSplit": {
+      "file": "PDF dosyası",
+      "needFile": "Bir PDF seçin",
+      "fromPage": "Başlangıç sayfası (1'den başlar)",
+      "toPage": "Bitiş sayfası (boş = son sayfa)",
+      "toPlaceholder": "Son sayfa",
+      "splitting": "Bölünüyor…",
+      "splitDownload": "Böl ve indir",
+      "done": "Böl · kaynak {source} sayfa → çıktı {pages} sayfa",
+      "note": "pdf-lib · API ile aynı yol",
+      "split": "Böl ve indir"
+    },
+    "passwordStrength": {
+      "check": "Güçlü mü kontrol et",
+      "checking": "Kontrol ediliyor…",
+      "crack": "Çevrimdışı yavaş-hash tahmini: {time}",
+      "score0": "Çok zayıf",
+      "score1": "Zayıf",
+      "score2": "Orta",
+      "score3": "Güçlü",
+      "score4": "Çok güçlü",
+      "note": "zxcvbn-ts · API ile aynı yol · parola asla saklanmaz"
+    },
+    "hmacSign": {
+      "compute": "HMAC Hesapla",
+      "computing": "Hesaplanıyor…",
+      "note": "node:crypto · API ile aynı yol"
+    },
+    "costEstimate": {
+      "text": "Giriş metni (giriş token tahmini için)",
+      "model": "Model",
+      "outputTokens": "Çıktı tokenleri (tahmini)",
+      "estimate": "Maliyeti tahmin et",
+      "estimating": "Hesaplanıyor…",
+      "note": "@nebutra/ai-providers/frontier kartı + js-tiktoken · list-fiyat tahmini, fatura değil"
+    },
+    "jsonSchema": {
+      "data": "JSON verisi",
+      "schema": "JSON Schema",
+      "validate": "Doğrula",
+      "validating": "Doğrulanıyor…",
+      "pass": "Geçti",
+      "fail": "Başarısız",
+      "note": "Ajv · API ile aynı yol"
+    },
+    "zhCnTw": {
+      "s2t": "Basitleştirilmiş → Geleneksel",
+      "t2s": "Geleneksel → Basitleştirilmiş",
+      "s2tw": "Basitleştirilmiş → Tayvan",
+      "tw2s": "Tayvan → Basitleştirilmiş",
+      "s2hk": "Basitleştirilmiş → Hong Kong",
+      "hk2s": "Hong Kong → Basitleştirilmiş",
+      "note": "OpenCC (opencc-js) · API ile aynı yol"
+    },
+    "pinyin": {
+      "tones": "Ton stili",
+      "symbol": "Sembol nǐ",
+      "num": "Sayı ni3",
+      "none": "Yok ni",
+      "hanzi": "Çince karakterler",
+      "convert": "Pinyin'e dönüştür",
+      "converting": "Dönüştürülüyor…",
+      "note": "pinyin-pro · API ile aynı yol"
+    },
+    "sqlFormat": {
+      "dialect": "Dialekt",
+      "format": "Biçimlendir",
+      "formatting": "Biçimlendiriliyor…",
+      "note": "sql-formatter · API ile aynı yol"
+    },
+    "colorConvert": {
+      "color": "Renk",
+      "pick": "Renk seç",
+      "convert": "Dönüştür",
+      "converting": "Dönüştürülüyor…",
+      "note": "culori · hex / rgb / hsl / oklch · API ile aynı yol"
+    },
+    "qrGen": {
+      "content": "İçerik",
+      "format": "Biçim",
+      "pngPreview": "PNG (önizleme)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "QR Oluştur",
+      "generating": "Oluşturuluyor…",
+      "note": "qrcode · API ile aynı yol"
+    },
+    "qrDecode": {
+      "upload": "QR kod içeren bir görsel yükleyin",
+      "parsing": "Çözülüyor…",
+      "note": "jsQR + sharp · API ile aynı yol"
+    },
+    "cron": {
+      "expression": "Cron ifadesi",
+      "timezone": "Saat dilimi",
+      "parse": "Sonraki çalıştırmalar",
+      "parsing": "Ayrıştırılıyor…",
+      "nextTitle": "Sonraki çalıştırmalar (ISO)",
+      "note": "cron-parser · API ile aynı yol"
+    },
+    "timezone": {
+      "datetime": "Tarih & saat",
+      "from": "Kaynak",
+      "to": "Hedef",
+      "convert": "Saat dilimini dönüştür",
+      "converting": "Dönüştürülüyor…",
+      "placeholder": "2026-07-24 12:00:00 veya ISO / unix",
+      "note": "dayjs timezone · API ile aynı yol"
+    },
+    "csvPreview": {
+      "preview": "Tablo önizlemesi",
+      "parsing": "Ayrıştırılıyor…",
+      "rows": "Önizleme {shown} / {total} satır",
+      "note": "papaparse · API ile aynı yol"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "Sorgu",
+      "querying": "Sorgulanıyor…",
+      "note": "jsonpath-plus · API ile aynı yol"
+    },
+    "xmlFormat": {
+      "pretty": "Düzenli",
+      "minify": "Sıkıştır",
+      "validate": "Doğrula",
+      "validOk": "Geçerli",
+      "done": "Tamamlandı · {engine}",
+      "processing": "İşleniyor…",
+      "note": "fast-xml-parser · API ile aynı yol"
+    },
+    "regexLegacy": {
+      "pattern": "Desen",
+      "flags": "Bayraklar",
+      "mode": "Mod",
+      "match": "Eşle",
+      "replace": "Değiştir",
+      "test": "Test Et",
+      "replacement": "Değiştirme",
+      "note": "Anında yerel · sunucu zaman aşımı bütçesi · API ile aynı yol"
+    },
+    "docxText": {
+      "file": "DOCX dosyası",
+      "needFile": "Önce bir .docx dosyası seçin",
+      "extract": "Metni çıkar",
+      "extracting": "Çıkartılıyor…",
+      "note": "DOCX → metin · saf ZIP + document.xml (Office paketi yok)"
+    },
+    "uuid": {
+      "count": "Sayı",
+      "local": "Yerel oluştur",
+      "server": "Sunucuda oluştur",
+      "copyAll": "Tümünü kopyala",
+      "empty": "UUID'ler burada görünecek"
+    },
+    "timestamp": {
+      "nowSec": "Unix saniye",
+      "nowMs": "Unix ms / ISO",
+      "serverNow": "Sunucu şimdi",
+      "toDate": "Zaman damgası → tarih",
+      "toUnix": "Tarih → zaman damgası",
+      "seconds": "Saniye",
+      "milliseconds": "Milisaniye",
+      "value": "Değer",
+      "convert": "Dönüştür",
+      "note": "API ile aynı yol"
+    },
+    "wordCount": {
+      "words": "Kelime",
+      "chars": "Karakter",
+      "noSpaces": "Boşluksuz",
+      "cjk": "CJK",
+      "lines": "Satırlar",
+      "paragraphs": "Paragraflar",
+      "placeholder": "Metni yapıştırın veya yazın…",
+      "copyText": "Metni kopyala",
+      "clear": "Temizle",
+      "verifying": "Doğrulanıyor…",
+      "serverNote": "Sunucu kelimeler={words} · API ile aynı yol",
+      "note": "Canlı motor: {engine} · yükleme gerekmez · API ile aynı yol"
+    },
+    "bmi": {
+      "height": "Boy (cm)",
+      "weight": "Kilo (kg)",
+      "compute": "BMI Hesapla",
+      "computing": "Hesaplanıyor…",
+      "invalid": "Geçerli boy (cm) ve kilo (kg) girin",
+      "underweight": "Zayıf",
+      "normal": "Normal",
+      "overweight": "Fazla kilolu",
+      "obese": "Obez",
+      "note": "WHO BMI · API ile aynı yol · tıbbi tavsiye değildir"
+    },
+    "percentage": {
+      "mode": "Mod",
+      "percentOf": "a'nın b'nin yüzde kaçı",
+      "isWhat": "a, b'nin yüzde kaçı",
+      "percentA": "Yüzde a",
+      "valueA": "Değer a",
+      "baseB": "Taban b",
+      "compute": "Hesapla",
+      "computing": "Hesaplanıyor…",
+      "invalid": "Geçerli sayılar girin",
+      "note": "API ile aynı yol"
+    },
+    "dataSize": {
+      "value": "Değer",
+      "convert": "Dönüştür",
+      "converting": "Dönüştürülüyor…",
+      "invalid": "Geçerli bir sayı girin",
+      "binary": "{value} {from} → taban-1024",
+      "note": "İkili birimler (1 KB = 1024 B) · API ile aynı yol"
+    },
+    "rmb": {
+      "amount": "Tutar (CNY)",
+      "convert": "Büyük harfe dönüştür",
+      "converting": "Dönüştürülüyor…",
+      "invalid": "Negatif olmayan bir tutar girin",
+      "note": "Çin faturası tutarı büyük harf · API ile aynı yol"
+    },
+    "dateDiff": {
+      "from": "Başlangıç tarihi",
+      "to": "Bitiş tarihi",
+      "compute": "Gün farkı",
+      "computing": "Hesaplanıyor…",
+      "days": "gün",
+      "note": "ECMAScript Date · API ile aynı yol"
+    },
+    "xlsxText": {
+      "file": "XLSX dosyası",
+      "needFile": "Önce bir .xlsx dosyası seçin",
+      "extract": "Sayfayı çıkar",
+      "extracting": "Çıkarılıyor…",
+      "note": "XLSX → CSV · saf ZIP + sheet1.xml (ilk sayfa)"
+    },
+    "mdToPdf": {
+      "drop": "Buraya bir .md dosyası bırakın veya aşağıya Markdown yapıştırın",
+      "title": "Başlık",
+      "engine": "Motor",
+      "ePlaywright": "playwright (Chromium yazdırma)",
+      "eSimple": "basit (tarayıcı yok)",
+      "generate": "PDF oluştur",
+      "generating": "Oluşturuluyor…",
+      "download": "PDF İndir",
+      "note": "marked → HTML → Playwright Chromium yazdırma. Chromium eksikse, basit yapılandırılmış PDF'ye otomatik geri dönüş yapar — renderEngine değerini kontrol edin; basit mod yazdırma kalitesinde yerleşim sağlamaz.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
+    },
+    "tokenCount": {
+      "count": "Token Sayısını Hesapla",
+      "counting": "Hesaplanıyor…",
+      "chars": "Karakter {n}",
+      "note": "Motor: js-tiktoken · sunucu tarafında tam sayım · Router maliyet tahminine beslenebilir"
+    },
+    "codec": {
+      "encodeDir": "Metin → kodlanmış",
+      "decodeDir": "Kodlanmış → metin",
+      "localNote": "Yerel çalıştırma",
+      "serverNote": "Sunucu · API ile aynı yol",
+      "hexInvalid": "Geçerli bir onaltılık dize değil",
+      "hexDecodeFail": "Sunucu onaltılık olarak UTF-8'e çözemiyor (geçerli onaltılık gerekli)",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · API ile aynı yol",
+      "noteHtml": "HTML varlık haritası · API ile aynı yol",
+      "noteHex": "UTF-8 ↔ hex · API ile aynı yol"
+    },
+    "textDiff": {
+      "left": "Sol",
+      "right": "Sağ",
+      "compare": "Karşılaştır",
+      "comparing": "Karşılaştırılıyor…"
+    },
+    "imageTool": {
+      "drop": "Bir resmi buraya sürükleyin veya göz atmak için tıklayın",
+      "selected": "Seçilen: {name} ({kb} KB)",
+      "needFile": "Önce bir resim seçin",
+      "format": "Çıktı biçimi",
+      "quality": "Kalite {n}",
+      "maxW": "Maks. genişlik",
+      "maxH": "Maks. yükseklik",
+      "optional": "İsteğe bağlı",
+      "resizeEg": "örn. 1280",
+      "processing": "İşleniyor…",
+      "compress": "Sıkıştır",
+      "resize": "Boyutlandır",
+      "convert": "Formatı dönüştür",
+      "download": "Sonucu indir",
+      "outMeta": "Çıktı {kb} KB{dims}{ratio} · {type}",
+      "ratio": " · orijinalin ~{pct}%’i",
+      "dims": " · {w}×{h}",
+      "original": "Orijinal",
+      "result": "Sonuç",
+      "note": "Motor: sharp (libvips) · sunucu tarafı · API (imageBase64) ile aynı yol",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+    },
+    "pptxText": {
+      "file": "PPTX dosyası",
+      "needFile": "Önce bir .pptx dosyası seçin",
+      "extract": "Ana hatları çıkar",
+      "extracting": "Çıkarılıyor…",
+      "note": "PPTX ana hatları · saf ZIP + slayt XML (PowerPoint yok)"
+    },
+    "shell": {
+      "copyJson": "JSON'u kopyala",
+      "sample": "Örnek",
+      "chars": "{n} karakter",
+      "largeInput": "Büyük girdi — sonuç, yazmayı bıraktıktan bir an sonra güncellenir.",
+      "manualInput": "Giriş, canlı yeniden hesaplamanın sayfayı durdurmasına neden olacak kadar büyük. Çalıştır'a basın.",
+      "options": "Seçenekler",
+      "regenerateNote": "Çıktı, seçenekleri değiştirdikçe zaten güncelleniyor.",
+      "fileTab": "Dosya",
+      "pasteTab": "Yapıştır",
+      "browse": "Dosya seç",
+      "selectedFile": "{name} · {kb} KB",
+      "truncated": "İlk {kb} KB okundu — yanıtlamak için yeterli, geri kalanı makinenizden asla ayrılmaz.",
+      "detail": "Ayrıntılar",
+      "dropIntoPane": "Buraya bir dosya bırakın",
+      "swap": "Tarafları değiştir",
+      "prevChange": "Önceki",
+      "nextChange": "Sonraki",
+      "changePosition": "{index} / {total}",
+      "result": "Sonuç"
+    },
+    "readmeSkeleton": {
+      "emptyHint": "README oluşturmak için en az bir bölüm işaretleyin.",
+      "note": "API ile aynı motoru çalıştırır. İşaretlenmeyen bölümler hiç görünmez — boş başlık olmaz.",
+      "orderNote": "Bölümler her zaman bu sabit sırayla işlenir, bu nedenle aynı girdi aynı dosyayı verir.",
+      "group": {
+        "core": "Çekirdek",
+        "docs": "Belgeler",
+        "community": "Topluluk",
+        "meta": "Meta"
+      },
+      "section": {
+        "title": "Başlık ve açıklama",
+        "badges": "Rozetler",
+        "callout": "Not çağrısı",
+        "toc": "İçindekiler",
+        "installation": "Kurulum",
+        "usage": "Kullanım",
+        "features": "Özellikler",
+        "api-reference": "API referansı",
+        "screenshots": "Ekran Görüntüleri",
+        "roadmap": "Yol Haritası",
+        "contributing": "Katkıda Bulunma",
+        "support": "Destek",
+        "acknowledgements": "Teşekkürler",
+        "license": "Lisans",
+        "authors": "Yazarlar",
+        "tech-stack": "Teknoloji yığını"
+      },
+      "projectName": "Proje adı",
+      "projectNamePlaceholder": "Proje adı",
+      "description": "Açıklama",
+      "descriptionPlaceholder": "Ne yaptığını tek cümleyle anlatın",
+      "badgeLicense": "Lisans rozeti",
+      "badgeNpm": "npm version",
+      "badgeBuild": "Derleme durumu",
+      "npmPackage": "npm package",
+      "npmPackagePlaceholder": "@scope/package",
+      "repo": "GitHub deposu",
+      "repoPlaceholder": "sahip/depo",
+      "calloutKind": "Uyarı türü",
+      "calloutBody": "Uyarı metni",
+      "calloutBodyPlaceholder": "1.0 öncesi — API henüz değişiyor",
+      "fenceLanguage": "Dil",
+      "installCommand": "Kurulum komutu",
+      "installCommandPlaceholder": "npm install your-project",
+      "usageExample": "Kullanım örneği",
+      "usageExamplePlaceholder": "Değeri gösteren en küçük örnek",
+      "features": "Özellikler",
+      "featuresPlaceholder": "Her satıra bir özellik",
+      "contact": "İletişim",
+      "contactPlaceholder": "support@example.com",
+      "license": "Lisans",
+      "authors": "Yazarlar",
+      "authorsPlaceholder": "@kullanici, Ayşe Yılmaz",
+      "techStack": "Teknoloji yığını",
+      "techStackPlaceholder": "typescript, postgresql (simple-icons slugs)",
+      "sectionCount": "{n} bölüm",
+      "charCount": "{n} karakter",
+      "warningCount": "{n} atlandı",
+      "omittedTitle": "Neler atlandı ve neden"
+    },
+    "gitignore": {
+      "searchLabel": "Yığınları ara",
+      "searchPlaceholder": "Dil, framework, işletim sistemi veya düzenleyici ara…",
+      "add": "{stack} ekle",
+      "remove": "{stack} kaldır",
+      "selected": "Seçili yığınlar",
+      "suggestions": "Eşleşen yığınlar",
+      "noMatches": "“{query}” ile eşleşen bir yığın bulunamadı. Yine de göndermek için Enter tuşuna basın — takma adlar sunucuda çözülür.",
+      "catalogFallback": "Yığın listesi kullanılamıyor — bir yığın adı yazın ve Enter tuşuna basın.",
+      "emptyHint": "Yukarıdan en az bir dil, çerçeve, işletim sistemi veya düzenleyici seçin.",
+      "regenerate": "Yeniden Oluştur",
+      "sections": "{n} bölüm",
+      "lines": "{n} satır",
+      "deduped": "{n} yinelenen desen birleştirildi",
+      "notFound": "Korpusda yok: {stacks}",
+      "globalScope": "{stacks} işletim sistemi/düzenleyici girdileridir — birçok geliştirici bunları her depoda değil, kişisel ~/.gitignore_global dosyasında tutar.",
+      "untrackedNote": "Bir .gitignore yalnızca izlenmeyen dosyaları etkiler. Git'in zaten izlediği bir dosya için git rm -r --cached <path> komutunu çalıştırın.",
+      "fileLabel": ".gitignore"
+    },
+    "editorconfig": {
+      "emptyHint": "Dosyayı görmek için en az bir özellik ayarlayın.",
+      "note": "API ile aynı motoru kullanır. Seçimleriniz bu tarayıcı oturumunda kalır; hiçbir şey saklanmaz.",
+      "checks": "Denetimler",
+      "presets": "Şuradan başla",
+      "preset": {
+        "spaces2": "2 boşluk, LF",
+        "spaces4": "4 boşluk, LF",
+        "tabs": "Tablar, genişlik 4",
+        "repo": "Depo başlangıç (+ Markdown, Makefile)"
+      },
+      "rootLabel": "root = true — düzenleyicilerin üst .editorconfig dosyalarını birleştirmesini durdur",
+      "glob": "Glob {n}",
+      "addSection": "Bölüm ekle",
+      "removeSection": "Kaldır",
+      "notSet": "(ayarlanmadı)",
+      "import": "Mevcut bir .editorconfig içe aktarın",
+      "importPlaceholder": "Forma yüklemek için buraya bir .editorconfig yapıştırın",
+      "importAction": "İçe Aktar",
+      "importing": "İçe aktarılıyor…",
+      "importFailed": "İçe aktarılamadı: {message}"
+    },
+    "robotsTxt": {
+      "emptyHint": "Yukarıdaki seçenekleri ayarlayın — dosya burada görünür",
+      "deployNote": "robots.txt yalnızca alan adı kökünde etki eder (https://example.com/robots.txt). Her alt alan adı kendi dosyasına ihtiyaç duyar.",
+      "outputLabel": "robots.txt",
+      "defaultAccess": "Varsayılan erişim (User-agent: *)",
+      "defaultAllow": "Tümüne izin ver",
+      "defaultDisallow": "Tümünü engelle",
+      "defaultAccessNote": "\"Tümüne izin ver\" boş bir \"Disallow:\" yazar — bu her şeye izin verir.",
+      "crawlDelay": "Crawl gecikmesi (saniye)",
+      "crawlDelayPlaceholder": "yok",
+      "crawlDelayNote": "RFC 9309'un bir parçası değildir. Google bunu yok sayar; asla bir Google grubuna yazılmaz.",
+      "searchAgents": "Arama motorları",
+      "aiAgents": "AI tarayıcıları",
+      "aiAgentsNote": "Eğitim ve yanıt motoru tarayıcıları. Bunları engellemek arama indekslemesini etkilemez.",
+      "accessDefault": "Varsayılan",
+      "accessAllow": "İzin Ver",
+      "accessDisallow": "Reddet",
+      "rules": "Yol kuralları",
+      "rulesNote": "Yollar büyük/küçük harfe duyarlıdır ve köke göredir. Bir kuralı yalnızca bir dizine sınırlamak için sonuna eğik çizgi ekleyin.",
+      "rulePath": "Yol {n}",
+      "rulePathPlaceholder": "/admin/",
+      "ruleType": "Kural türü",
+      "addRule": "Yol kuralı ekle",
+      "removeRule": "Kaldır",
+      "sitemaps": "Site haritaları",
+      "sitemapsNote": "Mutlak http(s) URL'leri. Her grubun dışında, ayrı satırlar halinde yazılır.",
+      "sitemapUrl": "Site haritası {n}",
+      "addSitemap": "Site haritası ekle",
+      "removeSitemap": "Kaldır",
+      "groupCount": "{n} grup",
+      "lineCount": "{n} satır",
+      "sitemapCount": "{n} site haritası",
+      "warningsSummary": "Bu dosyayla ilgili notlar ({n})"
+    },
+    "encodingDetect": {
+      "drop": "Kodlamasını belirlemek için bir dosya bırakın",
+      "privacy": "Yalnızca ilk {kb} KB okunur ve bir aracının çağıracağı aynı genel invoke uç noktasına gönderilir — diske hiçbir şey yazılmaz.",
+      "pasteLabel": "Veya metin yapıştırın",
+      "pastePlaceholder": "Açıklamasını istediğiniz mojibake dahil metni yapıştırın",
+      "detail": "Adaylar, satır sonları ve bayt istatistikleri",
+      "idle": "Bir dosya bırakın veya metin yapıştırın — okunacak bir şey olduğu anda rapor doldurulur.",
+      "readOnly": "Salt okunur: bu araç bir kodlamayı tanımlar, baytları asla yeniden yazmaz.",
+      "headline": "{encoding} · %{confidence} güven",
+      "notText": "Bu metin gibi görünmüyor",
+      "bomPresent": "BOM {bytes}",
+      "bomAbsent": "BOM yok",
+      "eol": "{kind} satır sonları",
+      "eolMixed": "Karışık satır sonları",
+      "language": "Dil {language} · {confidence}%",
+      "sampled": "{totalKb} KB'nin ilk {kb} KB'sından algılandı",
+      "candidates": "Sıralı adaylar",
+      "candidatesNote": "İkinci sıradaki kodlamalar bilinçli olarak gösterilir: kısa veya simetrik örnekler gerçekten belirsiz olabilir.",
+      "lineEndings": "Satır sonları",
+      "byteStats": "Bayt istatistikleri",
+      "totalBytes": "Toplam",
+      "asciiBytes": "ASCII",
+      "highBytes": "Yüksek (0x80–0xFF)",
+      "nullBytes": "NUL",
+      "mojibake": "Mojibake düzeltildi"
+    },
+    "dockerfileStarter": {
+      "language": "Dil",
+      "framework": "Çerçeve",
+      "packageManager": "Paket yöneticisi",
+      "baseVariant": "Temel görüntü",
+      "version": "Çalışma zamanı sürümü",
+      "workdir": "Çalışma dizini",
+      "port": "Port",
+      "buildCommand": "Derleme komutu",
+      "startCommand": "Başlatma komutu",
+      "commandPlaceholder": "Boş = varsayılan ayar",
+      "frameworkNone": "Yok (sade çalışma zamanı)",
+      "pmAuto": "Otomatik",
+      "variantSlim": "slim (glibc)",
+      "variantAlpine": "alpine (musl)",
+      "variantFull": "tam",
+      "multiStage": "Çok aşamalı derleme",
+      "nonRootUser": "Root olmayan kullanıcı",
+      "includeDockerignore": ".dockerignore ekle",
+      "includeCompose": "compose.yaml ekle",
+      "includeHealthcheck": "HEALTHCHECK ekle",
+      "groupWhat": "Yaptığınız şey",
+      "groupHow": "Nasıl çalışmalı",
+      "emptyHint": "Dockerfile'ı görmek için bir dil seçin.",
+      "note": "Yalnızca ön ayarlar — tarayıcınızdan yukarıdaki seçeneklerden başka hiçbir şey çıkmaz. Dosyayı göndermeden önce okuyun.",
+      "warnings": "Kontrol edilecek {n} şey",
+      "stages": "{n} aşama",
+      "badgeNonRoot": "Kök olmayan",
+      "badgeRoot": "Kök olarak çalışır",
+      "badgePort": "{port} Numaralı Bağlantı Noktası"
+    },
+    "lineEndingDetect": {
+      "dropLabel": "Satır sonlarını kontrol etmek için bir metin dosyası bırakın",
+      "privacy": "Yapıştırılan metin ve bırakılan bir dosyanın ilk 256 KB'ı, taranmak üzere Forge API'sine gönderilir; baytlar saklanmaz.",
+      "pasteLabel": "Veya metin yapıştırın",
+      "pastePlaceholder": "Kontrol etmek istediğiniz metni yapıştırın",
+      "idle": "Satır sonu kararını görmek için metin yapıştırın veya bir dosya bırakın.",
+      "detail": "Sayar ve kontrol eder",
+      "note": "Sadece algılama — bu araç dosyanızı asla yeniden yazmaz.",
+      "empty": "Boş girdi",
+      "noTerminator": "Satır sonlandırıcısı yok — tek sonlandırılmamış satır",
+      "consistent": "{style} — tutarlı",
+      "mixed": "KARIŞIK — {parts}",
+      "sharePart": "{pct}% {style}",
+      "style": {
+        "LF": "LF (Unix/Linux/macOS)",
+        "CRLF": "CRLF (Windows)",
+        "CR": "CR (klasik Mac OS 9 ve öncesi)"
+      },
+      "lines": "{n} satır",
+      "bytes": "{n} bayt",
+      "trailing": {
+        "present": "Yeni satır ile bitiyor",
+        "absent": "Dosya sonunda yeni satır yok"
+      },
+      "bomUtf8": "UTF-8 BOM",
+      "bomNone": "BOM yok",
+      "countRow": "{style}: {n} (%{pct})",
+      "colStyle": "Stil",
+      "colCount": "Sayı",
+      "colShare": "Pay",
+      "minorityLines": "Baskın stilden farklı satırlar: {lines}",
+      "andMore": "ve daha fazlası",
+      "findings": "Kontroller",
+      "level": {
+        "info": "Not",
+        "warning": "Uyarı",
+        "danger": "Bozar"
+      },
+      "sampled": "İlk {n} bayt {total} bayttan tarandı",
+      "encodingLink": "Kodlama algılayıcısını aç"
+    },
+    "fileTypeDetect": {
+      "drop": "Gerçek türünü belirlemek için bir dosya bırakın",
+      "privacy": "Sadece ilk {kb} KB başlık okunur — dosyanın geri kalanı cihazınızdan asla çıkmaz.",
+      "hexTab": "Hex yapıştır",
+      "detail": "Baytları ve adayları göster",
+      "idle": "Bir dosya bırakın veya başlangıç baytlarını hex olarak yapıştırın.",
+      "note": "İmzalar kapsayıcıyı tanımlar, codec veya içindeki içeriği değil.",
+      "unset": "—",
+      "unknownType": "Hiçbir imza eşleşmedi",
+      "polyglot": "Polyglot",
+      "tierNone": "Uzantı uyumlu",
+      "tierBenign": "Uyumsuzluk zararsız",
+      "tierMismatch": "Uzantı uyumsuzluğu",
+      "tierHighRisk": "Yüksek risk",
+      "confidenceMatch": "İmza eşleşmesi",
+      "confidenceContainer": "Sadece kapsayıcı",
+      "confidenceAmbiguous": "Belirsiz",
+      "confidenceNone": "Eşleşme yok",
+      "signalDetected": "Algılanan MIME",
+      "signalReported": "Bildirim MIME",
+      "signalExtension": "Dosya adı uzantısı",
+      "drillResolved": "{kind} kapsayıcısı açıldı: {type}",
+      "drillUnresolved": "{kind} kapsayıcısı doğrulandı; alt tür örneklenen baytlardan çözümlenemedi",
+      "hexDump": "Başlık baytları",
+      "bytesRead": "{n} bayt okundu",
+      "headerOnly": "sadece başlık örneği",
+      "entropy": "Entropi {bits} bit/bayt",
+      "signatureCount": "Tabloda {n} imza",
+      "textHints": "Yapısal ipuçları: {hints}",
+      "candidates": "Tüm eşleşen imzalar",
+      "atOffset": "kayma {offset}"
+    },
+    "licenseChooser": {
+      "prompt": "Bu proje neye ihtiyaç duyuyor?",
+      "pickScenario": "Projenize uyan satırı seçin — cevap ve dosya burada görünecek.",
+      "disclaimer": "Belirleyici şablon çıktısı, hukuki tavsiye değildir.",
+      "noAnswer": "Bu durum için tek bir lisans uygun değil",
+      "permissions": "İzin verir",
+      "conditions": "Şart koşar",
+      "limitations": "Kapsam dışı",
+      "alternates": "Bu durum için diğer seçenekler",
+      "useThis": "Bunu kullan",
+      "readCanonical": "SPDX’de resmi metni oku",
+      "holder": "Telif hakkı sahibi",
+      "holderPlaceholder": "Adınız veya şirketiniz",
+      "holderHint": "Telif hakkı sahibini ekleyin; yazarken dosya otomatik doldurulur.",
+      "year": "Yıl",
+      "manifest": "SPDX kimliğinin gideceği yer",
+      "verbatim": "{name} herkes için birebir aynı olarak dağıtılır — telif hakkı satırı LICENSE dosyası yerine kaynak dosyası bildirimi içine yazılır.",
+      "noLicense": {
+        "summary": "Hiç lisans eklemem ne demek?",
+        "body": "Lisanssız olmak kamu malı demek değildir. Lisans olmadan varsayılan telif hakkı geçerlidir ve kodunuz kimse tarafından kopyalanamaz, değiştirilemez veya yeniden dağıtılamaz — herkese açık bir depo görünürlük sağlar, izin değil."
+      },
+      "artifact": {
+        "header": "Kaynak dosyası başlığı",
+        "notice": "Kaynak dosyası bildirimi"
+      },
+      "refine": {
+        "patent": "Patent hakkı burada önemli (şirket kodu, donanım, standart çalışmaları)",
+        "network": "Sadece indirilebilir değil, barındırılan bir hizmet olarak çalışacak",
+        "library": "Diğer yazılımların bağlandığı bir kütüphane",
+        "later": "Lisansın sonraki sürümlerine izin ver (Apache-2.0 kodunu uyumlu tutar)",
+        "none": "Bu durum için daha fazla ayarlama yok."
+      },
+      "scenario": {
+        "permissive": {
+          "label": "Herkes özgürce kullanabilir",
+          "detail": "Kullan, değiştir, sat, kapalı ürünlerde dağıt — sadece telif hakkı bildirimini koru."
+        },
+        "copyleft": {
+          "label": "Geliştirmeler geri dönmek zorunda",
+          "detail": "Değiştirilmiş bir sürümü dağıtan herkes, kaynağı da yayınlamak zorundadır."
+        },
+        "community": {
+          "label": "Mevcut bir projeye katkıda bulunuyorum",
+          "detail": "Lisans zaten belirlenmiş — katkıda bulunduğunuz projeye uygun olanı seçin."
+        },
+        "non-software": {
+          "label": "Bu bir yazılım değil",
+          "detail": "Belgeler, veriler, tasarım veya medya için OSI lisansı değil, Creative Commons lisansı gerekir."
+        },
+        "unsure": {
+          "label": "Henüz bilmiyorum",
+          "detail": "Pişmanlık payı düşük varsayılanı ve bilmeniz gereken iki seçeneği alın."
+        }
+      },
+      "family": {
+        "permissive": "İzin verici",
+        "weak-copyleft": "Zayıf copyleft",
+        "strong-copyleft": "Güçlü copyleft",
+        "public-domain": "Halk malı",
+        "content": "İçerik lisansı"
+      },
+      "flag": {
+        "commercial-use": "Ticari kullanım",
+        "modifications": "Değişiklik",
+        "distribution": "Dağıtım",
+        "private-use": "Özel kullanım",
+        "patent-use": "Patent hakkı",
+        "include-copyright": "Telif hakkı bildirimini koru",
+        "document-changes": "Değişikliklerinizi belirtin",
+        "disclose-source": "Kaynağı açıklayın",
+        "same-license": "Tüm eser için aynı lisans",
+        "same-license-file": "Değiştirilen dosya başına aynı lisans",
+        "same-license-library": "Kütüphane için aynı lisans",
+        "network-use-disclose": "Ağ kullanımı dağıtım sayılır",
+        "liability": "Sorumluluk",
+        "warranty": "Garanti",
+        "trademark-use": "Marka kullanımı"
+      }
+    },
+    "isbn": {
+      "inputLabel": "ISBN'ler",
+      "placeholder": "978-0-306-40615-7 — her satıra bir tane, tire ve boşluklar yok sayılır",
+      "idle": "Tek bir ISBN veya tüm bir sütun yapıştırın; yazarken sonuçlar görünür.",
+      "scope": "Sadece kontrol basamağı hesabı. Geçerli bir ISBN iç tutarlıdır — bunun bir ajans tarafından gerçek bir kitaba atandığının kanıtı değildir.",
+      "summary": "{total} içinden {valid} geçerli",
+      "singleValid": "Geçerli ISBN",
+      "singleInvalid": "Geçerli bir ISBN değil",
+      "invalidCount": "{n} geçersiz",
+      "convertedTo": "{type}: {value}",
+      "valid": "Geçerli",
+      "invalid": "Geçersiz",
+      "truncated": "İlk {shown} satır gösteriliyor.",
+      "col": {
+        "input": "Giriş",
+        "normalized": "Normalleştirilmiş",
+        "type": "Tür",
+        "status": "Durum",
+        "converted": "Dönüştürüldü",
+        "note": "Not"
+      },
+      "type": {
+        "isbn10": "ISBN-10",
+        "isbn13": "ISBN-13",
+        "invalidLength": "Uzunluk hatalı"
+      },
+      "note": {
+        "checkDigit": "Kontrol rakamı {expected} olmalı",
+        "invalidLength": "Bir ISBN tam olarak 10 veya 13 karakterden oluşur",
+        "invalidCharacter": "Rakam olmayan bir karakter içeriyor",
+        "xMisplaced": "X yalnızca ISBN-10'un son karakteri olarak geçerlidir",
+        "noIsbn10": "979 öneki için ISBN-10 eşdeğeri yoktur",
+        "nonBookland": "13 haneli ISBN'ler 978 veya 979 ile başlamalıdır",
+        "ismn": "979-0, ISBN değil ISMN aralığıdır (basılı müzik)"
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
+    },
+    "languageDetect": {
+      "inputLabel": "Kod parçacığı",
+      "inputPlaceholder": "Dosya adı olmadan kod yapıştırın — sohbet kaydı, bilet, cevap…",
+      "hintLabel": "Dosya adı veya uzantı (isteğe bağlı)",
+      "hintPlaceholder": "main.h · .pl · Dockerfile",
+      "note": "API ile aynı motoru kullanır. Algılama yalnızca içeriğe dayanır; dosya adı ipucu vermezseniz belirsiz uzantılar (.h .m .pl .fs .ts .cs .r) önce kendi kurallarından geçirilir.",
+      "idle": "Bir kod parçası yapıştırın — yargı yazarken görünür.",
+      "confidence": {
+        "high": "Yüksek güven",
+        "medium": "Orta güven",
+        "low": "Düşük güven"
+      },
+      "score": "{n}/100",
+      "dataFormat": "Veri formatı, programlama dili değil",
+      "multiLanguage": "Birden fazla dil şüphesi",
+      "why": "Bu cevabın nedeni",
+      "signals": "Eşleşen sinyaller",
+      "alternates": "Diğer adaylar",
+      "composeNext": "Bu {language} kodunu biçimlendir"
+    },
+    "iban": {
+      "inputLabel": "IBAN",
+      "idle": "Bir IBAN yapıştırın — yargı tuşa basmadan, klavyeyle gelir.",
+      "sourceNote": "Kontrol toplamı ve yapı ISO 13616-1:2020'e göre. Ülke bazlı uzunluk ve BBAN formatı, ISO IBAN kayıt defterinin kendisi değil, yayımlanmış bir yeniden üretimi üzerinden alınır.",
+      "valid": "Doğru yapıda IBAN",
+      "keepTyping": "Yazmaya devam edin — bu ülkenin IBAN uzunluğundan kısa",
+      "caveat": "Sadece doğru yapıda. Geçerli bir kontrol toplamı, hesabın var olduğunu, açık olduğunu veya alıcıya ait olduğunu doğrulamaz.",
+      "printFormat": "Baskı formatı",
+      "details": "Ayrıştırılmış detaylar",
+      "notEncoded": "Bu ülkenin formatıyla kodlanmamış",
+      "coverage": "Kayıtlı IBAN formatına sahip {n} ülke",
+      "reason": {
+        "bad_charset": "IBAN yapısında değil — bir IBAN iki harf, iki rakam ve ardından yalnızca harf ve rakamlardan oluşur",
+        "country_unsupported": "Bu ülke kodu için kayıtlı bir IBAN formatı yok",
+        "incomplete": "Eksik",
+        "wrong_length_for_country": "Bu ülkenin IBAN'ı için çok uzun",
+        "structure_mismatch": "Doğru uzunlukta ancak bu ülkenin formatına uymuyor",
+        "checksum_failed": "Sağlama toplamı başarısız — bu IBAN'da bir yerde yazım hatası var"
+      },
+      "badge": {
+        "country": "{name} ({code})",
+        "unknownCountry": "Ülke kodu {code}",
+        "length": "{n} / {expected} karakter",
+        "bankCode": "Banka kodu {code}",
+        "expectedCheckDigits": "Bu hesap numarası için kontrol rakamları {digits} olacaktır"
+      },
+      "field": {
+        "normalized": "Elektronik format",
+        "country": "Ülke",
+        "checkDigits": "Kontrol rakamları",
+        "bban": "BBAN",
+        "bbanFormat": "BBAN formatı",
+        "bankCode": "Banka kodu"
+      },
+      "check": {
+        "charset": "Karakter seti",
+        "country": "Ülke",
+        "length": "Uzunluk",
+        "structure": "Yapı",
+        "checksum": "MOD 97-10"
+      },
+      "state": {
+        "pass": "geçti",
+        "fail": "başarısız",
+        "skipped": "ulaşılamadı"
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
+    },
+    "secretScan": {
+      "pasteLabel": "Kodu, yapılandırmayı veya .env dosyasını yapıştır",
+      "pastePlaceholder": "DATABASE_URL=postgres://…\nAPI_KEY=…",
+      "dropLabel": "Tarama için bir dosyayı sürükleyip bırakın",
+      "privacy": "Tamamen tarayıcınızda çalışır. Hiçbir şey hiçbir yere gönderilmez — bize bile.",
+      "scan": "Tara",
+      "scanning": "Taranıyor…",
+      "idleTitle": "Bir şey yapıştırın ve Tara'ya basın.",
+      "idleHint": "Satıcı API anahtarları, token'lar, özel anahtarlar ve yüksek entropili sırları kontrol eder. Eşleşen değerler maskelenir; yalnızca satır numaraları tam olarak gösterilir.",
+      "clean": "Sır bulunamadı",
+      "cleanCaveat": "Burada bilinen bir kimlik bilgisi formatıyla eşleşen veya rastgele bir sır olarak okunan hiçbir şey yok. Desen eşleştirme kesin kanıt değildir — emin olmadığınız her şeyi gözden geçirin.",
+      "found": "{n, plural, one {# olası sır bulundu} other {# olası sır bulundu}}",
+      "foundCaveat": "Bunları bir yere yapıştırmadan önce karartın. Bir anahtar gerçekse, döndürün.",
+      "countHigh": "{n} yüksek güven",
+      "countMedium": "{n} orta",
+      "countLow": "{n} düşük",
+      "confidence": {
+        "high": "Yüksek",
+        "medium": "Orta",
+        "low": "Düşük"
+      },
+      "position": "satır {line}, sütun {column}",
+      "length": "{n} karakter",
+      "maskedLabel": "Maskeleme eşleşmesi",
+      "why": "Neden eşleşti",
+      "candidates": "Ayrıca şunlar olabilir:",
+      "scanDetail": "Tarama detayı",
+      "lines": "{n} satır",
+      "bytes": "{n} bayt tarandı",
+      "suppressed": "{n} yer tutucu görmezden gelinecek",
+      "suppressedNote": "Bilinen demo değerleri (EXAMPLE anahtarları, your-api-key-here, tekrarlanan karakterler) örnek dosyaların yanlış alarm vermemesi için görmezden gelinecek.",
+      "omitted": "{n} daha gösterilmiyor",
+      "truncated": "Girdi sınırlandı — yalnızca ilk bölüm tarandı",
+      "reportTitle": "Gizli bilgi tarama sonuçları (değerler gizlendi)",
+      "scopeNote": "Yalnızca algılama: bu araç bir anahtarın hâlâ aktif olup olmadığını kontrol etmek için asla bir sağlayıcıya bağlanmaz — bu, anahtarınızı üçüncü bir tarafa göndermek anlamına gelir."
+    },
+    "eanUpcGtin": {
+      "inputLabel": "Barkod numaraları",
+      "placeholder": "Her satıra bir kod (virgül ve noktalı virgül de böler)",
+      "idle": "Tek bir kodu veya tüm bir sütunu yapıştırın — karar yazarken görünür.",
+      "operationLabel": "İşlem",
+      "operationValidate": "Doğrula (kod kontrol basamağını içerir)",
+      "operationCalculate": "Hesapla (kod kontrol basamağını içermiyor)",
+      "typeLabel": "Tür",
+      "typeAuto": "Uzunluğa göre algıla",
+      "total": "{n} kod",
+      "validCount": "{n} geçerli",
+      "invalidCount": "{n} geçersiz",
+      "calculatedCount": "{n} hesaplanmış",
+      "unrecognizedCount": "{n} tanınmayan uzunluk",
+      "verdict": {
+        "valid": "Geçerli",
+        "invalid": "Geçersiz",
+        "calculated": "Hesaplanmış",
+        "unrecognized-length": "Tanınmayan uzunluk"
+      },
+      "alsoReadsAs": "Ayrıca {type} olarak okunur",
+      "checkDigit": "Kontrol rakamı",
+      "corrected": "Olmalı",
+      "gtin14": "GTIN-14 formu",
+      "reason": {
+        "empty": "Bu satırda kontrol edilecek bir şey yok.",
+        "non-digit-characters": "Rakam veya ayırıcı olmayan karakterler içeriyor.",
+        "unsupported-length": "Bu uzunlukta bir GS1 tanımlayıcısı yok (8, 12, 13, 14 ve 18 basamak desteklenir).",
+        "length-mismatch": "Seçtiğiniz tür için uzunluk yanlış.",
+        "check-digit-mismatch": "Son rakam, standardın gerektirdiğiyle eşleşmiyor."
+      },
+      "warning": {
+        "separators-stripped": "Kontrol öncesi boşluklar, tireler ve noktalar kaldırıldı.",
+        "all-zero": "Tüm sıfırlar — matematiksel olarak geçerli, ancak gerçek bir tanımlayıcı değil.",
+        "payload-is-also-a-complete-code": "Bu aynı zamanda tam bir kod uzunluğudur. Zaten kontrol rakamı varsa, Doğrula'ya geçin."
+      },
+      "math": "Aritmetiği göster",
+      "mathSum": "Toplam {sum} → kontrol basamağı {check}",
+      "truncatedRows": "{total} satırdan ilk {shown} tanesi gösteriliyor. Kopyalama ve indirme tümünü içerir.",
+      "privacy": "Kodlar Forge API'ye doğrulanmak üzere gönderilir ve saklanmaz.",
+      "scopeNote": "Doğru bir kontrol basamağı, numaranın iyi yapılandırıldığını gösterir. GS1'in bunu gerçek bir ürüne, şirkete veya konuma atadığı anlamına gelmez — bunu yalnızca GEPIR kayıt defteri sorgusu yanıtlar.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
+    },
+    "vin": {
+      "inputLabel": "VIN (17 karakter)",
+      "privacy": "Tarayıcınızda doğrulanır. VIN hiçbir yere gönderilmez.",
+      "idle": "Bir VIN yapıştırın — yazarken sonuç görünür, düğme gerekmez.",
+      "scope": "Yalnızca yapı ve kontrol basamağı (49 CFR 565.15 / ISO 3779). Bu bir araç geçmişi sorgusu değildir.",
+      "verdict": {
+        "valid": "Geçerli VIN yapısı",
+        "keepTyping": "Yazmaya devam edin — {remaining} karakter kaldı",
+        "tooLong": "Çok uzun — bir VIN tam olarak 17 karakterdir, bu {n} karakter",
+        "invalidCharacter": "VIN karakteri değil: {position}. konumdaki \"{char}\"",
+        "checkDigitMismatch": "Kontrol rakamı uyuşmuyor — beklenen {expected}, bulunan {found}"
+      },
+      "hint": {
+        "confusable": "\"{char}\" bir VIN'de hiç kullanılmaz. {suggest} demek mi istediniz?"
+      },
+      "notice": {
+        "notProvenance": "Geçerli bir kontrol rakamı, VIN'in doğru biçimlendirildiğini doğrular. Araçların var olduğunu, değiştirilmediğini veya temiz bir geçmişe sahip olduğunu doğrulamaz — kopyalanmış bir VIN de bu kontrolü geçer.",
+        "pre1981": "1981 öncesi üretilen araçlar ve bazı ithal (JDM/European) araçlar bu kontrol rakamını kullanmaz — uyuşmazlık VIN'in yanlış yazıldığını göstermeyebilir.",
+        "partial": "Kontrol rakamı doğrulaması, tam 17 karakterlik VIN'i gerektirir. Kısmi bir VIN, checksum işi değil, çözümleme işidir."
+      },
+      "badge": {
+        "length": "{n} karakter",
+        "expected": "Kontrol rakamı {d}"
+      },
+      "invalidChars": {
+        "more": "Ayrıca VIN karakterleri değil: {list}"
+      },
+      "segment": {
+        "wmi": "WMI 1-3",
+        "vds": "Tanımlayıcı 4-8",
+        "checkDigit": "Kontrol rakamı 9",
+        "modelYear": "Model yılı 10",
+        "plant": "Tesis 11",
+        "serial": "Seri 12-17"
+      },
+      "math": {
+        "title": "Hesaplamayı göster",
+        "col": {
+          "position": "Poz",
+          "char": "Karakter",
+          "value": "Değer",
+          "weight": "Ağırlık",
+          "product": "Çarpım"
+        },
+        "formula": "toplam = {sum};  {sum} mod 11 = {remainder}  →  kontrol basamağı {expected}"
+      },
+      "specimenTitle": "VIN · structure specimen"
+    },
+    "envDiff": {
+      "envA": "Ortam A",
+      "envB": "Ortam B",
+      "placeholderA": "İlk .env dosyasını yapıştırın veya sürükleyin",
+      "placeholderB": "İkinci .env dosyasını yapıştırın veya sürükleyin",
+      "paneNoAssignment": "KEY=value satırı bulunamadı",
+      "optIgnoreComments": "Yorum ve boş satırları görmezden gel",
+      "optCaseInsensitive": "Büyük/küçük harf duyarsız anahtar karşılaştırması",
+      "optRedactSecrets": "Tespit edilen gizli bilgileri gizle",
+      "emptyHint": "Karşılaştırmayı görmek için ikinci bir ortam ekleyin",
+      "summaryNone": "{total} anahtar arasında fark yok",
+      "summaryDiff": "{total} anahtardan {n} tanesi farklı",
+      "note": {
+        "unchanged": "Her iki tarafta da aynı değer",
+        "changed": "Değer farklı",
+        "added": "Sadece B'de tanımlı",
+        "removed": "Sadece A'de tanımlı",
+        "commentedOutInA": "A'da yorum satırı, B'de ayarlanmış",
+        "commentedOutInB": "A'da ayarlanmış, B'de yorum satırı"
+      },
+      "secretChanged": "gizli değer farklı",
+      "secretSame": "gizli değer her iki tarafta da aynı",
+      "count": {
+        "unchanged": "{n} değişmedi",
+        "changed": "{n} değişti",
+        "added": "{n} eklendi",
+        "removed": "{n} kaldırıldı",
+        "commentedOut": "{n} yorum satırı"
+      },
+      "warnings": "Giriş uyarıları ({n})",
+      "warningType": {
+        "duplicateKey": "{file} · yinelenen anahtar",
+        "quoteMismatch": "{file} · tırnak uyumsuzluğu",
+        "unparsableLine": "{file} · ayrıştırılamayan satır"
+      },
+      "showUnchanged": "Değişmeyenleri göster ({n})",
+      "commentedIn": {
+        "A": "A'da yorum satırına alınmış",
+        "B": "B'de yorum satırına alınmış",
+        "both": "her ikisinde de yorum satırına alınmış"
+      },
+      "redactedNote": "Gizli değerler, anahtar adı anahtar kelime buluşsal yöntemiyle maskelenir — bir güvenlik tarayıcısı değildir. Karşılaştırma ham değerler üzerinde yapılır, bu nedenle döndürülen bir sır yine de değişmiş olarak gösterilir.",
+      "interpolationNote": "${VAR} referansları birebir karşılaştırılır ve asla çözümlenmez: genişleme tüketiciye göre farklılık gösterir.",
+      "truncated": "Yalnızca ilk 5.000 anahtar listelenir; sayılar tüm anahtarları kapsar.",
+      "colKey": "Anahtar",
+      "colA": "A",
+      "colB": "B",
+      "colStatus": "Durum",
+      "privacy": "Her iki dosya da tarayıcınızda karşılaştırılır. Hiçbir şey yüklenmez."
+    },
+    "csvDiff": {
+      "originalLabel": "Orijinal CSV",
+      "updatedLabel": "Güncellenmiş CSV",
+      "originalPlaceholder": "Orijinal dışa aktarımı yapıştırın veya buraya bir .csv dosyası bırakın",
+      "updatedPlaceholder": "Güncellenmiş dışa aktarımı yapıştırın veya buraya bir .csv dosyası bırakın",
+      "emptyHint": "Her iki dosyayı da yapıştırın veya bırakın — karşılaştırma, her iki tarafta da içerik olduğu anda çalışır.",
+      "note": "Satırlar konuma göre değil, kimliğe göre eşleştirilir; böylece eklenen veya yeniden sıralanan bir satır, bir değişiklik duvarı olarak okunmaz. İçerik karşılaştırma için API'ye gönderilir ve saklanmaz.",
+      "columns": "{n} sütun",
+      "keyLabel": "Anahtar sütun",
+      "keyAuto": "Otomatik öner",
+      "keyNone": "Anahtar yok — tüm satırları karşılaştır",
+      "joinLabel": "Birleştir",
+      "joinFull": "Tam dış — her satır",
+      "joinInner": "İç — her iki kümedeki satırlar",
+      "joinLeft": "Sol — orijinal satır kümesi",
+      "ignoreWhitespace": "Boşlukları yoksay",
+      "ignoreCase": "Büyük/küçük harf duyarsız",
+      "treatEmptyAsNull": "Boş = NULL = N/A",
+      "noDifferences": "Fark yok",
+      "differences": "{added} eklendi · {removed} silindi · {changed} değişti",
+      "added": "{n} eklendi",
+      "removed": "{n} silindi",
+      "changed": "{n} değişti",
+      "unchangedCount": "{n} değişmedi",
+      "totals": "{original} → {updated} satır",
+      "matchedBy": "{columns} ile eşleştirildi ({source})",
+      "matchedWholeRow": "Tüm satır içeriğine göre eşleştirildi — anahtar sütunu kullanılmadığından değişiklik olarak hiçbir şey raporlanmıyor.",
+      "keySource": {
+        "provided": "seçiminiz",
+        "auto": "otomatik önerilen",
+        "full-row": "tüm satır"
+      },
+      "keyRejected": "Reddedilen anahtar adayları: {items}",
+      "columnMismatch": "Sadece orijinalde olan sütunlar: {original} · sadece güncellenmişte olanlar: {updated}",
+      "truncated": "Tam sonuçtan {shown} gösteriliyor (önizleme {limit} satır ile sınırlandırıldı) — yukarıdaki sayılar eksiksiz.",
+      "findings": "Notlar ({n})",
+      "level": {
+        "info": "bilgi",
+        "warning": "uyarı",
+        "danger": "hata"
+      },
+      "wholeRow": "Satır {n}",
+      "exportChanged": "Değişen satırlar (CSV)",
+      "exportFull": "Tam fark (CSV)"
+    },
+    "uscc": {
+      "modeLabel": "Doğrula veya oluştur",
+      "tab": {
+        "verify": "Doğrula",
+        "generate": "Test kodları oluştur"
+      },
+      "inputLabel": "Birleşik sosyal kredi kodu",
+      "placeholder": "18 karakter, örn. 91500000059926748X",
+      "idle": "18 karakterlik bir kod yapıştırın. Yazarken tarayıcıda kontrol edilir — hiçbir şey saklanmaz.",
+      "scope": "Yalnızca yapısal kontrol (GB 32100-2015 + ISO 7064 MOD 31-3). Geçen bir kod iyi yapılandırılmıştır; bu, bir kuruluşun bu kod altında kayıtlı olduğu anlamına gelmez — bunu ulusal kayıt defteri cods.org.cn'de kontrol edin.",
+      "valid": "Geçerli birleşik sosyal kredi kodu",
+      "invalid": "Geçerli bir birleşik sosyal kredi kodu değil",
+      "incomplete": "18 karakterden {n}",
+      "invalidCharacters": "Standart tarafından hariç tutulan karakterler içeriyor",
+      "checksumOk": "Kontrol rakamı doğru",
+      "checksumBad": "Kontrol rakamı uyuşmuyor",
+      "expectedDigit": "Kontrol rakamı {expected} olmalı, {actual} değil",
+      "illegalAt": "Konum {position}: “{char}” kod karakter setinde yer almıyor (I, O, S, V, Z hariç tutuldu)",
+      "detail": "Alan detayı",
+      "legacyTitle": "Eski kuruluş kodu (GB 11714)",
+      "legacy": {
+        "ok": "Gömülü 9 karakterlik kuruluş kodu kendi içinde tutarlı",
+        "mismatch": "Eski denetim karakteri {expected} olmalı — yalnızca bilgilendirme amaçlı; her kayıt sınıfı GB 11714 kuruluş kodu taşımaz",
+        "unchecked": "Kontrol edilmedi"
+      },
+      "divisionScope": "3–8. konumlar, GB/T 2260 il tablosu ve altı haneli formun iç içe geçme kurallarıyla eşleştirilir; tam ilçe tablosu taşınmaz.",
+      "field": {
+        "registrationDept": "Kayıt birimi",
+        "orgCategory": "Kurum kategorisi",
+        "adminDivision": "İdari bölge",
+        "orgIdentifier": "Özne tanımlayıcısı",
+        "checkDigit": "Kontrol hanesi"
+      },
+      "depth": {
+        "none": "Çözümlenmedi",
+        "province": "İl düzeyi",
+        "prefecture": "İlçe düzeyi",
+        "county": "İlçe düzeyi"
+      },
+      "note": {
+        "empty": "Henüz kontrol edilecek bir şey yok",
+        "incomplete": "Birleşik sosyal kredi kodu tam olarak 18 karakterden oluşur",
+        "tooLong": "18 karakterden fazla",
+        "illegalCharacter": "GB 32100-2015 kümesinin dışında bir karakter içeriyor (I, O, S, V ve Z hariç)",
+        "checkDigitMismatch": "Kontrol rakamı ilk 17 karakterle eşleşmiyor",
+        "departmentUnknown": "1. konum, standardın tanımladığı bir kayıt birimi değil (1, 5, 9, Y)",
+        "categoryUnknown": "2. konum, bu kayıt birimi için tanımlanmış bir kuruluş kategorisi değil",
+        "divisionNotNumeric": "3–8. konumlar altı haneli olmalı",
+        "divisionUnknownProvince": "3–4. konumlar bir GB/T 2260 eyalet kodu değil",
+        "divisionMalformed": "GB/T 2260'nin izin vermediği, hiçbir ilin altında olmayan bir ilçe"
+      },
+      "gen": {
+        "dept": "Kayıt birimi",
+        "category": "Kuruluş kategorisi",
+        "province": "Eyalet",
+        "count": "Kaç tane",
+        "randomProvince": "Herhangi bir il",
+        "regenerate": "Yeni parti",
+        "emptyHint": "Test kodları oluşturmak için yukarıdaki seçenekleri belirleyin.",
+        "testDataBadge": "Test verisi",
+        "seed": "Tohum {seed}",
+        "allCodes": "Tüm kodlar",
+        "disclaimer": "Bu kodlar yapısal olarak geçerlidir ancak kayıtlı hiçbir örgüte ait değildir. Gerçek bir varlığı temsil etmek için kullanmayın.",
+        "note": "Oluşturma işlemi tohumlanır: aynı seçenekler ve tohum her zaman aynı partiyi döndürür, böylece bir sabit veri tekrarlanabilir kalır. Her kod, JSON'da da burada da isTestData olarak işaretlenir."
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
+    },
+    "yamlDiff": {
+      "original": "Orijinal",
+      "changed": "Değiştirilmiş",
+      "originalPlaceholder": "Orijinal YAML'i (veya JSON'u) yapıştırın veya bırakın",
+      "changedPlaceholder": "Değiştirilmiş YAML'i (veya JSON'u) yapıştırın veya bırakın",
+      "idle": "Her iki paneli de doldurun; karşılaştırma yazarken çalışır.",
+      "privacy": "Her iki belge de bu tarayıcıda ayrıştırılır ve karşılaştırılır — hiçbir şey yüklenmez; bu, ana bilgisayar adları ve gizli adlar içeren manifestolar için asıl amaçtır.",
+      "modeLabel": "Karşılaştırma",
+      "modeSemantic": "Anlamsal (yapı)",
+      "modeRawText": "Ham metin (karakter)",
+      "resolveAnchors": "Çapaları ve takma adları değerlerine çöz",
+      "valid": "Geçerli YAML",
+      "validMulti": "Geçerli YAML · {n} belge",
+      "invalid": "Ayrıştırma hatası, satır {line}",
+      "parseFailed": "Bir taraf ayrıştırılamadı — hiçbir şey karşılaştırılmadı",
+      "equivalent": "Fark yok — iki belge aynı yapıya çözülüyor",
+      "equivalentStructural": "Aynı çözülmüş yapı · {n} biçimlendirme veya çapa farkı",
+      "summary": "{added} eklendi · {removed} kaldırıldı · {changed} değiştirildi · {typeChanged} tür değişikliği",
+      "parseErrorAt": "{side} · satır {line}, sütun {column}: {message}",
+      "documentCountMismatch": "Belge sayısı farklı: {original} vs {changed} — belgeler sırayla eşleştirildi ve fazlalıklar tamamıyla raporlandı",
+      "duplicateKeys": "Kaynakta yinelenen anahtarlar",
+      "unified": "Birleşik yama (normalleştirilmiş YAML)",
+      "howItWorks": "Bu karşılaştırma nasıl çalışır",
+      "rule": {
+        "keyOrder": "Haritalama anahtar sırası, tırnak kullanımı ve girintiler görmezden gelinir; dizinin sırası karşılaştırılır çünkü bir listenin sırası anlam taşır.",
+        "anchors": "Takma adlar değerlerine çözümlenir, böylece ortak bir çapa arkasındaki düzenleme her takma ad konumunda görünür; değeri değişmeden çapa veya takma ad değişirse yapısal olarak ayrı raporlanır.",
+        "mergeKeys": "Birleştirme anahtarları (<<) karşılaştırmadan önce genişletilir ve bir düğümün kendi anahtarları birleştirilmiş olanların önüne geçer.",
+        "types": "Tür, değerin bir parçasıdır: 8080, \"8080\" ve !!str 8080 genel bir değişiklik olarak değil, tür değişikliği olarak raporlanır.",
+        "sequences": "Haritalama dizileri, her iki tarafta da benzersiz olduğunda ad, kimlik veya anahtar ile eşleştirilir, böylece eklenen bir öğe kaskat etkisi yaratmaz; sıralama değişikliği yine de raporlanır.",
+        "blockScalars": "Blok skalerleri çözümlenmiş dizeye göre karşılaştırılır, böylece |- ile çıkarılan son satır sonu gerçek bir değişikliktir; aynı değerle yeniden biçimlendirme yapısal olarak raporlanır.",
+        "comments": "Yorumlar, YAML veri modelinin bir parçası değildir ve karşılaştırılmaz.",
+        "multiDoc": "--- belgeleri, belge başına eşleştirir; sayı uyuşmazlığı, yalnızca ilk belgeyi karşılaştırmak yerine bildirilir.",
+        "duplicateKeys": "Girişteki tekrarlanan eşleme anahtarı, son görünüme göre kullanılır ve bir uyarı olarak bildirilir."
+      },
+      "note": {
+        "raw-text-mode": "Ham metin modu, yapı yerine karakterleri karşılaştırır: anahtar sırası, tırnak kullanımı ve girintiler hepsi önemlidir.",
+        "parse-error": "Bir taraf ayrıştırılamadığından hiçbir şey karşılaştırılmadı.",
+        "document-count-mismatch": "İki taraf, farklı sayıda --- belgesi içeriyor; belgeler sırayla eşleştirildi ve fazlalıklar tamamıyla bildirildi.",
+        "merge-keys-expanded": "Birleştirme anahtarları (<<), karşılaştırılmadan önce genişletildi.",
+        "anchors-unresolved": "Takma adlar, çözülmüş değerleri yerine *ad referansları olarak karşılaştırıldı.",
+        "yaml11-ambiguous-scalars": "Tırnak içinde olmayan y/n/yes/no/on/off değerleri burada dizeler olarak (YAML 1.2 Core) ve YAML 1.1 altında mantıksal değerler olarak okunur — mantıksal değer kastediliyorsa bunları tırnak içine alın.",
+        "sequence-matched-by-identity": "Eşleme dizileri, konuma göre değil, bir kimlik alanına göre eşleştirildi.",
+        "duplicate-keys": "Bir eşleme, aynı anahtarı iki kez tanımlıyor; son görünüm kullanıldı.",
+        "truncated": "Yalnızca ilk 2000 değişiklik listeleniyor."
+      }
+    },
+    "listSetCompare": {
+      "listA": "A Listesi",
+      "listB": "B Listesi",
+      "placeholder": "Öğeleri yapıştırın, her satıra bir tane (veya bir .txt/.csv dosyası bırakın)",
+      "emptyHint": "Karşılaştırmayı görmek için hem A Listesi hem de B Listesi'ne öğe ekleyin.",
+      "privacy": "Her iki liste tarayıcınızda karşılaştırılır — hiçbir şey yüklenmez. Aynı motor, API ve MCP çağrıları için sunucu tarafında çalışır.",
+      "delimiter": "Ayırıcı",
+      "delimiterOption": {
+        "auto": "Otomatik algıla",
+        "newline": "Yeni satır",
+        "comma": "Virgül",
+        "tab": "Sekme",
+        "custom": "Özel"
+      },
+      "customDelimiter": "Ayraç",
+      "customDelimiterPlaceholder": "| veya \\t",
+      "sort": "Sırala",
+      "sortOption": {
+        "original": "Orijinal sıra",
+        "asc": "A→Z",
+        "desc": "Z→A",
+        "byCount": "Sayıya göre"
+      },
+      "optCaseSensitive": "Büyük/küçük harf duyarlı",
+      "optTrim": "Boşlukları kırp",
+      "optCollapse": "İç boşlukları daralt",
+      "optIgnoreZeros": "Baştaki sıfırları yoksay",
+      "paneItems": "{n} öğe",
+      "paneSingle": "1 öğe — ayracı kontrol edin",
+      "items": "{n}",
+      "none": "Hiçbiri",
+      "more": "+{n} tane daha — tam liste için kopyalayın veya indirin",
+      "panel": {
+        "onlyInA": "Yalnızca A'da",
+        "onlyInB": "Yalnızca B'de",
+        "intersection": "Kesişim (her ikisinde de)",
+        "union": "Birleşim (tüm öğeler)",
+        "symmetricDifference": "Simetrik fark"
+      },
+      "summaryIdentical": "Aynı küme — {n} ortak öğe",
+      "summaryDiff": "{a} yalnızca A'da · {b} yalnızca B'de · {shared} ortak",
+      "drill": {
+        "symmetricDifference": "Simetrik fark ({n})",
+        "duplicates": "Bir liste içindeki kopyalar ({n})",
+        "multiplicities": "Öğe başına sayılar ({n})",
+        "warnings": "Bildirimler ({n})"
+      },
+      "duplicatesInA": "A'da tekrar eden",
+      "duplicatesInB": "B'de tekrar eden",
+      "colValue": "Öğe",
+      "colCountA": "A'da",
+      "colCountB": "B'de",
+      "detailTruncated": "Öğe başına sayılar kısaltıldı — tam tablo için API'de maxDetail değerini artırın.",
+      "reportTitle": "Liste karşılaştırması"
+    },
+    "loanAmortization": {
+      "principal": "Kredi tutarı",
+      "rate": "Yıllık faiz oranı %",
+      "term": "Vade",
+      "termUnit": "Vade birimi",
+      "unitYears": "Yıl",
+      "unitMonths": "Ay",
+      "startMonth": "İlk ödeme ayı",
+      "startMonthHint": "YYYY-AA. Tabloyu etiketler; tutarı değiştirmez.",
+      "extraHeading": "Ek ödemeler",
+      "extraMonthly": "Her ay ek",
+      "extraYearly": "Yılda bir ekstra ödeme",
+      "extraYearlyMonth": "Yıllık ekstra ödemenin düştüğü ay",
+      "extraOneTime": "Tek seferlik ekstra ödeme",
+      "extraOneTimePeriod": "Tek seferlik ödeme # numaralı taksitte",
+      "extraNote": "Ekstra ödemeler düştükleri dönemde ana parayı azaltır ve bu da sonraki tüm dönemlerin faizini düşürür. Faiz oranı ve planlanan ödeme tutarı değişmez.",
+      "monthlyPayment": "Aylık ödeme",
+      "totalInterest": "Toplam faiz",
+      "totalPaid": "Toplam ödenen",
+      "crossover": "Kesişim",
+      "crossoverValue": "Ödeme {n}",
+      "crossoverNone": "Asla",
+      "payoff": "Ödeme {n} tarihinde ödendi",
+      "monthsSaved": "{n} ay önce",
+      "totalExtra": "{amount} planın üzerinde ödendi",
+      "viewMonthly": "Her ödeme",
+      "viewAnnual": "Yıla göre",
+      "tableCaption": "Amortisman tablosu: dönem başına ödeme, faiz, ana para ve kalan bakiye",
+      "colPeriod": "#",
+      "colDate": "Ay",
+      "colPayment": "Ödeme",
+      "colInterest": "Faiz",
+      "colPrincipal": "Ana Para",
+      "colBalance": "Bakiye",
+      "colYear": "Yıl",
+      "expandRows": "Tüm {total} ödemeyi göster",
+      "collapseRows": "Daha az ödeme göster",
+      "windowNote": "{total} ödemeden {shown} tanesi gösteriliyor. CSV ve API hepsini içeriyor.",
+      "emptyHint": "Tabloyu görmek için bir kredi tutarı, faiz oranı ve vade girin.",
+      "note": "API ile aynı motor. Hesaplama yalnızca kredi koşullarınızla çalışır; hiçbir şey yüklenmez veya saklanmaz.",
+      "errPrincipal": "0'dan büyük bir kredi tutarı girin.",
+      "errRate": "0 ile 100 arasında bir oran girin.",
+      "errTerm": "1 ay ile 100 yıl arasında bir süre girin.",
+      "errStartMonth": "YYYY-AA formatını kullanın, örneğin 2026-01.",
+      "errExtra": "0 veya daha fazla bir tutar girin.",
+      "errOneTimePeriod": "Tek seferli ödemenin düşeceği ödeme numarasını girin."
+    },
+    "businessDayShift": {
+      "modeLabel": "Ne hesaplanacak",
+      "mode": {
+        "shift": "Bir tarihi kaydır",
+        "countBetween": "Tarihler arası say"
+      },
+      "startDate": "Başlangıç tarihi",
+      "days": "İş günü",
+      "daysHint": "Negatif sayılar geriye gider: −10, başlangıç tarihinden on iş günü önce.",
+      "daysInvalid": "İş günleri tam sayı olmalı, isteğe bağlı olarak başında eksi olabilir.",
+      "endDate": "Bitiş tarihi",
+      "includeEndDate": "Bitiş tarihini de sayın — bu, bir elektronik tablonun NETWORKDAYS fonksiyonunun döndürdüğü değerdir",
+      "weekendLabel": "Haftalık tatil günleri",
+      "weekendHint": "Varsayılan olarak Cumartesi ve Pazar. Tatil günleri Cumartesi ve Pazar olan bölgelerde Cumartesi ve Pazar olarak ayarlayın.",
+      "weekday": {
+        "sun": "Paz",
+        "mon": "Pzt",
+        "tue": "Sal",
+        "wed": "Çar",
+        "thu": "Per",
+        "fri": "Cum",
+        "sat": "Cmt"
+      },
+      "holidays": "Resmi tatiller",
+      "holidaysHint": "Boş bırakılırsa, sonuç sadece hafta sonu kuralına göre hesaplanır — herhangi bir ülke takvimi otomatik olarak uygulanmaz.",
+      "makeupWorkdays": "Telafi çalışma günleri",
+      "makeupHint": "Hafta sonu veya tatil gününe denk gelmesine rağmen çalışılan tarihler — Çin'in 调休/补班 Cumartesi günleri buraya girilir.",
+      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesIgnored": "{n, plural, one {# giriş YYYY-AA-GG formatında bir tarih değildi ve kullanılmıyor} other {# giriş YYYY-AA-GG formatında tarih değildi ve kullanılmıyor}}",
+      "pickStart": "Başlamak için bir başlangıç tarihi seçin.",
+      "emptyHintShift": "Bir başlangıç tarihi ve iş günü sayısı seçin.",
+      "emptyHintCount": "Bir başlangıç tarihi ve bitiş tarihi seçin.",
+      "note": "API ile aynı motor. Hesaplama, sonuçla birlikte gösterilen kural seti üzerinde çalışır; hiçbir şey saklanmaz.",
+      "countHeadline": "{n, plural, one {# iş günü} other {# iş günü}}",
+      "reversedRange": "Bitiş tarihi başlangıç tarihinden önce olduğu için sayı negatif olarak döner.",
+      "classification": {
+        "workday": "Çalışma günü",
+        "weekend": "Hafta sonu",
+        "holiday": "Tatil",
+        "makeupWorkday": "Telafi çalışma günü"
+      },
+      "ruleWeekend": "{days} gün izin",
+      "ruleNoWeekend": "haftalık izin günü yok",
+      "ruleHolidays": "{n, plural, =0 {tatil listesi yok} one {# tatil} other {# tatil}}",
+      "ruleMakeups": "{n, plural, =0 {telafi çalışma günü yok} one {# telafi çalışma günü} other {# telafi çalışma günü}}",
+      "ruleEndIncluded": "bitiş tarihi dahil",
+      "ruleEndExcluded": "bitiş tarihi dahil değil",
+      "chain": "Bu tarihten itibaren tekrar kaydır"
+    },
+    "retryBackoff": {
+      "strategy": {
+        "exponential": "Üstel",
+        "linear": "Doğrusal",
+        "fixed": "Sabit"
+      },
+      "initialDelay": "Başlangıç gecikmesi (ms)",
+      "factor": "Geri çekilme faktörü",
+      "factorHint": "Her yeniden denemede uygulanan çarpan. 1'den büyük olmalıdır.",
+      "increment": "Doğrusal artış (ms)",
+      "incrementHint": "Her yeniden denemede gecikmeye eklenen milisaniye.",
+      "maxDelay": "Maksimum gecikme sınırı (ms)",
+      "maxDelayHint": "Sınırsız için boş bırakın. Sınıra ulaşıldığında, sonraki tüm gecikmeler bu değerde sabit kalır.",
+      "maxAttempts": "Maksimum deneme sayısı",
+      "maxAttemptsHint": "1 ile 100 arasında.",
+      "excludeInitial": "Maksimum deneme sayısı ilk isteği hariç tutar",
+      "excludeInitialNote": "Açık: yukarıdaki sayı yalnızca yeniden denemeleri sayar, ilk istek ekstradır. Kapalı: ilk istek dahil tüm denemeleri sayar.",
+      "jitter": {
+        "none": "Yok — tam gecikmeler",
+        "equal": "Eşit — yarısı sabit, yarısı rastgele",
+        "full": "Tam — sıfırdan gecikmeye kadar herhangi bir değer"
+      },
+      "callerTimeout": "Kendi zaman aşımınız (ms)",
+      "callerTimeoutHint": "İsteğe bağlı. Bütçe kontrolünü atlamak için boş bırakın.",
+      "emptyHint": "Programı görmek için vurgulanmış alanı düzeltin.",
+      "note": "Sadece politika kullanılarak hesaplanır — hiçbir üst akış hizmetine veri gönderilmez. Jitter, gerçek bir istemcinin düştüğü aralık olarak raporlanır, asla tek bir örnek çekim olarak değil.",
+      "headlineExact": "{attempts} deneme, toplam {wait} bekleme süresi.",
+      "headlineRange": "{attempts} deneme, ortalama {expected} bekleme, en kötü durumda {max}'a kadar.",
+      "finalDelay": "{attempt}. denemeden önceki son bekleme {delay}.",
+      "noRetries": "Bu bütçe yalnızca bir denemeye izin verir ve yeniden deneme yoktur, bu nedenle beklenecek bir şey yoktur.",
+      "retryCount": "{count, plural, =0 {yeniden deneme yok} one {# yeniden deneme} other {# yeniden deneme}}",
+      "capFlattened": "{attempt}. denemede sınıra ulaşıldı — sonraki tüm beklemeler {delay} olarak kalır.",
+      "timeoutExceeded": "En kötü durumda {wait} beklenir, bu da {timeout} bütçenizi aşar.",
+      "timeoutOk": "En kötü durumda {wait} bekler, {timeout} bütçenizin içinde.",
+      "tableLabel": "Yeniden deneme takvimi",
+      "colAttempt": "Deneme",
+      "colDelay": "Gecikme",
+      "colCumulative": "Kümülatif bekleme",
+      "average": "ort. {value}",
+      "formula": {
+        "none": "Gecikmeler tamdır — titreşim uygulanmaz.",
+        "equal": "Eşit titreşim: gecikmenin yarısı sabit, diğer yarısı tekdüze çekilir; böylece her bekleme, gecikmenin yarısı ile tamamı arasında olur.",
+        "full": "Tam titreşim: bekleme, sıfır ile hesaplanan gecikme arasında tekdüze çekilir."
+      },
+      "errInitialDelay": "İlk gecikme, en az 1 olmak üzere tam milisaniye cinsinden olmalıdır.",
+      "errFactor": "Faktör 1'den büyük ve en fazla 100 olmalıdır. 1 faktörü sabit stratejidir.",
+      "errIncrement": "Artış, 0 veya daha fazla olmak üzere tam milisaniye cinsinden olmalıdır.",
+      "errMaxDelay": "Üst sınır, en az 1 olacak şekilde milisaniye cinsinden tam sayı olmalıdır.",
+      "errCapBelowInitial": "Üst sınır, başlangıç gecikmesinden en az bu kadar olmalıdır.",
+      "errMaxAttempts": "Deneme sayısı, 1 ile 100 arasında tam sayı olmalıdır.",
+      "errCallerTimeout": "Zaman aşımı, en az 1 olacak şekilde milisaniye cinsinden tam sayı olmalıdır."
+    },
+    "csvColumns": {
+      "csvLabel": "CSV",
+      "csvPlaceholder": "CSV'yi buraya yapıştırın veya bir dosya bırakın — ilk satır sütun adları olarak okunur",
+      "sample": "Örnek CSV",
+      "chooseFile": "Dosya seç",
+      "fileFailed": "{name} dosyası okunamadı.",
+      "delimiterLabel": "Ayraç",
+      "delimiter": {
+        "comma": "Virgül  ,",
+        "semicolon": "Noktalı virgül  ;",
+        "tab": "Tab",
+        "pipe": "Boru |"
+      },
+      "raggedPolicyLabel": "Başlık ile eşleşmeyen satırlar",
+      "ragged": {
+        "pad": "Başlığa hizala",
+        "truncate": "Uzun satırları kısalt, kısa satırları kısa bırak",
+        "reject": "Durdur ve bildir"
+      },
+      "columnsTitle": "Sütunlar — {total} içinden {kept} tutuldu",
+      "columnsHint": "Bir sütunu kaldırmak için işaretini kaldırın, yeniden adlandırmak için kutuyu düzenleyin, sıralamayı değiştirmek için okları kullanın. Her şey orijinal başlığa göre çözülür.",
+      "reset": "Sütunları sıfırla",
+      "keep": "{name} sütununu tut",
+      "renameLabel": "{name}",
+      "moveUp": "{name} sütununu yukarı taşı",
+      "moveDown": "{name} sütununu aşağı taşı",
+      "noneKept": "Hiçbir sütun işaretli değil — en az birini işaretleyin.",
+      "emptyHint": "Sütunları yönetmek için yukarıya bir CSV yapıştırın.",
+      "note": "Yapıştırdığınız metin üzerinde çalışır. Bırakın, yeniden adlandırın, sonra yeniden sıralayın — bu sabit sırayla, her zaman orijinal başlığa göre.",
+      "columnCount": "{n} sütun",
+      "rowCount": "{n} satır",
+      "duplicateHeaders": "Adıyla kullanılan yinelenen başlık: {names}",
+      "raggedCount": "{n}{more} satır başlık genişliğiyle eşleşmiyor",
+      "previewLabel": "Çıktı CSV",
+      "previewTruncated": "Toplam {total} satırdan ilk {shown} satır gösteriliyor. Tam dosya için kopyalayın veya indirin.",
+      "raggedListLabel": "Başlık genişliğiyle eşleşmeyen satırlar",
+      "raggedRow": "Satır {line}: {actual} alan, başlıkta {expected} alan var",
+      "unusedRenames": "Yeniden adlandırma yok sayıldı — bu sütunlar çıktıda yer almıyor: {names}"
+    },
+    "imageRotateFlip": {
+      "drop": "Bir görsel bırakın veya seçmek için tıklayın",
+      "browse": "Bir görsel seçin",
+      "selected": "{name} · {kb} KB",
+      "privacy": "Dosya, dönüştürme işlemi için Forge API'ye gönderilir ve hiçbir zaman saklanmaz.",
+      "tooLarge": "Bu görsel {mb} MB'tan büyük.",
+      "ccw": "90° sola",
+      "cw": "90° sağa",
+      "half": "180°",
+      "reset": "Sıfırla",
+      "flipHorizontal": "Yatay çevir",
+      "flipVertical": "Dikey çevir",
+      "angle": "Açı",
+      "exactAngle": "Tam °",
+      "fitMode": "Tuval",
+      "fitExpand": "Tuvalı genişlet",
+      "fitCrop": "Doldurmak için kırp",
+      "fitInside": "İçine sığdır",
+      "fitNote": "Çeyrek dönüş sonrası döndürülmüş görsel eski çerçevesine sığmaz: genişlet her pikseli korur, kırp orijinal boyutu korur ve köşeleri keser, sığdır ise tüm görseli küçültür.",
+      "outputFormat": "Çıktı formatı",
+      "sameFormat": "Girişle aynı",
+      "idle": "Yeniden yönlendirilmiş halini görmek için bir görsel bırakın.",
+      "original": "Orijinal · {w}×{h}",
+      "originalAlt": "Yüklenen görsel",
+      "result": "Sonuç · {w}×{h}",
+      "resultAlt": "Yeniden yönlendirilmiş görsel",
+      "badgeLossless": "Yeniden örnekleme yok",
+      "badgeResampled": "Yeniden örneklendi",
+      "badgeSize": "{kb} KB",
+      "badgeExif": "EXIF yönü {orientation} önce uygulandı",
+      "badgeSnapped": "Tam çeyrek dönüşe hizalandı",
+      "badgeReencode": "Geometri tam; codec yeniden kodluyor",
+      "download": "İndir",
+      "note": "90°, 180° ve 270° döndürmeler pikselleri harmanlamadan taşır. Diğer açılar yeniden örnekler. Animasyonlu GIF, APNG ve animasyonlu WebP henüz desteklenmiyor."
+    },
+    "exifStrip": {
+      "drop": "Meta verilerini kaldırmak için bir JPEG, PNG veya WebP sürükleyin",
+      "privacy": "Sunucularımızda işlenir ve asla depolanmaz. Görsel başına en fazla {mb} MB.",
+      "idle": "Kaldırılan: GPS, çekim zamanı, kamera ve cihaz bilgisi, gömülü küçük resim, düzenleme geçmişi. Korunan: yön, renk profili, boyutlar, piksel verisi.",
+      "note": "Yalnızca hareketsiz görseller. Video, PDF, HEIC, AVIF ve GIF kapsam dışıdır; C2PA kaynak bildirimleri olduğu gibi bırakılır.",
+      "detail": "Neler kaldırıldı",
+      "optKeepThumbnail": "Gömülü Exif küçük resmini koru",
+      "verdictStripped": "{fields} meta veri alanı kaldırıldı ({kb} KB)",
+      "verdictClean": "Bu dosyada kaldırılabilir meta veri yok",
+      "strippedCaveat": "Resim kendisi değişmedi — aynı pikseller, aynı boyutlar, yeniden kodlama yapılmadı.",
+      "cleanCaveat": "Olduğu gibi, bayt bayt döndürüldü.",
+      "badgeOrientationKept": "Yönlendirme korundu",
+      "badgeOrientationLost": "Yönlendirme aktarılamadı",
+      "badgeColorProfileKept": "Renk profili korundu",
+      "badgeThumbnailKept": "Küçük resim korundu",
+      "badgeThumbnailRemoved": "Küçük resim kaldırıldı",
+      "download": "Temizlenmiş resmi indir",
+      "sizes": "{before} KB → {after} KB",
+      "detailFields": "{fields} alan · {kb} KB",
+      "detailNothing": "Bu dosyadan hiçbir şey kaldırılmadı.",
+      "detailOrientation": "Exif yönlendirmesi {value} dosyadan okundu ve aktarıldı.",
+      "detailNoOrientation": "Dosya Exif yönlendirmesi belirtmedi, bu nedenle görüntüleme etkilenmez.",
+      "segmentExif": "Exif",
+      "segmentIptc": "IPTC",
+      "segmentXmp": "XMP",
+      "segmentComment": "Yorum",
+      "segmentText": "Metin meta verileri",
+      "segmentTime": "Zaman damgası",
+      "segmentVendor": "Üretici bloğu",
+      "summaryStripped": "{fields} tane meta veri alanı kaldırıldı ({families}), {kb} KB. Görüntü başka şekilde değiştirilmedi.",
+      "summaryClean": "Kaldırılabilir meta veri bulunamadı. Dosya değiştirilmeden döndürüldü."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "Name / host",
+      "type": "Record type",
+      "note": "Resolved by the Forge host DNS resolver — may differ from your local stub or browser DoH."
+    },
+    "tls": {
+      "host": "Host",
+      "expired": "Certificate expired",
+      "validDays": "{n} days remaining",
+      "note": "Connects from the Forge host. Inspection disables trust rejection so you can still read an untrusted leaf."
+    },
+    "myIp": {
+      "refresh": "Refresh",
+      "note": "Shows how this request reached Forge. No ASN/geo without a licensed data feed."
+    },
+    "mermaid": {
+      "source": "Mermaid source",
+      "idle": "Valid diagrams render here",
+      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
+      "sample": "Sample",
+      "theme": "Theme",
+      "theme_default": "Default",
+      "theme_dark": "Dark",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "Flowchart",
+      "sample_sequence": "Sequence",
+      "sample_class": "Class",
+      "sample_er": "ER diagram",
+      "sample_state": "State",
+      "sample_gantt": "Gantt",
+      "sample_pie": "Pie",
+      "sample_mindmap": "Mindmap",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "zoomReset": "Reset view",
+      "copySvg": "Copy SVG",
+      "downloadSvg": "Download SVG",
+      "downloadPng": "Download PNG",
+      "previewAria": "Mermaid diagram preview",
+      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
+    },
+    "colorDeltaE": {
+      "note": "CIEDE2000 via culori. Thresholds are UI review heuristics, not print contracts. color-convert already covers OKLCH."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL dialect",
+      "parseNote": "Hard-correct: parse & inventory only. Visual ERD ships only when layout quality passes the ship gate.",
+      "convertNote": "@dbml/core ModelExporter / importer — same path as the API."
+    },
+    "dnsLeak": {
+      "probeHost": "Compare host (advanced)",
+      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
+      "run": "Start DNS leak check",
+      "retest": "Run again",
+      "showAdvanced": "Advanced options",
+      "hideAdvanced": "Hide advanced",
+      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
+      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
+      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
+      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
+      "edgeIp": "Your edge IP",
+      "authorityHits": "Recursive IPs",
+      "forgePaths": "Forge resolver hits",
+      "dohPaths": "Browser DoH hits",
+      "webrtcCount": "WebRTC IPs",
+      "forgeResolvers": "Forge multi-resolver (server-side)",
+      "forgeNote": "These queries leave from the Forge host — not your laptop.",
+      "browserDoh": "Browser DoH",
+      "webrtc": "WebRTC ICE",
+      "egressMarkers": "Forge egress markers",
+      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
+      "honestyPrefix": "Honesty:",
+      "verdictConsistent": "Paths look consistent on this check",
+      "verdictSplit": "Split answers across DNS paths",
+      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
+      "verdictIncomplete": "Incomplete — browser probes missing",
+      "verdictAuthority": "System DNS recursives captured",
+      "infraOn": "Authority online",
+      "infraOff": "Authority offline — multi-path only",
+      "infraChecking": "Checking…",
+      "authorityResolvers": "System DNS recursive resolvers",
+      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
+      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
+      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
+      "authorityDetail": "Authority session detail",
+      "phaseSession": "Creating session…",
+      "phaseSystemDns": "Triggering system DNS…",
+      "phasePoll": "Listening for recursive hits ({n}/{total})…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "stepSession": "Session",
+      "stepSystemDns": "System DNS",
+      "stepPoll": "Listen",
+      "stepBrowser": "Browser",
+      "stepServer": "Server",
+      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
+      "liveHits": "Live recursive hits",
+      "sectionSystemDns": "System DNS (what you came for)",
+      "sectionComplementary": "Complementary paths",
+      "sectionTech": "Technical session detail",
+      "copyIps": "Copy IPs",
+      "copied": "Copied",
+      "queryCount": "{n} queries",
+      "colPath": "Path",
+      "colAnswers": "Answers",
+      "colMs": "ms",
+      "ipPublic": "public",
+      "ipPrivate": "private",
+      "sig": {
+        "captured": "System DNS captured",
+        "onlineNoHits": "Authority online · no hits yet",
+        "offline": "Authority offline",
+        "forgeSplit": "Forge resolvers disagree",
+        "dohSplit": "Browser DoH disagree",
+        "webrtcMismatch": "WebRTC ≠ edge IP",
+        "webrtcLocal": "Local WebRTC candidates",
+        "noBrowser": "No browser probes"
+      }
+    },
+    "honesty": {
+      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
+      "signatureNotVerified": "{engine} · decode only · signature not verified",
+      "localOnly": "Processed for this request · not stored as a card or credential"
+    },
+    "idCard": {
+      "number": "Resident ID number",
+      "note": "GB 11643 check digit · no household registry lookup · same path as API",
+      "specimenTitle": "Resident ID · structure specimen",
+      "segRegion": "Region",
+      "segBirth": "Birth",
+      "segSeq": "Seq",
+      "segCheck": "Check",
+      "metaBirth": "Birth",
+      "metaGender": "Gender",
+      "metaRegion": "Region code",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "reasonFormat": "Format should be 18 characters (last may be X)",
+      "reasonBirth": "Birth date segment is invalid",
+      "reasonCheck": "Check digit is wrong",
+      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} lines",
+      "chars": "{n} chars",
+      "empty": "(empty file)",
+      "readyToShip": "Ready to drop into the repo"
+    },
+    "textTransform": {
+      "mode": "Mode",
+      "input": "Input",
+      "output": "Output",
+      "emptyResult": "Result appears here",
+      "runLocal": "Run locally",
+      "runServer": "Run on server",
+      "statusLocalLive": "Local · live",
+      "statusLocal": "Local",
+      "statusServer": "Server · same path as API",
+      "noteDefault": "Same path as API"
+    }
+  },
+  "roots": {
+    "hubLabel": "Amaca göre",
+    "tools": "araçlar",
+    "dualSurface": "İnsan sayfası + Aracı API · aynı motor",
+    "otherRoots": "Diğer talep kökleri"
+  }
+}

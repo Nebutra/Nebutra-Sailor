@@ -1,0 +1,84 @@
+---
+title: Email Providers
+description: Configure Resend credentials and verified sending domains for @nebutra/email.
+---
+
+`@nebutra/email` currently delivers through **Resend**. The package can be
+imported without credentials for tests and preview checks; a real
+`RESEND_API_KEY` is required only when a sender helper dispatches an email.
+
+<Note>
+Alternative providers can be added later behind the same public sender helpers.
+Keep provider-specific behavior out of callers.
+</Note>
+
+## Resend setup
+
+<Steps>
+  <Step title="Create a Resend account">
+    Sign up at [resend.com](https://resend.com). The free tier is enough for
+    local development and early staging validation.
+  </Step>
+
+  <Step title="Add and verify your sending domain">
+    Go to **Resend dashboard → Domains → Add Domain**.
+
+    Use a subdomain such as `mail.nebutra.com` so email reputation is isolated
+    from the root product domain.
+  </Step>
+
+  <Step title="Create an API key">
+    Go to **Resend dashboard → API Keys → Create API Key**.
+
+    - **Name:** `nebutra-production` or `nebutra-staging`
+    - **Permission:** sending access
+    - **Domain:** restrict to the verified sending domain
+  </Step>
+
+  <Step title="Set environment variables">
+    ```bash
+    RESEND_API_KEY=re_...
+    EMAIL_FROM=Nebutra <noreply@nebutra.com>
+    ```
+  </Step>
+
+  <Step title="Validate before real delivery">
+    ```bash
+    pnpm --filter @nebutra/email test
+    pnpm mail:check
+    ```
+
+    Then use a Resend test key for a controlled delivery log.
+  </Step>
+</Steps>
+
+## Resend test key
+
+```bash
+# .env.local — development only
+RESEND_API_KEY=re_test_...
+EMAIL_FROM=Nebutra <noreply@nebutra.com>
+```
+
+<Warning>
+Never use a test key in production. Test emails are not delivered to real
+recipients.
+</Warning>
+
+## Domain troubleshooting
+
+| Symptom | Likely cause | Fix |
+|---------|--------------|-----|
+| Domain remains unverified | DNS records are missing or still propagating | Check DNS records and wait for propagation |
+| Emails land in spam | SPF, DKIM, or DMARC is incomplete | Add the records Resend provides |
+| Sending fails at runtime | `RESEND_API_KEY` is missing or invalid | Verify the environment value and key scope |
+| Wrong sender appears | `EMAIL_FROM` does not match the verified domain | Use an address on the verified domain |
+
+<CardGroup cols={2}>
+  <Card title="Email Overview" icon="mail" href="/email/overview">
+    Package architecture and catalog workflow
+  </Card>
+  <Card title="Testing" icon="flask" href="/email/testing">
+    Preview checks and safe delivery tests
+  </Card>
+</CardGroup>

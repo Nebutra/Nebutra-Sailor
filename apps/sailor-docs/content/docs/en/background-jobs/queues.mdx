@@ -1,0 +1,287 @@
+---
+title: Queues
+description: Simple task queues for deferred and high-throughput processing — QStash for serverless and BullMQ for self-hosted Redis deployments.
+---
+
+## Overview
+
+`@nebutra/queue` is a provider-agnostic task queue with two backends:
+
+- **QStash** (Upstash) — serverless, HTTP-based, no infrastructure to manage. Best for Vercel and edge deployments.
+- **BullMQ** — Redis-backed, self-hosted, high throughput. Best for dedicated servers with persistent queues.
+
+The application code is identical for both — only the environment variables differ.
+
+## Provider auto-detection
+
+The queue backend is selected automatically based on which environment variables are present:
+
+| Priority | Condition | Provider |
+|----------|-----------|----------|
+| 1 | `QUEUE_PROVIDER` is set | As specified (`qstash` / `bullmq` / `memory`) |
+| 2 | `QSTASH_TOKEN` exists | `qstash` |
+| 3 | `REDIS_URL` exists | `bullmq` |
+| 4 | Neither | `memory` (dev/test only — not persistent) |
+
+## Setup
+
+<Tabs>
+  <Tab title="QStash (serverless)">
+    <Steps>
+      <Step title="Set environment variables">
+        ```bash
+        QSTASH_TOKEN=""
+        QSTASH_CURRENT_SIGNING_KEY=""
+        QSTASH_NEXT_SIGNING_KEY=""
+
+        # Public base URL of your API gateway
+        # QStash calls this URL to deliver jobs
+        QSTASH_CALLBACK_BASE_URL="https://api.yourdomain.com"
+        ```
+      </Step>
+
+      <Step title="Register the webhook route">
+        The API gateway already exposes the QStash webhook at:
+
+        ```
+        POST /api/v1/queue/:queue/:type
+        ```
+
+        QStash will POST to `https://api.yourdomain.com/api/v1/queue/report/generate` when a `report.generate` job is ready.
+
+        <Warning>
+          QStash requires a **publicly reachable HTTPS endpoint**. It cannot deliver to `localhost`. Use a tunnel (e.g. `ngrok`) during local development.
+        </Warning>
+      </Step>
+
+      <Step title="Enqueue a job">
+        ```typescript
+        import { getQueue, createJob } from "@nebutra/queue";
+
+        const queue = await getQueue();
+
+        await queue.enqueue(
+          createJob("report", "generate", {
+            tenantId: "org_123",
+            reportType: "monthly",
+          })
+        );
+        ```
+      </Step>
+
+      <Step title="Register a handler">
+        ```typescript
+        import { getQueue } from "@nebutra/queue";
+
+        const queue = await getQueue();
+
+        queue.registerHandler("report", "generate", async (job) => {
+          await generateReport(job.data);
+        });
+        ```
+      </Step>
+    </Steps>
+  </Tab>
+
+  <Tab title="BullMQ (Redis)">
+    <Steps>
+      <Step title="Set environment variables">
+        ```bash
+        REDIS_URL="redis://localhost:6379"
+
+        # Optional: force BullMQ even if QSTASH_TOKEN is also set
+        QUEUE_PROVIDER="bullmq"
+        ```
+      </Step>
+
+      <Step title="Start Redis">
+        ```bash
+        # Local development
+        docker run -d -p 6379:6379 redis:7-alpine
+
+        # Or via pnpm dev (if Redis is in your compose file)
+        docker compose up redis
+        ```
+      </Step>
+
+      <Step title="Enqueue a job">
+        ```typescript
+        import { getQueue, createJob } from "@nebutra/queue";
+
+        const queue = await getQueue();
+
+        await queue.enqueue(
+          createJob("report", "generate", {
+            tenantId: "org_123",
+            reportType: "monthly",
+          })
+        );
+        ```
+      </Step>
+
+      <Step title="Register a handler">
+        ```typescript
+        import { getQueue } from "@nebutra/queue";
+
+        const queue = await getQueue();
+
+        // BullMQ starts a Worker process to pull jobs
+        queue.registerHandler("report", "generate", async (job) => {
+          await generateReport(job.data);
+        });
+        ```
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
+
+## Enqueue and handle pattern
+
+The enqueue/handle pattern is the same across all providers:
+
+```typescript
+import { getQueue, createJob } from "@nebutra/queue";
+
+// --- Producer (enqueue) ---
+const queue = await getQueue();
+
+await queue.enqueue(
+  createJob(
+    "email",        // queue name
+    "send",         // job type
+    {               // job data (serializable)
+      to: "user@example.com",
+      template: "invoice-paid",
+      data: { invoiceId: "inv_123", amount: 99.99 },
+    },
+    {               // options (optional)
+      tenantId: "org_123",
+      delay: 5000,  // delay in ms before delivery
+    }
+  )
+);
+
+// --- Consumer (handler) ---
+queue.registerHandler("email", "send", async (job) => {
+  await sendEmail(job.data.to, job.data.template, job.data.data);
+});
+```
+
+## Job options
+
+```typescript
+createJob(queueName, jobType, data, {
+  tenantId: "org_123",   // scopes the job to a tenant
+  delay: 60_000,         // deliver after 60 seconds
+  priority: 10,          // higher = processed first (BullMQ only)
+  jobId: "unique-id",    // deduplicate by ID (prevents duplicate enqueues)
+})
+```
+
+## QStash vs BullMQ comparison
+
+<Tabs>
+  <Tab title="QStash">
+    **Pros:**
+    - Zero infrastructure — fully managed by Upstash
+    - Works on Vercel, Netlify, and other serverless platforms
+    - Built-in retry with exponential backoff
+    - HTTP-based — easy to inspect and debug
+    - Signed webhooks — delivery is authenticated
+
+    **Cons:**
+    - Requires a public webhook endpoint (cannot use `localhost` directly)
+    - No priority queues
+    - Higher per-message cost at very high volumes
+    - Maximum message size: 1 MB
+
+    **Best for:** Vercel deployments, low-to-medium volume queues, teams that don't want to manage Redis.
+  </Tab>
+
+  <Tab title="BullMQ">
+    **Pros:**
+    - High throughput — millions of jobs per day
+    - Priority queues
+    - Works with private networks (no public endpoint needed)
+    - Rich job lifecycle events (active, completed, failed, stalled)
+    - Delayed and repeatable jobs
+
+    **Cons:**
+    - Requires a Redis instance
+    - Workers must be long-running processes (not serverless)
+    - More operational overhead
+
+    **Best for:** Self-hosted deployments, high-volume processing, workloads requiring priority or complex scheduling.
+  </Tab>
+</Tabs>
+
+## Dead letter queue (DLQ)
+
+Jobs that exhaust all retries are moved to the dead letter queue.
+
+<Tabs>
+  <Tab title="QStash">
+    QStash retries failed deliveries with exponential backoff (up to 3 times by default). After all retries are exhausted, the job is discarded. Monitor failed deliveries in the [Upstash Console](https://console.upstash.com).
+
+    ```typescript
+    // Configure retry count when enqueuing
+    await queue.enqueue(
+      createJob("report", "generate", data, { maxRetries: 5 })
+    );
+    ```
+  </Tab>
+
+  <Tab title="BullMQ">
+    BullMQ moves exhausted jobs to a `failed` queue. You can inspect and retry them programmatically:
+
+    ```typescript
+    import { getQueue } from "@nebutra/queue";
+
+    const queue = await getQueue();
+
+    // List failed jobs
+    const failedJobs = await queue.getFailedJobs("report");
+
+    // Retry a specific failed job
+    await queue.retryJob("report", jobId);
+
+    // Drain the failed queue (discard all)
+    await queue.cleanFailed("report");
+    ```
+  </Tab>
+</Tabs>
+
+## Python support
+
+`@nebutra/queue` also has a Python client for microservices:
+
+```python
+from _shared.queue import get_queue, create_job
+
+queue = await get_queue()
+
+# Enqueue
+await queue.enqueue(create_job("report", "generate", {"tenant_id": "org_123"}))
+
+# Handle
+@queue.handler("report", "generate")
+async def handle_report(job):
+    await generate_report(job.data["tenant_id"])
+```
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Inngest" icon="bolt" href="/background-jobs/inngest">
+    Multi-step durable workflows with retries and fan-out.
+  </Card>
+  <Card title="Cron Jobs" icon="clock" href="/background-jobs/cron">
+    Schedule recurring tasks.
+  </Card>
+  <Card title="Background Jobs Overview" icon="layers" href="/background-jobs/overview">
+    Inngest vs queues — when to use each.
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/overview">
+    Webhook endpoint spec for QStash delivery.
+  </Card>
+</CardGroup>

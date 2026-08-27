@@ -1,0 +1,1781 @@
+{
+  "nav": {
+    "features": "Funkce",
+    "solutions": "Řešení",
+    "pricing": "Ceník",
+    "docs": "Dokumentace",
+    "github": "GitHub",
+    "npm": "npm",
+    "about": "O nás",
+    "ideas": "Nápady",
+    "opc": "Platforma",
+    "roadmap": "Roadmapa",
+    "resources": "Zdroje",
+    "signIn": "Přihlásit se",
+    "getStarted": "Začít plout",
+    "changelog": "Seznam změn",
+    "news": "Novinky",
+    "designDocs": "Design systém",
+    "avatarMenu": {
+      "ariaLabel": "Nabídka účtu",
+      "loadingName": "Načítání…",
+      "dashboard": "Přehled",
+      "account": "Účet",
+      "billing": "Fakturace",
+      "docs": "Dokumentace",
+      "signOut": "Odhlásit se"
+    }
+  },
+  "refer": {
+    "metadataTitle": "Přidejte se k referenčnímu okruhu zakladatelů {brandName}",
+    "metadataDescription": "Přidejte se na čekací seznam {brandName}, zachovejte atribuci doporučení a odemkněte si vlastní odkaz na sdílení v jednom uzavřeném produktově řízeném okruhu.",
+    "eyebrow": "Referenční okruh zakladatelů",
+    "title": "Přidejte se k dalšímu ročníku zakladatelů a získajte vlastní odkaz na sdílení.",
+    "description": "Přidejte se pomocí libovolného pozvánkového kódu nebo přímo. Pokud kód existuje, zachováme atribuci, umístíme vás na čekací seznam a vydáme vám soukromý referenční odkaz, který můžete okamžitě sdílet.",
+    "signal": {
+      "waitlist": "Trvalý čekací seznam",
+      "codeDetected": "Zjištěn kód {code}",
+      "direct": "Přímá registrace"
+    },
+    "form": {
+      "emailLabel": "Pracovní e-mail",
+      "emailPlaceholder": "you@example.com",
+      "codeLabel": "Referenční kód",
+      "codePlaceholder": "Volitelný kód",
+      "submit": "Přidat se do seznamu čekajících",
+      "submitting": "Přidávám",
+      "invalidEmail": "Zadejte platný e-mail.",
+      "error": "Nelze se přidat. Zkuste to prosím znovu.",
+      "successTitle": "Jste na seznamu",
+      "successDescription": "Váš soukromý odkaz pro sdílení je připraven.",
+      "positionLabel": "Pozice ve frontě",
+      "referralCodeLabel": "Váš kód",
+      "referralUrlLabel": "Váš odkaz pro sdílení",
+      "copyLink": "Kopírovat odkaz",
+      "copied": "Zkopírováno",
+      "share": "Sdílet",
+      "shareTitle": "Přidejte se do zakládající smyčky {brandName}",
+      "shareText": "Použijte můj pozvávací odkaz a přidejte se do seznamu čekajících zakladatelů {brandName}.",
+      "directMode": "Není potřeba referenční kód",
+      "codeMode": "Připsání doporučení zapnuto"
+    },
+    "proof": {
+      "peerLoop": {
+        "title": "Smyčka zakladatel na zakladatele",
+        "description": "Každý přijatý zápis obdrží kód a URL, takže další doporučení začne bez ručního předání."
+      },
+      "attribution": {
+        "title": "Poctivé připsání",
+        "description": "Neznámé kódy se ukládají jako pokus o připsání, zatímco platné kódy zvýší počítadlo doporučujícího a zápis zůstane čistý."
+      },
+      "shareLink": {
+        "title": "Stav úspěchu připravený ke sdílení",
+        "description": "Stav potvrzení zobrazuje pozici, kód, možnost kopírování a nativní akce pro sdílení, takže se smyčka dokončí přímo na stránce."
+      }
+    },
+    "infrastructure": {
+      "eyebrow": "Infrastruktura řízená produktem",
+      "title": "Navrženo jako trvanlivá SaaS infrastruktura, ne jako jednorázový formulář.",
+      "description": "Povrch doporučení je podložen balíčkem domény, trvalým modelem Prisma, typovanou trasou Next.js a veřejnými kontrolami, které mohou běžet po nasazení ECS.",
+      "data": {
+        "eyebrow": "Data",
+        "title": "Jedna trvanlivá tabulka čekacího seznamu",
+        "description": "Jedinečnost e-mailu, automaticky inkrementovaná pozice, indexy kódů doporučení, metadata pokusů o připsání a přechody stavů jsou uloženy v databázi platformy."
+      },
+      "api": {
+        "eyebrow": "API",
+        "title": "Typovaný endpoint pro připojení",
+        "description": "Stránka posílá požadavek na `/api/waitlist`, normalizuje libovolné kódy, vrací existující záznamy idempotentně a nikdy nezávisí na vzorovém kódu."
+      },
+      "cicd": {
+        "eyebrow": "CI/CD",
+        "title": "Veřejný smoke test při nasazení",
+        "description": "Kanonické a alias URL jsou připravené pro automatizované kontroly, takže ECS doručení zachytí regresy v routování, DNS a stavu služby."
+      }
+    }
+  },
+  "hero": {
+    "headline1": "Nasaďte svůj startup",
+    "headline2": "poháněný Agent OS od {brandName}.",
+    "subheadline": "Ušetřete týdny práce na platformě díky <highlight>produkčně připravené</highlight> základně s řízenou architekturou, vytvořené pro AI kódovací agenty a zakladatele mířící na globální trh.",
+    "copyLabel": "Kopírovat příkaz",
+    "copiedLabel": "Zkopírováno",
+    "ctaGetAccess": "Spusťte svůj startup",
+    "ctaExploreDemo": "Prozkoumat demo",
+    "pillCopied": "Zkopírováno"
+  },
+  "features": {
+    "sectionTitle": "Infrastruktura připravená k použití, od prototypu po škálování.",
+    "item0": {
+      "title": "Infrastruktura pro AI aplikace",
+      "description": "Vestavěné, produkčně testované Agent Frameworks a LLM orchestrační enginy. Obejděte složité podkladové abstrakce a pracujte přímo se strukturovanými inteligentními API."
+    },
+    "item1": {
+      "title": "Řízená základna platformy",
+      "description": "Řízená základna platformy pro týmy vydávající AI-native SaaS. Synchronizujte kostry, runtime primitiva a doručovací rozhraní bez skládání improvizovaných nástrojů."
+    },
+    "item2": {
+      "title": "Automatizace enterprise SaaS",
+      "description": "Hluboká integrace moderní technologické stacku Vercel, Supabase a Stripe. Poskytuje bezpečnost na úrovni řádků, komplexní izolaci více nájemců a globální fakturaci předplatného přímo z krabice."
+    }
+  },
+  "cta": {
+    "heading": "Připraveni nasadit svou další AI aplikaci?",
+    "subheading": "Inicializujte kompletní cloud-native SaaS architekturu lokálně jediným příkazem v terminálu.",
+    "copyLabel": "Kopírovat příkaz",
+    "copiedLabel": "Zkopírováno",
+    "startBuilding": "Začít tvořit"
+  },
+  "footer": {
+    "brandDescription": "Spusťte svůj startup s {brandName} Agent OS. Více nájemců, fakturace, autentizace a AI — připraveno na produkční nasazení od prvního dne.",
+    "columns": {
+      "product": "Produkt",
+      "resources": "Zdroje",
+      "legal": "Právní",
+      "community": "Komunita"
+    },
+    "links": {
+      "product": "Produkt",
+      "features": "Funkce",
+      "forge": "Forge",
+      "pricing": "Ceník",
+      "about": "O nás",
+      "showcase": "Ukázka",
+      "blog": "Blog",
+      "playbook": "Playbook",
+      "changelog": "Přehled změn",
+      "roadmap": "Roadmap",
+      "docs": "Dokumentace",
+      "ideas": "Návrhy",
+      "opc": "Platforma",
+      "careers": "Kariéra",
+      "security": "Zabezpečení",
+      "dpa": "DPA",
+      "privacy": "Ochrana osobních údajů",
+      "terms": "Podmínky",
+      "cookies": "Cookies",
+      "refund": "Vrácení peněz",
+      "licensing": "Licencování",
+      "contact": "Kontakt",
+      "faq": "FAQ",
+      "github": "GitHub",
+      "discord": "Discord",
+      "twitter": "X (Twitter)"
+    },
+    "copyright": "© 2026 {brandName} Intelligence. Všechna práva vyhrazena.",
+    "statusOnline": "Všechny systémy fungují",
+    "newsletterTitle": "Zůstaňte informováni",
+    "newsletterPlaceholder": "you@example.com",
+    "newsletterSubscribe": "Odebírat",
+    "newsletterSuccess": "Děkujeme za odběr!",
+    "newsletterError": "Něco se pokazilo",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
+  },
+  "logoStrip": {
+    "tagline": "Běží na"
+  },
+  "monorepoTree": {
+    "badge": "STRUKTURA TURBOREPO",
+    "title": "15 aplikací. 113 balíčků. 4 backendové dráhy.",
+    "description": "Sdílený kód, paralelní sestavování, žádná duplicita. Kompletní typování od databáze až po frontend.",
+    "metricApps": "aplikace",
+    "metricBackends": "backendové dráhy",
+    "metricPackages": "balíčky",
+    "verifiedPaths": "Cesty ověřené vůči aktuálnímu pracovnímu prostoru",
+    "cta": "Prozkoumejte architekturu monorepo"
+  },
+  "stats": {
+    "title": "V číslech",
+    "github": "Hvězdy na GitHubu",
+    "discord": "Členové Discordu",
+    "setup": "Průměrná doba nastavení",
+    "packages": "Balíčky monorepo",
+    "ctaStar": "Hvězda →",
+    "ctaJoin": "Připojit se →",
+    "ctaStart": "Začít →",
+    "ctaExplore": "Prozkoumat →"
+  },
+  "legalPages": {
+    "about": {
+      "title": "O nás — Platforma řízeného AI",
+      "description": "Objevte komerční vizi a inženýrské principy za platformou řízeného AI od {brandName}.",
+      "heading": "Éra štíhlých produktových týmů",
+      "subheading": "Nahraďte opakovanou práci na platformě řízenou infrastrukturou, silnou automatizací a dlouhodobou inženýrskou výhodou.",
+      "missionTitle": "Nový řád odolávající administrativnímu úpadku",
+      "missionP1": "{brandName} staví řízenou AI platformu pro týmy, které potřebují trvanlivou infrastrukturu místo krátkodobých startovacích stacků. Tradiční škálování často přináší byrokracii a entropii; my reagujeme kódovou správou, automatizací a základnou platformy, která zůstává auditovatelná při růstu.",
+      "missionP2": "Obchod stále trpí koordinací, rozdrobenými nástroji a slabými cestami pro aktualizace. Zajímá nás snížení těchto třením prostřednictvím jasnějších platforemních smluv, silnějších prvků dodávky a chování runtime, které mohou týmy skutečně sledovat a důvěřovat.",
+      "missionP3": "Odmítáme zvyk řešit problémy škálování větší organizační zátěží. Automatizace, testy a správa by měly absorbovat opakovanou provozní práci, aby se týmy mohly soustředit na produkt, architekturu a výsledky pro zákazníky.",
+      "missionP4": "",
+      "valuesTitle": "Čtyři pilíře",
+      "values": {
+        "0": {
+          "title": "Řízené škálování (Filozofie)",
+          "description": "Škálování by mělo vycházet z silnějších systémů, lepší pákové výhody a jasnějších provozních pravidel — ne z hromadění další organizační váhy."
+        },
+        "1": {
+          "title": "Jádro tvůrce (Infrastruktura)",
+          "description": "Opakovaně použitelná základna platformy pro multi-tenancy, fakturaci, autentizaci, compliance a AI integrace, kterou mohou týmy auditovat, rozšiřovat a opakovaně vydávat."
+        },
+        "2": {
+          "title": "Disciplína aktualizací (Routing)",
+          "description": "Zdravé systémy rostou prostřednictvím kontrol kompatibility, migrací a pozorovatelných runtime smluv místo driftu, hrdinství a jednorázových přepisů."
+        },
+        "3": {
+          "title": "Kód je zákon (Organizace)",
+          "description": "Provozní disciplína by měla být zakódována v testech, workflow a pravidlech správy, aby týmy mohly platformu zlepšovat bez opírání se o politiku nebo institucionální paměť."
+        }
+      },
+      "jobsTitle": "Inženýrské signály před kredencemi",
+      "jobsDescription": "Více nás zajímá ověřitelný inženýrský výstup, jasnost myšlení a systémové soudnictví než původ nebo inflace titulů.",
+      "jobsButton": "Odeslat profil na GitHub",
+      "companyInfoTitle": "Organizační soulad",
+      "companyInfo": {
+        "legalName": "Registrace právní entity",
+        "founded": "Datum registrace",
+        "headquarters": "Centrum globálních operací",
+        "jurisdiction": "Převládající jurisdikce"
+      },
+      "ctaHeading": "Potřebujete hlubší technické posouzení?",
+      "ctaDescription": "Kontaktujte naše inženýrské specialisty pro hodnocení podnikové integrace nebo si prohlédněte dokumentaci nasazení.",
+      "ctaButton": "Navázat kontakt"
+    },
+    "contact": {
+      "title": "Technický a obchodní dotaz — {brandName} Intelligence",
+      "description": "Věcný komunikační kanál pro obchodní licencování, podnikové self-hosting a pokročilou technickou podporu.",
+      "heading": "Navázat spojení podpory",
+      "subheading": "Zašleme vám vyhrazeného technického specialistu nebo architekta k posouzení vašich explicitních požadavků.",
+      "contacts": {
+        "founder": {
+          "title": "Přímý kontakt s zakladatelem",
+          "description": "Přímý komunikační kanál pro základní strategické zarovnání a dotazy na úrovni vedení."
+        },
+        "general": {
+          "title": "Podniková konzultace",
+          "description": "Předběžná jednání týkající se ekologických strategických partnerství a celkového vývoje architektury."
+        },
+        "sales": {
+          "title": "Komerční nasazení",
+          "description": "Vyjednávání ohledně licencování uzavřeného zdroje a specifik týkajících se nasazení v soukromém clusterovém prostředí."
+        },
+        "support": {
+          "title": "Podpora na úrovni experta",
+          "description": "Cílené architektonické poradenství a služby řešení potíží pro aktivní obchodní integrace a ladění jádra systému."
+        },
+        "legal": {
+          "title": "Právní a soulad",
+          "description": "Dotazy týkající se definice hranic open-source, podnikových auditů souladu a smluvních podmínek."
+        },
+        "privacy": {
+          "title": "Soukromí datového centra",
+          "description": "Technické ověření a směrnice pro soulad týkající se GDPR a následných mezinárodních zákonů o ochraně dat."
+        },
+        "security": {
+          "title": "Zveřejnění bezpečnosti",
+          "description": "Bezpečně odešlete technické zprávy o reprodukci týkající se potenciálních softwarových zranitelností přímo našemu týmu infrastruktury."
+        }
+      },
+      "formTitle": "Portál pro odesílání",
+      "form": {
+        "name": "Označení odesílatele",
+        "email": "Oficiální e-mailová adresa",
+        "company": "Přidružená organizace",
+        "category": "Oblast požadavku",
+        "categories": {
+          "general": "Firemní konzultace",
+          "sales": "Licencování a architektura",
+          "support": "Podpora pro vývojáře",
+          "legal": "Právní a compliance hranice",
+          "privacy": "Politiky zpracování dat",
+          "partnership": "Integrace ekosystému",
+          "press": "Veřejné vztahy"
+        },
+        "subject": "Shrnutí hlavního problému",
+        "message": "Podrobné technické/komerční specifikace",
+        "submit": "Odeslat na backend",
+        "privacyNotice": "Provedením této síťové požadavku potvrzujete, že jste si přečetli a souhlasíte s našimi",
+        "privacyLink": "Systémová infrastruktura ochrany soukromí",
+        "submitting": "Vstup do fronty zpracování...",
+        "successMessage": "Data úspěšně odeslána. Odpovědný provozní tým poskytne podrobnou odpověď do 1–2 pracovních dnů."
+      },
+      "companyInfoTitle": "Provozní telemetrie",
+      "companyNameChinese": "{companyLegal}",
+      "companyNameEnglish": "{companyLegalEn}",
+      "companyAddress": "Wuxi, provincie Jiangsu, Čína",
+      "socialMedia": "Hlavní odkazy na sociální sítě"
+    },
+    "cookies": {
+      "title": "Zásady používání cookies — {brandName}",
+      "description": "Jak {brandName} používá cookies a podobné technologie sledování na našich webových stránkách a službách.",
+      "heading": "Zásady používání cookies",
+      "effectiveDate": "Datum účinnosti",
+      "lastUpdated": "Naposledy aktualizováno",
+      "dates": {
+        "effective": "1. ledna 2025",
+        "updated": "1. ledna 2025"
+      },
+      "intro": "Tyto zásady používání cookies vysvětlují, jak společnost {brandName} Co., Ltd. (\"{brandName}\", \"my\", \"nás\" nebo \"naše\") používá cookies a podobné technologie sledování na našich webových stránkách a službách.",
+      "whatAreCookies": {
+        "title": "Co jsou cookies?",
+        "content": "Cookies jsou malé textové soubory, které se umístí na vaše zařízení při návštěvě webové stránky. Široce se používají k efektivnějšímu fungování webových stránek a poskytování informací vlastníkům webových stránek."
+      },
+      "howWeUse": {
+        "title": "Jak používáme cookies",
+        "intro": "Cookies používáme k tomu, abychom mohli:",
+        "items": {
+          "0": {
+            "label": "Zajistit základní funkce",
+            "desc": "Poskytovat základní funkce, jako je ověřování uživatelů a zabezpečení"
+          },
+          "1": {
+            "label": "Pamatovat si předvolby",
+            "desc": "Uložení vašeho jazyka, tématu a dalších nastavení"
+          },
+          "2": {
+            "label": "Zlepšení výkonu",
+            "desc": "Porozumění tomu, jak návštěvníci interagují s našimi službami"
+          },
+          "3": {
+            "label": "Personalizace zážitku",
+            "desc": "Poskytování relevantního obsahu a doporučení"
+          },
+          "4": {
+            "label": "Měření marketingu",
+            "desc": "Sledování účinnosti našich marketingových kampaní"
+          }
+        }
+      },
+      "typesTitle": "Typy cookies, které používáme",
+      "tableHeaders": {
+        "cookie": "Cookie",
+        "provider": "Poskytovatel",
+        "purpose": "Účel",
+        "duration": "Doba trvání"
+      },
+      "necessary": {
+        "title": "Základní nezbytné cookies",
+        "description": "Tyto cookies jsou nezbytné pro správnou funkci webu. Nelze je vypnout.",
+        "cookies": {
+          "0": {
+            "name": "__session",
+            "provider": "{brandName}",
+            "purpose": "Relace ověřování uživatele",
+            "duration": "Relace"
+          },
+          "1": {
+            "name": "__clerk_db_jwt",
+            "provider": "Clerk",
+            "purpose": "Token pro ověřování",
+            "duration": "7 dní"
+          },
+          "2": {
+            "name": "cookie_consent",
+            "provider": "{brandName}",
+            "purpose": "Ukládá předvolby souhlasu s cookies",
+            "duration": "1 rok"
+          }
+        }
+      },
+      "functional": {
+        "title": "Funkční cookies",
+        "description": "Tyto cookies umožňují personalizované funkce a pamatují si vaše předvolby.",
+        "cookies": {
+          "0": {
+            "name": "locale",
+            "provider": "{brandName}",
+            "purpose": "Ukládá předvolbu jazyka",
+            "duration": "1 rok"
+          },
+          "1": {
+            "name": "theme",
+            "provider": "{brandName}",
+            "purpose": "Ukládá předvolbu motivu",
+            "duration": "1 rok"
+          }
+        }
+      },
+      "analyticsType": {
+        "title": "Analytické cookies",
+        "description": "Tyto cookies nám pomáhají pochopit, jak návštěvníci interagují s naším webem.",
+        "cookies": {
+          "0": {
+            "name": "_ga",
+            "provider": "Google Analytics",
+            "purpose": "Rozlišuje jedinečné uživatele",
+            "duration": "2 roky"
+          },
+          "1": {
+            "name": "ph_*",
+            "provider": "PostHog",
+            "purpose": "Analytika produktu",
+            "duration": "1 rok"
+          }
+        }
+      },
+      "marketingType": {
+        "title": "Marketingové cookies",
+        "description": "Tyto cookies se používají k reklamě a sledování výkonu reklamních kampaní.",
+        "cookies": {
+          "0": {
+            "name": "_fbp",
+            "provider": "Facebook",
+            "purpose": "Sleduje návštěvy pro reklamy na Facebooku",
+            "duration": "3 měsíce"
+          },
+          "1": {
+            "name": "_gcl_au",
+            "provider": "Google Ads",
+            "purpose": "Sledování konverzí",
+            "duration": "3 měsíce"
+          }
+        }
+      },
+      "managingTitle": "Správa vašich předvolení cookies",
+      "consentBanner": {
+        "title": "Banner souhlasu s cookies",
+        "intro": "Při první návštěvě naší webové stránky uvidíte banner souhlasu s cookies, který vám umožní:",
+        "items": {
+          "0": {
+            "label": "Přijmout vše",
+            "desc": "Povolit všechny kategorie cookies"
+          },
+          "1": {
+            "label": "Odmítnout vše",
+            "desc": "Zakázat všechny volitelné cookies (nezbytné cookies zůstanou)"
+          },
+          "2": {
+            "label": "Přizpůsobit",
+            "desc": "Vybrat konkrétní kategorie cookies k povolení"
+          }
+        },
+        "changeNote": "Své předvolení můžete kdykoli změnit kliknutíem na \"Nastavení cookies\" v patičce stránky."
+      },
+      "browserSettings": {
+        "title": "Nastavení prohlížeče",
+        "intro": "Většina webových prohlížečů vám umožňuje ovládat cookies prostřednictvím jejich nastavení:",
+        "browsers": {
+          "0": {
+            "name": "Chrome",
+            "path": "Nastavení > Soukromí a zabezpečení > Cookies"
+          },
+          "1": {
+            "name": "Firefox",
+            "path": "Nastavení > Soukromí a zabezpečení > Cookies"
+          },
+          "2": {
+            "name": "Safari",
+            "path": "Předvolby > Soukromí > Cookies"
+          },
+          "3": {
+            "name": "Edge",
+            "path": "Nastavení > Soukromí, vyhledávání a služby > Cookies"
+          }
+        },
+        "note": "Blokování určitých cookies může ovlivnit funkčnost webu."
+      },
+      "similarTech": {
+        "title": "Podobné technologie",
+        "intro": "Kromě cookies můžeme používat také:",
+        "items": {
+          "0": {
+            "label": "Lokální úložiště",
+            "desc": "Pro ukládání předvoleb a mezipaměti dat lokálně"
+          },
+          "1": {
+            "label": "Úložiště relace",
+            "desc": "Pro dočasná data během vaší prohlížecké relace"
+          },
+          "2": {
+            "label": "Pixelové značky",
+            "desc": "Malé obrázky pro sledování otevření e-mailů a návštěv webu"
+          }
+        },
+        "noFingerprinting": "Pro sledování NEPOUŽÍVÁME browser fingerprinting."
+      },
+      "updates": {
+        "title": "Aktualizace této politiky",
+        "content": "Tuto politiku cookies můžeme čas od času aktualizovat. O podstatných změnách vás budeme informovat zveřejněním aktualizované politiky na našem webu."
+      },
+      "contactUs": {
+        "title": "Kontaktujte nás",
+        "intro": "Pokud máte otázky týkající se používání cookies, kontaktujte nás:",
+        "company": "{brandName} Co., Ltd.",
+        "privacyNote": "Více informací o tom, jak sbíráme a zpracováváme vaše data, najdete v naší",
+        "privacyLink": "Zásadách ochrany osobních údajů"
+      }
+    },
+    "faq": {
+      "title": "Inženýrské pokyny a FAQ — {brandName}",
+      "description": "Komplexní analýza architektury frameworku, základních topologií a strategií komerčního nasazení.",
+      "heading": "Podrobný pohled pro vedení",
+      "subheading": "Podpůrné materiály optimalizované pro integraci systémového inženýrství a komerční rozhodování vedení.",
+      "categories": {
+        "0": {
+          "name": "Přehled architektury",
+          "questions": {
+            "0": {
+              "q": "Jaký je explicitní provozní účel {productName}?",
+              "a": "{productName} je vysoce strukturovaný, produkčně připravený Next.js AI SaaS framework. Kombinuje firemní fakturaci, vícefaktorové ověřování a izolaci více nájemců do řízené platformové základny, což umožňuje týmům soustředit se na implementaci AI specifickou pro produkt."
+            },
+            "1": {
+              "q": "Jak je strukturováno licencování repozitáře?",
+              "a": "Základní infrastruktura přísně vynucuje OSS licenci AGPLv3, což zaručuje transparentnost a bezplatné používání. Pro organizace vyžadující proprietární obfuskaci a zvýšené záruky přepisování jsou k dispozici explicitní komerční smlouvy s uzavřeným zdrojovým kódem."
+            },
+            "2": {
+              "q": "Jaká je rychlost počátečního komerčního hodnocení?",
+              "a": "Extrémně vysoká. Pomocí naší přizpůsobené Node CLI nástrojové řetězce a přesné technické specifikace může junior inženýr rozchodit autonomní místní instanci MVP (Minimum Viable Product) během několika minut."
+            }
+          }
+        },
+        "1": {
+          "name": "Komerční operace",
+          "questions": {
+            "0": {
+              "q": "Jak široká je tolerance pro komerční škálování?",
+              "a": "Navrženo silně na paradigmatu mikrokomponent, kapacita strukturní zátěže hladce mapuje od bezplatných úrovní s nulovým poptávkovým zatížením až po prahy Enterprise sloužící milionům měsíčních požadavků, vše plně konfigurovatelné prostřednictvím omezení v dashboardu."
+            },
+            "1": {
+              "q": "Jak ovlivňuje volatilita předplatného standardní účetnictví?",
+              "a": "Fungujeme s přesným, sekundovým strukturním logováním zdrojů a propustnosti API. Změna omezení se okamžitě vyrovná s účetní vrstvou – buď vrácením poměrných rozdílů nebo vydáním automatických kreditů. Neexistuje žádné období zamrznutí úrovně."
+            },
+            "2": {
+              "q": "Jaká zpracovatelská infrastruktura izoluje platební vektory?",
+              "a": "Globální směrování peněz se zásadně odkazuje na rozhraní serverů Stripe, což zaručuje přísnou telemetrii PCI-DSS a integritu zpracování. Nasazení Enterprise mohou integrovat soukromé finanční auditní potrubí řízené vlastními závazky SLA."
+            }
+          }
+        },
+        "2": {
+          "name": "Vrstva systémového inženýrství",
+          "questions": {
+            "0": {
+              "q": "Které základní inteligentní abstrakce jsou podporovány nativně?",
+              "a": "Primární interakční logika předepisuje nativní interoperabilitu přes standardní specifikace OpenAI, Anthropic a Gemini. To poskytuje obrovskou flexibilitu k efektivnímu výměně koncových bodů pro uvažování pomocí mapování proměnných bez degradace upstreamové komerční logiky."
+            },
+            "1": {
+              "q": "Jak je řešeno riziko obfuskace databáze?",
+              "a": "Implementace výchozími nastaveními intrinsicky nasazuje politiky zabezpečení na úrovni řádků Postgres (RLS) těsně spjaté s našimi primitivy pro směrování řešení nájemce bez serveru. To zajišťuje, že tvrdé particionování aktivně zabraňuje kritické kontaminaci dat na úrovni aplikace a překryvu provádění."
+            },
+            "2": {
+              "q": "Existují nějaká architektonická omezení pro samostatně spravovaná nasazení?",
+              "a": "Zcela žádná. Topologie je plně oddělená. Pokud prostředí spouští nezávislé Node.js runtime vedle zdravých PostgreSQL clusterů, plná funkčnost je inherentně zachována."
+            }
+          }
+        },
+        "3": {
+          "name": "Systémová integrita",
+          "questions": {
+            "0": {
+              "q": "Jaké protokoly určují mechanickou obranu perimetru?",
+              "a": "Mechanismy provádějí povinné šifrování TLS během přenosu, deterministické algoritmy hashování pro mapování tajných klíčů a všudypřítomné zaznamenávání událostí mutací, které jsou přísně zapisovány do interních časových řad sledovacích rejstříků."
+            },
+            "1": {
+              "q": "Respektuje topologie hlavní mezinárodní předpisy o ochraně soukromí?",
+              "a": "Ano, hluboce. Obchodní moduly poskytují algoritmus implementace přímo z krabice cílící na stavy stažení souhlasu, logiku tvrdého smazání a hluboké exportní dotazy, které optimálně odpovídají GDPR a lokalizovaným regulačním rámcům."
+            },
+            "2": {
+              "q": "Co se provede při anomálním katastrofickém incidentu?",
+              "a": "Automatické hlídače okamžitě upozorní základní inženýrské vektory, kteří vynutí blokování obvodů a provedou rychlou triáž. Řízeno pokročilou příručkou řešení, plně transparentní Incident Postmortems jsou univerzálně šířeny v absolutním časovém okně 72 hodin."
+            }
+          }
+        },
+        "4": {
+          "name": "Směrnice technické asistence",
+          "questions": {
+            "0": {
+              "q": "Jak se řeší odstraňování provozních úzkých míst?",
+              "a": "Počáteční vektory triáže cílí na pečlivě udržovanou a recenzovanou matici dokumentace a ověřené interakce komunity. Získání standardní nebo podnikové licence odemkne přístup k soukromým eskalačním frontám řešeným prostřednictvím přímých interních inženýrských uzlů."
+            },
+            "1": {
+              "q": "Poskytujete fyzické nebo specializované operační integrace prostředí?",
+              "a": "To spadá pod naši špičkovou prémiovou výkonnostní vrstvu pro korporátní konglomeráty nejvyšší úrovně. Naši nejzkušení architekti nasazují outly k provedení auditu kódu vůči legacy architektuře, správě citlivých cloudových přesunů a validaci vysoce izolovaných síťových partií."
+            }
+          }
+        }
+      },
+      "ctaHeading": "Potřebujete okamžitou technickou synchronizaci?",
+      "ctaDescription": "Ať už validujete specifický schéma chování API nebo provádíte dlouhodobé integrační dohody, rozhraní přímo s inženýrskou hierarchií.",
+      "ctaButton": "Získat pokyny k integraci",
+      "ctaEmail": "Odeslat přímou zprávu"
+    },
+    "privacy": {
+      "title": "Protokol ochrany soukromí a informací — {brandName}",
+      "description": "Podrobně popisuje, jak mechanika infrastruktury řídí autonomii uživatele a izolaci strojových dat.",
+      "heading": "Směrnice ochrany informací",
+      "effectiveDate": "Datum účinnosti",
+      "lastUpdated": "Poslední aktualizace",
+      "dates": {
+        "effective": "1. ledna 2025",
+        "updated": "1. ledna 2025"
+      },
+      "intro": "Společnost {brandName} (\"Společnost\", \"my\", \"nás\" nebo \"náš\") se zavazuje chránit vaše soukromí. Tato zásada ochrany osobních údajů vysvětluje, jak sbíráme, používáme, zveřejňujeme a chráníme vaše informace při používání našich webových stránek, aplikací a služeb (dále jen \"Služby\").",
+      "infoWeCollect": {
+        "title": "1. Informace, které sbíráme",
+        "youProvide": {
+          "title": "1.1 Informace, které nám poskytnete",
+          "intro": "Sbíráme informace, které nám přímo poskytnete, včetně:",
+          "items": {
+            "0": {
+              "label": "Informace o účtu",
+              "desc": "Jméno, e-mailová adresa, heslo a údaje o organizaci při vytváření účtu."
+            },
+            "1": {
+              "label": "Informace o profilu",
+              "desc": "Profilová fotografie, pracovní pozice, název společnosti a další volitelné informace."
+            },
+            "2": {
+              "label": "Platební údaje",
+              "desc": "Fakturační adresa a podrobnosti o platební metodě (bezpečně zpracovávané prostřednictvím Stripe)."
+            },
+            "3": {
+              "label": "Komunikace",
+              "desc": "Zprávy, zpětnou vazbu a další komunikaci, kterou nám zašlete."
+            },
+            "4": {
+              "label": "Obsah",
+              "desc": "Jakýkoli obsah, který vytvoříte, nahrajete nebo uložíte pomocí našich služeb."
+            }
+          }
+        },
+        "automatic": {
+          "title": "1.2 Informace shromažďované automaticky",
+          "intro": "Při používání našich služeb automaticky shromažďujeme určité informace:",
+          "items": {
+            "0": {
+              "label": "Informace o zařízení",
+              "desc": "Typ zařízení, operační systém, typ prohlížeče a jedinečné identifikátory zařízení."
+            },
+            "1": {
+              "label": "Informace o používání",
+              "desc": "Zobrazené stránky, používané funkce, provedené akce a čas strávený ve službách."
+            },
+            "2": {
+              "label": "Protokoly",
+              "desc": "IP adresa, časy přístupu, odkazující URL adresy a protokoly systémové aktivity."
+            },
+            "3": {
+              "label": "Informace o poloze",
+              "desc": "Obecná poloha na základě IP adresy (nesbíráme přesnou geolokaci)."
+            }
+          }
+        }
+      },
+      "howWeUse": {
+        "title": "2. Jak používáme vaše údaje",
+        "intro": "Používáme informace, které sbíráme, k tomu, abychom mohli:",
+        "items": {
+          "0": {
+            "label": "Poskytovat služby",
+            "desc": "Provozovat, udržovat a vylepšovat naše služby."
+          },
+          "1": {
+            "label": "Zpracovávat transakce",
+            "desc": "Zpracovávat platby, fakturaci a související operace."
+          },
+          "2": {
+            "label": "Komunikovat",
+            "desc": "Posílat oznámení o službách, aktualizace a marketingové zprávy (s vaším souhlasem)."
+          },
+          "3": {
+            "label": "Přizpůsobovat",
+            "desc": "Přizpůsobit vaše prostředí a poskytovat relevantní doporučení."
+          },
+          "4": {
+            "label": "Analyzovat",
+            "desc": "Rozumět vzorcům používání a vylepšovat naše služby."
+          },
+          "5": {
+            "label": "Chránit",
+            "desc": "Zjišťovat, předcházet a řešit podvody, zneužívání a bezpečnostní incidenty."
+          }
+        }
+      },
+      "howWeShare": {
+        "title": "3. Jak sdílíme vaše údaje",
+        "intro": "Vaše údaje můžeme sdílet v následujících případech:",
+        "serviceProviders": {
+          "title": "3.1 Poskytovatelé služeb",
+          "intro": "Informace sdílíme s poskytovateli třetích stran, kteří poskytují služby v naší jméno, včetně:",
+          "items": {
+            "0": {
+              "label": "Infrastruktura",
+              "desc": "Cloudové hostování (Vercel, Supabase), databázové služby"
+            },
+            "1": {
+              "label": "Zpracování plateb",
+              "desc": "Stripe pro bezpečné zpracování plateb"
+            },
+            "2": {
+              "label": "Ověřování",
+              "desc": "Clerk pro správu identit"
+            },
+            "3": {
+              "label": "Analytika",
+              "desc": "PostHog, Vercel Analytics pro analýzu využití"
+            }
+          }
+        },
+        "businessTransfers": {
+          "title": "3.2 Převody podnikání",
+          "content": "Pokud se účastníme fúze, akvizice nebo prodeje aktiv, vaše údaje mohou být přeneseny jako součást této transakce."
+        },
+        "legalRequirements": {
+          "title": "3.3 Právní požadavky",
+          "content": "Informace můžeme zveřejnit, pokud to vyžaduje zákon, právní řízení nebo žádost vlády, nebo k ochraně našich práv, soukromí, bezpečnosti nebo majetku."
+        }
+      },
+      "yourRights": {
+        "title": "4. Vaše práva a možnosti",
+        "accessPortability": {
+          "title": "4.1 Přístup a přenositelnost",
+          "content": "K vašim osobním údajům se můžete dostat prostřednictvím nastavení účtu a požádat o kopii vašich dat v přenosném formátu."
+        },
+        "correction": {
+          "title": "4.2 Oprava",
+          "content": "Informace o účtu můžete kdykoli aktualizovat prostřednictvím dashboardu."
+        },
+        "deletion": {
+          "title": "4.3 Smazání",
+          "content": "Můžete požádat o smazání svého účtu a souvisejících dat prostřednictvím nastavení nebo kontaktováním nás."
+        },
+        "marketing": {
+          "title": "4.4 Marketingové komunikace",
+          "content": "Můžete se odhlásit z marketingových e-mailů kliknutím na \"odhlásit\" v libovolném marketingovém e-mailu nebo aktualizací svých preferencí."
+        }
+      },
+      "dataSecurity": {
+        "title": "5. Zabezpečení dat",
+        "intro": "Implementujeme vhodné technické a organizační opatření k ochraně vašich informací, včetně:",
+        "items": {
+          "0": "Šifrování dat při přenosu (TLS) a v klidu",
+          "1": "Pravidelné bezpečnostní hodnocení a penetrační testování",
+          "2": "Kontrola přístupu a požadavky na ověřování",
+          "3": "Monitorování a protokolování aktivity systému"
+        }
+      },
+      "ccpa": {
+        "title": "6. Kalifornská práva soukromí (CCPA)",
+        "intro": "Pokud jste rezidentem Kalifornie, máte specifická práva týkající se vašich osobních údajů:",
+        "items": {
+          "0": {
+            "label": "Právo na informace",
+            "desc": "Požádejte o zveřejnění informací, které sbíráme, používáme a sdílíme."
+          },
+          "1": {
+            "label": "Právo na smazání",
+            "desc": "Požádejte o smazání vašich osobních údajů."
+          },
+          "2": {
+            "label": "Právo na výjimku",
+            "desc": "Vyloučte se z prodeje osobních údajů (vaše data neprodáváme)."
+          },
+          "3": {
+            "label": "Právo na nediskriminaci",
+            "desc": "Nediskriminujeme vás za uplatňování vašich práv."
+          }
+        }
+      },
+      "gdpr": {
+        "title": "7. Evropská práva soukromí (GDPR)",
+        "intro": "Pokud se nacházíte v EHP, ve Velké Británii nebo ve Švýcarsku, máte v souladu s GDPR další práva:",
+        "items": {
+          "0": {
+            "label": "Právní základ",
+            "desc": "Vaše údaje zpracováváme na základě plnění smlouvy, oprávněných zájmů nebo souhlasu."
+          },
+          "1": {
+            "label": "Práva",
+            "desc": "Přístup, oprava, smazání, přenositelnost, omezení a námitka."
+          },
+          "2": {
+            "label": "DPO",
+            "desc": "Můžete kontaktovat našeho správce ochrany osobních údajů na adrese dpo@nebutra.com."
+          }
+        }
+      },
+      "contactUs": {
+        "title": "8. Kontaktujte nás",
+        "intro": "Pokud máte otázky k této zásadě ochrany osobních údajů, kontaktujte nás:",
+        "company": "{brandName} Co., Ltd."
+      }
+    },
+    "refund": {
+      "title": "Protokoly pro anomálie transakcí — {brandName}",
+      "description": "Přesné určení parametrů vrácení prostředků napříč různými modely strukturovaného zapojení.",
+      "heading": "Rámec řešení sporů",
+      "effectiveDate": "Datum účinnosti",
+      "lastUpdated": "Datum poslední aktualizace",
+      "dates": {
+        "effective": "1. ledna 2025",
+        "updated": "1. ledna 2025"
+      },
+      "intro": "V {brandName} chceme, abyste byli s našimi službami naprosto spokojeni. Tato politika vrácení prostředků popisuje okolnosti, za kterých je možné vrácení prostředků, a proces pro jejich žádost.",
+      "subscriptionPlans": {
+        "title": "Plány předplatného",
+        "monthly": {
+          "title": "Měsíční předplatné",
+          "items": {
+            "0": {
+              "label": "Zrušení",
+              "desc": "Měsíční předplatné můžete kdykoli zrušit"
+            },
+            "1": {
+              "label": "Poměrné vrácení prostředků",
+              "desc": "Nabízíme pouze celkové vrácení peněz, ne pro-rata vrácení za částečné měsíce"
+            },
+            "2": {
+              "label": "Přístup",
+              "desc": "Přístup k placeným funkcím si zachováváte do konce svého fakturačního období"
+            },
+            "3": {
+              "label": "Automatické prodloužení",
+              "desc": "Předplatné se automaticky prodlužuje, pokud není zrušeno"
+            }
+          }
+        },
+        "annual": {
+          "title": "Roční předplatné",
+          "items": {
+            "0": {
+              "label": "14denní záruka vrácení peněz",
+              "desc": "Noví roční předplatitelé mohou požádat o plné vrácení peněz do 14 dnů od počátečního nákupu"
+            },
+            "1": {
+              "label": "Po 14 dnech",
+              "desc": "Vrácení peněz je obecně po 14denní lhůtě již možné"
+            },
+            "2": {
+              "label": "Zrušení",
+              "desc": "Předplatné můžete kdykoliv zrušit, ale zůstane aktivní do konce ročního období"
+            },
+            "3": {
+              "label": "Žádné pro-rata vrácení",
+              "desc": "Nabízíme pouze celkové vrácení peněz, ne částečné vrácení za nepoužité měsíce"
+            }
+          }
+        }
+      },
+      "eligibleScenarios": {
+        "title": "Případy způsobilé k vrácení peněz",
+        "intro": "Žádosti o vrácení peněz zvážíme v následujících případech:",
+        "serviceIssues": {
+          "title": "1. Problémy se službou",
+          "items": {
+            "0": "Výpadky služby, které výrazně omezují vaši schopnost používat základní funkce",
+            "1": "Technické problémy, které se nám nepodaří vyřešit v rozumném časovém horizontu",
+            "2": "Funkce výrazně odlišné od těch, které byly inzerovány"
+          }
+        },
+        "billingErrors": {
+          "title": "2. Chyby v fakturaci",
+          "items": {
+            "0": "Duplicitní poplatky",
+            "1": "Nesprávné částky fakturace",
+            "2": "Neoprávněné poplatky (po ověření)"
+          }
+        },
+        "exceptionalCircumstances": {
+          "title": "3. Výjimečné okolnosti",
+          "items": {
+            "0": "Doložené lékařské nouzové situace",
+            "1": "Přírodní katastrofy ovlivňující váš podnik",
+            "2": "Ostatní okolnosti posuzované individuálně"
+          }
+        }
+      },
+      "nonRefundable": {
+        "title": "Nevracitelné položky",
+        "intro": "Následující položky obvykle nejsou způsobilé k vrácení peněz:",
+        "items": {
+          "0": {
+            "label": "Poplatky na základě využití",
+            "desc": "Volání API, spotřeba AI tokenů nebo využitá úložiště"
+          },
+          "1": {
+            "label": "Doplňky a příplatky",
+            "desc": "Jednorázové nákupy nebo doplňkové služby"
+          },
+          "2": {
+            "label": "Podnikové smlouvy",
+            "desc": "Vlastní dohody mají vlastní podmínky"
+          },
+          "3": {
+            "label": "Dobrovolné zrušení",
+            "desc": "Po uplynutí lhůty pro nárok na vrácení"
+          },
+          "4": {
+            "label": "Porušení podmínek",
+            "desc": "Účty ukončené kvůli porušení pravidel"
+          }
+        }
+      },
+      "howToRequest": {
+        "title": "Jak požádat o vrácení peněz",
+        "step1": {
+          "title": "Krok 1: Kontaktujte podporu",
+          "intro": "Napište nám na billing@nebutra.com s těmito údaji:",
+          "items": {
+            "0": "E-mailová adresa vašeho účtu",
+            "1": "Plán předplatného a fakturační období",
+            "2": "Důvod žádosti o vrácení peněz",
+            "3": "Příslušnou dokumentaci"
+          }
+        },
+        "step2": {
+          "title": "Krok 2: Proces přezkumu",
+          "items": {
+            "0": "Vaši žádost prozkoumáme do 5 pracovních dnů",
+            "1": "Můžeme požádat o dodatečné informace",
+            "2": "Rozhodnutí obdržíte písemně e-mailem"
+          }
+        },
+        "step3": {
+          "title": "Krok 3: Zpracování vrácení",
+          "intro": "Pokud bude žádost schválena:",
+          "items": {
+            "0": "Vrácení se provádí na původní platební metodu",
+            "1": "Vrácení na kreditní kartu se obvykle objeví do 5–10 pracovních dnů",
+            "2": "Doba zpracování bankou se může lišit"
+          }
+        }
+      },
+      "planChanges": {
+        "title": "Změny plánu",
+        "upgrades": {
+          "title": "Upgrade",
+          "items": {
+            "0": "Upgrade platí okamžitě",
+            "1": "Za zbytek fakturačního období vám bude účtován poměrný rozdíl",
+            "2": "Za předchozí plán se nevyplácí vrácení"
+          }
+        },
+        "downgrades": {
+          "title": "Downgrade",
+          "items": {
+            "0": "Downgrade platí od dalšího fakturačního období",
+            "1": "Do té doby si zachováváte přístup k aktuálním funkcím",
+            "2": "Žádné částečné vrácení prostředků za aktuální období"
+          }
+        }
+      },
+      "freeTrial": {
+        "title": "Zkušební verze zdarma",
+        "items": {
+          "0": "Zkušební verze zdarma nevyžaduje platební údaje",
+          "1": "Během zkušební doby nedojde k žádnému úhradu",
+          "2": "Budete upozorněni před zahájením jakéhokoli úhrady"
+        }
+      },
+      "disputeResolution": {
+        "title": "Řešení sporů",
+        "intro": "Pokud nesouhlasíte s naším rozhodnutím o vrácení prostředků:",
+        "steps": {
+          "0": "Odpovězte na e-mail s rozhodnutím a přidejte další informace",
+          "1": "Požádejte o eskalaci na vedoucího",
+          "2": "Kontaktujte nás na adrese legal@nebutra.com pro další přezkum"
+        }
+      },
+      "contactUs": {
+        "title": "Kontaktujte nás",
+        "intro": "Pro žádosti o vrácení prostředků nebo dotazy týkající se této politiky:",
+        "company": "{brandName} Co., Ltd.",
+        "billingLabel": "Fakturace",
+        "supportLabel": "Podpora",
+        "legalLabel": "Právní oddělení",
+        "responseNote": "Snažíme se reagovat na všechny žádosti o vrácení peněz do 5 pracovních dnů.",
+        "termsNote": "Tato politika je součástí našich",
+        "termsLink": "Podmínek služby",
+        "termsAgreement": "Používáním {brandName} souhlasíte s těmito podmínkami vrácení peněz."
+      }
+    },
+    "terms": {
+      "title": "Podmínky služby — {brandName}",
+      "description": "Podmínky služby upravující váš přístup a používání webu, aplikací, API a služeb {brandName}.",
+      "heading": "Podmínky služby",
+      "effectiveDate": "Datum účinnosti",
+      "lastUpdated": "Poslední aktualizace",
+      "dates": {
+        "effective": "1. ledna 2025",
+        "updated": "1. ledna 2025"
+      },
+      "intro1": "Vítejte na {brandName}! Tyto podmínky služby (\"Podmínky\") upravují váš přístup a používání webu, aplikací, API a služeb (dogether „Služby“) poskytnutých společností {brandName} Co., Ltd. (\"{brandName}\", \"Společnost\", \"my\", \"nás\" nebo \"naše\").",
+      "intro2": "Přístupem nebo použitím našich Služeb souhlasíte s tím, že budete vázáni těmito Podmínkami a naší",
+      "intro2PrivacyLink": "Zásadou ochrany osobních údajů",
+      "intro2End": ". Pokud s těmito Podmínkami nesouhlasíte, nepoužívejte naše Služby.",
+      "acceptance": {
+        "title": "1. Přijetí podmínek",
+        "eligibility": {
+          "title": "1.1 Způsobilost",
+          "intro": "Pro používání našich služeb musíte:",
+          "items": {
+            "0": "Mít alespoň 18 let nebo věk plnoletosti ve vaší jurisdikci",
+            "1": "Mít oprávnění uzavřít tyto podmínky ve vlastním jménem nebo jménem vaší organizace",
+            "2": "Nemít zakázáno používat naše služby podle platné legislativy"
+          }
+        },
+        "orgAccounts": {
+          "title": "1.2 Organizační účty",
+          "content": "Pokud používáte naše služby jménem organizace, prohlašujete, že máte oprávnění zavázat tuto organizaci těmito podmínkami."
+        }
+      },
+      "services": {
+        "title": "2. Popis služeb",
+        "intro": "{brandName} poskytuje SaaS platformu, která zahrnuje:",
+        "items": {
+          "0": "Funkce poháněné AI a generování obsahu",
+          "1": "Nástroje pro správu obsahu a komunitu",
+          "2": "Doporučovací systémy",
+          "3": "Integrace e-commerce",
+          "4": "Funkce Web3",
+          "5": "Analytika a reporty"
+        }
+      },
+      "account": {
+        "title": "3. Registrace účtu",
+        "creation": {
+          "title": "3.1 Vytvoření účtu",
+          "intro": "Pro přístup k některým funkcím musíte vytvořit účet. Souhlasíte s tím, že:",
+          "items": {
+            "0": "Uvedete přesné a úplné informace",
+            "1": "Budete udržovat bezpečnost přihlašovacích údajů vašeho účtu",
+            "2": "Okamžitě aktualizujete své informace, pokud se změní",
+            "3": "Přijímáte odpovědnost za všechny aktivity pod vaším účtem"
+          }
+        }
+      },
+      "billing": {
+        "title": "4. Předplatné a fakturace",
+        "pricing": {
+          "title": "4.1 Ceny",
+          "content": "Naše služby jsou nabízeny v rámci různých předplatných plánů, jak je popsáno na naší stránce Ceny. Ceny se mohou měnit s 30denním předem upozorněním."
+        },
+        "payment": {
+          "title": "4.2 Platba",
+          "items": {
+            "0": "Předplatné je fakturováno předem měsíčně nebo ročně",
+            "1": "Všechny poplatky jsou nevracitelné, pokud není uvedeno jinak v našem",
+            "2": "Zmocňujete nás k naúčtování platby vaším platebním prostředkem pro příslušné poplatky",
+            "3": "Pro bezpečné zpracování plateb používáme Stripe",
+            "1RefundLink": "Zásady vrácení peněz"
+          }
+        }
+      },
+      "acceptableUse": {
+        "title": "5. Povolené používání",
+        "prohibited": {
+          "title": "5.1 Zakázané činnosti",
+          "intro": "Souhlasíte s tím, že NEBUDETE:",
+          "items": {
+            "0": "Porušovat žádné platné zákony, předpisy nebo práva třetích stran",
+            "1": "Používat Služby k přenosu malware, spamu nebo škodlivého obsahu",
+            "2": "Pokoušet se získat neoprávněný přístup k našim systémům",
+            "3": "Narušovat nebo ovlivňovat integritu nebo výkon našich Služeb",
+            "4": "Používat automatizované nástroje k scrapingu, kopírování nebo extrahování dat bez povolení",
+            "5": "Provádět reverzní inženýrství, dekomilaci nebo rozkládání našich Služeb",
+            "6": "Používat naše funkce AI k generování nelegálního, škodlivého nebo klamavého obsahu"
+          }
+        }
+      },
+      "ip": {
+        "title": "6. Duševní vlastnictví",
+        "ours": {
+          "title": "6.1 Naše duševní vlastnictví",
+          "content": "{brandName} a jeho licenční dárci vlastní všechna práva, titul a zájem na Službách, včetně všeho softwaru, návrhů, ochranných známek a obsahu vytvořeného námi."
+        },
+        "yours": {
+          "title": "6.2 Váš obsah",
+          "content": "Zůstáváte vlastníkem obsahu, který vytvoříte nebo nahrajete (\"Váš obsah\"). Používáním našich Služeb nám udělujete celosvětové, neexkluzivní, bezplatné licenci k používání, ukládání, zpracování a zobrazování Vašeho obsahu výhradně za účelem poskytování Služeb vám."
+        }
+      },
+      "warranties": {
+        "title": "7. Vyloučení záruk",
+        "content": "SLUŽBY JSOU POSKYTOVÁNY \"JAK JSOU\" A \"JAK JSOU DOSTUPNÉ\" BEZ ZÁRUK JAKÉHOKOLI DRUHU, AŽ NA PŘÍPADNÉ ZÁKONNÉ, AŽ NA PŘÍPADNÉ ZÁRUKY OBCHODOVATELNOSTI, VHODNOSTI PRO KONKRÉTNÍ ÚČEL, TITULU A NEPORUŠOVÁNÍ PRÁV TŘETÍCH STRAN."
+      },
+      "liability": {
+        "title": "8. Omezení odpovědnosti",
+        "para1": "V MAXIMÁLNÍ MÍŘE POVOLENÉ ZÁKONEM NENÍ NEBUTRA ODPOVĚDNÁ ZA NEPŘÍMÉ, NÁHODNÉ, SPECIÁLNÍ, DŮSLEDKOVÉ NEBO TRESTNÍ ŠKODY, ANI ZA ZTRÁTU ZISKU, DAT, POUŽITÍ NEBO DŮVĚRY.",
+        "para2": "V ŽÁDNÉM PŘÍPADĚ NESMÍ NÁŠ CELKOVÝ ROZSAH ODPOVĚDNOSTI PŘEKROČIT VĚTŠÍ Z NÁSLEDUJÍCÍCH ČÁSTEK: (A) ČÁSTKA, KTEROU JSTE NÁM ZAPLATILI BĚHEM 12 MĚSÍCŮ PŘED PODÁNÍM NÁROKU, NEBO (B) 100 USD."
+      },
+      "termination": {
+        "title": "9. Ukončení",
+        "byYou": {
+          "title": "9.1 Vámi",
+          "content": "Své konto můžete kdykoli ukončit prostřednictvím nastavení účtu. Po ukončení přijdete o přístup k Službám."
+        },
+        "byUs": {
+          "title": "9.2 Námi",
+          "intro": "Můžeme pozastavit nebo ukončit váš účet, pokud:",
+          "items": {
+            "0": "Porušíte tyto Podmínky",
+            "1": "Zapojíte se do podvodné nebo nezákonné činnosti",
+            "2": "Nezaplatíte příslušné poplatky",
+            "3": "Vytvoříte pro nás riziko nebo právní vystavení"
+          }
+        }
+      },
+      "disputes": {
+        "title": "10. Řešení sporů",
+        "informal": {
+          "title": "10.1 Neformální řešení",
+          "content": "Před zahájením formálního řízení souhlasíte s tím, že nás kontaktujete na adrese legal@nebutra.com, abyste se pokusili spory vyřešit neformálně."
+        },
+        "governingLaw": {
+          "title": "10.2 Řídicí právo",
+          "content": "Tyto podmínky se řídí zákony státu Delaware bez ohledu na zásady kolizního práva."
+        }
+      },
+      "contactUs": {
+        "title": "11. Kontaktujte nás",
+        "intro": "Pokud máte otázky týkající se těchto podmínek, kontaktujte nás:",
+        "company": "{brandName} Co., Ltd.",
+        "emailLabel": "E-mail",
+        "supportLabel": "Podpora"
+      },
+      "acknowledgement": "Používáním služby {brandName} potvrzujete, že jste si přečetli, porozuměli a souhlasíte s tím, že budete vázáni těmito podmínkami služby."
+    }
+  },
+  "metadata": {
+    "title": "{brandName} Agent OS | Startup Agent OS",
+    "description": "Startup Agent OS pro zakladatele vstupující na globální trh. Produkční základna Next.js s řízenou architekturou, autentizací, fakturací, agenty a i18n — vytvořeno pro AI kódovací agenty a seriózní týmy."
+  },
+  "microLanding": {
+    "architecture": {
+      "badge": "SYSTÉMOVÁ TOPOLOGIE",
+      "title": "Transparentní architektura, žádné černé skříňky.",
+      "description": "{productName} je navržen s hypermodulární strukturou Turborepo, což vám dává plnou kontrolu nad celým životním cyklem vašeho softwaru.",
+      "database": {
+        "title": "PostgreSQL + Prisma v7",
+        "desc": "Plně typovaný ORM s politikami Row-Level Security (RLS) zabudovanými nativně."
+      },
+      "auth": {
+        "title": "Clerk Multi-Tenant / Vlastní identita",
+        "desc": "Autentizační brána připravená na SOC2 podporující přepínání B2B organizací a RBAC."
+      }
+    },
+    "pricing": {
+      "title": "Stavět můžete zdarma. Platíte, jen když potřebujete, abychom ručili.",
+      "description": "Postavit komerční produkt na {brandName} nic nestojí — žádný poplatek, žádný licenční klíč, žádná registrace, žádný copyleft. Placené úrovně prodávají podporu, SLA, odškodnění a práva k ochranné známce, nikdy povolení k použití.",
+      "socialProofText": "MIT na npm · FSL-1.1-ALv2 v repozitáři, po dvou letech přechází na Apache-2.0 · komerční použití zdarma v jakémkoli rozsahu.",
+      "community": {
+        "badge": "KOMUNITA",
+        "price": "Zdarma",
+        "period": "navždy",
+        "desc": "Pro všechny. Jakákoli velikost týmu, jakékoli tržby. Komerční použití s uzavřeným kódem je zahrnuto, bez registrace a bez povinnosti uvádět autorství.",
+        "cta": "npx create-sailor",
+        "f1": "Kompletní jádro SaaS Next.js 16, všechny balíčky součástí",
+        "f2": "Komerční použití s uzavřeným kódem při jakékoli velikosti týmu či tržbách",
+        "f3": "Celý stack: Auth, Platby, Organizace, API, E-mail, i18n, Úlohy na pozadí, Úložiště a další",
+        "f4": "Marketingové funkce: Blog, vstupní stránka, SEO, Analytics",
+        "f5": "Veřejné issues, Discussions a Discord — dle možností, bez záruky odpovědi"
+      },
+      "team": {
+        "badge": "TÝM",
+        "price": "2 000 $",
+        "period": "rok",
+        "desc": "For teams that cannot put a critical path on community response times.",
+        "cta": "Získat podporu {brandName}",
+        "f1": "Soukromý kanál podpory (e-mail + sdílený Slack nebo Discord)",
+        "f2": "První odpověď zaručeně do dvou pracovních dnů",
+        "f3": "Přednostní třídění chyb před issues komunity",
+        "f4": "Pomoc s upgrady a předběžné upozornění na nekompatibilní změny",
+        "f5": "Vše z Komunity"
+      },
+      "enterprise": {
+        "badge": "ENTERPRISE",
+        "price": "Od 30 000 $",
+        "period": "rok",
+        "desc": "Pro organizace, jejichž nákup, právní oddělení nebo bezpečnostní prověrka vyžaduje protistranu, která podepíše.",
+        "cta": "Kontaktovat obchod",
+        "f1": "SLA odezvy — 4 pracovní hodiny standardně, 1 hodina při výpadku produkce",
+        "f2": "Odškodnění a smluvní závazek k bezpečnostním záplatám",
+        "f3": "Podepsaná smlouva o zpracování údajů, balíček shody a závazek kontinuity",
+        "f4": "Práva k ochranné známce a white label plus výjimka z konkurenčního použití",
+        "f5": "Větev dlouhodobé podpory a inženýrská podpora privátního nasazení",
+        "f6": "Vše z Týmu"
+      }
+    },
+    "faq": {
+      "title": "FAQ k cenám a licencování",
+      "description": "Otázky k licenčním úrovním, vrácení peněz a právům k komerčnímu využití.",
+      "q1": {
+        "q": "Je Sailor měsíční SaaS předplatné?",
+        "a": "Ne. Tato cenová politika platí pro licenční smlouvy k zdrojovému kódu Sailor: Independent je zdarma, Startup se fakturuje ročně a Enterprise je na míru."
+      },
+      "q2": {
+        "q": "Nabízíte vrácení peněz?",
+        "a": "Komerční licence Startup zahrnuje 14denní lhůtu na vrácení peněz za počáteční nákupy. Podmínky Enterprise se řeší v podepsané smlouvě."
+      },
+      "q3": {
+        "q": "Mohu použít Sailor pro práci pro klienty?",
+        "a": "Ano. Komerční licence umožňuje vašemu týmu vydávat uzavřené zdrojové produkty pro klienty nebo interní produkty v rámci licencovaného rozsahu; práva na bílou značku vyžadují schválení Enterprise."
+      },
+      "contactNudge": "Stále máte otázky? Promluvte si s týmem {brandName} →"
+    },
+    "cta": {
+      "eyebrow": "Začněte",
+      "title": "Přestaňte konfigurovat. Začněte budovat.",
+      "description": "Inicializujte škálovatelnou SaaS architekturu lokálně pomocí CLI {brandName}.",
+      "button": "Nasadit architekturu",
+      "license": "Open source pod licencí AGPL-3.0. Karta není vyžadována."
+    },
+    "capability": {
+      "badge": "Funkce pro enterprise",
+      "title": "Plně typované, rozšiřitelné jádro.",
+      "multiTenant": {
+        "title": "Nativní zabezpečení na úrovni řádků",
+        "desc": "Každý dotaz na databázi je přísně omezen aktuálním kontextem nájemce.",
+        "cta": "Přečíst si filozofii databáze"
+      },
+      "aiGateway": {
+        "title": "Univerzální AI brána",
+        "desc": "Plynule směrujte požadavky na OpenAI, Anthropic nebo open-source modely.",
+        "cta": "Prozkoumat AI SDK handler"
+      },
+      "rbac": {
+        "title": "Detailní řízení přístupu",
+        "desc": "Definujte role správce, člena a pozorovatele s vestavěnou strukturou politik.",
+        "cta": "Zobrazit dokumentaci RBAC"
+      },
+      "billing": {
+        "title": "Infrastruktura fakturace pro více poskytovatelů",
+        "desc": "Měřená spotřeba, webhooky předplatného a samoslužné portály pro zákazníky.",
+        "cta": "Zobrazit architekturu fakturace"
+      }
+    },
+    "productDemo": {
+      "badge": "Interaktivní demo",
+      "title": "The local loop, end to end.",
+      "description": "Vyzkoušejte si rozhraní příkazového řádku, tunelování webhooků Stripe a místní poskytování vícenájemcové databáze.",
+      "analytics": {
+        "label": "Živé telemetrie",
+        "desc": "Přenos dat o produkční spotřebě přímo do vašeho terminálu."
+      },
+      "billing": {
+        "label": "Platební události",
+        "desc": "Sledujte, jak se Stripe webhooky spouštějí prostřednictvím místního tunelování."
+      },
+      "workspaces": {
+        "label": "Inicializace pracovního prostoru",
+        "desc": "Okamžitě připravte izolované B2B schémata PostgreSQL."
+      }
+    },
+    "workflow": {
+      "badge": "Rychlost",
+      "title": "Od nuly k produkci v rekordním čase.",
+      "step1": {
+        "title": "1. Klonovat",
+        "desc": "Okamžitě naklonujte monorepo {brandName} a spusťte pnpm install."
+      },
+      "step2": {
+        "title": "2. Konfigurovat",
+        "desc": "Nastavte Prisma, Clerk a Stripe prostřednictvím interaktivního CLI během několika minut."
+      },
+      "step3": {
+        "title": "3. Vytvořit",
+        "desc": "Soustřeďte se na produktovou logiku a UI, zatímco základ platformy je již připraven."
+      },
+      "step4": {
+        "title": "4. Nasadit",
+        "desc": "Push na Vercel a AWS pro okamžité globální rozšíření."
+      },
+      "speedometer": {
+        "number": "10",
+        "unit": "min",
+        "subtitle": "ČAS NA TRH",
+        "comparison": "Ušetřete měsíce práce na platformě.",
+        "phases": {
+          "scaffold": "Inicializace",
+          "wire": "Jádro",
+          "ship": "Nasazení",
+          "scale": "Škálování",
+          "ongoing": "∞"
+        },
+        "cta": "Spusťte časovač"
+      },
+      "presetHint": {
+        "badge": "Přednastavený systém",
+        "message": "Jedna konfigurace. Všechny funkce. Vyberte přednastavení a nasadte.",
+        "detail": "Konfigurujte jednou, generujte vše — fakturaci, autentizaci, AI, i18n — z jedné přednastavené konfigurace.",
+        "readyStatus": "Přednastavený systém připraven"
+      }
+    }
+  },
+  "featuresPage": {
+    "hero": {
+      "badge": "Možnosti platformy",
+      "headlinePrefix": "Vše, co potřebujete k tomu, abyste ",
+      "headlineHighlight": "nasadili s jistotou.",
+      "description": "{brandName} je plnohodnotná full-stack SaaS platforma — AI, fakturace, multi-tenancy, observability a bezpečnost zabudované od prvního dne. Přestaňte stavět vrstvu platformy znovu."
+    },
+    "sections": {
+      "exploreFeature": "Prozkoumat funkci",
+      "ai_category": "AI a inteligence",
+      "ai_f1_title": "Chat dokončování s více modely",
+      "ai_f1_desc": "Směrujte požadavky na Anthropic, OpenAI, Google nebo vlastní vyladěné modely. Streaming, vizuální zpracování a volání funkcí jsou podporovány ihned po instalaci.",
+      "ai_f2_title": "Sémantické embeddingy",
+      "ai_f2_desc": "Generujte a ukládejte vektorové embeddingy pomocí pgvector. Podporuje sémantické vyhledávání, RAG pipeline a doporučovací systémy.",
+      "ai_f3_title": "Měření využití AI",
+      "ai_f3_desc": "Kvóty podle plánu s sledováním využití — měřte AI tokeny, API volání a úložiště vůči real-time agregátům na ClickHouse.",
+      "multi_category": "Platforma pro více nájemců",
+      "multi_f1_title": "Izolace na úrovni organizace",
+      "multi_f1_desc": "Zabezpečení na úrovni řádků v Postgres zajišťuje, že nájemci nikdy nebudou mít přístup k datům jiných nájemců — vynuceno na úrovni databáze, ne jen aplikace.",
+      "multi_f2_title": "Multi-provider autentizace (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub atd.) plus e-mail/heslo a magic-link — přepínejte mezi Clerk, Better Auth, NextAuth nebo Supabase Auth pomocí jedné proměnné prostředí.",
+      "multi_f3_title": "Automatické zprovozňování nájemců",
+      "multi_f3_desc": "Když se nová organizace zaregistruje přes Clerk, automaticky vygenerujeme její první API klíč a odešleme značkový uvítací e-mail — bez manuálních kroků.",
+      "dx_category": "Zkušenost vývojářů",
+      "dx_f1_title": "Hashované API klíče",
+      "dx_f1_desc": "SHA-256 hashované klíče s prefixem (nbtr_live_…). Zobrazeny v čitelné podobě pouze jednou při vytvoření — bezpečnost bez zbytečných překážek.",
+      "dx_f2_title": "Middleware pro idempotenci",
+      "dx_f2_desc": "Přidejte hlavičku Idempotency-Key a libovolná POST žádost se stane bezpečnou pro opakování. Podporováno Redisem, 24hodinová cache, v souladu s návrhem IETF.",
+      "dx_f3_title": "Multi-protokolové API (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI pro veřejná API, oRPC pro typově bezpečná volání z frontendu, tRPC pro kompatibilitu s T3 stackem. Všechny protokoly sdílejí stejné Zod kontrakty a middleware stack. Aktivujte jednotlivé protokoly přes přednastavenou konfiguraci.",
+      "billing_category": "Fakturace a monetizace",
+      "billing_f1_title": "Stripe, LemonSqueezy, Polar a platby pro Čínu",
+      "billing_f1_desc": "Vyberte si poskytovatele plateb: Stripe pro globální podniky, LemonSqueezy pro nezávislé vývojáře, Polar pro OSS nebo Alipay/WeChat Pay pro čínský trh. Jednoklikový checkout a samoobslužný fakturační portál.",
+      "billing_f2_title": "Vynucování kvót na základě využití",
+      "billing_f2_desc": "Reálné počítadla v Redisu sledují volání API a využití tokenů pro každého nájemce. Žádosti jsou bráněny na úrovni gateway, když jsou dosaženy limity.",
+      "billing_f3_title": "Synchronizace životního cyklu webhooků",
+      "billing_f3_desc": "Události předplatného ze Stripe automaticky aktualizují plány organizací v vaší databázi prostřednictvím Inngest — žádné cron úlohy, žádné dotazování.",
+      "rel_category": "Spolehlivost",
+      "rel_f1_title": "Circuit breaker + opakování",
+      "rel_f1_desc": "Gateway a AI služba používají circuit breaker v režimu CLOSED/OPEN/HALF_OPEN s exponenciálním backoffem a jitterem — žádné kaskádové selhání.",
+      "rel_f2_title": "Fronta mrtvé pošty",
+      "rel_f2_desc": "Obsluha událostí, která vyčerpá 3 pokusy o opakování, se dostane do DLQ. Přehrajte je jednotlivě přes admin API bez opětovného nasazení.",
+      "rel_f3_title": "Upozornění na rychlost spotřeby SLO",
+      "rel_f3_desc": "Víceokenná upozornění ve stylu Google SRE se spouštějí při rychlosti spotřeby 14,4×, 6× a 3× před vyčerpáním rozpočtu chyb.",
+      "sec_category": "Zabezpečení",
+      "sec_f1_title": "Hlavičky založené na nonce CSP",
+      "sec_f1_desc": "Přísně dynamická Content Security Policy s nonce generovanými pro každý požadavek v middleware Clerk — nikde žádné unsafe-inline.",
+      "sec_f2_title": "ModSecurity WAF",
+      "sec_f2_desc": "OWASP Core Rule Set v režimu DetectionOnly na každém vstupu. Omezení rychlosti na 30 RPS s tolerancí špiček prostřednictvím anotací nginx.",
+      "sec_f3_title": "SBOM + SLSA původ",
+      "sec_f3_desc": "Každé vydání generuje seznam softwarových komponent CycloneDX a atestaci původu SLSA, která se nahrává do vydání na GitHubu.",
+      "obs_category": "Observabilita",
+      "obs_f1_title": "Sledování OpenTelemetry",
+      "obs_f1_desc": "Distribuované stopy proudí z Next.js → Hono → Python mikroslužby prostřednictvím OTLP. Exportují se do Jaeger (vývoj) a Grafana Tempo (produkce).",
+      "obs_f2_title": "Nástěnky Grafana",
+      "obs_f2_desc": "Přehled platformy s více panely: dostupnost SLO, zbývající rozpočet chyb, saturace HPA, restarty podů a omezování CPU.",
+      "obs_f3_title": "Sledování chyb Sentry",
+      "obs_f3_desc": "Chyby na straně serveru i klienta se zachytávají s kontextem nájemce, ID požadavku a ID stopy pro korelaci napříč systémy.",
+      "data_category": "Data a analýza",
+      "data_f1_title": "ClickHouse OLAP sklad",
+      "data_f1_desc": "Události přistávají v ClickHouse pro rychlé analytické dotazy. dbt transformuje surové události na metriky růstu gold vrstvy viditelné v dashboardu.",
+      "data_f2_title": "Analýza trychtýřů",
+      "data_f2_desc": "Sledujte registrace → aktivace → konverze s atribucí na úrovni kohort. Příjmy na aktivního uživatele se počítají z gold vrstvy.",
+      "data_f3_title": "Kafka / příjem událostí",
+      "data_f3_desc": "Vysokoprovozní ingest událostí přes Inngest do ClickHouse bronze, s deduplikací v paměti a validací schématu na okraji gateway.",
+      "infra_category": "Infrastruktura",
+      "infra_f1_title": "GitOps s ArgoCD",
+      "infra_f1_desc": "Změny v hlavní větvi se automaticky synchronizují do clusteru. Self-heal vrací ruční úpravy kubectl. Sync windows vynucují bezpečné hodiny nasazení.",
+      "infra_f2_title": "PgBouncer sdílení připojení",
+      "infra_f2_desc": "PgBouncer v transakčním režimu před Supabase zvládne 1 000 připojení aplikace na 20 připojení Postgres. HA s 2 replikami.",
+      "infra_f3_title": "Horizontální a vertikální autoskalování",
+      "infra_f3_desc": "HPA škáluje podle CPU/paměti. VPA běží v režimu Off a poskytuje doporučení pro right-sizing. KEDA custom metrics plánováno pro v2."
+    }
+  },
+  "comingSoon": {
+    "badge": "🚧 V přípravě",
+    "description": {
+      "ideas": "Právě tvoříme úžasný geek-driven zážitek pro tuto sekci. Spustíme ji spolu s další velkou aktualizací architektury pipeline.",
+      "opc": "Podrobnější přehled platformy je v přípravě. Sledujte changelog a roadmap pro nadcházející vydání.",
+      "roadmap": "Od infrastrukturního základu až po podnikové nasazení — fáze produktu, milníky verzí a naše vize financování."
+    },
+    "returnBtn": "Zpět do Hubu"
+  },
+  "blogShowcase": {
+    "badge": "Z BLOGU",
+    "title": "Inženýrské poznatky",
+    "subtitle": "Hlubší pohled na architekturu SaaS, AI infrastrukturu a produkční inženýrství.",
+    "readMore": "Číst více"
+  },
+  "useCases": {
+    "badge": "ŠKÁLOVATELNÉ SCÉNÁŘE",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
+    "tabs": {
+      "opc": "Agentic operace",
+      "ip": "Osobní IP matice",
+      "multimodal": "Multimodální AI SaaS",
+      "enterprise": "Moderní podnik (CN)",
+      "export": "Globální export softwaru",
+      "design": "Design systémový engine",
+      "edam": "Podnikové digitální aktiva"
+    },
+    "content": {
+      "opc": {
+        "title": "AI-Nativní operační centrum",
+        "desc": "Spouštějte agentní workflow, interní nástroje a integrační rozhraní na jedné řízené platformě. Rozšíření řízená registrem, portály operátorů a opakovaně použitelné runtime vzory zůstávají v souladu při škálování systému.",
+        "features": {
+          "f1": "Registr nástrojů a integrační rozhraní",
+          "f2": "Portál operátorů a interní konzole"
+        }
+      },
+      "ip": {
+        "title": "Růst osobního IP a portfoliová matice",
+        "desc": "Vytvořte světovou přítomnost zakladatele s vysoko konvertujícím MDX blogem, portfoliem a profily. Vestavěný newsletter, analitika a SEO zajistí růst vaší osobní značky.",
+        "features": {
+          "f1": "MDX blog + newsletter engine",
+          "f2": "Optimalizováno pro SEO a sociální graf"
+        }
+      },
+      "multimodal": {
+        "title": "Inovativní multimodální AI SaaS",
+        "desc": "Publikujte Multi-Agent orchestraci, Chatbot, Text-to-Image, Image-to-Text a Text-to-Video SaaS produkty s UX-leading streaming UI, inteligentním model routingem a měřením využití.",
+        "features": {
+          "f1": "Multi-Agent streaming UI",
+          "f2": "Model Router + měření využití"
+        }
+      },
+      "enterprise": {
+        "title": "Moderní podnikové webové stránky (CN)",
+        "desc": "Přizpůsobeno pro čínské obchodní scénáře — ultra-rychlá domácí CDN, integrace ekosystému WeChat, mobile-first responzivní design a lokalizovaná compliance out of the box.",
+        "features": {
+          "f1": "Lokální CDN + compliance",
+          "f2": "Připraveno pro ekosystém WeChat"
+        }
+      },
+      "export": {
+        "title": "Landing pages pro globální export softwaru",
+        "desc": "Navrženo pro SaaS expandující do zahraničí. Stripe checkout s více měnami, automatické směrování i18n přes next-intl v 7 jazycích, soulad s GDPR/CCPA a obsah cílený podle země.",
+        "features": {
+          "f1": "Globální platby v více měnách",
+          "f2": "7 jazyků + připraveno na GDPR"
+        }
+      },
+      "design": {
+        "title": "Vedoucí designový systém a knihovna komponent",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "features": {
+          "f1": "Správa tokenů ve 4 vrstvách",
+          "f2": "Seven design languages + Storybook"
+        }
+      },
+      "edam": {
+        "title": "Správa digitálních aktiv pro podniky",
+        "desc": "Strukturovaná data lakes a komplexní topologie dashboardů využívající škálovatelné architektury PostgreSQL a granularní RBAC.",
+        "features": {
+          "f1": "Bezpečnost na úrovni řádků",
+          "f2": "Komplexní dotazy",
+          "f3": "Správa rolí"
+        }
+      }
+    }
+  },
+  "designSystem": {
+    "badge": "DESIGN SYSTEM",
+    "headline": "4 vrstvy designové správy.",
+    "subheadline": "Od brandových prvků přes runtime tokeny až po multi-theme engine a řízené komponenty — nejen shadcn s Tailwindem.",
+    "flowBrand": "Značka",
+    "flowBrandDesc": "Barevné prvky, gradienty, jazyk pohybu",
+    "flowTokens": "Tokeny",
+    "flowTokensDesc": "CSS proměnné, 12stupňové škály, tmavý režim",
+    "flowTheme": "Téma",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
+    "flowUI": "UI",
+    "flowUIDesc": "Komponenty, Storybook, Chromatic",
+    "card1Title": "12stupňové barevné škály",
+    "card1Desc": "Sémantická škála v souladu s Geistem: pozadí (1-2), stavy (3-5), okraje (6-8), výplně (9-10), text (11-12).",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
+    "card3Title": "Vizuální regrese",
+    "card3Desc": "Chromatic zachytí každou změnu pixelu. Storybook dokumentuje každou komponentu. Architektura testů vynucuje pokrytí příběhů.",
+    "card4Title": "Řízení tokenů",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
+    "card5Title": "Interaktivní dokumentace",
+    "card5Desc": "Kompletní web s designovou dokumentací poháněný Fumadocs s dvojjazyčnou (EN/ZH) dokumentací API komponent, galeriemi tokenů, průvodci vzory rozložení a živými příklady kódu.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
+  },
+  "notFound": {
+    "title": "Stránka nenalezena",
+    "desc": "Odkaz může být zastaralý nebo stránka mohla být přesunuta.",
+    "home": "Zpět na {brandName}",
+    "docs": "Otevřít dokumentaci"
+  },
+  "ui": {
+    "search": {
+      "placeholder": "Hledat vydání..."
+    },
+    "nav": {
+      "toggleMenu": "Přepnout menu"
+    },
+    "actions": {
+      "showFullRelease": "Zobrazit celé vydání",
+      "copyLinkToRelease": "Kopírovat odkaz na vydání",
+      "copyLink": "Kopírovat odkaz",
+      "openInNewTab": "Otevřít v novém panelu"
+    },
+    "status": {
+      "comingSoon": "Brzy"
+    }
+  },
+  "licensing": {
+    "hero": {
+      "title": "Zdarma <hl>vyvíjet na</hl>",
+      "description": "{brandName}-Sailor je zdarma i pro komerční použití — MIT na npm, FSL-1.1-ALv2 v repozitáři, po dvou letech přechází na Apache-2.0. Placené úrovně prodávají podporu a smluvní závazky, nikdy povolení."
+    },
+    "plans": {
+      "community": {
+        "badge": "Vždy zdarma",
+        "title": "Komunita",
+        "subtitle": "Pro každého",
+        "description": "Libovolná velikost týmu, libovolný obrat. Včetně uzavřených komerčních produktů.",
+        "features": {
+          "fullSource": "Celý zdrojový kód, všechny balíčky",
+          "closedSourceOk": "Uzavřené komerční použití — bez copyleftu",
+          "noAttribution": "Žádná registrace, žádná nutnost uvádět zdroj",
+          "communitySupport": "Podpora komunity — co nejlépe"
+        },
+        "cta": "Zobrazit na GitHubu"
+      },
+      "team": {
+        "badge": "Od {price}/rok",
+        "title": "Tým",
+        "subtitle": "Předplatné podpory",
+        "description": "For teams that cannot put a critical path on community response times.",
+        "features": {
+          "privateChannel": "Soukromý kanál podpory",
+          "firstResponse": "První odpověď do dvou pracovních dnů, zaručeno",
+          "priorityTriage": "Prioritní třídění chyb",
+          "upgradeHelp": "Asistence při aktualizaci a upozornění na breaking changes"
+        },
+        "cta": "Získat podporu"
+      },
+      "enterprise": {
+        "badge": "Od 30 000 USD/rok",
+        "title": "Enterprise",
+        "subtitle": "Připraveno pro nákupní proces",
+        "description": "Pro organizace, jejichž právní, bezpečnostní nebo nákupní revize vyžaduje protistranu, která podepisuje.",
+        "features": {
+          "sla": "SLA odezvy — 4 pracovní hodiny, 1 hodina při výpadku produkce",
+          "indemnity": "Ochrana před škodami a závazek k bezpečnostním záplatám",
+          "compliance": "Podepsaný DPA, balíček pro dodržování předpisů, závazek k kontinuitě",
+          "trademark": "Práva k ochranné známce a white-label"
+        },
+        "cta": "Kontaktujte prodej"
+      }
+    },
+    "faq": {
+      "title": "Často kladené otázky",
+      "description": "Stručná verze: používání je zdarma. Platba je pro případ, kdy nás potřebujete smluvně zavázat.",
+      "items": {
+        "whyFsl": {
+          "q": "Proč FSL místo MIT nebo AGPL?",
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
+        },
+        "reallyFree": {
+          "q": "Je komerční použití skutečně zdarma?",
+          "a": "Ano. Žádný poplatek, žádný licenční klíč, žádná registrace, žádný práh příjmu nebo počtu zaměstnanců, žádné připisování. Vytvořte produkt s uzavřeným zdrojovým kódem a prodávejte ho."
+        },
+        "competingUse": {
+          "q": "Co se počítá jako konkurenční použití?",
+          "a": "Nabízení Sailor samotného — hostované služby Sailor nebo pře-balívaná konkurenční základna platformy. Budování vertikálního SaaS, interního nástroje nebo projektů pro klienty na Sailor se nepočítá jako konkurenční použití. Pokud váš model potřebuje, může Enterprise smlouva zahrnovat písemné prominutí."
+        },
+        "upgrade": {
+          "q": "Co vlastně platné úrovně kupují?",
+          "a": "Závazky podpory, SLA odezvy, ochrana před škodami, dokumentace pro dodržování předpisů a práva k ochranné známce. Nikdy povolení k používání softwaru — to už máte."
+        },
+        "contributions": {
+          "q": "Co na to příspěvky do open source?",
+          "a": "Všechny příspěvky vyžadují CLA. Viz CONTRIBUTING.md."
+        }
+      }
+    },
+    "meta": {
+      "title": "Licencování — {brandName}",
+      "description": "Zdarma pro komerční použití. MIT na npm, FSL-1.1-ALv2 v repozitáři, převod na Apache-2.0."
+    }
+  },
+  "licenseWizard": {
+    "tiers": {
+      "individualFree": "Bezplatná licence pro jednotlivce",
+      "opcFree": "Licence pro společnost s jedním vlastníkem",
+      "startupCommercial": "Komerční licence Startup",
+      "enterprise": "Licence Enterprise"
+    },
+    "referralSource": {
+      "selectPlaceholder": "Vyberte možnost...",
+      "productHunt": "Product Hunt"
+    }
+  },
+  "changelogMeta": {
+    "title": "Přehled změn — {brandName}",
+    "description": "Každé vydání dodáváme s obsesivní péčí o detaily.",
+    "versionTitleSuffix": "Přehled změn {brandName}"
+  },
+  "roadmapMeta": {
+    "title": "Plán rozvoje platformy — {brandName}",
+    "description": "Roadmap pro řízenou základnu platformy {brandName}, Harness runtime a cestu k aktualizaci."
+  },
+  "blogMeta": {
+    "title": "Blog — {brandName}",
+    "description": "Inženýrské poznatky, aktualizace produktů a osvědčené postupy SaaS od týmu {brandName}."
+  },
+  "getLicenseMeta": {
+    "title": "Získejte svou licenci — {brandName}",
+    "description": "Získejte licenci {brandName} a přístup k platformě za 2 minuty."
+  },
+  "landing": {
+    "faq": {
+      "badge": "FAQ",
+      "title": "Otázky, odpovězené přímo",
+      "subtitle": "Vše, co potřebujete vědět před vydáním.",
+      "items": {
+        "what-is-sailor": {
+          "question": "Co přesně je {productName}?",
+          "answer": "Sailor je názorová SaaS základna Next.js + Tailwind v4 s již připraveným auth, billingem, multi-tenancí, AI, frontami, vyhledáváním a e-mailem. Stačí ji naklonovat, nakonfigurovat poskytovatele a vydat — obvykle do týdne."
+        },
+        "who-is-it-for": {
+          "question": "Pro koho je Sailor určený?",
+          "answer": "Pro zakladatele a produktové inženýry, kteří chtějí trávit čas tím, co je odlišuje — ne tím, že znovu staví stejnou infrastrukturu pro auth/billing/tenancy po páté."
+        },
+        "free-or-paid": {
+          "question": "Je to zdarma nebo placené?",
+          "answer": "Celý zdrojový kód je vydáván pod licencí AGPL-3.0 — zdarma pro osobní projekty, interní nástroje a open-source práci kompatibilní s AGPL. Komerční licence odemyká právo nasadit Sailor v proprietárním SaaS s uzavřeným zdrojovým kódem. Každý plán zahrnuje kompletní sadu funkcí (auth, billing, multi-tenancy, AI, audit); jednotlivé úrovně se liší licenčními podmínkami a podporou SLA, ne funkcemi."
+        },
+        "china-friendly": {
+          "question": "Funguje to v Číně?",
+          "answer": "Ano. Poskytujeme paralelní konfiguraci infrastruktury (CDN kompatibilní s Aliyun, domény vhodné pro ICP, volitelně Penpot místo Figma), takže stejná kódová základna se čistě nasadí i uvnitř Velkého ohnivého zdi."
+        },
+        "deployment": {
+          "question": "Kde to mohu nasadit?",
+          "answer": "Kdekoliv běží Node 22+. Marketingová stránka se nasazuje na Vercel; dashboard, gateway a Python služby běží na Docker / PM2 (dnes je provozujeme na Aliyun ECS, s kompletními Kubernetes manifesty v infra/iac/k8s/ pro clustery). Enterprise zákazníci také nasazují uvnitř vlastních VPC."
+        },
+        "security": {
+          "question": "Jak je řešena bezpečnost?",
+          "answer": "Šifrování na aplikační vrstvě pro tajné informace (@nebutra/vault), Postgres RLS pro izolaci tenantů, RBAC/ABAC přes CASL nebo OpenFGA (@nebutra/permissions), HMAC podepsané tokeny mezi službami, podepsané outbound webhooky a auditní pipeline v souladu se SOC 2 (@nebutra/audit) zahrnutá v každém plánu. Pro a Enterprise přidávají podporu pro SOC 2 attestaci, dedikovanou incident response a delší uchovávání auditních logů."
+        },
+        "support": {
+          "question": "Jakou podporu dostanu?",
+          "answer": "Zdarma zákazníci dostanou komunitní Discord + GitHub Issues. Pro přidává prioritní e-mail s odpovědí do 1 pracovního dne. Enterprise dostává dedikovaný Slack kanál a onboarding inženýra."
+        },
+        "byo-provider": {
+          "question": "Mohu si přinést vlastní poskytovatele?",
+          "answer": "Ano. Každá integrace (auth, queue, search, email, payments, storage, billing) je nezávislá na poskytovateli. Factory v každém balíčku vybere správný adapter z jedné env proměnné — vyměňte Clerk za Better Auth, NextAuth nebo Supabase Auth, QStash za BullMQ, Resend za SES, Stripe za Polar / LemonSqueezy / ChinaPay — bez dotyku aplikačního kódu."
+        },
+        "tech-stack": {
+          "question": "Jaký je tech stack?",
+          "answer": "Next.js 16 (App Router) na React 19, TypeScript 5.9, Tailwind v4, Prisma 7 nad Postgres (s pgvector + RLS), Hono pro BFF gateway, FastAPI pro ML/těžké služby a kurátorská komponentová knihovna na Radix, {brandName} UI primitivy a sdílené Motion vrstvě. AI funkce procházejí přes Vercel AI SDK s portabilitou poskytovatele (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
+        },
+        "license": {
+          "question": "Jaká je licence?",
+          "answer": "AGPL-3.0 s komerční výjimkou. Zdarma pro osobní použití, interní nástroje a AGPL kompatibilní OSS. Placená komerční licence odemyká právo nasadit Sailor tak, jak je, v proprietárním SaaS. Plný zdrojový kód je zahrnut v každém plánu."
+        },
+        "paid-updates": {
+          "question": "Musím platit za aktualizace?",
+          "answer": "Ne. Aktualizace zdrojového kódu jsou součástí každé komerční licence — tahat z mainu můžete kdykoliv a rebaseovat svůj fork. Placená úroveň je právem používat Sailor v komerční produkci, ne právem na přijímání kódu. Každá minor verze obsahuje CHANGELOG a návod na upgrade pro případné breaking změny."
+        },
+        "why-turborepo": {
+          "question": "Proč Turborepo místo standardní Next.js aplikace?",
+          "answer": "Sailor je 10 aplikací + 104 sdílených balíčků v packages/*/* + 4 backendové dráhy (Hono gateway, FastAPI/Python, Go, Rust) — daleko za bodem, kde by se udržovala jedna Next.js mega-aplikace. Turborepo nám dává builds pouze pro změněné části, transparentní remote caching a jediný zdroj pravdy pro sdílené design tokens, auth, billing a observability — bez nutnosti tlačit všechny týmy do stejného Next.js procesu."
+        },
+        "multi-tenancy": {
+          "question": "Jak je řešena multi-tenance?",
+          "answer": "Dvě vrstvy. Kontext tenantu v rozsahu požadavku přes @nebutra/tenant (AsyncLocalStorage propaguje aktivní organizaci přes každý serverový volání, včetně DB dotazů a outbound webhooků) a izolace vynucená databází přes Postgres Row-Level Security policies (infra/data/database/policies/rls.sql) vázané na session-local app.current_tenant_id. Service-role connectiony bypassují RLS pouze uvnitř důvěryhodných interních služeb; všechny uživatelské routy jdou přes tenant-scoped klienta."
+        },
+        "swap-clerk": {
+          "question": "Mohu vyměnit Clerk za jiného auth providera?",
+          "answer": "Ano. @nebutra/auth obsahuje first-class adaptéry pro Clerk, Better Auth, NextAuth (Auth.js v5) a Supabase Auth. Přepnutí přes AUTH_PROVIDER env var nebo výběr při scaffoldování s create-sailor --auth=... — server, React a middleware rozhraní zůstávají identická bez ohledu na providera. Přidání pátého adaptéru znamená implementaci jediného interface (~80 LOC); nic v okolním kódu není spjato s konkrétním providerem."
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "Milováno buildery",
+      "title": "Co říkají zakladatelé po nasazení s Sailor",
+      "subtitle": "Zákaznické příběhy z naší beta skupiny přicházejí brzy — buďte mezi prvními."
+    },
+    "comparison": {
+      "badge": "Porovnat úrovně",
+      "title": "Vše je zdarma. Vyberte si, jak velký závazek potřebujete.",
+      "subtitle": "Každá úroveň obsahuje kompletní zdrojový kód a umožňuje bezplatné komerční použití s uzavřeným kódem. Rozdíly jsou v podpoře, smluvních závazcích a právech k ochranné známce.",
+      "plan": {
+        "community": "Komunita",
+        "team": "Tým",
+        "enterprise": "Enterprise"
+      },
+      "feature": {
+        "license": {
+          "label": "Licence",
+          "type": "Licence",
+          "commercial-use": "Komerční použití s uzavřeným kódem",
+          "registration": "Registrace",
+          "trademark": "Práva k ochranné známce"
+        },
+        "source": {
+          "label": "Zdrojový kód",
+          "full-source": "Kompletní zdrojový kód",
+          "all-packages": "Všechny balíčky a moduly",
+          "update-window": "Aktualizace"
+        },
+        "support": {
+          "label": "Podpora",
+          "channel": "Kanál podpory",
+          "first-response": "Zaručená první odpověď",
+          "security-patch": "Závazek k bezpečnostním záplatám"
+        },
+        "procurement": {
+          "label": "Nákup",
+          "indemnification": "Odškodnění",
+          "dpa": "Podepsaná smlouva o zpracování a balíček shody",
+          "continuity": "Závazek kontinuity"
+        }
+      },
+      "ariaTable": "Porovnání úrovní a funkcí",
+      "value": {
+        "included": "Zahrnuto",
+        "notIncluded": "Nezahrnuto",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Není nutná",
+        "whiteLabelRights": "Práva white label",
+        "unlimited": "Neomezené",
+        "unlimitedPlusNotice": "Neomezené + předběžné upozornění na nekompatibilní změny",
+        "unlimitedPlusLts": "Neomezené + větev dlouhodobé podpory",
+        "publicChannels": "Veřejné issues a Discord",
+        "privateChannel": "Soukromý kanál",
+        "namedContact": "Určený kontakt",
+        "twoBusinessDays": "2 pracovní dny",
+        "fourBusinessHours": "4 pracovní hodiny",
+        "bestEffort": "Dle možností",
+        "contractual": "Smluvní"
+      }
+    },
+    "socialProof": {
+      "title": "Postaveno na stacku, kterému můžete věřit",
+      "logosLabel": "Partneři pro integraci",
+      "metrics": {
+        "developers": {
+          "value": "47+",
+          "label": "Podporovaní poskytovatelé AI"
+        },
+        "projects": {
+          "value": "104",
+          "label": "balíčky monorepo"
+        },
+        "uptime": {
+          "value": "7",
+          "label": "i18n lokalizace hned po instalaci"
+        }
+      }
+    }
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "Záznam ICP",
+      "publicSecurity": "Veřejná bezpečnost"
+    }
+  },
+  "icpFooter": {
+    "recordNumber": "Záznam ICP",
+    "publicSecurity": "Záznam veřejné bezpečnosti"
+  },
+  "MarketLocalePicker": {
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
+    "plannedHint": "Rozhraní přejde na angličtinu, dokud nebude tento jazyk vydán",
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
+  }
+}

@@ -1,0 +1,71 @@
+---
+title: Stripe
+description: 配置 Stripe 进行计费、订阅和客户计费门户管理。
+---
+
+## 前提条件
+
+- 一个 [Stripe 账户](https://stripe.com)
+- 已安装 Stripe CLI：`npm install -g stripe`
+
+## 第一步：设置环境变量
+
+```bash
+STRIPE_SECRET_KEY=sk_live_xxxxxxxxxxxxxxxxxxxx
+STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxx
+```
+
+开发时使用 `sk_test_` 密钥。
+
+## 第二步：在 Stripe 中创建产品
+
+```bash
+# 创建产品
+stripe products create --name="Nebutra PRO"
+
+# 创建价格
+stripe prices create \
+  --product=prod_xxx \
+  --unit-amount=2900 \
+  --currency=usd \
+  --recurring[interval]=month
+```
+
+## 第三步：配置 Webhook 端点
+
+在 Stripe 仪表板：**开发者 → Webhooks → 添加端点**
+
+- URL：`https://api.nebutra.com/api/webhooks/stripe`
+- 监听的事件：
+  - `checkout.session.completed`
+  - `customer.subscription.updated`
+  - `customer.subscription.deleted`
+  - `invoice.paid`
+  - `invoice.payment_failed`
+
+### 本地测试 Webhook
+
+```bash
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+```
+
+## Stripe 测试卡
+
+| 卡号 | 场景 |
+|------|------|
+| `4242 4242 4242 4242` | 支付成功 |
+| `4000 0000 0000 9995` | 余额不足 |
+| `4000 0025 0000 3155` | 3D Secure 认证 |
+
+使用任意未来到期日和任意 3 位 CVC。
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="计费模型" icon="credit-card" href="/zh/concepts/billing-model">
+    套餐、配额和计量。
+  </Card>
+  <Card title="Webhooks 指南" icon="webhook" href="/zh/guides/webhooks">
+    完整的 Webhook 配置和签名验证。
+  </Card>
+</CardGroup>

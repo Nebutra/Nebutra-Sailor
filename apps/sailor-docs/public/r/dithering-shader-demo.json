@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dithering-shader-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/dithering-shader-demo.tsx",
+      "content": "\"use client\";\n\nimport { DitheringShader } from \"@nebutra/ui/primitives\";\n\nexport function DitheringShaderDemo() {\n  return (\n    <div className=\"md:grid-cols-2 gap-8 max-w-4xl p-4 mx-auto grid w-full grid-cols-1\">\n      <div className=\"gap-2 relative flex flex-col\">\n        <div className=\"top-4 left-4 backdrop-blur text-xs px-2 py-1 rounded absolute z-10 border bg-background/80 font-mono\">\n          shape=\"wave\" type=\"4x4\"\n        </div>\n        <div className=\"h-[300px] w-full overflow-hidden rounded-xl border\">\n          <DitheringShader\n            shape=\"wave\"\n            type=\"4x4\"\n            width={800}\n            height={600}\n            colorBack=\"#000000\"\n            colorFront=\"#4338ca\"\n            pxSize={3}\n            speed={0.8}\n            className=\"h-full w-full\"\n          />\n        </div>\n      </div>\n\n      <div className=\"gap-2 relative flex flex-col\">\n        <div className=\"top-4 left-4 backdrop-blur text-xs px-2 py-1 rounded absolute z-10 border bg-background/80 font-mono\">\n          shape=\"sphere\" type=\"8x8\"\n        </div>\n        <div className=\"h-[300px] w-full overflow-hidden rounded-xl border\">\n          <DitheringShader\n            shape=\"sphere\"\n            type=\"8x8\"\n            width={800}\n            height={600}\n            colorBack=\"#000000\"\n            colorFront=\"#db2777\"\n            pxSize={4}\n            speed={1.2}\n            className=\"h-full w-full\"\n          />\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

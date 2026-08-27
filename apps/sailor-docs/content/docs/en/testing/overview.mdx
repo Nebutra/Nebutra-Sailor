@@ -1,0 +1,238 @@
+---
+title: "Testing Overview"
+description: "Understand Nebutra's testing strategy, commands, coverage requirements, and CI integration."
+---
+
+Nebutra uses a three-layer testing pyramid: fast unit tests for logic correctness, integration tests for API contracts, and Playwright E2E tests for critical user flows.
+
+## Testing Pyramid
+
+```
+        ▲
+       /E2E\         5%  — Playwright — Critical flows (sign-up, create project, upgrade)
+      /------\
+     /  Integ \     15%  — Vitest — API endpoints, DB operations, queue handlers
+    /----------\
+   /    Unit    \   80%  — Vitest — Functions, utilities, React components
+  /--------------\
+```
+
+Keep the pyramid shape intentional. Unit tests are fast and cheap — write many. E2E tests are slow and fragile — write few, focused on the most critical user journeys.
+
+## Test Commands
+
+| Command | What It Runs |
+|---------|-------------|
+| `pnpm test` | All unit + integration tests (Vitest) |
+| `pnpm test:watch` | Vitest in watch mode for development |
+| `pnpm test:coverage` | Vitest with V8 coverage report |
+| `pnpm e2e` | Playwright E2E suite (requires running app) |
+| `pnpm e2e:ui` | Playwright UI mode for visual debugging |
+| `pnpm test:arch` | Architecture tests (import boundary validation) |
+
+## Coverage Requirements
+
+| Metric | Minimum |
+|--------|---------|
+| Line coverage | 80% |
+| Function coverage | 80% |
+| Branch coverage | 70% |
+| Statement coverage | 80% |
+
+Coverage is measured per-package. A package that falls below threshold will fail the CI check.
+
+To view the coverage report locally:
+
+```bash
+pnpm test:coverage
+# Opens coverage/index.html in your browser
+```
+
+## Writing Unit Tests (Vitest)
+
+Test files are co-located with source files, using the `.test.ts` or `.spec.ts` suffix:
+
+```
+packages/commerce/metering/src/
+  metering.ts
+  metering.test.ts      ← co-located unit test
+```
+
+### Example: Testing Pure Logic
+
+```typescript
+import { describe, it, expect } from "vitest";
+import { calculateOverageFee } from "@nebutra/metering";
+
+describe("calculateOverageFee", () => {
+  it("returns zero when usage is within limit", () => {
+    expect(
+      calculateOverageFee({ used: 5000, limit: 10000, pricePerUnit: 0.001 })
+    ).toBe(0);
+  });
+
+  it("calculates fee for usage exceeding limit", () => {
+    expect(
+      calculateOverageFee({ used: 12000, limit: 10000, pricePerUnit: 0.001 })
+    ).toBe(2);
+  });
+
+  it("handles exact limit (no overage)", () => {
+    expect(
+      calculateOverageFee({ used: 10000, limit: 10000, pricePerUnit: 0.001 })
+    ).toBe(0);
+  });
+});
+```
+
+### Example: Testing React Components
+
+```typescript
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
+import { CreateProjectButton } from "./create-project-button";
+
+describe("CreateProjectButton", () => {
+  it("calls onSubmit with the project name", async () => {
+    const onSubmit = vi.fn();
+    render(<CreateProjectButton onSubmit={onSubmit} />);
+
+    await userEvent.click(screen.getByRole("button", { name: /create project/i }));
+    await userEvent.type(screen.getByRole("textbox", { name: /project name/i }), "My Project");
+    await userEvent.click(screen.getByRole("button", { name: /submit/i }));
+
+    expect(onSubmit).toHaveBeenCalledWith({ name: "My Project" });
+  });
+});
+```
+
+## Writing E2E Tests (Playwright)
+
+E2E test files live in the `e2e/` directory at the root of each app:
+
+```
+apps/web/
+  e2e/
+    auth.spec.ts          ← sign-up, sign-in, sign-out
+    projects.spec.ts      ← create, rename, delete project
+    billing.spec.ts       ← upgrade, downgrade, cancel
+```
+
+### Example: E2E User Flow
+
+```typescript
+import { test, expect } from "@playwright/test";
+
+test("user can create a project", async ({ page }) => {
+  await page.goto("/dashboard");
+  await page.click('[data-testid="create-project-button"]');
+  await page.fill('[name="projectName"]', "My Test Project");
+  await page.click('[type="submit"]');
+  await expect(
+    page.locator('[data-testid="project-card"]')
+  ).toContainText("My Test Project");
+});
+```
+
+### `data-testid` Convention
+
+All E2E-targeted elements must use `data-testid` attributes:
+
+```tsx
+// ✅ Testable
+<button type="button" data-testid="create-project-button">
+  Create Project
+</button>
+
+// ❌ Brittle — tied to copy that may change
+await page.click('text=Create Project');
+```
+
+## Mocking Strategy
+
+| Dependency | Mock approach |
+|-----------|--------------|
+| Stripe | `vi.mock("stripe")` with fixture responses |
+| Clerk / Auth | `vi.mock("@clerk/nextjs")` with mock session |
+| PostHog | `vi.mock("@nebutra/analytics")` — no-op stubs |
+| Email | `vi.mock("@nebutra/email")` — capture sent emails |
+| Database (unit) | In-memory SQLite via Prisma test client |
+| Database (integration) | Real test DB — never mock the DB layer |
+| External HTTP APIs | `msw` (Mock Service Worker) for integration tests |
+
+<Note>
+Never mock the database in integration tests. Use a dedicated test database seeded with fixtures. This ensures your SQL queries, schema constraints, and indexes are tested against real data.
+</Note>
+
+## Architecture Tests
+
+Architecture tests validate that package import boundaries are respected and that CSS token conventions are followed:
+
+```bash
+pnpm test:arch
+```
+
+These tests use `vitest` + `fast-check` to assert rules such as:
+
+- `apps/*` must not import from each other
+- `packages/ui` must not import from `apps/*`
+- No hardcoded hex values in component files (must use CSS variables)
+
+Architecture tests run in under 5 seconds and catch cross-boundary imports before they become entrenched.
+
+## CI Integration
+
+All test types run on every pull request via GitHub Actions:
+
+```yaml
+# .github/workflows/ci.yml (excerpt)
+jobs:
+  test:
+    steps:
+      - run: pnpm test:coverage    # unit + integration with coverage
+      - run: pnpm test:arch        # architecture boundary checks
+      - run: pnpm e2e              # Playwright E2E against preview deployment
+```
+
+Coverage results are posted as a comment on each PR. A PR cannot be merged if:
+
+- Unit/integration coverage drops below the threshold
+- Any test fails
+- Architecture boundary violations are detected
+
+## Test-Driven Development
+
+The project follows a TDD approach for new features:
+
+<Steps>
+  <Step title="Write a failing test (RED)">
+    Write the test before writing implementation code. Run it and confirm it fails.
+  </Step>
+  <Step title="Write minimal implementation (GREEN)">
+    Write just enough code to make the test pass. Do not over-engineer.
+  </Step>
+  <Step title="Refactor (IMPROVE)">
+    Clean up the implementation without breaking the test.
+  </Step>
+  <Step title="Verify coverage">
+    Run `pnpm test:coverage` and confirm the new code is covered at the required threshold.
+  </Step>
+</Steps>
+
+---
+
+<CardGroup cols={2}>
+  <Card title="Vitest Configuration" icon="flask" href="/testing/overview">
+    Vitest config, test utilities, and database fixture setup.
+  </Card>
+  <Card title="Playwright E2E" icon="browser" href="/testing/overview">
+    Playwright setup, page object models, and CI configuration.
+  </Card>
+  <Card title="CI / CD" icon="arrows-rotate" href="/deployment/overview">
+    Full GitHub Actions workflow including test gates and preview deployments.
+  </Card>
+  <Card title="Development Setup" icon="laptop-code" href="/development/overview">
+    Local development environment, tooling, and code quality checks.
+  </Card>
+</CardGroup>

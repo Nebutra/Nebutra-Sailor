@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — API-marknadsplats",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "API-marknadsplats för alla modeller · betala per användning · hantera nycklar och plånbok · prova snabbt."
+  },
+  "admin": {
+    "dashboard": "Översikt",
+    "keys": "API-nycklar",
+    "wallet": "Plånbok",
+    "docs": "Dokumentation",
+    "title": "Admin",
+    "backToMarket": "Tillbaka till marknadsplatsen",
+    "quickUse": "Snabbstart"
+  },
+  "chrome": {
+    "searchPlaceholder": "Vad vill du göra med AI?",
+    "search": "Sök",
+    "locale": "Språk",
+    "currency": "Valuta",
+    "collapseSidebar": "Dölj sidofält",
+    "expandSidebar": "Visa sidofält",
+    "home": "Hem",
+    "adminConsole": "Admin",
+    "quickUse": "Snabbstart",
+    "support": "Support",
+    "apiDocs": "API-dokumentation",
+    "integrationHelp": "Integrationsguide",
+    "aiRecommend": "AI-rekommendationer",
+    "market": "Marknad",
+    "usageTitle": "Snabb användning"
+  },
+  "channels": {
+    "app": "Appmarknad",
+    "api": "API-marknad",
+    "models": "Modellkatalog",
+    "client": "Klient"
+  },
+  "market": {
+    "new": "Nytt",
+    "hot": "Populärt",
+    "forYou": "För dig",
+    "grid": "Rutnät",
+    "list": "Lista",
+    "apiShelf": "API-hylla",
+    "toolShelf": "Verktygshylla",
+    "categories": "Kategorier",
+    "apps": "Appar",
+    "newRelease": "Ny utgåva",
+    "forgeTitle": "Forge-verktygsarbetsplats",
+    "forgeBlurb": "Texttransformeringar, codecs, formulär och sammansättbara verktyg. Appmarknads labbet pekar mot Forge.",
+    "openForge": "Öppna Forge →",
+    "allApi": "Alla API:er →",
+    "all": "Alla →",
+    "viewAll": "Visa alla {label} →",
+    "gridView": "Rutnät",
+    "listView": "Lista",
+    "hiTitle": "Plattformen för företags AI-resurser",
+    "hiSubtitle": "Matcha varje behov med rätt AI",
+    "sellable": "Säljbar",
+    "walletTopup": "Ladda på"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "Språkmodeller",
+      "hint": "Chatt · resonemang"
+    },
+    "image-gen": {
+      "label": "Bildgenerering",
+      "hint": "Text till bild"
+    },
+    "image-edit": {
+      "label": "Bildredigering",
+      "hint": "Redigera · utklipp"
+    },
+    "video": {
+      "label": "Videogenerering",
+      "hint": "Text till video"
+    },
+    "audio": {
+      "label": "Ljud & video",
+      "hint": "Tal · transkribering"
+    },
+    "data": {
+      "label": "Information",
+      "hint": "Hämtning · extrahering"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "Kunskapsutökad"
+    },
+    "tools": {
+      "label": "Verktygs-API:er",
+      "hint": "Agent · verktyg"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "Botar",
+      "chips": "Chattbots · ritbots · kunskap"
+    },
+    "productivity": {
+      "label": "Produktivitet",
+      "chips": "Modellarena · AI-skrivning"
+    },
+    "academic": {
+      "label": "Akademisk",
+      "chips": "PDF-verktyg · AI-patentsökning"
+    },
+    "image": {
+      "label": "Bildverktyg",
+      "chips": "3D-studio · Canvas"
+    },
+    "audio": {
+      "label": "Ljud",
+      "chips": "Tal · AI-musik"
+    },
+    "code": {
+      "label": "Kod",
+      "chips": "Webgenerator · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "Översikt",
+    "keys": "Nycklar",
+    "wallet": "Plånbok",
+    "use": "Prova",
+    "docs": "Dokumentation",
+    "models": "Mer"
+  }
+}

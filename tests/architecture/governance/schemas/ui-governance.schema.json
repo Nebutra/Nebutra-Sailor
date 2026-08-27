@@ -1,0 +1,348 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://nebutra.com/schemas/ui-governance.schema.json",
+  "title": "Nebutra UI Governance Policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "policyVersion",
+    "rawTailwindColorBudgets",
+    "tokenFormatBudget",
+    "motionBoundary",
+    "componentTierCoverage",
+    "dependencyBoundaries",
+    "dashboardExperience"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "policyVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "rawTailwindColorBudgets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/rawTailwindBudget"
+      }
+    },
+    "tokenFormatBudget": {
+      "$ref": "#/definitions/tokenFormatBudget"
+    },
+    "motionBoundary": {
+      "$ref": "#/definitions/motionBoundary"
+    },
+    "componentTierCoverage": {
+      "$ref": "#/definitions/componentTierCoverage"
+    },
+    "dependencyBoundaries": {
+      "$ref": "#/definitions/dependencyBoundaries"
+    },
+    "dashboardExperience": {
+      "$ref": "#/definitions/dashboardExperience"
+    },
+    "budgets": {
+      "$ref": "#/definitions/aggregateBudgets"
+    }
+  },
+  "definitions": {
+    "fileSurface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["root", "extensions"],
+      "properties": {
+        "root": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extensions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^\\.[a-z0-9]+$"
+          }
+        },
+        "excludeContains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "rawTailwindBudget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["surface", "root", "extensions", "max"],
+      "properties": {
+        "surface": {
+          "type": "string",
+          "minLength": 1
+        },
+        "root": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extensions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^\\.[a-z0-9]+$"
+          }
+        },
+        "excludeContains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "max": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "tokenFormatBudget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tokenSurfaces",
+        "maxHexLiterals",
+        "maxHslLiterals",
+        "minOklchLiterals",
+        "allowedHexFiles",
+        "allowedHslFiles"
+      ],
+      "properties": {
+        "tokenSurfaces": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/fileSurface"
+          }
+        },
+        "maxHexLiterals": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxHslLiterals": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "minOklchLiterals": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "allowedHexFiles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "allowedHslFiles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "motionBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["appSurfaces", "allowedFramerMotionImports"],
+      "properties": {
+        "appSurfaces": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "allowedFramerMotionImports": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "componentTierCoverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["primitivesRoot", "tiers"],
+      "properties": {
+        "primitivesRoot": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tiers": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/componentTier"
+          }
+        }
+      }
+    },
+    "componentTier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "requiredCoverage", "components"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requiredCoverage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "components": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          }
+        }
+      }
+    },
+    "aggregateBudgetEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["description", "max", "paths"],
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "max": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "paths": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "aggregateBudgets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rawTailwindColors", "rawTailwindBorderRadius"],
+      "properties": {
+        "rawTailwindColors": {
+          "$ref": "#/definitions/aggregateBudgetEntry"
+        },
+        "rawTailwindBorderRadius": {
+          "$ref": "#/definitions/aggregateBudgetEntry"
+        }
+      }
+    },
+    "dependencyBoundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["appSurfaces", "forbiddenImportRegexes", "customUiAllowedExports"],
+      "properties": {
+        "appSurfaces": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "forbiddenImportRegexes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "customUiAllowedExports": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "dashboardExperience": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rules"],
+      "properties": {
+        "rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/contentRule"
+          }
+        }
+      }
+    },
+    "contentRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "description", "file", "requiredContains", "forbiddenContains"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requiredContains": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "forbiddenContains": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

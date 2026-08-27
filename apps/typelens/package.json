@@ -1,0 +1,51 @@
+{
+  "name": "@nebutra/typelens",
+  "version": "0.1.1",
+  "private": true,
+  "nebutra": {
+    "status": "wip",
+    "graph": "labs",
+    "productionReady": false
+  },
+  "scripts": {
+    "dev": "next dev --port 3107",
+    "build": "node scripts/gen-catalog-fonts.mjs && next build --webpack",
+    "start": "next start",
+    "build:worker": "OPEN_NEXT_BUILD=true opennextjs-cloudflare build",
+    "preview:worker": "opennextjs-cloudflare preview",
+    "preview": "pnpm build:worker && pnpm preview:worker",
+    "deploy:worker": "OPEN_NEXT_BUILD=true opennextjs-cloudflare build && wrangler deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv",
+    "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf .next .open-next .wrangler",
+    "gen:fonts": "node scripts/gen-catalog-fonts.mjs"
+  },
+  "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "@nebutra/brand": "workspace:*",
+    "@nebutra/fonts": "workspace:*",
+    "@nebutra/icons": "workspace:*",
+    "@nebutra/tokens": "workspace:*",
+    "@nebutra/typelens-catalog": "workspace:*",
+    "@nebutra/ui": "workspace:*",
+    "geist": "catalog:",
+    "gsap": "^3.15.0",
+    "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@opennextjs/cloudflare": "1.20.1",
+    "@tailwindcss/postcss": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "wrangler": "4.112.0"
+  },
+  "license": "AGPL-3.0-only"
+}

@@ -1,0 +1,120 @@
+{
+  "name": "@nebutra/agents",
+  "version": "1.1.2",
+  "description": "Nebutra AI runtime: multi-agent orchestration + Vercel AI SDK helpers (absorbed @nebutra/ai-sdk in 1.0.0)",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "graph": "runtime",
+    "featureId": "agents",
+    "category": "ai",
+    "surface": "model-runtime",
+    "summary": "Nebutra AI runtime: multi-agent orchestration + Vercel AI SDK helpers"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./tools": {
+      "types": "./dist/tools.d.ts",
+      "import": "./dist/tools.js",
+      "default": "./dist/tools.js"
+    },
+    "./providers/vercel-ai": {
+      "types": "./dist/providers/vercel-ai.d.ts",
+      "import": "./dist/providers/vercel-ai.js",
+      "default": "./dist/providers/vercel-ai.js"
+    },
+    "./providers/langchain": {
+      "types": "./dist/providers/langchain.d.ts",
+      "import": "./dist/providers/langchain.js",
+      "default": "./dist/providers/langchain.js"
+    },
+    "./generation": {
+      "types": "./dist/generation/index.d.ts",
+      "import": "./dist/generation/index.js",
+      "default": "./dist/generation/index.js"
+    },
+    "./sdk": {
+      "types": "./dist/sdk/index.d.ts",
+      "import": "./dist/sdk/index.js",
+      "default": "./dist/sdk/index.js"
+    },
+    "./sdk/config": {
+      "types": "./dist/sdk/config.d.ts",
+      "import": "./dist/sdk/config.js",
+      "default": "./dist/sdk/config.js"
+    },
+    "./sdk/models": {
+      "types": "./dist/sdk/models.d.ts",
+      "import": "./dist/sdk/models.js",
+      "default": "./dist/sdk/models.js"
+    },
+    "./sdk/provider": {
+      "types": "./dist/sdk/provider.d.ts",
+      "import": "./dist/sdk/provider.js",
+      "default": "./dist/sdk/provider.js"
+    },
+    "./env": {
+      "types": "./dist/env.d.ts",
+      "import": "./dist/env.js",
+      "default": "./dist/env.js"
+    },
+    "./observability": {
+      "types": "./dist/observability.d.ts",
+      "import": "./dist/observability.js",
+      "default": "./dist/observability.js"
+    },
+    "./fallback": {
+      "types": "./dist/fallback.d.ts",
+      "import": "./dist/fallback.js",
+      "default": "./dist/fallback.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.76",
+    "@ai-sdk/openai": "^3.0.41",
+    "@nebutra/billing": "workspace:*",
+    "@nebutra/cache": "workspace:*",
+    "@nebutra/logger": "workspace:*",
+    "@openrouter/ai-sdk-provider": "^2.3.3",
+    "ai": "^6.0.0",
+    "ajv": "^8.18.0",
+    "langfuse": "^3.38.20",
+    "langfuse-vercel": "^3.38.20",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "^4.0.18"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/agents#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/agents"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ]
+}

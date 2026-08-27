@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spinner-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/spinner-demo.tsx",
+      "content": "import { Spinner } from \"@nebutra/ui/primitives\";\n\nexport function SpinnerDemo() {\n  return (\n    <div className=\"flex w-full max-w-sm items-center justify-center gap-8 px-4 py-8\">\n      <Spinner />\n      <Spinner size=\"sm\" />\n      <Spinner size=\"lg\" tone=\"foreground\" />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

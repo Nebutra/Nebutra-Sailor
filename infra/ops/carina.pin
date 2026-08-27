@@ -1,0 +1,9 @@
+# Single source of truth for same-host Carina co-deploy binary pin.
+# Renovate (custom regex manager) bumps `version=` when Nebutra/carina
+# publishes a new release. Ops scripts and deploy-ecs read this file.
+#
+# channel: optional major.minor floor for the auto-check workflow
+# (only propose bumps that stay on the same 0.8 line unless channel is empty).
+version=0.8.6
+channel=0.8
+repository=Nebutra/carina

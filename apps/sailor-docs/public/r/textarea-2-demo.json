@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea-2-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/textarea-2-demo.tsx",
+      "content": "\"use client\";\n\nimport { Textarea } from \"@nebutra/ui/primitives\";\nexport function Textarea2Demo() {\n  return (\n    <div className=\"gap-1 flex w-full flex-col\">\n      <Textarea defaultValue=\"\" placeholder=\"Type here...\" maxLength={500} />\n      <span className=\"text-xs w-full text-right text-muted-foreground\">0/500</span>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

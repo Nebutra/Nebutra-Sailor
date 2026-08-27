@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dithering-background-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/dithering-background-demo.tsx",
+      "content": "\"use client\";\n\nimport { DitheringBackground } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nexport function DitheringBackgroundDemo() {\n  const [theme, setTheme] = useState<\"system\" | \"light\" | \"dark\">(\"dark\");\n\n  return (\n    <div className=\"relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-xl border\">\n      <DitheringBackground\n        themeMode={theme}\n        intensity={0.65}\n        shape=\"swirl\"\n        type=\"8x8\"\n        parallax={true}\n        parallaxStrength={15}\n        className=\"rounded-xl\"\n      />\n\n      <div className=\"backdrop-blur-md p-6 max-w-sm gap-4 relative z-10 flex flex-col items-center rounded-2xl border bg-background/50 text-center shadow-lg\">\n        <h3 className=\"text-2xl font-bold tracking-tight\">Dithering Shader</h3>\n        <p className=\"text-sm text-muted-foreground\">\n          A WebGL-powered shader background featuring retro dithering patterns and interactive\n          parallax.\n        </p>\n\n        <div className=\"gap-2 mt-2 flex\">\n          <button\n            type=\"button\"\n            className={`px-3 py-1 text-xs rounded-full border ${theme === \"dark\" ? \"bg-primary text-primary-foreground\" : \"bg-background hover:bg-muted\"}`}\n            onClick={() => setTheme(\"dark\")}\n          >\n            Dark\n          </button>\n          <button\n            type=\"button\"\n            className={`px-3 py-1 text-xs rounded-full border ${theme === \"light\" ? \"bg-primary text-primary-foreground\" : \"bg-background hover:bg-muted\"}`}\n            onClick={() => setTheme(\"light\")}\n          >\n            Light\n          </button>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

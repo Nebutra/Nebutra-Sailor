@@ -1,0 +1,694 @@
+/**
+ * Nebutra Landing Page - Global Styles
+ *
+ * 1. Tailwind CSS v4
+ * 2. Tokens from @nebutra/tokens (single source of truth)
+ */
+
+/* Tailwind CSS v4 */
+@import "tailwindcss";
+@import "katex/dist/katex.min.css";
+/* Unified token system */
+@import "@nebutra/tokens/styles.css";
+@import "@nebutra/tokens/recipe.css";
+/* UI CVA source scan — owned by @nebutra/ui (do not hardcode monorepo @source) */
+@import "@nebutra/ui/styles/sources.css";
+/* Design-language catalog: the skins, how a change between them moves, and the
+ * scan path for the switcher's own classes. Owned by @nebutra/theme. */
+@import "@nebutra/theme/styles/sources.css";
+@import "@nebutra/theme/skins.css";
+@import "@nebutra/theme/morph.css";
+@import "tw-animate-css";
+
+/* Typography plugin — enables prose classes for legal/content pages */
+@plugin "@tailwindcss/typography";
+/*---break---
+ */
+@custom-variant dark (&:is(.dark *));
+
+/* Brand aliases (--brand-primary, --brand-accent, --brand-tertiary) are defined
+ * in @nebutra/tokens/styles.css, and overridden per design language by
+ * skins.css above. Do NOT redefine them here — a copy would win over the skin
+ * and freeze those seventy-five usages on Nebutra's own blue while the rest of
+ * the page changed language around them. */
+
+/* Custom overrides for landing page */
+@layer base {
+  /* Smooth page transitions */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    ::before,
+    ::after {
+      /* biome-ignore lint/complexity/noImportantStyles: reduced-motion safety must override component animation utilities. */
+      animation-duration: 0.01ms !important;
+      /* biome-ignore lint/complexity/noImportantStyles: reduced-motion safety must override component animation utilities. */
+      animation-iteration-count: 1 !important;
+      /* biome-ignore lint/complexity/noImportantStyles: reduced-motion safety must override component animation utilities. */
+      scroll-behavior: auto !important;
+      /* biome-ignore lint/complexity/noImportantStyles: reduced-motion safety must override component animation utilities. */
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 180ms;
+    animation-timing-function: ease-out;
+  }
+
+  /* Custom font configuration */
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Headings use the same font family */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-sans);
+    font-weight: 600;
+  }
+}
+/*---break---
+ */
+@theme inline {
+  /* How every bare transition on this site moves.
+   *
+   * `transition-colors` with no duration and no easing appears about forty
+   * times here, and `duration-150` with no easing another fourteen. Tailwind's
+   * defaults are 150ms on a near-linear curve, so every hover on the marketing
+   * site arrived as a step rather than a movement — the stiffness that came in
+   * when the GSAP layer was unhooked and nothing replaced what it was doing.
+   *
+   * Setting the default is the whole fix: no per-element churn, and a hover
+   * written tomorrow is smooth without anyone remembering to say so. The curve
+   * is the motion language's signature — a long deceleration that covers most
+   * of the distance immediately and then settles, which is the quality people
+   * mean by silky. Both sides are tokens, so a Brand Package moves them.
+   */
+  --default-transition-duration: var(--duration-flow);
+  --default-transition-timing-function: var(--ease-brand);
+
+  /* Section spacing tokens — standardize pb-12 / pb-16 / pb-32 usage */
+  --section-gap-sm: 3rem;
+  --section-gap-md: 4rem;
+  --section-gap-lg: 8rem;
+
+  --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
+  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
+  /* 3d-testimonails marquee animations */
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+
+  @keyframes shimmer-slide {
+    to {
+      transform: translate(calc(100cqw - 100%), 0);
+    }
+  }
+  @keyframes spin-around {
+    0% {
+      transform: translateZ(0) rotate(0);
+    }
+    15%,
+    35% {
+      transform: translateZ(0) rotate(90deg);
+    }
+    65%,
+    85% {
+      transform: translateZ(0) rotate(270deg);
+    }
+    100% {
+      transform: translateZ(0) rotate(360deg);
+    }
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+  @keyframes marquee-vertical {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  --animate-fade-in-up: fade-in-up 0.8s ease-out forwards;
+
+  /* Accordion animations */
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  /* Loader animations */
+  @keyframes typing {
+    0%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.5;
+    }
+    50% {
+      transform: translateY(-2px);
+      opacity: 1;
+    }
+  }
+  @keyframes loading-dots {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @keyframes wave {
+    0%,
+    100% {
+      transform: scaleY(1);
+    }
+    50% {
+      transform: scaleY(0.6);
+    }
+  }
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+  @keyframes text-blink {
+    0%,
+    100% {
+      color: hsl(var(--primary));
+    }
+    50% {
+      color: hsl(var(--muted-foreground));
+    }
+  }
+  @keyframes bounce-dots {
+    0%,
+    100% {
+      transform: scale(0.8);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+  }
+  @keyframes thin-pulse {
+    0%,
+    100% {
+      transform: scale(0.95);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.4;
+    }
+  }
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.5);
+      opacity: 1;
+    }
+  }
+  @keyframes wave-bars {
+    0%,
+    100% {
+      transform: scaleY(1);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scaleY(0.6);
+      opacity: 1;
+    }
+  }
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 50%;
+    }
+    100% {
+      background-position: -200% 50%;
+    }
+  }
+  @keyframes spinner-fade {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  /* SnippetStatus copy animations */
+  @keyframes snippet-fade-in {
+    from {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes snippet-fade-out {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+  }
+  --animate-snippet-fade-in: snippet-fade-in 0.2s ease-out forwards;
+  --animate-snippet-fade-out: snippet-fade-out 0.2s ease-out forwards;
+
+  /* InputOTP caret animation */
+  @keyframes edge-ping {
+    0% {
+      width: 4px;
+      height: 4px;
+      opacity: 0.8;
+    }
+    60% {
+      width: 32px;
+      height: 32px;
+      opacity: 0;
+    }
+    100% {
+      width: 32px;
+      height: 32px;
+      opacity: 0;
+    }
+  }
+  @keyframes edge-breath {
+    0%,
+    100% {
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @keyframes draw-check {
+    from {
+      stroke-dashoffset: 32;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes node-ripple {
+    from {
+      transform: scale(0.8);
+      opacity: 0.8;
+    }
+    to {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+  }
+  @keyframes wire-pulse {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+  @keyframes caret-blink {
+    0%,
+    70%,
+    100% {
+      opacity: 1;
+    }
+    20%,
+    50% {
+      opacity: 0;
+    }
+  }
+  --animate-caret-blink: caret-blink 1.25s ease-out infinite;
+  /* Two loops the workspace visual used to drive through framer: a ripple
+     leaving a node, and a highlight travelling a connector. Neither needs a
+     JS timeline — an infinite loop is what CSS keyframes are for, and this
+     way they cost nothing at runtime and pause with prefers-reduced-motion
+     through the global guard. */
+  --animate-node-ripple: node-ripple 2s ease-out infinite;
+  --animate-wire-pulse: wire-pulse 1.5s linear infinite;
+  /* The paid checkmark drawing itself. framer expressed this as pathLength;
+     the CSS equivalent is a dash the length of the path, offset out and
+     pulled back in. */
+  --animate-draw-check: draw-check 0.5s ease-out 0.1s both;
+  /* Edge-map node loops: a ring leaving the node and the node's own breath.
+     Per-node delays come from an inline animation-delay, so the ring still
+     travels around the map rather than pulsing in unison. */
+  --animate-edge-ping: edge-ping 5s ease-out infinite;
+  --animate-edge-breath: edge-breath 2s ease-in-out infinite;
+}
+/*---break---
+ */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Landing page utility: subtle dot-grid overlay */
+.bg-grid-overlay {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.landing-showcase-surface {
+  position: relative;
+  isolation: isolate;
+  border-color: color-mix(in oklab, hsl(var(--border)) 72%, transparent);
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, hsl(var(--background)) 96%, white 4%) 0%,
+    color-mix(in oklab, hsl(var(--muted)) 98%, var(--brand-gradient-start) 2%) 100%
+  );
+  box-shadow:
+    var(--ring-hairline),
+    0 24px 72px -58px color-mix(in oklab, hsl(var(--foreground)) 44%, transparent);
+}
+
+.landing-showcase-surface::before {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: -1;
+  height: 1px;
+  content: "";
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--brand-gradient-start) 32%, transparent) 28%,
+    color-mix(in oklab, var(--brand-gradient-end) 30%, transparent) 68%,
+    transparent 100%
+  );
+}
+
+.landing-showcase-surface::after {
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+  background-image:
+    linear-gradient(
+      90deg,
+      color-mix(in oklab, hsl(var(--border)) 26%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, hsl(var(--border)) 18%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 36px 36px;
+  -webkit-mask-image: linear-gradient(180deg, black 0%, transparent 82%);
+  mask-image: linear-gradient(180deg, black 0%, transparent 82%);
+  opacity: 0.34;
+}
+
+.landing-showcase-surface > :where(.bg-background, .bg-card) {
+  border-color: color-mix(in oklab, hsl(var(--border)) 58%, transparent);
+  background: color-mix(in oklab, hsl(var(--background)) 88%, transparent);
+  box-shadow: none;
+}
+
+.dark .landing-showcase-surface {
+  border-color: color-mix(in oklab, hsl(var(--border)) 72%, transparent);
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, hsl(var(--muted)) 92%, var(--brand-gradient-start) 4%) 0%,
+    color-mix(in oklab, hsl(var(--background)) 94%, black 6%) 100%
+  );
+  box-shadow:
+    var(--ring-hairline),
+    0 26px 82px -60px color-mix(in oklab, var(--brand-gradient-start) 34%, transparent);
+}
+
+.dark .landing-showcase-surface::after {
+  opacity: 0.22;
+}
+
+.dark .landing-showcase-surface > :where(.bg-background, .bg-card) {
+  border-color: color-mix(in oklab, hsl(var(--border)) 58%, transparent);
+  background: color-mix(in oklab, hsl(var(--muted)) 72%, black 28%);
+}
+
+.landing-cta-rule {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--brand-gradient-start) 34%, transparent) 35%,
+    color-mix(in oklab, var(--brand-gradient-end) 32%, transparent) 65%,
+    transparent 100%
+  );
+}
+
+.landing-brand-action {
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--brand-gradient-start) 92%, white 8%) 0%,
+    color-mix(in oklab, var(--brand-gradient-end) 90%, var(--brand-gradient-start) 10%) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    0 16px 32px -24px color-mix(in oklab, var(--brand-gradient-start) 72%, transparent);
+}
+
+.landing-brand-action:hover {
+  filter: saturate(1.04) brightness(1.03);
+}
+
+/* Hero background animation: direct video, tokenized fallback, and accessible motion opt-out. */
+.hero-stage::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  height: min(30svh, 320px);
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(
+    180deg,
+    hsl(var(--background) / 0) 0%,
+    hsl(var(--background) / 0.72) 58%,
+    hsl(var(--background)) 100%
+  );
+}
+
+.hero-motion-background {
+  height: clamp(1120px, 128svh, 1480px);
+  overflow: hidden;
+  background:
+    linear-gradient(
+      180deg,
+      hsl(var(--background) / 0.42) 0%,
+      hsl(var(--background) / 0.16) 54%,
+      hsl(var(--background) / 0.98) 100%
+    ),
+    radial-gradient(1100px 640px at 50% 16%, hsl(var(--primary) / 0.16), transparent 62%),
+    hsl(var(--background));
+}
+
+.dark .hero-motion-background {
+  background:
+    linear-gradient(
+      180deg,
+      hsl(var(--background) / 0.68) 0%,
+      hsl(var(--background) / 0.3) 54%,
+      hsl(var(--background)) 100%
+    ),
+    radial-gradient(1100px 640px at 50% 12%, hsl(var(--primary) / 0.18), transparent 64%),
+    hsl(var(--background));
+}
+
+.hero-motion-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.58;
+  filter: saturate(1.08) contrast(1.04);
+  transform: scale(1.015);
+}
+
+.dark .hero-motion-video {
+  opacity: 0.5;
+  filter: brightness(0.86) saturate(1.08) contrast(1.1);
+}
+
+.hero-motion-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, hsl(var(--foreground) / 0.16) 1px, transparent 1.35px);
+  background-position: 50% 0;
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(180deg, black 0%, black 62%, transparent 96%);
+  mask-image: linear-gradient(180deg, black 0%, black 62%, transparent 96%);
+  opacity: 0.34;
+}
+
+.dark .hero-motion-pattern {
+  opacity: 0.22;
+}
+
+.hero-motion-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      hsl(var(--background) / 0.9) 0%,
+      hsl(var(--background) / 0.48) 34%,
+      hsl(var(--background) / 0.56) 66%,
+      hsl(var(--background) / 0.92) 100%
+    ),
+    linear-gradient(
+      180deg,
+      hsl(var(--background) / 0.3) 0%,
+      hsl(var(--background) / 0.08) 48%,
+      hsl(var(--background)) 100%
+    );
+}
+
+.dark .hero-motion-veil {
+  background:
+    linear-gradient(
+      90deg,
+      hsl(var(--background) / 0.92) 0%,
+      hsl(var(--background) / 0.42) 34%,
+      hsl(var(--background) / 0.52) 66%,
+      hsl(var(--background) / 0.94) 100%
+    ),
+    linear-gradient(
+      180deg,
+      hsl(var(--background) / 0.5) 0%,
+      hsl(var(--background) / 0.14) 48%,
+      hsl(var(--background)) 100%
+    );
+}
+
+@media (max-width: 767px) {
+  .hero-motion-background {
+    height: clamp(980px, 138svh, 1260px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-motion-video {
+    display: none;
+  }
+}
+
+/* Landing section container queries */
+.feature-cards-cq {
+  container: feature-cards / inline-size;
+}
+
+.product-demo-cq {
+  container: product-demo / inline-size;
+}
+
+@container feature-cards (max-width: 72rem) {
+  .feature-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container feature-cards (max-width: 42rem) {
+  .feature-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-card-code {
+    padding: 0.875rem;
+  }
+}
+
+@container product-demo (max-width: 72rem) {
+  .product-demo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container product-demo (max-width: 42rem) {
+  .product-demo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-demo-title {
+    font-size: clamp(2rem, 8cqi, 3rem);
+  }
+
+  .product-demo-subtitle {
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,1273 @@
+{
+  "admin": {
+    "title": "Admin",
+    "description": "Panel super admin — kelola pengguna, organisasi, dan kesehatan sistem.",
+    "nav": {
+      "overview": "Ikhtisar",
+      "users": "Pengguna",
+      "organizations": "Organisasi"
+    },
+    "users": {
+      "title": "Pengguna",
+      "description": "Telusuri, cari, dan impersonate pengguna apa pun di seluruh organisasi.",
+      "searchPlaceholder": "Cari pengguna…",
+      "totalCount": "{count, plural, one {# pengguna} other {# pengguna}}",
+      "empty": "Tidak ada pengguna ditemukan.",
+      "loadError": "Gagal memuat pengguna.",
+      "columns": {
+        "email": "Email",
+        "name": "Nama",
+        "created": "Dibuat",
+        "activeOrgs": "Org aktif",
+        "actions": "Tindakan"
+      },
+      "viewOrgs": "Lihat organisasi"
+    },
+    "organizations": {
+      "title": "Organisasi",
+      "description": "Semua workspace dalam sistem, diurutkan berdasarkan terbaru.",
+      "searchPlaceholder": "Cari organisasi…",
+      "totalCount": "{count, plural, one {# organisasi} other {# organisasi}}",
+      "empty": "Tidak ada organisasi ditemukan.",
+      "loadError": "Gagal memuat organisasi.",
+      "columns": {
+        "name": "Nama",
+        "slug": "Slug",
+        "plan": "Paket",
+        "members": "Anggota",
+        "created": "Dibuat",
+        "actions": "Tindakan"
+      },
+      "view": "Lihat"
+    },
+    "impersonate": {
+      "trigger": "Impersonasi",
+      "starting": "Memulai…",
+      "stop": "Berhenti impersonasi",
+      "confirm": "Impersonasi {label}? Anda akan melihat aplikasi sebagai pengguna ini hingga berhenti.",
+      "error": "Gagal memulai impersonasi.",
+      "stopError": "Gagal menghentikan impersonasi."
+    },
+    "pagination": {
+      "previous": "Sebelumnya",
+      "next": "Berikutnya",
+      "pageOf": "Halaman {page} dari {total}"
+    }
+  },
+  "Common": {
+    "hello": "Halo Dunia",
+    "dashboard": "Dasbor",
+    "actions": {
+      "continue": "Lanjutkan",
+      "confirm": "Konfirmasi",
+      "done": "Selesai",
+      "cancel": "Batal"
+    }
+  },
+  "theme": {
+    "light": "Terang",
+    "dark": "Gelap",
+    "system": "Sistem"
+  },
+  "LocaleSwitcher": {
+    "label": "Bahasa",
+    "ariaLabel": "Ubah bahasa",
+    "searchPlaceholder": "Cari bahasa…",
+    "noResults": "Tidak ada bahasa yang cocok",
+    "menuAria": "Pilih bahasa"
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "Nomor rekaman ICP",
+      "publicSecurity": "Rekaman keamanan publik"
+    },
+    "wechat": {
+      "signIn": "Masuk dengan WeChat",
+      "notConfigured": "Login WeChat belum dikonfigurasi"
+    }
+  },
+  "onboarding": {
+    "title": "Atur workspace Anda",
+    "subtitle": "Tiga langkah cepat dan Anda siap meluncurkan.",
+    "steps": {
+      "workspace": "Ruang Kerja",
+      "invite": "Undang tim",
+      "plan": "Pilih paket"
+    },
+    "progress": {
+      "back": "Kembali",
+      "stepCounter": "Langkah {current} dari {total}"
+    },
+    "plan": {
+      "title": "Pilih paket",
+      "description": "Mulai gratis atau buka kapasitas lebih. Anda bisa mengubah paket kapan saja.",
+      "choose": "Pilih paket",
+      "skip": "Lewati dulu"
+    }
+  },
+  "userMenu": {
+    "ariaLabel": "Buka menu pengguna",
+    "profile": "Profil",
+    "settings": "Pengaturan",
+    "feedback": "Umpan balik",
+    "theme": "Tema",
+    "language": "Bahasa",
+    "signOut": "Keluar",
+    "signedInAs": "Masuk sebagai"
+  },
+  "account": {
+    "profile": {
+      "title": "Profil",
+      "description": "Perbarui informasi pribadi Anda.",
+      "nameLabel": "Nama",
+      "namePlaceholder": "Nama lengkap Anda",
+      "emailLabel": "Email",
+      "emailHint": "Kami akan mengirim tautan verifikasi untuk mengonfirmasi alamat email baru.",
+      "languageLabel": "Bahasa",
+      "submit": "Simpan perubahan",
+      "saving": "Menyimpan…",
+      "verifyEmail": "Verifikasi",
+      "verifying": "Mengirim verifikasi…",
+      "success": "Profil diperbarui.",
+      "verificationSent": "Email verifikasi telah dikirim.",
+      "errorRequiredName": "Nama wajib diisi.",
+      "errorInvalidEmail": "Alamat email tidak valid.",
+      "subtitle": "Identitas dan informasi kontak Anda.",
+      "unknown": "Pengguna tanpa nama",
+      "manageCta": "Buka pengaturan akun lengkap"
+    },
+    "avatar": {
+      "title": "Avatar",
+      "description": "Unggah gambar persegi (PNG, JPEG, atau WebP, maks 2MB).",
+      "uploadButton": "Unggah avatar",
+      "uploading": "Mengunggah…",
+      "fileTooBig": "Ukuran file terlalu besar. Ukuran maksimum adalah 2MB.",
+      "invalidType": "Tipe gambar tidak didukung. Gunakan PNG, JPEG, atau WebP.",
+      "success": "Avatar diperbarui.",
+      "removeButton": "Hapus avatar",
+      "removed": "Avatar dihapus.",
+      "deleteError": "Gagal menghapus avatar."
+    },
+    "export": {
+      "title": "Ekspor data saya",
+      "description": "Unduh salinan setiap catatan yang kami simpan untuk akun Anda, termasuk profil, organisasi, peristiwa audit, notifikasi, dan undangan.",
+      "compliance": "Diperlukan oleh Pasal 20 GDPR (Hak portabilitas data) dan Pasal 45 PIPL (Hak untuk mendapatkan salinan informasi pribadi).",
+      "export": "Ekspor data saya",
+      "pending": "Menyiapkan ekspor…",
+      "ready": "Ekspor Anda siap.",
+      "download": "Unduh JSON",
+      "error": "Gagal menyiapkan ekspor Anda. Silakan coba lagi."
+    },
+    "emailChange": {
+      "title": "Ubah alamat email",
+      "description": "Kami akan mengirim tautan verifikasi ke alamat baru. Perubahan hanya berlaku setelah Anda mengonfirmasinya dari kotak masuk tersebut.",
+      "newEmailLabel": "Alamat email baru",
+      "newEmailPlaceholder": "you@example.com",
+      "submit": "Kirim tautan verifikasi",
+      "submitting": "Mengirim…",
+      "verificationSent": "Periksa kotak masuk di {email} untuk mengonfirmasi perubahan.",
+      "errorInvalidEmail": "Alamat email tidak valid.",
+      "error": "Gagal meminta perubahan email.",
+      "confirm": {
+        "successTitle": "Email diperbarui",
+        "successDescription": "Email masuk Anda telah diperbarui.",
+        "successWithEmail": "Email masuk Anda sekarang adalah {email}.",
+        "failureTitle": "Kami tidak dapat mengonfirmasi tautan tersebut",
+        "failureDescription": "Tautan verifikasi ini tidak valid, kedaluwarsa, atau sudah digunakan. Harap minta tautan baru dari pengaturan akun Anda.",
+        "errorCode": "Alasan: {code}",
+        "continueCta": "Kembali ke akun",
+        "backCta": "Kembali ke akun"
+      }
+    },
+    "title": "Akun",
+    "ariaLabel": "Pengaturan akun",
+    "navLabel": "Tab pengaturan akun",
+    "tip": "Tekan {key} di mana saja untuk membuka kembali dialog ini.",
+    "tabs": {
+      "profile": "Profil",
+      "subscription": "Langganan",
+      "billing": "Tagihan",
+      "preferences": "Preferensi",
+      "personalization": "Personalisasi"
+    },
+    "subscription": {
+      "title": "Langganan",
+      "subtitle": "Paket, kuota, dan perpanjangan.",
+      "currentPlan": "Paket saat ini",
+      "upgradeCta": "Bandingkan paket",
+      "manageCta": "Kelola langganan"
+    },
+    "billing": {
+      "title": "Tagihan",
+      "subtitle": "Riwayat invoice dan metode pembayaran.",
+      "empty": {
+        "title": "Belum ada riwayat",
+        "description": "Biaya dan invoice akan muncul di sini setelah periode berbayar pertama Anda.",
+        "cta": "Buka tagihan lengkap"
+      }
+    },
+    "preferences": {
+      "title": "Preferensi",
+      "subtitle": "Tema dan aksesibilitas.",
+      "theme": "Tema",
+      "light": "Terang",
+      "dark": "Gelap",
+      "system": "Sistem",
+      "help": "Bantuan",
+      "reportIssue": "Laporkan masalah",
+      "shortcuts": "Pintasan keyboard"
+    },
+    "personalization": {
+      "title": "Personalisasi",
+      "subtitle": "Perkenalkan diri Anda kepada Sailor dan jelaskan cara merespons."
+    }
+  },
+  "impact": {
+    "hero_title": "Mendefinisikan Ulang Paradigma",
+    "hero_subtitle": "Agar tidak ada bisnis yang sulit di dunia ini.",
+    "social_title": "Sosial",
+    "social_headline": "Kesetaraan Teknologi Mutlak",
+    "social_description": "Memberdayakan inovator di garis depan. Menghancurkan filter tradisional dan memberdayakan pendiri tunggal dengan infrastruktur yang siap pakai.",
+    "governance_title": "Tata Kelola",
+    "governance_headline": "Kode adalah Hukum",
+    "governance_description": "Tata kelola algoritmik yang dibangun di atas Proof of Work dan hasil bisnis nyata, menggantikan birokrasi yang tidak transparan.",
+    "environment_title": "Lingkungan",
+    "environment_headline": "Minimalisme Digital",
+    "environment_description": "Mendorong pengurangan jejak cloud melalui integrasi SaaS ekstrem dan efisiensi sumber daya."
+  },
+  "auth": {
+    "security": {
+      "title": "Keamanan",
+      "description": "Kelola kata sandi, autentikasi multi-faktor, dan sesi aktif Anda.",
+      "managedByProvider": "Pengaturan keamanan dikelola oleh penyedia autentikasi Anda.",
+      "openProviderProfile": "Buka profil",
+      "changePassword": {
+        "title": "Ubah kata sandi",
+        "description": "Gunakan kata sandi yang kuat dan tidak digunakan di situs lain.",
+        "currentPasswordLabel": "Kata sandi saat ini",
+        "newPasswordLabel": "Kata sandi baru",
+        "confirmPasswordLabel": "Konfirmasi kata sandi baru",
+        "revokeOtherSessions": "Keluar dari perangkat lain",
+        "submit": "Perbarui kata sandi",
+        "pending": "Memperbarui kata sandi…",
+        "success": "Kata sandi berhasil diperbarui."
+      },
+      "twoFactor": {
+        "title": "Autentikasi dua faktor",
+        "description": "Tambahkan langkah verifikasi kedua menggunakan aplikasi autentikator.",
+        "enabled": "Diaktifkan",
+        "disabled": "Dinonaktifkan",
+        "enabledHelp": "Akun Anda meminta kode autentikator 6 digit setelah masuk dengan kata sandi.",
+        "disabledHelp": "Lindungi akun Anda dengan kode 6 digit dari aplikasi autentikator.",
+        "enable": "Aktifkan dua faktor",
+        "disable": "Nonaktifkan dua faktor",
+        "passwordPrompt": "Konfirmasi kata sandi Anda",
+        "scanQrCode": "Pindai kode QR ini dengan aplikasi autentikator Anda, lalu masukkan kode 6 digit di bawah.",
+        "secretKeyLabel": "Atau masukkan kunci rahasia ini secara manual",
+        "verificationCodeLabel": "Kode verifikasi",
+        "verify": "Verifikasi dan aktifkan",
+        "backupCodesTitle": "Kode cadangan",
+        "backupCodesDescription": "Simpan kode-kode ini di tempat yang aman. Masing-masing dapat digunakan sekali jika Anda kehilangan akses ke autentikator Anda.",
+        "copyBackupCodes": "Salin kode",
+        "finishSetup": "Selesaikan pengaturan",
+        "successEnabled": "Autentikasi dua faktor diaktifkan.",
+        "successDisabled": "Autentikasi dua faktor dinonaktifkan."
+      },
+      "sessions": {
+        "title": "Sesi aktif",
+        "description": "Perangkat dan browser yang saat ini masuk ke akun Anda.",
+        "currentSession": "(saat ini)",
+        "ipLabel": "Alamat IP",
+        "lastActiveLabel": "Terakhir aktif",
+        "revoke": "Keluar",
+        "revokeAll": "Keluar dari semua perangkat lain",
+        "empty": "Tidak ada sesi aktif lainnya.",
+        "successRevoked": "Sesi telah keluar.",
+        "successRevokedAll": "Semua sesi lain telah keluar."
+      },
+      "deleteAccount": {
+        "title": "Hapus akun",
+        "description": "Hapus akun dan semua data terkait secara permanen. Tindakan ini tidak dapat dibatalkan.",
+        "passwordPrompt": "Masukkan kata sandi untuk konfirmasi",
+        "confirmTextLabel": "Ketik DELETE untuk konfirmasi",
+        "submit": "Hapus akun",
+        "cancel": "Batal",
+        "success": "Akun telah dihapus."
+      },
+      "connectedAccounts": {
+        "title": "Akun terhubung",
+        "description": "Lihat metode masuk OAuth yang terhubung ke identitas Nebutra Anda.",
+        "connected": "Terhubung",
+        "connect": "Hubungkan",
+        "help": "Pastikan setidaknya satu metode masuk yang tepercaya tersedia sebelum memisahkan penyedia.",
+        "unlink": "Pisahkan",
+        "notLinked": "Belum terhubung"
+      },
+      "passkeys": {
+        "title": "Kunci Akses",
+        "description": "Gunakan kredensial terikat perangkat untuk masuk yang tahan phishing.",
+        "empty": "Belum ada kunci akses terdaftar",
+        "addPasskey": "Tambahkan kunci akses",
+        "cancelAdd": "Batal",
+        "cancelled": "Pengaturan kunci akses dibatalkan. Tidak ada perubahan.",
+        "defaultName": "Kunci Akses {number}",
+        "nameHelp": "Berikan nama yang mudah dikenali untuk kunci akses ini sebelum browser meminta konfirmasi.",
+        "nameLabel": "Nama kunci akses",
+        "rename": "Ubah nama",
+        "saveRename": "Simpan nama",
+        "remove": "Hapus",
+        "successAdded": "Passkey ditambahkan.",
+        "successRemoved": "Passkey dihapus.",
+        "unavailableBadge": "Tidak tersedia"
+      },
+      "setPassword": {
+        "title": "Atur kata sandi",
+        "description": "Tambahkan kata sandi untuk masuk tanpa penyedia OAuth Anda.",
+        "submit": "Atur kata sandi",
+        "pending": "Mengirim tautan pengaturan kata sandi…",
+        "sentMessage": "Kami telah mengirim tautan pengaturan kata sandi ke email Anda."
+      }
+    },
+    "banner": {
+      "logoAlt": "Nebutra",
+      "slogan": "Luncurkan Startup Anda, dikelola sejak hari pertama.",
+      "tagline": "Agen multi-region, multi-tenant secara default. Tanpa tim platform."
+    },
+    "signIn": {
+      "title": "Masuk ke Nebutra",
+      "subtitle": "Pilih cara Anda ingin masuk.",
+      "continueWith": "Lanjutkan dengan",
+      "continueWithProvider": "Lanjutkan dengan {provider}",
+      "providers": {
+        "google": "Google",
+        "github": "GitHub",
+        "apple": "Apple",
+        "microsoft": "Microsoft",
+        "feishu": "Feishu"
+      },
+      "providerLoading": "Mengalihkan…",
+      "dividerOr": "Atau lanjutkan dengan email",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "continue": "Lanjutkan",
+      "back": "Kembali",
+      "passwordLabel": "Kata sandi",
+      "passwordPlaceholder": "Masukkan kata sandi Anda",
+      "showPassword": "Tampilkan kata sandi",
+      "hidePassword": "Sembunyikan kata sandi",
+      "capsLockOn": "Caps Lock aktif",
+      "forgotPassword": "Lupa kata sandi?",
+      "submit": "Masuk",
+      "submitLoading": "Sedang masuk…",
+      "useMagicLink": "Kirimkan tautan ajaib ke saya",
+      "usePasskey": "Masuk dengan kunci sandi",
+      "passkeyTitle": "Masuk dengan kunci sandi Anda",
+      "passkeyDescription": "Gunakan Face ID, Touch ID, atau kunci keamanan Anda. Tidak perlu kata sandi.",
+      "passkeyButton": "Lanjutkan dengan kunci sandi",
+      "passkeyCancelled": "Permintaan kunci sandi dibatalkan.",
+      "passkeyUnsupported": "Browser ini tidak mendukung kunci sandi.",
+      "passkeyError": "Masuk dengan kunci sandi gagal. Coba metode lain.",
+      "ssoTitle": "Lanjutkan dengan SSO Perusahaan",
+      "ssoDescription": "Mengalihkan Anda ke {provider} untuk {email}.",
+      "ssoError": "SSO Perusahaan tidak dapat dimulai. Coba metode lain.",
+      "ssoRetry": "Coba lagi",
+      "newToProduct": "Baru di Nebutra?",
+      "signUpLink": "Daftar",
+      "homeLink": "Beranda",
+      "signInFailed": "Gagal masuk",
+      "genericError": "Terjadi kesalahan. Silakan coba lagi.",
+      "captchaError": "Verifikasi bot gagal. Muat ulang halaman dan coba lagi.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
+      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
+      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
+      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+    },
+    "signUp": {
+      "title": "Buat akun Nebutra Anda",
+      "subtitle": "Satu akun untuk semua aplikasi Nebutra.",
+      "firstNameLabel": "Nama depan",
+      "lastNameLabel": "Nama belakang",
+      "firstNamePlaceholder": "Depan",
+      "lastNamePlaceholder": "Belakang",
+      "submit": "Buat akun",
+      "submitLoading": "Membuat akun…",
+      "alreadyHaveAccount": "Sudah punya akun?",
+      "signInLink": "Masuk",
+      "signUpFailed": "Gagal mendaftar",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+    },
+    "passkeys": {
+      "title": "Kunci Akses",
+      "description": "Gunakan Face ID, Touch ID, Windows Hello, atau kunci keamanan sebagai pengganti kata sandi. Setiap perangkat memiliki kunci aksesnya sendiri.",
+      "addButton": "Tambahkan kunci sandi",
+      "adding": "Menyiapkan…",
+      "namePlaceholder": "mis. MacBook Pro",
+      "nameLabel": "Nama (opsional)",
+      "registerSuccess": "Kunci sandi ditambahkan.",
+      "registerCancelled": "Pengaturan dibatalkan.",
+      "registerUnsupported": "Browser ini tidak mendukung kunci sandi.",
+      "registerError": "Gagal mendaftarkan kunci sandi.",
+      "empty": "Belum ada kunci sandi.",
+      "loadError": "Gagal memuat kunci sandi.",
+      "revoke": "Hapus",
+      "revoking": "Menghapus…",
+      "revokeConfirm": "Hapus kunci sandi ini? Anda tidak akan bisa masuk dengannya lagi.",
+      "revokeSuccess": "Kunci sandi dihapus.",
+      "revokeError": "Gagal menghapus kunci sandi.",
+      "device": {
+        "singleDevice": "Terikat perangkat",
+        "multiDevice": "Tersinkronisasi di semua perangkat"
+      },
+      "addedOn": "Ditambahkan {date}"
+    },
+    "magicLink": {
+      "title": "Masuk dengan tautan ajaib",
+      "description": "Masukkan email Anda dan kami akan mengirimkan kode 6 digit untuk masuk.",
+      "emailLabel": "Email",
+      "send": "Kirim tautan",
+      "codeLabel": "Kode verifikasi",
+      "verify": "Verifikasi",
+      "resend": "Kirim ulang kode",
+      "resendCooldown": "Kirim ulang dalam {seconds} detik",
+      "sentTo": "Kami mengirim kode ke {email}"
+    },
+    "forgotPassword": {
+      "title": "Lupa kata sandi?",
+      "description": "Masukkan email Anda dan kami akan mengirimkan tautan untuk mengatur ulang kata sandi.",
+      "emailLabel": "Email",
+      "submit": "Kirim tautan reset",
+      "successTitle": "Periksa email Anda",
+      "success": "Jika email tersebut terdaftar, Anda akan menerima tautan reset dalam beberapa saat."
+    },
+    "resetPassword": {
+      "title": "Reset kata sandi Anda",
+      "description": "Pilih kata sandi baru untuk akun Anda.",
+      "newPasswordLabel": "Kata sandi baru",
+      "confirmPasswordLabel": "Konfirmasi kata sandi baru",
+      "submit": "Reset kata sandi",
+      "successTitle": "Kata sandi telah direset",
+      "successDescription": "Anda sekarang dapat masuk dengan kata sandi baru Anda.",
+      "signInCta": "Buka halaman masuk",
+      "invalidTitle": "Tautan reset tidak valid",
+      "invalidDescription": "Tautan reset kata sandi ini hilang atau tidak sesuai. Minta tautan baru dari halaman lupa kata sandi."
+    },
+    "verifyEmail": {
+      "successTitle": "Email telah diverifikasi",
+      "successDescription": "Alamat email Anda telah diverifikasi.",
+      "failureTitle": "Verifikasi gagal",
+      "failureDescription": "Kami tidak dapat memverifikasi email Anda dengan tautan tersebut.",
+      "continueCta": "Lanjutkan",
+      "signInCta": "Buka halaman masuk"
+    },
+    "loginSuccess": {
+      "eyebrow": "Login selesai",
+      "title": "Anda sudah masuk",
+      "description": "Sesi Anda siap. Kami sedang membuka workspace Nebutra dan menjaga alur autentikasi tetap aman.",
+      "session": "Sesi",
+      "verified": "Terverifikasi",
+      "workspace": "Workspace",
+      "preparing": "Menyiapkan",
+      "redirecting": "Masuk ke workspace dalam {seconds} detik",
+      "secureHandoff": "Alur aman",
+      "continueCta": "Lanjut ke workspace",
+      "signInCta": "Gunakan akun lain"
+    },
+    "errors": {
+      "invalidCredentials": "Email atau kata sandi salah.",
+      "userNotFound": "Tidak ada akun dengan email tersebut.",
+      "userAlreadyExists": "Akun dengan email tersebut sudah ada.",
+      "weakPassword": "Kata sandi terlalu lemah. Gunakan minimal 8 karakter dengan kombinasi huruf besar, huruf kecil, dan angka.",
+      "passwordsDontMatch": "Kata sandi tidak cocok.",
+      "passwordTooShort": "Kata sandi harus minimal 8 karakter.",
+      "currentPasswordIncorrect": "Kata sandi saat ini salah.",
+      "samePassword": "Kata sandi baru harus berbeda dari kata sandi saat ini.",
+      "invalidEmail": "Alamat email tidak valid.",
+      "emailNotVerified": "Verifikasi alamat email Anda terlebih dahulu.",
+      "sessionExpired": "Sesi Anda telah kedaluwarsa. Silakan masuk kembali.",
+      "twoFactorRequired": "Verifikasi dua faktor diperlukan.",
+      "invalidVerificationCode": "Kode verifikasi salah atau kedaluwarsa.",
+      "twoFactorAlreadyEnabled": "Autentikasi dua faktor sudah diaktifkan.",
+      "twoFactorNotEnabled": "Autentikasi dua faktor belum diaktifkan.",
+      "tooManyAttempts": "Terlalu banyak percobaan. Silakan coba lagi nanti.",
+      "rateLimited": "Anda melakukannya terlalu sering. Perlambat sedikit.",
+      "providerNotSupported": "Tindakan ini dikelola oleh penyedia autentikasi Anda.",
+      "networkError": "Kesalahan jaringan. Periksa koneksi Anda dan coba lagi.",
+      "unknown": "Terjadi kesalahan. Silakan coba lagi."
+    }
+  },
+  "chat": {
+    "suggestions": {
+      "title": "Coba salah satu ini untuk memulai",
+      "activity": {
+        "title": "Tampilkan aktivitas terbaru",
+        "prompt": "Tampilkan aktivitas terbaru di seluruh workspace saya dari 24 jam terakhir."
+      },
+      "debug": {
+        "title": "Debug sebuah error",
+        "prompt": "Bantu saya debug error runtime. Saya akan tempel stack trace dan Anda bisa memandu saya melaluinya."
+      },
+      "email": {
+        "title": "Buat draf email ringkasan",
+        "prompt": "Buat draf email ringkasan mingguan yang singkat untuk dikirim ke tim saya tentang kemajuan platform."
+      },
+      "features": {
+        "title": "Jelajahi fitur platform",
+        "prompt": "Jelaskan fitur utama platform SaaS ini dan cara menggunakannya."
+      }
+    }
+  },
+  "billing": {
+    "activePlan": {
+      "title": "Paket aktif",
+      "manage": "Kelola langganan",
+      "noPlanTitle": "Tidak ada paket aktif",
+      "noPlanDescription": "Pilih paket untuk membuka fitur berbayar dan batas penggunaan yang lebih tinggi.",
+      "choosePlan": "Pilih paket",
+      "renewsOn": "Perpanjang pada {date}",
+      "endsOn": "Berakhir pada {date}",
+      "trialEndsOn": "Masa percobaan berakhir {date}",
+      "status": {
+        "active": "Aktif",
+        "trialing": "Masa Percobaan",
+        "past_due": "Lewat Jatuh Tempo",
+        "canceled": "Dibatalkan",
+        "free": "Gratis"
+      },
+      "errors": {
+        "loadFailed": "Gagal memuat status penagihan Anda."
+      }
+    },
+    "pricing": {
+      "trial": "Masa percobaan gratis {days} hari",
+      "seat": "{count, plural, one {# tempat duduk} other {# tempat duduk}}",
+      "perSeat": "/ tempat duduk"
+    }
+  },
+  "organizations": {
+    "settings": {
+      "logo": {
+        "title": "Logo organisasi",
+        "description": "Unggah gambar persegi (PNG, JPEG, atau WebP, maks 2MB) untuk mewakili organisasi Anda.",
+        "uploadButton": "Unggah logo",
+        "uploading": "Mengunggah…",
+        "fileTooBig": "Ukuran file terlalu besar. Ukuran maksimum adalah 2MB.",
+        "invalidType": "Jenis gambar tidak didukung. Gunakan PNG, JPEG, atau WebP.",
+        "success": "Logo diperbarui.",
+        "removeButton": "Hapus logo",
+        "removed": "Logo dihapus."
+      },
+      "name": {
+        "title": "Nama organisasi",
+        "description": "Perbarui nama tampilan yang ditampilkan ke tim dan pelanggan Anda.",
+        "label": "Nama",
+        "submit": "Simpan",
+        "saving": "Menyimpan…",
+        "success": "Nama organisasi diperbarui."
+      },
+      "delete": {
+        "title": "Hapus organisasi",
+        "description": "Hapus organisasi ini secara permanen, beserta semua anggota, undangan, dan data terkait. Tindakan ini tidak dapat dibatalkan.",
+        "trigger": "Hapus organisasi",
+        "confirmLabel": "Ketik nama organisasi untuk konfirmasi",
+        "submit": "Hapus organisasi",
+        "cancel": "Batal",
+        "success": "Organisasi dihapus."
+      }
+    },
+    "invitation": {
+      "title": "Anda telah diundang",
+      "heading": "Anda telah diundang untuk bergabung dengan {organizationName}",
+      "description": "Terima undangan untuk mulai berkolaborasi dengan tim.",
+      "accept": "Terima undangan",
+      "accepting": "Menerima...",
+      "decline": "Tolak",
+      "declining": "Menolak...",
+      "declinedView": "Undangan ditolak",
+      "success": "Kami telah memberi tahu pengundang.",
+      "backToDashboard": "Kembali ke dashboard",
+      "roleLabel": "Peran: {role}",
+      "errorEmailMismatch": "Undangan ini dikirim ke email lain",
+      "errorEmailMismatchDetail": "Masuk dengan alamat email yang menerima undangan untuk menerimanya.",
+      "errorExpired": "Undangan kedaluwarsa",
+      "errorExpiredDetail": "Minta pengundang untuk mengirim undangan baru.",
+      "errorNotFound": "Undangan tidak ditemukan",
+      "errorNotFoundDetail": "Tautan undangan tidak valid atau telah dicabut.",
+      "errorNotAvailable": "Undangan tidak tersedia",
+      "errorNotAvailableDetail": "Undangan ini sudah ditanggapi dan tidak lagi aktif.",
+      "role": {
+        "owner": "Pemilik",
+        "admin": "Admin",
+        "member": "Anggota",
+        "viewer": "Peninjau"
+      }
+    }
+  },
+  "settings": {
+    "apiKeys": {
+      "title": "Kunci API",
+      "description": "Buat dan kelola kunci API untuk akses terprogram ke Nebutra.",
+      "createButton": "Buat kunci API",
+      "noPermission": "Anda tidak memiliki izin untuk melihat kunci API.",
+      "loading": "Memuat…",
+      "loadError": "Gagal memuat kunci API.",
+      "createError": "Gagal membuat kunci API.",
+      "revokeError": "Gagal mencabut kunci API.",
+      "empty": {
+        "title": "Belum ada kunci API",
+        "cta": "Buat API key pertama Anda"
+      },
+      "columns": {
+        "name": "Nama",
+        "prefix": "Awalan",
+        "lastUsed": "Terakhir Digunakan",
+        "scopes": "Lingkup",
+        "created": "Dibuat",
+        "actions": "Tindakan",
+        "never": "Belum Pernah"
+      },
+      "actions": {
+        "revoke": "Cabut",
+        "revoking": "Mencabut…",
+        "copy": "Salin",
+        "copied": "Tersalin",
+        "close": "Tutup",
+        "submit": "Buat kunci",
+        "submitting": "Membuat…"
+      },
+      "dialog": {
+        "title": "Buat API key",
+        "description": "Kunci API memungkinkan sistem eksternal berkomunikasi dengan Nebutra atas nama Anda. Perlakukan seperti kata sandi.",
+        "nameLabel": "Nama",
+        "namePlaceholder": "mis. Backend produksi",
+        "scopesLabel": "Ruang Lingkup",
+        "successWarning": "Kunci ini hanya muncul sekali. Simpan sebelum menutup.",
+        "confirmClose": "Menutup akan menyembunyikan kunci ini selamanya. Pastikan sudah disimpan."
+      }
+    },
+    "auditLog": {
+      "title": "Log Audit",
+      "description": "Lacak setiap tindakan administratif di workspace Anda. Filter berdasarkan pelaku, tindakan, entitas, atau rentang waktu.",
+      "empty": "Belum ada peristiwa audit",
+      "loadMore": "Muat lebih banyak",
+      "loading": "Memuat…",
+      "forbidden": "Anda memerlukan akses admin untuk melihat log audit.",
+      "columns": {
+        "when": "Kapan",
+        "actor": "Pelaku",
+        "action": "Tindakan",
+        "entity": "Entitas",
+        "outcome": "Hasil",
+        "ip": "IP"
+      },
+      "diff": {
+        "oldValue": "Nilai lama",
+        "newValue": "Nilai baru"
+      },
+      "filters": {
+        "action": "Tindakan",
+        "actionPlaceholder": "Cari tindakan…",
+        "entityType": "Jenis entitas",
+        "outcome": "Hasil",
+        "outcomeSuccess": "Berhasil",
+        "outcomeFailure": "Gagal",
+        "outcomePending": "Menunggu",
+        "startDate": "Tanggal mulai",
+        "endDate": "Tanggal akhir",
+        "range24h": "24 jam terakhir",
+        "range7d": "7 hari terakhir",
+        "range30d": "30 hari terakhir",
+        "reset": "Reset",
+        "all": "Semua"
+      }
+    },
+    "notifications": {
+      "title": "Notifikasi",
+      "description": "Pilih cara Nebutra menghubungi Anda untuk setiap jenis peristiwa, di setiap saluran pengiriman.",
+      "actions": {
+        "resetAll": "Reset ke default",
+        "save": "Simpan"
+      },
+      "status": {
+        "saving": "Menyimpan…",
+        "saved": "Tersimpan",
+        "error": "Gagal menyimpan. Silakan coba lagi."
+      },
+      "eventTypes": {
+        "security": {
+          "label": "Peringatan keamanan",
+          "description": "Peringatan masuk, perubahan kata sandi, perubahan dua faktor."
+        },
+        "billing": {
+          "label": "Tagihan",
+          "description": "Invoice, kegagalan pembayaran, dan perubahan langganan."
+        },
+        "invitation": {
+          "label": "Undangan tim",
+          "description": "Undangan untuk bergabung dengan organisasi, diterima atau ditolak."
+        },
+        "activity": {
+          "label": "Aktivitas tim",
+          "description": "Anggota bergabung, perubahan peran, dan aktivitas workspace lainnya."
+        },
+        "updates": {
+          "label": "Pembaruan produk",
+          "description": "Fitur baru, sorotan changelog, dan catatan rilis."
+        },
+        "marketing": {
+          "label": "Pemasaran",
+          "description": "Newsletter dan promosi sesekali. Hanya jika Anda setuju."
+        }
+      },
+      "channels": {
+        "in_app": {
+          "label": "Di aplikasi"
+        },
+        "email": {
+          "label": "Email"
+        },
+        "push": {
+          "label": "Push"
+        },
+        "sms": {
+          "label": "SMS"
+        }
+      }
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "Berlangganan peristiwa yang dipancarkan oleh workspace Anda. Kami menandatangani setiap payload dengan rahasia endpoint Anda agar Anda dapat memverifikasi keasliannya.",
+      "create": {
+        "heading": "Endpoint baru",
+        "urlLabel": "URL endpoint",
+        "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
+        "eventsLegend": "Peristiwa",
+        "submit": "Buat endpoint",
+        "submitting": "Membuat…",
+        "selectEvent": "Pilih setidaknya satu peristiwa.",
+        "successTitle": "Endpoint berhasil dibuat. Rahasia penandatanganan hanya muncul sekali.",
+        "successWarning": "Simpan di manajer rahasia aplikasi Anda sebelum menutup.",
+        "copy": "Salin",
+        "copied": "Disalin"
+      },
+      "list": {
+        "heading": "Endpoint aktif",
+        "empty": "Belum ada endpoint webhook. Buat satu di atas.",
+        "loading": "Memuat…",
+        "loadFailed": "Gagal memuat webhook",
+        "columns": {
+          "url": "URL",
+          "events": "Peristiwa",
+          "status": "Status",
+          "lastDelivered": "Terakhir dikirim",
+          "actions": "Tindakan"
+        },
+        "status": {
+          "active": "Aktif",
+          "disabled": "Nonaktif"
+        },
+        "actions": {
+          "edit": "Edit",
+          "enable": "Aktifkan",
+          "disable": "Nonaktifkan",
+          "viewDeliveries": "Lihat pengiriman",
+          "delete": "Hapus"
+        }
+      },
+      "deliveries": {
+        "heading": "Pengiriman terbaru",
+        "close": "Tutup",
+        "loading": "Memuat…",
+        "loadFailed": "Gagal memuat pengiriman",
+        "empty": "Belum ada pengiriman.",
+        "viewPayload": "Lihat payload",
+        "hidePayload": "Sembunyikan payload",
+        "replay": "Putar ulang",
+        "replaying": "Memutar ulang…",
+        "status": {
+          "success": "berhasil",
+          "failed": "gagal",
+          "retrying": "mencoba lagi"
+        }
+      }
+    },
+    "appearance": {
+      "title": "Tampilan",
+      "theme": {
+        "title": "Tema",
+        "description": "Gunakan terang, gelap, atau sesuaikan preferensi sistem."
+      },
+      "themePreset": {
+        "title": "Preset tema",
+        "description": "Terapkan tema apa pun dari Theme Playground ke seluruh aplikasi. Kontrol di bawah ini ditumpuk di atasnya untuk penyesuaian lebih lanjut.",
+        "search": "Cari tema…",
+        "searchLabel": "Cari tema",
+        "default": "Bawaan",
+        "defaultMood": "Nebutra base palette",
+        "active": "Aktif",
+        "empty": "Tidak ada tema yang cocok dengan pencarian Anda.",
+        "count": "{count} tema"
+      },
+      "themeEditor": {
+        "title": "Tema",
+        "description": "Pilih preset, impor DESIGN.md, lalu sesuaikan token di bawah ini.",
+        "selectLabel": "Preset tema",
+        "import": "Impor",
+        "copy": "Salin tema",
+        "copied": "Tersalin",
+        "copyError": "Gagal menyalin",
+        "custom": "Kustom"
+      },
+      "designMd": {
+        "title": "Impor DESIGN.md",
+        "description": "Tempel atau unggah DESIGN.md untuk menerapkan warna, radius, font, spasi, dan bayangan ke seluruh aplikasi — tetap tersimpan meski halaman dimuat ulang.",
+        "applied": "Diterapkan:",
+        "remove": "Hapus"
+      },
+      "themeMode": {
+        "label": "Mode tema",
+        "light": "Terang",
+        "dark": "Gelap",
+        "system": "Sistem"
+      },
+      "accent": {
+        "title": "Warna aksen",
+        "description": "Pilih aksen merek yang memberi warna pada status aktif di seluruh aplikasi.",
+        "label": "Warna aksen",
+        "options": {
+          "default": "Bawaan",
+          "blue": "Biru",
+          "cyan": "Cyan",
+          "violet": "Ungu",
+          "pink": "Merah Muda",
+          "amber": "Amber",
+          "green": "Hijau",
+          "red": "Merah"
+        }
+      },
+      "colors": {
+        "title": "Warna",
+        "description": "Aksen, latar belakang, dan latar depan.",
+        "background": {
+          "label": "Latar Belakang",
+          "description": "Timpa warna latar permukaan."
+        },
+        "foreground": {
+          "label": "Latar Depan",
+          "description": "Timpa warna teks isi."
+        },
+        "resetToDefault": "Kembalikan ke bawaan"
+      },
+      "fontFamily": {
+        "uiLabel": "Font UI",
+        "uiDescription": "Keluarga font yang digunakan di seluruh UI.",
+        "codeLabel": "Font kode",
+        "codeDescription": "Keluarga font yang digunakan untuk tampilan kode.",
+        "options": {
+          "ui": {
+            "theme": "Bawaan tema",
+            "system": "Sistem",
+            "geist": "Geist",
+            "inter": "Inter",
+            "sf": "SF Pro"
+          },
+          "code": {
+            "theme": "Bawaan tema",
+            "system": "Sistem mono",
+            "geist-mono": "Geist Mono",
+            "sf-mono": "SF Mono",
+            "jetbrains-mono": "JetBrains Mono"
+          }
+        }
+      },
+      "contrast": {
+        "title": "Kontras",
+        "description": "Sesuaikan kontras teks (50 = tanpa perubahan).",
+        "label": "Tingkat kontras"
+      },
+      "pointerCursor": {
+        "title": "Gunakan kursor pointer",
+        "description": "Beralih ke kursor pointer pada elemen interaktif saat diarahkan.",
+        "label": "Kursor pointer pada elemen interaktif"
+      },
+      "diffMarkers": {
+        "title": "Penanda diff",
+        "description": "Tampilkan pita warna atau glikf +/- pada setiap baris yang diubah.",
+        "label": "Gaya penanda diff",
+        "color": "Warna",
+        "plusminus": "+/-"
+      },
+      "fontSmoothing": {
+        "title": "Perhalusan font",
+        "description": "Terapkan antialiasing font asli macOS.",
+        "label": "Perhalusan font asli"
+      },
+      "typography": {
+        "title": "Tipografi",
+        "description": "Ukuran font dasar untuk antarmuka dan permukaan kode.",
+        "uiFontSize": "Ukuran font UI",
+        "uiFontSizeDescription": "Sesuaikan ukuran font dasar UI.",
+        "codeFontSize": "Ukuran font kode",
+        "codeFontSizeDescription": "Sesuaikan ukuran font dasar kode."
+      },
+      "fontSize": {
+        "followTheme": "Tema",
+        "customize": "Sesuaikan"
+      },
+      "motion": {
+        "title": "Kurangi gerakan",
+        "description": "Kurangi animasi atau sesuaikan dengan preferensi sistem.",
+        "label": "Preferensi gerakan",
+        "system": "Sistem",
+        "on": "Aktif",
+        "off": "Nonaktif"
+      },
+      "surface": {
+        "title": "Sidebar transparan",
+        "description": "Terapkan material transparan pada sidebar."
+      },
+      "transparency": {
+        "label": "Sidebar transparan",
+        "description": "Terapkan material transparan pada sidebar."
+      }
+    }
+  },
+  "legal": {
+    "version": "Versi",
+    "effective": "Berlaku",
+    "notFound": "Dokumen ini tidak tersedia.",
+    "backHome": "Kembali ke beranda"
+  },
+  "commandPalette": {
+    "ariaLabel": "Palet perintah",
+    "placeholder": "Ketik perintah atau cari…",
+    "empty": "Tidak ada hasil ditemukan.",
+    "sections": {
+      "navigation": "Navigasi",
+      "actions": "Tindakan",
+      "settings": "Pengaturan",
+      "account": "Akun",
+      "admin": "Admin",
+      "help": "Bantuan"
+    },
+    "commands": {
+      "nav": {
+        "home": "Beranda",
+        "settings": "Pengaturan",
+        "billing": "Tagihan",
+        "team": "Tim",
+        "apiKeys": "Kunci API",
+        "notifications": "Notifikasi",
+        "auditLog": "Log Audit",
+        "webhooks": "Webhooks",
+        "admin": "Admin"
+      },
+      "action": {
+        "inviteMember": "Undang anggota tim",
+        "createApiKey": "Buat kunci API",
+        "switchOrganization": "Beralih organisasi"
+      },
+      "settings": {
+        "themeLight": "Beralih ke tema terang",
+        "themeDark": "Beralih ke tema gelap",
+        "themeSystem": "Gunakan tema sistem"
+      },
+      "account": {
+        "signOut": "Keluar"
+      },
+      "help": {
+        "reportIssue": "Laporkan masalah",
+        "shortcuts": "Pintasan keyboard"
+      }
+    }
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "Pilihan privasi Anda",
+      "description": "Kami menggunakan cookie untuk meningkatkan pengalaman Anda, menganalisis lalu lintas situs, dan mempersonalisasi konten. Pilih kategori yang ingin Anda izinkan."
+    },
+    "button": {
+      "acceptAll": "Terima semua",
+      "savePreferences": "Simpan preferensi"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "Wajib",
+        "description": "Diperlukan agar situs berfungsi. Tidak dapat dinonaktifkan."
+      },
+      "functional": {
+        "label": "Fungsional",
+        "description": "Ingat preferensi Anda (bahasa, tema, tata letak)."
+      },
+      "analytics": {
+        "label": "Analitik",
+        "description": "Data penggunaan anonim agar kami dapat meningkatkan produk."
+      },
+      "marketing": {
+        "label": "Pemasaran",
+        "description": "Iklan yang dipersonalisasi dan retargeting di platform pihak ketiga."
+      }
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "Notifikasi",
+      "description": "Semua notifikasi Anda dalam satu tempat.",
+      "filter": {
+        "all": "Semua",
+        "unread": "Belum Dibaca"
+      },
+      "actions": {
+        "markAllRead": "Tandai semua sudah dibaca",
+        "markRead": "Tandai sudah dibaca",
+        "archive": "Arsipkan",
+        "loadMore": "Muat lebih banyak",
+        "loading": "Memuat...",
+        "selected": "{count} dipilih"
+      },
+      "empty": {
+        "all": "Semua sudah dibaca.",
+        "unread": "Tidak ada notifikasi belum dibaca."
+      },
+      "errors": {
+        "load": "Gagal memuat notifikasi.",
+        "network": "Kesalahan jaringan. Silakan coba lagi.",
+        "markRead": "Gagal menandai notifikasi sebagai sudah dibaca.",
+        "archive": "Gagal mengarsipkan notifikasi.",
+        "bulkMarkRead": "Beberapa notifikasi tidak dapat ditandai sebagai sudah dibaca."
+      },
+      "inbox": {
+        "noBackend": "Inbox memerlukan backend notifikasi yang persisten. Periksa konfigurasi penyedia Anda.",
+        "emptyCaughtUp": "Inbox kosong.",
+        "emptyChangelog": "Pembaruan changelog akan muncul di sini."
+      }
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Selamat pagi",
+      "afternoon": "Selamat siang",
+      "evening": "Selamat malam"
+    },
+    "home": {
+      "connectorsPill": "Dayakan aplikasi Anda dengan konektor",
+      "subtitle": "Masukkan prompt, tekan ⌘K dari mana saja, atau langsung masuk ke permukaan workspace.",
+      "promptPlaceholder": "Apa yang ada di pikiran Anda?",
+      "actions": {
+        "connect": "Hubungkan integrasi",
+        "theme": "Tema Playground",
+        "audit": "Log audit",
+        "billing": "Tagihan"
+      }
+    },
+    "commandSurface": {
+      "noAuth": "Autentikasi belum dikonfigurasi untuk penyedia yang dipilih. Atur rahasia penyedia untuk mengaktifkan sesi pengguna."
+    },
+    "commandCenter": {
+      "description": "Mulai dengan satu tindakan: tanyakan ke Sailor, periksa sinyal workspace, atau arahkan pekerjaan ke permukaan otomatisasi.",
+      "openSailor": "Buka Sailor AI",
+      "viewAnalytics": "Lihat Analitik"
+    },
+    "workspaceSnapshot": {
+      "title": "Snapshot Workspace",
+      "description": "Hari gudang terbaru · {day}",
+      "viewAnalytics": "Lihat analitik →",
+      "metrics": {
+        "activeUsers": "Pengguna Aktif",
+        "totalEvents": "Total Acara",
+        "conversions": "Konversi",
+        "revenue": "Pendapatan"
+      },
+      "details": {
+        "activeUsers": "Pengguna yang masuk",
+        "totalEvents": "Peristiwa yang ditangkap",
+        "conversions": "Tindakan yang memenuhi syarat",
+        "revenue": "Pendapatan yang diakui"
+      },
+      "meta": {
+        "snapshot": "Snapshot",
+        "cadence": "Cadence",
+        "tenant": "Tenant",
+        "daily": "Harian",
+        "latestDay": "{day}",
+        "users": "Pengguna tenant",
+        "events": "Aliran peristiwa",
+        "funnel": "Funnel",
+        "billing": "Billing"
+      }
+    },
+    "documentPipeline": {
+      "title": "Pipeline dokumen",
+      "description": "Kirim file sumber ke antrean tugas asal.",
+      "intakeTitle": "Penerimaan dokumen",
+      "intakeDescription": "PDF, Markdown, teks, atau dokumen Word",
+      "chooseDocument": "Pilih dokumen",
+      "startParseTask": "Mulai tugas parsing",
+      "queued": "Dalam antrean",
+      "fileInputLabel": "File dokumen",
+      "fallbackError": "Tugas dokumen gagal.",
+      "taskStatus": "Status tugas",
+      "progressLabel": "Progres tugas",
+      "refreshStatus": "Segarkan",
+      "cancelTask": "Batalkan",
+      "statusError": "Tidak dapat menyegarkan status tugas.",
+      "cancelError": "Tidak dapat membatalkan tugas.",
+      "statusQueued": "Dalam antrean",
+      "statusRunning": "Sedang berjalan",
+      "statusSucceeded": "Berhasil",
+      "statusFailed": "Gagal",
+      "statusCancelled": "Dibatalkan",
+      "resultReady": "Hasil siap",
+      "taskError": "Kesalahan tugas",
+      "updatedAt": "Diperbarui"
+    },
+    "recentSessions": {
+      "title": "Lanjutkan dari tempat terakhir",
+      "subtitle": "{count, plural, =0 {Tidak ada sesi} =1 {1 sesi terbaru} other {# sesi terbaru}}",
+      "viewAll": "Lihat semua →",
+      "newChat": "Chat baru",
+      "untitled": "Sesi tanpa judul",
+      "messageCount": "{count, plural, =1 {1 pesan} other {# pesan}}"
+    },
+    "gettingStarted": {
+      "title": "Memulai",
+      "description": "{done} dari {total} selesai · selesaikan pengaturan untuk membuka workspace penuh",
+      "progressLabel": "Progres pengaturan",
+      "tasks": {
+        "team": {
+          "label": "Undang rekan tim",
+          "description": "Ajak setidaknya satu kolaborator ke workspace Anda."
+        },
+        "api": {
+          "label": "Buat kunci API",
+          "description": "Akses terprogram ke endpoint workspace Anda."
+        },
+        "integration": {
+          "label": "Hubungkan integrasi",
+          "description": "Stripe, Slack, webhook, antrean, dan lainnya."
+        },
+        "ai": {
+          "label": "Buka Sailor AI",
+          "description": "Coba mode chat, data, atau alur kerja."
+        }
+      }
+    }
+  },
+  "Sidebar": {
+    "projects": "Proyek",
+    "noThreads": "Tidak ada thread",
+    "expandAll": "Buka semua",
+    "collapseAll": "Tutup semua",
+    "sectionMore": "Opsi lainnya",
+    "newProject": "Proyek baru",
+    "restoredGroups": "Grup yang sebelumnya dibuka telah dipulihkan",
+    "newProjectPlaceholder": "Nama proyek",
+    "newProjectDefault": "Tanpa judul",
+    "newProjectSuccess": "Proyek berhasil dibuat",
+    "newProjectError": "Gagal membuat proyek",
+    "sortBy": "Urutkan berdasarkan",
+    "sortRecent": "Aktif terakhir",
+    "sortAlphabetical": "Alfabetis",
+    "sortCreated": "Tanggal dibuat",
+    "archiveAll": "Arsipkan semua",
+    "comingV2": "Segera hadir di v2"
+  },
+  "startupOs": {
+    "milestone": {
+      "firstRoom": "Ruang pertama sudah siap.",
+      "firstFolder": "Banyak perusahaan bermula dari sebuah folder.",
+      "firstTable": "Meja pertama kini punya kursi kedua.",
+      "firstSignal": "Dunia nyata mulai berbicara.",
+      "firstShip": "Dunia melihatnya untuk pertama kali.",
+      "firstBeliever": "Mulai hari ini, Anda tidak lagi membangun hanya untuk diri sendiri.",
+      "firstRevenue": "Mimpi kini memiliki arus kas.",
+      "firstReturn": "Kembali lebih penting daripada sekadar berkunjung.",
+      "firstTeam": "Tiga orang bisa mulai membentuk sebuah perusahaan.",
+      "firstCrowd": "Meja pertama mulai ramai.",
+      "firstReset": "Memulai ulang adalah awal yang lebih jujur.",
+      "firstPublic": "Letakkan sepotong masa depan di ruang publik.",
+      "firstDemo": "Ini bukan pertunjukan. Ini adalah pengujian.",
+      "graduation": "Anda telah melampaui dasar-dasar. Jalan ke depan membutuhkan alat yang lebih kuat."
+    },
+    "emptyState": {
+      "default": "Banyak perusahaan dimulai sebagai sebuah folder.",
+      "integrations": "Belum ada konektor yang dikonfigurasi.",
+      "creditActivity": "Aktivitas kredit akan muncul setelah permintaan pertama Anda.",
+      "usageData": "Data penggunaan akan muncul setelah organisasi Anda mulai membuat permintaan.",
+      "apiKeys": "Belum ada kunci.",
+      "apiKeysCta": "Buat kunci pertama Anda",
+      "teamMembers": "Satu orang bisa memulai. Beberapa orang bisa membangun.",
+      "cofounders": "Orang pertama yang percaya pada Anda belum muncul.",
+      "cofoundersDescription": "Saat Anda dan pendiri lain sama-sama menunjukkan minat, mereka akan muncul di sini.",
+      "cofoundersAction": "Temukan rekan pendiri",
+      "growthChart": "Data tren akan muncul setelah aktivitas dimulai.",
+      "revenueChart": "Data pendapatan akan muncul setelah transaksi dimulai.",
+      "webhookDeliveries": "Pengiriman akan muncul di sini setelah peristiwa pertama.",
+      "webhookEndpoints": "Tambahkan endpoint di atas untuk mulai menerima peristiwa.",
+      "accessInvites": "Tidak ada kode undangan yang diterbitkan."
+    },
+    "success": "Ruang pertama sudah siap.",
+    "failure": "Memulai ulang adalah awal yang lebih jujur.",
+    "errors": {
+      "loadMatches": "Cocokan tidak dapat dimuat.",
+      "loadMatchesDescription": "Ada masalah di pihak kami. Muat ulang untuk mencoba lagi.",
+      "loadWebhookDeliveries": "Pengiriman tidak dapat dimuat.",
+      "replayWebhookDelivery": "Pemutaran ulang tidak berhasil.",
+      "loadWebhookEndpoints": "Titik akhir tidak dapat dimuat."
+    },
+    "team": "Satu orang bisa memulai. Beberapa orang bisa membangun.",
+    "revenue": "Mimpi kini memiliki arus kas.",
+    "growth": "Sinyal semakin kuat.",
+    "deployment": {
+      "primary": "Dunia melihatnya untuk pertama kalinya.",
+      "echo": "Akhirnya keluar dari localhost."
+    },
+    "onboarding": "Kamu tidak perlu siap. Kamu perlu memulai.",
+    "graduation": "Kamu sudah melampaui dasar-dasar. Coba {tool} untuk perjalanan selanjutnya.",
+    "company": {
+      "emptyTitle": "Menara konteks pertamamu dimulai di sini.",
+      "emptyDescription": "Kompilasi perusahaan di Startup OS untuk melihat dan mengedit menara konteksnya.",
+      "emptyAction": "Buka Startup OS",
+      "notice": {
+        "needsProvider": "Hubungkan kunci penyedia AI untuk mengisi otomatis bidang.",
+        "generateFailed": "Generasi tidak selesai.",
+        "saveFailed": "Perubahan Anda tidak tersimpan."
+      },
+      "action": {
+        "save": "Simpan",
+        "saving": "Menyimpan…",
+        "cancel": "Batal",
+        "open": "Buka Startup OS"
+      }
+    },
+    "execution": {
+      "noBets": "Belum ada taruhan.",
+      "noRuns": "Tidak ada eksekusi aktif."
+    },
+    "fileTree": {
+      "empty": "Proyek ini belum memiliki file."
+    }
+  },
+  "selectOrg": {
+    "invitation": {
+      "emptyTitle": "Ruang kerja sedang dalam proses.",
+      "emptyDescription": "Undangan mungkin masih disinkronkan. Segarkan halaman ini atau buat ruang kerja terpisah."
+    },
+    "billing": {
+      "emptyTitle": "Buat ruang kerja sebelum penagihan.",
+      "emptyDescription": "Tindakan penagihan memerlukan ruang kerja aktif. Buat terlebih dahulu, lalu kembali ke penagihan."
+    },
+    "default": {
+      "emptyTitle": "Workspace pertama dimulai di sini.",
+      "emptyDescription": "Buat workspace untuk memulai."
+    }
+  }
+}

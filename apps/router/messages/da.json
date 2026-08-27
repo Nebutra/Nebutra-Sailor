@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — API-markededsplads",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "API-markededsplads til alle modeller · betal efter forbrug · administrer nøgler og tegnebog · hurtig prøve."
+  },
+  "admin": {
+    "dashboard": "Oversigt",
+    "keys": "API-nøgler",
+    "wallet": "Lommebog",
+    "docs": "Dokumentation",
+    "title": "Admin",
+    "backToMarket": "Tilbage til markedet",
+    "quickUse": "Hurtig brug"
+  },
+  "chrome": {
+    "searchPlaceholder": "Hvad vil du gøre med AI?",
+    "search": "Søg",
+    "locale": "Sprog",
+    "currency": "Valuta",
+    "collapseSidebar": "Skjul sidebjælke",
+    "expandSidebar": "Udvid sidebjælke",
+    "home": "Hjem",
+    "adminConsole": "Admin",
+    "quickUse": "Hurtig brug",
+    "support": "Support",
+    "apiDocs": "API-dokumentation",
+    "integrationHelp": "Integrationsguide",
+    "aiRecommend": "AI-udvalg",
+    "market": "Marked",
+    "usageTitle": "Hurtig brug"
+  },
+  "channels": {
+    "app": "App-marked",
+    "api": "API-marked",
+    "models": "Modelkatalog",
+    "client": "Klient"
+  },
+  "market": {
+    "new": "Ny",
+    "hot": "Populær",
+    "forYou": "Til dig",
+    "grid": "Gitter",
+    "list": "Liste",
+    "apiShelf": "API-hylde",
+    "toolShelf": "Værktøjshylde",
+    "categories": "Kategorier",
+    "apps": "Apps",
+    "newRelease": "Ny udgivelse",
+    "forgeTitle": "Forge-værktøjsarbejdsområde",
+    "forgeBlurb": "Teksttransformationer, codecs, formularer og sammensættelige værktøjer. App-markedspladsen peger på Forge.",
+    "openForge": "Åbn Forge →",
+    "allApi": "Alle APIs →",
+    "all": "Alle →",
+    "viewAll": "Se alle {label} →",
+    "gridView": "Gittervisning",
+    "listView": "Listevisning",
+    "hiTitle": "Enterprise AI-ressourceplatform",
+    "hiSubtitle": "Match hvert behov med den rigtige AI",
+    "sellable": "Sælgbar",
+    "walletTopup": "Top op"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "Sprogmodeller",
+      "hint": "Chat · ræsonnement"
+    },
+    "image-gen": {
+      "label": "Billedgenerering",
+      "hint": "Tekst-til-billede"
+    },
+    "image-edit": {
+      "label": "Billedredigering",
+      "hint": "Redigér · matting"
+    },
+    "video": {
+      "label": "Videogenerering",
+      "hint": "Tekst-til-video"
+    },
+    "audio": {
+      "label": "Lyd & video",
+      "hint": "Tale · transskription"
+    },
+    "data": {
+      "label": "Information",
+      "hint": "Hentning · udtræk"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "Videnforstærket"
+    },
+    "tools": {
+      "label": "Værktøjs-API'er",
+      "hint": "Agent · værktøjer"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "Botter",
+      "chips": "Chatbots · tegnebots · viden"
+    },
+    "productivity": {
+      "label": "Produktivitet",
+      "chips": "Modelarena · AI-skrivning"
+    },
+    "academic": {
+      "label": "Akademisk",
+      "chips": "PDF-værktøjskasse · AI-patentsøgning"
+    },
+    "image": {
+      "label": "Billedværktøjer",
+      "chips": "3D-studie · Canvas"
+    },
+    "audio": {
+      "label": "Lyd",
+      "chips": "Tale · AI-musik"
+    },
+    "code": {
+      "label": "Kode",
+      "chips": "Web-generator · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "Oversigt",
+    "keys": "Nøgler",
+    "wallet": "Lommebog",
+    "use": "Prøv",
+    "docs": "Dokumentation",
+    "models": "Mere"
+  }
+}

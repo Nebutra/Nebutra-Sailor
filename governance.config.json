@@ -1,0 +1,355 @@
+{
+  "motionTokens": {
+    "allowlist": [
+      {
+        "file": "packages/design/ui/src/components/ai-prompt-box/file-attachment-zone.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/components/ai-prompt-box/prompt-input.tsx",
+        "count": 4
+      },
+      {
+        "file": "packages/design/ui/src/components/ai-prompt-box/voice-visualizer.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/components/onboarding-checklist.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/layouts/bento-grid.tsx",
+        "count": 5
+      },
+      {
+        "file": "packages/design/ui/src/marketing/Hero.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/marketing/Navbar.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/marketing/SocialProof.tsx",
+        "count": 3
+      },
+      {
+        "file": "packages/design/ui/src/marketing/award-badge.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/marketing/cosmic-spectrum.tsx",
+        "count": 3
+      },
+      {
+        "file": "packages/design/ui/src/marketing/cta-with-text-marquee.tsx",
+        "count": 8
+      },
+      {
+        "file": "packages/design/ui/src/marketing/customers-section.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/marketing/stagger-testimonials.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/patterns/artifact-shift-card.tsx",
+        "count": 3
+      },
+      {
+        "file": "packages/design/ui/src/patterns/kinetic-marketing.tsx",
+        "count": 7
+      },
+      {
+        "file": "packages/design/ui/src/primitives/animated-hike-card.tsx",
+        "count": 3
+      },
+      {
+        "file": "packages/design/ui/src/primitives/apple-liquid-glass-switcher.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/assisted-password-confirmation.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/book.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/display-cards.stories.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/primitives/dithering-background.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/gauge.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/primitives/globe.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/input-otp.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/interactive-frosted-glass-card.tsx",
+        "count": 5
+      },
+      {
+        "file": "packages/design/ui/src/primitives/stepper.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/tree.tsx",
+        "count": 1
+      }
+    ]
+  },
+  "brandLiterals": {
+    "allowlist": [
+      "apps/admin/src/lib/auth.ts",
+      "apps/forge/src/app/api/docs/route.ts",
+      "apps/forge/src/components/base64-runner.tsx",
+      "apps/forge/src/components/catalog-runners.tsx",
+      "apps/forge/src/components/codec-mode-runner.tsx",
+      "apps/forge/src/components/json-format-runner.tsx",
+      "apps/forge/src/components/md-to-pdf-runner.tsx",
+      "apps/forge/src/components/p0-runners.tsx",
+      "apps/forge/src/components/site-footer.tsx",
+      "apps/forge/src/components/tool-workspace.tsx",
+      "apps/forge/src/components/word-count-runner.tsx",
+      "apps/idp/src/lib/oidc.ts",
+      "apps/landing/src/app/[lang]/(marketing)/about/_about-data.ts",
+      "apps/landing/src/app/[lang]/(marketing)/about/business-portfolio/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/about/global/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/about/innovation/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/about/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/about/products/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/about/whitepaper/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/ai/models/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/blog/[slug]/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/blog/author/[author]/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/blog/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/blog/tag/[tag]/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/careers/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/changelog/[version]/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/changelog/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/features/[name]/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/features/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/get-license/LicenseWizard.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/ideas/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/news/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/opc/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/playbook/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/roadmap/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/security/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/showcase/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/solutions/[slug]/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/solutions/china-vc/[id]/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/solutions/global-vc/[id]/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/solutions/page.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/status/page.tsx",
+      "apps/landing/src/app/[lang]/layout.tsx",
+      "apps/landing/src/app/api/changelog/webhook/route.ts",
+      "apps/landing/src/app/api/og/route.ts",
+      "apps/landing/src/app/not-found.tsx",
+      "apps/landing/src/components/landing/HeroMockupWindow.tsx",
+      "apps/landing/src/components/landing/InteractiveChangelog.tsx",
+      "apps/landing/src/components/landing/VelocitySignalStrip.tsx",
+      "apps/landing/src/components/landing/blog-comments.tsx",
+      "apps/landing/src/components/landing/blog-motion-showcase.tsx",
+      "apps/landing/src/components/landing/features/feature-code-samples.ts",
+      "apps/landing/src/components/landing/features/glyphs/auth-glyph.tsx",
+      "apps/landing/src/components/landing/features/glyphs/cli-glyph.tsx",
+      "apps/landing/src/components/landing/features/glyphs/email-glyph.tsx",
+      "apps/landing/src/components/landing/features/glyphs/sms-glyph.tsx",
+      "apps/landing/src/components/landing/features/glyphs/status-glyph.tsx",
+      "apps/landing/src/components/landing/features/glyphs/tts-glyph.tsx",
+      "apps/landing/src/components/landing/features/package-feature-data.ts",
+      "apps/landing/src/components/landing/features/showcases/auth-showcase.tsx",
+      "apps/landing/src/components/landing/news-hero.tsx",
+      "apps/landing/src/components/marketing/ProductHuntSection.tsx",
+      "apps/landing/src/components/marketing/TestimonialsSection.tsx",
+      "apps/landing/src/lib/blog-fallback.ts",
+      "apps/landing/src/lib/constants/landing-data.ts",
+      "apps/landing/src/lib/constants/playbook-data.ts",
+      "apps/landing/src/lib/constants/resources-data.ts",
+      "apps/landing/src/lib/constants/solutions-data.ts",
+      "apps/landing/src/lib/seo/route-registry.ts",
+      "apps/mail-preview/src/app/layout.tsx",
+      "apps/sailor-docs/mdx-components.tsx",
+      "apps/sailor-docs/src/app/[lang]/[[...slug]]/page.tsx",
+      "apps/sailor-docs/src/app/[lang]/layout.tsx",
+      "apps/sailor-docs/src/app/og/docs/[...slug]/route.tsx",
+      "apps/sailor-docs/src/components/brand-overview-visuals.tsx",
+      "apps/sailor-docs/src/components/color-usage.tsx",
+      "apps/sailor-docs/src/components/component-preview.tsx",
+      "apps/sailor-docs/src/components/introduction-hero.tsx",
+      "apps/web/src/app/api/admin/access-invites/route.ts",
+      "apps/web/src/app/api/blog/comments/route.ts",
+      "apps/web/src/app/api/blog/reactions/route.ts",
+      "apps/web/src/app/api/organizations/[orgId]/members/route.ts",
+      "apps/web/src/components/api-keys/create-api-key-dialog.tsx",
+      "apps/web/src/components/auth/auth-banner.tsx",
+      "apps/web/src/components/auth/desktop-auth-complete-handoff.tsx",
+      "apps/web/src/components/auth/sign-up-form.tsx",
+      "apps/web/src/components/notifications/notification-inbox-preview.tsx",
+      "apps/web/src/components/notifications/notification-preference-matrix.tsx",
+      "apps/web/src/components/notifications/notification-runtime-banner.tsx",
+      "apps/web/src/components/settings/security/security-capabilities.ts",
+      "apps/web/src/components/settings/security/security-settings-client.tsx",
+      "apps/web/src/components/theme-playground/design-md-import.tsx",
+      "apps/web/src/components/theme-playground/theme-playground-workbench.tsx",
+      "backends/gateway/src/agents/default-agents.ts",
+      "backends/gateway/src/index.ts",
+      "backends/gateway/src/routes/ai/gateway.ts",
+      "packages/commerce/contracts/src/identity.ts",
+      "packages/commerce/legal/src/components/CookieBanner.tsx",
+      "packages/commerce/marketing/src/config/index.ts",
+      "packages/iam/auth/src/providers/better-auth.ts",
+      "packages/iam/auth/src/providers/better-auth/feishu-oauth.ts",
+      "packages/iam/auth/src/providers/better-auth/trusted-origins.ts",
+      "packages/iam/auth/src/utils/auth-center.ts",
+      "packages/iam/identity/src/adapters/nebutra.ts",
+      "packages/iam/identity/src/index.ts",
+      "packages/iam/identity/src/registry.ts",
+      "packages/iam/oauth/src/index.ts",
+      "packages/iam/oauth/src/provider.ts",
+      "packages/integrations/email/src/index.ts",
+      "packages/integrations/notifications/src/catalog.ts",
+      "packages/integrations/notifications/src/runtime.ts",
+      "packages/integrations/storage/src/r2.ts",
+      "packages/ops/cli/src/commands/ai.ts",
+      "packages/ops/cli/src/commands/auth.ts",
+      "packages/ops/cli/src/commands/backend.ts",
+      "packages/ops/cli/src/commands/brand.ts",
+      "packages/ops/cli/src/commands/community.ts",
+      "packages/ops/cli/src/commands/completions.ts",
+      "packages/ops/cli/src/commands/ecosystem.ts",
+      "packages/ops/cli/src/commands/generate.ts",
+      "packages/ops/cli/src/commands/init.ts",
+      "packages/ops/cli/src/commands/license.ts",
+      "packages/ops/cli/src/commands/link.ts",
+      "packages/ops/cli/src/commands/logout.ts",
+      "packages/ops/cli/src/commands/mcp-server.ts",
+      "packages/ops/cli/src/commands/metadata.ts",
+      "packages/ops/cli/src/commands/schema.ts",
+      "packages/ops/cli/src/commands/theme.ts",
+      "packages/ops/cli/src/commands/ui.ts",
+      "packages/ops/cli/src/commands/workflow.ts",
+      "packages/ops/cli/src/index.ts",
+      "packages/ops/cli/src/utils/analytics-emit.ts",
+      "packages/ops/cli/src/utils/nebutra-versions.ts",
+      "packages/ops/cli/src/utils/registry.ts",
+      "packages/ops/create-sailor/src/steps/cli-setup.ts",
+      "packages/ops/create-sailor/src/steps/mappers.ts",
+      "packages/ops/create-sailor/src/steps/resolve-config.ts",
+      "packages/ops/create-sailor/src/steps/scaffold.ts",
+      "packages/ops/create-sailor/src/test-prune-dev.ts",
+      "packages/ops/create-sailor/src/ui/banner.ts",
+      "packages/ops/create-sailor/src/ui/done.ts",
+      "packages/ops/create-sailor/src/ui/help.ts",
+      "packages/ops/create-sailor/src/utils/config.ts",
+      "packages/ops/create-sailor/src/utils/first-run.ts",
+      "packages/ops/create-sailor/src/utils/git.ts",
+      "packages/ops/create-sailor/src/utils/governance-lints.ts",
+      "packages/ops/create-sailor/src/utils/license-emit.ts",
+      "packages/ops/create-sailor/src/utils/nebutra-versions.ts",
+      "packages/ops/create-sailor/src/utils/prune.ts",
+      "packages/ops/create-sailor/src/utils/welcome.ts",
+      "packages/ops/preset/src/config-loader.ts",
+      "packages/ops/preset/src/config.ts",
+      "packages/ops/preset/src/index.ts",
+      "packages/ops/preset/src/nebutra-package-versions.ts",
+      "packages/platform/router-supply/src/resolve.ts"
+    ]
+  },
+  "brandHex": {
+    "allowlist": [
+      "apps/forge/src/components/sota-runners.tsx",
+      "packages/design/ui/src/marketing/cosmic-spectrum.tsx"
+    ]
+  },
+  "repositorySeam": {
+    "coreDomains": [
+      "^packages/commerce/(billing|license|metering)/",
+      "^packages/iam/(auth|audit|permissions|identity|tenant)/",
+      "^packages/ai/agent-runtime/",
+      "^packages/integrations/(uploads|storage)/",
+      "^packages/integrations/queue/src/scheduled/",
+      "^backends/gateway/src/inngest/",
+      "^backends/gateway/src/routes/(billing|ai|admin|legal|integrations|webhooks)/",
+      "^apps/web/src/app/api/(invitations|onboarding|startup-os)/",
+      "^apps/web/src/app/\\[locale\\]/\\(app\\)/organization-invitation/",
+      "^apps/web/src/lib/invitations\\.ts$"
+    ],
+    "seamPaths": ["^packages/platform/repositories/", "^packages/platform/db/"],
+    "dbAccessors": ["getTenantDb", "getSystemDb"],
+    "allowlist": [
+      "apps/web/src/app/[locale]/(app)/organization-invitation/[invitationId]/page.tsx",
+      "apps/web/src/app/api/invitations/[invitationId]/accept/route.ts",
+      "apps/web/src/app/api/onboarding/invite-members/route.ts",
+      "apps/web/src/app/api/startup-os/projects/[projectId]/runs/[runId]/execute/route.ts",
+      "apps/web/src/lib/invitations.ts",
+      "backends/gateway/src/inngest/functions/automationScheduler.ts",
+      "backends/gateway/src/inngest/functions/gdprDeletion.ts",
+      "backends/gateway/src/inngest/functions/tenantProvisioning.ts",
+      "backends/gateway/src/inngest/functions/userSync.ts",
+      "backends/gateway/src/routes/admin/index.ts",
+      "backends/gateway/src/routes/ai/api-keys.ts",
+      "backends/gateway/src/routes/ai/usage.ts",
+      "backends/gateway/src/routes/billing/index.ts",
+      "backends/gateway/src/routes/integrations/index.ts",
+      "backends/gateway/src/routes/legal/consent.ts",
+      "backends/gateway/src/routes/webhooks/clerk.ts",
+      "backends/gateway/src/routes/webhooks/stripe.ts",
+      "packages/ai/agent-runtime/src/adapters/prisma-rollout.ts",
+      "packages/commerce/license/src/handlers/on-license-issued.ts",
+      "packages/commerce/license/src/issue-license.ts",
+      "packages/commerce/license/src/validate-license.ts",
+      "packages/iam/audit/src/index.ts",
+      "packages/iam/auth/src/plugins/passkey-plugin.ts",
+      "packages/integrations/queue/src/scheduled/jobs/invitation-cleanup.ts",
+      "packages/integrations/queue/src/scheduled/jobs/session-cleanup.ts"
+    ]
+  },
+  "microcopyRules": {
+    "scanRoots": ["apps/web/src"],
+    "excludePaths": [
+      "/api/",
+      "\\.test\\.tsx?$",
+      "/__tests__/",
+      "/storybook/src/stories/",
+      "/sailor-docs/"
+    ],
+    "bannedPatterns": [
+      {
+        "pattern": "暂无",
+        "label": "禁七: 空白状态禁用「暂无」"
+      },
+      {
+        "pattern": "No [A-Za-z].*(yet|available)",
+        "label": "禁七: empty state lacks a 母题 (\"No X yet/available\")"
+      },
+      {
+        "pattern": "赋能|闭环|抓手|颗粒度|打法|系统检测到|请您",
+        "label": "禁四: LinkedIn/corporate-speak (赋能/闭环/抓手/颗粒度/打法/系统检测到/请您)"
+      },
+      {
+        "pattern": "加油|你能行|冲鸭|梦想成真",
+        "label": "禁一 (partial): over-incentive words (加油/你能行/冲鸭/梦想成真)"
+      }
+    ],
+    "allowlist": []
+  },
+  "inertDimensions": {
+    "description": "Dimensions every Brand Package declares that no shipped code reads, measured 2026-07-31 by compiling the real Tailwind pipeline rather than reading source. A skin can override these forever without moving a pixel. Shrink-only: give a dimension a consumer and delete its entry. This list records what was already true when the guard was written — it is not somewhere to park a new dimension so the gate goes green. spacing and controls were removed 2026-07-31: both were false positives from a detector bug (scripts/lint-inert-dimensions.mjs required var(--x) to close immediately, but every real caller writes a CSS fallback, var(--spacing-md, ...)). Compiling apps/web's real globals.css with @tailwindcss/node confirmed --spacing-md/--spacing-lg vary per brand (consumed by apps/web/src/components/theme-playground) and --control-height-* is read at 58 call sites in packages/design/ui/src/primitives/button-variants.ts and switch.tsx, density-driven via packages/design/tokens/src/brand-package/emit-css.ts. Both dimensions were already wired; only the guard was blind to it.",
+    "known": []
+  }
+}

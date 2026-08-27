@@ -1,0 +1,15 @@
+/**
+ * TypeLens CSS entry (Tailwind v4).
+ *
+ * Order matters:
+ * 1) preset = tailwind + tokens + UI @source
+ * 2) @source this app (so utilities in our components generate)
+ * 3) shell.css as a SEPARATE import (custom rules must not sit in the
+ *    same file as @import "tailwindcss" or Turbopack may drop them)
+ */
+@import "@nebutra/ui/styles/preset.css";
+
+/* Scan TypeLens app source for utility classes */
+@source "../**/*.{ts,tsx}";
+
+@import "../styles/shell.css";

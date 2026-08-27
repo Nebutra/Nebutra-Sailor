@@ -1,0 +1,206 @@
+---
+title: Python SDK
+description: Official nebutra-sdk Python reference — installation, initialization, and full method reference.
+---
+
+## Installation
+
+```bash
+pip install nebutra-sdk
+```
+
+Or with Poetry:
+
+```bash
+poetry add nebutra-sdk
+```
+
+Requires Python 3.11+.
+
+## Initialize the client
+
+```python
+import os
+from nebutra import Client
+
+nebutra = Client(
+    api_key=os.environ["NEBUTRA_API_KEY"],
+    org_id=os.environ["NEBUTRA_ORG_ID"],
+    # Optional
+    base_url="https://api.nebutra.com",
+    timeout=30,  # seconds
+)
+```
+
+## Authentication
+
+### Verify a JWT token
+
+```python
+from nebutra import verify_token
+
+payload = verify_token(
+    token=bearer_token,
+    api_key=os.environ["NEBUTRA_API_KEY"],
+)
+# payload.user_id, payload.org_id, payload.scopes, payload.plan
+```
+
+## Organizations
+
+```python
+# Get current org
+org = await nebutra.orgs.get(org_id)
+
+# Update org
+await nebutra.orgs.update(org_id, name="New Name")
+
+# List members
+members = await nebutra.members.list(org_id=org_id)
+
+# Invite a member
+await nebutra.members.invite(
+    org_id=org_id,
+    email="alice@example.com",
+    role="MEMBER",
+)
+
+# Remove a member
+await nebutra.members.remove(org_id=org_id, user_id=user_id)
+```
+
+## Projects
+
+```python
+# List projects
+result = await nebutra.projects.list(limit=20)
+projects = result.data
+next_cursor = result.meta.next_cursor
+
+# Get a project
+project = await nebutra.projects.get("proj_123")
+
+# Create a project
+project = await nebutra.projects.create(name="My Project")
+
+# Update a project
+await nebutra.projects.update("proj_123", name="New Name")
+
+# Delete a project
+await nebutra.projects.delete("proj_123")
+```
+
+## Permissions
+
+```python
+from nebutra import can, require_permission
+
+# Check a permission
+allowed = await can(user_id, "project:delete", org_id=org_id)
+
+# Raise 403 if not allowed
+await require_permission("project:delete")
+```
+
+## Metering & quotas
+
+```python
+# Get quota usage
+quota = await nebutra.metering.get_quota("api_calls")
+# quota.limit, quota.used, quota.remaining, quota.percentage
+
+# Ingest a usage event
+await nebutra.metering.ingest(
+    metric_id="api_calls",
+    tenant_id=org_id,
+    quantity=1,
+)
+```
+
+## Webhooks
+
+```python
+# Create an endpoint
+endpoint = await nebutra.webhooks.create_endpoint(
+    url="https://your-app.com/webhooks",
+    events=["project.created", "invoice.paid"],
+)
+
+# Send a custom event
+import uuid
+from datetime import datetime, timezone
+
+await nebutra.webhooks.send_event(
+    id=str(uuid.uuid4()),
+    event_type="custom.event",
+    payload={"key": "value"},
+    tenant_id=org_id,
+    timestamp=datetime.now(timezone.utc).isoformat(),
+)
+```
+
+## Error handling
+
+```python
+from nebutra import (
+    NebutraError,
+    NotFoundError,
+    ValidationError,
+    ForbiddenError,
+    RateLimitError,
+)
+import asyncio
+
+try:
+    project = await nebutra.projects.get("proj_123")
+except NotFoundError:
+    # 404 — resource not found
+    pass
+except ForbiddenError:
+    # 403 — insufficient permissions
+    pass
+except ValidationError as e:
+    # Field-level validation errors
+    for field in e.fields:
+        print(f"{field.field}: {field.message}")
+except RateLimitError as e:
+    # Rate limited — wait and retry
+    await asyncio.sleep(e.retry_after)
+except NebutraError as e:
+    print(f"[{e.code}] {e.message} (request: {e.request_id})")
+```
+
+## FastAPI integration
+
+```python
+from fastapi import FastAPI, Depends, HTTPException
+from nebutra import Client, verify_token, ForbiddenError
+import os
+
+nebutra = Client(
+    api_key=os.environ["NEBUTRA_API_KEY"],
+    org_id=os.environ["NEBUTRA_ORG_ID"],
+)
+
+async def get_current_auth(authorization: str = Header(...)):
+    token = authorization.removeprefix("Bearer ")
+    try:
+        return await verify_token(token, api_key=os.environ["NEBUTRA_API_KEY"])
+    except Exception:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+app = FastAPI()
+
+@app.get("/api/projects")
+async def list_projects(auth=Depends(get_current_auth)):
+    projects = await nebutra.projects.list(org_id=auth.org_id)
+    return {"data": projects.data}
+```
+
+## Type hints
+
+The Python SDK ships with full type stubs:
+
+```python
+from nebutra.types import Organization, Member, Project, ApiKey, Role, Plan
+```

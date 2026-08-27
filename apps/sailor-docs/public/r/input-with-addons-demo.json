@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-with-addons-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/icons",
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/input-with-addons-demo.tsx",
+      "content": "\"use client\";\n\nimport { Dollar as DollarSign } from \"@nebutra/icons\";\nimport { Input } from \"@nebutra/ui/primitives\";\n\nexport function InputWithAddonsDemo() {\n  return (\n    <div className=\"flex flex-col gap-4\">\n      <Input aria-label=\"Project URL\" prefix=\"https://\" suffix=\"app.nebutra.com\" placeholder=\"docs\" />\n      <Input\n        aria-label=\"Monthly spend\"\n        prefix={<DollarSign aria-hidden=\"true\" />}\n        suffix=\"USD\"\n        type=\"number\"\n        placeholder=\"0.00\"\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

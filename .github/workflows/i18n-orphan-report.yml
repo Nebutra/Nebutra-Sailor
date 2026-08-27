@@ -1,0 +1,53 @@
+name: i18n Orphan Report
+
+# Lightweight weekly drift scan — no SenseNova, no monorepo install, no writes.
+# Complements the event-driven translate worker without making CI slow or heavy.
+#
+# If missing keys accumulate, dispatch workflow "i18n Translate (SenseNova)"
+# (or run `pnpm i18n:translate` locally with SENSENOVA_API_KEY).
+
+on:
+  schedule:
+    # Monday 02:17 UTC — off-peak, once a week
+    - cron: "17 2 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: i18n-orphan-report
+  cancel-in-progress: true
+
+jobs:
+  report:
+    name: Scan missing / identical-to-en leaves
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node and pnpm
+        # Shared action, not actions/setup-node directly: it pins the Node
+        # version, the pnpm version and the supply-chain guards in one place.
+        # A workflow that sets up its own drifts from the rest silently.
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Orphan report
+        run: node scripts/i18n-orphan-report.mjs
+
+      # Always green — this is observability, not a release gate.
+      - name: JSON artifact
+        if: always()
+        run: |
+          mkdir -p artifacts
+          node scripts/i18n-orphan-report.mjs --json > artifacts/i18n-orphan-report.json
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: i18n-orphan-report
+          path: artifacts/i18n-orphan-report.json
+          retention-days: 30

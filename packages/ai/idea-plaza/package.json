@@ -1,0 +1,75 @@
+{
+  "name": "@nebutra/idea-plaza",
+  "version": "0.1.4",
+  "description": "Explicit opt-in idea publishing, lineage, and fork surface over Nebutra company artifacts",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "graph": "labs",
+    "status": "wip",
+    "productionReady": false,
+    "surface": "ecosystem-product",
+    "requires": [
+      "@nebutra/content-store for public snapshots",
+      "@nebutra/event-log for publish and fork checkpoints",
+      "@nebutra/ecosystem-safety for public-disclosure PII and secret checks",
+      "@nebutra/capability-kit for debug and doctor surfaces"
+    ],
+    "gaps": [
+      "Public registry transport is represented as local immutable snapshots",
+      "Moderation is deterministic metadata until human review queues exist",
+      "Cemetery similarity warnings are provided by input contracts until global KB is online"
+    ],
+    "featureId": "idea-plaza",
+    "category": "ai",
+    "summary": "Opt-in public idea snapshot and fork lineage product surface"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/capability-kit": "workspace:*",
+    "@nebutra/content-store": "workspace:*",
+    "@nebutra/ecosystem-safety": "workspace:*",
+    "@nebutra/errors": "workspace:*",
+    "@nebutra/event-log": "workspace:*",
+    "@nebutra/generation-context": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/idea-plaza#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/idea-plaza"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
+}

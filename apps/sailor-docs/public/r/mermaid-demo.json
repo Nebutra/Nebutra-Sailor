@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "mermaid-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/mermaid-demo.tsx",
+      "content": "\"use client\";\n\nimport { CodeBlock } from \"@nebutra/ui/primitives\";\n\nexport function MermaidDemo() {\n  const code = `graph TD;\n    A[Client] -->|HTTP POST| B(Gateway Wrapper);\n    B --> C{Authentication};\n    C -->|Valid| D[Service Mesh];\n    C -->|Invalid| E[401 Unauthorized];\n    D --> F[Database Cluster];`;\n\n  return (\n    <div className=\"w-full\">\n      <CodeBlock\n        files={[\n          {\n            title: \"architecture.mermaid\",\n            code: code,\n            language: \"mermaid\",\n          },\n        ]}\n        showLineNumbers={false}\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

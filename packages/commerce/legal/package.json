@@ -1,0 +1,72 @@
+{
+  "name": "@nebutra/legal",
+  "version": "0.1.2",
+  "private": true,
+  "description": "Legal & Compliance infrastructure for Nebutra SaaS",
+  "type": "module",
+  "nebutra": {
+    "graph": "core",
+    "status": "foundation",
+    "productionReady": false,
+    "requires": [
+      "@nebutra/db",
+      "React 19"
+    ],
+    "gaps": [
+      "No production app integrations",
+      "Consent persistence API route not wired in apps/backends",
+      "Database-backed consent store adapter pending",
+      "Document publishing workflow pending"
+    ]
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.js"
+    },
+    "./documents": {
+      "types": "./dist/documents/index.d.ts",
+      "import": "./dist/documents/index.js"
+    },
+    "./consent": {
+      "types": "./dist/consent/index.d.ts",
+      "import": "./dist/consent/index.js"
+    },
+    "./components": {
+      "types": "./dist/components/index.d.ts",
+      "import": "./dist/components/index.js"
+    },
+    "./content/*": "./content/*"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/brand": "workspace:*",
+    "@nebutra/db": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.15",
+    "@types/react": "^19.2.14",
+    "react": "^19.2.4",
+    "tsup": "^8.5.1",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "license": "AGPL-3.0-only"
+}

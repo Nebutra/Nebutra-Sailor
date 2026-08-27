@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — ऑनलाइन टूल स्टेशन",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "कोडेक्स, टेक्स्ट, हैशिंग, दस्तावेज़ और इमेज टूल्स ऑनलाइन।"
+  },
+  "nav": {
+    "main": "मुख्य नेविगेशन",
+    "homeAria": "{brandName} Forge होम",
+    "tools": "टूल्स",
+    "wallet": "वॉलेट",
+    "api": "API",
+    "routerAria": "{brandName} Router",
+    "categoriesAria": "टूल श्रेणियाँ",
+    "languageAria": "भाषा बदलें"
+  },
+  "tool": {
+    "breadcrumbAria": "ब्रेडक्रंब",
+    "workspace": "वर्कस्पेस",
+    "workspaceHint": "स्थानीय या सर्वर · API के समान पथ",
+    "api": "API",
+    "apiHint": "पेज के समान अनुबंध। उत्पादन में प्रमाणित कुंजी का उपयोग करें।",
+    "related": "संबंधित टूल्स"
+  },
+  "auth": {
+    "signIn": "साइन इन करें",
+    "signUp": "साइन अप करें",
+    "signOut": "साइन आउट करें"
+  },
+  "footer": {
+    "navAria": "फ़ूटर",
+    "blurb": "ऑनलाइन टूल स्टेशन। ब्राउज़र में काम पूरा करें, या API / MCP के माध्यम से ऑटोमेट करें।",
+    "product": "प्रोडक्ट",
+    "developers": "डेवलपर्स",
+    "company": "कंपनी",
+    "docs": "इंटीग्रेशन डॉक्स",
+    "website": "वेबसाइट",
+    "privacy": "गोपनीयता"
+  },
+  "home": {
+    "eyebrow": "देखें। कॉल करें।",
+    "title": "ऑनलाइन टूल्स के लिए स्विस्-आर्मी नाइफ",
+    "subtitle": "कोडेक्स, टेक्स्ट, हैशिंग, दस्तावेज़ और इमेज प्रोसेसिंग। ब्राउज़र में पूरा करें, या API / MCP के माध्यम से ऑटोमेट करें — एक ही इम्प्लीमेंटेशन।",
+    "toolCount": "{count} टूल्स",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "खोजें: शब्द गिनती, base64, json, टाइमस्टैम्प…",
+    "aria": "टूल्स खोजें",
+    "emptyTitle": "कोई टूल “{query}” से मेल नहीं खाता",
+    "emptyHint": "कोई और कीवर्ड आज़माएं, या नीचे दिए गए कैटेगरी से कोई टूल चुनें।"
+  },
+  "categories": {
+    "codec": {
+      "label": "कोडेक्स",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "चीन वैलिडेशन",
+      "hint": "ID · फ़ोन"
+    },
+    "data": {
+      "label": "डेटा",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "डेवलपर",
+      "hint": "Regex · SQL · color · UUID"
+    },
+    "doc": {
+      "label": "दस्तावेज़",
+      "hint": "Markdown · PDF merge/split"
+    },
+    "finance": {
+      "label": "फाइनेंस",
+      "hint": "Amount to words"
+    },
+    "hash": {
+      "label": "Hash & security",
+      "hint": "MD5 · SHA · HMAC · password"
+    },
+    "image": {
+      "label": "छवियाँ",
+      "hint": "Compress · QR · convert"
+    },
+    "life": {
+      "label": "Life calculators",
+      "hint": "Mortgage · BMI · kinship"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "टोकन · लागत · स्कीमा"
+    },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
+    "security": {
+      "label": "सुरक्षा",
+      "hint": "पासवर्ड जनरेटर"
+    },
+    "text": {
+      "label": "टेक्स्ट",
+      "hint": "शब्द गिनती · CJK · पिनयिन · अंतर"
+    },
+    "time": {
+      "label": "समय",
+      "hint": "टाइमस्टैम्प · समय क्षेत्र · Cron · चंद्र"
+    },
+    "unit": {
+      "label": "इकाइयाँ",
+      "hint": "लंबाई · वजन · तापमान · डेटा"
+    },
+    "template": {
+      "label": "टेम्पलेट",
+      "hint": ".gitignore · LICENSE · Dockerfile · README"
+    }
+  },
+  "runners": {
+    "common": {
+      "run": "चलाएँ",
+      "running": "चल रहा है…",
+      "copy": "कॉपी करें",
+      "copied": "कॉपी किया गया",
+      "sameAsApi": "API के समान पथ · OSS इंजन",
+      "mustBeNumber": "{label} एक संख्या होनी चाहिए",
+      "base64Loaded": "Base64 पेलोड लोड किया गया",
+      "workspaceMissing": "वर्कस्पेस कॉन्फ़िगर नहीं है: {slug}",
+      "yes": "हाँ",
+      "no": "नहीं",
+      "text": "टेक्स्ट",
+      "input": "इनपुट",
+      "output": "आउटपुट",
+      "outputPlaceholder": "परिणाम यहाँ दिखेगा",
+      "localRun": "स्थानीय चलाएँ",
+      "serverRun": "सर्वर पर चलाएँ",
+      "serverVerify": "सर्वर सत्यापन",
+      "outputPreview": "आउटपुट पूर्वावलोकन",
+      "mode": "मोड",
+      "encode": "एन्कोड करें",
+      "decode": "डिकोड करें",
+      "file": "फ़ाइल",
+      "clear": "साफ़ करें",
+      "length": "लंबाई: {n}",
+      "bytes": "{bytes} बाइट",
+      "download": "डाउनलोड",
+      "format": "फ़ॉर्मेट",
+      "formatting": "फॉर्मेटिंग…",
+      "dialect": "डायलेक्ट",
+      "color": "रंग",
+      "pickColor": "रंग चुनें",
+      "content": "सामग्री",
+      "algorithm": "एल्गोरिदम",
+      "encoding": "एन्कोडिंग",
+      "message": "संदेश",
+      "secret": "गुप्त",
+      "password": "पासवर्ड",
+      "direction": "दिशा",
+      "preview": "पूर्वावलोकन",
+      "query": "क्वेरी",
+      "querying": "क्वेरी कर रहे हैं…",
+      "validate": "सत्यापित करें",
+      "validating": "सत्यापित कर रहे हैं…",
+      "processing": "प्रसंस्करण हो रहा है…",
+      "pretty": "सुंदर",
+      "minify": "छोटा करें",
+      "from": "से",
+      "to": "तक",
+      "timezone": "समय क्षेत्र",
+      "datetime": "तारीख़ और समय",
+      "compute": "कंप्यूट",
+      "computing": "गणना हो रही है…",
+      "convertAction": "रूपांतरित करें",
+      "count": "गिनती",
+      "value": "मूल्य",
+      "unit": "इकाई",
+      "generateLocal": "स्थानीय उत्पन्न करें",
+      "generateServer": "सर्वर पर उत्पन्न करें",
+      "copyAll": "सभी कॉपी करें",
+      "emptyResult": "परिणाम यहाँ दिखेंगे",
+      "copyText": "पाठ कॉपी करें",
+      "quality": "गुणवत्ता",
+      "original": "मूल",
+      "result": "परिणाम",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
+    },
+    "base64": {
+      "encodeDir": "टेक्स्ट → Base64",
+      "decodeDir": "Base64 → टेक्स्ट",
+      "localNote": "स्थानीय Web API (TextEncoder / atob)",
+      "serverNote": "सर्वर बफर · API जैसा ही पथ"
+    },
+    "password": {
+      "uppercase": "बड़े अक्षर",
+      "lowercase": "छोटे अक्षर",
+      "digits": "अंक",
+      "symbols": "प्रतीक",
+      "generate": "पासवर्ड बनाएँ",
+      "recent": "हाल के",
+      "note": "इंजन: node:crypto randomInt · क्रिप्टोग्राफिक रूप से सुरक्षित · API जैसा ही पथ"
+    },
+    "hash": {
+      "algo": "एल्गोरिदम: {algo}",
+      "md5Warn": " · केवल चेकसम/संगतता के लिए — पासवर्ड न सहेजें",
+      "md5LocalError": "MD5 के लिए सर्वर रन की आवश्यकता है (Web Crypto में MD5 नहीं है)",
+      "md5ServerHint": "MD5: सर्वर रन का उपयोग करें (केवल संगतता के लिए, पासवर्ड स्टोरेज के लिए नहीं)",
+      "localNote": "स्थानीय Web Crypto · {algo}",
+      "serverNote": "सर्वर node:crypto · API के समान पथ"
+    },
+    "convert": {
+      "converting": "परिवर्तित हो रहा है…",
+      "convert": "परिवर्तित करें",
+      "done": "पूर्ण · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "यहाँ एक फ़ाइल छोड़ें, या ब्राउज़ करने के लिए क्लिक करें",
+      "needFile": "पहले एक फ़ाइल चुनें",
+      "needAlgo": "कम से कम एक एल्गोरिदम चुनें",
+      "compute": "Checksums की गणना करें",
+      "computing": "गणना हो रही है…",
+      "algorithms": "एल्गोरिदम",
+      "note": "node:crypto · multi-algo · same path as API"
+    },
+    "lorem": {
+      "paragraphs": "अनुच्छेद",
+      "wordsPerParagraph": "प्रति अनुच्छेद शब्द",
+      "startWithLorem": "“Lorem ipsum” से शुरू करें",
+      "note": "Lorem Ipsum जनरेटर · शुद्ध"
+    },
+    "emailValidate": {
+      "note": "ईमेल वैलिडेटर · केवल फॉर्मेट (MX लुकअप नहीं)"
+    },
+    "creditCardLuhn": {
+      "number": "कार्ड नंबर",
+      "note": "Luhn चेकर · ऑफ़लाइन, कभी स्टोर नहीं किया जाता",
+      "digits": "digits",
+      "specimenLabel": "Specimen",
+      "structureOnly": "Luhn structure only",
+      "unknownBrand": "Card"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "JSON मिनिफायर · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "CSS Minifier · हल्का (edge-safe)"
+    },
+    "hashCompare": {
+      "a": "Hash A",
+      "b": "Hash B",
+      "ignoreCase": "केस अनदेखा करें",
+      "note": "Hash Comparator · समान लंबाई के लिए constant-time"
+    },
+    "jsonDiff": {
+      "left": "JSON A",
+      "right": "JSON B",
+      "note": "JSON Diff · path-level ops · kind-colored rows · side-by-side",
+      "equal": "समान",
+      "differs": "{count} परिवर्तन",
+      "colPath": "Path",
+      "colKind": "प्रकार",
+      "colLeft": "बायाँ",
+      "colRight": "दायाँ",
+      "filtersAria": "परिवर्तन प्रकार से फ़िल्टर करें",
+      "filterAll": "सभी ({count})",
+      "filterAdd": "जोड़ें ({count})",
+      "filterRemove": "हटाएँ ({count})",
+      "filterChange": "परिवर्तन ({count})",
+      "filterType": "प्रकार ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "मोड",
+      "pretty": "सुंदर",
+      "compact": "संक्षिप्त",
+      "indent": "अंतराल",
+      "note": "YAML Formatter · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "TOML Formatter · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "XML Minifier · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "URL Validator · WHATWG URL (कोई नेटवर्क फ़ेच नहीं)"
+    },
+    "ipValidate": {
+      "note": "IP Validator · IPv4/IPv6 ऑफ़लाइन"
+    },
+    "uuidValidate": {
+      "note": "UUID Validator · RFC 4122 आकार"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "HTML Minifier · हल्का (एज-सुरक्षित)"
+    },
+    "randomString": {
+      "length": "लंबाई",
+      "count": "गिनती",
+      "charset": "कैरेक्टर सेट",
+      "alphanumeric": "अल्फ़ान्यूमेरिक",
+      "symbols": "अल्फ़ान्यूमेरिक + प्रतीक",
+      "hex": "हेक्स",
+      "base64url": "Base64URL",
+      "note": "रैंडम स्ट्रिंग · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "पढ़ने का समय · CJK + लैटिन हेउरिस्टिक"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "अधिकतम हेडिंग स्तर",
+      "note": "Markdown TOC · ATX हेडिंग्स"
+    },
+    "pdfInfo": {
+      "file": "PDF फ़ाइल",
+      "note": "PDF Info · pdf-lib (पेज + मेटाडेटा)"
+    },
+    "rot13": {
+      "shift": "शिफ्ट (13 = ROT13)",
+      "note": "ROT13 / Caesar · pure"
+    },
+    "morse": {
+      "note": "Morse Code · ITU · pure"
+    },
+    "textBinary": {
+      "toBinary": "टेक्स्ट → बाइनरी",
+      "fromBinary": "बाइनरी → टेक्स्ट",
+      "note": "टेक्स्ट ↔ बाइनरी · UTF-8 बिट्स"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "डिजेस्ट एन्कोडिंग",
+      "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "One shot digests · copy each · node:crypto"
+    },
+    "cssFormat": {
+      "note": "CSS Beautifier · lightweight"
+    },
+    "htmlFormat": {
+      "note": "HTML सुंदर करने वाला · हल्का"
+    },
+    "stringSimilarity": {
+      "a": "स्ट्रिंग A",
+      "b": "स्ट्रिंग B",
+      "note": "स्ट्रिंग समानता · लेवेनश्टीन"
+    },
+    "roman": {
+      "toRoman": "संख्या → रोमन",
+      "fromRoman": "रोमन → संख्या",
+      "note": "रोमन अंक · 1–3999"
+    },
+    "age": {
+      "birthDate": "जन्म तिथि (YYYY-MM-DD)",
+      "asOf": "तारीख तक (वैकल्पिक)",
+      "note": "आयु कैलकुलेटर · सटीक Y/M/D"
+    },
+    "tip": {
+      "bill": "बिल राशि",
+      "percent": "टिप %",
+      "people": "व्यक्ति",
+      "note": "टिप कैलकुलेटर · आसान बंटवारा"
+    },
+    "aspect": {
+      "width": "चौड़ाई",
+      "height": "ऊँचाई",
+      "note": "आकार अनुपात · GCD सरलीकरण"
+    },
+    "mime": {
+      "note": "MIME खोज · सामान्य वेब प्रकार"
+    },
+    "ua": {
+      "note": "User-Agent पार्सर · अनुमानित (ऑफ़लाइन)"
+    },
+    "imageMeta": {
+      "file": "छवि फ़ाइल",
+      "note": "छवि मेटाडेटा · sharp (EXIF बफ़र आकार)"
+    },
+    "wordFreq": {
+      "top": "शीर्ष N",
+      "note": "शब्द आवृत्ति · CJK + लैटिन"
+    },
+    "jsonXml": {
+      "note": "JSON ↔ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "SQL Minifier · टिप्पणियाँ + खाली स्थान"
+    },
+    "lineNum": {
+      "start": "शुरुआती संख्या",
+      "note": "पंक्ति संख्याएँ जोड़ें · शुद्ध"
+    },
+    "uniqueWords": {
+      "note": "अद्वितीय शब्द · पहले देखे गए क्रम में"
+    },
+    "epoch": {
+      "value": "मान",
+      "msToIso": "ms → ISO",
+      "isoToMs": "ISO → ms",
+      "note": "Epoch मिलीसेकंड · तारीख"
+    },
+    "passwordEntropy": {
+      "password": "पासवर्ड",
+      "note": "पासवर्ड एंट्रोपी · क्यारेक्टरसेट अनुमान"
+    },
+    "contrast": {
+      "fg": "फोरग्राउंड (#hex)",
+      "bg": "बैकग्राउंड (#hex)",
+      "note": "रंग कंट्रास्ट · WCAG 2.x",
+      "sampleHeadline": "Sample text",
+      "pass": "pass",
+      "fail": "fail",
+      "aaNormal": "AA normal",
+      "aaLarge": "AA large",
+      "aaaNormal": "AAA normal",
+      "aaaLarge": "AAA large"
+    },
+    "exif": {
+      "file": "छवि फ़ाइल",
+      "note": "EXIF व्यूअर · exifr + JPEG फॉलबैक"
+    },
+    "regex": {
+      "pattern": "पैटर्न",
+      "flags": "फ़्लैग्स",
+      "replacement": "प्रतिस्थापन",
+      "match": "मैच",
+      "replace": "बदलें",
+      "test": "टेस्ट",
+      "local": "स्थानीय चलाएं",
+      "server": "सर्वर सत्यापन",
+      "count": "{count} मैच",
+      "sotaNote": "Instant local highlight · server timeout budget · same path as API"
+    },
+    "jwt": {
+      "decode": "JWT डिकोड करें",
+      "sample": "सैंपल लोड करें",
+      "tokenPlaceholder": "JWT पेस्ट करें",
+      "decodeNote": "{engine} · केवल डिकोड, सिग्नेचर सत्यापित नहीं",
+      "footerNote": "Engine: jose · कोई सिग्नेचर सत्यापन नहीं। प्रोडक्शन में सर्वर पर jwtVerify के माध्यम से कीज़ के साथ सत्यापित करें।",
+      "generateHint": "टोकन साइन करने हैं?",
+      "secret": "सिक्कर",
+      "exp": "समय समाप्त (सेकंड)",
+      "payload": "पेयलोड JSON",
+      "note": "JWT जनरेट · HS256 (केवल dev/test)",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "(empty signature segment)"
+    },
+    "rand": {
+      "min": "न्यूनतम",
+      "max": "अधिकतम",
+      "count": "गणना",
+      "note": "यादृच्छिक संख्या · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "पक्ष",
+      "count": "पासा गणना",
+      "note": "पासा रोलर · crypto RNG"
+    },
+    "hexRgb": {
+      "note": "HEX ↔ RGB · शुद्ध"
+    },
+    "base64url": {
+      "note": "Base64URL · JWT-शैली"
+    },
+    "hmac": {
+      "message": "संदेश",
+      "secret": "गुप्त",
+      "signature": "हस्ताक्षर",
+      "note": "HMAC सत्यापन · SHA-256"
+    },
+    "secret": {
+      "bytes": "बाइट्स",
+      "count": "गिनती",
+      "note": "सीक्रेट की जनरेटर · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "PDF फ़ाइल",
+      "note": "PDF लाइट ऑप्टिमाइज़ · pdf-lib रीराइट (छवि पुनः संपीड़न नहीं)",
+      "needFile": "सबसे पहले एक PDF फ़ाइल चुनें"
+    },
+    "pdfCompress": {
+      "file": "PDF फ़ाइल",
+      "quality": "गुणवत्ता",
+      "engine": "इंजन",
+      "qStructural": "संरचनात्मक (qpdf, लॉसलेस स्ट्रीम)",
+      "qScreen": "स्क्रीन (सबसे छोटा, Ghostscript)",
+      "qEbook": "ईबुक (संतुलित, Ghostscript)",
+      "qPrinter": "प्रिंटर (उच्च गुणवत्ता, Ghostscript)",
+      "eAuto": "स्वचालित (qpdf → Ghostscript → pdf-lib)",
+      "download": "PDF डाउनलोड करें",
+      "needFile": "सबसे पहले एक PDF फ़ाइल चुनें",
+      "in": "इनपुट",
+      "out": "आउटपुट",
+      "saved": "सहेजा गया",
+      "note": "PDF Compress · होस्ट पर qpdf / Ghostscript · pdf-lib फ़ॉलबैक",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+    },
+    "jsonFormat": {
+      "indent": "इंडेंट",
+      "format": "फॉर्मेट",
+      "minify": "मिनिफाई",
+      "serverVerify": "सर्वर सत्यापन",
+      "clear": "साफ़ करें",
+      "sample": "सैंपल",
+      "placeholder": "JSON पेस्ट करें…",
+      "formatted": "फॉर्मेट किया गया",
+      "minified": "मिनिफाइड",
+      "serverOk": "सर्वर {mode} · {engine}",
+      "valid": "सही JSON",
+      "invalid": "गलत JSON",
+      "line": "पंक्ति",
+      "column": "कॉलम",
+      "note": "इंजन: JSON.parse/stringify · तुरंत स्थानीय · API जैसा ही पथ",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
+    },
+    "qr": {
+      "size": "आकार",
+      "ecl": "त्रुटि सुधार",
+      "generate": "बनाएं",
+      "download": "PNG डाउनलोड करें",
+      "needText": "टेक्स्ट या URL दर्ज करें",
+      "note": "QR · qrcode · लाइव प्रीव्यू · API के समान पथ"
+    },
+    "pdfText": {
+      "file": "PDF फ़ाइल",
+      "layout": "लेआउट",
+      "needFile": "पहले एक PDF चुनें",
+      "note": "PDF Text · pdftotext (poppler) होस्ट पर"
+    },
+    "svg": {
+      "optimize": "ऑप्टिमाइज़ करें",
+      "note": "SVG Optimize · हल्का शुद्ध मिनिफ़ाई"
+    },
+    "routerTranslate": {
+      "lab": "Lab shell: यहाँ अनुवाद नहीं करता। प्रॉम्प्ट के साथ Router खोलता है — मॉडल मीटर केवल Router पर।",
+      "source": "स्रोत भाषा",
+      "target": "लक्ष्य भाषा",
+      "open": "Router लिंक तैयार करें",
+      "deepLink": "Router में खोलें",
+      "note": "external · no silent Forge LLM ledger"
+    },
+    "imageCrop": {
+      "needFile": "पहले एक छवि चुनें",
+      "crop": "क्रॉप करें",
+      "note": "Image Crop · drag region · sharp extract",
+      "drop": "छवि ड्रॉप करें या ब्राउज़ करने के लिए क्लिक करें",
+      "dragHint": "क्रॉप क्षेत्र चुनने के लिए छवि पर खींचें",
+      "left": "बायाँ",
+      "top": "ऊपर",
+      "width": "चौड़ाई",
+      "height": "ऊँचाई",
+      "natural": "प्राकृतिक {w}×{h}",
+      "source": "स्रोत",
+      "result": "कट किया गया"
+    },
+    "markdown": {
+      "preview": "पूर्वावलोकन",
+      "html": "HTML",
+      "emptyPreview": "पूर्वावलोकन देखने के लिए चलाएं",
+      "emptyHtml": "रेंडर किया गया HTML",
+      "rendering": "रेंडर हो रहा है…",
+      "toHtml": "HTML में बदलें",
+      "copyHtml": "HTML कॉपी करें",
+      "note": "चिह्नित · सैंडबॉक्स्ड iframe पूर्वावलोकन · API जैसा ही पथ"
+    },
+    "pdfMerge": {
+      "files": "PDF फ़ाइलें (≥2, क्रम = मर्ज क्रम)",
+      "needFiles": "कम से कम 2 PDF चुनें",
+      "merging": "जोड़ रहे हैं…",
+      "mergeDownload": "जोड़ें और डाउनलोड करें",
+      "done": "जोड़ा गया · {pages} पृष्ठ · {bytes} बाइट",
+      "note": "pdf-lib · API जैसा ही पथ",
+      "merge": "जोड़ें और डाउनलोड करें"
+    },
+    "pdfSplit": {
+      "file": "PDF फ़ाइल",
+      "needFile": "एक PDF चुनें",
+      "fromPage": "पृष्ठ से (1 से शुरू)",
+      "toPage": "पृष्ठ तक (खाली = अंतिम)",
+      "toPlaceholder": "अंतिम पृष्ठ",
+      "splitting": "विभाजित कर रहे हैं…",
+      "splitDownload": "विभाजित करें और डाउनलोड करें",
+      "done": "विभाजन · स्रोत {source} पृष्ठ → आउटपुट {pages} पृष्ठ",
+      "note": "pdf-lib · API के समान पथ",
+      "split": "विभाजित करें और डाउनलोड करें"
+    },
+    "passwordStrength": {
+      "check": "मजबूती जांचें",
+      "checking": "जांच हो रही है…",
+      "crack": "ऑफ़लाइन धीमी-हैश अनुमान: {time}",
+      "score0": "बहुत कमज़ोर",
+      "score1": "कमज़ोर",
+      "score2": "मध्यम",
+      "score3": "मजबूत",
+      "score4": "बहुत मजबूत",
+      "note": "zxcvbn-ts · API के समान पथ · पासवर्ड कभी संग्रहीत नहीं होता"
+    },
+    "hmacSign": {
+      "compute": "HMAC की गणना करें",
+      "computing": "गणना हो रही है…",
+      "note": "node:crypto · API के समान पथ"
+    },
+    "costEstimate": {
+      "text": "इनपुट टेक्स्ट (इनपुट टोकन अनुमान के लिए)",
+      "model": "मॉडल",
+      "outputTokens": "आउटपुट टोकन (अनुमानित)",
+      "estimate": "लागत का अनुमान लगाएं",
+      "estimating": "अनुमान लगाया जा रहा है…",
+      "note": "@nebutra/ai-providers/frontier card + js-tiktoken · सूची मूल्य अनुमान, बिल नहीं"
+    },
+    "jsonSchema": {
+      "data": "JSON डेटा",
+      "schema": "JSON स्कीमा",
+      "validate": "मान्य करें",
+      "validating": "मान्य किया जा रहा है…",
+      "pass": "पास",
+      "fail": "फेल",
+      "note": "Ajv · API के समान पथ"
+    },
+    "zhCnTw": {
+      "s2t": "सरलीकृत → पारंपरिक",
+      "t2s": "पारंपरिक → सरलीकृत",
+      "s2tw": "सरलीकृत → ताइवान",
+      "tw2s": "ताइवान → सरलीकृत",
+      "s2hk": "सरलीकृत → हांगकांग",
+      "hk2s": "हांगकांग → सरलीकृत",
+      "note": "OpenCC (opencc-js) · API के समान पथ"
+    },
+    "pinyin": {
+      "tones": "स्वर शैली",
+      "symbol": "प्रतीक nǐ",
+      "num": "संख्या ni3",
+      "none": "कोई नहीं ni",
+      "hanzi": "चीनी अक्षर",
+      "convert": "पिनयिन में बदलें",
+      "converting": "बदल रहे हैं…",
+      "note": "pinyin-pro · API के समान पथ"
+    },
+    "sqlFormat": {
+      "dialect": "डायलेक्ट",
+      "format": "फॉर्मेट",
+      "formatting": "फॉर्मेट कर रहे हैं…",
+      "note": "sql-formatter · API के समान पथ"
+    },
+    "colorConvert": {
+      "color": "रंग",
+      "pick": "रंग चुनें",
+      "convert": "रूपांतरित करें",
+      "converting": "रूपांतरित हो रहा है…",
+      "note": "culori · hex / rgb / hsl / oklch · API जैसा ही पथ"
+    },
+    "qrGen": {
+      "content": "सामग्री",
+      "format": "प्रारूप",
+      "pngPreview": "PNG (पूर्वावलोकन)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "QR बनाएं",
+      "generating": "बनाया जा रहा है…",
+      "note": "qrcode · API जैसा ही पथ"
+    },
+    "qrDecode": {
+      "upload": "QR कोड वाली छवि अपलोड करें",
+      "parsing": "डिकोड हो रहा है…",
+      "note": "jsQR + sharp · API के समान पथ"
+    },
+    "cron": {
+      "expression": "Cron अभिव्यक्ति",
+      "timezone": "समय क्षेत्र",
+      "parse": "अगले चलाएँ",
+      "parsing": "पार्स हो रहा है…",
+      "nextTitle": "अगले चलाएँ (ISO)",
+      "note": "cron-parser · API के समान पथ"
+    },
+    "timezone": {
+      "datetime": "तारीख़ और समय",
+      "from": "से",
+      "to": "तक",
+      "convert": "समय क्षेत्र बदलें",
+      "converting": "रूपांतरित हो रहा है…",
+      "placeholder": "2026-07-24 12:00:00 या ISO / unix",
+      "note": "dayjs timezone · API जैसा ही path"
+    },
+    "csvPreview": {
+      "preview": "टेबल पूर्वावलोकन",
+      "parsing": "पार्स हो रहा है…",
+      "rows": "पूर्वावलोकन {shown} / {total} पंक्तियाँ",
+      "note": "papaparse · API जैसा ही path"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "क्वेरी",
+      "querying": "क्वेरी हो रही है…",
+      "note": "jsonpath-plus · API जैसा ही path"
+    },
+    "xmlFormat": {
+      "pretty": "सुंदर",
+      "minify": "संक्षिप्त करें",
+      "validate": "सत्यापित करें",
+      "validOk": "सही",
+      "done": "पूर्ण · {engine}",
+      "processing": "प्रसंस्करण…",
+      "note": "fast-xml-parser · API जैसा ही पथ"
+    },
+    "regexLegacy": {
+      "pattern": "पैटर्न",
+      "flags": "फ़्लैग्स",
+      "mode": "मोड",
+      "match": "मैच",
+      "replace": "बदलें",
+      "test": "टेस्ट",
+      "replacement": "प्रतिस्थापन",
+      "note": "तुरंत स्थानीय · सर्वर टाइमआउट बजट · API जैसा ही पथ"
+    },
+    "docxText": {
+      "file": "DOCX फ़ाइल",
+      "needFile": "पहले एक .docx फ़ाइल चुनें",
+      "extract": "पाठ निकालें",
+      "extracting": "निकाल रहे हैं…",
+      "note": "DOCX → पाठ · शुद्ध ZIP + document.xml (कोई Office सूट नहीं)"
+    },
+    "uuid": {
+      "count": "गिनती",
+      "local": "स्थानीय उत्पन्न करें",
+      "server": "सर्वर पर उत्पन्न करें",
+      "copyAll": "सभी कॉपी करें",
+      "empty": "UUID यहाँ दिखेंगे"
+    },
+    "timestamp": {
+      "nowSec": "Unix सेकंड",
+      "nowMs": "Unix ms / ISO",
+      "serverNow": "सर्वर अभी",
+      "toDate": "टाइमस्टैम्प → तारीख",
+      "toUnix": "तारीख → टाइमस्टैम्प",
+      "seconds": "सेकंड",
+      "milliseconds": "मिलीसेकंड",
+      "value": "मूल्य",
+      "convert": "रूपांतरित करें",
+      "note": "API जैसा ही पथ"
+    },
+    "wordCount": {
+      "words": "शब्द",
+      "chars": "अक्षर",
+      "noSpaces": "बिना स्पेस के",
+      "cjk": "CJK",
+      "lines": "पंक्तियाँ",
+      "paragraphs": "अनुच्छेद",
+      "placeholder": "टेक्स्ट पेस्ट या टाइप करें…",
+      "copyText": "टेक्स्ट कॉपी करें",
+      "clear": "साफ़ करें",
+      "verifying": "सत्यापित हो रहा है…",
+      "serverNote": "सर्वर शब्द={words} · API के समान पथ",
+      "note": "लाइव इंजन: {engine} · अपलोड की आवश्यकता नहीं · API के समान पथ"
+    },
+    "bmi": {
+      "height": "ऊँचाई (cm)",
+      "weight": "वजन (kg)",
+      "compute": "BMI की गणना करें",
+      "computing": "गणना हो रही है…",
+      "invalid": "सही ऊँचाई (cm) और वजन (kg) दर्ज करें",
+      "underweight": "कम वजन",
+      "normal": "सामान्य",
+      "overweight": "अधिक वजन",
+      "obese": "मोटापा",
+      "note": "WHO BMI · API के समान पथ · चिकित्सा सलाह नहीं"
+    },
+    "percentage": {
+      "mode": "मोड",
+      "percentOf": "a का b का a%",
+      "isWhat": "a, b का कितना % है",
+      "percentA": "प्रतिशत a",
+      "valueA": "मान a",
+      "baseB": "आधार b",
+      "compute": "गणना करें",
+      "computing": "गणना हो रही है…",
+      "invalid": "सही संख्याएँ दर्ज करें",
+      "note": "API का वही पथ"
+    },
+    "dataSize": {
+      "value": "मान",
+      "convert": "रूपांतरित करें",
+      "converting": "रूपांतरण हो रहा है…",
+      "invalid": "एक सही संख्या दर्ज करें",
+      "binary": "{value} {from} → आधार-1024",
+      "note": "बाइनरी इकाइयाँ (1 KB = 1024 B) · API का वही पथ"
+    },
+    "rmb": {
+      "amount": "राशि (CNY)",
+      "convert": "मोटे अक्षरों में",
+      "converting": "रूपांतरित हो रहा है…",
+      "invalid": "एक गैर-ऋणात्मक राशि दर्ज करें",
+      "note": "चीनी इनवॉइस राशि मोटे अक्षरों में · API के समान पथ"
+    },
+    "dateDiff": {
+      "from": "शुरुआती तारीख",
+      "to": "अंतिम तारीख",
+      "compute": "दिनों का अंतर",
+      "computing": "गणना हो रही है…",
+      "days": "दिन",
+      "note": "ECMAScript Date · API के समान पथ"
+    },
+    "xlsxText": {
+      "file": "XLSX फ़ाइल",
+      "needFile": "पहले एक .xlsx फ़ाइल चुनें",
+      "extract": "शीट निकालें",
+      "extracting": "निकाल रहे हैं…",
+      "note": "XLSX → CSV · शुद्ध ZIP + sheet1.xml (पहली शीट)"
+    },
+    "mdToPdf": {
+      "drop": "यहाँ एक .md फ़ाइल छोड़ें, या नीचे Markdown पेस्ट करें",
+      "title": "शीर्षक",
+      "engine": "इंजन",
+      "ePlaywright": "playwright (Chromium प्रिंट)",
+      "eSimple": "सरल (ब्राउज़र नहीं)",
+      "generate": "PDF बनाएँ",
+      "generating": "बना रहे हैं…",
+      "download": "PDF डाउनलोड करें",
+      "note": "marked → HTML → Playwright Chromium प्रिंट। यदि Chromium अनुपलब्ध है, तो स्वचालित रूप से सरल संरचित PDF पर वापस आ जाता है — renderEngine जांचें; सरल प्रिंट-ग्रेड लेआउट नहीं है।",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
+    },
+    "tokenCount": {
+      "count": "टोकन गिनें",
+      "counting": "गिन रहे हैं…",
+      "chars": "अक्षर {n}",
+      "note": "इंजन: js-tiktoken · सर्वर-साइड सटीक गणना · Router लागत अनुमान में उपयोग किया जा सकता है"
+    },
+    "codec": {
+      "encodeDir": "टेक्स्ट → एन्कोडेड",
+      "decodeDir": "एन्कोडेड → टेक्स्ट",
+      "localNote": "स्थानीय चलाएँ",
+      "serverNote": "सर्वर · API के समान पथ",
+      "hexInvalid": "मान्य हेक्स स्ट्रिंग नहीं",
+      "hexDecodeFail": "सर्वर UTF-8 के रूप में डिकोड नहीं कर सका (मान्य हेक्स आवश्यक है)",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · API के समान पथ",
+      "noteHtml": "HTML entity map · API के समान पथ",
+      "noteHex": "UTF-8 ↔ hex · API के समान पथ"
+    },
+    "textDiff": {
+      "left": "बायाँ",
+      "right": "दायाँ",
+      "compare": "तुलना करें",
+      "comparing": "तुलना हो रही है…"
+    },
+    "imageTool": {
+      "drop": "यहाँ एक छवि छोड़ें, या ब्राउज़ करने के लिए क्लिक करें",
+      "selected": "चयनित: {name} ({kb} KB)",
+      "needFile": "पहले एक छवि चुनें",
+      "format": "आउटपुट प्रारूप",
+      "quality": "गुणवत्ता {n}",
+      "maxW": "अधिकतम चौड़ाई",
+      "maxH": "अधिकतम ऊँचाई",
+      "optional": "वैकल्पिक",
+      "resizeEg": "जैसे 1280",
+      "processing": "प्रसंस्करण…",
+      "compress": "संपीड़ित करें",
+      "resize": "आकार बदलें",
+      "convert": "प्रारूप बदलें",
+      "download": "परिणाम डाउनलोड करें",
+      "outMeta": "आउटपुट {kb} KB{dims}{ratio} · {type}",
+      "ratio": " · मूल का ~{pct}%",
+      "dims": " · {w}×{h}",
+      "original": "मूल",
+      "result": "परिणाम",
+      "note": "इंजन: sharp (libvips) · सर्वर-साइड · API (imageBase64) का वही पथ",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+    },
+    "pptxText": {
+      "file": "PPTX फ़ाइल",
+      "needFile": "पहले एक .pptx फ़ाइल चुनें",
+      "extract": "आउटलाइन निकालें",
+      "extracting": "निकाल रहे हैं…",
+      "note": "PPTX आउटलाइन · शुद्ध ZIP + स्लाइड XML (PowerPoint नहीं)"
+    },
+    "shell": {
+      "copyJson": "JSON कॉपी करें",
+      "sample": "नमूना",
+      "chars": "{n} अक्षर",
+      "largeInput": "बड़ा इनपुट — टाइपिंग बंद करने के कुछ पल बाद परिणाम अपडेट होगा।",
+      "manualInput": "इनपुट काफी बड़ा है कि लाइव रिकंप्यूट पेज को रोक देगा। रन दबाएं।",
+      "options": "विकल्प",
+      "regenerateNote": "आउटपुट पहले से ही विकल्प बदलने पर अपडेट हो रहा है।",
+      "fileTab": "फ़ाइल",
+      "pasteTab": "पेस्ट",
+      "browse": "फ़ाइल चुनें",
+      "selectedFile": "{name} · {kb} KB",
+      "truncated": "पहले {kb} KB पढ़ें — जवाब देने के लिए काफी, और बाकी कभी आपके मशीन से बाहर नहीं जाता।",
+      "detail": "विवरण",
+      "dropIntoPane": "यहाँ एक फ़ाइल ड्रॉप करें",
+      "swap": "पक्ष बदलें",
+      "prevChange": "पिछला",
+      "nextChange": "आगे",
+      "changePosition": "{total} में {index}",
+      "result": "परिणाम"
+    },
+    "readmeSkeleton": {
+      "emptyHint": "README बनाने के लिए कम से कम एक सेक्शन चुनें।",
+      "note": "यह API जैसा ही इंजन चलाता है। जो सेक्शन आप छोड़ेंगे वे कभी नहीं दिखेंगे — कोई खाली हेडर नहीं।",
+      "orderNote": "सेक्शन हमेशा इसी निश्चित क्रम में रेंडर होते हैं, इसलिए एक ही इनपुट से एक ही फ़ाइल बनती है।",
+      "group": {
+        "core": "कोर",
+        "docs": "डॉक्स",
+        "community": "कम्युनिटी",
+        "meta": "मेटा"
+      },
+      "section": {
+        "title": "शीर्षक और विवरण",
+        "badges": "बैज",
+        "callout": "नोट कॉलआउट",
+        "toc": "विषय-सूची",
+        "installation": "स्थापना",
+        "usage": "उपयोग",
+        "features": "विशेषताएँ",
+        "api-reference": "API संदर्भ",
+        "screenshots": "स्क्रीनशॉट",
+        "roadmap": "रोडमैप",
+        "contributing": "योगदान",
+        "support": "सहायता",
+        "acknowledgements": "आभार",
+        "license": "लाइसेंस",
+        "authors": "लेखक",
+        "tech-stack": "टेक स्टैक"
+      },
+      "projectName": "प्रोजेक्ट का नाम",
+      "projectNamePlaceholder": "प्रोजेक्ट का नाम",
+      "description": "विवरण",
+      "descriptionPlaceholder": "एक वाक्य में बताएं कि यह क्या करता है",
+      "badgeLicense": "लाइसेंस बैज",
+      "badgeNpm": "npm version",
+      "badgeBuild": "बिल्ड स्थिति",
+      "npmPackage": "npm package",
+      "npmPackagePlaceholder": "@scope/package",
+      "repo": "GitHub रिपॉजिटरी",
+      "repoPlaceholder": "owner/repo",
+      "calloutKind": "कॉलआउट",
+      "calloutBody": "Callout text",
+      "calloutBodyPlaceholder": "Pre-1.0 — API अभी भी बदल रहा है",
+      "fenceLanguage": "Language",
+      "installCommand": "Install command",
+      "installCommandPlaceholder": "npm install your-project",
+      "usageExample": "Usage example",
+      "usageExamplePlaceholder": "सबसे छोटा उदाहरण जो मूल्य दिखाता है",
+      "features": "Features",
+      "featuresPlaceholder": "एक फीचर प्रति पंक्ति",
+      "contact": "Contact",
+      "contactPlaceholder": "support@example.com",
+      "license": "लाइसेंस",
+      "authors": "Authors",
+      "authorsPlaceholder": "@handle, Jane Roe",
+      "techStack": "टेक स्टैक",
+      "techStackPlaceholder": "typescript, postgresql (simple-icons slugs)",
+      "sectionCount": "{n} सेक्शन",
+      "charCount": "{n} अक्षर",
+      "warningCount": "{n} छोड़े गए",
+      "omittedTitle": "क्या छोड़ा गया और क्यों"
+    },
+    "gitignore": {
+      "searchLabel": "स्टैक खोजें",
+      "searchPlaceholder": "भाषा, फ्रेमवर्क, OS या एडिटर खोजें…",
+      "add": "{stack} जोड़ें",
+      "remove": "{stack} हटाएं",
+      "selected": "चयनित स्टैक",
+      "suggestions": "मिलते स्टैक",
+      "noMatches": "“{query}” से मेल खाने वाला कोई स्टैक नहीं मिला। भेजने के लिए Enter दबाएं — एलियास सर्वर पर रिज़ॉल्व होंगे।",
+      "catalogFallback": "स्टैक सूची उपलब्ध नहीं है — एक स्टैक नाम टाइप करें और Enter दबाएं।",
+      "emptyHint": "ऊपर से कम से कम एक भाषा, फ्रेमवर्क, OS या एडिटर चुनें।",
+      "regenerate": "पुनः उत्पन्न करें",
+      "sections": "{n} सेक्शन",
+      "lines": "{n} पंक्तियां",
+      "deduped": "{n} डुप्लिकेट पैटर्न मर्ज किए गए",
+      "notFound": "कॉर्पस में नहीं: {stacks}",
+      "globalScope": "{stacks} OS/एडिटर एंट्री हैं — कई डेवलपर्स इन्हें हर रेपो के बजाय व्यक्तिगत ~/.gitignore_global में रखते हैं।",
+      "untrackedNote": ".gitignore केवल अनट्रैक्ड फाइलों को प्रभावित करता है। किसी फाइल के लिए जो git पहले से ट्रैक कर रहा है, git rm -r --cached <path> चलाएं।",
+      "fileLabel": ".gitignore"
+    },
+    "editorconfig": {
+      "emptyHint": "फाइल देखने के लिए कम से कम एक प्रॉपर्टी सेट करें।",
+      "note": "API जैसा ही इंजन। आपका चयन इस ब्राउज़र सेशन में रहता है; कुछ भी स्टोर नहीं होता।",
+      "checks": "चेक",
+      "presets": "इससे शुरू करें",
+      "preset": {
+        "spaces2": "2 स्पेस, LF",
+        "spaces4": "4 स्पेस, LF",
+        "tabs": "टैब्स, चौड़ाई 4",
+        "repo": "रेपो स्टार्टर (+ Markdown, Makefile)"
+      },
+      "rootLabel": "root = true — पेरेंट .editorconfig फ़ाइलों को मर्ज करने से एडिटर्स को रोकें",
+      "glob": "ग्लोब {n}",
+      "addSection": "एक सेक्शन जोड़ें",
+      "removeSection": "हटाएं",
+      "notSet": "(नहीं सेट)",
+      "import": "एक मौजूदा .editorconfig आयात करें",
+      "importPlaceholder": "फॉर्म में लोड करने के लिए यहाँ एक .editorconfig पेस्ट करें",
+      "importAction": "आयात करें",
+      "importing": "आयात हो रहा है…",
+      "importFailed": "आयात नहीं हो सका: {message}"
+    },
+    "robotsTxt": {
+      "emptyHint": "ऊपर दिए गए विकल्प सेट करें — फ़ाइल यहाँ दिखेगी",
+      "deployNote": "robots.txt केवल डोमेन रूट पर लागू होता है (https://example.com/robots.txt)। प्रत्येक सबडोमेन को अपनी अलग फ़ाइल की आवश्यकता होती है।",
+      "outputLabel": "robots.txt",
+      "defaultAccess": "डिफ़ॉल्ट एक्सेस (User-agent: *)",
+      "defaultAllow": "सभी की अनुमति दें",
+      "defaultDisallow": "सभी को अस्वीकार करें",
+      "defaultAccessNote": "\"सभी की अनुमति दें\" एक खाली \"Disallow:\" लिखता है — यही सब कुछ की अनुमति देता है।",
+      "crawlDelay": "Crawl-delay (सेकंड)",
+      "crawlDelayPlaceholder": "कोई नहीं",
+      "crawlDelayNote": "RFC 9309 का हिस्सा नहीं है। Google इसे नज़रअंदाज़ करता है; यह कभी भी Google group में लिखा नहीं जाता।",
+      "searchAgents": "खोज इंजन",
+      "aiAgents": "AI क्रॉलर",
+      "aiAgentsNote": "प्रशिक्षण और उत्तर-इंजन क्रॉलर। इन्हें ब्लॉक करने से खोज इंडेक्सिंग पर असर नहीं पड़ता।",
+      "accessDefault": "डिफ़ॉल्ट",
+      "accessAllow": "अनुमति दें",
+      "accessDisallow": "अनुमति न दें",
+      "rules": "पथ नियम",
+      "rulesNote": "पथ केस-संवेदनशील हैं और रूट के सापेक्ष हैं। किसी नियम को एक डायरेक्टरी तक सीमित करने के लिए अंत में स्लैश जोड़ें।",
+      "rulePath": "पथ {n}",
+      "rulePathPlaceholder": "/admin/",
+      "ruleType": "नियम प्रकार",
+      "addRule": "पथ नियम जोड़ें",
+      "removeRule": "हटाएं",
+      "sitemaps": "साइटमैप्स",
+      "sitemapsNote": "पूर्ण http(s) URL। हर समूह के बाहर, अलग-अलग पंक्तियों में लिखें।",
+      "sitemapUrl": "साइटमैप {n}",
+      "addSitemap": "साइटमैप जोड़ें",
+      "removeSitemap": "हटाएं",
+      "groupCount": "{n} समूह",
+      "lineCount": "{n} पंक्तियां",
+      "sitemapCount": "{n} साइटमैप",
+      "warningsSummary": "इस फ़ाइल पर नोट्स ({n})"
+    },
+    "encodingDetect": {
+      "drop": "एन्कोडिंग पहचानने के लिए फ़ाइल ड्रॉप करें",
+      "privacy": "केवल पहले {kb} KB पढ़े जाते हैं, और उन्हें उसी सार्वजनिक invoke endpoint पर भेजा जाता है जो एक एजेंट कॉल करेगा — डिस्क पर कुछ नहीं लिखा जाता।",
+      "pasteLabel": "या टेक्स्ट पेस्ट करें",
+      "pastePlaceholder": "टेक्स्ट पेस्ट करें — जिसमें mojibake भी शामिल हो जिसे समझाया जाना है",
+      "detail": "उम्मीदवार, लाइन एंडिंग्स और बाइट सांख्यिकी",
+      "idle": "फ़ाइल ड्रॉप करें या टेक्स्ट पेस्ट करें — रिपोर्ट तुरंत भर जाएगी जैसे ही कुछ पढ़ने को मिले।",
+      "readOnly": "केवल-पढ़ने योग्य: यह टूल एन्कोडिंग पहचानता है, यह बाइट्स कभी नहीं रीराइट करता।",
+      "headline": "{encoding} · {confidence}% आत्मविश्वास",
+      "notText": "यह टेक्स्ट जैसा नहीं दिखता",
+      "bomPresent": "BOM {bytes}",
+      "bomAbsent": "कोई BOM नहीं",
+      "eol": "{kind} लाइन एंडिंग्स",
+      "eolMixed": "मिश्रित लाइन एंडिंग्स",
+      "language": "भाषा {language} · {confidence}%",
+      "sampled": "{totalKb} KB में से पहले {kb} KB से पहचाना गया",
+      "candidates": "रैंक किए गए उम्मीदवार",
+      "candidatesNote": "रनर-अप एन्कोडिंग जानबूझकर दिखाई गई हैं: छोटे या सममित नमूने वास्तव में अस्पष्ट होते हैं।",
+      "lineEndings": "लाइन एंडिंग्स",
+      "byteStats": "बाइट सांख्यिकी",
+      "totalBytes": "कुल",
+      "asciiBytes": "ASCII",
+      "highBytes": "हाई (0x80–0xFF)",
+      "nullBytes": "NUL",
+      "mojibake": "Mojibake पुनर्प्राप्त"
+    },
+    "dockerfileStarter": {
+      "language": "भाषा",
+      "framework": "फ्रेमवर्क",
+      "packageManager": "पैकेज मैनेजर",
+      "baseVariant": "बेस इमेज",
+      "version": "रनटाइम संस्करण",
+      "workdir": "कार्य निर्देशिका",
+      "port": "पोर्ट",
+      "buildCommand": "बिल्ड कमांड",
+      "startCommand": "स्टार्ट कमांड",
+      "commandPlaceholder": "खाली = प्रीसेट डिफ़ॉल्ट",
+      "frameworkNone": "कोई नहीं (साधारण रनटाइम)",
+      "pmAuto": "स्वचालित",
+      "variantSlim": "slim (glibc)",
+      "variantAlpine": "alpine (musl)",
+      "variantFull": "पूर्ण",
+      "multiStage": "बहु-चरणीय निर्माण",
+      "nonRootUser": "गैर-मूल उपयोगकर्ता",
+      "includeDockerignore": ".dockerignore जोड़ें",
+      "includeCompose": "compose.yaml जोड़ें",
+      "includeHealthcheck": "HEALTHCHECK जोड़ें",
+      "groupWhat": "आप क्या बना रहे हैं",
+      "groupHow": "यह कैसे चलना चाहिए",
+      "emptyHint": "Dockerfile देखने के लिए एक भाषा चुनें।",
+      "note": "केवल प्रीसेट्स — आपके ब्राउज़र से ऊपर दिए गए विकल्पों के अलावा कुछ नहीं जाता। इसे शिप करने से पहले फ़ाइल पढ़ें।",
+      "warnings": "{n} चीज़ें जाँचें",
+      "stages": "{n} स्टेज",
+      "badgeNonRoot": "Non-root",
+      "badgeRoot": "Root के रूप में चलता है",
+      "badgePort": "पोर्ट {port}"
+    },
+    "lineEndingDetect": {
+      "dropLabel": "लाइन एंडिंग्स की जाँच करने के लिए एक टेक्स्ट फ़ाइल ड्रॉप करें",
+      "privacy": "पेस्ट किया गया टेक्स्ट और ड्रॉप की गई फ़ाइल के पहले 256 KB, स्कैन करने के लिए Forge API को भेजे जाते हैं; बाइट्स स्टोर नहीं किए जाते।",
+      "pasteLabel": "या टेक्स्ट पेस्ट करें",
+      "pastePlaceholder": "जाँचने के लिए टेक्स्ट पेस्ट करें",
+      "idle": "लाइन-एंडिंग निर्णय देखने के लिए टेक्स्ट पेस्ट करें या फ़ाइल ड्रॉप करें।",
+      "detail": "गिनती और जाँचें",
+      "note": "केवल पहचान — यह टूल कभी भी आपकी फ़ाइल को पुनः नहीं लिखता।",
+      "empty": "खाली इनपुट",
+      "noTerminator": "कोई लाइन टर्मिनेटर नहीं — एक अपूर्ण लाइन",
+      "consistent": "{style} — सुसंगत",
+      "mixed": "मिश्रित — {parts}",
+      "sharePart": "{pct}% {style}",
+      "style": {
+        "LF": "LF (Unix/Linux/macOS)",
+        "CRLF": "CRLF (Windows)",
+        "CR": "CR (क्लासिक Mac OS 9 और पहले)"
+      },
+      "lines": "{n} पंक्तियाँ",
+      "bytes": "{n} बाइट्स",
+      "trailing": {
+        "present": "न्यूलाइन के साथ समाप्त होता है",
+        "absent": "फ़ाइल के अंत में नया पंक्ति नहीं"
+      },
+      "bomUtf8": "UTF-8 BOM",
+      "bomNone": "कोई BOM नहीं",
+      "countRow": "{style}: {n} ({pct}%)",
+      "colStyle": "शैली",
+      "colCount": "गिनती",
+      "colShare": "अंश",
+      "minorityLines": "प्रमुख शैली से भिन्न पंक्तियाँ: {lines}",
+      "andMore": "और अधिक",
+      "findings": "जाँच",
+      "level": {
+        "info": "नोट",
+        "warning": "चेतावनी",
+        "danger": "टूटता है"
+      },
+      "sampled": "पहले {n} में से {total} बाइट्स स्कैन किए गए",
+      "encodingLink": "एन्कोडिंग डिटेक्टर खोलें"
+    },
+    "fileTypeDetect": {
+      "drop": "यह पहचानने के लिए एक फ़ाइल छोड़ें कि वह वास्तव में क्या है",
+      "privacy": "केवल पहले {kb} KB हेडर पढ़ा जाता है — फ़ाइल का बाकी हिस्सा कभी आपके डिवाइस से बाहर नहीं जाता।",
+      "hexTab": "हेक्स पेस्ट करें",
+      "detail": "बाइट्स और उम्मीदवार दिखाएं",
+      "idle": "एक फ़ाइल छोड़ें, या इसके प्रारंभिक बाइट्स को हेक्स के रूप में पेस्ट करें।",
+      "note": "सिग्नेचर कंटेनर की पहचान करते हैं, कोडेक या उसके अंदर की सामग्री की नहीं।",
+      "unset": "—",
+      "unknownType": "कोई सिग्नेचर मेल नहीं खाया",
+      "polyglot": "पॉलीग्लॉट",
+      "tierNone": "एक्सटेंशन सहमत है",
+      "tierBenign": "हानिरहित असंगति",
+      "tierMismatch": "एक्सटेंशन असंगति",
+      "tierHighRisk": "उच्च जोखिम",
+      "confidenceMatch": "सिग्नेचर मेल",
+      "confidenceContainer": "केवल कंटेनर",
+      "confidenceAmbiguous": "अस्पष्ट",
+      "confidenceNone": "कोई मेल नहीं",
+      "signalDetected": "पता लगाया गया MIME",
+      "signalReported": "रिपोर्ट किया गया MIME",
+      "signalExtension": "फ़ाइलनाम एक्सटेंशन",
+      "drillResolved": "{kind} कंटेनर खोला गया: {type}",
+      "drillUnresolved": "{kind} कंटेनर की पुष्टि हुई; सैंपल किए गए बाइट्स से सबटाइप का पता नहीं लगा",
+      "hexDump": "हेडर बाइट्स",
+      "bytesRead": "{n} बाइट्स पढ़े गए",
+      "headerOnly": "केवल हेडर नमूना",
+      "entropy": "एंट्रोपी {bits} बिट्स/बाइट",
+      "signatureCount": "टेबल में {n} सिग्नेचर",
+      "textHints": "संरचनात्मक संकेत: {hints}",
+      "candidates": "सभी मिलते-जुलते सिग्नेचर",
+      "atOffset": "ऑफसेट {offset}"
+    },
+    "licenseChooser": {
+      "prompt": "इस प्रोजेक्ट को क्या चाहिए?",
+      "pickScenario": "वह पंक्ति चुनें जो आपके प्रोजेक्ट जैसी लगे — उत्तर और फ़ाइल यहीं दिखेंगी।",
+      "disclaimer": "निश्चयवादी टेम्पलेट आउटपुट, कानूनी सलाह नहीं।",
+      "noAnswer": "इस मामले के लिए कोई एक लाइसेंस फिट नहीं होता",
+      "permissions": "अनुमति देता है",
+      "conditions": "आवश्यक है",
+      "limitations": "इसमें शामिल नहीं है",
+      "alternates": "इस स्थिति के लिए अन्य विकल्प",
+      "useThis": "यह उपयोग करें",
+      "readCanonical": "SPDX पर मानक पाठ पढ़ें",
+      "holder": "कॉपीराइट धारक",
+      "holderPlaceholder": "आपका नाम या आपकी कंपनी",
+      "holderHint": "कॉपीराइट धारक जोड़ें और फ़ाइल टाइप करते समय स्वयं भर जाएगी।",
+      "year": "वर्ष",
+      "manifest": "SPDX id कहाँ जाता है",
+      "verbatim": "{name} सबके लिए बाइट-समान रूप से शिप होता है — कॉपीराइट पंक्ति LICENSE फ़ाइल के बजाय स्रोत-फ़ाइल नोटिस में जाती है।",
+      "noLicense": {
+        "summary": "अगर मैं कोई लाइसेंस नहीं जोड़ता तो?",
+        "body": "कोई लाइसेंस नहीं होना पब्लिक डोमेन के बराबर नहीं है। बिना लाइसेंस के डिफ़ॉल्ट कॉपीराइट लागू होता है और कोई भी आपके कोड की कॉपी, संशोधन या पुनर्वितरण नहीं कर सकता — एक पब्लिक रिपॉजिटरी दृश्यता है, अनुमति नहीं।"
+      },
+      "artifact": {
+        "header": "सोर्स-फ़ाइल हेडर",
+        "notice": "सोर्स-फ़ाइल नोटिस"
+      },
+      "refine": {
+        "patent": "यहाँ पेटेंट ग्रैंट मायने रखता है (कंपनी कोड, हार्डवेयर, स्टैंडर्ड्स वर्क)",
+        "network": "यह एक होस्टेड सर्विस के रूप中 चलेगा, सिर्फ़ डाउनलोड के रूप में नहीं",
+        "library": "यह एक लाइब्रेरी है जिसके खिलाफ़ अन्य सॉफ़्टवेयर लिंक होता है",
+        "later": "लाइसेंस के बाद के संस्करणों की अनुमति दें (Apache-2.0 कोड को संगत रखता है)",
+        "none": "इस मामले के लिए और कुछ रीफ़ाइन करने के लिए नहीं है।"
+      },
+      "scenario": {
+        "permissive": {
+          "label": "कोई भी इसे मुफ़्त में इस्तेमाल कर सकता है",
+          "detail": "इस्तेमाल करें, बदलें, बेचें, बंद उत्पादों में शिप करें — बस कॉपीराइट नोटिस रखें।"
+        },
+        "copyleft": {
+          "label": "सुधार वापस आने चाहिए",
+          "detail": "जो भी बदला हुआ संस्करण वितरित करता है, उसे स्रोत भी प्रकाशित करना होगा।"
+        },
+        "community": {
+          "label": "मैं किसी मौजूदा परियोजना में योगदान दे रहा हूँ",
+          "detail": "लाइसेंस पहले से तय है — जिस परियोजना में योगदान दे रहे हैं, उसका लाइसेंस अपनाएँ।"
+        },
+        "non-software": {
+          "label": "यह सॉफ़्टवेयर नहीं है",
+          "detail": "डॉक्स, डेटा, डिज़ाइन या मीडिया को OSI लाइसेंस नहीं, बल्कि Creative Commons लाइसेंस की ज़रूरत होती है।"
+        },
+        "unsure": {
+          "label": "मुझे अभी नहीं पता",
+          "detail": "कम पछतावे वाला डिफ़ॉल्ट और दो ऐसे विकल्प जो जानने लायक हैं।"
+        }
+      },
+      "family": {
+        "permissive": "परमिटिव",
+        "weak-copyleft": "कमज़ोर कॉपीलेफ़्ट",
+        "strong-copyleft": "मज़बूत कॉपीलेफ़्ट",
+        "public-domain": "सार्वजनिक डोमेन",
+        "content": "कंटेंट लाइसेंस"
+      },
+      "flag": {
+        "commercial-use": "वाणिज्यिक उपयोग",
+        "modifications": "संशोधन",
+        "distribution": "वितरण",
+        "private-use": "निजी उपयोग",
+        "patent-use": "पेटेंट अनुदान",
+        "include-copyright": "कॉपीराइट सूचना बनाए रखें",
+        "document-changes": "अपने परिवर्तन बताएं",
+        "disclose-source": "स्रोत प्रकट करें",
+        "same-license": "पूरे कार्य के लिए समान लाइसेंस",
+        "same-license-file": "समान लाइसेंस, प्रति संशोधित फ़ाइल",
+        "same-license-library": "लाइब्रेरी के लिए समान लाइसेंस",
+        "network-use-disclose": "नेटवर्क उपयोग वितरण के रूप中 गिना जाता है",
+        "liability": "दायित्व",
+        "warranty": "वारंटी",
+        "trademark-use": "ट्रेडमार्क का उपयोग"
+      }
+    },
+    "isbn": {
+      "inputLabel": "ISBNs",
+      "placeholder": "978-0-306-40615-7 — एक पंक्ति में एक, हाइफ़न और स्पेस नज़रअंदाज़",
+      "idle": "एक ISBN या पूरी कॉलम पेस्ट करें; टाइप करते ही परिणाम दिखेंगे।",
+      "scope": "केवल चेक-डिजिट गणना। एक वैध ISBN आंतरिक रूप से सुसंगत होता है — यह इस बात का प्रमाण नहीं कि किसी एजेंसी ने इसे किसी वास्तविक किताब के लिए आवंटित किया।",
+      "summary": "{total} में से {valid} वैध",
+      "singleValid": "वैध ISBN",
+      "singleInvalid": "वैध ISBN नहीं",
+      "invalidCount": "{n} अमान्य",
+      "convertedTo": "{type}: {value}",
+      "valid": "सही",
+      "invalid": "अमान्य",
+      "truncated": "पहली {shown} पंक्तियाँ दिखाई जा रही हैं।",
+      "col": {
+        "input": "इनपुट",
+        "normalized": "सामान्यीकृत",
+        "type": "प्रकार",
+        "status": "स्थिति",
+        "converted": "परिवर्तित",
+        "note": "नोट"
+      },
+      "type": {
+        "isbn10": "ISBN-10",
+        "isbn13": "ISBN-13",
+        "invalidLength": "गलत लंबाई"
+      },
+      "note": {
+        "checkDigit": "Check digit should be {expected}",
+        "invalidLength": "An ISBN has exactly 10 or 13 characters",
+        "invalidCharacter": "Contains a character that is not a digit",
+        "xMisplaced": "X is only valid as the last character of an ISBN-10",
+        "noIsbn10": "979 prefix has no ISBN-10 equivalent",
+        "nonBookland": "13-digit ISBNs must start with 978 or 979",
+        "ismn": "979-0 is the ISMN range (printed music), not ISBN"
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
+    },
+    "languageDetect": {
+      "inputLabel": "Code snippet",
+      "inputPlaceholder": "Paste code with no filename — from a chat log, a ticket, an answer…",
+      "hintLabel": "Filename or extension (optional)",
+      "hintPlaceholder": "main.h · .pl · Dockerfile",
+      "note": "Runs the same engine as the API. Detection is content-only unless you supply a filename hint; ambiguous extensions (.h .m .pl .fs .ts .cs .r) are routed through their own rules first.",
+      "idle": "एक स्निपेट पेस्ट करें — टाइप करते समय परिणाम दिखता है।",
+      "confidence": {
+        "high": "उच्च विश्वास",
+        "medium": "मध्यम विश्वास",
+        "low": "कम विश्वास"
+      },
+      "score": "{n}/100",
+      "dataFormat": "डेटा फॉर्मेट, प्रोग्रामिंग भाषा नहीं",
+      "multiLanguage": "एक से अधिक भाषाओं की संभावना",
+      "why": "यह उत्तर क्यों",
+      "signals": "मिले सिग्नल",
+      "alternates": "अन्य विकल्प",
+      "composeNext": "इस {language} को फॉर्मेट करें"
+    },
+    "iban": {
+      "inputLabel": "IBAN",
+      "idle": "IBAN पेस्ट करें — टाइप करते ही परिणाम मिलेगा, कोई बटन नहीं।",
+      "sourceNote": "Checksum और संरचना ISO 13616-1:2020 के अनुसार। देश-विशिष्ट लंबाई और BBAN प्रारूप ISO IBAN registry की प्रकाशित प्रतिलिपि से लिए गए हैं, registry स्वयं से नहीं।",
+      "valid": "सही IBAN",
+      "keepTyping": "टाइप करते रहें — इस देश के IBAN से छोटा है",
+      "caveat": "केवल संरचना सही है। पास होने वाला checksum खाते के अस्तित्व, खुले होने, या प्राप्तकर्ता के स्वामित्व की पुष्टि नहीं करता।",
+      "printFormat": "प्रिंट प्रारूप",
+      "details": "विस्तृत विश्लेषण",
+      "notEncoded": "इस देश के प्रारूप द्वारा एन्कोड नहीं किया गया",
+      "coverage": "{n} देशों में पंजीकृत IBAN प्रारूप",
+      "reason": {
+        "bad_charset": "IBAN का रूप नहीं — IBAN दो अक्षर, दो अंक, फिर केवल अक्षर और अंक होता है",
+        "country_unsupported": "इस देश कोड के लिए कोई पंजीकृत IBAN प्रारूप नहीं",
+        "incomplete": "अपूर्ण",
+        "wrong_length_for_country": "इस देश के IBAN के लिए बहुत लंबा है",
+        "structure_mismatch": "लंबाई सही है, लेकिन इस देश के फॉर्मेट के लिए आकार गलत है",
+        "checksum_failed": "Checksum विफल — इस IBAN में कहीं टाइपो है"
+      },
+      "badge": {
+        "country": "{name} ({code})",
+        "unknownCountry": "देश कोड {code}",
+        "length": "{n} of {expected} characters",
+        "bankCode": "बैंक कोड {code}",
+        "expectedCheckDigits": "इस खाता संख्या के लिए check digits {digits} होंगे"
+      },
+      "field": {
+        "normalized": "इलेक्ट्रॉनिक फॉर्मेट",
+        "country": "देश",
+        "checkDigits": "Check digits",
+        "bban": "BBAN",
+        "bbanFormat": "BBAN प्रारूप",
+        "bankCode": "बैंक कोड"
+      },
+      "check": {
+        "charset": "वर्णसेट",
+        "country": "देश",
+        "length": "लंबाई",
+        "structure": "संरचना",
+        "checksum": "MOD 97-10"
+      },
+      "state": {
+        "pass": "पास",
+        "fail": "असफल",
+        "skipped": "नहीं पहुंचा"
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
+    },
+    "secretScan": {
+      "pasteLabel": "कोड, कॉन्फ़िग या .env पेस्ट करें",
+      "pastePlaceholder": "DATABASE_URL=postgres://…\nAPI_KEY=…",
+      "dropLabel": "स्कैन करने के लिए फ़ाइल ड्रॉप करें",
+      "privacy": "पूरी तरह आपके ब्राउज़र में चलता है। कुछ भी कहीं नहीं भेजा जाता — हमें भी नहीं।",
+      "scan": "स्कैन करें",
+      "scanning": "स्कैन हो रहा है…",
+      "idleTitle": "कुछ पेस्ट करें और स्कैन दबाएँ।",
+      "idleHint": "वेंडर API कीज़, टोकन, प्राइवेट कीज़ और हाई-एंट्रोपी सीक्रेट्स की जाँच करता है। मिले हुए मान छिपाए जाते हैं; केवल पंक्ति संख्याएँ पूरी दिखाई जाती हैं।",
+      "clean": "कोई सीक्रेट नहीं मिला",
+      "cleanCaveat": "यहाँ कुछ भी ज्ञात क्रेडेंशियल फॉर्मेट से मेल नहीं खाता या रैंडम सीक्रेट जैसा नहीं लगता। पैटर्न मैचिंग सबूत नहीं है — जिस चीज़ पर शक हो उसे देखें।",
+      "found": "{n, plural, one {# संभावित सीक्रेट मिला} other {# संभावित सीक्रेट्स मिले}}",
+      "foundCaveat": "इसे कहीं पेस्ट करने से पहले इनका लुकाव करें। अगर की असली है, तो उसे रोटेट करें।",
+      "countHigh": "{n} हाई कॉन्फिडेंस",
+      "countMedium": "{n} मीडियम",
+      "countLow": "{n} कम",
+      "confidence": {
+        "high": "उच्च",
+        "medium": "मध्यम",
+        "low": "निम्न"
+      },
+      "position": "पंक्ति {line}, स्तंभ {column}",
+      "length": "{n} अक्षर",
+      "maskedLabel": "मास्क किया गया मिलान",
+      "why": "यह क्यों मिला",
+      "candidates": "यह भी हो सकता है:",
+      "scanDetail": "स्कैन विवरण",
+      "lines": "{n} पंक्तियाँ",
+      "bytes": "{n} बाइट्स स्कैन किए गए",
+      "suppressed": "{n} प्लेसहोल्डर नज़रअंदाज़ किए गए",
+      "suppressedNote": "ज्ञात डेमो मान (EXAMPLE कीज़, your-api-key-here, दोहराए गए अक्षर) नज़रअंदाज़ किए जाते हैं ताकि नमूना फ़ाइलें बेवजह अलार्म न बजाएँ।",
+      "omitted": "{n} और दिखाए नहीं गए",
+      "truncated": "इनपुट सीमित — केवल पहला हिस्सा स्कैन किया गया",
+      "reportTitle": "सीक्रेट स्कैन परिणाम (मान छिपे हुए)",
+      "scopeNote": "केवल पता लगाना: यह टूल कभी भी किसी विक्रेता से संपर्क नहीं करता यह जाँचने के लिए कि कोई की अभी भी सक्रिय है या नहीं — इसका मतलब होगा आपकी की को किसी तीसरे पक्ष को भेजना।"
+    },
+    "eanUpcGtin": {
+      "inputLabel": "बारकोड नंबर",
+      "placeholder": "प्रति पंक्ति एक कोड (कॉमा और सेमीकोलन भी अलग करते हैं)",
+      "idle": "एक कोड या पूरी कॉलम पेस्ट करें — निर्णय टाइप करते समय दिखता है।",
+      "operationLabel": "ऑपरेशन",
+      "operationValidate": "सत्यापित करें (कोड में चेक डिजिट शामिल है)",
+      "operationCalculate": "गणना करें (कोड में चेक डिजिट नहीं है)",
+      "typeLabel": "प्रकार",
+      "typeAuto": "लंबाई से पहचानें",
+      "total": "{n} कोड",
+      "validCount": "{n} वैध",
+      "invalidCount": "{n} अमान्य",
+      "calculatedCount": "{n} गणना किए गए",
+      "unrecognizedCount": "{n} अज्ञात लंबाई",
+      "verdict": {
+        "valid": "वैध",
+        "invalid": "अमान्य",
+        "calculated": "गणना किया गया",
+        "unrecognized-length": "अज्ञात लंबाई"
+      },
+      "alsoReadsAs": "{type} के रूप में भी पढ़ा जाता है",
+      "checkDigit": "जाँच अंक",
+      "corrected": "होना चाहिए",
+      "gtin14": "GTIN-14 रूप",
+      "reason": {
+        "empty": "इस पंक्ति में जाँचने के लिए कुछ नहीं है।",
+        "non-digit-characters": "इसमें ऐसे अक्षर हैं जो न तो अंक हैं और न ही विभाजक।",
+        "unsupported-length": "किसी भी GS1 पहचानकर्ता की यह लंबाई नहीं है (8, 12, 13, 14 और 18 अंक समर्थित हैं)।",
+        "length-mismatch": "आपके द्वारा चुने गए प्रकार के लिए गलत लंबाई।",
+        "check-digit-mismatch": "अंतिम अंक मानक द्वारा आवश्यक अंक से मेल नहीं खाता।"
+      },
+      "warning": {
+        "separators-stripped": "जाँच से पहले स्पेस, हाइफ़न और डॉट हटा दिए गए।",
+        "all-zero": "सभी शून्य — गणितीय रूप से मान्य, लेकिन वास्तविक पहचानकर्ता नहीं।",
+        "payload-is-also-a-complete-code": "यह एक पूर्ण कोड लंबाई भी है। यदि इसमें पहले से ही इसका जाँच अंक है, तो मान्य करें पर स्विच करें।"
+      },
+      "math": "अंकगणित दिखाएँ",
+      "mathSum": "योग {sum} → चेक अंक {check}",
+      "truncatedRows": "कुल {total} पंक्तियों में से पहले {shown} दिखाए जा रहे हैं। कॉपी और डाउनलोड सभी को ले जाते हैं।",
+      "privacy": "कोड Forge API पर भेजे जाते हैं जांच के लिए और सहेजे नहीं जाते।",
+      "scopeNote": "सही चेक अंक का मतलब है कि नंबर सही ढंग से बना है। इसका मतलब यह नहीं कि GS1 ने इसे किसी वास्तविक उत्पाद, कंपनी या स्थान के लिए कभी आवंटित किया है — इसका उत्तर केवल GEPIR रजिस्ट्री लुकअप दे सकता है।",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
+    },
+    "vin": {
+      "inputLabel": "VIN (17 अक्षर)",
+      "privacy": "आपके ब्राउज़र में जाँचा गया। VIN कहीं नहीं भेजा जाता।",
+      "idle": "VIN पेस्ट करें — टाइप करते ही निर्णय दिखता है, कोई बटन नहीं।",
+      "scope": "केवल संरचना और चेक अंक (49 CFR 565.15 / ISO 3779)। यह वाहन-इतिहास लुकअप नहीं है।",
+      "verdict": {
+        "valid": "मान्य VIN संरचना",
+        "keepTyping": "टाइप करते रहें — {remaining} और अक्षर बाकी",
+        "tooLong": "बहुत लंबा — VIN में ठीक 17 अक्षर होते हैं, इसमें {n} हैं",
+        "invalidCharacter": "VIN अक्षर नहीं: \"{char}\" स्थिति {position} पर",
+        "checkDigitMismatch": "चेक अंक बेमेल — अपेक्षित {expected}, मिला {found}"
+      },
+      "hint": {
+        "confusable": "\"{char}\" VIN में कभी उपयोग नहीं होता। क्या आपका मतलब {suggest} है?"
+      },
+      "notice": {
+        "notProvenance": "एक वैध चेक अंक पुष्टि करता है कि VIN सही ढंग से बना है। यह पुष्टि नहीं करता कि वाहन मौजूद है, संशोधित नहीं है, या उसका इतिहास साफ है — एक क्लोन किया गया VIN भी इस जांच को पास कर लेता है।",
+        "pre1981": "1981 से पहले बने वाहनों और कुछ आयातित (JDM/यूरोपीय) वाहनों में यह चेक अंक उपयोग नहीं होता — बेमेल का मतलब यह नहीं कि VIN गलत टाइप किया गया।",
+        "partial": "चेक-अंक सत्यापन के लिए पूरे 17-अक्षर वाले VIN की आवश्यकता है। आंशिक VIN डिकोड करने का काम है, चेकसम का नहीं।"
+      },
+      "badge": {
+        "length": "{n} अक्षर",
+        "expected": "चेक अंक {d}"
+      },
+      "invalidChars": {
+        "more": "ये भी VIN अक्षर नहीं हैं: {list}"
+      },
+      "segment": {
+        "wmi": "WMI 1-3",
+        "vds": "विवरणक 4-8",
+        "checkDigit": "चेक अंक 9",
+        "modelYear": "मॉडल वर्ष 10",
+        "plant": "प्लांट 11",
+        "serial": "सीरियल 12-17"
+      },
+      "math": {
+        "title": "गणित दिखाएं",
+        "col": {
+          "position": "स्थिति",
+          "char": "अक्षर",
+          "value": "मान",
+          "weight": "वजन",
+          "product": "गुणनफल"
+        },
+        "formula": "योग = {sum};  {sum} mod 11 = {remainder}  →  चेक अंक {expected}"
+      },
+      "specimenTitle": "VIN · structure specimen"
+    },
+    "envDiff": {
+      "envA": "वातावरण A",
+      "envB": "वातावरण B",
+      "placeholderA": "पहला .env फ़ाइल पेस्ट करें या ड्रॉप करें",
+      "placeholderB": "दूसरा .env फ़ाइल पेस्ट या ड्रॉप करें",
+      "paneNoAssignment": "कोई KEY=value पंक्ति नहीं मिली",
+      "optIgnoreComments": "टिप्पणी और खाली पंक्तियों को नज़रअंदाज़ करें",
+      "optCaseInsensitive": "केस-असंवेदनशील कुंजी तुलना",
+      "optRedactSecrets": "पता लगाए गए सीक्रेट्स को छुपाएं",
+      "emptyHint": "तुलना देखने के लिए दूसरा वातावरण जोड़ें",
+      "summaryNone": "{total} कुंजियों में कोई अंतर नहीं",
+      "summaryDiff": "{total} में से {n} कुंजियाँ भिन्न हैं",
+      "note": {
+        "unchanged": "दोनों ओर समान मान",
+        "changed": "मान भिन्न है",
+        "added": "केवल B में सेट",
+        "removed": "केवल A में सेट",
+        "commentedOutInA": "A में टिप्पणी के रूप में है, B में सेट है",
+        "commentedOutInB": "A में सेट है, B में टिप्पणी के रूप में है"
+      },
+      "secretChanged": "गुप्त चर भिन्न है",
+      "secretSame": "गुप्त चर दोनों ओर समान है",
+      "count": {
+        "unchanged": "{n} अपरिवर्तित",
+        "changed": "{n} परिवर्तित",
+        "added": "{n} जोड़े गए",
+        "removed": "{n} हटाए गए",
+        "commentedOut": "{n} कमेंट किए गए"
+      },
+      "warnings": "इनपुट चेतावनियाँ ({n})",
+      "warningType": {
+        "duplicateKey": "{file} · डुप्लिकेट की",
+        "quoteMismatch": "{file} · कोट मिसमैच",
+        "unparsableLine": "{file} · अपठनीय पंक्ति"
+      },
+      "showUnchanged": "अपरिवर्तित दिखाएँ ({n})",
+      "commentedIn": {
+        "A": "A में टिप्पणी की गई",
+        "B": "B में टिप्पणी की गई",
+        "both": "दोनों में टिप्पणी की गई"
+      },
+      "redactedNote": "गुप्त मान एक कुंजी-नाम कीवर्ड ह्यूरिस्टिक द्वारा छिपाए जाते हैं — यह कोई सुरक्षा स्कैनर नहीं है। तुलना कच्चे मानों पर चलती है, इसलिए घुमाया गया गुप्त मान फिर भी बदला हुआ दिखाई देगा।",
+      "interpolationNote": "${VAR} संदर्भों की तुलना शाब्दिक रूप से की जाती है और कभी हल नहीं की जाती: विस्तार उपभोक्ता के अनुसार भिन्न होता है।",
+      "truncated": "केवल पहले 5,000 कुंजी सूचीबद्ध हैं; गणना सभी कुंजियों को कवर करती है।",
+      "colKey": "कुंजी",
+      "colA": "A",
+      "colB": "B",
+      "colStatus": "स्थिति",
+      "privacy": "दोनों फ़ाइलों की तुलना आपके ब्राउज़र में की जाती है। कुछ भी अपलोड नहीं होता।"
+    },
+    "csvDiff": {
+      "originalLabel": "मूल CSV",
+      "updatedLabel": "अद्यतन CSV",
+      "originalPlaceholder": "मूल निर्यात चिपकाएँ, या यहाँ .csv फ़ाइल छोड़ें",
+      "updatedPlaceholder": "अद्यतन निर्यात चिपकाएँ, या यहाँ .csv फ़ाइल छोड़ें",
+      "emptyHint": "दोनों फ़ाइलें चिपकाएँ या छोड़ें — जैसे ही प्रत्येक पक्ष में सामग्री होगी, तुलना अपने आप चल जाएगी।",
+      "note": "पंक्तियाँ पहचान से मेल खाती हैं, स्थिति से नहीं, इसलिए एक सम्मिलित या पुनः क्रमबद्ध पंक्ति परिवर्तनों की दीवार के रूप中 नहीं पढ़ी जाती है। तुलना के लिए सामग्री API को भेजी जाती है और संग्रहीत नहीं की जाती है।",
+      "columns": "{n} स्तंभ",
+      "keyLabel": "मुख्य स्तंभ",
+      "keyAuto": "स्वतः सुझाव",
+      "keyNone": "कोई कुंजी नहीं — पूरी पंक्तियों की तुलना करें",
+      "joinLabel": "जोड़ें",
+      "joinFull": "Full outer — हर पंक्ति",
+      "joinInner": "Inner — दोनों में पंक्तियाँ",
+      "joinLeft": "Left — मूल पंक्ति सेट",
+      "ignoreWhitespace": "Whitespace नज़रअंदाज़ करें",
+      "ignoreCase": "Case नज़रअंदाज़ करें",
+      "treatEmptyAsNull": "खाली = NULL = N/A",
+      "noDifferences": "कोई अंतर नहीं",
+      "differences": "{added} जोड़े गए · {removed} हटाए गए · {changed} बदले गए",
+      "added": "{n} जोड़े गए",
+      "removed": "{n} हटाए गए",
+      "changed": "{n} बदले गए",
+      "unchangedCount": "{n} अपरिवर्तित",
+      "totals": "{original} → {updated} पंक्तियाँ",
+      "matchedBy": "{columns} ({source}) से मेल खाता है",
+      "matchedWholeRow": "पूरी पंक्ति के सामग्री से मेल खाता है — कोई कुंजी कॉलम उपयोग नहीं किया गया, इसलिए बदलाव के रूप中 कुछ भी रिपोर्ट नहीं किया गया।",
+      "keySource": {
+        "provided": "आपका चयन",
+        "auto": "स्वतः सुझाया गया",
+        "full-row": "पूरी पंक्ति"
+      },
+      "keyRejected": "अस्वीकृत कुंजी उम्मीदवार: {items}",
+      "columnMismatch": "केवल मूल में कॉलम: {original} · केवल अपडेटेड में: {updated}",
+      "truncated": "पूर्ण परिणाम का {shown} दिखा रहे हैं (पूर्वावलोकन {limit} पंक्तियों तक सीमित है) — ऊपर दिए गए गणना पूर्ण हैं।",
+      "findings": "नोट्स ({n})",
+      "level": {
+        "info": "जानकारी",
+        "warning": "चेतावनी",
+        "danger": "त्रुटि"
+      },
+      "wholeRow": "पंक्ति {n}",
+      "exportChanged": "बदली गई पंक्तियाँ (CSV)",
+      "exportFull": "पूर्ण अंतर (CSV)"
+    },
+    "uscc": {
+      "modeLabel": "सत्यापित करें या उत्पन्न करें",
+      "tab": {
+        "verify": "सत्यापित करें",
+        "generate": "परीक्षण कोड उत्पन्न करें"
+      },
+      "inputLabel": "एकीकृत सामाजिक क्रेडिट कोड",
+      "placeholder": "18 अक्षर, जैसे 91500000059926748X",
+      "idle": "18-अक्षर का कोड पेस्ट करें। टाइप करते समय यह ब्राउज़र में जाँचा जाता है — कुछ भी संग्रहित नहीं होता।",
+      "scope": "केवल संरचनात्मक जाँच (GB 32100-2015 + ISO 7064 MOD 31-3)। पास होने वाला कोड अच्छी तरह बने हुए है; इसका मतलब यह नहीं कि कोई संगठन इसके तहत पंजीकृत है — राष्ट्रीय पंजी cods.org.cn पर जाँचें।",
+      "valid": "मान्य एकीकृत सामाजिक क्रेडिट कोड",
+      "invalid": "संयुक्त सामाजिक क्रेडिट कोड मान्य नहीं है",
+      "incomplete": "18 अक्षरों में से {n}",
+      "invalidCharacters": "मानक द्वारा बहिष्कृत अक्षरों को शामिल करता है",
+      "checksumOk": "चेक अंक ठीक है",
+      "checksumBad": "चेक अंक मेल नहीं खाता",
+      "expectedDigit": "चेक अंक {expected} होना चाहिए, {actual} नहीं",
+      "illegalAt": "स्थिति {position}: “{char}” कोड अक्षर सेट में नहीं है (I, O, S, V, Z को बहिष्कृत किया गया है)",
+      "detail": "क्षेत्र विवरण",
+      "legacyTitle": "पारंपरिक संगठन कोड (GB 11714)",
+      "legacy": {
+        "ok": "एम्बेडेड 9-अक्षर संगठन कोड स्व-संगत है",
+        "mismatch": "पारंपरिक चेक अक्षर {expected} होगा — केवल सलाह; हर पंजीकृत वर्ग में GB 11714 संगठन कोड नहीं होता",
+        "unchecked": "जाँच नहीं की गई"
+      },
+      "divisionScope": "स्थान 3–8 को GB/T 2260 प्रांत तालिका और छह-अंकीय रूप की नेस्टिंग नियमों के खिलाफ मिलाया जाता है; पूर्ण जिला तालिका नहीं ली जाती।",
+      "field": {
+        "registrationDept": "पंजीकरण विभाग",
+        "orgCategory": "संस्था श्रेणी",
+        "adminDivision": "प्रशासनिक विभाग",
+        "orgIdentifier": "विषय पहचानकर्ता",
+        "checkDigit": "जाँच अंक"
+      },
+      "depth": {
+        "none": "समझा नहीं गया",
+        "province": "प्रांत स्तर",
+        "prefecture": "प्रेफेक्चर स्तर",
+        "county": "जिला स्तर"
+      },
+      "note": {
+        "empty": "अभी तक जाँचने के लिए कुछ नहीं",
+        "incomplete": "एक एकीकृत सामाजिक क्रेडिट कोड में ठीक 18 अक्षर होते हैं",
+        "tooLong": "18 से अधिक अक्षर",
+        "illegalCharacter": "GB 32100-2015 सेट के बाहर एक अक्षर है (I, O, S, V और Z को छोड़कर)",
+        "checkDigitMismatch": "चेक अंक पहले 17 अक्षरों से मेल नहीं खाता",
+        "departmentUnknown": "स्थिति 1 मानक द्वारा परिभाषित पंजीकरण विभाग नहीं है (1, 5, 9, Y)",
+        "categoryUnknown": "स्थिति 2 इस पंजीकरण विभाग के लिए परिभाषित संगठन श्रेणी नहीं है",
+        "divisionNotNumeric": "स्थितियाँ 3–8 छह अंकों की होनी चाहिए",
+        "divisionUnknownProvince": "स्थितियाँ 3–4 GB/T 2260 प्रांत कोड नहीं हैं",
+        "divisionMalformed": "कोई भी प्रीफेक्चर नहीं है, जो GB/T 2260 अनुमति नहीं देता"
+      },
+      "gen": {
+        "dept": "पंजीकरण विभाग",
+        "category": "संगठन श्रेणी",
+        "province": "प्रांत",
+        "count": "कितने",
+        "randomProvince": "किसी भी प्रांत का",
+        "regenerate": "नया बैच",
+        "emptyHint": "टेस्ट कोड उत्पन्न करने के लिए ऊपर दिए गए विकल्प चुनें।",
+        "testDataBadge": "टेस्ट डेटा",
+        "seed": "सीड {seed}",
+        "allCodes": "सभी कोड",
+        "disclaimer": "ये कोड संरचनात्मक रूप से वैध हैं लेकिन किसी पंजीकृत संस्था से संबंधित नहीं हैं। किसी वास्तविक संस्था का प्रतिनिधित्व करने के लिए इन्हें न उपयोग करें।",
+        "note": "Generation seed-based है: एक ही options और seed हमेशा एक ही batch return करते हैं, इसलिए fixture reproducible रहता है। हर code को JSON में और यहाँ isTestData flag किया गया है।"
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
+    },
+    "yamlDiff": {
+      "original": "मूल",
+      "changed": "परिवर्तित",
+      "originalPlaceholder": "मूल YAML (या JSON) पेस्ट करें या ड्रॉप करें",
+      "changedPlaceholder": "परिवर्तित YAML (या JSON) पेस्ट करें या ड्रॉप करें",
+      "idle": "तुलना शुरू करने के लिए दोनों पैन भरें।",
+      "privacy": "दोनों दस्तावेज़ इस ब्राउज़र में ही पार्स और तुलना किए जाते हैं — कुछ भी अपलोड नहीं होता, जो होस्टनेम और सीक्रेट नाम वाले मैनिफेस्ट के लिए महत्वपूर्ण है।",
+      "modeLabel": "तुलना",
+      "modeSemantic": "सेमान्टिक (संरचना)",
+      "modeRawText": "कच्चा पाठ (अक्षर)",
+      "resolveAnchors": "एन्कर और एलियास को उनके मानों में रिज़ॉल्व करें",
+      "valid": "मान्य YAML",
+      "validMulti": "मान्य YAML · {n} दस्तावेज़",
+      "invalid": "पार्स त्रुटि, पंक्ति {line}",
+      "parseFailed": "एक पक्ष पार्स नहीं हुआ — कुछ भी तुलना नहीं किया गया",
+      "equivalent": "कोई अंतर नहीं — दोनों दस्तावेज़ एक ही संरचना में रिज़ॉल्व होते हैं",
+      "equivalentStructural": "एक ही रिज़ॉल्व्ड संरचना · {n} फॉर्मेटिंग या एन्कर अंतर",
+      "summary": "{added} जोड़े गए · {removed} हटाए गए · {changed} बदले गए · {typeChanged} प्रकार परिवर्तन",
+      "parseErrorAt": "{side} · पंक्ति {line}, स्तंभ {column}: {message}",
+      "documentCountMismatch": "दस्तावेज़ की संख्या भिन्न है: {original} बनाम {changed} — दस्तावेज़ों को क्रम में जोड़ा गया और अतिरिक्त दस्तावेज़ पूरे रूप में रिपोर्ट किए गए",
+      "duplicateKeys": "स्रोत में डुप्लिकेट कुंजियाँ",
+      "unified": "एकीकृत पैच (सामान्यीकृत YAML)",
+      "howItWorks": "यह तुलना कैसे काम करती है",
+      "rule": {
+        "keyOrder": "मैपिंग कुंजी क्रम, उद्धरण और अंतर्निवेश की उपेक्षा की जाती है; अनुक्रम क्रम की तुलना की जाती है, क्योंकि सूची का क्रम अर्थ रखता है।",
+        "anchors": "एलियास उनके मानों में हल किए जाते हैं, इसलिए साझा एंकर के पीछे का संपादन हर एलियास स्थल पर दिखता है; मान अपरिवर्तित रहते हुए बदला गया एंकर या एलियास संरचनात्मक रूप से अलग रिपोर्ट किया जाता है।",
+        "mergeKeys": "तुलना से पहले मर्ज कुंजियों (<<) का विस्तार किया जाता है, और नोड की अपनी कुंजियाँ मर्ज की गई कुंजियों पर प्राथमिकता रखती हैं।",
+        "types": "प्रकार मान का हिस्सा है: 8080, \"8080\" और !!str 8080 को प्रकार परिवर्तन के रूप中 रिपोर्ट किया जाता है, सामान्य परिवर्तन के रूप में नहीं।",
+        "sequences": "मैपिंगों के अनुक्रम उस क्षेत्र के आधार पर नाम, आईडी या कुंजी से जोड़े जाते हैं जो दोनों पक्षों पर अद्वितीय हो, इसलिए एक जोड़ा गया आइटम जलन नहीं करता; फिर भी पुनः क्रमबद्धता रिपोर्ट की जाती है।",
+        "blockScalars": "ब्लॉक स्केलर हल किए गए स्ट्रिंग से तुलना करते हैं, इसलिए |- द्वारा हटाया गया अंतिम नया पंक्ति वास्तविक परिवर्तन है; समान मान के साथ पुनः शैली संरचनात्मक है।",
+        "comments": "टिप्पणियाँ YAML डेटा मॉडल का हिस्सा नहीं हैं और इन्हें तुलना में शामिल नहीं किया जाता।",
+        "multiDoc": "--- प्रत्येक दस्तावेज़ को जोड़े-दर-जोड़े स्ट्रीम करता है; गिनती में असंगति की रिपोर्ट की जाती है, केवल पहले दस्तावेज़ की तुलना नहीं।",
+        "duplicateKeys": "इनपुट में डुप्लिकेट मैपिंग की का उपयोग अंतिम घटना के रूप में किया जाता है और इसे चेतावनी के रूप में रिपोर्ट किया जाता है।"
+      },
+      "note": {
+        "raw-text-mode": "Raw-text मोड संरचना नहीं, बल्कि वर्णों की तुलना करता है: की का क्रम, कोटिंग और इंडेंटेशन सब मायने रखते हैं।",
+        "parse-error": "एक पक्ष पार्स नहीं हुआ, इसलिए कुछ भी तुलना नहीं किया गया।",
+        "document-count-mismatch": "दोनों पक्षों में --- दस्तावेज़ों की संख्या अलग है; दस्तावेज़ों को क्रम में जोड़ा गया और अतिरिक्त दस्तावेज़ों की पूरी रिपोर्ट की गई।",
+        "merge-keys-expanded": "तुलना से पहले मर्ज कीज़ (<<) का विस्तार किया गया।",
+        "anchors-unresolved": "एलियाज़ को उनके रिज़ॉल्व किए गए मानों के रूप में नहीं, बल्कि *नाम संदर्भों के रूप में तुलना किया गया।",
+        "yaml11-ambiguous-scalars": "अनकोटेड y/n/yes/no/on/off यहाँ स्ट्रिंग्स के रूप中 पढ़े जाते हैं (YAML 1.2 Core) और YAML 1.1 के तहत बूलियन के रूप में — यदि बूलियन चाहिए तो उन्हें कोट करें।",
+        "sequence-matched-by-identity": "मैपिंग्स की अनुक्रमों को स्थिति के बजाय एक पहचान क्षेत्र द्वारा जोड़ा गया।",
+        "duplicate-keys": "एक मैपिंग एक ही की को दो बार घोषित करती है; अंतिम घटना का उपयोग किया गया।",
+        "truncated": "केवल पहले 2000 परिवर्तन सूचीबद्ध हैं।"
+      }
+    },
+    "listSetCompare": {
+      "listA": "सूची A",
+      "listB": "सूची B",
+      "placeholder": "आइटम चिपकाएँ, प्रति पंक्ति एक (या .txt/.csv फ़ाइल छोड़ें)",
+      "emptyHint": "तुलना देखने के लिए सूची A और सूची B दोनों में आइटम जोड़ें।",
+      "privacy": "दोनों सूचियों की तुलना आपके ब्राउज़र में की जाती है — कुछ भी अपलोड नहीं होता। API और MCP कॉल करने वालों के लिए वही इंजन सर्वर-साइड चलता है।",
+      "delimiter": "सीमांकक",
+      "delimiterOption": {
+        "auto": "स्वतः पहचान",
+        "newline": "नई पंक्ति",
+        "comma": "अल्पविराम",
+        "tab": "टैब",
+        "custom": "कस्टम"
+      },
+      "customDelimiter": "विभाजक",
+      "customDelimiterPlaceholder": "| या \\t",
+      "sort": "क्रम",
+      "sortOption": {
+        "original": "मूल क्रम",
+        "asc": "A→Z",
+        "desc": "Z→A",
+        "byCount": "गिनती के अनुसार"
+      },
+      "optCaseSensitive": "केस संवेदनशील",
+      "optTrim": "स्पेस हटाएं",
+      "optCollapse": "अंदरूनी स्पेस जोड़ें",
+      "optIgnoreZeros": "शुरुआती शून्य नज़रअंदाज़ करें",
+      "paneItems": "{n} आइटम",
+      "paneSingle": "1 आइटम — डिलीमिटर जांचें",
+      "items": "{n}",
+      "none": "कोई नहीं",
+      "more": "+{n} और — पूरी सूची के लिए कॉपी या डाउनलोड करें",
+      "panel": {
+        "onlyInA": "केवल A में",
+        "onlyInB": "केवल B में",
+        "intersection": "समान (दोनों में)",
+        "union": "संघ (सभी आइटम)",
+        "symmetricDifference": "सममित अंतर"
+      },
+      "summaryIdentical": "समान सेट — {n} साझा आइटम",
+      "summaryDiff": "{a} केवल A में · {b} केवल B में · {shared} साझा",
+      "drill": {
+        "symmetricDifference": "सममित अंतर ({n})",
+        "duplicates": "एक सूची के भीतर डुप्लिकेट ({n})",
+        "multiplicities": "प्रति-आइटम गणना ({n})",
+        "warnings": "सूचनाएँ ({n})"
+      },
+      "duplicatesInA": "A में दोहराए गए",
+      "duplicatesInB": "B में दोहराए गए",
+      "colValue": "आइटम",
+      "colCountA": "A में",
+      "colCountB": "B में",
+      "detailTruncated": "प्रति-आइटम गणनाएँ कटी हुई हैं — पूर्ण तालिका के लिए API पर maxDetail बढ़ाएँ।",
+      "reportTitle": "सूची तुलना"
+    },
+    "loanAmortization": {
+      "principal": "ऋण राशि",
+      "rate": "वार्षिक दर %",
+      "term": "अवधि",
+      "termUnit": "अवधि इकाई",
+      "unitYears": "वर्ष",
+      "unitMonths": "महीने",
+      "startMonth": "पहली किश्त का महीना",
+      "startMonthHint": "YYYY-MM। शेड्यूल को लेबल करता है; किसी राशि को नहीं बदलता।",
+      "extraHeading": "अतिरिक्त भुगतान",
+      "extraMonthly": "हर महीने अतिरिक्त",
+      "extraYearly": "साल में एक बार अतिरिक्त",
+      "extraYearlyMonth": "वार्षिक अतिरिक्त इस महीने में आएगा",
+      "extraOneTime": "एक बार का अतिरिक्त",
+      "extraOneTimePeriod": "किश्त # पर एक बार का अतिरिक्त",
+      "extraNote": "अतिरिक्त भुगतान उस अवधि की मूल राशि को कम करता है जिसमें वे आते हैं, जिससे हर बाद की अवधि का ब्याज कम होता है। दर और निर्धारित किश्त वही रहती है।",
+      "monthlyPayment": "मासिक किश्त",
+      "totalInterest": "कुल ब्याज",
+      "totalPaid": "कुल भुगतान किया गया",
+      "crossover": "क्रॉसओवर",
+      "crossoverValue": "भुगतान {n}",
+      "crossoverNone": "कभी नहीं",
+      "payoff": "भुगतान {n} पर चुका दिया गया",
+      "monthsSaved": "{n} महीने पहले",
+      "totalExtra": "समयसार से {amount} अधिक भुगतान किया गया",
+      "viewMonthly": "हर भुगतान",
+      "viewAnnual": "वर्षानुसार",
+      "tableCaption": "अमोर्टाइज़ेशन समयसार: प्रत्येक अवधि के लिए भुगतान, ब्याज, मूलधन और शेष संतुलन",
+      "colPeriod": "#",
+      "colDate": "महीना",
+      "colPayment": "भुगतान",
+      "colInterest": "ब्याज",
+      "colPrincipal": "मूलधन",
+      "colBalance": "शेष राशि",
+      "colYear": "वर्ष",
+      "expandRows": "सभी {total} भुगतान दिखाएं",
+      "collapseRows": "कम भुगतान दिखाएं",
+      "windowNote": "{total} में से {shown} भुगतान दिखाए जा रहे हैं। CSV और API में सभी शामिल हैं।",
+      "emptyHint": "समयसार देखने के लिए ऋण राशि, दर और अवधि दर्ज करें।",
+      "note": "API जैसा ही इंजन। गणना केवल आपके ऋण शर्तों पर होती है; कुछ भी अपलोड या संग्रहित नहीं किया जाता।",
+      "errPrincipal": "0 से अधिक ऋण राशि दर्ज करें।",
+      "errRate": "0 और 100 के बीच दर दर्ज करें।",
+      "errTerm": "1 महीने से 100 साल के बीच की अवधि दर्ज करें।",
+      "errStartMonth": "YYYY-MM का प्रयोग करें, जैसे 2026-01।",
+      "errExtra": "0 या अधिक की राशि दर्ज करें।",
+      "errOneTimePeriod": "वह भुगतान संख्या दर्ज करें जिस पर एकमुश्त भुगतान आता है।"
+    },
+    "businessDayShift": {
+      "modeLabel": "क्या गणना करनी है",
+      "mode": {
+        "shift": "तारीख़ बदलें",
+        "countBetween": "तारीख़ों के बीच गणना करें"
+      },
+      "startDate": "शुरुआती तारीख़",
+      "days": "कार्य दिवस",
+      "daysHint": "ऋणात्मक गणना पीछे की ओर जाती है: −10 शुरुआती तारीख़ से दस कार्य दिवस पहले है।",
+      "daysInvalid": "कार्य दिवस पूर्णांक होने चाहिए, वैकल्पिक रूप से आगे माइनस चिह्न के साथ।",
+      "endDate": "अंतिम तारीख़",
+      "includeEndDate": "अंतिम तिथि भी गिनें — यह वही है जो स्प्रेडशीट NETWORKDAYS लौटाता है",
+      "weekendLabel": "हर हफ्ते के छुट्टी के दिन",
+      "weekendHint": "डिफ़ॉल्ट शनिवार और रविवार। जहाँ शनिवार छुट्टी है, वहाँ शुक्रवार और शनिवार सेट करें।",
+      "weekday": {
+        "sun": "रवि",
+        "mon": "सोम",
+        "tue": "मंगल",
+        "wed": "बुध",
+        "thu": "गुरु",
+        "fri": "शुक्र",
+        "sat": "शनि"
+      },
+      "holidays": "छुट्टियाँ",
+      "holidaysHint": "खाली छोड़ें, तो उत्तर शुद्ध छुट्टी-नियम गणना होगा — कोई देश कैलेंडर लागू नहीं किया जाएगा।",
+      "makeupWorkdays": "कंपensatory कार्य दिवस",
+      "makeupHint": "वे तारीखें जो शनिवार या छुट्टी पर भी काम की गईं — चीन के 调休/补班 शनिवार यहाँ आते हैं।",
+      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesIgnored": "{n, plural, one {# प्रविष्टि YYYY-MM-DD तारीख नहीं थी और उपयोग में नहीं ली जा रही है} other {# प्रविष्टियाँ YYYY-MM-DD तारीखें नहीं थीं और उपयोग में नहीं ली जा रही हैं}}",
+      "pickStart": "शुरू करने के लिए एक प्रारंभ तारीख चुनें।",
+      "emptyHintShift": "एक प्रारंभ तारीख और कार्य दिवसों की संख्या चुनें।",
+      "emptyHintCount": "एक प्रारंभ तारीख और अंत तारीख चुनें।",
+      "note": "API के समान इंजन। गणना परिणाम के साथ दिखाए गए नियम सेट पर चलती है; कुछ भी संग्रहित नहीं होता।",
+      "countHeadline": "{n, plural, one {# कार्य दिवस} other {# कार्य दिवस}}",
+      "reversedRange": "अंत तारीख प्रारंभ तारीख से पहले है, इसलिए गणना ऋणात्मक आती है।",
+      "classification": {
+        "workday": "कार्य दिवस",
+        "weekend": "शनिवार-रविवार",
+        "holiday": "छुट्टी",
+        "makeupWorkday": "कंपensatory कार्यदिवस"
+      },
+      "ruleWeekend": "{days} छुट्टी",
+      "ruleNoWeekend": "सप्ताहिक छुट्टी नहीं",
+      "ruleHolidays": "{n, plural, =0 {कोई छुट्टी सूची नहीं} one {# छुट्टी} other {# छुट्टियाँ}}",
+      "ruleMakeups": "{n, plural, =0 {कोई कंपensatory कार्यदिवस नहीं} one {# कंपensatory कार्यदिवस} other {# कंपensatory कार्यदिवस}}",
+      "ruleEndIncluded": "अंतिम तिथि गिनी जाएगी",
+      "ruleEndExcluded": "अंतिम तिथि नहीं गिनी जाएगी",
+      "chain": "इस तिथि से फिर से शिफ्ट करें"
+    },
+    "retryBackoff": {
+      "strategy": {
+        "exponential": "घातांकीय",
+        "linear": "रैखिक",
+        "fixed": "स्थिर"
+      },
+      "initialDelay": "प्रारंभिक विलंब (ms)",
+      "factor": "Backoff factor",
+      "factorHint": "हर retry पर लागू होने वाला गुणक। 1 से बड़ा होना चाहिए।",
+      "increment": "Linear increment (ms)",
+      "incrementHint": "हर retry पर delay में जोड़े जाने वाले मिलीसेकंड।",
+      "maxDelay": "Max delay cap (ms)",
+      "maxDelayHint": "कोई cap नहीं रखने के लिए खाली छोड़ें। Cap पार होने पर, बाद का हर delay उसी स्तर पर स्थिर रहता है।",
+      "maxAttempts": "Max attempts",
+      "maxAttemptsHint": "1 से 100।",
+      "excludeInitial": "Max attempts में initial request शामिल नहीं",
+      "excludeInitialNote": "On: ऊपर दिया गया संख्या केवल retries को गिनती है, initial request अलग है। Off: यह हर attempt को गिनती है, initial request सहित।",
+      "jitter": {
+        "none": "None — exact delays",
+        "equal": "Equal — आधा fixed, आधा random",
+        "full": "Full — शून्य से लेकर डिले तक कहीं भी"
+      },
+      "callerTimeout": "आपका अपना टाइमआउट (ms)",
+      "callerTimeoutHint": "वैकल्पिक। बजट जांच छोड़ने के लिए खाली छोड़ें।",
+      "emptyHint": "समय-सारणी देखने के लिए हाइलाइट किए गए फ़ील्ड को ठीक करें।",
+      "note": "केवल नीति से गणना की गई — किसी अपस्ट्रीम सेवा को कुछ नहीं भेजा जाता। Jitter को एक वास्तविक क्लाइंट के अंदर गिरने वाले रेंज के रूप में रिपोर्ट किया जाता है, कभी भी एक सैंपल्ड ड्रॉ के रूप में नहीं।",
+      "headlineExact": "{attempts} प्रयास, कुल मिलाकर {wait} की प्रतीक्षा।",
+      "headlineRange": "{attempts} प्रयास, औसतन {expected} की प्रतीक्षा, सबसे खराब स्थिति में {max} तक।",
+      "finalDelay": "प्रयास {attempt} से पहले की अंतिम प्रतीक्षा {delay} है।",
+      "noRetries": "यह बजट एक प्रयास और कोई पुनः प्रयास अनुमति देता है, इसलिए प्रतीक्षा करने के लिए कुछ नहीं है।",
+      "retryCount": "{count, plural, =0 {कोई पुनः प्रयास नहीं} one {# पुनः प्रयास} other {# पुनः प्रयास}}",
+      "capFlattened": "प्रयास {attempt} पर सीमा तक पहुंच गया — हर बाद की डिले {delay} पर रहती है।",
+      "timeoutExceeded": "सबसे खराब स्थिति में {wait} प्रतीक्षा होती है, जो आपके {timeout} बजट से अधिक है।",
+      "timeoutOk": "सबसे खराब स्थिति में {wait} तक प्रतीक्षा, आपकी {timeout} सीमा के भीतर।",
+      "tableLabel": "पुनः प्रयास अनुसूची",
+      "colAttempt": "प्रयास",
+      "colDelay": "विलंब",
+      "colCumulative": "कुल प्रतीक्षा",
+      "average": "औसत {value}",
+      "formula": {
+        "none": "विलंब सटीक हैं — कोई ज़िटर लागू नहीं।",
+        "equal": "समान ज़िटर: आधा विलंब स्थिर है, दूसरा आधा समान रूप से चुना जाता है, इसलिए प्रत्येक प्रतीक्षा आधे विलंब और पूर्ण विलंब के बीच होती है।",
+        "full": "पूर्ण ज़िटर: प्रतीक्षा शून्य और गणना किए गए विलंब के बीच समान रूप से चुनी जाती है।"
+      },
+      "errInitialDelay": "प्रारंभिक विलंब मिलीसेकंड का पूर्ण संख्या होना चाहिए, कम से कम 1।",
+      "errFactor": "कारक 1 से अधिक और अधिकतम 100 होना चाहिए। कारक 1 स्थिर रणनीति है।",
+      "errIncrement": "वृद्धि मिलीसेकंड की पूर्ण संख्या होनी चाहिए, 0 या अधिक।",
+      "errMaxDelay": "Cap कम से कम 1 मिलीसेकंड का पूर्णांक होना चाहिए।",
+      "errCapBelowInitial": "Cap कम से कम initial delay के बराबर होना चाहिए।",
+      "errMaxAttempts": "Attempts 1 से 100 के बीच का पूर्णांक होना चाहिए।",
+      "errCallerTimeout": "Timeout कम से कम 1 मिलीसेकंड का पूर्णांक होना चाहिए।"
+    },
+    "csvColumns": {
+      "csvLabel": "CSV",
+      "csvPlaceholder": "यहाँ CSV पेस्ट करें, या फ़ाइल ड्रॉप करें — पहली पंक्ति को कॉलम नाम के रूप में पढ़ा जाएगा",
+      "sample": "Sample CSV",
+      "chooseFile": "फ़ाइल चुनें",
+      "fileFailed": "{name} पढ़ने में असमर्थ।",
+      "delimiterLabel": "Delimiter",
+      "delimiter": {
+        "comma": "Comma  ,",
+        "semicolon": "Semicolon  ;",
+        "tab": "टैब",
+        "pipe": "पाइप |"
+      },
+      "raggedPolicyLabel": "पंक्तियाँ जो हेडर से मेल नहीं खातीं",
+      "ragged": {
+        "pad": "हेडर के साथ संरेखित करें",
+        "truncate": "लंबी पंक्तियों को काटें, छोटी पंक्तियों को छोटा ही रखें",
+        "reject": "रोकें और रिपोर्ट करें"
+      },
+      "columnsTitle": "स्तंभ — {total} में से {kept} रखे गए",
+      "columnsHint": "स्तंभ हटाने के लिए टिक हटाएं, नाम बदलने के लिए बॉक्स में संपादित करें, पुनः क्रमबद्ध करने के लिए तीरों का उपयोग करें। सब कुछ मूल हेडर के विरुद्ध हल होता है।",
+      "reset": "स्तंभ रीसेट करें",
+      "keep": "स्तंभ {name} रखें",
+      "renameLabel": "{name}",
+      "moveUp": "{name} ऊपर ले जाएं",
+      "moveDown": "{name} नीचे ले जाएं",
+      "noneKept": "हर कॉलम अनटिक किया गया है — कम से कम एक रखें।",
+      "emptyHint": "अपने कॉलम प्रबंधित करने के लिए ऊपर एक CSV पेस्ट करें।",
+      "note": "यह आपके पेस्ट किए गए टेक्स्ट पर चलता है। ड्रॉप करें, फिर रीनेम करें, फिर रीऑर्डर करें — हमेशा इसी निश्चित क्रम में, मूल हेडर के खिलाफ।",
+      "columnCount": "{n} कॉलम",
+      "rowCount": "{n} पंक्तियाँ",
+      "duplicateHeaders": "नाम से उपयोग किया गया डुप्लिकेट हेडर: {names}",
+      "raggedCount": "{n}{more} पंक्तियाँ हेडर की चौड़ाई से मेल नहीं खातीं",
+      "previewLabel": "आउटपुट CSV",
+      "previewTruncated": "{total} में से पहले {shown} पंक्तियाँ दिखाई जा रही हैं। पूरे फ़ाइल के लिए कॉपी या डाउनलोड करें।",
+      "raggedListLabel": "पंक्तियाँ जो हेडर की चौड़ाई से मेल नहीं खातीं",
+      "raggedRow": "पंक्ति {line}: {actual} फ़ील्ड, हेडर में {expected} हैं",
+      "unusedRenames": "रीनेम नज़रअंदाज़ किया गया — ये कॉलम आउटपुट में नहीं हैं: {names}"
+    },
+    "imageRotateFlip": {
+      "drop": "छवि ड्रॉप करें, या ब्राउज़ करने के लिए क्लिक करें",
+      "browse": "छवि चुनें",
+      "selected": "{name} · {kb} KB",
+      "privacy": "फ़ाइल ट्रांसफ़ॉर्म के लिए Forge API पर भेजी जाती है और कभी भी स्टोर नहीं की जाती।",
+      "tooLarge": "यह छवि {mb} MB से बड़ी है।",
+      "ccw": "90° बाएँ",
+      "cw": "90° दाएँ",
+      "half": "180°",
+      "reset": "रीसेट",
+      "flipHorizontal": "क्षैतिज फ्लिप",
+      "flipVertical": "ऊर्ध्वाधर फ्लिप",
+      "angle": "कोण",
+      "exactAngle": "सटीक °",
+      "fitMode": "कैनवास",
+      "fitExpand": "कैनवास बढ़ाएं",
+      "fitCrop": "भरने के लिए क्रॉप करें",
+      "fitInside": "अंदर फिट करें",
+      "fitNote": "एक चौथाई घुमाव के बाद घुमाया गया छवि अपने पुराने फ्रेम में फिट नहीं होती: बढ़ाना हर पिक्सेल को बचाता है, क्रॉप मूल आकार बनाए रखता है और कोने काटता है, फिट सब कुछ छोटा कर देता है।",
+      "outputFormat": "आउटपुट प्रारूप",
+      "sameFormat": "इनपुट जैसा ही",
+      "idle": "छवि को पुन: अभिविन्यासित करने के लिए देखें, एक छवि ड्रॉप करें।",
+      "original": "मूल · {w}×{h}",
+      "originalAlt": "छवि जैसा अपलोड किया गया",
+      "result": "परिणाम · {w}×{h}",
+      "resultAlt": "पुन: अभिविन्यासित छवि",
+      "badgeLossless": "बिना रीसैंपलिंग के",
+      "badgeResampled": "रीसैंपल किया गया",
+      "badgeSize": "{kb} KB",
+      "badgeExif": "EXIF अभिविन्यास {orientation} पहले लागू किया गया",
+      "badgeSnapped": "सटीक क्वार्टर टर्न पर स्नैप किया गया",
+      "badgeReencode": "ज्यामिति सटीक है; कोडेक पुन: एन्कोड करता है",
+      "download": "डाउनलोड करें",
+      "note": "90°, 180° और 270° के रोटेशन पिक्सेल को ब्लेंड किए बिना खिसकाते हैं। किसी अन्य कोण पर रिसैम्पलिंग होती है। एनिमेटेड GIF, APNG और एनिमेटेड WebP अभी सपोर्टेड नहीं हैं।"
+    },
+    "exifStrip": {
+      "drop": "मेटाडेटा हटाने के लिए JPEG, PNG या WebP छोड़ें",
+      "privacy": "हमारे सर्वर पर प्रसंस्कृत और कभी संग्रहीत नहीं किया जाता। प्रति छवि {mb} MB तक।",
+      "idle": "हटाया गया: GPS, कैप्चर समय, कैमरा और डिवाइस जानकारी, एम्बेडेड थंबनेल, संपादन इतिहास। रखा गया: अभिविन्यास, रंग प्रोफ़ाइल, आयाम, पिक्सेल डेटा।",
+      "note": "केवल स्थिर छवियाँ। वीडियो, PDF, HEIC, AVIF और GIF दायरे से बाहर हैं, और C2PA प्रोवनेंस मैनिफ़ेस्ट को अप्रभावित छोड़ा गया है।",
+      "detail": "क्या हटाया गया",
+      "optKeepThumbnail": "एम्बेडेड Exif थंबनेल रखें",
+      "verdictStripped": "{fields} मेटाडेटा फ़ील्ड हटाए गए ({kb} KB)",
+      "verdictClean": "इस फ़ाइल में कोई हटाने योग्य मेटाडेटा नहीं है",
+      "strippedCaveat": "छवि वही है — समान पिक्सेल, समान आयाम, कुछ भी पुनः एन्कोड नहीं किया गया।",
+      "cleanCaveat": "जैसा आया, वैसा ही बाइट-दर-बाइट वापस किया गया।",
+      "badgeOrientationKept": "ओरिएंटेशन बरकरार",
+      "badgeOrientationLost": "ओरिएंटेशन नहीं बचा",
+      "badgeColorProfileKept": "रंग प्रोफ़ाइल बरकरार",
+      "badgeThumbnailKept": "थंबनेल बरकरार",
+      "badgeThumbnailRemoved": "थंबनेल हटाया गया",
+      "download": "सफ़ाई की गई छवि डाउनलोड करें",
+      "sizes": "{before} KB → {after} KB",
+      "detailFields": "{fields} फ़ील्ड · {kb} KB",
+      "detailNothing": "इस फ़ाइल से कुछ भी हटाया नहीं गया।",
+      "detailOrientation": "Exif orientation {value} फ़ाइल से पढ़ा गया और आगे ले जाया गया।",
+      "detailNoOrientation": "फ़ाइल ने कोई Exif orientation घोषित नहीं किया, इसलिए प्रदर्शन प्रभावित नहीं हुआ।",
+      "segmentExif": "Exif",
+      "segmentIptc": "IPTC",
+      "segmentXmp": "XMP",
+      "segmentComment": "टिप्पणी",
+      "segmentText": "टेक्स्ट मेटाडेटा",
+      "segmentTime": "टाइमस्टैम्प",
+      "segmentVendor": "वेंडर ब्लॉक",
+      "summaryStripped": "{fields} मेटाडेटा फ़ील्ड ({families}) हटाए गए, {kb} KB। छवि अन्यथा अपरिवर्तित।",
+      "summaryClean": "कोई हटाने योग्य मेटाडेटा नहीं मिला। फ़ाइल अपरिवर्तित लौटाई गई।"
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "Nom / hôte",
+      "type": "Type d'enregistrement",
+      "note": "Résolu par le DNS de l'hôte Forge."
+    },
+    "tls": {
+      "host": "Hôte",
+      "expired": "Certificat expiré",
+      "validDays": "{n} jours restants",
+      "note": "Connexion depuis l'hôte Forge. Inspection seule."
+    },
+    "myIp": {
+      "refresh": "Actualiser",
+      "note": "IP vue par Forge. Pas de géo sans source licenciée."
+    },
+    "mermaid": {
+      "source": "Mermaid source",
+      "idle": "Valid diagrams render here",
+      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
+      "sample": "Sample",
+      "theme": "Theme",
+      "theme_default": "Default",
+      "theme_dark": "Dark",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "Flowchart",
+      "sample_sequence": "Sequence",
+      "sample_class": "Class",
+      "sample_er": "ER diagram",
+      "sample_state": "State",
+      "sample_gantt": "Gantt",
+      "sample_pie": "Pie",
+      "sample_mindmap": "Mindmap",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "zoomReset": "Reset view",
+      "copySvg": "Copy SVG",
+      "downloadSvg": "Download SVG",
+      "downloadPng": "Download PNG",
+      "previewAria": "Mermaid diagram preview",
+      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
+    },
+    "colorDeltaE": {
+      "note": "CIEDE2000 via culori. Seuils indicatifs UI."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "Dialecte SQL",
+      "parseNote": "Parse/inventaire seulement. ERD à part.",
+      "convertNote": "@dbml/core — même chemin que l'API."
+    },
+    "dnsLeak": {
+      "probeHost": "Compare host (advanced)",
+      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
+      "run": "Start DNS leak check",
+      "retest": "Run again",
+      "showAdvanced": "Advanced options",
+      "hideAdvanced": "Hide advanced",
+      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
+      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
+      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
+      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
+      "edgeIp": "Your edge IP",
+      "authorityHits": "Recursive IPs",
+      "forgePaths": "Forge resolver hits",
+      "dohPaths": "Browser DoH hits",
+      "webrtcCount": "WebRTC IPs",
+      "forgeResolvers": "Forge multi-resolver (server-side)",
+      "forgeNote": "These queries leave from the Forge host — not your laptop.",
+      "browserDoh": "Browser DoH",
+      "webrtc": "WebRTC ICE",
+      "egressMarkers": "Forge egress markers",
+      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
+      "honestyPrefix": "Honesty:",
+      "verdictConsistent": "Paths look consistent on this check",
+      "verdictSplit": "Split answers across DNS paths",
+      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
+      "verdictIncomplete": "Incomplete — browser probes missing",
+      "verdictAuthority": "System DNS recursives captured",
+      "infraOn": "Authority online",
+      "infraOff": "Authority offline — multi-path only",
+      "infraChecking": "Checking…",
+      "authorityResolvers": "System DNS recursive resolvers",
+      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
+      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
+      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
+      "authorityDetail": "Authority session detail",
+      "phaseSession": "Creating session…",
+      "phaseSystemDns": "Triggering system DNS…",
+      "phasePoll": "Listening for recursive hits ({n}/{total})…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "stepSession": "Session",
+      "stepSystemDns": "System DNS",
+      "stepPoll": "Listen",
+      "stepBrowser": "Browser",
+      "stepServer": "Server",
+      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
+      "liveHits": "Live recursive hits",
+      "sectionSystemDns": "System DNS (what you came for)",
+      "sectionComplementary": "Complementary paths",
+      "sectionTech": "Technical session detail",
+      "copyIps": "Copy IPs",
+      "copied": "Copied",
+      "queryCount": "{n} queries",
+      "colPath": "Path",
+      "colAnswers": "Answers",
+      "colMs": "ms",
+      "ipPublic": "public",
+      "ipPrivate": "private",
+      "sig": {
+        "captured": "System DNS captured",
+        "onlineNoHits": "Authority online · no hits yet",
+        "offline": "Authority offline",
+        "forgeSplit": "Forge resolvers disagree",
+        "dohSplit": "Browser DoH disagree",
+        "webrtcMismatch": "WebRTC ≠ edge IP",
+        "webrtcLocal": "Local WebRTC candidates",
+        "noBrowser": "No browser probes"
+      }
+    },
+    "honesty": {
+      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
+      "signatureNotVerified": "{engine} · decode only · signature not verified",
+      "localOnly": "Processed for this request · not stored as a card or credential"
+    },
+    "idCard": {
+      "number": "Resident ID number",
+      "note": "GB 11643 check digit · no household registry lookup · same path as API",
+      "specimenTitle": "Resident ID · structure specimen",
+      "segRegion": "Region",
+      "segBirth": "Birth",
+      "segSeq": "Seq",
+      "segCheck": "Check",
+      "metaBirth": "Birth",
+      "metaGender": "Gender",
+      "metaRegion": "Region code",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "reasonFormat": "Format should be 18 characters (last may be X)",
+      "reasonBirth": "Birth date segment is invalid",
+      "reasonCheck": "Check digit is wrong",
+      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} lines",
+      "chars": "{n} chars",
+      "empty": "(empty file)",
+      "readyToShip": "Ready to drop into the repo"
+    },
+    "textTransform": {
+      "mode": "Mode",
+      "input": "Input",
+      "output": "Output",
+      "emptyResult": "Result appears here",
+      "runLocal": "Run locally",
+      "runServer": "Run on server",
+      "statusLocalLive": "Local · live",
+      "statusLocal": "Local",
+      "statusServer": "Server · same path as API",
+      "noteDefault": "Same path as API"
+    }
+  },
+  "roots": {
+    "hubLabel": "उद्देश्य के अनुसार",
+    "tools": "उपकरण",
+    "dualSurface": "मानव पृष्ठ + एजेंट API · एक ही इंजन",
+    "otherRoots": "अन्य मांग मूल"
+  }
+}

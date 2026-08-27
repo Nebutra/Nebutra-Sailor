@@ -1,0 +1,88 @@
+{
+  "name": "@nebutra/mcp",
+  "version": "0.1.4",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "graph": "runtime",
+    "status": "wip",
+    "productionReady": false,
+    "requires": [
+      "@modelcontextprotocol/sdk runtime"
+    ],
+    "gaps": [
+      "No production app integrations",
+      "No production MCP transports beyond HTTP/local seams",
+      "No durable remote tool discovery or app-level integrations"
+    ],
+    "featureId": "mcp",
+    "category": "ai",
+    "surface": "tool-protocol",
+    "summary": "MCP server primitives (Model Context Protocol)"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./middleware": {
+      "types": "./dist/middleware/index.d.ts",
+      "import": "./dist/middleware/index.js",
+      "default": "./dist/middleware/index.js"
+    }
+  },
+  "bin": {
+    "nebutra-mcp": "./dist/server/contextServer.js",
+    "nebutra-tool-protocol": "./dist/cli.js"
+  },
+  "scripts": {
+    "prepare": "mkdir -p dist/server && (test -f dist/server/contextServer.js || echo '#!/usr/bin/env node' > dist/server/contextServer.js) && (test -f dist/cli.js || echo '#!/usr/bin/env node' > dist/cli.js)",
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "@nebutra/capability-kit": "workspace:*",
+    "@nebutra/errors": "workspace:*",
+    "@nebutra/event-log": "workspace:*",
+    "@nebutra/trace-store": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "peerDependencies": {
+    "@nebutra/ui": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@nebutra/ui": {
+      "optional": true
+    }
+  }
+}

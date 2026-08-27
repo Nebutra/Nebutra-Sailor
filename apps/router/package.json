@@ -1,0 +1,46 @@
+{
+  "name": "@nebutra/router",
+  "version": "0.1.1",
+  "private": true,
+  "nebutra": {
+    "status": "wip",
+    "graph": "labs",
+    "productionReady": false
+  },
+  "scripts": {
+    "dev": "next dev --port 3106",
+    "build": "pnpm --filter @nebutra/brand sync && next build",
+    "start": "next start",
+    "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@nebutra/brand": "workspace:*",
+    "@nebutra/fonts": "workspace:*",
+    "@nebutra/i18n": "workspace:*",
+    "@nebutra/icons": "workspace:*",
+    "@nebutra/prepaid-wallet": "workspace:*",
+    "@nebutra/router-supply": "workspace:*",
+    "@nebutra/tokens": "workspace:*",
+    "@nebutra/ui": "workspace:*",
+    "geist": "catalog:",
+    "next": "catalog:",
+    "next-intl": "^4.12.0",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "zod": "catalog:",
+    "@lobehub/icons": "^5.0.1",
+    "@nebutra/ai-providers": "workspace:*",
+    "@nebutra/auth": "workspace:*"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "license": "AGPL-3.0-only"
+}

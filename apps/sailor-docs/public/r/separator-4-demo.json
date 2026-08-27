@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "separator-4-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/separator-4-demo.tsx",
+      "content": "\"use client\";\n\nimport { Separator } from \"@nebutra/ui/primitives\";\nexport function Separator4Demo() {\n  return (\n    <div className=\"relative w-full\">\n      <Separator />\n      <span className=\"bg-fd-background px-2 text-xs absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-muted-foreground\">\n        OR\n      </span>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

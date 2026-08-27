@@ -1,0 +1,133 @@
+---
+title: 更新升级
+description: 如何从上游拉取最新更改、重新运行代码生成器以及处理破坏性变更。
+---
+
+## 标准更新工作流
+
+每次从主分支拉取新提交后，请运行以下命令：
+
+<Steps>
+  <Step title="拉取最新提交">
+    ```bash
+    git pull origin main
+    ```
+  </Step>
+  <Step title="安装更新后的依赖">
+    ```bash
+    pnpm install
+    ```
+    拉取后务必重新运行 `pnpm install`。新增的包或版本升级不会自动生效。
+  </Step>
+  <Step title="执行数据库迁移">
+    ```bash
+    pnpm db:migrate
+    ```
+    当 `packages/platform/db/prisma/migrations/` 中有新的迁移文件时运行此命令。即使没有待执行的迁移，运行也是安全的。
+  </Step>
+  <Step title="重新生成 Prisma 客户端">
+    ```bash
+    pnpm db:generate
+    ```
+    当 `packages/platform/db/prisma/schema.prisma` 发生变化时需要运行此命令。生成的客户端已被 gitignore，必须在本地重新生成。
+  </Step>
+</Steps>
+
+<Tip>
+  将所有四个步骤合并为一个命令，方便使用：
+  ```bash
+  git pull && pnpm install && pnpm db:migrate && pnpm db:generate
+  ```
+</Tip>
+
+## 检查破坏性变更
+
+在拉取主版本升级之前，请阅读[更新日志](/changelog)中的所有破坏性变更。
+
+常见的破坏性变更类型：
+
+| 类别 | 需要关注的内容 |
+|------|-------------|
+| **Schema 变更** | 新增必填列、重命名表、删除索引 |
+| **包 API 变更** | `@nebutra/*` 包中的重命名导出、更改的函数签名 |
+| **环境变量** | `@nebutra/config` 中新增的必填环境变量 |
+| **构建系统** | `turbo.json`、`tsconfig.base.json` 或 `biome.json` 的变更 |
+
+## 何时需要重新运行 `pnpm db:generate`
+
+当以下任一内容发生变化时，需要重新生成 Prisma 客户端：
+
+- `packages/platform/db/prisma/schema.prisma`
+- `packages/platform/db/prisma/migrations/`（新迁移文件）
+- `packages/platform/db/package.json` 中的 `prisma` 版本
+
+```bash
+pnpm db:generate
+```
+
+如果 Schema 文件没有变化，则拉取代码后**不需要**重新生成客户端。如果不确定，可以运行 `git diff packages/platform/db/prisma/schema.prisma` 查看。
+
+## 何时需要重新运行 `pnpm generate:api-types`
+
+当 API 网关的 OpenAPI 规范发生变化时，需要重新生成 OpenAPI TypeScript 类型：
+
+```bash
+pnpm generate:api-types
+```
+
+生成的类型位于 `apps/web/src/lib/api/types.generated.ts`，通过 `apps/web/src/lib/api/client.ts`（`getTypedApi`）和 `apps/web/src/lib/api/browser-client.ts`（`browserApiClient`）中的 `openapi-fetch` 消费。仓库中提交了 stub 以便生成前也能通过 typecheck，CI 会覆盖它。
+
+需要重新生成的信号：
+- 关于缺少 API 请求/响应类型的 TypeScript 错误
+- `backends/gateway/src/routes/` 中新增了端点
+- 现有端点的签名发生了变更
+
+## Turborepo 缓存失效
+
+Turborepo 会缓存任务输出以加速构建。如果更新后看到陈旧的构建产物，请强制执行干净的重新构建：
+
+```bash
+pnpm turbo run build --force
+```
+
+要完全清除本地缓存：
+
+```bash
+pnpm turbo prune --scope=@nebutra/ui   # 删除特定包的缓存
+rm -rf .turbo                           # 核弹选项：清除所有本地缓存
+```
+
+<Note>
+  Vercel Remote Cache 用于 CI/CD。本地缓存和远程缓存是独立的 — 清除本地缓存不会影响 CI 构建。
+</Note>
+
+## 依赖升级
+
+升级 workspace 中的单个依赖：
+
+```bash
+pnpm update --filter @nebutra/ui react
+```
+
+交互式升级所有过期包：
+
+```bash
+pnpm update --interactive --recursive
+```
+
+任何依赖升级后，请运行完整验证套件：
+
+```bash
+pnpm typecheck && pnpm lint && pnpm test && pnpm build
+```
+
+## 相关内容
+
+<CardGroup cols={2}>
+  <Card title="本地开发" icon="laptop" href="/zh/development/local-dev">
+    初始设置和所有开发命令。
+  </Card>
+  <Card title="部署概览" icon="rocket" href="/zh/deployment/overview">
+    拉取新版本后如何部署。
+  </Card>
+</CardGroup>

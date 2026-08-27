@@ -1,0 +1,137 @@
+# Claude Code
+.claude/
+
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+dist
+.next
+.open-next
+.wrangler
+.turbo
+out
+storybook-static
+# Local deploy staging tree (pnpm deploy --prod output). Untracked build
+# artifact; Biome reads this file (biome.json vcs.useIgnoreFile), so leaving it
+# out made `pnpm lint` fail on generated server bundles and short-circuited
+# every guard chained after `biome check`.
+.deploy
+
+# Environment
+.env
+.env.*
+!.env.example
+!*.template
+.wrangler-secrets.json
+
+# DNS inventory dumps
+infra/ops/dns/*
+!infra/ops/dns/README.md
+!infra/ops/dns/.gitignore
+!infra/ops/dns/topology.defaults.yaml
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Testing
+coverage
+e2e/test-results
+e2e/playwright-report
+playwright-report
+test-results
+
+# Prisma
+packages/db/generated
+
+# Python
+__pycache__
+*.pyc
+.venv
+venv
+.pytest_cache
+
+# Rust
+target
+
+# Brand assets (synced from packages/brand)
+apps/*/public/brand
+apps/*/public/brand-compliant
+apps/*/public/favicon.ico
+# tsekaluk-dev is deployed standalone on Vercel (turbo --filter skips root build:sync)
+# so brand assets must be committed directly
+!apps/tsekaluk-dev/public/brand
+!apps/tsekaluk-dev/public/brand-compliant
+
+# White-label customization (fork users)
+brand.config.ts
+brand.config/
+
+# Misc
+*.tsbuildinfo
+artifacts/
+# Source dir, not a build artifact — feature specimen components.
+!apps/landing/src/components/landing/features/artifacts/
+!apps/landing/src/components/landing/features/artifacts/**
+.vercel
+
+# Generated API client artifacts — produced by pnpm generate:api-types
+# Note: types.generated.ts stub is committed so typecheck works before generation;
+# a real generation run will overwrite it (treat modified state as expected).
+apps/api-gateway/openapi.json
+
+# npm auth tokens — MUST NEVER be committed (auth tokens leak secrets).
+# Root .npmrc stays tracked (pnpm public-hoist-pattern); this blocks new
+# .npmrc files in subdirs commonly created by tooling to hold bypass tokens.
+**/.npmrc
+!.npmrc
+!.npmrc.example
+
+# Fumadocs generated content — never commit. Empty stubs in this dir block
+# subsequent fumadocs-mdx regeneration (it skips files that already exist),
+# which silently broke design-docs typecheck for weeks.
+apps/*/.source/
+
+# Playwright MCP browser session logs
+.playwright-mcp/
+
+# LLM gateway debug traces — local-only call logs, never commit
+**/.nebutra/debug/
+
+# tsup temp bundled configs — auto-generated next to tsup.config.ts on build,
+# safe to delete, never commit
+**/tsup.config.bundled*.mjs
+
+# Brainstorm visual companion scratch
+.superpowers/
+
+# Verification scratch — throwaway playwright harnesses used to render a component
+# and look at it before a change lands. Ignored rather than tidied away by hand
+# because biome honours the ignore file, so an unformatted scratch script here
+# would otherwise fail `pnpm lint` and gate the whole pipeline on a file nobody
+# intended to keep.
+scratch-verify/
+
+# Competitor teardown captures — local research artifacts, not source.
+# Briefs in docs/plans/tools/ are the committed deliverable; regenerate the
+# captures with scripts/research-screenshot.mjs.
+docs/research/
+
+# Full CJK source faces downloaded by subset:cjk. Generated OFL woff2 files
+# under packages/design/fonts/generated/ ARE committed so next/font/local works
+# on a clean clone without fontTools.
+packages/design/fonts/vendor/**/*.ttf
+packages/design/fonts/vendor/**/*.otf

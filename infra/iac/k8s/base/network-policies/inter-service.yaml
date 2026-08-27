@@ -1,0 +1,283 @@
+# Inter-service NetworkPolicy rules
+#
+# Principle: only allow the minimum traffic each service legitimately needs.
+# Combined with default-deny.yaml (which blocks all by default), these rules
+# form a zero-trust network boundary inside the nebutra namespace.
+#
+# Legend for ports:
+#   3000 — web (Next.js)
+#   3000 — landing (Next.js)
+#   3002 — api-gateway (Hono)
+#   3003 — studio (Sanity)
+#   8001 — ai-service (FastAPI)
+#   8003 — recsys-service (FastAPI)
+#   8004 — ecommerce-service (FastAPI)
+#   8008 — event-ingest-service (Go)
+---
+# Web app → api-gateway (SSR server-side fetches)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-web-to-api-gateway
+  namespace: nebutra
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: api-gateway
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: web
+      ports:
+        - protocol: TCP
+          port: 3002
+---
+# web egress → api-gateway
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-web-egress-to-api-gateway
+  namespace: nebutra
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: web
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: api-gateway
+      ports:
+        - protocol: TCP
+          port: 3002
+---
+# api-gateway → AI service
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-api-gateway-to-ai
+  namespace: nebutra
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: ai-service
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: api-gateway
+      ports:
+        - protocol: TCP
+          port: 8001
+---
+# api-gateway → ecommerce-service
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-api-gateway-to-ecommerce
+  namespace: nebutra
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: ecommerce-service
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: api-gateway
+      ports:
+        - protocol: TCP
+          port: 8004
+---
+# api-gateway → recsys-service
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-api-gateway-to-recsys
+  namespace: nebutra
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: recsys-service
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: api-gateway
+      ports:
+        - protocol: TCP
+          port: 8003
+---
+# event-ingest-service — accepts from api-gateway only
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-api-gateway-to-event-ingest
+  namespace: nebutra
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: event-ingest-service
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: api-gateway
+      ports:
+        - protocol: TCP
+          port: 8008
+---
+# api-gateway egress → internal backend services
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-api-gateway-egress-to-backend-services
+  namespace: nebutra
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: api-gateway
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: ai-service
+      ports:
+        - protocol: TCP
+          port: 8001
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: ecommerce-service
+      ports:
+        - protocol: TCP
+          port: 8004
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: recsys-service
+      ports:
+        - protocol: TCP
+          port: 8003
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: event-ingest-service
+      ports:
+        - protocol: TCP
+          port: 8008
+---
+# event-ingest egress → ClickHouse HTTP endpoints
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-event-ingest-egress-to-clickhouse
+  namespace: nebutra
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: event-ingest-service
+  policyTypes:
+    - Egress
+  egress:
+    - ports:
+        - protocol: TCP
+          port: 8123
+        - protocol: TCP
+          port: 8443
+---
+# Prometheus scraper → all services (metrics collection)
+# The monitoring namespace hosts kube-prometheus-stack.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-prometheus-scrape
+  namespace: nebutra
+spec:
+  podSelector: {}    # all pods in nebutra namespace
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: monitoring
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: prometheus
+      ports:
+        - protocol: TCP
+          port: 3000
+        - protocol: TCP
+          port: 3002
+        - protocol: TCP
+          port: 3003
+        - protocol: TCP
+          port: 8001
+        - protocol: TCP
+          port: 8003
+        - protocol: TCP
+          port: 8004
+        - protocol: TCP
+          port: 8008
+---
+# OpenTelemetry collector → all services can push traces (egress from services)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-otel-egress
+  namespace: nebutra
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: monitoring
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: opentelemetry-collector
+      ports:
+        - protocol: TCP
+          port: 4317    # OTLP gRPC
+        - protocol: TCP
+          port: 4318    # OTLP HTTP
+---
+# Allow all pods to reach external HTTPS services (Stripe, Clerk, OpenAI, Sentry, etc.)
+# Scoped to port 443 only.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-external-https-egress
+  namespace: nebutra
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - ports:
+        - protocol: TCP
+          port: 443
+    - ports:
+        - protocol: TCP
+          port: 5432    # PostgreSQL (Supabase)
+    - ports:
+        - protocol: TCP
+          port: 6379    # Redis / Upstash

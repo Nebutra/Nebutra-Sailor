@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — Sàn giao dịch API",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "Sàn giao dịch API đa mô hình · thanh toán theo nhu cầu · quản lý khóa & ví · thử nghiệm nhanh."
+  },
+  "admin": {
+    "dashboard": "Tổng quan",
+    "keys": "Khóa API",
+    "wallet": "Ví",
+    "docs": "Tài liệu",
+    "title": "Quản trị",
+    "backToMarket": "Quay lại sàn giao dịch",
+    "quickUse": "Sử dụng nhanh"
+  },
+  "chrome": {
+    "searchPlaceholder": "Bạn muốn làm gì với AI?",
+    "search": "Tìm kiếm",
+    "locale": "Ngôn ngữ",
+    "currency": "Tiền tệ",
+    "collapseSidebar": "Thu gọn thanh bên",
+    "expandSidebar": "Mở rộng thanh bên",
+    "home": "Trang chủ",
+    "adminConsole": "Quản trị",
+    "quickUse": "Sử dụng nhanh",
+    "support": "Hỗ trợ",
+    "apiDocs": "Tài liệu API",
+    "integrationHelp": "Hướng dẫn tích hợp",
+    "aiRecommend": "Gợi ý AI",
+    "market": "Thị trường",
+    "usageTitle": "Sử dụng nhanh"
+  },
+  "channels": {
+    "app": "Thị trường ứng dụng",
+    "api": "Thị trường API",
+    "models": "Danh mục mô hình",
+    "client": "Khách hàng"
+  },
+  "market": {
+    "new": "Mới",
+    "hot": "Nổi bật",
+    "forYou": "Dành cho bạn",
+    "grid": "Lưới",
+    "list": "Danh sách",
+    "apiShelf": "Kệ API",
+    "toolShelf": "Kệ công cụ",
+    "categories": "Danh mục",
+    "apps": "Ứng dụng",
+    "newRelease": "Phát hành mới",
+    "forgeTitle": "Không gian làm việc công cụ Forge",
+    "forgeBlurb": "Biến đổi văn bản, bộ mã hóa, biểu mẫu và các công cụ có thể kết hợp. Phòng thí nghiệm ứng dụng hướng tới Forge.",
+    "openForge": "Mở Forge →",
+    "allApi": "Tất cả API →",
+    "all": "Tất cả →",
+    "viewAll": "Xem tất cả {label} →",
+    "gridView": "Xem dạng lưới",
+    "listView": "Xem dạng danh sách",
+    "hiTitle": "Nền tảng tài nguyên AI doanh nghiệp",
+    "hiSubtitle": "Đáp ứng mọi nhu cầu với AI phù hợp",
+    "sellable": "Có thể bán",
+    "walletTopup": "Nạp tiền"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "Mô hình ngôn ngữ",
+      "hint": "Trò chuyện · suy luận"
+    },
+    "image-gen": {
+      "label": "Tạo hình ảnh",
+      "hint": "Văn bản thành hình ảnh"
+    },
+    "image-edit": {
+      "label": "Chỉnh sửa hình ảnh",
+      "hint": "Chỉnh sửa · tách nền"
+    },
+    "video": {
+      "label": "Tạo video",
+      "hint": "Văn bản thành video"
+    },
+    "audio": {
+      "label": "Âm thanh & video",
+      "hint": "Giọng nói · chuyển văn bản"
+    },
+    "data": {
+      "label": "Thông tin",
+      "hint": "Tra cứu · trích xuất"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "Bổ sung tri thức"
+    },
+    "tools": {
+      "label": "API công cụ",
+      "hint": "Agent · công cụ"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "Bot",
+      "chips": "Chat bot · bot vẽ · tri thức"
+    },
+    "productivity": {
+      "label": "Năng suất",
+      "chips": "Sân đấu mô hình · AI viết"
+    },
+    "academic": {
+      "label": "Học thuật",
+      "chips": "Bộ công cụ PDF · Tìm kiếm bằng sáng chế AI"
+    },
+    "image": {
+      "label": "Công cụ hình ảnh",
+      "chips": "Studio 3D · Canvas"
+    },
+    "audio": {
+      "label": "Âm thanh",
+      "chips": "Giọng nói · Nhạc AI"
+    },
+    "code": {
+      "label": "Mã nguồn",
+      "chips": "Trình tạo web · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "Tổng quan",
+    "keys": "Khóa",
+    "wallet": "Ví",
+    "use": "Thử",
+    "docs": "Tài liệu",
+    "models": "Thêm"
+  }
+}

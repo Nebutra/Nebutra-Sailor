@@ -1,0 +1,63 @@
+---
+title: Vercel
+description: 将 Nebutra 营销入口部署到 Vercel，同时把 app/API/docs 保留在合适的运行边界。
+---
+
+## 概述
+
+Nebutra 在适合 Vercel 的地方使用 Vercel：公开营销站点、产品文档、预览部署和内容入口。
+有状态的 app/API origin 可以运行在 ECS 上，以便保留区域、网络策略和 origin 所有权。
+
+## 从 monorepo 部署
+
+托管在 Vercel 的应用作为独立项目部署：
+
+| 应用 | 项目名 |
+|-----|--------|
+| `apps/landing` | `nebutra-landing` |
+| `apps/sailor-docs` | `docs` |
+| `apps/studio` | `nebutra-studio` |
+
+`apps/sailor-docs` 支撑 **`https://docs.nebutra.com`**，走 Git → Vercel
+（项目专用 CNAME，DNS-only）。`https://nebutra.com/docs` 仍会 308 到文档站，兼容旧链。
+
+### 链接每个应用
+
+```bash
+cd apps/landing
+vercel link
+
+cd ../web
+vercel link
+```
+
+### 设置环境变量
+
+```bash
+# 拉取本地开发用的环境变量
+vercel env pull .env.local
+
+# 添加新的环境变量
+vercel env add DATABASE_URL production
+```
+
+## Turborepo 远程缓存
+
+在 CI 和本地机器之间启用共享构建缓存：
+
+```bash
+npx turbo link
+```
+
+这使用你的 Vercel 账户作为远程缓存后端——消除团队间的缓存未命中。
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="限流" icon="gauge" href="/zh/guides/rate-limits">
+    API 配额和限流配置。
+  </Card>
+  <Card title="API 概览" icon="code" href="/zh/api-reference/overview">
+    API 基础 URL 和规范。
+  </Card>
+</CardGroup>

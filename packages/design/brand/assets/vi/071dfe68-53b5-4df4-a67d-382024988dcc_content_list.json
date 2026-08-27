@@ -1,0 +1,1463 @@
+[
+  {
+    "type": "text",
+    "text": "云毓智能 品牌视觉识别手册 ",
+    "text_level": 1,
+    "bbox": [46, 330, 423, 520],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "Nebutra Brand visual identity manual ",
+    "bbox": [45, 564, 233, 676],
+    "page_idx": 0
+  },
+  {
+    "type": "header",
+    "text": "",
+    "bbox": [46, 105, 118, 225],
+    "page_idx": 0
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity February 2026 ",
+    "bbox": [46, 918, 238, 946],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "目录 三录",
+    "text_level": 1,
+    "bbox": [100, 103, 203, 193],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "/ CONTENT ",
+    "text_level": 1,
+    "bbox": [219, 150, 362, 194],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "A ",
+    "text_level": 1,
+    "bbox": [101, 323, 148, 406],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "品牌基本要素",
+    "text_level": 1,
+    "bbox": [178, 323, 319, 370],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "Brand Basic Elements ",
+    "text_level": 1,
+    "bbox": [179, 378, 319, 403],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "品牌标准标志",
+    "bbox": [178, 473, 252, 497],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "品牌标志墨稿 ",
+    "bbox": [179, 515, 252, 540],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "品牌标志方格制图",
+    "bbox": [179, 557, 275, 581],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "安全空间与最小化比例限定",
+    "bbox": [179, 600, 323, 623],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "使用限定",
+    "bbox": [179, 640, 227, 663],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "品牌中文名称方格制图",
+    "bbox": [179, 683, 298, 706],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "品牌英文名称方格制图",
+    "bbox": [179, 725, 300, 748],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "品牌中英文组合方格制图",
+    "bbox": [179, 766, 311, 789],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "品牌标准中文字体",
+    "bbox": [179, 808, 275, 831],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "品牌标准英文字体",
+    "bbox": [179, 850, 275, 873],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "品牌标准色及色阶",
+    "bbox": [392, 473, 488, 497],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "品牌辅助色及色阶 ",
+    "bbox": [392, 515, 488, 539],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "色彩禁用示例",
+    "bbox": [392, 557, 465, 581],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "标志左右组合",
+    "bbox": [392, 600, 465, 623],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "标志上下组合",
+    "bbox": [392, 641, 465, 664],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "标志左右组合-英文",
+    "bbox": [392, 683, 494, 706],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "标志上下组合-英文",
+    "bbox": [392, 725, 494, 748],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "B ",
+    "text_level": 1,
+    "bbox": [656, 323, 691, 405],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "品牌标志应用",
+    "text_level": 1,
+    "bbox": [728, 323, 868, 369],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "Application of brand logo ",
+    "text_level": 1,
+    "bbox": [729, 378, 895, 407],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "接待台及背景墙 ",
+    "bbox": [728, 473, 813, 497],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "路演板 / 展板",
+    "bbox": [729, 515, 802, 540],
+    "page_idx": 1
+  },
+  {
+    "type": "page_number",
+    "text": "> ",
+    "bbox": [928, 900, 952, 941],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "A品牌基本要素",
+    "text_level": 1,
+    "bbox": [46, 57, 392, 273],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "Brand Basic Elements ",
+    "text_level": 1,
+    "bbox": [48, 681, 375, 878],
+    "page_idx": 2
+  },
+  {
+    "type": "header",
+    "text": "品牌视觉系统规范",
+    "bbox": [846, 56, 951, 83],
+    "page_idx": 2
+  },
+  {
+    "type": "header",
+    "text": "Visual Design ",
+    "bbox": [881, 91, 952, 115],
+    "page_idx": 2
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity February 2026 ",
+    "bbox": [46, 925, 171, 943],
+    "page_idx": 2
+  },
+  {
+    "type": "footer",
+    "text": "",
+    "bbox": [928, 898, 953, 941],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "品牌标准标志",
+    "text_level": 1,
+    "bbox": [35, 114, 178, 157],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "品牌标志以首字母N的基础造型概念为主要设计框架，但又不直白的体现首字母的造型，通过几何正负空间构建隐形“N”，通过对基础图形的旋转变换，形成一个近似六边形的稳定结构。",
+    "bbox": [34, 230, 278, 345],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "色彩上使用清新明快的蓝绿渐变，通过线性渐变与角度渐变的方式填充其中，让整体更具未来感与科技的锋芒。整体表达品牌探索与引领未来，创建智能化连接的理念”",
+    "bbox": [34, 362, 277, 446],
+    "page_idx": 3
+  },
+  {
+    "type": "image",
+    "img_path": "images/e823943726f9b24cb7cdabd3d567ebf2209556102bf0fa3ab11aba5c34fe70cb.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [516, 256, 806, 739],
+    "page_idx": 3
+  },
+  {
+    "type": "header",
+    "text": "品牌基本要素 / Brand Basic Elements",
+    "bbox": [34, 61, 194, 81],
+    "page_idx": 3
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity February 2026 ",
+    "bbox": [46, 901, 107, 929],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "品牌标志墨稿 ",
+    "text_level": 1,
+    "bbox": [35, 114, 176, 157],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "品牌标志墨稿是以黑白色调呈现的标志设计稿，它在品牌视觉体系中有着不可或缺的作用。首先，墨稿能精准检验标志的结构合理性与图形识别性，剥离色彩干扰后，标志的线条粗细、图形比例、元素关系等细节问题会清晰暴露，帮助设计师及时优化，确保标志在任何场景下都能保持清晰易辨。",
+    "bbox": [34, 230, 276, 403],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "其次，墨稿能强化品牌标志的通用性，黑白配色不受印刷工艺、显示设备色彩差异的限制，无论是单色印刷品、黑白显示屏，还是烫金、压印等特殊工艺，都能保证标志完整呈现，有效提升品牌传播的稳定性。",
+    "bbox": [34, 423, 276, 535],
+    "page_idx": 4
+  },
+  {
+    "type": "image",
+    "img_path": "images/f6b65e082c07eb304013b16337689821b6c665140db7f60dc2cab52825df3d79.jpg",
+    "image_caption": ["标志反白"],
+    "image_footnote": [],
+    "bbox": [425, 133, 560, 363],
+    "page_idx": 4
+  },
+  {
+    "type": "image",
+    "img_path": "images/ee7ffa0034d535df384612f9f632639dd451034abda8f024f6637232ec276b01.jpg",
+    "image_caption": ["标志反白"],
+    "image_footnote": [],
+    "bbox": [763, 136, 897, 359],
+    "page_idx": 4
+  },
+  {
+    "type": "image",
+    "img_path": "images/87e4ea195b5e9411af77642592bf676d004e71fe7df9b4299339254eb0aaadf5.jpg",
+    "image_caption": ["标志烫金"],
+    "image_footnote": [],
+    "bbox": [425, 636, 559, 859],
+    "page_idx": 4
+  },
+  {
+    "type": "image",
+    "img_path": "images/871d1880bd00a585e03bf8acbb7e00344c5cf2cbbd4e690f37e3a8712d7ebb34.jpg",
+    "image_caption": ["标志烫银 "],
+    "image_footnote": [],
+    "bbox": [763, 636, 897, 859],
+    "page_idx": 4
+  },
+  {
+    "type": "header",
+    "text": "品牌基本要素 / Brand Basic Elements",
+    "bbox": [34, 61, 194, 81],
+    "page_idx": 4
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity ",
+    "bbox": [46, 901, 106, 914],
+    "page_idx": 4
+  },
+  {
+    "type": "footer",
+    "text": "February 2026 ",
+    "bbox": [46, 915, 93, 928],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "品牌标志方格制图",
+    "text_level": 1,
+    "bbox": [35, 113, 222, 157],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "方格制图通过精确的网格比例，规定标志中各元素（如线条、图形、文字）的尺寸、间距等参数，确保无论在任何场景下（如印刷、屏幕展示、实体制作），标志的形态都保持统一，避免因手工绘制或缩放导致的变形、比例失调。",
+    "bbox": [34, 230, 278, 373],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "7.5a ",
+    "bbox": [651, 148, 670, 164],
+    "page_idx": 5
+  },
+  {
+    "type": "image",
+    "img_path": "images/4345ff19239b8f019b4039faacb2ae0a178f4803409dfb75812b21158da59881.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [469, 203, 881, 851],
+    "page_idx": 5
+  },
+  {
+    "type": "header",
+    "text": "品牌基本要素 / Brand Basic Elements",
+    "bbox": [34, 61, 194, 81],
+    "page_idx": 5
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity ",
+    "bbox": [46, 900, 106, 914],
+    "page_idx": 5
+  },
+  {
+    "type": "footer",
+    "text": "February 2026 ",
+    "bbox": [46, 915, 93, 929],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "安全空间",
+    "text_level": 1,
+    "bbox": [34, 114, 129, 157],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "与最小化比例限定",
+    "text_level": 1,
+    "bbox": [34, 163, 222, 208],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "在应用品牌视觉识别系统时，需严格遵守以下规范，确保品牌形象统一、专业。",
+    "bbox": [34, 279, 276, 330],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "标志使用 ：标志应用时必须保留安全空间（最小边距不小于标志高度的1�4），避免元素挤压；最小尺寸要求：印刷媒体高度≥6mm，数字媒体高度 $2 3 5 \\mathrm { p } \\times \\mathrm { _ { \\circ } }$ 。优先使用彩色标识，允许单色版，但禁止在浅色或复杂背景中使用反白标识，以防辨识度降低。",
+    "bbox": [34, 350, 276, 492],
+    "page_idx": 6
+  },
+  {
+    "type": "image",
+    "img_path": "images/9fc95ed957e000973ff488544d7562feecff53bf09445cec70d89906a4e155a4.jpg",
+    "image_caption": ["a. 品牌标志使用安全空间"],
+    "image_footnote": [],
+    "bbox": [375, 245, 623, 650],
+    "page_idx": 6
+  },
+  {
+    "type": "image",
+    "img_path": "images/e0b9e6adc6a5ba03eecaffe5d68316547863885934180facf5302321f9f8cac0.jpg",
+    "image_caption": [
+      "b. 品牌标志在印刷媒体上最小使用：高度大于等于6mm在网络媒体上最小使用：高度大于等于35px"
+    ],
+    "image_footnote": [],
+    "bbox": [641, 261, 948, 662],
+    "page_idx": 6
+  },
+  {
+    "type": "header",
+    "text": "品牌基本要素 / Brand Basic Elements",
+    "bbox": [34, 61, 194, 81],
+    "page_idx": 6
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity ",
+    "bbox": [46, 901, 106, 914],
+    "page_idx": 6
+  },
+  {
+    "type": "footer",
+    "text": "February 2026 ",
+    "bbox": [46, 915, 93, 928],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "使用限定",
+    "text_level": 1,
+    "bbox": [34, 114, 129, 157],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "规定品牌标志的使用限定（即明确标志在不同场景下的禁用规则、限制条件等）是品牌视觉管理的核心环节，其作用与方格制图的 “正向规范” 形成互补，从 “反向约束” 角度保障品牌标志的完整性、识别性和品牌形象的一致性。",
+    "bbox": [34, 229, 276, 344],
+    "page_idx": 7
+  },
+  {
+    "type": "image",
+    "img_path": "images/1400960950aa7bf989293ddc99775df6a9a5467dede215c6fd5aa58ae7d30009.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [375, 148, 952, 834],
+    "page_idx": 7
+  },
+  {
+    "type": "header",
+    "text": "品牌基本要素 / Brand Basic Elements",
+    "bbox": [34, 61, 194, 81],
+    "page_idx": 7
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity ",
+    "bbox": [46, 900, 106, 913],
+    "page_idx": 7
+  },
+  {
+    "type": "footer",
+    "text": "February 2026 ",
+    "bbox": [46, 915, 93, 928],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "品牌中文名称方格制图",
+    "text_level": 1,
+    "bbox": [34, 113, 177, 209],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "方格制图通过精确的网格比例，规定标志中各元素（如线条、图形、文字）的尺寸、间距等参数，确保无论在任何场景下（如印刷、屏幕展示、实体制作），标志的形态都保持统一，避免因手工绘制或缩放导致的变形、比例失调。",
+    "bbox": [34, 279, 278, 425],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "13.5a ",
+    "bbox": [644, 280, 669, 300],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "疏起 一 1 ",
+    "text_level": 1,
+    "bbox": [471, 425, 842, 576],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "3a ",
+    "bbox": [912, 489, 925, 508],
+    "page_idx": 8
+  },
+  {
+    "type": "header",
+    "text": "品牌基本要素 / Brand Basic Elements",
+    "bbox": [34, 61, 194, 81],
+    "page_idx": 8
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity ",
+    "bbox": [46, 900, 106, 914],
+    "page_idx": 8
+  },
+  {
+    "type": "footer",
+    "text": "February 2026 ",
+    "bbox": [46, 915, 94, 929],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "品牌英文名称方格制图",
+    "text_level": 1,
+    "bbox": [34, 113, 178, 209],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "方格制图通过精确的网格比例，规定标志中各元素（如线条、图形、文字）的尺寸、间距等参数，确保无论在任何场景下（如印刷、屏幕展示、实体制作），标志的形态都保持统一，避免因手工绘制或缩放导致的变形、比例失调。",
+    "bbox": [34, 279, 278, 425],
+    "page_idx": 9
+  },
+  {
+    "type": "image",
+    "img_path": "images/a90262b79fb0870a604b0979cf108b91e2ab6da3dc5f6157a9ca4c86af57b2a1.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [465, 303, 893, 646],
+    "page_idx": 9
+  },
+  {
+    "type": "header",
+    "text": "品牌基本要素 / Brand Basic Elements",
+    "bbox": [34, 61, 194, 81],
+    "page_idx": 9
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity February 2026 ",
+    "bbox": [46, 900, 107, 929],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "品牌中英文组合方格制图",
+    "text_level": 1,
+    "bbox": [33, 113, 200, 208],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "方格制图通过精确的网格比例，规定标志中各元素（如线条、图形、文字）的尺寸、间距等参数，确保无论在任何场景下（如印刷、屏幕展示、实体制作），标志的形态都保持统一，避免因手工绘制或缩放导致的变形、比例失调。",
+    "bbox": [34, 279, 278, 425],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "13.5a ",
+    "bbox": [650, 208, 673, 227],
+    "page_idx": 10
+  },
+  {
+    "type": "image",
+    "img_path": "images/d630c610531f86547ebfd99398095fc12251d50534ca99920c65efe36a9c77ed.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [400, 253, 929, 796],
+    "page_idx": 10
+  },
+  {
+    "type": "header",
+    "text": "品牌基本要素 / Brand Basic Elements",
+    "bbox": [34, 61, 194, 81],
+    "page_idx": 10
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity ",
+    "bbox": [46, 900, 107, 915],
+    "page_idx": 10
+  },
+  {
+    "type": "footer",
+    "text": "February 2026 ",
+    "bbox": [46, 915, 94, 929],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "品牌标准中文字体",
+    "text_level": 1,
+    "bbox": [35, 113, 223, 159],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "为使视觉形象更加统一，企业对内办公、传播文件等在一般情况下应用本章规定的专用字体。",
+    "bbox": [34, 229, 276, 282],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "在一般情况下使用品牌标识，应尽量使用提供的电子文件，不建议重绘标识。尽量避免在重绘中出现误差。",
+    "bbox": [34, 301, 276, 354],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "无锡云毓智能科技有限公司",
+    "bbox": [371, 140, 791, 207],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "vivo Sans Light ",
+    "bbox": [875, 145, 950, 170],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "无锡云毓智能科技有限公司",
+    "bbox": [372, 290, 791, 357],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "vivo Sans Regular ",
+    "bbox": [863, 296, 950, 319],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "无锡云毓智能科技有限公司",
+    "bbox": [372, 440, 791, 506],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "vivo Sans Medium ",
+    "bbox": [860, 445, 950, 467],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "无锡云毓智能科技有限公司",
+    "bbox": [372, 591, 791, 657],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "vivo Sans DemiBold ",
+    "bbox": [854, 595, 950, 617],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "无锡云毓智能科技有限公司",
+    "bbox": [372, 741, 791, 808],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "vivo Sans Bold ",
+    "bbox": [878, 745, 950, 767],
+    "page_idx": 11
+  },
+  {
+    "type": "header",
+    "text": "品牌基本要素 / Brand Basic Elements",
+    "bbox": [34, 61, 194, 81],
+    "page_idx": 11
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity ",
+    "bbox": [46, 900, 106, 915],
+    "page_idx": 11
+  },
+  {
+    "type": "footer",
+    "text": "February 2026 ",
+    "bbox": [46, 915, 94, 929],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "品牌标准英文字体",
+    "text_level": 1,
+    "bbox": [35, 113, 223, 158],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "为使视觉形象更加统一，企业对内办公、传播文件等在一般情况下应用本章规定的专用字体。",
+    "bbox": [34, 229, 276, 282],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "在一般情况下使用品牌标识，应尽量使用提供的电子文件，不建议重绘标识。尽量避免在重绘中出现误差。",
+    "bbox": [34, 301, 276, 354],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "Poppins Regular ",
+    "bbox": [355, 156, 436, 185],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "ABCDEFGHI JKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 1234567890 # $ @%&,.-+() ",
+    "bbox": [525, 150, 950, 310],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "Poppins Medium ",
+    "bbox": [355, 413, 438, 437],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "ABCDEFGHI JKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 1234567890 # $ @%&,.-+() ",
+    "bbox": [525, 403, 960, 562],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "Poppins SemiBold ",
+    "bbox": [355, 664, 442, 689],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "ABCDEFGHI JKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 1234567890 # $ @%&,.-+() ",
+    "bbox": [525, 654, 968, 814],
+    "page_idx": 12
+  },
+  {
+    "type": "header",
+    "text": "品牌基本要素 / Brand Basic Elements",
+    "bbox": [34, 61, 194, 81],
+    "page_idx": 12
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity February 2026 ",
+    "bbox": [46, 900, 106, 928],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "品牌标准色及色阶",
+    "text_level": 1,
+    "bbox": [35, 114, 223, 158],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "云毓蓝品牌的核心标准色。蓝色象征科技与信任，契合云毓智能在AI-SaaS与云端数据智能领域的专业定位。“云”代表云端平台，“毓”寓意孕育与转化。这一色彩诠释了我们致力于将分散数据在云端整合、处理，并转化为有价值产品与服务的使命。它体现了创新、可靠与无限潜力，传递出公司在智能科技领域的前瞻性与突破精神。",
+    "bbox": [34, 230, 278, 389],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "云毓蓝 ",
+    "text_level": 1,
+    "bbox": [457, 219, 521, 259],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "Nebutra Blue ",
+    "bbox": [458, 272, 511, 290],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "HTML ",
+    "bbox": [458, 358, 483, 376],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "#0033FE ",
+    "bbox": [458, 387, 495, 403],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "RGB ",
+    "bbox": [458, 441, 477, 459],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "0 51 254 ",
+    "bbox": [458, 469, 498, 487],
+    "page_idx": 13
+  },
+  {
+    "type": "header",
+    "text": "品牌基本要素 / Brand Basic Elements",
+    "bbox": [34, 61, 194, 81],
+    "page_idx": 13
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity ",
+    "bbox": [46, 901, 106, 914],
+    "page_idx": 13
+  },
+  {
+    "type": "footer",
+    "text": "February 2026 ",
+    "bbox": [46, 915, 94, 929],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "品牌辅助色及色阶 ",
+    "text_level": 1,
+    "bbox": [35, 113, 223, 158],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "品牌主要辅助色定义为“云毓青”。它源于数据流动与智能交互的瞬间，青色的通透感象征着信息的清晰与算法的灵动。这一色彩代表了云毓智能在整合与处理数据过程中的高效与精准，体现了从原始数据到智慧产品的转化路径。",
+    "bbox": [34, 230, 276, 332],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "它与主色云毓蓝相辅相成，共同构建出我们可靠而不失创新、专业而充满活力的品牌形象，展现了智能科技与自然生机融合的未来感。",
+    "bbox": [34, 350, 276, 426],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "云毓青 ",
+    "text_level": 1,
+    "bbox": [403, 220, 465, 259],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "Nebutra Cyan ",
+    "bbox": [404, 272, 459, 290],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "HTML ",
+    "bbox": [404, 358, 429, 376],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "#0BF1C3 ",
+    "bbox": [404, 387, 441, 404],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "RGB ",
+    "bbox": [404, 441, 423, 459],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "11 241 195 ",
+    "bbox": [404, 470, 450, 486],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "白",
+    "text_level": 1,
+    "bbox": [784, 88, 803, 126],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "White ",
+    "bbox": [784, 140, 809, 156],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "HTML ",
+    "bbox": [784, 226, 809, 243],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "#FFFFFF ",
+    "bbox": [784, 253, 819, 270],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "RGB ",
+    "bbox": [784, 309, 803, 326],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "255 255 255 ",
+    "bbox": [784, 337, 839, 355],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "黑",
+    "text_level": 1,
+    "bbox": [784, 589, 804, 626],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "Black ",
+    "bbox": [784, 640, 806, 657],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "HTML ",
+    "bbox": [784, 726, 809, 743],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "#000000 ",
+    "bbox": [784, 754, 823, 771],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "RGB ",
+    "bbox": [784, 809, 803, 827],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "0 0 0 ",
+    "bbox": [784, 838, 811, 855],
+    "page_idx": 14
+  },
+  {
+    "type": "header",
+    "text": "品牌基本要素 / Brand Basic Elements",
+    "bbox": [34, 61, 194, 81],
+    "page_idx": 14
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity ",
+    "bbox": [46, 900, 106, 914],
+    "page_idx": 14
+  },
+  {
+    "type": "footer",
+    "text": "February 2026 ",
+    "bbox": [46, 915, 94, 929],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "色彩禁用示例",
+    "text_level": 1,
+    "bbox": [34, 114, 176, 157],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "为了使品牌标准色彩在未来的传播中更加科学有效，我们设置标准色和辅助色的使用规范。",
+    "bbox": [34, 231, 276, 278],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "禁用高饱和度背景与颜色重叠，避免颜色过于刺眼，影响品牌形象；禁用明度过高的重叠颜色，避免影响内容的识别性。",
+    "bbox": [34, 295, 276, 343],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "允许使用",
+    "text_level": 1,
+    "bbox": [364, 188, 404, 209],
+    "page_idx": 15
+  },
+  {
+    "type": "image",
+    "img_path": "images/9421a2507165ff7978e8e79828b17e883a7a7eded4c175d4dc3d30c9b95c9759.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [437, 407, 460, 436],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "WE NEVER ",
+    "bbox": [373, 571, 421, 587],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "STOP ",
+    "bbox": [375, 589, 400, 605],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "APPROACHING",
+    "bbox": [375, 609, 445, 625],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "PERFECT. ",
+    "bbox": [375, 628, 417, 644],
+    "page_idx": 15
+  },
+  {
+    "type": "image",
+    "img_path": "images/50ce2c3522e540e857e620ea2018b3b2557994cf6df250bc2f10f1a22df8b3d1.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [375, 675, 397, 715],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "云毓智能",
+    "bbox": [402, 678, 445, 696],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "Nebutra ",
+    "bbox": [402, 700, 435, 714],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "禁止使用",
+    "text_level": 1,
+    "bbox": [591, 188, 631, 209],
+    "page_idx": 15
+  },
+  {
+    "type": "image",
+    "img_path": "images/b22ddeea6bbbad31c66e7bc50dcdc620bb63ca0a3cc07af86642653285aa1427.jpg",
+    "image_caption": ["$\\oslash$ 禁用高饱和度背景与颜色重叠 "],
+    "image_footnote": [],
+    "bbox": [591, 285, 763, 736],
+    "page_idx": 15
+  },
+  {
+    "type": "image",
+    "img_path": "images/fced1e9eec54b6589c8869769882a16375ba7912288d35b8071e5cdaa525e192.jpg",
+    "image_caption": ["$\\cdot$ 禁用明度过高的重叠颜色"],
+    "image_footnote": [],
+    "bbox": [772, 285, 943, 736],
+    "page_idx": 15
+  },
+  {
+    "type": "header",
+    "text": "品牌基本要素 / Brand Basic Elements",
+    "bbox": [34, 61, 194, 81],
+    "page_idx": 15
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity ",
+    "bbox": [46, 901, 106, 914],
+    "page_idx": 15
+  },
+  {
+    "type": "footer",
+    "text": "February 2026 ",
+    "bbox": [46, 915, 93, 928],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "标志左右组合",
+    "text_level": 1,
+    "bbox": [34, 113, 177, 159],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "标志的不同组合形式是品牌视觉系统适配多元场景的核心策略。",
+    "bbox": [34, 230, 268, 251],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "左右组合适配横向空间（如门店招牌、横幅广告），避免因空间限制导致标志变形或信息压缩，适合强调 “标志 $^ +$ 品牌名” 的同等重要性。",
+    "bbox": [34, 267, 276, 342],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "强化应用灵活性：不同组合形式能应对印刷、屏幕、实体物料等多样载体，确保在包装、工牌、社交媒体等场景中，标志始终清晰完整，维持品牌一致性。",
+    "bbox": [34, 359, 276, 435],
+    "page_idx": 16
+  },
+  {
+    "type": "image",
+    "img_path": "images/a76617581d01c3589c0bf28f9aba532f817a45f71905240d3a337f692d7e87dc.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [357, 282, 973, 714],
+    "page_idx": 16
+  },
+  {
+    "type": "header",
+    "text": "品牌基本要素 / Brand Basic Elements",
+    "bbox": [34, 61, 194, 81],
+    "page_idx": 16
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity ",
+    "bbox": [46, 900, 106, 914],
+    "page_idx": 16
+  },
+  {
+    "type": "footer",
+    "text": "February 2026 ",
+    "bbox": [46, 915, 93, 929],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "标志上下组合",
+    "text_level": 1,
+    "bbox": [33, 113, 177, 159],
+    "page_idx": 17
+  },
+  {
+    "type": "text",
+    "text": "标志的不同组合形式是品牌视觉系统适配多元场景的核心策略。",
+    "bbox": [34, 229, 268, 251],
+    "page_idx": 17
+  },
+  {
+    "type": "text",
+    "text": "左右组合适配横向空间（如门店招牌、横幅广告），避免因空间限制导致标志变形或信息压缩，适合强调 “标志 $^ +$ 品牌名” 的同等重要性。",
+    "bbox": [34, 267, 276, 342],
+    "page_idx": 17
+  },
+  {
+    "type": "text",
+    "text": "强化应用灵活性：不同组合形式能应对印刷、屏幕、实体物料等多样载体，确保在包装、工牌、社交媒体等场景中，标志始终清晰完整，维持品牌一致性。",
+    "bbox": [34, 359, 276, 435],
+    "page_idx": 17
+  },
+  {
+    "type": "image",
+    "img_path": "images/45d02726a564281e871ce9aca0b99aac57f8be954adf8e3cab75b8e49d8d8fbb.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [461, 117, 861, 880],
+    "page_idx": 17
+  },
+  {
+    "type": "header",
+    "text": "品牌基本要素 / Brand Basic Elements",
+    "bbox": [34, 61, 194, 81],
+    "page_idx": 17
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity ",
+    "bbox": [46, 900, 106, 914],
+    "page_idx": 17
+  },
+  {
+    "type": "footer",
+    "text": "February 2026 ",
+    "bbox": [46, 915, 94, 929],
+    "page_idx": 17
+  },
+  {
+    "type": "text",
+    "text": "标志左右组合-英文",
+    "text_level": 1,
+    "bbox": [33, 113, 235, 159],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "标志的不同组合形式是品牌视觉系统适配多元场景的核心策略。",
+    "bbox": [34, 230, 268, 251],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "左右组合适配横向空间（如门店招牌、横幅广告），避免因空间限制导致标志变形或信息压缩，适合强调 “标志 $^ +$ 品牌名” 的同等重要性。",
+    "bbox": [34, 267, 276, 342],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "强化应用灵活性：不同组合形式能应对印刷、屏幕、实体物料等多样载体，确保在包装、工牌、社交媒体等场景中，标志始终清晰完整，维持品牌一致性。",
+    "bbox": [34, 359, 276, 435],
+    "page_idx": 18
+  },
+  {
+    "type": "image",
+    "img_path": "images/589df059e416d6dcc1ded5286a2a765d2ff6864184b5fe80041a6d866015b170.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [350, 348, 969, 646],
+    "page_idx": 18
+  },
+  {
+    "type": "header",
+    "text": "品牌基本要素 / Brand Basic Elements",
+    "bbox": [34, 61, 194, 81],
+    "page_idx": 18
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity ",
+    "bbox": [46, 900, 106, 914],
+    "page_idx": 18
+  },
+  {
+    "type": "footer",
+    "text": "February 2026 ",
+    "bbox": [46, 915, 94, 929],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "标志上下组合-英文",
+    "text_level": 1,
+    "bbox": [33, 113, 235, 159],
+    "page_idx": 19
+  },
+  {
+    "type": "text",
+    "text": "标志的不同组合形式是品牌视觉系统适配多元场景的核心策略。",
+    "bbox": [34, 230, 268, 251],
+    "page_idx": 19
+  },
+  {
+    "type": "text",
+    "text": "左右组合适配横向空间（如门店招牌、横幅广告），避免因空间限制导致标志变形或信息压缩，适合强调 “标志 $^ +$ 品牌名” 的同等重要性。",
+    "bbox": [34, 267, 276, 342],
+    "page_idx": 19
+  },
+  {
+    "type": "text",
+    "text": "强化应用灵活性：不同组合形式能应对印刷、屏幕、实体物料等多样载体，确保在包装、工牌、社交媒体等场景中，标志始终清晰完整，维持品牌一致性。",
+    "bbox": [34, 360, 276, 435],
+    "page_idx": 19
+  },
+  {
+    "type": "image",
+    "img_path": "images/40ab0d0269290d57ae2fc761ddbda8317e328f1efb590dc06dd875b5ee87d277.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [455, 153, 867, 843],
+    "page_idx": 19
+  },
+  {
+    "type": "header",
+    "text": "品牌基本要素 / Brand Basic Elements",
+    "bbox": [34, 61, 194, 81],
+    "page_idx": 19
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity ",
+    "bbox": [46, 900, 106, 914],
+    "page_idx": 19
+  },
+  {
+    "type": "footer",
+    "text": "February 2026 ",
+    "bbox": [46, 915, 94, 929],
+    "page_idx": 19
+  },
+  {
+    "type": "text",
+    "text": "B品牌标志应用",
+    "text_level": 1,
+    "bbox": [46, 53, 395, 281],
+    "page_idx": 20
+  },
+  {
+    "type": "text",
+    "text": "Application of brand logo ",
+    "text_level": 1,
+    "bbox": [43, 678, 446, 896],
+    "page_idx": 20
+  },
+  {
+    "type": "header",
+    "text": "品牌视觉系统规范",
+    "bbox": [845, 55, 953, 85],
+    "page_idx": 20
+  },
+  {
+    "type": "header",
+    "text": "Visual Design ",
+    "bbox": [880, 91, 952, 116],
+    "page_idx": 20
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity February 2026 ",
+    "bbox": [44, 923, 173, 944],
+    "page_idx": 20
+  },
+  {
+    "type": "footer",
+    "text": "",
+    "bbox": [928, 898, 953, 942],
+    "page_idx": 20
+  },
+  {
+    "type": "text",
+    "text": "路演板 / 展板",
+    "text_level": 1,
+    "bbox": [34, 114, 178, 159],
+    "page_idx": 21
+  },
+  {
+    "type": "text",
+    "text": "品牌展板与路演板是线下活动的核心视觉载体，承担着集中传递品牌信息、吸引受众并营造沉浸式体验的关键作用。设计上严格遵循VI标准，统一版式、色彩与字体规范，确保核心信息远距可视、一秒读懂。规范化的展板不仅能高效塑造专业权威的品牌形象，更能成为吸引客流、引导动线、并促成深度沟通的战略性媒介。",
+    "bbox": [583, 114, 913, 219],
+    "page_idx": 21
+  },
+  {
+    "type": "image",
+    "img_path": "images/6c8e0e385aef7b9739723e5f9c595a4ce5834760bceefeeffcc599a2370fb8fa.jpg",
+    "image_caption": ["横版"],
+    "image_footnote": [],
+    "bbox": [80, 297, 656, 809],
+    "page_idx": 21
+  },
+  {
+    "type": "image",
+    "img_path": "images/d2b6a7f7b7c6a03bb006e904dcd10009cc329d2fa1f6bc20e5bb2ca12245f7b3.jpg",
+    "image_caption": ["竖版"],
+    "image_footnote": [],
+    "bbox": [722, 297, 916, 809],
+    "page_idx": 21
+  },
+  {
+    "type": "header",
+    "text": "品牌标志应用 / Application of brand logo",
+    "bbox": [34, 61, 212, 84],
+    "page_idx": 21
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity ",
+    "bbox": [46, 900, 106, 914],
+    "page_idx": 21
+  },
+  {
+    "type": "footer",
+    "text": "February 2026 ",
+    "bbox": [46, 915, 94, 929],
+    "page_idx": 21
+  },
+  {
+    "type": "text",
+    "text": "接待台及背景墙 ",
+    "text_level": 1,
+    "bbox": [34, 113, 200, 159],
+    "page_idx": 22
+  },
+  {
+    "type": "text",
+    "text": "企业前台设计多层次的造型，整体线条与logo的设计呼应，第一层底板可采用纯色背景或浅色木纹效果，体现温馨与人文气息，两边增加LED的流水灯带，营造科技与未来的氛围感",
+    "bbox": [34, 229, 276, 306],
+    "page_idx": 22
+  },
+  {
+    "type": "image",
+    "img_path": "images/c9d93139c935a1a88f3572bdc06f7621e3380796239510e45e4d0cfb2667c151.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [359, 386, 915, 876],
+    "page_idx": 22
+  },
+  {
+    "type": "header",
+    "text": "品牌标志应用 / Application of brand logo",
+    "bbox": [34, 61, 212, 83],
+    "page_idx": 22
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity ",
+    "bbox": [46, 900, 107, 914],
+    "page_idx": 22
+  },
+  {
+    "type": "footer",
+    "text": "February 2026 ",
+    "bbox": [46, 915, 94, 929],
+    "page_idx": 22
+  },
+  {
+    "type": "text",
+    "text": "ND ",
+    "text_level": 1,
+    "bbox": [47, 439, 267, 551],
+    "page_idx": 23
+  },
+  {
+    "type": "footer",
+    "text": "Corporate Identity February 2026 ",
+    "bbox": [46, 918, 238, 946],
+    "page_idx": 23
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/textarea-demo.tsx",
+      "content": "\"use client\";\n\nimport { Label, Textarea } from \"@nebutra/ui/primitives\";\n\nexport function TextareaDemo() {\n  return (\n    <div className=\"gap-1.5 flex w-full flex-col\">\n      <Label htmlFor=\"message\">Message</Label>\n      <Textarea id=\"message\" placeholder=\"Write your message here...\" rows={4} />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

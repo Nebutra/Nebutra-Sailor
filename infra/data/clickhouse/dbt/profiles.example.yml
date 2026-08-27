@@ -1,0 +1,16 @@
+nebutra_clickhouse:
+  target: dev
+  outputs:
+    dev:
+      type: clickhouse
+      schema: nebutra
+      host: localhost
+      port: 8123
+      user: default
+      password: ""
+      secure: false
+      verify: false
+      connect_timeout: 10
+      send_receive_timeout: 300
+      retries: 1
+      database_engine: Atomic

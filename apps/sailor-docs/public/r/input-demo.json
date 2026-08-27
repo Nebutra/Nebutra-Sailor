@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/input-demo.tsx",
+      "content": "\"use client\";\nimport { Input } from \"@nebutra/ui/primitives\";\nexport function InputDemo() {\n  return (\n    <div className=\"flex max-w-sm flex-col gap-3\">\n      <Input aria-label=\"Small project name\" size=\"sm\" placeholder=\"Small\" />\n      <Input aria-label=\"Default project name\" placeholder=\"Default\" />\n      <Input aria-label=\"Large project name\" size=\"lg\" placeholder=\"Large\" />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

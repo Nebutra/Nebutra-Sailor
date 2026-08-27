@@ -1,0 +1,80 @@
+{
+  "gsap": [
+    "var(--font-reg-inter-tight)",
+    "Mori",
+    "Inter Tight",
+    "DM Sans",
+    "var(--font-noto-sans-sc",
+    "Noto Sans SC\")",
+    "Noto Sans SC",
+    "PingFang SC"
+  ],
+  "linear": [
+    "var(--font-inter)",
+    "Inter Variable",
+    "Inter",
+    "var(--font-noto-sans-sc",
+    "Noto Sans SC\")",
+    "Noto Sans SC",
+    "PingFang SC",
+    "var(--font-jetbrains-mono)",
+    "Berkeley Mono",
+    "JetBrains Mono"
+  ],
+  "notion": [
+    "var(--font-inter)",
+    "NotionInter",
+    "Inter",
+    "var(--font-noto-sans-sc",
+    "Noto Sans SC\")",
+    "Noto Sans SC",
+    "PingFang SC"
+  ],
+  "raycast": [
+    "var(--font-inter)",
+    "Inter",
+    "var(--font-noto-sans-sc",
+    "Noto Sans SC\")",
+    "Noto Sans SC",
+    "PingFang SC",
+    "var(--font-geist-mono)",
+    "Geist Mono",
+    "GeistMono",
+    "Menlo"
+  ],
+  "stripe": [
+    "var(--font-reg-inter-tight)",
+    "sohne-var",
+    "Inter Tight",
+    "Inter",
+    "var(--font-noto-sans-sc",
+    "Noto Sans SC\")",
+    "Noto Sans SC",
+    "PingFang SC"
+  ],
+  "vanta": [
+    "var(--font-inter)",
+    "Inter Variable",
+    "Inter",
+    "var(--font-noto-sans-sc",
+    "Noto Sans SC\")",
+    "Noto Sans SC",
+    "PingFang SC",
+    "var(--font-reg-source-serif-4)",
+    "Reckless",
+    "Source Serif 4",
+    "Lora"
+  ],
+  "vercel": [
+    "var(--font-geist-sans)",
+    "Geist Sans",
+    "Geist",
+    "var(--font-noto-sans-sc",
+    "Noto Sans SC\")",
+    "Noto Sans SC",
+    "PingFang SC",
+    "var(--font-geist-mono)",
+    "Geist Mono",
+    "Menlo"
+  ]
+}

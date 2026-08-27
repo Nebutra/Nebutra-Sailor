@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022", "DOM"],
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "types": ["node"]
+  },
+  "include": [
+    "smoke/**/*.ts",
+    "golden/**/*.ts",
+    "sleptons/**/*.ts",
+    "visual/**/*.ts",
+    "fixtures/**/*.ts",
+    "playwright.config.ts",
+    "playwright.golden.config.ts",
+    "playwright.sleptons.config.ts",
+    "playwright.visual.config.ts"
+  ]
+}

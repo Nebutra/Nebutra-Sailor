@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-group-stacked-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/radio-group-stacked-demo.tsx",
+      "content": "import { RadioGroupStacked, RadioGroupStackedItem } from \"@nebutra/ui/primitives\";\n\nexport function RadioGroupStackedDemo() {\n  return (\n    <div className=\"max-w-md px-4 py-8 w-full\">\n      <RadioGroupStacked defaultValue=\"standard\" className=\"w-full\">\n        <RadioGroupStackedItem value=\"standard\" id=\"delivery-standard\">\n          <div className=\"flex w-full justify-between\">\n            <div>\n              <div className=\"font-medium\">Standard Shipping</div>\n              <div className=\"text-sm mt-1 text-muted-foreground\">5–7 business days</div>\n            </div>\n            <div className=\"font-medium\">Free</div>\n          </div>\n        </RadioGroupStackedItem>\n        <RadioGroupStackedItem value=\"express\" id=\"delivery-express\">\n          <div className=\"flex w-full justify-between\">\n            <div>\n              <div className=\"font-medium\">Express Shipping</div>\n              <div className=\"text-sm mt-1 text-muted-foreground\">2–3 business days</div>\n            </div>\n            <div className=\"font-medium\">$9.99</div>\n          </div>\n        </RadioGroupStackedItem>\n        <RadioGroupStackedItem value=\"overnight\" id=\"delivery-overnight\">\n          <div className=\"flex w-full justify-between\">\n            <div>\n              <div className=\"font-medium\">Overnight Shipping</div>\n              <div className=\"text-sm mt-1 text-muted-foreground\">Next business day</div>\n            </div>\n            <div className=\"font-medium\">$19.99</div>\n          </div>\n        </RadioGroupStackedItem>\n      </RadioGroupStacked>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

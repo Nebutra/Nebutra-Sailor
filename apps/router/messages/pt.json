@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — marketplace de APIs",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "Marketplace de APIs para todos os modelos · pague conforme usa · gerencie chaves e carteira · teste rápido."
+  },
+  "admin": {
+    "dashboard": "Visão geral",
+    "keys": "Chaves de API",
+    "wallet": "Carteira",
+    "docs": "Documentação",
+    "title": "Admin",
+    "backToMarket": "Voltar ao marketplace",
+    "quickUse": "Uso rápido"
+  },
+  "chrome": {
+    "searchPlaceholder": "O que você quer fazer com IA?",
+    "search": "Pesquisar",
+    "locale": "Idioma",
+    "currency": "Moeda",
+    "collapseSidebar": "Recolher barra lateral",
+    "expandSidebar": "Expandir barra lateral",
+    "home": "Início",
+    "adminConsole": "Admin",
+    "quickUse": "Uso rápido",
+    "support": "Suporte",
+    "apiDocs": "Documentação da API",
+    "integrationHelp": "Guia de integração",
+    "aiRecommend": "Destaques da IA",
+    "market": "Mercado",
+    "usageTitle": "Uso rápido"
+  },
+  "channels": {
+    "app": "Mercado de apps",
+    "api": "Mercado de APIs",
+    "models": "Catálogo de modelos",
+    "client": "Cliente"
+  },
+  "market": {
+    "new": "Novo",
+    "hot": "Popular",
+    "forYou": "Para você",
+    "grid": "Grade",
+    "list": "Lista",
+    "apiShelf": "Prateleira de APIs",
+    "toolShelf": "Prateleira de ferramentas",
+    "categories": "Categorias",
+    "apps": "Apps",
+    "newRelease": "Novo lançamento",
+    "forgeTitle": "Espaço de trabalho de ferramentas Forge",
+    "forgeBlurb": "Transformações de texto, codecs, formulários e ferramentas composáveis. O laboratório do mercado de aplicativos aponta para o Forge.",
+    "openForge": "Abrir Forge →",
+    "allApi": "Todas as APIs →",
+    "all": "Tudo →",
+    "viewAll": "Ver tudo {label} →",
+    "gridView": "Exibição em grade",
+    "listView": "Exibição em lista",
+    "hiTitle": "Plataforma de recursos de IA empresarial",
+    "hiSubtitle": "Atenda a cada necessidade com a IA certa",
+    "sellable": "Disponível para venda",
+    "walletTopup": "Recarregar"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "Modelos de linguagem",
+      "hint": "Chat · raciocínio"
+    },
+    "image-gen": {
+      "label": "Geração de imagens",
+      "hint": "Texto para imagem"
+    },
+    "image-edit": {
+      "label": "Edição de imagens",
+      "hint": "Editar · recorte"
+    },
+    "video": {
+      "label": "Geração de vídeo",
+      "hint": "Texto para vídeo"
+    },
+    "audio": {
+      "label": "Áudio e vídeo",
+      "hint": "Fala · transcrição"
+    },
+    "data": {
+      "label": "Informação",
+      "hint": "Recuperação · extração"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "Com conhecimento aumentado"
+    },
+    "tools": {
+      "label": "APIs de ferramentas",
+      "hint": "Agente · ferramentas"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "Robôs",
+      "chips": "Bots de chat · bots de desenho · conhecimento"
+    },
+    "productivity": {
+      "label": "Produtividade",
+      "chips": "Arena de modelos · escrita com IA"
+    },
+    "academic": {
+      "label": "Acadêmico",
+      "chips": "Kit de PDF · Busca de patentes com IA"
+    },
+    "image": {
+      "label": "Ferramentas de imagem",
+      "chips": "Estúdio 3D · Canvas"
+    },
+    "audio": {
+      "label": "Áudio",
+      "chips": "Fala · Música com IA"
+    },
+    "code": {
+      "label": "Código",
+      "chips": "Gerador web · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "Visão geral",
+    "keys": "Chaves",
+    "wallet": "Carteira",
+    "use": "Experimentar",
+    "docs": "Documentação",
+    "models": "Mais"
+  }
+}

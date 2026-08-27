@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — Online verktøy",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "Kodek, tekst, hashing, dokumenter og bildedverktøy online."
+  },
+  "nav": {
+    "main": "Hovednavigasjon",
+    "homeAria": "{brandName} Forge hjem",
+    "tools": "Verktøy",
+    "wallet": "Lommebok",
+    "api": "API",
+    "routerAria": "{brandName} Router",
+    "categoriesAria": "Verktøykategorier",
+    "languageAria": "Bytt språk"
+  },
+  "tool": {
+    "breadcrumbAria": "Sti",
+    "workspace": "Arbeidsområde",
+    "workspaceHint": "Lokal eller server · samme sti som API",
+    "api": "API",
+    "apiHint": "Samme kontrakt som siden. Bruk en autentisert nøkkel i produksjon.",
+    "related": "Relaterte verktøy"
+  },
+  "auth": {
+    "signIn": "Logg inn",
+    "signUp": "Registrer deg",
+    "signOut": "Logg ut"
+  },
+  "footer": {
+    "navAria": "Bunnfelt",
+    "blurb": "Verktøy-stasjon for nett. Fullfør oppgaver i nettleseren, eller automatiser via API / MCP.",
+    "product": "Produkt",
+    "developers": "Utviklere",
+    "company": "Selskap",
+    "docs": "Integrasjonsdokumentasjon",
+    "website": "Nettsted",
+    "privacy": "Personvern"
+  },
+  "home": {
+    "eyebrow": "Se det. Kall det.",
+    "title": "Sveitsisk kniv for nettverktøy",
+    "subtitle": "Codec, tekst, hashing, dokumenter og bildebehandling. Fullfør i nettleseren, eller automatiser via API / MCP — én implementering.",
+    "toolCount": "{count} verktøy",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "Søk: ordtelling, base64, json, tidsstempel…",
+    "aria": "Søk etter verktøy",
+    "emptyTitle": "Ingen verktøy matcher “{query}”",
+    "emptyHint": "Prøv et annet søkeord, eller velg et verktøy fra kategoriene nedenfor."
+  },
+  "categories": {
+    "codec": {
+      "label": "Codec",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "Kina-validering",
+      "hint": "ID · telefon"
+    },
+    "data": {
+      "label": "Data",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "Utvikler",
+      "hint": "Regex · SQL · farge · UUID"
+    },
+    "doc": {
+      "label": "Dokumenter",
+      "hint": "Markdown · PDF-sammenføying/oppspalting"
+    },
+    "finance": {
+      "label": "Finans",
+      "hint": "Beløp til ord"
+    },
+    "hash": {
+      "label": "Hash og sikkerhet",
+      "hint": "MD5 · SHA · HMAC · passord"
+    },
+    "image": {
+      "label": "Bilder",
+      "hint": "Komprimer · QR · konverter"
+    },
+    "life": {
+      "label": "Livskalkulatorer",
+      "hint": "Boliglån · BMI · slektskap"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "Tokens · kostnad · skjema"
+    },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
+    "security": {
+      "label": "Sikkerhet",
+      "hint": "Passordgenerator"
+    },
+    "text": {
+      "label": "Tekst",
+      "hint": "Ordantall · CJK · pinyin · Diff"
+    },
+    "time": {
+      "label": "Tid",
+      "hint": "Tidspunkt · tidssone · Cron · kinesisk kalender"
+    },
+    "unit": {
+      "label": "Enheter",
+      "hint": "Lengde · vekt · temperatur · data"
+    },
+    "template": {
+      "label": "Maler",
+      "hint": ".gitignore · LICENSE · Dockerfile · README"
+    }
+  },
+  "runners": {
+    "common": {
+      "run": "Kjør",
+      "running": "Kjører…",
+      "copy": "Kopier",
+      "copied": "Kopiert",
+      "sameAsApi": "Samme sti som API · OSS-motor",
+      "mustBeNumber": "{label} må være et tall",
+      "base64Loaded": "Base64-payload lastet",
+      "workspaceMissing": "Arbeidsområde ikke konfigurert: {slug}",
+      "yes": "Ja",
+      "no": "Nei",
+      "text": "Tekst",
+      "input": "Inndata",
+      "output": "Uttak",
+      "outputPlaceholder": "Resultat vises her",
+      "localRun": "Kjør lokalt",
+      "serverRun": "Kjør på server",
+      "serverVerify": "Serververifisering",
+      "outputPreview": "Forhåndsvisning av utdata",
+      "mode": "Modus",
+      "encode": "Koder",
+      "decode": "Dekoder",
+      "file": "Fil",
+      "clear": "Tøm",
+      "length": "Lengde: {n}",
+      "bytes": "{bytes} bytes",
+      "download": "Last ned",
+      "format": "Format",
+      "formatting": "Formatering…",
+      "dialect": "Dialekt",
+      "color": "Farge",
+      "pickColor": "Velg farge",
+      "content": "Innhold",
+      "algorithm": "Algoritme",
+      "encoding": "Koding",
+      "message": "Melding",
+      "secret": "Hemmelighet",
+      "password": "Passord",
+      "direction": "Retning",
+      "preview": "Forhåndsvisning",
+      "query": "Spørring",
+      "querying": "Spør…",
+      "validate": "Valider",
+      "validating": "Validerer…",
+      "processing": "Behandler…",
+      "pretty": "Prettig",
+      "minify": "Minifiser",
+      "from": "Fra",
+      "to": "Til",
+      "timezone": "Tidssone",
+      "datetime": "Dato & tid",
+      "compute": "Beregn",
+      "computing": "Beregner…",
+      "convertAction": "Konverter",
+      "count": "Antall",
+      "value": "Verdi",
+      "unit": "Enhet",
+      "generateLocal": "Generer lokalt",
+      "generateServer": "Generer på server",
+      "copyAll": "Kopier alle",
+      "emptyResult": "Resultater vises her",
+      "copyText": "Kopier tekst",
+      "quality": "Kvalitet",
+      "original": "Original",
+      "result": "Resultat",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
+    },
+    "base64": {
+      "encodeDir": "Tekst → Base64",
+      "decodeDir": "Base64 → Tekst",
+      "localNote": "Lokal Web API (TextEncoder / atob)",
+      "serverNote": "Server Buffer · samme sti som API"
+    },
+    "password": {
+      "uppercase": "Store bokstaver",
+      "lowercase": "Små bokstaver",
+      "digits": "Sifre",
+      "symbols": "Symboler",
+      "generate": "Generer passord",
+      "recent": "Siste",
+      "note": "Motor: node:crypto randomInt · kryptografisk sikker · samme sti som API"
+    },
+    "hash": {
+      "algo": "Algoritme: {algo}",
+      "md5Warn": " · kun sjekksum/kompat – ikke lagre passord",
+      "md5LocalError": "MD5 krever serverkjøring (Web Crypto har ikke MD5)",
+      "md5ServerHint": "MD5: bruk serverkjøring (kun kompat, ikke til passordlagring)",
+      "localNote": "Lokal Web Crypto · {algo}",
+      "serverNote": "Server node:crypto · samme sti som API"
+    },
+    "convert": {
+      "converting": "Konverterer…",
+      "convert": "Konverter",
+      "done": "Ferdig · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "Slipp en fil her, eller klikk for å bla",
+      "needFile": "Velg en fil først",
+      "needAlgo": "Velg minst én algoritme",
+      "compute": "Beregn sjekksummer",
+      "computing": "Beregner…",
+      "algorithms": "Algoritmer",
+      "note": "node:crypto · flere algoritmer · samme sti som API"
+    },
+    "lorem": {
+      "paragraphs": "Avsnitt",
+      "wordsPerParagraph": "Ord per avsnitt",
+      "startWithLorem": "Start med «Lorem ipsum»",
+      "note": "Lorem Ipsum-generator · ren"
+    },
+    "emailValidate": {
+      "note": "E-postvaliderer · kun format (ingen MX-søk)"
+    },
+    "creditCardLuhn": {
+      "number": "Kortnummer",
+      "note": "Luhn-sjekker · offline, aldri lagret",
+      "digits": "digits",
+      "specimenLabel": "Specimen",
+      "structureOnly": "Luhn structure only",
+      "unknownBrand": "Card"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "JSON-minifiserer · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "CSS-minifisering · lettvekt (kanttrygg)"
+    },
+    "hashCompare": {
+      "a": "Hash A",
+      "b": "Hash B",
+      "ignoreCase": "Ignorer store/små bokstaver",
+      "note": "Hash-sammenligner · konstant tid for lik lengde"
+    },
+    "jsonDiff": {
+      "left": "JSON A",
+      "right": "JSON B",
+      "note": "JSON-diff · sti-nivå-operasjoner · fargede rader etter type · side ved side",
+      "equal": "Identisk",
+      "differs": "{count} endring(er)",
+      "colPath": "Sti",
+      "colKind": "Type",
+      "colLeft": "Venstre",
+      "colRight": "Høyre",
+      "filtersAria": "Filtrer etter endringstype",
+      "filterAll": "Alle ({count})",
+      "filterAdd": "Legg til ({count})",
+      "filterRemove": "Fjern ({count})",
+      "filterChange": "Endring ({count})",
+      "filterType": "Type ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "Modus",
+      "pretty": "Prettig",
+      "compact": "Kompakt",
+      "indent": "Innrykk",
+      "note": "YAML-formater · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "TOML-formater · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "XML-minifiserer · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "URL-validerer · WHATWG URL (ingen nettverkshenting)"
+    },
+    "ipValidate": {
+      "note": "IP-validerer · IPv4/IPv6 offline"
+    },
+    "uuidValidate": {
+      "note": "UUID-validerer · RFC 4122-format"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "HTML-minifiserer · lettvekt (kanttrygg)"
+    },
+    "randomString": {
+      "length": "Lengde",
+      "count": "Antall",
+      "charset": "Tegnsett",
+      "alphanumeric": "Alfanumerisk",
+      "symbols": "Alfanumerisk + symboler",
+      "hex": "Hex",
+      "base64url": "Base64URL",
+      "note": "Tilfeldig streng · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "Lesetid · CJK + Latin heuristikk"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "Maks overskriftsnivå",
+      "note": "Markdown TOC · ATX-overskrifter"
+    },
+    "pdfInfo": {
+      "file": "PDF-fil",
+      "note": "PDF-info · pdf-lib (sider + metadata)"
+    },
+    "rot13": {
+      "shift": "Forskyvning (13 = ROT13)",
+      "note": "ROT13 / Caesar · ren"
+    },
+    "morse": {
+      "note": "Morsekode · ITU · ren"
+    },
+    "textBinary": {
+      "toBinary": "Tekst → binær",
+      "fromBinary": "Binær → tekst",
+      "note": "Tekst ↔ binær · UTF-8-biter"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "Sjekksumkoding",
+      "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "Én gang digest · kopier hver · node:crypto"
+    },
+    "cssFormat": {
+      "note": "CSS-formatør · lettvekts"
+    },
+    "htmlFormat": {
+      "note": "HTML-formatør · lettvekts"
+    },
+    "stringSimilarity": {
+      "a": "Streng A",
+      "b": "Streng B",
+      "note": "Strenglignhet · Levenshtein"
+    },
+    "roman": {
+      "toRoman": "Tall → Romersk",
+      "fromRoman": "Romersk → Tall",
+      "note": "Romerske tall · 1–3999"
+    },
+    "age": {
+      "birthDate": "Fødselsdato (ÅÅÅÅ-MM-DD)",
+      "asOf": "Per (valgfritt)",
+      "note": "Aldersberegner · nøyaktig Å/M/D"
+    },
+    "tip": {
+      "bill": "Regning",
+      "percent": "Drikkepenger %",
+      "people": "Personer",
+      "note": "Tipskalkulator · vennlig oppdeling"
+    },
+    "aspect": {
+      "width": "Bredde",
+      "height": "Høyde",
+      "note": "Bildeformat · GCD forenkling"
+    },
+    "mime": {
+      "note": "MIME-oppslag · vanlige webtyper"
+    },
+    "ua": {
+      "note": "User-Agent-parser · heuristisk (frakoblet)"
+    },
+    "imageMeta": {
+      "file": "Bildefil",
+      "note": "Bildeforventninger · sharp (EXIF-bufferstørrelse)"
+    },
+    "wordFreq": {
+      "top": "Topp N",
+      "note": "Ordfrekvens · CJK + Latin"
+    },
+    "jsonXml": {
+      "note": "JSON ↔ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "SQL-minifisering · kommentarer + mellomrom"
+    },
+    "lineNum": {
+      "start": "Startnummer",
+      "note": "Legg til linjenumre · ren"
+    },
+    "uniqueWords": {
+      "note": "Unike ord · rekkefølge etter førstese"
+    },
+    "epoch": {
+      "value": "Verdi",
+      "msToIso": "ms → ISO",
+      "isoToMs": "ISO → ms",
+      "note": "Epoch-milliseconder · dato"
+    },
+    "passwordEntropy": {
+      "password": "Passord",
+      "note": "Passordentropi · tegnsett-heuristikk"
+    },
+    "contrast": {
+      "fg": "Forgrunn (#hex)",
+      "bg": "Bakgrunn (#hex)",
+      "note": "Fargekontrast · WCAG 2.x",
+      "sampleHeadline": "Sample text",
+      "pass": "pass",
+      "fail": "fail",
+      "aaNormal": "AA normal",
+      "aaLarge": "AA large",
+      "aaaNormal": "AAA normal",
+      "aaaLarge": "AAA large"
+    },
+    "exif": {
+      "file": "Bildefil",
+      "note": "EXIF-viser · exifr + JPEG-fallback"
+    },
+    "regex": {
+      "pattern": "Mønster",
+      "flags": "Flagg",
+      "replacement": "Erstatning",
+      "match": "Sammenfall",
+      "replace": "Erstatt",
+      "test": "Test",
+      "local": "Kjør lokalt",
+      "server": "Serververifisering",
+      "count": "{count} treff",
+      "sotaNote": "Øyeblikkelig lokal markering · server timeout-budsjett · samme sti som API"
+    },
+    "jwt": {
+      "decode": "Dekoder JWT",
+      "sample": "Last inn eksempel",
+      "tokenPlaceholder": "Lim inn JWT",
+      "decodeNote": "{engine} · kun dekoding, signatur ikke verifisert",
+      "footerNote": "Motor: jose · ingen signaturverifisering. Verifiser i produksjon med nøkler via jwtVerify på serveren.",
+      "generateHint": "Trenger du å signere token?",
+      "secret": "Hemmelighet",
+      "exp": "Utløper (sekunder)",
+      "payload": "Payload JSON",
+      "note": "JWT-generering · HS256 (kun utvikling/test)",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "(empty signature segment)"
+    },
+    "rand": {
+      "min": "Min",
+      "max": "Maks",
+      "count": "Antall",
+      "note": "Tilfeldig tall · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "Sider",
+      "count": "Antall terninger",
+      "note": "Terningkaster · crypto RNG"
+    },
+    "hexRgb": {
+      "note": "HEX ↔ RGB · ren"
+    },
+    "base64url": {
+      "note": "Base64URL · JWT-stil"
+    },
+    "hmac": {
+      "message": "Melding",
+      "secret": "Hemmelighet",
+      "signature": "Signatur",
+      "note": "HMAC-verifisering · SHA-256"
+    },
+    "secret": {
+      "bytes": "Bytes",
+      "count": "Antall",
+      "note": "Hemmelig nøkkel-generator · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "PDF-fil",
+      "note": "PDF Light Optimize · pdf-lib-omskrivning (ikke bildekomprimering)",
+      "needFile": "Velg en PDF-fil først"
+    },
+    "pdfCompress": {
+      "file": "PDF-fil",
+      "quality": "Kvalitet",
+      "engine": "Motor",
+      "qStructural": "Strukturell (qpdf, tapfri strømmer)",
+      "qScreen": "Skjerm (minst, Ghostscript)",
+      "qEbook": "E-bok (balansert, Ghostscript)",
+      "qPrinter": "Skriver (høyere kvalitet, Ghostscript)",
+      "eAuto": "Auto (qpdf → Ghostscript → pdf-lib)",
+      "download": "Last ned PDF",
+      "needFile": "Velg en PDF-fil først",
+      "in": "Inndata",
+      "out": "Utdata",
+      "saved": "Lagret",
+      "note": "PDF-komprimering · qpdf / Ghostscript på vert · pdf-lib fallback",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+    },
+    "jsonFormat": {
+      "indent": "Innrykk",
+      "format": "Formatér",
+      "minify": "Minifiser",
+      "serverVerify": "Serververifisering",
+      "clear": "Tøm",
+      "sample": "Eksempel",
+      "placeholder": "Lim inn JSON…",
+      "formatted": "Formatert",
+      "minified": "Minifisert",
+      "serverOk": "Server {mode} · {engine}",
+      "valid": "Gyldig JSON",
+      "invalid": "Ugyldig JSON",
+      "line": "linje",
+      "column": "kolonne",
+      "note": "Motor: JSON.parse/stringify · øyeblikkelig lokalt · samme sti som API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
+    },
+    "qr": {
+      "size": "Størrelse",
+      "ecl": "Feilkorreksjon",
+      "generate": "Generer",
+      "download": "Last ned PNG",
+      "needText": "Skriv inn tekst eller URL",
+      "note": "QR · qrcode · live forhåndsvisning · samme sti som API"
+    },
+    "pdfText": {
+      "file": "PDF-fil",
+      "layout": "Layout",
+      "needFile": "Velg en PDF først",
+      "note": "PDF-tekst · pdftotext (poppler) på vert"
+    },
+    "svg": {
+      "optimize": "Optimaliser",
+      "note": "SVG-optimalisering · lettvekts ren minifisering"
+    },
+    "routerTranslate": {
+      "lab": "Lab-skall: oversetter ikke her. Åpner Router med en ledetekst — modellmåler kun på Router.",
+      "source": "Kildespråk",
+      "target": "Målspråk",
+      "open": "Åpne Router-lenke",
+      "deepLink": "Åpne i Router",
+      "note": "ekstern · ingen stille Forge LLM-hovedbok"
+    },
+    "imageCrop": {
+      "needFile": "Velg et bilde først",
+      "crop": "Beskjær",
+      "note": "Bildebeskjæring · dra område · skarp uttrekk",
+      "drop": "Slipp bilde eller klikk for å bla",
+      "dragHint": "Dra på bildet for å velge et beskjæringsområde",
+      "left": "Venstre",
+      "top": "Topp",
+      "width": "Bredde",
+      "height": "Høyde",
+      "natural": "Naturlig {w}×{h}",
+      "source": "Kilde",
+      "result": "Beskjært"
+    },
+    "markdown": {
+      "preview": "Forhåndsvisning",
+      "html": "HTML",
+      "emptyPreview": "Kjør for å se forhåndsvisning",
+      "emptyHtml": "Rendret HTML",
+      "rendering": "Rendrer…",
+      "toHtml": "Til HTML",
+      "copyHtml": "Kopier HTML",
+      "note": "marked · sandkasse iframe-forhåndsvisning · samme sti som API"
+    },
+    "pdfMerge": {
+      "files": "PDF-filer (≥2, rekkefølge = sammenslåingsrekkefølge)",
+      "needFiles": "Velg minst 2 PDF-er",
+      "merging": "Sammer…",
+      "mergeDownload": "Samle og last ned",
+      "done": "Samlet · {pages} sider · {bytes} bytes",
+      "note": "pdf-lib · samme sti som API",
+      "merge": "Samle og last ned"
+    },
+    "pdfSplit": {
+      "file": "PDF-fil",
+      "needFile": "Velg en PDF",
+      "fromPage": "Fra side (1-basert)",
+      "toPage": "Til side (tom = siste)",
+      "toPlaceholder": "Siste side",
+      "splitting": "Del opp…",
+      "splitDownload": "Del og last ned",
+      "done": "Delte · kilde {source} sider → utdata {pages} sider",
+      "note": "pdf-lib · samme sti som API",
+      "split": "Del og last ned"
+    },
+    "passwordStrength": {
+      "check": "Sjekk styrke",
+      "checking": "Sjekker…",
+      "crack": "Estimat for offline slow-hash: {time}",
+      "score0": "Svært svak",
+      "score1": "Svak",
+      "score2": "God",
+      "score3": "Stark",
+      "score4": "Svært sterk",
+      "note": "zxcvbn-ts · samme sti som API · passord lagres aldri"
+    },
+    "hmacSign": {
+      "compute": "Beregn HMAC",
+      "computing": "Beregner…",
+      "note": "node:crypto · samme sti som API"
+    },
+    "costEstimate": {
+      "text": "Inndata tekst (for estimat av inndata-tokens)",
+      "model": "Modell",
+      "outputTokens": "Uttakstokens (est.)",
+      "estimate": "Estimer kostnad",
+      "estimating": "Estimerer…",
+      "note": "@nebutra/ai-providers/frontier-kort + js-tiktoken · estimat basert på listepris, ikke en faktura"
+    },
+    "jsonSchema": {
+      "data": "JSON-data",
+      "schema": "JSON Schema",
+      "validate": "Valider",
+      "validating": "Validerer…",
+      "pass": "Bestått",
+      "fail": "Mislyktes",
+      "note": "Ajv · samme sti som API"
+    },
+    "zhCnTw": {
+      "s2t": "Forenklet → Tradisjonell",
+      "t2s": "Tradisjonell → Forenklet",
+      "s2tw": "Forenklet → Taiwan",
+      "tw2s": "Taiwan → Forenklet",
+      "s2hk": "Forenklet → Hong Kong",
+      "hk2s": "Hong Kong → Forenklet",
+      "note": "OpenCC (opencc-js) · samme sti som API"
+    },
+    "pinyin": {
+      "tones": "Tone-stil",
+      "symbol": "Symbol nǐ",
+      "num": "Tall ni3",
+      "none": "Ingen ni",
+      "hanzi": "Kinesiske tegn",
+      "convert": "Til pinyin",
+      "converting": "Konverterer…",
+      "note": "pinyin-pro · samme sti som API"
+    },
+    "sqlFormat": {
+      "dialect": "Dialekt",
+      "format": "Formatér",
+      "formatting": "Formaterer…",
+      "note": "sql-formatter · samme sti som API"
+    },
+    "colorConvert": {
+      "color": "Farge",
+      "pick": "Velg farge",
+      "convert": "Konverter",
+      "converting": "Konverterer…",
+      "note": "culori · hex / rgb / hsl / oklch · samme sti som API"
+    },
+    "qrGen": {
+      "content": "Innhold",
+      "format": "Format",
+      "pngPreview": "PNG (forhåndsvisning)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "Generer QR",
+      "generating": "Genererer…",
+      "note": "qrcode · samme sti som API"
+    },
+    "qrDecode": {
+      "upload": "Last opp et bilde med en QR-kode",
+      "parsing": "Decoderer…",
+      "note": "jsQR + sharp · samme sti som API"
+    },
+    "cron": {
+      "expression": "Cron-uttrykk",
+      "timezone": "Tidssone",
+      "parse": "Neste kjøring",
+      "parsing": "Parser…",
+      "nextTitle": "Neste kjøring (ISO)",
+      "note": "cron-parser · samme sti som API"
+    },
+    "timezone": {
+      "datetime": "Dato og klokkeslett",
+      "from": "Fra",
+      "to": "Til",
+      "convert": "Konverter tidssone",
+      "converting": "Konverterer…",
+      "placeholder": "2026-07-24 12:00:00 eller ISO / unix",
+      "note": "dayjs timezone · samme sti som API"
+    },
+    "csvPreview": {
+      "preview": "Forhåndsvis tabell",
+      "parsing": "Parser…",
+      "rows": "Forhåndsvis {shown} / {total} rader",
+      "note": "papaparse · samme sti som API"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "Spørring",
+      "querying": "Spør…",
+      "note": "jsonpath-plus · samme sti som API"
+    },
+    "xmlFormat": {
+      "pretty": "Prettig",
+      "minify": "Komprimer",
+      "validate": "Valider",
+      "validOk": "Gyldig",
+      "done": "Ferdig · {engine}",
+      "processing": "Behandler…",
+      "note": "fast-xml-parser · samme sti som API"
+    },
+    "regexLegacy": {
+      "pattern": "Mønster",
+      "flags": "Flagg",
+      "mode": "Modus",
+      "match": "Sammenfall",
+      "replace": "Erstatt",
+      "test": "Test",
+      "replacement": "Erstatning",
+      "note": "Lokal umiddelbart · server timeout-budsjett · samme sti som API"
+    },
+    "docxText": {
+      "file": "DOCX-fil",
+      "needFile": "Velg en .docx-fil først",
+      "extract": "Hent tekst",
+      "extracting": "Henter…",
+      "note": "DOCX → tekst · ren ZIP + document.xml (ingen Office-suite)"
+    },
+    "uuid": {
+      "count": "Antall",
+      "local": "Generer lokalt",
+      "server": "Generer på server",
+      "copyAll": "Kopier alle",
+      "empty": "UUID-er vises her"
+    },
+    "timestamp": {
+      "nowSec": "Unix-sekunder",
+      "nowMs": "Unix ms / ISO",
+      "serverNow": "Server nå",
+      "toDate": "Tidspunkt → dato",
+      "toUnix": "Dato → tidspunkt",
+      "seconds": "Sekunder",
+      "milliseconds": "Millisekunder",
+      "value": "Verdi",
+      "convert": "Konverter",
+      "note": "Samme sti som API"
+    },
+    "wordCount": {
+      "words": "Ord",
+      "chars": "Tegn",
+      "noSpaces": "Uten mellomrom",
+      "cjk": "CJK",
+      "lines": "Linjer",
+      "paragraphs": "Avsnitt",
+      "placeholder": "Lim inn eller skriv tekst…",
+      "copyText": "Kopier tekst",
+      "clear": "Tøm",
+      "verifying": "Verifiserer…",
+      "serverNote": "Serverord={words} · samme sti som API",
+      "note": "Live-motor: {engine} · ingen opplasting nødvendig · samme sti som API"
+    },
+    "bmi": {
+      "height": "Høyde (cm)",
+      "weight": "Vekt (kg)",
+      "compute": "Beregn BMI",
+      "computing": "Beregner…",
+      "invalid": "Skriv inn gyldig høyde (cm) og vekt (kg)",
+      "underweight": "Undervekt",
+      "normal": "Normal",
+      "overweight": "Overvekt",
+      "obese": "Overvektig",
+      "note": "WHO BMI · samme sti som API · ikke medisinsk råd"
+    },
+    "percentage": {
+      "mode": "Modus",
+      "percentOf": "a% av b",
+      "isWhat": "a er hva % av b",
+      "percentA": "Prosent a",
+      "valueA": "Verdi a",
+      "baseB": "Grunnlag b",
+      "compute": "Beregn",
+      "computing": "Beregner…",
+      "invalid": "Skriv inn gyldige tall",
+      "note": "Samme sti som API"
+    },
+    "dataSize": {
+      "value": "Verdi",
+      "convert": "Konverter",
+      "converting": "Konverterer…",
+      "invalid": "Skriv inn et gyldig tall",
+      "binary": "{value} {from} → base-1024",
+      "note": "Binære enheter (1 KB = 1024 B) · samme sti som API"
+    },
+    "rmb": {
+      "amount": "Beløp (CNY)",
+      "convert": "Til store bokstaver",
+      "converting": "Konverterer…",
+      "invalid": "Angi et ikke-negativt beløp",
+      "note": "Kinesisk fakturabeløp med store bokstaver · samme bane som API"
+    },
+    "dateDiff": {
+      "from": "Startdato",
+      "to": "Sluttdato",
+      "compute": "Dagers forskjell",
+      "computing": "Beregner…",
+      "days": "dager",
+      "note": "ECMAScript Date · samme sti som API"
+    },
+    "xlsxText": {
+      "file": "XLSX-fil",
+      "needFile": "Velg en .xlsx-fil først",
+      "extract": "Trekk ut ark",
+      "extracting": "Trekker ut…",
+      "note": "XLSX → CSV · ren ZIP + sheet1.xml (første ark)"
+    },
+    "mdToPdf": {
+      "drop": "Slipp en .md-fil her, eller lim inn Markdown nedenfor",
+      "title": "Tittel",
+      "engine": "Motor",
+      "ePlaywright": "playwright (Chromium-utskrift)",
+      "eSimple": "enkelt (uten nettleser)",
+      "generate": "Generer PDF",
+      "generating": "Genererer…",
+      "download": "Last ned PDF",
+      "note": "marked → HTML → Playwright Chromium-utskrift. Hvis Chromium mangler, faller det automatisk tilbake til enkel strukturert PDF — sjekk renderEngine; enkel er ikke utskriftskvalitet.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
+    },
+    "tokenCount": {
+      "count": "Tell tokens",
+      "counting": "Teller…",
+      "chars": "Tegn {n}",
+      "note": "Motor: js-tiktoken · nøyaktig telling på serveren · kan mate Router-kostnadsestimat"
+    },
+    "codec": {
+      "encodeDir": "Tekst → kodet",
+      "decodeDir": "Kodet → tekst",
+      "localNote": "Lokal kjøring",
+      "serverNote": "Server · samme sti som API",
+      "hexInvalid": "Ikke en gyldig hex-streng",
+      "hexDecodeFail": "Serveren kunne ikke dekode som UTF-8 (krever gyldig hex)",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · samme sti som API",
+      "noteHtml": "HTML-entitetskart · samme sti som API",
+      "noteHex": "UTF-8 ↔ hex · samme sti som API"
+    },
+    "textDiff": {
+      "left": "Venstre",
+      "right": "Høyre",
+      "compare": "Sammenlign",
+      "comparing": "Sammenligner…"
+    },
+    "imageTool": {
+      "drop": "Slipp et bilde her, eller klikk for å bla gjennom",
+      "selected": "Valgt: {name} ({kb} KB)",
+      "needFile": "Velg et bilde først",
+      "format": "Utdataformat",
+      "quality": "Kvalitet {n}",
+      "maxW": "Maks bredde",
+      "maxH": "Maks høyde",
+      "optional": "Valgfritt",
+      "resizeEg": "f.eks. 1280",
+      "processing": "Behandler…",
+      "compress": "Komprimer",
+      "resize": "Endre størrelse",
+      "convert": "Konverter format",
+      "download": "Last ned resultat",
+      "outMeta": "Output {kb} KB{dims}{ratio} · {type}",
+      "ratio": " · ~{pct}% av original",
+      "dims": " · {w}×{h}",
+      "original": "Original",
+      "result": "Result",
+      "note": "Motor: sharp (libvips) · server-side · samme sti som API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+    },
+    "pptxText": {
+      "file": "PPTX-fil",
+      "needFile": "Velg en .pptx-fil først",
+      "extract": "Hent ut oversikt",
+      "extracting": "Henter ut…",
+      "note": "PPTX-oversikt · ren ZIP + slide XML (ingen PowerPoint)"
+    },
+    "shell": {
+      "copyJson": "Kopier JSON",
+      "sample": "Eksempel",
+      "chars": "{n} tegn",
+      "largeInput": "Stor inndata — resultatet oppdateres et øyeblikk etter at du slutter å skrive.",
+      "manualInput": "Inndata er stor nok til at live-oppdatering ville stoppet opp siden. Trykk Kjør.",
+      "options": "Alternativer",
+      "regenerateNote": "Utdata oppdateres allerede når du endrer alternativene.",
+      "fileTab": "Fil",
+      "pasteTab": "Lim inn",
+      "browse": "Velg fil",
+      "selectedFile": "{name} · {kb} KB",
+      "truncated": "Les de første {kb} KB — nok til å svare, og resten forlater aldri maskinen din.",
+      "detail": "Detaljer",
+      "dropIntoPane": "Slipp en fil her",
+      "swap": "Bytt side",
+      "prevChange": "Forrige",
+      "nextChange": "Neste",
+      "changePosition": "{index} av {total}",
+      "result": "Resultat"
+    },
+    "readmeSkeleton": {
+      "emptyHint": "Merk av minst én seksjon for å bygge en README.",
+      "note": "Kjører samme motor som API-en. Seksjoner du ikke merker av vises aldri — ingen tomme overskrifter.",
+      "orderNote": "Seksjoner vises alltid i denne faste rekkefølgen, så samme input gir samme fil.",
+      "group": {
+        "core": "Kjerne",
+        "docs": "Dokumentasjon",
+        "community": "Samfunn",
+        "meta": "Meta"
+      },
+      "section": {
+        "title": "Tittel og beskrivelse",
+        "badges": "Badges",
+        "callout": "Merknad",
+        "toc": "Innholdsfortegnelse",
+        "installation": "Installasjon",
+        "usage": "Bruk",
+        "features": "Funksjoner",
+        "api-reference": "API-referanse",
+        "screenshots": "Skjermbilder",
+        "roadmap": "Veikart",
+        "contributing": "Bidra",
+        "support": "Støtte",
+        "acknowledgements": "Takk",
+        "license": "Lisens",
+        "authors": "Forfattere",
+        "tech-stack": "Teknologistakk"
+      },
+      "projectName": "Prosjektnavn",
+      "projectNamePlaceholder": "Prosjektnavn",
+      "description": "Beskrivelse",
+      "descriptionPlaceholder": "En setning om hva det gjør",
+      "badgeLicense": "Lisensmerke",
+      "badgeNpm": "npm version",
+      "badgeBuild": "Byggestatus",
+      "npmPackage": "npm package",
+      "npmPackagePlaceholder": "@scope/pakke",
+      "repo": "GitHub-repo",
+      "repoPlaceholder": "eier/repo",
+      "calloutKind": "Callout-type",
+      "calloutBody": "Tekst i uthevet boks",
+      "calloutBodyPlaceholder": "Pre-1.0 — API-en endrer seg fortsatt",
+      "fenceLanguage": "Språk",
+      "installCommand": "Installasjonskommando",
+      "installCommandPlaceholder": "npm install your-project",
+      "usageExample": "Brukseksempel",
+      "usageExamplePlaceholder": "Det minste eksempelet som viser verdien",
+      "features": "Funksjoner",
+      "featuresPlaceholder": "Én funksjon per linje",
+      "contact": "Kontakt",
+      "contactPlaceholder": "support@example.com",
+      "license": "Lisens",
+      "authors": "Forfattere",
+      "authorsPlaceholder": "@håndtak, Jane Roe",
+      "techStack": "Teknologistabel",
+      "techStackPlaceholder": "typescript, postgresql (simple-icons-slugger)",
+      "sectionCount": "{n} seksjoner",
+      "charCount": "{n} tegn",
+      "warningCount": "{n} hoppet over",
+      "omittedTitle": "Hva som ble utelatt, og hvorfor"
+    },
+    "gitignore": {
+      "searchLabel": "Søk i stabler",
+      "searchPlaceholder": "Søk etter språk, rammeverk, OS eller editorer…",
+      "add": "Legg til {stack}",
+      "remove": "Fjern {stack}",
+      "selected": "Valgte stabler",
+      "suggestions": "Matchende stabler",
+      "noMatches": "Ingen stabel samsvarer med «{query}». Trykk Enter for å sende den likevel — aliaser løses på serveren.",
+      "catalogFallback": "Stabellisten er utilgjengelig — skriv inn et stabellnavn og trykk Enter.",
+      "emptyHint": "Velg minst ett språk, rammeverk, OS eller editor ovenfor.",
+      "regenerate": "Generer på nytt",
+      "sections": "{n} seksjoner",
+      "lines": "{n} linjer",
+      "deduped": "{n} duplikatmønstre slått sammen",
+      "notFound": "Finnes ikke i korpuset: {stacks}",
+      "globalScope": "{stacks} er OS-/editoroppføringer — mange utviklere holder disse i en personlig ~/.gitignore_global i stedet for i hvert repo.",
+      "untrackedNote": "En .gitignore påvirker kun uovervåkede filer. For en fil git allerede sporer, kjør git rm -r --cached <path>.",
+      "fileLabel": ".gitignore"
+    },
+    "editorconfig": {
+      "emptyHint": "Angi minst én egenskap for å se filen.",
+      "note": "Samme motor som API-en. Valgene dine beholdes i denne nettleserøkten; ingenting lagres.",
+      "checks": "Sjekker",
+      "presets": "Start fra",
+      "preset": {
+        "spaces2": "2 mellomrom, LF",
+        "spaces4": "4 mellomrom, LF",
+        "tabs": "Tabulatorer, bredde 4",
+        "repo": "Repo-starter (+ Markdown, Makefile)"
+      },
+      "rootLabel": "root = true — stopp redigeringsprogrammer fra å slå sammen overordnede .editorconfig-filer",
+      "glob": "Glob {n}",
+      "addSection": "Legg til en seksjon",
+      "removeSection": "Fjern",
+      "notSet": "(ikke angitt)",
+      "import": "Importer en eksisterende .editorconfig",
+      "importPlaceholder": "Lim inn en .editorconfig her for å laste den inn i skjemaet",
+      "importAction": "Importer",
+      "importing": "Importerer…",
+      "importFailed": "Kunne ikke importere: {message}"
+    },
+    "robotsTxt": {
+      "emptyHint": "Angi alternativene ovenfor — filen vises her",
+      "deployNote": "robots.txt har kun effekt på domeneroten (https://example.com/robots.txt). Hver underdomene trenger sin egen fil.",
+      "outputLabel": "robots.txt",
+      "defaultAccess": "Standardtilgang (User-agent: *)",
+      "defaultAllow": "Tillat alt",
+      "defaultDisallow": "Nekt alt",
+      "defaultAccessNote": "\"Tillat alt\" skriver en tom \"Disallow:\" — det er det som tillater alt.",
+      "crawlDelay": "Crawl-delay (sekunder)",
+      "crawlDelayPlaceholder": "ingen",
+      "crawlDelayNote": "Er ikke en del av RFC 9309. Google ignorerer det; det skrives aldri inn i en Google-gruppe.",
+      "searchAgents": "Søkemotorer",
+      "aiAgents": "AI-roboter",
+      "aiAgentsNote": "Robotere for trening og svarmotorer. Å blokkere dem påvirker ikke søkeindeksering.",
+      "accessDefault": "Standard",
+      "accessAllow": "Tillat",
+      "accessDisallow": "Ikke tillat",
+      "rules": "Stier",
+      "rulesNote": "Stier er skriftsensitiv og relative til roten. Legg til en avsluttende skråstrek for å begrense en regel til en mappe.",
+      "rulePath": "Sti {n}",
+      "rulePathPlaceholder": "/admin/",
+      "ruleType": "Regeltype",
+      "addRule": "Legg til stiregel",
+      "removeRule": "Fjern",
+      "sitemaps": "Sitemaps",
+      "sitemapsNote": "Absolutte http(s)-URL-er. Skrevet som egne linjer, utenfor alle grupper.",
+      "sitemapUrl": "Sitemap {n}",
+      "addSitemap": "Legg til sitemap",
+      "removeSitemap": "Fjern",
+      "groupCount": "{n} grupper",
+      "lineCount": "{n} linjer",
+      "sitemapCount": "{n} sitemaps",
+      "warningsSummary": "Merknader om denne filen ({n})"
+    },
+    "encodingDetect": {
+      "drop": "Slipp en fil for å identifisere kodingen",
+      "privacy": "Kun de første {kb} KB leses, og de sendes til samme offentlige invoke-endepunkt som en agent ville kalt — ingenting skrives til disk.",
+      "pasteLabel": "Eller lim inn tekst",
+      "pastePlaceholder": "Lim inn tekst — inkludert mojibake du vil ha forklart",
+      "detail": "Kandidater, linjeslutt og byte-statistikk",
+      "idle": "Slipp en fil eller lim inn tekst — rapporten fylles ut så snart det er noe å lese.",
+      "readOnly": "Skrivebeskyttet: dette verktøyet identifiserer en koding, det skriver aldri over byte.",
+      "headline": "{encoding} · {confidence}% sikkerhet",
+      "notText": "Dette ser ikke ut som tekst",
+      "bomPresent": "BOM {bytes}",
+      "bomAbsent": "Ingen BOM",
+      "eol": "{kind}-linjeslutt",
+      "eolMixed": "Blandet linjeslutt",
+      "language": "Språk {language} · {confidence} %",
+      "sampled": "Oppdaget fra de første {kb} KB av {totalKb} KB",
+      "candidates": "Rangerte kandidater",
+      "candidatesNote": "Nærmeste alternativer vises med vilje: korte eller symmetriske utvalg er virkelig tvetydige.",
+      "lineEndings": "Linjeslutt",
+      "byteStats": "Byte-statistikk",
+      "totalBytes": "Totalt",
+      "asciiBytes": "ASCII",
+      "highBytes": "Høy (0x80–0xFF)",
+      "nullBytes": "NUL",
+      "mojibake": "Mojibake gjenopprettet"
+    },
+    "dockerfileStarter": {
+      "language": "Språk",
+      "framework": "Rammeverk",
+      "packageManager": "Pakkehåndterer",
+      "baseVariant": "Basisimage",
+      "version": "Runtime-versjon",
+      "workdir": "Arbeidsmappe",
+      "port": "Port",
+      "buildCommand": "Byggekommmando",
+      "startCommand": "Startkommando",
+      "commandPlaceholder": "Tomt = forhåndsdefinert standard",
+      "frameworkNone": "Ingen (ren runtime)",
+      "pmAuto": "Auto",
+      "variantSlim": "slim (glibc)",
+      "variantAlpine": "alpine (musl)",
+      "variantFull": "full",
+      "multiStage": "Flerstegsbygging",
+      "nonRootUser": "Bruker uten root-tilgang",
+      "includeDockerignore": "Legg til .dockerignore",
+      "includeCompose": "Legg til compose.yaml",
+      "includeHealthcheck": "Legg til HEALTHCHECK",
+      "groupWhat": "Hva du bygger",
+      "groupHow": "Hvordet skal kjøre",
+      "emptyHint": "Velg et språk for å se Dockerfile.",
+      "note": "Kun forhåndsinnstillinger — ingenting annet enn alternativene over forlater nettleseren din. Les filen før du publiserer den.",
+      "warnings": "{n} ting å sjekke",
+      "stages": "{n} trinn",
+      "badgeNonRoot": "Ikke-root",
+      "badgeRoot": "Kjører som root",
+      "badgePort": "Port {port}"
+    },
+    "lineEndingDetect": {
+      "dropLabel": "Slipp en tekstfil for å sjekke linjesluttene",
+      "privacy": "Limt tekst og de første 256 KB av en sluppet fil sendes til Forge API for scanning; byteene lagres ikke.",
+      "pasteLabel": "Eller lim inn tekst",
+      "pastePlaceholder": "Lim inn teksten du vil sjekke",
+      "idle": "Lim inn tekst eller slipp en fil for å se dommen om linjesluttene.",
+      "detail": "Teller og sjekker",
+      "note": "Kun deteksjon — dette verktøyet skriver aldri over filen din.",
+      "empty": "Tomt innhold",
+      "noTerminator": "Ingen linjeskift — én avslutningsløs linje",
+      "consistent": "{style} — konsistent",
+      "mixed": "Blandet — {parts}",
+      "sharePart": "{pct}% {style}",
+      "style": {
+        "LF": "LF (Unix/Linux/macOS)",
+        "CRLF": "CRLF (Windows)",
+        "CR": "CR (klassisk Mac OS 9 og tidligere)"
+      },
+      "lines": "{n} linjer",
+      "bytes": "{n} bytes",
+      "trailing": {
+        "present": "Avsluttes med linjeskift",
+        "absent": "Ingen linjeskift i slutten av filen"
+      },
+      "bomUtf8": "UTF-8 BOM",
+      "bomNone": "Ingen BOM",
+      "countRow": "{style}: {n} ({pct}%)",
+      "colStyle": "Stil",
+      "colCount": "Antall",
+      "colShare": "Andel",
+      "minorityLines": "Linjer som avviker fra den dominerende stilen: {lines}",
+      "andMore": "og flere",
+      "findings": "Sjekker",
+      "level": {
+        "info": "Merknad",
+        "warning": "Advarsel",
+        "danger": "Bryter"
+      },
+      "sampled": "Skannet de første {n} av {total} bytes",
+      "encodingLink": "Åpne kodingdetektoren"
+    },
+    "fileTypeDetect": {
+      "drop": "Slipp en fil for å identifisere hva den egentlig er",
+      "privacy": "Kun de første {kb} KB i filhodet leses – resten av filen forlater aldri enheten din.",
+      "hexTab": "Lim inn hex",
+      "detail": "Vis bytes og kandidater",
+      "idle": "Slipp en fil, eller lim inn de ledende bytes som hex.",
+      "note": "Signaturer identifiserer beholderen, ikke kodekken eller innholdet i den.",
+      "unset": "—",
+      "unknownType": "Ingen signatur matchet",
+      "polyglot": "Polyglott",
+      "tierNone": "Utvidelse stemmer overens",
+      "tierBenign": "Ufarlig uoverensstemmelse",
+      "tierMismatch": "Uoverensstemmelse i filtype",
+      "tierHighRisk": "Høy risiko",
+      "confidenceMatch": "Signaturmatch",
+      "confidenceContainer": "Kun beholder",
+      "confidenceAmbiguous": "Ambigu",
+      "confidenceNone": "Ingen match",
+      "signalDetected": "Detektert MIME",
+      "signalReported": "Rapportert MIME",
+      "signalExtension": "Filtypeutvidelse",
+      "drillResolved": "Åpnet {kind}-beholderen: {type}",
+      "drillUnresolved": "{kind}-beholder bekreftet; undertype ikke løst fra de utprøvede byteene",
+      "hexDump": "Hodebytes",
+      "bytesRead": "{n} bytes lest",
+      "headerOnly": "kun hodeprøve",
+      "entropy": "Entropi {bits} bits/byte",
+      "signatureCount": "{n} signaturer i tabellen",
+      "textHints": "Strukturelle hint: {hints}",
+      "candidates": "Alle matchende signaturer",
+      "atOffset": "offset {offset}"
+    },
+    "licenseChooser": {
+      "prompt": "Hva trenger dette prosjektet?",
+      "pickScenario": "Velg linjen som ligner mest på prosjektet ditt — svaret og filen vises her.",
+      "disclaimer": "Deterministisk malutdata, ikke juridisk rådgivning.",
+      "noAnswer": "Ingen enkelt lisens passer for dette tilfellet",
+      "permissions": "Tillater",
+      "conditions": "Krever",
+      "limitations": "Dekker ikke",
+      "alternates": "Andre alternativer for dette tilfellet",
+      "useThis": "Bruk denne",
+      "readCanonical": "Les den offisielle teksten på SPDX",
+      "holder": "Opphavsrettslig eier",
+      "holderPlaceholder": "Ditt navn eller selskapet ditt",
+      "holderHint": "Legg til opphavsrettslig eier, og filen fylles ut mens du skriver.",
+      "year": "År",
+      "manifest": "Hvor SPDX-id-en skal plasseres",
+      "verbatim": "{name} leveres byte-identisk for alle — opphavsrettslinjen plasseres i kildefilens merknad i stedet for LICENSE-filen.",
+      "noLicense": {
+        "summary": "Hva skjer hvis jeg ikke legger til noen lisens i det hele tatt?",
+        "body": "Ingen lisens er ikke det samme som public domain. Uten en lisens gjelder standard opphavsrett, og ingen kan kopiere, endre eller distribuere koden din — et offentlig repository er synlighet, ikke tillatelse."
+      },
+      "artifact": {
+        "header": "Kildefil-hode",
+        "notice": "Kildefil-merknad"
+      },
+      "refine": {
+        "patent": "En patenttillatelse er relevant her (selskapskode, maskinvare, standardarbeid)",
+        "network": "Den vil kjøre som en vertstjeneste, ikke bare som en nedlasting",
+        "library": "Det er en bibliotek som annet programvare linker mot",
+        "later": "Tillat senere versjoner av lisensen (holder Apache-2.0-kode kompatibel)",
+        "none": "Ingenting mer å finjustere for dette tilfellet."
+      },
+      "scenario": {
+        "permissive": {
+          "label": "Alle kan bruke den, fritt",
+          "detail": "Bruk, endre, selge, lever i lukkede produkter — bare behold opphavsrettsmerknaden."
+        },
+        "copyleft": {
+          "label": "Forbedringer må komme tilbake",
+          "detail": "Alle som distribuerer en endret versjon må også publisere kildekoden."
+        },
+        "community": {
+          "label": "Jeg bidrar til et eksisterende prosjekt",
+          "detail": "Lisensen er allerede bestemt – bruk samme som prosjektet du bidrar til."
+        },
+        "non-software": {
+          "label": "Dette er ikke programvare",
+          "detail": "Dokumentasjon, data, design eller medier trenger en Creative Commons-lisens, ikke en OSI-lisens."
+        },
+        "unsure": {
+          "label": "Jeg vet ikke ennå",
+          "detail": "Få standardløsningen med lavt angrerisiko, pluss de to alternativene som er verdt å vite om."
+        }
+      },
+      "family": {
+        "permissive": "Tillatende",
+        "weak-copyleft": "Svak copyleft",
+        "strong-copyleft": "Sterk copyleft",
+        "public-domain": "Offentlig eie",
+        "content": "Innholdslisens"
+      },
+      "flag": {
+        "commercial-use": "Kommersiell bruk",
+        "modifications": "Endringer",
+        "distribution": "Distribusjon",
+        "private-use": "Privat bruk",
+        "patent-use": "Patentlisens",
+        "include-copyright": "Behold opphavsrettsmerknad",
+        "document-changes": "Angi endringer",
+        "disclose-source": "Åpne kildekode",
+        "same-license": "Samme lisens for hele verket",
+        "same-license-file": "Samme lisens per endret fil",
+        "same-license-library": "Samme lisens for biblioteket",
+        "network-use-disclose": "Nettverkbruk regnes som distribusjon",
+        "liability": "Ansvarsbegrensning",
+        "warranty": "Garanti",
+        "trademark-use": "Bruk av varemerke"
+      }
+    },
+    "isbn": {
+      "inputLabel": "ISBN-er",
+      "placeholder": "978-0-306-40615-7 — én per linje, bindestreker og mellomrom ignoreres",
+      "idle": "Lim inn ett ISBN eller en hel kolonne; resultater vises mens du skriver.",
+      "scope": "Kun kontrollsifferberegning. Et gyldig ISBN er internt konsistent — det er ikke et bevis på at et byrå har tildelt det til en reell bok.",
+      "summary": "{valid} av {total} gyldige",
+      "singleValid": "Gyldig ISBN",
+      "singleInvalid": "Ikke et gyldig ISBN",
+      "invalidCount": "{n} ugyldige",
+      "convertedTo": "{type}: {value}",
+      "valid": "Gyldig",
+      "invalid": "Ugyldig",
+      "truncated": "Viser de første {shown} radene.",
+      "col": {
+        "input": "Inndata",
+        "normalized": "Normalisert",
+        "type": "Type",
+        "status": "Status",
+        "converted": "Konvertert",
+        "note": "Merknad"
+      },
+      "type": {
+        "isbn10": "ISBN-10",
+        "isbn13": "ISBN-13",
+        "invalidLength": "Feil lengde"
+      },
+      "note": {
+        "checkDigit": "Kontrollsifferet skal være {expected}",
+        "invalidLength": "Et ISBN har nøyaktig 10 eller 13 tegn",
+        "invalidCharacter": "Inneholder et tegn som ikke er et siffer",
+        "xMisplaced": "X er kun gyldig som siste tegn i et ISBN-10",
+        "noIsbn10": "979-prefikset har ingen ISBN-10-ekvivalent",
+        "nonBookland": "13-sifrede ISBN må starte med 978 eller 979",
+        "ismn": "979-0 er ISMN-området (trykt musikk), ikke ISBN"
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
+    },
+    "languageDetect": {
+      "inputLabel": "Kodebit",
+      "inputPlaceholder": "Lim inn kode uten filnavn – fra en chatlogg, en sak, et svar…",
+      "hintLabel": "Filnavn eller filtype (valgfritt)",
+      "hintPlaceholder": "main.h · .pl · Dockerfile",
+      "note": "Kjører samme motor som API-et. Deteksjon er kun innholdsbasert med mindre du oppgir et filnavnhint; tvetydige filtyper (.h .m .pl .fs .ts .cs .r) behandles først via egne regler.",
+      "idle": "Lim inn et utsnitt – avgjørelsen vises mens du skriver.",
+      "confidence": {
+        "high": "Høy sikkerhet",
+        "medium": "Middels sikkerhet",
+        "low": "Lav sikkerhet"
+      },
+      "score": "{n}/100",
+      "dataFormat": "Dataformat, ikke et programmeringsspråk",
+      "multiLanguage": "Flere språk mistenkes",
+      "why": "Hvorfor dette svaret",
+      "signals": "Matchede signaler",
+      "alternates": "Andre kandidater",
+      "composeNext": "Formater dette {language}"
+    },
+    "iban": {
+      "inputLabel": "IBAN",
+      "idle": "Lim inn en IBAN — dommen følger tastetrykket, ingen knapp.",
+      "sourceNote": "Kontrollsum og struktur i henhold til ISO 13616-1:2020. Lenge per land og BBAN-format kommer fra en publisert reprodusjon av ISO IBAN-registret, ikke registret selv.",
+      "valid": "Velldannet IBAN",
+      "keepTyping": "Fortsett å skrive — kortere enn dette landets IBAN",
+      "caveat": "Kun velldannet. En bestått kontrollsum bekrefter ikke at kontoen eksisterer, er åpen, eller tilhører mottakeren.",
+      "printFormat": "Skriveformat",
+      "details": "Oppdelt oversikt",
+      "notEncoded": "Ikke kodet etter dette landets format",
+      "coverage": "{n} land med registrert IBAN-format",
+      "reason": {
+        "bad_charset": "Ikke et IBAN-format — et IBAN består av to bokstaver, to siffer, deretter kun bokstaver og siffer",
+        "country_unsupported": "Ingen registrert IBAN-format for denne landskoden",
+        "incomplete": "Ufullstendig",
+        "wrong_length_for_country": "For lang for dette landets IBAN",
+        "structure_mismatch": "Riktig lengde, feil struktur for dette landets format",
+        "checksum_failed": "Kontrollsum feilet — det er en tastefeil et sted i denne IBAN-en"
+      },
+      "badge": {
+        "country": "{name} ({code})",
+        "unknownCountry": "Landskode {code}",
+        "length": "{n} av {expected} tegn",
+        "bankCode": "Bankkode {code}",
+        "expectedCheckDigits": "Kontrolltall for dette kontonummeret ville vært {digits}"
+      },
+      "field": {
+        "normalized": "Elektronisk format",
+        "country": "Land",
+        "checkDigits": "Kontrolltall",
+        "bban": "BBAN",
+        "bbanFormat": "BBAN-format",
+        "bankCode": "Bankkode"
+      },
+      "check": {
+        "charset": "Tegnsett",
+        "country": "Land",
+        "length": "Lengde",
+        "structure": "Struktur",
+        "checksum": "MOD 97-10"
+      },
+      "state": {
+        "pass": "bestått",
+        "fail": "feilet",
+        "skipped": "ikke nådd"
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
+    },
+    "secretScan": {
+      "pasteLabel": "Lim inn kode, konfigurasjon eller en .env",
+      "pastePlaceholder": "DATABASE_URL=postgres://…\nAPI_KEY=…",
+      "dropLabel": "Dra en fil for å skanne den",
+      "privacy": "Kjøres helt i nettleseren din. Ingen data sendes noen steder — ikke engang til oss.",
+      "scan": "Skan",
+      "scanning": "Skanner…",
+      "idleTitle": "Lim inn noe og trykk Skan.",
+      "idleHint": "Sjekker for leverandørens API-nøkler, token, private nøkler og hemmeligheter med høy entropi. Samsvarende verdier maskeres; bare linjenumre vises i fullstendig form.",
+      "clean": "Ingen hemmeligheter funnet",
+      "cleanCaveat": "Ingenting her samsvarer med et kjent legitimasjonsformat eller ser ut som en tilfeldig hemmelighet. Mønstermatching er ikke bevis — gjennomgå alt du er usikker på.",
+      "found": "{n, plural, one {# mulig hemmelighet funnet} other {# mulige hemmeligheter funnet}}",
+      "foundCaveat": "Sensurer disse før du limer dette inn noen steder. Hvis en nøkkel er ekte, roter den.",
+      "countHigh": "{n} høy sannsynlighet",
+      "countMedium": "{n} middels sannsynlighet",
+      "countLow": "{n} lave",
+      "confidence": {
+        "high": "Høy",
+        "medium": "Middels",
+        "low": "Lav"
+      },
+      "position": "linje {line}, kol {column}",
+      "length": "{n} tegn",
+      "maskedLabel": "Maskert treff",
+      "why": "Hvorfor dette traff",
+      "candidates": "Kunne også være:",
+      "scanDetail": "Skanningsdetaljer",
+      "lines": "{n} linjer",
+      "bytes": "{n} bytes skannet",
+      "suppressed": "{n} plassholder(e) ignorert",
+      "suppressedNote": "Kjente demovverdier (EXAMPLE-nøkler, your-api-key-here, gjentatte tegn) ignoreres slik at eksempelfiler ikke skaper unødvendig alarm.",
+      "omitted": "{n} til vises ikke",
+      "truncated": "Inndata begrenset — bare den første delen ble skannet",
+      "reportTitle": "Hemmelighetsskanning – funn (verdier maskert)",
+      "scopeNote": "Kun deteksjon: dette verktøyet kontakter aldri en leverandør for å sjekke om en nøkkel fortsatt er aktiv — det ville betydd å sende nøkkelen din til en tredjepart."
+    },
+    "eanUpcGtin": {
+      "inputLabel": "Strekodesnumre",
+      "placeholder": "Én kode per linje (kommater og semikolon deler også)",
+      "idle": "Lim inn én kode eller en hel kolonne — avgjørelsen vises mens du skriver.",
+      "operationLabel": "Operasjon",
+      "operationValidate": "Valider (koden inkluderer sitt kontrolltall)",
+      "operationCalculate": "Beregn (koden mangler sitt kontrolltall)",
+      "typeLabel": "Type",
+      "typeAuto": "Oppdag etter lengde",
+      "total": "{n} koder",
+      "validCount": "{n} gyldige",
+      "invalidCount": "{n} ugyldige",
+      "calculatedCount": "{n} beregnede",
+      "unrecognizedCount": "{n} ukjent lengde",
+      "verdict": {
+        "valid": "Gyldig",
+        "invalid": "Ugyldig",
+        "calculated": "Beregnet",
+        "unrecognized-length": "Ukjent lengde"
+      },
+      "alsoReadsAs": "Leses også som {type}",
+      "checkDigit": "Kontrolltall",
+      "corrected": "Bør være",
+      "gtin14": "GTIN-14-format",
+      "reason": {
+        "empty": "Ingenting å sjekke på denne linja.",
+        "non-digit-characters": "Inneholder tegn som verken er sifre eller skilletegn.",
+        "unsupported-length": "Ingen GS1-identifikator har denne lengda (8, 12, 13, 14 og 18 sifre støttes).",
+        "length-mismatch": "Feil lengde for typen du valgte.",
+        "check-digit-mismatch": "Det siste sifferet stemmer ikke med det standarden krever."
+      },
+      "warning": {
+        "separators-stripped": "Mellomrom, bindestreker og punktum ble fjernet før sjekk.",
+        "all-zero": "Kun nuller — matematisk gyldig, men ikke en ekte identifikator.",
+        "payload-is-also-a-complete-code": "Dette er også en komplett kodelengde. Hvis den allerede har kontrolltall, bytt til Valider."
+      },
+      "math": "Vis regnestykket",
+      "mathSum": "Sum {sum} → kontrolltall {check}",
+      "truncatedRows": "Viser de første {shown} av {total} rader. Kopier og last ned for å få alle.",
+      "privacy": "Koder sendes til Forge API for sjekk og lagres ikke.",
+      "scopeNote": "Et korrekt kontrolltall betyr at nummeret er godt formet. Det betyr ikke at GS1 noen gang har tildelt det til et ekte produkt, selskap eller sted — bare en GEPIR-registersøk kan svare på det.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
+    },
+    "vin": {
+      "inputLabel": "VIN (17 tegn)",
+      "privacy": "Sjekkes i nettleseren din. VIN-en sendes aldri noen steder.",
+      "idle": "Lim inn en VIN — dommen vises mens du skriver, ingen knapp.",
+      "scope": "Kun struktur og kontrolltall (49 CFR 565.15 / ISO 3779). Dette er ikke en kjøretøyhistorikk-søk.",
+      "verdict": {
+        "valid": "Gyldig VIN-struktur",
+        "keepTyping": "Fortsett å skrive — {remaining} tegn igjen",
+        "tooLong": "For lang — en VIN har nøyaktig 17 tegn, denne har {n}",
+        "invalidCharacter": "Ikke et VIN-tegn: \"{char}\" på posisjon {position}",
+        "checkDigitMismatch": "Kontrolltall stemmer ikke — forventet {expected}, fant {found}"
+      },
+      "hint": {
+        "confusable": "\"{char}\" brukes aldri i en VIN. Mente du {suggest}?"
+      },
+      "notice": {
+        "notProvenance": "Et gyldig kontrolltall bekrefter at VIN-en er riktig dannet. Det bekrefter ikke at kjøretøyet eksisterer, er uendret, eller har en ren historie — en klonet VIN passer også denne sjekken.",
+        "pre1981": "Kjøretøy bygget før 1981, og noen importerte (JDM/europeiske) kjøretøy, bruker ikke dette kontrolltallet — en uoverensstemmelse betyr ikke nødvendigvis at VIN-en er tastet feil.",
+        "partial": "Kontrolltall-validering krever hele 17-sifrede VIN-en. En delvis VIN er en dekoding, ikke en kontrollsum."
+      },
+      "badge": {
+        "length": "{n} tegn",
+        "expected": "Kontrolltall {d}"
+      },
+      "invalidChars": {
+        "more": "Også ikke VIN-tegn: {list}"
+      },
+      "segment": {
+        "wmi": "WMI 1-3",
+        "vds": "Deskriptor 4-8",
+        "checkDigit": "Kontrolltall 9",
+        "modelYear": "Modellår 10",
+        "plant": "Anlegg 11",
+        "serial": "Serienr 12-17"
+      },
+      "math": {
+        "title": "Vis utregningen",
+        "col": {
+          "position": "Pos",
+          "char": "Tegn",
+          "value": "Verdi",
+          "weight": "Vekt",
+          "product": "Produkt"
+        },
+        "formula": "sum = {sum};  {sum} mod 11 = {remainder}  →  kontrolltall {expected}"
+      },
+      "specimenTitle": "VIN · structure specimen"
+    },
+    "envDiff": {
+      "envA": "Miljø A",
+      "envB": "Miljø B",
+      "placeholderA": "Lim inn eller dra den første .env-filen",
+      "placeholderB": "Lim eller slipp den andre .env-filen",
+      "paneNoAssignment": "Ingen KEY=value-linje funnet",
+      "optIgnoreComments": "Ignorer kommentar- og tomme linjer",
+      "optCaseInsensitive": "Sammenlign nøkler uten hensyn til store/små bokstaver",
+      "optRedactSecrets": "Skjul oppdagede hemmeligheter",
+      "emptyHint": "Legg til et andre miljø for å se sammenligningen",
+      "summaryNone": "Ingen forskjeller på {total} nøkler",
+      "summaryDiff": "{n} av {total} nøkler er forskjellige",
+      "note": {
+        "unchanged": "Samme verdi på begge sider",
+        "changed": "Verdien er forskjellig",
+        "added": "Angitt kun i B",
+        "removed": "Angitt kun i A",
+        "commentedOutInA": "Kommentert ut i A, satt i B",
+        "commentedOutInB": "Satt i A, kommentert ut i B"
+      },
+      "secretChanged": "hemmelighet er forskjellig",
+      "secretSame": "hemmeligheten er den samme på begge sider",
+      "count": {
+        "unchanged": "{n} uendret",
+        "changed": "{n} endret",
+        "added": "{n} lagt til",
+        "removed": "{n} fjernet",
+        "commentedOut": "{n} kommentert ut"
+      },
+      "warnings": "Inndataadvarsler ({n})",
+      "warningType": {
+        "duplicateKey": "{file} · duplisert nøkkel",
+        "quoteMismatch": "{file} · siteringsfeil",
+        "unparsableLine": "{file} · linje kan ikke tolkes"
+      },
+      "showUnchanged": "Vis uendret ({n})",
+      "commentedIn": {
+        "A": "kommentert ut i A",
+        "B": "kommentert ut i B",
+        "both": "kommentert ut i begge"
+      },
+      "redactedNote": "Hemmelige verdier er maskert med en nøkkelnavn-basert heuristikk — ikke en sikkerhetsskanner. Sammenligning kjører på råverdier, så en rotert hemmelighet vises fortsatt som endret.",
+      "interpolationNote": "${VAR}-referanser sammenlignes bokstavelig og løses aldri opp: utvidelse varierer etter mottaker.",
+      "truncated": "Kun de første 5 000 nøklene vises; antallene dekker alle nøkler.",
+      "colKey": "Nøkkel",
+      "colA": "A",
+      "colB": "B",
+      "colStatus": "Status",
+      "privacy": "Begge filene sammenlignes i nettleseren din. Ingenting lastes opp."
+    },
+    "csvDiff": {
+      "originalLabel": "Opprinnelig CSV",
+      "updatedLabel": "Oppdatert CSV",
+      "originalPlaceholder": "Lim inn den opprinnelige eksporten, eller dra en .csv-fil hit",
+      "updatedPlaceholder": "Lim inn den oppdaterte eksporten, eller dra en .csv-fil hit",
+      "emptyHint": "Lim inn eller dra begge filene — sammenligningen kjøres så snart hver side har innhold.",
+      "note": "Rader matches etter identitet, ikke etter posisjon, så en innført eller omorganisert rad leses ikke som en vegg med endringer. Innhold sendes til API-en for sammenligning og lagres ikke.",
+      "columns": "{n} kolonner",
+      "keyLabel": "Nøkkelkolonne",
+      "keyAuto": "Foreslå automatisk",
+      "keyNone": "Ingen nøkkel — sammenlign hele radene",
+      "joinLabel": "Kobling",
+      "joinFull": "Full outer — alle rader",
+      "joinInner": "Inner — rader i begge",
+      "joinLeft": "Left — den opprinnelige radsettet",
+      "ignoreWhitespace": "Ignorer mellomrom",
+      "ignoreCase": "Ignorer store/små bokstaver",
+      "treatEmptyAsNull": "Tom = NULL = N/A",
+      "noDifferences": "Ingen forskjeller",
+      "differences": "{added} lagt til · {removed} fjernet · {changed} endret",
+      "added": "{n} lagt til",
+      "removed": "{n} fjernet",
+      "changed": "{n} endret",
+      "unchangedCount": "{n} uendret",
+      "totals": "{original} → {updated} rader",
+      "matchedBy": "Sammenlignet etter {columns} ({source})",
+      "matchedWholeRow": "Sammenlignet etter hele radens innhold — ingen nøkkelkolonne ble brukt, så ingenting rapporteres som endret.",
+      "keySource": {
+        "provided": "ditt valg",
+        "auto": "autoforslått",
+        "full-row": "hele raden"
+      },
+      "keyRejected": "Avviste nøkkelforslag: {items}",
+      "columnMismatch": "Kolonner kun i original: {original} · kun i oppdatert: {updated}",
+      "truncated": "Viser {shown} av hele resultatet (forhåndsvisning begrenset til {limit} rader) — tallene ovenfor er komplette.",
+      "findings": "Notater ({n})",
+      "level": {
+        "info": "info",
+        "warning": "advarsel",
+        "danger": "feil"
+      },
+      "wholeRow": "Rad {n}",
+      "exportChanged": "Endrede rader (CSV)",
+      "exportFull": "Full differanse (CSV)"
+    },
+    "uscc": {
+      "modeLabel": "Verifiser eller generer",
+      "tab": {
+        "verify": "Verifiser",
+        "generate": "Generer testkoder"
+      },
+      "inputLabel": "Enhetlig sosial kredittkode",
+      "placeholder": "18 tegn, f.eks. 91500000059926748X",
+      "idle": "Lim inn en 18-tegns kode. Den kontrolleres i nettleserens mens du skriver — ingenting lagres.",
+      "scope": "Kun strukturell kontroll (GB 32100-2015 + ISO 7064 MOD 31-3). En gyldig kode er velformet; det betyr ikke at en organisasjon er registrert under den — sjekk det i det nasjonale registeret cods.org.cn.",
+      "valid": "Gyldig enhetlig sosial kredittkode",
+      "invalid": "Ikke en gyldig samlet sosial kredittkode",
+      "incomplete": "{n} av 18 tegn",
+      "invalidCharacters": "Inneholder tegn som standarden ekskluderer",
+      "checksumOk": "Kontrolltall OK",
+      "checksumBad": "Kontrolltall stemmer ikke",
+      "expectedDigit": "Kontrolltall bør være {expected}, ikke {actual}",
+      "illegalAt": "Posisjon {position}: “{char}” er ikke i kodesettets tegn (I, O, S, V, Z er ekskludert)",
+      "detail": "Felt detalj",
+      "legacyTitle": "Gammel organisasjonskode (GB 11714)",
+      "legacy": {
+        "ok": "Innebygd 9-tegners organisasjonskode er selv-konsistent",
+        "mismatch": "Gammel kontrolltall ville vært {expected} — kun veiledende; ikke alle registreringsklasser har en GB 11714-organisasjonskode",
+        "unchecked": "Ikke sjekket"
+      },
+      "divisionScope": "Posisjonene 3–8 sammenlignes med GB/T 2260-provins-tabellen og nestingsreglene for seks-sifret format; hele fylkestabellen medfølger ikke.",
+      "field": {
+        "registrationDept": "Registreringsavdeling",
+        "orgCategory": "Organisasjonskategori",
+        "adminDivision": "Administrativ inndeling",
+        "orgIdentifier": "Subjektidentifikator",
+        "checkDigit": "Kontrollsiffer"
+      },
+      "depth": {
+        "none": "Ikke løst",
+        "province": "Provinsnivå",
+        "prefecture": "Prefekturnivå",
+        "county": "Fylkesnivå"
+      },
+      "note": {
+        "empty": "Ingenting å sjekke ennå",
+        "incomplete": "En samlet sosial kredittkode har nøyaktig 18 tegn",
+        "tooLong": "Mer enn 18 tegn",
+        "illegalCharacter": "Inneholder et tegn utenfor GB 32100-2015-settet (I, O, S, V og Z er ekskludert)",
+        "checkDigitMismatch": "Kontrolltallet stemmer ikke med de første 17 tegnene",
+        "departmentUnknown": "Posisjon 1 er ikke et registreringsdepartement som standarden definerer (1, 5, 9, Y)",
+        "categoryUnknown": "Posisjon 2 er ikke en organisasjonskategori definert for dette registreringsdepartementet",
+        "divisionNotNumeric": "Posisjoner 3–8 må være seks sifre",
+        "divisionUnknownProvince": "Posisjoner 3–4 er ikke en GB/T 2260-provinskode",
+        "divisionMalformed": "En fylkeskommune under ingen prefektur, noe GB/T 2260 ikke tillater"
+      },
+      "gen": {
+        "dept": "Registreringsdepartement",
+        "category": "Organisasjonskategori",
+        "province": "Provins",
+        "count": "Hvor mange",
+        "randomProvince": "Alle provinser",
+        "regenerate": "Ny batch",
+        "emptyHint": "Velg alternativene ovenfor for å generere testkoder.",
+        "testDataBadge": "Testdata",
+        "seed": "Frø {seed}",
+        "allCodes": "Alle koder",
+        "disclaimer": "Disse kodene er strukturelt gyldige, men tilhører ingen registrert organisasjon. Bruk dem ikke til å representere en virkelig enhet.",
+        "note": "Generering er frøbasert: samme alternativer og frø gir alltid samme batch, slik at en fixture forblir reproduserbar. Hver kode er merket isTestData i JSON, samt her."
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
+    },
+    "yamlDiff": {
+      "original": "Original",
+      "changed": "Endret",
+      "originalPlaceholder": "Lim inn eller dra den originale YAML (eller JSON)",
+      "changedPlaceholder": "Lim inn eller dra den endrede YAML (eller JSON)",
+      "idle": "Fyll begge feltene, så kjører sammenligningen mens du skriver.",
+      "privacy": "Begge dokumentene blir analysert og sammenlignet i denne nettleser — ingenting lastes opp, noe som er poenget for manifest med vertsnavn og hemmelighetsnavn.",
+      "modeLabel": "Sammenligning",
+      "modeSemantic": "Semantisk (struktur)",
+      "modeRawText": "Rå tekst (tegn)",
+      "resolveAnchors": "Løs opp ankere og aliaser til deres verdier",
+      "valid": "Gyldig YAML",
+      "validMulti": "Gyldig YAML · {n} dokumenter",
+      "invalid": "Parsefeil, linje {line}",
+      "parseFailed": "Den ene siden ble ikke analysert — ingenting ble sammenlignet",
+      "equivalent": "Ingen forskjeller — de to dokumentene løses til samme struktur",
+      "equivalentStructural": "Samme løste struktur · {n} formaterings- eller ankerforskjeller",
+      "summary": "{added} lagt til · {removed} fjernet · {changed} endret · {typeChanged} typeendringer",
+      "parseErrorAt": "{side} · linje {line}, kolonne {column}: {message}",
+      "documentCountMismatch": "Dokumentantall er forskjellig: {original} vs {changed} — dokumenter ble parret i rekkefølge og de ekstra ble rapportert som helheter",
+      "duplicateKeys": "Duplikate nøkler i kilden",
+      "unified": "Enhetlig patch (normalisert YAML)",
+      "howItWorks": "Slik fungerer denne sammenligningen",
+      "rule": {
+        "keyOrder": "Rekkefølge på kartleggingsnøkler, sitater og innrykk ignoreres; sekvensrekkefølge sammenlignes, fordi rekkefølgen i en liste har betydning.",
+        "anchors": "Aliaser løses til sine verdier, så en endring bak en delt anker vises på hvert aliassted; en anker eller alias som endret seg med intakt verdi rapporteres separat som strukturell.",
+        "mergeKeys": "Sammenslåingsnøkler (<<) utvides før sammenligning, og en nodes egne nøkler vinner over sammenslåtte.",
+        "types": "Type er en del av verdien: 8080, \"8080\" og !!str 8080 rapporteres som typeendringer, ikke som en generell endring.",
+        "sequences": "Sekvenser av kartlegginger pares etter navn, id eller nøkkel når det feltet er unikt på begge sider, slik at ett innføyd element ikke kaskader; en omordning rapporteres fortsatt.",
+        "blockScalars": "Blokk-skalarer sammenlignes etter løst streng, så den avsluttende linjeskiftet som |- fjerner er en reell endring; en omformatering med samme verdi er strukturell.",
+        "comments": "Kommentarer er ikke en del av YAML-data modellen og sammenlignes ikke.",
+        "multiDoc": "--- strømmer sammenligner dokument for dokument; en uoverensstemmelse i antall rapporteres i stedet for å sammenligne bare det første.",
+        "duplicateKeys": "En duplisert nøkkel i inndata bruker den siste forekomsten og rapporteres som en advarsel."
+      },
+      "note": {
+        "raw-text-mode": "Råtekstmodus sammenligner tegn, ikke struktur: nøkkelrekkefølge, sitater og innrykk teller alle.",
+        "parse-error": "Den ene siden ble ikke analysert, så ingenting ble sammenlignet.",
+        "document-count-mismatch": "De to sidene har et forskjellig antall ----dokumenter; dokumenter ble parvis sammenlignet i rekkefølge og de ekstra rapporteres hele.",
+        "merge-keys-expanded": "Sammenslåingsnøkler (<<) ble utvidet før sammenligning.",
+        "anchors-unresolved": "Aliaser ble sammenlignet som *navn-referanser, ikke som deres oppløste verdier.",
+        "yaml11-ambiguous-scalars": "Utsiterte y/n/yes/no/on/off leses som strenger her (YAML 1.2 Core) og som booleanske verdier under YAML 1.1 — sitér dem hvis en booleansk verdi var ment.",
+        "sequence-matched-by-identity": "Sekvenser av kartlegginger ble parvis sammenlignet etter et identitetsfelt i stedet for etter posisjon.",
+        "duplicate-keys": "En kartlegging deklarerer samme nøkkel to ganger; den siste forekomsten ble brukt.",
+        "truncated": "Kun de første 2000 endringene er oppført."
+      }
+    },
+    "listSetCompare": {
+      "listA": "Liste A",
+      "listB": "Liste B",
+      "placeholder": "Lim inn elementer, ett per linje (eller dra inn en .txt/.csv-fil)",
+      "emptyHint": "Legg til elementer i både Liste A og Liste B for å se sammenligningen.",
+      "privacy": "Begge listene sammenlignes i nettleseren din — ingenting lastes opp. Samme motor kjører på serveren for API- og MCP-kallere.",
+      "delimiter": "Skilletegn",
+      "delimiterOption": {
+        "auto": "Autooppdag",
+        "newline": "Linjeskift",
+        "comma": "Komma",
+        "tab": "Tabulator",
+        "custom": "Egendefinert"
+      },
+      "customDelimiter": "Skilletegn",
+      "customDelimiterPlaceholder": "| eller \\t",
+      "sort": "Sorter",
+      "sortOption": {
+        "original": "Opprinnelig rekkefølge",
+        "asc": "A→Å",
+        "desc": "Å→A",
+        "byCount": "Etter antall"
+      },
+      "optCaseSensitive": "Skjellfølsomt",
+      "optTrim": "Fjern mellomrom",
+      "optCollapse": "Samle innvendige mellomrom",
+      "optIgnoreZeros": "Ignorer førerender nuller",
+      "paneItems": "{n} elementer",
+      "paneSingle": "1 element — sjekk skilletegnet",
+      "items": "{n}",
+      "none": "Ingen",
+      "more": "+{n} til — kopier eller last ned for full liste",
+      "panel": {
+        "onlyInA": "Kun i A",
+        "onlyInB": "Kun i B",
+        "intersection": "Snitt (i begge)",
+        "union": "Union (alle elementer)",
+        "symmetricDifference": "Symmetrisk differanse"
+      },
+      "summaryIdentical": "Samme sett — {n} felles elementer",
+      "summaryDiff": "{a} kun i A · {b} kun i B · {shared} felles",
+      "drill": {
+        "symmetricDifference": "Symmetrisk differanse ({n})",
+        "duplicates": "Duplikater innenfor en liste ({n})",
+        "multiplicities": "Antall per element ({n})",
+        "warnings": "Merknader ({n})"
+      },
+      "duplicatesInA": "Dobbelte i A",
+      "duplicatesInB": "Dobbelte i B",
+      "colValue": "Element",
+      "colCountA": "I A",
+      "colCountB": "I B",
+      "detailTruncated": "Antall per element er forkortet — øk maxDetail i API-en for full tabell.",
+      "reportTitle": "Listesammenligning"
+    },
+    "loanAmortization": {
+      "principal": "Lånebeløp",
+      "rate": "Årsrente %",
+      "term": "Løpetid",
+      "termUnit": "Løpetidsenhet",
+      "unitYears": "År",
+      "unitMonths": "Måneder",
+      "startMonth": "Første betalingsmåned",
+      "startMonthHint": "ÅÅÅÅ-MM. Merker planen; endrer ikke beløp.",
+      "extraHeading": "Ekstrapålegg",
+      "extraMonthly": "Ekstra hver måned",
+      "extraYearly": "Ekstra en gang i året",
+      "extraYearlyMonth": "Årlig ekstra faller i måned",
+      "extraOneTime": "Engangsekstra",
+      "extraOneTimePeriod": "Engangsekstra ved betaling #",
+      "extraNote": "Ekstrapålegg reduserer hovedstolen i perioden de faller, noe som reduserer renten for alle senere perioder. Rentesatsen og den planlagte betalingen forblir uendret.",
+      "monthlyPayment": "Månedlig betaling",
+      "totalInterest": "Total rente",
+      "totalPaid": "Totalt betalt",
+      "crossover": "Krysspunkt",
+      "crossoverValue": "Betaling {n}",
+      "crossoverNone": "Aldri",
+      "payoff": "Nedbetalt ved betaling {n}",
+      "monthsSaved": "{n} måneder tidligere",
+      "totalExtra": "{amount} betalt utover plan",
+      "viewMonthly": "Hver betaling",
+      "viewAnnual": "Per år",
+      "tableCaption": "Amortiseringsplan: betaling, rente, avdrag og gjenværende saldo per periode",
+      "colPeriod": "#",
+      "colDate": "Måned",
+      "colPayment": "Betaling",
+      "colInterest": "Rente",
+      "colPrincipal": "Hovedstol",
+      "colBalance": "Saldo",
+      "colYear": "År",
+      "expandRows": "Vis alle {total} betalinger",
+      "collapseRows": "Vis færre betalinger",
+      "windowNote": "Viser {shown} av {total} betalinger. CSV og API inneholder alle.",
+      "emptyHint": "Skriv inn lånebeløp, rente og løpetid for å se planen.",
+      "note": "Samme motor som API-en. Matematikken kjører kun på dine lånevilkår; ingenting lastes opp eller lagres.",
+      "errPrincipal": "Skriv inn et lånebeløp over 0.",
+      "errRate": "Skriv inn en rente mellom 0 og 100.",
+      "errTerm": "Angi en løpetid mellom 1 måned og 100 år.",
+      "errStartMonth": "Bruk ÅÅÅÅ-MM, for eksempel 2026-01.",
+      "errExtra": "Angi et beløp på 0 eller mer.",
+      "errOneTimePeriod": "Angi betalingsnummeret den engangsbetalingen faller på."
+    },
+    "businessDayShift": {
+      "modeLabel": "Hva skal beregnes",
+      "mode": {
+        "shift": "Flytt en dato",
+        "countBetween": "Tell mellom datoer"
+      },
+      "startDate": "Startdato",
+      "days": "Virkedager",
+      "daysHint": "Negative tall går bakover: −10 er ti virkedager før startdatoen.",
+      "daysInvalid": "Virkedager må være et heltall, med valgfritt ledende minustegn.",
+      "endDate": "Sluttdato",
+      "includeEndDate": "Tell med sluttdatoen også — dette er det NETWORKDAYS i et regneark returnerer",
+      "weekendLabel": "Fridager hver uke",
+      "weekendHint": "Standard er lørdag og søndag. Sett fredag og lørdag i stedet der det er helg.",
+      "weekday": {
+        "sun": "Søn",
+        "mon": "Man",
+        "tue": "Tir",
+        "wed": "Ons",
+        "thu": "Tor",
+        "fri": "Fre",
+        "sat": "Lør"
+      },
+      "holidays": "Helligdager",
+      "holidaysHint": "Hvis tom, er svaret ren helgeregning — ingen landskalender brukes.",
+      "makeupWorkdays": "Kompensasjonshelger",
+      "makeupHint": "Datoer som ble jobbet til tross for at de falt på helg eller helligdag – kinesiske 调休/补班-lørdager hører hjemme her.",
+      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesIgnored": "{n, plural, one {# oppføring var ikke en YYYY-MM-DD-dato og brukes ikke} other {# oppføringer var ikke YYYY-MM-DD-datoer og brukes ikke}}",
+      "pickStart": "Velg en startdato for å begynne.",
+      "emptyHintShift": "Velg en startdato og et antall virkedager.",
+      "emptyHintCount": "Velg en startdato og en sluttdato.",
+      "note": "Samme motor som API-en. Beregningen kjøres på regelsettet som vises sammen med resultatet; ingenting lagres.",
+      "countHeadline": "{n, plural, one {# virkedag} other {# virkedager}}",
+      "reversedRange": "Sluttdatoen er før startdatoen, så antallet blir negativt.",
+      "classification": {
+        "workday": "Virkedag",
+        "weekend": "Helg",
+        "holiday": "Helligdag",
+        "makeupWorkday": "Opphenting av arbeidsdag"
+      },
+      "ruleWeekend": "{days} fri",
+      "ruleNoWeekend": "ingen ukentlige fridager",
+      "ruleHolidays": "{n, plural, =0 {ingen helligdagsliste} one {# helligdag} other {# helligdager}}",
+      "ruleMakeups": "{n, plural, =0 {ingen opphenting av arbeidsdager} one {# opphenting av arbeidsdag} other {# opphenting av arbeidsdager}}",
+      "ruleEndIncluded": "sluttdato medregnet",
+      "ruleEndExcluded": "sluttdato ikke medregnet",
+      "chain": "Skift igjen fra denne datoen"
+    },
+    "retryBackoff": {
+      "strategy": {
+        "exponential": "Eksponentiell",
+        "linear": "Lineær",
+        "fixed": "Fast"
+      },
+      "initialDelay": "Innledende forsinkelse (ms)",
+      "factor": "Backoff-faktor",
+      "factorHint": "Multiplikator som brukes per nytt forsøk. Må være større enn 1.",
+      "increment": "Lineær økning (ms)",
+      "incrementHint": "Millisekunder som legges til forsinkelsen ved hvert nytt forsøk.",
+      "maxDelay": "Maks forsinkelse (ms)",
+      "maxDelayHint": "La stå tom for ingen grense. Når grensen er nådd, blir alle senere forsinkelser like.",
+      "maxAttempts": "Maks antall forsøk",
+      "maxAttemptsHint": "1 til 100.",
+      "excludeInitial": "Maks antall forsøk ekskluderer det første forespørselen",
+      "excludeInitialNote": "På: tallet over teller bare nye forsøk, den første forespørselen er ekstra. Av: det teller alle forsøk, inkludert den første forespørselen.",
+      "jitter": {
+        "none": "Ingen — eksakte forsinkelser",
+        "equal": "Lik — halv fast, halv tilfeldig",
+        "full": "Full — hvor som helst fra null til forsinkelsen"
+      },
+      "callerTimeout": "Din egen timeout (ms)",
+      "callerTimeoutHint": "Valgfritt. La stå tomt for å hoppe over budsjettkontrollen.",
+      "emptyHint": "Fiks det markerte feltet for å se tidsplanen.",
+      "note": "Beregnet ut fra politikken alene — ingenting sendes til noen upstream-tjeneste. Jitter rapporteres som intervallet en ekte klient faller innenfor, aldri som én uttrekket verdi.",
+      "headlineExact": "{attempts} forsøk, {wait} med venting totalt.",
+      "headlineRange": "{attempts} forsøk, {expected} med venting i snitt, opptil {max} i verste tilfelle.",
+      "finalDelay": "Den siste ventingen, før forsøk {attempt}, er {delay}.",
+      "noRetries": "Dette budsjettet tillater ett forsøk og ingen gjenforsøk, så det er ingenting å vente på.",
+      "retryCount": "{count, plural, =0 {ingen gjenforsøk} one {# gjenforsøk} other {# gjenforsøk}}",
+      "capFlattened": "Tak nådd ved forsøk {attempt} — alle senere forsinkelser holder seg på {delay}.",
+      "timeoutExceeded": "Verste tilfelle venter {wait}, som overstiger budsjettet ditt på {timeout}.",
+      "timeoutOk": "Verste tilfelle venter {wait}, innenfor din {timeout}-budsjett.",
+      "tableLabel": "Gjentakelsesplan",
+      "colAttempt": "Forsøk",
+      "colDelay": "Forsinkelse",
+      "colCumulative": "Kumulativ ventetid",
+      "average": "snitt {value}",
+      "formula": {
+        "none": "Forsinkelser er eksakte — ingen jitter påført.",
+        "equal": "Lik jitter: halvparten av forsinkelsen er fast, den andre halvparten trekkes jevnt, så hver ventetid lander mellom halvparten av forsinkelsen og hele forsinkelsen.",
+        "full": "Full jitter: ventetiden trekkes jevnt mellom null og den beregnede forsinkelsen."
+      },
+      "errInitialDelay": "Startforsinkelse må være et helt antall millisekunder, minst 1.",
+      "errFactor": "Faktor må være større enn 1 og maksimalt 100. En faktor på 1 er den faste strategien.",
+      "errIncrement": "Inkrement må være et helt antall millisekunder, 0 eller mer.",
+      "errMaxDelay": "Maksverdien må være et helt antall millisekunder, minst 1.",
+      "errCapBelowInitial": "Maksverdien må være minst lik den innledende forsinkelsen.",
+      "errMaxAttempts": "Antall forsøk må være et helt tall fra 1 til 100.",
+      "errCallerTimeout": "Tidsavbrudd må være et helt antall millisekunder, minst 1."
+    },
+    "csvColumns": {
+      "csvLabel": "CSV",
+      "csvPlaceholder": "Lim inn CSV her, eller dra inn en fil — første linje leses som kolonnenavn",
+      "sample": "Eksempel på CSV",
+      "chooseFile": "Velg fil",
+      "fileFailed": "Kunne ikke lese {name}.",
+      "delimiterLabel": "Skilletegn",
+      "delimiter": {
+        "comma": "Komma  ,",
+        "semicolon": "Semikolon  ;",
+        "tab": "Tabulator",
+        "pipe": "Vertikalstrek  |"
+      },
+      "raggedPolicyLabel": "Rader som ikke samsvarer med toppteksten",
+      "ragged": {
+        "pad": "Juster til toppteksten",
+        "truncate": "Kutt lange rader, la korte rader være korte",
+        "reject": "Stopp og rapporter"
+      },
+      "columnsTitle": "Kolonner — {kept} av {total} beholdt",
+      "columnsHint": "Fjern hake for å droppe en kolonne, rediger boksen for å gi nytt navn, bruk pilene for å omorganisere. Alt løses mot den opprinnelige toppteksten.",
+      "reset": "Tilbakestill kolonner",
+      "keep": "Behold kolonne {name}",
+      "renameLabel": "{name}",
+      "moveUp": "Flytt {name} opp",
+      "moveDown": "Flytt {name} ned",
+      "noneKept": "Alle kolonner er fjernet – behold minst én.",
+      "emptyHint": "Lim inn en CSV over for å administrere kolonnene.",
+      "note": "Kjører på teksten du limer inn. Slipp, gi nytt navn, og omorganiser – i den faste rekkefølgen, alltid mot den opprinnelige overskriften.",
+      "columnCount": "{n} kolonner",
+      "rowCount": "{n} rader",
+      "duplicateHeaders": "Duplikatoverskrift brukt av navn: {names}",
+      "raggedCount": "{n}{more} rader samsvarer ikke med overskriftens bredde",
+      "previewLabel": "Utdata CSV",
+      "previewTruncated": "Viser de første {shown} av {total} linjene. Kopier eller last ned for hele filen.",
+      "raggedListLabel": "Rader som ikke samsvarer med overskriftens bredde",
+      "raggedRow": "Linje {line}: {actual} felt, overskriften har {expected}",
+      "unusedRenames": "Omdøping ignorert – disse kolonnene er ikke i utdataen: {names}"
+    },
+    "imageRotateFlip": {
+      "drop": "Slipp inn et bilde, eller klikk for å bla gjennom",
+      "browse": "Velg et bilde",
+      "selected": "{name} · {kb} KB",
+      "privacy": "Filen sendes til Forge API for transformasjonen og lagres aldri.",
+      "tooLarge": "Bildet er større enn {mb} MB.",
+      "ccw": "90° venstre",
+      "cw": "90° høyre",
+      "half": "180°",
+      "reset": "Tilbakestill",
+      "flipHorizontal": "Snu horisontalt",
+      "flipVertical": "Snu vertikalt",
+      "angle": "Vinkel",
+      "exactAngle": "Nøyaktig °",
+      "fitMode": "Bildeformat",
+      "fitExpand": "Utvid bildeformat",
+      "fitCrop": "Beskjær for å fylle",
+      "fitInside": "Pass inn",
+      "fitNote": "Etter en kvart snu passer ikke det roterte bildet lenger i den gamle rammen: utvid beholder alle piksler, beskjær beholder den opprinnelige størrelsen og klipper hjørnene, pass inn skalerer hele bildet ned.",
+      "outputFormat": "Utdataformat",
+      "sameFormat": "Samme som inndata",
+      "idle": "Slipp et bilde for å se det orentert.",
+      "original": "Original · {w}×{h}",
+      "originalAlt": "Bildet slik det ble lastet opp",
+      "result": "Resultat · {w}×{h}",
+      "resultAlt": "Bildet etter orientering",
+      "badgeLossless": "Uten resampling",
+      "badgeResampled": "Resamplet",
+      "badgeSize": "{kb} KB",
+      "badgeExif": "EXIF-orientering {orientation} anvendt først",
+      "badgeSnapped": "Justert til nøyaktig kvart omdreining",
+      "badgeReencode": "Geometrien er nøyaktig; kodeken koder om",
+      "download": "Last ned",
+      "note": "Rotasjoner på 90°, 180° og 270° flytter piksler uten å blande dem. Alle andre vinkler resampler. Animert GIF, APNG og animert WebP støttes ikke ennå."
+    },
+    "exifStrip": {
+      "drop": "Slipp en JPEG, PNG eller WebP for å fjerne metadataen",
+      "privacy": "Behandles på våre servere og lagres aldri. Opptil {mb} MB per bilde.",
+      "idle": "Fjernet: GPS, opptakstidspunkt, kamera- og enhetsinfo, innebygd miniatyrbilde, redigeringshistorikk. Beholdt: orientering, fargeprofil, dimensjoner, pikseldata.",
+      "note": "Kun stillebilder. Video, PDF, HEIC, AVIF og GIF er utenfor omfang, og C2PA-provenansmanifest beholdes intakte.",
+      "detail": "Hva som ble fjernet",
+      "optKeepThumbnail": "Behold den innebygde Exif-miniatyrbildet",
+      "verdictStripped": "Fjernet {fields} metadatafelt ({kb} KB)",
+      "verdictClean": "Denne filen inneholder ingen metadata som kan fjernes",
+      "strippedCaveat": "Bildet selv er uendret — samme piksler, samme dimensjoner, ingenting omkodet.",
+      "cleanCaveat": "Returnert byte for byte slik den kom.",
+      "badgeOrientationKept": "Orientering beholdt",
+      "badgeOrientationLost": "Orientering kunne ikke overføres",
+      "badgeColorProfileKept": "Fargeprofil beholdt",
+      "badgeThumbnailKept": "Miniatyrbilde beholdt",
+      "badgeThumbnailRemoved": "Miniatyrbilde fjernet",
+      "download": "Last ned ryddet bilde",
+      "sizes": "{before} KB → {after} KB",
+      "detailFields": "{fields} felt · {kb} KB",
+      "detailNothing": "Ingenting ble fjernet fra denne filen.",
+      "detailOrientation": "Exif-orientering {value} ble lest fra filen og tatt med.",
+      "detailNoOrientation": "Filen deklarerte ingen Exif-orientering, så visningen er uberørt.",
+      "segmentExif": "Exif",
+      "segmentIptc": "IPTC",
+      "segmentXmp": "XMP",
+      "segmentComment": "Kommentar",
+      "segmentText": "Tekstmetadata",
+      "segmentTime": "Tidstempel",
+      "segmentVendor": "Leverandørblokk",
+      "summaryStripped": "Fjernet {fields} metadata-felter ({families}), {kb} KB. Bildet er ellers uendret.",
+      "summaryClean": "Ingen fjernbare metadata funnet. Filen returneres uendret."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "이름 / 호스트",
+      "type": "레코드 유형",
+      "note": "Forge 호스트 DNS로 해석합니다."
+    },
+    "tls": {
+      "host": "호스트",
+      "expired": "인증서 만료",
+      "validDays": "{n}일 남음",
+      "note": "Forge 호스트에서 연결. 검사용으로 신뢰 검증 완화."
+    },
+    "myIp": {
+      "refresh": "새로고침",
+      "note": "Forge가 본 IP. 라이선스 geo 없음."
+    },
+    "mermaid": {
+      "source": "Mermaid source",
+      "idle": "Valid diagrams render here",
+      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
+      "sample": "Sample",
+      "theme": "Theme",
+      "theme_default": "Default",
+      "theme_dark": "Dark",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "Flowchart",
+      "sample_sequence": "Sequence",
+      "sample_class": "Class",
+      "sample_er": "ER diagram",
+      "sample_state": "State",
+      "sample_gantt": "Gantt",
+      "sample_pie": "Pie",
+      "sample_mindmap": "Mindmap",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "zoomReset": "Reset view",
+      "copySvg": "Copy SVG",
+      "downloadSvg": "Download SVG",
+      "downloadPng": "Download PNG",
+      "previewAria": "Mermaid diagram preview",
+      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
+    },
+    "colorDeltaE": {
+      "note": "culori CIEDE2000. 임계값은 UI 리뷰용."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL 방언",
+      "parseNote": "파싱/목록만. ERD는 별도.",
+      "convertNote": "@dbml/core — API와 동일 경로."
+    },
+    "dnsLeak": {
+      "probeHost": "Compare host (advanced)",
+      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
+      "run": "Start DNS leak check",
+      "retest": "Run again",
+      "showAdvanced": "Advanced options",
+      "hideAdvanced": "Hide advanced",
+      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
+      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
+      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
+      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
+      "edgeIp": "Your edge IP",
+      "authorityHits": "Recursive IPs",
+      "forgePaths": "Forge resolver hits",
+      "dohPaths": "Browser DoH hits",
+      "webrtcCount": "WebRTC IPs",
+      "forgeResolvers": "Forge multi-resolver (server-side)",
+      "forgeNote": "These queries leave from the Forge host — not your laptop.",
+      "browserDoh": "Browser DoH",
+      "webrtc": "WebRTC ICE",
+      "egressMarkers": "Forge egress markers",
+      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
+      "honestyPrefix": "Honesty:",
+      "verdictConsistent": "Paths look consistent on this check",
+      "verdictSplit": "Split answers across DNS paths",
+      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
+      "verdictIncomplete": "Incomplete — browser probes missing",
+      "verdictAuthority": "System DNS recursives captured",
+      "infraOn": "Authority online",
+      "infraOff": "Authority offline — multi-path only",
+      "infraChecking": "Checking…",
+      "authorityResolvers": "System DNS recursive resolvers",
+      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
+      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
+      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
+      "authorityDetail": "Authority session detail",
+      "phaseSession": "Creating session…",
+      "phaseSystemDns": "Triggering system DNS…",
+      "phasePoll": "Listening for recursive hits ({n}/{total})…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "stepSession": "Session",
+      "stepSystemDns": "System DNS",
+      "stepPoll": "Listen",
+      "stepBrowser": "Browser",
+      "stepServer": "Server",
+      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
+      "liveHits": "Live recursive hits",
+      "sectionSystemDns": "System DNS (what you came for)",
+      "sectionComplementary": "Complementary paths",
+      "sectionTech": "Technical session detail",
+      "copyIps": "Copy IPs",
+      "copied": "Copied",
+      "queryCount": "{n} queries",
+      "colPath": "Path",
+      "colAnswers": "Answers",
+      "colMs": "ms",
+      "ipPublic": "public",
+      "ipPrivate": "private",
+      "sig": {
+        "captured": "System DNS captured",
+        "onlineNoHits": "Authority online · no hits yet",
+        "offline": "Authority offline",
+        "forgeSplit": "Forge resolvers disagree",
+        "dohSplit": "Browser DoH disagree",
+        "webrtcMismatch": "WebRTC ≠ edge IP",
+        "webrtcLocal": "Local WebRTC candidates",
+        "noBrowser": "No browser probes"
+      }
+    },
+    "honesty": {
+      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
+      "signatureNotVerified": "{engine} · decode only · signature not verified",
+      "localOnly": "Processed for this request · not stored as a card or credential"
+    },
+    "idCard": {
+      "number": "Resident ID number",
+      "note": "GB 11643 check digit · no household registry lookup · same path as API",
+      "specimenTitle": "Resident ID · structure specimen",
+      "segRegion": "Region",
+      "segBirth": "Birth",
+      "segSeq": "Seq",
+      "segCheck": "Check",
+      "metaBirth": "Birth",
+      "metaGender": "Gender",
+      "metaRegion": "Region code",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "reasonFormat": "Format should be 18 characters (last may be X)",
+      "reasonBirth": "Birth date segment is invalid",
+      "reasonCheck": "Check digit is wrong",
+      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} lines",
+      "chars": "{n} chars",
+      "empty": "(empty file)",
+      "readyToShip": "Ready to drop into the repo"
+    },
+    "textTransform": {
+      "mode": "Mode",
+      "input": "Input",
+      "output": "Output",
+      "emptyResult": "Result appears here",
+      "runLocal": "Run locally",
+      "runServer": "Run on server",
+      "statusLocalLive": "Local · live",
+      "statusLocal": "Local",
+      "statusServer": "Server · same path as API",
+      "noteDefault": "Same path as API"
+    }
+  },
+  "roots": {
+    "hubLabel": "Etter hensikt",
+    "tools": "verktøy",
+    "dualSurface": "Menneskeside + Agent-API · samme motor",
+    "otherRoots": "Andre etterspørselsrøtter"
+  }
+}

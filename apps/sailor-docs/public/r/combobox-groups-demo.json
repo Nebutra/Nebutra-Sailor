@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "combobox-groups-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/combobox-groups-demo.tsx",
+      "content": "\"use client\";\n\nimport { Combobox } from \"@nebutra/ui/primitives\";\n\nexport function ComboboxGroupsDemo() {\n  return (\n    <Combobox\n      options={[\n        { value: \"next\", label: \"Next.js\", group: \"React\" },\n        { value: \"remix\", label: \"Remix\", group: \"React\" },\n        { value: \"nuxt\", label: \"Nuxt\", group: \"Vue\" },\n        { value: \"svelte\", label: \"SvelteKit\", group: \"Svelte\" },\n      ]}\n      label=\"框架 (Framework)\"\n      placeholder=\"选择框架...\"\n    />\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

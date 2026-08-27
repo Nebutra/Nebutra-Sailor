@@ -1,0 +1,107 @@
+{
+  "id": "gsap",
+  "name": "GSAP",
+  "darkDefault": true,
+  "version": "1.0.0",
+  "semantic": {
+    "background": "150 7% 6%",
+    "foreground": "54 100% 94%",
+    "card": "0 0% 10%",
+    "cardForeground": "54 100% 94%",
+    "popover": "0 0% 10%",
+    "popoverForeground": "54 100% 94%",
+    "primary": "137 92% 47%",
+    "primaryForeground": "150 7% 6%",
+    "secondary": "70 5% 25%",
+    "secondaryForeground": "54 100% 94%",
+    "muted": "0 0% 10%",
+    "mutedForeground": "60 6% 46%",
+    "accent": "70 5% 25%",
+    "accentForeground": "54 100% 94%",
+    "destructive": "309 100% 47%",
+    "destructiveForeground": "54 100% 94%",
+    "border": "70 5% 25%",
+    "ring": "137 92% 47%",
+    "success": "137 92% 47%",
+    "successForeground": "150 7% 6%",
+    "info": "191 100% 44%",
+    "infoForeground": "150 7% 6%"
+  },
+  "recipe": {
+    "buttonDefault": "gradient-stroke",
+    "density": "compact",
+    "badgeDefault": "match-action",
+    "radii": {
+      "button": "100px",
+      "card": "8px",
+      "badge": "9999px",
+      "input": "100px",
+      "pill": "9999px"
+    },
+    "elevationTokens": {
+      "card": "0 0 #0000",
+      "control": "0 0 #0000",
+      "raised": "0 0 #0000"
+    },
+    "primaryStrokeGradient": "linear-gradient(114.41deg, #0ae448 20.74%, #abff84 65.5%)",
+    "outlineBorder": "#fffce1"
+  },
+  "typography": {
+    "fontSans": "'Mori', 'Inter Tight', 'DM Sans', ui-sans-serif, system-ui, sans-serif",
+    "fontDisplay": "'Mori', 'Inter Tight', ui-sans-serif, system-ui, sans-serif",
+    "headingWeight": 600
+  },
+  "motion": {
+    "easeOut": "cubic-bezier(0.22, 1, 0.36, 1)",
+    "easeInOut": "cubic-bezier(0.65, 0, 0.35, 1)",
+    "easeSpring": "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
+    "micro": 120,
+    "flow": 250,
+    "reveal": 400,
+    "cinematic": 700
+  },
+  "spacing": {
+    "xs": "0.5rem",
+    "sm": "0.875rem",
+    "md": "1.25rem",
+    "lg": "1.75rem",
+    "xl": "2.5rem",
+    "2xl": "3.5rem"
+  },
+  "extensions": {
+    "categories": {
+      "gsap": "#0ae448",
+      "scroll": "#fec5fb",
+      "svg": "#ff8709",
+      "text": "#9d95ff",
+      "ui": "#00bae2",
+      "other": "#abff84"
+    },
+    "displaySizePx": 224,
+    "sourceUrl": "https://gsap.com",
+    "notes": [
+      "Outline-first product controls; category colors are marketing extensions.",
+      "Replace typography.faces[].src with Create Center hosted font URLs."
+    ]
+  },
+  "roles": {
+    "canvas": "150 7% 6%",
+    "canvasForeground": "54 100% 94%",
+    "surface": "0 0% 10%",
+    "surfaceForeground": "54 100% 94%",
+    "action": "137 92% 47%",
+    "actionForeground": "150 7% 6%",
+    "quiet": "70 5% 25%",
+    "quietForeground": "54 100% 94%",
+    "muted": "0 0% 10%",
+    "mutedForeground": "60 6% 46%",
+    "border": "70 5% 25%",
+    "ring": "137 92% 47%",
+    "destructive": "309 100% 47%",
+    "destructiveForeground": "54 100% 94%",
+    "success": "137 92% 47%",
+    "successForeground": "150 7% 6%",
+    "info": "191 100% 44%",
+    "infoForeground": "150 7% 6%"
+  }
+}

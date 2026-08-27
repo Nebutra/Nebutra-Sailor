@@ -1,0 +1,1781 @@
+{
+  "nav": {
+    "features": "Funzionalità",
+    "solutions": "Soluzioni",
+    "pricing": "Prezzi",
+    "docs": "Documentazione",
+    "github": "GitHub",
+    "npm": "npm",
+    "about": "Chi siamo",
+    "ideas": "Idee",
+    "opc": "Piattaforma",
+    "roadmap": "Roadmap",
+    "resources": "Risorse",
+    "signIn": "Accedi",
+    "getStarted": "Inizia",
+    "changelog": "Changelog",
+    "news": "Notizie",
+    "designDocs": "Sistema di Design",
+    "avatarMenu": {
+      "ariaLabel": "Menu account",
+      "loadingName": "Caricamento…",
+      "dashboard": "Dashboard",
+      "account": "Account",
+      "billing": "Fatturazione",
+      "docs": "Documentazione",
+      "signOut": "Esci"
+    }
+  },
+  "refer": {
+    "metadataTitle": "Unisciti al ciclo di referral dei fondatori di {brandName}",
+    "metadataDescription": "Unisciti alla lista d'attesa di {brandName}, mantieni l'attribuzione del referral e sblocca il tuo link di condivisione in un unico ciclo prodotto.",
+    "eyebrow": "Ciclo di referral dei fondatori",
+    "title": "Unisciti alla prossima coorte di fondatori e ottieni il tuo link di condivisione.",
+    "description": "Entra con un codice invito o unisciti direttamente. Preserveremo l'attribuzione se il codice esiste, ti inseriremo nella lista d'attesa e ti forniremo un URL di referral privato da condividere immediatamente.",
+    "signal": {
+      "waitlist": "Lista d'attesa attiva",
+      "codeDetected": "Codice {code} rilevato",
+      "direct": "Iscrizione diretta"
+    },
+    "form": {
+      "emailLabel": "Email aziendale",
+      "emailPlaceholder": "you@example.com",
+      "codeLabel": "Codice referral",
+      "codePlaceholder": "Codice facoltativo",
+      "submit": "Unisciti alla lista d'attesa",
+      "submitting": "Aggiunta in corso",
+      "invalidEmail": "Inserisci un indirizzo email valido.",
+      "error": "Impossibile unirsi in questo momento. Riprova.",
+      "successTitle": "Sei in lista",
+      "successDescription": "Il tuo link di condivisione privato è pronto.",
+      "positionLabel": "Posizione in coda",
+      "referralCodeLabel": "Il tuo codice",
+      "referralUrlLabel": "Il tuo link di condivisione",
+      "copyLink": "Copia link",
+      "copied": "Copiato",
+      "share": "Condividi",
+      "shareTitle": "Unisciti al founding loop di {brandName}",
+      "shareText": "Usa il mio link di invito per unirti alla lista d'attesa dei fondatori di {brandName}.",
+      "directMode": "Nessun codice di referral necessario",
+      "codeMode": "Attribuzione referral abilitata"
+    },
+    "proof": {
+      "peerLoop": {
+        "title": "Ciclo founder-to-founder",
+        "description": "Ogni iscrizione accettata riceve un codice e un URL, così il prossimo referral parte senza passaggi manuali."
+      },
+      "attribution": {
+        "title": "Attribuzione trasparente",
+        "description": "I codici sconosciuti vengono salvati come tentativo di attribuzione, mentre i codici validi incrementano il referrer e mantengono l'iscrizione pulita."
+      },
+      "shareLink": {
+        "title": "Stato di successo pronto per la condivisione",
+        "description": "Lo stato di conferma espone posizione, codice, copia e azioni native di condivisione, così il ciclo si completa direttamente nella pagina."
+      }
+    },
+    "infrastructure": {
+      "eyebrow": "Infrastruttura product-led",
+      "title": "Progettata come infrastruttura SaaS durevole, non un modulo usa e getta.",
+      "description": "La superficie referral è supportata da un pacchetto dominio, un modello Prisma persistente, una route Next.js tipizzata e controlli pubblici che possono essere eseguiti dopo i deploy ECS.",
+      "data": {
+        "eyebrow": "Dati",
+        "title": "Una tabella waitlist durevole",
+        "description": "Unicità email, posizione autoincrementata, indici codici referral, metadati tentativo di attribuzione e transizioni di stato risiedono nel database della piattaforma."
+      },
+      "api": {
+        "eyebrow": "API",
+        "title": "Endpoint di iscrizione tipizzato",
+        "description": "La pagina invia a `/api/waitlist`, normalizza codici arbitrari, restituisce le voci esistenti in modo idempotente e non dipende mai da un codice di esempio."
+      },
+      "cicd": {
+        "eyebrow": "CI/CD",
+        "title": "Smoke test pubblico al deploy",
+        "description": "URL canonici e alias sono pronti per i controlli automatizzati, così la distribuzione ECS intercetta regressioni su route, DNS e health."
+      }
+    }
+  },
+  "hero": {
+    "headline1": "Lancia la tua Startup,",
+    "headline2": "potenziata da {brandName} Agent OS.",
+    "subheadline": "Salta settimane di lavoro sulla piattaforma con una base <highlight>pronta per la produzione</highlight> e un'architettura governata, costruita per agenti di coding AI e founder che vogliono andare globali.",
+    "copyLabel": "Copia comando",
+    "copiedLabel": "Copiato",
+    "ctaGetAccess": "Lancia la tua Startup",
+    "ctaExploreDemo": "Esplora la demo",
+    "pillCopied": "Copiato"
+  },
+  "features": {
+    "sectionTitle": "Infrastruttura pronta all'uso, dal prototipo alla scala.",
+    "item0": {
+      "title": "Infrastruttura per applicazioni AI",
+      "description": "Framework Agent e motori di orchestrazione LLM integrati e testati in produzione. Bypassa le astrazioni complesse sottostanti e interagisci direttamente con le API di intelligenza strutturata."
+    },
+    "item1": {
+      "title": "Baseline piattaforma governata",
+      "description": "Una baseline piattaforma governata per i team che rilasciano SaaS AI-native. Allinea scaffolding, primitive runtime e superfici di distribuzione senza assemblare tooling ad-hoc."
+    },
+    "item2": {
+      "title": "Automazione SaaS Enterprise",
+      "description": "Integrazione profonda dello stack tecnologico moderno di Vercel, Supabase e Stripe. Fornisce sicurezza a livello di riga pronta all'uso, isolamento multi-tenant complesso e fatturazione globale per abbonamenti."
+    }
+  },
+  "cta": {
+    "heading": "Pronto a distribuire il tuo prossimo prodotto AI?",
+    "subheading": "Inizializza localmente un'architettura SaaS cloud-native completa con un singolo comando nel terminale.",
+    "copyLabel": "Copia comando",
+    "copiedLabel": "Copiato",
+    "startBuilding": "Inizia a costruire"
+  },
+  "footer": {
+    "brandDescription": "Lancia la tua Startup con {brandName} Agent OS. Multi-tenancy, fatturazione, autenticazione e AI — pronti per la produzione fin dal primo giorno.",
+    "columns": {
+      "product": "Prodotto",
+      "resources": "Risorse",
+      "legal": "Legale",
+      "community": "Comunità"
+    },
+    "links": {
+      "product": "Prodotto",
+      "features": "Funzionalità",
+      "forge": "Forge",
+      "pricing": "Prezzi",
+      "about": "Chi siamo",
+      "showcase": "Vetrina",
+      "blog": "Blog",
+      "playbook": "Playbook",
+      "changelog": "Registro delle modifiche",
+      "roadmap": "Roadmap",
+      "docs": "Documentazione",
+      "ideas": "Idee",
+      "opc": "Piattaforma",
+      "careers": "Carriere",
+      "security": "Sicurezza",
+      "dpa": "DPA",
+      "privacy": "Privacy",
+      "terms": "Termini",
+      "cookies": "Cookie",
+      "refund": "Rimborso",
+      "licensing": "Licenze",
+      "contact": "Contatti",
+      "faq": "FAQ",
+      "github": "GitHub",
+      "discord": "Discord",
+      "twitter": "X (Twitter)"
+    },
+    "copyright": "© 2026 {brandName} Intelligence. Tutti i diritti riservati.",
+    "statusOnline": "Tutti i sistemi operativi",
+    "newsletterTitle": "Resta aggiornato",
+    "newsletterPlaceholder": "you@example.com",
+    "newsletterSubscribe": "Iscriviti",
+    "newsletterSuccess": "Grazie per l'iscrizione!",
+    "newsletterError": "Si è verificato un errore",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
+  },
+  "logoStrip": {
+    "tagline": "Basato su"
+  },
+  "monorepoTree": {
+    "badge": "STRUTTURA TURBOREPO",
+    "title": "15 app. 113 pacchetti. 4 lane backend.",
+    "description": "Codice condiviso, build parallele, zero duplicazioni. Tipizzazione end-to-end completa dal database al frontend.",
+    "metricApps": "app",
+    "metricBackends": "corsie backend",
+    "metricPackages": "pacchetti",
+    "verifiedPaths": "Percorsi verificati rispetto allo workspace corrente",
+    "cta": "Esplora l'architettura del monorepo"
+  },
+  "stats": {
+    "title": "In Cifre",
+    "github": "Stelle su GitHub",
+    "discord": "Membri Discord",
+    "setup": "Tempo Medio di Setup",
+    "packages": "Pacchetti Monorepo",
+    "ctaStar": "Dai una stella →",
+    "ctaJoin": "Unisciti →",
+    "ctaStart": "Inizia →",
+    "ctaExplore": "Esplora →"
+  },
+  "legalPages": {
+    "about": {
+      "title": "Chi Siamo — La Piattaforma AI Governata",
+      "description": "Scopri la visione commerciale e i principi ingegneristici alla base della piattaforma AI governata di {brandName}.",
+      "heading": "L'Era dei Team di Prodotto Lean",
+      "subheading": "Sostituisci il lavoro ripetitivo della piattaforma con infrastrutture governate, automazione solida e un vantaggio ingegneristico duraturo.",
+      "missionTitle": "Un Nuovo Ordine che Resiste al Decadimento Amministrativo",
+      "missionP1": "{brandName} sta costruendo una piattaforma AI governata per team che hanno bisogno di infrastrutture durature invece di stack iniziali a vita breve. La scala tradizionale spesso porta burocrazia e entropia; noi rispondiamo con governance del codice, automazione e una base di piattaforma che rimane auditabile mentre cresce.",
+      "missionP2": "Il commercio soffre ancora di sovraccarico di coordinamento, strumenti frammentati e percorsi di aggiornamento deboli. Ci impegniamo a ridurre queste frizioni attraverso contratti di piattaforma più chiari, primitive di consegna più solide e comportamenti runtime che i team possono effettivamente osservare e fidarsi.",
+      "missionP3": "Rifiutiamo l'abitudine di risolvere i problemi di scala con più attrito organizzativo. Automazione, test e governance dovrebbero assorbire il lavoro operativo ripetitivo in modo che i team possano rimanere focalizzati su prodotto, architettura e risultati per il cliente.",
+      "missionP4": "",
+      "valuesTitle": "I Quattro Pilastri",
+      "values": {
+        "0": {
+          "title": "Scala Governata (Filosofia)",
+          "description": "La scala dovrebbe derivare da sistemi più forti, migliore leva e regole operative più chiare — non dall'accumulo di più peso organizzativo."
+        },
+        "1": {
+          "title": "Il Nucleo del Costruttore (Infrastruttura)",
+          "description": "Una base di piattaforma riutilizzabile per multi-tenancy, fatturazione, autenticazione, conformità e integrazioni AI che i team possono auditare, estendere e rilasciare ripetutamente."
+        },
+        "2": {
+          "title": "Disciplina di Aggiornamento (Routing)",
+          "description": "I sistemi sani crescono attraverso controlli di compatibilità, migrazioni e contratti runtime osservabili invece di deriva, eroismi e riscritture una tantum."
+        },
+        "3": {
+          "title": "Il Codice è Legge (Organizzazione)",
+          "description": "La disciplina operativa dovrebbe essere codificata in test, workflow e regole di governance in modo che i team possano migliorare la piattaforma senza affidarsi alla politica o alla memoria istituzionale."
+        }
+      },
+      "jobsTitle": "Segnali di Ingegneria sopra le Credenziali",
+      "jobsDescription": "Ci importa di più dell'output ingegneristico verificabile, della chiarezza di pensiero e del giudizio di sistema che non del pedigree o dell'inflazione dei titoli.",
+      "jobsButton": "Invia profilo GitHub",
+      "companyInfoTitle": "Conformità organizzativa",
+      "companyInfo": {
+        "legalName": "Registrazione entità legale",
+        "founded": "Data di registrazione",
+        "headquarters": "Centro operativo globale",
+        "jurisdiction": "Giurisdizione applicabile"
+      },
+      "ctaHeading": "Hai bisogno di una valutazione tecnica approfondita?",
+      "ctaDescription": "Contatta i nostri specialisti ingegneristici per una valutazione dell'integrazione enterprise o consulta la documentazione di deployment.",
+      "ctaButton": "Stabilisci contatto"
+    },
+    "contact": {
+      "title": "Richiesta tecnica e commerciale — {brandName} Intelligence",
+      "description": "Il canale di comunicazione dedicato per licenze commerciali, self-hosting enterprise e supporto tecnico avanzato.",
+      "heading": "Stabilisci connessione di supporto",
+      "subheading": "Assegneremo un tecnico specializzato o un architetto dedicato per valutare le tue esigenze specifiche.",
+      "contacts": {
+        "founder": {
+          "title": "Contatto diretto fondatore",
+          "description": "Canale di comunicazione diretto per allineamenti strategici fondamentali e richieste di livello esecutivo."
+        },
+        "general": {
+          "title": "Consulenza enterprise",
+          "description": "Discussioni preliminari relative a partnership strategiche ecologiche e all'evoluzione architettonica generale."
+        },
+        "sales": {
+          "title": "Distribuzione Commerciale",
+          "description": "Negoziazione relativa alla licenza closed-source e ai dettagli concernenti le distribuzioni in ambienti cluster privati."
+        },
+        "support": {
+          "title": "Supporto di Livello Esperto",
+          "description": "Guida architettonica mirata e servizi di risoluzione dei problemi per integrazioni aziendali attive e debug dei sistemi principali."
+        },
+        "legal": {
+          "title": "Legale e Conformità",
+          "description": "Richieste relative alle definizioni dei confini open-source, alle audit di conformità aziendale e alle condizioni contrattuali."
+        },
+        "privacy": {
+          "title": "Privacy del Data Center",
+          "description": "Verifica tecnica e direttive di conformità relative al GDPR e alle successive leggi internazionali sulla protezione dei dati."
+        },
+        "security": {
+          "title": "Segnalazioni di Sicurezza",
+          "description": "Invia in modo sicuro i report di riproduzione tecnica relativi a potenziali vulnerabilità software direttamente al nostro team infrastrutturale."
+        }
+      },
+      "formTitle": "Portale di Invio",
+      "form": {
+        "name": "Designazione del Mittente",
+        "email": "Indirizzo Email Ufficiale",
+        "company": "Organizzazione Affiliata",
+        "category": "Ambito della Richiesta",
+        "categories": {
+          "general": "Consulenza Aziendale",
+          "sales": "Licenze e Architettura",
+          "support": "Assistenza Sviluppatori",
+          "legal": "Conformità e Aspetti Legali",
+          "privacy": "Politiche di Elaborazione Dati",
+          "partnership": "Integrazioni dell'Ecosistema",
+          "press": "Relazioni Pubbliche"
+        },
+        "subject": "Sintesi del Problema",
+        "message": "Specifiche Tecniche/Commerciali Dettagliate",
+        "submit": "Invia al Backend",
+        "privacyNotice": "Eseguendo questa richiesta di rete, confermi di aver letto e accettato la nostra",
+        "privacyLink": "Infrastruttura Privacy del Sistema",
+        "submitting": "In coda di elaborazione...",
+        "successMessage": "Dati trasmessi con successo. Il team operativo competente risponderà entro 1-2 giorni lavorativi."
+      },
+      "companyInfoTitle": "Telemetria Operativa",
+      "companyNameChinese": "{companyLegal}",
+      "companyNameEnglish": "{companyLegalEn}",
+      "companyAddress": "Wuxi, Provincia del Jiangsu, Cina",
+      "socialMedia": "Link ai principali social"
+    },
+    "cookies": {
+      "title": "Informativa sui cookie — {brandName}",
+      "description": "Come {brandName} utilizza i cookie e tecnologie di tracciamento simili sul nostro sito e nei nostri servizi.",
+      "heading": "Informativa sui cookie",
+      "effectiveDate": "Data di efficacia",
+      "lastUpdated": "Ultimo aggiornamento",
+      "dates": {
+        "effective": "1° gennaio 2025",
+        "updated": "1° gennaio 2025"
+      },
+      "intro": "Questa Informativa sui cookie spiega come {brandName} Co., Ltd. (\"{brandName}\", \"noi\", \"ci\" o \"nostro\") utilizza i cookie e tecnologie di tracciamento simili sul nostro sito e nei nostri servizi.",
+      "whatAreCookies": {
+        "title": "Cosa sono i cookie?",
+        "content": "I cookie sono piccoli file di testo salvati sul tuo dispositivo quando visiti un sito web. Sono ampiamente utilizzati per rendere i siti più efficienti e fornire informazioni ai proprietari del sito."
+      },
+      "howWeUse": {
+        "title": "Come utilizziamo i cookie",
+        "intro": "Utilizziamo i cookie per:",
+        "items": {
+          "0": {
+            "label": "Abilitare le funzionalità essenziali",
+            "desc": "Fornire funzionalità fondamentali come autenticazione utente e sicurezza"
+          },
+          "1": {
+            "label": "Ricordare le preferenze",
+            "desc": "Salva lingua, tema e altre impostazioni"
+          },
+          "2": {
+            "label": "Migliora le prestazioni",
+            "desc": "Capire come i visitatori interagiscono con i nostri servizi"
+          },
+          "3": {
+            "label": "Personalizza l'esperienza",
+            "desc": "Fornire contenuti e raccomandazioni pertinenti"
+          },
+          "4": {
+            "label": "Misura il marketing",
+            "desc": "Monitorare l'efficacia delle nostre campagne di marketing"
+          }
+        }
+      },
+      "typesTitle": "Tipi di cookie che utilizziamo",
+      "tableHeaders": {
+        "cookie": "Cookie",
+        "provider": "Fornitore",
+        "purpose": "Scopo",
+        "duration": "Durata"
+      },
+      "necessary": {
+        "title": "Cookie strettamente necessari",
+        "description": "Questi cookie sono essenziali per il corretto funzionamento del sito. Non possono essere disabilitati.",
+        "cookies": {
+          "0": {
+            "name": "__session",
+            "provider": "{brandName}",
+            "purpose": "Sessione di autenticazione utente",
+            "duration": "Sessione"
+          },
+          "1": {
+            "name": "__clerk_db_jwt",
+            "provider": "Clerk",
+            "purpose": "Token di autenticazione",
+            "duration": "7 giorni"
+          },
+          "2": {
+            "name": "cookie_consent",
+            "provider": "{brandName}",
+            "purpose": "Memorizza le preferenze di consenso ai cookie",
+            "duration": "1 anno"
+          }
+        }
+      },
+      "functional": {
+        "title": "Cookie funzionali",
+        "description": "Questi cookie abilitano funzionalità personalizzate e ricordano le tue preferenze.",
+        "cookies": {
+          "0": {
+            "name": "locale",
+            "provider": "{brandName}",
+            "purpose": "Memorizza la preferenza della lingua",
+            "duration": "1 anno"
+          },
+          "1": {
+            "name": "theme",
+            "provider": "{brandName}",
+            "purpose": "Memorizza la preferenza del tema",
+            "duration": "1 anno"
+          }
+        }
+      },
+      "analyticsType": {
+        "title": "Cookie di analisi",
+        "description": "Questi cookie ci aiutano a capire come i visitatori interagiscono con il nostro sito web.",
+        "cookies": {
+          "0": {
+            "name": "_ga",
+            "provider": "Google Analytics",
+            "purpose": "Distingue gli utenti unici",
+            "duration": "2 anni"
+          },
+          "1": {
+            "name": "ph_*",
+            "provider": "PostHog",
+            "purpose": "Analisi del prodotto",
+            "duration": "1 anno"
+          }
+        }
+      },
+      "marketingType": {
+        "title": "Cookie di marketing",
+        "description": "Questi cookie vengono utilizzati per la pubblicità e per tracciare le prestazioni delle campagne pubblicitarie.",
+        "cookies": {
+          "0": {
+            "name": "_fbp",
+            "provider": "Facebook",
+            "purpose": "Traccia le visite per gli annunci Facebook",
+            "duration": "3 mesi"
+          },
+          "1": {
+            "name": "_gcl_au",
+            "provider": "Google Ads",
+            "purpose": "Tracciamento delle conversioni",
+            "duration": "3 mesi"
+          }
+        }
+      },
+      "managingTitle": "Gestione delle tue preferenze sui cookie",
+      "consentBanner": {
+        "title": "Banner del consenso sui cookie",
+        "intro": "Quando visiti il nostro sito web per la prima volta, vedrai un banner del consenso sui cookie che ti permette di:",
+        "items": {
+          "0": {
+            "label": "Accetta tutto",
+            "desc": "Abilita tutte le categorie di cookie"
+          },
+          "1": {
+            "label": "Rifiuta tutto",
+            "desc": "Disabilita tutti i cookie facoltativi (i cookie necessari rimangono)"
+          },
+          "2": {
+            "label": "Personalizza",
+            "desc": "Scegli le categorie specifiche di cookie da abilitare"
+          }
+        },
+        "changeNote": "Puoi modificare le tue preferenze in qualsiasi momento cliccando su \"Impostazioni cookie\" nel piè di pagina."
+      },
+      "browserSettings": {
+        "title": "Impostazioni del browser",
+        "intro": "La maggior parte dei browser web ti permette di controllare i cookie tramite le loro impostazioni:",
+        "browsers": {
+          "0": {
+            "name": "Chrome",
+            "path": "Impostazioni > Privacy e sicurezza > Cookie"
+          },
+          "1": {
+            "name": "Firefox",
+            "path": "Impostazioni > Privacy e sicurezza > Cookie"
+          },
+          "2": {
+            "name": "Safari",
+            "path": "Preferenze > Privacy > Cookie"
+          },
+          "3": {
+            "name": "Edge",
+            "path": "Impostazioni > Privacy, ricerca e servizi > Cookie"
+          }
+        },
+        "note": "Il blocco di alcuni cookie potrebbe influire sulle funzionalità del sito."
+      },
+      "similarTech": {
+        "title": "Tecnologie simili",
+        "intro": "Oltre ai cookie, possiamo utilizzare:",
+        "items": {
+          "0": {
+            "label": "Archiviazione locale",
+            "desc": "Per memorizzare le preferenze e i dati della cache in locale"
+          },
+          "1": {
+            "label": "Archiviazione sessione",
+            "desc": "Per i dati temporanei durante la sessione di navigazione"
+          },
+          "2": {
+            "label": "Pixel Tag",
+            "desc": "Immagini piccole per tracciare l'apertura delle email e le visite al sito web"
+          }
+        },
+        "noFingerprinting": "NON utilizziamo il fingerprinting del browser per il tracciamento."
+      },
+      "updates": {
+        "title": "Aggiornamenti a questa Informativa",
+        "content": "Potremmo aggiornare questa Cookie Policy di tanto in tanto. Ti informeremo sui cambiamenti significativi pubblicando la policy aggiornata sul nostro sito web."
+      },
+      "contactUs": {
+        "title": "Contattaci",
+        "intro": "Se hai domande sull'uso dei cookie, contattaci:",
+        "company": "{brandName} Co., Ltd.",
+        "privacyNote": "Per ulteriori informazioni su come raccogliamo e trattiamo i tuoi dati, consulta la nostra",
+        "privacyLink": "Informativa sulla Privacy"
+      }
+    },
+    "faq": {
+      "title": "Guida per l'Ingegneria & FAQ — {brandName}",
+      "description": "Analisi completa dell'architettura del framework, delle topologie di base e delle strategie di distribuzione commerciale.",
+      "heading": "Analisi Approfondita per la Direzione",
+      "subheading": "Materiale di supporto ottimizzato per l'integrazione ingegneristica dei sistemi e per le decisioni commerciali della direzione.",
+      "categories": {
+        "0": {
+          "name": "Panoramica Architetturale",
+          "questions": {
+            "0": {
+              "q": "Qual è lo scopo operativo esplicito di {productName}?",
+              "a": "{productName} è un framework AI SaaS Next.js altamente strutturato e pronto per la produzione. Include fatturazione aziendale, autenticazione multi-fattore e isolamento multi-tenant in una piattaforma di base governata, consentendo ai team di concentrarsi sull'implementazione AI specifica del prodotto."
+            },
+            "1": {
+              "q": "Come è strutturata la licenza del repository?",
+              "a": "L'infrastruttura sottostante applica rigorosamente l'accordo OSS AGPLv3, garantendo trasparenza e utilizzo a costo zero. Per le organizzazioni che necessitano di oscuramento proprietario e garanzie di riscrittura elevate, sono disponibili contratti commerciali a codice chiuso espliciti."
+            },
+            "2": {
+              "q": "Qual è la velocità della valutazione commerciale iniziale?",
+              "a": "Estremamente elevata. Utilizzando la nostra toolchain Node CLI personalizzata insieme alla specifica tecnica precisa, un ingegnere junior può avviare un'istanza autonoma di Minimum Viable Product (MVP) locale in pochi minuti."
+            }
+          }
+        },
+        "1": {
+          "name": "Operazioni Commerciali",
+          "questions": {
+            "0": {
+              "q": "Quanto è ampia la tolleranza per il scaling commerciale?",
+              "a": "Progettato pesantemente su paradigmi di micro-componenti, la capacità di carico strutturale si mappa senza soluzione di continuità dai livelli Free a domanda zero fino alle soglie Enterprise che servono milioni di richieste mensili, configurato interamente tramite vincoli della dashboard."
+            },
+            "1": {
+              "q": "Come influisce la volatilità dell'abbonamento sulla contabilità standard?",
+              "a": "Operiamo utilizzando un logging strutturato preciso a livello di secondo delle risorse e del throughput API. I vincoli modificati si riconciliano istantaneamente con il livello di contabilità, restituendo le differenze proporzionali o emettendo crediti automatici. Non esiste alcun periodo di congelamento del livello."
+            },
+            "2": {
+              "q": "Quale infrastruttura di elaborazione isola i vettori di pagamento?",
+              "a": "Il routing globale dei fondi deferisce fondamentalmente alle interfacce server di Stripe, garantendo una telemetria PCI-DSS rigorosa e l'integrità dell'elaborazione. Le implementazioni Enterprise possono integrare pipeline di audit finanziario private governate da impegni SLA personalizzati."
+            }
+          }
+        },
+        "2": {
+          "name": "Livello di Ingegneria del Sistema",
+          "questions": {
+            "0": {
+              "q": "Quali astrazioni di intelligenza fondamentali sono supportate nativamente?",
+              "a": "La logica di interazione principale stabilisce l'interoperabilità nativa sulle specifiche standard di OpenAI, Anthropic e Gemini. Ciò offre una flessibilità enorme per sostituire in modo efficiente gli endpoint di ragionamento tramite mappatura variabile, senza alcuna degradazione della logica commerciale upstream."
+            },
+            "1": {
+              "q": "Come viene affrontato il rischio di oscuramento del database?",
+              "a": "L'implementazione predefinita distribuisce intrinsecamente le politiche di Row-Level Security (RLS) di Postgres strettamente accoppiate con le nostre primitive di Tenant Resolution Routing serverless. Ciò garantisce che le partizioni rigide impediscano attivamente la contaminazione dei dati a livello di applicazione e la sovrapposizione dell'esecuzione."
+            },
+            "2": {
+              "q": "Ci sono restrizioni architetturali per le distribuzioni self-managed?",
+              "a": "Assolutamente nessuna. La topologia è completamente disaccoppiata. Se l'ambiente esegue runtime Node.js indipendenti accanto a cluster PostgreSQL sani, la piena funzionalità è intrinsecamente preservata."
+            }
+          }
+        },
+        "3": {
+          "name": "Integrità Sistematica",
+          "questions": {
+            "0": {
+              "q": "Quali protocolli determinano la difesa meccanica del perimetro?",
+              "a": "I meccanismi eseguono la crittografia TLS obbligatoria durante la trasmissione, algoritmi di hashing deterministici per la mappatura dei segreti e la registrazione onnipresente degli eventi di mutazione scritti rigorosamente nei registri interni di tracciamento delle serie temporali."
+            },
+            "1": {
+              "q": "La topologia rispetta le principali normative internazionali sulla privacy?",
+              "a": "Sì, profondamente. I moduli aziendali forniscono implementazioni algoritmiche pronte all'uso mirate agli stati di revoca del consenso, alla logica di cancellazione definitiva e alle query di esportazione approfondita conformi in modo ottimale al GDPR e ai quadri normativi locali."
+            },
+            "2": {
+              "q": "Cosa viene eseguito in caso di incidente catastrofico anomalo?",
+              "a": "Sentinelle automatizzate avvertono istantaneamente i vettori di ingegneria principali, che bloccano i circuiti e implementano un triage rapido. Governati da un manuale di risoluzione avanzato, i Postmortem degli Incidenti completamente trasparenti vengono diffusi universalmente entro una finestra assoluta di 72 ore."
+            }
+          }
+        },
+        "4": {
+          "name": "Direttive di Assistenza Tecnica",
+          "questions": {
+            "0": {
+              "q": "Come viene risolto il troubleshooting dei colli di bottiglia operativi?",
+              "a": "I vettori di triage iniziale puntano alla matrice di documentazione rigorosamente mantenuta e revisionata tra pari e alle interazioni della comunità verificate. L'acquisizione di una licenza standard o enterprise sblocca l'accesso alle code di escalation private che risolvono tramite nodi di ingegneria interni diretti."
+            },
+            "1": {
+              "q": "Offrite operazioni di integrazione fisica o ambientale specializzata?",
+              "a": "Questo rientra nel nostro livello di esecuzione premium su misura per i conglomerati aziendali di alto livello. I nostri architetti più senior si recano in loco per eseguire audit del codice contro l'architettura legacy, gestire delicati trasferimenti cloud e convalidare partizioni di rete altamente isolate."
+            }
+          }
+        }
+      },
+      "ctaHeading": "Hai bisogno di una sincronizzazione tecnica immediata?",
+      "ctaDescription": "Che si tratti di convalidare uno schema di comportamento API specifico o di eseguire accordi di integrazione a lungo termine, interfacciati direttamente con la gerarchia di ingegneria.",
+      "ctaButton": "Ricevi le istruzioni di integrazione",
+      "ctaEmail": "Invia messaggio diretto"
+    },
+    "privacy": {
+      "title": "Protocollo di privacy e difesa delle informazioni — {brandName}",
+      "description": "Documentazione dettagliata su come la meccanica dell'infrastruttura regola l'autonomia dell'utente e l'isolamento dei dati della macchina.",
+      "heading": "Direttive di protezione delle informazioni",
+      "effectiveDate": "Data di entrata in vigore",
+      "lastUpdated": "Ultimo aggiornamento",
+      "dates": {
+        "effective": "1° gennaio 2025",
+        "updated": "1° gennaio 2025"
+      },
+      "intro": "In {brandName} (\"Società\", \"noi\", \"ci\" o \"nostro\"), ci impegniamo a proteggere la tua privacy. Questa Informativa sulla privacy spiega come raccogliamo, utilizziamo, divulghiamo e proteggiamo le tue informazioni quando utilizzi il nostro sito web, le applicazioni e i servizi (collettivamente, i \"Servizi\").",
+      "infoWeCollect": {
+        "title": "1. Informazioni che raccogliamo",
+        "youProvide": {
+          "title": "1.1 Informazioni che fornisci",
+          "intro": "Raccogliamo le informazioni che ci fornisci direttamente, tra cui:",
+          "items": {
+            "0": {
+              "label": "Informazioni sull'account",
+              "desc": "Nome, indirizzo email, password e dettagli dell'organizzazione quando crei un account."
+            },
+            "1": {
+              "label": "Informazioni sul profilo",
+              "desc": "Foto del profilo, titolo del lavoro, nome dell'azienda e altre informazioni facoltative."
+            },
+            "2": {
+              "label": "Informazioni di pagamento",
+              "desc": "Indirizzo di fatturazione e dettagli del metodo di pagamento (elaborati in modo sicuro tramite Stripe)."
+            },
+            "3": {
+              "label": "Comunicazioni",
+              "desc": "Messaggi, feedback e altre comunicazioni che ci invii."
+            },
+            "4": {
+              "label": "Contenuti",
+              "desc": "Qualsiasi contenuto che crei, carichi o memorizzi utilizzando i nostri Servizi."
+            }
+          }
+        },
+        "automatic": {
+          "title": "1.2 Informazioni raccolte automaticamente",
+          "intro": "Quando utilizzi i nostri Servizi, raccogliamo automaticamente determinate informazioni:",
+          "items": {
+            "0": {
+              "label": "Informazioni sul dispositivo",
+              "desc": "Tipo di dispositivo, sistema operativo, tipo di browser e identificatori univoci del dispositivo."
+            },
+            "1": {
+              "label": "Informazioni sull'utilizzo",
+              "desc": "Pagine visualizzate, funzionalità utilizzate, azioni eseguite e tempo trascorso sui Servizi."
+            },
+            "2": {
+              "label": "Dati di log",
+              "desc": "Indirizzo IP, orari di accesso, URL di riferimento e registri delle attività di sistema."
+            },
+            "3": {
+              "label": "Informazioni sulla posizione",
+              "desc": "Posizione generale basata sull'indirizzo IP (non raccogliamo la geolocalizzazione precisa)."
+            }
+          }
+        }
+      },
+      "howWeUse": {
+        "title": "2. Come utilizziamo le tue informazioni",
+        "intro": "Utilizziamo le informazioni raccolte per:",
+        "items": {
+          "0": {
+            "label": "Fornire i servizi",
+            "desc": "Gestire, mantenere e migliorare i nostri Servizi."
+          },
+          "1": {
+            "label": "Elaborare le transazioni",
+            "desc": "Gestire pagamenti, fatturazione e operazioni correlate."
+          },
+          "2": {
+            "label": "Comunicare",
+            "desc": "Inviare annunci sui servizi, aggiornamenti e comunicazioni di marketing (con il tuo consenso)."
+          },
+          "3": {
+            "label": "Personalizzare",
+            "desc": "Personalizzare la tua esperienza e fornire raccomandazioni pertinenti."
+          },
+          "4": {
+            "label": "Analizzare",
+            "desc": "Comprendere i modelli d'uso e migliorare i nostri Servizi."
+          },
+          "5": {
+            "label": "Proteggere",
+            "desc": "Rilevare, prevenire e rispondere a frodi, abusi e incidenti di sicurezza."
+          }
+        }
+      },
+      "howWeShare": {
+        "title": "3. Come condividiamo le tue informazioni",
+        "intro": "Potremmo condividere le tue informazioni nei seguenti casi:",
+        "serviceProviders": {
+          "title": "3.1 Fornitori di servizi",
+          "intro": "Condividiamo informazioni con fornitori terzi che prestano servizi per nostro conto, tra cui:",
+          "items": {
+            "0": {
+              "label": "Infrastruttura",
+              "desc": "Hosting cloud (Vercel, Supabase), servizi di database"
+            },
+            "1": {
+              "label": "Elaborazione dei pagamenti",
+              "desc": "Stripe per la gestione sicura dei pagamenti"
+            },
+            "2": {
+              "label": "Autenticazione",
+              "desc": "Clerk per la gestione dell'identità"
+            },
+            "3": {
+              "label": "Analisi",
+              "desc": "PostHog, Vercel Analytics per insight sull'uso"
+            }
+          }
+        },
+        "businessTransfers": {
+          "title": "3.2 Trasferimenti aziendali",
+          "content": "In caso di fusione, acquisizione o vendita di attività, le tue informazioni potrebbero essere trasferite come parte di tale operazione."
+        },
+        "legalRequirements": {
+          "title": "3.3 Obblighi legali",
+          "content": "Potremmo divulgare informazioni quando richiesto dalla legge, da un procedimento legale o da una richiesta governativa, o per tutelare i nostri diritti, la privacy, la sicurezza o la proprietà."
+        }
+      },
+      "yourRights": {
+        "title": "4. I tuoi diritti e le tue scelte",
+        "accessPortability": {
+          "title": "4.1 Accesso e portabilità",
+          "content": "Puoi accedere alle tue informazioni personali tramite le impostazioni dell'account e richiedere una copia dei tuoi dati in un formato portabile."
+        },
+        "correction": {
+          "title": "4.2 Correzione",
+          "content": "Puoi aggiornare le informazioni del tuo account in qualsiasi momento tramite la dashboard."
+        },
+        "deletion": {
+          "title": "4.3 Cancellazione",
+          "content": "Puoi richiedere la cancellazione del tuo account e dei dati associati tramite le impostazioni o contattandoci."
+        },
+        "marketing": {
+          "title": "4.4 Comunicazioni marketing",
+          "content": "Puoi annullare l'iscrizione alle email di marketing facendo clic su \"Annulla iscrizione\" in qualsiasi email di marketing o aggiornando le tue preferenze."
+        }
+      },
+      "dataSecurity": {
+        "title": "5. Sicurezza dei dati",
+        "intro": "Implementiamo misure tecniche e organizzative adeguate per proteggere le tue informazioni, tra cui:",
+        "items": {
+          "0": "Crittografia dei dati in transito (TLS) e a riposo",
+          "1": "Valutazioni della sicurezza e test di penetrazione regolari",
+          "2": "Controlli di accesso e requisiti di autenticazione",
+          "3": "Monitoraggio e registrazione dell'attività di sistema"
+        }
+      },
+      "ccpa": {
+        "title": "6. Diritti sulla privacy in California (CCPA)",
+        "intro": "Se sei residente in California, hai diritti specifici riguardo alle tue informazioni personali:",
+        "items": {
+          "0": {
+            "label": "Diritto di conoscere",
+            "desc": "Richiedi la comunicazione delle informazioni che raccogliamo, utilizziamo e condividiamo."
+          },
+          "1": {
+            "label": "Diritto di cancellazione",
+            "desc": "Richiedi la cancellazione dei tuoi dati personali."
+          },
+          "2": {
+            "label": "Diritto di opposizione",
+            "desc": "Opponiti alla vendita dei dati personali (non vendiamo i tuoi dati)."
+          },
+          "3": {
+            "label": "Diritto di non subire discriminazioni",
+            "desc": "Non ti discrimineremo per aver esercitato i tuoi diritti."
+          }
+        }
+      },
+      "gdpr": {
+        "title": "7. Diritti europei sulla privacy (GDPR)",
+        "intro": "Se ti trovi nell'EEE, nel Regno Unito o in Svizzera, hai diritti aggiuntivi ai sensi del GDPR:",
+        "items": {
+          "0": {
+            "label": "Base giuridica",
+            "desc": "Trattiamo i tuoi dati in base all'esecuzione del contratto, a interessi legittimi o al consenso."
+          },
+          "1": {
+            "label": "Diritti",
+            "desc": "Accesso, rettifica, cancellazione, portabilità, limitazione e opposizione."
+          },
+          "2": {
+            "label": "DPO",
+            "desc": "Puoi contattare il nostro Responsabile della protezione dei dati all'indirizzo dpo@nebutra.com."
+          }
+        }
+      },
+      "contactUs": {
+        "title": "8. Contattaci",
+        "intro": "Se hai domande su questa Informativa sulla Privacy, contattaci:",
+        "company": "{brandName} Co., Ltd."
+      }
+    },
+    "refund": {
+      "title": "Protocolli per Anomalie Transazionali — {brandName}",
+      "description": "Delimitazione rigorosa riguardo ai parametri esatti di rimborso del capitale attraverso diversi modelli di coinvolgimento strutturale.",
+      "heading": "Framework di Esecuzione delle Controversie",
+      "effectiveDate": "Data di Implementazione dell'Applicazione",
+      "lastUpdated": "Epoca di Tracciamento delle Revisioni",
+      "dates": {
+        "effective": "1° gennaio 2025",
+        "updated": "1° gennaio 2025"
+      },
+      "intro": "In {brandName}, vogliamo che tu sia completamente soddisfatto dei nostri servizi. Questa Politica di Rimborso descrive le circostanze in cui sono disponibili i rimborsi e il processo per richiederli.",
+      "subscriptionPlans": {
+        "title": "Piani di Abbonamento",
+        "monthly": {
+          "title": "Abbonamenti Mensili",
+          "items": {
+            "0": {
+              "label": "Cancellazione",
+              "desc": "Puoi cancellare il tuo abbonamento mensile in qualsiasi momento"
+            },
+            "1": {
+              "label": "Rimborsi Proporzionali",
+              "desc": "Non offriamo rimborsi proporzionali per i mesi parziali"
+            },
+            "2": {
+              "label": "Accesso",
+              "desc": "Mantieni l'accesso alle funzionalità a pagamento fino alla fine del tuo periodo di fatturazione"
+            },
+            "3": {
+              "label": "Rinnovo automatico",
+              "desc": "Gli abbonamenti si rinnovano automaticamente a meno che non vengano annullati"
+            }
+          }
+        },
+        "annual": {
+          "title": "Abbonamenti annuali",
+          "items": {
+            "0": {
+              "label": "Garanzia soddisfatti o rimborsati di 14 giorni",
+              "desc": "I nuovi abbonati annuali possono richiedere un rimborso completo entro 14 giorni dall'acquisto iniziale"
+            },
+            "1": {
+              "label": "Dopo 14 giorni",
+              "desc": "I rimborsi generalmente non sono disponibili dopo il periodo di 14 giorni"
+            },
+            "2": {
+              "label": "Annullamento",
+              "desc": "Puoi annullare in qualsiasi momento, ma il tuo abbonamento rimarrà attivo fino alla fine del termine annuale"
+            },
+            "3": {
+              "label": "Nessun rimborso proporzionale",
+              "desc": "Non offriamo rimborsi parziali per i mesi non utilizzati"
+            }
+          }
+        }
+      },
+      "eligibleScenarios": {
+        "title": "Scenari di rimborso ammissibili",
+        "intro": "Valuteremo le richieste di rimborso nelle seguenti circostanze:",
+        "serviceIssues": {
+          "title": "1. Problemi di servizio",
+          "items": {
+            "0": "Interruzioni significative del servizio che compromettono l'uso delle funzionalità principali",
+            "1": "Problemi tecnici che non riusciamo a risolvere entro un lasso di tempo ragionevole",
+            "2": "Funzionalità significativamente diverse da quelle pubblicizzate"
+          }
+        },
+        "billingErrors": {
+          "title": "2. Errori di fatturazione",
+          "items": {
+            "0": "Addebiti duplicati",
+            "1": "Importi di fatturazione errati",
+            "2": "Addebiti non autorizzati (dopo verifica)"
+          }
+        },
+        "exceptionalCircumstances": {
+          "title": "3. Circostanze eccezionali",
+          "items": {
+            "0": "Emergenze mediche documentate",
+            "1": "Calamità naturali che colpiscono la tua attività",
+            "2": "Altre circostanze valutate caso per caso"
+          }
+        }
+      },
+      "nonRefundable": {
+        "title": "Articoli non rimborsabili",
+        "intro": "I seguenti elementi generalmente non sono eleggibili per il rimborso:",
+        "items": {
+          "0": {
+            "label": "Addebiti basati sull'uso",
+            "desc": "Chiamate API, consumo di token AI o spazio di archiviazione utilizzato"
+          },
+          "1": {
+            "label": "Integrazioni e servizi extra",
+            "desc": "Acquisti una tantum o servizi aggiuntivi"
+          },
+          "2": {
+            "label": "Contratti enterprise",
+            "desc": "Gli accordi personalizzati hanno termini propri"
+          },
+          "3": {
+            "label": "Cancellazioni volontarie",
+            "desc": "Dopo il periodo di eleggibilità al rimborso"
+          },
+          "4": {
+            "label": "Violazioni dei termini",
+            "desc": "Account chiusi per violazioni delle policy"
+          }
+        }
+      },
+      "howToRequest": {
+        "title": "Come richiedere un rimborso",
+        "step1": {
+          "title": "Passo 1: Contatta il supporto",
+          "intro": "Inviaci un'email a billing@nebutra.com con:",
+          "items": {
+            "0": "L'indirizzo email del tuo account",
+            "1": "Piano di abbonamento e periodo di fatturazione",
+            "2": "Motivo della richiesta di rimborso",
+            "3": "Eventuali documenti pertinenti"
+          }
+        },
+        "step2": {
+          "title": "Passo 2: Processo di revisione",
+          "items": {
+            "0": "Esamineremo la tua richiesta entro 5 giorni lavorativi",
+            "1": "Potremmo richiedere informazioni aggiuntive",
+            "2": "Riceverai una decisione scritta via email"
+          }
+        },
+        "step3": {
+          "title": "Passaggio 3: Elaborazione del rimborso",
+          "intro": "Se approvato:",
+          "items": {
+            "0": "I rimborsi vengono elaborati sul metodo di pagamento originale",
+            "1": "I rimborsi su carta di credito appaiono solitamente entro 5-10 giorni lavorativi",
+            "2": "I tempi di elaborazione bancaria possono variare"
+          }
+        }
+      },
+      "planChanges": {
+        "title": "Modifiche del piano",
+        "upgrades": {
+          "title": "Aggiornamenti",
+          "items": {
+            "0": "Gli aggiornamenti hanno effetto immediato",
+            "1": "Ti verrà addebitata la differenza proporzionale per il resto del tuo periodo di fatturazione",
+            "2": "Non viene fornito alcun rimborso per il piano precedente"
+          }
+        },
+        "downgrades": {
+          "title": "Riduzioni",
+          "items": {
+            "0": "Le riduzioni hanno effetto dal prossimo periodo di fatturazione",
+            "1": "Mantieni l'accesso alle funzionalità attuali fino ad allora",
+            "2": "Nessun rimborso parziale per il periodo corrente"
+          }
+        }
+      },
+      "freeTrial": {
+        "title": "Prova Gratuita",
+        "items": {
+          "0": "Le prove gratuite non richiedono dati di pagamento",
+          "1": "Nessun addebito durante il periodo di prova",
+          "2": "Riceverai una notifica prima dell'inizio di qualsiasi addebito"
+        }
+      },
+      "disputeResolution": {
+        "title": "Risoluzione delle Controversie",
+        "intro": "Se non sei d'accordo con la nostra decisione sul rimborso:",
+        "steps": {
+          "0": "Rispondi all'email della decisione con informazioni aggiuntive",
+          "1": "Richiedi l'escalation a un supervisore",
+          "2": "Contattaci all'indirizzo legal@nebutra.com per un ulteriore esame"
+        }
+      },
+      "contactUs": {
+        "title": "Contattaci",
+        "intro": "Per richieste di rimborso o domande su questa politica:",
+        "company": "{brandName} Co., Ltd.",
+        "billingLabel": "Fatturazione",
+        "supportLabel": "Supporto",
+        "legalLabel": "Legale",
+        "responseNote": "Ci impegniamo a rispondere a tutte le richieste di rimborso entro 5 giorni lavorativi.",
+        "termsNote": "Questa politica fa parte dei nostri",
+        "termsLink": "Termini di Servizio",
+        "termsAgreement": "Utilizzando {brandName}, accetti questi termini di rimborso."
+      }
+    },
+    "terms": {
+      "title": "Termini di Servizio — {brandName}",
+      "description": "I Termini di Servizio che regolano l'accesso e l'uso del sito web, delle applicazioni, delle API e dei servizi di {brandName}.",
+      "heading": "Termini di Servizio",
+      "effectiveDate": "Data di efficacia",
+      "lastUpdated": "Ultimo aggiornamento",
+      "dates": {
+        "effective": "1° gennaio 2025",
+        "updated": "1° gennaio 2025"
+      },
+      "intro1": "Benvenuto su {brandName}! Questi Termini di Servizio (\"Termini\") regolano l'accesso e l'uso del sito web, delle applicazioni, delle API e dei servizi (collettivamente, i \"Servizi\") forniti da {brandName} Co., Ltd. (\"{brandName}\", \"Azienda\", \"noi\", \"ci\" o \"nostro\").",
+      "intro2": "Accedendo o utilizzando i nostri Servizi, accetti di essere vincolato da questi Termini e dalla nostra",
+      "intro2PrivacyLink": "Informativa sulla Privacy",
+      "intro2End": ". Se non accetti questi Termini, non utilizzare i nostri Servizi.",
+      "acceptance": {
+        "title": "1. Accettazione dei Termini",
+        "eligibility": {
+          "title": "1.1 Requisiti",
+          "intro": "Per utilizzare i nostri Servizi, devi:",
+          "items": {
+            "0": "Avere almeno 18 anni o l'età della maggiore età nella tua giurisdizione",
+            "1": "Avere l'autorità per accettare questi Termini per conto tuo o della tua organizzazione",
+            "2": "Non essere vietato dall'uso dei nostri Servizi ai sensi della legge applicabile"
+          }
+        },
+        "orgAccounts": {
+          "title": "1.2 Account Organizzazione",
+          "content": "Se utilizzi i nostri Servizi per conto di un'organizzazione, dichiari di avere l'autorità per vincolare tale organizzazione a questi Termini."
+        }
+      },
+      "services": {
+        "title": "2. Descrizione dei Servizi",
+        "intro": "{brandName} fornisce una piattaforma SaaS che include:",
+        "items": {
+          "0": "Funzionalità e generazione di contenuti basati sull'IA",
+          "1": "Gestione dei contenuti e strumenti per la community",
+          "2": "Sistemi di raccomandazione",
+          "3": "Integrazioni e-commerce",
+          "4": "Funzionalità Web3",
+          "5": "Analitica e reportistica"
+        }
+      },
+      "account": {
+        "title": "3. Registrazione dell'account",
+        "creation": {
+          "title": "3.1 Creazione dell'account",
+          "intro": "Per accedere a determinate funzionalità, devi creare un account. Accetti di:",
+          "items": {
+            "0": "Fornire informazioni accurate e complete",
+            "1": "Mantenere la sicurezza delle credenziali del tuo account",
+            "2": "Aggiornare tempestivamente le tue informazioni in caso di variazioni",
+            "3": "Assumerti la responsabilità di tutte le attività svolte sul tuo account"
+          }
+        }
+      },
+      "billing": {
+        "title": "4. Abbonamento e fatturazione",
+        "pricing": {
+          "title": "4.1 Prezzi",
+          "content": "I nostri Servizi sono offerti con vari piani di abbonamento, come descritto nella pagina Prezzi. I prezzi sono soggetti a variazioni con un preavviso di 30 giorni."
+        },
+        "payment": {
+          "title": "4.2 Pagamento",
+          "items": {
+            "0": "Gli abbonamenti vengono fatturati in anticipo su base mensile o annuale",
+            "1": "Tutte le tariffe non sono rimborsabili, salvo quanto indicato nella nostra",
+            "2": "Ci autorizzi a addebitare il tuo metodo di pagamento per le tariffe applicabili",
+            "3": "Utilizziamo Stripe per l'elaborazione sicura dei pagamenti",
+            "1RefundLink": "Politica di rimborso"
+          }
+        }
+      },
+      "acceptableUse": {
+        "title": "5. Uso accettabile",
+        "prohibited": {
+          "title": "5.1 Attività vietate",
+          "intro": "Ti impegni a NON:",
+          "items": {
+            "0": "Violare leggi, regolamenti o diritti di terzi applicabili",
+            "1": "Utilizzare i Servizi per trasmettere malware, spam o contenuti dannosi",
+            "2": "Tentare di accedere in modo non autorizzato ai nostri sistemi",
+            "3": "Interferire o compromettere l'integrità o le prestazioni dei nostri Servizi",
+            "4": "Utilizzare strumenti automatizzati per estrarre, copiare o raccogliere dati senza autorizzazione",
+            "5": "Eseguire reverse engineering, decompilare o disassemblare i nostri Servizi",
+            "6": "Utilizzare le nostre funzionalità AI per generare contenuti illegali, dannosi o ingannevoli"
+          }
+        }
+      },
+      "ip": {
+        "title": "6. Proprietà intellettuale",
+        "ours": {
+          "title": "6.1 La nostra proprietà intellettuale",
+          "content": "{brandName} e i suoi licenziatari sono titolari di tutti i diritti, la proprietà e gli interessi sui Servizi, inclusi tutti i software, i design, i marchi e i contenuti da noi creati."
+        },
+        "yours": {
+          "title": "6.2 I tuoi contenuti",
+          "content": "Mantiene la proprietà dei contenuti che crea o carica (\"I tuoi contenuti\"). Utilizzando i nostri Servizi, ci conferisci una licenza mondiale, non esclusiva e gratuita per utilizzare, archiviare, elaborare e visualizzare i tuoi contenuti esclusivamente per fornirti i Servizi."
+        }
+      },
+      "warranties": {
+        "title": "7. Esclusione di garanzie",
+        "content": "I SERVIZI SONO FORNITI \"COSÌ COME SONO\" E \"COSÌ COME SONO DISPONIBILI\" SENZA GARANZIE DI ALCUN TIPO, ESPLICITE O IMPLICITE, INCLUSE MA NON LIMITATE A GARANZIE IMPLICITE DI COMMERCIABILITÀ, IDONEITÀ PER UN PARTICOLARE SCOPO, TITOLO E NON VIOLAZIONE."
+      },
+      "liability": {
+        "title": "8. Limitazione di responsabilità",
+        "para1": "NEL MASSIMO MISURA CONSENTITA DALLA LEGGE, NEBUTRA NON SARÀ RESPONSABILE PER DANNI INDIRETTI, FORTUITI, SPECIALI, CONSEGUENZIALI O ESEMPLARI, O PER PERDITA DI PROFITTI, DATI, UTILIZZO O BUONA FAMA.",
+        "para2": "IN NESSUN CASO LA NOSTRA RESPONSABILITÀ TOTALE SUPERERÀ IL MAGGIORE TRA (A) L'IMPORTO CHE CI HAI PAGATO NEI 12 MESI PRECEDENTI LA RICLAMA, OPPURE (B) $100 USD."
+      },
+      "termination": {
+        "title": "9. Risoluzione",
+        "byYou": {
+          "title": "9.1 Da parte tua",
+          "content": "Puoi chiudere il tuo account in qualsiasi momento tramite le impostazioni dell'account. Al momento della chiusura, perderai l'accesso ai Servizi."
+        },
+        "byUs": {
+          "title": "9.2 Da parte nostra",
+          "intro": "Possiamo sospendere o chiudere il tuo account se tu:",
+          "items": {
+            "0": "Violassi questi Termini",
+            "1": "Ti dedicassi ad attività fraudolente o illegali",
+            "2": "Non pagassi le tariffe applicabili",
+            "3": "Creassi rischi o esposizioni legali per noi"
+          }
+        }
+      },
+      "disputes": {
+        "title": "10. Risoluzione delle controversie",
+        "informal": {
+          "title": "10.1 Risoluzione informale",
+          "content": "Prima di avviare procedimenti formali, ti impegni a contattarci all'indirizzo legal@nebutra.com per cercare di risolvere le controversie in modo informale."
+        },
+        "governingLaw": {
+          "title": "10.2 Legge applicabile",
+          "content": "Questi Termini sono regolati dalle leggi dello Stato del Delaware, senza riguardo ai principi di conflitto di leggi."
+        }
+      },
+      "contactUs": {
+        "title": "11. Contattaci",
+        "intro": "Se hai domande su questi Termini, contattaci:",
+        "company": "{brandName} Co., Ltd.",
+        "emailLabel": "Email",
+        "supportLabel": "Supporto"
+      },
+      "acknowledgement": "Utilizzando {brandName}, riconosci di aver letto, compreso e di accettare di essere vincolato da questi Termini di Servizio."
+    }
+  },
+  "metadata": {
+    "title": "{brandName} Agent OS | L'Agent OS per Startup",
+    "description": "Il Startup Agent OS per i fondatori che vanno globali. Base Next.js pronta per la produzione con architettura governata, autenticazione, fatturazione, agenti e i18n — costruita per agenti di coding AI e team seri."
+  },
+  "microLanding": {
+    "architecture": {
+      "badge": "TOPOLOGIA DEL SISTEMA",
+      "title": "Architettura trasparente, senza scatole nere.",
+      "description": "{productName} è progettato con una struttura Turborepo iper-modulare, che ti dà il controllo completo dell'intero ciclo di vita del tuo software.",
+      "database": {
+        "title": "PostgreSQL + Prisma v7",
+        "desc": "ORM completamente tipizzato con politiche di Row-Level Security (RLS) integrate nativamente."
+      },
+      "auth": {
+        "title": "Clerk Multi-Tenant / Identità Personalizzata",
+        "desc": "Gateway di autenticazione pronto per SOC2 che supporta il cambio di organizzazione B2B e RBAC."
+      }
+    },
+    "pricing": {
+      "title": "Gratis su cui costruire. Paghi solo se vuoi vincolarci.",
+      "description": "Costruire un prodotto commerciale su {brandName} non costa nulla: nessun canone, nessuna chiave di licenza, nessuna registrazione, nessun copyleft. I piani a pagamento vendono supporto, SLA, manleva e diritti di marchio, mai il permesso d'uso.",
+      "socialProofText": "MIT su npm · FSL-1.1-ALv2 sul repository, convertita in Apache-2.0 dopo due anni · uso commerciale gratuito a qualsiasi scala.",
+      "community": {
+        "badge": "COMMUNITY",
+        "price": "Gratis",
+        "period": "per sempre",
+        "desc": "Per tutti. Qualsiasi dimensione del team, qualsiasi fatturato. Uso commerciale closed-source incluso, senza registrazione né obbligo di attribuzione.",
+        "cta": "npx create-sailor",
+        "f1": "Core SaaS Next.js 16 completo, tutti i pacchetti inclusi",
+        "f2": "Uso commerciale closed-source con qualsiasi dimensione o fatturato",
+        "f3": "Stack completo: Auth, Pagamenti, Organizzazioni, API, Email, i18n, Job in background, Storage e altro",
+        "f4": "Funzioni di marketing: Blog, landing page, SEO, Analytics",
+        "f5": "Issue pubbliche, Discussions e Discord — best effort, senza garanzia di risposta"
+      },
+      "team": {
+        "badge": "TEAM",
+        "price": "2.000 $",
+        "period": "anno",
+        "desc": "Per i team che non possono affidare un percorso critico ai tempi di risposta della community.",
+        "cta": "Ottieni il supporto {brandName}",
+        "f1": "Canale di supporto privato (email + Slack o Discord condiviso)",
+        "f2": "Prima risposta garantita entro due giorni lavorativi",
+        "f3": "Triage prioritario dei bug, prima delle issue della community",
+        "f4": "Assistenza agli upgrade e preavviso sulle breaking change",
+        "f5": "Tutto ciò che c'è in Community"
+      },
+      "enterprise": {
+        "badge": "ENTERPRISE",
+        "price": "Da 30.000 $",
+        "period": "anno",
+        "desc": "Per organizzazioni il cui ufficio acquisti, legale o sicurezza richiede una controparte che firmi.",
+        "cta": "Contatta il commerciale",
+        "f1": "SLA di risposta: 4 ore lavorative standard, 1 ora per fermo in produzione",
+        "f2": "Manleva e impegno contrattuale sulle patch di sicurezza",
+        "f3": "DPA firmato, pacchetto di conformità e impegno di continuità",
+        "f4": "Diritti di marchio e white-label, più deroga all'uso concorrente",
+        "f5": "Branch di supporto a lungo termine e ingegneria per deployment privati",
+        "f6": "Tutto ciò che c'è in Team"
+      }
+    },
+    "faq": {
+      "title": "Domande frequenti su prezzi e licenze",
+      "description": "Domande sui livelli di licenza, rimborsi e diritti di utilizzo commerciale.",
+      "q1": {
+        "q": "Sailor è un abbonamento SaaS mensile?",
+        "a": "No. Questa tariffazione riguarda le licenze del codice sorgente di Sailor: Independent è gratuita, Startup è fatturata annualmente e Enterprise è su misura."
+      },
+      "q2": {
+        "q": "Offrite rimborsi?",
+        "a": "Le licenze commerciali Startup includono una finestra di rimborso di 14 giorni per gli acquisti iniziali. I termini Enterprise sono gestiti nel contratto firmato."
+      },
+      "q3": {
+        "q": "Posso usare Sailor per lavori per clienti?",
+        "a": "Sì. Una licenza commerciale permette al tuo team di rilasciare prodotti chiusi per clienti o interni entro l'ambito della licenza; i diritti white-label richiedono l'approvazione Enterprise."
+      },
+      "contactNudge": "Hai ancora domande? Parla con il team {brandName} →"
+    },
+    "cta": {
+      "eyebrow": "Inizia",
+      "title": "Smetti di configurare. Inizia a costruire.",
+      "description": "Inizializza localmente un'architettura SaaS scalabile con il CLI {brandName}.",
+      "button": "Distribuisci Architettura",
+      "license": "Open source con licenza AGPL-3.0. Non è richiesta carta di credito."
+    },
+    "capability": {
+      "badge": "Funzionalità Enterprise",
+      "title": "Un core completamente tipizzato e estensibile.",
+      "multiTenant": {
+        "title": "Sicurezza a livello di riga nativa",
+        "desc": "Ogni query al database è rigorosamente limitata al contesto del tenant corrente.",
+        "cta": "Leggi la filosofia del database"
+      },
+      "aiGateway": {
+        "title": "AI Gateway Universale",
+        "desc": "Instrada i prompt verso OpenAI, Anthropic o modelli open-source senza soluzione di continuità.",
+        "cta": "Esplora il gestore dell'AI SDK"
+      },
+      "rbac": {
+        "title": "Controllo degli Accessi Granulare",
+        "desc": "Definisci ruoli admin, membro e visualizzatore con una struttura di policy integrata.",
+        "cta": "Visualizza la documentazione RBAC"
+      },
+      "billing": {
+        "title": "Infrastruttura di Fatturazione Multi-Provider",
+        "desc": "Utilizzo misurato, webhook di abbonamento e portali self-service per i clienti.",
+        "cta": "Visualizza l'architettura di fatturazione"
+      }
+    },
+    "productDemo": {
+      "badge": "Demo Interattiva",
+      "title": "The local loop, end to end.",
+      "description": "Scopri l'interfaccia a riga di comando, l'inoltro dei webhook Stripe e la provisioning del database multi-tenant locale.",
+      "analytics": {
+        "label": "Telemetria in Diretta",
+        "desc": "Trasmetti i dati di utilizzo della produzione direttamente nel tuo terminale."
+      },
+      "billing": {
+        "label": "Eventi di fatturazione",
+        "desc": "Osserva l'esecuzione dei webhook di Stripe tramite tunneling locale."
+      },
+      "workspaces": {
+        "label": "Inizializzazione workspace",
+        "desc": "Provisiona istantaneamente schemi PostgreSQL B2B isolati."
+      }
+    },
+    "workflow": {
+      "badge": "Velocità",
+      "title": "Da zero alla produzione in tempi record.",
+      "step1": {
+        "title": "1. Clona",
+        "desc": "Clona istantaneamente il monorepo {brandName} ed esegui pnpm install."
+      },
+      "step2": {
+        "title": "2. Configura",
+        "desc": "Configura Prisma, Clerk e Stripe tramite la CLI interattiva in pochi minuti."
+      },
+      "step3": {
+        "title": "3. Sviluppa",
+        "desc": "Concentrati sulla logica del prodotto e sull'UI mentre la base della piattaforma è già configurata."
+      },
+      "step4": {
+        "title": "4. Distribuisci",
+        "desc": "Push su Vercel e AWS per una distribuzione globale istantanea."
+      },
+      "speedometer": {
+        "number": "10",
+        "unit": "min",
+        "subtitle": "TEMPO DI MERCATO",
+        "comparison": "Salta mesi di lavoro sulla piattaforma.",
+        "phases": {
+          "scaffold": "Inizializza",
+          "wire": "Core",
+          "ship": "Distribuisci",
+          "scale": "Scala",
+          "ongoing": "∞"
+        },
+        "cta": "Avvia il timer"
+      },
+      "presetHint": {
+        "badge": "Sistema Preset",
+        "message": "Una configurazione. Ogni funzionalità. Scegli il preset e distribuisci.",
+        "detail": "Configura una volta, genera tutto — fatturazione, autenticazione, AI, i18n — da una singola configurazione preset.",
+        "readyStatus": "Sistema preset pronto"
+      }
+    }
+  },
+  "featuresPage": {
+    "hero": {
+      "badge": "Funzionalità della piattaforma",
+      "headlinePrefix": "Tutto ciò che ti serve per ",
+      "headlineHighlight": "distribuire con fiducia.",
+      "description": "{brandName} è una piattaforma SaaS full-stack: AI, fatturazione, multi-tenancy, osservabilità e sicurezza integrate fin dal primo giorno. Smetti di ricostruire lo strato della piattaforma."
+    },
+    "sections": {
+      "exploreFeature": "Esplora funzionalità",
+      "ai_category": "AI e Intelligenza",
+      "ai_f1_title": "Completioni chat multi-modello",
+      "ai_f1_desc": "Instrada le richieste verso Anthropic, OpenAI, Google o i tuoi modelli fine-tuned. Streaming, visione e function calling supportati out of the box.",
+      "ai_f2_title": "Embeddings semantici",
+      "ai_f2_desc": "Genera e memorizza embeddings vettoriali con pgvector. Abilita la ricerca semantica, le pipeline RAG e i motori di raccomandazione.",
+      "ai_f3_title": "Misurazione utilizzo AI",
+      "ai_f3_desc": "Quota per piano con tracciamento dell'utilizzo: misura token AI, chiamate API e storage contro aggregazioni in tempo reale basate su ClickHouse.",
+      "multi_category": "Piattaforma multi-tenant",
+      "multi_f1_title": "Isolamento a livello di organizzazione",
+      "multi_f1_desc": "La sicurezza a livello di riga in Postgres garantisce che i tenant non possano mai accedere ai dati degli altri — applicata a livello di database, non solo dell'applicazione.",
+      "multi_f2_title": "Autenticazione multi-provider (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_desc": "OAuth multi-provider (Google, GitHub, ecc.) oltre a email/password e magic-link — passa tra Clerk, Better Auth, NextAuth o Supabase Auth tramite una singola variabile d'ambiente.",
+      "multi_f3_title": "Provisioning automatico dei tenant",
+      "multi_f3_desc": "Quando una nuova organizzazione si registra tramite Clerk, generiamo automaticamente la loro prima chiave API e inviamo un'email di benvenuto personalizzata — zero passaggi manuali.",
+      "dx_category": "Esperienza sviluppatore",
+      "dx_f1_title": "Chiavi API hashate",
+      "dx_f1_desc": "Chiavi hashate SHA-256 con visualizzazione del prefisso (nbtr_live_…). Visualizzate in chiaro esattamente una volta alla creazione — sicurezza senza attriti.",
+      "dx_f2_title": "Middleware di idempotenza",
+      "dx_f2_desc": "Invia un header Idempotency-Key e qualsiasi richiesta POST diventa sicura da ripetere. Supportato da Redis, cache di 24 ore, conforme alla bozza IETF.",
+      "dx_f3_title": "API multi-protocollo (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI per API pubbliche, oRPC per chiamate frontend type-safe, tRPC per compatibilità con lo stack T3. Tutti i protocolli condividono gli stessi contratti Zod e lo stack di middleware. Abilita per protocollo tramite configurazione predefinita.",
+      "billing_category": "Fatturazione e monetizzazione",
+      "billing_f1_title": "Stripe, LemonSqueezy, Polar e pagamenti cinesi",
+      "billing_f1_desc": "Scegli il tuo provider di pagamento: Stripe per le imprese globali, LemonSqueezy per gli sviluppatori indipendenti, Polar per il software open source, o Alipay/WeChat Pay per il mercato cinese. Checkout con un clic e portale di fatturazione self-service.",
+      "billing_f2_title": "Applicazione delle quote in base all'uso",
+      "billing_f2_desc": "Contatori Redis in tempo reale tracciano le chiamate API e l'uso dei token per tenant. Le richieste vengono bloccate al gateway quando si raggiungono i limiti.",
+      "billing_f3_title": "Sincronizzazione del ciclo di vita dei webhook",
+      "billing_f3_desc": "Gli eventi di abbonamento di Stripe aggiornano automaticamente i piani dell'organizzazione nel tuo database tramite Inngest — senza cron job, senza polling.",
+      "rel_category": "Affidabilità",
+      "rel_f1_title": "Interruttore automatico + riprova",
+      "rel_f1_desc": "Il gateway e il servizio AI utilizzano un circuit breaker CLOSED/OPEN/HALF_OPEN con backoff esponenziale e jitter — senza guasti a cascata.",
+      "rel_f2_title": "Coda delle lettere morte",
+      "rel_f2_desc": "I gestori di eventi che esauriscono 3 tentativi di retry finiscono nella DLQ. Riproducili singolarmente dall'API di amministrazione senza ridistribuire.",
+      "rel_f3_title": "Avvisi sul tasso di consumo degli SLO",
+      "rel_f3_desc": "Avvisi multi-finestra in stile Google SRE attivati a tassi di consumo di 14,4×, 6× e 3× prima dell'esaurimento del budget errori.",
+      "sec_category": "Sicurezza",
+      "sec_f1_title": "Intestazioni CSP basate su nonce",
+      "sec_f1_desc": "Content Security Policy strict-dynamic con nonce generati per ogni richiesta nel middleware Clerk — nessun unsafe-inline.",
+      "sec_f2_title": "WAF ModSecurity",
+      "sec_f2_desc": "OWASP Core Rule Set in modalità DetectionOnly su ogni ingress. Limitazione di frequenza a 30 RPS con tolleranza burst tramite annotazioni nginx.",
+      "sec_f3_title": "SBOM + provenienza SLSA",
+      "sec_f3_desc": "Ogni rilascio genera una software bill of materials CycloneDX e un'attestazione di provenienza SLSA, caricati nel GitHub Release.",
+      "obs_category": "Osservabilità",
+      "obs_f1_title": "Tracciamento OpenTelemetry",
+      "obs_f1_desc": "Tracce distribuite da Next.js → Hono → microservizi Python via OTLP. Esportate su Jaeger (dev) e Grafana Tempo (prod).",
+      "obs_f2_title": "Dashboard Grafana",
+      "obs_f2_desc": "Panoramica piattaforma multi-pannello: disponibilità SLO, budget errori residuo, saturazione HPA, riavvii pod e throttling CPU.",
+      "obs_f3_title": "Tracciamento errori Sentry",
+      "obs_f3_desc": "Errori lato server e client catturati con contesto tenant, ID richiesta e ID traccia per correlazione cross-system.",
+      "data_category": "Dati & Analytics",
+      "data_f1_title": "Warehouse OLAP ClickHouse",
+      "data_f1_desc": "Gli eventi arrivano su ClickHouse per query analitiche veloci. dbt trasforma gli eventi grezzi in metriche di crescita gold-layer visibili nella dashboard.",
+      "data_f2_title": "Analisi funnel",
+      "data_f2_desc": "Traccia registrazioni → attivazioni → conversioni con attribuzione a livello di coorte. Ricavi per utente attivo calcolati dal gold layer.",
+      "data_f3_title": "Kafka / ingestione eventi",
+      "data_f3_desc": "Ingestione eventi ad alto throughput tramite Inngest in ClickHouse bronze, con deduplicazione in memoria e validazione schema al bordo del gateway.",
+      "infra_category": "Infrastruttura",
+      "infra_f1_title": "GitOps con ArgoCD",
+      "infra_f1_desc": "Le modifiche al ramo principale vengono riconciliate automaticamente sul cluster. Il self-heal annulla le modifiche manuali kubectl. Le finestre di sincronizzazione impongono orari di deploy sicuri.",
+      "infra_f2_title": "Pooling connessioni PgBouncer",
+      "infra_f2_desc": "PgBouncer in modalità transazione davanti a Supabase gestisce 1.000 connessioni app su 20 connessioni Postgres. HA con 2 repliche.",
+      "infra_f3_title": "Autoscaling orizzontale + verticale",
+      "infra_f3_desc": "HPA scala su CPU/memoria. VPA in modalità Off fornisce raccomandazioni di right-sizing. Metriche personalizzate KEDA previste per la v2."
+    }
+  },
+  "comingSoon": {
+    "badge": "🚧 In Costruzione",
+    "description": {
+      "ideas": "Stiamo attualmente creando un'esperienza incredibile guidata dai geek per questa sezione. Sarà lanciata insieme al prossimo aggiornamento principale della pipeline architetturale.",
+      "opc": "Un'analisi più approfondita della piattaforma è in corso. Segui il changelog e la roadmap per le prossime versioni.",
+      "roadmap": "Dalle basi infrastrutturali alla scala enterprise — le nostre fasi di prodotto, i milestone delle versioni e la visione di finanziamento."
+    },
+    "returnBtn": "Torna all'Hub"
+  },
+  "blogShowcase": {
+    "badge": "DAL BLOG",
+    "title": "Approfondimenti tecnici",
+    "subtitle": "Analisi approfondite su architettura SaaS, infrastrutture AI e ingegneria in produzione.",
+    "readMore": "Leggi di più"
+  },
+  "useCases": {
+    "badge": "SCENARI SCALABILI",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
+    "tabs": {
+      "opc": "Operazioni Agentic",
+      "ip": "Matrice IP Personale",
+      "multimodal": "SaaS AI Multimodale",
+      "enterprise": "Enterprise Moderna (CN)",
+      "export": "Export Software Globale",
+      "design": "Motore Design System",
+      "edam": "Asset Digitali Enterprise"
+    },
+    "content": {
+      "opc": {
+        "title": "Hub Operativo AI-Native",
+        "desc": "Esegui flussi di lavoro degli agenti, strumenti interni e superfici di integrazione su una piattaforma governata unificata. Estensioni basate su registro, portali operatori e pattern runtime riutilizzabili rimangono allineati mentre il sistema scala.",
+        "features": {
+          "f1": "Registro Strumenti e Superficie di Integrazione",
+          "f2": "Portale Operatore e Console Interna"
+        }
+      },
+      "ip": {
+        "title": "Crescita IP Personale e Matrice Portfolio",
+        "desc": "Crea una presenza da fondatore di livello mondiale con blog MDX ad alta conversione, portfolio e pagine profilo. Newsletter integrata, analytics e SEO garantiscono la crescita del tuo brand personale.",
+        "features": {
+          "f1": "Blog MDX + Motore Newsletter",
+          "f2": "Ottimizzato per SEO e Social Graph"
+        }
+      },
+      "multimodal": {
+        "title": "SaaS AI Multimodale Innovativo",
+        "desc": "Lancia prodotti SaaS di orchestrazione Multi-Agent, Chatbot, Text-to-Image, Image-to-Text e Text-to-Video con UI streaming all'avanguardia, routing intelligente dei modelli e misurazione dell'uso.",
+        "features": {
+          "f1": "UI Streaming Multi-Agent",
+          "f2": "Model Router + Misurazione Uso"
+        }
+      },
+      "enterprise": {
+        "title": "Sito Web Enterprise Moderno (CN)",
+        "desc": "Progettato per scenari aziendali cinesi — CDN domestica ultra-veloce, integrazione ecosistema WeChat, design responsive mobile-first e conformità localizzata pronta all'uso.",
+        "features": {
+          "f1": "CDN Locale + Conformità",
+          "f2": "Pronto per l'ecosistema WeChat"
+        }
+      },
+      "export": {
+        "title": "Landing Pages per l'Export Globale di Software",
+        "desc": "Progettato per il SaaS che va globale. Checkout Stripe multi-valuta, auto-routing i18n con next-intl in 7 lingue, conformità GDPR/CCPA e contenuti geo-targettizzati.",
+        "features": {
+          "f1": "Pagamenti Globali Multi-Valuta",
+          "f2": "7 Lingue + Pronto per il GDPR"
+        }
+      },
+      "design": {
+        "title": "Design System e Libreria di Componenti Leader",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "features": {
+          "f1": "Governance dei Token a 4 Livelli",
+          "f2": "Seven design languages + Storybook"
+        }
+      },
+      "edam": {
+        "title": "Gestione dei Digital Asset per l'Enterprise",
+        "desc": "Data lake strutturati e topologie di dashboard complesse che utilizzano architetture PostgreSQL scalabili e RBAC granulare.",
+        "features": {
+          "f1": "Sicurezza a Livello di Riga",
+          "f2": "Query Complesse",
+          "f3": "Gestione dei Ruoli"
+        }
+      }
+    }
+  },
+  "designSystem": {
+    "badge": "SISTEMA DI DESIGN",
+    "headline": "4 livelli di governance del design.",
+    "subheadline": "Dalle primitive del brand ai token runtime, fino al motore multi-tema e ai componenti governati — non solo shadcn con Tailwind.",
+    "flowBrand": "Brand",
+    "flowBrandDesc": "Primitive colore, gradienti, linguaggio del moto",
+    "flowTokens": "Token",
+    "flowTokensDesc": "Variabili CSS, scale a 12 step, dark mode",
+    "flowTheme": "Tema",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
+    "flowUI": "UI",
+    "flowUIDesc": "Componenti, Storybook, Chromatic",
+    "card1Title": "Scale colore a 12 step",
+    "card1Desc": "Scala semantica allineata a Geist: sfondi (1-2), stati (3-5), bordi (6-8), riempimenti (9-10), testo (11-12).",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
+    "card3Title": "Regressione visiva",
+    "card3Desc": "Chromatic rileva ogni cambiamento di pixel. Storybook documenta ogni componente. I test architetturali impongono la copertura delle storie.",
+    "card4Title": "Governance dei token",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
+    "card5Title": "Documentazione interattiva",
+    "card5Desc": "Sito completo di documentazione design basato su Fumadocs con documentazione API dei componenti bilingue (EN/ZH), gallerie token, guide ai pattern di layout ed esempi di codice live.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
+  },
+  "notFound": {
+    "title": "Pagina non trovata",
+    "desc": "Il link potrebbe essere obsoleto oppure la pagina è stata spostata.",
+    "home": "Torna a {brandName}",
+    "docs": "Apri la documentazione"
+  },
+  "ui": {
+    "search": {
+      "placeholder": "Cerca release..."
+    },
+    "nav": {
+      "toggleMenu": "Apri/chiudi menu"
+    },
+    "actions": {
+      "showFullRelease": "Mostra release completa",
+      "copyLinkToRelease": "Copia link della release",
+      "copyLink": "Copia link",
+      "openInNewTab": "Apri in una nuova scheda"
+    },
+    "status": {
+      "comingSoon": "In arrivo"
+    }
+  },
+  "licensing": {
+    "hero": {
+      "title": "Gratuito per <hl>Costruire Su</hl>",
+      "description": "{brandName}-Sailor non costa nulla per l'uso commerciale — MIT su npm, FSL-1.1-ALv2 sul repository, con conversione a Apache-2.0 dopo due anni. I piani a pagamento offrono supporto e impegni contrattuali, mai permessi."
+    },
+    "plans": {
+      "community": {
+        "badge": "Sempre Gratuito",
+        "title": "Community",
+        "subtitle": "Per Tutti",
+        "description": "Qualsiasi dimensione del team, qualsiasi fatturato. Prodotti commerciali closed-source inclusi.",
+        "features": {
+          "fullSource": "Codice sorgente completo, tutti i pacchetti",
+          "closedSourceOk": "Uso commerciale closed-source — senza copyleft",
+          "noAttribution": "Nessuna registrazione, nessuna attribuzione richiesta",
+          "communitySupport": "Supporto community — best-effort"
+        },
+        "cta": "Visualizza su GitHub"
+      },
+      "team": {
+        "badge": "Da {price}/anno",
+        "title": "Team",
+        "subtitle": "Abbonamento al supporto",
+        "description": "Per i team che non possono affidare un percorso critico ai tempi di risposta della community.",
+        "features": {
+          "privateChannel": "Canale di supporto privato",
+          "firstResponse": "Prima risposta entro due giorni lavorativi, garantita",
+          "priorityTriage": "Triage prioritario dei bug",
+          "upgradeHelp": "Assistenza agli aggiornamenti e avviso su breaking-change"
+        },
+        "cta": "Ottieni supporto"
+      },
+      "enterprise": {
+        "badge": "Da $30.000/anno",
+        "title": "Enterprise",
+        "subtitle": "Pronto per gli acquisti",
+        "description": "Per le organizzazioni la cui revisione legale, di sicurezza o di approvvigionamento richiede una controparte che firmi.",
+        "features": {
+          "sla": "SLA di risposta — 4 ore lavorative, 1 ora di fermo in produzione",
+          "indemnity": "Indennità e impegno per le patch di sicurezza",
+          "compliance": "DPA firmato, pacchetto di conformità, impegno di continuità",
+          "trademark": "Diritti di marchio e white-label"
+        },
+        "cta": "Contatta il reparto vendite"
+      }
+    },
+    "faq": {
+      "title": "Domande frequenti",
+      "description": "Versione breve: l'uso è gratuito. Si paga quando ci serve un impegno contrattuale.",
+      "items": {
+        "whyFsl": {
+          "q": "Perché FSL invece di MIT o AGPL?",
+          "a": "FSL consente ogni utilizzo tranne la vendita di un sostituto di Sailor stesso, e ogni versione diventa Apache-2.0 due anni dopo il rilascio — una concessione fatta in modo irrevocabile in anticipo. Passa più facilmente la revisione legale aziendale rispetto ad AGPL."
+        },
+        "reallyFree": {
+          "q": "L'uso commerciale è davvero gratuito?",
+          "a": "Sì. Nessun costo, nessuna chiave di licenza, nessuna registrazione, nessuna soglia di fatturato o di dipendenti, nessun attribuzione. Crea un prodotto closed-source e vendilo."
+        },
+        "competingUse": {
+          "q": "Cosa si considera un uso concorrenziale?",
+          "a": "Offrire Sailor stesso — un servizio Sailor ospitato o una piattaforma concorrenziale ripacchettizzata. Costruire un SaaS verticale, uno strumento interno o progetti per clienti su Sailor non è un uso concorrenziale. Se il tuo modello lo richiede, un accordo Enterprise può includere una rinuncia scritta."
+        },
+        "upgrade": {
+          "q": "Cosa acquistano effettivamente i livelli a pagamento?",
+          "a": "Impegni di supporto, SLA di risposta, indennità, documentazione di conformità e diritti di marchio. Mai il permesso di usare il software — quello è già tuo."
+        },
+        "contributions": {
+          "q": "E le contribuzioni open source?",
+          "a": "Tutte le contribuzioni richiedono una CLA. Vedi CONTRIBUTING.md."
+        }
+      }
+    },
+    "meta": {
+      "title": "Licenza — {brandName}",
+      "description": "Gratuito per uso commerciale. MIT su npm, FSL-1.1-ALv2 sul repository, con conversione a Apache-2.0."
+    }
+  },
+  "licenseWizard": {
+    "tiers": {
+      "individualFree": "Licenza individuale gratuita",
+      "opcFree": "Licenza azienda a singolo proprietario",
+      "startupCommercial": "Licenza commerciale Startup",
+      "enterprise": "Licenza Enterprise"
+    },
+    "referralSource": {
+      "selectPlaceholder": "Seleziona un'opzione...",
+      "productHunt": "Product Hunt"
+    }
+  },
+  "changelogMeta": {
+    "title": "Registro delle modifiche — {brandName}",
+    "description": "Ogni release, consegnata con un'ossessiva attenzione ai dettagli.",
+    "versionTitleSuffix": "Changelog di {brandName}"
+  },
+  "roadmapMeta": {
+    "title": "Roadmap della piattaforma — {brandName}",
+    "description": "La roadmap per la baseline della piattaforma governata di {brandName}, il runtime Harness e il percorso di upgrade."
+  },
+  "blogMeta": {
+    "title": "Blog — {brandName}",
+    "description": "Approfondimenti tecnici, aggiornamenti sul prodotto e best practice SaaS dal team di {brandName}."
+  },
+  "getLicenseMeta": {
+    "title": "Ottieni la tua licenza — {brandName}",
+    "description": "Ottieni la tua licenza {brandName} e l'accesso alla piattaforma in 2 minuti."
+  },
+  "landing": {
+    "faq": {
+      "badge": "FAQ",
+      "title": "Domande, risposte dirette",
+      "subtitle": "Tutto quello che devi sapere prima di andare in produzione.",
+      "items": {
+        "what-is-sailor": {
+          "question": "Cos'è esattamente {productName}?",
+          "answer": "Sailor è una base SaaS opinionata basata su Next.js + Tailwind v4, con autenticazione, fatturazione, multi-tenancy, AI, code, ricerca ed email già configurate. La cloni, configuri i provider e vai in produzione — solitamente entro una settimana."
+        },
+        "who-is-it-for": {
+          "question": "Per chi è progettato Sailor?",
+          "answer": "Per founder e ingegneri di prodotto che vogliono dedicare il proprio tempo al fattore differenziante — non a ricostruire per la quinta volta la stessa infrastruttura di autenticazione, fatturazione e tenancy."
+        },
+        "free-or-paid": {
+          "question": "È gratuito o a pagamento?",
+          "answer": "L'intero codice sorgente è rilasciato sotto AGPL-3.0 — gratuito per progetti personali, tooling interno e progetti open-source compatibili con AGPL. Una licenza commerciale sblocca il diritto di distribuire Sailor in SaaS proprietari closed-source. Ogni piano include il set completo di funzionalità (autenticazione, fatturazione, multi-tenancy, AI, audit); le differenze tra i livelli riguardano i termini di licenza e il supporto SLA, non le funzionalità."
+        },
+        "china-friendly": {
+          "question": "Funziona in Cina?",
+          "answer": "Sì. Forniamo una configurazione infrastrutturale parallela (CDN compatibile con Aliyun, domini conformi all'ICP, Penpot opzionale al posto di Figma) in modo che la stessa codebase venga distribuita senza problemi all'interno del Great Firewall."
+        },
+        "deployment": {
+          "question": "Dove posso distribuirlo?",
+          "answer": "Ovunque giri Node 22+. Il sito marketing viene distribuito su Vercel; il dashboard, il gateway e i servizi Python girano su Docker / PM2 (oggi li eseguiamo su Aliyun ECS, con manifest Kubernetes completi sotto infra/iac/k8s/ per i cluster). I clienti Enterprise possono inoltre distribuirlo all'interno delle proprie VPC."
+        },
+        "security": {
+          "question": "Come viene gestita la sicurezza?",
+          "answer": "Crittografia envelope a livello applicativo per i segreti (@nebutra/vault), Postgres RLS per l'isolamento dei tenant, RBAC/ABAC tramite CASL o OpenFGA (@nebutra/permissions), token inter-servizi firmati HMAC, webhook in uscita firmati e una pipeline di audit allineata a SOC 2 (@nebutra/audit) inclusa in ogni piano. Pro e Enterprise aggiungono supporto per attestazione SOC 2, risposta agli incidenti dedicata e una conservazione più lunga dei log di audit."
+        },
+        "support": {
+          "question": "Che supporto ricevo?",
+          "answer": "I clienti Free ottengono la community Discord + GitHub Issues. Pro aggiunge email prioritaria con SLA di risposta entro 1 giorno lavorativo. Enterprise ottiene un canale Slack dedicato e un ingegnere per l'onboarding."
+        },
+        "byo-provider": {
+          "question": "Posso portare il mio provider?",
+          "answer": "Sì. Ogni integrazione (autenticazione, coda, ricerca, email, pagamenti, storage, fatturazione) è indipendente dal provider. La factory in ogni pacchetto seleziona l'adapter corretto da una singola variabile d'ambiente — sostituisci Clerk con Better Auth, NextAuth o Supabase Auth, QStash con BullMQ, Resend con SES, Stripe con Polar / LemonSqueezy / ChinaPay — senza toccare il codice dell'applicazione."
+        },
+        "tech-stack": {
+          "question": "Qual è lo stack tecnologico?",
+          "answer": "Next.js 16 (App Router) su React 19, TypeScript 5.9, Tailwind v4, Prisma 7 su Postgres (con pgvector + RLS), Hono per il gateway BFF, FastAPI per i servizi ML/pesanti e una libreria di componenti curata su Radix, primitive UI di {brandName} e il layer Motion condiviso. Le funzionalità AI passano attraverso il Vercel AI SDK con portabilità del provider (OpenAI / OpenRouter / SiliconFlow / Azure / locale)."
+        },
+        "license": {
+          "question": "Qual è la licenza?",
+          "answer": "AGPL-3.0 con eccezione commerciale. Gratuito per uso personale, tooling interno e OSS compatibili con AGPL. Una licenza commerciale a pagamento sblocca il diritto di distribuire Sailor così com'è in SaaS proprietari. L'intero codice sorgente è incluso in ogni piano."
+        },
+        "paid-updates": {
+          "question": "Devo pagare per gli aggiornamenti?",
+          "answer": "No. Gli aggiornamenti del codice sorgente sono inclusi in ogni licenza commerciale: puoi fare pull da main quando vuoi e fare rebase del tuo fork. Il piano a pagamento è il diritto di utilizzare Sailor in produzione commerciale, non il diritto di ricevere codice. Ogni rilascio minore include un CHANGELOG e una guida all'aggiornamento per eventuali modifiche non retrocompatibili."
+        },
+        "why-turborepo": {
+          "question": "Perché Turborepo invece di una standard app Next.js?",
+          "answer": "Sailor è composto da 10 app + 104 pacchetti condivisi sotto packages/*/* + 4 lane backend (gateway Hono, FastAPI/Python, Go, Rust) — ben oltre il punto in cui una singola mega-app Next.js rimane manutenibile. Turborepo ci offre build solo per i file modificati, caching remoto trasparente e una singola fonte di verità per design token condivisi, auth, fatturazione e osservabilità — senza costringere ogni team nello stesso processo Next.js."
+        },
+        "multi-tenancy": {
+          "question": "Come viene gestita la multi-tenancy?",
+          "answer": "Due livelli. Contesto tenant legato alla richiesta tramite @nebutra/tenant (AsyncLocalStorage propaga l'org attivo attraverso ogni chiamata server, incluse query DB e webhook in uscita) e isolamento imposto dal database tramite policy di Row-Level Security di Postgres (infra/data/database/policies/rls.sql) legate a una app.current_tenant_id locale alla sessione. Le connessioni con ruolo di servizio bypassano RLS solo all'interno di servizi interni fidati; tutte le route esposte agli utenti passano attraverso il client legato al tenant."
+        },
+        "swap-clerk": {
+          "question": "Posso sostituire Clerk con un altro provider di autenticazione?",
+          "answer": "Sì. @nebutra/auth include adapter di prima classe per Clerk, Better Auth, NextAuth (Auth.js v5) e Supabase Auth. Puoi cambiare tramite la variabile d'ambiente AUTH_PROVIDER o scegliere al momento dello scaffold con create-sailor --auth=... — le superfici server, React e middleware restano identiche indipendentemente dal provider. Aggiungere un quinto adapter significa implementare una singola interfaccia (~80 LOC); nulla nel codice circostante è legato a un provider specifico."
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "Amato dai builder",
+      "title": "Cosa dicono i fondatori dopo aver rilasciato con Sailor",
+      "subtitle": "Le storie dei clienti del nostro gruppo beta arriveranno presto — sii tra i primi."
+    },
+    "comparison": {
+      "badge": "Confronta i piani",
+      "title": "È tutto gratis. Scegli quanto impegno ti serve.",
+      "subtitle": "Ogni piano include il codice sorgente completo e consente l'uso commerciale closed-source senza costi. Le differenze riguardano supporto, impegni contrattuali e diritti di marchio.",
+      "plan": {
+        "community": "Community",
+        "team": "Team",
+        "enterprise": "Enterprise"
+      },
+      "feature": {
+        "license": {
+          "label": "Licenza",
+          "type": "Licenza",
+          "commercial-use": "Uso commerciale closed-source",
+          "registration": "Registrazione",
+          "trademark": "Diritti di marchio"
+        },
+        "source": {
+          "label": "Codice sorgente",
+          "full-source": "Codice sorgente completo",
+          "all-packages": "Tutti i pacchetti e moduli",
+          "update-window": "Aggiornamenti"
+        },
+        "support": {
+          "label": "Supporto",
+          "channel": "Canale di supporto",
+          "first-response": "Prima risposta garantita",
+          "security-patch": "Impegno sulle patch di sicurezza"
+        },
+        "procurement": {
+          "label": "Acquisti",
+          "indemnification": "Manleva",
+          "dpa": "DPA firmato e pacchetto di conformità",
+          "continuity": "Impegno di continuità"
+        }
+      },
+      "ariaTable": "Confronto tra piani e funzionalità",
+      "value": {
+        "included": "Incluso",
+        "notIncluded": "Non incluso",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Non richiesta",
+        "whiteLabelRights": "Diritti white-label",
+        "unlimited": "Illimitati",
+        "unlimitedPlusNotice": "Illimitati + preavviso sulle breaking change",
+        "unlimitedPlusLts": "Illimitati + branch di supporto a lungo termine",
+        "publicChannels": "Issue pubbliche e Discord",
+        "privateChannel": "Canale privato",
+        "namedContact": "Referente dedicato",
+        "twoBusinessDays": "2 giorni lavorativi",
+        "fourBusinessHours": "4 ore lavorative",
+        "bestEffort": "Best effort",
+        "contractual": "Contrattuale"
+      }
+    },
+    "socialProof": {
+      "title": "Costruito su uno stack in cui puoi avere fiducia",
+      "logosLabel": "Partner di integrazione",
+      "metrics": {
+        "developers": {
+          "value": "47+",
+          "label": "Provider AI supportati"
+        },
+        "projects": {
+          "value": "104",
+          "label": "pacchetti monorepo"
+        },
+        "uptime": {
+          "value": "7",
+          "label": "localizzazioni i18n pronte all'uso"
+        }
+      }
+    }
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "Numero di registrazione ICP",
+      "publicSecurity": "Sicurezza pubblica"
+    }
+  },
+  "icpFooter": {
+    "recordNumber": "Registrazione ICP",
+    "publicSecurity": "Registrazione sicurezza pubblica"
+  },
+  "MarketLocalePicker": {
+    "title": "Regioni e lingue",
+    "description": "Seleziona una regione e una lingua per il sito marketing.",
+    "triggerAria": "Seleziona regione e lingua",
+    "searchPlaceholder": "Cerca regioni…",
+    "plannedHint": "L'interfaccia torna all'inglese fino alla pubblicazione di questa lingua",
+    "noResults": "Nessuna regione corrispondente",
+    "menuAria": "Regioni e lingue"
+  }
+}

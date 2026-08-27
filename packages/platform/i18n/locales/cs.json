@@ -1,0 +1,1273 @@
+{
+  "admin": {
+    "title": "Administrace",
+    "description": "Panel superadmina — spravujte uživatele, organizace a stav systému.",
+    "nav": {
+      "overview": "Přehled",
+      "users": "Uživatelé",
+      "organizations": "Organizace"
+    },
+    "users": {
+      "title": "Uživatelé",
+      "description": "Procházejte, hledejte a impersonujte libovolného uživatele napříč všemi organizacemi.",
+      "searchPlaceholder": "Hledat uživatele…",
+      "totalCount": "{count, plural, one {# uživatel} few {# uživatelé} other {# uživatelů}}",
+      "empty": "Žádní uživatelé nenalezeni.",
+      "loadError": "Nepodařilo se načíst uživatele.",
+      "columns": {
+        "email": "E-mail",
+        "name": "Jméno",
+        "created": "Vytvořeno",
+        "activeOrgs": "Aktivní orgy",
+        "actions": "Akce"
+      },
+      "viewOrgs": "Zobrazit organizace"
+    },
+    "organizations": {
+      "title": "Organizace",
+      "description": "Všechny pracovní prostory v systému, seřazené podle aktuálnosti.",
+      "searchPlaceholder": "Hledat organizace…",
+      "totalCount": "{count, plural, one {# organizace} few {# organizace} other {# organizací}}",
+      "empty": "Nebyly nalezeny žádné organizace.",
+      "loadError": "Nepodařilo se načíst organizace.",
+      "columns": {
+        "name": "Název",
+        "slug": "Slug",
+        "plan": "Plán",
+        "members": "Členové",
+        "created": "Vytvořeno",
+        "actions": "Akce"
+      },
+      "view": "Zobrazit"
+    },
+    "impersonate": {
+      "trigger": "Převzít roli",
+      "starting": "Spouštím…",
+      "stop": "Přestat se vydávat za",
+      "confirm": "Vydávat se za {label}? Aplikaci budete vidět jako tento uživatel, dokud nepřestanete.",
+      "error": "Nepodařilo se zahájit vydávání za uživatele.",
+      "stopError": "Nepodařilo se ukončit vydávání za uživatele."
+    },
+    "pagination": {
+      "previous": "Předchozí",
+      "next": "Další",
+      "pageOf": "Strana {page} z {total}"
+    }
+  },
+  "Common": {
+    "hello": "Ahoj světe",
+    "dashboard": "Nástěnka",
+    "actions": {
+      "continue": "Pokračovat",
+      "confirm": "Potvrdit",
+      "done": "Hotovo",
+      "cancel": "Zrušit"
+    }
+  },
+  "theme": {
+    "light": "Světlý",
+    "dark": "Tmavý",
+    "system": "Systémový"
+  },
+  "LocaleSwitcher": {
+    "label": "Jazyk",
+    "ariaLabel": "Změnit jazyk",
+    "searchPlaceholder": "Hledat jazyky…",
+    "noResults": "Žádné jazyky neodpovídají",
+    "menuAria": "Vybrat jazyk"
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "Číslo záznamu ICP",
+      "publicSecurity": "Záznam veřejné bezpečnosti"
+    },
+    "wechat": {
+      "signIn": "Přihlásit se přes WeChat",
+      "notConfigured": "Přihlášení přes WeChat není nakonfigurováno"
+    }
+  },
+  "onboarding": {
+    "title": "Nastavte si pracovní prostor",
+    "subtitle": "Tři rychlé kroky a můžete začít.",
+    "steps": {
+      "workspace": "Pracovní prostor",
+      "invite": "Pozvat tým",
+      "plan": "Vybrat plán"
+    },
+    "progress": {
+      "back": "Zpět",
+      "stepCounter": "Krok {current} z {total}"
+    },
+    "plan": {
+      "title": "Vyberte si plán",
+      "description": "Začněte zdarma nebo si odemkněte více kapacity. Plán můžete kdykoli změnit.",
+      "choose": "Vybrat plán",
+      "skip": "Přeskočit"
+    }
+  },
+  "userMenu": {
+    "ariaLabel": "Otevřít uživatelské menu",
+    "profile": "Profil",
+    "settings": "Nastavení",
+    "feedback": "Zpětná vazba",
+    "theme": "Téma",
+    "language": "Jazyk",
+    "signOut": "Odhlásit se",
+    "signedInAs": "Přihlášen jako"
+  },
+  "account": {
+    "profile": {
+      "title": "Profil",
+      "description": "Aktualizujte své osobní údaje.",
+      "nameLabel": "Jméno",
+      "namePlaceholder": "Vaše celé jméno",
+      "emailLabel": "E-mail",
+      "emailHint": "Na novou e-mailovou adresu odešleme odkaz pro ověření.",
+      "languageLabel": "Jazyk",
+      "submit": "Uložit změny",
+      "saving": "Ukládání…",
+      "verifyEmail": "Ověřit",
+      "verifying": "Odesílání ověření…",
+      "success": "Profil aktualizován.",
+      "verificationSent": "Ověřovací e-mail odeslán.",
+      "errorRequiredName": "Jméno je povinné.",
+      "errorInvalidEmail": "E-mailová adresa není platná.",
+      "subtitle": "Vaše identita a kontaktní údaje.",
+      "unknown": "Nepojmenovaný uživatel",
+      "manageCta": "Otevřít kompletní nastavení účtu"
+    },
+    "avatar": {
+      "title": "Avatar",
+      "description": "Nahrajte čtvercový obrázek (PNG, JPEG nebo WebP, max. 2 MB).",
+      "uploadButton": "Nahrát avatar",
+      "uploading": "Nahrávám…",
+      "fileTooBig": "Soubor je příliš velký. Maximální velikost je 2 MB.",
+      "invalidType": "Nepodporovaný typ obrázku. Použijte PNG, JPEG nebo WebP.",
+      "success": "Avatar byl aktualizován.",
+      "removeButton": "Odstranit avatar",
+      "removed": "Avatar byl odstraněn.",
+      "deleteError": "Nepodařilo se smazat avatar."
+    },
+    "export": {
+      "title": "Exportovat moje data",
+      "description": "Stáhněte si kopii všech záznamů, které máme k vašemu účtu, včetně profilu, organizací, auditních událostí, oznámení a pozvánek.",
+      "compliance": "Vyžadováno článkem 20 GDPR (Právo na přenositelnost dat) a článkem 45 PIPL (Právo získat kopii osobních údajů).",
+      "export": "Exportovat moje data",
+      "pending": "Připravuji export…",
+      "ready": "Váš export je připraven.",
+      "download": "Stáhnout JSON",
+      "error": "Nepodařilo se připravit váš export. Zkuste to prosím znovu."
+    },
+    "emailChange": {
+      "title": "Změnit e-mailovou adresu",
+      "description": "Na novou adresu vám pošleme odkaz pro ověření. Změna se projeví až po potvrzení z této schránky.",
+      "newEmailLabel": "Nová e-mailová adresa",
+      "newEmailPlaceholder": "you@example.com",
+      "submit": "Odeslat ověřovací odkaz",
+      "submitting": "Odesílám…",
+      "verificationSent": "Zkontrolujte schránku na adrese {email} a potvrďte změnu.",
+      "errorInvalidEmail": "E-mailová adresa není platná.",
+      "error": "Nepodařilo se požádat o změnu e-mailu.",
+      "confirm": {
+        "successTitle": "E-mail aktualizován",
+        "successDescription": "Vaše přihlašovací e-mailová adresa byla aktualizována.",
+        "successWithEmail": "Vaše přihlašovací e-mailová adresa je nyní {email}.",
+        "failureTitle": "Nepodařilo se potvrdit tento odkaz",
+        "failureDescription": "Tento ověřovací odkaz je neplatný, vypršel nebo již byl použit. Požádejte o nový odkaz v nastavení účtu.",
+        "errorCode": "Důvod: {code}",
+        "continueCta": "Zpět na účet",
+        "backCta": "Zpět na účet"
+      }
+    },
+    "title": "Účet",
+    "ariaLabel": "Nastavení účtu",
+    "navLabel": "Karty nastavení účtu",
+    "tip": "Stiskněte {key} kdekoli pro znovuotevření tohoto dialogu.",
+    "tabs": {
+      "profile": "Profil",
+      "subscription": "Předplatné",
+      "billing": "Fakturace",
+      "preferences": "Předvolby",
+      "personalization": "Personalizace"
+    },
+    "subscription": {
+      "title": "Předplatné",
+      "subtitle": "Plán, kvóta a obnovení.",
+      "currentPlan": "Aktuální plán",
+      "upgradeCta": "Porovnat plány",
+      "manageCta": "Spravovat předplatné"
+    },
+    "billing": {
+      "title": "Fakturace",
+      "subtitle": "Historie faktur a platební metoda.",
+      "empty": {
+        "title": "Zatím žádná historie",
+        "description": "Poplatky a faktury se zde zobrazí po prvním placeném období.",
+        "cta": "Otevřít kompletní fakturaci"
+      }
+    },
+    "preferences": {
+      "title": "Předvolby",
+      "subtitle": "Motiv a přístupnost.",
+      "theme": "Motiv",
+      "light": "Světlý",
+      "dark": "Tmavý",
+      "system": "Systémový",
+      "help": "Nápověda",
+      "reportIssue": "Nahlásit problém",
+      "shortcuts": "Klávesové zkratky"
+    },
+    "personalization": {
+      "title": "Personalizace",
+      "subtitle": "Řekněte Sailorovi, kdo jste a jak má reagovat."
+    }
+  },
+  "impact": {
+    "hero_title": "Předefinování paradigmatu",
+    "hero_subtitle": "Ať neexistuje žádný obtížný byznys na světě.",
+    "social_title": "Sociální",
+    "social_headline": "Absolutní technologická rovnost",
+    "social_description": "Posilování inovátorů na okraji. Překonávání tradičních filtrů a vybavení samostatných zakladatelů infrastrukтурой mimo krabici.",
+    "governance_title": "Správa",
+    "governance_headline": "Kód je zákon",
+    "governance_description": "Algoritmická správa založená na Proof of Work a skutečných obchodních výsledcích, nahrazující neproniknutelnou byrokracii.",
+    "environment_title": "Prostředí",
+    "environment_headline": "Digitální minimalismus",
+    "environment_description": "Snížení cloudové stopy prostřednictvím extrémní integrace SaaS a efektivnosti zdrojů."
+  },
+  "auth": {
+    "security": {
+      "title": "Zabezpečení",
+      "description": "Spravujte své heslo, vícefaktorové ověřování a aktivní relace.",
+      "managedByProvider": "Nastavení zabezpečení spravuje váš poskytovatel ověřování.",
+      "openProviderProfile": "Otevřít profil",
+      "changePassword": {
+        "title": "Změnit heslo",
+        "description": "Použijte silné heslo, které nepoužíváte na jiných webech.",
+        "currentPasswordLabel": "Aktuální heslo",
+        "newPasswordLabel": "Nové heslo",
+        "confirmPasswordLabel": "Potvrdit nové heslo",
+        "revokeOtherSessions": "Odhlásit se z jiných zařízení",
+        "submit": "Aktualizovat heslo",
+        "pending": "Aktualizuji heslo…",
+        "success": "Heslo bylo úspěšně aktualizováno."
+      },
+      "twoFactor": {
+        "title": "Dvoufázové ověřování",
+        "description": "Přidejte druhý krok ověření pomocí aplikace pro ověřování.",
+        "enabled": "Povoleno",
+        "disabled": "Zakázáno",
+        "enabledHelp": "Váš účet po přihlášení heslem vyžaduje 6místný kód z ověřovací aplikace.",
+        "disabledHelp": "Ochráňte svůj účet pomocí 6místného kódu z ověřovací aplikace.",
+        "enable": "Povolit dvoufázové ověřování",
+        "disable": "Zakázat dvoufázové ověřování",
+        "passwordPrompt": "Potvrďte své heslo",
+        "scanQrCode": "Naskenujte tento QR kód pomocí aplikace pro ověřování a poté zadejte níže uvedený 6místný kód.",
+        "secretKeyLabel": "Nebo zadejte toto tajné klíč ručně",
+        "verificationCodeLabel": "Ověřovací kód",
+        "verify": "Ověřit a povolit",
+        "backupCodesTitle": "Záložní kódy",
+        "backupCodesDescription": "Uložte si tyto kódy na bezpečné místo. Každý lze použít pouze jednou, pokud ztratíte přístup k aplikaci pro ověřování.",
+        "copyBackupCodes": "Kopírovat kódy",
+        "finishSetup": "Dokončit nastavení",
+        "successEnabled": "Dvoufázové ověřování bylo povoleno.",
+        "successDisabled": "Dvoufázové ověřování bylo zakázáno."
+      },
+      "sessions": {
+        "title": "Aktivní relace",
+        "description": "Zařízení a prohlížeče, které jsou právě přihlášeny k vašemu účtu.",
+        "currentSession": "(aktuální)",
+        "ipLabel": "IP adresa",
+        "lastActiveLabel": "Naposledy aktivní",
+        "revoke": "Odhlásit",
+        "revokeAll": "Odhlásit ze všech ostatních zařízení",
+        "empty": "Žádné další aktivní relace.",
+        "successRevoked": "Relace odhlášena.",
+        "successRevokedAll": "Všechny ostatní relace odhlášeny."
+      },
+      "deleteAccount": {
+        "title": "Smazat účet",
+        "description": "Trvale odeberte svůj účet a všechna související data. Tuto akci nelze vrátit zpět.",
+        "passwordPrompt": "Pro potvrzení zadejte své heslo",
+        "confirmTextLabel": "Pro potvrzení napište DELETE",
+        "submit": "Smazat účet",
+        "cancel": "Zrušit",
+        "success": "Účet smazán."
+      },
+      "connectedAccounts": {
+        "title": "Propojené účty",
+        "description": "Zkontrolujte metody přihlášení přes OAuth propojené s vaší identitou Nebutra.",
+        "connected": "Připojeno",
+        "connect": "Připojit",
+        "help": "Než poskytovatele odpojte, ujistěte se, že máte k dispozici alespoň jednu důvěryhodnou metodu přihlášení.",
+        "unlink": "Odpojit",
+        "notLinked": "Nepřipojeno"
+      },
+      "passkeys": {
+        "title": "Klíče k přihlášení",
+        "description": "Použijte přihlašovací údaje vázané na zařízení pro přihlášení odolné vůči phishingu.",
+        "empty": "Zatím nejsou zaregistrovány žádné klíče k přihlášení",
+        "addPasskey": "Přidat klíč k přihlášení",
+        "cancelAdd": "Zrušit",
+        "cancelled": "Nastavení klíče k přihlášení bylo zrušeno. Nic se nezměnilo.",
+        "defaultName": "Klíč k přihlášení {number}",
+        "nameHelp": "Předtím, než vás prohlížeč požádá o potvrzení, přiřaďte tomuto klíči k přihlášení rozpoznatelný název.",
+        "nameLabel": "Název klíče k přihlášení",
+        "rename": "Přejmenovat",
+        "saveRename": "Uložit název",
+        "remove": "Odstranit",
+        "successAdded": "Přístupový klíč byl přidán.",
+        "successRemoved": "Přístupový klíč byl odstraněn.",
+        "unavailableBadge": "Nedostupné"
+      },
+      "setPassword": {
+        "title": "Nastavit heslo",
+        "description": "Přidejte heslo pro přihlášení bez poskytovatele OAuth.",
+        "submit": "Nastavit heslo",
+        "pending": "Odesílám odkaz pro nastavení hesla…",
+        "sentMessage": "Odeslali jsme odkaz pro nastavení hesla na váš e-mail."
+      }
+    },
+    "banner": {
+      "logoAlt": "Nebutra",
+      "slogan": "Spusťte svůj startup s řízením od prvního dne.",
+      "tagline": "Multi-regionální agenti, multi-tenant výchozí. Bez nutnosti týmu platformy."
+    },
+    "signIn": {
+      "title": "Přihlásit se do Nebutra",
+      "subtitle": "Vyberte způsob přihlášení.",
+      "continueWith": "Pokračovat pomocí",
+      "continueWithProvider": "Pokračovat pomocí {provider}",
+      "providers": {
+        "google": "Google",
+        "github": "GitHub",
+        "apple": "Apple",
+        "microsoft": "Microsoft",
+        "feishu": "Feishu"
+      },
+      "providerLoading": "Přesměrovávám…",
+      "dividerOr": "Nebo pokračujte pomocí e-mailu",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "you@example.com",
+      "continue": "Pokračovat",
+      "back": "Zpět",
+      "passwordLabel": "Heslo",
+      "passwordPlaceholder": "Zadejte své heslo",
+      "showPassword": "Zobrazit heslo",
+      "hidePassword": "Skrýt heslo",
+      "capsLockOn": "Je zapnutý Caps Lock",
+      "forgotPassword": "Zapomněli jste heslo?",
+      "submit": "Přihlásit se",
+      "submitLoading": "Přihlašuji se…",
+      "useMagicLink": "Místo toho mi zašlete magický odkaz",
+      "usePasskey": "Přihlásit se pomocí klíče",
+      "passkeyTitle": "Přihlásit se pomocí klíče",
+      "passkeyDescription": "Použijte Face ID, Touch ID nebo bezpečnostní klíč. Heslo není potřeba.",
+      "passkeyButton": "Pokračovat s klíčem",
+      "passkeyCancelled": "Výzva k použití klíče byla zrušena.",
+      "passkeyUnsupported": "Tento prohlížeč nepodporuje klíče.",
+      "passkeyError": "Přihlášení pomocí klíče selhalo. Zkuste jinou metodu.",
+      "ssoTitle": "Pokračovat pomocí Enterprise SSO",
+      "ssoDescription": "Přesměrováváme vás na {provider} pro {email}.",
+      "ssoError": "Enterprise SSO se nepodařilo spustit. Zkuste jinou metodu.",
+      "ssoRetry": "Zkusit znovu",
+      "newToProduct": "Nový v Nebutra?",
+      "signUpLink": "Registrovat se",
+      "homeLink": "Domů",
+      "signInFailed": "Přihlášení se nezdařilo",
+      "genericError": "Došlo k chybě. Zkuste to prosím znovu.",
+      "captchaError": "Ověření proti botům se nezdařilo. Obnovte stránku a zkuste to znovu.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
+      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
+      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
+      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+    },
+    "signUp": {
+      "title": "Vytvořte si účet Nebutra",
+      "subtitle": "Jeden účet pro všechny aplikace Nebutra.",
+      "firstNameLabel": "Jméno",
+      "lastNameLabel": "Příjmení",
+      "firstNamePlaceholder": "Jméno",
+      "lastNamePlaceholder": "Příjmení",
+      "submit": "Vytvořit účet",
+      "submitLoading": "Vytváření účtu…",
+      "alreadyHaveAccount": "Už máte účet?",
+      "signInLink": "Přihlásit se",
+      "signUpFailed": "Registrace se nezdařila",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+    },
+    "passkeys": {
+      "title": "Klíče k přihlášení",
+      "description": "Místo hesla použijte Face ID, Touch ID, Windows Hello nebo bezpečnostní klíč. Každé zařízení má vlastní klíč k přihlášení.",
+      "addButton": "Přidat přístupový klíč",
+      "adding": "Nastavuji…",
+      "namePlaceholder": "např. MacBook Pro",
+      "nameLabel": "Název (volitelné)",
+      "registerSuccess": "Přístupový klíč byl přidán.",
+      "registerCancelled": "Nastavení bylo zrušeno.",
+      "registerUnsupported": "Tento prohlížeč nepodporuje přístupové klíče.",
+      "registerError": "Registrace přístupového klíče selhala.",
+      "empty": "Zatím žádné přístupové klíče.",
+      "loadError": "Načtení přístupových klíčů selhalo.",
+      "revoke": "Odstranit",
+      "revoking": "Odstraňuji…",
+      "revokeConfirm": "Odstranit tento přístupový klíč? Už se pomocí něj nebudete moci přihlásit.",
+      "revokeSuccess": "Přístupový klíč byl odstraněn.",
+      "revokeError": "Odstranění přístupového klíče selhalo.",
+      "device": {
+        "singleDevice": "Vázané na zařízení",
+        "multiDevice": "Synchronizováno napříč zařízeními"
+      },
+      "addedOn": "Přidáno {date}"
+    },
+    "magicLink": {
+      "title": "Přihlásit se pomocí magic linku",
+      "description": "Zadejte svůj e-mail a my vám pošleme 6místný kód pro přihlášení.",
+      "emailLabel": "E-mail",
+      "send": "Odeslat odkaz",
+      "codeLabel": "Ověřovací kód",
+      "verify": "Ověřit",
+      "resend": "Znovu odeslat kód",
+      "resendCooldown": "Znovu odeslat za {seconds}s",
+      "sentTo": "Kód jsme odeslali na {email}"
+    },
+    "forgotPassword": {
+      "title": "Zapomněli jste heslo?",
+      "description": "Zadejte svůj e-mail a my vám pošleme odkaz pro resetování hesla.",
+      "emailLabel": "E-mail",
+      "submit": "Odeslat odkaz pro reset",
+      "successTitle": "Zkontrolujte svůj e-mail",
+      "success": "Pokud je tento e-mail registrován, brzy obdržíte odkaz pro obnovení hesla."
+    },
+    "resetPassword": {
+      "title": "Obnovit heslo",
+      "description": "Zvolte nové heslo pro svůj účet.",
+      "newPasswordLabel": "Nové heslo",
+      "confirmPasswordLabel": "Potvrdit nové heslo",
+      "submit": "Obnovit heslo",
+      "successTitle": "Heslo obnoveno",
+      "successDescription": "Nyní se můžete přihlásit pomocí nového hesla.",
+      "signInCta": "Přejít na přihlášení",
+      "invalidTitle": "Neplatný odkaz pro obnovení",
+      "invalidDescription": "Odkaz pro obnovení hesla chybí nebo je neplatný. Požádejte o nový na stránce pro zapomenuté heslo."
+    },
+    "verifyEmail": {
+      "successTitle": "E-mail ověřen",
+      "successDescription": "Vaše e-mailová adresa byla ověřena.",
+      "failureTitle": "Ověření selhalo",
+      "failureDescription": "Nepodařilo se ověřit váš e-mail pomocí tohoto odkazu.",
+      "continueCta": "Pokračovat",
+      "signInCta": "Přejít k přihlášení"
+    },
+    "loginSuccess": {
+      "eyebrow": "Přihlášení dokončeno",
+      "title": "Jste přihlášen/a",
+      "description": "Vaše relace je připravena. Otevíráme pracovní prostor Nebutra a zachováváme bezpečné předání z autentizačního procesu.",
+      "session": "Relace",
+      "verified": "Ověřeno",
+      "workspace": "Pracovní prostor",
+      "preparing": "Připravuje se",
+      "redirecting": "Vstup do pracovního prostoru za {seconds}s",
+      "secureHandoff": "Bezpečné předání",
+      "continueCta": "Pokračovat do pracovního prostoru",
+      "signInCta": "Použít jiný účet"
+    },
+    "errors": {
+      "invalidCredentials": "E-mail nebo heslo je nesprávné.",
+      "userNotFound": "Pro tento e-mail nebyl nalezen žádný účet.",
+      "userAlreadyExists": "Účet s tímto e-mailem již existuje.",
+      "weakPassword": "Heslo je příliš slabé. Použijte alespoň 8 znaků s kombinací velkých a malých písmen a číslic.",
+      "passwordsDontMatch": "Hesla se neshodují.",
+      "passwordTooShort": "Heslo musí mít alespoň 8 znaků.",
+      "currentPasswordIncorrect": "Aktuální heslo je nesprávné.",
+      "samePassword": "Nové heslo se musí lišit od aktuálního.",
+      "invalidEmail": "E-mailová adresa není platná.",
+      "emailNotVerified": "Nejprve si ověřte e-mailovou adresu.",
+      "sessionExpired": "Vaše relace vypršela. Přihlaste se znovu.",
+      "twoFactorRequired": "Vyžadováno dvoufázové ověření.",
+      "invalidVerificationCode": "Ověřovací kód je nesprávný nebo vypršel.",
+      "twoFactorAlreadyEnabled": "Dvoufázové ověřování je již zapnuto.",
+      "twoFactorNotEnabled": "Dvoufázové ověřování není zapnuto.",
+      "tooManyAttempts": "Příliš mnoho pokusů. Zkuste to prosím později.",
+      "rateLimited": "To děláte příliš často. Zpomalte.",
+      "providerNotSupported": "Tuto akci spravuje váš poskytovatel ověřování.",
+      "networkError": "Chyba sítě. Zkontrolujte připojení a zkuste to znovu.",
+      "unknown": "Něco se pokazilo. Zkuste to prosím znovu."
+    }
+  },
+  "chat": {
+    "suggestions": {
+      "title": "Začněte jednou z těchto možností",
+      "activity": {
+        "title": "Zobrazit nedávnou aktivitu",
+        "prompt": "Zobrazte mi nejnovější aktivitu v mém pracovním prostoru za posledních 24 hodin."
+      },
+      "debug": {
+        "title": "Ladit chybu",
+        "prompt": "Pomozte mi s laděním chyby za běhu. Vložím trasu zásobníku a vy mě provedete jejím řešením."
+      },
+      "email": {
+        "title": "Napsat shrnující e-mail",
+        "prompt": "Napište stručný týdenní shrnující e-mail, který mohu poslat svému týmu o pokroku platformy."
+      },
+      "features": {
+        "title": "Prozkoumat funkce platformy",
+        "prompt": "Proveďte mě klíčovými funkcemi této SaaS platformy a vysvětlete, jak je mohu používat."
+      }
+    }
+  },
+  "billing": {
+    "activePlan": {
+      "title": "Aktivní plán",
+      "manage": "Spravovat předplatné",
+      "noPlanTitle": "Žádný aktivní plán",
+      "noPlanDescription": "Vyberte plán pro odemknutí placených funkcí a vyšších limitů využití.",
+      "choosePlan": "Vybrat plán",
+      "renewsOn": "Obnoví se {date}",
+      "endsOn": "Končí {date}",
+      "trialEndsOn": "Zkušební období končí {date}",
+      "status": {
+        "active": "Aktivní",
+        "trialing": "Zkušební",
+        "past_due": "Po splatnosti",
+        "canceled": "Zrušeno",
+        "free": "Zdarma"
+      },
+      "errors": {
+        "loadFailed": "Nepodařilo se načíst stav fakturace."
+      }
+    },
+    "pricing": {
+      "trial": "Zkušební období zdarma na {days} dní",
+      "seat": "{count, plural, one {# místo} few {# místa} other {# míst}}",
+      "perSeat": "/ místo"
+    }
+  },
+  "organizations": {
+    "settings": {
+      "logo": {
+        "title": "Logo organizace",
+        "description": "Nahrajte čtvercový obrázek (PNG, JPEG nebo WebP, max. 2 MB), který bude představovat vaši organizaci.",
+        "uploadButton": "Nahrát logo",
+        "uploading": "Nahrávání…",
+        "fileTooBig": "Soubor je příliš velký. Maximální velikost je 2 MB.",
+        "invalidType": "Nepodporovaný typ obrázku. Použijte PNG, JPEG nebo WebP.",
+        "success": "Logo bylo aktualizováno.",
+        "removeButton": "Odstranit logo",
+        "removed": "Logo bylo odstraněno."
+      },
+      "name": {
+        "title": "Název organizace",
+        "description": "Aktualizujte zobrazovaný název, který vidí váš tým a zákazníci.",
+        "label": "Název",
+        "submit": "Uložit",
+        "saving": "Ukládání…",
+        "success": "Název organizace byl aktualizován."
+      },
+      "delete": {
+        "title": "Smazat organizaci",
+        "description": "Trvale odstranit tuto organizaci, všechny členy, pozvánky a související data. Tuto akci nelze vrátit zpět.",
+        "trigger": "Smazat organizaci",
+        "confirmLabel": "Pro potvrzení zadejte název organizace",
+        "submit": "Smazat organizaci",
+        "cancel": "Zrušit",
+        "success": "Organizace byla smazána."
+      }
+    },
+    "invitation": {
+      "title": "Byli jste pozváni",
+      "heading": "Byli jste pozváni k připojení k {organizationName}",
+      "description": "Přijměte pozvánku a začněte spolupracovat s týmem.",
+      "accept": "Přijmout pozvánku",
+      "accepting": "Přijímám...",
+      "decline": "Odmítnout",
+      "declining": "Odmítám...",
+      "declinedView": "Pozvánka odmítnuta",
+      "success": "Odeslali jsme pozvajícímu oznámení.",
+      "backToDashboard": "Zpět na přehled",
+      "roleLabel": "Role: {role}",
+      "errorEmailMismatch": "Tato pozvánka byla odeslána na jiný e-mail",
+      "errorEmailMismatchDetail": "Přihlaste se pomocí e-mailové adresy, na kterou byla pozvánka odeslána, abyste ji mohli přijmout.",
+      "errorExpired": "Pozvánka vypršela",
+      "errorExpiredDetail": "Požádejte pozvajícího o zaslání nové pozvánky.",
+      "errorNotFound": "Pozvánka nebyla nalezena",
+      "errorNotFoundDetail": "Odkaz na pozvánku je neplatný nebo byl zrušen.",
+      "errorNotAvailable": "Pozvánka není k dispozici",
+      "errorNotAvailableDetail": "Tato pozvánka již byla zodpovězena a není již aktivní.",
+      "role": {
+        "owner": "Majitel",
+        "admin": "Administrátor",
+        "member": "Člen",
+        "viewer": "Sledující"
+      }
+    }
+  },
+  "settings": {
+    "apiKeys": {
+      "title": "Klíče API",
+      "description": "Vytvářejte a spravujte klíče API pro programový přístup k Nebutra.",
+      "createButton": "Vytvořit klíč API",
+      "noPermission": "Nemáte oprávnění k zobrazení klíčů API.",
+      "loading": "Načítání…",
+      "loadError": "Nepodařilo se načíst klíče API.",
+      "createError": "Nepodařilo se vytvořit klíč API.",
+      "revokeError": "Nepodařilo se zrušit klíč API.",
+      "empty": {
+        "title": "Zatím žádné klíče API",
+        "cta": "Vytvořte svůj první API klíč"
+      },
+      "columns": {
+        "name": "Název",
+        "prefix": "Předpona",
+        "lastUsed": "Naposledy použit",
+        "scopes": "Oprávnění",
+        "created": "Vytvořeno",
+        "actions": "Akce",
+        "never": "Nikdy"
+      },
+      "actions": {
+        "revoke": "Zrušit",
+        "revoking": "Ruší se…",
+        "copy": "Kopírovat",
+        "copied": "Zkopírováno",
+        "close": "Zavřít",
+        "submit": "Vytvořit klíč",
+        "submitting": "Vytváří se…"
+      },
+      "dialog": {
+        "title": "Vytvořit API klíč",
+        "description": "Klíče API umožňují externím systémům komunikovat s Nebutrou ve vašem jménu. Chovejte se k nim jako k heslům.",
+        "nameLabel": "Název",
+        "namePlaceholder": "např. Produkční backend",
+        "scopesLabel": "Oprávnění",
+        "successWarning": "Tento klíč se zobrazí pouze jednou. Uložte si jej před zavřením.",
+        "confirmClose": "Zavřením se tento klíč navždy skryje. Ujistěte se, že je uložen."
+      }
+    },
+    "auditLog": {
+      "title": "Auditní protokol",
+      "description": "Sledujte každou administrativní akci ve vašem pracovním prostoru. Filtrovat můžete podle aktéra, akce, entity nebo časového období.",
+      "empty": "Zatím žádné auditní události",
+      "loadMore": "Načíst další",
+      "loading": "Načítání…",
+      "forbidden": "Pro zobrazení auditního protokolu potřebujete přístup správce.",
+      "columns": {
+        "when": "Kdy",
+        "actor": "Aktér",
+        "action": "Akce",
+        "entity": "Entita",
+        "outcome": "Výsledek",
+        "ip": "IP"
+      },
+      "diff": {
+        "oldValue": "Původní hodnota",
+        "newValue": "Nová hodnota"
+      },
+      "filters": {
+        "action": "Akce",
+        "actionPlaceholder": "Hledat akci…",
+        "entityType": "Typ entity",
+        "outcome": "Výsledek",
+        "outcomeSuccess": "Úspěch",
+        "outcomeFailure": "Selhání",
+        "outcomePending": "Čeká",
+        "startDate": "Datum začátku",
+        "endDate": "Datum konce",
+        "range24h": "Posledních 24 h",
+        "range7d": "Posledních 7 dní",
+        "range30d": "Posledních 30 dní",
+        "reset": "Resetovat",
+        "all": "Vše"
+      }
+    },
+    "notifications": {
+      "title": "Oznámení",
+      "description": "Nastavte, jak vás Nebutra kontaktuje pro jednotlivé typy událostí a kanály doručování.",
+      "actions": {
+        "resetAll": "Obnovit výchozí hodnoty",
+        "save": "Uložit"
+      },
+      "status": {
+        "saving": "Ukládání…",
+        "saved": "Uloženo",
+        "error": "Uložení selhalo. Zkuste to prosím znovu."
+      },
+      "eventTypes": {
+        "security": {
+          "label": "Bezpečnostní upozornění",
+          "description": "Upozornění na přihlášení, změny hesla a změny dvoufázového ověřování."
+        },
+        "billing": {
+          "label": "Fakturace",
+          "description": "Faktury, neúspěšné platby a změny předplatného."
+        },
+        "invitation": {
+          "label": "Pozvánky do týmu",
+          "description": "Pozvánky k připojení k organizaci, přijaté nebo odmítnuté."
+        },
+        "activity": {
+          "label": "Aktivita týmu",
+          "description": "Členové se připojili, změny rolí a další aktivity v pracovním prostoru."
+        },
+        "updates": {
+          "label": "Aktualizace produktu",
+          "description": "Nové funkce, důležité změny a poznámky k vydání."
+        },
+        "marketing": {
+          "label": "Marketing",
+          "description": "Newsletter a příležitostné akce. Pouze na základě souhlasu."
+        }
+      },
+      "channels": {
+        "in_app": {
+          "label": "V aplikaci"
+        },
+        "email": {
+          "label": "E-mail"
+        },
+        "push": {
+          "label": "Push"
+        },
+        "sms": {
+          "label": "SMS"
+        }
+      }
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "Přihlaste se k odběru událostí z vašeho pracovního prostoru. Každou zátěž podepisujeme pomocí tajného klíče vašeho koncového bodu, takže můžete ověřit její pravost.",
+      "create": {
+        "heading": "Nový koncový bod",
+        "urlLabel": "URL koncového bodu",
+        "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
+        "eventsLegend": "Události",
+        "submit": "Vytvořit koncový bod",
+        "submitting": "Vytváří se…",
+        "selectEvent": "Vyberte alespoň jednu událost.",
+        "successTitle": "Koncový bod byl vytvořen. Podpisové tajemství se zobrazí pouze jednou.",
+        "successWarning": "Uložte jej do správce tajemství vaší aplikace, než okno zavřete.",
+        "copy": "Kopírovat",
+        "copied": "Zkopírováno"
+      },
+      "list": {
+        "heading": "Aktivní koncové body",
+        "empty": "Zatím žádné koncové body webhooků. Vytvořte jeden výše.",
+        "loading": "Načítání…",
+        "loadFailed": "Nepodařilo se načíst webhooke",
+        "columns": {
+          "url": "URL",
+          "events": "Události",
+          "status": "Stav",
+          "lastDelivered": "Poslední doručení",
+          "actions": "Akce"
+        },
+        "status": {
+          "active": "Aktivní",
+          "disabled": "Zakázáno"
+        },
+        "actions": {
+          "edit": "Upravit",
+          "enable": "Povolit",
+          "disable": "Zakázat",
+          "viewDeliveries": "Zobrazit doručení",
+          "delete": "Smazat"
+        }
+      },
+      "deliveries": {
+        "heading": "Nedávná doručení",
+        "close": "Zavřít",
+        "loading": "Načítání…",
+        "loadFailed": "Nepodařilo se načíst doručení",
+        "empty": "Zatím žádná doručení.",
+        "viewPayload": "Zobrazit payload",
+        "hidePayload": "Skrýt payload",
+        "replay": "Přehrát znovu",
+        "replaying": "Přehrávání…",
+        "status": {
+          "success": "úspěch",
+          "failed": "selhalo",
+          "retrying": "opakování"
+        }
+      }
+    },
+    "appearance": {
+      "title": "Vzhled",
+      "theme": {
+        "title": "Motiv",
+        "description": "Použít světlý, tmavý nebo podle systému."
+      },
+      "themePreset": {
+        "title": "Předvolba motivu",
+        "description": "Aplikovat libovolný motiv z Theme Playground po celé aplikaci. Ovládací prvky níže umožňují jeho doladění.",
+        "search": "Hledat motivy…",
+        "searchLabel": "Hledat motivy",
+        "default": "Výchozí",
+        "defaultMood": "Nebutra base palette",
+        "active": "Aktivní",
+        "empty": "Žádné motivy neodpovídají vašemu hledání.",
+        "count": "{count} motivů"
+      },
+      "themeEditor": {
+        "title": "Motiv",
+        "description": "Vyberte předvolbu, importujte DESIGN.md a poté doladíte tokeny níže.",
+        "selectLabel": "Předvolba motivu",
+        "import": "Importovat",
+        "copy": "Kopírovat motiv",
+        "copied": "Zkopírováno",
+        "copyError": "Kopírování selhalo",
+        "custom": "Vlastní"
+      },
+      "designMd": {
+        "title": "Import DESIGN.md",
+        "description": "Vložte nebo nahrajte DESIGN.md pro aplikaci jeho barev, poloměrů, písem, rozestupů a stínů napříč celou aplikací — změny zůstanou zachovány i po obnovení.",
+        "applied": "Aplikováno:",
+        "remove": "Odebrat"
+      },
+      "themeMode": {
+        "label": "Režim motivu",
+        "light": "Světlý",
+        "dark": "Tmavý",
+        "system": "Systémový"
+      },
+      "accent": {
+        "title": "Akcentní barva",
+        "description": "Vyberte akcentní barvu značky, která zbarví aktivní stavy napříč aplikací.",
+        "label": "Akcentní barva",
+        "options": {
+          "default": "Výchozí",
+          "blue": "Modrá",
+          "cyan": "Azurová",
+          "violet": "Fialová",
+          "pink": "Růžová",
+          "amber": "Jantarová",
+          "green": "Zelená",
+          "red": "Červená"
+        }
+      },
+      "colors": {
+        "title": "Barvy",
+        "description": "Akcent, pozadí a popředí.",
+        "background": {
+          "label": "Pozadí",
+          "description": "Přepíše barvu pozadí povrchu."
+        },
+        "foreground": {
+          "label": "Popředí",
+          "description": "Přepíše barvu textu těla."
+        },
+        "resetToDefault": "Obnovit výchozí"
+      },
+      "fontFamily": {
+        "uiLabel": "Písmo UI",
+        "uiDescription": "Rodina písem používaná v rozhraní.",
+        "codeLabel": "Písmo pro kód",
+        "codeDescription": "Rodina písem používaná pro plochy s kódem.",
+        "options": {
+          "ui": {
+            "theme": "Výchozí téma",
+            "system": "Systémové",
+            "geist": "Geist",
+            "inter": "Inter",
+            "sf": "SF Pro"
+          },
+          "code": {
+            "theme": "Výchozí téma",
+            "system": "Systémové mono",
+            "geist-mono": "Geist Mono",
+            "sf-mono": "SF Mono",
+            "jetbrains-mono": "JetBrains Mono"
+          }
+        }
+      },
+      "contrast": {
+        "title": "Kontrast",
+        "description": "Upravte kontrast textu (50 = žádná změna).",
+        "label": "Úroveň kontrastu"
+      },
+      "pointerCursor": {
+        "title": "Použít kurzor ukazováku",
+        "description": "Přepnout na kurzor ve tvaru ukazatele u prvků reagujících na najetí myší.",
+        "label": "Kurzor ukazatele u interaktivních prvků"
+      },
+      "diffMarkers": {
+        "title": "Značky rozdílů",
+        "description": "Zobrazit barevné pásy nebo znaky +/- u každé změněné řádky.",
+        "label": "Styl značky rozdílů",
+        "color": "Barva",
+        "plusminus": "+/-"
+      },
+      "fontSmoothing": {
+        "title": "Zjemňování písem",
+        "description": "Použít nativní macOS antialiasing písem.",
+        "label": "Nativní zjemňování písem"
+      },
+      "typography": {
+        "title": "Typografie",
+        "description": "Základní velikosti písem pro rozhraní a kód.",
+        "uiFontSize": "Velikost písma rozhraní",
+        "uiFontSizeDescription": "Upravit základní velikost písma rozhraní.",
+        "codeFontSize": "Velikost písma kódu",
+        "codeFontSizeDescription": "Upravit základní velikost písma kódu."
+      },
+      "fontSize": {
+        "followTheme": "Motiv",
+        "customize": "Přizpůsobit"
+      },
+      "motion": {
+        "title": "Omezit pohyby",
+        "description": "Omezte animace nebo přizpůsobte systémovým předvolbám.",
+        "label": "Předvolba pohybů",
+        "system": "Systém",
+        "on": "Zapnuto",
+        "off": "Vypnuto"
+      },
+      "surface": {
+        "title": "Průsvitné postranní panel",
+        "description": "Použít průsvitný materiál na postranní panel."
+      },
+      "transparency": {
+        "label": "Průsvitné postranní panel",
+        "description": "Použít průsvitný materiál na postranní panel."
+      }
+    }
+  },
+  "legal": {
+    "version": "Verze",
+    "effective": "Účinné",
+    "notFound": "Tento dokument není k dispozici.",
+    "backHome": "Zpět na domovskou stránku"
+  },
+  "commandPalette": {
+    "ariaLabel": "Paleta příkazů",
+    "placeholder": "Napište příkaz nebo vyhledejte…",
+    "empty": "Nebyly nalezeny žádné výsledky.",
+    "sections": {
+      "navigation": "Navigace",
+      "actions": "Akce",
+      "settings": "Nastavení",
+      "account": "Účet",
+      "admin": "Administrace",
+      "help": "Nápověda"
+    },
+    "commands": {
+      "nav": {
+        "home": "Domů",
+        "settings": "Nastavení",
+        "billing": "Fakturace",
+        "team": "Tým",
+        "apiKeys": "Klíče API",
+        "notifications": "Oznámení",
+        "auditLog": "Protokol auditu",
+        "webhooks": "Webhooks",
+        "admin": "Administrace"
+      },
+      "action": {
+        "inviteMember": "Pozvat člena týmu",
+        "createApiKey": "Vytvořit klíč API",
+        "switchOrganization": "Přepnout organizaci"
+      },
+      "settings": {
+        "themeLight": "Přepnout na světlé téma",
+        "themeDark": "Přepnout na tmavé téma",
+        "themeSystem": "Použít systémové téma"
+      },
+      "account": {
+        "signOut": "Odhlásit se"
+      },
+      "help": {
+        "reportIssue": "Nahlásit problém",
+        "shortcuts": "Klávesové zkratky"
+      }
+    }
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "Vaše soukromí",
+      "description": "Používáme cookies pro zlepšení vašeho zážitku, analýzu provozu na webu a personalizaci obsahu. Vyberte si, které kategorie chcete povolit."
+    },
+    "button": {
+      "acceptAll": "Přijmout vše",
+      "savePreferences": "Uložit předvolby"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "Nutné",
+        "description": "Nutné pro fungování webu. Nelze vypnout."
+      },
+      "functional": {
+        "label": "Funkční",
+        "description": "Pamatovat si vaše preference (jazyk, motiv, rozložení)."
+      },
+      "analytics": {
+        "label": "Analytika",
+        "description": "Anonymní data o používání, abychom mohli produkt vylepšovat."
+      },
+      "marketing": {
+        "label": "Marketing",
+        "description": "Personalizovaná reklama a retargeting na platformách třetích stran."
+      }
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "Oznámení",
+      "description": "Všechna vaše oznámení na jednom místě.",
+      "filter": {
+        "all": "Vše",
+        "unread": "Nepřečtené"
+      },
+      "actions": {
+        "markAllRead": "Označit vše jako přečtené",
+        "markRead": "Označit jako přečtené",
+        "archive": "Archivovat",
+        "loadMore": "Načíst další",
+        "loading": "Načítání...",
+        "selected": "{count} vybráno"
+      },
+      "empty": {
+        "all": "Vše máte za sebou.",
+        "unread": "Žádné nepřečtená oznámení."
+      },
+      "errors": {
+        "load": "Nepodařilo se načíst oznámení.",
+        "network": "Chyba sítě. Zkuste to prosím znovu.",
+        "markRead": "Nepodařilo se označit oznámení jako přečtené.",
+        "archive": "Nepodařilo se archivovat oznámení.",
+        "bulkMarkRead": "Některá oznámení se nepodařila označit jako přečtená."
+      },
+      "inbox": {
+        "noBackend": "Schránka vyžaduje trvalý backend pro oznámení. Zkontrolujte konfiguraci poskytovatele.",
+        "emptyCaughtUp": "Schránka je prázdná.",
+        "emptyChangelog": "Aktualizace changelogu se zobrazí zde."
+      }
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Dobré ráno",
+      "afternoon": "Dobré odpoledne",
+      "evening": "Dobrý večer"
+    },
+    "home": {
+      "connectorsPill": "Napojte svou aplikaci pomocí konektorů",
+      "subtitle": "Vložte prompt, stiskněte ⌘K odkudkoli nebo přejděte přímo na pracovní plochu.",
+      "promptPlaceholder": "Na co myslíte?",
+      "actions": {
+        "connect": "Připojit integraci",
+        "theme": "Hřiště pro motivy",
+        "audit": "Protokol auditu",
+        "billing": "Fakturace"
+      }
+    },
+    "commandSurface": {
+      "noAuth": "Pro vybraného poskytovatele není nakonfigurováno ověřování. Nastavte tajné klíče poskytovatele pro povolení uživatelských relací."
+    },
+    "commandCenter": {
+      "description": "Začněte jednou akcí: zeptejte se Sailora, prozkoumejte signály pracovního prostoru nebo směrujte práci do automatizačního rozhraní.",
+      "openSailor": "Otevřít Sailor AI",
+      "viewAnalytics": "Zobrazit analýzy"
+    },
+    "workspaceSnapshot": {
+      "title": "Přehled pracovního prostoru",
+      "description": "Nejnovější den skladu · {day}",
+      "viewAnalytics": "Zobrazit analýzy →",
+      "metrics": {
+        "activeUsers": "Aktivní uživatelé",
+        "totalEvents": "Celkový počet událostí",
+        "conversions": "Konverze",
+        "revenue": "Příjmy"
+      },
+      "details": {
+        "activeUsers": "Přihlášení uživatelé",
+        "totalEvents": "Zaznamenané události",
+        "conversions": "Kvalifikované akce",
+        "revenue": "Uznána tržba"
+      },
+      "meta": {
+        "snapshot": "Snímek",
+        "cadence": "Frekvence",
+        "tenant": "Nájemce",
+        "daily": "Denně",
+        "latestDay": "{day}",
+        "users": "Uživatelé nájemce",
+        "events": "Proud událostí",
+        "funnel": "Trh",
+        "billing": "Fakturace"
+      }
+    },
+    "documentPipeline": {
+      "title": "Dokumentový kanál",
+      "description": "Odesílejte zdrojové soubory do fronty původních úloh.",
+      "intakeTitle": "Přijímání dokumentů",
+      "intakeDescription": "PDF, Markdown, text nebo dokument Word",
+      "chooseDocument": "Vybrat dokument",
+      "startParseTask": "Spustit úlohu analýzy",
+      "queued": "V řadě",
+      "fileInputLabel": "Soubor dokumentu",
+      "fallbackError": "Úloha dokumentu selhala.",
+      "taskStatus": "Stav úlohy",
+      "progressLabel": "Postup úlohy",
+      "refreshStatus": "Obnovit",
+      "cancelTask": "Zrušit",
+      "statusError": "Nepodařilo se obnovit stav úlohy.",
+      "cancelError": "Nepodařilo se zrušit úlohu.",
+      "statusQueued": "V řadě",
+      "statusRunning": "Probíhá",
+      "statusSucceeded": "Dokončeno",
+      "statusFailed": "Selhalo",
+      "statusCancelled": "Zrušeno",
+      "resultReady": "Výsledek připraven",
+      "taskError": "Chyba úkolu",
+      "updatedAt": "Aktualizováno"
+    },
+    "recentSessions": {
+      "title": "Pokračujte tam, kde jste skončili",
+      "subtitle": "{count, plural, =0 {Žádné relace} =1 {1 nedávná relace} other {# nedávných relací}}",
+      "viewAll": "Zobrazit vše →",
+      "newChat": "Nový chat",
+      "untitled": "Nepojmenovaná relace",
+      "messageCount": "{count, plural, =1 {1 zpráva} other {# zpráv}}"
+    },
+    "gettingStarted": {
+      "title": "Začínáme",
+      "description": "{done} z {total} dokončeno · dokončete nastavení pro odemknutí plného pracovního prostoru",
+      "progressLabel": "Postup nastavení",
+      "tasks": {
+        "team": {
+          "label": "Pozvat kolegu",
+          "description": "Přidejte do svého pracovního prostoru alespoň jednoho spolupracovníka."
+        },
+        "api": {
+          "label": "Vygenerovat klíč API",
+          "description": "Programový přístup k endpointům vašeho pracovního prostoru."
+        },
+        "integration": {
+          "label": "Připojit integraci",
+          "description": "Stripe, Slack, webhooks, fronta a další."
+        },
+        "ai": {
+          "label": "Otevřít Sailor AI",
+          "description": "Vyzkoušejte režim chatu, dat nebo workflow."
+        }
+      }
+    }
+  },
+  "Sidebar": {
+    "projects": "Projekty",
+    "noThreads": "Žádné vlákna",
+    "expandAll": "Rozbalit vše",
+    "collapseAll": "Sbalit vše",
+    "sectionMore": "Další možnosti",
+    "newProject": "Nový projekt",
+    "restoredGroups": "Obnovené dříve rozbalené skupiny",
+    "newProjectPlaceholder": "Název projektu",
+    "newProjectDefault": "Bez názvu",
+    "newProjectSuccess": "Projekt byl vytvořen",
+    "newProjectError": "Projekt se nepodařilo vytvořit",
+    "sortBy": "Seřadit podle",
+    "sortRecent": "Nedávná aktivita",
+    "sortAlphabetical": "Abecedně",
+    "sortCreated": "Datum vytvoření",
+    "archiveAll": "Archivovat vše",
+    "comingV2": "Přichází ve verzi v2"
+  },
+  "startupOs": {
+    "milestone": {
+      "firstRoom": "První místnost je připravená.",
+      "firstFolder": "Mnoho společností začíná jako složka.",
+      "firstTable": "První stůl má druhé místo.",
+      "firstSignal": "Skutečný svět začal mluvit.",
+      "firstShip": "Svět to vidí poprvé.",
+      "firstBeliever": "Od dnes už nestavíte jen pro sebe.",
+      "firstRevenue": "Sen teď má peněžní tok.",
+      "firstReturn": "Návrat je důležitější než návštěva.",
+      "firstTeam": "Tři lidé mohou začít tvořit společnost.",
+      "firstCrowd": "První stůl se plní lidmi.",
+      "firstReset": "Restart je upřímnější začátek.",
+      "firstPublic": "Vložte kousek budoucnosti do veřejného prostoru.",
+      "firstDemo": "Toto není předvádění. Je to test.",
+      "graduation": "Základy jste již překonali. Cesta před vámi vyžaduje silnější nástroje."
+    },
+    "emptyState": {
+      "default": "Mnoho společností začíná jako složka.",
+      "integrations": "Nejsou nakonfigurovány žádné konektory.",
+      "creditActivity": "Aktivita kreditů se zobrazí po vašem prvním požadavku.",
+      "usageData": "Data o využití se zobrazí, jakmile začne vaše organizace zasílat požadavky.",
+      "apiKeys": "Zatím žádné klíče.",
+      "apiKeysCta": "Vytvořit první klíč",
+      "teamMembers": "Jeden může začít. Několik může budovat.",
+      "cofounders": "První člověk, který vám věří, se ještě neobjevil.",
+      "cofoundersDescription": "Jakmile vy i další zakladatel vyjádříte zájem, objeví se zde.",
+      "cofoundersAction": "Najít spoluzakladatele",
+      "growthChart": "Data o trendech se zobrazí, jakmile začne aktivita.",
+      "revenueChart": "Data o příjmech se zobrazí, jakmile začnou transakce.",
+      "webhookDeliveries": "Doručení se zde zobrazí po prvním události.",
+      "webhookEndpoints": "Přidejte výše koncový bod, abyste začali přijímat události.",
+      "accessInvites": "Žádné pozvánky nebyly vydány."
+    },
+    "success": "První místnost je připravená.",
+    "failure": "Restart je upřímnější začátek.",
+    "errors": {
+      "loadMatches": "Zápasy se nepodařilo načíst.",
+      "loadMatchesDescription": "Na naší straně se něco pokazilo. Obnovte stránku a zkuste to znovu.",
+      "loadWebhookDeliveries": "Doručení se nepodařilo načíst.",
+      "replayWebhookDelivery": "Přehrání neproběhlo úspěšně.",
+      "loadWebhookEndpoints": "Koncečné body se nepodařilo načíst."
+    },
+    "team": "Začít může jeden. Postavit to může pár lidí.",
+    "revenue": "Sen teď má cash flow.",
+    "growth": "Signál se zesiluje.",
+    "deployment": {
+      "primary": "Svět to vidí poprvé.",
+      "echo": "Konečně to opustilo localhost."
+    },
+    "onboarding": "Nemusíte být připravení. Musíte začít.",
+    "graduation": "Základy jste již překročili. Pro cestu dál zkuste {tool}.",
+    "company": {
+      "emptyTitle": "Vaše první věž kontextu začíná zde.",
+      "emptyDescription": "Sestavte společnost v Startup OS, abyste mohli zobrazit a upravit její kontextovou věž.",
+      "emptyAction": "Otevřít Startup OS",
+      "notice": {
+        "needsProvider": "Připojte klíč poskytovatele AI pro automatické vyplnění polí.",
+        "generateFailed": "Generování nedokončilo.",
+        "saveFailed": "Změny se nepodařilo uložit."
+      },
+      "action": {
+        "save": "Uložit",
+        "saving": "Ukládání…",
+        "cancel": "Zrušit",
+        "open": "Otevřít Startup OS"
+      }
+    },
+    "execution": {
+      "noBets": "Zatím žádné sázky.",
+      "noRuns": "Žádné aktivní běhy."
+    },
+    "fileTree": {
+      "empty": "Tento projekt zatím nemá žádné soubory."
+    }
+  },
+  "selectOrg": {
+    "invitation": {
+      "emptyTitle": "Pracovní prostor se připravuje.",
+      "emptyDescription": "Pozvánka se možná ještě synchronizuje. Obnovte tuto stránku nebo vytvořte samostatný pracovní prostor."
+    },
+    "billing": {
+      "emptyTitle": "Nejprve vytvořte pracovní prostor před fakturací.",
+      "emptyDescription": "Akce fakturace vyžadují aktivní pracovní prostor. Nejprve si ho vytvořte a poté se vraťte k fakturaci."
+    },
+    "default": {
+      "emptyTitle": "První pracovní prostor začíná zde.",
+      "emptyDescription": "Vytvořte pracovní prostor pro začátek."
+    }
+  }
+}

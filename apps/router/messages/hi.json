@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — API मार्केटप्लेस",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "सभी-मॉडल API मार्केटप्लेस · उपयोग के अनुसार भुगतान · कुंजियाँ और वॉलेट प्रबंधित करें · त्वरित परीक्षण।"
+  },
+  "admin": {
+    "dashboard": "अवलोकन",
+    "keys": "API कुंजियाँ",
+    "wallet": "वॉलेट",
+    "docs": "दस्तावेज़",
+    "title": "एडमिन",
+    "backToMarket": "मार्केट पर वापस जाएं",
+    "quickUse": "त्वरित उपयोग"
+  },
+  "chrome": {
+    "searchPlaceholder": "आप AI के साथ क्या करना चाहते हैं?",
+    "search": "खोजें",
+    "locale": "भाषा",
+    "currency": "मुद्रा",
+    "collapseSidebar": "साइडबार संकुचित करें",
+    "expandSidebar": "साइडबार विस्तारित करें",
+    "home": "होम",
+    "adminConsole": "एडमिन",
+    "quickUse": "त्वरित उपयोग",
+    "support": "सहायता",
+    "apiDocs": "API दस्तावेज़",
+    "integrationHelp": "एकीकरण गाइड",
+    "aiRecommend": "AI पसंद",
+    "market": "मार्केट",
+    "usageTitle": "त्वरित उपयोग"
+  },
+  "channels": {
+    "app": "ऐप मार्केट",
+    "api": "API मार्केट",
+    "models": "मॉडल कैटलॉग",
+    "client": "क्लाइंट"
+  },
+  "market": {
+    "new": "नया",
+    "hot": "लोकप्रिय",
+    "forYou": "आपके लिए",
+    "grid": "ग्रिड",
+    "list": "सूची",
+    "apiShelf": "API शेल्फ",
+    "toolShelf": "टूल शेल्फ",
+    "categories": "श्रेणियाँ",
+    "apps": "ऐप्स",
+    "newRelease": "नया रिलीज़",
+    "forgeTitle": "Forge टूल वर्कस्पेस",
+    "forgeBlurb": "टेक्स्ट ट्रांसफॉर्म, कोडेक, फॉर्म और कंपोजेबल टूल्स। ऐप मार्केट लैब Forge की ओर इशारा करता है।",
+    "openForge": "Open Forge →",
+    "allApi": "सभी APIs →",
+    "all": "सभी →",
+    "viewAll": "सभी {label} देखें →",
+    "gridView": "ग्रिड व्यू",
+    "listView": "लिस्ट व्यू",
+    "hiTitle": "एंटरप्राइज़ AI रिसोर्स प्लेटफॉर्म",
+    "hiSubtitle": "हर जरूरत को सही AI से मिलाएं",
+    "sellable": "बिक्री योग्य",
+    "walletTopup": "टॉप अप करें"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "भाषा मॉडल",
+      "hint": "चैट · तर्क"
+    },
+    "image-gen": {
+      "label": "छवि उत्पत्ति",
+      "hint": "टेक्स्ट-टू-इमेज"
+    },
+    "image-edit": {
+      "label": "छवि संपादन",
+      "hint": "संपादन · मैटिंग"
+    },
+    "video": {
+      "label": "वीडियो जनरेशन",
+      "hint": "टेक्स्ट-टू-वीडियो"
+    },
+    "audio": {
+      "label": "ऑडियो और वीडियो",
+      "hint": "स्पीच · ट्रांसक्रिप्शन"
+    },
+    "data": {
+      "label": "जानकारी",
+      "hint": "रिट्रीवल · एक्सट्रैक्ट"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "ज्ञान-समृद्ध"
+    },
+    "tools": {
+      "label": "टूल APIs",
+      "hint": "एजेंट · टूल्स"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "बॉट्स",
+      "chips": "चैट बॉट्स · ड्रॉइंग बॉट्स · ज्ञान"
+    },
+    "productivity": {
+      "label": "उत्पादकता",
+      "chips": "मॉडल एरिना · AI लेखन"
+    },
+    "academic": {
+      "label": "शैक्षणिक",
+      "chips": "PDF टूलकिट · AI पेटेंट खोज"
+    },
+    "image": {
+      "label": "छवि उपकरण",
+      "chips": "3D स्टूडियो · कैनवास"
+    },
+    "audio": {
+      "label": "ऑडियो",
+      "chips": "बोलचाल · AI संगीत"
+    },
+    "code": {
+      "label": "कोड",
+      "chips": "वेब जनरेटर · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "अवलोकन",
+    "keys": "कुंजी",
+    "wallet": "वॉलेट",
+    "use": "आज़माएं",
+    "docs": "दस्तावेज़",
+    "models": "अधिक"
+  }
+}

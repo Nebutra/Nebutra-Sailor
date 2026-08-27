@@ -1,0 +1,13 @@
+# Pebble — public brand front on its own origin.
+#
+# Indexable on purpose: this origin serves the brand pages, the docs entry and
+# the download page, and nothing else. The support intake lives behind the
+# gateway's /pebble/* namespace on a different origin, so no unauthenticated
+# feedback or diagnostics endpoint is reachable from here to be crawled.
+#
+# No Sitemap line: this app ships no sitemap yet. An empty or invented one is
+# worse than none, and a real one needs per-route lastmod values that are not
+# the build timestamp.
+
+User-agent: *
+Allow: /

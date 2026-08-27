@@ -1,0 +1,420 @@
+name: Docker Build & Push
+
+# Builds and pushes Docker images for all services to configured container registries.
+#
+# Supported registries (each is optional — only activated when the corresponding
+# secret is present):
+#   - GitHub Container Registry (ghcr.io) — always attempted if GITHUB_TOKEN is available
+#   - AWS Elastic Container Registry (ECR)        — requires AWS_ACCOUNT_ID + AWS_REGION
+#   - GCP Artifact Registry                      — requires GCP_PROJECT_ID + GCP_REGION + WIF vars
+#   - Alibaba Cloud Container Registry (Aliyun)   — requires ALIYUN_ACR_USERNAME + ALIYUN_ACR_PASSWORD
+#   - Tencent Cloud Container Registry (TCR)      — requires TENCENT_TCR_HOST + TENCENT_TCR_USERNAME + TENCENT_TCR_PASSWORD
+#
+# Tag strategy:
+#   tag push (v*)     → :<tag-name>  (e.g. v1.2.3)
+#   workflow_dispatch → :latest + :sha-<short-sha>  (on the chosen branch)
+#
+# This workflow intentionally does not run on every main push. CI already
+# verifies source builds; container publishing is release/manual work and is too
+# slow/noisy for routine merges.
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Reason for manual trigger"
+        required: false
+        default: "Manual build"
+
+# Prevent concurrent runs for the same ref — cancel in-flight runs when a new
+# push arrives so we don't waste runner minutes on stale builds.
+concurrency:
+  group: docker-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  # ── Turborepo remote cache ──────────────────────────────────────────────────
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+  # ── Registry base paths (populated from secrets at run time) ────────────────
+  GHCR_REGISTRY: ghcr.io/${{ github.repository_owner }}
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  # AWS_REGION is a non-sensitive var — store in GitHub Actions Variables, not Secrets
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  AWS_ECR_ROLE_ARN: ${{ secrets.AWS_ECR_ROLE_ARN }}
+  GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+  GCP_REGION: ${{ vars.GCP_REGION }}
+  GCP_ARTIFACT_REPOSITORY: ${{ vars.GCP_ARTIFACT_REPOSITORY || 'nebutra' }}
+  GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+  GCP_SERVICE_ACCOUNT: ${{ vars.GCP_SERVICE_ACCOUNT }}
+  ALIYUN_ACR_USERNAME: ${{ secrets.ALIYUN_ACR_USERNAME }}
+  TENCENT_TCR_HOST: ${{ secrets.TENCENT_TCR_HOST }}
+
+jobs:
+  # ============================================================================
+  # Job: build-push-node-apps
+  # Builds multi-platform images for the three Next.js / Node.js applications.
+  # ============================================================================
+  build-push-node-apps:
+    name: "Build Node app: ${{ matrix.app }}"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # OIDC token for AWS role assumption (keyless auth)
+      packages: write # push to ghcr.io
+      security-events: write # upload Trivy SARIF
+
+    strategy:
+      fail-fast: false # Don't cancel sibling jobs if one app fails
+      matrix:
+        include:
+          - app: web
+            dockerfile: apps/web/Dockerfile
+          - app: landing
+            dockerfile: apps/landing/Dockerfile
+          - app: api-gateway
+            dockerfile: backends/gateway/Dockerfile
+          - app: idp
+            dockerfile: apps/idp/Dockerfile
+
+    steps:
+      # ── Checkout ─────────────────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Set lowercase owner
+        id: lowercase
+        run: echo "owner=${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_OUTPUT"
+
+      # ── QEMU (required for linux/arm64 cross-compilation on amd64 runners) ──
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+        with:
+          driver-opts: |
+            image=moby/buildkit:latest
+
+      # ── Registry logins (conditional — only when secrets are present) ────────
+
+      # GitHub Container Registry — always available via GITHUB_TOKEN
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # AWS ECR — OIDC keyless auth (no long-lived credentials stored as secrets).
+      # Prerequisites:
+      #   1. Create an IAM OIDC provider for token.actions.githubusercontent.com
+      #   2. Create an IAM role with trust policy scoped to this repo + ECR push permissions
+      #   3. Set AWS_ECR_ROLE_ARN secret to arn:aws:iam::<account>:role/<role-name>
+      - name: Configure AWS credentials (OIDC)
+        if: env.AWS_ACCOUNT_ID != '' && env.AWS_REGION != '' && env.AWS_ECR_ROLE_ARN != ''
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+        with:
+          role-to-assume: ${{ env.AWS_ECR_ROLE_ARN }}
+          role-session-name: github-actions-ecr-push-${{ github.run_id }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Log in to AWS ECR
+        if: env.AWS_ACCOUNT_ID != '' && env.AWS_REGION != '' && env.AWS_ECR_ROLE_ARN != ''
+        uses: aws-actions/amazon-ecr-login@d539f0932e70871a027e9d5a9d8fc38589180a64 # v2
+
+      # GCP Artifact Registry — Workload Identity Federation, no JSON key file.
+      # Prerequisites:
+      #   1. Create a Workload Identity Pool/Provider scoped to this repository
+      #   2. Grant the service account Artifact Registry writer permissions
+      #   3. Set GCP_PROJECT_ID, GCP_REGION, GCP_ARTIFACT_REPOSITORY,
+      #      GCP_WORKLOAD_IDENTITY_PROVIDER, and GCP_SERVICE_ACCOUNT as repo variables
+      - name: Authenticate to Google Cloud (OIDC)
+        id: google-auth
+        if: env.GCP_PROJECT_ID != '' && env.GCP_REGION != '' && env.GCP_ARTIFACT_REPOSITORY != '' && env.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && env.GCP_SERVICE_ACCOUNT != ''
+        uses: google-github-actions/auth@c200f3691d83b41bf9bbd8638997a462592937ed # v2
+        with:
+          token_format: access_token
+          workload_identity_provider: ${{ env.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.GCP_SERVICE_ACCOUNT }}
+
+      - name: Log in to Google Artifact Registry
+        if: env.GCP_PROJECT_ID != '' && env.GCP_REGION != '' && env.GCP_ARTIFACT_REPOSITORY != '' && env.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && env.GCP_SERVICE_ACCOUNT != ''
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ${{ env.GCP_REGION }}-docker.pkg.dev
+          username: oauth2accesstoken
+          password: ${{ steps.google-auth.outputs.access_token }}
+      - name: Log in to Aliyun Container Registry
+        if: env.ALIYUN_ACR_USERNAME != ''
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: registry.cn-hangzhou.aliyuncs.com
+          username: ${{ secrets.ALIYUN_ACR_USERNAME }}
+          password: ${{ secrets.ALIYUN_ACR_PASSWORD }}
+
+      # Tencent TCR — requires TENCENT_TCR_HOST + TENCENT_TCR_USERNAME + TENCENT_TCR_PASSWORD
+      - name: Log in to Tencent Container Registry
+        if: env.TENCENT_TCR_HOST != ''
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ${{ secrets.TENCENT_TCR_HOST }}
+          username: ${{ secrets.TENCENT_TCR_USERNAME }}
+          password: ${{ secrets.TENCENT_TCR_PASSWORD }}
+
+      # ── Image metadata (tags + OCI labels) ──────────────────────────────────
+      # docker/metadata-action generates all required tags automatically:
+      #   - On manual main builds: latest + sha-<short-sha>
+      #   - On semver tag: the tag itself (e.g. v1.2.3)
+      - name: Generate image metadata
+        id: meta
+        uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5
+        with:
+          images: |
+            ghcr.io/${{ steps.lowercase.outputs.owner }}/nebutra-${{ matrix.app }}
+            ${{ env.AWS_ACCOUNT_ID != '' && env.AWS_REGION != '' && env.AWS_ECR_ROLE_ARN != '' && format('{0}.dkr.ecr.{1}.amazonaws.com/nebutra-{2}', env.AWS_ACCOUNT_ID, env.AWS_REGION, matrix.app) || '' }}
+            ${{ env.GCP_PROJECT_ID != '' && env.GCP_REGION != '' && env.GCP_ARTIFACT_REPOSITORY != '' && env.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && env.GCP_SERVICE_ACCOUNT != '' && format('{0}-docker.pkg.dev/{1}/{2}/nebutra-{3}', env.GCP_REGION, env.GCP_PROJECT_ID, env.GCP_ARTIFACT_REPOSITORY, matrix.app) || '' }}
+            ${{ secrets.ALIYUN_ACR_USERNAME != '' && format('registry.cn-hangzhou.aliyuncs.com/nebutra/{0}', matrix.app) || '' }}
+            ${{ secrets.TENCENT_TCR_HOST != '' && format('{0}/nebutra/{1}', secrets.TENCENT_TCR_HOST, matrix.app) || '' }}
+          tags: |
+            # Tag with :latest on manual main builds
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch' }}
+            # Tag with short SHA on branch/manual builds
+            type=sha,prefix=sha-,format=short,enable=${{ startsWith(github.ref, 'refs/heads/') }}
+            # Tag with semver version on tag pushes (e.g. v1.2.3 → 1.2.3, 1.2, 1)
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+          labels: |
+            org.opencontainers.image.title=nebutra-${{ matrix.app }}
+            org.opencontainers.image.vendor=Nebutra
+
+      # ── Install cosign (keyless signing via Sigstore OIDC) ───────────────────
+      - name: Install cosign
+        uses: sigstore/cosign-installer@7e8b541eb2e61bf99390e1afd4be13a184e9ebc5 # v3.10.1
+      - name: Build and push image
+        id: build
+        uses: docker/build-push-action@ca052bb54ab0790a636c9b5f226502c73d547a25 # v5
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            SENTRY_RELEASE=${{ github.ref_name }}+${{ github.sha }}
+            GITHUB_SHA=${{ github.sha }}
+          # Use GHCR as the layer cache backend — avoids cold-cache on every run
+          cache-from: type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.owner }}/nebutra-${{ matrix.app }}:buildcache
+          cache-to: type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.owner }}/nebutra-${{ matrix.app }}:buildcache,mode=max
+
+      # ── Sign image with cosign (keyless, Sigstore OIDC — no keys to rotate) ──
+      # Signs only on release tags; manual branch builds stay unsigned.
+      # Verification: cosign verify --certificate-identity-regexp="github.com/..."
+      - name: Sign container image
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+        run: |
+          cosign sign --yes \
+            ghcr.io/${{ steps.lowercase.outputs.owner }}/nebutra-${{ matrix.app }}@${{ steps.build.outputs.digest }}
+        env:
+          COSIGN_EXPERIMENTAL: "1"
+
+      # ── Trivy vulnerability scan ─────────────────────────────────────────────
+      - name: Scan image for vulnerabilities
+        id: trivy
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        if: success()
+        with:
+          image-ref: ${{ fromJSON(steps.meta.outputs.json).tags[0] }}
+          format: "sarif"
+          output: "trivy-results.sarif"
+          severity: "CRITICAL,HIGH"
+          exit-code: "1"
+          ignore-unfixed: false
+
+      - name: Ensure SARIF file exists
+        if: always()
+        run: |
+          if [ ! -f "trivy-results.sarif" ]; then
+            echo '{"version":"2.1.0","runs":[{"tool":{"driver":{"name":"Trivy"}},"results":[]}]}' > trivy-results.sarif
+          fi
+
+      - name: Upload Trivy scan results
+        uses: github/codeql-action/upload-sarif@9792ccaef0455e446c567163589397e8c3ac2e0d # v3
+        if: always() && steps.trivy.outcome != 'skipped'
+        with:
+          sarif_file: "trivy-results.sarif"
+
+  # ============================================================================
+  # Job: build-push-python-services
+  # Builds multi-platform images for Python FastAPI microservices.
+  # All services share a single Dockerfile (infra/runtime/docker/Dockerfile.python)
+  # and are differentiated via the SERVICE build argument.
+  # ============================================================================
+  build-push-python-services:
+    name: "Build Python service: ${{ matrix.service }}"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # OIDC token for AWS role assumption (keyless auth)
+      packages: write # push to ghcr.io
+      security-events: write # upload Trivy SARIF
+
+    strategy:
+      fail-fast: false # Don't cancel sibling jobs if one service fails
+      matrix:
+        service:
+          - ai
+
+    steps:
+      # ── Checkout ─────────────────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Set lowercase owner
+        id: lowercase
+        run: echo "owner=${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_OUTPUT"
+
+      # ── QEMU (required for linux/arm64 cross-compilation on amd64 runners) ──
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+        with:
+          driver-opts: |
+            image=moby/buildkit:latest
+
+      # ── Registry logins (conditional — only when secrets are present) ────────
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure AWS credentials (OIDC)
+        if: env.AWS_ACCOUNT_ID != '' && env.AWS_REGION != '' && env.AWS_ECR_ROLE_ARN != ''
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+        with:
+          role-to-assume: ${{ env.AWS_ECR_ROLE_ARN }}
+          role-session-name: github-actions-ecr-push-${{ github.run_id }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Log in to AWS ECR
+        if: env.AWS_ACCOUNT_ID != '' && env.AWS_REGION != '' && env.AWS_ECR_ROLE_ARN != ''
+        uses: aws-actions/amazon-ecr-login@d539f0932e70871a027e9d5a9d8fc38589180a64 # v2
+
+      - name: Authenticate to Google Cloud (OIDC)
+        id: google-auth
+        if: env.GCP_PROJECT_ID != '' && env.GCP_REGION != '' && env.GCP_ARTIFACT_REPOSITORY != '' && env.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && env.GCP_SERVICE_ACCOUNT != ''
+        uses: google-github-actions/auth@c200f3691d83b41bf9bbd8638997a462592937ed # v2
+        with:
+          token_format: access_token
+          workload_identity_provider: ${{ env.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.GCP_SERVICE_ACCOUNT }}
+
+      - name: Log in to Google Artifact Registry
+        if: env.GCP_PROJECT_ID != '' && env.GCP_REGION != '' && env.GCP_ARTIFACT_REPOSITORY != '' && env.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && env.GCP_SERVICE_ACCOUNT != ''
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ${{ env.GCP_REGION }}-docker.pkg.dev
+          username: oauth2accesstoken
+          password: ${{ steps.google-auth.outputs.access_token }}
+
+      - name: Log in to Aliyun Container Registry
+        if: env.ALIYUN_ACR_USERNAME != ''
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: registry.cn-hangzhou.aliyuncs.com
+          username: ${{ secrets.ALIYUN_ACR_USERNAME }}
+          password: ${{ secrets.ALIYUN_ACR_PASSWORD }}
+
+      - name: Log in to Tencent Container Registry
+        if: env.TENCENT_TCR_HOST != ''
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ${{ secrets.TENCENT_TCR_HOST }}
+          username: ${{ secrets.TENCENT_TCR_USERNAME }}
+          password: ${{ secrets.TENCENT_TCR_PASSWORD }}
+
+      # ── Image metadata ───────────────────────────────────────────────────────
+      - name: Generate image metadata
+        id: meta
+        uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5
+        with:
+          images: |
+            ghcr.io/${{ steps.lowercase.outputs.owner }}/nebutra-${{ matrix.service }}
+            ${{ env.AWS_ACCOUNT_ID != '' && env.AWS_REGION != '' && env.AWS_ECR_ROLE_ARN != '' && format('{0}.dkr.ecr.{1}.amazonaws.com/nebutra-{2}', env.AWS_ACCOUNT_ID, env.AWS_REGION, matrix.service) || '' }}
+            ${{ env.GCP_PROJECT_ID != '' && env.GCP_REGION != '' && env.GCP_ARTIFACT_REPOSITORY != '' && env.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && env.GCP_SERVICE_ACCOUNT != '' && format('{0}-docker.pkg.dev/{1}/{2}/nebutra-{3}', env.GCP_REGION, env.GCP_PROJECT_ID, env.GCP_ARTIFACT_REPOSITORY, matrix.service) || '' }}
+            ${{ secrets.ALIYUN_ACR_USERNAME != '' && format('registry.cn-hangzhou.aliyuncs.com/nebutra/{0}', matrix.service) || '' }}
+            ${{ secrets.TENCENT_TCR_HOST != '' && format('{0}/nebutra/{1}', secrets.TENCENT_TCR_HOST, matrix.service) || '' }}
+          tags: |
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch' }}
+            type=sha,prefix=sha-,format=short,enable=${{ startsWith(github.ref, 'refs/heads/') }}
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+          labels: |
+            org.opencontainers.image.title=nebutra-${{ matrix.service }}
+            org.opencontainers.image.vendor=Nebutra
+
+      # ── Install cosign (keyless signing via Sigstore OIDC) ───────────────────
+      - name: Install cosign
+        uses: sigstore/cosign-installer@7e8b541eb2e61bf99390e1afd4be13a184e9ebc5 # v3.10.1
+      # Uses the shared Dockerfile.python with SERVICE build arg to select
+      # the correct service directory inside backends/python/<SERVICE>/
+      - name: Build and push image
+        id: build
+        uses: docker/build-push-action@ca052bb54ab0790a636c9b5f226502c73d547a25 # v5
+        with:
+          context: .
+          file: infra/runtime/docker/Dockerfile.python
+          platforms: linux/amd64,linux/arm64
+          push: true
+          build-args: |
+            SERVICE=${{ matrix.service }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # Registry-backed layer cache using GHCR — shared across branches
+          cache-from: type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.owner }}/nebutra-${{ matrix.service }}:buildcache
+          cache-to: type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.owner }}/nebutra-${{ matrix.service }}:buildcache,mode=max
+
+      # ── Sign image with cosign (keyless, Sigstore OIDC) ──────────────────────
+      - name: Sign container image
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+        run: |
+          cosign sign --yes \
+            ghcr.io/${{ steps.lowercase.outputs.owner }}/nebutra-${{ matrix.service }}@${{ steps.build.outputs.digest }}
+        env:
+          COSIGN_EXPERIMENTAL: "1"
+
+      # ── Trivy vulnerability scan ─────────────────────────────────────────────
+      - name: Scan image for vulnerabilities
+        id: trivy
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        if: success()
+        with:
+          image-ref: ${{ fromJSON(steps.meta.outputs.json).tags[0] }}
+          format: "sarif"
+          output: "trivy-results.sarif"
+          severity: "CRITICAL,HIGH"
+          exit-code: "1"
+          ignore-unfixed: false
+
+      - name: Ensure SARIF file exists
+        if: always()
+        run: |
+          if [ ! -f "trivy-results.sarif" ]; then
+            echo '{"version":"2.1.0","runs":[{"tool":{"driver":{"name":"Trivy"}},"results":[]}]}' > trivy-results.sarif
+          fi
+
+      - name: Upload Trivy scan results
+        uses: github/codeql-action/upload-sarif@9792ccaef0455e446c567163589397e8c3ac2e0d # v3
+        if: always() && steps.trivy.outcome != 'skipped'
+        with:
+          sarif_file: "trivy-results.sarif"

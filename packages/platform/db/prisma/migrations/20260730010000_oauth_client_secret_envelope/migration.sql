@@ -1,0 +1,16 @@
+-- Retrievable client secrets for confidential OAuth clients.
+--
+-- client_secret_hash is one-way, so it can verify a secret the caller presents
+-- but cannot answer "what is this client's secret" — which is exactly what
+-- oidc-provider needs in order to run its own client-auth check for
+-- client_secret_basic / _post / _jwt. The Prisma adapter therefore refused to
+-- serve any such client rather than invent a secret, which meant this issuer
+-- could not federate with any relying party that requires one. Cloudflare
+-- Access is the immediate case: its generic OIDC connector demands a
+-- client_secret and does not offer private_key_jwt.
+--
+-- Holds a @nebutra/vault EncryptedSecret envelope, not plaintext — the DEK is
+-- wrapped by a KEK in AWS KMS (local HKDF in development), so the row on its own
+-- does not yield the secret. Nullable: public clients (PKCE, auth method "none")
+-- have no secret and must stay that way.
+ALTER TABLE "oauth_clients" ADD COLUMN "client_secret_envelope" JSONB;

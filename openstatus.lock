@@ -1,0 +1,20 @@
+github-api:
+  ID: 7692
+  Monitor:
+    active: true
+    assertions:
+    - compare: eq
+      kind: statusCode
+      target: 200
+    description: Test monitor to verify OpenStatus setup
+    frequency: 10m
+    kind: http
+    name: GitHub API (Test)
+    openTelemetry: {}
+    regions:
+    - iad
+    request:
+      headers:
+        Accept: application/json
+      method: GET
+      url: https://api.github.com

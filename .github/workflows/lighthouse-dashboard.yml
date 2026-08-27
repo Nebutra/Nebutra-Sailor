@@ -1,0 +1,88 @@
+name: Lighthouse Dashboard Compare
+
+on:
+  workflow_dispatch:
+    inputs:
+      before_ref:
+        description: "Git ref/sha for baseline snapshot"
+        required: true
+      after_ref:
+        description: "Git ref/sha for candidate snapshot"
+        required: false
+        default: "HEAD"
+      runs:
+        description: "Runs per snapshot (median/p90 computed from these runs)"
+        required: false
+        default: "3"
+      target_path:
+        description: "Dashboard route path to audit"
+        required: false
+        default: "/tenants"
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse-dashboard:
+    name: Lighthouse Dashboard (Mobile)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve inputs
+        id: refs
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          BEFORE_REF="${{ inputs.before_ref }}"
+          AFTER_REF="${{ inputs.after_ref }}"
+          RUNS="${{ inputs.runs }}"
+          TARGET_PATH="${{ inputs.target_path }}"
+
+          {
+            echo "before_ref=${BEFORE_REF}"
+            echo "after_ref=${AFTER_REF}"
+            echo "runs=${RUNS}"
+            echo "target_path=${TARGET_PATH}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Run Lighthouse Compare
+        id: run_compare
+        shell: bash
+        env:
+          DATABASE_URL: ${{ secrets.CI_DATABASE_URL || 'postgresql://stub:stub@localhost:5432/stub' }}
+          NEXT_TELEMETRY_DISABLED: "1"
+        run: |
+          set -euo pipefail
+
+          OUT_DIR="artifacts/lighthouse-ci/${{ github.run_id }}-${{ github.run_attempt }}-dashboard-ci"
+
+          chmod +x scripts/lighthouse/ci-dashboard-compare.sh
+          scripts/lighthouse/ci-dashboard-compare.sh \
+            --before-ref "${{ steps.refs.outputs.before_ref }}" \
+            --after-ref "${{ steps.refs.outputs.after_ref }}" \
+            --runs "${{ steps.refs.outputs.runs }}" \
+            --target-path "${{ steps.refs.outputs.target_path }}" \
+            --output-dir "$OUT_DIR"
+
+          echo "out_dir=$OUT_DIR" >> "$GITHUB_OUTPUT"
+
+      - name: Upload Lighthouse Artifacts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: lighthouse-dashboard-${{ github.run_id }}
+          path: ${{ steps.run_compare.outputs.out_dir }}
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Publish Job Summary
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat "${{ steps.run_compare.outputs.out_dir }}/dashboard-tenants-compare.md" >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "separator-vertical-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/separator-vertical-demo.tsx",
+      "content": "\"use client\";\n\nimport { Separator } from \"@nebutra/ui/primitives\";\n\nexport function SeparatorVerticalDemo() {\n  return (\n    <div className=\"gap-3 h-5 text-sm flex items-center\">\n      <span>Home</span>\n      <Separator orientation=\"vertical\" />\n      <span>About</span>\n      <Separator orientation=\"vertical\" />\n      <span>Contact</span>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "expanding-textarea-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/expanding-textarea-demo.tsx",
+      "content": "import { ExpandingTextarea } from \"@nebutra/ui/primitives\";\n\nexport function ExpandingTextareaDemo() {\n  return (\n    <div className=\"max-w-md px-4 py-12 flex w-full items-center justify-center\">\n      <ExpandingTextarea\n        placeholder=\"Start typing... the textarea will expand automatically.\"\n        className=\"w-full\"\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

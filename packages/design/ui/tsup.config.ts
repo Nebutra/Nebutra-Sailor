@@ -1,0 +1,211 @@
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  statSync,
+  writeFileSync,
+} from "node:fs";
+import { dirname, join, relative, sep } from "node:path";
+import { defineConfig } from "tsup";
+
+/**
+ * Recursively walk a directory and yield POSIX-style relative paths
+ * (relative to `root`). Skips node_modules and dist.
+ */
+function walk(root: string): string[] {
+  const out: string[] = [];
+  const visit = (dir: string) => {
+    for (const name of readdirSync(dir)) {
+      if (name === "node_modules" || name === "dist") continue;
+      const full = join(dir, name);
+      const st = statSync(full);
+      if (st.isDirectory()) visit(full);
+      else out.push(relative(root, full).split(sep).join("/"));
+    }
+  };
+  visit(root);
+  return out;
+}
+
+/** Read the first ~64 chars of a file (cheap directive sniff). */
+function readHead(file: string): string {
+  try {
+    return readFileSync(file, "utf-8").slice(0, 128);
+  } catch {
+    return "";
+  }
+}
+
+/** Does the file (or any .ts/.tsx beneath the same dir) declare "use client"? */
+function entryNeedsUseClient(srcDir: string, entrySource: string): boolean {
+  // If the entry file itself has the directive, done.
+  const entryAbs = join(srcDir, entrySource);
+  if (/^\s*["']use client["']/.test(readHead(entryAbs))) return true;
+
+  // Otherwise scan everything under the entry's directory: if ANY descendant
+  // .ts/.tsx file has the directive, the bundled barrel transitively contains
+  // client code and the whole entry must be marked.
+  const entryDir = dirname(entryAbs);
+  if (!existsSync(entryDir)) return false;
+  for (const rel of walk(entryDir)) {
+    if (!rel.endsWith(".ts") && !rel.endsWith(".tsx")) continue;
+    if (rel.endsWith(".test.ts") || rel.endsWith(".test.tsx")) continue;
+    if (rel.endsWith(".spec.ts") || rel.endsWith(".spec.tsx")) continue;
+    if (rel.endsWith(".stories.ts") || rel.endsWith(".stories.tsx")) continue;
+    if (/^\s*["']use client["']/.test(readHead(join(entryDir, rel)))) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/** Prepend "use client" to a built dist .js file if not already present. */
+function prependUseClient(distFile: string): void {
+  if (!existsSync(distFile)) return;
+  const content = readFileSync(distFile, "utf-8");
+  if (/^\s*["']use client["']/.test(content)) return;
+  writeFileSync(distFile, `"use client";\n${content}`);
+}
+
+/** Copy a single file, creating parent dirs as needed. */
+function copyAsset(srcAbs: string, destAbs: string): void {
+  if (!existsSync(srcAbs)) return;
+  const parent = dirname(destAbs);
+  if (!existsSync(parent)) mkdirSync(parent, { recursive: true });
+  copyFileSync(srcAbs, destAbs);
+}
+
+/**
+ * Entry map — keys are dist paths (sans .js), values are src files.
+ * "tailwind.preset" is intentionally treated as a server-side build config
+ * (consumed by Tailwind's Node runtime), so it must NOT be marked "use client".
+ */
+const ENTRIES: Record<string, string> = {
+  index: "src/index.ts",
+  "components/index": "src/components/index.ts",
+  "chat/index": "src/chat/index.ts",
+  "agent/index": "src/agent/index.ts",
+  "layout/index": "src/layout/index.ts",
+  "layouts/index": "src/layouts/index.ts",
+  "icons/index": "src/icons/index.ts",
+  "theme/index": "src/theme/index.ts",
+  // Editorial blocks are deliberately free of "use client": the blog article
+  // body renders as RSC, and one client file in src/editorial/ would make
+  // entryNeedsUseClient stamp the whole barrel.
+  "editorial/index": "src/editorial/index.ts",
+  "primitives/index": "src/primitives/index.ts",
+  "primitives/canonical": "src/primitives/canonical.ts",
+  "patterns/index": "src/patterns/index.ts",
+  "typography/index": "src/typography/index.ts",
+  "hooks/index": "src/hooks/index.ts",
+  "shared/animation/index": "src/shared/animation/index.ts",
+  "shared/animation/css/index": "src/shared/animation/css/index.ts",
+  "shared/animation/motion/index": "src/shared/animation/motion/index.ts",
+  "utils/index": "src/utils/index.ts",
+  // Pure string contracts — must stay server-importable for AuthSplitLayout (RSC).
+  // See SERVER_ONLY_ENTRIES: utils/* must never ship a "use client" stamp.
+  "utils/auth-surfaces": "src/utils/auth-surfaces.ts",
+  "tailwind.preset": "src/tailwind.preset.ts",
+};
+
+// Entries that must NOT get a "use client" banner.
+//
+// utils/index re-exports pure helpers (cn, AUTH_FORM_*, brand color readers).
+// It lives next to slot.tsx (client), and the directory walk used to stamp the
+// whole utils barrel "use client" even though slot is NOT re-exported. That
+// made AUTH_FORM_* client references — RSC AuthSplitLayout then rendered an
+// error digression instead of className, leaving login form unstyled/wide.
+// agent + tailwind.preset are Node/server build surfaces.
+const SERVER_ONLY_ENTRIES = new Set<string>([
+  "agent/index",
+  "tailwind.preset",
+  "utils/index",
+  "utils/auth-surfaces",
+]);
+
+export default defineConfig({
+  entry: ENTRIES,
+  format: ["esm"],
+  // No DTS-only relaxation: src/** is strict-clean under the package tsconfig
+  // (exactOptionalPropertyTypes + noUncheckedIndexedAccess), so declaration
+  // emit runs on the same rules as `pnpm typecheck`.
+  dts: true,
+  splitting: false,
+  sourcemap: true,
+  clean: true,
+  treeshake: true,
+  target: "es2022",
+  external: [
+    "react",
+    "react-dom",
+    "next",
+    "framer-motion",
+    "motion",
+    "@base-ui/react",
+    "@lobehub/ui",
+    "@lobehub/ui/awesome",
+    "@lobehub/ui/chat",
+    "@lobehub/icons",
+    "@lobehub/fluent-emoji",
+    "antd",
+    "antd-style",
+    "@paper-design/shaders-react",
+    "@number-flow/react",
+    "@react-types/shared",
+    "@internationalized/date",
+    "@nebutra/brand",
+    "@nebutra/tokens",
+    "@nebutra/icons",
+    "recharts",
+    "react-hook-form",
+    "embla-carousel-react",
+    "cmdk",
+    "vaul",
+    "sonner",
+    "clsx",
+    "tailwind-merge",
+    "canvas-confetti",
+    "cobe",
+    "dotted-map",
+    "rough-notation",
+    "react-syntax-highlighter",
+    "react-tweet",
+    "react-use-measure",
+    "react-resizable-panels",
+    "input-otp",
+    "usehooks-ts",
+    "date-fns",
+    "react-day-picker",
+    "class-variance-authority",
+    "piri",
+    "react-ascii-text",
+    "@icons-pack/react-simple-icons",
+    "@react-three/fiber",
+    "three",
+    /^(react|react-dom|next|framer-motion|@base-ui|@lobehub|antd|@paper-design|@number-flow|@react-types|@internationalized|@nebutra|recharts|react-hook-form|embla-carousel-react|cmdk|vaul|sonner|clsx|tailwind-merge|canvas-confetti|cobe|dotted-map|rough-notation|react-syntax-highlighter|react-tweet|react-use-measure|react-resizable-panels|react-day-picker|input-otp|usehooks-ts|date-fns|class-variance-authority|piri|react-ascii-text|@icons-pack|@react-three|three)(\/.*)?$/,
+  ],
+  onSuccess: async () => {
+    const cwd = process.cwd();
+    const srcDir = join(cwd, "src");
+    const distDir = join(cwd, "dist");
+
+    // 1. For every entry, decide if its bundled output needs "use client".
+    //    Scan the entry source AND everything beneath the entry's directory.
+    for (const [distKey, srcEntry] of Object.entries(ENTRIES)) {
+      if (SERVER_ONLY_ENTRIES.has(distKey)) continue;
+      // Strip leading "src/" so it resolves against srcDir, not srcDir/src/.
+      const relSource = srcEntry.replace(/^src\//, "");
+      if (!entryNeedsUseClient(srcDir, relSource)) continue;
+      prependUseClient(join(distDir, `${distKey}.js`));
+    }
+
+    // 2. Copy CSS / static assets that are referenced via package exports.
+    copyAsset(join(srcDir, "typography/fonts.css"), join(distDir, "typography/fonts.css"));
+    copyAsset(
+      join(srcDir, "styles/brand-override.css"),
+      join(distDir, "styles/brand-override.css"),
+    );
+  },
+});

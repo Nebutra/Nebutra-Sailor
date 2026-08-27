@@ -1,0 +1,31 @@
+[
+  {
+    "name": "@nebutra/ui (core components)",
+    "path": "packages/design/ui/src/index.ts",
+    "limit": "2.5 MB",
+    "import": "*"
+  },
+  {
+    "name": "@nebutra/ui (Button tree-shake)",
+    "path": "packages/design/ui/src/primitives/index.ts",
+    "limit": "50 kB",
+    "import": "{ Button }"
+  },
+  {
+    "name": "@nebutra/tokens (CSS variables)",
+    "path": "packages/design/tokens/styles.css",
+    "limit": "10 kB"
+  },
+  {
+    "name": "@nebutra/icons (full set)",
+    "path": "packages/design/icons/dist/index.js",
+    "limit": "200 kB",
+    "import": "*"
+  },
+  {
+    "name": "@nebutra/errors",
+    "path": "packages/platform/errors/src/index.ts",
+    "limit": "10 kB",
+    "import": "*"
+  }
+]

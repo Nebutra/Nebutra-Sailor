@@ -1,0 +1,14 @@
+{
+  "name": "nebutra-registry",
+  "version": "1.0.0",
+  "features": [
+    {
+      "name": "queue",
+      "url": "https://registry.nebutra.com/r/features/queue.json"
+    },
+    {
+      "name": "search",
+      "url": "https://registry.nebutra.com/r/features/search.json"
+    }
+  ]
+}

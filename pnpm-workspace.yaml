@@ -1,0 +1,277 @@
+packages:
+  - "apps/*"
+  - "packages/*/*"
+  - "backends/python/*"
+  - "backends/gateway"
+
+# Supply-chain guardrails.
+# - Wait 24h before resolving newly published package versions. This matches
+#   pnpm 11's hardened default while keeping security hotfixes usable.
+# - Fail installs when a dependency with a lifecycle script is not explicitly
+#   reviewed in `onlyBuiltDependencies` below.
+# - Ignore pnpmfile hooks so dependency resolution cannot execute project-local
+#   JavaScript during install.
+minimumReleaseAge: 1440
+# Security hotfixes may land <24h; allow these override targets immediately.
+minimumReleaseAgeExclude:
+  - next
+  - better-auth
+  - "@better-auth/*"
+  - axios
+  - js-yaml
+  - brace-expansion
+  - fast-uri
+  - linkify-it
+  - protobufjs
+  - sharp
+  - adm-zip
+  - "@opentelemetry/*"
+  - "@hono/node-server"
+  - dompurify
+  - body-parser
+  - tar
+trustPolicy: no-downgrade
+# next-auth@5.0.0-beta.32 patches critical Auth.js CVEs but ships without the
+# provenance attestation present on beta.31 (upstream CI change, not takeover).
+trustPolicyExclude:
+  - "next-auth@5.0.0-beta.32"
+  - "@auth/core@0.41.3"
+  # chokidar@4.0.3 (via tsup) lost provenance attestation vs earlier 4.x — not a takeover.
+  - "chokidar@4.0.3"
+  # undici-types@6.21.0 (via @types/node) dropped provenance vs earlier 6.x — not a takeover.
+  - "undici-types@6.21.0"
+  - "undici-types"
+strictDepBuilds: true
+ignorePnpmfile: true
+
+# =============================================================================
+# pnpm Catalog — single source of truth for shared dependency versions.
+# Reference in any package.json as: "typescript": "catalog:"
+# Run `pnpm install` after editing to regenerate the lockfile.
+# =============================================================================
+catalog:
+  # ── Language & build tools ─────────────────────────────────────────────────
+  typescript: ^5.9.3
+  tsup: ^8.5.1
+  tsx: ^4.21.0
+
+  # ── Node types ─────────────────────────────────────────────────────────────
+  "@types/node": ^25.9.1
+
+  # ── React ──────────────────────────────────────────────────────────────────
+  # Most apps use ^19.2.4 (caret); a few pin to 19.2.4 — standardizing to caret.
+  react: ^19.2.4
+  react-dom: ^19.2.4
+  "@types/react": ^19.2.14
+  "@types/react-dom": ^19.2.3
+
+  # ── Next.js ────────────────────────────────────────────────────────────────
+  next: ^16.2.11
+  next-themes: ^0.4.6
+  next-intl: ^4.12.0
+  "@next/bundle-analyzer": ^16.2.11
+
+  # ── Fonts ──────────────────────────────────────────────────────────────────
+  geist: ^1.3.1
+
+  # ── Styling ────────────────────────────────────────────────────────────────
+  tailwindcss: ^4.2.1
+  "@tailwindcss/postcss": ^4.2.1
+  "@tailwindcss/vite": ^4.2.1
+  framer-motion: ^12.35.0
+  class-variance-authority: ^0.7.1
+  clsx: ^2.1.1
+  tailwind-merge: ^3.5.0
+
+  # ── Validation ─────────────────────────────────────────────────────────────
+  zod: ^4.3.6
+
+  # ── Database ───────────────────────────────────────────────────────────────
+  "@prisma/client": ^7.4.2
+  "@prisma/adapter-pg": ^7.4.2
+  prisma: ^7.4.2
+
+  # ── Testing ────────────────────────────────────────────────────────────────
+  vite: 8.0.16
+  vitest: ^4.1.4
+  "@vitest/coverage-v8": ^4.1.4
+  "@vitejs/plugin-react-swc": ^4.3.1
+  "@testing-library/jest-dom": ^6.9.1
+  "@testing-library/react": ^16.3.2
+  jsdom: ^29.1.1
+
+  # ── Linting ────────────────────────────────────────────────────────────────
+  "@biomejs/biome": ^2.4.8
+
+  # ── UI primitives ──────────────────────────────────────────────────────────
+  "@radix-ui/react-slot": ^1.2.4
+
+  # ── Forms & UI utilities ───────────────────────────────────────────────────
+  react-hook-form: ^7.71.2
+  react-resizable-panels: ^4.7.1
+
+  # ── AI ─────────────────────────────────────────────────────────────────────
+  "@ai-sdk/react": ^3.0.118
+  ai: ^6.0.116
+
+  # ── Docs / MDX ─────────────────────────────────────────────────────────────
+  fumadocs-core: ^16.6.12
+  fumadocs-mdx: ^14.2.10
+  fumadocs-ui: ^16.6.12
+  "@types/mdx": ^2.0.13
+  mermaid: ^11.15.0
+
+  # ── Backend / infra ────────────────────────────────────────────────────────
+  hono: ^4.12.27  # >=4.12.25 patches current 2026 Lambda/CORS advisories (#167)
+  ioredis: ^5.4.2
+  svix: ^1.86.0
+
+  # ── Observability / analytics ──────────────────────────────────────────────
+  "@vercel/analytics": ^1.6.1
+  "@vercel/speed-insights": ^1.3.1
+
+# Settings that used to live in package.json#pnpm. Current pnpm reads them here.
+overrides:
+  "@actions/github>undici": ">=7.29.0 <8"
+  "@actions/http-client>undici": ">=7.29.0 <8"
+  "@babel/core": "7.29.6"
+  "@babel/plugin-transform-modules-systemjs": ">=7.29.4"
+  "@changesets/parse>js-yaml": "5.2.2"
+  "@chenglou/pretext": ">=0.0.5"
+  "@clerk/backend": ">=3.2.14"
+  "@clerk/nextjs": ">=7.2.4"
+  "@clerk/react": ">=6.4.3"
+  "@clerk/shared": ">=4.8.3"
+  "@grpc/grpc-js": ">=1.14.4"
+  "@hono/node-server": ">=2.0.5"
+  "@modelcontextprotocol/sdk": "1.29.0"
+  "@opentelemetry/auto-instrumentations-node": ">=0.75.0"
+  "@opentelemetry/core": ">=2.8.0"
+  "@opentelemetry/exporter-prometheus": ">=0.217.0"
+  "@opentelemetry/propagator-jaeger": ">=2.9.0"
+  "@opentelemetry/sdk-node": ">=0.219.0"
+  "@protobufjs/utf8": ">=1.1.1"
+  "@redocly/cli>js-yaml": ">=4.3.1 <5"
+  "@redocly/cli>undici": ">=7.29.0 <8"
+  "@redocly/openapi-core>js-yaml": ">=4.3.1 <5"
+  "@redocly/respect-core>undici": ">=7.29.0 <8"
+  "@smithy/core": "^3.29.6"
+  "@svgr/plugin-svgo>svgo": "4.0.2"
+  "@types/react": "catalog:"
+  "@types/react-dom": "catalog:"
+  "@vercel/blob>undici": ">=7.29.0 <8"
+  "adm-zip": ">=0.6.0"
+  "axios": ">=1.18.0"
+  "baseline-browser-mapping": "^2.10.0"
+  "basic-ftp": ">=5.3.1"
+  "body-parser": ">=2.3.0"
+  "brace-expansion": ">=5.0.9"
+  "brace-expansion@>=3": ">=5.0.9"
+  "deepmerge-ts": ">=8.0.0"
+  "defu": ">=6.1.5"
+  "diff": ">=8.0.3"
+  "dompurify": ">=3.4.12"
+  "effect": ">=3.20.0"
+  "esbuild": ">=0.28.1"
+  "fast-uri": ">=4.1.2"
+  "fast-xml-builder": ">=1.1.7"
+  "fast-xml-parser": ">=5.7.0"
+  "follow-redirects": ">=1.16.0"
+  "form-data": ">=4.0.6"
+  "fumadocs-core": "16.6.12"
+  "fumadocs-mdx>js-yaml": "5.2.2"
+  "fumadocs-openapi": "10.3.17"
+  "fumadocs-typescript": "5.1.5"
+  "fumadocs-ui": "16.6.12"
+  "glob": ">=10.5.0"
+  "gray-matter>js-yaml": ">=3.15.1 <4"
+  "handlebars": ">=4.7.9"
+  "hono": "catalog:"
+  "icu-minify": ">=4.9.2"
+  "ip-address": ">=10.3.1"
+  "js-cookie": ">=3.0.7"
+  "js-yaml": ">=4.3.0"
+  "js-yaml@5": "5.2.2"
+  "js-yaml@^5": "5.2.2"
+  "jsdom>undici": ">=7.29.0 <8"
+  "json-2-csv": "5.5.11"
+  "kysely": ">=0.28.17"
+  "linkify-it": "5.0.2"
+  "lodash": ">=4.18.0"
+  "lodash-es": ">=4.18.0"
+  "markdown-it": ">=14.2.0"
+  "minimatch": ">=9.0.7"
+  "nanoid": ">=3.3.18 <4 || >=5.1.16"
+  "next": "catalog:"
+  "nodemailer": ">=9.0.1"
+  "oidc-provider>undici": ">=7.29.0 <8"
+  "openapi-typescript>js-yaml": "5.2.2"
+  "path-to-regexp": ">=8.4.0"
+  "picomatch@2.3.1": "2.3.2"
+  "picomatch@4.0.3": "4.0.4"
+  "postcss": ">=8.5.18"
+  "protobufjs": ">=7.6.5"
+  "qs": ">=6.15.2"
+  "react": "19.2.4"
+  "react-avatar-editor": "^14.0.0"
+  "react-dom": "19.2.4"
+  "read-yaml-file>js-yaml": ">=3.15.1 <4"
+  "rollup": ">=4.59.0"
+  "semver": ">=7.8.0"
+  "sharp": ">=0.35.0"
+  "smol-toml": ">=1.6.1"
+  "svgo": ">=3.3.3"
+  "tar": ">=7.5.21"
+  "tmp": ">=0.2.6"
+  "undici": ">=7.29.0 <8 || >=8.9.0"
+  "undici@^6": ">=6.24.0"
+  "undici@^7": ">=7.29.0"
+  "undici@^8": ">=8.9.0"
+  "uuid@10.0.0": "11.1.1"
+  "uuid@11.1.0": "11.1.1"
+  "uuid@13.0.0": "13.0.1"
+  "uuid@8.3.2": "11.1.1"
+  "uuid@9.0.1": "11.1.1"
+  "valibot": ">=1.2.0"
+  "vite": "8.0.16"
+  "ws": ">=8.21.0"
+  "yaml": "2.8.3"
+  "yaml@1.10.2": "1.10.3"
+  "yaml@2.8.2": "2.8.3"
+  "zod": "catalog:"
+peerDependencyRules:
+  "ignoreMissing":
+    - "styled-components"
+  "allowedVersions":
+    "react": "19"
+    "react-dom": "19"
+onlyBuiltDependencies:
+  - "@bundled-es-modules/glob"
+  - "@clerk/shared"
+  - "@cloudflare/workerd-darwin-arm64"
+  - "@cloudflare/workerd-darwin-x64"
+  - "@cloudflare/workerd-linux-arm64"
+  - "@cloudflare/workerd-linux-x64"
+  - "@dao-xyz/sqlite3-vec"
+  - "@parcel/watcher"
+  - "@prisma/engines"
+  - "@sentry/cli"
+  - "@swc/core"
+  - "better-sqlite3"
+  - "core-js"
+  - "esbuild"
+  - "lefthook"
+  - "msgpackr-extract"
+  - "onnxruntime-node"
+  - "prisma"
+  - "protobufjs"
+  - "sharp"
+  - "style-dictionary"
+  - "workerd"
+allowedDeprecatedVersions:
+  "@novu/node": "*"
+  "svg-dotted-map": "*"
+auditConfig:
+  "ignoreGhsas":
+    - "GHSA-w3rx-r6r6-pgpr"
+    - "GHSA-5p2g-fcmc-qvqq"

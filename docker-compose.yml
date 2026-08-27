@@ -1,0 +1,371 @@
+# Nebutra-Sailor Local Development Stack
+# Run: docker-compose up -d
+
+services:
+  # ============================================
+  # Infrastructure
+  # ============================================
+
+  # PostgreSQL (Supabase alternative for local dev)
+  # Schema is owned by Prisma 7 (packages/platform/db/prisma/) — see db-migrate service.
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: nebutra-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: nebutra
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # One-shot Prisma migrate runner. Replaces the legacy SQL bootstrap mounts.
+  db-migrate:
+    build:
+      context: .
+      dockerfile: infra/runtime/docker/Dockerfile.db-migrate
+    container_name: nebutra-db-migrate
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/nebutra
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  # Redis (Upstash alternative for local dev)
+  redis:
+    image: redis:7-alpine
+    container_name: nebutra-redis
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ClickHouse (warehouse for analytics + growth metrics)
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.8
+    container_name: nebutra-clickhouse
+    ports:
+      - "127.0.0.1:8123:8123" # HTTP
+      - "127.0.0.1:9000:9000" # Native
+    environment:
+      - CLICKHOUSE_DB=nebutra
+      - CLICKHOUSE_USER=default
+      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD:-}
+      - CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT=1
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+      - ./infra/data/clickhouse/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "clickhouse-client --query 'SELECT 1'"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # Bull Board — BullMQ job dashboard (optional)
+  bull-board:
+    image: venatum/bull-board:latest
+    container_name: nebutra-bull-board
+    ports:
+      - "127.0.0.1:3200:3000"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - BULL_PREFIX=nebutra:queue
+    depends_on:
+      redis:
+        condition: service_healthy
+    profiles: ["queue", "core"]
+
+  # Meilisearch — full-text search engine (@nebutra/search)
+  meilisearch:
+    image: getmeili/meilisearch:v1.12
+    container_name: nebutra-meilisearch
+    ports:
+      - "127.0.0.1:7700:7700"
+    environment:
+      - MEILI_ENV=development
+      - MEILI_MASTER_KEY=${MEILISEARCH_API_KEY:-nebutra-dev-key}
+      - MEILI_NO_ANALYTICS=true
+    volumes:
+      - meilisearch_data:/meili_data
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:7700/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    profiles: ["search", "core"]
+
+  # Novu — notification infrastructure (@nebutra/notifications)
+  novu:
+    image: ghcr.io/novuhq/novu/api:2.1.0
+    container_name: nebutra-novu
+    ports:
+      - "127.0.0.1:3300:3000"
+    environment:
+      - NODE_ENV=local
+      - MONGO_URL=mongodb://mongo:27017/novu-db
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      redis:
+        condition: service_healthy
+    profiles: ["notifications"]
+
+  # OpenFGA datastore bootstrap — `openfga migrate` creates the openfga_*
+  # tables in our shared postgres. Idempotent; safe to re-run on every up.
+  openfga-migrate:
+    image: openfga/openfga:v1.8
+    container_name: nebutra-openfga-migrate
+    command: migrate
+    environment:
+      - OPENFGA_DATASTORE_ENGINE=postgres
+      - OPENFGA_DATASTORE_URI=postgresql://postgres:postgres@postgres:5432/nebutra?sslmode=disable
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+    profiles: ["permissions"]
+
+  # OpenFGA — relationship-based auth (@nebutra/permissions)
+  openfga:
+    image: openfga/openfga:v1.8
+    container_name: nebutra-openfga
+    command: run
+    ports:
+      - "127.0.0.1:8080:8080"   # HTTP API
+      - "127.0.0.1:8081:8081"   # Playground
+    environment:
+      - OPENFGA_DATASTORE_ENGINE=postgres
+      - OPENFGA_DATASTORE_URI=postgresql://postgres:postgres@postgres:5432/nebutra?sslmode=disable
+    depends_on:
+      postgres:
+        condition: service_healthy
+      openfga-migrate:
+        condition: service_completed_successfully
+    profiles: ["permissions"]
+
+  # ============================================
+  # Python Microservices
+  # ============================================
+
+  ai-service:
+    build:
+      context: .
+      dockerfile: infra/runtime/docker/Dockerfile.python
+      args:
+        SERVICE: ai
+    container_name: nebutra-ai
+    ports:
+      - "127.0.0.1:8001:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/nebutra
+      - REDIS_URL=redis://redis:6379
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      db-migrate:
+        condition: service_completed_successfully
+    profiles: ["ai", "core"]
+
+  content-service:
+    build:
+      context: .
+      dockerfile: infra/runtime/docker/Dockerfile.python
+      args:
+        SERVICE: content
+    container_name: nebutra-content
+    ports:
+      - "127.0.0.1:8002:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/nebutra
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      db-migrate:
+        condition: service_completed_successfully
+    profiles: ["content", "core"]
+
+  recsys-service:
+    build:
+      context: .
+      dockerfile: infra/runtime/docker/Dockerfile.python
+      args:
+        SERVICE: recsys
+    container_name: nebutra-recsys
+    ports:
+      - "127.0.0.1:8003:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/nebutra
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      db-migrate:
+        condition: service_completed_successfully
+    profiles: ["recsys", "core"]
+
+  ecommerce-service:
+    build:
+      context: .
+      dockerfile: infra/runtime/docker/Dockerfile.python
+      args:
+        SERVICE: ecommerce
+    container_name: nebutra-ecommerce
+    ports:
+      - "127.0.0.1:8004:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/nebutra
+      - REDIS_URL=redis://redis:6379
+      - SHOPIFY_API_KEY=${SHOPIFY_API_KEY}
+      - SHOPIFY_API_SECRET=${SHOPIFY_API_SECRET}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      db-migrate:
+        condition: service_completed_successfully
+    profiles: ["ecommerce", "core"]
+
+  web3-service:
+    build:
+      context: .
+      dockerfile: infra/runtime/docker/Dockerfile.python
+      args:
+        SERVICE: web3
+    container_name: nebutra-web3
+    ports:
+      - "127.0.0.1:8005:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/nebutra
+      - REDIS_URL=redis://redis:6379
+      - ALCHEMY_API_KEY=${ALCHEMY_API_KEY}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      db-migrate:
+        condition: service_completed_successfully
+    profiles: ["web3"]
+
+  billing-service:
+    build:
+      context: .
+      dockerfile: infra/runtime/docker/Dockerfile.python
+      args:
+        SERVICE: billing
+    container_name: nebutra-billing
+    ports:
+      - "127.0.0.1:8006:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/nebutra
+      - REDIS_URL=redis://redis:6379
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
+      - STRIPE_PRICE_ID_PRO_MONTHLY=${STRIPE_PRICE_ID_PRO_MONTHLY}
+      - STRIPE_PRICE_ID_PRO_YEARLY=${STRIPE_PRICE_ID_PRO_YEARLY}
+      - STRIPE_PRICE_ID_ENTERPRISE_MONTHLY=${STRIPE_PRICE_ID_ENTERPRISE_MONTHLY}
+      - STRIPE_PRICE_ID_ENTERPRISE_YEARLY=${STRIPE_PRICE_ID_ENTERPRISE_YEARLY}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      db-migrate:
+        condition: service_completed_successfully
+    profiles: ["billing", "core"]
+
+  event-ingest-service:
+    build:
+      context: .
+      dockerfile: infra/runtime/docker/Dockerfile.python
+      args:
+        SERVICE: event-ingest
+    container_name: nebutra-event-ingest
+    ports:
+      - "127.0.0.1:8008:8000"
+    environment:
+      - CLICKHOUSE_HOST=clickhouse
+      - CLICKHOUSE_PORT=8123
+      - CLICKHOUSE_USER=default
+      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD:-}
+      - CLICKHOUSE_DATABASE=nebutra
+      - DEDUPE_TTL_SECONDS=3600
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+    profiles: ["analytics"]
+
+  # ============================================
+  # Identity Provider (OAuth 2.0 / OIDC)
+  # ============================================
+
+  idp:
+    build:
+      context: .
+      dockerfile: apps/idp/Dockerfile
+    container_name: nebutra-idp
+    ports:
+      - "127.0.0.1:3100:3100"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/nebutra
+      - REDIS_URL=redis://redis:6379
+      - OIDC_ISSUER=http://localhost:3100
+      - OIDC_COOKIE_KEYS=dev-cookie-key-1,dev-cookie-key-2
+      - NODE_ENV=development
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      db-migrate:
+        condition: service_completed_successfully
+    profiles: ["idp", "core"]
+
+  # ============================================
+  # Observability (optional)
+  # ============================================
+
+  # Jaeger for distributed tracing
+  jaeger:
+    image: jaegertracing/all-in-one:1.51
+    container_name: nebutra-jaeger
+    ports:
+      - "16686:16686" # UI
+      - "4317:4317" # OTLP gRPC
+      - "4318:4318" # OTLP HTTP
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    profiles:
+      - observability
+
+volumes:
+  postgres_data:
+  redis_data:
+  clickhouse_data:
+  meilisearch_data:
+
+networks:
+  default:
+    name: nebutra-network

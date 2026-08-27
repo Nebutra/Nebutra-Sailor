@@ -1,0 +1,46 @@
+{
+  "name": "@nebutra/sleptons",
+  "version": "0.1.3",
+  "private": true,
+  "nebutra": {
+    "status": "wip",
+    "graph": "labs",
+    "productionReady": false
+  },
+  "scripts": {
+    "dev": "next dev --port 3003",
+    "build": "next build",
+    "start": "next start",
+    "lint": "biome check .",
+    "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@clerk/nextjs": "^7.3.7",
+    "@nebutra/db": "workspace:*",
+    "@nebutra/fonts": "workspace:*",
+    "@nebutra/icons": "workspace:*",
+    "@nebutra/tokens": "workspace:*",
+    "@nebutra/ui": "workspace:*",
+    "geist": "catalog:",
+    "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "catalog:",
+    "@testing-library/jest-dom": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react-swc": "catalog:",
+    "jsdom": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "license": "AGPL-3.0-only"
+}

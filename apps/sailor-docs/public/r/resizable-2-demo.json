@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "resizable-2-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/resizable-2-demo.tsx",
+      "content": "\"use client\";\n\nimport { ResizableHandle, ResizablePanel, ResizablePanelGroup } from \"@nebutra/ui/primitives\";\nexport function Resizable2Demo() {\n  return (\n    <ResizablePanelGroup\n      direction=\"horizontal\"\n      className=\"max-w-3xl h-[300px] w-full rounded-lg border\"\n    >\n      <ResizablePanel defaultSize={20} minSize={15}>\n        <div className=\"p-6 flex h-full items-center justify-center bg-muted/20\">\n          <span className=\"font-semibold\">Sidebar</span>\n        </div>\n      </ResizablePanel>\n      <ResizableHandle withHandle />\n      <ResizablePanel defaultSize={60}>\n        <div className=\"p-6 flex h-full items-center justify-center bg-background\">\n          <span className=\"font-semibold text-lg max-w-[200px] text-center\">Main Content Area</span>\n        </div>\n      </ResizablePanel>\n      <ResizableHandle withHandle />\n      <ResizablePanel defaultSize={20} minSize={15}>\n        <div className=\"p-6 flex h-full items-center justify-center bg-muted/20\">\n          <span className=\"font-semibold\">Right Panel</span>\n        </div>\n      </ResizablePanel>\n    </ResizablePanelGroup>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

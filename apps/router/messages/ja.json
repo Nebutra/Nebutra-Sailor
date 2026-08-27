@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — API マーケットプレイス",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "全モデル API マーケットプレイス · 従量課金 · キーとウォレットの管理 · すぐに試せる。"
+  },
+  "admin": {
+    "dashboard": "概要",
+    "keys": "API キー",
+    "wallet": "ウォレット",
+    "docs": "ドキュメント",
+    "title": "管理",
+    "backToMarket": "マーケットに戻る",
+    "quickUse": "クイック使用"
+  },
+  "chrome": {
+    "searchPlaceholder": "AI で何をしたいですか？",
+    "search": "検索",
+    "locale": "言語",
+    "currency": "通貨",
+    "collapseSidebar": "サイドバーを折りたたむ",
+    "expandSidebar": "サイドバーを展開する",
+    "home": "ホーム",
+    "adminConsole": "管理",
+    "quickUse": "クイック使用",
+    "support": "サポート",
+    "apiDocs": "API ドキュメント",
+    "integrationHelp": "統合ガイド",
+    "aiRecommend": "AI ピック",
+    "market": "マーケット",
+    "usageTitle": "クイック使用"
+  },
+  "channels": {
+    "app": "アプリマーケット",
+    "api": "APIマーケット",
+    "models": "モデルカタログ",
+    "client": "クライアント"
+  },
+  "market": {
+    "new": "新着",
+    "hot": "人気",
+    "forYou": "あなたへ",
+    "grid": "グリッド",
+    "list": "リスト",
+    "apiShelf": "API棚",
+    "toolShelf": "ツール棚",
+    "categories": "カテゴリ",
+    "apps": "アプリ",
+    "newRelease": "新リリース",
+    "forgeTitle": "Forgeツールワークスペース",
+    "forgeBlurb": "テキスト変換、コーデック、フォーム、コンポーザブルツール。アプリマーケットのラボはForgeを指しています。",
+    "openForge": "Forgeを開く →",
+    "allApi": "すべてのAPI →",
+    "all": "すべて →",
+    "viewAll": "すべての {label} を表示 →",
+    "gridView": "グリッド表示",
+    "listView": "リスト表示",
+    "hiTitle": "エンタープライズAIリソースプラットフォーム",
+    "hiSubtitle": "あらゆるニーズに最適なAIをマッチング",
+    "sellable": "販売可能",
+    "walletTopup": "チャージ"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "言語モデル",
+      "hint": "チャット・推論"
+    },
+    "image-gen": {
+      "label": "画像生成",
+      "hint": "テキストから画像"
+    },
+    "image-edit": {
+      "label": "画像編集",
+      "hint": "編集 · マッティング"
+    },
+    "video": {
+      "label": "動画生成",
+      "hint": "テキストから動画"
+    },
+    "audio": {
+      "label": "音声と動画",
+      "hint": "音声合成 · 文字起こし"
+    },
+    "data": {
+      "label": "情報",
+      "hint": "検索 · 抽出"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "知識拡張"
+    },
+    "tools": {
+      "label": "ツールAPI",
+      "hint": "エージェント · ツール"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "ボット",
+      "chips": "チャットボット · 描画ボット · ナレッジ"
+    },
+    "productivity": {
+      "label": "生産性",
+      "chips": "モデルアリーナ · AIライティング"
+    },
+    "academic": {
+      "label": "学術",
+      "chips": "PDFツールキット · AI特許検索"
+    },
+    "image": {
+      "label": "画像ツール",
+      "chips": "3Dスタジオ · キャンバス"
+    },
+    "audio": {
+      "label": "オーディオ",
+      "chips": "音声 · AI音楽"
+    },
+    "code": {
+      "label": "コード",
+      "chips": "Webジェネレーター · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "概要",
+    "keys": "キー",
+    "wallet": "ウォレット",
+    "use": "試す",
+    "docs": "ドキュメント",
+    "models": "もっと見る"
+  }
+}

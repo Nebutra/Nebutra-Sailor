@@ -1,0 +1,156 @@
+{
+  "id": "vercel",
+  "name": "Vercel",
+  "darkDefault": false,
+  "version": "1.0.0",
+  "semantic": {
+    "background": "0 0% 98%",
+    "foreground": "0 0% 9%",
+    "card": "0 0% 100%",
+    "cardForeground": "0 0% 9%",
+    "popover": "0 0% 100%",
+    "popoverForeground": "0 0% 9%",
+    "primary": "0 0% 9%",
+    "primaryForeground": "0 0% 100%",
+    "secondary": "0 0% 92%",
+    "secondaryForeground": "0 0% 30%",
+    "muted": "0 0% 92%",
+    "mutedForeground": "0 0% 40%",
+    "accent": "0 0% 92%",
+    "accentForeground": "0 0% 30%",
+    "destructive": "0 72% 51%",
+    "destructiveForeground": "0 0% 100%",
+    "border": "0 0% 92%",
+    "ring": "0 0% 9%",
+    "success": "133 50% 32%",
+    "successForeground": "0 0% 100%",
+    "info": "0 0% 30%",
+    "infoForeground": "0 0% 100%"
+  },
+  "modes": {
+    "light": {
+      "semantic": {
+        "background": "0 0% 98%",
+        "foreground": "0 0% 9%",
+        "card": "0 0% 100%",
+        "cardForeground": "0 0% 9%",
+        "popover": "0 0% 100%",
+        "popoverForeground": "0 0% 9%",
+        "primary": "0 0% 9%",
+        "primaryForeground": "0 0% 100%",
+        "secondary": "0 0% 92%",
+        "secondaryForeground": "0 0% 30%",
+        "muted": "0 0% 92%",
+        "mutedForeground": "0 0% 40%",
+        "accent": "0 0% 92%",
+        "accentForeground": "0 0% 30%",
+        "destructive": "0 72% 51%",
+        "destructiveForeground": "0 0% 100%",
+        "border": "0 0% 92%",
+        "ring": "0 0% 9%",
+        "success": "133 50% 32%",
+        "successForeground": "0 0% 100%",
+        "info": "0 0% 30%",
+        "infoForeground": "0 0% 100%"
+      }
+    },
+    "dark": {
+      "semantic": {
+        "background": "0 0% 0%",
+        "foreground": "0 0% 93%",
+        "card": "0 0% 4%",
+        "cardForeground": "0 0% 93%",
+        "popover": "0 0% 4%",
+        "popoverForeground": "0 0% 93%",
+        "primary": "0 0% 100%",
+        "primaryForeground": "0 0% 0%",
+        "secondary": "0 0% 12%",
+        "secondaryForeground": "0 0% 93%",
+        "muted": "0 0% 12%",
+        "mutedForeground": "0 0% 63%",
+        "accent": "0 0% 12%",
+        "accentForeground": "0 0% 93%",
+        "destructive": "0 72% 51%",
+        "destructiveForeground": "0 0% 100%",
+        "border": "0 0% 16%",
+        "ring": "0 0% 100%",
+        "success": "133 49% 40%",
+        "successForeground": "0 0% 100%",
+        "info": "0 0% 70%",
+        "infoForeground": "0 0% 0%"
+      }
+    }
+  },
+  "recipe": {
+    "buttonDefault": "solid",
+    "density": "compact",
+    "badgeDefault": "muted",
+    "radii": {
+      "button": "6px",
+      "card": "6px",
+      "badge": "6px",
+      "input": "6px",
+      "pill": "9999px"
+    },
+    "elevationTokens": {
+      "card": "rgba(0, 0, 0, 0.08) 0px 0px 0px 1px, rgb(250, 250, 250) 0px 0px 0px 1px",
+      "control": "0 0 #0000",
+      "raised": "rgba(0, 0, 0, 0.08) 0px 0px 0px 1px, rgb(250, 250, 250) 0px 0px 0px 1px"
+    },
+    "outlineBorder": "#ebebeb"
+  },
+  "typography": {
+    "fontSans": "'Geist Sans', 'Geist', ui-sans-serif, system-ui, sans-serif",
+    "fontMono": "'Geist Mono', ui-monospace, Menlo, monospace",
+    "fontDisplay": "'Geist Sans', 'Geist', ui-sans-serif, system-ui, sans-serif",
+    "headingWeight": 450
+  },
+  "motion": {
+    "easeOut": "cubic-bezier(0, 0, 0.2, 1)",
+    "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "micro": 100,
+    "flow": 150,
+    "reveal": 200,
+    "cinematic": 300
+  },
+  "spacing": {
+    "xs": "0.5rem",
+    "sm": "0.75rem",
+    "md": "1rem",
+    "lg": "1.5rem",
+    "xl": "2rem",
+    "2xl": "3rem"
+  },
+  "extensions": {
+    "categories": {
+      "carbon": "#000000",
+      "terminal": "#297a3a"
+    },
+    "sourceUrl": "https://vercel.com",
+    "notes": [
+      "Dual-mode monochrome \u2014 light: Obsidian CTA; dark: white CTA on carbon.",
+      "Elevation is hairline double-ring, never drop-shadow.",
+      "Spectrum/solar gradients are marketing-only decorative (not product chrome)."
+    ]
+  },
+  "roles": {
+    "canvas": "0 0% 98%",
+    "canvasForeground": "0 0% 9%",
+    "surface": "0 0% 100%",
+    "surfaceForeground": "0 0% 9%",
+    "action": "0 0% 9%",
+    "actionForeground": "0 0% 100%",
+    "quiet": "0 0% 92%",
+    "quietForeground": "0 0% 30%",
+    "muted": "0 0% 92%",
+    "mutedForeground": "0 0% 40%",
+    "border": "0 0% 92%",
+    "ring": "0 0% 9%",
+    "destructive": "0 72% 51%",
+    "destructiveForeground": "0 0% 100%",
+    "success": "133 50% 32%",
+    "successForeground": "0 0% 100%",
+    "info": "0 0% 30%",
+    "infoForeground": "0 0% 100%"
+  }
+}

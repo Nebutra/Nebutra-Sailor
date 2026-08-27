@@ -1,0 +1,97 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Semantic-level tokens — reference core via {color.x.y} aliases. Layer 2 of the cascade. Mode-agnostic; light/dark overrides live in tokens/themes/.",
+  "brand": {
+    "primary": {
+      "$value": "{color.nebutra-blue.500}",
+      "$type": "color",
+      "$description": "Brand primary — 云毓蓝"
+    },
+    "accent": {
+      "$value": "{color.nebutra-cyan.500}",
+      "$type": "color",
+      "$description": "Brand accent — 云毓青"
+    },
+    "tertiary": { "$value": "{color.tertiary-purple}", "$type": "color" },
+    "gradient": {
+      "start": {
+        "$value": "hsl(var(--primary))",
+        "$type": "string",
+        "$description": "Legacy alias of --primary (shadcn product blue). Prefer bg-primary / Button default."
+      },
+      "end": {
+        "$value": "hsl(var(--primary))",
+        "$type": "string",
+        "$description": "Legacy alias of --primary. Prefer hover:bg-primary/90."
+      },
+      "primary": {
+        "$value": "hsl(var(--primary))",
+        "$type": "string",
+        "$description": "Legacy --brand-gradient. Same color as --primary — not a second palette. App CTAs should use Button / bg-primary."
+      },
+      "reverse": {
+        "$value": "hsl(var(--primary))",
+        "$type": "string",
+        "$description": "Legacy alias of --primary."
+      },
+      "vertical": {
+        "$value": "hsl(var(--primary))",
+        "$type": "string",
+        "$description": "Legacy alias of --primary."
+      },
+      "radial": {
+        "$value": "hsl(var(--primary))",
+        "$type": "string",
+        "$description": "Legacy alias of --primary."
+      },
+      "logo": {
+        "$value": "linear-gradient(135deg, #0033fe 0%, #00a2e9 50%, #0bf1c3 100%)",
+        "$type": "gradient",
+        "$description": "Logo/VI gradient (云毓蓝→云毓青). Mid stop #00a2e9 is the OKLab perceptual midpoint (avoids sRGB mid-path soft spots). Brand assets only — not product CTAs."
+      },
+      "logo-reverse": {
+        "$value": "linear-gradient(135deg, #0bf1c3 0%, #00a2e9 50%, #0033fe 100%)",
+        "$type": "gradient",
+        "$description": "Logo/VI reverse gradient with same OKLab mid stop."
+      }
+    }
+  },
+  "status": {
+    "danger": { "$value": "{color.status.danger}", "$type": "color" },
+    "warning": { "$value": "{color.status.warning}", "$type": "color" },
+    "success": { "$value": "{color.status.success}", "$type": "color" },
+    "info": {
+      "$value": "{brand.primary}",
+      "$type": "color",
+      "$description": "VI: Info = Brand Blue"
+    }
+  },
+  "container": {
+    "text": { "$value": "{size.container.text}", "$type": "dimension" },
+    "content": { "$value": "{size.container.content}", "$type": "dimension" },
+    "wide": { "$value": "{size.container.wide}", "$type": "dimension" }
+  },
+  "radius": {
+    "default": {
+      "$value": "{size.radius.md}",
+      "$type": "dimension",
+      "$description": "Geist-matching 6px"
+    }
+  },
+  "motion": {
+    "$description": "Semantic motion layer — references the four-rail duration scale in core.json. Component code should consume these (or Tailwind duration-micro / duration-flow / duration-reveal / duration-cinematic utilities), never raw ms.",
+    "duration": {
+      "micro": { "$value": "{duration.micro}", "$type": "duration" },
+      "flow": { "$value": "{duration.flow}", "$type": "duration" },
+      "reveal": { "$value": "{duration.reveal}", "$type": "duration" },
+      "cinematic": { "$value": "{duration.cinematic}", "$type": "duration" }
+    }
+  },
+  "focusRing": {
+    "default": {
+      "$type": "string",
+      "$value": "0 0 0 2px hsl(var(--ring) / 0.4)",
+      "$description": "Single-layer translucent focus ring (2026 pattern). Legacy box-shadow consumers stay compatible; modern surfaces should prefer the global :focus-visible outline rule in static/base.css."
+    }
+  }
+}

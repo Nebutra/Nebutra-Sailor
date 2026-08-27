@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "combobox-3-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/combobox-3-demo.tsx",
+      "content": "\"use client\";\n\nimport { Combobox } from \"@nebutra/ui/primitives\";\nexport function Combobox3Demo() {\n  return (\n    <Combobox\n      options={[\n        { value: \"next\", label: \"Next.js\" },\n        { value: \"remix\", label: \"Remix\" },\n        { value: \"astro\", label: \"Astro\" },\n        { value: \"nuxt\", label: \"Nuxt\" },\n      ]}\n      placeholder=\"Select framework...\"\n    />\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

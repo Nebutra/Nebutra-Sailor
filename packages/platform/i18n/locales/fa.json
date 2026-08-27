@@ -1,0 +1,1273 @@
+{
+  "admin": {
+    "title": "مدیریت",
+    "description": "پنل ابرمدیر — مدیریت کاربران، سازمان‌ها و سلامت سیستم.",
+    "nav": {
+      "overview": "نمای کلی",
+      "users": "کاربران",
+      "organizations": "سازمان‌ها"
+    },
+    "users": {
+      "title": "کاربران",
+      "description": "مرور، جستجو و تغییر هویت هر کاربر در تمام سازمان‌ها.",
+      "searchPlaceholder": "جستجوی کاربران…",
+      "totalCount": "{count, plural, one {# کاربر} other {# کاربر}}",
+      "empty": "کاربری یافت نشد.",
+      "loadError": "بارگذاری کاربران ناموفق بود.",
+      "columns": {
+        "email": "ایمیل",
+        "name": "نام",
+        "created": "ایجاد شده",
+        "activeOrgs": "سازمان‌های فعال",
+        "actions": "عملیات"
+      },
+      "viewOrgs": "مشاهده سازمان‌ها"
+    },
+    "organizations": {
+      "title": "سازمان‌ها",
+      "description": "تمام فضای‌های کاری در سیستم، مرتب‌شده بر اساس جدیدترین.",
+      "searchPlaceholder": "جستجوی سازمان‌ها…",
+      "totalCount": "{count, plural, one {# سازمان} other {# سازمان}}",
+      "empty": "هیچ سازمانی یافت نشد.",
+      "loadError": "بارگذاری سازمان‌ها ناموفق بود.",
+      "columns": {
+        "name": "نام",
+        "slug": "اسلاگ",
+        "plan": "پلن",
+        "members": "اعضا",
+        "created": "ایجاد شده",
+        "actions": "عملیات"
+      },
+      "view": "مشاهده"
+    },
+    "impersonate": {
+      "trigger": "جایگزینی",
+      "starting": "در حال شروع…",
+      "stop": "توقف از نقش‌پذیری",
+      "confirm": "نقش‌پذیری به {label}؟ تا زمان توقف، برنامه را از دید این کاربر مشاهده خواهید کرد.",
+      "error": "شروع نقش‌پذیری ناموفق بود.",
+      "stopError": "توقف نقش‌پذیری ناموفق بود."
+    },
+    "pagination": {
+      "previous": "قبلی",
+      "next": "بعدی",
+      "pageOf": "صفحه {page} از {total}"
+    }
+  },
+  "Common": {
+    "hello": "سلام دنیا",
+    "dashboard": "داشبورد",
+    "actions": {
+      "continue": "ادامه",
+      "confirm": "تأیید",
+      "done": "انجام شد",
+      "cancel": "لغو"
+    }
+  },
+  "theme": {
+    "light": "روشن",
+    "dark": "تاریک",
+    "system": "سیستم"
+  },
+  "LocaleSwitcher": {
+    "label": "زبان",
+    "ariaLabel": "تغییر زبان",
+    "searchPlaceholder": "جستجوی زبان‌ها…",
+    "noResults": "هیچ زبانی یافت نشد",
+    "menuAria": "انتخاب زبان"
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "شماره ثبت ICP",
+      "publicSecurity": "ثبت امنیت عمومی"
+    },
+    "wechat": {
+      "signIn": "ورود با WeChat",
+      "notConfigured": "ورود WeChat پیکربندی نشده است"
+    }
+  },
+  "onboarding": {
+    "title": "فضای کار خود را راه‌اندازی کنید",
+    "subtitle": "سه مرحله سریع و آماده انتشار هستید.",
+    "steps": {
+      "workspace": "فضای کار",
+      "invite": "دعوت از تیم",
+      "plan": "انتخاب طرح"
+    },
+    "progress": {
+      "back": "بازگشت",
+      "stepCounter": "مرحله {current} از {total}"
+    },
+    "plan": {
+      "title": "یک طرح انتخاب کنید",
+      "description": "رایگان شروع کنید یا ظرفیت بیشتری باز کنید. می‌توانید هر زمان طرح را تغییر دهید.",
+      "choose": "انتخاب طرح",
+      "skip": "فعلاً رد شوید"
+    }
+  },
+  "userMenu": {
+    "ariaLabel": "باز کردن منوی کاربر",
+    "profile": "پروفایل",
+    "settings": "تنظیمات",
+    "feedback": "بازخورد",
+    "theme": "پوسته",
+    "language": "زبان",
+    "signOut": "خروج",
+    "signedInAs": "وارد شده به عنوان"
+  },
+  "account": {
+    "profile": {
+      "title": "پروفایل",
+      "description": "اطلاعات شخصی خود را به‌روز کنید.",
+      "nameLabel": "نام",
+      "namePlaceholder": "نام کامل شما",
+      "emailLabel": "ایمیل",
+      "emailHint": "برای تأیید آدرس ایمیل جدید، یک لینک تأیید به آن ارسال می‌کنیم.",
+      "languageLabel": "زبان",
+      "submit": "ذخیره تغییرات",
+      "saving": "در حال ذخیره…",
+      "verifyEmail": "تأیید",
+      "verifying": "در حال ارسال تأیید…",
+      "success": "پروفایل به‌روز شد.",
+      "verificationSent": "ایمیل تأیید ارسال شد.",
+      "errorRequiredName": "نام الزامی است.",
+      "errorInvalidEmail": "آدرس ایمیل معتبر نیست.",
+      "subtitle": "هویت و اطلاعات تماس شما.",
+      "unknown": "کاربر بدون نام",
+      "manageCta": "باز کردن تنظیمات کامل حساب"
+    },
+    "avatar": {
+      "title": "آواتار",
+      "description": "یک تصویر مربع‌شکل آپلود کنید (PNG، JPEG یا WebP، حداکثر 2 مگابایت).",
+      "uploadButton": "آپلود آواتار",
+      "uploading": "در حال آپلود…",
+      "fileTooBig": "فایل خیلی بزرگ است. حداکثر حجم 2 مگابایت است.",
+      "invalidType": "نوع تصویر پشتیبانی نمی‌شود. از PNG، JPEG یا WebP استفاده کنید.",
+      "success": "آواتار به‌روزرسانی شد.",
+      "removeButton": "حذف آواتار",
+      "removed": "آواتار حذف شد.",
+      "deleteError": "حذف آواتار ناموفق بود."
+    },
+    "export": {
+      "title": "خروجی گرفتن از داده‌های من",
+      "description": "یک کپی از تمام رکوردهایی که برای حساب شما نگهداری می‌کنیم دانلود کنید، شامل پروفایل، سازمان‌ها، رویدادهای حسابرسی، اعلان‌ها و دعوت‌نامه‌ها.",
+      "compliance": "مطابق با ماده 20 GDPR (حق قابلیت انتقال داده) و ماده 45 PIPL (حق دریافت کپی از اطلاعات شخصی).",
+      "export": "خروجی گرفتن از داده‌های من",
+      "pending": "در حال آماده‌سازی خروجی…",
+      "ready": "خروجی شما آماده است.",
+      "download": "دانلود JSON",
+      "error": "آماده‌سازی خروجی شما ناموفق بود. لطفاً دوباره تلاش کنید."
+    },
+    "emailChange": {
+      "title": "تغییر آدرس ایمیل",
+      "description": "ما یک لینک تأیید به آدرس جدید ارسال خواهیم کرد. تغییر تنها زمانی اعمال می‌شود که آن را از صندوق ورودی آن تأیید کنید.",
+      "newEmailLabel": "آدرس ایمیل جدید",
+      "newEmailPlaceholder": "you@example.com",
+      "submit": "ارسال لینک تأیید",
+      "submitting": "در حال ارسال…",
+      "verificationSent": "برای تأیید تغییر، صندوق ورودی خود در {email} را بررسی کنید.",
+      "errorInvalidEmail": "آدرس ایمیل معتبر نیست.",
+      "error": "درخواست تغییر ایمیل ناموفق بود.",
+      "confirm": {
+        "successTitle": "ایمیل به‌روز شد",
+        "successDescription": "ایمیل ورود شما به‌روز شد.",
+        "successWithEmail": "ایمیل ورود شما اکنون {email} است.",
+        "failureTitle": "ما نتوانستیم آن لینک را تأیید کنیم",
+        "failureDescription": "این لینک تأیید نامعتبر، منقضی شده یا قبلاً استفاده شده است. لطفاً از تنظیمات حساب خود درخواست جدیدی ارسال کنید.",
+        "errorCode": "دلیل: {code}",
+        "continueCta": "بازگشت به حساب",
+        "backCta": "بازگشت به حساب"
+      }
+    },
+    "title": "حساب",
+    "ariaLabel": "تنظیمات حساب",
+    "navLabel": "زبانه‌های تنظیمات حساب",
+    "tip": "برای باز کردن مجدد این پنجره، در هر جای صفحه کلید {key} را فشار دهید.",
+    "tabs": {
+      "profile": "پروفایل",
+      "subscription": "اشتراک",
+      "billing": "صورتحساب",
+      "preferences": "ترجیحات",
+      "personalization": "شخصی‌سازی"
+    },
+    "subscription": {
+      "title": "اشتراک",
+      "subtitle": "پلن، سهمیه و تمدید.",
+      "currentPlan": "پلن فعلی",
+      "upgradeCta": "مقایسه طرح‌ها",
+      "manageCta": "مدیریت اشتراک"
+    },
+    "billing": {
+      "title": "صورتحساب",
+      "subtitle": "تاریخچه صورتحساب و روش پرداخت.",
+      "empty": {
+        "title": "هنوز تاریخی وجود ندارد",
+        "description": "پس از اولین دوره پرداختی، هزینه‌ها و صورتحساب‌ها در اینجا نمایش داده می‌شوند.",
+        "cta": "باز کردن صورتحساب کامل"
+      }
+    },
+    "preferences": {
+      "title": "ترجیحات",
+      "subtitle": "پوسته و دسترسی‌پذیری.",
+      "theme": "پوسته",
+      "light": "روشن",
+      "dark": "تاریک",
+      "system": "سیستم",
+      "help": "راهنما",
+      "reportIssue": "گزارش مشکل",
+      "shortcuts": "میانبرهای صفحه‌کلید"
+    },
+    "personalization": {
+      "title": "شخصی‌سازی",
+      "subtitle": "به Sailor بگویید شما کی هستید و چگونه پاسخ دهد."
+    }
+  },
+  "impact": {
+    "hero_title": "بازتعریف پارادایم",
+    "hero_subtitle": "بیایید هیچ کسب‌وکار دشواری در جهان وجود نداشته باشد.",
+    "social_title": "اجتماعی",
+    "social_headline": "برابری مطلق فناوری",
+    "social_description": "توانمندسازی نوآوران لبه. شکستن فیلترهای سنتی و توانمندسازی بنیانگذاران مستقل با زیرساخت‌های خارج از چارچوب.",
+    "governance_title": "حاکمیت",
+    "governance_headline": "کد قانون است",
+    "governance_description": "حاکمیت الگوریتمی مبتنی بر اثبات کار و نتایج واقعی کسب‌وکار، جایگزین بوروکراسی مبهم.",
+    "environment_title": "محیط",
+    "environment_headline": "مینیمالیسم دیجیتال",
+    "environment_description": "کاهش ردپای ابری از طریق یکپارچه‌سازی شدید SaaS و کارایی منابع."
+  },
+  "auth": {
+    "security": {
+      "title": "امنیت",
+      "description": "رمز عبور، احراز هویت چندمرحله‌ای و جلسات فعال خود را مدیریت کنید.",
+      "managedByProvider": "تنظیمات امنیت توسط ارائه‌دهنده احراز هویت شما مدیریت می‌شود.",
+      "openProviderProfile": "باز کردن پروفایل",
+      "changePassword": {
+        "title": "تغییر رمز عبور",
+        "description": "از یک رمز عبور قوی استفاده کنید که در سایت‌های دیگر تکرار نمی‌شود.",
+        "currentPasswordLabel": "رمز عبور فعلی",
+        "newPasswordLabel": "رمز عبور جدید",
+        "confirmPasswordLabel": "تأیید رمز عبور جدید",
+        "revokeOtherSessions": "خروج از دستگاه‌های دیگر",
+        "submit": "بروزرسانی رمز عبور",
+        "pending": "در حال بروزرسانی رمز عبور…",
+        "success": "رمز عبor با موفقیت بروزرسانی شد."
+      },
+      "twoFactor": {
+        "title": "احراز هویت دو مرحله‌ای",
+        "description": "یک مرحله تأیید دوم با استفاده از یک برنامه احراز هویت اضافه کنید.",
+        "enabled": "فعال",
+        "disabled": "غیرفعال",
+        "enabledHelp": "حساب شما پس از ورود با رمز عبور، یک کد 6 رقمی از برنامه احراز هویت درخواست می‌کند.",
+        "disabledHelp": "حساب خود را با یک کد 6 رقمی از برنامه احراز هویت محافظت کنید.",
+        "enable": "فعال‌سازی احراز هویت دو مرحله‌ای",
+        "disable": "غیرفعال‌سازی احراز هویت دو مرحله‌ای",
+        "passwordPrompt": "رمز عبور خود را تأیید کنید",
+        "scanQrCode": "این کد QR را با برنامه احراز هویت خود اسکن کنید، سپس کد 6 رقمی زیر را وارد کنید.",
+        "secretKeyLabel": "یا این کلید مخفی را دستی وارد کنید",
+        "verificationCodeLabel": "کد تأیید",
+        "verify": "تأیید و فعال‌سازی",
+        "backupCodesTitle": "کدهای پشتیبان",
+        "backupCodesDescription": "این کدها را در جای امنی ذخیره کنید. هر کد یک بار قابل استفاده است اگر به برنامه احراز هویت خود دسترسی نداشته باشید.",
+        "copyBackupCodes": "کپی کدها",
+        "finishSetup": "تکمیل تنظیمات",
+        "successEnabled": "احراز هویت دو مرحله‌ای فعال شد.",
+        "successDisabled": "احراز هویت دو مرحله‌ای غیرفعال شد."
+      },
+      "sessions": {
+        "title": "جلسات فعال",
+        "description": "دستگاه‌ها و مرورگرهایی که در حال حاضر به حساب شما وارد شده‌اند.",
+        "currentSession": "(جاری)",
+        "ipLabel": "آدرس IP",
+        "lastActiveLabel": "آخرین فعالیت",
+        "revoke": "خروج",
+        "revokeAll": "خروج از تمام دستگاه‌های دیگر",
+        "empty": "هیچ جلسه فعال دیگری وجود ندارد.",
+        "successRevoked": "از جلسه خارج شدید.",
+        "successRevokedAll": "از تمام جلسات دیگر خارج شدید."
+      },
+      "deleteAccount": {
+        "title": "حذف حساب",
+        "description": "حساب و تمام داده‌های مرتبط با آن به‌طور دائمی حذف می‌شوند. این عمل قابل بازگشت نیست.",
+        "passwordPrompt": "برای تأیید رمز عبور خود را وارد کنید",
+        "confirmTextLabel": "برای تأیید DELETE را تایپ کنید",
+        "submit": "حذف حساب",
+        "cancel": "لغو",
+        "success": "حساب حذف شد."
+      },
+      "connectedAccounts": {
+        "title": "حساب‌های متصل",
+        "description": "روش‌های ورود OAuth متصل به هویت Nebutra خود را بررسی کنید.",
+        "connected": "متصل",
+        "connect": "اتصال",
+        "help": "قبل از قطع ارتباط با یک ارائه‌دهنده، حداقل یک روش ورود قابل اعتماد را در دسترس نگه دارید.",
+        "unlink": "قطع ارتباط",
+        "notLinked": "متصل نیست"
+      },
+      "passkeys": {
+        "title": "کلیدهای عبور",
+        "description": "از اعتبارنامه‌های متصل به دستگاه برای ورود مقاوم در برابر فیشینگ استفاده کنید.",
+        "empty": "هنوز هیچ کلید عبوری ثبت نشده است",
+        "addPasskey": "افزودن کلید عبور",
+        "cancelAdd": "لغو",
+        "cancelled": "تنظیم کلید عبور لغو شد. تغییری ایجاد نشد.",
+        "defaultName": "کلید عبور {number}",
+        "nameHelp": "قبل از اینکه مرورگر برای تأیید درخواست کند، به این کلید عبor یک نام قابل تشخیص بدهید.",
+        "nameLabel": "نام کلید عبور",
+        "rename": "تغییر نام",
+        "saveRename": "ذخیره نام",
+        "remove": "حذف",
+        "successAdded": "کلید عبور اضافه شد.",
+        "successRemoved": "کلید عبور حذف شد.",
+        "unavailableBadge": "در دسترس نیست"
+      },
+      "setPassword": {
+        "title": "تنظیم رمز عبور",
+        "description": "برای ورود بدون ارائه‌دهنده OAuth، یک رمز عبor اضافه کنید.",
+        "submit": "تنظیم رمز عبور",
+        "pending": "ارسال لینک تنظیم رمز عبور…",
+        "sentMessage": "لینک تنظیم رمز عبور به ایمیل شما ارسال شد."
+      }
+    },
+    "banner": {
+      "logoAlt": "Nebutra",
+      "slogan": "استارتاپ خود را از روز اول با کنترل کامل عرضه کنید.",
+      "tagline": "ایجنت‌های چندمنطقه‌ای، چنداجاره‌نشین به‌طور پیش‌فرض. بدون نیاز به تیم پلتفرم."
+    },
+    "signIn": {
+      "title": "ورود به Nebutra",
+      "subtitle": "روش ورود خود را انتخاب کنید.",
+      "continueWith": "ادامه با",
+      "continueWithProvider": "ادامه با {provider}",
+      "providers": {
+        "google": "Google",
+        "github": "GitHub",
+        "apple": "Apple",
+        "microsoft": "Microsoft",
+        "feishu": "Feishu"
+      },
+      "providerLoading": "در حال انتقال…",
+      "dividerOr": "یا با ایمیل ادامه دهید",
+      "emailLabel": "ایمیل",
+      "emailPlaceholder": "you@example.com",
+      "continue": "ادامه",
+      "back": "بازگشت",
+      "passwordLabel": "رمز عبور",
+      "passwordPlaceholder": "رمز عبور خود را وارد کنید",
+      "showPassword": "نمایش رمز عبور",
+      "hidePassword": "مخفی کردن رمز عبور",
+      "capsLockOn": "Caps Lock روشن است",
+      "forgotPassword": "رمز عبور را فراموش کرده‌اید؟",
+      "submit": "ورود",
+      "submitLoading": "در حال ورود…",
+      "useMagicLink": "به جای آن یک لینک جادویی برایم بفرست",
+      "usePasskey": "با کلید عبور وارد شو",
+      "passkeyTitle": "با کلید عبور خود وارد شو",
+      "passkeyDescription": "از Face ID، Touch ID یا کلید امنیتی خود استفاده کن. نیازی به رمز عبور نیست.",
+      "passkeyButton": "ادامه با کلید عبور",
+      "passkeyCancelled": "درخواست کلید عبور لغو شد.",
+      "passkeyUnsupported": "این مرورگر از کلیدهای عبور پشتیبانی نمی‌کند.",
+      "passkeyError": "ورود با کلید عبور ناموفق بود. روش دیگری را امتحان کن.",
+      "ssoTitle": "ادامه با SSO سازمانی",
+      "ssoDescription": "در حال انتقال شما به {provider} برای {email}.",
+      "ssoError": "SSO سازمانی شروع نشد. روش دیگری را امتحان کن.",
+      "ssoRetry": "دوباره تلاش کن",
+      "newToProduct": "اولین بار است که از Nebutra استفاده می‌کنی؟",
+      "signUpLink": "ثبت‌نام",
+      "homeLink": "خانه",
+      "signInFailed": "ورود ناموفق بود",
+      "genericError": "خطایی رخ داد. لطفاً دوباره تلاش کنید.",
+      "captchaError": "تأیید ربات ناموفق بود. صفحه را تازه کنید و دوباره تلاش کنید.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
+      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
+      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
+      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+    },
+    "signUp": {
+      "title": "حساب Nebutra خود را بسازید",
+      "subtitle": "یک حساب برای تمام برنامه‌های Nebutra.",
+      "firstNameLabel": "نام",
+      "lastNameLabel": "نام خانوادگی",
+      "firstNamePlaceholder": "نام",
+      "lastNamePlaceholder": "نام خانوادگی",
+      "submit": "ساخت حساب",
+      "submitLoading": "در حال ساخت حساب…",
+      "alreadyHaveAccount": "قبلاً حساب دارید؟",
+      "signInLink": "ورود",
+      "signUpFailed": "ثبت‌نام ناموفق بود",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+    },
+    "passkeys": {
+      "title": "کلیدهای عبور",
+      "description": "به جای رمز عبور از Face ID، Touch ID، Windows Hello یا کلید امنیتی استفاده کنید. هر دستگاه کلید عبور مخصوص خود را دارد.",
+      "addButton": "افزودن کلید عبور",
+      "adding": "در حال راه‌اندازی…",
+      "namePlaceholder": "مثلاً MacBook Pro",
+      "nameLabel": "نام (اختیاری)",
+      "registerSuccess": "کلید عبور اضافه شد.",
+      "registerCancelled": "راه‌اندازی لغو شد.",
+      "registerUnsupported": "این مرورگر از کلیدهای عبور پشتیبانی نمی‌کند.",
+      "registerError": "ثبت کلید عبور ناموفق بود.",
+      "empty": "هنوز کلید عبوری وجود ندارد.",
+      "loadError": "بارگذاری کلیدهای عبور ناموفق بود.",
+      "revoke": "حذف",
+      "revoking": "در حال حذف…",
+      "revokeConfirm": "این کلید عبور حذف شود؟ دیگر نمی‌توانید با آن وارد شوید.",
+      "revokeSuccess": "کلید عبور حذف شد.",
+      "revokeError": "حذف کلید عبور ناموفق بود.",
+      "device": {
+        "singleDevice": "محدود به دستگاه",
+        "multiDevice": "همگام‌شده در دستگاه‌ها"
+      },
+      "addedOn": "افزوده شده در {date}"
+    },
+    "magicLink": {
+      "title": "ورود با لینک جادویی",
+      "description": "ایمیل خود را وارد کنید تا یک کد 6 رقمی برای ورود برایتان ارسال کنیم.",
+      "emailLabel": "ایمیل",
+      "send": "ارسال لینک",
+      "codeLabel": "کد تأیید",
+      "verify": "تأیید",
+      "resend": "ارسال مجدد کد",
+      "resendCooldown": "ارسال مجدد در {seconds} ثانیه",
+      "sentTo": "کدی به {email} ارسال کردیم"
+    },
+    "forgotPassword": {
+      "title": "رمز عبور را فراموش کرده‌اید؟",
+      "description": "ایمیل خود را وارد کنید تا لینک بازنشانی رمز عبور برایتان ارسال شود.",
+      "emailLabel": "ایمیل",
+      "submit": "ارسال لینک بازنشانی",
+      "successTitle": "ایمیل خود را بررسی کنید",
+      "success": "اگر این ایمیل ثبت شده باشد، به‌زودی لینک بازنشانی دریافت خواهید کرد."
+    },
+    "resetPassword": {
+      "title": "بازنشانی رمز عبور",
+      "description": "یک رمز عبور جدید برای حساب خود انتخاب کنید.",
+      "newPasswordLabel": "رمز عبور جدید",
+      "confirmPasswordLabel": "تأیید رمز عبور جدید",
+      "submit": "بازنشانی رمز عبور",
+      "successTitle": "رمز عبور بازنشانی شد",
+      "successDescription": "اکنون می‌توانید با رمز عبور جدید وارد شوید.",
+      "signInCta": "رفتن به ورود",
+      "invalidTitle": "لینک بازنشانی نامعتبر",
+      "invalidDescription": "لینک بازنشانی رمز عبور ناقص یا نادرست است. از صفحه فراموشی رمز عبور درخواست لینک جدید کنید."
+    },
+    "verifyEmail": {
+      "successTitle": "ایمیل تأیید شد",
+      "successDescription": "آدرس ایمیل شما تأیید شد.",
+      "failureTitle": "تأیید ناموفق بود",
+      "failureDescription": "نتوانستیم ایمیل شما را با این لینک تأیید کنیم.",
+      "continueCta": "ادامه",
+      "signInCta": "رفتن به ورود"
+    },
+    "loginSuccess": {
+      "eyebrow": "ورود کامل شد",
+      "title": "شما وارد شدید",
+      "description": "جلسه شما آماده است. فضای کاری Nebutra باز می‌شود و انتقال امن از جریان احراز هویت حفظ می‌شود.",
+      "session": "جلسه",
+      "verified": "تأیید شده",
+      "workspace": "فضای کاری",
+      "preparing": "در حال آماده‌سازی",
+      "redirecting": "ورود به فضای کاری در {seconds} ثانیه",
+      "secureHandoff": "انتقال امن",
+      "continueCta": "ادامه به فضای کاری",
+      "signInCta": "استفاده از حساب دیگر"
+    },
+    "errors": {
+      "invalidCredentials": "ایمیل یا رمز عبور نادرست است.",
+      "userNotFound": "هیچ حسابی با آن ایمیل یافت نشد.",
+      "userAlreadyExists": "حسابی با آن ایمیل از قبل وجود دارد.",
+      "weakPassword": "رمز عبور بسیار ضعیف است. حداقل ۸ کاراکتر با ترکیب حروف بزرگ و کوچک و اعداد استفاده کنید.",
+      "passwordsDontMatch": "رمزهای عبور مطابقت ندارند.",
+      "passwordTooShort": "رمز عبور باید حداقل ۸ کاراکتر باشد.",
+      "currentPasswordIncorrect": "رمز عبور فعلی اشتباه است.",
+      "samePassword": "رمز عبور جدید باید با رمز عبور فعلی متفاوت باشد.",
+      "invalidEmail": "آدرس ایمیل معتبر نیست.",
+      "emailNotVerified": "لطفاً ابتدا آدرس ایمیل خود را تأیید کنید.",
+      "sessionExpired": "جلسه شما منقضی شده است. لطفاً دوباره وارد شوید.",
+      "twoFactorRequired": "احراز هویت دو مرحله‌ای لازم است.",
+      "invalidVerificationCode": "کد تأیید اشتباه یا منقضی شده است.",
+      "twoFactorAlreadyEnabled": "احراز هویت دو مرحله‌ای قبلاً فعال شده است.",
+      "twoFactorNotEnabled": "احراز هویت دو مرحله‌ای فعال نیست.",
+      "tooManyAttempts": "تلاش‌های زیاد. لطفاً بعداً دوباره امتحان کنید.",
+      "rateLimited": "شما این کار را خیلی زیاد انجام می‌دهید. سرعت را کم کنید.",
+      "providerNotSupported": "این عملیات توسط ارائه‌دهنده احراز هویت شما مدیریت می‌شود.",
+      "networkError": "خطای شبکه. اتصال خود را بررسی و دوباره تلاش کنید.",
+      "unknown": "مشکلی پیش آمد. لطفاً دوباره تلاش کنید."
+    }
+  },
+  "chat": {
+    "suggestions": {
+      "title": "برای شروع یکی از این‌ها را امتحان کنید",
+      "activity": {
+        "title": "نمایش فعالیت‌های اخیر",
+        "prompt": "فعالیت‌های اخیر در فضای کاری من را در ۲۴ ساعت گذشته نشان بده."
+      },
+      "debug": {
+        "title": "عیب‌یابی یک خطا",
+        "prompt": "به من در عیب‌یابی یک خطای زمان اجرا کمک کن. ردپای خطا را می‌چسبانم و تو مرا راهنمایی کن."
+      },
+      "email": {
+        "title": "پیش‌نویس یک ایمیل خلاصه",
+        "prompt": "یک ایمیل خلاصه هفتگی مختصر برای ارسال به تیمم درباره پیشرفت پلتفرم بنویس."
+      },
+      "features": {
+        "title": "کاوش ویژگی‌های پلتفرم",
+        "prompt": "ویژگی‌های کلیدی این پلتفرم SaaS و نحوه استفاده از آن‌ها را برایم توضیح بده."
+      }
+    }
+  },
+  "billing": {
+    "activePlan": {
+      "title": "پلن فعال",
+      "manage": "مدیریت اشتراک",
+      "noPlanTitle": "بدون پلن فعال",
+      "noPlanDescription": "یک پلن انتخاب کنید تا ویژگی‌های پولی و محدودیت‌های استفاده بالاتر باز شوند.",
+      "choosePlan": "انتخاب پلن",
+      "renewsOn": "تمدید می‌شود در {date}",
+      "endsOn": "پایان می‌یابد در {date}",
+      "trialEndsOn": "دوره آزمایشی در {date} به پایان می‌رسد",
+      "status": {
+        "active": "فعال",
+        "trialing": "دوره آزمایشی",
+        "past_due": "سررسید گذشته",
+        "canceled": "لغو شده",
+        "free": "رایگان"
+      },
+      "errors": {
+        "loadFailed": "بارگذاری وضعیت صورتحساب شما امکان‌پذیر نبود."
+      }
+    },
+    "pricing": {
+      "trial": "دوره آزمایشی رایگان {days} روزه",
+      "seat": "{count, plural, one {# صندلی} other {# صندلی}}",
+      "perSeat": "/ صندلی"
+    }
+  },
+  "organizations": {
+    "settings": {
+      "logo": {
+        "title": "لوگوی سازمان",
+        "description": "یک تصویر مربعی (PNG، JPEG یا WebP، حداکثر 2 مگابایت) برای نمایش سازمان خود آپلود کنید.",
+        "uploadButton": "آپلود لوگو",
+        "uploading": "در حال آپلود…",
+        "fileTooBig": "فایل بسیار بزرگ است. حداکثر حجم مجاز 2 مگابایت است.",
+        "invalidType": "نوع تصویر پشتیبانی نمی‌شود. از PNG، JPEG یا WebP استفاده کنید.",
+        "success": "لوگو به‌روز شد.",
+        "removeButton": "حذف لوگو",
+        "removed": "لوگو حذف شد."
+      },
+      "name": {
+        "title": "نام سازمان",
+        "description": "نام نمایشی که برای تیم و مشتریان شما نشان داده می‌شود را به‌روز کنید.",
+        "label": "نام",
+        "submit": "ذخیره",
+        "saving": "در حال ذخیره…",
+        "success": "نام سازمان به‌روز شد."
+      },
+      "delete": {
+        "title": "حذف سازمان",
+        "description": "این سازمان، تمام اعضا، دعوت‌نامه‌ها و داده‌های مرتبط به‌طور دائم حذف می‌شوند. این عمل قابل بازگشت نیست.",
+        "trigger": "حذف سازمان",
+        "confirmLabel": "برای تأیید، نام سازمان را وارد کنید",
+        "submit": "حذف سازمان",
+        "cancel": "لغو",
+        "success": "سازمان حذف شد."
+      }
+    },
+    "invitation": {
+      "title": "دعوت شده‌اید",
+      "heading": "برای پیوستن به {organizationName} دعوت شده‌اید",
+      "description": "دعوت‌نامه را بپذیرید تا همکاری با تیم آغاز شود.",
+      "accept": "پذیرش دعوت",
+      "accepting": "در حال پذیرش...",
+      "decline": "رد کردن",
+      "declining": "در حال رد کردن...",
+      "declinedView": "دعوت‌نامه رد شد",
+      "success": "به دعوت‌کننده اطلاع دادیم.",
+      "backToDashboard": "بازگشت به داشبورد",
+      "roleLabel": "نقش: {role}",
+      "errorEmailMismatch": "این دعوت‌نامه به ایمیل دیگری ارسال شده است",
+      "errorEmailMismatchDetail": "برای پذیرش دعوت‌نامه، با آدرس ایمیلی که دعوت‌نامه را دریافت کرده وارد شوید.",
+      "errorExpired": "دعوت‌نامه منقضی شده است",
+      "errorExpiredDetail": "از دعوت‌کننده بخواهید دعوت‌نامه جدیدی ارسال کند.",
+      "errorNotFound": "دعوت‌نامه یافت نشد",
+      "errorNotFoundDetail": "لینک دعوت نامعتبر است یا لغو شده است.",
+      "errorNotAvailable": "دعوت‌نامه در دسترس نیست",
+      "errorNotAvailableDetail": "این دعوت‌نامه قبلاً پاسخ داده شده و دیگر فعال نیست.",
+      "role": {
+        "owner": "مالک",
+        "admin": "مدیر",
+        "member": "عضو",
+        "viewer": "بیننده"
+      }
+    }
+  },
+  "settings": {
+    "apiKeys": {
+      "title": "کلیدهای API",
+      "description": "کلیدهای API را برای دسترسی برنامه‌ای به Nebutra ایجاد و مدیریت کنید.",
+      "createButton": "ایجاد کلید API",
+      "noPermission": "شما اجازه مشاهده کلیدهای API را ندارید.",
+      "loading": "در حال بارگذاری…",
+      "loadError": "بارگذاری کلیدهای API ناموفق بود.",
+      "createError": "ایجاد کلید API ناموفق بود.",
+      "revokeError": "لغو کلید API ناموفق بود.",
+      "empty": {
+        "title": "هنوز کلید API وجود ندارد",
+        "cta": "اولین کلید API خود را بسازید"
+      },
+      "columns": {
+        "name": "نام",
+        "prefix": "پیشوند",
+        "lastUsed": "آخرین استفاده",
+        "scopes": "محدوده‌ها",
+        "created": "ایجاد شده",
+        "actions": "عملیات",
+        "never": "هرگز"
+      },
+      "actions": {
+        "revoke": "لغو",
+        "revoking": "در حال لغو…",
+        "copy": "کپی",
+        "copied": "کپی شد",
+        "close": "بستن",
+        "submit": "ساخت کلید",
+        "submitting": "در حال ساخت…"
+      },
+      "dialog": {
+        "title": "ساخت کلید API",
+        "description": "کلیدهای API به سیستم‌های خارجی اجازه می‌دهند به جای شما با Nebutra ارتباط برقرار کنند. با آن‌ها مانند رمز عبور رفتار کنید.",
+        "nameLabel": "نام",
+        "namePlaceholder": "مثلاً بک‌اند تولید",
+        "scopesLabel": "محدوده‌ها",
+        "successWarning": "این کلید تنها یک بار نمایش داده می‌شود. قبل از بستن آن را ذخیره کنید.",
+        "confirmClose": "با بستن، این کلید برای همیشه مخفی می‌شود. مطمئن شوید که ذخیره شده است."
+      }
+    },
+    "auditLog": {
+      "title": "گزارش حسابرسی",
+      "description": "تمام اقدامات مدیریتی در فضای کاری خود را ردیابی کنید. بر اساس انجام‌دهنده، اقدام، موجودیت یا بازه زمانی فیلتر کنید.",
+      "empty": "هنوز رویداد حسابرسی وجود ندارد",
+      "loadMore": "بارگذاری بیشتر",
+      "loading": "در حال بارگذاری…",
+      "forbidden": "برای مشاهده گزارش حسابرسی به دسترسی مدیر نیاز دارید.",
+      "columns": {
+        "when": "زمان",
+        "actor": "انجام‌دهنده",
+        "action": "اقدام",
+        "entity": "موجودیت",
+        "outcome": "نتیجه",
+        "ip": "آی‌پی"
+      },
+      "diff": {
+        "oldValue": "مقدار قبلی",
+        "newValue": "مقدار جدید"
+      },
+      "filters": {
+        "action": "عمل",
+        "actionPlaceholder": "جستجوی عمل…",
+        "entityType": "نوع موجودیت",
+        "outcome": "نتیجه",
+        "outcomeSuccess": "موفق",
+        "outcomeFailure": "ناموفق",
+        "outcomePending": "در انتظار",
+        "startDate": "تاریخ شروع",
+        "endDate": "تاریخ پایان",
+        "range24h": "۲۴ ساعت گذشته",
+        "range7d": "۷ روز گذشته",
+        "range30d": "۳۰ روز گذشته",
+        "reset": "بازنشانی",
+        "all": "همه"
+      }
+    },
+    "notifications": {
+      "title": "اعلان‌ها",
+      "description": "برای هر نوع رویداد و در هر کانال تحویل، مشخص کنید که Nebutra چگونه با شما تماس بگیرد.",
+      "actions": {
+        "resetAll": "بازنشانی به پیش‌فرض",
+        "save": "ذخیره"
+      },
+      "status": {
+        "saving": "در حال ذخیره…",
+        "saved": "ذخیره شد",
+        "error": "ذخیره ناموفق بود. لطفاً دوباره تلاش کنید."
+      },
+      "eventTypes": {
+        "security": {
+          "label": "هشدارهای امنیتی",
+          "description": "هشدارهای ورود، تغییر رمز عبور، تغییر احراز هویت دو مرحله‌ای."
+        },
+        "billing": {
+          "label": "صورتحساب",
+          "description": "صورتحساب‌ها، شکست پرداخت‌ها و تغییرات اشتراک."
+        },
+        "invitation": {
+          "label": "دعوت‌های تیم",
+          "description": "دعوت‌ها برای پیوستن به یک سازمان، پذیرفته یا رد شده."
+        },
+        "activity": {
+          "label": "فعالیت تیم",
+          "description": "اعضای جدید، تغییر نقش‌ها و سایر فعالیت‌های فضای کار."
+        },
+        "updates": {
+          "label": "بروزرسانی‌های محصول",
+          "description": "ویژگی‌های جدید، نکات برجسته تغییرات و یادداشت‌های انتشار."
+        },
+        "marketing": {
+          "label": "بازاریابی",
+          "description": "خبرنامه و تبلیغات گاه‌به‌گاه. فقط با رضایت شما."
+        }
+      },
+      "channels": {
+        "in_app": {
+          "label": "داخل برنامه"
+        },
+        "email": {
+          "label": "ایمیل"
+        },
+        "push": {
+          "label": "اعلان"
+        },
+        "sms": {
+          "label": "پیامک"
+        }
+      }
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "به رویدادهای منتشرشده توسط فضای کار خود مشترک شوید. ما هر بار با کلید مخفی نقطه پایانی شما امضا می‌کنیم تا بتوانید اصالت آن را تأیید کنید.",
+      "create": {
+        "heading": "نقطه پایانی جدید",
+        "urlLabel": "آدرس نقطه پایانی",
+        "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
+        "eventsLegend": "رویدادها",
+        "submit": "ایجاد نقطه پایانی",
+        "submitting": "در حال ایجاد…",
+        "selectEvent": "حداقل یک رویداد را انتخاب کنید.",
+        "successTitle": "نقطه پایانی ایجاد شد. رمز امضا تنها یک بار نمایش داده می‌شود.",
+        "successWarning": "قبل از بستن، آن را در مدیر رمزهای برنامه خود ذخیره کنید.",
+        "copy": "کپی",
+        "copied": "کپی شد"
+      },
+      "list": {
+        "heading": "نقاط پایانی فعال",
+        "empty": "هنوز نقطه پایانی وب‌هوک وجود ندارد. یکی در بالا ایجاد کنید.",
+        "loading": "در حال بارگذاری…",
+        "loadFailed": "بارگذاری وب‌هوک‌ها ناموفق بود",
+        "columns": {
+          "url": "آدرس",
+          "events": "رویدادها",
+          "status": "وضعیت",
+          "lastDelivered": "آخرین تحویل",
+          "actions": "عملیات"
+        },
+        "status": {
+          "active": "فعال",
+          "disabled": "غیرفعال"
+        },
+        "actions": {
+          "edit": "ویرایش",
+          "enable": "فعال‌سازی",
+          "disable": "غیرفعال‌سازی",
+          "viewDeliveries": "مشاهده تحویل‌ها",
+          "delete": "حذف"
+        }
+      },
+      "deliveries": {
+        "heading": "تحویل‌های اخیر",
+        "close": "بستن",
+        "loading": "در حال بارگذاری…",
+        "loadFailed": "بارگذاری تحویل‌ها ناموفق بود",
+        "empty": "هنوز تحویلی وجود ندارد.",
+        "viewPayload": "مشاهده داده‌ها",
+        "hidePayload": "مخفی کردن داده‌ها",
+        "replay": "تکرار",
+        "replaying": "در حال تکرار…",
+        "status": {
+          "success": "موفق",
+          "failed": "ناموفق",
+          "retrying": "در حال تلاش مجدد"
+        }
+      }
+    },
+    "appearance": {
+      "title": "ظاهر",
+      "theme": {
+        "title": "پوسته",
+        "description": "از حالت روشن، تیره یا هماهنگ با تنظیمات سیستم استفاده کنید."
+      },
+      "themePreset": {
+        "title": "پیش‌فرض پوسته",
+        "description": "هر پوسته‌ای از Theme Playground را در کل برنامه اعمال کنید. کنترل‌های زیر برای تنظیم دقیق روی آن قرار می‌گیرند.",
+        "search": "جستجوی پوسته‌ها…",
+        "searchLabel": "جستجوی پوسته‌ها",
+        "default": "پیش‌فرض",
+        "defaultMood": "Nebutra base palette",
+        "active": "فعال",
+        "empty": "هیچ پوسته‌ای با جستجوی شما مطابقت ندارد.",
+        "count": "{count} پوسته"
+      },
+      "themeEditor": {
+        "title": "پوسته",
+        "description": "یک پیش‌فرض انتخاب کنید، یک فایل DESIGN.md وارد کنید، سپس توکن‌های زیر را تنظیم دقیق کنید.",
+        "selectLabel": "پیش‌فرض پوسته",
+        "import": "وارد کردن",
+        "copy": "کپی تم",
+        "copied": "کپی شد",
+        "copyError": "کپی ناموفق بود",
+        "custom": "سفارشی"
+      },
+      "designMd": {
+        "title": "وارد کردن DESIGN.md",
+        "description": "یک DESIGN.md را پیست یا آپلود کنید تا رنگ‌ها، شعاع، فونت‌ها، فاصله‌ها و سایه‌های آن در کل برنامه اعمال شوند — و پس از بارگذاری مجدد حفظ شوند.",
+        "applied": "اعمال شد:",
+        "remove": "حذف"
+      },
+      "themeMode": {
+        "label": "حالت تم",
+        "light": "روشن",
+        "dark": "تاریک",
+        "system": "سیستم"
+      },
+      "accent": {
+        "title": "رنگ تأکیدی",
+        "description": "یک رنگ تأکیدی برند انتخاب کنید که حالت‌های فعال در کل برنامه را رنگ‌آمیزی کند.",
+        "label": "رنگ تأکیدی",
+        "options": {
+          "default": "پیش‌فرض",
+          "blue": "آبی",
+          "cyan": "فیروزه‌ای",
+          "violet": "بنفش",
+          "pink": "صورتی",
+          "amber": "کهربایی",
+          "green": "سبز",
+          "red": "قرمز"
+        }
+      },
+      "colors": {
+        "title": "رنگ‌ها",
+        "description": "رنگ تأکیدی، پس‌زمینه و پیش‌زمینه.",
+        "background": {
+          "label": "پس‌زمینه",
+          "description": "تغییر رنگ پس‌زمینه سطح."
+        },
+        "foreground": {
+          "label": "پیش‌زمینه",
+          "description": "تغییر رنگ متن اصلی."
+        },
+        "resetToDefault": "بازنشانی به پیش‌فرض"
+      },
+      "fontFamily": {
+        "uiLabel": "فونت رابط کاربری",
+        "uiDescription": "خانواده فونت استفاده‌شده در رابط کاربری.",
+        "codeLabel": "فونت کد",
+        "codeDescription": "خانواده فونت استفاده‌شده برای سطوح کد.",
+        "options": {
+          "ui": {
+            "theme": "پیش‌فرض تم",
+            "system": "سیستم",
+            "geist": "Geist",
+            "inter": "Inter",
+            "sf": "SF Pro"
+          },
+          "code": {
+            "theme": "پیش‌فرض تم",
+            "system": "سیستم مونو",
+            "geist-mono": "Geist Mono",
+            "sf-mono": "SF Mono",
+            "jetbrains-mono": "JetBrains Mono"
+          }
+        }
+      },
+      "contrast": {
+        "title": "کنتراست",
+        "description": "تنظیم دقیق کنتراست متن (۵۰ = بدون تغییر).",
+        "label": "سطح کنتراست"
+      },
+      "pointerCursor": {
+        "title": "استفاده از نشانگر اشاره‌گر",
+        "description": "نشانگر ماوس را به حالت اشاره‌گر روی عناصر تعاملی تغییر دهید.",
+        "label": "نشانگر اشاره‌گر روی عناصر تعاملی"
+      },
+      "diffMarkers": {
+        "title": "نشانگرهای تفاوت",
+        "description": "نوارهای رنگی یا نمادهای +/- را در هر خط تغییر یافته نمایش دهید.",
+        "label": "سبک نشانگر تفاوت",
+        "color": "رنگ",
+        "plusminus": "+/-"
+      },
+      "fontSmoothing": {
+        "title": "صاف‌سازی فونت",
+        "description": "ضدالیاژ بومی macOS را برای فونت اعمال کنید.",
+        "label": "صاف‌سازی بومی فونت"
+      },
+      "typography": {
+        "title": "تایپوگرافی",
+        "description": "اندازه‌های پایه فونت برای رابط کاربری و سطوح کد.",
+        "uiFontSize": "اندازه فونت رابط کاربری",
+        "uiFontSizeDescription": "اندازه پایه فونت رابط کاربری را تنظیم کنید.",
+        "codeFontSize": "اندازه فونت کد",
+        "codeFontSizeDescription": "اندازه پایه فونت کد را تنظیم کنید."
+      },
+      "fontSize": {
+        "followTheme": "پوسته",
+        "customize": "سفارشی‌سازی"
+      },
+      "motion": {
+        "title": "کاهش حرکت",
+        "description": "کاهش انیمیشن‌ها یا هماهنگی با ترجیح سیستم.",
+        "label": "ترجیح حرکت",
+        "system": "سیستم",
+        "on": "روشن",
+        "off": "خاموش"
+      },
+      "surface": {
+        "title": "نوار کناری شفاف",
+        "description": "اعمال متریال شفاف به نوار کناری."
+      },
+      "transparency": {
+        "label": "نوار کناری شفاف",
+        "description": "اعمال متریال شفاف به نوار کناری."
+      }
+    }
+  },
+  "legal": {
+    "version": "نسخه",
+    "effective": "موثر",
+    "notFound": "این سند در دسترس نیست.",
+    "backHome": "بازگشت به خانه"
+  },
+  "commandPalette": {
+    "ariaLabel": "پالت فرمان",
+    "placeholder": "دستوری بنویسید یا جستجو کنید…",
+    "empty": "نتیجه‌ای یافت نشد.",
+    "sections": {
+      "navigation": "ناوبری",
+      "actions": "عملیات",
+      "settings": "تنظیمات",
+      "account": "حساب کاربری",
+      "admin": "مدیریت",
+      "help": "راهنما"
+    },
+    "commands": {
+      "nav": {
+        "home": "خانه",
+        "settings": "تنظیمات",
+        "billing": "صورتحساب",
+        "team": "تیم",
+        "apiKeys": "کلیدهای API",
+        "notifications": "اعلان‌ها",
+        "auditLog": "گزارش حسابرسی",
+        "webhooks": "Webhooks",
+        "admin": "مدیریت"
+      },
+      "action": {
+        "inviteMember": "دعوت از عضو تیم",
+        "createApiKey": "ایجاد کلید API",
+        "switchOrganization": "تغییر سازمان"
+      },
+      "settings": {
+        "themeLight": "تغییر به حالت روشن",
+        "themeDark": "تغییر به حالت تیره",
+        "themeSystem": "استفاده از حالت سیستم"
+      },
+      "account": {
+        "signOut": "خروج"
+      },
+      "help": {
+        "reportIssue": "گزارش مشکل",
+        "shortcuts": "میانبرهای صفحه‌کلید"
+      }
+    }
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "انتخاب‌های حریم خصوصی شما",
+      "description": "ما از کوکی‌ها برای بهبود تجربه شما، تحلیل ترافیک سایت و شخصی‌سازی محتوا استفاده می‌کنیم. انتخاب کنید کدام دسته‌ها مجاز باشند."
+    },
+    "button": {
+      "acceptAll": "پذیرش همه",
+      "savePreferences": "ذخیره تنظیمات"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "ضروری",
+        "description": "برای عملکرد سایت لازم است. غیرفعال‌سازی امکان‌پذیر نیست."
+      },
+      "functional": {
+        "label": "عملکردی",
+        "description": "ذخیره ترجیحات شما (زبان، پوسته، چیدمان)."
+      },
+      "analytics": {
+        "label": "تحلیل‌ها",
+        "description": "داده‌های ناشناس استفاده برای بهبود محصول."
+      },
+      "marketing": {
+        "label": "بازاریابی",
+        "description": "تبلیغات شخصی‌سازی‌شده و بازهدف‌گذاری در پلتفرم‌های شخص ثالث."
+      }
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "اعلان‌ها",
+      "description": "تمام اعلان‌های شما در یک مکان.",
+      "filter": {
+        "all": "همه",
+        "unread": "خوانده نشده"
+      },
+      "actions": {
+        "markAllRead": "علامت‌گذاری همه به عنوان خوانده شده",
+        "markRead": "علامت‌گذاری به عنوان خوانده شده",
+        "archive": "بایگانی",
+        "loadMore": "بارگذاری بیشتر",
+        "loading": "در حال بارگذاری...",
+        "selected": "{count} انتخاب شده"
+      },
+      "empty": {
+        "all": "همه چیز به‌روز است.",
+        "unread": "هیچ اعلان خوانده‌نشده‌ای وجود ندارد."
+      },
+      "errors": {
+        "load": "بارگذاری اعلان‌ها انجام نشد.",
+        "network": "خطای شبکه. لطفاً دوباره تلاش کنید.",
+        "markRead": "نشان‌گذاری اعلان به‌عنوان خوانده‌شده انجام نشد.",
+        "archive": "آرشیو کردن اعلان انجام نشد.",
+        "bulkMarkRead": "برخی اعلان‌ها نتوانستند به‌عنوان خوانده‌شده علامت‌گذاری شوند."
+      },
+      "inbox": {
+        "noBackend": "صندوق ورودی به یک بک‌اند اعلان پایدار نیاز دارد. پیکربندی ارائه‌دهنده خود را بررسی کنید.",
+        "emptyCaughtUp": "صندوق ورودی خالی است.",
+        "emptyChangelog": "بروزرسانی‌های تغییرات اینجا نمایش داده می‌شوند."
+      }
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "صبح بخیر",
+      "afternoon": "عصر بخیر",
+      "evening": "شام بخیر"
+    },
+    "home": {
+      "connectorsPill": "اپ خود را با کانکتورها توانمند کنید",
+      "subtitle": "یک پرامپت رها کنید، از هر جایی ⌘K را بزنید، یا مستقیماً به سطح کاری بروید.",
+      "promptPlaceholder": "چه چیزی در ذهن دارید؟",
+      "actions": {
+        "connect": "اتصال یک یکپارچه‌سازی",
+        "theme": "زمینه بازی",
+        "audit": "لاگ حسابرسی",
+        "billing": "صورتحساب"
+      }
+    },
+    "commandSurface": {
+      "noAuth": "احراز هویت برای ارائه‌دهنده انتخاب‌شده پیکربندی نشده است. برای فعال‌سازی جلسات کاربر، اسرار ارائه‌دهنده را تنظیم کنید."
+    },
+    "commandCenter": {
+      "description": "با یک اقدام شروع کنید: از Sailor بپرسید، سیگنال‌های فضای کار را بررسی کنید، یا کار را به یک سطح خودکارسازی هدایت کنید.",
+      "openSailor": "باز کردن Sailor AI",
+      "viewAnalytics": "مشاهده تحلیل‌ها"
+    },
+    "workspaceSnapshot": {
+      "title": "نمای کلی فضای کار",
+      "description": "آخرین روز انبار · {day}",
+      "viewAnalytics": "مشاهده تحلیل‌ها →",
+      "metrics": {
+        "activeUsers": "کاربران فعال",
+        "totalEvents": "مجموع رویدادها",
+        "conversions": "تبدیل‌ها",
+        "revenue": "درآمد"
+      },
+      "details": {
+        "activeUsers": "کاربران واردشده",
+        "totalEvents": "رویدادهای ثبت‌شده",
+        "conversions": "عملکردهای واجد شرایط",
+        "revenue": "درآمد شناسایی‌شده"
+      },
+      "meta": {
+        "snapshot": "نمای لحظه‌ای",
+        "cadence": "تکرار",
+        "tenant": "مستاجر",
+        "daily": "روزانه",
+        "latestDay": "{day}",
+        "users": "کاربران مستاجر",
+        "events": "جریان رویدادها",
+        "funnel": "قیف",
+        "billing": "صورتحساب"
+      }
+    },
+    "documentPipeline": {
+      "title": "خط لوله اسناد",
+      "description": "فایل‌های مبدأ را به صف وظیفه مبدأ ارسال کنید.",
+      "intakeTitle": "دریافت اسناد",
+      "intakeDescription": "PDF، Markdown، متن یا سند Word",
+      "chooseDocument": "انتخاب سند",
+      "startParseTask": "شروع وظیفه تجزیه",
+      "queued": "در صف انتظار",
+      "fileInputLabel": "فایل سند",
+      "fallbackError": "وظیفه سند با خطا مواجه شد.",
+      "taskStatus": "وضعیت وظیفه",
+      "progressLabel": "پیشرفت وظیفه",
+      "refreshStatus": "بروزرسانی",
+      "cancelTask": "لغو",
+      "statusError": "امکان بروزرسانی وضعیت وظیفه وجود ندارد.",
+      "cancelError": "امکان لغو وظیفه وجود ندارد.",
+      "statusQueued": "در صف انتظار",
+      "statusRunning": "در حال اجرا",
+      "statusSucceeded": "موفق",
+      "statusFailed": "ناموفق",
+      "statusCancelled": "لغو شده",
+      "resultReady": "نتیجه آماده است",
+      "taskError": "خطای وظیفه",
+      "updatedAt": "بروزرسانی شده"
+    },
+    "recentSessions": {
+      "title": "از جایی که رها کردید ادامه دهید",
+      "subtitle": "{count, plural, =0 {هیچ جلسه‌ای} =1 {۱ جلسه اخیر} other {# جلسه اخیر}}",
+      "viewAll": "مشاهده همه →",
+      "newChat": "چت جدید",
+      "untitled": "جلسه بدون عنوان",
+      "messageCount": "{count, plural, =1 {۱ پیام} other {# پیام}}"
+    },
+    "gettingStarted": {
+      "title": "شروع کار",
+      "description": "{done} از {total} تکمیل شده · برای باز کردن فضای کاری کامل، راه‌اندازی را به پایان برسانید",
+      "progressLabel": "پیشرفت راه‌اندازی",
+      "tasks": {
+        "team": {
+          "label": "دعوت از یک همکار",
+          "description": "حداقل یک همکار را به فضای کاری خود اضافه کنید."
+        },
+        "api": {
+          "label": "تولید کلید API",
+          "description": "دسترسی برنامه‌ای به نقاط پایانی فضای کاری شما."
+        },
+        "integration": {
+          "label": "اتصال یک یکپارچه‌سازی",
+          "description": "Stripe، Slack، وب‌هوک‌ها، صف‌ها و موارد دیگر."
+        },
+        "ai": {
+          "label": "باز کردن Sailor AI",
+          "description": "حالت چت، داده یا گردش کار را امتحان کنید."
+        }
+      }
+    }
+  },
+  "Sidebar": {
+    "projects": "پروژه‌ها",
+    "noThreads": "بدون رشته",
+    "expandAll": "باز کردن همه",
+    "collapseAll": "جمع کردن همه",
+    "sectionMore": "گزینه‌های بیشتر",
+    "newProject": "پروژه جدید",
+    "restoredGroups": "گروه‌های پیش‌تر باز شده بازیابی شدند",
+    "newProjectPlaceholder": "نام پروژه",
+    "newProjectDefault": "بدون عنوان",
+    "newProjectSuccess": "پروژه ایجاد شد",
+    "newProjectError": "نمی‌توان پروژه ایجاد کرد",
+    "sortBy": "مرتب‌سازی بر اساس",
+    "sortRecent": "فعالیت اخیر",
+    "sortAlphabetical": "الفبایی",
+    "sortCreated": "تاریخ ایجاد",
+    "archiveAll": "بایگانی همه",
+    "comingV2": "در نسخه ۲"
+  },
+  "startupOs": {
+    "milestone": {
+      "firstRoom": "اولین اتاق آماده است.",
+      "firstFolder": "بسیاری از شرکت‌ها با یک پوشه شروع می‌شوند.",
+      "firstTable": "اولین میز یک صندلی دوم دارد.",
+      "firstSignal": "دنیای واقعی شروع به صحبت کرده است.",
+      "firstShip": "دنیای واقعی برای اولین بار آن را می‌بیند.",
+      "firstBeliever": "از امروز، دیگر فقط برای خودتان نمی‌سازید.",
+      "firstRevenue": "رویای شما حالا جریان نقدی دارد.",
+      "firstReturn": "بازگشت مهم‌تر از بازدید است.",
+      "firstTeam": "سه نفر می‌توانند شروع به تشکیل یک شرکت کنند.",
+      "firstCrowd": "اولین میز شلوغ‌تر می‌شود.",
+      "firstReset": "شروع دوباره، آغاز صادقانه‌تری است.",
+      "firstPublic": "تکه‌ای از آینده را در معرض دید عموم قرار دهید.",
+      "firstDemo": "این یک نمایش نیست. یک آزمایش است.",
+      "graduation": "شما از مقدمات فراتر رفته‌اید. جاده‌ی پیش رو به ابزارهای قوی‌تری نیاز دارد."
+    },
+    "emptyState": {
+      "default": "بسیاری از شرکت‌ها به‌عنوان یک پوشه شروع می‌شوند.",
+      "integrations": "هیچ کانکتوری پیکربندی نشده است.",
+      "creditActivity": "فعالیت اعتبار پس از اولین درخواست شما نمایش داده می‌شود.",
+      "usageData": "داده‌های استفاده پس از اینکه سازمان شما شروع به ارسال درخواست‌ها کند نمایش داده می‌شوند.",
+      "apiKeys": "هنوز کلیدی وجود ندارد.",
+      "apiKeysCta": "اولین کلید خود را بسازید",
+      "teamMembers": "یک نفر می‌تواند شروع کند. چند نفر می‌توانند بسازند.",
+      "cofounders": "اولین کسی که به شما ایمان دارد هنوز ظاهر نشده است.",
+      "cofoundersDescription": "وقتی شما و یک هم‌بنیان‌گذار دیگر هر دو علاقه نشان دهید، در اینجا ظاهر می‌شوند.",
+      "cofoundersAction": "هم‌بنیان‌گذار پیدا کنید",
+      "growthChart": "داده‌های روند پس از شروع فعالیت نمایش داده می‌شوند.",
+      "revenueChart": "داده‌های درآمد پس از شروع تراکنش‌ها نمایش داده می‌شوند.",
+      "webhookDeliveries": "تحویل‌ها پس از اولین رویداد در اینجا نمایش داده می‌شوند.",
+      "webhookEndpoints": "یک نقطه پایانی در بالا اضافه کنید تا دریافت رویدادها را شروع کنید.",
+      "accessInvites": "هیچ کد دعوتی صادر نشده است."
+    },
+    "success": "اولین اتاق آماده است.",
+    "failure": "شروع دوباره، آغاز صادقانه‌تری است.",
+    "errors": {
+      "loadMatches": "تطبیق‌ها بارگذاری نشدند.",
+      "loadMatchesDescription": "مشکلی از سمت ما پیش آمد. برای تلاش مجدد صفحه را تازه کنید.",
+      "loadWebhookDeliveries": "تحویل‌ها بارگذاری نشدند.",
+      "replayWebhookDelivery": "پخش مجدد انجام نشد.",
+      "loadWebhookEndpoints": "نقاط پایانی بارگذاری نشدند."
+    },
+    "team": "یکی می‌تواند شروع کند. چند نفر می‌توانند بسازند.",
+    "revenue": "رویای شما حالا جریان نقدی دارد.",
+    "growth": "سیگنال قوی‌تر می‌شود.",
+    "deployment": {
+      "primary": "جهان برای اولین بار آن را می‌بیند.",
+      "echo": "بالاخره از localhost خارج شد."
+    },
+    "onboarding": "نیاز نیست آماده باشید. نیاز است شروع کنید.",
+    "graduation": "از مقدمات فراتر رفته‌اید. برای مسیر پیش رو {tool} را امتحان کنید.",
+    "company": {
+      "emptyTitle": "اولین برج زمینه شما از اینجا آغاز می‌شود.",
+      "emptyDescription": "یک شرکت را در Startup OS کامپایل کنید تا برج زمینه آن را ببینید و ویرایش کنید.",
+      "emptyAction": "باز کردن Startup OS",
+      "notice": {
+        "needsProvider": "کلید ارائه‌دهنده هوش مصنوعی را متصل کنید تا فیلدها به‌طور خودکار پر شوند.",
+        "generateFailed": "تولید به پایان نرسید.",
+        "saveFailed": "تغییرات شما ذخیره نشدند."
+      },
+      "action": {
+        "save": "ذخیره",
+        "saving": "در حال ذخیره…",
+        "cancel": "لغو",
+        "open": "باز کردن Startup OS"
+      }
+    },
+    "execution": {
+      "noBets": "هنوز شرطی وجود ندارد.",
+      "noRuns": "هیچ اجرای فعالی وجود ندارد."
+    },
+    "fileTree": {
+      "empty": "این پروژه هنوز فایلی ندارد."
+    }
+  },
+  "selectOrg": {
+    "invitation": {
+      "emptyTitle": "فضای کار در حال راه‌اندازی است.",
+      "emptyDescription": "دعوت‌نامه ممکن است هنوز در حال همگام‌سازی باشد. این صفحه را تازه کنید یا یک فضای کار جداگane ایجاد کنید."
+    },
+    "billing": {
+      "emptyTitle": "قبل از صورتحساب، یک فضای کار ایجاد کنید.",
+      "emptyDescription": "عملیات صورتحساب به یک فضای کار فعال نیاز دارد. ابتدا یکی ایجاد کنید، سپس به صورتحساب بازگردید."
+    },
+    "default": {
+      "emptyTitle": "اولین فضای کاری از اینجا آغاز می‌شود.",
+      "emptyDescription": "برای شروع، یک فضای کاری ایجاد کنید."
+    }
+  }
+}

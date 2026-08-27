@@ -1,0 +1,65 @@
+{
+  "name": "@nebutra/feature-flags",
+  "version": "0.1.3",
+  "private": true,
+  "type": "module",
+  "description": "Feature flags abstraction - swap providers later",
+  "nebutra": {
+    "graph": "core",
+    "status": "foundation",
+    "productionReady": false,
+    "requires": [
+      "@nebutra/cache",
+      "or FEATURE_FLAG_* environment variables"
+    ],
+    "gaps": [
+      "Managed providers not wired to real Vercel Flags/GrowthBook/ConfigCat SDK clients",
+      "No rollout dashboard or persisted rule authoring UI"
+    ]
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js",
+      "default": "./dist/react.js"
+    }
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.90.21",
+    "@nebutra/cache": "workspace:*",
+    "@nebutra/db": "workspace:*"
+  },
+  "devDependencies": {
+    "@testing-library/react": "catalog:",
+    "@types/react": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "@types/node": "^22.19.15",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "license": "AGPL-3.0-only",
+  "files": [
+    "dist"
+  ]
+}

@@ -1,0 +1,86 @@
+name: Load Test
+
+on:
+  # Run a weekly smoke check on Monday 02:00 UTC (off-peak hours).
+  schedule:
+    - cron: "0 2 * * 1"
+  # Allow manual trigger with scenario selection
+  workflow_dispatch:
+    inputs:
+      scenario:
+        description: "k6 scenario to run"
+        required: true
+        default: "smoke"
+        type: choice
+        options: [smoke, ramp-up, stress, soak]
+      base_url:
+        description: "Target API base URL"
+        required: false
+        default: "https://api.nebutra.com"
+
+permissions:
+  contents: read
+
+jobs:
+  load-test:
+    name: k6 Load Test (${{ inputs.scenario || 'smoke' }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 90 # accommodate manually triggered soak tests
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Install k6
+        run: |
+          sudo gpg -k
+          sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg \
+            --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" \
+            | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo apt-get update
+          sudo apt-get install -y k6
+
+      - name: Create results directory
+        run: mkdir -p tests/load/results
+
+      - name: Run k6 load test
+        run: |
+          k6 run \
+            --env "SCENARIO=${LOAD_TEST_SCENARIO}" \
+            --env "BASE_URL=${LOAD_TEST_BASE_URL}" \
+            --env "API_TOKEN=${LOAD_TEST_API_TOKEN}" \
+            --out json=tests/load/results/raw.json \
+            tests/load/k6.js
+        env:
+          K6_CLOUD_TOKEN: ${{ secrets.K6_CLOUD_TOKEN }}
+          LOAD_TEST_API_TOKEN: ${{ secrets.LOAD_TEST_API_TOKEN }}
+          LOAD_TEST_BASE_URL: ${{ inputs.base_url || 'https://api.nebutra.com' }}
+          LOAD_TEST_SCENARIO: ${{ inputs.scenario || 'smoke' }}
+
+      - name: Upload k6 results
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: k6-results-${{ inputs.scenario || 'smoke' }}-${{ github.run_id }}
+          path: tests/load/results/
+          retention-days: 90
+
+      - name: Comment results on PR (if triggered manually)
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          LOAD_TEST_BASE_URL: ${{ inputs.base_url || 'https://api.nebutra.com' }}
+          LOAD_TEST_SCENARIO: ${{ inputs.scenario || 'smoke' }}
+        run: |
+          {
+            echo "### k6 Load Test Results"
+            echo ""
+            echo "**Scenario:** ${LOAD_TEST_SCENARIO}"
+            echo "**Target:** ${LOAD_TEST_BASE_URL}"
+            echo ""
+            if [ -f tests/load/results/summary.json ]; then
+              echo '```json'
+              python3 -m json.tool tests/load/results/summary.json
+              echo '```'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

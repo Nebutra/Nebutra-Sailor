@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "video-text-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/video-text-demo.tsx",
+      "content": "import { VideoText } from \"@nebutra/ui/primitives\";\n\nexport function VideoTextDemo() {\n  return (\n    <div className=\"max-w-4xl px-4 py-8 h-[300px] w-full\">\n      <div className=\"relative flex h-full w-full items-center justify-center overflow-hidden rounded-xl border border-border bg-background\">\n        <VideoText\n          src=\"https://www.w3schools.com/html/mov_bbb.mp4\"\n          fontSize=\"24vw\"\n          fontWeight={900}\n        >\n          NEBUTRA\n        </VideoText>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

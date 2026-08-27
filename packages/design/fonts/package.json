@@ -1,0 +1,86 @@
+{
+  "name": "@nebutra/fonts",
+  "version": "0.1.1",
+  "type": "module",
+  "description": "Self-hosted OSS font registry \u2014 build-time next/font faces + a name\u2192CSS-var resolver so theme / DESIGN.md fonts render with zero runtime external requests",
+  "private": false,
+  "nebutra": {
+    "graph": "core",
+    "status": "wip",
+    "productionReady": false,
+    "surface": "support-contract",
+    "featureId": "fonts",
+    "category": "design",
+    "summary": "Self-hosted OSS font registry for next/font + CSS-var resolution",
+    "gaps": [
+      "First intentional public publish not yet cut \u2014 workspace-only until release surface includes fonts"
+    ]
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/design/fonts"
+  },
+  "files": [
+    "dist",
+    "src",
+    "generated/noto-sans-sc.css",
+    "generated/subset-manifest.json",
+    "generated/index.ts",
+    "vendor/noto-sans-sc/OFL.txt",
+    "NOTICE-FONTS.md",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./registry": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./next": {
+      "types": "./src/next.ts",
+      "import": "./src/next.ts",
+      "default": "./src/next.ts"
+    },
+    "./next/cjk": {
+      "types": "./src/next-cjk.ts",
+      "import": "./src/next-cjk.ts",
+      "default": "./src/next-cjk.ts"
+    },
+    "./cjk": {
+      "types": "./dist/generated/index.d.ts",
+      "import": "./dist/generated/index.js",
+      "default": "./dist/generated/index.js"
+    },
+    "./cjk.css": "./generated/noto-sans-sc.css"
+  },
+  "scripts": {
+    "subset:cjk": "node scripts/subset-cjk.mjs",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "build": "tsup"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "tsup": "catalog:"
+  },
+  "peerDependencies": {
+    "next": ">=15",
+    "react": "^19"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

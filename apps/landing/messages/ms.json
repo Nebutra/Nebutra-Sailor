@@ -1,0 +1,1781 @@
+{
+  "nav": {
+    "features": "Ciri-ciri",
+    "solutions": "Penyelesaian",
+    "pricing": "Harga",
+    "docs": "Dokumentasi",
+    "github": "GitHub",
+    "npm": "npm",
+    "about": "Tentang Kami",
+    "ideas": "Idea",
+    "opc": "Platform",
+    "roadmap": "Peta Jalan",
+    "resources": "Sumber",
+    "signIn": "Log Masuk",
+    "getStarted": "Mula Berlayar",
+    "changelog": "Log Perubahan",
+    "news": "Berita",
+    "designDocs": "Sistem Reka Bentuk",
+    "avatarMenu": {
+      "ariaLabel": "Menu akaun",
+      "loadingName": "Memuatkan…",
+      "dashboard": "Papan Pemuka",
+      "account": "Akaun",
+      "billing": "Pembilanan",
+      "docs": "Dokumentasi",
+      "signOut": "Log keluar"
+    }
+  },
+  "refer": {
+    "metadataTitle": "Sertai gelung rujukan pengasas {brandName}",
+    "metadataDescription": "Sertai senarai tunggu {brandName}, kekalkan atribusi rujukan, dan buka pautan kongsi anda sendiri dalam satu gelung produk tertutup.",
+    "eyebrow": "Gelung rujukan pengasas",
+    "title": "Sertai kohort pengasas seterusnya dan dapatkan pautan kongsi anda sendiri.",
+    "description": "Masuk dengan mana-mana kod jemputan atau sertai secara langsung. Kami akan mengekalkan atribusi apabila kod wujud, meletakkan anda dalam senarai tunggu, dan mengeluarkan URL rujukan peribadi yang boleh dikongsi serta-merta.",
+    "signal": {
+      "waitlist": "Senarai tunggu tahan lama",
+      "codeDetected": "Kod {code} dikesan",
+      "direct": "Daftar terus"
+    },
+    "form": {
+      "emailLabel": "E-mel kerja",
+      "emailPlaceholder": "you@example.com",
+      "codeLabel": "Kod rujukan",
+      "codePlaceholder": "Kod pilihan",
+      "submit": "Sertai senarai tunggu",
+      "submitting": "Sedang menyertai",
+      "invalidEmail": "Masukkan e-mel yang sah.",
+      "error": "Tidak dapat menyertai sekarang. Sila cuba lagi.",
+      "successTitle": "Anda sudah dalam senarai",
+      "successDescription": "Pautan kongsi peribadi anda sedia.",
+      "positionLabel": "Kedudukan barisan",
+      "referralCodeLabel": "Kod anda",
+      "referralUrlLabel": "Pautan kongsi anda",
+      "copyLink": "Salin pautan",
+      "copied": "Disalin",
+      "share": "Kongsi",
+      "shareTitle": "Sertai gelung pengasas {brandName}",
+      "shareText": "Gunakan pautan jemputan saya untuk menyertai senarai tunggu pengasas {brandName}.",
+      "directMode": "Tiada kod rujukan diperlukan",
+      "codeMode": "Atribusi rujukan diaktifkan"
+    },
+    "proof": {
+      "peerLoop": {
+        "title": "Gelung pengasas-ke-pengasas",
+        "description": "Setiap pendaftaran yang diterima menerima kod dan URL, jadi rujukan seterusnya bermula tanpa penyerahan manual."
+      },
+      "attribution": {
+        "title": "Atribusi jujur",
+        "description": "Kod yang tidak dikenali disimpan sebagai atribusi percubaan, manakala kod yang sah meningkatkan rujukan dan mengekalkan pendaftaran yang bersih."
+      },
+      "shareLink": {
+        "title": "Keadaan berjaya sedia dikongsi",
+        "description": "Keadaan pengesahan mendedahkan kedudukan, kod, salin, dan tindakan kongsi asli supaya gelung selesai di halaman."
+      }
+    },
+    "infrastructure": {
+      "eyebrow": "Infrastruktur teraju produk",
+      "title": "Direka sebagai infrastruktur SaaS tahan lama, bukan borang sekali pakai.",
+      "description": "Permukaan rujukan disokong oleh pakej domain, model Prisma berterusan, laluan Next.js berjenis, dan pemeriksaan asap awam yang boleh dijalankan selepas ECS deploys.",
+      "data": {
+        "eyebrow": "Data",
+        "title": "Satu jadual senarai tunggu tahan lama",
+        "description": "Keunikan e-mel, kedudukan auto-tambah, indeks kod rujukan, metadata atribusi percubaan, dan peralihan status berada dalam pangkalan data platform."
+      },
+      "api": {
+        "eyebrow": "API",
+        "title": "Hujung penyambung berjenis",
+        "description": "Laman ini menghantar ke `/api/waitlist`, menormalisasi kod sewenang-wenangnya, mengembalikan entri sedia ada secara idempoten, dan tidak pernah bergantung pada kod contoh."
+      },
+      "cicd": {
+        "eyebrow": "CI/CD",
+        "title": "Ujian asap awam semasa penyebaran",
+        "description": "URL piawai dan alias sedia untuk pemeriksaan automatik supaya penghantaran ECS menangkap kemunduran laluan, DNS, dan kesihatan."
+      }
+    }
+  },
+  "hero": {
+    "headline1": "Lancarkan Startup Anda,",
+    "headline2": "dikuasakan oleh {brandName} Agent OS.",
+    "subheadline": "Lewati minggu kerja platform dengan asas <highlight>sedia pengeluaran</highlight> yang mempunyai senibina berketentuan, dibina khas untuk agen kod AI & pengasas yang ingin meluaskan ke peringkat global.",
+    "copyLabel": "Salin Arahan",
+    "copiedLabel": "Disalin",
+    "ctaGetAccess": "Lancarkan Startup Anda",
+    "ctaExploreDemo": "Teroka demo",
+    "pillCopied": "Disalin"
+  },
+  "features": {
+    "sectionTitle": "Infrastruktur sedia ada, dari prototaip ke skala.",
+    "item0": {
+      "title": "Infrastruktur Aplikasi AI",
+      "description": "Rangka Kerja Agen dan enjin pengurusan LLM terbina dalam, diuji untuk pengeluaran. Lepaskan abstraksi asas yang kompleks dan berinteraksi terus dengan API kecerdasan terstruktur."
+    },
+    "item1": {
+      "title": "Asas Platform Berkelola",
+      "description": "Asas platform berkelola untuk pasukan yang melancarkan SaaS asli AI. Selaraskan perangka, primitif masa jalan, dan permukaan penghantaran tanpa menyambung alat ad-hoc."
+    },
+    "item2": {
+      "title": "Automasi SaaS Perusahaan",
+      "description": "Berintegrasi mendalam dengan stack teknologi moden Vercel, Supabase, dan Stripe. Menyediakan keselamatan peringkat baris sedia ada, pengasingan pelbagai penyewa yang kompleks, dan penagihan langganan global."
+    }
+  },
+  "cta": {
+    "heading": "Sedia untuk melancarkan produk AI seterusnya anda?",
+    "subheading": "Mulakan seni bina SaaS asli awan yang lengkap secara tempatan dengan satu arahan terminal.",
+    "copyLabel": "Salin Arahan",
+    "copiedLabel": "Disalin",
+    "startBuilding": "Mula Membina"
+  },
+  "footer": {
+    "brandDescription": "Lancarkan Startup anda dengan {brandName} Agent OS. Multi-tenancy, billing, auth, dan AI — sedia untuk pengeluaran sejak hari pertama.",
+    "columns": {
+      "product": "Produk",
+      "resources": "Sumber",
+      "legal": "Undang-undang",
+      "community": "Komuniti"
+    },
+    "links": {
+      "product": "Produk",
+      "features": "Ciri-ciri",
+      "forge": "Forge",
+      "pricing": "Harga",
+      "about": "Tentang",
+      "showcase": "Pameran",
+      "blog": "Blog",
+      "playbook": "Playbook",
+      "changelog": "Changelog",
+      "roadmap": "Roadmap",
+      "docs": "Dokumen",
+      "ideas": "Idea",
+      "opc": "Platform",
+      "careers": "Kerjaya",
+      "security": "Keselamatan",
+      "dpa": "DPA",
+      "privacy": "Privasi",
+      "terms": "Terma",
+      "cookies": "Cookie",
+      "refund": "Bayaran Balik",
+      "licensing": "Lesen",
+      "contact": "Hubungi",
+      "faq": "Soalan Lazim",
+      "github": "GitHub",
+      "discord": "Discord",
+      "twitter": "X (Twitter)"
+    },
+    "copyright": "© 2026 {brandName} Intelligence. Hak cipta terpelihara.",
+    "statusOnline": "Semua sistem beroperasi",
+    "newsletterTitle": "Kekal terkini",
+    "newsletterPlaceholder": "you@example.com",
+    "newsletterSubscribe": "Langgan",
+    "newsletterSuccess": "Terima kasih kerana melanggan!",
+    "newsletterError": "Terdapat masalah",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
+  },
+  "logoStrip": {
+    "tagline": "Berjalan pada"
+  },
+  "monorepoTree": {
+    "badge": "STRUKTUR TURBOREPO",
+    "title": "15 aplikasi. 113 pakej. 4 lorong backend.",
+    "description": "Kod kongsi, binaan selari, sifar penduaan. Pengetikan hujung-ke-hujung lengkap dari pangkalan data ke hadapan.",
+    "metricApps": "aplikasi",
+    "metricBackends": "lorong backend",
+    "metricPackages": "pakej",
+    "verifiedPaths": "Laluan disahkan terhadap ruang kerja semasa",
+    "cta": "Teroka seni bina monorepo"
+  },
+  "stats": {
+    "title": "Dalam Angka",
+    "github": "Bintang GitHub",
+    "discord": "Ahli Discord",
+    "setup": "Masa Setup Purata",
+    "packages": "Pakej Monorepo",
+    "ctaStar": "Bintang →",
+    "ctaJoin": "Sertai →",
+    "ctaStart": "Mula →",
+    "ctaExplore": "Teroka →"
+  },
+  "legalPages": {
+    "about": {
+      "title": "Tentang Kami — Platform AI Berkelola",
+      "description": "Terokai visi komersial dan prinsip kejuruteraan di sebalik platform AI berkelola {brandName}.",
+      "heading": "Era Pasukan Produk Ringan",
+      "subheading": "Gantikan kerja platform berulang dengan infrastruktur berkelola, automasi kukuh, dan leverage kejuruteraan yang tahan lama.",
+      "missionTitle": "Tertib Baharu Menentang Kemerosotan Pentadbiran",
+      "missionP1": "{brandName} membina platform AI berkelola untuk pasukan yang memerlukan infrastruktur tahan lama, bukan stack permulaan jangka pendek. Skala tradisional sering datang dengan birokrasi dan entropi; kami bertindak balas dengan pemerintahan kod, automasi, dan garis asas platform yang kekal boleh diaudit semasa berkembang.",
+      "missionP2": "Perdagangan masih menderita daripada beban koordinasi, alat yang terpecah, dan laluan naik taraf yang lemah. Kami prihatin untuk mengurangkan geseran tersebut melalui kontrak platform yang lebih jelas, primitif penghantaran yang lebih kuat, dan tingkah laku masa jalan yang boleh diperhatikan dan dipercayai oleh pasukan.",
+      "missionP3": "Kami menolak kebiasaan menyelesaikan masalah skala dengan lebih banyak beban organisasi. Automasi, ujian, dan pemerintahan sepatutnya menyerap kerja operasi berulang supaya pasukan boleh kekal fokus pada produk, seni bina, dan hasil pelanggan.",
+      "missionP4": "",
+      "valuesTitle": "Empat Tiang",
+      "values": {
+        "0": {
+          "title": "Skala Berkelola (Falsafah)",
+          "description": "Skala sepatutnya datang daripada sistem yang lebih kuat, leverage yang lebih baik, dan peraturan operasi yang lebih jelas — bukan daripada menimbun lebih banyak beban organisasi."
+        },
+        "1": {
+          "title": "Teras Pembina (Infrastruktur)",
+          "description": "Garis asas platform boleh guna semula untuk multi-tenancy, bil, auth, pematuhan, dan integrasi AI yang boleh diaudit, dikembangkan, dan dihantar oleh pasukan secara berulang."
+        },
+        "2": {
+          "title": "Disiplin Naik Taraf (Pengenalan)",
+          "description": "Sistem sihat berkembang melalui semakan keserasian, migrasi, dan kontrak masa jalan yang boleh diperhatikan, bukan melalui hanyutan, kepahlawanan, dan penulisan semula sekali."
+        },
+        "3": {
+          "title": "Kod adalah Undang-undang (Organisasi)",
+          "description": "Disiplin operasi sepatutnya dikodkan dalam ujian, aliran kerja, dan peraturan pemerintahan supaya pasukan boleh meningkatkan platform tanpa bergantung pada politik atau memori institusi."
+        }
+      },
+      "jobsTitle": "Isyarat Kejuruteraan berbanding Kelayakan",
+      "jobsDescription": "Kami lebih prihatin tentang output kejuruteraan yang boleh disahkan, kejelasan pemikiran, dan pertimbangan sistem berbanding silsilah atau inflasi gelaran.",
+      "jobsButton": "Hantar Profil Github",
+      "companyInfoTitle": "Pematuhan Organisasi",
+      "companyInfo": {
+        "legalName": "Pendaftaran Entiti Undang-Undang",
+        "founded": "Tarikh Pendaftaran",
+        "headquarters": "Pusat Operasi Global",
+        "jurisdiction": "Yurisdiksi Pentadbiran"
+      },
+      "ctaHeading": "Memerlukan penilaian teknikal yang lebih mendalam?",
+      "ctaDescription": "Hubungi pakar kejuruteraan kami untuk penilaian integrasi perusahaan atau semak dokumentasi penyebaran.",
+      "ctaButton": "Mula Hubungan"
+    },
+    "contact": {
+      "title": "Pertanyaan Teknikal & Komersial — Kebijaksanaan {brandName}",
+      "description": "Saluran komunikasi khusus untuk lesen komersial, self-hosting perusahaan, dan sokongan teknikal lanjutan.",
+      "heading": "Mula Sambungan Sokongan",
+      "subheading": "Kami akan menghantar pakar teknikal atau arkitek khusus untuk menilai keperluan anda secara terperinci.",
+      "contacts": {
+        "founder": {
+          "title": "Langsung Pengasas",
+          "description": "Saluran komunikasi langsung untuk penyelarasan strategik teras dan pertanyaan peringkat eksekutif."
+        },
+        "general": {
+          "title": "Perundingan Perusahaan",
+          "description": "Perbincangan awal mengenai rakan strategik ekologi dan evolusi arkitektur menyeluruh."
+        },
+        "sales": {
+          "title": "Penyebaran Komersial",
+          "description": "Rundingan mengenai lesen sumber tertutup dan spesifikasi penyebaran persekitaran kluster peribadi."
+        },
+        "support": {
+          "title": "Sokongan Tahap Pakar",
+          "description": "Bimbingan arkitektur khusus dan perkhidmatan penyelesaian masalah untuk integrasi perniagaan aktif dan nyahpepijat sistem teras."
+        },
+        "legal": {
+          "title": "Hal Ehwal Undang-Undang & Pematuhan",
+          "description": "Pertanyaan berkaitan definisi sempadan sumber terbuka, audit pematuhan perusahaan, dan terma kontrak."
+        },
+        "privacy": {
+          "title": "Privasi Pusat Data",
+          "description": "Pengesahan teknikal dan arahan pematuhan mengenai GDPR dan undang-undang perlindungan data antarabangsa susulan."
+        },
+        "security": {
+          "title": "Pendedahan Keselamatan",
+          "description": "Hantar laporan reproduksi teknikal mengenai kerentanan perisian berpotensi secara selamat terus kepada pasukan infrastruktur kami."
+        }
+      },
+      "formTitle": "Portal Penghantaran",
+      "form": {
+        "name": "Gelaran Penghantar",
+        "email": "Alamat E-mel Rasmi",
+        "company": "Organisasi Berkaitan",
+        "category": "Domain Keperluan",
+        "categories": {
+          "general": "Perundingan Korporat",
+          "sales": "Lesen & Seni Bina",
+          "support": "Bantuan Pembangun",
+          "legal": "Sempadan Undang-Undang & Pematuhan",
+          "privacy": "Dasar Pemprosesan Data",
+          "partnership": "Integrasi Ekosistem",
+          "press": "Hubungan Awam"
+        },
+        "subject": "Ringkasan Isu Teras",
+        "message": "Spesifikasi Teknikal/Perniagaan Terperinci",
+        "submit": "Hantar ke Backend",
+        "privacyNotice": "Melaksanakan permintaan rangkaian ini menandakan anda telah membaca dan bersetuju dengan",
+        "privacyLink": "Infrastruktur Privasi Sistemik",
+        "submitting": "Masuk ke barisan pemprosesan...",
+        "successMessage": "Data berjaya dihantar. Pasukan operasi yang bertanggungjawab akan memberikan respons terperinci dalam 1-2 hari bekerja standard."
+      },
+      "companyInfoTitle": "Telemetri Operasi",
+      "companyNameChinese": "{companyLegal}",
+      "companyNameEnglish": "{companyLegalEn}",
+      "companyAddress": "Wuxi, Wilayah Jiangsu, China",
+      "socialMedia": "Pautan Rangkaian Utama"
+    },
+    "cookies": {
+      "title": "Dasar Kuki — {brandName}",
+      "description": "Bagaimana {brandName} menggunakan kuki dan teknologi penjejakan serupa di laman web dan perkhidmatan kami.",
+      "heading": "Dasar Kuki",
+      "effectiveDate": "Tarikh Berkuat Kuasa",
+      "lastUpdated": "Terakhir Dikemas Kini",
+      "dates": {
+        "effective": "1 Januari 2025",
+        "updated": "1 Januari 2025"
+      },
+      "intro": "Dasar Kuki ini menerangkan bagaimana {brandName} Co., Ltd. (\"{brandName},\" \"kami,\" \"kita,\" atau \"milik kami\") menggunakan kuki dan teknologi penjejakan serupa di laman web dan perkhidmatan kami.",
+      "whatAreCookies": {
+        "title": "Apakah Kuki?",
+        "content": "Kuki ialah fail teks kecil yang diletakkan pada peranti anda apabila anda melawati laman web. Ia digunakan secara meluas untuk menjadikan laman web berfungsi dengan lebih cekap dan menyediakan maklumat kepada pemilik laman web."
+      },
+      "howWeUse": {
+        "title": "Bagaimana Kami Menggunakan Kuki",
+        "intro": "Kami menggunakan kuki untuk:",
+        "items": {
+          "0": {
+            "label": "Membolehkan Ciri Asas",
+            "desc": "Menyediakan fungsi teras seperti pengesahan pengguna dan keselamatan"
+          },
+          "1": {
+            "label": "Mengingati Pilihan",
+            "desc": "Menyimpan bahasa, tema, dan tetapan lain anda"
+          },
+          "2": {
+            "label": "Meningkatkan Prestasi",
+            "desc": "Memahami bagaimana pelawat berinteraksi dengan perkhidmatan kami"
+          },
+          "3": {
+            "label": "Memperibadikan Pengalaman",
+            "desc": "Menyediakan kandungan dan cadangan yang relevan"
+          },
+          "4": {
+            "label": "Mengukur Pemasaran",
+            "desc": "Melacak keberkesanan kempen pemasaran kami"
+          }
+        }
+      },
+      "typesTitle": "Jenis Kuki Yang Kami Gunakan",
+      "tableHeaders": {
+        "cookie": "Kuki",
+        "provider": "Pembekal",
+        "purpose": "Tujuan",
+        "duration": "Tempoh"
+      },
+      "necessary": {
+        "title": "Kuki Perluas Mutlak",
+        "description": "Kuki ini penting untuk laman web berfungsi dengan betul. Ia tidak boleh dilumpuhkan.",
+        "cookies": {
+          "0": {
+            "name": "__session",
+            "provider": "{brandName}",
+            "purpose": "Sesi pengesahan pengguna",
+            "duration": "Sesi"
+          },
+          "1": {
+            "name": "__clerk_db_jwt",
+            "provider": "Clerk",
+            "purpose": "Token pengesahan",
+            "duration": "7 hari"
+          },
+          "2": {
+            "name": "cookie_consent",
+            "provider": "{brandName}",
+            "purpose": "Menyimpan pilihan persetujuan kuki",
+            "duration": "1 tahun"
+          }
+        }
+      },
+      "functional": {
+        "title": "Kuki Fungsional",
+        "description": "Kuki ini membolehkan ciri peribadi dan mengingat pilihan anda.",
+        "cookies": {
+          "0": {
+            "name": "locale",
+            "provider": "{brandName}",
+            "purpose": "Menyimpan pilihan bahasa",
+            "duration": "1 tahun"
+          },
+          "1": {
+            "name": "theme",
+            "provider": "{brandName}",
+            "purpose": "Menyimpan pilihan tema",
+            "duration": "1 tahun"
+          }
+        }
+      },
+      "analyticsType": {
+        "title": "Kuki Analitik",
+        "description": "Kuki ini membantu kami memahami bagaimana pelawat berinteraksi dengan laman web kami.",
+        "cookies": {
+          "0": {
+            "name": "_ga",
+            "provider": "Google Analytics",
+            "purpose": "Membezakan pengguna unik",
+            "duration": "2 tahun"
+          },
+          "1": {
+            "name": "ph_*",
+            "provider": "PostHog",
+            "purpose": "Analitik produk",
+            "duration": "1 tahun"
+          }
+        }
+      },
+      "marketingType": {
+        "title": "Kuki Pemasaran",
+        "description": "Kuki ini digunakan untuk pengiklanan dan penjejakan prestasi kempen iklan.",
+        "cookies": {
+          "0": {
+            "name": "_fbp",
+            "provider": "Facebook",
+            "purpose": "Menjejak lawatan untuk iklan Facebook",
+            "duration": "3 bulan"
+          },
+          "1": {
+            "name": "_gcl_au",
+            "provider": "Google Ads",
+            "purpose": "Penjejakan penukaran",
+            "duration": "3 bulan"
+          }
+        }
+      },
+      "managingTitle": "Menguruskan Pilihan Kuki Anda",
+      "consentBanner": {
+        "title": "Baner Persetujuan Kuki",
+        "intro": "Apabila anda melawati laman web kami buat kali pertama, anda akan melihat baner persetujuan kuki yang membolehkan anda untuk:",
+        "items": {
+          "0": {
+            "label": "Terima Semua",
+            "desc": "Dayakan semua kategori kuki"
+          },
+          "1": {
+            "label": "Tolak Semua",
+            "desc": "Lumpuhkan semua kuki pilihan (kuki diperlukan kekal)"
+          },
+          "2": {
+            "label": "Sesuaikan",
+            "desc": "Pilih kategori kuki tertentu untuk diaktifkan"
+          }
+        },
+        "changeNote": "Anda boleh mengubah pilihan anda pada bila-bila masa dengan mengklik \"Tetapan Kuki\" di bahagian bawah."
+      },
+      "browserSettings": {
+        "title": "Tetapan Pelayar",
+        "intro": "Kebanyakan pelayar web membolehkan anda mengawal kuki melalui tetapan mereka:",
+        "browsers": {
+          "0": {
+            "name": "Chrome",
+            "path": "Tetapan > Privasi dan keselamatan > Kuki"
+          },
+          "1": {
+            "name": "Firefox",
+            "path": "Tetapan > Privasi & Keselamatan > Kuki"
+          },
+          "2": {
+            "name": "Safari",
+            "path": "Keutamaan > Privasi > Kuki"
+          },
+          "3": {
+            "name": "Edge",
+            "path": "Tetapan > Privasi, carian, dan perkhidmatan > Kuki"
+          }
+        },
+        "note": "Menghalang kuki tertentu mungkin memberi kesan kepada fungsi laman web."
+      },
+      "similarTech": {
+        "title": "Teknologi Serupa",
+        "intro": "Selain kuki, kami mungkin menggunakan:",
+        "items": {
+          "0": {
+            "label": "Storan Tempatan",
+            "desc": "Untuk menyimpan keutamaan dan cache data secara tempatan"
+          },
+          "1": {
+            "label": "Penyimpanan Sesi",
+            "desc": "Untuk data sementara semasa sesi pelayaran anda"
+          },
+          "2": {
+            "label": "Tag Piksel",
+            "desc": "Imej kecil untuk menjejak pembukaan e-mel dan lawatan laman web"
+          }
+        },
+        "noFingerprinting": "Kami TIDAK menggunakan cap jari pelayar untuk penjejakan."
+      },
+      "updates": {
+        "title": "Kemas Kini kepada Dasar Ini",
+        "content": "Kami mungkin mengemas kini Dasar Kuki ini dari semasa ke semasa. Kami akan memaklumkan anda tentang perubahan penting dengan memaparkan dasar yang dikemas kini di laman web kami."
+      },
+      "contactUs": {
+        "title": "Hubungi Kami",
+        "intro": "Jika anda mempunyai soalan tentang penggunaan kuki kami, sila hubungi kami:",
+        "company": "{brandName} Co., Ltd.",
+        "privacyNote": "Untuk maklumat lanjut tentang bagaimana kami mengumpul dan memproses data anda, sila rujuk kepada",
+        "privacyLink": "Dasar Privasi"
+      }
+    },
+    "faq": {
+      "title": "Panduan Kejuruteraan & FAQ — {brandName}",
+      "description": "Analisis menyeluruh tentang seni bina rangka kerja, topologi asas, dan strategi penyebaran komersial.",
+      "heading": "Kajian Mendalam Eksekutif",
+      "subheading": "Bahan sokongan dioptimumkan untuk integrasi kejuruteraan sistem dan pembuatan keputusan komersial eksekutif.",
+      "categories": {
+        "0": {
+          "name": "Gambaran Keseluruhan Seni Bina",
+          "questions": {
+            "0": {
+              "q": "Apakah tujuan operasi eksplisit {productName}?",
+              "a": "{productName} ialah rangka kerja AI SaaS Next.js yang sangat terstruktur dan sedia untuk pengeluaran. Ia membundel bil korporat, pengesahan multi-faktor, dan pengasingan multi-tenant ke dalam garis asas platform yang dikawal, membolehkan pasukan memfokuskan pada pelaksanaan AI khusus produk."
+            },
+            "1": {
+              "q": "Bagaimana struktur lesen repositori?",
+              "a": "Infrastruktur asas menguatkuasakan perjanjian OSS AGPLv3 dengan ketat, menjamin ketelusan dan penggunaan tanpa kos. Bagi organisasi yang memerlukan pengaburan proprietari dan jaminan penulisan semula yang lebih tinggi, kontrak komersial sumber tertutup yang eksplisit tersedia."
+            },
+            "2": {
+              "q": "Berapakah kelajuan penilaian komersial awal?",
+              "a": "Sangat tinggi. Menggunakan rantau alat CLI Node yang disesuaikan bersama spesifikasi teknikal yang tepat, jurutera junior boleh menubuhkan contoh Minimum Viable Product (MVP) tempatan autonomi dalam masa beberapa minit."
+            }
+          }
+        },
+        "1": {
+          "name": "Operasi Komersial",
+          "questions": {
+            "0": {
+              "q": "Berapakah toleransi untuk penskalaan komersial?",
+              "a": "Direka bentuk secara meluas berdasarkan paradigma komponen mikro, kapasiti beban struktur dipetakan dengan lancar dari Free Tier tanpa permintaan secara dinamik sehingga ambang Enterprise yang melayani jutaan permintaan bulanan, semuanya dikonfigurasi melalui kekangan papan pemuka."
+            },
+            "1": {
+              "q": "Bagaimanakah volatiliti langganan mempengaruhi akaun standard?",
+              "a": "Kami beroperasi menggunakan pencatatan struktur sumber dan throughput API yang tepat pada tahap saat. Perubahan kekangan segera diselesaikan terhadap lapisan akaun—sama ada memulangkan perbezaan prorata atau mengeluarkan kredit automatik. Tiada tempoh pembekuan lapisan langsung."
+            },
+            "2": {
+              "q": "Infrastruktur pemprosesan apa yang mengasingkan vektor pembayaran?",
+              "a": "Penghalaan tunai global pada asasnya merujuk kepada antara muka pelayan Stripe, menjamin telemetri PCI-DSS yang ketat dan integriti pemprosesan. Penyelesaian Enterprise boleh mengintegrasikan paip audit kewangan peribadi yang dikawal oleh komitmen SLA tersuai."
+            }
+          }
+        },
+        "2": {
+          "name": "Lapisan Kejuruteraan Sistem",
+          "questions": {
+            "0": {
+              "q": "Abstraksi kecerdasan asas mana yang disokong secara asli?",
+              "a": "Logik interaksi utama menetapkan interoperabiliti asli ke atas spesifikasi standard OpenAI, Anthropic, dan Gemini. Ini menghasilkan fleksibiliti besar untuk menukar hujung penalaran secara efisien melalui pemetaan pemboleh ubah tanpa penurunan kepada logik komersial hulu."
+            },
+            "1": {
+              "q": "Bagaimanakah risiko pengaburan pangkalan data ditangani?",
+              "a": "Pelaksanaan lalai secara intrinsik melancarkan dasar Keselamatan Tahap Baris (RLS) Postgres yang digabungkan erat dengan primitif Penghalaan Penyelesaian Penyewa tanpa pelayan kami. Ini memastikan partition keras secara aktif menghalang pencemaran data peringkat aplikasi kritikal dan pertindihan pelaksanaan."
+            },
+            "2": {
+              "q": "Adakah terdapat sekatan arkitektur pada penyelesaian kendiri?",
+              "a": "Sudah tentu tiada. Topologi sepenuhnya terkopel. Jika persekitaran melaksanakan runtime Node.js bebas bersama kluster PostgreSQL yang sihat, fungsi penuh dikekalkan secara semula jadi."
+            }
+          }
+        },
+        "3": {
+          "name": "Integriti Sistematik",
+          "questions": {
+            "0": {
+              "q": "Protokol apa yang menentukan pertahanan mekanikal perimeter?",
+              "a": "Mekanisme melaksanakan penyulitan TLS wajib melalui transmisi, algoritma pengekodan deterministik untuk pemetaan rahsia, dan rakaman peristiwa mutasi yang ditulis secara ketat ke dalam buku besar penjejakan siri masa dalaman."
+            },
+            "1": {
+              "q": "Adakah topologi mematuhi perundangan privasi antarabangsa utama?",
+              "a": "Ya, sepenuhnya. Modul perniagaan menyediakan pelaksanaan algoritma siap pakai yang menargetkan keadaan penarikan persetujuan, logik pemadaman keras, dan pertanyaan eksport mendalam yang mematuhi GDPR serta rangka kerja peraturan tempatan dengan optimum."
+            },
+            "2": {
+              "q": "Apakah yang dilaksanakan apabila berlaku insiden bencana yang tidak normal?",
+              "a": "Sentinel automatik segera memaklumkan vektor kejuruteraan teras yang memaksa blok litar dan melaksanakan triase pantas. Di bawah panduan resolusi lanjutan, Pasca-Insiden yang sepenuhnya telus disebarkan secara meluas dalam tetingkap 72 jam mutlak."
+            }
+          }
+        },
+        "4": {
+          "name": "Arahan Bantuan Teknikal",
+          "questions": {
+            "0": {
+              "q": "Bagaimana penyelesaian masalah kempen operasi diselesaikan?",
+              "a": "Vektor triase awal menargetkan matriks dokumentasi yang dijaga dengan ketat dan ditinjau rakan sebaya serta interaksi komuniti yang disahkan. Mendapatkan lesen standard atau peringkat perusahaan membuka akses kepada barisan eskalasi peribadi yang diselesaikan melalui nod kejuruteraan dalaman secara langsung."
+            },
+            "1": {
+              "q": "Adakah anda menyediakan operasi integrasi persekitaran fizikal atau khusus?",
+              "a": "Ini termasuk dalam lapisan pelaksanaan premium khas kami untuk konglomerat korporat peringkat tinggi. Arkitek paling kanan kami melancarkan keluar untuk melaksanakan audit kod terhadap seni bina warisan, mengurus pemindahan awan yang halus, dan memvalidasi sebahagian rangkaian yang sangat terasing."
+            }
+          }
+        }
+      },
+      "ctaHeading": "Memerlukan penyegerakan teknikal segera?",
+      "ctaDescription": "Sama ada memvalidasi skema tingkah laku API tertentu atau melaksanakan perjanjian integrasi jangka panjang, berantaramuka secara langsung dengan hierarki kejuruteraan.",
+      "ctaButton": "Terima Arahan Integrasi",
+      "ctaEmail": "Hantar Mesej Langsung"
+    },
+    "privacy": {
+      "title": "Protokol Pertahanan Privasi & Maklumat — {brandName}",
+      "description": "Mendokumentasikan secara terperinci bagaimana mekanik infrastruktur memerintah autonomi pengguna dan pengasingan data mesin.",
+      "heading": "Arahan Perlindungan Maklumat",
+      "effectiveDate": "Tarikh Berkuat Kuasa",
+      "lastUpdated": "Terakhir Dikemas Kini",
+      "dates": {
+        "effective": "1 Januari 2025",
+        "updated": "1 Januari 2025"
+      },
+      "intro": "Di {brandName} (\"Syarikat,\" \"kami,\" \"kita,\" atau \"milik kami\"), kami komited untuk melindungi privasi anda. Dasar Privasi ini menerangkan bagaimana kami mengumpul, menggunakan, mendedahkan, dan melindungi maklumat anda apabila anda menggunakan laman web, aplikasi, dan perkhidmatan kami (secara kolektif, \"Perkhidmatan\").",
+      "infoWeCollect": {
+        "title": "1. Maklumat Yang Kami Kumpul",
+        "youProvide": {
+          "title": "1.1 Maklumat Yang Anda Berikan",
+          "intro": "Kami mengumpul maklumat yang anda berikan secara langsung kepada kami, termasuk:",
+          "items": {
+            "0": {
+              "label": "Maklumat Akaun",
+              "desc": "Nama, alamat e-mel, kata laluan, dan butiran organisasi apabila anda membuat akaun."
+            },
+            "1": {
+              "label": "Maklumat Profil",
+              "desc": "Gambar profil, jawatan, nama syarikat, dan maklumat pilihan lain."
+            },
+            "2": {
+              "label": "Maklumat Pembayaran",
+              "desc": "Alamat bil dan butiran kaedah pembayaran (diproses dengan selamat melalui Stripe)."
+            },
+            "3": {
+              "label": "Komunikasi",
+              "desc": "Mesej, maklum balas, dan komunikasi lain yang anda hantar kepada kami."
+            },
+            "4": {
+              "label": "Kandungan",
+              "desc": "Sebarang kandungan yang anda cipta, muat naik, atau simpan menggunakan Perkhidmatan kami."
+            }
+          }
+        },
+        "automatic": {
+          "title": "1.2 Maklumat Yang Dikumpul Secara Automatik",
+          "intro": "Apabila anda menggunakan Perkhidmatan kami, kami secara automatik mengumpul maklumat tertentu:",
+          "items": {
+            "0": {
+              "label": "Maklumat Peranti",
+              "desc": "Jenis peranti, sistem operasi, jenis pelayar, dan pengenal pasti peranti unik."
+            },
+            "1": {
+              "label": "Maklumat Penggunaan",
+              "desc": "Laman yang dilihat, ciri yang digunakan, tindakan yang diambil, dan masa yang dihabiskan di Perkhidmatan."
+            },
+            "2": {
+              "label": "Data Log",
+              "desc": "Alamat IP, masa akses, URL rujukan, dan log aktiviti sistem."
+            },
+            "3": {
+              "label": "Maklumat Lokasi",
+              "desc": "Lokasi umum berdasarkan alamat IP (kami tidak mengumpul geolokasi tepat)."
+            }
+          }
+        }
+      },
+      "howWeUse": {
+        "title": "2. Bagaimana Kami Menggunakan Maklumat Anda",
+        "intro": "Kami menggunakan maklumat yang kami kumpul untuk:",
+        "items": {
+          "0": {
+            "label": "Menyediakan Perkhidmatan",
+            "desc": "Mengendalikan, mengekalkan, dan meningkatkan Perkhidmatan kami."
+          },
+          "1": {
+            "label": "Memproses Transaksi",
+            "desc": "Mengendalikan pembayaran, pengebilan, dan operasi berkaitan."
+          },
+          "2": {
+            "label": "Berhubung",
+            "desc": "Menghantar pengumuman perkhidmatan, kemas kini, dan komunikasi pemasaran (dengan kebenaran)."
+          },
+          "3": {
+            "label": "Peribadikan",
+            "desc": "Menyesuaikan pengalaman anda dan menyediakan cadangan yang relevan."
+          },
+          "4": {
+            "label": "Menganalisis",
+            "desc": "Memahami corak penggunaan dan meningkatkan Perkhidmatan kami."
+          },
+          "5": {
+            "label": "Melindungi",
+            "desc": "Mengesan, mencegah, dan bertindak balas terhadap penipuan, penyalahgunaan, dan insiden keselamatan."
+          }
+        }
+      },
+      "howWeShare": {
+        "title": "3. Bagaimana Kami Berkongsi Maklumat Anda",
+        "intro": "Kami mungkin berkongsi maklumat anda dalam keadaan berikut:",
+        "serviceProviders": {
+          "title": "3.1 Penderma Servis",
+          "intro": "Kami berkongsi maklumat dengan pembekal pihak ketiga yang menyediakan servis atas nama kami, termasuk:",
+          "items": {
+            "0": {
+              "label": "Infrastruktur",
+              "desc": "Hos awan (Vercel, Supabase), perkhidmatan pangkalan data"
+            },
+            "1": {
+              "label": "Pemprosesan Pembayaran",
+              "desc": "Stripe untuk pengendalian pembayaran yang selamat"
+            },
+            "2": {
+              "label": "Pengesahan",
+              "desc": "Clerk untuk pengurusan identiti"
+            },
+            "3": {
+              "label": "Analitik",
+              "desc": "PostHog, Vercel Analytics untuk pandangan penggunaan"
+            }
+          }
+        },
+        "businessTransfers": {
+          "title": "3.2 Pemindahan Perniagaan",
+          "content": "Jika kami terlibat dalam penggabungan, pengambilalihan, atau penjualan aset, maklumat anda mungkin dipindahkan sebagai sebahagian daripada transaksi tersebut."
+        },
+        "legalRequirements": {
+          "title": "3.3 Keperluan Undang-undang",
+          "content": "Kami mungkin mendedahkan maklumat apabila dikehendaki oleh undang-undang, proses undang-undang, atau permintaan kerajaan, atau untuk melindungi hak, privasi, keselamatan, atau harta kami."
+        }
+      },
+      "yourRights": {
+        "title": "4. Hak dan Pilihan Anda",
+        "accessPortability": {
+          "title": "4.1 Akses dan Portabiliti",
+          "content": "Anda boleh mengakses maklumat peribadi anda melalui tetapan akaun anda dan meminta salinan data anda dalam format yang mudah alih."
+        },
+        "correction": {
+          "title": "4.2 Pembetulan",
+          "content": "Anda boleh mengemas kini maklumat akaun anda pada bila-bila masa melalui papan pemuka."
+        },
+        "deletion": {
+          "title": "4.3 Pemadaman",
+          "content": "Anda boleh memohon pemadaman akaun dan data berkaitan melalui tetapan atau menghubungi kami."
+        },
+        "marketing": {
+          "title": "4.4 Komunikasi Pemasaran",
+          "content": "Anda boleh berhenti menerima e-mel pemasaran dengan mengklik \"nyahlanggan\" dalam mana-mana e-mel pemasaran atau mengemas kini pilihan anda."
+        }
+      },
+      "dataSecurity": {
+        "title": "5. Keselamatan Data",
+        "intro": "Kami melaksanakan langkah teknikal dan organisasi yang sesuai untuk melindungi maklumat anda, termasuk:",
+        "items": {
+          "0": "Penyulitan data semasa penghantaran (TLS) dan pada rehat",
+          "1": "Penilaian keselamatan dan ujian penembusan secara berkala",
+          "2": "Kawalan akses dan keperluan pengesahan",
+          "3": "Pemantauan dan pengkatalogan aktiviti sistem"
+        }
+      },
+      "ccpa": {
+        "title": "6. Hak Privasi California (CCPA)",
+        "intro": "Jika anda penduduk California, anda mempunyai hak khusus mengenai maklumat peribadi anda:",
+        "items": {
+          "0": {
+            "label": "Hak untuk Tahu",
+            "desc": "Minta pendedahan maklumat yang kami kumpulkan, gunakan, dan kongsi."
+          },
+          "1": {
+            "label": "Hak untuk Padam",
+            "desc": "Minta pemadaman maklumat peribadi anda."
+          },
+          "2": {
+            "label": "Hak untuk Berhenti",
+            "desc": "Berhenti daripada penjualan maklumat peribadi (kami tidak menjual data anda)."
+          },
+          "3": {
+            "label": "Hak untuk Tidak Dipbezakan",
+            "desc": "Kami tidak akan membezakan anda kerana menggunakan hak anda."
+          }
+        }
+      },
+      "gdpr": {
+        "title": "7. Hak Privasi Eropah (GDPR)",
+        "intro": "Jika anda berada di EEA, UK, atau Switzerland, anda mempunyai hak tambahan di bawah GDPR:",
+        "items": {
+          "0": {
+            "label": "Asas Undang-undang",
+            "desc": "Kami memproses data anda berdasarkan prestasi kontrak, kepentingan sah, atau persetujuan."
+          },
+          "1": {
+            "label": "Hak",
+            "desc": "Akses, pembetulan, pemadaman, portabiliti, sekatan, dan keberatan."
+          },
+          "2": {
+            "label": "DPO",
+            "desc": "Anda boleh menghubungi Pegawai Perlindungan Data kami di dpo@nebutra.com."
+          }
+        }
+      },
+      "contactUs": {
+        "title": "8. Hubungi Kami",
+        "intro": "Jika anda mempunyai soalan mengenai Dasar Privasi ini, sila hubungi kami:",
+        "company": "{brandName} Co., Ltd."
+      }
+    },
+    "refund": {
+      "title": "Protokol Anomali Transaksi — {brandName}",
+      "description": "Penggayaan teliti mengenai parameter gulungan modal tepat merentas pelbagai model penglibatan struktur.",
+      "heading": "Rangka Pelaksanaan Pertikaian",
+      "effectiveDate": "Tarikh Pelaksanaan Penguatkuasaan",
+      "lastUpdated": "Epok Jejak Semakan",
+      "dates": {
+        "effective": "1 Januari 2025",
+        "updated": "1 Januari 2025"
+      },
+      "intro": "Di {brandName}, kami ingin anda berpuas hati sepenuhnya dengan perkhidmatan kami. Dasar Pemulangan ini merangkumi keadaan di mana pemulangan tersedia dan proses untuk memohonnya.",
+      "subscriptionPlans": {
+        "title": "Pelan Langganan",
+        "monthly": {
+          "title": "Langganan Bulanan",
+          "items": {
+            "0": {
+              "label": "Pembatalan",
+              "desc": "Anda boleh membatalkan langganan bulanan anda pada bila-bila masa"
+            },
+            "1": {
+              "label": "Bayaran Balik Pro-rata",
+              "desc": "Kami tidak menawarkan bayaran balik pro-rata untuk sebahagian bulan"
+            },
+            "2": {
+              "label": "Akses",
+              "desc": "Anda mengekalkan akses kepada ciri berbayar sehingga akhir tempoh penagihan anda"
+            },
+            "3": {
+              "label": "Pembaharuan Automatik",
+              "desc": "Langganan akan dibaharui secara automatik kecuali dibatalkan"
+            }
+          }
+        },
+        "annual": {
+          "title": "Langganan Tahunan",
+          "items": {
+            "0": {
+              "label": "Jaminan Wang Dikembalikan 14 Hari",
+              "desc": "Pelanggan tahunan baharu boleh memohon bayaran balik penuh dalam tempoh 14 hari dari pembelian awal"
+            },
+            "1": {
+              "label": "Selepas 14 Hari",
+              "desc": "Bayaran balik umumnya tidak tersedia selepas tempoh 14 hari"
+            },
+            "2": {
+              "label": "Pembatalan",
+              "desc": "Anda boleh membatalkan pada bila-bila masa, tetapi langganan anda akan kekal aktif sehingga akhir tempoh tahunan"
+            },
+            "3": {
+              "label": "Tiada Bayaran Balik Pro-rata",
+              "desc": "Kami tidak menawarkan bayaran balik sebahagian untuk bulan yang tidak digunakan"
+            }
+          }
+        }
+      },
+      "eligibleScenarios": {
+        "title": "Senario Bayaran Balik Yang Layak",
+        "intro": "Kami akan mempertimbangkan permintaan bayaran balik dalam keadaan berikut:",
+        "serviceIssues": {
+          "title": "1. Masalah Perkhidmatan",
+          "items": {
+            "0": "Kehilangan perkhidmatan yang ketara yang menjejaskan keupayaan anda untuk menggunakan ciri utama",
+            "1": "Masalah teknikal yang tidak dapat kami selesaikan dalam tempoh masa yang munasabah",
+            "2": "Ciri yang berbeza dengan ketara daripada yang diiklankan"
+          }
+        },
+        "billingErrors": {
+          "title": "2. Ralat Pengecasan",
+          "items": {
+            "0": "Pengecasan berganda",
+            "1": "Jumlah bil yang salah",
+            "2": "Pengecasan tanpa kebenaran (selepas pengesahan)"
+          }
+        },
+        "exceptionalCircumstances": {
+          "title": "3. Keadaan Luar Biasa",
+          "items": {
+            "0": "Kecemasan perubatan yang terdokumentasi",
+            "1": "Bencana alam yang menjejaskan perniagaan anda",
+            "2": "Keadaan lain yang dinilai secara kes demi kes"
+          }
+        }
+      },
+      "nonRefundable": {
+        "title": "Barang Tidak Boleh Dibuang Balik",
+        "intro": "Berikut umumnya tidak layak untuk bayaran balik:",
+        "items": {
+          "0": {
+            "label": "Pengecasan berasaskan penggunaan",
+            "desc": "Panggilan API, penggunaan token AI, atau storan yang digunakan"
+          },
+          "1": {
+            "label": "Tambah-on dan tambahan",
+            "desc": "Pembelian sekali gus atau perkhidmatan tambah-on"
+          },
+          "2": {
+            "label": "Kontrak perusahaan",
+            "desc": "Perjanjian tersuai mempunyai terma tersendiri"
+          },
+          "3": {
+            "label": "Pembatalan sukarela",
+            "desc": "Selepas tempoh kelayakan bayaran balik"
+          },
+          "4": {
+            "label": "Pelanggaran terma",
+            "desc": "Akaun ditamatkan kerana pelanggaran dasar"
+          }
+        }
+      },
+      "howToRequest": {
+        "title": "Cara Memohon Bayaran Balik",
+        "step1": {
+          "title": "Langkah 1: Hubungi Sokongan",
+          "intro": "E-mel kami di billing@nebutra.com dengan:",
+          "items": {
+            "0": "Alamat e-mel akaun anda",
+            "1": "Pelanggan langganan dan tempoh pengebilan",
+            "2": "Sebab permohonan bayaran balik",
+            "3": "Sebarang dokumentasi yang berkaitan"
+          }
+        },
+        "step2": {
+          "title": "Langkah 2: Proses Semakan",
+          "items": {
+            "0": "Kami akan menyemak permohonan anda dalam masa 5 hari bekerja",
+            "1": "Kami mungkin meminta maklumat tambahan",
+            "2": "Anda akan menerima keputusan bertulis melalui e-mel"
+          }
+        },
+        "step3": {
+          "title": "Langkah 3: Pemprosesan Bayaran Balik",
+          "intro": "Jika diluluskan:",
+          "items": {
+            "0": "Bayaran balik diproses ke kaedah pembayaran asal",
+            "1": "Bayaran balik kad kredit biasanya muncul dalam masa 5-10 hari bekerja",
+            "2": "Masa pemprosesan bank mungkin berbeza"
+          }
+        }
+      },
+      "planChanges": {
+        "title": "Perubahan Pelan",
+        "upgrades": {
+          "title": "Naik Taraf",
+          "items": {
+            "0": "Naik taraf berkuat kuasa serta-merta",
+            "1": "Anda akan dikenakan caj perbezaan berkadar untuk baki tempoh pengebilan anda",
+            "2": "Tiada bayaran balik diberikan untuk pelan sebelumnya"
+          }
+        },
+        "downgrades": {
+          "title": "Turun Taraf",
+          "items": {
+            "0": "Turun taraf berkuat kuasa pada tempoh pengebilan seterusnya",
+            "1": "Anda mengekalkan akses kepada ciri semasa sehingga masa itu",
+            "2": "Tiada bayaran balik separa untuk tempoh semasa"
+          }
+        }
+      },
+      "freeTrial": {
+        "title": "Cubaan Percuma",
+        "items": {
+          "0": "Cubaan percuma tidak memerlukan maklumat pembayaran",
+          "1": "Tiada caj dikenakan semasa tempoh percubaan",
+          "2": "Anda akan dimaklumkan sebelum mana-mana caj bermula"
+        }
+      },
+      "disputeResolution": {
+        "title": "Penyelesaian Pertikaian",
+        "intro": "Jika anda tidak bersetuju dengan keputusan bayaran balik kami:",
+        "steps": {
+          "0": "Balas e-mel keputusan dengan maklumat tambahan",
+          "1": "Minta pengesahan kepada penyelia",
+          "2": "Hubungi kami di legal@nebutra.com untuk semakan lanjut"
+        }
+      },
+      "contactUs": {
+        "title": "Hubungi Kami",
+        "intro": "Untuk permintaan bayaran balik atau soalan mengenai dasar ini:",
+        "company": "{brandName} Co., Ltd.",
+        "billingLabel": "Pembil",
+        "supportLabel": "Sokongan",
+        "legalLabel": "Undang-undang",
+        "responseNote": "Kami berusaha untuk membalas semua permintaan bayaran balik dalam masa 5 hari bekerja.",
+        "termsNote": "Dasar ini merupakan sebahagian daripada",
+        "termsLink": "Terma Perkhidmatan",
+        "termsAgreement": "Dengan menggunakan {brandName}, anda bersetuju dengan terma bayaran balik ini."
+      }
+    },
+    "terms": {
+      "title": "Terma Perkhidmatan — {brandName}",
+      "description": "Terma Perkhidmatan yang mengatur akses dan penggunaan laman web, aplikasi, API, dan perkhidmatan {brandName}.",
+      "heading": "Terma Perkhidmatan",
+      "effectiveDate": "Tarikh Berkuat Kuasa",
+      "lastUpdated": "Terakhir Dikemas Kini",
+      "dates": {
+        "effective": "1 Januari 2025",
+        "updated": "1 Januari 2025"
+      },
+      "intro1": "Selamat datang di {brandName}! Syarat Perkhidmatan ini (\"Syarat\") mengatur akses dan penggunaan laman web, aplikasi, API, dan perkhidmatan {brandName} (secara kolektif, \"Perkhidmatan\") yang disediakan oleh {brandName} Co., Ltd. (\"{brandName},\" \"Syarikat,\" \"kami,\" \"kita,\" atau \"milik kami\").",
+      "intro2": "Dengan mengakses atau menggunakan Perkhidmatan kami, anda bersetuju terikat dengan Terma ini dan",
+      "intro2PrivacyLink": "Dasar Privasi",
+      "intro2End": " kami. Jika anda tidak bersetuju dengan Terma ini, jangan gunakan Perkhidmatan kami.",
+      "acceptance": {
+        "title": "1. Penerimaan Terma",
+        "eligibility": {
+          "title": "1.1 Kelayakan",
+          "intro": "Untuk menggunakan Perkhidmatan kami, anda mesti:",
+          "items": {
+            "0": "Berusia sekurang-kurangnya 18 tahun atau umur majoriti undang-undang di wilayah anda",
+            "1": "Memiliki kuasa untuk memasuki Terma ini bagi pihak diri anda atau organisasi anda",
+            "2": "Tidak dilarang menggunakan Perkhidmatan kami di bawah undang-undang yang terpakai"
+          }
+        },
+        "orgAccounts": {
+          "title": "1.2 Akaun Organisasi",
+          "content": "Jika anda menggunakan Perkhidmatan kami bagi pihak organisasi, anda menyatakan bahawa anda mempunyai kuasa untuk mengikat organisasi tersebut kepada Terma ini."
+        }
+      },
+      "services": {
+        "title": "2. Penerangan Perkhidmatan",
+        "intro": "{brandName} menyediakan platform SaaS yang merangkumi:",
+        "items": {
+          "0": "Ciri dan penjanaan kandungan berkuasa AI",
+          "1": "Pengurusan kandungan dan alat komuniti",
+          "2": "Sistem cadangan",
+          "3": "Integrasi e-dagang",
+          "4": "Keupayaan Web3",
+          "5": "Analitik dan pelaporan"
+        }
+      },
+      "account": {
+        "title": "3. Pendaftaran Akaun",
+        "creation": {
+          "title": "3.1 Penciptaan Akaun",
+          "intro": "Untuk mengakses ciri tertentu, anda mesti mencipta akaun. Anda bersetuju untuk:",
+          "items": {
+            "0": "Memberikan maklumat yang tepat dan lengkap",
+            "1": "Menjaga keselamatan kelayakan akaun anda",
+            "2": "Memasih maklumat anda dengan segera jika ia berubah",
+            "3": "Terima tanggungjawab atas semua aktiviti di bawah akaun anda"
+          }
+        }
+      },
+      "billing": {
+        "title": "4. Langganan dan Bil",
+        "pricing": {
+          "title": "4.1 Harga",
+          "content": "Perkhidmatan kami ditawarkan di bawah pelbagai pelan langganan seperti yang diterangkan di halaman Harga kami. Harga tertakluk kepada perubahan dengan notis 30 hari."
+        },
+        "payment": {
+          "title": "4.2 Pembayaran",
+          "items": {
+            "0": "Langganan dibayar terlebih dahulu secara bulanan atau tahunan",
+            "1": "Semua yuran tidak boleh dikembalikan kecuali seperti yang dinyatakan dalam",
+            "2": "Anda memberi kuasa kepada kami untuk menjejaki kaedah pembayaran anda untuk yuran yang berkenaan",
+            "3": "Kami menggunakan Stripe untuk pemprosesan pembayaran yang selamat",
+            "1RefundLink": "Dasar Pemulangan"
+          }
+        }
+      },
+      "acceptableUse": {
+        "title": "5. Penggunaan Yang Dibenarkan",
+        "prohibited": {
+          "title": "5.1 Aktiviti Yang Dilarang",
+          "intro": "Anda bersetuju TIDAK untuk:",
+          "items": {
+            "0": "Melanggar sebarang undang-undang, peraturan, atau hak pihak ketiga",
+            "1": "Menggunakan Perkhidmatan untuk menghantar malware, spam, atau kandungan yang berbahaya",
+            "2": "Cuba mendapatkan akses yang tidak sah ke sistem kami",
+            "3": "Mengganggu atau mengganggu integriti atau prestasi Perkhidmatan kami",
+            "4": "Menggunakan alat automatik untuk mengikis, menyalin, atau mengekstrak data tanpa kebenaran",
+            "5": "Mereka semula, decompile, atau membongkar Perkhidmatan kami",
+            "6": "Menggunakan ciri AI kami untuk menjana kandungan yang haram, berbahaya, atau menipu"
+          }
+        }
+      },
+      "ip": {
+        "title": "6. Harta Intelektual",
+        "ours": {
+          "title": "6.1 Harta Intelektual Kami",
+          "content": "{brandName} dan pelisensornya memiliki semua hak, gelaran, dan kepentingan dalam Perkhidmatan, termasuk semua perisian, reka bentuk, tanda dagangan, dan kandungan yang diciptakan oleh kami."
+        },
+        "yours": {
+          "title": "6.2 Kandungan Anda",
+          "content": "Anda mengekalkan hak milik ke atas kandungan yang anda cipta atau muat naik (\"Kandungan Anda\"). Dengan menggunakan Perkhidmatan kami, anda memberikan kami lesen bebas royalti, bukan eksklusif, seluruh dunia untuk menggunakan, menyimpan, memproses, dan memaparkan Kandungan Anda semata-mata untuk menyediakan Perkhidmatan kepada anda."
+        }
+      },
+      "warranties": {
+        "title": "7. Penafian Jaminan",
+        "content": "PERKHIDMATAN DISEDIAKAN \"SEBAGAIMANA ADA\" DAN \"SEBAGAIMANA TERSEDIA\" TANPA JAMINAN APA JUA, SAMADA TERSURAT ATAU TERSIRAT, TERMASUK TETAPI TIDAK TERHAD KEPADA JAMINAN TERSIRAT KESALAHAN, KESESUAIAN UNTUK TUJUAN TERTENTU, GELARAN, DAN TIDAK MELANGGAR HAK."
+      },
+      "liability": {
+        "title": "8. Batasan Liabiliti",
+        "para1": "SEHINGGA KE TINGKAT MAKSIMUM YANG DIBENARKAN OLEH UNDANG-UNDANG, NEBUTRA TIDAK AKAN BERLIABILITI UNTUK KEROSAKAN TAK LANGSUNG, KEJADIAN, KHAS, BERAKIBAT, ATAU HUKUMAN, ATAU KEHILANGAN UNTUNG, DATA, PENGGUNAAN, ATAU NILAI BAIK.",
+        "para2": "DALAM KEADAAN APA JUA, LIABILITI JUMPAH KAMI TIDAK AKAN MELANGGAPI YANG LEBIH BESAR DARIPADA (A) JAMAK YANG ANDA BAYAR KEPADA KAMI DALAM 12 BULAN SEBELUM TUNTUTAN, ATAU (B) $100 USD."
+      },
+      "termination": {
+        "title": "9. Penamatan",
+        "byYou": {
+          "title": "9.1 Oleh Anda",
+          "content": "Anda boleh menamatkan akaun anda pada bila-bila masa melalui tetapan akaun anda. Selepas penamatan, anda akan kehilangan akses kepada Perkhidmatan."
+        },
+        "byUs": {
+          "title": "9.2 Oleh Kami",
+          "intro": "Kami boleh menangguhkan atau menamatkan akaun anda jika anda:",
+          "items": {
+            "0": "Melanggar Terma ini",
+            "1": "Terlibat dalam aktiviti penipuan atau haram",
+            "2": "Gagal membayar yuran yang berkenaan",
+            "3": "Mencipta risiko atau pendedahan undang-undang bagi kami"
+          }
+        }
+      },
+      "disputes": {
+        "title": "10. Penyelesaian Pertikaian",
+        "informal": {
+          "title": "10.1 Penyelesaian Tidak Rasmi",
+          "content": "Sebelum memulakan prosedur rasmi, anda bersetuju untuk menghubungi kami di legal@nebutra.com bagi cuba menyelesaikan pertikaian secara tidak rasmi."
+        },
+        "governingLaw": {
+          "title": "10.2 Undang-Undang Berkuat Kuasa",
+          "content": "Terma ini dikawal oleh undang-undang Negeri Delaware, tanpa mengira prinsip konflik undang-undang."
+        }
+      },
+      "contactUs": {
+        "title": "11. Hubungi Kami",
+        "intro": "Jika anda mempunyai soalan mengenai Terma ini, sila hubungi kami:",
+        "company": "{brandName} Co., Ltd.",
+        "emailLabel": "E-mel",
+        "supportLabel": "Sokongan"
+      },
+      "acknowledgement": "Dengan menggunakan {brandName}, anda mengakui bahawa anda telah membaca, memahami, dan bersetuju untuk terikat dengan Terma Perkhidmatan ini."
+    }
+  },
+  "metadata": {
+    "title": "{brandName} Agent OS | Sistem Operasi Ejen Permulaan",
+    "description": "Sistem Operasi Ejen Permulaan untuk pengasas yang meluaskan operasi ke peringkat global. Asas Next.js sedia pengeluaran dengan seni bina tertadbir, pengesahan, pengebilan, ejen, dan i18n — dibina untuk ejen pengekodan AI dan pasukan serius."
+  },
+  "microLanding": {
+    "architecture": {
+      "badge": "TOPOLOGI SISTEM",
+      "title": "Senibina telus, tiada kotak hitam.",
+      "description": "{productName} direka dengan struktur Turborepo hiper-modular, memberi anda hak milik penuh ke atas keseluruhan kitaran hayat perisian anda.",
+      "database": {
+        "title": "PostgreSQL + Prisma v7",
+        "desc": "ORM berjenis sepenuhnya dengan dasar Keselamatan Tahap Baris (RLS) terbina secara asli."
+      },
+      "auth": {
+        "title": "Clerk Multi-Tenant / Identiti Tersuai",
+        "desc": "Gerbang pengesahan sedia SOC2 yang menyokong pertukaran organisasi B2B dan RBAC."
+      }
+    },
+    "pricing": {
+      "title": "Percuma untuk dibina. Bayar hanya jika anda perlukan kami bertanggungjawab.",
+      "description": "Membina produk komersial di atas {brandName} tidak berkos — tiada yuran, tiada kunci lesen, tiada pendaftaran, tiada copyleft. Peringkat berbayar menjual sokongan, SLA, tanggung rugi dan hak tanda dagangan, bukan kebenaran penggunaan.",
+      "socialProofText": "MIT di npm · FSL-1.1-ALv2 di repositori, bertukar kepada Apache-2.0 selepas dua tahun · penggunaan komersial percuma pada sebarang skala.",
+      "community": {
+        "badge": "KOMUNITI",
+        "price": "Percuma",
+        "period": "selamanya",
+        "desc": "Untuk semua orang. Sebarang saiz pasukan, sebarang hasil. Termasuk penggunaan komersial sumber tertutup, tanpa pendaftaran dan tanpa kewajipan atribusi.",
+        "cta": "npx create-sailor",
+        "f1": "Teras SaaS Next.js 16 lengkap, semua pakej disertakan",
+        "f2": "Penggunaan komersial sumber tertutup pada sebarang saiz pasukan atau hasil",
+        "f3": "Stack penuh: Auth, Pembayaran, Organisasi, API, E-mel, i18n, Kerja latar belakang, Storan dan lain-lain",
+        "f4": "Ciri pemasaran: Blog, halaman pendaratan, SEO, Analytics",
+        "f5": "Issue awam, Discussions dan Discord — sedaya upaya, tiada jaminan maklum balas"
+      },
+      "team": {
+        "badge": "PASUKAN",
+        "price": "$2,000",
+        "period": "tahun",
+        "desc": "Untuk pasukan yang tidak boleh bergantung kepada masa tindak balas komuniti dalam laluan kritikal.",
+        "cta": "Dapatkan sokongan {brandName}",
+        "f1": "Saluran sokongan peribadi (e-mel + Slack atau Discord dikongsi)",
+        "f2": "Maklum balas pertama dijamin dalam dua hari bekerja",
+        "f3": "Triaj pepijat keutamaan, mendahului issue komuniti",
+        "f4": "Bantuan naik taraf dan notis awal tentang perubahan yang memecahkan keserasian",
+        "f5": "Semua dalam Komuniti"
+      },
+      "enterprise": {
+        "badge": "ENTERPRISE",
+        "price": "Dari $30,000",
+        "period": "tahun",
+        "desc": "Untuk organisasi yang bahagian perolehan, guaman atau semakan keselamatannya memerlukan pihak yang menandatangani.",
+        "cta": "Hubungi jualan",
+        "f1": "SLA maklum balas — 4 jam bekerja standard, 1 jam apabila produksi terhenti",
+        "f2": "Tanggung rugi dan komitmen kontrak bagi tampung keselamatan",
+        "f3": "DPA ditandatangani, pakej pematuhan dan akujanji kesinambungan",
+        "f4": "Hak tanda dagangan dan white label, serta pengecualian penggunaan pesaing",
+        "f5": "Cabang sokongan jangka panjang dan kejuruteraan penggunaan persendirian",
+        "f6": "Semua dalam Pasukan"
+      }
+    },
+    "faq": {
+      "title": "Soalan Lazim Harga & Lesen",
+      "description": "Soalan tentang lapisan lesen, bayaran balik, dan hak penggunaan komersial.",
+      "q1": {
+        "q": "Adakah Sailor langganan SaaS bulanan?",
+        "a": "Tidak. Harga ini adalah untuk lesen kod sumber Sailor: Independent adalah percuma, Startup dibayar secara tahunan, dan Enterprise adalah tersuai."
+      },
+      "q2": {
+        "q": "Adakah anda menawarkan bayaran balik?",
+        "a": "Lesen komersial Startup termasuk tingkap bayaran balik 14 hari untuk pembelian awal. Syarat Enterprise ditangani dalam kontrak yang ditandatangani."
+      },
+      "q3": {
+        "q": "Bolehkah saya menggunakan Sailor untuk kerja klien?",
+        "a": "Ya. Lesen komersial membolehkan pasukan anda melancarkan produk klien atau dalaman sumber tertutup dalam skop yang dilesenkan; hak label putih memerlukan kelulusan Enterprise."
+      },
+      "contactNudge": "Masih ada soalan? Bercakap dengan pasukan {brandName} →"
+    },
+    "cta": {
+      "eyebrow": "Mula Sekarang",
+      "title": "Berhenti konfigurasi. Mula membina.",
+      "description": "Inisialisasi senibina SaaS berskala secara tempatan dengan CLI {brandName}.",
+      "button": "Laksanakan Seni Bina",
+      "license": "Sumber terbuka di bawah lesen AGPL-3.0. Kad kredit tidak diperlukan."
+    },
+    "capability": {
+      "badge": "Keupayaan Perusahaan",
+      "title": "Teras berjenis penuh dan boleh dikembangkan.",
+      "multiTenant": {
+        "title": "Keselamatan Tahap Baris Asli",
+        "desc": "Setiap pertanyaan pangkalan data dikawal ketat mengikut konteks penyewa semasa.",
+        "cta": "Baca falsafah pangkalan data"
+      },
+      "aiGateway": {
+        "title": "Gerbang AI Universal",
+        "desc": "Arahkan arahan kepada OpenAI, Anthropic, atau model sumber terbuka dengan lancar.",
+        "cta": "Teroka pemproses SDK AI"
+      },
+      "rbac": {
+        "title": "Kawalan Akses Halus",
+        "desc": "Tentukan peranan pentadbir, ahli, dan penonton dengan struktur dasar terbina dalam.",
+        "cta": "Lihat dokumentasi RBAC"
+      },
+      "billing": {
+        "title": "Infrastruktur Bilan Pelbagai Penyedia",
+        "desc": "Penggunaan bermeter, webhook langganan, dan portal pelanggan kendiri.",
+        "cta": "Lihat seni bina bilan"
+      }
+    },
+    "productDemo": {
+      "badge": "Demo Interaktif",
+      "title": "The local loop, end to end.",
+      "description": "Rasai antara muka baris arahan, terowong webhook Stripe, dan peruntukan pangkalan data pelbagai penyewa tempatan.",
+      "analytics": {
+        "label": "Telemetri Langsung",
+        "desc": "Salurkan data penggunaan pengeluaran terus ke terminal anda."
+      },
+      "billing": {
+        "label": "Peristiwa Bil",
+        "desc": "Saksikan webhook Stripe dilaksanakan melalui terowong tempatan."
+      },
+      "workspaces": {
+        "label": "Inisiasi Ruang Kerja",
+        "desc": "Sediakan skema PostgreSQL B2B terpencil serta-merta."
+      }
+    },
+    "workflow": {
+      "badge": "Kelajuan",
+      "title": "Dari sifar ke pengeluaran dalam masa rekod.",
+      "step1": {
+        "title": "1. Klon",
+        "desc": "Klon repositori tunggal {brandName} serta-merta dan jalankan pnpm install."
+      },
+      "step2": {
+        "title": "2. Konfigurasi",
+        "desc": "Sediakan Prisma, Clerk, dan Stripe melalui CLI interaktif dalam beberapa minit."
+      },
+      "step3": {
+        "title": "3. Bina",
+        "desc": "Fokus pada logik produk dan UI manakala asas platform sudah disambung."
+      },
+      "step4": {
+        "title": "4. Terbitkan",
+        "desc": "Tolak ke Vercel dan AWS untuk pengedaran global serta-merta."
+      },
+      "speedometer": {
+        "number": "10",
+        "unit": "min",
+        "subtitle": "MASA KE PASARAN",
+        "comparison": "Langkau beberapa bulan kerja platform.",
+        "phases": {
+          "scaffold": "Inisiasi",
+          "wire": "Teras",
+          "ship": "Terbit",
+          "scale": "Skala",
+          "ongoing": "∞"
+        },
+        "cta": "Mula masa anda"
+      },
+      "presetHint": {
+        "badge": "Sistem Praset",
+        "message": "Satu konfigurasi. Setiap ciri. Pilih praset anda dan terbit.",
+        "detail": "Konfigurasi sekali, jana semuanya — bil, auth, AI, i18n — daripada satu konfigurasi praset.",
+        "readyStatus": "Sistem praset sedia"
+      }
+    }
+  },
+  "featuresPage": {
+    "hero": {
+      "badge": "Keupayaan Platform",
+      "headlinePrefix": "Semua yang anda perlukan untuk ",
+      "headlineHighlight": "melancarkan dengan yakin.",
+      "description": "{brandName} ialah platform SaaS penuh—AI, bil, pelbagai penyewa, pemerhatian, dan keselamatan terbina dari hari pertama. Berhenti membina semula lapisan platform."
+    },
+    "sections": {
+      "exploreFeature": "Teroka ciri",
+      "ai_category": "AI & Kecerdasan",
+      "ai_f1_title": "Penyiapan sembang pelbagai model",
+      "ai_f1_desc": "Arahkan permintaan ke Anthropic, OpenAI, Google, atau model halus sendiri anda. Penstriman, penglihatan, dan panggilan fungsi disokong terus.",
+      "ai_f2_title": "Penyematan semantik",
+      "ai_f2_desc": "Jana dan simpan penyematan vektor dengan pgvector. Kuasakan carian semantik, paip RAG, dan enjin cadangan.",
+      "ai_f3_title": "Pengukuran penggunaan AI",
+      "ai_f3_desc": "Kuota setiap pelan dengan penjejakan penggunaan — ukur token AI, panggilan API, dan storan terhadap agregat masa nyata berasaskan ClickHouse.",
+      "multi_category": "Platform Pelbagai Penyewa",
+      "multi_f1_title": "Pengecualian peringkat organisasi",
+      "multi_f1_desc": "Keselamatan peringkat baris dalam Postgres memastikan penyewa tidak pernah boleh mengakses data antara satu sama lain — dikuatkuasakan pada lapisan pangkalan data, bukan sekadar aplikasi.",
+      "multi_f2_title": "Pengesahan pelbagai penyedia (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_desc": "OAuth pelbagai penyedia (Google, GitHub, dll.) plus e-mel/kata laluan dan pautan ajaib — tukar antara Clerk, Better Auth, NextAuth, atau Supabase Auth melalui satu pemboleh ubah env.",
+      "multi_f3_title": "Pembekalan penyewa automatik",
+      "multi_f3_desc": "Apabila organisasi baharu mendaftar melalui Clerk, kami menjana kunci API pertama mereka secara automatik dan menghantar e-mel selamat datang bertanda dagang — sifar langkah manual.",
+      "dx_category": "Pengalaman Pembangun",
+      "dx_f1_title": "Kunci API yang dipaparkan",
+      "dx_f1_desc": "Kunci yang dipaparkan SHA-256 dengan paparan awalan (nbtr_live_…). Ditunjukkan dalam teks biasa sekali sahaja semasa penciptaan — keselamatan tanpa geseran.",
+      "dx_f2_title": "Perantara idempotensi",
+      "dx_f2_desc": "Hantar header Idempotency-Key dan mana-mana permintaan POST menjadi selamat untuk cuba semula. Disokong oleh Redis, cache 24 jam, mematuhi draf IETF.",
+      "dx_f3_title": "API Multi-Protokol (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI untuk API awam, oRPC untuk panggilan frontend yang selamat jenis, tRPC untuk keserasian stack T3. Semua protokol berkongsi kontrak Zod dan tumpukan perantara yang sama. Aktifkan mengikut protokol melalui konfigurasi pratetap.",
+      "billing_category": "Penagihan & Monetisasi",
+      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
+      "billing_f1_desc": "Pilih penyedia pembayaran anda: Stripe untuk perusahaan global, LemonSqueezy untuk pembangun indie, Polar untuk OSS, atau Alipay/WeChat Pay untuk pasaran China. Semakan satu klik dan portal penagihan sendiri.",
+      "billing_f2_title": "Penguatkuasaan kuota berasaskan penggunaan",
+      "billing_f2_desc": "Pengira Redis masa nyata menjejak panggilan API dan penggunaan token setiap penyewa. Permintaan dikawal di gerbang apabila had dicapai.",
+      "billing_f3_title": "Selaras kitaran hayat webhook",
+      "billing_f3_desc": "Peristiwa langganan Stripe secara automatik mengemas kini pelan organisasi dalam pangkalan data anda melalui Inngest — tiada tugas cron, tiada pengimbasan.",
+      "rel_category": "Kebolehpercayaan",
+      "rel_f1_title": "Pemecah litar + cuba semula",
+      "rel_f1_desc": "Gerbang dan perkhidmatan AI menggunakan pemecah litar CLOSED/OPEN/HALF_OPEN dengan bayaran balik eksponen dan jitter — tiada kegagalan berantai.",
+      "rel_f2_title": "Barisan surat mati",
+      "rel_f2_desc": "Penangan peristiwa yang menghabiskan 3 percubaan cuba semula mendarat di DLQ. Main semula secara individu dari API pentadbir tanpa penyebaran semula.",
+      "rel_f3_title": "Amaran kadar pembakaran SLO",
+      "rel_f3_desc": "Amaran gaya Google SRE multi-jendela diaktifkan pada kadar pembakaran 14.4×, 6×, dan 3× sebelum bajet ralat anda habis.",
+      "sec_category": "Keselamatan",
+      "sec_f1_title": "Pengepala CSP berasaskan nonce",
+      "sec_f1_desc": "Dasar Keselamatan Kandungan strict-dynamic dengan nonce per-req yang dijana dalam middleware Clerk — tiada unsafe-inline di mana-mana.",
+      "sec_f2_title": "ModSecurity WAF",
+      "sec_f2_desc": "Set Peraturan Teras OWASP dalam mod DetectionOnly pada setiap ingress. Had kadar pada 30 RPS dengan toleransi burst melalui anotasi nginx.",
+      "sec_f3_title": "SBOM + SLSA provenance",
+      "sec_f3_desc": "Setiap pelepasan menjana senarai bahan perisian CycloneDX dan pengesahan provenance SLSA, dimuat naik ke GitHub Release.",
+      "obs_category": "Keterlihatan",
+      "obs_f1_title": "Penjejakan OpenTelemetry",
+      "obs_f1_desc": "Jejak teragih mengalir dari Next.js → Hono → perkhidmatan mikro Python melalui OTLP. Dieksport ke Jaeger (dev) dan Grafana Tempo (prod).",
+      "obs_f2_title": "Papan pemuka Grafana",
+      "obs_f2_desc": "Gambaran keseluruhan platform berbilang panel: ketersediaan SLO, bajet ralat yang tinggal, tepu HPA, mulakan semula pod, dan throttling CPU.",
+      "obs_f3_title": "Penjejakan ralat Sentry",
+      "obs_f3_desc": "Ralat sisi pelayan dan sisi klien ditangkap dengan konteks penyewa, ID permintaan, dan ID jejak untuk korelasi merentas sistem.",
+      "data_category": "Data & Analitik",
+      "data_f1_title": "Gudang OLAP ClickHouse",
+      "data_f1_desc": "Peristiwa mendarat di ClickHouse untuk pertanyaan analitik pantas. dbt mengubah peristiwa mentah kepada metrik pertumbuhan lapisan emas yang kelihatan dalam papan pemuka.",
+      "data_f2_title": "Analitik corong",
+      "data_f2_desc": "Jejak pendaftaran → pengaktifan → penukaran dengan atribusi tahap kohort. Hasil per pengguna aktif dikira dari lapisan emas.",
+      "data_f3_title": "Kafka / pengambilan peristiwa",
+      "data_f3_desc": "Pengambilan acara berkapasiti tinggi melalui Inngest ke ClickHouse bronze, dengan dedup ingatan dan pengesahan skema di tepi gateway.",
+      "infra_category": "Infrastruktur",
+      "infra_f1_title": "GitOps dengan ArgoCD",
+      "infra_f1_desc": "Perubahan cawangan utama diselaraskan secara automatik ke kluster. Pemulihan sendiri memulihkan suntingan kubectl manual. Tetingkap selaras menguatkuasakan jam penyebaran selamat.",
+      "infra_f2_title": "Penyambungan kolam PgBouncer",
+      "infra_f2_desc": "PgBouncer mod transaksi di hadapan Supabase mengendalikan 1,000 sambungan aplikasi pada 20 sambungan Postgres. HA dengan 2 replika.",
+      "infra_f3_title": "Autoscaling mendatar + menegak",
+      "infra_f3_desc": "HPA berskala mengikut CPU/ingatan. VPA berjalan dalam mod Off memberikan cadangan saiz yang betul. Metrik tersuai KEDA dirancang untuk v2."
+    }
+  },
+  "comingSoon": {
+    "badge": "🚧 Dalam Pembinaan",
+    "description": {
+      "ideas": "Kami sedang menyiapkan pengalaman yang menakjubkan untuk bahagian ini. Ia akan dilancarkan bersama kemas kini paip seni bina utama seterusnya.",
+      "opc": "Gambaran keseluruhan platform yang lebih mendalam sedang dalam proses. Ikuti log perubahan dan peta jalan untuk pelancaran akan datang.",
+      "roadmap": "Dari asas infrastruktur ke skala perusahaan — fasa produk, tonggak versi, dan visi pembiayaan kami."
+    },
+    "returnBtn": "Kembali ke Hub"
+  },
+  "blogShowcase": {
+    "badge": "DARI BLOG",
+    "title": "Wawasan Kejuruteraan",
+    "subtitle": "Terokai lebih dalam tentang seni bina SaaS, infrastruktur AI, dan kejuruteraan pengeluaran.",
+    "readMore": "Baca lanjut"
+  },
+  "useCases": {
+    "badge": "SENARIO BERKAYAT",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
+    "tabs": {
+      "opc": "Operasi Agentic",
+      "ip": "Matriks IP Peribadi",
+      "multimodal": "SaaS AI Multimodal",
+      "enterprise": "Enterprise Moden (CN)",
+      "export": "Eksport Perisian Global",
+      "design": "Enjin Sistem Reka Bentuk",
+      "edam": "Aset Digital Enterprise"
+    },
+    "content": {
+      "opc": {
+        "title": "Hab Operasi AI-Native",
+        "desc": "Laksanakan aliran kerja agen, alat dalaman, dan permukaan integrasi pada satu asas platform yang dikawal. Sambungan berasaskan registri, portal operator, dan corak masa jalan boleh guna kekal selaras apabila sistem berkembang.",
+        "features": {
+          "f1": "Registri Alat & Permukaan Integrasi",
+          "f2": "Portal Operator & Konsol Dalaman"
+        }
+      },
+      "ip": {
+        "title": "Matriks Portfolio & Pertumbuhan IP Peribadi",
+        "desc": "Bina kehadiran pengasas kelas dunia dengan blog MDX, portfolio, dan halaman profil berprestasi tinggi. Newsletter terbina dalam, analitik, dan SEO memastikan jenama peribadi anda berkembang.",
+        "features": {
+          "f1": "Blog MDX + Enjin Newsletter",
+          "f2": "Dioptimumkan SEO & Graf Sosial"
+        }
+      },
+      "multimodal": {
+        "title": "SaaS AI Multimodal Inovatif",
+        "desc": "Lancarkan produk SaaS Orkestrasi Multi-Agen, Chatbot, Teks-ke-Imej, Imej-ke-Teks, dan Teks-ke-Video dengan UI streaming terunggul, laluan model pintar, dan metering penggunaan.",
+        "features": {
+          "f1": "Antaramuka Aliran Multi-Ejen",
+          "f2": "Router Model + Pengukuran Penggunaan"
+        }
+      },
+      "enterprise": {
+        "title": "Laman Web Perusahaan Moden (CN)",
+        "desc": "Direka khas untuk senario perniagaan China — CDN domestik ultra-cepat, integrasi ekosistem WeChat, reka bentuk responsif utamakan mudah alih, dan pematuhan tempatan sedia ada.",
+        "features": {
+          "f1": "CDN Tempatan + Pematuhan",
+          "f2": "Sedia untuk Ekosistem WeChat"
+        }
+      },
+      "export": {
+        "title": "Laman Pendaratan Eksport Perisian Global",
+        "desc": "Direka khas untuk SaaS yang meluaskan ke pasaran global. Pembayaran Stripe multi-mata wang, auto-routing i18n next-intl merentasi 7 bahasa, pematuhan GDPR/CCPA, dan kandungan berasaskan geo.",
+        "features": {
+          "f1": "Pembayaran Global Multi-Mata Wang",
+          "f2": "7 Bahasa + Sedia untuk GDPR"
+        }
+      },
+      "design": {
+        "title": "Sistem Reka Bentuk & Perpustakaan Komponen Terkemuka",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "features": {
+          "f1": "Tadbir Urus Token 4 Lapisan",
+          "f2": "Seven design languages + Storybook"
+        }
+      },
+      "edam": {
+        "title": "Pengurusan Aset Digital Perusahaan",
+        "desc": "Tasik data terstruktur dan topologi papan pemuka kompleks yang menggunakan senibina PostgreSQL berskala dan RBAC terperinci.",
+        "features": {
+          "f1": "Keselamatan Tahap Baris",
+          "f2": "Pertanyaan Kompleks",
+          "f3": "Pengurusan Peranan"
+        }
+      }
+    }
+  },
+  "designSystem": {
+    "badge": "SISTEM REKA BENTUK",
+    "headline": "4 lapisan pemerintahan reka bentuk.",
+    "subheadline": "Daripada primitif jenama hingga token masa nyata, enjin multi-tema hingga komponen yang diurus — bukan sekadar shadcn dengan Tailwind.",
+    "flowBrand": "Jenama",
+    "flowBrandDesc": "Primitif warna, gradien, bahasa gerakan",
+    "flowTokens": "Token",
+    "flowTokensDesc": "Pemboleh ubah CSS, skala 12 langkah, mod gelap",
+    "flowTheme": "Tema",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
+    "flowUI": "UI",
+    "flowUIDesc": "Komponen, Storybook, Chromatic",
+    "card1Title": "Skala Warna 12 Langkah",
+    "card1Desc": "Skala semantik selaras Geist: latar belakang (1-2), keadaan (3-5), sempadan (6-8), isian (9-10), teks (11-12).",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
+    "card3Title": "Regresi Visual",
+    "card3Desc": "Chromatic menangkap setiap perubahan piksel. Storybook mendokumentasikan setiap komponen. Ujian seni bina menguatkuasakan liputan cerita.",
+    "card4Title": "Pemerintahan Token",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
+    "card5Title": "Dokumentasi Interaktif",
+    "card5Desc": "Laman dokumen reka bentuk lengkap berkuasa Fumadocs dengan dokumen API komponen dwibahasa (EN/ZH), galeri token, panduan corak susun atur, dan contoh kod langsung.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
+  },
+  "notFound": {
+    "title": "Laman Tidak Dijumpai",
+    "desc": "Pautan ini mungkin sudah lapuk atau laman telah dipindahkan.",
+    "home": "Kembali ke {brandName}",
+    "docs": "Buka dokumen"
+  },
+  "ui": {
+    "search": {
+      "placeholder": "Cari keluaran..."
+    },
+    "nav": {
+      "toggleMenu": "Togol menu"
+    },
+    "actions": {
+      "showFullRelease": "Paparkan keluaran penuh",
+      "copyLinkToRelease": "Salin pautan ke keluaran",
+      "copyLink": "Salin pautan",
+      "openInNewTab": "Buka dalam tab baru"
+    },
+    "status": {
+      "comingSoon": "Akan datang"
+    }
+  },
+  "licensing": {
+    "hero": {
+      "title": "Percuma untuk <hl>Membina Atas</hl>",
+      "description": "{brandName}-Sailor percuma untuk digunakan secara komersial — MIT di npm, FSL-1.1-ALv2 di repositori, bertukar kepada Apache-2.0 selepas dua tahun. Lapisan berbayar menjual sokongan dan komitmen kontrak, bukan kebenaran."
+    },
+    "plans": {
+      "community": {
+        "badge": "Sentiasa Percuma",
+        "title": "Komuniti",
+        "subtitle": "Semua Orang",
+        "description": "Saiz pasukan apa pun, pendapatan apa pun. Produk komersial sumber tertutup termasuk.",
+        "features": {
+          "fullSource": "Kod sumber penuh, semua pakej",
+          "closedSourceOk": "Penggunaan komersial sumber tertutup — tiada copyleft",
+          "noAttribution": "Tiada pendaftaran, tiada atribusi diperlukan",
+          "communitySupport": "Sokongan komuniti — usaha terbaik"
+        },
+        "cta": "Lihat di GitHub"
+      },
+      "team": {
+        "badge": "Dari {price}/thn",
+        "title": "Pasukan",
+        "subtitle": "Langganan sokongan",
+        "description": "Untuk pasukan yang tidak boleh bergantung pada masa tindak balas komuniti dalam laluan kritikal mereka.",
+        "features": {
+          "privateChannel": "Saluran sokongan peribadi",
+          "firstResponse": "Tindak balas pertama dalam dua hari bekerja, dijamin",
+          "priorityTriage": "Triase pepijat keutamaan",
+          "upgradeHelp": "Bantuan naik taraf dan notis perubahan pemecah"
+        },
+        "cta": "Dapatkan sokongan"
+      },
+      "enterprise": {
+        "badge": "Dari $30,000/thn",
+        "title": "Enterprise",
+        "subtitle": "Sedia untuk pembelian",
+        "description": "Untuk organisasi yang memerlukan pihak lawan yang menandatangani semasa semakan undang-undang, keselamatan, atau pembelian.",
+        "features": {
+          "sla": "SLA respons — 4 jam perniagaan, 1 jam jika pengeluaran tergendala",
+          "indemnity": "Jaminan pampasan dan komitmen tampalan keselamatan",
+          "compliance": "DPA bertandatangan, pakej pematuhan, jaminan kesinambungan",
+          "trademark": "Hak tanda dagangan dan label putih"
+        },
+        "cta": "Hubungi jualan"
+      }
+    },
+    "faq": {
+      "title": "Soalan Lazim",
+      "description": "Versi ringkas: menggunakannya percuma. Bayaran diperlukan apabila anda memerlukan kami bertanggungjawab secara kontrak.",
+      "items": {
+        "whyFsl": {
+          "q": "Mengapa FSL berbanding MIT atau AGPL?",
+          "a": "FSL membenarkan setiap penggunaan kecuali menjual pengganti Sailor itu sendiri, dan setiap versi menjadi Apache-2.0 dua tahun selepas pelancaran — satu pemberian yang dibuat secara tidak boleh ditarik balik terlebih dahulu. Ia lebih mudah lulus semakan undang-undang korporat berbanding AGPL."
+        },
+        "reallyFree": {
+          "q": "Adakah penggunaan komersial benar-benar percuma?",
+          "a": "Ya. Tiada yuran, tiada kunci lesen, tiada pendaftaran, tiada ambang pendapatan atau bilangan kakitangan, tiada atribusi. Bina produk sumber tertutup dan jualkannya."
+        },
+        "competingUse": {
+          "q": "Apakah yang dikira sebagai penggunaan bersaing?",
+          "a": "Menawarkan Sailor itu sendiri — perkhidmatan Sailor yang dihoskan, atau platform asas bersaing yang dikemas semula. Membina SaaS menegak, alat dalaman, atau projek klien di atas Sailor bukanlah penggunaan bersaing. Jika model anda memerlukannya, perjanjian Enterprise boleh termasuk pembebasan bertulis."
+        },
+        "upgrade": {
+          "q": "Apakah yang sebenarnya dibeli oleh lapisan berbayar?",
+          "a": "Komitmen sokongan, SLA respons, pampasan, dokumen pematuhan, dan hak tanda dagangan. Bukan kebenaran untuk menggunakan perisian — itu sudah menjadi milik anda."
+        },
+        "contributions": {
+          "q": "Bagaimana dengan sumbangan sumber terbuka?",
+          "a": "Semua sumbangan memerlukan CLA. Lihat CONTRIBUTING.md."
+        }
+      }
+    },
+    "meta": {
+      "title": "Lesen — {brandName}",
+      "description": "Percuma untuk kegunaan komersial. MIT di npm, FSL-1.1-ALv2 di repositori, bertukar kepada Apache-2.0."
+    }
+  },
+  "licenseWizard": {
+    "tiers": {
+      "individualFree": "Lesen Percuma Individu",
+      "opcFree": "Lesen Syarikat Pemilik Tunggal",
+      "startupCommercial": "Lesen Komersial Startup",
+      "enterprise": "Lesen Enterprise"
+    },
+    "referralSource": {
+      "selectPlaceholder": "Pilih satu pilihan...",
+      "productHunt": "Product Hunt"
+    }
+  },
+  "changelogMeta": {
+    "title": "Log Perubahan — {brandName}",
+    "description": "Setiap keluaran, dihantar dengan perhatian terhadap butiran yang teliti.",
+    "versionTitleSuffix": "Log Perubahan {brandName}"
+  },
+  "roadmapMeta": {
+    "title": "Peta Jalan Platform — {brandName}",
+    "description": "Peta jalan bagi garis asas platform yang diuruskan {brandName}, masa laksana Harness, dan laluan naik taraf."
+  },
+  "blogMeta": {
+    "title": "Blog — {brandName}",
+    "description": "Wawasan kejuruteraan, kemas kini produk, dan amalan terbaik SaaS daripada pasukan {brandName}."
+  },
+  "getLicenseMeta": {
+    "title": "Dapatkan Lesen Anda — {brandName}",
+    "description": "Dapatkan lesen {brandName} dan akses platform anda dalam 2 minit."
+  },
+  "landing": {
+    "faq": {
+      "badge": "FAQ",
+      "title": "Soalan, dijawab terus",
+      "subtitle": "Semua yang perlu anda tahu sebelum melancarkan.",
+      "items": {
+        "what-is-sailor": {
+          "question": "Apakah {productName} sebenarnya?",
+          "answer": "Sailor ialah asas SaaS Next.js + Tailwind v4 yang beropini dengan auth, billing, multi-tenancy, AI, queues, search, dan email yang sudah disambungkan. Anda klonnya, konfigurasikan penyedia, dan lancarkan — biasanya dalam masa seminggu."
+        },
+        "who-is-it-for": {
+          "question": "Untuk siapa Sailor dibina?",
+          "answer": "Pencipta dan jurutera produk yang mahu menghabiskan masa mereka pada pembeza — bukan membina semula paip auth/billing/tenancy yang sama untuk kali kelima."
+        },
+        "free-or-paid": {
+          "question": "Adakah ia percuma atau berbayar?",
+          "answer": "Sumber penuh dilancarkan di bawah AGPL-3.0 — percuma untuk projek peribadi, alat dalaman, dan kerja sumber terbuka serasi AGPL. Lesen komersial membuka hak untuk melancarkan Sailor dalam SaaS proprietari tertutup. Setiap pelan termasuk set ciri lengkap (auth, billing, multi-tenancy, AI, audit); lapisan berbeza dalam terma lesen dan SLA sokongan, bukan dalam ciri."
+        },
+        "china-friendly": {
+          "question": "Adakah ia berfungsi di China?",
+          "answer": "Ya. Kami melancarkan konfigurasi infra selari (CDN serasi Aliyun, domain mesra ICP, Penpot pilihan menggantikan Figma) supaya kod asas yang sama boleh dilancarkan dengan kemas di dalam Great Firewall."
+        },
+        "deployment": {
+          "question": "Di mana saya boleh melancarkannya?",
+          "answer": "Di mana-mana Node 22+ berjalan. Laman pemasaran dilancarkan ke Vercel; papan pemuka, gateway, dan perkhidmatan Python berjalan pada Docker / PM2 (kami menjalankannya pada Aliyun ECS hari ini, dengan manifest Kubernetes penuh di bawah infra/iac/k8s/ untuk kluster). Pelanggan perusahaan juga melancarkan di dalam VPC mereka sendiri."
+        },
+        "security": {
+          "question": "Bagaimana keselamatan ditangani?",
+          "answer": "Enkripsi sampul lapisan aplikasi untuk rahsia (@nebutra/vault), Postgres RLS untuk pengasingan penyewa, RBAC/ABAC melalui CASL atau OpenFGA (@nebutra/permissions), token antara perkhidmatan bertandatangan HMAC, webhook keluaran bertandatangan, dan paip audit selari SOC 2 (@nebutra/audit) termasuk dalam setiap pelan. Pro dan Enterprise menambah sokongan pengesahan SOC 2, tindak balas insiden khusus, dan tempoh simpanan log audit yang lebih lama."
+        },
+        "support": {
+          "question": "Apakah sokongan yang saya dapat?",
+          "answer": "Pelanggan percuma mendapat Discord komuniti + GitHub Issues. Pro menambah e-mel keutamaan dengan SLA respons 1 hari bekerja. Enterprise mendapat saluran Slack khusus dan jurutera onboarding."
+        },
+        "byo-provider": {
+          "question": "Bolehkah saya membawa penyedia saya sendiri?",
+          "answer": "Ya. Setiap integrasi (auth, queue, search, email, pembayaran, storan, billing) adalah agnostik penyedia. Kilang dalam setiap pakej memilih penyesuai yang betul daripada satu pemboleh ubah env — tukar Clerk kepada Better Auth, NextAuth, atau Supabase Auth, QStash kepada BullMQ, Resend kepada SES, Stripe kepada Polar / LemonSqueezy / ChinaPay — tanpa menyentuh kod aplikasi."
+        },
+        "tech-stack": {
+          "question": "Apakah tumpukan teknologi?",
+          "answer": "Next.js 16 (App Router) di atas React 19, TypeScript 5.9, Tailwind v4, Prisma 7 di atas Postgres (dengan pgvector + RLS), Hono untuk gateway BFF, FastAPI untuk perkhidmatan ML/bertanggung, dan perpustakaan komponen terpilih di atas Radix, primitif UI {brandName}, dan lapisan Motion bersama. Ciri AI melalui Vercel AI SDK dengan kebolehpindahan penyedia (OpenAI / OpenRouter / SiliconFlow / Azure / tempatan)."
+        },
+        "license": {
+          "question": "Apakah lesen?",
+          "answer": "AGPL-3.0 dengan Pengecualian Komersial. Percuma untuk kegunaan peribadi, alat dalaman, dan OSS serasi AGPL. Lesen komersial berbayar membuka hak untuk menghantar Sailor sebagaimana adanya dalam SaaS proprietari. Sumber penuh disertakan dalam setiap pelan."
+        },
+        "paid-updates": {
+          "question": "Adakah saya perlu membayar untuk kemas kini?",
+          "answer": "Tidak. Kemas kini sumber disertakan dengan setiap lesen komersial — tarik dari main bila-bila masa anda mahu dan rebas fork anda. Lapisan berbayar ialah hak untuk menggunakan Sailor dalam pengeluaran komersial, bukan hak untuk menerima kod. Setiap keluaran kecil menghantar CHANGELOG dan panduan naik taraf untuk sebarang perubahan pemecah."
+        },
+        "why-turborepo": {
+          "question": "Mengapa Turborepo berbanding aplikasi Next.js standard?",
+          "answer": "Sailor ialah 10 aplikasi + 104 pakej bersama di bawah packages/*/* + 4 lorong backend (gateway Hono, FastAPI/Python, Go, Rust) — jauh melampaui titik di mana aplikasi mega Next.js tunggal kekal boleh diselenggara. Turborepo memberi kami pembinaan terjejas-sahaja, cache jauh telus, dan sumber kebenaran tunggal untuk token reka bentuk bersama, auth, bil, dan observability — tanpa memaksa setiap pasukan ke dalam proses Next.js yang sama."
+        },
+        "multi-tenancy": {
+          "question": "Bagaimana multi-tenancy ditangani?",
+          "answer": "Dua lapisan. Konteks tenant berskala permintaan melalui @nebutra/tenant (AsyncLocalStorage menyebarkan org aktif melalui setiap panggilan pelayan, termasuk pertanyaan DB dan webhook keluar), dan pengasingan dikuatkuasakan pangkalan data melalui dasar Postgres Row-Level Security (infra/data/database/policies/rls.sql) terikat kepada app.current_tenant_id sesi tempatan. Sambungan peranan perkhidmatan memintas RLS hanya di dalam perkhidmatan dalaman dipercayai; semua laluan berhadapan pengguna melalui klien berskala tenant."
+        },
+        "swap-clerk": {
+          "question": "Bolehkah saya menukar Clerk dengan penyedia auth lain?",
+          "answer": "Ya. @nebutra/auth menghantar penyesuai kelas pertama untuk Clerk, Better Auth, NextAuth (Auth.js v5), dan Supabase Auth. Tukar melalui pembolehubah env AUTH_PROVIDER atau pilih pada masa perancah dengan create-sailor --auth=... — permukaan pelayan, React, dan middleware kekal sama tanpa mengira penyedia. Menambah penyesuai kelima bermaksud melaksanakan satu antara muka (~80 LOC); tiada apa-apa dalam kod sekeliling yang berpasangan dengan penyedia khusus."
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "Disukai oleh pembina",
+      "title": "Apa yang pengasas katakan selepas menghantar dengan Sailor",
+      "subtitle": "Kisah pelanggan dari kohort beta kami akan tiba tidak lama lagi — jadi antara yang pertama."
+    },
+    "comparison": {
+      "badge": "Bandingkan peringkat",
+      "title": "Semuanya percuma. Pilih tahap komitmen yang anda perlukan.",
+      "subtitle": "Setiap peringkat menyertakan kod sumber penuh dan membenarkan penggunaan komersial sumber tertutup tanpa kos. Perbezaannya ialah sokongan, komitmen kontrak dan hak tanda dagangan.",
+      "plan": {
+        "community": "Komuniti",
+        "team": "Pasukan",
+        "enterprise": "Enterprise"
+      },
+      "feature": {
+        "license": {
+          "label": "Lesen",
+          "type": "Lesen",
+          "commercial-use": "Penggunaan komersial sumber tertutup",
+          "registration": "Pendaftaran",
+          "trademark": "Hak tanda dagangan"
+        },
+        "source": {
+          "label": "Kod Sumber",
+          "full-source": "Kod sumber penuh",
+          "all-packages": "Semua pakej dan modul",
+          "update-window": "Kemas kini"
+        },
+        "support": {
+          "label": "Sokongan",
+          "channel": "Saluran sokongan",
+          "first-response": "Maklum balas pertama dijamin",
+          "security-patch": "Komitmen tampung keselamatan"
+        },
+        "procurement": {
+          "label": "Perolehan",
+          "indemnification": "Tanggung rugi",
+          "dpa": "DPA ditandatangani dan pakej pematuhan",
+          "continuity": "Akujanji kesinambungan"
+        }
+      },
+      "ariaTable": "Perbandingan peringkat dan ciri",
+      "value": {
+        "included": "Termasuk",
+        "notIncluded": "Tidak termasuk",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Tidak perlu",
+        "whiteLabelRights": "Hak white label",
+        "unlimited": "Tanpa had",
+        "unlimitedPlusNotice": "Tanpa had + notis awal perubahan yang memecahkan keserasian",
+        "unlimitedPlusLts": "Tanpa had + cabang sokongan jangka panjang",
+        "publicChannels": "Issue awam dan Discord",
+        "privateChannel": "Saluran peribadi",
+        "namedContact": "Kenalan khusus",
+        "twoBusinessDays": "2 hari bekerja",
+        "fourBusinessHours": "4 jam bekerja",
+        "bestEffort": "Sedaya upaya",
+        "contractual": "Kontraktual"
+      }
+    },
+    "socialProof": {
+      "title": "Dibina di atas stack yang boleh dipercayai",
+      "logosLabel": "Rakan integrasi",
+      "metrics": {
+        "developers": {
+          "value": "47+",
+          "label": "Penyedia AI disokong"
+        },
+        "projects": {
+          "value": "104",
+          "label": "pakej monorepo"
+        },
+        "uptime": {
+          "value": "7",
+          "label": "lokasi i18n terus pakai"
+        }
+      }
+    }
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "Rekod ICP",
+      "publicSecurity": "Keselamatan awam"
+    }
+  },
+  "icpFooter": {
+    "recordNumber": "Rekod ICP",
+    "publicSecurity": "Rekod keselamatan awam"
+  },
+  "MarketLocalePicker": {
+    "title": "Wilayah dan bahasa",
+    "description": "Pilih wilayah dan bahasa untuk laman pemasaran.",
+    "triggerAria": "Pilih wilayah dan bahasa",
+    "searchPlaceholder": "Cari wilayah…",
+    "plannedHint": "Antaramuka akan kembali ke bahasa Inggeris sehingga bahasa ini dilancarkan",
+    "noResults": "Tiada wilayah sepadan",
+    "menuAria": "Wilayah dan bahasa"
+  }
+}

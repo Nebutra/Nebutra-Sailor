@@ -1,0 +1,164 @@
+/**
+ * Brand carrier skin: Vanta (vanta) v1.0.0
+ * darkDefault=false dualMode=false button=solid
+ * fonts=0 mode=global
+ * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
+ */
+
+:root,
+html[data-brand="vanta"] {
+  /* ── Color roles (carrier) ── */
+  --role-canvas: 220 23% 97%;
+  --role-canvas-fg: 240 17% 11%;
+  --role-surface: 0 0% 100%;
+  --role-surface-fg: 240 17% 11%;
+  --role-action: 268 95% 39%;
+  --role-action-fg: 0 0% 100%;
+  --role-quiet: 250 100% 92%;
+  --role-quiet-fg: 272 100% 14%;
+  --role-muted: 240 20% 93%;
+  --role-muted-fg: 238 11% 48%;
+  --role-border: 240 17% 11%;
+  --role-input: 240 17% 11%;
+  --role-ring: 268 95% 39%;
+  --role-brand: 272 100% 14%;
+  --role-brand-fg: 0 0% 100%;
+  --brand-mark: 272 100% 14%;
+  --brand-mark-foreground: 0 0% 100%;
+
+  /* ── shadcn bridge (primary = action CTA) ── */
+  --background: 220 23% 97%;
+  --foreground: 240 17% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 17% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 17% 11%;
+  --primary: 268 95% 39%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 250 100% 92%;
+  --secondary-foreground: 272 100% 14%;
+  --muted: 240 20% 93%;
+  --muted-foreground: 238 11% 48%;
+  --accent: 272 100% 14%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 240 17% 11%;
+  --input: 240 17% 11%;
+  --ring: 268 95% 39%;
+  --warning: 44 100% 53%;
+  --warning-foreground: 240 17% 11%;
+  --info: 270 63% 56%;
+  --info-foreground: 0 0% 100%;
+  --sidebar: 0 0% 100%;
+  --sidebar-foreground: 240 17% 11%;
+  --sidebar-primary: 268 95% 39%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 272 100% 14%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-border: 240 17% 11%;
+  --sidebar-ring: 268 95% 39%;
+  --brand-primary: hsl(272 100% 14%);
+  --brand-accent: hsl(268 95% 39%);
+  --brand-accent-foreground: hsl(0 0% 100%);
+  --brand-tertiary: hsl(268 95% 39%);
+  --brand-gradient: hsl(var(--primary));
+  --brand-gradient-reverse: hsl(var(--primary));
+  --brand-gradient-vertical: hsl(var(--primary));
+  --brand-gradient-radial: hsl(var(--primary));
+
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(220 23% 97%);
+  --neutral-2: hsl(0 0% 100%);
+  --neutral-3: color-mix(in oklab, hsl(240 17% 11%) 20%, hsl(0 0% 100%));
+  --neutral-4: color-mix(in oklab, hsl(240 17% 11%) 40%, hsl(0 0% 100%));
+  --neutral-5: color-mix(in oklab, hsl(240 17% 11%) 60%, hsl(0 0% 100%));
+  --neutral-6: color-mix(in oklab, hsl(240 17% 11%) 80%, hsl(0 0% 100%));
+  --neutral-7: hsl(240 17% 11%);
+  --neutral-8: color-mix(in oklab, hsl(238 11% 48%) 25%, hsl(240 17% 11%));
+  --neutral-9: color-mix(in oklab, hsl(238 11% 48%) 50%, hsl(240 17% 11%));
+  --neutral-10: color-mix(in oklab, hsl(238 11% 48%) 75%, hsl(240 17% 11%));
+  --neutral-11: hsl(238 11% 48%);
+  --neutral-12: hsl(240 17% 11%);
+
+  /* Recipe (action language + free elev/radii) */
+  /* Shape slots */
+  --btn-default-radius: 999px;
+  --radius-button: 999px;
+  --radius-buttons: 999px;
+  --radius-md: min(999px, 16px);
+  --radius-card: 16px;
+  --radius-lg: 16px;
+  --radius-badge: 999px;
+  --badge-default-radius: 999px;
+  --radius-inputs: 999px;
+  --input-radius: 999px;
+  --radius-pill: 9999px;
+
+  /* Free elevation (carrier-provided CSS shadows) */
+  --elevation-card: 0 0 #0000;
+  --elevation-control: 0 0 #0000;
+  --elevation-raised: 0 0 #0000;
+  --elevation-xs: 0 0 #0000;
+  --elevation-sm: 0 0 #0000;
+  --elevation-md: 0 0 #0000;
+  --elevation-lg: 0 0 #0000;
+  --btn-default-shadow: 0 0 #0000;
+  --btn-default-bg: hsl(var(--primary));
+  --btn-default-fg: hsl(var(--primary-foreground));
+  --btn-default-border-width: 0px;
+  --btn-default-border: transparent;
+  --btn-default-stroke-gradient: linear-gradient(transparent, transparent);
+  --btn-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 90%, transparent);
+  --badge-default-bg: hsl(var(--secondary));
+  --badge-default-fg: hsl(var(--secondary-foreground));
+  --badge-default-border: transparent;
+  --badge-default-hover-bg: color-mix(in srgb, hsl(var(--secondary)) 90%, white);
+
+  /* Typography */
+  --font-sans:
+    var(--font-inter), "Inter Variable", "Inter", var(--font-noto-sans-sc, "Noto Sans SC"),
+    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-cn:
+    var(--font-inter), "Inter Variable", "Inter", var(--font-noto-sans-sc, "Noto Sans SC"),
+    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-heading:
+    var(--font-reg-source-serif-4), "Reckless", "Source Serif 4", "Lora",
+    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-serif, Georgia, serif;
+  --font-display:
+    var(--font-reg-source-serif-4), "Reckless", "Source Serif 4", "Lora",
+    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-serif, Georgia, serif;
+  --font-weight-heading: 500;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+  --motion-ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-in-out: cubic-bezier(0.37, 0, 0.63, 1);
+  --motion-ease-in-out: cubic-bezier(0.37, 0, 0.63, 1);
+  --duration-micro: 120ms;
+  --motion-duration-micro: 120ms;
+  --duration-flow: 240ms;
+  --motion-duration-flow: 240ms;
+  --duration-reveal: 380ms;
+  --motion-duration-reveal: 380ms;
+  --duration-cinematic: 620ms;
+  --motion-duration-cinematic: 620ms;
+
+  /* Spacing */
+  --space-source-xs: 0.75rem;
+  --space-source-sm: 1.125rem;
+  --space-source-md: 1.75rem;
+  --space-source-lg: 2.5rem;
+  --space-source-xl: 3.5rem;
+  --space-source-2xl: 5rem;
+
+  /* Taxonomy / decorative (not product CTA) */
+  --brand-category-brand: #260048;
+  --brand-category-action: #5e05c4;
+  --brand-category-link: #8f47d5;
+  --brand-category-herowash: #ddd6ff;
+  --brand-category-warning: #ffbe0f;
+  --brand-category-steel: #9e9fb7;
+  --brand-category-ash: #dfdfe9;
+  --brand-decorative-hero-wash: #ddd6ff;
+}

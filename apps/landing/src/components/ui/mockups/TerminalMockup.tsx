@@ -1,0 +1,35 @@
+"use client";
+
+import { HARNESS_CODE_LINES } from "@/lib/constants/landing-data";
+
+/** Mini code snippet for Architecture Tests card */
+export function TerminalMockup() {
+  return (
+    <div className="overflow-hidden rounded-[var(--radius-2xl)] border border-border/50 bg-muted/30 shadow-elevation-high dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)]">
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-border/50 bg-muted/50">
+        <div className="w-2.5 h-2.5 rounded-full bg-border/80" />
+        <div className="w-2.5 h-2.5 rounded-full bg-border/80" />
+        <div className="w-2.5 h-2.5 rounded-full bg-border/80" />
+        <span className="ml-2 text-[10px] font-mono text-muted-foreground/60">arch.test.ts</span>
+      </div>
+      <div className="p-5 bg-muted dark:bg-background">
+        <pre className="font-mono text-[12px] sm:text-[13px] leading-relaxed">
+          {HARNESS_CODE_LINES.map((line, i) => (
+            <span
+              key={i}
+              className={`block ${
+                line.type === "key"
+                  ? "text-success font-medium"
+                  : line.text.includes("test") || line.text.includes("fc.")
+                    ? "text-blue-600 dark:text-blue-400"
+                    : "text-foreground/80"
+              }`}
+            >
+              {line.text}
+            </span>
+          ))}
+        </pre>
+      </div>
+    </div>
+  );
+}

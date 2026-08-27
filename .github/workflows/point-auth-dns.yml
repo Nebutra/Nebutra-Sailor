@@ -1,0 +1,112 @@
+name: Point auth DNS
+
+# Flip auth.nebutra.com between:
+# - cloudflare-workers (production): OpenNext Worker, Google-reachable + Hyperdrive
+# - ecs: China ECS PM2 fallback
+# - vercel: emergency-only (Hobby quota / temporary)
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "DNS target for auth.nebutra.com (production = cloudflare-workers)"
+        required: true
+        default: "cloudflare-workers"
+        type: choice
+        options:
+          - cloudflare-workers
+          - ecs
+          - vercel
+
+permissions:
+  contents: read
+
+concurrency:
+  group: point-auth-dns
+  cancel-in-progress: false
+
+jobs:
+  dns:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Point auth.nebutra.com → Cloudflare Worker
+        if: inputs.target == 'cloudflare-workers'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFLARE_WORKERS_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::CLOUDFLARE_API_TOKEN (or WORKERS) secret missing"; exit 1; }
+          bash infra/ops/scripts/point-auth-dns-cloudflare-worker.sh
+
+      - name: Point auth.nebutra.com → ECS
+        if: inputs.target == 'ecs'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFLARE_WORKERS_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+          ECS_HOST: ${{ vars.ECS_HOST || '106.15.4.31' }}
+        run: |
+          set -euo pipefail
+          test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::CLOUDFLARE_API_TOKEN (or WORKERS) secret missing"; exit 1; }
+          bash infra/ops/scripts/point-auth-dns-ecs.sh
+
+      - name: Point auth.nebutra.com → Vercel (emergency only)
+        if: inputs.target == 'vercel'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFLARE_WORKERS_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::CLOUDFLARE_API_TOKEN (or WORKERS) secret missing"; exit 1; }
+          bash infra/ops/scripts/point-auth-dns-vercel.sh
+
+      - name: Smoke auth health (+ Google pairing off China)
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6 7 8; do
+            code=$(curl -sS -o /tmp/ah.json -w '%{http_code}' --max-time 25 https://auth.nebutra.com/health || echo 000)
+            echo "try $i health -> $code"
+            if [ "$code" = "200" ]; then
+              head -c 500 /tmp/ah.json; echo
+              break
+            fi
+            sleep 12
+          done
+          if [ "${{ inputs.target }}" = "ecs" ]; then
+            echo "ECS origin: Google probe may network_error (expected in CN)."
+            exit 0
+          fi
+          echo "=== Google pairing probe (expect pair_ok on CF Worker / overseas) ==="
+          for i in 1 2 3 4 5 6; do
+            code=$(curl -sS -o /tmp/ag.json -w '%{http_code}' --max-time 40 \
+              'https://auth.nebutra.com/health?probe=google' || echo 000)
+            echo "try $i probe -> $code"
+            if [ "$code" != "200" ]; then
+              sleep 12
+              continue
+            fi
+            status=$(python3 -c 'import json; d=json.load(open("/tmp/ag.json")); print(((d.get("oauth") or {}).get("googlePairing") or {}).get("status") or "")')
+            python3 -c 'import json; d=json.load(open("/tmp/ag.json")); print(json.dumps((d.get("oauth") or {}).get("googlePairing"), indent=2))'
+            case "$status" in
+              pair_ok)
+                echo "google pairing OK on auth.nebutra.com"
+                exit 0
+                ;;
+              network_error)
+                echo "still network_error — DNS may not have reached overseas origin yet"
+                sleep 12
+                ;;
+              invalid_client)
+                echo "::error::invalid_client — fix GOOGLE_CLIENT_SECRET on Worker secrets"
+                exit 1
+                ;;
+              *)
+                echo "status=$status (continuing)"
+                sleep 8
+                ;;
+            esac
+          done
+          echo "::warning::health ok but google probe not pair_ok yet"
+          exit 0

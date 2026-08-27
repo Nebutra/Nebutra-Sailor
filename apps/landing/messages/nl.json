@@ -1,0 +1,1781 @@
+{
+  "nav": {
+    "features": "Functies",
+    "solutions": "Oplossingen",
+    "pricing": "Prijzen",
+    "docs": "Documentatie",
+    "github": "GitHub",
+    "npm": "npm",
+    "about": "Over ons",
+    "ideas": "Ideeën",
+    "opc": "Platform",
+    "roadmap": "Roadmap",
+    "resources": "Bronnen",
+    "signIn": "Inloggen",
+    "getStarted": "Start nu",
+    "changelog": "Changelog",
+    "news": "Nieuws",
+    "designDocs": "Designsysteem",
+    "avatarMenu": {
+      "ariaLabel": "Accountmenu",
+      "loadingName": "Laden…",
+      "dashboard": "Dashboard",
+      "account": "Account",
+      "billing": "Facturering",
+      "docs": "Documentatie",
+      "signOut": "Afmelden"
+    }
+  },
+  "refer": {
+    "metadataTitle": "Sluit je aan bij de {brandName} founder referral loop",
+    "metadataDescription": "Sluit je aan bij de {brandName} waitlist, behoud referral-attributie en ontgrendel je eigen sharelink in één gesloten product-led loop.",
+    "eyebrow": "Referral-lus voor oprichters",
+    "title": "Sluit je aan bij de volgende founder-cohort en krijg je eigen sharelink.",
+    "description": "Ga binnen met elke invitecode of meld je direct aan. We behouden de attributie als de code bestaat, plaatsen je op de waitlist en verstrekken een private referral-URL die je direct kunt delen.",
+    "signal": {
+      "waitlist": "Duurzame waitlist",
+      "codeDetected": "Code {code} gedetecteerd",
+      "direct": "Directe aanmelding"
+    },
+    "form": {
+      "emailLabel": "Werk-e-mail",
+      "emailPlaceholder": "you@example.com",
+      "codeLabel": "Referralcode",
+      "codePlaceholder": "Optionele code",
+      "submit": "Toetreden tot wachtlijst",
+      "submitting": "Aan het toetreden",
+      "invalidEmail": "Voer een geldig e-mailadres in.",
+      "error": "Kan momenteel niet toetreden. Probeer het opnieuw.",
+      "successTitle": "Je staat op de lijst",
+      "successDescription": "Je persoonlijke deelkoppeling is klaar.",
+      "positionLabel": "Wachtrijpositie",
+      "referralCodeLabel": "Jouw code",
+      "referralUrlLabel": "Jouw deelkoppeling",
+      "copyLink": "Koppeling kopiëren",
+      "copied": "Gekopieerd",
+      "share": "Delen",
+      "shareTitle": "Sluit je aan bij de {brandName} founding loop",
+      "shareText": "Gebruik mijn uitnodigingskoppeling om toe te treden tot de {brandName} founder-wachtlijst.",
+      "directMode": "Geen verwijscode nodig",
+      "codeMode": "Referral-attributie ingeschakeld"
+    },
+    "proof": {
+      "peerLoop": {
+        "title": "Oprichter-naar-oprichter-lus",
+        "description": "Elke geaccepteerde aanmelding ontvangt een code en URL, zodat de volgende verwijzing begint zonder handmatige overdracht."
+      },
+      "attribution": {
+        "title": "Eerlijke attributie",
+        "description": "Onbekende codes worden opgeslagen als geprobeerde attributie, terwijl geldige codes de verwijzer verhogen en de aanmelding schoon houden."
+      },
+      "shareLink": {
+        "title": "Deelklaar successtatus",
+        "description": "De bevestigingsstatus toont positie, code, kopiëren en native deelacties, zodat de lus op de pagina wordt voltooid."
+      }
+    },
+    "infrastructure": {
+      "eyebrow": "Product-gedreven infrastructuur",
+      "title": "Ontworpen als duurzame SaaS-infrastructuur, geen wegwerpvormulier.",
+      "description": "Het verwijzingsoppervlak wordt ondersteund door een domeinpakket, een persistente Prisma-model, een getypte Next.js-route en openbare rooktests die na ECS-deploys kunnen worden uitgevoerd.",
+      "data": {
+        "eyebrow": "Data",
+        "title": "Eén duurzame wachtlijsttabel",
+        "description": "E-mailuniekheid, automatisch verhoogde positie, verwijzingscode-indexen, metadata voor geprobeerde attributie en statusovergangen staan in de platformdatabase."
+      },
+      "api": {
+        "eyebrow": "API",
+        "title": "Getypt join-eindpunt",
+        "description": "De pagina post naar `/api/waitlist`, normaliseert willekeurige codes, retourneert bestaande items idempotent en is nooit afhankelijk van een voorbeeldcode."
+      },
+      "cicd": {
+        "eyebrow": "CI/CD",
+        "title": "Publieke smoke-test bij deploy",
+        "description": "Canonical en alias-URL's zijn klaar voor geautomatiseerde checks, zodat ECS-levering regressies in routes, DNS en gezondheid opvangt."
+      }
+    }
+  },
+  "hero": {
+    "headline1": "Zet je startup in de markt,",
+    "headline2": "aangedreven door {brandName} Agent OS.",
+    "subheadline": "Sla weken aan platformwerk over met een <highlight>productierijp</highlight> fundament met bestuurde architectuur, gebouwd voor AI-coding agents & founders die wereldwijd opereren.",
+    "copyLabel": "Commando kopiëren",
+    "copiedLabel": "Gekopieerd",
+    "ctaGetAccess": "Start je startup",
+    "ctaExploreDemo": "Demo verkennen",
+    "pillCopied": "Gekopieerd"
+  },
+  "features": {
+    "sectionTitle": "Infrastructuur uit de doos, van prototype tot schaal.",
+    "item0": {
+      "title": "AI-toepassingsinfrastructuur",
+      "description": "Ingebouwde, productietestte Agent Frameworks en LLM-orchestratie-engines. Omzeil complexe onderliggende abstracties en werk direct met gestructureerde intelligentie-API's."
+    },
+    "item1": {
+      "title": "Bestuurde platformbasis",
+      "description": "Een bestuurde platformbasis voor teams die AI-native SaaS leveren. Stem scaffolding, runtime-primitieven en leveringsoppervlakken op elkaar af zonder ad-hoc tooling aan elkaar te knutselen."
+    },
+    "item2": {
+      "title": "Enterprise SaaS-automatisering",
+      "description": "Diep geïntegreerde moderne tech stack van Vercel, Supabase en Stripe. Biedt out-of-the-box row-level security, complexe multi-tenant isolatie en wereldwijde abonnementsfacturering."
+    }
+  },
+  "cta": {
+    "heading": "Klaar om je volgende AI-product te deployen?",
+    "subheading": "Initialiseer een complete, cloud-native SaaS-architectuur lokaal met één terminalcommando.",
+    "copyLabel": "Commando kopiëren",
+    "copiedLabel": "Gekopieerd",
+    "startBuilding": "Begin met bouwen"
+  },
+  "footer": {
+    "brandDescription": "Breng je startup uit met {brandName} Agent OS. Multi-tenancy, facturering, auth en AI — productieklare vanaf dag één.",
+    "columns": {
+      "product": "Product",
+      "resources": "Bronnen",
+      "legal": "Juridisch",
+      "community": "Community"
+    },
+    "links": {
+      "product": "Product",
+      "features": "Functies",
+      "forge": "Forge",
+      "pricing": "Prijzen",
+      "about": "Over ons",
+      "showcase": "Showcase",
+      "blog": "Blog",
+      "playbook": "Playbook",
+      "changelog": "Changelog",
+      "roadmap": "Roadmap",
+      "docs": "Documentatie",
+      "ideas": "Ideeën",
+      "opc": "Platform",
+      "careers": "Vacatures",
+      "security": "Beveiliging",
+      "dpa": "DPA",
+      "privacy": "Privacy",
+      "terms": "Voorwaarden",
+      "cookies": "Cookies",
+      "refund": "Terugbetaling",
+      "licensing": "Licenties",
+      "contact": "Contact",
+      "faq": "FAQ",
+      "github": "GitHub",
+      "discord": "Discord",
+      "twitter": "X (Twitter)"
+    },
+    "copyright": "© 2026 {brandName} Intelligence. Alle rechten voorbehouden.",
+    "statusOnline": "Alle systemen operationeel",
+    "newsletterTitle": "Blijf op de hoogte",
+    "newsletterPlaceholder": "you@example.com",
+    "newsletterSubscribe": "Abonneren",
+    "newsletterSuccess": "Bedankt voor je aanmelding!",
+    "newsletterError": "Er is iets misgegaan",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
+  },
+  "logoStrip": {
+    "tagline": "Draait op"
+  },
+  "monorepoTree": {
+    "badge": "TURBOREPO-STRUCTUUR",
+    "title": "15 apps. 113 pakketten. 4 backendlanes.",
+    "description": "Gedeelde code, parallelle builds, geen duplicatie. Volledige end-to-end typing van database tot frontend.",
+    "metricApps": "apps",
+    "metricBackends": "backendlanes",
+    "metricPackages": "pakketten",
+    "verifiedPaths": "Paden geverifieerd tegen de huidige werkruimte",
+    "cta": "Verken de monorepo-architectuur"
+  },
+  "stats": {
+    "title": "In cijfers",
+    "github": "GitHub-sterren",
+    "discord": "Discord-leden",
+    "setup": "Gem. opzetduur",
+    "packages": "Monorepo-pakketten",
+    "ctaStar": "Ster →",
+    "ctaJoin": "Lid worden →",
+    "ctaStart": "Starten →",
+    "ctaExplore": "Verkenen →"
+  },
+  "legalPages": {
+    "about": {
+      "title": "Over ons — Het beheerde AI-platform",
+      "description": "Ontdek de commerciële visie en engineeringprincipes achter het beheerde AI-platform van {brandName}.",
+      "heading": "Het tijdperk van slanke productteams",
+      "subheading": "Vervang herhaald platformwerk door beheerde infrastructuur, sterke automatisering en duurzame engineering-leverage.",
+      "missionTitle": "Een nieuwe orde die bestandsverval weerstaat",
+      "missionP1": "{brandName} bouwt een beheerd AI-platform voor teams die duurzame infrastructuur nodig hebben in plaats van korte starter stacks. Traditionele schaal gaat vaak gepaard met bureaucratie en entropie; wij reageren met code-governance, automatisering en een platformbasis die auditbaar blijft naarmate het groeit.",
+      "missionP2": "Commerce kampt nog steeds met coördinatie-overhead, gefragmenteerde tooling en zwakke upgrade-paden. Wij richten ons op het verminderen van die wrijving door duidelijkere platformcontracten, sterkere delivery-primitieven en runtime-gedrag dat teams daadwerkelijk kunnen waarnemen en vertrouwen.",
+      "missionP3": "Wij verwerpen de gewoonte om schaalsproblemen op te lossen met meer organisatorische weerstand. Automatisering, tests en governance moeten herhaald operationeel werk absorberen, zodat teams zich kunnen richten op product, architectuur en klantresultaten.",
+      "missionP4": "",
+      "valuesTitle": "De vier pijlers",
+      "values": {
+        "0": {
+          "title": "Beheerde schaal (filosofie)",
+          "description": "Schaal moet komen van sterkere systemen, betere leverage en duidelijkere bedrijfsregels — niet van het ophopen van meer organisatorisch gewicht."
+        },
+        "1": {
+          "title": "De builder-core (infrastructuur)",
+          "description": "Een herbruikbare platformbasis voor multi-tenancy, facturering, auth, compliance en AI-integraties die teams kunnen auditen, uitbreiden en herhaaldelijk kunnen uitrollen."
+        },
+        "2": {
+          "title": "Upgrade-discipline (routing)",
+          "description": "Gezonde systemen groeien door compatibiliteitscontroles, migraties en waarneembare runtime-contracten in plaats van drift, heldendaden en eenmalige herschrijvingen."
+        },
+        "3": {
+          "title": "Code is wet (organisatie)",
+          "description": "Operationele discipline moet worden gecodeerd in tests, workflows en governance-regels, zodat teams het platform kunnen verbeteren zonder te vertrouwen op politiek of institutioneel geheugen."
+        }
+      },
+      "jobsTitle": "Engineering-signalen boven referenties",
+      "jobsDescription": "Wij hechten meer waarde aan verifieerbare engineering-output, helder denken en systeem-oordeel dan aan pedigree of titelinflatie.",
+      "jobsButton": "Verstuur GitHub-profiel",
+      "companyInfoTitle": "Organisatorische naleving",
+      "companyInfo": {
+        "legalName": "Registratie rechtspersoon",
+        "founded": "Registratiedatum",
+        "headquarters": "Globaal operationeel centrum",
+        "jurisdiction": "Toepasselijke rechtsgebieden"
+      },
+      "ctaHeading": "Heeft u een diepere technische evaluatie nodig?",
+      "ctaDescription": "Neem contact op met onze engineering-specialisten voor een enterprise-integratiebeoordeling of bekijk de implementatiedocumentatie.",
+      "ctaButton": "Contact opnemen"
+    },
+    "contact": {
+      "title": "Technische & commerciële aanvraag — {brandName} Intelligence",
+      "description": "Het speciale communicatiekanaal voor commerciële licenties, enterprise self-hosting en geavanceerde technische ondersteuning.",
+      "heading": "Ondersteuningsverbinding tot stand brengen",
+      "subheading": "Wij sturen een toegewijde technische specialist of architect om uw expliciete vereisten te evalueren.",
+      "contacts": {
+        "founder": {
+          "title": "Directe contact met oprichter",
+          "description": "Direct communicatiekanaal voor kernstrategische afstemmingen en uitvoerende aanvragen."
+        },
+        "general": {
+          "title": "Enterprise-consultatie",
+          "description": "Vooroverleg over ecologische strategische partnerschappen en de algehele architecturale ontwikkeling."
+        },
+        "sales": {
+          "title": "Commerciële Implementatie",
+          "description": "Onderhandelingen over licenties voor gesloten broncode en bijzonderheden met betrekking tot implementaties in privé-clusteromgevingen."
+        },
+        "support": {
+          "title": "Ondersteuning op Expertniveau",
+          "description": "Gerichte architecturale begeleiding en probleemoplossing voor actieve zakelijke integraties en debugging van kernsystemen."
+        },
+        "legal": {
+          "title": "Juridische Zaken & Compliance",
+          "description": "Vragen over de definitie van open-source grenzen, enterprise compliance-audits en contractvoorwaarden."
+        },
+        "privacy": {
+          "title": "Privacy van Datacenters",
+          "description": "Technische verificatie en compliance-richtlijnen met betrekking tot de GDPR en daaropvolgende internationale wetgeving op het gebied van gegevensbescherming."
+        },
+        "security": {
+          "title": "Beveiligingsmeldingen",
+          "description": "Dien technische reproduceringsrapporten in over mogelijke softwarekwetsbaarheden op een veilige manier direct bij ons infrastructuurteam."
+        }
+      },
+      "formTitle": "Inzendportaal",
+      "form": {
+        "name": "Naam van de Inzender",
+        "email": "Officieel E-mailadres",
+        "company": "Aangesloten Organisatie",
+        "category": "Domein van de Vraag",
+        "categories": {
+          "general": "Zakelijke Raadpleging",
+          "sales": "Licenties & Architectuur",
+          "support": "Ontwikkelaarsondersteuning",
+          "legal": "Juridische & Compliance Kaders",
+          "privacy": "Gegevensverwerkingsbeleid",
+          "partnership": "Ecosystem Integraties",
+          "press": "Public Relations"
+        },
+        "subject": "Kernprobleem Samenvatting",
+        "message": "Gedetailleerde Technische/Commerciële Specificaties",
+        "submit": "Verzenden naar Backend",
+        "privacyNotice": "Het verzenden van dit verzoek betekent dat u onze hebt gelezen en ermee akkoord gaat",
+        "privacyLink": "Systeem Privacy Infrastructuur",
+        "submitting": "Verwerkingswachtrij betreden...",
+        "successMessage": "Gegevens succesvol verzonden. Het verantwoordelijke operationele team zal binnen 1-2 werkdagen een gedetailleerd antwoord versturen."
+      },
+      "companyInfoTitle": "Operationele Telemetrie",
+      "companyNameChinese": "{companyLegal}",
+      "companyNameEnglish": "{companyLegalEn}",
+      "companyAddress": "Wuxi, provincie Jiangsu, China",
+      "socialMedia": "Primaire netwerklinks"
+    },
+    "cookies": {
+      "title": "Cookiebeleid — {brandName}",
+      "description": "Hoe {brandName} cookies en vergelijkbare trackingtechnologieën gebruikt op onze website en diensten.",
+      "heading": "Cookiebeleid",
+      "effectiveDate": "Ingangsdatum",
+      "lastUpdated": "Laatst bijgewerkt",
+      "dates": {
+        "effective": "1 januari 2025",
+        "updated": "1 januari 2025"
+      },
+      "intro": "Dit cookiebeleid legt uit hoe {brandName} Co., Ltd. (\"{brandName},\" \"wij,\" \"ons,\" of \"onze\") cookies en vergelijkbare trackingtechnologieën gebruikt op onze website en diensten.",
+      "whatAreCookies": {
+        "title": "Wat zijn cookies?",
+        "content": "Cookies zijn kleine tekstbestanden die op uw apparaat worden geplaatst wanneer u een website bezoekt. Ze worden veel gebruikt om websites efficiënter te laten werken en informatie te verstrekken aan website-eigenaren."
+      },
+      "howWeUse": {
+        "title": "Hoe wij cookies gebruiken",
+        "intro": "Wij gebruiken cookies om:",
+        "items": {
+          "0": {
+            "label": "Essentiële functies mogelijk maken",
+            "desc": "Kernfunctionaliteit bieden zoals gebruikersauthenticatie en beveiliging"
+          },
+          "1": {
+            "label": "Voorkeuren onthouden",
+            "desc": "Sla uw taal, thema en andere instellingen op"
+          },
+          "2": {
+            "label": "Verbeter prestaties",
+            "desc": "Begrijp hoe bezoekers met onze diensten omgaan"
+          },
+          "3": {
+            "label": "Personaliseer ervaring",
+            "desc": "Lever relevante inhoud en aanbevelingen"
+          },
+          "4": {
+            "label": "Meet marketing",
+            "desc": "Volg de effectiviteit van onze marketingcampagnes"
+          }
+        }
+      },
+      "typesTitle": "Soorten cookies die we gebruiken",
+      "tableHeaders": {
+        "cookie": "Cookie",
+        "provider": "Aanbieder",
+        "purpose": "Doel",
+        "duration": "Duur"
+      },
+      "necessary": {
+        "title": "Strikt noodzakelijke cookies",
+        "description": "Deze cookies zijn essentieel voor de werking van de website. Ze kunnen niet worden uitgeschakeld.",
+        "cookies": {
+          "0": {
+            "name": "__session",
+            "provider": "{brandName}",
+            "purpose": "Gebruikersautenticatiesessie",
+            "duration": "Sessie"
+          },
+          "1": {
+            "name": "__clerk_db_jwt",
+            "provider": "Clerk",
+            "purpose": "Autentificatietoken",
+            "duration": "7 dagen"
+          },
+          "2": {
+            "name": "cookie_consent",
+            "provider": "{brandName}",
+            "purpose": "Bewaart cookie-toestemmingsvoorkeuren",
+            "duration": "1 jaar"
+          }
+        }
+      },
+      "functional": {
+        "title": "Functionele cookies",
+        "description": "Deze cookies maken gepersonaliseerde functies mogelijk en onthouden uw voorkeuren.",
+        "cookies": {
+          "0": {
+            "name": "locale",
+            "provider": "{brandName}",
+            "purpose": "Bewaart taalvoorkeur",
+            "duration": "1 jaar"
+          },
+          "1": {
+            "name": "theme",
+            "provider": "{brandName}",
+            "purpose": "Bewaart thema-voorkeur",
+            "duration": "1 jaar"
+          }
+        }
+      },
+      "analyticsType": {
+        "title": "Analytische cookies",
+        "description": "Deze cookies helpen ons te begrijpen hoe bezoekers met onze website omgaan.",
+        "cookies": {
+          "0": {
+            "name": "_ga",
+            "provider": "Google Analytics",
+            "purpose": "Onderscheidt unieke gebruikers",
+            "duration": "2 jaar"
+          },
+          "1": {
+            "name": "ph_*",
+            "provider": "PostHog",
+            "purpose": "Productanalytics",
+            "duration": "1 jaar"
+          }
+        }
+      },
+      "marketingType": {
+        "title": "Marketingcookies",
+        "description": "Deze cookies worden gebruikt voor advertenties en het bijhouden van de prestaties van adverterende campagnes.",
+        "cookies": {
+          "0": {
+            "name": "_fbp",
+            "provider": "Facebook",
+            "purpose": "Houdt bezoeken bij voor Facebook-advertenties",
+            "duration": "3 maanden"
+          },
+          "1": {
+            "name": "_gcl_au",
+            "provider": "Google Ads",
+            "purpose": "Conversie-tracking",
+            "duration": "3 maanden"
+          }
+        }
+      },
+      "managingTitle": "Uw cookievoorkeuren beheren",
+      "consentBanner": {
+        "title": "Cookie-toestemmingsbanner",
+        "intro": "Bij uw eerste bezoek aan onze website ziet u een cookie-toestemmingsbanner waarmee u kunt:",
+        "items": {
+          "0": {
+            "label": "Alles accepteren",
+            "desc": "Alle cookiecategorieën inschakelen"
+          },
+          "1": {
+            "label": "Alles weigeren",
+            "desc": "Alle optionele cookies uitschakelen (noodzakelijke cookies blijven actief)"
+          },
+          "2": {
+            "label": "Aanpassen",
+            "desc": "Specifieke cookiecategorieën selecteren om in te schakelen"
+          }
+        },
+        "changeNote": "U kunt uw voorkeuren op elk moment wijzigen door op \"Cookie-instellingen\" in de voettekst te klikken."
+      },
+      "browserSettings": {
+        "title": "Browserinstellingen",
+        "intro": "De meeste webbrowsers laten u cookies beheren via hun instellingen:",
+        "browsers": {
+          "0": {
+            "name": "Chrome",
+            "path": "Instellingen > Privacy en beveiliging > Cookies"
+          },
+          "1": {
+            "name": "Firefox",
+            "path": "Instellingen > Privacy & Beveiliging > Cookies"
+          },
+          "2": {
+            "name": "Safari",
+            "path": "Voorkeuren > Privacy > Cookies"
+          },
+          "3": {
+            "name": "Edge",
+            "path": "Instellingen > Privacy, zoeken en services > Cookies"
+          }
+        },
+        "note": "Het blokkeren van bepaalde cookies kan de functionaliteit van de website beïnvloeden."
+      },
+      "similarTech": {
+        "title": "Vergelijkbare technologieën",
+        "intro": "Naast cookies kunnen we ook gebruikmaken van:",
+        "items": {
+          "0": {
+            "label": "Lokale opslag",
+            "desc": "Voor het lokaal opslaan van voorkeuren en het cachen van gegevens"
+          },
+          "1": {
+            "label": "Sessieopslag",
+            "desc": "Voor tijdelijke gegevens tijdens uw browsessie"
+          },
+          "2": {
+            "label": "Pixeltags",
+            "desc": "Kleine afbeeldingen om e-mailopeningen en websitebezoeken bij te houden"
+          }
+        },
+        "noFingerprinting": "We gebruiken GEEN browserfingerprinting voor tracking."
+      },
+      "updates": {
+        "title": "Bijwerkingen van dit beleid",
+        "content": "We kunnen dit cookiebeleid van tijd tot tijd bijwerken. We zullen u op de hoogte stellen van belangrijke wijzigingen door het bijgewerkte beleid op onze website te plaatsen."
+      },
+      "contactUs": {
+        "title": "Neem contact met ons op",
+        "intro": "Heeft u vragen over ons gebruik van cookies? Neem dan contact met ons op:",
+        "company": "{brandName} Co., Ltd.",
+        "privacyNote": "Voor meer informatie over hoe we uw gegevens verzamelen en verwerken, zie ons",
+        "privacyLink": "Privacybeleid"
+      }
+    },
+    "faq": {
+      "title": "Technische Richtlijnen & FAQ — {brandName}",
+      "description": "Uitgebreide analyse van frameworkarchitectuur, basistopologieën en commerciële implementatiestrategieën.",
+      "heading": "Executive Deep Dive",
+      "subheading": "Ondersteunend materiaal geoptimaliseerd voor systeemintegratie en uitvoerende commerciële besluitvorming.",
+      "categories": {
+        "0": {
+          "name": "Architectuuroverzicht",
+          "questions": {
+            "0": {
+              "q": "Wat is het expliciete operationele doel van {productName}?",
+              "a": "{productName} is een zeer gestructureerd, productie-klaar Next.js AI SaaS-framework. Het bundelt bedrijfsfacturering, multifactorauthenticatie en multi-tenant isolatie in een beheerd platformbaseline, zodat teams zich kunnen richten op product-specifieke AI-implementatie."
+            },
+            "1": {
+              "q": "Hoe is de licentie van de repository gestructureerd?",
+              "a": "De onderliggende infrastructuur handhaaft strikt de OSS AGPLv3-overeenkomst, wat transparantie en gebruik zonder kosten garandeert. Voor organisaties die gepatenteerde verduistering en verhoogde herschrijfgaranties nodig hebben, zijn expliciete gesloten-bron commerciële contracten beschikbaar."
+            },
+            "2": {
+              "q": "Wat is de snelheid van de initiële commerciële evaluatie?",
+              "a": "Extreem hoge snelheid. Met behulp van onze aangepaste Node CLI-toolchain en de nauwkeurige technische specificatie kan een junior engineer binnen enkele minuten een autonome lokale Minimum Viable Product (MVP)-instantie opzetten."
+            }
+          }
+        },
+        "1": {
+          "name": "Commerciële operaties",
+          "questions": {
+            "0": {
+              "q": "Hoe groot is de tolerantie voor commerciële schaalvergroting?",
+              "a": "Ontworpen met sterke nadruk op micro-component paradigma's, waarbij de structurele draagkracht naadloos schaalbaar is van Free Tiers zonder vraag tot Enterprise-drempels die meerdere miljoenen maandelijkse verzoeken afhandelen, volledig geconfigureerd via dashboardbeperkingen."
+            },
+            "1": {
+              "q": "Hoe beïnvloedt abonnementsvolatiliteit de standaard boekhouding?",
+              "a": "Wij werken met nauwkeurige, op seconden gebaseerde structurele logging van resources en API-doorvoer. Veranderende beperkingen worden direct afgestemd met de boekhoudlaag—ofwel door evenredige verschillen terug te storten of door automatische tegoeden toe te kennen. Er is absoluut geen periode van vastgevroren niveaus."
+            },
+            "2": {
+              "q": "Welke verwerkingsinfrastructuur isoleert betalingsvectoren?",
+              "a": "Wereldwijd geldrouten verzoeken fundamenteel aan Stripe-serverinterfaces, wat strikte PCI-DSS-telemetrie en verwerkingsintegriteit garandeert. Enterprise-implementaties kunnen private financiële auditpijplijnen integreren die worden beheerd door aangepaste SLA-verplichtingen."
+            }
+          }
+        },
+        "2": {
+          "name": "Systeemengineeringlaag",
+          "questions": {
+            "0": {
+              "q": "Welke fundamentele intelligentie-abstracties worden native ondersteund?",
+              "a": "De primaire interactielogica bepaalt native interoperabiliteit over de standaard specificaties van OpenAI, Anthropic en Gemini. Dit biedt enorme flexibiliteit om redeneer-eindpunten efficiënt te verwisselen via variabelemapping zonder degradatie van de upstream commerciële logica."
+            },
+            "1": {
+              "q": "Hoe wordt het risico van databaseverduistering aangepakt?",
+              "a": "Implementatie-standaarden zetten intrinsiek Postgres Row-Level Security (RLS)-beleid in, nauw verbonden met onze serverless Tenant Resolution Routing-primitieven. Dit zorgt ervoor dat harde partities actief kritieke data-contaminatie op applicatieniveau en uitvoeringsoverlapping voorkomen."
+            },
+            "2": {
+              "q": "Zijn er architectonische beperkingen voor zelfbeheerde implementaties?",
+              "a": "Helemaal niet. De topologie is volledig ontkoppeld. Als de omgeving onafhankelijke Node.js-runtimes uitvoert naast gezonde PostgreSQL-clusters, blijft de volledige functionaliteit inherent behouden."
+            }
+          }
+        },
+        "3": {
+          "name": "Systematische Integriteit",
+          "questions": {
+            "0": {
+              "q": "Welke protocollen bepalen de mechanische verdediging van de perimeter?",
+              "a": "Mechanismen voeren verplichte TLS-codering tijdens transmissie uit, deterministische hashalgoritmes voor geheimenmapping en de alomtegenwoordige registratie van mutatiegebeurtenissen die strikt worden geschreven in interne tijdreeksen-trackingledgers."
+            },
+            "1": {
+              "q": "Eerbiedigt de topologie belangrijke internationale privacywetgeving?",
+              "a": "Ja, diepgaand. Zakelijke modules leveren out-of-the-box algoritme-implementaties die gericht zijn op toestemmingsintrekkingstoestanden, harde-verwijderingslogica en diepe exportqueries die optimaal voldoen aan de GDPR en gelokaliseerde regelgevingskaders."
+            },
+            "2": {
+              "q": "Wat wordt uitgevoerd bij een abnormaal catastrofale incident?",
+              "a": "Automatische wachters waarschuwen onmiddellijk kernengineeringvectoren die circuitblokkades afdwingen en snelle triage implementeren. Bestuurd door een geavanceerd oplossingshandboek, worden volledig transparante Incident Postmortems universeel verspreid binnen een absolute 72-uursvenster."
+            }
+          }
+        },
+        "4": {
+          "name": "Technische Assistentie Richtlijnen",
+          "questions": {
+            "0": {
+              "q": "Hoe wordt operationeel bottleneck-onderzoek opgelost?",
+              "a": "Initiële triagevectoren richten zich op de zorgvuldig onderhouden en door collega's beoordeelde documentatiematrix en geverifieerde community-interacties. Het verwerven van een standaard- of enterprise-licentie ontgrendelt toegang tot private escalatiequeues die worden opgelost via directe interne engineeringknooppunten."
+            },
+            "1": {
+              "q": "Bieden jullie fysieke of gespecialiseerde omgevingsintegratieoperaties aan?",
+              "a": "Dit valt onder ons op maat gemaakte premium uitvoeringstier voor topcorporate conglomeraten. Onze meest senior architecten worden extern ingezet om codeaudits uit te voeren tegen legacy-architectuur, delicate cloudverplaatsingen te beheren en sterk geïsoleerde netwerkpartities te valideren."
+            }
+          }
+        }
+      },
+      "ctaHeading": "Directe technische synchronisatie nodig?",
+      "ctaDescription": "Of het nu gaat om het valideren van een specifiek API-gedragsschema of het uitvoeren van langetermijnintegratieovereenkomsten, neem direct contact op met de engineeringhiërarchie.",
+      "ctaButton": "Integratie-instructies ontvangen",
+      "ctaEmail": "Direct bericht verzenden"
+    },
+    "privacy": {
+      "title": "Privacy- en informatiebeschermingsprotocol — {brandName}",
+      "description": "Uitgebreide documentatie over hoe de infrastructuurmechanismen gebruikersautonomie en machinegegevensisolatie reguleren.",
+      "heading": "Informatiebeschermingsrichtlijnen",
+      "effectiveDate": "Ingangsdatum",
+      "lastUpdated": "Laatst bijgewerkt",
+      "dates": {
+        "effective": "1 januari 2025",
+        "updated": "1 januari 2025"
+      },
+      "intro": "Bij {brandName} (\"Bedrijf,\" \"wij,\" \"ons\" of \"onze\") zijn we toegewijd aan het beschermen van uw privacy. Dit privacybeleid legt uit hoe we uw informatie verzamelen, gebruiken, openbaren en beveiligen wanneer u onze website, applicaties en diensten gebruikt (gezamenlijk de \"Diensten\").",
+      "infoWeCollect": {
+        "title": "1. Informatie die we verzamelen",
+        "youProvide": {
+          "title": "1.1 Informatie die u verstrekt",
+          "intro": "We verzamelen informatie die u ons direct verstrekt, waaronder:",
+          "items": {
+            "0": {
+              "label": "Accountinformatie",
+              "desc": "Naam, e-mailadres, wachtwoord en organisatiedetails wanneer u een account aanmaakt."
+            },
+            "1": {
+              "label": "Profielinformatie",
+              "desc": "Profielfoto, functietitel, bedrijfsnaam en andere optionele informatie."
+            },
+            "2": {
+              "label": "Betalingsgegevens",
+              "desc": "Factuuradres en betalingsgegevens (veilig verwerkt via Stripe)."
+            },
+            "3": {
+              "label": "Communicatie",
+              "desc": "Berichten, feedback en andere communicatie die u naar ons stuurt."
+            },
+            "4": {
+              "label": "Inhoud",
+              "desc": "Alle inhoud die u maakt, uploadt of opslaat via onze Diensten."
+            }
+          }
+        },
+        "automatic": {
+          "title": "1.2 Automatisch verzamelde informatie",
+          "intro": "Wanneer u onze Diensten gebruikt, verzamelen we automatisch bepaalde informatie:",
+          "items": {
+            "0": {
+              "label": "Apparaatinformatie",
+              "desc": "Apparaattype, besturingssysteem, browsertype en unieke apparaatidentificatiecodes."
+            },
+            "1": {
+              "label": "Gebruiksgegevens",
+              "desc": "Bekeken pagina's, gebruikte functies, uitgevoerde acties en tijd besteed aan de Diensten."
+            },
+            "2": {
+              "label": "Loggegevens",
+              "desc": "IP-adres, toegangstijden, verwijzende URL's en systeemactiviteitslogs."
+            },
+            "3": {
+              "label": "Locatiegegevens",
+              "desc": "Algemene locatie op basis van IP-adres (we verzamelen geen nauwkeurige locatiegegevens)."
+            }
+          }
+        }
+      },
+      "howWeUse": {
+        "title": "2. Hoe we uw informatie gebruiken",
+        "intro": "We gebruiken de verzamelde informatie om:",
+        "items": {
+          "0": {
+            "label": "Diensten leveren",
+            "desc": "Onze Diensten beheren, onderhouden en verbeteren."
+          },
+          "1": {
+            "label": "Transacties verwerken",
+            "desc": "Betalingen, facturering en gerelateerde operaties afhandelen."
+          },
+          "2": {
+            "label": "Communiceren",
+            "desc": "Dienstaanbiedingen, updates en marketingcommunicatie sturen (met toestemming)."
+          },
+          "3": {
+            "label": "Personaliseren",
+            "desc": "Uw ervaring aanpassen en relevante aanbevelingen bieden."
+          },
+          "4": {
+            "label": "Analyseren",
+            "desc": "Gebruikspatronen begrijpen en onze Diensten verbeteren."
+          },
+          "5": {
+            "label": "Beschermen",
+            "desc": "Fraude, misbruik en beveiligingsincidenten detecteren, voorkomen en opvolgen."
+          }
+        }
+      },
+      "howWeShare": {
+        "title": "3. Hoe we uw informatie delen",
+        "intro": "We kunnen uw gegevens delen in de volgende omstandigheden:",
+        "serviceProviders": {
+          "title": "3.1 Dienstaanbieders",
+          "intro": "We delen gegevens met externe leveranciers die namens ons diensten verlenen, waaronder:",
+          "items": {
+            "0": {
+              "label": "Infrastructuur",
+              "desc": "Cloudhosting (Vercel, Supabase), databaseservices"
+            },
+            "1": {
+              "label": "Betalingsverwerking",
+              "desc": "Stripe voor beveiligde betalingsafhandeling"
+            },
+            "2": {
+              "label": "Authenticatie",
+              "desc": "Clerk voor identiteitsbeheer"
+            },
+            "3": {
+              "label": "Analytics",
+              "desc": "PostHog, Vercel Analytics voor gebruiksinzichten"
+            }
+          }
+        },
+        "businessTransfers": {
+          "title": "3.2 Bedrijfsoverdrachten",
+          "content": "Als we betrokken zijn bij een fusie, overname of verkoop van activa, kunnen uw gegevens worden overgedragen als onderdeel van die transactie."
+        },
+        "legalRequirements": {
+          "title": "3.3 Wettelijke verplichtingen",
+          "content": "We kunnen gegevens openbaren wanneer dit wettelijk verplicht is, op grond van een juridische procedure of overheidsverzoek, of om onze rechten, privacy, veiligheid of eigendommen te beschermen."
+        }
+      },
+      "yourRights": {
+        "title": "4. Uw rechten en keuzes",
+        "accessPortability": {
+          "title": "4.1 Toegang en overdraagbaarheid",
+          "content": "U kunt toegang krijgen tot uw persoonlijke gegevens via uw accountinstellingen en een kopie van uw gegevens aanvragen in een overdraagbaar formaat."
+        },
+        "correction": {
+          "title": "4.2 Correctie",
+          "content": "U kunt uw accountgegevens op elk moment bijwerken via het dashboard."
+        },
+        "deletion": {
+          "title": "4.3 Verwijdering",
+          "content": "U kunt verwijdering van uw account en bijbehorende gegevens aanvragen via de instellingen of door contact met ons op te nemen."
+        },
+        "marketing": {
+          "title": "4.4 Marketingcommunicatie",
+          "content": "U kunt zich afmelden voor marketinge-mails door op 'afmelden' te klikken in een marketinge-mail of uw voorkeuren bij te werken."
+        }
+      },
+      "dataSecurity": {
+        "title": "5. Gegevensbeveiliging",
+        "intro": "Wij nemen passende technische en organisatorische maatregelen om uw gegevens te beschermen, waaronder:",
+        "items": {
+          "0": "Versleuteling van gegevens tijdens overdracht (TLS) en opslag",
+          "1": "Regelmatige beveiligingsbeoordelingen en penetratietests",
+          "2": "Toegangscontroles en authenticatievereisten",
+          "3": "Monitoring en logging van systeemactiviteit"
+        }
+      },
+      "ccpa": {
+        "title": "6. Californische privacyrechten (CCPA)",
+        "intro": "Als u een inwoner van Californië bent, heeft u specifieke rechten met betrekking tot uw persoonlijke gegevens:",
+        "items": {
+          "0": {
+            "label": "Recht op informatie",
+            "desc": "Vraag informatie op over de gegevens die we verzamelen, gebruiken en delen."
+          },
+          "1": {
+            "label": "Recht op verwijdering",
+            "desc": "Vraag verwijdering van uw persoonlijke gegevens aan."
+          },
+          "2": {
+            "label": "Recht op uitsluiting",
+            "desc": "Kies voor uitsluiting van de verkoop van persoonlijke gegevens (we verkopen uw gegevens niet)."
+          },
+          "3": {
+            "label": "Recht op niet-discriminatie",
+            "desc": "We zullen u niet discrimineren omdat u uw rechten uitoefent."
+          }
+        }
+      },
+      "gdpr": {
+        "title": "7. Europese privacyrechten (GDPR)",
+        "intro": "Als u zich in de EER, het VK of Zwitserland bevindt, heeft u aanvullende rechten onder de GDPR:",
+        "items": {
+          "0": {
+            "label": "Juridische grondslag",
+            "desc": "We verwerken uw gegevens op basis van contractuitvoering, gerechtvaardigde belangen of toestemming."
+          },
+          "1": {
+            "label": "Rechten",
+            "desc": "Toegang, rectificatie, verwijdering, overdraagbaarheid, beperking en bezwaar."
+          },
+          "2": {
+            "label": "DPO",
+            "desc": "U kunt contact opnemen met onze Data Protection Officer op dpo@nebutra.com."
+          }
+        }
+      },
+      "contactUs": {
+        "title": "8. Neem contact met ons op",
+        "intro": "Heeft u vragen over dit privacybeleid? Neem dan contact met ons op:",
+        "company": "{brandName} Co., Ltd."
+      }
+    },
+    "refund": {
+      "title": "Protocollen voor transactieanomalieën — {brandName}",
+      "description": "Strikte afbakening van de exacte parameters voor kapitaalherstel binnen diverse structurele samenwerkingsmodellen.",
+      "heading": "Kader voor geschillenafhandeling",
+      "effectiveDate": "Datum van implementatie",
+      "lastUpdated": "Datum van laatste wijziging",
+      "dates": {
+        "effective": "1 januari 2025",
+        "updated": "1 januari 2025"
+      },
+      "intro": "Bij {brandName} willen we dat u volledig tevreden bent met onze diensten. In dit terugbetalingsbeleid beschrijven we de omstandigheden waaronder terugbetaling mogelijk is en het proces om dit aan te vragen.",
+      "subscriptionPlans": {
+        "title": "Abonnementsplannen",
+        "monthly": {
+          "title": "Maandabonnementen",
+          "items": {
+            "0": {
+              "label": "Annulering",
+              "desc": "U kunt uw maandabonnement op elk moment opzeggen"
+            },
+            "1": {
+              "label": "Proportionele terugbetaling",
+              "desc": "Wij bieden geen pro-rata terugbetalingen voor gedeeltelijke maanden aan"
+            },
+            "2": {
+              "label": "Toegang",
+              "desc": "U behoudt toegang tot betaalde functies tot het einde van uw factureringsperiode"
+            },
+            "3": {
+              "label": "Automatische verlenging",
+              "desc": "Abonnementen worden automatisch verlengd tenzij ze worden opgezegd"
+            }
+          }
+        },
+        "annual": {
+          "title": "Jaarabonnementen",
+          "items": {
+            "0": {
+              "label": "14-dagen geld-terug-garantie",
+              "desc": "Nieuwe jaarabonnees kunnen binnen 14 dagen na hun eerste aankoop een volledige terugbetaling aanvragen"
+            },
+            "1": {
+              "label": "Na 14 dagen",
+              "desc": "Terugbetalingen zijn over het algemeen niet beschikbaar na de periode van 14 dagen"
+            },
+            "2": {
+              "label": "Opzegging",
+              "desc": "U kunt op elk moment opzeggen, maar uw abonnement blijft actief tot het einde van de jaartermijn"
+            },
+            "3": {
+              "label": "Geen pro-rata terugbetalingen",
+              "desc": "Wij bieden geen gedeeltelijke terugbetalingen voor ongebruikte maanden aan"
+            }
+          }
+        }
+      },
+      "eligibleScenarios": {
+        "title": "In aanmerking komende terugbetalingsituaties",
+        "intro": "Wij zullen terugbetalingsverzoeken overwegen in de volgende omstandigheden:",
+        "serviceIssues": {
+          "title": "1. Serviceproblemen",
+          "items": {
+            "0": "Aanzienlijke serviceonderbrekingen die uw gebruik van kernfuncties beïnvloeden",
+            "1": "Technische problemen die wij niet binnen een redelijke termijn kunnen oplossen",
+            "2": "Functies die aanzienlijk afwijken van wat werd geadverteerd"
+          }
+        },
+        "billingErrors": {
+          "title": "2. Factureringsfouten",
+          "items": {
+            "0": "Dubbele debetboekingen",
+            "1": "Onjuiste factuurbedragen",
+            "2": "Ongeautoriseerde debetboekingen (na verificatie)"
+          }
+        },
+        "exceptionalCircumstances": {
+          "title": "3. Bijzondere omstandigheden",
+          "items": {
+            "0": "Gedocumenteerde medische noodgevallen",
+            "1": "Natuurrampen die uw bedrijf beïnvloeden",
+            "2": "Andere omstandigheden die geval per geval worden beoordeeld"
+          }
+        }
+      },
+      "nonRefundable": {
+        "title": "Niet-terugbetaalbare items",
+        "intro": "De volgende items komen doorgaans niet in aanmerking voor terugbetaling:",
+        "items": {
+          "0": {
+            "label": "Gebruiksgerelateerde kosten",
+            "desc": "API-aanroepen, AI-tokenverbruik of gebruikte opslagruimte"
+          },
+          "1": {
+            "label": "Add-ons en extra's",
+            "desc": "Eenmalige aankopen of add-on diensten"
+          },
+          "2": {
+            "label": "Enterprise contracten",
+            "desc": "Op maat gemaakte overeenkomsten hebben hun eigen voorwaarden"
+          },
+          "3": {
+            "label": "Vrijwillige opzeggingen",
+            "desc": "Na de periode waarin een terugbetaling mogelijk is"
+          },
+          "4": {
+            "label": "Schending van voorwaarden",
+            "desc": "Accounts die zijn opgezegd wegens schending van het beleid"
+          }
+        }
+      },
+      "howToRequest": {
+        "title": "Hoe een terugbetaling aanvragen",
+        "step1": {
+          "title": "Stap 1: Neem contact op met support",
+          "intro": "Stuur ons een e-mail naar billing@nebutra.com met:",
+          "items": {
+            "0": "Uw account e-mailadres",
+            "1": "Abonnementsplan en factureringsperiode",
+            "2": "Reden voor het terugbetalingsverzoek",
+            "3": "Eventuele relevante documentatie"
+          }
+        },
+        "step2": {
+          "title": "Stap 2: Beoordelingsproces",
+          "items": {
+            "0": "We bekijken uw verzoek binnen 5 werkdagen",
+            "1": "We kunnen om aanvullende informatie vragen",
+            "2": "U ontvangt een schriftelijk besluit per e-mail"
+          }
+        },
+        "step3": {
+          "title": "Stap 3: Terugbetaling verwerken",
+          "intro": "Indien goedgekeurd:",
+          "items": {
+            "0": "Terugbetalingen worden verwerkt naar het oorspronkelijke betaalmiddel",
+            "1": "Creditcardterugbetalingen verschijnen doorgaans binnen 5-10 werkdagen",
+            "2": "Verwerkingstijden van banken kunnen variëren"
+          }
+        }
+      },
+      "planChanges": {
+        "title": "Planwijzigingen",
+        "upgrades": {
+          "title": "Upgrades",
+          "items": {
+            "0": "Upgrades treden onmiddellijk in werking",
+            "1": "U wordt het pro-rata verschil in rekening gebracht voor de resterende periode van uw factuurcyclus",
+            "2": "Er wordt geen terugbetaling verleend voor het vorige plan"
+          }
+        },
+        "downgrades": {
+          "title": "Downgrades",
+          "items": {
+            "0": "Downgrades treden in werking bij de volgende factuurcyclus",
+            "1": "U behoudt toegang tot de huidige functies tot die tijd",
+            "2": "Geen gedeeltelijke terugbetaling voor de huidige periode"
+          }
+        }
+      },
+      "freeTrial": {
+        "title": "Gratis proefperiode",
+        "items": {
+          "0": "Voor gratis proefperioden is geen betaalgegevens nodig",
+          "1": "Er worden geen kosten in rekening gebracht tijdens de proefperiode",
+          "2": "U ontvangt een melding voordat er kosten worden berekend"
+        }
+      },
+      "disputeResolution": {
+        "title": "Geschillenbeslechting",
+        "intro": "Als u het niet eens bent met ons terugbetalingsbesluit:",
+        "steps": {
+          "0": "Reageer op de beslissing e-mail met aanvullende informatie",
+          "1": "Vraag escalatie aan naar een leidinggevende",
+          "2": "Neem contact met ons op via legal@nebutra.com voor verdere beoordeling"
+        }
+      },
+      "contactUs": {
+        "title": "Neem contact met ons op",
+        "intro": "Voor terugbetalingsverzoeken of vragen over dit beleid:",
+        "company": "{brandName} Co., Ltd.",
+        "billingLabel": "Facturering",
+        "supportLabel": "Ondersteuning",
+        "legalLabel": "Juridisch",
+        "responseNote": "We streven ernaar om binnen 5 werkdagen te reageren op alle terugvraaganvragen.",
+        "termsNote": "Dit beleid is onderdeel van onze",
+        "termsLink": "Servicevoorwaarden",
+        "termsAgreement": "Door {brandName} te gebruiken, ga je akkoord met deze terugvraagvoorwaarden."
+      }
+    },
+    "terms": {
+      "title": "Servicevoorwaarden — {brandName}",
+      "description": "De servicevoorwaarden die van toepassing zijn op je toegang tot en gebruik van de website, applicaties, API's en diensten van {brandName}.",
+      "heading": "Servicevoorwaarden",
+      "effectiveDate": "Ingangsdatum",
+      "lastUpdated": "Laatst bijgewerkt",
+      "dates": {
+        "effective": "1 januari 2025",
+        "updated": "1 januari 2025"
+      },
+      "intro1": "Welkom bij {brandName}! Deze servicevoorwaarden (\"Voorwaarden\") regelen je toegang tot en gebruik van de website, applicaties, API's en diensten (samen de \"Diensten\") van {brandName} Co., Ltd. (\"{brandName}\", \"Bedrijf\", \"wij\", \"ons\" of \"onze\").",
+      "intro2": "Door onze Diensten te gebruiken of er toegang toe te krijgen, ga je akkoord met deze Voorwaarden en onze",
+      "intro2PrivacyLink": "Privacybeleid",
+      "intro2End": ". Als je niet akkoord gaat met deze Voorwaarden, gebruik dan onze Diensten niet.",
+      "acceptance": {
+        "title": "1. Aanvaarding van de Voorwaarden",
+        "eligibility": {
+          "title": "1.1 Geschiktheid",
+          "intro": "Om onze Diensten te gebruiken, moet u:",
+          "items": {
+            "0": "Minimaal 18 jaar oud zijn of de leeftijd van meerderjarigheid in uw rechtsgebied",
+            "1": "De bevoegdheid hebben om deze Voorwaarden namens uzelf of uw organisatie aan te gaan",
+            "2": "Niet verboden zijn om onze Diensten te gebruiken krachtens toepasselijk recht"
+          }
+        },
+        "orgAccounts": {
+          "title": "1.2 Organisatieaccounts",
+          "content": "Als u onze Diensten gebruikt namens een organisatie, verklaart u dat u de bevoegdheid heeft om die organisatie aan deze Voorwaarden te binden."
+        }
+      },
+      "services": {
+        "title": "2. Beschrijving van Diensten",
+        "intro": "{brandName} biedt een SaaS-platform dat het volgende omvat:",
+        "items": {
+          "0": "AI-gestuurde functies en inhoudsgeneratie",
+          "1": "Inhoudsbeheer en communitytools",
+          "2": "Aanbevelingssystemen",
+          "3": "E-commerce-integraties",
+          "4": "Web3-mogelijkheden",
+          "5": "Analytics en rapportage"
+        }
+      },
+      "account": {
+        "title": "3. Accountregistratie",
+        "creation": {
+          "title": "3.1 Accountaanmaak",
+          "intro": "Om toegang te krijgen tot bepaalde functies, moet u een account aanmaken. U gaat ermee akkoord om:",
+          "items": {
+            "0": "Nauwkeurige en volledige informatie te verstrekken",
+            "1": "De beveiliging van uw accountgegevens te waarborgen",
+            "2": "Uw gegevens tijdig bij te werken indien deze wijzigen",
+            "3": "Verantwoordelijkheid te nemen voor alle activiteiten onder uw account"
+          }
+        }
+      },
+      "billing": {
+        "title": "4. Abonnement en facturering",
+        "pricing": {
+          "title": "4.1 Prijzen",
+          "content": "Onze diensten worden aangeboden onder verschillende abonnementsplannen zoals beschreven op onze Prijzenpagina. Prijzen kunnen wijzigen met 30 dagen voorafkennis."
+        },
+        "payment": {
+          "title": "4.2 Betaling",
+          "items": {
+            "0": "Abonnementen worden vooraf gefactureerd op maandelijkse of jaarlijkse basis",
+            "1": "Alle kosten zijn niet-terugbetaalbaar, tenzij anders vermeld in ons",
+            "2": "U machtigt ons om uw betaalmethode te belasten met de toepasselijke kosten",
+            "3": "We gebruiken Stripe voor veilige betalingsverwerking",
+            "1RefundLink": "Retourbeleid"
+          }
+        }
+      },
+      "acceptableUse": {
+        "title": "5. Aanvaardbaar gebruik",
+        "prohibited": {
+          "title": "5.1 Verboden activiteiten",
+          "intro": "U stemt ermee in om NIET het volgende te doen:",
+          "items": {
+            "0": "Inbreuk maken op geldende wetten, regelgeving of rechten van derden",
+            "1": "De Diensten gebruiken om malware, spam of schadelijke inhoud te verzenden",
+            "2": "Proberen ongeautoriseerde toegang te krijgen tot onze systemen",
+            "3": "De integriteit of prestaties van onze Diensten verstoren of onderbreken",
+            "4": "Geautomatiseerde tools gebruiken om data te scrapen, kopiëren of extraheren zonder toestemming",
+            "5": "Onze Diensten reverse engineeren, decompileren of uit elkaar halen",
+            "6": "Onze AI-functies gebruiken om illegale, schadelijke of misleidende inhoud te genereren"
+          }
+        }
+      },
+      "ip": {
+        "title": "6. Intellectuele eigendom",
+        "ours": {
+          "title": "6.1 Onze intellectuele eigendom",
+          "content": "{brandName} en haar licentiegevers zijn eigenaar van alle rechten, titels en belangen in de Diensten, inclusief alle software, ontwerpen, handelsmerken en inhoud die door ons is gemaakt."
+        },
+        "yours": {
+          "title": "6.2 Uw inhoud",
+          "content": "U behoudt het eigendom van inhoud die u maakt of uploadt (\"Uw inhoud\"). Door gebruik te maken van onze Diensten, verleent u ons een wereldwijde, niet-exclusieve, royaltyvrije licentie om Uw inhoud te gebruiken, op te slaan, te verwerken en weer te geven, uitsluitend om de Diensten aan u te leveren."
+        }
+      },
+      "warranties": {
+        "title": "7. Uitsluiting van garanties",
+        "content": "DE DIENSTEN WORDEN Aangeboden \"ZOALS IS\" EN \"ZOALS BESCHIKBAAR\" ZONDER ENIGE GARANTIE, Zowel EXPLICIET ALS IMPLICIET, INCLUSIEF MAAR NIET BEPERKT TOT IMPLICIETE GARANTIES VAN VERKOOPBAARHEID, GESCHIKTHEID VOOR EEN BEPAALD DOEL, EIGENDOM EN NIET-INBREUKMAKING."
+      },
+      "liability": {
+        "title": "8. Beperking van aansprakelijkheid",
+        "para1": "VOOR ZOVER TOEGESTAAN DOOR DE WET, IS NEBUTRA NIET AANSPRAKELIJK VOOR INDIRECTE, TOEVALLIGE, SPECIALE, GEVOLGSCHADE OF STRAFBARE SCHADE, OF VERLIES VAN Winst, GEGEVENS, GEBRUIK OF GOODWILL.",
+        "para2": "ONZE TOTALE AANSPRAKELIJKHEID OVERSTIJGT IN GEEN GEVAL HET HOOGSTE VAN (A) HET BEDRAG DAT U IN DE 12 MAANDEN VOORAFGAAND AAN DE AANSPRAAK AAN ONS HEBT BETAALD, OF (B) $100 USD."
+      },
+      "termination": {
+        "title": "9. Beëindiging",
+        "byYou": {
+          "title": "9.1 Door u",
+          "content": "U kunt uw account op elk moment beëindigen via uw accountinstellingen. Na beëindiging verliest u toegang tot de Diensten."
+        },
+        "byUs": {
+          "title": "9.2 Door ons",
+          "intro": "Wij kunnen uw account opschorten of beëindigen als u:",
+          "items": {
+            "0": "Deze Voorwaarden schendt",
+            "1": "Zich schuldig maakt aan fraude of illegale activiteiten",
+            "2": "Niet betaalt de van toepassing zijnde kosten",
+            "3": "Risico's of juridische blootstelling voor ons creëert"
+          }
+        }
+      },
+      "disputes": {
+        "title": "10. Geschillenbeslechting",
+        "informal": {
+          "title": "10.1 Informele afhandeling",
+          "content": "Voordat u formele procedures start, gaat u ermee akkoord ons te contacteren op legal@nebutra.com om geschillen informeel op te lossen."
+        },
+        "governingLaw": {
+          "title": "10.2 Toepasselijk recht",
+          "content": "Deze Voorwaarden worden beheerst door de wetten van de staat Delaware, zonder rekening te houden met conflicten van wetten."
+        }
+      },
+      "contactUs": {
+        "title": "11. Neem contact met ons op",
+        "intro": "Als u vragen heeft over deze Voorwaarden, neem dan contact met ons op:",
+        "company": "{brandName} Co., Ltd.",
+        "emailLabel": "E-mail",
+        "supportLabel": "Ondersteuning"
+      },
+      "acknowledgement": "Door {brandName} te gebruiken, bevestigt u dat u deze Servicevoorwaarden heeft gelezen, begrepen en ermee akkoord gaat gebonden te zijn."
+    }
+  },
+  "metadata": {
+    "title": "{brandName} Agent OS | Het Startup Agent OS",
+    "description": "Het Startup Agent OS voor oprichters die internationaal opereren. Productieklare Next.js-basis met beheerde architectuur, auth, facturering, agents en i18n — gebouwd voor AI-coding agents en serieuze teams."
+  },
+  "microLanding": {
+    "architecture": {
+      "badge": "SYSTEEMTOPOLOGIE",
+      "title": "Transparante architectuur, geen zwarte dozen.",
+      "description": "{productName} is ontworpen met een hyper-modulaire Turborepo-structuur, waardoor u volledige controle heeft over uw volledige softwarelevenscyclus.",
+      "database": {
+        "title": "PostgreSQL + Prisma v7",
+        "desc": "Volledig getypt ORM met Row-Level Security (RLS)-beleid standaard ingebouwd."
+      },
+      "auth": {
+        "title": "Clerk Multi-Tenant / Aangepaste Identiteit",
+        "desc": "SOC2-klare authenticatiegateway met ondersteuning voor B2B-organisatiewisseling en RBAC."
+      }
+    },
+    "pricing": {
+      "title": "Gratis om op te bouwen. Betaal alleen als wij moeten instaan.",
+      "description": "Een commercieel product bouwen op {brandName} kost niets — geen kosten, geen licentiesleutel, geen registratie, geen copyleft. Betaalde niveaus verkopen support, SLA's, vrijwaring en merkrechten, nooit toestemming.",
+      "socialProofText": "MIT op npm · FSL-1.1-ALv2 op de repository, na twee jaar Apache-2.0 · commercieel gebruik gratis op elke schaal.",
+      "community": {
+        "badge": "COMMUNITY",
+        "price": "Gratis",
+        "period": "voor altijd",
+        "desc": "Voor iedereen. Elke teamgrootte, elke omzet. Closed-source commercieel gebruik inbegrepen, zonder registratie en zonder naamsvermelding.",
+        "cta": "npx create-sailor",
+        "f1": "Volledige Next.js 16 SaaS-kern, alle pakketten inbegrepen",
+        "f2": "Closed-source commercieel gebruik bij elke teamgrootte of omzet",
+        "f3": "Volledige stack: Auth, Betalingen, Organisaties, API, E-mail, i18n, Achtergrondtaken, Opslag en meer",
+        "f4": "Marketingfuncties: Blog, landingspagina, SEO, Analytics",
+        "f5": "Publieke issues, Discussions en Discord — naar beste vermogen, zonder reactiegarantie"
+      },
+      "team": {
+        "badge": "TEAM",
+        "price": "$2.000",
+        "period": "jaar",
+        "desc": "Voor teams die geen kritieke pad kunnen leggen op community-reactietijden.",
+        "cta": "{brandName}-support afnemen",
+        "f1": "Privé supportkanaal (e-mail + gedeelde Slack of Discord)",
+        "f2": "Eerste reactie gegarandeerd binnen twee werkdagen",
+        "f3": "Prioritaire bugtriage, vóór community-issues",
+        "f4": "Upgradehulp en vooraankondiging van breaking changes",
+        "f5": "Alles uit Community"
+      },
+      "enterprise": {
+        "badge": "ENTERPRISE",
+        "price": "Vanaf $30.000",
+        "period": "jaar",
+        "desc": "Voor organisaties waarvan inkoop, juridische zaken of security een tegenpartij eist die tekent.",
+        "cta": "Neem contact op met sales",
+        "f1": "Reactie-SLA — 4 werkuren standaard, 1 uur bij productiestoring",
+        "f2": "Vrijwaring en contractuele toezegging voor securitypatches",
+        "f3": "Ondertekende verwerkersovereenkomst, compliancepakket en continuïteitstoezegging",
+        "f4": "Merk- en white-labelrechten, plus ontheffing van de concurrentieclausule",
+        "f5": "Long-term-supportbranch en engineering voor privé-implementaties",
+        "f6": "Alles uit Team"
+      }
+    },
+    "faq": {
+      "title": "Prijzen & licenties FAQ",
+      "description": "Vragen over licentietiers, terugbetalingen en commerciële gebruiksrechten.",
+      "q1": {
+        "q": "Is Sailor een maandelijkse SaaS-abonnement?",
+        "a": "Nee. Deze prijzen zijn voor Sailor-broncode-licenties: Independent is gratis, Startup wordt jaarlijks gefactureerd en Enterprise is op maat."
+      },
+      "q2": {
+        "q": "Bieden jullie terugbetalingen aan?",
+        "a": "Startup-commerciële licenties bevatten een terugbetalingsvenster van 14 dagen voor eerste aankopen. Enterprise-voorwaarden worden afgehandeld in het ondertekende contract."
+      },
+      "q3": {
+        "q": "Kan ik Sailor gebruiken voor klantwerk?",
+        "a": "Ja. Met een commerciële licentie kan je team closed-source klant- of interne producten uitbrengen binnen het gelicentieerde bereik; white-label-rechten vereisen Enterprise-goedkeuring."
+      },
+      "contactNudge": "Nog vragen? Neem contact op met het {brandName}-team →"
+    },
+    "cta": {
+      "eyebrow": "Aan de slag",
+      "title": "Stop met configureren. Begin met bouwen.",
+      "description": "Initialiseer een schaalbare SaaS-architectuur lokaal met de {brandName}-CLI.",
+      "button": "Architectuur implementeren",
+      "license": "Open source onder AGPL-3.0-licentie. Geen creditcard vereist."
+    },
+    "capability": {
+      "badge": "Enterprise-mogelijkheden",
+      "title": "Een volledig getypte, uitbreidbare kern.",
+      "multiTenant": {
+        "title": "Native rijniveau-beveiliging",
+        "desc": "Elke databasequery is strikt beperkt tot de huidige tenantcontext.",
+        "cta": "Lees databasefilosofie"
+      },
+      "aiGateway": {
+        "title": "Universele AI-gateway",
+        "desc": "Routeer prompts naadloos naar OpenAI, Anthropic of open-source modellen.",
+        "cta": "Ontdek de AI SDK-handler"
+      },
+      "rbac": {
+        "title": "Gedetailleerde toegangscontrole",
+        "desc": "Definieer rollen voor beheerder, lid en toeschouwer met ingebouwde beleidsstructuur.",
+        "cta": "Bekijk RBAC-documentatie"
+      },
+      "billing": {
+        "title": "Factureringsinfrastructuur voor meerdere providers",
+        "desc": "Gemeten gebruik, abonnementswebhooks en zelfbedieningsportalen voor klanten.",
+        "cta": "Bekijk factureringsarchitectuur"
+      }
+    },
+    "productDemo": {
+      "badge": "Interactieve demo",
+      "title": "The local loop, end to end.",
+      "description": "Maak kennis met de commandoregelinterface, Stripe-webhooktunneling en lokaal multi-tenant databaseprovisioning.",
+      "analytics": {
+        "label": "Live telemetrie",
+        "desc": "Stroom productiegebruiksgegevens direct naar je terminal."
+      },
+      "billing": {
+        "label": "Factuurgebeurtenissen",
+        "desc": "Bekijk hoe Stripe-webhooks worden uitgevoerd via lokale tunneling."
+      },
+      "workspaces": {
+        "label": "Workspace-initialisatie",
+        "desc": "Stel geïsoleerde B2B-PostgreSQL-schema's direct in."
+      }
+    },
+    "workflow": {
+      "badge": "Snelheid",
+      "title": "Van nul tot productie in recordtijd.",
+      "step1": {
+        "title": "1. Klonen",
+        "desc": "Kloon de {brandName}-monorepo direct en voer pnpm install uit."
+      },
+      "step2": {
+        "title": "2. Configureren",
+        "desc": "Stel Prisma, Clerk en Stripe in via de interactieve CLI in enkele minuten."
+      },
+      "step3": {
+        "title": "3. Bouwen",
+        "desc": "Focus op productlogica en UI terwijl de platformbasis al is aangesloten."
+      },
+      "step4": {
+        "title": "4. Implementeren",
+        "desc": "Push naar Vercel en AWS voor directe wereldwijde distributie."
+      },
+      "speedometer": {
+        "number": "10",
+        "unit": "min",
+        "subtitle": "TIJD TOT MARKT",
+        "comparison": "Sla maanden aan platformwerk over.",
+        "phases": {
+          "scaffold": "Init",
+          "wire": "Core",
+          "ship": "Deploy",
+          "scale": "Scale",
+          "ongoing": "∞"
+        },
+        "cta": "Start je timer"
+      },
+      "presetHint": {
+        "badge": "Preset Systeem",
+        "message": "Eén configuratie. Elke functie. Kies je preset en ship.",
+        "detail": "Configureer één keer, genereer alles — billing, auth, AI, i18n — vanuit één preset-configuratie.",
+        "readyStatus": "Preset systeem klaar"
+      }
+    }
+  },
+  "featuresPage": {
+    "hero": {
+      "badge": "Platformmogelijkheden",
+      "headlinePrefix": "Alles wat je nodig hebt om ",
+      "headlineHighlight": "met vertrouwen te shippen.",
+      "description": "{brandName} is een full-stack SaaS-platform — AI, billing, multi-tenancy, observability en security vanaf dag één ingebouwd. Stop met het opnieuw bouwen van de platformlaag."
+    },
+    "sections": {
+      "exploreFeature": "Verken functie",
+      "ai_category": "AI & Intelligentie",
+      "ai_f1_title": "Chat-completies voor meerdere modellen",
+      "ai_f1_desc": "Routeer verzoeken naar Anthropic, OpenAI, Google of je eigen fine-tuned modellen. Streaming, vision en function calling worden direct ondersteund.",
+      "ai_f2_title": "Semantische embeddings",
+      "ai_f2_desc": "Genereer en sla vector-embeddings op met pgvector. Ondersteun semantische zoekopdrachten, RAG-pipelines en aanbevelingsengines.",
+      "ai_f3_title": "AI-gebruiksmeting",
+      "ai_f3_desc": "Quota per plan met gebruikstracking — meet AI-tokens, API-aanroepen en opslag tegen real-time aggregaten op basis van ClickHouse.",
+      "multi_category": "Multi-tenant platform",
+      "multi_f1_title": "Isolatie op organisatie-niveau",
+      "multi_f1_desc": "Row-level security in Postgres zorgt ervoor dat tenants nooit toegang hebben tot elkaars gegevens — afgedwongen op databaselayer, niet alleen in de applicatie.",
+      "multi_f2_title": "Multi-provider authenticatie (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, etc.) plus e-mail/wachtwoord en magic-link — wissel tussen Clerk, Better Auth, NextAuth of Supabase Auth via één omgevingsvariabele.",
+      "multi_f3_title": "Automatische tenant-provisioning",
+      "multi_f3_desc": "Wanneer een nieuwe organisatie zich aanmeldt via Clerk, genereren we automatisch hun eerste API-sleutel en sturen we een branded welkomstmail — zonder handmatige stappen.",
+      "dx_category": "Ontwikkelaarservaring",
+      "dx_f1_title": "Gehashte API-sleutels",
+      "dx_f1_desc": "SHA-256 gehashte sleutels met prefixweergave (nbtr_live_…). Slechts één keer in platte tekst getoond bij aanmaken — beveiliging zonder wrijving.",
+      "dx_f2_title": "Idempotentie-middleware",
+      "dx_f2_desc": "Voeg een Idempotency-Key-header toe en elke POST-aanvraag kan veilig worden herhaald. Redis-gebaseerd, 24-uurs cache, IETF-draft-conform.",
+      "dx_f3_title": "Multi-protocol API (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI voor openbare API's, oRPC voor type-safe frontend-aanroepen, tRPC voor T3-stack-compatibiliteit. Alle protocollen delen dezelfde Zod-contracten en middleware-stack. Schakel per protocol in via preset-configuratie.",
+      "billing_category": "Facturering & Monetarisatie",
+      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
+      "billing_f1_desc": "Kies je betaalprovider: Stripe voor wereldwijd enterprise, LemonSqueezy voor indie-devs, Polar voor OSS, of Alipay/WeChat Pay voor de Chinese markt. Eén-klik checkout en zelfbedieningsfactureringsportaal.",
+      "billing_f2_title": "Quota-aafdwinging op basis van gebruik",
+      "billing_f2_desc": "Real-time Redis-tellers houden API-aanroepen en tokengebruik per tenant bij. Aanvragen worden op de gateway geblokkeerd zodra limieten zijn bereikt.",
+      "billing_f3_title": "Webhook-lifecycle synchronisatie",
+      "billing_f3_desc": "Stripe-abonnementsevents werken org-plannen automatisch bij in je database via Inngest — geen cron-jobs, geen polling.",
+      "rel_category": "Betrouwbaarheid",
+      "rel_f1_title": "Circuit breaker + retry",
+      "rel_f1_desc": "De gateway en AI-service gebruiken een CLOSED/OPEN/HALF_OPEN circuit breaker met exponentiële backoff en jitter — geen cascade-fouten.",
+      "rel_f2_title": "Dead letter queue",
+      "rel_f2_desc": "Event-handlers die 3 retry-attempten overschrijden, belanden in de DLQ. Speel ze individueel af via de admin-API zonder opnieuw te deployen.",
+      "rel_f3_title": "SLO-verbruiktariefmeldingen",
+      "rel_f3_desc": "Multi-window Google SRE-stijl meldingen worden afgevuurd bij 14,4×, 6× en 3× verbruiktarieven voordat je foutbudget op is.",
+      "sec_category": "Beveiliging",
+      "sec_f1_title": "CSP nonces-gebaseerde headers",
+      "sec_f1_desc": "Strict-dynamic Content Security Policy met per-aanvraag nonces gegenereerd in Clerk middleware — nergens unsafe-inline.",
+      "sec_f2_title": "ModSecurity WAF",
+      "sec_f2_desc": "OWASP Core Rule Set in DetectionOnly-modus op elke ingress. Rate limiting op 30 RPS met burst-tolerantie via nginx-annotaties.",
+      "sec_f3_title": "SBOM + SLSA-provenance",
+      "sec_f3_desc": "Elke release genereert een CycloneDX software bill of materials en SLSA-provenance attestatie, geüpload naar de GitHub Release.",
+      "obs_category": "Observability",
+      "obs_f1_title": "OpenTelemetry-tracering",
+      "obs_f1_desc": "Gedistribueerde traces stromen van Next.js → Hono → Python-microservices via OTLP. Geëxporteerd naar Jaeger (dev) en Grafana Tempo (prod).",
+      "obs_f2_title": "Grafana-dashboards",
+      "obs_f2_desc": "Multi-panel platformoverzicht: SLO-beschikbaarheid, resterend foutbudget, HPA-verzadiging, pod-herstarts en CPU-throttling.",
+      "obs_f3_title": "Sentry-fouttracking",
+      "obs_f3_desc": "Server-side en client-side fouten vastgelegd met tenant-context, aanvraag-ID en trace-ID voor cross-system correlatie.",
+      "data_category": "Data & Analytics",
+      "data_f1_title": "ClickHouse OLAP-warehouse",
+      "data_f1_desc": "Events komen binnen in ClickHouse voor snelle analytische queries. dbt transformeert ruwe events naar gold-layer-groeimetrics die zichtbaar zijn in het dashboard.",
+      "data_f2_title": "Funnel-analyse",
+      "data_f2_desc": "Volg aanmeldingen → activeringen → conversies met cohort-attributie. Omzet per actieve gebruiker wordt berekend vanuit de gold layer.",
+      "data_f3_title": "Kafka / event-inname",
+      "data_f3_desc": "Hoge doorvoer van event-inname via Inngest naar ClickHouse-bronze, met in-memory-deduplicatie en schema-validatie op de gateway-edge.",
+      "infra_category": "Infrastructuur",
+      "infra_f1_title": "GitOps met ArgoCD",
+      "infra_f1_desc": "Wijzigingen in de main-branch worden automatisch gesynchroniseerd met de cluster. Zelfherstellend gedrag draait handmatige kubectl-wijzigingen terug. Sync-windows handhaven veilige deploy-tijden.",
+      "infra_f2_title": "PgBouncer-verbindingspool",
+      "infra_f2_desc": "PgBouncer in transactiemodus voor Supabase hanteert 1.000 app-verbindingen op 20 Postgres-verbindingen. HA met 2 replica's.",
+      "infra_f3_title": "Horizontaal + verticaal autoscaling",
+      "infra_f3_desc": "HPA schaal op CPU/geheugen. VPA draait in Off-modus en geeft right-sizing-aanbevelingen. KEDA-custom metrics gepland voor v2."
+    }
+  },
+  "comingSoon": {
+    "badge": "🚧 In aanbouw",
+    "description": {
+      "ideas": "We werken momenteel aan een fantastische, door nerds gedreven ervaring voor dit onderdeel. Het wordt gelanceerd samen met de volgende grote update van de architectuurpijplijn.",
+      "opc": "Een uitgebreider platformoverzicht is in ontwikkeling. Volg het changelog en de roadmap voor aankomende releases.",
+      "roadmap": "Van infrastructuurbasis tot enterprise-schaal — onze productfasen, versiemijlpalen en financieringsvisie."
+    },
+    "returnBtn": "Terug naar Hub"
+  },
+  "blogShowcase": {
+    "badge": "UIT HET BLOG",
+    "title": "Engineering Insights",
+    "subtitle": "Diepgaande analyses van SaaS-architectuur, AI-infrastructuur en productie-engineering.",
+    "readMore": "Lees meer"
+  },
+  "useCases": {
+    "badge": "SCHAALBARE SCENARIO'S",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
+    "tabs": {
+      "opc": "Agentische Operaties",
+      "ip": "Persoonlijke IP-matrix",
+      "multimodal": "Multimodale AI SaaS",
+      "enterprise": "Modern Enterprise (CN)",
+      "export": "Wereldwijde Software-export",
+      "design": "Designsysteem-engine",
+      "edam": "Enterprise Digitale Activas"
+    },
+    "content": {
+      "opc": {
+        "title": "AI-native Operatiehub",
+        "desc": "Voer agent-workflows, interne tooling en integratieoppervlakken uit op één beheerd platform. Registry-gedreven extensies, operatorportals en herbruikbare runtimepatronen blijven gesynchroniseerd naarmate het systeem groeit.",
+        "features": {
+          "f1": "Tool Registry & Integratieoppervlak",
+          "f2": "Operatorportal & Interne Console"
+        }
+      },
+      "ip": {
+        "title": "Persoonlijke IP-groei- en Portfoliomatrix",
+        "desc": "Creëer een wereldklasse founder-presence met een hoog-converterende MDX-blog, portfolio en profielpagina's. Ingebouwde nieuwsbrief, analytics en SEO zorgen dat je persoonlijke merkwaarde groeit.",
+        "features": {
+          "f1": "MDX Blog + Nieuwsbrief Engine",
+          "f2": "SEO & Social Graph Geoptimaliseerd"
+        }
+      },
+      "multimodal": {
+        "title": "Innovatieve Multimodale AI SaaS",
+        "desc": "Lanceer Multi-Agent orchestration, Chatbot, Text-to-Image, Image-to-Text en Text-to-Video SaaS-producten met een UX-leidende streaming UI, intelligente modelrouting en gebruiksmeting.",
+        "features": {
+          "f1": "Multi-agent Streaming UI",
+          "f2": "Model Router + Gebruiksmeting"
+        }
+      },
+      "enterprise": {
+        "title": "Moderne Enterprise-website (CN)",
+        "desc": "Aangepast voor Chinese zakelijke scenario's — ultrasnelle binnenlandse CDN, WeChat-ecosysteemintegratie, mobile-first responsive design en lokaal compliance out of the box.",
+        "features": {
+          "f1": "Lokale CDN + Compliance",
+          "f2": "WeChat-ecosysteem klaar"
+        }
+      },
+      "export": {
+        "title": "Landingpagina's voor wereldwijde software-export",
+        "desc": "Speciaal ontworpen voor SaaS die wereldwijd uitbreidt. Multi-valuta Stripe-checkout, next-intl i18n-autorouting in 7 talen, GDPR/CCPA-compliance en geo-gerichte content.",
+        "features": {
+          "f1": "Wereldwijde betalingen in meerdere valuta",
+          "f2": "7 talen + GDPR-klaar"
+        }
+      },
+      "design": {
+        "title": "Toonaangevend designsystem en componentenbibliotheek",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "features": {
+          "f1": "4-laagse token-governance",
+          "f2": "Seven design languages + Storybook"
+        }
+      },
+      "edam": {
+        "title": "Enterprise digital asset management",
+        "desc": "Gestructureerde data lakes en complexe dashboardtopologieën met schaalbare PostgreSQL-architecturen en granulaire RBAC.",
+        "features": {
+          "f1": "Beveiliging op rijniveau",
+          "f2": "Complexe queries",
+          "f3": "Rolbeheer"
+        }
+      }
+    }
+  },
+  "designSystem": {
+    "badge": "DESIGNSYSTEM",
+    "headline": "4 lagen designgovernance.",
+    "subheadline": "Van merkprimitieven tot runtime-tokens, tot een multi-theme-engine en beheerde componenten — niet zomaar shadcn met Tailwind.",
+    "flowBrand": "Merk",
+    "flowBrandDesc": "Kleurprimitieven, gradients, bewegingstaal",
+    "flowTokens": "Tokens",
+    "flowTokensDesc": "CSS-variabelen, 12-staps schalen, donkere modus",
+    "flowTheme": "Thema",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
+    "flowUI": "UI",
+    "flowUIDesc": "Componenten, Storybook, Chromatic",
+    "card1Title": "12-staps kleurschalen",
+    "card1Desc": "Geist-uitgelijnde semantische schaal: achtergronden (1-2), statussen (3-5), randen (6-8), vullingen (9-10), tekst (11-12).",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
+    "card3Title": "Visuele regressie",
+    "card3Desc": "Chromatic vangt elke pixelverandering. Storybook documenteert elk component. Architectuurtests handhaven story-coverage.",
+    "card4Title": "Tokenbeheer",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
+    "card5Title": "Interactieve documentatie",
+    "card5Desc": "Volledig Fumadocs-aangedreven design-docs-site met tweetalige (EN/ZH) component-API-documentatie, token-galerijen, layoutpatroon-gidsen en live codevoorbeelden.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
+  },
+  "notFound": {
+    "title": "Pagina niet gevonden",
+    "desc": "De link is mogelijk verouderd of de pagina is verplaatst.",
+    "home": "Terug naar {brandName}",
+    "docs": "Documentatie openen"
+  },
+  "ui": {
+    "search": {
+      "placeholder": "Zoek releases..."
+    },
+    "nav": {
+      "toggleMenu": "Menu wisselen"
+    },
+    "actions": {
+      "showFullRelease": "Volledige release tonen",
+      "copyLinkToRelease": "Link naar release kopiëren",
+      "copyLink": "Link kopiëren",
+      "openInNewTab": "In nieuw tabblad openen"
+    },
+    "status": {
+      "comingSoon": "Binnenkort beschikbaar"
+    }
+  },
+  "licensing": {
+    "hero": {
+      "title": "Gratis om <hl>op te bouwen</hl>",
+      "description": "{brandName}-Sailor is gratis voor commercieel gebruik — MIT op npm, FSL-1.1-ALv2 in de repository, met overstap naar Apache-2.0 na twee jaar. Betaalde niveaus bieden ondersteuning en contractuele afspraken, nooit toestemming."
+    },
+    "plans": {
+      "community": {
+        "badge": "Altijd gratis",
+        "title": "Community",
+        "subtitle": "Iedereen",
+        "description": "Elk team, elke omzet. Gesloten-bron commerciële producten inbegrepen.",
+        "features": {
+          "fullSource": "Volledige broncode, alle pakketten",
+          "closedSourceOk": "Gesloten-bron commercieel gebruik — geen copyleft",
+          "noAttribution": "Geen registratie, geen vermelding vereist",
+          "communitySupport": "Community-ondersteuning — besteffort"
+        },
+        "cta": "Bekijk op GitHub"
+      },
+      "team": {
+        "badge": "Vanaf {price}/jr",
+        "title": "Team",
+        "subtitle": "Ondersteuningsabonnement",
+        "description": "Voor teams die geen kritieke pad kunnen leggen op community-reactietijden.",
+        "features": {
+          "privateChannel": "Privé-ondersteuningskanaal",
+          "firstResponse": "Eerste reactie binnen twee werkdagen, gegarandeerd",
+          "priorityTriage": "Prioritaire bugtriage",
+          "upgradeHelp": "Upgrade-ondersteuning en melding van brekende wijzigingen"
+        },
+        "cta": "Ondersteuning aanvragen"
+      },
+      "enterprise": {
+        "badge": "Vanaf $30.000/jaar",
+        "title": "Enterprise",
+        "subtitle": "Klaar voor inkoop",
+        "description": "Voor organisaties waarvan de juridische, beveiligings- of inkoopreview een tegenpartij nodig heeft die tekent.",
+        "features": {
+          "sla": "Response-SLA — 4 werkbare uren, 1 uur bij productie-down",
+          "indemnity": "Schadevergoeding en verbintenis tot beveiligingspatches",
+          "compliance": "Ondertekende DPA, compliancepakket, continuïteitsverklaring",
+          "trademark": "Handelsmerk- en white-labelrechten"
+        },
+        "cta": "Neem contact op met sales"
+      }
+    },
+    "faq": {
+      "title": "Veelgestelde vragen",
+      "description": "Kort gezegd: gebruiken is gratis. Betalen is voor wanneer je ons contractueel aanspreekbaar wilt hebben.",
+      "items": {
+        "whyFsl": {
+          "q": "Waarom FSL in plaats van MIT of AGPL?",
+          "a": "FSL staat elk gebruik toe, behalve het verkopen van een vervanging voor Sailor zelf, en elke versie wordt Apache-2.0 twee jaar na release — een onherroepelijke voorafgaande toestemming. Het gaat sneller door de juridische keuring bij bedrijven dan AGPL."
+        },
+        "reallyFree": {
+          "q": "Is commercieel gebruik echt gratis?",
+          "a": "Ja. Geen kosten, geen licentiekey, geen registratie, geen inkomsten- of personeelsgrens, geen attributie. Bouw een closed-source product en verkoop het."
+        },
+        "competingUse": {
+          "q": "Wat telt als concurrerend gebruik?",
+          "a": "Sailor zelf aanbieden — een gehoste Sailor-service of een herpakt concurrerend platform als basis. Een verticale SaaS, een intern hulpmiddel of klantprojecten bouwen op Sailor is geen concurrerend gebruik. Als je model het nodig heeft, kan een Enterprise-overeenkomst een schriftelijke vrijstelling bevatten."
+        },
+        "upgrade": {
+          "q": "Wat kopen de betaalde niveaus eigenlijk?",
+          "a": "Ondersteuningsverplichtingen, response-SLA's, schadevergoeding, compliance-documentatie en handelsmerkrechten. Nooit toestemming om de software te gebruiken — dat is al van jou."
+        },
+        "contributions": {
+          "q": "En open source-bijdragen?",
+          "a": "Alle bijdragen vereisen een CLA. Zie CONTRIBUTING.md."
+        }
+      }
+    },
+    "meta": {
+      "title": "Licenties — {brandName}",
+      "description": "Gratis voor commercieel gebruik. MIT op npm, FSL-1.1-ALv2 in de repository, conversie naar Apache-2.0."
+    }
+  },
+  "licenseWizard": {
+    "tiers": {
+      "individualFree": "Individuele gratis licentie",
+      "opcFree": "Single-Owner Company-licentie",
+      "startupCommercial": "Startup commerciële licentie",
+      "enterprise": "Enterprise-licentie"
+    },
+    "referralSource": {
+      "selectPlaceholder": "Selecteer een optie...",
+      "productHunt": "Product Hunt"
+    }
+  },
+  "changelogMeta": {
+    "title": "Wijzigingslogboek — {brandName}",
+    "description": "Elke release, geleverd met obsessieve aandacht voor detail.",
+    "versionTitleSuffix": "{brandName} Wijzigingslogboek"
+  },
+  "roadmapMeta": {
+    "title": "Platform Roadmap — {brandName}",
+    "description": "De roadmap voor de beheerde platformbasis van {brandName}, de Harness-runtime en het upgrade-pad."
+  },
+  "blogMeta": {
+    "title": "Blog — {brandName}",
+    "description": "Engineering-inzichten, productupdates en SaaS-best practices van het {brandName}-team."
+  },
+  "getLicenseMeta": {
+    "title": "Krijg je licentie — {brandName}",
+    "description": "Krijg je {brandName}-licentie en platformtoegang in 2 minuten."
+  },
+  "landing": {
+    "faq": {
+      "badge": "FAQ",
+      "title": "Vragen, direct beantwoord",
+      "subtitle": "Alles wat je moet weten voordat je live gaat.",
+      "items": {
+        "what-is-sailor": {
+          "question": "Wat is {productName} precies?",
+          "answer": "Sailor is een uitgesproken Next.js + Tailwind v4 SaaS-fundament met auth, facturering, multi-tenancy, AI, wachtrijen, zoekfunctie en e-mail die al zijn ingesteld. Je clone het, configureert providers en gaat live — meestal binnen een week."
+        },
+        "who-is-it-for": {
+          "question": "Voor wie is Sailor gebouwd?",
+          "answer": "Oprichters en productengineers die hun tijd willen besteden aan het onderscheidende element — niet aan het voor de vijfde keer opnieuw bouwen van dezelfde auth/facturering/tenancy-infrastructuur."
+        },
+        "free-or-paid": {
+          "question": "Is het gratis of betaald?",
+          "answer": "De volledige broncode wordt uitgegeven onder AGPL-3.0 — gratis voor persoonlijke projecten, interne tooling en AGPL-compatibel open-source werk. Een commerciële licentie opent het recht om Sailor te gebruiken in gesloten, proprietaire SaaS. Elk plan bevat de volledige functieset (authenticatie, facturering, multi-tenancy, AI, audit); de niveaus verschillen in licentievoorwaarden en ondersteunings-SLA, niet in functies."
+        },
+        "china-friendly": {
+          "question": "Werkt het in China?",
+          "answer": "Ja. We leveren een parallelle infrastructuurconfiguratie (Aliyun-compatibele CDN, ICP-vriendelijke domeinen, optioneel Penpot in plaats van Figma) zodat dezelfde codebase probleemloos binnen de Great Firewall kan worden gedeployed."
+        },
+        "deployment": {
+          "question": "Waar kan ik het deployen?",
+          "answer": "Overal waar Node 22+ draait. De marketing-site wordt naar Vercel gedeployed; het dashboard, de gateway en de Python-services draaien op Docker / PM2 (we draaien ze vandaag de dag op Aliyun ECS, met volledige Kubernetes-manifesten onder infra/iac/k8s/ voor clusters). Enterprise-klanten kunnen ook binnen hun eigen VPCs deployen."
+        },
+        "security": {
+          "question": "Hoe wordt beveiliging afgehandeld?",
+          "answer": "Toepassingslaag-envelope encryptie voor geheimen (@nebutra/vault), Postgres RLS voor tenant-isolatie, RBAC/ABAC via CASL of OpenFGA (@nebutra/permissions), HMAC-ondertekende inter-service tokens, ondertekende uitgaande webhooks en een SOC 2-uitgelijnde audit-pipeline (@nebutra/audit) inbegrepen in elk plan. Pro en Enterprise voegen SOC 2-attestatie-ondersteuning, toegewijde incidentrespons en langere audit-logretentie toe."
+        },
+        "support": {
+          "question": "Welke ondersteuning krijg ik?",
+          "answer": "Gratis klanten krijgen community Discord + GitHub Issues. Pro voegt prioritaire e-mail toe met een 1-werkdag respons-SLA. Enterprise krijgt een toegewijd Slack-kanaal en een onboarding-engineer."
+        },
+        "byo-provider": {
+          "question": "Kan ik mijn eigen provider meenemen?",
+          "answer": "Ja. Elke integratie (authenticatie, wachtrij, zoekopdracht, e-mail, betalingen, opslag, facturering) is provider-agnostisch. De fabriek in elk pakket kiest de juiste adapter uit een enkele omgevingsvariabele — vervang Clerk door Better Auth, NextAuth of Supabase Auth, QStash door BullMQ, Resend door SES, Stripe door Polar / LemonSqueezy / ChinaPay — zonder de applicatiecode aan te raken."
+        },
+        "tech-stack": {
+          "question": "Wat is de tech stack?",
+          "answer": "Next.js 16 (App Router) op React 19, TypeScript 5.9, Tailwind v4, Prisma 7 over Postgres (met pgvector + RLS), Hono voor de BFF-gateway, FastAPI voor ML/zware services en een gecureerde componentbibliotheek op Radix, {brandName} UI-primitieven en de gedeelde Motion-laag. AI-functies gaan via de Vercel AI SDK met provider-portabiliteit (OpenAI / OpenRouter / SiliconFlow / Azure / lokaal)."
+        },
+        "license": {
+          "question": "Wat is de licentie?",
+          "answer": "AGPL-3.0 met een Commerciële Uitzondering. Gratis voor persoonlijk gebruik, interne tooling en AGPL-compatibel OSS. Een betaalde commerciële licentie opent het recht om Sailor as-is te gebruiken in proprietaire SaaS. Volledige broncode is inbegrepen in elk plan."
+        },
+        "paid-updates": {
+          "question": "Moet ik betalen voor updates?",
+          "answer": "Nee. Broncode-updates zijn inbegrepen bij elk commercieel licentiepakket — haal op elk moment op uit main en rebased je fork. Het betaalde tarief is het recht om Sailor in commerciële productie te gebruiken, niet het recht om code te ontvangen. Elke minor-release wordt geleverd met een CHANGELOG en een upgradehandleiding voor eventuele breaking changes."
+        },
+        "why-turborepo": {
+          "question": "Waarom Turborepo in plaats van een standaard Next.js-app?",
+          "answer": "Sailor bestaat uit 10 apps + 104 gedeelde packages onder packages/*/* + 4 backend-lanes (Hono-gateway, FastAPI/Python, Go, Rust) — ver voorbij het punt waarop een enkele Next.js-mega-app nog onderhoudbaar blijft. Turborepo geeft ons affected-only builds, transparante remote caching en één bron van waarheid voor gedeelde design tokens, auth, facturering en observability — zonder elk team te dwingen in hetzelfde Next.js-proces."
+        },
+        "multi-tenancy": {
+          "question": "Hoe wordt multi-tenancy afgehandeld?",
+          "answer": "Twee lagen. Request-scope tenant-context via @nebutra/tenant (AsyncLocalStorage propageert de actieve org door elke serveraanroep, inclusief DB-query's en uitgaande webhooks), en database-afgedwongen isolatie via Postgres Row-Level Security-beleiden (infra/data/database/policies/rls.sql) gekoppeld aan een session-lokale app.current_tenant_id. Service-role-verbindingen omzeilen RLS alleen binnen vertrouwde interne services; alle gebruikersgerichte routes gaan via de tenant-scope client."
+        },
+        "swap-clerk": {
+          "question": "Kan ik Clerk vervangen door een andere auth-provider?",
+          "answer": "Ja. @nebutra/auth levert first-class adapters voor Clerk, Better Auth, NextAuth (Auth.js v5) en Supabase Auth. Schakel via de AUTH_PROVIDER-omgevingsvariabele of kies bij scaffold-tijd met create-sailor --auth=... — server-, React- en middleware-oppervlakken blijven identiek ongeacht de provider. Een vijfde adapter toevoegen betekent het implementeren van één interface (~80 LOC); niets in de omliggende code is gekoppeld aan een specifieke provider."
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "Geliefd bij bouwers",
+      "title": "Wat founders zeggen na het uitrollen met Sailor",
+      "subtitle": "Klantverhalen uit onze beta-cohort komen binnenkort — wees een van de eersten."
+    },
+    "comparison": {
+      "badge": "Niveaus vergelijken",
+      "title": "Alles is gratis. Kies hoeveel zekerheid u nodig hebt.",
+      "subtitle": "Elk niveau bevat de volledige broncode en staat kosteloos closed-source commercieel gebruik toe. De verschillen zitten in support, contractuele toezeggingen en merkrechten.",
+      "plan": {
+        "community": "Community",
+        "team": "Team",
+        "enterprise": "Enterprise"
+      },
+      "feature": {
+        "license": {
+          "label": "Licentie",
+          "type": "Licentie",
+          "commercial-use": "Closed-source commercieel gebruik",
+          "registration": "Registratie",
+          "trademark": "Merkrechten"
+        },
+        "source": {
+          "label": "Broncode",
+          "full-source": "Volledige broncode",
+          "all-packages": "Alle pakketten en modules",
+          "update-window": "Updates"
+        },
+        "support": {
+          "label": "Ondersteuning",
+          "channel": "Supportkanaal",
+          "first-response": "Gegarandeerde eerste reactie",
+          "security-patch": "Toezegging securitypatches"
+        },
+        "procurement": {
+          "label": "Inkoop",
+          "indemnification": "Vrijwaring",
+          "dpa": "Ondertekende verwerkersovereenkomst en compliancepakket",
+          "continuity": "Continuïteitstoezegging"
+        }
+      },
+      "ariaTable": "Vergelijking van niveaus en functies",
+      "value": {
+        "included": "Inbegrepen",
+        "notIncluded": "Niet inbegrepen",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Niet vereist",
+        "whiteLabelRights": "White-labelrechten",
+        "unlimited": "Onbeperkt",
+        "unlimitedPlusNotice": "Onbeperkt + vooraankondiging breaking changes",
+        "unlimitedPlusLts": "Onbeperkt + long-term-supportbranch",
+        "publicChannels": "Publieke issues en Discord",
+        "privateChannel": "Privékanaal",
+        "namedContact": "Vast aanspreekpunt",
+        "twoBusinessDays": "2 werkdagen",
+        "fourBusinessHours": "4 werkuren",
+        "bestEffort": "Naar beste vermogen",
+        "contractual": "Contractueel"
+      }
+    },
+    "socialProof": {
+      "title": "Gebouwd op een stack die je kunt vertrouwen",
+      "logosLabel": "Integratiepartners",
+      "metrics": {
+        "developers": {
+          "value": "47+",
+          "label": "Ondersteunde AI-aanbieders"
+        },
+        "projects": {
+          "value": "104",
+          "label": "monorepo-pakketten"
+        },
+        "uptime": {
+          "value": "7",
+          "label": "i18n-locales out of the box"
+        }
+      }
+    }
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP-registratienummer",
+      "publicSecurity": "Openbare veiligheid"
+    }
+  },
+  "icpFooter": {
+    "recordNumber": "ICP-registratie",
+    "publicSecurity": "Openbare veiligheidsregistratie"
+  },
+  "MarketLocalePicker": {
+    "title": "Regio's en talen",
+    "description": "Selecteer een regio en taal voor de marketingwebsite.",
+    "triggerAria": "Selecteer regio en taal",
+    "searchPlaceholder": "Zoek regio's…",
+    "plannedHint": "De interface valt terug op Engels tot deze taal beschikbaar is",
+    "noResults": "Geen overeenkomende regio's",
+    "menuAria": "Regio's en talen"
+  }
+}

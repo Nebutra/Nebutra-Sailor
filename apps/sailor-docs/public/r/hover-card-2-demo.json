@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hover-card-2-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/hover-card-2-demo.tsx",
+      "content": "\"use client\";\n\nimport { HoverCard, HoverCardContent, HoverCardTrigger } from \"@nebutra/ui/primitives\";\n\nexport function HoverCard2Demo() {\n  return (\n    <HoverCard>\n      <HoverCardTrigger className=\"text-sm font-medium h-10 px-4 py-2 inline-flex cursor-pointer items-center justify-center rounded-[var(--radius-md)] whitespace-nowrap text-primary underline-offset-4 transition-colors duration-150 ease-out hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50\">\n        Visit documentation\n      </HoverCardTrigger>\n      <HoverCardContent side=\"top\" className=\"w-72\">\n        <div className=\"space-y-2\">\n          <h4 className=\"font-semibold\">Nebutra Docs</h4>\n          <p className=\"text-sm text-muted-foreground\">\n            Comprehensive guides and API references for building with Nebutra.\n          </p>\n        </div>\n      </HoverCardContent>\n    </HoverCard>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

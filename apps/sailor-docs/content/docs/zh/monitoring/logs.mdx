@@ -1,0 +1,237 @@
+---
+title: "结构化日志"
+description: "在 Nebutra 全栈中使用 @nebutra/logger 进行结构化、感知租户的 JSON 日志记录。"
+---
+
+`@nebutra/logger` 是 Nebutra 的结构化日志库。它将换行符分隔的 JSON 写入 stdout，自动注入租户上下文，并将 `warn` 和 `error` 级别的事件作为面包屑和捕获的异常转发给 Sentry。
+
+## 为什么不用 `console.log`？
+
+`console.log` 输出难以搜索、解析和关联的非结构化字符串。`@nebutra/logger` 提供：
+
+- **结构化 JSON** — 每行日志都是一个具有一致字段的可解析对象
+- **租户上下文** — `tenantId`、`orgId` 和 `userId` 自动注入
+- **日志级别** — 通过设置 `LOG_LEVEL=warn` 在生产环境中过滤噪音
+- **Sentry 集成** — `warn` 和 `error` 日志成为 Sentry 面包屑；未捕获的错误成为 Sentry 问题
+- **生产环境零 `console.log`** — 由项目的 ESLint 规则强制执行
+
+<Warning>
+切勿在应用代码中使用 `console.log`、`console.warn` 或 `console.error`，请使用 `@nebutra/logger` 代替。项目的 Stop 钩子会在会话结束前检查所有修改过的文件中的 `console.log`。
+</Warning>
+
+## 基本用法
+
+```typescript
+import { logger } from "@nebutra/logger";
+
+// 信息 — 常规操作事件
+logger.info("项目已创建", { projectId, tenantId, userId });
+
+// 警告 — 异常但可恢复的情况
+logger.warn("配额即将达到上限", {
+  tenantId,
+  used: 8100,
+  limit: 10000,
+  percentage: 81,
+});
+
+// 错误 — 需要关注的故障
+logger.error("支付处理失败", {
+  error,
+  invoiceId,
+  tenantId,
+});
+```
+
+## 日志级别
+
+| 级别 | 使用时机 | Sentry 行为 |
+|------|---------|------------|
+| `trace` | 详细调试（循环、低级 I/O） | 不转发 |
+| `debug` | 开发者调试细节 | 不转发 |
+| `info` | 正常操作事件（已创建、已更新、已发送） | 不转发 |
+| `warn` | 意外但可恢复的情况 | Sentry 面包屑 |
+| `error` | 影响功能的故障 | Sentry 面包屑 + 捕获的异常 |
+| `fatal` | 需要立即关注的不可恢复故障 | Sentry 事件（高严重程度） |
+
+### 配置活动级别
+
+设置 `LOG_LEVEL` 来控制写入 stdout 的最低级别：
+
+```bash
+LOG_LEVEL=debug   # 开发环境 — 详细模式
+LOG_LEVEL=info    # 预发布环境 — 正常模式
+LOG_LEVEL=warn    # 生产环境 — 仅警告及以上
+```
+
+未设置 `LOG_LEVEL` 时，默认为 `info`。
+
+## 结构化日志格式
+
+每行日志是一个包含以下字段的 JSON 对象：
+
+```json
+{
+  "level": "info",
+  "time": "2026-03-31T12:34:56.789Z",
+  "msg": "项目已创建",
+  "projectId": "proj_abc123",
+  "tenantId": "org_xyz789",
+  "userId": "user_def456",
+  "service": "api-gateway",
+  "env": "production",
+  "release": "v2.4.1"
+}
+```
+
+`service`、`env` 和 `release` 由环境变量自动注入。你只需提供与业务相关的字段。
+
+## 租户上下文注入
+
+在经过 Nebutra 租户中间件处理的请求中调用时，`logger` 会自动从 `AsyncLocalStorage` 中读取当前租户上下文，并将 `tenantId`、`orgId` 和 `userId` 添加到每行日志中，无需手动传递：
+
+```typescript
+// ✅ 推荐方式 — 租户上下文自动注入
+logger.info("已生成发票", { invoiceId, amount });
+
+// 输出的 JSON 将包含来自请求上下文的 tenantId 和 userId
+// {
+//   "msg": "已生成发票",
+//   "invoiceId": "inv_xxx",
+//   "amount": 99.99,
+//   "tenantId": "org_yyy",   ← 自动注入
+//   "userId": "user_zzz"     ← 自动注入
+// }
+```
+
+如果需要在请求上下文之外记录日志（例如定时任务），请显式传递租户标识符：
+
+```typescript
+logger.info("已生成定时报告", {
+  reportId,
+  tenantId: job.tenantId,
+});
+```
+
+## 错误日志记录
+
+始终直接传递 `Error` 对象。日志记录器会序列化 `message`、`name`、`stack` 及任何附加属性：
+
+```typescript
+try {
+  await stripe.invoices.pay(invoiceId);
+} catch (error) {
+  logger.error("Stripe 发票支付失败", {
+    error,
+    invoiceId,
+    tenantId,
+  });
+  throw new Error("支付处理失败——请重试");
+}
+```
+
+<Note>
+`logger.error` 会自动以额外属性作为上下文调用 `Sentry.captureException(error)`。错误将在几秒内出现在 Sentry 的**问题**标签页中。
+</Note>
+
+## Sentry 集成详情
+
+日志记录器的 Sentry 集成工作方式如下：
+
+| 日志调用 | Sentry 行为 |
+|---------|------------|
+| `logger.warn(msg, ctx)` | `Sentry.addBreadcrumb({ level: "warning", message: msg, data: ctx })` |
+| `logger.error(msg, { error, ...ctx })` | `Sentry.addBreadcrumb(...)` + `Sentry.captureException(error, { extra: ctx })` |
+| `logger.fatal(msg, { error, ...ctx })` | 同 error，但 Sentry 中的 `level` 为 `"fatal"` |
+
+这意味着 Sentry 问题始终包含错误发生前的 `warn` 事件面包屑轨迹，为调试提供完整的上下文信息。
+
+## 查询日志
+
+### 在 Sentry 中
+
+所有 `warn` 和 `error` 日志都会以面包屑的形式出现在 Sentry 问题中。导航到任意问题并打开**面包屑**部分，即可看到错误发生前的日志事件序列。
+
+### 在本地开发环境中
+
+将 Next.js 开发服务器的输出通过管道传给 `jq` 以获得格式化的 JSON 视图：
+
+```bash
+pnpm dev 2>&1 | jq '.'
+```
+
+或按日志级别过滤：
+
+```bash
+pnpm dev 2>&1 | jq 'select(.level == "error")'
+```
+
+### 在生产环境中（stdout）
+
+如果你的部署平台支持日志流（Vercel Log Drains、Railway、Render），可以配置将 stdout JSON 发送到日志聚合服务。
+
+Nebutra 将结构化 JSON 日志输出到 stdout。使用你的部署平台的日志 Drain 将其传送到集中式服务。
+
+### Vercel Log Drains
+
+在 **Vercel Dashboard → Project → Settings → Log Drains** 中配置。支持的目标：
+
+| 目标 | 格式 | 适用场景 |
+|------|------|----------|
+| Datadog | JSON | 已使用 Datadog APM |
+| Grafana Loki | JSON | 自托管或 Grafana Cloud |
+| HTTP 端点 | JSON | 自定义接入（Axiom、Better Stack 等） |
+
+### Datadog 快速接入
+
+1. 从 Vercel Marketplace 安装 Vercel + Datadog 集成。
+2. 在 Vercel 项目环境变量中添加 `DATADOG_API_KEY`。
+3. 集成会自动创建 Log Drain，将所有 stdout JSON 转发到 Datadog Logs。
+
+```typescript
+// 日志在 Datadog 中会带有以下默认属性：
+// service: "nebutra", env: "production", version: <VERCEL_GIT_COMMIT_SHA>
+import { logger } from "@nebutra/logger";
+logger.info("order.created", { orderId, tenantId });
+```
+
+### 当前日志覆盖情况
+
+| 日志级别 | 可查看位置 |
+|---------|-----------|
+| `error` | Sentry 面包屑 + Log Drain |
+| `warn` | Sentry 面包屑 + Log Drain |
+| `info` | 仅 Log Drain |
+| `debug` | 仅 Log Drain（生产环境默认不输出） |
+
+在特定环境中临时设置 `NEBUTRA_LOG_LEVEL=debug` 可捕获详细日志，而不影响生产环境。
+
+## 子日志记录器
+
+对于需要始终输出一组固定上下文字段的库或模块，可创建子日志记录器：
+
+```typescript
+import { logger } from "@nebutra/logger";
+
+const queueLogger = logger.child({ service: "queue", provider: "bullmq" });
+
+queueLogger.info("任务已入队", { jobId, queue: "email" });
+// → { "service": "queue", "provider": "bullmq", "msg": "任务已入队", "jobId": "...", "queue": "email", ... }
+```
+
+---
+
+<CardGroup cols={2}>
+  <Card title="监控概览" icon="bell" href="/zh/monitoring/overview">
+    完整监控栈的架构、告警渠道和关键指标。
+  </Card>
+  <Card title="Sentry 配置" icon="bug" href="/zh/monitoring/sentry">
+    配置 Sentry 错误追踪、性能监控和发布追踪。
+  </Card>
+  <Card title="多租户" icon="building" href="/zh/guides/multi-tenancy">
+    了解租户上下文如何通过 AsyncLocalStorage 传播。
+  </Card>
+  <Card title="故障排查" icon="wrench" href="/zh/troubleshooting/overview">
+    使用 Sentry 和结构化日志查询诊断常见问题。
+  </Card>
+</CardGroup>

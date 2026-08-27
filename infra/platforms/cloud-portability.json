@@ -1,0 +1,98 @@
+{
+  "$schema": "./cloud-portability.schema.json",
+  "version": 1,
+  "defaultTopology": {
+    "frontend": "vercel",
+    "gateway": "cloudflare-workers",
+    "originBackend": "ecs-docker"
+  },
+  "principles": [
+    "One active deploy target per service per environment",
+    "Container images are portable across GHCR, AWS ECR, and GCP Artifact Registry",
+    "Cloud-specific credentials use OIDC or workload identity in CI whenever possible",
+    "Provider adapters are dormant unless explicitly selected by DEPLOY_TARGET_*"
+  ],
+  "providers": {
+    "aws": {
+      "status": "ready-adapter",
+      "compute": ["ecs-fargate", "eks", "ec2"],
+      "registry": {
+        "kind": "ecr",
+        "imagePattern": "{account}.dkr.ecr.{region}.amazonaws.com/nebutra-{service}"
+      },
+      "auth": {
+        "githubActions": "oidc",
+        "variables": ["AWS_REGION"],
+        "secrets": ["AWS_ACCOUNT_ID", "AWS_ECR_ROLE_ARN"]
+      },
+      "terraformModule": "infra/iac/terraform/modules/aws",
+      "deployTargets": ["aws", "k8s", "ecs-docker"]
+    },
+    "gcp": {
+      "status": "dormant-adapter",
+      "compute": ["gke", "cloud-run", "compute-engine"],
+      "registry": {
+        "kind": "artifact-registry",
+        "imagePattern": "{region}-docker.pkg.dev/{project}/{repository}/nebutra-{service}"
+      },
+      "auth": {
+        "githubActions": "workload-identity-federation",
+        "variables": [
+          "GCP_PROJECT_ID",
+          "GCP_REGION",
+          "GCP_ARTIFACT_REPOSITORY",
+          "GCP_WORKLOAD_IDENTITY_PROVIDER",
+          "GCP_SERVICE_ACCOUNT"
+        ],
+        "secrets": []
+      },
+      "terraformModule": "infra/iac/terraform/modules/gcp",
+      "deployTargets": ["gcp", "k8s", "ecs-docker"]
+    },
+    "cloud-vm": {
+      "status": "active-origin-default",
+      "compute": ["generic-linux-vm", "aliyun-ecs", "tencent-cvm", "aws-ec2", "gcp-compute-engine"],
+      "registry": {
+        "kind": "docker-compatible"
+      },
+      "auth": {
+        "githubActions": "ssh"
+      },
+      "terraformModule": null,
+      "deployTargets": ["ecs-docker"]
+    },
+    "k8s": {
+      "status": "dormant-adapter",
+      "compute": ["generic-kubernetes", "eks", "gke", "ack"],
+      "registry": {
+        "kind": "docker-compatible"
+      },
+      "auth": {
+        "githubActions": "kubeconfig-or-cloud-oidc"
+      },
+      "terraformModule": null,
+      "deployTargets": ["k8s"]
+    },
+    "vercel": {
+      "status": "active-frontend-default",
+      "compute": ["vercel-functions", "edge-network"],
+      "registry": {
+        "kind": "managed-build-output"
+      },
+      "auth": {
+        "githubActions": "vercel-git-integration"
+      },
+      "terraformModule": null,
+      "deployTargets": ["vercel", "vercel-functions"]
+    }
+  },
+  "ci": {
+    "doctor": "pnpm cloud:doctor",
+    "verify": "pnpm cloud:verify",
+    "workflows": [
+      ".github/workflows/docker-build-push.yml",
+      ".github/workflows/deploy-gateway.yml",
+      ".github/workflows/deploy-origin-ecs.yml"
+    ]
+  }
+}

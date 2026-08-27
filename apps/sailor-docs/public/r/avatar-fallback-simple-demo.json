@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "avatar-fallback-simple-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/avatar-fallback-simple-demo.tsx",
+      "content": "\"use client\";\n\nimport { Avatar, AvatarFallback } from \"@nebutra/ui/primitives\";\n\nexport function AvatarFallbackSimpleDemo() {\n  return (\n    <Avatar size=\"md\">\n      <AvatarFallback size=\"md\">NN</AvatarFallback>\n    </Avatar>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "name": "@nebutra/ai-providers",
+  "version": "1.0.1",
+  "private": false,
+  "description": "Provider registry metadata for Nebutra — meta-only, consumed by @nebutra/create-sailor and docs. Runtime lives in @nebutra/agents.",
+  "sideEffects": false,
+  "type": "module",
+  "nebutra": {
+    "graph": "runtime",
+    "featureId": "ai-providers",
+    "category": "ai",
+    "surface": "provider-metadata",
+    "summary": "Provider metadata only; runtime execution belongs to @nebutra/agents",
+    "status": "stable",
+    "productionReady": true,
+    "role": "meta-only",
+    "runtime": "@nebutra/agents"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./meta": {
+      "types": "./dist/meta.d.ts",
+      "import": "./dist/meta.js",
+      "default": "./dist/meta.js"
+    },
+    "./catalog": {
+      "types": "./dist/catalog.d.ts",
+      "import": "./dist/catalog.js",
+      "default": "./dist/catalog.js"
+    },
+    "./frontier": {
+      "types": "./dist/frontier.d.ts",
+      "import": "./dist/frontier.js",
+      "default": "./dist/frontier.js"
+    },
+    "./templates/*": "./templates/*"
+  },
+  "files": [
+    "dist",
+    "templates",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@tokenlens/core": "^1.3.0",
+    "@tokenlens/fetch": "^1.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/ai-providers#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/ai-providers"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  }
+}

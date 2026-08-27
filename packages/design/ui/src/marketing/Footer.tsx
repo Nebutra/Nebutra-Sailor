@@ -1,0 +1,228 @@
+"use client";
+
+import { brand } from "@nebutra/brand/metadata";
+import {
+  ArrowRight,
+  Message as Discord,
+  LogoGithub as Github,
+  Linkedin,
+  LogoTwitterX as Twitter,
+  LogoYoutubeSmall as Youtube,
+} from "@nebutra/icons";
+import { cva } from "class-variance-authority";
+import Link from "next/link";
+import { AnimateIn } from "../primitives/animate-in";
+import { Input } from "../primitives/input";
+import { cn } from "../utils/cn";
+import type { FooterProps } from "./types";
+
+const EMPTY_FOOTER_SECTIONS: NonNullable<FooterProps["sections"]> = [];
+const EMPTY_SOCIAL_LINKS: NonNullable<FooterProps["social"]> = [];
+const DEFAULT_COPYRIGHT = `© ${new Date().getFullYear()} ${brand.name}. All rights reserved.`;
+
+const footerVariants = cva("w-full bg-background border-t border-border", {
+  variants: {
+    density: {
+      compact: "pt-12 pb-8",
+      normal: "pt-16 pb-10 md:pt-24",
+      spacious: "pt-24 pb-12 md:pt-32",
+    },
+  },
+  defaultVariants: {
+    density: "normal",
+  },
+});
+
+function SocialIcon({ platform }: { platform: string }) {
+  switch (platform) {
+    case "twitter":
+      return <Twitter className="w-5 h-5" />;
+    case "github":
+      return <Github className="w-5 h-5" />;
+    case "linkedin":
+      return <Linkedin className="w-5 h-5" />;
+    case "discord":
+      return <Discord className="w-5 h-5" />;
+    case "youtube":
+      return <Youtube className="w-5 h-5" />;
+    default:
+      return null;
+  }
+}
+
+function isInternalHref(href: string) {
+  return href.startsWith("/") && !href.startsWith("//");
+}
+
+export function Footer({
+  locale = "en",
+  sections = EMPTY_FOOTER_SECTIONS,
+  social = EMPTY_SOCIAL_LINKS,
+  showNewsletter = true,
+  copyright,
+  className,
+  id,
+  density = "normal",
+}: FooterProps) {
+  return (
+    <footer id={id} className={cn(footerVariants({ density }), className)}>
+      <div className="max-w-[var(--container-wide)] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Main Footer Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 xl:gap-12 mb-16 md:mb-24">
+          {/* Brand & Social Column */}
+          <div className="md:col-span-4 lg:col-span-4 flex flex-col gap-6">
+            <AnimateIn preset="fadeUp">
+              {/* Brand Logo */}
+              <Link
+                href={`/${locale}`}
+                className="inline-flex items-center gap-2 outline-none rounded-[var(--radius-md)]"
+              >
+                {/* Generic Standard Logo Placeholder */}
+                <div className="flex items-center justify-center w-8 h-8 rounded-[var(--radius-lg)] bg-[hsl(var(--primary))] text-white font-bold">
+                  {brand.name.charAt(0)}
+                </div>
+                <span className="text-xl font-bold tracking-tight text-foreground">
+                  {brand.name}
+                </span>
+              </Link>
+
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground max-w-sm">
+                {brand.description}
+              </p>
+
+              {social.length > 0 && (
+                <div className="flex items-center gap-4 mt-6">
+                  {social.map((link) => (
+                    <a
+                      key={link.platform}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-muted-foreground hover:text-[hsl(var(--primary))] transition-colors outline-none rounded-[var(--radius-md)]"
+                      aria-label={link.platform}
+                    >
+                      <SocialIcon platform={link.platform} />
+                    </a>
+                  ))}
+                </div>
+              )}
+            </AnimateIn>
+          </div>
+
+          {/* Navigation Links Columns */}
+          <div className="md:col-span-8 lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+            {sections.map((section, idx) => (
+              <AnimateIn key={section.title} preset="fadeUp" delay={0.1 + idx * 0.05}>
+                <div className="flex flex-col gap-4">
+                  <h4 className="text-sm font-semibold tracking-wide text-foreground">
+                    {section.title}
+                  </h4>
+                  <ul className="flex flex-col gap-3">
+                    {section.links.map((link) => (
+                      <li key={link.href}>
+                        {link.external || !isInternalHref(link.href) ? (
+                          <a
+                            href={link.href}
+                            target={link.external ? "_blank" : undefined}
+                            rel={link.external ? "noopener noreferrer" : undefined}
+                            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors outline-none rounded-[var(--radius-sm)]"
+                          >
+                            {link.label}
+                            {link.badge && (
+                              <span className="px-2 py-0.5 text-[10px] uppercase tracking-wider font-semibold bg-[hsl(var(--primary) / 0.12)] text-[hsl(var(--primary))] rounded-full">
+                                {link.badge}
+                              </span>
+                            )}
+                          </a>
+                        ) : (
+                          <Link
+                            href={link.href}
+                            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors outline-none rounded-[var(--radius-sm)]"
+                          >
+                            {link.label}
+                            {link.badge && (
+                              <span className="px-2 py-0.5 text-[10px] uppercase tracking-wider font-semibold bg-[hsl(var(--primary) / 0.12)] text-[hsl(var(--primary))] rounded-full">
+                                {link.badge}
+                              </span>
+                            )}
+                          </Link>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </AnimateIn>
+            ))}
+
+            {/* Newsletter Injection into the responsive grid if there is space */}
+            {showNewsletter && sections.length < 4 && (
+              <AnimateIn
+                preset="fadeUp"
+                delay={0.3}
+                className="col-span-2 md:col-span-4 lg:col-span-1 min-w-[240px]"
+              >
+                <div className="flex flex-col gap-4">
+                  <h4 className="text-sm font-semibold tracking-wide text-foreground">Subscribe</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Get the latest updates and release notes straight to your inbox.
+                  </p>
+                  <div className="mt-2 flex flex-col gap-3">
+                    <div className="relative flex items-center">
+                      <Input
+                        type="email"
+                        placeholder="Enter your email"
+                        aria-label="Email address"
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="absolute right-1 p-1.5 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted rounded-[var(--radius-md)] transition-colors"
+                        aria-label="Submit newsletter subscription"
+                      >
+                        <ArrowRight className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </AnimateIn>
+            )}
+          </div>
+        </div>
+
+        {/* Bottom Bar: Legal & Locale */}
+        <AnimateIn preset="fadeUp" delay={0.4}>
+          <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-6">
+            <p className="text-sm text-muted-foreground order-2 md:order-1 text-center md:text-left">
+              {copyright || DEFAULT_COPYRIGHT}
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 order-1 md:order-2">
+              <div className="flex items-center gap-6 text-sm text-muted-foreground">
+                <Link
+                  href={`/${locale}/privacy`}
+                  className="hover:text-foreground transition-colors outline-none rounded-[var(--radius-sm)]"
+                >
+                  Privacy Policy
+                </Link>
+                <Link
+                  href={`/${locale}/terms`}
+                  className="hover:text-foreground transition-colors outline-none rounded-[var(--radius-sm)]"
+                >
+                  Terms of Service
+                </Link>
+              </div>
+
+              <div className="flex items-center gap-2 text-sm text-muted-foreground border-l-0 sm:border-l border-border pl-0 sm:pl-8">
+                <span className="font-medium text-foreground uppercase tracking-wider text-xs bg-muted px-2 py-1 rounded">
+                  {locale}
+                </span>
+              </div>
+            </div>
+          </div>
+        </AnimateIn>
+      </div>
+    </footer>
+  );
+}
+
+Footer.displayName = "Footer";

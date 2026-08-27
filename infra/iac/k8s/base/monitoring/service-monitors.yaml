@@ -1,0 +1,135 @@
+# Prometheus ServiceMonitor resources
+#
+# Prerequisites:
+#   Prometheus Operator (kube-prometheus-stack):
+#   helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack \
+#     --namespace monitoring --create-namespace
+#
+# All services expose /metrics on the same HTTP port as the app.
+# Node.js apps use prom-client; backend services expose /metrics on their HTTP port.
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: nebutra-node-apps
+  namespace: nebutra
+  labels:
+    # Prometheus Operator selects ServiceMonitors by this label
+    release: kube-prometheus-stack
+spec:
+  selector:
+    matchExpressions:
+      - key: app.kubernetes.io/component
+        operator: In
+        values: [gateway, frontend]
+  namespaceSelector:
+    matchNames: [nebutra]
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 30s
+      scrapeTimeout: 10s
+      honorLabels: true
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: nebutra-backend-services
+  namespace: nebutra
+  labels:
+    release: kube-prometheus-stack
+spec:
+  selector:
+    matchExpressions:
+      - key: app.kubernetes.io/name
+        operator: In
+        values:
+          - ai-service
+          - ecommerce-service
+          - recsys-service
+          - event-ingest-service
+  namespaceSelector:
+    matchNames: [nebutra]
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 30s
+      scrapeTimeout: 10s
+      honorLabels: true
+---
+# PrometheusRule: alert when any Nebutra service is unavailable or slow
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: nebutra-alerts
+  namespace: nebutra
+  labels:
+    release: kube-prometheus-stack
+spec:
+  groups:
+    - name: nebutra.availability
+      interval: 60s
+      rules:
+        - alert: NebutraServiceDown
+          expr: |
+            up{namespace="nebutra"} == 0
+          for: 2m
+          labels:
+            severity: critical
+            team: platform
+          annotations:
+            summary: "Nebutra service {{ $labels.job }} is down"
+            description: "Service {{ $labels.job }} in namespace {{ $labels.namespace }} has been unreachable for >2 minutes."
+
+        - alert: NebutraHighErrorRate
+          expr: |
+            sum(rate(http_requests_total{namespace="nebutra", status=~"5.."}[5m]))
+            /
+            sum(rate(http_requests_total{namespace="nebutra"}[5m])) > 0.05
+          for: 5m
+          labels:
+            severity: warning
+            team: platform
+          annotations:
+            summary: "High 5xx error rate in nebutra namespace"
+            description: "Error rate is {{ humanizePercentage $value }} over the last 5 minutes."
+
+        - alert: NebutraHighP99Latency
+          expr: |
+            histogram_quantile(0.99,
+              sum(rate(http_request_duration_seconds_bucket{namespace="nebutra"}[5m])) by (le, job)
+            ) > 2
+          for: 5m
+          labels:
+            severity: warning
+            team: platform
+          annotations:
+            summary: "High P99 latency for {{ $labels.job }}"
+            description: "P99 latency is {{ humanizeDuration $value }} for {{ $labels.job }}."
+
+    - name: nebutra.capacity
+      interval: 300s
+      rules:
+        - alert: NebutraPodCrashLooping
+          expr: |
+            rate(kube_pod_container_status_restarts_total{namespace="nebutra"}[15m]) > 0
+          for: 5m
+          labels:
+            severity: critical
+            team: platform
+          annotations:
+            summary: "Pod {{ $labels.pod }} is crash-looping"
+            description: "Container {{ $labels.container }} in pod {{ $labels.pod }} has restarted {{ $value }} times in the last 15 minutes."
+
+        - alert: NebutraHPAMaxedOut
+          expr: |
+            kube_horizontalpodautoscaler_status_current_replicas{namespace="nebutra"}
+            ==
+            kube_horizontalpodautoscaler_spec_max_replicas{namespace="nebutra"}
+          for: 15m
+          labels:
+            severity: warning
+            team: platform
+          annotations:
+            summary: "HPA {{ $labels.horizontalpodautoscaler }} has reached max replicas"
+            description: "{{ $labels.horizontalpodautoscaler }} is at max capacity ({{ $value }} replicas). Consider raising the limit or reducing load."

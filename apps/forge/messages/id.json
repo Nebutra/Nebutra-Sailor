@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — Stasiun alat online",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "Alat codec, teks, hashing, dokumen, dan gambar secara online."
+  },
+  "nav": {
+    "main": "Navigasi utama",
+    "homeAria": "Beranda {brandName} Forge",
+    "tools": "Alat",
+    "wallet": "Dompet",
+    "api": "API",
+    "routerAria": "Router {brandName}",
+    "categoriesAria": "Kategori alat",
+    "languageAria": "Ubah bahasa"
+  },
+  "tool": {
+    "breadcrumbAria": "Breadcrumb",
+    "workspace": "Workspace",
+    "workspaceHint": "Lokal atau server · jalur sama seperti API",
+    "api": "API",
+    "apiHint": "Kontrak sama dengan halaman. Gunakan kunci terautentikasi di produksi.",
+    "related": "Alat terkait"
+  },
+  "auth": {
+    "signIn": "Masuk",
+    "signUp": "Daftar",
+    "signOut": "Keluar"
+  },
+  "footer": {
+    "navAria": "Bagian Bawah",
+    "blurb": "Stasiun alat online. Selesaikan tugas di browser, atau otomatisasi via API / MCP.",
+    "product": "Produk",
+    "developers": "Pengembang",
+    "company": "Perusahaan",
+    "docs": "Dokumentasi integrasi",
+    "website": "Situs Web",
+    "privacy": "Privasi"
+  },
+  "home": {
+    "eyebrow": "Lihat. Panggil.",
+    "title": "Pisau swiss untuk alat online",
+    "subtitle": "Codec, teks, hashing, dokumen, dan pemrosesan gambar. Selesaikan di browser, atau otomatisasi via API / MCP — satu implementasi.",
+    "toolCount": "{count} alat",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "Cari: hitung kata, base64, json, timestamp…",
+    "aria": "Cari alat",
+    "emptyTitle": "Tidak ada alat yang cocok dengan “{query}”",
+    "emptyHint": "Coba kata kunci lain, atau pilih alat dari kategori di bawah."
+  },
+  "categories": {
+    "codec": {
+      "label": "Codec",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "Validasi Tiongkok",
+      "hint": "ID · telepon"
+    },
+    "data": {
+      "label": "Data",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "Pengembang",
+      "hint": "Regex · SQL · warna · UUID"
+    },
+    "doc": {
+      "label": "Dokumen",
+      "hint": "Markdown · gabung/pisah PDF"
+    },
+    "finance": {
+      "label": "Keuangan",
+      "hint": "Jumlah ke kata"
+    },
+    "hash": {
+      "label": "Hash & keamanan",
+      "hint": "MD5 · SHA · HMAC · sandi"
+    },
+    "image": {
+      "label": "Gambar",
+      "hint": "Kompres · QR · konversi"
+    },
+    "life": {
+      "label": "Kalkulator kehidupan",
+      "hint": "KPR · BMI · kekerabatan"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "Token · biaya · skema"
+    },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
+    "security": {
+      "label": "Keamanan",
+      "hint": "Generator sandi"
+    },
+    "text": {
+      "label": "Teks",
+      "hint": "Jumlah kata · CJK · pinyin · Diff"
+    },
+    "time": {
+      "label": "Waktu",
+      "hint": "Timestamp · zona waktu · Cron · lunar"
+    },
+    "unit": {
+      "label": "Satuan",
+      "hint": "Panjang · berat · suhu · data"
+    },
+    "template": {
+      "label": "Templat",
+      "hint": ".gitignore · LICENSE · Dockerfile · README"
+    }
+  },
+  "runners": {
+    "common": {
+      "run": "Jalankan",
+      "running": "Sedang berjalan…",
+      "copy": "Salin",
+      "copied": "Tersalin",
+      "sameAsApi": "Sama dengan jalur API · Mesin OSS",
+      "mustBeNumber": "{label} harus berupa angka",
+      "base64Loaded": "Payload Base64 dimuat",
+      "workspaceMissing": "Workspace belum dikonfigurasi: {slug}",
+      "yes": "Ya",
+      "no": "Tidak",
+      "text": "Teks",
+      "input": "Masukan",
+      "output": "Keluaran",
+      "outputPlaceholder": "Hasil muncul di sini",
+      "localRun": "Jalankan lokal",
+      "serverRun": "Jalankan di server",
+      "serverVerify": "Verifikasi server",
+      "outputPreview": "Pratinjau output",
+      "mode": "Mode",
+      "encode": "Encode",
+      "decode": "Decode",
+      "file": "File",
+      "clear": "Bersihkan",
+      "length": "Panjang: {n}",
+      "bytes": "{bytes} byte",
+      "download": "Unduh",
+      "format": "Format",
+      "formatting": "Memformat…",
+      "dialect": "Dialek",
+      "color": "Warna",
+      "pickColor": "Pilih warna",
+      "content": "Konten",
+      "algorithm": "Algoritma",
+      "encoding": "Encoding",
+      "message": "Pesan",
+      "secret": "Rahasia",
+      "password": "Kata Sandi",
+      "direction": "Arah",
+      "preview": "Pratinjau",
+      "query": "Kueri",
+      "querying": "Mengkueri…",
+      "validate": "Validasi",
+      "validating": "Memvalidasi…",
+      "processing": "Memproses…",
+      "pretty": "Rapikan",
+      "minify": "Minifikasi",
+      "from": "Dari",
+      "to": "Ke",
+      "timezone": "Zona waktu",
+      "datetime": "Tanggal & waktu",
+      "compute": "Komputasi",
+      "computing": "Menghitung…",
+      "convertAction": "Konversi",
+      "count": "Jumlah",
+      "value": "Nilai",
+      "unit": "Satuan",
+      "generateLocal": "Hasilkan lokal",
+      "generateServer": "Hasilkan di server",
+      "copyAll": "Salin semua",
+      "emptyResult": "Hasil akan muncul di sini",
+      "copyText": "Salin teks",
+      "quality": "Kualitas",
+      "original": "Asli",
+      "result": "Hasil",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
+    },
+    "base64": {
+      "encodeDir": "Teks → Base64",
+      "decodeDir": "Base64 → Teks",
+      "localNote": "Web API Lokal (TextEncoder / atob)",
+      "serverNote": "Buffer Server · jalur sama dengan API"
+    },
+    "password": {
+      "uppercase": "Huruf Besar",
+      "lowercase": "Huruf kecil",
+      "digits": "Angka",
+      "symbols": "Simbol",
+      "generate": "Buat kata sandi",
+      "recent": "Terbaru",
+      "note": "Engine: node:crypto randomInt · aman secara kriptografi · jalur sama dengan API"
+    },
+    "hash": {
+      "algo": "Algoritma: {algo}",
+      "md5Warn": " · hanya checksum/kompatibilitas — jangan simpan kata sandi",
+      "md5LocalError": "MD5 memerlukan eksekusi server (Web Crypto tidak memiliki MD5)",
+      "md5ServerHint": "MD5: gunakan eksekusi server (hanya kompatibilitas, bukan untuk penyimpanan kata sandi)",
+      "localNote": "Web Crypto lokal · {algo}",
+      "serverNote": "node:crypto server · jalur sama seperti API"
+    },
+    "convert": {
+      "converting": "Mengonversi…",
+      "convert": "Konversi",
+      "done": "Selesai · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "Letakkan file di sini, atau klik untuk menjelajah",
+      "needFile": "Pilih file terlebih dahulu",
+      "needAlgo": "Pilih setidaknya satu algoritma",
+      "compute": "Hitung checksum",
+      "computing": "Menghitung…",
+      "algorithms": "Algoritma",
+      "note": "node:crypto · multi-algo · jalur sama dengan API"
+    },
+    "lorem": {
+      "paragraphs": "Paragraf",
+      "wordsPerParagraph": "Kata per paragraf",
+      "startWithLorem": "Mulai dengan “Lorem ipsum”",
+      "note": "Lorem Ipsum Generator · pure"
+    },
+    "emailValidate": {
+      "note": "Email Validator · format only (no MX lookup)"
+    },
+    "creditCardLuhn": {
+      "number": "Nomor kartu",
+      "note": "Luhn Checker · offline, never stored",
+      "digits": "digits",
+      "specimenLabel": "Specimen",
+      "structureOnly": "Luhn structure only",
+      "unknownBrand": "Card"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "JSON Minifier · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "CSS Minifier · ringan (aman di edge)"
+    },
+    "hashCompare": {
+      "a": "Hash A",
+      "b": "Hash B",
+      "ignoreCase": "Abaikan huruf besar/kecil",
+      "note": "Hash Comparator · waktu konstan untuk panjang sama"
+    },
+    "jsonDiff": {
+      "left": "JSON A",
+      "right": "JSON B",
+      "note": "JSON Diff · operasi level path · baris berwarna jenis · berdampingan",
+      "equal": "Identik",
+      "differs": "{count} perubahan",
+      "colPath": "Path",
+      "colKind": "Jenis",
+      "colLeft": "Kiri",
+      "colRight": "Kanan",
+      "filtersAria": "Filter berdasarkan jenis perubahan",
+      "filterAll": "Semua ({count})",
+      "filterAdd": "Tambah ({count})",
+      "filterRemove": "Hapus ({count})",
+      "filterChange": "Ubah ({count})",
+      "filterType": "Tipe ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "Mode",
+      "pretty": "Rapi",
+      "compact": "Padat",
+      "indent": "Indentasi",
+      "note": "Formatter YAML · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "Formatter TOML · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "Minifier XML · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "Validator URL · WHATWG URL (tanpa pengambilan jaringan)"
+    },
+    "ipValidate": {
+      "note": "Validator IP · IPv4/IPv6 offline"
+    },
+    "uuidValidate": {
+      "note": "Validator UUID · bentuk RFC 4122"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "Minifier HTML · ringan (aman di edge)"
+    },
+    "randomString": {
+      "length": "Panjang",
+      "count": "Jumlah",
+      "charset": "Charset",
+      "alphanumeric": "Alfanumerik",
+      "symbols": "Alfanumerik + simbol",
+      "hex": "Hex",
+      "base64url": "Base64URL",
+      "note": "Random String · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "Waktu baca · heuristik CJK + Latin"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "Level heading maksimum",
+      "note": "Markdown TOC · heading ATX"
+    },
+    "pdfInfo": {
+      "file": "File PDF",
+      "note": "Info PDF · pdf-lib (halaman + metadata)"
+    },
+    "rot13": {
+      "shift": "Geser (13 = ROT13)",
+      "note": "ROT13 / Caesar · murni"
+    },
+    "morse": {
+      "note": "Kode Morse · ITU · murni"
+    },
+    "textBinary": {
+      "toBinary": "Teks → biner",
+      "fromBinary": "Biner → teks",
+      "note": "Teks ↔ Biner · bit UTF-8"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "Enkripsi digest",
+      "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "Digest sekali jalan · salin masing-masing · node:crypto"
+    },
+    "cssFormat": {
+      "note": "CSS Beautifier · ringan"
+    },
+    "htmlFormat": {
+      "note": "HTML Beautifier · ringan"
+    },
+    "stringSimilarity": {
+      "a": "String A",
+      "b": "String B",
+      "note": "String Similarity · Levenshtein"
+    },
+    "roman": {
+      "toRoman": "Angka → Romawi",
+      "fromRoman": "Romawi → Angka",
+      "note": "Angka Romawi · 1–3999"
+    },
+    "age": {
+      "birthDate": "Tanggal lahir (YYYY-MM-DD)",
+      "asOf": "Per (opsional)",
+      "note": "Kalkulator Umur · Y/B/H tepat"
+    },
+    "tip": {
+      "bill": "Jumlah tagihan",
+      "percent": "Tips %",
+      "people": "Orang",
+      "note": "Kalkulator Tips · bagi adil"
+    },
+    "aspect": {
+      "width": "Lebar",
+      "height": "Tinggi",
+      "note": "Rasio Aspek · sederhanakan GCD"
+    },
+    "mime": {
+      "note": "Cari MIME · tipe web umum"
+    },
+    "ua": {
+      "note": "Parser User-Agent · heuristik (offline)"
+    },
+    "imageMeta": {
+      "file": "File gambar",
+      "note": "Metadata Gambar · sharp (ukuran buffer EXIF)"
+    },
+    "wordFreq": {
+      "top": "Top N",
+      "note": "Frekuensi Kata · CJK + Latin"
+    },
+    "jsonXml": {
+      "note": "JSON ↔ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "SQL Minifier · komentar + spasi"
+    },
+    "lineNum": {
+      "start": "Nomor awal",
+      "note": "Tambah Nomor Baris · murni"
+    },
+    "uniqueWords": {
+      "note": "Kata Unik · urutan pertama muncul"
+    },
+    "epoch": {
+      "value": "Nilai",
+      "msToIso": "ms → ISO",
+      "isoToMs": "ISO → ms",
+      "note": "Epoch Milidetik · Tanggal"
+    },
+    "passwordEntropy": {
+      "password": "Kata Sandi",
+      "note": "Entropi Kata Sandi · heuristik charset"
+    },
+    "contrast": {
+      "fg": "Latar Depan (#hex)",
+      "bg": "Latar Belakang (#hex)",
+      "note": "Kontras Warna · WCAG 2.x",
+      "sampleHeadline": "Sample text",
+      "pass": "pass",
+      "fail": "fail",
+      "aaNormal": "AA normal",
+      "aaLarge": "AA large",
+      "aaaNormal": "AAA normal",
+      "aaaLarge": "AAA large"
+    },
+    "exif": {
+      "file": "File gambar",
+      "note": "Penampil EXIF · exifr + JPEG fallback"
+    },
+    "regex": {
+      "pattern": "Pola",
+      "flags": "Bendera",
+      "replacement": "Pengganti",
+      "match": "Cocokkan",
+      "replace": "Ganti",
+      "test": "Uji",
+      "local": "Jalankan lokal",
+      "server": "Verifikasi server",
+      "count": "{count} kecocokan",
+      "sotaNote": "Sorotan lokal instan · batas waktu server · jalur sama dengan API"
+    },
+    "jwt": {
+      "decode": "Dekode JWT",
+      "sample": "Muat contoh",
+      "tokenPlaceholder": "Tempel JWT",
+      "decodeNote": "{engine} · hanya dekode, tanda tangan tidak diverifikasi",
+      "footerNote": "Engine: jose · tanpa verifikasi tanda tangan. Verifikasi produksi dengan kunci via jwtVerify di server.",
+      "generateHint": "Perlu menandatangani token?",
+      "secret": "Rahasia",
+      "exp": "Kadaluarsa (detik)",
+      "payload": "Payload JSON",
+      "note": "Generate JWT · HS256 (hanya dev/test)",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "(empty signature segment)"
+    },
+    "rand": {
+      "min": "Min",
+      "max": "Maks",
+      "count": "Jumlah",
+      "note": "Angka Acak · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "Sisi",
+      "count": "Jumlah dadu",
+      "note": "Pengocok Dadu · crypto RNG"
+    },
+    "hexRgb": {
+      "note": "HEX ↔ RGB · murni"
+    },
+    "base64url": {
+      "note": "Base64URL · gaya JWT"
+    },
+    "hmac": {
+      "message": "Pesan",
+      "secret": "Rahasia",
+      "signature": "Tanda Tangan",
+      "note": "Verifikasi HMAC · SHA-256"
+    },
+    "secret": {
+      "bytes": "Byte",
+      "count": "Jumlah",
+      "note": "Generator Kunci Rahasia · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "File PDF",
+      "note": "Optimasi Ringan PDF · penulisan ulang pdf-lib (bukan kompresi ulang gambar)",
+      "needFile": "Pilih file PDF terlebih dahulu"
+    },
+    "pdfCompress": {
+      "file": "File PDF",
+      "quality": "Kualitas",
+      "engine": "Mesin",
+      "qStructural": "Struktural (qpdf, aliran tanpa kehilangan)",
+      "qScreen": "Layar (terkecil, Ghostscript)",
+      "qEbook": "Ebook (seimbang, Ghostscript)",
+      "qPrinter": "Printer (kualitas lebih tinggi, Ghostscript)",
+      "eAuto": "Otomatis (qpdf → Ghostscript → pdf-lib)",
+      "download": "Unduh PDF",
+      "needFile": "Pilih file PDF terlebih dahulu",
+      "in": "Masukan",
+      "out": "Keluaran",
+      "saved": "Tersimpan",
+      "note": "Kompres PDF · qpdf / Ghostscript di host · pdf-lib cadangan",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+    },
+    "jsonFormat": {
+      "indent": "Indentasi",
+      "format": "Format",
+      "minify": "Minify",
+      "serverVerify": "Verifikasi server",
+      "clear": "Hapus",
+      "sample": "Contoh",
+      "placeholder": "Tempel JSON…",
+      "formatted": "Tersusun",
+      "minified": "Dipadatkan",
+      "serverOk": "Server {mode} · {engine}",
+      "valid": "JSON valid",
+      "invalid": "JSON tidak valid",
+      "line": "baris",
+      "column": "kolom",
+      "note": "Engine: JSON.parse/stringify · instan lokal · jalur sama dengan API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
+    },
+    "qr": {
+      "size": "Ukuran",
+      "ecl": "Koreksi kesalahan",
+      "generate": "Buat",
+      "download": "Unduh PNG",
+      "needText": "Masukkan teks atau URL",
+      "note": "QR · qrcode · pratinjau langsung · jalur sama dengan API"
+    },
+    "pdfText": {
+      "file": "File PDF",
+      "layout": "Tata letak",
+      "needFile": "Pilih PDF terlebih dahulu",
+      "note": "Teks PDF · pdftotext (poppler) di host"
+    },
+    "svg": {
+      "optimize": "Optimalkan",
+      "note": "Optimasi SVG · minifikasi murni ringan"
+    },
+    "routerTranslate": {
+      "lab": "Lab shell: tidak menerjemahkan di sini. Membuka Router dengan prompt — pengukur model hanya di Router.",
+      "source": "Bahasa sumber",
+      "target": "Bahasa target",
+      "open": "Siapkan tautan Router",
+      "deepLink": "Buka di Router",
+      "note": "eksternal · tanpa ledger Forge LLM diam"
+    },
+    "imageCrop": {
+      "needFile": "Pilih gambar terlebih dahulu",
+      "crop": "Potong",
+      "note": "Potong Gambar · seret area · ekstrak tajam",
+      "drop": "Jatuhkan gambar atau klik untuk menelusuri",
+      "dragHint": "Seret pada gambar untuk memilih area potong",
+      "left": "Kiri",
+      "top": "Atas",
+      "width": "Lebar",
+      "height": "Tinggi",
+      "natural": "Alami {w}×{h}",
+      "source": "Sumber",
+      "result": "Tersunting"
+    },
+    "markdown": {
+      "preview": "Pratinjau",
+      "html": "HTML",
+      "emptyPreview": "Jalankan untuk melihat pratinjau",
+      "emptyHtml": "HTML yang dirender",
+      "rendering": "Merennder…",
+      "toHtml": "Ke HTML",
+      "copyHtml": "Salin HTML",
+      "note": "marked · pratinjau iframe terisolasi · jalur sama seperti API"
+    },
+    "pdfMerge": {
+      "files": "Berkas PDF (≥2, urutan = urutan penggabungan)",
+      "needFiles": "Pilih minimal 2 PDF",
+      "merging": "Menggabungkan…",
+      "mergeDownload": "Gabungkan & unduh",
+      "done": "Digabungkan · {pages} halaman · {bytes} byte",
+      "note": "pdf-lib · jalur sama seperti API",
+      "merge": "Gabungkan & unduh"
+    },
+    "pdfSplit": {
+      "file": "File PDF",
+      "needFile": "Pilih PDF",
+      "fromPage": "Dari halaman (berbasis 1)",
+      "toPage": "Sampai halaman (kosong = terakhir)",
+      "toPlaceholder": "Halaman terakhir",
+      "splitting": "Memecah…",
+      "splitDownload": "Pecah & unduh",
+      "done": "Pisahkan · sumber {source} halaman → keluaran {pages} halaman",
+      "note": "pdf-lib · jalur sama dengan API",
+      "split": "Pecah & unduh"
+    },
+    "passwordStrength": {
+      "check": "Periksa kekuatan",
+      "checking": "Memeriksa…",
+      "crack": "Estimasi slow-hash offline: {time}",
+      "score0": "Sangat lemah",
+      "score1": "Lemah",
+      "score2": "Cukup",
+      "score3": "Kuat",
+      "score4": "Sangat kuat",
+      "note": "zxcvbn-ts · jalur sama dengan API · kata sandi tidak pernah disimpan"
+    },
+    "hmacSign": {
+      "compute": "Hitung HMAC",
+      "computing": "Menghitung…",
+      "note": "node:crypto · jalur sama dengan API"
+    },
+    "costEstimate": {
+      "text": "Teks input (untuk estimasi token input)",
+      "model": "Model",
+      "outputTokens": "Token output (est.)",
+      "estimate": "Estimasi biaya",
+      "estimating": "Mengestimasi…",
+      "note": "@nebutra/ai-providers/frontier card + js-tiktoken · estimasi harga daftar, bukan tagihan"
+    },
+    "jsonSchema": {
+      "data": "Data JSON",
+      "schema": "JSON Schema",
+      "validate": "Validasi",
+      "validating": "Memvalidasi…",
+      "pass": "Lulus",
+      "fail": "Gagal",
+      "note": "Ajv · jalur sama dengan API"
+    },
+    "zhCnTw": {
+      "s2t": "Sederhana → Tradisional",
+      "t2s": "Tradisional → Sederhana",
+      "s2tw": "Sederhana → Taiwan",
+      "tw2s": "Taiwan → Sederhana",
+      "s2hk": "Sederhana → Hong Kong",
+      "hk2s": "Hong Kong → Sederhana",
+      "note": "OpenCC (opencc-js) · jalur sama dengan API"
+    },
+    "pinyin": {
+      "tones": "Gaya nada",
+      "symbol": "Simbol nǐ",
+      "num": "Angka ni3",
+      "none": "Tidak ada ni",
+      "hanzi": "Karakter Mandarin",
+      "convert": "Ke pinyin",
+      "converting": "Mengonversi…",
+      "note": "pinyin-pro · jalur yang sama dengan API"
+    },
+    "sqlFormat": {
+      "dialect": "Dialek",
+      "format": "Format",
+      "formatting": "Memformat…",
+      "note": "sql-formatter · jalur yang sama dengan API"
+    },
+    "colorConvert": {
+      "color": "Warna",
+      "pick": "Pilih warna",
+      "convert": "Konversi",
+      "converting": "Mengonversi…",
+      "note": "culori · hex / rgb / hsl / oklch · jalur yang sama dengan API"
+    },
+    "qrGen": {
+      "content": "Konten",
+      "format": "Format",
+      "pngPreview": "PNG (pratinjau)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "Buat QR",
+      "generating": "Membuat…",
+      "note": "qrcode · jalur yang sama dengan API"
+    },
+    "qrDecode": {
+      "upload": "Unggah gambar dengan kode QR",
+      "parsing": "Mendekode…",
+      "note": "jsQR + sharp · jalur yang sama dengan API"
+    },
+    "cron": {
+      "expression": "Ekspresi Cron",
+      "timezone": "Zona waktu",
+      "parse": "Jadwal berikutnya",
+      "parsing": "Memproses…",
+      "nextTitle": "Jadwal berikutnya (ISO)",
+      "note": "cron-parser · jalur yang sama dengan API"
+    },
+    "timezone": {
+      "datetime": "Tanggal & waktu",
+      "from": "Dari",
+      "to": "Ke",
+      "convert": "Konversi zona waktu",
+      "converting": "Mengonversi…",
+      "placeholder": "2026-07-24 12:00:00 atau ISO / unix",
+      "note": "dayjs timezone · jalur sama seperti API"
+    },
+    "csvPreview": {
+      "preview": "Pratinjau tabel",
+      "parsing": "Menganalisis…",
+      "rows": "Pratinjau {shown} / {total} baris",
+      "note": "papaparse · jalur sama seperti API"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "Query",
+      "querying": "Mencari…",
+      "note": "jsonpath-plus · jalur sama seperti API"
+    },
+    "xmlFormat": {
+      "pretty": "Rapi",
+      "minify": "Minyifikasi",
+      "validate": "Validasi",
+      "validOk": "Valid",
+      "done": "Selesai · {engine}",
+      "processing": "Memproses…",
+      "note": "fast-xml-parser · jalur sama dengan API"
+    },
+    "regexLegacy": {
+      "pattern": "Pola",
+      "flags": "Bendera",
+      "mode": "Mode",
+      "match": "Cocokkan",
+      "replace": "Ganti",
+      "test": "Uji",
+      "replacement": "Penggantian",
+      "note": "Lokal instan · batas waktu server · jalur sama seperti API"
+    },
+    "docxText": {
+      "file": "File DOCX",
+      "needFile": "Pilih file .docx terlebih dahulu",
+      "extract": "Ekstrak teks",
+      "extracting": "Mengekstrak…",
+      "note": "DOCX → teks · ZIP murni + document.xml (tanpa suite Office)"
+    },
+    "uuid": {
+      "count": "Jumlah",
+      "local": "Buat lokal",
+      "server": "Buat di server",
+      "copyAll": "Salin semua",
+      "empty": "UUID muncul di sini"
+    },
+    "timestamp": {
+      "nowSec": "Detik Unix",
+      "nowMs": "Milidetik Unix / ISO",
+      "serverNow": "Waktu server saat ini",
+      "toDate": "Timestamp → tanggal",
+      "toUnix": "Tanggal → timestamp",
+      "seconds": "Detik",
+      "milliseconds": "Milidetik",
+      "value": "Nilai",
+      "convert": "Konversi",
+      "note": "Sama dengan jalur API"
+    },
+    "wordCount": {
+      "words": "Kata",
+      "chars": "Karakter",
+      "noSpaces": "Tanpa spasi",
+      "cjk": "CJK",
+      "lines": "Baris",
+      "paragraphs": "Paragraf",
+      "placeholder": "Tempel atau ketik teks…",
+      "copyText": "Salin teks",
+      "clear": "Hapus",
+      "verifying": "Memverifikasi…",
+      "serverNote": "Kata server={words} · jalur sama dengan API",
+      "note": "Mesin langsung: {engine} · tidak perlu unggah · jalur sama dengan API"
+    },
+    "bmi": {
+      "height": "Tinggi (cm)",
+      "weight": "Berat (kg)",
+      "compute": "Hitung BMI",
+      "computing": "Menghitung…",
+      "invalid": "Masukkan tinggi (cm) dan berat (kg) yang valid",
+      "underweight": "Kurus",
+      "normal": "Normal",
+      "overweight": "Gemuk",
+      "obese": "Obesitas",
+      "note": "BMI WHO · jalur sama dengan API · bukan saran medis"
+    },
+    "percentage": {
+      "mode": "Mode",
+      "percentOf": "a% dari b",
+      "isWhat": "a adalah berapa % dari b",
+      "percentA": "Persen a",
+      "valueA": "Nilai a",
+      "baseB": "Dasar b",
+      "compute": "Hitung",
+      "computing": "Menghitung…",
+      "invalid": "Masukkan angka yang valid",
+      "note": "Sama jalur dengan API"
+    },
+    "dataSize": {
+      "value": "Nilai",
+      "convert": "Konversi",
+      "converting": "Mengonversi…",
+      "invalid": "Masukkan angka yang valid",
+      "binary": "{value} {from} → basis-1024",
+      "note": "Unit biner (1 KB = 1024 B) · sama jalur dengan API"
+    },
+    "rmb": {
+      "amount": "Jumlah (CNY)",
+      "convert": "Ke huruf besar",
+      "converting": "Mengonversi…",
+      "invalid": "Masukkan jumlah yang tidak negatif",
+      "note": "Jumlah invoice Tiongkok huruf besar · jalur sama dengan API"
+    },
+    "dateDiff": {
+      "from": "Tanggal mulai",
+      "to": "Tanggal akhir",
+      "compute": "Selisih hari",
+      "computing": "Menghitung…",
+      "days": "hari",
+      "note": "ECMAScript Date · jalur sama dengan API"
+    },
+    "xlsxText": {
+      "file": "File XLSX",
+      "needFile": "Pilih file .xlsx terlebih dahulu",
+      "extract": "Ekstrak sheet",
+      "extracting": "Mengekstrak…",
+      "note": "XLSX → CSV · ZIP murni + sheet1.xml (sheet pertama)"
+    },
+    "mdToPdf": {
+      "drop": "Letakkan file .md di sini, atau tempel Markdown di bawah",
+      "title": "Judul",
+      "engine": "Engine",
+      "ePlaywright": "playwright (cetak Chromium)",
+      "eSimple": "sederhana (tanpa browser)",
+      "generate": "Buat PDF",
+      "generating": "Membuat…",
+      "download": "Unduh PDF",
+      "note": "marked → HTML → cetak Playwright Chromium. Jika Chromium tidak ada, otomatis kembali ke PDF terstruktur sederhana — periksa renderEngine; sederhana bukan tata letak cetak berkualitas.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
+    },
+    "tokenCount": {
+      "count": "Hitung token",
+      "counting": "Menghitung…",
+      "chars": "Karakter {n}",
+      "note": "Engine: js-tiktoken · hitungan tepat di sisi server · dapat memberi masukan estimasi biaya Router"
+    },
+    "codec": {
+      "encodeDir": "Teks → terenkod",
+      "decodeDir": "Terenkod → teks",
+      "localNote": "Jalankan lokal",
+      "serverNote": "Server · jalur sama dengan API",
+      "hexInvalid": "Bukan string heksadesimal yang valid",
+      "hexDecodeFail": "Server tidak dapat mendekod sebagai UTF-8 (perlu heksadesimal valid)",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · jalur sama dengan API",
+      "noteHtml": "Peta entitas HTML · jalur sama dengan API",
+      "noteHex": "UTF-8 ↔ heksadesimal · jalur sama dengan API"
+    },
+    "textDiff": {
+      "left": "Kiri",
+      "right": "Kanan",
+      "compare": "Bandingkan",
+      "comparing": "Membandingkan…"
+    },
+    "imageTool": {
+      "drop": "Lepaskan gambar di sini, atau klik untuk menjelajahi",
+      "selected": "Dipilih: {name} ({kb} KB)",
+      "needFile": "Pilih gambar terlebih dahulu",
+      "format": "Format keluaran",
+      "quality": "Kualitas {n}",
+      "maxW": "Lebar maksimum",
+      "maxH": "Tinggi maksimum",
+      "optional": "Opsional",
+      "resizeEg": "mis. 1280",
+      "processing": "Memproses…",
+      "compress": "Kompres",
+      "resize": "Ubah ukuran",
+      "convert": "Ubah format",
+      "download": "Unduh hasil",
+      "outMeta": "Output {kb} KB{dims}{ratio} · {type}",
+      "ratio": " · ~{pct}% dari asli",
+      "dims": " · {w}×{h}",
+      "original": "Asli",
+      "result": "Hasil",
+      "note": "Mesin: sharp (libvips) · sisi server · jalur yang sama dengan API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+    },
+    "pptxText": {
+      "file": "File PPTX",
+      "needFile": "Pilih file .pptx terlebih dahulu",
+      "extract": "Ekstrak kerangka",
+      "extracting": "Mengekstrak…",
+      "note": "Kerangka PPTX · ZIP murni + XML slide (tanpa PowerPoint)"
+    },
+    "shell": {
+      "copyJson": "Salin JSON",
+      "sample": "Contoh",
+      "chars": "{n} karakter",
+      "largeInput": "Input besar — hasil diperbarui sesaat setelah Anda berhenti mengetik.",
+      "manualInput": "Input terlalu besar sehingga komputasi ulang langsung akan membuat halaman terhenti. Tekan Jalankan.",
+      "options": "Opsi",
+      "regenerateNote": "Output sudah diperbarui saat Anda mengubah opsi.",
+      "fileTab": "Berkas",
+      "pasteTab": "Tempel",
+      "browse": "Pilih berkas",
+      "selectedFile": "{name} · {kb} KB",
+      "truncated": "Baca {kb} KB pertama — cukup untuk menjawab, dan sisanya tidak pernah meninggalkan perangkat Anda.",
+      "detail": "Detail",
+      "dropIntoPane": "Letakkan berkas di sini",
+      "swap": "Tukar sisi",
+      "prevChange": "Sebelumnya",
+      "nextChange": "Berikutnya",
+      "changePosition": "{index} dari {total}",
+      "result": "Hasil"
+    },
+    "readmeSkeleton": {
+      "emptyHint": "Centang setidaknya satu bagian untuk membuat README.",
+      "note": "Menjalankan mesin yang sama dengan API. Bagian yang tidak dipilih tidak akan muncul — tidak ada judul kosong.",
+      "orderNote": "Bagian selalu ditampilkan dalam urutan tetap ini, sehingga input yang sama menghasilkan file yang sama.",
+      "group": {
+        "core": "Inti",
+        "docs": "Dokumen",
+        "community": "Komunitas",
+        "meta": "Meta"
+      },
+      "section": {
+        "title": "Judul & deskripsi",
+        "badges": "Lencana",
+        "callout": "Catatan panggilan",
+        "toc": "Daftar isi",
+        "installation": "Instalasi",
+        "usage": "Penggunaan",
+        "features": "Fitur",
+        "api-reference": "Referensi API",
+        "screenshots": "Tangkapan layar",
+        "roadmap": "Peta jalan",
+        "contributing": "Berkontribusi",
+        "support": "Dukungan",
+        "acknowledgements": "Penghargaan",
+        "license": "Lisensi",
+        "authors": "Penulis",
+        "tech-stack": "Tumpukan teknologi"
+      },
+      "projectName": "Nama proyek",
+      "projectNamePlaceholder": "Nama proyek",
+      "description": "Deskripsi",
+      "descriptionPlaceholder": "Satu kalimat tentang fungsinya",
+      "badgeLicense": "Lencana lisensi",
+      "badgeNpm": "npm version",
+      "badgeBuild": "Status build",
+      "npmPackage": "npm package",
+      "npmPackagePlaceholder": "@scope/package",
+      "repo": "Repositori GitHub",
+      "repoPlaceholder": "owner/repo",
+      "calloutKind": "Panggilan",
+      "calloutBody": "Teks callout",
+      "calloutBodyPlaceholder": "Pre-1.0 — API masih berubah",
+      "fenceLanguage": "Bahasa",
+      "installCommand": "Perintah instalasi",
+      "installCommandPlaceholder": "npm install your-project",
+      "usageExample": "Contoh penggunaan",
+      "usageExamplePlaceholder": "Contoh terkecil yang menunjukkan nilai",
+      "features": "Fitur",
+      "featuresPlaceholder": "Satu fitur per baris",
+      "contact": "Kontak",
+      "contactPlaceholder": "support@example.com",
+      "license": "Lisensi",
+      "authors": "Penulis",
+      "authorsPlaceholder": "@handle, Jane Roe",
+      "techStack": "Stack teknologi",
+      "techStackPlaceholder": "typescript, postgresql (slug simple-icons)",
+      "sectionCount": "{n} bagian",
+      "charCount": "{n} karakter",
+      "warningCount": "{n} dilewati",
+      "omittedTitle": "Apa yang ditinggalkan, dan mengapa"
+    },
+    "gitignore": {
+      "searchLabel": "Cari stack",
+      "searchPlaceholder": "Cari bahasa, framework, OS, atau editor…",
+      "add": "Tambah {stack}",
+      "remove": "Hapus {stack}",
+      "selected": "Stack terpilih",
+      "suggestions": "Stack yang cocok",
+      "noMatches": "Tidak ada stack yang cocok dengan “{query}”. Tekan Enter untuk mengirimkannya tetap — alias akan diselesaikan di server.",
+      "catalogFallback": "Daftar stack tidak tersedia — ketik nama stack dan tekan Enter.",
+      "emptyHint": "Pilih setidaknya satu bahasa, framework, OS, atau editor di atas.",
+      "regenerate": "Buat ulang",
+      "sections": "{n} bagian",
+      "lines": "{n} baris",
+      "deduped": "{n} pola duplikat digabungkan",
+      "notFound": "Tidak ada di korpus: {stacks}",
+      "globalScope": "{stacks} adalah entri OS/editor — banyak pengembang menyimpannya di ~/.gitignore_global pribadi alih-alih di setiap repo.",
+      "untrackedNote": ".gitignore hanya memengaruhi file yang belum dilacak. Untuk file yang sudah dilacak oleh git, jalankan git rm -r --cached <path>.",
+      "fileLabel": ".gitignore"
+    },
+    "editorconfig": {
+      "emptyHint": "Atur setidaknya satu properti untuk melihat file.",
+      "note": "Menggunakan engine yang sama dengan API. Pilihan Anda hanya tersimpan di sesi browser ini; tidak ada yang disimpan.",
+      "checks": "Pemeriksaan",
+      "presets": "Mulai dari",
+      "preset": {
+        "spaces2": "2 spasi, LF",
+        "spaces4": "4 spasi, LF",
+        "tabs": "Tab, lebar 4",
+        "repo": "Starter repo (+ Markdown, Makefile)"
+      },
+      "rootLabel": "root = true — hentikan editor agar tidak menggabungkan file .editorconfig induk",
+      "glob": "Glob {n}",
+      "addSection": "Tambahkan bagian",
+      "removeSection": "Hapus",
+      "notSet": "(tidak diatur)",
+      "import": "Impor .editorconfig yang sudah ada",
+      "importPlaceholder": "Tempel .editorconfig di sini untuk memuatnya ke dalam formulir",
+      "importAction": "Impor",
+      "importing": "Mengimpor…",
+      "importFailed": "Gagal mengimpor: {message}"
+    },
+    "robotsTxt": {
+      "emptyHint": "Atur opsi di atas — file akan muncul di sini",
+      "deployNote": "robots.txt hanya berlaku di root domain (https://example.com/robots.txt). Setiap subdomain memerlukan file sendiri.",
+      "outputLabel": "robots.txt",
+      "defaultAccess": "Akses default (User-agent: *)",
+      "defaultAllow": "Izinkan semua",
+      "defaultDisallow": "Tolak semua",
+      "defaultAccessNote": "\"Izinkan semua\" menulis \"Disallow:\" kosong — itulah yang mengizinkan semuanya.",
+      "crawlDelay": "Jeda merayap (detik)",
+      "crawlDelayPlaceholder": "tidak ada",
+      "crawlDelayNote": "Bukan bagian dari RFC 9309. Google mengabaikannya; tidak pernah ditulis ke grup Google.",
+      "searchAgents": "Mesin pencari",
+      "aiAgents": "Perayap AI",
+      "aiAgentsNote": "Perayap pelatihan dan mesin jawaban. Memblokirnya tidak memengaruhi pengindeksan pencarian.",
+      "accessDefault": "Bawaan",
+      "accessAllow": "Izinkan",
+      "accessDisallow": "Tolak",
+      "rules": "Aturan jalur",
+      "rulesNote": "Jalur peka huruf besar/kecil dan relatif terhadap root. Tambahkan garis miring akhir untuk membatasi aturan pada direktori.",
+      "rulePath": "Jalur {n}",
+      "rulePathPlaceholder": "/admin/",
+      "ruleType": "Jenis aturan",
+      "addRule": "Tambahkan aturan jalur",
+      "removeRule": "Hapus",
+      "sitemaps": "Sitemap",
+      "sitemapsNote": "URL http(s) absolut. Ditulis sebagai baris mandiri, di luar setiap grup.",
+      "sitemapUrl": "Sitemap {n}",
+      "addSitemap": "Tambahkan sitemap",
+      "removeSitemap": "Hapus",
+      "groupCount": "{n} grup",
+      "lineCount": "{n} baris",
+      "sitemapCount": "{n} sitemap",
+      "warningsSummary": "Catatan pada file ini ({n})"
+    },
+    "encodingDetect": {
+      "drop": "Lepaskan file untuk mengidentifikasi encoding-nya",
+      "privacy": "Hanya {kb} KB pertama yang dibaca, dan dikirim ke endpoint invoke publik yang sama yang dipanggil agen — tidak ada yang ditulis ke disk.",
+      "pasteLabel": "Atau tempel teks",
+      "pastePlaceholder": "Tempel teks — termasuk mojibake yang ingin dijelaskan",
+      "detail": "Kandidat, akhir baris, dan statistik byte",
+      "idle": "Lepaskan file atau tempel teks — laporan akan terisi begitu ada sesuatu untuk dibaca.",
+      "readOnly": "Hanya baca: alat ini mengidentifikasi encoding, tidak pernah menulis ulang byte.",
+      "headline": "{encoding} · {confidence}% keyakinan",
+      "notText": "Ini tidak terlihat seperti teks",
+      "bomPresent": "BOM {bytes}",
+      "bomAbsent": "Tidak ada BOM",
+      "eol": "Akhir baris {kind}",
+      "eolMixed": "Akhir baris campuran",
+      "language": "Bahasa {language} · {confidence}%",
+      "sampled": "Terdeteksi dari {kb} KB pertama dari {totalKb} KB",
+      "candidates": "Kandidat peringkat",
+      "candidatesNote": "Encoding kandidat kedua sengaja ditampilkan: sampel pendek atau simetris memang ambigu.",
+      "lineEndings": "Akhir baris",
+      "byteStats": "Statistik byte",
+      "totalBytes": "Total",
+      "asciiBytes": "ASCII",
+      "highBytes": "Tinggi (0x80–0xFF)",
+      "nullBytes": "NUL",
+      "mojibake": "Mojibake dipulihkan"
+    },
+    "dockerfileStarter": {
+      "language": "Bahasa",
+      "framework": "Kerangka kerja",
+      "packageManager": "Manajer paket",
+      "baseVariant": "Gambar dasar",
+      "version": "Versi runtime",
+      "workdir": "Direktori kerja",
+      "port": "Port",
+      "buildCommand": "Perintah build",
+      "startCommand": "Perintah mulai",
+      "commandPlaceholder": "Kosong = default preset",
+      "frameworkNone": "Tidak ada (runtime biasa)",
+      "pmAuto": "Otomatis",
+      "variantSlim": "slim (glibc)",
+      "variantAlpine": "alpine (musl)",
+      "variantFull": "lengkap",
+      "multiStage": "Build multi-tahap",
+      "nonRootUser": "Pengguna non-root",
+      "includeDockerignore": "Tambahkan .dockerignore",
+      "includeCompose": "Tambahkan compose.yaml",
+      "includeHealthcheck": "Tambahkan HEALTHCHECK",
+      "groupWhat": "Apa yang sedang dibangun",
+      "groupHow": "Bagaimana cara menjalankannya",
+      "emptyHint": "Pilih bahasa untuk melihat Dockerfile.",
+      "note": "Hanya preset — tidak ada yang keluar dari browser Anda selain opsi di atas. Baca filenya sebelum dikirim.",
+      "warnings": "{n} hal yang perlu diperiksa",
+      "stages": "{n} tahap",
+      "badgeNonRoot": "Non-root",
+      "badgeRoot": "Berjalan sebagai root",
+      "badgePort": "Port {port}"
+    },
+    "lineEndingDetect": {
+      "dropLabel": "Lepaskan file teks untuk memeriksa akhir baris",
+      "privacy": "Teks yang ditempel, dan 256 KB pertama dari file yang dilepaskan, dikirim ke API Forge untuk dipindai; byte tidak disimpan.",
+      "pasteLabel": "Atau tempel teks",
+      "pastePlaceholder": "Tempel teks yang ingin diperiksa",
+      "idle": "Tempel teks atau lepaskan file untuk melihat hasil akhir baris.",
+      "detail": "Jumlah dan pemeriksaan",
+      "note": "Hanya deteksi — alat ini tidak pernah menulis ulang file Anda.",
+      "empty": "Input kosong",
+      "noTerminator": "Tidak ada terminator baris — satu baris tidak diakhiri",
+      "consistent": "{style} — konsisten",
+      "mixed": "CAMPURAN — {parts}",
+      "sharePart": "{pct}% {style}",
+      "style": {
+        "LF": "LF (Unix/Linux/macOS)",
+        "CRLF": "CRLF (Windows)",
+        "CR": "CR (Mac OS 9 klasik dan sebelumnya)"
+      },
+      "lines": "{n} baris",
+      "bytes": "{n} byte",
+      "trailing": {
+        "present": "Berakhir dengan baris baru",
+        "absent": "Tidak ada baris baru di akhir file"
+      },
+      "bomUtf8": "UTF-8 BOM",
+      "bomNone": "Tanpa BOM",
+      "countRow": "{style}: {n} ({pct}%)",
+      "colStyle": "Gaya",
+      "colCount": "Jumlah",
+      "colShare": "Bagian",
+      "minorityLines": "Baris yang berbeda dari gaya dominan: {lines}",
+      "andMore": "dan lainnya",
+      "findings": "Pemeriksaan",
+      "level": {
+        "info": "Catatan",
+        "warning": "Peringatan",
+        "danger": "Rusak"
+      },
+      "sampled": "Memindai {n} dari {total} byte pertama",
+      "encodingLink": "Buka detektor encoding"
+    },
+    "fileTypeDetect": {
+      "drop": "Lepas file untuk mengidentifikasi jenisnya",
+      "privacy": "Hanya header {kb} KB pertama yang dibaca — sisa file tidak pernah meninggalkan perangkat Anda.",
+      "hexTab": "Tempel hex",
+      "detail": "Tampilkan byte dan kandidat",
+      "idle": "Lepas file, atau tempel byte awalnya sebagai hex.",
+      "note": "Signature mengidentifikasi container, bukan codec atau isi di dalamnya.",
+      "unset": "—",
+      "unknownType": "Tidak ada signature cocok",
+      "polyglot": "Polyglot",
+      "tierNone": "Ekstensi sesuai",
+      "tierBenign": "Ketidakcocokan ringan",
+      "tierMismatch": "Ketidakcocokan ekstensi",
+      "tierHighRisk": "Risiko tinggi",
+      "confidenceMatch": "Cocok dengan tanda tangan",
+      "confidenceContainer": "Hanya kontainer",
+      "confidenceAmbiguous": "Tidak jelas",
+      "confidenceNone": "Tidak cocok",
+      "signalDetected": "MIME terdeteksi",
+      "signalReported": "MIME dilaporkan",
+      "signalExtension": "Ekstensi nama file",
+      "drillResolved": "Membuka kontainer {kind}: {type}",
+      "drillUnresolved": "Kontainer {kind} dikonfirmasi; subtipe tidak dapat ditentukan dari byte yang diambil",
+      "hexDump": "Byte header",
+      "bytesRead": "{n} byte dibaca",
+      "headerOnly": "sampel header saja",
+      "entropy": "Entropi {bits} bit/byte",
+      "signatureCount": "{n} tanda tangan di tabel",
+      "textHints": "Petunjuk struktur: {hints}",
+      "candidates": "Semua tanda tangan yang cocok",
+      "atOffset": "offset {offset}"
+    },
+    "licenseChooser": {
+      "prompt": "Apa yang dibutuhkan proyek ini?",
+      "pickScenario": "Pilih baris yang terdengar seperti proyek Anda — jawaban dan file akan muncul di sini.",
+      "disclaimer": "Output template deterministik, bukan saran hukum.",
+      "noAnswer": "Tidak ada satu lisensi pun yang cocok untuk kasus ini",
+      "permissions": "Diizinkan",
+      "conditions": "Wajib",
+      "limitations": "Tidak mencakup",
+      "alternates": "Pilihan lain untuk kasus ini",
+      "useThis": "Gunakan ini",
+      "readCanonical": "Baca teks resmi di SPDX",
+      "holder": "Pemegang hak cipta",
+      "holderPlaceholder": "Nama Anda atau perusahaan Anda",
+      "holderHint": "Tambahkan pemegang hak cipta dan file akan terisi otomatis saat Anda mengetik.",
+      "year": "Tahun",
+      "manifest": "Tempat SPDX id diletakkan",
+      "verbatim": "{name} dikirim identik byte demi byte untuk semua orang — baris hak cipta diletakkan di pemberitahuan file sumber, bukan di file LICENSE.",
+      "noLicense": {
+        "summary": "Bagaimana jika saya tidak menambahkan lisensi sama sekali?",
+        "body": "Tidak ada lisensi bukanlah domain publik. Tanpa lisensi, hak cipta default berlaku dan tidak ada yang boleh menyalin, memodifikasi, atau mendistribusikan ulang kode Anda — repositori publik adalah visibilitas, bukan izin."
+      },
+      "artifact": {
+        "header": "Header file sumber",
+        "notice": "Pemberitahuan file sumber"
+      },
+      "refine": {
+        "patent": "Hak paten penting di sini (kode perusahaan, perangkat keras, pekerjaan standar)",
+        "network": "Ini akan berjalan sebagai layanan yang dihosting, bukan hanya sebagai unduhan",
+        "library": "Ini adalah pustaka yang digunakan oleh perangkat lunak lain",
+        "later": "Izinkan versi lisensi yang lebih baru (menjaga kompatibilitas kode Apache-2.0)",
+        "none": "Tidak ada lagi yang perlu disempurnakan untuk kasus ini."
+      },
+      "scenario": {
+        "permissive": {
+          "label": "Siapa pun dapat menggunakannya, secara bebas",
+          "detail": "Gunakan, ubah, jual, kirim dalam produk tertutup — cukup pertahankan pemberitahuan hak cipta."
+        },
+        "copyleft": {
+          "label": "Peningkatan harus dikembalikan",
+          "detail": "Siapa pun yang mendistribusikan versi yang dimodifikasi harus mempublikasikan sumbernya juga."
+        },
+        "community": {
+          "label": "Saya berkontribusi ke proyek yang sudah ada",
+          "detail": "Lisensi sudah ditentukan — sesuaikan dengan proyek yang Anda kontribusi."
+        },
+        "non-software": {
+          "label": "Ini bukan perangkat lunak",
+          "detail": "Dokumen, data, desain, atau media memerlukan lisensi Creative Commons, bukan lisensi OSI."
+        },
+        "unsure": {
+          "label": "Saya belum tahu",
+          "detail": "Dapatkan opsi default yang minim penyesalan serta dua opsi lain yang perlu diketahui."
+        }
+      },
+      "family": {
+        "permissive": "Permisif",
+        "weak-copyleft": "Copyleft lemah",
+        "strong-copyleft": "Copyleft kuat",
+        "public-domain": "Domain publik",
+        "content": "Lisensi konten"
+      },
+      "flag": {
+        "commercial-use": "Penggunaan komersial",
+        "modifications": "Modifikasi",
+        "distribution": "Distribusi",
+        "private-use": "Penggunaan pribadi",
+        "patent-use": "Hak paten",
+        "include-copyright": "Pertahankan pemberitahuan hak cipta",
+        "document-changes": "Nyatakan perubahan Anda",
+        "disclose-source": "Buka kode sumber",
+        "same-license": "Lisensi yang sama untuk seluruh karya",
+        "same-license-file": "Lisensi yang sama, per file yang dimodifikasi",
+        "same-license-library": "Lisensi yang sama untuk pustaka",
+        "network-use-disclose": "Penggunaan jaringan dianggap sebagai distribusi",
+        "liability": "Tanggung jawab",
+        "warranty": "Garansi",
+        "trademark-use": "Penggunaan merek dagang"
+      }
+    },
+    "isbn": {
+      "inputLabel": "ISBN",
+      "placeholder": "978-0-306-40615-7 — satu per baris, tanda hubung dan spasi diabaikan",
+      "idle": "Tempel satu ISBN atau seluruh kolom; hasil muncul saat Anda mengetik.",
+      "scope": "Hanya matematika digit kontrol. ISBN yang valid secara internal konsisten — bukan bukti bahwa lembaga telah menugaskannya ke buku nyata.",
+      "summary": "{valid} dari {total} valid",
+      "singleValid": "ISBN valid",
+      "singleInvalid": "Bukan ISBN yang valid",
+      "invalidCount": "{n} tidak valid",
+      "convertedTo": "{type}: {value}",
+      "valid": "Valid",
+      "invalid": "Tidak valid",
+      "truncated": "Menampilkan {shown} baris pertama.",
+      "col": {
+        "input": "Input",
+        "normalized": "Ternormalisasi",
+        "type": "Tipe",
+        "status": "Status",
+        "converted": "Dikonversi",
+        "note": "Catatan"
+      },
+      "type": {
+        "isbn10": "ISBN-10",
+        "isbn13": "ISBN-13",
+        "invalidLength": "Panjang salah"
+      },
+      "note": {
+        "checkDigit": "Digit pengontrol seharusnya {expected}",
+        "invalidLength": "ISBN memiliki tepat 10 atau 13 karakter",
+        "invalidCharacter": "Mengandung karakter yang bukan angka",
+        "xMisplaced": "X hanya valid sebagai karakter terakhir dari ISBN-10",
+        "noIsbn10": "Prefiks 979 tidak memiliki padanan ISBN-10",
+        "nonBookland": "ISBN 13 digit harus diawali dengan 978 atau 979",
+        "ismn": "979-0 adalah rentang ISMN (musik cetak), bukan ISBN"
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
+    },
+    "languageDetect": {
+      "inputLabel": "Potongan kode",
+      "inputPlaceholder": "Tempel kode tanpa nama file — dari log obrolan, tiket, jawaban…",
+      "hintLabel": "Nama file atau ekstensi (opsional)",
+      "hintPlaceholder": "main.h · .pl · Dockerfile",
+      "note": "Menggunakan mesin yang sama dengan API. Deteksi hanya berdasarkan konten kecuali Anda memberikan petunjuk nama file; ekstensi ambigu (.h .m .pl .fs .ts .cs .r) diarahkan melalui aturan masing-masing terlebih dahulu.",
+      "idle": "Tempelkan cuplikan — hasil muncul saat Anda mengetik.",
+      "confidence": {
+        "high": "Keyakinan tinggi",
+        "medium": "Keyakinan sedang",
+        "low": "Keyakinan rendah"
+      },
+      "score": "{n}/100",
+      "dataFormat": "Format data, bukan bahasa pemrograman",
+      "multiLanguage": "Dugaan beberapa bahasa",
+      "why": "Mengapa jawaban ini",
+      "signals": "Sinyal yang cocok",
+      "alternates": "Kandidat lain",
+      "composeNext": "Format {language} ini"
+    },
+    "iban": {
+      "inputLabel": "IBAN",
+      "idle": "Tempel IBAN — hasil verifikasi langsung muncul, tanpa tombol.",
+      "sourceNote": "Checksum dan struktur sesuai ISO 13616-1:2020. Panjang per negara dan format BBAN berasal dari reproduksi publik dari registri IBAN ISO, bukan registri aslinya.",
+      "valid": "IBAN terstruktur dengan baik",
+      "keepTyping": "Lanjutkan mengetik — lebih pendek dari IBAN negara ini",
+      "caveat": "Hanya terstruktur dengan baik. Checksum yang lolos tidak menjamin akun ada, aktif, atau milik penerima.",
+      "printFormat": "Format cetak",
+      "details": "Rincian parsing",
+      "notEncoded": "Tidak sesuai format negara ini",
+      "coverage": "{n} negara dengan format IBAN terdaftar",
+      "reason": {
+        "bad_charset": "Bentuk bukan IBAN — IBAN terdiri dari dua huruf, dua angka, lalu hanya huruf dan angka",
+        "country_unsupported": "Tidak ada format IBAN terdaftar untuk kode negara ini",
+        "incomplete": "Belum lengkap",
+        "wrong_length_for_country": "Terlalu panjang untuk IBAN negara ini",
+        "structure_mismatch": "Panjangnya benar, tapi bentuknya tidak sesuai format negara ini",
+        "checksum_failed": "Checksum gagal — ada salah ketik di IBAN ini"
+      },
+      "badge": {
+        "country": "{name} ({code})",
+        "unknownCountry": "Kode negara {code}",
+        "length": "{n} dari {expected} karakter",
+        "bankCode": "Kode bank {code}",
+        "expectedCheckDigits": "Digit kontrol untuk nomor rekening ini seharusnya {digits}"
+      },
+      "field": {
+        "normalized": "Format elektronik",
+        "country": "Negara",
+        "checkDigits": "Digit kontrol",
+        "bban": "BBAN",
+        "bbanFormat": "Format BBAN",
+        "bankCode": "Kode bank"
+      },
+      "check": {
+        "charset": "Charset",
+        "country": "Negara",
+        "length": "Panjang",
+        "structure": "Struktur",
+        "checksum": "MOD 97-10"
+      },
+      "state": {
+        "pass": "lulus",
+        "fail": "gagal",
+        "skipped": "tidak tercapai"
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
+    },
+    "secretScan": {
+      "pasteLabel": "Tempel kode, konfigurasi, atau .env",
+      "pastePlaceholder": "DATABASE_URL=postgres://…\nAPI_KEY=…",
+      "dropLabel": "Seret file untuk memindainya",
+      "privacy": "Berjalan sepenuhnya di browser Anda. Tidak ada yang dikirim ke mana pun — bahkan tidak kepada kami.",
+      "scan": "Pindai",
+      "scanning": "Memindai…",
+      "idleTitle": "Tempel sesuatu lalu tekan Pindai.",
+      "idleHint": "Memeriksa kunci API vendor, token, kunci privat, dan rahasia berentropi tinggi. Nilai yang cocok akan disembunyikan; hanya nomor baris yang ditampilkan sepenuhnya.",
+      "clean": "Tidak ada rahasia ditemukan",
+      "cleanCaveat": "Tidak ada yang cocok dengan format kredensial yang dikenal atau terlihat seperti rahasia acak. Pencocokan pola bukan bukti — tinjau kembali apa pun yang Anda ragukan.",
+      "found": "{n, plural, one {# rahasia mungkin ditemukan} other {# rahasia mungkin ditemukan}}",
+      "foundCaveat": "Sembunyikan ini sebelum Anda menempelnya ke mana pun. Jika kuncinya nyata, putar ulang.",
+      "countHigh": "{n} keyakinan tinggi",
+      "countMedium": "{n} sedang",
+      "countLow": "{n} rendah",
+      "confidence": {
+        "high": "Tinggi",
+        "medium": "Sedang",
+        "low": "Rendah"
+      },
+      "position": "baris {line}, kolom {column}",
+      "length": "{n} karakter",
+      "maskedLabel": "Kecocokan tersamarkan",
+      "why": "Mengapa ini cocok",
+      "candidates": "Juga bisa:",
+      "scanDetail": "Detail pemindaian",
+      "lines": "{n} baris",
+      "bytes": "{n} byte dipindai",
+      "suppressed": "{n} placeholder diabaikan",
+      "suppressedNote": "Nilai demo yang diketahui (kunci EXAMPLE, your-api-key-here, karakter berulang) diabaikan agar file contoh tidak memicu peringatan palsu.",
+      "omitted": "{n} lainnya tidak ditampilkan",
+      "truncated": "Input dibatasi — hanya bagian pertama yang dipindai",
+      "reportTitle": "Temuan pemindaian rahasia (nilai disembunyikan)",
+      "scopeNote": "Deteksi saja: alat ini tidak pernah menghubungi vendor untuk memeriksa apakah kunci masih aktif — itu berarti mengirim kunci Anda ke pihak ketiga."
+    },
+    "eanUpcGtin": {
+      "inputLabel": "Nomor barcode",
+      "placeholder": "Satu kode per baris (koma dan titik koma juga memisahkan)",
+      "idle": "Tempel satu kode atau seluruh kolom — hasilnya muncul saat Anda mengetik.",
+      "operationLabel": "Operasi",
+      "operationValidate": "Validasi (kode sudah termasuk digit pemeriksa)",
+      "operationCalculate": "Hitung (kode tidak memiliki digit pemeriksa)",
+      "typeLabel": "Tipe",
+      "typeAuto": "Deteksi berdasarkan panjang",
+      "total": "{n} kode",
+      "validCount": "{n} valid",
+      "invalidCount": "{n} tidak valid",
+      "calculatedCount": "{n} dihitung",
+      "unrecognizedCount": "{n} panjang tidak dikenali",
+      "verdict": {
+        "valid": "Valid",
+        "invalid": "Tidak valid",
+        "calculated": "Dihitung",
+        "unrecognized-length": "Panjang tidak dikenali"
+      },
+      "alsoReadsAs": "Juga dibaca sebagai {type}",
+      "checkDigit": "Digit pengontrol",
+      "corrected": "Seharusnya",
+      "gtin14": "Format GTIN-14",
+      "reason": {
+        "empty": "Tidak ada yang perlu diperiksa di baris ini.",
+        "non-digit-characters": "Berisi karakter yang bukan angka maupun pemisah.",
+        "unsupported-length": "Tidak ada pengenal GS1 dengan panjang ini (panjang 8, 12, 13, 14, dan 18 digit didukung).",
+        "length-mismatch": "Panjang tidak sesuai dengan jenis yang dipilih.",
+        "check-digit-mismatch": "Digit terakhir tidak sesuai dengan yang ditetapkan standar."
+      },
+      "warning": {
+        "separators-stripped": "Spasi, tanda hubung, dan titik dihapus sebelum diperiksa.",
+        "all-zero": "Semua nol — valid secara matematis, tapi bukan pengenal sungguhan.",
+        "payload-is-also-a-complete-code": "Ini juga merupakan panjang kode lengkap. Jika sudah memiliki digit pengontrol, beralih ke Validasi."
+      },
+      "math": "Tampilkan perhitungan",
+      "mathSum": "Jumlah {sum} → digit kontrol {check}",
+      "truncatedRows": "Menampilkan {shown} dari {total} baris pertama. Salin dan unduh untuk mendapatkan semuanya.",
+      "privacy": "Kode dikirim ke API Forge untuk diperiksa dan tidak disimpan.",
+      "scopeNote": "Digit kontrol yang benar berarti nomor tersebut terbentuk dengan baik. Ini tidak berarti GS1 pernah menugaskannya ke produk, perusahaan, atau lokasi nyata — hanya pencarian registri GEPIR yang dapat menjawab hal itu.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
+    },
+    "vin": {
+      "inputLabel": "VIN (17 karakter)",
+      "privacy": "Diperiksa di browser Anda. VIN tidak pernah dikirim ke mana pun.",
+      "idle": "Tempel VIN — hasil muncul saat Anda mengetik, tanpa tombol.",
+      "scope": "Hanya struktur dan digit kontrol (49 CFR 565.15 / ISO 3779). Ini bukan pencarian riwayat kendaraan.",
+      "verdict": {
+        "valid": "Struktur VIN valid",
+        "keepTyping": "Lanjutkan mengetik — masih {remaining} karakter lagi",
+        "tooLong": "Terlalu panjang — VIN memiliki tepat 17 karakter, ini memiliki {n}",
+        "invalidCharacter": "Bukan karakter VIN: \"{char}\" pada posisi {position}",
+        "checkDigitMismatch": "Digit pengontrol tidak cocok — diharapkan {expected}, ditemukan {found}"
+      },
+      "hint": {
+        "confusable": "\"{char}\" tidak pernah digunakan dalam VIN. Maksud Anda {suggest}?"
+      },
+      "notice": {
+        "notProvenance": "Digit pengontrol yang valid memastikan VIN dibentuk dengan benar. Hal ini tidak memastikan kendaraan ada, tidak dimodifikasi, atau memiliki riwayat bersih — VIN yang dikloning juga lolos pemeriksaan ini.",
+        "pre1981": "Kendaraan yang dibuat sebelum 1981, dan beberapa kendaraan impor (JDM/Eropa), tidak menggunakan digit pengontrol ini — ketidakcocokan mungkin tidak berarti VIN salah diketik.",
+        "partial": "Validasi digit pengontrol memerlukan VIN lengkap 17 karakter. VIN parsial adalah tugas dekode, bukan tugas checksum."
+      },
+      "badge": {
+        "length": "{n} karakter",
+        "expected": "Digit pengontrol {d}"
+      },
+      "invalidChars": {
+        "more": "Juga bukan karakter VIN: {list}"
+      },
+      "segment": {
+        "wmi": "WMI 1-3",
+        "vds": "Deskriptor 4-8",
+        "checkDigit": "Digit pengontrol 9",
+        "modelYear": "Tahun model 10",
+        "plant": "Pabrik 11",
+        "serial": "Seri 12-17"
+      },
+      "math": {
+        "title": "Tampilkan perhitungannya",
+        "col": {
+          "position": "Pos",
+          "char": "Karakter",
+          "value": "Nilai",
+          "weight": "Bobot",
+          "product": "Hasil"
+        },
+        "formula": "jumlah = {sum};  {sum} mod 11 = {remainder}  →  digit kontrol {expected}"
+      },
+      "specimenTitle": "VIN · structure specimen"
+    },
+    "envDiff": {
+      "envA": "Lingkungan A",
+      "envB": "Lingkungan B",
+      "placeholderA": "Tempel atau seret file .env pertama",
+      "placeholderB": "Tempel atau seret file .env kedua",
+      "paneNoAssignment": "Tidak ada baris KEY=value ditemukan",
+      "optIgnoreComments": "Abaikan baris komentar dan kosong",
+      "optCaseInsensitive": "Perbandingan kunci tidak peka huruf besar-kecil",
+      "optRedactSecrets": "Sembunyikan rahasia yang terdeteksi",
+      "emptyHint": "Tambahkan lingkungan kedua untuk melihat perbandingan",
+      "summaryNone": "Tidak ada perbedaan pada {total} kunci",
+      "summaryDiff": "{n} dari {total} kunci berbeda",
+      "note": {
+        "unchanged": "Nilai sama di kedua sisi",
+        "changed": "Nilai berbeda",
+        "added": "Hanya diatur di B",
+        "removed": "Hanya diatur di A",
+        "commentedOutInA": "Dikomentari di A, diatur di B",
+        "commentedOutInB": "Diatur di A, dikomentari di B"
+      },
+      "secretChanged": "rahasia berbeda",
+      "secretSame": "rahasia sama di kedua sisi",
+      "count": {
+        "unchanged": "{n} tidak berubah",
+        "changed": "{n} berubah",
+        "added": "{n} ditambahkan",
+        "removed": "{n} dihapus",
+        "commentedOut": "{n} dikomentari"
+      },
+      "warnings": "Peringatan input ({n})",
+      "warningType": {
+        "duplicateKey": "{file} · kunci duplikat",
+        "quoteMismatch": "{file} · tanda kutip tidak cocok",
+        "unparsableLine": "{file} · baris tidak dapat diparsing"
+      },
+      "showUnchanged": "Tampilkan yang tidak berubah ({n})",
+      "commentedIn": {
+        "A": "dikomentari di A",
+        "B": "dikomentari di B",
+        "both": "dikomentari di keduanya"
+      },
+      "redactedNote": "Nilai rahasia disembunyikan menggunakan heuristik kata kunci nama kunci — bukan pemindai keamanan. Perbandingan dijalankan pada nilai mentah, sehingga rahasia yang diputar tetap ditampilkan sebagai berubah.",
+      "interpolationNote": "Referensi ${VAR} dibandingkan secara harfiah dan tidak pernah diselesaikan: ekspansi berbeda tergantung konsumen.",
+      "truncated": "Hanya 5.000 kunci pertama yang ditampilkan; jumlah mencakup setiap kunci.",
+      "colKey": "Kunci",
+      "colA": "A",
+      "colB": "B",
+      "colStatus": "Status",
+      "privacy": "Kedua file dibandingkan di browser Anda. Tidak ada yang diunggah."
+    },
+    "csvDiff": {
+      "originalLabel": "CSV Asli",
+      "updatedLabel": "CSV Diperbarui",
+      "originalPlaceholder": "Tempel ekspor asli, atau seret file .csv ke sini",
+      "updatedPlaceholder": "Tempel ekspor yang diperbarui, atau seret file .csv ke sini",
+      "emptyHint": "Tempel atau seret kedua file — perbandingan berjalan begitu masing-masing sisi memiliki konten.",
+      "note": "Baris dicocokkan berdasarkan identitas, bukan posisi, sehingga baris yang disisipkan atau diurutkan ulang tidak terbaca sebagai deretan perubahan. Konten dikirim ke API untuk perbandingan dan tidak disimpan.",
+      "columns": "{n} kolom",
+      "keyLabel": "Kolom kunci",
+      "keyAuto": "Saran otomatis",
+      "keyNone": "Tanpa kunci — bandingkan seluruh baris",
+      "joinLabel": "Gabungkan",
+      "joinFull": "Full outer — setiap baris",
+      "joinInner": "Inner — baris di kedua sisi",
+      "joinLeft": "Left — set baris asli",
+      "ignoreWhitespace": "Abaikan spasi",
+      "ignoreCase": "Abaikan huruf besar/kecil",
+      "treatEmptyAsNull": "Kosong = NULL = N/A",
+      "noDifferences": "Tidak ada perbedaan",
+      "differences": "{added} ditambahkan · {removed} dihapus · {changed} diubah",
+      "added": "{n} ditambahkan",
+      "removed": "{n} dihapus",
+      "changed": "{n} diubah",
+      "unchangedCount": "{n} tidak berubah",
+      "totals": "{original} → {updated} baris",
+      "matchedBy": "Dicocokkan berdasarkan {columns} ({source})",
+      "matchedWholeRow": "Dicocokkan berdasarkan konten seluruh baris — tidak ada kolom kunci yang digunakan, sehingga tidak ada yang dilaporkan berubah.",
+      "keySource": {
+        "provided": "pilihan Anda",
+        "auto": "saran otomatis",
+        "full-row": "seluruh baris"
+      },
+      "keyRejected": "Kandidat kunci yang ditolak: {items}",
+      "columnMismatch": "Kolom hanya di versi asli: {original} · hanya di versi baru: {updated}",
+      "truncated": "Menampilkan {shown} dari hasil lengkap (pratinjau dibatasi {limit} baris) — jumlah di atas sudah lengkap.",
+      "findings": "Catatan ({n})",
+      "level": {
+        "info": "info",
+        "warning": "peringatan",
+        "danger": "error"
+      },
+      "wholeRow": "Baris {n}",
+      "exportChanged": "Baris yang diubah (CSV)",
+      "exportFull": "Diff lengkap (CSV)"
+    },
+    "uscc": {
+      "modeLabel": "Verifikasi atau buat",
+      "tab": {
+        "verify": "Verifikasi",
+        "generate": "Buat kode uji"
+      },
+      "inputLabel": "Kode kredit sosial terpadu",
+      "placeholder": "18 karakter, mis. 91500000059926748X",
+      "idle": "Tempel kode 18 karakter. Kode diperiksa di browser saat Anda mengetik — tidak ada yang disimpan.",
+      "scope": "Cek struktural saja (GB 32100-2015 + ISO 7064 MOD 31-3). Kode yang lolos berarti formatnya benar; bukan berarti organisasi terdaftar di bawahnya — periksa di registri nasional cods.org.cn.",
+      "valid": "Kode kredit sosial terpadu valid",
+      "invalid": "Kode kredit sosial terpadu tidak valid",
+      "incomplete": "{n} dari 18 karakter",
+      "invalidCharacters": "Mengandung karakter yang dikecualikan oleh standar",
+      "checksumOk": "Digit pemeriksa OK",
+      "checksumBad": "Digit pemeriksa tidak cocok",
+      "expectedDigit": "Digit pemeriksa seharusnya {expected}, bukan {actual}",
+      "illegalAt": "Posisi {position}: “{char}” tidak ada dalam set karakter kode (I, O, S, V, Z dikecualikan)",
+      "detail": "Detail bidang",
+      "legacyTitle": "Kode organisasi lama (GB 11714)",
+      "legacy": {
+        "ok": "Kode organisasi 9 karakter yang disematkan konsisten dengan dirinya sendiri",
+        "mismatch": "Karakter pemeriksa lama seharusnya {expected} — hanya bersifat advisori; tidak semua kelas pendaftar memiliki kode organisasi GB 11714",
+        "unchecked": "Tidak diperiksa"
+      },
+      "divisionScope": "Posisi 3–8 dicocokkan dengan tabel provinsi GB/T 2260 dan aturan penelanan bentuk enam digit; tabel kabupaten lengkap tidak disertakan.",
+      "field": {
+        "registrationDept": "Departemen pendaftaran",
+        "orgCategory": "Kategori organisasi",
+        "adminDivision": "Divisi administratif",
+        "orgIdentifier": "Identifikasi subjek",
+        "checkDigit": "Digit pengontrol"
+      },
+      "depth": {
+        "none": "Belum diuraikan",
+        "province": "Tingkat provinsi",
+        "prefecture": "Tingkat prefektur",
+        "county": "Tingkat kabupaten"
+      },
+      "note": {
+        "empty": "Belum ada yang diperiksa",
+        "incomplete": "Kode kredit sosial terpadu memiliki tepat 18 karakter",
+        "tooLong": "Lebih dari 18 karakter",
+        "illegalCharacter": "Mengandung karakter di luar set GB 32100-2015 (I, O, S, V, dan Z tidak termasuk)",
+        "checkDigitMismatch": "Digit pengontrol tidak cocok dengan 17 karakter pertama",
+        "departmentUnknown": "Posisi 1 bukan departemen pendaftaran yang didefinisikan standar (1, 5, 9, Y)",
+        "categoryUnknown": "Posisi 2 bukan kategori organisasi yang didefinisikan untuk departemen pendaftaran ini",
+        "divisionNotNumeric": "Posisi 3–8 harus enam digit",
+        "divisionUnknownProvince": "Posisi 3–4 bukan kode provinsi GB/T 2260",
+        "divisionMalformed": "Kabupaten tanpa prefektur, yang tidak diizinkan oleh GB/T 2260"
+      },
+      "gen": {
+        "dept": "Departemen pendaftaran",
+        "category": "Kategori organisasi",
+        "province": "Provinsi",
+        "count": "Berapa banyak",
+        "randomProvince": "Semua provinsi",
+        "regenerate": "Batch baru",
+        "emptyHint": "Pilih opsi di atas untuk menghasilkan kode uji.",
+        "testDataBadge": "Data uji",
+        "seed": "Seed {seed}",
+        "allCodes": "Semua kode",
+        "disclaimer": "Kode ini valid secara struktur namun tidak dimiliki oleh organisasi terdaftar. Jangan gunakan untuk mewakili entitas nyata.",
+        "note": "Pembuatan menggunakan seed: opsi dan seed yang sama selalu menghasilkan batch yang sama, sehingga fixture tetap dapat direproduksi. Setiap kode ditandai isTestData di JSON maupun di sini."
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
+    },
+    "yamlDiff": {
+      "original": "Asli",
+      "changed": "Berubah",
+      "originalPlaceholder": "Tempel atau seret YAML (atau JSON) asli",
+      "changedPlaceholder": "Tempel atau seret YAML (atau JSON) yang berubah",
+      "idle": "Isi kedua panel dan perbandingan akan berjalan saat Anda mengetik.",
+      "privacy": "Kedua dokumen diparsing dan dibandingkan di browser ini — tidak ada yang diunggah, itulah tujuannya untuk manifest yang membawa hostname dan nama rahasia.",
+      "modeLabel": "Perbandingan",
+      "modeSemantic": "Semantik (struktur)",
+      "modeRawText": "Teks mentah (karakter)",
+      "resolveAnchors": "Selesaikan jangkar dan alias ke nilainya",
+      "valid": "YAML valid",
+      "validMulti": "YAML valid · {n} dokumen",
+      "invalid": "Error parsing, baris {line}",
+      "parseFailed": "Salah satu sisi gagal diparsing — tidak ada yang dibandingkan",
+      "equivalent": "Tidak ada perbedaan — kedua dokumen diselesaikan ke struktur yang sama",
+      "equivalentStructural": "Struktur yang diselesaikan sama · {n} perbedaan format atau jangkar",
+      "summary": "{added} ditambahkan · {removed} dihapus · {changed} diubah · {typeChanged} perubahan tipe",
+      "parseErrorAt": "{side} · baris {line}, kolom {column}: {message}",
+      "documentCountMismatch": "Jumlah dokumen berbeda: {original} vs {changed} — dokumen dipasangkan secara berurutan dan sisanya dilaporkan utuh",
+      "duplicateKeys": "Kunci duplikat di sumber",
+      "unified": "Patch terpadu (YAML ternormalisasi)",
+      "howItWorks": "Cara kerja perbandingan ini",
+      "rule": {
+        "keyOrder": "Urutan kunci pemetaan, tanda kutip, dan indentasi diabaikan; urutan sekuens dibandingkan karena urutan daftar memiliki makna.",
+        "anchors": "Alias diselesaikan ke nilainya, sehingga perubahan di balik anchor bersama muncul di setiap situs alias; anchor atau alias yang berubah dengan nilai tetap dilaporkan terpisah sebagai struktural.",
+        "mergeKeys": "Kunci penggabungan (<<) dikembangkan sebelum dibandingkan, dan kunci milik node mengalahkan yang digabungkan.",
+        "types": "Tipe adalah bagian dari nilai: 8080, \"8080\", dan !!str 8080 dilaporkan sebagai perubahan tipe, bukan perubahan umum.",
+        "sequences": "Sekuens pemetaan dipasangkan berdasarkan nama, id, atau kunci jika bidang tersebut unik di kedua sisi, sehingga satu item yang disisipkan tidak merambat; pengurutan ulang tetap dilaporkan.",
+        "blockScalars": "Skalar blok dibandingkan berdasarkan string yang diselesaikan, sehingga newline akhir yang dihapus oleh |- adalah perubahan nyata; perubahan gaya dengan nilai sama bersifat struktural.",
+        "comments": "Komentar bukan bagian dari model data YAML dan tidak dibandingkan.",
+        "multiDoc": "--- memetakan dokumen berpasangan satu per satu; ketidakcocokan jumlah dilaporkan alih-alih hanya membandingkan dokumen pertama.",
+        "duplicateKeys": "Kunci pemetaan duplikat pada input menggunakan kemunculan terakhir dan dilaporkan sebagai peringatan."
+      },
+      "note": {
+        "raw-text-mode": "Mode teks mentah membandingkan karakter, bukan struktur: urutan kunci, tanda kutip, dan indentasi semuanya diperhitungkan.",
+        "parse-error": "Salah satu sisi tidak dapat diparsing, sehingga tidak ada yang dibandingkan.",
+        "document-count-mismatch": "Kedua sisi memiliki jumlah dokumen --- yang berbeda; dokumen dipasangkan secara berurutan dan sisanya dilaporkan utuh.",
+        "merge-keys-expanded": "Kunci penggabungan (<<) dikembangkan sebelum dibandingkan.",
+        "anchors-unresolved": "Alias dibandingkan sebagai referensi *name, bukan sebagai nilai yang telah diselesaikan.",
+        "yaml11-ambiguous-scalars": "y/n/yes/no/on/off tanpa tanda kutip dibaca sebagai string di sini (YAML 1.2 Core) dan sebagai boolean di bawah YAML 1.1 — gunakan tanda kutip jika yang dimaksud adalah boolean.",
+        "sequence-matched-by-identity": "Urutan pemetaan dipasangkan berdasarkan bidang identitas, bukan berdasarkan posisi.",
+        "duplicate-keys": "Sebuah pemetaan mendeklarasikan kunci yang sama dua kali; kemunculan terakhir digunakan.",
+        "truncated": "Hanya 2000 perubahan pertama yang ditampilkan."
+      }
+    },
+    "listSetCompare": {
+      "listA": "Daftar A",
+      "listB": "Daftar B",
+      "placeholder": "Tempel item, satu per baris (atau seret file .txt/.csv)",
+      "emptyHint": "Tambahkan item ke Daftar A dan Daftar B untuk melihat perbandingan.",
+      "privacy": "Kedua daftar dibandingkan di browser Anda — tidak ada yang diunggah. Mesin yang sama berjalan di sisi server untuk pemanggil API dan MCP.",
+      "delimiter": "Pemisah",
+      "delimiterOption": {
+        "auto": "Deteksi otomatis",
+        "newline": "Baris baru",
+        "comma": "Koma",
+        "tab": "Tab",
+        "custom": "Kustom"
+      },
+      "customDelimiter": "Pemisah",
+      "customDelimiterPlaceholder": "| atau \\t",
+      "sort": "Urutkan",
+      "sortOption": {
+        "original": "Urutan asli",
+        "asc": "A→Z",
+        "desc": "Z→A",
+        "byCount": "Berdasarkan jumlah"
+      },
+      "optCaseSensitive": "Hormati huruf besar/kecil",
+      "optTrim": "Hapus spasi tepi",
+      "optCollapse": "Gabungkan spasi internal",
+      "optIgnoreZeros": "Abaikan nol di depan",
+      "paneItems": "{n} item",
+      "paneSingle": "1 item — periksa pemisah",
+      "items": "{n}",
+      "none": "Tidak ada",
+      "more": "+{n} lainnya — salin atau unduh untuk daftar lengkap",
+      "panel": {
+        "onlyInA": "Hanya di A",
+        "onlyInB": "Hanya di B",
+        "intersection": "Irisan (ada di keduanya)",
+        "union": "Gabungan (semua item)",
+        "symmetricDifference": "Selisih simetris"
+      },
+      "summaryIdentical": "Set sama — {n} item bersama",
+      "summaryDiff": "{a} hanya di A · {b} hanya di B · {shared} bersama",
+      "drill": {
+        "symmetricDifference": "Selisih simetris ({n})",
+        "duplicates": "Duplikat dalam satu daftar ({n})",
+        "multiplicities": "Jumlah per item ({n})",
+        "warnings": "Pemberitahuan ({n})"
+      },
+      "duplicatesInA": "Duplikat di A",
+      "duplicatesInB": "Duplikat di B",
+      "colValue": "Item",
+      "colCountA": "Di A",
+      "colCountB": "Di B",
+      "detailTruncated": "Hitungan per-item terpotong — tingkatkan maxDetail di API untuk tabel lengkap.",
+      "reportTitle": "Perbandingan daftar"
+    },
+    "loanAmortization": {
+      "principal": "Jumlah pinjaman",
+      "rate": "Suku bunga tahunan %",
+      "term": "Jangka waktu",
+      "termUnit": "Satuan jangka waktu",
+      "unitYears": "Tahun",
+      "unitMonths": "Bulan",
+      "startMonth": "Bulan pembayaran pertama",
+      "startMonthHint": "YYYY-MM. Memberi label jadwal; tidak mengubah jumlah.",
+      "extraHeading": "Pembayaran tambahan",
+      "extraMonthly": "Tambahan setiap bulan",
+      "extraYearly": "Tambahan sekali setahun",
+      "extraYearlyMonth": "Tambahan tahunan jatuh pada bulan",
+      "extraOneTime": "Tambahan satu kali",
+      "extraOneTimePeriod": "Tambahan satu kali pada pembayaran #",
+      "extraNote": "Pembayaran tambahan mengurangi pokok pada periode jatuh tempo, yang mengurangi bunga setiap periode berikutnya. Suku bunga dan pembayaran terjadwal tetap sama.",
+      "monthlyPayment": "Pembayaran bulanan",
+      "totalInterest": "Total bunga",
+      "totalPaid": "Total dibayarkan",
+      "crossover": "Persilangan",
+      "crossoverValue": "Pembayaran {n}",
+      "crossoverNone": "Tidak pernah",
+      "payoff": "Lunas pada pembayaran {n}",
+      "monthsSaved": "{n} bulan lebih awal",
+      "totalExtra": "{amount} dibayarkan di atas jadwal",
+      "viewMonthly": "Setiap pembayaran",
+      "viewAnnual": "Per tahun",
+      "tableCaption": "Jadwal amortisasi: pembayaran, bunga, pokok, dan sisa saldo per periode",
+      "colPeriod": "#",
+      "colDate": "Bulan",
+      "colPayment": "Pembayaran",
+      "colInterest": "Bunga",
+      "colPrincipal": "Pokok",
+      "colBalance": "Saldo",
+      "colYear": "Tahun",
+      "expandRows": "Tampilkan semua {total} pembayaran",
+      "collapseRows": "Tampilkan lebih sedikit pembayaran",
+      "windowNote": "Menampilkan {shown} dari {total} pembayaran. CSV dan API membawa semuanya.",
+      "emptyHint": "Masukkan jumlah pinjaman, suku bunga, dan jangka waktu untuk melihat jadwal.",
+      "note": "Mesin yang sama dengan API. Perhitungan hanya berdasarkan ketentuan pinjaman Anda; tidak ada yang diunggah atau disimpan.",
+      "errPrincipal": "Masukkan jumlah pinjaman di atas 0.",
+      "errRate": "Masukkan suku bunga antara 0 dan 100.",
+      "errTerm": "Masukkan jangka waktu antara 1 bulan dan 100 tahun.",
+      "errStartMonth": "Gunakan YYYY-MM, misalnya 2026-01.",
+      "errExtra": "Masukkan jumlah 0 atau lebih.",
+      "errOneTimePeriod": "Masukkan nomor pembayaran tempat pembayaran satu kali jatuh."
+    },
+    "businessDayShift": {
+      "modeLabel": "Apa yang akan dihitung",
+      "mode": {
+        "shift": "Geser tanggal",
+        "countBetween": "Hitung antara tanggal"
+      },
+      "startDate": "Tanggal mulai",
+      "days": "Hari kerja",
+      "daysHint": "Hitungan negatif mundur: −10 adalah sepuluh hari kerja sebelum tanggal mulai.",
+      "daysInvalid": "Hari kerja harus berupa bilangan bulat, dengan tanda minus di depan jika diperlukan.",
+      "endDate": "Tanggal akhir",
+      "includeEndDate": "Hitung juga tanggal akhir — ini yang dikembalikan oleh NETWORKDAYS di spreadsheet",
+      "weekendLabel": "Hari libur setiap minggu",
+      "weekendHint": "Default Sabtu dan Minggu. Atur Jumat dan Sabtu jika itu adalah akhir pekan.",
+      "weekday": {
+        "sun": "Min",
+        "mon": "Sen",
+        "tue": "Sel",
+        "wed": "Rab",
+        "thu": "Kam",
+        "fri": "Jum",
+        "sat": "Sab"
+      },
+      "holidays": "Hari Libur",
+      "holidaysHint": "Kosongkan jika ingin menghitung hanya berdasarkan aturan akhir pekan — tidak ada kalender negara yang diterapkan.",
+      "makeupWorkdays": "Hari kerja pengganti",
+      "makeupHint": "Tanggal yang tetap bekerja meskipun jatuh pada akhir pekan atau hari libur — Sabtu 调休/补班 di Tiongkok masuk ke sini.",
+      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesIgnored": "{n, plural, one {# entri bukan tanggal format YYYY-MM-DD dan tidak digunakan} other {# entri bukan tanggal format YYYY-MM-DD dan tidak digunakan}}",
+      "pickStart": "Pilih tanggal mulai untuk memulai.",
+      "emptyHintShift": "Pilih tanggal mulai dan jumlah hari kerja.",
+      "emptyHintCount": "Pilih tanggal mulai dan tanggal akhir.",
+      "note": "Menggunakan mesin yang sama dengan API. Perhitungan berjalan berdasarkan aturan yang ditampilkan bersama hasilnya; tidak ada yang disimpan.",
+      "countHeadline": "{n, plural, one {# hari kerja} other {# hari kerja}}",
+      "reversedRange": "Tanggal akhir berada sebelum tanggal mulai, sehingga hasilnya negatif.",
+      "classification": {
+        "workday": "Hari kerja",
+        "weekend": "Akhir pekan",
+        "holiday": "Hari libur",
+        "makeupWorkday": "Hari kerja pengganti"
+      },
+      "ruleWeekend": "{days} libur",
+      "ruleNoWeekend": "tanpa hari libur mingguan",
+      "ruleHolidays": "{n, plural, =0 {tanpa daftar hari libur} one {# hari libur} other {# hari libur}}",
+      "ruleMakeups": "{n, plural, =0 {tanpa hari kerja pengganti} one {# hari kerja pengganti} other {# hari kerja pengganti}}",
+      "ruleEndIncluded": "tanggal akhir dihitung",
+      "ruleEndExcluded": "tanggal akhir tidak dihitung",
+      "chain": "Pindah lagi dari tanggal ini"
+    },
+    "retryBackoff": {
+      "strategy": {
+        "exponential": "Eksponensial",
+        "linear": "Linear",
+        "fixed": "Tetap"
+      },
+      "initialDelay": "Penundaan awal (ms)",
+      "factor": "Faktor backoff",
+      "factorHint": "Pengali yang diterapkan per percobaan ulang. Harus lebih besar dari 1.",
+      "increment": "Penambahan linear (ms)",
+      "incrementHint": "Milidetik yang ditambahkan ke penundaan pada setiap percobaan ulang.",
+      "maxDelay": "Batas maksimal penundaan (ms)",
+      "maxDelayHint": "Kosongkan jika tanpa batas. Setelah batas tercapai, setiap penundaan berikutnya tetap pada nilai tersebut.",
+      "maxAttempts": "Maksimal percobaan",
+      "maxAttemptsHint": "1 hingga 100.",
+      "excludeInitial": "Maksimal percobaan tidak termasuk permintaan awal",
+      "excludeInitialNote": "Aktif: angka di atas hanya menghitung percobaan ulang, permintaan awal dihitung terpisah. Nonaktif: menghitung setiap percobaan, termasuk permintaan awal.",
+      "jitter": {
+        "none": "Tidak ada — penundaan tepat",
+        "equal": "Sama — setengah tetap, setengah acak",
+        "full": "Full — dari nol hingga jeda"
+      },
+      "callerTimeout": "Timeout Anda sendiri (ms)",
+      "callerTimeoutHint": "Opsional. Kosongkan untuk melewati pemeriksaan budget.",
+      "emptyHint": "Perbaiki bidang yang disorot untuk melihat jadwal.",
+      "note": "Dihitung hanya dari kebijakan — tidak ada yang dikirim ke layanan upstream. Jitter dilaporkan sebagai rentang tempat klien nyata berada, bukan sebagai satu sampel.",
+      "headlineExact": "{attempts} percobaan, {wait} total waktu tunggu.",
+      "headlineRange": "{attempts} percobaan, rata-rata {expected} waktu tunggu, hingga {max} dalam kasus terburuk.",
+      "finalDelay": "Waktu tunggu terakhir, sebelum percobaan {attempt}, adalah {delay}.",
+      "noRetries": "Budget ini mengizinkan satu percobaan dan tanpa retry, jadi tidak ada yang perlu ditunggu.",
+      "retryCount": "{count, plural, =0 {tanpa retry} one {# retry} other {# retry}}",
+      "capFlattened": "Cap tercapai pada percobaan {attempt} — setiap jeda berikutnya tetap di {delay}.",
+      "timeoutExceeded": "Kasus terburuk menunggu {wait}, melebihi budget {timeout} Anda.",
+      "timeoutOk": "Kasus terburuk menunggu {wait}, dalam anggaran {timeout} Anda.",
+      "tableLabel": "Jadwal ulang coba",
+      "colAttempt": "Percobaan",
+      "colDelay": "Penundaan",
+      "colCumulative": "Total penundaan",
+      "average": "rata-rata {value}",
+      "formula": {
+        "none": "Penundaan tepat — tidak ada jitter diterapkan.",
+        "equal": "Jitter setengah: separuh penundaan tetap, separuh lainnya diambil secara seragam, sehingga setiap penundaan berada antara setengah penundaan dan penundaan penuh.",
+        "full": "Jitter penuh: penundaan diambil secara seragam antara nol dan penundaan yang dihitung."
+      },
+      "errInitialDelay": "Penundaan awal harus berupa bilangan bulat milidetik, minimal 1.",
+      "errFactor": "Faktor harus lebih besar dari 1 dan maksimal 100. Faktor 1 adalah strategi tetap.",
+      "errIncrement": "Penambahan harus berupa bilangan bulat milidetik, 0 atau lebih.",
+      "errMaxDelay": "Batas maksimal harus berupa bilangan bulat dalam milidetik, minimal 1.",
+      "errCapBelowInitial": "Batas maksimal harus setidaknya sama dengan penundaan awal.",
+      "errMaxAttempts": "Jumlah percobaan harus berupa bilangan bulat dari 1 hingga 100.",
+      "errCallerTimeout": "Waktu tunggu harus berupa bilangan bulat dalam milidetik, minimal 1."
+    },
+    "csvColumns": {
+      "csvLabel": "CSV",
+      "csvPlaceholder": "Tempel CSV di sini, atau jatuhkan file — baris pertama dibaca sebagai nama kolom",
+      "sample": "Contoh CSV",
+      "chooseFile": "Pilih file",
+      "fileFailed": "Tidak dapat membaca {name}.",
+      "delimiterLabel": "Pemisah",
+      "delimiter": {
+        "comma": "Koma  ,",
+        "semicolon": "Titik koma  ;",
+        "tab": "Tab",
+        "pipe": "Pipe  |"
+      },
+      "raggedPolicyLabel": "Baris yang tidak cocok dengan header",
+      "ragged": {
+        "pad": "Ratakan ke header",
+        "truncate": "Potong baris panjang, biarkan baris pendek tetap pendek",
+        "reject": "Berhenti dan laporkan"
+      },
+      "columnsTitle": "Kolom — {kept} dari {total} dipertahankan",
+      "columnsHint": "Batal centang untuk menghapus kolom, edit kotak untuk mengubah namanya, gunakan panah untuk mengubah urutan. Semua diselesaikan terhadap header asli.",
+      "reset": "Atur ulang kolom",
+      "keep": "Pertahankan kolom {name}",
+      "renameLabel": "{name}",
+      "moveUp": "Pindahkan {name} ke atas",
+      "moveDown": "Pindahkan {name} ke bawah",
+      "noneKept": "Semua kolom tidak dicentang — pertahankan setidaknya satu.",
+      "emptyHint": "Tempel CSV di atas untuk mengelola kolomnya.",
+      "note": "Berjalan pada teks yang Anda tempel. Jatuhkan, lalu ubah nama, lalu urutkan ulang — dalam urutan tetap tersebut, selalu berdasarkan header asli.",
+      "columnCount": "{n} kolom",
+      "rowCount": "{n} baris",
+      "duplicateHeaders": "Header duplikat digunakan berdasarkan nama: {names}",
+      "raggedCount": "{n}{more} baris tidak sesuai lebar header",
+      "previewLabel": "CSV Output",
+      "previewTruncated": "Menampilkan {shown} dari {total} baris pertama. Salin atau unduh untuk file lengkap.",
+      "raggedListLabel": "Baris yang tidak sesuai lebar header",
+      "raggedRow": "Baris {line}: {actual} bidang, header memiliki {expected}",
+      "unusedRenames": "Pengubahan nama diabaikan — kolom ini tidak ada di output: {names}"
+    },
+    "imageRotateFlip": {
+      "drop": "Seret gambar, atau klik untuk menjelajahi",
+      "browse": "Pilih gambar",
+      "selected": "{name} · {kb} KB",
+      "privacy": "File dikirim ke API Forge untuk transformasi dan tidak pernah disimpan.",
+      "tooLarge": "Gambar tersebut lebih besar dari {mb} MB.",
+      "ccw": "90° ke kiri",
+      "cw": "90° kanan",
+      "half": "180°",
+      "reset": "Reset",
+      "flipHorizontal": "Balik horizontal",
+      "flipVertical": "Balik vertical",
+      "angle": "Sudut",
+      "exactAngle": "Sudut ° tepat",
+      "fitMode": "Kanvas",
+      "fitExpand": "Perluas kanvas",
+      "fitCrop": "Potong untuk mengisi",
+      "fitInside": "Sesuaikan di dalam",
+      "fitNote": "Setelah diputar seperempat putaran, gambar yang diputar tidak lagi muat dalam bingkai lamanya: perluas menyimpan setiap piksel, potong mempertahankan ukuran asli dan memotong sudut-sudutnya, sesuaikan mengecilkan seluruh gambar.",
+      "outputFormat": "Format keluaran",
+      "sameFormat": "Sama seperti input",
+      "idle": "Seret gambar untuk melihat orientasinya diubah.",
+      "original": "Asli · {w}×{h}",
+      "originalAlt": "Gambar sesuai saat diunggah",
+      "result": "Hasil · {w}×{h}",
+      "resultAlt": "Gambar setelah orientasi diubah",
+      "badgeLossless": "Tanpa resampling",
+      "badgeResampled": "Resampling",
+      "badgeSize": "{kb} KB",
+      "badgeExif": "Orientasi EXIF {orientation} diterapkan terlebih dahulu",
+      "badgeSnapped": "Terpasang tepat pada seperempat putaran",
+      "badgeReencode": "Geometri tepat; codec melakukan pengkodean ulang",
+      "download": "Unduh",
+      "note": "Rotasi 90°, 180°, dan 270° memindahkan piksel tanpa pencampuran. Sudut lain akan melakukan resampling. GIF animasi, APNG, dan WebP animasi belum didukung."
+    },
+    "exifStrip": {
+      "drop": "Lepaskan JPEG, PNG, atau WebP untuk menghapus metadatanya",
+      "privacy": "Diproses di server kami dan tidak pernah disimpan. Maksimal {mb} MB per gambar.",
+      "idle": "Dihapus: GPS, waktu pengambilan, info kamera dan perangkat, thumbnail tertanam, riwayat pengeditan. Dipertahankan: orientasi, profil warna, dimensi, data piksel.",
+      "note": "Hanya gambar statis. Video, PDF, HEIC, AVIF, dan GIF tidak termasuk, dan manifest provenance C2PA tetap utuh.",
+      "detail": "Yang dihapus",
+      "optKeepThumbnail": "Pertahankan thumbnail Exif tertanam",
+      "verdictStripped": "Menghapus {fields} bidang metadata ({kb} KB)",
+      "verdictClean": "File ini tidak mengandung metadata yang dapat dihapus",
+      "strippedCaveat": "Gambar itu sendiri tidak berubah — piksel sama, dimensi sama, tidak ada yang di-encode ulang.",
+      "cleanCaveat": "Dikembalikan byte per byte sebagaimana diterima.",
+      "badgeOrientationKept": "Orientasi dipertahankan",
+      "badgeOrientationLost": "Orientasi tidak dapat dibawa",
+      "badgeColorProfileKept": "Profil warna dipertahankan",
+      "badgeThumbnailKept": "Thumbnail dipertahankan",
+      "badgeThumbnailRemoved": "Thumbnail dihapus",
+      "download": "Unduh gambar yang telah dibersihkan",
+      "sizes": "{before} KB → {after} KB",
+      "detailFields": "{fields} bidang · {kb} KB",
+      "detailNothing": "Tidak ada yang dihapus dari file ini.",
+      "detailOrientation": "Orientasi Exif {value} dibaca dari file dan dibawa bersama.",
+      "detailNoOrientation": "File tidak mendeklarasikan orientasi Exif, jadi tampilan tidak terpengaruh.",
+      "segmentExif": "Exif",
+      "segmentIptc": "IPTC",
+      "segmentXmp": "XMP",
+      "segmentComment": "Komentar",
+      "segmentText": "Metadata teks",
+      "segmentTime": "Timestamp",
+      "segmentVendor": "Blok vendor",
+      "summaryStripped": "Menghapus {fields} bidang metadata ({families}), {kb} KB. Gambar lainnya tetap tidak berubah.",
+      "summaryClean": "Tidak ditemukan metadata yang dapat dihapus. File dikembalikan tanpa perubahan."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "이름 / 호스트",
+      "type": "레코드 유형",
+      "note": "Forge 호스트 DNS로 해석합니다."
+    },
+    "tls": {
+      "host": "호스트",
+      "expired": "인증서 만료",
+      "validDays": "{n}일 남음",
+      "note": "Forge 호스트에서 연결. 검사용으로 신뢰 검증 완화."
+    },
+    "myIp": {
+      "refresh": "새로고침",
+      "note": "Forge가 본 IP. 라이선스 geo 없음."
+    },
+    "mermaid": {
+      "source": "Mermaid source",
+      "idle": "Valid diagrams render here",
+      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
+      "sample": "Sample",
+      "theme": "Theme",
+      "theme_default": "Default",
+      "theme_dark": "Dark",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "Flowchart",
+      "sample_sequence": "Sequence",
+      "sample_class": "Class",
+      "sample_er": "ER diagram",
+      "sample_state": "State",
+      "sample_gantt": "Gantt",
+      "sample_pie": "Pie",
+      "sample_mindmap": "Mindmap",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "zoomReset": "Reset view",
+      "copySvg": "Copy SVG",
+      "downloadSvg": "Download SVG",
+      "downloadPng": "Download PNG",
+      "previewAria": "Mermaid diagram preview",
+      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
+    },
+    "colorDeltaE": {
+      "note": "culori CIEDE2000. 임계값은 UI 리뷰용."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL 방언",
+      "parseNote": "파싱/목록만. ERD는 별도.",
+      "convertNote": "@dbml/core — API와 동일 경로."
+    },
+    "dnsLeak": {
+      "probeHost": "Compare host (advanced)",
+      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
+      "run": "Start DNS leak check",
+      "retest": "Run again",
+      "showAdvanced": "Advanced options",
+      "hideAdvanced": "Hide advanced",
+      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
+      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
+      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
+      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
+      "edgeIp": "Your edge IP",
+      "authorityHits": "Recursive IPs",
+      "forgePaths": "Forge resolver hits",
+      "dohPaths": "Browser DoH hits",
+      "webrtcCount": "WebRTC IPs",
+      "forgeResolvers": "Forge multi-resolver (server-side)",
+      "forgeNote": "These queries leave from the Forge host — not your laptop.",
+      "browserDoh": "Browser DoH",
+      "webrtc": "WebRTC ICE",
+      "egressMarkers": "Forge egress markers",
+      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
+      "honestyPrefix": "Honesty:",
+      "verdictConsistent": "Paths look consistent on this check",
+      "verdictSplit": "Split answers across DNS paths",
+      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
+      "verdictIncomplete": "Incomplete — browser probes missing",
+      "verdictAuthority": "System DNS recursives captured",
+      "infraOn": "Authority online",
+      "infraOff": "Authority offline — multi-path only",
+      "infraChecking": "Checking…",
+      "authorityResolvers": "System DNS recursive resolvers",
+      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
+      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
+      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
+      "authorityDetail": "Authority session detail",
+      "phaseSession": "Creating session…",
+      "phaseSystemDns": "Triggering system DNS…",
+      "phasePoll": "Listening for recursive hits ({n}/{total})…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "stepSession": "Session",
+      "stepSystemDns": "System DNS",
+      "stepPoll": "Listen",
+      "stepBrowser": "Browser",
+      "stepServer": "Server",
+      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
+      "liveHits": "Live recursive hits",
+      "sectionSystemDns": "System DNS (what you came for)",
+      "sectionComplementary": "Complementary paths",
+      "sectionTech": "Technical session detail",
+      "copyIps": "Copy IPs",
+      "copied": "Copied",
+      "queryCount": "{n} queries",
+      "colPath": "Path",
+      "colAnswers": "Answers",
+      "colMs": "ms",
+      "ipPublic": "public",
+      "ipPrivate": "private",
+      "sig": {
+        "captured": "System DNS captured",
+        "onlineNoHits": "Authority online · no hits yet",
+        "offline": "Authority offline",
+        "forgeSplit": "Forge resolvers disagree",
+        "dohSplit": "Browser DoH disagree",
+        "webrtcMismatch": "WebRTC ≠ edge IP",
+        "webrtcLocal": "Local WebRTC candidates",
+        "noBrowser": "No browser probes"
+      }
+    },
+    "honesty": {
+      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
+      "signatureNotVerified": "{engine} · decode only · signature not verified",
+      "localOnly": "Processed for this request · not stored as a card or credential"
+    },
+    "idCard": {
+      "number": "Resident ID number",
+      "note": "GB 11643 check digit · no household registry lookup · same path as API",
+      "specimenTitle": "Resident ID · structure specimen",
+      "segRegion": "Region",
+      "segBirth": "Birth",
+      "segSeq": "Seq",
+      "segCheck": "Check",
+      "metaBirth": "Birth",
+      "metaGender": "Gender",
+      "metaRegion": "Region code",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "reasonFormat": "Format should be 18 characters (last may be X)",
+      "reasonBirth": "Birth date segment is invalid",
+      "reasonCheck": "Check digit is wrong",
+      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} lines",
+      "chars": "{n} chars",
+      "empty": "(empty file)",
+      "readyToShip": "Ready to drop into the repo"
+    },
+    "textTransform": {
+      "mode": "Mode",
+      "input": "Input",
+      "output": "Output",
+      "emptyResult": "Result appears here",
+      "runLocal": "Run locally",
+      "runServer": "Run on server",
+      "statusLocalLive": "Local · live",
+      "statusLocal": "Local",
+      "statusServer": "Server · same path as API",
+      "noteDefault": "Same path as API"
+    }
+  },
+  "roots": {
+    "hubLabel": "Berdasarkan niat",
+    "tools": "alat",
+    "dualSurface": "Halaman manusia + API Agen · mesin yang sama",
+    "otherRoots": "Akar permintaan lainnya"
+  }
+}

@@ -1,0 +1,802 @@
+{
+  "translationKey": "agent-coordination-layer",
+  "author": "Tseka Luk",
+  "categories": "Nebutra Originals,AI Strategy,Frontier Notes",
+  "mainImage": "content/blog/covers/agent-coordination-layer.png",
+  "publishedAt": "2026-06-08T00:00:00.000Z",
+  "title": "People Standing on the Old Abstraction Layer: The Layer After Agents",
+  "slug": "agent-coordination-layer",
+  "language": "en",
+  "excerpt": "The next Manus Moment will not come from a smarter standalone agent. It will come from the coordination layer that turns many agents into an accountable AI-native organization.",
+  "body": [
+    {
+      "_key": "block-0001",
+      "_type": "block",
+      "style": "h2",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0002",
+          "_type": "span",
+          "text": "Prologue: The generator everyone brought home",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0003",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0004",
+          "_type": "span",
+          "text": "In the 1890s, American factory owners lined up to buy electric motors. The sales pitch sounded obvious: electricity was cleaner than steam, quieter than steam, and cheaper than steam. So they removed the boiler, placed one new electric motor where the steam engine used to sit, and waited for profits to double.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0005",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0006",
+          "_type": "span",
+          "text": "Profits did not double. For roughly three or four decades, the productivity accounts barely showed the impact of electrification. Economic historian Paul David later explained why: factory owners had installed a new engine inside an old body. The old factory had been designed around a central line shaft running through the whole room. Every machine hung from that shaft by belts. Wherever the shaft went, the machines had to cluster. They replaced the power source, but kept the shaft.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0007",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0008",
+          "_type": "span",
+          "text": "The real gain arrived only when someone understood the deeper change. If electricity could reach any corner of the building, why should machines still obey the shaft? Individual electric drives appeared. Factory floors were rebuilt around workflow, not around the iron axis. Only then did productivity take off.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "callout-0009",
+      "_type": "calloutBlock",
+      "tone": "insight",
+      "body": "People thought they had bought a better engine. Much later, they discovered that what really had to change was the structure of the building."
+    },
+    {
+      "_key": "block-0010",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0011",
+          "_type": "span",
+          "text": "I start with this story because we are standing at the same kind of crossing. This time, the generator everyone brought home is called the Agent.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "divider-0012",
+      "_type": "componentBlock",
+      "componentKey": "articleDivider",
+      "props": []
+    },
+    {
+      "_key": "block-0013",
+      "_type": "block",
+      "style": "h2",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0014",
+          "_type": "span",
+          "text": "Act I: Is the problem really the agent?",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0015",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0016",
+          "_type": "span",
+          "text": "On March 6, 2025, Manus released a demo. It found apartments, built spreadsheets, compared flights, and planned an itinerary in one flow. Within twenty hours the video had more than a million views, and invitation codes reportedly traded for 50,000 to 100,000 RMB. People called it China’s second DeepSeek moment and a window into AGI.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0017",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0018",
+          "_type": "span",
+          "text": "Eight months later, its annualized revenue had passed $100 million. Not long after, near the end of 2025, Meta reportedly acquired it for more than $2 billion, only for the deal to be rejected in a cross-border regulatory fight. A beautiful product. A respectable, unfinished exit.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0019",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0020",
+          "_type": "span",
+          "text": "But pause and look at the body of the product. Manus did not own the model; it ran on other people’s Claude and Qwen. It also did not own a proprietary data layer that became deeper every time it was used. It was an excellent orchestrator, a conductor of many capabilities.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "callout-0021",
+      "_type": "calloutBlock",
+      "tone": "insight",
+      "body": "Why did a conductor without its own engine or its own soil end up as an acquisition target rather than a platform?"
+    },
+    {
+      "_key": "block-0022",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0023",
+          "_type": "span",
+          "text": "The answer is hidden in the generator story. Manus was a beautiful electric motor, but it did not rearrange its factory. It proved that orchestration is moving enough to sell. It also proved that orchestration alone is not enough to live independently.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0024",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0025",
+          "_type": "span",
+          "text": "So when we ask what to bet on, the first move is to stop staring at the engine.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "divider-0026",
+      "_type": "componentBlock",
+      "componentKey": "articleDivider",
+      "props": []
+    },
+    {
+      "_key": "block-0027",
+      "_type": "block",
+      "style": "h2",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0028",
+          "_type": "span",
+          "text": "Act II: Every inch gained by the model takes land from someone else",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0029",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0030",
+          "_type": "span",
+          "text": "There is an open-source project that tracks products killed by AI. It lists more than eighty and keeps growing. OpenAI alone is credited with killing more than twenty; Google with more than ten. “Killed” is not a moral claim. It is what happens when the tide rises: a paid feature from yesterday becomes a free button inside the model today.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0031",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0032",
+          "_type": "span",
+          "text": "The most painful example is Jasper. In 2022 it was valued at $1.5 billion for writing marketing copy. When ChatGPT arrived, the wrapper business was hollowed out almost overnight, because it had never really owned the thing it sold. It stood in front of a model and resold what the model was learning to do directly. The same thing happened to a category of “chat with your PDF” products such as ChatPDF, PDF.ai, and AskYourPDF. Once native file upload became a model feature, their reason to exist evaporated.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "callout-0033",
+      "_type": "calloutBlock",
+      "tone": "insight",
+      "body": "In every technical revolution, the first to disappear are often not the weakest technologists. They are the people standing on an old abstraction layer, reselling the capability underneath."
+    },
+    {
+      "_key": "block-0034",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0035",
+          "_type": "span",
+          "text": "Yet in the same tide, some companies rose higher: Cursor, Harvey, Glean, Sierra, Perplexity, Cognition. They also use models that can improve underneath them at any time. Why do they survive?",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0036",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0037",
+          "_type": "span",
+          "text": "Put them side by side and a simple pattern appears. They do not survive because they hold intelligence. They survive because they hold four things beside intelligence: a workflow too deep for outsiders to insert themselves into; a proprietary data loop that compounds; a habit and distribution surface users return to daily; and, most importantly, responsibility for the result.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0038",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0039",
+          "_type": "span",
+          "text": "None of those four things is model capability. None is agent capability. Models will improve. Agents will become utility infrastructure. Those four things become more valuable as the model improves.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "divider-0040",
+      "_type": "componentBlock",
+      "componentKey": "articleDivider",
+      "props": []
+    },
+    {
+      "_key": "block-0041",
+      "_type": "block",
+      "style": "h2",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0042",
+          "_type": "span",
+          "text": "Act III: The agent is not the destination. It is the second-to-last stair",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0043",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0044",
+          "_type": "span",
+          "text": "Step back and the history of computing looks like a staircase. Every step increases the size of what we can delegate: assembly language, programming languages, frameworks, cloud, foundation models, copilots, agents.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0045",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0046",
+          "_type": "span",
+          "text": "We moved from delegating an instruction, to a function, to an application, to infrastructure, to a turn of reasoning, and then to a task. Each step turns the layer below it into a base we no longer think about. Assembly did not disappear, but nobody builds a moat by hand-writing assembly. Cloud did not disappear, but nobody treats “I can start a server” as a moat.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "callout-0047",
+      "_type": "calloutBlock",
+      "tone": "insight",
+      "body": "What is larger than one task performed by one agent?"
+    },
+    {
+      "_key": "block-0048",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0049",
+          "_type": "span",
+          "text": "Follow the staircase upward and the answer almost reveals itself: a coordinated set of tasks that together complete a larger body of work. In other words, an organization. The layer after agents is not a smarter agent. It is the thing above many agents, the way an operating system once sat above many processes. a16z calls it a system of coordination.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0050",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0051",
+          "_type": "span",
+          "text": "The reassuring part is not that this conclusion can be derived from first principles. It is that several independent groups reached the same place in late 2025 and 2026.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "quote-0052",
+      "_type": "quoteBlock",
+      "quote": "Users will shift from being people who do the work to managers of teams of agents.",
+      "attribution": "Sequoia, 2026: This Is AGI",
+      "sourceHref": "https://sequoiacap.com/article/2026-this-is-agi/"
+    },
+    {
+      "_key": "quote-0053",
+      "_type": "quoteBlock",
+      "quote": "Systems of record will recede into the background as commoditized storage; what enterprises need is the coordination system above them.",
+      "attribution": "a16z, Big Ideas 2026",
+      "sourceHref": "https://a16z.com/newsletter/big-ideas-2026-part-2/"
+    },
+    {
+      "_key": "quote-0054",
+      "_type": "quoteBlock",
+      "quote": "Every company’s IT department will become the HR department for AI agents.",
+      "attribution": "Jensen Huang / NVIDIA, CES 2025",
+      "sourceHref": "https://www.fortune.com/2025/01/09/nvidia-ceo-jensen-huangt-take-over-hr-ai-agents"
+    },
+    {
+      "_key": "block-0055",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0056",
+          "_type": "span",
+          "text": "Three smart minds that were not coordinating with each other pointed toward the same door. That is usually not coincidence. It is the same underlying law leaving footprints in different places.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "divider-0057",
+      "_type": "componentBlock",
+      "componentKey": "articleDivider",
+      "props": []
+    },
+    {
+      "_key": "block-0058",
+      "_type": "block",
+      "style": "h2",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0059",
+          "_type": "span",
+          "text": "Act IV: The bill tells the truth",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0060",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0061",
+          "_type": "span",
+          "text": "Arguments can lie. Bills rarely do. SaaS spent twenty years selling seats, built on a simple assumption: the more humans use the software, the more value is created. If one agent can do the work of ten people, that assumption breaks at the root. Why would a customer pay for ten seats when those seats are empty?",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0062",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0063",
+          "_type": "span",
+          "text": "The market is already voting with capital. In February 2026, a repricing described as a SaaS doomsday erased roughly $285 billion in market value. Monday.com fell from its yearly highs into the $70-$80 range, and the explanation was blunt: investors were repricing AI seat compression. CEO Eran Zinman acknowledged that a sales-development function once handled by roughly one hundred people had been taken over by AI, reducing response time from a day to three minutes.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0064",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0065",
+          "_type": "span",
+          "text": "At the same time, a new pricing model is growing. Intercom’s customer-service agent charges $0.99 per resolved issue with performance guarantees, grew from about $1 million to more than $100 million in ARR, and now resolves more than one million issues each week. HubSpot charges $0.50 per resolution, Zendesk $1.50, Salesforce $2.00. Sierra built the entire company around outcome pricing.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "callout-0066",
+      "_type": "calloutBlock",
+      "tone": "insight",
+      "body": "People thought they were buying software. Later they realized they had always wanted to buy outcomes."
+    },
+    {
+      "_key": "block-0067",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0068",
+          "_type": "span",
+          "text": "This is much bigger than a pricing tweak. Once you sell outcomes, you must own the organization that produces those outcomes. A result is not the work of one agent. It is the work of a coordinated body of tasks. Pricing quietly pushes the product toward the coordination layer. The bill confirms the staircase.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "divider-0069",
+      "_type": "componentBlock",
+      "componentKey": "articleDivider",
+      "props": []
+    },
+    {
+      "_key": "block-0070",
+      "_type": "block",
+      "style": "h2",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0071",
+          "_type": "span",
+          "text": "Act V: Build the organization, not the agent",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0072",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0073",
+          "_type": "span",
+          "text": "Pull the threads together and the conclusion is quiet: the abstraction layer worth betting on is the coordination layer, the system that turns commoditized agents into a governable organization that is accountable for outcomes.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0074",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0075",
+          "_type": "span",
+          "text": "If this has to become one concrete product direction, I would say this: choose a high-value function that is still widely outsourced today, such as a finance department, a law firm, or an engineering organization, and build an AI-native department in a box. It must satisfy three conditions.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0076",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0077",
+          "_type": "span",
+          "text": "First, stronger models must make it better, not obsolete. That is how you avoid the graveyard. Pick a domain where a rising tide lifts your boat rather than drowning your island.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0078",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0079",
+          "_type": "span",
+          "text": "Second, it must have a proprietary data loop that compounds. This is what Manus lacked. Every coordination run should make the next run more accurate. That soil cannot be copied by a stronger model alone.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0080",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0081",
+          "_type": "span",
+          "text": "Third, it must price by outcome. That captures value that seats cannot capture, and it forces the builder to own the organization instead of staying in the comfort zone of a tool.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0082",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0083",
+          "_type": "span",
+          "text": "Y Combinator’s 2026 requests for startups say almost the same thing: AI-native companies that do not sell software, but directly sell services. Insurance brokerage, accounting and audit, compliance, healthcare administration: we do the work. The frontier has moved from an agent that helps you to an organization that delivers the result.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "callout-0084",
+      "_type": "calloutBlock",
+      "tone": "insight",
+      "title": "A note on a popular bet",
+      "body": "Startup OS, AI-native company, agent governance, and multi-agent systems are directionally right, but only conditionally. The condition is that the product unit changes from agent to organization or department, and the business model changes from seats to outcomes. The moat is not the ability to coordinate. It is who you coordinate for, what result you own, and what soil nobody else can take."
+    },
+    {
+      "_key": "divider-0085",
+      "_type": "componentBlock",
+      "componentKey": "articleDivider",
+      "props": []
+    },
+    {
+      "_key": "block-0086",
+      "_type": "block",
+      "style": "h2",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0087",
+          "_type": "span",
+          "text": "Closing: three sentences",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0088",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0089",
+          "_type": "span",
+          "text": "This is only a thesis, and it may be wrong. Models may turn coordination into a default capability. Outcomes may be impossible to measure in some industries. Geopolitics may overpower all product logic; the vetoed Manus deal is a live reminder. But if I had to leave three sentences from this path, they would be these:",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "callout-0090",
+      "_type": "calloutBlock",
+      "tone": "insight",
+      "body": "Do not buy a better engine. Rearrange the structure of the building. Do not try to hold intelligence. Hold the compounding soil beside intelligence. Do not build a smarter agent. Build an organization that can run by itself and be accountable for outcomes."
+    },
+    {
+      "_key": "block-0091",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0092",
+          "_type": "span",
+          "text": "After agents, the next layer is not another agent. It is the thing that lets a group of agents run like a company, quietly and with accountability.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "callout-0093",
+      "_type": "calloutBlock",
+      "tone": "insight",
+      "title": "Editor’s note / Why we care",
+      "body": "This is a Nebutra Frontier field note. The reason we build Nebutra Agent OS is precisely the work described here: rearranging the building structure. We want independent developers and one-person companies to have a governed base layer where agents can be orchestrated, constrained, and trusted like an organization. This article is not a product pitch. It is the map behind how we judge the future. It may be wrong; if it is wrong, we want to be wrong clearly."
+    },
+    {
+      "_key": "block-0094",
+      "_type": "block",
+      "style": "h2",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0095",
+          "_type": "span",
+          "text": "References",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "source-0096",
+      "_type": "sourceCard",
+      "title": "Paul A. David, The Dynamo and the Computer",
+      "url": "https://www.researchgate.net/publication/4724731_The_Dynamo_and_the_Computer_An_Historical_Perspective_On_the_Modern_Productivity_Paradox",
+      "publisher": "ResearchGate",
+      "summary": "电气化的单机驱动与生产率延迟。"
+    },
+    {
+      "_key": "source-0097",
+      "_type": "sourceCard",
+      "title": "AEI: The Dynamo, the Computer, and ChatGPT",
+      "url": "https://www.aei.org/articles/the-dynamo-the-computer-and-chatgpt-explaining-todays-productivity-paradox/",
+      "publisher": "AEI",
+      "summary": "关于技术扩散和生产率悖论的背景。"
+    },
+    {
+      "_key": "source-0098",
+      "_type": "sourceCard",
+      "title": "Bloomberg: Meta acquires Manus",
+      "url": "https://www.bloomberg.com/news/articles/2025-12-29/meta-acquires-startup-manus-to-bolster-ai-business",
+      "publisher": "Bloomberg",
+      "summary": "Manus 与 Meta 交易相关报道。"
+    },
+    {
+      "_key": "source-0099",
+      "_type": "sourceCard",
+      "title": "CNBC: Manus ARR and customer reaction",
+      "url": "https://www.cnbc.com/2026/01/21/metas-2b-manus-deal-pushes-away-some-customers-sad-it-happened.html",
+      "publisher": "CNBC",
+      "summary": "Manus 年化收入和交易反应。"
+    },
+    {
+      "_key": "source-0100",
+      "_type": "sourceCard",
+      "title": "TechCrunch: China vetoes Meta Manus deal",
+      "url": "https://techcrunch.com/2026/04/27/china-vetoes-metas-2b-manus-deal-after-months-long-probe/",
+      "publisher": "TechCrunch",
+      "summary": "跨境监管否决交易的报道。"
+    },
+    {
+      "_key": "source-0101",
+      "_type": "sourceCard",
+      "title": "Killed by AI — The AI Graveyard",
+      "url": "https://mixtpatrik.github.io/killedbyai/",
+      "publisher": "Killed by AI",
+      "summary": "AI 原生能力挤压上层应用的案例集合。"
+    },
+    {
+      "_key": "source-0102",
+      "_type": "sourceCard",
+      "title": "Sequoia: 2026, This is AGI",
+      "url": "https://sequoiacap.com/article/2026-this-is-agi/",
+      "publisher": "Sequoia Capital",
+      "summary": "关于用户从执行者变成 Agent 管理者的论述。"
+    },
+    {
+      "_key": "source-0103",
+      "_type": "sourceCard",
+      "title": "a16z: Big Ideas 2026, Part 2",
+      "url": "https://a16z.com/newsletter/big-ideas-2026-part-2/",
+      "publisher": "a16z",
+      "summary": "Systems of coordination 的企业软件方向。"
+    },
+    {
+      "_key": "source-0104",
+      "_type": "sourceCard",
+      "title": "a16z: The Enterprise Orchestration Layer",
+      "url": "https://a16z.com/podcast/big-ideas-2026-the-enterprise-orchestration-layer/",
+      "publisher": "a16z",
+      "summary": "企业编排层相关讨论。"
+    },
+    {
+      "_key": "source-0105",
+      "_type": "sourceCard",
+      "title": "Jensen Huang at CES 2025",
+      "url": "https://www.fortune.com/2025/01/09/nvidia-ceo-jensen-huangt-take-over-hr-ai-agents",
+      "publisher": "Fortune",
+      "summary": "关于 IT 部门成为 AI Agent HR 部门的转述。"
+    },
+    {
+      "_key": "source-0106",
+      "_type": "sourceCard",
+      "title": "How Intercom built outcome-based pricing for Fin",
+      "url": "https://gtmnow.com/how-intercom-built-the-highest-performing-ai-agent-on-the-market-using-outcome-based-pricing-with-archana-agrawal-president-at-intercom/",
+      "publisher": "GTM Now",
+      "summary": "Intercom Fin 按解决结果定价。"
+    },
+    {
+      "_key": "source-0107",
+      "_type": "sourceCard",
+      "title": "Fin.ai pricing comparison",
+      "url": "https://fin.ai/learn/ai-customer-service-agent-pricing-comparison",
+      "publisher": "Fin.ai",
+      "summary": "客服 Agent 结果定价对比。"
+    },
+    {
+      "_key": "source-0108",
+      "_type": "sourceCard",
+      "title": "CNBC: Monday.com stock and AI software",
+      "url": "https://www.cnbc.com/2026/02/09/monday-com-stock-ai-software.html",
+      "publisher": "CNBC",
+      "summary": "AI 席位压缩与 SaaS 重新估值。"
+    },
+    {
+      "_key": "source-0109",
+      "_type": "sourceCard",
+      "title": "The Great SaaS Unbundling",
+      "url": "https://www.taskade.com/blog/great-saas-unbundling",
+      "publisher": "Taskade",
+      "summary": "SaaS unbundling 与重新定价背景。"
+    },
+    {
+      "_key": "source-0110",
+      "_type": "sourceCard",
+      "title": "Y Combinator Requests for Startups",
+      "url": "https://ycombinator.com/rfs",
+      "publisher": "Y Combinator",
+      "summary": "AI 原生服务公司方向。"
+    },
+    {
+      "_key": "source-0111",
+      "_type": "sourceCard",
+      "title": "YC Summer 2026 Requests for Startups Ideas",
+      "url": "https://www.thevccorner.com/p/yc-summer-2026-requests-for-startups-ideas",
+      "publisher": "The VC Corner",
+      "summary": "YC 2026 RFS 解读。"
+    },
+    {
+      "_key": "source-0112",
+      "_type": "sourceCard",
+      "title": "VisiCalc as a killer app",
+      "url": "https://www.cultofmac.com/apple-history/apple-ii-killer-app-visicalc",
+      "publisher": "Cult of Mac",
+      "summary": "VisiCalc 作为杀手级抽象的背景。"
+    }
+  ]
+}

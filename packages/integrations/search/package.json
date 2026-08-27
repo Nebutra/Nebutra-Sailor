@@ -1,0 +1,78 @@
+{
+  "name": "@nebutra/search",
+  "version": "0.1.2",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "graph": "core",
+    "status": "foundation",
+    "productionReady": false,
+    "requires": [
+      "MEILISEARCH_URL + MEILISEARCH_MASTER_KEY",
+      "or TYPESENSE_HOST + TYPESENSE_API_KEY",
+      "or ALGOLIA_APP_ID + ALGOLIA_ADMIN_API_KEY",
+      "or DATABASE_URL (Postgres + pgvector extension)"
+    ],
+    "gaps": [
+      "Provider adapters are stubs — need bulk index + faceted search",
+      "Tenant-scoped index isolation not enforced"
+    ]
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./meilisearch": {
+      "types": "./dist/providers/meilisearch.d.ts",
+      "import": "./dist/providers/meilisearch.js"
+    },
+    "./typesense": {
+      "types": "./dist/providers/typesense.d.ts",
+      "import": "./dist/providers/typesense.js"
+    },
+    "./algolia": {
+      "types": "./dist/providers/algolia.d.ts",
+      "import": "./dist/providers/algolia.js"
+    },
+    "./pgvector": {
+      "types": "./dist/providers/pgvector.d.ts",
+      "import": "./dist/providers/pgvector.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/logger": "workspace:*",
+    "meilisearch": "^0.44.1",
+    "typesense": "^2.0.0",
+    "algoliasearch": "^5.20.0",
+    "pg": "^8.13.1",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.10",
+    "typescript": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/integrations/search#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/integrations/search"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

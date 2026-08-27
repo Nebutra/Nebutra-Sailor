@@ -1,0 +1,143 @@
+name: Ops — sync auth Vercel DB env from GH secrets
+
+# Copies production DATABASE_URL / DIRECT_URL (and critical auth secrets)
+# from GitHub Actions secrets into the nebutra-auth Vercel project.
+# Prints only hostnames — never connection strings or secrets.
+#
+# Why: local packages/platform/db/.env may still point at a retired Supabase
+# pooler; production is PlanetScale Postgres (see docs/admin/ecs-postgres-to-supabase.md).
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Patch Vercel project env
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_AUTH_PROJECT_ID || vars.VERCEL_AUTH_PROJECT_ID }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DIRECT_URL: ${{ secrets.DIRECT_URL || secrets.DATABASE_URL }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+          BETTER_AUTH_URL: ${{ vars.NEXT_PUBLIC_AUTH_URL || 'https://auth.nebutra.com' }}
+          NEXT_PUBLIC_AUTH_URL: ${{ vars.NEXT_PUBLIC_AUTH_URL || 'https://auth.nebutra.com' }}
+          NEXT_PUBLIC_APP_URL: ${{ vars.NEXT_PUBLIC_APP_URL || 'https://app.nebutra.com' }}
+          AUTH_COOKIE_DOMAIN: ".nebutra.com"
+        run: |
+          set -euo pipefail
+          test -n "${VERCEL_TOKEN:-}" || { echo "::error::VERCEL_TOKEN missing"; exit 1; }
+          test -n "${VERCEL_PROJECT_ID:-}" || { echo "::error::VERCEL_AUTH_PROJECT_ID missing"; exit 1; }
+          test -n "${DATABASE_URL:-}" || { echo "::error::DATABASE_URL secret missing"; exit 1; }
+
+          python3 <<'PY'
+          import json, os, urllib.parse, urllib.request, urllib.error
+
+          token = os.environ["VERCEL_TOKEN"]
+          team = os.environ.get("VERCEL_ORG_ID") or ""
+          pid = os.environ["VERCEL_PROJECT_ID"]
+          headers = {
+              "Authorization": f"Bearer {token}",
+              "Content-Type": "application/json",
+          }
+
+          def mask_host(url: str) -> str:
+              try:
+                  u = urllib.parse.urlparse(url)
+                  return f"{u.scheme}://***@{u.hostname}:{u.port or ''}{u.path}?{u.query}"
+              except Exception:
+                  return "(unparseable)"
+
+          def api(method: str, url: str, body=None):
+              data = None if body is None else json.dumps(body).encode()
+              req = urllib.request.Request(url, data=data, headers=headers, method=method)
+              try:
+                  with urllib.request.urlopen(req, timeout=60) as res:
+                      raw = res.read()
+                      return res.status, json.loads(raw) if raw else {}
+              except urllib.error.HTTPError as e:
+                  raw = e.read().decode()
+                  try:
+                      return e.code, json.loads(raw)
+                  except Exception:
+                      return e.code, {"raw": raw[:400]}
+
+          q = f"?teamId={team}" if team else ""
+          status, env_list = api("GET", f"https://api.vercel.com/v9/projects/{pid}/env{q}")
+          if status != 200:
+              raise SystemExit(f"list env failed: {status} {env_list}")
+          existing = {e["key"]: e for e in (env_list.get("envs") or [])}
+
+          # Ensure PlanetScale-style sslmode on Postgres URLs when missing.
+          def with_ssl(url: str) -> str:
+              if not url or "sslmode=" in url:
+                  return url
+              return url + ("&" if "?" in url else "?") + "sslmode=require"
+
+          updates = {
+              "DATABASE_URL": with_ssl(os.environ["DATABASE_URL"]),
+              "DIRECT_URL": with_ssl(os.environ.get("DIRECT_URL") or os.environ["DATABASE_URL"]),
+              "BETTER_AUTH_URL": os.environ.get("BETTER_AUTH_URL") or "https://auth.nebutra.com",
+              "NEXT_PUBLIC_AUTH_URL": os.environ.get("NEXT_PUBLIC_AUTH_URL") or "https://auth.nebutra.com",
+              "NEXT_PUBLIC_APP_URL": os.environ.get("NEXT_PUBLIC_APP_URL") or "https://app.nebutra.com",
+              "AUTH_COOKIE_DOMAIN": os.environ.get("AUTH_COOKIE_DOMAIN") or ".nebutra.com",
+              "AUTH_PROVIDER": "better-auth",
+              "NEXT_PUBLIC_AUTH_PROVIDER": "better-auth",
+          }
+          if os.environ.get("GOOGLE_CLIENT_ID"):
+              updates["GOOGLE_CLIENT_ID"] = os.environ["GOOGLE_CLIENT_ID"]
+              updates["NEXT_PUBLIC_GOOGLE_CLIENT_ID"] = os.environ["GOOGLE_CLIENT_ID"]
+          if os.environ.get("GOOGLE_CLIENT_SECRET"):
+              updates["GOOGLE_CLIENT_SECRET"] = os.environ["GOOGLE_CLIENT_SECRET"]
+          if os.environ.get("BETTER_AUTH_SECRET"):
+              updates["BETTER_AUTH_SECRET"] = os.environ["BETTER_AUTH_SECRET"]
+
+          plain = {
+              "GOOGLE_CLIENT_ID",
+              "NEXT_PUBLIC_GOOGLE_CLIENT_ID",
+              "BETTER_AUTH_URL",
+              "NEXT_PUBLIC_AUTH_URL",
+              "NEXT_PUBLIC_APP_URL",
+              "AUTH_COOKIE_DOMAIN",
+              "AUTH_PROVIDER",
+              "NEXT_PUBLIC_AUTH_PROVIDER",
+          }
+          targets = ["production", "preview", "development"]
+
+          print("=== will write (hosts only) ===")
+          for k in ("DATABASE_URL", "DIRECT_URL"):
+              if k in updates:
+                  print(k, mask_host(updates[k]))
+          print("GOOGLE_CLIENT_ID set=", bool(updates.get("GOOGLE_CLIENT_ID")))
+          print("BETTER_AUTH_SECRET set=", bool(updates.get("BETTER_AUTH_SECRET")))
+
+          for key, value in updates.items():
+              typ = "plain" if key in plain else "encrypted"
+              if key in existing:
+                  eid = existing[key]["id"]
+                  url = f"https://api.vercel.com/v9/projects/{pid}/env/{eid}{q}"
+                  code, body = api(
+                      "PATCH",
+                      url,
+                      {"value": value, "type": typ, "target": targets},
+                  )
+              else:
+                  url = f"https://api.vercel.com/v10/projects/{pid}/env{q}"
+                  code, body = api(
+                      "POST",
+                      url,
+                      {"key": key, "value": value, "type": typ, "target": targets},
+                  )
+              if code not in (200, 201):
+                  raise SystemExit(f"upsert {key} failed: {code} {body}")
+              print("ok", key, code)
+
+          print("done — redeploy nebutra-auth for runtime to pick up secrets")
+          PY

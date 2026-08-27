@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "confetti-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/confetti-demo.tsx",
+      "content": "\"use client\";\n\nimport { Confetti, ConfettiButton, type ConfettiRef } from \"@nebutra/ui/primitives\";\nimport { useRef } from \"react\";\n\nexport function ConfettiDemo() {\n  const confettiRef = useRef<ConfettiRef>(null);\n\n  return (\n    <div className=\"gap-8 p-12 relative flex w-full flex-col items-center justify-center overflow-hidden rounded-xl border bg-background\">\n      <Confetti\n        ref={confettiRef}\n        manualstart\n        className=\"inset-0 pointer-events-none absolute z-0 h-full w-full\"\n      />\n\n      <div className=\"gap-4 z-10 flex flex-col items-center\">\n        <button\n          type=\"button\"\n          onClick={() =>\n            confettiRef.current?.fire({\n              particleCount: 150,\n              spread: 100,\n              origin: { y: 0.6 },\n            })\n          }\n          className=\"px-6 py-3 text-sm font-semibold rounded-lg bg-primary text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none\"\n        >\n          Fire Confetti via Ref!\n        </button>\n\n        <ConfettiButton variant=\"outline\" className=\"px-6 py-3 shadow-sm\">\n          🎊 Easy ConfettiButton\n        </ConfettiButton>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

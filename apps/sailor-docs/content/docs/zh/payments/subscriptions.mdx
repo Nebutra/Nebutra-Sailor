@@ -1,0 +1,166 @@
+---
+title: 订阅
+description: 重定向至 Stripe 结账、处理订阅生命周期状态，以及管理试用期。
+---
+
+## 结账流程
+
+<Steps>
+  <Step title="将用户重定向至 Stripe 结账">
+    调用 `@nebutra/billing` 中的 `createCheckoutSession` 生成 Stripe 托管的结账 URL，然后将用户重定向至该 URL。
+
+    ```typescript apps/web/src/app/billing/upgrade/route.ts
+    import { createCheckoutSession } from "@nebutra/billing";
+    import { redirect } from "next/navigation";
+    import { getCurrentTenant } from "@nebutra/tenant";
+
+    export async function GET() {
+      const tenant = getCurrentTenant();
+
+      const session = await createCheckoutSession({
+        orgId: tenant.tenantId,
+        priceId: process.env.STRIPE_PRO_PRICE_ID!,
+        successUrl: `${process.env.NEXT_PUBLIC_APP_URL}/billing/success`,
+        cancelUrl: `${process.env.NEXT_PUBLIC_APP_URL}/billing`,
+        trialDays: 14,
+      });
+
+      redirect(session.url);
+    }
+    ```
+  </Step>
+  <Step title="用户在 Stripe 完成支付">
+    Stripe 处理支付表单、SCA/3DS 以及错误状态。您无需自行构建支付表单。
+  </Step>
+  <Step title="处理成功重定向">
+    支付成功后，Stripe 将用户重定向至您的 `successUrl`。此时展示确认界面即可——**不要**在这里更新计划。计划激活由 Webhook 确认。
+
+    ```typescript apps/web/src/app/billing/success/page.tsx
+    export default function BillingSuccessPage() {
+      return (
+        <div>
+          <h1>您已升级至 PRO！</h1>
+          <p>
+            您的计划正在激活，通常需要几秒钟。
+            如果新的限额未立即生效，请刷新页面。
+          </p>
+        </div>
+      );
+    }
+    ```
+  </Step>
+  <Step title="Webhook 确认计划激活">
+    Stripe 触发 `checkout.session.completed` 事件。`@nebutra/billing` 中的 Webhook 处理程序更新数据库中的租户计划，配额限额自动更新。
+  </Step>
+</Steps>
+
+<Warning>
+不要仅凭成功重定向 URL 来更新计划。重定向 URL 可以被伪造。请始终等待 `checkout.session.completed` Webhook 来确认支付。
+</Warning>
+
+## 查询订阅状态
+
+使用 `getSubscription` 获取某个组织的当前订阅状态：
+
+```typescript
+import { getSubscription } from "@nebutra/billing";
+
+const subscription = await getSubscription("org_123");
+// → {
+//     orgId: "org_123",
+//     plan: "pro",
+//     status: "active",
+//     currentPeriodEnd: "2026-04-30T00:00:00.000Z",
+//     cancelAtPeriodEnd: false,
+//     trialEnd: null,
+//   }
+```
+
+### 订阅生命周期状态
+
+| 状态 | 含义 | 用户影响 |
+|------|------|---------|
+| `trialing` | 处于 14 天试用期内 | 享有完整 PRO 权限，尚未收费 |
+| `active` | 订阅当前有效且已付款 | 完整计划访问权限 |
+| `past_due` | 最新发票付款失败 | 计划保持有效；提示用户更新支付方式 |
+| `canceled` | 订阅已取消 | 在当前计费周期结束后降级至 FREE |
+| `unpaid` | 多次尝试失败；Stripe 已暂停订阅 | 访问权限被撤销；用户必须更新支付方式 |
+
+### 在 UI 中展示状态
+
+```typescript apps/web/src/app/settings/billing/page.tsx
+import { getSubscription } from "@nebutra/billing";
+import { getCurrentTenant } from "@nebutra/tenant";
+
+export default async function BillingSettingsPage() {
+  const tenant = getCurrentTenant();
+  const subscription = await getSubscription(tenant.tenantId);
+
+  return (
+    <div>
+      <p>当前计划：<strong>{subscription.plan.toUpperCase()}</strong></p>
+      <p>状态：{subscription.status}</p>
+      {subscription.status === "past_due" && (
+        <a href="/billing/portal">更新支付方式</a>
+      )}
+    </div>
+  );
+}
+```
+
+## 试用期
+
+PRO 订阅包含 **14 天免费试用期**，试用期结束前不会向信用卡收费。
+
+- 试用状态在 `getSubscription` 中表现为 `status: "trialing"`。
+- 试用到期后，Stripe 向绑定的信用卡收费，状态变为 `active`。
+- 若试用期结束前未提供支付方式，订阅变为 `canceled`，租户被降级至 FREE。
+
+```typescript
+// 创建结账会话时传入 trialDays 以开启试用期
+const session = await createCheckoutSession({
+  orgId: "org_123",
+  priceId: process.env.STRIPE_PRO_PRICE_ID!,
+  successUrl: "https://app.nebutra.com/billing/success",
+  cancelUrl: "https://app.nebutra.com/billing",
+  trialDays: 14,
+});
+```
+
+<Tip>
+对于特定用户（例如从旧计划迁移的用户或使用促销码的用户），可以设置 `trialDays: 0` 以跳过试用期。
+</Tip>
+
+## 取消与自助管理
+
+客户可通过 **Stripe 客户门户**自助取消、升级或更新支付方式，无需自定义 UI：
+
+```typescript apps/web/src/app/billing/portal/route.ts
+import { createPortalSession } from "@nebutra/billing";
+import { redirect } from "next/navigation";
+import { getCurrentTenant } from "@nebutra/tenant";
+
+export async function GET() {
+  const tenant = getCurrentTenant();
+
+  const session = await createPortalSession({
+    orgId: tenant.tenantId,
+    returnUrl: `${process.env.NEXT_PUBLIC_APP_URL}/settings/billing`,
+  });
+
+  redirect(session.url);
+}
+```
+
+该路由已连接至 Dashboard 中的 **Settings → Billing → Manage Subscription** 按钮。
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="Webhooks" icon="webhook" href="/zh/payments/webhooks">
+    处理来自 Stripe 的订阅生命周期事件。
+  </Card>
+  <Card title="付费墙" icon="lock" href="/zh/payments/paywall">
+    根据当前计划限制 UI 和 API 路由的访问。
+  </Card>
+</CardGroup>

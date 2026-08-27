@@ -1,0 +1,32 @@
+import type * as React from "react";
+import { forwardRef } from "react";
+export interface IconProps extends React.SVGProps<SVGSVGElement> {
+  /** Icon size in px (default: 16). Overrides width/height props. */
+  size?: number | string;
+}
+const Shield = forwardRef<SVGSVGElement, IconProps>(
+  ({ size = 16, width, height, ...props }, ref) => (
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      width={width ?? size}
+      height={height ?? size}
+      fill="none"
+      strokeLinejoin="round"
+      viewBox="0 0 16 16"
+      ref={ref}
+      {...props}
+    >
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M3.5 4.057v5.47a3.75 3.75 0 0 0 2.01 3.322L8 14.153l2.49-1.304a3.75 3.75 0 0 0 2.01-3.322v-5.47q-.286-.079-.607-.162l-.459-.12c-.586-.157-1.23-.344-1.823-.605C9.027 2.914 8.443 2.565 8 2.057c-.443.508-1.027.857-1.611 1.113-.593.26-1.237.448-1.823.605l-.46.12zM7.25 0c0 .467-.145.797-.372 1.061-.242.282-.608.523-1.092.736-.482.212-1.032.375-1.608.529l-.409.107c-.432.113-.874.228-1.256.355L2 2.96v6.568a5.25 5.25 0 0 0 2.814 4.65l2.838 1.487.348.183.348-.183 2.838-1.486A5.25 5.25 0 0 0 14 9.528V2.96l-.513-.172c-.382-.127-.824-.242-1.256-.355l-.409-.107c-.575-.154-1.126-.317-1.608-.53-.484-.212-.85-.453-1.092-.735C8.895.797 8.75.467 8.75 0z"
+        clipRule="evenodd"
+      />
+    </svg>
+  ),
+);
+Shield.displayName = "Shield";
+
+export { Shield };
+export default Shield;

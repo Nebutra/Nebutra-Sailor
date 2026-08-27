@@ -1,0 +1,86 @@
+{
+  "$schema": "https://developers.cloudflare.com/ruleset-engine/rulesets-api/",
+  "description": "Nebutra WAF and security rules",
+  "rules": [
+    {
+      "name": "Rate limit - API endpoints",
+      "description": "Limit API requests to 100/min per IP",
+      "expression": "http.host eq \"api.nebutra.com\" and not http.request.uri.path matches \"^/api/(misc|system)/.*\"",
+      "action": "rate_limit",
+      "action_parameters": {
+        "characteristics": ["ip.src"],
+        "period": 60,
+        "requests_per_period": 100,
+        "mitigation_timeout": 60,
+        "response": {
+          "status_code": 429,
+          "content": "{\"error\":\"Rate limit exceeded\",\"retry_after\":60}",
+          "content_type": "application/json"
+        }
+      }
+    },
+    {
+      "name": "Rate limit - Auth endpoints",
+      "description": "Stricter limit for auth endpoints (10/min per IP)",
+      "expression": "http.request.uri.path matches \"^/(sign-in|sign-up|api/auth)/.*\"",
+      "action": "rate_limit",
+      "action_parameters": {
+        "characteristics": ["ip.src"],
+        "period": 60,
+        "requests_per_period": 10,
+        "mitigation_timeout": 300,
+        "response": {
+          "status_code": 429,
+          "content": "{\"error\":\"Too many attempts\",\"retry_after\":300}",
+          "content_type": "application/json"
+        }
+      }
+    },
+    {
+      "name": "Block known bad bots",
+      "description": "Block malicious bots and scrapers",
+      "expression": "(cf.client.bot) and not (cf.verified_bot_category in {\"Search Engine Crawler\" \"Monitoring & Analytics\"})",
+      "action": "managed_challenge"
+    },
+    {
+      "name": "Challenge suspicious requests",
+      "description": "Challenge requests with suspicious characteristics",
+      "expression": "(cf.threat_score gt 30) or (not ssl)",
+      "action": "managed_challenge"
+    },
+    {
+      "name": "Block SQL injection attempts",
+      "description": "Block common SQL injection patterns",
+      "expression": "http.request.uri.query matches \"(?i)(union.*select|select.*from|insert.*into|delete.*from|drop.*table|update.*set)\"",
+      "action": "block"
+    },
+    {
+      "name": "Block XSS attempts",
+      "description": "Block common XSS patterns",
+      "expression": "http.request.uri.query matches \"(?i)(<script|javascript:|on\\w+\\s*=)\"",
+      "action": "block"
+    },
+    {
+      "name": "Protect webhooks",
+      "description": "Only allow known webhook sources",
+      "expression": "http.request.uri.path matches \"^/api/webhooks/.*\" and not (ip.src in {stripe_ips} or ip.src in {clerk_ips})",
+      "action": "block",
+      "enabled": false,
+      "comment": "Enable after configuring IP lists for Stripe/Clerk"
+    },
+    {
+      "name": "Geographic restrictions (optional)",
+      "description": "Block traffic from high-risk regions if needed",
+      "expression": "ip.geoip.country in {\"XX\" \"YY\"}",
+      "action": "block",
+      "enabled": false,
+      "comment": "Enable and configure countries as needed"
+    }
+  ],
+  "security_settings": {
+    "security_level": "medium",
+    "challenge_ttl": 1800,
+    "browser_integrity_check": true,
+    "hotlink_protection": true
+  }
+}

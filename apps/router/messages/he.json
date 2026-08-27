@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — שוק API",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "שוק API לכל המודלים · תשלום לפי שימוש · ניהול מפתחות וארנק · ניסוי מהיר."
+  },
+  "admin": {
+    "dashboard": "סקירה כללית",
+    "keys": "מפתחות API",
+    "wallet": "ארנק",
+    "docs": "תיעוד",
+    "title": "ניהול",
+    "backToMarket": "חזרה לשוק",
+    "quickUse": "שימוש מהיר"
+  },
+  "chrome": {
+    "searchPlaceholder": "מה תרצה לעשות עם AI?",
+    "search": "חיפוש",
+    "locale": "שפה",
+    "currency": "מטבע",
+    "collapseSidebar": "כיווץ סרגל צד",
+    "expandSidebar": "הרחבת סרגל צד",
+    "home": "דף הבית",
+    "adminConsole": "ניהול",
+    "quickUse": "שימוש מהיר",
+    "support": "תמיכה",
+    "apiDocs": "תיעוד API",
+    "integrationHelp": "מדריך אינטגרציה",
+    "aiRecommend": "המלצות AI",
+    "market": "שוק",
+    "usageTitle": "שימוש מהיר"
+  },
+  "channels": {
+    "app": "שוק אפליקציות",
+    "api": "שוק API",
+    "models": "קטלוג מודלים",
+    "client": "לקוח"
+  },
+  "market": {
+    "new": "חדש",
+    "hot": "פופולרי",
+    "forYou": "בשבילך",
+    "grid": "רשת",
+    "list": "רשימה",
+    "apiShelf": "מדף API",
+    "toolShelf": "מדף כלים",
+    "categories": "קטגוריות",
+    "apps": "אפליקציות",
+    "newRelease": "שחרור חדש",
+    "forgeTitle": "מרחב עבודה לכלי Forge",
+    "forgeBlurb": "המרות טקסט, קודקים, טפסים וכלים מורכבים. מעבדת שוק האפליקציות מכוונת ל-Forge.",
+    "openForge": "פתח את Forge →",
+    "allApi": "כל ה-APIs →",
+    "all": "הכל →",
+    "viewAll": "צפה בכל {label} →",
+    "gridView": "תצוגת רשת",
+    "listView": "תצוגת רשימה",
+    "hiTitle": "פלטפורמת משאבי AI לעסקים",
+    "hiSubtitle": "תואם כל צורך עם ה-AI הנכון",
+    "sellable": "ניתן למכירה",
+    "walletTopup": "טען ארנק"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "מודלי שפה",
+      "hint": "צ'אט · הסקה"
+    },
+    "image-gen": {
+      "label": "יצירת תמונות",
+      "hint": "טקסט לתמונה"
+    },
+    "image-edit": {
+      "label": "עריכת תמונות",
+      "hint": "עריכה · חיתוך"
+    },
+    "video": {
+      "label": "יצירת וידאו",
+      "hint": "טקסט לווידאו"
+    },
+    "audio": {
+      "label": "אודיו ווידאו",
+      "hint": "דיבור · תמלול"
+    },
+    "data": {
+      "label": "מידע",
+      "hint": "איתור · חילוץ"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "מורחב בידע"
+    },
+    "tools": {
+      "label": "API של כלים",
+      "hint": "סוכן · כלים"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "בוטים",
+      "chips": "בוטי צ'אט · בוטי ציור · ידע"
+    },
+    "productivity": {
+      "label": "פרודוקטיביות",
+      "chips": "זירת מודלים · כתיבה ממוחשבת"
+    },
+    "academic": {
+      "label": "אקדמי",
+      "chips": "ערכת PDF · חיפוש פטנטים עם AI"
+    },
+    "image": {
+      "label": "כלי תמונה",
+      "chips": "סטודיו 3D · Canvas"
+    },
+    "audio": {
+      "label": "אודיו",
+      "chips": "דיבור · מוזיקה AI"
+    },
+    "code": {
+      "label": "קוד",
+      "chips": "מחולל אינטרנט · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "סקירה כללית",
+    "keys": "מפתחות",
+    "wallet": "ארנק",
+    "use": "ניסיון",
+    "docs": "תיעוד",
+    "models": "עוד"
+  }
+}

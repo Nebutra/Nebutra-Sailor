@@ -1,0 +1,127 @@
+name: Sync package subrepo mirrors
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Build only; do not create repos or push"
+        type: boolean
+        default: true
+      package:
+        description: "Optional package name, e.g. @nebutra/agents"
+        type: string
+        required: false
+  push:
+    branches: [main]
+    paths:
+      - "config/subrepo-mirrors.json"
+      - "packages/**"
+      - "scripts/lib/release-surface.mjs"
+      - "scripts/lib/subrepo-mirrors.mjs"
+      - "scripts/create-subrepo-mirrors.mjs"
+      - "scripts/sync-subrepo-mirrors.mjs"
+      - "scripts/verify-subrepo-mirrors.mjs"
+      - "scripts/verify-subrepo-readmes.mjs"
+
+concurrency:
+  group: sync-subrepo-mirrors-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version: 22
+
+      - name: Verify mirror manifest
+        run: node scripts/verify-subrepo-mirrors.mjs --cohort=first-wave
+
+      - name: Verify mirror READMEs
+        run: node scripts/verify-subrepo-readmes.mjs --cohort=first-wave
+
+      # Vendor step needs monorepo dist/ for workspace file: deps. Without this,
+      # standalone typecheck falls back to npm packages that still publish src.
+      - name: Build workspace packages for vendor
+        run: |
+          set -euo pipefail
+          pnpm turbo run build \
+            --filter=@nebutra/errors \
+            --filter=@nebutra/logger \
+            --filter=@nebutra/capability-kit \
+            --filter=@nebutra/event-log \
+            --filter=@nebutra/trace-store \
+            --filter=@nebutra/content-store \
+            --filter=@nebutra/local-embedding \
+            --filter=@nebutra/sandbox-runtime \
+            --filter=@nebutra/execution-policy \
+            --filter=@nebutra/ui \
+            --filter=@nebutra/icons \
+            --filter=@nebutra/brand \
+            --filter=@nebutra/graph-model \
+            --filter=@nebutra/agents \
+            --filter=@nebutra/mcp \
+            --filter=@nebutra/tool-registry \
+            --filter=@nebutra/code-execution \
+            --filter=@nebutra/cache \
+            --filter=@nebutra/email \
+            --filter=@nebutra/webhooks \
+            --filter=@nebutra/provider-factory \
+            --continue
+
+      - name: Create missing mirror repositories
+        if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
+        env:
+          SUBREPO_MIRROR_TOKEN: ${{ secrets.SUBREPO_MIRROR_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SUBREPO_MIRROR_TOKEN:-}" ]; then
+            echo "::error::SUBREPO_MIRROR_TOKEN is not configured — cannot create/push package subrepos."
+            echo "Add a PAT with repo scope as secrets.SUBREPO_MIRROR_TOKEN, or run workflow_dispatch with dry_run=true."
+            exit 1
+          fi
+          args=(--cohort=first-wave --apply)
+          if [ -n "${{ inputs.package }}" ]; then
+            args+=(--package="${{ inputs.package }}")
+          fi
+          node scripts/create-subrepo-mirrors.mjs "${args[@]}"
+
+      - name: Build mirrors
+        run: |
+          set -euo pipefail
+          args=(--cohort=first-wave --out=/tmp/nebutra-subrepo-mirrors)
+          if [ -n "${{ inputs.package }}" ]; then
+            args+=(--package="${{ inputs.package }}")
+          else
+            args+=(--all)
+          fi
+          node scripts/sync-subrepo-mirrors.mjs "${args[@]}"
+
+      - name: Push mirrors
+        if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
+        env:
+          SUBREPO_MIRROR_TOKEN: ${{ secrets.SUBREPO_MIRROR_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SUBREPO_MIRROR_TOKEN:-}" ]; then
+            echo "::error::SUBREPO_MIRROR_TOKEN is not configured — mirror push skipped with failure."
+            exit 1
+          fi
+          args=(--cohort=first-wave --out=/tmp/nebutra-subrepo-mirrors --push)
+          if [ -n "${{ inputs.package }}" ]; then
+            args+=(--package="${{ inputs.package }}")
+          else
+            args+=(--all)
+          fi
+          node scripts/sync-subrepo-mirrors.mjs "${args[@]}"

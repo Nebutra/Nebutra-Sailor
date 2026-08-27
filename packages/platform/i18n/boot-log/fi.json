@@ -1,0 +1,1439 @@
+{
+  "panelLabel": "Käynnistysloki",
+  "entries": {
+    "transistor-name-off-patent-1947": {
+      "tag": "Patentti",
+      "title": "Patentista pois jätetty nimi",
+      "body": "23. joulukuuta 1947 Bardeen ja Brattain esittelivät Bell Labsissa germaniumin pisteyhteispäätransistorin. Shockley ei ollut huoneessa. Lakimiehet löysivät hänen oman suunnitelmansa liian lähelle Julius Lilienfeldin vuoden 1925 patenttia ja pudottivat hänen nimensä tästä.",
+      "coda": "Vuonna 1956 kaikki kolme jakoivat fysiikan Nobelin palkinnon."
+    },
+    "dartmouth-two-month-study-1956": {
+      "tag": "Ehdotus",
+      "title": "Kahden kuukauden tutkimus",
+      "body": "McCarthy, Minsky, Rochester ja Shannonin vuoden 1955 ehdotus pyysi kahden kuukauden, kymmenen miehen tutkimusta oletuksella, että älykkyyttä voidaan kuvata tarpeeksi tarkasti koneen simuloimiseksi. Vuoden 1956 työpaja kesti kuudesta kahdeksaan viikkoon; vain kolme osallistujaa jäi koko ajan.",
+      "coda": "Alueelle valitsemaansa nimi, tekoäly, on se, joka jäi."
+    },
+    "traitorous-eight-lie-detector-1957": {
+      "tag": "Jako",
+      "title": "Valheenkarkottajan muistio",
+      "body": "Toukokuussa 1957 kahdeksan insinööriä Shockley Semiconductorissa vaati William Shockleyn korvaamista johtajana. Hän oli tallentanut puheluita, estänyt henkilöstön jakamasta tuloksia ja vaatinut valheenkarkotustestejä. 18. syyskuuta 1957 kahdeksan perusti Fairchild Semiconductorin sen sijaan.",
+      "coda": "Wikipedia laskee Intelin ja AMD:n satojen yritysten joukkoon, jotka johtavat takaisin siihen spinoffiin."
+    },
+    "kilby-noyce-six-months-1958-1959": {
+      "tag": "Samaa aikaa",
+      "title": "Kuusi kuukautta, yksi mitali",
+      "body": "Kilby esitteli toimivan integroidun piirin Texas Instrumentsissa syyskuussa 1958, sen osat yhdistettyinä ulkoisilla johtimilla. Noyce haki monoliittisen piisipohjaisen version Fairchildissa heinäkuussa 1959, massatuotantokelpoisen. Kumpikaan mies ei hylännyt toisen väitettä yhteiskeksijyydestä.",
+      "coda": "Kilby hyväksyi vuoden 2000 Nobelin palkinnon yksin. Noyce oli kuollut vuonna 1990."
+    },
+    "perceptron-conscious-machine-1958": {
+      "tag": "Neuroverkot",
+      "title": "Kone, joka heräisi",
+      "body": "Vuonna 1958 New York Times raportoi, että Frank Rosenblattin perceptron oli laivaston odottaman tietokoneen sikiö, joka kävelisi, puhuisi, näkisi, kirjoittaisi, lisääntyisi ja olisi tietoinen olemassaolostaan. Vuonna 1969 Minsky ja Papertin kirja osoitti, että yksikerroksinen perceptron ei voinut laskea XORia.",
+      "coda": "Neuroverkkojen tutkimuksen rahoitus kuivui ja ei palannut ennen 1980-lukua."
+    },
+    "hamilton-software-engineering": {
+      "tag": "Nimeäminen",
+      "title": "Jatkuva vitsi",
+      "body": "Apollo-ohjelman aikana Margaret Hamilton alkoi kutsua työtään \"ohjelmistoinstituutiksi\" erottaakseen sen laitteistoinstituutista. Hän sanoi, että kukaan ei ollut aiemmin kuullut termiä, ja siitä tuli jatkuva vitsi, kunnes arvostettu laitteistoinstituutti nousi kokouksessa ja oli samaa mieltä.",
+      "coda": "Vitsi kesti vuosia, sitten kukaan ei enää kertonut sitä."
+    },
+    "macau-seventeen-thousand": {
+      "tag": "Tarjous",
+      "title": "Seitsemäntuhat",
+      "body": "Lokakuussa 1961 Stanley Hon, Henry Fokin, Yip Honin ja Teddy Yipin muodostama syndikaatti tarjoutui Macaon pelimonopolista. He tarjosivat 3 167 000 patacaa, seitsemäntuhat enemmän kuin kilpailijan tarjous.",
+      "coda": "Tuo marginaali osti heille monopolin, joka kesti yli neljäkymmentä vuotta."
+    },
+    "moores-law-ten-year-bet-1965": {
+      "tag": "Ennuste",
+      "title": "Kymmenen vuoden veto",
+      "body": "Mooren vuoden 1965 artikkeli ennusti, että sirun komponenttien määrä kaksinkertaistuisi joka vuosi seuraavan vuosikymmenen ajan ja saavuttaisi noin 65 000 vuoteen 1975 mennessä. Vuonna 1975 hän tarkisti kaksinkertaistumisjakson kahteen vuoteen. Myöhemmin laiksi kutsuttu käyrä oli hänen oma ennusteensa, jota oli jo kerran muutettu.",
+      "coda": "Vuoteen 1995 mennessä Moore sanoi termin tarkoittavan lähes mitä tahansa siruteollisuudessa."
+    },
+    "eliza-secretary-1966": {
+      "tag": "Keskusteluroboti",
+      "title": "Sihteeri ja DOCTOR",
+      "body": "Vuonna 1966 Joseph Weizenbaum julkaisi MIT:ssä ELIZAn DOCTOR-skriptin, ohjelman, joka heijasti käyttäjien omia lauseita takaisin kysymyksinä. Hänen oma sihteerinsä pyysi häntä lähtemään huoneesta, jotta hän voisi puhua sen kanssa yksin.",
+      "coda": "Kuvio, jota hän ei ollut odottanut, sai myöhemmin nimeksi ELIZA-ilmiö."
+    },
+    "engelbart-royalties": {
+      "tag": "Patentti",
+      "title": "Neljäntuhatta dollaria",
+      "body": "SRI patentoi hiiren demon jälkeen ja, omien tietojensa mukaan, ei todellakaan tiennyt sen arvoa. Muutama vuosi myöhemmin selvisi, että he olivat lisenssöineet sen Applen käyttöön noin 40 000 dollarilla.",
+      "coda": "Engelbart ei koskaan saanut mitään rojalteja sen keksimisestä."
+    },
+    "lo": {
+      "tag": "Ensimmäinen yhteys",
+      "title": "LO",
+      "body": "Charley Kline aikoi kirjautua UCLA:sta SRI:n koneeseen. L saapui. O saapui. G:n kohdalla kaukopää kaatui.",
+      "coda": "Internetissä koskaan sanottuna ensimmäinen asia oli kaksi kirjainta: LO."
+    },
+    "multics": {
+      "tag": "Piirustus",
+      "title": "Laskenta hyötynä",
+      "body": "Multics ei suunniteltu tietokoneeksi vaan laskentahyödykkeeksi: aina päällä, kuten sähkö, ja yhden koneen vuokralaiset eristetty toisistaan. Se julkaistiin myöhässä ja kalliina, ja Bell Labs lähti pois.",
+      "coda": "Viidenkymmenen vuoden kuluttua idea sai nimeksi pilvilaskenta."
+    },
+    "rfc1": {
+      "tag": "Hallinto",
+      "title": "Request for Comments",
+      "body": "Steve Crockerin piti kirjoittaa ensimmäiset säännöt muutamalle verkkoon yhdistetylle isäntäkoneelle. Häntä ei ollut valtuutettu tehtävään, ja hän pelkäsi, että se tulisi vastaan viranomaisasenteena — joten hän kutsui genren nimellä Request for Comments.",
+      "coda": "Kaikki internetin siitä lähtien hyväksymät säännöt tunnetaan edelleen nimellä RFC."
+    },
+    "pdp7": {
+      "tag": "Alkuperä",
+      "title": "Kone, jota kukaan ei halunnut",
+      "body": "Kun Bell Labs lopetti Multicsin, Ken Thompsonilla oli hylätty PDP-7 ja kuukausi yksinään, kun hänen vaimonsa ja poikansa olivat San Diegossa. Hän antoi itselleen viikon per pala: ydin, kuori, editori, assembleri.",
+      "coda": "Neljän viikon kuluttua kone, jota kukaan ei halunnut, ajoi Unixiä."
+    },
+    "alarm-1202": {
+      "tag": "Incident",
+      "title": "Ohjelmaalarmi 1202",
+      "body": "Neljä minuuttia pinnan edessä ohjauskompuutteri laukaisi viisi alarmia: kohtaamisradarin kytkin oli jäänyt väärään asentoon ja söi sen syklejä. Se ei jäädytynyt. Se hylkäsi matalan prioriteetin tehtävät, käynnisti uudelleen ja jatkoi laskeutumista.",
+      "coda": "Tietää, mitä hylätä kuormituksessa, on kallis oppi."
+    },
+    "mariner-1": {
+      "tag": "Incidentti",
+      "title": "Yksi puuttuva ylin viiva",
+      "body": "Mariner 1 tuhoutui 293 sekuntia laukaisun jälkeen. Laitteessa ollut majakka oli viallinen, ja ohjausyhtälöitä kopioidessaan ohjelmaan R:n ylin viiva jäi pois. Viiva tarkoitti keskiarvon ottamista.",
+      "coda": "Lehdet pitivät ylintä viivaa vaikeana selittää ja kirjoittivat yhdysmerkin. Yhdysmerkki jäi."
+    },
+    "mother-of-all-demos": {
+      "tag": "Demo",
+      "title": "Kaikkien demojen emo",
+      "body": "Engelbartille annettiin yhdeksänkymmentä minuuttia. Hänen päätelaiteensa toimi puhelinyhteyden yli kolmekymmentä mailia päässä olevaan koneeseen, ja hän esitteli hiiren, hyperlinkit, ikkunat, näytön jakamisen ja kahden henkilön muokkaavan yhden asiakirjan samanaikaisesti.",
+      "coda": "Tuhat ihmistä katsoi ja palasi sitten reikäkortteihin seuraavaksi vuosikymmeneksi."
+    },
+    "conway": {
+      "tag": "Laki",
+      "title": "Artikkeli, joka hylättiin",
+      "body": "Melvin Conway kirjoitti havainnon, jonka mukaan järjestelmän rakenne päätyy peilaamaan sitä organisaatiota, joka sen rakensi, ja lähetti \"How Do Committees Invent?\" Harvard Business Review -lehteen. He hylkäsivät sen sillä perusteella, ettei hän ollut todistanut teesiään. Datamation julkaisi sen vuonna 1968.",
+      "coda": "Fred Brooks sitoi myöhemmin todistamattoman teesin ja nimesi sen Conwayn laiksi."
+    },
+    "apollo-burn-baby-burn": {
+      "tag": "Kommentti",
+      "title": "Burn, Baby, Burn",
+      "body": "Kuukerrosmoduulin pääsytytysrutiini on merkitty lähdekoodissa nimellä BURN_BABY_BURN. Nimi ei liity työntövoimaan; se lainattiin soul-radio-DJ:n päivän sanahelinästä.",
+      "coda": "Rivi on edelleen muokkaamattomana julkisessa arkistossa."
+    },
+    "waterfall": {
+      "tag": "Väärinlukeminen",
+      "title": "Kaavio oli vastaesimerkki",
+      "body": "Artikkelissaan \"Managing the Development of Large Software Systems\" Winston Royce piirsi kaavion, jonka teollisuus alkoi kutsua vesiputkimalliksi, ja kirjoitti sitten: \"Uskon tähän käsitteeseen, mutta yllä kuvattu toteutus on riskialtis ja kutsuu epäonnistumista.\" Artikkelin lopuissa puhutaan sen iteratiivisesta toteutuksesta.",
+      "coda": "Teollisuus säilytti kaavion ja hylkäsi lauseen."
+    },
+    "moth": {
+      "tag": "Etymologia",
+      "title": "Ensimmäinen todellinen virhe",
+      "body": "Perhonen poimittiin Harvard Mark II -releen ja teipattiin lokikirjaan. Sen viereinen rivi on sitattu sanan alkuperäksi, mutta siinä lukee: ensimmäinen todellinen tapaus virheen löytymisestä.",
+      "coda": "Insinöörit olivat käyttäneet sanaa bug Edisonin ajoista lähtien. Museo epäilee sivun olevan edes Hopperin käsialaa."
+    },
+    "intel-4004-busicom-rights-1971": {
+      "tag": "Oikeudet",
+      "title": "Laskimayhtiön omistama siru",
+      "body": "Vuonna 1969 Japanin Busicom tilasi Inteliltä laskinsirujen suunnittelun sopimuksella, joka siirsi suunnittelu-oikeudet Busicomille, vaikka työ tehtiin kokonaan Intelin sisällä. Vuonna 1971 insinööri Federico Faggin vaihtoi alhaisemman hinnan erikoisoikeuden luopumiseen.",
+      "coda": "Intel 4004:n yleiset myynnit alkoivat samana heinäkuuna."
+    },
+    "pong-coin-overflow": {
+      "tag": "Palaute",
+      "title": "Kolikkolaatikko täyttyi",
+      "body": "Elokuussa 1972 Atari sijoitti Pong-prototyypin Sunnyvalen baariin. Muutaman päivän kuluttua omistaja ilmoitti sen rikkoutuneeksi. Insinööri Al Alcorn ajoi paikalle korjaamaan ja havaitsi vian olevan sähköinen: kolikkomekanismi oli jumittunut, koska se oli täynnä kolikkoja.",
+      "coda": "Vika ei ollut johdotusvirhe; kolikkoja oli liian monta."
+    },
+    "wozniak-breakout-bonus": {
+      "tag": "Bonusta",
+      "title": "Jaotus",
+      "body": "Vuonna 1973 Atari pyysi Stevea Jobsia pienentämään Breakout-piirilevyä ja maksoi 100 dollaria poistettua sirua kohti. Jobs pyysi Wozniakin apuun ja lupasi puolet. Wozniak leikkasi pois 50 sirua. Jobs sanoi kokonaissumman olevan 700 dollaria, joten Wozniakin osuus oli 350 dollaria. Kymmenen vuotta myöhemmin Wozniak sai tietää todellisen bonuksen olleen 5 000 dollaria.",
+      "coda": "Wozniak sanoi, että olisi antanut rahaa Jobsille, jos olisi pyydetty."
+    },
+    "unix-not-expected-to-understand": {
+      "tag": "Ydin",
+      "title": "Ymmärtämistä ei odoteta",
+      "body": "Unixin kuudennen version slp.c sisältää rivin 'You are not expected to understand this', joka liittyy prosessinvaihtoon ja pinojen palautukseen perustuvaan koodiin, joka rakentuu PDP-11-kääntäjän erityispiirteille. Dennis Ritchie sanoi myöhemmin tarkoittaneensa sitä niin kuin opettaja sanoo tämän tulevan kokeeseen.",
+      "coda": "Rutiini kirjoitettiin uudelleen Unixin seitsemänteen versioon."
+    },
+    "vi-adm3a-keys": {
+      "tag": "Näppäinkomennot",
+      "title": "Nuolimerkinnät kirjainnäppäimissä",
+      "body": "Bill Joy kirjoitti vin Berkeleyssä vuonna 1977 Lear Siegler ADM-3A -päätteellä, jossa ei ollut nuolinäppäimiä; h, j, k ja l -näppäimiin oli kaiverrettu nuolet, ja niistä tuli liikkumisnäppäimet. Lyhyet yhden kirjaimen komennot syntyivät, kun kirjoitettiin nopeammin kuin 300 baudin modeemi ehti vastaanottaa.",
+      "coda": "Näppäimiä, joita myöhemmin pidettiin suunnittelufilosofian ansiona, alettiin käyttää, koska päätteessä ei ollut nuolinäppäimiä."
+    },
+    "kildall-flying": {
+      "tag": "Todistus",
+      "title": "Lento, jota ei vahvistettu",
+      "body": "Vuonna 1980 IBM tuli lisensoimaan CP/M:ää. Gary Kildall lensi ohjelmistoa asiakkaalle; hänen vaimonsa Dorothy hoiti alustavat neuvottelut. Bill Gates kertoi myöhemmin toimittajille Kildallin \"menneen oikukkaasti lentämään.\" IBM:n pääneuvottelija Jack Sams sanoi, ettei koskaan tavannut Kildallia.",
+      "coda": "Näitä kahta kertomusta tapaamisesta ei ole koskaan sovitettu yhteen."
+    },
+    "trusting-trust": {
+      "tag": "Luottamus",
+      "title": "Pohdintoja luottamuksesta luottamukseen",
+      "body": "Thompsonin Turing-luennossa kuvattiin kääntäjä, joka istuttaa takaoven kirjautumisohjelmaan ja asentaa koko tempun uudelleen aina, kun se kääntää kääntäjän. Vaikka lähdekoodi rakennettaisiin puhtaasta alusta, takaovi säilyy.",
+      "coda": "Et voi luottaa koodiin, jota et ole täysin itse luonut."
+    },
+    "arm-one-person-company-1985": {
+      "tag": "Alkuperä",
+      "title": "Yhden hengen piiriyhtiö",
+      "body": "Acorn, joka oli tehnyt nimensä koulutustietokoneilla, aloitti RISC-tutkimuksen vuonna 1983. Vierailu kilpailevan piirisuunnittelijan luona osoitti, että 6502-päivitykset tulivat käytännössä yhden hengen yritykseltä, ja he päättelivät, etteivät tarvitse enempää.",
+      "coda": "ARM1 saapui 26. huhtikuuta 1985 ja toimi heti ensimmäisellä käynnistyksellä."
+    },
+    "copyleft-all-rights-reversed": {
+      "tag": "Tekijänoikeus",
+      "title": "Kaikki oikeudet kumottu",
+      "body": "Joku lähetti Richard Stallmanille kirjeen, jossa luki \"Copyleft — all rights reversed,\" parodia tavallisesta ilmoituksesta. Kun Symbolics paransi hänen Lisp-tulkkiaan eikä suostunut jakamaan parannuksia takaisin, hän käytti tekijänoikeuslakia itseään kirjoittaakseen lisenssin, joka vaati päinvastaista velvoitetta.",
+      "coda": "General Public License seurasi helmikuussa 1989."
+    },
+    "tetris-unpaid-decade": {
+      "tag": "Oikeudet",
+      "title": "Lohko ilman rojalteja",
+      "body": "Vuonna 1985 Pajitnov kirjoitti Tetriksen Neuvostoliiton tiedeakatemian valtion työntekijänä; oikeudet kuuluivat laskentakeskukselle, eivät hänelle. Länsimaiset lisenssit kulkivat useiden käsien kautta ennen kuin ne saavuttivat Nintendon, ja peli myi kymmeniä miljoonia kopioita.",
+      "coda": "Oikeudet palautuivat hänelle vuonna 1996, yksitoista vuotta sen jälkeen kun hän kirjoitti sen."
+    },
+    "euv-twenty-three-hours-2018": {
+      "tag": "Litografia",
+      "title": "Kaksikymmentäkolme tuntia yhdelle kiekolle",
+      "body": "Hiroo Kinoshita NTT:llä osoitti ensimmäisen kerran äärimmäisen ultraviolettilitografian kuvia vuonna 1986. ASML:n vuoden 2006 prototyyppi vei kaksikymmentäkolme tuntia yhden kiekon valottamiseen. Vasta vuonna 2018 EUV saavutti tuotantovaiheen, koneessa, jota MIT Technology Review kutsui koneeksi, joka pelasti Mooren lain.",
+      "coda": "Vuoteen 2022 mennessä tuotannon EUV-skanneri käsitteli noin kaksisataa kiekkoa tunnissa."
+    },
+    "tsmc-foundry-fifty-six-1987": {
+      "tag": "Valimo",
+      "title": "Valimo viidenkymmenenkuuden",
+      "body": "Morris Chang, syntynyt 1931, nousi Texas Instrumentsin maailmanlaajuisten puolijohdeoperaatioiden ryhmävarapuheenjohtajaksi, toimi sitten General Instrumentin puheenjohtajana ja toimitusjohtajana ja johti Taiwanin ITRI:tä. Vuonna 1987, kuusikymmentäkuusivuotiaana, hän perusti TSMC:n, joka ei suunnittele yhtään valmistamistaan siruista.",
+      "coda": "Se oli maailman ensimmäinen foundry, joka teki vain valmistusta."
+    },
+    "huawei-diet-pills": {
+      "tag": "Välittäjä",
+      "title": "Huawein ensimmäinen liiketoiminta ei ollut teknologiaa",
+      "body": "Huawei rekisteröityi 21 000 yuanin pääomalla 15. syyskuuta 1987 ja kutsui itseään teknologiayhtiöksi. Se aloitti tavarakaupalla, mukaan lukien dieettitabletit, ja myi sitten Hongkongissa valmistettuja HAX-kytkimiä voitolla. Oma kytkimensä, BH01, koottiin käsin vasta vuonna 1989.",
+      "coda": "Neljän vuoden kuluttua yhtiö piirsi ensimmäisen kerran oman piirilevynsä."
+    },
+    "morris": {
+      "tag": "Incident",
+      "title": "Mittaus",
+      "body": "Morris halusi tietää, kuinka suuri internet oli, joten hän kirjoitti ohjelman, joka kopioi itseään. Jotta isäntien ei olisi mahdollista väärentää jo infektoidun vastauksen näyttämistä, hän antoi sille yhden seitsemästä mahdollisuuden infektoida uudelleen silti.",
+      "coda": "Se yksi seitsemästä kaatoi noin 6 000 silloin verkossa olleesta 60 000 isännästä."
+    },
+    "naur": {
+      "tag": "Filosofia",
+      "title": "Ohjelma ei ole artefakti",
+      "body": "Naur väitti, että ohjelma ei elä lähdekoodissaan vaan teoriassa, jota sen kirjoittaneet ihmiset pitävät siitä, miksi ongelma ratkaistaan juuri näin. Lähdekoodi on siitä häviöllinen projekti.",
+      "coda": "Hän kutsui hetkeä, jolloin viimeinen teorian haltija lähtee, ohjelman kuolemaksi."
+    },
+    "mit-license-171-words": {
+      "tag": "Ehdot",
+      "title": "171 sanaa",
+      "body": "MIT:n ryhmä, joka kirjoitti TCP/IP-toteutusta, halusi välttää oikeudelliset neuvottelut, joten se antoi ohjelmiston pois noin 171 sanan ilmoituksella. Tämä lyhyt teksti kattaa nyt lähes kolmasosan kaikista GitHubissa lisensoituista projekteista, enemmän kuin mikään muu lisenssi.",
+      "coda": "Sanamuoto on pysynyt olennaisesti muuttumattomana siitä lähtien, kun se kirjoitettiin."
+    },
+    "photoshop-display-origin": {
+      "tag": "Alkuperä",
+      "title": "Sitä kutsuttiin ensin Displayksi",
+      "body": "Vuonna 1988 Thomas Knoll, Michiganin yliopiston jatko-opiskelija, kirjoitti pienen ohjelman harmaasävykuvien näyttämiseen yksivärisellä Mac-näytöllä. Hän nimesi sen Displayksi, sitten ImageProksi ja sitten Photoshopiksi, ennen kuin hänen veljensä John näytti sen Adobelle, joka lisensoi sen samana vuonna.",
+      "coda": "Adobe osti täydet oikeudet kokonaan vuonna 1995, 34,5 miljoonalla dollarilla."
+    },
+    "sosumi-so-sue-me": {
+      "tag": "Nimeäminen",
+      "title": "So Sue Me",
+      "body": "Vuonna 1991 Applen oikeusosasto hylkäsi hälytysäänen nimen \"Let It Beep\" liian musiikillisena, sovinnon nojalla, joka esti Apple Computerin käyttämästä musiikkiin liittyviä tavaramerkkejä. Äänisuunnittelija Jim Reekes kirjoitti takaisin \"so sue me\" ja rekisteröi sen nimellä \"sosumi\".",
+      "coda": "Ääni oli mukana Mac OS:ssä lähes kolme vuosikymmentä, ennen kuin Big Sur korvasi sen vuonna 2020."
+    },
+    "www-royalty-free": {
+      "tag": "Luovutettu",
+      "title": "Päivä, jolloin se lopetti maksamisen",
+      "body": "30. huhtikuuta 1993 CERN teki World Wide Webin protokollan ja koodin saataville palkkiottomasti. Kuka tahansa voiti ottaa sen, ilman maksua ja kysymättä.",
+      "coda": "Kukaan ei ole maksanut palkkiota sen käytöstä siitä lähtien."
+    },
+    "doom-ftp-crash": {
+      "tag": "Shareware",
+      "title": "Palvelin, johon he eivät päässeet",
+      "body": "10. joulukuuta 1993 id Software antoi Doomin ensimmäisen episodin sharewarena, lyöden vetoa loppujen myynnistä. Lähettäessään sen Wisconsinin yliopiston FTP-palvelimelle he huomasivat, että niin monet odottivat jo, ettei tiimi itse päässyt yhteyteen.",
+      "coda": "Lähetys valmistui lähellä keskiyötä; kymmenen tuhatta latausta kerralla kaatoi yliopiston verkon."
+    },
+    "zlib-two-authors": {
+      "tag": "Perusta",
+      "title": "Kahden pakkauskerros",
+      "body": "zlib sijaitsee Linuxissa, macOS:ssä, iOS:ssä ja peräkkäisissä pelikonsolisukupolvissa; Git ja OpenSSH molemmat nojaavat siihen pakkaamisessa. Kaksi ihmistä kirjoitti sen ensimmäisen julkisen julkaisun vuonna 1995.",
+      "coda": "Tekijärivi ei ole koskaan kasvanut kolmannella nimellä."
+    },
+    "byd-battery-to-car": {
+      "tag": "Hankinta",
+      "title": "Akkuyhtiö Osti Autonvalmistajan",
+      "body": "BYD perustettiin Shenzhenin Longgangin alueella 10. helmikuuta 1995, valmistaen nikkeli-kadmium- ja nikkeli-metallihydridiakkuihin, sitten siirtyen litiumioniakkuihin vuonna 1996. Vuonna 2003 akkuvalmistaja hankki Xi'an Qinchuan Automobilen, nimeten sen BYD Autoksi.",
+      "coda": "Kaksi vuotta myöhemmin sen ensimmäinen oma sedan, F3, tuli myyntiin."
+    },
+    "ariane-501": {
+      "tag": "Tapaus",
+      "title": "Kolmekymmentäseitsemän sekuntia",
+      "body": "Kolmekymmentäseitsemän sekunnin kohdalla inertiaalinen viitejärjestelmä muunsi 64-bittisen liukuluvun 16-bittiseksi kokonaisluvuksi ja ylivuoto tapahtui; noin neljänkymmenen sekunnin kohdalla ajoneuvo hajosi. Rutiini tuli muuttumattomana Ariane 4:stä, eikä sillä ollut syytä olla käynnissä nousun jälkeen.",
+      "coda": "Noin 370 miljoonaa dollaria, käytettynä koodiin, joka olisi pitänyt kytkeä pois päältä."
+    },
+    "deep-blue-move-44-1997": {
+      "tag": "Shakki",
+      "title": "Siirron Neljäkymmentäneljä Häiriö",
+      "body": "Vuoden 1997 uusintaottelun ensimmäisessä pelissä Kasparov voitti Deep Bluen neljässäkymmenessäviidessä siirrossa. Deep Bluen neljäskymmenesneljäs siirto oli väitetysti bugin tulos: kykenemättä päättämään suosikkisiirrosta haussa, moottori putosi varajärjestelmään.",
+      "coda": "Hävittyään toisen pelin Kasparov syytti IBM:ää huijaamisesta."
+    },
+    "curl-one-maintainer": {
+      "tag": "Perusta",
+      "title": "Yhden miehen protokollapino",
+      "body": "curlin omien dokumentaatioiden mukaan libcurl on noin kymmenellä miljardilla laitteella, jotka toimivat 110 käyttöjärjestelmällä ja 28 suorittimen arkkitehtuurilla. Projekti on kantanut Daniel Stenbergin nimeä pääylläpitäjänä siitä lähtien, kun se nimettiin uudelleen curliksi vuonna 1998.",
+      "coda": "Nimeämätön seuraaja ei ole koskaan ollut listattuna."
+    },
+    "book-of-mozilla-verses": {
+      "tag": "Pääsiäismuna",
+      "title": "Mozilla-kirja",
+      "body": "Osoitepalkkiin kirjoittamalla about:mozilla paljastuu Mozilla-kirja, apokalyptinen säkeistö, jossa 'peto' kohtaa 'Mammonin' ja joka jokainen selaimen sukupolvi päivittää. Säkeistön numerot eivät ole luvun merkkejä: ne ovat julkaisupäiviä.",
+      "coda": "Uusin säkeistö, 6:27, julkaistiin ensimmäisen kerran Firefox Nightly -rakennuksessa vuonna 2020."
+    },
+    "http-418-teapot": {
+      "tag": "Protokolla",
+      "title": "Olen teekannu",
+      "body": "RFC 2324, julkaistu 1. huhtikuuta 1998, määrittelee tilan 418 muodossa \"I'm a teapot\" ja luokittelee itsensä tiedolliseksi, ei standardiksi. 1. huhtikuuta 2014 RFC 7168 laajensi sitä kattamaan teetön. Koodi ei koskaan tullut todelliseksi standardiksi.",
+      "coda": "Molemmat asiakirjat ovat edelleen tiedollisia; tilakoodi päätyi kuitenkin oikeisiin palvelimiin."
+    },
+    "open-source-coined-1998": {
+      "tag": "Nimeäminen",
+      "title": "Avoin lähdekoodi -termin syntymä",
+      "body": "Helmikuussa 1998 Christine Peterson ehdotti termiä \"open source\", koska uudet tulijat kuulsivat \"free software\" -ilmaisuun hinnan, ei vapautta. VA Researchin kokouksessa 5. helmikuuta Todd Anderson liukui termi keskusteluun ilman virallista ehdotusta, jolloin se levisi itsestään.",
+      "coda": "Ryhmä yritti myöhemmin rekisteröidä lauseen tavaramerkiksi ja epäonnistui."
+    },
+    "netscape-source-1998": {
+      "tag": "Julkaisu",
+      "title": "Ei aivan avoin",
+      "body": "22. tammikuuta 1998 Netscape ilmoitti, että sen selaimen lähdekoodi julkaistaan, ja työntekijä Jamie Zawinski rekisteröi mozilla.org. Mutta heidän kirjoittamansa lisenssi jätti yhden oven auki: Netscape itse voisi jatkaa saman koodin sisällyttämistä omaisuudellisiin tuotteisiin.",
+      "coda": "Netscape ostettiin AOL:lle noin vuoden kuluttua."
+    },
+    "bsd-75-acknowledgments": {
+      "tag": "Lisenssi",
+      "title": "Seitsemänkymmentäviisi tunnustusta",
+      "body": "Alkuperäinen BSD-lisenssi vaati, että jokaisessa mainoksessa mainittiin nimeltä jokainen osallistunut tekijä. Vuoteen 1997 mennessä yksi NetBSD-rakennus sisälsi seitsemänkymmentäviisi tällaista tunnustusta, mikä oli yhteensopimaton GPL:n kanssa. Berkeleyn lisenssijohtaja poisti lausekkeen 22. heinäkuuta 1999.",
+      "coda": "Yhden toimiston allekirjoitus poisti käytöstä lausekkeen, joka oli lisääntynyt vuosikymmenen ajan."
+    },
+    "red-hat-ipo-1999": {
+      "tag": "IPO",
+      "title": "Ilmaisen ohjelmiston hinta",
+      "body": "Red Hat jakoi ydinohjelmistonsa lähdekoodin ilmaiseksi ja peri sen sijaan tuen, koulutuksen ja integraation. Yhtiö listautui pörssiin 11. elokuuta 1999. Sen ensimmäisen päivän voitto oli tuolloin Wall Streetin historian kahdeksanneksi suurin.",
+      "coda": "Perustaja Bob Young korvattiin toimitusjohtajana neljä kuukautta myöhemmin."
+    },
+    "multics-shutdown": {
+      "tag": "Sammutus",
+      "title": "Viimeinen",
+      "body": "30. lokakuuta 2000 viimeinen tunnettu Multics-asennus, joka toimi natiivisti Honeywell-laitteistolla, sammutettiin Halifaxissa Nova Scotiassa Kanadan kansallispuolustusministeriössä.",
+      "coda": "Kolmekymmentäviisi vuotta projektin alkamisesta."
+    },
+    "sqlite-no-license": {
+      "tag": "Säätiö",
+      "title": "Tietokanta ilman lisenssiä",
+      "body": "SQLite:n oma sivu arvioi maailmassa olevan yli biljoona aktiivista tietokantatiedostoa, sillä jokainen älypuhelin sisältää satoja, mikä sijoittaa sen toiseksi zlib:n jälkeen käytössä olevien ohjelmistojen joukossa. Lisenssiä ei ole, koska tekijät lahjoittivat jokaisen rivin julkiseen omaisuuteen.",
+      "coda": "Yritykset, jotka haluavat oikeudellisen suojan, ostavat erillisen omistusoikeuden takuun."
+    },
+    "smic-tsmc-lawsuit": {
+      "tag": "Oikeusjuttu",
+      "title": "SMIC:n kaksi oikeusjuttua",
+      "body": "SMIC perustettiin vuonna 2000 Richard Changin, entisen TSMC-insinöörin, ja muiden toimesta. TSMC haastoi sen kahdesti kaupallisen salaisuuden varastamisesta; vuoden 2009 jutussa tuomijaneuvosto katsoi SMIC:n syylliseksi 61:stä 65:stä syytteestä.",
+      "coda": "Marraskuussa 2010 SMIC sovitti asian TSMC:n kanssa 200 miljoonalla dollarilla ja noin 8 prosentin osuudella omista osakkeistaan."
+    },
+    "api-mandate": {
+      "tag": "Hallinto",
+      "title": "Muistio",
+      "body": "Vuonna 2011 vahingossa julkiseksi tulleen kirjoituksen mukaan Bezos määräsi vuonna 2002, että tiimien on paljastettava kaikki palvelurajapintojen kautta: ei suoraa linkitystä, ei toisen tiimin tietokannan lukemista, ei takaovia.",
+      "coda": "Kirjoituksen tekijä oli tarkoittanut sen vain kollegoilleen."
+    },
+    "hupu-rumours": {
+      "tag": "Foorumi",
+      "title": "Huhujen kääntäjä",
+      "body": "Tammikuussa 2004 kiinalainen opiskelija, joka työskenteli konetekniikan tohtorintutkinnon parissa Chicagossa, perusti vapaa-ajallaan koripallofoorumin. Työ koostui lähinnä NBA-uutisten ja -huhujen kääntämisestä kiinaksi ja niiden järjestelystä.",
+      "coda": "Kahdeksan vuotta myöhemmin foorumi avasi oman verkkokaupan."
+    },
+    "jd-the-other-name": {
+      "tag": "Etymologia",
+      "title": "Nimen toinen puoli",
+      "body": "Verkkokauppa-alusta, joka avattiin vuonna 2004, sai nimensä kahdelta ihmiseltä: perustajaltaan Liu Qiangdongilta ja Gong Xiaojingilta, naiselta, jonka kanssa hän oli ensin seurustellut. Yksi merkki kummaltakin.",
+      "coda": "Jing on hänen."
+    },
+    "douban-hutong": {
+      "tag": "Etymologia",
+      "title": "Kujan mukaan nimetty",
+      "body": "Sivusto, joka avattiin 6. maaliskuuta 2005, ei ole nimetty metaforan mukaan. Yang Bo kirjoitti sen lähdekoodin kahvilassa lähellä Douban Hutonia Pekingissä ja otti kujan nimen.",
+      "coda": "Kaksikymmentäyksi vuotta myöhemmin sivusto kantaa sitä yhä."
+    },
+    "git-information-manager-hell": {
+      "tag": "Git",
+      "title": "Information Manager from Hell",
+      "body": "7. huhtikuuta 2005 Linus Torvalds teki gitin ensimmäisen versiohallintasitoumuksen. Viestissä lukee: Initial revision of \"git\", the information manager from hell. Tekijän osoite on torvalds@ppc970.osdl.org.",
+      "coda": "Tuo osoite viittaa PowerPC 970 -testikoneeseen OSDL:ssä."
+    },
+    "knuth-reward-check": {
+      "tag": "Palkinto",
+      "title": "Bank of San Serriffe",
+      "body": "Donald Knuth maksaa 2,56 dollaria jokaisesta hänen kirjoissaan löydetystä virheestä, ja maksu peritään kuvitteelliselta Bank of San Serriffe -pankilta. Maaliskuuhun 2005 mennessä hänen allekirjoittamansa shekit ylittivät 20 000 dollaria.",
+      "coda": "Useimmat saajat kehystävät shekin eikä sitä talleteta."
+    },
+    "dji-helicopter-first": {
+      "tag": "Pivot",
+      "title": "DJI aloitti helikopterilla",
+      "body": "Frank Wang valmistui Hong Kong University of Science and Technologysta vuonna 2006 ja perusti DJI:n Shenzhenissä luokkatovereidensa kanssa. Sen ensimmäinen tuote oli helikopterin lentäjäjärjestelmä; ensimmäinen kypsä versio, XP3.1, toimitettiin vuonna 2008.",
+      "coda": "Tiimi havaitsi myöhemmin, että useimmat gimbal-ostajat kiinnittivät ne moniroottoreihin, ei helikoptereihin."
+    },
+    "dropbox-hn": {
+      "tag": "Counterintuitive",
+      "title": "Se vastaus",
+      "body": "Houston julkaisi Dropbox-demon Hacker Newsissa. Kuuluisa vastaus selitti, että sen voi tehdä itse FTP-tilillä, curlftpfs:llä ja SVN:llä, ja että se ei näyttänyt tuottavan rahaa.",
+      "coda": "Yhdeksän vuoden kuluttua, IPO:n yhteydessä, Houston kutsui sitä suosikkiviestikokonaan sivustolla."
+    },
+    "butterfield": {
+      "tag": "Käännös",
+      "title": "Kaksi kertaa raunioista",
+      "body": "Butterfieldin peli, Game Neverending, jumitti, ja tiimi erotti valokuvien jakamisen osan Flickriksi. Kahdeksan vuotta myöhemmin hänen toinen pelinsä, Glitch, suljettiin, ja tiimi erotti itseensä rakentamansa keskustelutyökalun: Slack.",
+      "coda": "Hastings ja Randolph lensivät Dallasissa myymään Netflixin Blockbusterille viidelläkymmenellä miljoonalla ja hoitamaan heidän verkkosivuaan. Randolphin mukaan vastakkaisella puolella istunut toimitusjohtaja pyrki koko kokouksen ajan tukahduttamaan naurun."
+    },
+    "blockbuster": {
+      "tag": "Läpäisy",
+      "title": "Viisikymmentä miljoonaa",
+      "body": "Hastings ja Randolph lensivät Dallasin myymään Netflixin Blockbusterille viidelläkymmenellä miljoonalla ja hoitamaan sen verkkosivustoja. Randolphin mukaan vastapäätä istunut toimitusjohtaja pyrki koko kokouksen ajan tukahduttamaan naurun.",
+      "coda": "Blockbuster haki konkurssia kymmenen vuotta myöhemmin."
+    },
+    "y2k": {
+      "tag": "Hallinto",
+      "title": "Mitään ei tapahtunut",
+      "body": "Gartner arvioi Y2K:n maailmanlaajuiset kustannukset kolmeen kuuteen sataan miljardiin dollariin, ja satojatuhansia ihmisiä muutti kahden numeron vuosia rivi kerrallaan. Yön aikana sähköverkko pysyi pystyssä, pankit pysyivät pystyssä, lentokoneet lensivät.",
+      "coda": "Neljä vuotta myöhemmin taloustieteilijä julkaisi artikkelin, jossa väitettiin useimman rahasta käytetyn turhaan."
+    },
+    "unsourced": {
+      "tag": "Lähdettä ei",
+      "title": "Kenenkään nimiin ei laitettu",
+      "body": "\"640K ought to be enough for anybody\" — Gatesin oma vastaus on, että lainausta ei koskaan siteeroida, vaan se leijuu kuin huhu ja toistuu. \"A world market for maybe five computers\" — Thomas Watson sanoi viisi vuonna 1953 puhuessaan yhdestä koneesta, IBM 701:stä, odottamistaan tilauksista.",
+      "coda": "701 myi lopulta kahdeksantoista kappaletta."
+    },
+    "homebrew-volunteer-team": {
+      "tag": "Säätiö",
+      "title": "Varasto ilman työnantajaa",
+      "body": "Homebrew on useimpien Mac-kehittäjien koneiden oletuspakettienhallinta; vuonna 2013 se johti kaikkea GitHubia osallistujien määrässä. Max Howell kirjoitti sen ensimmäisen julkaisun vuonna 2009. Sitä ylläpidetään nykyään 34 hengen tiimin voimin, kaikki palkatta.",
+      "coda": "Sen rahoitushistoria on yksi Kickstarter ja Open Source Collective -tili."
+    },
+    "xiaomi-software-first": {
+      "tag": "Ohjelmisto",
+      "title": "Xiaomin ensimmäinen tuote ei ollut puhelin",
+      "body": "Xiaomi perustettiin 6. huhtikuuta 2010. Saman vuoden elokuussa ja joulukuussa se julkaisi MIUI-käyttöjärjestelmän ja Miliao-keskustelu-sovelluksen beta-versiot, molemmat ohjelmistoja.",
+      "coda": "Yhtiön ensimmäinen puhelin ei lähetetty ennen seuraavan vuoden elokuuta."
+    },
+    "ritchie-same-week": {
+      "tag": "Kuolinilmoitus",
+      "title": "Sama viikko",
+      "body": "Dennis Ritchie loi Ken Thompsonin kanssa Unixin ja C-ohjelmointikielen. Hänet löydettiin kuolleena New Jerseyn kodistaan 12. lokakuuta 2011, 70-vuotiaana. Steve Jobs oli kuollut viikkoa aiemmin, 5. lokakuuta. Kommentaattorit huomauttivat myöhemmin Ritchien työn muodostaneen pohjan teknologialle, jolle Apple rakensi varallisuutensa.",
+      "coda": "Kaksi kuolinilmoitusta julkaistiin samalla viikolla."
+    },
+    "leap-second": {
+      "tag": "Incident",
+      "title": "Lisäsekunti",
+      "body": "Lisäsekunti lisättiin pitääkseen atomikellot synkronoituna Maan pyörimisen kanssa. Ydinjärjestelmä ei ilmoittanut asiaa ajastinmoduulilleen, korkean tarkkuuden ajastimet laukeaisivat liian aikaisin ja prosessorit pyöriivät tyhjän päällä. Reddit, Mozilla ja LinkedIn jumittuivat; lentoyhtiö laivasi matkustajat käsin.",
+      "coda": "Aika ei kasva monotonisesti. Koodi olettaa sen kasvavan."
+    },
+    "gregorian-1752-eleven-days": {
+      "tag": "Myytti",
+      "title": "Kymmenen kadonnutta päivää",
+      "body": "2. syyskuuta 1752 brittiläinen kalenteri hyppäsi 14. syyskuuta, poistaen kymmenen päivää. Suosittu historia väittää väkiväen mellastaneen asiasta. Nykyajan mellakasta ei ole säilynyt yhtään aikalaistaista lähdettä. Tarina juontuu 1755 satirisessa vaalimaalauksessa olleesta lippuista.",
+      "coda": "Maalauksen rekvisiitta muuttui tapahtuman ainoaksi jäljeksi."
+    },
+    "bootstrap-the-impossible-joke": {
+      "tag": "Etymologia",
+      "title": "Lainattu mahdottomasta teosta",
+      "body": "\"Nostaa itseään saappaidensa nilkkojen varassa\" juontuu baronin Munchausenin 1785 jättiläiseltävästä ja sitä käytettiin koko 1800-luvulla fyysisen mahdottomuuden standardiesimerkkinä. Vuonna 1953 laskentateknologia lainasi sen ohjeiden ketjuksi, joka saa koneen käynnistämään itsensä.",
+      "coda": "Temppuun käytetty sana oli ensimmäisellä käyttökerrallaan vitsi temppun epäonnistumisesta."
+    },
+    "french-revolutionary-decimal-time": {
+      "tag": "Kokeilu",
+      "title": "Kymmenen tunnin vuorokausi",
+      "body": "Vuonna 1793 Ranska jakoi vuorokauden kymmeneen tuntiin, joissa kussakin oli sata desimaaliminuuttia. Pakollinen käyttö alkoi syyskuussa 1794 ja keskeytettiin vain seitsemän kuukautta myöhemmin. Tuileries-palatsin kellon desimaalinen numerotaulu kävi vielä vähintään vuoteen 1801 asti.",
+      "coda": "Lakkautettu järjestelmä pysyi palatsin seinällä vuosia sen jälkeen."
+    },
+    "railway-time-gwr": {
+      "tag": "Standardi",
+      "title": "Aika, jonka junat pitivät",
+      "body": "Marraskuussa 1840 Great Western Railway otti käyttöön Greenwichin ajan koko verkostossaan, korvaten jokaisen kaupungin oman paikallisen ajan. Vuoteen 1855 mennessä noin 98 prosenttia brittiläisistä kaupungeista oli seurannut esimerkkiä. Parlamentti ei tehnyt siitä laillista kansallista standardia ennen vuotta 1880.",
+      "coda": "Kellot sopivat ajasta neljäkymmentä vuotta ennen lakia."
+    },
+    "western-union-telephone-memo-1876": {
+      "tag": "Kumottu",
+      "title": "Muistio, jonka Western Union ei koskaan kirjoittanut",
+      "body": "Laajasti lainattua 1876:n Western Unionin muistiota pidetään puhelinta \"idioottina\" telegrafiavirastoon lähetetyn sanansaattajan rinnalla. Aikakauslehtiä tutkineet tutkijat eivät löytäneet siitä jälkeäkään, eikä nimetty johtaja ollut tuolloin kyseisessä tehtävässä yrityksessä. Teksti keksittiin myöhemmin.",
+      "coda": "Western Union hylkäsi Bellin patentin kyseisenä vuonna; se ei vain koskaan kirjoittanut tätä muistiota."
+    },
+    "nintendo-hanafuda-detours": {
+      "tag": "Käännös",
+      "title": "Kiertoteitä kukkakorttien jälkeen",
+      "body": "Fusajiro Yamauchi avasi kaupan Kiotoon vuonna 1889 ja valmisti siellä käsin hanafuda-pelikortteja. Yritys kokeili myöhemmin taksipalvelua ja pikariceä, joista molemmat hylättiin; laajasti toistettu rakastajien hotelliketjun väite ei löydy arvopaperitiedotuksista, jotka on tutkittu aina vuoteen 1962 asti.",
+      "coda": "Vuonna 1966 lelunimellä Ultra Hand myytiin satojatuhansia yksiköitä."
+    },
+    "wrigley-premiums-premium": {
+      "tag": "Käännös",
+      "title": "Palkinnon palkinto",
+      "body": "Vuonna 1891 William Wrigley Jr. myi saippuaa Chicagossa ja antoi lisäpalkinnoksi leivinjauhetta. Asiakkaat halusivat leivinjauhetta enemmän kuin saippuaa, joten hän siirtyi myymään sitä ja lisäsi purukumin leivinjauheen omaksi lisäpalkinnokseen. Asiakkaat halusivat purukumin enemmän.",
+      "coda": "Vuoteen 1892 mennessä hän oli lopettanut sekä saippuan että leivinjauheen myynnin ja myi vain purukumia."
+    },
+    "robot-labor-not-brother": {
+      "tag": "Etymologia",
+      "title": "Robotin tunnustamaton keksijä",
+      "body": "Karel Čapek laati vuonna 1920 näytelmänsä latinankielisellä sanalla \"laboři\" ja piti sitä liian kirjallisena. Sanomalehden palstalla hän nimesi todellisen lähteen: hänen veljensä Josef, joka heitti sen ohimennen. \"Robot\" tulee sanasta robota — orjuuden pakollinen työ, ei koneisto.",
+      "coda": "Näytelmän otsikkosivulla oli edelleen yhden veljen nimi."
+    },
+    "play-doh-wallpaper-cleaner": {
+      "tag": "Käännös",
+      "title": "Se oli tarkoitettu tapetin puhdistamiseen",
+      "body": "1930-luvulla Kutol kehitti pehmeän taikinan hiilensäien puhdistamiseen tapeteista. Kun kodit siirtyivät puhtaampaan lämmityispolttoaineeseen, kysyntä katosi. Opettaja ehdotti sen myyntiä mallintamissauna; se nimettiin uudelleen Play-Dohiksi vuonna 1956.",
+      "coda": "Vuoteen 2005 mennessä sitä myytiin 95 miljoonaa tölkkiä vuodessa 75 maassa."
+    },
+    "hedy-lamarr-frequency-hopping-patent": {
+      "tag": "Patentti",
+      "title": "Patentti, joka hyllytettiin",
+      "body": "Vuonna 1942 Lamarr ja säveltäjä George Antheil patentoivat taajuushyppelyjärjestelmän torpedon radio-ohjauksen häirinnän estämiseksi. Laivasto luokitteli sen salaiseksi, hyllytti sen ja ehdotti Lamarrille sotavelkakirjojen myyntiä. Patentti vanheni vuonna 1959, ennen kuin yksikään alus käytti sitä.",
+      "coda": "Lamarr ei koskaan saanut korvausta patentista elinaikanaan."
+    },
+    "bush-1945-memex": {
+      "tag": "Alkuperä",
+      "title": "Pöytä, jota ei koskaan rakennettu",
+      "body": "Heinäkuussa 1945 Vannevar Bush julkaisi The Atlanticissa artikkelin \"As We May Think\", jossa kuvattiin pöytäkokoinen mikrofilmilaite nimeltä Memex, jonka avulla käyttäjä pystyi rakentamaan assosiatiivisia polkuja tallennetun tiedon läpi. Se julkaistiin uudelleen lyhennettynä uusintapainoksena saman vuoden syyskuussa. Yhtään prototyyppiä ei koskaan rakennettu.",
+      "coda": "Sekä Engelbart että Nelson mainitsivat myöhemmin esseen syyksi, miksi he aloittivat."
+    },
+    "jean-bartik-eniac-dinner": {
+      "tag": "Tietue",
+      "title": "Illallinen, johon heitä ei kutsuttu",
+      "body": "ENIACin julkisessa esittelyssä 14. helmikuuta 1946 liikerataohjelman, joka teki vaikutuksen yleisöön, olivat kirjoittaneet Jean Bartik ja Betty Holberton. Lehdistö esitteli vain Eckertin ja Mauchlyn. Yhtäkään kuudesta naisohjelmoijasta ei kutsuttu illalliselle sen jälkeen.",
+      "coda": "Heidän nimensä kaivettiin esiin tapahtuman valokuvista vuosikymmeniä myöhemmin."
+    },
+    "claude-shannon-juggling-theorem": {
+      "tag": "Paperi",
+      "title": "Jongleerauslause",
+      "body": "Vuonna 1948 Shannon julkaisi teoksen 'A Mathematical Theory of Communication', joka loi informaatioteorian perustan. Vuosikymmeniä myöhemmin hän kohdisti saman tarkkuuden harrastukseensa ja johti muodollisen suhteen pallon lentoaikaan, sen pitoaikaan sekä pallojen ja käsien määrään.",
+      "coda": "Se koottiin samaan niteeseen kuin vuoden 1948 paperi."
+    },
+    "mccarthy-1960-eval": {
+      "tag": "Alkuperä",
+      "title": "Tulkki alaviitteessä",
+      "body": "Vuoden 1960 paperissaan John McCarthy kirjoitti eval-funktion matemaattisena merkintänä osoittaakseen, että symboliset lausekkeet voisivat kuvata itseään. Hänen oppilaansa Steve Russell käänsi johdannoksen IBM 704 -konekoodiksi. Todistuslaitteesta tuli ensimmäinen toimiva Lisp-tulkki.",
+      "coda": "McCarthy sanoi myöhemmin, ettei ollut tarkoittanut kenenkään todella suorittavan sitä."
+    },
+    "licklider-1960-symbiosis": {
+      "tag": "Alkuperä",
+      "title": "Kirjastot kytketty toisiinsa",
+      "body": "Vuoden 1960 artikkelissaan \"Man-Computer Symbiosis\" J.C.R. Licklider ehdotti \"ajattelukeskuksia\", jotka sisältäisivät kirjastotoimintoja ja jotka olisi linkitetty verkkoon tietokoneiden reaaliaikaista, keskustelevaa käyttöä varten. Useimmat sen ajan koneet toimivat erissä reikäkorteilla; interaktiivisia päätteitä tuskin oli olemassa.",
+      "coda": "Kaksi vuotta myöhemmin hän johti uutta Pentagonin toimistoa ja rahoitti projektia, josta tuli ARPANET."
+    },
+    "ctss-1962-password-leak": {
+      "tag": "Alkuperä",
+      "title": "Salasanatiedosto tulostettuna",
+      "body": "Vuonna 1962 MIT:n tohtoriopiskelija Allan Scherr turhautui neljään viikkotuntiinsa CTSS:llä. Hän huomasi, että offline-tulostuskomennolla pystyi hakemaan minkä tahansa tilin tiedostot, joten hän tulosti UACCNT.SECRET-tiedoston, joka sisälsi kaikki salasanat, ja jakoi sen lainatakseen tilejä ja jatkaakseen simulaatioitaan.",
+      "coda": "Scherr ei myöntänyt sitä laboratorion johtajalle ennen kuin lähes kolmekymmentä vuotta myöhemmin."
+    },
+    "katherine-johnson-check-the-numbers": {
+      "tag": "Tietue",
+      "title": "Anna tytön tarkistaa se",
+      "body": "Ennen vuoden 1962 kiertoratalentoaan John Glenn pyysi insinöörejä käskemään Katherine Johnsonia laskemaan käsin uudelleen liikeradan, jonka IBM 7090 oli jo laskenut. 'Jos hän sanoo niiden olevan hyviä', Glenn sanoi, 'olen valmis lähtemään.' Hänen luvut vastasivat täsmälleen tietokoneen lukuja.",
+      "coda": "Friendship 7 laukaistiin aikataulussa 20. helmikuuta 1962."
+    },
+    "daemon-backronym": {
+      "tag": "Etymologia",
+      "title": "Daemonin jälkikäteen rakennettu akronyymi",
+      "body": "Vuonna 1963 MIT:n Project MACin ohjelmoijat nimesivät taustalla toimivan nauhavarmenteen prosessin Maxwellin demonin mukaan, 1867:n ajatuskokeen agentin, joka lajittelee molekyylejä väsymättä ja näkymättömästi — kreikan daimonin, neutraalin henkiolennon, ei juudaattis-kristillisen pahan.",
+      "coda": "\"Disk And Execution MONitor\" sovittiin sanaan jälkikäteen."
+    },
+    "sketchpad-1963": {
+      "tag": "Alkuperä",
+      "title": "Valosulatin ja oskilloskoopin aika",
+      "body": "Tammikuussa 1963 Ivan Sutherland jätti MIT:lle väitöskirjansa Sketchpadista, jossa hän piirsi rajoitettua geometriaa valosulattimella TX-2:n ruudulla Lincoln Laboratoryssa. Kone maksoi noin miljoona dollaria ja niitä oli vain muutama; hänen piirustuslaudansa ei voinut antaa kellekään muulle.",
+      "coda": "Kaupallinen CAD-ohjelmisto tarvitsi lähes kaksi vuosikymmentä väitöskirjan osoittaman saavuttamiseksi."
+    },
+    "douglas-mcilroy-garden-hose-pipe": {
+      "tag": "Muistio",
+      "title": "Pihaletkun muistio",
+      "body": "Lokakuussa 1964 McIlroy kirjoitti Bell Labsin muistion, jossa hän ehdotti ohjelmien yhdistämistä pihaletkujen tapaan — kierrä toinen segmentti päälle, jotta dataa voidaan muokata eri tavalla. Se levisi, sitä ihailltiin, ja sitä ei toteutettu. Yhdeksän vuotta myöhemmin Ken Thompson lisäsi Unixin komentotulkkiin yhden merkin, |, yhdessä yössä.",
+      "coda": "Aamulla ohjelmat, jotka eivät olleet koskaan puhuneet toisilleen, tekivät sen."
+    },
+    "berkshire-hathaway-spite-buy": {
+      "tag": "Kostollisuus",
+      "title": "Tehtaasta, joka ostettiin vihasta",
+      "body": "Vuonna 1964 Warren Buffett suostui suullisesti myymään osuutensa takaisin Berkshire'n puheenjohtajalle Seabury Stantonille 11,50 dollarilla kappaleelta. Kirjallinen ostotarjous tuli 11,375 dollarin tasolle. Buffett oli niin vihainen puuttuvasta kahdeksasosasta, että hän osti yrityksen hallinnan ja irtisanoi Stantonin.",
+      "coda": "Vuonna 1985 hän sulkoi tekstiilitehtaat, joiden säilyttämiseksi hän oli taistellut."
+    },
+    "nelson-1965-hypertext": {
+      "tag": "Alkuperä",
+      "title": "Linkki ennen sivua",
+      "body": "Vuoden 1965 ACM-julkaisussa Ted Nelson loi termin \"hypertext\" dokumenteille, jotka linkittävät ja lainaavat toisiaan ei-järjestyksessä, rakentaen projektin varaan, jonka hän oli aloittanut vuonna 1960 ja myöhemmin nimennyt Xanaduksi. Hänen versiossaan alkuperäisille tekijöille maksettiin jokaisesta seuratuista linkistä. Osittainen toteutus julkaistiin vasta vuonna 2014.",
+      "coda": "Web omaksui hänen sanastonsa ja jätti maksujärjestelmän taakseen."
+    },
+    "mary-allen-wilkes-linc": {
+      "tag": "Merkintä",
+      "title": "LINC olohuoneessa",
+      "body": "Vuonna 1965 Wilkes siirsi 113-kiloisen LINC-tietokoneen vanhempiensa Baltimoren olohuoneeseen ja kirjoitti yksin LAP6:n, interaktiivisen käyttöjärjestelmän — kaksitoista vuotta ennen kuin Apple II saapui mihinkään kotiin. Kun häntä kysyttiin, oliko hän ensimmäinen, hän sanoi vain: 'Luulisin, että ehkä olin.'",
+      "coda": "Hän ei itse koskaan väittänyt olevansa ensimmäinen."
+    },
+    "hoares-billion-dollar-mistake": {
+      "tag": "Tunnustus",
+      "title": "Viite, jonka hän lisäsi silti",
+      "body": "Vuonna 1965 Tony Hoare rakensi ensimmäistä tyypijärjestelmää, jonka tarkoitus oli tehdä ALGOL W:n viitteistä todistettavasti turvallisia käännösaikana. Hän lisäsi silti nollaviitteen, koska se oli helppo toteuttaa. Vuonna 2009 hän kutsui sitä miljardin dollarin virheekseen.",
+      "coda": "Turvallisuus tavoitteena oli selvä; epäonnistuminen oli, että helppous voitti silti."
+    },
+    "johnson-vs-cern-touchscreen": {
+      "tag": "Kosketusnäyttö",
+      "title": "Kuka oli todella ensimmäinen",
+      "body": "CERN antaa Bent Stumpen krediitit maailman ensimmäisen kapasitiivisen kosketusnäytön rakentamisesta vuonna 1972 kiihdyttimen ohjaushuoneeseen. Britannian Royal Radar Establishmentin Eric Johnson oli jo julkaissut artikkelin sormella ohjattavasta kapasitiivisesta kosketusteknologiasta vuonna 1965, seitsemän vuotta aiemmin.",
+      "coda": "CERNin väite ensimmäisen kosketusnäytön rakentamisesta on edelleen voimassa sen omalla verkkosivustolla."
+    },
+    "second-redefined-1967": {
+      "tag": "Metrologia",
+      "title": "9 192 631 770 sykliä",
+      "body": "Vuoteen 1960 asti sekunti oli määritelty 1900-luvun tropiikkavuoden murto-osaksi tähtitieteellisten havaintojen perusteella. Vuonna 1967 painojen ja mittausten yleiskokous määriteli sen uudelleen 9 192 631 770 sykliksi cesium-133 siirtymästä.",
+      "coda": "Sekunnin pituutta ei enää määritellyt aurinko vaan atomi."
+    },
+    "goto-statement-considered-harmful": {
+      "tag": "Oikaisu",
+      "title": "Otsikko, jonka hän ei kirjoittanut",
+      "body": "Dijkstra lähetti CACM-lehteen artikkelin nimeltä A Case against the GO TO Statement. Toimitusjohtaja Niklaus Wirth, joka kiirehti sen painoon kirjeenä, antoi sille otsikon, joka teki siitä kuuluisan: Go To Statement Considered Harmful.",
+      "coda": "Lauseke ylitti kirjeen ja loi vuosikymmenet kestäneen 'X Considered Harmful' -otsikoiden perinteen, joita kukaan ei lukenut loppuun."
+    },
+    "rollkugel-vs-mouse": {
+      "tag": "Hiiri",
+      "title": "Kaksi hiirtä, yksi vuosi",
+      "body": "Lokakuussa 1968 Telefunken listasi Rollkugel-hiiren myyntiesitteessä, pyörivän pallon laitteen, jonka sen insinöörit olivat rakentaneet vuodesta 1966 lähtien. Kaksi kuukautta myöhemmin, 9. joulukuuta, Douglas Engelbart esitteli puuhiiren, jonka hänen SRI-tiiminsä oli rakentanut vuodesta 1963 lähtien. Kumpikaan tiimi ei tiennyt toisesta.",
+      "coda": "Telefunken saapui markkinoille ensimmäisenä ja unohtui; Engelbart tuli toiseksi ja on se, mitä ihmiset tarkoittavat sanalla hiiri."
+    },
+    "peter-principle-verified": {
+      "tag": "Tutkimus",
+      "title": "Edistynyt epäpätevyyteen",
+      "body": "Vuonna 1969 Laurence Peter ja Raymond Hull vitsailivät puoliksi bestsellerissä, että jokainen työntekijä nousee tasolle, jossa hänestä tulee epäpätevä, tarkoitettuna satiirina. Vuonna 2019 tutkimus myyntijoukon ylitysmenetelmistä 214:ssä todellisessa yrityksessä löysi vitsin pitävän paikkansa: parhaat myyjät olivat huonompia johtajia.",
+      "coda": "Vitsin kärki osoittautui mitattavaksi, julkaistuksi regressiokerroksi."
+    },
+    "lanpar-vs-visicalc": {
+      "tag": "Laskentataulukko",
+      "title": "Taulukkolaskenta, jota kukaan ei nimennyt",
+      "body": "Kesällä 1969 Harvardin valmistuneet Rene Pardo ja Remy Landau kirjoittivat LANPARin, taulukkolaskentakielen, joka antoi käyttäjien syöttää kaavoja missä tahansa järjestyksessä ja laski silti oikein. Bell Canada ja General Motors käyttivät sitä. Vuonna 1979 Dan Bricklin rakensi VisiCalcin tietämättä LANPARin olemassaolosta.",
+      "coda": "LANPARin patentti kesti oikeushaasteen vuoteen 1983 asti; lehdet olivat jo nimenneet VisiCalcin ensimmäiseksi."
+    },
+    "spam-vikings-not-marketers": {
+      "tag": "Etymologia",
+      "title": "Spam, ennen markkinointia",
+      "body": "Vuoden 1970 sketsissä Monty Pythonin viikingit huutavat \"spamia\" ruokailijan dialogin päälle, pilkaten säilykelihan ylitarjontaa ruokalistalla. Vitsi siirtyi MUD-keskusteluhuoneisiin 1980-luvun lopulla tarkoittaen keskustelun tulvimista, ja sitten sähköpostiin 1990-luvun alussa.",
+      "coda": "Sana saapui sähköpostilaatikoihin lounasaiheisen komediasketsin kautta."
+    },
+    "codd-1970-relational-model": {
+      "tag": "Alkuperä",
+      "title": "Paperi, jonka työnantaja jätti huomiotta",
+      "body": "Vuonna 1970 IBM:n tutkija Edgar Codd julkaisi relaatiomallin. IBM:n lippulaivatuote oli hierarkkinen, eikä yritys ollut kiirehtimässä omaksumaan hänen ideaansa. Larry Ellison luki Codin paperin ja IBM:n omat System R -raportit, ja toimitti ensimmäisenä kaupallisen relaatiotietokannan vuonna 1979.",
+      "coda": "IBM:n oma relaatiotuote DB2 ei ilmestynyt ennen vuotta 1983."
+    },
+    "linnainmaa-backpropagation": {
+      "tag": "Algoritmi",
+      "title": "Puuttuva viittaus",
+      "body": "Vuonna 1970 suomalainen opiskelija Seppo Linnainmaa julkaisi täydellisen algoritmin käänteismoodin automaattiseen differentiointiin toimivan koodin kera pro gradu -työssään. Vuonna 1986 Rumelhart, Hinton ja Williams julkaisivat saman menetelmän Nature-lehdessä neuroverkkojen kouluttamiseksi. He eivät viitanneet häneen.",
+      "coda": "Linnainmaan opinnäytetyö oli viittaamatta kuusitoista vuotta, ennen kuin alan historioitsijat kaivoivat sen esiin."
+    },
+    "at-sign-arbitrary-pick": {
+      "tag": "Etymologia",
+      "title": "Ainoa käyttämätön näppäin",
+      "body": "Vuonna 1971 BBN:n insinööri Ray Tomlinson tarvitsi erottimen käyttäjänimen ja isännän välille, joka ei voisi koskaan esiintyä oikeassa henkilönnimessä. Selatessaan Model 33 -teletype-näppäimistöään hän valitsi @-merkin — merkin, jota käyttivät silloin lähes yksinomaan kauppiaat ja kirjanpitäjät.",
+      "coda": "Jokainen sähköpostiosoite sen jälkeen on kantanut tuota yhtä rajoitusta eteenpäin."
+    },
+    "parnas-module-decomposition": {
+      "tag": "Menetelmä",
+      "title": "Missä leikata moduli",
+      "body": "Vuonna 1972 David Parnas jakoi saman KWIC-indeksijärjestelmän moduuleihin kahdella tavalla: toinen käsittelyvaiheen mukaan, toinen niiden suunnittelupäätösten mukaan, jotka todennäköisimmin muuttuvat, kumpikin piilossa rajapinnan takana. Vain toinen mahdollisti muutoksen, joka kosketti yhtä modulia ilman, että kenenkään tarvitsi lukea loppua.",
+      "coda": "Modulin raja osoittautui koodaavan arvausta siitä, mitä tulevan ylläpitäjän olisi tiedettävä."
+    },
+    "karen-sparck-jones-idf": {
+      "tag": "Merkintä",
+      "title": "Kaavaa, jota kukaan ei kiitä",
+      "body": "Vuonna 1972 Spärck Jones julkaisi artikkelin, jossa hän ehdotti, että sanan harvinaisuus asiakirjakokoelmassa mittaa sen tärkeyttä — käänteinen asiakirjatiheys, joka on nyt lähes kaikkien hakukoneiden ranking-logiikan alla. Hän ei saanut pysyvää virkaa Cambridgessa ennen vuotta 1993.",
+      "coda": "Siihen asti hän oli työskennellyt sarjan lyhytaikaisissa, pehmeän rahan sopimuksissa."
+    },
+    "cyclades-pouzin-tcpip": {
+      "tag": "Internet",
+      "title": "Internetin viides mies",
+      "body": "Vuonna 1972 Louis Pouzin rakensi CYCLADES-verkon Ranskassa, ensimmäisen, jossa päätepisteet, ei verkko, olivat vastuussa luotettavasta toimituksesta. Vuonna 1974 Cerfin ja Kahnin TCP-artikkeli kiitti häntä nimeltä. Vuonna 2004 Cerf ja Kahn saivat Turing-palkinnon. Pouzinin nimi ei ollut siinä.",
+      "coda": "The Economist kutsui häntä myöhemmin internetin viidenneksi mieheksi."
+    },
+    "ethernet-1973-memo": {
+      "tag": "Alkuperä",
+      "title": "Ether-memo",
+      "body": "22. toukokuuta 1973 Robert Metcalfe kirjoitti Xerox PARC:n memon otsikolla \"Ether Acquisition\", jossa oli käsin piirretty kaavio yhteisestä kaapelista, joka yhdisti Alto-tietokoneita. Teknologia ajoitetaan yleensä vuoden 1976 lehtiartikkeliin. Itse piirros on kolme vuotta vanhempi ja käsin piirretty.",
+      "coda": "Kun artikkeli julkaistiin, Ethernet oli jo toiminut PARC:n sisällä kolme vuotta."
+    },
+    "vint-cerf-envelope-sketch": {
+      "tag": "Anekdootti",
+      "title": "Kirjekuoren takapuoli",
+      "body": "Internetin perustamiselämäkerta kertoo, että Cerf piirsi porttiteknologian arkkitehtuurin lautasliinaan. Hän on korjannut tämän: 'Itse asiassa se ei ollut lautasliina, vaan kirjekuoren takapuoli.' Vuonna 1973, odottaessaan hotellin aulassa, hän piirsi sen, mikä tuli TCP/IP:n porttisuunnitelmaksi.",
+      "coda": "Seuraavana vuonna piirroksista tuli artikkeli IEEE Transactions on Communications -lehdessä."
+    },
+    "gchq-nonsecret-encryption": {
+      "tag": "Kryptografia",
+      "title": "Julkaisematon avain",
+      "body": "Syyskuussa 1973 22-vuotias Clifford Cocks, joka oli juuri saapunut GCHQ:han, keksi yhteisavaimettoman salausmenetelmän puolessa tunnissa. Kolme vuotta myöhemmin Diffie, Hellman ja Merkle julkaisivat saman idean Yhdysvalloissa ja heidät tunnustettiin sen keksijöiksi. GCHQ:n tiedostot pysyivät salassa pidettävinä vuoteen 1997 asti.",
+      "coda": "James Ellis kuoli vuonna 1997, muutama kuukausi sen jälkeen kun hänen nimensä päättyi viralliseen tietoon salassapidon purkua seuranneena."
+    },
+    "kodak-digital-camera-1975": {
+      "tag": "Hyllytetty",
+      "title": "Kodakin hautautunut kamera",
+      "body": "Vuonna 1975 24-vuotias insinööri Steven Sasson rakensi ensimmäisen digitaalisen kameran: 8 puntaa, 23 sekuntia kuvaa kohti. Johtajat päättelivät, että kukaan ei haluaisi katsoa kuvia televisiossa, kun painettu kuva oli edullista ja oli toiminut vuosisadan ajan. He patenttoivat kameran ja hyllyttivät sen.",
+      "coda": "Kodak haki konkurssisuojaa vuonna 2012."
+    },
+    "galls-law-origin": {
+      "tag": "Alkuperä",
+      "title": "Kirja byrokraatioista",
+      "body": "Vuonna 1975, sen jälkeen kun 30 kustantajaa oli hylännyt sen, lastenlääkäri John Gall julkaisi itse teoksen Systemantics: toimiva monimutkainen järjestelmä kehittyy väistämättä toimivasta yksinkertaisesta järjestelmästä, ja alusta alkaen rakennettu monimutkainen järjestelmä ei koskaan toimi. Hän kirjoitti sairaaloista ja hallintovirastoista.",
+      "coda": "Ohjelmistoarkkitehdit säilyttivät lauseen ja hylkäsivät hiljaa sen byrokraatiat, joista se oli kirjoitettu."
+    },
+    "ken-olsen-home-computer-1977": {
+      "tag": "Väärin lainaus",
+      "title": "Olsenin kotitietokone",
+      "body": "Vuonna 1977 DEC:n perustaja Ken Olsen sanoi, ettei yksilöllä ollut syytä omistaa tietokonetta kotiin. Hän tarkoitti yhtä keskitettyä konetta, joka hoitaa kodin valot, lämmön ja viihteen, mikä oli tarkaa hänen kuvailemaansa asiaa. Juttu säilytti vain lauseen ensimmäisen puoliskon.",
+      "coda": "Olsenilla itsellään oli tietokone kotona tuolloin."
+    },
+    "kernighans-debugging-law": {
+      "tag": "Aforismi",
+      "title": "Kaksi kertaa vaikeampaa kuin kirjoittaa se",
+      "body": "Vuoden 1978 Elements of Programming Style -teoksessa Kernighan ja Plauger kirjoittivat, että virheiden etsiminen on kaksi kertaa vaikeampaa kuin ohjelman kirjoittaminen, joten sen kirjoittaminen niin kekseliäästi kuin mahdollista jättää sinut määritelmän mukaan riittämättömän älykkääksi sen virheiden etsimiseen. Tyylisääntö, joka on esitetty rajoituksena kohtaamassa omaa työtäsi kahdesti.",
+      "coda": "Vastustaja ei koskaan ollut joku muu, se olit sinä muutama viikko myöhemmin."
+    },
+    "xerox-parc-1979-visit": {
+      "tag": "Alkuperä",
+      "title": "Xeroxin oma kauppa",
+      "body": "Joulukuu 1979: Apple vieraili Xerox PARC:ssa sen jälkeen, kun Xerox suostui ostamaan 100 000 Apple-osaketta ennen IPO:ta 10 dollarin kappalehintaan pääsyn vuoksi. Jobs näki Alton graafisen käyttöliittymän ja kutsui sitä parhaaksi asiaksi, mitä hän oli koskaan nähnyt. Suosittu tarina on varkaus; asiakirja kertoo kaupasta, jonka Xerox neuvotteli.",
+      "coda": "Xerox sai osakkeensa. Altoa ei koskaan myyty kaupallisena tuotteena."
+    },
+    "visicalc-1979-no-patent": {
+      "tag": "Alkuperä",
+      "title": "Patentti, jonka he ohittivat",
+      "body": "Ennen VisiCalcin julkaisua vuonna 1979 Dan Bricklin konsultoi patenttiasiamiestä, joka arvioi onnistumisen todennäköisyyden olevan noin yksi kymmenestä tuon ajan sääntöjen mukaan. He hakivat sen sijaan tekijänoikeutta ja tavaramerkkiä. Vuonna 1983 Lotus 1-2-3 julkaisi yhteensopivan käyttöliittymän, joka pystyi lukemaan VisiCalcin omia tiedostoja.",
+      "coda": "Laskentataulukko säilyi kategoriana. Yhtiö, joka rakensi sen, ei säilynyt."
+    },
+    "ibm-microsoft-dos-1980": {
+      "tag": "Lauseke",
+      "title": "IBM jättää oven auki",
+      "body": "IBM allekirjoitti sopimuksen Microsoftin kanssa PC:n käyttöjärjestelmästä 6. marraskuuta 1980. Syvällä yli vuosikymmenen kestäneessä kilpailulakia koskevassa oikeudenkäynnissä IBM päätti olla kontrolloimatta toimittajiaan ja antoi Microsoftin myydä DOS:n kenelle tahansa muulle. Toisen oikeudenkäynnin varalta se tuntui järkevältä tuolloin.",
+      "coda": "Kloonivalmistajat tulivat perään muutamassa vuodessa, ja IBM ei koskaan saanut hallintaa alustasta takaisin."
+    },
+    "postel-law-robustness-reversal": {
+      "tag": "Hallinto",
+      "title": "Robustiusperiaate, käänteisesti",
+      "body": "RFC 761 (1980) kehotti toteuttajia olemaan liberaaleja vastaanottamisessa ja konservatiivisia lähettämisessä. Vuonna 2023 IETF:n oma arkkitehtuurilautakunta kumosi ohjeen RFC 9413:ssa: suvaitsevaisuus antaa virheiden kivistyä de facto -standardeiksi, jättäen järjestelmät vähemmän robustiksi, ei enemmän.",
+      "coda": "Standardi, joka kehotti internetiä olemaan suvaitseva, kumottiin sen omien hoitajien toimesta."
+    },
+    "end-to-end-argument": {
+      "tag": "Artikkeli",
+      "title": "Väittämä tyhmästä verkosta",
+      "body": "Vuonna 1981 Saltzer, Reed ja Clark väittivät, että siirretyn tiedoston virheiden tarkistus voidaan tehdä oikein vain kahdessa päätepisteessä; verkko voi auttaa mutta ei koskaan korvata täysin. Tiedoston tarkistuskoodin sijoittelusta käsitellyt artikkeli tuli perustavaksi tapaukseksi verkkojen yksinkertaisuuden säilyttämiseksi.",
+      "coda": "Huomautus virhetarkistuksen sijoittelusta kasvoi verkkoneutraalisuuden puolesta esitetyksi väitteeksi."
+    },
+    "excel-1900-leap-year": {
+      "tag": "Perintö",
+      "title": "Karkausvuosi, joka ei ollut",
+      "body": "Lotus 1-2-3 käsitteli vuotta 1900 karkausvuotena, harmittomana oikotienä. Microsoft kopioi saman virheellisen päivämäärän pysyäkseen yhteensopivana. Lotus on poissa; väärä karkauspäivä on jäljellä, nyt kirjattuna Office Open XML -spesifikaatioon.",
+      "coda": "Yhteensopivuushakkerointi lakkautetulle kilpailijalle on nyt kirjattu standardi."
+    },
+    "avatar-before-snow-crash": {
+      "tag": "Etymologia",
+      "title": "Avatar ennen romaania",
+      "body": "Neal Stephensonin vuoden 1992 romaanin Snow Crash ansioksi luetaan yleensä sanan \"avatar\" verkkokäyttö. Mutta Lucasfilmin Habitat, joka oli toiminut Commodore 64:llä vuodesta 1985, kirjoitti jo: \"pelaajia edustavat animoidut hahmot, joita kutsumme avatareiksi\", sanskritin kielen inkarnaatiota tarkoittavasta sanasta.",
+      "coda": "Termi oli käytössä kaupallisessa palvelussa seitsemän vuotta ennen kirjaa."
+    },
+    "radia-perlman-algorhyme": {
+      "tag": "Kasku",
+      "title": "Algorhyme",
+      "body": "Vuonna 1985 Perlmanin esimies DEC:llä antoi silmukattoman siltausongelman perjantaina ja katosi sitten viikoksi. Hän sai spanning-tree-algoritmin valmiiksi keskiviikkoon mennessä — ja käytti loppuajan kirjoittaen Algorhyme-runon, josta tuli paperin abstrakti.",
+      "coda": "Runon laatiessaan kului enemmän aikaa kuin algoritmia."
+    },
+    "brooks-no-silver-bullet": {
+      "tag": "Eseki",
+      "title": "Ei hopeakärpästä",
+      "body": "Vuoden 1986 IFIP-kongressissa Fred Brooks jakoi ohjelmistojen vaikeuden oleelliseen ja sattumaiseen monimutkaisuuteen. Sattumainen vaikeus oli laskenut jyrkästi, hän sanoi, mutta yksikään tekniikka ei tuottaisi kymmenkertaisen tuottavuuden kasvun kymmenen vuoden sisällä.",
+      "coda": "Neljä vuosikymmentä myöhemmin jokainen uusi paradigma myydään edelleen kärpäkseksi, jota hänen mukaansa ei ole olemassa."
+    },
+    "tz-olson-database": {
+      "tag": "Nimeäminen",
+      "title": "Olsonin tietokanta",
+      "body": "Useimmat laitteet ratkaisevat aikavyöhykkeet yhden vapaaehtoisten ylläpitämän tiedostojoukon perusteella, jota epävirallisesti kutsutaan Olsonin tietokannaksi perustajan Arthur David Olsonin mukaan. Nimeämiskäytäntöön luetaan Paul Eggert, joka on itse muokannut tietokantaa vuodesta 2005 lähtien.",
+      "coda": "Nimikkö ja henkilö, joka on ylläpitänyt sitä siitä lähtien, ovat eri henkilöitä."
+    },
+    "china-1987-first-email": {
+      "tag": "Merkintä",
+      "title": "Muurin yli",
+      "body": "Kertomuksissa Kiinan ensimmäinen sähköposti, 'Across the Great Wall we can reach every corner of the world.', luetaan yksin Qian Tianbain nimiin. Qian opiskeli Yhdysvalloissa kyseisenä kuukautena; viestin kirjoittivat Li Chengjiong ja Karlsruhen Werner Zorn, ja se lähti Kiinasta kuusi päivää myöhemmin, 20. syyskuuta.",
+      "coda": "Hänen kuolleetuutensa listaa hänet edelleen lähettäjäksi."
+    },
+    "barbara-liskov-substitution-property": {
+      "tag": "Periaate",
+      "title": "Laki, jota hän ei koskaan nimennyt",
+      "body": "Vuoden 1987 OOPSLA-avajaispuheessa Barbara Liskov ehdotti, että jos tyypin S objektin korvaaminen tyypillä T jättää jokaisen ohjelman käytöksen muuttumattomaksi, S on T:n alityyppi. Hän kutsui sitä korvaamisominaisuudeksi. Vuosia myöhemmin Robert Martin sisällytti sen SOLID:iin ja nimitti sen hänen mukaansa.",
+      "coda": "Sana 'periaate' oli jonkun muun lisäys."
+    },
+    "go-corporation-pen-computing": {
+      "tag": "Kynälaskenta",
+      "title": "Tabletti, jota kukaan ei ostanut",
+      "body": "Vuonna 1987 Jerry Kaplan perusti GO Corporationin kynäpohjaisen PenPoint-käyttöjärjestelmän rakentamiseksi ja keräsi 75 miljoonaa dollaria. AT&T osti GO:n tammikuussa 1994, peruutti sen tukemaa sirulinjaa kaksi viikkoa myöhemmin ja GO suljettiin samana vuonna heinäkuussa. Kaplan sanoi myöhemmin, että yrityksellä ei ollut \"merkittäviä myyntiä\".",
+      "coda": "Vuonna 2010 Apple julkaisi iPadin, kapasitiivisen monikosketus-tabletin."
+    },
+    "iso8601-unify-then-fork": {
+      "tag": "Standardi",
+      "title": "ISO 8601:n kapeampi vastine",
+      "body": "ISO 8601 julkaistiin ensimmäisen kerran vuonna 1988 yhdistäen viisi aiempaa, ristiriitaisempaa ISO-päivämäärä- ja aikastandardia yhteen. Mutta muoto, jota useimmat internet-sovellukset validoi, on RFC 3339 (1997), kapeampi profiili, joka ei ISO 8601:n myöhemmän tarkistuksen jälkeen ole edes sen tiukka osajoukko.",
+      "coda": "Standardi, jota kaikki siteeraavat, ja murre, jota kaikkien koodi tarkistaa vastaan, eivät ole sama asiakirja."
+    },
+    "python-christmas-project": {
+      "tag": "Skriptaus",
+      "title": "Jouluharrastus",
+      "body": "Vuoden 1989 joululomien aikana, kun hänen toimistonsa oli suljettu viikon ajaksi, Amsterdamin tutkija etsi harrastusohjelmointiprojektia. Hän alkoi kirjoittaa tulkki uutta skriptikieltä varten ja nimesi sen komediaryhmän mukaan, ei käärmeen.",
+      "coda": "Heinäkuussa 2026 se sijoittui ensimmäiseksi TIOBE:n ohjelmointikielten suosion indeksissä."
+    },
+    "worse-is-better": {
+      "tag": "Debate",
+      "title": "Huonompi on parempi",
+      "body": "Vuonna 1989 Richard Gabriel loi termin 'worse is better': yksinkertainen, puoliksi oikea toteutus selviää paremmin kuin täydellinen ja oikea toteutus, minkä vuoksi hänen mielestään C ja Unix voittivat Lispin. Vuonna 1991 hän julkaisi vastaväitteen nimellä Nickieben Bourbaki, esittäen itsensä vanhana ystävänä.",
+      "coda": "Kymmenien vuosien kuluttua hän sanoi edelleen, ettei hän osannut päättää, oliko hänen oma väitöksensä oikea."
+    },
+    "rfc1149-avian-carriers-test": {
+      "tag": "Incident",
+      "title": "Pöytäkirja, jonka joku todella lensi",
+      "body": "David Waitzman julkaisi RFC 1149:n huippuäitienpäivänä vuonna 1990: eritelmän IP-datagrammien kuljettamisesta kyyhkysellä. 28. huhtikuuta 2001 Bergenin Linux-käyttäjäryhmä rakensi sen todellisuudessa ja laukaisi yhdeksän ping-pakettia noin 5 km:n matkalle. Neljä palasi — 55 prosentin häviöaste, edestakaiset matkat kestivät 53–106 minuuttia.",
+      "coda": "Vitsa-RFC:llä on kirjattuna todellinen paketinhäviö: 55 prosenttia."
+    },
+    "att-1990-break-statement": {
+      "tag": "Incident",
+      "title": "Väärässä paikassa oleva break",
+      "body": "New Yorkin 4ESS-kytkimen palautusrutiinissa oli break-lauseke, joka oli sisäistetty yhden tason liian matalalle, vika, jota testaus ei koskaan käyttänyt. Uudelleenkäynnistyksen rutiinin \"valmis\"-signaali luettiin sitten väärin naapurikytkimissä virheeksi, ja vääriä hälytyksiä kaskadoitui verkossa yhdeksän tuntia.",
+      "coda": "AT&T myöhemmin arvioi menetetyt tulot 60 miljoonaksi dollariksi."
+    },
+    "aspec-vs-musicam": {
+      "tag": "Audio",
+      "title": "Häviö yksinkertaisemmalle",
+      "body": "Vuonna 1991 MPEG testasi kahta kilpailevaa äänikoodikkia. Fraunhoferin, AT&T:n ja Ranskan CNET:n kehittämä ASPEC voitti laadun testit, mutta se hylättiin liian monimutkaisena. Matsushitan ja Philipsin MUSICAM voitti yksinkertaisuudellaan. Valmis MP3 sisällytti lopulta ASPEC:n suodatinrakenteen silti.",
+      "coda": "Kaikkien MP3:ksi kutsuman muodoston sisällä on hävinneen ehdotuksen insinööritöitä voittaneen nimen alla."
+    },
+    "linux-minix-post": {
+      "tag": "Kernel",
+      "title": "Viesti comp.os.minixiin",
+      "body": "25. elokuuta 1991 helsinkiläinen ylioppilas kirjoitti comp.os.minix-uutisryhmään, että hän kirjoittaa vapaan käyttöjärjestelmän, kutsuen sitä \"vain harrastukseksi, ei tule olemaan iso ja ammattimainen kuten gnu\", ja kysyi, mitä ominaisuuksia ihmiset halusivat.",
+      "coda": "Marraskuusta 2017 lähtien kaikki maailman 500 nopeinta supertietokonetta ovat käyttäneet sen varaan rakennettua käyttöjärjestelmää."
+    },
+    "web-vs-gopher-1991": {
+      "tag": "Web",
+      "title": "Ilmainen biitti hinnoiteltu",
+      "body": "Vuonna 1991 Tim Berners-Lee julkaisi World Wide Webin CERNistä. Samana vuonna Minnesotan yliopisto julkaisi Gopherin, joka oli jonkin aikaa suositumpi järjestelmä. Helmikuussa 1993 Minnesota ilmoitti lisenssimaksuista Gopher-palvelimille. Saman vuoden huhtikuussa CERN teki verkkoprotokollasta ilmaisen.",
+      "coda": "Gopherilla oli suurempi kannatus ennen maksuilmoitusta, eikä koskaan sen jälkeen."
+    },
+    "rough-consensus-running-code": {
+      "tag": "Hallinto",
+      "title": "Karkea konsensus, toimiva koodi",
+      "body": "Heinäkuun 1992 IETF-kokouksessa MIT:n Dave Clark esitti dian: 'Hylkäämme kuninkaat, presidentit ja äänestyksen. Uskomme karkeaan konsensukseen ja toimivaan koodiin.' Lause ankkuroi nyt internet-hallinnon kansanperinnettä. Se alkoi pistona OSI:n muodollista komiteaäänestysprosessia kohtaan.",
+      "coda": "Vitsidiasta OSI:n äänestyssäännöistä tuli internet-hallinnon perustava uskontunnustus."
+    },
+    "han-unification-japanese-delegate": {
+      "tag": "Standardi",
+      "title": "Han-unifikaation epätodennäköinen tekijä",
+      "body": "Vuonna 1992 CJK-yhteistutkimusryhmä yhdisti kymmeniätuhansia kiinalaisia, japanilaisia ja korealaisia merkkejä yhteisiin Unicode-koodipisteisiin. Suosituissa kertomuksissa Japani esitetään vastustajana. Unicoden oma historia antaa vahvistussäännöistä kunnian japanilaiselle edustajalle Miyazawa Akiralle.",
+      "coda": "Välikäsityksen uhriksi asettunut delegaatio auttoi kirjoittamaan säännöt, joiden vastustajaksi se on jäänyt muistiin."
+    },
+    "china-first-internet-line": {
+      "tag": "Merkintä",
+      "title": "Viiva Vuotta Aiemmin",
+      "body": "Kiina merkitsee 20. huhtikuuta 1994 päivänä, jona se liittyi maailmanlaajuiseen internetiin — 64K:n viiva, täysitoiminen pääsy. Kolmetoista kuukautta aiemmin IHEP:n fyysikot olivat jo vuokraneet viivan Stanfordin SLACiin ja vaihtaneet sähköposteja kymmenien laitosten kanssa. Se ei ollut vain sellainen viiva, jota kukaan laski.",
+      "coda": "Kaksi viivaa on olemassa; vain yhdelle on vuosipäivä."
+    },
+    "wiki-the-airport-shuttle": {
+      "tag": "Etymologia",
+      "title": "Nimetty Laiteliikenteen Perusteella",
+      "body": "\"Wiki\" on hawaijia ja tarkoittaa \"nopea\". Vuonna 1995 Ward Cunningham tarvitsi nimen ensimmäiselle muokattavalle verkkosysteemille, jonka hän rakensi, ja hän ei hakenut teknistä termiä vaan muistoa Wiki Wiki Shuttlesta, ilmaiskäytössä olleesta bussista, joka kulki Honolulun lentoaseman terminaalien välillä.",
+      "coda": "Sanan ensimmäinen koti oli maalattu lentoaseman bussin sivuun."
+    },
+    "robots-exclusion-rfc9309": {
+      "tag": "Standardi",
+      "title": "robots.txt: 28 vuotta vahvistamatta",
+      "body": "Martijn Koster ehdotti robots.txt:tä vuonna 1994; hakukonebotit noudattivat sitä vapaaehtoisesti ilman virallista standardia ja ilman täytäntöönpanomekanismia. Google ehdotti standardointia vuonna 2019, ja IETF julkaisi lopulta RFC 9309:n syyskuussa 2022, sulkiessaan 28 vuoden aukon.",
+      "coda": "Verkon eniten noudatettu herrasmiessovinto kesti 28 vuotta ennen kuin siitä tuli todellinen standardi."
+    },
+    "pentium-fdiv-writeoff": {
+      "tag": "Incident",
+      "title": "Puuttuvat taulukkorivit",
+      "body": "Matematiikko Thomas Nicely huomasi uuden Pentiuminsa tuottavan hieman väärän tuloksen laskiessaan alkulukujen käänteislukujen summaa ja jäljitti vian siruun itse. Intel tarjosi aluksi vaihtosiruja vain valittaneille asiakkaille ja kääntyi täysimittaiseen takaisinkutsuun vasta julkisen paineen alla.",
+      "coda": "Intel kirjasi takaisinkutsusta 475 miljoonan dollarin veron edellisen kustannuksen."
+    },
+    "general-magic-private-network": {
+      "tag": "Networks",
+      "title": "General Magicin yksityinen johto",
+      "body": "Vuonna 1990 entiset Applen insinöörit Bill Atkinson, Andy Hertzfeld ja Marc Porat perustivat General Magicin. Sonyn Magic Link julkaistiin vuonna 1994 hintaan 800 dollaria, lähettämään sähköposteja ja ajamaan sovelluksia. Johto rakensi oman AT&T-verkkonsa internetin sijaan kutsuen webiä \"passiiviseksi\".",
+      "coda": "Työntekijä Tony Fadell johti myöhemmin iPodin ja iPhonen laitteistokehitystä Applen palveluksessa."
+    },
+    "ibm-simon-first-touchscreen": {
+      "tag": "Kosketusnäyttö",
+      "title": "Simonin faksikone",
+      "body": "IBM ja BellSouth lanseerasivat Simon Personal Communicatorin 16. elokuuta 1994: 4,5 tuuman kosketusnäyttö, joka lähetti sähköposteja ja fakseja, hinta 899 dollaria. Akun kesto oli noin tunti. Se poistettiin myynnistä kuusi kuukautta myöhemmin, ja siitä oli myyty noin 50 000 kappaletta.",
+      "coda": "Vuonna 2007 Apple julkaisi iPhonen, kapasitiivisen kosketusnäytön puhelimen ilman fyysistä näppäimistöä."
+    },
+    "cors-same-origin-orphaned": {
+      "tag": "Standardi",
+      "title": "CORS: Eläkkeelle jäänyt suositus",
+      "body": "Netscape lisäsi saman alkuperän politiikan Navigatoriin vuonna 1995 yhdessä JavaScriptin kanssa ilman mitään standardointiprosessia. CORS, jonka tarkoitus oli virallisesti löysätä kyseistä politiikkaa, tuli W3C:n suositukseksi vasta vuonna 2014 — ja vuoteen 2020 mennessä W3C oli jäädyttänyt sen ja luovuttanut spesifikaation WHATWG:n Fetch-asiakirjalle.",
+      "coda": "Standardointielin jäädytti oman tietosuosituksensa kuusi vuotta sen julkaisun jälkeen."
+    },
+    "php-resume-counter": {
+      "tag": "Web",
+      "title": "CV:n katselukertojen laskuri",
+      "body": "Vuonna 1994 ohjelmoija kirjoitti muutamia pieniä C-kielellä tehtyjä CGI-ohjelmia ainoastaan siksi, että hän halusi tietää, kuinka monta ihmistä katsoi hänen verkkosivuillaan olevaa CV:tään. Hän kutsui työkalupakettia nimellä \"Personal Home Page Tools\" ja julkaisi lähdekoodin kesäkuussa 1995.",
+      "coda": "Kolme vuosikymmentä myöhemmin yli 70 % verkkosivustoista, joiden palvelinpohjainen kieli on tunnettu, käyttää edelleen sen jälkeläistä."
+    },
+    "craigslist-email-list": {
+      "tag": "Luokitellut ilmoitukset",
+      "title": "Tapahtumien sähköpostilista",
+      "body": "Vuonna 1995 San Franciscossa työskennellyt ohjelmistoinenööri alkoi koota paikalliset kokoukset ja tapahtumat, joista hän tiesi, sähköpostiviestiksi ja lähetti sen muutamille ystäville pääasiassa siksi, että ihmiset pääsisivät hieman paremmin tuntemaan toisiaan.",
+      "coda": "Lista ulottuu nyt 570 kaupunkiin 70 maassa ja saa yli 140 miljoonaa käyntiä kuukaudessa."
+    },
+    "wirths-law-misattributed": {
+      "tag": "Oikaisu",
+      "title": "Laki, jonka hän luovutti pois",
+      "body": "Vuonna 1995 Niklaus Wirth julkaisi teoksen 'A Plea for Lean Software', jossa hän kirjoitti, että ohjelmisto hidastuu nopeammin kuin laitteisto nopeutuu. Myöhemmin Wirthin laiksi nimetty lause oli hänen oman jalkamerkinsä mukaan lainaus hänen kollegansa Martin Reiserin sanoista.",
+      "coda": "Nimismies viittasi lähteeseen; jälkipolvet säilyttivät vain nimismiehen."
+    },
+    "general-magic-weekend-site": {
+      "tag": "Sivuprojekti",
+      "title": "Sivusto, jota hän ei ottanut vakavasti",
+      "body": "1990-luvun puolivälissä Silicon Valleyn startupissa, jossa odotettiin kannettavan tietokoneen uudelleenkeksimistä, yksi ohjelmoija käytti vapaa-aikaansa kirjoittaakseen kömpelön pienen sivuston käytettyjen tavaroiden myyntiä varten. Se julkaistiin viikonloppuna. Hän ei ottanut sitä vakavasti.",
+      "coda": "Startup oli General Magic. Sivusto nimettiin myöhemmin uudelleen eBayksi."
+    },
+    "gettickcount-776-day-bug": {
+      "tag": "Ylivuoto",
+      "title": "776 päivän velka",
+      "body": "Windows 95:n GetTickCount nollautuu joka 49,7 päivän välein, dokumentoitu toiminta, jota ei koskaan pidetty virheenä. Mutta Windows 8:sta Server 2019:ään sama funktio voiti ylivuotaa ennenaikaisesti, noin 776 päivän kohdalla, todellinen vika. Microsoft korjasi sen vasta Windows 11:ssä, versiossa 24H2.",
+      "coda": "Korjaus julkaistiin kolme vuosikymmentä sen jälkeen, kun korjattava laskuri julkaistiin ensimmäisen kerran."
+    },
+    "bluetooth-the-placeholder": {
+      "tag": "Etymologia",
+      "title": "Koodinimi, joka jäi",
+      "body": "Vuonna 1996 Intelillä työskennellyt Jim Kardach ehdotti nimeä \"Bluetooth\" – viitaten viikinkikuningas Harald Bluetoothiin, joka yhdisti Skandinavian – heittokoodinimeksi Ericssonin ja Nokian neuvotteluissa. Aiottu korvaava nimi RadioWire ei läpäissyt tavaramerkkihakua ennen julkaisua.",
+      "coda": "Korvaavaa nimeä ei koskaan tuotu markkinoille."
+    },
+    "chinaren-detour": {
+      "tag": "Pieni maailma",
+      "title": "Listan ulkopuolinen koodari",
+      "body": "Vuonna 1996 kiinalainen opiskelija voitti kultaa tietotekniikan olympialaisissa ja pääsi suoraan Tsinghuan tietojenkäsittelytieteen ohjelmaan. Opiskelijana hän teki sivutöinä sisällönhallintajärjestelmää erään alumnin verkkosivustolle. Sohu osti sen seuraavana vuonna; hän jäi ja jatkoi työskentelyä siellä.",
+      "coda": "Opiskelija oli Wang Xiaochuan. Vuonna 2004 hän rakensi Sohun sisällä Sogoun."
+    },
+    "google-a-typo": {
+      "tag": "Etymologia",
+      "title": "Väärin kirjoitettu verkkotunnushaku",
+      "body": "Syyskuussa 1997 aivoriihessä Sean Anderson ehdotti \"googolplex\"; Larry Page lyhensi sen muotoon \"googol.\" Tarkistaessaan verkkotunnusrekisteriä paikan päällä Anderson kirjoitti vahingossa \"google\" ja huomasi sen olevan vapaana. Page rekisteröi google.com samana päivänä.",
+      "coda": "Rekisteröintitietueessa on edelleen kirjoitusvirhe, päivätty 15. syyskuuta 1997."
+    },
+    "rfc2119-must-should": {
+      "tag": "Standardi",
+      "title": "MUST vs must: Kahdenkymmenen vuoden aukko",
+      "body": "RFC 2119 (maaliskuu 1997) määritteli MUST, SHOULD, MAY ja niiden negaatiot sitoviksi vaatimustasoiksi IETF-asiakirjoille. Mutta se sanoi vain, että nämä sanat 'usein kirjoitetaan isolla' – pienellä kirjoitettuja must ja should ei koskaan suljettu pois. RFC 8174 paikkasi aukon vuonna 2017: vain suuraakkoset lasketaan.",
+      "coda": "Kahdenkymmenen vuoden ajan pienellä kirjoitettu must kantoi samaa juridista painoarvoa kuin olankohautus."
+    },
+    "netease-license-mail-1997": {
+      "tag": "Lisensointi",
+      "title": "Myy lisenssi ensin",
+      "body": "11. kesäkuuta 1997 William Ding rekisteröi NetEasen Guangzhoussa. Yhtiön ensimmäinen liiketoiminta ei ollut ilmainen sähköposti. Se lisensoi itse rakentamansa sähköpostipalvelinohjelmiston muille verkkosivustoille maksua vastaan.",
+      "coda": "NetEase ei julkaissut omaa ilmaista sähköpostiaan osoitteessa 163.com ennen vuotta 1998."
+    },
+    "lixiang-graphics-card-home": {
+      "tag": "Arvostelusivusto",
+      "title": "Graafikkakortti-koti",
+      "body": "Vuonna 1998 Hebein lukiolainen perusti vapaa-ajallaan henkilökohtaisen verkkosivuston nimeltä Graafikkakortti-koti, jossa hän julkaisi tietokoneiden graafikkakorttien arvosteluja. Kaksi vuotta myöhemmin hän muutti nimen PCPopiksi ja päivitti sivustoa koko loppukoulun ajan.",
+      "coda": "Vuonna 2005 sama henkilö perusti Autohomen."
+    },
+    "china-oicq-to-qq": {
+      "tag": "Uudelleennimeäminen",
+      "title": "OICQsta QQ:ksi",
+      "body": "Tencent julkaisi OICQ:n helmikuussa 1999 — O tarkoitti 'Openia', viittaus ICQ:han. Saman vuoden lokakuussa AOL, ICQ:n omistaja, lähetti tavaramerkin loukkaamisesta keskeytä- ja lopeta -kirjeen. Marraskuussa 2000 Ma Huateng muutti nimen QQ:ksi, koska kirjain luetaan kiinaksi 'söpö'.",
+      "coda": "Open oli ensimmäinen sana, joka katosi, kun AOLin lakimiehet saapuivat."
+    },
+    "excite-google-1999": {
+      "tag": "Väärä arvio",
+      "title": "Excite hylkäsi Googlen",
+      "body": "Vuonna 1999 Google tarjosi myydä itsensä Excitelle 750 000 dollarilla plus noin 1 % omistusosuudella. Toimitusjohtaja George Bell arvioi hakukoneiden välisen kuilun liian pieneksi Exciten teknologian vaihtamiseksi. Perustelu piti paikkansa. Google oli arvoltaan yli miljardin dollarin yrityksen vuoden kuluessa.",
+      "coda": "Bell on sen jälkeen sanonut, että hän tekisi saman päätöksen uudelleen."
+    },
+    "mars-climate-orbiter-units": {
+      "tag": "Tapahtuma",
+      "title": "Pound-force, Newton",
+      "body": "Mars Climate Orbiter hiljeni kiertoradalle siirtymisen aikana. Hallinto totesi, että urakoitsijan työntömoottorin ohjelmisto tuotti impulssin pound-force sekunteina, kun navigointiohjelmisto odotti newton-sekunteja, eli virhe oli kerroin 4,45. Alus ohjattiin noin 57 km:n päähän pinnasta.",
+      "coda": "327,6 miljoonan dollarin tehtävä ei koskaan lähettänyt enää viestiä."
+    },
+    "paypal-palm-beaming": {
+      "tag": "Käännös",
+      "title": "Säde, joka ei koskaan saapunut",
+      "body": "Vuonna 1999 Confinity lanseerasi infrapunan rahansiirrot Palm Pilottiin välillä ja esitteli sen livenä rahoitustapahtumassa. Muutama viikko julkaisun jälkeen sillä oli noin 13 000 käyttäjää, ja määrä ei juuri liikkunut seuraavan vuoden aikana. Sen sijaan sähköpostimaksut, jotka oli rakennettu vain varavaihtoehdoksi, lähtivät kasvuun.",
+      "coda": "Yhtiö muutti nimensä PayPali ja hylkäsi säteen hiljaa."
+    },
+    "cai-500-yuan": {
+      "tag": "Pieni maailma",
+      "title": "500 juanin palkka",
+      "body": "Vuonna 1999 hongkongilainen sijoitusjohtaja matkusti Hangzhouhun arvioidakseen pientä verkkosivustoa mahdollisena sijoituskohteena. Hän löysi tusinan verran ihmisiä koodaamassa ahtaassa asunnossa. Hän ei sijoittanut – hän erosi 700 000 dollarin palkastaan ja liittyi sen sijaan mukaan 500 juanilla kuussa.",
+      "coda": "Hänen nimensä oli Joe Tsai. Hänestä tuli myöhemmin Alibaban varapuheenjohtaja."
+    },
+    "gps-week-rollover": {
+      "tag": "Mekanismi",
+      "title": "GPS-viikko 1024",
+      "body": "GPS laskee viikkoja 10 bitillä, kenttä, joka saavuttaa maksiminsa 1 023 ja nollautuu noin 19,7 vuoden välein. Ensimmäinen nollaus tapahtui elokuussa 1999. Toinen osui 6. huhtikuuta 2019 rikkoen vastaanottimia, jotka oli rakennettu ikään kuin ensimmäinen olisi ollut kertaluonteinen.",
+      "coda": "Sama ylivuoto on aikataulutettu ja toistuu jälleen vuonna 2038."
+    },
+    "foxmail-resold": {
+      "tag": "Pieni maailma",
+      "title": "Myyty ohjelmiston mukana",
+      "body": "Vuonna 1994 ohjelmoija Guangzhoussa kirjoitti vapaa-ajallaan ilmaisen sähköpostiohjelman. Vuonna 2000, dot-com-kuplan puhjetessa, hän myi sen yritykselle ja jäi teknologiajohtajaksi. Viisi vuotta myöhemmin yritys kaatui ja myi ohjelmiston – ja hänet sen mukana – Tencentille.",
+      "coda": "Ohjelmoija oli Zhang Xiaolong. Viisi vuotta myöhemmin, Tencentin sisällä, hän rakensi WeChatin."
+    },
+    "danger-duarte-android-reunion": {
+      "tag": "Jälleennäkeminen",
+      "title": "Suunnittelujohtaja, epäonnistunut startup",
+      "body": "Vuonna 2000 suunnittelija liittyi Andy Rubinin perustamaan kämmenlaitteiden startupiin työskennellen sen käyttöliittymän parissa. Yritys myytiin Microsoftille ja tiimi hajaantui. Suunnittelija siirtyi seuraavan vuosikymmenen aikana kahteen muuhun yritykseen.",
+      "coda": "Suunnittelija oli Matias Duarte. Kymmenen vuotta myöhemmin Rubin palkkasi hänet Androidiin."
+    },
+    "slashdot-ipod-2001": {
+      "tag": "Hylkääminen",
+      "title": "Ei langatonta, vähemmän tilaa",
+      "body": "Kun Apple esitteli ensimmäisen iPodin 23. lokakuuta 2001, Slashdotin perustaja Rob \"CmdrTaco\" Malda kirjoitti toimittajan huomautuksessaan: \"Ei langatonta. Vähemmän tilaa kuin nomad. Lame.\" Tuon ajan kilpailevien MP3-soittimien tekniset tiedot huomioon ottaen lause ei ollut tosiasiallisesti väärä.",
+      "coda": "Kommenttia siteerataan nyt rutiininomaisesti vastaesimerkkinä, jonka se tuotti."
+    },
+    "discuz-shenyang-dorm": {
+      "tag": "Foorumi",
+      "title": "CDB, majoitetyö",
+      "body": "Vuonna 2001 Shenyangin majoitustalossa asunut ylioppilas kirjoitti foorumiohjelmiston ja nimesi sen Crossday Bulletiniksi, työskennellen sen parissa opintojensa ohella. Seuraavan vuoden lokakuussa hän muutti sen nimen Discuziksi.",
+      "coda": "23. elokuuta 2010 Tencent osti hänen sen ympärille rakentamansa yrityksen."
+    },
+    "wikipedia-side-wiki": {
+      "tag": "Wiki",
+      "title": "Nupedian vieressä tehty sivuprojekti",
+      "body": "10. tammikuuta 2001 vertaisarvioidun verkkotietosanakirjan perustaja asensi wikiohjelmiston projektin omaan palvelimeen pääasiassa sen vuoksi, että vapaaehtoiset voisivat kokeilla kirjoittaa artikkeleita sivuprojektina, kun arvioitu tietosanakirja edistyi hitaasti.",
+      "coda": "Heinäkuuhun 2026 mennessä sen englanninkielinen painos yksinään sisälsi yli 7,2 miljoonaa artikkelia."
+    },
+    "bittorrent-mailing-list": {
+      "tag": "Protokolla",
+      "title": "Uusi P2P-sovellus",
+      "body": "2. heinäkuuta 2001 ohjelmoija lähetti viestin Yahoo eGroupsin sähköpostilistalle otsikolla \"BitTorrent -- a new P2P app\", jossa hän kuvaili juuri suunnittelemaansa tiedostonjakoprotokollaa, joka nouti tiedoston osia useasta lähteestä samanaikaisesti.",
+      "coda": "Kolme vuotta myöhemmin se muodosti kolmanneksen koko internetliikenteestä 2004 tehdyssä CacheLogic-tutkimuksessa."
+    },
+    "webvan-thirty-minute-window": {
+      "tag": "Ruokakauppa",
+      "title": "Kolmenkymmenen minuutin ikkuna",
+      "body": "Vuonna 1996 Borders-kirjakaupan perustaja Louis Borders perusti Webvanin ja lupasi 30 minuutin toimituksen nollasta rakennetuissa varastoissa. Se listautui pörssiin marraskuussa 1999 375 miljoonalla dollarilla yli 4,8 miljardin dollarin arvostuksella ja haki konkurssia heinäkuussa 2001, menettääkseen yli 800 miljoonaa dollaria.",
+      "coda": "Jotkut Webvanin johtajat siirtyivät Amazoniin; Amazon Fresh ja Instacart täyttivät myöhemmin saman tilauksen."
+    },
+    "kozmo-free-hour-delivery": {
+      "tag": "Toimitus",
+      "title": "Ilmaisen tunnin lupaus",
+      "body": "Vuonna 1998 Joseph Park ja Yong Kang perustivat Kozmo.comin ja lupasivat ilmaisen tunnin toimituksen, jossa kurssit lähetettiin pagerin avulla. Se keräsi noin 250 miljoonaa dollaria mutta ansaitsi 3,5 miljoonaa dollaria 26,3 miljoonan dollarin tappiota vastaan vuonna 1999. Huhtikuussa 2001 henkilökunta sai tietää lopettamisesta löytämällä suljetut toimistot.",
+      "coda": "Vuonna 2013 perustettu DoorDash lähettää kurssit älypuhelimen GPS:n avulla ja perii toimitusmaksun."
+    },
+    "flooz-digital-currency": {
+      "tag": "Valuutta",
+      "title": "Rahaa ilman liikettä",
+      "body": "Helmikuussa 1999 iVillagen perustajajäsen Robert Levitan lanseerasi Flooz.comin, digitaalisen valuutan, jota käyttäjät pystyivät ostamaan ja käyttämään kumppanikauppiaille. Rikosverkosto käytti varastettuja kortteja 300 000 dollarin huijauksellisten luottojen luomiseen, ja vuonna 2001 huijauksen osuus nousi 19 prosenttiin. Yhtiö lopetti toimintansa saman vuoden elokuussa.",
+      "coda": "Tammikuussa 2009 Satoshi Nakamoto louhii bitcoinin alkuperäisplokki."
+    },
+    "yahoo-google-2002": {
+      "tag": "Ohi",
+      "title": "Yahoo jättää Googlen",
+      "body": "Vuonna 2002 Yahoon toimitusjohtaja Terry Semel tarjosi Googlesta 3 miljardia dollaria; Page ja Brin vaativat 5 miljardia. Semelin arvio oli, että Yahoon oma markkina-arvo, joka oli noin 5 miljardia dollaria romahduksen jälkeen, ei kestäisi sitä panosta. Google listautui kaksi vuotta myöhemmin 23 miljardin dollarin arvosta.",
+      "coda": "Yahoo myy ydintoimintansa Verizonille vuonna 2017 4,48 miljardin dollarin hinnalla."
+    },
+    "pplive-dorm-2002": {
+      "tag": "Majoitus",
+      "title": "Rakennus 26, Yunyuan",
+      "body": "Vuoden 2002 jalkapallon maailmanmestaruuskilpailujen aikana Yao Xinin majoitus Huazhongin teknillisessä yliopistossa ei ollut varustettu televisiolla, joten hän seurasi otteluita kampusverkon kautta, joka kaatui jatkuvasti. Rakennuksen 26 huoneessaan hän alkoi pohtia, miten peer-to-peer-siirto yhdistettäisiin suoratoistovideoon.",
+      "coda": "PPLive lanseerattiin vuonna 2005 ja huippuajallaan sillä oli yli sata miljoonaa käyttäjää."
+    },
+    "china-alipay-escrow": {
+      "tag": "Luottamus",
+      "title": "Takuumaksuratkaisu",
+      "body": "Vuonna 2003, kun Taobaon ostajat ja myyjät eivät luottaneet toisiinsa, rahoitusosasto loi takuumaksuratkaisun: maksu pysyi jäädytettynä, kunnes tavarat oli vahvistettu. Ensimmäinen kauppa suljettiin lokakuussa — opiskelija Xi'anissa maksoi myyjälle Japanissa. Nimi on sanaleikki sanoista 'maksaa' ja 'takuu'.",
+      "coda": "Sanaleikkistä tuli yhtiön pysyvä virallinen nimi."
+    },
+    "china-taobao-free-vs-ebay": {
+      "tag": "Kilpailu",
+      "title": "Kolme vuotta ilmaiseksi",
+      "body": "Vuonna 2003 eBayn Eachnet hallitsi yli 70 prosenttia Kiinan C2C-markkinasta ja peri listaus- ja transaktiomaksuja. Taobao lanseerattiin toukokuussa lähes tyhjälle sivustolle; Alibaban vastaus oli kolme vuotta ilmaisia listoja. Vuoteen 2006 mennessä Taobao hallitsi 70 prosenttia ja eBay vetäytyi Kiinan C2C-markkinoilta.",
+      "coda": "Puoli, joka vielä peri listausmaksuja, loppui ensin."
+    },
+    "dianping-zagat-notes": {
+      "tag": "Arvosteluopas",
+      "title": "Zagat-kohteen muistikirja",
+      "body": "Vuonna 2002 Zhang Tao palasi Yhdysvalloista Kiinaan mukanaan siellä saatu idea: Zagat Survey, lukijoiden omista arvioista koostettu ravintolaoikeus. Hän rekisteröi verkkotunnuksen zsurvey.com ja ryhtyi rakentamaan kiinalaista versiota Shanghaissa.",
+      "coda": "Sivusto, josta Dianping kasvoi, käynnistyi 12. huhtikuuta 2003."
+    },
+    "wordpress-b2-post": {
+      "tag": "Bloggaaminen",
+      "title": "Bloggausohjelmiston dilemma",
+      "body": "24. tammikuuta 2003 yliopisto-opiskelija kirjoitti omalle blogilleen, että b2, jota hän käytti päivittäin, oli ollut huoltamatta kuukausien ajan sen pääkehittäjän katoamisen jälkeen. Hän sanoi haluavansa haarauttaa sen ja pyysi vain nimeä.",
+      "coda": "Haarautuksesta syntynyt yritys arvostettiin 7,5 miljardiin dollariin vuonna 2021."
+    },
+    "2003-blackout-race-condition": {
+      "tag": "Incidentti",
+      "title": "Hälytys, joka ei soinnut",
+      "body": "Ohion ohjaamon hälytysprosessi tukkeutui äänettömästi: koodausvirhe antoi kahdelle prosessille kirjoitusoikeuden samaan tietorakenteeseen samanaikaisesti, jolloin ne silmukkoivat ikuisesti. Operaatit eivät nähneet ylikuormitushälytyksiä eivätkä onnistuneet vähentämään kuormitusta ajoissa. Ketjureaktio jätti 55 miljoonaa ihmistä ilman sähköä.",
+      "coda": "Insinöörit tarvitsivat kahdeksan viikkoa kilpailutilanteen toistamiseen."
+    },
+    "aws-not-leftover-servers": {
+      "tag": "Korjaus",
+      "title": "Eivät jäljellä olevat palvelimet",
+      "body": "Yleinen versio väittää AWS:n aloittaneen Amazonin tyhjänä olleen loma-ajan palvelinkapasiteetin jälleenmyynnillä. Benjamin Black kutsuu tätä suorasti vääräksi: vuonna 2003 hän ja Chris Pinkham kirjoittivat muistion, jossa ehdotettiin standardoitua, automatisoitua infrastruktuuria, joka oli suunniteltu alusta alkaen myytäväksi ulkoisena palveluna.",
+      "coda": "S3 ja EC2 käynnistyivät vuonna 2006 muistion jälkeen."
+    },
+    "maps-intern-friendfeed": {
+      "tag": "Harjoittelu",
+      "title": "Maps-tiimin harjoittelija",
+      "body": "Vuonna 2003 Googlen tuotepäällikkö palkkasi harjoittelijan tiimiin, joka rakensi paikallista hakua, projektia, josta kasvoi Google Maps. Neljä vuotta myöhemmin tuo harjoittelija ja Gmailin rakentanut insinööri lähtivät Googlestä yhdessä perustamaan yritystä.",
+      "coda": "Harjoittelija oli Bret Taylor. Hänen perustamansa yritys ostettiin Facebookin toimesta."
+    },
+    "friendster-forty-second-load": {
+      "tag": "Skalautuminen",
+      "title": "Neljäkymmentäkakkonen lataus",
+      "body": "Friendster käynnistyi vuonna 2002 ja saavutti yli 100 miljoonaa rekisteröityä tiliä, mutta sen palvelimet taipuivat ystäväverkoston asteiden laskennan kuormituksen alla; yksittäinen sivu voiti ladata neljäkymmentä sekuntia. Tukiin lähetetyt sähköpostit osoittavat käyttäjien uhkaavan siirtyvänsä uudemman MySpaceen.",
+      "coda": "Facebook käynnistyi vuonna 2004 samalla sosiaalisen graafin idealla ja kesti liikenteen."
+    },
+    "shopify-snowdevil-software": {
+      "tag": "Käännös",
+      "title": "Kaupan ohjelmisto kasvoi kauppaa suuremmaksi",
+      "body": "Vuonna 2004 ohjelmoija Tobias Lutke löysi ajan e-kauppaohjelmiston liian kömpelöksi, joten hän kirjoitti oman myydessään lumilautavarusteita verkossa nimellä Snowdevil. Snowdevil itse pysyi pienenä kauppana, mutta muut kauppiaat alkoivat pyytää lisenssiä sen takana olevaan ohjelmistoon.",
+      "coda": "Shopify listautui New Yorkin pörssiin vuonna 2015."
+    },
+    "twitter-odeo-podcast-pivot": {
+      "tag": "Käännös",
+      "title": "Podcast-yhtiön sivuprojekti",
+      "body": "28. kesäkuuta 2005 Apple lisäsi podcast-tilaukset iTunesiin; kahden päivän kuluessa tilaukset ylittivät miljoonan ja Odeon koko podcast-liiketoiminta jäi vanhentuneeksi yhdessä yössä. Seuraavan vuoden maaliskuussa sisäinen hackathon tuotti Jack Dorseyn SMS-tilauspäivitys-esityksen: Twitter.",
+      "coda": "Odeo, yhtiö jonka sisällä Twitter rakennettiin, myytiin vuonna 2007."
+    },
+    "youtube-tune-in-hook-up": {
+      "tag": "Legenda",
+      "title": "Valentinonpäivänä rekisteröity verkkotunnus",
+      "body": "youtube.com rekisteröitiin 14. helmikuuta 2005 ja sen perustajat kertoivat myöhemmin treffisivustokonseptista, joka oli mallinnettu Hot or Notin mukaan. Jawed Karim kiisti osallistuneensa tarinan keskiössä olevaan illallisjuhlaan ja Steve Chen myönsi sen kuulostavan markkinointinaratiivilta.",
+      "coda": "Karimin mainitsema syy oli sen sijaan tsunamikuvaamateriaalin löytämisen vaikeus verkosta."
+    },
+    "duan-buffett-lunch": {
+      "tag": "Pieni maailma",
+      "title": "Buffettin lounas",
+      "body": "Vuonna 2006 Guangdongin elektroniikkavalmistaja voitti vuosittaisen hyväntekeväisyysauktion lounaasta Warren Buffettin kanssa ja maksoi 620 100 dollaria. Hän toi mukanaan 26-vuotiaan, joka oli juuri irtisanoutunut yhdysvaltalaisesta yrityksestä ja jolla ei vielä ollut selkeää suunnitelmaa.",
+      "coda": "Valmistaja oli Duan Yongping. Nuori mies oli Colin Huang, joka perusti myöhemmin Pinduodon."
+    },
+    "blackberry-iphone-2007": {
+      "tag": "Väärinluettu",
+      "title": "BlackBerry näki virheet",
+      "body": "Tammikuussa 2007 BlackBerryn toimitusjohtaja Jim Balsillie ja puheenjohtaja Mike Lazaridis katsoivat iPhonen julkaisua. Lazaridisin virhelista oli tarkka: ei fyysistä näppäimistöä, heikko turvallisuus, huono akku, lasin kirjoittaminen. Jokainen kohta oli todellinen. Balsillien vastaus oli: \"On ok, meillä menee hyvin.\"",
+      "coda": "BlackBerryn markkinaosuus karsiutui iPhonelle seuraavina vuosina."
+    },
+    "dvorak-iphone-2007": {
+      "tag": "Ennuste",
+      "title": "Dvorak sanoo katkaise virta",
+      "body": "28. maaliskuuta 2007 kolumnisti John C. Dvorak kirjoitti, että puhelinten katteet olivat ohuet ja Nokia sekä Motorola jo dominoivat, joten Applen olisi luovutettava iPhonen suunnittelu joillekin \"tyhmille\" ja poistuttava. Ottaen huomioon Applen historian kyseisellä markkinalla, päättely ei ollut epäreilu.",
+      "coda": "Hän myöhemmin sanoi, että kun hän itse piti puhelinta kädessään, hän katui kutsua."
+    },
+    "auctomatic-taggar-yc": {
+      "tag": "Yhdistyminen",
+      "title": "Hän, joka joutui oppimaan koodaamaan",
+      "body": "Vuonna 2007 kaksi irlantilaista teini-ikäistä veljestä toi itse tehdyn e-kauppatyökalun Y Combinatoriin ja yhdisti yrityksensä kahden Oxfordin yliopiston valmistuneen johtaman yrityksen kanssa. Molemmista Oxfordin parista ei osannut ohjelmoida. Yhden heistä käskettiin oppimaan, nopeasti.",
+      "coda": "Hän oli Harj Taggar, myöhemmin Y Combinatorin ensimmäinen perustajan ulkopuolinen kumppani."
+    },
+    "justintv-backpack-cruise": {
+      "tag": "Reppu",
+      "title": "Lähetysreppu",
+      "body": "Maaliskuussa 2007 mies kiinnitti verkkokameran baseball-lippaaseen ja aloitti elämänsä suoratoiston San Franciscossa ympäri vuorokautta, käyttäen ystävän rakentamaa itse tehtyä kannettavan tietokoneen reppurakennetta, jonka ystävä oli pudonnut MIT:stä.",
+      "coda": "Ystävä, joka rakensi sen, oli Kyle Vogt, joka myöhemmin perusti Cruisen, jonka GM osti yli miljardilla dollarilla."
+    },
+    "stackoverflow-blog-post": {
+      "tag": "Kysymys ja vastaus",
+      "title": "Anti-Experts-Exchange",
+      "body": "16. huhtikuuta 2008 ohjelmoija kirjoitti omalle blogilleen, että hän halusi rakentaa \"anti-Experts-Exchange\" -kysymys- ja vastauspalvelun ohjelmoijille ilman maksuaitoja ja hakukonepelejä, jotka hän koki nykyisen palvelun pahoinvointia aiheuttaviksi.",
+      "coda": "Vuonna 2021 sivusto myytiin Prosusille 1,8 miljardilla dollarilla."
+    },
+    "zune-leap-year-freeze": {
+      "tag": "Incident",
+      "title": "Päivä 366",
+      "body": "Yöll 31. joulukuuta 2008 Pacificin aikavyöhykkeellä kaikki Zune 30 -laitteet jäätyivät täysin, lempinimellä Z2K9. Syy oli ääretön silmukka virtasirun ajurissa, joka voitiin laukaista vain karkausvuoden 366. päivänä. Päivitystä ei ollut olemassa; ainoa korjaus oli odottaa akun tyhjenemistä.",
+      "coda": "Microsoftin toimittama korjaus oli odottaa laitteen akun tyhjenemistä."
+    },
+    "china-wang-jian-alibaba-cloud": {
+      "tag": "Epäily",
+      "title": "Pilven rakentanut valehtelija",
+      "body": "Noin vuonna 2012, kun Alibaba Cloud oli ollut raskaan sijoituksen kohteena vuosia ilman näkyvää tuotetta, henkilökunta kertoi Jack Malle suoraan, että Wang Jian oli huijari. Lähes kahdeksankymmentä prosenttia insinöörijoukosta erosi. Man vastaus: rahoita se miljardi juania vuodessa kymmenen vuotta, sitten arvioi se.",
+      "coda": "Kymmenen vuotta myöhemmin huijarin projekti tuotti voittoa."
+    },
+    "taobao-double11-2009": {
+      "tag": "Alennus",
+      "title": "27 kauppiaasta",
+      "body": "11. marraskuuta 2009 Taobao Mall keräsi kaksikymmentäseitsemän brändiä täyttämään hiljaisen myyntiviikon; suunnitelma oli ollut yli kolmekymmentä, mutta kauppiaat putosivat pois. Yan Jun niminen virkamies Shanxissa teki päivän ensimmäisen tilauksen, 150 juania puhelinlatausta, kello 00:00:03.",
+      "coda": "Päivän myynti saavutti 52 miljoonaa juania, kymmenen kertaa tavallisen päivän."
+    },
+    "cloudflare-hbs-elective": {
+      "tag": "Luokkatoveri",
+      "title": "Valinnainen kurssi HBS:ssä",
+      "body": "Vuonna 2009 ohjelmoija otti eron opiskellakseen MBA-tutkintoa Harvard Business Schoolissa. Hän oli käyttänyt vuosia vapaaehtoista roskapostin estoprojektia sivuprojektina. Hän mainitsi sen luokassa yhdenä päivänä. Luokkatoveri sanoi sen tulleen aidoksi tuotteeksi.",
+      "coda": "Se luokkatoveri oli Michelle Zatlyn, myöhemmin Cloudflaren perustaja ja toimitusjohtaja."
+    },
+    "china-3q-war": {
+      "tag": "Tapaus",
+      "title": "Valitse yksi",
+      "body": "3. marraskuuta 2010 Tencent pakotti ponnahdusvalinnan: poista 360 tai QQ lakkaa toimimasta. Ma Huateng varoitti käyttäjiä saattavan häviävän kolmen päivän sisällä. Päiviä myöhemmin Teollisuuden ja tietotekniikan ministeriö määräsi molemmat osapuolet palauttamaan yhteensopivuuden.",
+      "coda": "Sääntelyviranomainen päätti sen, ei markkina eikä kumpikaan yritys."
+    },
+    "china-thousand-groupon-war": {
+      "tag": "Kupla",
+      "title": "Tuhat-Grouponin sota",
+      "body": "Kiinan ensimmäinen ryhmäostossivusto käynnistyi vuonna 2010; portaalit ja sosiaaliverkostot ryntäsivät mukaan kuukausien kuluessa. Elokuuhun 2011 mennessä yli 5 000 ryhmäostosyhtiötä kilpaili keskenään – 'Tuhat-Grouponin sota'. Vuoden 2014 puoliväliin mennessä jäljellä oli vain 176 sivustoa.",
+      "coda": "Viidestä tuhannesta selvisi alle kaksi sataa."
+    },
+    "semver-dependency-hell": {
+      "tag": "Standardi",
+      "title": "SemVerin oma poikkeus",
+      "body": "Vuonna 2010 GitHubin perustaja Tom Preston-Werner julkaisi semver.orgin ja ehdotti MAJOR.MINOR.PATCH-muotoa 'riippuvuuspahan' päättämiseksi. Spesifikaatio itse sisältää poikkeuksen: 0.y.z 'alkuperäisen kehityksen' vaiheessa mikä tahansa voi muuttua milloin tahansa – vaihe, josta useimmat paketit eivät koskaan todellisuudessa poistu.",
+      "coda": "Useimmat julkaistut paketit eivät koskaan poistu versiovälistä, jota sääntö ei sidota."
+    },
+    "instagram-burbn-cut": {
+      "tag": "Käännös",
+      "title": "Mitä Burbnistä leikattiin pois",
+      "body": "Kevin Systrom ja Mike Krieger käyttivät lähes vuoden rakentaakseen täysivaltaisen sisäänkirjautumispohjaisen sovelluksen nimeltä Burbn, mutta arvioivat oman valmiin iPhone-rakennelmansa sekavaksi. He leikkasivat sen valokuviksi, kommenteiksi ja tykkäyksiksi ja julkaisivat tuloksen kahdeksan viikon kuluttua Instagramina.",
+      "coda": "Julkaisun viikon sisällä sillä oli 100 000 käyttäjää."
+    },
+    "tz-database-lawsuit": {
+      "tag": "Incidentti",
+      "title": "Oikeusjuttu aikavyöhykkeitä koskevasta tietokannasta",
+      "body": "Lokakuussa 2011 astrologiaohjelmistojen valmistaja Astrolabe syytti tz-tietokannan ylläpitäjiä väittäen sen vyöhyketietojen loukkaavan sen julkaisemaa atlasia. Sähköpostilista ja FTP-palvelin sammui. ICANN astui mukaan isännöimään tietokantaa; Astrolabe perui syytteen helmikuussa 2012.",
+      "coda": "Astrologiafirman tekemä tekijänoikeusvaatimus auringonnousutaulukoiden osalta peruttiin ilman maksua."
+    },
+    "instagram-facebook-2012": {
+      "tag": "Häpeä",
+      "title": "Miliardi suodattimesta",
+      "body": "Huhtikuussa 2012 Facebook ilmoitti maksavansa 1 miljardi dollaria Instagramista, 13 hengen tiimistä, jolla ei ollut tuloja. The Daily Showssa Jon Stewart kysyi: 'Miliardi dollareita rahaa? Asiasta, joka melkein pilaa kuviasi?' Tiimin kokoon ja tuloihin nähden kysymys ei ollut epäreilu.",
+      "coda": "Sopimusta sitoten viitataan rutiininomaisesti yhtenä teknologian historian parhaista hankinnoista."
+    },
+    "didi-alibaba-resignation": {
+      "tag": "Erko",
+      "title": "Alibabasta takseihin",
+      "body": "Cheng Wei työskenteli Alibaballa kahdeksan vuotta ja nousi Alipayn kuluttajaliiketoiminnan varatoimitusjohtajaksi. Kesäkuussa 2012 hän erosi ja perusti Wu Ruen ja Li Xiangin kanssa taksikutsusovelluksen. Sovelluksen käynnistyessä 9. syyskuuta vain kuusitoista kuljettajaa oli yhtä aikaa verkossa.",
+      "coda": "Kaksi kuukautta myöhemmin yli sata kuljettajaa oli yhtä aikaa verkossa."
+    },
+    "knight-capital-power-peg": {
+      "tag": "Incident",
+      "title": "Kahdeksas palvelin",
+      "body": "Knight Capital lähetti uutta kaupankäyntikoodia kahdeksalle palvelimelle; vain seitsemän otti sen vastaan. Kahdeksas palvelin ajoi edelleen vanhaa Power Peg -koodia, joka oli poistettu käytöstä vuosia aiemmin ja jonka live-tilaukset herättivät. 45 minuutissa Knight rakensi 3,5 miljardin dollarin longin ja 3,15 miljardin dollarin shortin. SEC:n päätelmä: kukaan ei tarkistanut keskeneräistä deploytä.",
+      "coda": "Knight ostettiin kilpailijan toimesta viikon kuluessa tappiosta."
+    },
+    "dnnresearch-week-of-bidding": {
+      "tag": "Auction",
+      "title": "Tarjousviikko",
+      "body": "Vuonna 2012 Toronton yliopiston professori ja hänen kaksi maisteriopilaataansa murskasivat kentän kuvantunnistuskilpailussa ja perustivat sitten kuorifirman myydäkseen itsensä. Google, Microsoft, Baidu ja DeepMind käyttivät viikon tarjoten toisiaan vastaan.",
+      "coda": "Hinton valitsi Googlen. Yksi kahdesta opiskelijasta oli Ilya Sutskever."
+    },
+    "xiaohongshu-name": {
+      "tag": "Etymology",
+      "title": "Ei tuo pieni punainen kirja",
+      "body": "Useimmat olettavat nimen viittaavan toiseen punaiseen kirjaan. Perustajan oma selitys on tylsää: Bain & Company ja Stanfordin liiketalouskoulu, hänen yrityksensä ja koulunsa, molemmat toimivat punaisella.",
+      "coda": "Käännettynä englanniksi nimi on joka tapauksessa sama kuin toinen."
+    },
+    "china-wechat-red-envelope-pearl-harbor": {
+      "tag": "Payments",
+      "title": "Pearl Harbor, digitaalinen",
+      "body": "Kiinalaisen uudenvuoden 2014 aikoihin WeChatin punaisen kirjekuoren ominaisuus tuli käyttöön; käyttäjät nappasivat yli 40 miljoonaa punaista kirjekuorta muutamassa päivässä. Sovelluksessa Laiwang Jack Ma kutsui sitä 'Pearl Harborin yllätysiskuksi' — tehokas lyhyellä aikavälillä, hän kirjoitti, mutta terve pitkäaikainen kasvu oli tärkeämpää.",
+      "coda": "Punainen kirjekuori muuttui maksukanavaksi."
+    },
+    "heartbleed-two-person-team": {
+      "tag": "Incident",
+      "title": "Neljän hengen tiimi",
+      "body": "Heartbleedin puuttuva rajatarkistus päätyi OpenSSL:n heartbeat-laajennukseen joulukuussa 2011 ja pysyi huomaamattomana kaksi vuotta, kunnes riippumattomat tutkijat löysivät sen huhtikuussa 2014. Tuolloin suurimman osan verkon HTTPS-liikenteestä takana olevaa koodikantaa ylläpiti neljä vapaaehtoista, joista yksi kokopäiväisesti.",
+      "coda": "Korjaus julkaistiin samana päivänä, kun haavoittuvuus paljastettiin."
+    },
+    "goto-fail-duplicate": {
+      "tag": "Tietoturva",
+      "title": "Kaksoishyppy",
+      "body": "Applen SSLVerifySignedServerKeyExchange-koodissa goto fail; -rivi oli kopioitu. Toinen kopio oli minkään if-lauseen ulkopuolella, joten funktio hyppäsi aina allekirjoitustarkistuksen ohi ja palautti onnistumisen riippumatta siitä, mitä tarkistus olisi sanonut.",
+      "coda": "Kopioitu rivi toimi muuttumattomana vaikuttavissa järjestelmissä kuukausia."
+    },
+    "ntp-harlan-stenn": {
+      "tag": "Aika",
+      "title": "Kuka asettaa kellon",
+      "body": "Pankit, pörssit ja satelliittijärjestelmät synkronoituvat NTP:n avulla. David Mills suunnitteli protokollan; referenssitoteutusta johtaa nyt, suurelta osin yksin, Harlan Stenn. Maaliskuussa 2015 alan lehdistö julkaisi otsikon 'NTP Needs Money: Is A Foundation The Answer?'",
+      "coda": "Säätiö kerää edelleen varoja budjettiinsa."
+    },
+    "alphago-lee-sedol-2016": {
+      "tag": "Go",
+      "title": "Kivi numero sata kaksi",
+      "body": "AlphaGo voitti Lee Sedolin neljä peliä yhtä vastaan Soulissa maaliskuussa 2016; Leen ainoa voitto tuli neljännessä pelissä. Myöhemmin hän sanoi tehneensä kriittisen virheen ensimmäisen pelin alussa, kutsuen tietokoneen peliä siinä erinomaiseksi ja yhtä siirtoa sellaiseksi, jota yksikään ihmispelaaja ei olisi valinnut.",
+      "coda": "Siirrolla, jonka hän nosti esiin, oli vain kiven numero, ei nimeä."
+    },
+    "aws-s3-2017-typo": {
+      "tag": "Häiriö",
+      "title": "Yksi liian laaja argumentti",
+      "body": "S3-insinööri suoritti valtuutetun komennon, jonka tarkoitus oli ottaa pieni määrä laskutuspalvelimia pois käytöstä, mutta yksi syöte kattoi laajemman alueen kuin oli tarkoitettu. Poistetut palvelimet toimivat myös indeksialijärjestelmän taustalla, jota ei ollut täysin käynnistetty uudelleen vuosiin ja joka palasi toimintaan odotettua hitaammin.",
+      "coda": "Häiriö kesti noin neljä tuntia; AWS:n oma tilasivu oli riippuvainen samoista järjestelmistä."
+    },
+    "gitlab-2017-rm-rf": {
+      "tag": "Häiriö",
+      "title": "Viisi varmuuskopiota, nolla",
+      "body": "Insinööri tarkoitti tyhjentää viivästynyttä replikaattia mutta poisti PostgreSQLin datakansion ensisijaiselta palvelimelta; pysäytys tuli sekunteja liian myöhään, noin 300 Gt oli jo kadonnut. GitLab havaitsi, että viidestä käytössä olleesta varmuuskopiointi- ja replikaatiomenetelmästä mikään ei pystynyt palauttamaan dataa.",
+      "coda": "Palautus perustui varjokuvaan, jonka joku sattui ottamaan kuusi tuntia aiemmin."
+    },
+    "attention-title-beatles-2017": {
+      "tag": "Artikkeli",
+      "title": "Beatlesilta lainattu otsikko",
+      "body": "Kahdeksan Googlen tutkijaa julkaisi \"Attention Is All You Need\" kesäkuussa 2017; otsikko viittaa Beatlesin kappaleeseen \"All You Need Is Love.\" Artikkelin ilmoitettu tavoite oli sekvenssimalli konekäännökselle, joka hylkäsi rekurrentit verkot ja käytti vain huomiomekanismia.",
+      "coda": "Kaikki kahdeksan kirjoittajaa ovat sittemmin lähteneet Googlestä."
+    },
+    "cloudflare-2019-regex": {
+      "tag": "Incident",
+      "title": "Poistettu sulatin",
+      "body": "Uusi WAF-sääntö, jossa oli katastrofaalisesti takaisinperääntyvä regex, nosti Cloudflaren globaalin verkon CPU-käytön lähes 100 prosenttiin muutaman sekunnin sisällä käyttöönotosta. Sääntö itsessään oli tavallinen; sen räjäyttämisen mahdollisti CPU-käytön turvasuoja regex-säännöissä, joka oli hiljaa poistettu viikkoja aiemmin refaktoroinnissa.",
+      "coda": "Käyttökatko kesti 27 minuuttia ja päättyi, kun WAF poistettiin käytöstä globaalisti."
+    },
+    "requests-kenneth-reitz": {
+      "tag": "Vastuun siirto",
+      "title": "Avainten luovuttaminen",
+      "body": "Requests kirjaa yli 30 miljoonaa latausta kuukaudessa ja tuli Pythonin standardiksi HTTP-asiakkaaksi. Kenneth Reitz julkaisi sen 14. helmikuuta 2011. Vuonna 2019 hän luovutti projektin hallinnan terveysongelmien jälkeen Python Software Foundationille.",
+      "coda": "Hän ei ole palannut johtamaan projektia eroamisensa jälkeen."
+    },
+    "linux-y2038-kernel-fix": {
+      "tag": "Fix",
+      "title": "Kahdeksantoista vuotta aikaisemmin",
+      "body": "32-bittiset Unix-järjestelmät ylivuotavat time_t-laskurinsa 19. tammikuuta 2038. Linux 5.6, joka julkaistiin vuonna 2020, oli ensimmäinen ydin, joka pystyi pitämään 32-bittisen järjestelmän käynnissä sen päivän jälkeen. Sovellukset tarvitsevat kuitenkin uudelleenkäännöksen 64-bittistä time_t:tä vastaan hyötyäkseen todella.",
+      "coda": "Ydin korjattiin vuosia ennen kuin useimmat 32-bittiset käyttäjätason ohjelmat ehtivät perääntyä."
+    },
+    "log4shell-eight-years": {
+      "tag": "Vulnerability",
+      "title": "Kahdeksan vuotta lukematta",
+      "body": "Log4j sijaitsee useimmissa yritysten Java-ohjelmistoissa; Wiz ja EY havaitsivat 93 prosentilla pilvialustoista Log4Shell-alttiuden. Virhe oli koodissa vuodesta 2013. Se ilmoitettiin 24. marraskuuta 2021 ja julkaistiin julkisesti 10. joulukuuta, arvosana CVSS 10.",
+      "coda": "Muutama vapaaehtoinen kirjoitti korjauksen, joka saapui miljooniin palvelimiin."
+    },
+    "core-js-denis-pushkarev": {
+      "tag": "Ylläpitäjä",
+      "title": "Paikkaus, jota kukaan ei vaihtanut",
+      "body": "core-js toimitetaan WhatsAppiin, Netflixiin, Applen ja PayPalin sisälle, kirjaten noin 250 miljoonaa latausta kuukaudessa. Sen tekijä Denis Pushkarev oli kuolemaan johtaneessa auto-onnettomuudessa vuonna 2019, istui noin kymmenen kuukautta vankilassa tammikuusta 2020 alkaen ja ylläpiti kirjastoa koko ajan.",
+      "coda": "Kuukausilahjoitukset laskivat noin 2 500 dollarista 400 dollariin."
+    },
+    "tesla-westinghouse-royalty": {
+      "tag": "Patentit",
+      "title": "Lisenssikulut, jotka Tesla luovutti",
+      "body": "Westinghousen sopimus maksoi Teslalle 2,50 dollaria hevosvoimaa kohti lisenssikuluna. Varhain vuonna 1891, kun yritys oli lähellä epäonnistumista, Tesla vapautti sen lisenssiklausulasta.",
+      "coda": "Vuonna 1897 Westinghouse osti hänen patenttinsa suoraan 216 000 dollarilla."
+    },
+    "salk-polio-patent": {
+      "tag": "Patentit",
+      "title": "Aurinkoa ei voi patentoida",
+      "body": "Edward Murrow kysyi, kuka omistaa poliovirusrokkeen patentin. Salk vastasi, ettei ollut, voisiko aurinkoa patentoida. Säätiön lakimiehet olivat jo tutkineet asian ja todenneet rokotteen puuttuvan patentoitavasta uutuudesta aiemman tekniikan vuoksi.",
+      "coda": "Patentoimaton rokote arvostettiin myöhemmin seitsemään miljardiin dollariin."
+    },
+    "cobol-two-hundred-billion-lines": {
+      "tag": "Perintö",
+      "title": "Kaksisataa miljardia riviä",
+      "body": "Vuoteen 1997 mennessä Gartner arvioi 200 miljardia COBOL-riviä ajavan 80 prosenttia maailman liiketoimintaohjelmista. Vuonna 2020, kun COVID-ajan työttömyyskorvaukset kasvoivat, useat Yhdysvaltain osavaltion hallitukset pyysivät julkisesti COBOL-ohjelmoijia pitämään vuosikymmeniä vanhat etuusjärjestelmät käynnissä.",
+      "coda": "Kuusi vuotta on kulunut siitä pyynnöstä."
+    },
+    "sabre-sage-to-booking": {
+      "tag": "Varaus",
+      "title": "Tutkasta varauksiin",
+      "body": "American Airlines ja IBM solmivat kumppanuuden vuonna 1957, soveltaen ilmavoimien kylmän sodan SAGE-ilmapuolustusarkkitehtuuria varausjärjestelmäksi. SABRE suoritti ensimmäisen online-testinsä vuonna 1960 ja käynnistyi täysin vuonna 1964, tullen maailman ensimmäiseksi online-tapahtumankäsittelyjärjestelmäksi.",
+      "coda": "Emoyhtiö toimii edelleen, yli kuusikymmentä vuotta myöhemmin."
+    },
+    "kay-objects-messaging": {
+      "tag": "Nimeäminen",
+      "title": "Objektit, ei pointti",
+      "body": "Vuoteen 1967 mennessä Alan Kay käytti termiä \"olio-ohjelmointi\" suunnitelmasta, joka perustui soluihin tai verkkosolmuihin, jotka kommunikoivat vain viestien välityksellä. Hän kirjoitti myöhemmin olevansa pahoillaan, että oli koskaan keksinyt termin \"objektit\", koska se kiinnittää huomion vähäisempään ideaan ja hautaa sen, jota hän tarkoitti: viestinnän.",
+      "coda": "Sana, jota hän katui, eli pidempään kuin idea, jota hän sillä tarkoitti."
+    },
+    "voyager-68-kilobits": {
+      "tag": "Avaruus",
+      "title": "Rikkoutuneen sirun ympäri",
+      "body": "Voyager 1 laukaistiin syyskuussa 1977. Neljäkymmentäseitsemän vuotta myöhemmin muistisiru sen lennon tiedonjakelujärjestelmässä vioittui, kolme prosenttia siitä vaurioitui korjauskelvottomaksi. 20. huhtikuuta 2024 insinöörit järjestivät koodin uudelleen vaurioituneen alueen ympärillä ja signaali palasi.",
+      "coda": "Sen generaattorit voivat tuottaa riittävästi tehoa palauttaakseen teknisiä tietoja vuoteen 2036 asti."
+    },
+    "gif-lzw-unisys": {
+      "tag": "Patentit",
+      "title": "Vapaa formaatti, joka ei ollut",
+      "body": "CompuServe julkaisi GIF:n kesäkuussa 1987 käyttäen LZW-pakkausmenetelmää tietämättä, että Sperry Corporation omisti jo patentin siihen. Joulukuussa 1994 Unisys, joka syntyi Sperryn fuusiosta, ilmoitti perivänsä lisenssimaksuja, mikä sai kehittäjät rakentamaan PNG:n korvaajaksi.",
+      "coda": "Patentit vanhenivat maailmanlaajuisesti vuonna 2004, ja vasta sitten GIF oli vapaa."
+    },
+    "zimmermann-pgp-release": {
+      "tag": "Kryptografia",
+      "title": "PGP annettiin pois, sitten tutkittiin",
+      "body": "Phil Zimmermann julkaisi PGP:n lähdekoodeineen julkisella FTP:llä vuonna 1991, ensimmäisenä laajalti saatavilla olevana julkisen avaimen salausohjelmana. Yhdysvaltain tulli aloitti rikostutkinnan vientivalvontarikkomuksista. Se kesti kolme vuotta ja lopetettiin ilman syytteitä alkuvuodesta 1996.",
+      "coda": "Kolme vuotta tutkinnan alla, ei syytteitä, ei koskaan peritty rojalteja."
+    },
+    "json-good-not-evil": {
+      "tag": "Lisenssi",
+      "title": "Hyvää varten, ei pahaa",
+      "body": "Douglas Crockfordin vuonna 2002 laatima lisenssi JSON-kirjastoille lisäsi yhden ehdon: ohjelmistoa on käytettävä hyvään, ei pahaan. JSON itse levisi vapaana ja patentoituna lähes jokaiseen internetin API:han, mutta tuo yksi lause teki lisenssistä yhteensopimattoman standardien avoimen lähdekoodin ehtojen kanssa.",
+      "coda": "Muotoilu yleistyivät; vitsiehto, jonka mukana se julkaistiin, ei selviytynyt yritysten oikeudellisen käsittelyn kohtalon."
+    },
+    "sogou-movie-line": {
+      "tag": "Nimeäminen",
+      "title": "Sogoun nimi oli ensin vitsi",
+      "body": "Vuoden 2001 komediassa Big Shot's Funeral on sanaleikki hakukoneista: \"He hakevat Sohusta, me hakeemme Sogousta, jokainen hakee omalla tavallaan.\" Kolme vuotta myöhemmin, vuonna 2004, Sohun tiimi otti vitsin ja lanseerasi sen todellisena hakukoneena, Sogou.",
+      "coda": "Vitsin kärki muuttui tuotteen nimeksi, muokkaamattomana."
+    },
+    "tbl-double-slash": {
+      "tag": "Suunnittelu",
+      "title": "Ylimääräiset kauttaviivat",
+      "body": "Tim Berners-Lee sijoitti \"//\" verkkotunnuksen eteen suunnitellessaan URL-osoitetta. Lokakuussa 2009 hän myönsi, että kaksoispiste jo olemassa ollessa kaksi kauttaviivaa eivät olleet lainkaan tarpeen — \"se vaikutti hyvältä idealta tuolloin\", hän sanoi.",
+      "coda": "Jokainen URL-osoite siitä lähtien on edelleen kirjoittanut molemmat."
+    },
+    "bilibili-mikufans": {
+      "tag": "Nimeäminen",
+      "title": "Bilibilin ensimmäinen nimi oli Mikufans",
+      "body": "Sivusto lanseerattiin kesäkuussa 2009 nimellä Mikufans, rakennettuna Hatsune Miku -vocaloidin faneille. Tammikuussa 2010 se nimettiin uudelleen Bilibili, kevyen romaanisarjan päähenkilön antaman lempinimen mukaan Misaka Mikotolle — sähköpurkauksen ääni.",
+      "coda": "Uudelleennimetty sivusto säilytti nimen jokaisessa myöhemmässä uudelleensuunnittelussa."
+    },
+    "kuaishou-gif-app": {
+      "tag": "Nimeäminen",
+      "title": "Kuaishou alkoi GIF-sovelluksena",
+      "body": "Kuaishou lanseerattiin maaliskuussa 2011 nimellä GIF Kuaishou, puhelinsovelluksena GIF-kuvien tekemiseen ja jakamiseen. Vuonna 2012 se kääntyi lyhyiden videoiden suuntaan, ja vuonna 2014 GIF-alkuosa poistettiin, jättäen nimen, jonka se kantaa videopalveluna tänä päivänä.",
+      "coda": "GIF-alkuosa on poissa; perustavan yrityksen nimi ei koskaan muuttunut."
+    },
+    "zhihu-invite-only": {
+      "tag": "Nimeäminen",
+      "title": "Zhihu vaati kutsukoodin",
+      "body": "Zhihu käynnistyi 26. tammikuuta 2011, ja ensimmäisenä kahden vuoden aikana rekisteröityminen vaati kutsukoodin. Avoin rekisteröityminen alkoi vasta maaliskuussa 2013. Nimi tarkoittaa klassisella kiinaksi \"tiedätkö\" — kysymys, ei iskulause.",
+      "coda": "Rekisteröityminen ei ole vaatinut kutsua maaliskuusta 2013 lähtien."
+    },
+    "hp-garage-palo-alto": {
+      "tag": "Autotalli",
+      "title": "Addison Avenuella sijaitseva autotalli",
+      "body": "Vuonna 1938 David Packard ja hänen vaimonsa vuokrasivat Palo Altossa Addison Avenuella 367:ssa sijaitsevan 1905-luvun talon maanpäällisen asunnon. Hän ja Bill Hewlett panostivat 538 dollaria takana olevaan yksiautoiseen autotalliin ja valmistivat ensimmäisen tuotteen, äänioskillaattorin.",
+      "coda": "Kiinteistö on nykyään National Register of Historic Places -rekisterissä ja se ei ole avoinna vierailijoille."
+    },
+    "apple-crist-drive-garage": {
+      "tag": "Myytti",
+      "title": "Kun makuuhuone loppui",
+      "body": "Vuonna 1976 Steve Jobs ja Steve Wozniak kokosivat ensimmäiset Apple-piirilevyt Jobsin vanhempien omistamassa Los Altosin, Kalifornian, talossa.",
+      "coda": "Aluksi hänen makuuhuoneessaan. Autotalli vasta myöhemmin, kun tilaa ei ollut enää jäljellä."
+    },
+    "huawei-nanyou-flat": {
+      "tag": "Huoneisto",
+      "title": "Huoneisto Nanyou Xincunissa",
+      "body": "Syyskuussa 1987 Huawei rekisteröitiin Shenzhenin Nanyou Xincunin asuinalueelle 21 000 yuanin pääomalla, neljännellätoista työntekijällä ja kuudella osakkeenomistajalla, jotka jakoivat osuudet tasaisesti.",
+      "coda": "Yhtiö siirsi pääkonttorinsa pois vuonna 1989; huoneiston toiminta pääkonttorina päättyi siihen."
+    },
+    "wojcicki-garage-menlo-park": {
+      "tag": "Vuokranantaja",
+      "title": "Autotalli, jonka hän vuokrasi",
+      "body": "Syyskuussa 1998 Page ja Brin vuokrasivat Menlo Parkista Susan Wojcickilta autotallin 1 700 dollarilla kuukaudessa. Google perustettiin siellä.",
+      "coda": "Hänestä tuli myöhemmin YouTuben toimitusjohtaja."
+    },
+    "tencent-seg-403": {
+      "tag": "Huone 403",
+      "title": "Rakennus 2, huone 403",
+      "body": "Tencent rekisteröityi marraskuussa 1998 Shenzhenin Huaqiangbeissa sijaitsevan Saige-tekniikkapuiston rakennuksen kahden huoneeseen 403. Rakennuksessa oli täynnä samanlaisia startup-yrityksiä, ja ovi ei poikennut muista.",
+      "coda": "Huone on nyt auki vain Tencentin työntekijöille nimellä Tencent Origin."
+    },
+    "unitree-left-dji": {
+      "tag": "Erko",
+      "title": "Ulos DJI:stä",
+      "body": "Maisterintutkintoaan tehdessään Wang Xingxing rakensi itsenäisesti täysin sähköisen nelijalkarobotin ja kutsui sitä XDogiksi. Opintojensa jälkeen hän aloitti työt DJI:llä ja lähti pian sen jälkeen.",
+      "coda": "Unitree rekisteröitiin Hangzhoun Binjiangin piiriin elokuussa 2016."
+    },
+    "unitree-one-yuan-option": {
+      "tag": "Optiot",
+      "title": "Yksi juan osake",
+      "body": "Syyskuussa 2017 Unitree allekirjoitti optiosopimukset seitsemäntoista työntekijän kanssa yhden juan hinnalla osakkeelta. Lisämyönnytyksiä seurasi, ja ne pidettiin yhden työntekijäajoneuvon kautta.",
+      "coda": "Kahdeksan vuotta myöhemmin yritys avasi kirjan IPO:staan."
+    },
+    "unitree-g1-price": {
+      "tag": "Hinnoittelu",
+      "title": "Yhdeksänkymmentäyhdeksätuhatta",
+      "body": "Humanoidirobotit oli hinnoiteltu laboratoriovälineiksi. Unitree myi G1:n hintaan 99 000 juania, mikä on suunnilleen edullisen auton hinta.",
+      "coda": "Vuoteen 2025 mennessä humanoidit olivat 51,78 prosenttia sen liikevaihdosta, 5 500 toimitetun yksikön perusteella."
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Script-only deploy config, used by CI. Identical to wrangler.jsonc except
+  // that it declares no routes.
+  //
+  // typelens.nebutra.com/* already exists in Cloudflare and serves 200. Asking
+  // wrangler to re-assert it on every deploy means every deploy needs Zone →
+  // Workers Routes:Edit, so a token scoped to Workers Scripts:Edit uploaded the
+  // new Worker successfully and then failed the run on a route that was already
+  // correct. Same reason apps/auth/wrangler.edge.jsonc omits its routes.
+  //
+  // The route is infrastructure, not build output: it changes when the domain
+  // changes, which is not what a deploy does. Create or move it with
+  // wrangler.jsonc (which still carries it) or in the dashboard.
+  "name": "nebutra-typelens",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-06-04",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "NEXT_PUBLIC_SITE_URL": "https://typelens.nebutra.com",
+    "NEXT_PUBLIC_APP_URL": "https://typelens.nebutra.com"
+  },
+  "workers_dev": true
+}

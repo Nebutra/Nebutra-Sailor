@@ -1,0 +1,95 @@
+---
+title: Backend Language Policy
+description: TS-by-Default — new backend work goes in TypeScript (backends/gateway/). Python is reserved for batch / ML / specialized library scenarios.
+---
+
+This page summarizes **ADR 2026-05-10 — TS-by-Default, Python Only When Justified**, the single source of truth for backend language choice in Nebutra-Sailor.
+
+## The rule
+
+> **New backend work goes in TypeScript** (`backends/gateway/` — Hono — or `packages/<category>/<name>/`) **by default.**
+
+A new Python service is acceptable **only** when its `README.md` cites at least one of:
+
+1. **Batch / queued work** that is too long for edge runtimes (>5s typical)
+2. **ML / scientific compute** that depends on the Python ecosystem (transformers, vLLM, scikit-learn, etc.)
+3. **Specialized libraries** with no comparable TypeScript port
+
+CRUD, webhooks, billing, content management, blockchain RPC reads, third-party API proxies — these go in TypeScript, **no exceptions**.
+
+## Canonical implementations
+
+Before reaching for Python, check whether the canonical TypeScript implementation already exists. **Do not duplicate** these surfaces in Python:
+
+| Domain | Canonical (use this) | Do not duplicate in |
+|--------|----------------------|---------------------|
+| Billing / subscriptions | `packages/commerce/billing` (multi-provider, full surface) | ❌ Python |
+| Content management | `apps/studio` (Sanity Studio v4) | ❌ Python |
+| Auth / identity | `packages/iam/auth` + `apps/idp` | ❌ Python |
+| Webhooks (outbound) | `packages/integrations/webhooks` | ❌ Python |
+| Edge AI (interactive) | `packages/ai/agents` (Vercel AI SDK) | Python only for batch / heavy translate |
+| BFF / REST gateway | `backends/gateway` (Hono) | ❌ Python |
+
+If you're about to write Python that does what one of the above does — stop and consult the ADR.
+
+## Three-tier module lifecycle
+
+Every module under `backends/python/` and `packages/` has exactly one of three tiers:
+
+| Tier | What it means | CI status |
+|------|---------------|-----------|
+| `active` | Has real callers (not just status probes / MCP registry stubs) | Builds, typechecks, tests |
+| `stub` | Concept preserved: `README.md` + interface exists, but `src/` is empty | Excluded from build, retained as a placeholder |
+| `incubator` | Moved to `incubator/`; experimental, no callers | Excluded from workspaces and CI entirely |
+
+### Promotion rules
+
+- **`stub → active`** — requires a real consumer landing in the **same PR**. No "we'll wire it up later."
+- **`active → stub`** — zero callers for one quarter (caller-graph audit). Removed from CI to keep the build green.
+- **`stub → incubator`** — untouched for two quarters.
+
+### Caller-graph audit
+
+To verify whether a Python service has real callers (status checks and MCP registry entries do **not** count):
+
+```bash
+# Find external callers of a Python backend (by env-var URL)
+rg "<SERVICE_NAME>_SERVICE_URL" --type ts \
+  -g '!**/node_modules/**' \
+  -g '!**/dist/**'
+```
+
+## Current state of `backends/python/`
+
+As of 2026-05-12 (post follow-up audit), `backends/python/` contains:
+
+- `_shared/` — `active` (cross-service utilities)
+- `ai/` — `active` (LLM, embeddings, agent orchestration with real callers)
+
+Previously present, now removed: `recsys`, `ecommerce` (mock data, no callers), `event-ingest` (migrated in-process to `backends/gateway`), and the empty stubs under `content`, `web3`, `third-party`.
+
+The Three-Tier Lifecycle is now **structurally enforced**, not just documented.
+
+## How to start a justified Python service
+
+```bash
+# Interactive: prompts for service name
+nebutra backend init py
+
+# Non-interactive
+nebutra backend init py --name translator
+nebutra backend init py --name translator --dry-run
+```
+
+The generated `backends/python/<name>/README.md` ships with a **placeholder line** that you must replace with the concrete justification (cite 1, 2, or 3 from the rule above). PR review will reject services whose README still contains the placeholder.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Python Quickstart" icon="python" href="/docs/quickstart/python">
+    SDK consumer guide — for existing Python services that need to call Nebutra.
+  </Card>
+  <Card title="nebutra backend" icon="terminal" href="/docs/cli/nebutra-cli">
+    CLI reference for `nebutra backend init`.
+  </Card>
+</CardGroup>

@@ -1,0 +1,140 @@
+---
+title: Rate Limits
+description: Understanding Nebutra's rate limit headers, per-tenant quotas, and how to handle 429 responses gracefully.
+---
+
+## Overview
+
+Nebutra enforces two types of limits:
+
+1. **Rate limits** — requests per second / minute, enforced per tenant, per endpoint
+2. **Quotas** — monthly usage caps (API calls, AI tokens), enforced per billing plan
+
+## Rate limit headers
+
+Every API response includes these headers:
+
+| Header | Description |
+|--------|-------------|
+| `x-ratelimit-limit` | Requests allowed in the current window |
+| `x-ratelimit-remaining` | Requests remaining in the current window |
+| `x-ratelimit-reset` | Unix timestamp when the window resets |
+| `retry-after` | Seconds to wait before retrying (only on 429) |
+
+Example response headers:
+
+```
+x-ratelimit-limit: 1000
+x-ratelimit-remaining: 847
+x-ratelimit-reset: 1743430800
+```
+
+## Default limits by plan
+
+| Plan | API calls/month | AI tokens/month | Requests/minute |
+|------|-----------------|-----------------|-----------------|
+| FREE | 1,000 | 100,000 | 60 |
+| PRO | 100,000 | 5,000,000 | 600 |
+| ENTERPRISE | Unlimited | Unlimited | Custom |
+
+## Handling 429 responses
+
+When you exceed a rate limit, the API returns:
+
+```json
+HTTP/1.1 429 Too Many Requests
+retry-after: 12
+
+{
+  "success": false,
+  "error": {
+    "code": "RATE_LIMIT_EXCEEDED",
+    "message": "Too many requests. Retry after 12 seconds.",
+    "details": {
+      "limit": 60,
+      "window": "1m",
+      "retry_after": 12
+    }
+  }
+}
+```
+
+### Retry with exponential backoff
+
+```typescript
+async function fetchWithRetry(url: string, options?: RequestInit, maxRetries = 3) {
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    const res = await fetch(url, options);
+
+    if (res.status !== 429) return res;
+
+    if (attempt === maxRetries) throw new Error("Max retries exceeded");
+
+    const retryAfter = parseInt(res.headers.get("retry-after") ?? "1", 10);
+    const backoff = retryAfter * 1000 * Math.pow(2, attempt);
+
+    await new Promise((resolve) => setTimeout(resolve, backoff));
+  }
+}
+```
+
+### SDK retry configuration
+
+The Nebutra SDK handles retries automatically:
+
+```typescript
+const nebutra = createClient({
+  apiKey: process.env.NEBUTRA_API_KEY!,
+  orgId: process.env.NEBUTRA_ORG_ID!,
+  retry: {
+    maxAttempts: 3,
+    backoff: "exponential", // or "linear" | "constant"
+    initialDelay: 1000,     // ms
+  },
+});
+```
+
+## Checking quota usage
+
+Query your current quota usage before making expensive operations:
+
+```typescript
+const quota = await nebutra.metering.getQuota("api_calls");
+// → {
+//     limit: 1000,
+//     used: 847,
+//     remaining: 153,
+//     percentage: 0.847,
+//     reset_at: "2026-04-01T00:00:00Z"
+//   }
+
+if (quota.percentage > 0.9) {
+  // Warn user / prompt upgrade
+}
+```
+
+## Quota warnings
+
+Nebutra automatically sends transactional emails when a tenant reaches:
+
+- **80%** of their monthly quota — warning email
+- **100%** of their quota — exceeded email with upgrade prompt
+
+You can customize these email templates in Sanity Studio or via Resend's template editor.
+
+## Raising limits
+
+- **FREE → PRO**: Upgrade from the billing settings page
+- **PRO → ENTERPRISE**: [Contact us](mailto:founders@nebutra.com) for custom limits
+- **Temporary burst**: For one-time high-volume operations, contact support
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Billing Model" icon="credit-card" href="/concepts/billing-model">
+    Plan quotas and metering details.
+  </Card>
+  <Card title="Error Handling" icon="triangle-alert" href="/guides/error-handling">
+    Full error code reference and retry strategies.
+  </Card>
+</CardGroup>

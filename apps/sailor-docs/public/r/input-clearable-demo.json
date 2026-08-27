@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-clearable-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/input-clearable-demo.tsx",
+      "content": "\"use client\";\n\nimport { Input } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nexport function InputClearableDemo() {\n  const [value, setValue] = useState(\"contact@nebutra.com\");\n\n  return (\n    <Input\n      aria-label=\"Contact email\"\n      clearable\n      value={value}\n      onValueChange={setValue}\n      placeholder=\"Type to see the clear button\"\n    />\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — תחנת כלים מקוונת",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "קודקים, טקסט, הקודות, מסמכים וכלי תמונות מקוונים."
+  },
+  "nav": {
+    "main": "ניווט ראשי",
+    "homeAria": "דף הבית של {brandName} Forge",
+    "tools": "כלים",
+    "wallet": "ארנק",
+    "api": "API",
+    "routerAria": "{brandName} Router",
+    "categoriesAria": "קטגוריות כלים",
+    "languageAria": "שנה שפה"
+  },
+  "tool": {
+    "breadcrumbAria": "פירורי לחם",
+    "workspace": "מרחב עבודה",
+    "workspaceHint": "מקומי או שרת · אותו נתיב כמו ב-API",
+    "api": "API",
+    "apiHint": "אותו חוזה כמו בדף. השתמש במפתח מאומת בייצור.",
+    "related": "כלים קשורים"
+  },
+  "auth": {
+    "signIn": "התחבר",
+    "signUp": "הירשם",
+    "signOut": "התנתק"
+  },
+  "footer": {
+    "navAria": "כותרת תחתונה",
+    "blurb": "תחנת כלים מקוונת. סיימו משימות בדפדפן או אוטומציה דרך API / MCP.",
+    "product": "מוצר",
+    "developers": "מפתחים",
+    "company": "חברה",
+    "docs": "תיעוד אינטגרציה",
+    "website": "אתר",
+    "privacy": "פרטיות"
+  },
+  "home": {
+    "eyebrow": "ראו את זה. קראו את זה.",
+    "title": "סכין שוויצרית לכלים מקוונים",
+    "subtitle": "קודקים, טקסט, הקודות, מסמכים ועיבוד תמונות. סיימו בדפדפן או אוטומציה דרך API / MCP — יישום אחד.",
+    "toolCount": "{count} כלים",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "חיפוש: ספירת מילים, base64, json, חותמת זמן…",
+    "aria": "חיפוש כלים",
+    "emptyTitle": "אין כלים התואמים ל-“{query}”",
+    "emptyHint": "נסו מילת מפתח אחרת או בחרו כלי מהקטגוריות למטה."
+  },
+  "categories": {
+    "codec": {
+      "label": "קודקים",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "אימות סין",
+      "hint": "מזהה · טלפון"
+    },
+    "data": {
+      "label": "נתונים",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "מפתחים",
+      "hint": "Regex · SQL · צבע · UUID"
+    },
+    "doc": {
+      "label": "מסמכים",
+      "hint": "Markdown · מיזוג/פיצול PDF"
+    },
+    "finance": {
+      "label": "פיננסים",
+      "hint": "סכום למילים"
+    },
+    "hash": {
+      "label": "האש ואבטחה",
+      "hint": "MD5 · SHA · HMAC · סיסמה"
+    },
+    "image": {
+      "label": "תמונות",
+      "hint": "דחיסה · QR · המרה"
+    },
+    "life": {
+      "label": "מחשבי חיים",
+      "hint": "משכנתא · BMI · קרבה משפחתית"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "טוקנים · עלות · סכמה"
+    },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
+    "security": {
+      "label": "אבטחה",
+      "hint": "מחולל סיסמאות"
+    },
+    "text": {
+      "label": "טקסט",
+      "hint": "מספר מילים · CJK · פין-יין · Diff"
+    },
+    "time": {
+      "label": "זמן",
+      "hint": "חותמת זמן · אזור זמן · Cron · לוח ירחי"
+    },
+    "unit": {
+      "label": "יחידות",
+      "hint": "אורך · משקל · טמפרטורה · נתונים"
+    },
+    "template": {
+      "label": "תבניות",
+      "hint": ".gitignore · LICENSE · Dockerfile · README"
+    }
+  },
+  "runners": {
+    "common": {
+      "run": "הפעל",
+      "running": "מפעיל…",
+      "copy": "העתק",
+      "copied": "הועתק",
+      "sameAsApi": "אותו נתיב כמו API · מנוע OSS",
+      "mustBeNumber": "{label} חייב להיות מספר",
+      "base64Loaded": "נתוני Base64 נטענו",
+      "workspaceMissing": "מרחב העבודה לא מוגדר: {slug}",
+      "yes": "כן",
+      "no": "לא",
+      "text": "טקסט",
+      "input": "קלט",
+      "output": "פלט",
+      "outputPlaceholder": "התוצאה מופיעה כאן",
+      "localRun": "הפעל מקומית",
+      "serverRun": "הפעל בשרת",
+      "serverVerify": "אימות שרת",
+      "outputPreview": "תצוגה מקדימה של פלט",
+      "mode": "מצב",
+      "encode": "קודד",
+      "decode": "פענח",
+      "file": "קובץ",
+      "clear": "נקה",
+      "length": "אורך: {n}",
+      "bytes": "{bytes} בתים",
+      "download": "הורד",
+      "format": "פורמט",
+      "formatting": "עיצוב…",
+      "dialect": "ניב",
+      "color": "צבע",
+      "pickColor": "בחר צבע",
+      "content": "תוכן",
+      "algorithm": "אלגוריתם",
+      "encoding": "קידוד",
+      "message": "הודעה",
+      "secret": "סוד",
+      "password": "סיסמה",
+      "direction": "כיוון",
+      "preview": "תצוגה מקדימה",
+      "query": "שאילתה",
+      "querying": "שואל…",
+      "validate": "אימות",
+      "validating": "מאמת…",
+      "processing": "מעבד…",
+      "pretty": "מסודר",
+      "minify": "מכווץ",
+      "from": "מ",
+      "to": "עד",
+      "timezone": "אזור זמן",
+      "datetime": "תאריך ושעה",
+      "compute": "חישוב",
+      "computing": "מחשב…",
+      "convertAction": "המר",
+      "count": "ספירה",
+      "value": "ערך",
+      "unit": "יחידה",
+      "generateLocal": "צור מקומית",
+      "generateServer": "צור בשרת",
+      "copyAll": "העתק הכל",
+      "emptyResult": "התוצאות יופיעו כאן",
+      "copyText": "העתק טקסט",
+      "quality": "איכות",
+      "original": "מקורי",
+      "result": "תוצאה",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
+    },
+    "base64": {
+      "encodeDir": "טקסט → Base64",
+      "decodeDir": "Base64 → טקסט",
+      "localNote": "Web API מקומי (TextEncoder / atob)",
+      "serverNote": "Buffer שרת · אותו נתיב כמו API"
+    },
+    "password": {
+      "uppercase": "אותיות גדולות",
+      "lowercase": "אותיות קטנות",
+      "digits": "ספרות",
+      "symbols": "סימנים",
+      "generate": "צור סיסמה",
+      "recent": "אחרונים",
+      "note": "מנוע: node:crypto randomInt · מאובטח קריפטוגרפית · אותו נתיב כמו API"
+    },
+    "hash": {
+      "algo": "אלגוריתם: {algo}",
+      "md5Warn": " · בדיקת תאימות בלבד — לא לשמור סיסמאות",
+      "md5LocalError": "MD5 דורש הרצה בשרת (Web Crypto לא תומך ב-MD5)",
+      "md5ServerHint": "MD5: השתמש בהרצה בשרת (תאימות בלבד, לא לאחסון סיסמאות)",
+      "localNote": "Web Crypto מקומי · {algo}",
+      "serverNote": "שרת node:crypto · אותו נתיב כמו API"
+    },
+    "convert": {
+      "converting": "ממיר…",
+      "convert": "המר",
+      "done": "בוצע · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "גרור קובץ לכאן, או לחץ כדי לעיין",
+      "needFile": "בחר קודם קובץ",
+      "needAlgo": "בחר לפחות אלגוריתם אחד",
+      "compute": "חישוב סכומי ביקורת",
+      "computing": "מחשב…",
+      "algorithms": "אלגוריתמים",
+      "note": "node:crypto · ריבוי-אלגוריתמים · אותו נתיב כמו API"
+    },
+    "lorem": {
+      "paragraphs": "פסקאות",
+      "wordsPerParagraph": "מילים לפסקה",
+      "startWithLorem": "התחל עם \"Lorem ipsum\"",
+      "note": "מחולל Lorem Ipsum · טהור"
+    },
+    "emailValidate": {
+      "note": "מאמת דוא\"ל · בדיקת פורמט בלבד (ללא בדיקת MX)"
+    },
+    "creditCardLuhn": {
+      "number": "מספר כרטיס",
+      "note": "בודק Luhn · לא מקוון, לא מאוחסן",
+      "digits": "digits",
+      "specimenLabel": "Specimen",
+      "structureOnly": "Luhn structure only",
+      "unknownBrand": "Card"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "מכווץ JSON · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "מכווץ CSS · קל משקל (בטוח לשוליים)"
+    },
+    "hashCompare": {
+      "a": "האש א",
+      "b": "האש ב",
+      "ignoreCase": "התעלם מרישיות",
+      "note": "מקבל האשים · זמן קבוע לאותו אורך"
+    },
+    "jsonDiff": {
+      "left": "JSON א",
+      "right": "JSON ב",
+      "note": "הבדלי JSON · פעולות ברמת נתיב · שורות צבעויות לפי סוג · צד לצד",
+      "equal": "זהים",
+      "differs": "{count} שינויים",
+      "colPath": "נתיב",
+      "colKind": "סוג",
+      "colLeft": "שמאל",
+      "colRight": "ימין",
+      "filtersAria": "סינון לפי סוג שינוי",
+      "filterAll": "הכל ({count})",
+      "filterAdd": "הוספה ({count})",
+      "filterRemove": "הסרה ({count})",
+      "filterChange": "שינוי ({count})",
+      "filterType": "סוג ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "מצב",
+      "pretty": "מסודר",
+      "compact": "קומפקטי",
+      "indent": "שורה חדשה",
+      "note": "מסדר YAML · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "מסדר TOML · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "מכווץ XML · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "מאמת כתובות · WHATWG URL (ללא גישה לרשת)"
+    },
+    "ipValidate": {
+      "note": "מאמת כתובות IP · IPv4/IPv6 לא מקוון"
+    },
+    "uuidValidate": {
+      "note": "מאמת UUID · מבנה לפי RFC 4122"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "מכווץ HTML · קל משקל (בטוח ל־edge)"
+    },
+    "randomString": {
+      "length": "אורך",
+      "count": "כמות",
+      "charset": "סט תווים",
+      "alphanumeric": "אלפא-נומרי",
+      "symbols": "אלפא-נומרי + סמלים",
+      "hex": "הקסדצימלי",
+      "base64url": "Base64URL",
+      "note": "מחרוזת אקראית · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "זמן קריאה · היוריסטיקה ל-CJK וללטיני"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "רמת כותרת מקסימלית",
+      "note": "תוכן עניינים ב-Markdown · כותרות ATX"
+    },
+    "pdfInfo": {
+      "file": "קובץ PDF",
+      "note": "מידע PDF · pdf-lib (עמודים + מטא-נתונים)"
+    },
+    "rot13": {
+      "shift": "הזזה (13 = ROT13)",
+      "note": "ROT13 / קיסר · טהור"
+    },
+    "morse": {
+      "note": "קוד מורס · ITU · טהור"
+    },
+    "textBinary": {
+      "toBinary": "טקסט → בינארי",
+      "fromBinary": "בינארי → טקסט",
+      "note": "טקסט ↔ בינארי · סיביות UTF-8"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "קידוד עיכול",
+      "note": "ריבוי-האש · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "תמציות חד-שלביות · העתק כל אחת · node:crypto"
+    },
+    "cssFormat": {
+      "note": "מסדר CSS · קל משקל"
+    },
+    "htmlFormat": {
+      "note": "מְעַצֵּב HTML · קל משקל"
+    },
+    "stringSimilarity": {
+      "a": "מחרוזת א׳",
+      "b": "מחרוזת ב׳",
+      "note": "דמיון מחרוזות · לֶבֶנְשְׁטַיְן"
+    },
+    "roman": {
+      "toRoman": "מספר → רומי",
+      "fromRoman": "רומי → מספר",
+      "note": "ספרות רומיות · 1–3999"
+    },
+    "age": {
+      "birthDate": "תאריך לידה (YYYY-MM-DD)",
+      "asOf": "נכון ל־ (אופציונלי)",
+      "note": "מחשבון גיל · שנים/חודשים/ימים מדויקים"
+    },
+    "tip": {
+      "bill": "סכום החשבון",
+      "percent": "טיפ %",
+      "people": "אנשים",
+      "note": "מחשבון טיפים · חלוקה נוחה"
+    },
+    "aspect": {
+      "width": "רוחב",
+      "height": "גובה",
+      "note": "יחס תצוגה · פישוט GCD"
+    },
+    "mime": {
+      "note": "חיפוש MIME · סוגי אינטרנט נפוצים"
+    },
+    "ua": {
+      "note": "מנתח User-Agent · היוריסטי (אופליין)"
+    },
+    "imageMeta": {
+      "file": "קובץ תמונה",
+      "note": "מטא-נתוני תמונה · sharp (גודל באפר EXIF)"
+    },
+    "wordFreq": {
+      "top": "Top N",
+      "note": "תדירות מילים · CJK + לטיני"
+    },
+    "jsonXml": {
+      "note": "JSON ↔ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "מקטין SQL · הערות + רווחים"
+    },
+    "lineNum": {
+      "start": "מספר התחלה",
+      "note": "הוסף מספרי שורה · טהור"
+    },
+    "uniqueWords": {
+      "note": "מילים ייחודיות · סדר מופע ראשון"
+    },
+    "epoch": {
+      "value": "ערך",
+      "msToIso": "ms → ISO",
+      "isoToMs": "ISO → ms",
+      "note": "אלפיות עידן · תאריך"
+    },
+    "passwordEntropy": {
+      "password": "סיסמה",
+      "note": "אנטרופיית סיסמה · היוריסטיקת מערך תווים"
+    },
+    "contrast": {
+      "fg": "טקסט (#hex)",
+      "bg": "רקע (#hex)",
+      "note": "ניגודיות צבעים · WCAG 2.x",
+      "sampleHeadline": "Sample text",
+      "pass": "pass",
+      "fail": "fail",
+      "aaNormal": "AA normal",
+      "aaLarge": "AA large",
+      "aaaNormal": "AAA normal",
+      "aaaLarge": "AAA large"
+    },
+    "exif": {
+      "file": "קובץ תמונה",
+      "note": "צופה EXIF · exifr + גיבוי JPEG"
+    },
+    "regex": {
+      "pattern": "תבנית",
+      "flags": "דגלים",
+      "replacement": "החלפה",
+      "match": "התאמה",
+      "replace": "החלף",
+      "test": "בדיקה",
+      "local": "הרץ מקומי",
+      "server": "אימות שרת",
+      "count": "{count} התאמות",
+      "sotaNote": "הדגשה מקומית מיידית · תקציב זמן לשרת · אותו נתיב כמו API"
+    },
+    "jwt": {
+      "decode": "פענח JWT",
+      "sample": "טען דוגמה",
+      "tokenPlaceholder": "הדבק JWT",
+      "decodeNote": "{engine} · פענוח בלבד, החתימה לא מאומתת",
+      "footerNote": "מנוע: jose · ללא אימות חתימה. לאימות ייצור יש להשתמש במפתחות דרך jwtVerify בשרת.",
+      "generateHint": "צריך לחתום על טוקנים?",
+      "secret": "סוד",
+      "exp": "פג תוקף (שניות)",
+      "payload": "Payload JSON",
+      "note": "יצירת JWT · HS256 (לפיתוח/בדיקות בלבד)",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "(empty signature segment)"
+    },
+    "rand": {
+      "min": "מינימום",
+      "max": "מקסימום",
+      "count": "כמות",
+      "note": "מספר אקראי · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "צדדים",
+      "count": "מספר קוביות",
+      "note": "זורק קוביות · crypto RNG"
+    },
+    "hexRgb": {
+      "note": "HEX ↔ RGB · טהור"
+    },
+    "base64url": {
+      "note": "Base64URL · בסגנון JWT"
+    },
+    "hmac": {
+      "message": "הודעה",
+      "secret": "סוד",
+      "signature": "חתימה",
+      "note": "אימות HMAC · SHA-256"
+    },
+    "secret": {
+      "bytes": "בתים",
+      "count": "ספירה",
+      "note": "מחולל מפתח סודי · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "קובץ PDF",
+      "note": "PDF Light Optimize · כתיבה מחדש עם pdf-lib (לא דחיסה מחדש של תמונות)",
+      "needFile": "בחר קובץ PDF תחילה"
+    },
+    "pdfCompress": {
+      "file": "קובץ PDF",
+      "quality": "איכות",
+      "engine": "מנוע",
+      "qStructural": "מבני (qpdf, זרמים ללא אובדן)",
+      "qScreen": "מסך (קטן ביותר, Ghostscript)",
+      "qEbook": "ספר אלקטרוני (מאוזן, Ghostscript)",
+      "qPrinter": "מדפסת (איכות גבוהה יותר, Ghostscript)",
+      "eAuto": "אוטומטי (qpdf → Ghostscript → pdf-lib)",
+      "download": "הורד PDF",
+      "needFile": "בחר קובץ PDF תחילה",
+      "in": "קלט",
+      "out": "פלט",
+      "saved": "נשמר",
+      "note": "PDF Compress · qpdf / Ghostscript על המארח · pdf-lib כגיבוי",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+    },
+    "jsonFormat": {
+      "indent": "הזחה",
+      "format": "עיצוב",
+      "minify": "מיזעור",
+      "serverVerify": "אימות שרת",
+      "clear": "נקה",
+      "sample": "דוגמה",
+      "placeholder": "הדבק JSON…",
+      "formatted": "מסודר",
+      "minified": "מכווץ",
+      "serverOk": "שרת {mode} · {engine}",
+      "valid": "JSON תקין",
+      "invalid": "JSON לא תקין",
+      "line": "שורה",
+      "column": "עמודה",
+      "note": "מנוע: JSON.parse/stringify · מיידי מקומי · אותו נתיב כמו API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
+    },
+    "qr": {
+      "size": "גודל",
+      "ecl": "תיקון שגיאות",
+      "generate": "צור",
+      "download": "הורד PNG",
+      "needText": "הזן טקסט או כתובת",
+      "note": "QR · qrcode · תצוגה מקדימה חיה · אותו נתיב כמו API"
+    },
+    "pdfText": {
+      "file": "קובץ PDF",
+      "layout": "פריסה",
+      "needFile": "בחר קודם קובץ PDF",
+      "note": "טקסט PDF · pdftotext (poppler) במארח"
+    },
+    "svg": {
+      "optimize": "אופטימיזציה",
+      "note": "אופטימיזציה SVG · מיניפיקציה קלה וטהורה"
+    },
+    "routerTranslate": {
+      "lab": "מעטפת Lab: לא מתרגם כאן. פותח את Router עם בקשה — מדידת מודל ב-Router בלבד.",
+      "source": "שפת מקור",
+      "target": "שפת יעד",
+      "open": "הכן קישור Router",
+      "deepLink": "פתח ב-Router",
+      "note": "חיצוני · ללא פנקס Forge LLM שקט"
+    },
+    "imageCrop": {
+      "needFile": "בחר תמונה קודם",
+      "crop": "חתוך",
+      "note": "חתך תמונה · גרור אזור · חיתוך מדויק",
+      "drop": "גרור תמונה או לחץ כדי לעיין",
+      "dragHint": "גרור על התמונה כדי לבחור אזור חיתוך",
+      "left": "שמאל",
+      "top": "עליון",
+      "width": "רוחב",
+      "height": "גובה",
+      "natural": "טבעי {w}×{h}",
+      "source": "מקור",
+      "result": "חתוך"
+    },
+    "markdown": {
+      "preview": "תצוגה מקדימה",
+      "html": "HTML",
+      "emptyPreview": "הפעל כדי לראות תצוגה מקדימה",
+      "emptyHtml": "HTML שמופעל",
+      "rendering": "מפעיל…",
+      "toHtml": "ל-HTML",
+      "copyHtml": "העתק HTML",
+      "note": "marked · תצוגה מקדימה ב-iframe מבודד · אותו נתיב כמו API"
+    },
+    "pdfMerge": {
+      "files": "קבצי PDF (≥2, סדר = סדר מיזוג)",
+      "needFiles": "בחר לפחות 2 קבצי PDF",
+      "merging": "מאחד…",
+      "mergeDownload": "אחד והורד",
+      "done": "מואחד · {pages} עמודים · {bytes} בתים",
+      "note": "pdf-lib · אותו נתיב כמו ב-API",
+      "merge": "אחד והורד"
+    },
+    "pdfSplit": {
+      "file": "קובץ PDF",
+      "needFile": "בחר קובץ PDF",
+      "fromPage": "מעמוד (מבוסס על 1)",
+      "toPage": "עד עמוד (ריק = אחרון)",
+      "toPlaceholder": "עמוד אחרון",
+      "splitting": "מפצל…",
+      "splitDownload": "פצל והורד",
+      "done": "פיצול · מקור {source} דפים → פלט {pages} דפים",
+      "note": "pdf-lib · אותו נתיב כמו API",
+      "split": "פצל והורד"
+    },
+    "passwordStrength": {
+      "check": "בדיקת חוזק",
+      "checking": "בודק…",
+      "crack": "הערכת פריצה לאט-האש אופליין: {time}",
+      "score0": "חלש מאוד",
+      "score1": "חלש",
+      "score2": "בינוני",
+      "score3": "חזק",
+      "score4": "חזק מאוד",
+      "note": "zxcvbn-ts · אותו נתיב כמו API · הסיסמה לעולם לא נשמרת"
+    },
+    "hmacSign": {
+      "compute": "חישוב HMAC",
+      "computing": "מחשב…",
+      "note": "node:crypto · אותו נתיב כמו ב-API"
+    },
+    "costEstimate": {
+      "text": "טקסט קלט (להערכת אסימוני קלט)",
+      "model": "מודל",
+      "outputTokens": "אסימוני פלט (הערכה)",
+      "estimate": "הערכת עלות",
+      "estimating": "מעריך…",
+      "note": "כרטיס @nebutra/ai-providers/frontier + js-tiktoken · הערכת מחיר רשימה, לא חשבונית"
+    },
+    "jsonSchema": {
+      "data": "נתוני JSON",
+      "schema": "JSON Schema",
+      "validate": "אימות",
+      "validating": "מאמת…",
+      "pass": "עבר",
+      "fail": "נכשל",
+      "note": "Ajv · אותו נתיב כמו API"
+    },
+    "zhCnTw": {
+      "s2t": "פשוט → מסורתי",
+      "t2s": "מסורתי → פשוט",
+      "s2tw": "פשוט → טאיוואן",
+      "tw2s": "טאיוואן → פשוט",
+      "s2hk": "פשוט → הונג קונג",
+      "hk2s": "הונג קונג → פשוט",
+      "note": "OpenCC (opencc-js) · אותו נתיב כמו API"
+    },
+    "pinyin": {
+      "tones": "סגנון טון",
+      "symbol": "סמל nǐ",
+      "num": "מספר ni3",
+      "none": "ללא ni",
+      "hanzi": "תווים סיניים",
+      "convert": "לפיניין",
+      "converting": "ממיר…",
+      "note": "pinyin-pro · אותו נתיב כמו API"
+    },
+    "sqlFormat": {
+      "dialect": "ניב",
+      "format": "עיצוב",
+      "formatting": "מעצב…",
+      "note": "sql-formatter · אותו נתיב כמו API"
+    },
+    "colorConvert": {
+      "color": "צבע",
+      "pick": "בחר צבע",
+      "convert": "המר",
+      "converting": "ממיר…",
+      "note": "culori · hex / rgb / hsl / oklch · אותו נתיב כמו API"
+    },
+    "qrGen": {
+      "content": "תוכן",
+      "format": "פורמט",
+      "pngPreview": "PNG (תצוגה מקדימה)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "צור קוד QR",
+      "generating": "יוצר…",
+      "note": "qrcode · אותו נתיב כמו API"
+    },
+    "qrDecode": {
+      "upload": "העלה תמונה עם קוד QR",
+      "parsing": "מפענח…",
+      "note": "jsQR + sharp · אותו נתיב כמו ב-API"
+    },
+    "cron": {
+      "expression": "ביטוי Cron",
+      "timezone": "אזור זמן",
+      "parse": "הפעלות הבאות",
+      "parsing": "מנתח…",
+      "nextTitle": "הפעלות הבאות (ISO)",
+      "note": "cron-parser · אותו נתיב כמו ב-API"
+    },
+    "timezone": {
+      "datetime": "תאריך ושעה",
+      "from": "מ",
+      "to": "אל",
+      "convert": "המרת אזור זמן",
+      "converting": "ממיר…",
+      "placeholder": "2026-07-24 12:00:00 או ISO / unix",
+      "note": "dayjs timezone · אותו נתיב כמו API"
+    },
+    "csvPreview": {
+      "preview": "תצוגה מקדימה של טבלה",
+      "parsing": "מנתח…",
+      "rows": "תצוגה מקדימה {shown} / {total} שורות",
+      "note": "papaparse · אותו נתיב כמו API"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "שאילתא",
+      "querying": "שואל…",
+      "note": "jsonpath-plus · אותו נתיב כמו API"
+    },
+    "xmlFormat": {
+      "pretty": "מנומק",
+      "minify": "צמצום",
+      "validate": "אימות",
+      "validOk": "תקין",
+      "done": "בוצע · {engine}",
+      "processing": "מעבד…",
+      "note": "fast-xml-parser · אותו נתיב כמו API"
+    },
+    "regexLegacy": {
+      "pattern": "תבנית",
+      "flags": "דגלים",
+      "mode": "מצב",
+      "match": "התאמה",
+      "replace": "החלפה",
+      "test": "בדיקה",
+      "replacement": "החלפה",
+      "note": "מקומי מיידי · תקציב תפוגה של שרת · אותו נתיב כמו API"
+    },
+    "docxText": {
+      "file": "קובץ DOCX",
+      "needFile": "בחר קודם קובץ .docx",
+      "extract": "חלץ טקסט",
+      "extracting": "מחלץ…",
+      "note": "DOCX → טקסט · ZIP טהור + document.xml (ללא סוויטת Office)"
+    },
+    "uuid": {
+      "count": "ספירה",
+      "local": "צור מקומית",
+      "server": "צור בשרת",
+      "copyAll": "העתק הכל",
+      "empty": "ה־UUIDs יופיעו כאן"
+    },
+    "timestamp": {
+      "nowSec": "שניות Unix",
+      "nowMs": "מילישניות Unix / ISO",
+      "serverNow": "עכשיו בשרת",
+      "toDate": "חותמת זמן → תאריך",
+      "toUnix": "תאריך → חותמת זמן",
+      "seconds": "שניות",
+      "milliseconds": "מילישניות",
+      "value": "ערך",
+      "convert": "המרה",
+      "note": "אותו נתיב כמו API"
+    },
+    "wordCount": {
+      "words": "מילים",
+      "chars": "תווים",
+      "noSpaces": "ללא רווחים",
+      "cjk": "CJK",
+      "lines": "שורות",
+      "paragraphs": "פסקאות",
+      "placeholder": "הדבק או הקלד טקסט…",
+      "copyText": "העתק טקסט",
+      "clear": "נקה",
+      "verifying": "מאמת…",
+      "serverNote": "מילים בשרת={words} · אותו נתיב כמו API",
+      "note": "מנוע חי: {engine} · אין צורך בהעלאה · אותו נתיב כמו API"
+    },
+    "bmi": {
+      "height": "גובה (ס\"מ)",
+      "weight": "משקל (ק\"ג)",
+      "compute": "חשב BMI",
+      "computing": "מחשב…",
+      "invalid": "הזן גובה (ס\"מ) ומשקל (ק\"ג) תקינים",
+      "underweight": "תת-משקל",
+      "normal": "תקין",
+      "overweight": "עודף משקל",
+      "obese": "השמנה",
+      "note": "WHO BMI · אותו נתיב כמו API · לא ייעוץ רפואי"
+    },
+    "percentage": {
+      "mode": "מצב",
+      "percentOf": "a% מתוך b",
+      "isWhat": "a הוא כמה % מ-b",
+      "percentA": "אחוז a",
+      "valueA": "ערך א׳",
+      "baseB": "בסיס ב׳",
+      "compute": "חשב",
+      "computing": "מחשב…",
+      "invalid": "הזן מספרים תקינים",
+      "note": "אותו נתיב כמו ב-API"
+    },
+    "dataSize": {
+      "value": "ערך",
+      "convert": "המר",
+      "converting": "ממיר…",
+      "invalid": "הזן מספר תקין",
+      "binary": "{value} {from} → בסיס-1024",
+      "note": "יחידות בינאריות (1 KB = 1024 B) · אותו נתיב כמו ב-API"
+    },
+    "rmb": {
+      "amount": "סכום (CNY)",
+      "convert": "להמיר לאותיות גדולות",
+      "converting": "ממיר…",
+      "invalid": "הזן סכום שאינו שלילי",
+      "note": "סכום חשבונית סינית באותיות גדולות · אותו נתיב כמו API"
+    },
+    "dateDiff": {
+      "from": "תאריך התחלה",
+      "to": "תאריך סיום",
+      "compute": "הפרש ימים",
+      "computing": "מחשב…",
+      "days": "ימים",
+      "note": "ECMAScript Date · אותו נתיב כמו API"
+    },
+    "xlsxText": {
+      "file": "קובץ XLSX",
+      "needFile": "ראשית בחר קובץ .xlsx",
+      "extract": "חלץ גיליון",
+      "extracting": "מחלץ…",
+      "note": "XLSX → CSV · ZIP טהור + sheet1.xml (גיליון ראשון)"
+    },
+    "mdToPdf": {
+      "drop": "גרור לכאן קובץ .md, או הדבק Markdown למטה",
+      "title": "כותרת",
+      "engine": "מנוע",
+      "ePlaywright": "playwright (הדפסת Chromium)",
+      "eSimple": "פשוט (ללא דפדפן)",
+      "generate": "צור PDF",
+      "generating": "מייצר…",
+      "download": "הורד PDF",
+      "note": "marked → HTML → הדפסת Chromium של Playwright. אם Chromium חסר, המערכת נופלת אוטומטית ל-PDF מובנה פשוט — בדוק renderEngine; פשוט אינו פריסה ברמת הדפסה.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
+    },
+    "tokenCount": {
+      "count": "ספור אסימונים",
+      "counting": "סופר…",
+      "chars": "תווים {n}",
+      "note": "מנוע: js-tiktoken · ספירה מדויקת בצד השרת · יכול להזין אומדן עלות Router"
+    },
+    "codec": {
+      "encodeDir": "טקסט → מקודד",
+      "decodeDir": "מקודד → טקסט",
+      "localNote": "ריצה מקומית",
+      "serverNote": "שרת · אותו נתיב כמו API",
+      "hexInvalid": "מחרוזת hex לא חוקית",
+      "hexDecodeFail": "השרת לא הצליח לפענח כ-UTF-8 (נדרש hex חוקי)",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · אותו נתיב כמו API",
+      "noteHtml": "מפת ישויות HTML · אותו נתיב כמו API",
+      "noteHex": "UTF-8 ↔ hex · אותו נתיב כמו API"
+    },
+    "textDiff": {
+      "left": "שמאלי",
+      "right": "ימני",
+      "compare": "השוואה",
+      "comparing": "מבצע השוואה…"
+    },
+    "imageTool": {
+      "drop": "גרור תמונה לכאן, או לחץ כדי לעיין",
+      "selected": "נבחר: {name} ({kb} KB)",
+      "needFile": "בחר תמונה קודם",
+      "format": "פורמט פלט",
+      "quality": "איכות {n}",
+      "maxW": "רוחב מקסימלי",
+      "maxH": "גובה מקסימלי",
+      "optional": "אופציונלי",
+      "resizeEg": "למשל 1280",
+      "processing": "מעבד…",
+      "compress": "לדחוס",
+      "resize": "שינוי גודל",
+      "convert": "המרת פורמט",
+      "download": "הורדת התוצאה",
+      "outMeta": "פלט {kb} KB{dims}{ratio} · {type}",
+      "ratio": " · ~{pct}% מהמקור",
+      "dims": " · {w}×{h}",
+      "original": "מקור",
+      "result": "תוצאה",
+      "note": "מנוע: sharp (libvips) · בצד השרת · אותו נתיב כמו API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+    },
+    "pptxText": {
+      "file": "קובץ PPTX",
+      "needFile": "בחר קובץ .pptx תחילה",
+      "extract": "חלץ מתווה",
+      "extracting": "מחלץ…",
+      "note": "תוכן נאום של PPTX · קובץ ZIP + XML של שקופיות (ללא PowerPoint)"
+    },
+    "shell": {
+      "copyJson": "העתק JSON",
+      "sample": "דוגמה",
+      "chars": "{n} תווים",
+      "largeInput": "קלט גדול — התוצאה מתעדכנת רגע אחרי שאתה מפסיק להקליד.",
+      "manualInput": "הקלט גדול מדי כדי לחשב מחדש בזמן אמת — זה יעכב את הדף. לחץ על הפעל.",
+      "options": "אפשרויות",
+      "regenerateNote": "הפלט מתעדכן כבר כשמשנים את האפשרויות.",
+      "fileTab": "קובץ",
+      "pasteTab": "הדבק",
+      "browse": "בחר קובץ",
+      "selectedFile": "{name} · {kb} KB",
+      "truncated": "קראתי את {kb} KB הראשונים — מספיק כדי לענות, והשאר לא עוזב את המכשיר שלך.",
+      "detail": "פרטים",
+      "dropIntoPane": "גרור קובץ לכאן",
+      "swap": "החלף צדדים",
+      "prevChange": "קודם",
+      "nextChange": "הבא",
+      "changePosition": "{index} מתוך {total}",
+      "result": "תוצאה"
+    },
+    "readmeSkeleton": {
+      "emptyHint": "סמן לפחות קטע אחד כדי לבנות README.",
+      "note": "מריץ את אותו מנוע כמו ה-API. קטעים שלא סומנו לא יופיעו — ללא כותרות ריקות.",
+      "orderNote": "הקטעים תמיד מוצגים בסדר קבוע זה, כך שהקלט הזהה מניב את אותו קובץ.",
+      "group": {
+        "core": "ליבה",
+        "docs": "תיעוד",
+        "community": "קהילה",
+        "meta": "מטה"
+      },
+      "section": {
+        "title": "כותרת ותיאור",
+        "badges": "תגיות",
+        "callout": "הערה בולטת",
+        "toc": "תוכן עניינים",
+        "installation": "התקנה",
+        "usage": "שימוש",
+        "features": "תכונות",
+        "api-reference": "מאגר API",
+        "screenshots": "צילומי מסך",
+        "roadmap": "מפת דרכים",
+        "contributing": "תרומה",
+        "support": "תמיכה",
+        "acknowledgements": "הוקרות",
+        "license": "רישיון",
+        "authors": "מחברים",
+        "tech-stack": "סטק טכנולוגי"
+      },
+      "projectName": "שם הפרויקט",
+      "projectNamePlaceholder": "שם הפרויקט",
+      "description": "תיאור",
+      "descriptionPlaceholder": "משפט אחד על מה שהוא עושה",
+      "badgeLicense": "תג רישיון",
+      "badgeNpm": "npm version",
+      "badgeBuild": "סטטוס בנייה",
+      "npmPackage": "npm package",
+      "npmPackagePlaceholder": "@scope/package",
+      "repo": "מאגר GitHub",
+      "repoPlaceholder": "owner/repo",
+      "calloutKind": "סוג התראה",
+      "calloutBody": "טקסט התראה",
+      "calloutBodyPlaceholder": "לפני גרסה 1.0 — ה-API עדיין משתנה",
+      "fenceLanguage": "שפה",
+      "installCommand": "פקודת התקנה",
+      "installCommandPlaceholder": "npm install your-project",
+      "usageExample": "דוגמת שימוש",
+      "usageExamplePlaceholder": "הדוגמה הקטנה ביותר שממחישה את הערך",
+      "features": "תכונות",
+      "featuresPlaceholder": "תכונה אחת בשורה",
+      "contact": "צור קשר",
+      "contactPlaceholder": "support@example.com",
+      "license": "רישיון",
+      "authors": "מחברים",
+      "authorsPlaceholder": "@handle, Jane Roe",
+      "techStack": "סטק טכנולוגי",
+      "techStackPlaceholder": "typescript, postgresql (שמות קוד של simple-icons)",
+      "sectionCount": "{n} סעיפים",
+      "charCount": "{n} תווים",
+      "warningCount": "{n} הושמטו",
+      "omittedTitle": "מה הושאר בחוץ, ולמה"
+    },
+    "gitignore": {
+      "searchLabel": "חיפוש סטקים",
+      "searchPlaceholder": "חפש שפות, פריימוורקים, מערכות הפעלה או עורכים…",
+      "add": "הוסף את {stack}",
+      "remove": "הסר את {stack}",
+      "selected": "סטקים נבחרים",
+      "suggestions": "סטקים תואמים",
+      "noMatches": "אין סטק התואם ל-\"{query}\". לחץ Enter לשליחה בכל זאת — כינויים מתורגמים בשרת.",
+      "catalogFallback": "רשימת הסטקים לא זמינה — הקלד שם סטק ולחץ Enter.",
+      "emptyHint": "בחר לפחות שפה אחת, פריימוורק, מערכת הפעלה או עורך מהרשימה למעלה.",
+      "regenerate": "לחדש",
+      "sections": "{n} סעיפים",
+      "lines": "{n} שורות",
+      "deduped": "{n} דפוסים כפולים מוזגו",
+      "notFound": "לא נמצא בקורפוס: {stacks}",
+      "globalScope": "{stacks} הם רשומות של מערכת הפעלה/עורך — רבים שומרים אותן בקובץ אישי ~/.gitignore_global במקום בכל רפוזיטוריון.",
+      "untrackedNote": "קובץ .gitignore משפיע רק על קבצים לא מעוקבים. עבור קובץ שכבר git מעקב אחריו, הרץ git rm -r --cached <path>.",
+      "fileLabel": ".gitignore"
+    },
+    "editorconfig": {
+      "emptyHint": "הגדר לפחות תכונה אחת כדי לראות את הקובץ.",
+      "note": "אותו מנוע כמו ב-API. הבחירות שלך נשמרות רק במפגש הדפדפן הנוכחי; כלום לא נשמר.",
+      "checks": "בדיקות",
+      "presets": "התחל מ",
+      "preset": {
+        "spaces2": "2 רווחים, LF",
+        "spaces4": "4 רווחים, LF",
+        "tabs": "טאבים, רוחב 4",
+        "repo": "תבנית מלאי (+ Markdown, Makefile)"
+      },
+      "rootLabel": "root = true — מונע מעורכים לשלב קבצי .editorconfig מההורה",
+      "glob": "גלוב {n}",
+      "addSection": "הוסף קטע",
+      "removeSection": "הסר",
+      "notSet": "(לא הוגדר)",
+      "import": "ייבוא קובץ .editorconfig קיים",
+      "importPlaceholder": "הדבק כאן קובץ .editorconfig כדי לטעון אותו לטופס",
+      "importAction": "ייבוא",
+      "importing": "מייבא…",
+      "importFailed": "לא ניתן לייבא: {message}"
+    },
+    "robotsTxt": {
+      "emptyHint": "הגדר את האפשרויות למעלה — הקובץ יופיע כאן",
+      "deployNote": "robots.txt פועל רק בשורש הדומיין (https://example.com/robots.txt). לכל תת-דומיין נדרש קובץ נפרד.",
+      "outputLabel": "robots.txt",
+      "defaultAccess": "גישה ברירת מחדל (User-agent: *)",
+      "defaultAllow": "אפשר הכל",
+      "defaultDisallow": "חסום הכל",
+      "defaultAccessNote": "\"אפשר הכל\" כותב \"Disallow:\" ריק — זה מה שמאפשר הכל.",
+      "crawlDelay": "עיכוב גלילה (שניות)",
+      "crawlDelayPlaceholder": "אין",
+      "crawlDelayNote": "לא חלק מ-RFC 9309. Google מתעלם ממנו; הוא לעולם לא נכתב לקבוצת Google.",
+      "searchAgents": "מנועי חיפוש",
+      "aiAgents": "גולשי בינה מלאכותית",
+      "aiAgentsNote": "גולשי אימון ומנועי תשובות. חסימתם אינה משפיעה על אינדוקס חיפוש.",
+      "accessDefault": "ברירת מחדל",
+      "accessAllow": "אפשר",
+      "accessDisallow": "אסור",
+      "rules": "כללי נתיב",
+      "rulesNote": "נתיבים רגישים לאותיות גדולות/קטנות ויחסיים לשורש. הוסף קו נטוי סופי כדי להגביל כלל לספרייה.",
+      "rulePath": "נתיב {n}",
+      "rulePathPlaceholder": "/admin/",
+      "ruleType": "סוג כלל",
+      "addRule": "הוסף כלל נתיב",
+      "removeRule": "הסר",
+      "sitemaps": "מפות אתר",
+      "sitemapsNote": "כתובות http(s) מוחלטות. מופיעות כשורות עצמאיות, מחוץ לכל קבוצה.",
+      "sitemapUrl": "מפת אתר {n}",
+      "addSitemap": "הוסף מפת אתר",
+      "removeSitemap": "הסר",
+      "groupCount": "{n} קבוצות",
+      "lineCount": "{n} שורות",
+      "sitemapCount": "{n} מפות אתר",
+      "warningsSummary": "הערות על קובץ זה ({n})"
+    },
+    "encodingDetect": {
+      "drop": "גרור קובץ לזיהוי הקידוד שלו",
+      "privacy": "רק {kb} ק\"ב הראשונים נקראים, והם נשלחים לאותה נקודת קצה ציבורית שסוכן היה קורא לה — שום דבר לא נכתב לדיסק.",
+      "pasteLabel": "או הדבק טקסט",
+      "pastePlaceholder": "הדבק טקסט — כולל מוג'יבקה שאתה רוצה להסביר",
+      "detail": "מועמדים, סופי שורות וסטטיסטיקות בתים",
+      "idle": "גרור קובץ או הדבק טקסט — הדוח יתמלא ברגע שיש מה לקרוא.",
+      "readOnly": "לקריאה בלבד: כלי זה מזהה קידוד, הוא לעולם לא משכתב את הבתים.",
+      "headline": "{encoding} · {confidence}% ביטחון",
+      "notText": "זה לא נראה כמו טקסט",
+      "bomPresent": "BOM {bytes}",
+      "bomAbsent": "ללא BOM",
+      "eol": "סיומי שורות {kind}",
+      "eolMixed": "סיומי שורות מעורבים",
+      "language": "שפה {language} · {confidence}%",
+      "sampled": "זוהה מה-{kb} הקילובייט הראשונים מתוך {totalKb} קילובייט",
+      "candidates": "מועמדים מדורגים",
+      "candidatesNote": "קידודים נוספים מוצגים במכוון: דוגמאות קצרות או סימטריות הן דו-משמעותיות באופן טבעי.",
+      "lineEndings": "סיומי שורות",
+      "byteStats": "סטטיסטיקת בתים",
+      "totalBytes": "סה\"כ",
+      "asciiBytes": "ASCII",
+      "highBytes": "גבוהים (0x80–0xFF)",
+      "nullBytes": "NUL",
+      "mojibake": "Mojibake שוחזר"
+    },
+    "dockerfileStarter": {
+      "language": "שפה",
+      "framework": "מסגרת",
+      "packageManager": "מנהל חבילות",
+      "baseVariant": "תמונת בסיס",
+      "version": "גרסת ריצה",
+      "workdir": "תיקיית עבודה",
+      "port": "פורט",
+      "buildCommand": "פקודת בנייה",
+      "startCommand": "פקודת התחלה",
+      "commandPlaceholder": "ריק = ברירת מחדל",
+      "frameworkNone": "ללא (ריצה פשוטה)",
+      "pmAuto": "אוטומטי",
+      "variantSlim": "slim (glibc)",
+      "variantAlpine": "alpine (musl)",
+      "variantFull": "מלא",
+      "multiStage": "בנייה רב-שלבית",
+      "nonRootUser": "משתמש לא-מנהל",
+      "includeDockerignore": "הוסף .dockerignore",
+      "includeCompose": "הוסף compose.yaml",
+      "includeHealthcheck": "הוסף HEALTHCHECK",
+      "groupWhat": "מה אתה בונה",
+      "groupHow": "איך זה אמור לרוץ",
+      "emptyHint": "בחר שפה כדי לראות את ה-Dockerfile.",
+      "note": "תבניות מוכנות בלבד — רק האפשרויות לעיל עוזבות את הדפדפן שלך. קרא את הקובץ לפני שאתה שולח אותו.",
+      "warnings": "{n} דברים לבדוק",
+      "stages": "{n} שלבים",
+      "badgeNonRoot": "לא כ-root",
+      "badgeRoot": "רץ כ-root",
+      "badgePort": "פורט {port}"
+    },
+    "lineEndingDetect": {
+      "dropLabel": "גרור קובץ טקסט כדי לבדוק את סיומי השורות שלו",
+      "privacy": "טקסט שהודבק, וה-256 KB הראשונים של קובץ שנגרר, נשלחים ל-Forge API לסריקה; הבייטים אינם מאוחסנים.",
+      "pasteLabel": "או הדבק טקסט",
+      "pastePlaceholder": "הדבק את הטקסט שברצונך לבדוק",
+      "idle": "הדבק טקסט או גרור קובץ כדי לראות את פסק הדין לגבי סיומי השורות שלו.",
+      "detail": "ספירות ובדיקות",
+      "note": "זיהוי בלבד — הכלי הזה לעולם לא כותב מחדש את הקובץ שלך.",
+      "empty": "קלט ריק",
+      "noTerminator": "אין מסיים שורה — שורה אחת ללא סיום",
+      "consistent": "{style} — עקבי",
+      "mixed": "מורכב — {parts}",
+      "sharePart": "{pct}% {style}",
+      "style": {
+        "LF": "LF (Unix/Linux/macOS)",
+        "CRLF": "CRLF (Windows)",
+        "CR": "CR (מק קלאסי OS 9 ומטה)"
+      },
+      "lines": "{n} שורות",
+      "bytes": "{n} בתים",
+      "trailing": {
+        "present": "מסתיים ב־newline",
+        "absent": "אין שורה חדשה בסוף הקובץ"
+      },
+      "bomUtf8": "UTF-8 BOM",
+      "bomNone": "ללא BOM",
+      "countRow": "{style}: {n} ({pct}%)",
+      "colStyle": "סגנון",
+      "colCount": "ספירה",
+      "colShare": "חלק",
+      "minorityLines": "שורות שסוטות מהסגנון הדומיננטי: {lines}",
+      "andMore": "ועוד",
+      "findings": "בדיקות",
+      "level": {
+        "info": "הערה",
+        "warning": "אזהרה",
+        "danger": "שובר"
+      },
+      "sampled": "סרוק את {n} הראשונים מתוך {total} בתים",
+      "encodingLink": "פתח את גלאי הקידוד"
+    },
+    "fileTypeDetect": {
+      "drop": "גרור קובץ כדי לזהות מה הוא באמת",
+      "privacy": "רק כותרת של {kb} ק״ב נקראת — שאר הקובץ לעולם לא עוזב את המכשיר שלך.",
+      "hexTab": "הדבק הקס",
+      "detail": "הצג בתים ומתמודדים",
+      "idle": "גרור קובץ, או הדבק את הבתים המובילים שלו כהקס.",
+      "note": "חתימות מזהות את המיכל, לא את הקודק או את התוכן בתוכו.",
+      "unset": "—",
+      "unknownType": "אף חתימה לא התאימה",
+      "polyglot": "פוליגלוט",
+      "tierNone": "הסיומת מסכימה",
+      "tierBenign": "אי-התאמה לא מזיקה",
+      "tierMismatch": "אי-התאמת סיומת",
+      "tierHighRisk": "סיכון גבוה",
+      "confidenceMatch": "התאמת חתימה",
+      "confidenceContainer": "מיכל בלבד",
+      "confidenceAmbiguous": "מטעה",
+      "confidenceNone": "אין התאמה",
+      "signalDetected": "MIME זוהה",
+      "signalReported": "MIME מדווח",
+      "signalExtension": "סיומת שם קובץ",
+      "drillResolved": "נפתח המיכל {kind}: {type}",
+      "drillUnresolved": "מיכל {kind} מאומת; תת-סוג לא פוענח מהבתים שנדגמו",
+      "hexDump": "בתים בכותרת",
+      "bytesRead": "{n} בתים נקראו",
+      "headerOnly": "דוגמת כותרת בלבד",
+      "entropy": "אנטרופיה {bits} סיביות/בת",
+      "signatureCount": "{n} חתימות בטבלה",
+      "textHints": "רמזים מבניים: {hints}",
+      "candidates": "כל החתימות התואמות",
+      "atOffset": "הזזה {offset}"
+    },
+    "licenseChooser": {
+      "prompt": "מה הפרויקט הזה צריך?",
+      "pickScenario": "בחר את השורה שמספרת על הפרויקט שלך — התשובה והקובץ יופיעו כאן.",
+      "disclaimer": "פלט תבנית דטרמיניסטי, לא ייעוץ משפטי.",
+      "noAnswer": "אין רישיון אחד שמתאים למקרה זה",
+      "permissions": "מאפשר",
+      "conditions": "דורש",
+      "limitations": "אינו מכסה",
+      "alternates": "אפשרויות אחרes למקרה זה",
+      "useThis": "להשתמש בזה",
+      "readCanonical": "לקרוא את הטקסט הקנוני ב-SPDX",
+      "holder": "בעל זכויות היוצרים",
+      "holderPlaceholder": "השם שלך או של החברה שלך",
+      "holderHint": "הוסף את בעל זכויות היוצרים והקובץ ימלא את עצמו כשאתה מקליד.",
+      "year": "שנה",
+      "manifest": "איפה ה-SPDX id הולך",
+      "verbatim": "{name} משדרג זהה בתים לכולם — שורת זכויות היוצרים הולכת בהודעת קובץ המקור במקום בקובץ LICENSE.",
+      "noLicense": {
+        "summary": "מה קורה אם לא מוסיפים רישיון בכלל?",
+        "body": "אין רישיון זה לא אותו דבר כמו תחום ציבורי. ללא רישיון, זכויות היוצרים המובנות בתוקף חלות ואיש לא רשאי להעתיק, לשנות או להפיץ מחדש את הקוד שלך — מאגר ציבורי הוא נראות, לא הרשאה."
+      },
+      "artifact": {
+        "header": "כותרת קובץ מקור",
+        "notice": "הודעת קובץ מקור"
+      },
+      "refine": {
+        "patent": "הענקת פטנט רלוונטית כאן (קוד חברה, חומרה, עבודה על תקנים)",
+        "network": "הוא ירוץ כשירות ממוקם, לא רק כהורדה",
+        "library": "זו ספרייה שבה תוכנה אחרת משתמשת",
+        "later": "לאפשר גרסאות מאוחרות יותר של הרישיון (שומר על תאימות לקוד Apache-2.0)",
+        "none": "אין מה לדייק עוד במקרה הזה."
+      },
+      "scenario": {
+        "permissive": {
+          "label": "כל אחד יכול להשתמש בו בחופשיות",
+          "detail": "להשתמש, לשנות, למכור, לשלוח במוצרים סגורים — פשוט לשמור על הודעת זכויות היוצרים."
+        },
+        "copyleft": {
+          "label": "שיפורים חייבים לחזור",
+          "detail": "כל מי שמפיץ גרסה משונה חייב לפרסם גם את הקוד המקור."
+        },
+        "community": {
+          "label": "אני תורם לפרויקט קיים",
+          "detail": "הרישוי כבר הוחלט — התאם את הפרויקט שאליו אתה תורם."
+        },
+        "non-software": {
+          "label": "זה לא תוכנה",
+          "detail": "מסמכים, נתונים, עיצוב או מדיה דורשים רישיון Creative Commons, לא רישיון OSI."
+        },
+        "unsure": {
+          "label": "אני עדיין לא יודע",
+          "detail": "קבל את ברירת המחדל עם הסיכון הנמוך ביותר, ועוד שתי אפשרויות שכדאי להכיר."
+        }
+      },
+      "family": {
+        "permissive": "מקל",
+        "weak-copyleft": "קופילפט חלש",
+        "strong-copyleft": "קופילפט חזק",
+        "public-domain": "נחלת הכלל",
+        "content": "רישיון תוכן"
+      },
+      "flag": {
+        "commercial-use": "שימוש מסחרי",
+        "modifications": "שינויים",
+        "distribution": "הפצה",
+        "private-use": "שימוש פרטי",
+        "patent-use": "הענקת פטנט",
+        "include-copyright": "שמור על הודעת זכויות היוצרים",
+        "document-changes": "ציין את השינויים שלך",
+        "disclose-source": "חשוף את המקור",
+        "same-license": "אותה רישיון לכל היצירה",
+        "same-license-file": "אותה רישיון, לכל קובץ ששונה",
+        "same-license-library": "אותה רישיון לספרייה",
+        "network-use-disclose": "שימוש ברשת נחשב להפצה",
+        "liability": "אחריות",
+        "warranty": "אחריות יצרן",
+        "trademark-use": "שימוש בסימן מסחרי"
+      }
+    },
+    "isbn": {
+      "inputLabel": "מספרי ISBN",
+      "placeholder": "978-0-306-40615-7 — אחד בשורה, מקפים ורווחים מתעלמים",
+      "idle": "הדבק מספר ISBN אחד או עמודה שלמה; התוצאות מופיעות בזמן הקלדה.",
+      "scope": "חישוב ספרת בדיקה בלבד. מספר ISBN תקין הוא עקבי פנימית — זה אינו הוכחה שגוף רשמי הקצה אותו לספר אמיתי.",
+      "summary": "{valid} מתוך {total} תקינים",
+      "singleValid": "מספר ISBN תקין",
+      "singleInvalid": "לא מספר ISBN תקין",
+      "invalidCount": "{n} לא תקינים",
+      "convertedTo": "{type}: {value}",
+      "valid": "תקין",
+      "invalid": "לא תקין",
+      "truncated": "מוצגות {shown} השורות הראשונות.",
+      "col": {
+        "input": "קלט",
+        "normalized": "מנורמל",
+        "type": "סוג",
+        "status": "סטטוס",
+        "converted": "הומר",
+        "note": "הערה"
+      },
+      "type": {
+        "isbn10": "ISBN-10",
+        "isbn13": "ISBN-13",
+        "invalidLength": "אורך שגוי"
+      },
+      "note": {
+        "checkDigit": "ספרת בדיקה צריכה להיות {expected}",
+        "invalidLength": "ל־ISBN יש בדיוק 10 או 13 תווים",
+        "invalidCharacter": "מכיל תו שאינו ספרה",
+        "xMisplaced": "X תקין רק כתו האחרון ב־ISBN-10",
+        "noIsbn10": "ל־979 אין מקביל ב־ISBN-10",
+        "nonBookland": "ISBN בן 13 ספרות חייב להתחיל ב־978 או 979",
+        "ismn": "979-0 הוא טווח ISMN (מוזיקה מודפסת), לא ISBN"
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
+    },
+    "languageDetect": {
+      "inputLabel": "קטע קוד",
+      "inputPlaceholder": "הדבק קוד ללא שם קובץ — מתוך יומן צ'אט, פנייה, תשובה…",
+      "hintLabel": "שם קובץ או סיומת (אופציונלי)",
+      "hintPlaceholder": "main.h · .pl · Dockerfile",
+      "note": "מריץ את אותו מנוע כמו ה־API. הזיהוי מבוסס תוכן בלבד אלא אם כן מספקים רמז לשם קובץ; סיומות מעורפלות (.h .m .pl .fs .ts .cs .r) מופנות קודם כל דרך הכללים הייעודיים שלהן.",
+      "idle": "הדבק קטע — פסק הדין מופיע תוך כדי הקלדה.",
+      "confidence": {
+        "high": "ביטחון גבוה",
+        "medium": "ביטחון בינוני",
+        "low": "ביטחון נמוך"
+      },
+      "score": "{n}/100",
+      "dataFormat": "פורמט נתונים, לא שפת תכנות",
+      "multiLanguage": "חשודים בשפות מרובות",
+      "why": "מדוע תשובה זו",
+      "signals": "אותות תואמים",
+      "alternates": "מועמדים אחרים",
+      "composeNext": "עצב שפה זו {language}"
+    },
+    "iban": {
+      "inputLabel": "IBAN",
+      "idle": "הדבק IBAN — ההחלטה מגיעה אחרי הקלדה, ללא לחיצה על כפתור.",
+      "sourceNote": "בדיקת סכום ביקורת ומבנה לפי ISO 13616-1:2020. אורך לפי מדינה ופורמט BBAN מגיעים מרפרודוקציה פומבית של רישום IBAN של ISO, לא מהרישום עצמו.",
+      "valid": "IBAN תקין מבחינה תחבירית",
+      "keepTyping": "משיך להקליד — קצר מ-IBAN של המדינה הזו",
+      "caveat": "תקין מבחינה תחבירית בלבד. סכום ביקורת עובר לא מאשר שהחשבון קיים, פתוח או שייך לנמען.",
+      "printFormat": "פורמט הדפסה",
+      "details": "פירוק מפורש",
+      "notEncoded": "לא מקודד לפי פורמט המדינה הזו",
+      "coverage": "{n} מדינות עם פורמט IBAN רשום",
+      "reason": {
+        "bad_charset": "לא צורת IBAN — IBAN הוא שתי אותיות, שתי ספרות, ואז רק אותיות וספרות",
+        "country_unsupported": "אין פורמט IBAN רשום לקוד המדינה הזה",
+        "incomplete": "לא שלם",
+        "wrong_length_for_country": "ארוך מדי עבור ה-IBAN של מדינה זו",
+        "structure_mismatch": "אורך נכון, מבנה שגוי לפי הפורמט של מדינה זו",
+        "checksum_failed": "סכום ביקורת נכשל — יש טעות הקלדה איפשהו ב-IBAN הזה"
+      },
+      "badge": {
+        "country": "{name} ({code})",
+        "unknownCountry": "קוד מדינה {code}",
+        "length": "{n} מתוך {expected} תווים",
+        "bankCode": "קוד בנק {code}",
+        "expectedCheckDigits": "ספרות הביקורת למספר חשבון זה יהיו {digits}"
+      },
+      "field": {
+        "normalized": "פורמט אלקטרוני",
+        "country": "מדינה",
+        "checkDigits": "ספרות ביקורת",
+        "bban": "BBAN",
+        "bbanFormat": "פורמט BBAN",
+        "bankCode": "קוד בנק"
+      },
+      "check": {
+        "charset": "סט תווים",
+        "country": "מדינה",
+        "length": "אורך",
+        "structure": "מבנה",
+        "checksum": "MOD 97-10"
+      },
+      "state": {
+        "pass": "עבר",
+        "fail": "נכשל",
+        "skipped": "לא הושג"
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
+    },
+    "secretScan": {
+      "pasteLabel": "הדבק קוד, קובץ תצורה או .env",
+      "pastePlaceholder": "DATABASE_URL=postgres://…\nAPI_KEY=…",
+      "dropLabel": "גרור קובץ כדי לסרוק אותו",
+      "privacy": "רץ כולו בדפדפן שלך. כלום לא נשלח לשום מקום — גם לא אלינו.",
+      "scan": "סרוק",
+      "scanning": "סורק…",
+      "idleTitle": "הדבק משהו ולחץ על סרוק.",
+      "idleHint": "בודק מפתחות API של ספקים, אסימונים, מפתחות פרטיים וסודות בעלי אנטרופיה גבוהה. ערכים תואמים מוסתרים; רק מספרי שורות מוצגים במלואם.",
+      "clean": "לא נמצאו סודות",
+      "cleanCaveat": "אין כאן התאמה לפורמט אישורים ידוע או משהו שנראה כמו סוד אקראי. התאמת תבניות אינה הוכחה — סקור כל דבר שאתה לא בטוח לגביו.",
+      "found": "{n, plural, one {# סוד אפשרי נמצא} other {# סודות אפשריים נמצאו}}",
+      "foundCaveat": "מחק אותם לפני שאתה מדביק את זה לשום מקום. אם המפתח אמיתי, סובב אותו.",
+      "countHigh": "{n} ביטחון גבוה",
+      "countMedium": "{n} ביטחון בינוני",
+      "countLow": "{n} נמוכים",
+      "confidence": {
+        "high": "גבוה",
+        "medium": "בינוני",
+        "low": "נמוך"
+      },
+      "position": "שורה {line}, עמודה {column}",
+      "length": "{n} תווים",
+      "maskedLabel": "התאמה מוסתרת",
+      "why": "למה זה התאים",
+      "candidates": "יכול להיות גם:",
+      "scanDetail": "פרטי סריקה",
+      "lines": "{n} שורות",
+      "bytes": "{n} בתים נסרקו",
+      "suppressed": "{n} מקום/מקומות התעלמו",
+      "suppressedNote": "ערכי הדגמה ידועים (מפתחות EXAMPLE, your-api-key-here, תווים חוזרים) מתעלמים כדי שקבצי דוגמה לא יזעיקו לשווא.",
+      "omitted": "{n} נוספים לא מוצגים",
+      "truncated": "הקלט קוצץ — נסרק רק החלק הראשון",
+      "reportTitle": "ממצאי סריקת סודות (ערכים מוסתרים)",
+      "scopeNote": "זיהוי בלבד: הכלי הזה לעולם לא פונה לספק כדי לבדוק האם מפתח עדיין פעיל — זה היה אומר לשלוח את המפתח שלך לצד שלישי."
+    },
+    "eanUpcGtin": {
+      "inputLabel": "מספרי ברקוד",
+      "placeholder": "קוד אחד בשורה (פסיקים ונקודות-פסיק מפרידים גם כן)",
+      "idle": "הדבק קוד אחד או עמודה שלמה — ההחלטה מופיעה כשאתה מקליד.",
+      "operationLabel": "פעולה",
+      "operationValidate": "אמת (הקוד כולל את ספרת הבדיקה שלו)",
+      "operationCalculate": "חשב (לקוד חסרה ספרת הבדיקה שלו)",
+      "typeLabel": "סוג",
+      "typeAuto": "זיהוי לפי אורך",
+      "total": "{n} קודים",
+      "validCount": "{n} תקינים",
+      "invalidCount": "{n} לא תקינים",
+      "calculatedCount": "{n} מחושבים",
+      "unrecognizedCount": "{n} אורך לא מזוהה",
+      "verdict": {
+        "valid": "תקין",
+        "invalid": "לא תקין",
+        "calculated": "מחושב",
+        "unrecognized-length": "אורך לא מזוהה"
+      },
+      "alsoReadsAs": "נקרא גם כ-{type}",
+      "checkDigit": "ספרת ביקורת",
+      "corrected": "צריך להיות",
+      "gtin14": "צורה GTIN-14",
+      "reason": {
+        "empty": "אין מה לבדוק בשורה זו.",
+        "non-digit-characters": "מכיל תווים שאינם ספרות או פרידות.",
+        "unsupported-length": "אין מזהה GS1 באורך זה (נתמכים 8, 12, 13, 14 ו-18 ספרות).",
+        "length-mismatch": "אורך שגוי לסוג שבחרת.",
+        "check-digit-mismatch": "הספרה האחרונה לא תואמת את מה שהתקן דורש."
+      },
+      "warning": {
+        "separators-stripped": "רווחים, מקפים ונקודות הוסרו לפני הבדיקה.",
+        "all-zero": "כל האפסים — תקין מתמטית, אך לא מזהה אמיתי.",
+        "payload-is-also-a-complete-code": "זה גם אורך של קוד שלם. אם כבר יש לו ספרת ביקורת, עבור לאימות."
+      },
+      "math": "הצג את החישוב",
+      "mathSum": "סכום {sum} → ספרת ביקורת {check}",
+      "truncatedRows": "מוצגות {shown} השורות הראשונות מתוך {total}. העתקה והורדה כוללות את כולן.",
+      "privacy": "הקודים נשלחים ל-Forge API לבדיקה ואינם נשמרים.",
+      "scopeNote": "ספרת ביקורת תקינה פירושה שהמספר תקין מבחינה מבנית. אין זה אומר ש-GS1 הקצתה אותו למוצר, חברה או מיקום אמיתי — רק חיפוש במרשם GEPIR עונה על שאלה זו.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
+    },
+    "vin": {
+      "inputLabel": "VIN (17 תווים)",
+      "privacy": "נבדק בדפדפן שלך. ה-VIN לעולם לא נשלח לשום מקום.",
+      "idle": "הדבק VIN — הפסק יופיע תוך כדי הקלדה, ללא כפתור.",
+      "scope": "מבנה וספרת ביקורת בלבד (49 CFR 565.15 / ISO 3779). אין זה חיפוש היסטוריית רכב.",
+      "verdict": {
+        "valid": "מבנה VIN תקין",
+        "keepTyping": "המשך להקליד — נותרו {remaining} תווים נוספים",
+        "tooLong": "ארוך מדי — ל-VIN יש בדיוק 17 תווים, לזה יש {n}",
+        "invalidCharacter": "תו לא חוקי ל-VIN: \"{char}\" במיקום {position}",
+        "checkDigitMismatch": "אי-התאמה בספרת בדיקה — צפוי {expected}, נמצא {found}"
+      },
+      "hint": {
+        "confusable": "\"{char}\" אינו משמש לעולם ב-VIN. האם התכוונת ל-{suggest}?"
+      },
+      "notice": {
+        "notProvenance": "ספרת בדיקה תקינה מאששת שה-VIN מנוסח כראוי. היא אינה מאששת שהרכב קיים, לא שונה, או בעל היסטוריה נקייה — גם VIN מזויף עובר בדיקה זו.",
+        "pre1981": "רכבים שיוצרו לפני 1981, וכן חלק מרכבי היבוא (JDM/אירופה), אינם משתמשים בספרת בדיקה זו — אי-התאמה עשויה לא להעיד על הקלדה שגויה של ה-VIN.",
+        "partial": "אימות ספרת בדיקה דורש VIN מלא של 17 תווים. VIN חלקי הוא משימת פענוח, לא משימת סכום בדיקה."
+      },
+      "badge": {
+        "length": "{n} תווים",
+        "expected": "ספרת בדיקה {d}"
+      },
+      "invalidChars": {
+        "more": "גם אלה אינם תווים של VIN: {list}"
+      },
+      "segment": {
+        "wmi": "WMI 1-3",
+        "vds": "מזהה 4-8",
+        "checkDigit": "ספרת בדיקה 9",
+        "modelYear": "שנת דגם 10",
+        "plant": "מפעל 11",
+        "serial": "סידורי 12-17"
+      },
+      "math": {
+        "title": "הצג את החישוב",
+        "col": {
+          "position": "מיקום",
+          "char": "תו",
+          "value": "ערך",
+          "weight": "משקל",
+          "product": "מכפלה"
+        },
+        "formula": "סכום = {sum};  {sum} mod 11 = {remainder}  →  ספרת ביקורת {expected}"
+      },
+      "specimenTitle": "VIN · structure specimen"
+    },
+    "envDiff": {
+      "envA": "סביבה A",
+      "envB": "סביבה B",
+      "placeholderA": "הדבק או גרור את קובץ ה-.env הראשון",
+      "placeholderB": "הדבק או גרור את קובץ ה-.env השני",
+      "paneNoAssignment": "לא נמצאה שורת KEY=value",
+      "optIgnoreComments": "התעלם משורות הערה וריקות",
+      "optCaseInsensitive": "השוואת מפתחות ללא תלות ברישיות",
+      "optRedactSecrets": "הסתר סודות שזוהו",
+      "emptyHint": "הוסף סביבה שנייה כדי לראות את ההשוואה",
+      "summaryNone": "אין הבדלים בין {total} מפתחות",
+      "summaryDiff": "{n} מתוך {total} מפתחות שונים",
+      "note": {
+        "unchanged": "אותה ערך בשני הצדדים",
+        "changed": "הערך שונה",
+        "added": "מוגדר רק ב-B",
+        "removed": "מוגדר רק ב-A",
+        "commentedOutInA": "מושתק ב-A, מוגדר ב-B",
+        "commentedOutInB": "מוגדר ב-A, מושתק ב-B"
+      },
+      "secretChanged": "הסוד שונה",
+      "secretSame": "הסוד זהה בשני הצדדים",
+      "count": {
+        "unchanged": "{n} ללא שינוי",
+        "changed": "{n} השתנו",
+        "added": "{n} נוספו",
+        "removed": "{n} הוסרו",
+        "commentedOut": "{n} הופסקו"
+      },
+      "warnings": "אזהרות קלט ({n})",
+      "warningType": {
+        "duplicateKey": "{file} · מפתח כפול",
+        "quoteMismatch": "{file} · אי-התאמת גרשיים",
+        "unparsableLine": "{file} · שורה לא ניתנת לניתוח"
+      },
+      "showUnchanged": "הצג ללא שינוי ({n})",
+      "commentedIn": {
+        "A": "מוער ב-A",
+        "B": "מוער ב-B",
+        "both": "מוער בשניהם"
+      },
+      "redactedNote": "ערכים סודיים מוסתרים על ידי הוריסטיקת מילות מפתח — לא סורק אבטחה. ההשוואה מתבצעת על הערכים הגולמיים, כך שסוד שהוחלף עדיין יוצג כשונה.",
+      "interpolationNote": "הפניות ${VAR} מופיעות כפי שהן ולא מתבצעת פתוחה: ההרחבה משתנה לפי הצרכן.",
+      "truncated": "מוצגים רק 5,000 המפתחות הראשונים; הספירות מכסות כל מפתח.",
+      "colKey": "מפתח",
+      "colA": "A",
+      "colB": "B",
+      "colStatus": "סטטוס",
+      "privacy": "שני הקבצים מופיעים להשוואה בדפדפן שלך. כלום לא מעלה."
+    },
+    "csvDiff": {
+      "originalLabel": "CSV מקורי",
+      "updatedLabel": "CSV מעודכן",
+      "originalPlaceholder": "הדבק את הייצוא המקורי, או גרור קובץ .csv לכאן",
+      "updatedPlaceholder": "הדבק את הייצוא המעודכן, או גרור קובץ .csv לכאן",
+      "emptyHint": "הדבק או גרור את שני הקבצים — ההשוואה תרוץ ברגע שיש תוכן בכל צד.",
+      "note": "שורות מתאימות לפי זהות ולא לפי מיקום, כך ששורה שהוכנסה או ממוינת מחדש לא נראית כקיר של שינויים. התוכן נשלח ל-API להשוואה ואינו מאוחסן.",
+      "columns": "{n} עמודות",
+      "keyLabel": "עמודת מפתח",
+      "keyAuto": "הצעה אוטומטית",
+      "keyNone": "ללא מפתח — השווה שורות שלמות",
+      "joinLabel": "חיבור",
+      "joinFull": "מלא חיצוני — כל שורה",
+      "joinInner": "פנימי — שורות בשני הקבצים",
+      "joinLeft": "שמאלי — סט השורות המקורי",
+      "ignoreWhitespace": "התעלם מרווחים",
+      "ignoreCase": "התעלם מרישיות",
+      "treatEmptyAsNull": "ריק = NULL = N/A",
+      "noDifferences": "אין הבדלים",
+      "differences": "{added} נוספו · {removed} הוסרו · {changed} שונו",
+      "added": "{n} נוספו",
+      "removed": "{n} הוסרו",
+      "changed": "{n} שונו",
+      "unchangedCount": "{n} ללא שינוי",
+      "totals": "{original} → {updated} שורות",
+      "matchedBy": "התאמה לפי {columns} ({source})",
+      "matchedWholeRow": "התאמה לפי תוכן השורה כולה — לא נעשה שימוש בעמודת מפתח, ולכן לא מדווח על שינויים.",
+      "keySource": {
+        "provided": "הבחירה שלך",
+        "auto": "מוצע אוטומטית",
+        "full-row": "שורה שלמה"
+      },
+      "keyRejected": "מועמדי מפתח שנדחו: {items}",
+      "columnMismatch": "עמודות רק במקור: {original} · רק בעדכון: {updated}",
+      "truncated": "מוצגות {shown} מתוך התוצאה המלאה (תצוגה מקדימה מוגבלת ל-{limit} שורות) — הספירות למעלה הן מלאות.",
+      "findings": "הערות ({n})",
+      "level": {
+        "info": "מידע",
+        "warning": "אזהרה",
+        "danger": "שגיאה"
+      },
+      "wholeRow": "שורה {n}",
+      "exportChanged": "שורות שונתו (CSV)",
+      "exportFull": "הבדלים מלאים (CSV)"
+    },
+    "uscc": {
+      "modeLabel": "אימות או יצירה",
+      "tab": {
+        "verify": "אימות",
+        "generate": "יצירת קודי בדיקה"
+      },
+      "inputLabel": "קוד אשראי חברתי מאוחד",
+      "placeholder": "18 תווים, למשל 91500000059926748X",
+      "idle": "הדבק קוד של 18 תווים. הוא נבדק בדפדפן בזמן הקלדה — שום דבר לא נשמר.",
+      "scope": "בדיקה מבנית בלבד (GB 32100-2015 + ISO 7064 MOD 31-3). קוד שעובר בדיקה הוא תקין מבחינה מבנית; זה לא אומר שארגון רשום תחתיו — בדוק זאת ברישום הלאומי cods.org.cn.",
+      "valid": "קוד אשראי חברתי מאוחד תקין",
+      "invalid": "קוד אשראי חברתי מאוחד לא תקין",
+      "incomplete": "{n} מתוך 18 תווים",
+      "invalidCharacters": "מכיל תווים שהתקן שולל",
+      "checksumOk": "ספרת בדיקה תקינה",
+      "checksumBad": "אי-התאמה בספרת בדיקה",
+      "expectedDigit": "ספרת הבדיקה צריכה להיות {expected}, לא {actual}",
+      "illegalAt": "מיקום {position}: “{char}” אינו נכלל בקבוצת התווים של הקוד (I, O, S, V, Z נשללו)",
+      "detail": "פרטי שדה",
+      "legacyTitle": "קוד ארגון מורשת (GB 11714)",
+      "legacy": {
+        "ok": "קוד הארגון המוטמע בן 9 תווים עקבי בעצמו",
+        "mismatch": "תו הבדיקה המורשת היה אמור להיות {expected} — לידיעה בלבד; לא כל מחלקת רישום נושאת קוד ארגון GB 11714",
+        "unchecked": "לא נבדק"
+      },
+      "divisionScope": "מיקומים 3–8 מתואמים מול טבלת המחוזות של GB/T 2260 וכללי ההקשרה של הצורה בן-שיש-ספרות; טבלת המחוזות המלאה אינה מועברת.",
+      "field": {
+        "registrationDept": "מחלקת רישום",
+        "orgCategory": "קטגוריית ארגון",
+        "adminDivision": "חלוקה מנהלית",
+        "orgIdentifier": "מזהה נושא",
+        "checkDigit": "ספרת ביקורת"
+      },
+      "depth": {
+        "none": "לא פוענח",
+        "province": "רמת מחוז",
+        "prefecture": "רמת מחוז מנהלי",
+        "county": "רמת מחוז"
+      },
+      "note": {
+        "empty": "אין עדיין מה לבדוק",
+        "incomplete": "קוד אשראי חברתי מאוחד מכיל בדיוק 18 תווים",
+        "tooLong": "יותר מ-18 תווים",
+        "illegalCharacter": "מכיל תו שאינו נכלל בקבוצה GB 32100-2015 (I, O, S, V ו-Z אינם מותרים)",
+        "checkDigitMismatch": "ספרת הבדיקה אינה תואמת את 17 התווים הראשונים",
+        "departmentUnknown": "מיקום 1 אינו מחלקת רישום המוגדרת בסטנדרט (1, 5, 9, Y)",
+        "categoryUnknown": "מיקום 2 אינו קטגוריית ארגון המוגדרת למחלקת הרישום הזו",
+        "divisionNotNumeric": "מיקומים 3–8 חייבים להיות שישה ספרות",
+        "divisionUnknownProvince": "מיקומים 3–4 אינם קוד מחוז לפי GB/T 2260",
+        "divisionMalformed": "מחוז ללא מטרופולין, מה שאינו מותר לפי GB/T 2260"
+      },
+      "gen": {
+        "dept": "מחלקת רישום",
+        "category": "קטגוריית ארגון",
+        "province": "מחוז",
+        "count": "כמה",
+        "randomProvince": "כל מחוז",
+        "regenerate": "צור סדרה חדשה",
+        "emptyHint": "בחר את האפשרויות למעלה כדי לייצר קודים לבדיקה.",
+        "testDataBadge": "נתוני בדיקה",
+        "seed": "זרע {seed}",
+        "allCodes": "כל הקודים",
+        "disclaimer": "קודים אלה תקינים מבחינה מבנית אך אינם שייכים לארגון רשום. אין להשתמש בהם לייצוג ישות אמיתית.",
+        "note": "הייצור מבוסס זרע: אותן אפשרויות ואותו זרע תמיד מחזירים את אותה סדרה, כך שפיקסורה נשארת ניתנת לשחזור. כל קוד מסומן כ-isTestData ב-JSON וגם כאן."
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
+    },
+    "yamlDiff": {
+      "original": "מקורי",
+      "changed": "שונה",
+      "originalPlaceholder": "הדבק או גרור את ה-YAML המקורי (או JSON)",
+      "changedPlaceholder": "הדבק או גרור את ה-YAML המשתנה (או JSON)",
+      "idle": "מלא את שתי החלונות וההשוואה תרוץ בזמן אמת כותבים.",
+      "privacy": "שני המסמכים נפרשים ומושווים בדפדפן הזה — כלום לא מעלה, וזה בדיוק המטרה עבור מניפסטים שמכילים שמות מארחים ושמות סודות.",
+      "modeLabel": "השוואה",
+      "modeSemantic": "סמנטית (מבנה)",
+      "modeRawText": "טקסט גולמי (תווים)",
+      "resolveAnchors": "פתור עוגנים ואליאסים לערכיהם",
+      "valid": "YAML תקין",
+      "validMulti": "YAML תקין · {n} מסמכים",
+      "invalid": "שגיאת פירוש, שורה {line}",
+      "parseFailed": "צד אחד לא נפרש — לא בוצעה השוואה",
+      "equivalent": "אין הבדלים — שני המסמכים מתפרשים לאותו מבנה",
+      "equivalentStructural": "אותו מבנה מפורש · {n} הבדלי עיצוב או עוגנים",
+      "summary": "{added} נוספו · {removed} הוסרו · {changed} שונו · {typeChanged} שינויי סוג",
+      "parseErrorAt": "{side} · שורה {line}, עמודה {column}: {message}",
+      "documentCountMismatch": "מספר המסמכים שונה: {original} מול {changed} — המסמכים הותאמו לפי סדר והיתר דווחו בשלמותם",
+      "duplicateKeys": "מפתחות כפולים במקור",
+      "unified": "טלאי מאוחד (YAML מנורמל)",
+      "howItWorks": "איך עובד ההשוואה הזו",
+      "rule": {
+        "keyOrder": "סדר המפתחות במיפוי, גרשיים וקווי הריבוע מתעלמים; סדר הרשימות משוואה, כי סדר ברשימה נושא משמעות.",
+        "anchors": "כינויים מפורשים לערכיהם, כך ששינוי מאחורי עוגן משותף מופיע בכל אתר כינוי; עוגן או כינוי ששונה עם הערך שלם מדווח בנפרד כשינוי מבני.",
+        "mergeKeys": "מפתחות מיזוג (<<) מורחבים לפני ההשוואה, ומפתחות של הצומת עצמו גוברים על הממוזגים.",
+        "types": "הסוג הוא חלק מהערך: 8080, \"8080\" ו-!!str 8080 מדווחים כשינויי סוג, לא כשינוי כללי.",
+        "sequences": "רשימות של מיפויים מתאמות לפי שם, מזהה או מפתח כשהשדה ייחודי בשני הצדדים, כך שפריט אחד שנוסף לא גורר נפילה דומינוא; סידור מחדש עדיין מדווח.",
+        "blockScalars": "סקלרים בלוקיים משוואים לפי מחרוזת מפורשת, כך ששורת הסיום ש-|- מסיר היא שינוי אמיתי; שינוי עיצוב עם אותו ערך הוא מבני.",
+        "comments": "הערות אינן חלק ממודל הנתונים של YAML ואינן מופיעות בהשוואה.",
+        "multiDoc": "--- זורמים משווים מסמך אחר מסמך; במקרה של אי-התאמה במספר, מוצגת התראה במקום להשוות רק את הראשון.",
+        "duplicateKeys": "מפתח מיפוי כפול בקלט משתמש בהופעה האחרונה ומדווח כאזהרה."
+      },
+      "note": {
+        "raw-text-mode": "מצב טקסט גולמי משווה תווים, לא מבנה: סדר המפתחות, גרשיים וכניסה נחשבים.",
+        "parse-error": "צד אחד לא עבר ניתוח, ולכן לא בוצעה השוואה.",
+        "document-count-mismatch": "שני הצדדים מכילים מספר שונה of --- מסמכים; המסמכים הוזווגו לפי סדר והיתר דווחו בשלמותם.",
+        "merge-keys-expanded": "מפתחות מיזוג (<<) הורחבו לפני ההשוואה.",
+        "anchors-unresolved": "כינויים הופיעו בהשוואה כהפניות *name, לא כערכים המפוענחים שלהם.",
+        "yaml11-ambiguous-scalars": "ערכי y/n/yes/no/on/off ללא גרשיים נקראים כאן כמחרוזות (YAML 1.2 Core) וכערכים בוליאניים ב-YAML 1.1 — הוסיפו גרשיים אם התכוונתם לערך בוליאני.",
+        "sequence-matched-by-identity": "רצפים of מיפויים הוזווגו לפי שדה זהות ולא לפי מיקום.",
+        "duplicate-keys": "מיפוי מכריז על אותו מפתח פעמיים; הופעה אחרונה נעשה בה שימוש.",
+        "truncated": "מוצגות רק 2000 השינויים הראשונים."
+      }
+    },
+    "listSetCompare": {
+      "listA": "רשימה א׳",
+      "listB": "רשימה ב׳",
+      "placeholder": "הדבק פריטים, אחד בשורה (או גרור קובץ .txt/.csv)",
+      "emptyHint": "הוסף פריטים לשתי הרשימות כדי לראות את ההשוואה.",
+      "privacy": "שתי הרשימות מושוות בדפדפן שלך — כלום לא מעלה. אותו מנוע פועל בשרת עבור קוראי API ו-MCP.",
+      "delimiter": "פריד",
+      "delimiterOption": {
+        "auto": "זיהוי אוטומטי",
+        "newline": "שורה חדשה",
+        "comma": "פסיק",
+        "tab": "טאב",
+        "custom": "מותאם אישית"
+      },
+      "customDelimiter": "מפריד",
+      "customDelimiterPlaceholder": "| או \\t",
+      "sort": "סדר",
+      "sortOption": {
+        "original": "סדר מקורי",
+        "asc": "א→ת",
+        "desc": "ת→א",
+        "byCount": "לפי כמות"
+      },
+      "optCaseSensitive": "רגיש לאותיות",
+      "optTrim": "לנקות רווחים",
+      "optCollapse": "לדחוס רווחים פנימיים",
+      "optIgnoreZeros": "להתעלם מאפסים מובילים",
+      "paneItems": "{n} פריטים",
+      "paneSingle": "פריט אחד — בדוק את הפריד",
+      "items": "{n}",
+      "none": "אין",
+      "more": "+{n} נוספים — העתק או הורד לקבלת הרשימה המלאה",
+      "panel": {
+        "onlyInA": "רק ב-A",
+        "onlyInB": "רק ב-B",
+        "intersection": "חיתוך (בשניהם)",
+        "union": "איחוד (כל הפריטים)",
+        "symmetricDifference": "הפרש סימטרי"
+      },
+      "summaryIdentical": "אותו קבוצה — {n} פריטים משותפים",
+      "summaryDiff": "{a} רק ב-A · {b} רק ב-B · {shared} משותפים",
+      "drill": {
+        "symmetricDifference": "הפרש סימטרי ({n})",
+        "duplicates": "כפילויות בתוך רשימה ({n})",
+        "multiplicities": "ספירות לפריט ({n})",
+        "warnings": "הודעות ({n})"
+      },
+      "duplicatesInA": "חוזר ב-A",
+      "duplicatesInB": "חוזר ב-B",
+      "colValue": "פריט",
+      "colCountA": "ב-A",
+      "colCountB": "ב-B",
+      "detailTruncated": "ספירות לפריט קוצצות — הגדל את maxDetail ב-API לקבלת הטבלה המלאה.",
+      "reportTitle": "השוואת רשימות"
+    },
+    "loanAmortization": {
+      "principal": "סכום הלוואה",
+      "rate": "שיעור שנתי %",
+      "term": "תקופה",
+      "termUnit": "יחידת תקופה",
+      "unitYears": "שנים",
+      "unitMonths": "חודשים",
+      "startMonth": "חודש התשלום הראשון",
+      "startMonthHint": "YYYY-MM. מתייג את לוח הזמנים; אינו משנה סכומים.",
+      "extraHeading": "תשלומים נוספים",
+      "extraMonthly": "תוספת חודשית",
+      "extraYearly": "תוספת שנתית",
+      "extraYearlyMonth": "התוספת השנתית נוחתת בחודש",
+      "extraOneTime": "תוספת חד-פעמית",
+      "extraOneTimePeriod": "חד-פעמית בתשלום מס׳",
+      "extraNote": "תשלומים נוספים מקטינים את הקרן בתקופה שבה הם נוחתים, מה שמקטין את הריבית בכל התקופות הבאות. הריבית והתשלום הקבוע נשארים זהים.",
+      "monthlyPayment": "תשלום חודשי",
+      "totalInterest": "סה\"כ ריבית",
+      "totalPaid": "סה\"כ תשלום",
+      "crossover": "נקודת מעבר",
+      "crossoverValue": "תשלום {n}",
+      "crossoverNone": "לעולם לא",
+      "payoff": "שולם במלואו בתשלום {n}",
+      "monthsSaved": "{n} חודשים מוקדם יותר",
+      "totalExtra": "{amount} שולם מעבר ללוח הזמנים",
+      "viewMonthly": "כל תשלום",
+      "viewAnnual": "לפי שנה",
+      "tableCaption": "לוח הפחתות: תשלום, ריבית, קרן ויתרה לתקופה",
+      "colPeriod": "#",
+      "colDate": "חודש",
+      "colPayment": "תשלום",
+      "colInterest": "ריבית",
+      "colPrincipal": "ראש הון",
+      "colBalance": "יתרה",
+      "colYear": "שנה",
+      "expandRows": "הצג את כל {total} התשלומים",
+      "collapseRows": "הצג פחות תשלומים",
+      "windowNote": "מוצגים {shown} מתוך {total} תשלומים. ה־CSV וה־API מכילים את כולם.",
+      "emptyHint": "הזן סכום הלוואה, ריבית ומועד כדי לראות את לוח התשלומים.",
+      "note": "אותו מנוע כמו ב־API. החישוב מבוצע רק על סמך פרטי ההלוואה שלך; כלום לא מעלה ולא נשמר.",
+      "errPrincipal": "הזן סכום הלוואה גדול מ־0.",
+      "errRate": "הזן ריבית בין 0 ל־100.",
+      "errTerm": "הזן תקופה בין חודש אחד ל-100 שנים.",
+      "errStartMonth": "השתמש ב-YYYY-MM, לדוגמה 2026-01.",
+      "errExtra": "הזן סכום של 0 או יותר.",
+      "errOneTimePeriod": "הזן את מספר התשלום שבו נופל התשלום הבודד."
+    },
+    "businessDayShift": {
+      "modeLabel": "מה לחשב",
+      "mode": {
+        "shift": "הזז תאריך",
+        "countBetween": "ספור בין תאריכים"
+      },
+      "startDate": "תאריך התחלה",
+      "days": "ימי עסקים",
+      "daysHint": "ספירה שלילית עוברת אחורה: −10 הם עשרה ימי עסקים לפני תאריך ההתחלה.",
+      "daysInvalid": "ימי עסקים חייבים להיות מספר שלם, עם סימן מינוס מוביל אופציונלי.",
+      "endDate": "תאריך סיום",
+      "includeEndDate": "לספור גם את תאריך הסיום — זה מה ש- NETWORKDAYS מחזיר בגיליון אלקטרוני",
+      "weekendLabel": "ימי מנוחה בכל שבוע",
+      "weekendHint": "ברירת המחדל היא שבת ושבתון. הגדר חמישי ושבת במקום זאת שם זהו סוף השבוע.",
+      "weekday": {
+        "sun": "א",
+        "mon": "ב",
+        "tue": "ג",
+        "wed": "ד",
+        "thu": "ה",
+        "fri": "ו",
+        "sat": "ש"
+      },
+      "holidays": "חגים",
+      "holidaysHint": "אם ריק, התשובה היא ספירת סוף השבוע הטהורה — לא מוחל לך לוח שנה מדינתי.",
+      "makeupWorkdays": "ימי עבודה פיצוי",
+      "makeupHint": "תאריכים שבהם עבדו למרות שחלו בסוף שבוע או בחג – ימי שישי של 调休/补班 בסין נכנסים לכאן.",
+      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesIgnored": "{n, plural, one {# רשומה אינה תאריך בפורמט YYYY-MM-DD ואינה בשימוש} other {# רשומות אינן תאריכים בפורמט YYYY-MM-DD ואינן בשימוש}}",
+      "pickStart": "בחר תאריך התחלה כדי להתחיל.",
+      "emptyHintShift": "בחר תאריך התחלה ומספר ימי עבודה.",
+      "emptyHintCount": "בחר תאריך התחלה ותאריך סיום.",
+      "note": "אותו מנוע כמו ב-API. החישוב מתבצע על סט הכללים המוצג יחד עם התוצאה; כלום לא נשמר.",
+      "countHeadline": "{n, plural, one {# יום עבודה} other {# ימי עבודה}}",
+      "reversedRange": "תאריך הסיום מוקדם מתאריך ההתחלה, ולכן התוצאה יוצאת שלילית.",
+      "classification": {
+        "workday": "יום עבודה",
+        "weekend": "סוף שבוע",
+        "holiday": "חג",
+        "makeupWorkday": "יום עבודה פיצוי"
+      },
+      "ruleWeekend": "{days} ימי מנוחה",
+      "ruleNoWeekend": "אין ימי מנוחה שבועיים",
+      "ruleHolidays": "{n, plural, =0 {אין רשימת חגים} one {# חג} other {# חגים}}",
+      "ruleMakeups": "{n, plural, =0 {אין ימי עבודה פיצוי} one {# יום עבודה פיצוי} other {# ימי עבודה פיצוי}}",
+      "ruleEndIncluded": "תאריך סיום נספר",
+      "ruleEndExcluded": "תאריך סיום לא נספר",
+      "chain": "הזז שוב מתאריך זה"
+    },
+    "retryBackoff": {
+      "strategy": {
+        "exponential": "אקספוננציאלי",
+        "linear": "ליניארי",
+        "fixed": "קבוע"
+      },
+      "initialDelay": "השהייה ראשונית (מילי-שניות)",
+      "factor": "מקדם איטור",
+      "factorHint": "מכפיל המוחל בכל ניסיון חוזר. חייב להיות גדול מ-1.",
+      "increment": "הגדלה ליניארית (מילי-שניות)",
+      "incrementHint": "מילי-שניות המוספות לעיכוב בכל ניסיון חוזר.",
+      "maxDelay": "תקרת עיכוב מקסימלי (מילי-שניות)",
+      "maxDelayHint": "השאר ריק ללא תקרה. ברגע שהתקרה מושגת, כל עיכוב מאוחר יותר נשאר קבוע עליה.",
+      "maxAttempts": "מספר ניסיונות מקסימלי",
+      "maxAttemptsHint": "1 עד 100.",
+      "excludeInitial": "מספר הניסיונות המקסימלי אינו כולל את הבקשה הראשונית",
+      "excludeInitialNote": "מופעל: המספר למעלה סופר רק ניסיונות חוזרים, הבקשה הראשונית היא נוספת. כבוי: הוא סופר כל ניסיון, כולל הבקשה הראשונית.",
+      "jitter": {
+        "none": "ללא — עיכובים מדויקים",
+        "equal": "שווה — מחצית קבועה, מחצית אקראית",
+        "full": "מלא — בין אפס להשהייה"
+      },
+      "callerTimeout": "הזמן הקצוב שלך (מילישניות)",
+      "callerTimeoutHint": "אופציונלי. השאר ריק כדי לדלג על בדיקת התקציב.",
+      "emptyHint": "תקן את השדה המודגש כדי לראות את לוח הזמנים.",
+      "note": "מחושב מהמדיניות בלבד — כלום לא נשלח לשירות חיצוני. ה-Jitter מדווח כטווח שבו לקוח אמיתי ייפול, לעולם לא כדגימה בודדת.",
+      "headlineExact": "{attempts} ניסיונות, {wait} של המתנה בסך הכל.",
+      "headlineRange": "{attempts} ניסיונות, {expected} של המתנה בממוצע, עד {max} במקרה הגרוע.",
+      "finalDelay": "ההמתנה האחרונה, לפני ניסיון {attempt}, היא {delay}.",
+      "noRetries": "תקציב זה מאפשר ניסיון אחד ללא חידוש, כך שאין מה להמתין.",
+      "retryCount": "{count, plural, =0 {אין חידושים} one {חידוש אחד} other {# חידושים}}",
+      "capFlattened": "הגבול הושג בניסיון {attempt} — כל השהייה מאוחרת יותר נשארת ב-{delay}.",
+      "timeoutExceeded": "המקרה הגרוע מחכה {wait}, מה שעובר את תקציב ה-{timeout} שלך.",
+      "timeoutOk": "במקרה הגרוע ביותר, ההמתנה היא {wait}, בתוך תקציב ה-{timeout} שלך.",
+      "tableLabel": "לוח זמנים לניסיון חוזר",
+      "colAttempt": "ניסיון",
+      "colDelay": "השהיה",
+      "colCumulative": "המתנה מצטברת",
+      "average": "ממוצע {value}",
+      "formula": {
+        "none": "ההשהיות מדויקות — לא מופעל רעש (jitter).",
+        "equal": "רעש שווה: מחצית מההשהיה קבועה, והמחצית השנייה נבחרת באופן אחיד, כך שכל המתנה נופלת בין מחצית ההשהיה להשהיה המלאה.",
+        "full": "רעש מלא: ההמתנה נבחרת באופן אחיד בין אפס להשהיה המחושבת."
+      },
+      "errInitialDelay": "ההשהיה ההתחלתית חייבת להיות מספר שלם של מילישניות, לפחות 1.",
+      "errFactor": "המקדם חייב להיות גדול מ-1 ולא יותר מ-100. מקדם של 1 הוא האסטרטגיה הקבועה.",
+      "errIncrement": "הגידול חייב להיות מספר שלם של מילישניות, 0 או יותר.",
+      "errMaxDelay": "התקרה חייבת להיות מספר שלם של מילישניות, לפחות 1.",
+      "errCapBelowInitial": "התקרה חייבת להיות לפחות העיכוב ההתחלתי.",
+      "errMaxAttempts": "מספר הניסיונות חייב להיות מספר שלם בין 1 ל-100.",
+      "errCallerTimeout": "זמן ההמתנה חייב להיות מספר שלם של מילישניות, לפחות 1."
+    },
+    "csvColumns": {
+      "csvLabel": "CSV",
+      "csvPlaceholder": "הדבק CSV כאן, או גרור קובץ — השורה הראשונה נקראת כשמות העמודות",
+      "sample": "דוגמת CSV",
+      "chooseFile": "בחר קובץ",
+      "fileFailed": "לא ניתן לקרוא את {name}.",
+      "delimiterLabel": "תו מפריד",
+      "delimiter": {
+        "comma": "פסיק  ,",
+        "semicolon": "נקודה-פסיק  ;",
+        "tab": "טאב",
+        "pipe": "צינור |"
+      },
+      "raggedPolicyLabel": "שורות שאינן תואמות לכותרת",
+      "ragged": {
+        "pad": "יישר לכותרת",
+        "truncate": "קצץ שורות ארוכות, השאר שורות קצרות קצרות",
+        "reject": "עצור ודווח"
+      },
+      "columnsTitle": "עמודות — {kept} מתוך {total} נשמרו",
+      "columnsHint": "בטל סימון כדי להסיר עמודה, ערוך את התיבה כדי לשנות את שמה, השתמש בחצים כדי לסדר מחדש. הכל נפתר מול הכותרת המקורית.",
+      "reset": "אפס עמודות",
+      "keep": "שמור עמודה {name}",
+      "renameLabel": "{name}",
+      "moveUp": "הזז את {name} למעלה",
+      "moveDown": "הזז את {name} למטה",
+      "noneKept": "כל העמודות מבוטלות — יש לשמור לפחות אחת.",
+      "emptyHint": "הדבק CSV למעלה כדי לנהל את עמודותיו.",
+      "note": "פועל על הטקסט שמדביקים. גרור, ואז שנה שם, ואז סדר מחדש — בסדר קבוע זה, תמיד ביחס לכותרת המקורית.",
+      "columnCount": "{n} עמודות",
+      "rowCount": "{n} שורות",
+      "duplicateHeaders": "כותרת כפולה בשימוש לפי שם: {names}",
+      "raggedCount": "{n}{more} שורות לא תואמות לרוחב הכותרת",
+      "previewLabel": "פלט CSV",
+      "previewTruncated": "מוצגות {shown} השורות הראשונות מתוך {total}. העתק או הורד לקבלת הקובץ המלא.",
+      "raggedListLabel": "שורות שלא תואמות לרוחב הכותרת",
+      "raggedRow": "שורה {line}: {actual} שדות, בכותרת יש {expected}",
+      "unusedRenames": "השינוי התעלם — העמודות האלה לא נכללות בפלט: {names}"
+    },
+    "imageRotateFlip": {
+      "drop": "גרור תמונה, או לחץ כדי לעיין",
+      "browse": "בחר תמונה",
+      "selected": "{name} · {kb} KB",
+      "privacy": "הקובץ נשלח ל-Forge API לבצע את ההמרה ואינו מאוחסן.",
+      "tooLarge": "התמונה הזו גדולה מ-{mb} MB.",
+      "ccw": "90° שמאלה",
+      "cw": "90° ימינה",
+      "half": "180°",
+      "reset": "אפס",
+      "flipHorizontal": "הפוך אופקית",
+      "flipVertical": "הפוך אנכית",
+      "angle": "זווית",
+      "exactAngle": "° מדויק",
+      "fitMode": "מצב התאמה",
+      "fitExpand": "הרחב קנבס",
+      "fitCrop": "חתוך למילוי",
+      "fitInside": "התאם לתוך",
+      "fitNote": "לאחר סיבוב של רבע, התמונה המסובבת כבר לא מתאימה למסגרת הקודמת שלה: הרחבה שומרת כל פיקסל, חיתוך שומר על הגודל המקורי וחותך את הפינות, התאמה מקטינה את כל התמונה.",
+      "outputFormat": "פורמט פלט",
+      "sameFormat": "כמו הקלט",
+      "idle": "גרור תמונה כדי לראות אותה מכוונת מחדש.",
+      "original": "מקור · {w}×{h}",
+      "originalAlt": "התמונה כפי שהועלתה",
+      "result": "תוצאה · {w}×{h}",
+      "resultAlt": "התמונה המכוונת מחדש",
+      "badgeLossless": "ללא דגימה מחדש",
+      "badgeResampled": "דוגמה מחדש",
+      "badgeSize": "{kb} KB",
+      "badgeExif": "כיוון EXIF {orientation} הוחל קודם",
+      "badgeSnapped": "מוצמד לסיבוב רבע מדויק",
+      "badgeReencode": "הגיאומטריה מדויקת; הקודק מקודד מחדש",
+      "download": "הורד",
+      "note": "סיבובים של 90°, 180° ו-270° מזיזים פיקסלים ללא ערבוב. כל זווית אחרת מבצעת דגימה מחדש. GIF מונפש, APNG ו-WebP מונפש עדיין לא נתמכים."
+    },
+    "exifStrip": {
+      "drop": "גרור JPEG, PNG או WebP כדי להסיר את המטא-נתונים שלו",
+      "privacy": "מעובד בשרתים שלנו ואינו מאוחסן. עד {mb} MB לתמונה.",
+      "idle": "הוסר: GPS, זמן צילום, מידע על המצלמה והמכשיר, תמונה ממוזערת מוטמעת, היסטוריית עריכה. נשמר: כיוון, פרופיל צבע, מידות, נתוני פיקסלים.",
+      "note": "תמונות סטטיות בלבד. וידאו, PDF, HEIC, AVIF ו-GIF אינם בתחום, ומניפסטים של מקור C2PA נשארים שלמים.",
+      "detail": "מה הוסר",
+      "optKeepThumbnail": "שמור את תמונת המיניאטורה המוטמעת ב-Exif",
+      "verdictStripped": "הוסרו {fields} שדות מטא-נתונים ({kb} KB)",
+      "verdictClean": "קובץ זה אינו מכיל מטא-נתונים ניתנים להסרה",
+      "strippedCaveat": "התמונה עצמה לא השתנתה — אותם פיקסלים, אותן מידות, ללא קידוד מחדש.",
+      "cleanCaveat": "הוחזר בתקווה של שלמות, בדיוק כפי שהגיע.",
+      "badgeOrientationKept": "הכיוון נשמר",
+      "badgeOrientationLost": "לא ניתן לשמור את הכיוון",
+      "badgeColorProfileKept": "פרופיל צבע נשמר",
+      "badgeThumbnailKept": "תמונת מיניאטורה נשמרה",
+      "badgeThumbnailRemoved": "תמונת מיניאטורה הוסרה",
+      "download": "הורד תמונה נקיה",
+      "sizes": "{before} KB → {after} KB",
+      "detailFields": "{fields} שדות · {kb} KB",
+      "detailNothing": "לא הוסר כלום מהקובץ הזה.",
+      "detailOrientation": "כיוון Exif {value} נקרא מהקובץ והועבר.",
+      "detailNoOrientation": "הקובץ לא הכריז על כיוון Exif, כך שהתצוגה לא מושפעת.",
+      "segmentExif": "Exif",
+      "segmentIptc": "IPTC",
+      "segmentXmp": "XMP",
+      "segmentComment": "הערה",
+      "segmentText": "מטא-נתוני טקסט",
+      "segmentTime": "חותמת זמן",
+      "segmentVendor": "בלוק ספק",
+      "summaryStripped": "הוסרו {fields} שדות מטא-דאטה ({families}), {kb} ק\"ב. התמונה נותרה ללא שינוי.",
+      "summaryClean": "לא נמצא מטא-דאטה בר-הסרה. הקובץ הוחזר ללא שינוי."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "이름 / 호스트",
+      "type": "레코드 유형",
+      "note": "Forge 호스트 DNS로 해석합니다."
+    },
+    "tls": {
+      "host": "호스트",
+      "expired": "인증서 만료",
+      "validDays": "{n}일 남음",
+      "note": "Forge 호스트에서 연결. 검사용으로 신뢰 검증 완화."
+    },
+    "myIp": {
+      "refresh": "새로고침",
+      "note": "Forge가 본 IP. 라이선스 geo 없음."
+    },
+    "mermaid": {
+      "source": "Mermaid source",
+      "idle": "Valid diagrams render here",
+      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
+      "sample": "Sample",
+      "theme": "Theme",
+      "theme_default": "Default",
+      "theme_dark": "Dark",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "Flowchart",
+      "sample_sequence": "Sequence",
+      "sample_class": "Class",
+      "sample_er": "ER diagram",
+      "sample_state": "State",
+      "sample_gantt": "Gantt",
+      "sample_pie": "Pie",
+      "sample_mindmap": "Mindmap",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "zoomReset": "Reset view",
+      "copySvg": "Copy SVG",
+      "downloadSvg": "Download SVG",
+      "downloadPng": "Download PNG",
+      "previewAria": "Mermaid diagram preview",
+      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
+    },
+    "colorDeltaE": {
+      "note": "culori CIEDE2000. 임계값은 UI 리뷰용."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL 방언",
+      "parseNote": "파싱/목록만. ERD는 별도.",
+      "convertNote": "@dbml/core — API와 동일 경로."
+    },
+    "dnsLeak": {
+      "probeHost": "Compare host (advanced)",
+      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
+      "run": "Start DNS leak check",
+      "retest": "Run again",
+      "showAdvanced": "Advanced options",
+      "hideAdvanced": "Hide advanced",
+      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
+      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
+      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
+      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
+      "edgeIp": "Your edge IP",
+      "authorityHits": "Recursive IPs",
+      "forgePaths": "Forge resolver hits",
+      "dohPaths": "Browser DoH hits",
+      "webrtcCount": "WebRTC IPs",
+      "forgeResolvers": "Forge multi-resolver (server-side)",
+      "forgeNote": "These queries leave from the Forge host — not your laptop.",
+      "browserDoh": "Browser DoH",
+      "webrtc": "WebRTC ICE",
+      "egressMarkers": "Forge egress markers",
+      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
+      "honestyPrefix": "Honesty:",
+      "verdictConsistent": "Paths look consistent on this check",
+      "verdictSplit": "Split answers across DNS paths",
+      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
+      "verdictIncomplete": "Incomplete — browser probes missing",
+      "verdictAuthority": "System DNS recursives captured",
+      "infraOn": "Authority online",
+      "infraOff": "Authority offline — multi-path only",
+      "infraChecking": "Checking…",
+      "authorityResolvers": "System DNS recursive resolvers",
+      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
+      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
+      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
+      "authorityDetail": "Authority session detail",
+      "phaseSession": "Creating session…",
+      "phaseSystemDns": "Triggering system DNS…",
+      "phasePoll": "Listening for recursive hits ({n}/{total})…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "stepSession": "Session",
+      "stepSystemDns": "System DNS",
+      "stepPoll": "Listen",
+      "stepBrowser": "Browser",
+      "stepServer": "Server",
+      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
+      "liveHits": "Live recursive hits",
+      "sectionSystemDns": "System DNS (what you came for)",
+      "sectionComplementary": "Complementary paths",
+      "sectionTech": "Technical session detail",
+      "copyIps": "Copy IPs",
+      "copied": "Copied",
+      "queryCount": "{n} queries",
+      "colPath": "Path",
+      "colAnswers": "Answers",
+      "colMs": "ms",
+      "ipPublic": "public",
+      "ipPrivate": "private",
+      "sig": {
+        "captured": "System DNS captured",
+        "onlineNoHits": "Authority online · no hits yet",
+        "offline": "Authority offline",
+        "forgeSplit": "Forge resolvers disagree",
+        "dohSplit": "Browser DoH disagree",
+        "webrtcMismatch": "WebRTC ≠ edge IP",
+        "webrtcLocal": "Local WebRTC candidates",
+        "noBrowser": "No browser probes"
+      }
+    },
+    "honesty": {
+      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
+      "signatureNotVerified": "{engine} · decode only · signature not verified",
+      "localOnly": "Processed for this request · not stored as a card or credential"
+    },
+    "idCard": {
+      "number": "Resident ID number",
+      "note": "GB 11643 check digit · no household registry lookup · same path as API",
+      "specimenTitle": "Resident ID · structure specimen",
+      "segRegion": "Region",
+      "segBirth": "Birth",
+      "segSeq": "Seq",
+      "segCheck": "Check",
+      "metaBirth": "Birth",
+      "metaGender": "Gender",
+      "metaRegion": "Region code",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "reasonFormat": "Format should be 18 characters (last may be X)",
+      "reasonBirth": "Birth date segment is invalid",
+      "reasonCheck": "Check digit is wrong",
+      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} lines",
+      "chars": "{n} chars",
+      "empty": "(empty file)",
+      "readyToShip": "Ready to drop into the repo"
+    },
+    "textTransform": {
+      "mode": "Mode",
+      "input": "Input",
+      "output": "Output",
+      "emptyResult": "Result appears here",
+      "runLocal": "Run locally",
+      "runServer": "Run on server",
+      "statusLocalLive": "Local · live",
+      "statusLocal": "Local",
+      "statusServer": "Server · same path as API",
+      "noteDefault": "Same path as API"
+    }
+  },
+  "roots": {
+    "hubLabel": "על פי כוונה",
+    "tools": "כלים",
+    "dualSurface": "דף אנושי + ממשק API לסוכן · אותו מנוע",
+    "otherRoots": "שורשי ביקוש אחרים"
+  }
+}

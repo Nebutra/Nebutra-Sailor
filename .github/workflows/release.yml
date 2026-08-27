@@ -1,0 +1,171 @@
+name: Release
+
+# Manual-only: publish is gated on workflow_dispatch. We intentionally do NOT
+# auto-publish on `push: main` so that landing a PR does not surface a release.
+# Run via the Actions tab when ready to cut a release.
+on:
+  workflow_dispatch:
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions: read-all
+
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+  npm_config_verify_deps_before_run: "false"
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+    outputs:
+      published: ${{ steps.changesets.outputs.published }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version: 22
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Generate Prisma Client
+        run: pnpm db:generate
+
+      - name: Verify release surface
+        run: pnpm verify:release-surface
+
+      - name: Verify scaffold package-version registry
+        run: pnpm package-versions:check
+
+      - name: Verify changeset graph
+        run: |
+          if find .changeset -maxdepth 1 -name '*.md' ! -name README.md | grep -q .; then
+            pnpm exec changeset status --verbose
+          else
+            echo "No pending changesets; continuing to publish."
+          fi
+
+      - name: Resolve publishable package filters
+        id: release_filters
+        run: |
+          filters="$(node scripts/print-release-filters.mjs)"
+          echo "filters=${filters}" >> "$GITHUB_OUTPUT"
+          echo "$filters"
+
+      - name: Build publishable package graph
+        run: pnpm turbo run build ${{ steps.release_filters.outputs.filters }}
+
+      - name: Typecheck publishable package graph
+        run: pnpm turbo run typecheck ${{ steps.release_filters.outputs.filters }}
+
+      - name: Resolve test filters for packages shipping this cycle
+        id: test_filters
+        run: |
+          filters="$(node scripts/print-release-test-filters.mjs)"
+          echo "filters=${filters}" >> "$GITHUB_OUTPUT"
+          echo "$filters"
+
+      - name: Test packages shipping this cycle
+        run: pnpm turbo run test ${{ steps.test_filters.outputs.filters }}
+
+      - name: Verify scaffold template
+        run: pnpm template:check
+
+      - name: Smoke test CLI bundle
+        run: node packages/ops/create-sailor/dist/index.js --help
+
+      - name: Ensure npm CLI supports trusted publishing
+        run: npm install -g npm@11.5.1
+
+      - name: Create Release Pull Request or Publish
+        id: changesets
+        uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1
+        with:
+          commit: "chore(release): version packages"
+          title: "chore(release): version packages"
+          version: bash ./scripts/release-version.sh
+          publish: bash ./scripts/release-publish.sh
+          createGithubReleases: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TRUSTED_PUBLISHING: ${{ vars.NPM_TRUSTED_PUBLISHING }}
+          NPM_CONFIG_PROVENANCE: "true"
+          LEFTHOOK: "0"
+
+      - name: Push release tags
+        if: steps.changesets.outputs.published == 'true'
+        run: node scripts/push-release-tags.mjs
+
+  provenance:
+    name: Artifact Attestation
+    needs: [release]
+    if: needs.release.outputs.published == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Generate SBOM
+        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0
+        with:
+          format: cyclonedx-json
+          output-file: sbom.cdx.json
+      - name: Attest SBOM
+        uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be # v2
+        with:
+          subject-path: sbom.cdx.json
+      - name: Upload SBOM artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sbom
+          path: sbom.cdx.json
+          retention-days: 90
+
+  github-packages:
+    name: Mirror to GitHub Packages
+    needs: [release]
+    if: needs.release.outputs.published == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version: 22
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@nebutra"
+
+      - name: Verify release surface
+        run: pnpm verify:release-surface
+
+      - name: Publish scoped packages to GitHub Packages
+        run: bash ./scripts/release-publish-github-packages.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify package registry governance
+        run: node scripts/verify-package-registry.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.PACKAGE_GOVERNANCE_TOKEN || secrets.GITHUB_TOKEN }}
+          PACKAGE_REGISTRY_REQUIRE_CONTAINER_AUDIT: ${{ secrets.PACKAGE_GOVERNANCE_TOKEN != '' && 'true' || 'false' }}
+          PACKAGE_REGISTRY_VERIFY_NPMJS: "true"

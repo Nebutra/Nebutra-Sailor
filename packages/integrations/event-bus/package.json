@@ -1,0 +1,53 @@
+{
+  "name": "@nebutra/event-bus",
+  "version": "0.1.2",
+  "private": true,
+  "type": "module",
+  "nebutra": {
+    "graph": "core",
+    "status": "wip",
+    "productionReady": false,
+    "requires": [
+      "Inngest event key (INNGEST_EVENT_KEY, INNGEST_SIGNING_KEY)"
+    ],
+    "gaps": [
+      "Partially integrated (consumed by @nebutra/saga and workflows/pusher)",
+      "No production app integrations",
+      "Cross-service pub/sub guarantees not verified"
+    ]
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./schemas": {
+      "types": "./dist/schemas/inngest.d.ts",
+      "import": "./dist/schemas/inngest.js",
+      "default": "./dist/schemas/inngest.js"
+    }
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@nebutra/logger": "workspace:*",
+    "inngest": "^3.54.2",
+    "p-limit": "^7.3.0",
+    "p-retry": "^8.0.0",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "license": "AGPL-3.0-only",
+  "files": [
+    "dist"
+  ]
+}

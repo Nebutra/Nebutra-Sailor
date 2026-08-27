@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/card-demo.tsx",
+      "content": "\"use client\";\n\nimport { Card, CardBody } from \"@nebutra/ui/patterns\";\nimport { Button, CardDescription, CardFooter, CardHeader, CardTitle } from \"@nebutra/ui/primitives\";\nexport function CardDemo() {\n  return (\n    <Card variant=\"default\" padding=\"md\">\n      <CardHeader>\n        <CardTitle>Create project</CardTitle>\n      </CardHeader>\n      <CardBody>\n        <CardDescription>Launch your next big idea securely.</CardDescription>\n      </CardBody>\n      <CardFooter className=\"gap-2 flex justify-end\">\n        <Button variant=\"outline\">Cancel</Button>\n        <Button>Create</Button>\n      </CardFooter>\n    </Card>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

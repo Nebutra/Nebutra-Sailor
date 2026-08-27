@@ -1,0 +1,1273 @@
+{
+  "admin": {
+    "title": "Msimamizi",
+    "description": "Paneli ya msimamizi mkuu — simamia watumiaji, mashirika, na afya ya mfumo.",
+    "nav": {
+      "overview": "Mwongozo",
+      "users": "Watumiaji",
+      "organizations": "Mashirika"
+    },
+    "users": {
+      "title": "Watumiaji",
+      "description": "Angalia, tafuta, na uweke nafasi ya mtumiaji yeyote katika mashirika yote.",
+      "searchPlaceholder": "Tafuta watumiaji…",
+      "totalCount": "{count, plural, one {mtumiaji #} other {watumiaji #}}",
+      "empty": "Hakuna watumiaji wamepatikana.",
+      "loadError": "Imeshindikana kupakia watumiaji.",
+      "columns": {
+        "email": "Barua pepe",
+        "name": "Jina",
+        "created": "Imeundwa",
+        "activeOrgs": "Mashirika yanayofanya kazi",
+        "actions": "Vitendo"
+      },
+      "viewOrgs": "Angalia mashirika"
+    },
+    "organizations": {
+      "title": "Mashirika",
+      "description": "Maeneo yote ya kazi kwenye mfumo, yaliyopangwa kwa utaratibu wa hivi karibuni.",
+      "searchPlaceholder": "Tafuta mashirika…",
+      "totalCount": "{count, plural, one {shirika #} other {mashirika #}}",
+      "empty": "Hakuna mashirika yaliyopatikana.",
+      "loadError": "Imeshindwa kupakia mashirika.",
+      "columns": {
+        "name": "Jina",
+        "slug": "Slug",
+        "plan": "Mpango",
+        "members": "Wanachama",
+        "created": "Imeundwa",
+        "actions": "Vitendo"
+      },
+      "view": "Angalia"
+    },
+    "impersonate": {
+      "trigger": "Fanya kama",
+      "starting": "Inaanza…",
+      "stop": "Aacha kuwakilisha",
+      "confirm": "Wakilisha {label}? Utakutaona programu kama mtumiaji huyu hadi utakapoaacha.",
+      "error": "Imeshindwa kuanzisha kuwakilisha.",
+      "stopError": "Imeshindwa kuacha kuwakilisha."
+    },
+    "pagination": {
+      "previous": "Iliyopita",
+      "next": "Inayofuata",
+      "pageOf": "Ukurasa {page} wa {total}"
+    }
+  },
+  "Common": {
+    "hello": "Habari Dunia",
+    "dashboard": "Dashibodi",
+    "actions": {
+      "continue": "Endelea",
+      "confirm": "Thibitisha",
+      "done": "Imekamilika",
+      "cancel": "Ghairi"
+    }
+  },
+  "theme": {
+    "light": "Nuru",
+    "dark": "Giza",
+    "system": "Mfumo"
+  },
+  "LocaleSwitcher": {
+    "label": "Lugha",
+    "ariaLabel": "Badilisha lugha",
+    "searchPlaceholder": "Tafuta lugha…",
+    "noResults": "Hakuna lugha zinazolingana",
+    "menuAria": "Chagua lugha"
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "Nambari ya rekodi ya ICP",
+      "publicSecurity": "Rekodi ya usalama wa umma"
+    },
+    "wechat": {
+      "signIn": "Ingia kwa WeChat",
+      "notConfigured": "Uingiaji wa WeChat haujasanifiwa"
+    }
+  },
+  "onboarding": {
+    "title": "Weka kazi yako",
+    "subtitle": "Hatua tatu za haraka na tayari kutoa.",
+    "steps": {
+      "workspace": "Kazi",
+      "invite": "Karibisha timu",
+      "plan": "Chagua mpango"
+    },
+    "progress": {
+      "back": "Nyuma",
+      "stepCounter": "Hatua {current} ya {total}"
+    },
+    "plan": {
+      "title": "Chagua mpango",
+      "description": "Anza bure au ufungue uwezo zaidi. Unaweza kubadilisha mipango wakati wowote.",
+      "choose": "Chagua mpango",
+      "skip": "Ruka kwa sasa"
+    }
+  },
+  "userMenu": {
+    "ariaLabel": "Fungua menyu ya mtumiaji",
+    "profile": "Wasifu",
+    "settings": "Mipangilio",
+    "feedback": "Maoni",
+    "theme": "Mandhari",
+    "language": "Lugha",
+    "signOut": "Ondoka",
+    "signedInAs": "Umeingia kama"
+  },
+  "account": {
+    "profile": {
+      "title": "Wasifu",
+      "description": "Sasisha taarifa zako za kibinafsi.",
+      "nameLabel": "Jina",
+      "namePlaceholder": "Jina lako kamili",
+      "emailLabel": "Barua pepe",
+      "emailHint": "Tutapanga kiungo cha uthibitisho ili kuthibitisha anuani mpya ya barua pepe.",
+      "languageLabel": "Lugha",
+      "submit": "Hifadhi mabadiliko",
+      "saving": "Inahifadhi…",
+      "verifyEmail": "Thibitisha",
+      "verifying": "Inatuma uthibitisho…",
+      "success": "Wasifu umesasishwa.",
+      "verificationSent": "Barua pepe ya uthibitisho imetumwa.",
+      "errorRequiredName": "Jina linahitajika.",
+      "errorInvalidEmail": "Anuani ya barua pepe si sahihi.",
+      "subtitle": "Utambulisho wako na taarifa za mawasiliano.",
+      "unknown": "Mtumiaji asiye na jina",
+      "manageCta": "Fungua mipangilio kamili ya akaunti"
+    },
+    "avatar": {
+      "title": "Picha ya mtumiaji",
+      "description": "Pakia picha ya mraba (PNG, JPEG, au WebP, hadi 2MB).",
+      "uploadButton": "Pakia picha ya mtumiaji",
+      "uploading": "Inapakia…",
+      "fileTooBig": "Faili ni kubwa mno. Ukubwa wa juu ni 2MB.",
+      "invalidType": "Aina ya picha haihodheshwi. Tumia PNG, JPEG, au WebP.",
+      "success": "Picha ya mtumiaji imeesasishwa.",
+      "removeButton": "Ondoa picha ya mtumiaji",
+      "removed": "Picha ya mtumiaji imeondolewa.",
+      "deleteError": "Imeshindwa kufuta picha ya mtumiaji."
+    },
+    "export": {
+      "title": "Hamisha data yangu",
+      "description": "Pakua nakala ya kumbukumbu zote tunazoshikilia kwa akaunti yako, ikiwa ni pamoja na wasifu, mashirika, matukio ya ukaguzi, arifa, na madai.",
+      "compliance": "Inahitajwa na GDPR Article 20 (Haki ya uhamishaji wa data) na PIPL Article 45 (Haki ya kupata nakala ya taarifa za kibinafsi).",
+      "export": "Hamisha data yangu",
+      "pending": "Tayari ya uhamisho…",
+      "ready": "Uhamisho wako tayari.",
+      "download": "Pakua JSON",
+      "error": "Imeshindikana kutayarisha uhamisho wako. Tafadhali jaribu tena."
+    },
+    "emailChange": {
+      "title": "Badilisha barua pepe",
+      "description": "Tutapanga kiungo cha uthibitisho kwa anwani mpya. Mabadiliko yanakuza tu baada ya kuthibitisha kutoka kwa sanduku la barua pepe hilo.",
+      "newEmailLabel": "Barua pepe mpya",
+      "newEmailPlaceholder": "you@example.com",
+      "submit": "Tuma kiungo cha uthibitisho",
+      "submitting": "Inatuma…",
+      "verificationSent": "Angalia sanduku la barua pepe kwa {email} ili kuthibitisha mabadiliko.",
+      "errorInvalidEmail": "Barua pepe si sahihi.",
+      "error": "Imeshindikana kuomba mabadiliko ya barua pepe.",
+      "confirm": {
+        "successTitle": "Barua pepe imeasiliwa",
+        "successDescription": "Barua pepe yako ya kuingia imeasiliwa.",
+        "successWithEmail": "Barua pepe yako ya kuingia sasa ni {email}.",
+        "failureTitle": "Tulishindwa kuthibitisha kiungo hicho",
+        "failureDescription": "Kiungo hiki cha uthibitisho si halali, kimeisha muda, au tayari kime tumika. Tafadhali omba kipya kutoka mipangilio ya akaunti yako.",
+        "errorCode": "Sababu: {code}",
+        "continueCta": "Rudi kwenye akaunti",
+        "backCta": "Rudi kwenye akaunti"
+      }
+    },
+    "title": "Akaunti",
+    "ariaLabel": "Mipangilio ya akaunti",
+    "navLabel": "Tab za mipangilio ya akaunti",
+    "tip": "Bonyeza {key} popote kufungua tena dialog hii.",
+    "tabs": {
+      "profile": "Wasifu",
+      "subscription": "Ujiuzi",
+      "billing": "Malipo",
+      "preferences": "Mapendeleo",
+      "personalization": "Ubinafsishaji"
+    },
+    "subscription": {
+      "title": "Ujiuzi",
+      "subtitle": "Mpango, kiasi, na mrejesho.",
+      "currentPlan": "Mpango wa sasa",
+      "upgradeCta": "Linganisha mipango",
+      "manageCta": "Simamia usajili"
+    },
+    "billing": {
+      "title": "Malipo",
+      "subtitle": "Historia ya viapisho na njia ya malipo.",
+      "empty": {
+        "title": "Bado hakuna historia",
+        "description": "Malipo na viapisho vitajionekana hapa baada ya kipindi chako kwanza cha kulipwa.",
+        "cta": "Fungua malipo kamili"
+      }
+    },
+    "preferences": {
+      "title": "Sifa",
+      "subtitle": "Mandhari na ufikivu.",
+      "theme": "Mandhari",
+      "light": "Nuru",
+      "dark": "Giza",
+      "system": "Mfumo",
+      "help": "Msaada",
+      "reportIssue": "Ripoti tatizo",
+      "shortcuts": "Njia za mkato za kibodi"
+    },
+    "personalization": {
+      "title": "Ubinafsi",
+      "subtitle": "Mwambie Sailor ni nani wewe na jinsi ya kujibu."
+    }
+  },
+  "impact": {
+    "hero_title": "Kubadilisha Paradimu",
+    "hero_subtitle": "Usiwe na biashara ngumu duniani.",
+    "social_title": "Jamii",
+    "social_headline": "Usawa wa Teknolojia Kamili",
+    "social_description": "Kuleta nguvu kwa wabunifu wa mabadiliko. Kuvunja vichujio vya kawaida na kuwapa nguvu washirika peke yao kwa miundombinu ya nje ya sanduku.",
+    "governance_title": "Utawala",
+    "governance_headline": "Msimbo ni Sheria",
+    "governance_description": "Utawala wa algoriti uliokunjwa kwenye Uthibitisho wa Kazi na matokeo halisi ya biashara, kubadilisha ubureaucracy isiyo wazi.",
+    "environment_title": "Mazingira",
+    "environment_headline": "Uchache wa Kidijitali",
+    "environment_description": "Kusukuma upunguzo wa enzi ya wavu kupitia muunganisho wa SaaS wa kipekee na ufanisi wa rasilimali."
+  },
+  "auth": {
+    "security": {
+      "title": "Usalama",
+      "description": "Simamia nenosiri lako, uthibitisho wa nyingi, na vikao vya kazi.",
+      "managedByProvider": "Mipangilio ya usalama inasimamiwa na mtoaji wako wa uthibitisho.",
+      "openProviderProfile": "Fungua wasifu",
+      "changePassword": {
+        "title": "Badilisha nenosiri",
+        "description": "Tumia nenosiri imara ambalo hutumii tena kwenye tovuti nyingine.",
+        "currentPasswordLabel": "Nenosiri la sasa",
+        "newPasswordLabel": "Nenosiri jipya",
+        "confirmPasswordLabel": "Thibitisha nenosiri jipya",
+        "revokeOtherSessions": "Ondoka kwenye vifaa vingine",
+        "submit": "Sasisha nenosiri",
+        "pending": "Inasasisha nenosiri…",
+        "success": "Nenosiri limesasishwa kwa mafanikio."
+      },
+      "twoFactor": {
+        "title": "Uthibitisho wa hatua mbili",
+        "description": "Ongeza hatua ya pili ya uthibitisho ukitumia programu ya kuthibitisha.",
+        "enabled": "Imewashwa",
+        "disabled": "Imezimwa",
+        "enabledHelp": "Akaunti yako inahitaji nambari ya kuthibitisha ya tarakimu 6 baada ya kuingia kwa nenosiri.",
+        "disabledHelp": "Linda akaunti yako kwa nambari ya tarakimu 6 kutoka programu ya kuthibitisha.",
+        "enable": "Washa uthibitisho wa hatua mbili",
+        "disable": "Zima uthibitisho wa hatua mbili",
+        "passwordPrompt": "Thibitisha nenosiri lako",
+        "scanQrCode": "Skanza kodu ya QR hii kwa programu yako ya uthibitishaji, kisha ingiza nambari ya tarakimu 6 hapa chini.",
+        "secretKeyLabel": "Au ingiza siri hii kwa mkono",
+        "verificationCodeLabel": "Nambari ya uthibitisho",
+        "verify": "Thibitisha na washia",
+        "backupCodesTitle": "Nambari za akiba",
+        "backupCodesDescription": "Hifadhi nambari hizi mahali salama. Kila moja inaweza kutumika mara moja ikiwa utapoteza upatikanaji wa programu yako ya uthibitishaji.",
+        "copyBackupCodes": "Nakili nambari",
+        "finishSetup": "Maliza usanidi",
+        "successEnabled": "Uthibitisho wa hatua mbili umewashwa.",
+        "successDisabled": "Uthibitisho wa hatua mbili umezimwa."
+      },
+      "sessions": {
+        "title": "Vipindi vya sasa",
+        "description": "Vifaa na kivinjari vilivyowashwa kwenye akaunti yako sasa.",
+        "currentSession": "(sasa)",
+        "ipLabel": "Anuani ya IP",
+        "lastActiveLabel": "Iliamka mwisho",
+        "revoke": "Toka nje",
+        "revokeAll": "Toka nje kwa vifaa vyote vingine",
+        "empty": "Hakuna misaada mingine ya kufanya kazi.",
+        "successRevoked": "Msaada umetoka nje.",
+        "successRevokedAll": "Misaada yote mingine imetoka nje."
+      },
+      "deleteAccount": {
+        "title": "Futa akaunti",
+        "description": "Ondoa akaunti yako na data zote zinazohusiana na yake milele. Hii haiwezi kurejeshwa.",
+        "passwordPrompt": "Ingiza nenosiri lako ili kuthibitisha",
+        "confirmTextLabel": "Andika FUTA ili kuthibitisha",
+        "submit": "Futa akaunti",
+        "cancel": "Ghairi",
+        "success": "Akaunti imefutwa."
+      },
+      "connectedAccounts": {
+        "title": "Akaunti zilizounganishwa",
+        "description": "Angalia njia za kuingia kwa OAuth zilizounganishwa na utambulisho wako wa Nebutra.",
+        "connected": "Imeunganishwa",
+        "connect": "unganisha",
+        "help": "Weka angalau njia moja ya kuingia inayoweza kuaminika kabla ya kutenganisha mtoa huduma.",
+        "unlink": "Tenganisha",
+        "notLinked": "Haijaunganishwa"
+      },
+      "passkeys": {
+        "title": "Passkeys",
+        "description": "Tumia nyakati za kifaa kwa kuingia ambazo hazipateki kwa phishing.",
+        "empty": "Hakuna passkeys zilizosajiliwa bado",
+        "addPasskey": "Ongeza passkey",
+        "cancelAdd": "Ghairi",
+        "cancelled": "Mipangilio ya passkey imeghairiwa. Hakuna mabadiliko yaliyofanywa.",
+        "defaultName": "Passkey {number}",
+        "nameHelp": "Peleka jina linaloweza kutambuliwa kwa passkey hii kabla ya kivinjari chako kukulinda kwa uthibitisho.",
+        "nameLabel": "Jina la passkey",
+        "rename": "Badilisha jina",
+        "saveRename": "Hifadhi jina",
+        "remove": "Ondoa",
+        "successAdded": "Passkey imeongezwa.",
+        "successRemoved": "Passkey imeondolewa.",
+        "unavailableBadge": "Haipatikani"
+      },
+      "setPassword": {
+        "title": "Weka nenosiri",
+        "description": "Ongeza nenosiri ili uingie bila mtumaji wako wa OAuth.",
+        "submit": "Weka nenosiri",
+        "pending": "Tunatumia kiungo cha kuweka nenosiri…",
+        "sentMessage": "Tumetuma kiungo cha kuweka nenosiri kwenye barua pepe yako."
+      }
+    },
+    "banner": {
+      "logoAlt": "Nebutra",
+      "slogan": "Zindua Startup yako, ikiongozwa tangu siku ya kwanza.",
+      "tagline": "Wakala wa maeneo mengi, multi-tenant kwa chaguo-msingi. Hakuna timu ya platform inayohitajika."
+    },
+    "signIn": {
+      "title": "Ingia kwenye Nebutra",
+      "subtitle": "Chagua jinsi unavyotaka kuingia.",
+      "continueWith": "Endelea na",
+      "continueWithProvider": "Endelea na {provider}",
+      "providers": {
+        "google": "Google",
+        "github": "GitHub",
+        "apple": "Apple",
+        "microsoft": "Microsoft",
+        "feishu": "Feishu"
+      },
+      "providerLoading": "Inaongoza tena…",
+      "dividerOr": "Au endelea kwa barua pepe",
+      "emailLabel": "Barua pepe",
+      "emailPlaceholder": "you@example.com",
+      "continue": "Endelea",
+      "back": "Rudi",
+      "passwordLabel": "Nywili",
+      "passwordPlaceholder": "Ingiza nywili yako",
+      "showPassword": "Onyesha nywili",
+      "hidePassword": "Ficha nywili",
+      "capsLockOn": "Caps Lock imefunguliwa",
+      "forgotPassword": "Umesahau nywili?",
+      "submit": "Ingia",
+      "submitLoading": "Inaingia…",
+      "useMagicLink": "Nipe kiungo cha magic badala yake",
+      "usePasskey": "Ingia kwa kutumia passkey",
+      "passkeyTitle": "Ingia kwa kutumia passkey yako",
+      "passkeyDescription": "Tumia Face ID, Touch ID, au ufunguo wako wa usalama. Hakuna nenosiri inahitajika.",
+      "passkeyButton": "Endelea kwa passkey",
+      "passkeyCancelled": "Ombi la passkey limekatishwa.",
+      "passkeyUnsupported": "Browser hii haithamini passkeys.",
+      "passkeyError": "Kuingia kwa passkey kimekua. Jaribu njia nyingine.",
+      "ssoTitle": "Endelea na Enterprise SSO",
+      "ssoDescription": "Tunakuletea {provider} kwa {email}.",
+      "ssoError": "Enterprise SSO haikuweza kuanza. Jaribu njia nyingine.",
+      "ssoRetry": "Jaribu tena",
+      "newToProduct": "Mpya kwenye Nebutra?",
+      "signUpLink": "Jisajili",
+      "homeLink": "Nyumbani",
+      "signInFailed": "Uingizaji umeshindwa",
+      "genericError": "Hitilafu imetokea. Tafadhali jaribu tena.",
+      "captchaError": "Uthibitisho wa bot umeshindwa. Onyesha upya ukurasa na jaribu tena.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
+      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
+      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
+      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+    },
+    "signUp": {
+      "title": "Unda akaunti yako ya Nebutra",
+      "subtitle": "Akaunti moja kwa kila programu ya Nebutra.",
+      "firstNameLabel": "Jina la kwanza",
+      "lastNameLabel": "Jina la mwisho",
+      "firstNamePlaceholder": "Kwanza",
+      "lastNamePlaceholder": "Mwisho",
+      "submit": "Unda akaunti",
+      "submitLoading": "Inaunda akaunti…",
+      "alreadyHaveAccount": "Tayari una akaunti?",
+      "signInLink": "Ingia",
+      "signUpFailed": "Ujiandishi umeshindwa",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+    },
+    "passkeys": {
+      "title": "Passkeys",
+      "description": "Tumia Face ID, Touch ID, Windows Hello, au ufunguo wa usalama badala ya nenosiri. Kila kifaa kina passkey yake mwenyewe.",
+      "addButton": "Ongeza passkey",
+      "adding": "Inaweka…",
+      "namePlaceholder": "k.m. MacBook Pro",
+      "nameLabel": "Jina (hiari)",
+      "registerSuccess": "Passkey imeongezwa.",
+      "registerCancelled": "Uwekaji umekataliwa.",
+      "registerUnsupported": "Kivinjari hiki hakisaidii passkeys.",
+      "registerError": "Imeshindikana kuweka passkey.",
+      "empty": "Hakuna passkeys bado.",
+      "loadError": "Imeshindikana kupakia passkeys.",
+      "revoke": "Ondoa",
+      "revoking": "Inaondoa…",
+      "revokeConfirm": "Ondoa passkey hii? Hutaweza tena kuingia kwa kutumia.",
+      "revokeSuccess": "Passkey imeondolewa.",
+      "revokeError": "Imeshindikana kuondoa passkey.",
+      "device": {
+        "singleDevice": "Imeunganishwa na kifaa",
+        "multiDevice": "Imesasindikwa kati ya vifaa"
+      },
+      "addedOn": "Imeongezwa {date}"
+    },
+    "magicLink": {
+      "title": "Ingia kwa kutumia kiungo cha ajabu",
+      "description": "Ingiza barua pepe yako na tutakutumia nambari ya tarakimu 6 kuingia.",
+      "emailLabel": "Barua pepe",
+      "send": "Tuma kiungo",
+      "codeLabel": "Nambari ya uthibitisho",
+      "verify": "Thibitisha",
+      "resend": "Tuma tena nambari",
+      "resendCooldown": "Tuma tena baada ya sekunde {seconds}",
+      "sentTo": "Tumetuma nambari kwa {email}"
+    },
+    "forgotPassword": {
+      "title": "Umesahau nenosiri?",
+      "description": "Ingiza barua pepe yako na tutakutumia kiungo cha kuweka upya nenosiri.",
+      "emailLabel": "Barua pepe",
+      "submit": "Tuma kiungo cha kuweka upya",
+      "successTitle": "Angalia barua pepe yako",
+      "success": "Ikiwa barua pepe hiyo imesajiliwa, utapokea kiungo cha kurudisha hivi karibuni."
+    },
+    "resetPassword": {
+      "title": "Rudisha nenosiri lako",
+      "description": "Chagua nenosiri jipya kwa akaunti yako.",
+      "newPasswordLabel": "Nenosiri jipya",
+      "confirmPasswordLabel": "Thibitisha nenosiri jipya",
+      "submit": "Rudisha nenosiri",
+      "successTitle": "Nenosiri limekurudishwa",
+      "successDescription": "Sasa unaweza kuingia kwa kutumia nenosiri lako jipya.",
+      "signInCta": "Nenda kwenye kuingia",
+      "invalidTitle": "Kiungo cha kurudisha si halali",
+      "invalidDescription": "Kiungo hiki cha kurudisha nenosiri kinaonekana kuwa kimepotea au kimeharibika.omba kipya kutoka ukurasa wa ulisahau nenosiri."
+    },
+    "verifyEmail": {
+      "successTitle": "Barua pepe imethibitishwa",
+      "successDescription": "Barua pepe yako imethibitishwa.",
+      "failureTitle": "Uthibitisho umeshindwa",
+      "failureDescription": "Tulishindwa kuthibitisha barua pepe yako kwa kiungo hicho.",
+      "continueCta": "Endelea",
+      "signInCta": "Nenda kwenye kuingia"
+    },
+    "loginSuccess": {
+      "eyebrow": "Kuingia kumekamilika",
+      "title": "Umeingia",
+      "description": "Kipindi chako kimeandaliwa. Tunafungua eneo la kazi la Nebutra na kuhifadhi uhamisho salama kutoka mtiririko wa uthibitishaji.",
+      "session": "Kipindi",
+      "verified": "Imethibitishwa",
+      "workspace": "Eneo la kazi",
+      "preparing": "Inaandaliwa",
+      "redirecting": "Inaingia eneo la kazi katika {seconds}s",
+      "secureHandoff": "Uhamisho salama",
+      "continueCta": "Endelea kwenda eneo la kazi",
+      "signInCta": "Tumia akaunti nyingine"
+    },
+    "errors": {
+      "invalidCredentials": "Barua pepe au neno siri si sahihi.",
+      "userNotFound": "Hakuna akaunti iliyopatikana kwa barua pepe hiyo.",
+      "userAlreadyExists": "Akaunti kwa barua pepe hiyo tayari ipo.",
+      "weakPassword": "Neno siri ni dhaifu sana. Tumia angalau herufi 8 zenye mchanganyiko wa herufi kubwa na ndogo na namba.",
+      "passwordsDontMatch": "Nywila hazilingani.",
+      "passwordTooShort": "Nywila lazima iwe na angalau herufi 8.",
+      "currentPasswordIncorrect": "Nywila ya sasa si sahihi.",
+      "samePassword": "Nywila mpya lazima iwe tofauti na nywila yako ya sasa.",
+      "invalidEmail": "Barua pepe si sahihi.",
+      "emailNotVerified": "Tafadhali thibitisha barua pepe yako kwanza.",
+      "sessionExpired": "Kipindi chako kimeisha. Tafadhali ingia tena.",
+      "twoFactorRequired": "Uthibitisho wa hatua mbili unahitajika.",
+      "invalidVerificationCode": "Msimbo wa uthibitisho si sahihi au umekwisha muda.",
+      "twoFactorAlreadyEnabled": "Uthibitisho wa hatua mbili tayari umewashwa.",
+      "twoFactorNotEnabled": "Uthibitisho wa hatua mbili haujawashwa.",
+      "tooManyAttempts": "Majaribio mengi sana. Tafadhali jaribu tena baadaye.",
+      "rateLimited": "Unafanya hivyo mara nyingi sana. Punguza kasi.",
+      "providerNotSupported": "Kitendo hiki kinashughulikiwa na mtoa huduma wa uthibitisho wako.",
+      "networkError": "Hitilafu ya mtandao. Angalia muunganisho wako na jaribu tena.",
+      "unknown": "Kuna kitu kilichokosea. Tafadhali jaribu tena."
+    }
+  },
+  "chat": {
+    "suggestions": {
+      "title": "Jaribu moja ya hizi kuanza",
+      "activity": {
+        "title": "Onyesha shughuli za hivi karibuni",
+        "prompt": "Nionyeshe shughuli za hivi karibuni kote kwenye enzi langu la kazi tangu saa 24 zilizopita."
+      },
+      "debug": {
+        "title": "Rekebisha hitilafu",
+        "prompt": "Nisaidie kurekebisha hitilafu ya wakati wa utekelezaji. Nitakopi stack trace na utanisaidia kuelewa."
+      },
+      "email": {
+        "title": "Andaa barua pepe ya muhtasari",
+        "prompt": "Andaa barua pepe fupi ya muhtasari wa wiki ambayo naweza kutuma kwa timu yangu kuhusu maendeleo ya platform."
+      },
+      "features": {
+        "title": "Chunguza vipengele vya platform",
+        "prompt": "Nieleze vipengele muhimu vya platform hii ya SaaS na jinsi naweza kuvitumia."
+      }
+    }
+  },
+  "billing": {
+    "activePlan": {
+      "title": "Mpango unaofanya kazi",
+      "manage": "Simamia usajili",
+      "noPlanTitle": "Hakuna mpango unaofanya kazi",
+      "noPlanDescription": "Chagua mpango ili kufungua vipengele vilivyolipwa na mipaka ya matumizi ya juu zaidi.",
+      "choosePlan": "Chagua mpango",
+      "renewsOn": "Inajirejesha tarehe {date}",
+      "endsOn": "Inamalizika tarehe {date}",
+      "trialEndsOn": "Muda wa majaribio unaisha {date}",
+      "status": {
+        "active": "Inafanya kazi",
+        "trialing": "Inajaribiwa",
+        "past_due": "Imepita tarehe",
+        "canceled": "Imetengwa",
+        "free": "Bure"
+      },
+      "errors": {
+        "loadFailed": "Haikuweza kupakia hali yako ya bili."
+      }
+    },
+    "pricing": {
+      "trial": "Majaribio ya bure ya siku {days}",
+      "seat": "{count, plural, one {# kiti} other {# viti}}",
+      "perSeat": "/ kiti"
+    }
+  },
+  "organizations": {
+    "settings": {
+      "logo": {
+        "title": "Nemba ya shirika",
+        "description": "Pakia picha ya mraba (PNG, JPEG, au WebP, hadi 2MB) kuwakilisha shirika lako.",
+        "uploadButton": "Pakia nemba",
+        "uploading": "Inapakia…",
+        "fileTooBig": "Faili ni kubwa mno. Ukubwa wa juu ni 2MB.",
+        "invalidType": "Aina ya picha haihodheshwi. Tumia PNG, JPEG, au WebP.",
+        "success": "Logo imesasishwa.",
+        "removeButton": "Ondoa logo",
+        "removed": "Logo imeondolewa."
+      },
+      "name": {
+        "title": "Jina la shirika",
+        "description": "Sasisha jina la kuonyesha linaloonekana kwa timu yako na wateja.",
+        "label": "Jina",
+        "submit": "Hifadhi",
+        "saving": "Inahifadhi…",
+        "success": "Jina la shirika limesasishwa."
+      },
+      "delete": {
+        "title": "Futa shirika",
+        "description": "Ondoa shirika hili kabisa, wanachama wote, mwaliko, na data zinazohusishwa. Hatua hii haiwezi kurejeshwa.",
+        "trigger": "Futa shirika",
+        "confirmLabel": "Andika jina la shirika ili kuthibitisha",
+        "submit": "Futa shirika",
+        "cancel": "Ghairi",
+        "success": "Shirika limefutwa."
+      }
+    },
+    "invitation": {
+      "title": "Umeandikwa",
+      "heading": "Umeandikwa kujiunga na {organizationName}",
+      "description": "Kubali wito huu ili uanze kufanya kazi pamoja na timu.",
+      "accept": "Kubali wito",
+      "accepting": "Inakubaliwa...",
+      "decline": "Kataa",
+      "declining": "Inakataliwa...",
+      "declinedView": "Wito umekataliwa",
+      "success": "Tumemwambia mwenye kuandika.",
+      "backToDashboard": "Rudi kwenye dashibodi",
+      "roleLabel": "Jukumu: {role}",
+      "errorEmailMismatch": "Wito huu ulitumwa kwa barua pepe tofauti",
+      "errorEmailMismatchDetail": "Ingia kwa kutumia anuani ya barua pepe iliyopokea wito ili ukubali.",
+      "errorExpired": "Wito umekufa",
+      "errorExpiredDetail": "Umbie mwenye kuandika atutumie wito mpya.",
+      "errorNotFound": "Wito haukupatikana",
+      "errorNotFoundDetail": "Kiungo cha wito si halali au kimefutwa.",
+      "errorNotAvailable": "Wito haupatikani",
+      "errorNotAvailableDetail": "Wito huu tayari umekabiliwa na hauna nguvu tena.",
+      "role": {
+        "owner": "Mwenyeji",
+        "admin": "Msimamizi",
+        "member": "Mwanachama",
+        "viewer": "Mtafuta"
+      }
+    }
+  },
+  "settings": {
+    "apiKeys": {
+      "title": "Ufunguo wa API",
+      "description": "Tengeneza na simamia ufunguo wa API kwa upatikanaji wa programu wa Nebutra.",
+      "createButton": "Tengeneza ufunguo wa API",
+      "noPermission": "Huna ruhusa ya kuona ufunguo wa API.",
+      "loading": "Inapakia…",
+      "loadError": "Imeshindwa kupakia ufunguo wa API.",
+      "createError": "Imeshindwa kutengeneza ufunguo wa API.",
+      "revokeError": "Imeshindwa kufuta ufunguo wa API.",
+      "empty": {
+        "title": "Bado hakuna ufunguo wa API",
+        "cta": "Tengeneza API key yako ya kwanza"
+      },
+      "columns": {
+        "name": "Jina",
+        "prefix": "Kiambishi",
+        "lastUsed": "Iliitumika Mwisho",
+        "scopes": "Masafa",
+        "created": "Imetengenezwa",
+        "actions": "Vitendo",
+        "never": "Hakuna"
+      },
+      "actions": {
+        "revoke": "Futa",
+        "revoking": "Inafutwa…",
+        "copy": "Nakili",
+        "copied": "Imenakiliwa",
+        "close": "Funga",
+        "submit": "Tengeneza key",
+        "submitting": "Inatengenezwa…"
+      },
+      "dialog": {
+        "title": "Tengeneza API key",
+        "description": "Ufunguo wa API huruhusu mifumo ya nje kuongana na Nebutra kwa niaba yako. Uchukue kama nywila.",
+        "nameLabel": "Jina",
+        "namePlaceholder": "k.m. Backend ya uzalishaji",
+        "scopesLabel": "Masafa",
+        "successWarning": "Ufunguo huu unaonekana mara moja. Uhifadhi kabla ya kufunga.",
+        "confirmClose": "Kufunga kunaficha ufunguo huu milele. Hakikisha umehifadhiwa."
+      }
+    },
+    "auditLog": {
+      "title": "Logi ya Ukaguzi",
+      "description": "Fuata kila hatua ya utawala katika enzi lako la kazi. Chuja kwa mwenendo, hatua, kitu, au muda.",
+      "empty": "Bado hakuna matukio ya ukaguzi",
+      "loadMore": "Pakia zaidi",
+      "loading": "Inapakia…",
+      "forbidden": "Unahitaji ufikiaji wa msimamizi kuona logi ya ukaguzi.",
+      "columns": {
+        "when": "Wakati",
+        "actor": "Mwenendo",
+        "action": "Hatua",
+        "entity": "Kitu",
+        "outcome": "Matokeo",
+        "ip": "IP"
+      },
+      "diff": {
+        "oldValue": "Thamani ya zamani",
+        "newValue": "Thamani mpya"
+      },
+      "filters": {
+        "action": "Kitendo",
+        "actionPlaceholder": "Tafuta kitendo…",
+        "entityType": "Aina ya kitu",
+        "outcome": "Matokeo",
+        "outcomeSuccess": "Mafanikio",
+        "outcomeFailure": "Kushindwa",
+        "outcomePending": "Inasubiri",
+        "startDate": "Tarehe ya kuanza",
+        "endDate": "Tarehe ya kumaliza",
+        "range24h": "Saa 24 zilizopita",
+        "range7d": "Siku 7 zilizopita",
+        "range30d": "Siku 30 zilizopita",
+        "reset": "Weka upya",
+        "all": "Zote"
+      }
+    },
+    "notifications": {
+      "title": "Arifa",
+      "description": "Chagua jinsi Nebutra inavyokufika kwa kila aina ya tukio, kwenye kila njia ya utoaji.",
+      "actions": {
+        "resetAll": "Weka upya kwa vigezo vya awali",
+        "save": "Hifadhi"
+      },
+      "status": {
+        "saving": "Inahifadhi…",
+        "saved": "Imehifadhiwa",
+        "error": "Kuhifadhi kumeshindwa. Tafadhali jaribu tena."
+      },
+      "eventTypes": {
+        "security": {
+          "label": "Onyo la usalama",
+          "description": "Onyo la kuingia, mabadiliko ya neno siri, mabadiliko ya kuthibitisha kwa hatua mbili."
+        },
+        "billing": {
+          "label": "Bililingi",
+          "description": "Vibali, kushindwa kwa malipo, na mabadiliko ya usajili."
+        },
+        "invitation": {
+          "label": "Mwongozo wa timu",
+          "description": "Mwongozo wa kujiunga na shirika, ukubali au kukataa."
+        },
+        "activity": {
+          "label": "Shughuli za timu",
+          "description": "Wanachama wamejiunga, mabadiliko ya jukumu, na shughuli nyingine za eneo la kazi."
+        },
+        "updates": {
+          "label": "Masasisho ya bidhaa",
+          "description": "Vipengele vipya, mabadiliko muhimu, na maelezo ya toleo."
+        },
+        "marketing": {
+          "label": "Masokozi",
+          "description": "Jarida la barua pepe na mapendekezo ya wakati mwingine. Chagua kuingia tu."
+        }
+      },
+      "channels": {
+        "in_app": {
+          "label": "Ndani ya programu"
+        },
+        "email": {
+          "label": "Barua pepe"
+        },
+        "push": {
+          "label": "Push"
+        },
+        "sms": {
+          "label": "SMS"
+        }
+      }
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "Jiandikishe kwa matukio yanayotolewa na eneo lako la kazi. Tunasaini kila payload kwa siri ya endpoint yako ili uweze kuhakiki ukweli wake.",
+      "create": {
+        "heading": "Endpoint mpya",
+        "urlLabel": "URL ya endpoint",
+        "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
+        "eventsLegend": "Matukio",
+        "submit": "Tengeneza endpoint",
+        "submitting": "Inatengenezwa…",
+        "selectEvent": "Chagua angalau tukio moja.",
+        "successTitle": "Nukta ya mwisho imetengenezwa. Siri ya saini inaonekana mara moja.",
+        "successWarning": "Hifadhi kwenye meneja ya siri za programu yako kabla ya kufunga.",
+        "copy": "Nakili",
+        "copied": "Imenakiliwa"
+      },
+      "list": {
+        "heading": "Nukta za mwisho zinazofanya kazi",
+        "empty": "Bado hakuna nukta za mwisho za webhook. Tengeneza moja hapo juu.",
+        "loading": "Inapakia…",
+        "loadFailed": "Imeshindwa kupakia webhooks",
+        "columns": {
+          "url": "URL",
+          "events": "Matukio",
+          "status": "Hali",
+          "lastDelivered": "Iliyosafirishwa mwisho",
+          "actions": "Vitendo"
+        },
+        "status": {
+          "active": "Inafanya kazi",
+          "disabled": "Imezuiwa"
+        },
+        "actions": {
+          "edit": "Hariri",
+          "enable": "Washa",
+          "disable": "Zima",
+          "viewDeliveries": "Angalia usafirishaji",
+          "delete": "Futa"
+        }
+      },
+      "deliveries": {
+        "heading": "Usafirishaji wa hivi karibuni",
+        "close": "Funga",
+        "loading": "Inapakia…",
+        "loadFailed": "Imeshindwa kupakia usafirishaji",
+        "empty": "Hakuna usafirishaji bado.",
+        "viewPayload": "Angalia mzigo",
+        "hidePayload": "Ficha mzigo",
+        "replay": "Cheza tena",
+        "replaying": "Inacheza tena…",
+        "status": {
+          "success": "imethibitishwa",
+          "failed": "imekosa",
+          "retrying": "inajaribu tena"
+        }
+      }
+    },
+    "appearance": {
+      "title": "Muonekano",
+      "theme": {
+        "title": "Mandhari",
+        "description": "Tumia mwanga, giza, au ufanane na mapendeleo ya mfumo."
+      },
+      "themePreset": {
+        "title": "Kichujio cha mandhari",
+        "description": "Tumia mandhari yoyote ya Theme Playground kote kwenye programu. Vidhibiti vya chini vinaongezwa juu ili kurekebisha kwa usahihi.",
+        "search": "Tafuta mandhari…",
+        "searchLabel": "Tafuta mandhari",
+        "default": "Chaguo-msingi",
+        "defaultMood": "Nebutra base palette",
+        "active": "Inafanya kazi",
+        "empty": "Hakuna mandhari zinazolingana na utafutaji wako.",
+        "count": "mandhari {count}"
+      },
+      "themeEditor": {
+        "title": "Mandhari",
+        "description": "Chagua kichujio, ingiza DESIGN.md, kisha rekebisha alama za chini.",
+        "selectLabel": "Kichujio cha mandhari",
+        "import": "Ingiza",
+        "copy": "Nakili mandhari",
+        "copied": "Imenakiliwa",
+        "copyError": "Unakiliwa imekosa",
+        "custom": "Maalum"
+      },
+      "designMd": {
+        "title": "Ingiza DESIGN.md",
+        "description": "Nakili au paki DESIGN.md ili kutumia rangi zake, radius, fonti, nafasi, na kivuli kote programu — hifadhiwa hata baada ya kurefresh.",
+        "applied": "Imetumika:",
+        "remove": "Ondoa"
+      },
+      "themeMode": {
+        "label": "Hali ya mandhari",
+        "light": "Nuru",
+        "dark": "Giza",
+        "system": "Mfumo"
+      },
+      "accent": {
+        "title": "Rangi ya kipekee",
+        "description": "Chagua rangi ya kipekee ya brand inayopamba hali za kazi kote programu.",
+        "label": "Rangi ya kipekee",
+        "options": {
+          "default": "Chaguo-msingi",
+          "blue": "Bluu",
+          "cyan": "Saiyani",
+          "violet": "Violeti",
+          "pink": "Uwekundu",
+          "amber": "Kijani-kahubwa",
+          "green": "Kijani",
+          "red": "Nyekundu"
+        }
+      },
+      "colors": {
+        "title": "Rangi",
+        "description": "Rangi ya kipekee, ya nyuma, na ya mbele.",
+        "background": {
+          "label": "Rangi ya nyuma",
+          "description": "Badilisha rangi ya nyuma ya uso."
+        },
+        "foreground": {
+          "label": "Rangi ya mbele",
+          "description": "Badilisha rangi ya maandishi ya mwili."
+        },
+        "resetToDefault": "Rudisha kwenye chaguo la awali"
+      },
+      "fontFamily": {
+        "uiLabel": "Fonti ya UI",
+        "uiDescription": "Familia ya fonti inayotumika kote kwenye UI.",
+        "codeLabel": "Fonti ya msimbo",
+        "codeDescription": "Familia ya fonti inayotumika kwa nyuso za msimbo.",
+        "options": {
+          "ui": {
+            "theme": "Chaguo-msingi la mandhari",
+            "system": "Mfumo",
+            "geist": "Geist",
+            "inter": "Inter",
+            "sf": "SF Pro"
+          },
+          "code": {
+            "theme": "Chaguo-msingi la mandhari",
+            "system": "System mono",
+            "geist-mono": "Geist Mono",
+            "sf-mono": "SF Mono",
+            "jetbrains-mono": "JetBrains Mono"
+          }
+        }
+      },
+      "contrast": {
+        "title": "Tofauti",
+        "description": "Rekebisha tofauti ya maandishi (50 = hakuna mabadiliko).",
+        "label": "Kiwango cha tofauti"
+      },
+      "pointerCursor": {
+        "title": "Tumia kichwa cha kidirisha",
+        "description": "Badilisha kuwa kipeo cha pointer juu ya vipengele vinavyoweza kuingiliana.",
+        "label": "Kipeo cha pointer juu ya vipengele vinavyoweza kuingiliana"
+      },
+      "diffMarkers": {
+        "title": "Alama za tofauti",
+        "description": "Onyesha bandi za rangi, au alama za +/- kwenye kila mstari uliobadilika.",
+        "label": "Mtindo wa alama za tofauti",
+        "color": "Rangi",
+        "plusminus": "+/-"
+      },
+      "fontSmoothing": {
+        "title": "Kusafisha fonti",
+        "description": "Tumia antialiasing ya fonti ya asili ya macOS.",
+        "label": "Kusafisha fonti ya asili"
+      },
+      "typography": {
+        "title": "Tipografia",
+        "description": "Ukubwa wa fonti wa msingi kwa UI na nyuso za msimbo.",
+        "uiFontSize": "Ukubwa wa fonti ya UI",
+        "uiFontSizeDescription": "Rekebisha ukubwa wa fonti ya UI ya msingi.",
+        "codeFontSize": "Ukubwa wa fonti ya msimbo",
+        "codeFontSizeDescription": "Rekebisha ukubwa wa fonti ya msimbo ya msingi."
+      },
+      "fontSize": {
+        "followTheme": "Mandhari",
+        "customize": "Badilisha"
+      },
+      "motion": {
+        "title": "Punguza mwendo",
+        "description": "Punguza animesheni au fuata mpangilio wa mfumo.",
+        "label": "Mpangilio wa mwendo",
+        "system": "Mfumo",
+        "on": "Imewashwa",
+        "off": "Imezimwa"
+      },
+      "surface": {
+        "title": "Upau wa pembeni wa kioo",
+        "description": "Weka nyenzo ya kioo kwenye upau wa pembeni."
+      },
+      "transparency": {
+        "label": "Upau wa pembeni wa kioo",
+        "description": "Weka nyenzo ya kioo kwenye upau wa pembeni."
+      }
+    }
+  },
+  "legal": {
+    "version": "Toleo",
+    "effective": "Inaathiri",
+    "notFound": "Hati hii haipatikani.",
+    "backHome": "Rudi nyumbani"
+  },
+  "commandPalette": {
+    "ariaLabel": "Betri ya amri",
+    "placeholder": "Andika amri au tafuta…",
+    "empty": "Hakuna matokeo yaliyopatikana.",
+    "sections": {
+      "navigation": "Urambazaji",
+      "actions": "Vitendo",
+      "settings": "Mipangilio",
+      "account": "Akaunti",
+      "admin": "Msimamizi",
+      "help": "Msaada"
+    },
+    "commands": {
+      "nav": {
+        "home": "Nyumbani",
+        "settings": "Mipangilio",
+        "billing": "Malipo",
+        "team": "Timu",
+        "apiKeys": "Ufunguo wa API",
+        "notifications": "Arifa",
+        "auditLog": "Logi ya Ukaguzi",
+        "webhooks": "Webhooks",
+        "admin": "Usimamizi"
+      },
+      "action": {
+        "inviteMember": "Karibisha mwanachama wa timu",
+        "createApiKey": "Tengeneza ufunguo wa API",
+        "switchOrganization": "Badilisha shirika"
+      },
+      "settings": {
+        "themeLight": "Badilisha kuwa mandhari ya mwanga",
+        "themeDark": "Badilisha kuwa mandhari ya giza",
+        "themeSystem": "Tumia mandhari ya mfumo"
+      },
+      "account": {
+        "signOut": "Ondoka"
+      },
+      "help": {
+        "reportIssue": "Ripoti tatizo",
+        "shortcuts": "Njia za mkato za kibodi"
+      }
+    }
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "Chaguzi zako za faragha",
+      "description": "Tunatumia vitabu vya kukumbuka ili kuboresha uzoefu wako, kuchambua trafiki ya tovuti, na kubinafsisha maudhui. Chagua aina unazotaka kuruhusu."
+    },
+    "button": {
+      "acceptAll": "Kubali zote",
+      "savePreferences": "Hifadhi chaguzi"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "Zinazohitajika",
+        "description": "Zinazohitajika ili tovuti ifanye kazi. Haziwezi kuzimwa."
+      },
+      "functional": {
+        "label": "Fanksheni",
+        "description": "Kumbuka mapendeleo yako (lugha, mandhari, mpangilio)."
+      },
+      "analytics": {
+        "label": "Uchambuzi",
+        "description": "Data ya matumizi isiyo na jina ili tuweze kuboresha bidhaa."
+      },
+      "marketing": {
+        "label": "Masoko",
+        "description": "Uangazaji wa kibinafsi na kurudisha lengo kwenye majukwaa ya wengine."
+      }
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "Arifa",
+      "description": "Arifa zako zote katika mahali pamoja.",
+      "filter": {
+        "all": "Zote",
+        "unread": "Zisizosomwa"
+      },
+      "actions": {
+        "markAllRead": "Alama zote kama zimesomwa",
+        "markRead": "Alama kama imesomwa",
+        "archive": "Hifadhi",
+        "loadMore": "Pakia zaidi",
+        "loading": "Inapakia...",
+        "selected": "{count} zimechaguliwa"
+      },
+      "empty": {
+        "all": "Uko sawa kabisa.",
+        "unread": "Hakuna arifa zisizosomwa."
+      },
+      "errors": {
+        "load": "Imeshindwa kupakia arifa.",
+        "network": "Hitilafu ya mtandao. Tafadhali jaribu tena.",
+        "markRead": "Imeshindwa kuweka arifa kama imesomwa.",
+        "archive": "Imeshindwa kuhifadhi arifa.",
+        "bulkMarkRead": "Baadhi ya arifa hazikuweza kuwekwa kama zimesomwa."
+      },
+      "inbox": {
+        "noBackend": "Sanduku la barua linahitaji mfumo wa kudumu wa arifa. Angalia usanidi wa mtoa huduma yako.",
+        "emptyCaughtUp": "Sanduku la barua ni safi.",
+        "emptyChangelog": "Masasisho ya ripoti ya mabadiliko yataonyesha hapa."
+      }
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Habari za asubuhi",
+      "afternoon": "Habari za mchana",
+      "evening": "Habari za jioni"
+    },
+    "home": {
+      "connectorsPill": "Nunua programu yako kwa viunganishi",
+      "subtitle": "Poa prompt, bonyeza ⌘K kutoka popote, au ingia moja kwa moja kwenye uso wa eneo la kazi.",
+      "promptPlaceholder": "Unafikiri nini?",
+      "actions": {
+        "connect": "Unganisha muunganisho",
+        "theme": "Uwanja wa Mandhari",
+        "audit": "Logi ya ukaguzi",
+        "billing": "Malipo"
+      }
+    },
+    "commandSurface": {
+      "noAuth": "Uthibitishaji haujasanifiwa kwa mtumaji uliochaguliwa. Weka siri za mtumaji ili kuwezesha misaada ya mtumiaji."
+    },
+    "commandCenter": {
+      "description": "Anza kwa hatua moja: uliza Sailor, angalia ishara za eneo la kazi, au uepusha kazi kwenye uso wa utendaji wa kiotomatiki.",
+      "openSailor": "Fungua Sailor AI",
+      "viewAnalytics": "Angalia Uchambuzi"
+    },
+    "workspaceSnapshot": {
+      "title": "Picha ya Eneo la Kazi",
+      "description": "Siku ya hifadhi ya hivi karibuni · {day}",
+      "viewAnalytics": "Angalia uchambuzi →",
+      "metrics": {
+        "activeUsers": "Watumiaji Wanaofanya Kazi",
+        "totalEvents": "Matukio Yote",
+        "conversions": "Ubadilishaji",
+        "revenue": "Mapato"
+      },
+      "details": {
+        "activeUsers": "Watumiaji wanaosajiliwa",
+        "totalEvents": "Matukio yaliyorekodiwa",
+        "conversions": "Vitendo vya kufaa",
+        "revenue": "Mapato yaliyotambuliwa"
+      },
+      "meta": {
+        "snapshot": "Picha ya hali",
+        "cadence": "Mzunguko",
+        "tenant": "Mkazi",
+        "daily": "Kila siku",
+        "latestDay": "{day}",
+        "users": "Watumiaji wa mkazi",
+        "events": "Mtiririko wa matukio",
+        "funnel": "Mkono",
+        "billing": "Malipo"
+      }
+    },
+    "documentPipeline": {
+      "title": "Mfumo wa hati",
+      "description": "Tuma faili za chanzo kwenye foleni ya kazi ya asili.",
+      "intakeTitle": "Uingizaji wa hati",
+      "intakeDescription": "PDF, Markdown, maandishi, au hati ya Word",
+      "chooseDocument": "Chagua hati",
+      "startParseTask": "Anzisha kazi ya kuchanganua",
+      "queued": "Imewekwa kwenye foleni",
+      "fileInputLabel": "Faili la hati",
+      "fallbackError": "Kazi ya hati imekua.",
+      "taskStatus": "Hali ya kazi",
+      "progressLabel": "Maendeleo ya kazi",
+      "refreshStatus": "Sasisha",
+      "cancelTask": "Ghairi",
+      "statusError": "Imeshindwa kusasisha hali ya kazi.",
+      "cancelError": "Imeshindwa kuighairi kazi.",
+      "statusQueued": "Imewekwa kwenye foleni",
+      "statusRunning": "Inaendelea",
+      "statusSucceeded": "Imekamilika",
+      "statusFailed": "Imeshindwa",
+      "statusCancelled": "Imeghairiwa",
+      "resultReady": "Matokeo tayari",
+      "taskError": "Hitilafu ya kazi",
+      "updatedAt": "Imesasishwa"
+    },
+    "recentSessions": {
+      "title": "Endelea ambapo ulikuwa",
+      "subtitle": "{count, plural, =0 {Hakuna misimamo} =1 {Msimo wa hivi karibuni 1} other {Msimamo wa hivi karibuni #}}",
+      "viewAll": "Angalia yote →",
+      "newChat": "Mazungumzo mpya",
+      "untitled": "Kikao kisichojulikana",
+      "messageCount": "{count, plural, =1 {Ujumbe 1} other {Ujumbe #}}"
+    },
+    "gettingStarted": {
+      "title": "Kuanza",
+      "description": "{done} ya {total} imekamilika · maliza usanidi ili ufungue enzi la kazi kamili",
+      "progressLabel": "Maendeleo ya usanidi",
+      "tasks": {
+        "team": {
+          "label": "Pakana mshirika wa timu",
+          "description": "Kulea angalau mshirika mmoja ndani ya enzi lako la kazi."
+        },
+        "api": {
+          "label": "Tengeneza ufunguo wa API",
+          "description": "Ufikiaji wa programu kwa pointi zako za enzi la kazi."
+        },
+        "integration": {
+          "label": "Unganisha muunganisho",
+          "description": "Stripe, Slack, webhooks, mistari, na zaidi."
+        },
+        "ai": {
+          "label": "Fungua Sailor AI",
+          "description": "Jaribu hali ya mazungumzo, data, au mchakato."
+        }
+      }
+    }
+  },
+  "Sidebar": {
+    "projects": "Miradi",
+    "noThreads": "Hakuna majaribio",
+    "expandAll": "Panua yote",
+    "collapseAll": "Kunja yote",
+    "sectionMore": "Chaguzi zaidi",
+    "newProject": "Mradi mpya",
+    "restoredGroups": "Vikundi vilivyopanuliwa hapo awali vimerudishwa",
+    "newProjectPlaceholder": "Jina la mradi",
+    "newProjectDefault": "Bila jina",
+    "newProjectSuccess": "Mradi umetengenezwa",
+    "newProjectError": "Haikuweza kutengeneza mradi",
+    "sortBy": "Panga kwa",
+    "sortRecent": "Imeandaliwa hivi karibuni",
+    "sortAlphabetical": "Alfabeti",
+    "sortCreated": "Tarehe iliyoundwa",
+    "archiveAll": "Hifadhi yote",
+    "comingV2": "Inakuja katika v2"
+  },
+  "startupOs": {
+    "milestone": {
+      "firstRoom": "Chumba cha kwanza kimeandaliwa.",
+      "firstFolder": "Kampuni nyingi huanza kama folda.",
+      "firstTable": "Meza ya kwanza ina kiti cha pili.",
+      "firstSignal": "Ulimwengu halisi umeanza kuzungumza.",
+      "firstShip": "Ulimwengu unaiona kwa mara ya kwanza.",
+      "firstBeliever": "Kutoka leo, sio tena unajenga kwa ajili yako peke yako.",
+      "firstRevenue": "Lala lina mtiririko wa fedha sasa.",
+      "firstReturn": "Kurudi ni muhimu zaidi kuliko kutembelea.",
+      "firstTeam": "Watu watatu wanaweza kuanza kuunda kampuni.",
+      "firstCrowd": "Meza ya kwanza inajaa watu.",
+      "firstReset": "Kuanza upya ni mwanzo wa kweli zaidi.",
+      "firstPublic": "Weka sehemu ya mustakabali hadharani.",
+      "firstDemo": "Hii sionyesho. Ni jaribio.",
+      "graduation": "Umezidi msingi. Njia inayofuata inahitaji zana zenye nguvu zaidi."
+    },
+    "emptyState": {
+      "default": "Kampuni nyingi huanza kama folda.",
+      "integrations": "Hakuna viunganishi vilivyowekwa.",
+      "creditActivity": "Shughuli za kridi zitajionyesha baada ya ombi lako la kwanza.",
+      "usageData": "Data ya matumizi itajionyesha mara tu shirika lako litapochora ombi.",
+      "apiKeys": "Hakuna ufunguo bado.",
+      "apiKeysCta": "Unda ufunguo wako wa kwanza",
+      "teamMembers": "Mtu mmoja anaweza kuanza. Wachezi wachache wanaweza kujenga.",
+      "cofounders": "Mtu wa kwanza anayekiamini bado hajakutokea.",
+      "cofoundersDescription": "Unapopambana na mwenzi wengine wa kuanzisha na kushiriki nia, atajitokeza hapa.",
+      "cofoundersAction": "Pata wanachama wa kuanzisha",
+      "growthChart": "Data ya mtiririko itajitokeza baada ya shughuli kuanza.",
+      "revenueChart": "Data ya mapato itajitokeza baada ya mikamilisho kuanza.",
+      "webhookDeliveries": "Usafirishaji utajitokeza hapa baada ya tukio la kwanza.",
+      "webhookEndpoints": "Ongeza mwisho wa huduma hapo juu ili uanze kupokea matukio.",
+      "accessInvites": "Hakuna nambari za upeke zilizotolewa."
+    },
+    "success": "Chumba cha kwanza kimeandaliwa.",
+    "failure": "Kuanzisha tena ni mwanzo wa kweli zaidi.",
+    "errors": {
+      "loadMatches": "Makutano hayakuweza kupakuliwa.",
+      "loadMatchesDescription": "Hitilafu imetokea upande wetu. Onyesha tena kujaribu tena.",
+      "loadWebhookDeliveries": "Usafirishaji haukuweza kupakuliwa.",
+      "replayWebhookDelivery": "Upigaji tena haukufika.",
+      "loadWebhookEndpoints": "Mwisho wa huduma haukuweza kupakuliwa."
+    },
+    "team": "Mtu mmoja anaweza kuanza. Wachezi wachache wanaweza kujenga.",
+    "revenue": "Ndoto sasa ina mtiririko wa fedha.",
+    "growth": "Ishara inakuwa imara zaidi.",
+    "deployment": {
+      "primary": "Ulimwengu unaiona kwa mara ya kwanza.",
+      "echo": "Hatimaye imeondoka localhost."
+    },
+    "onboarding": "Hauhitaji kuwa tayari. Unahitaji kuanza.",
+    "graduation": "Umezidi msingi. Jaribu {tool} kwa njia inayokuja.",
+    "company": {
+      "emptyTitle": "Mnara wako wa kwanza wa muktadha unaanza hapa.",
+      "emptyDescription": "Unda kampuni katika Startup OS ili kuona na kuhariri mnara wake wa muktadha.",
+      "emptyAction": "Fungua Startup OS",
+      "notice": {
+        "needsProvider": "Unganisha ufunguo wa mtumaji wa AI ili kujaza sehemu moja kwa moja.",
+        "generateFailed": "Uzalishaji haukuisha.",
+        "saveFailed": "Mabadiliko yako hayakuhifadhiwa."
+      },
+      "action": {
+        "save": "Hifadhi",
+        "saving": "Inahifadhi…",
+        "cancel": "Ghairi",
+        "open": "Fungua Startup OS"
+      }
+    },
+    "execution": {
+      "noBets": "Hakuna bahati bado.",
+      "noRuns": "Hakuna miradi inayofanywa."
+    },
+    "fileTree": {
+      "empty": "Mradi huu bado hauna faili."
+    }
+  },
+  "selectOrg": {
+    "invitation": {
+      "emptyTitle": "Kazi inafanywa.",
+      "emptyDescription": "Mwito unaweza bado kuwa unasawazishwa. Onyesha upya ukurasa huu au uunde eneo la kazi tofauti."
+    },
+    "billing": {
+      "emptyTitle": "Unda eneo la kazi kabla ya bili.",
+      "emptyDescription": "Vitendo vya bili vinahitaji eneo la kazi la kazi. Unda kwanza, kisha rudi kwa bili."
+    },
+    "default": {
+      "emptyTitle": "Eneo la kazi la kwanza linaanza hapa.",
+      "emptyDescription": "Unda eneo la kazi kuanza."
+    }
+  }
+}

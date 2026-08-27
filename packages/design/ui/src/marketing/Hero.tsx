@@ -1,0 +1,240 @@
+/**
+ * Hero - Marketing Hero Section
+ *
+ * Primary above-the-fold section with headline, value proposition, CTAs,
+ * and visual elements (gradients, particles, 3D, video).
+ */
+
+"use client";
+
+import { ArrowRight, Play } from "@nebutra/icons";
+import Image from "next/image";
+import { AnimateIn, AnimateInGroup } from "../primitives/animate-in";
+import { domAnimation, LazyMotion, m } from "../shared/animation/motion";
+import { cn } from "../utils";
+import { GridPattern } from "./grid-pattern";
+import type { HeroProps } from "./types";
+
+const TRUST_BADGE_IDS = ["runtime", "policy", "deploy", "audit", "ops"] as const;
+
+function HeroBackground({ backgroundType }: { backgroundType: HeroProps["backgroundType"] }) {
+  switch (backgroundType) {
+    case "video":
+      return (
+        <div className="absolute inset-0 -z-10 overflow-hidden bg-[var(--neutral-12)] pointer-events-none dark:bg-background">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            aria-label="Decorative hero background video"
+            className="h-full w-full object-cover opacity-40 mix-blend-screen"
+          >
+            <source src="/assets/hero-bg.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--neutral-12)] via-transparent to-[var(--neutral-12)] opacity-80 dark:from-[var(--neutral-1)] dark:to-[var(--neutral-1)]" />
+        </div>
+      );
+    default:
+      return (
+        <div className="pointer-events-none absolute inset-0 -z-10 isolate flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 bg-[var(--blue-1)] dark:bg-background" />
+          {/* Mesh gradient approximation */}
+          <div className="absolute -top-1/4 -left-1/4 size-[50rem] rounded-full bg-[var(--blue-6)]/20 blur-[100px] opacity-70" />
+          <div className="absolute top-1/2 -right-1/4 size-[40rem] rounded-full bg-primary/10 blur-[120px] opacity-50" />
+          <div className="absolute bottom-0 left-1/3 size-[60rem] rounded-full bg-[var(--blue-5)]/10 blur-[150px] opacity-60" />
+          <GridPattern className="[mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
+        </div>
+      );
+  }
+}
+
+export function Hero({
+  locale: _locale = "en",
+  variant = "default",
+  backgroundType = "gradient",
+  headline,
+  subheadline,
+  primaryCTA,
+  secondaryCTA,
+  showTrustBadges = true,
+  media,
+  className,
+  id,
+}: HeroProps) {
+  return (
+    <LazyMotion features={domAnimation}>
+      <section
+        id={id}
+        className={cn(
+          "relative flex min-h-[90vh] w-full items-center overflow-hidden pt-24 pb-16",
+          variant === "centered" || variant === "default" ? "text-center" : "text-left",
+          className,
+        )}
+      >
+        <HeroBackground backgroundType={backgroundType} />
+
+        <div
+          className={cn(
+            "relative z-10 mx-auto w-full min-w-0 max-w-[var(--container-wide)] px-4 sm:px-6 lg:px-8",
+            variant === "split"
+              ? "grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8"
+              : "flex flex-col items-center",
+          )}
+        >
+          {/* Content Layer */}
+          <div
+            className={cn(
+              "flex w-full min-w-0 flex-col",
+              variant === "split" ? "max-w-xl" : "mx-auto max-w-3xl items-center",
+            )}
+          >
+            <AnimateInGroup stagger="fast">
+              {/* Headline */}
+              <AnimateIn preset="fadeUp">
+                <h1
+                  className={cn(
+                    "w-full text-balance text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl",
+                    variant === "split" ? "mb-6" : "mb-8 text-center",
+                  )}
+                >
+                  {headline || (
+                    <span>
+                      Build faster with{" "}
+                      <span className="text-[var(--blue-11)]">Agentic Precision</span>
+                    </span>
+                  )}
+                </h1>
+              </AnimateIn>
+
+              {/* Subheadline */}
+              <AnimateIn preset="fadeUp">
+                <p
+                  className={cn(
+                    "w-full text-base leading-relaxed text-muted-foreground sm:text-lg md:text-xl lg:text-2xl lg:leading-relaxed",
+                    variant === "split" ? "mb-8" : "mx-auto mb-10 max-w-2xl text-center",
+                  )}
+                >
+                  {subheadline ||
+                    "The unified multi-agent operating system scaling next-generation SaaS businesses autonomously."}
+                </p>
+              </AnimateIn>
+
+              {/* CTA Buttons */}
+              <AnimateIn preset="fadeUp">
+                <div
+                  className={cn(
+                    "flex flex-col sm:flex-row gap-4",
+                    variant === "split" ? "" : "justify-center",
+                  )}
+                >
+                  <a
+                    href={primaryCTA?.href || "/signup"}
+                    className="inline-flex h-12 items-center justify-center rounded-[var(--radius-lg)] bg-primary px-8 text-base font-semibold text-white shadow-lg shadow-primary/20 hover:bg-primary/90 transition-[background-color,box-shadow,transform] duration-flow ease-[var(--ease-brand)] hover:scale-[1.02] active:scale-[0.97] motion-reduce:hover:scale-100 motion-reduce:active:scale-100 group"
+                  >
+                    {primaryCTA?.text || "Start Free Trial"}
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </a>
+
+                  <a
+                    href={secondaryCTA?.href || "/demo"}
+                    className="inline-flex h-12 items-center justify-center rounded-[var(--radius-lg)] border border-border bg-white/50 px-8 text-base font-medium text-foreground shadow-sm backdrop-blur-sm transition-[background-color,border-color,box-shadow,transform] duration-flow ease-[var(--ease-brand)] hover:scale-[1.02] hover:bg-muted active:scale-[0.97] motion-reduce:hover:scale-100 motion-reduce:active:scale-100 dark:bg-background/70 group"
+                  >
+                    <Play className="mr-2 h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    {secondaryCTA?.text || "Watch Demo"}
+                  </a>
+                </div>
+              </AnimateIn>
+
+              {/* Trust Badges */}
+              {showTrustBadges && (
+                <AnimateIn preset="fade">
+                  <div
+                    className={cn("mt-12 sm:mt-16", variant === "split" ? "w-full" : "text-center")}
+                  >
+                    <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-6">
+                      Trusted by innovative engineering teams
+                    </p>
+                    <div
+                      className={cn(
+                        "flex flex-wrap items-center gap-6 sm:gap-10",
+                        variant === "split" ? "justify-start" : "justify-center",
+                      )}
+                    >
+                      {/* Placeholder logos - real logos will be mapped from props later */}
+                      {TRUST_BADGE_IDS.map((badgeId) => (
+                        <div
+                          key={badgeId}
+                          className="h-8 w-24 rounded bg-muted dark:bg-muted opacity-60 animate-pulse mix-blend-luminosity"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </AnimateIn>
+              )}
+            </AnimateInGroup>
+          </div>
+
+          {/* Media Layer (for split variant) */}
+          {variant === "split" && (
+            <m.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full relative h-[400px] lg:h-[600px] rounded-[var(--radius-2xl)] overflow-hidden shadow-2xl border border-[var(--neutral-4)] bg-muted"
+            >
+              {media?.type === "video" ? (
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  aria-label={media.alt || "Hero video"}
+                  className="w-full h-full object-cover"
+                  poster={media.src?.replace(".mp4", ".jpg")}
+                >
+                  <source src={media.src} type="video/mp4" />
+                </video>
+              ) : media?.type === "image" ? (
+                <Image
+                  src={media.src}
+                  alt={media.alt || "Hero Media"}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="w-full h-full object-cover"
+                  unoptimized
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-[var(--neutral-3)] to-[var(--neutral-2)] flex items-center justify-center overflow-hidden">
+                  {/* 3D Placeholder or generic fallback */}
+                  <div className="w-3/4 h-3/4 bg-white/50 dark:bg-background/70 backdrop-blur border border-white/20 rounded-[var(--radius-xl)] shadow-ambient-glow flex items-center justify-center -rotate-3 hover:rotate-0 transition-transform duration-700 cursor-pointer group">
+                    <Play className="h-16 w-16 text-primary group-hover:scale-110 transition-transform" />
+                  </div>
+                </div>
+              )}
+            </m.div>
+          )}
+        </div>
+
+        {/* Scroll Indicator */}
+        <AnimateIn
+          preset="fade"
+          delay={1}
+          duration={1}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2"
+        >
+          <span className="text-xs font-medium text-muted-foreground uppercase tracking-widest">
+            Scroll
+          </span>
+          <m.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            className="w-px h-12 bg-gradient-to-b from-[var(--neutral-5)] to-transparent"
+          />
+        </AnimateIn>
+      </section>
+    </LazyMotion>
+  );
+}
+
+Hero.displayName = "Hero";

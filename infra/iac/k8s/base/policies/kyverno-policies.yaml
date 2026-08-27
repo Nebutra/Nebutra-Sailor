@@ -1,0 +1,218 @@
+# Kyverno ClusterPolicies — enforce pod security standards and image hygiene.
+#
+# Prerequisites:
+#   kubectl apply -f https://github.com/kyverno/kyverno/releases/latest/download/install.yaml
+#
+# These policies apply to the "nebutra" namespace only (via namespaceSelector).
+# Policies are in "Audit" mode by default — switch to "Enforce" after validating
+# that all existing workloads pass.
+#
+# Docs: https://kyverno.io/docs/
+
+---
+# Require all containers to run as non-root
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-run-as-non-root
+  annotations:
+    policies.kyverno.io/title: Require Non-Root Containers
+    policies.kyverno.io/category: Pod Security
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/description: >-
+      Containers must not run as root (UID 0).
+      All Nebutra deployments set runAsNonRoot: true and runAsUser: 1000.
+spec:
+  validationFailureAction: Audit
+  background: true
+  rules:
+    - name: check-run-as-non-root
+      match:
+        any:
+          - resources:
+              kinds: [Pod]
+              namespaces: [nebutra]
+      validate:
+        message: "Containers must set securityContext.runAsNonRoot: true"
+        pattern:
+          spec:
+            containers:
+              - securityContext:
+                  runAsNonRoot: true
+
+---
+# Disallow privilege escalation
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: disallow-privilege-escalation
+  annotations:
+    policies.kyverno.io/title: Disallow Privilege Escalation
+    policies.kyverno.io/category: Pod Security
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/description: >-
+      Containers must set allowPrivilegeEscalation: false to prevent
+      child processes from gaining more privileges than the parent.
+spec:
+  validationFailureAction: Audit
+  background: true
+  rules:
+    - name: check-privilege-escalation
+      match:
+        any:
+          - resources:
+              kinds: [Pod]
+              namespaces: [nebutra]
+      validate:
+        message: "Containers must set securityContext.allowPrivilegeEscalation: false"
+        pattern:
+          spec:
+            containers:
+              - securityContext:
+                  allowPrivilegeEscalation: false
+
+---
+# Require image digest (not floating tags) for production workloads
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-image-digest
+  annotations:
+    policies.kyverno.io/title: Require Image Digest
+    policies.kyverno.io/category: Supply Chain Security
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/description: >-
+      Production images must use a digest (sha256:...) rather than a floating
+      tag like :latest to ensure reproducible deployments.
+      CI pipeline injects the digest via kustomize image transforms.
+spec:
+  validationFailureAction: Audit
+  background: true
+  rules:
+    - name: check-image-digest
+      match:
+        any:
+          - resources:
+              kinds: [Pod]
+              namespaces: [nebutra]
+      # Only enforce in production overlay (staging/dev may use :latest for speed)
+      preconditions:
+        any:
+          - key: "{{ request.object.metadata.labels.\"app.kubernetes.io/part-of\" || '' }}"
+            operator: Equals
+            value: nebutra-sailor
+      validate:
+        message: "Container images must use a digest: image@sha256:..."
+        foreach:
+          - list: "request.object.spec.containers"
+            deny:
+              conditions:
+                any:
+                  - key: "{{ element.image }}"
+                    operator: NotContains
+                    value: "@sha256:"
+
+---
+# Disallow latest tag in production
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: disallow-latest-tag
+  annotations:
+    policies.kyverno.io/title: Disallow Latest Tag
+    policies.kyverno.io/category: Best Practices
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/description: >-
+      The :latest image tag is mutable and not reproducible.
+      Use explicit version tags or digests.
+spec:
+  validationFailureAction: Audit
+  background: true
+  rules:
+    - name: check-image-tag
+      match:
+        any:
+          - resources:
+              kinds: [Pod]
+              namespaces: [nebutra]
+      validate:
+        message: "Image tag ':latest' is not allowed in production. Use a version tag or digest."
+        foreach:
+          - list: "request.object.spec.containers"
+            deny:
+              conditions:
+                any:
+                  - key: "{{ element.image }}"
+                    operator: Contains
+                    value: ":latest"
+
+---
+# Require resource requests and limits on all containers
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-resource-limits
+  annotations:
+    policies.kyverno.io/title: Require Resource Limits
+    policies.kyverno.io/category: Resource Management
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/description: >-
+      All containers must specify CPU and memory requests and limits
+      to enable proper scheduling and prevent resource starvation.
+spec:
+  validationFailureAction: Audit
+  background: true
+  rules:
+    - name: check-resource-limits
+      match:
+        any:
+          - resources:
+              kinds: [Pod]
+              namespaces: [nebutra]
+      validate:
+        message: "Containers must specify resource requests and limits for CPU and memory"
+        pattern:
+          spec:
+            containers:
+              - resources:
+                  requests:
+                    memory: "?*"
+                    cpu: "?*"
+                  limits:
+                    memory: "?*"
+                    cpu: "?*"
+
+---
+# Require liveness and readiness probes
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-health-probes
+  annotations:
+    policies.kyverno.io/title: Require Liveness and Readiness Probes
+    policies.kyverno.io/category: Reliability
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/description: >-
+      All containers must have liveness and readiness probes configured
+      to enable Kubernetes to detect and restart unhealthy pods.
+spec:
+  validationFailureAction: Audit
+  background: true
+  rules:
+    - name: check-probes
+      match:
+        any:
+          - resources:
+              kinds: [Pod]
+              namespaces: [nebutra]
+      validate:
+        message: "Containers must define livenessProbe and readinessProbe"
+        pattern:
+          spec:
+            containers:
+              - livenessProbe:
+                  httpGet:
+                    path: "?*"
+                readinessProbe:
+                  httpGet:
+                    path: "?*"

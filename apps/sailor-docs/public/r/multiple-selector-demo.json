@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "multiple-selector-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/multiple-selector-demo.tsx",
+      "content": "import { MultipleSelector } from \"@nebutra/ui/primitives\";\n\nexport function MultipleSelectorDemo() {\n  const OPTIONS = [\n    { label: \"next.js\", value: \"nextjs\" },\n    { label: \"Vue\", value: \"vue\" },\n    { label: \"Nuxt\", value: \"nuxt\" },\n    { label: \"Svelte\", value: \"svelte\" },\n    { label: \"SvelteKit\", value: \"sveltekit\" },\n    { label: \"Remix\", value: \"remix\" },\n    { label: \"Astro\", value: \"astro\" },\n    { label: \"Angular\", value: \"angular\" },\n  ];\n\n  return (\n    <div className=\"max-w-sm p-8 gap-6 mx-auto flex h-[400px] w-full flex-col\">\n      <div className=\"space-y-2\">\n        <span className=\"text-sm font-medium\">Frameworks</span>\n        <MultipleSelector\n          defaultOptions={OPTIONS}\n          placeholder=\"Select frameworks...\"\n          emptyIndicator={\n            <p className=\"text-lg leading-10 text-gray-600 dark:text-gray-400 text-center\">\n              No results found.\n            </p>\n          }\n        />\n      </div>\n\n      <div className=\"space-y-2\">\n        <span className=\"text-sm font-medium\">Creatable Frameworks</span>\n        <MultipleSelector\n          creatable\n          defaultOptions={OPTIONS}\n          placeholder=\"Select or create...\"\n          emptyIndicator={\n            <p className=\"text-lg leading-10 text-gray-600 dark:text-gray-400 text-center\">\n              No results found.\n            </p>\n          }\n        />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

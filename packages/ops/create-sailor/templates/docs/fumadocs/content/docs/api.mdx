@@ -1,0 +1,31 @@
+---
+title: API Reference
+description: Complete API documentation
+---
+
+{/* 2026 BEST PRACTICE: API Reference should be auto-generated from OpenAPI spec */}
+{/* 2026 BEST PRACTICE: Every endpoint needs: Method badge, params table, response schema, multi-language examples */}
+{/* TODO: Export backends/gateway/openapi.json and replace this starter page with generated reference content. */}
+
+# API Reference
+
+API documentation is easiest to maintain when it is generated from your OpenAPI spec.
+
+To refresh the source spec and the shared TypeScript types in `apps/web`:
+
+```bash
+pnpm --filter @nebutra/gateway generate:spec
+pnpm generate:api-types
+```
+
+## Endpoints
+
+### GET /hello
+
+Returns a hello message.
+
+**Response**:
+
+```json
+{ "message": "Hello, world!" }
+```

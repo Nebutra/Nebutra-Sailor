@@ -1,0 +1,52 @@
+name: Setup Node and pnpm
+description: Shared Nebutra workflow setup for Node.js, pnpm cache, and optional install.
+
+inputs:
+  node-version:
+    description: Node.js version to install.
+    required: false
+    default: "22"
+  install:
+    description: Run the install command after setup.
+    required: false
+    default: "true"
+  install-command:
+    description: Dependency install command.
+    required: false
+    default: pnpm install --frozen-lockfile
+  verify-supply-chain:
+    description: Verify repository supply-chain policy before setup.
+    required: false
+    default: "false"
+  registry-url:
+    description: Optional package registry URL for npm publishing.
+    required: false
+    default: ""
+  scope:
+    description: Optional package scope for scoped registry publishing.
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Verify supply-chain policy
+      if: inputs.verify-supply-chain == 'true'
+      shell: bash
+      run: node scripts/verify-supply-chain-policy.mjs
+
+    - name: Setup pnpm
+      uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: pnpm
+        registry-url: ${{ inputs.registry-url }}
+        scope: ${{ inputs.scope }}
+
+    - name: Install dependencies
+      if: inputs.install == 'true'
+      shell: bash
+      run: ${{ inputs.install-command }}

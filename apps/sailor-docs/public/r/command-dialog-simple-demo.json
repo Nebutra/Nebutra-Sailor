@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "command-dialog-simple-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/command-dialog-simple-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  CommandDialog,\n  CommandEmpty,\n  CommandGroup,\n  CommandInput,\n  CommandItem,\n  CommandList,\n} from \"@nebutra/ui/primitives\";\nimport * as React from \"react\";\n\nexport function CommandDialogSimpleDemo() {\n  const [open, setOpen] = React.useState(false);\n\n  React.useEffect(() => {\n    setOpen(true);\n  }, []);\n\n  return (\n    <CommandDialog open={open} onOpenChange={setOpen}>\n      <CommandInput placeholder=\"Type a command or search...\" />\n      <CommandList>\n        <CommandEmpty>No results found.</CommandEmpty>\n        <CommandGroup heading=\"Pages\">\n          <CommandItem>Dashboard</CommandItem>\n        </CommandGroup>\n      </CommandList>\n    </CommandDialog>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

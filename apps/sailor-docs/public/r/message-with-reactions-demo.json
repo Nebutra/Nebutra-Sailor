@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "message-with-reactions-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/message-with-reactions-demo.tsx",
+      "content": "import { MessageWithReactions, ReactionChip } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nexport default function MessageWithReactionsDemo() {\n  const [selected, setSelected] = useState<string>();\n\n  return (\n    <div className=\"gap-6 flex flex-col items-start\">\n      {/* Pre-composed message with reactions */}\n      <MessageWithReactions text=\"Great work on this feature! 🚀\" />\n\n      {/* Standalone chip */}\n      <ReactionChip onSelect={setSelected} selected={selected} />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

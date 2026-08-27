@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — API-markedplace",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "API-markedplace for alle modeller · betal etter bruk · administrer nøkler og lommebok · rask prøve."
+  },
+  "admin": {
+    "dashboard": "Oversikt",
+    "keys": "API-nøkler",
+    "wallet": "Lommebok",
+    "docs": "Dokumentasjon",
+    "title": "Admin",
+    "backToMarket": "Tilbake til markedet",
+    "quickUse": "Rask bruk"
+  },
+  "chrome": {
+    "searchPlaceholder": "Hva vil du gjøre med AI?",
+    "search": "Søk",
+    "locale": "Språk",
+    "currency": "Valuta",
+    "collapseSidebar": "Skjul sidepanel",
+    "expandSidebar": "Vis sidepanel",
+    "home": "Hjem",
+    "adminConsole": "Admin",
+    "quickUse": "Rask bruk",
+    "support": "Brukerstøtte",
+    "apiDocs": "API-dokumentasjon",
+    "integrationHelp": "Integrasjonsveiledning",
+    "aiRecommend": "AI-utvalg",
+    "market": "Marked",
+    "usageTitle": "Rask bruk"
+  },
+  "channels": {
+    "app": "Appmarked",
+    "api": "API-marked",
+    "models": "Modellkatalog",
+    "client": "Klient"
+  },
+  "market": {
+    "new": "Ny",
+    "hot": "Populært",
+    "forYou": "For deg",
+    "grid": "Rutenett",
+    "list": "Liste",
+    "apiShelf": "API-hylle",
+    "toolShelf": "Verktøyhylle",
+    "categories": "Kategorier",
+    "apps": "Apper",
+    "newRelease": "Ny utgivelse",
+    "forgeTitle": "Forge-verktøyarbeidsområde",
+    "forgeBlurb": "Teksttransformasjoner, kodeker, skjemaer og sammensetbare verktøy. App-markedslaboratoriet peker mot Forge.",
+    "openForge": "Åpne Forge →",
+    "allApi": "Alle API-er →",
+    "all": "Alle →",
+    "viewAll": "Vis alle {label} →",
+    "gridView": "Rutenettvisning",
+    "listView": "Listevisning",
+    "hiTitle": "Enterprise AI-ressursplattform",
+    "hiSubtitle": "Match hvert behov med riktig AI",
+    "sellable": "Salgbar",
+    "walletTopup": "Laste på"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "Språkmodeller",
+      "hint": "Chat · resonnering"
+    },
+    "image-gen": {
+      "label": "Bildegenerering",
+      "hint": "Tekst-til-bilde"
+    },
+    "image-edit": {
+      "label": "Bilde-redigering",
+      "hint": "Redigere · matting"
+    },
+    "video": {
+      "label": "Videogenerering",
+      "hint": "Tekst-til-video"
+    },
+    "audio": {
+      "label": "Lyd og video",
+      "hint": "Tale · transkripsjon"
+    },
+    "data": {
+      "label": "Informasjon",
+      "hint": "Henting · uttrekk"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "Kunnskapsforsterket"
+    },
+    "tools": {
+      "label": "Verktøy-APIer",
+      "hint": "Agent · verktøy"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "Bots",
+      "chips": "Chatbots · tegnebots · kunnskap"
+    },
+    "productivity": {
+      "label": "Produktivitet",
+      "chips": "Modellarena · AI-skriving"
+    },
+    "academic": {
+      "label": "Akademisk",
+      "chips": "PDF-verktøysett · AI-patentsøk"
+    },
+    "image": {
+      "label": "Bildeverktøy",
+      "chips": "3D-studio · Canvas"
+    },
+    "audio": {
+      "label": "Lyd",
+      "chips": "Tale · AI-musik"
+    },
+    "code": {
+      "label": "Kode",
+      "chips": "Web-generator · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "Oversikt",
+    "keys": "Nøkler",
+    "wallet": "Lommebok",
+    "use": "Prøv",
+    "docs": "Dokumentasjon",
+    "models": "Mer"
+  }
+}

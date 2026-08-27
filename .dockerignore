@@ -1,0 +1,63 @@
+# ── Version control ──────────────────────────────────────────────────────────
+.git
+.gitignore
+.gitattributes
+
+# ── Node / package managers ───────────────────────────────────────────────────
+**/node_modules
+
+# ── Build artefacts ───────────────────────────────────────────────────────────
+**/.next
+**/dist
+**/.turbo
+**/build
+**/.cache
+**/coverage
+**/.nyc_output
+
+# ── Test files ────────────────────────────────────────────────────────────────
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+**/__tests__
+**/__mocks__
+**/e2e
+**/playwright-report
+**/test-results
+
+# ── Environment / secrets ─────────────────────────────────────────────────────
+.env
+.env.*
+**/.env
+**/.env.*
+*.pem
+*.key
+
+# ── Documentation ─────────────────────────────────────────────────────────────
+README*
+readme*
+CHANGELOG*
+LICENSE*
+docs/
+**/NOTES*
+
+# ── Storybook ─────────────────────────────────────────────────────────────────
+apps/storybook
+**/.storybook
+**/storybook-static
+
+# ── IDE / tooling ─────────────────────────────────────────────────────────────
+.vscode
+.idea
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── CI / misc ─────────────────────────────────────────────────────────────────
+.github
+.circleci
+.claude
+*.log
+*.tsbuildinfo

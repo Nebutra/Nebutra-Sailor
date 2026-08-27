@@ -1,0 +1,104 @@
+---
+title: Python SDK
+description: 官方 nebutra-sdk Python 参考——安装、初始化和完整方法参考。
+---
+
+## 安装
+
+```bash
+pip install nebutra-sdk
+```
+
+需要 Python 3.11+。
+
+## 初始化客户端
+
+```python
+import os
+from nebutra import Client
+
+nebutra = Client(
+    api_key=os.environ["NEBUTRA_API_KEY"],
+    org_id=os.environ["NEBUTRA_ORG_ID"],
+)
+```
+
+## 认证
+
+```python
+from nebutra import verify_token
+
+payload = await verify_token(
+    token=bearer_token,
+    api_key=os.environ["NEBUTRA_API_KEY"],
+)
+# payload.user_id, payload.org_id, payload.scopes, payload.plan
+```
+
+## 组织
+
+```python
+org = await nebutra.orgs.get(org_id)
+await nebutra.orgs.update(org_id, name="新名称")
+
+members = await nebutra.members.list(org_id=org_id)
+await nebutra.members.invite(org_id=org_id, email="alice@example.com", role="MEMBER")
+await nebutra.members.remove(org_id=org_id, user_id=user_id)
+```
+
+## 项目
+
+```python
+result = await nebutra.projects.list(limit=20)
+project = await nebutra.projects.get("proj_123")
+project = await nebutra.projects.create(name="我的项目")
+await nebutra.projects.update("proj_123", name="新名称")
+await nebutra.projects.delete("proj_123")
+```
+
+## 错误处理
+
+```python
+from nebutra import NebutraError, NotFoundError, ValidationError, RateLimitError
+import asyncio
+
+try:
+    project = await nebutra.projects.get("proj_123")
+except NotFoundError:
+    pass  # 404 — 资源未找到
+except ForbiddenError:
+    pass  # 403 — 权限不足
+except ValidationError as e:
+    for field in e.fields:
+        print(f"{field.field}: {field.message}")
+except RateLimitError as e:
+    await asyncio.sleep(e.retry_after)
+except NebutraError as e:
+    print(f"[{e.code}] {e.message} (请求 ID: {e.request_id})")
+```
+
+## FastAPI 集成
+
+```python
+from fastapi import FastAPI, Depends, HTTPException, Header
+from nebutra import Client, verify_token
+import os
+
+nebutra = Client(api_key=os.environ["NEBUTRA_API_KEY"], org_id=os.environ["NEBUTRA_ORG_ID"])
+
+async def get_current_auth(authorization: str = Header(...)):
+    token = authorization.removeprefix("Bearer ")
+    try:
+        return await verify_token(token, api_key=os.environ["NEBUTRA_API_KEY"])
+    except Exception:
+        raise HTTPException(status_code=401, detail="无效令牌")
+
+app = FastAPI()
+
+@app.get("/api/projects")
+async def list_projects(auth=Depends(get_current_auth)):
+    projects = await nebutra.projects.list(org_id=auth.org_id)
+    return {"data": projects.data}
+```
+
+详见 [Python 快速开始](/zh/quickstart/python)。

@@ -1,0 +1,195 @@
+---
+title: Docker Deployment
+description: Self-hosted deployment of Nebutra-Sailor using Docker and Docker Compose — for teams with data residency requirements or custom infrastructure.
+---
+
+## Overview
+
+Docker deployment runs all services — apps, databases, and supporting services — on your own infrastructure. This is the recommended approach for teams that need:
+
+- Data residency in a specific region or data center
+- Full control over infrastructure and runtime
+- On-premise deployments
+- Custom networking or security policies
+
+<Warning>
+  **Turbopack is not supported in Docker builds.** The production Dockerfiles use webpack (Next.js default) for builds. Turbopack is used only in local development (`pnpm dev`). This is expected behavior — do not enable `--turbopack` in the `build` script inside Docker.
+</Warning>
+
+## Docker Compose services
+
+The `docker-compose.yml` at the repo root defines the full production stack:
+
+| Service | Image | Port | Purpose |
+|---------|-------|------|---------|
+| `web` | `nebutra/web` | 3000 | SaaS dashboard (Next.js) |
+| `api-gateway` | `nebutra/api-gateway` | 3001 | REST API (Hono) |
+| `landing` | `nebutra/landing` | 3002 | Marketing site (Next.js) |
+| `postgres` | `postgres:16-alpine` | 5432 | Primary database |
+| `redis` | `redis:7-alpine` | 6379 | Cache and queue |
+| `clickhouse` | `clickhouse/clickhouse-server:24` | 8123 | Usage metering |
+
+The infrastructure-only stack (`docker-compose.infra.yml`) contains only `postgres`, `redis`, and `clickhouse` — this is what `pnpm infra:up` uses for local development.
+
+## Step-by-step deployment
+
+<Steps>
+  <Step title="Create your environment file">
+    Copy the production env example and fill in all required values:
+    ```bash
+    cp .env.production.example .env.production
+    ```
+    Edit `.env.production` with your actual secrets. See the [environment variables reference](/development/local-dev#environment-variables).
+  </Step>
+  <Step title="Build all Docker images">
+    <Tabs>
+      <Tab title="All apps at once">
+        ```bash
+        docker compose build
+        ```
+      </Tab>
+      <Tab title="Individual app">
+        ```bash
+        docker build -f apps/web/Dockerfile -t nebutra/web .
+        docker build -f backends/gateway/Dockerfile -t nebutra/api-gateway .
+        docker build -f apps/landing/Dockerfile -t nebutra/landing .
+        ```
+        Build context must be the repo root (`.`) so that Turborepo can access shared packages.
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="Start the infrastructure services first">
+    ```bash
+    docker compose up -d postgres redis clickhouse
+    ```
+    Wait for the database to be healthy before running migrations.
+  </Step>
+  <Step title="Run database migrations">
+    ```bash
+    docker compose run --rm api-gateway pnpm db:migrate
+    ```
+  </Step>
+  <Step title="Start all application services">
+    ```bash
+    docker compose up -d
+    ```
+  </Step>
+  <Step title="Verify the deployment">
+    ```bash
+    docker compose ps        # all services should show "healthy" or "running"
+    docker compose logs web  # inspect logs for a specific service
+    ```
+  </Step>
+</Steps>
+
+## Multi-stage Dockerfiles
+
+Each app uses a multi-stage Dockerfile to minimize image size:
+
+```dockerfile
+# Stage 1: dependency installer
+FROM node:22-alpine AS deps
+WORKDIR /app
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN corepack enable && pnpm install --frozen-lockfile
+
+# Stage 2: builder
+FROM node:22-alpine AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN pnpm turbo run build --filter=apps/web
+
+# Stage 3: production runner
+FROM node:22-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=builder /app/apps/web/.next/standalone ./
+COPY --from=builder /app/apps/web/.next/static ./.next/static
+COPY --from=builder /app/apps/web/public ./public
+EXPOSE 3000
+CMD ["node", "server.js"]
+```
+
+<Note>
+  Next.js `output: 'standalone'` is configured in each app's `next.config.ts`. This produces a self-contained Node.js server in `.next/standalone/` that does not require `node_modules` at runtime.
+</Note>
+
+## Health checks
+
+Each service includes a Docker health check. The `api-gateway` exposes a dedicated health endpoint:
+
+```
+GET /health
+```
+
+Response:
+
+```json
+{
+  "status": "ok",
+  "timestamp": "2026-03-31T12:00:00Z",
+  "services": {
+    "database": "ok",
+    "redis": "ok",
+    "clickhouse": "ok"
+  }
+}
+```
+
+Configure your load balancer or reverse proxy to poll this endpoint.
+
+## Reverse proxy
+
+Serve all three apps behind a single reverse proxy (nginx or Caddy). Example Caddy configuration:
+
+```
+yourdomain.com {
+  reverse_proxy web:3000
+}
+
+app.yourdomain.com {
+  reverse_proxy web:3000
+}
+
+api.yourdomain.com {
+  reverse_proxy api-gateway:3001
+}
+```
+
+## Updating a running deployment
+
+<Steps>
+  <Step title="Pull the latest code">
+    ```bash
+    git pull origin main
+    ```
+  </Step>
+  <Step title="Rebuild the affected images">
+    ```bash
+    docker compose build web api-gateway landing
+    ```
+  </Step>
+  <Step title="Run migrations before rolling out">
+    ```bash
+    docker compose run --rm api-gateway pnpm db:migrate
+    ```
+  </Step>
+  <Step title="Rolling restart">
+    ```bash
+    docker compose up -d --no-deps web api-gateway landing
+    ```
+    The `--no-deps` flag prevents Docker Compose from restarting the database services.
+  </Step>
+</Steps>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Vercel Deployment" icon="triangle" href="/deployment/vercel">
+    Managed deployment without infrastructure overhead.
+  </Card>
+  <Card title="Production Checklist" icon="circle-check" href="/deployment/production-checklist">
+    Verify everything before going live.
+  </Card>
+</CardGroup>

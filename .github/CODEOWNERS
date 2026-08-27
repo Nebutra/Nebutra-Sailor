@@ -1,0 +1,33 @@
+# CODEOWNERS — automatic reviewer assignment for sensitive paths.
+# Docs: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default: everything requires a review from the primary owner
+*                                              @tseka_luk
+
+# Database schema & migrations — high blast-radius changes
+packages/platform/db/**                        @tseka_luk
+packages/platform/db/prisma/migrations/**      @tseka_luk
+
+# Identity, auth, vault, secrets — security-sensitive surface
+packages/iam/**                                @tseka_luk
+
+# Shared platform packages
+packages/platform/logger/**                    @tseka_luk
+packages/platform/rate-limit/**                @tseka_luk
+packages/integrations/cache/**                 @tseka_luk
+
+# API surface
+backends/gateway/**                            @tseka_luk
+
+# Python microservices
+backends/python/**                             @tseka_luk
+
+# Kubernetes, Docker, Terraform (infra)
+infra/**                                       @tseka_luk
+
+# Workflow definitions (Inngest, n8n, Pusher)
+workflows/**                                   @tseka_luk
+
+# CI/CD pipelines — highest sensitivity (can exfiltrate secrets)
+.github/workflows/**                           @tseka_luk
+.github/CODEOWNERS                             @tseka_luk

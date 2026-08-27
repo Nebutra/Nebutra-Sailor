@@ -1,0 +1,361 @@
+# =============================================================================
+# Nebutra Production Docker Compose Override
+# Usage: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+#
+# This file EXTENDS docker-compose.yml for VM-based production deployment.
+# (Alibaba Cloud ECS / Tencent Cloud CVM / Any Linux VM)
+#
+# What this override does:
+#   1. Adds Nginx reverse proxy (ports 80 + 443 exposed to the world)
+#   2. Removes direct host port mappings from internal services
+#      (all traffic must flow through Nginx)
+#   3. Sets restart: unless-stopped on all services
+#   4. Adds memory/CPU resource limits per service
+#   5. Adds Certbot service (profile: ssl-renew) for Let's Encrypt renewal
+#
+# Prerequisites on the VM:
+#   - Docker >= 24.x and Docker Compose V2 (docker compose, not docker-compose)
+#   - SSL certificate at /etc/ssl/nebutra/fullchain.pem + privkey.pem
+#     (see infra/runtime/nginx/README.md for initial certificate setup)
+#   - .env file with production secrets in the repo root
+#
+# NOTE: Services `web`, `landing`, and `api-gateway` are defined here as
+# overrides anticipating their addition to docker-compose.yml (they are Next.js
+# and Node.js apps currently in development). Once added to the base file this
+# override will apply restart policies and resource limits to them automatically.
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# YAML anchors — reusable restart policy
+# ---------------------------------------------------------------------------
+x-restart-policy: &restart-policy
+  restart: unless-stopped
+
+# ---------------------------------------------------------------------------
+# YAML anchor — common healthcheck settings
+# ---------------------------------------------------------------------------
+x-healthcheck-defaults: &healthcheck-defaults
+  interval: 30s
+  timeout: 10s
+  retries: 5
+  start_period: 30s
+
+services:
+  # ===========================================================================
+  # Nginx reverse proxy — the only service with public host ports
+  # ===========================================================================
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: nebutra-nginx
+    <<: *restart-policy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./infra/runtime/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./infra/runtime/nginx/conf.d:/etc/nginx/conf.d:ro
+      # SSL certificate directory — provision via certbot or commercial CA
+      # The host path /etc/ssl/nebutra must contain fullchain.pem + privkey.pem
+      - /etc/ssl/nebutra:/etc/ssl/nebutra:ro
+      # Certbot webroot for ACME challenges
+      - certbot_www:/var/www/certbot:ro
+      # Nginx logs persisted to a named volume
+      - nginx_logs:/var/log/nginx
+    depends_on:
+      - web
+      - landing
+      - api-gateway
+      - idp
+    healthcheck:
+      test: ["CMD-SHELL", "nginx -t && wget -qO- http://localhost/health 2>/dev/null || exit 0"]
+      <<: *healthcheck-defaults
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 256M
+        reservations:
+          cpus: "0.25"
+          memory: 64M
+
+  # ===========================================================================
+  # Certbot — Let's Encrypt certificate renewal
+  # Run manually or via cron; activated only with --profile ssl-renew
+  #
+  # Initial certificate (run ONCE before starting nginx):
+  #   docker compose -f docker-compose.yml -f docker-compose.prod.yml \
+  #     --profile ssl-renew run --rm certbot \
+  #     certonly --webroot -w /var/www/certbot \
+  #     -d nebutra.com -d www.nebutra.com \
+  #     -d app.nebutra.com -d api.nebutra.com \
+  #     -d sso.nebutra.com \
+  #     --email ops@nebutra.com --agree-tos --no-eff-email
+  #
+  # Renewal (run via cron every 12h):
+  #   docker compose -f docker-compose.yml -f docker-compose.prod.yml \
+  #     --profile ssl-renew run --rm certbot renew
+  # ===========================================================================
+  certbot:
+    image: certbot/certbot:latest
+    container_name: nebutra-certbot
+    volumes:
+      # Certificates written here must match /etc/ssl/nebutra mount in nginx
+      - /etc/ssl/nebutra:/etc/letsencrypt
+      - certbot_www:/var/www/certbot
+    profiles:
+      - ssl-renew
+    command: renew --quiet
+
+  # ===========================================================================
+  # Next.js SaaS application
+  # Port removed — accessible only via Nginx proxy
+  # ===========================================================================
+  web:
+    <<: *restart-policy
+    ports: []   # No direct host port; Nginx proxies :3000 internally
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/api/health || exit 1"]
+      <<: *healthcheck-defaults
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 1G
+        reservations:
+          cpus: "0.5"
+          memory: 256M
+
+  # ===========================================================================
+  # Next.js landing / marketing page
+  # ===========================================================================
+  landing:
+    <<: *restart-policy
+    ports: []   # No direct host port
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3001 || exit 1"]
+      <<: *healthcheck-defaults
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+
+  # ===========================================================================
+  # Node.js API Gateway
+  # ===========================================================================
+  api-gateway:
+    <<: *restart-policy
+    ports: []   # No direct host port
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3002/health || exit 1"]
+      <<: *healthcheck-defaults
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 512M
+        reservations:
+          cpus: "0.5"
+          memory: 128M
+
+  # ===========================================================================
+  # Nebutra-owned Identity Provider (OAuth 2.0 / OIDC)
+  # ===========================================================================
+  idp:
+    <<: *restart-policy
+    ports: []   # No direct host port; Nginx proxies :3100 internally
+    environment:
+      - NODE_ENV=production
+      - PORT=3100
+      - HOSTNAME=0.0.0.0
+      - DATABASE_URL=${DATABASE_URL:?DATABASE_URL is required for the IdP}
+      - REDIS_URL=${REDIS_URL:?REDIS_URL is required for the IdP}
+      - OIDC_ISSUER=${OIDC_ISSUER:-https://sso.nebutra.com}
+      - OIDC_COOKIE_KEYS=${OIDC_COOKIE_KEYS:?OIDC_COOKIE_KEYS is required for the IdP}
+      - OIDC_ENABLE_CLIENT_CREDENTIALS=${OIDC_ENABLE_CLIENT_CREDENTIALS:-false}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3100/ready || exit 1"]
+      <<: *healthcheck-defaults
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+
+  # ===========================================================================
+  # Python FastAPI microservices — all internal, no direct port exposure
+  # ===========================================================================
+  ai-service:
+    <<: *restart-policy
+    ports: []
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8000/health || exit 1"]
+      <<: *healthcheck-defaults
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"   # AI workloads are CPU/GPU intensive
+          memory: 4G
+        reservations:
+          cpus: "1.0"
+          memory: 1G
+
+  content-service:
+    <<: *restart-policy
+    ports: []
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8000/health || exit 1"]
+      <<: *healthcheck-defaults
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+
+  recsys-service:
+    <<: *restart-policy
+    ports: []
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8000/health || exit 1"]
+      <<: *healthcheck-defaults
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2G
+        reservations:
+          cpus: "0.5"
+          memory: 512M
+
+  ecommerce-service:
+    <<: *restart-policy
+    ports: []
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8000/health || exit 1"]
+      <<: *healthcheck-defaults
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+
+  web3-service:
+    <<: *restart-policy
+    ports: []
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8000/health || exit 1"]
+      <<: *healthcheck-defaults
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+
+  billing-service:
+    <<: *restart-policy
+    ports: []
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8000/health || exit 1"]
+      <<: *healthcheck-defaults
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+
+  event-ingest-service:
+    <<: *restart-policy
+    ports: []
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8000/health || exit 1"]
+      <<: *healthcheck-defaults
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+
+  # ===========================================================================
+  # One-shot Prisma migrate runner (defined in base file).
+  # NOTE: do NOT inherit *restart-policy — one-shot containers must stay
+  # `restart: "no"` so they exit cleanly after `migrate deploy` completes.
+  # ===========================================================================
+  db-migrate:
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+
+  # ===========================================================================
+  # Infrastructure services — also no direct host port exposure in prod
+  # (accessible only within the Docker network by services that need them)
+  # ===========================================================================
+  postgres:
+    <<: *restart-policy
+    ports: []   # Never expose database ports publicly in production
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2G
+        reservations:
+          cpus: "0.5"
+          memory: 512M
+
+  redis:
+    <<: *restart-policy
+    ports: []   # Never expose Redis publicly in production
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+
+  clickhouse:
+    <<: *restart-policy
+    ports: []   # Never expose ClickHouse publicly in production
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: 8G
+        reservations:
+          cpus: "1.0"
+          memory: 2G
+
+# ===========================================================================
+# Named volumes (new volumes added by this override)
+# ===========================================================================
+volumes:
+  nginx_logs:
+    driver: local
+  certbot_www:
+    driver: local

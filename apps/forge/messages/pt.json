@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — Estação de ferramentas online",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "Codecs, texto, hashing, documentos e ferramentas de imagem online."
+  },
+  "nav": {
+    "main": "Navegação principal",
+    "homeAria": "Início do {brandName} Forge",
+    "tools": "Ferramentas",
+    "wallet": "Carteira",
+    "api": "API",
+    "routerAria": "{brandName} Router",
+    "categoriesAria": "Categorias de ferramentas",
+    "languageAria": "Alterar idioma"
+  },
+  "tool": {
+    "breadcrumbAria": "Breadcrumb",
+    "workspace": "Área de trabalho",
+    "workspaceHint": "Local ou servidor · mesmo caminho da API",
+    "api": "API",
+    "apiHint": "Mesmo contrato da página. Use uma chave autenticada em produção.",
+    "related": "Ferramentas relacionadas"
+  },
+  "auth": {
+    "signIn": "Entrar",
+    "signUp": "Cadastrar-se",
+    "signOut": "Sair"
+  },
+  "footer": {
+    "navAria": "Rodapé",
+    "blurb": "Estação de ferramentas online. Conclua tarefas no navegador ou automatize via API / MCP.",
+    "product": "Produto",
+    "developers": "Desenvolvedores",
+    "company": "Empresa",
+    "docs": "Documentação de integração",
+    "website": "Site",
+    "privacy": "Privacidade"
+  },
+  "home": {
+    "eyebrow": "Veja. Chame.",
+    "title": "Canivete suíço para ferramentas online",
+    "subtitle": "Codecs, texto, hashing, documentos e processamento de imagens. Conclua no navegador ou automatize via API / MCP — uma única implementação.",
+    "toolCount": "{count} ferramentas",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "Pesquisar: contagem de palavras, base64, json, timestamp…",
+    "aria": "Pesquisar ferramentas",
+    "emptyTitle": "Nenhuma ferramenta corresponde a “{query}”",
+    "emptyHint": "Tente outro termo ou selecione uma ferramenta nas categorias abaixo."
+  },
+  "categories": {
+    "codec": {
+      "label": "Codecs",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "Validação China",
+      "hint": "ID · telefone"
+    },
+    "data": {
+      "label": "Dados",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "Desenvolvedor",
+      "hint": "Regex · SQL · cor · UUID"
+    },
+    "doc": {
+      "label": "Documentos",
+      "hint": "Markdown · PDF unir/dividir"
+    },
+    "finance": {
+      "label": "Finanças",
+      "hint": "Valor por extenso"
+    },
+    "hash": {
+      "label": "Hash e segurança",
+      "hint": "MD5 · SHA · HMAC · senha"
+    },
+    "image": {
+      "label": "Imagens",
+      "hint": "Compactar · QR · converter"
+    },
+    "life": {
+      "label": "Calculadoras de vida",
+      "hint": "Hipoteca · IMC · parentesco"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "Tokens · custo · schema"
+    },
+    "net": {
+      "label": "Rede",
+      "hint": "DNS · TLS · IP · vazamento"
+    },
+    "security": {
+      "label": "Segurança",
+      "hint": "Gerador de senhas"
+    },
+    "text": {
+      "label": "Texto",
+      "hint": "Contagem de palavras · CJK · pinyin · Diff"
+    },
+    "time": {
+      "label": "Tempo",
+      "hint": "Carimbo de tempo · fuso horário · Cron · lunar"
+    },
+    "unit": {
+      "label": "Unidades",
+      "hint": "Comprimento · peso · temperatura · dados"
+    },
+    "template": {
+      "label": "Modelos",
+      "hint": ".gitignore · LICENSE · Dockerfile · README"
+    }
+  },
+  "runners": {
+    "common": {
+      "run": "Executar",
+      "running": "Executando…",
+      "copy": "Copiar",
+      "copied": "Copiado",
+      "sameAsApi": "Mesmo caminho da API · motor OSS",
+      "mustBeNumber": "{label} deve ser um número",
+      "base64Loaded": "Carga Base64 carregada",
+      "workspaceMissing": "Workspace não configurado: {slug}",
+      "yes": "Sim",
+      "no": "Não",
+      "text": "Texto",
+      "input": "Entrada",
+      "output": "Saída",
+      "outputPlaceholder": "O resultado aparece aqui",
+      "localRun": "Executar local",
+      "serverRun": "Executar no servidor",
+      "serverVerify": "Verificar servidor",
+      "outputPreview": "Pré-visualização da saída",
+      "mode": "Modo",
+      "encode": "Codificar",
+      "decode": "Decodificar",
+      "file": "Arquivo",
+      "clear": "Limpar",
+      "length": "Tamanho: {n}",
+      "bytes": "{bytes} bytes",
+      "download": "Baixar",
+      "format": "Formato",
+      "formatting": "Formatando…",
+      "dialect": "Dialeto",
+      "color": "Cor",
+      "pickColor": "Escolher cor",
+      "content": "Conteúdo",
+      "algorithm": "Algoritmo",
+      "encoding": "Codificação",
+      "message": "Mensagem",
+      "secret": "Segredo",
+      "password": "Senha",
+      "direction": "Direção",
+      "preview": "Visualizar",
+      "query": "Consulta",
+      "querying": "Consultando…",
+      "validate": "Validar",
+      "validating": "Validando…",
+      "processing": "Processando…",
+      "pretty": "Formatado",
+      "minify": "Minimizar",
+      "from": "De",
+      "to": "Para",
+      "timezone": "Fuso horário",
+      "datetime": "Data e hora",
+      "compute": "Computar",
+      "computing": "A calcular…",
+      "convertAction": "Converter",
+      "count": "Contagem",
+      "value": "Valor",
+      "unit": "Unidade",
+      "generateLocal": "Gerar localmente",
+      "generateServer": "Gerar no servidor",
+      "copyAll": "Copiar tudo",
+      "emptyResult": "Os resultados aparecem aqui",
+      "copyText": "Copiar texto",
+      "quality": "Qualidade",
+      "original": "Original",
+      "result": "Resultado",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
+    },
+    "base64": {
+      "encodeDir": "Texto → Base64",
+      "decodeDir": "Base64 → Texto",
+      "localNote": "Web API local (TextEncoder / atob)",
+      "serverNote": "Buffer do servidor · mesmo caminho da API"
+    },
+    "password": {
+      "uppercase": "Maiúsculas",
+      "lowercase": "Minúsculas",
+      "digits": "Números",
+      "symbols": "Símbolos",
+      "generate": "Gerar senha",
+      "recent": "Recentes",
+      "note": "Motor: node:crypto randomInt · criptograficamente seguro · mesmo caminho da API"
+    },
+    "hash": {
+      "algo": "Algoritmo: {algo}",
+      "md5Warn": " · apenas checksum/compatibilidade — não armazene senhas",
+      "md5LocalError": "MD5 requer execução no servidor (Web Crypto não tem MD5)",
+      "md5ServerHint": "MD5: use execução no servidor (apenas compatibilidade, não para armazenamento de senhas)",
+      "localNote": "Web Crypto local · {algo}",
+      "serverNote": "Servidor node:crypto · mesmo caminho da API"
+    },
+    "convert": {
+      "converting": "Convertendo…",
+      "convert": "Converter",
+      "done": "Concluído · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "Arraste um arquivo aqui ou clique para navegar",
+      "needFile": "Escolha um arquivo primeiro",
+      "needAlgo": "Selecione pelo menos um algoritmo",
+      "compute": "Calcular checksums",
+      "computing": "Calculando…",
+      "algorithms": "Algoritmos",
+      "note": "node:crypto · multi-algo · mesmo caminho da API"
+    },
+    "lorem": {
+      "paragraphs": "Parágrafos",
+      "wordsPerParagraph": "Palavras por parágrafo",
+      "startWithLorem": "Começar com “Lorem ipsum”",
+      "note": "Gerador de Lorem Ipsum · puro"
+    },
+    "emailValidate": {
+      "note": "Validador de e-mail · apenas formato (sem consulta MX)"
+    },
+    "creditCardLuhn": {
+      "number": "Número do cartão",
+      "note": "Verificador Luhn · offline, nunca armazenado",
+      "digits": "digits",
+      "specimenLabel": "Specimen",
+      "structureOnly": "Luhn structure only",
+      "unknownBrand": "Card"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "Minificador JSON · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "Minificador CSS · leve (seguro para edge)"
+    },
+    "hashCompare": {
+      "a": "Hash A",
+      "b": "Hash B",
+      "ignoreCase": "Ignorar maiúsculas/minúsculas",
+      "note": "Comparador de Hash · tempo constante para mesmo comprimento"
+    },
+    "jsonDiff": {
+      "left": "JSON A",
+      "right": "JSON B",
+      "note": "Diferença JSON · operações por caminho · linhas coloridas por tipo · lado a lado",
+      "equal": "Idênticos",
+      "differs": "{count} alteração(ões)",
+      "colPath": "Caminho",
+      "colKind": "Tipo",
+      "colLeft": "Esquerda",
+      "colRight": "Direita",
+      "filtersAria": "Filtrar por tipo de alteração",
+      "filterAll": "Todos ({count})",
+      "filterAdd": "Adicionar ({count})",
+      "filterRemove": "Remover ({count})",
+      "filterChange": "Alterar ({count})",
+      "filterType": "Tipo ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "Modo",
+      "pretty": "Bonito",
+      "compact": "Compacto",
+      "indent": "Indentação",
+      "note": "Formatador YAML · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "Formatador TOML · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "Minificador XML · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "Validador de URL · WHATWG URL (sem busca na rede)"
+    },
+    "ipValidate": {
+      "note": "Validador de IP · IPv4/IPv6 offline"
+    },
+    "uuidValidate": {
+      "note": "Validador de UUID · formato RFC 4122"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "Minificador HTML · leve (seguro para edge)"
+    },
+    "randomString": {
+      "length": "Comprimento",
+      "count": "Quantidade",
+      "charset": "Conjunto de caracteres",
+      "alphanumeric": "Alfanumérico",
+      "symbols": "Alfanumérico + símbolos",
+      "hex": "Hexadecimal",
+      "base64url": "Base64URL",
+      "note": "String aleatória · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "Tempo de leitura · heurística CJK + Latina"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "Nível máximo de cabeçalho",
+      "note": "Sumário Markdown · cabeçalhos ATX"
+    },
+    "pdfInfo": {
+      "file": "Arquivo PDF",
+      "note": "Info do PDF · pdf-lib (páginas + metadados)"
+    },
+    "rot13": {
+      "shift": "Deslocamento (13 = ROT13)",
+      "note": "ROT13 / César · puro"
+    },
+    "morse": {
+      "note": "Código Morse · ITU · puro"
+    },
+    "textBinary": {
+      "toBinary": "Texto → binário",
+      "fromBinary": "Binário → texto",
+      "note": "Texto ↔ Binário · bits UTF-8"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "Codificação do resumo",
+      "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "Digests em uma única passagem · copiar cada um · node:crypto"
+    },
+    "cssFormat": {
+      "note": "Beautifier CSS · leve"
+    },
+    "htmlFormat": {
+      "note": "Formatador HTML · leve"
+    },
+    "stringSimilarity": {
+      "a": "String A",
+      "b": "String B",
+      "note": "Similaridade de Strings · Levenshtein"
+    },
+    "roman": {
+      "toRoman": "Número → Romano",
+      "fromRoman": "Romano → Número",
+      "note": "Números Romanos · 1–3999"
+    },
+    "age": {
+      "birthDate": "Data de nascimento (AAAA-MM-DD)",
+      "asOf": "Até (opcional)",
+      "note": "Calculadora de Idade · Y/M/D exato"
+    },
+    "tip": {
+      "bill": "Valor da conta",
+      "percent": "Propina %",
+      "people": "Pessoas",
+      "note": "Calculadora de Gorjeta · divisão justa"
+    },
+    "aspect": {
+      "width": "Largura",
+      "height": "Altura",
+      "note": "Proporção · simplificação MDC"
+    },
+    "mime": {
+      "note": "Consulta MIME · tipos web comuns"
+    },
+    "ua": {
+      "note": "Parser User-Agent · heurístico (offline)"
+    },
+    "imageMeta": {
+      "file": "Arquivo de imagem",
+      "note": "Metadados de Imagem · sharp (tamanho do buffer EXIF)"
+    },
+    "wordFreq": {
+      "top": "Top N",
+      "note": "Frequência de Palavras · CJK + Latim"
+    },
+    "jsonXml": {
+      "note": "JSON ↔ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "Minificador SQL · comentários + espaços em branco"
+    },
+    "lineNum": {
+      "start": "Número inicial",
+      "note": "Adicionar Números de Linha · puro"
+    },
+    "uniqueWords": {
+      "note": "Palavras Únicas · ordem de primeira ocorrência"
+    },
+    "epoch": {
+      "value": "Valor",
+      "msToIso": "ms → ISO",
+      "isoToMs": "ISO → ms",
+      "note": "Milissegundos Epoch · Data"
+    },
+    "passwordEntropy": {
+      "password": "Senha",
+      "note": "Entropia de Senha · heurística de conjunto de caracteres"
+    },
+    "contrast": {
+      "fg": "Primeiro plano (#hex)",
+      "bg": "Plano de fundo (#hex)",
+      "note": "Contraste de Cor · WCAG 2.x",
+      "sampleHeadline": "Sample text",
+      "pass": "pass",
+      "fail": "fail",
+      "aaNormal": "AA normal",
+      "aaLarge": "AA large",
+      "aaaNormal": "AAA normal",
+      "aaaLarge": "AAA large"
+    },
+    "exif": {
+      "file": "Arquivo de imagem",
+      "note": "Visualizador EXIF · exifr + JPEG fallback"
+    },
+    "regex": {
+      "pattern": "Padrão",
+      "flags": "Flags",
+      "replacement": "Substituição",
+      "match": "Correspondência",
+      "replace": "Substituir",
+      "test": "Testar",
+      "local": "Executar local",
+      "server": "Verificar servidor",
+      "count": "{count} correspondências",
+      "sotaNote": "Destaque local instantâneo · limite de tempo do servidor · mesmo caminho da API"
+    },
+    "jwt": {
+      "decode": "Decodificar JWT",
+      "sample": "Carregar exemplo",
+      "tokenPlaceholder": "Colar JWT",
+      "decodeNote": "{engine} · apenas decodificação, assinatura não verificada",
+      "footerNote": "Engine: jose · sem verificação de assinatura. Em produção, verifique com chaves via jwtVerify no servidor.",
+      "generateHint": "Precisa assinar tokens?",
+      "secret": "Segredo",
+      "exp": "Expira (segundos)",
+      "payload": "Payload JSON",
+      "note": "Gerar JWT · HS256 (apenas dev/teste)",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "(empty signature segment)"
+    },
+    "rand": {
+      "min": "Mín",
+      "max": "Máx",
+      "count": "Quantidade",
+      "note": "Número Aleatório · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "Faces",
+      "count": "Quantidade de dados",
+      "note": "Rolador de Dados · RNG criptográfico"
+    },
+    "hexRgb": {
+      "note": "HEX ↔ RGB · puro"
+    },
+    "base64url": {
+      "note": "Base64URL · estilo JWT"
+    },
+    "hmac": {
+      "message": "Mensagem",
+      "secret": "Segredo",
+      "signature": "Assinatura",
+      "note": "Verificação HMAC · SHA-256"
+    },
+    "secret": {
+      "bytes": "Bytes",
+      "count": "Contagem",
+      "note": "Gerador de Chave Secreta · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "Arquivo PDF",
+      "note": "Otimização Leve de PDF · reescrita com pdf-lib (sem recompressão de imagens)",
+      "needFile": "Selecione um arquivo PDF primeiro"
+    },
+    "pdfCompress": {
+      "file": "Arquivo PDF",
+      "quality": "Qualidade",
+      "engine": "Motor",
+      "qStructural": "Estrutural (qpdf, streams sem perdas)",
+      "qScreen": "Tela (menor tamanho, Ghostscript)",
+      "qEbook": "Ebook (equilibrado, Ghostscript)",
+      "qPrinter": "Impressora (qualidade superior, Ghostscript)",
+      "eAuto": "Automático (qpdf → Ghostscript → pdf-lib)",
+      "download": "Baixar PDF",
+      "needFile": "Selecione um arquivo PDF primeiro",
+      "in": "Entrada",
+      "out": "Saída",
+      "saved": "Salvo",
+      "note": "Compressão PDF · qpdf / Ghostscript no host · pdf-lib como fallback",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+    },
+    "jsonFormat": {
+      "indent": "Indentar",
+      "format": "Formatar",
+      "minify": "Minificar",
+      "serverVerify": "Verificar no servidor",
+      "clear": "Limpar",
+      "sample": "Exemplo",
+      "placeholder": "Cole JSON…",
+      "formatted": "Formatado",
+      "minified": "Minificado",
+      "serverOk": "Servidor {mode} · {engine}",
+      "valid": "JSON válido",
+      "invalid": "JSON inválido",
+      "line": "linha",
+      "column": "coluna",
+      "note": "Engine: JSON.parse/stringify · local instantâneo · mesmo caminho da API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
+    },
+    "qr": {
+      "size": "Tamanho",
+      "ecl": "Correção de erro",
+      "generate": "Gerar",
+      "download": "Baixar PNG",
+      "needText": "Digite texto ou URL",
+      "note": "QR · qrcode · visualização ao vivo · mesmo caminho da API"
+    },
+    "pdfText": {
+      "file": "Arquivo PDF",
+      "layout": "Layout",
+      "needFile": "Escolha um PDF primeiro",
+      "note": "Texto PDF · pdftotext (poppler) no host"
+    },
+    "svg": {
+      "optimize": "Otimizar",
+      "note": "Otimizar SVG · minificação leve e pura"
+    },
+    "routerTranslate": {
+      "lab": "Shell Lab: não traduz aqui. Abre o Router com um prompt — medição do modelo apenas no Router.",
+      "source": "Idioma de origem",
+      "target": "Idioma de destino",
+      "open": "Preparar link do Router",
+      "deepLink": "Abrir no Router",
+      "note": "externo · sem registro silencioso do Forge LLM"
+    },
+    "imageCrop": {
+      "needFile": "Escolha uma imagem primeiro",
+      "crop": "Recortar",
+      "note": "Recorte de Imagem · arraste a região · extração precisa",
+      "drop": "Solte a imagem ou clique para navegar",
+      "dragHint": "Arraste na imagem para selecionar uma região de recorte",
+      "left": "Esquerda",
+      "top": "Topo",
+      "width": "Largura",
+      "height": "Altura",
+      "natural": "Natural {w}×{h}",
+      "source": "Original",
+      "result": "Cortado"
+    },
+    "markdown": {
+      "preview": "Preview",
+      "html": "HTML",
+      "emptyPreview": "Execute para ver o preview",
+      "emptyHtml": "HTML renderizado",
+      "rendering": "Renderizando…",
+      "toHtml": "Para HTML",
+      "copyHtml": "Copiar HTML",
+      "note": "marked · preview em iframe sandboxed · mesmo caminho da API"
+    },
+    "pdfMerge": {
+      "files": "Arquivos PDF (≥2, ordem = ordem de mesclagem)",
+      "needFiles": "Selecione pelo menos 2 PDFs",
+      "merging": "Unindo…",
+      "mergeDownload": "Unir e baixar",
+      "done": "Unido · {pages} páginas · {bytes} bytes",
+      "note": "pdf-lib · mesmo caminho da API",
+      "merge": "Unir e baixar"
+    },
+    "pdfSplit": {
+      "file": "Arquivo PDF",
+      "needFile": "Escolha um PDF",
+      "fromPage": "Da página (base 1)",
+      "toPage": "Até a página (vazio = última)",
+      "toPlaceholder": "Última página",
+      "splitting": "Dividindo…",
+      "splitDownload": "Dividir e baixar",
+      "done": "Dividir · origem {source} páginas → saída {pages} páginas",
+      "note": "pdf-lib · mesmo caminho da API",
+      "split": "Dividir e baixar"
+    },
+    "passwordStrength": {
+      "check": "Verificar força",
+      "checking": "Verificando…",
+      "crack": "Estimativa offline de hash lento: {time}",
+      "score0": "Muito fraca",
+      "score1": "Fraca",
+      "score2": "Razoável",
+      "score3": "Forte",
+      "score4": "Muito forte",
+      "note": "zxcvbn-ts · mesmo caminho da API · senha nunca armazenada"
+    },
+    "hmacSign": {
+      "compute": "Calcular HMAC",
+      "computing": "Calculando…",
+      "note": "node:crypto · mesmo caminho da API"
+    },
+    "costEstimate": {
+      "text": "Texto de entrada (para estimativa de tokens)",
+      "model": "Modelo",
+      "outputTokens": "Tokens de saída (est.)",
+      "estimate": "Estimar custo",
+      "estimating": "Estimando…",
+      "note": "@nebutra/ai-providers/frontier card + js-tiktoken · estimativa de preço de lista, não uma fatura"
+    },
+    "jsonSchema": {
+      "data": "Dados JSON",
+      "schema": "JSON Schema",
+      "validate": "Validar",
+      "validating": "Validando…",
+      "pass": "Aprovado",
+      "fail": "Falhou",
+      "note": "Ajv · mesmo caminho da API"
+    },
+    "zhCnTw": {
+      "s2t": "Simplificado → Tradicional",
+      "t2s": "Tradicional → Simplificado",
+      "s2tw": "Simplificado → Taiwan",
+      "tw2s": "Taiwan → Simplificado",
+      "s2hk": "Simplificado → Hong Kong",
+      "hk2s": "Hong Kong → Simplificado",
+      "note": "OpenCC (opencc-js) · mesmo caminho da API"
+    },
+    "pinyin": {
+      "tones": "Estilo de tom",
+      "symbol": "Símbolo nǐ",
+      "num": "Número ni3",
+      "none": "Nenhum ni",
+      "hanzi": "Caracteres chineses",
+      "convert": "Para pinyin",
+      "converting": "Convertendo…",
+      "note": "pinyin-pro · mesmo caminho da API"
+    },
+    "sqlFormat": {
+      "dialect": "Dialeto",
+      "format": "Formatar",
+      "formatting": "Formatando…",
+      "note": "sql-formatter · mesmo caminho da API"
+    },
+    "colorConvert": {
+      "color": "Cor",
+      "pick": "Escolher cor",
+      "convert": "Converter",
+      "converting": "Convertendo…",
+      "note": "culori · hex / rgb / hsl / oklch · mesmo caminho da API"
+    },
+    "qrGen": {
+      "content": "Conteúdo",
+      "format": "Formato",
+      "pngPreview": "PNG (visualização)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "Gerar QR",
+      "generating": "Gerando…",
+      "note": "qrcode · mesmo caminho da API"
+    },
+    "qrDecode": {
+      "upload": "Envie uma imagem com um código QR",
+      "parsing": "Decodificando…",
+      "note": "jsQR + sharp · mesmo caminho da API"
+    },
+    "cron": {
+      "expression": "Expressão Cron",
+      "timezone": "Fuso horário",
+      "parse": "Próximas execuções",
+      "parsing": "Analisando…",
+      "nextTitle": "Próximas execuções (ISO)",
+      "note": "cron-parser · mesmo caminho da API"
+    },
+    "timezone": {
+      "datetime": "Data e hora",
+      "from": "De",
+      "to": "Para",
+      "convert": "Converter fuso horário",
+      "converting": "Convertendo…",
+      "placeholder": "2026-07-24 12:00:00 ou ISO / unix",
+      "note": "dayjs timezone · mesmo caminho da API"
+    },
+    "csvPreview": {
+      "preview": "Visualizar tabela",
+      "parsing": "Analisando…",
+      "rows": "Visualizar {shown} / {total} linhas",
+      "note": "papaparse · mesmo caminho da API"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "Consulta",
+      "querying": "Consultando…",
+      "note": "jsonpath-plus · mesmo caminho da API"
+    },
+    "xmlFormat": {
+      "pretty": "Formatado",
+      "minify": "Minificar",
+      "validate": "Validar",
+      "validOk": "Válido",
+      "done": "Concluído · {engine}",
+      "processing": "Processando…",
+      "note": "fast-xml-parser · mesmo caminho da API"
+    },
+    "regexLegacy": {
+      "pattern": "Padrão",
+      "flags": "Sinalizadores",
+      "mode": "Modo",
+      "match": "Correspondência",
+      "replace": "Substituir",
+      "test": "Testar",
+      "replacement": "Substituição",
+      "note": "Local instantâneo · orçamento de tempo limite do servidor · mesmo caminho da API"
+    },
+    "docxText": {
+      "file": "Arquivo DOCX",
+      "needFile": "Escolha um arquivo .docx primeiro",
+      "extract": "Extrair texto",
+      "extracting": "Extraindo…",
+      "note": "DOCX → texto · ZIP puro + document.xml (sem suíte Office)"
+    },
+    "uuid": {
+      "count": "Quantidade",
+      "local": "Gerar local",
+      "server": "Gerar no servidor",
+      "copyAll": "Copiar tudo",
+      "empty": "UUIDs aparecem aqui"
+    },
+    "timestamp": {
+      "nowSec": "Segundos Unix",
+      "nowMs": "Unix ms / ISO",
+      "serverNow": "Agora no servidor",
+      "toDate": "Timestamp → data",
+      "toUnix": "Data → timestamp",
+      "seconds": "Segundos",
+      "milliseconds": "Milissegundos",
+      "value": "Valor",
+      "convert": "Converter",
+      "note": "Mesmo caminho da API"
+    },
+    "wordCount": {
+      "words": "Palavras",
+      "chars": "Caracteres",
+      "noSpaces": "Sem espaços",
+      "cjk": "CJK",
+      "lines": "Linhas",
+      "paragraphs": "Parágrafos",
+      "placeholder": "Cole ou digite o texto…",
+      "copyText": "Copiar texto",
+      "clear": "Limpar",
+      "verifying": "Verificando…",
+      "serverNote": "Palavras no servidor={words} · mesmo caminho da API",
+      "note": "Motor em tempo real: {engine} · sem necessidade de upload · mesmo caminho da API"
+    },
+    "bmi": {
+      "height": "Altura (cm)",
+      "weight": "Peso (kg)",
+      "compute": "Calcular IMC",
+      "computing": "A calcular…",
+      "invalid": "Introduza altura (cm) e peso (kg) válidos",
+      "underweight": "Abaixo do peso",
+      "normal": "Normal",
+      "overweight": "Acima do peso",
+      "obese": "Obeso",
+      "note": "IMC OMS · mesmo caminho que a API · não é aconselhamento médico"
+    },
+    "percentage": {
+      "mode": "Modo",
+      "percentOf": "a% de b",
+      "isWhat": "a é que % de b",
+      "percentA": "Percentagem a",
+      "valueA": "Valor a",
+      "baseB": "Base b",
+      "compute": "Calcular",
+      "computing": "Calculando…",
+      "invalid": "Insira números válidos",
+      "note": "Mesmo caminho que a API"
+    },
+    "dataSize": {
+      "value": "Valor",
+      "convert": "Converter",
+      "converting": "Convertendo…",
+      "invalid": "Insira um número válido",
+      "binary": "{value} {from} → base-1024",
+      "note": "Unidades binárias (1 KB = 1024 B) · mesmo caminho que a API"
+    },
+    "rmb": {
+      "amount": "Valor (CNY)",
+      "convert": "Para maiúsculas",
+      "converting": "Convertendo…",
+      "invalid": "Insira um valor não negativo",
+      "note": "Valor da fatura chinesa em maiúsculas · mesmo caminho da API"
+    },
+    "dateDiff": {
+      "from": "Data inicial",
+      "to": "Data final",
+      "compute": "Diferença de dias",
+      "computing": "Calculando…",
+      "days": "dias",
+      "note": "ECMAScript Date · mesmo caminho da API"
+    },
+    "xlsxText": {
+      "file": "Arquivo XLSX",
+      "needFile": "Selecione um arquivo .xlsx primeiro",
+      "extract": "Extrair planilha",
+      "extracting": "Extraindo…",
+      "note": "XLSX → CSV · ZIP puro + sheet1.xml (primeira planilha)"
+    },
+    "mdToPdf": {
+      "drop": "Arraste um arquivo .md aqui ou cole Markdown abaixo",
+      "title": "Título",
+      "engine": "Motor",
+      "ePlaywright": "playwright (impressão Chromium)",
+      "eSimple": "simples (sem navegador)",
+      "generate": "Gerar PDF",
+      "generating": "Gerando…",
+      "download": "Baixar PDF",
+      "note": "marked → HTML → impressão Playwright Chromium. Se o Chromium estiver ausente, usa automaticamente PDF estruturado simples — verifique renderEngine; o modo simples não é layout de impressão.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
+    },
+    "tokenCount": {
+      "count": "Contar tokens",
+      "counting": "Contando…",
+      "chars": "Caracteres {n}",
+      "note": "Engine: js-tiktoken · contagem exata no servidor · pode alimentar estimativa de custo do Router"
+    },
+    "codec": {
+      "encodeDir": "Texto → codificado",
+      "decodeDir": "Codificado → texto",
+      "localNote": "Execução local",
+      "serverNote": "Servidor · mesmo caminho da API",
+      "hexInvalid": "Não é uma string hex válida",
+      "hexDecodeFail": "O servidor não conseguiu decodificar como UTF-8 (necessário hex válido)",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · mesmo caminho da API",
+      "noteHtml": "Mapa de entidades HTML · mesmo caminho da API",
+      "noteHex": "UTF-8 ↔ hex · mesmo caminho da API"
+    },
+    "textDiff": {
+      "left": "Esquerda",
+      "right": "Direita",
+      "compare": "Comparar",
+      "comparing": "Comparando…"
+    },
+    "imageTool": {
+      "drop": "Arraste uma imagem aqui ou clique para procurar",
+      "selected": "Selecionado: {name} ({kb} KB)",
+      "needFile": "Escolha uma imagem primeiro",
+      "format": "Formato de saída",
+      "quality": "Qualidade {n}",
+      "maxW": "Largura máx.",
+      "maxH": "Altura máx.",
+      "optional": "Opcional",
+      "resizeEg": "ex.: 1280",
+      "processing": "Processando…",
+      "compress": "Comprimir",
+      "resize": "Redimensionar",
+      "convert": "Converter formato",
+      "download": "Baixar resultado",
+      "outMeta": "Saída {kb} KB{dims}{ratio} · {type}",
+      "ratio": " · ~{pct}% do original",
+      "dims": " · {w}×{h}",
+      "original": "Original",
+      "result": "Resultado",
+      "note": "Engine: sharp (libvips) · server-side · same path as API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+    },
+    "pptxText": {
+      "file": "Arquivo PPTX",
+      "needFile": "Selecione um arquivo .pptx primeiro",
+      "extract": "Extrair estrutura",
+      "extracting": "Extraindo…",
+      "note": "Estrutura PPTX · ZIP puro + slide XML (sem PowerPoint)"
+    },
+    "shell": {
+      "copyJson": "Copiar JSON",
+      "sample": "Exemplo",
+      "chars": "{n} caracteres",
+      "largeInput": "Entrada grande — o resultado será atualizado um momento depois que você parar de digitar.",
+      "manualInput": "A entrada é grande o suficiente para que a recomputação ao vivo trave a página. Pressione Executar.",
+      "options": "Opções",
+      "regenerateNote": "A saída já é atualizada conforme você altera as opções.",
+      "fileTab": "Arquivo",
+      "pasteTab": "Colar",
+      "browse": "Escolher arquivo",
+      "selectedFile": "{name} · {kb} KB",
+      "truncated": "Ler os primeiros {kb} KB — o suficiente para responder, e o resto nunca sai do seu dispositivo.",
+      "detail": "Detalhes",
+      "dropIntoPane": "Arraste um arquivo aqui",
+      "swap": "Trocar lados",
+      "prevChange": "Anterior",
+      "nextChange": "Próximo",
+      "changePosition": "{index} de {total}",
+      "result": "Resultado"
+    },
+    "readmeSkeleton": {
+      "emptyHint": "Marque pelo menos uma seção para gerar um README.",
+      "note": "Executa o mesmo mecanismo da API. Seções que você deixar de fora nunca aparecem — sem cabeçalhos vazios.",
+      "orderNote": "As seções sempre são renderizadas nesta ordem fixa, portanto a mesma entrada gera o mesmo arquivo.",
+      "group": {
+        "core": "Principal",
+        "docs": "Documentação",
+        "community": "Comunidade",
+        "meta": "Meta"
+      },
+      "section": {
+        "title": "Título e descrição",
+        "badges": "Emblemas",
+        "callout": "Nota de destaque",
+        "toc": "Índice",
+        "installation": "Instalação",
+        "usage": "Uso",
+        "features": "Funcionalidades",
+        "api-reference": "Referência da API",
+        "screenshots": "Capturas de tela",
+        "roadmap": "Roteiro",
+        "contributing": "Contribuição",
+        "support": "Suporte",
+        "acknowledgements": "Agradecimentos",
+        "license": "Licença",
+        "authors": "Autores",
+        "tech-stack": "Stack tecnológico"
+      },
+      "projectName": "Nome do projeto",
+      "projectNamePlaceholder": "Nome do projeto",
+      "description": "Descrição",
+      "descriptionPlaceholder": "Uma frase sobre o que ele faz",
+      "badgeLicense": "Badge de licença",
+      "badgeNpm": "npm version",
+      "badgeBuild": "Status do build",
+      "npmPackage": "npm package",
+      "npmPackagePlaceholder": "@scope/package",
+      "repo": "Repositório GitHub",
+      "repoPlaceholder": "owner/repo",
+      "calloutKind": "Tipo de callout",
+      "calloutBody": "Texto de destaque",
+      "calloutBodyPlaceholder": "Pré-1.0 — a API ainda está em evolução",
+      "fenceLanguage": "Linguagem",
+      "installCommand": "Comando de instalação",
+      "installCommandPlaceholder": "npm install your-project",
+      "usageExample": "Exemplo de uso",
+      "usageExamplePlaceholder": "O menor exemplo que demonstra o valor",
+      "features": "Recursos",
+      "featuresPlaceholder": "Um recurso por linha",
+      "contact": "Contato",
+      "contactPlaceholder": "support@example.com",
+      "license": "Licença",
+      "authors": "Autores",
+      "authorsPlaceholder": "@handle, Jane Roe",
+      "techStack": "Stack de tecnologia",
+      "techStackPlaceholder": "typescript, postgresql (slugs do simple-icons)",
+      "sectionCount": "{n} seções",
+      "charCount": "{n} caracteres",
+      "warningCount": "{n} ignorados",
+      "omittedTitle": "O que foi omitido e por quê"
+    },
+    "gitignore": {
+      "searchLabel": "Pesquisar stacks",
+      "searchPlaceholder": "Pesquisar linguagens, frameworks, SO ou editores…",
+      "add": "Adicionar {stack}",
+      "remove": "Remover {stack}",
+      "selected": "Stacks selecionados",
+      "suggestions": "Stacks correspondentes",
+      "noMatches": "Nenhum stack corresponde a “{query}”. Pressione Enter para enviar mesmo assim — os aliases são resolvidos no servidor.",
+      "catalogFallback": "Lista de stacks indisponível — digite o nome de um stack e pressione Enter.",
+      "emptyHint": "Selecione pelo menos uma linguagem, framework, SO ou editor acima.",
+      "regenerate": "Regenerar",
+      "sections": "{n} seções",
+      "lines": "{n} linhas",
+      "deduped": "{n} padrões duplicados mesclados",
+      "notFound": "Não está no corpus: {stacks}",
+      "globalScope": "{stacks} são entradas de SO/editor — muitos desenvolvedores mantêm essas em um ~/.gitignore_global pessoal em vez de em cada repositório.",
+      "untrackedNote": "Um .gitignore afeta apenas arquivos não rastreados. Para um arquivo que o git já rastreia, execute git rm -r --cached <path>.",
+      "fileLabel": ".gitignore"
+    },
+    "editorconfig": {
+      "emptyHint": "Defina pelo menos uma propriedade para ver o arquivo.",
+      "note": "Mesmo motor da API. Suas escolhas ficam nesta sessão do navegador; nada é armazenado.",
+      "checks": "Verificações",
+      "presets": "Começar com",
+      "preset": {
+        "spaces2": "2 espaços, LF",
+        "spaces4": "4 espaços, LF",
+        "tabs": "Tabs, largura 4",
+        "repo": "Início do repositório (+ Markdown, Makefile)"
+      },
+      "rootLabel": "root = true — impede que editores mesclem arquivos .editorconfig dos pais",
+      "glob": "Glob {n}",
+      "addSection": "Adicionar uma seção",
+      "removeSection": "Remover",
+      "notSet": "(não definido)",
+      "import": "Importar um .editorconfig existente",
+      "importPlaceholder": "Cole um .editorconfig aqui para carregá-lo no formulário",
+      "importAction": "Importar",
+      "importing": "Importando…",
+      "importFailed": "Não foi possível importar: {message}"
+    },
+    "robotsTxt": {
+      "emptyHint": "Defina as opções acima — o arquivo aparecerá aqui",
+      "deployNote": "robots.txt só tem efeito na raiz do domínio (https://example.com/robots.txt). Cada subdomínio precisa do seu próprio arquivo.",
+      "outputLabel": "robots.txt",
+      "defaultAccess": "Acesso padrão (User-agent: *)",
+      "defaultAllow": "Permitir tudo",
+      "defaultDisallow": "Negar tudo",
+      "defaultAccessNote": "\"Permitir tudo\" escreve um \"Disallow:\" vazio — é assim que se permite tudo.",
+      "crawlDelay": "Crawl-delay (segundos)",
+      "crawlDelayPlaceholder": "nenhum",
+      "crawlDelayNote": "Não faz parte do RFC 9309. O Google ignora; nunca é escrito em um grupo do Google.",
+      "searchAgents": "Motores de busca",
+      "aiAgents": "Crawlers de IA",
+      "aiAgentsNote": "Crawlers de treinamento e motores de resposta. Bloqueá-los não afeta a indexação de busca.",
+      "accessDefault": "Padrão",
+      "accessAllow": "Permitir",
+      "accessDisallow": "Negar",
+      "rules": "Regras de caminho",
+      "rulesNote": "Os caminhos diferenciam maiúsculas de minúsculas e são relativos à raiz. Adicione uma barra final para restringir uma regra a um diretório.",
+      "rulePath": "Caminho {n}",
+      "rulePathPlaceholder": "/admin/",
+      "ruleType": "Tipo de regra",
+      "addRule": "Adicionar regra de caminho",
+      "removeRule": "Remover",
+      "sitemaps": "Sitemaps",
+      "sitemapsNote": "URLs absolutas http(s). Escritas como linhas independentes, fora de cada grupo.",
+      "sitemapUrl": "Sitemap {n}",
+      "addSitemap": "Adicionar sitemap",
+      "removeSitemap": "Remover",
+      "groupCount": "{n} grupos",
+      "lineCount": "{n} linhas",
+      "sitemapCount": "{n} sitemaps",
+      "warningsSummary": "Notas sobre este arquivo ({n})"
+    },
+    "encodingDetect": {
+      "drop": "Arraste um arquivo para identificar sua codificação",
+      "privacy": "Apenas os primeiros {kb} KB são lidos e enviados ao mesmo endpoint público de invocação que um agente usaria — nada é gravado no disco.",
+      "pasteLabel": "Ou cole texto",
+      "pastePlaceholder": "Cole texto — incluindo mojibake que você quer explicado",
+      "detail": "Candidatos, terminações de linha e estatísticas de bytes",
+      "idle": "Arraste um arquivo ou cole texto — o relatório é preenchido assim que houver algo para ler.",
+      "readOnly": "Somente leitura: esta ferramenta identifica uma codificação, nunca reescreve os bytes.",
+      "headline": "{encoding} · {confidence}% de confiança",
+      "notText": "Isso não parece ser texto",
+      "bomPresent": "BOM {bytes}",
+      "bomAbsent": "Sem BOM",
+      "eol": "Finais de linha {kind}",
+      "eolMixed": "Finais de linha mistos",
+      "language": "Idioma {language} · {confidence}%",
+      "sampled": "Detectado a partir dos primeiros {kb} KB de {totalKb} KB",
+      "candidates": "Candidatos classificados",
+      "candidatesNote": "As codificações secundárias são mostradas propositalmente: amostras curtas ou simétricas são genuinamente ambíguas.",
+      "lineEndings": "Quebras de linha",
+      "byteStats": "Estatísticas de bytes",
+      "totalBytes": "Total",
+      "asciiBytes": "ASCII",
+      "highBytes": "Altos (0x80–0xFF)",
+      "nullBytes": "NUL",
+      "mojibake": "Mojibake recuperado"
+    },
+    "dockerfileStarter": {
+      "language": "Idioma",
+      "framework": "Framework",
+      "packageManager": "Gerenciador de pacotes",
+      "baseVariant": "Imagem base",
+      "version": "Versão do runtime",
+      "workdir": "Diretório de trabalho",
+      "port": "Porta",
+      "buildCommand": "Comando de build",
+      "startCommand": "Comando de início",
+      "commandPlaceholder": "Vazio = padrão predefinido",
+      "frameworkNone": "Nenhum (runtime simples)",
+      "pmAuto": "Automático",
+      "variantSlim": "slim (glibc)",
+      "variantAlpine": "alpine (musl)",
+      "variantFull": "completo",
+      "multiStage": "Build multi-stage",
+      "nonRootUser": "Usuário não-root",
+      "includeDockerignore": "Adicionar .dockerignore",
+      "includeCompose": "Adicionar compose.yaml",
+      "includeHealthcheck": "Adicionar HEALTHCHECK",
+      "groupWhat": "O que você está construindo",
+      "groupHow": "Como deve ser executado",
+      "emptyHint": "Selecione uma linguagem para ver o Dockerfile.",
+      "note": "Apenas predefinições — nada além das opções acima sai do seu navegador. Leia o arquivo antes de publicá-lo.",
+      "warnings": "{n} itens para verificar",
+      "stages": "{n} etapas",
+      "badgeNonRoot": "Não-root",
+      "badgeRoot": "Executa como root",
+      "badgePort": "Porta {port}"
+    },
+    "lineEndingDetect": {
+      "dropLabel": "Arraste um arquivo de texto para verificar suas quebras de linha",
+      "privacy": "O texto colado e os primeiros 256 KB de um arquivo arrastado são enviados à API do Forge para análise; os bytes não são armazenados.",
+      "pasteLabel": "Ou cole o texto",
+      "pastePlaceholder": "Cole o texto que deseja verificar",
+      "idle": "Cole texto ou arraste um arquivo para ver o veredito sobre suas quebras de linha.",
+      "detail": "Contagens e verificações",
+      "note": "Apenas detecção — esta ferramenta nunca reescreve seu arquivo.",
+      "empty": "Entrada vazia",
+      "noTerminator": "Sem terminador de linha — uma linha não terminada",
+      "consistent": "{style} — consistente",
+      "mixed": "MISTO — {parts}",
+      "sharePart": "{pct}% {style}",
+      "style": {
+        "LF": "LF (Unix/Linux/macOS)",
+        "CRLF": "CRLF (Windows)",
+        "CR": "CR (Mac OS 9 clássico e anteriores)"
+      },
+      "lines": "{n} linhas",
+      "bytes": "{n} bytes",
+      "trailing": {
+        "present": "Termina com uma nova linha",
+        "absent": "Sem nova linha no final do arquivo"
+      },
+      "bomUtf8": "BOM UTF-8",
+      "bomNone": "Sem BOM",
+      "countRow": "{style}: {n} ({pct}%)",
+      "colStyle": "Estilo",
+      "colCount": "Contagem",
+      "colShare": "Participação",
+      "minorityLines": "Linhas que diferem do estilo dominante: {lines}",
+      "andMore": "e mais",
+      "findings": "Verificações",
+      "level": {
+        "info": "Nota",
+        "warning": "Aviso",
+        "danger": "Quebra"
+      },
+      "sampled": "Verificados os primeiros {n} de {total} bytes",
+      "encodingLink": "Abrir o detector de codificação"
+    },
+    "fileTypeDetect": {
+      "drop": "Arraste um ficheiro para identificar o que realmente é",
+      "privacy": "Apenas o cabeçalho dos primeiros {kb} KB é lido — o resto do ficheiro nunca sai do seu dispositivo.",
+      "hexTab": "Colar hex",
+      "detail": "Mostrar bytes e candidatos",
+      "idle": "Arraste um ficheiro ou cole os primeiros bytes em hex.",
+      "note": "As assinaturas identificam o contentor, não o codec nem o conteúdo dentro dele.",
+      "unset": "—",
+      "unknownType": "Nenhuma assinatura correspondida",
+      "polyglot": "Poliglota",
+      "tierNone": "A extensão concorda",
+      "tierBenign": "Incompatibilidade benigna",
+      "tierMismatch": "Incompatibilidade de extensão",
+      "tierHighRisk": "Alto risco",
+      "confidenceMatch": "Correspondência de assinatura",
+      "confidenceContainer": "Apenas container",
+      "confidenceAmbiguous": "Ambíguo",
+      "confidenceNone": "Sem correspondência",
+      "signalDetected": "MIME detectado",
+      "signalReported": "MIME reportado",
+      "signalExtension": "Extensão do nome do arquivo",
+      "drillResolved": "Container {kind} aberto: {type}",
+      "drillUnresolved": "Container {kind} confirmado; subtipo não resolvido a partir dos bytes amostrados",
+      "hexDump": "Bytes do cabeçalho",
+      "bytesRead": "{n} bytes lidos",
+      "headerOnly": "apenas amostra do cabeçalho",
+      "entropy": "Entropia {bits} bits/byte",
+      "signatureCount": "{n} assinaturas na tabela",
+      "textHints": "Dicas estruturais: {hints}",
+      "candidates": "Todas as assinaturas correspondentes",
+      "atOffset": "deslocamento {offset}"
+    },
+    "licenseChooser": {
+      "prompt": "O que este projeto precisa?",
+      "pickScenario": "Escolha a linha que mais se parece com o seu projeto — a resposta e o arquivo aparecem aqui mesmo.",
+      "disclaimer": "Saída de modelo determinística, não constitui aconselhamento jurídico.",
+      "noAnswer": "Nenhuma licença única se encaixa neste caso",
+      "permissions": "Permite",
+      "conditions": "Exige",
+      "limitations": "Não cobre",
+      "alternates": "Outras opções para este caso",
+      "useThis": "Usar esta",
+      "readCanonical": "Leia o texto canônico no SPDX",
+      "holder": "Titular dos direitos autorais",
+      "holderPlaceholder": "Seu nome ou sua empresa",
+      "holderHint": "Adicione o titular dos direitos autorais e o arquivo preenche conforme você digita.",
+      "year": "Ano",
+      "manifest": "Onde o ID do SPDX é inserido",
+      "verbatim": "{name} é distribuído byte-identicamente para todos — a linha de direitos autorais vai no aviso do arquivo-fonte, não no arquivo LICENSE.",
+      "noLicense": {
+        "summary": "E se eu não adicionar nenhuma licença?",
+        "body": "Nenhuma licença não é o mesmo que domínio público. Sem uma, os direitos autorais padrão se aplicam e ninguém pode copiar, modificar ou redistribuir seu código — um repositório público é visibilidade, não permissão."
+      },
+      "artifact": {
+        "header": "Cabeçalho do arquivo fonte",
+        "notice": "Aviso do arquivo fonte"
+      },
+      "refine": {
+        "patent": "Uma concessão de patente é importante aqui (código de empresa, hardware, trabalho com padrões)",
+        "network": "Será executado como um serviço hospedado, não apenas como um download",
+        "library": "É uma biblioteca que outro software vincula",
+        "later": "Permitir versões posteriores da licença (mantém o código Apache-2.0 compatível)",
+        "none": "Nada mais a refinar para este caso."
+      },
+      "scenario": {
+        "permissive": {
+          "label": "Qualquer um pode usá-lo, livremente",
+          "detail": "Usar, modificar, vender, distribuir em produtos fechados — apenas mantenha o aviso de direitos autorais."
+        },
+        "copyleft": {
+          "label": "Melhorias devem ser compartilhadas",
+          "detail": "Quem distribuir uma versão modificada também deve publicar o código-fonte."
+        },
+        "community": {
+          "label": "Estou contribuindo para um projeto existente",
+          "detail": "A licença já está definida — use a mesma do projeto para o qual você está contribuindo."
+        },
+        "non-software": {
+          "label": "Não é software",
+          "detail": "Documentos, dados, design ou mídia precisam de uma licença Creative Commons, não uma licença OSI."
+        },
+        "unsure": {
+          "label": "Ainda não sei",
+          "detail": "Obtenha o padrão de baixo arrependimento e as duas opções que vale a pena conhecer."
+        }
+      },
+      "family": {
+        "permissive": "Permissiva",
+        "weak-copyleft": "Copyleft fraco",
+        "strong-copyleft": "Copyleft forte",
+        "public-domain": "Domínio público",
+        "content": "Licença de conteúdo"
+      },
+      "flag": {
+        "commercial-use": "Uso comercial",
+        "modifications": "Modificação",
+        "distribution": "Distribuição",
+        "private-use": "Uso privado",
+        "patent-use": "Concessão de patente",
+        "include-copyright": "Manter o aviso de direitos autorais",
+        "document-changes": "Indicar suas alterações",
+        "disclose-source": "Divulgar o código-fonte",
+        "same-license": "Mesma licença para toda a obra",
+        "same-license-file": "Mesma licença, por arquivo modificado",
+        "same-license-library": "Mesma licença para a biblioteca",
+        "network-use-disclose": "Uso em rede conta como distribuição",
+        "liability": "Responsabilidade",
+        "warranty": "Garantia",
+        "trademark-use": "Uso de marca registrada"
+      }
+    },
+    "isbn": {
+      "inputLabel": "ISBNs",
+      "placeholder": "978-0-306-40615-7 — um por linha, hífens e espaços ignorados",
+      "idle": "Cole um ISBN ou uma coluna inteira; os resultados aparecem enquanto você digita.",
+      "scope": "Apenas verificação do dígito verificador. Um ISBN válido é internamente consistente — não é prova de que uma agência o atribuiu a um livro real.",
+      "summary": "{valid} de {total} válidos",
+      "singleValid": "ISBN válido",
+      "singleInvalid": "ISBN inválido",
+      "invalidCount": "{n} inválidos",
+      "convertedTo": "{type}: {value}",
+      "valid": "Válido",
+      "invalid": "Inválido",
+      "truncated": "Mostrando as primeiras {shown} linhas.",
+      "col": {
+        "input": "Entrada",
+        "normalized": "Normalizado",
+        "type": "Tipo",
+        "status": "Status",
+        "converted": "Convertido",
+        "note": "Nota"
+      },
+      "type": {
+        "isbn10": "ISBN-10",
+        "isbn13": "ISBN-13",
+        "invalidLength": "Comprimento incorreto"
+      },
+      "note": {
+        "checkDigit": "O dígito verificador deve ser {expected}",
+        "invalidLength": "Um ISBN tem exatamente 10 ou 13 caracteres",
+        "invalidCharacter": "Contém um caractere que não é um dígito",
+        "xMisplaced": "X só é válido como último caractere de um ISBN-10",
+        "noIsbn10": "O prefixo 979 não tem equivalente em ISBN-10",
+        "nonBookland": "ISBNs de 13 dígitos devem começar com 978 ou 979",
+        "ismn": "979-0 é o intervalo ISMN (música impressa), não ISBN"
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
+    },
+    "languageDetect": {
+      "inputLabel": "Trecho de código",
+      "inputPlaceholder": "Cole código sem nome de arquivo — de um log de chat, um ticket, uma resposta…",
+      "hintLabel": "Nome de arquivo ou extensão (opcional)",
+      "hintPlaceholder": "main.h · .pl · Dockerfile",
+      "note": "Usa o mesmo mecanismo da API. A detecção é apenas por conteúdo, a menos que você forneça uma dica de nome de arquivo; extensões ambíguas (.h .m .pl .fs .ts .cs .r) são roteadas por suas próprias regras primeiro.",
+      "idle": "Cole um trecho — o veredicto aparece enquanto você digita.",
+      "confidence": {
+        "high": "Alta confiança",
+        "medium": "Confiança média",
+        "low": "Baixa confiança"
+      },
+      "score": "{n}/100",
+      "dataFormat": "Formato de dados, não uma linguagem de programação",
+      "multiLanguage": "Múltiplas linguagens suspeitas",
+      "why": "Por que esta resposta",
+      "signals": "Sinais correspondentes",
+      "alternates": "Outros candidatos",
+      "composeNext": "Formatar este {language}"
+    },
+    "iban": {
+      "inputLabel": "IBAN",
+      "idle": "Cole um IBAN — o veredicto vem logo após a tecla, sem botão.",
+      "sourceNote": "Soma de verificação e estrutura conforme ISO 13616-1:2020. O comprimento por país e o formato BBAN vêm de uma reprodução publicada do registro ISO de IBAN, não do registro em si.",
+      "valid": "IBAN bem formado",
+      "keepTyping": "Continue digitando — menor que o IBAN deste país",
+      "caveat": "Apenas bem formado. Uma soma de verificação válida não confirma que a conta existe, está aberta ou pertence ao beneficiário.",
+      "printFormat": "Formato de impressão",
+      "details": "Análise detalhada",
+      "notEncoded": "Não codificado pelo formato deste país",
+      "coverage": "{n} países com formato IBAN registrado",
+      "reason": {
+        "bad_charset": "Não é formato IBAN — um IBAN tem duas letras, dois dígitos, depois apenas letras e dígitos",
+        "country_unsupported": "Nenhum formato IBAN registrado para este código de país",
+        "incomplete": "Incompleto",
+        "wrong_length_for_country": "Muito longo para o IBAN deste país",
+        "structure_mismatch": "Comprimento correto, formato errado para este país",
+        "checksum_failed": "Falha na soma de verificação — há um erro de digitação neste IBAN"
+      },
+      "badge": {
+        "country": "{name} ({code})",
+        "unknownCountry": "Código do país {code}",
+        "length": "{n} de {expected} caracteres",
+        "bankCode": "Código do banco {code}",
+        "expectedCheckDigits": "Os dígitos de verificação para este número de conta seriam {digits}"
+      },
+      "field": {
+        "normalized": "Formato eletrônico",
+        "country": "País",
+        "checkDigits": "Dígitos de verificação",
+        "bban": "BBAN",
+        "bbanFormat": "Formato BBAN",
+        "bankCode": "Código do banco"
+      },
+      "check": {
+        "charset": "Conjunto de caracteres",
+        "country": "País",
+        "length": "Comprimento",
+        "structure": "Estrutura",
+        "checksum": "MOD 97-10"
+      },
+      "state": {
+        "pass": "passou",
+        "fail": "falhou",
+        "skipped": "não alcançado"
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
+    },
+    "secretScan": {
+      "pasteLabel": "Cole código, configuração ou um .env",
+      "pastePlaceholder": "DATABASE_URL=postgres://…\nAPI_KEY=…",
+      "dropLabel": "Arraste um arquivo para analisá-lo",
+      "privacy": "Executa inteiramente no seu navegador. Nada é enviado a lugar nenhum — nem mesmo para nós.",
+      "scan": "Analisar",
+      "scanning": "Analisando…",
+      "idleTitle": "Cole algo e pressione Analisar.",
+      "idleHint": "Verifica chaves de API de fornecedores, tokens, chaves privadas e segredos de alta entropia. Valores correspondentes são ofuscados; apenas os números das linhas são exibidos por completo.",
+      "clean": "Nenhum segredo encontrado",
+      "cleanCaveat": "Nada aqui corresponde a um formato de credencial conhecido ou parece um segredo aleatório. A correspondência de padrões não é prova — revise qualquer coisa de que tenha dúvida.",
+      "found": "{n, plural, one {# possível segredo encontrado} other {# possíveis segredos encontrados}}",
+      "foundCaveat": "Redija estes antes de colar isso em qualquer lugar. Se uma chave for real, rotacione-a.",
+      "countHigh": "{n} alta confiança",
+      "countMedium": "{n} média",
+      "countLow": "{n} baixo",
+      "confidence": {
+        "high": "Alta",
+        "medium": "Média",
+        "low": "Baixa"
+      },
+      "position": "linha {line}, col {column}",
+      "length": "{n} caracteres",
+      "maskedLabel": "Correspondência mascarada",
+      "why": "Por que isso correspondeu",
+      "candidates": "Também poderia ser:",
+      "scanDetail": "Detalhe da verificação",
+      "lines": "{n} linhas",
+      "bytes": "{n} bytes verificados",
+      "suppressed": "{n} placeholder(s) ignorados",
+      "suppressedNote": "Valores de demonstração conhecidos (chaves EXAMPLE, your-api-key-here, caracteres repetidos) são ignorados para que arquivos de exemplo não gerem alarmes falsos.",
+      "omitted": "Mais {n} não mostrados",
+      "truncated": "Entrada limitada — apenas a primeira parte foi analisada",
+      "reportTitle": "Resultados da verificação de segredos (valores mascarados)",
+      "scopeNote": "Apenas detecção: esta ferramenta nunca contata um fornecedor para verificar se uma chave ainda está ativa — isso significaria enviar sua chave a um terceiro."
+    },
+    "eanUpcGtin": {
+      "inputLabel": "Números de código de barras",
+      "placeholder": "Um código por linha (vírgulas e ponto e vírgula também separam)",
+      "idle": "Cole um código ou uma coluna inteira — o veredito aparece enquanto você digita.",
+      "operationLabel": "Operação",
+      "operationValidate": "Validar (o código inclui seu dígito verificador)",
+      "operationCalculate": "Calcular (o código está sem seu dígito verificador)",
+      "typeLabel": "Tipo",
+      "typeAuto": "Detectar pelo comprimento",
+      "total": "{n} códigos",
+      "validCount": "{n} válidos",
+      "invalidCount": "{n} inválidos",
+      "calculatedCount": "{n} calculados",
+      "unrecognizedCount": "{n} comprimento não reconhecido",
+      "verdict": {
+        "valid": "Válido",
+        "invalid": "Inválido",
+        "calculated": "Calculado",
+        "unrecognized-length": "Comprimento não reconhecido"
+      },
+      "alsoReadsAs": "Também lê como {type}",
+      "checkDigit": "Dígito verificador",
+      "corrected": "Deveria ser",
+      "gtin14": "Formato GTIN-14",
+      "reason": {
+        "empty": "Nada para verificar nesta linha.",
+        "non-digit-characters": "Contém caracteres que não são dígitos nem separadores.",
+        "unsupported-length": "Nenhum identificador GS1 tem este comprimento (são suportados 8, 12, 13, 14 e 18 dígitos).",
+        "length-mismatch": "Comprimento incorreto para o tipo selecionado.",
+        "check-digit-mismatch": "O último dígito não corresponde ao exigido pelo padrão."
+      },
+      "warning": {
+        "separators-stripped": "Espaços, hífens e pontos foram removidos antes da verificação.",
+        "all-zero": "Todos zeros — matematicamente válido, mas não é um identificador real.",
+        "payload-is-also-a-complete-code": "Isto também é um comprimento de código completo. Se já tem o seu dígito verificador, mude para Validar."
+      },
+      "math": "Mostrar o cálculo",
+      "mathSum": "Soma {sum} → dígito verificador {check}",
+      "truncatedRows": "Mostrando as primeiras {shown} de {total} linhas. Copiar e baixar inclui todas elas.",
+      "privacy": "Os códigos são enviados à API do Forge para verificação e não são armazenados.",
+      "scopeNote": "Um dígito verificador correto significa que o número está bem formado. Isso não significa que a GS1 o tenha atribuído a um produto, empresa ou local real — apenas uma consulta ao registro GEPIR responde isso.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
+    },
+    "vin": {
+      "inputLabel": "VIN (17 caracteres)",
+      "privacy": "Verificado no seu navegador. O VIN nunca é enviado a lugar nenhum.",
+      "idle": "Cole um VIN — o veredicto aparece enquanto você digita, sem botão.",
+      "scope": "Apenas estrutura e dígito verificador (49 CFR 565.15 / ISO 3779). Isso não é uma consulta de histórico do veículo.",
+      "verdict": {
+        "valid": "Estrutura de VIN válida",
+        "keepTyping": "Continue digitando — faltam {remaining} caracteres",
+        "tooLong": "Muito longo — um VIN tem exatamente 17 caracteres, este tem {n}",
+        "invalidCharacter": "Não é um caractere de VIN: \"{char}\" na posição {position}",
+        "checkDigitMismatch": "Dígito verificador incorreto — esperado {expected}, encontrado {found}"
+      },
+      "hint": {
+        "confusable": "\"{char}\" nunca é usado em um VIN. Você quis dizer {suggest}?"
+      },
+      "notice": {
+        "notProvenance": "Um dígito verificador válido confirma que o VIN está formado corretamente. Isso não confirma que o veículo existe, não foi modificado ou tem histórico limpo — um VIN clonado também passa nessa verificação.",
+        "pre1981": "Veículos fabricados antes de 1981 e alguns importados (JDM/Europeus) não usam esse dígito verificador — uma incompatibilidade pode não significar que o VIN foi digitado incorretamente.",
+        "partial": "A validação do dígito verificador exige o VIN completo de 17 caracteres. Um VIN parcial é uma tarefa de decodificação, não de verificação de soma."
+      },
+      "badge": {
+        "length": "{n} caracteres",
+        "expected": "Dígito verificador {d}"
+      },
+      "invalidChars": {
+        "more": "Também não são caracteres de VIN: {list}"
+      },
+      "segment": {
+        "wmi": "WMI 1-3",
+        "vds": "Descritor 4-8",
+        "checkDigit": "Dígito verificador 9",
+        "modelYear": "Ano do modelo 10",
+        "plant": "Planta 11",
+        "serial": "Série 12-17"
+      },
+      "math": {
+        "title": "Mostrar o cálculo",
+        "col": {
+          "position": "Pos",
+          "char": "Car",
+          "value": "Valor",
+          "weight": "Peso",
+          "product": "Produto"
+        },
+        "formula": "soma = {sum};  {sum} mod 11 = {remainder}  →  dígito verificador {expected}"
+      },
+      "specimenTitle": "VIN · structure specimen"
+    },
+    "envDiff": {
+      "envA": "Ambiente A",
+      "envB": "Ambiente B",
+      "placeholderA": "Cole ou arraste o primeiro arquivo .env",
+      "placeholderB": "Cole ou arraste o segundo arquivo .env",
+      "paneNoAssignment": "Nenhuma linha KEY=value encontrada",
+      "optIgnoreComments": "Ignorar linhas em branco e comentários",
+      "optCaseInsensitive": "Comparação de chaves sem distinção de maiúsculas/minúsculas",
+      "optRedactSecrets": "Ocultar segredos detectados",
+      "emptyHint": "Adicione um segundo ambiente para ver a comparação",
+      "summaryNone": "Sem diferenças entre {total} chaves",
+      "summaryDiff": "{n} de {total} chaves diferem",
+      "note": {
+        "unchanged": "Mesmo valor em ambos os lados",
+        "changed": "Valor diferente",
+        "added": "Definido apenas em B",
+        "removed": "Definido apenas em A",
+        "commentedOutInA": "Comentado em A, definido em B",
+        "commentedOutInB": "Definido em A, comentado em B"
+      },
+      "secretChanged": "segredo diferente",
+      "secretSame": "segredo é igual em ambos os lados",
+      "count": {
+        "unchanged": "{n} inalterados",
+        "changed": "{n} alterados",
+        "added": "{n} adicionados",
+        "removed": "{n} removidos",
+        "commentedOut": "{n} comentados"
+      },
+      "warnings": "Avisos de entrada ({n})",
+      "warningType": {
+        "duplicateKey": "{file} · chave duplicada",
+        "quoteMismatch": "{file} · aspas incompatíveis",
+        "unparsableLine": "{file} · linha não analisável"
+      },
+      "showUnchanged": "Mostrar inalterados ({n})",
+      "commentedIn": {
+        "A": "comentado em A",
+        "B": "comentado em B",
+        "both": "comentado em ambos"
+      },
+      "redactedNote": "Valores secretos são mascarados por uma heurística baseada em palavras-chave do nome da chave — não por um scanner de segurança. A comparação é feita nos valores brutos, então um segredo rotacionado ainda aparece como alterado.",
+      "interpolationNote": "Referências ${VAR} são comparadas literalmente e nunca resolvidas: a expansão varia conforme o consumidor.",
+      "truncated": "Apenas as primeiras 5.000 chaves são listadas; as contagens cobrem todas as chaves.",
+      "colKey": "Chave",
+      "colA": "A",
+      "colB": "B",
+      "colStatus": "Status",
+      "privacy": "Ambos os arquivos são comparados no seu navegador. Nada é enviado."
+    },
+    "csvDiff": {
+      "originalLabel": "CSV original",
+      "updatedLabel": "CSV atualizado",
+      "originalPlaceholder": "Cole a exportação original ou arraste um arquivo .csv aqui",
+      "updatedPlaceholder": "Cole a exportação atualizada ou arraste um arquivo .csv aqui",
+      "emptyHint": "Cole ou arraste ambos os arquivos — a comparação é executada assim que cada lado tiver conteúdo.",
+      "note": "As linhas são correspondidas por identidade, não por posição, portanto uma linha inserida ou reordenada não aparece como uma parede de alterações. O conteúdo é enviado à API para a comparação e não é armazenado.",
+      "columns": "{n} colunas",
+      "keyLabel": "Coluna-chave",
+      "keyAuto": "Sugestão automática",
+      "keyNone": "Sem chave — comparar linhas inteiras",
+      "joinLabel": "Unir",
+      "joinFull": "Completa externa — todas as linhas",
+      "joinInner": "Interna — linhas em ambos",
+      "joinLeft": "Esquerda — o conjunto original de linhas",
+      "ignoreWhitespace": "Ignorar espaços em branco",
+      "ignoreCase": "Ignorar maiúsculas/minúsculas",
+      "treatEmptyAsNull": "Vazio = NULL = N/A",
+      "noDifferences": "Sem diferenças",
+      "differences": "{added} adicionados · {removed} removidos · {changed} alterados",
+      "added": "{n} adicionados",
+      "removed": "{n} removidos",
+      "changed": "{n} alterados",
+      "unchangedCount": "{n} inalterados",
+      "totals": "{original} → {updated} linhas",
+      "matchedBy": "Correspondido por {columns} ({source})",
+      "matchedWholeRow": "Correspondido pelo conteúdo da linha inteira — nenhuma coluna de chave foi usada, portanto nada é relatado como alterado.",
+      "keySource": {
+        "provided": "sua escolha",
+        "auto": "sugerido automaticamente",
+        "full-row": "linha inteira"
+      },
+      "keyRejected": "Candidatos a chave rejeitados: {items}",
+      "columnMismatch": "Colunas apenas no original: {original} · apenas na atualização: {updated}",
+      "truncated": "Exibindo {shown} do resultado completo (pré-visualização limitada a {limit} linhas) — os totais acima estão completos.",
+      "findings": "Observações ({n})",
+      "level": {
+        "info": "info",
+        "warning": "aviso",
+        "danger": "erro"
+      },
+      "wholeRow": "Linha {n}",
+      "exportChanged": "Linhas alteradas (CSV)",
+      "exportFull": "Diff completo (CSV)"
+    },
+    "uscc": {
+      "modeLabel": "Verificar ou gerar",
+      "tab": {
+        "verify": "Verificar",
+        "generate": "Gerar códigos de teste"
+      },
+      "inputLabel": "Código de crédito social unificado",
+      "placeholder": "18 caracteres, ex.: 91500000059926748X",
+      "idle": "Cole um código de 18 caracteres. Ele é verificado no navegador enquanto você digita — nada é armazenado.",
+      "scope": "Apenas verificação estrutural (GB 32100-2015 + ISO 7064 MOD 31-3). Um código aprovado está bem-formado; não significa que uma organização esteja registrada com ele — verifique isso no registro nacional cods.org.cn.",
+      "valid": "Código de crédito social unificado válido",
+      "invalid": "Código de crédito social unificado inválido",
+      "incomplete": "{n} de 18 caracteres",
+      "invalidCharacters": "Contém caracteres excluídos pelo padrão",
+      "checksumOk": "Dígito verificador OK",
+      "checksumBad": "Dígito verificador não corresponde",
+      "expectedDigit": "O dígito verificador deve ser {expected}, não {actual}",
+      "illegalAt": "Posição {position}: “{char}” não está no conjunto de caracteres do código (I, O, S, V, Z são excluídos)",
+      "detail": "Detalhe do campo",
+      "legacyTitle": "Código de organização legado (GB 11714)",
+      "legacy": {
+        "ok": "O código de organização de 9 caracteres incorporado é autoconsistente",
+        "mismatch": "O caractere de verificação legado seria {expected} — apenas informativo; nem toda classe de registrador possui um código de organização GB 11714",
+        "unchecked": "Não verificado"
+      },
+      "divisionScope": "As posições 3–8 são comparadas com a tabela de províncias GB/T 2260 e as regras de aninhamento do formato de seis dígitos; a tabela completa de condados não é incluída.",
+      "field": {
+        "registrationDept": "Departamento de registro",
+        "orgCategory": "Categoria da organização",
+        "adminDivision": "Divisão administrativa",
+        "orgIdentifier": "Identificador do sujeito",
+        "checkDigit": "Dígito verificador"
+      },
+      "depth": {
+        "none": "Não resolvido",
+        "province": "Nível provincial",
+        "prefecture": "Nível de prefeitura",
+        "county": "Nível de condado"
+      },
+      "note": {
+        "empty": "Nada para verificar ainda",
+        "incomplete": "Um código de crédito social unificado tem exatamente 18 caracteres",
+        "tooLong": "Mais de 18 caracteres",
+        "illegalCharacter": "Contém um caractere fora do conjunto GB 32100-2015 (I, O, S, V e Z são excluídos)",
+        "checkDigitMismatch": "O dígito verificador não corresponde aos 17 primeiros caracteres",
+        "departmentUnknown": "A posição 1 não é um departamento de registro definido pelo padrão (1, 5, 9, Y)",
+        "categoryUnknown": "A posição 2 não é uma categoria de organização definida para este departamento de registro",
+        "divisionNotNumeric": "As posições 3–8 devem ser seis dígitos",
+        "divisionUnknownProvince": "As posições 3–4 não são um código de província GB/T 2260",
+        "divisionMalformed": "Um condado sem prefeitura, o que o GB/T 2260 não permite"
+      },
+      "gen": {
+        "dept": "Departamento de registro",
+        "category": "Categoria da organização",
+        "province": "Província",
+        "count": "Quantos",
+        "randomProvince": "Qualquer província",
+        "regenerate": "Novo lote",
+        "emptyHint": "Selecione as opções acima para gerar códigos de teste.",
+        "testDataBadge": "Dados de teste",
+        "seed": "Semente {seed}",
+        "allCodes": "Todos os códigos",
+        "disclaimer": "Estes códigos são estruturalmente válidos, mas não pertencem a nenhuma organização registrada. Não os use para representar uma entidade real.",
+        "note": "A geração é baseada em seed: as mesmas opções e seed sempre retornam o mesmo lote, então um fixture permanece reproduzível. Cada código é marcado como isTestData no JSON, assim como aqui."
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
+    },
+    "yamlDiff": {
+      "original": "Original",
+      "changed": "Alterado",
+      "originalPlaceholder": "Cole ou arraste o YAML original (ou JSON)",
+      "changedPlaceholder": "Cole ou arraste o YAML alterado (ou JSON)",
+      "idle": "Preencha ambos os painéis e a comparação será executada enquanto você digita.",
+      "privacy": "Ambos os documentos são analisados e comparados neste navegador — nada é enviado, o que é fundamental para manifests que contêm hostnames e nomes de segredos.",
+      "modeLabel": "Comparação",
+      "modeSemantic": "Semântica (estrutura)",
+      "modeRawText": "Texto bruto (caracteres)",
+      "resolveAnchors": "Resolver âncoras e aliases para seus valores",
+      "valid": "YAML válido",
+      "validMulti": "YAML válido · {n} documentos",
+      "invalid": "Erro de análise, linha {line}",
+      "parseFailed": "Um dos lados não foi analisado — nada foi comparado",
+      "equivalent": "Sem diferenças — os dois documentos resultam na mesma estrutura",
+      "equivalentStructural": "Mesma estrutura resolvida · {n} diferenças de formatação ou âncora",
+      "summary": "{added} adicionados · {removed} removidos · {changed} alterados · {typeChanged} alterações de tipo",
+      "parseErrorAt": "{side} · linha {line}, coluna {column}: {message}",
+      "documentCountMismatch": "Contagem de documentos diferente: {original} vs {changed} — os documentos foram emparelhados por ordem e os extras foram relatados por inteiro",
+      "duplicateKeys": "Chaves duplicadas na origem",
+      "unified": "Patch unificado (YAML normalizado)",
+      "howItWorks": "Como funciona esta comparação",
+      "rule": {
+        "keyOrder": "A ordem das chaves, aspas e indentação de mapeamentos são ignoradas; a ordem de sequências é comparada, pois a ordem de uma lista tem significado.",
+        "anchors": "Aliases são resolvidos para seus valores, então uma edição atrás de uma âncora compartilhada aparece em todos os sites de alias; uma âncora ou alias que mudou com o valor intacto é relatada separadamente como estrutural.",
+        "mergeKeys": "Chaves de mesclagem (<<) são expandidas antes da comparação, e as próprias chaves de um nó têm prioridade sobre as mescladas.",
+        "types": "O tipo faz parte do valor: 8080, \"8080\" e !!str 8080 são relatados como alterações de tipo, não como uma alteração genérica.",
+        "sequences": "Sequências de mapeamentos são emparelhadas por nome, id ou chave quando esse campo é único em ambos os lados, então um item inserido não causa cascata; uma reordenação ainda é relatada.",
+        "blockScalars": "Escalares em bloco são comparados pela string resolvida, então a quebra de linha final que |- remove é uma alteração real; uma reformatação com o mesmo valor é estrutural.",
+        "comments": "Comentários não fazem parte do modelo de dados YAML e não são comparados.",
+        "multiDoc": "--- compara documentos em pares; uma diferença de contagem é relatada em vez de comparar apenas o primeiro.",
+        "duplicateKeys": "Uma chave de mapeamento duplicada na entrada usa a última ocorrência e é relatada como aviso."
+      },
+      "note": {
+        "raw-text-mode": "O modo de texto bruto compara caracteres, não estrutura: ordem das chaves, aspas e indentação contam.",
+        "parse-error": "Um dos lados não foi analisado, então nada foi comparado.",
+        "document-count-mismatch": "Os dois lados têm um número diferente de documentos ---; os documentos foram emparelhados por ordem e os extras relatados por inteiro.",
+        "merge-keys-expanded": "Chaves de mesclagem (<<) foram expandidas antes da comparação.",
+        "anchors-unresolved": "Aliases foram comparados como referências *name, não como seus valores resolvidos.",
+        "yaml11-ambiguous-scalars": "y/n/yes/no/on/off sem aspas são lidos como strings aqui (YAML 1.2 Core) e como booleanos no YAML 1.1 — coloque aspas se a intenção era um booleano.",
+        "sequence-matched-by-identity": "Sequências de mapeamentos foram emparelhadas por um campo de identidade em vez de por posição.",
+        "duplicate-keys": "Um mapeamento declara a mesma chave duas vezes; a última ocorrência foi usada.",
+        "truncated": "Apenas as primeiras 2000 alterações são listadas."
+      }
+    },
+    "listSetCompare": {
+      "listA": "Lista A",
+      "listB": "Lista B",
+      "placeholder": "Cole os itens, um por linha (ou arraste um arquivo .txt/.csv)",
+      "emptyHint": "Adicione itens à Lista A e à Lista B para ver a comparação.",
+      "privacy": "Ambas as listas são comparadas no seu navegador — nada é enviado. O mesmo mecanismo é executado no servidor para chamadas de API e MCP.",
+      "delimiter": "Delimitador",
+      "delimiterOption": {
+        "auto": "Detectar automaticamente",
+        "newline": "Nova linha",
+        "comma": "Vírgula",
+        "tab": "Tabulação",
+        "custom": "Personalizado"
+      },
+      "customDelimiter": "Separador",
+      "customDelimiterPlaceholder": "| ou \\t",
+      "sort": "Ordenar",
+      "sortOption": {
+        "original": "Ordem original",
+        "asc": "A→Z",
+        "desc": "Z→A",
+        "byCount": "Por quantidade"
+      },
+      "optCaseSensitive": "Diferenciar maiúsculas",
+      "optTrim": "Remover espaços em branco",
+      "optCollapse": "Unir espaços internos",
+      "optIgnoreZeros": "Ignorar zeros à esquerda",
+      "paneItems": "{n} itens",
+      "paneSingle": "1 item — verifique o delimitador",
+      "items": "{n}",
+      "none": "Nenhum",
+      "more": "+{n} mais — copie ou faça download para ver a lista completa",
+      "panel": {
+        "onlyInA": "Apenas em A",
+        "onlyInB": "Apenas em B",
+        "intersection": "Interseção (em ambos)",
+        "union": "União (todos os itens)",
+        "symmetricDifference": "Diferença simétrica"
+      },
+      "summaryIdentical": "Mesmo conjunto — {n} itens compartilhados",
+      "summaryDiff": "{a} apenas em A · {b} apenas em B · {shared} compartilhados",
+      "drill": {
+        "symmetricDifference": "Diferença simétrica ({n})",
+        "duplicates": "Duplicatas dentro de uma lista ({n})",
+        "multiplicities": "Contagens por item ({n})",
+        "warnings": "Avisos ({n})"
+      },
+      "duplicatesInA": "Repetido em A",
+      "duplicatesInB": "Repetido em B",
+      "colValue": "Item",
+      "colCountA": "Em A",
+      "colCountB": "Em B",
+      "detailTruncated": "Contagens por item truncadas — aumente maxDetail na API para ver a tabela completa.",
+      "reportTitle": "Comparação de listas"
+    },
+    "loanAmortization": {
+      "principal": "Valor do empréstimo",
+      "rate": "Taxa anual %",
+      "term": "Prazo",
+      "termUnit": "Unidade de prazo",
+      "unitYears": "Anos",
+      "unitMonths": "Meses",
+      "startMonth": "Mês da primeira parcela",
+      "startMonthHint": "AAAA-MM. Rotula a tabela; não altera valores.",
+      "extraHeading": "Pagamentos extras",
+      "extraMonthly": "Extra todo mês",
+      "extraYearly": "Extra uma vez por ano",
+      "extraYearlyMonth": "Mês do extra anual",
+      "extraOneTime": "Extra único",
+      "extraOneTimePeriod": "Extra único na parcela nº",
+      "extraNote": "Pagamentos extras reduzem o principal no período em que incidem, o que reduz os juros de todos os períodos seguintes. A taxa e a parcela programada permanecem inalteradas.",
+      "monthlyPayment": "Parcela mensal",
+      "totalInterest": "Juros totais",
+      "totalPaid": "Total pago",
+      "crossover": "Cruzamento",
+      "crossoverValue": "Pagamento {n}",
+      "crossoverNone": "Nunca",
+      "payoff": "Quitado no pagamento {n}",
+      "monthsSaved": "{n} meses antes",
+      "totalExtra": "{amount} pago acima do previsto",
+      "viewMonthly": "Cada pagamento",
+      "viewAnnual": "Por ano",
+      "tableCaption": "Cronograma de amortização: pagamento, juros, principal e saldo restante por período",
+      "colPeriod": "#",
+      "colDate": "Mês",
+      "colPayment": "Pagamento",
+      "colInterest": "Juros",
+      "colPrincipal": "Principal",
+      "colBalance": "Saldo",
+      "colYear": "Ano",
+      "expandRows": "Mostrar todos os {total} pagamentos",
+      "collapseRows": "Mostrar menos pagamentos",
+      "windowNote": "Mostrando {shown} de {total} pagamentos. O CSV e a API contêm todos.",
+      "emptyHint": "Insira um valor de empréstimo, uma taxa e um prazo para ver a tabela.",
+      "note": "Mesmo motor da API. Os cálculos usam apenas os termos do seu empréstimo; nada é enviado ou armazenado.",
+      "errPrincipal": "Insira um valor de empréstimo maior que 0.",
+      "errRate": "Insira uma taxa entre 0 e 100.",
+      "errTerm": "Insira um prazo entre 1 mês e 100 anos.",
+      "errStartMonth": "Use AAAA-MM, por exemplo 2026-01.",
+      "errExtra": "Insira um valor igual ou superior a 0.",
+      "errOneTimePeriod": "Insira o número do pagamento em que o valor único incide."
+    },
+    "businessDayShift": {
+      "modeLabel": "O que calcular",
+      "mode": {
+        "shift": "Deslocar uma data",
+        "countBetween": "Contar entre datas"
+      },
+      "startDate": "Data de início",
+      "days": "Dias úteis",
+      "daysHint": "Valores negativos retrocedem: −10 significa dez dias úteis antes da data de início.",
+      "daysInvalid": "Dias úteis devem ser um número inteiro, com sinal de menos opcional no início.",
+      "endDate": "Data de fim",
+      "includeEndDate": "Contar a data final também — é o que o NETWORKDAYS de uma planilha retorna",
+      "weekendLabel": "Dias de folga por semana",
+      "weekendHint": "Padrão: sábado e domingo. Defina sexta e sábado onde esse é o fim de semana.",
+      "weekday": {
+        "sun": "Dom",
+        "mon": "Seg",
+        "tue": "Ter",
+        "wed": "Qua",
+        "thu": "Qui",
+        "fri": "Sex",
+        "sat": "Sáb"
+      },
+      "holidays": "Feriados",
+      "holidaysHint": "Se deixado em branco, o resultado é a contagem pura pela regra de fim de semana — nenhum calendário nacional é aplicado automaticamente.",
+      "makeupWorkdays": "Dias de compensação",
+      "makeupHint": "Datas trabalhadas mesmo caindo em fim de semana ou feriado — os sábados de compensação (调休/补班) da China entram aqui.",
+      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesIgnored": "{n, plural, one {# entrada não era uma data YYYY-MM-DD e não está sendo usada} other {# entradas não eram datas YYYY-MM-DD e não estão sendo usadas}}",
+      "pickStart": "Selecione uma data de início para começar.",
+      "emptyHintShift": "Selecione uma date de início e um número de dias úteis.",
+      "emptyHintCount": "Selecione uma data de início e uma data de término.",
+      "note": "Mesmo motor da API. O cálculo é executado no conjunto de regras mostrado com o resultado; nada é armazenado.",
+      "countHeadline": "{n, plural, one {# dia útil} other {# dias úteis}}",
+      "reversedRange": "A data de término é anterior à data de início, então a contagem retorna negativa.",
+      "classification": {
+        "workday": "Dia útil",
+        "weekend": "Fim de semana",
+        "holiday": "Feriado",
+        "makeupWorkday": "Dia de compensação"
+      },
+      "ruleWeekend": "{days} de folga",
+      "ruleNoWeekend": "sem folgas semanais",
+      "ruleHolidays": "{n, plural, =0 {sem lista de feriados} one {# feriado} other {# feriados}}",
+      "ruleMakeups": "{n, plural, =0 {sem dias de compensação} one {# dia de compensação} other {# dias de compensação}}",
+      "ruleEndIncluded": "data final incluída",
+      "ruleEndExcluded": "data final não incluída",
+      "chain": "Reiniciar turno a partir desta date"
+    },
+    "retryBackoff": {
+      "strategy": {
+        "exponential": "Exponencial",
+        "linear": "Linear",
+        "fixed": "Fixo"
+      },
+      "initialDelay": "Atraso inicial (ms)",
+      "factor": "Fator de backoff",
+      "factorHint": "Multiplicador aplicado por tentativa. Deve ser maior que 1.",
+      "increment": "Incremento linear (ms)",
+      "incrementHint": "Milissegundos adicionados ao atraso a cada tentativa.",
+      "maxDelay": "Limite máximo de atraso (ms)",
+      "maxDelayHint": "Deixe vazio para sem limite. Quando o limite é atingido, todos os atrasos posteriores permanecem fixos nele.",
+      "maxAttempts": "Tentativas máximas",
+      "maxAttemptsHint": "1 a 100.",
+      "excludeInitial": "Tentativas máximas exclui a solicitação inicial",
+      "excludeInitialNote": "Ativado: o número acima conta apenas as tentativas, a solicitação inicial é extra. Desativado: conta todas as tentativas, incluindo a inicial.",
+      "jitter": {
+        "none": "Nenhum — atrasos exatos",
+        "equal": "Igual — metade fixo, metade aleatório",
+        "full": "Total — de zero até o atraso"
+      },
+      "callerTimeout": "Seu próprio tempo limite (ms)",
+      "callerTimeoutHint": "Opcional. Deixe em branco para ignorar a verificação de orçamento.",
+      "emptyHint": "Corrija o campo destacado para ver o cronograma.",
+      "note": "Calculado apenas com base na política — nada é enviado a qualquer serviço upstream. O jitter é relatado como o intervalo em que um cliente real se enquadra, nunca como uma única amostra.",
+      "headlineExact": "{attempts} tentativas, {wait} de espera no total.",
+      "headlineRange": "{attempts} tentativas, {expected} de espera em média, até {max} no pior caso.",
+      "finalDelay": "A última espera, antes da tentativa {attempt}, é {delay}.",
+      "noRetries": "Este orçamento permite uma tentativa e nenhuma repetição, então não há nada para esperar.",
+      "retryCount": "{count, plural, =0 {nenhuma repetição} one {# repetição} other {# repetições}}",
+      "capFlattened": "Limite atingido na tentativa {attempt} — todo atraso posterior permanece em {delay}.",
+      "timeoutExceeded": "No pior caso espera {wait}, o que ultrapassa seu orçamento de {timeout}.",
+      "timeoutOk": "No pior caso, espera {wait}, dentro do seu orçamento de {timeout}.",
+      "tableLabel": "Agenda de tentativas",
+      "colAttempt": "Tentativa",
+      "colDelay": "Atraso",
+      "colCumulative": "Tempo total de espera",
+      "average": "média {value}",
+      "formula": {
+        "none": "Os atrasos são exatos — sem jitter aplicado.",
+        "equal": "Jitter igual: metade do atraso é fixa, a outra metade é sorteada uniformemente, então cada espera fica entre metade do atraso e o atraso total.",
+        "full": "Jitter total: a espera é sorteada uniformemente entre zero e o atraso calculado."
+      },
+      "errInitialDelay": "O atraso inicial deve ser um número inteiro de milissegundos, no mínimo 1.",
+      "errFactor": "O fator deve ser maior que 1 e no máximo 100. Um fator de 1 é a estratégia fixa.",
+      "errIncrement": "O incremento deve ser um número inteiro de milissegundos, 0 ou mais.",
+      "errMaxDelay": "O limite deve ser um número inteiro de milissegundos, pelo menos 1.",
+      "errCapBelowInitial": "O limite deve ser pelo menos o atraso inicial.",
+      "errMaxAttempts": "As tentativas devem ser um número inteiro de 1 a 100.",
+      "errCallerTimeout": "O tempo limite deve ser um número inteiro de milissegundos, pelo menos 1."
+    },
+    "csvColumns": {
+      "csvLabel": "CSV",
+      "csvPlaceholder": "Cole o CSV aqui ou solte um arquivo — a primeira linha é lida como os nomes das colunas",
+      "sample": "Amostra CSV",
+      "chooseFile": "Selecionar ficheiro",
+      "fileFailed": "Não foi possível ler {name}.",
+      "delimiterLabel": "Delimitador",
+      "delimiter": {
+        "comma": "Vírgula  ,",
+        "semicolon": "Ponto e vírgula  ;",
+        "tab": "Tabulação",
+        "pipe": "Pipe  |"
+      },
+      "raggedPolicyLabel": "Linhas que não correspondem ao cabeçalho",
+      "ragged": {
+        "pad": "Alinhar ao cabeçalho",
+        "truncate": "Cortar linhas longas, manter curtas",
+        "reject": "Parar e reportar"
+      },
+      "columnsTitle": "Colunas — {kept} de {total} mantidas",
+      "columnsHint": "Desmarque para remover uma coluna, edite o campo para renomeá-la, use as setas para reordenar. Tudo é resolvido em relação ao cabeçalho original.",
+      "reset": "Redefinir colunas",
+      "keep": "Manter coluna {name}",
+      "renameLabel": "{name}",
+      "moveUp": "Mover {name} para cima",
+      "moveDown": "Mover {name} para baixo",
+      "noneKept": "Nenhuma coluna está marcada — mantenha pelo menos uma.",
+      "emptyHint": "Cole um CSV acima para gerenciar suas colunas.",
+      "note": "Executa no texto que você cola. Solte, depois renomeie, depois reordene — nessa ordem fixa, sempre em relação ao cabeçalho original.",
+      "columnCount": "{n} colunas",
+      "rowCount": "{n} linhas",
+      "duplicateHeaders": "Cabeçalho duplicado usado por nome: {names}",
+      "raggedCount": "{n}{more} linhas não correspondem à largura do cabeçalho",
+      "previewLabel": "CSV de saída",
+      "previewTruncated": "Mostrando as primeiras {shown} de {total} linhas. Copie ou faça download para o arquivo completo.",
+      "raggedListLabel": "Linhas que não correspondem à largura do cabeçalho",
+      "raggedRow": "Linha {line}: {actual} campos, o cabeçalho tem {expected}",
+      "unusedRenames": "Renomeação ignorada — essas colunas não estão na saída: {names}"
+    },
+    "imageRotateFlip": {
+      "drop": "Arraste uma imagem ou clique para navegar",
+      "browse": "Escolha uma imagem",
+      "selected": "{name} · {kb} KB",
+      "privacy": "O arquivo é enviado à API Forge para a transformação e nunca é armazenado.",
+      "tooLarge": "Essa imagem é maior que {mb} MB.",
+      "ccw": "90° à esquerda",
+      "cw": "90° à direita",
+      "half": "180°",
+      "reset": "Redefinir",
+      "flipHorizontal": "Inverter horizontalmente",
+      "flipVertical": "Inverter verticalmente",
+      "angle": "Ângulo",
+      "exactAngle": "Ângulo exato °",
+      "fitMode": "Modo de ajuste",
+      "fitExpand": "Expandir canvas",
+      "fitCrop": "Cortar para preencher",
+      "fitInside": "Ajustar dentro",
+      "fitNote": "Com uma rotação de um quarto de volta, a imagem não cabe mais no quadro original: expandir mantém todos os pixels, cortar mantém o tamanho original e recorta os cantos, ajustar reduz tudo proporcionalmente.",
+      "outputFormat": "Formato de saída",
+      "sameFormat": "Igual ao de entrada",
+      "idle": "Arraste uma imagem para vê-la reorientada.",
+      "original": "Original · {w}×{h}",
+      "originalAlt": "A imagem conforme enviada",
+      "result": "Resultado · {w}×{h}",
+      "resultAlt": "A imagem reorientada",
+      "badgeLossless": "Sem reamostragem",
+      "badgeResampled": "Reamostrado",
+      "badgeSize": "{kb} KB",
+      "badgeExif": "Orientação EXIF {orientation} aplicada primeiro",
+      "badgeSnapped": "Ajustado ao quarto de volta exato",
+      "badgeReencode": "A geometria é exata; o codec re-encode",
+      "download": "Baixar",
+      "note": "Rotações de 90°, 180° e 270° movem pixels sem mesclá-los. Qualquer outro ângulo reamostra. GIF animado, APNG e WebP animado ainda não são suportados."
+    },
+    "exifStrip": {
+      "drop": "Arraste um JPEG, PNG ou WebP para remover seus metadados",
+      "privacy": "Processado em nossos servidores e nunca armazenado. Até {mb} MB por imagem.",
+      "idle": "Removido: GPS, hora de captura, informações da câmera e do dispositivo, miniatura embutida, histórico de edição. Mantido: orientação, perfil de cor, dimensões, dados de pixel.",
+      "note": "Apenas imagens estáticas. Vídeo, PDF, HEIC, AVIF e GIF estão fora do escopo, e os manifestos de procedência C2PA são mantidos intactos.",
+      "detail": "O que foi removido",
+      "optKeepThumbnail": "Manter a miniatura Exif incorporada",
+      "verdictStripped": "Removidos {fields} campos de metadados ({kb} KB)",
+      "verdictClean": "Este arquivo não contém metadados removíveis",
+      "strippedCaveat": "A imagem em si permanece inalterada — mesmos pixels, mesmas dimensões, nada re-codificado.",
+      "cleanCaveat": "Devolvido byte a byte como chegou.",
+      "badgeOrientationKept": "Orientação mantida",
+      "badgeOrientationLost": "Orientação não pôde ser mantida",
+      "badgeColorProfileKept": "Perfil de cor mantido",
+      "badgeThumbnailKept": "Miniatura mantida",
+      "badgeThumbnailRemoved": "Miniatura removida",
+      "download": "Baixar imagem limpa",
+      "sizes": "{before} KB → {after} KB",
+      "detailFields": "{fields} campos · {kb} KB",
+      "detailNothing": "Nada foi removido deste ficheiro.",
+      "detailOrientation": "A orientação Exif {value} foi lida do ficheiro e mantida.",
+      "detailNoOrientation": "O ficheiro não declarou orientação Exif, por isso a exibição não é afetada.",
+      "segmentExif": "Exif",
+      "segmentIptc": "IPTC",
+      "segmentXmp": "XMP",
+      "segmentComment": "Comentário",
+      "segmentText": "Metadados de texto",
+      "segmentTime": "Carimbo de data/hora",
+      "segmentVendor": "Bloco do fornecedor",
+      "summaryStripped": "Removidos {fields} campos de metadados ({families}), {kb} KB. Imagem inalterada no restante.",
+      "summaryClean": "Nenhum metadado removível encontrado. Arquivo retornado inalterado."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "Name / Host",
+      "type": "Record-Typ",
+      "note": "Auflösung über den Forge-Host-DNS — kann vom lokalen Stub abweichen."
+    },
+    "tls": {
+      "host": "Host",
+      "expired": "Zertifikat abgelaufen",
+      "validDays": "Noch {n} Tage",
+      "note": "Verbindung vom Forge-Host. Trust-Prüfung deaktiviert nur zur Inspektion."
+    },
+    "myIp": {
+      "refresh": "Aktualisieren",
+      "note": "IP wie vom Forge-Edge gesehen. Kein Geo ohne Lizenzdaten."
+    },
+    "mermaid": {
+      "source": "Mermaid source",
+      "idle": "Valid diagrams render here",
+      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
+      "sample": "Sample",
+      "theme": "Theme",
+      "theme_default": "Default",
+      "theme_dark": "Dark",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "Flowchart",
+      "sample_sequence": "Sequence",
+      "sample_class": "Class",
+      "sample_er": "ER diagram",
+      "sample_state": "State",
+      "sample_gantt": "Gantt",
+      "sample_pie": "Pie",
+      "sample_mindmap": "Mindmap",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "zoomReset": "Reset view",
+      "copySvg": "Copy SVG",
+      "downloadSvg": "Download SVG",
+      "downloadPng": "Download PNG",
+      "previewAria": "Mermaid diagram preview",
+      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
+    },
+    "colorDeltaE": {
+      "note": "CIEDE2000 via culori. Schwellen nur für UI-Review."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL-Dialekt",
+      "parseNote": "Nur Parse/Inventar. ERD-Canvas separat.",
+      "convertNote": "@dbml/core — gleicher Pfad wie die API."
+    },
+    "dnsLeak": {
+      "probeHost": "Compare host (advanced)",
+      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
+      "run": "Start DNS leak check",
+      "retest": "Run again",
+      "showAdvanced": "Advanced options",
+      "hideAdvanced": "Hide advanced",
+      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
+      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
+      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
+      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
+      "edgeIp": "Your edge IP",
+      "authorityHits": "Recursive IPs",
+      "forgePaths": "Forge resolver hits",
+      "dohPaths": "Browser DoH hits",
+      "webrtcCount": "WebRTC IPs",
+      "forgeResolvers": "Forge multi-resolver (server-side)",
+      "forgeNote": "These queries leave from the Forge host — not your laptop.",
+      "browserDoh": "Browser DoH",
+      "webrtc": "WebRTC ICE",
+      "egressMarkers": "Forge egress markers",
+      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
+      "honestyPrefix": "Honesty:",
+      "verdictConsistent": "Paths look consistent on this check",
+      "verdictSplit": "Split answers across DNS paths",
+      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
+      "verdictIncomplete": "Incomplete — browser probes missing",
+      "verdictAuthority": "System DNS recursives captured",
+      "infraOn": "Authority online",
+      "infraOff": "Authority offline — multi-path only",
+      "infraChecking": "Checking…",
+      "authorityResolvers": "System DNS recursive resolvers",
+      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
+      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
+      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
+      "authorityDetail": "Authority session detail",
+      "phaseSession": "Creating session…",
+      "phaseSystemDns": "Triggering system DNS…",
+      "phasePoll": "Listening for recursive hits ({n}/{total})…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "stepSession": "Session",
+      "stepSystemDns": "System DNS",
+      "stepPoll": "Listen",
+      "stepBrowser": "Browser",
+      "stepServer": "Server",
+      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
+      "liveHits": "Live recursive hits",
+      "sectionSystemDns": "System DNS (what you came for)",
+      "sectionComplementary": "Complementary paths",
+      "sectionTech": "Technical session detail",
+      "copyIps": "Copy IPs",
+      "copied": "Copied",
+      "queryCount": "{n} queries",
+      "colPath": "Path",
+      "colAnswers": "Answers",
+      "colMs": "ms",
+      "ipPublic": "public",
+      "ipPrivate": "private",
+      "sig": {
+        "captured": "System DNS captured",
+        "onlineNoHits": "Authority online · no hits yet",
+        "offline": "Authority offline",
+        "forgeSplit": "Forge resolvers disagree",
+        "dohSplit": "Browser DoH disagree",
+        "webrtcMismatch": "WebRTC ≠ edge IP",
+        "webrtcLocal": "Local WebRTC candidates",
+        "noBrowser": "No browser probes"
+      }
+    },
+    "honesty": {
+      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
+      "signatureNotVerified": "{engine} · decode only · signature not verified",
+      "localOnly": "Processed for this request · not stored as a card or credential"
+    },
+    "idCard": {
+      "number": "Resident ID number",
+      "note": "GB 11643 check digit · no household registry lookup · same path as API",
+      "specimenTitle": "Resident ID · structure specimen",
+      "segRegion": "Region",
+      "segBirth": "Birth",
+      "segSeq": "Seq",
+      "segCheck": "Check",
+      "metaBirth": "Birth",
+      "metaGender": "Gender",
+      "metaRegion": "Region code",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "reasonFormat": "Format should be 18 characters (last may be X)",
+      "reasonBirth": "Birth date segment is invalid",
+      "reasonCheck": "Check digit is wrong",
+      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} lines",
+      "chars": "{n} chars",
+      "empty": "(empty file)",
+      "readyToShip": "Ready to drop into the repo"
+    },
+    "textTransform": {
+      "mode": "Mode",
+      "input": "Input",
+      "output": "Output",
+      "emptyResult": "Result appears here",
+      "runLocal": "Run locally",
+      "runServer": "Run on server",
+      "statusLocalLive": "Local · live",
+      "statusLocal": "Local",
+      "statusServer": "Server · same path as API",
+      "noteDefault": "Same path as API"
+    }
+  },
+  "roots": {
+    "hubLabel": "Por intenção",
+    "tools": "ferramentas",
+    "dualSurface": "Página humana + API de agente · mesmo motor",
+    "otherRoots": "Outras raízes de demanda"
+  }
+}

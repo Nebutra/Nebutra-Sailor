@@ -1,0 +1,47 @@
+# Thin edge gateway. Separate Worker from nebutra-gateway, not a variant of it.
+#
+# No Hyperdrive binding and no cron: this entry never touches Postgres. Both
+# belong to the full gateway, which runs on ECS Origin. Giving the edge a
+# database connection would invite exactly the duplicated logic the split
+# exists to avoid.
+#
+# ORIGIN_URL must be a hostname that is NOT proxied through this Worker.
+# Pointing it at the hostname the Worker serves loops the request back into
+# itself, so it is set per-environment as a var rather than defaulted here.
+
+name = "nebutra-gateway-edge"
+main = "src/worker-edge.ts"
+compatibility_date = "2026-06-04"
+
+# Takes api.nebutra.com in front of ECS Origin. The hostname is already proxied
+# by Cloudflare, so this changes only what runs before the origin fetch — no DNS
+# change, no cutover window, and removing the route puts traffic straight back
+# on the origin.
+#
+# ORIGIN_URL below has to stay grey-cloud. Once this route exists, pointing it
+# at a proxied hostname would send each forward back into this Worker.
+routes = [
+  { pattern = "api.nebutra.com/*", zone_name = "nebutra.com" },
+]
+
+# Kept on alongside the route. Declaring `routes` makes wrangler disable the
+# workers.dev subdomain by default, which removes the only way to exercise this
+# Worker without sending production traffic at it — and if the route fails to
+# apply, that leaves no way to reach it at all.
+workers_dev = true
+
+[observability]
+enabled = true
+head_sampling_rate = 1
+
+[vars]
+# Origin hostname. A hostname, not a credential — it belongs in config where it
+# is visible, and if it is wrong every forwarded request fails loudly rather
+# than leaking anything. Must be grey-cloud (DNS only): pointing it at a
+# proxied hostname sends the request back through this Worker.
+ORIGIN_URL = "https://origin.nebutra.com"
+
+# Requests per minute per IP before shedding. Set far above real usage — this
+# sheds floods, it is not the per-key limit, which stays at the origin where
+# the plan is known.
+EDGE_IP_RATE_LIMIT = "600"

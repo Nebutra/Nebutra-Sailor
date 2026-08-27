@@ -1,0 +1,77 @@
+# Nebutra Router — market banner art DAG
+# Style: 拟物 claymorphism · 互联网大厂 App 运营插画（支付宝/微信/抖音功能位同级）
+# Soft 3D clay plastic, rounded friendly, pastel product marketing — NOT cyber, NOT pure mesh abstract
+tasks:
+  - id: style-base
+    name: router-banner-style-base
+    ratio: "16:9"
+    prompt: >
+      2026 Chinese big-tech mobile app feature banner plate, soft claymorphism product art.
+      Premium app store / 运营位 style like Alipay WeChat Douyin feature cards: cute soft 3D
+      clay-plastic materials with matte finish, gentle rounded forms, subtle soft shadows,
+      friendly pastel palette (soft blue, lavender, peach cream, mint white), clean studio
+      lighting, polished commercial illustration, slightly toy-like soft skeuomorphic depth.
+      Wide 16:9 landscape, generous empty calm space on the left third for UI title overlay,
+      decorative clay shapes clustered on the right. No logos, no brand marks, no readable text,
+      no watermark, no cyber grid, no neon, no dark sci-fi. Expensive internet product design.
+
+  - id: banner-llm
+    name: router-banner-llm
+    ratio: "16:9"
+    refs: ["@style-base"]
+    prompt: >
+      Same soft claymorphism big-tech app banner style as the reference. Wide 16:9 landscape.
+      Theme: language AI chat — cute soft 3D clay speech bubbles and chat pills in matte
+      plastic pastel blue pink lavender, floating gently on the right two-thirds, soft studio
+      shadows, left third empty for Chinese headline. Friendly 互联网大厂运营位 look.
+      No logos, no text, no cyber neon.
+
+  - id: banner-image
+    name: router-banner-image
+    ratio: "16:9"
+    refs: ["@style-base"]
+    prompt: >
+      Same soft claymorphism big-tech app banner style as the reference. Wide 16:9 landscape.
+      Theme: AI image generation — soft clay picture frames and rounded canvas tiles in matte
+      plastic pastel, cute 3D gallery props, gentle shadows, right-side cluster, left third empty.
+      Commercial app feature poster, no logos, no text, no hard glass cyber look.
+
+  - id: banner-video
+    name: router-banner-video
+    ratio: "16:9"
+    refs: ["@style-base"]
+    prompt: >
+      Same soft claymorphism big-tech app banner style as the reference. Wide 16:9 landscape.
+      Theme: AI video — soft clay film clapper, rounded play button pill, film-strip as matte
+      plastic ribbon, pastel toy-like 3D, right side composition, left third empty for UI text.
+      No logos, no readable text, no dark cinematic sci-fi.
+
+  - id: banner-audio
+    name: router-banner-audio
+    ratio: "16:9"
+    refs: ["@style-base"]
+    prompt: >
+      Same soft claymorphism big-tech app banner style as the reference. Wide 16:9 landscape.
+      Theme: AI audio voice — soft clay soundwave bars, rounded headphone or equalizer rings
+      as matte pastel plastic toys, cute commercial app art, right cluster, left third empty.
+      No brand microphones, no logos, no text.
+
+  - id: banner-data
+    name: router-banner-data
+    ratio: "16:9"
+    refs: ["@style-base"]
+    prompt: >
+      Same soft claymorphism big-tech app banner style as the reference. Wide 16:9 landscape.
+      Theme: data search knowledge — soft clay document cards, folder tabs, magnifier as cute
+      matte plastic 3D props, pastel big-tech feature banner, right side, left third empty.
+      No logos, no text, no wireframe graphs.
+
+  - id: banner-tools
+    name: router-banner-tools
+    ratio: "16:9"
+    refs: ["@style-base"]
+    prompt: >
+      Same soft claymorphism big-tech app banner style as the reference. Wide 16:9 landscape.
+      Theme: developer tools API — soft clay toolbox blocks, wrench and modular cubes as cute
+      rounded matte plastic 3D, friendly product marketing, right cluster, left third empty.
+      No logos, no readable text, no cyberpunk.

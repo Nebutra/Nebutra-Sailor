@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "x-post-card-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/x-post-card-demo.tsx",
+      "content": "\"use client\";\n\nimport { XPostCard } from \"@nebutra/ui/primitives\";\n\nexport function XPostCardDemo() {\n  return (\n    <div className=\"py-12 md:flex-row gap-8 flex w-full flex-col items-center justify-center border-y bg-muted/20\">\n      {/* Real Post */}\n      <div className=\"gap-3 max-w-sm flex w-full flex-col\">\n        <h3 className=\"text-sm font-medium ml-1 text-muted-foreground\">Embedded Post</h3>\n        <XPostCard\n          id=\"1744047805177266619\" // Next.js related tweet\n          className=\"w-full\"\n        />\n      </div>\n\n      {/* Mocked/Fallback/Different Post */}\n      <div className=\"gap-3 max-w-sm flex w-full flex-col\">\n        <h3 className=\"text-sm font-medium ml-1 text-muted-foreground\">Light Theme Preview</h3>\n        <div className=\"light bg-white p-4 border-zinc-200 rounded-xl border\">\n          <XPostCard\n            id=\"1612501538392551424\" // Another popular tech tweet\n            className=\"w-full border-0 bg-transparent shadow-none\"\n          />\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

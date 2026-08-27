@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-error-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/input-error-demo.tsx",
+      "content": "\"use client\";\n\nimport { Input } from \"@nebutra/ui/primitives\";\n\nexport function InputErrorDemo() {\n  return (\n    <Input\n      id=\"email-error\"\n      type=\"email\"\n      label=\"Email Address\"\n      defaultValue=\"not-an-email\"\n      error=\"Email address must be valid.\"\n    />\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

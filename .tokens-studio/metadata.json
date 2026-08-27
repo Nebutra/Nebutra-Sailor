@@ -1,0 +1,14 @@
+{
+  "tokenSetOrder": [
+    "core",
+    "semantic",
+    "themes/light",
+    "themes/dark",
+    "themes/neon",
+    "themes/gradient",
+    "themes/dark-dense",
+    "themes/minimal",
+    "themes/vibrant",
+    "themes/ocean"
+  ]
+}

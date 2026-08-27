@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nebutra-typelens",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-06-04",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "NEXT_PUBLIC_SITE_URL": "https://typelens.nebutra.com",
+    "NEXT_PUBLIC_APP_URL": "https://typelens.nebutra.com"
+  },
+  "routes": [
+    {
+      "pattern": "typelens.nebutra.com/*",
+      "zone_name": "nebutra.com"
+    }
+  ],
+  "workers_dev": true
+}

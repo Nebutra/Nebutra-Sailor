@@ -1,0 +1,358 @@
+import * as p from "@clack/prompts";
+import type { Command } from "commander";
+import pc from "picocolors";
+import { mergeGlobalOptions, type RegisterCommand } from "../utils/commander-types";
+import { delegate, pnpmRun, turboRun } from "../utils/delegate";
+import { ExitCode } from "../utils/exit-codes";
+import { dryRunOutput } from "../utils/output";
+
+type OutputFormat = "json" | "plain" | "table";
+function asOutputFormat(value: unknown): OutputFormat | undefined {
+  if (value === "json" || value === "plain" || value === "table") return value;
+  return undefined;
+}
+
+interface DevOptions {
+  app?: string;
+  dryRun?: boolean;
+  verbose?: boolean;
+  quiet?: boolean;
+  format?: string;
+}
+
+interface BuildOptions extends DevOptions {
+  strict?: boolean;
+}
+
+interface LintOptions extends DevOptions {
+  fix?: boolean;
+}
+
+interface TypecheckOptions extends DevOptions {
+  // no additional options for typecheck
+}
+
+/**
+ * Valid turbo `--filter` short names for monorepo apps/backends.
+ * Product apps (forge/router/…) exist only in Nebutra-Sailor; scaffolded
+ * projects omit them via .templateignore — filter will simply no-op if missing.
+ */
+const VALID_APPS = [
+  // Scaffold core
+  "landing",
+  "web",
+  "storybook",
+  "design-docs",
+  "idp",
+  "mail-preview",
+  "gateway",
+  // Monorepo product surfaces (stripped from Sailor-Template)
+  "admin",
+  "auth",
+  "design",
+  "forge",
+  "router",
+  "pebble",
+  "typelens",
+  "sailor-docs",
+  "studio",
+  "sleptons",
+];
+
+/**
+ * Validate app filter
+ */
+function validateApp(app: string): string {
+  const appName = `@nebutra/${app}`;
+  if (!VALID_APPS.includes(app)) {
+    const suggestion = pc.yellow(`Valid apps: ${VALID_APPS.join(", ")}`);
+    throw new Error(`Invalid app: ${pc.red(app)}\n${suggestion}`);
+  }
+  return appName;
+}
+
+/**
+ * Handle dev command
+ */
+export async function devCommand(options: DevOptions) {
+  if (options.dryRun) {
+    dryRunOutput(
+      {
+        mode: "dry-run",
+        timestamp: new Date().toISOString(),
+        command: "dev",
+        options: {
+          app: options.app,
+        },
+        task: options.app ? "turbo dev" : "turbo dev (all apps)",
+      },
+      { format: asOutputFormat(options.format) },
+    );
+    process.exit(ExitCode.DRY_RUN_OK);
+  }
+
+  try {
+    if (options.app) {
+      validateApp(options.app);
+      const appName = `@nebutra/${options.app}`;
+      if (!options.quiet) {
+        p.log.info(pc.cyan(`Starting dev server for ${pc.bold(appName)}...`));
+      }
+      const result = await turboRun("dev", { filter: appName });
+      process.exit(result.exitCode);
+    }
+
+    // Default: run turbo dev (all apps)
+    if (!options.quiet) {
+      p.log.info(pc.cyan("Starting dev servers for all apps..."));
+    }
+    const result = await turboRun("dev");
+    process.exit(result.exitCode);
+  } catch (error) {
+    if (error instanceof Error) {
+      p.log.error(pc.red(error.message));
+    } else {
+      p.log.error(pc.red("Unknown error occurred"));
+    }
+    process.exit(ExitCode.ERROR);
+  }
+}
+
+/**
+ * Handle build command
+ */
+export async function buildCommand(options: BuildOptions) {
+  if (options.dryRun) {
+    dryRunOutput(
+      {
+        mode: "dry-run",
+        timestamp: new Date().toISOString(),
+        command: "build",
+        options: {
+          app: options.app,
+          strict: options.strict,
+        },
+        task: options.strict ? "pnpm build:strict" : "pnpm build",
+      },
+      { format: asOutputFormat(options.format) },
+    );
+    process.exit(ExitCode.DRY_RUN_OK);
+  }
+
+  try {
+    if (options.app && options.strict) {
+      p.log.error(pc.red("Cannot use --strict with --app filter"));
+      process.exit(ExitCode.INVALID_ARGS);
+    }
+
+    if (options.app) {
+      validateApp(options.app);
+      const appName = `@nebutra/${options.app}`;
+      if (!options.quiet) {
+        p.log.info(pc.cyan(`Building ${pc.bold(appName)}...`));
+      }
+      const result = await turboRun("build", { filter: appName });
+      process.exit(result.exitCode);
+    }
+
+    const script = options.strict ? "build:strict" : "build";
+    if (!options.quiet) {
+      const msg = options.strict
+        ? "Running strict build (with UI governance verification)..."
+        : "Building all apps...";
+      p.log.info(pc.cyan(msg));
+    }
+    const result = await pnpmRun(script, { interactive: true });
+    process.exit(result.exitCode);
+  } catch (error) {
+    if (error instanceof Error) {
+      p.log.error(pc.red(error.message));
+    } else {
+      p.log.error(pc.red("Unknown error occurred"));
+    }
+    process.exit(ExitCode.ERROR);
+  }
+}
+
+/**
+ * Handle lint command
+ */
+export async function lintCommand(options: LintOptions) {
+  if (options.dryRun) {
+    dryRunOutput(
+      {
+        mode: "dry-run",
+        timestamp: new Date().toISOString(),
+        command: "lint",
+        options: {
+          app: options.app,
+          fix: options.fix,
+        },
+        task: options.fix ? "pnpm lint:fix" : "pnpm lint",
+      },
+      { format: asOutputFormat(options.format) },
+    );
+    process.exit(ExitCode.DRY_RUN_OK);
+  }
+
+  try {
+    if (options.app && options.fix) {
+      p.log.error(pc.red("Cannot use --fix with --app filter (lint:fix is global only)"));
+      process.exit(ExitCode.INVALID_ARGS);
+    }
+
+    if (options.app) {
+      validateApp(options.app);
+      const appName = `@nebutra/${options.app}`;
+      if (!options.quiet) {
+        p.log.info(pc.cyan(`Linting ${pc.bold(appName)}...`));
+      }
+      const result = await delegate({
+        command: "turbo",
+        args: ["run", "lint", "--filter", appName],
+        interactive: true,
+        label: `turbo lint --filter ${appName}`,
+        dryRun: options.dryRun,
+      });
+      process.exit(result.exitCode);
+    }
+
+    const script = options.fix ? "lint:fix" : "lint";
+    if (!options.quiet) {
+      const msg = options.fix ? "Fixing linting issues..." : "Linting codebase...";
+      p.log.info(pc.cyan(msg));
+    }
+    const result = await pnpmRun(script, { interactive: true });
+    process.exit(result.exitCode);
+  } catch (error) {
+    if (error instanceof Error) {
+      p.log.error(pc.red(error.message));
+    } else {
+      p.log.error(pc.red("Unknown error occurred"));
+    }
+    process.exit(ExitCode.ERROR);
+  }
+}
+
+/**
+ * Handle typecheck command
+ */
+export async function typecheckCommand(options: TypecheckOptions) {
+  if (options.dryRun) {
+    dryRunOutput(
+      {
+        mode: "dry-run",
+        timestamp: new Date().toISOString(),
+        command: "typecheck",
+        options: {
+          app: options.app,
+        },
+        task: "turbo typecheck",
+      },
+      { format: asOutputFormat(options.format) },
+    );
+    process.exit(ExitCode.DRY_RUN_OK);
+  }
+
+  try {
+    if (options.app) {
+      validateApp(options.app);
+      const appName = `@nebutra/${options.app}`;
+      if (!options.quiet) {
+        p.log.info(pc.cyan(`Type-checking ${pc.bold(appName)}...`));
+      }
+      const result = await turboRun("typecheck", { filter: appName });
+      process.exit(result.exitCode);
+    }
+
+    if (!options.quiet) {
+      p.log.info(pc.cyan("Type-checking all packages..."));
+    }
+    const result = await turboRun("typecheck");
+    process.exit(result.exitCode);
+  } catch (error) {
+    if (error instanceof Error) {
+      p.log.error(pc.red(error.message));
+    } else {
+      p.log.error(pc.red("Unknown error occurred"));
+    }
+    process.exit(ExitCode.ERROR);
+  }
+}
+
+/**
+ * Register dev, build, lint, and typecheck as top-level commands
+ */
+export const registerDevCommand: RegisterCommand = (program) => {
+  // ─── dev command ──────────────────────────────────────────
+  program
+    .command("dev")
+    .description("Start development servers (turbo dev)")
+    .option("--app <name>", `App to run: ${VALID_APPS.join(", ")}`)
+    .option("--dry-run", "Preview what would run (exit code 10)")
+    .action(async (options: Record<string, unknown>, command: Command) => {
+      const globalOptions = mergeGlobalOptions(options, command);
+      await devCommand({
+        app: typeof options.app === "string" ? options.app : undefined,
+        dryRun: Boolean(options.dryRun),
+        quiet: Boolean(globalOptions.quiet),
+        verbose: Boolean(globalOptions.verbose),
+        format: asOutputFormat(globalOptions.format),
+      });
+    });
+
+  // ─── build command ────────────────────────────────────────
+  program
+    .command("build")
+    .description("Build all apps (pnpm build or turbo build)")
+    .option("--app <name>", `App to build: ${VALID_APPS.join(", ")}`)
+    .option("--strict", "Run strict build with UI governance verification (pnpm build:strict)")
+    .option("--dry-run", "Preview what would run (exit code 10)")
+    .action(async (options: Record<string, unknown>, command: Command) => {
+      const globalOptions = mergeGlobalOptions(options, command);
+      await buildCommand({
+        app: typeof options.app === "string" ? options.app : undefined,
+        dryRun: Boolean(options.dryRun),
+        strict: Boolean(options.strict),
+        quiet: Boolean(globalOptions.quiet),
+        verbose: Boolean(globalOptions.verbose),
+        format: asOutputFormat(globalOptions.format),
+      });
+    });
+
+  // ─── lint command ─────────────────────────────────────────
+  program
+    .command("lint")
+    .description("Lint with Biome (pnpm lint or pnpm lint:fix)")
+    .option("--app <name>", `App to lint: ${VALID_APPS.join(", ")}`)
+    .option("--fix", "Fix linting issues automatically")
+    .option("--dry-run", "Preview what would run (exit code 10)")
+    .action(async (options: Record<string, unknown>, command: Command) => {
+      const globalOptions = mergeGlobalOptions(options, command);
+      await lintCommand({
+        app: typeof options.app === "string" ? options.app : undefined,
+        dryRun: Boolean(options.dryRun),
+        fix: Boolean(options.fix),
+        quiet: Boolean(globalOptions.quiet),
+        verbose: Boolean(globalOptions.verbose),
+        format: asOutputFormat(globalOptions.format),
+      });
+    });
+
+  // ─── typecheck command ────────────────────────────────────
+  program
+    .command("typecheck")
+    .description("Type-check with TypeScript (turbo typecheck)")
+    .option("--app <name>", `App to typecheck: ${VALID_APPS.join(", ")}`)
+    .option("--dry-run", "Preview what would run (exit code 10)")
+    .action(async (options: Record<string, unknown>, command: Command) => {
+      const globalOptions = mergeGlobalOptions(options, command);
+      await typecheckCommand({
+        app: typeof options.app === "string" ? options.app : undefined,
+        dryRun: Boolean(options.dryRun),
+        quiet: Boolean(globalOptions.quiet),
+        verbose: Boolean(globalOptions.verbose),
+        format: asOutputFormat(globalOptions.format),
+      });
+    });
+};

@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nebutra-sailor-docs",
+  // Same account as typelens/gateway; required when API token cannot list accounts.
+  "account_id": "a4248a5738df319996a70092fe598d37",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-06-04",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  // Shrink Worker upload (handler.mjs was ~99 MiB uncompressed / ~15 MiB gzip).
+  "minify": true,
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "NEXT_PUBLIC_DOCS_ORIGIN_URL": "https://docs.nebutra.com"
+  },
+  // One-time DNS: CNAME docs → this worker (proxied). Route binds hostname.
+  "routes": [
+    {
+      "pattern": "docs.nebutra.com/*",
+      "zone_name": "nebutra.com"
+    }
+  ],
+  "workers_dev": true
+}

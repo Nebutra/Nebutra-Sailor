@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-toggle-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/theme-toggle-demo.tsx",
+      "content": "\"use client\";\n\nimport { ThemeToggle, type ThemeToggleValue } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nexport function ThemeToggleDemo() {\n  const [theme, setTheme] = useState<ThemeToggleValue>(\"light\");\n\n  return (\n    <div className=\"flex min-h-[220px] w-full flex-col items-center justify-center gap-5 rounded-[var(--radius-lg)] border bg-card p-8 text-card-foreground\">\n      <ThemeToggle value={theme} onChange={setTheme} />\n      <div className=\"flex items-center gap-2 text-muted-foreground text-sm\">\n        Current state:\n        <span className=\"rounded-[var(--radius-sm)] bg-muted px-2 py-1 font-mono text-foreground text-xs\">\n          {theme}\n        </span>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

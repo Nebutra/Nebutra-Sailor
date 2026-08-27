@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs-pill-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/tabs-pill-demo.tsx",
+      "content": "\"use client\";\n\nimport { Tabs, TabsList, TabsTrigger } from \"@nebutra/ui/primitives\";\n\nexport function TabsPillDemo() {\n  return (\n    <Tabs defaultValue=\"source\" className=\"w-full max-w-sm\">\n      <TabsList aria-label=\"Code preview\" shape=\"pill\" className=\"grid grid-cols-2\">\n        <TabsTrigger value=\"source\">Source</TabsTrigger>\n        <TabsTrigger value=\"output\">Output</TabsTrigger>\n      </TabsList>\n    </Tabs>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

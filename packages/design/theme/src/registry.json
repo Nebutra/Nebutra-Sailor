@@ -1,0 +1,7 @@
+{
+  "$schema": "https://nebutra.com/schemas/theme-registry.json",
+  "version": "2026.07",
+  "defaultTheme": "factory",
+  "themes": [],
+  "notes": "FROZEN empty mood list. Design languages: languages.json. Do not add themes here."
+}

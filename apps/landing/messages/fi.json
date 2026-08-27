@@ -1,0 +1,1781 @@
+{
+  "nav": {
+    "features": "Ominaisuudet",
+    "solutions": "Ratkaisut",
+    "pricing": "Hinnoittelu",
+    "docs": "Dokumentaatio",
+    "github": "GitHub",
+    "npm": "npm",
+    "about": "Meistä",
+    "ideas": "Ideat",
+    "opc": "Alusta",
+    "roadmap": "Tiekartta",
+    "resources": "Resurssit",
+    "signIn": "Kirjaudu sisään",
+    "getStarted": "Aloita purjehtiminen",
+    "changelog": "Muutosloki",
+    "news": "Uutiset",
+    "designDocs": "Suunnittelujärjestelmä",
+    "avatarMenu": {
+      "ariaLabel": "Tilimenu",
+      "loadingName": "Ladataan…",
+      "dashboard": "Työpöytä",
+      "account": "Tili",
+      "billing": "Laskutus",
+      "docs": "Dokumentaatio",
+      "signOut": "Kirjaudu ulos"
+    }
+  },
+  "refer": {
+    "metadataTitle": "Liity {brandName}-perustajien suosittelusilmukkaan",
+    "metadataDescription": "Liity {brandName}-odotuslistalle, säilytä suosittelun attribuointi ja avaa oma jakamislinkkisi yhdessä suljetussa tuotejohtoisessa silmukassa.",
+    "eyebrow": "Perustajien suosittelusilmukka",
+    "title": "Liity seuraavaan perustajaryhmään ja hanki oma jakamislinkkisi.",
+    "description": "Syötä mikä tahansa kutsukoodi tai liity suoraan. Säilytämme attribuoinnin, jos koodi on olemassa, lisäämme sinut odotuslistalle ja annamme yksityisen suosittelun URL-osoitteen, jonka voit jakaa välittömästi.",
+    "signal": {
+      "waitlist": "Pitkäaikainen odotuslista",
+      "codeDetected": "Koodi {code} havaittu",
+      "direct": "Suora rekisteröityminen"
+    },
+    "form": {
+      "emailLabel": "Työ sähköposti",
+      "emailPlaceholder": "you@example.com",
+      "codeLabel": "Suosittelukoodi",
+      "codePlaceholder": "Valinnainen koodi",
+      "submit": "Liity odotuslistalle",
+      "submitting": "Liittyminen",
+      "invalidEmail": "Syötä kelvollinen sähköpostiosoite.",
+      "error": "Ei voitu liittyä juuri nyt. Yritä uudelleen.",
+      "successTitle": "Olet listalla",
+      "successDescription": "Yksityinen jakamislinkkisi on valmis.",
+      "positionLabel": "Jonoasema",
+      "referralCodeLabel": "Koodisi",
+      "referralUrlLabel": "Jakamislinkkisi",
+      "copyLink": "Kopioi linkki",
+      "copied": "Kopioitu",
+      "share": "Jaa",
+      "shareTitle": "Liity {brandName}-perustajapiiriin",
+      "shareText": "Liity {brandName}-perustajien odotuslistalle käyttämällä kutsulinkkiäni.",
+      "directMode": "Suosituskoodia ei tarvita",
+      "codeMode": "Suositusattribuointi käytössä"
+    },
+    "proof": {
+      "peerLoop": {
+        "title": "Perustajalta perustajalle -silmukka",
+        "description": "Jokainen hyväksytty rekisteröityminen saa koodin ja URL-osoitteen, joten seuraava suosittelu alkaa ilman manuaalista siirtoa."
+      },
+      "attribution": {
+        "title": "Rehellinen attribuointi",
+        "description": "Tuntemattomat koodit tallennetaan yrityksenä attribuoiduksi, kun taas kelvolliset koodit kasvattavat suositelijan määrää ja pitävät rekisteröitymisen siistinä."
+      },
+      "shareLink": {
+        "title": "Jakoilmoitusvalmis onnistumisvaltio",
+        "description": "Vahvistusvaltio paljastaa sijainnin, koodin, kopion ja natiivit jakotoiminnot, jotta silmukka saadaan päätökseen sivulla."
+      }
+    },
+    "infrastructure": {
+      "eyebrow": "Tuotejohtoinen infrastruktuuri",
+      "title": "Suunniteltu kestävänä SaaS-infrastruktuurina, ei kertakäyttöisenä lomakkeena.",
+      "description": "Suosituspinta on tuettu domain-paketilla, pysyvällä Prisma-mallilla, tyypitettyllä Next.js-reitillä ja julkisilla smoke-tarkistuksilla, jotka voivat suorittaa ECS-julkaisujen jälkeen.",
+      "data": {
+        "eyebrow": "Tiedot",
+        "title": "Yksi kestävä odotusluettelotaulukko",
+        "description": "Sähköpostin yksikäsitteisyys, automaattisesti kasvava sijainti, suosituskoodien indeksit, yrityksen attribuointimetatiedot ja tilansiirtymät ovat alustan tietokannassa."
+      },
+      "api": {
+        "eyebrow": "API",
+        "title": "Tyypitetty liittymäpääte",
+        "description": "Sivu lähettää tiedot osoitteeseen `/api/waitlist`, normalisoi mielivaltaiset koodit, palauttaa olemassa olevat merkinnät idempotentisti ja ei koskaan riipu näytekoodista."
+      },
+      "cicd": {
+        "eyebrow": "CI/CD",
+        "title": "Julkiset smoke-testit deploy-hetkellä",
+        "description": "Kanoniset ja alias-URL-osoitteet ovat valmiina automatisoituja tarkistuksia varten, jotta ECS-toimitus havaitsee reittien, DNS:n ja kunnontarkistusten regressiot."
+      }
+    }
+  },
+  "hero": {
+    "headline1": "Julkaise startupisi,",
+    "headline2": "{brandName} Agent OS:n voimalla.",
+    "subheadline": "Säästä viikkoja alustatyötä <highlight>tuotantovalmiilla</highlight> perustalla, jossa on hallittu arkkitehtuuri, rakennettu AI-koodausagenttien ja perustajien globaalia kasvua varten.",
+    "copyLabel": "Kopioi komento",
+    "copiedLabel": "Kopioitu",
+    "ctaGetAccess": "Lanseeraa startupisi",
+    "ctaExploreDemo": "Tutustu demoon",
+    "pillCopied": "Kopioitu"
+  },
+  "features": {
+    "sectionTitle": "Valmiit infrastruktuurit, prototyypistä skaalaamiseen.",
+    "item0": {
+      "title": "AI-sovellusinfrastruktuuri",
+      "description": "Sisäänrakennetut, tuotannossa testatut agenttikehykset ja LLM-ohjausmoottorit. Ohita monimutkaisia abstraktioita ja vuorovaikuta suoraan strukturoitujen älykkäiden API-rajapintojen kanssa."
+    },
+    "item1": {
+      "title": "Hallittu alustapohja",
+      "description": "Hallittu alustapohja tiimeille, jotka julkaisevat AI-natiivia SaaS-palvelua. Yhdenmukaista luurangot, ajonaikaiset peruskomponentit ja toimituspinnat ilman ad-hoc-työkalujen yhdistelyä."
+    },
+    "item2": {
+      "title": "YritysasaaS-automatisointi",
+      "description": "Syvästi integroitu nykyaikaiseen teknologiaan: Vercel, Supabase ja Stripe. Tarjoaa valmiin rivitasoisen turvallisuuden, monimutkaisen monivuokraisuuden eristelyn ja globaalin tilauslaskutuksen."
+    }
+  },
+  "cta": {
+    "heading": "Valmis julkaisemaan seuraavan tekoälytuotteesi?",
+    "subheading": "Alusta täydellinen, pilvipohjainen SaaS-arkkitehtuuri paikallisesti yhdellä komentorivikomentoa.",
+    "copyLabel": "Kopioi komento",
+    "copiedLabel": "Kopioitu",
+    "startBuilding": "Aloita rakentaminen"
+  },
+  "footer": {
+    "brandDescription": "Julkaise startuppiisi {brandName} Agent OS:n avulla. Monivuokraisuus, laskutus, autentikointi ja tekoäly — tuotantovalmiina jo ensimmäisestä päivästä.",
+    "columns": {
+      "product": "Tuote",
+      "resources": "Resurssit",
+      "legal": "Lakisääteinen",
+      "community": "Yhteisö"
+    },
+    "links": {
+      "product": "Tuote",
+      "features": "Ominaisuudet",
+      "forge": "Forge",
+      "pricing": "Hinnoittelu",
+      "about": "Tietoa",
+      "showcase": "Esittely",
+      "blog": "Blogi",
+      "playbook": "Toimintamalli",
+      "changelog": "Muutosloki",
+      "roadmap": "Tiekartta",
+      "docs": "Dokumentaatio",
+      "ideas": "Idea-alue",
+      "opc": "Alusta",
+      "careers": "Ura",
+      "security": "Turvallisuus",
+      "dpa": "DPA",
+      "privacy": "Tietosuoja",
+      "terms": "Käyttöehdot",
+      "cookies": "Evästeet",
+      "refund": "Palautus",
+      "licensing": "Lisenssien hallinta",
+      "contact": "Ota yhteyttä",
+      "faq": "UKK",
+      "github": "GitHub",
+      "discord": "Discord",
+      "twitter": "X (Twitter)"
+    },
+    "copyright": "© 2026 {brandName} Intelligence. Kaikki oikeudet pidätetään.",
+    "statusOnline": "Kaikki järjestelmät toimivat",
+    "newsletterTitle": "Pysy ajan tasalla",
+    "newsletterPlaceholder": "you@example.com",
+    "newsletterSubscribe": "Tilaa",
+    "newsletterSuccess": "Kiitos tilauksesta!",
+    "newsletterError": "Jokin meni pieleen",
+    "statusDegraded": "Degraded performance",
+    "statusOutage": "Major service outage",
+    "statusUnknown": "Checking status"
+  },
+  "logoStrip": {
+    "tagline": "Toimii alustalla"
+  },
+  "monorepoTree": {
+    "badge": "TURBOREPO-RAKENNE",
+    "title": "15 sovellusta. 113 pakettia. 4 backend-raitaa.",
+    "description": "Jaettu koodi, rinnakkaiset buildit, nolla päällekkäisyyksiä. Täydellinen päästä-päähän-tyypitys tietokannasta frontendiin.",
+    "metricApps": "sovellusta",
+    "metricBackends": "backend-laneja",
+    "metricPackages": "paketit",
+    "verifiedPaths": "Reitit vahvistettu nykyisen työtilan suhteen",
+    "cta": "Tutustu monorepo-arkkitehtuuriin"
+  },
+  "stats": {
+    "title": "Lukujen valossa",
+    "github": "GitHub-tähtiä",
+    "discord": "Discord-jäseniä",
+    "setup": "Keskimääräinen asennusaika",
+    "packages": "Monorepo-paketit",
+    "ctaStar": "Tähditä →",
+    "ctaJoin": "Liity →",
+    "ctaStart": "Aloita →",
+    "ctaExplore": "Tutustu →"
+  },
+  "legalPages": {
+    "about": {
+      "title": "Meistä — Hallittu tekoälyalusta",
+      "description": "Tutustu kaupalliseen näkemykseen ja insinööripäiväntekijöihin, jotka ovat {brandName}:n hallitun tekoälyalustan takana.",
+      "heading": "Kevyiden tuotetiimien aikakausi",
+      "subheading": "Korvaa toistuva alustatyö hallitulla infrastruktuurilla, vahvalla automaatiolla ja kestävällä insinööriosuudella.",
+      "missionTitle": "Uusi järjestys, joka vastustaa hallinnollista rappeutumista",
+      "missionP1": "{brandName} rakentaa hallittua tekoälyalustaa tiimeille, jotka tarvitsevat kestävää infrastruktuuria lyhytikäisten aloituspinojen sijaan. Perinteinen skaalaaminen tuo usein mukanaan byrokratiaa ja entropiaa; me vastaamme koodinhallinnalla, automaatiolla ja alustapohjalla, joka pysyy tarkastettavana kasvaessaan.",
+      "missionP2": "Kaupankäynti kärsii edelleen koordinaatiokulusta, hajanaisista työkaluista ja heikoista päivityspolkuja. Haluamme vähentää näitä kitkoja selkeämmillä alustasopimuksilla, vahvemmillä toimitusprimitiiveillä ja ajonaikaisella käytöksellä, jota tiimit voivat todella havainnoida ja luottaa.",
+      "missionP3": "Hylkäämme tavan ratkaista skaalaamisongelmia lisäämällä organisaatiota. Automaation, testien ja hallinnon tulisi absorboida toistuva operatiivinen työ, jotta tiimit voivat keskittyä tuotteeseen, arkkitehtuuriin ja asiakastuloksiin.",
+      "missionP4": "",
+      "valuesTitle": "Neljä pilaria",
+      "values": {
+        "0": {
+          "title": "Hallittu skaalaaminen (filosofia)",
+          "description": "Skaalaamisen tulisi tulla vahvemmista järjestelmistä, paremmasta osuudesta ja selkeämmistä toimintasäännöistä – ei organisaatiopainon lisäämisestä."
+        },
+        "1": {
+          "title": "Rakentajan ydin (infrastruktuuri)",
+          "description": "Uudelleenkäytettävä alustapohja monivuokraisuuteen, laskutukseen, todennukseen, complianceen ja tekoälyintegraatioihin, jota tiimit voivat tarkastaa, laajentaa ja toimittaa uudelleen."
+        },
+        "2": {
+          "title": "Päivityksen kurinalaisuus (reititys)",
+          "description": "Terveet järjestelmät kasvavat yhteensopivuustarkastusten, migraatioiden ja havainnollisten ajonaikaisten sopimusten kautta – ei hajaannuksen, sankaritekojen ja kertakäyttöisten uudelleenkirjoitusten kautta."
+        },
+        "3": {
+          "title": "Koodi on laki (organisaatio)",
+          "description": "Operatiivisen kurinalaisuuden tulisi olla koodattu testeihin, työvirtauksiin ja hallintosääntöihin, jotta tiimit voivat parantaa alustaa ilman politiikkaan tai instituutionaliseen muistiin nojaamista."
+        }
+      },
+      "jobsTitle": "Insinöörisignaalit ennen pätevyyksiä",
+      "jobsDescription": "Meille on tärkeämpää todennettava insinöörituotos, ajattelun selkeys ja järjestelmäarviointi kuin tausta tai tittelin inflaatio.",
+      "jobsButton": "Lähetä GitHub-profiili",
+      "companyInfoTitle": "Organisaation sääntöjen noudattaminen",
+      "companyInfo": {
+        "legalName": "Laitteellisen yksikön rekisteröinti",
+        "founded": "Rekisteröintipäivämäärä",
+        "headquarters": "Globaali toimintakeskus",
+        "jurisdiction": "Soveltuva lainsäädäntöalue"
+      },
+      "ctaHeading": "Tarvitsetko syvällisempää teknistä arviointia?",
+      "ctaDescription": "Ota yhteyttä insinööri-asiantuntijoihimme yritysjärjestelmien integrointiarviointia varten tai tutustu käyttöönotto-ohjeistukseen.",
+      "ctaButton": "Ota yhteyttä"
+    },
+    "contact": {
+      "title": "Tekninen ja kaupallinen kysely — {brandName} Intelligence",
+      "description": "Omistettu viestintäkanava kaupallisille lisensseille, yrityksen omalle isännöidylle ja edistyneelle tekniselle tuelle.",
+      "heading": "Ota tukiyhteys",
+      "subheading": "Lähetämme omistautuneen teknisen asiantuntijan tai arkkitehdin arvioimaan nimenomaisia vaatimuksiasi.",
+      "contacts": {
+        "founder": {
+          "title": "Perustajan suora yhteys",
+          "description": "Suora viestintäkanava keskeisille strategisille linjauksille ja johtotasoisille kyselyille."
+        },
+        "general": {
+          "title": "Yrityskonsultaatio",
+          "description": "Ennakkokeskustelut ekologisista strategioista ja yleisestä arkkitehtuurin kehityksestä."
+        },
+        "sales": {
+          "title": "Kaupallinen käyttöönotto",
+          "description": "Neuvottelut suljettuja lähdekoodilisen lisenssin ja yksityisten klusteriympäristöjen käyttöönottoon liittyvistä yksityiskohdista."
+        },
+        "support": {
+          "title": "Asiantuntijatason tuki",
+          "description": "Suunnattu arkkitehtuuriohjaus ja vianetsintäpalvelut aktiivisille liiketoimintaintegraatioille ja ydinsysteemien vianetsinnälle."
+        },
+        "legal": {
+          "title": "Oikeudelliset asiat ja sääntely",
+          "description": "Kyselyt avoimen lähdekoodin rajojen määrittelyyn, yritysten sääntelytarkastuksiin ja sopimusehtoihin liittyen."
+        },
+        "privacy": {
+          "title": "Tietokeskuksen yksityisyys",
+          "description": "Tekninen tarkistus ja GDPR:n sekä myöhempien kansainvälisten tietosuoja-asetusten noudattamisohjeet."
+        },
+        "security": {
+          "title": "Turvallisuusilmoitukset",
+          "description": "Lähetä tekniset toistamiskertomukset mahdollisista ohjelmistovioista suoraan infrastruktuuritiimillemme turvallisesti."
+        }
+      },
+      "formTitle": "Lähetysportaali",
+      "form": {
+        "name": "Lähettäjän nimi",
+        "email": "Virallinen sähköpostiosoite",
+        "company": "Yhteysorganisaatio",
+        "category": "Tarpeen alue",
+        "categories": {
+          "general": "Yritysneuvonta",
+          "sales": "Lisenssit ja arkkitehtuuri",
+          "support": "Kehittäjän tuki",
+          "legal": "Oikeudelliset ja sääntelyraamat",
+          "privacy": "Tietojenkäsittelykäytännöt",
+          "partnership": "Ekosysteemien integraatiot",
+          "press": "Julkisuussuhteet"
+        },
+        "subject": "Ydinongelman yhteenveto",
+        "message": "Yksityiskohtaiset tekniset/kommerciaaliset spesifikaatiot",
+        "submit": "Lähetä backendille",
+        "privacyNotice": "Tämän verkkopyynnön suorittaminen merkitsee, että olet lukenut ja hyväksynyt",
+        "privacyLink": "Järjestelmällisen tietosuojainfrastruktuurin",
+        "submitting": "Siirretään käsittelyjonoon...",
+        "successMessage": "Tiedot lähetetty onnistuneesti. Vastuullinen toimintatiimi antaa yksityiskohtaisen vastauksen 1–2 arkipäivän kuluessa."
+      },
+      "companyInfoTitle": "Toiminnallinen telemetria",
+      "companyNameChinese": "{companyLegal}",
+      "companyNameEnglish": "{companyLegalEn}",
+      "companyAddress": "Wuxi, Jiangsun maakunta, Kiina",
+      "socialMedia": "Pääverkostolinkit"
+    },
+    "cookies": {
+      "title": "Evästekäytäntö — {brandName}",
+      "description": "Kuinka {brandName} käyttää evästeitä ja vastaavia seuranta-tekniikoita verkkosivuillamme ja palveluissamme.",
+      "heading": "Evästekäytäntö",
+      "effectiveDate": "Voimaantulopäivä",
+      "lastUpdated": "Viimeksi päivitetty",
+      "dates": {
+        "effective": "1. tammikuuta 2025",
+        "updated": "1. tammikuuta 2025"
+      },
+      "intro": "Tämä evästekäytäntö selittää, kuinka {brandName} Co., Ltd. (\"{brandName}\", \"me\", \"meidän\" tai \"meidän\") käyttää evästeitä ja vastaavia seuranta-tekniikoita verkkosivuillamme ja palveluissamme.",
+      "whatAreCookies": {
+        "title": "Mitä evästeet ovat?",
+        "content": "Evästeet ovat pieniä tekstitiedostoja, jotka sijoitetaan laitteellesi, kun käyät verkkosivustolla. Niitä käytetään laajasti verkkosivustojen toiminnan tehostamiseen ja tietojen tarjoamiseen verkkosivustojen omistajille."
+      },
+      "howWeUse": {
+        "title": "Kuinka käytämme evästeitä",
+        "intro": "Käytämme evästeitä seuraaviin tarkoituksiin:",
+        "items": {
+          "0": {
+            "label": "Välttämättömien toimintojen mahdollistaminen",
+            "desc": "Tarjoaa ydintoiminnallisuutta, kuten käyttäjän todentaminen ja turvallisuus"
+          },
+          "1": {
+            "label": "Muistaa asetukset",
+            "desc": "Tallenna kieli, teema ja muut asetukset"
+          },
+          "2": {
+            "label": "Paranna suorituskykyä",
+            "desc": "Ymmärrä, miten kävijät käyttävät palveluitamme"
+          },
+          "3": {
+            "label": "Personoi kokemus",
+            "desc": "Tarjoa relevanttia sisältöä ja suosituksia"
+          },
+          "4": {
+            "label": "Mittaa markkinointia",
+            "desc": "Seuraa markkinointikampanjoidemme tehokkuutta"
+          }
+        }
+      },
+      "typesTitle": "Käyttämämme evästeiden tyypit",
+      "tableHeaders": {
+        "cookie": "Eväste",
+        "provider": "Palveluntarjoaja",
+        "purpose": "Tarkoitus",
+        "duration": "Kesto"
+      },
+      "necessary": {
+        "title": "Välttämättömät evästeet",
+        "description": "Nämä evästeet ovat välttämättömiä verkkosivuston toiminnan kannalta. Niitä ei voi poistaa käytöstä.",
+        "cookies": {
+          "0": {
+            "name": "__session",
+            "provider": "{brandName}",
+            "purpose": "Käyttäjän tunnistamisistunto",
+            "duration": "Istunto"
+          },
+          "1": {
+            "name": "__clerk_db_jwt",
+            "provider": "Clerk",
+            "purpose": "Autentikointitunniste",
+            "duration": "7 päivää"
+          },
+          "2": {
+            "name": "cookie_consent",
+            "provider": "{brandName}",
+            "purpose": "Tallentaa evästeiden suostumusasetykset",
+            "duration": "1 vuosi"
+          }
+        }
+      },
+      "functional": {
+        "title": "Toiminnalliset evästeet",
+        "description": "Nämä evästeet mahdollistavat henkilökohtaiset ominaisuudet ja muistavat asetuksesi.",
+        "cookies": {
+          "0": {
+            "name": "locale",
+            "provider": "{brandName}",
+            "purpose": "Tallentaa kieliasetuksen",
+            "duration": "1 vuosi"
+          },
+          "1": {
+            "name": "theme",
+            "provider": "{brandName}",
+            "purpose": "Tallentaa teeman asetuksen",
+            "duration": "1 vuosi"
+          }
+        }
+      },
+      "analyticsType": {
+        "title": "Analytiikkakakut",
+        "description": "Nämä kakut auttavat meitä ymmärtämään, miten vierailevat käyttäjät vuorovaikuttavat verkkosivustomme kanssa.",
+        "cookies": {
+          "0": {
+            "name": "_ga",
+            "provider": "Google Analytics",
+            "purpose": "Eroittaa yksittäiset käyttäjät",
+            "duration": "2 vuotta"
+          },
+          "1": {
+            "name": "ph_*",
+            "provider": "PostHog",
+            "purpose": "Tuoteanalytiikka",
+            "duration": "1 vuosi"
+          }
+        }
+      },
+      "marketingType": {
+        "title": "Markkinointikakut",
+        "description": "Nämä kakut käytetään mainontaan ja mainoskampanjoiden tehokkuuden seurantaan.",
+        "cookies": {
+          "0": {
+            "name": "_fbp",
+            "provider": "Facebook",
+            "purpose": "Seuraa vierailuja Facebook-mainoksille",
+            "duration": "3 kuukautta"
+          },
+          "1": {
+            "name": "_gcl_au",
+            "provider": "Google Ads",
+            "purpose": "Konversioseuranta",
+            "duration": "3 kuukautta"
+          }
+        }
+      },
+      "managingTitle": "Evästeasetuksesi hallinta",
+      "consentBanner": {
+        "title": "Evästeiden hyväksyntäilmoitus",
+        "intro": "Kun vierailet verkkosivuillamme ensimmäisen kerran, näet evästeiden hyväksyntäilmoituksen, jonka avulla voit:",
+        "items": {
+          "0": {
+            "label": "Hyväksy kaikki",
+            "desc": "Ota kaikki evästekategoriat käyttöön"
+          },
+          "1": {
+            "label": "Hylkää kaikki",
+            "desc": "Poista kaikki valinnaiset evästeet käytöstä (välttämättömät evästeet säilyvät)"
+          },
+          "2": {
+            "label": "Mukauta",
+            "desc": "Valitse halutut evästekategoriat"
+          }
+        },
+        "changeNote": "Voit muuttaa asetuksiasi milloin tahansa napsauttamalla \"Evästeasetukset\" -linkkiä sivun alareunassa."
+      },
+      "browserSettings": {
+        "title": "Selaimen asetukset",
+        "intro": "Useimmat verkkoselaimet mahdollistavat evästeiden hallinnan asetuksista:",
+        "browsers": {
+          "0": {
+            "name": "Chrome",
+            "path": "Asetukset > Yksityisyys ja turvallisuus > Evästeet"
+          },
+          "1": {
+            "name": "Firefox",
+            "path": "Asetukset > Yksityisyys ja turvallisuus > Evästeet"
+          },
+          "2": {
+            "name": "Safari",
+            "path": "Ominaisuudet > Yksityisyys > Evästeet"
+          },
+          "3": {
+            "name": "Edge",
+            "path": "Asetukset > Yksityisyys, haku ja palvelut > Evästeet"
+          }
+        },
+        "note": "Tietyiden evästeiden estäminen voi vaikuttaa verkkosivuston toiminnallisuuteen."
+      },
+      "similarTech": {
+        "title": "Samankaltaiset teknologiat",
+        "intro": "Evästeiden lisäksi voimme käyttää:",
+        "items": {
+          "0": {
+            "label": "Paikallinen tallennus",
+            "desc": "Oletusten ja välimuistitietojen paikalliseen tallentamiseen"
+          },
+          "1": {
+            "label": "Istuntotallennus",
+            "desc": "Väliaikaisiin tietoihin selausistunnon aikana"
+          },
+          "2": {
+            "label": "Pixel-tagit",
+            "desc": "Pienet kuvat sähköpostien avausten ja verkkosivustovierailujen seurantaan"
+          }
+        },
+        "noFingerprinting": "Emme käytä selaimen sormenjälkitunnistusta seurantaan."
+      },
+      "updates": {
+        "title": "Tämän käytännön päivitykset",
+        "content": "Voimme päivittää tämän evästekäytännön ajoittain. Ilmoitamme merkittävistä muutoksista julkaisemalla päivitetyn käytännön verkkosivustollamme."
+      },
+      "contactUs": {
+        "title": "Ota yhteyttä",
+        "intro": "Jos sinulla on kysyttävää evästeiden käytöstämme, ota yhteyttä:",
+        "company": "{brandName} Co., Ltd.",
+        "privacyNote": "Lisätietoja siitä, miten keräämme ja käsittelemme tietojasi, löydät osoitteesta",
+        "privacyLink": "Tietosuojakäytäntö"
+      }
+    },
+    "faq": {
+      "title": "Insinööriohe ja UKK — {brandName}",
+      "description": "Kattava analyysi kehysarkkitehtuurista, perustopologioista ja kaupallisista käyttöönottostrategioista.",
+      "heading": "Johtava syvällinen katsaus",
+      "subheading": "Materiaali, joka on optimoitu järjestelmäinsinöörintegrointiin ja johtavien kaupallisten päätösten tekemiseen.",
+      "categories": {
+        "0": {
+          "name": "Arkkitehtuurin yleiskatsaus",
+          "questions": {
+            "0": {
+              "q": "Mikä on {productNamein} eksplisiittinen toiminnallinen tarkoitus?",
+              "a": "{productName} on erittäin rakenteellinen, tuotantovalmis Next.js-pohjainen tekoäly-SaaS-kehys. Se yhdistää yrityslaskutuksen, monivaiheisen todennuksen ja monivuokraisen eristämisen hallittuun alustaperustan, jolloin tiimit voivat keskittyä tuotekohtaiseen tekoälytoteutukseen."
+            },
+            "1": {
+              "q": "Miten varaston lisenssien rakenne on järjestetty?",
+              "a": "Perustavanlaatuinen infrastruktuuri noudattaa tiukasti OSS AGPLv3-sopimusta, mikä takaa läpinäkyvyyden ja maksuttoman käytön. Organisaatioille, jotka tarvitsevat omistusoikeudellista salailua ja korkeampia uudelleenkirjoitustakuuja, on saatavilla erilliset suljetun lähdekoodin kaupalliset sopimukset."
+            },
+            "2": {
+              "q": "Mikä on alkuperäisen kaupallisen arvioinnin nopeus?",
+              "a": "Erittäin korkea. Käyttämällä räätälöityä Node CLI-työkaluketjua ja tarkkaa teknistä spesifikaatiota, juniorikehittäjä pystyy pystyttämään itsenäisen paikallisen MVP-instanssin (Minimum Viable Product) yksinumeroisissa minuuteissa."
+            }
+          }
+        },
+        "1": {
+          "name": "Kaupalliset operaatiot",
+          "questions": {
+            "0": {
+              "q": "Mikä on kaupallisen skaalautuvuuden sietokyky?",
+              "a": "Ratkaisu on suunniteltu vahvasti mikrokomponenttiparadigmalle, ja rakenteellinen kuormituskapasiteetti skaalautuu saumattomasti nollakysynnän ilmaisista tasoista dynaamisesti aina yritystason rajoihin asti, jotka palvelevat miljoonia kuukausipyyntöjä, ja kaikki konfiguroidaan dashboardin rajoitusten kautta."
+            },
+            "1": {
+              "q": "Miten tilausvaihtelu vaikuttaa standarditilanteeseen?",
+              "a": "Toimimme käyttäen tarkkaa, sekuntitasoista resurssien ja API:n läpivirtauksen loggausta. Rajoitusten muutokset tasapainottuvat välittömästi kirjanpitokerroksen kanssa – joko hyvittämällä suhteelliset erotukset tai myöntämällä automaattisia krediittejä. Ei ole lainkaan tason jäädytysjaksoa."
+            },
+            "2": {
+              "q": "Mikä käsittelyinfrastruktuuri eristää maksuväylät?",
+              "a": "Globaali rahavirtaaminen perustuu Stripe-palvelinliittymiin, mikä takaa tiukan PCI-DSS-telemetrian ja käsittelyn eheyden. Yritysjärjestelmät voivat integroida yksityisiä taloudellisia tarkastusputkia, joita säätelevät räätälöidyt SLA-sitoumukset."
+            }
+          }
+        },
+        "2": {
+          "name": "Järjestelmäinsinööritaso",
+          "questions": {
+            "0": {
+              "q": "Mitä perustavanlaatuisia älyabstraktioita tuetaan natiivisti?",
+              "a": "Päävuorovaikutuslogiikka määrittää natiivin yhteentoimivuuden OpenAI:n, Anthropicin ja Gemini:n standardispesifikaatioiden kanssa. Tämä tarjoaa valtavasti joustavuutta vaihtaa päättelypäätepisteitä tehokkaasti muuttujakartotuksen kautta ilman heikentymistä ystevirran kaupalliseen logiikkaan."
+            },
+            "1": {
+              "q": "Miten tietokannan salailun riski käsitellään?",
+              "a": "Toteutuksen oletusarvoinen käyttäytyminen asettaa Postgres Row-Level Security (RLS) -säännöt, jotka on tiiviisti kytketty palvelimettomiin Tenant Resolution Routing -primitiiveihimme. Tämä varmistaa, että jäykät eristykset estävät aktiivisesti kriittisen sovellustason datasaastumisen ja suoritusylikkymisen."
+            },
+            "2": {
+              "q": "Onko itsenäisesti hallittavissa käyttöönotoissa arkkitehtuurisia rajoituksia?",
+              "a": "Ei lainkaan. Topologia on täysin irrotettu. Jos ympäristö suorittaa itsenäisiä Node.js-käyttöympäristöjä yhdessä terveiden PostgreSQL-klustereiden kanssa, täysi toiminnallisuus säilyy luonnostaan."
+            }
+          }
+        },
+        "3": {
+          "name": "Järjestelmällinen eheys",
+          "questions": {
+            "0": {
+              "q": "Mitkä protokollat määrittävät rajapinnan mekaanisen puolustuksen?",
+              "a": "Mekanismit suorittavat pakollisen TLS-salauksen siirron aikana, deterministiset hash-algoritmit salaisuuksien kartoitusta varten sekä muutos tapahtumien yleismaailmallisen tallentamisen, jotka kirjoitetaan tiukasti sisäisiin aikasarjan seurantalokkeihin."
+            },
+            "1": {
+              "q": "Kunnioittaako topologia merkittäviä kansainvälisiä tietosuojalakeja?",
+              "a": "Kyllä, syvästi. Liiketoimintamoduulit tarjoavat valmiita algoritmisia toteutuksia, jotka kohdistuvat suostumuksen peruuttamiseen, pakolliseen poistamisloogiikkaan ja syviin vientikyselyihin, jotka vastaavat optimaalisesti GDPR:ää ja paikallisia sääntelykehyksiä."
+            },
+            "2": {
+              "q": "Mitä tapahtuu poikkeavan katastrofaalisen tilanteen yhteydessä?",
+              "a": "Automaattiset vartijat hälyttävät välittömästi keskeisiä insinöörivektoreita, jotka pakottavat piirien estämisen ja toteuttavat nopean ensiarviointia. Edistyneen ratkaisukäsikirjan ohjaamana täysin läpinäkyvät Incident Postmortems levitetään yleisesti absoluuttisen 72 tunnin ikkunassa."
+            }
+          }
+        },
+        "4": {
+          "name": "Teknisen avun ohjeet",
+          "questions": {
+            "0": {
+              "q": "Miten toiminnalliset pullonkaulat ratkaistaan?",
+              "a": "Alustavat ensiarviointivektorit kohdistuvat huolellisesti ylläpidettyyn ja vertaisarvioituun dokumentaatiomatriisiin sekä vahvistettuihin yhteisövuorovaikutuksiin. Vakiolisen tai yritystason lisenssin hankkiminen avaa pääsyn yksityisiin eskalaatioriveihin, jotka ratkaistaan suoraan sisäisten insinöörisolmujen kautta."
+            },
+            "1": {
+              "q": "Tarjoatteko fyysisiä tai erikoistuneita ympäristöintegraatiotoimintoja?",
+              "a": "Tämä kuuluu räätälöityyn ensiluokkaiseen toteutustasoomme ylimmän tason yrityskonglomeraateille. Kokeneimmat arkkitehtimme toteuttavat ulkoisesti koodiauditointia perinteistä arkkitehtuuria vastaan, hallinnoivat hienovaraisia pilvinsiirtoja ja validointia erittäin eristetyille verkkopartioille."
+            }
+          }
+        }
+      },
+      "ctaHeading": "Tarvitsetko välitöntä teknistä synkronointia?",
+      "ctaDescription": "Olipa kyseessä tietyn API-käyttäytymisskeeman validointi tai pitkän aikavälin integraatiosopimusten toteuttaminen, ota suoraan yhteyttä insinöörihierarkiaan.",
+      "ctaButton": "Vastaanota integroimisohjeet",
+      "ctaEmail": "Lähetä suora viesti"
+    },
+    "privacy": {
+      "title": "Tietosuoja- ja tietojen suojaamissopimus — {brandName}",
+      "description": "Laaja dokumentaatio siitä, miten infrastruktuurin mekanismit säätelevät käyttäjän autonomiaa ja koneiden tietojen eristämistä.",
+      "heading": "Tietojen suojaamisdirektiivit",
+      "effectiveDate": "Voimaantulopäivä",
+      "lastUpdated": "Viimeksi päivitetty",
+      "dates": {
+        "effective": "1. tammikuuta 2025",
+        "updated": "1. tammikuuta 2025"
+      },
+      "intro": "{brandName} (\"Yritys\", \"me\", \"meidän\" tai \"meidän\") on sitoutunut suojaamaan yksityisyyttäsi. Tämä tietosuojakäytäntö selittää, miten keräämme, käytämme, paljastamme ja suojamme tietojasi, kun käytät verkkosivustomme, sovelluksiamme ja palvelujamme (yhteisesti \"Palvelut\").",
+      "infoWeCollect": {
+        "title": "1. Keräämämme tiedot",
+        "youProvide": {
+          "title": "1.1 Sinun antamasi tiedot",
+          "intro": "Keräämme sinun suoraan meille antamasi tiedot, mukaan lukien:",
+          "items": {
+            "0": {
+              "label": "Tilittiedot",
+              "desc": "Nimi, sähköpostiosoite, salasana ja organisaation tiedot, kun luot tilin."
+            },
+            "1": {
+              "label": "Profiilitiedot",
+              "desc": "Profiilikuva, työnimike, yrityksen nimi ja muu valinnainen tieto."
+            },
+            "2": {
+              "label": "Maksutiedot",
+              "desc": "Laskutusosoite ja maksutapaa koskevat tiedot (käsittely tapahtuu turvallisesti Stripe-palvelun kautta)."
+            },
+            "3": {
+              "label": "Viestit",
+              "desc": "Viestit, palaute ja muut viestinnät, jotka lähetät meille."
+            },
+            "4": {
+              "label": "Sisältö",
+              "desc": "Kaikki sisältö, jonka luot, lataat tai tallennat palvelujamme käyttäen."
+            }
+          }
+        },
+        "automatic": {
+          "title": "1.2 Automaattisesti kerättävä tieto",
+          "intro": "Käyttäessäsi palvelujamme keräämme automaattisesti tiettyä tietoa:",
+          "items": {
+            "0": {
+              "label": "Laitetiedot",
+              "desc": "Laitetyyppi, käyttöjärjestelmä, selaimen tyyppi ja yksilölliset laitetunnisteet."
+            },
+            "1": {
+              "label": "Käyttötiedot",
+              "desc": "Näytetyt sivut, käytetyt ominaisuudet, suoritetut toiminnot ja palveluissa vietetty aika."
+            },
+            "2": {
+              "label": "Lokitiedot",
+              "desc": "IP-osoite, pääsyajat, lähettänyt URL-osoite ja järjestelmän toimintalokit."
+            },
+            "3": {
+              "label": "Sijaintitiedot",
+              "desc": "Yleinen sijainti IP-osoitteen perusteella (emme kerää tarkkaa sijaintitietoa)."
+            }
+          }
+        }
+      },
+      "howWeUse": {
+        "title": "2. Kuinka käytämme tietojasi",
+        "intro": "Käytämme keräämiämme tietoja seuraaviin tarkoituksiin:",
+        "items": {
+          "0": {
+            "label": "Palveluiden tarjoaminen",
+            "desc": "Palveluidemme toimittaminen, ylläpito ja kehittäminen."
+          },
+          "1": {
+            "label": "Transaktioiden käsittely",
+            "desc": "Maksujen, laskutuksen ja niihin liittyvien toimintojen käsittely."
+          },
+          "2": {
+            "label": "Viestintä",
+            "desc": "Palveluilmoitusten, päivitysten ja markkinointiviestien lähettäminen (suostumuksella)."
+          },
+          "3": {
+            "label": "Personointi",
+            "desc": "Kokemuksesi räätälöinti ja relevanttien suositusten tarjoaminen."
+          },
+          "4": {
+            "label": "Analysointi",
+            "desc": "Käyttötapojen ymmärtäminen ja palveluidemme parantaminen."
+          },
+          "5": {
+            "label": "Suojelu",
+            "desc": "Huijauksen, väärinkäytön ja tietoturvatapauksien havaitseminen, ehkäisy ja niihin reagointi."
+          }
+        }
+      },
+      "howWeShare": {
+        "title": "3. Kuinka jaamme tietojasi",
+        "intro": "Voimme jakaa tietojasi seuraavissa tilanteissa:",
+        "serviceProviders": {
+          "title": "3.1 Palveluntarjoajat",
+          "intro": "Jaamme tietoja kolmansien osapuolten toimittajille, jotka tarjoavat palveluita puolestamme, mukaan lukien:",
+          "items": {
+            "0": {
+              "label": "Infrastruktuuri",
+              "desc": "Pilvipalvelut (Vercel, Supabase), tietokantapalvelut"
+            },
+            "1": {
+              "label": "Maksujen käsittely",
+              "desc": "Stripe turvalliseen maksujen käsittelyyn"
+            },
+            "2": {
+              "label": "Autentikointi",
+              "desc": "Clerk henkilöllisyyden hallintaan"
+            },
+            "3": {
+              "label": "Analytiikka",
+              "desc": "PostHog, Vercel Analytics käyttöanalytiikkaan"
+            }
+          }
+        },
+        "businessTransfers": {
+          "title": "3.2 Liiketoimintasiirrot",
+          "content": "Jos olemme mukana fuusiossa, yrityksen hankinnassa tai omaisuuden myynnissä, tietosi voidaan siirtää osana kyseistä liiketoimintaa."
+        },
+        "legalRequirements": {
+          "title": "3.3 Lainsäädännölliset vaatimukset",
+          "content": "Voimme paljastaa tietoja, kun laki, oikeudellinen menettely tai viranomaispyyntö niin vaatii, tai suojataksemme oikeuksiamme, yksityisyyttämme, turvallisuuttamme tai omaisuuttamme."
+        }
+      },
+      "yourRights": {
+        "title": "4. Oikeutesi ja valintasi",
+        "accessPortability": {
+          "title": "4.1 Pääsy ja siirrettävyus",
+          "content": "Voit päästä käsiksi henkilötietoihisi tilisi asetuksista ja pyytää kopion tiedoistasi siirrettävässä muodossa."
+        },
+        "correction": {
+          "title": "4.2 Korjaus",
+          "content": "Voit päivittää tilisi tietoja milloin tahansa ohjauspaneelista."
+        },
+        "deletion": {
+          "title": "4.3 Poisto",
+          "content": "Voit pyytää tilisi ja siihen liittyvien tietojen poistoa asetuksista tai ottamalla meihin yhteyttä."
+        },
+        "marketing": {
+          "title": "4.4 Markkinointiviestintä",
+          "content": "Voit peruuttaa markkinointisähköpostien vastaanottamisen napsauttamalla \"peruuta tilaus\" mistä tahansa markkinointisähköpostista tai päivittämällä asetuksiasi."
+        }
+      },
+      "dataSecurity": {
+        "title": "5. Tietoturva",
+        "intro": "Olemme toteuttaneet asianmukaiset tekniset ja organisatoriset toimenpiteet tietojen suojamiseksi, mukaan lukien:",
+        "items": {
+          "0": "Tietojen salaus siirrossa (TLS) ja levyltä",
+          "1": "Säännölliset tietoturva-arvioinnit ja tunkeutumistestit",
+          "2": "Pääsynhallinta ja todennusvaatimukset",
+          "3": "Järjestelmän toiminnan valvonta ja lokitus"
+        }
+      },
+      "ccpa": {
+        "title": "6. Kalifornian tietosuojaoikeudet (CCPA)",
+        "intro": "Jos olet Kalifornian asukas, sinulla on erityisiä oikeuksia henkilötietojasi koskevien asioiden osalta:",
+        "items": {
+          "0": {
+            "label": "Tieto-oikeus",
+            "desc": "Pyydä tietoa keräämistämme, käyttämistämme ja jakamistamme tiedoista."
+          },
+          "1": {
+            "label": "Poisto-oikeus",
+            "desc": "Pyydä henkilökohtaisten tietojesi poistamista."
+          },
+          "2": {
+            "label": "Kieltäytymisoikeus",
+            "desc": "Kiellä henkilökohtaisten tietojesi myynti (emme myy tietojasi)."
+          },
+          "3": {
+            "label": "Erottamattomuusoikeus",
+            "desc": "Emme syrji sinua oikeuksiesi käyttämisestä."
+          }
+        }
+      },
+      "gdpr": {
+        "title": "7. Eurooppalaiset tietosuojaoikeudet (GDPR)",
+        "intro": "Jos olet ETA-alueella, Yhdistyneessä kuningaskunnassa tai Sveitsissä, sinulla on lisäoikeuksia GDPR:n mukaisesti:",
+        "items": {
+          "0": {
+            "label": "Oikeusperusta",
+            "desc": "Käsittelemme tietojasi sopimuksen täytäntöönpanon, laillisen edun tai suostumuksen perusteella."
+          },
+          "1": {
+            "label": "Oikeudet",
+            "desc": "Pääsy, oikaisu, poisto, siirrettävyys, rajoitus ja vastustaminen."
+          },
+          "2": {
+            "label": "DPO",
+            "desc": "Voit ottaa yhteyttä tietosuojavastaavaamme osoitteessa dpo@nebutra.com."
+          }
+        }
+      },
+      "contactUs": {
+        "title": "8. Ota yhteyttä",
+        "intro": "Jos sinulla on kysyttävää tämän tietosuojakäytännön sisältöä koskien, ota yhteyttä:",
+        "company": "{brandName} Co., Ltd."
+      }
+    },
+    "refund": {
+      "title": "Transaktioiden poikkeamaprotokollat — {brandName}",
+      "description": "Tarkat määritelmät pääoman palauttamisparametreista eri rakenteellisissa sitoutumis- ja käyttäytymismalleissa.",
+      "heading": "Kiistojen käsittelykehys",
+      "effectiveDate": "Voimaantulopäivä",
+      "lastUpdated": "Viimeisin päivitys",
+      "dates": {
+        "effective": "1. tammikuuta 2025",
+        "updated": "1. tammikuuta 2025"
+      },
+      "intro": "{brandName}-palveluissa haluamme, että olet täysin tyytyväinen. Tämä palautuskäytäntö kuvaa tilanteet, joissa palautuksia voidaan myöntää, sekä palautuspyynnön käsittelyprosessin.",
+      "subscriptionPlans": {
+        "title": "Tilauspaketit",
+        "monthly": {
+          "title": "Kuukausitilaukset",
+          "items": {
+            "0": {
+              "label": "Peruutus",
+              "desc": "Voit peruuttaa kuukausitilauksesi milloin tahansa"
+            },
+            "1": {
+              "label": "Suhteelliset palautukset",
+              "desc": "Emme myönnä osittaiskuukausien osuutta vastaavia palautuksia"
+            },
+            "2": {
+              "label": "Pääsy",
+              "desc": "Sinulla on pääsy maksullisiin ominaisuuksiin laskutuskauden loppuun saakka"
+            },
+            "3": {
+              "label": "Automaattinen uusiminen",
+              "desc": "Tilaukset uusitaan automaattisesti, ellei niitä peruuteta"
+            }
+          }
+        },
+        "annual": {
+          "title": "Vuositilaukset",
+          "items": {
+            "0": {
+              "label": "14 päivän rahastat takaisin -takuu",
+              "desc": "Uudet vuosittaiset tilaajat voivat pyytää täyttä palautusta 14 päivän kuluessa alkuperäisestä ostosta"
+            },
+            "1": {
+              "label": "14 päivän jälkeen",
+              "desc": "Palautuksia ei yleensä myönnetä 14 päivän jälkeen"
+            },
+            "2": {
+              "label": "Peruutus",
+              "desc": "Voit peruuttaa milloin tahansa, mutta tilauksesi pysyy voimassa vuositilauksen loppuun saakka"
+            },
+            "3": {
+              "label": "Ei osuutta vastaavia palautuksia",
+              "desc": "Emme myönnä osittaisia palautuksia käyttämättömistä kuukausista"
+            }
+          }
+        }
+      },
+      "eligibleScenarios": {
+        "title": "Kelpoiset palautustilanteet",
+        "intro": "Harkimme palautuspyyntöjä seuraavissa tilanteissa:",
+        "serviceIssues": {
+          "title": "1. Palveluongelmat",
+          "items": {
+            "0": "Suuret palvelukatkot, jotka vaikuttavat ydintoimintojen käyttöön",
+            "1": "Tekniset ongelmat, joita emme pysty ratkaisemaan kohtuullisessa ajassa",
+            "2": "Toiminnot, jotka poikkeavat merkittävästi mainostusta"
+          }
+        },
+        "billingErrors": {
+          "title": "2. Laskutusvirheet",
+          "items": {
+            "0": "Kaksoislaskutukset",
+            "1": "Virheelliset laskutussummat",
+            "2": "Valtuuttamattomat laskutukset (tarkistuksen jälkeen)"
+          }
+        },
+        "exceptionalCircumstances": {
+          "title": "3. Poikkeukselliset olosuhteet",
+          "items": {
+            "0": "Dokumentoidut lääketieteelliset hätätilanteet",
+            "1": "Luonnonmullistukset, jotka vaikuttavat liiketoimintaasi",
+            "2": "Muut olosuhteet, jotka arvioidaan tapauskohtaisesti"
+          }
+        }
+      },
+      "nonRefundable": {
+        "title": "Palauttamattomat tuotteet",
+        "intro": "Seuraavat eivät yleensä ole palautuskelpoisia:",
+        "items": {
+          "0": {
+            "label": "Käyttöön perustuvat maksut",
+            "desc": "API-kutsut, AI-tokenien kulutus tai käytetty tallennustila"
+          },
+          "1": {
+            "label": "Lisäosat ja lisäpalvelut",
+            "desc": "Kertakaupat tai lisäpalvelut"
+          },
+          "2": {
+            "label": "Yrityssopimukset",
+            "desc": "Mukautetuissa sopimuksissa on omat ehdot"
+          },
+          "3": {
+            "label": "Vapaaehtoiset peruutukset",
+            "desc": "Palautusoikeuden määräajan jälkeen"
+          },
+          "4": {
+            "label": "Ehtojen rikkomukset",
+            "desc": "Tilit, jotka on lopetettu sääntöjen rikkomisen vuoksi"
+          }
+        }
+      },
+      "howToRequest": {
+        "title": "Miten pyytää palautusta",
+        "step1": {
+          "title": "Vaihe 1: Ota yhteyttä tukeen",
+          "intro": "Lähetä sähköposti osoitteeseen billing@nebutra.com ja sisällytä seuraavat tiedot:",
+          "items": {
+            "0": "Tilisi sähköpostiosoite",
+            "1": "Tilaussuunnitelma ja laskutuskausi",
+            "2": "Palautuspyynnön syy",
+            "3": "Mahdolliset liittyvät asiakirjat"
+          }
+        },
+        "step2": {
+          "title": "Vaihe 2: Arviointiprosessi",
+          "items": {
+            "0": "Käsittelemme pyyntösi 5 arkipäivän kuluessa",
+            "1": "Voimme pyytää lisätietoja",
+            "2": "Saat kirjallisen päätöksen sähköpostitse"
+          }
+        },
+        "step3": {
+          "title": "Vaihe 3: Palautuksen käsittely",
+          "intro": "Jos hyväksytään:",
+          "items": {
+            "0": "Palautukset suoritetaan alkuperäiselle maksutavalle",
+            "1": "Luottokorttipalautukset näkyvät yleensä 5–10 arkipäivän kuluessa",
+            "2": "Pankkien käsittelyajat voivat vaihdella"
+          }
+        }
+      },
+      "planChanges": {
+        "title": "Suunnitelman muutokset",
+        "upgrades": {
+          "title": "Päivitykset",
+          "items": {
+            "0": "Päivitykset astuvat voimaan välittömästi",
+            "1": "Sinulta peritään suhteellinen erotus laskutuskauden jäljellä olevasta ajasta",
+            "2": "Edellisestä suunnitelmasta ei myönnetä palautusta"
+          }
+        },
+        "downgrades": {
+          "title": "Alennukset",
+          "items": {
+            "0": "Alennukset astuvat voimaan seuraavalla laskutuskaudella",
+            "1": "Sinulla on pääsy nykyisiin ominaisuuksiin siihen asti",
+            "2": "Osittaisia palautuksia ei myönnetä nykyiselle laskutuskaudelle"
+          }
+        }
+      },
+      "freeTrial": {
+        "title": "Ilmainen kokeilu",
+        "items": {
+          "0": "Ilmaiseen kokeiluun ei tarvitse antaa maksutietoja",
+          "1": "Kokeilujakson aikana ei peritä maksuja",
+          "2": "Saat ilmoituksen ennen kuin maksut alkavat"
+        }
+      },
+      "disputeResolution": {
+        "title": "Kiistojen ratkaiseminen",
+        "intro": "Jos et ole samaa mieltä palautuspäätöksestämme:",
+        "steps": {
+          "0": "Vastaa päätös sähköpostiin lisätietojen kera",
+          "1": "Pyydä asiaa siirrettäväksi esimiehelle",
+          "2": "Ota yhteyttä osoitteeseen legal@nebutra.com saadaksesi asian uudelleen tarkastettua"
+        }
+      },
+      "contactUs": {
+        "title": "Ota yhteyttä",
+        "intro": "Palautuspyynnöissä tai tämän käytännön kysymyksissä:",
+        "company": "{brandName} Co., Ltd.",
+        "billingLabel": "Laskutus",
+        "supportLabel": "Tuki",
+        "legalLabel": "Oikeudellinen",
+        "responseNote": "Pyrimme vastaamaan kaikkiin palautuspyyntöihin 5 arkipäivän kuluessa.",
+        "termsNote": "Tämä käytäntö on osa",
+        "termsLink": "Käyttöehtoja",
+        "termsAgreement": "Käyttämällä {brandName}-palvelua hyväksyt nämä palautusehdot."
+      }
+    },
+    "terms": {
+      "title": "Käyttöehdot — {brandName}",
+      "description": "Käyttöehdot, jotka säätelevät pääsyäsi ja käyttöäsi {brandName}-verkkosivustolle, sovelluksille, API:ille ja palveluille.",
+      "heading": "Käyttöehdot",
+      "effectiveDate": "Voimaantulopäivä",
+      "lastUpdated": "Viimeksi päivitetty",
+      "dates": {
+        "effective": "1. tammikuuta 2025",
+        "updated": "1. tammikuuta 2025"
+      },
+      "intro1": "Tervetuloa {brandName}-palveluun! Nämä käyttöehdot (\"ehdot\") säätelevät pääsyäsi ja käyttöäsi {brandName} Co., Ltd.:n (\"{brandName}\", \"yhtiö\", \"me\", \"meidän\" tai \"meidän\") tarjoamille verkkosivustolle, sovelluksille, API:ille ja palveluille (yhteisesti \"palvelut\").",
+      "intro2": "Pääsemällä tai käyttämällä palvelujamme hyväksyt, että olet sitoutunut näihin ehtoihin ja",
+      "intro2PrivacyLink": "Yksityisyydensuojakäytäntöön",
+      "intro2End": ". Jos et hyväksy näitä ehtoja, älä käytä palvelujamme.",
+      "acceptance": {
+        "title": "1. Ehtojen hyväksyntä",
+        "eligibility": {
+          "title": "1.1 Kelpoisuus",
+          "intro": "Jotta voit käyttää palveluamme, sinun on oltava:",
+          "items": {
+            "0": "Vähintään 18-vuotias tai täysi-ikäinen oman lainsäädäntöalueesi mukaan",
+            "1": "Valtuutettu solmimaan nämä ehdot itseäsi tai organisaatiotasi edustaen",
+            "2": "Ei ole lain mukaan estetty käyttämästä palveluamme"
+          }
+        },
+        "orgAccounts": {
+          "title": "1.2 Organisaatiotilit",
+          "content": "Jos käytät palveluamme organisaation puolesta, vakuutat, että sinullaon valtuus sitoa kyseinen organisaatio näihin ehtoihin."
+        }
+      },
+      "services": {
+        "title": "2. Palveluiden kuvaus",
+        "intro": "{brandName} tarjoaa SaaS-alustan, joka sisältää:",
+        "items": {
+          "0": "Tekoälypohjaiset ominaisuudet ja sisällöntuotanto",
+          "1": "Sisältöhallinnan ja yhteisötyökalut",
+          "2": "Suositusjärjestelmät",
+          "3": "Verkkokaupan integraatiot",
+          "4": "Web3-ominaisuudet",
+          "5": "Analytiikka ja raportointi"
+        }
+      },
+      "account": {
+        "title": "3. Tilin rekisteröinti",
+        "creation": {
+          "title": "3.1 Tilin luominen",
+          "intro": "Tietyiden ominaisuuksien käyttämiseksi sinun on luotava tili. Suostut seuraaviin:",
+          "items": {
+            "0": "Antamaan tarkat ja täydelliset tiedot",
+            "1": "Ylläpitämään tilisi tunnistetietojen turvallisuutta",
+            "2": "Päivittämään tietosi välittömästi, jos ne muuttuvat",
+            "3": "Vastaamaan kaikista tilisi alla tapahtuvista toimista"
+          }
+        }
+      },
+      "billing": {
+        "title": "4. Tilaukset ja laskutus",
+        "pricing": {
+          "title": "4.1 Hinnasto",
+          "content": "Palvelumme tarjotaan eri tilauspohjaisina suunnitelmina, kuten Hinnasto-sivullamme kuvataan. Hinnat voivat muuttua 30 päivän ennakkoon ilmoitettuna."
+        },
+        "payment": {
+          "title": "4.2 Maksut",
+          "items": {
+            "0": "Tilaukset laskutetaan etukäteen kuukausittain tai vuosittain",
+            "1": "Kaikki maksut ovat palauttamattomia, ellei toisin mainita",
+            "2": "Valtuutat meidät veloittamaan maksutapasi soveltuvista maksuista",
+            "3": "Käytämme Stripea turvalliseen maksunkäsittelyyn",
+            "1RefundLink": "Palautuskäytäntö"
+          }
+        }
+      },
+      "acceptableUse": {
+        "title": "5. Hyväksyttävä käyttö",
+        "prohibited": {
+          "title": "5.1 Kielletyt toiminnat",
+          "intro": "Sitoudut EITTÄMÄÄN seuraavia toimia:",
+          "items": {
+            "0": "Rikkoa sovellettavia lakeja, määräyksiä tai kolmansien osapuolten oikeuksia",
+            "1": "Käyttää palveluita haittaohjelmien, roskapostin tai haitallisen sisällön lähettämiseen",
+            "2": "Yrittää päästä luvatta järjestelmäämme",
+            "3": "Haitata tai häiritä palveluidemme eheyttä tai suorituskykyä",
+            "4": "Käyttää automaattisia työkaluja tietojen kaavintaan, kopiointiin tai erotteluun ilman lupaa",
+            "5": "Tee palveluidemme käänteisinsinöörintyötä, dekompilointia tai purkua",
+            "6": "Käyttää tekoälyominaisuuksiamme laittoman, haitallisen tai harhaanjohtavan sisällön tuottamiseen"
+          }
+        }
+      },
+      "ip": {
+        "title": "6. Tekijänoikeudet",
+        "ours": {
+          "title": "6.1 Tekijänoikeutemme",
+          "content": "{brandName} ja sen lisenssien myöntäjät omistavat kaikki oikeudet, oikeudet ja edut palveluihin, mukaan lukien kaikki ohjelmistot, suunnitelmat, tavaramerkit ja sisällöt, jotka olemme luoneet."
+        },
+        "yours": {
+          "title": "6.2 Sisältösi",
+          "content": "Sinulla on edelleen omistusoikeus luomaasi tai lataamaasi sisältöön (\"Sisältösi\"). Käyttämällä palveluitamme myönsit meille maailmanlaajuisen, ei-yksinoikeudellisen, palkkiottoman lisenssin käyttää, tallentaa, käsitellä ja näyttää sisältöäsi ainoastaan palveluiden tarjoamiseksi sinulle."
+        }
+      },
+      "warranties": {
+        "title": "7. Vakuutusten luovutus",
+        "content": "PALVELUT TARJOTAAN \"MITÄ ON\" JA \"MITÄ ON SAATAVILLA\" MITÄÄN VAKUUTUKSIA ILMAISEMATTOMINA, OLI NE SELVÄSTI ILMAISTUJA TAI SIVUVAIHTOEHTOJA, MUKAAN LUKIEN MUTTA RAJOITTAMATTOMASTI SOVELTUVUUTTA KAUPALLISEEN KÄYTTÖÖN, SOVELTUVUUTTA TIETYLLÄ TARKOITUKSELLA, OIKEUTTA JA EI-RISTIRIITÄ."
+      },
+      "liability": {
+        "title": "8. Vastuuvastuun rajoittaminen",
+        "para1": "LAIN SALLIMASSA OLEVASSA LAJISSAAN NEBUTRA EI OLE VASTUULLAAN VÄLILLISESTÄ, SATUNNAISESTA, ERITYISESTÄ, SEURAAVAISISTA TAI RANGAISEVISTA VAHINGOISTA TAI VOITTOJEN, DATAN, KÄYTÖN TAI MAINEEN MENETYKSESTÄ.",
+        "para2": "MITÄÄN OLEMASSA OLEVASSA TILANTEESSA MEIDEN KOKONAISVASTUUMME EI YLITÄ SUUREMPAA ARVOISTA (A) SUMMAA, JOKA OLET MEILLE MAATTANUT VAATIMUKSEEN EDISTÄVÄN 12 KUUKAUDEN AJAN JA (B) 100 USD."
+      },
+      "termination": {
+        "title": "9. Sopimuksen purkaminen",
+        "byYou": {
+          "title": "9.1 Sinun toimestasi",
+          "content": "Voit peruuttaa tilisi milloin tahansa tilisi asetuksista. Purkamisen jälkeen menetät pääsyn palveluihin."
+        },
+        "byUs": {
+          "title": "9.2 Meidän toimestamme",
+          "intro": "Voimme keskeyttää tai peruuttaa tilisi, jos:",
+          "items": {
+            "0": "Rikot näitä ehtoja",
+            "1": "Harjoitat huijaus- tai laittomaa toimintaa",
+            "2": "Et maksa sovellettavia maksuja",
+            "3": "Luo meille riskiä tai oikeudellista alttiutta"
+          }
+        }
+      },
+      "disputes": {
+        "title": "10. Riitojen ratkaiseminen",
+        "informal": {
+          "title": "10.1 Epämuodollinen ratkaisu",
+          "content": "Ennen muodollisten menettelyjen aloittamista sopit ottaaksesi meihin yhteyttä osoitteessa legal@nebutra.com riitojen epämuodolliseen ratkaisemiseen."
+        },
+        "governingLaw": {
+          "title": "10.2 Sovellettava laki",
+          "content": "Nämä ehdot noudattavat Delawaren osavaltion lakeja, ilman lainvalintaperiaatteiden huomioon ottamista."
+        }
+      },
+      "contactUs": {
+        "title": "11. Ota yhteyttä",
+        "intro": "Jos sinulla on kysyttävää näistä ehdoista, ota yhteyttä:",
+        "company": "{brandName} Co., Ltd.",
+        "emailLabel": "Sähköposti",
+        "supportLabel": "Tuki"
+      },
+      "acknowledgement": "Käyttämällä {brandName}-palvelua vahvistat, että olet lukenut ja ymmärtänyt nämä käyttöehdot ja sitoudut noudattamaan niitä."
+    }
+  },
+  "metadata": {
+    "title": "{brandName} Agent OS | Startup Agent OS",
+    "description": "Startup Agent OS perustajille, jotka laajenevat globaalisti. Tuotantokelpoinen Next.js-pohja hallitulla arkitekturilla, kirjautumisella, laskutuksella, agenteilla ja i18n-tuella — suunniteltu tekoälykoodausagenteille ja vakaville tiimeille."
+  },
+  "microLanding": {
+    "architecture": {
+      "badge": "JÄRJESTELMÄN TOPOLOGIA",
+      "title": "Läpinäkyvä arkkitehtuuri, ei mustia laatikoita.",
+      "description": "{productName} on suunniteltu hypermodulaarisella Turborepo-rakenteella, joka antaa sinulle täyden hallinnan koko ohjelmistosi elinkaaresta.",
+      "database": {
+        "title": "PostgreSQL + Prisma v7",
+        "desc": "Täysin tyypitetty ORM, jossa rivitasoinen turvallisuus (RLS) on sisäänrakennettu."
+      },
+      "auth": {
+        "title": "Clerk Multi-Tenant / Custom Identity",
+        "desc": "SOC2-valmis kirjautumisportti, joka tukee B2B-organisaatioiden vaihtoa ja RBAC-oikeuksia."
+      }
+    },
+    "pricing": {
+      "title": "Rakentaminen on ilmaista. Maksa vain, jos tarvitset meiltä sitoumuksen.",
+      "description": "Kaupallisen tuotteen rakentaminen {brandName}-pohjalle ei maksa mitään — ei maksuja, ei lisenssiavainta, ei rekisteröitymistä, ei copyleftiä. Maksulliset tasot myyvät tukea, SLA-tasoja, vastuunkantoa ja tavaramerkkioikeuksia, eivät koskaan käyttölupaa.",
+      "socialProofText": "MIT npm:ssä · FSL-1.1-ALv2 repositoriossa, muuttuu Apache-2.0:ksi kahden vuoden kuluttua · kaupallinen käyttö ilmaista kaikissa kokoluokissa.",
+      "community": {
+        "badge": "YHTEISÖ",
+        "price": "Ilmainen",
+        "period": "ikuisesti",
+        "desc": "Kaikille. Mikä tahansa tiimin koko, mikä tahansa liikevaihto. Suljetun lähdekoodin kaupallinen käyttö sisältyy, ilman rekisteröitymistä ja ilman mainintavelvoitetta.",
+        "cta": "npx create-sailor",
+        "f1": "Täysi Next.js 16 -SaaS-ydin, kaikki paketit mukana",
+        "f2": "Suljetun lähdekoodin kaupallinen käyttö tiimin koosta ja liikevaihdosta riippumatta",
+        "f3": "Koko pino: Auth, Maksut, Organisaatiot, API, Sähköposti, i18n, Taustatyöt, Tallennus ja muuta",
+        "f4": "Markkinointiominaisuudet: Blogi, laskeutumissivu, SEO, Analytiikka",
+        "f5": "Julkiset issuet, Discussions ja Discord — parhaan kyvyn mukaan, ei vastaustakuuta"
+      },
+      "team": {
+        "badge": "TIIMI",
+        "price": "2 000 $",
+        "period": "vuosi",
+        "desc": "Tiimeille, jotka eivät voi sallia kriittisen toimintaketjun riippuvuutta yhteisön vasteajoista.",
+        "cta": "Hanki {brandName}-tuki",
+        "f1": "Yksityinen tukikanava (sähköposti + jaettu Slack tai Discord)",
+        "f2": "Ensimmäinen vastaus taatusti kahden arkipäivän kuluessa",
+        "f3": "Priorisoitu vikojen käsittely yhteisön issueiden edellä",
+        "f4": "Päivitysapu ja ennakkoilmoitus rikkovista muutoksista",
+        "f5": "Kaikki Community-tasolta"
+      },
+      "enterprise": {
+        "badge": "YRITYS",
+        "price": "Alkaen 30 000 $",
+        "period": "vuosi",
+        "desc": "Organisaatioille, joiden hankinta, lakiasiat tai tietoturva-arviointi edellyttää sopimuskumppania, joka allekirjoittaa.",
+        "cta": "Ota yhteyttä myyntiin",
+        "f1": "Vastaus-SLA — 4 työtuntia vakiona, 1 tunti tuotantokatkossa",
+        "f2": "Vastuunkanto ja sopimusperusteinen sitoumus tietoturvapäivityksiin",
+        "f3": "Allekirjoitettu tietojenkäsittelysopimus, vaatimustenmukaisuuspaketti ja jatkuvuussitoumus",
+        "f4": "Tavaramerkki- ja white label -oikeudet sekä vapautus kilpailevan käytön rajoituksesta",
+        "f5": "Pitkän tuen haara ja yksityisen käyttöönoton tekninen tuki",
+        "f6": "Kaikki Tiimi-tasolta"
+      }
+    },
+    "faq": {
+      "title": "Hinnoittelu ja lisenssityyppien yleisimmät kysymykset",
+      "description": "Kysymyksiä lisenssitasoista, palautuksista ja kaupallisista käyttöoikeuksista.",
+      "q1": {
+        "q": "Onko Sailor kuukausittainen SaaS-tilaus?",
+        "a": "Ei. Tämä hinnoittelu koskee Sailorin lähdekoodilisenssejä: Independent on ilmainen, Startup laskutetaan vuosittain ja Enterprise räätälöidään."
+      },
+      "q2": {
+        "q": "Tarjoatteko palautuksia?",
+        "a": "Startup-kaupallisissa lisensseissä on 14 päivän palautusaika alkuperäisille ostoksille. Enterprise-sopimusehdot käsitellään allekirjoitetussa sopimuksessa."
+      },
+      "q3": {
+        "q": "Voinko käyttää Sailoria asiakastyössä?",
+        "a": "Kyllä. Kaupallinen lisenssi mahdollistaa tiimillesi suljettua lähdekoodia olevien asiakas- tai sisäisten tuotteiden julkaisun lisenssin piirissä; white-label-oikeudet vaativat Enterprise-hyväksynnän."
+      },
+      "contactNudge": "Kysymyksiä vielä? Ota yhteyttä {brandName}-tiimiin →"
+    },
+    "cta": {
+      "eyebrow": "Aloita",
+      "title": "Lopeta konfigurointi. Aloita rakentaminen.",
+      "description": "Alusta skaalautuva SaaS-arkkitehtuuri paikallisesti {brandName}-CLI:n avulla.",
+      "button": "Julkaise arkkitehtuuri",
+      "license": "Avoin lähdekoodi AGPL-3.0-lisenssillä. Luottokorttia ei tarvita."
+    },
+    "capability": {
+      "badge": "Enterprise-ominaisuudet",
+      "title": "Täysin tyypitetty ja laajennettava ydin.",
+      "multiTenant": {
+        "title": "Natiivi rivitasoinen turvallisuus",
+        "desc": "Jokainen tietokantakysely on tiukasti rajoitettu nykyiseen vuokralaiskontekstiin.",
+        "cta": "Lue tietokantafilosofia"
+      },
+      "aiGateway": {
+        "title": "Yleinen AI Gateway",
+        "desc": "Reititä kehotteet saumattomasti OpenAI:hin, Anthropicin tai avoimen lähdekoodin malleihin.",
+        "cta": "Tutustu AI SDK -käsittelijään"
+      },
+      "rbac": {
+        "title": "Tarkka pääsynhallinta",
+        "desc": "Määritä ylläpitäjä-, jäsen- ja katselija-roolit sisäänrakennetulla sääntörakenteella.",
+        "cta": "Katso RBAC-dokumentaatio"
+      },
+      "billing": {
+        "title": "Monen tarjoajan laskutusinfrastruktuuri",
+        "desc": "Mittarointi, tilauswebhookit ja itsepalveluasiakaspalvelut.",
+        "cta": "Katso laskutusarkkitehtuuri"
+      }
+    },
+    "productDemo": {
+      "badge": "Interaktiivinen demo",
+      "title": "The local loop, end to end.",
+      "description": "Kokeile komentorajapintaa, Stripe-webhook-tunnelointia ja paikallista monivuokralaistietokannan varausta.",
+      "analytics": {
+        "label": "Reaaliaikainen telemetria",
+        "desc": "Viedä tuotannon käyttödata suoraan terminaaliisi."
+      },
+      "billing": {
+        "label": "Laskutus tapahtumat",
+        "desc": "Seuraa Stripe webhooksien suoritusta paikallisen tunneloinnin kautta."
+      },
+      "workspaces": {
+        "label": "Työtilan alustus",
+        "desc": "Luo eristetyt B2B PostgreSQL-kaaviot hetkessä."
+      }
+    },
+    "workflow": {
+      "badge": "Nopeus",
+      "title": "Nollasta tuotantoon ennätyksellisessä ajassa.",
+      "step1": {
+        "title": "1. Kloonaa",
+        "desc": "Kloonaa {brandName}-monorepo hetkessä ja suorita pnpm install."
+      },
+      "step2": {
+        "title": "2. Määritä",
+        "desc": "Määritä Prisma, Clerk ja Stripe interaktiivisen CLI:n avulla minuuteissa."
+      },
+      "step3": {
+        "title": "3. Rakenna",
+        "desc": "Keskity tuotelogiikkaan ja käyttöliittymään, kun alustan perusta on jo valmiina."
+      },
+      "step4": {
+        "title": "4. Julkaise",
+        "desc": "Pushaa Verceliin ja AWS:iin välittömän globaalin jakelun saamiseksi."
+      },
+      "speedometer": {
+        "number": "10",
+        "unit": "min",
+        "subtitle": "MARKKINOILLE SAAMINEN",
+        "comparison": "Säästä kuukausia alustatyötä.",
+        "phases": {
+          "scaffold": "Aloitus",
+          "wire": "Ydin",
+          "ship": "Julkaisu",
+          "scale": "Skalaa",
+          "ongoing": "∞"
+        },
+        "cta": "Aloita ajastin"
+      },
+      "presetHint": {
+        "badge": "Valmisjärjestelmä",
+        "message": "Yksi konfiguraatio. Kaikki ominaisuudet. Valitse valmisasetus ja julkaise.",
+        "detail": "Määritä kerran, luo kaikki — laskutus, tunnistautuminen, tekoäly, i18n — yhdestä valmisasetuskonfiguraatiosta.",
+        "readyStatus": "Valmisjärjestelmä valmis"
+      }
+    }
+  },
+  "featuresPage": {
+    "hero": {
+      "badge": "Alustan ominaisuudet",
+      "headlinePrefix": "Kaikki mitä tarvitset ",
+      "headlineHighlight": "julkaisemiseen luottavaisesti.",
+      "description": "{brandName} on kokonainen full-stack SaaS-alusta — tekoäly, laskutus, monivuokraisuus, havainnointi ja turvallisuus sisäänrakennettuna jo päivästä yksi. Lopeta alustakerroksen uudelleenrakentaminen."
+    },
+    "sections": {
+      "exploreFeature": "Tutustu ominaisuuteen",
+      "ai_category": "Tekoäly & älykkyyt",
+      "ai_f1_title": "Monimalliset keskustelupäätteet",
+      "ai_f1_desc": "Reititä pyynnöt Anthropicille, OpenAI:lle, Googlelle tai omille hienosäädetyille malleillesi. Streamaus, näkökyky ja funktion kutsut tuettu valmiiksi.",
+      "ai_f2_title": "Semanttiset upotukset",
+      "ai_f2_desc": "Luo ja tallenna vektoripohjaisia upotuksia pgvectorilla. Mahdollista semanttinen haku, RAG-putkistot ja suositusjärjestelmät.",
+      "ai_f3_title": "Käyttömittaus tekoälylle",
+      "ai_f3_desc": "Suunnitelman mukaiset kvootit ja käytön seuranta — mittaa tekoälytoken, API-kutsut ja tallennustila ClickHouse-pohjaisilla reaaliaikaisilla kokonaisuuksilla.",
+      "multi_category": "Monivuokra-alusta",
+      "multi_f1_title": "Organisaatiotasoinen eristys",
+      "multi_f1_desc": "Postgresin rivitasoinen turvallisuus varmistaa, että vuokralaiset eivät pääse toistensa tietoihin — pakotettuna tietokantatasolla, ei vain sovelluksessa.",
+      "multi_f2_title": "Monivalmistajan todennus (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_desc": "Monivalmistajan OAuth (Google, GitHub jne.) sekä sähköposti/salasana ja magic-link — vaihda Clerk, Better Auth, NextAuth tai Supabase Auth välillä yhdellä ympäristömuuttujalla.",
+      "multi_f3_title": "Automaattinen vuokralaisen luonti",
+      "multi_f3_desc": "Kun uusi organisaatio rekisteröityy Clerkissä, luomme automaattisesti ensimmäisen API-avaimen ja lähetämme brändätyn tervetuloviestin — ilman manuaalisia toimia.",
+      "dx_category": "Kehittäjän kokemus",
+      "dx_f1_title": "Hashatut API-avaimet",
+      "dx_f1_desc": "SHA-256 hashatut avaimet etuliitteellä (nbtr_live_…). Näytetään avoimena tarkalleen kerran luonnin yhteydessä — turvallisuus ilman kitkaa.",
+      "dx_f2_title": "Idempottenssivälittäjä",
+      "dx_f2_desc": "Lähetä Idempotency-Key-otsikko, ja mikä tahansa POST-pyyntö voidaan uudelleenkäynnistää turvallisesti. Redis-pohjainen, 24 tunnin välimuisti, IETF-luonnosta noudattava.",
+      "dx_f3_title": "Moniprotokollainen API (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI julkisille API:ille, oRPC tyypiltään turvallisiin frontend-kutsuihin ja tRPC T3-stack-yhteensopivuuteen. Kaikki protokollat käyttävät samoja Zod-sopimuksia ja välittäjäpinoa. Ota käyttöön protokollakohtaisesti valmiilla määrityksellä.",
+      "billing_category": "Laskutus & Monetalisointi",
+      "billing_f1_title": "Stripe, LemonSqueezy, Polar ja Kiinan maksut",
+      "billing_f1_desc": "Valitse maksupalveluntarjoaja: Stripe globaaleille yrityksille, LemonSqueezy itsenäisille kehittäjille, Polar avoimen lähdekoodin projekteille tai Alipay/WeChat Pay Kiinan markkinoille. Yhden napsautuksen kassaprosessi ja itsepalvelulaskutusportaali.",
+      "billing_f2_title": "Käyttöön perustuva kiintiönvalvonta",
+      "billing_f2_desc": "Reaaliaikaiset Redis-laskurit seuraavat API-kutsuja ja token-käyttöä jokaista vuokra-asiakasta kohti. Pyyntöjen käsittely keskeytetään portissa, kun rajat ylittyvät.",
+      "billing_f3_title": "Webhook-elinkaaren synkronointi",
+      "billing_f3_desc": "Stripe-tilauspäivitykset päivittävät automaattisesti organisaatioiden suunnitelmat tietokantaasi Inngestin kautta — ei cron-työkaluja, ei pollausta.",
+      "rel_category": "Luotettavuus",
+      "rel_f1_title": "Piirikatkaisin + uudelleenkokeilu",
+      "rel_f1_desc": "Portti ja tekoälypalvelu käyttävät CLOSED/OPEN/HALF_OPEN-piirikatkaisijaa eksponentiaalisen takaisinvedon ja satunnaisuuden kanssa — ei kaskadivikoja.",
+      "rel_f2_title": "Kuolleiden kirjeiden jono",
+      "rel_f2_desc": "Tapahtumankäsittelijät, jotka käyttävät loppuun 3 uudelleenkokeilua, päättyvät DLQ-jonoon. Toista ne yksitellen hallinnointi-API:n kautta ilman uudelleenlaittomista.",
+      "rel_f3_title": "SLO:n kulutusnopeusvaroitukset",
+      "rel_f3_desc": "Moni-ikkunaiset Google SRE -tyyliset varoitukset laukeavat 14,4×, 6× ja 3× kulutusnopeuksilla ennen virhebudjetin loppumista.",
+      "sec_category": "Turvallisuus",
+      "sec_f1_title": "CSP:n nonce-pohjaiset otsikot",
+      "sec_f1_desc": "Strict-dynamic Content Security Policy, jossa Clerk-keskivälittäjän tuottamat pyyntökohtaiset noncet — ei unsafe-inline -käyttöä missään.",
+      "sec_f2_title": "ModSecurity WAF",
+      "sec_f2_desc": "OWASP Core Rule Set DetectionOnly-tilassa jokaisella sisäänkäynnillä. Nopeusrajoitus 30 pyyntöä sekunnissa burst-sietokyvyn kanssa nginx-annotaatioiden kautta.",
+      "sec_f3_title": "SBOM + SLSA-lähtöperäisyys",
+      "sec_f3_desc": "Jokainen julkaisu tuottaa CycloneDX-ohjelmistomateriaaliluettelon ja SLSA-lähtöperäisyysvakuutuksen, jotka ladataan GitHub-julkaisuun.",
+      "obs_category": "Havaittavuus",
+      "obs_f1_title": "OpenTelemetry-jäljitys",
+      "obs_f1_desc": "Jakautuneet jäljitykset kulkevat Next.js → Hono → Python-mikropalvelut -reitillä OTLP:n kautta. Viedään Jaegeriin (dev) ja Grafana Tempoon (prod).",
+      "obs_f2_title": "Grafana-mittaripaneelit",
+      "obs_f2_desc": "Monipaneelinen alustakatsaus: SLO-käytettävyys, jäljellä oleva virhebudjetti, HPA-kylläisyys, podien uudelleenkäynnistykset ja CPU-tukahdutus.",
+      "obs_f3_title": "Sentry-virheiden seuranta",
+      "obs_f3_desc": "Palvelin- ja asiakassivun virheet tallennetaan tenanttikonstein, pyyntö-ID:n ja jäljitys-ID:n kanssa järjestelmien väliseen korrelaatioon.",
+      "data_category": "Data ja analytiikka",
+      "data_f1_title": "ClickHouse OLAP-arkisto",
+      "data_f1_desc": "Tapahtumat saapuvat ClickHouseen nopeita analytiikkakyselyitä varten. dbt muuntaa raakatapahtumat kultakerroksen kasvumittareiksi, jotka näkyvät dashboardissa.",
+      "data_f2_title": "Tunnelianalytiikka",
+      "data_f2_desc": "Seuraa rekisteröitymisiä → aktivoitumisia → konversioita kohorttitason attribuution avulla. Aktiivisen käyttäjän tuotto lasketaan kultakerroksesta.",
+      "data_f3_title": "Kafka / tapahtumien otto",
+      "data_f3_desc": "Suurkapasiteettinen tapahtumien otto Inngestin kautta ClickHousen pronssikerrokseen, muistissa tapahtuvalla duplikaattien poistolla ja skeeman validoinnilla gateway-rajapinnassa.",
+      "infra_category": "Infrastruktuuri",
+      "infra_f1_title": "GitOps ArgoCD:n kanssa",
+      "infra_f1_desc": "Päähaaran muutokset yhdenmukaistetaan automaattisesti klusteriin. Itseparantava järjestelmä peruuttaa manuaaliset kubectl-muokkaukset. Synkronointiikkunat määrittävät turvalliset julkaisuaikojen rajat.",
+      "infra_f2_title": "PgBouncer-yhteyksien poolaus",
+      "infra_f2_desc": "Supabasen edessä oleva transaktiomieliallinen PgBouncer käsittelee 1 000 sovellusyhteyttä 20 Postgres-yhteydellä. HA 2 replikalla.",
+      "infra_f3_title": "Vaakasuuntautunut + pystysuuntainen automaattinen skaalaus",
+      "infra_f3_desc": "HPA skaalaa CPU:n ja muistin perusteella. VPA toimii Off-tilassa ja tarjoaa oikean kokoluokan suosituksia. KEDA:n mukautettuja mittareita suunniteltu v2:een."
+    }
+  },
+  "comingSoon": {
+    "badge": "🚧 Työ käynnissä",
+    "description": {
+      "ideas": "Rakennamme parhaillaan tätä osastoa varten uskomattoman geek-ohjauksen kokemuksen. Se julkaistaan seuraavan suuren arkkitehtuuriputkiston päivityksen yhteydessä.",
+      "opc": "Syvempi alustakatsaus on työn alla. Seuraa muutoslokkia ja tiekarttaa tulevista julkaisuista.",
+      "roadmap": "Infrastruktuurin perustasta yritystason skaalautuvuuteen — tuotantovaiheemme, versiomilestoneit ja rahoitusvisiomme."
+    },
+    "returnBtn": "Palaa Hubiin"
+  },
+  "blogShowcase": {
+    "badge": "BLOGISTA",
+    "title": "Insinööritietoa",
+    "subtitle": "Syvällisiä katsauksia SaaS-arkkitehtuuriin, tekoälyinfrastruktuuriin ja tuotantoinstituuriin.",
+    "readMore": "Lue lisää"
+  },
+  "useCases": {
+    "badge": "SKAALAUTUVAT KÄYTTÖTILANTEET",
+    "title": "Seven shapes, one foundation.",
+    "description": "An operations hub, a portfolio site, a multimodal SaaS, two enterprise sites, a design system and an asset library — the same core underneath each.",
+    "tabs": {
+      "opc": "Agentic-toiminnallisuus",
+      "ip": "Henkilökohtainen IP-matriisi",
+      "multimodal": "Monimodaalinen tekoäly-SaaS",
+      "enterprise": "Moderni yritys (CN)",
+      "export": "Globaali ohjelmistovienti",
+      "design": "Suunnittelujärjestelmämoottori",
+      "edam": "Yrityksen digitaaliset varat"
+    },
+    "content": {
+      "opc": {
+        "title": "AI-luonteinen toimintakeskus",
+        "desc": "Suorita agenttityönkulkuja, sisäisiä työkaluja ja integraatiopintoja yhdellä hallitulla alustapohjalla. Rekisteröityihin laajennuksiin, operaattoriportaaleihin ja uudelleenkäytettäviin ajonaikaisiin malleihin perustuva järjestelmä pysyy linjassa skaalautuessa.",
+        "features": {
+          "f1": "Työkalurekisteri ja integraatiopinta",
+          "f2": "Operaattoriportaali ja sisäinen konsoli"
+        }
+      },
+      "ip": {
+        "title": "Henkilökohtainen IP-kasvu ja salkkumatriisi",
+        "desc": "Rakenna maailmanluokan perustajan läsnäolo korkean konversion MDX-blogilla, portfolio- ja profiilisivuilla. Sisäänrakennettu uutiskirje, analytiikka ja SEO varmistavat henkilöbrändisi kasvun.",
+        "features": {
+          "f1": "MDX-blogi ja uutiskirjeiden moottori",
+          "f2": "SEO ja sosiaalisen graafin optimointi"
+        }
+      },
+      "multimodal": {
+        "title": "Innovatiivinen multimodaalinen AI-SaaS",
+        "desc": "Julkaise Multi-Agent-ohjausta, chatbotteja, tekstistä kuvaan, kuvasta tekstiin ja tekstistä videoon -SaaS-tuotteita johtavalla suoratoistokäyttöliittymällä, älykkäällä mallin reitityksellä ja käytön mittauksella.",
+        "features": {
+          "f1": "Multi-Agent-suoratoistokäyttöliittymä",
+          "f2": "Mallin reititin ja käytön mittaus"
+        }
+      },
+      "enterprise": {
+        "title": "Moderni yrityssivusto (CN)",
+        "desc": "Suunniteltu Kiinan liiketoimintatilanteisiin — erittäin nopea kotimainen CDN, WeChat-ekosysteemin integraatio, mobiilipainotteinen responsiivinen suunnittelu ja paikallistettu noudattaminen valmiina.",
+        "features": {
+          "f1": "Paikallinen CDN ja noudattaminen",
+          "f2": "WeChat-ekosysteemi valmiina"
+        }
+      },
+      "export": {
+        "title": "Globaalit ohjelmistojen vienti-istumissivut",
+        "desc": "Rakennettu erityisesti SaaS-yhtiöille, jotka laajenevat maailmalle. Monivaluuttainen Stripe-kassan toiminto, next-intl i18n -automaattinen reititys 7 kielellä, GDPR/CCPA-sopivuus ja maantieteellisesti kohdennettu sisältö.",
+        "features": {
+          "f1": "Monivaluuttainen globaali maksaminen",
+          "f2": "7 kieltä + GDPR-valmius"
+        }
+      },
+      "design": {
+        "title": "Johtava suunnittelujärjestelmä ja komponenttikirjasto",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "features": {
+          "f1": "Nelikerroksinen token-hallinta",
+          "f2": "Seven design languages + Storybook"
+        }
+      },
+      "edam": {
+        "title": "Yritysten digitaalinen varainhallinta",
+        "desc": "Rakenteelliset datajärved ja monimutkaiset dashboard-arkkitehtuurit skaalautuvilla PostgreSQL-ratkaisuilla ja tarkalla RBAC-oikeuksien hallinnalla.",
+        "features": {
+          "f1": "Rivitasoinen turvallisuus",
+          "f2": "Monimutkaiset kyselyt",
+          "f3": "Roolien hallinta"
+        }
+      }
+    }
+  },
+  "designSystem": {
+    "badge": "SUUNNITTELUJÄRJESTELMÄ",
+    "headline": "Neljä kerrosta suunnittelun hallintaa.",
+    "subheadline": "Brändin perusarvoista ajonaikaisiin tokeneihin, moniteemamoottoriin ja hallittuihin komponentteihin — ei vain shadcn + Tailwind.",
+    "flowBrand": "Brändi",
+    "flowBrandDesc": "Värien perusarvot, gradientit, liikkeen kieli",
+    "flowTokens": "Tokenit",
+    "flowTokensDesc": "CSS-muuttujat, 12-askeliset asteikot, tumma tila",
+    "flowTheme": "Teema",
+    "flowThemeDesc": "Brand Packages, 7 languages, html[data-brand]",
+    "flowUI": "Käyttöliittymä",
+    "flowUIDesc": "Komponentit, Storybook, Chromatic",
+    "card1Title": "12-askeliset väriasteikot",
+    "card1Desc": "Geist-yhteensopiva semanttinen asteikko: taustat (1–2), tilat (3–5), reunat (6–8), täytöt (9–10), teksti (11–12).",
+    "card2Title": "Design Languages",
+    "card2Desc": "Seven Brand Packages on html[data-brand]. Colour roles, radii, elevation, type and easing switch together — not just the palette.",
+    "card3Title": "Visuaalinen regressio",
+    "card3Desc": "Chromatic havaitsee jokaisen pikselin muutoksen. Storybook dokumentoi jokaisen komponentin. Arkkitehtuuritestit varmistavat tarinoiden kattavuuden.",
+    "card4Title": "Tokenien hallinta",
+    "card4Desc": "Shrink-only allowlists for brand hex, brand literals and motion tokens. A new offender fails CI; the existing ones migrate on touch.",
+    "card5Title": "Interaktiivinen dokumentaatio",
+    "card5Desc": "Kokonainen Fumadocs-pohjainen suunnitteludokumentointisivusto, jossa on kaksikieliset (EN/ZH) komponenttien API-dokumentaatiot, token-galleriat, asettelukuvioiden ohjeet ja reaaliaikaiset koodiesimerkit.",
+    "card6Title": "Token Pipeline",
+    "card6Desc": "Brand primitives compile to DTCG tokens, tokens to CSS variables, variables to governed components. One direction, no hand-offs by hand."
+  },
+  "notFound": {
+    "title": "Sivua ei löydy",
+    "desc": "Linkki saattaa olla vanhentunut tai sivu on siirretty.",
+    "home": "Takaisin {brandName}",
+    "docs": "Avaa dokumentaatio"
+  },
+  "ui": {
+    "search": {
+      "placeholder": "Hae julkaisuja..."
+    },
+    "nav": {
+      "toggleMenu": "Näytä/piilota valikko"
+    },
+    "actions": {
+      "showFullRelease": "Näytä koko julkaisu",
+      "copyLinkToRelease": "Kopioi julkaisulinkki",
+      "copyLink": "Kopioi linkki",
+      "openInNewTab": "Avaa uudessa välilehdessä"
+    },
+    "status": {
+      "comingSoon": "Tulossa pian"
+    }
+  },
+  "licensing": {
+    "hero": {
+      "title": "Ilmainen <hl>kehitettäväksi</hl>",
+      "description": "{brandName}-Sailor on kaupalliseen käyttöön ilmainen — MIT npm:ssä, FSL-1.1-ALv2 varastossa, muuttuu Apache-2.0:ksi kahden vuoden jälkeen. Maksulliset tasot myyvät tukea ja sopimusvelvoitteita, ei käyttöoikeutta."
+    },
+    "plans": {
+      "community": {
+        "badge": "Aina ilmainen",
+        "title": "Yhteisö",
+        "subtitle": "Kaikille",
+        "description": "Minkä kokoiselle tahansa tiimille, minkä tulojen tahansa. Suljettu lähdekoodi kaupallisissa tuotteissa sallittu.",
+        "features": {
+          "fullSource": "Koko lähdekoodi, kaikki paketit",
+          "closedSourceOk": "Suljettu lähdekoodi kaupallisessa käytössä — ei copyleftiä",
+          "noAttribution": "Ei rekisteröitymistä, ei lähdeviittausta",
+          "communitySupport": "Yhteisötuki — parhaan mahdollisen ponnistuksen mukainen"
+        },
+        "cta": "Näytä GitHubissa"
+      },
+      "team": {
+        "badge": "Alkaen {price}/v",
+        "title": "Tiimi",
+        "subtitle": "Tukipaketti",
+        "description": "Tiimeille, jotka eivät voi asettaa kriittistä reittiä yhteisön vasteaikoihin.",
+        "features": {
+          "privateChannel": "Yksityinen tukikanava",
+          "firstResponse": "Kaksi arkipäivää ensimmäiseen vastaukseen, taattu",
+          "priorityTriage": "Priorisoitu vikojen käsittely",
+          "upgradeHelp": "Päivitysapu ja katkeamattomuusvaroitus"
+        },
+        "cta": "Hanki tuki"
+      },
+      "enterprise": {
+        "badge": "Alkaen 30 000 €/vuosi",
+        "title": "Yritys",
+        "subtitle": "Hankintavalmis",
+        "description": "Organisaatioille, joiden oikeudellinen, turvallisuudellinen tai hankintakatsaus vaatii vastapuolen, joka allekirjoittaa.",
+        "features": {
+          "sla": "Vastaus-SLA — 4 liiketoimintatuntia, 1 tunti tuotannon pysähtyessä",
+          "indemnity": "Vastuunotto ja tietoturvakorjausvelvoite",
+          "compliance": "Allekirjoitettu DPA, compliance-paketti, jatkuvuuspakottaminen",
+          "trademark": "Tavaramerkki- ja valkoleimaoikeudet"
+        },
+        "cta": "Ota yhteyttä myyntiin"
+      }
+    },
+    "faq": {
+      "title": "Usein kysytyt kysymykset",
+      "description": "Lyhyesti: käyttö on ilmaista. Maksaminen on silloin, kun tarvitset meidät sopimuksellisesti vastuussa.",
+      "items": {
+        "whyFsl": {
+          "q": "Miksi FSL eikä MIT tai AGPL?",
+          "a": "FSL sallii kaiken käytön paitsi Sailorin korvikkeen myymisen, ja jokainen versio siirtyy Apache-2.0 -lisenssiin kaksi vuotta julkaisun jälkeen — lupaus, joka tehdään peruuttamattomasti etukäteen. Se läpäisee yritysten oikeudellisen tarkastuksen helpommin kuin AGPL."
+        },
+        "reallyFree": {
+          "q": "Onko kaupallinen käyttö todella ilmaista?",
+          "a": "Kyllä. Ei maksua, ei lisenssivälikeyttä, ei rekisteröitymistä, ei tulo- tai henkilömääräraja-arvoa, ei viittausta. Rakenna suljettu lähdekoodituote ja myy sitä."
+        },
+        "competingUse": {
+          "q": "Mitä pidetään kilpailevana käytönä?",
+          "a": "Sailorin itsensä tarjoaminen — isännöity Sailor-palvelu tai uudelleenpaketoitu kilpaileva alustapohja. Vertikaalisen SaaS:n, sisäisen työkalun tai asiakasprojektit Sailorin päälle rakentaminen ei ole kilpailevaa käyttöä. Jos mallisi tarvitsee sen, Enterprise-sopimus voi sisältää kirjallisen vapautuksen."
+        },
+        "upgrade": {
+          "q": "Mitä maksulliset tasot oikeasti ostavat?",
+          "a": "Tukivelvoitteet, vastaus-SLAt, vastuunotto, compliance-dokumentit ja tavaramerkkioikeudet. Ei koskaan lupaa käyttää ohjelmistoa — se on jo sinulla."
+        },
+        "contributions": {
+          "q": "Mitä mieltä olemme avoimen lähdekoodin panostuksista?",
+          "a": "Kaikki panokset vaativat CLAn. Katso CONTRIBUTING.md."
+        }
+      }
+    },
+    "meta": {
+      "title": "Lisenssit — {brandName}",
+      "description": "Ilmainen kaupalliseen käyttöön. MIT npm:ssä, FSL-1.1-ALv2 varastossa, siirtyy Apache-2.0:aan."
+    }
+  },
+  "licenseWizard": {
+    "tiers": {
+      "individualFree": "Yksittäisen käyttäjän ilmainen lisenssi",
+      "opcFree": "Yksittäisen omistajan yrityksen lisenssi",
+      "startupCommercial": "Startup-yrityksen kaupallinen lisenssi",
+      "enterprise": "Enterprise-lisenssi"
+    },
+    "referralSource": {
+      "selectPlaceholder": "Valitse vaihtoehto...",
+      "productHunt": "Product Hunt"
+    }
+  },
+  "changelogMeta": {
+    "title": "Muutosloki — {brandName}",
+    "description": "Jokainen julkaisu, jossa huolellinen huomio yksityiskohtiin.",
+    "versionTitleSuffix": "{brandName} -muutosloki"
+  },
+  "roadmapMeta": {
+    "title": "Alustan tiekartta — {brandName}",
+    "description": "Tiekartta {brandName}:n hallitulle alustapohjalle, Harness-runtime-ympäristölle ja päivityspolulle."
+  },
+  "blogMeta": {
+    "title": "Blogi — {brandName}",
+    "description": "Insinööritiivistelmiä, tuotepäivityksiä ja SaaS-parhaita käytäntöjä {brandName}-tiimiltä."
+  },
+  "getLicenseMeta": {
+    "title": "Hanki lisenssisi — {brandName}",
+    "description": "Hanki {brandName}-lisenssisi ja alustapääsy 2 minuutissa."
+  },
+  "landing": {
+    "faq": {
+      "badge": "UKK",
+      "title": "Kysymyksiin suorat vastaukset",
+      "subtitle": "Kaikki mitä tarvitset tietää ennen julkaisua.",
+      "items": {
+        "what-is-sailor": {
+          "question": "Mikä {productName} oikeastaan on?",
+          "answer": "Sailor on mielipiteellinen Next.js + Tailwind v4 -SaaS-pohja, jossa on valmiina todennus, laskutus, monivuokraisuus, tekoäly, jonot, haku ja sähköposti. Kloonaa se, määritä palveluntarjoajat ja julkaise — yleensä viikossa."
+        },
+        "who-is-it-for": {
+          "question": "Kenelle Sailor on suunniteltu?",
+          "answer": "Perustajille ja tuoteinsinööreille, jotka haluavat käyttää aikansa erottaviin tekijöihin — ei saman todennus-/laskutus-/vuokrausputkiston uudelleenrakentamiseen viidettä kertaa."
+        },
+        "free-or-paid": {
+          "question": "Onko se ilmainen vai maksullinen?",
+          "answer": "Koko lähdekoodi on AGPL-3.0 -lisenssillä — ilmainen henkilökohtaisiin projekteihin, sisäisiin työkaluihin ja AGPL-yhteensopivaan avoimeen lähdekoodiin. Kaupallinen lisenssi antaa oikeuden julkaista Sailorin suljettuna lähdekoodina olevana omaehtoisena SaaS-palveluna. Jokainen suunnitelma sisältää täyden ominaisuusvalikoiman (autentikointi, laskutus, monivuokraisuus, tekoäly, tarkastus); tasot eroavat lisenssiehdoissa ja tuen SLA:ssa, ei ominaisuuksissa."
+        },
+        "china-friendly": {
+          "question": "Toimiiko se Kiinassa?",
+          "answer": "Kyllä. Julkaisemme rinnakkaista infrastruktuurikonfiguraatiota (Aliyun-yhteensopiva CDN, ICP-yhteensopivat verkkotunnukset, valinnainen Penpot Figan sijasta), jotta sama koodipohja voidaan julkaista saumattomasti Great Firewallin sisällä."
+        },
+        "deployment": {
+          "question": "Minne voin julkaista sen?",
+          "answer": "Mihin tahansa paikkaan, jossa Node 22+ toimii. Markkinointisivusto julkaistaan Verceliin; dashboard, gateway ja Python-palvelut toimivat Dockerilla / PM2:lla (käytämme niitä nykyään Aliyun ECS:ssä, ja täydelliset Kubernetes-manifestit ovat infra/iac/k8s/-polussa klustereille). Enterprise-asiakkaat voivat myös julkaista omissa VPC:ssään."
+        },
+        "security": {
+          "question": "Miten turvallisuus hoidetaan?",
+          "answer": "Sovelluskerroksen kuorittu salaus salaisuuksille (@nebutra/vault), Postgres RLS vuokraeristykseen, RBAC/ABAC CASL:n tai OpenFGA:n kautta (@nebutra/permissions), HMAC-merkityt palveluiden väliset tokenit, merkityt lähtevät webhookit ja SOC 2 -yhteensopiva tarkastusputki (@nebutra/audit) sisältyvät jokaiseen suunnitelmaan. Pro ja Enterprise lisäävät SOC 2 -todistuksen tuen, omistetun incident response -palvelun ja pidemmän tarkastuslokin säilytysajan."
+        },
+        "support": {
+          "question": "Minkälaista tukea saan?",
+          "answer": "Ilmaiset asiakkaat saavat yhteisön Discordin ja GitHub Issuesin. Pro lisää priorisoidun sähköpostituen, jossa on 1 arkipäivän vasteajan SLA. Enterprise saa omistetun Slack-kanavan ja onboarding-ingenieerin."
+        },
+        "byo-provider": {
+          "question": "Voinko tuoda oman palveluntarjoajani?",
+          "answer": "Kyllä. Jokainen integraatio (autentikointi, jono, haku, sähköposti, maksut, tallennus, laskutus) on palveluntarjoajasta riippumaton. Jokaisen paketin factory valitsee oikean adapterin yhdestä env-muuttujasta — vaihda Clerk Better Authiin, NextAuthiin tai Supabase Authiin, QStash BullMQ:han, Resend SES:ään, Stripe Polar / LemonSqueezy / ChinaPay:hin — ilman sovelluskoodin koskemista."
+        },
+        "tech-stack": {
+          "question": "Mikä on tekninen stack?",
+          "answer": "Next.js 16 (App Router) React 19:n päällä, TypeScript 5.9, Tailwind v4, Prisma 7 Postgresin päällä (pgvector + RLS), Hono BFF-gatewaylle, FastAPI ML/raskaalle palveluille ja huolella valittu komponenttikirjasto Radixin, {brandName} UI-primitiivien ja yhteisen Motion-kerroksen päällä. Tekoälyominaisuudet kulkevat Vercel AI SDK:n kautta palveluntarjoajan portabiliteetilla (OpenAI / OpenRouter / SiliconFlow / Azure / paikallinen)."
+        },
+        "license": {
+          "question": "Mikä on lisenssi?",
+          "answer": "AGPL-3.0 kaupallisella poikkeuksella. Ilmainen henkilökohtaiseen käyttöön, sisäisiin työkaluihin ja AGPL-yhteensopivaan OSS:iin. Maksullinen kaupallinen lisenssi antaa oikeuden julkaista Sailor sellaisenaan omaehtoisessa SaaS:ssä. Täysi lähdekoodi sisältyy jokaiseen suunnitelmaan."
+        },
+        "paid-updates": {
+          "question": "Pitäisikö minun maksaa päivityksistä?",
+          "answer": "Ei. Lähdekoodipäivitykset sisältyvät jokaiseen kaupalliseen lisenssiin — vedä main-haarasta milloin haluat ja rebasaa oma haaraasi. Maksullinen taso on oikeus käyttää Sailoria kaupallisessa tuotannossa, ei oikeus vastaanottaa koodia. Jokainen pienjulkaisu sisältää CHANGELOGin ja päivitysoppaan mahdollisista breaking change -muutoksista."
+        },
+        "why-turborepo": {
+          "question": "Miksi Turborepo sen sijaan kuin tavallinen Next.js-sovellus?",
+          "answer": "Sailor koostuu 10 sovelluksesta ja 104 yhteisestä paketista packages/*/* -polussa sekä 4 backend-linjestä (Hono-gateway, FastAPI/Python, Go, Rust) — paljon sen rajan yli, jossa yksittäinen Next.js-megasovellus pysyy ylläpidettävänä. Turborepo tarjoaa meille vain muutettujen osien rakentamisen, läpinäkyvän etäcacheauksen ja yhden totuuden lähteen yhteisille design token -muuttujille, kirjautumiselle, laskutukselle ja havainnoinnille — ilman että pakotamme jokaista tiimiä samaan Next.js-prosessiin."
+        },
+        "multi-tenancy": {
+          "question": "Miten monivuokraisuus on toteutettu?",
+          "answer": "Kaksi kerrosta. Pyyntöön sidottu vuokralaiskonteksti @nebutra/tenant -paketin kautta (AsyncLocalStorage välittää aktiivisen organisaation jokaisen palvelinpäivityksen kautta, mukaan lukien tietokantakyselyt ja ulospäin menevät webhookit) sekä tietokannassa pakotettu eristys Postgres Row-Level Security -sääntöjen kautta (infra/data/database/policies/rls.sql), jotka sidotaan sessioon paikalliseen app.current_tenant_id -muuttujaan. Palveluroolien yhteydet ohittavat RLS:n vain luotettujen sisäisten palveluiden sisällä; kaikki käyttäjäkohtaiset reitit kulkevat vuokralaiskontekstiin sidotun clientin kautta."
+        },
+        "swap-clerk": {
+          "question": "Voinko vaihtaa Clerkin toiseen kirjautumispalveluun?",
+          "answer": "Kyllä. @nebutra/auth sisältää ensiluokkaiset adapterit Clerkille, Better Authille, NextAuthille (Auth.js v5) ja Supabase Authille. Vaihdetaan AUTH_PROVIDER-ympäristömuuttujan kautta tai valitaan luonninhetkellä komennolla create-sailor --auth=... — palvelin, React ja middleware -pinnat pysyvät identtisinä riippumatta palveluntarjoajasta. Viidennen adapterin lisääminen tarkoittaa yhden rajapinnan toteuttamista (~80 LOC); ympäröivässä koodissa ei ole sidoksia tiettyyn palveluntarjoajaan."
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "Rakastettu rakentajien keskuudessa",
+      "title": "Mitä perustajat sanovat Sailorin avulla julkaisemisen jälkeen",
+      "subtitle": "Beta-ryhmämme asiakaskokemukset julkaistaan pian — ole yksi ensimmäisistä."
+    },
+    "comparison": {
+      "badge": "Vertaile tasoja",
+      "title": "Kaikki on ilmaista. Valitse, kuinka paljon sitoumusta tarvitset.",
+      "subtitle": "Jokainen taso sisältää koko lähdekoodin ja sallii suljetun lähdekoodin kaupallisen käytön maksutta. Erot ovat tuessa, sopimussitoumuksissa ja tavaramerkkioikeuksissa.",
+      "plan": {
+        "community": "Yhteisö",
+        "team": "Tiimi",
+        "enterprise": "Yritys"
+      },
+      "feature": {
+        "license": {
+          "label": "Lisenssi",
+          "type": "Lisenssi",
+          "commercial-use": "Suljetun lähdekoodin kaupallinen käyttö",
+          "registration": "Rekisteröityminen",
+          "trademark": "Tavaramerkkioikeudet"
+        },
+        "source": {
+          "label": "Lähdekoodi",
+          "full-source": "Koko lähdekoodi",
+          "all-packages": "Kaikki paketit ja moduulit",
+          "update-window": "Päivitykset"
+        },
+        "support": {
+          "label": "Tuki",
+          "channel": "Tukikanava",
+          "first-response": "Taattu ensimmäinen vastaus",
+          "security-patch": "Sitoumus tietoturvapäivityksiin"
+        },
+        "procurement": {
+          "label": "Hankinta",
+          "indemnification": "Vastuunkanto",
+          "dpa": "Allekirjoitettu tietojenkäsittelysopimus ja vaatimustenmukaisuuspaketti",
+          "continuity": "Jatkuvuussitoumus"
+        }
+      },
+      "ariaTable": "Tasojen ja ominaisuuksien vertailu",
+      "value": {
+        "included": "Sisältyy",
+        "notIncluded": "Ei sisälly",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Ei vaadita",
+        "whiteLabelRights": "White label -oikeudet",
+        "unlimited": "Rajoittamaton",
+        "unlimitedPlusNotice": "Rajoittamaton + ennakkoilmoitus rikkovista muutoksista",
+        "unlimitedPlusLts": "Rajoittamaton + pitkän tuen haara",
+        "publicChannels": "Julkiset issuet ja Discord",
+        "privateChannel": "Yksityinen kanava",
+        "namedContact": "Nimetty yhteyshenkilö",
+        "twoBusinessDays": "2 arkipäivää",
+        "fourBusinessHours": "4 työtuntia",
+        "bestEffort": "Parhaan kyvyn mukaan",
+        "contractual": "Sopimusperusteinen"
+      }
+    },
+    "socialProof": {
+      "title": "Rakennettu luotettavalle stackille",
+      "logosLabel": "Integraatiokumppanit",
+      "metrics": {
+        "developers": {
+          "value": "47+",
+          "label": "Tuetut tekoälypalveluntarjoajat"
+        },
+        "projects": {
+          "value": "104",
+          "label": "monorepo-paketteja"
+        },
+        "uptime": {
+          "value": "7",
+          "label": "i18n-kieliversioita valmiina"
+        }
+      }
+    }
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP-rekisterinumero",
+      "publicSecurity": "Julkinen turvallisuus"
+    }
+  },
+  "icpFooter": {
+    "recordNumber": "ICP-rekisterinumero",
+    "publicSecurity": "Julkinen turvallisuusrekisteri"
+  },
+  "MarketLocalePicker": {
+    "title": "Alueet ja kielet",
+    "description": "Valitse alue ja kieli markkinointisivustolle.",
+    "triggerAria": "Valitse alue ja kieli",
+    "searchPlaceholder": "Hae alueita…",
+    "plannedHint": "Käyttöliittymä palautuu englanniksi, kunnes tämä kieli julkaistaan",
+    "noResults": "Aluetta ei löytynyt",
+    "menuAria": "Alueet ja kielet"
+  }
+}

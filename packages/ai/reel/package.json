@@ -1,0 +1,109 @@
+{
+  "name": "@nebutra/reel",
+  "version": "1.0.4",
+  "description": "Typed node-graph dataflow for generative-media production: versioned IO envelope, multi-transport execution, storyboard pipeline",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "graph": "labs",
+    "featureId": "reel",
+    "category": "ai",
+    "surface": "media-graph",
+    "summary": "Node-graph dataflow + storyboard pipeline for generative media"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./canvas": {
+      "types": "./dist/canvas/index.d.ts",
+      "import": "./dist/canvas/index.js",
+      "default": "./dist/canvas/index.js"
+    },
+    "./store": {
+      "types": "./dist/store/index.d.ts",
+      "import": "./dist/store/index.js",
+      "default": "./dist/store/index.js"
+    },
+    "./storyboard": {
+      "types": "./dist/storyboard/index.d.ts",
+      "import": "./dist/storyboard/index.js",
+      "default": "./dist/storyboard/index.js"
+    },
+    "./transport": {
+      "types": "./dist/transport/index.d.ts",
+      "import": "./dist/transport/index.js",
+      "default": "./dist/transport/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/graph-model": "workspace:*",
+    "@nebutra/logger": "workspace:*",
+    "@nebutra/tenant-store": "workspace:*",
+    "eventsource-parser": "^3.0.8"
+  },
+  "peerDependencies": {
+    "@nebutra/agents": "workspace:*",
+    "@nebutra/icons": "workspace:*",
+    "@nebutra/ui": "workspace:*",
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "@nebutra/agents": {
+      "optional": true
+    },
+    "@nebutra/icons": {
+      "optional": true
+    },
+    "@nebutra/ui": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@nebutra/agents": "workspace:*",
+    "@nebutra/icons": "workspace:*",
+    "@nebutra/ui": "workspace:*",
+    "@testing-library/react": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@vitejs/plugin-react-swc": "catalog:",
+    "jsdom": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "^4.0.18"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/reel#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/reel"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
+}

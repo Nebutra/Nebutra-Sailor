@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — API pazarı",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "Tüm model API pazarı · kullandıkça öde · anahtarları ve cüzdanı yönet · hızlı dene."
+  },
+  "admin": {
+    "dashboard": "Genel Bakış",
+    "keys": "API Anahtarları",
+    "wallet": "Cüzdan",
+    "docs": "Dokümanlar",
+    "title": "Yönetici",
+    "backToMarket": "Pazara dön",
+    "quickUse": "Hızlı kullanım"
+  },
+  "chrome": {
+    "searchPlaceholder": "AI ile ne yapmak istiyorsun?",
+    "search": "Ara",
+    "locale": "Dil",
+    "currency": "Para Birimi",
+    "collapseSidebar": "Kenar çubuğunu daralt",
+    "expandSidebar": "Kenar çubuğunu genişlet",
+    "home": "Ana Sayfa",
+    "adminConsole": "Yönetici",
+    "quickUse": "Hızlı kullanım",
+    "support": "Destek",
+    "apiDocs": "API dokümanları",
+    "integrationHelp": "Entegrasyon kılavuzu",
+    "aiRecommend": "AI önerileri",
+    "market": "Pazar",
+    "usageTitle": "Hızlı kullanım"
+  },
+  "channels": {
+    "app": "Uygulama mağazası",
+    "api": "API mağazası",
+    "models": "Model kataloğu",
+    "client": "İstemci"
+  },
+  "market": {
+    "new": "Yeni",
+    "hot": "Popüler",
+    "forYou": "Senin için",
+    "grid": "Izgara",
+    "list": "Liste",
+    "apiShelf": "API rafı",
+    "toolShelf": "Araç rafı",
+    "categories": "Kategoriler",
+    "apps": "Uygulamalar",
+    "newRelease": "Yeni sürüm",
+    "forgeTitle": "Forge araç çalışma alanı",
+    "forgeBlurb": "Metin dönüşümleri, codec'ler, formlar ve birleştirilebilir araçlar. Uygulama pazarı laboratuvarı Forge'u işaret ediyor.",
+    "openForge": "Forge'u Aç →",
+    "allApi": "Tüm API'ler →",
+    "all": "Tümü →",
+    "viewAll": "Tüm {label} göster →",
+    "gridView": "Izgara görünümü",
+    "listView": "Liste görünümü",
+    "hiTitle": "Kurumsal AI kaynak platformu",
+    "hiSubtitle": "Her ihtiyacı doğru AI ile eşleştirin",
+    "sellable": "Satışa uygun",
+    "walletTopup": "Yükle"
+  },
+  "apiTaxonomy": {
+    "llm": {
+      "label": "Dil modelleri",
+      "hint": "Sohbet · akıl yürütme"
+    },
+    "image-gen": {
+      "label": "Görsel oluşturma",
+      "hint": "Metinden görsel"
+    },
+    "image-edit": {
+      "label": "Görsel düzenleme",
+      "hint": "Düzenle · matlama"
+    },
+    "video": {
+      "label": "Video oluşturma",
+      "hint": "Metinden videoya"
+    },
+    "audio": {
+      "label": "Ses ve video",
+      "hint": "Konuşma · transkripsiyon"
+    },
+    "data": {
+      "label": "Bilgi",
+      "hint": "Getirme · çıkarma"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "Bilgi destekli"
+    },
+    "tools": {
+      "label": "Araç API'leri",
+      "hint": "Ajan · araçlar"
+    }
+  },
+  "toolTaxonomy": {
+    "bots": {
+      "label": "Botlar",
+      "chips": "Sohbet botları · çizim botları · bilgi"
+    },
+    "productivity": {
+      "label": "Verimlilik",
+      "chips": "Model arenası · AI yazma"
+    },
+    "academic": {
+      "label": "Akademik",
+      "chips": "PDF araç seti · AI patent araması"
+    },
+    "image": {
+      "label": "Görsel araçları",
+      "chips": "3D stüdyo · Tuval"
+    },
+    "audio": {
+      "label": "Ses",
+      "chips": "Konuşma · AI müzik"
+    },
+    "code": {
+      "label": "Kod",
+      "chips": "Web oluşturucu · Forge"
+    }
+  },
+  "shortcuts": {
+    "dashboard": "Genel bakış",
+    "keys": "Anahtarlar",
+    "wallet": "Cüzdan",
+    "use": "Dene",
+    "docs": "Dokümanlar",
+    "models": "Daha fazla"
+  }
+}

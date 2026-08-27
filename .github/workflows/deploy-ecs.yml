@@ -1,0 +1,1648 @@
+name: Deploy to Cloud VM (PM2 Manual Fallback)
+
+# Legacy manual fallback for shipping standalone Node bundles to a single
+# SSH-managed Linux VM that runs PM2 + Nginx. It is vendor-neutral and works
+# with AWS EC2, Alibaba Cloud ECS, Tencent Cloud CVM, GCP Compute Engine, or
+# any equivalent VM with SSH + Node.js + PM2.
+#
+# The production default is still Vercel frontends + Cloudflare Workers gateway
+# + VM/FastAPI origin for most surfaces. Auto-CI on this VM (see `on.push`) is
+# limited to product edges + the api-gateway (forge, router, pebble, api).
+# All other apps stay manual via workflow_dispatch to protect the small disk
+# and avoid cross-region SSH blast radius.
+#
+# REQUIRED REPOSITORY SECRETS (Settings → Secrets and variables → Actions):
+#   VM_SSH_PRIVATE_KEY   — OpenSSH private key (Ed25519 recommended) whose
+#                          public key is in the deploy user's authorized_keys.
+#   VM_SSH_KNOWN_HOSTS   — output of `ssh-keyscan -H <VM_HOST>` to pin the
+#                          host key. `CLOUD_VM_*` and legacy `ECS_*` aliases
+#                          remain supported for backwards compatibility.
+#
+# REQUIRED REPOSITORY VARIABLES (same UI, "Variables" tab):
+#   VM_HOST              — IP or DNS of the target VM.
+#   VM_USER              — SSH user that owns/manages PM2.
+#   VM_DEPLOY_ROOT       — Base path on the VM (default /var/www/nebutra).
+#
+# OPTIONAL REPOSITORY VARIABLES:
+#   VM_PROVIDER          — aws-ec2 | aliyun-ecs | tencent-cvm | gcp-gce | other
+#                          (metadata only; deploy remains SSH-driven).
+#   VM_SSH_PORT          — defaults to 22.
+#   VM_KEEP_RELEASES     — past releases to retain (default 1 since 2026-05-15
+#                          when design-docs was added as the 4th app; previously
+#                          2 after the May 12 disk-full incident reduced it from
+#                          5. 4 apps × ~1 GB node_modules per release can
+#                          overflow small 2C4G cloud disks at retention=2.
+#                          Override per deploy via VM_KEEP_RELEASES if the VM
+#                          has enough disk for deeper rollback history).
+#
+# CONNECTIVITY NOTE:
+# GH-hosted runners sit in US/EU. Cross-region SSH to any cloud VM can be flaky
+# during peak hours. If deploys time out, register a self-hosted runner in the
+# same cloud/region/VPC and add a matching `runs-on` override.
+
+on:
+  workflow_dispatch:
+    inputs:
+      apps:
+        description: "Apps to deploy (space-separated subset of: landing web api idp auth design pebble sailor-docs router forge admin). Empty = auto-detect."
+        required: false
+        default: ""
+      reason:
+        description: "Reason (shown in run summary)"
+        required: false
+        default: ""
+  # Auto CI/CD on this VM (allowlisted). Other apps remain workflow_dispatch.
+  push:
+    branches: [main]
+    paths:
+      - "apps/design/**"
+      # The design site renders @nebutra/ui against the token source, so a change
+      # confined to these packages is precisely the change it exists to show. The
+      # per-app filter below already tests `packages/design/**` in five places,
+      # but those filters only run once the workflow has been triggered — and
+      # without this line it never was. A token fix landed, CI went green, and
+      # design.nebutra.com kept serving the old skins with nothing reporting a
+      # failure.
+      - "packages/design/**"
+      - "apps/forge/**"
+      - "apps/router/**"
+      - "apps/pebble/**"
+      - "backends/gateway/**"
+      - "packages/ai/forge-runtime/**"
+      - "packages/ai/forge-dns-leak/**"
+      - "packages/platform/router-supply/**"
+      - "infra/runtime/nginx/conf.d/*.nebutra.com.conf"
+      - "infra/runtime/nginx/nginx.conf"
+      - "infra/ops/scripts/ecs-deploy-remote.sh"
+      - "infra/ops/scripts/carina-codeploy.sh"
+      - "infra/ops/scripts/install-carina-daemon.sh"
+      - "infra/ops/scripts/configure-api-carina-env.sh"
+      - "infra/ops/scripts/carina-version.sh"
+      - "infra/ops/carina.pin"
+      - ".github/workflows/deploy-ecs.yml"
+
+permissions:
+  contents: read
+
+# Serialise deploys to one VM target — never run two in parallel.
+concurrency:
+  group: deploy-cloud-vm-prod
+  cancel-in-progress: false
+
+env:
+  NODE_VERSION: "24"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+  TURBO_TELEMETRY_DISABLED: "1"
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  # ──────────────────────────────────────────────────────────────────────
+  # detect-changes — figure out which apps actually need rebuilding.
+  # On workflow_dispatch with explicit `apps`, we honour the input.
+  # ──────────────────────────────────────────────────────────────────────
+  detect-changes:
+    name: Detect changed apps
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      landing:     ${{ steps.resolve.outputs.landing }}
+      web:         ${{ steps.resolve.outputs.web }}
+      api:         ${{ steps.resolve.outputs.api }}
+      idp:         ${{ steps.resolve.outputs.idp }}
+      auth:        ${{ steps.resolve.outputs.auth }}
+      design:      ${{ steps.resolve.outputs.design }}
+      pebble:      ${{ steps.resolve.outputs.pebble }}
+      sailor-docs: ${{ steps.resolve.outputs['sailor-docs'] }}
+      router:      ${{ steps.resolve.outputs.router }}
+      forge:       ${{ steps.resolve.outputs.forge }}
+      admin:       ${{ steps.resolve.outputs.admin }}
+      any:         ${{ steps.resolve.outputs.any }}
+      # Dynamic Next build matrix — only selected apps (no false-green skips).
+      next_matrix: ${{ steps.resolve.outputs.next_matrix }}
+      next_any:    ${{ steps.resolve.outputs.next_any }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 2
+
+      - name: Path filter
+        id: filter
+        uses: dorny/paths-filter@d1c1ffe0248fe513906c8e24db8ea791d46f8590 # v3
+        with:
+          # NOTE: include `.github/workflows/deploy-ecs.yml` in every app's
+          # filter. Without it, edits to this workflow (e.g. build env, deploy
+          # script, smoke-test logic) don't trigger any app rebuild, leaving
+          # the new workflow behaviour live but the apps it deploys stale.
+          # That bit us during the May 12 /sign-in outage — see commit history.
+          filters: |
+            landing:
+              - 'apps/landing/**'
+              - 'packages/**'
+              - 'pnpm-lock.yaml'
+              - 'infra/iac/ecs/**'
+              - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
+              - '.github/workflows/deploy-ecs.yml'
+            web:
+              - 'apps/web/**'
+              - 'packages/**'
+              - 'pnpm-lock.yaml'
+              - 'infra/iac/ecs/**'
+              - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
+              - '.github/workflows/deploy-ecs.yml'
+            api:
+              - 'backends/gateway/**'
+              - 'packages/**'
+              - 'pnpm-lock.yaml'
+              - 'infra/iac/ecs/**'
+              - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/ops/carina.pin'
+              - 'infra/ops/scripts/carina-*.sh'
+              - 'infra/ops/scripts/install-carina-daemon.sh'
+              - 'infra/ops/scripts/configure-api-carina-env.sh'
+              - 'infra/runtime/nginx/**'
+              - '.github/workflows/deploy-ecs.yml'
+            # Tighter filter for main-push auto-CI (avoids packages/** fan-out).
+            # Include Carina pin/ops so upstream version bumps redeploy api-gateway
+            # and refresh /var/carina/bin (co-deploy only runs after api start).
+            api-core:
+              - 'backends/gateway/**'
+              - 'infra/ops/carina.pin'
+              - 'infra/ops/scripts/carina-*.sh'
+              - 'infra/ops/scripts/install-carina-daemon.sh'
+              - 'infra/ops/scripts/configure-api-carina-env.sh'
+            idp:
+              - 'apps/idp/**'
+              - 'packages/iam/oauth-server/**'
+              - 'packages/platform/db/**'
+              - 'packages/design/**'
+              - 'pnpm-lock.yaml'
+              - 'infra/iac/ecs/**'
+              - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
+              - '.github/workflows/deploy-ecs.yml'
+            auth:
+              - 'apps/auth/**'
+              - 'packages/iam/auth/**'
+              - 'packages/platform/db/**'
+              - 'packages/design/**'
+              - 'pnpm-lock.yaml'
+              - 'infra/iac/ecs/**'
+              - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
+              - '.github/workflows/deploy-ecs.yml'
+            design:
+              - 'apps/design/**'
+              - 'packages/design/**'
+              # The four every other app lists. Without them a change to the
+              # deploy script, the vhost, the task definition or this workflow
+              # redeploys the whole fleet except the design site, which then
+              # runs on an older image than everything around it.
+              - 'pnpm-lock.yaml'
+              - 'infra/iac/ecs/**'
+              - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
+              - '.github/workflows/deploy-ecs.yml'
+            # apps/design-docs retired 2026-08-07 — its content is on
+            # design.nebutra.com now, rendered from source rather than described
+            # in MDX. The twenty-two enumerations that named it were left in
+            # place at the time behind a path nothing matches, because they
+            # include positional arguments to emit_next_matrix and renumbering
+            # those by hand is how this workflow has previously reported success
+            # while deploying nothing.
+            #
+            # They are gone as of 2026-08-11, once the closure test could see the
+            # dynamic matrix and check the renumbering. Deleting an enumeration
+            # is worth more than guarding one.
+            pebble:
+              - 'apps/pebble/**'
+              - 'infra/runtime/nginx/**'
+            sailor-docs:
+              - 'apps/sailor-docs/**'
+              - 'packages/**'
+              - 'pnpm-lock.yaml'
+              - 'infra/iac/ecs/**'
+              - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
+              - '.github/workflows/deploy-ecs.yml'
+            router:
+              - 'apps/router/**'
+              - 'packages/platform/router-supply/**'
+              - 'packages/platform/prepaid-wallet/**'
+              - 'packages/ai/ai-providers/**'
+              - 'packages/iam/auth/**'
+              - 'packages/design/**'
+              - 'pnpm-lock.yaml'
+              - 'infra/iac/ecs/**'
+              - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
+              - '.github/workflows/deploy-ecs.yml'
+            admin:
+              - 'apps/admin/**'
+              - 'packages/iam/permissions/**'
+              - 'packages/platform/db/**'
+              - 'packages/design/**'
+              - 'pnpm-lock.yaml'
+              - 'infra/iac/ecs/**'
+              - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
+              - '.github/workflows/deploy-ecs.yml'
+            forge:
+              - 'apps/forge/**'
+              - 'packages/ai/forge-runtime/**'
+              - 'packages/platform/prepaid-wallet/**'
+              - 'packages/iam/auth/**'
+              - 'packages/design/**'
+              - 'pnpm-lock.yaml'
+              - 'infra/iac/ecs/**'
+              - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
+              - '.github/workflows/deploy-ecs.yml'
+
+      - name: Resolve target apps
+        id: resolve
+        env:
+          EVENT_NAME:     ${{ github.event_name }}
+          INPUT_APPS:     ${{ github.event.inputs.apps }}
+          F_LANDING:      ${{ steps.filter.outputs.landing }}
+          F_WEB:          ${{ steps.filter.outputs.web }}
+          F_API:          ${{ steps.filter.outputs.api }}
+          F_API_CORE:     ${{ steps.filter.outputs['api-core'] }}
+          F_IDP:          ${{ steps.filter.outputs.idp }}
+          F_AUTH:         ${{ steps.filter.outputs.auth }}
+          F_DESIGN:       ${{ steps.filter.outputs.design }}
+          F_PEBBLE:       ${{ steps.filter.outputs.pebble }}
+          F_SAILOR_DOCS:  ${{ steps.filter.outputs['sailor-docs'] }}
+          F_ROUTER:       ${{ steps.filter.outputs.router }}
+          F_FORGE:        ${{ steps.filter.outputs.forge }}
+          F_ADMIN:        ${{ steps.filter.outputs.admin }}
+        run: |
+          normalize_apps() {
+            printf '%s' "$1" | tr ',\n\t' '    ' | xargs
+          }
+
+          contains_app() {
+            case " $1 " in
+              *" $2 "*) echo true ;;
+              *) echo false ;;
+            esac
+          }
+
+
+          # Build dynamic Next matrix — only selected apps (no false-green skips).
+          emit_next_matrix() {
+            local landing="$1" web="$2" idp="$3" auth="$4"
+            local pebble="$5" sailor_docs="$6" router="$7" forge="$8" admin="$9"
+            local design="${10}"
+            local items=()
+            if [ "$landing" = "true" ]; then items+=('{"app":"landing","package":"@nebutra/landing","workspace":"apps/landing","kind":"next-standalone","build_command":"build","site_url":"https://nebutra.com"}'); fi
+            if [ "$web" = "true" ]; then items+=('{"app":"web","package":"@nebutra/web","workspace":"apps/web","kind":"next-standalone","build_command":"build:next","site_url":"https://app.nebutra.com"}'); fi
+            if [ "$idp" = "true" ]; then items+=('{"app":"idp","package":"@nebutra/idp","workspace":"apps/idp","kind":"next-standalone","build_command":"build","site_url":"https://sso.nebutra.com"}'); fi
+            if [ "$auth" = "true" ]; then items+=('{"app":"auth","package":"@nebutra/auth-center","workspace":"apps/auth","kind":"next-standalone","build_command":"build","site_url":"https://auth.nebutra.com"}'); fi
+            if [ "$design" = "true" ]; then items+=('{"app":"design","package":"@nebutra/design","workspace":"apps/design","kind":"next-standalone","build_command":"build","site_url":"https://design.nebutra.com"}'); fi
+            if [ "$pebble" = "true" ]; then items+=('{"app":"pebble","package":"@nebutra/pebble-site","workspace":"apps/pebble","kind":"next-standalone","build_command":"build","site_url":"https://pebble.nebutra.com"}'); fi
+            if [ "$sailor_docs" = "true" ]; then items+=('{"app":"sailor-docs","package":"@nebutra/sailor-docs","workspace":"apps/sailor-docs","kind":"next-standalone","build_command":"build:vm","site_url":"https://docs.nebutra.com"}'); fi
+            if [ "$router" = "true" ]; then items+=('{"app":"router","package":"@nebutra/router","workspace":"apps/router","kind":"next-standalone","build_command":"build","site_url":"https://router.nebutra.com"}'); fi
+            if [ "$forge" = "true" ]; then items+=('{"app":"forge","package":"@nebutra/forge","workspace":"apps/forge","kind":"next-standalone","build_command":"build","site_url":"https://forge.nebutra.com"}'); fi
+            if [ "$admin" = "true" ]; then items+=('{"app":"admin","package":"@nebutra/admin","workspace":"apps/admin","kind":"next-standalone","build_command":"build","site_url":"https://admin.nebutra.com"}'); fi
+            local joined=""
+            if [ "${#items[@]}" -gt 0 ]; then
+              local IFS=,
+              joined="${items[*]}"
+            fi
+            echo "next_matrix=[${joined}]"
+            if [ "${#items[@]}" -gt 0 ]; then
+              echo "next_any=true"
+            else
+              echo "next_any=false"
+            fi
+          }
+
+          # main push auto-CI allowlist: product edges + api-gateway on this VM.
+          # Use api-core (backends/gateway only) so packages/** does not fan out.
+          # Nginx-only edits still match forge/router/api/pebble filters via
+          # their shared infra/runtime/nginx/** paths — prefer forge as carrier
+          # when no app source changed.
+          if [ "${EVENT_NAME:-}" = "push" ]; then
+            api="${F_API_CORE:-false}"
+            forge="${F_FORGE:-false}"
+            router="${F_ROUTER:-false}"
+            pebble="${F_PEBBLE:-false}"
+            # design is on the push list because it is the acceptance surface for
+            # the token pipeline: when a token or a component changes, the page
+            # that renders them is the thing that should show it. Its filter
+            # includes packages/design/**, so that is exactly when it fires.
+            design="${F_DESIGN:-false}"
+            if [ "$api" != "true" ] && [ "$forge" != "true" ] && [ "$router" != "true" ] && [ "$pebble" != "true" ] && [ "$design" != "true" ]; then
+              # Shared deploy/nginx/workflow-only change: ship via forge so vhosts update.
+              forge=true
+            fi
+            any=false
+            if [ "$api" = "true" ] || [ "$forge" = "true" ] || [ "$router" = "true" ] || [ "$pebble" = "true" ] || [ "$design" = "true" ]; then
+              any=true
+            fi
+            {
+              echo "landing=false"
+              echo "web=false"
+              echo "api=$api"
+              echo "idp=false"
+              echo "auth=false"
+              echo "design=$design"
+              echo "pebble=$pebble"
+              echo "sailor-docs=false"
+              echo "router=$router"
+              echo "forge=$forge"
+              echo "admin=false"
+              echo "any=$any"
+              emit_next_matrix false false false false "$pebble" false "$router" "$forge" false "$design"
+            } >> "$GITHUB_OUTPUT"
+            echo "Auto-CI push: api=$api forge=$forge router=$router pebble=$pebble design=$design any=$any"
+            exit 0
+          fi
+
+          normalized_apps=""
+          if [ -n "${INPUT_APPS:-}" ]; then
+            normalized_apps="$(normalize_apps "$INPUT_APPS")"
+            unknown_apps=""
+            for app in $normalized_apps; do
+              case "$app" in
+                landing|web|api|idp|auth|design|pebble|sailor-docs|router|forge|admin) ;;
+                *) unknown_apps="$unknown_apps $app" ;;
+              esac
+            done
+
+            if [ -n "$unknown_apps" ]; then
+              echo "::error::Unsupported apps: $(echo "$unknown_apps" | xargs). Allowed: landing web api idp auth design pebble sailor-docs router forge admin"
+              exit 1
+            fi
+          fi
+
+          {
+            if [ -n "$normalized_apps" ]; then
+              landing=$(contains_app "$normalized_apps" landing)
+              web=$(contains_app "$normalized_apps" web)
+              api=$(contains_app "$normalized_apps" api)
+              idp=$(contains_app "$normalized_apps" idp)
+              auth=$(contains_app "$normalized_apps" auth)
+              design=$(contains_app "$normalized_apps" design)
+              pebble=$(contains_app "$normalized_apps" pebble)
+              sailor_docs=$(contains_app "$normalized_apps" sailor-docs)
+              router=$(contains_app "$normalized_apps" router)
+              forge=$(contains_app "$normalized_apps" forge)
+              admin=$(contains_app "$normalized_apps" admin)
+              echo "landing=$landing"
+              echo "web=$web"
+              echo "api=$api"
+              echo "idp=$idp"
+              echo "auth=$auth"
+              echo "design=$design"
+              echo "pebble=$pebble"
+              echo "sailor-docs=$sailor_docs"
+              echo "router=$router"
+              echo "forge=$forge"
+              echo "admin=$admin"
+              echo "any=true"
+              emit_next_matrix "$landing" "$web" "$idp" "$auth" "$pebble" "$sailor_docs" "$router" "$forge" "$admin" "$design"
+            else
+              echo "landing=$F_LANDING"
+              echo "web=$F_WEB"
+              echo "api=$F_API"
+              echo "idp=$F_IDP"
+              echo "auth=$F_AUTH"
+              echo "design=$F_DESIGN"
+              echo "pebble=$F_PEBBLE"
+              echo "sailor-docs=$F_SAILOR_DOCS"
+              echo "router=$F_ROUTER"
+              echo "forge=$F_FORGE"
+              echo "admin=$F_ADMIN"
+              echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_IDP" == "true" || "$F_AUTH" == "true" || "$F_PEBBLE" == "true" || "$F_SAILOR_DOCS" == "true" || "$F_ROUTER" == "true" || "$F_FORGE" == "true" || "$F_ADMIN" == "true" ]] && echo true || echo false)"
+              emit_next_matrix "$F_LANDING" "$F_WEB" "$F_IDP" "$F_AUTH" "$F_PEBBLE" "$F_SAILOR_DOCS" "$F_ROUTER" "$F_FORGE" "$F_ADMIN" "$F_DESIGN"
+            fi
+          } >> "$GITHUB_OUTPUT"
+
+  # ──────────────────────────────────────────────────────────────────────
+  # build-next — build frontend docs/app artifacts and package as tarballs.
+  # All PM2 frontend fallbacks ship Next standalone bundles. apps/web keeps
+  # Vite as the product-app development/runtime migration target, but VM must
+  # run the Next server so route handlers such as /signup/remote and
+  # /desktop-auth/complete remain available during fallback deploys.
+  # ──────────────────────────────────────────────────────────────────────
+  build-next:
+    name: Build ${{ matrix.app }} VM artifact
+    needs: detect-changes
+    # Dynamic matrix: only *selected* apps appear. Unselected apps are absent
+    # (not a green 4s "Skip if not needed" job that hid "auth never built").
+    # Job-level `if: matrix.*` is invalid in GHA — use fromJson matrix instead.
+    if: needs.detect-changes.outputs.next_any == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.detect-changes.outputs.next_matrix) }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache Turborepo local artifacts
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .turbo/cache
+          key: turbo-ecs-next-${{ runner.os }}-${{ matrix.app }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+          restore-keys: |
+            turbo-ecs-next-${{ runner.os }}-${{ matrix.app }}-${{ hashFiles('pnpm-lock.yaml') }}-
+            turbo-ecs-next-${{ runner.os }}-${{ matrix.app }}-
+            turbo-ecs-next-${{ runner.os }}-
+
+      - name: Cache Next.js build artifacts
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ${{ matrix.workspace }}/.next/cache
+          key: next-ecs-${{ runner.os }}-${{ matrix.app }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+          restore-keys: |
+            next-ecs-${{ runner.os }}-${{ matrix.app }}-${{ hashFiles('pnpm-lock.yaml') }}-
+            next-ecs-${{ runner.os }}-${{ matrix.app }}-
+
+      - name: Build workspace dependencies of ${{ matrix.package }}
+        # Build all transitive workspace deps first (the `^...` filter means
+        # "dependencies only, not the package itself"). Mirrors the pattern in
+        # .github/workflows/ci.yml — required so that workspace packages like
+        # @nebutra/brand, @nebutra/icons, @nebutra/ui produce their dist/ files
+        # before the frontend build resolves them.
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+        run: pnpm turbo build --filter="${{ matrix.package }}^..."
+
+      - name: Typecheck ${{ matrix.package }}
+        # Keep the VM fallback from packaging stale docs/design-system bundles
+        # when Next type generation, Fumadocs MDX, or downstream UI contracts
+        # fail before `next build` starts.
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+        run: pnpm --filter "${{ matrix.package }}" typecheck
+
+      - name: Build ${{ matrix.package }}
+        # NEXT_PUBLIC_* vars are baked into the client bundle at build time.
+        # Without them, layout.tsx falls back to http://localhost:3000 for
+        # metadataBase, and middleware self-fetches break with EPROTO when
+        # nginx terminates TLS but the bundle thinks the origin is localhost.
+        # These are non-secret prod URLs — safe to hardcode here.
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+          NEXT_PUBLIC_SITE_URL: ${{ matrix.site_url }}
+          NEXT_PUBLIC_APP_URL: "https://app.nebutra.com"
+          NEXT_PUBLIC_API_URL: "https://api.nebutra.com"
+          NEXT_PUBLIC_API_GATEWAY_URL: "https://api.nebutra.com"
+          NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
+          VITE_API_GATEWAY_URL: ${{ vars.VITE_API_GATEWAY_URL || vars.NEXT_PUBLIC_API_GATEWAY_URL || 'https://api.nebutra.com' }}
+          VITE_AUTH_PROVIDER: ${{ vars.VITE_AUTH_PROVIDER || vars.AUTH_PROVIDER || 'better-auth' }}
+          VITE_AUTH_API_URL: ${{ vars.VITE_AUTH_API_URL || 'https://api.nebutra.com/api/auth' }}
+          # Build-time placeholder for server env validation. Next.js collects
+          # page data by loading each route module at build time, which triggers
+          # @t3-oss/env-nextjs Zod validation (`DATABASE_URL: z.string().url()`).
+          # Without a value the build crashes with "Invalid environment variables"
+          # while inspecting routes like /api/me/public. Real DATABASE_URL lives
+          # in /var/www/nebutra/web/current/.env on the VM and is read at
+          # runtime by the standalone server.
+          DATABASE_URL: "postgresql://build-placeholder:placeholder@localhost:5432/build"
+          REDIS_URL: "redis://localhost:6379"
+          OIDC_ISSUER: "https://sso.nebutra.com"
+          OIDC_COOKIE_KEYS: "build-placeholder-cookie-key-one-000000,build-placeholder-cookie-key-two-000000"
+          OIDC_ENABLE_CLIENT_CREDENTIALS: "false"
+          # Force standalone output for VM — landing's next.config gates
+          # `output: "standalone"` on this env so Vercel builds skip the trace
+          # cost. This workflow needs the standalone bundle for assembly below.
+          NEXT_OUTPUT: standalone
+          # Forge root metadata also reads these at build time. The deploy job
+          # still writes them into the VM .env so request-time tags stay live.
+          GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+          BING_SITE_VERIFICATION: ${{ vars.BING_SITE_VERIFICATION }}
+        run: pnpm --filter ${{ matrix.package }} ${{ matrix.build_command }}
+
+      # Next standalone output is at <workspace>/.next/standalone/. Route
+      # handlers are part of this server artifact, which is why apps/web cannot
+      # be assembled from a static Vite dist/ bundle for VM fallback.
+      - name: Assemble VM bundle
+        run: |
+          set -euo pipefail
+          WS="${{ matrix.workspace }}"
+          STAGE="$RUNNER_TEMP/stage-${{ matrix.app }}"
+          rm -rf "$STAGE"
+          mkdir -p "$STAGE"
+
+          if [ "${{ matrix.kind }}" != "next-standalone" ]; then
+            echo "::error::Unsupported VM frontend artifact kind: ${{ matrix.kind }}"
+            exit 1
+          fi
+
+          cp -r "$WS/.next/standalone/." "$STAGE/"
+          mkdir -p "$STAGE/$WS/.next"
+          cp -r "$WS/.next/static" "$STAGE/$WS/.next/static"
+          # Turbopack may place external package aliases under .next/node_modules
+          # (e.g. shiki-<hash>). Merge them into the staged app tree.
+          if [ -d "$WS/.next/node_modules" ]; then
+            mkdir -p "$STAGE/$WS/.next/node_modules"
+            cp -a "$WS/.next/node_modules/." "$STAGE/$WS/.next/node_modules/"
+          fi
+          if [ -d "$STAGE/$WS/.next/node_modules" ]; then
+            mkdir -p "$STAGE/$WS/node_modules"
+            for d in "$STAGE/$WS/.next/node_modules"/shiki-*; do
+              [ -e "$d" ] || continue
+              base="$(basename "$d")"
+              ln -sfn "../.next/node_modules/${base}" "$STAGE/$WS/node_modules/${base}"
+            done
+          fi
+          if [ -d "$WS/public" ]; then
+            cp -r "$WS/public" "$STAGE/$WS/public"
+          fi
+
+          # Forge md-to-pdf: Playwright is serverExternalPackages — copy into
+          # standalone so the VM can import it and install Chromium browsers.
+          if [ "${{ matrix.app }}" = "forge" ]; then
+            echo "Copying playwright into forge standalone bundle..."
+            STAGE="$STAGE" node scripts/copy-forge-playwright-to-standalone.mjs
+          fi
+
+          # public/brand is gitignored and produced by `pnpm brand:sync` during
+          # app build (landing/web/auth/forge/router). Fail closed if the app
+          # chrome expects logos but the bundle is missing them — otherwise
+          # forge/router ship with broken header images in production.
+          if [ -f "$WS/src/components/brand-logo.tsx" ] || [ -f "$WS/src/components/brand-logo.ts" ]; then
+            for logo in logo-color.svg logo-horizontal-en.svg; do
+              if [ ! -f "$STAGE/$WS/public/brand/$logo" ]; then
+                echo "::error::Missing $WS/public/brand/$logo in VM bundle (run brand:sync in build)"
+                ls -la "$STAGE/$WS/public" || true
+                ls -la "$STAGE/$WS/public/brand" || true
+                exit 1
+              fi
+            done
+            echo "brand assets ok: $STAGE/$WS/public/brand/{logo-color,logo-horizontal-en}.svg"
+          fi
+
+          ls -la "$STAGE/$WS"
+          tar -czf "$RUNNER_TEMP/nebutra-${{ matrix.app }}-${{ github.sha }}.tar.gz" -C "$STAGE" .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: bundle-${{ matrix.app }}
+          path: ${{ runner.temp }}/nebutra-${{ matrix.app }}-${{ github.sha }}.tar.gz
+          retention-days: 7
+          if-no-files-found: error
+
+  # ──────────────────────────────────────────────────────────────────────
+  # build-api — pnpm-deploy bundles the api-gateway with hoisted prod deps.
+  # ──────────────────────────────────────────────────────────────────────
+  build-api:
+    name: Build api-gateway
+    needs: detect-changes
+    if: needs.detect-changes.outputs.api == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache Turborepo local artifacts
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .turbo/cache
+          key: turbo-ecs-api-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+          restore-keys: |
+            turbo-ecs-api-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
+            turbo-ecs-api-${{ runner.os }}-
+
+      - name: Build workspace dependencies of api-gateway
+        run: pnpm turbo build --filter="@nebutra/gateway^..."
+
+      - name: Build api-gateway
+        run: pnpm --filter @nebutra/gateway build
+
+      - name: pnpm deploy → self-contained bundle
+        run: |
+          set -euo pipefail
+          STAGE="$RUNNER_TEMP/stage-api"
+          rm -rf "$STAGE"
+          # `pnpm deploy` resolves into $STAGE (outside the repo), so the
+          # repo's .npmrc trust-policy is not consulted. NPM_CONFIG_TRUST_POLICY
+          # also isn't honored (pnpm 10 didn't add that mapping for the new
+          # config). Use the CLI flag form — `--config.<name>=<value>` is the
+          # contract that ships in pnpm 10 for one-shot config overrides.
+          pnpm --config.trust-policy=permissive deploy \
+            --filter @nebutra/gateway --prod --legacy "$STAGE"
+          # Compile/rewrite workspace package exports so Node can boot without tsx
+          # (many monorepo packages still advertise ./src/*.ts for DX).
+          node scripts/prepare-pnpm-deploy-node-runtime.mjs "$STAGE"
+          # Smoke: syntax-check entry; prepare script already fails if any
+          # @nebutra package still advertises .ts runtime exports.
+          node --check "$STAGE/dist/node.js"
+          ls -la "$STAGE"
+          tar -czf "$RUNNER_TEMP/nebutra-api-${{ github.sha }}.tar.gz" -C "$STAGE" .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: bundle-api
+          path: ${{ runner.temp }}/nebutra-api-${{ github.sha }}.tar.gz
+          retention-days: 7
+          if-no-files-found: error
+
+  # ──────────────────────────────────────────────────────────────────────
+  # deploy — fetch artifacts, upload over SSH, run remote helper.
+  # ──────────────────────────────────────────────────────────────────────
+  deploy:
+    name: Deploy to Cloud VM
+    needs: [detect-changes, build-next, build-api]
+    if: |
+      always() &&
+      needs.detect-changes.outputs.any == 'true' &&
+      (needs.build-next.result == 'success' || needs.build-next.result == 'skipped') &&
+      (needs.build-api.result  == 'success' || needs.build-api.result  == 'skipped') &&
+      !(needs.build-next.result == 'skipped' && needs.build-api.result == 'skipped')
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment: ecs-prod
+    env:
+      VM_PROVIDER:       ${{ vars.VM_PROVIDER || vars.CLOUD_VM_PROVIDER || vars.ECS_PROVIDER || 'unknown' }}
+      ECS_HOST:          ${{ vars.VM_HOST || vars.CLOUD_VM_HOST || vars.ECS_HOST }}
+      ECS_USER:          ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
+      ECS_SSH_PORT:      ${{ vars.VM_SSH_PORT || vars.CLOUD_VM_SSH_PORT || vars.ECS_SSH_PORT || '22' }}
+      ECS_DEPLOY_ROOT:   ${{ vars.VM_DEPLOY_ROOT || vars.CLOUD_VM_DEPLOY_ROOT || vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}
+      ECS_KEEP_RELEASES: ${{ vars.VM_KEEP_RELEASES || vars.CLOUD_VM_KEEP_RELEASES || vars.ECS_KEEP_RELEASES || '1' }}
+    steps:
+      - name: Verify deploy targets configured
+        run: |
+          [ -n "${ECS_HOST:-}" ] || { echo "::error::VM_HOST, CLOUD_VM_HOST, or legacy ECS_HOST repository variable is not set"; exit 1; }
+          [ -n "${ECS_USER:-}" ] || { echo "::error::VM_USER, CLOUD_VM_USER, or legacy ECS_USER repository variable is not set"; exit 1; }
+
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          # conf.d is taken as a whole DIRECTORY, never a glob. actions/checkout
+          # runs sparse-checkout in cone mode, and cone mode takes directories —
+          # a pattern makes git exit 128 ("specify directories rather than
+          # patterns"), which fails every deploy before a single job body runs.
+          # Note these lines cannot move inside the block scalar below: in a `|`
+          # scalar a leading # is literal text, so each comment would be handed
+          # to git as a path.
+          #
+          # The directory form also means a newly added vhost is checked out
+          # without anyone remembering to list it here — which is the same reason
+          # the scp loop further down globs instead of enumerating hosts.
+          sparse-checkout: |
+            infra/iac/ecs/ecosystem.config.cjs
+            infra/ops/scripts/ecs-deploy-remote.sh
+            infra/runtime/nginx/nginx.conf
+            infra/runtime/nginx/conf.d
+
+      - name: Download landing bundle
+        if: needs.detect-changes.outputs.landing == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: bundle-landing
+          path: ${{ runner.temp }}/bundles
+
+      - name: Download web bundle
+        if: needs.detect-changes.outputs.web == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: bundle-web
+          path: ${{ runner.temp }}/bundles
+
+      - name: Download design bundle
+        if: needs.detect-changes.outputs.design == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: bundle-design
+          path: ${{ runner.temp }}/bundles
+
+      - name: Download pebble bundle
+        if: needs.detect-changes.outputs.pebble == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: bundle-pebble
+          path: ${{ runner.temp }}/bundles
+
+      - name: Download sailor-docs bundle
+        if: needs.detect-changes.outputs['sailor-docs'] == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: bundle-sailor-docs
+          path: ${{ runner.temp }}/bundles
+
+      - name: Download api bundle
+        if: needs.detect-changes.outputs.api == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: bundle-api
+          path: ${{ runner.temp }}/bundles
+
+      - name: Download idp bundle
+        if: needs.detect-changes.outputs.idp == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: bundle-idp
+          path: ${{ runner.temp }}/bundles
+
+      - name: Download auth bundle
+        if: needs.detect-changes.outputs.auth == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: bundle-auth
+          path: ${{ runner.temp }}/bundles
+
+      - name: Download router bundle
+        if: needs.detect-changes.outputs.router == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: bundle-router
+          path: ${{ runner.temp }}/bundles
+
+      - name: Download forge bundle
+        if: needs.detect-changes.outputs.forge == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: bundle-forge
+          path: ${{ runner.temp }}/bundles
+
+      - name: Download admin bundle
+        if: needs.detect-changes.outputs.admin == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: bundle-admin
+          path: ${{ runner.temp }}/bundles
+
+      - name: Configure SSH
+        env:
+          SSH_KEY:     ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.CLOUD_VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VM_SSH_KNOWN_HOSTS || secrets.CLOUD_VM_SSH_KNOWN_HOSTS || secrets.ECS_SSH_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          [ -n "${SSH_KEY:-}" ]     || { echo "::error::VM_SSH_PRIVATE_KEY, CLOUD_VM_SSH_PRIVATE_KEY, or legacy ECS_SSH_PRIVATE_KEY secret is not set"; exit 1; }
+          [ -n "${KNOWN_HOSTS:-}" ] || { echo "::error::VM_SSH_KNOWN_HOSTS, CLOUD_VM_SSH_KNOWN_HOSTS, or legacy ECS_SSH_KNOWN_HOSTS secret is not set"; exit 1; }
+          mkdir -p ~/.ssh
+          umask 077
+          printf '%s\n' "$SSH_KEY"     > ~/.ssh/id_deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_deploy ~/.ssh/known_hosts
+
+      - name: Pre-flight disk cleanup on Cloud VM
+        # Small cloud VMs often have limited root disks. Each release directory
+        # holds ~1 GB of node_modules, so KEEP_RELEASES=5 × 3 apps fills the
+        # disk and even upload staging can fail before the remote helper runs.
+        # This step SSHes in BEFORE upload and prunes:
+        #   1. Stale /tmp/nebutra-*.tar.gz and .incoming bundles from prior failed runs
+        #   2. Existing releases of APPS BEING DEPLOYED ONLY (never other live apps)
+        #      down to the upload headroom required by KEEP_RELEASES
+        #   3. Old pnpm store / apt caches as a last resort
+        # so the VM has enough headroom for the new bundle + extracted tree.
+        #
+        # CRITICAL: never loop every app when KEEP_RELEASES=1 (upload_keep=0) —
+        # that deleted the sole release of healthy siblings (forge/router/web)
+        # during a sailor-docs-only deploy and left PM2 serving deleted inodes → 500.
+        run: |
+          set -euo pipefail
+          remote_root=$(printf '%q' "${ECS_DEPLOY_ROOT:-/var/www/nebutra}")
+          keep_releases=$(printf '%q' "${ECS_KEEP_RELEASES:-1}")
+          # Only prune apps selected for this deploy.
+          prune_apps=""
+          if [ "${{ needs.detect-changes.outputs.landing }}" = "true" ]; then prune_apps="$prune_apps landing"; fi
+          if [ "${{ needs.detect-changes.outputs.web }}" = "true" ]; then prune_apps="$prune_apps web"; fi
+          if [ "${{ needs.detect-changes.outputs.api }}" = "true" ]; then prune_apps="$prune_apps api"; fi
+          if [ "${{ needs.detect-changes.outputs.idp }}" = "true" ]; then prune_apps="$prune_apps idp"; fi
+          if [ "${{ needs.detect-changes.outputs.auth }}" = "true" ]; then prune_apps="$prune_apps auth"; fi
+          if [ "${{ needs.detect-changes.outputs.design }}" = "true" ]; then prune_apps="$prune_apps design"; fi
+          if [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ]; then prune_apps="$prune_apps pebble"; fi
+          if [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ]; then prune_apps="$prune_apps sailor-docs"; fi
+          if [ "${{ needs.detect-changes.outputs.router }}" = "true" ]; then prune_apps="$prune_apps router"; fi
+          if [ "${{ needs.detect-changes.outputs.forge }}" = "true" ]; then prune_apps="$prune_apps forge"; fi
+          if [ "${{ needs.detect-changes.outputs.admin }}" = "true" ]; then prune_apps="$prune_apps admin"; fi
+          prune_apps="$(echo "$prune_apps" | xargs)"
+          prune_apps_q=$(printf '%q' "$prune_apps")
+          echo "Preflight will only prune releases for: ${prune_apps:-<none>}"
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+              -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+              -o ServerAliveInterval=30 -o ServerAliveCountMax=6 \
+              "${ECS_USER}@${ECS_HOST}" \
+              "ECS_DEPLOY_ROOT=${remote_root} ECS_KEEP_RELEASES=${keep_releases} PRUNE_APPS=${prune_apps_q} bash -s" <<'PREFLIGHT'
+          set -euo pipefail
+          incoming="${ECS_DEPLOY_ROOT:-/var/www/nebutra}/.incoming"
+          keep="${ECS_KEEP_RELEASES:-1}"
+          case "$keep" in
+            ''|*[!0-9]*) keep=1 ;;
+          esac
+          upload_keep=$((keep - 1))
+          [ "$upload_keep" -lt 0 ] && upload_keep=0
+          echo "--- disk before cleanup ---"
+          df -h / 2>/dev/null || df -h
+          echo "--- /tmp tarballs ---"
+          find /tmp -maxdepth 1 -name 'nebutra-*.tar.gz' -ls 2>/dev/null || true
+          find /tmp -maxdepth 1 -name 'nebutra-*.tar.gz' -delete 2>/dev/null || true
+          echo "--- incoming bundle staging ---"
+          mkdir -p "$incoming"
+          find "$incoming" -mindepth 1 -maxdepth 1 -print -exec rm -rf {} + 2>/dev/null || true
+          echo "--- pruning releases for deploy targets only (keep latest $upload_keep): ${PRUNE_APPS:-<none>} ---"
+          for app in ${PRUNE_APPS:-}; do
+            app_root="${ECS_DEPLOY_ROOT:-/var/www/nebutra}/$app"
+            dir="$app_root/releases"
+            [ -d "$dir" ] || continue
+            if [ -f "$app_root/current/.env" ] && [ ! -f "$app_root/.env" ]; then
+              cp -p "$app_root/current/.env" "$app_root/.env" || true
+              chmod 600 "$app_root/.env" 2>/dev/null || true
+            fi
+            extra=$(find "$dir" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' 2>/dev/null \
+                      | sort -nr | tail -n +"$((upload_keep + 1))" | cut -d' ' -f2- || true)
+            if [ -n "$extra" ]; then
+              echo "$app:"; echo "$extra"
+              echo "$extra" | xargs -r rm -rf
+            fi
+          done
+          echo "--- clear pnpm store cache (safe — pnpm rebuilds on next install) ---"
+          rm -rf ~/.local/share/pnpm/store 2>/dev/null || true
+          rm -rf ~/.pnpm-store 2>/dev/null || true
+          echo "--- clear apt + journal as last resort ---"
+          command -v apt-get >/dev/null 2>&1 && apt-get clean 2>/dev/null || true
+          command -v journalctl >/dev/null 2>&1 && journalctl --vacuum-time=2d 2>/dev/null || true
+          echo "--- disk after cleanup ---"
+          df -h / 2>/dev/null || df -h
+          PREFLIGHT
+        env:
+          ECS_HOST:        ${{ vars.VM_HOST || vars.CLOUD_VM_HOST || vars.ECS_HOST }}
+          ECS_USER:        ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
+          ECS_SSH_PORT:    ${{ vars.VM_SSH_PORT || vars.CLOUD_VM_SSH_PORT || vars.ECS_SSH_PORT || '22' }}
+          ECS_DEPLOY_ROOT: ${{ vars.VM_DEPLOY_ROOT || vars.CLOUD_VM_DEPLOY_ROOT || vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}
+
+      - name: Upload bundles + helper to Cloud VM
+        run: |
+          set -euo pipefail
+          # ServerAlive options keep the connection alive on slow / lossy
+          # GH-runner -> remote VM links. Without them, scp on a 100MB+
+          # bundle silently hangs forever when TCP keepalives are absent.
+          # 30s ping × 6 misses = drop after 3 min idle.
+          SCP_OPTS=(-i ~/.ssh/id_deploy -P "${ECS_SSH_PORT}" \
+                    -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+                    -o ServerAliveInterval=30 -o ServerAliveCountMax=6 \
+                    -C)
+          BUNDLES_DIR="${RUNNER_TEMP}/bundles"
+          REMOTE_BUNDLE_DIR="${ECS_DEPLOY_ROOT}/.incoming/${{ github.sha }}"
+          if [ ! -d "$BUNDLES_DIR" ] || [ -z "$(ls -A "$BUNDLES_DIR" 2>/dev/null)" ]; then
+            echo "::warning::No bundle artifacts to upload"; exit 1
+          fi
+
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+              -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+              -o ServerAliveInterval=30 -o ServerAliveCountMax=6 \
+              "${ECS_USER}@${ECS_HOST}" \
+              "rm -rf $(printf '%q' "$REMOTE_BUNDLE_DIR") && mkdir -p $(printf '%q' "$REMOTE_BUNDLE_DIR") && df -h $(printf '%q' "$ECS_DEPLOY_ROOT")"
+
+          # Upload bundles one at a time, each under a hard wall-clock cap.
+          #
+          # ServerAlive catches a link that has died; it cannot catch one that
+          # is merely crawling, and there was nothing else bounding the
+          # transfer. A 37MB bundle once took 44m50s and hit the job's
+          # timeout-minutes: 45 — which GitHub reports as `cancelled`, so a
+          # hung upload was indistinguishable from somebody pressing cancel, and
+          # it left a half-written release behind that served 500s until PM2
+          # fell back. Diagnosing it took reading step timestamps.
+          #
+          # Ten minutes is roughly twenty times the normal transfer, so a
+          # legitimately slow link still lands; anything past it is stuck, and
+          # saying so beats waiting another half hour to be ambiguous about it.
+          SCP_TIMEOUT=600
+          for bundle in "$BUNDLES_DIR"/*.tar.gz; do
+            base=$(basename "$bundle")
+            size=$(du -h "$bundle" | cut -f1)
+            uploaded=""
+            for attempt in 1 2 3; do
+              echo "→ scp $base ($size) -> $REMOTE_BUNDLE_DIR/ (attempt $attempt, ${SCP_TIMEOUT}s cap)"
+              if timeout "$SCP_TIMEOUT" scp "${SCP_OPTS[@]}" "$bundle" "${ECS_USER}@${ECS_HOST}:${REMOTE_BUNDLE_DIR}/"; then
+                uploaded=1
+                break
+              fi
+              rc=$?
+              if [ "$rc" -eq 124 ]; then
+                echo "::warning::$base stalled past ${SCP_TIMEOUT}s on attempt $attempt"
+              else
+                echo "::warning::$base failed with exit $rc on attempt $attempt"
+              fi
+              sleep 10
+            done
+            if [ -z "$uploaded" ]; then
+              echo "::error::Could not upload $base ($size) after 3 attempts of ${SCP_TIMEOUT}s each. The link to ${ECS_HOST} is stalling, not just slow."
+              exit 1
+            fi
+          done
+
+          # Always re-upload the helper + runtime configs so the box stays in sync.
+          scp "${SCP_OPTS[@]}" infra/ops/scripts/ecs-deploy-remote.sh \
+            "${ECS_USER}@${ECS_HOST}:/tmp/ecs-deploy-remote.sh"
+          # Carina same-host co-deploy helpers (api-gateway post-start)
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+              -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+              "${ECS_USER}@${ECS_HOST}" \
+              'mkdir -p /tmp/carina-ops'
+          scp "${SCP_OPTS[@]}" \
+            infra/ops/scripts/carina-codeploy.sh \
+            infra/ops/scripts/install-carina-daemon.sh \
+            infra/ops/scripts/configure-api-carina-env.sh \
+            infra/ops/scripts/carina-version.sh \
+            infra/ops/carina.pin \
+            "${ECS_USER}@${ECS_HOST}:/tmp/carina-ops/"
+          # Pre-stage carina-daemon on the GH runner (US) then scp — ECS cannot
+          # reliably pull GitHub Releases in reasonable time from CN.
+          # Version comes from infra/ops/carina.pin unless CARINA_VERSION is set.
+          if [ -z "${CARINA_VERSION:-}" ]; then
+            # shellcheck source=infra/ops/scripts/carina-version.sh
+            source infra/ops/scripts/carina-version.sh
+            CARINA_VERSION="$(carina_version_from_pin)"
+          fi
+          ARCH_TAG="linux_amd64"
+          ASSET="carina_${CARINA_VERSION}_${ARCH_TAG}.tar.gz"
+          URL="https://github.com/Nebutra/carina/releases/download/v${CARINA_VERSION}/${ASSET}"
+          echo "Pre-staging carina-daemon v${CARINA_VERSION} from $URL"
+          mkdir -p /tmp/carina-stage
+          # Prefer origin on GH runners; fall back to CN proxies if origin flakes.
+          ok=0
+          for try_url in \
+            "$URL" \
+            "https://ghfast.top/$URL" \
+            "https://ghproxy.net/$URL" \
+            "https://mirror.ghproxy.com/$URL"
+          do
+            echo "  try $try_url"
+            if curl -fsSL --connect-timeout 20 --max-time 180 --retry 1 \
+                "$try_url" -o "/tmp/carina-stage/$ASSET" \
+              && tar -tzf "/tmp/carina-stage/$ASSET" >/dev/null 2>&1; then
+              ok=1
+              break
+            fi
+            rm -f "/tmp/carina-stage/$ASSET"
+          done
+          if [ "$ok" != "1" ]; then
+            echo "::error::failed to download carina release (origin + mirrors)"
+            exit 1
+          fi
+          tar -xzf "/tmp/carina-stage/$ASSET" -C /tmp/carina-stage
+          BIN="$(find /tmp/carina-stage -type f -name carina-daemon | head -1)"
+          KERNEL="$(find /tmp/carina-stage -type f -name carina-kernel-service | head -1)"
+          printf '%s\n' "$CARINA_VERSION" > /tmp/carina-stage/VERSION
+          scp "${SCP_OPTS[@]}" /tmp/carina-stage/VERSION \
+            "${ECS_USER}@${ECS_HOST}:/tmp/carina-ops/VERSION" || true
+          if [ -z "$BIN" ]; then
+            echo "::warning::carina-daemon not found in release archive — VM will try network install"
+          else
+            scp "${SCP_OPTS[@]}" "$BIN" \
+              "${ECS_USER}@${ECS_HOST}:/tmp/carina-ops/carina-daemon"
+          fi
+          if [ -z "$KERNEL" ]; then
+            echo "::warning::carina-kernel-service not found in release archive — daemon will not start without it"
+          else
+            # Required child process of carina-daemon (capability kernel).
+            scp "${SCP_OPTS[@]}" "$KERNEL" \
+              "${ECS_USER}@${ECS_HOST}:/tmp/carina-ops/carina-kernel-service"
+          fi
+          # Optional zig native tools (carina-scan, carina-patch, …) next to daemon.
+          mkdir -p /tmp/carina-stage/tools-out
+          while IFS= read -r -d '' tool; do
+            base="$(basename "$tool")"
+            case "$base" in
+              carina-daemon|carina-kernel-service|carina|carina-cli|carina-worker|carina-tui|carina-ui) continue ;;
+            esac
+            cp "$tool" "/tmp/carina-stage/tools-out/$base"
+          done < <(find /tmp/carina-stage -type f -name 'carina-*' -print0 2>/dev/null || true)
+          if [ -n "$(ls -A /tmp/carina-stage/tools-out 2>/dev/null || true)" ]; then
+            ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+                -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+                "${ECS_USER}@${ECS_HOST}" \
+                'mkdir -p /tmp/carina-ops/tools'
+            scp "${SCP_OPTS[@]}" /tmp/carina-stage/tools-out/* \
+              "${ECS_USER}@${ECS_HOST}:/tmp/carina-ops/tools/" || true
+          fi
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+              -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+              "${ECS_USER}@${ECS_HOST}" \
+              'chmod +x /tmp/carina-ops/*.sh /tmp/carina-ops/carina-daemon /tmp/carina-ops/carina-kernel-service /tmp/carina-ops/tools/* 2>/dev/null || chmod +x /tmp/carina-ops/*.sh'
+          scp "${SCP_OPTS[@]}" infra/iac/ecs/ecosystem.config.cjs \
+            "${ECS_USER}@${ECS_HOST}:${ECS_DEPLOY_ROOT}/ecosystem.config.cjs"
+          scp "${SCP_OPTS[@]}" infra/runtime/nginx/nginx.conf \
+            "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx.conf"
+          scp "${SCP_OPTS[@]}" infra/runtime/nginx/conf.d/proxy_params.conf \
+            "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-proxy_params.conf"
+          scp "${SCP_OPTS[@]}" infra/runtime/nginx/conf.d/security.conf \
+            "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-security.conf"
+          # Clear the staging area FIRST. /tmp survives between deploys and the
+          # remote script includes every /tmp/nebutra-vhost-* it finds, so a
+          # leftover from an earlier run keeps being deployed after the repo has
+          # stopped shipping it — a vhost deleted from the repo was undeletable.
+          # That is not hypothetical: a stale auth.nebutra.com.conf kept being
+          # injected alongside nginx.conf's own auth blocks, giving
+          # `duplicate upstream "nebutra_auth"` and failing every deploy on a
+          # file that no longer existed here.
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+              -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+              "${ECS_USER}@${ECS_HOST}" \
+              'rm -f /tmp/nebutra-vhost-*.nebutra.com.conf'
+
+          # Every vhost fragment, named after itself. Enumerating hosts here is
+          # how design.nebutra.com came to have a conf file in the repo that was
+          # never uploaded, leaving the host on the apex redirect.
+          for vhost in infra/runtime/nginx/conf.d/*.nebutra.com.conf; do
+            scp "${SCP_OPTS[@]}" "$vhost" \
+              "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-vhost-$(basename "$vhost")"
+          done
+
+      - name: Run remote deploy
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DIRECT_URL: ${{ secrets.DIRECT_URL }}
+          # DEPLOY_-prefixed duplicates, and they are not redundant.
+          #
+          # ecs-deploy-remote.sh sources the VM's existing per-app .env
+          # (source_runtime_env_file uses `set -a`) BEFORE composing the new one,
+          # which overwrites whatever this job forwarded. runtime_env_value then
+          # writes that sourced value straight back. The effect is a box pinned to
+          # the first DATABASE_URL it ever received: rotating this secret changes
+          # nothing, and the apps keep talking to whichever database they were
+          # first pointed at.
+          #
+          # runtime_env_value checks DEPLOY_<KEY> first, precisely so the deploy
+          # can override the file. Using it for the database URLs makes the repo
+          # the source of truth again.
+          DEPLOY_DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DEPLOY_DIRECT_URL: ${{ secrets.DIRECT_URL }}
+          # Non-bypassrls role assumed per tenant transaction. Belt and braces:
+          # DATABASE_URL already connects as this role, so RLS applies either
+          # way — but a future connection string that does not would silently
+          # take tenant isolation with it.
+          APP_DB_ROLE: ${{ vars.APP_DB_ROLE }}
+          SUPABASE_DATABASE_URL: ${{ secrets.SUPABASE_DATABASE_URL }}
+          SUPABASE_DIRECT_URL: ${{ secrets.SUPABASE_DIRECT_URL }}
+          AUTH_PROVIDER: ${{ vars.AUTH_PROVIDER || 'better-auth' }}
+          NEXT_PUBLIC_AUTH_PROVIDER: ${{ vars.NEXT_PUBLIC_AUTH_PROVIDER || vars.AUTH_PROVIDER || 'better-auth' }}
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || vars.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+          CLERK_WEBHOOK_SECRET: ${{ secrets.CLERK_WEBHOOK_SECRET }}
+          AUTH_SSO_DISCOVERY_PROVIDERS: ${{ vars.AUTH_SSO_DISCOVERY_PROVIDERS || secrets.AUTH_SSO_DISCOVERY_PROVIDERS }}
+          VITE_AUTH_PROVIDER: ${{ vars.VITE_AUTH_PROVIDER || vars.AUTH_PROVIDER || 'better-auth' }}
+          VITE_API_GATEWAY_URL: ${{ vars.VITE_API_GATEWAY_URL || vars.NEXT_PUBLIC_API_GATEWAY_URL || 'https://api.nebutra.com' }}
+          VITE_AUTH_API_URL: ${{ vars.VITE_AUTH_API_URL || 'https://api.nebutra.com/api/auth' }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+          # The control plane signs its own sessions with its own secret, NOT
+          # BETTER_AUTH_SECRET. Sharing that one would make a session minted by
+          # the tenant login centre verifiable here, which is the whole thing the
+          # host-only cookie in apps/admin/src/lib/auth.ts exists to prevent.
+          ADMIN_AUTH_SECRET: ${{ secrets.ADMIN_AUTH_SECRET }}
+          # The Access application's aud tag. apps/admin verifies the Cloudflare
+          # assertion against it, and REFUSES every request when it is unset —
+          # without an audience the check would accept an assertion minted for any
+          # other app in this account, which is a gate in name only. Not a secret
+          # (it is in every login redirect), but it must reach the VM.
+          ACCESS_AUD: ${{ vars.ACCESS_AUD || 'cef8151fcccb2be39d01c63b68eea989aa41042789c8bef0f0ff3e7a8aa991a9' }}
+          ACCESS_TEAM_DOMAIN: ${{ vars.ACCESS_TEAM_DOMAIN || 'nebutra.cloudflareaccess.com' }}
+          # Wraps the per-secret DEKs that @nebutra/vault stores in the database —
+          # OAuth client secrets among them, which is what lets sso.nebutra.com
+          # federate with a relying party that requires a client_secret.
+          #
+          # Without it getVault() throws "No vault provider detected", the OIDC
+          # adapter cannot recover any confidential client's secret and (by
+          # design) refuses to serve it. Nothing appears broken; the client simply
+          # never authenticates.
+          #
+          # The KEK is HKDF-derived from this value against a fixed salt, so it is
+          # deterministic across machines — the same key here and on the VM means
+          # an envelope written from a laptop is readable by the IdP. It also means
+          # ROTATING THIS VALUE ORPHANS EVERY STORED SECRET: re-encrypt through
+          # vault.rotateKek() before changing it, never by editing the secret.
+          #
+          # AWS_KMS_KEY_ID/_ARN takes precedence if ever set, which is the upgrade
+          # path — a KEK in KMS rather than one sitting in this .env next to
+          # DATABASE_URL.
+          VAULT_LOCAL_MASTER_KEY: ${{ secrets.VAULT_LOCAL_MASTER_KEY }}
+          # Login center owns Better Auth origin (multi-app RP model).
+          BETTER_AUTH_URL: ${{ vars.BETTER_AUTH_URL || 'https://auth.nebutra.com' }}
+          NEXT_PUBLIC_AUTH_URL: ${{ vars.NEXT_PUBLIC_AUTH_URL || 'https://auth.nebutra.com' }}
+          AUTH_COOKIE_DOMAIN: ${{ vars.AUTH_COOKIE_DOMAIN || '.nebutra.com' }}
+          NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://app.nebutra.com' }}
+          NEXT_PUBLIC_APP_URL: ${{ vars.NEXT_PUBLIC_APP_URL || 'https://app.nebutra.com' }}
+          NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL || 'https://api.nebutra.com' }}
+          NEXT_PUBLIC_API_GATEWAY_URL: ${{ vars.NEXT_PUBLIC_API_GATEWAY_URL || 'https://api.nebutra.com' }}
+          NEXT_PUBLIC_STUDIO_URL: ${{ vars.NEXT_PUBLIC_STUDIO_URL || 'https://studio.nebutra.com' }}
+          NEXT_PUBLIC_DOCS_URL: ${{ vars.NEXT_PUBLIC_DOCS_URL || 'https://docs.nebutra.com' }}
+          NEBUTRA_LANDING_ORIGIN: ${{ vars.NEBUTRA_LANDING_ORIGIN || 'https://nebutra.com' }}
+          NEBUTRA_SESSION_HINT_DOMAIN: ${{ vars.NEBUTRA_SESSION_HINT_DOMAIN || '.nebutra.com' }}
+          DOMAIN_LANDING: ${{ vars.DOMAIN_LANDING || 'https://nebutra.com' }}
+          DOMAIN_APP: ${{ vars.DOMAIN_APP || 'https://app.nebutra.com' }}
+          DOMAIN_API: ${{ vars.DOMAIN_API || 'https://api.nebutra.com' }}
+          DOMAIN_STUDIO: ${{ vars.DOMAIN_STUDIO || 'https://studio.nebutra.com' }}
+          LANDING_URL: ${{ vars.LANDING_URL || 'https://nebutra.com' }}
+          WEB_URL: ${{ vars.WEB_URL || 'https://app.nebutra.com' }}
+          STUDIO_URL: ${{ vars.STUDIO_URL || 'https://studio.nebutra.com' }}
+          CORS_ORIGINS: ${{ vars.CORS_ORIGINS }}
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+          UPSTASH_REDIS_URL: ${{ secrets.UPSTASH_REDIS_URL || secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_TOKEN: ${{ secrets.UPSTASH_REDIS_TOKEN || secrets.UPSTASH_REDIS_REST_TOKEN }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          OIDC_ISSUER: ${{ vars.OIDC_ISSUER || 'https://sso.nebutra.com' }}
+          OIDC_COOKIE_KEYS: ${{ secrets.OIDC_COOKIE_KEYS }}
+          OIDC_ENABLE_CLIENT_CREDENTIALS: ${{ vars.OIDC_ENABLE_CLIENT_CREDENTIALS || 'false' }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID || secrets.GOOGLE_CLIENT_ID }}
+          GITHUB_CLIENT_ID: ${{ secrets.GITHUB_CLIENT_ID || secrets.GH_OAUTH_CLIENT_ID }}
+          GITHUB_CLIENT_SECRET: ${{ secrets.GITHUB_CLIENT_SECRET || secrets.GH_OAUTH_CLIENT_SECRET }}
+          FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID || vars.FEISHU_APP_ID }}
+          FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
+          FEISHU_OAUTH_SCOPES: ${{ vars.FEISHU_OAUTH_SCOPES }}
+          FEISHU_ALLOWED_TENANT_KEYS: ${{ vars.FEISHU_ALLOWED_TENANT_KEYS || secrets.FEISHU_ALLOWED_TENANT_KEYS }}
+          FEISHU_OAUTH_BASE_URL: ${{ vars.FEISHU_OAUTH_BASE_URL }}
+          FEISHU_AUTHORIZATION_URL: ${{ vars.FEISHU_AUTHORIZATION_URL }}
+          FEISHU_TOKEN_URL: ${{ vars.FEISHU_TOKEN_URL }}
+          FEISHU_USER_INFO_URL: ${{ vars.FEISHU_USER_INFO_URL }}
+          FEISHU_REDIRECT_URI: ${{ vars.FEISHU_REDIRECT_URI }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL || vars.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY || secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY || secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_WEBHOOK_SECRET: ${{ secrets.SUPABASE_WEBHOOK_SECRET }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL || secrets.NEXT_PUBLIC_SUPABASE_URL || secrets.SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || secrets.SUPABASE_PUBLISHABLE_KEY }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || secrets.SUPABASE_ANON_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_AUDIENCE_ID: ${{ secrets.RESEND_AUDIENCE_ID }}
+          RESEND_FROM: ${{ vars.RESEND_FROM || secrets.RESEND_FROM }}
+          EMAIL_FROM: ${{ vars.EMAIL_FROM || secrets.EMAIL_FROM }}
+          EMAIL_PROVIDER: ${{ vars.EMAIL_PROVIDER }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST || vars.SMTP_HOST }}
+          SMTP_PORT: ${{ vars.SMTP_PORT }}
+          SMTP_SECURE: ${{ vars.SMTP_SECURE }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || vars.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}
+          STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+          STRIPE_PRICE_ID_PRO_MONTHLY: ${{ vars.STRIPE_PRICE_ID_PRO_MONTHLY || secrets.STRIPE_PRICE_ID_PRO_MONTHLY }}
+          STRIPE_PRICE_ID_PRO_YEARLY: ${{ vars.STRIPE_PRICE_ID_PRO_YEARLY || secrets.STRIPE_PRICE_ID_PRO_YEARLY }}
+          PRICE_ID_PRO_MONTHLY: ${{ vars.PRICE_ID_PRO_MONTHLY || secrets.PRICE_ID_PRO_MONTHLY }}
+          PRICE_ID_PRO_YEARLY: ${{ vars.PRICE_ID_PRO_YEARLY || secrets.PRICE_ID_PRO_YEARLY }}
+          STRIPE_PRICE_ID_STARTUP_LICENSE: ${{ vars.STRIPE_PRICE_ID_STARTUP_LICENSE || secrets.STRIPE_PRICE_ID_STARTUP_LICENSE }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_BASE_URL: ${{ vars.OPENAI_BASE_URL }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_BASE_URL: ${{ vars.OPENROUTER_BASE_URL }}
+          SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
+          UPLOAD_PROVIDER: ${{ vars.UPLOAD_PROVIDER }}
+          UPLOAD_DIR: ${{ vars.UPLOAD_DIR }}
+          UPLOADS_PUBLIC_BASE_URL: ${{ vars.UPLOADS_PUBLIC_BASE_URL }}
+          UPLOAD_HTTP_BASE_URL: ${{ vars.UPLOAD_HTTP_BASE_URL }}
+          UPLOAD_MAX_CONCURRENCY: ${{ vars.UPLOAD_MAX_CONCURRENCY }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT || vars.R2_ENDPOINT }}
+          R2_PUBLIC_URL: ${{ vars.R2_PUBLIC_URL }}
+          R2_BUCKET: ${{ vars.R2_BUCKET }}
+          R2_BUCKET_ASSETS: ${{ vars.R2_BUCKET_ASSETS }}
+          R2_BUCKET_UPLOADS: ${{ vars.R2_BUCKET_UPLOADS }}
+          R2_BUCKET_BACKUPS: ${{ vars.R2_BUCKET_BACKUPS }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          S3_BUCKET: ${{ vars.S3_BUCKET }}
+          S3_PUBLIC_URL: ${{ vars.S3_PUBLIC_URL }}
+          BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN || vars.NEXT_PUBLIC_SENTRY_DSN }}
+          SENTRY_RELEASE: ${{ vars.SENTRY_RELEASE || github.sha }}
+          LOGGER_SENTRY_ENABLED: ${{ vars.LOGGER_SENTRY_ENABLED }}
+          POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+          NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NEXT_PUBLIC_POSTHOG_KEY || vars.NEXT_PUBLIC_POSTHOG_KEY }}
+          NEXT_PUBLIC_POSTHOG_HOST: ${{ vars.NEXT_PUBLIC_POSTHOG_HOST }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          TURNSTILE_SECRET_KEY: ${{ secrets.TURNSTILE_SECRET_KEY }}
+          NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY || vars.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
+          # Auth-center optional surfaces (default off until set in repo vars/secrets).
+          NEXT_PUBLIC_AUTH_MAGIC_LINK: ${{ vars.NEXT_PUBLIC_AUTH_MAGIC_LINK || secrets.NEXT_PUBLIC_AUTH_MAGIC_LINK }}
+          NEXT_PUBLIC_AUTH_PASSKEYS: ${{ vars.NEXT_PUBLIC_AUTH_PASSKEYS || secrets.NEXT_PUBLIC_AUTH_PASSKEYS }}
+          PASSKEY_RP_ID: ${{ vars.PASSKEY_RP_ID || 'auth.nebutra.com' }}
+          PASSKEY_RP_NAME: ${{ vars.PASSKEY_RP_NAME || 'Nebutra' }}
+          PASSKEY_ORIGIN: ${{ vars.PASSKEY_ORIGIN || 'https://auth.nebutra.com' }}
+          ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
+          SERVICE_SECRET: ${{ secrets.SERVICE_SECRET }}
+          INTERNAL_API_KEY: ${{ secrets.INTERNAL_API_KEY }}
+          CLICKHOUSE_URL: ${{ secrets.CLICKHOUSE_URL }}
+          CLICKHOUSE_HTTP_URL: ${{ secrets.CLICKHOUSE_HTTP_URL }}
+          CLICKHOUSE_USERNAME: ${{ secrets.CLICKHOUSE_USERNAME }}
+          CLICKHOUSE_USER: ${{ secrets.CLICKHOUSE_USER }}
+          CLICKHOUSE_PASSWORD: ${{ secrets.CLICKHOUSE_PASSWORD }}
+          CLICKHOUSE_DATABASE: ${{ vars.CLICKHOUSE_DATABASE }}
+          AUDIT_USE_CLICKHOUSE: ${{ vars.AUDIT_USE_CLICKHOUSE }}
+          METERING_PROVIDER: ${{ vars.METERING_PROVIDER }}
+          QSTASH_TOKEN: ${{ secrets.QSTASH_TOKEN }}
+          QSTASH_CURRENT_SIGNING_KEY: ${{ secrets.QSTASH_CURRENT_SIGNING_KEY }}
+          QSTASH_NEXT_SIGNING_KEY: ${{ secrets.QSTASH_NEXT_SIGNING_KEY }}
+          QSTASH_CALLBACK_BASE_URL: ${{ vars.QSTASH_CALLBACK_BASE_URL }}
+          INNGEST_EVENT_KEY: ${{ secrets.INNGEST_EVENT_KEY }}
+          INNGEST_SIGNING_KEY: ${{ secrets.INNGEST_SIGNING_KEY }}
+          SANITY_API_TOKEN: ${{ secrets.SANITY_API_TOKEN }}
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ vars.NEXT_PUBLIC_SANITY_DATASET }}
+          NEXT_PUBLIC_SANITY_API_VERSION: ${{ vars.NEXT_PUBLIC_SANITY_API_VERSION }}
+          SANITY_WEBHOOK_SECRET: ${{ secrets.SANITY_WEBHOOK_SECRET }}
+          GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+          BING_SITE_VERIFICATION: ${{ vars.BING_SITE_VERIFICATION }}
+          # IndexNow proves ownership by serving this value back at
+          # /indexnow-key.txt, so it is a shared token rather than a credential
+          # — a repository variable, readable in the run log like the host it
+          # names.
+          INDEXNOW_KEY: ${{ vars.INDEXNOW_KEY }}
+          INDEXNOW_HOST: ${{ vars.INDEXNOW_HOST }}
+        run: |
+          set -euo pipefail
+          APPS=""
+          if [ "${{ needs.detect-changes.outputs.landing }}" = "true" ]; then APPS="$APPS landing"; fi
+          if [ "${{ needs.detect-changes.outputs.web }}" = "true" ]; then APPS="$APPS web"; fi
+          if [ "${{ needs.detect-changes.outputs.api }}" = "true" ]; then APPS="$APPS api"; fi
+          if [ "${{ needs.detect-changes.outputs.idp }}" = "true" ]; then APPS="$APPS idp"; fi
+          if [ "${{ needs.detect-changes.outputs.auth }}" = "true" ]; then APPS="$APPS auth"; fi
+          if [ "${{ needs.detect-changes.outputs.design }}" = "true" ]; then APPS="$APPS design"; fi
+          if [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ]; then APPS="$APPS pebble"; fi
+          if [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ]; then APPS="$APPS sailor-docs"; fi
+          if [ "${{ needs.detect-changes.outputs.router }}" = "true" ]; then APPS="$APPS router"; fi
+          if [ "${{ needs.detect-changes.outputs.forge }}" = "true" ]; then APPS="$APPS forge"; fi
+          if [ "${{ needs.detect-changes.outputs.admin }}" = "true" ]; then APPS="$APPS admin"; fi
+          APPS="$(echo "$APPS" | xargs)"
+
+          # An empty APPS must not reach the remote script. Its own
+          # `APPS="${APPS:-landing web api idp auth design pebble sailor-docs
+          # router forge}"` default then expands "deploy nothing" into "deploy
+          # everything": it walks every app, logs `skip — no tarball` for
+          # each because only the selected bundle was uploaded, and finishes with
+          # `deploy complete: landing web api …`. That is how dispatching
+          # apps=admin reported a successful deploy of nine other apps and never
+          # touched the control plane.
+          if [ -z "$APPS" ]; then
+            echo "::error::Resolved APPS is empty. detect-changes selected something this step does not know how to name — add it above rather than letting the remote default expand to every app."
+            exit 1
+          fi
+          echo "Deploying: $APPS"
+          # SSH joins all remaining args into a single shell-evaluated string
+          # on the remote side. We must wrap the whole remote command in one
+          # quoted string and quote any value containing spaces (APPS) — else
+          # `env A=foo APPS=landing web api B=bar` is reparsed and `web` is
+          # treated as a command. See run 25603759255 for the original bug.
+          shell_quote() { printf "%q" "$1"; }
+          add_remote_env() {
+            local key="$1" value="${2:-}"
+            [ -n "$value" ] || return 0
+            REMOTE_CMD="${REMOTE_CMD} ${key}=$(shell_quote "$value")"
+          }
+          add_remote_envs() {
+            local key
+            for key in "$@"; do
+              add_remote_env "$key" "${!key:-}"
+            done
+          }
+
+          REMOTE_CMD="env DEPLOY_ROOT=$(shell_quote "$ECS_DEPLOY_ROOT")"
+          add_remote_env APPS "$APPS"
+          add_remote_env KEEP_RELEASES "$ECS_KEEP_RELEASES"
+          add_remote_env PM2_CONFIG "$ECS_DEPLOY_ROOT/ecosystem.config.cjs"
+          add_remote_env SHA "${{ github.sha }}"
+          add_remote_env BUNDLE_DIR "$ECS_DEPLOY_ROOT/.incoming/${{ github.sha }}"
+          add_remote_envs \
+            DATABASE_URL DIRECT_URL DEPLOY_DATABASE_URL DEPLOY_DIRECT_URL APP_DB_ROLE SUPABASE_DATABASE_URL SUPABASE_DIRECT_URL \
+            AUTH_PROVIDER NEXT_PUBLIC_AUTH_PROVIDER VITE_AUTH_PROVIDER VITE_API_GATEWAY_URL VITE_AUTH_API_URL \
+            NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY CLERK_SECRET_KEY CLERK_WEBHOOK_SECRET AUTH_SSO_DISCOVERY_PROVIDERS \
+            BETTER_AUTH_SECRET BETTER_AUTH_URL ADMIN_AUTH_SECRET VAULT_LOCAL_MASTER_KEY \
+            ACCESS_AUD ACCESS_TEAM_DOMAIN \
+            NEXT_PUBLIC_SITE_URL NEXT_PUBLIC_APP_URL NEXT_PUBLIC_API_URL NEXT_PUBLIC_API_GATEWAY_URL \
+            NEXT_PUBLIC_STUDIO_URL NEXT_PUBLIC_DOCS_URL NEBUTRA_LANDING_ORIGIN \
+            NEBUTRA_SESSION_HINT_DOMAIN DOMAIN_LANDING DOMAIN_APP DOMAIN_API DOMAIN_STUDIO \
+            LANDING_URL WEB_URL STUDIO_URL CORS_ORIGINS \
+            UPSTASH_REDIS_REST_URL UPSTASH_REDIS_REST_TOKEN UPSTASH_REDIS_URL UPSTASH_REDIS_TOKEN REDIS_URL \
+            OIDC_ISSUER OIDC_COOKIE_KEYS OIDC_ENABLE_CLIENT_CREDENTIALS \
+            GOOGLE_CLIENT_ID GOOGLE_CLIENT_SECRET NEXT_PUBLIC_GOOGLE_CLIENT_ID \
+            GITHUB_CLIENT_ID GITHUB_CLIENT_SECRET \
+            FEISHU_APP_ID FEISHU_APP_SECRET FEISHU_OAUTH_SCOPES FEISHU_ALLOWED_TENANT_KEYS \
+            FEISHU_OAUTH_BASE_URL FEISHU_AUTHORIZATION_URL FEISHU_TOKEN_URL FEISHU_USER_INFO_URL FEISHU_REDIRECT_URI \
+            SUPABASE_URL SUPABASE_PUBLISHABLE_KEY SUPABASE_ANON_KEY SUPABASE_SERVICE_ROLE_KEY \
+            SUPABASE_WEBHOOK_SECRET NEXT_PUBLIC_SUPABASE_URL NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY \
+            NEXT_PUBLIC_SUPABASE_ANON_KEY \
+            RESEND_API_KEY RESEND_AUDIENCE_ID RESEND_FROM EMAIL_FROM EMAIL_PROVIDER \
+            SMTP_HOST SMTP_PORT SMTP_SECURE SMTP_USER SMTP_PASS \
+            STRIPE_SECRET_KEY NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY STRIPE_WEBHOOK_SECRET \
+            STRIPE_PRICE_ID_PRO_MONTHLY STRIPE_PRICE_ID_PRO_YEARLY PRICE_ID_PRO_MONTHLY PRICE_ID_PRO_YEARLY \
+            STRIPE_PRICE_ID_STARTUP_LICENSE \
+            OPENAI_API_KEY OPENAI_BASE_URL OPENROUTER_API_KEY OPENROUTER_BASE_URL SILICONFLOW_API_KEY \
+            UPLOAD_PROVIDER UPLOAD_DIR UPLOADS_PUBLIC_BASE_URL UPLOAD_HTTP_BASE_URL UPLOAD_MAX_CONCURRENCY \
+            R2_ACCOUNT_ID R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY R2_ENDPOINT R2_PUBLIC_URL \
+            R2_BUCKET R2_BUCKET_ASSETS R2_BUCKET_UPLOADS R2_BUCKET_BACKUPS \
+            AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_REGION S3_BUCKET S3_PUBLIC_URL BLOB_READ_WRITE_TOKEN \
+            SENTRY_DSN NEXT_PUBLIC_SENTRY_DSN SENTRY_RELEASE LOGGER_SENTRY_ENABLED \
+            POSTHOG_KEY NEXT_PUBLIC_POSTHOG_KEY NEXT_PUBLIC_POSTHOG_HOST \
+            CRON_SECRET TURNSTILE_SECRET_KEY NEXT_PUBLIC_TURNSTILE_SITE_KEY \
+            NEXT_PUBLIC_AUTH_MAGIC_LINK NEXT_PUBLIC_AUTH_PASSKEYS \
+            PASSKEY_RP_ID PASSKEY_RP_NAME PASSKEY_ORIGIN \
+            ADMIN_API_KEY SERVICE_SECRET INTERNAL_API_KEY \
+            CLICKHOUSE_URL CLICKHOUSE_HTTP_URL CLICKHOUSE_USERNAME CLICKHOUSE_USER CLICKHOUSE_PASSWORD CLICKHOUSE_DATABASE \
+            AUDIT_USE_CLICKHOUSE METERING_PROVIDER \
+            QSTASH_TOKEN QSTASH_CURRENT_SIGNING_KEY QSTASH_NEXT_SIGNING_KEY QSTASH_CALLBACK_BASE_URL \
+            INNGEST_EVENT_KEY INNGEST_SIGNING_KEY \
+            SANITY_API_TOKEN NEXT_PUBLIC_SANITY_PROJECT_ID NEXT_PUBLIC_SANITY_DATASET NEXT_PUBLIC_SANITY_API_VERSION \
+            SANITY_WEBHOOK_SECRET GOOGLE_SITE_VERIFICATION BING_SITE_VERIFICATION \
+            INDEXNOW_KEY INDEXNOW_HOST
+          REMOTE_CMD="${REMOTE_CMD} bash /tmp/ecs-deploy-remote.sh"
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+              -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+              -o ServerAliveInterval=30 -o ServerAliveCountMax=6 \
+              "${ECS_USER}@${ECS_HOST}" \
+              "$REMOTE_CMD"
+
+      - name: Smoke test public endpoints
+        run: |
+          set -euo pipefail
+          declare -A targets=()
+          [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && targets[landing]="https://nebutra.com"
+          [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && targets[landing-license]="https://nebutra.com/get-license"
+          [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && targets[web]="https://app.nebutra.com"
+          [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && targets[api]="https://api.nebutra.com/api/misc/health"
+          [ "${{ needs.detect-changes.outputs.idp }}"            = "true" ] && targets[idp]="https://sso.nebutra.com/.well-known/openid-configuration"
+          [ "${{ needs.detect-changes.outputs.auth }}"           = "true" ] && targets[auth]="https://auth.nebutra.com/health"
+          [ "${{ needs.detect-changes.outputs.design }}" = "true" ] && targets[design]="https://design.nebutra.com"
+          [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ] && targets[pebble]="https://pebble.nebutra.com"
+          [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && targets[sailor-docs]="https://docs.nebutra.com"
+          [ "${{ needs.detect-changes.outputs.router }}"         = "true" ] && targets[router]="https://router.nebutra.com"
+          [ "${{ needs.detect-changes.outputs.forge }}"          = "true" ] && targets[forge]="https://forge.nebutra.com"
+          # Origin fallback when public DNS is missing/broken (Host header on ECS IP).
+          # Prevents rolling back a healthy PM2+nginx deploy solely because CF DNS is NXDOMAIN.
+          declare -A origin_hosts=()
+          [ "${{ needs.detect-changes.outputs.router }}" = "true" ] && origin_hosts[router]="router.nebutra.com"
+          [ "${{ needs.detect-changes.outputs.forge }}"  = "true" ] && origin_hosts[forge]="forge.nebutra.com"
+          [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ] && origin_hosts[pebble]="pebble.nebutra.com"
+          ECS_ORIGIN_IP="${ECS_HOST:-${{ vars.ECS_HOST || vars.VM_HOST || '106.15.4.31' }}}"
+          # Follow redirects and require the request to still be on the host it
+          # was aimed at. Accepting a bare 301 as success is what made this smoke
+          # test blind to the failure it exists for: a host with no server_name
+          # falls through to the first 443 block, which answers
+          # `301 -> https://nebutra.com$request_uri`, and every deploy of
+          # design-docs reported design.nebutra.com healthy while the design
+          # system was unreachable. Any misrouted host 301s — that is the symptom,
+          # not the pass condition.
+          host_of() { printf '%s' "$1" | sed -E 's#^https?://([^/]+).*#\1#'; }
+          for name in "${!targets[@]}"; do
+            url="${targets[$name]}"
+            code=000
+            ok=0
+            # New PM2 apps (pebble) need extra headroom before the first 200.
+            retries=5
+            [ "$name" = "pebble" ] && retries=10
+            for i in $(seq 1 "$retries"); do
+              # The \n is load-bearing. curl -w emits no trailing newline, and
+              # `read` returns 1 when it reaches EOF without one — under
+              # `set -euo pipefail` that killed the whole step silently, before a
+              # single echo, in about a second. The `|| echo` fallback DOES end
+              # with a newline, so the failure happened only when curl SUCCEEDED:
+              # this smoke test broke precisely when the endpoint was healthy, and
+              # passed whenever `targets` was empty. Every deploy since 2026-07-28
+              # that named a real app has been red for this and nothing else.
+              read -r code final < <(curl -sSL -o /dev/null \
+                -w '%{http_code} %{url_effective}\n' --max-time 15 "$url" 2>/dev/null || echo "000 -")
+              if [ "$code" = "200" ] && [ "$(host_of "$final")" = "$(host_of "$url")" ]; then
+                echo "✅ $name $url -> $code $final"; ok=1; break
+              fi
+              if [ "$code" = "200" ]; then
+                echo "::warning::$name $url left its host: ended on $final"
+              fi
+              sleep 8
+            done
+            if [ "$ok" -ne 1 ]; then
+              host="${origin_hosts[$name]:-}"
+              if [ -n "$host" ]; then
+                ocode=$(curl -skf -o /dev/null -w "%{http_code}" --max-time 15 \
+                  --resolve "${host}:443:${ECS_ORIGIN_IP}" "https://${host}/" 2>/dev/null || echo 000)
+                if [ "$ocode" = "200" ] || [ "$ocode" = "301" ] || [ "$ocode" = "302" ]; then
+                  echo "::warning::$name public $url failed ($code) but origin https://${host}/ via ${ECS_ORIGIN_IP} -> $ocode (DNS/edge issue, not app rollback)"
+                  continue
+                fi
+              fi
+              echo "::error::Smoke test failed for $name at $url (last code: $code, ended on ${final:-?})"; exit 1
+            fi
+          done
+
+          if [ "${{ needs.detect-changes.outputs.api }}" = "true" ]; then
+            health="$(curl -fsS --max-time 15 https://api.nebutra.com/api/misc/health)"
+            echo "$health" | grep -q '"database":{"status":"up"' || {
+              echo "::error::API health did not report database.status=up: $health"
+              exit 1
+            }
+            echo "✅ api database dependency -> up"
+            session_code=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 15 \
+              https://api.nebutra.com/api/auth/session || echo 000)
+            if [ "$session_code" != "200" ]; then
+              echo "::error::API session probe failed at https://api.nebutra.com/api/auth/session (expected 200, got $session_code)"
+              exit 1
+            fi
+            echo "✅ api auth session -> $session_code"
+          fi
+
+          # Multi-app RP model: app.nebutra.com/sign-in is a soft redirect into
+          # auth.nebutra.com (login center). Expect 307, not a local 200 page.
+          # Do not probe the origin gateway here — a 502 there rolled back a
+          # healthy web release (2026-08-27) while /__edge/health was still 200.
+          if [ "${{ needs.detect-changes.outputs.web }}" = "true" ]; then
+            declare -A web_targets=(
+              [web-sign-in]="https://app.nebutra.com/sign-in"
+              [web-desktop-auth-foundryoss]="https://app.nebutra.com/signup/remote?scheme=foundryoss&state=f80fe991-f260-468a-b9fc-9a9b98bf9352&public_beta=true"
+            )
+            declare -A expected_codes=(
+              [web-sign-in]="307"
+              [web-desktop-auth-foundryoss]="307"
+            )
+            for name in "${!web_targets[@]}"; do
+              url="${web_targets[$name]}"
+              expected="${expected_codes[$name]}"
+              code=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 15 "$url" || echo 000)
+              if [ "$code" != "$expected" ]; then
+                echo "::error::Smoke test failed for $name at $url (expected $expected, got $code)"
+                exit 1
+              fi
+              echo "✅ $name $url -> $code"
+            done
+          fi
+
+          if [ "${{ needs.detect-changes.outputs.auth }}" = "true" ]; then
+            # HTTP alone is not enough: a green health check can leave a stale
+            # auth bundle live (skipped matrix job reports success). Assert the
+            # login-card SSOT markers from AUTH_FORM_* / AUTH_OAUTH_* so we
+            # never ship "deployed" with a wide form or stacked OAuth again.
+            html_file="${RUNNER_TEMP}/auth-sign-in.html"
+            code=$(curl -sS -L -o "$html_file" -w "%{http_code}" --max-time 20 "https://auth.nebutra.com/sign-in" || echo 000)
+            if [ "$code" != "200" ]; then
+              echo "::error::Smoke test failed for auth-sign-in at https://auth.nebutra.com/sign-in (expected 200, got $code)"
+              exit 1
+            fi
+            echo "✅ auth-sign-in https://auth.nebutra.com/sign-in -> $code"
+            # RSC client-proxy regression: AUTH_FORM_* imported from a "use client"
+            # utils barrel rendered as digression instead of className.
+            if grep -qF 'AUTH_FORM_COLUMN_CLASS is on the client' "$html_file"; then
+              echo "::error::auth-sign-in HTML contains RSC client-proxy digression for AUTH_FORM_*. @nebutra/ui/utils must not stamp use client on auth-surfaces."
+              exit 1
+            fi
+            if ! grep -qF 'min(100%,360px)' "$html_file"; then
+              echo "::error::auth-sign-in HTML missing login-column width SSOT (expected w-[min(100%,360px)]). Bundle is stale, not deployed, or AUTH_FORM_* failed to render."
+              grep -oE 'class="[^"]*(max-w-|min\(100%|w-\[min)[^"]*"' "$html_file" | head -20 || true
+              exit 1
+            fi
+            if ! grep -qF 'grid-cols-2' "$html_file"; then
+              echo "::error::auth-sign-in HTML missing compact OAuth grid (expected grid-cols-2). Stacked OAuth must not ship."
+              grep -oE 'class="[^"]*grid-cols-[0-9][^"]*"' "$html_file" | head -20 || true
+              exit 1
+            fi
+            # Nested card chrome was a mistaken #426 addition — ban it on sign-in.
+            if grep -qE 'class="[^"]*rounded-2xl[^"]*border[^"]*shadow-sm[^"]*"' "$html_file" \
+              || grep -qE 'class="[^"]*min\(100%,360px\)[^"]*rounded-2xl[^"]*"' "$html_file"; then
+              echo "::error::auth-sign-in still wraps the form in nested card chrome (rounded-2xl+border+shadow). Remove AUTH_FORM_CARD_CLASS."
+              exit 1
+            fi
+            if grep -qE 'class="[^"]*max-w-xs[^"]*"' "$html_file"; then
+              echo "::error::auth-sign-in still serves pre-#426 max-w-xs form column — auth bundle did not update."
+              exit 1
+            fi
+            echo "✅ auth-sign-in layout markers: min(100%,360px) + grid-cols-2, no nested card chrome"
+          fi
+
+      - name: Emit deployment verification analytics
+        if: success()
+        env:
+          POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+          POSTHOG_HOST: ${{ vars.POSTHOG_HOST || vars.NEXT_PUBLIC_POSTHOG_HOST || 'https://analytics.nebutra.com' }}
+          VM_PROVIDER: ${{ vars.VM_PROVIDER || vars.CLOUD_VM_PROVIDER || vars.ECS_PROVIDER || 'unknown' }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${POSTHOG_KEY:-}" ]; then
+            echo "::notice::POSTHOG_KEY is not configured; skipping deployment.verified analytics."
+            exit 0
+          fi
+
+          posthog_host="${POSTHOG_HOST:-https://analytics.nebutra.com}"
+          posthog_host="${posthog_host%/}"
+          payload_file="${RUNNER_TEMP}/deployment-verified.json"
+
+          emit_deployment_verified() {
+            local app="$1" public_url="$2"
+            APP="$app" PUBLIC_URL="$public_url" node <<'NODE' > "$payload_file"
+          const payload = {
+            api_key: process.env.POSTHOG_KEY,
+            event: "deployment.verified",
+            distinct_id: `deploy:${process.env.GITHUB_REPOSITORY}:${process.env.GITHUB_SHA}:${process.env.APP}`,
+            properties: {
+              app: process.env.APP,
+              deploy_target: "ecs-pm2",
+              deployment_env: "ecs-prod",
+              provider: process.env.VM_PROVIDER || "unknown",
+              public_url: process.env.PUBLIC_URL,
+              ref: process.env.GITHUB_REF_NAME,
+              run_attempt: process.env.GITHUB_RUN_ATTEMPT,
+              run_id: process.env.GITHUB_RUN_ID,
+              sha: process.env.GITHUB_SHA,
+              smoke_status: "passed",
+            },
+            timestamp: new Date().toISOString(),
+          };
+
+          process.stdout.write(JSON.stringify(payload));
+          NODE
+            curl -fsS -X POST \
+              -H "Content-Type: application/json" \
+              --data-binary @"$payload_file" \
+              "${posthog_host}/capture/" >/dev/null
+            echo "✅ deployment.verified $app -> $public_url"
+          }
+
+          [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && emit_deployment_verified landing "https://nebutra.com"
+          [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && emit_deployment_verified web "https://app.nebutra.com"
+          [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && emit_deployment_verified api "https://api.nebutra.com/api/misc/health"
+          [ "${{ needs.detect-changes.outputs.idp }}"            = "true" ] && emit_deployment_verified idp "https://sso.nebutra.com/.well-known/openid-configuration"
+          [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ] && emit_deployment_verified pebble "https://pebble.nebutra.com"
+          [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && emit_deployment_verified sailor-docs "https://docs.nebutra.com"
+
+      - name: Rollback Cloud VM on deploy or smoke failure
+        if: failure()
+        env:
+          ECS_HOST:          ${{ vars.VM_HOST || vars.CLOUD_VM_HOST || vars.ECS_HOST }}
+          ECS_USER:          ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
+          ECS_SSH_PORT:      ${{ vars.VM_SSH_PORT || vars.CLOUD_VM_SSH_PORT || vars.ECS_SSH_PORT || '22' }}
+          ECS_DEPLOY_ROOT:   ${{ vars.VM_DEPLOY_ROOT || vars.CLOUD_VM_DEPLOY_ROOT || vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}
+          ECS_KEEP_RELEASES: ${{ vars.VM_KEEP_RELEASES || vars.CLOUD_VM_KEEP_RELEASES || vars.ECS_KEEP_RELEASES || '1' }}
+        run: |
+          set -euo pipefail
+          APPS=""
+          if [ "${{ needs.detect-changes.outputs.landing }}" = "true" ]; then APPS="$APPS landing"; fi
+          if [ "${{ needs.detect-changes.outputs.web }}" = "true" ]; then APPS="$APPS web"; fi
+          if [ "${{ needs.detect-changes.outputs.api }}" = "true" ]; then APPS="$APPS api"; fi
+          if [ "${{ needs.detect-changes.outputs.idp }}" = "true" ]; then APPS="$APPS idp"; fi
+          if [ "${{ needs.detect-changes.outputs.auth }}" = "true" ]; then APPS="$APPS auth"; fi
+          if [ "${{ needs.detect-changes.outputs.design }}" = "true" ]; then APPS="$APPS design"; fi
+          if [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ]; then APPS="$APPS pebble"; fi
+          if [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ]; then APPS="$APPS sailor-docs"; fi
+          if [ "${{ needs.detect-changes.outputs.router }}" = "true" ]; then APPS="$APPS router"; fi
+          if [ "${{ needs.detect-changes.outputs.forge }}" = "true" ]; then APPS="$APPS forge"; fi
+          if [ "${{ needs.detect-changes.outputs.admin }}" = "true" ]; then APPS="$APPS admin"; fi
+          APPS="$(echo "$APPS" | xargs)"
+          # Empty means the deploy never named anything, so there is nothing to
+          # undo — and it must exit rather than fall through, because the remote
+          # script's APPS default would expand "nothing" into every app and roll
+          # the whole fleet back over one app's failure.
+          [ -n "$APPS" ] || { echo "No deployed apps to roll back."; exit 0; }
+
+          shell_quote() { printf "%q" "$1"; }
+          REMOTE_CMD="test -f /tmp/ecs-deploy-remote.sh && env"
+          REMOTE_CMD="${REMOTE_CMD} MODE=rollback"
+          REMOTE_CMD="${REMOTE_CMD} DEPLOY_ROOT=$(shell_quote "$ECS_DEPLOY_ROOT")"
+          REMOTE_CMD="${REMOTE_CMD} APPS=$(shell_quote "$APPS")"
+          REMOTE_CMD="${REMOTE_CMD} KEEP_RELEASES=$(shell_quote "$ECS_KEEP_RELEASES")"
+          REMOTE_CMD="${REMOTE_CMD} PM2_CONFIG=$(shell_quote "$ECS_DEPLOY_ROOT/ecosystem.config.cjs")"
+          REMOTE_CMD="${REMOTE_CMD} SHA=${{ github.sha }}"
+          REMOTE_CMD="${REMOTE_CMD} bash /tmp/ecs-deploy-remote.sh"
+
+          echo "::warning::Deploy/smoke failed — attempting Cloud VM rollback for: $APPS"
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+              -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+              -o ServerAliveInterval=30 -o ServerAliveCountMax=6 \
+              "${ECS_USER}@${ECS_HOST}" \
+              "$REMOTE_CMD" || {
+                echo "::warning::Rollback command did not complete; inspect VM PM2 state manually."
+                exit 0
+              }
+
+      - name: Cleanup SSH
+        if: always()
+        run: rm -rf ~/.ssh
+
+      - name: Summary
+        if: always()
+        # Note: GitHub Actions runs `bash --noprofile --norc -eo pipefail`, so
+        # `[ -n "" ] && echo ...` exits 1 when the reason is empty (push events).
+        # Use an explicit if-block to keep the step's exit code at 0.
+        run: |
+          {
+            echo "## Cloud VM deploy summary"
+            echo "- Commit: \`${{ github.sha }}\`"
+            echo "- Provider: ${VM_PROVIDER:-unknown}"
+            echo "- **AUTH_DEPLOYED=${{ needs.detect-changes.outputs.auth }}** (true = this run built+uploaded auth; false = auth bundle untouched)"
+            echo "- Apps: landing=${{ needs.detect-changes.outputs.landing }} / web=${{ needs.detect-changes.outputs.web }} / api=${{ needs.detect-changes.outputs.api }} / auth=${{ needs.detect-changes.outputs.auth }} / idp=${{ needs.detect-changes.outputs.idp }} / forge=${{ needs.detect-changes.outputs.forge }} / router=${{ needs.detect-changes.outputs.router }} / sailor-docs=${{ needs.detect-changes.outputs['sailor-docs'] }} / pebble=${{ needs.detect-changes.outputs.pebble }} / admin=${{ needs.detect-changes.outputs.admin }}"
+            echo "- Triggered by: ${{ github.actor }} via ${{ github.event_name }}"
+            if [ -n "${{ github.event.inputs.reason }}" ]; then
+              echo "- Reason: ${{ github.event.inputs.reason }}"
+            fi
+            echo ""
+            echo "Unselected matrix apps are **skipped** (not green). Green Build auth = real build."
+          } >> "$GITHUB_STEP_SUMMARY"

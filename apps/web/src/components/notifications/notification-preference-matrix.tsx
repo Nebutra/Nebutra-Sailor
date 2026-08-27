@@ -1,0 +1,189 @@
+import { Information as Info, ShieldOff as ShieldAlert } from "@nebutra/icons";
+import type {
+  NotificationPreferenceSection,
+  NotificationPreferenceSource,
+  NotificationRuntimeStatus,
+} from "@nebutra/notifications";
+import { Button, Table } from "@nebutra/ui/primitives";
+import { cn } from "@nebutra/ui/utils";
+import { updateNotificationPreference } from "@/app/(app)/settings/notifications/actions";
+
+interface Props {
+  locale: string;
+  runtime: NotificationRuntimeStatus;
+  preferenceSource: NotificationPreferenceSource;
+  sections: NotificationPreferenceSection[];
+}
+
+const VISIBLE_CHANNELS = new Set(["in_app", "email", "push"]);
+
+// The matrix reads as a panel, so the table sits flush inside its own border
+// and keeps the roomier 16px cell rhythm rather than the default table density.
+const MATRIX_DENSITY = { "--table-cell-padding-x": "1rem", "--table-cell-padding-y": "1rem" };
+const MATRIX_HEADING = "text-xs font-semibold uppercase tracking-wide";
+
+// State-only overlay classes. Button outline variant supplies the base
+// border / background / text — these classes layer on top to encode
+// enabled / disabled visual state.
+function getCellButtonClasses(enabled: boolean, editable: boolean): string {
+  if (!editable) {
+    return "cursor-not-allowed border-border bg-muted text-muted-foreground hover:bg-muted hover:text-muted-foreground";
+  }
+
+  if (enabled) {
+    return "border-success/30 bg-success/10/70 text-[hsl(var(--success-strong))] hover:bg-success/10 hover:text-[hsl(var(--success-strong))]";
+  }
+
+  return "";
+}
+
+export function NotificationPreferenceMatrix({
+  locale,
+  runtime,
+  preferenceSource,
+  sections,
+}: Props) {
+  return (
+    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
+      <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+        <div>
+          <h3 className="text-base font-semibold text-foreground">Delivery matrix</h3>
+          <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
+            Copy-first from the proven `supastarter` pattern, but adapted to Nebutra&apos;s
+            operator-facing signals. Each cell controls whether a notification category is allowed
+            to reach you through that channel.
+          </p>
+        </div>
+
+        <div
+          className={`inline-flex items-center gap-2 rounded-full px-2.5 py-1 text-xs font-medium ${
+            runtime.canManagePreferences
+              ? "bg-success/10 text-[hsl(var(--success-strong))]"
+              : "bg-warning/10 text-[hsl(var(--warning-strong))]"
+          }`}
+        >
+          {runtime.canManagePreferences ? (
+            <ShieldAlert className="size-3.5" aria-hidden />
+          ) : (
+            <Info className="size-3.5" aria-hidden />
+          )}
+          {preferenceSource === "provider" ? "Live preferences" : "Defaults preview"}
+        </div>
+      </div>
+
+      {!runtime.canManagePreferences ? (
+        <div className="mt-4 rounded-[var(--radius-lg)] border border-warning/20 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+          Changes are disabled here because the current notification runtime does not expose durable
+          preference storage yet.
+        </div>
+      ) : null}
+
+      <div className="mt-6 space-y-8">
+        {sections.map((section) => (
+          <div key={section.id}>
+            <div className="mb-3">
+              <h4 className="text-sm font-semibold text-foreground">{section.title}</h4>
+              <p className="mt-1 text-sm text-muted-foreground">{section.description}</p>
+            </div>
+
+            <Table
+              bare
+              wrapperClassName="rounded-[var(--radius-lg)] border border-border"
+              wrapperStyle={MATRIX_DENSITY}
+              className="min-w-[720px]"
+            >
+              <Table.Header className="bg-muted">
+                <Table.Row>
+                  <Table.Head className={MATRIX_HEADING}>Signal</Table.Head>
+                  <Table.Head className={MATRIX_HEADING}>Inbox</Table.Head>
+                  <Table.Head className={MATRIX_HEADING}>Email</Table.Head>
+                  <Table.Head className={MATRIX_HEADING}>Push</Table.Head>
+                  <Table.Head alignment="start" className={MATRIX_HEADING}>
+                    Notes
+                  </Table.Head>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body bordered>
+                {section.rows.map((row) => (
+                  <Table.Row key={row.id}>
+                    <Table.Cell className="align-top">
+                      <p className="text-sm font-medium text-foreground">{row.label}</p>
+                      <p className="mt-1 text-sm text-muted-foreground">{row.description}</p>
+                    </Table.Cell>
+
+                    {row.cells.slice(0, 3).map((cell) => (
+                      <Table.Cell key={cell.channel} className="align-top">
+                        {cell.supported ? (
+                          <form action={updateNotificationPreference}>
+                            <input data-allow-native type="hidden" name="locale" value={locale} />
+                            <input data-allow-native type="hidden" name="type" value={row.id} />
+                            <input
+                              data-allow-native
+                              type="hidden"
+                              name="channel"
+                              value={cell.channel}
+                            />
+                            <input
+                              data-allow-native
+                              type="hidden"
+                              name="enabled"
+                              value={String(!cell.enabled)}
+                            />
+                            <Button
+                              type="submit"
+                              variant="outline"
+                              size="sm"
+                              disabled={!cell.editable}
+                              aria-pressed={cell.enabled}
+                              aria-label={`${cell.enabled ? "Turn off" : "Turn on"} ${row.label} via ${cell.channelLabel}`}
+                              title={cell.reason}
+                              className={cn(
+                                "min-w-20 rounded-full",
+                                getCellButtonClasses(cell.enabled, cell.editable),
+                              )}
+                            >
+                              {cell.enabled ? "On" : "Off"}
+                            </Button>
+                          </form>
+                        ) : (
+                          <span
+                            title={cell.reason}
+                            className="inline-flex rounded-full border border-border bg-muted px-3 py-1.5 text-xs font-medium text-muted-foreground"
+                          >
+                            N/A
+                          </span>
+                        )}
+                      </Table.Cell>
+                    ))}
+
+                    <Table.Cell alignment="start" className="align-top">
+                      <ul className="space-y-1 text-sm text-muted-foreground">
+                        {row.cells
+                          .filter((cell) => VISIBLE_CHANNELS.has(cell.channel) && cell.reason)
+                          .slice(0, 2)
+                          .map((cell) => (
+                            <li key={cell.channel}>
+                              <span className="font-medium text-foreground">
+                                {cell.channelLabel}:
+                              </span>{" "}
+                              {cell.reason}
+                            </li>
+                          ))}
+                        {row.cells.every((cell) => !cell.reason) ? (
+                          <li>
+                            <span className="font-medium text-foreground">Default:</span> Routed
+                            only where this signal is meant to stay high-signal.
+                          </li>
+                        ) : null}
+                      </ul>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}

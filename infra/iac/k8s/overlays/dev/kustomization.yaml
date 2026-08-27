@@ -1,0 +1,108 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: nebutra-dev
+
+resources:
+  - ../../base
+
+namePrefix: dev-
+
+commonLabels:
+  environment: development
+
+# ---------------------------------------------------------------------------
+# Scale every deployment down to 1 replica in dev to minimise resource usage
+# ---------------------------------------------------------------------------
+patches:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: web
+      spec:
+        replicas: 1
+    target:
+      kind: Deployment
+      name: web
+
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: landing
+      spec:
+        replicas: 1
+    target:
+      kind: Deployment
+      name: landing
+
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: api-gateway
+      spec:
+        replicas: 1
+    target:
+      kind: Deployment
+      name: api-gateway
+
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: ai-service
+      spec:
+        replicas: 1
+    target:
+      kind: Deployment
+      name: ai-service
+
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: ecommerce-service
+      spec:
+        replicas: 1
+    target:
+      kind: Deployment
+      name: ecommerce-service
+
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: recsys-service
+      spec:
+        replicas: 1
+    target:
+      kind: Deployment
+      name: recsys-service
+
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: event-ingest-service
+      spec:
+        replicas: 1
+    target:
+      kind: Deployment
+      name: event-ingest-service
+
+  - patch: |-
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: nebutra-config
+      data:
+        NODE_ENV: development
+        PYTHON_ENV: development
+        NEXT_PUBLIC_API_URL: https://api.dev.nebutra.com
+        NEXT_PUBLIC_APP_URL: https://app.dev.nebutra.com
+        LOG_LEVEL: debug
+    target:
+      kind: ConfigMap
+      name: nebutra-config

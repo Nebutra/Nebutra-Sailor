@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dialog-destructive-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/dialog-destructive-demo.tsx",
+      "content": "\"use client\";\n\nimport {\n  Button,\n  Dialog,\n  DialogClose,\n  DialogContent,\n  DialogDescription,\n  DialogFooter,\n  DialogHeader,\n  DialogTitle,\n  DialogTrigger,\n} from \"@nebutra/ui/primitives\";\n\nexport function DialogDestructiveDemo() {\n  return (\n    <Dialog>\n      <DialogTrigger asChild>\n        <Button variant=\"destructive\">Delete Account</Button>\n      </DialogTrigger>\n      <DialogContent>\n        <DialogHeader>\n          <DialogTitle>Are you absolutely sure?</DialogTitle>\n          <DialogDescription>\n            This action cannot be undone. This will permanently delete your account and remove your\n            data from our servers.\n          </DialogDescription>\n        </DialogHeader>\n        <DialogFooter>\n          <DialogClose asChild>\n            <Button variant=\"outline\">Cancel</Button>\n          </DialogClose>\n          <Button variant=\"destructive\">Delete</Button>\n        </DialogFooter>\n      </DialogContent>\n    </Dialog>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

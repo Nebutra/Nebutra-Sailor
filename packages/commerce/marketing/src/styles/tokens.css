@@ -1,0 +1,131 @@
+/**
+ * Marketing Components Design Tokens
+ *
+ * These CSS custom properties allow the marketing components to be
+ * themed according to the consuming application's design system.
+ *
+ * Override these in your app's global CSS to match your design system.
+ */
+
+:root {
+  /* ========================
+   * Canvas / Background
+   * ======================== */
+  --marketing-canvas-default: #ffffff;
+  --marketing-canvas-subtle: #f6f8fa;
+  --marketing-canvas-inset: #f6f8fa;
+
+  /* ========================
+   * Foreground / Text
+   * ======================== */
+  --marketing-fg-default: #1f2328;
+  --marketing-fg-muted: #656d76;
+  --marketing-fg-subtle: #6e7781;
+  --marketing-fg-on-emphasis: #ffffff;
+
+  /* ========================
+   * Border
+   * ======================== */
+  --marketing-border-default: #d0d7de;
+  --marketing-border-muted: #d8dee4;
+  --marketing-border-subtle: rgba(27, 31, 36, 0.15);
+
+  /* ========================
+   * Accent (Primary)
+   * ======================== */
+  --marketing-accent-fg: #0969da;
+  --marketing-accent-emphasis: #0969da;
+  --marketing-accent-subtle: #ddf4ff;
+
+  /* ========================
+   * Success
+   * ======================== */
+  --marketing-success-fg: #1a7f37;
+  --marketing-success-subtle: #dafbe1;
+
+  /* ========================
+   * Warning / Attention
+   * ======================== */
+  --marketing-attention-fg: #9a6700;
+  --marketing-attention-subtle: #fff8c5;
+
+  /* ========================
+   * Product Hunt Brand
+   * ======================== */
+  --marketing-ph-primary: #da552f;
+  --marketing-ph-primary-hover: #c44a29;
+  --marketing-ph-bg-light: #fff5f2;
+  --marketing-ph-bg-dark: rgba(218, 85, 47, 0.1);
+
+  /* ========================
+   * GitHub Brand
+   * ======================== */
+  --marketing-github-bg: #24292f;
+  --marketing-github-fg: #ffffff;
+
+  /* ========================
+   * Social Proof Stats
+   * ======================== */
+  --marketing-stat-users-bg: var(--marketing-accent-subtle);
+  --marketing-stat-users-fg: var(--marketing-accent-fg);
+  --marketing-stat-rating-bg: var(--marketing-attention-subtle);
+  --marketing-stat-rating-fg: var(--marketing-attention-fg);
+  --marketing-stat-upvotes-bg: var(--marketing-ph-bg-light);
+  --marketing-stat-upvotes-fg: var(--marketing-ph-primary);
+  --marketing-stat-stars-bg: var(--marketing-canvas-subtle);
+  --marketing-stat-stars-fg: var(--marketing-fg-default);
+
+  /* ========================
+   * Card
+   * ======================== */
+  --marketing-card-bg: var(--marketing-canvas-default);
+  --marketing-card-border: var(--marketing-border-default);
+  --marketing-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --marketing-card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  /* ========================
+   * Radius
+   * ======================== */
+  --marketing-radius-sm: 6px;
+  --marketing-radius-md: 12px;
+  --marketing-radius-lg: 16px;
+  --marketing-radius-full: 9999px;
+}
+
+/* ========================
+ * Dark Mode
+ * ======================== */
+.dark {
+  --marketing-canvas-default: #0d1117;
+  --marketing-canvas-subtle: #161b22;
+  --marketing-canvas-inset: #010409;
+
+  --marketing-fg-default: #e6edf3;
+  --marketing-fg-muted: #8b949e;
+  --marketing-fg-subtle: #6e7681;
+  --marketing-fg-on-emphasis: #ffffff;
+
+  --marketing-border-default: #30363d;
+  --marketing-border-muted: #21262d;
+  --marketing-border-subtle: rgba(240, 246, 252, 0.1);
+
+  --marketing-accent-fg: #58a6ff;
+  --marketing-accent-emphasis: #1f6feb;
+  --marketing-accent-subtle: rgba(56, 139, 253, 0.15);
+
+  --marketing-success-fg: #3fb950;
+  --marketing-success-subtle: rgba(46, 160, 67, 0.15);
+
+  --marketing-attention-fg: #d29922;
+  --marketing-attention-subtle: rgba(187, 128, 9, 0.15);
+
+  --marketing-ph-bg-light: rgba(218, 85, 47, 0.15);
+  --marketing-ph-bg-dark: rgba(218, 85, 47, 0.2);
+
+  --marketing-stat-stars-bg: rgba(110, 118, 129, 0.2);
+
+  --marketing-card-bg: var(--marketing-canvas-subtle);
+  --marketing-card-border: var(--marketing-border-default);
+  --marketing-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --marketing-card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.4);
+}

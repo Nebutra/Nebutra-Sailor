@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recsys-service
+  namespace: nebutra
+  labels:
+    app.kubernetes.io/name: recsys-service
+    app.kubernetes.io/component: service
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: recsys-service
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: recsys-service
+        app.kubernetes.io/component: service
+    spec:
+      serviceAccountName: recsys-service
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: recsys-service
+          # CI pipeline overrides this tag via kustomize image transforms
+          image: nebutra/recsys-service:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8003
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: nebutra-config
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: DATABASE_URL
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: REDIS_URL
+            - name: CLICKHOUSE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: CLICKHOUSE_HOST
+          resources:
+            # Recommendation engine may need extra memory for in-memory model data
+            requests:
+              memory: "512Mi"
+              cpu: "200m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 3
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 1000
+            readOnlyRootFilesystem: true
+      securityContext:
+        fsGroup: 1000

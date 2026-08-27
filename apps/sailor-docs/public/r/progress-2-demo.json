@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "progress-2-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/progress-2-demo.tsx",
+      "content": "\"use client\";\n\nimport { Progress } from \"@nebutra/ui/primitives\";\nexport function Progress2Demo() {\n  return (\n    <div className=\"space-y-1 w-full\">\n      <div className=\"text-sm flex justify-between\">\n        <span>Uploading...</span>\n        <span>65%</span>\n      </div>\n      <Progress value={65} />\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

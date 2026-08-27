@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stack-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/stack-demo.tsx",
+      "content": "import { Stack } from \"@nebutra/ui/primitives\";\n\nexport function StackDemo() {\n  return (\n    <Stack gap={4} className=\"max-w-sm p-6 w-full rounded-xl border bg-background shadow-sm\">\n      <div className=\"h-8 w-3/4 rounded-md bg-primary/20\" />\n      <div className=\"h-4 w-full rounded-md bg-muted\" />\n      <div className=\"h-4 w-5/6 rounded-md bg-muted\" />\n      <div className=\"mt-2 h-10 w-full rounded-md bg-primary\" />\n    </Stack>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

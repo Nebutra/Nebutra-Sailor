@@ -1,0 +1,741 @@
+{
+  "owner": "Nebutra",
+  "sourceRepository": "Nebutra/Nebutra-Sailor",
+  "defaultBranch": "main",
+  "distribution": {
+    "canonicalSource": "monorepo",
+    "packageRegistries": ["npmjs", "github-packages"],
+    "mirrorRole": "public discovery, cloneable examples, and contribution intake"
+  },
+  "mirrors": [
+    {
+      "packageName": "@nebutra/agents",
+      "repoName": "agents",
+      "sourceDir": "packages/ai/agents",
+      "cohort": "first-wave",
+      "category": "ai-runtime",
+      "description": "Nebutra AI runtime for multi-agent orchestration and Vercel AI SDK helpers.",
+      "topics": ["nebutra", "ai", "agents", "typescript", "ai-sdk", "multi-agent"]
+    },
+    {
+      "packageName": "@nebutra/mcp",
+      "repoName": "mcp",
+      "sourceDir": "packages/ai/mcp",
+      "cohort": "first-wave",
+      "category": "ai-runtime",
+      "description": "Model Context Protocol primitives for Nebutra agent and tool surfaces.",
+      "topics": ["nebutra", "mcp", "model-context-protocol", "agents", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/tool-registry",
+      "repoName": "tool-registry",
+      "sourceDir": "packages/ai/tool-registry",
+      "cohort": "first-wave",
+      "category": "ai-runtime",
+      "description": "Registry and loader primitives for agent skills, tools, and local capability packs.",
+      "topics": ["nebutra", "tool-registry", "agent-tools", "typescript", "skills"]
+    },
+    {
+      "packageName": "@nebutra/code-execution",
+      "repoName": "code-execution",
+      "sourceDir": "packages/ai/code-execution",
+      "cohort": "first-wave",
+      "category": "ai-runtime",
+      "description": "Policy-aware code execution orchestration for AI-native applications.",
+      "topics": ["nebutra", "code-execution", "sandbox", "agents", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/sandbox-runtime",
+      "repoName": "sandbox-runtime",
+      "sourceDir": "packages/ai/sandbox-runtime",
+      "cohort": "first-wave",
+      "category": "ai-runtime",
+      "description": "Sandbox runtime contracts for governed AI tool execution.",
+      "topics": ["nebutra", "sandbox", "runtime", "security", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/ui",
+      "repoName": "ui",
+      "sourceDir": "packages/design/ui",
+      "cohort": "first-wave",
+      "category": "design-system",
+      "description": "Nebutra design-system UI primitives, layouts, and token-integrated components.",
+      "topics": ["nebutra", "ui", "design-system", "react", "tailwindcss", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/tokens",
+      "repoName": "tokens",
+      "sourceDir": "packages/design/tokens",
+      "cohort": "first-wave",
+      "category": "design-system",
+      "description": "Runtime CSS variables and theme provider primitives for Nebutra products.",
+      "topics": ["nebutra", "design-tokens", "theme", "css-variables", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/icons",
+      "repoName": "icons",
+      "sourceDir": "packages/design/icons",
+      "cohort": "first-wave",
+      "category": "design-system",
+      "description": "Nebutra icon exports and generated Geist-compatible icon components.",
+      "topics": ["nebutra", "icons", "design-system", "react", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/fonts",
+      "repoName": "fonts",
+      "sourceDir": "packages/design/fonts",
+      "cohort": "first-wave",
+      "category": "design-system",
+      "description": "Self-hosted OSS font registry for Nebutra themes and DESIGN.md imports.",
+      "topics": ["nebutra", "fonts", "nextjs", "design-system", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/logger",
+      "repoName": "logger",
+      "sourceDir": "packages/platform/logger",
+      "cohort": "first-wave",
+      "category": "platform",
+      "description": "Structured logging and OpenTelemetry instrumentation for Nebutra services.",
+      "topics": ["nebutra", "logger", "opentelemetry", "observability", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/errors",
+      "repoName": "errors",
+      "sourceDir": "packages/platform/errors",
+      "cohort": "first-wave",
+      "category": "platform",
+      "description": "Typed error definitions and platform error contracts for Nebutra packages.",
+      "topics": ["nebutra", "errors", "platform", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/provider-factory",
+      "repoName": "provider-factory",
+      "sourceDir": "packages/platform/provider-factory",
+      "cohort": "first-wave",
+      "category": "platform",
+      "description": "Provider resolution primitive for explicit, environment, detection-chain, and fallback selection.",
+      "topics": ["nebutra", "provider-factory", "platform", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/cache",
+      "repoName": "cache",
+      "sourceDir": "packages/integrations/cache",
+      "cohort": "first-wave",
+      "category": "integrations",
+      "description": "Cache provider contracts and runtime helpers for Nebutra applications.",
+      "topics": ["nebutra", "cache", "redis", "integrations", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/email",
+      "repoName": "email",
+      "sourceDir": "packages/integrations/email",
+      "cohort": "first-wave",
+      "category": "integrations",
+      "description": "Transactional email contracts and provider integration helpers.",
+      "topics": ["nebutra", "email", "resend", "integrations", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/webhooks",
+      "repoName": "webhooks",
+      "sourceDir": "packages/integrations/webhooks",
+      "cohort": "first-wave",
+      "category": "integrations",
+      "description": "Outbound webhook contracts and delivery primitives for Nebutra services.",
+      "topics": ["nebutra", "webhooks", "svix", "integrations", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/notifications",
+      "repoName": "notifications",
+      "sourceDir": "packages/integrations/notifications",
+      "cohort": "second-wave",
+      "category": "integrations",
+      "description": "Multi-channel notification center for in-app, email, push, SMS, and chat delivery.",
+      "topics": ["nebutra", "notifications", "novu", "integrations", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/search",
+      "repoName": "search",
+      "sourceDir": "packages/integrations/search",
+      "cohort": "second-wave",
+      "category": "integrations",
+      "description": "Provider-agnostic full-text search across Meilisearch, Typesense, and Algolia.",
+      "topics": ["nebutra", "search", "meilisearch", "typesense", "algolia", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/uploads",
+      "repoName": "uploads",
+      "sourceDir": "packages/integrations/uploads",
+      "cohort": "second-wave",
+      "category": "integrations",
+      "description": "Large file uploads with S3/R2 multipart, Tus resumable, and presigned URLs.",
+      "topics": ["nebutra", "uploads", "s3", "tus", "integrations", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/vault",
+      "repoName": "vault",
+      "sourceDir": "packages/iam/vault",
+      "cohort": "second-wave",
+      "category": "iam",
+      "description": "Application-layer envelope encryption for tenant secrets (AWS KMS + local HKDF).",
+      "topics": ["nebutra", "vault", "encryption", "kms", "security", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/permissions",
+      "repoName": "permissions",
+      "sourceDir": "packages/iam/permissions",
+      "cohort": "second-wave",
+      "category": "iam",
+      "description": "RBAC/ABAC authorization engine with CASL and OpenFGA adapters.",
+      "topics": ["nebutra", "permissions", "rbac", "abac", "casl", "openfga", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/tenant",
+      "repoName": "tenant",
+      "sourceDir": "packages/iam/tenant",
+      "cohort": "second-wave",
+      "category": "iam",
+      "description": "Multi-tenancy context with AsyncLocalStorage, RLS helpers, and isolation strategies.",
+      "topics": ["nebutra", "tenant", "multi-tenancy", "rls", "iam", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/identity",
+      "repoName": "identity",
+      "sourceDir": "packages/iam/identity",
+      "cohort": "second-wave",
+      "category": "iam",
+      "description": "Provider-agnostic identity adapter layer (Clerk-first, Auth.js-ready).",
+      "topics": ["nebutra", "identity", "auth", "clerk", "iam", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/metering",
+      "repoName": "metering",
+      "sourceDir": "packages/commerce/metering",
+      "cohort": "second-wave",
+      "category": "commerce",
+      "description": "Usage metering pipeline with ClickHouse real-time aggregation for consumption billing.",
+      "topics": ["nebutra", "metering", "clickhouse", "billing", "usage", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/design-sync",
+      "repoName": "design-sync",
+      "sourceDir": "packages/design/design-sync",
+      "cohort": "second-wave",
+      "category": "design-system",
+      "description": "Provider-agnostic design-tool sync for Figma, Penpot, and git-only token workflows.",
+      "topics": ["nebutra", "design-sync", "figma", "penpot", "design-tokens", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/theme",
+      "repoName": "theme",
+      "sourceDir": "packages/design/theme",
+      "cohort": "second-wave",
+      "category": "design-system",
+      "description": "Design-language catalog and Brand Packages for global product chrome swap.",
+      "topics": ["nebutra", "theme", "design-system", "brand-packages", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/brand",
+      "repoName": "brand",
+      "sourceDir": "packages/design/brand",
+      "cohort": "second-wave",
+      "category": "design-system",
+      "description": "Nebutra brand assets, logos, and identity components.",
+      "topics": ["nebutra", "brand", "logo", "design-system", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/knowledge-rag",
+      "repoName": "knowledge-rag",
+      "sourceDir": "packages/ai/knowledge-rag",
+      "cohort": "second-wave",
+      "category": "ai-runtime",
+      "description": "Knowledge retrieval with zero-config local embedder and pluggable vector/keyword ports.",
+      "topics": ["nebutra", "rag", "knowledge", "embeddings", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/queue",
+      "repoName": "queue",
+      "sourceDir": "packages/integrations/queue",
+      "cohort": "third-wave",
+      "category": "integrations",
+      "description": "Provider-agnostic message queue with QStash, BullMQ, SQS, and scheduled job DI.",
+      "topics": ["nebutra", "queue", "qstash", "bullmq", "sqs", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/capability-kit",
+      "repoName": "capability-kit",
+      "sourceDir": "packages/platform/capability-kit",
+      "cohort": "third-wave",
+      "category": "platform",
+      "description": "Neutral capability primitives shared by every Nebutra capability package.",
+      "topics": ["nebutra", "capability-kit", "platform", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/tenant-store",
+      "repoName": "tenant-store",
+      "sourceDir": "packages/platform/tenant-store",
+      "cohort": "third-wave",
+      "category": "platform",
+      "description": "Lowest-layer multi-tenant storage primitives for per-tenant resource isolation.",
+      "topics": ["nebutra", "tenant-store", "multi-tenancy", "platform", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/trace-store",
+      "repoName": "trace-store",
+      "sourceDir": "packages/platform/trace-store",
+      "cohort": "third-wave",
+      "category": "platform",
+      "description": "Async trace emit layer for agent, tool, and LLM spans.",
+      "topics": ["nebutra", "trace-store", "observability", "agents", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/graph-model",
+      "repoName": "graph-model",
+      "sourceDir": "packages/platform/graph-model",
+      "cohort": "third-wave",
+      "category": "platform",
+      "description": "Neutral structural DAG contract with generic GraphNode and GraphEdge types.",
+      "topics": ["nebutra", "graph-model", "dag", "platform", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/contracts",
+      "repoName": "contracts",
+      "sourceDir": "packages/commerce/contracts",
+      "cohort": "third-wave",
+      "category": "commerce",
+      "description": "Canonical API, event, and domain contracts for Nebutra superstarter packages.",
+      "topics": ["nebutra", "contracts", "events", "api", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/ai-primitives",
+      "repoName": "ai-primitives",
+      "sourceDir": "packages/ai/ai-primitives",
+      "cohort": "third-wave",
+      "category": "ai-runtime",
+      "description": "Zero-dependency AI primitives for deterministic hashing and numeric helpers.",
+      "topics": ["nebutra", "ai-primitives", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/local-embedding",
+      "repoName": "local-embedding",
+      "sourceDir": "packages/ai/local-embedding",
+      "cohort": "third-wave",
+      "category": "ai-runtime",
+      "description": "Deterministic zero-config local text embedding primitive for file and RAG indexes.",
+      "topics": ["nebutra", "embeddings", "local-embedding", "rag", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/content-store",
+      "repoName": "content-store",
+      "sourceDir": "packages/ai/content-store",
+      "cohort": "third-wave",
+      "category": "ai-runtime",
+      "description": "Tenant-scoped content file truth layer for knowledge and document pipelines.",
+      "topics": ["nebutra", "content-store", "storage", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/event-log",
+      "repoName": "event-log",
+      "sourceDir": "packages/ai/event-log",
+      "cohort": "third-wave",
+      "category": "ai-runtime",
+      "description": "Append-only event log primitives for agent and workflow observability.",
+      "topics": ["nebutra", "event-log", "observability", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/execution-policy",
+      "repoName": "execution-policy",
+      "sourceDir": "packages/ai/execution-policy",
+      "cohort": "third-wave",
+      "category": "ai-runtime",
+      "description": "Policy contracts for governed AI tool and code execution.",
+      "topics": ["nebutra", "execution-policy", "security", "agents", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/integration-vault",
+      "repoName": "integration-vault",
+      "sourceDir": "packages/integrations/integration-vault",
+      "cohort": "third-wave",
+      "category": "integrations",
+      "description": "Tenant-scoped SaaS OAuth and credential vault for tool calling.",
+      "topics": ["nebutra", "integration-vault", "oauth", "credentials", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/agent-runtime",
+      "repoName": "agent-runtime",
+      "sourceDir": "packages/ai/agent-runtime",
+      "cohort": "third-wave",
+      "category": "ai-runtime",
+      "description": "Multi-tenant agent-runtime grammar with thread, turn, and approval model.",
+      "topics": ["nebutra", "agent-runtime", "agents", "multi-tenant", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/audit",
+      "repoName": "audit",
+      "sourceDir": "packages/iam/audit",
+      "cohort": "fourth-wave",
+      "category": "iam",
+      "description": "SOC 2-grade audit logging with pluggable memory, Postgres, and ClickHouse providers.",
+      "topics": ["nebutra", "audit", "compliance", "soc2", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/collab",
+      "repoName": "collab",
+      "sourceDir": "packages/integrations/collab",
+      "cohort": "fourth-wave",
+      "category": "integrations",
+      "description": "Multi-tenant real-time collaborative sync layer with transport-agnostic CRDT contracts.",
+      "topics": ["nebutra", "collab", "crdt", "realtime", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/prepaid-wallet",
+      "repoName": "prepaid-wallet",
+      "sourceDir": "packages/platform/prepaid-wallet",
+      "cohort": "fourth-wave",
+      "category": "platform",
+      "description": "Prepaid wallet, API key product helpers, and dual-ledger usage envelope.",
+      "topics": ["nebutra", "prepaid-wallet", "billing", "platform", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/router-supply",
+      "repoName": "router-supply",
+      "sourceDir": "packages/platform/router-supply",
+      "cohort": "fourth-wave",
+      "category": "platform",
+      "description": "Router supply orchestration for model aliases and engine endpoints.",
+      "topics": ["nebutra", "router-supply", "ai-router", "platform", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/tts",
+      "repoName": "tts",
+      "sourceDir": "packages/integrations/tts",
+      "cohort": "fourth-wave",
+      "category": "integrations",
+      "description": "Provider-agnostic text-to-speech and narration synthesis.",
+      "topics": ["nebutra", "tts", "speech", "audio", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/typelens-catalog",
+      "repoName": "typelens-catalog",
+      "sourceDir": "packages/design/typelens-catalog",
+      "cohort": "fourth-wave",
+      "category": "design-system",
+      "description": "Type Lens works, pairings, and agent extract packs for design systems.",
+      "topics": ["nebutra", "typelens", "design-system", "typography", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/video-compose",
+      "repoName": "video-compose",
+      "sourceDir": "packages/integrations/video-compose",
+      "cohort": "fourth-wave",
+      "category": "integrations",
+      "description": "Timeline and edit-decision-list builder with provider-agnostic video compose.",
+      "topics": ["nebutra", "video-compose", "timeline", "video", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/forge-dns-leak",
+      "repoName": "forge-dns-leak",
+      "sourceDir": "packages/ai/forge-dns-leak",
+      "cohort": "fourth-wave",
+      "category": "ai-runtime",
+      "description": "Authoritative DNS leak zone and session API for Nebutra Forge.",
+      "topics": ["nebutra", "dns", "forge", "security", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/ecosystem-safety",
+      "repoName": "ecosystem-safety",
+      "sourceDir": "packages/ai/ecosystem-safety",
+      "cohort": "fourth-wave",
+      "category": "ai-runtime",
+      "description": "Public-disclosure safety primitives for ecosystem publishing surfaces.",
+      "topics": ["nebutra", "ecosystem-safety", "safety", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/generation-context",
+      "repoName": "generation-context",
+      "sourceDir": "packages/ai/generation-context",
+      "cohort": "fourth-wave",
+      "category": "ai-runtime",
+      "description": "Shared BrandContext and generated-asset metadata contracts for multimodal pipelines.",
+      "topics": ["nebutra", "generation-context", "brand", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/knowledge-graph",
+      "repoName": "knowledge-graph",
+      "sourceDir": "packages/ai/knowledge-graph",
+      "cohort": "fourth-wave",
+      "category": "ai-runtime",
+      "description": "Multi-tenant knowledge-graph substrate with typed entities and edges.",
+      "topics": ["nebutra", "knowledge-graph", "graph", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/play-loader",
+      "repoName": "play-loader",
+      "sourceDir": "packages/ai/play-loader",
+      "cohort": "fourth-wave",
+      "category": "ai-runtime",
+      "description": "Declarative SKILL.md play loader and dependency planner.",
+      "topics": ["nebutra", "play-loader", "skills", "agents", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/code-index",
+      "repoName": "code-index",
+      "sourceDir": "packages/ai/code-index",
+      "cohort": "fourth-wave",
+      "category": "ai-runtime",
+      "description": "Multi-tenant codebase semantic-index grammar with content-hash identity.",
+      "topics": ["nebutra", "code-index", "search", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/license",
+      "repoName": "license",
+      "sourceDir": "packages/commerce/license",
+      "cohort": "fifth-wave",
+      "category": "commerce",
+      "description": "License key issuance, validation, and lifecycle events with host-injected DB.",
+      "topics": ["nebutra", "license", "commerce", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/document-pipeline",
+      "repoName": "document-pipeline",
+      "sourceDir": "packages/ai/document-pipeline",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "Document parse and ingestion pipeline for tenant knowledge products.",
+      "topics": ["nebutra", "document-pipeline", "ingestion", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/knowledge-base",
+      "repoName": "knowledge-base",
+      "sourceDir": "packages/ai/knowledge-base",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "Tenant-scoped knowledge product layer over content-store and knowledge-rag.",
+      "topics": ["nebutra", "knowledge-base", "rag", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/browser-control",
+      "repoName": "browser-control",
+      "sourceDir": "packages/ai/browser-control",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "Browser task execution, recording, and deterministic replay ports.",
+      "topics": ["nebutra", "browser-control", "automation", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/workflow-runtime",
+      "repoName": "workflow-runtime",
+      "sourceDir": "packages/ai/workflow-runtime",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "Workflow runtime contracts for durable multi-step agent execution.",
+      "topics": ["nebutra", "workflow-runtime", "workflows", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/voice-realtime",
+      "repoName": "voice-realtime",
+      "sourceDir": "packages/ai/voice-realtime",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "Realtime voice session ports and provider adapters.",
+      "topics": ["nebutra", "voice-realtime", "voice", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/support-deflector",
+      "repoName": "support-deflector",
+      "sourceDir": "packages/ai/support-deflector",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "Confidence-gated support deflection and answer assist primitives.",
+      "topics": ["nebutra", "support-deflector", "support", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/time-machine",
+      "repoName": "time-machine",
+      "sourceDir": "packages/ai/time-machine",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "Temporal replay and time-travel debugging helpers for agent runs.",
+      "topics": ["nebutra", "time-machine", "replay", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/video-pipeline",
+      "repoName": "video-pipeline",
+      "sourceDir": "packages/ai/video-pipeline",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "BrandContext-first video generation and pipeline routing surface.",
+      "topics": ["nebutra", "video-pipeline", "video", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/image-pipeline",
+      "repoName": "image-pipeline",
+      "sourceDir": "packages/ai/image-pipeline",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "BrandContext-first image generation and workflow routing surface.",
+      "topics": ["nebutra", "image-pipeline", "image", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/audio-pipeline",
+      "repoName": "audio-pipeline",
+      "sourceDir": "packages/ai/audio-pipeline",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "BrandContext-first audio generation with license and loudness helpers.",
+      "topics": ["nebutra", "audio-pipeline", "audio", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/cofounder-match",
+      "repoName": "cofounder-match",
+      "sourceDir": "packages/ai/cofounder-match",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "Cofounder matching play surface for startup agent OS.",
+      "topics": ["nebutra", "cofounder-match", "matching", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/billing",
+      "repoName": "billing",
+      "sourceDir": "packages/commerce/billing",
+      "cohort": "sixth-wave",
+      "category": "commerce",
+      "description": "Multi-provider billing, subscriptions, credits, and usage with host-injected tenant DB.",
+      "topics": ["nebutra", "billing", "stripe", "subscriptions", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/3d-pipeline",
+      "repoName": "3d-pipeline",
+      "sourceDir": "packages/ai/3d-pipeline",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "BrandContext-first mesh generation, export manifests, and previews.",
+      "topics": ["nebutra", "3d-pipeline", "mesh", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/atelier-canvas",
+      "repoName": "atelier-canvas",
+      "sourceDir": "packages/ai/atelier-canvas",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "Server-authoritative creative canvas engine with non-overlap layout.",
+      "topics": ["nebutra", "atelier-canvas", "canvas", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/brand-genesis",
+      "repoName": "brand-genesis",
+      "sourceDir": "packages/ai/brand-genesis",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "BrandContext-first flagship play for complete brand package generation.",
+      "topics": ["nebutra", "brand-genesis", "brand", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/cinema",
+      "repoName": "cinema",
+      "sourceDir": "packages/ai/cinema",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "Agentic film-production IP with camera-continuity tree contracts.",
+      "topics": ["nebutra", "cinema", "film", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/founder-cemetery",
+      "repoName": "founder-cemetery",
+      "sourceDir": "packages/ai/founder-cemetery",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "Founder failure-case knowledge surface for startup agent OS.",
+      "topics": ["nebutra", "founder-cemetery", "startup", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/idea-plaza",
+      "repoName": "idea-plaza",
+      "sourceDir": "packages/ai/idea-plaza",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "Idea marketplace and plaza play surface for startup agents.",
+      "topics": ["nebutra", "idea-plaza", "marketplace", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/landing-builder",
+      "repoName": "landing-builder",
+      "sourceDir": "packages/ai/landing-builder",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "Landing page generation play surface for marketing agents.",
+      "topics": ["nebutra", "landing-builder", "marketing", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/outreach-engine",
+      "repoName": "outreach-engine",
+      "sourceDir": "packages/ai/outreach-engine",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "Outbound outreach sequencing and personalization engine.",
+      "topics": ["nebutra", "outreach-engine", "sales", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/play-marketplace",
+      "repoName": "play-marketplace",
+      "sourceDir": "packages/ai/play-marketplace",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "Play catalog and marketplace surface for agent skill packs.",
+      "topics": ["nebutra", "play-marketplace", "skills", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/reel",
+      "repoName": "reel",
+      "sourceDir": "packages/ai/reel",
+      "cohort": "sixth-wave",
+      "category": "ai-runtime",
+      "description": "Short-form reel composition and generation contracts.",
+      "topics": ["nebutra", "reel", "video", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/ai-providers",
+      "repoName": "ai-providers",
+      "sourceDir": "packages/ai/ai-providers",
+      "cohort": "seventh-wave",
+      "category": "ai-runtime",
+      "description": "Provider registry metadata and frontier model SSOT for Nebutra products.",
+      "topics": ["nebutra", "ai-providers", "models", "metadata", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/forge-runtime",
+      "repoName": "forge-runtime",
+      "sourceDir": "packages/ai/forge-runtime",
+      "cohort": "seventh-wave",
+      "category": "ai-runtime",
+      "description": "Forge capability registry, invoke pipeline, and pure tool station runtime.",
+      "topics": ["nebutra", "forge-runtime", "tools", "agents", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/design-tokens",
+      "repoName": "design-tokens",
+      "sourceDir": "packages/design/design-tokens",
+      "cohort": "seventh-wave",
+      "category": "design-system",
+      "description": "W3C DTCG token SSOT with Style Dictionary 4 pipeline for Nebutra brands.",
+      "topics": ["nebutra", "design-tokens", "dtcg", "style-dictionary", "typescript"]
+    },
+    {
+      "packageName": "create-sailor",
+      "repoName": "create-sailor",
+      "sourceDir": "packages/ops/create-sailor",
+      "cohort": "eighth-wave",
+      "category": "ops",
+      "description": "Governed AI-native SaaS scaffolder — bootstrap a production monorepo with multi-tenant defaults.",
+      "topics": ["nebutra", "create-sailor", "scaffold", "cli", "typescript"]
+    },
+    {
+      "packageName": "nebutra",
+      "repoName": "nebutra-cli",
+      "sourceDir": "packages/ops/cli",
+      "cohort": "eighth-wave",
+      "category": "ops",
+      "description": "Governance-first Nebutra CLI for topology scaffolding and platform operations.",
+      "topics": ["nebutra", "cli", "ops", "scaffold", "typescript"]
+    }
+  ]
+}

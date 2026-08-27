@@ -1,0 +1,102 @@
+{
+  "name": "@nebutra/billing",
+  "version": "0.1.4",
+  "description": "Billing & Monetization infrastructure for Nebutra - Stripe integration, subscriptions, usage, credits",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "graph": "core",
+    "status": "foundation",
+    "productionReady": false,
+    "category": "commerce",
+    "summary": "Multi-provider billing with host-injected tenant DB",
+    "requires": [
+      "Host-injected getTenantDb via configureBillingTenantDb for credits/usage ledger"
+    ],
+    "gaps": [
+      "Provider adapters need credentials before they do anything: STRIPE_SECRET_KEY + STRIPE_WEBHOOK_SECRET, POLAR_ACCESS_TOKEN, LEMONSQUEEZY_API_KEY, CHINAPAY_APP_SECRET",
+      "Persistence is host-owned \u2014 the package ships no prisma/ schema and reads the client through @nebutra/db",
+      "No UI surface: checkout, portal and invoice screens are the consuming app's"
+    ]
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./stripe": {
+      "import": "./dist/stripe/index.js",
+      "types": "./dist/stripe/index.d.ts"
+    },
+    "./polar": {
+      "import": "./dist/polar/index.js",
+      "types": "./dist/polar/index.d.ts"
+    },
+    "./subscriptions": {
+      "import": "./dist/subscriptions/index.js",
+      "types": "./dist/subscriptions/index.d.ts"
+    },
+    "./usage": {
+      "import": "./dist/usage/index.js",
+      "types": "./dist/usage/index.d.ts"
+    },
+    "./credits": {
+      "import": "./dist/credits/index.js",
+      "types": "./dist/credits/index.d.ts"
+    },
+    "./entitlements": {
+      "import": "./dist/entitlements/index.js",
+      "types": "./dist/entitlements/index.d.ts"
+    },
+    "./lemonsqueezy": {
+      "import": "./dist/lemonsqueezy/index.js",
+      "types": "./dist/lemonsqueezy/index.d.ts"
+    },
+    "./chinapay": {
+      "import": "./dist/chinapay/index.js",
+      "types": "./dist/chinapay/index.d.ts"
+    },
+    "./checkout": {
+      "import": "./dist/checkout/index.js",
+      "types": "./dist/checkout/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "rm -rf dist .turbo"
+  },
+  "dependencies": {
+    "@lemonsqueezy/lemonsqueezy.js": "^4.0.0",
+    "@nebutra/contracts": "workspace:*",
+    "@nebutra/logger": "workspace:*",
+    "@nebutra/metering": "workspace:*",
+    "@polar-sh/sdk": "^0.46.7",
+    "date-fns": "^4.1.0",
+    "stripe": "^20.4.0",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.15",
+    "tsup": "^8.5.1",
+    "typescript": "catalog:",
+    "vitest": "^4.0.18"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/commerce/billing#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/commerce/billing"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

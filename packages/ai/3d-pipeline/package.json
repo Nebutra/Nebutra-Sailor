@@ -1,0 +1,72 @@
+{
+  "name": "@nebutra/3d-pipeline",
+  "version": "0.1.3",
+  "description": "BrandContext-first mesh generation, export manifests, and previews",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "graph": "labs",
+    "status": "wip",
+    "productionReady": false,
+    "surface": "generation-capability",
+    "requires": [
+      "@nebutra/generation-context for BrandContext",
+      "@nebutra/image-pipeline for image-to-mesh inputs",
+      "@nebutra/sandbox-runtime for model and Blender sidecars"
+    ],
+    "gaps": [
+      "Model-backed mesh generation is adapter-gated",
+      "Retopology and UV workflows are deterministic manifest placeholders",
+      "Remote provider license checks are metadata-only"
+    ],
+    "featureId": "3d-pipeline",
+    "category": "ai",
+    "summary": "BrandContext-first mesh, preview, and export surface"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/capability-kit": "workspace:*",
+    "@nebutra/errors": "workspace:*",
+    "@nebutra/generation-context": "workspace:*",
+    "@nebutra/image-pipeline": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/3d-pipeline#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/3d-pipeline"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
+}

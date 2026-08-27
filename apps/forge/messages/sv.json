@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — Online verktygsstation",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "Kodningar, text, hashning, dokument och bildverktyg online."
+  },
+  "nav": {
+    "main": "Huvudnavigation",
+    "homeAria": "{brandName} Forge hem",
+    "tools": "Verktyg",
+    "wallet": "Plånbok",
+    "api": "API",
+    "routerAria": "{brandName} Router",
+    "categoriesAria": "Verktygskategorier",
+    "languageAria": "Byt språk"
+  },
+  "tool": {
+    "breadcrumbAria": "Brödsmulor",
+    "workspace": "Arbetsyta",
+    "workspaceHint": "Lokalt eller server · samma sökväg som API",
+    "api": "API",
+    "apiHint": "Samma kontrakt som sidan. Använd en autentiserad nyckel i produktion.",
+    "related": "Relaterade verktyg"
+  },
+  "auth": {
+    "signIn": "Logga in",
+    "signUp": "Skapa konto",
+    "signOut": "Logga ut"
+  },
+  "footer": {
+    "navAria": "Sidfot",
+    "blurb": "Onlineverktygsstation. Slutför uppgifter i webbläsaren eller automatisera via API / MCP.",
+    "product": "Produkt",
+    "developers": "Utvecklare",
+    "company": "Företag",
+    "docs": "Integrationsdokumentation",
+    "website": "Webbplats",
+    "privacy": "Integritet"
+  },
+  "home": {
+    "eyebrow": "Se det. Anropa det.",
+    "title": "Multiverktyg för onlineverktyg",
+    "subtitle": "Codecs, text, hashning, dokument och bildbehandling. Slutför i webbläsaren eller automatisera via API / MCP — en implementation.",
+    "toolCount": "{count} verktyg",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "Sök: ordantal, base64, json, tidsstämpel…",
+    "aria": "Sök verktyg",
+    "emptyTitle": "Inga verktyg matchar ”{query}”",
+    "emptyHint": "Försök med ett annat nyckelord eller välj ett verktyg från kategorierna nedan."
+  },
+  "categories": {
+    "codec": {
+      "label": "Kodningar",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "Kina-validering",
+      "hint": "ID · telefon"
+    },
+    "data": {
+      "label": "Data",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "Utvecklare",
+      "hint": "Regex · SQL · färg · UUID"
+    },
+    "doc": {
+      "label": "Dokument",
+      "hint": "Markdown · PDF sammanfoga/dela"
+    },
+    "finance": {
+      "label": "Finans",
+      "hint": "Belopp till ord"
+    },
+    "hash": {
+      "label": "Hash & säkerhet",
+      "hint": "MD5 · SHA · HMAC · lösenord"
+    },
+    "image": {
+      "label": "Bilder",
+      "hint": "Komprimera · QR · konvertera"
+    },
+    "life": {
+      "label": "Livskalkylatorer",
+      "hint": "Bostadslån · BMI · släktskap"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "Tokens · kostnad · schema"
+    },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
+    "security": {
+      "label": "Säkerhet",
+      "hint": "Lösenordsgenerator"
+    },
+    "text": {
+      "label": "Text",
+      "hint": "Ordantal · CJK · pinyin · Diff"
+    },
+    "time": {
+      "label": "Tid",
+      "hint": "Tidstämpel · tidszon · Cron · lunär"
+    },
+    "unit": {
+      "label": "Enheter",
+      "hint": "Längd · vikt · temperatur · data"
+    },
+    "template": {
+      "label": "Mallar",
+      "hint": ".gitignore · LICENSE · Dockerfile · README"
+    }
+  },
+  "runners": {
+    "common": {
+      "run": "Kör",
+      "running": "Kör…",
+      "copy": "Kopiera",
+      "copied": "Kopierat",
+      "sameAsApi": "Samma sökväg som API · OSS-motor",
+      "mustBeNumber": "{label} måste vara ett nummer",
+      "base64Loaded": "Base64-payload laddad",
+      "workspaceMissing": "Arbetsplats inte konfigurerad: {slug}",
+      "yes": "Ja",
+      "no": "Nej",
+      "text": "Text",
+      "input": "Inmatning",
+      "output": "Utdata",
+      "outputPlaceholder": "Resultat visas här",
+      "localRun": "Kör lokalt",
+      "serverRun": "Kör på server",
+      "serverVerify": "Verifiera server",
+      "outputPreview": "Förhandsvisning av utdata",
+      "mode": "Läge",
+      "encode": "Kodning",
+      "decode": "Avkodning",
+      "file": "Fil",
+      "clear": "Rensa",
+      "length": "Längd: {n}",
+      "bytes": "{bytes} byte",
+      "download": "Ladda ner",
+      "format": "Format",
+      "formatting": "Formatering…",
+      "dialect": "Dialekt",
+      "color": "Färg",
+      "pickColor": "Välj färg",
+      "content": "Innehåll",
+      "algorithm": "Algoritm",
+      "encoding": "Kodning",
+      "message": "Meddelande",
+      "secret": "Hemlighet",
+      "password": "Lösenord",
+      "direction": "Riktning",
+      "preview": "Förhandsgranskning",
+      "query": "Fråga",
+      "querying": "Frågar…",
+      "validate": "Validera",
+      "validating": "Validerar…",
+      "processing": "Bearbetar…",
+      "pretty": "Formatera",
+      "minify": "Minifiera",
+      "from": "Från",
+      "to": "Till",
+      "timezone": "Tidszon",
+      "datetime": "Datum & tid",
+      "compute": "Beräkna",
+      "computing": "Beräknar…",
+      "convertAction": "Konvertera",
+      "count": "Antal",
+      "value": "Värde",
+      "unit": "Enhet",
+      "generateLocal": "Generera lokalt",
+      "generateServer": "Generera på server",
+      "copyAll": "Kopiera allt",
+      "emptyResult": "Resultat visas här",
+      "copyText": "Kopiera text",
+      "quality": "Kvalitet",
+      "original": "Original",
+      "result": "Resultat",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
+    },
+    "base64": {
+      "encodeDir": "Text → Base64",
+      "decodeDir": "Base64 → Text",
+      "localNote": "Lokal Web API (TextEncoder / atob)",
+      "serverNote": "Server Buffer · samma väg som API"
+    },
+    "password": {
+      "uppercase": "Versaler",
+      "lowercase": "Små bokstäver",
+      "digits": "Siffror",
+      "symbols": "Symboler",
+      "generate": "Generera lösenord",
+      "recent": "Senaste",
+      "note": "Motor: node:crypto randomInt · kryptografiskt säkert · samma väg som API"
+    },
+    "hash": {
+      "algo": "Algoritm: {algo}",
+      "md5Warn": " · endast checksumma/kompatibilitet — lagra inte lösenord",
+      "md5LocalError": "MD5 kräver serverkörning (Web Crypto har inget MD5)",
+      "md5ServerHint": "MD5: använd serverkörning (endast kompatibilitet, inte för lösenordslagring)",
+      "localNote": "Lokal Web Crypto · {algo}",
+      "serverNote": "Server node:crypto · samma sökväg som API"
+    },
+    "convert": {
+      "converting": "Konverterar…",
+      "convert": "Konvertera",
+      "done": "Klar · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "Släpp en fil här eller klicka för att bläddra",
+      "needFile": "Välj en fil först",
+      "needAlgo": "Välj minst en algoritm",
+      "compute": "Beräkna kontrollsummor",
+      "computing": "Beräknar…",
+      "algorithms": "Algoritmer",
+      "note": "node:crypto · flera algoritmer · samma sökväg som API"
+    },
+    "lorem": {
+      "paragraphs": "Stycken",
+      "wordsPerParagraph": "Ord per stycke",
+      "startWithLorem": "Börja med ”Lorem ipsum”",
+      "note": "Lorem Ipsum-generator · ren"
+    },
+    "emailValidate": {
+      "note": "E-postvaliderare · endast format (ingen MX-lookup)"
+    },
+    "creditCardLuhn": {
+      "number": "Kortnummer",
+      "note": "Luhn-kontroll · offline, sparas aldrig",
+      "digits": "digits",
+      "specimenLabel": "Specimen",
+      "structureOnly": "Luhn structure only",
+      "unknownBrand": "Card"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "JSON-minifierare · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "CSS-minifier · lättviktig (säker för edge)"
+    },
+    "hashCompare": {
+      "a": "Hash A",
+      "b": "Hash B",
+      "ignoreCase": "Ignorera storlek",
+      "note": "Hashjämförare · konstant tid för lika längd"
+    },
+    "jsonDiff": {
+      "left": "JSON A",
+      "right": "JSON B",
+      "note": "JSON-diff · sökvägsnivåoperationer · färgkodade rader · sida vid sida",
+      "equal": "Identiska",
+      "differs": "{count} ändring(ar)",
+      "colPath": "Sökväg",
+      "colKind": "Typ",
+      "colLeft": "Vänster",
+      "colRight": "Höger",
+      "filtersAria": "Filtrera efter ändringstyp",
+      "filterAll": "Alla ({count})",
+      "filterAdd": "Lägg till ({count})",
+      "filterRemove": "Ta bort ({count})",
+      "filterChange": "Ändra ({count})",
+      "filterType": "Typ ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "Läge",
+      "pretty": "Prettig",
+      "compact": "Kompakt",
+      "indent": "Indentera",
+      "note": "YAML-formatering · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "TOML-formatering · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "XML-minifier · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "URL-validerare · WHATWG URL (ingen nätverksinhämtning)"
+    },
+    "ipValidate": {
+      "note": "IP-validerare · IPv4/IPv6 offline"
+    },
+    "uuidValidate": {
+      "note": "UUID-validerare · RFC 4122-format"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "HTML-minifier · lättviktig (edge-säker)"
+    },
+    "randomString": {
+      "length": "Längd",
+      "count": "Antal",
+      "charset": "Teckenuppsättning",
+      "alphanumeric": "Alfanumeriskt",
+      "symbols": "Alfanumeriskt + symboler",
+      "hex": "Hex",
+      "base64url": "Base64URL",
+      "note": "Slumpsträng · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "Lästid · CJK + Latin heuristik"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "Max rubriknivå",
+      "note": "Markdown TOC · ATX-rubriker"
+    },
+    "pdfInfo": {
+      "file": "PDF-fil",
+      "note": "PDF-info · pdf-lib (sidor + metadata)"
+    },
+    "rot13": {
+      "shift": "Förskjutning (13 = ROT13)",
+      "note": "ROT13 / Caesar · ren"
+    },
+    "morse": {
+      "note": "Morsekod · ITU · ren"
+    },
+    "textBinary": {
+      "toBinary": "Text → binär",
+      "fromBinary": "Binär → text",
+      "note": "Text ↔ Binär · UTF-8-bitar"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "Digest-kodning",
+      "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "Enkel digest · kopiera varje · node:crypto"
+    },
+    "cssFormat": {
+      "note": "CSS-formatering · lättviktig"
+    },
+    "htmlFormat": {
+      "note": "HTML Beautifier · lättviktig"
+    },
+    "stringSimilarity": {
+      "a": "Sträng A",
+      "b": "Sträng B",
+      "note": "Stränglikhet · Levenshtein"
+    },
+    "roman": {
+      "toRoman": "Tal → Romerskt",
+      "fromRoman": "Romerskt → Tal",
+      "note": "Romerska siffror · 1–3999"
+    },
+    "age": {
+      "birthDate": "Födelsedatum (YYYY-MM-DD)",
+      "asOf": "Per (valfritt)",
+      "note": "Åldersberäknare · exakt Å/M/D"
+    },
+    "tip": {
+      "bill": "Belopp",
+      "percent": "Dricks %",
+      "people": "Personer",
+      "note": "Dricksberäknare · enkel delning"
+    },
+    "aspect": {
+      "width": "Bredd",
+      "height": "Höjd",
+      "note": "Bildförhållande · förenklat GCD"
+    },
+    "mime": {
+      "note": "MIME-sökning · vanliga webbtyper"
+    },
+    "ua": {
+      "note": "User-Agent-parser · heuristisk (offline)"
+    },
+    "imageMeta": {
+      "file": "Bildfil",
+      "note": "Bildmetadata · sharp (EXIF-buffertstorlek)"
+    },
+    "wordFreq": {
+      "top": "Top N",
+      "note": "Ordfrekvens · CJK + Latin"
+    },
+    "jsonXml": {
+      "note": "JSON ↔ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "SQL-minifier · kommentarer + blanksteg"
+    },
+    "lineNum": {
+      "start": "Startnummer",
+      "note": "Lägg till radnummer · rent"
+    },
+    "uniqueWords": {
+      "note": "Unika ord · i ordning av första förekomst"
+    },
+    "epoch": {
+      "value": "Värde",
+      "msToIso": "ms → ISO",
+      "isoToMs": "ISO → ms",
+      "note": "Epoch-milliseconder · datum"
+    },
+    "passwordEntropy": {
+      "password": "Lösenord",
+      "note": "Lösenordsentropi · teckenuppsättningsheuristik"
+    },
+    "contrast": {
+      "fg": "Förgrund (#hex)",
+      "bg": "Bakgrund (#hex)",
+      "note": "Färgkontrast · WCAG 2.x",
+      "sampleHeadline": "Sample text",
+      "pass": "pass",
+      "fail": "fail",
+      "aaNormal": "AA normal",
+      "aaLarge": "AA large",
+      "aaaNormal": "AAA normal",
+      "aaaLarge": "AAA large"
+    },
+    "exif": {
+      "file": "Bildfil",
+      "note": "EXIF-visare · exifr + JPEG-fallback"
+    },
+    "regex": {
+      "pattern": "Mönster",
+      "flags": "Flaggor",
+      "replacement": "Ersättning",
+      "match": "Matcha",
+      "replace": "Ersätt",
+      "test": "Testa",
+      "local": "Kör lokalt",
+      "server": "Verifiera på server",
+      "count": "{count} träffar",
+      "sotaNote": "Omedelbar lokal markering · server timeout-budget · samma sökväg som API"
+    },
+    "jwt": {
+      "decode": "Avkoda JWT",
+      "sample": "Ladda exempel",
+      "tokenPlaceholder": "Klistra in JWT",
+      "decodeNote": "{engine} · endast avkodning, signatur verifieras inte",
+      "footerNote": "Motor: jose · ingen signaturverifiering. Verifiera produktion med nycklar via jwtVerify på servern.",
+      "generateHint": "Behöver du signera tokens?",
+      "secret": "Hemlighet",
+      "exp": "Utgår (sekunder)",
+      "payload": "Payload JSON",
+      "note": "JWT-generering · HS256 (endast utveckling/test)",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "(empty signature segment)"
+    },
+    "rand": {
+      "min": "Min",
+      "max": "Max",
+      "count": "Antal",
+      "note": "Slumpmässig tal · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "Sidor",
+      "count": "Antal tärningar",
+      "note": "Tärningsrulle · crypto RNG"
+    },
+    "hexRgb": {
+      "note": "HEX ↔ RGB · ren"
+    },
+    "base64url": {
+      "note": "Base64URL · JWT-stil"
+    },
+    "hmac": {
+      "message": "Meddelande",
+      "secret": "Hemlighet",
+      "signature": "Signatur",
+      "note": "HMAC-verifiering · SHA-256"
+    },
+    "secret": {
+      "bytes": "Byte",
+      "count": "Antal",
+      "note": "Hemlig nyckelgenerator · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "PDF-fil",
+      "note": "PDF Light Optimize · pdf-lib-omskrivning (ingen bildomkomprimering)",
+      "needFile": "Välj en PDF-fil först"
+    },
+    "pdfCompress": {
+      "file": "PDF-fil",
+      "quality": "Kvalitet",
+      "engine": "Motor",
+      "qStructural": "Strukturell (qpdf, förlustfria strömmar)",
+      "qScreen": "Skärm (minst, Ghostscript)",
+      "qEbook": "E-bok (balanserad, Ghostscript)",
+      "qPrinter": "Skrivare (högre kvalitet, Ghostscript)",
+      "eAuto": "Auto (qpdf → Ghostscript → pdf-lib)",
+      "download": "Ladda ner PDF",
+      "needFile": "Välj en PDF-fil först",
+      "in": "Inmatning",
+      "out": "Utmatning",
+      "saved": "Sparad",
+      "note": "PDF-komprimering · qpdf / Ghostscript på värd · pdf-lib som reserv",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+    },
+    "jsonFormat": {
+      "indent": "Indrag",
+      "format": "Formatera",
+      "minify": "Minimera",
+      "serverVerify": "Serververifiering",
+      "clear": "Rensa",
+      "sample": "Exempel",
+      "placeholder": "Klistra in JSON…",
+      "formatted": "Formaterad",
+      "minified": "Minifierad",
+      "serverOk": "Server {mode} · {engine}",
+      "valid": "Giltig JSON",
+      "invalid": "Ogiltig JSON",
+      "line": "rad",
+      "column": "kolumn",
+      "note": "Motor: JSON.parse/stringify · omedelbar lokalt · samma sökväg som API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
+    },
+    "qr": {
+      "size": "Storlek",
+      "ecl": "Felkorrigering",
+      "generate": "Generera",
+      "download": "Ladda ner PNG",
+      "needText": "Ange text eller URL",
+      "note": "QR · qrcode · live preview · samma sökväg som API"
+    },
+    "pdfText": {
+      "file": "PDF-fil",
+      "layout": "Layout",
+      "needFile": "Välj en PDF först",
+      "note": "PDF Text · pdftotext (poppler) på värden"
+    },
+    "svg": {
+      "optimize": "Optimera",
+      "note": "SVG Optimize · lättviktig ren minifiering"
+    },
+    "routerTranslate": {
+      "lab": "Lab-skal: översätter inte här. Öppnar Router med en prompt — modellmätare endast på Router.",
+      "source": "Källspråk",
+      "target": "Målspråk",
+      "open": "Förbered Router-länk",
+      "deepLink": "Öppna i Router",
+      "note": "extern · ingen tyst Forge LLM-ledger"
+    },
+    "imageCrop": {
+      "needFile": "Välj en bild först",
+      "crop": "Beskär",
+      "note": "Bildbeskärning · dra område · skarp utdragning",
+      "drop": "Släpp bild eller klicka för att bläddra",
+      "dragHint": "Dra på bilden för att välja ett beskärningsområde",
+      "left": "Vänster",
+      "top": "Övre",
+      "width": "Bredd",
+      "height": "Höjd",
+      "natural": "Naturlig {w}×{h}",
+      "source": "Källa",
+      "result": "Beskuren"
+    },
+    "markdown": {
+      "preview": "Förhandsgranskning",
+      "html": "HTML",
+      "emptyPreview": "Kör för att se förhandsgranskning",
+      "emptyHtml": "Renderad HTML",
+      "rendering": "Renderar…",
+      "toHtml": "Till HTML",
+      "copyHtml": "Kopiera HTML",
+      "note": "markerad · sandboxad iframe-förhandsgranskning · samma sökväg som API"
+    },
+    "pdfMerge": {
+      "files": "PDF-filer (≥2, ordning = sammanslagningsordning)",
+      "needFiles": "Välj minst 2 PDF-filer",
+      "merging": "Sammanfogar…",
+      "mergeDownload": "Sammanfogning och hämta",
+      "done": "Sammanfogad · {pages} sidor · {bytes} byte",
+      "note": "pdf-lib · samma sökväg som API",
+      "merge": "Sammanfogning och hämta"
+    },
+    "pdfSplit": {
+      "file": "PDF-fil",
+      "needFile": "Välj en PDF",
+      "fromPage": "Från sida (1-baserad)",
+      "toPage": "Till sida (tomt = sista)",
+      "toPlaceholder": "Sista sidan",
+      "splitting": "Delar upp…",
+      "splitDownload": "Del upp och hämta",
+      "done": "Delat · källa {source} sidor → utdata {pages} sidor",
+      "note": "pdf-lib · samma sökväg som API",
+      "split": "Del upp och hämta"
+    },
+    "passwordStrength": {
+      "check": "Kontrollera styrka",
+      "checking": "Kontrollerar…",
+      "crack": "Uppskattning offline långsam hash: {time}",
+      "score0": "Mycket svag",
+      "score1": "Svag",
+      "score2": "Medel",
+      "score3": "Stark",
+      "score4": "Mycket stark",
+      "note": "zxcvbn-ts · samma sökväg som API · lösenord lagras aldrig"
+    },
+    "hmacSign": {
+      "compute": "Beräkna HMAC",
+      "computing": "Beräknar…",
+      "note": "node:crypto · samma sökväg som API"
+    },
+    "costEstimate": {
+      "text": "Inmatad text (för uppskattning av inmatningstokens)",
+      "model": "Modell",
+      "outputTokens": "Utdatastokens (uppsk.)",
+      "estimate": "Uppskatta kostnad",
+      "estimating": "Uppskattar…",
+      "note": "@nebutra/ai-providers/frontier-kort + js-tiktoken · uppskattning baserat på listpris, inte en faktura"
+    },
+    "jsonSchema": {
+      "data": "JSON-data",
+      "schema": "JSON Schema",
+      "validate": "Validera",
+      "validating": "Validerar…",
+      "pass": "Godkänd",
+      "fail": "Misslyckad",
+      "note": "Ajv · samma sökväg som API"
+    },
+    "zhCnTw": {
+      "s2t": "Förenklad → Traditionell",
+      "t2s": "Traditionell → Förenklad",
+      "s2tw": "Förenklad → Taiwan",
+      "tw2s": "Taiwan → Förenklad",
+      "s2hk": "Förenklad → Hongkong",
+      "hk2s": "Hongkong → Förenklad",
+      "note": "OpenCC (opencc-js) · samma sökväg som API"
+    },
+    "pinyin": {
+      "tones": "Tonstil",
+      "symbol": "Symbol nǐ",
+      "num": "Nummer ni3",
+      "none": "Ingen ni",
+      "hanzi": "Kinesiska tecken",
+      "convert": "Till pinyin",
+      "converting": "Konverterar…",
+      "note": "pinyin-pro · samma sökväg som API"
+    },
+    "sqlFormat": {
+      "dialect": "Dialekt",
+      "format": "Formatera",
+      "formatting": "Formaterar…",
+      "note": "sql-formatter · samma sökväg som API"
+    },
+    "colorConvert": {
+      "color": "Färg",
+      "pick": "Välj färg",
+      "convert": "Konvertera",
+      "converting": "Konverterar…",
+      "note": "culori · hex / rgb / hsl / oklch · samma sökväg som API"
+    },
+    "qrGen": {
+      "content": "Innehåll",
+      "format": "Format",
+      "pngPreview": "PNG (förhandsvisning)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "Generera QR",
+      "generating": "Genererar…",
+      "note": "qrcode · samma sökväg som API"
+    },
+    "qrDecode": {
+      "upload": "Ladda upp en bild med en QR-kod",
+      "parsing": "Avkodar…",
+      "note": "jsQR + sharp · samma sökväg som API"
+    },
+    "cron": {
+      "expression": "Cron-uttryck",
+      "timezone": "Tidszon",
+      "parse": "Nästa körningar",
+      "parsing": "Tolkar…",
+      "nextTitle": "Nästa körningar (ISO)",
+      "note": "cron-parser · samma sökväg som API"
+    },
+    "timezone": {
+      "datetime": "Datum & tid",
+      "from": "Från",
+      "to": "Till",
+      "convert": "Konvertera tidszon",
+      "converting": "Konverterar…",
+      "placeholder": "2026-07-24 12:00:00 eller ISO / unix",
+      "note": "dayjs timezone · samma sökväg som API"
+    },
+    "csvPreview": {
+      "preview": "Förhandsgranska tabell",
+      "parsing": "Tolkar…",
+      "rows": "Förhandsgranska {shown} / {total} rader",
+      "note": "papaparse · samma sökväg som API"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "Fråga",
+      "querying": "Frågar…",
+      "note": "jsonpath-plus · samma sökväg som API"
+    },
+    "xmlFormat": {
+      "pretty": "Formatera",
+      "minify": "Minifiera",
+      "validate": "Validera",
+      "validOk": "Giltig",
+      "done": "Klar · {engine}",
+      "processing": "Bearbetar…",
+      "note": "fast-xml-parser · samma sökväg som API"
+    },
+    "regexLegacy": {
+      "pattern": "Mönster",
+      "flags": "Flaggor",
+      "mode": "Läge",
+      "match": "Matcha",
+      "replace": "Ersätt",
+      "test": "Testa",
+      "replacement": "Ersättning",
+      "note": "Omedelbart lokalt · server-timeout-budget · samma sökväg som API"
+    },
+    "docxText": {
+      "file": "DOCX-fil",
+      "needFile": "Välj en .docx-fil först",
+      "extract": "Extrahera text",
+      "extracting": "Extraherar…",
+      "note": "DOCX → text · ren ZIP + document.xml (ingen Office-suite)"
+    },
+    "uuid": {
+      "count": "Antal",
+      "local": "Generera lokalt",
+      "server": "Generera på servern",
+      "copyAll": "Kopiera alla",
+      "empty": "UUID:er visas här"
+    },
+    "timestamp": {
+      "nowSec": "Unix sekunder",
+      "nowMs": "Unix ms / ISO",
+      "serverNow": "Server nu",
+      "toDate": "Tidsstämpel → datum",
+      "toUnix": "Datum → tidsstämpel",
+      "seconds": "Sekunder",
+      "milliseconds": "Millisekunder",
+      "value": "Värde",
+      "convert": "Konvertera",
+      "note": "Samma sökväg som API"
+    },
+    "wordCount": {
+      "words": "Ord",
+      "chars": "Tecken",
+      "noSpaces": "Inga mellanslag",
+      "cjk": "CJK",
+      "lines": "Rader",
+      "paragraphs": "Stycken",
+      "placeholder": "Klistra in eller skriv text…",
+      "copyText": "Kopiera text",
+      "clear": "Rensa",
+      "verifying": "Verifierar…",
+      "serverNote": "Serverord={words} · samma sökväg som API",
+      "note": "Live-motor: {engine} · ingen uppladdning krävs · samma sökväg som API"
+    },
+    "bmi": {
+      "height": "Längd (cm)",
+      "weight": "Vikt (kg)",
+      "compute": "Beräkna BMI",
+      "computing": "Beräknar…",
+      "invalid": "Ange giltig längd (cm) och vikt (kg)",
+      "underweight": "Undervikt",
+      "normal": "Normalvikt",
+      "overweight": "Övervikt",
+      "obese": "Fetma",
+      "note": "WHO BMI · samma väg som API · inte medicinsk rådgivning"
+    },
+    "percentage": {
+      "mode": "Läge",
+      "percentOf": "a% av b",
+      "isWhat": "a är hur många % av b",
+      "percentA": "Procent a",
+      "valueA": "Värde a",
+      "baseB": "Bas b",
+      "compute": "Beräkna",
+      "computing": "Beräknar…",
+      "invalid": "Ange giltiga tal",
+      "note": "Samma sökväg som API"
+    },
+    "dataSize": {
+      "value": "Värde",
+      "convert": "Konvertera",
+      "converting": "Konverterar…",
+      "invalid": "Ange ett giltigt tal",
+      "binary": "{value} {from} → bas-1024",
+      "note": "Binära enheter (1 KB = 1024 B) · samma sökväg som API"
+    },
+    "rmb": {
+      "amount": "Belopp (CNY)",
+      "convert": "Till versaler",
+      "converting": "Konverterar…",
+      "invalid": "Ange ett icke-negativt belopp",
+      "note": "Kinesiskt fakturabelopp i versaler · samma sökväg som API"
+    },
+    "dateDiff": {
+      "from": "Startdatum",
+      "to": "Slutdatum",
+      "compute": "Dagskillnad",
+      "computing": "Beräknar…",
+      "days": "dagar",
+      "note": "ECMAScript Date · samma sökväg som API"
+    },
+    "xlsxText": {
+      "file": "XLSX-fil",
+      "needFile": "Välj en .xlsx-fil först",
+      "extract": "Extrahera ark",
+      "extracting": "Extraherar…",
+      "note": "XLSX → CSV · ren ZIP + sheet1.xml (första arket)"
+    },
+    "mdToPdf": {
+      "drop": "Släpp en .md-fil här eller klistra in Markdown nedan",
+      "title": "Titel",
+      "engine": "Motor",
+      "ePlaywright": "playwright (Chromium-utskrift)",
+      "eSimple": "simple (utan webbläsare)",
+      "generate": "Generera PDF",
+      "generating": "Genererar…",
+      "download": "Ladda ner PDF",
+      "note": "marked → HTML → Playwright Chromium-skriv ut. Om Chromium saknas, faller automatiskt tillbaka till enkel strukturerad PDF — kontrollera renderEngine; enkel är inte skrivut-läge.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
+    },
+    "tokenCount": {
+      "count": "Räkna tokens",
+      "counting": "Räknar…",
+      "chars": "Tecken {n}",
+      "note": "Motor: js-tiktoken · exakt serverräkning · kan mata Router kostnadsuppskattning"
+    },
+    "codec": {
+      "encodeDir": "Text → kodad",
+      "decodeDir": "Kodad → text",
+      "localNote": "Lokal körning",
+      "serverNote": "Server · samma sökväg som API",
+      "hexInvalid": "Inte en giltig hex-sträng",
+      "hexDecodeFail": "Server kunde inte avkoda som UTF-8 (behöver giltig hex)",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · samma sökväg som API",
+      "noteHtml": "HTML-entitetsmappning · samma sökväg som API",
+      "noteHex": "UTF-8 ↔ hex · samma sökväg som API"
+    },
+    "textDiff": {
+      "left": "Vänster",
+      "right": "Höger",
+      "compare": "Jämför",
+      "comparing": "Jämför…"
+    },
+    "imageTool": {
+      "drop": "Släpp en bild här eller klicka för att bläddra",
+      "selected": "Vald: {name} ({kb} KB)",
+      "needFile": "Välj en bild först",
+      "format": "Utdataformat",
+      "quality": "Kvalitet {n}",
+      "maxW": "Max bredd",
+      "maxH": "Max höjd",
+      "optional": "Valfritt",
+      "resizeEg": "t.ex. 1280",
+      "processing": "Bearbetar…",
+      "compress": "Komprimera",
+      "resize": "Ändra storlek",
+      "convert": "Konvertera format",
+      "download": "Ladda ner resultat",
+      "outMeta": "Output {kb} KB{dims}{ratio} · {type}",
+      "ratio": " · ~{pct}% av original",
+      "dims": " · {w}×{h}",
+      "original": "Original",
+      "result": "Resultat",
+      "note": "Motor: sharp (libvips) · server-side · samma sökväg som API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+    },
+    "pptxText": {
+      "file": "PPTX-fil",
+      "needFile": "Välj en .pptx-fil först",
+      "extract": "Extrahera disposition",
+      "extracting": "Extraherar…",
+      "note": "PPTX-disposition · ren ZIP + slide XML (ingen PowerPoint)"
+    },
+    "shell": {
+      "copyJson": "Kopiera JSON",
+      "sample": "Exempel",
+      "chars": "{n} tecken",
+      "largeInput": "Stor inmatning — resultatet uppdateras en stund efter att du slutar skriva.",
+      "manualInput": "Inmatningen är tillräckligt stor för att live-beräkning skulle få sidan att fastna. Tryck Kör.",
+      "options": "Alternativ",
+      "regenerateNote": "Resultatet uppdateras redan när du ändrar alternativen.",
+      "fileTab": "Fil",
+      "pasteTab": "Klistra in",
+      "browse": "Välj fil",
+      "selectedFile": "{name} · {kb} KB",
+      "truncated": "Läser de första {kb} KB — tillräckligt för att svara, och resten förblir på din dator.",
+      "detail": "Detaljer",
+      "dropIntoPane": "Släpp en fil här",
+      "swap": "Byt sida",
+      "prevChange": "Föregående",
+      "nextChange": "Nästa",
+      "changePosition": "{index} av {total}",
+      "result": "Resultat"
+    },
+    "readmeSkeleton": {
+      "emptyHint": "Markera minst ett avsnitt för att skapa en README.",
+      "note": "Använder samma motor som API:et. Avsnitt du inte markerar visas inte — inga tomma rubriker.",
+      "orderNote": "Avsnitt visas alltid i denna fasta ordning, så samma indata ger samma fil.",
+      "group": {
+        "core": "Kärna",
+        "docs": "Dokumentation",
+        "community": "Community",
+        "meta": "Meta"
+      },
+      "section": {
+        "title": "Titel och beskrivning",
+        "badges": "Badges",
+        "callout": "Obs!",
+        "toc": "Innehållsförteckning",
+        "installation": "Installation",
+        "usage": "Användning",
+        "features": "Funktioner",
+        "api-reference": "API-referens",
+        "screenshots": "Skärmdumpar",
+        "roadmap": "Vägkarta",
+        "contributing": "Bidra",
+        "support": "Support",
+        "acknowledgements": "Tack",
+        "license": "Licens",
+        "authors": "Författare",
+        "tech-stack": "Teknikstack"
+      },
+      "projectName": "Projektnamn",
+      "projectNamePlaceholder": "Projektnamn",
+      "description": "Beskrivning",
+      "descriptionPlaceholder": "En mening om vad det gör",
+      "badgeLicense": "Licensmärke",
+      "badgeNpm": "npm version",
+      "badgeBuild": "Byggstatus",
+      "npmPackage": "npm package",
+      "npmPackagePlaceholder": "@scope/package",
+      "repo": "GitHub-repo",
+      "repoPlaceholder": "ägare/repo",
+      "calloutKind": "Uppmärksamhetsmarkeringstyp",
+      "calloutBody": "Text för callout",
+      "calloutBodyPlaceholder": "Pre-1.0 — API:t förändras fortfarande",
+      "fenceLanguage": "Språk",
+      "installCommand": "Installationskommando",
+      "installCommandPlaceholder": "npm install your-project",
+      "usageExample": "Användningsexempel",
+      "usageExamplePlaceholder": "Det minsta exemplet som visar värdet",
+      "features": "Funktioner",
+      "featuresPlaceholder": "En funktion per rad",
+      "contact": "Kontakt",
+      "contactPlaceholder": "support@example.com",
+      "license": "Licens",
+      "authors": "Författare",
+      "authorsPlaceholder": "@handle, Jane Roe",
+      "techStack": "Teknikstack",
+      "techStackPlaceholder": "typescript, postgresql (simple-icons-sluggar)",
+      "sectionCount": "{n} sektioner",
+      "charCount": "{n} tecken",
+      "warningCount": "{n} hoppades över",
+      "omittedTitle": "Vad som utelämnades, och varför"
+    },
+    "gitignore": {
+      "searchLabel": "Sök stackar",
+      "searchPlaceholder": "Sök språk, ramverk, OS eller redigerare…",
+      "add": "Lägg till {stack}",
+      "remove": "Ta bort {stack}",
+      "selected": "Valda stackar",
+      "suggestions": "Matchande stackar",
+      "noMatches": "Ingen stack matchar “{query}”. Tryck Enter för att skicka ändå — alias löses ut på servern.",
+      "catalogFallback": "Stacklistan är inte tillgänglig — skriv ett stacknamn och tryck Enter.",
+      "emptyHint": "Välj minst ett språk, ramverk, operativsystem eller redigerare ovan.",
+      "regenerate": "Återskapa",
+      "sections": "{n} sektioner",
+      "lines": "{n} rader",
+      "deduped": "{n} dubblettmönster sammanslagna",
+      "notFound": "Inte i korpusen: {stacks}",
+      "globalScope": "{stacks} är OS-/redigerarposter — många utvecklare håller dessa i en personlig ~/.gitignore_global istället för i varje repo.",
+      "untrackedNote": "En .gitignore påverkar bara spårade filer. För en fil som git redan spårar, kör git rm -r --cached <path>.",
+      "fileLabel": ".gitignore"
+    },
+    "editorconfig": {
+      "emptyHint": "Ställ in minst en egenskap för att se filen.",
+      "note": "Samma motor som API:t. Dina val finns kvar i den här webbläsarsessionen; ingenting lagras.",
+      "checks": "Kontroller",
+      "presets": "Starta från",
+      "preset": {
+        "spaces2": "2 mellanslag, LF",
+        "spaces4": "4 mellanslag, LF",
+        "tabs": "Tabbar, bredd 4",
+        "repo": "Repo-startare (+ Markdown, Makefile)"
+      },
+      "rootLabel": "root = true — stoppar redigerare från att slå samman överordnade .editorconfig-filer",
+      "glob": "Glob {n}",
+      "addSection": "Lägg till ett avsnitt",
+      "removeSection": "Ta bort",
+      "notSet": "(inte inställt)",
+      "import": "Importera en befintlig .editorconfig",
+      "importPlaceholder": "Klistra in en .editorconfig här för att läsa in den i formuläret",
+      "importAction": "Importera",
+      "importing": "Importerar…",
+      "importFailed": "Kunde inte importera: {message}"
+    },
+    "robotsTxt": {
+      "emptyHint": "Ställ in alternativen ovan — filen visas här",
+      "deployNote": "robots.txt gäller endast på domänrot (https://example.com/robots.txt). Varje subdomän behöver sin egen fil.",
+      "outputLabel": "robots.txt",
+      "defaultAccess": "Standardåtkomst (User-agent: *)",
+      "defaultAllow": "Tillåt allt",
+      "defaultDisallow": "Neka allt",
+      "defaultAccessNote": "\"Tillåt allt\" skriver en tom \"Disallow:\" — det är vad som tillåter allt.",
+      "crawlDelay": "Crawl-delay (sekunder)",
+      "crawlDelayPlaceholder": "ingen",
+      "crawlDelayNote": "Ingen del av RFC 9309. Google ignorerar det; det skrivs aldrig in i en Google-grupp.",
+      "searchAgents": "Sökmotorer",
+      "aiAgents": "AI-webbgrävare",
+      "aiAgentsNote": "Webbgrävare för träning och svarsmotorer. Att blockera dem påverkar inte sökindexering.",
+      "accessDefault": "Standard",
+      "accessAllow": "Tillåt",
+      "accessDisallow": "Neka",
+      "rules": "Sökvägsregler",
+      "rulesNote": "Sökvägar är skiftkänsliga och relativa till roten. Lägg till ett avslutande snedstreck för att begränsa en regel till en katalog.",
+      "rulePath": "Sökväg {n}",
+      "rulePathPlaceholder": "/admin/",
+      "ruleType": "Regeltyp",
+      "addRule": "Lägg till sökvägsregel",
+      "removeRule": "Ta bort",
+      "sitemaps": "Sitemaps",
+      "sitemapsNote": "Absoluta http(s)-URL:er. Skrivs som egna rader, utanför varje grupp.",
+      "sitemapUrl": "Sitemap {n}",
+      "addSitemap": "Lägg till sitemap",
+      "removeSitemap": "Ta bort",
+      "groupCount": "{n} grupper",
+      "lineCount": "{n} rader",
+      "sitemapCount": "{n} sitemaps",
+      "warningsSummary": "Anteckningar om denna fil ({n})"
+    },
+    "encodingDetect": {
+      "drop": "Släpp en fil för att identifiera dess kodning",
+      "privacy": "Endast de första {kb} KB läses och skickas till samma offentliga invoke-endpoint som en agent skulle anropa — ingenting skrivs till disk.",
+      "pasteLabel": "Eller klistra in text",
+      "pastePlaceholder": "Klistra in text — inklusive mojibake du vill ha förklarat",
+      "detail": "Kandidater, radändelser och byte-statistik",
+      "idle": "Släpp en fil eller klistra in text — rapporten fylls i så snart det finns något att läsa.",
+      "readOnly": "Skrivskyddad: detta verktyg identifierar en kodning, det skriver aldrig om bytes.",
+      "headline": "{encoding} · {confidence}% tillförlitlighet",
+      "notText": "Detta ser inte ut som text",
+      "bomPresent": "BOM {bytes}",
+      "bomAbsent": "Ingen BOM",
+      "eol": "{kind}-radbrytningar",
+      "eolMixed": "Blandade radbrytningar",
+      "language": "Språk {language} · {confidence}%",
+      "sampled": "Identifierat från de första {kb} KB av {totalKb} KB",
+      "candidates": "Rankade kandidater",
+      "candidatesNote": "Alternativa kodningar visas medvetet: korta eller symmetriska prover är genuint otydliga.",
+      "lineEndings": "Radbrytningar",
+      "byteStats": "Byte-statistik",
+      "totalBytes": "Totalt",
+      "asciiBytes": "ASCII",
+      "highBytes": "Hög (0x80–0xFF)",
+      "nullBytes": "NUL",
+      "mojibake": "Mojibake återställt"
+    },
+    "dockerfileStarter": {
+      "language": "Språk",
+      "framework": "Ramverk",
+      "packageManager": "Pakethanterare",
+      "baseVariant": "Basimage",
+      "version": "Körtidsversion",
+      "workdir": "Arbetskatalog",
+      "port": "Port",
+      "buildCommand": "Byggkommando",
+      "startCommand": "Startkommando",
+      "commandPlaceholder": "Tomt = förinställt standard",
+      "frameworkNone": "Inget (ren körtid)",
+      "pmAuto": "Auto",
+      "variantSlim": "slim (glibc)",
+      "variantAlpine": "alpine (musl)",
+      "variantFull": "full",
+      "multiStage": "Multi-stage build",
+      "nonRootUser": "Non-root user",
+      "includeDockerignore": "Lägg till .dockerignore",
+      "includeCompose": "Lägg till compose.yaml",
+      "includeHealthcheck": "Lägg till HEALTHCHECK",
+      "groupWhat": "Vad du bygger",
+      "groupHow": "Hur det ska köras",
+      "emptyHint": "Välj ett språk för att se Dockerfilen.",
+      "note": "Endast förinställningar — ingenting annat än alternativen ovan lämnar din webbläsare. Läs filen innan du skickar den.",
+      "warnings": "{n} saker att kontrollera",
+      "stages": "{n} steg",
+      "badgeNonRoot": "Ej root",
+      "badgeRoot": "Körs som root",
+      "badgePort": "Port {port}"
+    },
+    "lineEndingDetect": {
+      "dropLabel": "Släpp en textfil för att kontrollera dess radavslut",
+      "privacy": "Klistrad text och de första 256 KB av en släppt fil skickas till Forge API för skanning; byte lagras inte.",
+      "pasteLabel": "Eller klistra in text",
+      "pastePlaceholder": "Klistra in texten du vill kontrollera",
+      "idle": "Klistra in text eller släpp en fil för att se dess radavslutsbedömning.",
+      "detail": "Räkningar och kontroller",
+      "note": "Endast detektering — detta verktyg skriver aldrig över din fil.",
+      "empty": "Tom indata",
+      "noTerminator": "Ingen radavslutning — en oavslutad rad",
+      "consistent": "{style} — konsekvent",
+      "mixed": "BLANDAT — {parts}",
+      "sharePart": "{pct}% {style}",
+      "style": {
+        "LF": "LF (Unix/Linux/macOS)",
+        "CRLF": "CRLF (Windows)",
+        "CR": "CR (klassisk Mac OS 9 och tidigare)"
+      },
+      "lines": "{n} rader",
+      "bytes": "{n} byte",
+      "trailing": {
+        "present": "Slutar med ny rad",
+        "absent": "Ingen nyrad i slutet av filen"
+      },
+      "bomUtf8": "UTF-8 BOM",
+      "bomNone": "Ingen BOM",
+      "countRow": "{style}: {n} ({pct}%)",
+      "colStyle": "Stil",
+      "colCount": "Antal",
+      "colShare": "Andel",
+      "minorityLines": "Rader som avviker från dominant stil: {lines}",
+      "andMore": "och fler",
+      "findings": "Kontroller",
+      "level": {
+        "info": "Notering",
+        "warning": "Varning",
+        "danger": "Radbrytningar"
+      },
+      "sampled": "Skannade de första {n} av {total} byte",
+      "encodingLink": "Öppna teckenkodningsdetektorn"
+    },
+    "fileTypeDetect": {
+      "drop": "Släpp en fil för att identifiera vad den verkligen är",
+      "privacy": "Endast de första {kb} KB-huvudet läses – resten av filen lämnar aldrig din enhet.",
+      "hexTab": "Klistra in hex",
+      "detail": "Visa byte och kandidater",
+      "idle": "Släpp en fil eller klistra in dess inledande byte som hex.",
+      "note": "Signaturer identifierar behållaren, inte codec eller innehållet i den.",
+      "unset": "—",
+      "unknownType": "Ingen signatur matchade",
+      "polyglot": "Polyglott",
+      "tierNone": "Tillägget stämmer",
+      "tierBenign": "Harmless avvikelse",
+      "tierMismatch": "Tillägg avvikelse",
+      "tierHighRisk": "Hög risk",
+      "confidenceMatch": "Signaturmatchning",
+      "confidenceContainer": "Endast behållare",
+      "confidenceAmbiguous": "Tvetydigt",
+      "confidenceNone": "Ingen match",
+      "signalDetected": "Detekterad MIME",
+      "signalReported": "Rapporterad MIME",
+      "signalExtension": "Filnamnstillägg",
+      "drillResolved": "Öppnade {kind}-behållaren: {type}",
+      "drillUnresolved": "{kind}-behållare bekräftad; underkategori kunde inte avgöras från de provtagna byte",
+      "hexDump": "Huvudbytes",
+      "bytesRead": "{n} byte lästa",
+      "headerOnly": "endast huvudprov",
+      "entropy": "Entropi {bits} bit/byte",
+      "signatureCount": "{n} signaturer i tabellen",
+      "textHints": "Strukturella ledtrådar: {hints}",
+      "candidates": "Alla matchande signaturer",
+      "atOffset": "förskjutning {offset}"
+    },
+    "licenseChooser": {
+      "prompt": "Vad behöver detta projekt?",
+      "pickScenario": "Välj raden som låter som ditt projekt — svaret och filen visas här.",
+      "disclaimer": "Deterministisk malloutput, inte juridisk rådgivning.",
+      "noAnswer": "Ingen enskild licens passar detta fall",
+      "permissions": "Tillåter",
+      "conditions": "Kräver",
+      "limitations": "Täcker inte",
+      "alternates": "Andra alternativ för detta fall",
+      "useThis": "Använd denna",
+      "readCanonical": "Läs den officiella texten på SPDX",
+      "holder": "Upphovsrättsinnehavare",
+      "holderPlaceholder": "Ditt namn eller ditt företag",
+      "holderHint": "Lägg till upphovsrättsinnehavaren och filen fylls i medan du skriver.",
+      "year": "År",
+      "manifest": "Var SPDX-id:t placeras",
+      "verbatim": "{name} distribueras byte-identiskt för alla — upphovsrättsraden placeras i källfilens meddelande istället för i LICENSE-filen.",
+      "noLicense": {
+        "summary": "Vad händer om jag inte lägger till någon licens alls?",
+        "body": "Ingen licens är inte samma sak som public domain. Utan en licens gäller standardupphovsrätt och ingen får kopiera, ändra eller distribuera din kod — ett offentligt arkiv är synlighet, inte tillstånd."
+      },
+      "artifact": {
+        "header": "Källfilshuvud",
+        "notice": "Källfilmeddelande"
+      },
+      "refine": {
+        "patent": "En patentöverlåtelse är viktig här (företagskod, hårdvara, standardarbete)",
+        "network": "Det kommer köras som en värdtjänst, inte bara som en nedladdning",
+        "library": "Det är ett bibliotek som annan programvara länkar mot",
+        "later": "Tillåt senare versioner av licensen (håller Apache-2.0-kod kompatibel)",
+        "none": "Inget mer att finjustera för detta fall."
+      },
+      "scenario": {
+        "permissive": {
+          "label": "Vem som helst kan använda det, fritt",
+          "detail": "Använd, ändra, sälj, leverera i slutna produkter — behåll bara upphovsrättsmeddelandet."
+        },
+        "copyleft": {
+          "label": "Förbättringar måste komma tillbaka",
+          "detail": "Den som distribuerar en ändrad version måste också publicera källkoden."
+        },
+        "community": {
+          "label": "Jag bidrar till ett befintligt projekt",
+          "detail": "Licensen är redan bestämd — följ det projekt du bidrar till."
+        },
+        "non-software": {
+          "label": "Detta är inte mjukvara",
+          "detail": "Dokumentation, data, design eller media behöver en Creative Commons-licens, inte en OSI-licens."
+        },
+        "unsure": {
+          "label": "Jag vet inte ännu",
+          "detail": "Få standardvalet med låg ångerrisk samt de två alternativ som är värda att känna till."
+        }
+      },
+      "family": {
+        "permissive": "Permissiv",
+        "weak-copyleft": "Svag copyleft",
+        "strong-copyleft": "Stark copyleft",
+        "public-domain": "Offentlig domän",
+        "content": "Innehållslicens"
+      },
+      "flag": {
+        "commercial-use": "Kommersiell användning",
+        "modifications": "Ändring",
+        "distribution": "Distribution",
+        "private-use": "Privat användning",
+        "patent-use": "Patentlicens",
+        "include-copyright": "Behåll copyright-meddelandet",
+        "document-changes": "Ange dina ändringar",
+        "disclose-source": "Offentliggör källkod",
+        "same-license": "Samma licens för hela verket",
+        "same-license-file": "Samma licens, per ändrad fil",
+        "same-license-library": "Samma licens för biblioteket",
+        "network-use-disclose": "Nätverksanvändning räknas som distribution",
+        "liability": "Ansvar",
+        "warranty": "Garanti",
+        "trademark-use": "Varumärkesanvändning"
+      }
+    },
+    "isbn": {
+      "inputLabel": "ISBN-nummer",
+      "placeholder": "978-0-306-40615-7 — ett per rad, bindestreck och mellanslag ignoreras",
+      "idle": "Klistra in ett ISBN eller en hel kolumn; resultaten visas medan du skriver.",
+      "scope": "Endast kontrollsumma. Ett giltigt ISBN är internt konsistent — det är inte bevis på att en myndighet har tilldelat det till en verklig bok.",
+      "summary": "{valid} av {total} giltiga",
+      "singleValid": "Giltigt ISBN",
+      "singleInvalid": "Inte ett giltigt ISBN",
+      "invalidCount": "{n} ogiltiga",
+      "convertedTo": "{type}: {value}",
+      "valid": "Giltig",
+      "invalid": "Ogiltig",
+      "truncated": "Visar de första {shown} raderna.",
+      "col": {
+        "input": "Indata",
+        "normalized": "Normaliserad",
+        "type": "Typ",
+        "status": "Status",
+        "converted": "Konverterad",
+        "note": "Notering"
+      },
+      "type": {
+        "isbn10": "ISBN-10",
+        "isbn13": "ISBN-13",
+        "invalidLength": "Fel längd"
+      },
+      "note": {
+        "checkDigit": "Kontrollsiffran ska vara {expected}",
+        "invalidLength": "Ett ISBN har exakt 10 eller 13 tecken",
+        "invalidCharacter": "Innehåller ett tecken som inte är en siffra",
+        "xMisplaced": "X är endast giltigt som sista tecken i ett ISBN-10",
+        "noIsbn10": "Prefixet 979 har ingen motsvarighet i ISBN-10",
+        "nonBookland": "13-siffriga ISBN-nummer måste börja med 978 eller 979",
+        "ismn": "979-0 är ISMN-området (tryckt musik), inte ISBN"
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
+    },
+    "languageDetect": {
+      "inputLabel": "Kodavsnitt",
+      "inputPlaceholder": "Klistra in kod utan filnamn — från en chattlog, en ärende, ett svar…",
+      "hintLabel": "Filnamn eller filändelse (valfritt)",
+      "hintPlaceholder": "main.h · .pl · Dockerfile",
+      "note": "Kör samma motor som API:t. Detektering är endast innehållsbaserad om du inte anger en filnamnshint; otydliga filändelser (.h .m .pl .fs .ts .cs .r) skickas först via sina egna regler.",
+      "idle": "Klistra in ett utdrag — resultatet visas medan du skriver.",
+      "confidence": {
+        "high": "Hög säkerhet",
+        "medium": "Medelhög säkerhet",
+        "low": "Låg säkerhet"
+      },
+      "score": "{n}/100",
+      "dataFormat": "Dataformat, inte ett programmeringsspråk",
+      "multiLanguage": "Flera språk misstänks",
+      "why": "Varför detta svar",
+      "signals": "Matchade signaler",
+      "alternates": "Andra kandidater",
+      "composeNext": "Formatera detta {language}"
+    },
+    "iban": {
+      "inputLabel": "IBAN",
+      "idle": "Klistra in ett IBAN — domen följer tangenttryckningen, ingen knapp.",
+      "sourceNote": "Kontrollsumma och struktur enligt ISO 13616-1:2020. Längd per land och BBAN-format hämtas från en publicerad återgivning av ISO:s IBAN-register, inte registret i sig.",
+      "valid": "Korrekt formad IBAN",
+      "keepTyping": "Fortsätt skriva — kortare än IBAN för detta land",
+      "caveat": "Endast korrekt formad. En godkänd kontrollsumma bekräftar inte att kontot finns, är öppet eller tillhör mottagaren.",
+      "printFormat": "Utskriftsformat",
+      "details": "Tolkad uppdelning",
+      "notEncoded": "Inte kodat enligt formatet för detta land",
+      "coverage": "{n} länder med ett registrerat IBAN-format",
+      "reason": {
+        "bad_charset": "Inte en IBAN-form — en IBAN består av två bokstäver, två siffror och därefter endast bokstäver och siffror",
+        "country_unsupported": "Inget registrerat IBAN-format för denna landskod",
+        "incomplete": "Ofullständigt",
+        "wrong_length_for_country": "För lång för detta lands IBAN",
+        "structure_mismatch": "Rätt längd, fel format för detta land",
+        "checksum_failed": "Kontrollsumman stämmer inte – det finns ett stavfel i denna IBAN"
+      },
+      "badge": {
+        "country": "{name} ({code})",
+        "unknownCountry": "Landskod {code}",
+        "length": "{n} av {expected} tecken",
+        "bankCode": "Bankkod {code}",
+        "expectedCheckDigits": "Kontrollsiffror för detta kontonummer skulle vara {digits}"
+      },
+      "field": {
+        "normalized": "Elektroniskt format",
+        "country": "Land",
+        "checkDigits": "Kontrollsiffror",
+        "bban": "BBAN",
+        "bbanFormat": "BBAN-format",
+        "bankCode": "Bankkod"
+      },
+      "check": {
+        "charset": "Teckenuppsättning",
+        "country": "Land",
+        "length": "Längd",
+        "structure": "Struktur",
+        "checksum": "MOD 97-10"
+      },
+      "state": {
+        "pass": "godkänd",
+        "fail": "misslyckad",
+        "skipped": "ej nådd"
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
+    },
+    "secretScan": {
+      "pasteLabel": "Klistra in kod, konfiguration eller en .env",
+      "pastePlaceholder": "DATABASE_URL=postgres://…\nAPI_KEY=…",
+      "dropLabel": "Släpp en fil för att skanna den",
+      "privacy": "Körs helt i din webbläsare. Inget skickas någonstans — inte ens till oss.",
+      "scan": "Skanna",
+      "scanning": "Skannar…",
+      "idleTitle": "Klistra in något och tryck på Skanna.",
+      "idleHint": "Kontrollerar efter API-nycklar från leverantörer, token, privata nycklar och hemligheter med hög entropi. Matchade värden maskeras; endast radnummer visas i sin helhet.",
+      "clean": "Inga hemligheter hittades",
+      "cleanCaveat": "Ingenting här matchar ett känt inloggningsformat eller ser ut som en slumpmässig hemlighet. Mönstermatchning är inget bevis — granska allt du är osäker på.",
+      "found": "{n, plural, one {# möjlig hemlighet hittad} other {# möjliga hemligheter hittade}}",
+      "foundCaveat": "Redigera bort dessa innan du klistrar in detta någonstans. Om en nyckel är verklig, byt ut den.",
+      "countHigh": "{n} hög tillförlitlighet",
+      "countMedium": "{n} medel",
+      "countLow": "{n} låga",
+      "confidence": {
+        "high": "Hög",
+        "medium": "Medel",
+        "low": "Låg"
+      },
+      "position": "rad {line}, kol {column}",
+      "length": "{n} tecken",
+      "maskedLabel": "Maskerat match",
+      "why": "Varför detta matchade",
+      "candidates": "Kunde också vara:",
+      "scanDetail": "Skanningsdetalj",
+      "lines": "{n} rader",
+      "bytes": "{n} byte skannade",
+      "suppressed": "{n} platshållare ignorerade",
+      "suppressedNote": "Kända demovärden (EXAMPLE-nycklar, your-api-key-here, upprepade tecken) ignoreras så att exempel filer inte väcker falsk larm.",
+      "omitted": "{n} till visas inte",
+      "truncated": "Inmatning avskuren — endast den första delen skannades",
+      "reportTitle": "Hittat vid hemligskanning (värden maskerade)",
+      "scopeNote": "Endast detektion: detta verktyg kontaktar aldrig en leverantör för att kontrollera om en nyckel fortfarande är aktiv — det skulle innebära att skicka din nyckel till en tredjepart."
+    },
+    "eanUpcGtin": {
+      "inputLabel": "Streckkodsnummer",
+      "placeholder": "En kod per rad (komma och semikolon delar också)",
+      "idle": "Klistra in en kod eller en hel kolumn — bedömningen visas medan du skriver.",
+      "operationLabel": "Operation",
+      "operationValidate": "Validera (koden innehåller sin kontrollsiffra)",
+      "operationCalculate": "Beräkna (koden saknar sin kontrollsiffra)",
+      "typeLabel": "Typ",
+      "typeAuto": "Detektera efter längd",
+      "total": "{n} koder",
+      "validCount": "{n} giltiga",
+      "invalidCount": "{n} ogiltiga",
+      "calculatedCount": "{n} beräknade",
+      "unrecognizedCount": "{n} okänd längd",
+      "verdict": {
+        "valid": "Giltig",
+        "invalid": "Ogiltig",
+        "calculated": "Beräknad",
+        "unrecognized-length": "Okänd längd"
+      },
+      "alsoReadsAs": "Läser även som {type}",
+      "checkDigit": "Kontrollsiffra",
+      "corrected": "Bör vara",
+      "gtin14": "GTIN-14-form",
+      "reason": {
+        "empty": "Inget att kontrollera på denna rad.",
+        "non-digit-characters": "Innehåller tecken som varken är siffror eller avgränsare.",
+        "unsupported-length": "Ingen GS1-identifierare har denna längd (8, 12, 13, 14 och 18 siffror stöds).",
+        "length-mismatch": "Fel längd för den typ du valde.",
+        "check-digit-mismatch": "Sista siffran stämmer inte med den som standarden kräver."
+      },
+      "warning": {
+        "separators-stripped": "Mellanslag, bindestreck och punkter togs bort innan kontroll.",
+        "all-zero": "Endast nollor — matematiskt giltigt, men inte en riktig identifierare.",
+        "payload-is-also-a-complete-code": "Detta är också en fullständig kodlängd. Om den redan har sin kontrollsiffra, byt till Validera."
+      },
+      "math": "Visa beräkningen",
+      "mathSum": "Summa {sum} → kontrollsiffra {check}",
+      "truncatedRows": "Visar de första {shown} av {total} raderna. Kopiera och ladda ner innehåller alla.",
+      "privacy": "Koder skickas till Forge API för kontroll och lagras inte.",
+      "scopeNote": "En korrekt kontrollsiffra innebär att numret är välformat. Det betyder inte att GS1 någonsin tilldelat det till en verklig produkt, ett företag eller en plats – endast en GEPIR-registersökning kan ge svar på det.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
+    },
+    "vin": {
+      "inputLabel": "VIN (17 tecken)",
+      "privacy": "Kontrolleras i din webbläsare. VIN skickas aldrig någonstans.",
+      "idle": "Klistra in ett VIN — bedömningen visas medan du skriver, ingen knapp.",
+      "scope": "Endast struktur och kontrollsumma (49 CFR 565.15 / ISO 3779). Detta är inte en fordonsregisteruppslagning.",
+      "verdict": {
+        "valid": "Giltig VIN-struktur",
+        "keepTyping": "Fortsätt skriva — {remaining} tecken kvar",
+        "tooLong": "För långt — ett VIN har exakt 17 tecken, detta har {n}",
+        "invalidCharacter": "Inte ett VIN-tecken: \"{char}\" på position {position}",
+        "checkDigitMismatch": "Kontrollsiffra stämmer inte — förväntat {expected}, hittade {found}"
+      },
+      "hint": {
+        "confusable": "\"{char}\" används aldrig i ett VIN. Menade du {suggest}?"
+      },
+      "notice": {
+        "notProvenance": "En giltig kontrollsiffra bekräftar att VIN-numret är korrekt format. Det bekräftar inte att fordonet finns, är omodifierat eller har en ren historik — ett klonat VIN-nummer klarar också denna kontroll.",
+        "pre1981": "Fordon tillverkade före 1981, och vissa importerade (JDM/europeiska) fordon, använder inte denna kontrollsiffra — en diskrepans betyder inte nödvändigtvis att VIN-numret är felaktigt inmatat.",
+        "partial": "Validering av kontrollsiffra kräver hela VIN-numret på 17 tecken. Ett delvis VIN-numer är ett dekodningsjobb, inte ett checksumma-jobb."
+      },
+      "badge": {
+        "length": "{n} tecken",
+        "expected": "Kontrollsiffra {d}"
+      },
+      "invalidChars": {
+        "more": "Även inte VIN-tecken: {list}"
+      },
+      "segment": {
+        "wmi": "WMI 1-3",
+        "vds": "Beskrivning 4-8",
+        "checkDigit": "Kontrollsiffra 9",
+        "modelYear": "Modellår 10",
+        "plant": "Anläggning 11",
+        "serial": "Serienr 12-17"
+      },
+      "math": {
+        "title": "Visa beräkningen",
+        "col": {
+          "position": "Pos",
+          "char": "Tecken",
+          "value": "Värde",
+          "weight": "Vikt",
+          "product": "Produkt"
+        },
+        "formula": "summa = {sum};  {sum} mod 11 = {remainder}  →  kontrolltecken {expected}"
+      },
+      "specimenTitle": "VIN · structure specimen"
+    },
+    "envDiff": {
+      "envA": "Miljö A",
+      "envB": "Miljö B",
+      "placeholderA": "Klistra in eller dra dit den första .env-filen",
+      "placeholderB": "Klistra in eller släpp den andra .env-filen",
+      "paneNoAssignment": "Ingen KEY=value-rad hittades",
+      "optIgnoreComments": "Ignorera kommentarer och tomma rader",
+      "optCaseInsensitive": "Jämför nycklar utan hänsyn till versalitet",
+      "optRedactSecrets": "Censurera upptäckta hemligheter",
+      "emptyHint": "Lägg till en andra miljö för att se jämförelsen",
+      "summaryNone": "Inga skillnader bland {total} nycklar",
+      "summaryDiff": "{n} av {total} nycklar skiljer sig",
+      "note": {
+        "unchanged": "Samma värde på båda sidor",
+        "changed": "Värdet skiljer sig",
+        "added": "Satt endast i B",
+        "removed": "Satt endast i A",
+        "commentedOutInA": "Kommenterad bort i A, inställd i B",
+        "commentedOutInB": "Inställd i A, kommenterad bort i B"
+      },
+      "secretChanged": "hemlighet skiljer sig",
+      "secretSame": "hemligheten är densamma på båda sidor",
+      "count": {
+        "unchanged": "{n} oförändrade",
+        "changed": "{n} ändrade",
+        "added": "{n} tillagda",
+        "removed": "{n} borttagna",
+        "commentedOut": "{n} kommenterade bort"
+      },
+      "warnings": "Inmatningsvarningar ({n})",
+      "warningType": {
+        "duplicateKey": "{file} · dubbel nyckel",
+        "quoteMismatch": "{file} · citattecken matchar inte",
+        "unparsableLine": "{file} · otolkbar rad"
+      },
+      "showUnchanged": "Visa oförändrade ({n})",
+      "commentedIn": {
+        "A": "utkommenterad i A",
+        "B": "utkommenterad i B",
+        "both": "utkommenterad i båda"
+      },
+      "redactedNote": "Hemliga värden maskeras med en heuristik baserad på nyckelord – inte en säkerhetsskanner. Jämförelsen körs på råvärdena, så en roterad hemlighet visas fortfarande som ändrad.",
+      "interpolationNote": "${VAR}-referenser jämförs bokstavligt och löses aldrig upp: expansionen skiljer sig beroende på konsument.",
+      "truncated": "Endast de första 5 000 nycklarna visas; antalen täcker alla nycklar.",
+      "colKey": "Nyckel",
+      "colA": "A",
+      "colB": "B",
+      "colStatus": "Status",
+      "privacy": "Båda filerna jämförs i din webbläsare. Ingenting laddas upp."
+    },
+    "csvDiff": {
+      "originalLabel": "Original CSV",
+      "updatedLabel": "Uppdaterad CSV",
+      "originalPlaceholder": "Klistra in den ursprungliga exporten, eller släpp en .csv-fil här",
+      "updatedPlaceholder": "Klistra in den uppdaterade exporten, eller släpp en .csv-fil här",
+      "emptyHint": "Klistra in eller släpp båda filerna — jämförelsen körs så snart varje sida har innehåll.",
+      "note": "Rader matchas efter identitet, inte efter position, så en infogad eller om sorterad rad läses inte som en vägg av ändringar. Innehållet skickas till API:et för jämförelsen och lagras inte.",
+      "columns": "{n} kolumner",
+      "keyLabel": "Nyckelkolumn",
+      "keyAuto": "Föreslå automatiskt",
+      "keyNone": "Ingen nyckel — jämför hela rader",
+      "joinLabel": "Sammanfoga",
+      "joinFull": "Full outer — alla rader",
+      "joinInner": "Inner — rader i båda",
+      "joinLeft": "Left — det ursprungliga raduppsättningen",
+      "ignoreWhitespace": "Ignorera mellanslag",
+      "ignoreCase": "Ignorera storlek",
+      "treatEmptyAsNull": "Tom = NULL = N/A",
+      "noDifferences": "Inga skillnader",
+      "differences": "{added} tillagda · {removed} borttagna · {changed} ändrade",
+      "added": "{n} tillagda",
+      "removed": "{n} borttagna",
+      "changed": "{n} ändrade",
+      "unchangedCount": "{n} oförändrade",
+      "totals": "{original} → {updated} rader",
+      "matchedBy": "Matchade med {columns} ({source})",
+      "matchedWholeRow": "Matchade med hel rad — ingen nyckelkolumn användes, så ingenting rapporteras som ändrat.",
+      "keySource": {
+        "provided": "ditt val",
+        "auto": "automatiskt föreslagen",
+        "full-row": "hel rad"
+      },
+      "keyRejected": "Avvisade nyckelkandidater: {items}",
+      "columnMismatch": "Kolumner endast i original: {original} · endast i uppdaterad: {updated}",
+      "truncated": "Visar {shown} av hela resultatet (förhandsvisning begränsad till {limit} rader) — antalen ovan är fullständiga.",
+      "findings": "Anteckningar ({n})",
+      "level": {
+        "info": "info",
+        "warning": "varning",
+        "danger": "fel"
+      },
+      "wholeRow": "Rad {n}",
+      "exportChanged": "Ändrade rader (CSV)",
+      "exportFull": "Komplett diff (CSV)"
+    },
+    "uscc": {
+      "modeLabel": "Verifiera eller generera",
+      "tab": {
+        "verify": "Verifiera",
+        "generate": "Generera testkoder"
+      },
+      "inputLabel": "Enhetlig social kreditkod",
+      "placeholder": "18 tecken, t.ex. 91500000059926748X",
+      "idle": "Klistra in en 18-tecken lång kod. Den kontrolleras i webbläsaren medan du skriver — ingenting lagras.",
+      "scope": "Endast strukturell kontroll (GB 32100-2015 + ISO 7064 MOD 31-3). En godkänd kod är välformad; det betyder inte att en organisation är registrerad under den — kontrollera det i det nationella registret cods.org.cn.",
+      "valid": "Giltig enhetlig social kreditkod",
+      "invalid": "Inte en giltig enhetlig social kreditkod",
+      "incomplete": "{n} av 18 tecken",
+      "invalidCharacters": "Innehåller tecken som standarden utesluter",
+      "checksumOk": "Kontrollsiffra OK",
+      "checksumBad": "Kontrollsiffra matchar inte",
+      "expectedDigit": "Kontrollsiffra ska vara {expected}, inte {actual}",
+      "illegalAt": "Position {position}: “{char}” finns inte i kodteckenuppsättningen (I, O, S, V, Z är uteslutna)",
+      "detail": "Fältinformation",
+      "legacyTitle": "Legacy organisationskod (GB 11714)",
+      "legacy": {
+        "ok": "Inbäddad 9-teckens organisationskod är självkonsistent",
+        "mismatch": "Legacy kontrolltecken skulle vara {expected} — endast rådgivande; inte alla registreringsklasser har en GB 11714 organisationskod",
+        "unchecked": "Inte kontrollerad"
+      },
+      "divisionScope": "Positionerna 3–8 matchas mot GB/T 2260-provinstabellen och de sexsiffriga formens nästlingsregler; hela läns-tabellen medföljer inte.",
+      "field": {
+        "registrationDept": "Registreringsmyndighet",
+        "orgCategory": "Organisationskategori",
+        "adminDivision": "Administrativ indelning",
+        "orgIdentifier": "Subjektsidentifierare",
+        "checkDigit": "Kontrollsiffra"
+      },
+      "depth": {
+        "none": "Inte löst",
+        "province": "Provinsnivå",
+        "prefecture": "Prefekturnivå",
+        "county": "Länsnivå"
+      },
+      "note": {
+        "empty": "Inget att kontrollera än",
+        "incomplete": "En enhetlig social kreditkod har exakt 18 tecken",
+        "tooLong": "Mer än 18 tecken",
+        "illegalCharacter": "Innehåller ett tecken utanför GB 32100-2015-mängden (I, O, S, V och Z är uteslutna)",
+        "checkDigitMismatch": "Kontrollciffran stämmer inte med de första 17 tecknen",
+        "departmentUnknown": "Position 1 är inte ett registreringsdepartement som standarden definierar (1, 5, 9, Y)",
+        "categoryUnknown": "Position 2 är inte en organisationskategori som är definierad för detta registreringsdepartement",
+        "divisionNotNumeric": "Positionerna 3–8 måste vara sex siffror",
+        "divisionUnknownProvince": "Positionerna 3–4 är inte en GB/T 2260-provinskod",
+        "divisionMalformed": "En county utan prefektur, vilket GB/T 2260 inte tillåter"
+      },
+      "gen": {
+        "dept": "Registreringsdepartement",
+        "category": "Organisationskategori",
+        "province": "Provins",
+        "count": "Hur många",
+        "randomProvince": "Valfri provins",
+        "regenerate": "Ny batch",
+        "emptyHint": "Välj alternativen ovan för att generera testkoder.",
+        "testDataBadge": "Testdata",
+        "seed": "Seed {seed}",
+        "allCodes": "Alla koder",
+        "disclaimer": "Dessa koder är strukturellt giltiga men tillhör ingen registrerad organisation. Använd dem inte för att representera en verklig enhet.",
+        "note": "Genereringen är seedad: samma alternativ och seed ger alltid samma batch, så en fixture förblir reproducerbar. Varje kod är märkt isTestData i JSON såväl som här."
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
+    },
+    "yamlDiff": {
+      "original": "Original",
+      "changed": "Ändrad",
+      "originalPlaceholder": "Klistra in eller släpp den ursprungliga YAML (eller JSON)",
+      "changedPlaceholder": "Klistra in eller släpp den ändrade YAML (eller JSON)",
+      "idle": "Fyll båda fönstren så körs jämförelsen medan du skriver.",
+      "privacy": "Båda dokumenten tolkas och jämförs i den här webbläsaren — ingenting laddas upp, vilket är poängen för manifest med värdnamn och hemlighetsnamn.",
+      "modeLabel": "Jämförelse",
+      "modeSemantic": "Semantisk (struktur)",
+      "modeRawText": "Råtext (tecken)",
+      "resolveAnchors": "Lös upp ankare och alias till sina värden",
+      "valid": "Giltig YAML",
+      "validMulti": "Giltig YAML · {n} dokument",
+      "invalid": "Tolkningsfel, rad {line}",
+      "parseFailed": "En sida kunde inte tolkas — ingenting jämfördes",
+      "equivalent": "Inga skillnader — de två dokumenten löser sig till samma struktur",
+      "equivalentStructural": "Samma lösta struktur · {n} formaterings- eller ankar-skillnader",
+      "summary": "{added} tillagda · {removed} borttagna · {changed} ändrade · {typeChanged} typändringar",
+      "parseErrorAt": "{side} · rad {line}, kolumn {column}: {message}",
+      "documentCountMismatch": "Antal dokument skiljer sig: {original} vs {changed} — dokumenten parades i ordning och överskottet rapporteras som helheter",
+      "duplicateKeys": "Dubbla nycklar i källan",
+      "unified": "Enhetlig patch (normaliserad YAML)",
+      "howItWorks": "Så här fungerar jämförelsen",
+      "rule": {
+        "keyOrder": "Ordning på nycklar i mappingar, citattecken och indragning ignoreras; sekvensordning jämförs eftersom ordningen i en lista bär betydelse.",
+        "anchors": "Aliaser löses till sina värden, så en redigering bakom en delad ankare visas på varje aliasplats; en ankare eller alias som ändrades med oförändrat värde rapporteras separat som strukturellt.",
+        "mergeKeys": "Sammanslagningsnycklar (<<) expanderas innan jämförelse, och en nodens egna nycklar har företräde framför sammanslagna.",
+        "types": "Typ är en del av värdet: 8080, \"8080\" och !!str 8080 rapporteras som typändringar, inte som generiska ändringar.",
+        "sequences": "Sekvenser av mappingar parades efter namn, id eller nyckel när det fältet är unikt på båda sidor, så ett infogat objekt sprider sig inte; en omordning rapporteras fortfarande.",
+        "blockScalars": "Blockskalärer jämförs efter löst strängvärde, så den avslutande radbrytning som |- tar bort är en verklig ändring; en omformatering med samma värde är strukturell.",
+        "comments": "Kommentarer är inte en del av YAML-datamodellen och jämförs inte.",
+        "multiDoc": "--- strömmar parar dokument med dokument; en räkneavvikelse rapporteras istället för att endast jämföra det första.",
+        "duplicateKeys": "En dubblettnyckel i indata använder den senaste förekomsten och rapporteras som en varning."
+      },
+      "note": {
+        "raw-text-mode": "Råtextläge jämför tecken, inte struktur: nyckelordning, citattecken och indrag räknas alla.",
+        "parse-error": "En sida kunde inte tolkas, så inget jämfördes.",
+        "document-count-mismatch": "De två sidorna har olika antal --- dokument; dokument parades i ordning och de extra rapporterades i sin helhet.",
+        "merge-keys-expanded": "Sammanslagningsnycklar (<<) expanderades före jämförelse.",
+        "anchors-unresolved": "Alias jämfördes som *namnreferenser, inte som deras upplösta värden.",
+        "yaml11-ambiguous-scalars": "Ociterade y/n/yes/no/on/off läses som strängar här (YAML 1.2 Core) och som booleaner i YAML 1.1 — citera dem om en boolean avsågs.",
+        "sequence-matched-by-identity": "Sekvenser av mappningar parades med ett identitetsfält istället för efter position.",
+        "duplicate-keys": "En mappning deklarerar samma nyckel två gånger; den senaste förekomsten användes.",
+        "truncated": "Endast de första 2000 ändringarna listas."
+      }
+    },
+    "listSetCompare": {
+      "listA": "Lista A",
+      "listB": "Lista B",
+      "placeholder": "Klistra in objekt, ett per rad (eller släpp en .txt/.csv-fil)",
+      "emptyHint": "Lägg till objekt i både Lista A och Lista B för att se jämförelsen.",
+      "privacy": "Båda listorna jämförs i din webbläsare – inget laddas upp. Samma motor körs på serversidan för API- och MCP-anropare.",
+      "delimiter": "Avgränsare",
+      "delimiterOption": {
+        "auto": "Auto-upptäckt",
+        "newline": "Ny rad",
+        "comma": "Komma",
+        "tab": "Tabb",
+        "custom": "Anpassad"
+      },
+      "customDelimiter": "Avskiljare",
+      "customDelimiterPlaceholder": "| eller \\t",
+      "sort": "Sortering",
+      "sortOption": {
+        "original": "Ursprunglig ordning",
+        "asc": "A→Ö",
+        "desc": "Ö→A",
+        "byCount": "Efter antal"
+      },
+      "optCaseSensitive": "Skiftlägeskänslig",
+      "optTrim": "Trimma blanksteg",
+      "optCollapse": "Slå ihop interna mellanrum",
+      "optIgnoreZeros": "Ignorera inledande nollor",
+      "paneItems": "{n} objekt",
+      "paneSingle": "1 objekt — kontrollera avgränsaren",
+      "items": "{n}",
+      "none": "Ingen",
+      "more": "+{n} till — kopiera eller ladda ner för hela listan",
+      "panel": {
+        "onlyInA": "Endast i A",
+        "onlyInB": "Endast i B",
+        "intersection": "Schnittmängd (i båda)",
+        "union": "Union (alla objekt)",
+        "symmetricDifference": "Symmetrisk differens"
+      },
+      "summaryIdentical": "Samma mängd — {n} gemensamma objekt",
+      "summaryDiff": "{a} endast i A · {b} endast i B · {shared} gemensamma",
+      "drill": {
+        "symmetricDifference": "Symmetrisk differens ({n})",
+        "duplicates": "Dubbletter inom en lista ({n})",
+        "multiplicities": "Antal per objekt ({n})",
+        "warnings": "Meddelanden ({n})"
+      },
+      "duplicatesInA": "Upprepas i A",
+      "duplicatesInB": "Upprepas i B",
+      "colValue": "Objekt",
+      "colCountA": "I A",
+      "colCountB": "I B",
+      "detailTruncated": "Antal per objekt har trunceras — öka maxDetail i API:t för hela tabellen.",
+      "reportTitle": "Listjämställning"
+    },
+    "loanAmortization": {
+      "principal": "Lånebelopp",
+      "rate": "Årsränta %",
+      "term": "Löp_tid",
+      "termUnit": "Löp_tid-enhet",
+      "unitYears": "År",
+      "unitMonths": "Månader",
+      "startMonth": "Första betalningsmånad",
+      "startMonthHint": "YYYY-MM. Märker schemat; påverkar inga belopp.",
+      "extraHeading": "Extra betalningar",
+      "extraMonthly": "Extra varje månad",
+      "extraYearly": "Extra en gång per år",
+      "extraYearlyMonth": "Årlig extra hamnar i månad",
+      "extraOneTime": "Engångs extra",
+      "extraOneTimePeriod": "Engångs vid betalning #",
+      "extraNote": "Extra betalningar minskar huvudsumman under den period de hamnar i, vilket sänker räntan för alla senare perioder. Räntan och den schemalagda betalningen förblir oförändrade.",
+      "monthlyPayment": "Månadsbetalning",
+      "totalInterest": "Totalränta",
+      "totalPaid": "Totalt betalt",
+      "crossover": "Korsning",
+      "crossoverValue": "Avbetalning {n}",
+      "crossoverNone": "Aldrig",
+      "payoff": "Betald av vid avbetalning {n}",
+      "monthsSaved": "{n} månader tidigare",
+      "totalExtra": "{amount} betalt över schema",
+      "viewMonthly": "Varje avbetalning",
+      "viewAnnual": "Per år",
+      "tableCaption": "Avbetalningsschema: avbetalning, ränta, kapital och återstående balans per period",
+      "colPeriod": "#",
+      "colDate": "Månad",
+      "colPayment": "Betaling",
+      "colInterest": "Ränta",
+      "colPrincipal": "Huvudman",
+      "colBalance": "Saldo",
+      "colYear": "År",
+      "expandRows": "Visa alla {total} betalningar",
+      "collapseRows": "Visa färre betalningar",
+      "windowNote": "Visar {shown} av {total} betalningar. CSV-filen och API:et innehåller alla.",
+      "emptyHint": "Ange ett lånebelopp, en ränta och en löptid för att se amorteringsplanen.",
+      "note": "Samma motor som API:et. Beräkningarna baseras endast på dina lånevillkor; ingenting laddas upp eller lagras.",
+      "errPrincipal": "Ange ett lånebelopp över 0.",
+      "errRate": "Ange en ränta mellan 0 och 100.",
+      "errTerm": "Ange en löptid mellan 1 månad och 100 år.",
+      "errStartMonth": "Använd ÅÅÅÅ-MM, till exempel 2026-01.",
+      "errExtra": "Ange ett belopp på 0 eller mer.",
+      "errOneTimePeriod": "Ange betalningsnumret som engångsbetalningen hamnar på."
+    },
+    "businessDayShift": {
+      "modeLabel": "Vad ska beräknas",
+      "mode": {
+        "shift": "Flytta ett datum",
+        "countBetween": "Räkna mellan datum"
+      },
+      "startDate": "Startdatum",
+      "days": "Verkdagar",
+      "daysHint": "Negativa värden räknas bakåt: −10 är tio verkliga dagar före startdatumet.",
+      "daysInvalid": "Verkdagar måste vara ett heltal, med valfritt inledande minustecken.",
+      "endDate": "Slutdatum",
+      "includeEndDate": "Räkna med slutdatumet också — detta är vad ett kalkylblads NETWORKDAYS returnerar",
+      "weekendLabel": "Lediga dagar varje vecka",
+      "weekendHint": "Standard är lördag och söndag. Ställ in fredag och lördag istället där det är helg.",
+      "weekday": {
+        "sun": "Sön",
+        "mon": "Mån",
+        "tue": "Tis",
+        "wed": "Ons",
+        "thu": "Tor",
+        "fri": "Fre",
+        "sat": "Lör"
+      },
+      "holidays": "Helgdagar",
+      "holidaysHint": "Lämna tomt, så blir svaret den rena helgregele-baserade räkningen — inget landskalender tillämpas åt dig.",
+      "makeupWorkdays": "Kompensationsarbetsdagar",
+      "makeupHint": "Datum som arbetades trots att de inföll på helg eller helgdag – Kinas 调休/补班-lördagar hamnar här.",
+      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesIgnored": "{n, plural, one {# post var inte ett YYYY-MM-DD-datum och används inte} other {# poster var inte YYYY-MM-DD-datum och används inte}}",
+      "pickStart": "Välj ett startdatum för att komma igång.",
+      "emptyHintShift": "Välj ett startdatum och ett antal arbetsdagar.",
+      "emptyHintCount": "Välj ett startdatum och ett slutdatum.",
+      "note": "Samma motor som API:t. Beräkningen körs på regelsetet som visas tillsammans med resultatet; ingenting lagras.",
+      "countHeadline": "{n, plural, one {# arbetsdag} other {# arbetsdagar}}",
+      "reversedRange": "Slutdatumet är före startdatumet, så antalet blir negativt.",
+      "classification": {
+        "workday": "Arbetsdag",
+        "weekend": "Helg",
+        "holiday": "Helgdag",
+        "makeupWorkday": "Ersättningsarbetsdag"
+      },
+      "ruleWeekend": "{days} lediga",
+      "ruleNoWeekend": "inga veckovisa lediga dagar",
+      "ruleHolidays": "{n, plural, =0 {ingen helgdagslista} one {# helgdag} other {# helgdagar}}",
+      "ruleMakeups": "{n, plural, =0 {inga ersättningsarbetsdagar} one {# ersättningsarbetsdag} other {# ersättningsarbetsdagar}}",
+      "ruleEndIncluded": "slutdatum räknas med",
+      "ruleEndExcluded": "slutdatum räknas inte med",
+      "chain": "Flytta skiftet från detta datum"
+    },
+    "retryBackoff": {
+      "strategy": {
+        "exponential": "Exponentiell",
+        "linear": "Linjär",
+        "fixed": "Fast"
+      },
+      "initialDelay": "Initial fördröjning (ms)",
+      "factor": "Backoff-faktor",
+      "factorHint": "Multiplikator som tillämpas per försök. Måste vara större än 1.",
+      "increment": "Linjär ökning (ms)",
+      "incrementHint": "Millisekunder som läggs till i fördröjningen vid varje försök.",
+      "maxDelay": "Maximal fördröjning (ms)",
+      "maxDelayHint": "Lämna tomt för ingen gräns. När gränsen nåtts håller alla senare fördröjningar sig på samma nivå.",
+      "maxAttempts": "Max antal försök",
+      "maxAttemptsHint": "1 till 100.",
+      "excludeInitial": "Max antal försök exkluderar den initiala begäran",
+      "excludeInitialNote": "På: talet ovan räknar endast omförsök, den initiala begäran är extra. Av: det räknar varje försök, inklusive den initiala begäran.",
+      "jitter": {
+        "none": "Ingen — exakta fördröjningar",
+        "equal": "Jämn — hälften fast, hälften slumpmässig",
+        "full": "Full — var som helst från noll till fördröjningen"
+      },
+      "callerTimeout": "Din egen timeout (ms)",
+      "callerTimeoutHint": "Valfritt. Lämna tomt för att hoppa över budgetkontrollen.",
+      "emptyHint": "Åtgärda det markerade fältet för att se schemat.",
+      "note": "Beräknat enbart från policyn — inget skickas till någon extern tjänst. Jitter rapporteras som intervallet en verklig klient hamnar inom, aldrig som ett enskilt utfall.",
+      "headlineExact": "{attempts} försök, {wait} väntetid totalt.",
+      "headlineRange": "{attempts} försök, {expected} väntetid i genomsnitt, upp till {max} i värsta fall.",
+      "finalDelay": "Den sista väntan, före försök {attempt}, är {delay}.",
+      "noRetries": "Denna budget tillåter ett försök och inget återförsök, så det finns inget att vänta på.",
+      "retryCount": "{count, plural, =0 {inga återförsök} one {# återförsök} other {# återförsök}}",
+      "capFlattened": "Tak nått vid försök {attempt} — varje senare fördröjning stannar på {delay}.",
+      "timeoutExceeded": "Värsta fall väntar {wait}, vilket överskrider din {timeout}-budget.",
+      "timeoutOk": "Sämsta fall väntar {wait}, inom din {timeout}-budget.",
+      "tableLabel": "Återförsöksschema",
+      "colAttempt": "Försök",
+      "colDelay": "Fördröjning",
+      "colCumulative": "Kumulativ väntan",
+      "average": "snitt {value}",
+      "formula": {
+        "none": "Fördröjningarna är exakta — ingen jitter tillämpas.",
+        "equal": "Jämn jitter: halva fördröjningen är fast, den andra halvan dras slumpmässigt, så varje väntan hamnar mellan halva fördröjningen och hela fördröjningen.",
+        "full": "Full jitter: väntan dras slumpmässigt mellan noll och den beräknade fördröjningen."
+      },
+      "errInitialDelay": "Startfördröjning måste vara ett heltal i millisekunder, minst 1.",
+      "errFactor": "Faktor måste vara större än 1 och högst 100. En faktor på 1 är den fasta strategin.",
+      "errIncrement": "Inkrement måste vara ett heltal i millisekunder, 0 eller mer.",
+      "errMaxDelay": "Taket måste vara ett helt antal millisekunder, minst 1.",
+      "errCapBelowInitial": "Taket måste vara minst den initiala fördröjningen.",
+      "errMaxAttempts": "Antal försök måste vara ett heltal mellan 1 och 100.",
+      "errCallerTimeout": "Timeout måste vara ett helt antal millisekunder, minst 1."
+    },
+    "csvColumns": {
+      "csvLabel": "CSV",
+      "csvPlaceholder": "Klistra in CSV här, eller släpp en fil — första raden läses som kolumnnamn",
+      "sample": "Exempel-CSV",
+      "chooseFile": "Välj fil",
+      "fileFailed": "Kunde inte läsa {name}.",
+      "delimiterLabel": "Avgränsare",
+      "delimiter": {
+        "comma": "Komma  ,",
+        "semicolon": "Semikolon  ;",
+        "tab": "Tab",
+        "pipe": "Rör  |"
+      },
+      "raggedPolicyLabel": "Rader som inte matchar rubriken",
+      "ragged": {
+        "pad": "Justera mot rubriken",
+        "truncate": "Kapa långa rader, låt korta rader vara korta",
+        "reject": "Stoppa och rapportera"
+      },
+      "columnsTitle": "Kolumner — {kept} av {total} behållna",
+      "columnsHint": "Avmarkera för att ta bort en kolumn, redigera rutan för att byta namn, använd pilarna för att ordna om. Allt löses mot den ursprungliga rubriken.",
+      "reset": "Återställ kolumner",
+      "keep": "Behåll kolumn {name}",
+      "renameLabel": "{name}",
+      "moveUp": "Flytta upp {name}",
+      "moveDown": "Flytta ner {name}",
+      "noneKept": "Alla kolumner är avmarkerade — behåll minst en.",
+      "emptyHint": "Klistra in en CSV ovan för att hantera dess kolumner.",
+      "note": "Körs på texten du klistrar in. Släpp, döp om och ändra sedan ordning — i den fasta ordningen, alltid mot den ursprungliga rubriken.",
+      "columnCount": "{n} kolumner",
+      "rowCount": "{n} rader",
+      "duplicateHeaders": "Dubbel rubrik används med namn: {names}",
+      "raggedCount": "{n}{more} rader matchar inte rubrikbredden",
+      "previewLabel": "Output CSV",
+      "previewTruncated": "Visar de första {shown} av {total} rader. Kopiera eller ladda ner för hela filen.",
+      "raggedListLabel": "Rader som inte matchar rubrikbredden",
+      "raggedRow": "Rad {line}: {actual} fält, rubriken har {expected}",
+      "unusedRenames": "Omdöpning ignorerad — dessa kolumner finns inte i utdata: {names}"
+    },
+    "imageRotateFlip": {
+      "drop": "Släpp ett bildfil, eller klicka för att bläddra",
+      "browse": "Välj en bild",
+      "selected": "{name} · {kb} KB",
+      "privacy": "Filen skickas till Forge API för transformationen och lagras aldrig.",
+      "tooLarge": "Bilden är större än {mb} MB.",
+      "ccw": "90° vänster",
+      "cw": "90° höger",
+      "half": "180°",
+      "reset": "Återställ",
+      "flipHorizontal": "Vänd horisontellt",
+      "flipVertical": "Vänd vertikalt",
+      "angle": "Vinkel",
+      "exactAngle": "Exakt °",
+      "fitMode": "Canvas",
+      "fitExpand": "Expandera canvas",
+      "fitCrop": "Beskär för att fylla",
+      "fitInside": "Passa in",
+      "fitNote": "Vid en kvartvarvsvändning passar den roterade bilden inte längre i sin gamla ram: expandera behåller alla pixlar, beskär behåller den ursprungliga storleken och klipper hörnen, passa in krymper hela bilden.",
+      "outputFormat": "Utdataformat",
+      "sameFormat": "Samma som indata",
+      "idle": "Släpp en bild för att se den omdisponerad.",
+      "original": "Original · {w}×{h}",
+      "originalAlt": "Bilden som laddades upp",
+      "result": "Resultat · {w}×{h}",
+      "resultAlt": "Den omdisponerade bilden",
+      "badgeLossless": "Ingen resampling",
+      "badgeResampled": "Resamplad",
+      "badgeSize": "{kb} KB",
+      "badgeExif": "EXIF-orientering {orientation} tillämpad först",
+      "badgeSnapped": "Avrundad till exakt kvartsvändning",
+      "badgeReencode": "Geometrin är exakt; codec omkodar",
+      "download": "Ladda ner",
+      "note": "Rotationer på 90°, 180° och 270° flyttar pixlar utan att blanda dem. Alla andra vinklar resamplar. Animerade GIF, APNG och animerade WebP stöds ännu inte."
+    },
+    "exifStrip": {
+      "drop": "Släpp en JPEG, PNG eller WebP för att ta bort dess metadata",
+      "privacy": "Bearbetas på våra servrar och lagras aldrig. Upp till {mb} MB per bild.",
+      "idle": "Borttaget: GPS, inspelnings tid, kamerainfo och enhetsinfo, inbäddad miniatyrbild, redigeringshistorik. Behållen: orientering, färgprofil, dimensioner, pixeldata.",
+      "note": "Endast stillbilder. Video, PDF, HEIC, AVIF och GIF ingår inte, och C2PA-proveniensmanifest lämnas oförändrade.",
+      "detail": "Vad som togs bort",
+      "optKeepThumbnail": "Behåll den inbäddade Exif-miniatyrbilden",
+      "verdictStripped": "Tog bort {fields} metadatafält ({kb} KB)",
+      "verdictClean": "Denna fil innehåller ingen metadata som kan tas bort",
+      "strippedCaveat": "Bilden i sig är oförändrad — samma pixlar, samma dimensioner, inget omkodat.",
+      "cleanCaveat": "Returnerad byte för byte som den kom.",
+      "badgeOrientationKept": "Orientering behållen",
+      "badgeOrientationLost": "Orientering kunde inte behållas",
+      "badgeColorProfileKept": "Färgprofil behållen",
+      "badgeThumbnailKept": "Miniatyrbild behållen",
+      "badgeThumbnailRemoved": "Miniatyrbild borttagen",
+      "download": "Ladda ner rensad bild",
+      "sizes": "{before} KB → {after} KB",
+      "detailFields": "{fields} fält · {kb} KB",
+      "detailNothing": "Ingenting togs bort från den här filen.",
+      "detailOrientation": "Exif-orientering {value} lästes från filen och behölls.",
+      "detailNoOrientation": "Filen deklarerade ingen Exif-orientering, så visningen påverkas inte.",
+      "segmentExif": "Exif",
+      "segmentIptc": "IPTC",
+      "segmentXmp": "XMP",
+      "segmentComment": "Kommentar",
+      "segmentText": "Textmetadata",
+      "segmentTime": "Tidsstämpel",
+      "segmentVendor": "Tillverkarblock",
+      "summaryStripped": "Tog {fields} metadatafält ({families}), {kb} KB. Bilden annars oförändrad.",
+      "summaryClean": "Inga borttagbara metadata hittades. Filen returnerades oförändrad."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "이름 / 호스트",
+      "type": "레코드 유형",
+      "note": "Forge 호스트 DNS로 해석합니다."
+    },
+    "tls": {
+      "host": "호스트",
+      "expired": "인증서 만료",
+      "validDays": "{n}일 남음",
+      "note": "Forge 호스트에서 연결. 검사용으로 신뢰 검증 완화."
+    },
+    "myIp": {
+      "refresh": "새로고침",
+      "note": "Forge가 본 IP. 라이선스 geo 없음."
+    },
+    "mermaid": {
+      "source": "Mermaid source",
+      "idle": "Valid diagrams render here",
+      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
+      "sample": "Sample",
+      "theme": "Theme",
+      "theme_default": "Default",
+      "theme_dark": "Dark",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "Flowchart",
+      "sample_sequence": "Sequence",
+      "sample_class": "Class",
+      "sample_er": "ER diagram",
+      "sample_state": "State",
+      "sample_gantt": "Gantt",
+      "sample_pie": "Pie",
+      "sample_mindmap": "Mindmap",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "zoomReset": "Reset view",
+      "copySvg": "Copy SVG",
+      "downloadSvg": "Download SVG",
+      "downloadPng": "Download PNG",
+      "previewAria": "Mermaid diagram preview",
+      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
+    },
+    "colorDeltaE": {
+      "note": "culori CIEDE2000. 임계값은 UI 리뷰용."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL 방언",
+      "parseNote": "파싱/목록만. ERD는 별도.",
+      "convertNote": "@dbml/core — API와 동일 경로."
+    },
+    "dnsLeak": {
+      "probeHost": "Compare host (advanced)",
+      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
+      "run": "Start DNS leak check",
+      "retest": "Run again",
+      "showAdvanced": "Advanced options",
+      "hideAdvanced": "Hide advanced",
+      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
+      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
+      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
+      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
+      "edgeIp": "Your edge IP",
+      "authorityHits": "Recursive IPs",
+      "forgePaths": "Forge resolver hits",
+      "dohPaths": "Browser DoH hits",
+      "webrtcCount": "WebRTC IPs",
+      "forgeResolvers": "Forge multi-resolver (server-side)",
+      "forgeNote": "These queries leave from the Forge host — not your laptop.",
+      "browserDoh": "Browser DoH",
+      "webrtc": "WebRTC ICE",
+      "egressMarkers": "Forge egress markers",
+      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
+      "honestyPrefix": "Honesty:",
+      "verdictConsistent": "Paths look consistent on this check",
+      "verdictSplit": "Split answers across DNS paths",
+      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
+      "verdictIncomplete": "Incomplete — browser probes missing",
+      "verdictAuthority": "System DNS recursives captured",
+      "infraOn": "Authority online",
+      "infraOff": "Authority offline — multi-path only",
+      "infraChecking": "Checking…",
+      "authorityResolvers": "System DNS recursive resolvers",
+      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
+      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
+      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
+      "authorityDetail": "Authority session detail",
+      "phaseSession": "Creating session…",
+      "phaseSystemDns": "Triggering system DNS…",
+      "phasePoll": "Listening for recursive hits ({n}/{total})…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "stepSession": "Session",
+      "stepSystemDns": "System DNS",
+      "stepPoll": "Listen",
+      "stepBrowser": "Browser",
+      "stepServer": "Server",
+      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
+      "liveHits": "Live recursive hits",
+      "sectionSystemDns": "System DNS (what you came for)",
+      "sectionComplementary": "Complementary paths",
+      "sectionTech": "Technical session detail",
+      "copyIps": "Copy IPs",
+      "copied": "Copied",
+      "queryCount": "{n} queries",
+      "colPath": "Path",
+      "colAnswers": "Answers",
+      "colMs": "ms",
+      "ipPublic": "public",
+      "ipPrivate": "private",
+      "sig": {
+        "captured": "System DNS captured",
+        "onlineNoHits": "Authority online · no hits yet",
+        "offline": "Authority offline",
+        "forgeSplit": "Forge resolvers disagree",
+        "dohSplit": "Browser DoH disagree",
+        "webrtcMismatch": "WebRTC ≠ edge IP",
+        "webrtcLocal": "Local WebRTC candidates",
+        "noBrowser": "No browser probes"
+      }
+    },
+    "honesty": {
+      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
+      "signatureNotVerified": "{engine} · decode only · signature not verified",
+      "localOnly": "Processed for this request · not stored as a card or credential"
+    },
+    "idCard": {
+      "number": "Resident ID number",
+      "note": "GB 11643 check digit · no household registry lookup · same path as API",
+      "specimenTitle": "Resident ID · structure specimen",
+      "segRegion": "Region",
+      "segBirth": "Birth",
+      "segSeq": "Seq",
+      "segCheck": "Check",
+      "metaBirth": "Birth",
+      "metaGender": "Gender",
+      "metaRegion": "Region code",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "reasonFormat": "Format should be 18 characters (last may be X)",
+      "reasonBirth": "Birth date segment is invalid",
+      "reasonCheck": "Check digit is wrong",
+      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} lines",
+      "chars": "{n} chars",
+      "empty": "(empty file)",
+      "readyToShip": "Ready to drop into the repo"
+    },
+    "textTransform": {
+      "mode": "Mode",
+      "input": "Input",
+      "output": "Output",
+      "emptyResult": "Result appears here",
+      "runLocal": "Run locally",
+      "runServer": "Run on server",
+      "statusLocalLive": "Local · live",
+      "statusLocal": "Local",
+      "statusServer": "Server · same path as API",
+      "noteDefault": "Same path as API"
+    }
+  },
+  "roots": {
+    "hubLabel": "Efter avsikt",
+    "tools": "verktyg",
+    "dualSurface": "Människosida + Agent-API · samma motor",
+    "otherRoots": "Andra efterfråganrötter"
+  }
+}

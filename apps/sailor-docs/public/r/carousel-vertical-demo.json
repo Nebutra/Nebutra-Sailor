@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "carousel-vertical-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/carousel-vertical-demo.tsx",
+      "content": "\"use client\";\n\nimport { Card } from \"@nebutra/ui/patterns\";\nimport {\n  CardContent,\n  Carousel,\n  CarouselContent,\n  CarouselItem,\n  CarouselNext,\n  CarouselPrevious,\n} from \"@nebutra/ui/primitives\";\nexport function CarouselVerticalDemo() {\n  return (\n    <Carousel orientation=\"vertical\" opts={{ align: \"start\" }} className=\"max-w-xs w-full\">\n      <CarouselContent className=\"-mt-1 h-[200px]\">\n        {Array.from({ length: 5 }).map((_, index) => (\n          <CarouselItem key={index} className=\"pt-1 md:basis-1/2\">\n            <div className=\"p-1\">\n              <Card>\n                <CardContent className=\"p-6 flex items-center justify-center\">\n                  <span className=\"text-3xl font-semibold\">{index + 1}</span>\n                </CardContent>\n              </Card>\n            </div>\n          </CarouselItem>\n        ))}\n      </CarouselContent>\n      <CarouselPrevious />\n      <CarouselNext />\n    </Carousel>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,238 @@
+---
+title: "测试概览"
+description: "了解 Nebutra 的测试策略、命令、覆盖率要求和 CI 集成。"
+---
+
+Nebutra 采用三层测试金字塔：用于验证逻辑正确性的快速单元测试、用于 API 合约验证的集成测试，以及用于关键用户流程的 Playwright 端到端测试。
+
+## 测试金字塔
+
+```
+        ▲
+       /E2E\         5%  — Playwright — 关键流程（注册、创建项目、升级）
+      /------\
+     /  集成  \     15%  — Vitest — API 端点、DB 操作、队列处理器
+    /----------\
+   /  单元测试  \   80%  — Vitest — 函数、工具函数、React 组件
+  /--------------\
+```
+
+保持金字塔形状是有意为之的。单元测试快速且成本低——多写。端到端测试速度慢且脆弱——少写，专注于最关键的用户旅程。
+
+## 测试命令
+
+| 命令 | 运行内容 |
+|------|---------|
+| `pnpm test` | 所有单元测试 + 集成测试（Vitest） |
+| `pnpm test:watch` | Vitest 监听模式，用于开发 |
+| `pnpm test:coverage` | 带 V8 覆盖率报告的 Vitest |
+| `pnpm e2e` | Playwright 端到端测试套件（需要运行中的应用） |
+| `pnpm e2e:ui` | Playwright UI 模式，用于可视化调试 |
+| `pnpm test:arch` | 架构测试（导入边界验证） |
+
+## 覆盖率要求
+
+| 指标 | 最低要求 |
+|------|---------|
+| 行覆盖率 | 80% |
+| 函数覆盖率 | 80% |
+| 分支覆盖率 | 70% |
+| 语句覆盖率 | 80% |
+
+覆盖率按包计算。低于阈值的包将导致 CI 检查失败。
+
+在本地查看覆盖率报告：
+
+```bash
+pnpm test:coverage
+# 在浏览器中打开 coverage/index.html
+```
+
+## 编写单元测试（Vitest）
+
+测试文件与源文件放在同一目录，使用 `.test.ts` 或 `.spec.ts` 后缀：
+
+```
+packages/commerce/metering/src/
+  metering.ts
+  metering.test.ts      ← 同目录单元测试
+```
+
+### 示例：测试纯逻辑
+
+```typescript
+import { describe, it, expect } from "vitest";
+import { calculateOverageFee } from "@nebutra/metering";
+
+describe("calculateOverageFee", () => {
+  it("使用量在配额内时返回零", () => {
+    expect(
+      calculateOverageFee({ used: 5000, limit: 10000, pricePerUnit: 0.001 })
+    ).toBe(0);
+  });
+
+  it("计算超出配额的费用", () => {
+    expect(
+      calculateOverageFee({ used: 12000, limit: 10000, pricePerUnit: 0.001 })
+    ).toBe(2);
+  });
+
+  it("处理恰好达到配额的情况（无超额）", () => {
+    expect(
+      calculateOverageFee({ used: 10000, limit: 10000, pricePerUnit: 0.001 })
+    ).toBe(0);
+  });
+});
+```
+
+### 示例：测试 React 组件
+
+```typescript
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
+import { CreateProjectButton } from "./create-project-button";
+
+describe("CreateProjectButton", () => {
+  it("以项目名称调用 onSubmit", async () => {
+    const onSubmit = vi.fn();
+    render(<CreateProjectButton onSubmit={onSubmit} />);
+
+    await userEvent.click(screen.getByRole("button", { name: /创建项目/i }));
+    await userEvent.type(screen.getByRole("textbox", { name: /项目名称/i }), "我的项目");
+    await userEvent.click(screen.getByRole("button", { name: /提交/i }));
+
+    expect(onSubmit).toHaveBeenCalledWith({ name: "我的项目" });
+  });
+});
+```
+
+## 编写端到端测试（Playwright）
+
+端到端测试文件位于每个应用根目录下的 `e2e/` 目录中：
+
+```
+apps/web/
+  e2e/
+    auth.spec.ts          ← 注册、登录、登出
+    projects.spec.ts      ← 创建、重命名、删除项目
+    billing.spec.ts       ← 升级、降级、取消
+```
+
+### 示例：端到端用户流程
+
+```typescript
+import { test, expect } from "@playwright/test";
+
+test("用户可以创建项目", async ({ page }) => {
+  await page.goto("/dashboard");
+  await page.click('[data-testid="create-project-button"]');
+  await page.fill('[name="projectName"]', "我的测试项目");
+  await page.click('[type="submit"]');
+  await expect(
+    page.locator('[data-testid="project-card"]')
+  ).toContainText("我的测试项目");
+});
+```
+
+### `data-testid` 规范
+
+所有端到端测试目标元素必须使用 `data-testid` 属性：
+
+```tsx
+// ✅ 可测试
+<button type="button" data-testid="create-project-button">
+  创建项目
+</button>
+
+// ❌ 脆弱 — 与可能变更的文案绑定
+await page.click('text=创建项目');
+```
+
+## Mock 策略
+
+| 依赖项 | Mock 方式 |
+|-------|---------|
+| Stripe | `vi.mock("stripe")` 配合固定响应 |
+| Clerk / Auth | `vi.mock("@clerk/nextjs")` 配合 Mock 会话 |
+| PostHog | `vi.mock("@nebutra/analytics")` — 无操作桩 |
+| 邮件 | `vi.mock("@nebutra/email")` — 捕获已发送的邮件 |
+| 数据库（单元测试） | 通过 Prisma 测试客户端使用内存 SQLite |
+| 数据库（集成测试） | 真实测试数据库——绝不 Mock 数据库层 |
+| 外部 HTTP API | 集成测试使用 `msw`（Mock Service Worker） |
+
+<Note>
+集成测试中绝不要 Mock 数据库。使用通过固定数据填充的专用测试数据库。这确保你的 SQL 查询、Schema 约束和索引都能在真实数据上进行测试。
+</Note>
+
+## 架构测试
+
+架构测试验证包导入边界是否被遵守，以及 CSS Token 规范是否被遵循：
+
+```bash
+pnpm test:arch
+```
+
+这些测试使用 `vitest` + `fast-check` 来断言以下规则：
+
+- `apps/*` 不得相互导入
+- `packages/ui` 不得从 `apps/*` 导入
+- 组件文件中不得有硬编码的十六进制值（必须使用 CSS 变量）
+
+架构测试在 5 秒内完成，可在跨边界导入根深蒂固之前将其捕获。
+
+## CI 集成
+
+每次拉取请求（PR）时，GitHub Actions 都会运行所有测试类型：
+
+```yaml
+# .github/workflows/ci.yml（摘录）
+jobs:
+  test:
+    steps:
+      - run: pnpm test:coverage    # 单元 + 集成测试，含覆盖率
+      - run: pnpm test:arch        # 架构边界检查
+      - run: pnpm e2e              # 针对预览部署的 Playwright 端到端测试
+```
+
+覆盖率结果会作为评论发布在每个 PR 上。如果出现以下情况，PR 将无法合并：
+
+- 单元/集成覆盖率低于阈值
+- 任何测试失败
+- 检测到架构边界违规
+
+## 测试驱动开发
+
+本项目对新功能采用测试驱动开发（TDD）方式：
+
+<Steps>
+  <Step title="编写失败测试（RED）">
+    在编写实现代码之前先编写测试。运行测试并确认它失败。
+  </Step>
+  <Step title="编写最小实现（GREEN）">
+    只编写足以使测试通过的代码，不要过度设计。
+  </Step>
+  <Step title="重构（IMPROVE）">
+    在不破坏测试的前提下清理实现代码。
+  </Step>
+  <Step title="验证覆盖率">
+    运行 `pnpm test:coverage`，确认新代码的覆盖率达到要求的阈值。
+  </Step>
+</Steps>
+
+---
+
+<CardGroup cols={2}>
+  <Card title="Vitest 配置" icon="flask" href="/zh/testing/overview">
+    Vitest 配置、测试工具函数和数据库固定数据设置。
+  </Card>
+  <Card title="Playwright 端到端测试" icon="browser" href="/zh/testing/overview">
+    Playwright 配置、页面对象模型和 CI 配置。
+  </Card>
+  <Card title="CI / CD" icon="arrows-rotate" href="/zh/deployment/overview">
+    完整的 GitHub Actions 工作流，包括测试门控和预览部署。
+  </Card>
+  <Card title="开发环境配置" icon="laptop-code" href="/zh/development/overview">
+    本地开发环境、工具链和代码质量检查。
+  </Card>
+</CardGroup>

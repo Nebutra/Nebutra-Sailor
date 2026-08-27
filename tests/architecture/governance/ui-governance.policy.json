@@ -1,0 +1,326 @@
+{
+  "$schema": "./schemas/ui-governance.schema.json",
+  "schemaVersion": "1.0.0",
+  "policyVersion": "2026.5.0",
+  "rawTailwindColorBudgets": [
+    {
+      "surface": "landing-marketing",
+      "root": "apps/landing/src",
+      "extensions": [".tsx"],
+      "excludeContains": ["/(legal)/"],
+      "max": 399
+    },
+    {
+      "surface": "web-app",
+      "root": "apps/web/src",
+      "extensions": [".tsx"],
+      "excludeContains": [],
+      "max": 88
+    }
+  ],
+  "tokenFormatBudget": {
+    "tokenSurfaces": [
+      {
+        "root": "packages/design/ui/src/theme",
+        "extensions": [".ts", ".tsx"]
+      },
+      {
+        "root": "packages/design/theme/themes.css",
+        "extensions": [".css"]
+      }
+    ],
+    "maxHexLiterals": 40,
+    "maxHslLiterals": 1,
+    "minOklchLiterals": 0,
+    "allowedHexFiles": ["packages/design/ui/src/theme/tokens.ts"],
+    "allowedHslFiles": []
+  },
+  "motionBoundary": {
+    "appSurfaces": ["apps/landing/src", "apps/web/src"],
+    "allowedFramerMotionImports": [
+      "apps/landing/src/components/landing/AnimateIn.tsx",
+      "apps/landing/src/components/landing/GlobalEdgeMap.tsx",
+      "apps/landing/src/components/landing/ProductDemoSection.tsx",
+      "apps/landing/src/app/[lang]/(marketing)/layout.tsx",
+      "apps/landing/src/components/landing/agentic-engineering/TerminalSnippet.tsx",
+      "apps/landing/src/components/landing/design-system/PipelineCard.tsx",
+      "apps/landing/src/components/landing/navbar/MobileDrawer.tsx",
+      "apps/landing/src/components/landing/product-demo/InvoiceCard.tsx",
+      "apps/landing/src/components/landing/product-demo/LiveMetricsChart.tsx",
+      "apps/landing/src/components/landing/product-demo/WorkspacesVisuals.tsx",
+      "apps/landing/src/components/landing/seo-geo/SEOGEOMockup.tsx",
+      "apps/landing/src/components/landing/use-cases/UseCasesSection.tsx",
+      "apps/landing/src/components/landing/use-cases/mockups/DesignMockup.tsx",
+      "apps/landing/src/components/landing/use-cases/mockups/EDAMMockup.tsx",
+      "apps/landing/src/components/landing/use-cases/mockups/EnterpriseMockup.tsx",
+      "apps/landing/src/components/landing/use-cases/mockups/IPMockup.tsx",
+      "apps/landing/src/components/landing/use-cases/mockups/MultimodalMockup.tsx",
+      "apps/landing/src/components/landing/use-cases/mockups/OPCMockup.tsx",
+      "packages/design/ui/src/components/animate-in.tsx"
+    ]
+  },
+  "componentTierCoverage": {
+    "primitivesRoot": "packages/design/ui/src/primitives",
+    "tiers": [
+      {
+        "name": "tier-1",
+        "requiredCoverage": 1,
+        "components": [
+          "button",
+          "input",
+          "textarea",
+          "checkbox-group",
+          "combobox",
+          "command-menu",
+          "dialog",
+          "popover",
+          "select",
+          "tabs",
+          "tooltip",
+          "skeleton",
+          "switch"
+        ]
+      }
+    ]
+  },
+  "dependencyBoundaries": {
+    "appSurfaces": ["apps/landing/src", "apps/web/src"],
+    "forbiddenImportRegexes": ["^@nebutra\\/[^\\/]+\\/[^\\/]+\\/.+"],
+    "customUiAllowedExports": [
+      ".",
+      "./agent",
+      "./chat",
+      "./components",
+      "./editorial",
+      "./hooks",
+      "./icons",
+      "./layout",
+      "./layouts",
+      "./patterns",
+      "./primitives",
+      "./primitives/canonical",
+      "./shared/animation",
+      "./shared/animation/css",
+      "./shared/animation/motion",
+      "./tailwind.preset",
+      "./theme",
+      "./typography",
+      "./typography/fonts.css",
+      "./styles/sources.css",
+      "./styles/preset.css",
+      "./styles.css",
+      "./utils",
+      "./utils/auth-surfaces"
+    ]
+  },
+  "dashboardExperience": {
+    "rules": [
+      {
+        "name": "web-dashboard-overview-high-resolution-density",
+        "description": "The legacy dashboard overview must stay a redirect, not a parallel prompt-first home. /workspace lands on Startup OS when that prototype is on, otherwise Connectors.",
+        "file": "apps/web/src/app/(app)/workspace/page.tsx",
+        "requiredContains": [
+          "resolveAuthenticatedHomePath",
+          "Cookie-based i18n: no locale prefix.",
+          "Promise<never>",
+          "/workspace — stable post-login alias"
+        ],
+        "forbiddenContains": [
+          "CommandCenter",
+          "max-w-[1760px]",
+          "if (!tenantId) return null",
+          "if (!summary?.day) return null",
+          "snapshotMeta",
+          "details.activeUsers",
+          "meta.latestDay",
+          "meta.snapshot",
+          "meta.cadence",
+          "meta.tenant",
+          "xl:grid-cols-4",
+          "RecentSessions",
+          "DashboardHint",
+          "GettingStarted",
+          "OnboardingSkeleton",
+          "CommandSurfaceButton",
+          "ModePills",
+          "demo_org",
+          "empty.noSnapshot",
+          "empty.pending",
+          "Atmospheric brand glow",
+          "max-w-2xl flex-col items-center",
+          "type MetricMeta",
+          "dailyMeta",
+          "<dl",
+          "text-3xl font-semibold tabular-nums",
+          "2xl:grid-cols-4"
+        ]
+      },
+      {
+        "name": "web-dashboard-loading-state-matches-final-ia",
+        "description": "Skeletons must mirror the final dashboard information architecture so loading does not feel like a different product.",
+        "file": "apps/web/src/app/(app)/_dashboard-skeletons.tsx",
+        "requiredContains": ["max-w-4xl", "metricCards", "h-28"],
+        "forbiddenContains": [
+          "OnboardingSkeleton",
+          "space-y-px overflow-hidden",
+          "lg:grid-cols-[minmax(0,1fr)_minmax(26rem,34rem)]",
+          "max-w-2xl space-y-4 text-center",
+          "justify-center"
+        ]
+      },
+      {
+        "name": "web-dashboard-recent-sessions-real-only",
+        "description": "Recent sessions should render only when real persisted sessions exist; the dashboard must not show an empty working queue as product chrome.",
+        "file": "apps/web/src/components/onboarding/recent-sessions.tsx",
+        "requiredContains": [
+          "if (sessions.length === 0) return null",
+          "space-y-2",
+          "formatSessionTime"
+        ],
+        "forbiddenContains": ["emptyTitle", "emptyDescription", "border-dashed"]
+      },
+      {
+        "name": "web-dashboard-header-chrome-single-source",
+        "description": "Dashboard header chrome must stay quiet and single-purpose: shallow routes own their page title, nested routes get one breadcrumb trail, and global utility actions stay in the sidebar/user menu.",
+        "file": "apps/web/src/app/providers/design-system-shell.tsx",
+        "requiredContains": [
+          "currentBreadcrumb?.label ?? \"Dashboard\"",
+          "BrandLogo",
+          "webBrandLabels.homeLink",
+          "WorkspaceSwitcher",
+          "NotificationsDialog",
+          "UserMenu",
+          "breadcrumbs.length > 1 ?",
+          "aria-label=\"Breadcrumb\"",
+          "Feedback now lives solely"
+        ],
+        "forbiddenContains": [
+          "aria-label=\"Open feedback dialog\"",
+          "<span className=\"hidden xl:inline\">Feedback</span>",
+          "DASHBOARD_NAV_ITEMS.slice",
+          "planBadge",
+          "Nebutra Sailor",
+          "role=\"img\"",
+          "Workspace</p>",
+          "className=\"hidden gap-2 md:flex\""
+        ]
+      },
+      {
+        "name": "web-brand-assets-single-source",
+        "description": "Web brand chrome must render package assets from @nebutra/brand — the multi-path colour mark for light, mono LogomarkSVG for dark, and an independent WordmarkEnSVG — instead of retyping the brand, depending on public/brand sync, or tinting the mono mark with solid brand-mark blue (see commit 60e5f740).",
+        "file": "apps/web/src/components/brand/brand-assets.tsx",
+        "requiredContains": [
+          "from \"@nebutra/brand\"",
+          "WordmarkEnSVG",
+          "LogomarkSVG",
+          "logo-color.svg",
+          "data-brand-source={webBrandAssets.source}",
+          "alt=\"\""
+        ],
+        "forbiddenContains": [
+          "Nebutra Sailor",
+          "alt=\"Nebutra\"",
+          "src: \"/brand/logo-color.svg\"",
+          "src: \"/brand/logo-horizontal-en.svg\""
+        ]
+      },
+      {
+        "name": "web-public-chrome-brand-assets",
+        "description": "Public recovery chrome should reuse the governed brand logo primitive and labels instead of raw logo image tags or hardcoded brand labels.",
+        "file": "apps/web/src/components/navigation/public-page-chrome.tsx",
+        "requiredContains": [
+          "BrandLogo",
+          "webBrandLabels.homeLink",
+          "webBrandLabels.primaryNavigation"
+        ],
+        "forbiddenContains": [
+          "src=\"/brand/logo-horizontal-en.svg\"",
+          "alt=\"Nebutra\"",
+          "aria-label=\"Nebutra\""
+        ]
+      },
+      {
+        "name": "web-theme-playground-single-brand-anchor",
+        "description": "Theme Playground content chrome must not repeat the global sidebar brand; the page header should carry product context only.",
+        "file": "apps/web/src/components/theme-playground/theme-playground-workbench.tsx",
+        "requiredContains": ["Theme Playground", "Token governance workbench"],
+        "forbiddenContains": [
+          "BrandLogo",
+          "ThemeBrandMark",
+          "function NebutraMark",
+          "font-semibold text-base text-foreground\">Nebutra",
+          "grid size-7 place-items-center rounded-[var(--radius-md)] border border-primary/30"
+        ]
+      },
+      {
+        "name": "web-dashboard-plan-status-billing-context-only",
+        "description": "Plan status must stay in subscription or billing context, not as an ambiguous standalone header chip.",
+        "file": "apps/web/src/components/billing/plan-badge.tsx",
+        "requiredContains": [
+          "subscription status for billing/account surfaces",
+          "data-tour-id=\"plan-badge\"",
+          "flex flex-wrap items-center gap-2"
+        ],
+        "forbiddenContains": ["shell header", "hidden items-center gap-2 sm:flex"]
+      },
+      {
+        "name": "web-dashboard-header-locale-normalization",
+        "description": "Dashboard navigation state and breadcrumbs must normalize locale-prefixed routes from the shared i18n routing source.",
+        "file": "apps/web/src/app/providers/dashboard-nav.ts",
+        "requiredContains": [
+          "import { routing } from \"@nebutra/i18n/routing\";",
+          "const LOCALE_PREFIXES = new Set<string>(routing.locales)",
+          "export function stripLocalePrefix(pathname: string)",
+          "const normalizedPathname = stripLocalePrefix(pathname);",
+          "const segments = stripLocalePrefix(pathname).split(\"/\").filter(Boolean);"
+        ],
+        "forbiddenContains": [
+          "const LOCALE_PREFIXES = new Set([\"en\", \"zh\"]);",
+          ".filter((segment, index) => index > 0 || !LOCALE_PREFIXES.has(segment))"
+        ]
+      },
+      {
+        "name": "web-dashboard-copy-tokenized-for-locales",
+        "description": "Dashboard experience copy must live in shared i18n messages so governance covers English and Chinese routes together.",
+        "file": "packages/platform/i18n/locales/en.json",
+        "requiredContains": [
+          "\"commandCenter\"",
+          "\"snapshot\": \"Snapshot\"",
+          "\"cadence\": \"Cadence\"",
+          "\"tenant\": \"Tenant\""
+        ],
+        "forbiddenContains": [
+          "\"No recent sessions yet\"",
+          "\"noSnapshot\"",
+          "\"pending\": \"Pending\""
+        ]
+      },
+      {
+        "name": "web-dashboard-zh-copy-tokenized-for-locales",
+        "description": "Chinese dashboard copy must stay in the shared i18n layer, not hardcoded in app components.",
+        "file": "packages/platform/i18n/locales/zh.json",
+        "requiredContains": [
+          "\"commandCenter\"",
+          "\"snapshot\": \"快照\"",
+          "\"cadence\": \"频率\"",
+          "\"tenant\": \"租户\""
+        ],
+        "forbiddenContains": ["\"暂无最近会话\"", "\"noSnapshot\"", "\"pending\": \"待连接\""]
+      }
+    ]
+  },
+  "budgets": {
+    "rawTailwindColors": {
+      "description": "Raw Tailwind color utilities (bg-slate-*, text-gray-*, etc.) — use semantic tokens instead",
+      "max": 1064,
+      "paths": ["packages/design/ui/src/**", "apps/web/src/**", "apps/landing/src/**"],
+      "exclude": ["**/*.stories.*", "**/globals.css"]
+    },
+    "rawTailwindBorderRadius": {
+      "description": "Raw Tailwind border-radius utilities — use var(--radius-*) tokens instead",
+      "max": 556,
+      "paths": ["packages/design/ui/src/**", "apps/web/src/**", "apps/landing/src/**"],
+      "exclude": ["**/*.stories.*"]
+    }
+  }
+}

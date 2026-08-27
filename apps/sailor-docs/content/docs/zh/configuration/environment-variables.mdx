@@ -1,0 +1,279 @@
+---
+title: 环境变量
+description: Nebutra-Sailor 中所有环境变量的完整参考——必填级别、默认值和服务说明。
+---
+
+## 验证机制
+
+所有变量在启动时由 `@nebutra/config` 进行验证（`packages/platform/config/src/index.ts`）。缺失或为空的必填变量会导致立即退出，并输出描述性错误信息。缺失的可选变量将使用文档中记录的默认值。
+
+<Note>
+  以 `NEXT_PUBLIC_` 为前缀的变量会被打包进客户端 JavaScript 中，对终端用户可见。切勿在 `NEXT_PUBLIC_` 变量中存放密钥。
+</Note>
+
+---
+
+## 数据库
+
+| 变量 | 是否必填 | 默认值 | 说明 |
+|------|----------|--------|------|
+| `DATABASE_URL` | 是 | — | 完整的 PostgreSQL 连接字符串。格式：`postgresql://user:pass@host:5432/nebutra` |
+
+```bash .env.local
+DATABASE_URL=postgresql://postgres:password@localhost:5432/nebutra
+```
+
+<Tip>
+  在本地开发中，`pnpm infra:up` 会在端口 5432 上启动 PostgreSQL 16 实例，用户名为 `postgres`，密码为 `password`。
+</Tip>
+
+---
+
+## 身份验证
+
+| 变量 | 是否必填 | 默认值 | 说明 |
+|------|----------|--------|------|
+| `AUTH_PROVIDER` | 否 | `better-auth` | 服务端认证提供商。可选：`better-auth`、`nextauth`、`clerk`、`supabase`、`dev`。 |
+| `NEXT_PUBLIC_AUTH_PROVIDER` | 否 | `better-auth` | 客户端可见的认证提供商。应与 `AUTH_PROVIDER` 保持一致。 |
+| `BETTER_AUTH_SECRET` | `AUTH_PROVIDER=better-auth` 时 | — | Better Auth 自托管签名密钥。可用 `openssl rand -base64 32` 生成。**auth 与各 RP 必须一致**。 |
+| `BETTER_AUTH_URL` | `AUTH_PROVIDER=better-auth` 时 | — | 提供 `/api/auth/*` 的登录中心源站。生产：`https://auth.nebutra.com`。 |
+| `NEXT_PUBLIC_AUTH_URL` | 拆分登录中心时 | — | 客户端跳转 / SDK baseURL 使用的登录中心 URL，通常与 `BETTER_AUTH_URL` 相同。 |
+| `AUTH_COOKIE_DOMAIN` | 多子域生产 | — | 共享 Cookie 父域（如 `.nebutra.com`），使 `app` 与 `auth` 共享会话。 |
+| `SERVICE_SECRET` | 是（网关 / S2S） | — | 内部 `x-service-token` HS256 JWT 密钥。不是终端用户会话密钥。 |
+| `AUTH_SECRET` | `AUTH_PROVIDER=nextauth` 时 | — | Auth.js / NextAuth 签名密钥。可用 `openssl rand -base64 32` 生成。 |
+| `NEXTAUTH_URL` | `AUTH_PROVIDER=nextauth` 时 | — | Auth.js 回调使用的控制台源站。 |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | `AUTH_PROVIDER=clerk` 时 | — | Clerk 可发布密钥。以 `pk_live_` 或 `pk_test_` 开头。 |
+| `CLERK_SECRET_KEY` | `AUTH_PROVIDER=clerk` 时 | — | Clerk 密钥。以 `sk_live_` 或 `sk_test_` 开头。 |
+| `CLERK_WEBHOOK_SECRET` | 启用 Clerk Webhook 时 | — | Clerk Webhook 载荷的签名密钥。以 `whsec_` 开头。 |
+| `AUTH_SSO_DISCOVERY_PROVIDERS` | 启用企业 SSO 发现时 | — | 将邮箱域名映射到 SSO provider 的 JSON 数组。Clerk 条目使用 `/sign-in/sso`；Feishu 条目使用 `/api/auth/oauth/feishu`；generic 条目必须定义内部 `loginUrl`。 |
+| `FEISHU_APP_ID` | 启用飞书/Lark SSO 时 | — | Better Auth generic OAuth 使用的飞书/Lark App ID。 |
+| `FEISHU_APP_SECRET` | 启用飞书/Lark SSO 时 | — | 飞书/Lark App Secret。切勿暴露为 `NEXT_PUBLIC_`。 |
+| `FEISHU_OAUTH_SCOPES` | 否 | `contact:user.email contact:user.base:readonly` | 向飞书/Lark 请求的 OAuth scope，支持空格或逗号分隔。 |
+| `FEISHU_ALLOWED_TENANT_KEYS` | 否 | — | 可选的飞书 tenant key 白名单，用于限制本部署接受的租户。 |
+| `FEISHU_REDIRECT_URI` | 否 | — | 可选覆盖。Better Auth 默认回调为 `/api/auth/oauth2/callback/feishu`。 |
+| `GOOGLE_CLIENT_ID` | 启用 Google OAuth 时 | — | Better Auth 或 NextAuth 使用的 Google OAuth Web Client ID。 |
+| `GOOGLE_CLIENT_SECRET` | 启用 Google OAuth 时 | — | Better Auth 或 NextAuth 使用的 Google OAuth Web Client Secret。 |
+| `GITHUB_CLIENT_ID` | 启用 GitHub OAuth 时 | — | Better Auth 使用的 GitHub OAuth App Client ID。 |
+| `GITHUB_CLIENT_SECRET` | 启用 GitHub OAuth 时 | — | GitHub OAuth App Client Secret。 |
+| `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | Better Auth 或 NextAuth 启用 Google One Tap 时 | — | Landing 页 One Tap 提示使用的公开 Google OAuth Web Client ID。 |
+| `NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP` | 否 | `true` | 设置为 `false` 可关闭 Landing 页 One Tap 提示。 |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | 展示 Turnstile 时 | — | 登录中心表单使用的 Cloudflare Turnstile site key。 |
+| `TURNSTILE_SECRET_KEY` / `TURNSTILE_SECRET` | 强制 Turnstile 时 | — | `siteverify` 服务端密钥。未配置时跳过校验。 |
+| `NEXT_PUBLIC_AUTH_MAGIC_LINK` | 否 | 关闭 | 设为 `1` / `true` 时在登录中心展示魔法链接入口。 |
+| `NEXT_PUBLIC_AUTH_PASSKEYS` | 否 | 关闭 | 设为 `1` / `true` 时展示 Passkey 按钮与条件 UI。 |
+| `PASSKEY_RP_ID` | 否 | auth 主机名 | WebAuthn RP ID 覆盖（默认登录中心主机）。 |
+| `PASSKEY_ORIGIN` | 否 | auth 源站 | WebAuthn origin 覆盖（默认登录中心源站）。 |
+| `NEBUTRA_LANDING_ORIGIN` | NextAuth One Tap 启用时 | — | 允许 POST 到 `/api/auth/google-one-tap` 的 Landing 源站。 |
+| `NEBUTRA_SESSION_HINT_DOMAIN` | 否 | — | 可选的跨子域轻量会话提示 Cookie 域。 |
+
+<CodeGroup>
+```bash .env.local（开发环境）
+AUTH_PROVIDER=better-auth
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
+BETTER_AUTH_SECRET=local-dev-secret
+BETTER_AUTH_URL=http://localhost:3101
+NEXT_PUBLIC_AUTH_URL=http://localhost:3101
+GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=xxx
+NEXT_PUBLIC_GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
+```
+```bash .env（生产 — Nebutra.com / Better Auth）
+AUTH_PROVIDER=better-auth
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
+BETTER_AUTH_SECRET=...                 # apps/auth 与 apps/web 相同
+BETTER_AUTH_URL=https://auth.nebutra.com
+NEXT_PUBLIC_AUTH_URL=https://auth.nebutra.com
+AUTH_COOKIE_DOMAIN=.nebutra.com
+DATABASE_URL=postgresql://...
+SERVICE_SECRET=...
+GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=xxx
+GITHUB_CLIENT_ID=...
+GITHUB_CLIENT_SECRET=...
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=0x4AAAAA...
+TURNSTILE_SECRET_KEY=0x4AAAAA...
+# 可选 UX 开关：
+# NEXT_PUBLIC_AUTH_MAGIC_LINK=1
+# NEXT_PUBLIC_AUTH_PASSKEYS=1
+# PASSKEY_RP_ID=auth.nebutra.com
+# PASSKEY_ORIGIN=https://auth.nebutra.com
+```
+```bash .env（可选 Clerk 提供商）
+AUTH_PROVIDER=clerk
+NEXT_PUBLIC_AUTH_PROVIDER=clerk
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_xxx
+CLERK_SECRET_KEY=sk_live_xxx
+CLERK_WEBHOOK_SECRET=whsec_xxx
+```
+```bash .env（飞书/Lark SSO）
+AUTH_PROVIDER=better-auth
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
+BETTER_AUTH_SECRET=...
+BETTER_AUTH_URL=https://auth.nebutra.com
+NEXT_PUBLIC_AUTH_URL=https://auth.nebutra.com
+AUTH_COOKIE_DOMAIN=.nebutra.com
+FEISHU_APP_ID=cli_xxx
+FEISHU_APP_SECRET=xxx
+FEISHU_OAUTH_SCOPES="contact:user.email contact:user.base:readonly"
+AUTH_SSO_DISCOVERY_PROVIDERS='[{"domain":"example.cn","id":"example-feishu","name":"Example Feishu","type":"oidc","provider":"feishu"}]'
+```
+</CodeGroup>
+
+<Note>
+  OAuth 回调 URI 必须指向**登录中心**源站，例如
+  `https://auth.nebutra.com/api/auth/callback/google` 与
+  `https://auth.nebutra.com/api/auth/callback/github`。
+  `GET https://auth.nebutra.com/health` 会返回当前启用的 `oauth.callbackUrls`。
+</Note>
+
+---
+
+## 应用 URL
+
+| 变量 | 是否必填 | 默认值 | 说明 |
+|------|----------|--------|------|
+| `NEXT_PUBLIC_APP_URL` | 是 | — | 已认证控制台的基础 URL。示例：`https://app.nebutra.com` |
+| `NEXT_PUBLIC_API_URL` | 是 | — | API 网关的基础 URL。示例：`https://api.nebutra.com` |
+
+---
+
+## 支付（Stripe）
+
+| 变量 | 是否必填 | 默认值 | 说明 |
+|------|----------|--------|------|
+| `STRIPE_SECRET_KEY` | 是 | — | Stripe 密钥。以 `sk_live_` 或 `sk_test_` 开头。 |
+| `STRIPE_WEBHOOK_SECRET` | 是 | — | Stripe Webhook 载荷的签名密钥。以 `whsec_` 开头。 |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | 是 | — | Stripe 可发布密钥。以 `pk_live_` 或 `pk_test_` 开头。 |
+| `STRIPE_PRO_PRICE_ID` | 是 | — | Pro 计划的 Stripe Price ID。以 `price_` 开头。 |
+| `STRIPE_ENTERPRISE_PRICE_ID` | 是 | — | Enterprise 计划的 Stripe Price ID。以 `price_` 开头。 |
+
+<Warning>
+  在开发和预览环境中请使用测试模式密钥（`sk_test_`、`pk_test_`）。切勿在生产环境之外使用正式模式密钥。
+</Warning>
+
+---
+
+## 邮件（Resend）
+
+| 变量 | 是否必填 | 默认值 | 说明 |
+|------|----------|--------|------|
+| `RESEND_API_KEY` | 是 | — | Resend API 密钥。以 `re_` 开头。 |
+| `EMAIL_FROM` | 是 | — | 所有事务性邮件显示的发件人地址。示例：`Nebutra <noreply@nebutra.com>` |
+
+---
+
+## 存储
+
+| 变量 | 是否必填 | 默认值 | 说明 |
+|------|----------|--------|------|
+| `STORAGE_PROVIDER` | 否 | `local` | 存储后端。可选值：`s3`、`r2`、`s3-compatible`、`local`。 |
+| `AWS_BUCKET_NAME` | 否 | `nebutra-uploads` | S3 或 R2 存储桶名称。 |
+| `AWS_REGION` | 否 | `us-east-1` | S3 的 AWS 区域。 |
+| `AWS_ACCESS_KEY_ID` | 否 | — | AWS Access Key ID。 |
+| `AWS_SECRET_ACCESS_KEY` | 否 | — | AWS Secret Access Key。 |
+
+<Info>
+  当 `STORAGE_PROVIDER` 为 `local` 时，上传的文件写入服务器文件系统的 `./uploads` 目录。这仅适用于本地开发——本地存储在部署间不会持久化。
+</Info>
+
+---
+
+## AI
+
+| 变量 | 是否必填 | 默认值 | 说明 |
+|------|----------|--------|------|
+| `OPENAI_API_KEY` | 否 | — | OpenAI API 密钥。当 `FEATURE_AI_CHAT=true` 或 `FEATURE_AI_EMBEDDINGS=true` 时必填。 |
+| `OPENROUTER_API_KEY` | 否 | — | OpenRouter API 密钥。可替代直接访问 OpenAI。 |
+| `AI_DEFAULT_MODEL` | 否 | `gpt-5.4-mini` | AI 补全使用的默认模型标识符。 |
+
+---
+
+## Redis
+
+| 变量 | 是否必填 | 默认值 | 说明 |
+|------|----------|--------|------|
+| `REDIS_URL` | 否 | — | Redis 连接字符串。队列（BullMQ）、缓存和限流必需。示例：`redis://localhost:6379`。 |
+
+<Tip>
+  `pnpm infra:up` 会在端口 6379 上启动 Redis 7。`pnpm infra:lite` 仅启动 PostgreSQL，不包含 Redis。
+</Tip>
+
+---
+
+## 分析与可观测性（ClickHouse）
+
+| 变量 | 是否必填 | 默认值 | 说明 |
+|------|----------|--------|------|
+| `CLICKHOUSE_URL` | 否 | `http://localhost:8123` | ClickHouse HTTP 端点。`@nebutra/metering` 管道必需。 |
+| `CLICKHOUSE_DB` | 否 | `nebutra` | ClickHouse 数据库名称。 |
+
+---
+
+## 错误追踪（Sentry）
+
+| 变量 | 是否必填 | 默认值 | 说明 |
+|------|----------|--------|------|
+| `SENTRY_DSN` | 否 | — | 服务端错误报告的 Sentry DSN。 |
+| `NEXT_PUBLIC_SENTRY_DSN` | 否 | — | 客户端错误报告的 Sentry DSN。 |
+
+---
+
+## 产品分析（PostHog）
+
+| 变量 | 是否必填 | 默认值 | 说明 |
+|------|----------|--------|------|
+| `POSTHOG_KEY` | 否 | — | 服务端产品事件使用的 PostHog 项目 API 密钥，以 `phc_` 开头。 |
+| `POSTHOG_HOST` | 否 | `https://us.i.posthog.com` | 服务端 PostHog 数据摄入主机。 |
+| `NEXT_PUBLIC_POSTHOG_KEY` | 否 | — | PostHog 项目 API 密钥。以 `phc_` 开头。 |
+| `NEXT_PUBLIC_POSTHOG_HOST` | 否 | `https://app.posthog.com` | PostHog 数据摄入主机。如使用自托管或 EU 实例，请覆盖此值。 |
+
+---
+
+## 后台任务（Inngest）
+
+| 变量 | 是否必填 | 默认值 | 说明 |
+|------|----------|--------|------|
+| `INNGEST_EVENT_KEY` | 否 | — | 用于发送事件的 Inngest 事件 API 密钥。 |
+| `INNGEST_SIGNING_KEY` | 否 | — | 用于 Webhook 验证的 Inngest 签名密钥。 |
+
+---
+
+## 无服务器队列（QStash）
+
+仅当 `QUEUE_PROVIDER=qstash` 时需要这些变量。若已设置 `REDIS_URL` 且未设置 `QUEUE_PROVIDER`，系统会自动选择 BullMQ。
+
+| 变量 | 是否必填 | 默认值 | 说明 |
+|------|----------|--------|------|
+| `QSTASH_TOKEN` | 条件必填 | — | Upstash QStash REST 令牌。 |
+| `QSTASH_CURRENT_SIGNING_KEY` | 条件必填 | — | 用于载荷验证的当前 Webhook 签名密钥。 |
+| `QSTASH_NEXT_SIGNING_KEY` | 条件必填 | — | 密钥轮换期间使用的下一个签名密钥。 |
+| `QSTASH_CALLBACK_BASE_URL` | 条件必填 | — | QStash 投递 Webhook 回调的公开基础 URL。示例：`https://api.nebutra.com`。 |
+
+---
+
+## 生成密钥
+
+对于需要加密随机值的密钥：
+
+```bash
+openssl rand -base64 32
+```
+
+每个环境（开发、预览、生产）请使用独立的密钥值，切勿跨环境复用。
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="配置概览" icon="gear" href="/zh/configuration/overview">
+    配置验证的工作原理及各环境中变量的设置位置。
+  </Card>
+  <Card title="功能开关" icon="toggle-on" href="/zh/configuration/feature-flags">
+    启用或禁用产品功能的布尔型开关。
+  </Card>
+  <Card title="常见错误" icon="triangle-exclamation" href="/zh/troubleshooting/common-errors">
+    由缺失或错误环境变量引起的启动错误。
+  </Card>
+  <Card title="部署" icon="rocket" href="/zh/deployment/overview">
+    Nebutra-Sailor 的部署及生产环境密钥管理。
+  </Card>
+</CardGroup>

@@ -1,0 +1,10 @@
+{
+  "generatedBy": "packages/design/fonts/scripts/subset-cjk.mjs",
+  "source": "Noto Sans SC (SIL Open Font License 1.1)",
+  "faces": [
+    { "weight": 400, "output": "noto-sans-sc-400.woff2", "bytes": 1142552 },
+    { "weight": 500, "output": "noto-sans-sc-500.woff2", "bytes": 1159128 },
+    { "weight": 600, "output": "noto-sans-sc-600.woff2", "bytes": 1162352 },
+    { "weight": 700, "output": "noto-sans-sc-700.woff2", "bytes": 1172244 }
+  ]
+}

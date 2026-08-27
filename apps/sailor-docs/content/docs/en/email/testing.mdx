@@ -1,0 +1,85 @@
+---
+title: Testing Emails
+description: Validate @nebutra/email with no-key contract tests, local preview checks, and Resend test delivery.
+---
+
+Test email changes at three levels: package contract, local preview artifacts,
+and safe provider delivery.
+
+<Warning>
+Never send real emails in test or CI environments. Package tests and preview
+checks do not require `RESEND_API_KEY`.
+</Warning>
+
+## Package contract
+
+Run the package tests after changing sender helpers, catalog entries, preview
+filenames, or import-time behavior:
+
+```bash
+pnpm --filter @nebutra/email test
+pnpm --filter @nebutra/email typecheck
+```
+
+The contract test verifies that every `EMAIL_TEMPLATE_CATALOG` entry has a
+public send helper and a matching preview artifact.
+
+## Local preview artifacts
+
+Use the dedicated preview workspace:
+
+```bash
+pnpm mail:check
+pnpm mail:export
+```
+
+`mail:check` fails when a catalog entry is missing from `apps/mail-preview/dist`.
+`mail:export` regenerates `dist/index.html` and `dist/preview-manifest.json`
+from the package-owned catalog.
+
+## Resend test delivery
+
+Resend test keys accept API calls and show logs without delivering to real
+recipients.
+
+```bash
+# .env.local — never commit this file
+RESEND_API_KEY=re_test_...
+EMAIL_FROM=Nebutra <noreply@nebutra.com>
+```
+
+```typescript
+import { sendMagicLinkEmail } from "@nebutra/email";
+
+await sendMagicLinkEmail({
+  to: "delivered@resend.dev",
+  magicLinkUrl: "https://app.nebutra.com/login/magic-link/test",
+});
+```
+
+<Tip>
+`delivered@resend.dev` is Resend's test address for successful delivery logs.
+</Tip>
+
+## CI checklist
+
+- [ ] `pnpm --filter @nebutra/email test`
+- [ ] `pnpm --filter @nebutra/email typecheck`
+- [ ] `pnpm mail:check`
+- [ ] `pnpm mail:export` when preview index/manifest output matters
+- [ ] Production delivery uses a verified sending domain and production key
+
+<CardGroup cols={2}>
+  <Card title="Templates" icon="layout-template" href="/email/templates">
+    Catalog IDs and required payload examples
+  </Card>
+  <Card title="Providers" icon="server" href="/email/providers">
+    Resend setup and domain verification
+  </Card>
+  <Card title="Email Overview" icon="mail" href="/email/overview">
+    Package architecture and preview workflow
+  </Card>
+  <Card title="Guides" icon="book" href="/guides">
+    General development guides
+  </Card>
+</CardGroup>

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "field-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/field-demo.tsx",
+      "content": "import { Field, Input } from \"@nebutra/ui/primitives\";\n\nexport function FieldDemo() {\n  return (\n    <div className=\"space-y-4 w-80 py-8 px-4\">\n      <Field label=\"Email address\" description=\"We'll never share your email.\" htmlFor=\"email\">\n        <Input id=\"email\" type=\"email\" placeholder=\"you@example.com\" />\n      </Field>\n\n      <Field label=\"Username\" error=\"Username is already taken.\" htmlFor=\"username\">\n        <Input id=\"username\" placeholder=\"johndoe\" />\n      </Field>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

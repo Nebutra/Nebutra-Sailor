@@ -1,0 +1,35 @@
+import { AvatarUploadForm } from "@/components/account/avatar-upload-form";
+import { ProfileForm } from "@/components/account/profile-form";
+import { getUser, requireOrg } from "@/lib/auth";
+
+export const metadata = { title: "Settings" };
+
+export default async function SettingsPage() {
+  await requireOrg();
+  const user = await getUser();
+
+  return (
+    <div className="space-y-8">
+      <ProfileForm />
+
+      <AvatarUploadForm
+        initialAvatarUrl={user?.imageUrl ?? null}
+        email={user?.email ?? null}
+        fallbackName={user?.name ?? user?.email ?? ""}
+      />
+
+      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
+        <h2 className="mb-4 text-base font-semibold text-foreground">Danger Zone</h2>
+        <p className="mb-4 text-sm text-muted-foreground">
+          These actions are permanent and cannot be undone.
+        </p>
+        <button
+          type="button"
+          className="rounded-[var(--radius-md)] border border-destructive/40 px-4 py-2 text-sm font-medium text-[hsl(var(--destructive-strong))] transition-colors hover:bg-destructive/10"
+        >
+          Delete Organization
+        </button>
+      </section>
+    </div>
+  );
+}

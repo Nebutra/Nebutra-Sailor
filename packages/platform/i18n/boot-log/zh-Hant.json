@@ -1,0 +1,1439 @@
+{
+  "panelLabel": "啟動日誌",
+  "entries": {
+    "transistor-name-off-patent-1947": {
+      "tag": "專利",
+      "title": "被從專利上拿掉的名字",
+      "body": "1947 年 12 月 23 日，Bardeen 與 Brattain 在 Bell Labs 示範了鍺點接觸式電晶體。Shockley 不在場。律師認為他自己的設計與 Julius Lilienfeld 1925 年的專利過於接近，便將他的名字從這份專利中移除。",
+      "coda": "1956 年三人共同獲得諾貝爾物理學獎。"
+    },
+    "dartmouth-two-month-study-1956": {
+      "tag": "提案",
+      "title": "為期兩個月的研究",
+      "body": "McCarthy、Minsky、Rochester 與 Shannon 於 1955 年提出提案，要求進行為期兩個月、十人的研究，前提是智能可以被描述得足夠精確，讓機器得以模擬。1956 年的研討會實際舉辦六至八週；只有三位與會者全程參與。",
+      "coda": "他們為這個領域選定的名稱 artificial intelligence，是沿用至今的那一個。"
+    },
+    "traitorous-eight-lie-detector-1957": {
+      "tag": "分裂",
+      "title": "測謊儀備忘錄",
+      "body": "1957 年 5 月，Shockley Semiconductor 的八名工程師要求撤換 William Shockley 的管理職位。他曾錄音電話、阻止員工分享成果，並要求進行測謊測試。1957 年 9 月 18 日，這八人轉而創辦 Fairchild Semiconductor。",
+      "coda": "Wikipedia 將 Intel 與 AMD 列為可追溯至該衍生公司的數十家企業之一。"
+    },
+    "kilby-noyce-six-months-1958-1959": {
+      "tag": "並行",
+      "title": "六個月，一枚獎章",
+      "body": "Kilby 於 1958 年 9 月在 Texas Instruments 示範了可運作的積體電路，其零件以外部導線連接。Noyce 於 1959 年 7 月在 Fairchild 申請了單晶矽版本，可大量生產。兩人皆未否認對方對共同發明權的主張。",
+      "coda": "Kilby 單獨接受了 2000 年的諾貝爾獎。Noyce 已於 1990 年去世。"
+    },
+    "perceptron-conscious-machine-1958": {
+      "tag": "神經網路",
+      "title": "那台會醒來的機器",
+      "body": "1958 年《紐約時報》報導稱，Frank Rosenblatt 的 perceptron 是一台電腦的胚胎，海軍預期它將能行走、說話、看見、書寫、自我複製並意識到自身的存在。1969 年 Minsky 與 Papert 的著作證明單層 perceptron 無法計算 XOR。",
+      "coda": "神經網路研究的資金枯竭，直到 1980 年代才恢復。"
+    },
+    "hamilton-software-engineering": {
+      "tag": "命名",
+      "title": "一個持續的笑話",
+      "body": "在阿波羅計畫期間，瑪格麗特·漢密爾頓開始將她的工作稱為「軟體工程」，以區別於硬體工程。她說沒人聽過這個詞，這成了個持續的笑話，直到一位受尊敬的硬體工程師在會議上站起來表示同意。",
+      "coda": "這個笑話持續了多年，後來再沒人提起。"
+    },
+    "macau-seventeen-thousand": {
+      "tag": "標書",
+      "title": "一萬七千",
+      "body": "1961年10月，由何鴻燊、霍英東、葉漢和葉德利組成的財團競標澳門博彩專營權。他們出價3,167,000澳門元，比競爭對手高出17,000元。",
+      "coda": "這筆差價買下的專營權維持了四十多年。"
+    },
+    "moores-law-ten-year-bet-1965": {
+      "tag": "預測",
+      "title": "十年之賭",
+      "body": "摩爾1965年的文章預測，晶片的元件數量在接下來十年將每年翻倍，到1975年約達65,000個。1975年他將翻倍週期修正為兩年。後來被稱為定律的曲線是他自己的預測，且已修正過一次。",
+      "coda": "到1995年，摩爾表示這個詞在晶片產業已幾乎可指任何事。"
+    },
+    "eliza-secretary-1966": {
+      "tag": "聊天機器人",
+      "title": "秘書與DOCTOR",
+      "body": "1966年，約瑟夫·魏澤鮑姆在MIT發布了ELIZA的DOCTOR腳本，這是一個主要將使用者自己的句子以問句形式反射回來的程式。據說他本人的秘書曾要求他離開房間，以便單獨與它對話。",
+      "coda": "他未曾預期的模式後來被命名為ELIZA效應。"
+    },
+    "engelbart-royalties": {
+      "tag": "專利",
+      "title": "四萬美元",
+      "body": "SRI在示範後為滑鼠申請了專利，據其自述，他們對其價值並無實際概念。數年後才揭露，他們以約40,000美元的價格授權給蘋果。",
+      "coda": "英格巴特從未因發明它而收到任何版稅。"
+    },
+    "lo": {
+      "tag": "首次接觸",
+      "title": "LO",
+      "body": "Charley Kline 從 UCLA 嘗試登入 SRI 的一台機器。L 傳到了。O 也傳到了。輸入 G 時，遠端當機了。",
+      "coda": "網際網路上說出的第一句話是兩個字母：LO。"
+    },
+    "multics": {
+      "tag": "藍圖",
+      "title": "運算即公用事業",
+      "body": "Multics 並非設計為一台電腦，而是設計為一項運算公用事業：永遠在線，如同電力一般，同一台機器上的租戶彼此隔離。它延遲上市且價格昂貴，貝爾實驗室退出了。",
+      "coda": "五十年後，這個概念被重新命名為雲端運算。"
+    },
+    "rfc1": {
+      "tag": "治理",
+      "title": "意見徵求",
+      "body": "Steve Crocker 必須為少數幾台網路主機撰寫第一套規則。沒有人授予他權威，他擔心這會被解讀為越權——因此他將此類文件稱為「意見徵求」。",
+      "coda": "自此之後，網際網路所同意的每一項規則仍被稱為 RFC。"
+    },
+    "pdp7": {
+      "tag": "起源",
+      "title": "沒人要的機器",
+      "body": "貝爾實驗室退出 Multics 後，Ken Thompson 得到一台廢棄的 PDP-7，並在妻子與兒子前往聖地牙哥期間獨自擁有一個月的時間。他給自己每項元件一週：核心、Shell、編輯器、組譯器。",
+      "coda": "四週後，那台沒人要的機器開始執行 Unix。"
+    },
+    "alarm-1202": {
+      "tag": "事件",
+      "title": "程式警報 1202",
+      "body": "距離月球表面四分鐘時，導航電腦觸發了五次警報：一個會合雷達開關留在錯誤位置，耗盡了它的運算週期。它沒有當機。它捨棄了低優先級任務，重新啟動，並維持了登陸。",
+      "coda": "知道在負載下該捨棄什麼，是昂貴的一課。"
+    },
+    "mariner-1": {
+      "tag": "事故",
+      "title": "一個遺漏的長橫線",
+      "body": "Mariner 1 在發射後 293 秒被摧毀。機載信標失效，當導航方程式被複製進程式時，R 上的長橫線被遺漏。長橫線表示取平均值。",
+      "coda": "媒體難以解釋長橫線，寫成了連字符。連字符被保留下來。"
+    },
+    "mother-of-all-demos": {
+      "tag": "示範",
+      "title": "萬演之母",
+      "body": "Engelbart 獲得了九十分鐘。他的終端透過電話線連接到三十英里外的一台機器，他示範了滑鼠、超連結、視窗、螢幕共享，以及兩人同時編輯一份文件。",
+      "coda": "一千人觀看，然後又回到打孔卡十年。"
+    },
+    "conway": {
+      "tag": "定律",
+      "title": "被拒的論文",
+      "body": "Melvin Conway 寫下了一個觀察：系統的結構最終會反映建構它的組織的溝通結構，並將「How Do Committees Invent?」寄給 Harvard Business Review。他們以他未證明其論點為由拒絕。Datamation 於 1968 年刊登。",
+      "coda": "Fred Brooks 後來引用了這個未證明的論點，並將其命名為 Conway 定律。"
+    },
+    "apollo-burn-baby-burn": {
+      "tag": "註解",
+      "title": "Burn, Baby, Burn",
+      "body": "登月艙的主點火常式在原始碼中被標記為 BURN_BABY_BURN。這個名稱與推力無關；它借自當時一位靈魂樂電台 DJ 的口頭禪。",
+      "coda": "這行字仍原封不動地留在公開倉庫中。"
+    },
+    "waterfall": {
+      "tag": "誤讀",
+      "title": "圖表就是反例",
+      "body": "在「Managing the Development of Large Software Systems」中，Winston Royce 畫出了業界後來稱為瀑布模型的圖表，然後寫道：「我相信這個概念，但上述的實作方式風險高且容易失敗。」論文其餘部分都在談如何使其迭代化。",
+      "coda": "業界保留了圖表，丟掉了這句話。"
+    },
+    "moth": {
+      "tag": "詞源",
+      "title": "第一個真正的蟲",
+      "body": "一隻飛蛾從哈佛 Mark II 的繼電器中被取出，貼進日誌。旁邊那行字被引為該詞的起源，但上面寫的是：發現蟲的第一個實際案例。",
+      "coda": "工程師自愛迪生時代起就說 bug。博物館懷疑那頁甚至不是霍珀親筆。"
+    },
+    "intel-4004-busicom-rights-1971": {
+      "tag": "權利",
+      "title": "歸計算機公司所有的晶片",
+      "body": "1969 年，日本的 Busicom 委託 Intel 設計一套計算機晶片組，合約規定設計權歸 Busicom，儘管工作完全在 Intel 內部完成。1971 年，工程師 Federico Faggin 以較低價格換取解除該排他性。",
+      "coda": "Intel 4004 於同年七月開始一般銷售。"
+    },
+    "pong-coin-overflow": {
+      "tag": "回饋",
+      "title": "硬幣箱溢出了",
+      "body": "1972 年八月，Atari 將 Pong 原型機放在 Sunnyvale 的一家酒吧。幾天後，老闆報告它壞了。工程師 Al Alcorn 趕去修理，發現故障並非電氣問題：投幣機構因硬幣過多而卡住。",
+      "coda": "故障不是接線問題；是硬幣太多。"
+    },
+    "wozniak-breakout-bonus": {
+      "tag": "獎金",
+      "title": "分帳",
+      "body": "1973 年，Atari 請 Steve Jobs 縮小 Breakout 電路板，每移除一顆晶片支付 100 美元。Jobs 請 Wozniak 幫忙，承諾分他一半。Wozniak 減少了 50 顆晶片。Jobs 說總額是 700 美元，所以 Wozniak 的份是 350 美元。十年後，Wozniak 得知真正的獎金是 5,000 美元。",
+      "coda": "Wozniak 說如果有人問，他會把錢給 Jobs。"
+    },
+    "unix-not-expected-to-understand": {
+      "tag": "核心",
+      "title": "不期望你理解",
+      "body": "第六版 Unix 的 slp.c 包含一行『你不期望理解這個』，附在基於 PDP-11 編譯器怪癖的進程交換堆疊恢復程式碼上。Dennis Ritchie 後來說他的意思就像老師說這不會考。",
+      "coda": "該常式為第七版 Unix 重寫。"
+    },
+    "vi-adm3a-keys": {
+      "tag": "按鍵綁定",
+      "title": "字母鍵上的箭頭",
+      "body": "比爾·喬伊於1977年在柏克萊使用 Lear Siegler ADM-3A 終端機撰寫 vi，該終端機沒有方向鍵；h、j、k 和 l 鍵上刻有箭頭，成為移動鍵。簡短單字母指令源於在300波特的數據機前打字，速度太慢跟不上。",
+      "coda": "這些後來被歸功於設計哲學的按鍵，起初只是為了應付沒有方向鍵的終端機。"
+    },
+    "kildall-flying": {
+      "tag": "證詞",
+      "title": "未被證實的飛行",
+      "body": "1980年，IBM 前來授權 CP/M。蓋瑞·基爾多正飛往客戶處交付軟體；他的妻子桃樂絲負責開場談判。比爾·蓋茲後來告訴記者，基爾多「任性地去飛行了」。IBM 的首席談判代表傑克·薩姆斯表示他從未見過基爾多。",
+      "coda": "關於那次會面的兩種說法從未得到調和。"
+    },
+    "trusting-trust": {
+      "tag": "信任",
+      "title": "對信任的反思",
+      "body": "湯普森的圖靈講座描述了一個在登入程式中植入後門的編譯器，並且每當它編譯編譯器時，就會重新安裝整個把戲。從乾淨的原始碼重建，後門依然存在。",
+      "coda": "你無法信任不是你完全自己創建的程式碼。"
+    },
+    "arm-one-person-company-1985": {
+      "tag": "起源",
+      "title": "一人晶片公司",
+      "body": "以教育電腦聞名的 Acorn，於1983年開始 RISC 研究。拜訪一家競爭晶片設計商後，他們發現 6502 的更新來自於一個實際上只有一人的公司，於是他們認為自己不需要更多。",
+      "coda": "ARM1 於1985年4月26日問世，首次通電即正常運作。"
+    },
+    "copyleft-all-rights-reversed": {
+      "tag": "版權",
+      "title": "所有權利反轉",
+      "body": "有人寄給理查·史托曼一封標有「Copyleft — 所有權利反轉」的信，這是對標準聲明的雙關。在 Symbolics 增強了他的 Lisp 直譯器卻拒絕回饋改進後，他利用版權法本身撰寫了一份要求相反義務的授權。",
+      "coda": "通用公共授權於1989年2月隨之而來。"
+    },
+    "tetris-unpaid-decade": {
+      "tag": "權利",
+      "title": "沒有版稅的方塊",
+      "body": "1985 年，Pajitnov 作為蘇聯科學院的國家員工撰寫了 Tetris；權利歸屬於計算中心，而非他本人。西方授權經過多手轉讓才到達 Nintendo，該遊戲銷量達數千萬份。",
+      "coda": "權利於 1996 年歸還給他，距他撰寫該遊戲已過十一年。"
+    },
+    "euv-twenty-three-hours-2018": {
+      "tag": "光刻",
+      "title": "一片晶圓耗時二十三小時",
+      "body": "NTT 的 Hiroo Kinoshita 於 1986 年首次展示極紫外光刻影像。ASML 的 2006 年原型機曝光一片晶圓耗時二十三小時。直到 2018 年，EUV 才進入量產，被 MIT Technology Review 稱為拯救摩爾定律的機器。",
+      "coda": "到 2022 年，量產 EUV 掃描機每小時處理約兩百片晶圓。"
+    },
+    "tsmc-foundry-fifty-six-1987": {
+      "tag": "晶圓代工",
+      "title": "五十六歲創辦晶圓代工廠",
+      "body": "Morris Chang 生於 1931 年，晉升為 Texas Instruments 全球半導體業務集團副總裁，隨後擔任 General Instrument 總裁兼 COO，之後領導台灣 ITRI。1987 年，他五十六歲時創辦 TSMC，該公司不設計其所製造的任何晶片。",
+      "coda": "它是世界上第一家僅從事製造的晶圓代工廠。"
+    },
+    "huawei-diet-pills": {
+      "tag": "經銷商",
+      "title": "華為的首項業務並非科技",
+      "body": "華為於 1987 年 9 月 15 日以 21,000 元資本註冊，自稱科技公司。它從貿易商品開始，包括減肥藥，隨後轉售香港製造的 HAX 交換機以賺取利潤。其自有交換機 BH01 直到 1989 年才手工組裝。",
+      "coda": "四年後，公司首次自行繪製電路板。"
+    },
+    "morris": {
+      "tag": "事件",
+      "title": "一次測量",
+      "body": "Morris 想知道網際網路有多大，因此他撰寫了一個會複製自身的程式。為了阻止主機偽造已感染的回覆，他讓該程式有七分之一機率無論如何都會重新感染。",
+      "coda": "這七分之一機率導致當時在線的 60,000 台主機中約 6,000 台當機。"
+    },
+    "naur": {
+      "tag": "哲學",
+      "title": "程式並非成品",
+      "body": "Naur 主張，程式並非存在於原始碼中，而是作為一種理論，由撰寫者持有，說明為何問題以這種方式解決。原始碼只是它的一種有損投影。",
+      "coda": "他稱最後一位理論持有者離開的那一刻為程式之死。"
+    },
+    "mit-license-171-words": {
+      "tag": "條款",
+      "title": "171 字",
+      "body": "MIT 一組撰寫 TCP/IP 實作的團隊希望避免法律談判，因此以約 171 字的聲明將軟體免費提供。這段短文如今涵蓋 GitHub 上近三分之一的授權專案，超過任何其他授權條款。",
+      "coda": "自撰寫以來，措辭基本未變。"
+    },
+    "photoshop-display-origin": {
+      "tag": "起源",
+      "title": "最初名為 Display",
+      "body": "1988 年，密西根大學研究生 Thomas Knoll 撰寫了一個小程式，用於在單色 Mac 螢幕上查看灰階影像。他先將其命名為 Display，後改為 ImagePro，再改為 Photoshop，之後他的哥哥 John 將其展示給 Adobe，Adobe 於當年取得授權。",
+      "coda": "Adobe 於 1995 年以 3450 萬美元 outright 買斷全部權利。"
+    },
+    "sosumi-so-sue-me": {
+      "tag": "命名",
+      "title": "So Sue Me",
+      "body": "1991 年，Apple 法律部門以和解協議禁止 Apple Computer 使用與音樂相關的商標為由，拒絕了警示音效名稱「Let It Beep」，認為其過於音樂化。音效設計師 Jim Reekes 回覆「so sue me」，隨後將其註冊為「sosumi」。",
+      "coda": "該音效在 Mac OS 中隨附近三十年，直至 2020 年被 Big Sur 取代。"
+    },
+    "www-royalty-free": {
+      "tag": "免費提供",
+      "title": "不再收費的那一天",
+      "body": "1993 年 4 月 30 日，CERN 將 World Wide Web 的協定與程式碼以免授權費方式公開。任何人都可取用，無需付費，亦無需申請。",
+      "coda": "自那時起，無人為使用它支付過授權費。"
+    },
+    "doom-ftp-crash": {
+      "tag": "共享軟體",
+      "title": "無法連上的伺服器",
+      "body": "1993年12月10日，id Software 將《毀滅戰士》第一章作為共享軟體免費釋出，寄望於其餘章節的銷售。他們將檔案上傳至威斯康辛大學的 FTP 伺服器，卻發現已有太多人在等待，連團隊自己都無法連上。",
+      "coda": "上傳在午夜前完成；一萬次同時下載癱瘓了大學的網路。"
+    },
+    "zlib-two-authors": {
+      "tag": "基礎",
+      "title": "兩人的壓縮層",
+      "body": "zlib 存在於 Linux、macOS、iOS 及歷代遊戲主機中；Git 和 OpenSSH 都依賴它進行壓縮。1995年，兩人寫出了它的首個公開版本。",
+      "coda": "作者名單從未增加第三個名字。"
+    },
+    "byd-battery-to-car": {
+      "tag": "收購",
+      "title": "電池公司買下車廠",
+      "body": "比亞迪於1995年2月10日在深圳龍崗區創立，生產鎳鎘及鎳氫電池，1996年進入鋰離子電池領域。2003年，這家電池製造商收購了西安秦川汽車，更名為比亞迪汽車。",
+      "coda": "兩年後，其首款自研轎車 F3 上市。"
+    },
+    "ariane-501": {
+      "tag": "事件",
+      "title": "三十七秒",
+      "body": "三十七秒時，慣性參考系統將64位元浮點數轉換為16位元整數而溢位；約四十秒時，飛行器解體。該程式碼沿用自亞利安四號，升空後本不應執行。",
+      "coda": "約3.7億美元，花在理應關閉的程式碼上。"
+    },
+    "deep-blue-move-44-1997": {
+      "tag": "西洋棋",
+      "title": "第四十四步的故障",
+      "body": "在1997年重賽的第一局中，卡斯帕洛夫以四十五步擊敗深藍。深藍的第四十四步據稱是錯誤的結果：在搜尋中無法決定偏好走法，引擎退回了安全機制。",
+      "coda": "輸掉第二局後，卡斯帕洛夫指控 IBM 作弊。"
+    },
+    "curl-one-maintainer": {
+      "tag": "基礎",
+      "title": "一人之協定堆疊",
+      "body": "curl 官方文件指出 libcurl 部署於約一百億台裝置，涵蓋 110 種作業系統與 28 種 CPU 架構。自 1998 年更名為 curl 以來，Daniel Stenberg 一直擔任專案的主要維護者。",
+      "coda": "從未列出任何具名接班人。"
+    },
+    "book-of-mozilla-verses": {
+      "tag": "彩蛋",
+      "title": "Mozilla 書",
+      "body": "在網址列輸入 about:mozilla 會顯示 Mozilla 書，這是一則將「獸」與「瑪門」對立的末日詩篇，每一代瀏覽器都會更新。詩篇編號並非章節標記：它們是發佈日期。",
+      "coda": "最新詩篇 6:27 於 2020 年首次隨 Firefox Nightly 版本發佈。"
+    },
+    "http-418-teapot": {
+      "tag": "協定",
+      "title": "我是一壺茶",
+      "body": "1998 年 4 月 1 日發佈的 RFC 2324 將狀態碼 418 定義為「我是一壺茶」，並將自身歸類為資訊性文件，而非標準。2014 年 4 月 1 日，RFC 7168 將其擴展至涵蓋泡茶。該代碼始終未成為真正的標準。",
+      "coda": "兩份文件均為資訊性；該狀態碼仍被實際伺服器採用。"
+    },
+    "open-source-coined-1998": {
+      "tag": "命名",
+      "title": "開源的誕生",
+      "body": "1998 年 2 月，Christine Peterson 提出「開源」一詞，因為新接觸者總將「自由軟體」聽成價格而非自由。在 2 月 5 日的 VA Research 會議上，Todd Anderson 將該詞帶入對話而非正式提出，任其自然傳播。",
+      "coda": "該團體後來嘗試註冊該詞組的商標，但未成功。"
+    },
+    "netscape-source-1998": {
+      "tag": "發佈",
+      "title": "並非完全開放",
+      "body": "1998 年 1 月 22 日，Netscape 宣布將釋出其瀏覽器原始碼，員工 Jamie Zawinski 註冊了 mozilla.org。但他們撰寫的授權條款保留了一扇門：Netscape 本身仍可將相同程式碼納入專有產品。",
+      "coda": "Netscape 約一年後被 AOL 收購。"
+    },
+    "bsd-75-acknowledgments": {
+      "tag": "授權條款",
+      "title": "七十五則鳴謝",
+      "body": "原始 BSD 授權條款要求每一則廣告皆須逐一列名鳴謝每位貢獻作者。至 1997 年，單一 NetBSD 建置已累積七十五則此類鳴謝，與 GPL 不相容。柏克萊授權主管於 1999 年 7 月 22 日刪除此條款。",
+      "coda": "一個辦公室的簽名，讓一條累積十年的條款退出歷史。"
+    },
+    "red-hat-ipo-1999": {
+      "tag": "首次公開募股",
+      "title": "免費軟體的代價",
+      "body": "Red Hat 免費提供核心產品的原始碼，改以支援、訓練與整合服務收費。1999 年 8 月 11 日公司上市。首日漲幅當時為華爾街歷史上第八大。",
+      "coda": "創辦人 Bob Young 於四個月後被取代 CEO 職位。"
+    },
+    "multics-shutdown": {
+      "tag": "關閉",
+      "title": "最後一台",
+      "body": "2000 年 10 月 30 日，最後一組已知於 Honeywell 硬體上原生運行的 Multics 系統，於加拿大國防部哈利法克斯分部關閉。",
+      "coda": "距專案啟動已三十五年。"
+    },
+    "sqlite-no-license": {
+      "tag": "基礎",
+      "title": "沒有授權的資料庫",
+      "body": "SQLite 官方頁面估計全球活躍資料庫檔案超過一兆個，僅每支智慧型手機即載有數百個，使其在已部署軟體中僅次於 zlib。沒有授權條款，因為作者將每一行程式碼都捐給公眾領域。",
+      "coda": "需要法律保障的公司另行購買權利保證。"
+    },
+    "smic-tsmc-lawsuit": {
+      "tag": "訴訟",
+      "title": "SMIC 的兩起訴訟",
+      "body": "SMIC 於 2000 年由前 TSMC 工程師 Richard Chang 等人創立。TSMC 兩次以商業機密竊取提告；2009 年案件中，陪審團認定 SMIC 於 65 項指控中的 61 項成立。",
+      "coda": "2010 年 11 月 SMIC 以 2 億美元及約 8% 股權與 TSMC 和解。"
+    },
+    "api-mandate": {
+      "tag": "治理",
+      "title": "那則備忘錄",
+      "body": "根據 2011 年意外公開的貼文，貝佐斯於 2002 年下令各團隊必須透過服務介面暴露一切：禁止直接連結，禁止讀取其他團隊的儲存，禁止後門。",
+      "coda": "該貼文的作者本意僅供同事閱覽。"
+    },
+    "hupu-rumours": {
+      "tag": "論壇",
+      "title": "翻譯謠言的人",
+      "body": "2004 年 1 月，一名在芝加哥攻讀機械工程博士的中國學生在業餘時間創立了一個籃球論壇。工作內容主要是將 NBA 新聞與謠言翻譯成中文並加以整理。",
+      "coda": "八年後該論壇開設了自己的線上商店。"
+    },
+    "jd-the-other-name": {
+      "tag": "詞源",
+      "title": "名字的另一半",
+      "body": "2004 年上線的零售平台取自兩個人的名字：創始人劉強東，以及他最初交往過的女性龔小京。各取一字。",
+      "coda": "京字屬於她。"
+    },
+    "douban-hutong": {
+      "tag": "詞源",
+      "title": "以胡同命名",
+      "body": "2005 年 3 月 6 日上線的網站並非以隱喻命名。楊勃在北京豆瓣胡同附近的一家咖啡廳寫下其原始程式碼，並採用了該胡同的名稱。",
+      "coda": "二十一年後該網站仍沿用此名。"
+    },
+    "git-information-manager-hell": {
+      "tag": "Git",
+      "title": "地獄資訊管理器",
+      "body": "2005 年 4 月 7 日，林納斯·托瓦茲提交了 git 的首個版本。訊息內容為：「git」的首個版本，地獄資訊管理器。其作者地址為 torvalds@ppc970.osdl.org。",
+      "coda": "該地址指向 OSDL 的一台 PowerPC 970 測試機。"
+    },
+    "knuth-reward-check": {
+      "tag": "獎金",
+      "title": "San Serriffe 銀行",
+      "body": "Donald Knuth 為其著作中發現的每個錯誤支付 2.56 美元，支票開自虛構的 San Serriffe 銀行。截至 2005 年 3 月，他所簽發的支票總額已超過 20,000 美元。",
+      "coda": "大多數收件人將支票裱框而非存入。"
+    },
+    "dji-helicopter-first": {
+      "tag": "轉折",
+      "title": "DJI 從直升機起步",
+      "body": "Frank Wang 於 2006 年畢業於香港科技大學，並與同學在深圳共同創立 DJI。其首款產品為直升機飛行控制系統；首個成熟版本 XP3.1 於 2008 年出貨。",
+      "coda": "團隊後來發現大多數雲台買家將其安裝在多旋翼上，而非直升機。"
+    },
+    "dropbox-hn": {
+      "tag": "反直覺",
+      "title": "那則回覆",
+      "body": "Houston 將 Dropbox 示範發布至 Hacker News。那則著名的回覆解釋說，你可以用 FTP 帳戶、curlftpfs 和 SVN 自行完成，而且看起來不會賺錢。",
+      "coda": "十一年後，在 IPO 時，Houston 稱那是他在該網站上最喜歡的討論串。"
+    },
+    "butterfield": {
+      "tag": "轉折",
+      "title": "兩次從殘骸中重生",
+      "body": "Butterfield 的遊戲 Game Neverending 停滯不前，團隊將照片分享部分拆分出來成為 Flickr。八年後他的第二款遊戲 Glitch 關閉，團隊將他們為自己建構的聊天工具拆分出來：Slack。",
+      "coda": "兩次都是主體關閉後，副產品才變得可見。"
+    },
+    "blockbuster": {
+      "tag": "錯失",
+      "title": "五千萬",
+      "body": "Hastings 與 Randolph 飛往達拉斯，以五千萬美元將 Netflix 賣給 Blockbuster，並為其營運線上業務。據 Randolph 所述，對面的 CEO 在整個會議中都在壓制笑意。",
+      "coda": "Blockbuster 於十年後申請破產。"
+    },
+    "y2k": {
+      "tag": "治理",
+      "title": "什麼都沒發生",
+      "body": "Gartner 將全球 Y2K 的損失估計為三千到六千億美元，數十萬人逐行修改兩位數年份。當晚，電網沒垮，銀行沒停，飛機照常飛行。",
+      "coda": "四年後，一位經濟學家發表論文，認為大部分錢都白花了。"
+    },
+    "unsourced": {
+      "tag": "無出處",
+      "title": "無人署名",
+      "body": "「640K 對任何人來說都夠了」—— Gates 本人的回答是，這句話從來沒有引文，它就像謠言一樣飄著，被人反覆引用。「全球市場大概只需要五台電腦」——Thomas Watson 確實在 1953 年說過五台，指的是他預期某款機器 IBM 701 的訂單量。",
+      "coda": "701 後來賣出了十八台。"
+    },
+    "homebrew-volunteer-team": {
+      "tag": "基礎設施",
+      "title": "沒有僱主的程式庫",
+      "body": "Homebrew 是大多數 Mac 開發者機器上的預設套件管理器；2013 年它在 GitHub 上的貢獻者人數排名第一。Max Howell 於 2009 年寫出第一個版本。如今由 34 人團隊維護，全部無薪。",
+      "coda": "其資金來源僅有一個 Kickstarter 和一個 Open Source Collective 帳戶。"
+    },
+    "xiaomi-software-first": {
+      "tag": "軟體",
+      "title": "小米的第一款產品不是手機",
+      "body": "小米成立於 2010 年 4 月 6 日。同年 8 月和 12 月，它分別釋出了 MIUI 作業系統與米聊聊天程式的測試版，兩者皆為軟體。",
+      "coda": "該公司的第一款手機直到次年 8 月才出貨。"
+    },
+    "ritchie-same-week": {
+      "tag": "訃聞",
+      "title": "同一週",
+      "body": "Dennis Ritchie 與 Ken Thompson 共同創造了 Unix 與 C 程式語言。他於 2011 年 10 月 12 日在新澤西州家中被發現身亡，享年 70 歲。Steve Jobs 於 10 月 5 日，即一週前去世。評論者後來指出，Ritchie 的工作是 Apple 建立其財富的技術基礎。",
+      "coda": "兩則訃聞在同一週刊出。"
+    },
+    "leap-second": {
+      "tag": "事件",
+      "title": "多出的一秒",
+      "body": "為使原子鐘與地球自轉保持一致，插入了一個閏秒。核心從未告知其計時子系統，高解析度計時器提前觸發，處理器空轉。Reddit、Mozilla 與 LinkedIn 癱瘓；一家航空公司改以人工登機。",
+      "coda": "時間並非單調遞增。程式碼假定它是。"
+    },
+    "gregorian-1752-eleven-days": {
+      "tag": "迷思",
+      "title": "消失的十一天",
+      "body": "1752年9月2日，英國曆法跳至9月14日，刪除了十一天。民間歷史稱民眾因此暴動。現存當時紀錄中無任何暴動記載。此說法源自1755年一幅諷刺選舉畫作中的橫幅。",
+      "coda": "畫作中的道具成了無其他痕跡事件的紀錄。"
+    },
+    "bootstrap-the-impossible-joke": {
+      "tag": "詞源",
+      "title": "借自不可能的壯舉",
+      "body": "「憑藉自己的鞋帶將自己拉起」源自1785年閔希豪森男爵的吹牛故事，並在19世紀被用作物理上不可能之事的標準例子。1953年，計算領域借用此詞，指稱讓機器自行啟動的指令鏈。",
+      "coda": "這個詞首次使用時，本身就是關於該技巧失敗的笑點。"
+    },
+    "french-revolutionary-decimal-time": {
+      "tag": "實驗",
+      "title": "十小時制的一天",
+      "body": "1793年，法國將一天分為十小時，每小時一百個十進制分鐘。強制使用始於1794年9月，僅七個月後即被暫停。杜樂麗宮鐘樓上的十進制鐘面至少運行至1801年。",
+      "coda": "被廢除的制度在宮殿牆上持續掛了數年。"
+    },
+    "railway-time-gwr": {
+      "tag": "標準",
+      "title": "火車所守的時間",
+      "body": "1840年11月，大西部鐵路在其全網絡採用格林威治時間，取代各城鎮的當地時間。至1855年，約98%的英國城鎮已跟進。國會直到1880年才將其定為法定國家標準。",
+      "coda": "時鐘在法律之前四十年已達成一致。"
+    },
+    "western-union-telephone-memo-1876": {
+      "tag": "已闢謠",
+      "title": "西方聯盟從未寫下的備忘錄",
+      "body": "一份廣被引用的 1876 年西方聯盟備忘錄稱，相對於派人到電報局送信，電話是「愚蠢的」。研究人員翻查當時報紙，未發現任何痕跡，且該備忘錄所指的高管當年並未擔任該職。該文本係後人偽造。",
+      "coda": "西方聯盟當年確實拒絕了貝爾的專利；它只是從未寫下這份備忘錄。"
+    },
+    "nintendo-hanafuda-detours": {
+      "tag": "轉折",
+      "title": "花札之後的轉折",
+      "body": "山內房治郎於 1889 年在京都開設店鋪，手工製作花札紙牌。該公司後來嘗試過計程車服務與即食米，兩者皆遭放棄；廣為流傳的愛情旅館連鎖說法，在可追溯至 1962 年的證券申報紀錄中並無依據。",
+      "coda": "1966 年，一款名為 Ultra Hand 的玩具售出數十萬件。"
+    },
+    "wrigley-premiums-premium": {
+      "tag": "轉折",
+      "title": "贈品的贈品",
+      "body": "1891 年，威廉·瑞格利二世在芝加哥銷售肥皂，並附贈烘焙粉作為贈品。顧客對烘焙粉的需求超過肥皂，因此他改賣烘焙粉，並將口香糖作為烘焙粉的附贈品。顧客對口香糖的需求更高。",
+      "coda": "到 1892 年，他已放棄肥皂與烘焙粉，僅銷售口香糖。"
+    },
+    "robot-labor-not-brother": {
+      "tag": "詞源",
+      "title": "機器人一詞的未署名創造者",
+      "body": "卡雷爾·恰佩克在起草 1920 年的劇本時，曾使用一個源自拉丁語的詞「laboři」，但認為過於書面化。他在報紙專欄中指出真正的來源：他的弟弟約瑟夫，只是隨口一提。「Robot」源自 robota——農奴的強制勞動，而非機械。",
+      "coda": "該劇的扉頁保留了其中一位弟弟的名字。"
+    },
+    "play-doh-wallpaper-cleaner": {
+      "tag": "轉折",
+      "title": "它原本是用來清潔壁紙的",
+      "body": "1930 年代，Kutol 調製出一種軟質麵團，用於刷除壁紙上的煤煙。一旦家庭改用更清潔的取暖燃料，需求便消失。一位教師建議將其作為造型黏土銷售；1956 年它被改名為 Play-Doh。",
+      "coda": "到 2005 年，它在 75 個國家每年銷售 9500 萬罐。"
+    },
+    "hedy-lamarr-frequency-hopping-patent": {
+      "tag": "專利",
+      "title": "被擱置的專利",
+      "body": "1942 年，Lamarr 與作曲家 George Antheil 為一種跳頻系統申請專利，以防止魚雷無線電被干擾。海軍將其列為機密、擱置，並建議 Lamarr 改賣戰爭債券。該專利於 1959 年到期，當時尚無任何艦艇搭載此系統。",
+      "coda": "Lamarr 在生前從未因該專利獲得任何報酬。"
+    },
+    "bush-1945-memex": {
+      "tag": "起源",
+      "title": "從未建造的書桌",
+      "body": "1945 年 7 月，Vannevar Bush 在 The Atlantic 發表〈As We May Think〉，描述一台名為 Memex 的桌面微縮膠片機器，讓使用者能在儲存的知識中建立關聯路徑。同年 9 月該文以精簡版再版。從未有人製造出原型機。",
+      "coda": "Engelbart 與 Nelson 後來皆將該論文列為他們開始研究的緣由。"
+    },
+    "jean-bartik-eniac-dinner": {
+      "tag": "紀錄",
+      "title": "未被邀請的晚宴",
+      "body": "1946 年 2 月 14 日 ENIAC 公開揭幕時，令全場印象深刻的軌跡程式由 Jean Bartik 與 Betty Holberton 撰寫。媒體僅介紹 Eckert 與 Mauchly。六位女性程式設計師無一受邀參加之後的晚宴。",
+      "coda": "她們的名字在數十年後才被從活動照片中重新找回。"
+    },
+    "claude-shannon-juggling-theorem": {
+      "tag": "論文",
+      "title": "雜耍定理",
+      "body": "1948 年，Shannon 發表〈A Mathematical Theory of Communication〉，奠定資訊論基礎。數十年後他將同樣的嚴謹性應用於自己的嗜好，推導出球的飛行時間、停留時間與球數及手數之間的正式關係。",
+      "coda": "該定理被收錄於與 1948 年論文相同的卷冊中。"
+    },
+    "mccarthy-1960-eval": {
+      "tag": "起源",
+      "title": "腳註中的直譯器",
+      "body": "在 1960 年的論文中，John McCarthy 以數學符號寫出一個 eval 函數，用以證明符號表達式可以描述自身。他的學生 Steve Russell 將該推導翻譯為 IBM 704 機器碼。該證明工具成為第一個可運作的 Lisp 直譯器。",
+      "coda": "McCarthy 後來表示他並未打算讓任何人實際執行它。"
+    },
+    "licklider-1960-symbiosis": {
+      "tag": "起源",
+      "title": "圖書館互聯",
+      "body": "J.C.R. Licklider 於 1960 年的論文《Man-Computer Symbiosis》中提出「思考中心」，這些中心承載圖書館功能，並連結成網路，供電腦進行即時、對話式使用。當時大多數機器以打孔卡批次運行；互動終端幾乎不存在。",
+      "coda": "兩年後他掌管五角大廈的新辦公室，並資助了後來成為 ARPANET 的計畫。"
+    },
+    "ctss-1962-password-leak": {
+      "tag": "起源",
+      "title": "密碼檔案，列印出來",
+      "body": "1962 年，MIT 博士生 Allan Scherr 對每週在 CTSS 上耗費四小時感到沮喪。他發現離線列印指令可提取任何帳戶的檔案，因此列印了 UACCNT.SECRET，即存放所有密碼的檔案，並分享給他人，以便借用帳戶並持續運行他的模擬。",
+      "coda": "Scherr 直到近三十年後才向實驗室主任承認此事。"
+    },
+    "katherine-johnson-check-the-numbers": {
+      "tag": "紀錄",
+      "title": "讓那個女孩核對一下",
+      "body": "在 1962 年軌道飛行前，John Glenn 讓工程師請 Katherine Johnson 手動重新計算 IBM 7090 已算出的軌道。他說：「如果她說沒問題，我就準備好了。」她的數字與電腦的完全一致。",
+      "coda": "Friendship 7 於 1962 年 2 月 20 日如期發射。"
+    },
+    "daemon-backronym": {
+      "tag": "詞源",
+      "title": "守護程序的後設首字母縮寫",
+      "body": "1963 年，MIT 的 Project MAC 程式員將一個背景磁帶備份程序命名為 Maxwell's demon，這是 1867 年一個思想實驗中的代理，不知疲倦且隱形地對分子進行分類——即希臘語的 daimon，一種中性精靈，而非猶太-基督教的惡魔。",
+      "coda": "「Disk And Execution MONitor」是事後套用在該詞上的。"
+    },
+    "sketchpad-1963": {
+      "tag": "起源",
+      "title": "一支光筆與一台示波器",
+      "body": "1963 年 1 月，Ivan Sutherland 提交了他在 MIT 關於 Sketchpad 的論文，在 Lincoln Laboratory 的 TX-2 螢幕上以光筆繪製受約束的幾何圖形。該機器成本約一百萬美元，僅存寥寥數台；他的繪圖板無法交給任何人使用。",
+      "coda": "商業 CAD 軟體花了近二十年才追平該論文所展示的內容。"
+    },
+    "douglas-mcilroy-garden-hose-pipe": {
+      "tag": "備忘錄",
+      "title": "水管備忘錄",
+      "body": "1964 年 10 月，McIlroy 寫下一份 Bell Labs 備忘錄，提出程式應像水管般串接——接上一段，資料的處理方式就不同。這份備忘錄流傳開來，被人稱讚，卻始終未被實現。九年後，Ken Thompson 在一夜之間為 Unix shell 加上一個字元：|。",
+      "coda": "到了早上，從未互相溝通的程式開始互通了。"
+    },
+    "berkshire-hathaway-spite-buy": {
+      "tag": "氣憤",
+      "title": "出於憤怒買下的工廠",
+      "body": "1964 年，Warren Buffett 口頭同意以每股 11.50 美元將股份賣回給 Berkshire 的總裁 Seabury Stanton。書面要約價卻為 11.375 美元。Buffett 對那差掉的八分之一美元憤怒到轉而買下公司控制權，並解僱了 Stanton。",
+      "coda": "1985 年，他關閉了那些他曾力爭保留的紡織廠。"
+    },
+    "nelson-1965-hypertext": {
+      "tag": "起源",
+      "title": "頁面之前的連結",
+      "body": "在 1965 年的一篇 ACM 論文中，Ted Nelson 為彼此非順序連結與引用的文件創造了「hypertext」一詞，這建立在他 1960 年開始、後命名為 Xanadu 的計畫之上。他的版本按被追蹤的連結向原作者付費。部分實作直到 2014 年才發布。",
+      "coda": "Web 採用了他的詞彙，卻把付費機制留了下來。"
+    },
+    "mary-allen-wilkes-linc": {
+      "tag": "紀錄",
+      "title": "客廳裡的 LINC",
+      "body": "1965 年，Wilkes 將一台 250 磅重的 LINC 電腦搬進父母在 Baltimore 的客廳，獨自寫出 LAP6，一個互動式作業系統——比 Apple II 進入任何家庭早了十二年。被問及是否為第一人時，她只說：「我想我可能是。」",
+      "coda": "她從未自己直接聲稱這個頭銜。"
+    },
+    "hoares-billion-dollar-mistake": {
+      "tag": "懺悔",
+      "title": "他還是加上的引用",
+      "body": "1965 年，Tony Hoare 正在建構第一個旨在讓 ALGOL W 引用在編譯期即可證明安全的類型系統。他還是加上了 null 引用，因為實作起來容易。2009 年，他稱之為他的十億美元錯誤。",
+      "coda": "安全目標是明確的；失敗在於容易還是勝出了。"
+    },
+    "johnson-vs-cern-touchscreen": {
+      "tag": "觸控螢幕",
+      "title": "究竟誰先",
+      "body": "CERN 將 1972 年為其加速器控制室建造全球首台電容式觸控螢幕的功績歸於 Bent Stumpe。英國皇家雷達研究所的 Eric Johnson 早在 1965 年便已發表關於手指驅動電容觸控技術的論文，比前者早七年。",
+      "coda": "CERN 關於建造首台觸控螢幕的說法仍立於其官方網站。"
+    },
+    "second-redefined-1967": {
+      "tag": "度量衡",
+      "title": "9,192,631,770 個週期",
+      "body": "1960 年之前，秒是 1900 年回歸年的分數，由天文觀測固定。1967 年，國際度量衡大會將其重新定義為鈦-133 躍遷的 9,192,631,770 個週期。",
+      "coda": "一秒的長度不再由太陽決定，改由原子決定。"
+    },
+    "goto-statement-considered-harmful": {
+      "tag": "更正",
+      "title": "他沒寫的標題",
+      "body": "Dijkstra 向 CACM 提交了一篇題為 A Case against the GO TO Statement 的論文。編輯 Niklaus Wirth 為趕著將其以信件形式付梓，賦予了使其聞名的標題：Go To Statement Considered Harmful。",
+      "coda": "這句標題超越了信件本身，衍生出數十年來無人讀完的『X Considered Harmful』標題。"
+    },
+    "rollkugel-vs-mouse": {
+      "tag": "滑鼠",
+      "title": "兩隻滑鼠，同一年",
+      "body": "1968 年 10 月，Telefunken 在銷售手冊中列出 Rollkugel 滑鼠，這是其工程師自 1966 年起建造的滾球裝置。兩個月後，12 月 9 日，Douglas Engelbart 展示了其 SRI 團隊自 1963 年起建造的木製滑鼠。兩組團隊互不知情。",
+      "coda": "Telefunken 率先進入市場卻被遺忘；Engelbart 居次，卻成為人們所指的滑鼠。"
+    },
+    "peter-principle-verified": {
+      "tag": "研究",
+      "title": "晉升至無能",
+      "body": "1969 年，Laurence Peter 與 Raymond Hull 在一本暢銷書中半開玩笑地指出，每位員工都會晉升至其無法勝任的層級，本意為諷刺。2019 年一項針對 214 家真實企業銷售團隊晉升資料的研究發現，這個玩笑成立：頂尖銷售員成為更差的經理。",
+      "coda": "笑點最終成為一個可測量、已發表的迴歸係數。"
+    },
+    "lanpar-vs-visicalc": {
+      "tag": "試算表",
+      "title": "無人命名的試算表",
+      "body": "1969 年夏，哈佛畢業生 Rene Pardo 與 Remy Landau 撰寫了 LANPAR，一種試算表語言，允許使用者以任何順序輸入公式並仍能正確計算。Bell Canada 與 General Motors 皆運行於其上。1979 年，Dan Bricklin 在不知 LANPAR 存在的情況下開發了 VisiCalc。",
+      "coda": "LANPAR 的專利在 1983 年前經受住法庭挑戰；雜誌早已將 VisiCalc 列為第一。"
+    },
+    "spam-vikings-not-marketers": {
+      "tag": "詞源",
+      "title": "Spam，行銷之前",
+      "body": "1970 年的一個短劇中，Monty Python 的維京人對餐廳顧客的對話高喊「spam」，嘲諷菜單上罐頭肉的過剩。這個笑話在 1980 年代末遷移至 MUD 聊天室用於聊天淹沒，隨後在 1990 年代初進入電子郵件。",
+      "coda": "這個詞透過一段關於午餐的喜劇短劇進入了收件箱。"
+    },
+    "codd-1970-relational-model": {
+      "tag": "起源",
+      "title": "雇主忽略的論文",
+      "body": "1970 年，IBM 研究員 Edgar Codd 發表了關係模型。IBM 的旗艦產品是階層式的，公司並無急於採用他的想法。Larry Ellison 閱讀了 Codd 的論文與 IBM 自身的 System R 報告，隨後於 1979 年率先推出商業關係資料庫。",
+      "coda": "IBM 自身的關係產品 DB2 直到 1983 年才推出。"
+    },
+    "linnainmaa-backpropagation": {
+      "tag": "演算法",
+      "title": "遺漏的引用",
+      "body": "1970 年，芬蘭學生 Seppo Linnainmaa 在其碩士論文中發表了反向模式自動微分的完整演算法，並附有可運作程式碼。1986 年，Rumelhart、Hinton 與 Williams 在 Nature 發表了相同方法以訓練神經網路。他們未引用他。",
+      "coda": "Linnainmaa 的論文在十六年間未被引用，直到該領域歷史學家將其重新挖掘。"
+    },
+    "at-sign-arbitrary-pick": {
+      "tag": "詞源",
+      "title": "唯一未使用的鍵",
+      "body": "1971 年，BBN 工程師 Ray Tomlinson 需要一個分隔使用者名稱與主機的字元，該字元絕不會出現在真實人名中。掃描他的 Model 33 電傳打字機鍵盤，他選了 @——一個當時幾乎僅由雜貨商與記帳員使用的字元。",
+      "coda": "此後每個電子郵件地址都承載了此一限制。"
+    },
+    "parnas-module-decomposition": {
+      "tag": "方法",
+      "title": "模組該切在哪裡",
+      "body": "1972 年，David Parnas 將同一個 KWIC 索引系統以兩種方式拆成模組：一種依處理步驟，另一種依最可能變動的設計決策，且皆隱藏於介面之後。唯有第二種做法，讓一次變動僅觸及一個模組，而無需任何人閱讀其餘部分。",
+      "coda": "模組邊界最終編碼了對未來維護者需要知道什麼的猜測。"
+    },
+    "karen-sparck-jones-idf": {
+      "tag": "紀錄",
+      "title": "無人道謝的公式",
+      "body": "1972 年，Spärck Jones 發表一篇論文，提出詞彙在文件集合中的稀有度可衡量其重要性——逆向文件頻率，如今幾乎所有搜尋引擎的排序邏輯皆基於此。她直到 1993 年才在劍橋大學獲得永久職位。",
+      "coda": "在此之前，她一直從事一系列短期、軟性資金合約。"
+    },
+    "cyclades-pouzin-tcpip": {
+      "tag": "網際網路",
+      "title": "網際網路的第五人",
+      "body": "1972 年，Louis Pouzin 在法國建構 CYCLADES 網路，這是第一個讓端點主機而非網路負責可靠傳輸的系統。1974 年，Cerf 與 Kahn 的 TCP 論文指名感謝他。2004 年，Cerf 與 Kahn 獲得圖靈獎。Pouzin 的名字不在其上。",
+      "coda": "《經濟學人》後來稱他為網際網路的第五人。"
+    },
+    "ethernet-1973-memo": {
+      "tag": "起源",
+      "title": "以太網備忘錄",
+      "body": "1973 年 5 月 22 日，Robert Metcalfe 撰寫一份標題為「Ether Acquisition」的 Xerox PARC 備忘錄，附有一張手繪圖，展示一條共享電纜連接 Alto 電腦。該技術通常被追溯至 1976 年的期刊論文。實際草圖早三年，且為手繪。",
+      "coda": "論文發表時，Ethernet 已在 PARC 內部運行三年。"
+    },
+    "vint-cerf-envelope-sketch": {
+      "tag": "軼事",
+      "title": "信封背面",
+      "body": "網際網路的創始傳說稱 Cerf 在餐巾紙上畫出閘道架構。他已更正此事：「實際上不是餐巾紙，而是信封背面。」1973 年，他在飯店大廳等待時，畫出了後來成為 TCP/IP 閘道設計的草圖。",
+      "coda": "隔年，該草圖成為 IEEE Transactions on Communications 的一篇論文。"
+    },
+    "gchq-nonsecret-encryption": {
+      "tag": "密碼學",
+      "title": "未發表的密鑰",
+      "body": "1973 年 9 月，22 歲的 Clifford Cocks 剛到 GCHQ，在半小時內推導出一種無需共享密鑰的加密方案。三年後，Diffie、Hellman 與 Merkle 在美國發表了相同構想，並被認定為發明人。GCHQ 檔案直到 1997 年才解密。",
+      "coda": "James Ellis 於 1997 年去世，距解密將其名字載入紀錄僅數月。"
+    },
+    "kodak-digital-camera-1975": {
+      "tag": "擱置",
+      "title": "柯達被埋沒的相機",
+      "body": "1975 年，24 歲的工程師 Steven Sasson 造出第一台數位相機：重 8 磅，每張拍攝需 23 秒。高層認為，當印刷便宜且已運作一個世紀時，沒人會想在電視上看照片。他們為相機申請專利並將其擱置。",
+      "coda": "柯達於 2012 年申請破產保護。"
+    },
+    "galls-law-origin": {
+      "tag": "起源",
+      "title": "一本關於官僚機構的書",
+      "body": "1975 年，在被 30 家出版社拒絕後，小兒科醫生 John Gall 自費出版《Systemantics》：一個運作的複雜系統必然由一個運作的簡單系統演化而來，而從頭建構的複雜系統永遠無法運作。他寫的是醫院與政府機構。",
+      "coda": "軟體架構師保留了這句話，並悄悄丟棄了它所描述的官僚機構。"
+    },
+    "ken-olsen-home-computer-1977": {
+      "tag": "誤引",
+      "title": "Olsen 的家用電腦",
+      "body": "1977 年，DEC 創辦人 Ken Olsen 表示個人沒有理由在家中擁有一台電腦。他指的是控制家庭燈光、暖氣與娛樂的一台中央機器，就他所描述的事物而言是準確的。報導只保留了這句話的前半段。",
+      "coda": "Olsen 本人當時家中就有一台電腦。"
+    },
+    "kernighans-debugging-law": {
+      "tag": "格言",
+      "title": "比撰寫它難兩倍",
+      "body": "在 1978 年的《Elements of Programming Style》中，Kernighan 與 Plauger 寫道，除錯比撰寫程式難兩倍，因此盡可能聰明地撰寫程式，按定義就意味著你不夠聰明到能除錯它。一條以限制你再次面對自己作品為表述的風格規則。",
+      "coda": "對手從來不是別人，而是幾週後的你自己。"
+    },
+    "xerox-parc-1979-visit": {
+      "tag": "起源",
+      "title": "施樂自己的交易",
+      "body": "1979 年 12 月：在施樂同意以每股 10 美元購買 10 萬股蘋果上市前股份以換取參觀權後，蘋果參觀了施樂 PARC。喬布斯看到 Alto 的圖形介面，稱之為他見過最好的東西。流行的說法是竊取；紀錄是一筆施樂談判的交易。",
+      "coda": "施樂拿到了它的股份。Alto 從未作為商業產品出售。"
+    },
+    "visicalc-1979-no-patent": {
+      "tag": "起源",
+      "title": "他們跳過的專利",
+      "body": "在 VisiCalc 1979 年發布之前，Dan Bricklin 諮詢了一位專利律師，律師根據當時的規則將成功機率定為大約十分之一。他們改為申請版權和商標。1983 年，Lotus 1-2-3 發布了一個相容介面，可以讀取 VisiCalc 自己的檔案。",
+      "coda": "試算表作為一個類別存活下來。建立它的公司沒有。"
+    },
+    "ibm-microsoft-dos-1980": {
+      "tag": "條款",
+      "title": "IBM 留了一扇門",
+      "body": "IBM 於 1980 年 11 月 6 日與微軟就 PC 的作業系統簽約。在一個持續十多年的反壟斷案件深處，IBM 選擇不控制其供應商，並讓微軟向任何人轉售 DOS。作為對另一場訴訟的對沖，當時這是有道理的。",
+      "coda": "複製製造商在幾年內跟隨，IBM 從未重新控制該平台。"
+    },
+    "postel-law-robustness-reversal": {
+      "tag": "治理",
+      "title": "穩健性原則，被顛覆",
+      "body": "RFC 761（1980）敦促實施者在接收時寬容，在發送時保守。2023 年，IETF 自己的架構委員會在 RFC 9413 中顛覆了該指引：寬容讓錯誤固化為事實標準，使系統更不穩健，而非更穩健。",
+      "coda": "告訴網際網路要寬容的標準被其自己的保管者廢止。"
+    },
+    "end-to-end-argument": {
+      "tag": "論文",
+      "title": "為笨網路辯護",
+      "body": "1981 年，Saltzer、Reed 和 Clark 論證，檢查傳輸檔案的錯誤只能在兩個端點正確完成；網路可以協助但永遠無法完全取代。一篇關於在哪裡放置校驗和的論文成為保持網路簡單的奠基案例。",
+      "coda": "一篇關於錯誤檢查放置的註記成長為網路中立性的案例。"
+    },
+    "excel-1900-leap-year": {
+      "tag": "遺留",
+      "title": "未曾存在的閏年",
+      "body": "Lotus 1-2-3 將 1900 年視為閏年，這是一個無害的捷徑。Microsoft 為了相容性複製了同樣的錯誤日期。Lotus 已消失；錯誤的閏日仍然存在，如今已寫入 Office Open XML 規範。",
+      "coda": "針對已停產競爭對手的相容性權宜之計，如今已成書面標準。"
+    },
+    "avatar-before-snow-crash": {
+      "tag": "詞源",
+      "title": "小說之前的化身",
+      "body": "Neal Stephenson 1992 年的小說 Snow Crash 通常被認為賦予了「avatar」的線上含義。但 Lucasfilm 的 Habitat 自 1985 年起在 Commodore 64 上運行，早已寫道：「玩家由我們稱為 Avatars 的動畫圖像代表」，源自梵語的化身之意。",
+      "coda": "該詞在書籍出版前七年已於商業服務中啟用。"
+    },
+    "radia-perlman-algorhyme": {
+      "tag": "軼事",
+      "title": "演算法詩",
+      "body": "1985 年，Perlman 在 DEC 的經理於星期五指派了無環橋接問題，隨後消失了一週。她在星期三前完成了生成樹演算法——並將剩餘時間用來撰寫 Algorhyme，一首後來成為論文摘要的詩。",
+      "coda": "寫詩所花時間比寫演算法更長。"
+    },
+    "brooks-no-silver-bullet": {
+      "tag": "論文",
+      "title": "沒有銀彈",
+      "body": "在 1986 年 IFIP 大會上，Fred Brooks 將軟體難度分為本質複雜度與偶然複雜度。他表示，偶然難度已大幅下降，但沒有任何單一技術能在十年內帶來十倍生產力提升。",
+      "coda": "四十年後，每個新範式仍被宣稱為他稱不存在的銀彈。"
+    },
+    "tz-olson-database": {
+      "tag": "命名",
+      "title": "Olson 資料庫",
+      "body": "大多數裝置根據一套志工維護的檔案集來解析時區，非正式地稱為 Olson 資料庫，以創始人 Arthur David Olson 命名。其命名方案歸功於 Paul Eggert，他自 2005 年起實際編輯該資料庫。",
+      "coda": "冠名者與自那時起維護它的人是不同的人。"
+    },
+    "china-1987-first-email": {
+      "tag": "紀錄",
+      "title": "越過長城",
+      "body": "各種說法將中國第一封電子郵件「越過長城，我們能到達世界的每個角落」歸功於錢天白一人。錢天白當月在美國留學；郵件由李成俊與卡爾斯魯厄的 Werner Zorn 輸入，並於九月二十日離開中國。",
+      "coda": "他的訃告仍將他列為發送者。"
+    },
+    "barbara-liskov-substitution-property": {
+      "tag": "原則",
+      "title": "她從未命名的法則",
+      "body": "在一九八七年的 OOPSLA 主題演講中，Barbara Liskov 提出，若以類型 S 的物件取代類型 T 的物件而所有程式行為不變，則 S 是 T 的子類型。她稱之為取代性質。多年後，Robert Martin 將其納入 SOLID 並以她的名字命名。",
+      "coda": "「原則」一詞是他人添加的。"
+    },
+    "go-corporation-pen-computing": {
+      "tag": "筆式計算",
+      "title": "無人購買的平板",
+      "body": "一九八七年 Jerry Kaplan 創立 GO Corporation，開發基於筆的 PenPoint 作業系統，募得七千五百萬美元。AT&T 於一九九四年一月收購 GO，兩週後取消其支援晶片線，GO 同年七月關閉。Kaplan 後稱公司「無實質銷售」。",
+      "coda": "二〇一〇年 Apple 發布 iPad，一款電容式多點觸控平板。"
+    },
+    "iso8601-unify-then-fork": {
+      "tag": "標準",
+      "title": "ISO 8601 的狹窄替代品",
+      "body": "ISO 8601 於一九八八年首次發布，將五個先前相互衝突的 ISO 日期與時間標準統一為一個。但大多數網路軟體驗證的格式是 RFC 3339（一九九七年），一個更狹窄的輪廓，在 ISO 8601 後續修訂後，甚至不是其嚴格子集。",
+      "coda": "人人引用的標準與人人程式碼檢查的方言並非同一份文件。"
+    },
+    "python-christmas-project": {
+      "tag": "腳本",
+      "title": "一個聖誕節的業餘項目",
+      "body": "一九八九年聖誕假期，辦公室關閉一週，阿姆斯特丹的一名研究人員尋找一個業餘程式設計項目。他開始撰寫一種新腳本語言的直譯器，並以一個喜劇團體命名，而非蛇。",
+      "coda": "二〇二六年七月它在 TIOBE 程式語言流行度指數中排名第一。"
+    },
+    "worse-is-better": {
+      "tag": "辯論",
+      "title": "Worse Is Better",
+      "body": "1989 年 Richard Gabriel 提出「worse is better」：簡單、半對的實作比完整、正確的實作更能存活，這也是他認為 C 與 Unix 勝過 Lisp 的原因。1991 年他以 Nickieben Bourbaki 的假名發表反駁，偽裝成一位老朋友。",
+      "coda": "數十年後他仍表示無法判斷自己的論點是否正確。"
+    },
+    "rfc1149-avian-carriers-test": {
+      "tag": "Incident",
+      "title": "The Protocol Someone Actually Flew",
+      "body": "David Waitzman 於 1990 年愚人節發布 RFC 1149：一份以鴿子承載 IP 數據報的規格。2001 年 4 月 28 日，Bergen Linux User Group 實際建造了它，在約 5 公里距離上發射九個 ping 封包。四個返回——55% 的封包遺失率，往返時間介於 53 至 106 分鐘。",
+      "coda": "這份玩笑 RFC 在紀錄上有一個真實的封包遺失數字：55 百分比。"
+    },
+    "att-1990-break-statement": {
+      "tag": "Incident",
+      "title": "The Misplaced Break",
+      "body": "紐約 4ESS 交換機上的一條復原常式將 break 語句嵌套得過淺一層，這是一個測試從未觸發的缺陷。重啟常式的「ready」訊號隨後被鄰近交換機誤讀為錯誤，虛假警報在網絡中級聯了九小時。",
+      "coda": "AT&T 後來將損失的營收定為六千萬美元。"
+    },
+    "aspec-vs-musicam": {
+      "tag": "Audio",
+      "title": "Losing to the Simpler One",
+      "body": "1991 年，MPEG 測試了兩個競爭的音頻編碼器。由 Fraunhofer、AT&T 與法國 CNET 建構的 ASPEC 在品質測試中獲勝，但被判定過於複雜。來自 Matsushita 與 Philips 的 MUSICAM 憑藉簡潔性獲勝。最終的 MP3 仍將 ASPEC 的濾波器設計重新納入。",
+      "coda": "所有人稱為 MP3 的格式，在獲勝者的名稱內承載了落敗提案的工程。"
+    },
+    "linux-minix-post": {
+      "tag": "Kernel",
+      "title": "A Post to comp.os.minix",
+      "body": "1991 年 8 月 25 日，一名赫爾辛基大學學生在 comp.os.minix 新聞組發文，表示他正在撰寫一個免費作業系統，稱其「只是一個興趣，不會像 gnu 那樣龐大且專業」，並詢問人們想要什麼功能。",
+      "coda": "自 2017 年 11 月起，全球最快的 500 台超級電腦皆運行基於它的作業系統。"
+    },
+    "web-vs-gopher-1991": {
+      "tag": "Web",
+      "title": "免費的 Beat 定價",
+      "body": "1991 年，Tim Berners-Lee 從 CERN 發布了 World Wide Web。同年，明尼蘇達大學發布了 Gopher，一度成為更受歡迎的系統。1993 年 2 月，明尼蘇達大學宣布對 Gopher 伺服器收取授權費。同年 4 月，CERN 將網頁協定改為免費。",
+      "coda": "在收費公告之前，Gopher 擁有更大的追隨者群體，此後再未恢復。"
+    },
+    "rough-consensus-running-code": {
+      "tag": "治理",
+      "title": "粗略共識，運行代碼",
+      "body": "在 1992 年 7 月的 IETF 會議上，MIT 的 Dave Clark 展示了一張投影片：「我們拒絕國王、總統和投票。我們相信粗略共識和運行代碼。」這句話如今成為互聯網治理民間傳說的基石。它最初是對 OSI 正式委員會投票程序的一次諷刺。",
+      "coda": "關於 OSI 投票規則的玩笑投影片，成為互聯網治理的創始信條。"
+    },
+    "han-unification-japanese-delegate": {
+      "tag": "標準",
+      "title": "漢字統一的非同尋常作者",
+      "body": "1992 年，CJK 聯合研究小組將數萬個中、日、韓字元合併至共享的 Unicode 碼點。流傳的說法將日本描繪為反對者。Unicode 自身的歷史則將驗證規則歸功於日本代表宮澤明。",
+      "coda": "被描繪為受害者的代表團，協助撰寫了它被記住為反對的規則。"
+    },
+    "china-first-internet-line": {
+      "tag": "紀錄",
+      "title": "早一年的線路",
+      "body": "中國將 1994 年 4 月 20 日標記為其接入全球互聯網的日子——一條 64K 線路，具備完整功能。十三個月前，高能物理研究所的物理學家已租用一條線路連接史丹福的 SLAC，與數十個機構交換電子郵件。那只是一條無人計入的線路。",
+      "coda": "兩條線路存在；僅有一條獲得週年紀念。"
+    },
+    "wiki-the-airport-shuttle": {
+      "tag": "詞源",
+      "title": "以接駁車命名",
+      "body": "「Wiki」是夏威夷語，意為「快速」。1995 年，Ward Cunningham 需要為他建構的第一個可編輯網頁系統命名，他未選用任何技術術語，而是想起了威基威基接駁車，即檀香山機場各航廈之間的免費巴士。",
+      "coda": "該詞的首個出處，繪於機場巴士的側面。"
+    },
+    "robots-exclusion-rfc9309": {
+      "tag": "標準",
+      "title": "robots.txt：28 年未定稿",
+      "body": "Martijn Koster 於 1994 年提出 robots.txt；爬蟲自願遵循，無正式標準，亦無強制機制。Google 於 2019 年提出標準化，IETF 於 2022 年 9 月發布 RFC 9309，結束 28 年的空白。",
+      "coda": "網路最被遵守的君子協議，花了 28 年才成為真正的標準。"
+    },
+    "pentium-fdiv-writeoff": {
+      "tag": "事件",
+      "title": "遺失的表格項目",
+      "body": "數學家 Thomas Nicely 發現他的新 Pentium 在對質數倒數求和時返回略為錯誤的結果，並將故障追溯到晶片本身。Intel 最初僅向投訴的客戶提供更換，在公眾壓力下才改為全面召回。",
+      "coda": "Intel 為此次召回計提 4.75 億美元的稅前費用。"
+    },
+    "general-magic-private-network": {
+      "tag": "網路",
+      "title": "General Magic 的私有線路",
+      "body": "1990 年，前 Apple 工程師 Bill Atkinson、Andy Hertzfeld 與 Marc Porat 創立 General Magic。Sony 的 Magic Link 於 1994 年以 800 美元上市，可發送電子郵件並執行應用程式。領導層選擇建構專有的 AT&T 網路而非使用網際網路，稱網路為「被動的」。",
+      "coda": "員工 Tony Fadell 後來在 Apple 主導 iPod 與 iPhone 的硬體開發。"
+    },
+    "ibm-simon-first-touchscreen": {
+      "tag": "觸控螢幕",
+      "title": "Simon 的傳真機",
+      "body": "1994 年 8 月 16 日，IBM 與 BellSouth 推出 Simon Personal Communicator：一款 4.5 吋觸控螢幕裝置，可發送電子郵件與傳真，售價 899 美元。電池續航約一小時。上市六個月後停產，銷量約 50,000 台。",
+      "coda": "2007 年 Apple 推出 iPhone，一款無實體鍵盤的電容式觸控螢幕手機。"
+    },
+    "cors-same-origin-orphaned": {
+      "tag": "標準",
+      "title": "CORS：退休中的建議",
+      "body": "Netscape 於 1995 年將同源政策附加至 Navigator，與 JavaScript 一同推出，完全沒有標準化流程。CORS 旨在正式放寬該政策，直到 2014 年才成為 W3C 建議——而到 2020 年，W3C 已將其退休，將規格移交給 WHATWG 的 Fetch 文件。",
+      "coda": "標準機構在發布其安全建議六年後將其退休。"
+    },
+    "php-resume-counter": {
+      "tag": "網路",
+      "title": "簡歷計數器",
+      "body": "1994 年，一名程式員用 C 語言寫了幾個小型 CGI 程式，唯一的目的就是想知道有多少人瀏覽他的線上簡歷。他將這套工具包命名為「Personal Home Page Tools」，並於 1995 年 6 月釋出了原始碼。",
+      "coda": "三十年後，超過 70% 已知使用伺服器端語言的網站仍在運行其後代。"
+    },
+    "craigslist-email-list": {
+      "tag": "分類廣告",
+      "title": "活動郵件列表",
+      "body": "1995 年，一名舊金山的軟體工程師開始將他所知的本地聚會和活動整理成郵件，發送給幾位朋友，主要是為了讓人們彼此更熟悉一些。",
+      "coda": "該列表現已覆蓋 70 個國家的 570 個城市，每月訪問量超過 1.4 億次。"
+    },
+    "wirths-law-misattributed": {
+      "tag": "更正",
+      "title": "他讓出的定律",
+      "body": "1995 年，Niklaus Wirth 發表了《A Plea for Lean Software》，指出軟體變慢的速度比硬體變快的速度更快。後來被稱為 Wirth 定律的這句話，根據他自己的腳註，是引用自他的同事 Martin Reiser。",
+      "coda": "命名者引用了來源；後世只保留了命名。"
+    },
+    "general-magic-weekend-site": {
+      "tag": "副項目",
+      "title": "他沒當真做的網站",
+      "body": "1990 年代中期，在一家被期望重新定義手持計算的矽谷新創公司裡，一名程式員利用業餘時間寫了一個粗糙的小網站，用來賣二手雜貨。網站在週末上線。他並沒有把它當回事。",
+      "coda": "那家新創公司是 General Magic。那個網站後來被改名為 eBay。"
+    },
+    "gettickcount-776-day-bug": {
+      "tag": "溢出",
+      "title": "776 天的債",
+      "body": "Windows 95 的 GetTickCount 每 49.7 天歸零一次，這是文件記錄的行為，從未被视为錯誤。但在 Windows 8 到 Server 2019 中，同一函數可能會提前溢出，接近 776 天，這是一個真正的缺陷。Microsoft 直到 Windows 11 24H2 版本才修復了它。",
+      "coda": "修復在該計數器首次發布三十年後才落地。"
+    },
+    "bluetooth-the-placeholder": {
+      "tag": "詞源",
+      "title": "流傳至今的代號",
+      "body": "1996年，英特爾的吉姆·卡達赫在易利信與諾基亞的會談中，提出以「Bluetooth」——取自統一斯堪地那維亞的維京國王哈拉爾·藍牙——作為臨時代號。原本預定的名稱RadioWire，在上市前未能通過商標檢索。",
+      "coda": "沒有任何替代名稱真正上市。"
+    },
+    "chinaren-detour": {
+      "tag": "世界真小",
+      "title": "名單之外的程式設計師",
+      "body": "1996年，一名中國學生在資訊奧林匹亞競賽中獲得金牌，直接保送清華大學電腦科學系。就學期間，他為一位校友的網站兼職開發內容系統。隔年搜狐收購了該網站；他留下來繼續工作。",
+      "coda": "這名學生是王小川。2004年，他在搜狐內部打造了搜狗。"
+    },
+    "google-a-typo": {
+      "tag": "詞源",
+      "title": "拼錯的網域搜尋",
+      "body": "1997年9月的一次腦力激盪中，西恩·安德森提議「googolplex」；賴瑞·佩吉將其縮短為「googol」。當場查詢網域註冊時，安德森誤打成「google」，發現無人註冊。佩吉當天就註冊了google.com。",
+      "coda": "註冊紀錄至今仍保留著這個拼寫錯誤，日期為1997年9月15日。"
+    },
+    "rfc2119-must-should": {
+      "tag": "標準",
+      "title": "MUST與must：二十年的差距",
+      "body": "RFC 2119（1997年3月）定義了MUST、SHOULD、MAY及其否定形式，作為IETF文件的強制性要求等級。但文件中僅說這些詞「通常以大寫呈現」——小寫的must和should從未被排除。RFC 8174在2017年修補了這個漏洞：只有全大寫才算數。",
+      "coda": "二十年來，小寫的must與聳肩具有相同的法律效力。"
+    },
+    "netease-license-mail-1997": {
+      "tag": "授權",
+      "title": "先賣授權",
+      "body": "1997年6月11日，丁磊在廣州註冊了網易。公司的第一項業務並非免費電子郵件。它將自建的郵件伺服器軟體授權給其他網站，收取費用。",
+      "coda": "網易直到1998年才在163.com推出自己的免費郵件。"
+    },
+    "lixiang-graphics-card-home": {
+      "tag": "評測網站",
+      "title": "顯卡之家",
+      "body": "1998 年，河北一名高中生在課餘時間建立個人網站「顯卡之家」，發布電腦顯卡評測。兩年後他將其改名為 PCPop，並在求學期間持續更新。",
+      "coda": "2005 年，同一人創立了 Autohome。"
+    },
+    "china-oicq-to-qq": {
+      "tag": "品牌重塑",
+      "title": "從 OICQ 到 QQ",
+      "body": "騰訊於 1999 年 2 月推出 OICQ，其中 O 代表「Open」，向 ICQ 致敬。同年 10 月，ICQ 的擁有者 AOL 以商標侵權為由發出停止侵害通知。2000 年 11 月，馬化騰將其改名為 QQ，因該字母在中文中讀作「可愛」。",
+      "coda": "AOL 的律師一到，「Open」就是第一個被拿掉的詞。"
+    },
+    "excite-google-1999": {
+      "tag": "誤判",
+      "title": "Excite 拒絕 Google",
+      "body": "1999 年，Google 提出以 75 萬美元加約 1% 股權出售給 Excite。CEO George Bell 認為搜尋技術差距太小，不值得替換 Excite 的技術。該判斷站住了腳。Google 在一年內估值超過十億美元。",
+      "coda": "Bell 此後表示，他會再次做出同樣的決定。"
+    },
+    "mars-climate-orbiter-units": {
+      "tag": "事故",
+      "title": "磅力，牛頓",
+      "body": "火星氣候軌道器在入軌過程中失去聯繫。調查發現，承包商推進器軟體以磅力秒輸出衝量，而導航軟體預期為牛頓秒，相差 4.45 倍。航天器被導航至距離地表約 57 公里處。",
+      "coda": "這項耗資 3.276 億美元的任務再未傳回訊號。"
+    },
+    "paypal-palm-beaming": {
+      "tag": "轉型",
+      "title": "從未實現的傳輸",
+      "body": "1999 年，Confinity 推出 Palm Pilot 之間的紅外線現金傳輸，並在融資活動中現場示範。上線數週後約有 13,000 名使用者，此後一年該數字幾乎沒有變動。真正起飛的是電子郵件支付，該功能僅作為備用選項開發。",
+      "coda": "公司改名為 PayPal，並悄悄放棄了傳輸功能。"
+    },
+    "cai-500-yuan": {
+      "tag": "小世界",
+      "title": "五百元月薪",
+      "body": "1999 年，一位香港投資主管前往杭州，評估一個小型網站是否值得投資。他發現十幾個人擠在一間公寓裡寫程式。他沒有投資——他辭去了年薪 70 萬美元的職位，轉而加入，月薪 500 元。",
+      "coda": "他的名字是蔡崇信。他後來成為阿里巴巴的執行副主席。"
+    },
+    "gps-week-rollover": {
+      "tag": "機制",
+      "title": "GPS 第 1024 週",
+      "body": "GPS 以 10 位元計數週數，該欄位最大值為 1,023，大約每 19.7 年歸零一次。第一次歸零發生在 1999 年 8 月。第二次發生在 2019 年 4 月 6 日，破壞了那些假設第一次歸零只是偶發事件的接收器。",
+      "coda": "相同的溢位已排入日程，預計將在 2038 年再次發生。"
+    },
+    "foxmail-resold": {
+      "tag": "小世界",
+      "title": "隨軟體售出",
+      "body": "1994 年，一位廣州程式員在業餘時間寫了一個免費郵件客戶端。2000 年，隨著網際網路泡沫破裂，他將其賣給一家公司，並留任技術總監。五年後，該公司倒閉，將軟體——連同他本人——賣給了騰訊。",
+      "coda": "那位程式員是張小龍。五年後，在騰訊內部，他打造了微信。"
+    },
+    "danger-duarte-android-reunion": {
+      "tag": "重逢",
+      "title": "設計總監，失敗的初創公司",
+      "body": "2000 年，一位設計師加入由 Andy Rubin 創立的行動裝置初創公司，負責介面設計。該公司被微軟收購，團隊解散。該設計師在接下來的十年裡又去了兩家公司。",
+      "coda": "那位設計師是 Matias Duarte。十年後，Rubin 將他招入 Android。"
+    },
+    "slashdot-ipod-2001": {
+      "tag": "輕視",
+      "title": "無無線，空間更小",
+      "body": "當 Apple 於 2001 年 10 月 23 日揭曉第一代 iPod 時，Slashdot 創始人 Rob \"CmdrTaco\" Malda 在其編輯按語中寫道：「無無線。空間比 nomad 還小。遜。」相對於當時競爭對手 MP3 播放器的規格表，這句話在事實上並無錯誤。",
+      "coda": "該評論如今常被引用為其所產生的反例。"
+    },
+    "discuz-shenyang-dorm": {
+      "tag": "論壇",
+      "title": "CDB，一個宿舍專案",
+      "body": "2001 年，一名住在瀋陽宿舍的大學生寫了一套論壇軟體，命名為 Crossday Bulletin，並與課業並行開發。同年十月，他將其改名為 Discuz。",
+      "coda": "2010 年 8 月 23 日，Tencent 收購了他圍繞該軟體建立的公司。"
+    },
+    "wikipedia-side-wiki": {
+      "tag": "Wiki",
+      "title": "Nupedia 旁的副專案",
+      "body": "2001 年 1 月 10 日，一位同儕審查線上百科全書的創辦人，在專案自有伺服器上安裝了 wiki 軟體，主要讓志工在受審查百科緩慢推進的同時，能於旁側隨意嘗試撰寫條目。",
+      "coda": "至 2026 年 7 月，其英文版單單就擁有超過 720 萬篇文章。"
+    },
+    "bittorrent-mailing-list": {
+      "tag": "Protocol",
+      "title": "一款新的 P2P 應用",
+      "body": "2001 年 7 月 2 日，一名程式設計師在 Yahoo eGroups 郵件列表上發布了一則標題為「BitTorrent -- a new P2P app」的訊息，描述了他剛完成設計的一種檔案分發協定，該協定能同時從多個來源拉取檔案片段。",
+      "coda": "三年後，根據 2004 年 CacheLogic 的研究，它佔據了所有網際網路流量的三分之一。"
+    },
+    "webvan-thirty-minute-window": {
+      "tag": "Groceries",
+      "title": "三十分鐘窗口",
+      "body": "1996 年，Borders 書店共同創辦人 Louis Borders 創立了 Webvan，承諾在從零建成的倉庫基礎上提供 30 分鐘送貨。它於 1999 年 11 月以超過 48 億美元的估值 IPO，募資 3.75 億美元，隨後於 2001 年 7 月申請破產，虧損超過 8 億美元。",
+      "coda": "部分 Webvan 高階主管後來轉投 Amazon；Amazon Fresh 和 Instacart 後來填補了相同的訂單需求。"
+    },
+    "kozmo-free-hour-delivery": {
+      "tag": "Delivery",
+      "title": "免費一小時承諾",
+      "body": "1998 年，Joseph Park 與 Yong Kang 創立了 Kozmo.com，承諾透過傳呼機調度快遞員提供免費一小時送貨。它募資約 2.5 億美元，但在 1999 年賺得 350 萬美元，卻面臨 2630 萬美元的虧損。2001 年 4 月，員工透過發現辦公室關閉而得知關門消息。",
+      "coda": "2013 年創立的 DoorDash，透過智慧型手機 GPS 調度快遞員，並收取送貨費。"
+    },
+    "flooz-digital-currency": {
+      "tag": "Currency",
+      "title": "無店鋪的貨幣",
+      "body": "1999 年 2 月，iVillage 聯合創辦人 Robert Levitan 推出 Flooz.com，一種用戶可向合作商家購買並消費的數位貨幣。一個犯罪集團使用盜用信用卡鑄造了 30 萬美元的詐欺信用額度，到 2001 年詐欺佔交易量達 19%。該公司於同年 8 月倒閉。",
+      "coda": "2009 年 1 月，Satoshi Nakamoto 挖出了比特幣的創世區塊。"
+    },
+    "yahoo-google-2002": {
+      "tag": "錯失",
+      "title": "Yahoo 錯過 Google",
+      "body": "2002 年，Yahoo 執行長 Terry Semel 出價 30 億美元收購 Google；Page 與 Brin 堅持要價 50 億美元。Semel 的判斷是 Yahoo 自身市值在崩盤後接近 50 億美元，無法承擔此賭注。Google 兩年後以 230 億美元市值上市。",
+      "coda": "Yahoo 於 2017 年以 44.8 億美元將核心業務出售給 Verizon。"
+    },
+    "pplive-dorm-2002": {
+      "tag": "宿舍",
+      "title": "雲園 26 棟",
+      "body": "2002 年世界盃期間，姚欣在華中科技大學的宿舍沒有電視，他透過校園網路觀看比賽，但網路頻繁當機。他在 26 棟的房間裡開始研究如何將 P2P 傳輸與串流影片結合。",
+      "coda": "PPLive 於 2005 年推出，鼎盛時期用戶超過一億。"
+    },
+    "china-alipay-escrow": {
+      "tag": "信任",
+      "title": "擔保交易變通法",
+      "body": "2003 年，由於淘寶買賣雙方不願先信任對方，財務部門建立了一套擔保交易變通法：款項在確認收貨前保持凍結。首筆交易於同年 10 月完成——一名西安學生向日本賣家付款。名稱取「支付」與「擔保」的諧音。",
+      "coda": "該諧音成為公司的永久正式名稱。"
+    },
+    "china-taobao-free-vs-ebay": {
+      "tag": "競爭",
+      "title": "三年免費",
+      "body": "2003 年，eBay 的易趣佔據中國 C2C 市場超過 70%，並收取刊登與交易費用。淘寶於同年 5 月推出，初期網站幾乎空無一人；阿里的應對是提供三年免費刊登。到 2006 年，淘寶佔據 70% 市場，eBay 退出中國 C2C 市場。",
+      "coda": "仍收取刊登費的一方先耗盡資金。"
+    },
+    "dianping-zagat-notes": {
+      "tag": "評論指南",
+      "title": "一本 Zagat 筆記本",
+      "body": "2002 年，張濤從美國回到中國，帶回他在當地接觸到的一個構想：Zagat Survey，一本由讀者評分構成的餐廳指南。他註冊了 zsurvey.com 域名，在上海開始打造中文版。",
+      "coda": "由此發展出的大衆點評於 2003 年 4 月 12 日上線。"
+    },
+    "wordpress-b2-post": {
+      "tag": "部落格",
+      "title": "部落格軟體的困境",
+      "body": "2003 年 1 月 24 日，一名大學生在自己的部落格上寫道，他每天使用的部落格軟體 b2 已因主要開發者失蹤而停更數月。他表示想 fork 它，只請求一個名字。",
+      "coda": "由該 fork 發展出的公司在 2021 年估值達 75 億美元。"
+    },
+    "2003-blackout-race-condition": {
+      "tag": "事故",
+      "title": "沒有響起的警報",
+      "body": "俄亥俄州一間控制室的警報程序靜默卡死：一個編碼錯誤讓兩個程序同時取得同一資料結構的寫入權限，陷入無限迴圈。操作員從未看到超載警告，也未能及時卸載負荷。連鎖反應使 5500 萬人斷電。",
+      "coda": "工程師花了八週才重現該競爭條件。"
+    },
+    "aws-not-leftover-servers": {
+      "tag": "更正",
+      "title": "並非閒置伺服器",
+      "body": "常見說法是 AWS 起步於轉售亞馬遜節假日閒置的伺服器容量。Benjamin Black 明確稱此說法錯誤：2003 年他與 Chris Pinkham 撰寫了一份備忘錄，提出標準化、自動化的基礎設施，從一開始就為對外銷售服務而設計。",
+      "coda": "S3 與 EC2 於 2006 年依該備忘錄推出。"
+    },
+    "maps-intern-friendfeed": {
+      "tag": "實習",
+      "title": "地圖團隊的實習生",
+      "body": "2003 年，一名 Google 產品經理將一名實習生招入建構本地搜尋的團隊，該項目後來發展為 Google Maps。四年後，該實習生與一名曾建構 Gmail 的工程師一同離開 Google 創業。",
+      "coda": "該實習生是 Bret Taylor。他離開後創立的公司在被 Facebook 收購。"
+    },
+    "friendster-forty-second-load": {
+      "tag": "擴展",
+      "title": "第四十二次載入",
+      "body": "Friendster 於 2002 年上線，註冊帳戶超過一億，但伺服器在計算朋友之間的關聯度時不堪負荷；單一頁面可能需要四十秒才能載入。客服郵件顯示使用者威脅要轉投較新的 MySpace。",
+      "coda": "Facebook 於 2004 年以相同的社交圖概念上線，並在流量下維持穩定。"
+    },
+    "shopify-snowdevil-software": {
+      "tag": "轉型",
+      "title": "商店軟體超越了商店",
+      "body": "2004 年，程式設計師 Tobias Lutke 認為當時的電子商務軟體過於笨重，因此自行撰寫軟體，以 Snowdevil 之名線上銷售滑雪板裝備。Snowdevil 本身始終是一家小店，但其他商家開始要求授權其背後的軟體。",
+      "coda": "Shopify 於 2015 年在紐約證券交易所上市。"
+    },
+    "twitter-odeo-podcast-pivot": {
+      "tag": "轉型",
+      "title": "播客公司的副項目",
+      "body": "2005 年 6 月 28 日，Apple 將播客訂閱功能納入 iTunes；兩天內訂閱量突破一百萬，Odeo 的整個播客業務一夜之間過時。次年三月，一場內部黑客松產生了 Jack Dorsey 的 SMS 狀態更新提案：Twitter。",
+      "coda": "Odeo，Twitter 誕生於此的公司，於 2007 年被出售。"
+    },
+    "youtube-tune-in-hook-up": {
+      "tag": "傳奇",
+      "title": "情人節註冊的網域",
+      "body": "youtube.com 於 2005 年 2 月 14 日註冊，其創辦人後來提到一個模仿 Hot or Not 的約會網站概念。Jawed Karim 否認出席故事關鍵的晚宴，Steve Chen 則承認這讀起來像行銷敘事。",
+      "coda": "Karim 實際提到的是難以在網上找到海嘯影片。"
+    },
+    "duan-buffett-lunch": {
+      "tag": "世界真小",
+      "title": "巴菲特午餐",
+      "body": "2006 年，一位廣東電子製造商以 620,100 美元贏得與 Warren Buffett 共進午餐的年度慈善拍賣。他帶了一位剛辭去美國公司職位、尚無明確計劃的 26 歲年輕人。",
+      "coda": "該製造商是段永平。年輕人則是後來創立拼多多的黃崢。"
+    },
+    "blackberry-iphone-2007": {
+      "tag": "誤判",
+      "title": "BlackBerry 察覺了缺陷",
+      "body": "2007 年 1 月，BlackBerry 共同執行長 Jim Balsillie 與董事長 Mike Lazaridis 觀看 iPhone 發表會。Lazaridis 列出的缺陷準確無誤：無實體鍵盤、安全性弱、電池續航差、玻璃螢幕打字體驗不佳。每一項皆屬實。Balsillie 的回應是：「沒關係，我們會沒事。」",
+      "coda": "隨後數年，BlackBerry 的市場佔有率被 iPhone 侵蝕。"
+    },
+    "dvorak-iphone-2007": {
+      "tag": "預測",
+      "title": "Dvorak 說拔掉插頭",
+      "body": "2007 年 3 月 28 日，專欄作家 John C. Dvorak 撰文指出手機利潤微薄，Nokia 與 Motorola 已佔據主導地位，因此 Apple 應將 iPhone 設計交給某些「冤大頭」後抽身。鑒於 Apple 在該市場的歷史，此推論並非不合理。",
+      "coda": "他後來表示，一旦實際握持該手機後，便後悔了該論斷。"
+    },
+    "auctomatic-taggar-yc": {
+      "tag": "合併",
+      "title": "那個必須學會寫程式的人",
+      "body": "2007 年，兩名愛爾蘭青少年兄弟將自製的電子商務工具帶入 Y Combinator，並將他們的公司與一家由兩名牛津大學畢業生營運的公司合併。牛津的兩人皆無法寫程式。其中一人被要求快速學會。",
+      "coda": "那人便是 Harj Taggar，後來成為 Y Combinator 首位非創始人合夥人。"
+    },
+    "justintv-backpack-cruise": {
+      "tag": "背包",
+      "title": "直播背包",
+      "body": "2007 年 3 月，一名男子將網路攝影機綁在棒球帽上，開始在舊金山周圍全天候直播他的生活，他背著一名從 MIT 輟學的朋友所製作的自製筆記型電腦背包裝置。",
+      "coda": "製作該裝置的朋友是 Kyle Vogt，他後來創立了 Cruise，被 GM 以超過 10 億美元收購。"
+    },
+    "stackoverflow-blog-post": {
+      "tag": "問答",
+      "title": "反 Experts-Exchange",
+      "body": "2008 年 4 月 16 日，一名程式設計師在自己的部落格上發文，表示他想為程式設計師建立一個「反 Experts-Exchange」問答網站，沒有他覺得令人作嘔的既有平台的付費牆與搜尋引擎操弄。",
+      "coda": "2021 年，該網站以 18 億美元出售給 Prosus。"
+    },
+    "zune-leap-year-freeze": {
+      "tag": "事件",
+      "title": "第 366 天",
+      "body": "2008 年 12 月 31 日太平洋時間接近午夜時，所有 Zune 30 全部凍結，被稱為 Z2K9。原因是電源晶片驅動程式中存在一個無限迴圈，僅能在閏年的第 366 天觸發。當時沒有補丁；唯一的修復方法是讓電池耗盡。",
+      "coda": "Microsoft 提供的解決方案是等待裝置電力耗盡。"
+    },
+    "china-wang-jian-alibaba-cloud": {
+      "tag": "懷疑",
+      "title": "打造雲端的那個騙子",
+      "body": "約 2012 年，阿里巴巴雲端已投入大量資金多年卻無可見產品，員工直接向馬雲指出王堅是騙子。近百分之八十的工程團隊離職。馬雲的回應是：每年投入十億元資金，持續十年，再作評判。",
+      "coda": "十年後，那個騙子的專案開始獲利。"
+    },
+    "taobao-double11-2009": {
+      "tag": "折扣",
+      "title": "27 家商家",
+      "body": "2009 年 11 月 11 日，淘寶商城召集了二十七個品牌來填補銷售低迷的一週；原計畫超過三十個，但商家不斷退出。山西一名叫嚴俊的公務員在 00:00:03 下了當天第一單，150 元話費。",
+      "coda": "當天銷售額達到 5200 萬元，是普通日子的十倍。"
+    },
+    "cloudflare-hbs-elective": {
+      "tag": "同學",
+      "title": "哈佛商學院的一門選修課",
+      "body": "2009 年，一名程式設計師請假去哈佛商學院攻讀 MBA。他多年來在業餘時間經營一個反垃圾郵件志工專案。有一天他在課堂上提到了這件事。一位同學說這應該成為一個真正的產品。",
+      "coda": "那位同學是 Michelle Zatlyn，後來成為 Cloudflare 的聯合創始人兼 COO。"
+    },
+    "china-3q-war": {
+      "tag": "事件",
+      "title": "二選一",
+      "body": "2010 年 11 月 3 日，騰訊強制彈出選擇：卸載 360 或 QQ 將停止運行。馬化騰警告用戶可能在三天內被清除。幾天後，工業和信息化部命令雙方恢復相容性。",
+      "coda": "監管機構終止了這場爭端，而非市場或任何一方公司。"
+    },
+    "china-thousand-groupon-war": {
+      "tag": "泡沫",
+      "title": "千團大戰",
+      "body": "中國第一個團購網站於 2010 年上線；門戶與社交網絡在數月內蜂擁而入。至 2011 年 8 月，超過 5,000 家團購公司相互競爭——即「千團大戰」。至 2014 年中，僅剩 176 個網站仍在營運。",
+      "coda": "五千家中不到兩百家存活。"
+    },
+    "semver-dependency-hell": {
+      "tag": "標準",
+      "title": "SemVer 自身的豁免",
+      "body": "2010 年 GitHub 聯合創始人 Tom Preston-Werner 發布 semver.org，提出 MAJOR.MINOR.PATCH 以終結「依賴地獄」。該規範本身卻開了一個例外：在 0.y.z「初始開發」階段，任何內容皆可隨時變更——而大多數套件從未真正離開這一階段。",
+      "coda": "大多數已發布的套件從未離開該規則不具約束力的版本範圍。"
+    },
+    "instagram-burbn-cut": {
+      "tag": "轉型",
+      "title": "Burbn 被砍掉的部分",
+      "body": "Kevin Systrom 與 Mike Krieger 花了近一年時間打造一款功能齊全的簽到應用 Burbn，隨後認為自己完成的 iPhone 版本過於雜亂。他們將其精簡為照片、評論與按讚，並在八週後以 Instagram 之名發布。",
+      "coda": "上線一週內便吸引了十萬名用戶。"
+    },
+    "tz-database-lawsuit": {
+      "tag": "事件",
+      "title": "時區資料庫訴訟案",
+      "body": "2011年10月，占星軟體製造商 Astrolabe 起訴 tz 資料庫的維護者，聲稱其時區資料侵犯了該公司出版的地圖集。郵件列表與 FTP 伺服器隨即關閉。ICANN 介入並代管該資料庫；Astrolabe 於2012年2月撤回訴訟。",
+      "coda": "一家占星公司對日出時間表的版權主張，在未支付任何賠償下被撤回。"
+    },
+    "instagram-facebook-2012": {
+      "tag": "嘲諷",
+      "title": "十億買一個濾鏡",
+      "body": "2012年4月，Facebook 宣布以10億美元收購 Instagram，一個僅有13名成員且無營收的團隊。在《每日秀》中，Jon Stewart 問道：「十億美元？就為了那個會毀掉你照片的東西？」以團隊規模和營收衡量，這個問題並非不公允。",
+      "coda": "如今這筆交易常被引用為科技史上最成功的收購之一。"
+    },
+    "didi-alibaba-resignation": {
+      "tag": "辭職",
+      "title": "從阿里巴巴到計程車",
+      "body": "程維在阿里巴巴工作八年，升至支付寶消費業務副總經理。2012 年 6 月他辭職，與吳睿、李想共同創立了一款叫車應用。9 月 9 日推出時，同時在線司機僅十六人。",
+      "coda": "兩個月後，同時在線司機超過百人。"
+    },
+    "knight-capital-power-peg": {
+      "tag": "事件",
+      "title": "第八台伺服器",
+      "body": "Knight Capital 將新交易程式碼推送到八台伺服器，僅七台接收成功。第八台仍執行多年前已退役的 Power Peg 程式碼，被即時訂單喚醒。45 分鐘內 Knight 建立 $3.5B 多頭與 $3.15B 空頭。SEC 的結論：無人審查此次不完整部署。",
+      "coda": "Knight 在損失發生一周內被競爭對手收購。"
+    },
+    "dnnresearch-week-of-bidding": {
+      "tag": "拍賣",
+      "title": "競標的一週",
+      "body": "2012 年，一名多倫多大學教授與兩名研究生在圖像辨識競賽中壓倒群雄，隨後註冊一家空殼公司以出售自身。Google、Microsoft、Baidu 與 DeepMind 花了一週時間互相競標。",
+      "coda": "Hinton 選擇了 Google。兩名學生之一為 Ilya Sutskever。"
+    },
+    "xiaohongshu-name": {
+      "tag": "詞源",
+      "title": "不是那本紅寶書",
+      "body": "多數人以為這個名字指向另一本紅寶書。創始人自己的說法更平淡：Bain & Company 與 Stanford Graduate School of Business，他任職的公司與就讀的學校，皆以紅色為主。",
+      "coda": "譯成英文後，這個名字與另一個完全相同。"
+    },
+    "china-wechat-red-envelope-pearl-harbor": {
+      "tag": "支付",
+      "title": "數位珍珠港",
+      "body": "2014 年農曆新年期間，WeChat 的紅包功能上線；用戶在數天內搶領超過 4000 萬個紅包。在 Laiwang 上，馬雲稱之為「珍珠港偷襲」——他寫道，短期有效，但長期健康成長更為重要。",
+      "coda": "紅包成為支付漏斗。"
+    },
+    "heartbleed-two-person-team": {
+      "tag": "事件",
+      "title": "四人團隊",
+      "body": "Heartbleed 的邊界檢查遺漏於 2011 年 12 月進入 OpenSSL 的心跳擴展，靜置兩年未被察覺，直到 2014 年 4 月由獨立研究人員發現。當時，承載網際網路大部分 HTTPS 流量的程式碼庫由四名志工維護，其中一人為全職。",
+      "coda": "修復於漏洞揭露當日發布。"
+    },
+    "goto-fail-duplicate": {
+      "tag": "安全",
+      "title": "重複的跳躍",
+      "body": "在 Apple 的 SSLVerifySignedServerKeyExchange 中，goto fail; 這一行被重複。第二份副本位於任何 if 之外，因此函數總是跳過簽名檢查並返回成功。",
+      "coda": "重複的這一行在受影響系統上無變動運行數月。"
+    },
+    "ntp-harlan-stenn": {
+      "tag": "時間",
+      "title": "誰設定時鐘",
+      "body": "銀行、交易所與衛星系統皆對 NTP 進行同步。David Mills 設計了該協定；參考實作現由 Harlan Stenn 幾乎獨自領導。2015 年 3 月，商業媒體刊出標題『NTP Needs Money: Is A Foundation The Answer?』",
+      "coda": "該基金會仍在為其預算募款。"
+    },
+    "alphago-lee-sedol-2016": {
+      "tag": "圍棋",
+      "title": "第一百零二子",
+      "body": "AlphaGo 於 2016 年 3 月在首爾以四比一擊敗李世乭；李世乭唯一的勝利出現在第四局。賽後他表示自己在第一局早期犯下關鍵錯誤，稱電腦在那裡的著法出色，且有一手是人類棋手不會選擇的。",
+      "coda": "他特別點出的那一手只保留了一顆棋子的編號，沒有名字。"
+    },
+    "aws-s3-2017-typo": {
+      "tag": "事故",
+      "title": "一個過寬的參數",
+      "body": "一名 S3 工程師執行了一條授權命令，意圖將少量計費伺服器離線，但其中一個輸入涵蓋了比預期更寬的範圍。被移除的伺服器同時支援索引子系統，該子系統數年未完全重啟，恢復速度遠慢於預期。",
+      "coda": "停機持續約四小時；AWS 自身的狀態頁面依賴同一批系統。"
+    },
+    "gitlab-2017-rm-rf": {
+      "tag": "事故",
+      "title": "五份備份，零份可用",
+      "body": "一名工程師本意是清除滯後的副本，卻誤刪了主庫上的 PostgreSQL 資料目錄，停止操作時已為時過晚；約 300GB 資料已經消失。GitLab 發現其運行的五種備份與複製方法中，沒有一種能真正恢復資料。",
+      "coda": "恢復依賴於某人六小時前碰巧拍下的一個快照。"
+    },
+    "attention-title-beatles-2017": {
+      "tag": "論文",
+      "title": "一個借用自披頭四的標題",
+      "body": "八位 Google 研究人員於 2017 年 6 月發表了「Attention Is All You Need」；標題向披頭四的歌曲「All You Need Is Love」致意。該論文明確的目標是建構一種用於機器翻譯的序列模型，捨棄循環網路，僅依賴注意力機制。",
+      "coda": "八位作者此後均已離開 Google。"
+    },
+    "cloudflare-2019-regex": {
+      "tag": "事故",
+      "title": "被移除的保險絲",
+      "body": "一條帶有災難性回溯的正則表達式的新 WAF 規則，在部署後數秒內將 Cloudflare 全球網路的 CPU 推至接近 100%。規則本身平平無奇；讓它引爆的，是數週前在一次重構中被悄悄刪除的正則規則 CPU 用量防護。",
+      "coda": "中斷持續 27 分鐘，於 WAF 全球停用後結束。"
+    },
+    "requests-kenneth-reitz": {
+      "tag": "移交",
+      "title": "移交鑰匙",
+      "body": "Requests 每月下載量超過 3000 萬次，成為 Python 的標準 HTTP 用戶端。Kenneth Reitz 於 2011 年 2 月 14 日發布。2019 年，因健康問題，他將專案控制權移交給 Python Software Foundation。",
+      "coda": "自卸任後，他未再回歸領導該專案。"
+    },
+    "linux-y2038-kernel-fix": {
+      "tag": "修復",
+      "title": "提早十八年",
+      "body": "32 位元 Unix 系統將於 2038 年 1 月 19 日溢出 time_t 計數器。2020 年發布的 Linux 5.6 是第一個能讓 32 位元系統在那個日期後繼續運作的核心。應用程式仍需針對 64 位元 time_t 重新編譯才能真正受惠。",
+      "coda": "核心在大多數 32 位元使用者空間趕上之前數年即已補丁。"
+    },
+    "log4shell-eight-years": {
+      "tag": "漏洞",
+      "title": "八年未讀",
+      "body": "Log4j 內嵌於大多數企業 Java 軟體中；Wiz 與 EY 發現 93 百分比的雲端環境暴露於 Log4Shell。該缺陷自 2013 年起即存在於程式碼中。2021 年 11 月 24 日提出報告，12 月 10 日公開披露，CVSS 評級為 10。",
+      "coda": "少數志工撰寫了修復程式，該修復程式已部署至數百萬台伺服器。"
+    },
+    "core-js-denis-pushkarev": {
+      "tag": "維護者",
+      "title": "無人取代的修補程式",
+      "body": "core-js 內嵌於 WhatsApp、Netflix、Apple 與 PayPal，每月下載量約 2.5 億次。其作者 Denis Pushkarev 於 2019 年遭遇致命車禍，自 2020 年 1 月起服刑約十個月，期間持續維護該函式庫。",
+      "coda": "每月捐款從約 2,500 美元降至 400 美元。"
+    },
+    "tesla-westinghouse-royalty": {
+      "tag": "Patents",
+      "title": "Tesla 放棄的版稅",
+      "body": "Westinghouse 的合約按每馬力 2.50 美元支付 Tesla 版稅。1891 年初，在公司濒临失敗之際，Tesla 免除其版稅條款。",
+      "coda": "1897 年 Westinghouse 以 216,000 美元 outright 買斷其專利。"
+    },
+    "salk-polio-patent": {
+      "tag": "Patents",
+      "title": "太陽沒有專利",
+      "body": "Edward Murrow 詢問誰擁有小兒麻痺疫苗專利。Salk 回答沒有，難道能為太陽申請專利嗎。基金會律師早已審查該問題，並發現因先前技術存在，該疫苗缺乏可專利的新穎性。",
+      "coda": "該未申請專利的疫苗後被估值為 70 億美元。"
+    },
+    "cobol-two-hundred-billion-lines": {
+      "tag": "Legacy",
+      "title": "兩千億行",
+      "body": "至 1997 年，Gartner 估計有 2000 億行 COBOL 程式碼運行全球 80 百分比的商業程式。2020 年，隨著 COVID 時期失業申請激增，數個美國州政府公開呼籲招募 COBOL 程式員，以維持其數十年歷史的福利系統運行。",
+      "coda": "自該呼籲以來已過去六年。"
+    },
+    "sabre-sage-to-booking": {
+      "tag": "Booking",
+      "title": "從雷達到預訂",
+      "body": "美國航空與 IBM 於 1957 年簽署合作協議，將美國空軍冷戰時期的 SAGE 防空架構改造成預訂系統。SABRE 於 1960 年進行首次線上測試，1964 年全面上線，成為全球首個線上交易處理系統。",
+      "coda": "母公司至今仍在營運，已逾六十年。"
+    },
+    "kay-objects-messaging": {
+      "tag": "命名",
+      "title": "物件，並非重點",
+      "body": "至 1967 年，Alan Kay 已使用「物件導向」一詞，指稱一種建立在僅透過訊息溝通的單元或網路節點之上的設計。他後來表示，後悔自己創造了「物件」這個詞，因為它將注意力引向較次要的概念，掩蓋了他真正想表達的重點：訊息傳遞。",
+      "coda": "他後悔造出的詞，比他想傳達的概念存活得更久。"
+    },
+    "voyager-68-kilobits": {
+      "tag": "深空",
+      "title": "繞過損壞的晶片",
+      "body": "Voyager 1 於 1977 年 9 月發射。飛行四十七年後，其飛行資料子系統中的一顆記憶體晶片失效，其中百分之三已損壞無法修復。2024 年 4 月 20 日，工程師將程式碼重新排列，繞過損壞區域，訊號得以恢復。",
+      "coda": "其發電機可能持續供應足夠電力，以回傳工程資料至 2036 年。"
+    },
+    "gif-lzw-unisys": {
+      "tag": "專利",
+      "title": "並非免費的格式",
+      "body": "CompuServe 於 1987 年 6 月推出 GIF，採用 LZW 壓縮，卻未意識到 Sperry Corporation 早已持有該技術專利。1994 年 12 月，由 Sperry 合併而成的 Unisys 宣布將收取授權費用，促使開發者建立 PNG 作為替代方案。",
+      "coda": "專利於 2004 年在全球範圍內失效，GIF 自此才真正免費。"
+    },
+    "zimmermann-pgp-release": {
+      "tag": "密碼學",
+      "title": "PGP 免費釋出，隨後遭調查",
+      "body": "Phil Zimmermann 於 1991 年在公開 FTP 上釋出了 PGP 及其原始碼，這是首款廣泛可用的公開金鑰加密程式。美國海關以違反出口管制為由展開刑事調查。調查持續三年，於 1996 年初無罪撤銷，未提起控訴。",
+      "coda": "調查三年，未起訴，從未收取任何版稅。"
+    },
+    "json-good-not-evil": {
+      "tag": "授權條款",
+      "title": "為善，非為惡",
+      "body": "Douglas Crockford 於 2002 年為 JSON 函式庫制定的授權條款增加了一項條款：該軟體應用於善，而非惡。JSON 本身免費且無專利地傳播至網際網路上幾乎所有 API，但該單一句子使該授權條款與標準開源條款不相容。",
+      "coda": "該格式成為通用標準；隨之附帶的玩笑條款在接觸企業法律後未能存活。"
+    },
+    "sogou-movie-line": {
+      "tag": "命名",
+      "title": "搜狗的線索最初是個玩笑",
+      "body": "2001 年的喜劇《大腕》中有一句關於搜尋引擎的雙關語：「他們搜尋搜狐，我們搜尋搜狗，人人各搜各的。」三年後，即 2004 年，搜狐團隊將該玩笑採納並推出為真正的搜尋引擎，即搜狗。",
+      "coda": "該笑點成為產品名稱，未經修改。"
+    },
+    "tbl-double-slash": {
+      "tag": "設計",
+      "title": "多餘的斜線",
+      "body": "Tim Berners-Lee 在設計 URL 時在域名前加上了「//」。2009 年 10 月他承認，鑒於冒號已經存在，這兩條斜線根本不需要——「當時覺得是個好主意」，他說。",
+      "coda": "此後每個網址仍會鍵入兩者。"
+    },
+    "bilibili-mikufans": {
+      "tag": "命名",
+      "title": "Bilibili 最初名為 Mikufans",
+      "body": "該網站於 2009 年 6 月以 Mikufans 之名上線，專為初音未來（Vocaloid）的粉絲而建。2010 年 1 月更名為 Bilibili，此名源自輕小說系列主角對御坂美琴的暱稱——一個模擬放電聲的擬聲詞。",
+      "coda": "更名後的網站歷經後續所有改版，始終沿用此名。"
+    },
+    "kuaishou-gif-app": {
+      "tag": "命名",
+      "title": "快手最初是一款 GIF 應用",
+      "body": "快手於 2011 年 3 月以「GIF 快手」之名推出，是一款製作與分享 GIF 圖片的手機應用。2012 年轉型為短影音平台，2014 年移除「GIF」前綴，留下今日作為影音平台所使用的名稱。",
+      "coda": "「GIF」前綴已消失；底層公司名稱從未改變。"
+    },
+    "zhihu-invite-only": {
+      "tag": "命名",
+      "title": "知乎需要邀請碼",
+      "body": "知乎於 2011 年 1 月 26 日上線，前兩年註冊需邀請碼。公開註冊直到 2013 年 3 月才開放。其名稱取自文言「知乎」，意為「你知道嗎」——是一個問句，不是口號。",
+      "coda": "自 2013 年 3 月起，註冊不再需要邀請碼。"
+    },
+    "hp-garage-palo-alto": {
+      "tag": "車庫",
+      "title": "艾迪生大道上的車庫",
+      "body": "1938 年，大衛·帕卡德與妻子租下帕洛阿爾托艾迪生大道 367 號一棟 1905 年房屋的一樓公寓。他與比爾·休利特投入 538 美元，在後面的單車位車庫裡製作出第一款產品——音頻振盪器。",
+      "coda": "該處現已列入國家歷史名勝名錄，不對遊客開放。"
+    },
+    "apple-crist-drive-garage": {
+      "tag": "傳說",
+      "title": "當臥室不夠用時",
+      "body": "1976 年，史蒂夫·喬布斯與史蒂夫·沃茲尼亞克在加利福尼亞州洛斯阿爾托斯喬布斯父母所有的房屋裡組裝了第一批 Apple 電路板。",
+      "coda": "先在臥室。車庫是後來臥室沒空間了才搬過去的。"
+    },
+    "huawei-nanyou-flat": {
+      "tag": "公寓",
+      "title": "南油新村的一套公寓",
+      "body": "1987 年 9 月，華為在深圳南油新村的一棟住宅樓註冊成立，註冊資本 21,000 元，十四名員工，六名股東均分股權。",
+      "coda": "公司於 1989 年將總部遷出；該公寓作為總部的租期到此結束。"
+    },
+    "wojcicki-garage-menlo-park": {
+      "tag": "房東",
+      "title": "她出租的那間車庫",
+      "body": "1998 年 9 月，佩奇與布林向蘇珊·沃西基租下門洛帕克的一間車庫，月租 1,700 美元。Google 在那裡完成註冊。",
+      "coda": "她後來成為 YouTube 的首席執行官。"
+    },
+    "tencent-seg-403": {
+      "tag": "403 室",
+      "title": "二棟403室",
+      "body": "1998年11月，騰訊於深圳華強北賽格科技園二棟403室註冊。該樓內充斥著類似的新創公司，門面與其餘無異。",
+      "coda": "該室現僅對騰訊員工開放，名為騰訊源點。"
+    },
+    "unitree-left-dji": {
+      "tag": "離職",
+      "title": "離開大疆",
+      "body": "王興興在碩士期間自行打造了一台全電動四足機器人，命名為XDog。畢業後進入大疆任職，不久後離職。",
+      "coda": "宇樹於2016年8月在杭州濱江區註冊。"
+    },
+    "unitree-one-yuan-option": {
+      "tag": "期權",
+      "title": "一股一元",
+      "body": "2017年9月，宇樹與十七名員工簽署期權協議，每股一元。後續持續授予，透過單一員工持股平台持有。",
+      "coda": "八年後公司開啟IPO招股。"
+    },
+    "unitree-g1-price": {
+      "tag": "定價",
+      "title": "九萬九",
+      "body": "人形機器人以往按實驗室設備定價。宇樹將G1定價為99,000元，約相當於入門級轎車價格。",
+      "coda": "至2025年，人形機器人佔其營收的51.78%，出貨量為5,500台。"
+    }
+  }
+}

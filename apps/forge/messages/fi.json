@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — verkkotyökalupaketti",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "Koodereita, tekstityökaluja, hashauksia, asiakirjoja ja kuvatyökaluja verkossa."
+  },
+  "nav": {
+    "main": "Päävalikko",
+    "homeAria": "{brandName} Forge -etusivu",
+    "tools": "Työkalut",
+    "wallet": "Lompakko",
+    "api": "API",
+    "routerAria": "{brandName} Router",
+    "categoriesAria": "Työkaluluokat",
+    "languageAria": "Vaihda kieli"
+  },
+  "tool": {
+    "breadcrumbAria": "Polku",
+    "workspace": "Työtila",
+    "workspaceHint": "Paikallinen tai palvelin · sama polku kuin API",
+    "api": "API",
+    "apiHint": "Sama sopimus kuin sivulla. Käytä tuotannossa todennettua avainta.",
+    "related": "Liittyvät työkalut"
+  },
+  "auth": {
+    "signIn": "Kirjaudu sisään",
+    "signUp": "Rekisteröidy",
+    "signOut": "Kirjaudu ulos"
+  },
+  "footer": {
+    "navAria": "Alaosa",
+    "blurb": "Verkkotyökalustation. Suorita tehtäviä selaimessa tai automatisoi API / MCP -liittymien kautta.",
+    "product": "Tuote",
+    "developers": "Kehittäjät",
+    "company": "Yritys",
+    "docs": "Integraatio-ohjeet",
+    "website": "Verkkosivusto",
+    "privacy": "Tietosuoja"
+  },
+  "home": {
+    "eyebrow": "Näe se. Kutsu se.",
+    "title": "Sveitsinveitsi verkkotyökaluihin",
+    "subtitle": "Koodaukset, teksti, hashaus, asiakirjat ja kuvankäsittely. Suorita selaimessa tai automatisoi API / MCP -liittymien kautta — yksi toteutus.",
+    "toolCount": "{count} työkalua",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "Hae: sanamäärä, base64, json, aikaleima…",
+    "aria": "Hae työkaluja",
+    "emptyTitle": "Ei työkaluja, jotka vastaavat hakua “{query}”",
+    "emptyHint": "Kokeile toista hakusanaa tai valitse työkalu alla olevista kategorioista."
+  },
+  "categories": {
+    "codec": {
+      "label": "Koodaukset",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "Kiinan validointi",
+      "hint": "ID · puhelin"
+    },
+    "data": {
+      "label": "Data",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "Kehittäjä",
+      "hint": "Regex · SQL · väri · UUID"
+    },
+    "doc": {
+      "label": "Dokumentit",
+      "hint": "Markdown · PDF yhdistä/erota"
+    },
+    "finance": {
+      "label": "Rahoitus",
+      "hint": "Summa sanoiksi"
+    },
+    "hash": {
+      "label": "Hash & turvallisuus",
+      "hint": "MD5 · SHA · HMAC · salasana"
+    },
+    "image": {
+      "label": "Kuvat",
+      "hint": "Purista · QR · muunna"
+    },
+    "life": {
+      "label": "Elämän laskurit",
+      "hint": "Asuntolaina · BMI · sukulaisuus"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "Tokenit · kustannus · skeema"
+    },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
+    "security": {
+      "label": "Turvallisuus",
+      "hint": "Salasanageneraattori"
+    },
+    "text": {
+      "label": "Teksti",
+      "hint": "Sanalaskenta · CJK · pinyin · Diff"
+    },
+    "time": {
+      "label": "Aika",
+      "hint": "Aikaleima · aikavyöhyke · Cron · kuukalenteri"
+    },
+    "unit": {
+      "label": "Yksiköt",
+      "hint": "Pituus · paino · lämpötila · data"
+    },
+    "template": {
+      "label": "Mallit",
+      "hint": ".gitignore · LICENSE · Dockerfile · README"
+    }
+  },
+  "runners": {
+    "common": {
+      "run": "Suorita",
+      "running": "Suorittaa…",
+      "copy": "Kopioi",
+      "copied": "Kopioitu",
+      "sameAsApi": "Sama polku kuin API:ssä · OSS-moottori",
+      "mustBeNumber": "{label}n on oltava numero",
+      "base64Loaded": "Base64-payload ladattu",
+      "workspaceMissing": "Työtilaa ei ole määritetty: {slug}",
+      "yes": "Kyllä",
+      "no": "Ei",
+      "text": "Teksti",
+      "input": "Syöte",
+      "output": "Lähtö",
+      "outputPlaceholder": "Tulos näkyy täällä",
+      "localRun": "Suorita paikallisesti",
+      "serverRun": "Suorita palvelimella",
+      "serverVerify": "Palvelimen vahvistus",
+      "outputPreview": "Lähtöarvon esikatselu",
+      "mode": "Tila",
+      "encode": "Koodaa",
+      "decode": "Koodaa purku",
+      "file": "Tiedosto",
+      "clear": "Tyhjennä",
+      "length": "Pituus: {n}",
+      "bytes": "{bytes} tavua",
+      "download": "Lataa",
+      "format": "Muoto",
+      "formatting": "Muotoilu…",
+      "dialect": "Dialekti",
+      "color": "Väri",
+      "pickColor": "Valitse väri",
+      "content": "Sisältö",
+      "algorithm": "Algoritmi",
+      "encoding": "Koodaus",
+      "message": "Viesti",
+      "secret": "Salaisuus",
+      "password": "Salasana",
+      "direction": "Suunta",
+      "preview": "Esikatselu",
+      "query": "Kysely",
+      "querying": "Kysellään…",
+      "validate": "Validoi",
+      "validating": "Validoidaan…",
+      "processing": "Käsitellään…",
+      "pretty": "Siisti",
+      "minify": "Pienennä",
+      "from": "Lähettäjä",
+      "to": "Vastaanottaja",
+      "timezone": "Aikavyöhyke",
+      "datetime": "Päivämäärä ja aika",
+      "compute": "Laske",
+      "computing": "Lasketaan…",
+      "convertAction": "Muunna",
+      "count": "Määrä",
+      "value": "Arvo",
+      "unit": "Yksikkö",
+      "generateLocal": "Luo paikallisesti",
+      "generateServer": "Luo palvelimella",
+      "copyAll": "Kopioi kaikki",
+      "emptyResult": "Tulokset näkyvät täällä",
+      "copyText": "Kopioi teksti",
+      "quality": "Laatu",
+      "original": "Alkuperäinen",
+      "result": "Tulos",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
+    },
+    "base64": {
+      "encodeDir": "Teksti → Base64",
+      "decodeDir": "Base64 → Teksti",
+      "localNote": "Paikallinen Web API (TextEncoder / atob)",
+      "serverNote": "Palvelimen puskuri · sama reitti kuin API"
+    },
+    "password": {
+      "uppercase": "Isot kirjaimet",
+      "lowercase": "Pienet kirjaimet",
+      "digits": "Numerot",
+      "symbols": "Symbolit",
+      "generate": "Luo salasana",
+      "recent": "Viimeisimmät",
+      "note": "Moottori: node:crypto randomInt · kryptografisesti turvallinen · sama reitti kuin API"
+    },
+    "hash": {
+      "algo": "Algoritmi: {algo}",
+      "md5Warn": " · vain tarkiste/yhteensopivuus — älä tallenna salasanoja",
+      "md5LocalError": "MD5 vaatii palvelimen suorituksen (Web Crypto ei tue MD5)",
+      "md5ServerHint": "MD5: käytä palvelimen suoritusta (vain yhteensopivuus, ei salasanoihin)",
+      "localNote": "Paikallinen Web Crypto · {algo}",
+      "serverNote": "Palvelin node:crypto · sama polku kuin API"
+    },
+    "convert": {
+      "converting": "Muunnetaan…",
+      "convert": "Muunna",
+      "done": "Valmis · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "Vedä tiedosto tähän tai napsauta selataksesi",
+      "needFile": "Valitse ensin tiedosto",
+      "needAlgo": "Valitse vähintään yksi algoritmi",
+      "compute": "Laske tarkisteet",
+      "computing": "Lasketaan…",
+      "algorithms": "Algoritmit",
+      "note": "node:crypto · useita algoritmeja · sama polku kuin API"
+    },
+    "lorem": {
+      "paragraphs": "Kappaleet",
+      "wordsPerParagraph": "Sanoja kappaleessa",
+      "startWithLorem": "Aloita ”Lorem ipsum” -tekstistä",
+      "note": "Lorem Ipsum -generaattori · puhtaasti"
+    },
+    "emailValidate": {
+      "note": "Sähköpostin validointi · vain muoto (ei MX-hakua)"
+    },
+    "creditCardLuhn": {
+      "number": "Kortin numero",
+      "note": "Luhn-tarkistus · offline, ei tallenneta",
+      "digits": "digits",
+      "specimenLabel": "Specimen",
+      "structureOnly": "Luhn structure only",
+      "unknownBrand": "Card"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "JSON-pienennys · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "CSS-pienennin · kevyt (reunan turvallinen)"
+    },
+    "hashCompare": {
+      "a": "Hash A",
+      "b": "Hash B",
+      "ignoreCase": "Älä huomioi kirjainkokoa",
+      "note": "Hash-vertailija · vakioaika saman pituisille"
+    },
+    "jsonDiff": {
+      "left": "JSON A",
+      "right": "JSON B",
+      "note": "JSON-ero · polkutaso-operaatiot · lajiväritetyt rivit · vierekkäin",
+      "equal": "Identtinen",
+      "differs": "{count} muutos",
+      "colPath": "Polku",
+      "colKind": "Tyyppi",
+      "colLeft": "Vasen",
+      "colRight": "Oikea",
+      "filtersAria": "Suodata muutostyyppien mukaan",
+      "filterAll": "Kaikki ({count})",
+      "filterAdd": "Lisää ({count})",
+      "filterRemove": "Poista ({count})",
+      "filterChange": "Muuta ({count})",
+      "filterType": "Tyyppi ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "Tila",
+      "pretty": "Siisti",
+      "compact": "Tiivis",
+      "indent": "Sisennys",
+      "note": "YAML-muotoilija · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "TOML-muotoilija · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "XML-pienennin · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "URL-validaattori · WHATWG URL (ilman verkkohakua)"
+    },
+    "ipValidate": {
+      "note": "IP-validaattori · IPv4/IPv6 offline"
+    },
+    "uuidValidate": {
+      "note": "UUID-validaattori · RFC 4122 -muoto"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "HTML-pienennin · kevyt (reuna turvallinen)"
+    },
+    "randomString": {
+      "length": "Pituus",
+      "count": "Määrä",
+      "charset": "Merkistö",
+      "alphanumeric": "Kirjaimet ja numerot",
+      "symbols": "Kirjaimet, numerot ja symbolit",
+      "hex": "Hex",
+      "base64url": "Base64URL",
+      "note": "Satunnainen merkkijono · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "Lukuaika · CJK + Latin -heuristiikka"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "Maksimiotsikon taso",
+      "note": "Markdown TOC · ATX-otsikot"
+    },
+    "pdfInfo": {
+      "file": "PDF-tiedosto",
+      "note": "PDF-tiedot · pdf-lib (sivut + metatiedot)"
+    },
+    "rot13": {
+      "shift": "Siirto (13 = ROT13)",
+      "note": "ROT13 / Caesar · puhtaana"
+    },
+    "morse": {
+      "note": "Morse-koodi · ITU · puhtaana"
+    },
+    "textBinary": {
+      "toBinary": "Teksti → binääri",
+      "fromBinary": "Binääri → teksti",
+      "note": "Teksti ↔ Binääri · UTF-8-bittit"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "Tiivisteen koodaus",
+      "note": "Monitiivistys · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "Yhden kerran tiivistelmät · kopioi kukin · node:crypto"
+    },
+    "cssFormat": {
+      "note": "CSS-kaunistaja · kevyt"
+    },
+    "htmlFormat": {
+      "note": "HTML-kaunistaja · kevyt"
+    },
+    "stringSimilarity": {
+      "a": "Merkkijono A",
+      "b": "Merkkijono B",
+      "note": "Merkkijonojen samankaltaisuus · Levenshtein"
+    },
+    "roman": {
+      "toRoman": "Luku → roomalainen",
+      "fromRoman": "Roomalainen → luku",
+      "note": "Roomalaiset numerot · 1–3999"
+    },
+    "age": {
+      "birthDate": "Syntymäaika (VVVV-KK-PP)",
+      "asOf": "Päivämäärä (valinnainen)",
+      "note": "Ikälaskuri · tarkka V/K/P"
+    },
+    "tip": {
+      "bill": "Laskun summa",
+      "percent": "Vinkki %",
+      "people": "Henkilöitä",
+      "note": "Vinkkilaskuri · jaettavaksi"
+    },
+    "aspect": {
+      "width": "Leveys",
+      "height": "Korkeus",
+      "note": "Kuvansuhde · GCD-yksinkertaistus"
+    },
+    "mime": {
+      "note": "MIME-haku · yleiset verkkotyypit"
+    },
+    "ua": {
+      "note": "User-Agent-tulkitsija · heuristinen (offline)"
+    },
+    "imageMeta": {
+      "file": "Kuvatiedosto",
+      "note": "Kuvan metatiedot · sharp (EXIF-puskurin koko)"
+    },
+    "wordFreq": {
+      "top": "Top N",
+      "note": "Sanojen esiintymistiheys · CJK + latinalainen"
+    },
+    "jsonXml": {
+      "note": "JSON ↔ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "SQL-pienennin · kommentit + välilyönnit"
+    },
+    "lineNum": {
+      "start": "Aloitenumero",
+      "note": "Lisää rivinumerot · puhtaasti"
+    },
+    "uniqueWords": {
+      "note": "Uniikit sanat · ensimmäisenä nähty järjestyksessä"
+    },
+    "epoch": {
+      "value": "Arvo",
+      "msToIso": "ms → ISO",
+      "isoToMs": "ISO → ms",
+      "note": "Epoch-millisekunteja · Päivämäärä"
+    },
+    "passwordEntropy": {
+      "password": "Salasana",
+      "note": "Salasanan entropia · meristöheuristiikka"
+    },
+    "contrast": {
+      "fg": "Etualusta (#hex)",
+      "bg": "Tausta (#hex)",
+      "note": "Värikontrasti · WCAG 2.x",
+      "sampleHeadline": "Sample text",
+      "pass": "pass",
+      "fail": "fail",
+      "aaNormal": "AA normal",
+      "aaLarge": "AA large",
+      "aaaNormal": "AAA normal",
+      "aaaLarge": "AAA large"
+    },
+    "exif": {
+      "file": "Kuvatiedosto",
+      "note": "EXIF-katselin · exifr + JPEG-varavaihtoehto"
+    },
+    "regex": {
+      "pattern": "Kuvio",
+      "flags": "Liput",
+      "replacement": "Korvaus",
+      "match": "Osuma",
+      "replace": "Korvaa",
+      "test": "Testaa",
+      "local": "Suorita paikallisesti",
+      "server": "Palvelimen vahvistus",
+      "count": "{count} osumaa",
+      "sotaNote": "Välitön paikallinen korostus · palvelimen aikakatkaisubudjetti · sama polku kuin API"
+    },
+    "jwt": {
+      "decode": "Pura JWT",
+      "sample": "Lataa esimerkki",
+      "tokenPlaceholder": "Liitä JWT",
+      "decodeNote": "{engine} · vain purkua, allekirjoitusta ei vahvisteta",
+      "footerNote": "Moottori: jose · allekirjoitusta ei vahvisteta. Tuotannossa vahvista avaimilla palvelimella jwtVerify-funktiolla.",
+      "generateHint": "Tarvitsetko tokenien allekirjoittamista?",
+      "secret": "Salasana",
+      "exp": "Vanhenee (sekuntia)",
+      "payload": "Payload JSON",
+      "note": "JWT Generointi · HS256 (vain kehitys/testaus)",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "(empty signature segment)"
+    },
+    "rand": {
+      "min": "Min",
+      "max": "Maksimi",
+      "count": "Määrä",
+      "note": "Satunnaisluku · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "Sivut",
+      "count": "Noppamäärä",
+      "note": "Noppapelaaja · crypto RNG"
+    },
+    "hexRgb": {
+      "note": "HEX ↔ RGB · puhtaana"
+    },
+    "base64url": {
+      "note": "Base64URL · JWT-tyylinen"
+    },
+    "hmac": {
+      "message": "Viesti",
+      "secret": "Salasana",
+      "signature": "Allekirjoitus",
+      "note": "HMAC-varmennus · SHA-256"
+    },
+    "secret": {
+      "bytes": "Bitejä",
+      "count": "Määrä",
+      "note": "Salaisenen avaimen generointi · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "PDF-tiedosto",
+      "note": "PDF Light Optimize · pdf-lib uudelleenkirjoitus (ei kuvien uudelleenpakkausta)",
+      "needFile": "Valitse ensin PDF-tiedosto"
+    },
+    "pdfCompress": {
+      "file": "PDF-tiedosto",
+      "quality": "Laatu",
+      "engine": "Moottori",
+      "qStructural": "Rakenne (qpdf, häviöttömät virtaukset)",
+      "qScreen": "Näyttö (pienin, Ghostscript)",
+      "qEbook": "E-kirja (tasapainoinen, Ghostscript)",
+      "qPrinter": "Tulostin (korkeampi laatu, Ghostscript)",
+      "eAuto": "Automaattinen (qpdf → Ghostscript → pdf-lib)",
+      "download": "Lataa PDF",
+      "needFile": "Valitse ensin PDF-tiedosto",
+      "in": "Syöte",
+      "out": "Tulos",
+      "saved": "Tallennettu",
+      "note": "PDF-pakkaus · qpdf / Ghostscript isäntäkonetta · pdf-lib-varjostus",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+    },
+    "jsonFormat": {
+      "indent": "Sisennys",
+      "format": "Muotoile",
+      "minify": "Tiivistä",
+      "serverVerify": "Palvelinvahvistus",
+      "clear": "Tyhjennä",
+      "sample": "Esimerkki",
+      "placeholder": "Liitä JSON…",
+      "formatted": "Muotoiltu",
+      "minified": "Tiivistetty",
+      "serverOk": "Palvelin {mode} · {engine}",
+      "valid": "Kelvollinen JSON",
+      "invalid": "Virheellinen JSON",
+      "line": "rivi",
+      "column": "sarakke",
+      "note": "Moottori: JSON.parse/stringify · välitön paikallinen · sama polku kuin API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
+    },
+    "qr": {
+      "size": "Koko",
+      "ecl": "Virheenkorjaus",
+      "generate": "Luo",
+      "download": "Lataa PNG",
+      "needText": "Syötä teksti tai URL-osoite",
+      "note": "QR · qrcode · live preview · sama polku kuin API"
+    },
+    "pdfText": {
+      "file": "PDF-tiedosto",
+      "layout": "Asettelu",
+      "needFile": "Valitse ensin PDF",
+      "note": "PDF Text · pdftotext (poppler) isännällä"
+    },
+    "svg": {
+      "optimize": "Optimoi",
+      "note": "SVG Optimize · kevyt puhdas minify"
+    },
+    "routerTranslate": {
+      "lab": "Lab shell: ei käännä täällä. Avaa Routerin kanssa kehotteen — mallimittari vain Routerissa.",
+      "source": "Lähdekieli",
+      "target": "Kohdekieli",
+      "open": "Valmistele Router-linkki",
+      "deepLink": "Avaa Routerissa",
+      "note": "ulkoinen · ei hiljaista Forge LLM-laskelmaa"
+    },
+    "imageCrop": {
+      "needFile": "Valitse ensin kuva",
+      "crop": "Rajaa",
+      "note": "Kuvan rajaus · vedä alue · tarkka leikkaus",
+      "drop": "Pudota kuva tai klikkaa selataksesi",
+      "dragHint": "Vedä kuvalla valitaksesi rajausalueen",
+      "left": "Vasen",
+      "top": "Ylä",
+      "width": "Leveys",
+      "height": "Korkeus",
+      "natural": "Luonnollinen {w}×{h}",
+      "source": "Lähde",
+      "result": "Rajattu"
+    },
+    "markdown": {
+      "preview": "Esikatselu",
+      "html": "HTML",
+      "emptyPreview": "Suorita nähdäksesi esikatselun",
+      "emptyHtml": "Renderöity HTML",
+      "rendering": "Renderöidään…",
+      "toHtml": "Muunna HTML:ksi",
+      "copyHtml": "Kopioi HTML",
+      "note": "merkitty · sandboxattu iframe-esikatselu · sama polku kuin API"
+    },
+    "pdfMerge": {
+      "files": "PDF-tiedostot (≥2, järjestys = yhdistämisen järjestys)",
+      "needFiles": "Valitse vähintään 2 PDF-tiedostoa",
+      "merging": "Yhdistetään…",
+      "mergeDownload": "Yhdistä ja lataa",
+      "done": "Yhdistetty · {pages} sivua · {bytes} tavua",
+      "note": "pdf-lib · sama polku kuin API",
+      "merge": "Yhdistä ja lataa"
+    },
+    "pdfSplit": {
+      "file": "PDF-tiedosto",
+      "needFile": "Valitse PDF",
+      "fromPage": "Alkaen sivulta (1-pohjainen)",
+      "toPage": "Sivulle asti (tyhjä = viimeinen)",
+      "toPlaceholder": "Viimeinen sivu",
+      "splitting": "Jaetaan…",
+      "splitDownload": "Jaa ja lataa",
+      "done": "Jako · lähteessä {source} sivua → tuloksessa {pages} sivua",
+      "note": "pdf-lib · sama polku kuin API",
+      "split": "Jaa ja lataa"
+    },
+    "passwordStrength": {
+      "check": "Tarkista vahvuus",
+      "checking": "Tarkistetaan…",
+      "crack": "Arvio hitaan hashauksen murtamisesta offline-tilassa: {time}",
+      "score0": "Erittäin heikko",
+      "score1": "Heikko",
+      "score2": "Kohtalainen",
+      "score3": "Vahva",
+      "score4": "Erittäin vahva",
+      "note": "zxcvbn-ts · sama polku kuin API · salasanaa ei tallenneta"
+    },
+    "hmacSign": {
+      "compute": "Laske HMAC",
+      "computing": "Lasketaan…",
+      "note": "node:crypto · sama polku kuin API"
+    },
+    "costEstimate": {
+      "text": "Syöttöteksti (syöttötunnisteiden arviointia varten)",
+      "model": "Malli",
+      "outputTokens": "Lähtötunnisteet (arvio)",
+      "estimate": "Arvioi kustannus",
+      "estimating": "Arvioidaan…",
+      "note": "@nebutra/ai-providers/frontier-kortti + js-tiktoken · listahintaan perustuva arvio, ei lasku"
+    },
+    "jsonSchema": {
+      "data": "JSON-data",
+      "schema": "JSON Schema",
+      "validate": "Vahvista",
+      "validating": "Vahvistetaan…",
+      "pass": "Hyväksytty",
+      "fail": "Hylätty",
+      "note": "Ajv · sama polku kuin API"
+    },
+    "zhCnTw": {
+      "s2t": "Yksinkertaistettu → Perinteinen",
+      "t2s": "Perinteinen → Yksinkertaistettu",
+      "s2tw": "Yksinkertaistettu → Taiwan",
+      "tw2s": "Taiwan → Simplified",
+      "s2hk": "Simplified → Hong Kong",
+      "hk2s": "Hong Kong → Simplified",
+      "note": "OpenCC (opencc-js) · sama polku kuin API"
+    },
+    "pinyin": {
+      "tones": "Äännekorkeus",
+      "symbol": "Symboli nǐ",
+      "num": "Luku ni3",
+      "none": "Ei mitään ni",
+      "hanzi": "Kiinalaiset merkit",
+      "convert": "Muunna pinyiniin",
+      "converting": "Muunnetaan…",
+      "note": "pinyin-pro · sama polku kuin API"
+    },
+    "sqlFormat": {
+      "dialect": "Dialekti",
+      "format": "Muoto",
+      "formatting": "Muotoilu…",
+      "note": "sql-formatter · sama polku kuin API"
+    },
+    "colorConvert": {
+      "color": "Väri",
+      "pick": "Valitse väri",
+      "convert": "Muunna",
+      "converting": "Muunnetaan…",
+      "note": "culori · hex / rgb / hsl / oklch · sama polku kuin API"
+    },
+    "qrGen": {
+      "content": "Sisältö",
+      "format": "Muoto",
+      "pngPreview": "PNG (esikatselu)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "Luo QR-koodi",
+      "generating": "Luodaan…",
+      "note": "qrcode · sama polku kuin API"
+    },
+    "qrDecode": {
+      "upload": "Lataa kuva, jossa on QR-koodi",
+      "parsing": "Pakotetaan…",
+      "note": "jsQR + sharp · sama reitti kuin API"
+    },
+    "cron": {
+      "expression": "Cron-lauseke",
+      "timezone": "Aikavyöhyke",
+      "parse": "Seuraavat ajot",
+      "parsing": "Jäsennetään…",
+      "nextTitle": "Seuraavat ajot (ISO)",
+      "note": "cron-parser · sama reitti kuin API"
+    },
+    "timezone": {
+      "datetime": "Päivämäärä ja aika",
+      "from": "Alkaen",
+      "to": "Mihin",
+      "convert": "Muunna aikavyöhyke",
+      "converting": "Muunnetaan…",
+      "placeholder": "2026-07-24 12:00:00 tai ISO / unix",
+      "note": "dayjs-aikavyöhyke · sama polku kuin API"
+    },
+    "csvPreview": {
+      "preview": "Esikatselu taulukko",
+      "parsing": "Jalostetaan…",
+      "rows": "Esikatselu {shown} / {total} riviä",
+      "note": "papaparse · sama polku kuin API"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "Kysely",
+      "querying": "Kysytään…",
+      "note": "jsonpath-plus · sama polku kuin API"
+    },
+    "xmlFormat": {
+      "pretty": "Siisti",
+      "minify": "Tiivistä",
+      "validate": "Validoi",
+      "validOk": "Kelvollinen",
+      "done": "Valmis · {engine}",
+      "processing": "Käsitellään…",
+      "note": "fast-xml-parser · sama polku kuin API"
+    },
+    "regexLegacy": {
+      "pattern": "Kuvio",
+      "flags": "Liput",
+      "mode": "Tila",
+      "match": "Osuma",
+      "replace": "Korvaa",
+      "test": "Testaa",
+      "replacement": "Korvaus",
+      "note": "Päivitetään paikallisesti · palvelimen aikakatkaisubudjetti · sama polku kuin API"
+    },
+    "docxText": {
+      "file": "DOCX-tiedosto",
+      "needFile": "Valitse ensin .docx-tiedosto",
+      "extract": "Uudista teksti",
+      "extracting": "Uudistetaan…",
+      "note": "DOCX → teksti · pelkkä ZIP + document.xml (ei Office-pakettia)"
+    },
+    "uuid": {
+      "count": "Määrä",
+      "local": "Luo paikallisesti",
+      "server": "Luo palvelimella",
+      "copyAll": "Kopioi kaikki",
+      "empty": "UUID:t näkyvät täällä"
+    },
+    "timestamp": {
+      "nowSec": "Unix-sekunteja",
+      "nowMs": "Unix-ms / ISO",
+      "serverNow": "Palvelimen aika nyt",
+      "toDate": "Aikaleima → päivämäärä",
+      "toUnix": "Päivämäärä → aikaleima",
+      "seconds": "Sekunteja",
+      "milliseconds": "Millisekunteja",
+      "value": "Arvo",
+      "convert": "Muunna",
+      "note": "Sama polku kuin API"
+    },
+    "wordCount": {
+      "words": "Sanoja",
+      "chars": "Merkkejä",
+      "noSpaces": "Ei välilyöntejä",
+      "cjk": "CJK",
+      "lines": "Rivejä",
+      "paragraphs": "Kappaleita",
+      "placeholder": "Liitä tai kirjoita tekstiä…",
+      "copyText": "Kopioi teksti",
+      "clear": "Tyhjennä",
+      "verifying": "Varmistetaan…",
+      "serverNote": "Palvelimen sanat={words} · sama polku kuin API",
+      "note": "Reaaliaikainen moottori: {engine} · ei latausta tarvita · sama polku kuin API"
+    },
+    "bmi": {
+      "height": "Pituus (cm)",
+      "weight": "Paino (kg)",
+      "compute": "Laske BMI",
+      "computing": "Lasketaan…",
+      "invalid": "Syötä kelvollinen pituus (cm) ja paino (kg)",
+      "underweight": "Alipainoinen",
+      "normal": "Normaali",
+      "overweight": "Ylipainoinen",
+      "obese": "Lihava",
+      "note": "WHO:n BMI · sama reitti kuin API · ei lääketieteellistä neuvontaa"
+    },
+    "percentage": {
+      "mode": "Tila",
+      "percentOf": "a %:a b:sta",
+      "isWhat": "a on mikä % b:sta",
+      "percentA": "Prosentti a",
+      "valueA": "Arvo a",
+      "baseB": "Kanta b",
+      "compute": "Laske",
+      "computing": "Lasketaan…",
+      "invalid": "Syötä kelvolliset luvut",
+      "note": "Sama polku kuin API"
+    },
+    "dataSize": {
+      "value": "Arvo",
+      "convert": "Muunna",
+      "converting": "Muunnetaan…",
+      "invalid": "Syötä kelvollinen luku",
+      "binary": "{value} {from} → kanta-1024",
+      "note": "Binääriyksiköt (1 KB = 1024 B) · sama polku kuin API"
+    },
+    "rmb": {
+      "amount": "Summa (CNY)",
+      "convert": "Suuremmaksi kirjaimiksi",
+      "converting": "Muunnetaan…",
+      "invalid": "Syötä ei-negatiivinen summa",
+      "note": "Kiinalaisen laskun summa suuremmilla kirjaimilla · sama reitti kuin API"
+    },
+    "dateDiff": {
+      "from": "Alkupäivämäärä",
+      "to": "Loppupäivämäärä",
+      "compute": "Päivien erotus",
+      "computing": "Lasketaan…",
+      "days": "päivää",
+      "note": "ECMAScript Date · sama reitti kuin API"
+    },
+    "xlsxText": {
+      "file": "XLSX-tiedosto",
+      "needFile": "Valitse ensin .xlsx-tiedosto",
+      "extract": "Pura taulukko",
+      "extracting": "Puretaan…",
+      "note": "XLSX → CSV · puhdas ZIP + sheet1.xml (ensimmäinen taulukko)"
+    },
+    "mdToPdf": {
+      "drop": "Pudota .md-tiedosto tähän tai liitä Markdown alla",
+      "title": "Otsikko",
+      "engine": "Moottori",
+      "ePlaywright": "playwright (Chromium-tulostus)",
+      "eSimple": "yksinkertainen (ei selainta)",
+      "generate": "Luo PDF",
+      "generating": "Luodaan…",
+      "download": "Lataa PDF",
+      "note": "marked → HTML → Playwright Chromium print. Jos Chromium puuttuu, käytetään automaattisesti yksinkertaistettua PDF-rakennetta — tarkista renderEngine; yksinkertainen versio ei ole painovalmis asettelu.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
+    },
+    "tokenCount": {
+      "count": "Laske tokenit",
+      "counting": "Lasketaan…",
+      "chars": "Merkkiä {n}",
+      "note": "Moottori: js-tiktoken · palvelimella tarkka laskenta · voi syöttää Routerin kustannusarvioon"
+    },
+    "codec": {
+      "encodeDir": "Teksti → koodattu",
+      "decodeDir": "Koodattu → teksti",
+      "localNote": "Paikallinen suoritus",
+      "serverNote": "Palvelin · sama polku kuin API",
+      "hexInvalid": "Ei kelvollinen heksa-merkkijono",
+      "hexDecodeFail": "Palvelin ei voinut dekoodata UTF-8-muotoon (vaaditaan kelvollinen heksa)",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · sama polku kuin API",
+      "noteHtml": "HTML-entiteettikartta · sama polku kuin API",
+      "noteHex": "UTF-8 ↔ heksadesimaali · sama polku kuin API"
+    },
+    "textDiff": {
+      "left": "Vasen",
+      "right": "Oikea",
+      "compare": "Vertaile",
+      "comparing": "Vertaillaan…"
+    },
+    "imageTool": {
+      "drop": "Pudota kuva tähän tai klikkaa selataksesi",
+      "selected": "Valittu: {name} ({kb} kt)",
+      "needFile": "Valitse ensin kuva",
+      "format": "Tulostusmuoto",
+      "quality": "Laatu {n}",
+      "maxW": "Maksimileveys",
+      "maxH": "Maksimikorkeus",
+      "optional": "Valinnainen",
+      "resizeEg": "esim. 1280",
+      "processing": "Käsitellään…",
+      "compress": "Purista",
+      "resize": "Muuta kokoa",
+      "convert": "Muunna muoto",
+      "download": "Lataa tulos",
+      "outMeta": "Lähtö {kb} KB{dims}{ratio} · {type}",
+      "ratio": " · ~{pct}% alkuperäisestä",
+      "dims": " · {w}×{h}",
+      "original": "Alkuperäinen",
+      "result": "Tulos",
+      "note": "Moottori: sharp (libvips) · palvelinpohjainen · sama polku kuin API:ssa (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+    },
+    "pptxText": {
+      "file": "PPTX-tiedosto",
+      "needFile": "Valitse ensin .pptx-tiedosto",
+      "extract": "Uusi linjauksen",
+      "extracting": "Uudetaan…",
+      "note": "PPTX-linjauksen · puhtaasti ZIP + slide XML (ilman PowerPointia)"
+    },
+    "shell": {
+      "copyJson": "Kopioi JSON",
+      "sample": "Esimerkki",
+      "chars": "{n} merkkiä",
+      "largeInput": "Suuri syöte — tulos päivittyy hetken kuluttua kirjoittamisen lopettamisesta.",
+      "manualInput": "Syötteen koko on niin suuri, että reaaliaikainen uudelleenlaskenta hidastaisi sivua. Paina Suorita.",
+      "options": "Asetukset",
+      "regenerateNote": "Tulos päivittyy automaattisesti, kun muutat asetuksia.",
+      "fileTab": "Tiedosto",
+      "pasteTab": "Liitä",
+      "browse": "Valitse tiedosto",
+      "selectedFile": "{name} · {kb} KB",
+      "truncated": "Luetaan ensimmäiset {kb} KB — riittävästi vastaukseen, ja loput eivät koskaan poistu laitteeltasi.",
+      "detail": "Yksityiskohdat",
+      "dropIntoPane": "Vedä tiedosto tähän",
+      "swap": "Vaihda puolia",
+      "prevChange": "Edellinen",
+      "nextChange": "Seuraava",
+      "changePosition": "{index} / {total}",
+      "result": "Tulos"
+    },
+    "readmeSkeleton": {
+      "emptyHint": "Valitse vähintään yksi osio README:n luomiseen.",
+      "note": "Käyttää samaa moottoria kuin API. Jätät pois olevat osiot eivät näy — ei tyhjiä otsikoita.",
+      "orderNote": "Osioita renderöidään aina tässä kiinteässä järjestyksessä, joten sama syöte tuottaa saman tiedoston.",
+      "group": {
+        "core": "Ydin",
+        "docs": "Dokumentaatio",
+        "community": "Yhteisö",
+        "meta": "Meta"
+      },
+      "section": {
+        "title": "Otsikko ja kuvaus",
+        "badges": "Merkit",
+        "callout": "Huomio",
+        "toc": "Sisällysluettelo",
+        "installation": "Asennus",
+        "usage": "Käyttö",
+        "features": "Ominaisuudet",
+        "api-reference": "API-dokumentaatio",
+        "screenshots": "Kuvakaappaukset",
+        "roadmap": "Tiekartta",
+        "contributing": "Osallistuminen",
+        "support": "Tuki",
+        "acknowledgements": "Kiitokset",
+        "license": "Lisenssi",
+        "authors": "Tekijät",
+        "tech-stack": "Tekninen pino"
+      },
+      "projectName": "Hankkeen nimi",
+      "projectNamePlaceholder": "Hankkeen nimi",
+      "description": "Kuvaus",
+      "descriptionPlaceholder": "Yksi lause siitä, mitä se tekee",
+      "badgeLicense": "Lisenssimerkki",
+      "badgeNpm": "npm version",
+      "badgeBuild": "Rakennustila",
+      "npmPackage": "npm package",
+      "npmPackagePlaceholder": "@scope/package",
+      "repo": "GitHub-repositorio",
+      "repoPlaceholder": "omistaja/repositorio",
+      "calloutKind": "Huomautustyyppi",
+      "calloutBody": "Huomautusteksti",
+      "calloutBodyPlaceholder": "Ennen 1.0-versiota — API muuttuu vielä",
+      "fenceLanguage": "Kieli",
+      "installCommand": "Asennuskomento",
+      "installCommandPlaceholder": "npm install your-project",
+      "usageExample": "Käyttöesimerkki",
+      "usageExamplePlaceholder": "Pienin esimerkki, joka osoittaa arvon",
+      "features": "Ominaisuudet",
+      "featuresPlaceholder": "Yksi ominaisuus per rivi",
+      "contact": "Yhteystiedot",
+      "contactPlaceholder": "support@example.com",
+      "license": "Lisenssi",
+      "authors": "Tekijät",
+      "authorsPlaceholder": "@käyttäjätunnus, Jane Roe",
+      "techStack": "Tekninen pino",
+      "techStackPlaceholder": "typescript, postgresql (simple-icons-tunnisteet)",
+      "sectionCount": "{n} osiota",
+      "charCount": "{n} merkkiä",
+      "warningCount": "{n} ohitettu",
+      "omittedTitle": "Mitä jätettiin pois ja miksi"
+    },
+    "gitignore": {
+      "searchLabel": "Hae pinoja",
+      "searchPlaceholder": "Hae kieliä, kehyksiä, käyttöjärjestelmiä tai editoreita…",
+      "add": "Lisää {stack}",
+      "remove": "Poista {stack}",
+      "selected": "Valitut pinot",
+      "suggestions": "Vastaavat pinot",
+      "noMatches": "Ei löydy pinoja, jotka vastaavat ”{query}”. Paina Enter lähettääksesi silti — aliakset ratkaistaan palvelimella.",
+      "catalogFallback": "Pinoluettelo ei saatavilla — kirjoita pinon nimi ja paina Enter.",
+      "emptyHint": "Valitse vähintään yksi kieli, kehys, käyttöjärjestelmä tai editori yllä.",
+      "regenerate": "Luo uudelleen",
+      "sections": "{n} osiota",
+      "lines": "{n} riviä",
+      "deduped": "{n} kaksoiskuvioita yhdistetty",
+      "notFound": "Ei korpuksessa: {stacks}",
+      "globalScope": "{stacks} ovat käyttöjärjestelmä/editori-määrittelyjä — monet kehittäjät pitävät nämä henkilökohtaisessa ~/.gitignore_global-tiedostossa eikä jokaisessa repositoriossa.",
+      "untrackedNote": ".gitignore vaikuttaa vain seurantaan ottamattomiin tiedostoihin. Gitin jo seuraamaan tiedostoon suorita git rm -r --cached <path>.",
+      "fileLabel": ".gitignore"
+    },
+    "editorconfig": {
+      "emptyHint": "Aseta vähintään yksi ominaisuus nähdäksesi tiedoston.",
+      "note": "Sama moottori kuin API. Valintasi säilyvät tämän selaimen istunnon ajan; mitään ei tallenneta.",
+      "checks": "Tarkistukset",
+      "presets": "Aloita valmiista mallista",
+      "preset": {
+        "spaces2": "2 välilyöntiä, LF",
+        "spaces4": "4 välilyöntiä, LF",
+        "tabs": "Tabit, leveys 4",
+        "repo": "Repo-aloitus (+ Markdown, Makefile)"
+      },
+      "rootLabel": "root = true — estää editoreita yhdistämästä vanhemman .editorconfig-tiedoston asetuksia",
+      "glob": "Glob {n}",
+      "addSection": "Lisää osio",
+      "removeSection": "Poista",
+      "notSet": "(ei asetettu)",
+      "import": "Tuo olemassa oleva .editorconfig",
+      "importPlaceholder": "Liitä .editorconfig tähän ladataksesi sen lomakkeeseen",
+      "importAction": "Tuo",
+      "importing": "Tuodaan…",
+      "importFailed": "Tuonti epäonnistui: {message}"
+    },
+    "robotsTxt": {
+      "emptyHint": "Aseta yllä olevat vaihtoehdot — tiedosto näkyy täällä",
+      "deployNote": "robots.txt toimii vain domainin juuressa (https://example.com/robots.txt). Jokaisella alidomainilla on oltava oma tiedostonsa.",
+      "outputLabel": "robots.txt",
+      "defaultAccess": "Oletuslupa (User-agent: *)",
+      "defaultAllow": "Salli kaikki",
+      "defaultDisallow": "Kiellä kaikki",
+      "defaultAccessNote": "\"Salli kaikki\" kirjoittaa tyhjän \"Disallow:\"-rivin — tämä sallii kaiken.",
+      "crawlDelay": "Crawl-delay (sekuntia)",
+      "crawlDelayPlaceholder": "ei",
+      "crawlDelayNote": "Ei kuulu RFC 9309 -standardiin. Google jättää sen huomiotta; sitä ei kirjoiteta koskaan Google-ryhmään.",
+      "searchAgents": "Hakukoneet",
+      "aiAgents": "Tekekäytetyt crawlerit",
+      "aiAgentsNote": "Koulutus- ja vastausmoottorin crawlerit. Niiden estäminen ei vaikuta hakusindeksointiin.",
+      "accessDefault": "Oletus",
+      "accessAllow": "Salli",
+      "accessDisallow": "Kiellä",
+      "rules": "Polkureglit",
+      "rulesNote": "Polut ovat kirjainkokoherkkiä ja suhteellisia juureen. Lisää loppuun kauttaviiva rajoittaaksesi säännön hakemistoon.",
+      "rulePath": "Polku {n}",
+      "rulePathPlaceholder": "/admin/",
+      "ruleType": "Säännön tyyppi",
+      "addRule": "Lisää polkusääntö",
+      "removeRule": "Poista",
+      "sitemaps": "Sivukartat",
+      "sitemapsNote": "Absoluuttiset http(s)-URL-osoitteet. Kirjoitetaan omille riveilleen ryhmien ulkopuolelle.",
+      "sitemapUrl": "Sivukartta {n}",
+      "addSitemap": "Lisää sivukartta",
+      "removeSitemap": "Poista",
+      "groupCount": "{n} ryhmää",
+      "lineCount": "{n} riviä",
+      "sitemapCount": "{n} sivukarttaa",
+      "warningsSummary": "Huomioita tästä tiedostosta ({n})"
+    },
+    "encodingDetect": {
+      "drop": "Vedä tiedosto tunnistamaan sen merkistö",
+      "privacy": "Vain ensimmäiset {kb} KB luetaan, ja ne lähetetään samaan julkiseen kutsupäätteeseen, jota agentti käyttäisi — mitään ei kirjoiteta levylle.",
+      "pasteLabel": "Tai liitä tekstiä",
+      "pastePlaceholder": "Liitä tekstiä — mukaan lukien mojibake, jonka haluat selitettävän",
+      "detail": "Ehdokkaat, rivinvaihdot ja tavustatistiikka",
+      "idle": "Vedä tiedosto tai liitä tekstiä — raportti täyttyy heti, kun on jotain luettavaa.",
+      "readOnly": "Vain lukuoikeus: tämä työkalu tunnistaa merkistön, se ei koskaan kirjoita tavuja uudelleen.",
+      "headline": "{encoding} · {confidence}% luottamus",
+      "notText": "Tämä ei näytä tekstiltä",
+      "bomPresent": "BOM {bytes}",
+      "bomAbsent": "Ei BOMia",
+      "eol": "{kind} rivinvaihdot",
+      "eolMixed": "Sekalaiset rivinvaihdot",
+      "language": "Kieli {language} · {confidence}%",
+      "sampled": "Havaittu ensimmäisestä {kb} KB:sta {totalKb} KB:sta",
+      "candidates": "Sijoitetut ehdokkaat",
+      "candidatesNote": "Toiseksi parhaat merkistöt näytetään tarkoituksella: lyhyet tai symmetriset näytteet ovat aidosti monitulkintaisia.",
+      "lineEndings": "Rivinvaihdot",
+      "byteStats": "Tavutilastot",
+      "totalBytes": "Yhteensä",
+      "asciiBytes": "ASCII",
+      "highBytes": "Korkeat (0x80–0xFF)",
+      "nullBytes": "NUL",
+      "mojibake": "Mojibake palautettu"
+    },
+    "dockerfileStarter": {
+      "language": "Kieli",
+      "framework": "Kehys",
+      "packageManager": "Pakettienhallinta",
+      "baseVariant": "Peruskuvake",
+      "version": "Suoritusympäristön versio",
+      "workdir": "Työskentelyhakemisto",
+      "port": "Portti",
+      "buildCommand": "Kääntökomento",
+      "startCommand": "Käynnistyskomento",
+      "commandPlaceholder": "Tyhjä = oletusarvo",
+      "frameworkNone": "Ei mitään (pelkkä suoritusympäristö)",
+      "pmAuto": "Automaattinen",
+      "variantSlim": "slim (glibc)",
+      "variantAlpine": "alpine (musl)",
+      "variantFull": "täysi",
+      "multiStage": "Monivaiheinen rakennus",
+      "nonRootUser": "Ei-pääkäyttäjä",
+      "includeDockerignore": "Lisää .dockerignore",
+      "includeCompose": "Lisää compose.yaml",
+      "includeHealthcheck": "Lisää HEALTHCHECK",
+      "groupWhat": "Mitä rakennat",
+      "groupHow": "Miten sen tulisi toimia",
+      "emptyHint": "Valitse kieli nähdäksesi Dockerfile-tiedoston.",
+      "note": "Vain valmiita asetuksia — mitään muuta kuin yllä olevat vaihtoehdot ei lähetetä selaimestasi. Lue tiedosto ennen julkaisua.",
+      "warnings": "{n} asiaa tarkistettavana",
+      "stages": "{n} vaihetta",
+      "badgeNonRoot": "Ei root",
+      "badgeRoot": "Suorittaa rootina",
+      "badgePort": "Portti {port}"
+    },
+    "lineEndingDetect": {
+      "dropLabel": "Vedä teksti tiedosto tarkistaaksesi rivinvaihtotavat",
+      "privacy": "Liitetty teksti ja pudotetun tiedoston ensimmäiset 256 KB lähetetään Forge API:lle skannattavaksi; tavuja ei tallenneta.",
+      "pasteLabel": "Tai liitä tekstiä",
+      "pastePlaceholder": "Liitä tarkistettava teksti",
+      "idle": "Liitä tekstiä tai pudota tiedosto nähdäksesi rivinvaihtotapojen arviointi.",
+      "detail": "Laskenta ja tarkistus",
+      "note": "Vain havainto — tämä työkalu ei koskaan kirjoita tiedostoa uudelleen.",
+      "empty": "Tyhjä syöte",
+      "noTerminator": "Ei rivinvaihtoa — yksi kesken jäänyt rivi",
+      "consistent": "{style} — yhtenäinen",
+      "mixed": "SEKOITETTU — {parts}",
+      "sharePart": "{pct}% {style}",
+      "style": {
+        "LF": "LF (Unix/Linux/macOS)",
+        "CRLF": "CRLF (Windows)",
+        "CR": "CR (klassinen Mac OS 9 ja aiemmat)"
+      },
+      "lines": "{n} riviä",
+      "bytes": "{n} tavua",
+      "trailing": {
+        "present": "Päätyy rivinvaihtoon",
+        "absent": "Ei rivinvaihtoa tiedoston lopussa"
+      },
+      "bomUtf8": "UTF-8 BOM",
+      "bomNone": "Ei BOMia",
+      "countRow": "{style}: {n} ({pct}%)",
+      "colStyle": "Tyyli",
+      "colCount": "Määrä",
+      "colShare": "Osuus",
+      "minorityLines": "Rivit, jotka poikkeavat yleisimmästä tyylistä: {lines}",
+      "andMore": "ja muita",
+      "findings": "Tarkistukset",
+      "level": {
+        "info": "Huomautus",
+        "warning": "Varoitus",
+        "danger": "Rikkomuksia"
+      },
+      "sampled": "Skannattu ensimmäiset {n} / {total} tavua",
+      "encodingLink": "Avaa koodauksen tunnistin"
+    },
+    "fileTypeDetect": {
+      "drop": "Vedä tiedosto tunnistamaan sen todellinen tyyppi",
+      "privacy": "Vain ensimmäiset {kb} KB otsikkoa luetaan — loput tiedostosta eivät koskaan poistu laitteeltasi.",
+      "hexTab": "Liitä heksadesimaali",
+      "detail": "Näytä tavut ja ehdokkaat",
+      "idle": "Vedä tiedosto tai liitä sen alkuun tulevat tavut heksadesimaalimuodossa.",
+      "note": "Allekirjoitukset tunnistavat säiliön, ei koodikkia tai sen sisältöä.",
+      "unset": "—",
+      "unknownType": "Ei yhtään allekirjoitusta löydetty",
+      "polyglot": "Polyglotti",
+      "tierNone": "Laajennus sopii",
+      "tierBenign": "Vaaraton epäsopivuus",
+      "tierMismatch": "Laajennepoikkeama",
+      "tierHighRisk": "Korkea riski",
+      "confidenceMatch": "Allekirjoitus yhteensopiva",
+      "confidenceContainer": "Vain säiliö",
+      "confidenceAmbiguous": "Epäselvä",
+      "confidenceNone": "Ei yhteensopivaa",
+      "signalDetected": "Tunnistettu MIME",
+      "signalReported": "Ilmoitettu MIME",
+      "signalExtension": "Tiedostonimi-laajennus",
+      "drillResolved": "Avattiin {kind}-säiliön: {type}",
+      "drillUnresolved": "{kind}-säiliö vahvistettu; alityyppiä ei voitu ratkaista otetusta tavujoukosta",
+      "hexDump": "Otsikkobytit",
+      "bytesRead": "{n} tavua luettuna",
+      "headerOnly": "vain otsikkonäyte",
+      "entropy": "Entropia {bits} bittiä/tavu",
+      "signatureCount": "{n} allekirjoitusta taulukossa",
+      "textHints": "Rakenneviitteet: {hints}",
+      "candidates": "Kaikki vastaavat allekirjoitukset",
+      "atOffset": "siirtymä {offset}"
+    },
+    "licenseChooser": {
+      "prompt": "Mitä tämä projekti tarvitsee?",
+      "pickScenario": "Valitse rivi, joka kuulostaa projektisi kaltaiselta — vastaus ja tiedosto näkyvät tässä.",
+      "disclaimer": "Deterministinen mallipohjainen tuotos, ei oikeudellista neuvontaa.",
+      "noAnswer": "Yksittäinen lisenssi ei sovi tähän tapaukseen",
+      "permissions": "Sallitaan",
+      "conditions": "Edellyttää",
+      "limitations": "Ei kata",
+      "alternates": "Muut vaihtoehdot tähän tapaukseen",
+      "useThis": "Käytä tätä",
+      "readCanonical": "Lue alkuperäinen teksti SPDX:ssä",
+      "holder": "Tekijänoikeuden haltija",
+      "holderPlaceholder": "Nimesi tai yrityksesi nimi",
+      "holderHint": "Lisää tekijänoikeuden haltija ja tiedosto täyttää automaattisesti kirjoittaessasi.",
+      "year": "Vuosi",
+      "manifest": "Mihin SPDX-tunniste menee",
+      "verbatim": "{name} toimitetaan täsmälleen samanlaisena kaikille — tekijänoikeusviiva menee lähdekooditiedoston ilmoitukseen eikä LICENSE-tiedostoon.",
+      "noLicense": {
+        "summary": "Mikä tapahtuu, jos en lisää mitään lisenssiä?",
+        "body": "Ei lisenssiä ei ole sama asia kuin julkinen omistusoikeus. Ilman sitä oletetaan oletusmuotoinen tekijänoikeus, eikä kukaan saa kopioida, muokata tai levittää koodiasi uudelleen — julkinen arkisto on näkyvyys, ei lupa."
+      },
+      "artifact": {
+        "header": "Lähdetiedoston otsikko",
+        "notice": "Lähdetiedoston ilmoitus"
+      },
+      "refine": {
+        "patent": "Patenttivaltuutus on tärkeä tässä (yrityksen koodi, laitteisto, standardityö)",
+        "network": "Se toimii isännöitynä palveluna, ei vain latauksena",
+        "library": "Se on kirjasto, johon muu ohjelmisto linkittyy",
+        "later": "Salli lisenssin myöhemmät versiot (pitää Apache-2.0-koodin yhteensopivana)",
+        "none": "Ei enempää täsmennettävää tässä tapauksessa."
+      },
+      "scenario": {
+        "permissive": {
+          "label": "Kuka tahansa voi käyttää sitä vapaasti",
+          "detail": "Käytä, muuta, myy, toimita suljetuissa tuotteissa — pidä vain tekijänoikeusilmoitus."
+        },
+        "copyleft": {
+          "label": "Parannukset on palautettava",
+          "detail": "Kenen tahansa, joka levittää muutettua versiota, on julkaistava myös lähdekoodi."
+        },
+        "community": {
+          "label": "Olen osallistumassa olemassa olevaan projektiin",
+          "detail": "Lisenssi on jo päätetty — käytä samaa lisenssiä kuin projekti, johon osallistut."
+        },
+        "non-software": {
+          "label": "Tämä ei ole ohjelmisto",
+          "detail": "Dokumentaatio, data, suunnittelu tai media tarvitsee Creative Commons -lisenssin, ei OSI-lisenssiä."
+        },
+        "unsure": {
+          "label": "En vielä tiedä",
+          "detail": "Valitse vähäisimmän katuen oletuslisenssi sekä kaksi muuta kannattaa tuntea lisenssiä."
+        }
+      },
+      "family": {
+        "permissive": "Vapaamielinen",
+        "weak-copyleft": "Heikko copyleft",
+        "strong-copyleft": "Vahva copyleft",
+        "public-domain": "Julkinen omaisuus",
+        "content": "Sisältölisenssi"
+      },
+      "flag": {
+        "commercial-use": "Käyttö kaupallisiin tarkoituksiin",
+        "modifications": "Muokkaaminen",
+        "distribution": "Jakaminen",
+        "private-use": "Yksityiskäyttö",
+        "patent-use": "Patenttivaltuutus",
+        "include-copyright": "Säilytä tekijänoikeusilmoitus",
+        "document-changes": "Ilmoita muutoksistasi",
+        "disclose-source": "Julkaise lähdekoodi",
+        "same-license": "Sama lisenssi koko teokselle",
+        "same-license-file": "Sama lisenssi muokatulle tiedostolle",
+        "same-license-library": "Sama lisenssi kirjastolle",
+        "network-use-disclose": "Verkkokäyttö lasketaan jakamiseksi",
+        "liability": "Vastuu",
+        "warranty": "Takuu",
+        "trademark-use": "Tekijänoikeuden käyttö"
+      }
+    },
+    "isbn": {
+      "inputLabel": "ISBN-numerot",
+      "placeholder": "978-0-306-40615-7 — yksi rivillä, väliviivat ja välilyönnit jätetään huomiotta",
+      "idle": "Liitä yksi ISBN tai koko sarake; tulokset näkyvät kirjoittaessasi.",
+      "scope": "Vain tarkistusluvun laskenta. Voimassa oleva ISBN on sisäisesti johdonmukainen — se ei ole todiste siitä, että viranomainen on myöntänyt sen todelliselle kirjalle.",
+      "summary": "{valid} / {total} kelvollista",
+      "singleValid": "Kelvollinen ISBN",
+      "singleInvalid": "Ei kelvollinen ISBN",
+      "invalidCount": "{n} virheellistä",
+      "convertedTo": "{type}: {value}",
+      "valid": "Kelpo",
+      "invalid": "Virheellinen",
+      "truncated": "Näytetään ensimmäiset {shown} riviä.",
+      "col": {
+        "input": "Syöte",
+        "normalized": "Normalisoitu",
+        "type": "Tyyppi",
+        "status": "Tila",
+        "converted": "Muunnettu",
+        "note": "Huomautus"
+      },
+      "type": {
+        "isbn10": "ISBN-10",
+        "isbn13": "ISBN-13",
+        "invalidLength": "Väärä pituus"
+      },
+      "note": {
+        "checkDigit": "Tarkistusmerkin pitäisi olla {expected}",
+        "invalidLength": "ISBN:issä on tasan 10 tai 13 merkkiä",
+        "invalidCharacter": "Sisältää merkin, joka ei ole numero",
+        "xMisplaced": "X on kelvollinen vain ISBN-10:n viimeisenä merkkinä",
+        "noIsbn10": "979-alkiolla ei ole ISBN-10-vastaavaa",
+        "nonBookland": "13 merkin ISBN:n on aloitettava 978- tai 979-alkiolla",
+        "ismn": "979-0 on ISMN-alue (painettu musiikki), ei ISBN"
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
+    },
+    "languageDetect": {
+      "inputLabel": "Koodinpätkä",
+      "inputPlaceholder": "Liitä koodia ilman tiedostonimeä — keskustelulogista, tiketistä, vastauksesta…",
+      "hintLabel": "Tiedostonimi tai laajenne (valinnainen)",
+      "hintPlaceholder": "main.h · .pl · Dockerfile",
+      "note": "Käyttää samaa moottoria kuin API. Tunnistus perustuu sisältöön, ellei anna tiedostonimen vihjettä; epäselvät laajennukset (.h .m .pl .fs .ts .cs .r) ohjataan ensin omien sääntöjensä kautta.",
+      "idle": "Liitä koodinpätkä — tulos näkyy kirjoittaessasi.",
+      "confidence": {
+        "high": "Korkea luottamus",
+        "medium": "Keskitason luottamus",
+        "low": "Matala luottamus"
+      },
+      "score": "{n}/100",
+      "dataFormat": "Tiedostomuoto, ei ohjelmointikieli",
+      "multiLanguage": "Useita kieliä epäilty",
+      "why": "Miksi tämä vastaus",
+      "signals": "Osumat",
+      "alternates": "Muut ehdokkaat",
+      "composeNext": "Muotoile tämä {language}"
+    },
+    "iban": {
+      "inputLabel": "IBAN",
+      "idle": "Liitä IBAN — lausunto seuraa näppäintä, ei painiketta.",
+      "sourceNote": "Tarkistuskoodi ja rakenne ISO 13616-1:2020 -standardin mukaisesti. Maakohtainen pituus ja BBAN-muoto perustuvat julkaistuun ISO IBAN -rekisterin jäljennökseen, ei itse rekisteriin.",
+      "valid": "Muodoltaan oikea IBAN",
+      "keepTyping": "Kirjoita edelleen — lyhyempi kuin tämän maan IBAN",
+      "caveat": "Vain muodoltaan oikea. Onnistunut tarkistuskoodi ei vahvista, että tili on olemassa, avoin tai kuuluu maksun saajalle.",
+      "printFormat": "Tulostusmuoto",
+      "details": "Jäsennetty erittely",
+      "notEncoded": "Ei koodattu tämän maan muodolla",
+      "coverage": "{n} maata, joilla on rekisteröity IBAN-muoto",
+      "reason": {
+        "bad_charset": "Ei IBAN-muoto — IBAN on kaksi kirjainta, kaksi numeroa ja sen jälkeen vain kirjaimia ja numeroita",
+        "country_unsupported": "Ei rekisteröityä IBAN-muotoa tälle maakoodille",
+        "incomplete": "Epätäydellinen",
+        "wrong_length_for_country": "Liian pitkä tämän maan IBANille",
+        "structure_mismatch": "Pituus oikea, mutta muoto ei vastaa tämän maan muotoa",
+        "checksum_failed": "Tarkistussumma epäonnistui — IBANissa on kirjoitusvirhe"
+      },
+      "badge": {
+        "country": "{name} ({code})",
+        "unknownCountry": "Maa-koodi {code}",
+        "length": "{n} / {expected} merkkiä",
+        "bankCode": "Pankkikoodi {code}",
+        "expectedCheckDigits": "Tämän tilinumeron tarkistusmerkit olisivat {digits}"
+      },
+      "field": {
+        "normalized": "Sähköinen muoto",
+        "country": "Maa",
+        "checkDigits": "Tarkistusmerkit",
+        "bban": "BBAN",
+        "bbanFormat": "BBAN-muoto",
+        "bankCode": "Pankkikoodi"
+      },
+      "check": {
+        "charset": "Merkistö",
+        "country": "Maa",
+        "length": "Pituus",
+        "structure": "Rakenne",
+        "checksum": "MOD 97-10"
+      },
+      "state": {
+        "pass": "läpäisi",
+        "fail": " epäonnistui",
+        "skipped": "ei saavutettu"
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
+    },
+    "secretScan": {
+      "pasteLabel": "Liitä koodi, konfiguraatio tai .env",
+      "pastePlaceholder": "DATABASE_URL=postgres://…\nAPI_KEY=…",
+      "dropLabel": "Vedä tiedosto skannausta varten",
+      "privacy": "Suorittuu kokonaan selaimessasi. Mitään ei lähetetä mihinkään — ei edes meille.",
+      "scan": "Skannaa",
+      "scanning": "Skannataan…",
+      "idleTitle": "Liitä jotain ja paina Skannaa.",
+      "idleHint": "Tarkistaa valmistajien API-avaimet, tunnisteet, yksityisavaimet ja korkean entropian salaisuudet. Osumat peitetään; vain rivinumerot näytetään kokonaisuudessaan.",
+      "clean": "Salaisuuksia ei löytynyt",
+      "cleanCaveat": "Täällä ei ole mitään, joka vastaisi tunnettua todennusmuotoa tai vaikuttaisi satunnaiselta salaisuudelta. Kuvioiden yhdistäminen ei ole todiste — tarkista epävarmat kohdat.",
+      "found": "{n, plural, one {# mahdollinen salaisuus löydetty} other {# mahdollista salaisuutta löydetty}}",
+      "foundCaveat": "Poista nämä ennen kuin liität tätä mihinkään. Jos avain on aito, vaihda se.",
+      "countHigh": "{n} korkeaa luottamusta",
+      "countMedium": "{n} keskivertoa",
+      "countLow": "{n} vähäinen",
+      "confidence": {
+        "high": "Korkea",
+        "medium": "Keskitaso",
+        "low": "Matala"
+      },
+      "position": "rivi {line}, sarakke {column}",
+      "length": "{n} merkkiä",
+      "maskedLabel": "Peitetty osuma",
+      "why": "Miksi tämä osui",
+      "candidates": "Voisi myös olla:",
+      "scanDetail": "Tarkastuksen yksityiskohdat",
+      "lines": "{n} riviä",
+      "bytes": "{n} tavua tarkastettu",
+      "suppressed": "{n} paikkamerkkiä ohitettu",
+      "suppressedNote": "Tunnetut demot (ESIMERKKI-avaimet, your-api-key-here, toistuvat merkit) ohitetaan, jotta esimerkkitiedostot eivät aiheuta vääriä hälytyksiä.",
+      "omitted": "{n} muuta ei näytetä",
+      "truncated": "Syöte katkaistu – vain ensimmäinen osa tarkistettiin",
+      "reportTitle": "Salaisuuksien skannauksen tulokset (arvot peitetty)",
+      "scopeNote": "Vain tunnistus: tämä työkalu ei koskaan ota yhteyttä toimittajaan tarkistaakseen, onko avain edelleen käytössä – se tarkoittaisi avaimen lähettämistä kolmannelle osapuolelle."
+    },
+    "eanUpcGtin": {
+      "inputLabel": "Viivakoodinumerot",
+      "placeholder": "Yksi koodi rivillä (pilkuilla ja puolipisteillä erotetaan myös)",
+      "idle": "Liitä yksi koodi tai kokonainen sarake – tulos näkyy kirjoittaessasi.",
+      "operationLabel": "Toiminto",
+      "operationValidate": "Validoi (koodi sisältää tarkistusnumeron)",
+      "operationCalculate": "Laske (koodista puuttuu tarkistusnumero)",
+      "typeLabel": "Tyyppi",
+      "typeAuto": "Tunnista pituuden perusteella",
+      "total": "{n} koodia",
+      "validCount": "{n} kelvollista",
+      "invalidCount": "{n} virheellistä",
+      "calculatedCount": "{n} laskettua",
+      "unrecognizedCount": "{n} tunnistamatonta pituutta",
+      "verdict": {
+        "valid": "Kelvollinen",
+        "invalid": "Virheellinen",
+        "calculated": "Laskettu",
+        "unrecognized-length": "Tunnistamaton pituus"
+      },
+      "alsoReadsAs": "Luetaan myös muodossa {type}",
+      "checkDigit": "Tarkistusnumero",
+      "corrected": "Pitäisi olla",
+      "gtin14": "GTIN-14-muoto",
+      "reason": {
+        "empty": "Tällä rivillä ei ole tarkistettavaa.",
+        "non-digit-characters": "Sisältää merkkejä, jotka eivät ole numeroita tai erottimia.",
+        "unsupported-length": "Yhdelläkään GS1-tunnisteella ei ole tätä pituutta (tuetut pituudet: 8, 12, 13, 14 ja 18 numeroa).",
+        "length-mismatch": "Väärä pituus valitsemallesi tyypille.",
+        "check-digit-mismatch": "Viimeinen numero ei vastaa standardin vaatimaa numeroa."
+      },
+      "warning": {
+        "separators-stripped": "Välilyönnit, yhdysviivat ja pisteet poistettiin ennen tarkistusta.",
+        "all-zero": "Kaikki nollia – matemaattisesti kelvollinen, mutta ei oikea tunniste.",
+        "payload-is-also-a-complete-code": "Tämä on myös täydellisen koodin pituus. Jos siinä on jo tarkistusnumero, vaihda Vahvista-tilaan."
+      },
+      "math": "Näytä laskutoimitus",
+      "mathSum": "Summa {sum} → tarkistekirjain {check}",
+      "truncatedRows": "Näytetään ensimmäiset {shown} rivistä yhteensä {total}. Kopioi ja lataa kaikki.",
+      "privacy": "Koodit lähetetään Forge API:lle tarkistettavaksi eivätkä niitä tallenneta.",
+      "scopeNote": "Oikea tarkistekirjain tarkoittaa, että numero on muodoltaan oikea. Se ei tarkoita sitä, että GS1 olisi koskaan osoittanut sitä todelliselle tuotteelle, yritykselle tai sijainnille — vain GEPIR-rekisterin hakemalla saa vastauksen siihen.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
+    },
+    "vin": {
+      "inputLabel": "VIN (17 merkkiä)",
+      "privacy": "Tarkistetaan selaimessasi. VIN:ää ei koskaan lähetetä mihinkään.",
+      "idle": "Liitä VIN — tulos näkyy kirjoittaessasi, ei painiketta.",
+      "scope": "Vain rakenne ja tarkistusmerkki (49 CFR 565.15 / ISO 3779). Tämä ei ole ajoneuvon historiaan haku.",
+      "verdict": {
+        "valid": "Kelvollinen VIN-rakenne",
+        "keepTyping": "Jatka kirjoittamista — {remaining} merkkiä jäljellä",
+        "tooLong": "Liian pitkä — VIN:ssä on tasan 17 merkkiä, tässä on {n}",
+        "invalidCharacter": "Ei VIN-merkki: \"{char}\" paikassa {position}",
+        "checkDigitMismatch": "Tarkistusmerkki ei täsmää — odotettiin {expected}, löytyi {found}"
+      },
+      "hint": {
+        "confusable": "\"{char}\" ei koskaan käytetä VIN-koodissa. Tarkoititko {suggest}?"
+      },
+      "notice": {
+        "notProvenance": "Voimassa oleva tarkistusmerkki vahvistaa, että VIN-koodi on muodostettu oikein. Se ei vahvista, että ajoneuvo on olemassa, on muuttamaton tai sillä on puhdas historia — kloonattu VIN-koodi läpäisee tämän tarkistuksen myös.",
+        "pre1981": "Vuoden 1981 edellä valmistetut ajoneuvot ja jotkin tuontiajoneuvot (JDM/eurooppalaiset) eivät käytä tätä tarkistusmerkkiä — epätasa-arvo ei välttämättä tarkoita, että VIN-koodi on kirjoitettu väärin.",
+        "partial": "Tarkistusmerkin validointi vaatii koko 17 merkin VIN-koodin. Osittainen VIN-koodi on dekoodaus, ei tarkistussumma."
+      },
+      "badge": {
+        "length": "{n} merkkiä",
+        "expected": "Tarkistusmerkki {d}"
+      },
+      "invalidChars": {
+        "more": "Eivät myöskään ole VIN-merkkejä: {list}"
+      },
+      "segment": {
+        "wmi": "WMI 1-3",
+        "vds": "Kuvaus 4-8",
+        "checkDigit": "Tarkistusmerkki 9",
+        "modelYear": "Mallivuosi 10",
+        "plant": "Tehtaalla 11",
+        "serial": "Sarjanumero 12-17"
+      },
+      "math": {
+        "title": "Näytä laskut",
+        "col": {
+          "position": "Sij.",
+          "char": "Merk.",
+          "value": "Arvo",
+          "weight": "Paino",
+          "product": "Tulo"
+        },
+        "formula": "sum = {sum};  {sum} mod 11 = {remainder}  →  tarkistusmerkki {expected}"
+      },
+      "specimenTitle": "VIN · structure specimen"
+    },
+    "envDiff": {
+      "envA": "Ympäristö A",
+      "envB": "Ympäristö B",
+      "placeholderA": "Liitä tai pudota ensimmäinen .env-tiedosto",
+      "placeholderB": "Liitä tai pudota toinen .env-tiedosto",
+      "paneNoAssignment": "Ei löytynyt KEY=arvo-riviä",
+      "optIgnoreComments": "Ohita kommentti- ja tyhjät rivit",
+      "optCaseInsensitive": "Avainten vertailu ilman kirjainkokoa",
+      "optRedactSecrets": "Piilota havaitut salaisuudet",
+      "emptyHint": "Lisää toinen ympäristö nähdäksesi vertailun",
+      "summaryNone": "Ei eroja {total} avaimessa",
+      "summaryDiff": "{n} / {total} avainta eroaa",
+      "note": {
+        "unchanged": "Sama arvo molemmilla puolilla",
+        "changed": "Arvo eroaa",
+        "added": "Asetettu vain B:ssä",
+        "removed": "Asetettu vain A:ssa",
+        "commentedOutInA": "Kommentoitu A:ssa, määritetty B:ssä",
+        "commentedOutInB": "Määritetty A:ssa, kommentoitu B:ssä"
+      },
+      "secretChanged": "salasana poikkeaa",
+      "secretSame": "salasana on sama molemmilla puolilla",
+      "count": {
+        "unchanged": "{n} muuttumatonta",
+        "changed": "{n} muutettua",
+        "added": "{n} lisätty",
+        "removed": "{n} poistettu",
+        "commentedOut": "{n} kommentoitu"
+      },
+      "warnings": "Syötteen varoitukset ({n})",
+      "warningType": {
+        "duplicateKey": "{file} · kaksoisavain",
+        "quoteMismatch": "{file} · lainausmerkkien epäsopivuus",
+        "unparsableLine": "{file} · jäsentämätön rivi"
+      },
+      "showUnchanged": "Näytä muuttumattomat ({n})",
+      "commentedIn": {
+        "A": "kommentoitu pois A:ssa",
+        "B": "kommentoitu pois B:ssä",
+        "both": "kommentoitu pois molemmissa"
+      },
+      "redactedNote": "Salaiset arvot peitetään avainnimen avainsanaheuristiikalla — ei tietoturvatarkistus. Vertailu suoritetaan raaka-arvoilla, joten kierrätetty salaisuus näkyy edelleen muuttuneena.",
+      "interpolationNote": "${VAR}-viittauksia verrataan kirjaimellisesti eikä niitä koskaan ratkaista: laajennus vaihtelee käyttäjän mukaan.",
+      "truncated": "Vain ensimmäiset 5 000 avainta on listattu; lukumäärät kattavat kaikki avaimet.",
+      "colKey": "Avain",
+      "colA": "A",
+      "colB": "B",
+      "colStatus": "Tila",
+      "privacy": "Molemmat tiedostot verrataan selaimessasi. Mitään ei lähetetä palvelimelle."
+    },
+    "csvDiff": {
+      "originalLabel": "Alkuperäinen CSV",
+      "updatedLabel": "Päivitetty CSV",
+      "originalPlaceholder": "Liitä alkuperäinen vienti tai pudota .csv-tiedosto tähän",
+      "updatedPlaceholder": "Liitä päivitetty vienti tai pudota .csv-tiedosto tähän",
+      "emptyHint": "Liitä tai pudota molemmat tiedostot — vertailu käynnistyy heti, kun molemmissa sarakkeissa on sisältöä.",
+      "note": "Rivit yhdistetään tunnuksen perusteella, ei sijainnin, joten lisätty tai uudelleen järjestetty rivi ei näytä muuttuneiden rivien seinämältä. Sisältö lähetetään API:lle vertailua varten eikä sitä tallenneta.",
+      "columns": "{n} saraketta",
+      "keyLabel": "Avainsarake",
+      "keyAuto": "Automaattiesitys",
+      "keyNone": "Ei avainta — vertaa koko rivejä",
+      "joinLabel": "Yhdistä",
+      "joinFull": "Täydellinen ulkoinen — kaikki rivit",
+      "joinInner": "Sisäinen — rivit molemmissa",
+      "joinLeft": "Vasen — alkuperäinen rivijoukko",
+      "ignoreWhitespace": "Jätä välilyönnit huomiotta",
+      "ignoreCase": "Jätä kirjainkoko huomiotta",
+      "treatEmptyAsNull": "Tyhjä = NULL = N/A",
+      "noDifferences": "Eroja ei",
+      "differences": "{added} lisättyä · {removed} poistettua · {changed} muutettua",
+      "added": "{n} lisättyä",
+      "removed": "{n} poistettua",
+      "changed": "{n} muutettua",
+      "unchangedCount": "{n} muuttumatonta",
+      "totals": "{original} → {updated} riviä",
+      "matchedBy": "Vastattu sarakkeilla {columns} ({source})",
+      "matchedWholeRow": "Vastattu koko rivin sisällön perusteella — avainsarakea ei käytetty, joten muutoksia ei raportoida.",
+      "keySource": {
+        "provided": "valintasi",
+        "auto": "automaattisesti ehdotettu",
+        "full-row": "koko rivi"
+      },
+      "keyRejected": "Hylätyt avainehdokkaat: {items}",
+      "columnMismatch": "Sarakkeita vain alkuperäisessä: {original} · vain päivitetyssä: {updated}",
+      "truncated": "Näytetään {shown} koko tuloksesta (esikatselu rajoitettu {limit} riviin) — yllä olevat määrät ovat täydellisiä.",
+      "findings": "Huomioita ({n})",
+      "level": {
+        "info": "tietoa",
+        "warning": "varoitus",
+        "danger": "virhe"
+      },
+      "wholeRow": "Rivi {n}",
+      "exportChanged": "Muutetut rivit (CSV)",
+      "exportFull": "Koko ero (CSV)"
+    },
+    "uscc": {
+      "modeLabel": "Vahvista tai luo",
+      "tab": {
+        "verify": "Vahvista",
+        "generate": "Luo testikoodeja"
+      },
+      "inputLabel": "Yhteinen yhteiskuntaluottokoodi",
+      "placeholder": "18 merkkiä, esim. 91500000059926748X",
+      "idle": "Liitä 18 merkin koodi. Se tarkistaa selaimessa kirjoittaessasi — mitään ei tallenneta.",
+      "scope": "Vain rakenteellinen tarkistus (GB 32100-2015 + ISO 7064 MOD 31-3). Hyväksytty koodi on muodoltaan oikea; se ei tarkoita, että organisaatio olisi rekisteröity sen alle — tarkista se kansallisesta rekisteristä cods.org.cn.",
+      "valid": "Kelvollinen yhteinen yhteiskuntaluottokoodi",
+      "invalid": "Ei ole kelvollinen yhdistetty yhteiskuntaluottokoodi",
+      "incomplete": "{n} / 18 merkkiä",
+      "invalidCharacters": "Sisältää merkkejä, jotka standardi sulkee pois",
+      "checksumOk": "Tarkistusmerkki kunnossa",
+      "checksumBad": "Tarkistusmerkki ei täsmää",
+      "expectedDigit": "Tarkistusmerkin pitäisi olla {expected}, ei {actual}",
+      "illegalAt": "Sijainti {position}: ”{char}” ei kuulu koodin merkkijoukkoon (I, O, S, V, Z on suljettu pois)",
+      "detail": "Kentän yksityiskohdat",
+      "legacyTitle": "Perinteinen organisaatiokoodi (GB 11714)",
+      "legacy": {
+        "ok": "Upotettu 9 merkin organisaatiokoodi on sisäisesti johdonmukainen",
+        "mismatch": "Perinteinen tarkistusmerkki olisi {expected} — vain ohjeellinen; kaikki rekisteröityjät eivät sisällä GB 11714 -organisaatiokoodia",
+        "unchecked": "Ei tarkistettu"
+      },
+      "divisionScope": "Paikat 3–8 vastaavat GB/T 2260 -provinssitaulukkoa ja kuusinumeroisen muodon sisäkkäisyyssääntöjä; koko piiritaulukkoa ei sisällytetä.",
+      "field": {
+        "registrationDept": "Rekisteröitymisosasto",
+        "orgCategory": "Organisaatioluokka",
+        "adminDivision": "Hallinnollinen jako",
+        "orgIdentifier": "Kohteen tunniste",
+        "checkDigit": "Tarkistusmerkki"
+      },
+      "depth": {
+        "none": "Ei ratkaistu",
+        "province": "Provinssitaso",
+        "prefecture": "Prefektuuritaso",
+        "county": "Piiritaso"
+      },
+      "note": {
+        "empty": "Ei vielä mitään tarkistettavaa",
+        "incomplete": "Yhdistyneellä yhteiskuntaluottokoodilla on täsmälleen 18 merkkiä",
+        "tooLong": "Yli 18 merkkiä",
+        "illegalCharacter": "Sisältää merkin, joka ei kuulu GB 32100-2015 -joukkoon (kirjaimet I, O, S, V ja Z on suljettu pois)",
+        "checkDigitMismatch": "Tarkistusmerkki ei vastaa ensimmäisiä 17 merkkiä",
+        "departmentUnknown": "Paikka 1 ei ole rekisteröintilaitos, jonka standardi määrittelee (1, 5, 9, Y)",
+        "categoryUnknown": "Paikka 2 ei ole tälle rekisteröintilaitokselle määritelty organisaatioluokka",
+        "divisionNotNumeric": "Paikkojen 3–8 on oltava kuusi numeroa",
+        "divisionUnknownProvince": "Paikat 3–4 eivät ole GB/T 2260 -provinssikoodi",
+        "divisionMalformed": "Piirikunta ilman prefektuuria, jota GB/T 2260 ei salli"
+      },
+      "gen": {
+        "dept": "Rekisteröintilaitos",
+        "category": "Organisaatioluokka",
+        "province": "Provinssi",
+        "count": "Kuinka monta",
+        "randomProvince": "Mikä tahansa maakunta",
+        "regenerate": "Uusi erä",
+        "emptyHint": "Valitse yllä olevat vaihtoehdot testikoodien tuottamiseksi.",
+        "testDataBadge": "Testidata",
+        "seed": "Siemen {seed}",
+        "allCodes": "Kaikki koodit",
+        "disclaimer": "Nämä koodit ovat rakenteellisesti kelvollisia, mutta ne eivät kuulu mihinkään rekisteröityyn organisaatioon. Älä käytä niitä todellisen entiteetin edustamiseen.",
+        "note": "Generointi on siemenpohjainen: samat vaihtoehdot ja siemen tuottavat aina saman erän, joten fixture pysyy toistettavana. Jokainen koodi on merkitty isTestData-kentällä sekä JSON:ssä että tässä."
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
+    },
+    "yamlDiff": {
+      "original": "Alkuperäinen",
+      "changed": "Muutettu",
+      "originalPlaceholder": "Liitä tai pudota alkuperäinen YAML (tai JSON)",
+      "changedPlaceholder": "Liitä tai pudota muutettu YAML (tai JSON)",
+      "idle": "Täytä molemmat ruudut, ja vertailu käynnistyy kirjoittaessasi.",
+      "privacy": "Molemmat asiakirjat jäsennetään ja verrataan tässä selaimessa – mitään ei ladata palvelimelle, mikä on tarkoitus manifesteille, jotka sisältävät isäntänimiä ja salaisuuksien nimiä.",
+      "modeLabel": "Vertailu",
+      "modeSemantic": "Semanttinen (rakenne)",
+      "modeRawText": "Raakateksti (merkit)",
+      "resolveAnchors": "Ratkaise ankkurit ja aliakset niiden arvoiksi",
+      "valid": "Kelvollinen YAML",
+      "validMulti": "Kelvollinen YAML · {n} asiakirjaa",
+      "invalid": "Jäsennysvirhe, rivi {line}",
+      "parseFailed": "Yhtä puolta ei voitu jäsentää — vertailua ei tehty",
+      "equivalent": "Eroja ei ole — asiakirjat ratkeavat samaan rakenteeseen",
+      "equivalentStructural": "Sama ratkaistu rakenne · {n} muotoilua tai ankkuri-eroa",
+      "summary": "{added} lisätty · {removed} poistettu · {changed} muutettu · {typeChanged} tyyppimuutoksia",
+      "parseErrorAt": "{side} · rivi {line}, sarake {column}: {message}",
+      "documentCountMismatch": "Asiakirjojen määrä eroaa: {original} vs {changed} — asiakirjat yhdistettiin järjestyksessä ja ylimääräiset raportoitiin kokonaisina",
+      "duplicateKeys": "Päällekkäiset avaimet lähteessä",
+      "unified": "Yhdistetty korjaus (normalisoitu YAML)",
+      "howItWorks": "Miten tämä vertailu toimii",
+      "rule": {
+        "keyOrder": "Avainjärjestys, lainausmerkit ja sisennys jätetään huomiotta; sekvenssien järjestys verrataan, koska listan järjestys kantaa merkitystä.",
+        "anchors": "Aliakset ratkaistaan niiden arvoihin, joten muutokset jaetun ankkurin takana näkyvät kaikissa aliakskohtissa; ankkuri tai aliaksen muutos, jonka arvo on ennallaan, ilmoitetaan erikseen rakenteellisena muutoksena.",
+        "mergeKeys": "Yhdistämisavaimet (<<) laajennetaan ennen vertailua, ja solun omat avaimet voittavat yhdistetyt avaimet.",
+        "types": "Tyyppi on osa arvoa: 8080, \"8080\" ja !!str 8080 ilmoitetaan tyyppimuutoksina, ei yleisinä muutoksina.",
+        "sequences": "Kuvauksien sekvenssit paritetaan nimen, id:n tai avaimen perusteella, kun kyseinen kenttä on yksikäsitteinen molemmilla puolilla, jotta yksi lisätty kohta ei aiheuta dominoivaan muutokseen; uudelleenjärjestely ilmoitetaan kuitenkin.",
+        "blockScalars": "Lohkoesimerkit verrataan ratkaistun merkkijonon perusteella, joten |- poistama lopun rivinvaihto on todellinen muutos; saman arvon uudelleenmuotoilu on rakenteellinen muutos.",
+        "comments": "Kommentit eivät kuulu YAML-datamalliin eivätkä niitä verrata.",
+        "multiDoc": "--- -merkit parittavat dokumentit yksi kerrallaan; lukumääräero ilmoitetaan sen sijaan, että verrattaisiin vain ensimmäistä dokumenttia.",
+        "duplicateKeys": "Toistuva avain syötteessä käyttää viimeistä esiintymää ja ilmoitetaan varoituksena."
+      },
+      "note": {
+        "raw-text-mode": "Raakatekstitilassa verrataan merkkejä, ei rakennetta: avainten järjestys, lainausmerkit ja sisennys vaikuttavat kaikki tulokseen.",
+        "parse-error": "Toista puolta ei voitu jäsentää, joten mitään ei verrattu.",
+        "document-count-mismatch": "Kummallakin puolella on eri määrä --- -dokumentteja; dokumentit paritettiin järjestyksessä ja ylimääräiset ilmoitettiin kokonaisina.",
+        "merge-keys-expanded": "Yhdistämisavaimet (<<) laajennettiin ennen vertailua.",
+        "anchors-unresolved": "Aliaksia verrattiin *nimi -viittauksina, ei niiden ratkaistuina arvoina.",
+        "yaml11-ambiguous-scalars": "Lainausmerkeittömät y/n/yes/no/on/off tulkitaan tässä merkkijonoina (YAML 1.2 Core) ja totuusarvoina YAML 1.1:ssä — käytä lainausmerkkejä, jos totuusarvo oli tarkoituksena.",
+        "sequence-matched-by-identity": "Avainarvoparien jonoja paritettiin identiteettikentän perusteella sijainnin sijaan.",
+        "duplicate-keys": "Avainarvopari määrittelee saman avaimen kahdesti; viimeistä esiintymää käytettiin.",
+        "truncated": "Vain ensimmäiset 2000 muutosta on listattu."
+      }
+    },
+    "listSetCompare": {
+      "listA": "Lista A",
+      "listB": "Lista B",
+      "placeholder": "Liitä kohteet, yksi per rivi (tai pudota .txt- tai .csv-tiedosto)",
+      "emptyHint": "Lisää kohteita sekä listaan A että listaan B nähdäksesi vertailun.",
+      "privacy": "Molemmat listat verrataan selaimessasi — mitään ei lähetetä palvelimelle. Sama moottori toimii palvelinpohjaisesti API- ja MCP-kutsujille.",
+      "delimiter": "Eroittelija",
+      "delimiterOption": {
+        "auto": "Automaattinen tunnistus",
+        "newline": "Rivinvaihto",
+        "comma": "Pilkku",
+        "tab": "Sarkain",
+        "custom": "Mukautettu"
+      },
+      "customDelimiter": "Eroin",
+      "customDelimiterPlaceholder": "| tai \\t",
+      "sort": "Järjestys",
+      "sortOption": {
+        "original": "Alkuperäinen järjestys",
+        "asc": "A→Z",
+        "desc": "Z→A",
+        "byCount": "Määrän mukaan"
+      },
+      "optCaseSensitive": "Huomioi kirjainkoko",
+      "optTrim": "Poista välilyönnit",
+      "optCollapse": "Yhdistä sisäiset välilyönnit",
+      "optIgnoreZeros": "Jätä alkuperäiset nollat huomiotta",
+      "paneItems": "{n} kohtea",
+      "paneSingle": "1 kohta — tarkista erottin",
+      "items": "{n}",
+      "none": "Ei mitään",
+      "more": "+{n} lisää — kopioi tai lataa koko lista",
+      "panel": {
+        "onlyInA": "Vain A:ssa",
+        "onlyInB": "Vain B:ssä",
+        "intersection": "Leikkaus (molemmissa)",
+        "union": "Yhdiste (kaikki kohteet)",
+        "symmetricDifference": "Symmetrinen erotus"
+      },
+      "summaryIdentical": "Sama joukko — {n} yhteistä kohdetta",
+      "summaryDiff": "{a} vain A:ssa · {b} vain B:ssä · {shared} yhteistä",
+      "drill": {
+        "symmetricDifference": "Symmetrinen erotus ({n})",
+        "duplicates": "Duplicaatit listan sisällä ({n})",
+        "multiplicities": "Kohteen lukumäärät ({n})",
+        "warnings": "Ilmoitukset ({n})"
+      },
+      "duplicatesInA": "Toistuu joukossa A",
+      "duplicatesInB": "Toistuu joukossa B",
+      "colValue": "Kohde",
+      "colCountA": "Joukossa A",
+      "colCountB": "Joukossa B",
+      "detailTruncated": "Yksittäisten kohteiden määrät on katkaistu — kasvata API:n maxDetail-asetusta nähdäksesi koko taulukon.",
+      "reportTitle": "Listojen vertailu"
+    },
+    "loanAmortization": {
+      "principal": "Lainan määrä",
+      "rate": "Vuotuinen korko %",
+      "term": "Kesto",
+      "termUnit": "Kestoyksikkö",
+      "unitYears": "Vuotta",
+      "unitMonths": "Kuukautta",
+      "startMonth": "Ensimmäisen maksun kuukausi",
+      "startMonthHint": "YYYY-MM. Merkitsee aikataulun; ei muuta määriä.",
+      "extraHeading": "Lisämaksut",
+      "extraMonthly": "Lisä joka kuukausi",
+      "extraYearly": "Lisä kerran vuodessa",
+      "extraYearlyMonth": "Vuotuinen lisä kuukaudella",
+      "extraOneTime": "Kertalasku",
+      "extraOneTimePeriod": "Kertalasku maksulla #",
+      "extraNote": "Lisämaksut vähentävät pääomaa siltä kaudelta, jolloin ne suoritetaan, mikä vähentää kaikkien myöhempien kausien korkoa. Korko ja suunniteltu maksu pysyvät samoina.",
+      "monthlyPayment": "Kuukausimaksu",
+      "totalInterest": "Koko korko",
+      "totalPaid": "Kokonaissumma",
+      "crossover": "Risteytyminen",
+      "crossoverValue": "Maksu {n}",
+      "crossoverNone": "Ei koskaan",
+      "payoff": "Maksettu pois maksussa {n}",
+      "monthsSaved": "{n} kuukautta aiemmin",
+      "totalExtra": "{amount} maksettu aikataulua enemmän",
+      "viewMonthly": "Jokainen maksu",
+      "viewAnnual": "Vuoden mukaan",
+      "tableCaption": "Jaksotus: maksu, korko, pääoma ja jäljellä oleva saldo kaudella",
+      "colPeriod": "#",
+      "colDate": "Kuukausi",
+      "colPayment": "Maksu",
+      "colInterest": "Korko",
+      "colPrincipal": "Pääoma",
+      "colBalance": "Saldo",
+      "colYear": "Vuosi",
+      "expandRows": "Näytä kaikki {total} maksua",
+      "collapseRows": "Näytä vähemmän maksuja",
+      "windowNote": "Näytetään {shown} maksua yhteensä {total} maksusta. CSV ja API sisältävät kaikki maksut.",
+      "emptyHint": "Syötä lainasumma, korko ja takaisinmaksuaika nähdäksesi aikataulun.",
+      "note": "Sama moottori kuin API:ssa. Laskenta perustuu vain lainasi ehtoihin; mitään ei lähetetä tai tallenneta.",
+      "errPrincipal": "Syötä lainasumma, joka on suurempi kuin 0.",
+      "errRate": "Syötä korko välillä 0–100.",
+      "errTerm": "Syötä määräaika väliltä 1 kuukausi – 100 vuotta.",
+      "errStartMonth": "Käytä muotoa VVVV-KK, esimerkiksi 2026-01.",
+      "errExtra": "Syötä summa, jokaon 0 tai suurempi.",
+      "errOneTimePeriod": "Syötä maksun numero, jolle kertamaksu osuu."
+    },
+    "businessDayShift": {
+      "modeLabel": "Mitä lasketaan",
+      "mode": {
+        "shift": "Siirrä päivämäärää",
+        "countBetween": "Laske päivämäärien väli"
+      },
+      "startDate": "Alkamispäivä",
+      "days": "Työpäiviä",
+      "daysHint": "Negatiiviset arvot laskevat taaksepäin: −10 tarkoittaa kymmentä työpäivää ennen alkamispäivää.",
+      "daysInvalid": "Työpäivien määrän on oltava kokonaisluku, valinnaisesti miinusmerkillä.",
+      "endDate": "Päättymispäivä",
+      "includeEndDate": "Lasketaan myös päättymispäivä — tämä on sama kuin lehtitaulukon NETWORKDAYS-funktion palauttama tulos",
+      "weekendLabel": "Vapaapäivät viikossa",
+      "weekendHint": "Oletuksena lauantai ja sunnuntai. Aseta perjantai ja lauantai, jos viikonloppu on eri.",
+      "weekday": {
+        "sun": "Su",
+        "mon": "Ma",
+        "tue": "Ti",
+        "wed": "Ke",
+        "thu": "To",
+        "fri": "Pe",
+        "sat": "La"
+      },
+      "holidays": "Pyhät",
+      "holidaysHint": "Jätetään tyhjäksi, jolloin tulos perustuu pelkkään viikonloppusääntöön — minkään maan kalenteria ei käytetä.",
+      "makeupWorkdays": "Lisätyöpäivät",
+      "makeupHint": "Työpäivät, jotka lasketaan mukaan vaikka ne osuvat viikonloppuun tai juhlapäivään – Kiinan 调休/补班 -lauantaipäivät tulevat tähän.",
+      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesIgnored": "{n, plural, one {# merkintä ei ollut YYYY-MM-DD-päivämäärä ja sitä ei käytetä} other {# merkintää ei ollut YYYY-MM-DD-päivämääriä ja niitä ei käytetä}}",
+      "pickStart": "Valitse aloituspäivämäärä aloittaaksesi.",
+      "emptyHintShift": "Valitse aloituspäivämäärä ja työpäivien määrä.",
+      "emptyHintCount": "Valitse aloitus- ja lopetuspäivämäärä.",
+      "note": "Sama moottori kuin API:ssa. Laskenta suoritetaan näytetyllä sääntöjoukolla; mitään ei tallenneta.",
+      "countHeadline": "{n, plural, one {# työpäivä} other {# työpäivää}}",
+      "reversedRange": "Lopetuspäivämäärä on ennen aloituspäivämäärää, joten määrä on negatiivinen.",
+      "classification": {
+        "workday": "Työpäivä",
+        "weekend": "Viikonloppu",
+        "holiday": "Juhlapäivä",
+        "makeupWorkday": "Lisätyöpäivä"
+      },
+      "ruleWeekend": "{days} vapaata",
+      "ruleNoWeekend": "ei viikoittaisia vapaita päiviä",
+      "ruleHolidays": "{n, plural, =0 {ei juhlapyväluetteloa} one {# juhlapyhä} other {# juhlapyhää}}",
+      "ruleMakeups": "{n, plural, =0 {ei lisätyöpäiviä} one {# lisätyöpäivä} other {# lisätyöpäivää}}",
+      "ruleEndIncluded": "loppupäivä lasketaan mukaan",
+      "ruleEndExcluded": "loppupäivä ei lasketa mukaan",
+      "chain": "Siirrä uudelleen tästä päivästä"
+    },
+    "retryBackoff": {
+      "strategy": {
+        "exponential": "Eksponentiaalinen",
+        "linear": "Lineaarinen",
+        "fixed": "Kiinteä"
+      },
+      "initialDelay": "Alkuperäinen viive (ms)",
+      "factor": "Kertoimen kerroin",
+      "factorHint": "Kerroin, jota sovelletaan jokaisella uudelleenyrityksellä. Täytyy olla suurempi kuin 1.",
+      "increment": "Lineaarinen lisäys (ms)",
+      "incrementHint": "Millisekunteja, jotka lisätään viiveeseen jokaisella uudelleenyrityksellä.",
+      "maxDelay": "Maksimiviiveen yläraja (ms)",
+      "maxDelayHint": "Jätä tyhjäksi, jos ei ylärajaa. Kun yläraja saavutetaan, kaikki myöhemmät viiveet pysyvät tasaisina.",
+      "maxAttempts": "Maksimiyritykset",
+      "maxAttemptsHint": "1–100.",
+      "excludeInitial": "Maksimiyritykset eivät sisällä alkuperäistä pyyntöä",
+      "excludeInitialNote": "Päällä: yllä oleva luku laskee vain uudelleenyritykset, alkuperäinen pyyntö on erillinen. Pois päältä: se laskee kaikki yritykset, alkuperäinen pyyntö mukaan lukien.",
+      "jitter": {
+        "none": "Ei mitään — tarkat viiveet",
+        "equal": "Tasainen — puolet kiinteä, puolet satunnainen",
+        "full": "Täysi — missä tahansa nollasta viiveeseen"
+      },
+      "callerTimeout": "Oma aikakatkaisu (ms)",
+      "callerTimeoutHint": "Valinnainen. Jätä tyhjäksi ohittaaksesi budjettitarkistuksen.",
+      "emptyHint": "Korjaa korostettu kenttä nähdäksesi aikataulun.",
+      "note": "Laskettu pelkästään käytännöstä — mitään ei lähetetä ylävirran palveluun. Jitter ilmoitetaan vaihteluvälinä, johon todellinen asiakas osuu, ei koskaan yksittäisenä otoksena.",
+      "headlineExact": "{attempts} yritystä, yhteensä {wait} odotusaikaa.",
+      "headlineRange": "{attempts} yritystä, keskimäärin {expected} odotusaikaa, huonossa tapauksessa jopa {max}.",
+      "finalDelay": "Viimeinen odotus ennen yritystä {attempt} on {delay}.",
+      "noRetries": "Tämä budjetti sallii yhden yrityksen eikä yhtään uudelleenyritystä, joten odotettavaa ei ole.",
+      "retryCount": "{count, plural, =0 {ei uudelleenyrityksiä} one {# uudelleenyritys} other {# uudelleenyritystä}}",
+      "capFlattened": "Katto saavutettu yrityksessä {attempt} — jokainen myöhempi viive pysyy arvossa {delay}.",
+      "timeoutExceeded": "Pahimmassa tapauksessa odotetaan {wait}, mikä ylittää {timeout} budjetin.",
+      "timeoutOk": "Huonoimmassa tapauksessa odotetaan {wait}, mikä mahtuu {timeout} -budjettiin.",
+      "tableLabel": "Yritetään uudelleen -aikataulu",
+      "colAttempt": "Yritys",
+      "colDelay": "Viive",
+      "colCumulative": "Kumulatiivinen odotus",
+      "average": "kesk. {value}",
+      "formula": {
+        "none": "Viiveet ovat tarkanarvoisia — ei satunnaisuutta.",
+        "equal": "Tasainen satunnaisuus: puolet viiveestä on kiinteä ja toinen puoli arvotaan tasaisesti, joten jokainen odotus on puolen viiveen ja koko viiveen välillä.",
+        "full": "Täysi satunnaisuus: odotus arvotaan tasaisesti nollan ja lasketun viiveen välillä."
+      },
+      "errInitialDelay": "Alkuperäisen viiveen on oltava kokonaisluku millisekunneissa, vähintään 1.",
+      "errFactor": "Tekijän on oltava suurempi kuin 1 ja enintään 100. Tekijä 1 tarkoittaa kiinteää strategiaa.",
+      "errIncrement": "Lisäyksen on oltava kokonaisluku millisekunneissa, 0 tai enemmän.",
+      "errMaxDelay": "Ylärajan on oltava kokonaisluku millisekunneina, vähintään 1.",
+      "errCapBelowInitial": "Ylärajan on oltava vähintään alkuperäinen viive.",
+      "errMaxAttempts": "Yritysten määrän on oltava kokonaisluku väliltä 1–100.",
+      "errCallerTimeout": "Aikakatkaisun on oltava kokonaisluku millisekunneina, vähintään 1."
+    },
+    "csvColumns": {
+      "csvLabel": "CSV",
+      "csvPlaceholder": "Liitä CSV tähän tai pudota tiedosto — ensimmäinen rivi luetaan sarakkeiden nimiksi",
+      "sample": "Esimerkki CSV",
+      "chooseFile": "Valitse tiedosto",
+      "fileFailed": "Tiedostoa {name} ei voitu lukea.",
+      "delimiterLabel": "Eroittelija",
+      "delimiter": {
+        "comma": "Pilkku  ,",
+        "semicolon": "Pisteenekkä  ;",
+        "tab": "Tabulatori",
+        "pipe": "Putsi |"
+      },
+      "raggedPolicyLabel": "Rivit, jotka eivät vastaa otsikkoa",
+      "ragged": {
+        "pad": "Tasaa otsikon mukaan",
+        "truncate": "Katkaise pitkät rivit, jätä lyhyet lyhyiksi",
+        "reject": "Pysäytä ja raportoi"
+      },
+      "columnsTitle": "Sarakkeet — {kept}/{total} säilytetty",
+      "columnsHint": "Poista valinta sarakkeen poistamiseksi, muokkaa laatikkoa nimenvaihtoon ja käytä nuolia järjestystä muuttaaksesi. Kaikki ratkaistaan alkuperäisen otsikon perusteella.",
+      "reset": "Palauta sarakkeet",
+      "keep": "Säilytä sarake {name}",
+      "renameLabel": "{name}",
+      "moveUp": "Siirrä {name} ylös",
+      "moveDown": "Siirrä {name} alas",
+      "noneKept": "Kaikki sarakkeet on poistettu käytöstä — pidä vähintään yksi.",
+      "emptyHint": "Liitä CSV yllä hallitaksesi sen sarakkeita.",
+      "note": "Suorittaa liittämästäsi tekstistä. Pudota, nimetään uudelleen, järjestetään uudelleen — aina tässä kiinteässä järjestyksessä alkuperäistä otsikkoa vastaan.",
+      "columnCount": "{n} saraketta",
+      "rowCount": "{n} riviä",
+      "duplicateHeaders": "Toistuva otsikko käytetty nimellä: {names}",
+      "raggedCount": "{n}{more} riviä ei vastaa otsikon leveyttä",
+      "previewLabel": "Lähtö CSV",
+      "previewTruncated": "Näytetään ensimmäiset {shown} rivistä yhteensä {total}. Kopioi tai lataa koko tiedosto.",
+      "raggedListLabel": "Rivit, jotka eivät vastaa otsikon leveyttä",
+      "raggedRow": "Rivi {line}: {actual} kenttää, otsikossa on {expected}",
+      "unusedRenames": "Uudelleennimeäminen ohitettu — nämä sarakkeet eivät ole lähdössä: {names}"
+    },
+    "imageRotateFlip": {
+      "drop": "Vedä kuva tähän tai napsauta selataksesi",
+      "browse": "Valitse kuva",
+      "selected": "{name} · {kb} KB",
+      "privacy": "Tiedosto lähetetään Forge API:lle muunnosta varten eikä sitä tallenneta.",
+      "tooLarge": "Kuva on suurempi kuin {mb} MB.",
+      "ccw": "90° vasemmalle",
+      "cw": "90° oikealle",
+      "half": "180°",
+      "reset": "Palauta",
+      "flipHorizontal": "Käännä vaakasuunnassa",
+      "flipVertical": "Käännä pystysuunnassa",
+      "angle": "Kulma",
+      "exactAngle": "Tarkka °",
+      "fitMode": "Kangas",
+      "fitExpand": "Laajenna kangasta",
+      "fitCrop": "Rajaa täyttämään",
+      "fitInside": "Mahtuu sisään",
+      "fitNote": "Kun kuva on kierretty neljänneskierroksen verran, se ei enää mahdu alkuperäiseen kehykseensä: laajennus säilyttää kaikki pikselit, rajaaminen säilyttää alkuperäisen koon ja leikkaa kulmat, mahtuminen skaalaa koko kuvan pienemmäksi.",
+      "outputFormat": "Lähtömuoto",
+      "sameFormat": "Sama kuin syöte",
+      "idle": "Pudota kuva nähdäksesi sen uudelleen suunnattuna.",
+      "original": "Alkuperäinen · {w}×{h}",
+      "originalAlt": "Kuva sellaisena kuin se ladattiin",
+      "result": "Tulos · {w}×{h}",
+      "resultAlt": "Uudelleen suunnattu kuva",
+      "badgeLossless": "Ei uudelleenotannetta",
+      "badgeResampled": "Uudelleenotettu",
+      "badgeSize": "{kb} KB",
+      "badgeExif": "EXIF-orientaatio {orientation} sovellettu ensin",
+      "badgeSnapped": "Pyöritetty tarkalleen neljänneskierroksen",
+      "badgeReencode": "Geometria on tarkka; koodaus uudelleen",
+      "download": "Lataa",
+      "note": "90°, 180° ja 270° pyöräytykset siirtävät pikseleitä ilman sekoittamista. Muut kulmat tekevät uudelleenotannon. Animoituja GIF-, APNG- ja WebP-tiedostoja ei vielä tueta."
+    },
+    "exifStrip": {
+      "drop": "Vedä JPEG-, PNG- tai WebP-tiedosto poistaaksesi sen metatiedot",
+      "privacy": "Käsitellään palvelimillamme eikä tallenneta. Enintään {mb} MB kuvaa kohti.",
+      "idle": "Poistettu: GPS, otosajankohta, kamera- ja laitetiedot, upotettu esikatselukuva, muokkaushistoria. Säilytetty: orientaatio, väriprofiili, mitat, pikselidata.",
+      "note": "Vain still-kuvat. Video, PDF, HEIC, AVIF ja GIF eivät kuulu toiminnon piiriin, ja C2PA-alkuperäselosteet jätetään ennalleen.",
+      "detail": "Mitä poistettiin",
+      "optKeepThumbnail": "Säilytä upotettu Exif-kuva",
+      "verdictStripped": "Poistettiin {fields} metatietokenttää ({kb} KB)",
+      "verdictClean": "Tiedostossa ei ole poistettavia metatietoja",
+      "strippedCaveat": "Itse kuva on muuttumaton — samat pikselit, samat mitat, ei uudelleenkodeutusta.",
+      "cleanCaveat": "Palautettu tavu kerrallaan sellaisenaan.",
+      "badgeOrientationKept": "Suunta säilyi",
+      "badgeOrientationLost": "Suuntaa ei voitu säilyttää",
+      "badgeColorProfileKept": "Väriprofiili säilyi",
+      "badgeThumbnailKept": "Kuva säilyi",
+      "badgeThumbnailRemoved": "Kuva poistettiin",
+      "download": "Lataa puhdistettu kuva",
+      "sizes": "{before} KB → {after} KB",
+      "detailFields": "{fields} kenttää · {kb} KB",
+      "detailNothing": "Tästä tiedostosta ei poistettu mitään.",
+      "detailOrientation": "Tiedostosta luettiin Exif-orientaatio {value} ja se siirrettiin mukana.",
+      "detailNoOrientation": "Tiedosto ei määrittänyt Exif-orientaatiota, joten näyttö ei muutu.",
+      "segmentExif": "Exif",
+      "segmentIptc": "IPTC",
+      "segmentXmp": "XMP",
+      "segmentComment": "Kommentti",
+      "segmentText": "Tekstimetadatat",
+      "segmentTime": "Aikaleima",
+      "segmentVendor": "Valmistajan lohko",
+      "summaryStripped": "Poistettiin {fields} metatietokenttää ({families}), {kb} KB. Kuva muuten muuttumaton.",
+      "summaryClean": "Poistettavaa metatietoa ei löytynyt. Tiedosto palautettu muuttumattomana."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "Name / Host",
+      "type": "Record-Typ",
+      "note": "Auflösung über den Forge-Host-DNS — kann vom lokalen Stub abweichen."
+    },
+    "tls": {
+      "host": "Host",
+      "expired": "Zertifikat abgelaufen",
+      "validDays": "Noch {n} Tage",
+      "note": "Verbindung vom Forge-Host. Trust-Prüfung deaktiviert nur zur Inspektion."
+    },
+    "myIp": {
+      "refresh": "Aktualisieren",
+      "note": "IP wie vom Forge-Edge gesehen. Kein Geo ohne Lizenzdaten."
+    },
+    "mermaid": {
+      "source": "Mermaid source",
+      "idle": "Valid diagrams render here",
+      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
+      "sample": "Sample",
+      "theme": "Theme",
+      "theme_default": "Default",
+      "theme_dark": "Dark",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "Flowchart",
+      "sample_sequence": "Sequence",
+      "sample_class": "Class",
+      "sample_er": "ER diagram",
+      "sample_state": "State",
+      "sample_gantt": "Gantt",
+      "sample_pie": "Pie",
+      "sample_mindmap": "Mindmap",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "zoomReset": "Reset view",
+      "copySvg": "Copy SVG",
+      "downloadSvg": "Download SVG",
+      "downloadPng": "Download PNG",
+      "previewAria": "Mermaid diagram preview",
+      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
+    },
+    "colorDeltaE": {
+      "note": "CIEDE2000 via culori. Schwellen nur für UI-Review."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL-Dialekt",
+      "parseNote": "Nur Parse/Inventar. ERD-Canvas separat.",
+      "convertNote": "@dbml/core — gleicher Pfad wie die API."
+    },
+    "dnsLeak": {
+      "probeHost": "Compare host (advanced)",
+      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
+      "run": "Start DNS leak check",
+      "retest": "Run again",
+      "showAdvanced": "Advanced options",
+      "hideAdvanced": "Hide advanced",
+      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
+      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
+      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
+      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
+      "edgeIp": "Your edge IP",
+      "authorityHits": "Recursive IPs",
+      "forgePaths": "Forge resolver hits",
+      "dohPaths": "Browser DoH hits",
+      "webrtcCount": "WebRTC IPs",
+      "forgeResolvers": "Forge multi-resolver (server-side)",
+      "forgeNote": "These queries leave from the Forge host — not your laptop.",
+      "browserDoh": "Browser DoH",
+      "webrtc": "WebRTC ICE",
+      "egressMarkers": "Forge egress markers",
+      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
+      "honestyPrefix": "Honesty:",
+      "verdictConsistent": "Paths look consistent on this check",
+      "verdictSplit": "Split answers across DNS paths",
+      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
+      "verdictIncomplete": "Incomplete — browser probes missing",
+      "verdictAuthority": "System DNS recursives captured",
+      "infraOn": "Authority online",
+      "infraOff": "Authority offline — multi-path only",
+      "infraChecking": "Checking…",
+      "authorityResolvers": "System DNS recursive resolvers",
+      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
+      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
+      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
+      "authorityDetail": "Authority session detail",
+      "phaseSession": "Creating session…",
+      "phaseSystemDns": "Triggering system DNS…",
+      "phasePoll": "Listening for recursive hits ({n}/{total})…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "stepSession": "Session",
+      "stepSystemDns": "System DNS",
+      "stepPoll": "Listen",
+      "stepBrowser": "Browser",
+      "stepServer": "Server",
+      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
+      "liveHits": "Live recursive hits",
+      "sectionSystemDns": "System DNS (what you came for)",
+      "sectionComplementary": "Complementary paths",
+      "sectionTech": "Technical session detail",
+      "copyIps": "Copy IPs",
+      "copied": "Copied",
+      "queryCount": "{n} queries",
+      "colPath": "Path",
+      "colAnswers": "Answers",
+      "colMs": "ms",
+      "ipPublic": "public",
+      "ipPrivate": "private",
+      "sig": {
+        "captured": "System DNS captured",
+        "onlineNoHits": "Authority online · no hits yet",
+        "offline": "Authority offline",
+        "forgeSplit": "Forge resolvers disagree",
+        "dohSplit": "Browser DoH disagree",
+        "webrtcMismatch": "WebRTC ≠ edge IP",
+        "webrtcLocal": "Local WebRTC candidates",
+        "noBrowser": "No browser probes"
+      }
+    },
+    "honesty": {
+      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
+      "signatureNotVerified": "{engine} · decode only · signature not verified",
+      "localOnly": "Processed for this request · not stored as a card or credential"
+    },
+    "idCard": {
+      "number": "Resident ID number",
+      "note": "GB 11643 check digit · no household registry lookup · same path as API",
+      "specimenTitle": "Resident ID · structure specimen",
+      "segRegion": "Region",
+      "segBirth": "Birth",
+      "segSeq": "Seq",
+      "segCheck": "Check",
+      "metaBirth": "Birth",
+      "metaGender": "Gender",
+      "metaRegion": "Region code",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "reasonFormat": "Format should be 18 characters (last may be X)",
+      "reasonBirth": "Birth date segment is invalid",
+      "reasonCheck": "Check digit is wrong",
+      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} lines",
+      "chars": "{n} chars",
+      "empty": "(empty file)",
+      "readyToShip": "Ready to drop into the repo"
+    },
+    "textTransform": {
+      "mode": "Mode",
+      "input": "Input",
+      "output": "Output",
+      "emptyResult": "Result appears here",
+      "runLocal": "Run locally",
+      "runServer": "Run on server",
+      "statusLocalLive": "Local · live",
+      "statusLocal": "Local",
+      "statusServer": "Server · same path as API",
+      "noteDefault": "Same path as API"
+    }
+  },
+  "roots": {
+    "hubLabel": "Tarkoituksen mukaan",
+    "tools": "työkalut",
+    "dualSurface": "Ihmisille tarkoitettu sivu + Agent API · sama moottori",
+    "otherRoots": "Muut kysyntäjuuret"
+  }
+}

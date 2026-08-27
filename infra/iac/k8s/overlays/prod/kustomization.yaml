@@ -1,0 +1,43 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: nebutra-prod
+
+resources:
+  - ../../base
+
+# Prefix all resource names with "prod-" to disambiguate in multi-env clusters
+namePrefix: prod-
+
+commonLabels:
+  environment: production
+
+# ---------------------------------------------------------------------------
+# Strategic-merge patches applied on top of base manifests
+# ---------------------------------------------------------------------------
+patches:
+  # Scale up api-gateway and web to 3 replicas; ai-service stays at 2
+  - path: patches/replicas.yaml
+  # Increase CPU/memory ceilings for production workloads
+  - path: patches/resources.yaml
+
+# ---------------------------------------------------------------------------
+# Image tag override — CI replaces :latest with the immutable SHA tag
+# Example (set in CI):
+#   kustomize edit set image nebutra/web=nebutra/web:abc1234
+# ---------------------------------------------------------------------------
+# images:
+#   - name: nebutra/web
+#     newTag: "$(IMAGE_TAG)"
+#   - name: nebutra/landing
+#     newTag: "$(IMAGE_TAG)"
+#   - name: nebutra/api-gateway
+#     newTag: "$(IMAGE_TAG)"
+#   - name: nebutra/ai-service
+#     newTag: "$(IMAGE_TAG)"
+#   - name: nebutra/ecommerce-service
+#     newTag: "$(IMAGE_TAG)"
+#   - name: nebutra/recsys-service
+#     newTag: "$(IMAGE_TAG)"
+#   - name: nebutra/event-ingest-service
+#     newTag: "$(IMAGE_TAG)"

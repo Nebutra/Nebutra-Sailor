@@ -1,0 +1,63 @@
+{
+  "name": "@nebutra/typelens-catalog",
+  "version": "0.1.1",
+  "description": "TypeLens — works, pairings, and agent extract packs for designers and design agents",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "graph": "labs",
+    "status": "wip",
+    "productionReady": false,
+    "surface": "support-contract",
+    "featureId": "typelens-catalog",
+    "category": "design",
+    "summary": "AI-native type pairing library — works · pairings · extract packs",
+    "gaps": [
+      "typelens.nebutra.com product surface not yet shipped",
+      "Catalog seed content and licensing review incomplete",
+      "Agent extract pack generation pipeline is scaffold only"
+    ]
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "research:fiu": "node ./scripts/fiu-research-coldstart.mjs",
+    "research:fiu:quick": "node ./scripts/fiu-research-coldstart.mjs --max-uses-per-face=3 --delay-ms=3000 --max-pages=24",
+    "research:fiu:promote": "node ./scripts/fiu-promote.mjs",
+    "prebuild": "node ./scripts/fiu-promote.mjs",
+    "build": "tsup"
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "tsup": "catalog:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/design/typelens-catalog"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
+}

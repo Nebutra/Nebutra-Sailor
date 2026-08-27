@@ -1,0 +1,1273 @@
+{
+  "admin": {
+    "title": "لوحة الإدارة",
+    "description": "لوحة المسؤول الرئيسي — إدارة المستخدمين والمنظمات وصحة النظام.",
+    "nav": {
+      "overview": "نظرة عامة",
+      "users": "المستخدمين",
+      "organizations": "المنظمات"
+    },
+    "users": {
+      "title": "المستخدمين",
+      "description": "تصفح، ابحث، وتقمص أي مستخدم عبر جميع المنظمات.",
+      "searchPlaceholder": "البحث عن المستخدمين…",
+      "totalCount": "{count, plural, one {# مستخدم} other {# مستخدمين}}",
+      "empty": "لم يتم العثور على مستخدمين.",
+      "loadError": "فشل في تحميل المستخدمين.",
+      "columns": {
+        "email": "البريد الإلكتروني",
+        "name": "الاسم",
+        "created": "تاريخ الإنشاء",
+        "activeOrgs": "المنظمات النشطة",
+        "actions": "الإجراءات"
+      },
+      "viewOrgs": "عرض المنظمات"
+    },
+    "organizations": {
+      "title": "المنظمات",
+      "description": "جميع مساحات العمل في النظام، مرتبة حسب الأحدث.",
+      "searchPlaceholder": "البحث عن المنظمات…",
+      "totalCount": "{count, plural, one {# منظمة} other {# منظمات}}",
+      "empty": "لم يتم العثور على منظمات.",
+      "loadError": "فشل في تحميل المنظمات.",
+      "columns": {
+        "name": "الاسم",
+        "slug": "المعرف المختصر",
+        "plan": "الخطة",
+        "members": "الأعضاء",
+        "created": "تاريخ الإنشاء",
+        "actions": "الإجراءات"
+      },
+      "view": "عرض"
+    },
+    "impersonate": {
+      "trigger": "التقمص",
+      "starting": "جارٍ البدء…",
+      "stop": "إيقاف التمثيل",
+      "confirm": "تمثيل {label}؟ ستظهر لك التطبيق كما يراه هذا المستخدم حتى تتوقف.",
+      "error": "فشل بدء التمثيل.",
+      "stopError": "فشل إيقاف التمثيل."
+    },
+    "pagination": {
+      "previous": "السابق",
+      "next": "التالي",
+      "pageOf": "الصفحة {page} من {total}"
+    }
+  },
+  "Common": {
+    "hello": "مرحباً بالعالم",
+    "dashboard": "لوحة التحكم",
+    "actions": {
+      "continue": "متابعة",
+      "confirm": "تأكيد",
+      "done": "تم",
+      "cancel": "إلغاء"
+    }
+  },
+  "theme": {
+    "light": "فاتح",
+    "dark": "داكن",
+    "system": "النظام"
+  },
+  "LocaleSwitcher": {
+    "label": "اللغة",
+    "ariaLabel": "تغيير اللغة",
+    "searchPlaceholder": "ابحث عن اللغات…",
+    "noResults": "لا توجد لغات مطابقة",
+    "menuAria": "اختر اللغة"
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "رقم تسجيل ICP",
+      "publicSecurity": "سجل الأمن العام"
+    },
+    "wechat": {
+      "signIn": "تسجيل الدخول عبر WeChat",
+      "notConfigured": "لم يتم تكوين تسجيل الدخول عبر WeChat"
+    }
+  },
+  "onboarding": {
+    "title": "إعداد مساحة العمل",
+    "subtitle": "ثلاث خطوات سريعة وستكون جاهزًا للإطلاق.",
+    "steps": {
+      "workspace": "مساحة العمل",
+      "invite": "دعوة الفريق",
+      "plan": "اختيار الخطة"
+    },
+    "progress": {
+      "back": "رجوع",
+      "stepCounter": "الخطوة {current} من {total}"
+    },
+    "plan": {
+      "title": "اختر خطة",
+      "description": "ابدأ مجاناً أو افتح سعة أكبر. يمكنك تغيير الخطة في أي وقت.",
+      "choose": "اختر خطة",
+      "skip": "تخطي الآن"
+    }
+  },
+  "userMenu": {
+    "ariaLabel": "فتح قائمة المستخدم",
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات",
+    "feedback": "الملاحظات",
+    "theme": "المظهر",
+    "language": "اللغة",
+    "signOut": "تسجيل الخروج",
+    "signedInAs": "متصل باسم"
+  },
+  "account": {
+    "profile": {
+      "title": "الملف الشخصي",
+      "description": "تحديث معلوماتك الشخصية.",
+      "nameLabel": "الاسم",
+      "namePlaceholder": "اسمك الكامل",
+      "emailLabel": "البريد الإلكتروني",
+      "emailHint": "سنرسل رابط التحقق لتأكيد عنوان البريد الإلكتروني الجديد.",
+      "languageLabel": "اللغة",
+      "submit": "حفظ التغييرات",
+      "saving": "جارٍ الحفظ…",
+      "verifyEmail": "التحقق",
+      "verifying": "جارٍ إرسال التحقق…",
+      "success": "تم تحديث الملف الشخصي.",
+      "verificationSent": "تم إرسال بريد التحقق.",
+      "errorRequiredName": "الاسم مطلوب.",
+      "errorInvalidEmail": "عنوان البريد الإلكتروني غير صالح.",
+      "subtitle": "هويتك ومعلومات الاتصال الخاصة بك.",
+      "unknown": "مستخدم غير مسمى",
+      "manageCta": "فتح إعدادات الحساب الكاملة"
+    },
+    "avatar": {
+      "title": "الصورة الرمزية",
+      "description": "قم برفع صورة مربعة (PNG أو JPEG أو WebP، بحد أقصى 2 ميجابايت).",
+      "uploadButton": "رفع الصورة الرمزية",
+      "uploading": "جارٍ الرفع…",
+      "fileTooBig": "الملف كبير جدًا. الحد الأقصى للحجم هو 2 ميجابايت.",
+      "invalidType": "نوع الصورة غير مدعوم. استخدم PNG أو JPEG أو WebP.",
+      "success": "تم تحديث الصورة الرمزية.",
+      "removeButton": "إزالة الصورة الرمزية",
+      "removed": "تمت إزالة الصورة الرمزية.",
+      "deleteError": "فشل حذف الصورة الرمزية."
+    },
+    "export": {
+      "title": "تصدير بياناتي",
+      "description": "قم بتنزيل نسخة من كل سجلات نحفظها لحسابك، بما في ذلك الملف الشخصي والمنظمات وأحداث التدقيق والإشعارات والدعوات.",
+      "compliance": "مطلوب بموجب المادة 20 من اللائحة العامة لحماية البيانات (حق قابلية نقل البيانات) والمادة 45 من قانون حماية المعلومات الشخصية (حق الحصول على نسخة من المعلومات الشخصية).",
+      "export": "تصدير بياناتي",
+      "pending": "جارٍ تحضير التصدير…",
+      "ready": "التصدير جاهز.",
+      "download": "تحميل JSON",
+      "error": "فشل تحضير التصدير. يرجى المحاولة مرة أخرى."
+    },
+    "emailChange": {
+      "title": "تغيير عنوان البريد الإلكتروني",
+      "description": "سنرسل رابط التحقق إلى العنوان الجديد. لن يتم تطبيق التغيير إلا بعد تأكيدك منه.",
+      "newEmailLabel": "عنوان البريد الإلكتروني الجديد",
+      "newEmailPlaceholder": "you@example.com",
+      "submit": "إرسال رابط التحقق",
+      "submitting": "جارٍ الإرسال…",
+      "verificationSent": "تحقق من صندوق الوارد في {email} لتأكيد التغيير.",
+      "errorInvalidEmail": "عنوان البريد الإلكتروني غير صالح.",
+      "error": "فشل طلب تغيير البريد الإلكتروني.",
+      "confirm": {
+        "successTitle": "تم تحديث البريد الإلكتروني",
+        "successDescription": "تم تحديث بريدك الإلكتروني لتسجيل الدخول.",
+        "successWithEmail": "بريدك الإلكتروني لتسجيل الدخول هو الآن {email}.",
+        "failureTitle": "لم نتمكن من تأكيد ذلك الرابط",
+        "failureDescription": "رابط التحقق هذا غير صالح أو انتهت صلاحيته أو تم استخدامه بالفعل. يرجى طلب رابط جديد من إعدادات حسابك.",
+        "errorCode": "السبب: {code}",
+        "continueCta": "العودة إلى الحساب",
+        "backCta": "العودة إلى الحساب"
+      }
+    },
+    "title": "الحساب",
+    "ariaLabel": "إعدادات الحساب",
+    "navLabel": "علامات تبويب إعدادات الحساب",
+    "tip": "اضغط على {key} في أي مكان لإعادة فتح هذا الحوار.",
+    "tabs": {
+      "profile": "الملف الشخصي",
+      "subscription": "الاشتراك",
+      "billing": "الفواتير",
+      "preferences": "التفضيلات",
+      "personalization": "التخصيص"
+    },
+    "subscription": {
+      "title": "الاشتراك",
+      "subtitle": "الخطة، الحصة، والتجديد.",
+      "currentPlan": "الخطة الحالية",
+      "upgradeCta": "قارن الخطط",
+      "manageCta": "إدارة الاشتراك"
+    },
+    "billing": {
+      "title": "الفواتير",
+      "subtitle": "سجل الفواتير وطريقة الدفع.",
+      "empty": {
+        "title": "لا يوجد سجل بعد",
+        "description": "ستظهر الرسوم والفواتير هنا بعد أول فترة مدفوعة.",
+        "cta": "فتح الفواتير الكاملة"
+      }
+    },
+    "preferences": {
+      "title": "التفضيلات",
+      "subtitle": "المظهر وإمكانية الوصول.",
+      "theme": "المظهر",
+      "light": "فاتح",
+      "dark": "داكن",
+      "system": "النظام",
+      "help": "المساعدة",
+      "reportIssue": "الإبلاغ عن مشكلة",
+      "shortcuts": "اختصارات لوحة المفاتيح"
+    },
+    "personalization": {
+      "title": "التخصيص",
+      "subtitle": "أخبر Sailor من أنت وكيف يجب أن يستجيب."
+    }
+  },
+  "impact": {
+    "hero_title": "إعادة تعريف النموذج",
+    "hero_subtitle": "ليكن لا يوجد عمل صعب في العالم.",
+    "social_title": "الاجتماعية",
+    "social_headline": "المساواة التكنولوجية المطلقة",
+    "social_description": "تمكين المبتكرين على الحافة. كسر الفلاتر التقليدية وتمكين المؤسسين الفرديين ببنية تحتية مبتكرة.",
+    "governance_title": "الحوكمة",
+    "governance_headline": "الكود هو القانون",
+    "governance_description": "حوكمة خوارزمية مبنية على إثبات العمل والنتائج التجارية الحقيقية، تحل محل البيروقراطية المعتمة.",
+    "environment_title": "البيئة",
+    "environment_headline": "التقليلية الرقمية",
+    "environment_description": "دفع تقليل البصمة السحابية عبر تكامل SaaS المتطرف وكفاءة الموارد."
+  },
+  "auth": {
+    "security": {
+      "title": "الأمان",
+      "description": "إدارة كلمة المرور، المصادقة متعددة العوامل، والجلسات النشطة.",
+      "managedByProvider": "إعدادات الأمان تُدار بواسطة مزود المصادقة الخاص بك.",
+      "openProviderProfile": "فتح الملف الشخصي",
+      "changePassword": {
+        "title": "تغيير كلمة المرور",
+        "description": "استخدم كلمة مرور قوية لا تُستخدم في مواقع أخرى.",
+        "currentPasswordLabel": "كلمة المرور الحالية",
+        "newPasswordLabel": "كلمة المرور الجديدة",
+        "confirmPasswordLabel": "تأكيد كلمة المرور الجديدة",
+        "revokeOtherSessions": "تسجيل الخروج من الأجهزة الأخرى",
+        "submit": "تحديث كلمة المرور",
+        "pending": "جارٍ تحديث كلمة المرور…",
+        "success": "تم تحديث كلمة المرور بنجاح."
+      },
+      "twoFactor": {
+        "title": "المصادقة الثنائية",
+        "description": "أضف خطوة تحقق ثانية باستخدام تطبيق المصادقة.",
+        "enabled": "مفعّلة",
+        "disabled": "غير مفعّلة",
+        "enabledHelp": "يطلب حسابك رمز مصادقة مكونًا من 6 أرقام بعد تسجيل الدخول بكلمة المرور.",
+        "disabledHelp": "احمِ حسابك برمز مكون من 6 أرقام من تطبيق المصادقة.",
+        "enable": "تفعيل المصادقة الثنائية",
+        "disable": "تعطيل المصادقة الثنائية",
+        "passwordPrompt": "تأكيد كلمة المرور",
+        "scanQrCode": "امسح رمز QR هذا باستخدام تطبيق المصادقة الخاص بك، ثم أدخل الرمز المكوّن من 6 أرقام أدناه.",
+        "secretKeyLabel": "أو أدخل هذا المفتاح السري يدويًا",
+        "verificationCodeLabel": "رمز التحقق",
+        "verify": "التحقق والتفعيل",
+        "backupCodesTitle": "رموز النسخ الاحتياطي",
+        "backupCodesDescription": "احفظ هذه الرموز في مكان آمن. يمكن استخدام كل رمز مرة واحدة إذا فقدت الوصول إلى تطبيق المصادقة الخاص بك.",
+        "copyBackupCodes": "نسخ الرموز",
+        "finishSetup": "إكمال الإعداد",
+        "successEnabled": "تم تفعيل المصادقة الثنائية.",
+        "successDisabled": "تم تعطيل المصادقة الثنائية."
+      },
+      "sessions": {
+        "title": "الجلسات النشطة",
+        "description": "الأجهزة والمتصفحات المتصلة حاليًا بحسابك.",
+        "currentSession": "(الجلسة الحالية)",
+        "ipLabel": "عنوان IP",
+        "lastActiveLabel": "آخر نشاط",
+        "revoke": "تسجيل الخروج",
+        "revokeAll": "تسجيل الخروج من جميع الأجهزة الأخرى",
+        "empty": "لا توجد جلسات نشطة أخرى.",
+        "successRevoked": "تم تسجيل خروج الجلسة.",
+        "successRevokedAll": "تم تسجيل الخروج من جميع الجلسات الأخرى."
+      },
+      "deleteAccount": {
+        "title": "حذف الحساب",
+        "description": "إزالة حسابك وجميع البيانات المرتبطة به نهائياً. لا يمكن التراجع عن هذا الإجراء.",
+        "passwordPrompt": "أدخل كلمة المرور للتأكيد",
+        "confirmTextLabel": "اكتب DELETE للتأكيد",
+        "submit": "حذف الحساب",
+        "cancel": "إلغاء",
+        "success": "تم حذف الحساب."
+      },
+      "connectedAccounts": {
+        "title": "الحسابات المتصلة",
+        "description": "راجع طرق تسجيل الدخول عبر OAuth المرتبطة بهوية Nebutra الخاصة بك.",
+        "connected": "متصل",
+        "connect": "ربط",
+        "help": "تأكد من وجود طريقة تسجيل دخول موثوقة واحدة على الأقل قبل فك ربط المزود.",
+        "unlink": "فك الربط",
+        "notLinked": "غير مرتبط"
+      },
+      "passkeys": {
+        "title": "مفاتيح المرور",
+        "description": "استخدم بيانات الاعتماد المرتبطة بالجهاز لتسجيل الدخول المقاوم للاحتيال.",
+        "empty": "لم يتم تسجيل أي مفاتيح مرور بعد",
+        "addPasskey": "إضافة مفتاح مرور",
+        "cancelAdd": "إلغاء",
+        "cancelled": "تم إلغاء إعداد مفتاح المرور. لم يتم تغيير أي شيء.",
+        "defaultName": "مفتاح مرور {number}",
+        "nameHelp": "أعطِ هذا المفتاح اسمًا يمكن التعرف عليه قبل أن يطلب المتصفح التأكيد.",
+        "nameLabel": "اسم مفتاح المرور",
+        "rename": "إعادة تسمية",
+        "saveRename": "حفظ الاسم",
+        "remove": "إزالة",
+        "successAdded": "تمت إضافة مفتاح المرور.",
+        "successRemoved": "تمت إزالة مفتاح المرور.",
+        "unavailableBadge": "غير متاح"
+      },
+      "setPassword": {
+        "title": "تعيين كلمة مرور",
+        "description": "أضف كلمة مرور لتسجيل الدخول دون الاعتماد على مزود OAuth.",
+        "submit": "تعيين كلمة المرور",
+        "pending": "جارٍ إرسال رابط إعداد كلمة المرور…",
+        "sentMessage": "لقد أرسلنا رابط إعداد كلمة المرور إلى بريدك الإلكتروني."
+      }
+    },
+    "banner": {
+      "logoAlt": "Nebutra",
+      "slogan": "أطلق مشروعك الناشئ، مُدارًا منذ اليوم الأول.",
+      "tagline": "وكلاء متعددو المناطق، متعددو المستأجرين افتراضيًا. لا حاجة لفريق منصة."
+    },
+    "signIn": {
+      "title": "تسجيل الدخول إلى Nebutra",
+      "subtitle": "اختر طريقة تسجيل الدخول.",
+      "continueWith": "المتابعة باستخدام",
+      "continueWithProvider": "المتابعة باستخدام {provider}",
+      "providers": {
+        "google": "Google",
+        "github": "GitHub",
+        "apple": "Apple",
+        "microsoft": "Microsoft",
+        "feishu": "Feishu"
+      },
+      "providerLoading": "جارٍ التحويل…",
+      "dividerOr": "أو المتابعة عبر البريد الإلكتروني",
+      "emailLabel": "البريد الإلكتروني",
+      "emailPlaceholder": "you@example.com",
+      "continue": "متابعة",
+      "back": "رجوع",
+      "passwordLabel": "كلمة المرور",
+      "passwordPlaceholder": "أدخل كلمة المرور",
+      "showPassword": "إظهار كلمة المرور",
+      "hidePassword": "إخفاء كلمة المرور",
+      "capsLockOn": "مفتاح Caps Lock مفعّل",
+      "forgotPassword": "نسيت كلمة المرور؟",
+      "submit": "تسجيل الدخول",
+      "submitLoading": "جارٍ تسجيل الدخول…",
+      "useMagicLink": "أرسل لي رابط سحري بدلاً من ذلك",
+      "usePasskey": "تسجيل الدخول باستخدام مفتاح المرور",
+      "passkeyTitle": "تسجيل الدخول باستخدام مفتاح المرور",
+      "passkeyDescription": "استخدم Face ID أو Touch ID أو مفتاح الأمان الخاص بك. لا حاجة لكلمة مرور.",
+      "passkeyButton": "المتابعة باستخدام مفتاح المرور",
+      "passkeyCancelled": "تم إلغاء مطالبة مفتاح المرور.",
+      "passkeyUnsupported": "هذا المتصفح لا يدعم مفاتيح المرور.",
+      "passkeyError": "فشل تسجيل الدخول باستخدام مفتاح المرور. جرب طريقة أخرى.",
+      "ssoTitle": "المتابعة باستخدام SSO المؤسسي",
+      "ssoDescription": "جارٍ تحويلك إلى {provider} لـ {email}.",
+      "ssoError": "لم يتمكن SSO المؤسسي من البدء. جرب طريقة أخرى.",
+      "ssoRetry": "حاول مرة أخرى",
+      "newToProduct": "جديد في Nebutra؟",
+      "signUpLink": "إنشاء حساب",
+      "homeLink": "الرئيسية",
+      "signInFailed": "فشل تسجيل الدخول",
+      "genericError": "حدث خطأ. يرجى المحاولة مرة أخرى.",
+      "captchaError": "فشل التحقق من البوت. قم بتحديث الصفحة وحاول مرة أخرى.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
+      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
+      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
+      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+    },
+    "signUp": {
+      "title": "أنشئ حسابك في Nebutra",
+      "subtitle": "حساب واحد لجميع تطبيقات Nebutra.",
+      "firstNameLabel": "الاسم الأول",
+      "lastNameLabel": "اسم العائلة",
+      "firstNamePlaceholder": "الأول",
+      "lastNamePlaceholder": "العائلة",
+      "submit": "إنشاء الحساب",
+      "submitLoading": "جارٍ إنشاء الحساب…",
+      "alreadyHaveAccount": "لديك حساب بالفعل؟",
+      "signInLink": "تسجيل الدخول",
+      "signUpFailed": "فشل التسجيل",
+      "inviteLabel": "Invite code",
+      "invitePlaceholder": "neb_...",
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+    },
+    "passkeys": {
+      "title": "مفاتيح المرور",
+      "description": "استخدم Face ID أو Touch ID أو Windows Hello أو مفتاح أمان بدلاً من كلمة المرور. كل جهاز له مفتاح مرور خاص به.",
+      "addButton": "إضافة مفتاح مرور",
+      "adding": "جارٍ الإعداد…",
+      "namePlaceholder": "مثال: MacBook Pro",
+      "nameLabel": "الاسم (اختياري)",
+      "registerSuccess": "تمت إضافة مفتاح المرور.",
+      "registerCancelled": "تم إلغاء الإعداد.",
+      "registerUnsupported": "المتصفح لا يدعم مفاتيح المرور.",
+      "registerError": "فشل تسجيل مفتاح المرور.",
+      "empty": "لا توجد مفاتيح مرور بعد.",
+      "loadError": "فشل تحميل مفاتيح المرور.",
+      "revoke": "إزالة",
+      "revoking": "جارٍ الإزالة…",
+      "revokeConfirm": "إزالة مفتاح المرور هذا؟ لن تتمكن من تسجيل الدخول باستخدامه بعد الآن.",
+      "revokeSuccess": "تمت إزالة مفتاح المرور.",
+      "revokeError": "فشل إزالة مفتاح المرور.",
+      "device": {
+        "singleDevice": "مقيد بالجهاز",
+        "multiDevice": "متزامن عبر الأجهزة"
+      },
+      "addedOn": "تمت الإضافة في {date}"
+    },
+    "magicLink": {
+      "title": "تسجيل الدخول برابط سحري",
+      "description": "أدخل بريدك الإلكتروني وسنرسل لك رمزًا مكونًا من 6 أرقام لتسجيل الدخول.",
+      "emailLabel": "البريد الإلكتروني",
+      "send": "إرسال الرابط",
+      "codeLabel": "رمز التحقق",
+      "verify": "تحقق",
+      "resend": "إعادة إرسال الرمز",
+      "resendCooldown": "إعادة الإرسال خلال {seconds} ثانية",
+      "sentTo": "لقد أرسلنا رمزًا إلى {email}"
+    },
+    "forgotPassword": {
+      "title": "نسيت كلمة المرور؟",
+      "description": "أدخل بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة المرور.",
+      "emailLabel": "البريد الإلكتروني",
+      "submit": "إرسال رابط إعادة التعيين",
+      "successTitle": "تحقق من بريدك الإلكتروني",
+      "success": "إذا كان هذا البريد الإلكتروني مسجلاً، ستتلقى رابط إعادة التعيين قريباً."
+    },
+    "resetPassword": {
+      "title": "إعادة تعيين كلمة المرور",
+      "description": "اختر كلمة مرور جديدة لحسابك.",
+      "newPasswordLabel": "كلمة المرور الجديدة",
+      "confirmPasswordLabel": "تأكيد كلمة المرور الجديدة",
+      "submit": "إعادة تعيين كلمة المرور",
+      "successTitle": "تمت إعادة تعيين كلمة المرور",
+      "successDescription": "يمكنك الآن تسجيل الدخول باستخدام كلمة المرور الجديدة.",
+      "signInCta": "الانتقال إلى تسجيل الدخول",
+      "invalidTitle": "رابط إعادة التعيين غير صالح",
+      "invalidDescription": "رابط إعادة تعيين كلمة المرور هذا مفقود أو غير صحيح. اطلب رابطاً جديداً من صفحة نسيان كلمة المرور."
+    },
+    "verifyEmail": {
+      "successTitle": "تم التحقق من البريد الإلكتروني",
+      "successDescription": "تم التحقق من عنوان بريدك الإلكتروني.",
+      "failureTitle": "فشل التحقق",
+      "failureDescription": "لم نتمكن من التحقق من بريدك الإلكتروني باستخدام هذا الرابط.",
+      "continueCta": "متابعة",
+      "signInCta": "انتقل إلى تسجيل الدخول"
+    },
+    "loginSuccess": {
+      "eyebrow": "اكتمل تسجيل الدخول",
+      "title": "تم تسجيل دخولك",
+      "description": "جلستك جاهزة. نحن نفتح مساحة عمل Nebutra ونحافظ على التسليم الآمن من تدفق المصادقة.",
+      "session": "الجلسة",
+      "verified": "تم التحقق",
+      "workspace": "مساحة العمل",
+      "preparing": "جارٍ التحضير",
+      "redirecting": "الدخول إلى مساحة العمل خلال {seconds} ثانية",
+      "secureHandoff": "تسليم آمن",
+      "continueCta": "المتابعة إلى مساحة العمل",
+      "signInCta": "استخدم حسابًا آخر"
+    },
+    "errors": {
+      "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+      "userNotFound": "لم يتم العثور على حساب بهذا البريد الإلكتروني.",
+      "userAlreadyExists": "يوجد حساب بالفعل بهذا البريد الإلكتروني.",
+      "weakPassword": "كلمة المرور ضعيفة جدًا. استخدم 8 أحرف على الأقل مع مزيج من الأحرف الكبيرة والصغيرة والأرقام.",
+      "passwordsDontMatch": "كلمتا المرور غير متطابقتين.",
+      "passwordTooShort": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل.",
+      "currentPasswordIncorrect": "كلمة المرور الحالية غير صحيحة.",
+      "samePassword": "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمة المرور الحالية.",
+      "invalidEmail": "عنوان البريد الإلكتروني غير صالح.",
+      "emailNotVerified": "يرجى التحقق من عنوان بريدك الإلكتروني أولاً.",
+      "sessionExpired": "انتهت صلاحية الجلسة. يرجى تسجيل الدخول مرة أخرى.",
+      "twoFactorRequired": "يتطلب التحقق الثنائي.",
+      "invalidVerificationCode": "رمز التحقق غير صحيح أو انتهت صلاحيته.",
+      "twoFactorAlreadyEnabled": "تم تفعيل المصادقة الثنائية بالفعل.",
+      "twoFactorNotEnabled": "لم يتم تفعيل المصادقة الثنائية.",
+      "tooManyAttempts": "عدد محاولات كثيرة جداً. يرجى المحاولة لاحقاً.",
+      "rateLimited": "أنت تقوم بذلك كثيراً. تباطأ قليلاً.",
+      "providerNotSupported": "يتم إدارة هذا الإجراء بواسطة مزود المصادقة الخاص بك.",
+      "networkError": "خطأ في الشبكة. تحقق من اتصالك وحاول مرة أخرى.",
+      "unknown": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+    }
+  },
+  "chat": {
+    "suggestions": {
+      "title": "جرب واحدة من هذه للبدء",
+      "activity": {
+        "title": "عرض النشاط الأخير",
+        "prompt": "أظهر لي أحدث النشاط عبر مساحة العمل الخاصة بي خلال الـ 24 ساعة الماضية."
+      },
+      "debug": {
+        "title": "تصحيح خطأ",
+        "prompt": "ساعدني في تصحيح خطأ وقت التشغيل. سألصق تتبع المكدس ويمكنك إرشادي خلاله."
+      },
+      "email": {
+        "title": "مسودة بريد إلكتروني تلخيصي",
+        "prompt": "أعد مسودة بريد إلكتروني أسبوعي موجز يمكنني إرساله إلى فريقي حول تقدم المنصة."
+      },
+      "features": {
+        "title": "استكشاف ميزات المنصة",
+        "prompt": "أرشدني عبر الميزات الرئيسية لهذه منصة SaaS وكيف يمكنني استخدامها."
+      }
+    }
+  },
+  "billing": {
+    "activePlan": {
+      "title": "الخطة النشطة",
+      "manage": "إدارة الاشتراك",
+      "noPlanTitle": "لا توجد خطة نشطة",
+      "noPlanDescription": "اختر خطة لفتح الميزات المدفوعة وحدود الاستخدام الأعلى.",
+      "choosePlan": "اختر خطة",
+      "renewsOn": "تتجدد في {date}",
+      "endsOn": "تنتهي في {date}",
+      "trialEndsOn": "ينتهي فترة التجربة في {date}",
+      "status": {
+        "active": "نشط",
+        "trialing": "فترة تجربة",
+        "past_due": "متأخر",
+        "canceled": "ملغي",
+        "free": "مجاني"
+      },
+      "errors": {
+        "loadFailed": "تعذر تحميل حالة الفوترة الخاصة بك."
+      }
+    },
+    "pricing": {
+      "trial": "تجربة مجانية لمدة {days} يومًا",
+      "seat": "{count, plural, one {مقعد} other {مقاعد}}",
+      "perSeat": "/ مقعد"
+    }
+  },
+  "organizations": {
+    "settings": {
+      "logo": {
+        "title": "شعار المنظمة",
+        "description": "قم برفع صورة مربعة (PNG أو JPEG أو WebP، بحد أقصى 2 ميجابايت) لتمثيل منظمتك.",
+        "uploadButton": "رفع الشعار",
+        "uploading": "جارٍ الرفع…",
+        "fileTooBig": "الملف كبير جدًا. الحد الأقصى للحجم هو 2 ميجابايت.",
+        "invalidType": "نوع الصورة غير مدعوم. استخدم PNG أو JPEG أو WebP.",
+        "success": "تم تحديث الشعار.",
+        "removeButton": "إزالة الشعار",
+        "removed": "تمت إزالة الشعار."
+      },
+      "name": {
+        "title": "اسم المنظمة",
+        "description": "تحديث الاسم الظاهر لفريقك وعملائك.",
+        "label": "الاسم",
+        "submit": "حفظ",
+        "saving": "جارٍ الحفظ…",
+        "success": "تم تحديث اسم المنظمة."
+      },
+      "delete": {
+        "title": "حذف المنظمة",
+        "description": "إزالة هذه المنظمة نهائيًا، بما في ذلك جميع الأعضاء والدعوات والبيانات المرتبطة. لا يمكن التراجع عن هذا الإجراء.",
+        "trigger": "حذف المنظمة",
+        "confirmLabel": "اكتب اسم المنظمة للتأكيد",
+        "submit": "حذف المنظمة",
+        "cancel": "إلغاء",
+        "success": "تم حذف المنظمة."
+      }
+    },
+    "invitation": {
+      "title": "لقد تمت دعوتك",
+      "heading": "لقد تمت دعوتك للانضمام إلى {organizationName}",
+      "description": "اقبل الدعوة لبدء التعاون مع الفريق.",
+      "accept": "قبول الدعوة",
+      "accepting": "جارٍ القبول...",
+      "decline": "رفض",
+      "declining": "جارٍ الرفض...",
+      "declinedView": "تم رفض الدعوة",
+      "success": "لقد أبلغنا المدعو.",
+      "backToDashboard": "العودة إلى لوحة التحكم",
+      "roleLabel": "الدور: {role}",
+      "errorEmailMismatch": "تم إرسال هذه الدعوة إلى بريد إلكتروني مختلف",
+      "errorEmailMismatchDetail": "سجّل الدخول باستخدام عنوان البريد الإلكتروني الذي تلقى الدعوة لقبولها.",
+      "errorExpired": "انتهت صلاحية الدعوة",
+      "errorExpiredDetail": "اطلب من المدعو إرسال دعوة جديدة.",
+      "errorNotFound": "لم يتم العثور على الدعوة",
+      "errorNotFoundDetail": "رابط الدعوة غير صالح أو تم إلغاؤه.",
+      "errorNotAvailable": "الدعوة غير متاحة",
+      "errorNotAvailableDetail": "تم الرد على هذه الدعوة مسبقاً ولم تعد نشطة.",
+      "role": {
+        "owner": "المالك",
+        "admin": "المدير",
+        "member": "العضو",
+        "viewer": "المتفرج"
+      }
+    }
+  },
+  "settings": {
+    "apiKeys": {
+      "title": "مفاتيح API",
+      "description": "إنشاء وإدارة مفاتيح API للوصول البرمجي إلى Nebutra.",
+      "createButton": "إنشاء مفتاح API",
+      "noPermission": "ليس لديك إذن لعرض مفاتيح API.",
+      "loading": "جارٍ التحميل…",
+      "loadError": "فشل في تحميل مفاتيح API.",
+      "createError": "فشل في إنشاء مفتاح API.",
+      "revokeError": "فشل في إلغاء مفتاح API.",
+      "empty": {
+        "title": "لا توجد مفاتيح API بعد",
+        "cta": "أنشئ مفتاح API الأول"
+      },
+      "columns": {
+        "name": "الاسم",
+        "prefix": "البادئة",
+        "lastUsed": "آخر استخدام",
+        "scopes": "النطاقات",
+        "created": "تاريخ الإنشاء",
+        "actions": "الإجراءات",
+        "never": "لم يُستخدم"
+      },
+      "actions": {
+        "revoke": "إلغاء",
+        "revoking": "جارٍ الإلغاء…",
+        "copy": "نسخ",
+        "copied": "تم النسخ",
+        "close": "إغلاق",
+        "submit": "إنشاء المفتاح",
+        "submitting": "جارٍ الإنشاء…"
+      },
+      "dialog": {
+        "title": "إنشاء مفتاح API",
+        "description": "تتيح مفاتيح API للنظم الخارجية التواصل مع Nebutra نيابةً عنك. تعامل معها كما تتعامل مع كلمات المرور.",
+        "nameLabel": "الاسم",
+        "namePlaceholder": "مثال: واجهة الإنتاج الخلفية",
+        "scopesLabel": "النطاقات",
+        "successWarning": "يظهر هذا المفتاح مرة واحدة فقط. احفظه قبل الإغلاق.",
+        "confirmClose": "سيؤدي الإغلاق إلى إخفاء هذا المفتاح نهائيًا. تأكد من حفظه."
+      }
+    },
+    "auditLog": {
+      "title": "سجل التدقيق",
+      "description": "تتبع كل إجراء إداري في مساحة العمل الخاصة بك. يمكنك التصفية حسب الفاعل، أو الإجراء، أو الكيان، أو نطاق الوقت.",
+      "empty": "لا توجد أحداث تدقيق بعد",
+      "loadMore": "تحميل المزيد",
+      "loading": "جارٍ التحميل…",
+      "forbidden": "تحتاج إلى صلاحيات المسؤول لعرض سجل التدقيق.",
+      "columns": {
+        "when": "متى",
+        "actor": "الفاعل",
+        "action": "الإجراء",
+        "entity": "الكيان",
+        "outcome": "النتيجة",
+        "ip": "عنوان IP"
+      },
+      "diff": {
+        "oldValue": "القيمة القديمة",
+        "newValue": "القيمة الجديدة"
+      },
+      "filters": {
+        "action": "الإجراء",
+        "actionPlaceholder": "البحث عن إجراء…",
+        "entityType": "نوع الكيان",
+        "outcome": "النتيجة",
+        "outcomeSuccess": "نجاح",
+        "outcomeFailure": "فشل",
+        "outcomePending": "قيد الانتظار",
+        "startDate": "تاريخ البدء",
+        "endDate": "تاريخ الانتهاء",
+        "range24h": "آخر 24 ساعة",
+        "range7d": "آخر 7 أيام",
+        "range30d": "آخر 30 يوماً",
+        "reset": "إعادة تعيين",
+        "all": "الكل"
+      }
+    },
+    "notifications": {
+      "title": "الإشعارات",
+      "description": "اختر كيف يصلك Nebutra لكل نوع من الأحداث، وعلى كل قناة توصيل.",
+      "actions": {
+        "resetAll": "إعادة تعيين إلى الإعدادات الافتراضية",
+        "save": "حفظ"
+      },
+      "status": {
+        "saving": "جارٍ الحفظ…",
+        "saved": "تم الحفظ",
+        "error": "فشل الحفظ. يرجى المحاولة مرة أخرى."
+      },
+      "eventTypes": {
+        "security": {
+          "label": "تنبيهات الأمان",
+          "description": "تنبيهات تسجيل الدخول، تغييرات كلمة المرور، وتغييرات المصادقة الثنائية."
+        },
+        "billing": {
+          "label": "الفواتير",
+          "description": "الفواتير، فشل الدفع، وتغييرات الاشتراك."
+        },
+        "invitation": {
+          "label": "دعوات الفريق",
+          "description": "دعوات للانضمام إلى منظمة، مقبولة أو مرفوضة."
+        },
+        "activity": {
+          "label": "نشاط الفريق",
+          "description": "انضمام أعضاء، تغييرات في الأدوار، وأنشطة أخرى في مساحة العمل."
+        },
+        "updates": {
+          "label": "تحديثات المنتج",
+          "description": "ميزات جديدة، أبرز التغييرات، وملاحظات الإصدارات."
+        },
+        "marketing": {
+          "label": "التسويق",
+          "description": "النشرة الإخبارية والعروض الترويجية العرضية. الاشتراك اختياري."
+        }
+      },
+      "channels": {
+        "in_app": {
+          "label": "داخل التطبيق"
+        },
+        "email": {
+          "label": "البريد الإلكتروني"
+        },
+        "push": {
+          "label": "إشعارات فورية"
+        },
+        "sms": {
+          "label": "الرسائل النصية"
+        }
+      }
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "اشترك في الأحداث التي تصدرها مساحة عملك. نوقّع كل حمولة باستخدام السرية الخاصة بنقطة النهاية الخاصة بك حتى تتمكن من التحقق من أصالتها.",
+      "create": {
+        "heading": "نقطة نهاية جديدة",
+        "urlLabel": "عنوان نقطة النهاية",
+        "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
+        "eventsLegend": "الأحداث",
+        "submit": "إنشاء نقطة نهاية",
+        "submitting": "جارٍ الإنشاء…",
+        "selectEvent": "حدد حدثًا واحدًا على الأقل.",
+        "successTitle": "تم إنشاء نقطة النهاية. يظهر سري التوقيع مرة واحدة فقط.",
+        "successWarning": "احفظه في مدير الأسرار الخاص بالتطبيق قبل الإغلاق.",
+        "copy": "نسخ",
+        "copied": "تم النسخ"
+      },
+      "list": {
+        "heading": "نقاط النهاية النشطة",
+        "empty": "لا توجد نقاط نهاية للويب هوك بعد. أنشئ واحدة أعلاه.",
+        "loading": "جارٍ التحميل…",
+        "loadFailed": "فشل تحميل الويب هوك",
+        "columns": {
+          "url": "الرابط",
+          "events": "الأحداث",
+          "status": "الحالة",
+          "lastDelivered": "آخر تسليم",
+          "actions": "الإجراءات"
+        },
+        "status": {
+          "active": "نشط",
+          "disabled": "معطل"
+        },
+        "actions": {
+          "edit": "تعديل",
+          "enable": "تفعيل",
+          "disable": "تعطيل",
+          "viewDeliveries": "عرض التسليمات",
+          "delete": "حذف"
+        }
+      },
+      "deliveries": {
+        "heading": "التسليمات الأخيرة",
+        "close": "إغلاق",
+        "loading": "جارٍ التحميل…",
+        "loadFailed": "فشل تحميل التسليمات",
+        "empty": "لا توجد تسليمات بعد.",
+        "viewPayload": "عرض الحمولة",
+        "hidePayload": "إخفاء الحمولة",
+        "replay": "إعادة التشغيل",
+        "replaying": "جارٍ إعادة التشغيل…",
+        "status": {
+          "success": "نجاح",
+          "failed": "فشل",
+          "retrying": "جارٍ إعادة المحاولة"
+        }
+      }
+    },
+    "appearance": {
+      "title": "المظهر",
+      "theme": {
+        "title": "السمة",
+        "description": "استخدم الوضع الفاتح، أو الداكن، أو تطابق تفضيلات النظام."
+      },
+      "themePreset": {
+        "title": "إعداد السمة",
+        "description": "تطبيق أي سمة من Theme Playground على التطبيق بالكامل. تتحكم الإعدادات أدناه في ضبطها بدقة.",
+        "search": "البحث عن السمات…",
+        "searchLabel": "البحث عن السمات",
+        "default": "الافتراضي",
+        "defaultMood": "Nebutra base palette",
+        "active": "نشط",
+        "empty": "لا توجد سمات تطابق بحثك.",
+        "count": "{count} سمة"
+      },
+      "themeEditor": {
+        "title": "السمة",
+        "description": "اختر إعدادًا مسبقًا، أو استورد ملف DESIGN.md، ثم اضبط الرموز أدناه بدقة.",
+        "selectLabel": "إعداد السمة",
+        "import": "استيراد",
+        "copy": "نسخ السمة",
+        "copied": "تم النسخ",
+        "copyError": "فشل النسخ",
+        "custom": "مخصص"
+      },
+      "designMd": {
+        "title": "استيراد DESIGN.md",
+        "description": "الصق أو ارفع ملف DESIGN.md لتطبيق ألوانه، أنصاف أقطاره، خطوطه، مسافاتِه، وظلاله عبر التطبيق بالكامل — مع الاحتفاظ بها عبر إعادة التحميل.",
+        "applied": "تم التطبيق:",
+        "remove": "إزالة"
+      },
+      "themeMode": {
+        "label": "وضع السمة",
+        "light": "فاتح",
+        "dark": "داكن",
+        "system": "النظام"
+      },
+      "accent": {
+        "title": "لون التمييز",
+        "description": "اختر لون تمييز للعلامة التجارية يلون الحالات النشطة عبر التطبيق.",
+        "label": "لون التمييز",
+        "options": {
+          "default": "افتراضي",
+          "blue": "أزرق",
+          "cyan": "سماوي",
+          "violet": "بنفسجي",
+          "pink": "وردي",
+          "amber": "كهرماني",
+          "green": "أخضر",
+          "red": "أحمر"
+        }
+      },
+      "colors": {
+        "title": "الألوان",
+        "description": "اللون الرئيسي، والخلفية، والنص.",
+        "background": {
+          "label": "الخلفية",
+          "description": "تجاوز لون خلفية السطح."
+        },
+        "foreground": {
+          "label": "النص",
+          "description": "تجاوز لون نص المحتوى."
+        },
+        "resetToDefault": "إعادة تعيين إلى الافتراضي"
+      },
+      "fontFamily": {
+        "uiLabel": "خط الواجهة",
+        "uiDescription": "عائلة الخط المستخدمة في الواجهة.",
+        "codeLabel": "خط الكود",
+        "codeDescription": "عائلة الخط المستخدمة لأسطح الكود.",
+        "options": {
+          "ui": {
+            "theme": "الافتراضي حسب السمة",
+            "system": "النظام",
+            "geist": "Geist",
+            "inter": "Inter",
+            "sf": "SF Pro"
+          },
+          "code": {
+            "theme": "الافتراضي حسب السمة",
+            "system": "النظام أحادي المسافة",
+            "geist-mono": "Geist Mono",
+            "sf-mono": "SF Mono",
+            "jetbrains-mono": "JetBrains Mono"
+          }
+        }
+      },
+      "contrast": {
+        "title": "التباين",
+        "description": "ضبط تباين النص بدقة (50 = بدون تغيير).",
+        "label": "مستوى التباين"
+      },
+      "pointerCursor": {
+        "title": "استخدام مؤشر المؤشر",
+        "description": "التبديل إلى مؤشر سهم عند التمرير فوق العناصر التفاعلية.",
+        "label": "مؤشر سهم على العناصر التفاعلية"
+      },
+      "diffMarkers": {
+        "title": "علامات الاختلافات",
+        "description": "إظهار أشرطة ملونة أو رموز +/- على كل سطر مُعدّل.",
+        "label": "نمط علامات الاختلافات",
+        "color": "اللون",
+        "plusminus": "+/-"
+      },
+      "fontSmoothing": {
+        "title": "تنعيم الخطوط",
+        "description": "تطبيق تنعيم الخطوط الأصلي في macOS.",
+        "label": "تنعيم الخطوط الأصلي"
+      },
+      "typography": {
+        "title": "الخطوط والتنسيق",
+        "description": "أحجام الخطوط الأساسية لواجهة المستخدم وسطوح الكود.",
+        "uiFontSize": "حجم خط واجهة المستخدم",
+        "uiFontSizeDescription": "تعديل حجم خط واجهة المستخدم الأساسي.",
+        "codeFontSize": "حجم خط الكود",
+        "codeFontSizeDescription": "تعديل حجم خط الكود الأساسي."
+      },
+      "fontSize": {
+        "followTheme": "السمة",
+        "customize": "تخصيص"
+      },
+      "motion": {
+        "title": "تقليل الحركة",
+        "description": "تقليل الرسوم المتحركة أو مطابقة تفضيلات النظام.",
+        "label": "تفضيل الحركة",
+        "system": "النظام",
+        "on": "مفعّل",
+        "off": "معطّل"
+      },
+      "surface": {
+        "title": "شريط جانبي شفاف",
+        "description": "تطبيق مادة شفافة على الشريط الجانبي."
+      },
+      "transparency": {
+        "label": "شريط جانبي شفاف",
+        "description": "تطبيق مادة شفافة على الشريط الجانبي."
+      }
+    }
+  },
+  "legal": {
+    "version": "الإصدار",
+    "effective": "النافذ",
+    "notFound": "هذا المستند غير متوفر.",
+    "backHome": "العودة إلى الصفحة الرئيسية"
+  },
+  "commandPalette": {
+    "ariaLabel": "لوحة الأوامر",
+    "placeholder": "اكتب أمرًا أو ابحث…",
+    "empty": "لم يتم العثور على نتائج.",
+    "sections": {
+      "navigation": "التنقل",
+      "actions": "الإجراءات",
+      "settings": "الإعدادات",
+      "account": "الحساب",
+      "admin": "الإدارة",
+      "help": "المساعدة"
+    },
+    "commands": {
+      "nav": {
+        "home": "الرئيسية",
+        "settings": "الإعدادات",
+        "billing": "الفواتير",
+        "team": "الفريق",
+        "apiKeys": "مفاتيح API",
+        "notifications": "الإشعارات",
+        "auditLog": "سجل المراجعة",
+        "webhooks": "Webhooks",
+        "admin": "الإدارة"
+      },
+      "action": {
+        "inviteMember": "دعوة عضو إلى الفريق",
+        "createApiKey": "إنشاء مفتاح API",
+        "switchOrganization": "تبديل المنظمة"
+      },
+      "settings": {
+        "themeLight": "التبديل إلى الوضع الفاتح",
+        "themeDark": "التبديل إلى الوضع الداكن",
+        "themeSystem": "استخدام وضع النظام"
+      },
+      "account": {
+        "signOut": "تسجيل الخروج"
+      },
+      "help": {
+        "reportIssue": "الإبلاغ عن مشكلة",
+        "shortcuts": "اختصارات لوحة المفاتيح"
+      }
+    }
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "خيارات الخصوصية الخاصة بك",
+      "description": "نستخدم ملفات تعريف الارتباط لتحسين تجربتك، وتحليل حركة المرور على الموقع، وتخصيص المحتوى. اختر الفئات التي تريد السماح بها."
+    },
+    "button": {
+      "acceptAll": "قبول الكل",
+      "savePreferences": "حفظ التفضيلات"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "ضرورية",
+        "description": "مطلوبة لعمل الموقع. لا يمكن تعطيلها."
+      },
+      "functional": {
+        "label": "وظيفية",
+        "description": "تذكر تفضيلاتك (اللغة، المظهر، التخطيط)."
+      },
+      "analytics": {
+        "label": "تحليلات",
+        "description": "بيانات استخدام مجهولة لتحسين المنتج."
+      },
+      "marketing": {
+        "label": "تسويق",
+        "description": "إعلانات مخصصة وإعادة استهداف على منصات خارجية."
+      }
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "الإشعارات",
+      "description": "جميع إشعاراتك في مكان واحد.",
+      "filter": {
+        "all": "الكل",
+        "unread": "غير مقروءة"
+      },
+      "actions": {
+        "markAllRead": "تحديد الكل كمقروء",
+        "markRead": "تحديد كمقروء",
+        "archive": "أرشفة",
+        "loadMore": "تحميل المزيد",
+        "loading": "جارٍ التحميل...",
+        "selected": "{count} محدد"
+      },
+      "empty": {
+        "all": "لقد أتممت مراجعة كل شيء.",
+        "unread": "لا توجد إشعارات غير مقروءة."
+      },
+      "errors": {
+        "load": "فشل تحميل الإشعارات.",
+        "network": "خطأ في الشبكة. يرجى المحاولة مرة أخرى.",
+        "markRead": "فشل تحديد الإشعار كمقروء.",
+        "archive": "فشل أرشفة الإشعار.",
+        "bulkMarkRead": "تعذر تحديد بعض الإشعارات كمقروءة."
+      },
+      "inbox": {
+        "noBackend": "يتطلب صندوق الوارد نظام إشعارات دائم. تحقق من إعدادات المزود.",
+        "emptyCaughtUp": "صندوق الوارد فارغ.",
+        "emptyChangelog": "ستظهر تحديثات سجل التغييرات هنا."
+      }
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "صباح الخير",
+      "afternoon": "مساء الخير",
+      "evening": "مساء النور"
+    },
+    "home": {
+      "connectorsPill": "أضف قوة لتطبيقك باستخدام الموصلات",
+      "subtitle": "أفلت موجهًا، اضغط على ⌘K من أي مكان، أو انتقل مباشرة إلى سطح مساحة العمل.",
+      "promptPlaceholder": "ما الذي يدور في ذهنك؟",
+      "actions": {
+        "connect": "توصيل تكامل",
+        "theme": "ساحة تجربة السمات",
+        "audit": "سجل التدقيق",
+        "billing": "الفواتير"
+      }
+    },
+    "commandSurface": {
+      "noAuth": "لم يتم تكوين المصادقة لمزود الخدمة المحدد. قم بتعيين أسرار المزود لتمكين جلسات المستخدمين."
+    },
+    "commandCenter": {
+      "description": "ابدأ بإجراء واحد: اسأل Sailor، أو تفحص إشارات مساحة العمل، أو وجه العمل إلى سطح أتمتة.",
+      "openSailor": "فتح Sailor AI",
+      "viewAnalytics": "عرض التحليلات"
+    },
+    "workspaceSnapshot": {
+      "title": "لقطة مساحة العمل",
+      "description": "أحدث يوم في المستودع · {day}",
+      "viewAnalytics": "عرض التحليلات →",
+      "metrics": {
+        "activeUsers": "المستخدمون النشطون",
+        "totalEvents": "إجمالي الأحداث",
+        "conversions": "التحويلات",
+        "revenue": "الإيرادات"
+      },
+      "details": {
+        "activeUsers": "المستخدمون المسجلون",
+        "totalEvents": "الأحداث المسجلة",
+        "conversions": "الإجراءات المؤهلة",
+        "revenue": "الإيرادات المُدركة"
+      },
+      "meta": {
+        "snapshot": "لقطة",
+        "cadence": "الإيقاع",
+        "tenant": "المستأجر",
+        "daily": "يومي",
+        "latestDay": "{day}",
+        "users": "مستخدمو المستأجر",
+        "events": "تدفق الأحداث",
+        "funnel": "القمع",
+        "billing": "الفوترة"
+      }
+    },
+    "documentPipeline": {
+      "title": "خط أنابيب المستندات",
+      "description": "أرسل ملفات المصدر إلى طابور المهام الأصلية.",
+      "intakeTitle": "استقبال المستندات",
+      "intakeDescription": "PDF، Markdown، نص، أو مستند Word",
+      "chooseDocument": "اختر المستند",
+      "startParseTask": "بدء مهمة التحليل",
+      "queued": "في الانتظار",
+      "fileInputLabel": "ملف المستند",
+      "fallbackError": "فشل مهمة المستند.",
+      "taskStatus": "حالة المهمة",
+      "progressLabel": "تقدم المهمة",
+      "refreshStatus": "تحديث",
+      "cancelTask": "إلغاء",
+      "statusError": "تعذر تحديث حالة المهمة.",
+      "cancelError": "تعذر إلغاء المهمة.",
+      "statusQueued": "في الانتظار",
+      "statusRunning": "قيد التنفيذ",
+      "statusSucceeded": "تم بنجاح",
+      "statusFailed": "فشل",
+      "statusCancelled": "تم الإلغاء",
+      "resultReady": "النتيجة جاهزة",
+      "taskError": "خطأ في المهمة",
+      "updatedAt": "تم التحديث"
+    },
+    "recentSessions": {
+      "title": "استمر من حيث توقفت",
+      "subtitle": "{count, plural, =0 {لا توجد جلسات} =1 {جلسة واحدة حديثة} other {# جلسات حديثة}}",
+      "viewAll": "عرض الكل →",
+      "newChat": "محادثة جديدة",
+      "untitled": "جلسة بدون عنوان",
+      "messageCount": "{count, plural, =1 {رسالة واحدة} other {# رسائل}}"
+    },
+    "gettingStarted": {
+      "title": "البدء",
+      "description": "{done} من {total} مكتمل · أكمل الإعداد لفتح مساحة العمل الكاملة",
+      "progressLabel": "تقدم الإعداد",
+      "tasks": {
+        "team": {
+          "label": "دعوة زميل",
+          "description": "أضف متعاونًا واحدًا على الأقل إلى مساحة عملك."
+        },
+        "api": {
+          "label": "إنشاء مفتاح API",
+          "description": "الوصول البرمجي إلى نقاط نهاية مساحة عملك."
+        },
+        "integration": {
+          "label": "ربط تكامل",
+          "description": "Stripe و Slack و webhooks و queues والمزيد."
+        },
+        "ai": {
+          "label": "فتح Sailor AI",
+          "description": "جرب وضع الدردشة أو البيانات أو سير العمل."
+        }
+      }
+    }
+  },
+  "Sidebar": {
+    "projects": "المشاريع",
+    "noThreads": "لا توجد خيوط",
+    "expandAll": "توسيع الكل",
+    "collapseAll": "طي الكل",
+    "sectionMore": "المزيد من الخيارات",
+    "newProject": "مشروع جديد",
+    "restoredGroups": "تمت استعادة المجموعات الموسعة سابقاً",
+    "newProjectPlaceholder": "اسم المشروع",
+    "newProjectDefault": "بدون عنوان",
+    "newProjectSuccess": "تم إنشاء المشروع",
+    "newProjectError": "تعذر إنشاء المشروع",
+    "sortBy": "ترتيب حسب",
+    "sortRecent": "الأكثر نشاطاً مؤخراً",
+    "sortAlphabetical": "أبجدي",
+    "sortCreated": "تاريخ الإنشاء",
+    "archiveAll": "أرشفة الكل",
+    "comingV2": "قريباً في الإصدار 2"
+  },
+  "startupOs": {
+    "milestone": {
+      "firstRoom": "الغرفة الأولى جاهزة.",
+      "firstFolder": "تبدأ العديد من الشركات كملف.",
+      "firstTable": "الطاولة الأولى بها مقعد ثانٍ.",
+      "firstSignal": "بدأ العالم الحقيقي بالتحدث.",
+      "firstShip": "يرى العالم ذلك لأول مرة.",
+      "firstBeliever": "من اليوم فصاعداً، لم تعد تبني لنفسك فقط.",
+      "firstRevenue": "للمشروع الآن تدفق نقدي.",
+      "firstReturn": "العودة أهم من الزيارة.",
+      "firstTeam": "ثلاثة أشخاص يمكنهم بدء شركة.",
+      "firstCrowd": "الطاولة الأولى بدأت تزدحم.",
+      "firstReset": "البدء من جديد هو بداية أكثر صدقاً.",
+      "firstPublic": "ضع جزءاً من المستقبل في العلن.",
+      "firstDemo": "هذا ليس عرضًا. إنه اختبار.",
+      "graduation": "لقد تجاوزت الأساسيات. الطريق أمامك يحتاج إلى أدوات أقوى."
+    },
+    "emptyState": {
+      "default": "تبدأ العديد من الشركات كملف واحد.",
+      "integrations": "لم يتم تكوين أي مكوّنات اتصال.",
+      "creditActivity": "ستظهر نشاطات الائتمان بعد طلبك الأول.",
+      "usageData": "ستظهر بيانات الاستخدام بمجرد أن تبدأ مؤسستك في إرسال الطلبات.",
+      "apiKeys": "لا توجد مفاتيح بعد.",
+      "apiKeysCta": "أنشئ مفتاحك الأول",
+      "teamMembers": "يمكن لشخص واحد أن يبدأ. ويمكن لعدد قليل أن يبني.",
+      "cofounders": "لم يظهر بعد الشخص الأول الذي يؤمن بك.",
+      "cofoundersDescription": "عندما يعبر كل من مؤسّس آخر وأنت عن الاهتمام، سيظهرون هنا.",
+      "cofoundersAction": "ابحث عن شركاء مؤسسين",
+      "growthChart": "ستظهر بيانات الاتجاه بمجرد بدء النشاط.",
+      "revenueChart": "ستظهر بيانات الإيرادات بمجرد بدء المعاملات.",
+      "webhookDeliveries": "ستظهر عمليات التسليم هنا بعد الحدث الأول.",
+      "webhookEndpoints": "أضف نقطة نهاية أعلاه لبدء تلقي الأحداث.",
+      "accessInvites": "لم يتم إصدار رموز دعوة بعد."
+    },
+    "success": "الغرفة الأولى جاهزة.",
+    "failure": "البدء من جديد بداية أكثر صدقًا.",
+    "errors": {
+      "loadMatches": "تعذر تحميل المباريات.",
+      "loadMatchesDescription": "حدث خطأ من جانبنا. قم بتحديث الصفحة للمحاولة مرة أخرى.",
+      "loadWebhookDeliveries": "تعذر تحميل عمليات التسليم.",
+      "replayWebhookDelivery": "لم تتم إعادة التشغيل.",
+      "loadWebhookEndpoints": "تعذر تحميل نقاط النهاية."
+    },
+    "team": "يمكن لشخص واحد أن يبدأ. ويمكن لعدد قليل أن يبني.",
+    "revenue": "الحلم أصبح لديه تدفق نقدي الآن.",
+    "growth": "الإشارة تصبح أقوى.",
+    "deployment": {
+      "primary": "العالم يراها لأول مرة.",
+      "echo": "لقد غادرت localhost أخيرًا."
+    },
+    "onboarding": "لا تحتاج إلى أن تكون مستعدًا. تحتاج إلى أن تبدأ.",
+    "graduation": "لقد تجاوزت الأساسيات. جرّب {tool} للطريق الذي أمامك.",
+    "company": {
+      "emptyTitle": "برج السياق الأول يبدأ هنا.",
+      "emptyDescription": "قم بتجميع شركة في Startup OS لعرض برج السياق وتعديله.",
+      "emptyAction": "افتح Startup OS",
+      "notice": {
+        "needsProvider": "اربط مفتاح مزود ذكاء اصطناعي لملء الحقول تلقائيًا.",
+        "generateFailed": "لم يكتمل التوليد.",
+        "saveFailed": "لم يتم حفظ التغييرات."
+      },
+      "action": {
+        "save": "حفظ",
+        "saving": "جارٍ الحفظ…",
+        "cancel": "إلغاء",
+        "open": "افتح Startup OS"
+      }
+    },
+    "execution": {
+      "noBets": "لا توجد رهانات بعد.",
+      "noRuns": "لا توجد عمليات تشغيل نشطة."
+    },
+    "fileTree": {
+      "empty": "لا توجد ملفات في هذا المشروع بعد."
+    }
+  },
+  "selectOrg": {
+    "invitation": {
+      "emptyTitle": "مساحة العمل قيد الإعداد.",
+      "emptyDescription": "قد لا يزال الدعوة قيد المزامنة. قم بتحديث الصفحة أو أنشئ مساحة عمل منفصلة."
+    },
+    "billing": {
+      "emptyTitle": "أنشئ مساحة عمل قبل الفوترة.",
+      "emptyDescription": "تتطلب إجراءات الفوترة مساحة عمل نشطة. أنشئ واحدة أولاً، ثم عد إلى الفوترة."
+    },
+    "default": {
+      "emptyTitle": "تبدأ أول مساحة عمل من هنا.",
+      "emptyDescription": "أنشئ مساحة عمل للبدء."
+    }
+  }
+}

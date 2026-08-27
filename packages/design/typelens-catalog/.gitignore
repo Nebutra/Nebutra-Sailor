@@ -1,0 +1,2 @@
+# Generated FIU research coldstart artifacts (regenerate via pnpm research:fiu:quick)
+research/fiu-traverse-*.json

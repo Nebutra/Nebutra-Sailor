@@ -1,0 +1,87 @@
+name: Ops — Cloudflare account check
+
+# Which account does CLOUDFLARE_API_TOKEN actually belong to, and what may it do?
+#
+# apps/auth/wrangler.edge.jsonc pins account_id a4248a5738df319996a70092fe598d37
+# and its comment says "same account as gateway-edge / typelens". typelens pins
+# no account and deploys fine on this token; auth fails on
+# /accounts/***/workers/services/nebutra-auth with code 10000. Exactly one of
+# those two facts can be true, and guessing which would mean either re-issuing a
+# token against the wrong account or repointing a production Worker at one.
+#
+# `wrangler whoami` answers it. Read-only, and the token stays in the secret —
+# only its account id and permission list are printed.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ops-cloudflare-whoami
+  cancel-in-progress: true
+
+jobs:
+  whoami:
+    name: Identify the API token's account
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup pnpm + Node
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: wrangler whoami
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          set -uo pipefail
+          [ -n "${CLOUDFLARE_API_TOKEN:-}" ] || { echo "::error::CLOUDFLARE_API_TOKEN is not set"; exit 1; }
+          pnpm exec wrangler whoami 2>&1 | tee /tmp/whoami.txt || true
+
+          echo
+          echo "── comparison"
+          pinned="a4248a5738df319996a70092fe598d37"
+          if grep -qi "$pinned" /tmp/whoami.txt; then
+            echo "The token CAN see the account pinned in apps/auth/wrangler.edge.jsonc ($pinned)."
+            echo "So the account id is right and the failure is a missing permission on it —"
+            echo "the token needs Account → Workers Scripts: Edit there."
+          else
+            echo "The token CANNOT see $pinned, the account pinned in apps/auth/wrangler.edge.jsonc."
+            echo "typelens deploys fine because it pins no account and inherits the token's own."
+            echo "So either the pin is stale and auth should follow typelens, or the token was"
+            echo "issued on the wrong account. The account(s) listed above are the ones it has."
+          fi
+
+      - name: Which capability is missing
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          set -uo pipefail
+          # typelens ships on this token, so Workers Scripts:Edit is present.
+          # auth differs from typelens in exactly one way that touches another
+          # product: it declares a Hyperdrive binding. Probe each capability on
+          # its own so the answer is a name, not a guess.
+          probe() {
+            echo "── $1"
+            if out=$(timeout 60 pnpm exec wrangler $2 2>&1); then
+              echo "  OK"
+            else
+              echo "$out" | grep -iE 'code: [0-9]+|Authentication|Unauthorized|permission' | head -3 | sed 's/^/  /'
+              echo "  (failed)"
+            fi
+          }
+          probe "Workers scripts (typelens deploys, so expected OK)" "deployments list --name nebutra-typelens"
+          probe "Hyperdrive — auth binds one, typelens does not"     "hyperdrive list"
+          probe "Workers secrets on the auth worker"                  "secret list --config apps/auth/wrangler.edge.jsonc"
+          # `deploy` fails on GET /accounts/*/workers/services/nebutra-auth while
+          # `secret list` (a different endpoint) succeeds. Either the service is
+          # not in this account, or that one endpoint needs a permission the
+          # others do not. Ask about both workers so the answer is a comparison.
+          probe "deployments — typelens (known good)" "deployments list --name nebutra-typelens"
+          probe "deployments — auth (the failing one)" "deployments list --name nebutra-auth"
+          echo "── every worker this token can see"
+          timeout 60 pnpm exec wrangler list 2>&1 | head -30 || \
+            timeout 60 pnpm exec wrangler deployments list 2>&1 | head -10 || true

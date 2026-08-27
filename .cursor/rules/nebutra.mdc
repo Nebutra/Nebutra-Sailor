@@ -1,0 +1,282 @@
+---
+description: Nebutra-Sailor monorepo project rules for Cursor AI
+globs: ["**/*.ts", "**/*.tsx", "**/*.mdx"]
+alwaysApply: true
+---
+
+# Nebutra-Sailor — Cursor Rules
+
+## Stack
+
+- Node.js 22+, pnpm 10.32+
+- Next.js 16 (App Router, React 19, Turbopack) — frontends
+- Hono — TypeScript backends; FastAPI — Python (only when justified)
+- Tailwind CSS v4 + CSS variables from `@nebutra/tokens` (SSOT)
+- TypeScript 5.9 strict, Biome (NOT ESLint), Vitest + Playwright
+- License: AGPL-3.0
+
+## Repository Layout (categorized monorepo)
+
+```
+apps/                            # User-facing apps
+  landing/ web/ storybook/ studio/ docs/
+  sleptons/ idp/ mail-preview/ sailor-docs/ tsekaluk-dev/
+
+backends/                        # No-UI backends, split by language
+  gateway/                       # TS / Hono — BFF, auth, tenancy, rate-limit
+                                 # DEFAULT for new backend work
+  python/                        # FastAPI — only when batch/ML/libs justify (ADR 2026-05-10)
+    active:  _shared, ai, ecommerce, event-ingest, recsys
+    stub:    content, third-party, web3
+
+packages/                        # categorized: <category>/<name>
+  design/        ui  tokens  design-tokens  brand  theme  icons  design-sync
+  iam/           auth  audit  vault  tenant  permissions  identity
+  commerce/      billing  contracts  license  marketing  metering  waitlist
+  integrations/  queue  search  notifications  webhooks  uploads  storage  email  saga
+  platform/      db  logger  config
+  ops/           cli  create-sailor  sanity  preset
+  ai/            mcp  ai-providers
+
+infra/      iac/ + runtime/ + data/ + ops/
+workflows/  inngest/ + n8n/ + pusher/
+e2e/        smoke/ + golden/ + sleptons/
+tests/      architecture/ + load/
+```
+
+Notes:
+- `@nebutra/design-system` was merged into `@nebutra/ui` (layout at `@nebutra/ui/layout`).
+- `apps/api-gateway` was relocated to `backends/gateway`.
+
+## CRITICAL Import Rules
+
+```tsx
+// UI components (low-level primitives + composed patterns)
+import { Button, Input, Card } from "@nebutra/ui/primitives";
+import { Browser, Safari } from "@nebutra/ui/primitives";
+import { PageHeader, EmptyState, LoadingState, ErrorState } from "@nebutra/ui/layout";
+
+// Icons — Geist preferred, Lucide for generic
+import { Search, Settings } from "@nebutra/icons";
+import { ChevronRight } from "lucide-react";
+
+// Theme switching
+import { ThemeProvider, useTheme } from "@nebutra/tokens";
+import { NebutraThemeProvider } from "@nebutra/ui";  // Lobe UI bridge
+
+// Utilities
+import { cn } from "@nebutra/ui/utils";
+```
+
+- ❌ NEVER import from `@primer/react` (removed)
+- ❌ NEVER add new HeroUI imports unless Radix has NO equivalent
+- ❌ NEVER import JS color tokens from `@nebutra/ui/theme` (deprecated, internal only)
+
+## Component Discipline (手搓禁止)
+
+Priority order — DO NOT hand-craft when something exists:
+
+1. **Geist source** — direct reference for Geist-aligned components
+2. **21st.dev** — community-vetted implementations
+3. **HeroUI / Radix** — existing wheels
+4. **Hand-craft** — absolute last resort
+
+Also:
+- NO inline SVG icons — always use `lucide-react` or `@nebutra/icons`
+- SVG math for data viz (e.g. Gauge) is OK; only icon SVGs are forbidden
+- HeroUI visual style often mismatches Geist — prefer Geist-native when restyling
+- Every new component MUST have a Storybook story
+
+## Styling Rules
+
+```tsx
+// ✅ Semantic 12-step scales (registered in @theme)
+<div className="bg-neutral-1 text-neutral-12 border-neutral-7" />
+<div className="bg-blue-9 text-cyan-11" />
+
+// ✅ Semantic shadcn classes
+<div className="bg-primary text-foreground border-border" />
+
+// ✅ Brand aliases via Tailwind
+<div className="bg-brand-primary text-brand-accent" />
+
+// ✅ Brand gradient
+<h1 style={{
+  background: "var(--brand-gradient)",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent",
+}}>...</h1>
+
+// ✅ CSS variables in inline styles (SVG, recharts, dynamic)
+<Cell fill="var(--brand-accent)" />
+
+// ❌ NEVER hardcode brand hex
+<stop stopColor="#0033FE" />     // → var(--brand-primary)
+<Cell fill="#0BF1C3" />          // → var(--brand-accent)
+tagColor: "#ef4444"              // → var(--status-danger)
+```
+
+### Container widths
+
+- text content: `max-w-4xl` (`var(--container-text)`)
+- feature / wide: `max-w-[1400px]` (`var(--container-wide)`)
+- NEVER: `max-w-5xl`, `max-w-7xl` (too narrow/inconsistent for sections)
+
+### Dark mode border tokens (governance — 2026-05-12)
+
+- Default page-level border = `--border` — auto resolves light/dark via wildcard rule in `packages/design/tokens/styles.css`.
+- For explicit borders prefer semantic tokens:
+  - `border-neutral-6` — subtle border
+  - `border-neutral-7` — default border
+  - `border-neutral-8` — hovered border
+- Dark mode neutral-6/7/8 reference `nebutra-gray.*` (pure neutral, no hue) — added to fix slate blue-tint clash. Light mode still uses slate.
+- NEVER hardcode `border-white/X` in dark contexts — use semantic tokens so theme switching stays correct.
+- The `var(--brand-gradient)` is for **CTAs and meaningful highlights only** — not decorative dividers / hairlines.
+
+## Animation Rules
+
+```tsx
+import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+
+// Single
+<AnimateIn preset="emerge"><Component /></AnimateIn>
+
+// Scroll-triggered
+<AnimateIn preset="emerge" inView><Section /></AnimateIn>
+
+// Staggered list
+<AnimateInGroup stagger="normal" className="grid grid-cols-3 gap-6">
+  {items.map((it) => <AnimateIn key={it.id} preset="fadeUp"><Card /></AnimateIn>)}
+</AnimateInGroup>
+```
+
+Presets: `emerge` (default), `flow`, `fade`, `fadeUp`, `scale`.
+❌ NEVER use raw `motion.div` with hardcoded `initial`/`animate` values — import from `packages/design/brand/src/motion.ts` or use `AnimateIn`.
+
+## Component Variants — CVA
+
+```tsx
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@nebutra/ui/utils";
+
+const cardVariants = cva("rounded-lg border bg-white shadow-sm", {
+  variants: { size: { sm: "p-4", md: "p-6", lg: "p-8" } },
+  defaultVariants: { size: "md" },
+});
+```
+
+## Accessibility
+
+Every interactive component must have:
+- `type="button"` on all `<button>` elements
+- `aria-label` on icon-only buttons
+- `role` where semantic HTML can't express the intent
+- Focus rings: `focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1`
+
+## Next.js 16 Rules
+
+- Default to **Server Components**; only `'use client'` for interactivity
+- Use `proxy.ts` NOT `middleware.ts` (renamed in Next.js 16)
+- Request APIs are async: `await cookies()`, `await headers()`, `await params`
+- Cache Components: `'use cache'` (replaces PPR)
+- Mutations via Server Actions, NOT Route Handlers
+- Client data fetching: TanStack Query + typed API client
+
+## Backend Language Policy (ADR 2026-05-10 — TS-by-Default)
+
+New backend work goes in **TypeScript** (`backends/gateway/` or `packages/<category>/<name>/`) by default.
+
+A new Python service is acceptable ONLY when its `README.md` cites at least one of:
+1. Batch / queued work too long for edge (>5s typical)
+2. ML / scientific compute (transformers, vLLM, etc.)
+3. Specialized libraries with no comparable TS port
+
+CRUD, webhooks, billing, content management, blockchain reads, third-party API proxies → **TS**, no exceptions.
+
+### Canonical implementations — do not duplicate
+
+| Domain | Canonical |
+|---|---|
+| Billing / subscriptions | `packages/commerce/billing` (TS, multi-provider) |
+| Content management | `apps/studio` (Sanity) |
+| Auth / identity | `packages/iam/auth` + `apps/idp` |
+| Webhooks | `packages/integrations/webhooks` |
+| Edge AI (interactive) | `packages/ai/agents` (Vercel AI SDK) |
+
+## Provider-Agnostic Packages (auto-detect via env)
+
+| Package | Providers |
+|---|---|
+| `@nebutra/auth` | Clerk \| Better Auth \| NextAuth |
+| `@nebutra/billing` | Stripe \| Polar \| LemonSqueezy \| ChinaPay \| Manual |
+| `@nebutra/queue` | QStash \| BullMQ \| memory |
+| `@nebutra/search` | Meilisearch \| Typesense \| Algolia |
+| `@nebutra/notifications` | Novu \| direct dispatchers |
+| `@nebutra/webhooks` | Svix \| custom |
+| `@nebutra/uploads` | S3 multipart \| Tus \| presigned |
+| `@nebutra/design-sync` | Figma \| Penpot \| git-only |
+
+`<NAME>_PROVIDER` env var overrides auto-detection. Application code stays the same across providers.
+
+## Multi-Tenancy (`@nebutra/tenant`)
+
+```ts
+import { tenantMiddleware, fromHeader } from "@nebutra/tenant/middleware";
+import { getCurrentTenant, withRls } from "@nebutra/tenant";
+
+app.use("*", tenantMiddleware({ resolvers: [fromHeader("x-tenant-id")] }));
+const tenant = getCurrentTenant();      // { tenantId, plan, ... }
+const db = withRls(prisma, tenant.tenantId);
+```
+
+## Permissions (`@nebutra/permissions`)
+
+```ts
+// API middleware (Hono)
+import { requirePermission } from "@nebutra/permissions";
+app.delete("/api/projects/:id", requirePermission("delete", "Project"), handler);
+
+// React UI gates
+import { Can } from "@nebutra/permissions/react";
+<Can action="edit" resource="Document" subject={doc}><EditButton /></Can>
+```
+
+## Testing Requirements
+
+- Minimum **80% coverage** (lines/functions), 70% branches
+- Vitest unit: `packages/*/src/**/*.test.ts`
+- Playwright E2E: `e2e/*.spec.ts`
+- Architecture tests: `pnpm test:arch`
+- Load tests: `tests/load/` (k6)
+
+## What NEVER to Do
+
+- `@primer/react` (removed from repo)
+- `console.log` in production code (use `@nebutra/logger`)
+- Hardcoded secrets (use env vars + `@nebutra/vault` for customer secrets)
+- Hardcoded brand hex (use `var(--brand-primary)` / `var(--brand-accent)` / `var(--brand-gradient)`)
+- Hardcoded status hex (use `var(--status-danger|warning|success|info)`)
+- Raw `motion.div` with hardcoded animation values (use `AnimateIn`)
+- New components without a Storybook story
+- Mutations via Route Handlers (use Server Actions)
+- `middleware.ts` in Next.js 16 (use `proxy.ts`)
+- Duplicating canonical implementations in Python (see canonical table above)
+- Hand-crafted components when Geist / 21st.dev / HeroUI / Radix has it
+- `border-white/X` for dark-mode borders (use semantic neutral tokens)
+- Decorative use of `var(--brand-gradient)` for hairlines / dividers
+
+## Dev Commands
+
+```bash
+pnpm dev                                          # all apps
+pnpm dev:dashboard                                # web + backends/gateway
+pnpm dev:marketing                                # landing + studio
+pnpm typecheck                                    # TypeScript across workspace
+pnpm lint / pnpm lint:fix                         # Biome
+pnpm test / pnpm e2e                              # Vitest / Playwright
+pnpm db:generate / pnpm db:studio                 # Prisma
+pnpm infra:up                                     # Docker infrastructure
+pnpm --filter @nebutra/design-tokens build        # rebuild DTCG tokens
+pnpm --filter @nebutra/storybook dev              # Storybook (design tokens browser)
+node scripts/generate-palette.mjs --primary=#HEX --secondary=#HEX  # rebrand
+```

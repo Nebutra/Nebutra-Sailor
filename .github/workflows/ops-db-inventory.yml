@@ -1,0 +1,211 @@
+name: Ops — Database Inventory (read-only)
+
+# Answers "which database is production actually using, and what is in it" from a
+# box nobody can SSH into.
+#
+# This exists because that question had no answer. The apps' DATABASE_URL points
+# at a local Postgres on the VM while DIRECT_URL — which Prisma uses only for
+# migrations — points at PlanetScale. So migrations have been landing on a
+# database no application reads, and the discrepancy was invisible: every deploy
+# logged "ensured database runtime env" without naming an endpoint, and there is
+# no interactive access to look.
+#
+# STRICTLY READ-ONLY. No DDL, no writes, no dumps, no secrets in the output —
+# connection URLs are printed with the password removed. Safe to run at any time,
+# including while deciding whether a cutover is safe, which is the point: the
+# numbers have to come before the decision.
+
+on:
+  workflow_dispatch:
+    inputs:
+      restore_secret_from_box:
+        description: >-
+          Copy the box's live DATABASE_URL back into the repo secret. Use only to
+          undo an accidental overwrite — it makes the secret match what production
+          is already using, never the other way round. NEEDS a PAT in
+          OPS_SECRETS_TOKEN: the built-in GITHUB_TOKEN cannot write Actions
+          secrets, and the step fails with no output when it is missing.
+        type: boolean
+        default: false
+
+concurrency:
+  group: ops-db-inventory
+  cancel-in-progress: true
+
+jobs:
+  inventory:
+    name: Inventory both databases
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          sparse-checkout: |
+            .github
+
+      - name: Configure SSH
+        env:
+          SSH_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.CLOUD_VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VM_SSH_KNOWN_HOSTS || secrets.CLOUD_VM_SSH_KNOWN_HOSTS || secrets.ECS_SSH_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          [ -n "$SSH_KEY" ] || { echo "::error::No VM SSH private key secret is set"; exit 1; }
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Inventory
+        env:
+          ECS_HOST: ${{ vars.VM_HOST || vars.CLOUD_VM_HOST || vars.ECS_HOST }}
+          ECS_USER: ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
+          ECS_SSH_PORT: ${{ vars.VM_SSH_PORT || vars.CLOUD_VM_SSH_PORT || vars.ECS_SSH_PORT || '22' }}
+          ECS_DEPLOY_ROOT: ${{ vars.VM_DEPLOY_ROOT || vars.CLOUD_VM_DEPLOY_ROOT || vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}
+          # Forwarded so the report can say whether the secret and the box agree.
+          # Compared after redaction; the values themselves are never printed.
+          SECRET_DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SECRET_DIRECT_URL: ${{ secrets.DIRECT_URL }}
+        run: |
+          set -euo pipefail
+          [ -n "${ECS_HOST:-}" ] || { echo "::error::VM_HOST is not set"; exit 1; }
+
+          # Hashes let the report state agreement without revealing either value.
+          secret_db_hash=$(printf '%s' "${SECRET_DATABASE_URL:-}" | sha256sum | cut -c1-12)
+          secret_direct_hash=$(printf '%s' "${SECRET_DIRECT_URL:-}" | sha256sum | cut -c1-12)
+          secret_db_len=${#SECRET_DATABASE_URL}
+
+          ssh -i ~/.ssh/id_deploy -p "$ECS_SSH_PORT" \
+              -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+              "${ECS_USER}@${ECS_HOST}" \
+              "DEPLOY_ROOT=$(printf '%q' "$ECS_DEPLOY_ROOT") SECRET_DB_HASH=$secret_db_hash SECRET_DIRECT_HASH=$secret_direct_hash SECRET_DB_LEN=$secret_db_len bash -s" <<'REMOTE'
+          set -uo pipefail
+
+          redact() {
+            local url="$1" scheme rest userinfo
+            case "$url" in *://*) : ;; *) printf '%s' "$url"; return 0 ;; esac
+            scheme="${url%%://*}"; rest="${url#*://}"
+            case "$rest" in *@*) : ;; *) printf '%s' "$url"; return 0 ;; esac
+            userinfo="${rest%@*}"
+            case "$userinfo" in
+              *:*) printf '%s://%s:***@%s' "$scheme" "${userinfo%%:*}" "${rest##*@}" ;;
+              *)   printf '%s://%s@%s' "$scheme" "$userinfo" "${rest##*@}" ;;
+            esac
+          }
+
+          env_file="$DEPLOY_ROOT/idp/.env"
+          [ -f "$env_file" ] || { echo "no $env_file on this host"; exit 1; }
+          # shellcheck disable=SC1090
+          set -a; . "$env_file"; set +a
+
+          echo "=================================================================="
+          echo " ENDPOINTS AS THE APPS SEE THEM"
+          echo "=================================================================="
+          echo "DATABASE_URL (runtime reads/writes go here):"
+          echo "  $(redact "${DATABASE_URL:-<unset>}")"
+          echo "DIRECT_URL (Prisma uses this ONLY for migrations):"
+          echo "  $(redact "${DIRECT_URL:-<unset>}")"
+          echo
+          echo "Repo secret vs box, by hash (values never printed):"
+          box_hash=$(printf '%s' "${DATABASE_URL:-}" | sha256sum | cut -c1-12)
+          echo "  DATABASE_URL  box=$box_hash secret=$SECRET_DB_HASH  $([ "$box_hash" = "$SECRET_DB_HASH" ] && echo SAME || echo DIFFERENT)"
+          if [ "$SECRET_DB_LEN" -eq 0 ]; then
+            echo "  !! the DATABASE_URL repo secret is EMPTY — a deploy would fall back to SUPABASE_DATABASE_URL"
+          else
+            echo "  DATABASE_URL secret length: $SECRET_DB_LEN chars (non-empty)"
+          fi
+          echo
+
+          # psql is not installed on this box, but every deployed app ships a
+          # node_modules containing pg. Borrowing it beats asking someone to
+          # apt-get install on a production host just to count rows.
+          echo "looking for a bundled pg module..."
+          # -L: every app is served through a `current` SYMLINK into releases/,
+          # and find does not traverse symlinks by default — which is why the
+          # first attempt reported no pg on a host that has several.
+          pg_index=$(find -L "$DEPLOY_ROOT" -maxdepth 8 -type f -path '*/node_modules/pg/package.json' 2>/dev/null | head -1)
+          if [ -z "$pg_index" ]; then
+            echo "  none found under $DEPLOY_ROOT — skipping row counts."
+            echo "  (the endpoint facts above are the part that matters; counts need pg or psql)"
+            echo "read-only inventory complete; nothing was modified"
+            exit 0
+          fi
+          pg_root="${pg_index%/node_modules/pg/package.json}"
+          echo "  using pg from: $pg_root"
+          echo
+
+          # Written INTO the directory that owns the pg module: ESM resolves bare
+          # specifiers from the importing FILE's location, not from cwd, so the same
+          # script under /tmp cannot see it however the process was started.
+          probe="$pg_root/.db-inventory.mjs"
+          cat > "$probe" <<'NODE'
+          import pg from "pg";
+          const TABLES = ["users","organizations","tenants","auth_users","auth_sessions","oauth_clients","platform_staff"];
+          async function report(label, url) {
+            console.log("==================================================================");
+            console.log(" " + label);
+            console.log("==================================================================");
+            const c = new pg.Client({ connectionString: url, connectionTimeoutMillis: 15000 });
+            try { await c.connect(); } catch (e) {
+              console.log("  UNREACHABLE: " + e.message + "\n"); return;
+            }
+            const one = async (q, d = "-") => { try { return (await c.query(q)).rows[0]?.n ?? d; } catch { return d; } };
+            console.log("  tables in public:            " + await one("select count(*)::int n from pg_tables where schemaname='public'"));
+            console.log("  client_secret_envelope col:  " + await one("select count(*)::int n from information_schema.columns where table_name='oauth_clients' and column_name='client_secret_envelope'"));
+            console.log("  applied migrations:          " + await one("select count(*)::int n from _prisma_migrations"));
+            console.log("  RLS-enabled tables:          " + await one("select count(*)::int n from pg_tables where schemaname='public' and rowsecurity"));
+            console.log("  --- rows in the tables that decide which database is real ---");
+            for (const t of TABLES) {
+              const n = await one(`select count(*)::int n from "${t}"`);
+              console.log("  " + t.padEnd(24) + n);
+            }
+            console.log("  --- 10 largest tables by live row estimate ---");
+            try {
+              const r = await c.query("select relname, n_live_tup from pg_stat_user_tables order by n_live_tup desc limit 10");
+              for (const row of r.rows) console.log("  " + String(row.relname).padEnd(24) + row.n_live_tup);
+            } catch { console.log("  (unavailable)"); }
+            console.log();
+            await c.end();
+          }
+          const runtime = process.env.RUNTIME_URL || "";
+          const direct = process.env.DIRECT_URL_IN || "";
+          if (runtime) await report("RUNTIME DATABASE (DATABASE_URL)", runtime);
+          if (direct && direct !== runtime) await report("MIGRATION TARGET (DIRECT_URL)", direct);
+          if (!direct) console.log("DIRECT_URL is unset on this host — migrations would target the runtime database.");
+          NODE
+
+          RUNTIME_URL="${DATABASE_URL:-}" DIRECT_URL_IN="${DIRECT_URL:-}" node "$probe"
+          rm -f "$probe"
+          echo "read-only inventory complete; nothing was modified"
+          REMOTE
+
+      - name: Restore the DATABASE_URL secret from the box
+        # always(): an emptied secret is a live hazard and must be fixable even
+        # when the inventory half of this workflow cannot run.
+        if: always() && inputs.restore_secret_from_box
+        env:
+          ECS_HOST: ${{ vars.VM_HOST || vars.CLOUD_VM_HOST || vars.ECS_HOST }}
+          ECS_USER: ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
+          ECS_SSH_PORT: ${{ vars.VM_SSH_PORT || vars.CLOUD_VM_SSH_PORT || vars.ECS_SSH_PORT || '22' }}
+          ECS_DEPLOY_ROOT: ${{ vars.VM_DEPLOY_ROOT || vars.CLOUD_VM_DEPLOY_ROOT || vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}
+          # Must be a PAT with repo scope. GITHUB_TOKEN has no permission that
+          # grants Actions-secret writes, so it fails here silently.
+          GH_TOKEN: ${{ secrets.OPS_SECRETS_TOKEN }}
+        run: |
+          set -euo pipefail
+          [ -n "${GH_TOKEN:-}" ] || { echo "::error::OPS_SECRETS_TOKEN is not set — GITHUB_TOKEN cannot write Actions secrets"; exit 1; }
+          # The value moves box -> GitHub without passing through a log or a
+          # human's screen. `gh secret set` reads stdin, and ::add-mask:: keeps it
+          # out of the run output even if a later command echoes it.
+          value=$(ssh -i ~/.ssh/id_deploy -p "$ECS_SSH_PORT" \
+            -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+            "${ECS_USER}@${ECS_HOST}" \
+            "sed -n 's/^DATABASE_URL=//p' $(printf '%q' "$ECS_DEPLOY_ROOT")/idp/.env | head -1")
+          [ -n "$value" ] || { echo "::error::the box has no DATABASE_URL either; refusing to write an empty secret"; exit 1; }
+          echo "::add-mask::$value"
+          printf '%s' "$value" | gh secret set DATABASE_URL --repo "$GITHUB_REPOSITORY"
+          echo "DATABASE_URL secret restored from the box ($(printf '%s' "$value" | wc -c | tr -d ' ') chars)"
+
+      - name: Cleanup SSH
+        if: always()
+        run: rm -f ~/.ssh/id_deploy ~/.ssh/known_hosts

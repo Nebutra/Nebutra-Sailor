@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "grid-system-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/grid-system-demo.tsx",
+      "content": "import { Grid } from \"@nebutra/ui/primitives\";\n\nconst cells = [\n  { label: \"Signal\", column: { sm: \"1\", md: \"1/3\" }, row: { sm: \"1/3\", md: \"1/2\" }, solid: true },\n  {\n    label: \"Latency\",\n    column: { sm: \"1\", md: \"3/4\" },\n    row: { sm: \"3/4\", md: \"1/2\" },\n    solid: false,\n  },\n  {\n    label: \"Trace\",\n    column: { sm: \"1\", md: \"1/2\" },\n    row: { sm: \"4/5\", md: \"2/3\" },\n    solid: false,\n  },\n  {\n    label: \"Release health\",\n    column: { sm: \"1\", md: \"2/4\" },\n    row: { sm: \"5/7\", md: \"2/3\" },\n    solid: true,\n  },\n] as const;\n\nexport function GridSystemDemo() {\n  return (\n    <div className=\"mx-auto flex w-full max-w-4xl flex-col gap-6 px-4 py-8\">\n      <div className=\"space-y-2\">\n        <h3 className=\"text-lg font-semibold tracking-tight\">Responsive guide grid</h3>\n        <p className=\"max-w-2xl text-sm leading-6 text-muted-foreground\">\n          Guide lines belong to the grid system. Solid cells intentionally clip the guides behind\n          dense content.\n        </p>\n      </div>\n\n      <Grid.System debug guideWidth={1} unstable_useContainer>\n        <Grid columns={{ sm: 1, md: 3 }} rows={{ sm: 6, md: 2 }}>\n          {cells.map((cell) => (\n            <Grid.Cell\n              key={cell.label}\n              column={cell.column}\n              row={cell.row}\n              solid={cell.solid}\n              className=\"flex items-center justify-center text-center text-sm font-medium\"\n            >\n              {cell.label}\n            </Grid.Cell>\n          ))}\n        </Grid>\n      </Grid.System>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

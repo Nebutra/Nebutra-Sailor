@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "avatar-group-simple-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/avatar-group-simple-demo.tsx",
+      "content": "\"use client\";\n\nimport { AvatarGroup } from \"@nebutra/ui/primitives\";\n\nexport function AvatarGroupSimpleDemo() {\n  return (\n    <AvatarGroup\n      items={[\n        { alt: \"user1\", fallback: \"U1\" },\n        { alt: \"user2\", fallback: \"U2\" },\n        { alt: \"user3\", fallback: \"U3\" },\n        { alt: \"user4\", fallback: \"U4\" },\n        { alt: \"user5\", fallback: \"U5\" },\n      ]}\n      max={4}\n      size=\"sm\"\n    />\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

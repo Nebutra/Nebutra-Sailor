@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toggle-3-demo",
+  "type": "registry:example",
+  "dependencies": [
+    "@nebutra/ui"
+  ],
+  "registryDependencies": [
+    "@nebutra/ui"
+  ],
+  "files": [
+    {
+      "path": "registry/examples/toggle-3-demo.tsx",
+      "content": "\"use client\";\n\nimport { Toggle } from \"@nebutra/ui/primitives\";\n\nexport function Toggle3Demo() {\n  return <Toggle defaultChecked size=\"large\" aria-label=\"Toggle on\" />;\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

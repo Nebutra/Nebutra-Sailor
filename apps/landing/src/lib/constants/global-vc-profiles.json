@@ -1,0 +1,976 @@
+{
+  "1": {
+    "thesis": {
+      "en": "Y Combinator funds pre-seed and seed-stage startups through an intensive batch program, providing capital, mentorship, and connections to help founders achieve product-market fit and scale. It backs founders at the earliest stages — including those with no product, revenue, or fully formed idea — betting on the people as much as the concept.",
+      "zh": "Y Combinator 通过密集的批次项目投资种子前期和种子期初创公司，为创始人提供资金、导师指导和人脉资源，帮助他们实现产品市场契合并快速扩展。它在最早期阶段押注创业者，即便对方尚无产品、收入或成熟想法，核心赌注在于人本身。"
+    },
+    "stages": ["pre-seed", "seed"],
+    "checkSize": "$500,000 per company (structured as $125,000 on a post-money SAFE for 7% equity plus $375,000 on an uncapped SAFE with MFN provision)",
+    "notable": [
+      "Airbnb",
+      "Stripe",
+      "Coinbase",
+      "DoorDash",
+      "Dropbox",
+      "OpenAI",
+      "Reddit",
+      "Twitch"
+    ],
+    "recent": [
+      "Starcloud — reached unicorn status ($170M Series A, March 2026, described by YC as its fastest unicorn to date at 17 months post-demo day)",
+      "Meesho — Indian e-commerce platform IPO (December 2025, S16 batch)",
+      "BillionToOne — genetic testing company IPO (November 2025, YC's fourth publicly traded biotech)"
+    ],
+    "hq": "San Francisco, California"
+  },
+  "2": {
+    "thesis": {
+      "en": "a16z backs bold founders building transformative technology companies across AI, bio, crypto, fintech, enterprise, and \"American dynamism\" sectors — operating with the conviction that software and emerging technologies will reshape every major industry. The firm pairs capital with a large operational platform (marketing, recruiting, legal, BD) to support companies from seed through growth stage.",
+      "zh": "a16z 投资于在人工智能、生物科技、加密货币、金融科技、企业软件及\"美国活力\"领域构建变革性技术的大胆创始人，坚信软件与新兴技术将重塑每一个主要行业。该公司以资本为基础，辅以庞大的运营支持平台（营销、招聘、法律、业务拓展），支持企业从种子阶段成长至后期阶段。"
+    },
+    "stages": ["Seed", "Series A", "Series B", "Growth", "Late Stage"],
+    "checkSize": "$750K–$1M (accelerator); multi-million to hundreds of millions for series rounds",
+    "notable": ["Airbnb", "Stripe", "Coinbase", "GitHub", "Figma", "Roblox", "Facebook", "Slack"],
+    "recent": [
+      "OpenRouter ($113M Series B, May 2026)",
+      "Stipple Bio ($100M, April 2026)",
+      "$15B in new funds raised (January 2026)"
+    ],
+    "hq": "Menlo Park, California"
+  },
+  "3": {
+    "thesis": {
+      "en": "Sequoia backs the daring founders building legendary companies across technology sectors, partnering from the earliest idea through company maturity. The firm focuses on seed, early-stage, and growth-stage investments in software, AI, consumer internet, fintech, healthcare, and deep tech.",
+      "zh": "红杉资本支持在科技领域缔造传奇企业的大胆创始人，从最初的想法到公司成熟全程陪伴。公司专注于软件、人工智能、消费互联网、金融科技、医疗健康和硬科技领域的种子轮、早期和成长期投资。"
+    },
+    "stages": ["Seed", "Early", "Growth"],
+    "checkSize": "Varies by stage and fund; 2025 fund disclosures indicate a $200M seed fund and a $750M venture fund (US/Europe), suggesting checks ranging from ~$1M at seed to $50M+ at growth",
+    "notable": [
+      "Apple",
+      "Google",
+      "NVIDIA",
+      "Stripe",
+      "Airbnb",
+      "Snowflake",
+      "Anthropic",
+      "Klarna"
+    ],
+    "recent": ["Ineffable Intelligence (April 2026)", "Auctor (April 2026)"],
+    "hq": "Menlo Park, California"
+  },
+  "4": {
+    "thesis": {
+      "en": "Accel employs a \"prepared mind\" philosophy — through deep sector focus and disciplined research, it partners early with exceptional founders building enterprise software, consumer, and infrastructure companies globally across the US, Europe, and India/Southeast Asia.",
+      "zh": "Accel 秉持\"有备而来\"的投资理念——通过深度行业研究与专注，在早期阶段与优秀创始人并肩，支持全球（美国、欧洲、印度/东南亚）企业软件、消费及基础设施领域的创业公司。"
+    },
+    "stages": ["Seed", "Early-Stage (Series A/B)", "Growth"],
+    "checkSize": "Seed/early: $1M–$30M; Growth (Leaders Fund): ~$200M average",
+    "notable": [
+      "Facebook",
+      "Slack",
+      "Dropbox",
+      "Spotify",
+      "Atlassian",
+      "CrowdStrike",
+      "UiPath",
+      "Flipkart"
+    ],
+    "recent": [
+      "Cursor (Series D, 2025) — AI-powered code editor",
+      "Legora (2025) — legal AI operating system",
+      "Leaders Fund V ($4B raise, April 2026) — growth-stage follow-ons at ~$200M average check"
+    ],
+    "hq": "Palo Alto, California"
+  },
+  "5": {
+    "thesis": {
+      "en": "Benchmark focuses on early-stage investing, typically leading the first institutional round of funding and taking board seats, with a flat equal-partnership structure where returns are driven by investment performance rather than management fees.",
+      "zh": "Benchmark 专注于早期阶段投资，通常主导企业的首轮机构融资并取得董事会席位，采用扁平化的平等合伙人结构，以投资回报而非管理费作为核心驱动。"
+    },
+    "stages": ["Seed", "Series A", "Series B"],
+    "checkSize": "$5M–$25M",
+    "notable": ["eBay", "Uber", "Snap", "Twitter", "Instagram", "Discord", "Dropbox", "Zendesk"],
+    "recent": [
+      "Manus (led $75M Series B, April 2025; acquired by Meta for $2B+ in December 2025)",
+      "Sierra (AI customer experience platform; Benchmark investor via 2020 fund, raised $950M at $15B valuation May 2026)",
+      "Mercor (AI hiring platform; Benchmark participated in $350M Series C at $10B valuation, October 2025)"
+    ],
+    "hq": "San Francisco, California"
+  },
+  "6": {
+    "thesis": {
+      "en": "Greylock partners with ambitious, inventive entrepreneurs at the earliest stages — pre-seed through Series A — to build enduring companies in AI, cybersecurity, infrastructure, SaaS, consumer, and fintech, with over 80% of investments being first checks.",
+      "zh": "Greylock 专注于在最早期阶段（种子轮至 A 轮）与雄心勃勃的创业者合作，聚焦 AI、网络安全、基础设施、SaaS、消费和金融科技领域，超过 80% 的投资为首笔支票。"
+    },
+    "stages": ["Pre-Seed", "Seed", "Series A"],
+    "checkSize": "Not publicly disclosed; fund sizes historically ~$1B per flagship fund",
+    "notable": [
+      "Airbnb",
+      "LinkedIn",
+      "Facebook",
+      "Figma",
+      "Discord",
+      "Coinbase",
+      "Palo Alto Networks",
+      "Workday"
+    ],
+    "recent": [
+      "Altara (2026, Seed) — scientific intelligence platform for physical sciences",
+      "Cylake (2026, Seed) — AI-native cybersecurity for regulated industries",
+      "Cogent Security (2025, Seed) — AI taskforce for vulnerability management"
+    ],
+    "hq": "Menlo Park, California"
+  },
+  "7": {
+    "thesis": {
+      "en": "Kleiner Perkins backs founders with bold, transformative ideas across technology and life sciences — from seed through growth — with an AI-first lens, believing artificial intelligence will reshape every industry the way electricity did. The firm partners actively from inception to IPO, providing recruiting, strategic, and network support beyond capital.",
+      "zh": "Kleiner Perkins 投资于科技与生命科学领域具有颠覆性创意的创始人，覆盖从种子轮到成长轮的全阶段，以 AI 优先视角出发，相信人工智能将如同电力一样重新塑造每个行业。公司不仅提供资金，还从公司创立到 IPO 全程深度参与，协助招募高管、提供战略指导与资源网络。"
+    },
+    "stages": ["Seed", "Early-Stage", "Growth"],
+    "checkSize": "$1M–$25M+ (early-stage); growth checks vary by fund",
+    "notable": [
+      "Google",
+      "Amazon",
+      "Genentech",
+      "Netscape",
+      "Slack",
+      "DoorDash",
+      "Figma",
+      "Anthropic"
+    ],
+    "recent": [
+      "Harvey (AI legal platform)",
+      "Applied Intuition (autonomous vehicle software)",
+      "Glean (enterprise AI search)"
+    ],
+    "hq": "Menlo Park, California"
+  },
+  "8": {
+    "thesis": {
+      "en": "Founders Fund backs ambitious founders building transformative technology companies — especially in hard tech, defense, space, and AI — that others consider too difficult or too bold to attempt.",
+      "zh": "Founders Fund 投资于敢于构建变革性技术公司的雄心勃勃的创始人，尤其聚焦于硬科技、国防、航天和人工智能等被其他投资者视为过于艰难或大胆的领域。"
+    },
+    "stages": ["Seed", "Series A", "Series B", "Growth"],
+    "checkSize": "$10M–$500M+ (growth fund checks avg ~$460M per company as of 2025)",
+    "notable": ["SpaceX", "Palantir", "Stripe", "Anduril", "Airbnb", "Neuralink", "Nubank", "Ramp"],
+    "recent": [
+      "Anduril Series G (~$1B, 2025)",
+      "OpenAI funding round participation ($8.3B round, 2025)",
+      "Varda Space Industries ($187M round, 2025)"
+    ],
+    "hq": "San Francisco, CA"
+  },
+  "9": {
+    "thesis": {
+      "en": "Lightspeed backs bold, mission-driven founders from Seed through growth stages across enterprise software, consumer, fintech, and AI, combining deep hands-on partnership with a global multi-geography platform spanning the US, Europe, Israel, India, and Southeast Asia.",
+      "zh": "Lightspeed 从种子轮到成长期全程支持具有远大志向的创始人，专注企业软件、消费互联网、金融科技及人工智能领域，以深度的陪伴式合作结合覆盖美国、欧洲、以色列、印度和东南亚的全球化平台为核心差异化优势。"
+    },
+    "stages": ["Seed", "Series A", "Series B", "Series C", "Series D", "Growth (Series F+)"],
+    "checkSize": "Not publicly disclosed",
+    "notable": [
+      "Snap (Snapchat)",
+      "Anthropic",
+      "Affirm",
+      "Rubrik",
+      "Nutanix",
+      "Navan",
+      "MuleSoft (acq. Salesforce $6.5B)",
+      "Nest (acq. Google $3.2B)"
+    ],
+    "recent": [
+      "ElevenLabs — Series D (2026)",
+      "Helion — Series F (2025)",
+      "Composio — Series A (2025)"
+    ],
+    "hq": "Menlo Park, California"
+  },
+  "10": {
+    "thesis": {
+      "en": "Index Ventures backs exceptional founders from seed through explosive growth, investing across software, fintech, healthcare, and consumer technology with a conviction that people — not ideas alone — build enduring companies.",
+      "zh": "Index Ventures 从种子轮到成长期全程支持卓越创始人，专注于软件、金融科技、医疗健康及消费科技领域，坚信是人而非创意本身造就了持久卓越的企业。"
+    },
+    "stages": ["Seed", "Series A", "Series B", "Growth"],
+    "checkSize": "$15M (Series A); $50M (growth); seed via Index Origin fund",
+    "notable": ["Figma", "Revolut", "Wiz", "Datadog", "Discord", "Adyen", "Roblox", "Anthropic"],
+    "recent": [
+      "LiveKit — led $100M Series C at $1B valuation (January 2026)",
+      "Parallel — led $20M Series A for AI hospital-agent platform (2025)",
+      "Wonderful — participated in $150M Series B for hyper-local enterprise AI (2025)"
+    ],
+    "hq": "London"
+  },
+  "11": {
+    "thesis": {
+      "en": "Bessemer Venture Partners backs early-stage and growth-stage technology and healthcare companies globally, partnering with founders who demonstrate intellectual honesty and the potential to build enduring category-defining businesses. The firm invests across AI/ML, cloud, cybersecurity, fintech, healthcare, deep tech, and consumer sectors through dedicated sector roadmaps.",
+      "zh": "Bessemer Venture Partners 在全球范围内投资早期和成长期科技与医疗健康公司，与具备诚信品质、有望打造长期行业领军企业的创始人深度合作。该基金通过专项行业路线图，聚焦 AI/ML、云计算、网络安全、金融科技、医疗健康、深科技及消费互联网等赛道。"
+    },
+    "stages": ["Seed", "Series A", "Series B", "Growth"],
+    "checkSize": "Not publicly disclosed; flagship early-stage fund totals $3.85B (2022 vintage)",
+    "notable": [
+      "Shopify",
+      "Pinterest",
+      "LinkedIn",
+      "Twilio",
+      "Canva",
+      "Anthropic",
+      "Procore",
+      "ServiceTitan"
+    ],
+    "recent": [
+      "Illoca — $13M seed led by BVP for generative AI design tools for architects (May 2026)",
+      "Amperos Health — $16M Series A led by BVP for agentic AI denial management in healthcare (April 2026)",
+      "Anthropic — BVP committed an additional $3.5B to the AI safety company (March 2025)"
+    ],
+    "hq": "San Francisco, California"
+  },
+  "12": {
+    "thesis": {
+      "en": "GV backs innovative founders from seed through growth across technology and life sciences, combining independent venture capital judgment with access to Google and Alphabet's engineering talent, networks, and resources to support companies with long-term transformative potential.",
+      "zh": "GV 从种子轮到成长期投资技术与生命科学领域的创新创始人，以独立的风险投资判断力结合 Google 和 Alphabet 的工程人才、资源与网络，支持具有长期颠覆性潜力的企业。"
+    },
+    "stages": ["Seed", "Series A", "Series B", "Growth"],
+    "checkSize": "$500K–$50M+",
+    "notable": [
+      "Uber",
+      "Slack",
+      "GitLab",
+      "Nest",
+      "Flatiron Health",
+      "Lemonade",
+      "One Medical",
+      "Synthesia"
+    ],
+    "recent": [
+      "Harvey (legal AI, 2024–2025)",
+      "Synthesia (AI video, 2024–2025)",
+      "MokN (identity security, May 2026)"
+    ],
+    "hq": "San Francisco, CA"
+  },
+  "13": {
+    "thesis": {
+      "en": "Khosla Ventures backs technology-driven companies tackling large, important problems across consumer, enterprise, fintech, health, and sustainability, with a particular emphasis on AI-enabled disruption and founders with proprietary technological or business-model advantages.",
+      "zh": "Khosla Ventures 投资利用技术驱动解决重大问题的公司，覆盖消费、企业、金融科技、医疗健康与可持续发展等领域，尤其专注于具备 AI 颠覆潜力、拥有专有技术或商业模式优势的创始团队。"
+    },
+    "stages": ["Seed", "Early Stage", "Growth", "Opportunity"],
+    "checkSize": "Not publicly disclosed; fund structure includes a dedicated $500M seed fund and $1B+ later-stage fund (2023)",
+    "notable": [
+      "OpenAI",
+      "DoorDash",
+      "Stripe",
+      "Instacart",
+      "Okta",
+      "Affirm",
+      "Commonwealth Fusion Systems",
+      "Rocket Lab"
+    ],
+    "recent": [
+      "Mach Industries — $100M raise (defense tech, 2025; Khosla co-led with Bedrock per TechCrunch)",
+      "Hermeus — $350M raise for unmanned hypersonic aircraft (April 2026, per TechCrunch)",
+      "Glydways — $170M raise for autonomous transit pods (April 2026, per TechCrunch)"
+    ],
+    "hq": "Menlo Park, California"
+  },
+  "14": {
+    "thesis": {
+      "en": "NEA partners with entrepreneurs across technology and healthcare to build transformational companies from seed through IPO, combining deep sector expertise with long-term, hands-on commitment to founders over the full arc of their journey.",
+      "zh": "NEA 专注于科技与医疗健康领域，从种子轮到 IPO 全程陪伴创业者，凭借深厚的行业积累与长期主义的实操支持，致力于与创始人共同打造具有变革意义的企业。"
+    },
+    "stages": ["Seed", "Series A", "Series B", "Series C", "Series D", "Growth/Pre-IPO"],
+    "checkSize": "Not publicly disclosed; AUM ~$25B (as of 2023)",
+    "notable": [
+      "Databricks",
+      "Cloudflare",
+      "MongoDB",
+      "Robinhood",
+      "Plaid",
+      "Coursera",
+      "Perplexity",
+      "CRISPR Therapeutics"
+    ],
+    "recent": ["Spektr (fintech compliance, ~$20M Series A lead, April 2026)"],
+    "hq": "Menlo Park, California"
+  },
+  "15": {
+    "thesis": {
+      "en": "General Catalyst invests across seed, venture, and growth stages with a focus on applying AI and technology to transform core societal systems — including healthcare, enterprise software, defense, and financial services — at global scale. The firm emphasizes \"unscaling\" industries through data and AI to deliver personalized, resilient solutions rather than simply making legacy systems larger.",
+      "zh": "General Catalyst 跨种子轮、风险投资及成长期进行多阶段投资，专注于利用人工智能和技术改造医疗健康、企业软件、国防及金融服务等核心社会领域。公司倡导通过数据与AI\"去规模化\"各行业，以个性化、韧性化方案重塑传统体系，而非单纯扩大现有规模。"
+    },
+    "stages": ["Seed", "Series A", "Series B", "Growth"],
+    "checkSize": "$500K–$100M",
+    "notable": ["Airbnb", "Stripe", "Anthropic", "HubSpot", "Canva", "Anduril", "Mistral", "Ramp"],
+    "recent": [
+      "Anthropic (March 2025, at $61.5B valuation)",
+      "NHS medical technology venture fund with Speedinvest (May 2025, £30M)",
+      "Zarminali Pediatrics Series A (January 2026)"
+    ],
+    "hq": "Cambridge, Massachusetts"
+  },
+  "16": {
+    "thesis": {
+      "en": "Tiger Global is a research-driven crossover firm that invests in leading private and public companies across software, consumer internet, and financial technology globally, seeking to partner with dominant platforms at multiple lifecycle stages from growth equity through public markets.",
+      "zh": "Tiger Global 是一家以研究驱动的跨阶段投资机构，专注于全球软件、消费互联网和金融科技领域的领先私人和上市公司，寻求在从成长期股权到公开市场的多个生命周期阶段与主导平台建立长期合作关系。"
+    },
+    "stages": ["Growth", "Late Stage", "Public Equity"],
+    "checkSize": "$50M–$200M+ (historically median ~$114M in peak years; now more selective with larger conviction checks)",
+    "notable": [
+      "Stripe",
+      "Databricks",
+      "ByteDance",
+      "Nubank",
+      "Flipkart",
+      "UiPath",
+      "Coinbase",
+      "JD.com"
+    ],
+    "recent": [
+      "Sierra (Series E, May 2026 — $950M round led by Tiger Global at $15.8B valuation, enterprise AI platform)",
+      "Zipline (March 2026 — $600M+ round, drone delivery logistics, $7.6B valuation)"
+    ],
+    "hq": "New York City, NY"
+  },
+  "17": {
+    "thesis": {
+      "en": "Coatue invests in technology-driven innovation across public and private markets — from early-stage venture through growth and public equities — with deep conviction in AI-enabled platforms, cloud infrastructure, and consumer technology that can reshape entire industries at scale.",
+      "zh": "Coatue 专注于在公开市场与私募市场跨阶段投资技术驱动型创新，重点布局 AI 赋能平台、云基础设施及消费科技，致力于支持能够重塑行业格局的颠覆性科技企业。"
+    },
+    "stages": ["Seed", "Series A", "Series B", "Growth / Late Stage", "Public Equity"],
+    "checkSize": "$10M–$500M+ (varies widely by stage; growth rounds often $100M+)",
+    "notable": [
+      "Anthropic",
+      "Databricks",
+      "ByteDance",
+      "DoorDash",
+      "Instacart",
+      "Snap",
+      "Airtable",
+      "UiPath"
+    ],
+    "recent": [
+      "Anthropic Series G (Feb 2026) — co-led at $380B valuation alongside GIC",
+      "Kalshi Series F (May 2026) — led $1B round valuing the prediction-markets platform at $22B",
+      "Coatue Innovation Fund (CTEK) launch (2025) — $1B anchor from Bezos and Dell family offices, $355M net inflows Q1 2026"
+    ],
+    "hq": "New York City, NY"
+  },
+  "18": {
+    "thesis": {
+      "en": "Insight Partners invests exclusively in software and internet companies, providing flexible capital and hands-on operational support (\"Insight Onsite\") to help founders scale from initial product-market fit through late-stage growth and public markets.",
+      "zh": "Insight Partners 专注于软件和互联网公司的投资，通过灵活的资本以及专属运营团队（Insight Onsite）的实操支持，协助创始人从初步产品市场契合阶段一路扩张至后期成长乃至上市。"
+    },
+    "stages": ["Series A", "Series B", "Growth", "Late Stage", "Pre-IPO"],
+    "checkSize": "Not publicly disclosed",
+    "notable": [
+      "SentinelOne",
+      "monday.com",
+      "Twitter",
+      "Qualtrics",
+      "DocuSign",
+      "Checkmarx",
+      "Delinea",
+      "Semperis"
+    ],
+    "recent": [
+      "Fund XIII close: raised $12.5 billion (flagship fund + structured-equity vehicle) in January 2025",
+      "Acquired Venn (quantitative investment analytics tool) from Two Sigma in January 2026, merging it with portfolio company Solovis"
+    ],
+    "hq": "New York City, NY, USA"
+  },
+  "19": {
+    "thesis": {
+      "en": "Thrive Capital builds and invests in software, internet, and technology-enabled companies, concentrating capital in fewer positions to maintain close founder relationships across early and growth stages.",
+      "zh": "Thrive Capital 专注于软件、互联网及科技驱动型公司的投资，采取集中持仓策略，与更少的创始人建立深度合作关系，覆盖早期至成长期各阶段。"
+    },
+    "stages": ["early-stage", "growth", "late-stage"],
+    "checkSize": "Varies widely by stage; early rounds from ~$5M, growth rounds up to $100M+",
+    "notable": [
+      "OpenAI",
+      "Stripe",
+      "Databricks",
+      "Scale AI",
+      "Instagram",
+      "GitHub",
+      "Spotify",
+      "Nubank"
+    ],
+    "recent": [
+      "Anysphere (AI coding software, January 2025)",
+      "Fund X close at $10 billion (February 2026)",
+      "Stake acquisition in San Francisco Giants (April 2026)"
+    ],
+    "hq": "New York City"
+  },
+  "20": {
+    "thesis": {
+      "en": "First Round Capital is an exclusively seed-stage firm that partners with founders at the very first stages of company creation, seeking teams with compelling and contrarian insight into how the world works that others miss.",
+      "zh": "First Round Capital 是一家专注于种子阶段的风险投资机构，在公司创立最初阶段与创始人携手合作，寻找那些对世界运作方式拥有深刻且反共识洞察、能够发现他人所忽视机会的创业团队。"
+    },
+    "stages": ["Pre-Seed", "Seed"],
+    "checkSize": "$750K–$4M",
+    "notable": [
+      "Uber",
+      "Square",
+      "Roblox",
+      "Notion",
+      "Warby Parker",
+      "Looker",
+      "Flatiron Health",
+      "Verkada"
+    ],
+    "recent": [
+      "Clay (AI sales automation, $3.1B valuation, 2025)",
+      "Fal (generative media infrastructure, $4.5B valuation, Dec 2025)",
+      "Pomelo Care (virtual maternal health, $1.7B valuation, Jan 2026)"
+    ],
+    "hq": "San Francisco, CA"
+  },
+  "21": {
+    "thesis": {
+      "en": "USV invests at the edge of large markets being transformed by technological and societal pressures, backing companies—primarily internet, mobile, and software—that broaden access to capital, knowledge, and wellbeing through large networks of engaged users.",
+      "zh": "USV 投资于受技术与社会压力驱动、正在发生深刻变革的大型市场边缘地带，专注于通过构建大规模用户网络、扩大资本、知识与福祉获取渠道的互联网、移动及软件公司。"
+    },
+    "stages": ["Seed", "Series A", "Early-stage"],
+    "checkSize": "Not publicly disclosed",
+    "notable": [
+      "Twitter",
+      "Etsy",
+      "Stripe",
+      "Coinbase",
+      "Kickstarter",
+      "Duolingo",
+      "Cloudflare",
+      "MongoDB"
+    ],
+    "recent": [
+      "Tutor Intelligence (Series A, December 2025) — robotics platform enabling robots to learn from humans in real-time",
+      "Anon (May 2026) — web architecture / browser-service boundary",
+      "Glif (April 2026)"
+    ],
+    "hq": "New York City, NY"
+  },
+  "22": {
+    "thesis": {
+      "en": "Spark Capital backs non-consensus, product-centric founders across all sectors and stages — from seed through growth — with a curiosity-first approach that favors contrarian ideas and creative builders over conventional wisdom.",
+      "zh": "Spark Capital 以产品为核心、以好奇心为驱动，投资于各行业各阶段的逆向创业者，偏好挑战传统认知的非共识理念与富有创造力的团队。"
+    },
+    "stages": ["Seed", "Series A", "Series B", "Growth"],
+    "checkSize": "$2M–$100M",
+    "notable": [
+      "Twitter",
+      "Slack",
+      "Discord",
+      "Anthropic",
+      "Coinbase",
+      "Affirm",
+      "Plaid",
+      "Oculus VR"
+    ],
+    "recent": [
+      "Anrok – led $55M Series C (October 2025)",
+      "The Bot Company – participated in $150M Series A/growth round (2025)",
+      "Sesame – listed on sparkcapital.com/companies as active portfolio (2025–2026)"
+    ],
+    "hq": "Boston, MA (with offices in San Francisco and New York City)"
+  },
+  "23": {
+    "thesis": {
+      "en": "Battery Ventures is a technology-focused investor backing founders building category-defining businesses across application software, infrastructure software, consumer, and industrial tech and life science tools at all stages of growth.",
+      "zh": "Battery Ventures 专注于技术领域投资，支持在应用软件、基础架构软件、消费科技及工业技术与生命科学工具领域打造行业标杆企业的创始人，覆盖从早期到成长期的全阶段投资。"
+    },
+    "stages": ["Seed", "Early-stage", "Growth", "Buyout / Take-private"],
+    "checkSize": "Not publicly disclosed; fund XV capitalized at $3.25B",
+    "notable": [
+      "Coinbase",
+      "Wayfair",
+      "Affirm",
+      "Splunk",
+      "Amplitude",
+      "Braze",
+      "JFrog",
+      "Nutanix"
+    ],
+    "recent": [
+      "Koi (endpoint security, $48M seed/Series A, 2025)",
+      "1mind (AI sales platform, $30M, 2025)",
+      "Enzo Biochem (take-private transaction completed August 2025)"
+    ],
+    "hq": "Boston, Massachusetts"
+  },
+  "24": {
+    "thesis": {
+      "en": "IVP focuses on the fastest-growing late-stage and growth-stage technology companies, backing 10–12 prominent businesses per year with capital and deep operational support to convert momentum into market dominance.",
+      "zh": "IVP 专注于成长最快的后期及成长期科技企业，每年遴选约 10–12 家重点公司，以资本与深度运营支持帮助其将业务势能转化为市场主导地位。"
+    },
+    "stages": ["Series B", "Series C", "Growth / Late Stage"],
+    "checkSize": "$10M–$100M per company (typical range; average Series B round ~$70M, Series C ~$72M)",
+    "notable": [
+      "Netflix",
+      "Slack",
+      "Figma",
+      "CrowdStrike",
+      "Datadog",
+      "Coinbase",
+      "Klarna",
+      "Perplexity"
+    ],
+    "recent": [
+      "Cape (Series C, $100M, 2025–2026)",
+      "Whoop (Series G follow-on, 2025–2026)",
+      "Anthropic (growth round, 2025–2026)"
+    ],
+    "hq": "Menlo Park, California"
+  },
+  "25": {
+    "thesis": {
+      "en": "Redpoint Ventures backs seed, early, and growth-stage technology companies across enterprise software, cloud infrastructure, consumer technology, and fintech, partnering with founders from the earliest stages through to IPO and beyond.",
+      "zh": "Redpoint Ventures 专注于投资种子期、早期及成长期科技公司，覆盖企业软件、云基础设施、消费科技与金融科技等领域，从创业初期陪伴创始人成长至上市及后续阶段。"
+    },
+    "stages": ["Seed", "Early", "Growth"],
+    "checkSize": "Not publicly disclosed; fund X closed at $650M (2025)",
+    "notable": [
+      "Netflix",
+      "Snowflake",
+      "Twilio",
+      "Stripe",
+      "HashiCorp",
+      "Zendesk",
+      "Ramp",
+      "Pure Storage"
+    ],
+    "recent": [
+      "Gradient Labs (AI customer-service agent, 2025)",
+      "Redpoint Fund X — $650M close (2025)",
+      "Owner.com Series B (2024)"
+    ],
+    "hq": "Menlo Park, California"
+  },
+  "26": {
+    "thesis": {
+      "en": "Menlo Ventures backs transformative technology companies across AI, cybersecurity, fintech, and healthcare, partnering with founders from inception through growth with hands-on operational support and over $7.6B under management across 50 years of investing.",
+      "zh": "Menlo Ventures 专注于投资 AI、网络安全、金融科技和医疗健康领域的变革性科技公司，以超过 50 年的投资经验和逾 76 亿美元的管理资产，从创业初期到成长阶段全程陪跑创始人，提供资本之外的深度运营支持。"
+    },
+    "stages": ["Seed", "Series A", "Series B", "Series C", "Growth"],
+    "checkSize": "Not publicly disclosed",
+    "notable": [
+      "Anthropic",
+      "Chime",
+      "Pinecone",
+      "Abnormal AI",
+      "Carta",
+      "Harness",
+      "Benchling",
+      "Uber"
+    ],
+    "recent": [
+      "Inception (AI research venture by Stefano Ermon et al., March 2026)",
+      "Gimlet (multi-silicon inference cloud, March 2026)",
+      "Astrix Security (Series B 2024; acquired by Cisco, May 2026)"
+    ],
+    "hq": "Menlo Park, California"
+  },
+  "27": {
+    "thesis": {
+      "en": "Emergence Capital backs early-stage B2B software founders building the next generation of enterprise and AI-native business software, betting on new business models unlocked by cloud and AI technology revolutions. The firm takes a low-volume, high-conviction approach — making only 5–7 investments per year — focused on helping companies go from emerging to iconic.",
+      "zh": "Emergence Capital 投资于构建下一代企业级与 AI 原生商业软件的早期 B2B 软件创始人，押注由云计算和 AI 技术革命所解锁的新商业模式。该机构采取低频高信念的投资策略，每年仅进行 5–7 笔投资，专注于帮助企业从新兴走向标志性。"
+    },
+    "stages": ["Seed", "Series A", "Series B"],
+    "checkSize": "$10M–$50M",
+    "notable": [
+      "Salesforce",
+      "Zoom",
+      "Veeva Systems",
+      "Doximity",
+      "Bill.com",
+      "Gusto",
+      "Ironclad",
+      "Salesloft"
+    ],
+    "recent": [
+      "Genspark (Series B, $275M, November 2025 — AI workspace valued at $1.25B)",
+      "Together AI (Series B, February 2025 — AI infrastructure and model serving)",
+      "Harper (Series A, $46.8M, February 2026 — autonomous AI commercial insurance brokerage)"
+    ],
+    "hq": "San Francisco, CA"
+  },
+  "28": {
+    "thesis": {
+      "en": "Bain Capital Ventures partners with ambitious founders from seed through growth stage, bringing tightly focused sector expertise and a global network to help companies in AI, fintech, commerce, healthcare, industrials, and security realize their full potential. The firm takes a tailored, partnership-driven approach rather than a one-size-fits-all playbook.",
+      "zh": "Bain Capital Ventures 从种子轮到成长期全程陪伴有雄心的创始人，凭借深度垂直领域专长与全球网络，助力人工智能、金融科技、商业、医疗健康、工业及安全领域的企业实现其全部潜力。公司摒弃千篇一律的打法，以定制化合伙关系为核心理念。"
+    },
+    "stages": ["Seed", "Early Stage", "Growth"],
+    "checkSize": "$1M–$100M",
+    "notable": [
+      "LinkedIn",
+      "DocuSign",
+      "Twilio",
+      "Redis",
+      "Attentive",
+      "Justworks",
+      "Crusoe",
+      "Cognition"
+    ],
+    "recent": [
+      "Legora (AI for legal professionals, Growth 2026)",
+      "Cape (privacy-first mobile virtual network operator, Growth 2026)",
+      "Cognition (AI coding assistant, Growth 2025)"
+    ],
+    "hq": "Boston, MA"
+  },
+  "29": {
+    "thesis": {
+      "en": "Lux Capital backs visionary founders working at the edges of science and technology — spanning AI, defense, robotics, life sciences, and aerospace — with a contrarian, long-horizon conviction captured in their motto \"We believe before others understand.\"",
+      "zh": "Lux Capital 支持在科技前沿开拓的远见创始人，聚焦人工智能、国防、机器人、生命科学与航空航天等领域，以\"别人理解之前我们已相信\"的逆向长期投资理念为核心。"
+    },
+    "stages": ["Seed", "Series A", "Series B", "Growth"],
+    "checkSize": "$100K–$100M",
+    "notable": [
+      "Anduril Industries",
+      "Hugging Face",
+      "Applied Intuition",
+      "Runway",
+      "Databricks",
+      "Benchling",
+      "Hadrian",
+      "Eikon Therapeutics"
+    ],
+    "recent": [
+      "Phonic (voice-agent reliability platform, April 2025)",
+      "Lux Ventures IX — $1.5B fund close focused on new science and defense (January 2026)",
+      "Crosby (legal-tech / AI for lawyers, March 2026)"
+    ],
+    "hq": "New York, NY"
+  },
+  "30": {
+    "thesis": {
+      "en": "DCVC backs deep-tech entrepreneurs tackling the hardest, highest-stakes problems in the world — applying advanced AI, computational biology, climate science, and hard engineering to create trillion-dollar outcomes across industries.",
+      "zh": "DCVC专注于支持深科技创业者，利用人工智能、计算生物学、气候技术及硬工程，攻克世界上最艰难、影响最深远的问题，推动跨行业的万亿美元级机遇。"
+    },
+    "stages": ["Seed", "Series A", "Series B", "Growth"],
+    "checkSize": "Not publicly disclosed",
+    "notable": [
+      "Databricks",
+      "Recursion Pharmaceuticals",
+      "Pivot Bio",
+      "Fervo Energy",
+      "SentinelOne",
+      "Rocket Lab",
+      "Ginkgo Bioworks",
+      "Checkr"
+    ],
+    "hq": "Palo Alto, CA"
+  },
+  "31": {
+    "thesis": {
+      "en": "Ribbit Capital backs entrepreneurs who are transforming financial services through technology, with a global mandate spanning fintech, crypto infrastructure, and commerce — concentrating capital into a select number of companies it believes will fundamentally reshape how people interact with money.",
+      "zh": "Ribbit Capital 专注支持通过技术变革金融服务的创始人，投资范围覆盖全球金融科技、加密基础设施与商业领域，将资本集中押注于少数有潜力从根本上重塑人们与金钱关系的公司。"
+    },
+    "stages": ["Seed", "Series A", "Series B", "Growth"],
+    "checkSize": "$5M–$500M",
+    "notable": [
+      "Robinhood",
+      "Coinbase",
+      "Nubank",
+      "Stripe",
+      "Revolut",
+      "Plaid",
+      "Credit Karma",
+      "Brex"
+    ],
+    "recent": [
+      "Privy (crypto wallet infrastructure, ~$15M round led by Ribbit, March 2025)",
+      "Ribbit Capital Y — $500M flagship fund raised (SEC filing March 2025)",
+      "Leapfrog Capital — $300M opportunistic fund raised (July 2025)"
+    ],
+    "hq": "Palo Alto, California"
+  },
+  "32": {
+    "thesis": {
+      "en": "QED Investors is a thesis-driven fintech-only venture firm that backs data-driven, disruptive financial services companies — from credit, lending, and insurance to wealth management, proptech, and banking-as-a-service — across emerging and developed markets globally.",
+      "zh": "QED Investors 是一家专注于金融科技的论点驱动型风险投资机构，投资于以数据为核心、颠覆传统的金融服务公司，涵盖信贷、借贷、保险、财富管理、房产科技及银行即服务等领域，布局全球新兴市场与成熟市场。"
+    },
+    "stages": ["Pre-Seed", "Seed", "Series A", "Series B", "Growth"],
+    "checkSize": "$3M–$20M initial check (Early Fund avg ~$15M total; Growth Fund II avg $15–20M)",
+    "notable": [
+      "Nubank",
+      "Credit Karma",
+      "Klarna",
+      "Remitly",
+      "Kavak",
+      "Flywire",
+      "GreenSky",
+      "Creditas"
+    ],
+    "recent": [
+      "Raenest – led $11M Series A, February 2025 (Nigerian cross-border fintech)",
+      "Cedar Money – seeded $9.9M, January 2025 (stablecoin payments platform)"
+    ],
+    "hq": "Alexandria, Virginia, USA"
+  },
+  "33": {
+    "thesis": {
+      "en": "Paradigm is a research-driven investment firm that backs foundational infrastructure across crypto, AI, robotics, and other frontier technologies, partnering with builders from the earliest stages to help develop and scale the technical primitives underlying next-generation digital ecosystems.",
+      "zh": "Paradigm 是一家以研究为驱动的投资机构，专注于支持加密、人工智能、机器人及其他前沿技术领域的基础设施，从创业最早期阶段就与建设者并肩合作，助力构建下一代数字生态系统的核心技术基石。"
+    },
+    "stages": ["Seed", "Series A", "Series B", "Growth"],
+    "checkSize": "$10M–$225M (typical lead: $50M+)",
+    "notable": [
+      "Coinbase",
+      "Uniswap",
+      "Optimism",
+      "Monad Labs",
+      "Flashbots",
+      "Phantom",
+      "Chainalysis",
+      "Kalshi"
+    ],
+    "recent": [
+      "Nous Research — $50M Series A (April 2025), decentralized AI infrastructure",
+      "Kalshi — led multiple rounds in 2025, valuing the prediction market platform at $11B by December 2025",
+      "Kuru Labs — led $11.6M round (July 2025) for DeFi liquidity on Monad"
+    ],
+    "hq": "San Francisco, California"
+  },
+  "34": {
+    "thesis": {
+      "en": "Craft Ventures backs early-stage technology companies — particularly SaaS and marketplace businesses — founded by exceptional operators, positioning itself as a firm \"designed by founders for founders\" that provides both capital and hands-on operational support.",
+      "zh": "Craft Ventures 专注于投资早期技术公司——尤其是 SaaS 和市场平台类企业——由顶尖创业者创立，自我定位为\"由创业者为创业者打造\"的基金，除资本支持外还提供深度运营辅导。"
+    },
+    "stages": ["Seed", "Series A", "Series B"],
+    "checkSize": "Not publicly disclosed (fund sizes range from $350M to $712M per fund)",
+    "notable": [
+      "Replit",
+      "Affirm",
+      "Anduril",
+      "Glean",
+      "ElevenLabs",
+      "Supabase",
+      "ClickUp",
+      "Eight Sleep"
+    ],
+    "recent": [
+      "Starbridge — $42M Series A in govtech, led by Craft Ventures (October 2025)",
+      "ComfyUI — generative media OS, backed by Craft Ventures (reached $500M valuation, April 2026)"
+    ],
+    "hq": "San Francisco, CA"
+  },
+  "35": {
+    "thesis": {
+      "en": "Felicis backs bold founders at the earliest stages — primarily Seed and Series A — across AI, cybersecurity and defense, global resilience and energy, and health and bio, leading or co-leading the majority of its investments before product-market fit is obvious.",
+      "zh": "Felicis 专注于在最早期阶段（主要为种子轮和 A 轮）支持具有远见的创始人，聚焦人工智能、网络安全与国防、全球韧性与能源、健康与生物等领域，在产品市场契合度尚未明朗时便率先投资并主导大多数交易。"
+    },
+    "stages": ["Seed", "Series A"],
+    "checkSize": "Not publicly disclosed (Seed/Series A stage implies typical early checks)",
+    "notable": [
+      "Shopify",
+      "Canva",
+      "Notion",
+      "Adyen",
+      "Twitch",
+      "Plaid",
+      "Credit Karma",
+      "Weights & Biases"
+    ],
+    "recent": [
+      "Fractile — AI inference hardware, Series B ($220M, 2025)",
+      "Artemis — AI security, Series A ($70M, 2025)",
+      "Mercor — AI hiring platform, Series C ($350M valuation $10B, 2025)"
+    ],
+    "hq": "Menlo Park, California"
+  },
+  "36": {
+    "thesis": {
+      "en": "500 Global backs globally ambitious founders building fast-growing technology companies in underinvested and emerging markets, operating on the belief that exceptional talent and investable opportunities exist everywhere in the world regardless of geography, gender, or background.",
+      "zh": "500 Global投资于全球有雄心的创始人，支持其在被忽视的新兴市场构建高增长科技公司，秉持\"优秀创业者和投资机会遍布世界各地\"的理念，不受地域、性别或背景限制。"
+    },
+    "stages": ["Pre-Seed", "Seed", "Series A"],
+    "checkSize": "$100K–$2M",
+    "notable": [
+      "Canva",
+      "Credit Karma",
+      "Twilio",
+      "Udemy",
+      "Grab",
+      "GitLab",
+      "Talkdesk",
+      "BukaLapak"
+    ],
+    "recent": [
+      "RemotePass (Series B, May 2026 — global payroll and embedded fintech platform)",
+      "Level3 AI (Seed, 2026 — AI-powered platform)",
+      "Monnai (follow-on, 2025 — fintech data infrastructure)"
+    ],
+    "hq": "San Francisco, California"
+  },
+  "37": {
+    "thesis": {
+      "en": "Techstars is a mentorship-driven global accelerator that invests in pre-seed and early-stage startups, providing capital, hands-on mentorship, and network access to help founders scale world-changing businesses across more than 150 countries.",
+      "zh": "Techstars 是一家以导师制为核心的全球加速器，专注于投资初创期和早期初创企业，通过提供资金、深度辅导和全球网络资源，帮助创始人在全球150多个国家和地区将创业公司发展为改变世界的企业。"
+    },
+    "stages": ["Pre-seed", "Seed"],
+    "checkSize": "$220K for 6% equity (standard accelerator program investment)",
+    "notable": [
+      "Uber",
+      "DigitalOcean",
+      "SendGrid",
+      "Chainalysis",
+      "ClassPass",
+      "Remitly",
+      "PillPack",
+      "Headspace"
+    ],
+    "recent": [
+      "Healthcare accelerator cohort with Northwestern Medicine (March 2026)",
+      "Workforce development accelerator sixth cohort — eight startups (March 2026)",
+      "CU Boulder partnership to expand founder opportunities in Colorado (April 2026)"
+    ],
+    "hq": "New York City, NY (founded in Boulder, CO; relocated February 2024)"
+  },
+  "38": {
+    "thesis": {
+      "en": "Antler backs exceptional founders from day zero — before they have a team or idea — to build impactful, scalable technology companies, positioning itself as a global company-builder and the world's most active early-stage investor across 27 cities.",
+      "zh": "Antler 从创业第零天起支持优秀创始人，在其尚无团队或想法之前即介入，帮助他们打造具有影响力和可扩展性的科技公司，并以全球最活跃的早期投资机构自居，业务覆盖27座城市。"
+    },
+    "stages": ["Pre-seed", "Seed", "Series A"],
+    "checkSize": "Pre-seed: location-specific (undisclosed globally); Series A via Antler Elevate: $3–10M",
+    "notable": ["Airalo", "Lovable", "Reebelo", "Wrtn", "Brick", "Locad", "Glint Solar", "Tactiq"],
+    "recent": [
+      "Spring 2026 U.S. Portfolio Showcase cohort (2026)",
+      "Antler Southeast Asia Fund II close — $72M (2024, backing 2025 cohorts)",
+      "Prefactor (AI agent infrastructure, backed via Antler residency, referenced 2026)"
+    ],
+    "hq": "Singapore"
+  },
+  "39": {
+    "thesis": {
+      "en": "Atomico backs transformative technology founders in Europe capable of global execution, believing the biggest technology-driven transformations across all sectors are still ahead. The firm partners from Series A through pre-IPO, combining capital with operational expertise to help European companies scale worldwide.",
+      "zh": "Atomico 投资欧洲具备全球执行力的变革性科技创业者，坚信技术驱动的最大变革尚未到来。公司从 A 轮到上市前全程陪跑，结合资金与运营支持，助力欧洲企业走向全球。"
+    },
+    "stages": ["Series A", "Series B", "Growth / Pre-IPO"],
+    "checkSize": "$10M–$50M",
+    "notable": [
+      "Klarna",
+      "Stripe",
+      "Supercell",
+      "DeepL",
+      "Pipedrive",
+      "Hinge Health",
+      "Aiven",
+      "Framer"
+    ],
+    "recent": [
+      "Tem (Series B, January 2026)",
+      "Lakera ($20M Series A, LLM security)",
+      "Lace Lithography (Series A)"
+    ],
+    "hq": "London, United Kingdom"
+  },
+  "40": {
+    "thesis": {
+      "en": "Balderton Capital is a London-based venture firm focused exclusively on backing European-founded technology companies from early stage through growth, partnering with founders who are building category-defining businesses.",
+      "zh": "Balderton Capital 是一家总部位于伦敦的风险投资机构，专注于支持欧洲创始人从早期到成长期的科技公司，致力于与那些构建行业定义型企业的创始人长期合作。"
+    },
+    "stages": ["Seed", "Series A", "Series B", "Growth"],
+    "checkSize": "Not publicly disclosed; fund VII was $400M (2019); raised $1.3B across early and growth funds in 2024",
+    "notable": [
+      "Revolut",
+      "Wayve",
+      "Darktrace",
+      "GoCardless",
+      "Depop",
+      "Contentful",
+      "Dream Games",
+      "MySQL"
+    ],
+    "recent": [
+      "Dash0 — $110M Series B at $1B valuation (March 2026)",
+      "Geordie — $30M funding for enterprise agentic AI security (May 2026)",
+      "Grand Games — $70M Series B for hybrid casual gaming (May 2026)"
+    ],
+    "hq": "London"
+  },
+  "41": {
+    "thesis": {
+      "en": "Northzone backs category-creating founders from seed to growth stages across Europe and the US, combining long-term conviction with a network of 500+ operators to help portfolio companies scale.",
+      "zh": "Northzone 支持欧洲和美国从种子轮到成长期的类别创造者，凭借长期信念和超过 500 名运营专家网络，帮助被投公司实现规模化增长。"
+    },
+    "stages": ["Seed", "Series A", "Series B", "Growth"],
+    "checkSize": "$1M–$50M",
+    "notable": [
+      "Spotify",
+      "Klarna",
+      "Trustpilot",
+      "Personio",
+      "Spring Health",
+      "Kahoot",
+      "Zettle",
+      "Black Forest Labs"
+    ],
+    "recent": [
+      "Black Forest Labs (AI image generation, 2025)",
+      "Blitzy (autonomous enterprise software development, 2026)",
+      "Tandem Health (2025–2026 featured portfolio spotlight)"
+    ],
+    "hq": "London"
+  },
+  "42": {
+    "thesis": {
+      "en": "Creandum backs exceptional European founders building category-defining technology companies with global ambitions at the earliest stages, before their potential is obvious to the broader market.",
+      "zh": "Creandum 在最早期阶段支持具有全球野心、致力于打造定义类别的科技公司的杰出欧洲创始人，在其潜力被市场广泛认可之前率先布局。"
+    },
+    "stages": ["Pre-Seed", "Seed", "Series A"],
+    "checkSize": "$1M–$10M (sweet spot ~€3M)",
+    "notable": [
+      "Spotify",
+      "Klarna",
+      "Bolt",
+      "Trade Republic",
+      "Depop",
+      "Kahoot!",
+      "iZettle",
+      "Lovable"
+    ],
+    "recent": [
+      "Lovable (Seed, January 2025 — AI-powered app builder; followed through Series A and Series B as company reached $6.6B valuation)",
+      "Cast AI (April 2025 — Kubernetes optimization platform, $108M round)",
+      "Maisa AI (Seed, May 2026)"
+    ],
+    "hq": "Stockholm, Sweden"
+  },
+  "43": {
+    "thesis": {
+      "en": "DST Global is a late-stage internet investment firm that backs some of the world's fastest-growing consumer technology companies across global markets, deploying large-scale capital into high-growth internet businesses ahead of or around IPO.",
+      "zh": "DST Global 是一家专注于后期阶段互联网投资的基金，向全球增长最快的消费科技公司投入大规模资本，主要在上市前后阶段布局高增长互联网企业。"
+    },
+    "stages": ["Late Stage", "Growth Equity", "Pre-IPO"],
+    "checkSize": "$100M+",
+    "notable": [
+      "Facebook",
+      "WhatsApp",
+      "Twitter",
+      "Spotify",
+      "Snapchat",
+      "Alibaba",
+      "ByteDance",
+      "Xiaohongshu"
+    ],
+    "recent": [
+      "OpenEvidence — co-led $250M Series D at $12B valuation (January 2026, with Thrive Capital)"
+    ],
+    "hq": "Hong Kong"
+  },
+  "44": {
+    "thesis": {
+      "en": "SoftBank Vision Fund backs transformative technology companies at scale, concentrating on AI hardware and infrastructure, software platforms, and AI-driven applications across sectors including mobility, fintech, and enterprise software, with the conviction that founder ambition determines a company's ultimate potential.",
+      "zh": "软银愿景基金以大规模资本支持变革性科技企业，聚焦人工智能硬件与基础设施、软件平台及AI驱动的应用场景（涵盖出行、金融科技和企业软件等领域），坚信创始人的格局与野心决定企业的最终潜力。"
+    },
+    "stages": ["Growth", "Late Stage", "Series B", "Series C", "Series D+"],
+    "checkSize": "$100M–$10B+ (minimum ~$100M per deal; typical range $500M–several billion; targets 20–40% ownership)",
+    "notable": ["Arm", "Uber", "ByteDance", "Coupang", "DoorDash", "Grab", "DiDi", "OpenAI"],
+    "recent": [
+      "OpenAI — cumulative $64.6B commitment (including $30B follow-on tranches in 2026, ~13% ownership at $730B pre-money valuation; confirmed Feb 2026 via group.softbank/en/news/press/20260227)",
+      "Perplexity AI — participated in $500M Series D (Dec 2024) via Vision Fund 2; Perplexity reached $20B valuation by Sep 2025",
+      "Wayve — autonomous driving company; most recent first-time investment noted on visionfund.com portfolio"
+    ],
+    "hq": "London"
+  }
+}

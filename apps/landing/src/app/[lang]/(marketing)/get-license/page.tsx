@@ -1,0 +1,61 @@
+import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { hasLocale } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
+import { FooterMinimal, Navbar } from "@/components/landing";
+import { type Locale, routing } from "@/i18n/routing";
+import { createAppSignInUrl } from "@/lib/app-url";
+import { getAuth } from "@/lib/auth";
+import { buildPageMetadata } from "@/lib/seo/metadata";
+import { LicenseWizard } from "./LicenseWizard";
+
+// Under Next 16's `cacheComponents: true`, route segment `dynamic = "force-dynamic"`
+// is rejected at build time. Dynamic rendering is triggered automatically because
+// `getAuth()` reads cookies via `headers()`; no explicit opt-out is needed.
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ lang: locale }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(routing.locales, lang)) return {};
+  const t = await getTranslations({ locale: lang as Locale, namespace: "getLicenseMeta" });
+  return buildPageMetadata({
+    title: t("title"),
+    description: t("description"),
+    path: "/get-license",
+    locale: lang as Locale,
+  });
+}
+
+async function RequireAuth({ children }: { children: React.ReactNode }) {
+  const { userId } = await getAuth();
+  if (!userId) {
+    redirect(createAppSignInUrl("/choose-plan"));
+  }
+  return <>{children}</>;
+}
+
+export default async function GetLicensePage({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  if (!hasLocale(routing.locales, lang)) return null;
+  setRequestLocale(lang as Locale);
+
+  return (
+    <main className="min-h-screen bg-background">
+      <Navbar />
+      <Suspense fallback={null}>
+        <RequireAuth>
+          <LicenseWizard />
+        </RequireAuth>
+      </Suspense>
+      <FooterMinimal />
+    </main>
+  );
+}

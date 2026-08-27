@@ -1,0 +1,115 @@
+version: 2
+
+updates:
+  # pnpm workspace dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 10
+    groups:
+      # Security patches get their own PR — merged first, faster review cycle
+      security-patches:
+        applies-to: security-updates
+        update-types:
+          - "patch"
+      # All other minor/patch updates batched together
+      dependencies:
+        update-types:
+          - "minor"
+          - "patch"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    groups:
+      actions:
+        update-types:
+          - "minor"
+          - "patch"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # Python microservices — one entry per service
+  - package-ecosystem: "pip"
+    directory: "/backends/python/ai"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+    open-pull-requests-limit: 3
+    groups:
+      python-security:
+        applies-to: security-updates
+        update-types: ["patch"]
+      python-deps:
+        update-types: ["minor", "patch"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # Docker base images — monthly cadence (digest SHA updates)
+  - package-ecosystem: "docker"
+    directory: "/backends/gateway"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 2
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: "docker"
+    directory: "/apps/web"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 2
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: "docker"
+    directory: "/apps/landing"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 2
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: "docker"
+    directory: "/infra/runtime/docker"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 2
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # Python AI backend
+  - package-ecosystem: "docker"
+    directory: "/backends/python/ai"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 2
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # create-sailor scaffold template — keeps the pinned node SHA current
+  - package-ecosystem: "docker"
+    directory: "/packages/ops/create-sailor/templates/deploy"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 2
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]

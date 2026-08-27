@@ -1,0 +1,97 @@
+"use client";
+
+import { Compass, Sparkles, Cross as X } from "@nebutra/icons";
+import { useTour } from "@nebutra/onboarding";
+import { AnimateIn } from "@nebutra/ui/components";
+import { Button } from "@nebutra/ui/primitives";
+import { useState } from "react";
+import { DASHBOARD_TOUR_V1 } from "@/lib/onboarding/dashboard-tour";
+
+interface Props {
+  cookieName: string;
+}
+
+export function DashboardHintCard({ cookieName }: Props) {
+  const [isVisible, setIsVisible] = useState(true);
+  const tour = useTour();
+
+  function dismiss() {
+    // 1-year cookie, root path, no JS-only flag (must be readable by server
+    // for the gate in DashboardHint).
+    const oneYear = 60 * 60 * 24 * 365;
+    // biome-ignore lint/suspicious/noDocumentCookie: server-side hint gating needs a root-path cookie; Cookie Store is not universal.
+    document.cookie = `${cookieName}=1; max-age=${oneYear}; path=/; SameSite=Lax`;
+    setIsVisible(false);
+  }
+
+  function startTour() {
+    dismiss();
+    // Delay slightly so the hint card's exit transition has begun; driver.js
+    // overlay should land on a stable layout.
+    setTimeout(() => tour.start(DASHBOARD_TOUR_V1), 80);
+  }
+
+  return isVisible ? (
+    <AnimateIn>
+      <div className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-primary/25 bg-primary/10 p-4 dark:border-primary/40 dark:bg-primary/10">
+        {/* Decorative gradient glow */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-12 -top-12 size-40 opacity-[0.18] blur-3xl"
+          style={{ background: "hsl(var(--primary))" }}
+        />
+
+        <div className="relative flex items-start gap-3">
+          <div
+            className="flex size-9 shrink-0 items-center justify-center rounded-[var(--radius-xl)] text-white"
+            style={{ background: "hsl(var(--primary))" }}
+          >
+            <Sparkles className="size-4" />
+          </div>
+
+          <div className="flex-1 pr-6">
+            <p className="text-sm font-semibold text-neutral-12">
+              Welcome to your Sailor workspace.
+            </p>
+            <p className="mt-1 text-xs leading-relaxed text-neutral-11">
+              Press{" "}
+              <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] text-neutral-12 dark:bg-black/40">
+                ⌘K
+              </kbd>{" "}
+              to open the command palette. Pick a{" "}
+              <span className="font-medium text-neutral-12">mode</span> below to focus your work:
+              chat, data, workflow, or search.
+            </p>
+
+            <div className="mt-3 flex items-center gap-2">
+              <Button
+                type="button"
+                shape="pill"
+                size="tiny"
+                onClick={startTour}
+                prefix={<Compass className="size-3" />}
+              >
+                Take the 4-step tour
+              </Button>
+              <Button type="button" variant="ghost" shape="pill" size="tiny" onClick={dismiss}>
+                Skip
+              </Button>
+            </div>
+          </div>
+
+          <Button
+            type="button"
+            variant="ghost"
+            shape="circle"
+            size="tiny"
+            className="absolute right-0 top-0"
+            onClick={dismiss}
+            aria-label="Dismiss hint"
+          >
+            <X className="size-3.5" />
+          </Button>
+        </div>
+      </div>
+    </AnimateIn>
+  ) : null;
+}

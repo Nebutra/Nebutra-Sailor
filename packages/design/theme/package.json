@@ -1,0 +1,99 @@
+{
+  "name": "@nebutra/theme",
+  "version": "0.2.2",
+  "type": "module",
+  "description": "Design-language catalog for global product chrome swap (Brand Packages). Multi-mood oklch catalog removed.",
+  "private": false,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": [
+    "./keyframes.css",
+    "./themes.css",
+    "./skins.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "import": "./dist/client.js",
+      "default": "./dist/client.js"
+    },
+    "./language-switcher": {
+      "types": "./dist/language-switcher.d.ts",
+      "import": "./dist/language-switcher.js",
+      "default": "./dist/language-switcher.js"
+    },
+    "./languages": {
+      "types": "./dist/languages.d.ts",
+      "import": "./dist/languages.js",
+      "default": "./dist/languages.js"
+    },
+    "./languages.json": "./src/languages.json",
+    "./brand-package": {
+      "types": "./dist/brand-package-surface.d.ts",
+      "import": "./dist/brand-package-surface.js",
+      "default": "./dist/brand-package-surface.js"
+    },
+    "./keyframes.css": "./keyframes.css",
+    "./themes.css": "./themes.css",
+    "./skins.css": "./skins.css",
+    "./morph.css": "./morph.css",
+    "./styles/sources.css": "./styles/sources.css"
+  },
+  "scripts": {
+    "build": "tsup",
+    "build:codegen": "node scripts/sync-languages.mjs && node ../tokens/scripts/emit-skins.mjs && node scripts/sync-skins.mjs && tsup",
+    "sync": "node scripts/sync-languages.mjs && node scripts/sync-skins.mjs",
+    "sync:languages": "node scripts/sync-languages.mjs",
+    "sync:skins": "node scripts/sync-skins.mjs",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "tsup": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "^19"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/design/theme#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/design/theme"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "src/languages.json",
+    "keyframes.css",
+    "themes.css",
+    "skins.css",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "morph.css",
+    "styles"
+  ]
+}

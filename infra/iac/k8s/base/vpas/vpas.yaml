@@ -1,0 +1,147 @@
+# VerticalPodAutoscaler resources
+#
+# Prerequisites:
+#   kubectl apply -f https://github.com/kubernetes/autoscaler/releases/latest/download/vertical-pod-autoscaler.yaml
+#
+# Mode: "Off" — VPA computes recommendations but does NOT evict/resize pods.
+# Switch to "Auto" in production after observing recommendations for ≥ 7 days.
+# Rationale: VPA "Auto" and HPA CPU-based scaling conflict; keep VPA in "Off"
+#            until we migrate HPA to scale on custom metrics (KEDA).
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: vpa-web
+  namespace: nebutra
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: web
+  updatePolicy:
+    updateMode: "Off"
+  resourcePolicy:
+    containerPolicies:
+      - containerName: web
+        minAllowed:
+          cpu: 50m
+          memory: 128Mi
+        maxAllowed:
+          cpu: 2
+          memory: 2Gi
+        controlledResources: ["cpu", "memory"]
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: vpa-landing
+  namespace: nebutra
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: landing
+  updatePolicy:
+    updateMode: "Off"
+  resourcePolicy:
+    containerPolicies:
+      - containerName: landing
+        minAllowed:
+          cpu: 50m
+          memory: 128Mi
+        maxAllowed:
+          cpu: 1
+          memory: 1Gi
+        controlledResources: ["cpu", "memory"]
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: vpa-api-gateway
+  namespace: nebutra
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api-gateway
+  updatePolicy:
+    updateMode: "Off"
+  resourcePolicy:
+    containerPolicies:
+      - containerName: api-gateway
+        minAllowed:
+          cpu: 50m
+          memory: 128Mi
+        maxAllowed:
+          cpu: 2
+          memory: 1Gi
+        controlledResources: ["cpu", "memory"]
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: vpa-ai-service
+  namespace: nebutra
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ai-service
+  updatePolicy:
+    updateMode: "Off"
+  resourcePolicy:
+    containerPolicies:
+      - containerName: ai-service
+        minAllowed:
+          cpu: 100m
+          memory: 256Mi
+        maxAllowed:
+          cpu: 4
+          memory: 4Gi
+        controlledResources: ["cpu", "memory"]
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: vpa-event-ingest-service
+  namespace: nebutra
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: event-ingest-service
+  updatePolicy:
+    updateMode: "Off"
+  resourcePolicy:
+    containerPolicies:
+      - containerName: event-ingest-service
+        minAllowed:
+          cpu: 50m
+          memory: 128Mi
+        maxAllowed:
+          cpu: 2
+          memory: 2Gi
+        controlledResources: ["cpu", "memory"]
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: vpa-recsys-service
+  namespace: nebutra
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: recsys-service
+  updatePolicy:
+    updateMode: "Off"
+  resourcePolicy:
+    containerPolicies:
+      - containerName: recsys-service
+        minAllowed:
+          cpu: 100m
+          memory: 256Mi
+        maxAllowed:
+          cpu: 4
+          memory: 4Gi
+        controlledResources: ["cpu", "memory"]
