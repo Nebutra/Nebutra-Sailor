@@ -91,6 +91,12 @@ Complete navigation to all project documentation.
 | [Figma Sync](./design-system/figma-sync.md)                       | Figma ↔ repo token sync                   |
 | [Figma Onboarding](./design-system/figma-onboarding.md)           | Getting started with Figma                |
 
+## Current phase
+
+| Document | Description |
+| --- | --- |
+| [Closure phase](./architecture/2026-08-27-closure-phase.md) | Converge existing modules; no expansion, no deletion |
+
 ## Security
 
 | Document                                                         | Description                    |
