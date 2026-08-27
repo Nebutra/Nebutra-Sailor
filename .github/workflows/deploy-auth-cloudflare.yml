@@ -14,6 +14,8 @@ on:
     paths:
       - "apps/auth/src/worker-edge.ts"
       - "apps/auth/src/lib/auth-edge-pool.ts"
+      - "apps/auth/src/lib/auth-edge-oauth.ts"
+      - "apps/auth/src/lib/session-hint.ts"
       - "apps/auth/wrangler.edge.jsonc"
       - "apps/auth/package.json"
       - "packages/iam/auth/**"

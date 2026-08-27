@@ -20,6 +20,12 @@ describe("auth-edge worker contract", () => {
   });
 
   it("bumps edgeBuild when the request-path contract changes", () => {
-    expect(source).toContain('edgeBuild: "2026-08-27-pg-pool-per-request"');
+    expect(source).toContain('edgeBuild: "2026-08-27-oauth-continue"');
+  });
+
+  it("commits the OAuth session cookie on a same-origin continue page", () => {
+    expect(source).toContain("finalizeOAuthCallback");
+    expect(source).toContain("isOAuthCallbackPath");
+    expect(source).toContain("applySessionHint");
   });
 });
