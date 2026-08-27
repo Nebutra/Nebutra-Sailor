@@ -116,7 +116,7 @@ export function KineticFeatureCard({
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-primary/12 via-primary/5 to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.12),transparent_70%)]"
         style={{ maskImage: "linear-gradient(to bottom, black 45%, transparent 100%)" }}
       />
 

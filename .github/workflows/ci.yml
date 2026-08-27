@@ -519,10 +519,10 @@ jobs:
       - name: Build (affected)
         run: |
           filters=(--filter="...[${TURBO_BASE_REF}]...")
-          # typelens downloads ~120 next/font/google faces at compile time.
-          # Affected design-token diffs pull it into this job, then the build
-          # dies on a Google connect timeout. Its own deploy workflow builds it.
-          for app in apps/sailor-docs apps/storybook apps/studio apps/typelens; do
+          # Labs / sidecar apps are pulled in by token diffs and fail this job
+          # on their own seams (Google fonts, brand:sync). They keep their
+          # dedicated deploy workflows.
+          for app in apps/sailor-docs apps/storybook apps/studio apps/typelens apps/router apps/forge apps/pebble apps/design apps/sleptons; do
             if [ -d "$app" ]; then
               filters+=(--filter="!./$app")
             fi
