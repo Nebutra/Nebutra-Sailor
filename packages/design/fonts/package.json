@@ -25,10 +25,10 @@
   "files": [
     "dist",
     "src",
-    "generated/vivo-sans-cn.css",
+    "generated/noto-sans-sc.css",
     "generated/subset-manifest.json",
     "generated/index.ts",
-    "vendor/vivo-sans/LICENCE-vivo-Sans.txt",
+    "vendor/noto-sans-sc/OFL.txt",
     "NOTICE-FONTS.md",
     "README.md",
     "LICENSE",
@@ -62,7 +62,7 @@
       "import": "./dist/generated/index.js",
       "default": "./dist/generated/index.js"
     },
-    "./cjk.css": "./generated/vivo-sans-cn.css"
+    "./cjk.css": "./generated/noto-sans-sc.css"
   },
   "scripts": {
     "subset:cjk": "node scripts/subset-cjk.mjs",

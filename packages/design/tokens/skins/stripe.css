@@ -116,19 +116,19 @@ html[data-brand="stripe"] {
   /* Typography */
   --font-sans:
     var(--font-reg-inter-tight), "sohne-var", "Inter Tight", "Inter",
-    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    var(--font-noto-sans-sc, "Noto Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
     system-ui, sans-serif;
   --font-cn:
     var(--font-reg-inter-tight), "sohne-var", "Inter Tight", "Inter",
-    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    var(--font-noto-sans-sc, "Noto Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
     system-ui, sans-serif;
   --font-heading:
     var(--font-reg-inter-tight), "sohne-var", "Inter Tight",
-    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    var(--font-noto-sans-sc, "Noto Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
     system-ui, sans-serif;
   --font-display:
     var(--font-reg-inter-tight), "sohne-var", "Inter Tight",
-    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
+    var(--font-noto-sans-sc, "Noto Sans SC"), "Noto Sans SC", "PingFang SC", ui-sans-serif,
     system-ui, sans-serif;
   --font-weight-heading: 300;
 

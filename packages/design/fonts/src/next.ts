@@ -45,7 +45,7 @@ import {
   Work_Sans,
 } from "next/font/google";
 
-export { cjkFontClassName, vivoSansCn } from "./next-cjk";
+export { cjkFontClassName, notoSansSc } from "./next-cjk";
 
 const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-inter" });
 const interTight = Inter_Tight({

@@ -123,16 +123,16 @@ html[data-brand="vercel"] {
 
   /* Typography */
   --font-sans:
-    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-noto-sans-sc, "Noto Sans SC"),
     "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-cn:
-    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-noto-sans-sc, "Noto Sans SC"),
     "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-heading:
-    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-noto-sans-sc, "Noto Sans SC"),
     "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-display:
-    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-noto-sans-sc, "Noto Sans SC"),
     "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, Menlo, monospace;
   --font-weight-heading: 450;

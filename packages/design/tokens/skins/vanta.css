@@ -117,18 +117,18 @@ html[data-brand="vanta"] {
 
   /* Typography */
   --font-sans:
-    var(--font-inter), "Inter Variable", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    var(--font-inter), "Inter Variable", "Inter", var(--font-noto-sans-sc, "Noto Sans SC"),
     "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-cn:
-    var(--font-inter), "Inter Variable", "Inter", var(--font-vivo-sans-sc, "vivo Sans SC"),
+    var(--font-inter), "Inter Variable", "Inter", var(--font-noto-sans-sc, "Noto Sans SC"),
     "Noto Sans SC", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-heading:
     var(--font-reg-source-serif-4), "Reckless", "Source Serif 4", "Lora",
-    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-serif, Georgia,
+    var(--font-noto-sans-sc, "Noto Sans SC"), "Noto Sans SC", "PingFang SC", ui-serif, Georgia,
     serif;
   --font-display:
     var(--font-reg-source-serif-4), "Reckless", "Source Serif 4", "Lora",
-    var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", ui-serif, Georgia,
+    var(--font-noto-sans-sc, "Noto Sans SC"), "Noto Sans SC", "PingFang SC", ui-serif, Georgia,
     serif;
   --font-weight-heading: 500;
 

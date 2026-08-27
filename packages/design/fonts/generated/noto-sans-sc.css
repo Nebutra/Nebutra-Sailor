@@ -1,0 +1,43 @@
+/*
+ * noto-sans-sc.css — self-hosted Noto Sans SC (SIL Open Font License 1.1).
+ * See vendor/noto-sans-sc/OFL.txt.
+ *
+ * STACK ORDER: use "Geist, Noto Sans SC, …" — Geist first so it keeps Latin
+ * and the numerals. The unicode-range below contains no Latin, ASCII or
+ * general punctuation, so Latin-only text never downloads a CJK file.
+ */
+@font-face {
+  font-family: "Noto Sans SC";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./noto-sans-sc-400.woff2") format("woff2");
+  unicode-range: U+3000-303F, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF;
+}
+
+@font-face {
+  font-family: "Noto Sans SC";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("./noto-sans-sc-500.woff2") format("woff2");
+  unicode-range: U+3000-303F, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF;
+}
+
+@font-face {
+  font-family: "Noto Sans SC";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("./noto-sans-sc-600.woff2") format("woff2");
+  unicode-range: U+3000-303F, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF;
+}
+
+@font-face {
+  font-family: "Noto Sans SC";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("./noto-sans-sc-700.woff2") format("woff2");
+  unicode-range: U+3000-303F, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF;
+}
