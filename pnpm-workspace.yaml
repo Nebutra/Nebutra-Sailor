@@ -29,6 +29,7 @@ minimumReleaseAgeExclude:
   - "@hono/node-server"
   - dompurify
   - body-parser
+  - tar
 trustPolicy: no-downgrade
 # next-auth@5.0.0-beta.32 patches critical Auth.js CVEs but ships without the
 # provenance attestation present on beta.31 (upstream CI change, not takeover).

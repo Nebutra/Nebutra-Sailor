@@ -35,6 +35,8 @@ import {
 } from "@/lib/blog-page-cache";
 import { env } from "@/lib/env";
 import { isZhUiLocale } from "@/lib/i18n/localized";
+import { buildPageMetadata } from "@/lib/seo/metadata";
+import { unpublishedSet } from "@/lib/seo/site-routes";
 
 type Params = { lang: string; slug: string };
 
@@ -51,7 +53,15 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { lang, slug } = await params;
-  if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG) return {};
+  if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG) {
+    return buildPageMetadata({
+      title: "Not found — Nebutra Blog",
+      description: "This article is not published.",
+      path: `/blog/${slug}`,
+      locale: lang,
+      publishedIn: unpublishedSet(`/blog/${slug}`),
+    });
+  }
   await connection();
   return buildBlogMetadata(lang, slug);
 }
@@ -173,7 +183,10 @@ function BlogArticleFooter({
   );
 }
 
-export default function BlogPostPage({ params }: { params: Promise<Params> }) {
+export default async function BlogPostPage({ params }: { params: Promise<Params> }) {
+  const { slug } = await params;
+  if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG) notFound();
+
   return (
     <Suspense fallback={<BlogPostSkeleton />}>
       <BlogPostLoader params={params} />

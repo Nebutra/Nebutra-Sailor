@@ -66,7 +66,7 @@ export async function RecentSessions() {
 
   return (
     <div className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 p-3.5 sm:p-4">
-      <AnimateIn preset="fadeUp">
+      <AnimateIn>
         <div className="mb-3 flex items-center justify-between">
           <div>
             <h2 className="text-sm font-semibold text-neutral-12">{t("title")}</h2>
@@ -98,7 +98,7 @@ export async function RecentSessions() {
           const Icon = meta.icon;
           const href = `/chat?sessionId=${encodeURIComponent(session.id)}&mode=${encodeURIComponent(session.mode)}`;
           return (
-            <AnimateIn key={session.id} preset="fadeUp">
+            <AnimateIn key={session.id}>
               <ViewTransitionLink href={href} className="block">
                 <div className="flex min-h-14 items-center justify-between gap-3 rounded-[var(--radius-lg)] border border-neutral-5 bg-neutral-1 px-3 py-2.5 transition-colors duration-150 hover:border-neutral-7 hover:bg-neutral-2">
                   <div className="min-w-0">

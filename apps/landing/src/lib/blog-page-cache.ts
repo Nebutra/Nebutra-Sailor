@@ -24,7 +24,7 @@ import { isZhUiLocale } from "@/lib/i18n/localized";
 import { contentTimestamp } from "@/lib/seo/lastmod";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { localesForPath } from "@/lib/seo/route-registry";
-import { getSiteUrl, type PublicationSet } from "@/lib/seo/site-routes";
+import { getSiteUrl, type PublicationSet, unpublishedSet } from "@/lib/seo/site-routes";
 import { buildArticleSchema, buildBreadcrumbListSchema } from "@/lib/seo/structured-data";
 
 export const EMPTY_BLOG_PLACEHOLDER_SLUG = "empty-placeholder-do-not-fetch";
@@ -117,19 +117,31 @@ async function blogPublicationSet(post: BlogPostWithSource): Promise<Publication
   return { path: pathByLocale[primary] as `/${string}`, locales: ordered, pathByLocale };
 }
 
+function unpublishedBlogMetadata(lang: string, slug: string): Metadata {
+  const locale = hasLocale(routing.locales, lang) ? lang : routing.defaultLocale;
+  return buildPageMetadata({
+    title: "Not found — Nebutra Blog",
+    description: "This article is not published.",
+    path: `/blog/${slug}`,
+    locale,
+    publishedIn: unpublishedSet(`/blog/${slug}`),
+  });
+}
+
 export async function buildBlogMetadata(lang: string, slug: string): Promise<Metadata> {
   "use cache";
   cacheLife("hours");
   cacheTag("blog");
 
-  if (!hasLocale(routing.locales, lang)) return {};
-  if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG) return {};
+  if (!hasLocale(routing.locales, lang) || slug === EMPTY_BLOG_PLACEHOLDER_SLUG) {
+    return unpublishedBlogMetadata(lang, slug);
+  }
   cacheTag(`blog:${slug}`);
 
   const post =
     (await getCachedBlogPost(slug, toBlogLanguage(lang))) ??
     (await getCachedLocalizedPostForSiblingSlug(slug, toBlogLanguage(lang)));
-  if (!post) return {};
+  if (!post) return unpublishedBlogMetadata(lang, slug);
 
   const ogImage = `${getSiteUrl()}${localizedPostHref(lang, post.slug)}/opengraph-image`;
   const authorName = getAuthorName(post.author);

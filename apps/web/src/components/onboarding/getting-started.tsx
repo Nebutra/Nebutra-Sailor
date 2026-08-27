@@ -130,7 +130,7 @@ export async function GettingStarted() {
         {tasks.map((task) => {
           const Icon = task.icon;
           return (
-            <AnimateIn key={task.id} preset="fadeUp">
+            <AnimateIn key={task.id}>
               <ViewTransitionLink
                 href={task.href}
                 aria-label={

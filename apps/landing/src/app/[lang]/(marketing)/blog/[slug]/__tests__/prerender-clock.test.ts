@@ -25,5 +25,8 @@ describe("blog post prerender clock", () => {
     expect(source).toContain("prerenderDefaultLocale([{ slug: EMPTY_BLOG_PLACEHOLDER_SLUG }]");
     expect(source).not.toContain("posts.slice(0, 50)");
     expect(source).toContain("await connection()");
+    expect(source).toContain("buildPageMetadata");
+    expect(source).toContain("unpublishedSet(`/blog/${slug}`)");
+    expect(source).toMatch(/if \(slug === EMPTY_BLOG_PLACEHOLDER_SLUG\) notFound\(\);/u);
   });
 });

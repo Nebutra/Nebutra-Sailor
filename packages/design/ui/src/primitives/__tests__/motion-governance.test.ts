@@ -108,6 +108,12 @@ describe("primitive motion governance", () => {
     expect(source("animate-in.tsx")).not.toMatch(/preset = "emerge"/u);
   });
 
+  it("does not wrap NodeGraphCanvas in cinematic emerge", () => {
+    const canvas = designFile("ui/src/components/node-graph-canvas.tsx");
+    expect(canvas).not.toMatch(/preset=["']emerge["']/u);
+    expect(canvas).not.toContain("AnimateIn");
+  });
+
   it.each([
     "command-menu-parts.tsx",
     "dialog.tsx",

@@ -60,20 +60,42 @@ describe("lighthouse dashboard ci harness", () => {
       join(process.cwd(), "apps/landing/src/app/[lang]/(marketing)/blog/[slug]/page.tsx"),
       "utf8",
     );
-    // The architectural invariant: the placeholder slug is declared, cached,
-    // guarded, and the guard appears before any Sanity fetch. Layout-agnostic
-    // so that extracting helpers (e.g. buildBlogMetadata) doesn't break the
-    // contract — only ordering relative to the Sanity call matters.
-    const placeholderGuard = blogPostPage.indexOf("if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG)");
-    const sanityFetch = blogPostPage.indexOf("getPostBySlug(slug");
-
-    expect(blogPostPage).toContain(
-      'const EMPTY_BLOG_PLACEHOLDER_SLUG = "empty-placeholder-do-not-fetch";',
+    const blogPageCache = await readFile(
+      join(process.cwd(), "apps/landing/src/lib/blog-page-cache.ts"),
+      "utf8",
     );
-    expect(blogPostPage).toContain('cacheLife("hours");');
-    expect(placeholderGuard).toBeGreaterThan(-1);
-    expect(sanityFetch).toBeGreaterThan(-1);
-    expect(placeholderGuard).toBeLessThan(sanityFetch);
+    // Clock and Sanity live in the cache module. The page must short-circuit
+    // the sentinel before either loadCachedBlogArticle or buildBlogMetadata,
+    // and must emit buildPageMetadata so Next does not inherit the homepage
+    // canonical from [lang]/layout.tsx.
+    const metadataFn = blogPageCache.indexOf("export async function buildBlogMetadata");
+    const loadFn = blogPageCache.indexOf("export async function loadCachedBlogArticle");
+    const metadataGuard = blogPageCache.indexOf("slug === EMPTY_BLOG_PLACEHOLDER_SLUG", metadataFn);
+    const metadataFetch = blogPageCache.indexOf("getCachedBlogPost", metadataFn);
+    const loadGuard = blogPageCache.indexOf("slug === EMPTY_BLOG_PLACEHOLDER_SLUG", loadFn);
+    const loadFetch = blogPageCache.indexOf("getCachedBlogPost", loadFn);
+    const pageGuard = blogPostPage.indexOf("if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG)");
+    const cachedLoad = blogPostPage.indexOf("await loadCachedBlogArticle");
+    const cachedMetadata = blogPostPage.indexOf("return buildBlogMetadata");
+
+    expect(blogPageCache).toContain(
+      'export const EMPTY_BLOG_PLACEHOLDER_SLUG = "empty-placeholder-do-not-fetch";',
+    );
+    expect(blogPageCache).toContain('cacheLife("hours");');
+    expect(blogPageCache).toContain("return getPostBySlug(");
+    expect(metadataGuard).toBeGreaterThan(metadataFn);
+    expect(metadataFetch).toBeGreaterThan(metadataGuard);
+    expect(loadGuard).toBeGreaterThan(loadFn);
+    expect(loadFetch).toBeGreaterThan(loadGuard);
+
+    expect(blogPostPage).toContain("buildPageMetadata");
+    expect(blogPostPage).not.toContain("cacheLife");
+    expect(blogPostPage).not.toContain("getPostBySlug");
+    expect(pageGuard).toBeGreaterThan(-1);
+    expect(cachedLoad).toBeGreaterThan(-1);
+    expect(cachedMetadata).toBeGreaterThan(-1);
+    expect(pageGuard).toBeLessThan(cachedLoad);
+    expect(pageGuard).toBeLessThan(cachedMetadata);
   });
 
   it("keeps Next prerender feed fetch cancellations out of CI error logs", async () => {

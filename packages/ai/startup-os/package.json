@@ -25,59 +25,68 @@
     "summary": "Startup OS product orchestration contracts for company context, founder conversation, execution, files, rollout, canvas state, and model-tier decisions"
   },
   "main": "./dist/compiler.js",
-  "types": "./dist/compiler.d.ts",
+  "types": "./src/compiler.ts",
   "exports": {
     "./canvas": {
-      "types": "./dist/canvas.d.ts",
+      "types": "./src/canvas.ts",
       "import": "./dist/canvas.js",
       "default": "./dist/canvas.js"
     },
     "./compiler": {
-      "types": "./dist/compiler.d.ts",
+      "types": "./src/compiler.ts",
       "import": "./dist/compiler.js",
       "default": "./dist/compiler.js"
     },
     "./conversation": {
-      "types": "./dist/conversation.d.ts",
+      "types": "./src/conversation.ts",
       "import": "./dist/conversation.js",
       "default": "./dist/conversation.js"
     },
     "./dev-tenant": {
-      "types": "./dist/dev-tenant.d.ts",
+      "types": "./src/dev-tenant.ts",
       "import": "./dist/dev-tenant.js",
       "default": "./dist/dev-tenant.js"
     },
     "./execution": {
-      "types": "./dist/execution.d.ts",
+      "types": "./src/execution.ts",
       "import": "./dist/execution.js",
       "default": "./dist/execution.js"
     },
     "./feature-flag": {
-      "types": "./dist/feature-flag.d.ts",
+      "types": "./src/feature-flag.ts",
       "import": "./dist/feature-flag.js",
       "default": "./dist/feature-flag.js"
     },
     "./files": {
-      "types": "./dist/files.d.ts",
+      "types": "./src/files.ts",
       "import": "./dist/files.js",
       "default": "./dist/files.js"
     },
     "./model-tier": {
-      "types": "./dist/model-tier.d.ts",
+      "types": "./src/model-tier.ts",
       "import": "./dist/model-tier.js",
       "default": "./dist/model-tier.js"
     },
     "./rollout": {
-      "types": "./dist/rollout.d.ts",
+      "types": "./src/rollout.ts",
       "import": "./dist/rollout.js",
       "default": "./dist/rollout.js"
     },
     "./store": {
-      "types": "./dist/store.d.ts",
+      "types": "./src/store.ts",
       "import": "./dist/store.js",
       "default": "./dist/store.js"
     },
-    "./company-context/*": "./dist/company-context/*.js"
+    "./company-context/projection": {
+      "types": "./src/company-context/projection.ts",
+      "import": "./dist/company-context/projection.js",
+      "default": "./dist/company-context/projection.js"
+    },
+    "./company-context/*": {
+      "types": "./src/company-context/*.ts",
+      "import": "./dist/company-context/*.js",
+      "default": "./dist/company-context/*.js"
+    }
   },
   "scripts": {
     "test": "vitest run",

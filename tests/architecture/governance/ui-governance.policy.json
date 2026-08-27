@@ -89,6 +89,7 @@
     "customUiAllowedExports": [
       ".",
       "./agent",
+      "./chat",
       "./components",
       "./editorial",
       "./hooks",

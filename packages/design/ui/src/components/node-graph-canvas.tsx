@@ -41,7 +41,6 @@ import { cva } from "class-variance-authority";
 import { type CSSProperties, type ReactNode, useId, useState } from "react";
 import { Button } from "../primitives/button";
 import { cn } from "../utils/cn";
-import { AnimateIn } from "./animate-in";
 import {
   applyNodePositions,
   type EdgeIdentity,
@@ -204,54 +203,52 @@ export function NodeGraphCanvas<N extends GraphNode, E extends GraphEdge, G exte
   };
 
   return (
-    <AnimateIn preset="emerge">
-      <div
-        style={XYFLOW_TOKEN_THEME}
-        className={cn(
-          "relative h-[480px] w-full overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-1",
-          className,
-        )}
-      >
-        <ReactFlowProvider>
-          <ReactFlow
-            nodes={nodes as Node[]}
-            edges={edges as Edge[]}
-            nodeTypes={NODE_TYPES}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            nodesDraggable={!readOnly}
-            nodesConnectable={!readOnly}
-            elementsSelectable={!readOnly}
-            fitView
-            proOptions={REACT_FLOW_PRO_OPTIONS}
-          >
-            <Background color="var(--neutral-6)" />
-            <Controls showInteractive={!readOnly} />
-            {rejection ? (
-              <Panel position="top-center">
-                <div
-                  id={statusId}
-                  role="alert"
-                  aria-live="assertive"
-                  className="flex items-center gap-2 rounded-[var(--radius-md)] border border-destructive bg-destructive/10 px-3 py-2 text-sm text-destructive"
+    <div
+      style={XYFLOW_TOKEN_THEME}
+      className={cn(
+        "relative h-[480px] w-full overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-1",
+        className,
+      )}
+    >
+      <ReactFlowProvider>
+        <ReactFlow
+          nodes={nodes as Node[]}
+          edges={edges as Edge[]}
+          nodeTypes={NODE_TYPES}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          nodesDraggable={!readOnly}
+          nodesConnectable={!readOnly}
+          elementsSelectable={!readOnly}
+          fitView
+          proOptions={REACT_FLOW_PRO_OPTIONS}
+        >
+          <Background color="var(--neutral-6)" />
+          <Controls showInteractive={!readOnly} />
+          {rejection ? (
+            <Panel position="top-center">
+              <div
+                id={statusId}
+                role="alert"
+                aria-live="assertive"
+                className="flex items-center gap-2 rounded-[var(--radius-md)] border border-destructive bg-destructive/10 px-3 py-2 text-sm text-destructive"
+              >
+                <span>{rejection}</span>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  prefix={<CrossSmall size={14} />}
+                  aria-label="Dismiss connection error"
+                  onClick={() => setRejection(null)}
                 >
-                  <span>{rejection}</span>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    prefix={<CrossSmall size={14} />}
-                    aria-label="Dismiss connection error"
-                    onClick={() => setRejection(null)}
-                  >
-                    Dismiss
-                  </Button>
-                </div>
-              </Panel>
-            ) : null}
-          </ReactFlow>
-        </ReactFlowProvider>
-      </div>
-    </AnimateIn>
+                  Dismiss
+                </Button>
+              </div>
+            </Panel>
+          ) : null}
+        </ReactFlow>
+      </ReactFlowProvider>
+    </div>
   );
 }
