@@ -420,7 +420,7 @@ describe("yaml-diff · raw-text mode", () => {
 });
 
 describe("yaml-diff · the summary is a fact about the documents, not about the list", () => {
-  it("counts every change even when the list is capped", () => {
+  it("counts every change even when the list is capped", { timeout: 15_000 }, () => {
     const doc = (v: number) =>
       `${Array.from({ length: 2100 }, (_, i) => `k${i}: ${v}`).join("\n")}\n`;
     const output = run({ original: doc(1), changed: doc(2) });

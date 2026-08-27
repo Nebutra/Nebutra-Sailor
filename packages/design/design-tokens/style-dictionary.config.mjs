@@ -881,10 +881,10 @@ function buildTailwindThemeInline() {
      CJK, system CJK faces behind it. Order is the design decision; see the
      fontFamily $description in tokens/core.json. Mirror of those tokens — keep
      the two in sync (verify:parity compares them). */
-  --font-sans: var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-cn: var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-  --font-display: var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), "Noto Sans SC", sans-serif;
-  --font-heading: var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), "Noto Sans SC", sans-serif;
+  --font-sans: var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-cn: var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-display: var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), sans-serif;
+  --font-heading: var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), sans-serif;
   --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 }
 `;
