@@ -37,7 +37,8 @@ pre-push:
       #
       # `@{push}` rather than a literal origin/main so the base is whatever this
       # branch actually pushes to, and stays right on a branch or a fork.
-      run: npm_config_verify_deps_before_run=false ./node_modules/.bin/turbo typecheck --filter="...[@{push}...HEAD]"
+      # New branches have no push ref yet — fall back to origin/main...HEAD.
+      run: node scripts/pre-push-typecheck.mjs
     i18n-check:
       # Every catalog in scripts/i18n-catalogs.mjs, not just landing. The gate
       # used to watch one app while translation covered four, so a catalog
