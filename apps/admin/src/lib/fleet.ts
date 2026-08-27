@@ -167,7 +167,7 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     port: 3109,
     runtime: "ecs-pm2",
     deployService: "design-docs",
-    note: "Replaced design-docs at design.nebutra.com. Deploy service id is still design-docs.",
+    note: "Replaced design-docs at the design hostname. Deploy service id is still design-docs.",
   },
   {
     id: "@nebutra/typelens",
