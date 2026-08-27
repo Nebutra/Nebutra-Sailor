@@ -178,7 +178,7 @@
   },
   "monorepoTree": {
     "badge": "ESTRUCTURA TURBOREPO",
-    "title": "15 apps. 104 paquetes. 4 líneas backend.",
+    "title": "15 apps. 113 paquetes. 4 líneas backend.",
     "description": "Código compartido, builds paralelos y cero duplicación. Tipado end-to-end completo desde la base de datos hasta el frontend.",
     "metricApps": "aplicaciones",
     "metricBackends": "líneas backend",
@@ -1749,7 +1749,7 @@
           "label": "Proveedores de IA compatibles"
         },
         "projects": {
-          "value": "104",
+          "value": "113",
           "label": "paquetes del monorepo"
         },
         "uptime": {
