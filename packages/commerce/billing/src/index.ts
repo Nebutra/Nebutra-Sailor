@@ -46,6 +46,19 @@
  * ```
  */
 
+// Checkout catalog — server-owned plan → price mapping
+export {
+  assertProductReturnUrl,
+  CHECKOUT_INTERVALS,
+  CHECKOUT_PLANS,
+  type CheckoutInterval,
+  type CheckoutOffer,
+  type CheckoutPlanId,
+  type CheckoutSelection,
+  parseCheckoutSelection,
+  resolveCheckoutOffer,
+  resolveCheckoutReturnUrls,
+} from "./catalog/checkout-plan";
 // Checkout (provider-agnostic abstraction)
 export {
   type BillingProviderReadiness,
@@ -141,7 +154,6 @@ export {
   initPolar,
   listPolarProducts,
 } from "./polar/index";
-// Stripe
 export {
   createBillingPortalSession,
   createCheckoutSession,
@@ -154,6 +166,20 @@ export {
   initStripe,
   updateCustomer,
 } from "./stripe/index";
+// Stripe
+export {
+  advanceStripeTestClock,
+  type ClockWebhookInboxState,
+  clockAdvanceCrossesPeriodEnd,
+  createStripeTestClock,
+  decideClockWebhookReplay,
+  invoiceEventsAfterClockAdvance,
+  isStripeTestModeSecret,
+  requireStripeTestClockSecret,
+  STRIPE_TEST_CLOCK_IN_FLIGHT_MS,
+  type StripeTestClock,
+  type StripeTestClockApi,
+} from "./stripe/test-clock";
 // Subscriptions
 export {
   cancelStripeSubscription,

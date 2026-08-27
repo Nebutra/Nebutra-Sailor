@@ -115,8 +115,6 @@
     "allowlist": [
       "apps/admin/src/lib/auth.ts",
       "apps/forge/src/app/api/docs/route.ts",
-      "apps/forge/src/app/docs/page.tsx",
-      "apps/forge/src/app/wallet/page.tsx",
       "apps/forge/src/components/base64-runner.tsx",
       "apps/forge/src/components/catalog-runners.tsx",
       "apps/forge/src/components/codec-mode-runner.tsx",
@@ -161,7 +159,6 @@
       "apps/landing/src/app/api/changelog/webhook/route.ts",
       "apps/landing/src/app/api/og/route.ts",
       "apps/landing/src/app/not-found.tsx",
-      "apps/landing/src/components/landing/FooterMinimal.tsx",
       "apps/landing/src/components/landing/HeroMockupWindow.tsx",
       "apps/landing/src/components/landing/InteractiveChangelog.tsx",
       "apps/landing/src/components/landing/VelocitySignalStrip.tsx",

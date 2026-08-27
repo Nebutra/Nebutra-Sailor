@@ -9,6 +9,7 @@ import {
   resolveBlogCover,
   toBlogLanguage,
 } from "@nebutra/blog";
+import { brand } from "@nebutra/brand/metadata";
 import { getImageUrl } from "@nebutra/sanity/image";
 import type { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
@@ -120,7 +121,7 @@ async function blogPublicationSet(post: BlogPostWithSource): Promise<Publication
 function unpublishedBlogMetadata(lang: string, slug: string): Metadata {
   const locale = hasLocale(routing.locales, lang) ? lang : routing.defaultLocale;
   return buildPageMetadata({
-    title: "Not found — Nebutra Blog",
+    title: `Not found — ${brand.name} Blog`,
     description: "This article is not published.",
     path: `/blog/${slug}`,
     locale,
@@ -147,7 +148,7 @@ export async function buildBlogMetadata(lang: string, slug: string): Promise<Met
   const authorName = getAuthorName(post.author);
 
   return buildPageMetadata({
-    title: `${post.title} — Nebutra Blog`,
+    title: `${post.title} — ${brand.name} Blog`,
     description: post.excerpt || post.title,
     path: `/blog/${post.slug}`,
     locale: lang as Locale,
@@ -275,7 +276,7 @@ export async function loadCachedBlogArticle(
       dateModified,
       author: authorName ? { name: authorName } : undefined,
       publisher: {
-        name: "Nebutra",
+        name: brand.name,
         logo: `${getSiteUrl()}/icon.png`,
       },
     }),

@@ -6,6 +6,8 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "status": "wip",
+    "graph": "labs",
     "featureId": "collab",
     "category": "integrations",
     "summary": "Tenant-partitioned CRDT room manager (Yjs) with pluggable store + transport seams"

@@ -7,30 +7,58 @@
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import {
+  assertProductReturnUrl,
+  BillingError,
   checkUsageLimit,
   createBillingPortalSession,
   createCheckoutSession,
   DEFAULT_PLAN_LIMITS,
   getStripeSubscription,
+  parseCheckoutSelection,
   resolveBillingProviderReadiness,
+  resolveCheckoutOffer,
+  resolveCheckoutReturnUrls,
 } from "@nebutra/billing";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { getSystemDb } from "@nebutra/db";
 import { toApiError } from "@nebutra/errors";
-import { requireAuth, requireOrganization } from "../../middlewares/tenantContext.js";
+import type { Context, Next } from "hono";
+import {
+  mapTenantRoleToPermissionRoles,
+  requireAuth,
+  requireOrganization,
+} from "../../middlewares/tenantContext.js";
 import { getUsageSnapshot } from "../../middlewares/usageMetering.js";
 import { billingServiceBreaker, CircuitOpenError } from "../../services/circuitBreaker.js";
 
 export const billingRoutes = new OpenAPIHono();
 billingRoutes.use("*", requireAuth, requireOrganization);
+billingRoutes.use("/checkout", requireBillingManage);
+billingRoutes.use("/portal", requireBillingManage);
+
+const BILLING_MANAGE_ROLES = new Set(["owner", "admin", "billing_admin"]);
+
+async function requireBillingManage(c: Context, next: Next) {
+  const tenant = c.get("tenant");
+  const roles = mapTenantRoleToPermissionRoles(tenant?.role);
+  if (!roles.some((role) => BILLING_MANAGE_ROLES.has(role))) {
+    return c.json({ error: "Forbidden", message: "billing:manage permission is required" }, 403);
+  }
+  await next();
+}
+
+function checkoutEnv(): NodeJS.ProcessEnv {
+  return {
+    ...process.env,
+    APP_URL: process.env.APP_URL ?? process.env.NEXT_PUBLIC_APP_URL ?? getBrandOrigin("app"),
+  };
+}
 
 // ── Schemas ───────────────────────────────────────────────────────────────────
 
 const CheckoutRequestSchema = z.object({
-  priceId: z.string().startsWith("price_"),
-  successUrl: z.string().url(),
-  cancelUrl: z.string().url(),
-  quantity: z.number().int().positive().max(10_000).optional(),
-  trialPeriodDays: z.number().int().min(0).max(30).optional(),
+  plan: z.enum(["pro", "enterprise", "plan_pro", "plan_enterprise"]),
+  interval: z.enum(["monthly", "yearly", "month", "year"]),
 });
 
 const PortalRequestSchema = z.object({
@@ -126,7 +154,7 @@ const checkoutRoute = createRoute({
 
 billingRoutes.openapi(checkoutRoute, async (c) => {
   const tenant = c.get("tenant");
-  const { priceId, successUrl, cancelUrl, quantity, trialPeriodDays } = c.req.valid("json");
+  const body = c.req.valid("json");
   const organizationId = tenant.organizationId as string;
   const customerId = await resolveStripeCustomerId(organizationId);
 
@@ -135,15 +163,18 @@ billingRoutes.openapi(checkoutRoute, async (c) => {
   }
 
   try {
+    const env = checkoutEnv();
+    const offer = resolveCheckoutOffer(parseCheckoutSelection(body), env);
+    const urls = resolveCheckoutReturnUrls(env);
     const session = await billingServiceBreaker.call(() =>
       createCheckoutSession({
         customerId,
-        priceId,
-        successUrl,
-        cancelUrl,
-        metadata: { organizationId },
-        ...(quantity !== undefined && { quantity }),
-        ...(trialPeriodDays !== undefined && { trialPeriodDays }),
+        priceId: offer.priceId,
+        successUrl: urls.successUrl,
+        cancelUrl: urls.cancelUrl,
+        metadata: { organizationId, plan: offer.plan, interval: offer.interval },
+        quantity: offer.quantity,
+        ...(offer.trialPeriodDays !== undefined && { trialPeriodDays: offer.trialPeriodDays }),
       }),
     );
     if (!session.url) {
@@ -153,6 +184,9 @@ billingRoutes.openapi(checkoutRoute, async (c) => {
   } catch (err) {
     if (err instanceof CircuitOpenError) {
       return c.json({ error: "Billing service temporarily unavailable" }, 503);
+    }
+    if (err instanceof BillingError) {
+      return c.json({ error: err.message }, err.statusCode === 503 ? 503 : 400);
     }
     const apiError = toApiError(err);
     return c.json({ error: apiError.error.message }, 400);
@@ -220,13 +254,17 @@ billingRoutes.openapi(portalRoute, async (c) => {
   }
 
   try {
+    const safeReturnUrl = assertProductReturnUrl(returnUrl, checkoutEnv());
     const session = await billingServiceBreaker.call(() =>
-      createBillingPortalSession(customerId, returnUrl),
+      createBillingPortalSession(customerId, safeReturnUrl),
     );
     return c.json({ url: session.url }, 200);
   } catch (err) {
     if (err instanceof CircuitOpenError) {
       return c.json({ error: "Billing service temporarily unavailable" }, 503);
+    }
+    if (err instanceof BillingError) {
+      return c.json({ error: err.message }, 400);
     }
     const apiError = toApiError(err);
     return c.json({ error: apiError.error.message }, 400);

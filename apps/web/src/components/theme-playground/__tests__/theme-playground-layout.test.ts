@@ -40,6 +40,18 @@ describe("Theme Playground layout contract", () => {
     expect(css).toContain("grid-template-columns: repeat(3, minmax(0, 1fr))");
   });
 
+  it("sizes charts from the selected artboard, not the browser breakpoint", () => {
+    const source = readFileSync(WORKBENCH, "utf8");
+    const css = readFileSync(PLAYGROUND_CSS, "utf8");
+
+    expect(source).toContain("theme-preview-artboard");
+    expect(source).toContain("theme-charts-grid");
+    expect(source).not.toContain("lg:grid-cols-3");
+    expect(css).toMatch(/\.theme-preview-artboard\s*\{[^}]*container:\s*theme-preview/);
+    expect(css).toContain(".theme-charts-grid");
+    expect(css).not.toMatch(/\.theme-preview-canvas\s*\{[^}]*container:\s*theme-preview/);
+  });
+
   it("gives the live preview pane a bounded scrollport instead of a 680px floor", () => {
     const source = readFileSync(WORKBENCH, "utf8");
 

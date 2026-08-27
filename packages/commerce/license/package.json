@@ -6,6 +6,7 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "graph": "core",
     "featureId": "license",
     "category": "commerce",
     "summary": "License key generation + validation",

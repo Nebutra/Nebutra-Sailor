@@ -5,8 +5,9 @@
  * faces for the theme / DESIGN.md registry. Importing it just to get the CJK face
  * would drag those build-time Google downloads into every app — and this repo has
  * a known trap where `next/font/google` fails outright in a network-sandboxed dev
- * server. This file imports `next/font/local` ONLY: the woff2 files ship in the
- * package, so it works offline, in CI, and in the sandbox. `./next` re-exports it,
+ * server. This file imports `next/font/local` ONLY: the woff2 files live in the
+ * workspace `generated/` directory (not the npm tarball), so first-party apps
+ * work offline, in CI, and in the sandbox. `./next` re-exports it,
  * so an app already applying `fontRegistryClassName` still only needs one import.
  *
  * WHY SELF-HOSTED AT ALL: Geist has no CJK coverage, so without this every Chinese
@@ -15,11 +16,13 @@
  * surface here (see docs/microcopy/), so the face is pinned rather than left to
  * the OS.
  *
- * The files are built by `pnpm --filter @nebutra/fonts subset:cjk`; the literal
- * `src` list below mirrors VIVO_SANS_CN_SOURCES in ../generated/index.ts (a drift
- * test in ./next-cjk.test.ts asserts they agree). It is spelled out rather than
- * spread because next/font is a compile-time transform — SWC statically analyses
- * this call, so the options object cannot be computed.
+ * The files are built by `pnpm --filter @nebutra/fonts subset:cjk` and live in
+ * the workspace `generated/` directory. They are **not** published to npm
+ * (vivo Sans licence clause 2.3). The literal `src` list below mirrors
+ * VIVO_SANS_CN_SOURCES in ../generated/index.ts (a drift test in
+ * ./next-cjk.test.ts asserts they agree). It is spelled out rather than spread
+ * because next/font is a compile-time transform — SWC statically analyses this
+ * call, so the options object cannot be computed.
  *
  * FONT ATTRIBUTION (vivo Sans 字体知识产权许可协议 clause 2.1):
  *   您应在软件中特别注明使用了vivo Sans 字体 — this software uses the vivo Sans

@@ -6,6 +6,8 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "status": "foundation",
+    "graph": "core",
     "featureId": "capability-kit",
     "surface": "support-contract",
     "category": "platform",

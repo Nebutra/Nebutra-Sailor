@@ -6,6 +6,8 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "status": "wip",
+    "graph": "runtime",
     "featureId": "sandbox-runtime",
     "category": "ai",
     "surface": "execution-router",

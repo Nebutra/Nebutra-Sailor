@@ -15,15 +15,6 @@ interface PrismaLikeClient {
   $executeRawUnsafe?: (query: string) => Promise<number>;
 }
 
-// Optional non-bypassrls role to assume for tenant-scoped queries — e.g. "app_user"
-// on Supabase, whose `postgres` connection role bypasses RLS entirely. Env-driven so
-// other backends opt in (or leave unset); validated as a bare SQL identifier before
-// interpolation since role names cannot be bound as parameters.
-const RLS_ROLE = (() => {
-  const r = process.env.APP_DB_ROLE;
-  return r && /^[a-z_][a-z0-9_]*$/.test(r) ? r : null;
-})();
-
 export type RlsPolicyCommand = "ALL" | "SELECT" | "INSERT" | "UPDATE" | "DELETE";
 
 export interface RlsPolicySqlOptions {
@@ -159,8 +150,10 @@ export function generateRlsPolicySql(options: RlsPolicySqlOptions): string {
  * Works with PostgreSQL RLS policies that check `app.current_tenant_id`.
  * This is the standard pattern for shared-schema multi-tenancy.
  *
- * The Prisma client middleware intercepts all queries and sets the
- * application-level variable before executing.
+ * The Prisma client extension intercepts all queries and sets the
+ * application-level variable before executing. Missing `$extends`,
+ * `$transaction`, or `$executeRaw` throws `TenantIsolationError` instead
+ * of running an unisolated query. Production also requires `APP_DB_ROLE`.
  *
  * @param prisma The Prisma client to extend
  * @param tenantId The tenant ID to set in RLS context
@@ -183,57 +176,65 @@ export function generateRlsPolicySql(options: RlsPolicySqlOptions): string {
  * // SQL: SELECT * FROM users WHERE current_setting('app.current_tenant_id') = user.tenant_id
  * ```
  */
+function resolveRlsRole(): string | null {
+  const role = process.env.APP_DB_ROLE;
+  return role && /^[a-z_][a-z0-9_]*$/.test(role) ? role : null;
+}
+
 export function withRls<P extends PrismaLikeClient>(prisma: P, tenantId: string): P {
+  const extendClient = prisma.$extends;
+  const runTransaction = prisma.$transaction;
+  const executeRaw = prisma.$executeRaw;
+  if (typeof extendClient !== "function") {
+    throw new TenantIsolationError(
+      "Prisma client does not support $extends; refusing unisolated queries",
+      "shared_schema",
+    );
+  }
+
+  if (typeof runTransaction !== "function" || typeof executeRaw !== "function") {
+    throw new TenantIsolationError(
+      "Prisma client cannot apply transaction-local RLS; refusing unisolated queries",
+      "shared_schema",
+    );
+  }
+
+  const rlsRole = resolveRlsRole();
+  if (process.env.NODE_ENV === "production" && !rlsRole) {
+    throw new TenantIsolationError(
+      "APP_DB_ROLE is required in production so withRls cannot run as a BYPASSRLS owner",
+      "shared_schema",
+    );
+  }
+
   try {
-    // Check if Prisma client supports $extends (v5+)
-    if (typeof prisma.$extends === "function") {
-      // Create a Prisma client extension that scopes every query to the tenant.
-      const extended = prisma.$extends({
-        query: {
-          async $allOperations({
-            args,
-            query,
-          }: {
-            args: unknown;
-            query: (a: unknown) => Promise<unknown>;
-          }) {
-            // Run the RLS setting and the operation in ONE transaction so they
-            // share a connection, and set it transaction-local (third arg
-            // `true`) so it is cleared at transaction end. A session-level SET
-            // would leak across pooled/reused connections; running the SET
-            // outside a transaction does not guarantee the query lands on the
-            // same connection at all.
-            if (
-              typeof prisma.$transaction === "function" &&
-              typeof prisma.$executeRaw === "function"
-            ) {
-              const ops: unknown[] = [];
-              // Switch to the non-bypassrls role first (when configured) so RLS
-              // policies apply; role names can't be bound, hence validated raw.
-              if (RLS_ROLE && typeof prisma.$executeRawUnsafe === "function") {
-                ops.push(prisma.$executeRawUnsafe(`SET LOCAL ROLE "${RLS_ROLE}"`));
-              }
-              ops.push(
-                prisma.$executeRaw`SELECT set_config('app.current_tenant_id', ${tenantId}, true)`,
-              );
-              ops.push(query(args));
-              const results = (await prisma.$transaction(ops)) as unknown[];
-              logger.debug("RLS context set", { tenantId });
-              return results[results.length - 1];
-            }
-            return query(args);
-          },
+    const extended = extendClient({
+      query: {
+        async $allOperations({
+          args,
+          query,
+        }: {
+          args: unknown;
+          query: (a: unknown) => Promise<unknown>;
+        }) {
+          const ops: unknown[] = [];
+          if (rlsRole && typeof prisma.$executeRawUnsafe === "function") {
+            ops.push(prisma.$executeRawUnsafe(`SET LOCAL ROLE "${rlsRole}"`));
+          }
+          ops.push(executeRaw`SELECT set_config('app.current_tenant_id', ${tenantId}, true)`);
+          ops.push(query(args));
+          const results = (await runTransaction(ops)) as unknown[];
+          logger.debug("RLS context set", { tenantId });
+          return results[results.length - 1];
         },
-      });
-
-      return extended as P;
-    }
-
-    logger.debug("withRls: Prisma client does not support $extends, returning original client", {
-      tenantId,
+      },
     });
-    return prisma;
+
+    return extended as P;
   } catch (err) {
+    if (err instanceof TenantIsolationError) {
+      throw err;
+    }
     logger.error("Failed to apply RLS extension", err, { tenantId });
     throw new TenantIsolationError(
       `Failed to apply RLS isolation for tenant ${tenantId}`,

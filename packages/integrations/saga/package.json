@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "nebutra": {
+    "graph": "labs",
     "status": "wip",
     "productionReady": false,
     "requires": [

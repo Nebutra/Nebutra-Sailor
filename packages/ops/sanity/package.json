@@ -2,6 +2,11 @@
   "name": "@nebutra/sanity",
   "version": "0.0.1",
   "private": true,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.js",

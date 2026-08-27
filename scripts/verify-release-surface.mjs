@@ -1,5 +1,10 @@
 #!/usr/bin/env node
 import { getNpmPublishIdentityDiagnostics } from "./lib/npm-publish-identity.mjs";
+import {
+  getPackageMaturityDiagnostics,
+  PACKAGE_GRAPHS,
+  PACKAGE_STATUSES,
+} from "./lib/package-maturity.mjs";
 import { getReleaseSurfaceDiagnostics } from "./lib/release-surface.mjs";
 
 const diagnostics = getReleaseSurfaceDiagnostics();
@@ -33,6 +38,22 @@ const failures = [
     (name) => `${publishIdentity.identityPath} lists ${name}, which is not publishable`,
   ),
 ];
+
+const maturity = getPackageMaturityDiagnostics();
+for (const item of maturity.undeclaredStatus) {
+  failures.push(`${item.name} is missing nebutra.status`);
+}
+for (const item of maturity.undeclaredGraph) {
+  failures.push(`${item.name} is missing nebutra.graph`);
+}
+for (const item of maturity.packages) {
+  if (!PACKAGE_STATUSES.includes(item.status)) {
+    failures.push(`${item.name} has invalid nebutra.status=${item.status}`);
+  }
+  if (!PACKAGE_GRAPHS.includes(item.graph)) {
+    failures.push(`${item.name} has invalid nebutra.graph=${item.graph}`);
+  }
+}
 
 console.log(
   `[release-surface] ${diagnostics.publishableCount} publishable packages across ${diagnostics.packageCount} workspace manifests`,

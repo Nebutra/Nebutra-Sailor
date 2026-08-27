@@ -5,6 +5,7 @@
   "description": "Thin contract layer for external admin tools (Retool, Forest Admin, Appsmith) to safely access internal Nebutra-Sailor data with audit trails",
   "type": "module",
   "nebutra": {
+    "graph": "core",
     "status": "foundation",
     "productionReady": false,
     "requires": [

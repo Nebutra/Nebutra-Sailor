@@ -2,6 +2,11 @@
   "name": "@nebutra/blog",
   "version": "0.1.0",
   "private": true,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "description": "Reusable blog domain rules for Nebutra content surfaces",
   "license": "AGPL-3.0-only",
   "type": "module",

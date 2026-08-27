@@ -2,6 +2,11 @@
   "name": "@nebutra/preset",
   "version": "0.1.2",
   "private": true,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "type": "module",
   "description": "Scenario preset system — defines which apps, features, and themes each scenario enables",
   "main": "./src/index.ts",

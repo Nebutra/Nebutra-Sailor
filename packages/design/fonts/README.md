@@ -227,8 +227,11 @@ This software uses the **vivo Sans** typeface.
 Per clause 2.1 of the vivo Sans 字体知识产权许可协议 (committed at
 `vendor/vivo-sans/LICENCE-vivo-Sans.txt`): 您应在软件中特别注明使用了 vivo Sans 字体.
 vivo Sans is licensed from vivo Mobile Communication Co., Ltd. and is **not**
-covered by this package's MIT licence, which applies to the code only. Any
-redistribution of the generated `.woff2` files carries the same obligation.
+covered by this package's MIT licence, which applies to the code only.
+
+Clause 2.3 forbids redistributing the font software or copies of it. Generated
+`.woff2` subsets stay in this workspace for first-party apps and are excluded
+from the npm tarball. See `NOTICE-FONTS.md`.
 
 ## Registered Families
 
@@ -244,4 +247,5 @@ uses the corresponding CSS variable.
 
 ## License
 
-MIT
+MIT for first-party code. vivo Sans binaries are separately licensed and are
+not published to npm.

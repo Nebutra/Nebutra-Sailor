@@ -4,13 +4,15 @@
  * Two browser-navigation bugs this file exists to close:
  *   1. Better Auth social start often returns 200 + JSON. Top-level <a href>
  *      only follows 3xx, so we rewrite to 302 and keep every Set-Cookie.
- *   2. A successful callback 302s straight to app.nebutra.com while setting
- *      the session cookie. Chrome/Safari bounce-tracking treats
+ *   2. A successful callback 302s straight to the product app origin while
+ *      setting the session cookie. Chrome/Safari bounce-tracking treats
  *      Google → auth → other-host as a tracker hop and drops the cookie.
  *      Dashboard requireAuth then bounces back to /sign-in?returnTo=… —
  *      "login did nothing". Serve a same-origin 200 first so the cookie
  *      commits, then navigate.
  */
+
+import { brand } from "@nebutra/brand/metadata";
 
 const SESSION_COOKIE_NAME_RE = /session[._-]token/i;
 
@@ -147,7 +149,8 @@ function isSafeContinueUrl(dest: URL): boolean {
     return dest.hostname === "localhost" || dest.hostname === "127.0.0.1";
   }
   const host = dest.hostname.toLowerCase();
-  return host === "nebutra.com" || host.endsWith(".nebutra.com");
+  const apex = brand.domains.landing.toLowerCase();
+  return host === apex || host.endsWith(`.${apex}`);
 }
 
 export function shouldServeOAuthContinuePage(res: Response, requestUrl: string): string | null {
@@ -184,7 +187,7 @@ export function renderOAuthContinueHtml(destination: string): string {
   const href = escapeHtml(destination);
   const js = JSON.stringify(destination);
   // Delay the hop so Set-Cookie from the previous same-host 302 is committed
-  // before we leave auth.nebutra.com. A 0s refresh races the cookie jar.
+  // before we leave the auth host. A 0s refresh races the cookie jar.
   return `<!doctype html>
 <html lang="en">
 <meta charset="utf-8">
@@ -199,7 +202,7 @@ export function renderOAuthContinueHtml(destination: string): string {
 }
 
 export function loginSuccessLocation(destination: string): string {
-  const url = new URL("/login/success", "https://auth.nebutra.com");
+  const url = new URL("/login/success", `https://${brand.domains.auth}`);
   url.searchParams.set("returnTo", destination);
   return `${url.pathname}${url.search}`;
 }

@@ -5,6 +5,7 @@
   "description": "China-market compliance utilities for Nebutra SaaS — ICP filing, region detection, WeChat OAuth scaffolding.",
   "type": "module",
   "nebutra": {
+    "graph": "core",
     "status": "foundation",
     "productionReady": false,
     "requires": [
