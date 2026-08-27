@@ -6,6 +6,8 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "status": "wip",
+    "graph": "labs",
     "featureId": "reel",
     "category": "ai",
     "surface": "media-graph",

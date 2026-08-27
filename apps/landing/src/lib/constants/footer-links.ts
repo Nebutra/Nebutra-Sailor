@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { createPublicDocsUrl } from "@/lib/docs-links";
 
@@ -52,11 +53,15 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     links: [
       {
         labelKey: "github",
-        href: "https://github.com/Nebutra/Nebutra-Sailor",
+        href: `${brand.social.github}/${brand.name}-Sailor`,
         external: true,
       },
-      { labelKey: "discord", href: "https://discord.gg/nebutra", external: true },
-      { labelKey: "twitter", href: "https://x.com/nebutra", external: true },
+      { labelKey: "discord", href: brand.social.discord, external: true },
+      {
+        labelKey: "twitter",
+        href: brand.social.twitter.replace("https://twitter.com/", "https://x.com/"),
+        external: true,
+      },
     ],
   },
 ];

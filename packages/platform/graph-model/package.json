@@ -6,6 +6,8 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "status": "foundation",
+    "graph": "core",
     "featureId": "graph-model",
     "category": "platform",
     "summary": "Generic acyclic graph types + pure traversal algorithms"

@@ -2,6 +2,11 @@
   "name": "@nebutra/marketing",
   "version": "0.1.3",
   "private": true,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "description": "Marketing infrastructure for Nebutra - Product Hunt integration, testimonials, social proof, and attribution tracking",
   "license": "AGPL-3.0-only",
   "type": "module",

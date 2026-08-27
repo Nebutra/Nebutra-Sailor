@@ -6,6 +6,8 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "status": "foundation",
+    "graph": "core",
     "featureId": "tenant-store",
     "category": "platform",
     "summary": "Multi-tenant lock + store base shared by canvas/graph features"

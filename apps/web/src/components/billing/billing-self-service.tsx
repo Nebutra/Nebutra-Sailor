@@ -39,6 +39,8 @@ export interface BillingPlanAction {
   enabled: boolean;
   reason?: string;
   priceId?: string;
+  plan?: "pro" | "enterprise";
+  interval?: "monthly" | "yearly";
   href?: string;
 }
 
@@ -268,7 +270,13 @@ export function buildBillingSelfServiceModel({
         reason: "Missing checkout price id.",
       };
     } else {
-      action = { label: "Change plan", enabled: true, priceId };
+      action = {
+        label: "Change plan",
+        enabled: true,
+        priceId,
+        plan: "pro",
+        interval: plan.id === "pro_yearly" ? "yearly" : "monthly",
+      };
     }
 
     return {
@@ -437,10 +445,11 @@ function PlanAction({ action }: { action: BillingPlanAction }) {
     );
   }
 
-  if (action.enabled && action.priceId) {
+  if (action.enabled && action.plan && action.interval) {
     return (
       <form action="/api/billing/checkout" method="post" className="mt-6">
-        <input data-allow-native type="hidden" name="priceId" value={action.priceId} />
+        <input data-allow-native type="hidden" name="plan" value={action.plan} />
+        <input data-allow-native type="hidden" name="interval" value={action.interval} />
         <button
           type="submit"
           className="inline-flex w-full items-center justify-center rounded-[var(--radius-xl)] bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"

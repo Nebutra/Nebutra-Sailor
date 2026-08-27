@@ -6,6 +6,8 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "status": "foundation",
+    "graph": "core",
     "featureId": "integration-vault",
     "category": "integrations",
     "summary": "OAuth, secret storage, and SaaS action invocation boundary"

@@ -2,6 +2,11 @@
   "name": "@nebutra/docs-shared",
   "version": "0.1.1",
   "private": true,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "type": "module",
   "description": "Shared UI/docs components for design-docs and sailor-docs (byte-identical SSOT)",
   "license": "MIT",

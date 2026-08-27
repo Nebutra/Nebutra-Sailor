@@ -5,6 +5,7 @@
   "type": "module",
   "description": "Feature flags abstraction - swap providers later",
   "nebutra": {
+    "graph": "core",
     "status": "foundation",
     "productionReady": false,
     "requires": [

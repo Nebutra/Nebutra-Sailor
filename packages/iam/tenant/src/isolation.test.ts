@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { generateRlsPolicySql } from "./isolation";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { generateRlsPolicySql, withRls } from "./isolation";
 import { TenantIsolationError } from "./types";
 
 describe("generateRlsPolicySql", () => {
@@ -57,5 +57,82 @@ describe("generateRlsPolicySql", () => {
 
   it("rejects empty table lists", () => {
     expect(() => generateRlsPolicySql({ tables: [] })).toThrow(TenantIsolationError);
+  });
+});
+
+describe("withRls", () => {
+  const originalEnv = process.env.NODE_ENV;
+  const originalRole = process.env.APP_DB_ROLE;
+
+  afterEach(() => {
+    process.env.NODE_ENV = originalEnv;
+    if (originalRole === undefined) {
+      delete process.env.APP_DB_ROLE;
+    } else {
+      process.env.APP_DB_ROLE = originalRole;
+    }
+  });
+
+  it("throws instead of returning an unisolated client without $extends", () => {
+    expect(() => withRls({} as never, "org_1")).toThrow(TenantIsolationError);
+    expect(() => withRls({} as never, "org_1")).toThrow(/does not support \$extends/);
+  });
+
+  it("throws instead of running the raw query when the client cannot SET LOCAL", () => {
+    const prisma = {
+      $extends: vi.fn(),
+    };
+
+    expect(() => withRls(prisma as never, "org_1")).toThrow(TenantIsolationError);
+    expect(() => withRls(prisma as never, "org_1")).toThrow(/transaction-local RLS/);
+    expect(prisma.$extends).not.toHaveBeenCalled();
+  });
+
+  it("refuses production use without APP_DB_ROLE", () => {
+    process.env.NODE_ENV = "production";
+    delete process.env.APP_DB_ROLE;
+
+    expect(() =>
+      withRls(
+        {
+          $extends: vi.fn(),
+          $transaction: vi.fn(),
+          $executeRaw: vi.fn(),
+        } as never,
+        "org_1",
+      ),
+    ).toThrow(/APP_DB_ROLE/);
+  });
+
+  it("applies tenant context inside a transaction when the client is capable", async () => {
+    process.env.NODE_ENV = "test";
+    delete process.env.APP_DB_ROLE;
+
+    const executeRaw = vi.fn();
+    const transaction = vi.fn(async (ops: unknown[]) => {
+      const last = ops[ops.length - 1];
+      return [...ops.slice(0, -1), await (last as Promise<unknown>)];
+    });
+    const query = vi.fn().mockResolvedValue([{ id: "user_1" }]);
+    const prisma = {
+      $transaction: transaction,
+      $executeRaw: executeRaw,
+      $extends(extension: { query: { $allOperations: Function } }) {
+        return {
+          run: (args: unknown) =>
+            extension.query.$allOperations({
+              args,
+              query,
+            }),
+        };
+      },
+    };
+
+    const isolated = withRls(prisma as never, "org_1") as {
+      run: (args: unknown) => Promise<unknown>;
+    };
+    await expect(isolated.run({ where: {} })).resolves.toEqual([{ id: "user_1" }]);
+    expect(transaction).toHaveBeenCalled();
+    expect(query).toHaveBeenCalled();
   });
 });

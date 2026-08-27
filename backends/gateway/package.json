@@ -2,6 +2,11 @@
   "name": "@nebutra/gateway",
   "version": "0.2.2",
   "private": true,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/node.ts",

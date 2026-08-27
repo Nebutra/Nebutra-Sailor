@@ -94,6 +94,12 @@ describe("package readiness governance", () => {
     );
 
     expect(manifests.length).toBeGreaterThan(0);
+    const documented = manifests.filter((manifest) => {
+      const status = manifest.nebutra?.status;
+      if (status === "stable") return true;
+      return previewDocPackages.has(manifest.name);
+    });
+
     for (const [status, section] of Object.entries(docSections)) {
       expect(section.packages, `${status} package-status count`).toHaveLength(
         section.declaredCount,
@@ -103,7 +109,7 @@ describe("package readiness governance", () => {
       );
     }
 
-    for (const manifest of manifests) {
+    for (const manifest of documented) {
       const packageName = manifest.name.replace("@nebutra/", "");
       const readmePath = join(manifest.__packageDir, "README.md");
       const cliStatusRegistry = await readFile(

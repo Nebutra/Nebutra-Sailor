@@ -1,8 +1,9 @@
 # Nebutra Package Status
 
 This page tracks the production-readiness of each `@nebutra/*` package
-exposed by `create-sailor`. It is the human-readable companion to the
-machine-readable `nebutra` block in every `package.json`.
+exposed by `create-sailor`. Every workspace package now declares
+`nebutra.status` and `nebutra.graph` in its `package.json`. The tables
+below remain the create-sailor CLI surface, not the full workspace.
 
 ## Status values
 
@@ -12,6 +13,33 @@ machine-readable `nebutra` block in every `package.json`.
 | `foundation`    | Core contract is production-usable, while optional provider adapters or UI surfaces still need credentials/wiring. |
 | `wip`           | Actively under development. Do not use in production until the notice is removed from its README.|
 | `deprecated`    | Scheduled for removal. Do not use.                                                               |
+
+Do not mark a new package `stable` without a real integration, empty `gaps`,
+and `productionReady: true`. Undeclared packages are classified as
+`foundation` (core graph) or `wip` (runtime / labs).
+
+## Graphs
+
+| Graph     | Meaning | Included in `pnpm build:release` / `pnpm test:release` |
+| --------- | ------- | -------------------------------------------------------- |
+| `core`    | Product, platform, and create-sailor infrastructure | Yes |
+| `runtime` | Agent / MCP / sandbox execution kernel | Yes |
+| `labs`    | Experimental apps and plays (forge, sleptons, cinema, …) | No |
+
+Labs stay in `pnpm-workspace.yaml` so workspace imports keep resolving.
+`pnpm build` still builds the full workspace. The release graph is
+`core` + `runtime`:
+
+```bash
+pnpm maturity:verify
+node scripts/print-graph-filters.mjs release
+pnpm build:release
+pnpm test:release
+```
+
+`node scripts/print-release-filters.mjs` remains the **npm publish**
+surface (every non-private package), which is a different cut from the
+build/test graph.
 
 ## How to read the CLI
 
@@ -131,6 +159,7 @@ Every package carries its status in its own `package.json`:
   "name": "@nebutra/queue",
   "nebutra": {
     "status": "foundation",
+    "graph": "core",
     "productionReady": false,
     "requires": ["QSTASH_TOKEN or REDIS_URL"],
     "gaps": [

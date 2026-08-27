@@ -3,32 +3,17 @@ import { NextResponse } from "next/server";
 import { API_BASE_URL } from "@/lib/api/client";
 import { getAuth } from "@/lib/auth";
 import { appendBillingStatus, resolveBillingReturnUrl } from "@/lib/billing/return-url";
-import { db } from "@/lib/db";
 
 export interface CheckoutRequestBody {
-  priceId?: unknown;
+  plan?: unknown;
   planId?: unknown;
   interval?: unknown;
   redirectUrl?: unknown;
-  /**
-   * Optional seat count override. When `seatBased` is true and this is omitted,
-   * the route counts the calling org's members and uses that as the quantity.
-   */
-  seats?: unknown;
-  /** Optional trial days from plan price metadata. */
-  trialPeriodDays?: unknown;
-  /**
-   * When true, the route resolves seats from the calling org's member count and
-   * forwards it as `quantity` to the gateway checkout factory.
-   */
-  seatBased?: unknown;
 }
 
 interface NormalizedBody {
-  priceId: string;
-  seats: number | null;
-  seatBased: boolean;
-  trialPeriodDays: number | null;
+  plan: string;
+  interval: string;
   explicitReturnUrl: string | null;
   invalidReturnUrl: boolean;
   wantsJsonResponse: boolean;
@@ -44,23 +29,9 @@ async function readBody(request: Request): Promise<NormalizedBody> {
       typeof raw.redirectUrl === "string"
         ? resolveExplicitReturnUrl(request, raw.redirectUrl)
         : null;
+    const selection = readSelection(raw.plan ?? raw.planId, raw.interval);
     return {
-      priceId:
-        typeof raw.priceId === "string"
-          ? raw.priceId
-          : resolvePriceIdFromPlan(raw.planId, raw.interval),
-      seats:
-        typeof raw.seats === "number" && Number.isFinite(raw.seats) && raw.seats > 0
-          ? Math.floor(raw.seats)
-          : null,
-      seatBased: raw.seatBased === true,
-      trialPeriodDays:
-        typeof raw.trialPeriodDays === "number" &&
-        Number.isFinite(raw.trialPeriodDays) &&
-        raw.trialPeriodDays >= 0 &&
-        raw.trialPeriodDays <= 30
-          ? Math.floor(raw.trialPeriodDays)
-          : null,
+      ...selection,
       explicitReturnUrl,
       invalidReturnUrl: typeof raw.redirectUrl === "string" && explicitReturnUrl === null,
       wantsJsonResponse: typeof raw.redirectUrl === "string",
@@ -71,10 +42,8 @@ async function readBody(request: Request): Promise<NormalizedBody> {
   const form = await request.formData().catch(() => null);
   if (!form) {
     return {
-      priceId: "",
-      seats: null,
-      seatBased: false,
-      trialPeriodDays: null,
+      plan: "",
+      interval: "",
       explicitReturnUrl: null,
       invalidReturnUrl: false,
       wantsJsonResponse: false,
@@ -82,33 +51,13 @@ async function readBody(request: Request): Promise<NormalizedBody> {
     };
   }
 
-  const priceId = form.get("priceId");
-  const planId = form.get("planId");
-  const interval = form.get("interval");
   const redirectUrl = form.get("redirectUrl");
-  const seatsRaw = form.get("seats");
-  const seatBasedRaw = form.get("seatBased");
-  const trialPeriodDaysRaw = form.get("trialPeriodDays");
-  const seats = typeof seatsRaw === "string" ? Number.parseInt(seatsRaw, 10) : Number.NaN;
-  const trialPeriodDays =
-    typeof trialPeriodDaysRaw === "string" ? Number.parseInt(trialPeriodDaysRaw, 10) : Number.NaN;
   const explicitReturnUrl =
     typeof redirectUrl === "string" ? resolveExplicitReturnUrl(request, redirectUrl) : null;
+  const selection = readSelection(form.get("plan") ?? form.get("planId"), form.get("interval"));
 
   return {
-    priceId:
-      typeof priceId === "string"
-        ? priceId
-        : resolvePriceIdFromPlan(
-            typeof planId === "string" ? planId : undefined,
-            typeof interval === "string" ? interval : undefined,
-          ),
-    seats: Number.isFinite(seats) && seats > 0 ? seats : null,
-    seatBased: seatBasedRaw === "true" || seatBasedRaw === "1",
-    trialPeriodDays:
-      Number.isFinite(trialPeriodDays) && trialPeriodDays >= 0 && trialPeriodDays <= 30
-        ? trialPeriodDays
-        : null,
+    ...selection,
     explicitReturnUrl,
     invalidReturnUrl: typeof redirectUrl === "string" && explicitReturnUrl === null,
     wantsJsonResponse: false,
@@ -116,26 +65,33 @@ async function readBody(request: Request): Promise<NormalizedBody> {
   };
 }
 
-function resolvePriceIdFromPlan(planId: unknown, interval: unknown): string {
-  if (typeof planId !== "string") return "";
-
-  const normalizedPlan = planId.toLowerCase();
-  const normalizedInterval = interval === "year" ? "year" : "month";
-
-  if (
+function readSelection(plan: unknown, interval: unknown): { plan: string; interval: string } {
+  if (typeof plan !== "string" || typeof interval !== "string") {
+    return { plan: "", interval: "" };
+  }
+  const normalizedPlan = plan.trim().toLowerCase();
+  const normalizedInterval = interval.trim().toLowerCase();
+  const planId =
     normalizedPlan === "plan_pro" ||
-    normalizedPlan === "pro" ||
     normalizedPlan === "pro_monthly" ||
     normalizedPlan === "pro_yearly"
+      ? "pro"
+      : normalizedPlan === "plan_enterprise"
+        ? "enterprise"
+        : normalizedPlan;
+  const intervalId =
+    normalizedInterval === "month"
+      ? "monthly"
+      : normalizedInterval === "year"
+        ? "yearly"
+        : normalizedInterval;
+  if (
+    (planId === "pro" || planId === "enterprise") &&
+    (intervalId === "monthly" || intervalId === "yearly")
   ) {
-    if (normalizedPlan === "pro_yearly" || normalizedInterval === "year") {
-      return process.env.STRIPE_PRICE_ID_PRO_YEARLY ?? process.env.PRICE_ID_PRO_YEARLY ?? "";
-    }
-
-    return process.env.STRIPE_PRICE_ID_PRO_MONTHLY ?? process.env.PRICE_ID_PRO_MONTHLY ?? "";
+    return { plan: planId, interval: intervalId };
   }
-
-  return "";
+  return { plan: "", interval: "" };
 }
 
 function resolveExplicitReturnUrl(request: Request, value: string): string | null {
@@ -145,22 +101,6 @@ function resolveExplicitReturnUrl(request: Request, value: string): string | nul
     if (explicitUrl.origin !== requestUrl.origin) return null;
     return explicitUrl.toString();
   } catch {
-    return null;
-  }
-}
-
-async function resolveSeatQuantity(
-  organizationId: string | null,
-  explicitSeats: number | null,
-): Promise<number | null> {
-  if (explicitSeats !== null) return explicitSeats;
-  if (!organizationId) return null;
-
-  try {
-    const count = await db.organizationMember.count({ where: { organizationId } });
-    return count > 0 ? count : 1;
-  } catch {
-    // Defensive — never block checkout because seat lookup failed.
     return null;
   }
 }
@@ -191,26 +131,17 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid billing return URL." }, { status: 400 });
   }
 
-  if (!body.priceId.startsWith("price_")) {
-    return NextResponse.json({ error: "Invalid or missing Stripe price id." }, { status: 400 });
+  if (!body.plan || !body.interval) {
+    return NextResponse.json(
+      { error: "Checkout requires a catalog plan and interval." },
+      { status: 400 },
+    );
   }
 
-  let quantity: number | null = null;
-  if (body.seatBased) {
-    const { orgId } = await getAuth(request);
-    quantity = await resolveSeatQuantity(orgId, body.seats);
-  } else if (body.seats !== null) {
-    // Seats provided without seatBased — still respect them as a manual override.
-    quantity = body.seats;
-  }
-
-  const upstreamPayload: Record<string, unknown> = {
-    priceId: body.priceId,
-    successUrl: appendBillingStatus(body.explicitReturnUrl ?? returnUrl, "checkout-success"),
-    cancelUrl: appendBillingStatus(body.explicitReturnUrl ?? returnUrl, "checkout-canceled"),
+  const upstreamPayload = {
+    plan: body.plan,
+    interval: body.interval,
   };
-  if (quantity !== null) upstreamPayload.quantity = quantity;
-  if (body.trialPeriodDays !== null) upstreamPayload.trialPeriodDays = body.trialPeriodDays;
 
   const response = await fetch(`${API_BASE_URL}/api/v1/billing/checkout`, {
     method: "POST",
@@ -230,8 +161,6 @@ export async function POST(request: Request) {
     );
   }
 
-  // SOC 2 audit — record checkout intent. Resolved auth is best-effort; the
-  // event is emitted only if we can scope it to a tenant.
   const { userId, orgId } = await getAuth(request);
   if (userId && orgId) {
     await auditLogger(request, {
@@ -240,9 +169,8 @@ export async function POST(request: Request) {
     }).log({
       action: "billing.checkout.started",
       outcome: "success",
-      resource: { type: "stripe_price", id: body.priceId },
+      resource: { type: "billing_plan", id: `${body.plan}:${body.interval}` },
       severity: "info",
-      ...(quantity !== null ? { metadata: { quantity, seatBased: body.seatBased } } : {}),
     });
   }
 

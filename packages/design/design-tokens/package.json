@@ -3,6 +3,11 @@
   "version": "0.1.2",
   "description": "W3C DTCG ($value/$type) tokens — SSOT, Style Dictionary 4 pipeline. Coexists with @nebutra/tokens; not a replacement.",
   "private": false,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "license": "MIT",
   "type": "module",
   "main": "./build/ts/index.js",

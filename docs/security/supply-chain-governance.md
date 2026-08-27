@@ -11,8 +11,9 @@ or privileged GitHub Actions workflows.
   published versions by 24 hours before they can be resolved.
 - `pnpm-workspace.yaml` sets `strictDepBuilds: true`; any dependency with an
   unreviewed lifecycle script fails installation.
-- Root `package.json` owns the reviewed lifecycle-script allowlist in
-  `pnpm.onlyBuiltDependencies`.
+- `pnpm-workspace.yaml` owns the reviewed lifecycle-script allowlist in
+  `onlyBuiltDependencies`, plus `overrides` and audit exceptions. Current pnpm
+  does not read `package.json#pnpm`.
 - `pnpm-workspace.yaml` sets `ignorePnpmfile: true`, so dependency resolution
   cannot execute project-local pnpmfile JavaScript.
 - `.npmrc` pins package-manager strictness and fails `pnpm run` when

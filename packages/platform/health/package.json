@@ -2,6 +2,11 @@
   "name": "@nebutra/health",
   "version": "0.1.0",
   "private": true,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "description": "Health check utilities for Nebutra services",
   "type": "module",
   "main": "./dist/index.js",

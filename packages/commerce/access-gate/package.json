@@ -6,6 +6,7 @@
   "license": "AGPL-3.0-only",
   "type": "module",
   "nebutra": {
+    "graph": "core",
     "status": "foundation",
     "productionReady": false,
     "requires": [

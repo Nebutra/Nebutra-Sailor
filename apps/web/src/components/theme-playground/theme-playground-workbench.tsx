@@ -528,7 +528,7 @@ function PreviewCanvas({
             minHeight: `${viewportHeight}px`,
           }}
           className={cn(
-            "mx-auto w-full overflow-hidden rounded-[var(--radius-lg)] bg-[var(--color-background)] text-[color:var(--color-foreground)] transition-[max-width] duration-200",
+            "theme-preview-artboard mx-auto w-full overflow-hidden rounded-[var(--radius-lg)] bg-[var(--color-background)] text-[color:var(--color-foreground)] transition-[max-width] duration-200",
             // Force theme fonts onto ALL descendants, beating any intermediate CSS
             // rule (e.g. globals.css @layer base h1-h6 / body font-family) that
             // would otherwise re-declare font-family and break inheritance from
@@ -808,7 +808,7 @@ function AiChatPanel() {
 function ChartsPanel() {
   return (
     <PreviewCard title="Charts">
-      <div className="grid gap-3 lg:grid-cols-3">
+      <div className="theme-charts-grid gap-3">
         <MiniChart title="User Growth" value="1,248" variant="line" />
         <MiniChart title="Revenue" value="$12,426" variant="bar" />
         <MiniChart title="API Requests" value="98,426" variant="area" />
@@ -830,13 +830,13 @@ function MiniChart({
   // Flat mini chart — no nested card frame, no inner well bg. Numbers +
   // sparkline sit directly on the parent Charts card.
   return (
-    <div className="p-1">
-      <div className="mb-4 flex items-start justify-between">
-        <div>
-          <div className="font-medium text-xs">{title}</div>
-          <div className="mt-1 font-bold text-lg">{value}</div>
+    <div className="min-w-0 p-1">
+      <div className="mb-4 flex flex-wrap items-start justify-between gap-2">
+        <div className="min-w-0">
+          <div className="font-medium text-xs leading-4">{title}</div>
+          <div className="mt-1 font-bold text-lg tabular-nums">{value}</div>
         </div>
-        <Badge variant="green-subtle" size="sm">
+        <Badge variant="green-subtle" size="sm" className="shrink-0">
           +12.5%
         </Badge>
       </div>

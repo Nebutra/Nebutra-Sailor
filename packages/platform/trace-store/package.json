@@ -6,6 +6,8 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
+    "status": "foundation",
+    "graph": "core",
     "featureId": "trace-store",
     "category": "platform",
     "summary": "Batched trace emitter over the shared telemetry layer"

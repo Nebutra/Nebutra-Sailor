@@ -3,6 +3,11 @@
   "version": "0.1.2",
   "description": "Unified error handling and API error responses",
   "private": false,
+  "nebutra": {
+    "status": "foundation",
+    "graph": "core",
+    "productionReady": false
+  },
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
