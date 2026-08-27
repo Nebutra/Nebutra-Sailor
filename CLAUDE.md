@@ -3,6 +3,11 @@
 This file is the single source of truth for how Claude Code should work in this codebase.
 Read it in full before writing any code.
 
+> **Current phase:** closure only. Canonical contract:
+> [docs/architecture/2026-08-27-closure-phase.md](docs/architecture/2026-08-27-closure-phase.md).
+> Do not add packages, product nouns, or abstraction layers. Do not delete
+> existing modules. Follow P0 → P1 → P2 → P3. No official Release until P0 is green.
+
 ---
 
 ## Project Structure

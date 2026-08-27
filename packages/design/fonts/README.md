@@ -54,7 +54,7 @@ const stack = withRegistryFont("Space Grotesk, sans-serif");
 // "var(--font-space-grotesk), Space Grotesk, sans-serif"
 ```
 
-## Simplified Chinese — self-hosted vivo Sans SC
+## Simplified Chinese — self-hosted Noto Sans SC
 
 Geist has no CJK coverage at all, so without a CJK face every Chinese character
 falls back to whatever the OS supplies: PingFang on macOS, Microsoft YaHei on
@@ -74,7 +74,7 @@ import { GeistSans } from "geist/font/sans";
 <html className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}>
 ```
 
-That defines `--font-vivo-sans-sc`. Nothing else is needed: the token stacks in
+That defines `--font-noto-sans-sc`. Nothing else is needed: the token stacks in
 `@nebutra/tokens` (`--font-sans`, `--font-cn`, `--font-display`, `--font-heading`)
 already reference the variable in the right position. The app also needs
 `"@nebutra/fonts"` in `dependencies` and in `transpilePackages` (the package ships
@@ -88,13 +88,13 @@ duplication is gone; the file now only carries derived aliases.
 ### Stack order is the design decision
 
 ```css
-font-family: var(--font-geist-sans), "Geist", var(--font-vivo-sans-sc), "Noto Sans SC", …;
+font-family: var(--font-geist-sans), "Geist", var(--font-noto-sans-sc), "Noto Sans SC", …;
 ```
 
 Geist comes **first** and keeps Latin and the numerals — its tabular figures and
 tighter x-height are what dense dashboard tables need, and it is the locked UI
-face. vivo Sans SC takes CJK. Both faces cover Latin, so the *order* is what
-decides: reversed, vivo Sans would take the Latin too, and its Latin is not as
+face. Noto Sans SC takes CJK. Both faces cover Latin, so the *order* is what
+decides: reversed, Noto would take the Latin too, and its Latin is not as
 good as Geist's for UI.
 
 Belt and braces: the generated `@font-face` rules carry a `unicode-range` with
@@ -102,56 +102,18 @@ no Latin, no ASCII and no general-punctuation codepoints in it, so a Latin-only
 page can never trigger a CJK download even if a stack somewhere is written the
 wrong way round. Geist Mono remains the code face.
 
-### Verified, not assumed
-
-Measured in Chromium against a running app (`apps/typelens`, dev and production
-build), reading the fonts the engine actually used per text run via
-`CSS.getPlatformFontsForNode` — not by eye and not from the declared stack:
-
-| Probe | Face actually used |
-|---|---|
-| `Handgloves ABC` | Geist |
-| `1234567890` | Geist |
-| `开始设置的一二三` @400 | vivo Sans |
-| `开始设置的一二三` @500 | vivo Sans Medium |
-| `开始设置的一二三` @600 | vivo Sans Demibold |
-| `开始设置的一二三` @700 | vivo Sans Demibold (no synthesis — `font-synthesis: none`) |
-| `。、！？（）` | vivo Sans |
-| `Nebutra 云毓 2026` | Geist for Latin + digits, vivo Sans for 云, PingFang SC for 毓 |
-
-The last row is the design working as intended: 毓 is a GB2312 **level-2**
-character, outside the subset, so it falls through the stack instead of bloating
-every page. A Latin-only route (`/this-route-does-not-exist`) requested
-`Geist_Variable` and **nothing else** — zero CJK bytes. The production build emits
-exactly three woff2 files (498,084 / 504,228 / 504,332 B, byte-identical to the
-package) and preloads only the two Geist files.
-
-Note that `document.fonts.check("16px vivoSansCn", "A")` returns `true`. That is
-the vacuous-true case in the spec — no face in the family matches U+0041's
-`unicode-range`, so "all matching faces are loaded" is trivially satisfied. It is
-not evidence of Latin coverage; the platform-font table above is.
-
 ### Building the subsets
 
 ```bash
-pnpm --filter @nebutra/fonts subset:cjk          # idempotent; reports every byte size
-pnpm --filter @nebutra/fonts subset:cjk -- --force
+FONTTOOLS_PYTHON=/path/to/python \
+  pnpm --filter @nebutra/fonts subset:cjk -- --force
 ```
 
-Requires `python3` with `fontTools` and `brotli` (for `--flavor=woff2`).
-`woff2_compress` is not needed. Outputs land in `generated/`:
-
-| File | Weight | Size |
-|---|---|---|
-| `vivo-sans-sc-400.woff2` | 400 body | 498,084 B (486.4 KB) |
-| `vivo-sans-sc-500.woff2` | 500 `--font-weight-medium` | 504,228 B (492.4 KB) |
-| `vivo-sans-sc-600.woff2` | 600 `--font-weight-heading` | 504,332 B (492.5 KB) |
-| `vivo-sans-cn.css` | `@font-face` rules | 1,813 B |
-| `generated/index.ts` | face metadata for `next/font/local` | 1,398 B |
-
-Sizes move by a few hundred bytes as Chinese copy lands — the catalog character
-count is an input, not a constant. `generated/subset-manifest.json` records the
-exact character count and byte size of the build actually on disk.
+Requires Python with `fontTools` and `brotli` (for `--flavor=woff2`).
+The script downloads the OFL Noto Sans SC variable face, instances 400 / 500 /
+600 / 700, then subsets. Outputs land in `generated/`. The committed woff2
+files are the SIL OFL Noto Sans SC chinese-simplified faces used by
+`next/font/local` so a clean clone does not need fontTools to render text.
 
 ### Why three weights
 
@@ -168,12 +130,9 @@ Each weight costs ~490 KB, so shipping all nine static faces would be ~4.4 MB.
 
 ### Why the static faces, not the variable one
 
-`vivoSansSCVF.ttf` is 42 MB. Subset to this exact character set it is still
-1,070,240 B, because a variable CJK font carries per-weight deltas for every
-glyph it keeps — one variable file costs more than all three static subsets on
-the pages that only use one weight. `vivo Sans SC L3` is *not* usable as a body
-face: 60,339 characters but zero in the CJK basic block, it is a rare-plane
-supplement.
+A variable CJK font carries per-weight deltas for every glyph it keeps, so one
+variable file costs more than the static weights a page actually uses. The
+pipeline instances 400 / 500 / 600 / 700 and subsets each one.
 
 ### Character set
 
@@ -212,26 +171,19 @@ weight, the full set to ~498,000 B.
 
 ### Vendored sources
 
-`vendor/vivo-sans/` holds only the three static TTFs the pipeline consumes —
-`vivoSans-Regular.ttf`, `vivoSans-Medium.ttf`, `vivoSans-DemiBold.ttf` (7.4 MB
-each) — not all 33 faces from the licensed set, and not the 42 MB variable font.
-The licence agreement is committed beside them as
-`vendor/vivo-sans/LICENCE-vivo-Sans.txt`. `VIVO_SANS_SOURCE_DIR` points the
-script at the licensed originals when re-vendoring.
+`vendor/noto-sans-sc/OFL.txt` is committed. Full source TTFs are downloaded by
+`subset:cjk` and gitignored. Do not commit unmodified CJK source faces.
 
 ## Third-party font attribution
 
-本软件使用了 **vivo Sans** 字体。
-This software uses the **vivo Sans** typeface.
+本软件使用了 **Noto Sans SC** 字体。
+This software uses the **Noto Sans SC** typeface.
 
-Per clause 2.1 of the vivo Sans 字体知识产权许可协议 (committed at
-`vendor/vivo-sans/LICENCE-vivo-Sans.txt`): 您应在软件中特别注明使用了 vivo Sans 字体.
-vivo Sans is licensed from vivo Mobile Communication Co., Ltd. and is **not**
-covered by this package's MIT licence, which applies to the code only.
-
-Clause 2.3 forbids redistributing the font software or copies of it. Generated
-`.woff2` subsets stay in this workspace for first-party apps and are excluded
-from the npm tarball. See `NOTICE-FONTS.md`.
+Noto Sans SC is licensed under the SIL Open Font License 1.1
+(`vendor/noto-sans-sc/OFL.txt`). That licence is separate from this package's
+MIT licence, which applies to first-party code only. Generated `.woff2` files
+stay in the workspace for first-party apps and are excluded from the npm
+tarball. See `NOTICE-FONTS.md`.
 
 ## Registered Families
 
@@ -247,5 +199,5 @@ uses the corresponding CSS variable.
 
 ## License
 
-MIT for first-party code. vivo Sans binaries are separately licensed and are
-not published to npm.
+MIT for first-party code. Noto Sans SC binaries are SIL OFL 1.1 and are not
+published to npm.

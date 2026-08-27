@@ -27,11 +27,11 @@ import "./globals.css";
 // GeistMono → --font-geist-mono (variable font, 100–900)
 // Referenced in packages/design/ui/src/typography/fonts.css via var(--font-geist-sans/mono)
 //
-// cjkFontClassName → --font-vivo-sans-sc: the self-hosted vivo Sans SC subset
+// cjkFontClassName → --font-noto-sans-sc: the self-hosted Noto Sans SC subset
 // (next/font/local — files ship in @nebutra/fonts, so no build-time fetch). Geist
 // has zero CJK coverage, so without it every Chinese character fell back to the
 // OS face (PingFang / YaHei / whatever Android ships). ORDER: --font-sans lists
-// Geist first and vivo Sans SC after it, so Geist keeps Latin and the numerals
+// Geist first and Noto Sans SC after it, so Geist keeps Latin and the numerals
 // (tabular figures in dense tables) and only CJK falls through — and the subset
 // carries no Latin glyphs at all, so that holds even if a stack is mis-ordered.
 //

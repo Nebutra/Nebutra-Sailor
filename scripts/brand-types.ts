@@ -156,17 +156,6 @@ export interface FontAssetConfig {
     black: string;
     blackItalic: string;
   };
-  vivoSans: {
-    thin: string;
-    extraLight: string;
-    light: string;
-    regular: string;
-    medium: string;
-    demiBold: string;
-    bold: string;
-    extraBold: string;
-    heavy: string;
-  };
 }
 
 export interface FaviconAssetConfig {
@@ -458,12 +447,12 @@ export const DEFAULT_BRAND: BrandConfig = {
   typography: {
     fontFamily: {
       en: '"Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif',
-      cn: '"Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif',
+      cn: '"Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif',
       sans: '"Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
       mono: '"Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace',
       display: '"Geist", "Noto Sans SC", sans-serif',
       heading: '"Geist", "Noto Sans SC", sans-serif',
-      brandPrint: '"vivo Sans", "PingFang SC", sans-serif',
+      brandPrint: '"Noto Sans SC", "PingFang SC", sans-serif',
     },
     cssVars: {
       sans: "var(--font-geist-sans)",
@@ -550,17 +539,6 @@ export const DEFAULT_BRAND: BrandConfig = {
       extraBoldItalic: "assets/fonts/poppins/Poppins-ExtraBoldItalic.otf",
       black: "assets/fonts/poppins/Poppins-Black.otf",
       blackItalic: "assets/fonts/poppins/Poppins-BlackItalic.otf",
-    },
-    vivoSans: {
-      thin: "assets/fonts/vivo-sans/vivoSans-Thin.ttf",
-      extraLight: "assets/fonts/vivo-sans/vivoSans-ExtraLight.ttf",
-      light: "assets/fonts/vivo-sans/vivoSans-Light.ttf",
-      regular: "assets/fonts/vivo-sans/vivoSans-Regular.ttf",
-      medium: "assets/fonts/vivo-sans/vivoSans-Medium.ttf",
-      demiBold: "assets/fonts/vivo-sans/vivoSans-DemiBold.ttf",
-      bold: "assets/fonts/vivo-sans/vivoSans-Bold.ttf",
-      extraBold: "assets/fonts/vivo-sans/vivoSans-ExtraBold.ttf",
-      heavy: "assets/fonts/vivo-sans/vivoSans-Heavy.ttf",
     },
   },
   faviconAssets: {

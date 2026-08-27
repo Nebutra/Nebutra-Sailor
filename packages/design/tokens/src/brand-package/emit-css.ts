@@ -48,7 +48,7 @@ const GENERIC_FAMILIES = new Set([
  *
  * Inter, Geist, Söhne and Mori carry no CJK glyphs, and a generic family always
  * resolves — so `"Inter", ui-sans-serif, sans-serif` hands every Han character
- * to whatever the OS picks, and the careful vivo Sans SC / PingFang order that
+ * to whatever the OS picks, and the careful Noto Sans SC / PingFang order that
  * the default stack spells out is lost the moment a visitor picks a language.
  *
  * The tail goes in ahead of the first generic family, which is the last point
@@ -57,8 +57,8 @@ const GENERIC_FAMILIES = new Set([
 function withCjkTail(stack: string): string {
   const families = stack.split(",").map((f) => f.trim());
   const cut = families.findIndex((f) => GENERIC_FAMILIES.has(f.replace(/"/g, "")));
-  if (cut === -1 || families.some((f) => f.includes("vivo Sans SC"))) return stack;
-  const cjk = ['var(--font-vivo-sans-sc, "vivo Sans SC")', '"Noto Sans SC"', '"PingFang SC"'];
+  if (cut === -1 || families.some((f) => f.includes("Noto Sans SC"))) return stack;
+  const cjk = ['var(--font-noto-sans-sc, "Noto Sans SC")', '"PingFang SC"'];
   return [...families.slice(0, cut), ...cjk, ...families.slice(cut)].join(", ");
 }
 
