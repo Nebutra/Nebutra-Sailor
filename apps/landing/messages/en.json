@@ -178,7 +178,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO STRUCTURE",
-    "title": "15 apps. 113 packages. 4 backend lanes.",
+    "title": "15 apps. 104 packages. 4 backend lanes.",
     "description": "Shared code, parallel builds, zero duplication. Complete end-to-end typing from database to frontend.",
     "metricApps": "apps",
     "metricBackends": "backend lanes",

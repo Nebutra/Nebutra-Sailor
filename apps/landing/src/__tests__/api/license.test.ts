@@ -41,6 +41,7 @@ const mockIssueLicense = vi.fn().mockResolvedValue({
 vi.mock("@nebutra/license", () => ({
   issueLicense: (...args: unknown[]) => mockIssueLicense(...args),
   validateLicense: vi.fn(),
+  configureLicenseSystemDb: vi.fn(),
 }));
 
 // Mock @nebutra/billing — not exercised by free-tier tests, but imported at load
