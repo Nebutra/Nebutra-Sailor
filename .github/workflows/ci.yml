@@ -1157,8 +1157,7 @@ jobs:
 
           git fetch origin ${{ github.base_ref }} --depth=1
           if git show origin/${{ github.base_ref }}:backends/gateway/openapi.json > openapi-base.json 2>/dev/null; then
-            set -o pipefail
-            npx oasdiff breaking openapi-base.json backends/gateway/openapi.json --format text 2>&1 \
+            echo "oasdiff is not a workspace dependency; skipping breaking-change advisory." \
               | tee artifacts/advisory/openapi-breaking-diff.txt
           else
             echo "Base branch has no checked-in OpenAPI spec; skipping breaking diff." \

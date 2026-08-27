@@ -10,6 +10,10 @@ vi.mock("next-intl", () => ({
   useTranslations: (namespace: string) => (key: string) => `${namespace}.${key}`,
 }));
 
+vi.mock("react-tweet", () => ({
+  Tweet: () => null,
+}));
+
 import en from "../../../../messages/en.json" with { type: "json" };
 import { COMPARISON_GROUPS, PLAN_IDS } from "../../../lib/landing/pricing-features";
 import { PricingComparisonTable } from "../pricing-comparison-table";

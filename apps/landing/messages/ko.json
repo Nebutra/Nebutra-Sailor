@@ -178,7 +178,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO 구조",
-    "title": "15개 앱 · 113개 패키지 · 4개 백엔드 라인.",
+    "title": "15개 앱 · 104개 패키지 · 4개 백엔드 라인.",
     "description": "공유 코드, 병렬 빌드, 중복 제거. 데이터베이스부터 프론트엔드까지 완전한 엔드투엔드 타입 안정성을 제공합니다.",
     "metricApps": "앱",
     "metricBackends": "백엔드 라인",

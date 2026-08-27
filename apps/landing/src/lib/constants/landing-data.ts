@@ -127,16 +127,7 @@ const packageGroups = [
     featureAnchor: "capability-iam",
     description: "- Auth, identity, permissions, tenancy, audit, and secrets",
     icon: React.createElement(Shield, { className: "h-4 w-4" }),
-    children: [
-      "audit",
-      "auth",
-      "captcha",
-      "identity",
-      "oauth-server",
-      "permissions",
-      "tenant",
-      "vault",
-    ],
+    children: ["audit", "auth", "captcha", "identity", "oauth", "permissions", "tenant", "vault"],
   },
   {
     id: "integrations",
@@ -360,7 +351,7 @@ export const TREE_DATA: FileNode[] = [
     id: "packages",
     label: "packages",
     path: "packages",
-    tag: "113",
+    tag: "104",
     icon: React.createElement(Box, {
       className: "h-[15px] w-[15px] text-success fill-emerald-500/20",
     }),
