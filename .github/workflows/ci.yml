@@ -844,13 +844,15 @@ jobs:
 
       - name: Check migration history is consistent
         working-directory: packages/platform/db
-        # prisma migrate diff exits non-zero if schema is ahead of migrations —
-        # fails "forgot to create a migration" before it reaches production.
+        # Prisma 7 dropped --to-schema-datamodel and --shadow-database-url.
+        # Replay migrations onto the job's shadow Postgres via DATABASE_URL.
+        env:
+          DATABASE_URL: ${{ secrets.SHADOW_DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/shadow_nebutra' }}
+          DIRECT_URL: ${{ secrets.SHADOW_DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/shadow_nebutra' }}
         run: |
           pnpm exec prisma migrate diff \
             --from-migrations ./prisma/migrations \
-            --to-schema-datamodel ./prisma/schema.prisma \
-            --shadow-database-url "${{ secrets.SHADOW_DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/shadow_nebutra' }}" \
+            --to-schema ./prisma/schema.prisma \
             --exit-code
 
   # ── Security scanning ────────────────────────────────────────────────────
