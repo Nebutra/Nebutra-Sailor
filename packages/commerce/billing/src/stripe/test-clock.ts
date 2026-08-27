@@ -31,7 +31,7 @@ export interface ClockWebhookInboxState {
   createdAt: Date;
 }
 
-export function isStripeTestModeSecret(secret: string | undefined): boolean {
+export function isStripeTestModeSecret(secret: string | undefined): secret is `sk_test_${string}` {
   return typeof secret === "string" && secret.startsWith("sk_test_");
 }
 
