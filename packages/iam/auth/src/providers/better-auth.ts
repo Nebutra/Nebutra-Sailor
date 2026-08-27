@@ -40,6 +40,10 @@ import type {
   SignInResult,
   TwoFactorCapability,
 } from "../types";
+import {
+  fetchAuthCenterSession,
+  shouldResolveSessionAtAuthCenter,
+} from "./better-auth/auth-center-session";
 import { ALL_FALSE_CAPABILITIES, probeBetterAuthCapabilities } from "./better-auth/capabilities";
 import { buildMagicLinkCapability } from "./better-auth/magic-link";
 import { mapSession, mapUser, normalizeOrganization } from "./better-auth/mappers";
@@ -418,12 +422,21 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     },
 
     async getSession(request) {
-      const auth = await getAuth();
       if (!request) {
         logger.warn("Better Auth getSession: a Request object is required to resolve the session.");
         return null;
       }
+      const authBase = process.env.BETTER_AUTH_URL?.trim();
+      if (authBase && shouldResolveSessionAtAuthCenter(request.url, authBase)) {
+        try {
+          const remote = await fetchAuthCenterSession(request, authBase);
+          return mapSession(remote);
+        } catch (error) {
+          logger.warn("Auth center getSession failed, falling back to local Prisma", { error });
+        }
+      }
       try {
+        const auth = await getAuth();
         const result = await auth.api.getSession({ headers: request.headers });
         return mapSession(
           result as { session: Record<string, unknown>; user: Record<string, unknown> } | null,

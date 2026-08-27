@@ -22,6 +22,7 @@ import { Pool } from "pg";
 import {
   asBrowserOAuthRedirect,
   finalizeOAuthCallback,
+  handleLoginSuccess,
   isOAuthCallbackPath,
   socialStartToRedirect,
 } from "./lib/auth-edge-oauth";
@@ -166,11 +167,17 @@ function requireAuthSecrets(env: AuthEdgeEnv): { secret: string; dbUrl: string }
  * edge and the Node auth-center share one session store.
  */
 function createAuth(env: AuthEdgeEnv, database: PgDatabase, secret: string): AuthInstance {
-  const socialProviders: Record<string, { clientId: string; clientSecret: string }> = {};
+  const socialProviders: Record<string, Record<string, string>> = {};
   const googleId = env.GOOGLE_CLIENT_ID?.trim() || process.env.GOOGLE_CLIENT_ID?.trim();
   const googleSecret = env.GOOGLE_CLIENT_SECRET?.trim() || process.env.GOOGLE_CLIENT_SECRET?.trim();
   if (googleId && googleSecret) {
-    socialProviders.google = { clientId: googleId, clientSecret: googleSecret };
+    // prompt=select_account — Google's default with include_granted_scopes is
+    // prompt=none on repeat visits, which looks like "didn't open Google".
+    socialProviders.google = {
+      clientId: googleId,
+      clientSecret: googleSecret,
+      prompt: "select_account",
+    };
   }
   const ghId = env.GITHUB_CLIENT_ID?.trim() || process.env.GITHUB_CLIENT_ID?.trim();
   const ghSecret = env.GITHUB_CLIENT_SECRET?.trim() || process.env.GITHUB_CLIENT_SECRET?.trim();
@@ -353,7 +360,7 @@ async function handleHealth(request: Request, env: AuthEdgeEnv): Promise<Respons
     role: "login-center-edge",
     deploy: "cloudflare-workers-edge",
     // Bump when shipping edge fixes so /health proves the new script is live.
-    edgeBuild: "2026-08-27-oauth-continue",
+    edgeBuild: "2026-08-27-oauth-handoff",
     features: {
       authApi: true,
       // ORIGIN_URL is the preferred pass-through; ORIGIN_IP alone is legacy.
@@ -506,6 +513,11 @@ async function handleAuthApi(request: Request, env: AuthEdgeEnv): Promise<Respon
   }
 
   const url = new URL(request.url);
+  // Link previews / crawlers HEAD the callback URL. Better Auth 404s HEAD and
+  // must not consume the one-time state + code.
+  if (request.method.toUpperCase() === "HEAD" && isOAuthCallbackPath(url.pathname)) {
+    return new Response(null, { status: 204, headers: { "cache-control": "no-store" } });
+  }
   const oauthMatch = url.pathname.match(/\/api\/auth\/oauth\/([^/]+)\/?$/);
   if (oauthMatch?.[1]) {
     return handleOAuthStart(request, env, decodeURIComponent(oauthMatch[1]));
@@ -659,6 +671,9 @@ export default {
       if (url.pathname === "/api/auth" || url.pathname.startsWith("/api/auth/")) {
         return await handleAuthApi(request, env);
       }
+
+      const loginSuccess = handleLoginSuccess(request);
+      if (loginSuccess) return loginSuccess;
 
       return await forwardToOrigin(request, env);
     } catch (error) {

@@ -183,17 +183,48 @@ function escapeHtml(value: string): string {
 export function renderOAuthContinueHtml(destination: string): string {
   const href = escapeHtml(destination);
   const js = JSON.stringify(destination);
+  // Delay the hop so Set-Cookie from the previous same-host 302 is committed
+  // before we leave auth.nebutra.com. A 0s refresh races the cookie jar.
   return `<!doctype html>
 <html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Signing you in</title>
-<meta http-equiv="refresh" content="0;url=${href}">
+<meta http-equiv="refresh" content="1;url=${href}">
 <body>
 <p>Signing you in… <a href="${href}">Continue</a></p>
-<script>location.replace(${js})</script>
+<script>setTimeout(function(){location.replace(${js})},300)</script>
 </body>
 </html>`;
+}
+
+export function loginSuccessLocation(destination: string): string {
+  const url = new URL("/login/success", "https://auth.nebutra.com");
+  url.searchParams.set("returnTo", destination);
+  return `${url.pathname}${url.search}`;
+}
+
+export function handleLoginSuccess(request: Request): Response | null {
+  const url = new URL(request.url);
+  if (url.pathname !== "/login/success") return null;
+  const raw = url.searchParams.get("returnTo") ?? url.searchParams.get("returnUrl");
+  if (!raw) {
+    return new Response(null, { status: 302, headers: { Location: "/sign-in" } });
+  }
+  let dest: URL;
+  try {
+    dest = new URL(raw);
+  } catch {
+    return new Response(null, { status: 302, headers: { Location: "/sign-in" } });
+  }
+  if (!isSafeContinueUrl(dest)) {
+    return new Response(null, { status: 302, headers: { Location: "/sign-in" } });
+  }
+  const headers = new Headers({
+    "content-type": "text/html; charset=utf-8",
+    "cache-control": "private, no-store",
+  });
+  return new Response(renderOAuthContinueHtml(dest.toString()), { status: 200, headers });
 }
 
 export function finalizeOAuthCallback(res: Response, request: Request): Response {
@@ -205,7 +236,7 @@ export function finalizeOAuthCallback(res: Response, request: Request): Response
 
   const headers = new Headers();
   copySetCookieHeaders(headers, res.headers);
-  headers.set("content-type", "text/html; charset=utf-8");
+  headers.set("Location", loginSuccessLocation(destination));
   headers.set("cache-control", "private, no-store");
-  return new Response(renderOAuthContinueHtml(destination), { status: 200, headers });
+  return new Response(null, { status: 302, headers });
 }

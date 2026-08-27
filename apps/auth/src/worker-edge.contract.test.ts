@@ -20,12 +20,14 @@ describe("auth-edge worker contract", () => {
   });
 
   it("bumps edgeBuild when the request-path contract changes", () => {
-    expect(source).toContain('edgeBuild: "2026-08-27-oauth-continue"');
+    expect(source).toContain('edgeBuild: "2026-08-27-oauth-handoff"');
   });
 
-  it("commits the OAuth session cookie on a same-origin continue page", () => {
+  it("hands off OAuth through a same-host success page and shows the Google picker", () => {
     expect(source).toContain("finalizeOAuthCallback");
+    expect(source).toContain("handleLoginSuccess");
     expect(source).toContain("isOAuthCallbackPath");
     expect(source).toContain("applySessionHint");
+    expect(source).toContain('prompt: "select_account"');
   });
 });

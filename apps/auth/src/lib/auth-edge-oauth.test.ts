@@ -3,6 +3,7 @@ import {
   asBrowserOAuthRedirect,
   copySetCookieHeaders,
   finalizeOAuthCallback,
+  handleLoginSuccess,
   isOAuthCallbackPath,
   shouldServeOAuthContinuePage,
   socialStartToRedirect,
@@ -123,7 +124,7 @@ describe("shouldServeOAuthContinuePage", () => {
 });
 
 describe("finalizeOAuthCallback", () => {
-  it("serves a same-origin 200 that keeps the session cookie before leaving auth", () => {
+  it("302s to same-host /login/success and keeps the session cookie", () => {
     const headers = new Headers({ location: "https://app.nebutra.com/workspace" });
     headers.append(
       "Set-Cookie",
@@ -134,9 +135,10 @@ describe("finalizeOAuthCallback", () => {
       res,
       new Request("https://auth.nebutra.com/api/auth/callback/google?code=unused"),
     );
-    expect(out.status).toBe(200);
-    expect(out.headers.get("content-type")).toMatch(/text\/html/);
-    expect(out.headers.get("location")).toBeNull();
+    expect(out.status).toBe(302);
+    expect(out.headers.get("location")).toBe(
+      "/login/success?returnTo=https%3A%2F%2Fapp.nebutra.com%2Fworkspace",
+    );
     expect(out.headers.getSetCookie()[0]).toContain("__Secure-better-auth.session_token=tok");
   });
 
@@ -151,6 +153,26 @@ describe("finalizeOAuthCallback", () => {
     );
     expect(out.status).toBe(302);
     expect(out.headers.get("location")).toBe("/sign-in?error=account_not_linked");
+  });
+});
+
+describe("handleLoginSuccess", () => {
+  it("serves a delayed continue page for a first-party returnTo", () => {
+    const out = handleLoginSuccess(
+      new Request(
+        "https://auth.nebutra.com/login/success?returnTo=https%3A%2F%2Fapp.nebutra.com%2Fworkspace",
+      ),
+    );
+    expect(out?.status).toBe(200);
+    expect(out?.headers.get("content-type")).toMatch(/text\/html/);
+  });
+
+  it("rejects an off-brand returnTo", () => {
+    const out = handleLoginSuccess(
+      new Request("https://auth.nebutra.com/login/success?returnTo=https%3A%2F%2Fevil.example%2Fx"),
+    );
+    expect(out?.status).toBe(302);
+    expect(out?.headers.get("location")).toBe("/sign-in");
   });
 });
 
