@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 const APP_ROOT = process.cwd();
 const REPO_ROOT = join(APP_ROOT, "../..");
 const WORKSPACE_PAGE = join(APP_ROOT, "src/app/(app)/workspace/page.tsx");
+const STARTUP_OS_PAGE = join(APP_ROOT, "src/app/(app)/startup-os/page.tsx");
 const SHELL = join(APP_ROOT, "src/app/providers/design-system-shell.tsx");
 const SKELETONS = join(APP_ROOT, "src/app/(app)/_dashboard-skeletons.tsx");
 const GETTING_STARTED = join(APP_ROOT, "src/components/onboarding/getting-started.tsx");
@@ -20,16 +21,24 @@ const SHARED_ZH_MESSAGES = join(REPO_ROOT, "packages/platform/i18n/locales/zh.js
 const EXTERNAL_TASTE_PREFIX = ["cu", "lt-"].join("");
 
 describe("@nebutra/web dashboard UI governance", () => {
-  it("redirects the converged workspace route to the Startup OS entry surface", () => {
+  it("keeps the workspace route a thin post-login alias instead of a dashboard overview", () => {
     const source = readFileSync(WORKSPACE_PAGE, "utf8");
 
-    // Home converged into Startup OS (merge): /workspace redirects to
-    // /startup-os under cookie-based i18n, not a duplicate dashboard overview.
+    // /workspace redirects via resolveAuthenticatedHomePath: Startup OS when
+    // the prototype is on, Connectors in production when it is off.
     expect(source).toContain('from "next/navigation"');
-    expect(source).toContain('redirect("/startup-os")');
+    expect(source).toContain("resolveAuthenticatedHomePath");
     expect(source).not.toContain("DashboardCommandSurface");
     expect(source).not.toContain('data-dashboard-section="workspace-overview"');
     expect(source).not.toContain(EXTERNAL_TASTE_PREFIX);
+  });
+
+  it("does not 404 Startup OS when the production prototype flag is off", () => {
+    const source = readFileSync(STARTUP_OS_PAGE, "utf8");
+
+    expect(source).toContain("resolveAuthenticatedHomePath");
+    expect(source).toContain("redirect(");
+    expect(source).not.toContain("notFound(");
   });
 
   it("keeps the app shell visually governed instead of page-local chrome hacks", () => {

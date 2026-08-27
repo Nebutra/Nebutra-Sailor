@@ -1,13 +1,14 @@
 import { redirect } from "next/navigation";
+import { resolveAuthenticatedHomePath } from "@/lib/authenticated-home-path";
 
 // =============================================================================
-// /workspace — redirect to Startup OS (merge)
+// /workspace — stable post-login alias
 // =============================================================================
-// The dashboard Home and Startup OS were duplicate prompt-first heroes. Home is
-// converged into Startup OS, which is the prompt-first entry surface. This route
-// now redirects to /startup-os. Cookie-based i18n: no locale prefix in the URL.
+// Product home converged into Startup OS when that prototype is on. Production
+// keeps Startup OS private unless STARTUP_AGENT_OS_PROTOTYPE=1; in that case
+// land on Connectors so login never 404s. Cookie-based i18n: no locale prefix.
 // =============================================================================
 
 export default async function WorkspacePage(): Promise<never> {
-  redirect("/startup-os");
+  redirect(resolveAuthenticatedHomePath());
 }

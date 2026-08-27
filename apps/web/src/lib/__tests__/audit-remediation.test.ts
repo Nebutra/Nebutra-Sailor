@@ -192,10 +192,10 @@ describe("UI/UX audit remediation invariants", () => {
     const dashboard = readFromRepo("apps/web/src/app/(app)/workspace/page.tsx");
     const translations = readFromRepo("packages/platform/i18n/locales/en.json");
 
-    // Home converged into Startup OS (merge): /workspace is a server redirect to
-    // /startup-os. Cookie-based i18n: no locale prefix in the redirect path.
+    // /workspace is a server redirect via resolveAuthenticatedHomePath.
+    // Cookie-based i18n: no locale prefix in the redirect path.
     expect(dashboard).toContain('from "next/navigation"');
-    expect(dashboard).toContain('redirect("/startup-os")');
+    expect(dashboard).toContain("resolveAuthenticatedHomePath");
     expect(dashboard).not.toContain("CommandCenter");
     expect(dashboard).not.toContain("DashboardMetricTile");
     expect(dashboard).not.toContain("snapshotMeta");
@@ -223,8 +223,8 @@ describe("UI/UX audit remediation invariants", () => {
   it("keeps the converged workspace route minimal instead of rendering metric chrome", () => {
     const dashboard = readFromRepo("apps/web/src/app/(app)/workspace/page.tsx");
 
-    // After the Startup OS merge the route is a thin redirect — it must not
-    // re-grow nested metric-card scaffolding.
+    // After the home-route merge the workspace page is a thin redirect — it
+    // must not re-grow nested metric-card scaffolding.
     expect(dashboard).not.toContain("type MetricMeta");
     expect(dashboard).not.toContain("dailyMeta");
     expect(dashboard).not.toContain("<dl");
@@ -266,8 +266,7 @@ describe("UI/UX audit remediation invariants", () => {
     // Real Product IA routes (the Operations group — Billing/Tenants/Audit —
     // was intentionally removed from the sidebar; those pages remain reachable
     // by route but are no longer top-level nav items). The Home item was merged
-    // into Startup OS, which is now the top Product entry; /workspace redirects
-    // to /startup-os and is no longer a nav item.
+    // into Startup OS; /workspace is a post-login alias, not a nav item.
     expect(navModel).toContain('href: "/startup-os"');
     expect(navModel).not.toContain('href: "/workspace"');
     expect(navModel).toContain('href: "/integrations"');
