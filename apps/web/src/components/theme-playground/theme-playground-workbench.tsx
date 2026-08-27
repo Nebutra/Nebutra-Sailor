@@ -114,7 +114,7 @@ function ThemeSwatches({
         <span
           key={`${themeId}-${i}-${color}`}
           className={cn(
-            "rounded-[var(--radius-sm)] border border-white/10 shadow-sm",
+            "rounded-[var(--radius-sm)] border border-neutral-6 shadow-sm",
             size === "sm" ? "size-4" : "size-5",
           )}
           style={{ background: color }}
@@ -226,7 +226,7 @@ function ThemeRegistryPanel({
             key={importedEntry.id}
             type="button"
             className={cn(
-              "w-full rounded-[var(--radius-lg)] border p-4 text-left transition",
+              "w-full rounded-[var(--radius-lg)] border p-3 text-left transition",
               "bg-background/55 hover:border-primary/50 hover:bg-background/80",
               selectedTheme.id === IMPORTED_THEME_ID
                 ? "border-primary/70 shadow-[0_0_0_1px_color-mix(in_oklch,var(--color-primary),transparent_35%)]"
@@ -261,7 +261,7 @@ function ThemeRegistryPanel({
               key={theme.id}
               type="button"
               className={cn(
-                "w-full rounded-[var(--radius-lg)] border p-4 text-left transition",
+                "w-full rounded-[var(--radius-lg)] border p-3 text-left transition",
                 "bg-background/55 hover:border-primary/50 hover:bg-background/80",
                 active
                   ? "border-primary/70 shadow-[0_0_0_1px_color-mix(in_oklch,var(--color-primary),transparent_35%)]"
@@ -282,16 +282,8 @@ function ThemeRegistryPanel({
                   </span>
                 )}
               </div>
-              <ThemeSwatches themeId={theme.id} />
-              <div className="mt-3 flex items-center justify-between gap-2">
-                <Badge variant="blue-subtle" size="sm">
-                  {theme.kind}
-                </Badge>
-                {theme.proves[0] ? (
-                  <Badge variant="outline" size="sm" className="max-w-[10rem] truncate">
-                    {theme.proves[0]}
-                  </Badge>
-                ) : null}
+              <div className="mt-3">
+                <ThemeSwatches themeId={theme.id} />
               </div>
             </button>
           );
@@ -443,43 +435,45 @@ function CanvasHeader({
   onViewportChange: (viewport: ViewportId) => void;
 }) {
   return (
-    <div className="grid gap-3 border-border/70 border-b p-4 tight:grid-cols-[minmax(0,1fr)_auto_auto] tight:items-center">
-      <div>
+    <div className="flex flex-col gap-3 border-border/70 border-b px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="min-w-0">
         <h2 className="font-semibold text-foreground text-sm">Live Preview Canvas</h2>
-        <p className="mt-1 text-muted-foreground text-xs">
-          Same semantic suite, different token payload.
+        <p className="mt-0.5 text-muted-foreground text-xs">
+          One suite at a time. Tokens stay the same.
         </p>
       </div>
-      <div className="min-w-0 overflow-x-auto">
-        <Tabs
-          value={activeSuite}
-          size="sm"
-          onValueChange={(value) => onSuiteChange(value as PreviewSuite)}
-        >
-          <TabsList className="min-w-max border border-border bg-card/80">
-            {suites.map((suite) => (
-              <TabsTrigger key={suite.id} value={suite.id}>
-                <span className="inline-flex items-center gap-1.5">
-                  {suite.icon}
-                  {suite.label}
-                </span>
-              </TabsTrigger>
+      <div className="flex min-w-0 items-center gap-2">
+        <div className="min-w-0 flex-1 overflow-x-auto">
+          <Tabs
+            value={activeSuite}
+            size="sm"
+            onValueChange={(value) => onSuiteChange(value as PreviewSuite)}
+          >
+            <TabsList className="min-w-max border border-border bg-card/80">
+              {suites.map((suite) => (
+                <TabsTrigger key={suite.id} value={suite.id}>
+                  <span className="inline-flex items-center gap-1.5">
+                    {suite.icon}
+                    {suite.label}
+                  </span>
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
+        </div>
+        <Select value={viewport} onValueChange={(v) => onViewportChange(v as ViewportId)}>
+          <SelectTrigger size="small" className="h-8 w-[8.5rem] shrink-0">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {(Object.keys(viewportSpec) as ViewportId[]).map((id) => (
+              <SelectItem key={id} value={id}>
+                {viewportSpec[id].label}
+              </SelectItem>
             ))}
-          </TabsList>
-        </Tabs>
+          </SelectContent>
+        </Select>
       </div>
-      <Select value={viewport} onValueChange={(v) => onViewportChange(v as ViewportId)}>
-        <SelectTrigger size="small" className="h-8 min-w-[120px]">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          {(Object.keys(viewportSpec) as ViewportId[]).map((id) => (
-            <SelectItem key={id} value={id}>
-              {viewportSpec[id].label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
     </div>
   );
 }
@@ -549,11 +543,11 @@ function PreviewCanvas({
           )}
         >
           <div className="theme-preview-grid gap-[var(--space-source-md,var(--playground-gap))] p-[var(--space-source-lg,var(--playground-pad))]">
-            <FormsPanel active={activeSuite === "forms"} />
-            <PricingPanel active={activeSuite === "pricing"} />
-            <DashboardPanel active={activeSuite === "dashboard"} />
-            <AiChatPanel active={activeSuite === "ai-chat"} />
-            <ChartsPanel active={activeSuite === "charts"} />
+            {activeSuite === "forms" ? <FormsPanel /> : null}
+            {activeSuite === "pricing" ? <PricingPanel /> : null}
+            {activeSuite === "dashboard" ? <DashboardPanel /> : null}
+            {activeSuite === "ai-chat" ? <AiChatPanel /> : null}
+            {activeSuite === "charts" ? <ChartsPanel /> : null}
           </div>
         </div>
       </div>
@@ -563,12 +557,10 @@ function PreviewCanvas({
 
 function PreviewCard({
   title,
-  active,
   className,
   children,
 }: {
   title: string;
-  active?: boolean;
   className?: string;
   children: ReactNode;
 }) {
@@ -586,19 +578,16 @@ function PreviewCard({
         // Fallback mirrors the original soft drop so themes without shadow tokens look unchanged.
         "rounded-[var(--radius-lg)] bg-[var(--color-card)] p-[var(--space-source-lg,var(--playground-pad))] text-[color:var(--color-card-foreground)]",
         "shadow-[0_0_0_1px_var(--edge-soft),var(--shadow-md,0_2px_8px_-2px_rgb(0_0_0/0.08))]",
-        active &&
-          "shadow-[0_0_0_1px_var(--edge-medium),var(--shadow-md,0_4px_12px_-2px_rgb(0_0_0/0.12))]",
         className,
       )}
     >
-      <div className="mb-3 flex items-center justify-between gap-3">
+      <div className="mb-4">
         {/* --font-weight-heading: an import with fontWeight.heading 300 visibly lightens titles.
             --text-heading size is intentionally NOT applied here — card <h3>s are section labels,
             not page-h1s. A 3rem import value would distort the card layout. */}
         <h3 className="text-sm" style={{ fontWeight: "var(--font-weight-heading, 600)" }}>
           {title}
         </h3>
-        {active && <Badge size="sm">Focused</Badge>}
       </div>
       {children}
     </section>
@@ -636,13 +625,13 @@ function FormInput({
   );
 }
 
-function FormsPanel({ active }: { active: boolean }) {
+function FormsPanel() {
   return (
-    <PreviewCard title="Create an account" active={active} className="theme-preview-span-5">
-      <p className="mb-4 text-[color:var(--color-muted-foreground)] text-xs">
+    <PreviewCard title="Create an account" className="mx-auto max-w-md">
+      <p className="mb-5 text-[color:var(--color-muted-foreground)] text-xs">
         Start building in seconds.
       </p>
-      <div className="grid gap-3">
+      <div className="grid gap-4">
         <FormInput label="Full name" value="Ava Johnson" />
         <FormInput label="Email" value="ava.johnson@example.com" />
         <FormInput label="Password" value="************" type="password" />
@@ -663,7 +652,7 @@ function FormsPanel({ active }: { active: boolean }) {
   );
 }
 
-function PricingPanel({ active }: { active: boolean }) {
+function PricingPanel() {
   const plans = [
     {
       name: "Starter",
@@ -680,8 +669,8 @@ function PricingPanel({ active }: { active: boolean }) {
   ];
 
   return (
-    <PreviewCard title="Choose your plan" active={active} className="theme-preview-span-7">
-      <div className="theme-pricing-grid gap-3">
+    <PreviewCard title="Choose your plan">
+      <div className="theme-pricing-grid gap-4">
         {plans.map((plan) => (
           <div
             key={plan.name}
@@ -692,38 +681,36 @@ function PricingPanel({ active }: { active: boolean }) {
               // "rectangle 白线" — 0.05 L transition reads as visible edge
               // step regardless of border alpha). Card stays same bg as
               // parent; the ring + popular-shadow do the layering work.
-              "relative rounded-[var(--radius-lg)] p-4 shadow-[0_0_0_1px_var(--edge-soft)]",
+              "flex h-full min-w-0 flex-col rounded-[var(--radius-lg)] p-4 shadow-[0_0_0_1px_var(--edge-soft)]",
               plan.popular &&
                 "shadow-[0_0_0_1px_var(--edge-medium),0_4px_12px_-4px_rgb(0_0_0/0.18)]",
             )}
           >
-            {plan.popular && (
-              <Badge className="-top-3 -translate-x-1/2 absolute left-1/2" size="sm">
-                Most popular
-              </Badge>
-            )}
+            <div className="mb-2 flex min-h-5 items-center">
+              {plan.popular ? <Badge size="sm">Most popular</Badge> : null}
+            </div>
             <div className="font-semibold text-sm">{plan.name}</div>
             <div className="mt-3 flex items-end gap-1">
               <span className="font-bold text-2xl">{plan.price}</span>
               <span className="text-[color:var(--color-muted-foreground)] text-xs">/month</span>
             </div>
-            <ul className="mt-4 space-y-2 text-xs">
+            <ul className="mt-4 flex-1 space-y-2 text-xs">
               {plan.items.map((item) => (
                 <li
                   key={item}
-                  className="flex items-center gap-2 text-[color:var(--color-muted-foreground)]"
+                  className="flex items-start gap-2 text-[color:var(--color-muted-foreground)]"
                 >
-                  <Check className="size-3 text-[color:var(--color-primary)]" />
-                  {item}
+                  <Check className="mt-0.5 size-3 shrink-0 text-[color:var(--color-primary)]" />
+                  <span className="min-w-0 leading-5">{item}</span>
                 </li>
               ))}
             </ul>
             <button
               className={cn(
-                "mt-5 min-h-9 w-full rounded-[var(--radius-md)] px-2 py-1.5 text-center font-medium text-xs leading-tight",
+                "mt-auto pt-5 min-h-9 w-full rounded-[var(--radius-md)] px-2 py-1.5 text-center font-medium text-xs leading-tight",
                 plan.popular
                   ? "bg-[var(--color-primary)] text-[color:var(--color-primary-foreground)]"
-                  : "bg-[var(--color-card)] text-[color:var(--color-card-foreground)]",
+                  : "border border-[color:var(--edge-soft)] bg-[var(--color-card)] text-[color:var(--color-card-foreground)]",
               )}
               type="button"
             >
@@ -736,7 +723,7 @@ function PricingPanel({ active }: { active: boolean }) {
   );
 }
 
-function DashboardPanel({ active }: { active: boolean }) {
+function DashboardPanel() {
   const stats = [
     ["Total Projects", "24", "12%"],
     ["Active Users", "1,248", "8%"],
@@ -745,7 +732,7 @@ function DashboardPanel({ active }: { active: boolean }) {
   ];
 
   return (
-    <PreviewCard title="Project Overview" active={active} className="theme-preview-span-7">
+    <PreviewCard title="Project Overview">
       {/* Stat tiles: no own bg — blend into parent card. Spacing + typography hierarchy alone. */}
       <div className="theme-stats-grid gap-x-6 gap-y-3">
         {stats.map(([label, value, delta]) => (
@@ -778,9 +765,9 @@ function DashboardPanel({ active }: { active: boolean }) {
   );
 }
 
-function AiChatPanel({ active }: { active: boolean }) {
+function AiChatPanel() {
   return (
-    <PreviewCard title="AI Assistant" active={active} className="theme-preview-span-5">
+    <PreviewCard title="AI Assistant" className="mx-auto max-w-lg">
       <div className="mb-4 flex items-center gap-2">
         <span className="grid size-7 place-items-center rounded-full bg-[color-mix(in_oklch,var(--color-primary),transparent_85%)] text-[color:var(--color-primary)]">
           <Sparkles className="size-4" />
@@ -817,9 +804,9 @@ function AiChatPanel({ active }: { active: boolean }) {
   );
 }
 
-function ChartsPanel({ active }: { active: boolean }) {
+function ChartsPanel() {
   return (
-    <PreviewCard title="Charts" active={active} className="theme-preview-span-12">
+    <PreviewCard title="Charts">
       <div className="grid gap-3 lg:grid-cols-3">
         <MiniChart title="User Growth" value="1,248" variant="line" />
         <MiniChart title="Revenue" value="$12,426" variant="bar" />
@@ -1130,7 +1117,7 @@ export function ThemePlaygroundWorkbench() {
   }
 
   return (
-    <div className="theme-playground-frame flex h-[calc(100vh-7rem)] flex-col overflow-hidden bg-background text-foreground">
+    <div className="theme-playground-frame flex h-[calc(100dvh-3rem)] min-h-0 flex-col overflow-hidden bg-background text-foreground">
       <TopBar
         mode={mode}
         density={density}
