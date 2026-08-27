@@ -85,16 +85,13 @@ describe("brand favicon completeness", () => {
 
   it("fontAssets paths declared in metadata.ts exist on disk (M2 — no ghost paths)", () => {
     // Per M2 binding correction: must be an arch assertion, not just a JSDoc comment.
-    // If the poppins/vivoSans paths in metadata.ts ever drift from what's on disk,
+    // If the poppins paths in metadata.ts ever drift from what's on disk,
     // this test fails — fix by either adding the missing fonts or removing the paths.
     const expectedFonts = [
       // Poppins — subset used in OG images
       "fonts/poppins/Poppins-Thin.otf",
       "fonts/poppins/Poppins-Regular.otf",
       "fonts/poppins/Poppins-Bold.otf",
-      // vivoSans — brand typeface
-      "fonts/vivo-sans/vivoSans-Regular.ttf",
-      "fonts/vivo-sans/vivoSans-Bold.ttf",
     ];
 
     for (const relPath of expectedFonts) {

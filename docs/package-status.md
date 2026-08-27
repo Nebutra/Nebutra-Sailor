@@ -20,11 +20,11 @@ and `productionReady: true`. Undeclared packages are classified as
 
 ## Graphs
 
-| Graph     | Meaning | Included in `pnpm build:release` / `pnpm test:release` |
-| --------- | ------- | -------------------------------------------------------- |
-| `core`    | Product, platform, and create-sailor infrastructure | Yes |
-| `runtime` | Agent / MCP / sandbox execution kernel | Yes |
-| `labs`    | Experimental apps and plays (forge, sleptons, cinema, …) | No |
+| Graph     | Meaning | External promise | Included in `pnpm build:release` / `pnpm test:release` |
+| --------- | ------- | ---------------- | -------------------------------------------------------- |
+| `core`    | Product, platform, and create-sailor infrastructure | Install, types, tests, and build must pass; compatibility is protected | Yes |
+| `runtime` | Agent / MCP / sandbox execution kernel | Real integration tests pass; runtime and failure behavior are documented | Yes |
+| `labs`    | Experimental apps and plays (forge, sleptons, cinema, …) | Usable; API may change; README must say experimental | No |
 
 Labs stay in `pnpm-workspace.yaml` so workspace imports keep resolving.
 `pnpm build` still builds the full workspace. The release graph is

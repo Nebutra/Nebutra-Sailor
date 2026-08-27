@@ -19,6 +19,7 @@
     "LICENSE"
   ],
   "scripts": {
+    "prepare": "mkdir -p dist && test -f dist/index.js || echo '#!/usr/bin/env node' > dist/index.js",
     "dev": "tsup --watch",
     "build": "tsup",
     "prepublishOnly": "pnpm run build",
