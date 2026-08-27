@@ -70,7 +70,16 @@
 
   .theme-playground-layout {
     display: grid;
+    min-height: 0;
     grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(12rem, 0.7fr) minmax(16rem, 1fr) minmax(12rem, 0.8fr);
+  }
+
+  .theme-playground-registry,
+  .theme-playground-inspector,
+  .theme-preview-canvas {
+    min-height: 0;
+    overflow: hidden;
   }
 
   .theme-playground-registry {
@@ -109,27 +118,43 @@
 @container theme-playground (min-width: 66rem) {
   .theme-playground-layout {
     grid-template-columns: minmax(17.5rem, 18rem) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "registry canvas"
+      "inspector canvas";
   }
 
   .theme-playground-registry {
+    grid-area: registry;
     border-right: 1px solid hsl(var(--border) / 0.8);
-    border-bottom-width: 0;
+    border-bottom: 1px solid hsl(var(--border) / 0.8);
   }
 
   .theme-playground-inspector {
-    grid-column: 1 / -1;
+    grid-area: inspector;
     border-left-width: 0;
-    border-top: 1px solid hsl(var(--border) / 0.8);
+    border-top-width: 0;
+    border-right: 1px solid hsl(var(--border) / 0.8);
+  }
+
+  .theme-preview-canvas {
+    grid-area: canvas;
   }
 }
 
 @container theme-playground (min-width: 92rem) {
   .theme-playground-layout {
     grid-template-columns: minmax(18rem, 19rem) minmax(42rem, 1fr) minmax(20rem, 22rem);
+    grid-template-rows: minmax(0, 1fr);
+    grid-template-areas: "registry canvas inspector";
+  }
+
+  .theme-playground-registry {
+    border-bottom-width: 0;
   }
 
   .theme-playground-inspector {
-    grid-column: auto;
+    border-right-width: 0;
     border-left: 1px solid hsl(var(--border) / 0.8);
     border-top-width: 0;
   }
