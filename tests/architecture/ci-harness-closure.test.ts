@@ -141,7 +141,7 @@ describe("ci harness dependency closure", () => {
     expect(workflow).toContain("  db-check:");
     expect(workflow).toContain("    services:");
     expect(workflow).toContain("      postgres:");
-    expect(workflow).toContain("        image: postgres:16");
+    expect(workflow).toContain("        image: pgvector/pgvector:pg16");
     expect(workflow).toContain("          POSTGRES_DB: shadow_nebutra");
     expect(workflow).toContain('          --health-cmd "pg_isready -U postgres -d shadow_nebutra"');
     // Prisma 7 dropped the CLI flag and rejects url === shadowDatabaseUrl.

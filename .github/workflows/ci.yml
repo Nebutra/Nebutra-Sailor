@@ -816,7 +816,7 @@ jobs:
     if: needs.detect-changes.outputs.template != 'true' && needs.detect-changes.outputs.db == 'true'
     services:
       postgres:
-        image: postgres:16
+        image: pgvector/pgvector:pg16
         env:
           POSTGRES_DB: shadow_nebutra
           POSTGRES_USER: postgres
