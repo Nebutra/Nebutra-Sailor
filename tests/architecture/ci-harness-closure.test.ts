@@ -133,6 +133,7 @@ describe("ci harness dependency closure", () => {
     expect(workflow).toContain("apps/sailor-docs apps/storybook apps/studio");
     expect(workflow).toContain('filters+=(--filter="!./$app")');
     expect(workflow).toContain(`pnpm turbo build "\${filters[@]}"`);
+    expect(workflow).toContain(`pnpm turbo test "\${filters[@]}"`);
   });
 
   it("backs database migration checks with a local Postgres shadow service", async () => {
