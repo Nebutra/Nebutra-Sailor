@@ -147,7 +147,18 @@ describe("ci harness dependency closure", () => {
     expect(workflow).toContain("        image: postgres:16");
     expect(workflow).toContain("          POSTGRES_DB: shadow_nebutra");
     expect(workflow).toContain('          --health-cmd "pg_isready -U postgres -d shadow_nebutra"');
-    expect(workflow).toContain(`--shadow-database-url "${shadowDatabaseUrl}"`);
+    // Prisma 7 dropped the CLI flag; the shadow URL is injected as env for
+    // packages/platform/db/prisma.config.ts datasource.shadowDatabaseUrl.
+    expect(workflow).toContain(`SHADOW_DATABASE_URL: ${shadowDatabaseUrl}`);
+    expect(workflow).toContain("--from-migrations ./prisma/migrations");
+    expect(workflow).toContain("--to-schema ./prisma/schema.prisma");
+
+    const prismaConfig = await readFile(
+      join(process.cwd(), "packages/platform/db/prisma.config.ts"),
+      "utf8",
+    );
+    expect(prismaConfig).toContain("SHADOW_DATABASE_URL");
+    expect(prismaConfig).toContain("shadowDatabaseUrl");
   });
 
   it("keeps UI governance scoped to design and policy paths", async () => {

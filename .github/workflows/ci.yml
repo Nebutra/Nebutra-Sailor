@@ -845,10 +845,11 @@ jobs:
       - name: Check migration history is consistent
         working-directory: packages/platform/db
         # Prisma 7 dropped --to-schema-datamodel and --shadow-database-url.
-        # Replay migrations onto the job's shadow Postgres via DATABASE_URL.
+        # Replay migrations onto the job's shadow Postgres via prisma.config.ts.
         env:
           DATABASE_URL: ${{ secrets.SHADOW_DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/shadow_nebutra' }}
           DIRECT_URL: ${{ secrets.SHADOW_DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/shadow_nebutra' }}
+          SHADOW_DATABASE_URL: ${{ secrets.SHADOW_DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/shadow_nebutra' }}
         run: |
           pnpm exec prisma migrate diff \
             --from-migrations ./prisma/migrations \
