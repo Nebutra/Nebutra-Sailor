@@ -5,11 +5,11 @@ import { describe, expect, it } from "vitest";
 const source = readFileSync(path.join(__dirname, "worker-edge.ts"), "utf8");
 
 describe("auth-edge worker contract", () => {
-  it("opens a pg Client per request instead of reusing a Pool across isolates", () => {
-    expect(source).toContain("new Client");
-    expect(source).toContain("client.end");
-    expect(source).not.toContain("await client.connect()");
+  it("opens a max-1 pg Pool per request and ends it after Better Auth returns", () => {
+    expect(source).toContain("max: 1");
+    expect(source).toContain("pool.end");
     expect(source).not.toContain("authSingleton");
+    expect(source).not.toContain("new Client");
     expect(source).toContain("withConnectRetry");
     expect(source).toContain("attachPoolErrorGuard");
   });
@@ -20,6 +20,6 @@ describe("auth-edge worker contract", () => {
   });
 
   it("bumps edgeBuild when the request-path contract changes", () => {
-    expect(source).toContain('edgeBuild: "2026-08-27-pg-client-no-preconnect"');
+    expect(source).toContain('edgeBuild: "2026-08-27-pg-pool-per-request"');
   });
 });
