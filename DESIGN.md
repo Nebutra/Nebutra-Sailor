@@ -88,14 +88,14 @@ That path is an implementation detail of `packages/design/ui/src/styles/sources.
 
 | Role | Family | CSS variable | Notes |
 |------|--------|-------------|-------|
-| Display / heading | Geist Sans → vivo Sans SC → Noto Sans SC | `--font-display` | Loaded through `--font-geist-sans` / `--font-vivo-sans-sc` |
-| UI sans (body, label, button) | Geist Sans → vivo Sans SC → Noto Sans SC → PingFang SC → Microsoft YaHei → system | `--font-sans` | Order is the decision: Geist keeps Latin + numerals, only CJK falls through |
+| Display / heading | Geist Sans → Noto Sans SC → Noto Sans SC | `--font-display` | Loaded through `--font-geist-sans` / `--font-noto-sans-sc` |
+| UI sans (body, label, button) | Geist Sans → Noto Sans SC → Noto Sans SC → PingFang SC → Microsoft YaHei → system | `--font-sans` | Order is the decision: Geist keeps Latin + numerals, only CJK falls through |
 | CJK body | same order as `--font-sans`, minus the Latin-only system faces | `--font-cn` | Consumed by the `font-cn` utility and the `html:lang(zh\|ja\|ko)` rule, which set it alone — so it must lead with Geist too |
 | Mono | Geist Mono → ui-monospace → SF Mono / Menlo | `--font-mono` | Code, tabular figures |
 
 Loaded via `next/font` per app — never via `<link>` or `@import`. Latin comes from
 `geist/font`; CJK from `cjkFontClassName` (`@nebutra/fonts/next/cjk`), a self-hosted
-vivo Sans SC subset in weights 400/500/600 with a CJK-only `unicode-range`, so a
+Noto Sans SC subset in weights 400/500/600 with a CJK-only `unicode-range`, so a
 Latin-only page downloads none of it. Stacks are declared ONLY in
 `packages/design/design-tokens/tokens/core.json` — never re-declared downstream,
 where a later import would silently win.

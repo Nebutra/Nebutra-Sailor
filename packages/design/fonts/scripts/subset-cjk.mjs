@@ -7,22 +7,14 @@
  * back to whatever the OS ships (PingFang on macOS, Microsoft YaHei on Windows,
  * something else again on Android). Chinese copy is a first-class surface here
  * (see docs/microcopy/), so the CJK face has to be ours and it has to be
- * self-hosted. vivo Sans SC covers the common set correctly; the only problem is
- * delivery — 7.4MB per static face, 42MB for the variable one. This script cuts
- * each static face down to the characters the product can actually render.
+ * self-hosted. Noto Sans SC (SIL OFL) covers the common set and may be
+ * redistributed. This script cuts each static instance down to the characters
+ * the product can actually render.
  *
  * WHY THE *STATIC* FACES, NOT THE VARIABLE ONE
- * `OS/Chinese/Simplified Chinese/vivo Sans SC/vivoSansSCVF.ttf` is a 42MB
- * variable font. Subset to the catalog character set it is still 1,070,240 B,
- * because a variable CJK font carries per-weight deltas for every single glyph it
- * keeps. The static `Brand/vivo Sans简体/vivoSans-*.ttf` faces subset to 191,108 B
- * for the catalog set and ~498,000 B once the common-character floor is added —
- * so one variable file costs more than a static weight, and the browser only
- * fetches the weights a page actually uses.
- *
- * WHY NOT `vivo Sans SC L3`
- * It has 60,339 characters but ZERO in the CJK basic block — it is a rare-plane
- * supplement, not a body face. Using it as the body face renders nothing.
+ * The upstream Noto Sans SC variable face is large. Instantiating static
+ * weights and subsetting each one keeps Latin-only pages from downloading a
+ * variable CJK file, and the browser only fetches the weights a page uses.
  *
  * CHARACTER SET = catalogs (glob) ∪ punctuation ∪ GB2312 level-1 floor
  * See collectCharacterSet() for the reasoning on each of the three inputs.
@@ -37,34 +29,29 @@
 
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import {
-  copyFileSync,
-  existsSync,
-  mkdirSync,
-  readdirSync,
-  readFileSync,
-  statSync,
-  writeFileSync,
-} from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const PKG_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const REPO_ROOT = resolve(PKG_DIR, "../../..");
-const VENDOR_DIR = join(PKG_DIR, "vendor", "vivo-sans");
+const VENDOR_DIR = join(PKG_DIR, "vendor", "noto-sans-sc");
 const OUT_DIR = join(PKG_DIR, "generated");
 const MANIFEST_PATH = join(OUT_DIR, "subset-manifest.json");
-const CSS_PATH = join(OUT_DIR, "vivo-sans-cn.css");
+const CSS_PATH = join(OUT_DIR, "noto-sans-sc.css");
 const TS_PATH = join(OUT_DIR, "index.ts");
+const PYTHON = process.env.FONTTOOLS_PYTHON ?? "python3";
+const NOTO_VF_URL =
+  process.env.NOTO_SANS_SC_VF_URL ??
+  "https://github.com/notofonts/noto-cjk/raw/Sans2.004/Sans/Variable/TTF/Subset/NotoSansSC-VF.ttf";
+const NOTO_OFL_URL =
+  process.env.NOTO_SANS_SC_OFL_URL ??
+  "https://raw.githubusercontent.com/notofonts/noto-cjk/Sans2.004/LICENSE";
 
 const FORCE = process.argv.includes("--force");
 
-/** Where the licensed originals live when vendoring for the first time. */
-const UPSTREAM_DIR =
-  process.env.VIVO_SANS_SOURCE_DIR ??
-  join(process.env.HOME ?? "", "Desktop/Design-System/Nebutra/vivo Sans/Brand/vivo Sans简体");
-const UPSTREAM_LICENCE = resolve(UPSTREAM_DIR, "../../vivo Sans字体知识产权许可协议.txt");
-const VENDOR_LICENCE = join(PKG_DIR, "vendor", "vivo-sans", "LICENCE-vivo-Sans.txt");
+const VENDOR_LICENCE = join(VENDOR_DIR, "OFL.txt");
+const VENDOR_VF = join(VENDOR_DIR, "NotoSansSC-VF.ttf");
 
 /**
  * The weights we ship — deliberately three, not nine.
@@ -87,19 +74,10 @@ const VENDOR_LICENCE = join(PKG_DIR, "vendor", "vivo-sans", "LICENCE-vivo-Sans.t
  * visible gain.
  */
 const FACES = [
-  { weight: 400, file: "vivoSans-Regular.ttf", out: "vivo-sans-sc-400.woff2" },
-  { weight: 500, file: "vivoSans-Medium.ttf", out: "vivo-sans-sc-500.woff2" },
-  { weight: 600, file: "vivoSans-DemiBold.ttf", out: "vivo-sans-sc-600.woff2" },
-  // 700 exists because without it the mixed-script weight ladder breaks at the
-  // top. Measured ink coverage over the advance box, faces force-loaded so the
-  // canvas could not silently rasterise a fallback:
-  //   Geist 400/500/600/700 → 8.31 / 10.14 / 11.91 / 13.65 %   (a clean ladder)
-  //   vivo  400/500/600/700 → 16.40 / 18.99 / 20.42 / 20.42 %  (flat from 600)
-  // The flat step is what happens when 700 resolves down to the 600 face: the
-  // Latin keeps getting heavier and the Chinese beside it stops, so a bold run
-  // in mixed copy reads as the English shouting over the Chinese. Shipping a
-  // real Bold face costs one more file, only fetched by pages that use 700.
-  { weight: 700, file: "vivoSans-Bold.ttf", out: "vivo-sans-sc-700.woff2" },
+  { weight: 400, file: "NotoSansSC-400.ttf", out: "noto-sans-sc-400.woff2" },
+  { weight: 500, file: "NotoSansSC-500.ttf", out: "noto-sans-sc-500.woff2" },
+  { weight: 600, file: "NotoSansSC-600.ttf", out: "noto-sans-sc-600.woff2" },
+  { weight: 700, file: "NotoSansSC-700.ttf", out: "noto-sans-sc-700.woff2" },
 ];
 
 /**
@@ -108,9 +86,9 @@ const FACES = [
  * THE ORDER IS THE DESIGN DECISION, and this range is its enforcement. Geist
  * keeps Latin and the numerals — its tabular figures and tighter x-height are
  * what dense dashboard tables need, and it is the locked UI face. The app stack
- * is therefore "Geist, vivo Sans SC, …": both faces cover Latin, so whichever
- * comes FIRST wins Latin, and CJK falls through to vivo Sans. Reversed, vivo
- * Sans would also take the Latin, and its Latin is not as good as Geist's for UI.
+ * is therefore "Geist, Noto Sans SC, …": both faces cover Latin, so whichever
+ * comes FIRST wins Latin, and CJK falls through to Noto. Reversed, Noto would
+ * also take the Latin, and its Latin is not as good as Geist's for UI.
  *
  * Belt and braces: the range below contains NO Latin, no ASCII and no
  * general-punctuation codepoints, so a purely Latin page can never trigger a
@@ -272,36 +250,38 @@ function collectCharacterSet() {
   };
 }
 
-/** Copy the originals into vendor/ on first run so the build is self-contained. */
-function ensureVendoredSources() {
+async function downloadFile(url, target) {
+  const response = await fetch(url, { redirect: "follow" });
+  if (!response.ok) {
+    throw new Error(`Failed to download ${url}: ${response.status} ${response.statusText}`);
+  }
+  const bytes = Buffer.from(await response.arrayBuffer());
+  writeFileSync(target, bytes);
+  return bytes.length;
+}
+
+/** Download the OFL variable face and instantiate the static weights we ship. */
+async function ensureVendoredSources() {
   mkdirSync(VENDOR_DIR, { recursive: true });
-  const missing = [];
+
+  if (!existsSync(VENDOR_LICENCE)) {
+    log(`downloading OFL from ${NOTO_OFL_URL}`);
+    await downloadFile(NOTO_OFL_URL, VENDOR_LICENCE);
+  }
+
+  if (!existsSync(VENDOR_VF)) {
+    log(`downloading Noto Sans SC VF from ${NOTO_VF_URL}`);
+    await downloadFile(NOTO_VF_URL, VENDOR_VF);
+  }
+
   for (const face of FACES) {
     const target = join(VENDOR_DIR, face.file);
     if (existsSync(target)) continue;
-    const upstream = join(UPSTREAM_DIR, face.file);
-    if (existsSync(upstream)) {
-      copyFileSync(upstream, target);
-      log(`vendored ${face.file} from ${UPSTREAM_DIR}`);
-    } else {
-      missing.push(face.file);
-    }
-  }
-  if (!existsSync(VENDOR_LICENCE) && existsSync(UPSTREAM_LICENCE)) {
-    copyFileSync(UPSTREAM_LICENCE, VENDOR_LICENCE);
-    log(`vendored ${basename(VENDOR_LICENCE)}`);
-  }
-  if (missing.length > 0) {
-    throw new Error(
-      `Missing vendored source faces: ${missing.join(", ")}\n` +
-        `Place them in ${relative(REPO_ROOT, VENDOR_DIR)} or set VIVO_SANS_SOURCE_DIR ` +
-        `to the licensed "Brand/vivo Sans简体" directory.`,
-    );
-  }
-  if (!existsSync(VENDOR_LICENCE)) {
-    throw new Error(
-      `Missing licence text at ${relative(REPO_ROOT, VENDOR_LICENCE)} — the vivo Sans ` +
-        `licence agreement must be committed alongside the fonts.`,
+    log(`instancing wght=${face.weight} → ${face.file}`);
+    execFileSync(
+      PYTHON,
+      ["-m", "fontTools.varLib.instancer", VENDOR_VF, `wght=${face.weight}`, "--output", target],
+      { stdio: ["ignore", "ignore", "inherit"] },
     );
   }
 }
@@ -341,7 +321,7 @@ function findUncoveredChars(sourcePath, charsFilePath) {
     "want = open(sys.argv[2], encoding='utf8').read()",
     "sys.stdout.write(''.join(c for c in want if ord(c) not in covered))",
   ].join("\n");
-  const missing = execFileSync("python3", ["-c", script, sourcePath, charsFilePath], {
+  const missing = execFileSync(PYTHON, ["-c", script, sourcePath, charsFilePath], {
     encoding: "utf8",
   });
   return [...missing];
@@ -365,19 +345,17 @@ function fingerprint(charsetFingerprint) {
 function renderCss(results, charCount) {
   const ranges = UNICODE_RANGES.join(", ");
   return `/*
- * vivo-sans-cn.css — GENERATED FILE, DO NOT EDIT.
+ * noto-sans-sc.css — GENERATED FILE, DO NOT EDIT.
  * Written by packages/design/fonts/scripts/subset-cjk.mjs (\`pnpm --filter
  * @nebutra/fonts subset:cjk\`). Re-run it after adding Chinese copy; the
  * character set is collected from the repo's zh* message catalogs by glob.
  *
- * ${charCount} characters per face. Source: vivo Sans SC (static Brand faces),
- * licensed — see vendor/vivo-sans/LICENCE-vivo-Sans.txt. Per clause 2.1 of that
- * agreement: 您应在软件中特别注明使用了vivo Sans 字体 / this software uses the
- * vivo Sans typeface.
+ * ${charCount} characters per face. Source: Noto Sans SC (SIL Open Font License),
+ * see vendor/noto-sans-sc/OFL.txt.
  *
- * STACK ORDER: use "Geist, vivo Sans SC, …" — Geist first so it keeps Latin and
+ * STACK ORDER: use "Geist, Noto Sans SC, …" — Geist first so it keeps Latin and
  * the numerals (tabular figures, tighter x-height), with CJK falling through to
- * vivo Sans SC. The unicode-range below contains no Latin, ASCII or general
+ * Noto Sans SC. The unicode-range below contains no Latin, ASCII or general
  * punctuation, so Latin-only text never downloads a CJK file.
  *
  * font-display: swap — the fallback (PingFang / YaHei) paints immediately and is
@@ -387,7 +365,7 @@ ${results
   .map(
     (face) => `
 @font-face {
-  font-family: "vivo Sans SC";
+  font-family: "Noto Sans SC";
   font-style: normal;
   font-weight: ${face.weight};
   font-display: swap;
@@ -407,24 +385,24 @@ function renderTs(results, charCount) {
  * Metadata for the self-hosted Simplified-Chinese faces, in the shape
  * \`next/font/local\` expects, so the server entry (\`@nebutra/fonts/next\`) can
  * declare the face without re-stating weights or file names. The plain
- * \`vivo-sans-cn.css\` next to this file is the non-Next consumer path.
+ * \`noto-sans-sc.css\` next to this file is the non-Next consumer path.
  *
- * The registry key is "vivo sans sc" (see FONT_REGISTRY in ../src/index.ts);
+ * The registry key is "noto sans sc" (see FONT_REGISTRY in ../src/index.ts);
  * the CSS variable is ${JSON.stringify(cssVariable())}.
  */
 
-export const VIVO_SANS_CN_VARIABLE = ${JSON.stringify(cssVariable())} as const;
+export const NOTO_SANS_SC_VARIABLE = ${JSON.stringify(cssVariable())} as const;
 
-export const VIVO_SANS_CN_FAMILY = "vivo Sans SC" as const;
+export const NOTO_SANS_SC_FAMILY = "Noto Sans SC" as const;
 
 /** Characters covered per face (catalogs ∪ CJK punctuation ∪ GB2312 level-1). */
-export const VIVO_SANS_CN_CHAR_COUNT = ${charCount} as const;
+export const NOTO_SANS_SC_CHAR_COUNT = ${charCount} as const;
 
 /** \`unicode-range\` of every generated @font-face — CJK only, no Latin. */
-export const VIVO_SANS_CN_UNICODE_RANGE = ${JSON.stringify(UNICODE_RANGES.join(", "))} as const;
+export const NOTO_SANS_SC_UNICODE_RANGE = ${JSON.stringify(UNICODE_RANGES.join(", "))} as const;
 
 /** Sources for \`next/font/local({ src: [...] })\`, paths relative to this file. */
-export const VIVO_SANS_CN_SOURCES = [
+export const NOTO_SANS_SC_SOURCES = [
 ${results
   .map(
     (face) =>
@@ -435,10 +413,10 @@ ${results
 `;
 }
 
-const cssVariable = () => "--font-vivo-sans-sc";
+const cssVariable = () => "--font-noto-sans-sc";
 
-function main() {
-  ensureVendoredSources();
+async function main() {
+  await ensureVendoredSources();
   mkdirSync(OUT_DIR, { recursive: true });
 
   const set = collectCharacterSet();
@@ -446,7 +424,7 @@ function main() {
   const charsetHash = createHash("sha256").update(charsetText).digest("hex");
 
   log("");
-  log("vivo Sans SC — CJK subset build");
+  log("Noto Sans SC — CJK subset build");
   log(`  zh catalogs found      ${set.catalogs.length}`);
   for (const file of set.catalogs) log(`    - ${relative(REPO_ROOT, file)}`);
   log(`  chars from catalogs    ${set.fromCatalogs.size}`);
@@ -481,7 +459,7 @@ function main() {
     const output = join(OUT_DIR, face.out);
     if (!upToDate) {
       execFileSync(
-        "python3",
+        PYTHON,
         [
           "-m",
           "fontTools.subset",
@@ -554,4 +532,7 @@ function main() {
   log("");
 }
 
-main();
+main().catch((error) => {
+  process.stderr.write(`${error instanceof Error ? (error.stack ?? error.message) : error}\n`);
+  process.exitCode = 1;
+});

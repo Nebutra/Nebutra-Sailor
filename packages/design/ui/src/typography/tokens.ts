@@ -35,11 +35,11 @@ export const FONT_FAMILY_MONO =
 /**
  * CJK (Chinese/Japanese/Korean) fallback stack
  *
- * vivo Sans is the primary Chinese font.
+ * Noto Sans SC is the primary Chinese font.
  * Provides consistent rendering for Chinese, Japanese, and Korean text.
  */
 export const FONT_FAMILY_CJK =
-  '"vivo Sans", "Source Han Sans SC", "Source Han Sans", "Noto Sans CJK SC", "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif';
+  '"Noto Sans SC", "Source Han Sans SC", "Source Han Sans", "Noto Sans CJK SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif';
 
 /**
  * Complete font stacks with CJK fallback

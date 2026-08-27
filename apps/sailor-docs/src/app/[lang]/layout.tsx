@@ -23,10 +23,10 @@ const logoColorMarkSrc =
 
 // GeistSans → --font-geist-sans | GeistMono → --font-geist-mono
 // Matches the Precision Stack used across apps/web and apps/landing
-// cjkFontClassName -> --font-vivo-sans-sc: self-hosted vivo Sans SC subset via
+// cjkFontClassName -> --font-noto-sans-sc: self-hosted Noto Sans SC subset via
 // next/font/local (files ship in @nebutra/fonts, so no build-time fetch). Geist has
 // no CJK coverage; it stays first in --font-sans and keeps Latin + numerals, and only
-// CJK falls through to vivo Sans SC — whose subset carries no Latin glyphs at all.
+// CJK falls through to Noto Sans SC — whose subset carries no Latin glyphs at all.
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_DOCS_ORIGIN_URL || "https://docs.nebutra.com"),

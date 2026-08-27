@@ -181,13 +181,13 @@ export type PrimitiveFontWeight = keyof typeof primitiveFontWeight;
 // Aligned with @nebutra/design-tokens SSOT (tokens/core.json fontFamily.*).
 // EN primary: Geist (Vercel variable, 100–900)
 // EN mono:    Geist Mono
-// CN primary: Noto Sans SC → PingFang SC → Microsoft YaHei → vivo Sans (print)
+// CN primary: Noto Sans SC → PingFang SC → Microsoft YaHei
 
 export const primitiveFontFamily = {
   /** Default body/UI stack — Geist with CJK auto-fallbacks */
   sans: '"Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
   /** Chinese body/UI stack */
-  cnSans: '"Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif',
+  cnSans: '"Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif',
   /** Display / hero headlines */
   display: '"Geist", "Noto Sans SC", sans-serif',
   /** Heading (alias of display) */

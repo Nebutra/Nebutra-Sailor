@@ -6,9 +6,9 @@
  * Font loading (Next.js apps): each app's layout.tsx applies the loader classes
  *   GeistSans        → --font-geist-sans     (variable, 100–900)   Latin + numerals
  *   GeistMono        → --font-geist-mono     (variable, 100–900)   code
- *   cjkFontClassName → --font-vivo-sans-sc   (@nebutra/fonts/next/cjk)  CJK
+ *   cjkFontClassName → --font-noto-sans-sc   (@nebutra/fonts/next/cjk)  CJK
  * and the token stacks reference those variables in that order, so Geist keeps
- * Latin and only CJK falls through to vivo Sans SC.
+ * Latin and only CJK falls through to Noto Sans SC.
  *
  * IMPORT ORDER MATTERS: this file must come AFTER @nebutra/tokens/styles.css
  * (see ../styles/preset.css). It used to re-declare --font-sans / --font-heading /
