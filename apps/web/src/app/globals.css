@@ -141,25 +141,9 @@
   }
 }
 
-@container theme-preview (min-width: 66rem) {
-  .theme-preview-grid {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-  }
-
+@container theme-preview (min-width: 40rem) {
   .theme-pricing-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .theme-preview-span-5 {
-    grid-column: span 5 / span 5;
-  }
-
-  .theme-preview-span-7 {
-    grid-column: span 7 / span 7;
-  }
-
-  .theme-preview-span-12 {
-    grid-column: 1 / -1;
   }
 }
 
