@@ -18,7 +18,7 @@
 
 import { brand } from "@nebutra/brand/metadata";
 import { betterAuth } from "better-auth";
-import { Pool } from "pg";
+import { Client, Pool } from "pg";
 import { attachPoolErrorGuard, isPgConnectFailure, withConnectRetry } from "./lib/auth-edge-pool";
 
 interface HyperdriveBinding {
@@ -46,21 +46,22 @@ export interface AuthEdgeEnv {
 }
 
 // betterAuth() is generic over its options; keep a wide handle so the
-// singleton can be rebuilt when secrets/DB change without TS gymnastics.
+// per-request Client can swap without TS gymnastics.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AuthInstance = { handler: (request: Request) => Promise<Response>; api: any };
 
-let pool: Pool | null = null;
-let authSingleton: AuthInstance | null = null;
-let authKey = "";
+type PgDatabase = Client | Pool;
 
-/** Drop a dead isolate pool. Do not pool.end() here — that races in-flight queries into 1101. */
-function discardAuthPool(dead?: Pool | null): void {
-  if (dead && pool && dead !== pool) return;
-  pool = null;
-  authSingleton = null;
-  authKey = "";
-}
+/**
+ * nodejs_compat `net.Socket` + a reused pg Pool leaves zombie connections in
+ * the isolate. The next query parks forever; workerd cancels it as
+ * "would never generate a response" (Error 1101) in a couple of milliseconds.
+ * Hyperdrive already pools — open a Client per request and close it after.
+ */
+addEventListener("unhandledrejection", (event) => {
+  console.error("[nebutra-auth] unhandledrejection", event.reason);
+  event.preventDefault();
+});
 
 // Derived from brand.domains rather than typed out, so a rebrand moves the
 // trusted origins with everything else. A stale entry here is not a cosmetic
@@ -138,11 +139,7 @@ function trustedOrigins(env: AuthEdgeEnv): string[] {
   return [...new Set([...DEFAULT_TRUSTED, ...fromEnv, ...extra])];
 }
 
-/**
- * Physical table names match Prisma @@map on AuthUser/AuthSession/… so the
- * edge and the Node auth-center share one session store.
- */
-function getAuth(env: AuthEdgeEnv): AuthInstance {
+function requireAuthSecrets(env: AuthEdgeEnv): { secret: string; dbUrl: string } {
   applyEnv(env);
   const secret = env.BETTER_AUTH_SECRET?.trim() || process.env.BETTER_AUTH_SECRET?.trim();
   if (!secret) {
@@ -152,27 +149,14 @@ function getAuth(env: AuthEdgeEnv): AuthInstance {
   if (!dbUrl) {
     throw new Error("HYPERDRIVE or DATABASE_URL is required on the auth edge Worker");
   }
+  return { secret, dbUrl };
+}
 
-  // One Pool per isolate — never pool.end() on the request path (races → 1101).
-  const key = `${secret.slice(0, 8)}:${dbUrl.slice(0, 48)}`;
-  if (authSingleton && authKey === key && pool) {
-    return authSingleton;
-  }
-
-  pool = new Pool({
-    connectionString: dbUrl,
-    // Workers: tiny pool; Hyperdrive handles real pooling.
-    max: 1,
-    idleTimeoutMillis: 0,
-    connectionTimeoutMillis: 8_000,
-    allowExitOnIdle: false,
-  });
-  attachPoolErrorGuard(pool, (err) => {
-    console.error("[nebutra-auth] pg pool error", err.message);
-    discardAuthPool(pool);
-  });
-  authKey = key;
-
+/**
+ * Physical table names match Prisma @@map on AuthUser/AuthSession/… so the
+ * edge and the Node auth-center share one session store.
+ */
+function createAuth(env: AuthEdgeEnv, database: PgDatabase, secret: string): AuthInstance {
   const socialProviders: Record<string, { clientId: string; clientSecret: string }> = {};
   const googleId = env.GOOGLE_CLIENT_ID?.trim() || process.env.GOOGLE_CLIENT_ID?.trim();
   const googleSecret = env.GOOGLE_CLIENT_SECRET?.trim() || process.env.GOOGLE_CLIENT_SECRET?.trim();
@@ -207,8 +191,8 @@ function getAuth(env: AuthEdgeEnv): AuthInstance {
         domain: cookieDomain,
       },
     },
-    // Pool → Kysely path (no Prisma / no 17 MiB workerd client).
-    database: pool,
+    // Client → Kysely path (no Prisma / no 17 MiB workerd client).
+    database,
     user: {
       modelName: "auth_users",
       fields: {
@@ -253,8 +237,37 @@ function getAuth(env: AuthEdgeEnv): AuthInstance {
     },
   }) as AuthInstance;
 
-  authSingleton = instance;
   return instance;
+}
+
+async function withAuth<T>(env: AuthEdgeEnv, fn: (auth: AuthInstance) => Promise<T>): Promise<T> {
+  const { secret, dbUrl } = requireAuthSecrets(env);
+  const client = new Client({
+    connectionString: dbUrl,
+    connectionTimeoutMillis: 8_000,
+  });
+  attachPoolErrorGuard(client, (err) => {
+    console.error("[nebutra-auth] pg client error", err.message);
+  });
+  await client.connect();
+  try {
+    return await fn(createAuth(env, client, secret));
+  } finally {
+    await Promise.race([
+      client.end().catch(() => undefined),
+      new Promise((resolve) => setTimeout(resolve, 500)),
+    ]);
+  }
+}
+
+/** Forward only identity headers — copying Host / cf-* onto BA can throw 1101. */
+function authForwardHeaders(request: Request): Headers {
+  const headers = new Headers();
+  for (const name of ["cookie", "authorization", "user-agent", "x-forwarded-for"] as const) {
+    const value = request.headers.get(name);
+    if (value) headers.set(name, value);
+  }
+  return headers;
 }
 
 async function probeGoogle(env: AuthEdgeEnv, origin: string): Promise<Record<string, unknown>> {
@@ -329,7 +342,7 @@ async function handleHealth(request: Request, env: AuthEdgeEnv): Promise<Respons
     role: "login-center-edge",
     deploy: "cloudflare-workers-edge",
     // Bump when shipping edge fixes so /health proves the new script is live.
-    edgeBuild: "2026-08-27-pg-pool-guard",
+    edgeBuild: "2026-08-27-pg-client-per-request",
     features: {
       authApi: true,
       // ORIGIN_URL is the preferred pass-through; ORIGIN_IP alone is legacy.
@@ -433,6 +446,40 @@ async function asBrowserOAuthRedirect(res: Response): Promise<Response> {
   return new Response(null, { status: 302, headers });
 }
 
+function socialStartToRedirect(raw: unknown): Response {
+  const record = raw && typeof raw === "object" ? (raw as Record<string, unknown>) : null;
+  const nested =
+    record?.response && typeof record.response === "object"
+      ? (record.response as Record<string, unknown>)
+      : null;
+  const authorizeUrl =
+    (typeof nested?.url === "string" ? nested.url : undefined) ??
+    (typeof record?.url === "string" ? record.url : undefined) ??
+    (typeof nested?.redirect === "string" ? nested.redirect : undefined) ??
+    (typeof record?.redirect === "string" ? record.redirect : undefined);
+  if (!authorizeUrl || !authorizeUrl.startsWith("http")) {
+    throw new Error("OAuth start did not return an authorize URL");
+  }
+
+  const headers = new Headers();
+  headers.set("Location", authorizeUrl);
+  const rawHeaders = record?.headers;
+  if (rawHeaders instanceof Headers) {
+    const getSetCookie = (
+      rawHeaders as Headers & { getSetCookie?: () => string[] }
+    ).getSetCookie?.bind(rawHeaders);
+    if (typeof getSetCookie === "function") {
+      for (const cookie of getSetCookie()) {
+        if (cookie) headers.append("Set-Cookie", cookie);
+      }
+    } else {
+      const single = rawHeaders.get("set-cookie");
+      if (single) headers.append("Set-Cookie", single);
+    }
+  }
+  return new Response(null, { status: 302, headers });
+}
+
 /**
  * GET /api/auth/oauth/:provider?callbackURL=… — same contract as the Next route.
  * BA's native social start is POST /sign-in/social; product links use this GET.
@@ -479,16 +526,16 @@ async function handleOAuthStart(
 
   try {
     return await withConnectRetry(
-      async () => {
-        const auth = getAuth(env);
-        const result = await auth.api.signInSocial({
-          body: { provider, callbackURL },
-          headers: request.headers,
-          asResponse: true,
-        });
-        return asBrowserOAuthRedirect(result);
-      },
-      () => discardAuthPool(),
+      () =>
+        withAuth(env, async (auth) => {
+          const raw = await auth.api.signInSocial({
+            body: { provider, callbackURL, errorCallbackURL: "/sign-in" },
+            headers: authForwardHeaders(request),
+            returnHeaders: true,
+          });
+          return socialStartToRedirect(raw);
+        }),
+      () => undefined,
     );
   } catch (error) {
     return json(
@@ -528,21 +575,20 @@ async function handleAuthApi(request: Request, env: AuthEdgeEnv): Promise<Respon
 
   try {
     return await withConnectRetry(
-      async () => {
-        const auth = getAuth(env);
-        const res = await auth.handler(request);
-        // Top-level social start must 302 (see asBrowserOAuthRedirect).
-        const path = new URL(request.url).pathname;
-        if (
-          path.includes("/sign-in/social") ||
-          path.includes("/signin/social") ||
-          path.includes("/oauth/")
-        ) {
-          return asBrowserOAuthRedirect(res);
-        }
-        return res;
-      },
-      () => discardAuthPool(),
+      () =>
+        withAuth(env, async (auth) => {
+          const res = await auth.handler(request);
+          const path = new URL(request.url).pathname;
+          if (
+            path.includes("/sign-in/social") ||
+            path.includes("/signin/social") ||
+            path.includes("/oauth/")
+          ) {
+            return asBrowserOAuthRedirect(res);
+          }
+          return res;
+        }),
+      () => undefined,
     );
   } catch (error) {
     return json(
