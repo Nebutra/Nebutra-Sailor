@@ -46,9 +46,12 @@ jobs:
       - name: Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
 
-      - name: Typecheck gateway
-        run: pnpm --filter @nebutra/gateway typecheck
-
+      # Do not typecheck the origin gateway package here. Fresh install has
+      # no workspace dist/, so a bare filter tsc cannot resolve @nebutra/db
+      # and the job dies before wrangler. Origin typecheck is CI's job —
+      # workflow_run already requires conclusion == success. This job deploys
+      # worker-edge.ts only (no workspace imports); wrangler is the compile
+      # gate for that file.
       - name: Validate Cloudflare secrets
         run: |
           [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ] || { echo "::error::CLOUDFLARE_API_TOKEN secret is not set"; exit 1; }
