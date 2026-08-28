@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { readFileSync, realpathSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { realpathSync } from "node:fs";
+import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Command } from "commander";
 import { addCommand } from "./commands/add";
@@ -42,6 +42,7 @@ import { registerWorkflowCommand } from "./commands/workflow";
 import { CommandError, reportCommandError, runCommand } from "./utils/command-error";
 import { ExitCode } from "./utils/exit-codes";
 import { maybeShowFirstRunBanner } from "./utils/first-run";
+import { readCliVersion } from "./utils/resolve-cli-package";
 import { maybeNotifyUpdate } from "./utils/update-notifier";
 
 // Error-handling convention: new commands MUST wrap their `.action(...)` body
@@ -59,11 +60,7 @@ import { maybeNotifyUpdate } from "./utils/update-notifier";
 // renaming a command, ALWAYS keep the old form as a `.alias()` so existing
 // docs/scripts continue to work.
 
-// Read version from package.json at module load. Same relative path works for
-// both `tsx src/index.ts` (dev) and `node dist/index.js` (prod) because src/
-// and dist/ are siblings under packages/ops/cli/.
-const PKG_JSON_PATH = join(dirname(fileURLToPath(import.meta.url)), "..", "package.json");
-const VERSION = (JSON.parse(readFileSync(PKG_JSON_PATH, "utf8")) as { version: string }).version;
+const VERSION = readCliVersion();
 
 export interface BuildProgramOptions {
   readonly version: string;

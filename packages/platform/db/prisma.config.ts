@@ -5,6 +5,7 @@ import { defineConfig } from "prisma/config";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const runtimeDatabaseUrl = process.env.DATABASE_URL ?? "";
 const migrationDatabaseUrl = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
+const shadowDatabaseUrl = process.env.SHADOW_DATABASE_URL ?? "";
 
 export default defineConfig({
   earlyAccess: true,
@@ -14,6 +15,10 @@ export default defineConfig({
   // unaffected when DATABASE_URL is absent (e.g. during `prisma generate` in CI).
   datasource: {
     url: runtimeDatabaseUrl,
+    // Prisma 7 dropped --shadow-database-url. migrate diff --from-migrations
+    // reads this instead. Leave unset unless the caller provided a dedicated
+    // shadow URL so `prisma generate` stays env-free.
+    ...(shadowDatabaseUrl ? { shadowDatabaseUrl } : {}),
   },
   migrate: {
     // Supabase/Neon production deployments use a pooled DATABASE_URL for app

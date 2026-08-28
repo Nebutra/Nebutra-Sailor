@@ -43,7 +43,7 @@
  */
 
 import { logger } from "@nebutra/logger";
-import { getSystemDb, type PrismaClient } from "../src/client";
+import type { PrismaClient } from "../src/client";
 
 /**
  * Subset of the Prisma client surface the backfill needs. Declaring it
@@ -149,7 +149,7 @@ export async function backfillBaInvitations(
 ): Promise<BackfillResult> {
   const dryRun = options.dryRun ?? false;
   const limit = options.limit;
-  const db = options.db ?? (getSystemDb() as unknown as BackfillDb);
+  const db = options.db ?? ((await import("../src/client")).getSystemDb() as unknown as BackfillDb);
 
   const findArgs: { orderBy: { createdAt: "asc" | "desc" }; take?: number } = {
     orderBy: { createdAt: "asc" },
@@ -262,6 +262,7 @@ async function main(): Promise<void> {
     )}\n`,
   );
   // Disconnect the lazy Prisma singleton so the process exits cleanly.
+  const { getSystemDb } = await import("../src/client");
   const client = getSystemDb() as unknown as PrismaClient & { $disconnect?: () => Promise<void> };
   if (typeof client.$disconnect === "function") {
     await client.$disconnect();

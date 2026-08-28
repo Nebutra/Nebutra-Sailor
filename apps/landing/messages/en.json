@@ -1749,7 +1749,7 @@
           "label": "AI providers supported"
         },
         "projects": {
-          "value": "104",
+          "value": "113",
           "label": "monorepo packages"
         },
         "uptime": {

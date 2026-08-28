@@ -158,17 +158,17 @@ html[data-brand="raycast"] {
 
   /* Typography */
   --font-sans:
-    var(--font-inter), "Inter", var(--font-noto-sans-sc, "Noto Sans SC"), "Noto Sans SC",
-    "PingFang SC", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    var(--font-inter), "Inter", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC",
+    ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-cn:
-    var(--font-inter), "Inter", var(--font-noto-sans-sc, "Noto Sans SC"), "Noto Sans SC",
-    "PingFang SC", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    var(--font-inter), "Inter", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC",
+    ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-heading:
-    var(--font-inter), "Inter", var(--font-noto-sans-sc, "Noto Sans SC"), "Noto Sans SC",
-    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-inter), "Inter", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC",
+    ui-sans-serif, system-ui, sans-serif;
   --font-display:
-    var(--font-inter), "Inter", var(--font-noto-sans-sc, "Noto Sans SC"), "Noto Sans SC",
-    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-inter), "Inter", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC",
+    ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), "Geist Mono", "GeistMono", ui-monospace, Menlo, monospace;
   --font-weight-heading: 400;
 

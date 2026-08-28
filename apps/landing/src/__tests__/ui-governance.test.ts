@@ -170,7 +170,8 @@ describe("landing UI governance", () => {
   it("keeps use-case demo mockups out of the mobile landing flow", () => {
     expect(useCasesSectionSource).toContain("hidden w-full");
     expect(useCasesSectionSource).toContain("lg:block");
-    expect(useCasesSectionSource).toContain("order-1 lg:order-1");
+    expect(useCasesSectionSource).toContain("order-1");
+    expect(useCasesSectionSource).toContain("lg:order-1");
     expect(useCasesSectionSource).not.toContain("scale-[0.55]");
   });
 

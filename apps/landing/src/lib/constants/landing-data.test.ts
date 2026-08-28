@@ -89,10 +89,15 @@ describe("landing monorepo count copy", () => {
   ] as const;
 
   it("uses the current packages count across localized landing copy", () => {
+    const packages = TREE_DATA.find((node) => node.label === "packages");
+    const packageLeafCount = String(
+      packages?.children?.reduce((total, group) => total + (group.children?.length ?? 0), 0) ?? 0,
+    );
+
     for (const [locale, messages] of locales) {
-      expect(messages.monorepoTree.title, locale).toContain("104");
+      expect(messages.monorepoTree.title, locale).toContain(packageLeafCount);
       expect(messages.monorepoTree.title, locale).not.toContain("55");
-      expect(messages.landing.socialProof.metrics.projects.value, locale).toBe("104");
+      expect(messages.landing.socialProof.metrics.projects.value, locale).toBe(packageLeafCount);
     }
   });
 });

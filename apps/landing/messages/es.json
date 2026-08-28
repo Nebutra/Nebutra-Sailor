@@ -1749,7 +1749,7 @@
           "label": "Proveedores de IA compatibles"
         },
         "projects": {
-          "value": "104",
+          "value": "113",
           "label": "paquetes del monorepo"
         },
         "uptime": {

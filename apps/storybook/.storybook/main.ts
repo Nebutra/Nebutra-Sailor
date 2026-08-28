@@ -96,6 +96,10 @@ const config: StorybookConfig = {
             replacement: resolve(HERE, "../../../packages/design/icons/src/index.ts"),
           },
           {
+            find: /^@nebutra\/startup-os\/(.+)$/,
+            replacement: `${resolve(HERE, "../../../packages/ai/startup-os/src")}/$1.ts`,
+          },
+          {
             find: /^@nebutra\/tokens$/,
             replacement: resolve(HERE, "../../../packages/design/tokens/src/index.ts"),
           },
