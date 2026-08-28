@@ -1,4 +1,4 @@
-import { mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
@@ -14,7 +14,7 @@ describe("ui command", () => {
   });
 
   function writeUiContractFixture(): string {
-    const root = join(tmpdir(), `nebutra-cli-ui-${Date.now()}`);
+    const root = mkdtempSync(join(tmpdir(), "nebutra-cli-ui-"));
     fixtureRoots.push(root);
     const manifestPath = join(root, "agent-manifest.json");
     const componentDir = join(root, "agent", "components");
