@@ -117,13 +117,13 @@
     "rules": [
       {
         "name": "web-dashboard-overview-high-resolution-density",
-        "description": "The legacy dashboard overview must stay converged into Startup OS; /workspace redirects instead of reintroducing a parallel prompt-first home.",
+        "description": "The legacy dashboard overview must stay a redirect, not a parallel prompt-first home. /workspace lands on Startup OS when that prototype is on, otherwise Connectors.",
         "file": "apps/web/src/app/(app)/workspace/page.tsx",
         "requiredContains": [
-          "redirect(\"/startup-os\")",
-          "Cookie-based i18n: no locale prefix in the URL.",
+          "resolveAuthenticatedHomePath",
+          "Cookie-based i18n: no locale prefix.",
           "Promise<never>",
-          "/workspace — redirect to Startup OS"
+          "/workspace — stable post-login alias"
         ],
         "forbiddenContains": [
           "CommandCenter",

@@ -3490,13 +3490,10 @@ export interface paths {
       requestBody?: {
         content: {
           "application/json": {
-            priceId: string;
-            /** Format: uri */
-            successUrl: string;
-            /** Format: uri */
-            cancelUrl: string;
-            quantity?: number;
-            trialPeriodDays?: number;
+            /** @enum {string} */
+            plan: "pro" | "enterprise" | "plan_pro" | "plan_enterprise";
+            /** @enum {string} */
+            interval: "monthly" | "yearly" | "month" | "year";
           };
         };
       };
@@ -5567,7 +5564,7 @@ export interface paths {
     put?: never;
     /**
      * Stripe webhook handler
-     * @description Receives Stripe webhook events for subscription lifecycle management. Signature verification is handled by the Stripe SDK.
+     * @description Receives Stripe webhook events for subscription lifecycle management. Signature verification is handled by the Stripe SDK. 2xx is returned only after the inbox row is marked processed.
      */
     post: {
       parameters: {
@@ -5584,7 +5581,7 @@ export interface paths {
         };
       };
       responses: {
-        /** @description Webhook received and queued for processing */
+        /** @description Webhook processed, or already processed */
         200: {
           headers: {
             [name: string]: unknown;
@@ -5608,8 +5605,19 @@ export interface paths {
             };
           };
         };
-        /** @description Webhook not configured */
+        /** @description Webhook not configured or handler failed */
         500: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+        /** @description Event is still being processed; provider should retry */
+        503: {
           headers: {
             [name: string]: unknown;
           };
@@ -5638,7 +5646,7 @@ export interface paths {
     put?: never;
     /**
      * Clerk webhook handler
-     * @description Receives Clerk webhook events for user and organization lifecycle management. Signature verification is handled by the Svix SDK.
+     * @description Receives Clerk webhook events for user and organization lifecycle management. Signature verification is handled by the Svix SDK. 2xx is returned only after the inbox row is marked processed.
      */
     post: {
       parameters: {
@@ -5655,7 +5663,7 @@ export interface paths {
         };
       };
       responses: {
-        /** @description Webhook received and queued for processing */
+        /** @description Webhook processed, or already processed */
         200: {
           headers: {
             [name: string]: unknown;
@@ -5679,8 +5687,19 @@ export interface paths {
             };
           };
         };
-        /** @description Webhook not configured */
+        /** @description Webhook not configured or handler failed */
         500: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+        /** @description Event is still being processed; provider should retry */
+        503: {
           headers: {
             [name: string]: unknown;
           };

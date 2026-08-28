@@ -503,6 +503,47 @@ const ALLOWLIST_GROUPS: readonly AllowlistGroup[] = [
       "(as a pair) once an rgb-with-alpha token type is settled on.",
     tokens: ["--edge-faint", "--edge-medium", "--edge-soft", "--halo-faint"],
   },
+  {
+    reason:
+      "static/base.css source rails concatenated into the generated sheet. " +
+      "Motion curves and space-source exist so @theme utilities can point at a " +
+      "different property than they emit; category accents are derived color-mix " +
+      "formulas, not palette picks.",
+    migration:
+      "Keep the rails in static/base.css until Brand Packages can override a " +
+      "DTCG leaf without dual-writing the same custom property.",
+    tokens: [
+      "--category-1",
+      "--category-2",
+      "--category-3",
+      "--category-4",
+      "--motion-ease-brand",
+      "--motion-ease-in",
+      "--motion-ease-in-out",
+      "--motion-ease-out",
+      "--motion-ease-spring",
+      "--space-source-2xl",
+      "--space-source-lg",
+      "--space-source-md",
+      "--space-source-sm",
+      "--space-source-xl",
+      "--space-source-xs",
+    ],
+  },
+  {
+    reason:
+      "Tailwind v4 `@theme inline` motion bridges — `--ease-brand` and " +
+      "`--transition-duration-*` alias the static/base.css and duration rails " +
+      "the same way `--color-primary` aliases `--primary`.",
+    migration: "Emit one bridge line per motion token from the token tree.",
+    tokens: [
+      "--ease-brand",
+      "--transition-duration-cinematic",
+      "--transition-duration-flow",
+      "--transition-duration-micro",
+      "--transition-duration-reveal",
+    ],
+  },
 ] as const;
 
 interface DeclSite {

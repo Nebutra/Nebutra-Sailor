@@ -52,12 +52,12 @@ describe("migration: 2026-05-20 — add Atelier canvas without template drift", 
   it("keeps the Prisma model mapped to the migration table shape", () => {
     const model = getModelBlock(readSchema(), "AtelierCanvas");
 
-    expect(model).toContain("id             String");
-    expect(model).toContain('tenantId String   @map("tenant_id")');
-    expect(model).toContain(
-      'scene          Json     @default("{\\"elements\\":[],\\"files\\":[]}")',
-    );
-    expect(model).toContain("thumbnail      String?");
+    expect(model).toContain("pk        String   @id @default(cuid())");
+    expect(model).toContain("id        String");
+    expect(model).toContain('tenantId  String   @map("tenant_id")');
+    expect(model).toContain("name      String");
+    expect(model).toContain('scene     Json     @default("{\\"elements\\":[],\\"files\\":[]}")');
+    expect(model).toContain("thumbnail String?");
     expect(model).toContain(
       "tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)",
     );

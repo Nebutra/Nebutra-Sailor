@@ -93,6 +93,13 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     note: "Shared API. Each product owns /<product>/v1/*.",
   },
   {
+    id: "carina-daemon",
+    label: "Carina Daemon",
+    pm2Name: "carina-daemon",
+    runtime: "ecs-pm2",
+    note: "Track-B kernel on the gateway host. Socket-only; no HTTP PORT.",
+  },
+  {
     id: "@nebutra/router",
     label: "Router",
     domainKey: "router",
@@ -126,6 +133,13 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     note: "Tool station + Agent tool API.",
   },
   {
+    id: "@nebutra/forge-dns-leak",
+    label: "Forge DNS Leak",
+    pm2Name: "forge-dns-leak",
+    runtime: "ecs-pm2",
+    note: "Authoritative leak zone + localhost control API :3953. No PORT env.",
+  },
+  {
     id: "@nebutra/admin",
     label: "Admin",
     domainKey: "admin",
@@ -146,13 +160,14 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     note: "OpenNext Worker preferred; ECS is emergency-only.",
   },
   {
-    id: "@nebutra/design-docs",
-    label: "Design Docs",
+    id: "@nebutra/design",
+    label: "Design",
     domainKey: "design",
-    pm2Name: "design-docs",
-    port: 3004,
+    pm2Name: "design",
+    port: 3109,
     runtime: "ecs-pm2",
     deployService: "design-docs",
+    note: "Replaced design-docs at the design hostname. Deploy service id is still design-docs.",
   },
   {
     id: "@nebutra/typelens",

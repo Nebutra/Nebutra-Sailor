@@ -1,7 +1,6 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import { MCPClient } from "../client/mcpClient";
 import { InMemoryToolConsentStore } from "../consent";
@@ -10,8 +9,6 @@ import { McpHost } from "../host";
 import { MCPServerRegistry } from "../registry/serverRegistry";
 import { createContextServerHandlers } from "../server/contextServer";
 import { createUiAgentMcpServer } from "../server/uiAgentServer";
-
-const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../../..");
 
 describe("tool protocol host", () => {
   it("requires manifest and per-tool consent before executing a connected server", async () => {
@@ -192,7 +189,96 @@ describe("MCP tool registry access control", () => {
 });
 
 describe("Nebutra UI agent MCP tools", () => {
+  const fixtureRoots: string[] = [];
+
+  afterEach(() => {
+    for (const root of fixtureRoots.splice(0)) {
+      fs.rmSync(root, { recursive: true, force: true });
+    }
+  });
+
   it("searches, validates, and returns migration hints from the generated UI contract", async () => {
+    const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), "nebutra-ui-agent-"));
+    fixtureRoots.push(fixtureRoot);
+    const manifestPath = path.join(fixtureRoot, "agent-manifest.json");
+    const componentDir = path.join(fixtureRoot, "agent", "components");
+    fs.mkdirSync(componentDir, { recursive: true });
+
+    const button = {
+      name: "button",
+      title: "Button",
+      description: "Primary action primitive",
+      status: "stable",
+      maturity: "canonical",
+      layer: "primitive",
+      source: "packages/design/ui/src/primitives/button.tsx",
+      href: "https://ui.nebutra.com/agent/components/button.json",
+      tags: ["canonical", "primitive"],
+      package: "@nebutra/ui",
+      substrate: "native",
+      imports: {
+        package: "@nebutra/ui/primitives",
+        registry: "https://ui.nebutra.com/r/button.json",
+      },
+      dependencies: { npm: ["class-variance-authority"], registry: [] },
+      files: [{ path: "components/ui/button.tsx", type: "registry:ui" }],
+      tokens: ["--neutral-1"],
+      evidence: {
+        source: true,
+        docs: true,
+        storybook: true,
+        registry: true,
+        tokens: true,
+      },
+      docs: {
+        source: "/en/docs/components/button",
+        routes: ["/en/docs/components/button"],
+        lastVerified: "2026-05-21",
+      },
+      usage: {
+        recommended: "Use package imports inside Nebutra apps.",
+        antiPatterns: ["Do not import registry JSON as source of truth."],
+      },
+      migration: {
+        requiredForBreakingChanges: true,
+        codemods: [],
+        hints: ["Breaking renames require a dry-run codemod entry."],
+      },
+    };
+
+    fs.writeFileSync(
+      manifestPath,
+      JSON.stringify({
+        $schema: "https://ui.nebutra.com/schemas/nebutra-ui-agent.v1.json",
+        name: "nebutra-ui-agent",
+        version: 1,
+        generatedAt: "2026-07-06",
+        homepage: "https://ui.nebutra.com",
+        registry: "https://ui.nebutra.com/registry.json",
+        commands: [],
+        rules: {
+          sourceOfTruth: [],
+          importPolicy: "Use package imports.",
+          registryPolicy: "Registry is distribution.",
+          tokenPolicy: "Tokens own CSS variables.",
+        },
+        components: [
+          {
+            name: button.name,
+            title: button.title,
+            description: button.description,
+            status: button.status,
+            maturity: button.maturity,
+            layer: button.layer,
+            source: button.source,
+            href: button.href,
+            tags: button.tags,
+          },
+        ],
+      }),
+    );
+    fs.writeFileSync(path.join(componentDir, "button.json"), JSON.stringify(button));
+
     const registry = new MCPServerRegistry();
     registry.register(createUiAgentMcpServer());
     const client = new MCPClient(registry);
@@ -210,7 +296,7 @@ describe("Nebutra UI agent MCP tools", () => {
     await expect(
       client.executeTool(
         "nebutra_ui_search_components",
-        { query: "button", limit: 1, root: repoRoot },
+        { query: "button", limit: 1, manifestPath },
         context,
       ),
     ).resolves.toMatchObject({
@@ -223,7 +309,7 @@ describe("Nebutra UI agent MCP tools", () => {
     await expect(
       client.executeTool(
         "nebutra_ui_validate_component",
-        { name: "button", root: repoRoot },
+        { name: "button", manifestPath },
         context,
       ),
     ).resolves.toMatchObject({
@@ -234,7 +320,7 @@ describe("Nebutra UI agent MCP tools", () => {
     await expect(
       client.executeTool(
         "nebutra_ui_get_migration_hints",
-        { name: "button", root: repoRoot },
+        { name: "button", manifestPath },
         context,
       ),
     ).resolves.toMatchObject({
@@ -242,7 +328,7 @@ describe("Nebutra UI agent MCP tools", () => {
       result: {
         component: "button",
         dryRun: true,
-        hints: expect.arrayContaining([expect.stringContaining("breaking")]),
+        hints: expect.arrayContaining([expect.stringMatching(/breaking/i)]),
       },
     });
   });
