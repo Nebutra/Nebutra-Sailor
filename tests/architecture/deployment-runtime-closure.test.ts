@@ -170,6 +170,9 @@ describe("production runtime closure", () => {
     expect(workflow).toContain("deploy --config wrangler.edge.toml");
     expect(workflow).toContain("backends/gateway");
     expect(workflow).not.toContain("DEPLOY_TARGET == '");
+    // Bare filter typecheck does not build workspace packages. Fresh CI
+    // install has no dist/, so the edge deploy never reached wrangler.
+    expect(workflow).not.toMatch(/^\s+run:\s+pnpm --filter @nebutra\/gateway typecheck\s*$/m);
   });
 
   it("forwards request correlation headers from the Worker gateway to ECS origin", () => {
