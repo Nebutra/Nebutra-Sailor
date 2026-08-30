@@ -31,8 +31,8 @@ function mergeMessages(base: unknown, overlay: unknown): unknown {
 export default getRequestConfig(async () => {
   const store = await cookies();
   const cookieLocale = store.get("NEXT_LOCALE")?.value;
-  const locale = canonicalizeLocaleOrDefault(cookieLocale);
-  const messageLocale = toMessageLocale(locale);
+  const canonical = canonicalizeLocaleOrDefault(cookieLocale);
+  const messageLocale = toMessageLocale(canonical);
 
   const en = (await import("../../messages/en.json")).default;
   let messages: typeof en = en;
@@ -45,5 +45,8 @@ export default getRequestConfig(async () => {
     }
   }
 
-  return { locale, messages };
+  // next-intl routing.locales is ROUTE_LOCALES (`en`, `zh-Hans`). The cookie
+  // is a canonical tag (`en-US`, `zh-Hans-CN`) shared on .nebutra.com. Returning
+  // the canonical tag here 500s every page for anyone who picked a language.
+  return { locale: messageLocale, messages };
 });
