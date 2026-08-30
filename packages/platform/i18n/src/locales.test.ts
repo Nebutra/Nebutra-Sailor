@@ -61,6 +61,30 @@ describe("locale contract", () => {
     expect(toMessageLocale("de-DE")).toBe("de");
   });
 
+  it("folds every switcher cookie tag onto a next-intl route locale", () => {
+    // Cookie-mode apps write CANONICAL tags (en-US, zh-Hans-CN). next-intl
+    // routing.locales is ROUTE_LOCALES (en, zh-Hans). Handing the canonical
+    // tag back as `locale` 500s the whole tree — seen on forge/router.
+    const cookies = [
+      "en",
+      "en-US",
+      "zh",
+      "zh-CN",
+      "zh-Hans",
+      "zh-Hans-CN",
+      "zh-TW",
+      "zh-Hant-TW",
+      "ja",
+      "ja-JP",
+      "de-DE",
+    ];
+    for (const cookie of cookies) {
+      expect(ROUTE_LOCALES).toContain(toMessageLocale(cookie));
+    }
+    expect(ROUTE_LOCALES).not.toContain("en-US");
+    expect(ROUTE_LOCALES).not.toContain("zh-Hans-CN");
+  });
+
   it("uses canonical tags for browser and SEO metadata", () => {
     expect(toHtmlLang("en")).toBe("en-US");
     expect(toHreflang("en")).toBe("en-US");

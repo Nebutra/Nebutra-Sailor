@@ -5,8 +5,8 @@ import { getRequestConfig } from "next-intl/server";
 export default getRequestConfig(async () => {
   const store = await cookies();
   const cookieLocale = store.get("NEXT_LOCALE")?.value;
-  const locale = canonicalizeLocaleOrDefault(cookieLocale);
-  const messageLocale = toMessageLocale(locale);
+  const canonical = canonicalizeLocaleOrDefault(cookieLocale);
+  const messageLocale = toMessageLocale(canonical);
 
   const en = (await import("../../messages/en.json")).default;
   let messages = en;
@@ -21,5 +21,7 @@ export default getRequestConfig(async () => {
     }
   }
 
-  return { locale, messages };
+  // Same contract as apps/forge: cookie is canonical BCP-47, next-intl locale
+  // must be a ROUTE_LOCALES message key or the tree 500s.
+  return { locale: messageLocale, messages };
 });
