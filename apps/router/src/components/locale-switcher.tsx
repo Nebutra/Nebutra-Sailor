@@ -13,8 +13,9 @@ type LocaleCode = CanonicalLocale;
 
 const labels = buildCanonicalLocaleLabels(CANONICAL_LOCALES) as Record<LocaleCode, string>;
 
-// Cookie mode: same ID space as request.ts (canonicalizeLocaleOrDefault).
-// Do NOT pass PRODUCT_LANGUAGES message keys — useLocale() returns BCP-47 tags.
+// Cookie is canonical BCP-47 (`zh-Hans-CN`). getRequestConfig returns the
+// route/message key (`zh-Hans`); the factory folds useLocale() back onto
+// CANONICAL_LOCALES so the active pin still matches.
 const Inner = createLocaleSwitcher(
   { useRouter, usePathname },
   {
