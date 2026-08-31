@@ -180,6 +180,9 @@ describe("Deploy substrate governance", () => {
       'flyctl apps create "${' + '{ matrix.fly_app }}" --machines --org "$org" --yes',
     );
     expect(yml.indexOf("Setup flyctl")).toBeLessThan(yml.indexOf("Setup Node and pnpm"));
+    const certs = readFileSync(resolve(WORKFLOWS, "issue-fly-certs.yml"), "utf-8");
+    expect(certs).toContain("flyctl certs add");
+    expect(certs).toContain("nebutra-forge");
     for (const app of ["forge", "router", "web", "pebble", "design"]) {
       const toml = readFileSync(resolve(process.cwd(), "infra/fly", `${app}.toml`), "utf-8");
       expect(toml, app).toContain('primary_region = "sin"');

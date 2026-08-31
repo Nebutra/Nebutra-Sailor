@@ -1,0 +1,50 @@
+name: Issue Fly hostname certificates
+
+# Orange-cloud CNAME to *.fly.dev returns Cloudflare 525 until Fly has a
+# certificate for <host>.nebutra.com. This job only talks to Fly — it does
+# not rebuild images or touch DNS.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  certs:
+    name: Cert ${{ matrix.app }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - app: forge
+            fly_app: nebutra-forge
+            host: forge
+          - app: router
+            fly_app: nebutra-router
+            host: router
+          - app: web
+            fly_app: nebutra-web
+            host: app
+          - app: pebble
+            fly_app: nebutra-pebble
+            host: pebble
+          - app: design
+            fly_app: nebutra-design
+            host: design
+    steps:
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      - name: Issue certificate
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          host="${{ matrix.host }}.nebutra.com"
+          flyctl certs add "$host" -a "${{ matrix.fly_app }}" --yes || true
+          echo "----- show $host -----"
+          flyctl certs show "$host" -a "${{ matrix.fly_app }}" || true
+          echo "----- list -----"
+          flyctl certs list -a "${{ matrix.fly_app }}"

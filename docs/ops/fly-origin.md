@@ -22,8 +22,15 @@ SSO, leak DNS, grey-cloud `origin.nebutra.com`, the Node api-gateway, and
 auth-edge stay on ECS / Cloudflare. Admin is staff-only and not in this slice.
 
 Cutover writes a proxied CNAME `<host>.nebutra.com → <app>.fly.dev`.
+Issue `fly certs add <host>.nebutra.com` first
+(`.github/workflows/issue-fly-certs.yml`). Without that cert, Cloudflare
+returns 525. The GitHub `CLOUDFLARE_API_TOKEN` currently cannot write
+zone DNS (API 10000); cutover has to go through a token that has
+Zone DNS Edit, or the Cloudflare account API.
+
 Rollback is [`point-forge-dns-ecs.sh`](../../infra/ops/scripts/point-forge-dns-ecs.sh)
-(and the sibling ECS DNS scripts).
+(and the sibling ECS DNS scripts). Production hostnames were rolled back
+to ECS A `106.15.4.31` after the first 525.
 
 ## Secrets
 
