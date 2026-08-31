@@ -1,0 +1,192 @@
+name: Deploy KUANLAN (Vercel)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-kuanlan-vercel
+  cancel-in-progress: true
+
+jobs:
+  vercel:
+    name: Deploy kuanlan.nebutra.com
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Ensure project, env, domain, and deploy
+        id: deploy
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
+          EXPECTED_ROOT: apps/kuanlan
+          PROJECT_NAME: nebutra-kuanlan
+          DOMAIN: kuanlan.nebutra.com
+          IMAGE2_API_KEY: ${{ secrets.KUANLAN_IMAGE2_API_KEY }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${VERCEL_TOKEN:-}" ]; then
+            echo "::error::VERCEL_TOKEN is not set"; exit 1
+          fi
+          if [ -z "${VERCEL_ORG_ID:-}" ]; then
+            echo "::error::VERCEL_ORG_ID is not set"; exit 1
+          fi
+          if [ -z "${IMAGE2_API_KEY:-}" ]; then
+            echo "::error::KUANLAN_IMAGE2_API_KEY is not set"; exit 1
+          fi
+
+          api() {
+            curl -sS -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" "$@"
+          }
+
+          api "https://api.vercel.com/v9/projects?teamId=${VERCEL_ORG_ID}&limit=100" > projects.json
+          python3 - <<'PY' > resolved.env
+          import json
+          data = json.load(open("projects.json"))
+          names = {p["name"]: p for p in data.get("projects", [])}
+          p = names.get("nebutra-kuanlan")
+          if p:
+              print("PROJECT_ID=" + p["id"])
+              print("CURRENT_ROOT=" + (p.get("rootDirectory") or "(none)"))
+          else:
+              print("PROJECT_ID=")
+              print("CURRENT_ROOT=(missing)")
+          PY
+          set -a; . ./resolved.env; set +a
+
+          if [ -z "${PROJECT_ID:-}" ]; then
+            create=$(api -X POST "https://api.vercel.com/v10/projects?teamId=${VERCEL_ORG_ID}" \
+              -d "{\"name\":\"${PROJECT_NAME}\",\"framework\":\"nextjs\",\"rootDirectory\":\"${EXPECTED_ROOT}\"}")
+            PROJECT_ID=$(echo "$create" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("id",""))')
+            [ -n "$PROJECT_ID" ] || { echo "::error::failed to create project"; exit 1; }
+            CURRENT_ROOT="$EXPECTED_ROOT"
+          fi
+
+          if [ "$CURRENT_ROOT" != "$EXPECTED_ROOT" ]; then
+            api -X PATCH "https://api.vercel.com/v9/projects/${PROJECT_ID}?teamId=${VERCEL_ORG_ID}" \
+              -d "{\"rootDirectory\":\"${EXPECTED_ROOT}\",\"framework\":\"nextjs\"}" > /dev/null
+          fi
+
+          python3 - <<'PY'
+          import json, os, urllib.request
+
+          token = os.environ["VERCEL_TOKEN"]
+          team = os.environ["VERCEL_ORG_ID"]
+          project = os.environ["PROJECT_ID"]
+
+          def api(method, path, payload=None):
+              req = urllib.request.Request(
+                  f"https://api.vercel.com{path}",
+                  data=None if payload is None else json.dumps(payload).encode(),
+                  headers={
+                      "Authorization": f"Bearer {token}",
+                      "Content-Type": "application/json",
+                  },
+                  method=method,
+              )
+              try:
+                  with urllib.request.urlopen(req, timeout=45) as response:
+                      body = response.read().decode()
+                      return response.status, json.loads(body) if body else {}
+              except urllib.error.HTTPError as error:
+                  return error.code, json.loads(error.read().decode() or "{}")
+
+          status, existing = api("GET", f"/v10/projects/{project}/env?teamId={team}")
+          current = {item["key"]: item for item in existing.get("envs", [])} if status == 200 else {}
+          values = {
+              "IMAGE2_API_KEY": os.environ["IMAGE2_API_KEY"],
+              "IMAGE2_BASE_URL": "https://api.302.ai/v1",
+              "IMAGE2_MODEL": "gpt-image-2",
+              "CLOUDFLARE_ACCOUNT_ID": os.environ.get("CLOUDFLARE_ACCOUNT_ID", ""),
+              "R2_ACCESS_KEY_ID": os.environ.get("R2_ACCESS_KEY_ID", ""),
+              "R2_SECRET_ACCESS_KEY": os.environ.get("R2_SECRET_ACCESS_KEY", ""),
+              "R2_BUCKET_ASSETS": "nebutra-assets",
+              "R2_BUCKET_UPLOADS": "nebutra-uploads",
+              "R2_PUBLIC_URL": "https://cdn.nebutra.com",
+              "NEXT_PUBLIC_R2_PUBLIC_URL": "https://cdn.nebutra.com",
+              "NEXT_PUBLIC_SITE_URL": "https://kuanlan.nebutra.com",
+              "NEXT_PUBLIC_APP_URL": "https://kuanlan.nebutra.com",
+          }
+          sensitive = {"IMAGE2_API_KEY", "R2_ACCESS_KEY_ID", "R2_SECRET_ACCESS_KEY"}
+          for key, value in values.items():
+              if not value:
+                  print("skip_empty", key)
+                  continue
+              if key in current:
+                  env_id = current[key]["id"]
+                  status, _ = api(
+                      "PATCH",
+                      f"/v9/projects/{project}/env/{env_id}?teamId={team}",
+                      {
+                          "value": value,
+                          "type": "sensitive" if key in sensitive else "plain",
+                          "target": ["production", "preview", "development"],
+                      },
+                  )
+                  print("patch_env", key, status)
+              else:
+                  status, _ = api(
+                      "POST",
+                      f"/v10/projects/{project}/env?teamId={team}",
+                      {
+                          "key": key,
+                          "value": value,
+                          "type": "sensitive" if key in sensitive else "plain",
+                          "target": ["production", "preview", "development"],
+                      },
+                  )
+                  print("add_env", key, status)
+
+          status, domain = api(
+              "POST",
+              f"/v10/projects/{project}/domains?teamId={team}",
+              {"name": "kuanlan.nebutra.com"},
+          )
+          print("domain", status, domain.get("name") or domain.get("error", {}).get("code"))
+          PY
+
+          npm i -g vercel@56.5.0
+          mkdir -p .vercel
+          printf '{"projectId":"%s","orgId":"%s"}\n' "$PROJECT_ID" "$VERCEL_ORG_ID" > .vercel/project.json
+          export VERCEL_PROJECT_ID="$PROJECT_ID"
+
+          set +e
+          out=$(vercel deploy --prod --yes --archive=tgz --token="$VERCEL_TOKEN" --scope "$VERCEL_ORG_ID" --build-env VERCEL_FORCE_BUILD=1 2>&1)
+          code=$?
+          set -e
+          echo "$out"
+          if [ "$code" -ne 0 ]; then
+            exit "$code"
+          fi
+          echo "deployed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Smoke kuanlan.nebutra.com
+        if: steps.deploy.outputs.deployed == 'true'
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6 7 8; do
+            home=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 25 "https://kuanlan.nebutra.com/" || echo 000)
+            health=$(curl -sS -o /tmp/kuanlan-health.json -w '%{http_code}' --max-time 25 "https://kuanlan.nebutra.com/api/e2e/health" || echo 000)
+            echo "attempt $i home=$home health=$health"
+            if [ "$home" = "200" ] && [ "$health" = "200" ]; then
+              python3 - <<'PY'
+          import json
+          body = json.load(open("/tmp/kuanlan-health.json"))
+          assert body.get("service") == "kuanlan"
+          assert body.get("consume", {}).get("provider") == "image2"
+          print("health_ok", body.get("consume"), body.get("storage"))
+          PY
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "kuanlan front not healthy after retries"
+          exit 1

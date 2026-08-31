@@ -224,7 +224,9 @@ export async function getSignedDownloadUrl(
   const bucket = config.buckets[options.bucket || "uploads"];
   const expiresIn = options.expiresIn || 3600; // 1 hour default
 
-  return getSignedUrl(r2Client, new GetObjectCommand({ Bucket: bucket, Key: key }), { expiresIn });
+  return getSignedUrl(r2Client as never, new GetObjectCommand({ Bucket: bucket, Key: key }), {
+    expiresIn,
+  });
 }
 
 /**
@@ -238,7 +240,7 @@ export async function getSignedUploadUrl(
   const expiresIn = options.expiresIn || 3600; // 1 hour default
 
   return getSignedUrl(
-    r2Client,
+    r2Client as never,
     new PutObjectCommand({
       Bucket: bucket,
       Key: key,

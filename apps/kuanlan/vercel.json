@@ -1,3 +1,54 @@
 {
-  "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh apps/kuanlan"
+  "framework": "nextjs",
+  "buildCommand": "cd ../.. && pnpm turbo build --filter=@nebutra/kuanlan",
+  "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh apps/kuanlan",
+  "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
+  "outputDirectory": ".next",
+  "regions": ["hnd1"],
+  "env": {
+    "NEXT_PUBLIC_SITE_URL": "https://kuanlan.nebutra.com",
+    "NEXT_PUBLIC_APP_URL": "https://kuanlan.nebutra.com",
+    "R2_PUBLIC_URL": "https://cdn.nebutra.com",
+    "NEXT_PUBLIC_R2_PUBLIC_URL": "https://cdn.nebutra.com",
+    "R2_BUCKET_ASSETS": "nebutra-assets",
+    "R2_BUCKET_UPLOADS": "nebutra-uploads",
+    "IMAGE2_BASE_URL": "https://api.302.ai/v1",
+    "IMAGE2_MODEL": "gpt-image-2"
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
+      ]
+    }
+  ]
 }

@@ -68,14 +68,14 @@ if [[ "$COMMIT_REF" == dependabot/* ]] || [[ "$AUTHOR_LOGIN" == "dependabot[bot]
   exit 0
 fi
 
-if [[ -n "$COMMIT_REF" && "$COMMIT_REF" != "main" ]]; then
-  echo "Non-main ref '$COMMIT_REF' — skip (main only)."
-  exit 0
-fi
-
 if [[ "${VERCEL_FORCE_BUILD:-}" == "1" ]] || [[ "$COMMIT_MSG" == *"[vercel-force]"* ]]; then
   echo "Force build requested — building."
   exit 1
+fi
+
+if [[ -n "$COMMIT_REF" && "$COMMIT_REF" != "main" ]]; then
+  echo "Non-main ref '$COMMIT_REF' — skip (main only)."
+  exit 0
 fi
 
 # --- ECS-primary surfaces: production is not Vercel; skip unless opted in ---
@@ -205,17 +205,11 @@ packages/design/design-tokens
 EOF
       ;;
     apps/kuanlan)
-      # Keep in sync with apps/kuanlan/package.json workspace deps when the
-      # app lands. Do not add this path to the ECS-optional skip list.
+      # Keep in sync with apps/kuanlan/package.json workspace deps.
+      # Do not add this path to the ECS-optional skip list.
       cat <<'EOF'
 apps/kuanlan
-packages/design/brand
-packages/design/icons
-packages/design/tokens
-packages/design/ui
-packages/design/design-tokens
-packages/iam/auth
-packages/platform/i18n
+packages/integrations/storage
 EOF
       ;;
     apps/web)
