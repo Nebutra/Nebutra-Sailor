@@ -96,6 +96,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      - name: Ensure Fly app
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          FLY_ORG: ${{ vars.FLY_ORG }}
+        run: |
+          set -euo pipefail
+          org="$(bash infra/ops/scripts/resolve-fly-org.sh)"
+          echo "FLY_ORG=$org" >> "$GITHUB_ENV"
+          echo "using Fly org $org"
+          if flyctl apps list --json | python3 -c "import json,sys; names={a.get('Name') or a.get('name') for a in json.load(sys.stdin)}; sys.exit(0 if '${{ matrix.fly_app }}' in names else 1)"; then
+            echo "app ${{ matrix.fly_app }} exists"
+          else
+            flyctl apps create "${{ matrix.fly_app }}" --machines --org "$org" --yes
+          fi
+
       - name: Setup Node and pnpm
         uses: ./.github/actions/setup-node-pnpm
 
@@ -119,47 +137,6 @@ jobs:
 
       - name: Assemble image context
         run: bash infra/ops/scripts/assemble-next-standalone.sh "${{ matrix.workspace }}" "$RUNNER_TEMP/stage-${{ matrix.app }}" "${{ matrix.app }}"
-
-      - name: Setup flyctl
-        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
-
-      - name: Ensure Fly app
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-          FLY_ORG: ${{ vars.FLY_ORG }}
-        run: |
-          set -euo pipefail
-          org="${FLY_ORG:-}"
-          if [ -z "$org" ]; then
-            org=$(flyctl orgs list --json | python3 -c '
-          import json, sys
-          raw = json.load(sys.stdin)
-          orgs = raw if isinstance(raw, list) else (raw.get("organizations") or raw.get("Orgs") or [])
-          slugs, personal = [], []
-          for o in orgs:
-              slug = o.get("slug") or o.get("Slug") or o.get("name") or o.get("Name")
-              typ = str(o.get("type") or o.get("Type") or "").lower()
-              if not slug:
-                  continue
-              slugs.append(slug)
-              if "personal" in typ:
-                  personal.append(slug)
-          if len(slugs) == 1:
-              print(slugs[0])
-          elif len(personal) == 1:
-              print(personal[0])
-          else:
-              sys.stderr.write("Set repository variable FLY_ORG. orgs=" + ",".join(slugs) + "\n")
-              sys.exit(1)
-          ')
-          fi
-          echo "FLY_ORG=$org" >> "$GITHUB_ENV"
-          echo "using Fly org $org"
-          if flyctl apps list --json | python3 -c "import json,sys; names={a.get('Name') or a.get('name') for a in json.load(sys.stdin)}; sys.exit(0 if '${{ matrix.fly_app }}' in names else 1)"; then
-            echo "app ${{ matrix.fly_app }} exists"
-          else
-            flyctl apps create "${{ matrix.fly_app }}" --machines --org "$org" --yes
-          fi
 
       - name: Import ECS env if present
         env:

@@ -11,8 +11,8 @@ remains the rollback.
 ## Why traffic is still on ECS
 
 Machines are not live until `https://<app>.fly.dev` returns 200/302/307.
-CI creates apps non-interactively and needs an org slug (`vars.FLY_ORG`, or
-the single org / personal org on the deploy token).
+CI creates apps non-interactively and needs an org slug (`vars.FLY_ORG`,
+`fly orgs list` / GraphQL, then `personal`).
 
 1. `gh workflow run deploy-fly.yml` (empty `apps` = forge router web pebble design)
 2. Confirm each `https://nebutra-<app>.fly.dev` is healthy
