@@ -1,27 +1,14 @@
 "use client";
 
 /**
- * UserAvatarMenu — closed-loop signed-in indicator for marketing pages.
+ * UserAvatarMenu — signed-in indicator for marketing pages.
  *
- * 2026 SaaS pattern (Vercel / Linear / Stripe Dashboard style):
- *   - Reads `session hint cookie` on brand apex by the web app's
- *     auth catchall (apps/web/src/lib/session-hint.ts) when sign-in succeeds.
- *   - When the hint is present, fetches `${APP_URL}/api/me/public` with
- *     credentials to hydrate avatar + name + active-org.
- *   - Dropdown actions are real: go-to-dashboard, switch theme, sign-out
- *     (clears server session + the hint cookie via the catchall).
+ * The apex hint cookie only decides whether `/` bounces into the app.
+ * Chrome hydrates from `${APP_URL}/api/me/public` with credentials so an
+ * app-host session is enough — the hint is not a gate.
  *
- * Graceful degradation:
- *   - No hint cookie → render nothing (Navbar shows Sign In + Get Sailed).
- *   - Hint present but fetch fails (CORS, network, server) → render nothing
- *     and let the Navbar fall back to Sign In + Get Sailed. Never display
- *     a broken half-loaded avatar.
- *   - Hint present, fetch in-flight → render a quiet placeholder circle
- *     (no skeleton shimmer; avoids layout shift for the common-case anon).
- *
- * Privacy: never displays the user's ID or any sensitive field. Only the
- * display name + email + avatar URL the server explicitly allow-listed in
- * apps/web/src/app/api/me/public/route.ts.
+ * Renders nothing until that request succeeds. Anon visitors stay on
+ * Sign In / Get Sailed with no loading circle.
  */
 
 import {
@@ -33,7 +20,7 @@ import {
   User,
 } from "@nebutra/icons";
 import { useTranslations } from "next-intl";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState } from "react";
 import { env } from "@/lib/env";
 
 const SESSION_HINT_COOKIE = "nebutra_session_hint";
@@ -44,26 +31,6 @@ interface PublicMe {
   email: string;
   avatarUrl: string | null;
   activeOrganization: { name: string; slug: string } | null;
-}
-
-function readSessionHint(): boolean {
-  if (typeof document === "undefined") return false;
-  return document.cookie
-    .split(";")
-    .map((c) => c.trim())
-    .some((c) => c.startsWith(`${SESSION_HINT_COOKIE}=1`));
-}
-
-function subscribeToSessionHint() {
-  return () => {};
-}
-
-function getClientSessionHint() {
-  return readSessionHint();
-}
-
-function getServerSessionHint() {
-  return false;
 }
 
 function initialsFor(name: string, email: string): string {
@@ -78,19 +45,11 @@ function initialsFor(name: string, email: string): string {
 
 export function UserAvatarMenu(): React.ReactElement | null {
   const t = useTranslations("nav.avatarMenu");
-  const hintPresent = useSyncExternalStore(
-    subscribeToSessionHint,
-    getClientSessionHint,
-    getServerSessionHint,
-  );
   const [me, setMe] = useState<PublicMe | null>(null);
-  const [loadFailed, setLoadFailed] = useState(false);
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  // Hydrate user info once the hint is observed.
   useEffect(() => {
-    if (!hintPresent || me || loadFailed) return;
     let cancelled = false;
     void (async () => {
       try {
@@ -98,23 +57,18 @@ export function UserAvatarMenu(): React.ReactElement | null {
           credentials: "include",
           headers: { Accept: "application/json" },
         });
-        if (cancelled) return;
-        if (!response.ok) {
-          setLoadFailed(true);
-          return;
-        }
+        if (cancelled || !response.ok) return;
         const data = (await response.json()) as PublicMe;
-        setMe(data);
+        if (!cancelled) setMe(data);
       } catch {
-        if (!cancelled) setLoadFailed(true);
+        // Anon / CORS / network — keep the public CTAs.
       }
     })();
     return () => {
       cancelled = true;
     };
-  }, [hintPresent, me, loadFailed]);
+  }, []);
 
-  // Close on outside click + Escape.
   useEffect(() => {
     if (!open) return;
     function onDocumentClick(event: MouseEvent) {
@@ -133,27 +87,22 @@ export function UserAvatarMenu(): React.ReactElement | null {
   }, [open]);
 
   async function handleSignOut() {
-    // Drive sign-out through the canonical web-app route — that flow
-    // also clears the brand apex session-hint cookie via session-hint.ts.
     try {
       await fetch(`${APP_URL}/api/auth/sign-out`, {
         method: "POST",
         credentials: "include",
       });
     } catch {
-      // Even on a network failure, wipe the local hint so the UI reflects
-      // the user's intent immediately.
+      // Wipe the local hint so `/` stops bouncing after a failed sign-out hop.
     }
-    // Optimistically clear in case the catchall didn't reach us.
     document.cookie = `${SESSION_HINT_COOKIE}=; Path=/; Max-Age=0; SameSite=Lax`;
     window.location.assign(`${APP_URL}/sign-in`);
   }
 
-  // Nothing renders until we know there's a session AND the fetch succeeded.
-  if (!hintPresent || loadFailed) return null;
+  if (!me) return null;
 
-  const displayName = me?.name || me?.email || t("loadingName");
-  const subtitle = me?.activeOrganization?.name ?? me?.email ?? "";
+  const displayName = me.name || me.email || t("loadingName");
+  const subtitle = me.activeOrganization?.name ?? me.email ?? "";
 
   return (
     <div ref={containerRef} className="relative inline-flex">
@@ -169,7 +118,7 @@ export function UserAvatarMenu(): React.ReactElement | null {
           aria-hidden
           className="relative flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-primary text-[10px] font-semibold text-white shadow-inner"
         >
-          {me?.avatarUrl ? (
+          {me.avatarUrl ? (
             // biome-ignore lint/performance/noImgElement: external user avatars are not in next/image's remotePatterns allowlist; defaults to native <img> with no optimization.
             <img
               src={me.avatarUrl}
@@ -179,7 +128,7 @@ export function UserAvatarMenu(): React.ReactElement | null {
               referrerPolicy="no-referrer"
             />
           ) : (
-            initialsFor(me?.name ?? "", me?.email ?? "")
+            initialsFor(me.name, me.email)
           )}
           <span
             aria-hidden
@@ -200,7 +149,7 @@ export function UserAvatarMenu(): React.ReactElement | null {
               aria-hidden
               className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary text-sm font-semibold text-white shadow-inner"
             >
-              {me?.avatarUrl ? (
+              {me.avatarUrl ? (
                 // biome-ignore lint/performance/noImgElement: external user avatar; see comment on trigger img.
                 <img
                   src={me.avatarUrl}
@@ -210,7 +159,7 @@ export function UserAvatarMenu(): React.ReactElement | null {
                   referrerPolicy="no-referrer"
                 />
               ) : (
-                initialsFor(me?.name ?? "", me?.email ?? "")
+                initialsFor(me.name, me.email)
               )}
             </span>
             <div className="min-w-0 flex-1">
