@@ -1,7 +1,7 @@
 # Fly origin (product edges)
 
 ECS PM2 is no longer the intended home for `forge` / `router` / `web` /
-`pebble` / `design`. Those apps ship as Next standalone Machines in `hkg`
+`pebble` / `design`. Those apps ship as Next standalone Machines in `sin`
 via [`.github/workflows/deploy-fly.yml`](../../.github/workflows/deploy-fly.yml).
 
 Landing, Cloudflare Workers (gateway + auth-edge), `sso.nebutra.com`,

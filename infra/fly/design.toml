@@ -1,5 +1,5 @@
 app = "nebutra-design"
-primary_region = "hkg"
+primary_region = "sin"
 
 [http_service]
   internal_port = 8080

@@ -180,6 +180,11 @@ describe("Deploy substrate governance", () => {
       'flyctl apps create "${' + '{ matrix.fly_app }}" --machines --org "$org" --yes',
     );
     expect(yml.indexOf("Setup flyctl")).toBeLessThan(yml.indexOf("Setup Node and pnpm"));
+    for (const app of ["forge", "router", "web", "pebble", "design"]) {
+      const toml = readFileSync(resolve(process.cwd(), "infra/fly", `${app}.toml`), "utf-8");
+      expect(toml, app).toContain('primary_region = "sin"');
+      expect(toml, app).not.toContain("hkg");
+    }
   });
 
   it("web and auth Vercel workflows are workflow_dispatch only", () => {
