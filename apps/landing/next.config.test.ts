@@ -19,7 +19,13 @@ describe("landing Next.js security headers", () => {
 
     expect(csp).toContain("script-src");
     expect(csp).toContain("https://accounts.google.com/gsi/client");
-    expect(csp).toContain("connect-src 'self' https://accounts.google.com/gsi/");
+    expect(csp).toContain("connect-src");
+    expect(csp).toContain("'self'");
+    expect(csp).toContain("https://accounts.google.com/gsi/");
+    // Navbar session + sign-out talk to the app host. Without these origins
+    // the browser drops the credentialed fetch and the header stays anonymous.
+    expect(csp).toContain("https://app.nebutra.com");
+    expect(csp).toContain("https://auth.nebutra.com");
     expect(csp).toContain("frame-src https://accounts.google.com/gsi/");
     expect(csp).toContain("style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style");
   });

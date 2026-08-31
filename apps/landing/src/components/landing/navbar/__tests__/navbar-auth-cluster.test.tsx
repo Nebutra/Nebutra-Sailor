@@ -3,6 +3,7 @@ import * as matchers from "@testing-library/jest-dom/matchers";
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import type * as React from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { resetPublicMeCache } from "@/lib/public-me";
 
 expect.extend(matchers);
 
@@ -22,8 +23,7 @@ vi.mock("@nebutra/icons", () => {
   };
 });
 
-import { resetPublicMeCache } from "@/lib/public-me";
-import { UserAvatarMenu } from "../UserAvatarMenu";
+import { NavbarAuthCluster } from "../NavbarAuthCluster";
 
 function jsonResponse(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
@@ -32,10 +32,9 @@ function jsonResponse(body: unknown, status = 200): Response {
   });
 }
 
-describe("UserAvatarMenu", () => {
+describe("NavbarAuthCluster", () => {
   beforeEach(() => {
     resetPublicMeCache();
-    document.cookie = "nebutra_session_hint=; Path=/; Max-Age=0";
     vi.restoreAllMocks();
   });
 
@@ -45,27 +44,22 @@ describe("UserAvatarMenu", () => {
     vi.unstubAllGlobals();
   });
 
-  it("asks /api/me/public with credentials even when the apex hint cookie is missing", async () => {
-    const fetchMock = vi.fn().mockResolvedValue(jsonResponse({ error: "Not authenticated" }, 401));
-    vi.stubGlobal("fetch", fetchMock);
-
-    render(<UserAvatarMenu />);
-
-    await waitFor(() => {
-      expect(fetchMock).toHaveBeenCalled();
-    });
-    expect(fetchMock).toHaveBeenCalledWith(
-      expect.stringMatching(/\/api\/me\/public$/),
-      expect.objectContaining({
-        credentials: "include",
-      }),
+  it("keeps Sign In / Get Sailed while the session probe is anonymous", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(jsonResponse({ error: "Not authenticated" }, 401)),
     );
-    expect(
-      screen.queryByRole("button", { name: "nav.avatarMenu.ariaLabel" }),
-    ).not.toBeInTheDocument();
+
+    render(<NavbarAuthCluster />);
+
+    expect(screen.getByRole("link", { name: "nav.signIn" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "nav.getStarted" })).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByRole("link", { name: "nav.signIn" })).toBeInTheDocument();
+    });
   });
 
-  it("renders the signed-in menu after /api/me/public succeeds", async () => {
+  it("hides Sign In / Get Sailed after the session probe succeeds", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn().mockResolvedValue(
@@ -78,11 +72,12 @@ describe("UserAvatarMenu", () => {
       ),
     );
 
-    render(<UserAvatarMenu />);
+    render(<NavbarAuthCluster />);
 
     expect(
       await screen.findByRole("button", { name: "nav.avatarMenu.ariaLabel" }),
     ).toBeInTheDocument();
-    expect(screen.getByText("TL")).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "nav.signIn" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "nav.getStarted" })).not.toBeInTheDocument();
   });
 });

@@ -7,6 +7,9 @@
  * Chrome hydrates from `${APP_URL}/api/me/public` with credentials so an
  * app-host session is enough — the hint is not a gate.
  *
+ * That fetch is cross-origin. Landing CSP `connect-src` must list the app
+ * host or the browser drops the request and this menu never appears.
+ *
  * Renders nothing until that request succeeds. Anon visitors stay on
  * Sign In / Get Sailed with no loading circle.
  */
@@ -22,16 +25,10 @@ import {
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { env } from "@/lib/env";
+import { usePublicMe } from "@/lib/use-public-me";
 
 const SESSION_HINT_COOKIE = "nebutra_session_hint";
 const APP_URL = env.NEXT_PUBLIC_APP_URL;
-
-interface PublicMe {
-  name: string;
-  email: string;
-  avatarUrl: string | null;
-  activeOrganization: { name: string; slug: string } | null;
-}
 
 function initialsFor(name: string, email: string): string {
   const source = (name || email || "").trim();
@@ -45,29 +42,9 @@ function initialsFor(name: string, email: string): string {
 
 export function UserAvatarMenu(): React.ReactElement | null {
   const t = useTranslations("nav.avatarMenu");
-  const [me, setMe] = useState<PublicMe | null>(null);
+  const me = usePublicMe();
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    void (async () => {
-      try {
-        const response = await fetch(`${APP_URL}/api/me/public`, {
-          credentials: "include",
-          headers: { Accept: "application/json" },
-        });
-        if (cancelled || !response.ok) return;
-        const data = (await response.json()) as PublicMe;
-        if (!cancelled) setMe(data);
-      } catch {
-        // Anon / CORS / network — keep the public CTAs.
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   useEffect(() => {
     if (!open) return;

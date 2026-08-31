@@ -5,24 +5,21 @@ import { getMarketingHomePath } from "@nebutra/brand/metadata-helpers";
 import { DEFAULT_ROUTE_LOCALE, toRouteLocale } from "@nebutra/i18n/locales";
 import { useDarkSurface } from "@nebutra/theme";
 import { useTheme } from "@nebutra/tokens";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useEffect, useState } from "react";
 import { MarketLocalePicker } from "@/components/ui/market-locale-picker";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { useMount } from "@/hooks/useMount";
-import { env } from "@/lib/env";
 import { cn } from "@/lib/utils";
 import { DesktopNav } from "./navbar/DesktopNav";
 import { MobileDrawer } from "./navbar/MobileDrawer";
+import { NavbarAuthCluster } from "./navbar/NavbarAuthCluster";
 import { UserAvatarMenu } from "./navbar/UserAvatarMenu";
-
-const APP_URL = env.NEXT_PUBLIC_APP_URL;
 
 /**
  * Navbar - Fixed navigation with brand logo and theme toggle
  */
 export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean }) {
-  const t = useTranslations("nav");
   const locale = useLocale();
   const homeHref = getMarketingHomePath({
     locale: toRouteLocale(locale),
@@ -71,25 +68,7 @@ export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean })
           <MarketLocalePicker />
           <ThemeSwitcher />
 
-          {/*
-            Signed-in chrome hydrates from app `/api/me/public`. Hint cookie
-            is not a gate. Sign-In / Get-Sailed stay visible to avoid a
-            flash-of-anonymous-CTA while that request is in flight.
-          */}
-          <UserAvatarMenu />
-
-          <a
-            href={`${APP_URL}/sign-in`}
-            className="whitespace-nowrap text-[0.8rem] xl:text-sm font-medium text-neutral-11 transition-colors hover:text-neutral-12"
-          >
-            {t("signIn")}
-          </a>
-          <a
-            href={`${APP_URL}/sign-up`}
-            className="whitespace-nowrap rounded-[var(--radius-lg)] bg-[color:hsl(var(--foreground))] px-3 py-1.5 text-[0.8rem] font-medium text-[color:hsl(var(--background))] shadow-sm transition-colors hover:bg-[color:hsl(var(--muted-foreground))] xl:px-4 xl:py-2 xl:text-sm"
-          >
-            {t("getStarted")}
-          </a>
+          <NavbarAuthCluster />
         </div>
 
         {/* --- GLOBAL CONTROLS & DRAWER (Mobile) --- */}
@@ -98,6 +77,7 @@ export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean })
           <div className="hidden sm:block">
             <ThemeSwitcher />
           </div>
+          <UserAvatarMenu />
           <MobileDrawer />
         </div>
       </div>
