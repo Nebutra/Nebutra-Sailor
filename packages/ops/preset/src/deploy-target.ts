@@ -1,5 +1,5 @@
 export const TARGETS_BY_SURFACE = {
-  frontend: ["vercel", "standalone", "cloudflare-pages", "railway"],
+  frontend: ["vercel", "standalone", "cloudflare-pages", "railway", "fly"],
   edgeGateway: [
     "cloudflare-workers",
     "vercel-functions",
@@ -8,8 +8,9 @@ export const TARGETS_BY_SURFACE = {
     "aws",
     "gcp",
     "railway",
+    "fly",
   ],
-  originBackend: ["ecs-docker", "k8s", "aws", "gcp", "railway"],
+  originBackend: ["ecs-docker", "k8s", "aws", "gcp", "railway", "fly"],
 } as const;
 
 export type DeploySurface = keyof typeof TARGETS_BY_SURFACE;

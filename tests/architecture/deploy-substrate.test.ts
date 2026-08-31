@@ -165,4 +165,22 @@ describe("Deploy substrate governance", () => {
       expect(script).not.toMatch(/name:\s*"api-gateway"[\s\S]{0,200}?node_modules\/\.bin\/next/);
     }
   });
+
+  it("Fly origin workflow requires a token and does not cut DNS on push", () => {
+    const yml = read("deploy-fly.yml");
+    expect(yml).toContain("FLY_API_TOKEN");
+    expect(yml).toContain("Set repository secret FLY_API_TOKEN");
+    expect(yml).toContain("infra/fly/${" + "{ matrix.app }}.toml");
+    expect(yml).toContain("point-host-dns-fly.sh");
+    expect(yml).toContain("github.event.inputs.cutover == 'true'");
+    expect(yml).toContain("uses: ./.github/actions/setup-node-pnpm");
+  });
+
+  it("web and auth Vercel workflows are workflow_dispatch only", () => {
+    for (const file of ["deploy-web-vercel.yml", "deploy-auth-vercel.yml"]) {
+      const yml = read(file);
+      expect(yml).toContain("workflow_dispatch:");
+      expect(yml, `${file} must not auto-deploy on push`).not.toMatch(/^ {2}push:/m);
+    }
+  });
 });

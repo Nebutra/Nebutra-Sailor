@@ -112,7 +112,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | **Vercel** | Git-native frontends | landing, docs (+ web/auth when cut over) |
 | **ECS (slim)** | Origin processes | web*, auth*, api, sso/idp |
 
-\* web/auth currently origin on ECS while Vercel projects exist for future cutover.
+\* web/auth currently origin on ECS; Vercel Git auto-deploy for those two is off in `vercel.json`. kuanlan stays Git-linked and is skipped until `package.json` lands — [vercel-spend.md](./ops/vercel-spend.md). Product-edge Fly Machines: [fly-origin.md](./ops/fly-origin.md) (DNS still ECS until `FLY_API_TOKEN` + cutover).
 
 ### Repo variables (no drift)
 
