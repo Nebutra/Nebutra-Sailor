@@ -716,8 +716,9 @@ jobs:
           # without anyone remembering to list it here — which is the same reason
           # the scp loop further down globs instead of enumerating hosts.
           sparse-checkout: |
-            infra/iac/ecs/ecosystem.config.cjs
-            infra/ops/scripts/ecs-deploy-remote.sh
+            infra/iac/ecs
+            infra/nebutra-router
+            infra/ops/scripts
             infra/runtime/nginx/nginx.conf
             infra/runtime/nginx/conf.d
 
