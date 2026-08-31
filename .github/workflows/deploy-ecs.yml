@@ -1079,6 +1079,7 @@ jobs:
           done
 
       - name: Run remote deploy
+        id: remote-deploy
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DIRECT_URL: ${{ secrets.DIRECT_URL }}
@@ -1398,6 +1399,7 @@ jobs:
 
       - name: Bootstrap New-API sidecar
         if: needs.detect-changes.outputs.router == 'true' || needs.detect-changes.outputs.kuanlan == 'true'
+        continue-on-error: true
         env:
           ECS_HOST: ${{ vars.VM_HOST || vars.CLOUD_VM_HOST || vars.ECS_HOST }}
           ECS_USER: ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
@@ -1421,7 +1423,7 @@ jobs:
               "CHANNEL_302_KEY=$(printf '%q' "${CHANNEL_302_KEY:-}") ECS_DEPLOY_ROOT=$(printf '%q' "$ECS_DEPLOY_ROOT") bash /tmp/ecs-bootstrap-new-api.sh"
 
       - name: Point kuanlan DNS to ECS
-        if: needs.detect-changes.outputs.kuanlan == 'true'
+        if: always() && needs.detect-changes.outputs.kuanlan == 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
@@ -1433,6 +1435,8 @@ jobs:
           bash infra/ops/scripts/point-kuanlan-dns-ecs.sh
 
       - name: Smoke test public endpoints
+        id: smoke
+        if: always() && steps.remote-deploy.outcome == 'success'
         run: |
           set -euo pipefail
           declare -A targets=()
@@ -1645,7 +1649,7 @@ jobs:
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && emit_deployment_verified sailor-docs "https://docs.nebutra.com"
 
       - name: Rollback Cloud VM on deploy or smoke failure
-        if: failure()
+        if: failure() && (steps.remote-deploy.outcome == 'failure' || steps.smoke.outcome == 'failure')
         env:
           ECS_HOST:          ${{ vars.VM_HOST || vars.CLOUD_VM_HOST || vars.ECS_HOST }}
           ECS_USER:          ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
