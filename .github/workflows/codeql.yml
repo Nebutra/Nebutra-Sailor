@@ -3,10 +3,14 @@ name: CodeQL Security Analysis
 # Runs GitHub's CodeQL SAST scanner on TypeScript and Python source code.
 # Results appear in the Security tab → Code scanning alerts.
 #
-# Runs on:
-#   - Every push to main/develop
-#   - Every PR targeting main/develop
-#   - Weekly schedule (Sunday 03:00 Asia/Shanghai) to catch new CVEs in unchanged code
+# Branch protection requires both job names to report on every PR:
+#   - CodeQL Analysis (javascript-typescript)
+#   - CodeQL Analysis (python)
+# A skipped matrix entry would leave the required check pending forever.
+# Python therefore always reports, and only extracts when Python paths change.
+#
+# JavaScript/TypeScript extracts from source. A full pnpm install is not part
+# of the extract and was the long pole on landing-only PRs (~5 minutes).
 
 on:
   push:
@@ -24,8 +28,42 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  detect-languages:
+    name: Detect CodeQL languages
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      python: ${{ steps.resolve.outputs.python }}
+    steps:
+      - name: Checkout
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Detect Python paths
+        if: github.event_name == 'pull_request'
+        id: filter
+        uses: dorny/paths-filter@d1c1ffe0248fe513906c8e24db8ea791d46f8590 # v3
+        with:
+          filters: |
+            python:
+              - "**/*.py"
+              - "**/*.pyi"
+              - "backends/python/**"
+              - "**/pyproject.toml"
+              - "**/uv.lock"
+
+      - name: Resolve
+        id: resolve
+        run: |
+          if [ "${{ github.event_name }}" != "pull_request" ]; then
+            echo "python=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "python=${{ steps.filter.outputs.python }}" >> "$GITHUB_OUTPUT"
+          fi
+
   analyze:
     name: CodeQL Analysis (${{ matrix.language }})
+    needs: detect-languages
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
@@ -41,9 +79,16 @@ jobs:
           - python
 
     steps:
+      - name: Skip Python (no Python in this PR)
+        if: matrix.language == 'python' && needs.detect-languages.outputs.python != 'true'
+        run: echo "No Python paths changed; required check stays green without a full extract."
+
       - name: Checkout
+        if: matrix.language != 'python' || needs.detect-languages.outputs.python == 'true'
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
       - name: Initialize CodeQL
+        if: matrix.language != 'python' || needs.detect-languages.outputs.python == 'true'
         uses: github/codeql-action/init@4187e74d05793876e9989daffde9c3e66b4acd07 # v3
         with:
           languages: ${{ matrix.language }}
@@ -52,24 +97,27 @@ jobs:
           # so they're version-controlled, reviewed on PR, and not buried inline.
           config-file: .github/codeql/codeql-config.yml
 
-      # ── TypeScript: build for analysis ────────────────────────────────────
+      # JS/TS extract reads source. Installing the workspace is not required
+      # and was dominating wall-clock on small PRs. Keep the shared setup
+      # action so the CI harness contract still holds.
       - name: Setup Node.js and pnpm
         if: matrix.language == 'javascript-typescript'
         uses: ./.github/actions/setup-node-pnpm
+        with:
+          install: "false"
 
-      # ── Python: setup for analysis ────────────────────────────────────────
       - name: Setup Python
-        if: matrix.language == 'python'
+        if: matrix.language == 'python' && needs.detect-languages.outputs.python == 'true'
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.11"
 
       - name: Install uv
-        if: matrix.language == 'python'
+        if: matrix.language == 'python' && needs.detect-languages.outputs.python == 'true'
         uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
 
-      # ── Run CodeQL analysis ───────────────────────────────────────────────
       - name: Perform CodeQL Analysis
+        if: matrix.language != 'python' || needs.detect-languages.outputs.python == 'true'
         uses: github/codeql-action/analyze@4187e74d05793876e9989daffde9c3e66b4acd07 # v3
         with:
           category: "/language:${{ matrix.language }}"

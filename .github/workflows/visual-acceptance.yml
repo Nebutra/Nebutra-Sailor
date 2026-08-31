@@ -3,7 +3,8 @@ name: Visual Acceptance
 on:
   pull_request:
     paths:
-      - "apps/landing/**"
+      - "apps/landing/src/app/**"
+      - "apps/landing/src/components/**"
       - "e2e/visual/**"
       - "e2e/playwright.visual.config.ts"
       - "packages/design/**"
@@ -14,7 +15,8 @@ on:
     branches:
       - main
     paths:
-      - "apps/landing/**"
+      - "apps/landing/src/app/**"
+      - "apps/landing/src/components/**"
       - "e2e/visual/**"
       - "e2e/playwright.visual.config.ts"
       - "packages/design/**"
@@ -45,7 +47,8 @@ jobs:
         with:
           filters: |
             landing:
-              - "apps/landing/**"
+              - "apps/landing/src/app/**"
+              - "apps/landing/src/components/**"
               - "e2e/visual/landing-feature-showcase.visual.spec.ts"
               - "e2e/visual/helpers/**"
               - "e2e/playwright.visual.config.ts"
