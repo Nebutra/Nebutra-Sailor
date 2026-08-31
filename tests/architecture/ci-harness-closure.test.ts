@@ -99,6 +99,19 @@ describe("ci harness dependency closure", () => {
     expect(workflow).toContain("pnpm visual:landing:ci");
     expect(workflow).toContain('e2e/visual/helpers/**"');
     expect(workflow).toContain("name: Docs and Feature Showcase");
+    // Feature-showcase screenshots, not every landing file. A CSP / unit-test
+    // PR must not wait on a 30-minute Playwright install.
+    expect(workflow).not.toContain('"apps/landing/**"');
+    expect(workflow).toContain("apps/landing/src/components/**");
+  });
+
+  it("keeps CodeQL as a required gate without a full monorepo install", async () => {
+    const workflow = await readFile(join(process.cwd(), ".github/workflows/codeql.yml"), "utf8");
+
+    expect(workflow).toContain("uses: ./.github/actions/setup-node-pnpm");
+    expect(workflow).toContain('install: "false"');
+    expect(workflow).toContain("No Python paths changed");
+    expect(workflow).toContain("CodeQL Analysis (${{ matrix.language }})");
   });
 
   it("keeps the Cloud VM fallback on the shared setup action without redundant smoke URLs", async () => {
