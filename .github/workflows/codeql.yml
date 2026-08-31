@@ -42,7 +42,7 @@ jobs:
       - name: Detect Python paths
         if: github.event_name == 'pull_request'
         id: filter
-        uses: dorny/paths-filter@d1c1ffe0248fe513906c8e24db8ea791d46f8590 # v3
+        uses: dorny/paths-filter@0e4a8c6effa4802afeda77dc8d303f8176d7dfad # v3
         with:
           filters: |
             python:
@@ -89,7 +89,7 @@ jobs:
 
       - name: Initialize CodeQL
         if: matrix.language != 'python' || needs.detect-languages.outputs.python == 'true'
-        uses: github/codeql-action/init@4187e74d05793876e9989daffde9c3e66b4acd07 # v3
+        uses: github/codeql-action/init@6f5948dfacef28e207b48d0905cf90c03365536d # v3
         with:
           languages: ${{ matrix.language }}
           queries: security-extended,security-and-quality
@@ -118,7 +118,7 @@ jobs:
 
       - name: Perform CodeQL Analysis
         if: matrix.language != 'python' || needs.detect-languages.outputs.python == 'true'
-        uses: github/codeql-action/analyze@4187e74d05793876e9989daffde9c3e66b4acd07 # v3
+        uses: github/codeql-action/analyze@6f5948dfacef28e207b48d0905cf90c03365536d # v3
         with:
           category: "/language:${{ matrix.language }}"
           # Upload results as SARIF to GitHub Security tab
