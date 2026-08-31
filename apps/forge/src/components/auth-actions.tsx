@@ -6,9 +6,19 @@ import {
   getConfiguredAuthProvider,
   useAuth,
 } from "@nebutra/auth/client";
-import { Button } from "@nebutra/ui/primitives";
+import { Logout } from "@nebutra/icons";
+import {
+  Avatar,
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
+import { userInitials } from "@/lib/user-initials";
 
 export type AuthActionsProps = {
   /** Server-computed sign-in URL (avoids client env / localhost fallback). */
@@ -43,42 +53,46 @@ export function AuthActions({ signInHref, signUpHref }: AuthActionsProps = {}) {
     return signUpHref ?? buildAuthCenterSignUpUrl();
   }, [provider, returnTo, signUpHref]);
 
-  // While session is loading, still render Sign in / Sign up with server-injected
-  // URLs so the first paint never links to localhost:3101.
   if (!isLoaded) {
-    return (
-      <div className="flex items-center gap-2">
-        <Button asChild variant="ghost" size="sm">
-          <a href={resolvedSignIn}>{t("signIn")}</a>
-        </Button>
-        <Button asChild variant="outline" size="sm">
-          <a href={resolvedSignUp}>{t("signUp")}</a>
-        </Button>
-      </div>
-    );
+    return <div className="h-8 w-8 animate-pulse rounded-full bg-neutral-3" aria-hidden />;
   }
 
   if (isSignedIn && user) {
-    const label = user.email ?? user.name ?? user.id;
+    const displayName = user.name ?? user.email ?? user.id;
     return (
-      <div className="flex items-center gap-2">
-        <span
-          className="hidden max-w-[140px] truncate text-[12px] text-[var(--neutral-11)] sm:inline"
-          title={label}
-        >
-          {label}
-        </span>
-        <Button
+      <DropdownMenu>
+        <DropdownMenuTrigger
           type="button"
-          variant="ghost"
-          size="sm"
-          onClick={() => {
-            void signOut();
-          }}
+          aria-label={t("menuAria")}
+          className="inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-neutral-7 bg-neutral-2"
         >
-          {t("signOut")}
-        </Button>
-      </div>
+          <Avatar
+            size="sm"
+            src={user.imageUrl}
+            title={displayName}
+            letter={userInitials(user.name, user.email)}
+          />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" sideOffset={6} className="w-56" aria-label={t("menuAria")}>
+          <div className="px-3 py-2">
+            {user.name ? (
+              <p className="truncate text-sm font-medium text-foreground">{user.name}</p>
+            ) : null}
+            {user.email ? (
+              <p className="truncate text-xs text-muted-foreground">{user.email}</p>
+            ) : null}
+          </div>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onClick={() => {
+              void signOut();
+            }}
+          >
+            <Logout className="size-4" />
+            {t("signOut")}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     );
   }
 
