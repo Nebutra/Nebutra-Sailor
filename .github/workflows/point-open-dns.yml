@@ -1,0 +1,85 @@
+name: Point open DNS to Vercel
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dns:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Upsert open.nebutra.com → Vercel
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+          CF_ZONE_ID: ${{ vars.CF_ZONE_ID || '' }}
+        run: |
+          set -euo pipefail
+          test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::CLOUDFLARE_API_TOKEN secret missing"; exit 1; }
+          bash infra/ops/scripts/point-open-dns-vercel.sh
+
+      - name: Attach open.nebutra.com on nebutra-landing
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
+        run: |
+          set -euo pipefail
+          if [ -z "${VERCEL_TOKEN:-}" ]; then
+            echo "::error::VERCEL_TOKEN is not set"; exit 1
+          fi
+          if [ -z "${VERCEL_ORG_ID:-}" ]; then
+            echo "::error::VERCEL_ORG_ID is not set"; exit 1
+          fi
+
+          api() {
+            curl -sS -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" "$@"
+          }
+
+          api "https://api.vercel.com/v9/projects?teamId=${VERCEL_ORG_ID}&limit=100" > projects.json
+          python3 - <<'PY' > resolved.env
+          import json
+          data = json.load(open("projects.json"))
+          names = {p["name"]: p for p in data.get("projects", [])}
+          for candidate in ("nebutra-landing", "landing", "nebutra-landing-page", "landing-page"):
+              if candidate in names:
+                  p = names[candidate]
+                  print("PROJECT_ID=" + p["id"])
+                  break
+          else:
+              raise SystemExit("landing project not found: " + ", ".join(sorted(names)))
+          PY
+          set -a
+          # shellcheck disable=SC1091
+          . ./resolved.env
+          set +a
+          echo "project=$PROJECT_ID"
+
+          echo "Attaching domain open.nebutra.com (idempotent)"
+          api -X POST "https://api.vercel.com/v10/projects/${PROJECT_ID}/domains?teamId=${VERCEL_ORG_ID}" \
+            -d '{"name":"open.nebutra.com"}' > domain.json || true
+          python3 -c 'import json; d=json.load(open("domain.json")); print("domain", d.get("name") or d.get("error",{}).get("code"), d.get("verified", d.get("error")))'
+
+      - name: Smoke open host (must stay on open.nebutra.com)
+        run: |
+          set -euo pipefail
+          host_of() { printf '%s' "$1" | sed -E 's#^https?://([^/]+).*#\1#'; }
+          for i in 1 2 3 4 5 6 7 8; do
+            read -r code final < <(curl -sSL -o /tmp/open.html \
+              -w '%{http_code} %{url_effective}\n' --max-time 25 https://open.nebutra.com/ 2>/dev/null || echo "000 -")
+            echo "try $i -> $code $final"
+            if [ "$code" = "200" ] && [ "$(host_of "$final")" = "open.nebutra.com" ]; then
+              head -c 400 /tmp/open.html; echo
+              exit 0
+            fi
+            if [ "$code" = "200" ]; then
+              echo "::warning::open left its host: ended on $final"
+            fi
+            sleep 12
+          done
+          echo "::warning::DNS may be set but Vercel domain binding not ready yet"
+          curl -sSI --max-time 15 https://open.nebutra.com/ || true
+          exit 0

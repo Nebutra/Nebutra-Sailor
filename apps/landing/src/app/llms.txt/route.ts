@@ -34,6 +34,7 @@ multi-tenant products with agent workflows.
 - [Changelog](${base}/changelog): Release notes
 - [Licensing](${base}/licensing): OSS + commercial license terms
 - [Status](${base}/status): Service health
+- [Open Platform](${base}/open): Public API catalog and developer console index
 
 ## Documentation (separate origin)
 

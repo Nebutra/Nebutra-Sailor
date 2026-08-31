@@ -232,6 +232,7 @@ describe("getBrandOrigin / getBrandPublicUrls", () => {
     const u = getBrandPublicUrls();
     expect(u.authUrl).toBe(`https://${brand.domains.auth}`);
     expect(u.routerUrl).toBe(`https://${brand.domains.router}`);
+    expect(u.openUrl).toBe(`https://${brand.domains.open}`);
     expect(u.cookieDomain).toBe(`.${brand.domains.landing}`);
     expect(getBrandCookieDomain()).toBe(`.${brand.domains.landing}`);
   });

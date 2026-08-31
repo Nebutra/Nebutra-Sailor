@@ -190,6 +190,13 @@ export const SEO_ROUTE_REGISTRY: ReadonlyArray<SeoRouteEntry> = [
   },
   { pattern: "/playbook", changeFrequency: "weekly", priority: 0.5, localization: "content" },
   { pattern: "/showcase", changeFrequency: "weekly", priority: 0.5, localization: "content" },
+  {
+    pattern: "/open",
+    changeFrequency: "weekly",
+    priority: 0.8,
+    localization: "content",
+    sitelinkCandidate: { label: "Open Platform" },
+  },
 
   // ── Content-scoped dynamic families ─────────────────────────────
   { pattern: "/blog/*", changeFrequency: "monthly", priority: 0.7, localization: "content" },
