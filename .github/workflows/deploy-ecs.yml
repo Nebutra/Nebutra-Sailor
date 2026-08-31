@@ -785,6 +785,13 @@ jobs:
           name: bundle-router
           path: ${{ runner.temp }}/bundles
 
+      - name: Download kuanlan bundle
+        if: needs.detect-changes.outputs.kuanlan == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: bundle-kuanlan
+          path: ${{ runner.temp }}/bundles
+
       - name: Download forge bundle
         if: needs.detect-changes.outputs.forge == 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
@@ -1424,8 +1431,9 @@ jobs:
 
       - name: Point kuanlan DNS to ECS
         if: always() && needs.detect-changes.outputs.kuanlan == 'true'
+        continue-on-error: true
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFLARE_WORKERS_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
           ECS_HOST: ${{ vars.ECS_HOST || vars.VM_HOST || '106.15.4.31' }}
           CF_ZONE_NAME: nebutra.com
