@@ -45,6 +45,7 @@ describe("brand config facts (contract lock for app helpers + i18n)", () => {
       "forge",
       "design",
       "status",
+      "open",
       "analytics",
       "pebble",
       "carina",

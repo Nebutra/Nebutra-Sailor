@@ -8,8 +8,10 @@ import { routing } from "@/i18n/routing";
  * - `/status` — public trust surface (also served on status.nebutra.com). One Tap
  *   here looked like "status requires login" and still pointed some clients at
  *   the legacy app `/dashboard` dead-end after auth.
+ * - `/open` — developer catalog (also served on open.nebutra.com). One Tap here
+ *   reads as "the platform requires Google" before the visitor chose a console.
  */
-const oneTapSuppressedPaths = new Set(["/refer", "/status"]);
+const oneTapSuppressedPaths = new Set(["/refer", "/status", "/open"]);
 
 function normalizePathname(pathname: string): string {
   const normalized = pathname.startsWith("/") ? pathname : `/${pathname}`;

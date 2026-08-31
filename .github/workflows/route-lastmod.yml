@@ -35,6 +35,7 @@ on:
       - "apps/landing/src/lib/constants/solutions-data.ts"
       - "apps/landing/src/lib/blog.ts"
       - "apps/landing/src/lib/blog-fallback.ts"
+      - "apps/landing/src/lib/constants/open-platform.ts"
 
 concurrency:
   group: route-lastmod

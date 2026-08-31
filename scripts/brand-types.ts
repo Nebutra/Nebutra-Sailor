@@ -224,6 +224,12 @@ export interface BrandConfig {
     design: string;
     status: string;
     /**
+     * Public open-platform catalog (`open.nebutra.com`). Host alias on landing:
+     * `/` rewrites to `/open`. Authenticated console stays on `app` at
+     * `/settings/developers`. Not a new workspace app. See docs/DOMAINS.md.
+     */
+    open: string;
+    /**
      * Internal ecosystem control plane (`apps/admin`). Staff-only: OIDC against
      * the `sso` host plus a platform-staff role, behind Cloudflare Access. Never
      * carries tenant-visible functionality. See
@@ -360,6 +366,7 @@ export const DEFAULT_BRAND: BrandConfig = {
     forge: "forge.nebutra.com",
     design: "design.nebutra.com",
     status: "status.nebutra.com",
+    open: "open.nebutra.com",
     admin: "admin.nebutra.com",
     analytics: "analytics.nebutra.com",
     pebble: "pebble.nebutra.com",

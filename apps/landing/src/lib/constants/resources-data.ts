@@ -17,6 +17,7 @@ import {
   Eye,
   FileText,
   GitPullRequest,
+  Globe,
   Lightning,
   Notification,
   Pencil,
@@ -56,6 +57,16 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
 
 export const RESOURCES: ResourceLink[] = [
   // ── Developers ────────────────────────────────────────────────────────────
+  {
+    groupId: "developers",
+    icon: Globe,
+    label: { en: "Open Platform", zh: "开放平台" },
+    tagline: {
+      en: "APIs, docs, and the developer console",
+      zh: "API、文档与开发者控制台",
+    },
+    href: "/open",
+  },
   {
     groupId: "developers",
     icon: FileText,

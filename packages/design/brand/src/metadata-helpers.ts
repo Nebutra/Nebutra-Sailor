@@ -96,6 +96,7 @@ export function getBrandPublicUrls() {
     forgeUrl: getBrandOrigin("forge"),
     designUrl: getBrandOrigin("design"),
     statusUrl: getBrandOrigin("status"),
+    openUrl: getBrandOrigin("open"),
     studioUrl: getBrandOrigin("studio"),
     cdnUrl: getBrandOrigin("cdn"),
     analyticsUrl: getBrandOrigin("analytics"),

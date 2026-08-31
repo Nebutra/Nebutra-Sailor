@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { href: "/settings/appearance", label: "Appearance" },
   { href: "/settings/security", label: "Security" },
   { href: "/settings/team", label: "Team" },
+  { href: "/settings/developers", label: "Open Platform" },
   { href: "/settings/api-keys", label: "API Keys" },
   { href: "/settings/provider-keys", label: "Provider Keys" },
   { href: "/settings/webhooks", label: "Webhooks" },

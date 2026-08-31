@@ -8,6 +8,12 @@ describe("shouldMountMarketingGoogleOneTap", () => {
     expect(shouldMountMarketingGoogleOneTap("/zh/refer", true)).toBe(false);
   });
 
+  it("does not mount Google One Tap on the open-platform catalog", () => {
+    expect(shouldMountMarketingGoogleOneTap("/open", true)).toBe(false);
+    expect(shouldMountMarketingGoogleOneTap("/open/", true)).toBe(false);
+    expect(shouldMountMarketingGoogleOneTap("/zh-Hans/open", true)).toBe(false);
+  });
+
   it("does not mount Google One Tap on the public status trust surface", () => {
     expect(shouldMountMarketingGoogleOneTap("/status", true)).toBe(false);
     expect(shouldMountMarketingGoogleOneTap("/status/", true)).toBe(false);

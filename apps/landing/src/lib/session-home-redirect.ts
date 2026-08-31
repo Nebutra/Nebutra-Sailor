@@ -12,14 +12,14 @@ export function isAppRedirectablePath(pathname: string, locales: readonly string
 export function shouldBounceSignedInVisitorToApp(input: {
   pathname: string;
   host: string | undefined;
-  statusHost: string;
+  aliasHosts: readonly string[];
   hasSessionHint: boolean;
   hasHomeFlag: boolean;
   locales: readonly string[];
 }): boolean {
   if (!input.hasSessionHint) return false;
   const host = input.host?.toLowerCase();
-  if (!host || host === input.statusHost.toLowerCase()) return false;
+  if (!host || input.aliasHosts.some((alias) => alias.toLowerCase() === host)) return false;
   if (!isAppRedirectablePath(input.pathname, input.locales)) return false;
   if (input.hasHomeFlag) return false;
   return true;

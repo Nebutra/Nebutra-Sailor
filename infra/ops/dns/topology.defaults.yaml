@@ -20,8 +20,13 @@ mail:
 # pure Vercel (CNAME + nebutra-landing domain) is scripted in
 # point-status-dns-vercel.sh once CLOUDFLARE_API_TOKEN has Zone DNS Edit and
 # landing production deploys are green.
+#
+# open: Vercel CNAME on the landing project (`point-open-dns-vercel.sh`).
+# Host alias — landing `/` on open.nebutra.com rewrites to `/open`.
+# Console stays on app `/settings/developers`. Do not add an ECS A or a
+# second Vercel project.
 ecs_surfaces: [app, auth, api, sso, router, forge, design, status, admin, pebble, carina]
-vercel_surfaces: []
+vercel_surfaces: [open]
 proxy:
   proxied:
     [
@@ -35,6 +40,7 @@ proxy:
       forge,
       design,
       status,
+      open,
       admin,
       pebble,
       carina,
