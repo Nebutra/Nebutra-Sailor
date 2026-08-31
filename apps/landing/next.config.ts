@@ -63,6 +63,15 @@ function buildContentSecurityPolicy(): string {
       "https://images.unsplash.com",
       "https://avatars.githubusercontent.com",
       "https://api.dicebear.com",
+      // OAuth profile photos (navbar avatar). Google Gmail photos live on
+      // lh*.googleusercontent.com — without this host the <img> is blocked
+      // and the header shows the broken-image glyph.
+      "https://*.googleusercontent.com",
+      "https://*.gravatar.com",
+      "https://*.clerk.com",
+      "https://img.clerk.com",
+      "https://images.clerk.com",
+      "https://ui-avatars.com",
     ]),
     cspDirective("font-src", ["'self'", "data:"]),
     cspDirective("media-src", ["'self'", "https://d8j0ntlcm91z4.cloudfront.net"]),
