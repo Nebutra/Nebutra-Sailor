@@ -1242,23 +1242,6 @@
         "cta": "Vezi arhitectura de facturare"
       }
     },
-    "productDemo": {
-      "badge": "Demo Interactiv",
-      "title": "The local loop, end to end.",
-      "description": "Simte interfața de linie de comandă, tunelarea webhook-urilor Stripe și provisionarea locală a bazei de date multi-tenant.",
-      "analytics": {
-        "label": "Telemetrie Live",
-        "desc": "Transmite datele de utilizare din producție direct în terminalul tău."
-      },
-      "billing": {
-        "label": "Evenimente de facturare",
-        "desc": "Urmărește execuția webhook-urilor Stripe prin tunelare locală."
-      },
-      "workspaces": {
-        "label": "Inițializare spațiu de lucru",
-        "desc": "Configurează instantaneu scheme PostgreSQL B2B izolate."
-      }
-    },
     "workflow": {
       "badge": "Viteză",
       "title": "De la zero la producție în timp record.",

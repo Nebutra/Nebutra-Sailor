@@ -653,10 +653,6 @@
   container: feature-cards / inline-size;
 }
 
-.product-demo-cq {
-  container: product-demo / inline-size;
-}
-
 @container feature-cards (max-width: 72rem) {
   .feature-cards-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -670,25 +666,5 @@
 
   .feature-card-code {
     padding: 0.875rem;
-  }
-}
-
-@container product-demo (max-width: 72rem) {
-  .product-demo-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@container product-demo (max-width: 42rem) {
-  .product-demo-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .product-demo-title {
-    font-size: clamp(2rem, 8cqi, 3rem);
-  }
-
-  .product-demo-subtitle {
-    font-size: 1rem;
   }
 }

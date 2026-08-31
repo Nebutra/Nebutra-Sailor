@@ -35,10 +35,6 @@ const footerMinimalSource = readFileSync(
   path.join(process.cwd(), "src/components/landing/FooterMinimal.tsx"),
   "utf8",
 );
-const productDemoSectionSource = readFileSync(
-  path.join(process.cwd(), "src/components/landing/ProductDemoSection.tsx"),
-  "utf8",
-);
 const designSystemSectionSource = readFileSync(
   path.join(process.cwd(), "src/components/landing/DesignSystemSection.tsx"),
   "utf8",
@@ -128,14 +124,10 @@ describe("landing UI governance", () => {
     expect(capabilityFolderShowcaseSource).not.toContain(EXTERNAL_TASTE_PREFIX);
   });
 
-  it("consumes design-system kinetic patterns for the live home capability, product, and design-system surfaces", () => {
+  it("consumes design-system kinetic patterns for the live home capability and design-system surfaces", () => {
     expect(capabilityCardSource).toContain('from "@nebutra/ui/patterns"');
     expect(capabilityCardSource).toContain("<KineticFeatureCard");
     expect(capabilityCardSource).not.toContain(EXTERNAL_TASTE_PREFIX);
-
-    expect(productDemoSectionSource).toContain('from "@nebutra/ui/patterns"');
-    expect(productDemoSectionSource).toContain("<KineticConsoleFrame");
-    expect(productDemoSectionSource).not.toContain('from "./product-demo/FauxTerminal"');
 
     expect(designSystemSectionSource).toContain('from "@nebutra/ui/patterns"');
     expect(designSystemSectionSource).toContain("<KineticStepRail");
@@ -176,8 +168,6 @@ describe("landing UI governance", () => {
   });
 
   it("does not render dense desktop demos in the mobile landing flow", () => {
-    expect(productDemoSectionSource).toContain("hidden lg:col-span-7 lg:block");
-    expect(productDemoSectionSource).not.toContain("h-[450px] md:h-[500px]");
     expect(heroMockupSource).toContain("h-[360px]");
     expect(heroMockupSource).toContain("sm:h-[440px]");
     expect(heroMockupSource).toContain("md:h-[520px]");
@@ -225,17 +215,10 @@ describe("landing UI governance", () => {
     expect(blogMotionShowcaseSource).not.toContain(EXTERNAL_TASTE_PREFIX);
   });
 
-  it("keeps the dense product demo desktop-only so mobile does not load hidden demo code", () => {
-    const desktopDemoSource = readFileSync(
-      path.join(process.cwd(), "src/components/landing/DesktopProductDemoSection.tsx"),
-      "utf8",
-    );
-
-    expect(marketingHomePageSource).toContain("<DesktopProductDemoSection />");
-    expect(desktopDemoSource).toContain("ssr: false");
-    expect(desktopDemoSource).toContain('"hidden min-h-[48rem] w-full lg:block"');
-    expect(desktopDemoSource).toContain('"(min-width: 1024px)"');
-    expect(desktopDemoSource).toContain("return null");
+  it("does not mount the retired interactive product-demo section on the marketing home", () => {
+    expect(marketingHomePageSource).not.toContain("DesktopProductDemoSection");
+    expect(marketingHomePageSource).not.toContain("ProductDemoSection");
+    expect(marketingHomePageSource).not.toContain('id="demo"');
   });
 });
 

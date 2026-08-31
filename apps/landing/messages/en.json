@@ -1242,23 +1242,6 @@
         "cta": "See billing architecture"
       }
     },
-    "productDemo": {
-      "badge": "Interactive Demo",
-      "title": "The local loop, end to end.",
-      "description": "Get a feel for the command-line interface, Stripe webhook tunneling, and local multi-tenant database provisioning.",
-      "analytics": {
-        "label": "Live Telemetry",
-        "desc": "Stream production usage data straight into your terminal."
-      },
-      "billing": {
-        "label": "Billing Events",
-        "desc": "Watch Stripe webhooks execute via local tunneling."
-      },
-      "workspaces": {
-        "label": "Workspace Init",
-        "desc": "Provision isolated B2B PostgreSQL schemas instantly."
-      }
-    },
     "workflow": {
       "badge": "Velocity",
       "title": "From zero to production in record time.",

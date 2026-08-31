@@ -67,7 +67,10 @@ export async function HeroSection() {
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="w-full sm:w-auto">
-                  <Link href="#demo" className="inline-flex items-center justify-center gap-2">
+                  <Link
+                    href="#capabilities"
+                    className="inline-flex items-center justify-center gap-2"
+                  >
                     <Play aria-hidden="true" className="h-4 w-4 opacity-70" />
                     {t("ctaExploreDemo")}
                   </Link>

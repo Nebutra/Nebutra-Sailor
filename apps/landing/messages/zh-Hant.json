@@ -1242,23 +1242,6 @@
         "cta": "了解计费中间件架构"
       }
     },
-    "productDemo": {
-      "badge": "交互式演示",
-      "title": "本地閉環，從頭到尾。",
-      "description": "感受顶级的终端命令行工具、Stripe Webhook 本地隧道穿透能力，以及本地开发环境下的多租户数据库自动装配体验。",
-      "analytics": {
-        "label": "实时遥测",
-        "desc": "将生产环境中的全链路业务使用数据直接传输至您的终端仪表盘。"
-      },
-      "billing": {
-        "label": "计费事件分发",
-        "desc": "通过本地环境的即时隧道观察核心 Stripe Webhooks 的异步执行机制。"
-      },
-      "workspaces": {
-        "label": "工作空间隔离",
-        "desc": "利用 Prisma 瞬间装配与隔离全新的 B2B PostgreSQL Schema 架构。"
-      }
-    },
     "workflow": {
       "badge": "研发效能",
       "title": "以破纪录的速度从零走向生产",

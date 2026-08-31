@@ -1242,23 +1242,6 @@
         "cta": "Katso laskutusarkkitehtuuri"
       }
     },
-    "productDemo": {
-      "badge": "Interaktiivinen demo",
-      "title": "The local loop, end to end.",
-      "description": "Kokeile komentorajapintaa, Stripe-webhook-tunnelointia ja paikallista monivuokralaistietokannan varausta.",
-      "analytics": {
-        "label": "Reaaliaikainen telemetria",
-        "desc": "Viedä tuotannon käyttödata suoraan terminaaliisi."
-      },
-      "billing": {
-        "label": "Laskutus tapahtumat",
-        "desc": "Seuraa Stripe webhooksien suoritusta paikallisen tunneloinnin kautta."
-      },
-      "workspaces": {
-        "label": "Työtilan alustus",
-        "desc": "Luo eristetyt B2B PostgreSQL-kaaviot hetkessä."
-      }
-    },
     "workflow": {
       "badge": "Nopeus",
       "title": "Nollasta tuotantoon ennätyksellisessä ajassa.",
