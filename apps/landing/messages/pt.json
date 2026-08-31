@@ -178,7 +178,7 @@
   },
   "monorepoTree": {
     "badge": "ESTRUTURA TURBOREPO",
-    "title": "15 apps. 113 pacotes. 4 trilhos de backend.",
+    "title": "10 apps. 113 pacotes. 4 trilhos de backend.",
     "description": "Código compartilhado, builds paralelos, zero duplicação. Tipagem completa de ponta a ponta, do banco de dados ao frontend.",
     "metricApps": "aplicativos",
     "metricBackends": "trilhas de backend",

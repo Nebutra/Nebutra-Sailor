@@ -178,7 +178,7 @@
   },
   "monorepoTree": {
     "badge": "STRUKTURA TURBOREPO",
-    "title": "15 aplikací. 113 balíčků. 4 backendové dráhy.",
+    "title": "10 aplikací. 113 balíčků. 4 backendové dráhy.",
     "description": "Sdílený kód, paralelní sestavování, žádná duplicita. Kompletní typování od databáze až po frontend.",
     "metricApps": "aplikace",
     "metricBackends": "backendové dráhy",

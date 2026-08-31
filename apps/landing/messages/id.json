@@ -178,7 +178,7 @@
   },
   "monorepoTree": {
     "badge": "STRUKTUR TURBOREPO",
-    "title": "15 aplikasi. 113 paket. 4 jalur backend.",
+    "title": "10 aplikasi. 113 paket. 4 jalur backend.",
     "description": "Kode bersama, build paralel, tanpa duplikasi. Tiping end-to-end lengkap dari database hingga frontend.",
     "metricApps": "aplikasi",
     "metricBackends": "jalur backend",

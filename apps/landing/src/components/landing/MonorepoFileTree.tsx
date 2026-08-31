@@ -18,10 +18,15 @@ import { type FileNode, TREE_DATA } from "@/lib/constants/landing-data";
 import { createPublicDocsUrl } from "@/lib/docs-links";
 import { AnimateIn } from "./AnimateIn";
 
+function treeCount(id: string): string {
+  const node = TREE_DATA.find((entry) => entry.id === id);
+  return node?.tag ?? String(node?.children?.length ?? 0);
+}
+
 const TREE_METRICS = [
-  { labelKey: "metricApps", value: "10" },
-  { labelKey: "metricBackends", value: "4" },
-  { labelKey: "metricPackages", value: "102" },
+  { labelKey: "metricApps", value: treeCount("apps") },
+  { labelKey: "metricBackends", value: treeCount("backends") },
+  { labelKey: "metricPackages", value: treeCount("packages") },
 ] as const;
 
 const EMPTY_PARENT_PATH: boolean[] = [];

@@ -178,7 +178,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO-STRUKTUR",
-    "title": "15 appar. 113 paket. 4 bakomliggande baner.",
+    "title": "10 appar. 113 paket. 4 bakomliggande baner.",
     "description": "Delad kod, parallella byggen, ingen dublettering. Fullständig end-to-end-typning från databas till frontend.",
     "metricApps": "appar",
     "metricBackends": "backend-lanor",

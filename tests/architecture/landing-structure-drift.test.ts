@@ -27,6 +27,30 @@ function declaredPaths(): string[] {
   return [...new Set([...source.matchAll(pattern)].map((m) => m[1] as string))];
 }
 
+function listedAppDirs(): string[] {
+  return readdirSync(join(REPO_ROOT, "apps"), { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && !entry.name.startsWith("."))
+    .filter((entry) => existsSync(join(REPO_ROOT, "apps", entry.name, "package.json")))
+    .map((entry) => `apps/${entry.name}`);
+}
+
+/**
+ * First-party products keep their own origins. The landing explorer is the
+ * Sailor kit, not the whole Nebutra product catalog. Parsed from the same
+ * constant the tree uses so the two cannot drift.
+ */
+function sailorExcludedProductApps(): Set<string> {
+  const source = readFileSync(DATA_FILE, "utf8");
+  const block =
+    /export const SAILOR_EXCLUDED_PRODUCT_APPS = \[([\s\S]*?)\] as const/.exec(source)?.[1] ?? "";
+  return new Set([...block.matchAll(/"([a-z0-9-]+)"/g)].map((match) => `apps/${match[1]}`));
+}
+
+function sailorAppDirs(): string[] {
+  const excluded = sailorExcludedProductApps();
+  return listedAppDirs().filter((path) => !excluded.has(path));
+}
+
 describe("landing structure tree", () => {
   it("only names directories that exist", () => {
     const missing = declaredPaths().filter((p) => !existsSync(join(REPO_ROOT, p)));
@@ -43,24 +67,24 @@ describe("landing structure tree", () => {
     expect(source).not.toContain("tsekaluk");
   });
 
-  it("names every app that exists, so the tree stays a description and not a sample", () => {
+  it("names every Sailor app that exists, so the tree stays a description and not a sample", () => {
     // A tree that quietly omits half the apps is worse than no tree: it reads
-    // as complete. Anything intentionally hidden belongs in EXCLUDED with a
-    // reason, not simply left out.
-    const EXCLUDED = new Set<string>([
-      // Nothing today. Add with a comment saying why it is not shown.
-    ]);
-
-    const onDisk = readdirSync(join(REPO_ROOT, "apps"), { withFileTypes: true })
-      .filter((e) => e.isDirectory() && !e.name.startsWith("."))
-      .filter((e) => existsSync(join(REPO_ROOT, "apps", e.name, "package.json")))
-      .map((e) => `apps/${e.name}`)
-      .filter((p) => !EXCLUDED.has(p));
-
+    // as complete. First-party products are hidden on purpose — they belong in
+    // SAILOR_EXCLUDED_PRODUCT_APPS with a reason, not simply left out.
     const declared = new Set(declaredPaths());
-    const undeclared = onDisk.filter((p) => !declared.has(p));
+    const undeclared = sailorAppDirs().filter((path) => !declared.has(path));
 
     expect(undeclared, `apps missing from the landing tree: ${undeclared.join(", ")}`).toEqual([]);
+  });
+
+  it("only excludes first-party product apps that still exist", () => {
+    const excluded = [...sailorExcludedProductApps()];
+    expect(excluded.length, "SAILOR_EXCLUDED_PRODUCT_APPS must list product apps").toBeGreaterThan(
+      0,
+    );
+    for (const path of excluded) {
+      expect(existsSync(join(REPO_ROOT, path, "package.json")), path).toBe(true);
+    }
   });
 
   it("shows lane counts that match the repo", () => {
@@ -85,10 +109,7 @@ describe("landing structure tree", () => {
       0,
     );
 
-    const apps = dirs("apps").filter((entry) =>
-      existsSync(join(REPO_ROOT, "apps", entry.name, "package.json")),
-    );
-    expect(tagFor("apps"), "apps tag").toBe(apps.length);
+    expect(tagFor("apps"), "apps tag").toBe(sailorAppDirs().length);
     expect(tagFor("backends"), "backends tag").toBe(dirs("backends").length);
     expect(tagFor("packages"), "packages tag").toBe(packages);
   });
@@ -101,14 +122,9 @@ describe("landing structure tree", () => {
     const group = source.slice(source.indexOf('label: "apps",'));
     const tag = group.match(/tag:\s*"(\d+)"/)?.[1];
 
-    const actual = readdirSync(join(REPO_ROOT, "apps"), { withFileTypes: true }).filter(
-      (e) =>
-        e.isDirectory() &&
-        !e.name.startsWith(".") &&
-        existsSync(join(REPO_ROOT, "apps", e.name, "package.json")),
-    ).length;
+    const actual = sailorAppDirs().length;
 
-    expect(Number(tag), `apps tag says ${tag}, repo has ${actual}`).toBe(actual);
+    expect(Number(tag), `apps tag says ${tag}, Sailor tree has ${actual}`).toBe(actual);
   });
 
   it("headlines the tree with counts that match the repo", () => {
@@ -140,10 +156,7 @@ describe("landing structure tree", () => {
       0,
     );
 
-    const actualApps = dirs("apps").filter((entry) =>
-      existsSync(join(REPO_ROOT, "apps", entry.name, "package.json")),
-    ).length;
-    expect(Number(apps), `title says ${apps} apps`).toBe(actualApps);
+    expect(Number(apps), `title says ${apps} apps`).toBe(sailorAppDirs().length);
     expect(Number(packages), `title says ${packages} packages`).toBe(actualPackages);
     expect(Number(lanes), `title says ${lanes} backend lanes`).toBe(dirs("backends").length);
   });
