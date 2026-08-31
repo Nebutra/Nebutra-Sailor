@@ -12,7 +12,7 @@
     "NEXT_PUBLIC_R2_PUBLIC_URL": "https://cdn.nebutra.com",
     "R2_BUCKET_ASSETS": "nebutra-assets",
     "R2_BUCKET_UPLOADS": "nebutra-uploads",
-    "IMAGE2_BASE_URL": "https://api.302.ai/v1",
+    "IMAGE2_BASE_URL": "https://router.nebutra.com/v1",
     "IMAGE2_MODEL": "gpt-image-2"
   },
   "headers": [

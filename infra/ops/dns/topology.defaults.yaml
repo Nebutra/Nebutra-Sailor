@@ -20,7 +20,7 @@ mail:
 # pure Vercel (CNAME + nebutra-landing domain) is scripted in
 # point-status-dns-vercel.sh once CLOUDFLARE_API_TOKEN has Zone DNS Edit and
 # landing production deploys are green.
-ecs_surfaces: [app, auth, api, sso, router, forge, design, status, admin, pebble, carina]
+ecs_surfaces: [app, auth, api, sso, router, forge, design, status, admin, pebble, carina, kuanlan]
 vercel_surfaces: []
 proxy:
   proxied:
@@ -38,6 +38,7 @@ proxy:
       admin,
       pebble,
       carina,
+      kuanlan,
       mail,
       imap,
       pop3,

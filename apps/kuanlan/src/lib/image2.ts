@@ -1,6 +1,6 @@
 import type { IdPhotoSku } from "@/catalog/skus";
 
-export const DEFAULT_IMAGE2_BASE_URL = "https://api.302.ai/v1";
+export const DEFAULT_IMAGE2_BASE_URL = "https://router.nebutra.com/v1";
 export const DEFAULT_IMAGE2_MODEL = "gpt-image-2";
 
 const BACKGROUND_COPY = {
@@ -17,15 +17,11 @@ export class Image2UnavailableError extends Error {
 }
 
 export function image2ApiKey(): string {
-  return process.env.IMAGE2_API_KEY || process.env.SENSENOVA_API_KEY || "";
+  return process.env.ROUTER_API_KEY || process.env.IMAGE2_API_KEY || "";
 }
 
 export function image2BaseUrl(): string {
-  return (
-    process.env.IMAGE2_BASE_URL ||
-    process.env.SENSENOVA_BASE_URL ||
-    DEFAULT_IMAGE2_BASE_URL
-  ).replace(/\/$/, "");
+  return (process.env.IMAGE2_BASE_URL || DEFAULT_IMAGE2_BASE_URL).replace(/\/$/, "");
 }
 
 export function image2Model(): string {
@@ -43,6 +39,7 @@ export function image2SizeForSku(sku: Pick<IdPhotoSku, "widthMm" | "heightMm">):
   return sku.heightMm > sku.widthMm ? "1024x1536" : "1536x1024";
 }
 
+/** Server-only SKU brief. Never send this string to the browser. */
 export function idPhotoShootBrief(sku: IdPhotoSku): string {
   return [
     "Official identification portrait of the same person in the reference photo.",
@@ -75,10 +72,12 @@ export async function shootWithImage2(input: {
 }): Promise<Buffer> {
   requireImage2();
 
+  // 302.ai / OpenAI images.edits contract — same fields, router host + key.
   const body = new FormData();
   body.set("model", image2Model());
   body.set("prompt", input.prompt);
   body.set("size", input.size);
+  body.set("n", "1");
   body.set(
     "image",
     new Blob([new Uint8Array(input.image)], { type: input.mimeType || "image/png" }),

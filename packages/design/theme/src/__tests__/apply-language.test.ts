@@ -15,7 +15,16 @@ describe("getBuiltInBrandPackage", () => {
   it("loads all stress-test fixtures", () => {
     const ids = listBuiltInBrandIds();
     expect(ids).toEqual(
-      expect.arrayContaining(["linear", "gsap", "raycast", "vercel", "vanta", "stripe", "notion"]),
+      expect.arrayContaining([
+        "linear",
+        "gsap",
+        "raycast",
+        "vercel",
+        "vanta",
+        "stripe",
+        "notion",
+        "cosmos",
+      ]),
     );
     for (const id of ids) {
       const pkg = getBuiltInBrandPackage(id);

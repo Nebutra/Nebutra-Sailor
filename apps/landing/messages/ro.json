@@ -1445,10 +1445,10 @@
       },
       "design": {
         "title": "Sistem de design și bibliotecă de componente de top",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with eight switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "Governanță tokeni în 4 straturi",
-          "f2": "Seven design languages + Storybook"
+          "f2": "Eight design languages + Storybook"
         }
       },
       "edam": {

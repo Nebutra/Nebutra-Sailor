@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
+const useStandalone =
+  process.env.NEXT_OUTPUT === "standalone" ||
+  (process.env.VERCEL !== "1" && process.env.NEXT_OUTPUT !== "vercel");
+
 const nextConfig: NextConfig = {
+  ...(useStandalone ? { output: "standalone" as const } : {}),
   transpilePackages: ["@nebutra/storage"],
   serverExternalPackages: ["sharp"],
   images: {

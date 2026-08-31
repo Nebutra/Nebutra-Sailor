@@ -27,6 +27,33 @@
       }
     },
     {
+      "id": "cosmos",
+      "name": "Cosmos",
+      "kind": "design-language",
+      "description": "Light-first gallery canvas; Ink pill CTA ≠ acid-lime brand-mark (spark only, never a fill); 14px tiles + 999px search/CTA; elevation=none.",
+      "tagline": "images sit; chrome recedes",
+      "shortName": "Cosmos",
+      "proves": [
+        "action ≠ brand-mark (ink pill vs lime spark)",
+        "gallery canvas ≠ white chrome (paper vs pure white)",
+        "elevation=none + 14px tiles + 999px pills",
+        "dual-mode light-first (dark inverts the gallery)"
+      ],
+      "darkDefault": false,
+      "brandPath": "brands/cosmos/brand.json",
+      "skinPath": "skins/cosmos.css",
+      "install": {
+        "command": "nebutra theme use cosmos",
+        "cssImport": "@nebutra/tokens/skins/cosmos.css"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "brandPackage": true,
+        "dataBrand": true
+      }
+    },
+    {
       "id": "gsap",
       "name": "GSAP",
       "kind": "design-language",

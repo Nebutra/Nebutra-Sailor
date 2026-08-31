@@ -68,6 +68,15 @@ export function chatCompletionsUrl(baseUrl: string): string {
   return `${base}/v1/chat/completions`;
 }
 
+/** OpenAI-compatible path on a New-API / 302-style base (`/v1/...`). */
+export function openaiCompatibleUrl(baseUrl: string, path: readonly string[], search = ""): string {
+  const base = stripTrailingSlash(baseUrl);
+  const suffix = path.filter(Boolean).join("/");
+  const query = search.startsWith("?") || search.length === 0 ? search : `?${search}`;
+  if (base.endsWith("/v1")) return `${base}/${suffix}${query}`;
+  return `${base}/v1/${suffix}${query}`;
+}
+
 export function kindLabel(kind: SupplyEngineKind): string {
   return kind;
 }

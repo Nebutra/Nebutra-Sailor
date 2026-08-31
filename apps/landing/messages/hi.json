@@ -1445,10 +1445,10 @@
       },
       "design": {
         "title": "अग्रणी डिज़ाइन सिस्टम और कंपोनेंट लाइब्रेरी",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with eight switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4-स्तरीय टोकन शासन",
-          "f2": "Seven design languages + Storybook"
+          "f2": "Eight design languages + Storybook"
         }
       },
       "edam": {
