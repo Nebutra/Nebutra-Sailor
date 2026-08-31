@@ -1,5 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
-import { getBrandOrigin, MARKETING_HOME_STAY_PARAM } from "@nebutra/brand/metadata-helpers";
+import { getBrandOrigin, MARKETING_HOME_PARAM } from "@nebutra/brand/metadata-helpers";
 import { MARKET_COOKIE } from "@nebutra/i18n/cookies";
 import { legacyLocalePathRedirect } from "@nebutra/i18n/locales";
 import {
@@ -166,12 +166,8 @@ export default function proxy(request: NextRequest): NextResponse {
     return withSecurityHeaders(NextResponse.next());
   }
 
-  // Status-aware root: if the user has a session hint cookie from app host,
-  // root + bare-locale roots redirect into the product. Marketing sub-pages always
-  // render (signed-in users still want to read /pricing, /changelog, etc.).
-  //
-  // In-site Home is the opposite intent — skip the bounce when `stay=1`
-  // or the click came from the auth host / a marketing page (navbar logo).
+  // Apex `/` is a product launcher when the session-hint cookie is present.
+  // The only skip is `?home`. Marketing sub-pages always render.
   //
   // The response is intentionally `Cache-Control: private, no-store` because the
   // body varies per-cookie — never cache at the edge.
@@ -180,11 +176,8 @@ export default function proxy(request: NextRequest): NextResponse {
       pathname,
       host,
       statusHost: STATUS_HOST,
-      authHost: brand.domains.auth,
-      landingHost: brand.domains.landing,
       hasSessionHint: request.cookies.get(SESSION_HINT_COOKIE)?.value === "1",
-      stayParam: request.nextUrl.searchParams.get(MARKETING_HOME_STAY_PARAM),
-      referer: request.headers.get("referer"),
+      hasHomeFlag: request.nextUrl.searchParams.has(MARKETING_HOME_PARAM),
       locales: routing.locales,
     })
   ) {

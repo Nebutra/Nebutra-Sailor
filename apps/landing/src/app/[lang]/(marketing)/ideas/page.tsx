@@ -1,7 +1,8 @@
+import { getMarketingHomePath } from "@nebutra/brand/metadata-helpers";
+import { DEFAULT_ROUTE_LOCALE, toRouteLocale } from "@nebutra/i18n/locales";
 import { AnimatedGradientText, Button } from "@nebutra/ui/primitives";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
-import { Link } from "@/i18n/navigation";
 
 import type { Locale } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -55,7 +56,14 @@ export default async function IdeasPage(props: { params: Promise<{ lang: string 
         </p>
 
         <Button asChild variant="ink" size="lg">
-          <Link href="/">{t("returnBtn")}</Link>
+          <a
+            href={getMarketingHomePath({
+              locale: toRouteLocale(lang),
+              defaultLocale: DEFAULT_ROUTE_LOCALE,
+            })}
+          >
+            {t("returnBtn")}
+          </a>
         </Button>
       </main>
       <FooterMinimal />
