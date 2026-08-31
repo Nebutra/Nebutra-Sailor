@@ -11,7 +11,7 @@ export function CapabilityMatrixSection() {
   return (
     <section
       id="capabilities"
-      className="w-full bg-background py-24 md:py-32 relative overflow-hidden"
+      className="relative w-full scroll-mt-24 overflow-hidden bg-background py-24 md:py-32"
     >
       {/* Ambient aurora background */}
       <AuroraBackground variant="subtle" position="center" intensity={0.4} />

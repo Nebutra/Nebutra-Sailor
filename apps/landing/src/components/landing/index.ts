@@ -21,7 +21,6 @@ export { Navbar } from "./Navbar";
 export { NewsletterForm } from "./NewsletterForm";
 export { PricingHintSection } from "./PricingHintSection";
 export { PricingSection } from "./PricingSection";
-export { ProductDemoSection } from "./ProductDemoSection";
 export { UseCasesSection } from "./use-cases";
 export { VelocitySignalStrip } from "./VelocitySignalStrip";
 export { WorkflowSection } from "./WorkflowSection";
@@ -32,7 +31,6 @@ export const LANDING_SECTIONS = [
   "LogoStrip",
   "HeroMockupWindow",
   "AIConstellationMarquee",
-  "ProductDemoSection",
   "CapabilityMatrixSection",
   "DesignSystemSection",
   "UseCasesSection",

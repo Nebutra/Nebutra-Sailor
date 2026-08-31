@@ -1242,23 +1242,6 @@
         "cta": "Zobacz architekturę rozliczeń"
       }
     },
-    "productDemo": {
-      "badge": "Interaktywna demonstracja",
-      "title": "The local loop, end to end.",
-      "description": "Poznaj interfejs wiersza poleceń, tunelowanie webhooków Stripe i lokalne przydzielanie bazy danych wielonajemcy.",
-      "analytics": {
-        "label": "Telemetria na żywo",
-        "desc": "Przesyłaj dane użycia z produkcji bezpośrednio do terminala."
-      },
-      "billing": {
-        "label": "Wydarzenia rozliczeniowe",
-        "desc": "Obserwuj wykonywanie webhooków Stripe przez tunelowanie lokalne."
-      },
-      "workspaces": {
-        "label": "Inicjalizacja przestrzeni roboczej",
-        "desc": "Natychmiastowo zaopatruj izolowane schematy PostgreSQL B2B."
-      }
-    },
     "workflow": {
       "badge": "Szybkość",
       "title": "Od zera do produkcji w rekordowym czasie.",

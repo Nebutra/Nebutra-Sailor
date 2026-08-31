@@ -3,14 +3,13 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { CSSProperties } from "react";
 import { Suspense } from "react";
 import { HeroMockupWindow, LogoStrip, Navbar } from "@/components/landing";
-import { DesktopProductDemoSection } from "@/components/landing/DesktopProductDemoSection";
 import { HeroSection } from "@/components/landing/HeroSection";
 import type { Locale } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 // Skeleton uses min-h so longer locales don't clip. Heights track real
 // section sizes to keep CLS down while content streams in; mobile uses a
-// separate contract because several dense demos are intentionally removed.
+// separate contract because several dense demos stay desktop-only.
 const SectionSkeleton = ({
   minH = "32rem",
   mobileMinH = "24rem",
@@ -122,32 +121,27 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
           <AIConstellationMarquee />
         </Suspense>
 
-        {/* 5. Product Demo */}
-        <div id="demo" className="scroll-mt-24">
-          <DesktopProductDemoSection />
-        </div>
-
-        {/* 6. Capability Matrix */}
+        {/* 5. Capability Matrix */}
         <Suspense fallback={<SectionSkeleton minH="56rem" mobileMinH="42rem" />}>
           <CapabilityMatrixSection />
         </Suspense>
 
-        {/* 7. Design System */}
+        {/* 6. Design System */}
         <Suspense fallback={<SectionSkeleton minH="48rem" mobileMinH="38rem" />}>
           <DesignSystemSection />
         </Suspense>
 
-        {/* 8. Use Cases */}
+        {/* 7. Use Cases */}
         <Suspense fallback={<SectionSkeleton minH="56rem" mobileMinH="34rem" />}>
           <UseCasesSection />
         </Suspense>
 
-        {/* 9. Pricing */}
+        {/* 8. Pricing */}
         <Suspense fallback={<SectionSkeleton minH="56rem" mobileMinH="42rem" />}>
           <PricingSection />
         </Suspense>
 
-        {/* 10. FAQ */}
+        {/* 9. FAQ */}
         <Suspense fallback={<SectionSkeleton minH="36rem" mobileMinH="28rem" />}>
           <FAQSection />
         </Suspense>

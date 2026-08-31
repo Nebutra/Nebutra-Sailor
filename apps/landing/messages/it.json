@@ -1242,23 +1242,6 @@
         "cta": "Visualizza l'architettura di fatturazione"
       }
     },
-    "productDemo": {
-      "badge": "Demo Interattiva",
-      "title": "The local loop, end to end.",
-      "description": "Scopri l'interfaccia a riga di comando, l'inoltro dei webhook Stripe e la provisioning del database multi-tenant locale.",
-      "analytics": {
-        "label": "Telemetria in Diretta",
-        "desc": "Trasmetti i dati di utilizzo della produzione direttamente nel tuo terminale."
-      },
-      "billing": {
-        "label": "Eventi di fatturazione",
-        "desc": "Osserva l'esecuzione dei webhook di Stripe tramite tunneling locale."
-      },
-      "workspaces": {
-        "label": "Inizializzazione workspace",
-        "desc": "Provisiona istantaneamente schemi PostgreSQL B2B isolati."
-      }
-    },
     "workflow": {
       "badge": "Velocità",
       "title": "Da zero alla produzione in tempi record.",

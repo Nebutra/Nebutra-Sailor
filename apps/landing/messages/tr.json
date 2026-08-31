@@ -1242,23 +1242,6 @@
         "cta": "Faturalandırma mimarisini gör"
       }
     },
-    "productDemo": {
-      "badge": "Etkileşimli Demo",
-      "title": "The local loop, end to end.",
-      "description": "Komut satırı arayüzü, Stripe webhook tünellemesi ve yerel çok kiracılı veritabanı sağlama hakkında bir fikir edinin.",
-      "analytics": {
-        "label": "Canlı Telemetri",
-        "desc": "Üretim kullanım verilerini doğrudan terminalinize aktarın."
-      },
-      "billing": {
-        "label": "Faturalama Olayları",
-        "desc": "Stripe webhooks'lerini yerel tünelleme ile çalıştırırken izleyin."
-      },
-      "workspaces": {
-        "label": "Çalışma Alanı Başlatma",
-        "desc": "İzole B2B PostgreSQL şemalarını anında hazırlayın."
-      }
-    },
     "workflow": {
       "badge": "Hız",
       "title": "Sıfırdan üretime rekor sürede.",

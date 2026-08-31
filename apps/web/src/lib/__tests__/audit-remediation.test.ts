@@ -91,7 +91,9 @@ describe("UI/UX audit remediation invariants", () => {
 
   it("uses fluid hero typography and responsive product grids", () => {
     const hero = readFromRepo("apps/landing/src/components/landing/HeroSection.tsx");
-    const productDemo = readFromRepo("apps/landing/src/components/landing/ProductDemoSection.tsx");
+    const capability = readFromRepo(
+      "apps/landing/src/components/landing/CapabilityMatrixSection.tsx",
+    );
 
     // The 2026 landing sweep (commit a6a32240) replaced clamp() with a
     // Tailwind responsive scale anchored to design-token tracking/leading
@@ -104,7 +106,7 @@ describe("UI/UX audit remediation invariants", () => {
     // retune of the headline read as a regression.
     expect(hero).toMatch(/clamp\(|text-\d+xl[\s\S]*sm:text-\d+xl[\s\S]*md:text-\d+xl/);
     expect(hero).toMatch(/var\(--tracking-display\)|var\(--leading-display\)/);
-    expect(productDemo).toMatch(/lg:grid-cols-|lg:col-span-/);
+    expect(capability).toMatch(/md:grid-cols-|lg:grid-cols-|lg:col-span-/);
   });
 
   it("uses LazyMotion wrappers in shared animation primitives", () => {
@@ -311,10 +313,7 @@ describe("UI/UX audit remediation invariants", () => {
     const globals = readFromRepo("apps/landing/src/app/globals.css");
     const featureCards = readFromRepo("apps/landing/src/components/landing/FeatureCards.tsx");
 
-    expect(globals).toContain("@container product-demo");
     expect(globals).toContain("@container feature-cards");
-    expect(globals).toContain("product-demo-cq");
-    expect(globals).toContain("product-demo-grid");
     expect(featureCards).toContain("feature-cards-cq");
     expect(featureCards).toContain("feature-cards-grid");
   });

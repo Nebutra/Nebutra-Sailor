@@ -1242,23 +1242,6 @@
         "cta": "Tazama muundo wa bililingi"
       }
     },
-    "productDemo": {
-      "badge": "Onyesho la Kuingiliana",
-      "title": "The local loop, end to end.",
-      "description": "Pata hisia ya kioo cha mstari wa amri, upitishaji wa webhook za Stripe, na uwekaji wa hifadha ya data ya watumiaji wengi ndani ya kompyuta.",
-      "analytics": {
-        "label": "Telemetri ya Moja kwa Moja",
-        "desc": "Sogea data ya matumizi ya uzalishaji moja kwa moja kwenye terminali yako."
-      },
-      "billing": {
-        "label": "Matukio ya Bililingi",
-        "desc": "Tazama Stripe webhooks zinazotekelezwa kupitia tunneling ya ndani."
-      },
-      "workspaces": {
-        "label": "Kuanzisha Workspace",
-        "desc": "Pata schemas za PostgreSQL za B2B zilizotengwa papo hapo."
-      }
-    },
     "workflow": {
       "badge": "Kasi",
       "title": "Kutoka sifuri hadi uzalishaji kwa muda wa rekodi.",
