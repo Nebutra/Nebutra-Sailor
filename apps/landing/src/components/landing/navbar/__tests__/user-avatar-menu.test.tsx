@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import * as matchers from "@testing-library/jest-dom/matchers";
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type * as React from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -84,5 +84,30 @@ describe("UserAvatarMenu", () => {
       await screen.findByRole("button", { name: "nav.avatarMenu.ariaLabel" }),
     ).toBeInTheDocument();
     expect(screen.getByText("TL")).toBeInTheDocument();
+  });
+
+  it("falls back to initials when the avatar image fails to load", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        jsonResponse({
+          name: "Tseka Luk",
+          email: "tseka@nebutra.com",
+          avatarUrl: "https://lh3.googleusercontent.com/a/blocked",
+          activeOrganization: null,
+        }),
+      ),
+    );
+
+    const { container } = render(<UserAvatarMenu />);
+
+    const photo = await waitFor(() => {
+      const node = container.querySelector("img");
+      expect(node).toBeTruthy();
+      return node as HTMLImageElement;
+    });
+    fireEvent.error(photo);
+    expect(screen.getByText("TL")).toBeInTheDocument();
+    expect(container.querySelector("img")).toBeNull();
   });
 });
