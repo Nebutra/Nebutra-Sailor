@@ -174,6 +174,7 @@ describe("Deploy substrate governance", () => {
     expect(yml).toContain("point-host-dns-fly.sh");
     expect(yml).toContain("github.event.inputs.cutover == 'true'");
     expect(yml).toContain("uses: ./.github/actions/setup-node-pnpm");
+    expect(yml).toContain('pnpm turbo build --filter="${' + '{ matrix.package }}^..."');
   });
 
   it("web and auth Vercel workflows are workflow_dispatch only", () => {

@@ -99,9 +99,22 @@ jobs:
       - name: Setup Node and pnpm
         uses: ./.github/actions/setup-node-pnpm
 
+      - name: Build workspace dependencies
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+        run: pnpm turbo build --filter="${{ matrix.package }}^..."
+
       - name: Build standalone
         env:
+          NEXT_TELEMETRY_DISABLED: "1"
           NEXT_OUTPUT: standalone
+          NEXT_PUBLIC_SITE_URL: ${{ matrix.site }}
+          NEXT_PUBLIC_APP_URL: "https://app.nebutra.com"
+          NEXT_PUBLIC_API_URL: "https://api.nebutra.com"
+          NEXT_PUBLIC_API_GATEWAY_URL: "https://api.nebutra.com"
+          NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
+          DATABASE_URL: "postgresql://build-placeholder:placeholder@localhost:5432/build"
+          REDIS_URL: "redis://localhost:6379"
         run: pnpm --filter ${{ matrix.package }} ${{ matrix.build_command }}
 
       - name: Assemble image context
