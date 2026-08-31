@@ -43,7 +43,7 @@ jobs:
         run: |
           set -euo pipefail
           host="${{ matrix.host }}.nebutra.com"
-          flyctl certs add "$host" -a "${{ matrix.fly_app }}" --yes || true
+          flyctl certs add "$host" -a "${{ matrix.fly_app }}"
           echo "----- show $host -----"
           flyctl certs show "$host" -a "${{ matrix.fly_app }}" || true
           echo "----- list -----"
