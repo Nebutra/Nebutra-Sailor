@@ -72,16 +72,9 @@ export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean })
           <ThemeSwitcher />
 
           {/*
-            Closed-loop signed-in indicator. UserAvatarMenu only mounts when
-            the `nebutra_session_hint` cookie is present AND the /api/me/public
-            fetch succeeds — otherwise renders null, and the Sign-In + CTA
-            below remain the visible affordance.
-
-            We don't conditionally hide Sign-In / Get-Sailed: showing both is
-            harmless when the avatar is mounted (avatar gets clicked first
-            anyway), and avoids a flash-of-anonymous-CTA during avatar
-            hydration. The avatar sits left of the CTAs so it's the first
-            element a returning user sees.
+            Signed-in chrome hydrates from app `/api/me/public`. Hint cookie
+            is not a gate. Sign-In / Get-Sailed stay visible to avoid a
+            flash-of-anonymous-CTA while that request is in flight.
           */}
           <UserAvatarMenu />
 
