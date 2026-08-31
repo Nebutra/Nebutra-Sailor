@@ -45,8 +45,8 @@ describe("router OpenAI edge", () => {
     body.set("size", "1024x1536");
     body.set("image", new Blob([new Uint8Array([1, 2, 3])], { type: "image/png" }), "portrait.png");
 
-    const fetchImpl = vi.fn(async (url: string, init?: RequestInit) => {
-      expect(url).toBe("http://127.0.0.1:3001/v1/images/edits");
+    const fetchImpl: typeof fetch = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      expect(String(input)).toBe("http://127.0.0.1:3001/v1/images/edits");
       expect(init?.method).toBe("POST");
       expect(new Headers(init?.headers).get("authorization")).toBe("Bearer sk-router-product");
       expect(new Headers(init?.headers).get("content-type")).toMatch(/multipart\/form-data/);
