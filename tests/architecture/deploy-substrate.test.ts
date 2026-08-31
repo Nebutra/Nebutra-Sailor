@@ -195,8 +195,9 @@ describe("Deploy substrate governance", () => {
   it("Hono origin has its own Fly workflow, not the Next standalone path", () => {
     const yml = read("deploy-fly-gateway.yml");
     expect(yml).toContain("FLY_API_TOKEN");
-    expect(yml).toContain("backends/gateway/Dockerfile");
+    expect(yml).toContain("infra/runtime/docker/Dockerfile.gateway");
     expect(yml).toContain("infra/fly/gateway.toml");
+    expect(yml).toContain("prepare-pnpm-deploy-node-runtime.mjs");
     expect(yml).toContain("nebutra-gateway");
     expect(yml).toContain("/var/www/nebutra/api/.env");
     expect(yml).toContain("https://nebutra-gateway.fly.dev/api/misc/health");
@@ -207,10 +208,10 @@ describe("Deploy substrate governance", () => {
 
     const nextYml = read("deploy-fly.yml");
     expect(nextYml).toContain("want_gateway");
-    expect(nextYml).toContain("backends/gateway/Dockerfile");
+    expect(nextYml).toContain("infra/runtime/docker/Dockerfile.gateway");
     expect(nextYml).toContain("assemble-next-standalone.sh");
     expect(nextYml.indexOf("assemble-next-standalone.sh")).toBeLessThan(
-      nextYml.indexOf("backends/gateway/Dockerfile"),
+      nextYml.indexOf("infra/runtime/docker/Dockerfile.gateway"),
     );
 
     const toml = readFileSync(resolve(process.cwd(), "infra/fly/gateway.toml"), "utf-8");

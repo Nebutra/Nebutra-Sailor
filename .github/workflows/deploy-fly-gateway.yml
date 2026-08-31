@@ -19,7 +19,7 @@ on:
     paths:
       - "backends/gateway/**"
       - "infra/fly/gateway.toml"
-      - "backends/gateway/Dockerfile"
+      - "infra/runtime/docker/Dockerfile.gateway"
       - ".github/workflows/deploy-fly-gateway.yml"
 
 permissions:
@@ -106,13 +106,30 @@ jobs:
             || echo "no leftover bind secrets"
           flyctl secrets set HOST=0.0.0.0 PORT=8080 -a nebutra-gateway --stage
 
+      - name: Setup Node and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Build Hono bundle
+        run: |
+          set -euo pipefail
+          pnpm turbo build --filter="@nebutra/gateway^..."
+          pnpm --filter @nebutra/gateway build
+          STAGE="$RUNNER_TEMP/stage-gateway"
+          rm -rf "$STAGE"
+          pnpm --config.trust-policy=permissive deploy \
+            --filter @nebutra/gateway --prod --legacy "$STAGE"
+          node scripts/prepare-pnpm-deploy-node-runtime.mjs "$STAGE"
+          node --check "$STAGE/dist/node.js"
+          cp infra/runtime/docker/Dockerfile.gateway "$STAGE/Dockerfile"
+          echo "STAGE=$STAGE" >> "$GITHUB_ENV"
+
       - name: Deploy Machine
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
-          flyctl deploy "$GITHUB_WORKSPACE" \
+          flyctl deploy "$STAGE" \
             --config "$GITHUB_WORKSPACE/infra/fly/gateway.toml" \
-            --dockerfile "$GITHUB_WORKSPACE/backends/gateway/Dockerfile" \
+            --dockerfile "$STAGE/Dockerfile" \
             --ha=false \
             --remote-only \
             --yes
