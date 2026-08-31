@@ -320,6 +320,7 @@ jobs:
           node scripts/prepare-pnpm-deploy-node-runtime.mjs "$STAGE"
           node --check "$STAGE/dist/node.js"
           cp infra/runtime/docker/Dockerfile.gateway "$STAGE/Dockerfile"
+          bash infra/ops/scripts/materialize-pnpm-deploy-bundle.sh "$STAGE"
           echo "STAGE=$STAGE" >> "$GITHUB_ENV"
 
       - name: Deploy Machine
