@@ -12,8 +12,10 @@ import {
   FormMessage,
   Input,
 } from "@nebutra/ui/primitives";
+import { AUTH_PRIMARY_CTA_CLASS } from "@nebutra/ui/utils";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useTranslations } from "next-intl";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -30,18 +32,28 @@ function slugify(name: string): string {
     .slice(0, 48);
 }
 
-const schema = z.object({
-  name: z.string().min(1),
-  slug: z
-    .string()
-    .refine((slug) => /^[a-z0-9][a-z0-9-]{1,46}[a-z0-9]$/.test(slug) || slug.length >= 3, {
-      message: "3–48 characters, lowercase letters, numbers, and hyphens only.",
-    }),
-});
-type Values = z.infer<typeof schema>;
+type Values = {
+  name: string;
+  slug: string;
+};
 
 export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
+  const t = useTranslations("onboarding.workspace");
   const router = useRouter();
+
+  const schema = useMemo(
+    () =>
+      z.object({
+        name: z.string().min(1),
+        slug: z
+          .string()
+          .refine((slug) => /^[a-z0-9][a-z0-9-]{1,46}[a-z0-9]$/.test(slug) || slug.length >= 3, {
+            message: t("slugError"),
+          }),
+      }),
+    [t],
+  );
+
   const form = useForm<Values>({
     resolver: zodResolver(schema),
     defaultValues: { name: "", slug: "" },
@@ -51,7 +63,6 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
   const { setError, watch, setValue, setFocus } = form;
   const name = watch("name");
 
-  // Auto-derive the slug from the name until the user edits the slug directly.
   const slugDirty = form.getFieldState("slug").isDirty;
   useEffect(() => {
     if (!slugDirty) {
@@ -73,12 +84,11 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
 
       if (!response.ok) {
         const data = await response.json();
-        setError("root", { message: data.error || "Failed to create workspace." });
+        setError("root", { message: data.error || t("error") });
         return;
       }
 
       const result = await response.json();
-      // Set the organization context before completing
       if (result.organizationId) {
         router.refresh();
       }
@@ -86,7 +96,7 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
       onComplete();
     } catch (err: unknown) {
       setError("root", {
-        message: err instanceof Error ? err.message : "Failed to create workspace.",
+        message: err instanceof Error ? err.message : t("error"),
       });
     }
   }
@@ -95,12 +105,10 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
   const rootError = form.formState.errors.root?.message;
 
   return (
-    <div className="flex flex-col gap-6">
-      <div>
-        <h2 className="text-2xl font-semibold tracking-tight">Set up your workspace</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          This is where your team will collaborate.
-        </p>
+    <div className="w-full">
+      <div className="mb-8">
+        <h1 className="text-3xl font-semibold tracking-tight text-foreground">{t("title")}</h1>
+        <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("description")}</p>
       </div>
 
       <Form {...form}>
@@ -109,10 +117,16 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
             control={form.control}
             name="name"
             render={({ field }) => (
-              <FormItem className="flex flex-col gap-1.5 space-y-0">
-                <FormLabel>Workspace name</FormLabel>
+              <FormItem className="flex flex-col gap-1.5">
+                <FormLabel>{t("nameLabel")}</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g. Acme Corp" required {...field} />
+                  <Input
+                    size="lg"
+                    className="h-12 border-border bg-background text-foreground shadow-none"
+                    placeholder={t("namePlaceholder")}
+                    required
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -123,33 +137,37 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
             control={form.control}
             name="slug"
             render={({ field }) => (
-              <FormItem className="flex flex-col gap-1.5 space-y-0">
-                <FormLabel>Workspace URL</FormLabel>
-                <div className="flex items-center rounded-[var(--radius-md)] border border-input bg-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
-                  <span className="select-none border-r border-input px-3 py-2 text-sm text-muted-foreground">
-                    {brand.domains.app} /
-                  </span>
-                  <FormControl>
-                    <Input
-                      placeholder="my-workspace"
-                      pattern="[a-z0-9][a-z0-9\-]{1,46}[a-z0-9]"
-                      required
-                      {...field}
-                      onChange={(e) => {
-                        field.onChange(slugify(e.target.value) || e.target.value.toLowerCase());
-                      }}
-                    />
-                  </FormControl>
-                </div>
-                <FormMessage className="text-xs text-muted-foreground" />
+              <FormItem className="flex flex-col gap-1.5">
+                <FormLabel>{t("urlLabel")}</FormLabel>
+                <FormControl>
+                  <Input
+                    size="lg"
+                    className="h-12 border-border bg-background text-foreground shadow-none"
+                    placeholder={t("slugPlaceholder")}
+                    pattern="[a-z0-9][a-z0-9\-]{1,46}[a-z0-9]"
+                    required
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(slugify(e.target.value) || e.target.value.toLowerCase());
+                    }}
+                  />
+                </FormControl>
+                <p className="text-xs leading-5 text-muted-foreground">
+                  {brand.domains.app}/{field.value || t("slugPlaceholder")}
+                </p>
+                <FormMessage />
               </FormItem>
             )}
           />
 
-          {rootError && <p className="text-sm text-destructive">{rootError}</p>}
+          {rootError ? (
+            <p className="text-sm text-destructive" role="alert">
+              {rootError}
+            </p>
+          ) : null}
 
-          <Button type="submit" className="w-full" disabled={loading || !name}>
-            {loading ? "Creating…" : "Create Workspace →"}
+          <Button type="submit" variant="ink" className={AUTH_PRIMARY_CTA_CLASS} disabled={loading}>
+            {loading ? t("submitting") : t("submit")}
           </Button>
         </form>
       </Form>

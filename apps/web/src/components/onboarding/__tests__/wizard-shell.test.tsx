@@ -61,6 +61,16 @@ vi.mock("@nebutra/ui/primitives", () => ({
 
 vi.mock("@nebutra/ui/utils", () => ({
   cn: (...classes: Array<string | undefined | null | false>) => classes.filter(Boolean).join(" "),
+  AUTH_FORM_COLUMN_CLASS: "",
+  AUTH_PRIMARY_CTA_CLASS: "",
+}));
+
+vi.mock("@/components/brand/brand-assets", () => ({
+  BrandLogo: () => <div data-testid="brand-logo" />,
+}));
+
+vi.mock("@/components/navigation/locale-switcher", () => ({
+  LocaleSwitcher: () => <div data-testid="locale-switcher" />,
 }));
 
 const pushMock = vi.fn();

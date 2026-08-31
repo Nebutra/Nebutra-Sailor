@@ -96,13 +96,38 @@
     },
     "progress": {
       "back": "返回",
-      "stepCounter": "第 {current} 步 / 共 {total} 步"
+      "stepCounter": "第 {current} 步 / 共 {total} 步",
+      "ariaLabel": "開通進度"
+    },
+    "workspace": {
+      "title": "為工作空間取個名字",
+      "description": "邀請與帳單都會使用這個名稱。",
+      "nameLabel": "工作空間名稱",
+      "namePlaceholder": "例如：極光實驗室",
+      "urlLabel": "工作空間網址",
+      "slugPlaceholder": "my-workspace",
+      "slugError": "3–48 個字元，僅限小寫字母、數字和連字號。",
+      "submit": "建立工作空間",
+      "submitting": "建立中…",
+      "error": "無法建立工作空間。"
+    },
+    "invite": {
+      "title": "邀請團隊",
+      "description": "之後再邀也可以。空白的信箱會略過。",
+      "emailsLabel": "成員信箱",
+      "emailPlaceholder": "colleague@company.com",
+      "addAnother": "再加一位",
+      "removeEmail": "移除信箱",
+      "send": "送出邀請",
+      "sending": "送出中…",
+      "skip": "暫時略過",
+      "error": "無法送出邀請。"
     },
     "plan": {
-      "title": "选择套餐",
-      "description": "可先免费开始，随时升级。",
-      "choose": "选择套餐",
-      "skip": "暂时跳过"
+      "title": "選擇套餐",
+      "description": "可先免費開始，隨時升級。",
+      "choose": "選擇套餐",
+      "skip": "暫時略過"
     }
   },
   "userMenu": {

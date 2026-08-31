@@ -96,13 +96,38 @@
     },
     "progress": {
       "back": "Înapoi",
-      "stepCounter": "Pasul {current} din {total}"
+      "stepCounter": "Pasul {current} din {total}",
+      "ariaLabel": "Onboarding progress"
     },
     "plan": {
       "title": "Alege un plan",
       "description": "Începe gratuit sau deblochează mai multă capacitate. Poți schimba planul oricând.",
       "choose": "Alege un plan",
       "skip": "Sari peste acum"
+    },
+    "workspace": {
+      "title": "Name the workspace",
+      "description": "This is how it shows up on invites and invoices.",
+      "nameLabel": "Workspace name",
+      "namePlaceholder": "e.g. Acme Corp",
+      "urlLabel": "Workspace URL",
+      "slugPlaceholder": "my-workspace",
+      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
+      "submit": "Create workspace",
+      "submitting": "Creating…",
+      "error": "Could not create the workspace."
+    },
+    "invite": {
+      "title": "Invite the team",
+      "description": "You can do this later. Empty fields are skipped.",
+      "emailsLabel": "Email addresses",
+      "emailPlaceholder": "colleague@company.com",
+      "addAnother": "Add another",
+      "removeEmail": "Remove email",
+      "send": "Send invitations",
+      "sending": "Sending…",
+      "skip": "Skip for now",
+      "error": "Could not send invitations."
     }
   },
   "userMenu": {

@@ -67,4 +67,12 @@ describe("ProgressBar", () => {
     expect(progress).toHaveAttribute("aria-valuemax", "3");
     expect(progress).toHaveAttribute("aria-valuenow", "2");
   });
+
+  it("uses the provided aria label", () => {
+    render(
+      <ProgressBar steps={STEPS} currentStep={1} completedSteps={new Set()} ariaLabel="开通进度" />,
+    );
+
+    expect(screen.getByRole("progressbar")).toHaveAttribute("aria-label", "开通进度");
+  });
 });
