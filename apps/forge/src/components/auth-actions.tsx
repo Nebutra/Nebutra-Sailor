@@ -68,7 +68,7 @@ export function AuthActions({ signInHref, signUpHref }: AuthActionsProps = {}) {
         >
           <Avatar
             size="sm"
-            src={user.imageUrl}
+            {...(user.imageUrl ? { src: user.imageUrl } : {})}
             title={displayName}
             letter={userInitials(user.name, user.email)}
           />
