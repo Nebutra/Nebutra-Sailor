@@ -40,6 +40,35 @@ function initialsFor(name: string, email: string): string {
   return source.slice(0, 2).toUpperCase();
 }
 
+function AvatarFace({
+  src,
+  name,
+  email,
+}: {
+  src: string | null;
+  name: string;
+  email: string;
+}): React.ReactElement {
+  const [failed, setFailed] = useState(false);
+  const showImage = Boolean(src) && !failed;
+
+  if (!showImage) {
+    return <>{initialsFor(name, email)}</>;
+  }
+
+  return (
+    // biome-ignore lint/performance/noImgElement: external user avatars are not in next/image's remotePatterns allowlist; defaults to native <img> with no optimization.
+    <img
+      src={src ?? ""}
+      alt=""
+      className="h-full w-full object-cover"
+      loading="lazy"
+      referrerPolicy="no-referrer"
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
 export function UserAvatarMenu(): React.ReactElement | null {
   const t = useTranslations("nav.avatarMenu");
   const me = usePublicMe();
@@ -95,18 +124,12 @@ export function UserAvatarMenu(): React.ReactElement | null {
           aria-hidden
           className="relative flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-primary text-[10px] font-semibold text-white shadow-inner"
         >
-          {me.avatarUrl ? (
-            // biome-ignore lint/performance/noImgElement: external user avatars are not in next/image's remotePatterns allowlist; defaults to native <img> with no optimization.
-            <img
-              src={me.avatarUrl}
-              alt=""
-              className="h-full w-full object-cover"
-              loading="lazy"
-              referrerPolicy="no-referrer"
-            />
-          ) : (
-            initialsFor(me.name, me.email)
-          )}
+          <AvatarFace
+            key={me.avatarUrl ?? "none"}
+            src={me.avatarUrl}
+            name={me.name}
+            email={me.email}
+          />
           <span
             aria-hidden
             className="absolute right-0 bottom-0 h-2 w-2 rounded-full bg-green-500 ring-2 ring-white dark:ring-black"
@@ -126,18 +149,12 @@ export function UserAvatarMenu(): React.ReactElement | null {
               aria-hidden
               className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary text-sm font-semibold text-white shadow-inner"
             >
-              {me.avatarUrl ? (
-                // biome-ignore lint/performance/noImgElement: external user avatar; see comment on trigger img.
-                <img
-                  src={me.avatarUrl}
-                  alt=""
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                  referrerPolicy="no-referrer"
-                />
-              ) : (
-                initialsFor(me.name, me.email)
-              )}
+              <AvatarFace
+                key={me.avatarUrl ?? "none"}
+                src={me.avatarUrl}
+                name={me.name}
+                email={me.email}
+              />
             </span>
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-semibold text-neutral-12">{displayName}</p>

@@ -28,5 +28,10 @@ describe("landing Next.js security headers", () => {
     expect(csp).toContain("https://auth.nebutra.com");
     expect(csp).toContain("frame-src https://accounts.google.com/gsi/");
     expect(csp).toContain("style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style");
+    // Google / GitHub / Gravatar profile photos. Without these the navbar
+    // avatar <img> is dropped by CSP and shows the broken-image glyph.
+    expect(csp).toContain("https://*.googleusercontent.com");
+    expect(csp).toContain("https://avatars.githubusercontent.com");
+    expect(csp).toContain("https://*.gravatar.com");
   });
 });
