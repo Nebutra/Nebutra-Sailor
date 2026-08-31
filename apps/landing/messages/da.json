@@ -178,7 +178,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO STRUKTUR",
-    "title": "15 apps. 113 pakker. 4 backend-linjer.",
+    "title": "10 apps. 113 pakker. 4 backend-linjer.",
     "description": "Delt kode, parallelle builds, ingen duplikering. Komplet end-to-end typing fra database til frontend.",
     "metricApps": "apps",
     "metricBackends": "backend-lanes",

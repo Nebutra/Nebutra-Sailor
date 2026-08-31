@@ -178,7 +178,7 @@
   },
   "monorepoTree": {
     "badge": "ΔΟΜΗ TURBOREPO",
-    "title": "15 εφαρμογές. 113 πακέτα. 4 backend lanes.",
+    "title": "10 εφαρμογές. 113 πακέτα. 4 backend lanes.",
     "description": "Κοινός κώδικας, παράλληλες κατασκευές, μηδενική διπλοποίηση. Ολοκληρωμένος end-to-end typing από τη βάση δεδομένων στο frontend.",
     "metricApps": "εφαρμογές",
     "metricBackends": "διαδρομές backend",

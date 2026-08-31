@@ -9,7 +9,7 @@ import fr from "../../../messages/fr.json";
 import ja from "../../../messages/ja.json";
 import ko from "../../../messages/ko.json";
 import zh from "../../../messages/zh.json";
-import { type FileNode, TREE_DATA } from "./landing-data";
+import { type FileNode, SAILOR_EXCLUDED_PRODUCT_APPS, TREE_DATA } from "./landing-data";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../../..");
 
@@ -42,6 +42,17 @@ describe("landing monorepo tree data", () => {
     expect(labels).not.toContain("ai-sdk");
     expect(labels).not.toContain("database");
     expect(labels).not.toContain("api-gateway");
+  });
+
+  it("does not list first-party product surfaces as Sailor apps", () => {
+    const apps = TREE_DATA.find((node) => node.label === "apps");
+    const labels = apps?.children?.map((node) => node.label) ?? [];
+
+    expect(labels).toContain("landing");
+    expect(labels).toContain("web");
+    for (const product of SAILOR_EXCLUDED_PRODUCT_APPS) {
+      expect(labels, product).not.toContain(product);
+    }
   });
 
   it("points every displayed non-virtual node at a real repo path", () => {
@@ -88,13 +99,16 @@ describe("landing monorepo count copy", () => {
     ["zh", zh],
   ] as const;
 
-  it("uses the current packages count across localized landing copy", () => {
+  it("uses the current apps and packages counts across localized landing copy", () => {
+    const apps = TREE_DATA.find((node) => node.label === "apps");
+    const appCount = String(apps?.children?.length ?? 0);
     const packages = TREE_DATA.find((node) => node.label === "packages");
     const packageLeafCount = String(
       packages?.children?.reduce((total, group) => total + (group.children?.length ?? 0), 0) ?? 0,
     );
 
     for (const [locale, messages] of locales) {
+      expect(messages.monorepoTree.title, locale).toContain(appCount);
       expect(messages.monorepoTree.title, locale).toContain(packageLeafCount);
       expect(messages.monorepoTree.title, locale).not.toContain("55");
       expect(messages.landing.socialProof.metrics.projects.value, locale).toBe(packageLeafCount);

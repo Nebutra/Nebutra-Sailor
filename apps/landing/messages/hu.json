@@ -178,7 +178,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO STRUKTÚRA",
-    "title": "15 alkalmazás. 113 csomag. 4 backend sáv.",
+    "title": "10 alkalmazás. 113 csomag. 4 backend sáv.",
     "description": "Megosztott kód, párhuzamos build, nulla duplikáció. Teljes végponttól végpontig terjedő típusozás az adatbázistól a frontendig.",
     "metricApps": "alkalmazás",
     "metricBackends": "backend sávok",
