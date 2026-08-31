@@ -199,6 +199,7 @@ describe("Deploy substrate governance", () => {
     expect(yml).toContain("infra/fly/gateway.toml");
     expect(yml).toContain("prepare-pnpm-deploy-node-runtime.mjs");
     expect(yml).toContain("materialize-pnpm-deploy-bundle.sh");
+    expect(yml).toContain("packages/design/ui/dist");
     expect(yml).toContain("nebutra-gateway");
     expect(yml).toContain("/var/www/nebutra/api/.env");
     expect(yml).toContain("https://nebutra-gateway.fly.dev/api/misc/health");

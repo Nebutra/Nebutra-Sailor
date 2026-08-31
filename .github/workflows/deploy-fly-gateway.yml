@@ -112,7 +112,7 @@ jobs:
       - name: Build Hono bundle
         run: |
           set -euo pipefail
-          pnpm turbo build --filter="@nebutra/gateway^..."
+          pnpm turbo build --filter="@nebutra/gateway^..." --filter=@nebutra/ui
           pnpm --filter @nebutra/gateway build
           STAGE="$RUNNER_TEMP/stage-gateway"
           rm -rf "$STAGE"
@@ -120,6 +120,9 @@ jobs:
             --filter @nebutra/gateway --prod --legacy "$STAGE"
           node scripts/prepare-pnpm-deploy-node-runtime.mjs "$STAGE"
           node --check "$STAGE/dist/node.js"
+          mkdir -p "$STAGE/node_modules/@nebutra/ui"
+          cp packages/design/ui/package.json "$STAGE/node_modules/@nebutra/ui/"
+          cp -R packages/design/ui/dist "$STAGE/node_modules/@nebutra/ui/dist"
           cp infra/runtime/docker/Dockerfile.gateway "$STAGE/Dockerfile"
           bash infra/ops/scripts/materialize-pnpm-deploy-bundle.sh "$STAGE"
           echo "STAGE=$STAGE" >> "$GITHUB_ENV"
