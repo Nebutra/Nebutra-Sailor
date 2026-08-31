@@ -10,12 +10,14 @@ import { getGroupResources, RESOURCE_GROUPS } from "@/lib/constants/resources-da
 import { getGroupSolutions, pick, SOLUTION_GROUPS } from "@/lib/constants/solutions-data";
 import { env } from "@/lib/env";
 import { isZhUiLocale } from "@/lib/i18n/localized";
+import { usePublicMe } from "@/lib/use-public-me";
 import { Presence } from "../Presence";
 
 const APP_URL = env.NEXT_PUBLIC_APP_URL;
 
 export function MobileDrawer() {
   const t = useTranslations("nav");
+  const me = usePublicMe();
   const locale = useLocale();
   type NavTranslationKey = Parameters<typeof t>[0];
   type LocalizedHref = Parameters<typeof Link>[0]["href"];
@@ -159,22 +161,24 @@ export function MobileDrawer() {
               })}
             </div>
 
-            <div className="mt-auto flex flex-col gap-3 border-t border-neutral-6/60 pt-4 dark:border-border/60">
-              <a
-                href={`${APP_URL}/sign-in`}
-                onClick={() => setOpen(false)}
-                className="w-full rounded-[var(--radius-lg)] border border-neutral-6/60 px-4 py-3 text-center text-sm font-medium text-neutral-12 dark:border-border/60"
-              >
-                {t("signIn")}
-              </a>
-              <a
-                href={`${APP_URL}/sign-up`}
-                onClick={() => setOpen(false)}
-                className="w-full rounded-[var(--radius-lg)] bg-[color:hsl(var(--foreground))] px-4 py-3 text-center text-sm font-medium text-[color:hsl(var(--background))]"
-              >
-                {t("getStarted")}
-              </a>
-            </div>
+            {me ? null : (
+              <div className="mt-auto flex flex-col gap-3 border-t border-neutral-6/60 pt-4 dark:border-border/60">
+                <a
+                  href={`${APP_URL}/sign-in`}
+                  onClick={() => setOpen(false)}
+                  className="w-full rounded-[var(--radius-lg)] border border-neutral-6/60 px-4 py-3 text-center text-sm font-medium text-neutral-12 dark:border-border/60"
+                >
+                  {t("signIn")}
+                </a>
+                <a
+                  href={`${APP_URL}/sign-up`}
+                  onClick={() => setOpen(false)}
+                  className="w-full rounded-[var(--radius-lg)] bg-[color:hsl(var(--foreground))] px-4 py-3 text-center text-sm font-medium text-[color:hsl(var(--background))]"
+                >
+                  {t("getStarted")}
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </Presence>
