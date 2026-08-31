@@ -13,7 +13,7 @@ import { useTranslations } from "next-intl";
  * about a design system, illustrated with a picture of a design system.
  *
  * The mechanism was real the whole time — `html[data-brand]` plus skins.css,
- * seven Brand Packages, already shipping. So the card runs it. Pressing Linear
+ * eight Brand Packages, already shipping. So the card runs it. Pressing Linear
  * here does not restyle this card; it restyles the entire page, because that is
  * what a Brand Package does, and a visitor watching the hero, the pricing table
  * and the footer change under one press has been told something no mockup can

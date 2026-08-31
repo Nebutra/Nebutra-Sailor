@@ -10,6 +10,7 @@ export {
   chatCompletionsUrl,
   kindLabel,
   loadEnginesFromEnv,
+  openaiCompatibleUrl,
   type ResolvedEngine,
 } from "./engines";
 export {

@@ -57,6 +57,8 @@ describe("id-photo catalog", () => {
 
     expect(publicSku).not.toHaveProperty("enabled");
     expect(publicSku).not.toHaveProperty("headRatio");
+    expect(publicSku).not.toHaveProperty("prompt");
+    expect(JSON.stringify(publicSku)).not.toMatch(/Official identification|same person/);
     expect(publicSku.widthPx).toBe(413);
     expect(publicSku.heightPx).toBe(579);
     expect(publicSku.background).toBe("blue");

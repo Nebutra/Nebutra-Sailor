@@ -11,8 +11,9 @@ export function GET() {
         configured: isR2Configured(),
       },
       consume: {
-        provider: "image2",
+        provider: "router",
         model: process.env.IMAGE2_MODEL || "gpt-image-2",
+        base: process.env.IMAGE2_BASE_URL || "https://router.nebutra.com/v1",
         configured: isImage2Configured(),
       },
     },

@@ -28,6 +28,7 @@ describe("@nebutra/theme design-language catalog", () => {
         "vanta",
         "stripe",
         "notion",
+        "cosmos",
       ]),
     );
     expect(LANGUAGE_IDS[0]).toBe("factory");

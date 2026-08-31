@@ -300,4 +300,12 @@ describe("getThemePreviewStyle", () => {
     const linear = asRecord(getThemePreviewStyle("linear", "light"));
     expect(linear["--color-primary"]).not.toBe(factory["--color-primary"]);
   });
+
+  it("Theme Registry can preview the Cosmos design language", () => {
+    const style = asRecord(getThemePreviewStyle("cosmos", "light"));
+    const factory = asRecord(getThemePreviewStyle("factory", "light"));
+    expect(style["--color-primary"]).toBe("hsl(0 0% 7%)");
+    expect(style["--color-background"]).toBe("hsl(60 10% 96%)");
+    expect(style["--color-background"]).not.toBe(factory["--color-background"]);
+  });
 });

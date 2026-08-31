@@ -25,7 +25,7 @@ mail:
 # Host alias — landing `/` on open.nebutra.com rewrites to `/open`.
 # Console stays on app `/settings/developers`. Do not add an ECS A or a
 # second Vercel project.
-ecs_surfaces: [app, auth, api, sso, router, forge, design, status, admin, pebble, carina]
+ecs_surfaces: [app, auth, api, sso, router, forge, design, status, admin, pebble, carina, kuanlan]
 vercel_surfaces: [open]
 proxy:
   proxied:
@@ -44,6 +44,7 @@ proxy:
       admin,
       pebble,
       carina,
+      kuanlan,
       mail,
       imap,
       pop3,

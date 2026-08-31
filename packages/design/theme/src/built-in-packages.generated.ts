@@ -5,6 +5,7 @@
  */
 
 import { type BrandPackage, normalizeBrandPackage } from "@nebutra/tokens/brand-package";
+import cosmos from "@nebutra/tokens/brands/cosmos/brand.json" with { type: "json" };
 import gsap from "@nebutra/tokens/brands/gsap/brand.json" with { type: "json" };
 import linear from "@nebutra/tokens/brands/linear/brand.json" with { type: "json" };
 import notion from "@nebutra/tokens/brands/notion/brand.json" with { type: "json" };
@@ -14,6 +15,7 @@ import vanta from "@nebutra/tokens/brands/vanta/brand.json" with { type: "json" 
 import vercel from "@nebutra/tokens/brands/vercel/brand.json" with { type: "json" };
 
 const RAW_BUILT_IN: Record<string, BrandPackage> = {
+  cosmos: cosmos as BrandPackage,
   gsap: gsap as BrandPackage,
   linear: linear as BrandPackage,
   notion: notion as BrandPackage,

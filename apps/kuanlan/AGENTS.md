@@ -14,7 +14,7 @@ It owns:
 - resource key layout under `src/lib/resources.ts`
 - brand voice and editorial chrome under `src/components`
 
-It does not own shared Nebutra UI chrome or a new `packages/ai/*` package. Exact millimetre compose stays in this app (`sharp`). Remote 开拍 consume goes through the in-app image2 client (`src/lib/image2.ts` → `gpt-image-2`). Object bytes go through `@nebutra/storage` (Cloudflare R2).
+It does not own shared Nebutra UI chrome or a new `packages/ai/*` package. Exact millimetre compose stays in this app (`sharp`). Remote 开拍 consume goes through this app's backend (`src/lib/image2.ts`) to `https://router.nebutra.com/v1` with a router product key and model `gpt-image-2`. SKU system prompts stay in `idPhotoShootBrief` and never reach the browser. The 302.ai channel key lives only in New-API. Object bytes go through `@nebutra/storage` (Cloudflare R2).
 
 ## Source Of Truth
 
@@ -33,7 +33,7 @@ Do not treat `.next/` or `public/orbit` as implementation truth. Public stills l
 - Do not invent wardrobe, travel, or photoshoot catalogs until an SKU is enabled here.
 - Disabled SKUs fail closed. Public list and compose both require `enabled: true`.
 - Resource writes fail closed without `CLOUDFLARE_ACCOUNT_ID` + `R2_ACCESS_KEY_ID` + `R2_SECRET_ACCESS_KEY`. Do not fall back to disk or response blobs.
-- 开拍 consume fails closed without `IMAGE2_API_KEY`. Default model is `gpt-image-2` at `IMAGE2_BASE_URL`.
+- 开拍 consume fails closed without `ROUTER_API_KEY` (router.nebutra.com product key). Default model is `gpt-image-2` at `https://router.nebutra.com/v1`. Do not put a 302.ai key in this app.
 - File inputs use `data-allow-native`. No native `<select>`.
 - No lucide. No `max-w-5xl` / `max-w-7xl`.
 
