@@ -116,5 +116,8 @@ Complete navigation to all project documentation.
 | Document                            | Description          |
 | ----------------------------------- | -------------------- |
 | [DOMAINS](./DOMAINS.md)             | Domain configuration |
+| [Vercel spend](./ops/vercel-spend.md) | Repo-owned ignore + Git flags; kuanlan stays linked |
+| [Fly / China origin](./architecture/2026-08-31-fly-global-china-ecs-origin.md) | Fly hkg product edges; ECS issuer / leak / rollback |
+| [Fly origin runbook](./ops/fly-origin.md) | FLY_API_TOKEN → deploy-fly.yml → optional DNS cutover |
 | [changelog](../CHANGELOG.md)        | Version history      |
 | [Alibaba Cloud ECS](./阿里云ECS部署指南.md) | ECS deployment guide |

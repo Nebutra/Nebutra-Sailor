@@ -60,10 +60,11 @@ describe("production runtime closure", () => {
         "aws",
         "gcp",
         "railway",
+        "fly",
       ]),
     );
     expect(TARGETS_BY_SURFACE.frontend).toEqual(
-      expect.arrayContaining(["vercel", "standalone", "cloudflare-pages", "railway"]),
+      expect.arrayContaining(["vercel", "standalone", "cloudflare-pages", "railway", "fly"]),
     );
     expect(TARGETS_BY_SURFACE.originBackend).toEqual([
       "ecs-docker",
@@ -71,6 +72,7 @@ describe("production runtime closure", () => {
       "aws",
       "gcp",
       "railway",
+      "fly",
     ]);
   });
 

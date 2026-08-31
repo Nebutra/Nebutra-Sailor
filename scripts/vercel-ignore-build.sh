@@ -23,9 +23,10 @@
 #   The old rule rebuilt every Vercel project on any package change and burned
 #   Hobby's ~100 deployments/day. Scope is intentional and per-app.
 #
-# Hobby note: canceled/skipped deploys can still count toward the daily cap.
 # Keep Git connected only for surfaces you want auto-deployed (typically
-# landing + sailor-docs). web/auth/api production is ECS — optional on Vercel.
+# landing + kuanlan). web/auth/api production is ECS — optional on Vercel.
+# kuanlan stays Git-linked while it is launching: skip when the app dir is
+# missing so empty monorepo pushes do not burn a failed build. Do not Unlink.
 
 set -euo pipefail
 
@@ -37,6 +38,15 @@ COMMIT_MSG="$(git -C "$REPO_ROOT" log -1 --pretty=%B 2>/dev/null || true)"
 
 echo "Repo root: $REPO_ROOT"
 echo "App scope root: $APP_DIR"
+
+# Launching product: the Vercel project is already Git-linked. Skip when the
+# app is not on this SHA. A leftover local directory without package.json
+# does not count as shipped.
+if [ "$APP_DIR" = "apps/kuanlan" ] && [ ! -f "$REPO_ROOT/apps/kuanlan/package.json" ]; then
+  echo "apps/kuanlan is not in this tree yet — skip."
+  echo "Keep the Git connection. Unpause / deploy when the app lands on main."
+  exit 0
+fi
 
 if [ ! -d "$REPO_ROOT/$APP_DIR" ]; then
   echo "Unknown Vercel app directory: $APP_DIR"
@@ -184,6 +194,20 @@ packages/design/icons
 packages/design/tokens
 packages/design/ui
 packages/design/design-tokens
+EOF
+      ;;
+    apps/kuanlan)
+      # Keep in sync with apps/kuanlan/package.json workspace deps when the
+      # app lands. Do not add this path to the ECS-optional skip list.
+      cat <<'EOF'
+apps/kuanlan
+packages/design/brand
+packages/design/icons
+packages/design/tokens
+packages/design/ui
+packages/design/design-tokens
+packages/iam/auth
+packages/platform/i18n
 EOF
       ;;
     apps/web)

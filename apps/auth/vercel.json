@@ -1,5 +1,8 @@
 {
   "framework": "nextjs",
+  "git": {
+    "deploymentEnabled": false
+  },
   "buildCommand": "cd ../.. && pnpm --filter @nebutra/brand sync && pnpm turbo build --filter=@nebutra/auth-center",
   "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh apps/auth",
   "installCommand": "cd ../.. && pnpm install --frozen-lockfile",

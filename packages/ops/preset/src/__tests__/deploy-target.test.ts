@@ -35,6 +35,8 @@ describe("deploy-target selector", () => {
       "cloudflare-pages",
     );
     expect(resolveDeployTarget("web", { DEPLOY_TARGET_WEB: "railway" })).toBe("railway");
+    expect(resolveDeployTarget("web", { DEPLOY_TARGET_WEB: "fly" })).toBe("fly");
+    expect(resolveDeployTarget("forge", { DEPLOY_TARGET_FORGE: "fly" })).toBe("fly");
     expect(resolveDeployTarget("gateway", { DEPLOY_TARGET_GATEWAY: "ecs-docker" })).toBe(
       "ecs-docker",
     );
@@ -72,6 +74,7 @@ describe("deploy-target selector", () => {
       "standalone",
       "cloudflare-pages",
       "railway",
+      "fly",
     ]);
     expect(TARGETS_BY_SURFACE.edgeGateway).toEqual([
       "cloudflare-workers",
@@ -81,6 +84,7 @@ describe("deploy-target selector", () => {
       "aws",
       "gcp",
       "railway",
+      "fly",
     ]);
     expect(TARGETS_BY_SURFACE.originBackend).toEqual([
       "ecs-docker",
@@ -88,6 +92,7 @@ describe("deploy-target selector", () => {
       "aws",
       "gcp",
       "railway",
+      "fly",
     ]);
     expect(deployTargetEnvKey("landing")).toBe("DEPLOY_TARGET_LANDING");
     expect(deployTargetEnvKey("python-ai")).toBe("DEPLOY_TARGET_PYTHON_AI");

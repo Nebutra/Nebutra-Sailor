@@ -32,12 +32,12 @@ provider-switchable through per-service selector keys:
 
 | Service | Default | Allowed targets |
 | --- | --- | --- |
-| `web` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
-| `landing` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
-| `design-docs` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
-| `sailor-docs` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
-| `gateway` | `cloudflare-workers` | `cloudflare-workers`, `vercel-functions`, `vm-docker`, `ecs-docker`, `k8s`, `aws`, `gcp`, `railway` |
-| `python-ai` | `ecs-docker` | `ecs-docker`, `k8s`, `aws`, `gcp`, `railway` |
+| `web` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway`, `fly` |
+| `landing` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway`, `fly` |
+| `design-docs` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway`, `fly` |
+| `sailor-docs` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway`, `fly` |
+| `gateway` | `cloudflare-workers` | `cloudflare-workers`, `vercel-functions`, `vm-docker`, `ecs-docker`, `k8s`, `aws`, `gcp`, `railway`, `fly` |
+| `python-ai` | `ecs-docker` | `ecs-docker`, `k8s`, `aws`, `gcp`, `railway`, `fly` |
 
 Selector env keys are service-specific:
 

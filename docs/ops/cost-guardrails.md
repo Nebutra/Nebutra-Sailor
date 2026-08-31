@@ -14,6 +14,7 @@ Ranked by how much damage a single bad day can do:
 | Risk | Ceiling | Enforced by |
 | --- | --- | --- |
 | AI token spend | none today | **open — see below** |
+| Vercel build minutes / on-demand | per-app ignore + Git auto-deploy flags | [vercel-spend.md](./vercel-spend.md) |
 | Postgres storage growth | retention windows | `retention.sql` + Cron Trigger |
 | Postgres runaway query CPU | 30s | role `statement_timeout` |
 | Postgres connection exhaustion | 50 | role `CONNECTION LIMIT` |
@@ -102,6 +103,14 @@ also carry TTLs, so under real memory pressure they can be evicted too — and
 that surfaces as duplicate work or a missed limit, not as an error. Memory
 headroom is a correctness property here, not only a cost one. Treat sustained
 `evicted_keys` growth as a bug, not as the cache doing its job.
+
+## Vercel
+
+One Git repo linked to several projects bills a deployment per project per
+push. Production web/auth is ECS — those projects must not auto-deploy
+(`git.deploymentEnabled: false`). `nebutra-kuanlan` stays Git-linked; the
+ignore script skips until `apps/kuanlan/package.json` exists. Playbook:
+[vercel-spend.md](./vercel-spend.md).
 
 ## Still open: AI token spend
 

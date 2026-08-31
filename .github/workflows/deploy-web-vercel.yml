@@ -1,42 +1,14 @@
 name: Deploy Web (Vercel)
 
 # Optional edge host for app.nebutra.com. Production DNS still prefers ECS
-# (see docs/ops/web-auth-vercel-cutover.md). This workflow is the CLI re-trigger
-# path; Git integration uses scripts/vercel-ignore-build.sh and skips ECS-
-# primary apps unless opted in.
+# (see docs/ops/web-auth-vercel-cutover.md). CLI deploy is emergency-only:
+# workflow_dispatch. Do not auto-push — Git integration plus this workflow
+# double-billed the Pro meter. Git auto-deploy should stay off on nebutra-web.
 #
-# Hobby (~100 deploys/day team-wide): keep path filters aligned with the
-# ignore-script web scope — never packages/** — cancel superseded runs, and
-# upload with --archive=tgz to avoid the monorepo 15k-file CLI limit.
+# Upload with --archive=tgz to avoid the monorepo 15k-file CLI limit.
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - "apps/web/**"
-      - "apps/web/vercel.json"
-      # Match scripts/vercel-ignore-build.sh apps/web scope (not packages/**)
-      - "packages/commerce/**"
-      - "packages/design/**"
-      - "packages/iam/**"
-      - "packages/platform/**"
-      - "packages/integrations/**"
-      - "packages/ai/agents/**"
-      - "packages/ai/agent-runtime/**"
-      - "packages/ai/startup-os/**"
-      - "packages/ai/cinema/**"
-      - "packages/ai/reel/**"
-      - "packages/ai/atelier-canvas/**"
-      - "packages/ops/preset/**"
-      - "packages/ops/sanity/**"
-      - "packages/ops/china-compliance/**"
-      - "pnpm-workspace.yaml"
-      - "turbo.json"
-      - ".github/workflows/deploy-web-vercel.yml"
-  # No daily cron: production is ECS; a scheduled Vercel deploy would burn
-  # Hobby quota every day even when nothing was deferred. After a cap miss,
-  # re-run this workflow manually (workflow_dispatch).
 
 permissions:
   contents: read

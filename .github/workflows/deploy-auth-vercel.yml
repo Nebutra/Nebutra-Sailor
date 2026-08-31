@@ -1,30 +1,12 @@
 name: Deploy Auth Center (Vercel)
 
-# Login center on Vercel — same pattern as web. ECS keeps api + sso only;
-# auth is multi-app RP session authority on the edge when DNS is flipped.
-# Hobby: narrow paths, cancel superseded runs, --archive=tgz; manual retry only.
+# Login center on Vercel — emergency-only. Production auth-edge is Cloudflare
+# Workers; UI origin is ECS. CLI deploy is workflow_dispatch only so this
+# workflow cannot double-bill with Git integration. Keep Git auto-deploy off
+# on nebutra-auth. --archive=tgz avoids the monorepo 15k-file CLI limit.
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - "apps/auth/**"
-      - "apps/auth/vercel.json"
-      - "packages/iam/auth/**"
-      - "packages/iam/captcha/**"
-      - "packages/platform/db/**"
-      - "packages/platform/i18n/**"
-      - "packages/platform/logger/**"
-      - "packages/design/brand/**"
-      - "packages/design/ui/**"
-      - "packages/design/tokens/**"
-      - "packages/design/design-tokens/**"
-      - "packages/design/icons/**"
-      - "pnpm-workspace.yaml"
-      - "turbo.json"
-      - ".github/workflows/deploy-auth-vercel.yml"
-  # No daily cron — same rationale as deploy-web (ECS primary; manual retry).
 
 permissions:
   contents: read

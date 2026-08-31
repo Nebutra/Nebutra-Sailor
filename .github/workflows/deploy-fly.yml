@@ -1,0 +1,183 @@
+name: Deploy origin apps to Fly
+
+# Replaces the Aliyun ECS PM2 product edges with Fly Machines (Hong Kong).
+# Landing, gateway-edge, auth-edge, SSO, leak DNS, and origin.nebutra.com stay
+# where they are. This workflow deploys Machines; DNS cutover is a separate
+# workflow_dispatch input so a failed image cannot take production down.
+#
+# REQUIRED: repository secret FLY_API_TOKEN (deploy-scoped). There is no
+# fallback. The leaked chat tokens were revoked and must not be reused.
+
+on:
+  workflow_dispatch:
+    inputs:
+      apps:
+        description: "Apps to deploy (space-separated: forge router web pebble design). Empty = all."
+        required: false
+        default: ""
+      cutover:
+        description: "After a healthy Fly URL, point Cloudflare DNS at <app>.fly.dev"
+        required: false
+        default: "false"
+        type: boolean
+  push:
+    branches: [main]
+    paths:
+      - "apps/forge/**"
+      - "apps/router/**"
+      - "apps/web/**"
+      - "apps/pebble/**"
+      - "apps/design/**"
+      - "packages/ai/forge-runtime/**"
+      - "packages/platform/router-supply/**"
+      - "packages/design/**"
+      - "infra/fly/**"
+      - "infra/runtime/docker/Dockerfile.standalone"
+      - ".github/workflows/deploy-fly.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-fly-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  matrix:
+    name: Resolve apps
+    runs-on: ubuntu-latest
+    outputs:
+      apps: ${{ steps.resolve.outputs.apps }}
+    steps:
+      - id: resolve
+        env:
+          INPUT_APPS: ${{ github.event.inputs.apps }}
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          import json, os
+          all_apps = [
+            {"app":"forge","package":"@nebutra/forge","workspace":"apps/forge","build_command":"build","fly_app":"nebutra-forge","host":"forge","site":"https://forge.nebutra.com"},
+            {"app":"router","package":"@nebutra/router","workspace":"apps/router","build_command":"build","fly_app":"nebutra-router","host":"router","site":"https://router.nebutra.com"},
+            {"app":"web","package":"@nebutra/web","workspace":"apps/web","build_command":"build:next","fly_app":"nebutra-web","host":"app","site":"https://app.nebutra.com"},
+            {"app":"pebble","package":"@nebutra/pebble-site","workspace":"apps/pebble","build_command":"build","fly_app":"nebutra-pebble","host":"pebble","site":"https://pebble.nebutra.com"},
+            {"app":"design","package":"@nebutra/design","workspace":"apps/design","build_command":"build","fly_app":"nebutra-design","host":"design","site":"https://design.nebutra.com"},
+          ]
+          wanted = [w for w in os.environ.get("INPUT_APPS", "").split() if w]
+          apps = all_apps if not wanted else [row for row in all_apps if row["app"] in wanted]
+          missing = set(wanted) - {row["app"] for row in apps}
+          if missing:
+              raise SystemExit(f"unknown apps: {sorted(missing)}")
+          out = os.environ["GITHUB_OUTPUT"]
+          with open(out, "a", encoding="utf-8") as fh:
+              fh.write("apps<<EOF\n")
+              fh.write(json.dumps(apps))
+              fh.write("\nEOF\n")
+          PY
+
+  deploy:
+    name: Fly ${{ matrix.app }}
+    needs: matrix
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.matrix.outputs.apps) }}
+    steps:
+      - name: Require FLY_API_TOKEN
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          if [ -z "${FLY_API_TOKEN:-}" ]; then
+            echo "::error::Set repository secret FLY_API_TOKEN (deploy token). Chat tokens were revoked."
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Build standalone
+        env:
+          NEXT_OUTPUT: standalone
+        run: pnpm --filter ${{ matrix.package }} ${{ matrix.build_command }}
+
+      - name: Assemble image context
+        run: bash infra/ops/scripts/assemble-next-standalone.sh "${{ matrix.workspace }}" "$RUNNER_TEMP/stage-${{ matrix.app }}" "${{ matrix.app }}"
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      - name: Ensure Fly app
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          if flyctl apps list --json | python3 -c "import json,sys; names={a.get('Name') or a.get('name') for a in json.load(sys.stdin)}; sys.exit(0 if '${{ matrix.fly_app }}' in names else 1)"; then
+            echo "app ${{ matrix.fly_app }} exists"
+          else
+            flyctl apps create "${{ matrix.fly_app }}" --machines
+          fi
+
+      - name: Import ECS env if present
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          VM_HOST: ${{ vars.VM_HOST || vars.ECS_HOST }}
+          VM_USER: ${{ vars.VM_USER || vars.ECS_USER }}
+          VM_SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${VM_HOST:-}" ] || [ -z "${VM_SSH_PRIVATE_KEY:-}" ]; then
+            echo "No VM SSH — skip secret import. Set fly secrets later."
+            exit 0
+          fi
+          env_path="/var/www/nebutra/${{ matrix.app }}/.env"
+          if [ "${{ matrix.app }}" = "web" ]; then env_path="/var/www/nebutra/web/.env"; fi
+          if [ "${{ matrix.app }}" = "design" ]; then env_path="/var/www/nebutra/design/.env"; fi
+          install -m 600 /dev/null "$RUNNER_TEMP/vm_key"
+          printf '%s\n' "$VM_SSH_PRIVATE_KEY" > "$RUNNER_TEMP/vm_key"
+          if ssh -i "$RUNNER_TEMP/vm_key" -o StrictHostKeyChecking=accept-new \
+            "${VM_USER}@${VM_HOST}" "test -f $env_path"; then
+            ssh -i "$RUNNER_TEMP/vm_key" -o StrictHostKeyChecking=accept-new \
+              "${VM_USER}@${VM_HOST}" "cat $env_path" \
+              | flyctl secrets import -a "${{ matrix.fly_app }}" --stage \
+              || echo "::warning::fly secrets import failed for ${{ matrix.fly_app }}"
+          else
+            echo "No $env_path on VM — skip."
+          fi
+          rm -f "$RUNNER_TEMP/vm_key"
+
+      - name: Deploy Machine
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          flyctl deploy "$RUNNER_TEMP/stage-${{ matrix.app }}" \
+            --config "infra/fly/${{ matrix.app }}.toml" \
+            --dockerfile "$RUNNER_TEMP/stage-${{ matrix.app }}/Dockerfile" \
+            --build-arg "APP_WORKSPACE=${{ matrix.workspace }}" \
+            --ha=false \
+            --remote-only \
+            --yes
+
+      - name: Smoke Fly URL
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          url="https://${{ matrix.fly_app }}.fly.dev/"
+          code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 -L "$url" || echo 000)
+          echo "GET $url -> $code"
+          if [ "$code" != "200" ] && [ "$code" != "307" ] && [ "$code" != "302" ]; then
+            echo "::error::$url is not healthy ($code). DNS will not cut over."
+            exit 1
+          fi
+
+      - name: Cut over Cloudflare DNS
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.cutover == 'true'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          HOST: ${{ matrix.host }}
+          FLY_APP: ${{ matrix.fly_app }}
+        run: bash infra/ops/scripts/point-host-dns-fly.sh
