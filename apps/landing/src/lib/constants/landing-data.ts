@@ -23,7 +23,6 @@ import {
   SettingsGear as Settings,
   Shield,
   ShieldCheck,
-  Users,
   Workflow,
 } from "@nebutra/icons";
 import { PaintBrush as Paintbrush } from "@phosphor-icons/react/dist/ssr";
@@ -206,16 +205,29 @@ const packageGroups = [
   },
 ] as const;
 
+/**
+ * First-party product surfaces (forge, pebble, router, sleptons, typelens)
+ * ship from this monorepo but are not Sailor kit apps. Keep them off the
+ * landing explorer — they have their own origins.
+ */
+export const SAILOR_EXCLUDED_PRODUCT_APPS = [
+  "forge",
+  "pebble",
+  "router",
+  "sleptons",
+  "typelens",
+] as const;
+
 export const TREE_DATA: FileNode[] = [
   {
     id: "apps",
     label: "apps",
     path: "apps",
-    tag: "15",
+    tag: "10",
     icon: React.createElement(FolderOpen, {
       className: "h-[15px] w-[15px] fill-current/20",
     }),
-    description: "- Workspace applications",
+    description: "- Sailor workspace applications",
     children: [
       {
         id: "apps-admin",
@@ -246,13 +258,6 @@ export const TREE_DATA: FileNode[] = [
         icon: React.createElement(Key, { className: "h-4 w-4" }),
       },
       {
-        id: "apps-forge",
-        label: "forge",
-        path: "apps/forge",
-        description: "- Human tool station + Agent invoke API",
-        icon: React.createElement(Settings, { className: "h-4 w-4" }),
-      },
-      {
         id: "apps-landing",
         label: "landing",
         path: "apps/landing",
@@ -267,32 +272,11 @@ export const TREE_DATA: FileNode[] = [
         icon: React.createElement(Mail, { className: "h-4 w-4" }),
       },
       {
-        id: "apps-pebble",
-        label: "pebble",
-        path: "apps/pebble",
-        description: "- Pebble brand front and support intake",
-        icon: React.createElement(Megaphone, { className: "h-4 w-4" }),
-      },
-      {
-        id: "apps-router",
-        label: "router",
-        path: "apps/router",
-        description: "- OpenAI-compatible model relay",
-        icon: React.createElement(GitBranch, { className: "h-4 w-4" }),
-      },
-      {
         id: "apps-sailor-docs",
         label: "sailor-docs",
         path: "apps/sailor-docs",
         description: "- Public product documentation (Fumadocs)",
         icon: React.createElement(FileText, { className: "h-4 w-4" }),
-      },
-      {
-        id: "apps-sleptons",
-        label: "sleptons",
-        path: "apps/sleptons",
-        description: "- Community and license-facing product surface",
-        icon: React.createElement(Users, { className: "h-4 w-4" }),
       },
       {
         id: "apps-storybook",
@@ -307,13 +291,6 @@ export const TREE_DATA: FileNode[] = [
         path: "apps/studio",
         description: "- Sanity Studio CMS v5",
         icon: React.createElement(PenTool, { className: "h-4 w-4" }),
-      },
-      {
-        id: "apps-typelens",
-        label: "typelens",
-        path: "apps/typelens",
-        description: "- Type specimen collection UI",
-        icon: React.createElement(FileText, { className: "h-4 w-4" }),
       },
       {
         id: "apps-web",

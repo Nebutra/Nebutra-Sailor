@@ -178,7 +178,7 @@
   },
   "monorepoTree": {
     "badge": "STRUCTURĂ TURBOREPO",
-    "title": "15 aplicații. 113 pachete. 4 căi backend.",
+    "title": "10 aplicații. 113 pachete. 4 căi backend.",
     "description": "Cod partajat, build-uri paralele, zero duplicare. Tipizare completă end-to-end de la bază de date la frontend.",
     "metricApps": "aplicații",
     "metricBackends": "piste backend",
