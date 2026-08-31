@@ -30,7 +30,7 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
   return buildPageMetadata({
-    title: pick({ en: "Nebutra Open Platform", zh: "云毓开放平台" }, lang),
+    title: pick(OPEN_PLATFORM_COPY.title, lang),
     description: pick(OPEN_PLATFORM_COPY.lead, lang),
     path: "/open",
     locale: lang as Locale,

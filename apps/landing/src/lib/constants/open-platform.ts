@@ -6,6 +6,7 @@
  * This file only names existing hosts and settings routes.
  */
 
+import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import {
   BookOpen,
@@ -44,7 +45,7 @@ export interface OpenPlatformItem {
 
 export const OPEN_PLATFORM_COPY = {
   eyebrow: { en: "Open Platform", zh: "开放平台" },
-  title: { en: "Nebutra Open Platform", zh: "云毓开放平台" },
+  title: { en: `${brand.name} Open Platform`, zh: `${brand.nameCn}开放平台` },
   lead: {
     en: "Docs, public APIs, and the signed-in developer console — one catalog, no second origin.",
     zh: "文档、公开 API 与登录后的开发者控制台，集中在这一处，不另开源站。",
@@ -124,7 +125,7 @@ export const OPEN_PLATFORM_ITEMS: OpenPlatformItem[] = [
     id: "sso",
     group: "catalog",
     icon: Shield,
-    title: { en: "Sign in with Nebutra", zh: "使用云毓登录" },
+    title: { en: `Sign in with ${brand.name}`, zh: `使用${brand.nameCn}登录` },
     description: {
       en: "OIDC issuer on sso. Client registration is not self-serve yet.",
       zh: "OIDC 签发在 sso。第三方应用注册尚未自助开通。",

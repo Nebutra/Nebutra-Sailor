@@ -1,7 +1,9 @@
+import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { describe, expect, it } from "vitest";
 import {
   OPEN_PLATFORM_CONSOLE_HREF,
+  OPEN_PLATFORM_COPY,
   OPEN_PLATFORM_ITEMS,
   resolveOpenPlatformConsoleHref,
   resolveOpenPlatformHref,
@@ -34,5 +36,13 @@ describe("open platform catalog", () => {
     expect(OPEN_PLATFORM_CONSOLE_HREF).toBe("/settings/developers");
     expect(resolveOpenPlatformHref(consoleItems[0]!)).toMatch(/\/settings\//);
     expect(resolveOpenPlatformConsoleHref()).toMatch(/\/settings\/developers$/);
+  });
+
+  it("names the catalog from brand metadata, not hardcoded identity", () => {
+    expect(OPEN_PLATFORM_COPY.title.en).toBe(`${brand.name} Open Platform`);
+    expect(OPEN_PLATFORM_COPY.title.zh).toBe(`${brand.nameCn}开放平台`);
+    const sso = OPEN_PLATFORM_ITEMS.find((item) => item.id === "sso");
+    expect(sso?.title.en).toBe(`Sign in with ${brand.name}`);
+    expect(sso?.title.zh).toBe(`使用${brand.nameCn}登录`);
   });
 });
