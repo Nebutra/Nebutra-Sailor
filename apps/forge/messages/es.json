@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "Iniciar sesión",
     "signUp": "Registrarse",
-    "signOut": "Cerrar sesión"
+    "signOut": "Cerrar sesión",
+    "menuAria": "Menú de la cuenta"
   },
   "footer": {
     "navAria": "Pie de página",

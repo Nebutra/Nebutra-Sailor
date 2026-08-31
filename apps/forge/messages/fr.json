@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "Se connecter",
     "signUp": "S'inscrire",
-    "signOut": "Se déconnecter"
+    "signOut": "Se déconnecter",
+    "menuAria": "Menu du compte"
   },
   "footer": {
     "navAria": "Pied de page",

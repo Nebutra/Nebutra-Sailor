@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "Giriş yap",
     "signUp": "Kayıt ol",
-    "signOut": "Çıkış yap"
+    "signOut": "Çıkış yap",
+    "menuAria": "Hesap menüsü"
   },
   "footer": {
     "navAria": "Alt bilgi",

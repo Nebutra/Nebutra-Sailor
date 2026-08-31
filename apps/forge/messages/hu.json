@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "Bejelentkezés",
     "signUp": "Regisztráció",
-    "signOut": "Kijelentkezés"
+    "signOut": "Kijelentkezés",
+    "menuAria": "Fiók menü"
   },
   "footer": {
     "navAria": "Lábléc",

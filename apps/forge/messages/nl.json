@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "Inloggen",
     "signUp": "Aanmelden",
-    "signOut": "Uitloggen"
+    "signOut": "Uitloggen",
+    "menuAria": "Accountmenu"
   },
   "footer": {
     "navAria": "Voettekst",

@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "התחבר",
     "signUp": "הירשם",
-    "signOut": "התנתק"
+    "signOut": "התנתק",
+    "menuAria": "תפריט חשבון"
   },
   "footer": {
     "navAria": "כותרת תחתונה",

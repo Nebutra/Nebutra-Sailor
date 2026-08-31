@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "ورود",
     "signUp": "ثبت‌نام",
-    "signOut": "خروج"
+    "signOut": "خروج",
+    "menuAria": "منوی حساب"
   },
   "footer": {
     "navAria": "پاورقی",

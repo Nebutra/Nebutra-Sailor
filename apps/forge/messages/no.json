@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "Logg inn",
     "signUp": "Registrer deg",
-    "signOut": "Logg ut"
+    "signOut": "Logg ut",
+    "menuAria": "Kontomeny"
   },
   "footer": {
     "navAria": "Bunnfelt",
