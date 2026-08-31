@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "Autentificare",
     "signUp": "Înregistrare",
-    "signOut": "Deconectare"
+    "signOut": "Deconectare",
+    "menuAria": "Meniul contului"
   },
   "footer": {
     "navAria": "Subsol",

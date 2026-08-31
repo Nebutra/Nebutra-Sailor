@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "登入",
     "signUp": "註冊",
-    "signOut": "登出"
+    "signOut": "登出",
+    "menuAria": "帳戶選單"
   },
   "footer": {
     "navAria": "頁尾",

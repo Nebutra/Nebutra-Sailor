@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "Ingia",
     "signUp": "Jisajili",
-    "signOut": "Ondoka"
+    "signOut": "Ondoka",
+    "menuAria": "Menyu ya akaunti"
   },
   "footer": {
     "navAria": "Sehemu ya chini",

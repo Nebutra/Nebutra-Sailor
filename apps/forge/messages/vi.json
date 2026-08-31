@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "Đăng nhập",
     "signUp": "Đăng ký",
-    "signOut": "Đăng xuất"
+    "signOut": "Đăng xuất",
+    "menuAria": "Menu tài khoản"
   },
   "footer": {
     "navAria": "Chân trang",

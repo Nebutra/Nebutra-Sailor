@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "로그인",
     "signUp": "회원가입",
-    "signOut": "로그아웃"
+    "signOut": "로그아웃",
+    "menuAria": "계정 메뉴"
   },
   "footer": {
     "navAria": "푸터",

@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "Kirjaudu sisään",
     "signUp": "Rekisteröidy",
-    "signOut": "Kirjaudu ulos"
+    "signOut": "Kirjaudu ulos",
+    "menuAria": "Tilivalikko"
   },
   "footer": {
     "navAria": "Alaosa",

@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "Masuk",
     "signUp": "Daftar",
-    "signOut": "Keluar"
+    "signOut": "Keluar",
+    "menuAria": "Menu akun"
   },
   "footer": {
     "navAria": "Bagian Bawah",

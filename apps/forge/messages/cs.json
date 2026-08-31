@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "Přihlásit se",
     "signUp": "Registrovat se",
-    "signOut": "Odhlásit se"
+    "signOut": "Odhlásit se",
+    "menuAria": "Nabídka účtu"
   },
   "footer": {
     "navAria": "Patička",

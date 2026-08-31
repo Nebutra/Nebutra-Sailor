@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "Accedi",
     "signUp": "Registrati",
-    "signOut": "Esci"
+    "signOut": "Esci",
+    "menuAria": "Menu account"
   },
   "footer": {
     "navAria": "Piè di pagina",

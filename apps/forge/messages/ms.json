@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "Log masuk",
     "signUp": "Daftar",
-    "signOut": "Log keluar"
+    "signOut": "Log keluar",
+    "menuAria": "Menu akaun"
   },
   "footer": {
     "navAria": "Pengek",

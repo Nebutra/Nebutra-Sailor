@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "سائن ان",
     "signUp": "سائن اپ",
-    "signOut": "سائن آؤٹ"
+    "signOut": "سائن آؤٹ",
+    "menuAria": "اکاؤنٹ مینو"
   },
   "footer": {
     "navAria": "فوٹر",

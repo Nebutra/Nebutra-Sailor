@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "Zaloguj się",
     "signUp": "Zarejestruj się",
-    "signOut": "Wyloguj się"
+    "signOut": "Wyloguj się",
+    "menuAria": "Menu konta"
   },
   "footer": {
     "navAria": "Stopka",

@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "साइन इन करें",
     "signUp": "साइन अप करें",
-    "signOut": "साइन आउट करें"
+    "signOut": "साइन आउट करें",
+    "menuAria": "खाता मेनू"
   },
   "footer": {
     "navAria": "फ़ूटर",

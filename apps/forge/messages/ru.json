@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "Войти",
     "signUp": "Зарегистрироваться",
-    "signOut": "Выйти"
+    "signOut": "Выйти",
+    "menuAria": "Меню аккаунта"
   },
   "footer": {
     "navAria": "Подвал",

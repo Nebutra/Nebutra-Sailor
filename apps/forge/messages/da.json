@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "Log ind",
     "signUp": "Opret konto",
-    "signOut": "Log ud"
+    "signOut": "Log ud",
+    "menuAria": "Kontomenu"
   },
   "footer": {
     "navAria": "Sidefod",
