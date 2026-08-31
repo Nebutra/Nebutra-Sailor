@@ -24,13 +24,10 @@ export async function AuthSplitLayout({
   className?: string;
 }) {
   const [t, locale] = await Promise.all([getTranslations("auth.signIn"), getLocale()]);
-  // Marketing home, not this host and not the product `/workspace` bounce.
-  // `stay` + auth Referer keep a leftover session-hint from looping login →
-  // landing → app → login.
+  // Marketing home (`?home`), not this host and not the product launcher.
   const homeHref = getMarketingHomeUrl({
     locale: toRouteLocale(locale),
     defaultLocale: DEFAULT_ROUTE_LOCALE,
-    stay: true,
   });
 
   return (

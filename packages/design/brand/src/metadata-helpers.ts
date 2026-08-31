@@ -35,33 +35,32 @@ export function getBrandOrigin(service: BrandService): string {
 }
 
 /**
- * Query flag for login-center → marketing Home. Landing skips the
- * session-hint bounce into the app when this is present.
+ * Bare query flag that keeps a signed-in visitor on the marketing homepage
+ * (`?home`, no value). Apex `/` without it is a product launcher.
  */
-export const MARKETING_HOME_STAY_PARAM = "stay";
-export const MARKETING_HOME_STAY_VALUE = "1";
+export const MARKETING_HOME_PARAM = "home";
 
 /**
- * Marketing homepage URL. `stay` keeps a signed-in visitor on the
- * marketing surface instead of `/workspace`.
+ * Marketing homepage path. Always includes the `?home` skip — that is the
+ * only signal landing honours. `getBrandOrigin("landing")` is the launcher.
  *
  * `defaultLocale` is the landing path locale that lives on `/` (today `en`).
  * Pass it from `@nebutra/i18n` so brand does not import the i18n package.
  */
-export function getMarketingHomeUrl(options?: {
+export function getMarketingHomePath(options?: {
   locale?: string;
   defaultLocale?: string;
-  stay?: boolean;
 }): string {
-  const origin = getBrandOrigin("landing");
   const defaultLocale = options?.defaultLocale?.trim() || "en";
   const locale = options?.locale?.trim();
   const path = locale && locale !== defaultLocale ? `/${locale}` : "/";
-  const url = new URL(path, `${origin}/`);
-  if (options?.stay) {
-    url.searchParams.set(MARKETING_HOME_STAY_PARAM, MARKETING_HOME_STAY_VALUE);
-  }
-  return url.toString();
+  return path === "/" ? `/?${MARKETING_HOME_PARAM}` : `${path}?${MARKETING_HOME_PARAM}`;
+}
+
+/** Absolute marketing homepage. Same contract as `getMarketingHomePath`. */
+export function getMarketingHomeUrl(options?: { locale?: string; defaultLocale?: string }): string {
+  const origin = getBrandOrigin("landing");
+  return new URL(getMarketingHomePath(options), `${origin}/`).toString();
 }
 
 /** Cookie parent domain from landing apex (e.g. `.example.com`). */
