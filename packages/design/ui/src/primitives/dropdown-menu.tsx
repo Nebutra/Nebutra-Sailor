@@ -137,7 +137,7 @@ const DropdownMenuSubContent = ({
   ref?: React.Ref<React.ElementRef<typeof BaseMenu.Popup>> | undefined;
 }) => (
   <BaseMenu.Portal>
-    <BaseMenu.Positioner>
+    <BaseMenu.Positioner style={{ zIndex: overlayZIndex.popover }}>
       <BaseMenu.Popup
         ref={ref}
         className={cn(
@@ -179,6 +179,7 @@ const DropdownMenuContent = ({
       align={align}
       alignOffset={alignOffset}
       side={side}
+      style={{ zIndex: overlayZIndex.popover }}
     >
       <BaseMenu.Popup
         ref={ref}
