@@ -12,7 +12,7 @@ RUN addgroup --system --gid 1001 nodejs \
  && adduser  --system --uid 1001 appuser
 
 COPY --chown=appuser:nodejs package.json ./
-COPY --chown=appuser:nodejs dist ./dist
+COPY --chown=appuser:nodejs app-dist ./dist
 COPY --chown=appuser:nodejs deps ./node_modules
 USER appuser
 

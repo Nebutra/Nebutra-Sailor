@@ -220,6 +220,12 @@ describe("Deploy substrate governance", () => {
     expect(toml).toContain('HOST = "0.0.0.0"');
     expect(toml).toContain('PORT = "8080"');
     expect(toml).toContain('path = "/api/misc/health"');
+    const gatewayDocker = readFileSync(
+      resolve(process.cwd(), "infra/runtime/docker/Dockerfile.gateway"),
+      "utf-8",
+    );
+    expect(gatewayDocker).toContain("COPY --chown=appuser:nodejs deps ./node_modules");
+    expect(gatewayDocker).toContain("COPY --chown=appuser:nodejs app-dist ./dist");
     expect(toml).not.toContain("hkg");
 
     const wrangler = readFileSync(
