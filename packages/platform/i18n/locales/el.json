@@ -96,13 +96,38 @@
     },
     "progress": {
       "back": "Πίσω",
-      "stepCounter": "Βήμα {current} από {total}"
+      "stepCounter": "Βήμα {current} από {total}",
+      "ariaLabel": "Onboarding progress"
     },
     "plan": {
       "title": "Επιλέξτε ένα σχέδιο",
       "description": "Ξεκινήστε δωρεάν ή ξεκλειδώστε περισσότερη χωρητικότητα. Μπορείτε να αλλάξετε σχέδιο ανά πάσα στιγμή.",
       "choose": "Επιλογή σχεδίου",
       "skip": "Παράλειψη για αργότερα"
+    },
+    "workspace": {
+      "title": "Name the workspace",
+      "description": "This is how it shows up on invites and invoices.",
+      "nameLabel": "Workspace name",
+      "namePlaceholder": "e.g. Acme Corp",
+      "urlLabel": "Workspace URL",
+      "slugPlaceholder": "my-workspace",
+      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
+      "submit": "Create workspace",
+      "submitting": "Creating…",
+      "error": "Could not create the workspace."
+    },
+    "invite": {
+      "title": "Invite the team",
+      "description": "You can do this later. Empty fields are skipped.",
+      "emailsLabel": "Email addresses",
+      "emailPlaceholder": "colleague@company.com",
+      "addAnother": "Add another",
+      "removeEmail": "Remove email",
+      "send": "Send invitations",
+      "sending": "Sending…",
+      "skip": "Skip for now",
+      "error": "Could not send invitations."
     }
   },
   "userMenu": {

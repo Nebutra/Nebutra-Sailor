@@ -3,9 +3,13 @@
 import { safeGetJson, safeRemoveItem, safeSetJson } from "@nebutra/browser-utils";
 import { ArrowLeft } from "@nebutra/icons";
 import { Button } from "@nebutra/ui/primitives";
+import { AUTH_FORM_COLUMN_CLASS, AUTH_PRIMARY_CTA_CLASS } from "@nebutra/ui/utils";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
+
+import { BrandLogo } from "@/components/brand/brand-assets";
+import { LocaleSwitcher } from "@/components/navigation/locale-switcher";
 
 import { CreateWorkspaceStep } from "./create-workspace-step";
 import { InviteTeamStep } from "./invite-team-step";
@@ -14,7 +18,6 @@ import { ProgressBar, type ProgressBarStep } from "./progress-bar";
 export const ONBOARDING_STORAGE_KEY = "nebutra-onboarding-progress";
 
 type StepNumber = 1 | 2 | 3;
-const STEP_IDS: readonly StepNumber[] = [1, 2, 3] as const;
 
 interface PersistedState {
   readonly currentStep: StepNumber;
@@ -52,7 +55,6 @@ export function WizardShell() {
   );
   const [hydrated, setHydrated] = useState(false);
 
-  // Hydrate from localStorage AFTER mount to avoid SSR/CSR mismatch.
   useEffect(() => {
     const persisted = readPersistedState();
     if (persisted) {
@@ -62,7 +64,6 @@ export function WizardShell() {
     setHydrated(true);
   }, []);
 
-  // Persist whenever step or completion changes (after first hydrate).
   useEffect(() => {
     if (!hydrated) return;
     writePersistedState({
@@ -91,7 +92,6 @@ export function WizardShell() {
         return;
       }
 
-      // All three steps complete — go home.
       finishOnboarding("/");
     },
     [completedSteps, finishOnboarding],
@@ -113,29 +113,37 @@ export function WizardShell() {
   );
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-4 py-16">
-      <div className="w-full max-w-xl">
-        <header className="mb-8 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground">{t("title")}</h1>
-          <p className="mt-2 text-sm text-muted-foreground">{t("subtitle")}</p>
-        </header>
+    <div className="relative min-h-svh bg-background">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-[linear-gradient(180deg,color-mix(in_srgb,hsl(var(--muted))_80%,transparent),transparent)]"
+      />
+      <div className="absolute right-5 top-6 z-20 sm:right-8">
+        <LocaleSwitcher />
+      </div>
 
-        <div className="mb-8">
+      <main
+        id="main-content"
+        className="relative flex min-h-svh flex-col items-center justify-center px-5 py-20"
+      >
+        <div className={AUTH_FORM_COLUMN_CLASS}>
+          <BrandLogo variant="mark" className="mb-8 h-7" />
+
           <ProgressBar
+            className="mb-8"
             steps={progressSteps}
             currentStep={currentStep}
             completedSteps={completedSteps}
+            ariaLabel={t("progress.ariaLabel")}
           />
-        </div>
 
-        <div className="rounded-[var(--radius-2xl)] border border-border bg-background p-8 shadow-sm">
           {currentStep > 1 && (
             <button
               type="button"
               onClick={handleBack}
-              className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
-              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+              <ArrowLeft className="size-3.5" aria-hidden="true" />
               {t("progress.back")}
             </button>
           )}
@@ -145,22 +153,13 @@ export function WizardShell() {
           {currentStep === 3 && (
             <ChoosePlanStep
               onChoose={() => {
-                // Marking step 3 complete here is unnecessary because we are
-                // navigating away — clear state and route to /choose-plan.
                 finishOnboarding("/choose-plan");
               }}
               onSkip={() => finishOnboarding("/")}
             />
           )}
         </div>
-
-        <p className="mt-4 text-center text-xs text-muted-foreground">
-          {t("progress.stepCounter", {
-            current: String(currentStep),
-            total: String(STEP_IDS.length),
-          })}
-        </p>
-      </div>
+      </main>
     </div>
   );
 }
@@ -174,24 +173,20 @@ function ChoosePlanStep({ onChoose, onSkip }: ChoosePlanStepProps) {
   const t = useTranslations("onboarding");
 
   return (
-    <div className="flex flex-col gap-6">
-      <div>
-        <h2 className="text-2xl font-semibold tracking-tight text-foreground">{t("plan.title")}</h2>
-        <p className="mt-1 text-sm text-muted-foreground">{t("plan.description")}</p>
+    <div className="w-full">
+      <div className="mb-8">
+        <h1 className="text-3xl font-semibold tracking-tight text-foreground">{t("plan.title")}</h1>
+        <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("plan.description")}</p>
       </div>
 
-      <Button onClick={onChoose} className="w-full">
-        {t("plan.choose")}
-      </Button>
-
-      <Button
-        type="button"
-        variant="ghost"
-        onClick={onSkip}
-        className="w-full text-muted-foreground"
-      >
-        {t("plan.skip")}
-      </Button>
+      <div className="flex flex-col gap-2">
+        <Button type="button" variant="ink" onClick={onChoose} className={AUTH_PRIMARY_CTA_CLASS}>
+          {t("plan.choose")}
+        </Button>
+        <Button type="button" variant="ghost" onClick={onSkip} className="h-11 w-full">
+          {t("plan.skip")}
+        </Button>
+      </div>
     </div>
   );
 }
