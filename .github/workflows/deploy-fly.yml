@@ -1,9 +1,10 @@
 name: Deploy origin apps to Fly
 
-# Replaces the Aliyun ECS PM2 product edges with Fly Machines (Hong Kong).
-# Landing, gateway-edge, auth-edge, SSO, leak DNS, and origin.nebutra.com stay
-# where they are. This workflow deploys Machines; DNS cutover is a separate
-# workflow_dispatch input so a failed image cannot take production down.
+# Replaces the Aliyun ECS PM2 product edges with Fly Machines (Singapore).
+# The Hono api-gateway is a different image — see deploy-fly-gateway.yml.
+# Landing, gateway-edge, auth-edge, SSO, and leak DNS stay where they are.
+# This workflow deploys Machines; DNS cutover is a separate workflow_dispatch
+# input so a failed image cannot take production down.
 #
 # REQUIRED: repository secret FLY_API_TOKEN (deploy-scoped). There is no
 # fallback. The leaked chat tokens were revoked and must not be reused.
@@ -12,7 +13,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated: forge router web pebble design). Empty = all."
+        description: "Apps to deploy (space-separated: forge router web pebble design gateway). Empty = Next edges. gateway is the Hono origin, not standalone."
         required: false
         default: ""
       cutover:
@@ -48,6 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       apps: ${{ steps.resolve.outputs.apps }}
+      want_gateway: ${{ steps.resolve.outputs.want_gateway }}
     steps:
       - id: resolve
         env:
@@ -64,20 +66,23 @@ jobs:
             {"app":"design","package":"@nebutra/design","workspace":"apps/design","build_command":"build","fly_app":"nebutra-design","host":"design","site":"https://design.nebutra.com"},
           ]
           wanted = [w for w in os.environ.get("INPUT_APPS", "").split() if w]
-          apps = all_apps if not wanted else [row for row in all_apps if row["app"] in wanted]
-          missing = set(wanted) - {row["app"] for row in apps}
+          known = {row["app"] for row in all_apps} | {"gateway"}
+          missing = set(wanted) - known
           if missing:
               raise SystemExit(f"unknown apps: {sorted(missing)}")
+          apps = all_apps if not wanted else [row for row in all_apps if row["app"] in wanted]
           out = os.environ["GITHUB_OUTPUT"]
           with open(out, "a", encoding="utf-8") as fh:
               fh.write("apps<<EOF\n")
               fh.write(json.dumps(apps))
               fh.write("\nEOF\n")
+              fh.write(f"want_gateway={'true' if 'gateway' in wanted else 'false'}\n")
           PY
 
   deploy:
     name: Fly ${{ matrix.app }}
     needs: matrix
+    if: needs.matrix.outputs.apps != '[]'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -221,3 +226,120 @@ jobs:
           HOST: ${{ matrix.host }}
           FLY_APP: ${{ matrix.fly_app }}
         run: bash infra/ops/scripts/point-host-dns-fly.sh
+
+  deploy-gateway:
+    name: Fly Hono origin
+    needs: matrix
+    if: needs.matrix.outputs.want_gateway == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require FLY_API_TOKEN
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          if [ -z "${FLY_API_TOKEN:-}" ]; then
+            echo "::error::Set repository secret FLY_API_TOKEN (deploy token). Chat tokens were revoked."
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      - name: Ensure Fly app
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          FLY_ORG: ${{ vars.FLY_ORG }}
+        run: |
+          set -euo pipefail
+          org="$(bash infra/ops/scripts/resolve-fly-org.sh)"
+          echo "FLY_ORG=$org" >> "$GITHUB_ENV"
+          echo "using Fly org $org"
+          if flyctl apps list --json | python3 -c "import json,sys; names={a.get('Name') or a.get('name') for a in json.load(sys.stdin)}; sys.exit(0 if 'nebutra-gateway' in names else 1)"; then
+            echo "app nebutra-gateway exists"
+          else
+            flyctl apps create nebutra-gateway --machines --org "$org" --yes
+          fi
+
+      - name: Import ECS api env if present
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          VM_HOST: ${{ vars.VM_HOST || vars.ECS_HOST }}
+          VM_USER: ${{ vars.VM_USER || vars.ECS_USER }}
+          VM_SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${VM_HOST:-}" ] || [ -z "${VM_SSH_PRIVATE_KEY:-}" ]; then
+            echo "No VM SSH — skip secret import. Set fly secrets later."
+            exit 0
+          fi
+          env_path="/var/www/nebutra/api/.env"
+          install -m 600 /dev/null "$RUNNER_TEMP/vm_key"
+          printf '%s\n' "$VM_SSH_PRIVATE_KEY" > "$RUNNER_TEMP/vm_key"
+          if ssh -i "$RUNNER_TEMP/vm_key" -o StrictHostKeyChecking=accept-new \
+            "${VM_USER}@${VM_HOST}" "test -f $env_path"; then
+            ssh -i "$RUNNER_TEMP/vm_key" -o StrictHostKeyChecking=accept-new \
+              "${VM_USER}@${VM_HOST}" "cat $env_path" \
+              | python3 -c '
+          import sys
+          skip = {"HOSTNAME", "PORT", "HOST", "PWD"}
+          for line in sys.stdin:
+              raw = line.strip()
+              if not raw or raw.startswith("#"):
+                  continue
+              key = raw.split("=", 1)[0].strip()
+              if key.startswith("export "):
+                  key = key[7:].strip()
+              if key in skip:
+                  continue
+              sys.stdout.write(line)
+          ' | flyctl secrets import -a nebutra-gateway --stage \
+              || echo "::warning::fly secrets import failed for nebutra-gateway"
+          else
+            echo "No $env_path on VM — skip."
+          fi
+          rm -f "$RUNNER_TEMP/vm_key"
+          flyctl secrets unset HOSTNAME PORT HOST -a nebutra-gateway --stage \
+            || echo "no leftover bind secrets"
+          flyctl secrets set HOST=0.0.0.0 PORT=8080 -a nebutra-gateway --stage
+
+      - name: Deploy Machine
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          flyctl deploy "$GITHUB_WORKSPACE" \
+            --config "$GITHUB_WORKSPACE/infra/fly/gateway.toml" \
+            --dockerfile "$GITHUB_WORKSPACE/backends/gateway/Dockerfile" \
+            --ha=false \
+            --remote-only \
+            --yes
+
+      - name: Smoke Fly URL
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          url="https://nebutra-gateway.fly.dev/api/misc/health"
+          code="000"
+          for i in 1 2 3 4 5 6 7 8; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "$url" || echo 000)
+            echo "GET $url try $i -> $code"
+            if [ "$code" = "200" ]; then
+              exit 0
+            fi
+            sleep 10
+          done
+          flyctl status -a nebutra-gateway || true
+          flyctl logs -a nebutra-gateway --no-tail || true
+          echo "::error::$url is not healthy ($code). DNS will not cut over."
+          exit 1
+
+      - name: Cut over grey-cloud origin DNS
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.cutover == 'true'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          HOST: origin
+          FLY_APP: nebutra-gateway
+        run: bash infra/ops/scripts/point-origin-dns-fly.sh

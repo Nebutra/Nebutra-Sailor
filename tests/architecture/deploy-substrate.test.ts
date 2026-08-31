@@ -192,6 +192,54 @@ describe("Deploy substrate governance", () => {
     }
   });
 
+  it("Hono origin has its own Fly workflow, not the Next standalone path", () => {
+    const yml = read("deploy-fly-gateway.yml");
+    expect(yml).toContain("FLY_API_TOKEN");
+    expect(yml).toContain("backends/gateway/Dockerfile");
+    expect(yml).toContain("infra/fly/gateway.toml");
+    expect(yml).toContain("nebutra-gateway");
+    expect(yml).toContain("/var/www/nebutra/api/.env");
+    expect(yml).toContain("https://nebutra-gateway.fly.dev/api/misc/health");
+    expect(yml).toContain("point-origin-dns-fly.sh");
+    expect(yml).toContain("github.event.inputs.cutover == 'true'");
+    expect(yml).not.toContain("assemble-next-standalone.sh");
+    expect(yml).not.toContain("Dockerfile.standalone");
+
+    const nextYml = read("deploy-fly.yml");
+    expect(nextYml).toContain("want_gateway");
+    expect(nextYml).toContain("backends/gateway/Dockerfile");
+    expect(nextYml).toContain("assemble-next-standalone.sh");
+    expect(nextYml.indexOf("assemble-next-standalone.sh")).toBeLessThan(
+      nextYml.indexOf("backends/gateway/Dockerfile"),
+    );
+
+    const toml = readFileSync(resolve(process.cwd(), "infra/fly/gateway.toml"), "utf-8");
+    expect(toml).toContain('primary_region = "sin"');
+    expect(toml).toContain('HOST = "0.0.0.0"');
+    expect(toml).toContain('PORT = "8080"');
+    expect(toml).toContain('path = "/api/misc/health"');
+    expect(toml).not.toContain("hkg");
+
+    const wrangler = readFileSync(
+      resolve(process.cwd(), "backends/gateway/wrangler.edge.toml"),
+      "utf-8",
+    );
+    expect(wrangler).toContain('ORIGIN_URL = "https://nebutra-gateway.fly.dev"');
+    expect(wrangler).not.toContain('ORIGIN_URL = "https://api.nebutra.com"');
+    expect(wrangler).not.toContain('ORIGIN_URL = "https://origin.nebutra.com"');
+
+    const originDns = readFileSync(
+      resolve(process.cwd(), "infra/ops/scripts/point-origin-dns-fly.sh"),
+      "utf-8",
+    );
+    expect(originDns).toContain("'proxied':False");
+    expect(originDns).toContain("origin");
+
+    const certs = readFileSync(resolve(WORKFLOWS, "issue-fly-certs.yml"), "utf-8");
+    expect(certs).toContain("nebutra-gateway");
+    expect(certs).toContain("host: origin");
+  });
+
   it("web and auth Vercel workflows are workflow_dispatch only", () => {
     for (const file of ["deploy-web-vercel.yml", "deploy-auth-vercel.yml"]) {
       const yml = read(file);

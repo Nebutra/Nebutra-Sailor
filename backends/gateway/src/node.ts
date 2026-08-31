@@ -6,11 +6,12 @@ import { enabledOptionalProtocols } from "./config/protocols.js";
 import app, { areGatewayDepsInitialized } from "./index.js";
 
 const port = parseInt(process.env.PORT || "3002", 10);
+const hostname = process.env.HOST || "0.0.0.0";
 
-logger.info("API Gateway started", { port, optionalProtocols: enabledOptionalProtocols });
+logger.info("API Gateway started", { port, hostname, optionalProtocols: enabledOptionalProtocols });
 
-const server = serve({ fetch: app.fetch, port }, (info) => {
-  logger.info(`API Gateway listening on port ${info.port}`);
+const server = serve({ fetch: app.fetch, port, hostname }, (info) => {
+  logger.info(`API Gateway listening on ${info.address}:${info.port}`);
 });
 
 const shutdown = async (signal: string) => {

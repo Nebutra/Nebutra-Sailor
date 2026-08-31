@@ -1,25 +1,26 @@
 # Thin edge gateway. Separate Worker from nebutra-gateway, not a variant of it.
 #
 # No Hyperdrive binding and no cron: this entry never touches Postgres. Both
-# belong to the full gateway, which runs on ECS Origin. Giving the edge a
-# database connection would invite exactly the duplicated logic the split
-# exists to avoid.
+# belong to the full gateway, which runs as the Fly Hono origin. Giving the
+# edge a database connection would invite exactly the duplicated logic the
+# split exists to avoid.
 #
-# ORIGIN_URL must be a hostname that is NOT proxied through this Worker.
-# Pointing it at the hostname the Worker serves loops the request back into
-# itself, so it is set per-environment as a var rather than defaulted here.
+# ORIGIN_URL must be a hostname that is NOT routed to this Worker.
+# Pointing it at api.nebutra.com loops the request back into itself, so it
+# is set per-environment as a var rather than defaulted here.
 
 name = "nebutra-gateway-edge"
 main = "src/worker-edge.ts"
 compatibility_date = "2026-06-04"
 
-# Takes api.nebutra.com in front of ECS Origin. The hostname is already proxied
-# by Cloudflare, so this changes only what runs before the origin fetch — no DNS
-# change, no cutover window, and removing the route puts traffic straight back
-# on the origin.
+# Takes api.nebutra.com in front of the Fly Hono origin. The hostname is
+# already proxied by Cloudflare, so this changes only what runs before the
+# origin fetch — removing the route puts traffic straight back on whatever
+# api.nebutra.com resolves to.
 #
-# ORIGIN_URL below has to stay grey-cloud. Once this route exists, pointing it
-# at a proxied hostname would send each forward back into this Worker.
+# ORIGIN_URL must not be api.nebutra.com. The Fly app URL is outside this
+# zone's Worker routes, so it cannot loop. A grey-cloud origin.nebutra.com
+# alias is also safe; an orange-cloud same-zone name is not.
 routes = [
   { pattern = "api.nebutra.com/*", zone_name = "nebutra.com" },
 ]
@@ -37,9 +38,8 @@ head_sampling_rate = 1
 [vars]
 # Origin hostname. A hostname, not a credential — it belongs in config where it
 # is visible, and if it is wrong every forwarded request fails loudly rather
-# than leaking anything. Must be grey-cloud (DNS only): pointing it at a
-# proxied hostname sends the request back through this Worker.
-ORIGIN_URL = "https://origin.nebutra.com"
+# than leaking anything. Must not be the hostname this Worker serves.
+ORIGIN_URL = "https://nebutra-gateway.fly.dev"
 
 # Requests per minute per IP before shedding. Set far above real usage — this
 # sheds floods, it is not the per-key limit, which stays at the origin where
