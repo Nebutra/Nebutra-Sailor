@@ -46,5 +46,7 @@ jobs:
           flyctl certs add "$host" -a "${{ matrix.fly_app }}"
           echo "----- show $host -----"
           flyctl certs show "$host" -a "${{ matrix.fly_app }}" || true
+          echo "----- setup $host -----"
+          flyctl certs setup "$host" -a "${{ matrix.fly_app }}" || true
           echo "----- list -----"
           flyctl certs list -a "${{ matrix.fly_app }}"
