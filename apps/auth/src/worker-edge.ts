@@ -19,6 +19,7 @@
 import { brand } from "@nebutra/brand/metadata";
 import { betterAuth } from "better-auth";
 import { Pool } from "pg";
+import { applyEdgeAuthCors } from "./lib/auth-edge-cors";
 import {
   asBrowserOAuthRedirect,
   finalizeOAuthCallback,
@@ -360,7 +361,7 @@ async function handleHealth(request: Request, env: AuthEdgeEnv): Promise<Respons
     role: "login-center-edge",
     deploy: "cloudflare-workers-edge",
     // Bump when shipping edge fixes so /health proves the new script is live.
-    edgeBuild: "2026-08-27-oauth-handoff",
+    edgeBuild: "2026-08-31-auth-cors",
     features: {
       authApi: true,
       // ORIGIN_URL is the preferred pass-through; ORIGIN_IP alone is legacy.
@@ -495,21 +496,10 @@ async function handleOAuthStart(
 }
 
 async function handleAuthApi(request: Request, env: AuthEdgeEnv): Promise<Response> {
+  // CORS lives on the fetch wrapper (`applyEdgeAuthCors`). OPTIONS is 204
+  // here so we never reflect an arbitrary Origin with credentials.
   if (request.method.toUpperCase() === "OPTIONS") {
-    const origin = request.headers.get("origin") ?? "*";
-    return new Response(null, {
-      status: 204,
-      headers: {
-        "access-control-allow-origin": origin,
-        "access-control-allow-methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
-        "access-control-allow-headers":
-          request.headers.get("access-control-request-headers") ??
-          "content-type,authorization,x-captcha-response",
-        "access-control-allow-credentials": "true",
-        "access-control-max-age": "86400",
-        vary: "origin",
-      },
-    });
+    return new Response(null, { status: 204 });
   }
 
   const url = new URL(request.url);
@@ -669,7 +659,7 @@ export default {
       }
 
       if (url.pathname === "/api/auth" || url.pathname.startsWith("/api/auth/")) {
-        return await handleAuthApi(request, env);
+        return applyEdgeAuthCors(request, await handleAuthApi(request, env));
       }
 
       const loginSuccess = handleLoginSuccess(request);

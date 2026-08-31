@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "登录",
     "signUp": "注册",
-    "signOut": "退出"
+    "signOut": "退出",
+    "menuAria": "账户菜单"
   },
   "footer": {
     "navAria": "页脚",

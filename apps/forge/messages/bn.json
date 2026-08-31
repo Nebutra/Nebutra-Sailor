@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "সাইন ইন",
     "signUp": "সাইন আপ",
-    "signOut": "সাইন আউট"
+    "signOut": "সাইন আউট",
+    "menuAria": "অ্যাকাউন্ট মেনু"
   },
   "footer": {
     "navAria": "ফুটার",

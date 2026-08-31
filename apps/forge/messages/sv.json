@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "Logga in",
     "signUp": "Skapa konto",
-    "signOut": "Logga ut"
+    "signOut": "Logga ut",
+    "menuAria": "Kontomeny"
   },
   "footer": {
     "navAria": "Sidfot",

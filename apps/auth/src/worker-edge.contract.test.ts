@@ -20,7 +20,11 @@ describe("auth-edge worker contract", () => {
   });
 
   it("bumps edgeBuild when the request-path contract changes", () => {
-    expect(source).toContain('edgeBuild: "2026-08-27-oauth-handoff"');
+    expect(source).toContain('edgeBuild: "2026-08-31-auth-cors"');
+  });
+
+  it("attaches first-party CORS to every /api/auth response, not only OPTIONS", () => {
+    expect(source).toContain("applyEdgeAuthCors");
   });
 
   it("hands off OAuth through a same-host success page and shows the Google picker", () => {

@@ -13,6 +13,7 @@ on:
     branches: [main]
     paths:
       - "apps/auth/src/worker-edge.ts"
+      - "apps/auth/src/lib/auth-edge-cors.ts"
       - "apps/auth/src/lib/auth-edge-pool.ts"
       - "apps/auth/src/lib/auth-edge-oauth.ts"
       - "apps/auth/src/lib/session-hint.ts"

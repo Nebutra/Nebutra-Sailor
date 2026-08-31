@@ -25,7 +25,8 @@
   "auth": {
     "signIn": "Entrar",
     "signUp": "Cadastrar-se",
-    "signOut": "Sair"
+    "signOut": "Sair",
+    "menuAria": "Menu da conta"
   },
   "footer": {
     "navAria": "Rodapé",
