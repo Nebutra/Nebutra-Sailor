@@ -86,7 +86,32 @@
     },
     "progress": {
       "back": "返回",
-      "stepCounter": "第 {current} 步 / 共 {total} 步"
+      "stepCounter": "第 {current} 步 / 共 {total} 步",
+      "ariaLabel": "开通进度"
+    },
+    "workspace": {
+      "title": "给工作空间起个名字",
+      "description": "邀请和账单上都会用这个名字。",
+      "nameLabel": "工作空间名称",
+      "namePlaceholder": "例如：极光实验室",
+      "urlLabel": "工作空间地址",
+      "slugPlaceholder": "my-workspace",
+      "slugError": "3–48 个字符，仅限小写字母、数字和连字符。",
+      "submit": "创建工作空间",
+      "submitting": "创建中…",
+      "error": "工作空间创建失败。"
+    },
+    "invite": {
+      "title": "邀请团队",
+      "description": "可以以后再邀。空着的邮箱会跳过。",
+      "emailsLabel": "成员邮箱",
+      "emailPlaceholder": "colleague@company.com",
+      "addAnother": "再加一位",
+      "removeEmail": "移除邮箱",
+      "send": "发送邀请",
+      "sending": "发送中…",
+      "skip": "暂时跳过",
+      "error": "邀请发送失败。"
     },
     "plan": {
       "title": "选择套餐",

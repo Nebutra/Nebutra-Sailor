@@ -96,13 +96,38 @@
     },
     "progress": {
       "back": "পিছনে যান",
-      "stepCounter": "মোট {total} এর মধ্যে ধাপ {current}"
+      "stepCounter": "মোট {total} এর মধ্যে ধাপ {current}",
+      "ariaLabel": "Onboarding progress"
     },
     "plan": {
       "title": "একটি প্ল্যান বেছে নিন",
       "description": "বিনামূল্যে শুরু করুন অথবা আরও ক্ষমতা আনলক করুন. আপনি যেকোনো সময় প্ল্যান পরিবর্তন করতে পারবেন।",
       "choose": "একটি প্ল্যান বেছে নিন",
       "skip": "এখনের জন্য বাদ দিন"
+    },
+    "workspace": {
+      "title": "Name the workspace",
+      "description": "This is how it shows up on invites and invoices.",
+      "nameLabel": "Workspace name",
+      "namePlaceholder": "e.g. Acme Corp",
+      "urlLabel": "Workspace URL",
+      "slugPlaceholder": "my-workspace",
+      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
+      "submit": "Create workspace",
+      "submitting": "Creating…",
+      "error": "Could not create the workspace."
+    },
+    "invite": {
+      "title": "Invite the team",
+      "description": "You can do this later. Empty fields are skipped.",
+      "emailsLabel": "Email addresses",
+      "emailPlaceholder": "colleague@company.com",
+      "addAnother": "Add another",
+      "removeEmail": "Remove email",
+      "send": "Send invitations",
+      "sending": "Sending…",
+      "skip": "Skip for now",
+      "error": "Could not send invitations."
     }
   },
   "userMenu": {

@@ -1,7 +1,9 @@
 "use client";
 
-import { Plus, Cross as X } from "@nebutra/icons";
-import { Button, Button as IconButton, Input, Label } from "@nebutra/ui/primitives";
+import { CrossSmall, Plus } from "@nebutra/icons";
+import { Button, Input, Label } from "@nebutra/ui/primitives";
+import { AUTH_PRIMARY_CTA_CLASS } from "@nebutra/ui/utils";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 interface InviteTeamStepProps {
@@ -9,6 +11,7 @@ interface InviteTeamStepProps {
 }
 
 export function InviteTeamStep({ onComplete }: InviteTeamStepProps) {
+  const t = useTranslations("onboarding.invite");
   const [emails, setEmails] = useState<string[]>([""]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -48,82 +51,82 @@ export function InviteTeamStep({ onComplete }: InviteTeamStepProps) {
 
       if (!response.ok) {
         const data = await response.json();
-        setError(data.error || "Failed to send invitations.");
+        setError(data.error || t("error"));
         return;
       }
 
       onComplete();
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Failed to send invitations.");
+      setError(err instanceof Error ? err.message : t("error"));
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="flex flex-col gap-6">
-      <div>
-        <h2 className="text-2xl font-semibold tracking-tight">Invite your team</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Collaborate with your team from day one.
-        </p>
+    <div className="w-full">
+      <div className="mb-8">
+        <h1 className="text-3xl font-semibold tracking-tight text-foreground">{t("title")}</h1>
+        <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("description")}</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <Label>Team member emails</Label>
-        <div className="space-y-2">
-          {emails.map((email, i) => (
-            <div key={i} className="flex items-center gap-2">
-              <Input
-                type="email"
-                placeholder="colleague@company.com"
-                value={email}
-                onChange={(e) => updateEmail(i, e.target.value)}
-              />
-              {emails.length > 1 && (
-                <IconButton
-                  type="button"
-                  variant="ghost"
-                  shape="circle"
-                  size="sm"
-                  aria-label="Remove email"
-                  onClick={() => removeField(i)}
-                  className="text-muted-foreground hover:text-destructive"
-                >
-                  <X className="h-4 w-4" />
-                </IconButton>
-              )}
-            </div>
-          ))}
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+        <div className="flex flex-col gap-1.5">
+          <Label>{t("emailsLabel")}</Label>
+          <div className="flex flex-col gap-2">
+            {emails.map((email, i) => (
+              <div key={i} className="flex items-center gap-2">
+                <Input
+                  type="email"
+                  size="lg"
+                  className="h-12 border-border bg-background text-foreground shadow-none"
+                  placeholder={t("emailPlaceholder")}
+                  value={email}
+                  onChange={(e) => updateEmail(i, e.target.value)}
+                />
+                {emails.length > 1 ? (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    shape="circle"
+                    size="sm"
+                    aria-label={t("removeEmail")}
+                    onClick={() => removeField(i)}
+                    className="text-muted-foreground hover:text-destructive"
+                  >
+                    <CrossSmall className="size-4" />
+                  </Button>
+                ) : null}
+              </div>
+            ))}
+          </div>
         </div>
 
-        {emails.length < 5 && (
+        {emails.length < 5 ? (
           <button
             type="button"
             onClick={addField}
-            className="flex items-center gap-1.5 self-start text-sm text-muted-foreground hover:text-foreground"
+            className="inline-flex items-center gap-1.5 self-start text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            <Plus className="h-3.5 w-3.5" />
-            Add another
+            <Plus className="size-3.5" />
+            {t("addAnother")}
           </button>
-        )}
+        ) : null}
 
-        {error && <p className="text-sm text-destructive">{error}</p>}
+        {error ? (
+          <p className="text-sm text-destructive" role="alert">
+            {error}
+          </p>
+        ) : null}
 
-        <div className="flex gap-3">
-          <Button type="submit" className="flex-1" disabled={loading}>
-            {loading ? "Sending invites…" : "Send Invitations →"}
+        <div className="flex flex-col gap-2">
+          <Button type="submit" variant="ink" className={AUTH_PRIMARY_CTA_CLASS} disabled={loading}>
+            {loading ? t("sending") : t("send")}
+          </Button>
+          <Button type="button" variant="ghost" className="h-11 w-full" onClick={onComplete}>
+            {t("skip")}
           </Button>
         </div>
-
-        <Button
-          type="button"
-          variant="ghost"
-          className="w-full text-muted-foreground"
-          onClick={onComplete}
-        >
-          Skip for now
-        </Button>
       </form>
     </div>
   );

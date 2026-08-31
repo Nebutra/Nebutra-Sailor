@@ -96,13 +96,38 @@
     },
     "progress": {
       "back": "رجوع",
-      "stepCounter": "الخطوة {current} من {total}"
+      "stepCounter": "الخطوة {current} من {total}",
+      "ariaLabel": "Onboarding progress"
     },
     "plan": {
       "title": "اختر خطة",
       "description": "ابدأ مجاناً أو افتح سعة أكبر. يمكنك تغيير الخطة في أي وقت.",
       "choose": "اختر خطة",
       "skip": "تخطي الآن"
+    },
+    "workspace": {
+      "title": "Name the workspace",
+      "description": "This is how it shows up on invites and invoices.",
+      "nameLabel": "Workspace name",
+      "namePlaceholder": "e.g. Acme Corp",
+      "urlLabel": "Workspace URL",
+      "slugPlaceholder": "my-workspace",
+      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
+      "submit": "Create workspace",
+      "submitting": "Creating…",
+      "error": "Could not create the workspace."
+    },
+    "invite": {
+      "title": "Invite the team",
+      "description": "You can do this later. Empty fields are skipped.",
+      "emailsLabel": "Email addresses",
+      "emailPlaceholder": "colleague@company.com",
+      "addAnother": "Add another",
+      "removeEmail": "Remove email",
+      "send": "Send invitations",
+      "sending": "Sending…",
+      "skip": "Skip for now",
+      "error": "Could not send invitations."
     }
   },
   "userMenu": {
