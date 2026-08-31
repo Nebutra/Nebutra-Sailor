@@ -175,6 +175,10 @@ describe("Deploy substrate governance", () => {
     expect(yml).toContain("github.event.inputs.cutover == 'true'");
     expect(yml).toContain("uses: ./.github/actions/setup-node-pnpm");
     expect(yml).toContain('pnpm turbo build --filter="${' + '{ matrix.package }}^..."');
+    expect(yml).toContain("flyctl orgs list --json");
+    expect(yml).toContain(
+      'flyctl apps create "${' + '{ matrix.fly_app }}" --machines --org "$org" --yes',
+    );
   });
 
   it("web and auth Vercel workflows are workflow_dispatch only", () => {

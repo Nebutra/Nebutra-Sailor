@@ -10,15 +10,16 @@ remains the rollback.
 
 ## Why traffic is still on ECS
 
-There is no `FLY_API_TOKEN` in GitHub. The tokens pasted in chat were
-revoked. Without a new deploy token, CI cannot create Machines.
+Machines are not live until `https://<app>.fly.dev` returns 200/302/307.
+CI creates apps non-interactively and needs an org slug (`vars.FLY_ORG`, or
+the single org / personal org on the deploy token).
 
-1. Mint a **deploy** token at https://fly.io/user/personal-access-tokens
-2. `gh secret set FLY_API_TOKEN`
-3. `gh workflow run deploy-fly.yml -f apps=forge`
-4. Confirm `https://nebutra-forge.fly.dev` is healthy
-5. Repeat or run with empty `apps` for the rest
-6. When the Fly URLs are good: `gh workflow run deploy-fly.yml -f cutover=true`
+1. `gh workflow run deploy-fly.yml` (empty `apps` = forge router web pebble design)
+2. Confirm each `https://nebutra-<app>.fly.dev` is healthy
+3. Then `gh workflow run deploy-fly.yml -f cutover=true`
+
+SSO, leak DNS, grey-cloud `origin.nebutra.com`, the Node api-gateway, and
+auth-edge stay on ECS / Cloudflare. Admin is staff-only and not in this slice.
 
 Cutover writes a proxied CNAME `<host>.nebutra.com → <app>.fly.dev`.
 Rollback is [`point-forge-dns-ecs.sh`](../../infra/ops/scripts/point-forge-dns-ecs.sh)
