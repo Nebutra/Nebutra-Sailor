@@ -49,6 +49,7 @@ export const brand = {
     forge: "forge.nebutra.com",
     design: "design.nebutra.com",
     status: "status.nebutra.com",
+    open: "open.nebutra.com",
     admin: "admin.nebutra.com",
     analytics: "analytics.nebutra.com",
     pebble: "pebble.nebutra.com",

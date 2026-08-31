@@ -15,7 +15,7 @@ describe("shouldBounceSignedInVisitorToApp", () => {
   const base = {
     pathname: "/",
     host: "nebutra.com",
-    statusHost: "status.nebutra.com",
+    aliasHosts: ["status.nebutra.com", "open.nebutra.com"],
     hasSessionHint: true,
     hasHomeFlag: false,
     locales: LOCALES,
@@ -32,5 +32,10 @@ describe("shouldBounceSignedInVisitorToApp", () => {
   it("never bounces without a session hint or off a marketing subpage", () => {
     expect(shouldBounceSignedInVisitorToApp({ ...base, hasSessionHint: false })).toBe(false);
     expect(shouldBounceSignedInVisitorToApp({ ...base, pathname: "/blog" })).toBe(false);
+  });
+
+  it("never bounces landing host aliases used as product surfaces", () => {
+    expect(shouldBounceSignedInVisitorToApp({ ...base, host: "status.nebutra.com" })).toBe(false);
+    expect(shouldBounceSignedInVisitorToApp({ ...base, host: "open.nebutra.com" })).toBe(false);
   });
 });

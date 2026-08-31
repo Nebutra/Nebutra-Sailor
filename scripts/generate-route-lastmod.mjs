@@ -40,6 +40,7 @@ const DATA_DEPENDENCIES = {
   "/solutions/*": ["src/lib/constants/solutions-data.ts"],
   "/blog": ["src/lib/blog.ts", "src/lib/blog-fallback.ts"],
   "/blog/*": ["src/lib/blog.ts", "src/lib/blog-fallback.ts"],
+  "/open": ["src/lib/constants/open-platform.ts"],
 };
 
 function readRegistryPatterns() {

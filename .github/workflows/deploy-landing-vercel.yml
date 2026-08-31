@@ -85,6 +85,12 @@ jobs:
           fi
           echo "project=$PROJECT_ID rootDirectory=$CURRENT_ROOT"
 
+          echo "Attaching domain open.nebutra.com (idempotent)"
+          curl -sS -X POST -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" \
+            "https://api.vercel.com/v10/projects/${PROJECT_ID}/domains?teamId=${VERCEL_ORG_ID}" \
+            -d '{"name":"open.nebutra.com"}' > domain-open.json || true
+          python3 -c 'import json; d=json.load(open("domain-open.json")); print("domain", d.get("name") or d.get("error",{}).get("code"), d.get("verified", d.get("error")))' || true
+
           if [ "$CURRENT_ROOT" != "$EXPECTED_ROOT" ]; then
             echo "::warning::Root Directory was '$CURRENT_ROOT', correcting to '$EXPECTED_ROOT'"
             api -X PATCH -H 'Content-Type: application/json' \

@@ -12,6 +12,7 @@
 | `sso.nebutra.com` | idp | **OIDC IdP** — issuer URL permanent; used for SSO / internal tools |
 | `design.nebutra.com` | design-docs | Design system docs (ECS PM2 :3004) |
 | `status.nebutra.com` | landing (host alias) | Public status page — Vercel landing, rewrite `/` → `/status` |
+| `open.nebutra.com` | landing (host alias) | **云毓开放平台** — public catalog; `/` rewrites to `/open`. Console is `app` `/settings/developers` |
 | `docs.nebutra.com` | sailor-docs (Cloudflare Worker / Vercel fallback) | Product/docs site |
 | `nebutra.sanity.studio` | studio | Canonical Sanity-hosted Studio |
 | `studio.nebutra.com` | studio | Optional branded Studio alias |
@@ -23,6 +24,21 @@
 | `carina.nebutra.com` | (external repo `Nebutra/carina` → `apps/docs`) | **Carina product docs** — Astro + Starlight static site. No backend of its own. |
 
 > Router/Forge: product hosts; supply engines (New-API, Sub2API) stay **internal** — see `infra/nebutra-router/`.
+
+### Open Platform — catalog on landing, console on app
+
+`open.nebutra.com` is a **host alias**, not a new app. Same pattern as `status.nebutra.com`.
+
+| Capability | Host + path |
+|---|---|
+| Public catalog | `open.nebutra.com` → landing `/open` |
+| Developer console | `app.nebutra.com/settings/developers` |
+| API keys / webhooks / provider keys | `app.nebutra.com/settings/{api-keys,webhooks,provider-keys}` |
+| Docs / API / SSO | `docs` / `api` / `sso` — existing hosts |
+
+Do not add `apps/open`, `api.open.*`, or a second Vercel project. Bring-up: land `/open` on landing, then run **Point open DNS to Vercel** (`point-open-dns.yml`) — it upserts the Cloudflare CNAME and attaches `open.nebutra.com` on `nebutra-landing`. Smoke `/` on the alias (must rewrite, must not 301 to apex).
+
+Sign-in-with-Nebutra client registration is **not** self-serve yet. The catalog links the existing OIDC issuer and docs.
 
 ### Pebble — brand front, platform backend
 
@@ -102,6 +118,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | `pebble.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `pebble` :3017 | Brand front. Owner topology 2026-07-30: same ECS A pattern as app/api (not Vercel). nginx `conf.d/pebble.nebutra.com.conf`. Deploy: `deploy-ecs.yml` apps=`pebble`. Legacy `POST /v1/feedback` + `/diagnostics/*` reverse-proxy to api-gateway `/pebble/*`. |
 | `carina.nebutra.com` | A `106.15.4.31` proxied | **ECS nginx static** `/var/www/nebutra/carina/current` | Product docs (Astro). Owner topology 2026-07-30: same ECS A as pebble. nginx `conf.d/carina.nebutra.com.conf`. Deploy: `deploy-carina-ecs.yml`. |
 | `status.nebutra.com` | A `106.15.4.31` proxied | **ECS nginx** reverse-proxy → landing `/status` | vhost `conf.d/status.nebutra.com.conf` (no 301 to apex). Content from Vercel landing. Future: pure Vercel CNAME when CF token has DNS Edit + landing prod green (`point-status-dns-vercel.sh`). |
+| `open.nebutra.com` | CNAME `cname.vercel-dns.com` **proxied** | **Vercel landing** host alias | Bind on project `nebutra-landing` (`point-open-dns.yml`). Rewrite `/` → `/open`. Console: `https://app.nebutra.com/settings/developers`. Do not add `apps/open` or `api.open.*`. |
 | `design.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `design-docs` :3004 | nginx `conf.d/design.nebutra.com.conf`. Deploy: `deploy-ecs.yml` apps=`design-docs`. Without PM2 → CF 502; without vhost → 301 apex. DNS: `point-design-dns-ecs.sh`. |
 
 ### Topology layers
@@ -152,6 +169,7 @@ A       admin     106.15.4.31              ✅           ECS PM2 @nebutra/admin 
 CNAME   docs      nebutra-sailor-docs.nebutra.workers.dev  ✅  # OpenNext Worker; Vercel grey-cloud is fallback only
 A       pebble    106.15.4.31              ✅           Pebble brand front (ECS PM2 :3017); not Vercel
 A       carina    106.15.4.31              ✅           Carina product docs (ECS nginx static); not Vercel
+CNAME   open      cname.vercel-dns.com     ✅           Landing host alias — create with the Vercel domain
 ```
 
 When cutting `app` / `auth` to Vercel: switch to `CNAME … cname.vercel-dns.com` (grey or orange per SSL plan) and remove the ECS A records.
@@ -192,7 +210,7 @@ Unauthenticated product routes: `auth.nebutra.com/sign-in?returnTo=https://app.n
 
 | Project | Root | Domain(s) |
 |---------|------|-----------|
-| landing | `apps/landing` | `nebutra.com`, `www` |
+| landing | `apps/landing` | `nebutra.com`, `www`, `open.nebutra.com` |
 | docs | `apps/sailor-docs` | `docs.nebutra.com` |
 | ~~nebutra-pebble~~ | `apps/pebble` | Superseded by ECS PM2 (kept only if Hobby quota is free for experiments) |
 | nebutra-auth | `apps/auth` | `auth.nebutra.com` (ready; DNS may still be ECS) |
@@ -202,7 +220,7 @@ Unauthenticated product routes: `auth.nebutra.com/sign-in?returnTo=https://app.n
 
 Cloudflare Origin Certificate on ECS must include at least:
 
-`*.nebutra.com`, `nebutra.com`, `app`, `auth`, `api`, `sso`, `docs`, `status`, `design`, `admin`, `www`
+`*.nebutra.com`, `nebutra.com`, `app`, `auth`, `api`, `sso`, `docs`, `status`, `open`, `design`, `admin`, `www`
 
 Path on VM: `/etc/ssl/nebutra/fullchain.pem` + `privkey.pem`.
 
