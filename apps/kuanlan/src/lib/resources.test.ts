@@ -83,7 +83,7 @@ describe("R2 configuration", () => {
     process.env.R2_ACCESS_KEY_ID = "key";
     process.env.R2_SECRET_ACCESS_KEY = "secret";
 
-    const upload = vi.fn(async (key: string) => ({
+    const upload = vi.fn(async (key: string, _body: unknown, _options?: unknown) => ({
       key,
       bucket: "nebutra-uploads",
       url: `https://signed.example/${key}`,
