@@ -76,10 +76,8 @@ if [ ! -f "$DATA/root.password" ]; then
 fi
 ROOT_PASS="$(cat "$DATA/root.password")"
 
-NEW_API_ROOT_PASSWORD="$ROOT_PASS" python3 - "$BASE" "$ROOT" <<'PY' || {
-  echo "New-API admin API seed skipped (container is up; configure channel by hand)"
-  exit 0
-}
+set +e
+NEW_API_ROOT_PASSWORD="$ROOT_PASS" python3 - "$BASE" "$ROOT" <<'PY'
 import json, os, sys, urllib.error, urllib.request
 base, root = sys.argv[1:3]
 password = os.environ["NEW_API_ROOT_PASSWORD"]
@@ -175,8 +173,14 @@ with open(env_path, "w", encoding="utf-8") as handle:
     handle.writelines(out)
 print("seeded kuanlan ROUTER_API_KEY from New-API user token")
 PY
+seed_status=$?
+set -e
+if [ "$seed_status" -ne 0 ]; then
+  echo "New-API admin API seed skipped (container is up; configure channel by hand)"
+fi
 
 if command -v pm2 >/dev/null 2>&1; then
   pm2 reload router --update-env || pm2 restart router || true
   pm2 reload kuanlan --update-env || pm2 restart kuanlan || true
 fi
+exit 0
