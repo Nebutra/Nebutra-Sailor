@@ -26,7 +26,6 @@ export function AuthSplitLayout({ children, className }: AuthSplitLayoutProps) {
   const homeHref = getMarketingHomeUrl({
     locale: toRouteLocale(locale),
     defaultLocale: DEFAULT_ROUTE_LOCALE,
-    stay: true,
   });
 
   return (

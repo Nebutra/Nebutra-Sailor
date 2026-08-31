@@ -1,14 +1,15 @@
 "use client";
 
 import { Logo, Logomark } from "@nebutra/brand";
+import { getMarketingHomePath } from "@nebutra/brand/metadata-helpers";
+import { DEFAULT_ROUTE_LOCALE, toRouteLocale } from "@nebutra/i18n/locales";
 import { useDarkSurface } from "@nebutra/theme";
 import { useTheme } from "@nebutra/tokens";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { MarketLocalePicker } from "@/components/ui/market-locale-picker";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { useMount } from "@/hooks/useMount";
-import { Link } from "@/i18n/navigation";
 import { env } from "@/lib/env";
 import { cn } from "@/lib/utils";
 import { DesktopNav } from "./navbar/DesktopNav";
@@ -22,6 +23,11 @@ const APP_URL = env.NEXT_PUBLIC_APP_URL;
  */
 export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean }) {
   const t = useTranslations("nav");
+  const locale = useLocale();
+  const homeHref = getMarketingHomePath({
+    locale: toRouteLocale(locale),
+    defaultLocale: DEFAULT_ROUTE_LOCALE,
+  });
   const { resolvedTheme } = useTheme();
   const isMounted = useMount();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -52,10 +58,10 @@ export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean })
       )}
     >
       <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6">
-        <Link href="/" className="flex items-center gap-2 relative z-[60]">
+        <a href={homeHref} className="flex items-center gap-2 relative z-[60]">
           <Logomark size={32} variant={isDark ? "mono" : "color"} className="md:hidden" />
           <Logo variant="en" size={150} inverted={isDark} className="hidden md:block" />
-        </Link>
+        </a>
 
         {/* --- DESKTOP NAV --- */}
         <DesktopNav />

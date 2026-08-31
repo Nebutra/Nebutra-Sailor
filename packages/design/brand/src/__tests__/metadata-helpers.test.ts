@@ -16,10 +16,11 @@ import {
   getBrandMailFrom,
   getBrandOrigin,
   getBrandPublicUrls,
+  getMarketingHomePath,
   getMarketingHomeUrl,
   getSiteMetadata,
   getSiteUrl,
-  MARKETING_HOME_STAY_PARAM,
+  MARKETING_HOME_PARAM,
 } from "../metadata-helpers";
 
 describe("getSiteUrl", () => {
@@ -243,22 +244,26 @@ describe("getBrandEmail / getBrandMailFrom", () => {
   });
 });
 
-describe("getMarketingHomeUrl", () => {
-  it("uses the landing origin for the default locale", () => {
-    expect(getMarketingHomeUrl()).toBe(`https://${brand.domains.landing}/`);
-    expect(getMarketingHomeUrl({ locale: "en" })).toBe(`https://${brand.domains.landing}/`);
+describe("getMarketingHomePath", () => {
+  it("is a same-origin path with a bare home flag", () => {
+    expect(getMarketingHomePath()).toBe(`/?${MARKETING_HOME_PARAM}`);
+    expect(getMarketingHomePath({ locale: "zh-Hans" })).toBe(`/zh-Hans?${MARKETING_HOME_PARAM}`);
   });
+});
 
-  it("prefixes a non-default locale", () => {
-    expect(getMarketingHomeUrl({ locale: "zh-Hans" })).toBe(
-      `https://${brand.domains.landing}/zh-Hans`,
+describe("getMarketingHomeUrl", () => {
+  it("uses the landing origin and ?home for the default locale", () => {
+    expect(getMarketingHomeUrl()).toBe(`https://${brand.domains.landing}/?${MARKETING_HOME_PARAM}`);
+    expect(getMarketingHomeUrl({ locale: "en" })).toBe(
+      `https://${brand.domains.landing}/?${MARKETING_HOME_PARAM}`,
     );
   });
 
-  it("asks landing not to bounce a signed-in visitor into the app", () => {
-    const url = new URL(getMarketingHomeUrl({ locale: "zh-Hans", stay: true }));
+  it("prefixes a non-default locale and keeps the bare home flag", () => {
+    const url = new URL(getMarketingHomeUrl({ locale: "zh-Hans" }));
     expect(url.origin).toBe(`https://${brand.domains.landing}`);
     expect(url.pathname).toBe("/zh-Hans");
-    expect(url.searchParams.get(MARKETING_HOME_STAY_PARAM)).toBe("1");
+    expect(url.search).toBe(`?${MARKETING_HOME_PARAM}`);
+    expect(url.searchParams.has(MARKETING_HOME_PARAM)).toBe(true);
   });
 });
