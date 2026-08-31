@@ -1242,23 +1242,6 @@
         "cta": "Xem kiến trúc thanh toán"
       }
     },
-    "productDemo": {
-      "badge": "Demo tương tác",
-      "title": "The local loop, end to end.",
-      "description": "Cảm nhận giao diện dòng lệnh, đường hầm webhook Stripe và việc cấp phát cơ sở dữ liệu đa tenant cục bộ.",
-      "analytics": {
-        "label": "Telemetry trực tiếp",
-        "desc": "Truyền dữ liệu sử dụng sản xuất trực tiếp vào terminal của bạn."
-      },
-      "billing": {
-        "label": "Sự kiện thanh toán",
-        "desc": "Xem Stripe webhooks thực thi qua đường hầm cục bộ."
-      },
-      "workspaces": {
-        "label": "Khởi tạo không gian làm việc",
-        "desc": "Cung cấp ngay lập tức các lược đồ PostgreSQL B2B biệt lập."
-      }
-    },
     "workflow": {
       "badge": "Tốc độ",
       "title": "Từ con số 0 đến sản xuất trong thời gian kỷ lục.",

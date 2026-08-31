@@ -1242,23 +1242,6 @@
         "cta": "Bekijk factureringsarchitectuur"
       }
     },
-    "productDemo": {
-      "badge": "Interactieve demo",
-      "title": "The local loop, end to end.",
-      "description": "Maak kennis met de commandoregelinterface, Stripe-webhooktunneling en lokaal multi-tenant databaseprovisioning.",
-      "analytics": {
-        "label": "Live telemetrie",
-        "desc": "Stroom productiegebruiksgegevens direct naar je terminal."
-      },
-      "billing": {
-        "label": "Factuurgebeurtenissen",
-        "desc": "Bekijk hoe Stripe-webhooks worden uitgevoerd via lokale tunneling."
-      },
-      "workspaces": {
-        "label": "Workspace-initialisatie",
-        "desc": "Stel geïsoleerde B2B-PostgreSQL-schema's direct in."
-      }
-    },
     "workflow": {
       "badge": "Snelheid",
       "title": "Van nul tot productie in recordtijd.",

@@ -1242,23 +1242,6 @@
         "cta": "Se faktureringsarkitektur"
       }
     },
-    "productDemo": {
-      "badge": "Interaktiv demo",
-      "title": "The local loop, end to end.",
-      "description": "Få en følelse av kommandolinjegrensesnittet, Stripe-webhook-tunneling og lokal multi-tenant database-provisioning.",
-      "analytics": {
-        "label": "Sanntidsmåling",
-        "desc": "Strøm produksjonsbruksdata direkte til terminalen din."
-      },
-      "billing": {
-        "label": "Faktureringshendelser",
-        "desc": "Se Stripe-webhooks utføres via lokal tunneling."
-      },
-      "workspaces": {
-        "label": "Arbeidsområde-initiering",
-        "desc": "Sett opp isolerte B2B PostgreSQL-skjemaer øyeblikkelig."
-      }
-    },
     "workflow": {
       "badge": "Hastighet",
       "title": "Fra null til produksjon på rekordtid.",

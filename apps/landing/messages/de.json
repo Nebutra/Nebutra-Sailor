@@ -1242,23 +1242,6 @@
         "cta": "Abrechnungsarchitektur ansehen"
       }
     },
-    "productDemo": {
-      "badge": "Interaktive Demo",
-      "title": "The local loop, end to end.",
-      "description": "Lernen Sie die Kommandozeilenschnittstelle, Stripe-Webhook-Tunneling und lokale Multi-Tenant-Datenbankbereitstellung kennen.",
-      "analytics": {
-        "label": "Live-Telemetrie",
-        "desc": "Produktions-Nutzungsdaten direkt ins Terminal streamen."
-      },
-      "billing": {
-        "label": "Billing-Events",
-        "desc": "Stripe-Webhooks per lokalem Tunneling in Echtzeit beobachten."
-      },
-      "workspaces": {
-        "label": "Workspace-Init",
-        "desc": "Isolierte B2B-PostgreSQL-Schemas sofort bereitstellen."
-      }
-    },
     "workflow": {
       "badge": "Geschwindigkeit",
       "title": "Von null in Rekordzeit in die Produktion.",

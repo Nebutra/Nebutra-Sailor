@@ -1242,23 +1242,6 @@
         "cta": "Ver arquitetura de cobrança"
       }
     },
-    "productDemo": {
-      "badge": "Demo Interativo",
-      "title": "The local loop, end to end.",
-      "description": "Sinta a interface de linha de comando, o tunelamento de webhooks do Stripe e o provisionamento local de banco de dados multi-tenant.",
-      "analytics": {
-        "label": "Telemetria ao Vivo",
-        "desc": "Transmita dados de uso de produção diretamente para o seu terminal."
-      },
-      "billing": {
-        "label": "Eventos de Cobrança",
-        "desc": "Veja os webhooks do Stripe em execução via túnel local."
-      },
-      "workspaces": {
-        "label": "Inicialização do Workspace",
-        "desc": "Provisione esquemas PostgreSQL B2B isolados instantaneamente."
-      }
-    },
     "workflow": {
       "badge": "Velocidade",
       "title": "Do zero à produção em tempo recorde.",
