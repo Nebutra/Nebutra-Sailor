@@ -1,0 +1,123 @@
+import { afterEach, describe, expect, it, vi } from "vitest";
+import {
+  InvalidResourceKeyError,
+  isR2Configured,
+  momentObjectKey,
+  orbitAssetKey,
+  publicAssetUrl,
+  RESOURCE_ROOT,
+  ResourceStoreUnavailableError,
+} from "./resources";
+
+describe("resource keys", () => {
+  it("places public orbit stills under the kuanlan assets prefix", () => {
+    expect(orbitAssetKey("01.jpg")).toBe("kuanlan/orbit/01.jpg");
+    expect(orbitAssetKey("12.jpg")).toBe(`${RESOURCE_ROOT}/orbit/12.jpg`);
+  });
+
+  it("places 领证照 moments under the private uploads prefix", () => {
+    expect(momentObjectKey({ kind: "id-photo", id: "moment-1" })).toBe(
+      "kuanlan/moments/id-photo/moment-1.png",
+    );
+    expect(momentObjectKey({ kind: "id-photo", id: "moment-1", part: "source" })).toBe(
+      "kuanlan/moments/id-photo/moment-1.source",
+    );
+  });
+
+  it("refuses path traversal and unmarked names", () => {
+    expect(() => orbitAssetKey("../secret.jpg")).toThrow(InvalidResourceKeyError);
+    expect(() => orbitAssetKey("01.png")).toThrow(InvalidResourceKeyError);
+    expect(() => momentObjectKey({ kind: "id-photo", id: "../x" })).toThrow(
+      InvalidResourceKeyError,
+    );
+  });
+
+  it("joins the public CDN base without a double slash", () => {
+    expect(publicAssetUrl("kuanlan/orbit/08.jpg", "https://cdn.nebutra.com/")).toBe(
+      "https://cdn.nebutra.com/kuanlan/orbit/08.jpg",
+    );
+  });
+
+  it("refuses to publish a key outside the kuanlan prefix", () => {
+    expect(() => publicAssetUrl("other/orbit/01.jpg", "https://cdn.nebutra.com")).toThrow(
+      InvalidResourceKeyError,
+    );
+  });
+});
+
+describe("R2 configuration", () => {
+  const keys = ["CLOUDFLARE_ACCOUNT_ID", "R2_ACCESS_KEY_ID", "R2_SECRET_ACCESS_KEY"] as const;
+  const previous = Object.fromEntries(keys.map((key) => [key, process.env[key]]));
+
+  afterEach(() => {
+    for (const key of keys) {
+      if (previous[key] === undefined) {
+        delete process.env[key];
+      } else {
+        process.env[key] = previous[key];
+      }
+    }
+    vi.resetModules();
+    vi.unstubAllEnvs();
+  });
+
+  it("fails closed when S3 credentials are missing", async () => {
+    delete process.env.CLOUDFLARE_ACCOUNT_ID;
+    delete process.env.R2_ACCESS_KEY_ID;
+    delete process.env.R2_SECRET_ACCESS_KEY;
+    expect(isR2Configured()).toBe(false);
+
+    const { persistIdPhotoMoment } = await import("./resources.server");
+    await expect(
+      persistIdPhotoMoment({
+        skuId: "cn-1in-white",
+        print: Buffer.from("png"),
+        source: Buffer.from("jpg"),
+        sourceType: "image/jpeg",
+      }),
+    ).rejects.toBeInstanceOf(ResourceStoreUnavailableError);
+  });
+
+  it("writes the print and source to the uploads bucket", async () => {
+    process.env.CLOUDFLARE_ACCOUNT_ID = "account";
+    process.env.R2_ACCESS_KEY_ID = "key";
+    process.env.R2_SECRET_ACCESS_KEY = "secret";
+
+    const upload = vi.fn(async (key: string) => ({
+      key,
+      bucket: "nebutra-uploads",
+      url: `https://signed.example/${key}`,
+      size: 3,
+    }));
+
+    const { persistIdPhotoMoment } = await import("./resources.server");
+    const stored = await persistIdPhotoMoment(
+      {
+        id: "shot-1",
+        skuId: "cn-1in-white",
+        print: Buffer.from("png"),
+        source: Buffer.from("jpg"),
+        sourceType: "image/jpeg",
+      },
+      upload,
+    );
+
+    expect(stored).toEqual({
+      id: "shot-1",
+      key: "kuanlan/moments/id-photo/shot-1.png",
+      url: "https://signed.example/kuanlan/moments/id-photo/shot-1.png",
+      sourceKey: "kuanlan/moments/id-photo/shot-1.source",
+    });
+    expect(upload).toHaveBeenCalledTimes(2);
+    expect(upload.mock.calls[0]?.[0]).toBe("kuanlan/moments/id-photo/shot-1.png");
+    expect(upload.mock.calls[0]?.[2]).toMatchObject({
+      bucket: "uploads",
+      contentType: "image/png",
+    });
+    expect(upload.mock.calls[1]?.[0]).toBe("kuanlan/moments/id-photo/shot-1.source");
+    expect(upload.mock.calls[1]?.[2]).toMatchObject({
+      bucket: "uploads",
+      contentType: "image/jpeg",
+    });
+  });
+});

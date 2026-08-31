@@ -6,9 +6,11 @@
         "https://www.nebutra.com",
         "https://app.nebutra.com",
         "https://studio.nebutra.com",
+        "https://kuanlan.nebutra.com",
         "http://localhost:3000",
         "http://localhost:3001",
-        "http://localhost:3003"
+        "http://localhost:3003",
+        "http://localhost:3120"
       ],
       "AllowedMethods": ["GET", "PUT", "POST", "DELETE", "HEAD"],
       "AllowedHeaders": ["*"],
