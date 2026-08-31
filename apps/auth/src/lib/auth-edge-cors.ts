@@ -3,22 +3,29 @@
  *
  * Better Auth does not emit Access-Control-* headers. The Next catch-all
  * (`applyAuthCors`) only runs on ECS. Production `/api/auth/*` is this Worker,
- * so GET /get-session must carry CORS here or forge/router cannot read the
- * session after login (preflight 204s, the actual GET is opaque, UI stays on
- * 登录 / 注册).
+ * so GET /get-session must carry CORS here or product RPs cannot read the
+ * session after login (preflight 204s, the actual GET is opaque, UI stays
+ * signed-out).
  *
  * Only first-party product hosts. Reflecting an arbitrary Origin with
- * credentials would be a hole.
+ * credentials would be a hole. Apex comes from brand.domains.landing.
  */
+
+import { brand } from "@nebutra/brand/metadata";
+
+function firstPartyApex(): string {
+  return brand.domains.landing
+    .replace(/^https?:\/\//, "")
+    .replace(/\/+$/, "")
+    .toLowerCase();
+}
 
 export function isFirstPartyAuthOrigin(origin: string): boolean {
   try {
     const host = new URL(origin).hostname.toLowerCase();
+    const apex = firstPartyApex();
     return (
-      host === "nebutra.com" ||
-      host.endsWith(".nebutra.com") ||
-      host === "localhost" ||
-      host === "127.0.0.1"
+      host === apex || host.endsWith(`.${apex}`) || host === "localhost" || host === "127.0.0.1"
     );
   } catch {
     return false;
