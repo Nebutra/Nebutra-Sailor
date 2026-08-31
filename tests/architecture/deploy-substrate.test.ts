@@ -170,7 +170,7 @@ describe("Deploy substrate governance", () => {
     const yml = read("deploy-fly.yml");
     expect(yml).toContain("FLY_API_TOKEN");
     expect(yml).toContain("Set repository secret FLY_API_TOKEN");
-    expect(yml).toContain("infra/fly/${" + "{ matrix.app }}.toml");
+    expect(yml).toContain("$GITHUB_WORKSPACE/infra/fly/${" + "{ matrix.app }}.toml");
     expect(yml).toContain("point-host-dns-fly.sh");
     expect(yml).toContain("github.event.inputs.cutover == 'true'");
     expect(yml).toContain("uses: ./.github/actions/setup-node-pnpm");

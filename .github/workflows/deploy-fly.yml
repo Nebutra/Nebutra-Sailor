@@ -171,7 +171,7 @@ jobs:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
           flyctl deploy "$RUNNER_TEMP/stage-${{ matrix.app }}" \
-            --config "infra/fly/${{ matrix.app }}.toml" \
+            --config "$GITHUB_WORKSPACE/infra/fly/${{ matrix.app }}.toml" \
             --dockerfile "$RUNNER_TEMP/stage-${{ matrix.app }}/Dockerfile" \
             --build-arg "APP_WORKSPACE=${{ matrix.workspace }}" \
             --ha=false \
