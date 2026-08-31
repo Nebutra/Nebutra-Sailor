@@ -1,7 +1,7 @@
 # Fly product origin (Hong Kong), ECS kept for issuer / leak / rollback
 
 - **Date**: 2026-08-31
-- **Status**: Implemented substrate — production DNS still ECS until Fly URLs are healthy
+- **Status**: Product edges live on Fly `sin`; ECS keeps issuer / leak / origin
 - **Runbook**: [fly-origin.md](../ops/fly-origin.md)
 
 ```text

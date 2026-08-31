@@ -8,15 +8,11 @@ Landing, Cloudflare Workers (gateway + auth-edge), `sso.nebutra.com`,
 `origin.nebutra.com`, and `leak.nebutra.com` stay put. `deploy-ecs.yml`
 remains the rollback.
 
-## Why traffic is still on ECS
+## Live traffic
 
-Machines are not live until `https://<app>.fly.dev` returns 200/302/307.
-CI creates apps non-interactively and needs an org slug (`vars.FLY_ORG`,
-`fly orgs list` / GraphQL, then `personal`).
-
-1. `gh workflow run deploy-fly.yml` (empty `apps` = forge router web pebble design)
-2. Confirm each `https://nebutra-<app>.fly.dev` is healthy
-3. Then `gh workflow run deploy-fly.yml -f cutover=true`
+`forge` / `router` / `app` / `pebble` / `design` are proxied CNAMEs to
+Fly Machines in `sin` (Let's Encrypt certs issued). Confirm with
+`via: 1.1 fly.io` on the product hostname.
 
 SSO, leak DNS, grey-cloud `origin.nebutra.com`, the Node api-gateway, and
 auth-edge stay on ECS / Cloudflare. Admin is staff-only and not in this slice.
@@ -29,8 +25,7 @@ zone DNS (API 10000); cutover has to go through a token that has
 Zone DNS Edit, or the Cloudflare account API.
 
 Rollback is [`point-forge-dns-ecs.sh`](../../infra/ops/scripts/point-forge-dns-ecs.sh)
-(and the sibling ECS DNS scripts). Production hostnames were rolled back
-to ECS A `106.15.4.31` after the first 525.
+(and the sibling ECS DNS scripts).
 
 ## Secrets
 
