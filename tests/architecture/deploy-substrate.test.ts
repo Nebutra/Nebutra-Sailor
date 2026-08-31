@@ -183,6 +183,8 @@ describe("Deploy substrate governance", () => {
     for (const app of ["forge", "router", "web", "pebble", "design"]) {
       const toml = readFileSync(resolve(process.cwd(), "infra/fly", `${app}.toml`), "utf-8");
       expect(toml, app).toContain('primary_region = "sin"');
+      expect(toml, app).toContain('HOSTNAME = "0.0.0.0"');
+      expect(toml, app).toContain('PORT = "8080"');
       expect(toml, app).not.toContain("hkg");
     }
   });

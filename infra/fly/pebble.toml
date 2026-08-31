@@ -1,6 +1,10 @@
 app = "nebutra-pebble"
 primary_region = "sin"
 
+[env]
+  HOSTNAME = "0.0.0.0"
+  PORT = "8080"
+
 [http_service]
   internal_port = 8080
   force_https = true

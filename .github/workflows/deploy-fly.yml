@@ -159,12 +159,28 @@ jobs:
             "${VM_USER}@${VM_HOST}" "test -f $env_path"; then
             ssh -i "$RUNNER_TEMP/vm_key" -o StrictHostKeyChecking=accept-new \
               "${VM_USER}@${VM_HOST}" "cat $env_path" \
-              | flyctl secrets import -a "${{ matrix.fly_app }}" --stage \
+              | python3 -c '
+          import sys
+          skip = {"HOSTNAME", "PORT", "HOST", "PWD"}
+          for line in sys.stdin:
+              raw = line.strip()
+              if not raw or raw.startswith("#"):
+                  continue
+              key = raw.split("=", 1)[0].strip()
+              if key.startswith("export "):
+                  key = key[7:].strip()
+              if key in skip:
+                  continue
+              sys.stdout.write(line)
+          ' | flyctl secrets import -a "${{ matrix.fly_app }}" --stage \
               || echo "::warning::fly secrets import failed for ${{ matrix.fly_app }}"
           else
             echo "No $env_path on VM — skip."
           fi
           rm -f "$RUNNER_TEMP/vm_key"
+          flyctl secrets unset HOSTNAME PORT HOST -a "${{ matrix.fly_app }}" --stage \
+            || echo "no leftover bind secrets"
+          flyctl secrets set HOSTNAME=0.0.0.0 PORT=8080 -a "${{ matrix.fly_app }}" --stage
 
       - name: Deploy Machine
         env:
@@ -184,12 +200,19 @@ jobs:
         run: |
           set -euo pipefail
           url="https://${{ matrix.fly_app }}.fly.dev/"
-          code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 -L "$url" || echo 000)
-          echo "GET $url -> $code"
-          if [ "$code" != "200" ] && [ "$code" != "307" ] && [ "$code" != "302" ]; then
-            echo "::error::$url is not healthy ($code). DNS will not cut over."
-            exit 1
-          fi
+          code="000"
+          for i in 1 2 3 4 5 6; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 -L "$url" || echo 000)
+            echo "GET $url try $i -> $code"
+            if [ "$code" = "200" ] || [ "$code" = "307" ] || [ "$code" = "302" ]; then
+              exit 0
+            fi
+            sleep 10
+          done
+          flyctl status -a "${{ matrix.fly_app }}" || true
+          flyctl logs -a "${{ matrix.fly_app }}" --no-tail || true
+          echo "::error::$url is not healthy ($code). DNS will not cut over."
+          exit 1
 
       - name: Cut over Cloudflare DNS
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.cutover == 'true'
