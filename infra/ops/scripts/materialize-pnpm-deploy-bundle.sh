@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
-# Make a pnpm-deploy stage safe to Docker COPY.
-# pnpm leaves store symlinks; Docker will not follow them, so the image
-# would boot with an empty node_modules. Also write a stage-local
-# .dockerignore so a repo-root "**/node_modules" rule cannot apply.
+# Prepare a pnpm-deploy stage for Fly/Docker.
+#
+# Do not dereference the tree (cp -aL explodes a pnpm store into tens of GB).
+# Rename node_modules → deps so a repo-root .dockerignore of **/node_modules
+# cannot drop the only runtime the image needs.
 set -euo pipefail
 
 stage="${1:?stage dir}"
 nm="$stage/node_modules"
-if [ -d "$nm" ]; then
-  rm -rf "$stage/node_modules.real"
-  cp -aL "$nm" "$stage/node_modules.real"
-  rm -rf "$nm"
-  mv "$stage/node_modules.real" "$nm"
+if [ ! -d "$nm" ]; then
+  echo "missing $nm" >&2
+  exit 1
 fi
-printf '%s\n' "# pnpm-deploy bundle — do not drop node_modules" > "$stage/.dockerignore"
-du -sh "$stage" "$nm"
+rm -rf "$stage/deps"
+mv "$nm" "$stage/deps"
+printf '%s\n' "# pnpm-deploy bundle — keep deps/" > "$stage/.dockerignore"
+du -sh "$stage" "$stage/deps"
