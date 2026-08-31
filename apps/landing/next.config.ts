@@ -1,3 +1,4 @@
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import createBundleAnalyzer from "@next/bundle-analyzer";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
@@ -14,6 +15,30 @@ const googleIdentityServices = {
 
 function cspDirective(name: string, sources: readonly string[]): string {
   return `${name} ${sources.join(" ")}`;
+}
+
+function originFromUrl(raw: string | undefined): string | null {
+  if (!raw?.trim()) return null;
+  try {
+    return new URL(raw).origin;
+  } catch {
+    return null;
+  }
+}
+
+/** App / auth hosts the navbar session probe and sign-out hop talk to. */
+function firstPartyConnectOrigins(): string[] {
+  const origins = new Set<string>();
+  for (const raw of [
+    process.env.NEXT_PUBLIC_APP_URL,
+    process.env.NEXT_PUBLIC_AUTH_URL,
+    getBrandOrigin("app"),
+    getBrandOrigin("auth"),
+  ]) {
+    const origin = originFromUrl(raw);
+    if (origin) origins.add(origin);
+  }
+  return [...origins].sort();
 }
 
 function buildContentSecurityPolicy(): string {
@@ -41,7 +66,11 @@ function buildContentSecurityPolicy(): string {
     ]),
     cspDirective("font-src", ["'self'", "data:"]),
     cspDirective("media-src", ["'self'", "https://d8j0ntlcm91z4.cloudfront.net"]),
-    cspDirective("connect-src", ["'self'", googleIdentityServices.connect]),
+    cspDirective("connect-src", [
+      "'self'",
+      ...firstPartyConnectOrigins(),
+      googleIdentityServices.connect,
+    ]),
     cspDirective("frame-src", [googleIdentityServices.frame]),
     cspDirective("frame-ancestors", ["'none'"]),
   ].join("; ");
