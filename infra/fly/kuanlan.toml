@@ -1,0 +1,24 @@
+app = "nebutra-kuanlan"
+primary_region = "sin"
+
+[env]
+  HOSTNAME = "0.0.0.0"
+  PORT = "8080"
+  R2_PUBLIC_URL = "https://cdn.nebutra.com"
+  NEXT_PUBLIC_R2_PUBLIC_URL = "https://cdn.nebutra.com"
+  R2_BUCKET_ASSETS = "nebutra-assets"
+  R2_BUCKET_UPLOADS = "nebutra-uploads"
+  IMAGE2_BASE_URL = "https://router.nebutra.com/v1"
+  IMAGE2_MODEL = "gpt-image-2"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "1gb"

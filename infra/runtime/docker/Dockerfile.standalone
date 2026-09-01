@@ -1,0 +1,15 @@
+# Prebuilt Next standalone bundle. CI copies .next/standalone + static + public
+# into the build context; this image only runs the server on 0.0.0.0.
+FROM node:22-alpine@sha256:16e22a550f3863206a3f701448c45f7912c6896a62de43add43bb9c86130c3e2
+WORKDIR /app
+
+ARG APP_WORKSPACE=apps/forge
+ENV NODE_ENV=production
+ENV HOSTNAME=0.0.0.0
+ENV PORT=8080
+ENV APP_WORKSPACE=${APP_WORKSPACE}
+
+COPY --chown=node:node . .
+USER node
+EXPOSE 8080
+CMD ["sh", "-c", "node ${APP_WORKSPACE}/server.js"]

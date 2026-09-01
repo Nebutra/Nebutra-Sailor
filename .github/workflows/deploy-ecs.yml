@@ -66,7 +66,8 @@ on:
       - "packages/design/**"
       - "apps/forge/**"
       - "apps/router/**"
-      - "apps/kuanlan/**"
+      # kuanlan ships on Fly (deploy-fly.yml). Keep the VM bundle as rollback
+      # via workflow_dispatch; do not auto-push it here or DNS will steal Fly.
       - "apps/pebble/**"
       - "backends/gateway/**"
       - "packages/ai/forge-runtime/**"
@@ -849,6 +850,7 @@ jobs:
           if [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ]; then prune_apps="$prune_apps pebble"; fi
           if [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ]; then prune_apps="$prune_apps sailor-docs"; fi
           if [ "${{ needs.detect-changes.outputs.router }}" = "true" ]; then prune_apps="$prune_apps router"; fi
+          if [ "${{ needs.detect-changes.outputs.kuanlan }}" = "true" ]; then prune_apps="$prune_apps kuanlan"; fi
           if [ "${{ needs.detect-changes.outputs.forge }}" = "true" ]; then prune_apps="$prune_apps forge"; fi
           if [ "${{ needs.detect-changes.outputs.admin }}" = "true" ]; then prune_apps="$prune_apps admin"; fi
           prune_apps="$(echo "$prune_apps" | xargs)"
@@ -1430,7 +1432,7 @@ jobs:
               "CHANNEL_302_KEY=$(printf '%q' "${CHANNEL_302_KEY:-}") ECS_DEPLOY_ROOT=$(printf '%q' "$ECS_DEPLOY_ROOT") bash /tmp/ecs-bootstrap-new-api.sh"
 
       - name: Point kuanlan DNS to ECS
-        if: always() && needs.detect-changes.outputs.kuanlan == 'true'
+        if: github.event_name == 'workflow_dispatch' && contains(github.event.inputs.reason, 'rollback-kuanlan-ecs') && needs.detect-changes.outputs.kuanlan == 'true'
         continue-on-error: true
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFLARE_WORKERS_API_TOKEN }}

@@ -1,6 +1,8 @@
 # AGENTS.md — apps/kuanlan
 
 KUANLAN 观澜. AI personal presence platform at `kuanlan.nebutra.com`.
+Active origin is Fly (`nebutra-kuanlan` in `sin`) via `deploy-fly.yml`.
+Shanghai ECS is rollback only (`reason=rollback-kuanlan-ecs`).
 
 ## Scope
 
