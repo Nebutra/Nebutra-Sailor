@@ -14,7 +14,12 @@ import { createDocsRedirectUrl } from "./lib/docs-routing";
 import { shouldBounceSignedInVisitorToApp } from "./lib/session-home-redirect";
 
 const intlMiddleware = createMiddleware(routing);
-const STATUS_HOST = brand.domains.status;
+const LANDING_ALIAS_HOME = new Map(
+  [
+    [brand.domains.status, "/status"],
+    [brand.domains.open, "/open"],
+  ].map(([host, path]) => [host.toLowerCase(), path] as const),
+);
 
 /**
  * Cross-subdomain "user is signed in somewhere" hint.
@@ -82,6 +87,7 @@ function isHostAllowed(host: string | undefined): boolean {
     `www.${brand.domains.landing}`,
     brand.domains.app,
     brand.domains.status,
+    brand.domains.open,
     brand.domains.docs,
   ]
     .filter(Boolean)
@@ -156,7 +162,9 @@ export default function proxy(request: NextRequest): NextResponse {
     return withSecurityHeaders(NextResponse.redirect(docsRedirectUrl, 308));
   }
 
-  if (host !== STATUS_HOST && legacyAppRedirectUrl) {
+  const aliasHome = host ? LANDING_ALIAS_HOME.get(host) : undefined;
+
+  if (!aliasHome && legacyAppRedirectUrl) {
     const redirect = NextResponse.redirect(legacyAppRedirectUrl, 302);
     redirect.headers.set("Cache-Control", "private, no-store");
     return withSecurityHeaders(redirect);
@@ -166,8 +174,9 @@ export default function proxy(request: NextRequest): NextResponse {
     return withSecurityHeaders(NextResponse.next());
   }
 
-  // Apex `/` is a product launcher when the session-hint cookie is present.
-  // The only skip is `?home`. Marketing sub-pages always render.
+  // Do not launch the dashboard from marketing `/`. A cached 301 from a
+  // product host (kuanlan) onto the apex used to dump signed-in visitors
+  // into app.nebutra.com/integrations.
   //
   // The response is intentionally `Cache-Control: private, no-store` because the
   // body varies per-cookie — never cache at the edge.
@@ -175,7 +184,7 @@ export default function proxy(request: NextRequest): NextResponse {
     shouldBounceSignedInVisitorToApp({
       pathname,
       host,
-      statusHost: STATUS_HOST,
+      aliasHosts: [...LANDING_ALIAS_HOME.keys()],
       hasSessionHint: request.cookies.get(SESSION_HINT_COOKIE)?.value === "1",
       hasHomeFlag: request.nextUrl.searchParams.has(MARKETING_HOME_PARAM),
       locales: routing.locales,
@@ -186,14 +195,11 @@ export default function proxy(request: NextRequest): NextResponse {
     return withSecurityHeaders(redirect);
   }
 
-  if (
-    host === STATUS_HOST &&
-    (pathname === "/" || routing.locales.some((l) => pathname === `/${l}`))
-  ) {
+  if (aliasHome && (pathname === "/" || routing.locales.some((l) => pathname === `/${l}`))) {
     const rewriteUrl = request.nextUrl.clone();
     const locale = routing.locales.find((l) => pathname === `/${l}`);
     rewriteUrl.pathname =
-      locale && locale !== routing.defaultLocale ? `/${locale}/status` : "/status";
+      locale && locale !== routing.defaultLocale ? `/${locale}${aliasHome}` : aliasHome;
     request = new NextRequest(rewriteUrl, { headers: request.headers });
   }
 

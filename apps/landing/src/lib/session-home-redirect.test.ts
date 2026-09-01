@@ -15,14 +15,18 @@ describe("shouldBounceSignedInVisitorToApp", () => {
   const base = {
     pathname: "/",
     host: "nebutra.com",
-    statusHost: "status.nebutra.com",
+    aliasHosts: ["status.nebutra.com", "open.nebutra.com"],
     hasSessionHint: true,
     hasHomeFlag: false,
     locales: LOCALES,
   };
 
-  it("bounces a hinted visitor from the marketing root into the app", () => {
-    expect(shouldBounceSignedInVisitorToApp(base)).toBe(true);
+  it("does not launch the app from marketing home", () => {
+    expect(shouldBounceSignedInVisitorToApp(base)).toBe(false);
+  });
+
+  it("never bounces a product host leftover onto the apex", () => {
+    expect(shouldBounceSignedInVisitorToApp({ ...base, host: "kuanlan.nebutra.com" })).toBe(false);
   });
 
   it("keeps marketing only when ?home is present", () => {
@@ -32,5 +36,10 @@ describe("shouldBounceSignedInVisitorToApp", () => {
   it("never bounces without a session hint or off a marketing subpage", () => {
     expect(shouldBounceSignedInVisitorToApp({ ...base, hasSessionHint: false })).toBe(false);
     expect(shouldBounceSignedInVisitorToApp({ ...base, pathname: "/blog" })).toBe(false);
+  });
+
+  it("never bounces landing host aliases used as product surfaces", () => {
+    expect(shouldBounceSignedInVisitorToApp({ ...base, host: "status.nebutra.com" })).toBe(false);
+    expect(shouldBounceSignedInVisitorToApp({ ...base, host: "open.nebutra.com" })).toBe(false);
   });
 });
