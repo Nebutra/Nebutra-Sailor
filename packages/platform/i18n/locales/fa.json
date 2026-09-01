@@ -97,39 +97,39 @@
     "progress": {
       "back": "بازگشت",
       "stepCounter": "مرحله {current} از {total}",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "پیشرفت راه‌اندازی"
+    },
+    "workspace": {
+      "title": "نام فضای کاری",
+      "description": "این نام در دعوت‌نامه‌ها و فاکتورها نمایش داده می‌شود.",
+      "nameLabel": "نام فضای کاری",
+      "namePlaceholder": "مثلاً آکمه کورپ",
+      "nameRequired": "نام فضای کاری را وارد کنید.",
+      "urlLabel": "آدرس فضای کاری",
+      "slugPlaceholder": "my-workspace",
+      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
+      "submit": "ایجاد فضای کاری",
+      "submitting": "در حال ایجاد…",
+      "error": "ایجاد فضای کاری ممکن نشد.",
+      "providerUnsupported": "این ارائه‌دهنده ورود از فضاهای کاری پشتیبانی نمی‌کند."
+    },
+    "invite": {
+      "title": "دعوت از تیم",
+      "description": "می‌توانید این کار را بعداً انجام دهید. فیلدهای خالی نادیده گرفته می‌شوند.",
+      "emailsLabel": "آدرس‌های ایمیل",
+      "emailPlaceholder": "colleague@company.com",
+      "addAnother": "افزودن دیگری",
+      "removeEmail": "حذف ایمیل",
+      "send": "ارسال دعوت‌نامه‌ها",
+      "sending": "در حال ارسال…",
+      "skip": "رد شدن برای now",
+      "error": "ارسال دعوت‌نامه‌ها ممکن نشد."
     },
     "plan": {
       "title": "یک طرح انتخاب کنید",
       "description": "رایگان شروع کنید یا ظرفیت بیشتری باز کنید. می‌توانید هر زمان طرح را تغییر دهید.",
       "choose": "انتخاب طرح",
       "skip": "فعلاً رد شوید"
-    },
-    "workspace": {
-      "title": "Name the workspace",
-      "description": "This is how it shows up on invites and invoices.",
-      "nameLabel": "Workspace name",
-      "namePlaceholder": "e.g. Acme Corp",
-      "nameRequired": "Enter a workspace name.",
-      "urlLabel": "Workspace URL",
-      "slugPlaceholder": "my-workspace",
-      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
-      "submit": "Create workspace",
-      "submitting": "Creating…",
-      "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces."
-    },
-    "invite": {
-      "title": "Invite the team",
-      "description": "You can do this later. Empty fields are skipped.",
-      "emailsLabel": "Email addresses",
-      "emailPlaceholder": "colleague@company.com",
-      "addAnother": "Add another",
-      "removeEmail": "Remove email",
-      "send": "Send invitations",
-      "sending": "Sending…",
-      "skip": "Skip for now",
-      "error": "Could not send invitations."
     }
   },
   "userMenu": {
@@ -404,14 +404,14 @@
       "signInFailed": "ورود ناموفق بود",
       "genericError": "خطایی رخ داد. لطفاً دوباره تلاش کنید.",
       "captchaError": "تأیید ربات ناموفق بود. صفحه را تازه کنید و دوباره تلاش کنید.",
-      "challengeTitle": "Verify you are human",
-      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…",
-      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
-      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
-      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
-      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
-      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+      "challengeTitle": "تأیید کنید که انسان هستید",
+      "challengeSubtitle": "برای ادامه ورود، این بررسی را تکمیل کنید. این مرحله از سوءاستفاده خودکار از فرم جلوگیری می‌کند.",
+      "challengeSubmitting": "تأیید کامل شد — در حال ورود شما…",
+      "legalNotice": "با ادامه، با <terms>شرایط استفاده</terms> و <privacy>سیاست حفظ حریم خصوصی</privacy> {brandName} موافقت می‌کنید.",
+      "oauthInvalidCode": "ورود با شبکه اجتماعی ناموفق بود (کد مجوز رد شد). دوباره تلاش کنید. اگر این مشکل ادامه یافت، احتمالاً کلید مخفی OAuth یا آدرس بازگردانی به‌درستی پیکربندی نشده است.",
+      "oauthStateMismatch": "این تلاش ورود منقضی شده یا قطع شده است. برگه‌های اضافی را ببندید و دوباره Google یا GitHub را شروع کنید.",
+      "oauthAccessDenied": "ورود لغو شد. هر زمان که آماده بودید، دوباره یک ارائه‌دهنده انتخاب کنید.",
+      "oauthUnavailable": "این روش ورود موقتاً در دسترس نیست. از ایمیل و رمز عبور استفاده کنید یا ارائه‌دهنده دیگری را امتحان کنید."
     },
     "signUp": {
       "title": "حساب Nebutra خود را بسازید",
@@ -428,8 +428,8 @@
       "inviteLabel": "Invite code",
       "invitePlaceholder": "neb_...",
       "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
-      "inviteRequired": "A valid invite code is required to sign up.",
-      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRequired": "برای ثبت‌نام، کد دعوت معتبر الزامی است.",
+      "inviteInvalid": "کد دعوت نامعتبر، منقضی شده یا در دسترس نیست.",
       "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },
     "passkeys": {

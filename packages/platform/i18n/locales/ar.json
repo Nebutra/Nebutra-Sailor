@@ -97,39 +97,39 @@
     "progress": {
       "back": "رجوع",
       "stepCounter": "الخطوة {current} من {total}",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "تقدم الإعداد"
+    },
+    "workspace": {
+      "title": "اسم مساحة العمل",
+      "description": "هكذا تظهر في الدعوات والفواتير.",
+      "nameLabel": "اسم مساحة العمل",
+      "namePlaceholder": "مثال: شركة Acme",
+      "nameRequired": "أدخل اسم مساحة العمل.",
+      "urlLabel": "رابط مساحة العمل",
+      "slugPlaceholder": "my-workspace",
+      "slugError": "3–48 حرفًا، أحرف صغيرة وأرقام وشرطات فقط.",
+      "submit": "إنشاء مساحة العمل",
+      "submitting": "Creating…",
+      "error": "تعذر إنشاء مساحة العمل.",
+      "providerUnsupported": "مزوّد تسجيل الدخول هذا لا يدعم مساحات العمل."
+    },
+    "invite": {
+      "title": "ادعُ الفريق",
+      "description": "يمكنك القيام بذلك لاحقًا. يتم تخطي الحقول الفارغة.",
+      "emailsLabel": "عناوين البريد الإلكتروني",
+      "emailPlaceholder": "colleague@company.com",
+      "addAnother": "إضافة آخر",
+      "removeEmail": "إزالة البريد الإلكتروني",
+      "send": "إرسال الدعوات",
+      "sending": "جارٍ الإرسال…",
+      "skip": "تخطَّ الآن",
+      "error": "تعذّر إرسال الدعوات."
     },
     "plan": {
       "title": "اختر خطة",
       "description": "ابدأ مجاناً أو افتح سعة أكبر. يمكنك تغيير الخطة في أي وقت.",
       "choose": "اختر خطة",
       "skip": "تخطي الآن"
-    },
-    "workspace": {
-      "title": "Name the workspace",
-      "description": "This is how it shows up on invites and invoices.",
-      "nameLabel": "Workspace name",
-      "namePlaceholder": "e.g. Acme Corp",
-      "nameRequired": "Enter a workspace name.",
-      "urlLabel": "Workspace URL",
-      "slugPlaceholder": "my-workspace",
-      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
-      "submit": "Create workspace",
-      "submitting": "Creating…",
-      "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces."
-    },
-    "invite": {
-      "title": "Invite the team",
-      "description": "You can do this later. Empty fields are skipped.",
-      "emailsLabel": "Email addresses",
-      "emailPlaceholder": "colleague@company.com",
-      "addAnother": "Add another",
-      "removeEmail": "Remove email",
-      "send": "Send invitations",
-      "sending": "Sending…",
-      "skip": "Skip for now",
-      "error": "Could not send invitations."
     }
   },
   "userMenu": {
@@ -404,14 +404,14 @@
       "signInFailed": "فشل تسجيل الدخول",
       "genericError": "حدث خطأ. يرجى المحاولة مرة أخرى.",
       "captchaError": "فشل التحقق من البوت. قم بتحديث الصفحة وحاول مرة أخرى.",
-      "challengeTitle": "Verify you are human",
-      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…",
-      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
-      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
-      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
-      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
-      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+      "challengeTitle": "تحقق من أنك إنسان",
+      "challengeSubtitle": "أكمل التحقق للمتابعة في تسجيل الدخول. هذه الخطوة تمنع إساءة الاستخدام الآلي للنموذج.",
+      "challengeSubmitting": "اكتمل التحقق — جارٍ تسجيل دخولك…",
+      "legalNotice": "بالمتابعة، أنت توافق على <terms>شروط الخدمة</terms> و<privacy>سياسة الخصوصية</privacy> الخاصة بـ{brandName}.",
+      "oauthInvalidCode": "فشل تسجيل الدخول عبر وسائل التواصل الاجتماعي (تم رفض رمز التفويض). حاول مرة أخرى. إذا استمرت المشكلة، فمن المحتمل أن سر العميل أو رابط إعادة التوجيه في OAuth غير مضبوط بشكل صحيح.",
+      "oauthStateMismatch": "انتهت صلاحية محاولة تسجيل الدخول هذه أو تمت مقاطعتها. أغلق علامات التبويب الإضافية، ثم ابدأ باستخدام Google أو GitHub مرة أخرى.",
+      "oauthAccessDenied": "تم إلغاء تسجيل الدخول. اختر مزودًا مرة أخرى عندما تكون مستعدًا.",
+      "oauthUnavailable": "طريقة تسجيل الدخول هذه غير متاحة مؤقتًا. استخدم البريد الإلكتروني وكلمة المرور، أو جرّب مزودًا آخر."
     },
     "signUp": {
       "title": "أنشئ حسابك في Nebutra",
@@ -425,11 +425,11 @@
       "alreadyHaveAccount": "لديك حساب بالفعل؟",
       "signInLink": "تسجيل الدخول",
       "signUpFailed": "فشل التسجيل",
-      "inviteLabel": "Invite code",
+      "inviteLabel": "رمز الدعوة",
       "invitePlaceholder": "neb_...",
       "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
       "inviteRequired": "A valid invite code is required to sign up.",
-      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteInvalid": "رمز الدعوة غير صالح، أو منتهي الصلاحية، أو غير متاح.",
       "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },
     "passkeys": {

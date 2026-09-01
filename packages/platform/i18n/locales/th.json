@@ -97,39 +97,39 @@
     "progress": {
       "back": "ย้อนกลับ",
       "stepCounter": "ขั้นตอนที่ {current} จาก {total}",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "ความคืบหน้าการเริ่มต้นใช้งาน"
+    },
+    "workspace": {
+      "title": "ตั้งชื่อพื้นที่ทำงาน",
+      "description": "ชื่อนี้จะแสดงในคำเชิญและใบแจ้งหนี้",
+      "nameLabel": "ชื่อพื้นที่ทำงาน",
+      "namePlaceholder": "เช่น Acme Corp",
+      "nameRequired": "กรุณากรอกชื่อพื้นที่ทำงาน",
+      "urlLabel": "URL ของพื้นที่ทำงาน",
+      "slugPlaceholder": "my-workspace",
+      "slugError": "3–48 ตัวอักษร ตัวพิมพ์เล็ก ตัวเลข และเครื่องหมายยัติภังค์เท่านั้น",
+      "submit": "สร้างพื้นที่ทำงาน",
+      "submitting": "กำลังสร้าง…",
+      "error": "ไม่สามารถสร้างพื้นที่ทำงานได้",
+      "providerUnsupported": "ผู้ให้บริการเข้าสู่ระบบนี้ไม่รองรับพื้นที่ทำงาน"
+    },
+    "invite": {
+      "title": "เชิญทีม",
+      "description": "คุณสามารถทำได้ในภายหลัง ฟิลด์ที่เว้นว่างจะถูกข้าม",
+      "emailsLabel": "ที่อยู่อีเมล",
+      "emailPlaceholder": "colleague@company.com",
+      "addAnother": "เพิ่มอีก",
+      "removeEmail": "ลบอีเมล",
+      "send": "ส่งคำเชิญ",
+      "sending": "กำลังส่ง…",
+      "skip": "ข้ามไปก่อน",
+      "error": "ไม่สามารถส่งคำเชิญได้"
     },
     "plan": {
       "title": "เลือกแพ็กเกจ",
       "description": "เริ่มต้นฟรีหรือปลดล็อกความจุเพิ่มเติม คุณสามารถเปลี่ยนแพ็กเกจได้ตลอดเวลา",
       "choose": "เลือกแพ็กเกจ",
       "skip": "ข้ามไปก่อน"
-    },
-    "workspace": {
-      "title": "Name the workspace",
-      "description": "This is how it shows up on invites and invoices.",
-      "nameLabel": "Workspace name",
-      "namePlaceholder": "e.g. Acme Corp",
-      "nameRequired": "Enter a workspace name.",
-      "urlLabel": "Workspace URL",
-      "slugPlaceholder": "my-workspace",
-      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
-      "submit": "Create workspace",
-      "submitting": "Creating…",
-      "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces."
-    },
-    "invite": {
-      "title": "Invite the team",
-      "description": "You can do this later. Empty fields are skipped.",
-      "emailsLabel": "Email addresses",
-      "emailPlaceholder": "colleague@company.com",
-      "addAnother": "Add another",
-      "removeEmail": "Remove email",
-      "send": "Send invitations",
-      "sending": "Sending…",
-      "skip": "Skip for now",
-      "error": "Could not send invitations."
     }
   },
   "userMenu": {
@@ -404,14 +404,14 @@
       "signInFailed": "เข้าสู่ระบบไม่สำเร็จ",
       "genericError": "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง",
       "captchaError": "การยืนยันว่าไม่ใช่บอทล้มเหลว กรุณารีเฟรชหน้าแล้วลองอีกครั้ง",
-      "challengeTitle": "Verify you are human",
-      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…",
-      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
-      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
-      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
-      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
-      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+      "challengeTitle": "ยืนยันว่าคุณเป็นมนุษย์",
+      "challengeSubtitle": "ทำการตรวจสอบเพื่อดำเนินการเข้าสู่ระบบต่อ ขั้นตอนนี้ช่วยป้องกันการใช้งานอัตโนมัติที่ไม่เหมาะสมบนฟอร์ม",
+      "challengeSubmitting": "การตรวจสอบเสร็จสมบูรณ์ — กำลังเข้าสู่ระบบ…",
+      "legalNotice": "การดำเนินการต่อแสดงว่าคุณยอมรับ <terms>ข้อกำหนดการให้บริการ</terms> และ <privacy>นโยบายความเป็นส่วนตัว</privacy> ของ {brandName}",
+      "oauthInvalidCode": "การเข้าสู่ระบบผ่านโซเชียลล้มเหลว (รหัสอนุญาตถูกปฏิเสธ) โปรดลองอีกครั้ง หากเกิดปัญหานี้ซ้ำ อาจเป็นเพราะค่า OAuth client secret หรือ redirect URI ตั้งค่าไม่ถูกต้อง",
+      "oauthStateMismatch": "ความพยายามเข้าสู่ระบบนี้หมดอายุหรือถูกขัดจังหวะ ปิดแท็บอื่นๆ แล้วเริ่ม Google หรือ GitHub ใหม่อีกครั้ง",
+      "oauthAccessDenied": "การเข้าสู่ระบบถูกยกเลิก กรุณาเลือกผู้ให้บริการอีกครั้งเมื่อคุณพร้อม",
+      "oauthUnavailable": "วิธีการเข้าสู่ระบบนี้ไม่พร้อมใช้งานชั่วคราว กรุณาใช้อีเมลและรหัสผ่าน หรือลองผู้ให้บริการรายอื่น"
     },
     "signUp": {
       "title": "สร้างบัญชี Nebutra ของคุณ",
@@ -425,11 +425,11 @@
       "alreadyHaveAccount": "มีบัญชีอยู่แล้ว?",
       "signInLink": "เข้าสู่ระบบ",
       "signUpFailed": "สมัครไม่สำเร็จ",
-      "inviteLabel": "Invite code",
+      "inviteLabel": "รหัสเชิญ",
       "invitePlaceholder": "neb_...",
       "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
       "inviteRequired": "A valid invite code is required to sign up.",
-      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteInvalid": "รหัสเชิญไม่ถูกต้อง หมดอายุ หรือไม่พร้อมใช้งาน",
       "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },
     "passkeys": {

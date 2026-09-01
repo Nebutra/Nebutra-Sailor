@@ -97,39 +97,39 @@
     "progress": {
       "back": "Terug",
       "stepCounter": "Stap {current} van {total}",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "Voortgang van onboarding"
+    },
+    "workspace": {
+      "title": "Naam de werkruimte",
+      "description": "Zo wordt het weergegeven op uitnodigingen en facturen.",
+      "nameLabel": "Naam van de werkruimte",
+      "namePlaceholder": "bijv. Acme Corp",
+      "nameRequired": "Voer een naam voor de werkruimte in.",
+      "urlLabel": "Workspace-URL",
+      "slugPlaceholder": "mijn-werkruimte",
+      "slugError": "Alleen 3–48 tekens, kleine letters, cijfers en koppeltekens.",
+      "submit": "Werkruimte aanmaken",
+      "submitting": "Bezig met aanmaken…",
+      "error": "Could not create the workspace.",
+      "providerUnsupported": "Deze aanmeldprovider ondersteunt geen werkruimten."
+    },
+    "invite": {
+      "title": "Nodig het team uit",
+      "description": "Je kunt dit later doen. Lege velden worden overgeslagen.",
+      "emailsLabel": "E-mailadressen",
+      "emailPlaceholder": "colleague@company.com",
+      "addAnother": "Nog een toevoegen",
+      "removeEmail": "E-mail verwijderen",
+      "send": "Uitnodigingen versturen",
+      "sending": "Versturen…",
+      "skip": "Later overslaan",
+      "error": "Uitnodigingen konden niet worden verstuurd."
     },
     "plan": {
       "title": "Kies een plan",
       "description": "Begin gratis of ontgrendel meer capaciteit. Je kunt altijd van plan wisselen.",
       "choose": "Kies een plan",
       "skip": "Nu overslaan"
-    },
-    "workspace": {
-      "title": "Name the workspace",
-      "description": "This is how it shows up on invites and invoices.",
-      "nameLabel": "Workspace name",
-      "namePlaceholder": "e.g. Acme Corp",
-      "nameRequired": "Enter a workspace name.",
-      "urlLabel": "Workspace URL",
-      "slugPlaceholder": "my-workspace",
-      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
-      "submit": "Create workspace",
-      "submitting": "Creating…",
-      "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces."
-    },
-    "invite": {
-      "title": "Invite the team",
-      "description": "You can do this later. Empty fields are skipped.",
-      "emailsLabel": "Email addresses",
-      "emailPlaceholder": "colleague@company.com",
-      "addAnother": "Add another",
-      "removeEmail": "Remove email",
-      "send": "Send invitations",
-      "sending": "Sending…",
-      "skip": "Skip for now",
-      "error": "Could not send invitations."
     }
   },
   "userMenu": {
@@ -404,14 +404,14 @@
       "signInFailed": "Inloggen mislukt",
       "genericError": "Er is een fout opgetreden. Probeer het opnieuw.",
       "captchaError": "Botverificatie mislukt. Vernieuw de pagina en probeer het opnieuw.",
-      "challengeTitle": "Verify you are human",
-      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…",
-      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
-      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
-      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
-      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
-      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+      "challengeTitle": "Bevestig dat u een mens bent",
+      "challengeSubtitle": "Voltooi de controle om verder te gaan met aanmelden. Deze stap voorkomt geautomatiseerd misbruik van het formulier.",
+      "challengeSubmitting": "Verificatie voltooid — u wordt aangemeld…",
+      "legalNotice": "Door verder te gaan gaat u akkoord met de <terms>Servicevoorwaarden</terms> en het <privacy>Privacybeleid</privacy> van {brandName}.",
+      "oauthInvalidCode": "Sociale aanmelding mislukt (autorisatiecode afgewezen). Probeer het opnieuw. Als dit blijft gebeuren, is de OAuth-clientgeheim of redirect-URI waarschijnlijk onjuist geconfigureerd.",
+      "oauthStateMismatch": "Deze aanmeldpoging is verlopen of onderbroken. Sluit extra tabbladen en start Google of GitHub opnieuw.",
+      "oauthAccessDenied": "Aanmelden is geannuleerd. Kies opnieuw een provider wanneer je er klaar voor bent.",
+      "oauthUnavailable": "Deze aanmeldmethode is tijdelijk niet beschikbaar. Gebruik e-mail en wachtwoord, of probeer een andere provider."
     },
     "signUp": {
       "title": "Maak je Nebutra-account aan",
@@ -425,10 +425,10 @@
       "alreadyHaveAccount": "Heb je al een account?",
       "signInLink": "Inloggen",
       "signUpFailed": "Aanmelden mislukt",
-      "inviteLabel": "Invite code",
+      "inviteLabel": "Uitnodigingscode",
       "invitePlaceholder": "neb_...",
       "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
-      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteRequired": "Er is een geldige uitnodigingscode vereist om je aan te melden.",
       "inviteInvalid": "Invite code is invalid, expired, or not available.",
       "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },

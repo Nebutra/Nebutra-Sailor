@@ -97,39 +97,39 @@
     "progress": {
       "back": "חזרה",
       "stepCounter": "שלב {current} מתוך {total}",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "התקדמות ההתחברות"
+    },
+    "workspace": {
+      "title": "תן שם לסביבת העבודה",
+      "description": "כך זה יופיע בהזמנות ובחשבוניות.",
+      "nameLabel": "שם סביבת העבודה",
+      "namePlaceholder": "לדוגמה, Acme Corp",
+      "nameRequired": "הזן שם עבור סביבת העבודה.",
+      "urlLabel": "כתובת URL של סביבת העבודה",
+      "slugPlaceholder": "my-workspace",
+      "slugError": "3–48 תווים, אותיות קטנות, מספרים ומקפים בלבד.",
+      "submit": "צור סביבת עבודה",
+      "submitting": "יוצר...",
+      "error": "לא ניתן היה ליצור את סביבת העבודה.",
+      "providerUnsupported": "ספק התחברות זה אינו תומך בסביבות עבודה."
+    },
+    "invite": {
+      "title": "הזמן את הצוות",
+      "description": "תוכל לעשות זאת מאוחר יותר. שדות ריקים ידולגו.",
+      "emailsLabel": "כתובות אימייל",
+      "emailPlaceholder": "colleague@company.com",
+      "addAnother": "הוסף עוד",
+      "removeEmail": "הסר אימייל",
+      "send": "שלח הזמנות",
+      "sending": "שולח…",
+      "skip": "דלג לעת עתה",
+      "error": "Could not send invitations."
     },
     "plan": {
       "title": "בחר תוכנית",
       "description": "התחל בחינם או פתח יותר קיבולת. ניתן לשנות תוכניות בכל עת.",
       "choose": "בחר תוכנית",
       "skip": "דלג לרגע"
-    },
-    "workspace": {
-      "title": "Name the workspace",
-      "description": "This is how it shows up on invites and invoices.",
-      "nameLabel": "Workspace name",
-      "namePlaceholder": "e.g. Acme Corp",
-      "nameRequired": "Enter a workspace name.",
-      "urlLabel": "Workspace URL",
-      "slugPlaceholder": "my-workspace",
-      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
-      "submit": "Create workspace",
-      "submitting": "Creating…",
-      "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces."
-    },
-    "invite": {
-      "title": "Invite the team",
-      "description": "You can do this later. Empty fields are skipped.",
-      "emailsLabel": "Email addresses",
-      "emailPlaceholder": "colleague@company.com",
-      "addAnother": "Add another",
-      "removeEmail": "Remove email",
-      "send": "Send invitations",
-      "sending": "Sending…",
-      "skip": "Skip for now",
-      "error": "Could not send invitations."
     }
   },
   "userMenu": {
@@ -404,14 +404,14 @@
       "signInFailed": "הכניסה נכשלה",
       "genericError": "אירעה שגיאה. נסה שוב.",
       "captchaError": "אימות הבוט נכשל. רענן את הדף ונסה שוב.",
-      "challengeTitle": "Verify you are human",
-      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…",
-      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
-      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
-      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
-      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
-      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+      "challengeTitle": "אמת שאתה אנושי",
+      "challengeSubtitle": "השלם את הבדיקה כדי להמשיך בהתחברות. שלב זה מונע שימוש לרעה אוטומטי בטופס.",
+      "challengeSubmitting": "האימות הושלם — מתחבר…",
+      "legalNotice": "בהמשך, אתה מסכים ל<terms>תנאי השירות</terms> ול<privacy>מדיניות הפרטיות</privacy> של {brandName}.",
+      "oauthInvalidCode": "ההתחברות דרך הרשת החברתית נכשלה (קוד ההרשאה נדחה). נסה שוב. אם זה חוזר על עצמו, ככל הנראה סוד ה-OAuth או כתובת ההפניה מוגדרים שגוי.",
+      "oauthStateMismatch": "ניסיון ההתחברות פג או הופסק. סגור כרטיסיות נוספות, ואז התחל שוב עם Google או GitHub.",
+      "oauthAccessDenied": "הכניסה בוטלה. בחר ספק שוב כשתמוכן.",
+      "oauthUnavailable": "שיטת כניסה זו אינה זמינה זמנית. השתמש בדוא\"ל ובסיסמה, או נסה ספק אחר."
     },
     "signUp": {
       "title": "צור את חשבון Nebutra שלך",
@@ -425,10 +425,10 @@
       "alreadyHaveAccount": "כבר יש לך חשבון?",
       "signInLink": "היכנס",
       "signUpFailed": "ההרשמה נכשלה",
-      "inviteLabel": "Invite code",
+      "inviteLabel": "קוד הזמנה",
       "invitePlaceholder": "neb_...",
       "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
-      "inviteRequired": "A valid invite code is required to sign up.",
+      "inviteRequired": "נדרש קוד הזמנה תקף כדי להירשם.",
       "inviteInvalid": "Invite code is invalid, expired, or not available.",
       "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },

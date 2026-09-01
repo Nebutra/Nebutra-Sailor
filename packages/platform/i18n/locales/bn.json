@@ -97,39 +97,39 @@
     "progress": {
       "back": "পিছনে যান",
       "stepCounter": "মোট {total} এর মধ্যে ধাপ {current}",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "অনবোর্ডিং অগ্রগতি"
+    },
+    "workspace": {
+      "title": "ওয়ার্কস্পেসের নাম দিন",
+      "description": "এটি আমন্ত্রণ এবং চালানে এভাবেই দেখানো হবে।",
+      "nameLabel": "ওয়ার্কস্পেসের নাম",
+      "namePlaceholder": "যেমন: Acme Corp",
+      "nameRequired": "ওয়ার্কস্পেসের নাম লিখুন।",
+      "urlLabel": "ওয়ার্কস্পেস URL",
+      "slugPlaceholder": "my-workspace",
+      "slugError": "৩–৪৮ অক্ষর, শুধুমাত্র ছোট হাতের অক্ষর, সংখ্যা এবং হাইফেন।",
+      "submit": "ওয়ার্কস্পেস তৈরি করুন",
+      "submitting": "তৈরি হচ্ছে…",
+      "error": "ওয়ার্কস্পেস তৈরি করা যায়নি।",
+      "providerUnsupported": "এই সাইন-ইন প্রদানকারী ওয়ার্কস্পেস সমর্থন করে না।"
+    },
+    "invite": {
+      "title": "টিমকে আমন্ত্রণ জানান",
+      "description": "আপনি এটি পরে করতে পারেন। খালি ক্ষেত্রগুলি বাদ দেওয়া হবে।",
+      "emailsLabel": "ইমেইল ঠিকানা",
+      "emailPlaceholder": "colleague@company.com",
+      "addAnother": "আরেকটি যোগ করুন",
+      "removeEmail": "ইমেইল সরান",
+      "send": "আমন্ত্রণ পাঠান",
+      "sending": "পাঠানো হচ্ছে…",
+      "skip": "আপাতত এড়িয়ে যান",
+      "error": "আমন্ত্রণ পাঠানো যায়নি।"
     },
     "plan": {
       "title": "একটি প্ল্যান বেছে নিন",
       "description": "বিনামূল্যে শুরু করুন অথবা আরও ক্ষমতা আনলক করুন. আপনি যেকোনো সময় প্ল্যান পরিবর্তন করতে পারবেন।",
       "choose": "একটি প্ল্যান বেছে নিন",
       "skip": "এখনের জন্য বাদ দিন"
-    },
-    "workspace": {
-      "title": "Name the workspace",
-      "description": "This is how it shows up on invites and invoices.",
-      "nameLabel": "Workspace name",
-      "namePlaceholder": "e.g. Acme Corp",
-      "nameRequired": "Enter a workspace name.",
-      "urlLabel": "Workspace URL",
-      "slugPlaceholder": "my-workspace",
-      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
-      "submit": "Create workspace",
-      "submitting": "Creating…",
-      "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces."
-    },
-    "invite": {
-      "title": "Invite the team",
-      "description": "You can do this later. Empty fields are skipped.",
-      "emailsLabel": "Email addresses",
-      "emailPlaceholder": "colleague@company.com",
-      "addAnother": "Add another",
-      "removeEmail": "Remove email",
-      "send": "Send invitations",
-      "sending": "Sending…",
-      "skip": "Skip for now",
-      "error": "Could not send invitations."
     }
   },
   "userMenu": {
@@ -404,14 +404,14 @@
       "signInFailed": "সাইন ইন ব্যর্থ হয়েছে",
       "genericError": "একটি ত্রুটি হয়েছে. অনুগ্রহ করে আবার চেষ্টা করুন।",
       "captchaError": "বট যাচাই ব্যর্থ হয়েছে। পেজটি রিফ্রেশ করে আবার চেষ্টা করুন।",
-      "challengeTitle": "Verify you are human",
-      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…",
-      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "challengeTitle": "নিশ্চিত করুন আপনি মানুষ",
+      "challengeSubtitle": "সাইন ইন চালিয়ে যেতে চেকটি সম্পূর্ণ করুন। এই ধাপটি ফর্ম থেকে স্বয়ংক্রিয় অপব্যবহার রোধ করে।",
+      "challengeSubmitting": "যাচাই সম্পন্ন — আপনাকে সাইন ইন করানো হচ্ছে…",
+      "legalNotice": "চালিয়ে যাওয়ার মাধ্যমে, আপনি {brandName}-এর <terms>পরিষেবার শর্তাবলী</terms> এবং <privacy>গোপনীয়তা নীতি</privacy>-তে সম্মত হচ্ছেন।",
       "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
-      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
-      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
-      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+      "oauthStateMismatch": "এই সাইন-ইন প্রচেষ্টার মেয়াদ শেষ হয়ে গেছে বা বাধাপ্রাপ্ত হয়েছে। অতিরিক্ত ট্যাব বন্ধ করুন, তারপর Google বা GitHub আবার শুরু করুন।",
+      "oauthAccessDenied": "সাইন-ইন বাতিল করা হয়েছে। আপনি প্রস্তুত হলে আবার একটি প্রদানকারী নির্বাচন করুন।",
+      "oauthUnavailable": "এই সাইন-ইন পদ্ধতিটি সাময়িকভাবে অনুপলব্ধ। ইমেল এবং পাসওয়ার্ড ব্যবহার করুন, অথবা অন্য প্রদানকারী চেষ্টা করুন।"
     },
     "signUp": {
       "title": "আপনার Nebutra অ্যাকাউন্ট তৈরি করুন",
@@ -425,11 +425,11 @@
       "alreadyHaveAccount": "আগে থেকেই অ্যাকাউন্ট আছে?",
       "signInLink": "লগ ইন করুন",
       "signUpFailed": "সাইন আপ ব্যর্থ হয়েছে",
-      "inviteLabel": "Invite code",
+      "inviteLabel": "আমন্ত্রণ কোড",
       "invitePlaceholder": "neb_...",
       "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
-      "inviteRequired": "A valid invite code is required to sign up.",
-      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRequired": "সাইন আপ করতে একটি বৈধ আমন্ত্রণ কোড প্রয়োজন।",
+      "inviteInvalid": "আমন্ত্রণ কোডটি অবৈধ, মেয়াদোত্তীর্ণ, বা উপলব্ধ নয়।",
       "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },
     "passkeys": {

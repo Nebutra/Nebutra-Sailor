@@ -97,39 +97,39 @@
     "progress": {
       "back": "Πίσω",
       "stepCounter": "Βήμα {current} από {total}",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "Πρόοδος ενσωμάτωσης"
+    },
+    "workspace": {
+      "title": "Ονομάστε τον χώρο εργασίας",
+      "description": "Έτσι εμφανίζεται στις προσκλήσεις και στα τιμολόγια.",
+      "nameLabel": "Όνομα χώρου εργασίας",
+      "namePlaceholder": "π.χ. Acme Corp",
+      "nameRequired": "Εισαγάγετε ένα όνομα χώρου εργασίας.",
+      "urlLabel": "URL χώρου εργασίας",
+      "slugPlaceholder": "my-workspace",
+      "slugError": "3–48 χαρακτήρες, μόνο πεζά γράμματα, αριθμοί και παύλες.",
+      "submit": "Δημιουργία χώρου εργασίας",
+      "submitting": "Δημιουργία…",
+      "error": "Δεν ήταν δυνατή η δημιουργία του χώρου εργασίας.",
+      "providerUnsupported": "Αυτός ο πάροχος σύνδεσης δεν υποστηρίζει χώρους εργασίας."
+    },
+    "invite": {
+      "title": "Προσκαλέστε την ομάδα",
+      "description": "Μπορείτε να το κάνετε αργότερα. Τα κενά πεδία παραλείπονται.",
+      "emailsLabel": "Email addresses",
+      "emailPlaceholder": "colleague@company.com",
+      "addAnother": "Προσθήκη άλλου",
+      "removeEmail": "Αφαίρεση email",
+      "send": "Αποστολή προσκλήσεων",
+      "sending": "Αποστολή…",
+      "skip": "Παράβλεψη για τώρα",
+      "error": "Δεν ήταν δυνατή η αποστολή προσκλήσεων."
     },
     "plan": {
       "title": "Επιλέξτε ένα σχέδιο",
       "description": "Ξεκινήστε δωρεάν ή ξεκλειδώστε περισσότερη χωρητικότητα. Μπορείτε να αλλάξετε σχέδιο ανά πάσα στιγμή.",
       "choose": "Επιλογή σχεδίου",
       "skip": "Παράλειψη για αργότερα"
-    },
-    "workspace": {
-      "title": "Name the workspace",
-      "description": "This is how it shows up on invites and invoices.",
-      "nameLabel": "Workspace name",
-      "namePlaceholder": "e.g. Acme Corp",
-      "nameRequired": "Enter a workspace name.",
-      "urlLabel": "Workspace URL",
-      "slugPlaceholder": "my-workspace",
-      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
-      "submit": "Create workspace",
-      "submitting": "Creating…",
-      "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces."
-    },
-    "invite": {
-      "title": "Invite the team",
-      "description": "You can do this later. Empty fields are skipped.",
-      "emailsLabel": "Email addresses",
-      "emailPlaceholder": "colleague@company.com",
-      "addAnother": "Add another",
-      "removeEmail": "Remove email",
-      "send": "Send invitations",
-      "sending": "Sending…",
-      "skip": "Skip for now",
-      "error": "Could not send invitations."
     }
   },
   "userMenu": {
@@ -404,14 +404,14 @@
       "signInFailed": "Η σύνδεση απέτυχε",
       "genericError": "Προέκυψε σφάλμα. Δοκιμάστε ξανά.",
       "captchaError": "Η επαλήθευση bot απέτυχε. Ανανεώστε τη σελίδα και δοκιμάστε ξανά.",
-      "challengeTitle": "Verify you are human",
-      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…",
-      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
-      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
-      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
-      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
-      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+      "challengeTitle": "Επαληθεύστε ότι είστε άνθρωπος",
+      "challengeSubtitle": "Ολοκληρώστε τον έλεγχο για να συνεχίσετε τη σύνδεση. Αυτό το βήμα προστατεύει τη φόρμα από αυτοματοποιημένη κακοποίηση.",
+      "challengeSubmitting": "Η επαλήθευση ολοκληρώθηκε — σύνδεση σε εξέλιξη…",
+      "legalNotice": "Συνεχίζοντας, συμφωνείτε με τους <terms>Όρους Παροχής Υπηρεσιών</terms> και την <privacy>Πολιτική Απορρήτου</privacy> του {brandName}.",
+      "oauthInvalidCode": "Η κοινωνική σύνδεση απέτυχε (ο κωδικός εξουσιοδότησης απορρίφθηκε). Δοκιμάστε ξανά. Αν συνεχιστεί, πιθανόν το μυστικό OAuth ή το URI ανακατεύθυνσης είναι λανθασμένα.",
+      "oauthStateMismatch": "Αυτή η προσπάθεια σύνδεσης έληξε ή διακόπηκε. Κλείστε τις επιπλέον καρτέλες και ξεκινήστε ξανά με Google ή GitHub.",
+      "oauthAccessDenied": "Η σύνδεση ακυρώθηκε. Επιλέξτε ξανά έναν πάροχο όταν είστε έτοιμοι.",
+      "oauthUnavailable": "Αυτή η μέθοδος σύνδεσης είναι προσωρινά μη διαθέσιμη. Χρησιμοποιήστε email και κωδικό πρόσβασης ή δοκιμάστε άλλο πάροχο."
     },
     "signUp": {
       "title": "Δημιουργία λογαριασμού Nebutra",
@@ -425,11 +425,11 @@
       "alreadyHaveAccount": "Έχετε ήδη λογαριασμό;",
       "signInLink": "Σύνδεση",
       "signUpFailed": "Η εγγραφή απέτυχε",
-      "inviteLabel": "Invite code",
+      "inviteLabel": "Κωδικός πρόσκλησης",
       "invitePlaceholder": "neb_...",
       "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
-      "inviteRequired": "A valid invite code is required to sign up.",
-      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRequired": "Απαιτείται έγκυρος κωδικός πρόσκλησης για εγγραφή.",
+      "inviteInvalid": "Ο κωδικός πρόσκλησης είναι άκυρος, έχει λήξει ή δεν είναι διαθέσιμος.",
       "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },
     "passkeys": {

@@ -97,39 +97,39 @@
     "progress": {
       "back": "Geri",
       "stepCounter": "Adım {current} / {total}",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "Kayıt ilerlemesi"
+    },
+    "workspace": {
+      "title": "Çalışma alanını adlandırın",
+      "description": "Bu, davetiyelerde ve faturalarda böyle görünür.",
+      "nameLabel": "Çalışma alanı adı",
+      "namePlaceholder": "örn. Acme Corp",
+      "nameRequired": "Bir çalışma alanı adı girin.",
+      "urlLabel": "Çalışma Alanı URL'si",
+      "slugPlaceholder": "benim-calisma-alanim",
+      "slugError": "3–48 karakter, yalnızca küçük harfler, rakamlar ve tireler.",
+      "submit": "Çalışma alanı oluştur",
+      "submitting": "Oluşturuluyor…",
+      "error": "Çalışma alanı oluşturulamadı.",
+      "providerUnsupported": "Bu oturum açma sağlayıcısı çalışma alanlarını desteklemiyor."
+    },
+    "invite": {
+      "title": "Ekibi davet et",
+      "description": "Bunu daha sonra yapabilirsiniz. Boş alanlar atlanır.",
+      "emailsLabel": "E-posta adresleri",
+      "emailPlaceholder": "colleague@company.com",
+      "addAnother": "Başka ekle",
+      "removeEmail": "E-postayı kaldır",
+      "send": "Davetiyeleri gönder",
+      "sending": "Gönderiliyor…",
+      "skip": "Şimdilik atla",
+      "error": "Davetiyeler gönderilemedi."
     },
     "plan": {
       "title": "Plan seç",
       "description": "Ücretsiz başla veya daha fazla kapasite aç. İstediğin zaman planını değiştirebilirsin.",
       "choose": "Plan seç",
       "skip": "Şimdilik atla"
-    },
-    "workspace": {
-      "title": "Name the workspace",
-      "description": "This is how it shows up on invites and invoices.",
-      "nameLabel": "Workspace name",
-      "namePlaceholder": "e.g. Acme Corp",
-      "nameRequired": "Enter a workspace name.",
-      "urlLabel": "Workspace URL",
-      "slugPlaceholder": "my-workspace",
-      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
-      "submit": "Create workspace",
-      "submitting": "Creating…",
-      "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces."
-    },
-    "invite": {
-      "title": "Invite the team",
-      "description": "You can do this later. Empty fields are skipped.",
-      "emailsLabel": "Email addresses",
-      "emailPlaceholder": "colleague@company.com",
-      "addAnother": "Add another",
-      "removeEmail": "Remove email",
-      "send": "Send invitations",
-      "sending": "Sending…",
-      "skip": "Skip for now",
-      "error": "Could not send invitations."
     }
   },
   "userMenu": {
@@ -404,14 +404,14 @@
       "signInFailed": "Giriş başarısız oldu",
       "genericError": "Bir hata oluştu. Lütfen tekrar deneyin.",
       "captchaError": "Bot doğrulaması başarısız oldu. Sayfayı yenileyin ve tekrar deneyin.",
-      "challengeTitle": "Verify you are human",
-      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…",
-      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
-      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
-      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
-      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
-      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+      "challengeTitle": "İnsan olduğunuzu doğrulayın",
+      "challengeSubtitle": "Oturum açmaya devam etmek için kontrolü tamamlayın. Bu adım, formu otomatik kötüye kullanımdan korur.",
+      "challengeSubmitting": "Doğrulama tamamlandı — oturumunuz açılıyor…",
+      "legalNotice": "Devam ederek {brandName}'in <terms>Hizmet Şartları</terms> ve <privacy>Gizlilik Politikası</privacy>'nı kabul etmiş olursunuz.",
+      "oauthInvalidCode": "Sosyal oturum açma başarısız oldu (yetkilendirme kodu reddedildi). Tekrar deneyin. Bu sorun devam ederse, OAuth istemci gizli anahtarı veya yönlendirme URI'si büyük olasılıkla yanlış yapılandırılmıştır.",
+      "oauthStateMismatch": "Bu oturum açma denemesi süresi doldu veya kesintiye uğradı. Fazla sekmeleri kapatın ve Google veya GitHub'ı yeniden başlatın.",
+      "oauthAccessDenied": "Oturum açma iptal edildi. Hazır olduğunuzda tekrar bir sağlayıcı seçin.",
+      "oauthUnavailable": "Bu oturum açma yöntemi geçici olarak kullanılamıyor. E-posta ve şifre kullanın veya başka bir sağlayıcı deneyin."
     },
     "signUp": {
       "title": "Nebutra hesabınızı oluşturun",
@@ -428,8 +428,8 @@
       "inviteLabel": "Invite code",
       "invitePlaceholder": "neb_...",
       "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
-      "inviteRequired": "A valid invite code is required to sign up.",
-      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRequired": "Kayıt olmak için geçerli bir davet kodu gereklidir.",
+      "inviteInvalid": "Davet kodu geçersiz, süresi dolmuş veya kullanılamıyor.",
       "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },
     "passkeys": {

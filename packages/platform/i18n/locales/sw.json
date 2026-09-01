@@ -97,39 +97,39 @@
     "progress": {
       "back": "Nyuma",
       "stepCounter": "Hatua {current} ya {total}",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "Maendeleo ya kuanzisha"
+    },
+    "workspace": {
+      "title": "Taja nafasi ya kazi",
+      "description": "Hivi ndivyo inavyoonekana kwenye mialiko na ankara.",
+      "nameLabel": "Jina la nafasi ya kazi",
+      "namePlaceholder": "mf. Acme Corp",
+      "nameRequired": "Weka jina la nafasi ya kazi.",
+      "urlLabel": "URL ya Workspace",
+      "slugPlaceholder": "workspace-yangu",
+      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
+      "submit": "Unda nafasi ya kazi",
+      "submitting": "Inaunda…",
+      "error": "Haikuweza kuunda nafasi ya kazi.",
+      "providerUnsupported": "Mtoa huduma hii ya kuingia haiauni nafasi za kazi."
+    },
+    "invite": {
+      "title": "Alika timu",
+      "description": "Unaweza kufanya hivi baadaye. Sehemu zisizojazwa zitarukwa.",
+      "emailsLabel": "Anwani za barua pepe",
+      "emailPlaceholder": "colleague@company.com",
+      "addAnother": "Add another",
+      "removeEmail": "Ondoa barua pepe",
+      "send": "Tuma mialiko",
+      "sending": "Inatuma…",
+      "skip": "Ruka kwa sasa",
+      "error": "Haikuweza kutuma mialiko."
     },
     "plan": {
       "title": "Chagua mpango",
       "description": "Anza bure au ufungue uwezo zaidi. Unaweza kubadilisha mipango wakati wowote.",
       "choose": "Chagua mpango",
       "skip": "Ruka kwa sasa"
-    },
-    "workspace": {
-      "title": "Name the workspace",
-      "description": "This is how it shows up on invites and invoices.",
-      "nameLabel": "Workspace name",
-      "namePlaceholder": "e.g. Acme Corp",
-      "nameRequired": "Enter a workspace name.",
-      "urlLabel": "Workspace URL",
-      "slugPlaceholder": "my-workspace",
-      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
-      "submit": "Create workspace",
-      "submitting": "Creating…",
-      "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces."
-    },
-    "invite": {
-      "title": "Invite the team",
-      "description": "You can do this later. Empty fields are skipped.",
-      "emailsLabel": "Email addresses",
-      "emailPlaceholder": "colleague@company.com",
-      "addAnother": "Add another",
-      "removeEmail": "Remove email",
-      "send": "Send invitations",
-      "sending": "Sending…",
-      "skip": "Skip for now",
-      "error": "Could not send invitations."
     }
   },
   "userMenu": {
@@ -404,14 +404,14 @@
       "signInFailed": "Uingizaji umeshindwa",
       "genericError": "Hitilafu imetokea. Tafadhali jaribu tena.",
       "captchaError": "Uthibitisho wa bot umeshindwa. Onyesha upya ukurasa na jaribu tena.",
-      "challengeTitle": "Verify you are human",
-      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…",
-      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
-      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
-      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
-      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
-      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+      "challengeTitle": "Thibitisha kuwa wewe ni binadamu",
+      "challengeSubtitle": "Kamilisha ukaguzi ili uendelee kuingia. Hatua hii inazuia matumizi mabaya ya kiotomatiki kwenye fomu.",
+      "challengeSubmitting": "Uthibitishaji umekamilika — tunakuingiza…",
+      "legalNotice": "Kwa kuendelea, unakubali <terms>Masharti ya Huduma</terms> na <privacy>Sera ya Faragha</privacy> ya {brandName}.",
+      "oauthInvalidCode": "Kuingia kwa mtandao wa kijamii kumeshindwa (msimbo wa idhini umekataliwa). Jaribu tena. Ikiwa hii inaendelea kutokea, kuna uwezekano siri ya mteja wa OAuth au URI ya kuelekeza haijasanidiwa vizuri.",
+      "oauthStateMismatch": "Jaribio hili la kuingia limeisha muda wake au limekatizwa. Funga tabu za ziada, kisha uanze tena Google au GitHub.",
+      "oauthAccessDenied": "Kuingia kulighairiwa. Chagua mtoa huduma tena ukiwa tayari.",
+      "oauthUnavailable": "Njia hii ya kuingia haipatikani kwa sasa. Tumia barua pepe na nenosiri, au jaribu mtoa huduma mwingine."
     },
     "signUp": {
       "title": "Unda akaunti yako ya Nebutra",
@@ -428,8 +428,8 @@
       "inviteLabel": "Invite code",
       "invitePlaceholder": "neb_...",
       "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
-      "inviteRequired": "A valid invite code is required to sign up.",
-      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRequired": "Msimbo halali wa mwaliko unahitajika kujisajili.",
+      "inviteInvalid": "Msimbo wa mwaliko si sahihi, umekwisha muda wake, au haupatikani.",
       "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },
     "passkeys": {

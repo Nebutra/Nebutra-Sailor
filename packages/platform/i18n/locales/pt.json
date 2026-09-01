@@ -97,39 +97,39 @@
     "progress": {
       "back": "Voltar",
       "stepCounter": "Etapa {current} de {total}",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "Progresso da integração"
+    },
+    "workspace": {
+      "title": "Nomeie o espaço de trabalho",
+      "description": "É assim que ele aparece em convites e faturas.",
+      "nameLabel": "Workspace name",
+      "namePlaceholder": "ex.: Acme Corp",
+      "nameRequired": "Digite um nome para o workspace.",
+      "urlLabel": "URL do workspace",
+      "slugPlaceholder": "meu-workspace",
+      "slugError": "3–48 caracteres, apenas letras minúsculas, números e hífens.",
+      "submit": "Criar workspace",
+      "submitting": "Criando…",
+      "error": "Não foi possível criar o workspace.",
+      "providerUnsupported": "Este provedor de login não suporta workspaces."
+    },
+    "invite": {
+      "title": "Convide a equipe",
+      "description": "Você pode fazer isso depois. Campos vazios são ignorados.",
+      "emailsLabel": "Endereços de e-mail",
+      "emailPlaceholder": "colleague@company.com",
+      "addAnother": "Adicionar outro",
+      "removeEmail": "Remover e-mail",
+      "send": "Enviar convites",
+      "sending": "Enviando…",
+      "skip": "Pular por agora",
+      "error": "Could not send invitations."
     },
     "plan": {
       "title": "Escolha um plano",
       "description": "Comece grátis ou desbloqueie mais capacidade. Você pode alterar o plano a qualquer momento.",
       "choose": "Escolher um plano",
       "skip": "Pular por enquanto"
-    },
-    "workspace": {
-      "title": "Name the workspace",
-      "description": "This is how it shows up on invites and invoices.",
-      "nameLabel": "Workspace name",
-      "namePlaceholder": "e.g. Acme Corp",
-      "nameRequired": "Enter a workspace name.",
-      "urlLabel": "Workspace URL",
-      "slugPlaceholder": "my-workspace",
-      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
-      "submit": "Create workspace",
-      "submitting": "Creating…",
-      "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces."
-    },
-    "invite": {
-      "title": "Invite the team",
-      "description": "You can do this later. Empty fields are skipped.",
-      "emailsLabel": "Email addresses",
-      "emailPlaceholder": "colleague@company.com",
-      "addAnother": "Add another",
-      "removeEmail": "Remove email",
-      "send": "Send invitations",
-      "sending": "Sending…",
-      "skip": "Skip for now",
-      "error": "Could not send invitations."
     }
   },
   "userMenu": {
@@ -404,14 +404,14 @@
       "signInFailed": "Falha ao fazer login",
       "genericError": "Ocorreu um erro. Tente novamente.",
       "captchaError": "Verificação de bot falhou. Atualize a página e tente novamente.",
-      "challengeTitle": "Verify you are human",
-      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…",
+      "challengeTitle": "Verifique se você é humano",
+      "challengeSubtitle": "Conclua a verificação para continuar entrando. Esta etapa impede abusos automatizados no formulário.",
+      "challengeSubmitting": "Verificação concluída — entrando…",
       "legalNotice": "Ao continuar, você concorda com os <terms>Termos de Serviço</terms> e a <privacy>Política de Privacidade</privacy> da {brandName}.",
-      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
-      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
-      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
-      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+      "oauthInvalidCode": "Falha no login social (código de autorização rejeitado). Tente novamente. Se isso continuar acontecendo, provavelmente o segredo do cliente OAuth ou o URI de redirecionamento está mal configurado.",
+      "oauthStateMismatch": "Esta tentativa de login expirou ou foi interrompida. Feche as abas extras e inicie o Google ou GitHub novamente.",
+      "oauthAccessDenied": "O login foi cancelado. Escolha um provedor novamente quando estiver pronto.",
+      "oauthUnavailable": "Este método de login está temporariamente indisponível. Use e-mail e senha ou tente outro provedor."
     },
     "signUp": {
       "title": "Crie sua conta Nebutra",
@@ -425,11 +425,11 @@
       "alreadyHaveAccount": "Já tem uma conta?",
       "signInLink": "Fazer login",
       "signUpFailed": "Falha ao criar conta",
-      "inviteLabel": "Invite code",
+      "inviteLabel": "Código de convite",
       "invitePlaceholder": "neb_...",
       "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
-      "inviteRequired": "A valid invite code is required to sign up.",
-      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRequired": "É necessário um código de convite válido para se cadastrar.",
+      "inviteInvalid": "O código de convite é inválido, expirou ou não está disponível.",
       "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },
     "passkeys": {

@@ -97,39 +97,39 @@
     "progress": {
       "back": "Quay lại",
       "stepCounter": "Bước {current} trong {total}",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "Tiến trình thiết lập"
+    },
+    "workspace": {
+      "title": "Đặt tên cho không gian làm việc",
+      "description": "Tên này sẽ hiển thị trên lời mời và hóa đơn.",
+      "nameLabel": "Tên không gian làm việc",
+      "namePlaceholder": "VD: Acme Corp",
+      "nameRequired": "Vui lòng nhập tên không gian làm việc.",
+      "urlLabel": "URL không gian làm việc",
+      "slugPlaceholder": "khong-gian-lam-viec-cua-toi",
+      "slugError": "3–48 ký tự, chỉ gồm chữ thường, số và dấu gạch ngang.",
+      "submit": "Tạo không gian làm việc",
+      "submitting": "Đang tạo…",
+      "error": "Không thể tạo không gian làm việc.",
+      "providerUnsupported": "Nhà cung cấp đăng nhập này không hỗ trợ không gian làm việc."
+    },
+    "invite": {
+      "title": "Mời nhóm của bạn",
+      "description": "Bạn có thể làm điều này sau. Các trường trống sẽ được bỏ qua.",
+      "emailsLabel": "Địa chỉ email",
+      "emailPlaceholder": "colleague@company.com",
+      "addAnother": "Thêm email khác",
+      "removeEmail": "Xóa email",
+      "send": "Gửi lời mời",
+      "sending": "Đang gửi…",
+      "skip": "Bỏ qua bây giờ",
+      "error": "Không thể gửi lời mời."
     },
     "plan": {
       "title": "Chọn một gói",
       "description": "Bắt đầu miễn phí hoặc mở khóa thêm dung lượng. Bạn có thể thay đổi gói bất cứ lúc nào.",
       "choose": "Chọn gói",
       "skip": "Bỏ qua"
-    },
-    "workspace": {
-      "title": "Name the workspace",
-      "description": "This is how it shows up on invites and invoices.",
-      "nameLabel": "Workspace name",
-      "namePlaceholder": "e.g. Acme Corp",
-      "nameRequired": "Enter a workspace name.",
-      "urlLabel": "Workspace URL",
-      "slugPlaceholder": "my-workspace",
-      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
-      "submit": "Create workspace",
-      "submitting": "Creating…",
-      "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces."
-    },
-    "invite": {
-      "title": "Invite the team",
-      "description": "You can do this later. Empty fields are skipped.",
-      "emailsLabel": "Email addresses",
-      "emailPlaceholder": "colleague@company.com",
-      "addAnother": "Add another",
-      "removeEmail": "Remove email",
-      "send": "Send invitations",
-      "sending": "Sending…",
-      "skip": "Skip for now",
-      "error": "Could not send invitations."
     }
   },
   "userMenu": {
@@ -404,14 +404,14 @@
       "signInFailed": "Đăng nhập thất bại",
       "genericError": "Đã xảy ra lỗi. Vui lòng thử lại.",
       "captchaError": "Xác minh chống bot thất bại. Làm mới trang và thử lại.",
-      "challengeTitle": "Verify you are human",
-      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…",
-      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
-      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
-      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
-      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
-      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+      "challengeTitle": "Xác minh bạn là con người",
+      "challengeSubtitle": "Hoàn tất kiểm tra để tiếp tục đăng nhập. Bước này ngăn chặn hành vi lạm dụng tự động trên biểu mẫu.",
+      "challengeSubmitting": "Xác minh hoàn tất — đang đăng nhập…",
+      "legalNotice": "Bằng việc tiếp tục, bạn đồng ý với <terms>Điều khoản dịch vụ</terms> và <privacy>Chính sách quyền riêng tư</privacy> của {brandName}.",
+      "oauthInvalidCode": "Đăng nhập qua mạng xã hội thất bại (mã ủy quyền bị từ chối). Vui lòng thử lại. Nếu vẫn tiếp diễn, có thể bí mật OAuth client hoặc URI chuyển hướng đã bị cấu hình sai.",
+      "oauthStateMismatch": "Lần đăng nhập này đã hết hạn hoặc bị gián đoạn. Hãy đóng các tab thừa, sau đó bắt đầu lại với Google hoặc GitHub.",
+      "oauthAccessDenied": "Đăng nhập đã bị hủy. Chọn lại nhà cung cấp khi bạn sẵn sàng.",
+      "oauthUnavailable": "Phương thức đăng nhập này tạm thời không khả dụng. Sử dụng email và mật khẩu, hoặc thử nhà cung cấp khác."
     },
     "signUp": {
       "title": "Tạo tài khoản Nebutra",
@@ -425,11 +425,11 @@
       "alreadyHaveAccount": "Đã có tài khoản?",
       "signInLink": "Đăng nhập",
       "signUpFailed": "Đăng ký thất bại",
-      "inviteLabel": "Invite code",
+      "inviteLabel": "Mã mời",
       "invitePlaceholder": "neb_...",
       "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
-      "inviteRequired": "A valid invite code is required to sign up.",
-      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRequired": "Cần mã mời hợp lệ để đăng ký.",
+      "inviteInvalid": "Mã mời không hợp lệ, đã hết hạn hoặc không khả dụng.",
       "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },
     "passkeys": {

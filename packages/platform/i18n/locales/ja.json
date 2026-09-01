@@ -97,39 +97,39 @@
     "progress": {
       "back": "戻る",
       "stepCounter": "ステップ {current} / {total}",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "オンボーディングの進捗"
+    },
+    "workspace": {
+      "title": "ワークスペースに名前を付ける",
+      "description": "これは招待状や請求書に表示されます。",
+      "nameLabel": "ワークスペース名",
+      "namePlaceholder": "例：Acme Corp",
+      "nameRequired": "ワークスペース名を入力してください。",
+      "urlLabel": "ワークスペースURL",
+      "slugPlaceholder": "my-workspace",
+      "slugError": "3〜48文字で、小文字の英字、数字、ハイフンのみ使用できます。",
+      "submit": "ワークスペースを作成",
+      "submitting": "Creating…",
+      "error": "ワークスペースを作成できませんでした。",
+      "providerUnsupported": "このサインインプロバイダーはワークスペースに対応していません。"
+    },
+    "invite": {
+      "title": "チームを招待",
+      "description": "後で行うこともできます。空のフィールドはスキップされます。",
+      "emailsLabel": "メールアドレス",
+      "emailPlaceholder": "colleague@company.com",
+      "addAnother": "もう1つ追加",
+      "removeEmail": "メールを削除",
+      "send": "招待状を送信",
+      "sending": "送信中…",
+      "skip": "今はスキップ",
+      "error": "招待状を送信できませんでした。"
     },
     "plan": {
       "title": "プランを選択",
       "description": "無料で開始するか、容量をアンロック。いつでもプランを変更できます。",
       "choose": "プランを選択",
       "skip": "今はスキップ"
-    },
-    "workspace": {
-      "title": "Name the workspace",
-      "description": "This is how it shows up on invites and invoices.",
-      "nameLabel": "Workspace name",
-      "namePlaceholder": "e.g. Acme Corp",
-      "nameRequired": "Enter a workspace name.",
-      "urlLabel": "Workspace URL",
-      "slugPlaceholder": "my-workspace",
-      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
-      "submit": "Create workspace",
-      "submitting": "Creating…",
-      "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces."
-    },
-    "invite": {
-      "title": "Invite the team",
-      "description": "You can do this later. Empty fields are skipped.",
-      "emailsLabel": "Email addresses",
-      "emailPlaceholder": "colleague@company.com",
-      "addAnother": "Add another",
-      "removeEmail": "Remove email",
-      "send": "Send invitations",
-      "sending": "Sending…",
-      "skip": "Skip for now",
-      "error": "Could not send invitations."
     }
   },
   "userMenu": {
@@ -404,14 +404,14 @@
       "signInFailed": "サインイン失敗",
       "genericError": "エラーが発生しました。もう一度試してください。",
       "captchaError": "ボット認証に失敗しました。ページを更新して再度お試しください。",
-      "challengeTitle": "Verify you are human",
-      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…",
+      "challengeTitle": "人間確認",
+      "challengeSubtitle": "チェックを完了してサインインを続行してください。このステップにより、フォームへの自動的な不正利用を防ぎます。",
+      "challengeSubmitting": "認証が完了しました — サインインしています…",
       "legalNotice": "続行することで、{brandName} の <terms>利用規約</terms> および <privacy>プライバシーポリシー</privacy> に同意したものとみなされます。",
-      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
-      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
-      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
-      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+      "oauthInvalidCode": "ソーシャルサインインに失敗しました（認可コードが拒否されました）。もう一度お試しください。この問題が続く場合、OAuthクライアントシークレットまたはリダイレクトURIが正しく設定されていない可能性があります。",
+      "oauthStateMismatch": "このサインイン試行は期限切れか中断されました。余分なタブを閉じてから、GoogleまたはGitHubを再度開始してください。",
+      "oauthAccessDenied": "サインインがキャンセルされました。準備ができたら、もう一度プロバイダーを選択してください。",
+      "oauthUnavailable": "このサインイン方法は一時的に利用できません。メールアドレスとパスワードを使用するか、別のプロバイダーをお試しください。"
     },
     "signUp": {
       "title": "Nebutra アカウントを作成",

@@ -97,39 +97,39 @@
     "progress": {
       "back": "Tilbage",
       "stepCounter": "Trin {current} af {total}",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "Fremskridt for onboarding"
+    },
+    "workspace": {
+      "title": "Navngiv arbejdsområdet",
+      "description": "Sådan vises det på invitationer og fakturaer.",
+      "nameLabel": "Navn på arbejdsområde",
+      "namePlaceholder": "f.eks. Acme Corp",
+      "nameRequired": "Indtast et navn på arbejdsområdet.",
+      "urlLabel": "Arbejdsområde-URL",
+      "slugPlaceholder": "mit-arbejdsområde",
+      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
+      "submit": "Opret arbejdsområde",
+      "submitting": "Opretter…",
+      "error": "Kunne ikke oprette arbejdsområdet.",
+      "providerUnsupported": "Denne login-udbyder understøtter ikke arbejdsområder."
+    },
+    "invite": {
+      "title": "Inviter teamet",
+      "description": "Du kan gøre dette senere. Tomme felter springes over.",
+      "emailsLabel": "E-mailadresser",
+      "emailPlaceholder": "colleague@company.com",
+      "addAnother": "Tilføj endnu en",
+      "removeEmail": "Fjern e-mail",
+      "send": "Send invitationer",
+      "sending": "Sender…",
+      "skip": "Spring over for nu",
+      "error": "Could not send invitations."
     },
     "plan": {
       "title": "Vælg en plan",
       "description": "Start gratis eller lås mere kapacitet op. Du kan ændre plan når som helst.",
       "choose": "Vælg en plan",
       "skip": "Spring over for nu"
-    },
-    "workspace": {
-      "title": "Name the workspace",
-      "description": "This is how it shows up on invites and invoices.",
-      "nameLabel": "Workspace name",
-      "namePlaceholder": "e.g. Acme Corp",
-      "nameRequired": "Enter a workspace name.",
-      "urlLabel": "Workspace URL",
-      "slugPlaceholder": "my-workspace",
-      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
-      "submit": "Create workspace",
-      "submitting": "Creating…",
-      "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces."
-    },
-    "invite": {
-      "title": "Invite the team",
-      "description": "You can do this later. Empty fields are skipped.",
-      "emailsLabel": "Email addresses",
-      "emailPlaceholder": "colleague@company.com",
-      "addAnother": "Add another",
-      "removeEmail": "Remove email",
-      "send": "Send invitations",
-      "sending": "Sending…",
-      "skip": "Skip for now",
-      "error": "Could not send invitations."
     }
   },
   "userMenu": {
@@ -404,14 +404,14 @@
       "signInFailed": "Logon mislykkedes",
       "genericError": "Der opstod en fejl. Prøv igen.",
       "captchaError": "Bot-verificering mislykkedes. Opdater siden og prøv igen.",
-      "challengeTitle": "Verify you are human",
-      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…",
-      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
-      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
-      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
-      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
-      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+      "challengeTitle": "Bekræft, at du er et menneske",
+      "challengeSubtitle": "Udfør kontrollen for at fortsætte med at logge ind. Dette trin forhindrer automatiseret misbrug af formularen.",
+      "challengeSubmitting": "Verifikation fuldført — logger dig ind…",
+      "legalNotice": "Ved at fortsætte accepterer du {brandName}'s <terms>Servicevilkår</terms> og <privacy>Privatlivspolitik</privacy>.",
+      "oauthInvalidCode": "Social login mislykkedes (autorisationskode afvist). Prøv igen. Hvis dette fortsætter, er OAuth-klienthemmeligheden eller redirect-URI'en sandsynligvis forkert konfigureret.",
+      "oauthStateMismatch": "Dette login-forsøg udløb eller blev afbrudt. Luk ekstra faner, og start Google eller GitHub igen.",
+      "oauthAccessDenied": "Login blev annulleret. Vælg en udbyder igen, når du er klar.",
+      "oauthUnavailable": "Denne login-metode er midlertidigt utilgængelig. Brug e-mail og adgangskode, eller prøv en anden udbyder."
     },
     "signUp": {
       "title": "Opret din Nebutra-konto",
@@ -425,11 +425,11 @@
       "alreadyHaveAccount": "Har du allerede en konto?",
       "signInLink": "Log ind",
       "signUpFailed": "Tilmelding mislykkedes",
-      "inviteLabel": "Invite code",
+      "inviteLabel": "Invitationskode",
       "invitePlaceholder": "neb_...",
       "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
-      "inviteRequired": "A valid invite code is required to sign up.",
-      "inviteInvalid": "Invite code is invalid, expired, or not available.",
+      "inviteRequired": "En gyldig invitationskode er påkrævet for at oprette en konto.",
+      "inviteInvalid": "Invitationskoden er ugyldig, udløbet eller ikke tilgængelig.",
       "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
     },
     "passkeys": {
