@@ -618,7 +618,7 @@ jobs:
               if "private" in kind or "privatenetwork" in kind or addr.startswith("fdaa:"):
                   continue
               print("releasing public", addr)
-              subprocess.check_call(["flyctl", "ips", "release", addr, "-a", "nebutra-new-api", "--yes"])
+              subprocess.check_call(["flyctl", "ips", "release", addr, "-a", "nebutra-new-api"])
           '
 
       - name: Import SESSION_SECRET from VM
