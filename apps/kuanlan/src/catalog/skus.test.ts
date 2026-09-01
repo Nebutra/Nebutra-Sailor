@@ -1,6 +1,12 @@
+import { existsSync, readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { HOME_ORBIT, homeOrbitSrc } from "@/lib/orbit";
 import {
   getEnabledSku,
+  idPhotoParentTile,
+  listIdPhotoCreateTiles,
   listPublicSkus,
   SKUS,
   SkuUnavailableError,
@@ -62,5 +68,38 @@ describe("id-photo catalog", () => {
     expect(publicSku.widthPx).toBe(413);
     expect(publicSku.heightPx).toBe(579);
     expect(publicSku.background).toBe("blue");
+    expect(publicSku.sample).toBe("/skus/cn-2in-blue.jpg");
+  });
+
+  it("ships a sample still for every live spec", () => {
+    const dir = join(dirname(fileURLToPath(import.meta.url)), "../../public/skus");
+    for (const sku of listPublicSkus()) {
+      expect(toPublicSku(sku).sample).toBe(`/skus/${sku.id}.jpg`);
+      expect(existsSync(join(dir, `${sku.id}.jpg`))).toBe(true);
+    }
+  });
+
+  it("puts 领证照 parent and child tiles on sample stills, not the fashion orbit", () => {
+    const parent = idPhotoParentTile();
+    const tiles = listIdPhotoCreateTiles();
+    const orbit = HOME_ORBIT.find((tile) => tile.label === "领证照");
+
+    expect(parent.sample).toBe("/skus/cn-2in-white.jpg");
+    expect(parent.href).toBe("/create/id-photo");
+    expect(parent.title).toBe("领证照");
+    expect(tiles.map((tile) => tile.id)).toEqual(listPublicSkus().map((sku) => sku.id));
+    expect(tiles.every((tile) => tile.href.startsWith("/create/id-photo?sku="))).toBe(true);
+    expect(orbit && homeOrbitSrc(orbit)).toBe("/skus/cn-2in-white.jpg");
+  });
+
+  it("keeps the create masonry on sample stills instead of the fashion orbit", () => {
+    const page = readFileSync(
+      join(dirname(fileURLToPath(import.meta.url)), "../app/create/page.tsx"),
+      "utf8",
+    );
+    expect(page).not.toMatch(/orbitSrc\("01\.jpg"\)/);
+    expect(page).toContain("idPhotoParentTile");
+    expect(page).toContain("listIdPhotoCreateTiles");
+    expect(page).toContain("sku.sample");
   });
 });

@@ -24,7 +24,7 @@ It does not own shared Nebutra UI chrome or a new `packages/ai/*` package. Exact
 - `design/` — Linear-derived tokens applied as an editorial dark system
 - `src/app/` — routes and API
 
-Do not treat `.next/` or `public/orbit` as implementation truth. Public stills live at `kuanlan/orbit/{name}` on the assets bucket. Moments live at `kuanlan/moments/id-photo/{id}.png` on the uploads bucket.
+Do not treat `.next/` or `public/orbit` as implementation truth. Public stills live at `kuanlan/orbit/{name}` on the assets bucket. Live 领证照 samples ship with the app at `public/skus/{id}.jpg`, composed from `src/catalog/samples/`. Moments live at `kuanlan/moments/id-photo/{id}.png` on the uploads bucket.
 
 ## Contract Boundaries
 

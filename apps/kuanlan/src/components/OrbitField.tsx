@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import { HOME_ORBIT, orbitSrc } from "@/lib/orbit";
+import { HOME_ORBIT, homeOrbitSrc } from "@/lib/orbit";
 
 export function OrbitField() {
   return (
@@ -24,7 +24,7 @@ export function OrbitField() {
             style={style}
             aria-label={tile.label}
           >
-            <img src={orbitSrc(tile.name)} alt="" />
+            <img src={homeOrbitSrc(tile)} alt="" />
           </Link>
         );
       })}

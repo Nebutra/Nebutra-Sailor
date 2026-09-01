@@ -15,7 +15,8 @@
     "lint": "biome check .",
     "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "samples:compose": "tsx scripts/compose-sku-samples.ts"
   },
   "dependencies": {
     "@nebutra/storage": "workspace:*",

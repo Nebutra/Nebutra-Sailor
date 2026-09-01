@@ -5,9 +5,11 @@ import { listPublicSkus, toPublicSku } from "@/catalog/skus";
 
 type Status = "idle" | "shooting" | "ready" | "error";
 
-export function IdPhotoStudio() {
+export function IdPhotoStudio({ initialSkuId }: { initialSkuId?: string }) {
   const skus = useMemo(() => listPublicSkus().map(toPublicSku), []);
-  const [skuId, setSkuId] = useState(skus[0]?.id ?? "");
+  const [skuId, setSkuId] = useState(
+    () => (skus.some((sku) => sku.id === initialSkuId) ? initialSkuId : skus[0]?.id) ?? "",
+  );
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [resultUrl, setResultUrl] = useState<string | null>(null);
@@ -69,20 +71,30 @@ export function IdPhotoStudio() {
 
   return (
     <div>
-      <ul className="sku-row">
+      <ul className="sku-grid">
         {skus.map((sku) => (
           <li key={sku.id}>
             <button
               type="button"
-              className="pill"
+              className="sku-card"
+              data-sku={sku.id}
               data-active={sku.id === skuId}
+              aria-pressed={sku.id === skuId}
               onClick={() => {
                 setSkuId(sku.id);
                 setResultUrl(null);
                 setStatus("idle");
               }}
             >
-              {sku.title} · {sku.subtitle}
+              <img
+                src={sku.sample}
+                alt={`${sku.title}${sku.subtitle}样例`}
+                width={sku.widthPx}
+                height={sku.heightPx}
+              />
+              <span className="sku-name">
+                {sku.title} · {sku.subtitle}
+              </span>
             </button>
           </li>
         ))}

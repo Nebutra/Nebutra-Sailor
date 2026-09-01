@@ -1,4 +1,7 @@
+import { skuSampleSrc } from "@/lib/resources";
+
 export const ID_PHOTO_KIND = "id-photo" as const;
+export const ID_PHOTO_PARENT_SKU_ID = "cn-2in-white";
 
 export type IdPhotoBackground = "white" | "blue" | "red";
 
@@ -141,5 +144,31 @@ export function toPublicSku(sku: IdPhotoSku) {
     background: sku.background,
     widthPx: pixels.width,
     heightPx: pixels.height,
+    sample: skuSampleSrc(sku.id),
+  };
+}
+
+export function listIdPhotoCreateTiles() {
+  return listPublicSkus().map((sku) => {
+    const pub = toPublicSku(sku);
+    return {
+      ...pub,
+      href: `/create/id-photo?sku=${sku.id}`,
+    };
+  });
+}
+
+export function idPhotoParentTile() {
+  const live = listPublicSkus();
+  const sku = live.find((item) => item.id === ID_PHOTO_PARENT_SKU_ID) ?? live[0];
+  if (!sku) {
+    throw new SkuUnavailableError(ID_PHOTO_PARENT_SKU_ID);
+  }
+  const pub = toPublicSku(sku);
+  return {
+    ...pub,
+    href: "/create/id-photo",
+    title: "领证照",
+    subtitle: `先留下一张可以用的 · ${[...new Set(live.map((item) => item.title))].join(" / ")}`,
   };
 }

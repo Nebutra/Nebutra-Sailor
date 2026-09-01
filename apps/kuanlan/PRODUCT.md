@@ -16,7 +16,7 @@ KUANLAN 围绕「我如何出现、如何被看见」工作。它不是变美工
 
 1. 产品首页（品牌认知 + 开拍入口）
 2. Create（今天想怎么拍？）
-3. 通用领证照 SKU（规格目录 + 上传本人照片 + 开拍 + 下载）
+3. 通用领证照 SKU（规格目录 + 每规格样例图 + 上传本人照片 + 开拍 + 下载）
 4. 资源落在 Cloudflare R2（公开 stills 在 `nebutra-assets`，Moment 在 `nebutra-uploads`）
 5. 开拍：本应用后端封装 SKU 系统提示词，再打 `https://router.nebutra.com/v1` 的 `gpt-image-2`（New-API 中转 302.ai），最后由 sharp 裁到规格像素
 
