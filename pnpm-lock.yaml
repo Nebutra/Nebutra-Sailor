@@ -630,6 +630,9 @@ importers:
 
   apps/kuanlan:
     dependencies:
+      '@nebutra/auth':
+        specifier: workspace:*
+        version: link:../../packages/iam/auth
       '@nebutra/storage':
         specifier: workspace:*
         version: link:../../packages/integrations/storage

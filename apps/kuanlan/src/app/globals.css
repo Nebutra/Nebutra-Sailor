@@ -96,6 +96,32 @@ input {
   justify-content: flex-end;
 }
 
+.auth-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.auth-link {
+  border: 0;
+  background: transparent;
+  color: var(--mute);
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+}
+
+.auth-link:hover,
+a.auth-link:hover {
+  color: var(--ink);
+}
+
+.auth-slot {
+  display: inline-block;
+  width: 28px;
+  height: 14px;
+}
+
 .brand {
   display: grid;
   place-items: center;

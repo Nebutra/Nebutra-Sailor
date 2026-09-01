@@ -1,5 +1,16 @@
-import { type UploadOptions, type UploadResult, upload } from "@nebutra/storage";
-import { isR2Configured, momentObjectKey, ResourceStoreUnavailableError } from "./resources";
+import {
+  getSignedDownloadUrl,
+  list,
+  type UploadOptions,
+  type UploadResult,
+  upload,
+} from "@nebutra/storage";
+import {
+  isR2Configured,
+  momentObjectKey,
+  momentUserPrefix,
+  ResourceStoreUnavailableError,
+} from "./resources";
 
 export type PutObject = (
   key: string,
@@ -22,6 +33,7 @@ export function portraitContentType(type: string): string {
 export async function persistIdPhotoMoment(
   input: {
     id?: string;
+    userId: string;
     skuId: string;
     print: Buffer;
     source: Buffer;
@@ -32,18 +44,24 @@ export async function persistIdPhotoMoment(
   requireR2();
 
   const id = input.id ?? crypto.randomUUID();
-  const key = momentObjectKey({ kind: "id-photo", id });
-  const sourceKey = momentObjectKey({ kind: "id-photo", id, part: "source" });
+  const key = momentObjectKey({ kind: "id-photo", userId: input.userId, id });
+  const sourceKey = momentObjectKey({
+    kind: "id-photo",
+    userId: input.userId,
+    id,
+    part: "source",
+  });
+  const metadata = { skuId: input.skuId, app: RESOURCE_APP, userId: input.userId };
 
   const stored = await put(key, input.print, {
     bucket: "uploads",
     contentType: "image/png",
-    metadata: { skuId: input.skuId, app: RESOURCE_APP },
+    metadata,
   });
   await put(sourceKey, input.source, {
     bucket: "uploads",
     contentType: portraitContentType(input.sourceType),
-    metadata: { skuId: input.skuId, app: RESOURCE_APP },
+    metadata,
   });
 
   return {
@@ -52,6 +70,30 @@ export async function persistIdPhotoMoment(
     url: stored.url,
     sourceKey,
   };
+}
+
+export async function listIdPhotoMoments(
+  userId: string,
+  io: {
+    list?: (prefix: string, bucket?: "uploads") => Promise<string[]>;
+    sign?: (key: string) => Promise<string>;
+  } = {},
+): Promise<Array<{ id: string; key: string; url: string }>> {
+  requireR2();
+
+  const prefix = momentUserPrefix(userId);
+  const keys = await (io.list ?? list)(prefix, "uploads");
+  const sign = io.sign ?? ((key: string) => getSignedDownloadUrl(key, { bucket: "uploads" }));
+
+  return Promise.all(
+    keys
+      .filter((key) => key.endsWith(".png"))
+      .map(async (key) => ({
+        id: key.slice(prefix.length).replace(/\.png$/, ""),
+        key,
+        url: await sign(key),
+      })),
+  );
 }
 
 const RESOURCE_APP = "kuanlan";

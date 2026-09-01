@@ -15,6 +15,7 @@ export const ID_PHOTO_BACKGROUNDS: Record<IdPhotoBackground, { r: number; g: num
     red: { r: 217, g: 0, b: 27 },
     smoke: { r: 126, g: 134, b: 145 },
     light: { r: 179, g: 178, b: 179 },
+    studio: { r: 42, g: 64, b: 102 },
   };
 
 export class InvalidPortraitError extends Error {
@@ -40,6 +41,49 @@ function subjectBox(width: number, height: number, headRatio: number) {
   return { subjectWidth, subjectHeight, left, top };
 }
 
+async function fitSubject(
+  source: Buffer,
+  box: { subjectWidth: number; subjectHeight: number },
+  background: { r: number; g: number; b: number },
+): Promise<Buffer> {
+  const rotated = sharp(source).rotate();
+  const sourceMeta = await rotated.metadata();
+  let prepared = await rotated.toBuffer();
+
+  try {
+    const trimmed = sharp(prepared).trim({
+      background: { ...background, alpha: 1 },
+      threshold: 24,
+    });
+    const trimmedMeta = await trimmed.metadata();
+    const sourceArea = (sourceMeta.width ?? 1) * (sourceMeta.height ?? 1);
+    const trimmedArea = (trimmedMeta.width ?? 0) * (trimmedMeta.height ?? 0);
+    if (trimmedArea > sourceArea * 0.15) {
+      const pad = Math.round((trimmedMeta.height ?? 1) * 0.14);
+      prepared = await trimmed
+        .extend({
+          top: pad,
+          bottom: Math.round(pad * 0.35),
+          left: Math.round(pad * 0.18),
+          right: Math.round(pad * 0.18),
+          background,
+        })
+        .toBuffer();
+    }
+  } catch {
+    // Keep the rotated source when trim cannot find a background border.
+  }
+
+  return sharp(prepared)
+    .flatten({ background })
+    .resize(box.subjectWidth, box.subjectHeight, {
+      fit: "contain",
+      background,
+    })
+    .png()
+    .toBuffer();
+}
+
 export async function composeIdPhoto(input: {
   source: Buffer;
   sku: IdPhotoSku;
@@ -56,15 +100,7 @@ export async function composeIdPhoto(input: {
   const box = subjectBox(width, height, input.sku.headRatio);
 
   try {
-    const subject = await sharp(input.source)
-      .rotate()
-      .flatten({ background })
-      .resize(box.subjectWidth, box.subjectHeight, {
-        fit: "cover",
-        position: "attention",
-      })
-      .png()
-      .toBuffer();
+    const subject = await fitSubject(input.source, box, background);
 
     const png = await sharp({
       create: {

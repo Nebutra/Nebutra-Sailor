@@ -32,18 +32,21 @@ describe("resource keys", () => {
   });
 
   it("places 领证照 moments under the private uploads prefix", () => {
-    expect(momentObjectKey({ kind: "id-photo", id: "moment-1" })).toBe(
-      "kuanlan/moments/id-photo/moment-1.png",
+    expect(momentObjectKey({ kind: "id-photo", userId: "user_1", id: "moment-1" })).toBe(
+      "kuanlan/moments/id-photo/user_1/moment-1.png",
     );
-    expect(momentObjectKey({ kind: "id-photo", id: "moment-1", part: "source" })).toBe(
-      "kuanlan/moments/id-photo/moment-1.source",
+    expect(
+      momentObjectKey({ kind: "id-photo", userId: "user_1", id: "moment-1", part: "source" }),
+    ).toBe("kuanlan/moments/id-photo/user_1/moment-1.source");
+    expect(() => momentObjectKey({ kind: "id-photo", userId: "../x", id: "moment-1" })).toThrow(
+      InvalidResourceKeyError,
     );
   });
 
   it("refuses path traversal and unmarked names", () => {
     expect(() => orbitAssetKey("../secret.jpg")).toThrow(InvalidResourceKeyError);
     expect(() => orbitAssetKey("01.png")).toThrow(InvalidResourceKeyError);
-    expect(() => momentObjectKey({ kind: "id-photo", id: "../x" })).toThrow(
+    expect(() => momentObjectKey({ kind: "id-photo", userId: "user_1", id: "../x" })).toThrow(
       InvalidResourceKeyError,
     );
   });
@@ -86,6 +89,7 @@ describe("R2 configuration", () => {
     const { persistIdPhotoMoment } = await import("./resources.server");
     await expect(
       persistIdPhotoMoment({
+        userId: "user_1",
         skuId: "cn-1in-white",
         print: Buffer.from("png"),
         source: Buffer.from("jpg"),
@@ -110,6 +114,7 @@ describe("R2 configuration", () => {
     const stored = await persistIdPhotoMoment(
       {
         id: "shot-1",
+        userId: "user_1",
         skuId: "cn-1in-white",
         print: Buffer.from("png"),
         source: Buffer.from("jpg"),
@@ -120,20 +125,50 @@ describe("R2 configuration", () => {
 
     expect(stored).toEqual({
       id: "shot-1",
-      key: "kuanlan/moments/id-photo/shot-1.png",
-      url: "https://signed.example/kuanlan/moments/id-photo/shot-1.png",
-      sourceKey: "kuanlan/moments/id-photo/shot-1.source",
+      key: "kuanlan/moments/id-photo/user_1/shot-1.png",
+      url: "https://signed.example/kuanlan/moments/id-photo/user_1/shot-1.png",
+      sourceKey: "kuanlan/moments/id-photo/user_1/shot-1.source",
     });
     expect(upload).toHaveBeenCalledTimes(2);
-    expect(upload.mock.calls[0]?.[0]).toBe("kuanlan/moments/id-photo/shot-1.png");
+    expect(upload.mock.calls[0]?.[0]).toBe("kuanlan/moments/id-photo/user_1/shot-1.png");
     expect(upload.mock.calls[0]?.[2]).toMatchObject({
       bucket: "uploads",
       contentType: "image/png",
+      metadata: { skuId: "cn-1in-white", app: "kuanlan", userId: "user_1" },
     });
-    expect(upload.mock.calls[1]?.[0]).toBe("kuanlan/moments/id-photo/shot-1.source");
+    expect(upload.mock.calls[1]?.[0]).toBe("kuanlan/moments/id-photo/user_1/shot-1.source");
     expect(upload.mock.calls[1]?.[2]).toMatchObject({
       bucket: "uploads",
       contentType: "image/jpeg",
     });
+  });
+
+  it("lists only that person's prints", async () => {
+    process.env.CLOUDFLARE_ACCOUNT_ID = "account";
+    process.env.R2_ACCESS_KEY_ID = "key";
+    process.env.R2_SECRET_ACCESS_KEY = "secret";
+
+    const { listIdPhotoMoments } = await import("./resources.server");
+    const moments = await listIdPhotoMoments("user_1", {
+      list: async () => [
+        "kuanlan/moments/id-photo/user_1/shot-1.png",
+        "kuanlan/moments/id-photo/user_1/shot-1.source",
+        "kuanlan/moments/id-photo/user_1/shot-2.png",
+      ],
+      sign: async (key) => `https://signed.example/${key}`,
+    });
+
+    expect(moments).toEqual([
+      {
+        id: "shot-1",
+        key: "kuanlan/moments/id-photo/user_1/shot-1.png",
+        url: "https://signed.example/kuanlan/moments/id-photo/user_1/shot-1.png",
+      },
+      {
+        id: "shot-2",
+        key: "kuanlan/moments/id-photo/user_1/shot-2.png",
+        url: "https://signed.example/kuanlan/moments/id-photo/user_1/shot-2.png",
+      },
+    ]);
   });
 });

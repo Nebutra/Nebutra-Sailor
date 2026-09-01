@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AuthGate } from "@/components/AuthGate";
 import { Mark } from "@/components/Mark";
 import { SearchBar } from "@/components/SearchBar";
 import { BRAND } from "@/lib/brand";
@@ -34,6 +35,7 @@ export function SiteNav({
           </nav>
         </div>
         <div className="topbar-right">
+          <AuthGate />
           <Link className="pill pill-ink" href="/create">
             开拍
           </Link>

@@ -95,6 +95,7 @@ const DEFAULT_TRUSTED = [
   `https://${brand.domains.auth}`,
   `https://${brand.domains.forge}`,
   `https://${brand.domains.router}`,
+  "https://kuanlan.nebutra.com",
 ] as const;
 
 function json(body: unknown, status = 200, extra?: HeadersInit): Response {

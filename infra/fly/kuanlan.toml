@@ -10,6 +10,10 @@ primary_region = "sin"
   R2_BUCKET_UPLOADS = "nebutra-uploads"
   IMAGE2_BASE_URL = "https://router.nebutra.com/v1"
   IMAGE2_MODEL = "gpt-image-2"
+  NEXT_PUBLIC_SITE_URL = "https://kuanlan.nebutra.com"
+  NEXT_PUBLIC_AUTH_PROVIDER = "better-auth"
+  NEXT_PUBLIC_AUTH_URL = "https://auth.nebutra.com"
+  BETTER_AUTH_URL = "https://auth.nebutra.com"
 
 [http_service]
   internal_port = 8080

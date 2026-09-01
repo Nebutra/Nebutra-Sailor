@@ -483,6 +483,9 @@ persist_kuanlan_runtime_env() {
   local env_file="$app_root/.env"
 
   NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL:-https://kuanlan.nebutra.com}"
+  NEXT_PUBLIC_AUTH_URL="${NEXT_PUBLIC_AUTH_URL:-https://auth.nebutra.com}"
+  NEXT_PUBLIC_AUTH_PROVIDER="${NEXT_PUBLIC_AUTH_PROVIDER:-better-auth}"
+  BETTER_AUTH_URL="${BETTER_AUTH_URL:-https://auth.nebutra.com}"
   IMAGE2_BASE_URL="${IMAGE2_BASE_URL:-https://router.nebutra.com/v1}"
   IMAGE2_MODEL="${IMAGE2_MODEL:-gpt-image-2}"
   R2_PUBLIC_URL="${R2_PUBLIC_URL:-https://cdn.nebutra.com}"
@@ -494,9 +497,14 @@ persist_kuanlan_runtime_env() {
     CLOUDFLARE_ACCOUNT_ID R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY R2_ENDPOINT \
     R2_PUBLIC_URL R2_BUCKET_ASSETS R2_BUCKET_UPLOADS \
     ROUTER_API_KEY IMAGE2_BASE_URL IMAGE2_MODEL \
-    NEXT_PUBLIC_R2_PUBLIC_URL NEXT_PUBLIC_SITE_URL
+    NEXT_PUBLIC_R2_PUBLIC_URL NEXT_PUBLIC_SITE_URL \
+    NEXT_PUBLIC_AUTH_URL NEXT_PUBLIC_AUTH_PROVIDER BETTER_AUTH_URL BETTER_AUTH_SECRET \
+    AUTH_PROVIDER AUTH_COOKIE_DOMAIN
 
   replace_env_assignment "$env_file" NEXT_PUBLIC_SITE_URL "$NEXT_PUBLIC_SITE_URL"
+  replace_env_assignment "$env_file" NEXT_PUBLIC_AUTH_URL "$NEXT_PUBLIC_AUTH_URL"
+  replace_env_assignment "$env_file" NEXT_PUBLIC_AUTH_PROVIDER "$NEXT_PUBLIC_AUTH_PROVIDER"
+  replace_env_assignment "$env_file" BETTER_AUTH_URL "$BETTER_AUTH_URL"
   replace_env_assignment "$env_file" IMAGE2_BASE_URL "$IMAGE2_BASE_URL"
   replace_env_assignment "$env_file" IMAGE2_MODEL "$IMAGE2_MODEL"
   replace_env_assignment "$env_file" R2_PUBLIC_URL "$R2_PUBLIC_URL"

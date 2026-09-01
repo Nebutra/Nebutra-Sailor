@@ -48,6 +48,16 @@ describe("composeIdPhoto", () => {
     expect(data[last]).toBe(67);
     expect(data[last + 1]).toBe(142);
     expect(data[last + 2]).toBe(219);
+
+    const studio = getEnabledSku("linkedin-studio");
+    const studioPrint = await composeIdPhoto({
+      source: await samplePortrait(),
+      sku: studio,
+    });
+    const studioRaw = await sharp(studioPrint.png).raw().toBuffer({ resolveWithObject: true });
+    expect(studioRaw.data[0]).toBe(42);
+    expect(studioRaw.data[1]).toBe(64);
+    expect(studioRaw.data[2]).toBe(102);
   });
 
   it("places the portrait inside the frame", async () => {
@@ -63,6 +73,11 @@ describe("composeIdPhoto", () => {
     expect(data[center]).toBeGreaterThan(180);
     expect(data[center + 1]).toBeLessThan(80);
     expect(data[center + 2]).toBeLessThan(80);
+
+    const top = (0 * info.width + Math.floor(info.width / 2)) * info.channels;
+    expect(data[top]).toBe(255);
+    expect(data[top + 1]).toBe(255);
+    expect(data[top + 2]).toBe(255);
   });
 
   it("refuses a disabled spec even if the object is passed in", async () => {
