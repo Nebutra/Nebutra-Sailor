@@ -399,6 +399,9 @@ jobs:
             echo "::error::UPSTASH_REDIS_REST_URL / TOKEN secrets are not set"
             exit 1
           fi
+          # ECS .env imported REDIS_URL=localhost and sometimes CACHE_BACKEND=ioredis.
+          # Those win the health ping and keep the origin degraded.
+          flyctl secrets unset REDIS_URL CACHE_BACKEND -a nebutra-gateway || true
           flyctl secrets set \
             UPSTASH_REDIS_REST_URL="$UPSTASH_REDIS_REST_URL" \
             UPSTASH_REDIS_REST_TOKEN="$UPSTASH_REDIS_REST_TOKEN" \
