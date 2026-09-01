@@ -7,7 +7,7 @@
 
 export type { LogoEdition, LogoProps, LogoVariant } from "./components/Logo";
 // Components
-export { Logo, Logomark, Wordmark } from "./components/Logo";
+export { Logo, Logomark, logoPublicSrc, Wordmark } from "./components/Logo";
 export type { LogoEnSVGProps } from "./components/LogoSVG";
 // Inline SVG: mono (currentColor) + color VI (gradient mark)
 export { LogoEnColorSVG, LogoEnSVG, LogomarkSVG, WordmarkEnSVG } from "./components/LogoSVG";
@@ -82,6 +82,7 @@ export {
   getSiteMetadata,
   getSiteUrl,
   MARKETING_HOME_PARAM,
+  publicAssetUrl,
 } from "./metadata-helpers";
 // Microcopy SSOT — typed projection of docs/microcopy/nebutra-microcopy-system.md
 export type {

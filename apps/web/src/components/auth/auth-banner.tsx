@@ -1,3 +1,4 @@
+import { publicAssetUrl } from "@nebutra/brand/metadata-helpers";
 import { cn } from "@nebutra/ui/utils";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
@@ -55,7 +56,7 @@ export function AuthBanner({ className }: AuthBannerProps) {
       <div className="relative z-10 flex w-full flex-col items-start justify-between px-14 py-20 xl:px-20 xl:py-24">
         <div className="flex max-w-[28rem] flex-col items-start">
           <Image
-            src="/brand/logo-color.svg"
+            src={publicAssetUrl("brand/logo/logo-color.svg")}
             alt={t("logoAlt")}
             width={72}
             height={72}
