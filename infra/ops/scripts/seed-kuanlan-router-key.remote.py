@@ -232,35 +232,38 @@ def sqlite_issue_token():
             conn.commit()
             print("inserted New-API consume token in sqlite")
         if channel_key:
-            existing = conn.execute(
-                "SELECT id FROM channels WHERE name = '302-image2' OR models LIKE '%gpt-image-2%'"
-            ).fetchone()
-            if existing:
-                conn.execute(
-                    "UPDATE channels SET key = ?, base_url = ?, models = ?, status = 1, type = 1 WHERE id = ?",
-                    (channel_key, "https://api.302.ai", "gpt-image-2", existing[0]),
-                )
-                channel_id = existing[0]
-            else:
-                now = int(time.time())
-                cur = conn.execute(
-                    "INSERT INTO channels (type, key, status, name, created_time, models, \"group\") "
-                    "VALUES (1, ?, 1, '302-image2', ?, 'gpt-image-2', 'default')",
-                    (channel_key, now),
-                )
-                channel_id = cur.lastrowid
-            ability = conn.execute(
-                "SELECT id FROM abilities WHERE channel_id = ? AND model = 'gpt-image-2'",
-                (channel_id,),
-            ).fetchone()
-            if not ability:
-                conn.execute(
-                    "INSERT INTO abilities (\"group\", model, channel_id, enabled, priority) "
-                    "VALUES ('default', 'gpt-image-2', ?, 1, 0)",
+            try:
+                existing = conn.execute(
+                    "SELECT id FROM channels WHERE name = '302-image2' OR models LIKE '%gpt-image-2%'"
+                ).fetchone()
+                if existing:
+                    conn.execute(
+                        "UPDATE channels SET key = ?, base_url = ?, models = ?, status = 1, type = 1 WHERE id = ?",
+                        (channel_key, "https://api.302.ai", "gpt-image-2", existing[0]),
+                    )
+                    channel_id = existing[0]
+                else:
+                    now = int(time.time())
+                    cur = conn.execute(
+                        "INSERT INTO channels (type, key, status, name, created_time, models, \"group\") "
+                        "VALUES (1, ?, 1, '302-image2', ?, 'gpt-image-2', 'default')",
+                        (channel_key, now),
+                    )
+                    channel_id = cur.lastrowid
+                ability = conn.execute(
+                    "SELECT 1 FROM abilities WHERE channel_id = ? AND model = 'gpt-image-2'",
                     (channel_id,),
-                )
-            conn.commit()
-            print("ensured 302-image2 channel in sqlite")
+                ).fetchone()
+                if not ability:
+                    conn.execute(
+                        "INSERT INTO abilities (\"group\", model, channel_id, enabled, priority) "
+                        "VALUES ('default', 'gpt-image-2', ?, 1, 0)",
+                        (channel_id,),
+                    )
+                conn.commit()
+                print("ensured 302-image2 channel in sqlite")
+            except sqlite3.Error as error:
+                print("channel seed skipped: %s" % error)
         if key.startswith("sk-"):
             return key
         return "sk-" + key
