@@ -12,7 +12,7 @@
     "dev": "next dev --port 3004",
     "prebuild": "fumadocs-mdx",
     "build": "_FUMADOCS_MDX=1 next build",
-    "build:vm": "_FUMADOCS_MDX=1 next build --webpack",
+    "build:vm": "fumadocs-mdx && _FUMADOCS_MDX=1 next build --webpack",
     "start": "next start",
     "build:worker": "opennextjs-cloudflare build",
     "preview:worker": "opennextjs-cloudflare preview",
