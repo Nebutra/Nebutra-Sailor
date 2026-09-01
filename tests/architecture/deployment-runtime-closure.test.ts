@@ -113,6 +113,7 @@ describe("production runtime closure", () => {
     const nodeEntry = readFileSync(GATEWAY_NODE_PATH, "utf8");
     expect(nodeEntry).toContain("@hono/node-server");
     expect(nodeEntry).toContain("serve({ fetch: app.fetch");
+    expect(nodeEntry).toContain("hostname");
 
     expect(existsSync(GATEWAY_WORKER_PATH), `${GATEWAY_WORKER_PATH} must exist`).toBe(true);
     const workerEntry = readFileSync(GATEWAY_WORKER_PATH, "utf8");
@@ -152,7 +153,7 @@ describe("production runtime closure", () => {
     // 2026-07-28 — bundled for Workers it is the whole Node backend, 25MB and
     // 457ms of startup CPU against a ~400ms budget, so it could not deploy and
     // no fix could reach it. api.nebutra.com is now served by
-    // nebutra-gateway-edge, which forwards to ECS Origin.
+    // nebutra-gateway-edge, which forwards to the Fly Hono origin.
     //
     // So the credentials this workflow needs are Cloudflare's plus Upstash, for
     // the per-IP flood limit the edge shares across colos. It deliberately does

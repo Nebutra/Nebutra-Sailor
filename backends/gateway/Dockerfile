@@ -6,7 +6,6 @@ RUN corepack enable pnpm
 
 # Copy manifests for the gateway workspace and its package dependencies
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
-COPY patches/ ./patches/
 COPY backends/gateway/package.json ./backends/gateway/
 # Gateway imports a broad workspace graph. Copy package sources in the deps
 # stage so pnpm can resolve every workspace:* edge without a stale hand list.
