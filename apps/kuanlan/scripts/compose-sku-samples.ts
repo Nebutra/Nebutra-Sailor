@@ -2,7 +2,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
-import { listPublicSkus, skuPixelSize } from "../src/catalog/skus";
+import { type IdPhotoSku, listIdPhotoSkus, skuPixelSize } from "../src/catalog/skus";
 import { ID_PHOTO_BACKGROUNDS } from "../src/lib/id-photo";
 
 const SCALE = 2;
@@ -10,17 +10,18 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const samples = join(root, "src/catalog/samples");
 const outDir = join(root, "public/skus");
 
-const sources: Record<"white" | "blue" | "red", Buffer> = {
-  white: readFileSync(join(samples, "portrait-white.jpg")),
-  blue: readFileSync(join(samples, "portrait-blue.jpg")),
-  red: readFileSync(join(samples, "portrait-white.jpg")),
-};
+function sourceFile(sku: IdPhotoSku): string {
+  if (sku.look === "linkedin") {
+    return `portrait-linkedin-${sku.background}-${sku.garmentId ?? "blazer"}.jpg`;
+  }
+  return sku.background === "blue" ? "portrait-id-blue.jpg" : "portrait-id-white.jpg";
+}
 
 async function main() {
   mkdirSync(outDir, { recursive: true });
-  for (const sku of listPublicSkus()) {
+  for (const sku of listIdPhotoSkus()) {
     const { width, height } = skuPixelSize(sku);
-    const jpeg = await sharp(sources[sku.background])
+    const jpeg = await sharp(readFileSync(join(samples, sourceFile(sku))))
       .rotate()
       .resize(width * SCALE, height * SCALE, {
         fit: "cover",

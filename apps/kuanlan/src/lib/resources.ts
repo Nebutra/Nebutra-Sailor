@@ -35,9 +35,21 @@ export function skuSampleKey(id: string): string {
   return `${RESOURCE_ROOT}/skus/${id}.jpg`;
 }
 
-export function skuSampleSrc(id: string): string {
-  skuSampleKey(id);
-  return `/skus/${id}.jpg`;
+export function skuSampleSrc(id: string, base?: string): string {
+  return publicAssetUrl(skuSampleKey(id), base);
+}
+
+const WARDROBE_ID = SKU_ID;
+
+export function wardrobeSampleKey(id: string): string {
+  if (!WARDROBE_ID.test(id)) {
+    throw new InvalidResourceKeyError("wardrobe_id");
+  }
+  return `${RESOURCE_ROOT}/wardrobe/${id}.png`;
+}
+
+export function wardrobeSampleSrc(id: string, base?: string): string {
+  return publicAssetUrl(wardrobeSampleKey(id), base);
 }
 
 export function momentObjectKey(input: {

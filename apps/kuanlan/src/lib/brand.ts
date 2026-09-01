@@ -4,4 +4,5 @@ export const BRAND = {
   slogan: "观你所见，澜起于心。",
   support: "穿你喜欢的衣服，去你想去的地方，留下属于你的每一个 Moment。",
   origin: "https://kuanlan.nebutra.com",
+  skuMark: "KUANLAN©️",
 } as const;

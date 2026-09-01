@@ -281,11 +281,12 @@ input {
 
 .hero-title {
   margin: 0;
-  max-width: 12ch;
-  font-size: clamp(40px, 6vw, 64px);
+  max-width: none;
+  font-size: clamp(28px, 5.6vw, 64px);
   line-height: 1.05;
   font-weight: 590;
   letter-spacing: -0.04em;
+  white-space: nowrap;
 }
 
 .hero-actions {
@@ -344,6 +345,26 @@ input {
   background: #ecece8;
 }
 
+.masonry[data-ground="paper"] {
+  --garment-ground: var(--canvas);
+}
+
+.masonry[data-ground="white"] {
+  --garment-ground: #ffffff;
+}
+
+.masonry[data-ground="smoke"] {
+  --garment-ground: #7e8691;
+}
+
+.masonry[data-ground="ink"] {
+  --garment-ground: #111111;
+}
+
+.tile-photo-garment {
+  background: var(--garment-ground, var(--canvas));
+}
+
 .masonry-item figcaption,
 .tile-meta {
   padding: 10px 4px 4px;
@@ -360,6 +381,21 @@ input {
   margin-top: 2px;
   color: var(--mute);
   font-size: 13px;
+}
+
+.tile-spec {
+  display: block;
+  margin-top: 4px;
+  color: var(--mute);
+  font-size: 12px;
+}
+
+.tile-brand {
+  display: block;
+  margin-top: 6px;
+  color: var(--mute);
+  font-size: 11px;
+  letter-spacing: 0.04em;
 }
 
 .masonry-item[data-live="false"] {

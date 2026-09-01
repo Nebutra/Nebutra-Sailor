@@ -1,12 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { listPublicSkus, toPublicSku } from "@/catalog/skus";
+import { listIdPhotoSkus, toPublicIdPhoto } from "@/catalog/skus";
 
 type Status = "idle" | "shooting" | "ready" | "error";
 
 export function IdPhotoStudio({ initialSkuId }: { initialSkuId?: string }) {
-  const skus = useMemo(() => listPublicSkus().map(toPublicSku), []);
+  const skus = useMemo(() => listIdPhotoSkus().map(toPublicIdPhoto), []);
   const [skuId, setSkuId] = useState(
     () => (skus.some((sku) => sku.id === initialSkuId) ? initialSkuId : skus[0]?.id) ?? "",
   );
@@ -104,6 +104,12 @@ export function IdPhotoStudio({ initialSkuId }: { initialSkuId?: string }) {
         <p className="note">
           {selected.widthMm} × {selected.heightMm} mm · {selected.dpi} dpi · {selected.widthPx} ×{" "}
           {selected.heightPx}
+          {selected.garmentId ? (
+            <>
+              {" · "}
+              <a href="/wardrobe">衣柜</a>
+            </>
+          ) : null}
         </p>
       ) : null}
 
@@ -154,7 +160,7 @@ export function IdPhotoStudio({ initialSkuId }: { initialSkuId?: string }) {
 
       <div className="studio-frame">
         {preview ? <img className="portrait" src={preview} alt="上传的本人照片" /> : null}
-        {resultUrl ? <img className="portrait" src={resultUrl} alt="领证照成片" /> : null}
+        {resultUrl ? <img className="portrait" src={resultUrl} alt="拍好的一张" /> : null}
       </div>
     </div>
   );

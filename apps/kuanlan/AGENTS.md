@@ -24,13 +24,15 @@ It does not own shared Nebutra UI chrome or a new `packages/ai/*` package. Exact
 - `design/` — Linear-derived tokens applied as an editorial dark system
 - `src/app/` — routes and API
 
-Do not treat `.next/` or `public/orbit` as implementation truth. Public stills live at `kuanlan/orbit/{name}` on the assets bucket. Live 领证照 samples ship with the app at `public/skus/{id}.jpg`, composed from `src/catalog/samples/`. Moments live at `kuanlan/moments/id-photo/{id}.png` on the uploads bucket.
+Do not treat `.next/` or `public/` as consumption truth. Browser stills come from `https://cdn.nebutra.com/kuanlan/{orbit|skus|wardrobe}/…` on `nebutra-assets`. `public/` is only the seed tree. Compose 领证照 samples from `src/catalog/samples/` into `public/skus/`, then `pnpm --filter @nebutra/kuanlan assets:seed`. Moments write to `kuanlan/moments/id-photo/{id}.png` on `nebutra-uploads`.
 
 ## Contract Boundaries
 
 - Users are shooting Moments, not calling a generator.
 - Do not add Prompt / Generate / CFG / 模型 copy.
-- Do not invent wardrobe, travel, or photoshoot catalogs until an SKU is enabled here.
+- Wardrobe lists live `kind: "garment"` SKUs as ghost-mannequin PNGs with alpha, not portraits and not hangers. Swap the still ground with `--garment-ground` (`paper` / `white` / `smoke` / `ink`). Shoot SKUs may set `garmentId`. Do not derive the wardrobe from one shoot path. Do not invent garments or shoots that are not real. Do not pretend the user has a personal closet.
+- Garment SKUs carry a cut spec: size, color, material, and centimetre measures (衣长 / 裤长 / 胸围 / 袖长 / 肩宽 / 腰围 / 臀围). Omit a measure when it does not apply. Do not invent bottoms just to fill 裤长.
+- Every SKU carries `origin` + `brand`. Platform-listed rows seal to `KUANLAN©️`. User-uploaded rows (not open) keep their own brand. Do not invent upload or VLM. Do not put the brand mark into shoot briefs.
 - Disabled SKUs fail closed. Public list and compose both require `enabled: true`.
 - Resource writes fail closed without `CLOUDFLARE_ACCOUNT_ID` + `R2_ACCESS_KEY_ID` + `R2_SECRET_ACCESS_KEY`. Do not fall back to disk or response blobs.
 - 开拍 consume fails closed without `ROUTER_API_KEY` (router.nebutra.com product key). Default model is `gpt-image-2` at `https://router.nebutra.com/v1`. Do not put a 302.ai key in this app.
@@ -43,8 +45,9 @@ Do not treat `.next/` or `public/orbit` as implementation truth. Public stills l
 - `pnpm --filter @nebutra/kuanlan typecheck`
 - `pnpm --filter @nebutra/kuanlan build`
 
-Writes need an R2 S3 token in `.env.local` (`R2_ACCESS_KEY_ID` / `R2_SECRET_ACCESS_KEY`). Public stills are seeded with:
+Writes need `CLOUDFLARE_ACCOUNT_ID`. Prefer an R2 S3 token (`R2_ACCESS_KEY_ID` / `R2_SECRET_ACCESS_KEY`); otherwise `assets:seed` uses wrangler OAuth against `nebutra-assets`. After composing samples:
 
 ```bash
-wrangler r2 object put nebutra-assets/kuanlan/orbit/01.jpg --file=apps/kuanlan/public/orbit/01.jpg --content-type=image/jpeg --remote
+pnpm --filter @nebutra/kuanlan samples:compose
+pnpm --filter @nebutra/kuanlan assets:seed
 ```
