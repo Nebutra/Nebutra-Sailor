@@ -1,20 +1,26 @@
-# Fly product origin (Hong Kong), ECS kept for issuer / leak / rollback
+# Fly product + Hono origin (Singapore), ECS kept for China transit / issuer / leak / rollback
 
 - **Date**: 2026-08-31
-- **Status**: Product edges live on Fly `sin`; ECS keeps issuer / leak / origin
+- **Status**: Product edges and Hono origin live on Fly `sin`; ECS keeps issuer / leak / China transit
 - **Runbook**: [fly-origin.md](../ops/fly-origin.md)
 
 ```text
 China + global browsers
   -> Cloudflare (proxied)
-  -> Fly Machines in sin     forge / router / web / pebble / design
-  -> Cloudflare Workers      api.nebutra.com, auth.nebutra.com /api/auth/*
-  -> Vercel                  nebutra.com
-  -> Shanghai ECS            origin.nebutra.com, sso, leak DNS, rollback
+    -> Fly Machines in sin     forge / router / web / pebble / design
+    -> Fly Machines in sin     Hono api-gateway (nebutra-gateway)
+    -> Cloudflare Workers      api.nebutra.com → nebutra-gateway.fly.dev
+                               auth.nebutra.com /api/auth/*
+    -> Vercel                  nebutra.com
+    -> Shanghai ECS            China transit, sso, leak DNS, rollback
 ```
 
-Fly retired `hkg`; new Machines go to Singapore (`sin`). Shanghai ECS is not
-used as a reverse proxy to Fly — that would add a hop. It stays the grey-cloud
-API origin, the OIDC issuer, and authoritative leak DNS.
+Fly retired `hkg`; new Machines go to Singapore (`sin`). Shanghai ECS is
+not the Worker origin. It stays the OIDC issuer, authoritative leak DNS,
+and the hop for China transit / emergency rollback.
 
-Do not move `sso.nebutra.com` or `ns1.leak.nebutra.com` in the first cutover.
+`api.nebutra.com` stays orange-cloud on the edge Worker. `ORIGIN_URL` is
+the Fly app URL, not `origin.nebutra.com` on ECS. Grey-cloud
+`origin.nebutra.com` may point grey-cloud A/AAAA at the same Fly app as an alias.
+
+Do not move `sso.nebutra.com` or `ns1.leak.nebutra.com` in this cutover.

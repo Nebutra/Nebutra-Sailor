@@ -9,9 +9,9 @@
  * registering every OpenAPI route at module scope.
  *
  * This entry does the work that genuinely belongs at the edge and forwards the
- * rest to ECS Origin. What it deliberately does NOT do is re-implement any
- * decision the origin already makes. Duplicated auth or quota logic that drifts
- * from the origin's is worse than the round trip it saves: the two would
+ * rest to the Fly Hono origin. What it deliberately does NOT do is re-implement
+ * any decision the origin already makes. Duplicated auth or quota logic that
+ * drifts from the origin's is worse than the round trip it saves: the two would
  * disagree, and the edge would be the one nobody is looking at.
  *
  * So the split is drawn at "needs no business state":
@@ -29,7 +29,7 @@
 // wrangler var, precisely so it is not hardcoded here.
 
 interface EdgeEnv {
-  /** Non-proxied origin hostname. Must not be the hostname this Worker serves. */
+  /** Origin that is not routed to this Worker. Must not be api.nebutra.com. */
   ORIGIN_URL?: string;
   /** Requests per minute per IP before shedding. */
   EDGE_IP_RATE_LIMIT?: string;
@@ -105,24 +105,54 @@ function corsPreflightResponse(request: Request): Response | null {
   });
 }
 
+const DROP_ON_FORWARD = new Set([
+  "host",
+  "connection",
+  "content-length",
+  "transfer-encoding",
+  "cf-connecting-ip",
+  "cf-ray",
+  "cf-visitor",
+  "cf-ipcountry",
+  "x-forwarded-proto",
+  "x-forwarded-for",
+  "x-real-ip",
+]);
+
+/**
+ * Copy caller headers for the origin fetch, except Host.
+ *
+ * Cloning `request.headers` keeps Host: api.nebutra.com. A same-zone
+ * subrequest with that Host is routed back into this Worker, Cloudflare
+ * detects the loop, and the client gets the HTML 502 page — not our JSON.
+ * Auth-edge already strips Host for the same reason. Do not set Host
+ * yourself either: workerd rejects it (Error 1101). fetch() takes Host
+ * from ORIGIN_URL, which must not be a hostname this Worker is routed on.
+ */
+export function buildForwardHeaders(request: Request): Headers {
+  const incoming = new URL(request.url);
+  const headers = new Headers();
+  request.headers.forEach((value, key) => {
+    if (DROP_ON_FORWARD.has(key.toLowerCase())) return;
+    headers.set(key, value);
+  });
+  headers.set("x-forwarded-host", incoming.host);
+  headers.set("x-forwarded-proto", incoming.protocol.replace(":", ""));
+  const clientIp = request.headers.get("cf-connecting-ip");
+  if (clientIp) headers.set("x-forwarded-for", clientIp);
+  return headers;
+}
+
 async function forward(request: Request, originUrl: string): Promise<Response> {
   const incoming = new URL(request.url);
   const target = new URL(originUrl);
   target.pathname = incoming.pathname;
   target.search = incoming.search;
 
-  const headers = new Headers(request.headers);
-  // The origin needs the caller's address and the original host; without these
-  // it sees every request as coming from Cloudflare, which breaks its own
-  // logging, rate limiting, and any host-based routing.
-  headers.set("x-forwarded-host", incoming.host);
-  headers.set("x-forwarded-proto", incoming.protocol.replace(":", ""));
-  const clientIp = request.headers.get("cf-connecting-ip");
-  if (clientIp) headers.set("x-forwarded-for", clientIp);
-
   return fetch(target.toString(), {
     method: request.method,
-    headers,
+    headers: buildForwardHeaders(request),
+    redirect: "manual",
     body: request.method === "GET" || request.method === "HEAD" ? undefined : request.body,
     // Required by workerd when a streaming body is forwarded.
     ...(request.body ? { duplex: "half" } : {}),

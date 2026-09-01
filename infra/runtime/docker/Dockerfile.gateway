@@ -1,0 +1,20 @@
+# Runtime image for the pnpm-deploy Hono bundle (same tree ECS ships).
+# The CI step renames node_modules → deps so a repo-root .dockerignore of
+# **/node_modules cannot empty the image.
+FROM node:22-alpine@sha256:16e22a550f3863206a3f701448c45f7912c6896a62de43add43bb9c86130c3e2
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV HOST=0.0.0.0
+ENV PORT=8080
+
+RUN addgroup --system --gid 1001 nodejs \
+ && adduser  --system --uid 1001 appuser
+
+COPY --chown=appuser:nodejs package.json ./
+COPY --chown=appuser:nodejs app-dist ./dist
+COPY --chown=appuser:nodejs deps ./node_modules
+USER appuser
+
+EXPOSE 8080
+CMD ["node", "dist/node.js"]
