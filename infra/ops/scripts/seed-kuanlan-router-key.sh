@@ -22,13 +22,25 @@ fi
 secrets_file="$(mktemp)"
 chmod 600 "$secrets_file"
 python3 - "$secrets_file" <<'PY'
-import json, os, sys
+import json, os, subprocess, sys
+
 path = sys.argv[1]
+try:
+    import bcrypt
+except ImportError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "--user", "bcrypt", "-q"])
+    import bcrypt
+
+# New-API v0.8 validates passwords as min=8, max=20. hex(8) is 16 chars.
+root_password = os.urandom(8).hex()
+root_hash = bcrypt.hashpw(root_password.encode(), bcrypt.gensalt(rounds=10)).decode()
 with open(path, "w", encoding="utf-8") as handle:
     json.dump(
         {
             "CHANNEL_302_KEY": os.environ.get("CHANNEL_302_KEY", ""),
             "NEW_API_ACCESS_TOKEN": os.environ.get("NEW_API_ACCESS_TOKEN", ""),
+            "ROOT_PASSWORD": root_password,
+            "ROOT_PASSWORD_HASH": root_hash,
         },
         handle,
     )
