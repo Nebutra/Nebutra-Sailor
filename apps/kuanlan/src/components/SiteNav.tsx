@@ -19,27 +19,29 @@ export function SiteNav({
   query?: string;
 }) {
   return (
-    <header className="topbar">
-      <div className="topbar-left">
-        <Link href="/" className="brand" aria-label={BRAND.name}>
-          <Mark />
-        </Link>
-        <nav className="nav-links" aria-label="Primary">
-          {LINKS.map((link) => (
-            <Link key={link.href} href={link.href} data-active={link.href === active}>
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-      </div>
-      <div className="topbar-search">
+    <>
+      <header className="topbar">
+        <div className="topbar-left">
+          <Link href="/" className="brand" aria-label={BRAND.name}>
+            <Mark />
+          </Link>
+          <nav className="nav-links" aria-label="Primary">
+            {LINKS.map((link) => (
+              <Link key={link.href} href={link.href} data-active={link.href === active}>
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+        <div className="topbar-right">
+          <Link className="pill pill-ink" href="/create">
+            开拍
+          </Link>
+        </div>
+      </header>
+      <div className="chatbox">
         <SearchBar defaultValue={query} />
       </div>
-      <div className="topbar-right">
-        <Link className="pill pill-ink" href="/create">
-          开拍
-        </Link>
-      </div>
-    </header>
+    </>
   );
 }

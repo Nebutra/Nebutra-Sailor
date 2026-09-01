@@ -10,11 +10,12 @@ export function SearchBar({
       <span className="search-glyph" aria-hidden />
       <input
         data-allow-native
-        type="search"
+        type="text"
         name="q"
         defaultValue={defaultValue}
         placeholder={placeholder}
         aria-label="告诉观澜"
+        autoComplete="off"
       />
       <span className="search-spark" aria-hidden />
     </form>
