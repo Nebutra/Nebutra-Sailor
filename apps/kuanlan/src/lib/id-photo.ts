@@ -33,17 +33,27 @@ export type IdPhotoResult = {
   skuId: string;
 };
 
-function subjectBox(width: number, height: number, headRatio: number) {
-  const subjectHeight = Math.round(height * headRatio);
+function subjectBox(sku: IdPhotoSku, width: number, height: number) {
+  if (sku.look === "linkedin") {
+    return {
+      subjectWidth: width,
+      subjectHeight: height,
+      left: 0,
+      top: 0,
+      fit: "cover" as const,
+    };
+  }
+
+  const subjectHeight = Math.round(height * sku.headRatio);
   const subjectWidth = Math.min(width, Math.round(subjectHeight * 0.78));
   const left = Math.round((width - subjectWidth) / 2);
   const top = Math.round((height - subjectHeight) * 0.28);
-  return { subjectWidth, subjectHeight, left, top };
+  return { subjectWidth, subjectHeight, left, top, fit: "contain" as const };
 }
 
 async function fitSubject(
   source: Buffer,
-  box: { subjectWidth: number; subjectHeight: number },
+  box: { subjectWidth: number; subjectHeight: number; fit: "cover" | "contain" },
   background: { r: number; g: number; b: number },
 ): Promise<Buffer> {
   const rotated = sharp(source).rotate();
@@ -77,8 +87,9 @@ async function fitSubject(
   return sharp(prepared)
     .flatten({ background })
     .resize(box.subjectWidth, box.subjectHeight, {
-      fit: "contain",
+      fit: box.fit,
       background,
+      position: box.fit === "cover" ? "top" : "centre",
     })
     .png()
     .toBuffer();
@@ -97,7 +108,7 @@ export async function composeIdPhoto(input: {
 
   const { width, height } = skuPixelSize(input.sku);
   const background = ID_PHOTO_BACKGROUNDS[input.sku.background];
-  const box = subjectBox(width, height, input.sku.headRatio);
+  const box = subjectBox(input.sku, width, height);
 
   try {
     const subject = await fitSubject(input.source, box, background);

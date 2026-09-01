@@ -36,7 +36,8 @@ export function skuSampleKey(id: string): string {
 }
 
 export function skuSampleSrc(id: string, base?: string): string {
-  return publicAssetUrl(skuSampleKey(id), base);
+  const url = publicAssetUrl(skuSampleKey(id), base);
+  return id === "linkedin-studio" ? `${url}?v=2` : url;
 }
 
 const WARDROBE_ID = SKU_ID;

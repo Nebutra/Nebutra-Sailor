@@ -30,6 +30,23 @@ describe("sku sample compose", () => {
     expect(data[top + 2]).toBeGreaterThan(240);
   });
 
+  it("keeps 质感蓝 as a full 领证照, not a small print on navy", async () => {
+    const sku = getEnabledSku("linkedin-studio");
+    const source = readFileSync(
+      join(dirname(fileURLToPath(import.meta.url)), "../catalog/samples", skuSampleSourceFile(sku)),
+    );
+    const jpeg = await composeSkuSampleJpeg(sku, source);
+    const { data, info } = await sharp(jpeg).raw().toBuffer({ resolveWithObject: true });
+    let painted = 0;
+    for (let i = 0; i < data.length; i += info.channels) {
+      if (data[i] === 42 && data[i + 1] === 64 && data[i + 2] === 102) painted += 1;
+    }
+
+    expect(info.width).toBe(944);
+    expect(info.height).toBe(1182);
+    expect(painted / (info.width * info.height)).toBeLessThan(0.01);
+  });
+
   it("maps white id specs onto the white source portrait", () => {
     expect(skuSampleSourceFile(getEnabledSku("visa-us"))).toBe("portrait-visa-us.jpg");
     expect(skuSampleSourceFile(getEnabledSku("passport-cn"))).toBe("portrait-id-white.jpg");
