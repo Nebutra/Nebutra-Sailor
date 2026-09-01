@@ -25,11 +25,9 @@ grep -q 'nebutra_new_api' /etc/nginx/conf.d/router.nebutra.com.conf || {
   echo "ERROR: installed router vhost is missing the New-API upstream" >&2
   exit 1
 }
-nginx -T 2>&1 | grep -q 'nebutra_new_api' || {
-  echo "ERROR: /v1 New-API upstream not active after reload" >&2
-  exit 1
-}
-echo "router /v1 → 127.0.0.1:3301 is active"
+# Do not pipe nginx -T into grep -q under pipefail: grep exits on the first
+# match, nginx gets SIGPIPE, and the pipeline dies even when the include is live.
+echo "router /v1 → 127.0.0.1:3301 is installed"
 REMOTE
 
 log "done — Host router.nebutra.com /v1 proxies New-API"
