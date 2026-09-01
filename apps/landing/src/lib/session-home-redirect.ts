@@ -12,7 +12,7 @@ export function isAppRedirectablePath(pathname: string, locales: readonly string
 export function shouldBounceSignedInVisitorToApp(_input: {
   pathname: string;
   host: string | undefined;
-  aliasHosts: readonly string[];
+  statusHost: string;
   hasSessionHint: boolean;
   hasHomeFlag: boolean;
   locales: readonly string[];
