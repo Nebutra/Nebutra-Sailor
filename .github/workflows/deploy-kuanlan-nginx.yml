@@ -23,7 +23,7 @@ jobs:
   inject:
     name: Inject kuanlan vhost
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -61,6 +61,32 @@ jobs:
         env:
           REMOTE_HOST: kuanlan-ecs
         run: bash infra/ops/scripts/install-kuanlan-nginx-vhost.sh
+
+      - name: Install router /v1 → New-API
+        env:
+          REMOTE_HOST: kuanlan-ecs
+        run: bash infra/ops/scripts/install-router-v1-nginx.sh
+
+      - name: Issue Router consume key for 观澜
+        env:
+          REMOTE_HOST: kuanlan-ecs
+          CHANNEL_302_KEY: ${{ secrets.KUANLAN_IMAGE2_API_KEY }}
+          NEW_API_ACCESS_TOKEN: ${{ secrets.NEW_API_ACCESS_TOKEN }}
+        run: bash infra/ops/scripts/seed-kuanlan-router-key.sh
+
+      - name: Smoke kuanlan consume is configured
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6 7 8; do
+            body=$(curl -fsS --max-time 20 https://kuanlan.nebutra.com/api/e2e/health || true)
+            echo "attempt $i $body"
+            case "$body" in
+              *'"configured":true'*) exit 0 ;;
+            esac
+            sleep 8
+          done
+          echo "::error::kuanlan consume still unconfigured"
+          exit 1
 
       - name: Smoke kuanlan host stays on itself
         run: |
