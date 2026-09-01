@@ -47,13 +47,6 @@ jobs:
       - name: Checkout Sailor
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
-      - name: Checkout Carina
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          repository: Nebutra/carina
-          ref: ${{ inputs.ref || 'main' }}
-          path: carina
-
       - name: Setup flyctl
         uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
 
@@ -71,32 +64,31 @@ jobs:
             flyctl apps create nebutra-carina --machines --org "$org" --yes
           fi
 
-      - name: Setup Node and pnpm
-        uses: ./.github/actions/setup-node-pnpm
-        with:
-          node-version: "24"
-          install: "false"
-
-      - name: Pin the pnpm version carina builds with
-        run: |
-          corepack enable
-          corepack prepare pnpm@11.13.1 --activate
-
-      - name: Build Carina docs
-        working-directory: carina/apps/docs
+      - name: Stage live dist from the VM
+        env:
+          VM_HOST: ${{ vars.VM_HOST || vars.ECS_HOST }}
+          VM_USER: ${{ vars.VM_USER || vars.ECS_USER }}
+          VM_SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
         run: |
           set -euo pipefail
-          pnpm install --frozen-lockfile
-          pnpm run build
-          test -f dist/index.html
-
-      - name: Assemble image context
-        run: |
-          set -euo pipefail
+          # Live site is the Nebutra/carina apps/docs dist already on the box.
           STAGE="$RUNNER_TEMP/stage-carina"
           rm -rf "$STAGE"
           mkdir -p "$STAGE/html"
-          cp -R carina/apps/docs/dist/. "$STAGE/html/"
+          if [ -z "${VM_HOST:-}" ] || [ -z "${VM_SSH_PRIVATE_KEY:-}" ]; then
+            echo "::error::Need VM SSH to copy the live Nebutra/carina dist."
+            exit 1
+          fi
+          install -m 600 /dev/null "$RUNNER_TEMP/vm_key"
+          printf '%s\n' "$VM_SSH_PRIVATE_KEY" > "$RUNNER_TEMP/vm_key"
+          ssh -i "$RUNNER_TEMP/vm_key" -o StrictHostKeyChecking=accept-new \
+            "${VM_USER}@${VM_HOST}" \
+            "tar -C /var/www/nebutra/carina/current -czf - ." \
+            > "$RUNNER_TEMP/carina-dist.tgz"
+          rm -f "$RUNNER_TEMP/vm_key"
+          tar -C "$STAGE/html" -xzf "$RUNNER_TEMP/carina-dist.tgz"
+          rm -f "$RUNNER_TEMP/carina-dist.tgz"
+          test -f "$STAGE/html/index.html"
           cp infra/fly/Dockerfile.carina "$STAGE/Dockerfile"
           cp infra/fly/carina.nginx.conf "$STAGE/nginx.conf"
           echo "STAGE=$STAGE" >> "$GITHUB_ENV"

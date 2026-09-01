@@ -482,13 +482,6 @@ jobs:
       - name: Checkout Sailor
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
-      - name: Checkout Carina
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          repository: Nebutra/carina
-          ref: main
-          path: carina
-
       - name: Setup flyctl
         uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
 
@@ -506,32 +499,32 @@ jobs:
             flyctl apps create nebutra-carina --machines --org "$org" --yes
           fi
 
-      - name: Setup Node and pnpm
-        uses: ./.github/actions/setup-node-pnpm
-        with:
-          node-version: "24"
-          install: "false"
-
-      - name: Pin the pnpm version carina builds with
-        run: |
-          corepack enable
-          corepack prepare pnpm@11.13.1 --activate
-
-      - name: Build Carina docs
-        working-directory: carina/apps/docs
+      - name: Stage live dist from the VM
+        env:
+          VM_HOST: ${{ vars.VM_HOST || vars.ECS_HOST }}
+          VM_USER: ${{ vars.VM_USER || vars.ECS_USER }}
+          VM_SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
         run: |
           set -euo pipefail
-          pnpm install --frozen-lockfile
-          pnpm run build
-          test -f dist/index.html
-
-      - name: Assemble image context
-        run: |
-          set -euo pipefail
+          # Live site is the Nebutra/carina apps/docs dist already on the box.
           STAGE="$RUNNER_TEMP/stage-carina"
           rm -rf "$STAGE"
           mkdir -p "$STAGE/html"
-          cp -R carina/apps/docs/dist/. "$STAGE/html/"
+          if [ -n "${VM_HOST:-}" ] && [ -n "${VM_SSH_PRIVATE_KEY:-}" ]; then
+            install -m 600 /dev/null "$RUNNER_TEMP/vm_key"
+            printf '%s\n' "$VM_SSH_PRIVATE_KEY" > "$RUNNER_TEMP/vm_key"
+            ssh -i "$RUNNER_TEMP/vm_key" -o StrictHostKeyChecking=accept-new \
+              "${VM_USER}@${VM_HOST}" \
+              "tar -C /var/www/nebutra/carina/current -czf - ." \
+              > "$RUNNER_TEMP/carina-dist.tgz"
+            rm -f "$RUNNER_TEMP/vm_key"
+            tar -C "$STAGE/html" -xzf "$RUNNER_TEMP/carina-dist.tgz"
+            rm -f "$RUNNER_TEMP/carina-dist.tgz"
+          fi
+          if [ ! -f "$STAGE/html/index.html" ]; then
+            echo "::error::No live carina dist on the VM. Fix Nebutra/carina main build, then retry."
+            exit 1
+          fi
           cp infra/fly/Dockerfile.carina "$STAGE/Dockerfile"
           cp infra/fly/carina.nginx.conf "$STAGE/nginx.conf"
           echo "STAGE=$STAGE" >> "$GITHUB_ENV"
@@ -690,7 +683,7 @@ jobs:
           flyctl ssh sftp put -a nebutra-new-api \
             "$RUNNER_TEMP/new-api-data.tgz" /tmp/new-api-data.tgz
           flyctl ssh console -a nebutra-new-api --pty=false -C \
-            "tar -C /data -xzf /tmp/new-api-data.tgz && rm -f /tmp/new-api-data.tgz && ls /data | wc -l"
+            "sh -c 'tar -C /data -x -z -f /tmp/new-api-data.tgz && rm -f /tmp/new-api-data.tgz && ls /data'"
           rm -f "$RUNNER_TEMP/new-api-data.tgz"
           flyctl apps restart nebutra-new-api
 
@@ -701,7 +694,7 @@ jobs:
           set -euo pipefail
           for i in 1 2 3 4 5 6; do
             if flyctl ssh console -a nebutra-new-api --pty=false -C \
-              "wget -qO- --timeout=5 http://127.0.0.1:3000/api/status || wget -qO- --timeout=5 http://127.0.0.1:3000/ || true" \
+              "sh -c 'wget -qO- --timeout=5 http://127.0.0.1:3000/api/status || wget -qO- --timeout=5 http://127.0.0.1:3000/ || true'" \
               | tee "$RUNNER_TEMP/new-api-smoke.txt" | grep -q .; then
               echo "new-api answered on try $i"
               exit 0
@@ -764,28 +757,23 @@ jobs:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
           set -euo pipefail
-          ns_ip="$(flyctl ips list -a nebutra-dns-leak --json | python3 -c '
-          import json, sys
-          for ip in json.load(sys.stdin):
-              addr = ip.get("Address") or ip.get("address") or ""
-              fam = (ip.get("Family") or ip.get("family") or "").lower()
-              kind = (ip.get("Type") or ip.get("type") or "").lower()
-              if "." in addr and "v4" in fam and "shared" not in kind:
+          pick_v4() {
+            python3 -c '
+          import json, re, sys
+          raw = json.load(sys.stdin)
+          rows = raw if isinstance(raw, list) else raw.get("ips") or raw.get("Addresses") or raw.get("data") or []
+          for ip in rows:
+              addr = ip.get("Address") or ip.get("address") or ip.get("IP") or ip.get("ip") or ""
+              kind = str(ip.get("Type") or ip.get("type") or "").lower()
+              if re.match(r"^\d{1,3}(\.\d{1,3}){3}$", addr) and "shared" not in kind:
                   print(addr)
                   break
-          ')"
+          '
+          }
+          ns_ip="$(flyctl ips list -a nebutra-dns-leak --json | pick_v4)"
           if [ -z "$ns_ip" ]; then
             flyctl ips allocate-v4 -a nebutra-dns-leak --yes
-            ns_ip="$(flyctl ips list -a nebutra-dns-leak --json | python3 -c '
-          import json, sys
-          for ip in json.load(sys.stdin):
-              addr = ip.get("Address") or ip.get("address") or ""
-              fam = (ip.get("Family") or ip.get("family") or "").lower()
-              kind = (ip.get("Type") or ip.get("type") or "").lower()
-              if "." in addr and "v4" in fam and "shared" not in kind:
-                  print(addr)
-                  break
-          ')"
+            ns_ip="$(flyctl ips list -a nebutra-dns-leak --json | pick_v4)"
           fi
           test -n "$ns_ip"
           echo "ns_ip=$ns_ip" >> "$GITHUB_OUTPUT"
@@ -821,7 +809,7 @@ jobs:
           set -euo pipefail
           for i in 1 2 3 4 5 6; do
             if flyctl ssh console -a nebutra-dns-leak --pty=false -C \
-              "wget -qO- --timeout=5 http://127.0.0.1:3953/health" \
+              "sh -c 'wget -qO- --timeout=5 http://127.0.0.1:3953/health'" \
               | tee "$RUNNER_TEMP/leak-health.txt" | grep -q '"ok":true'; then
               echo "control API healthy on try $i"
               exit 0
