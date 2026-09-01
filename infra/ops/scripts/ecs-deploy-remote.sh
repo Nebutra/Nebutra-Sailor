@@ -749,7 +749,7 @@ load_runtime_env() {
     AUTH_PROVIDER="${AUTH_PROVIDER:-better-auth}"
     # CORS trust for product RPs that call getSession() cross-origin (forge/router/app).
     BETTER_AUTH_TRUSTED_ORIGINS="${BETTER_AUTH_TRUSTED_ORIGINS:-https://forge.nebutra.com,https://router.nebutra.com,https://app.nebutra.com,https://nebutra.com,https://www.nebutra.com}"
-    AUTH_RETURN_ALLOWED_HOSTS="${AUTH_RETURN_ALLOWED_HOSTS:-forge.nebutra.com,router.nebutra.com,app.nebutra.com,nebutra.com,www.nebutra.com,auth.nebutra.com}"
+    AUTH_RETURN_ALLOWED_HOSTS="${AUTH_RETURN_ALLOWED_HOSTS:-forge.nebutra.com,router.nebutra.com,app.nebutra.com,nebutra.com,www.nebutra.com,auth.nebutra.com,kuanlan.nebutra.com}"
 
     local missing=()
     [ -n "${DATABASE_URL:-}" ] || missing+=("DATABASE_URL")

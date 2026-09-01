@@ -174,8 +174,9 @@ export default function proxy(request: NextRequest): NextResponse {
     return withSecurityHeaders(NextResponse.next());
   }
 
-  // Apex `/` is a product launcher when the session-hint cookie is present.
-  // The only skip is `?home`. Marketing sub-pages always render.
+  // Do not launch the dashboard from marketing `/`. A cached 301 from a
+  // product host (kuanlan) onto the apex used to dump signed-in visitors
+  // into app.nebutra.com/integrations.
   //
   // The response is intentionally `Cache-Control: private, no-store` because the
   // body varies per-cookie — never cache at the edge.

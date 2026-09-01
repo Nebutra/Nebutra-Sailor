@@ -21,8 +21,12 @@ describe("shouldBounceSignedInVisitorToApp", () => {
     locales: LOCALES,
   };
 
-  it("bounces a hinted visitor from the marketing root into the app", () => {
-    expect(shouldBounceSignedInVisitorToApp(base)).toBe(true);
+  it("does not launch the app from marketing home", () => {
+    expect(shouldBounceSignedInVisitorToApp(base)).toBe(false);
+  });
+
+  it("never bounces a product host leftover onto the apex", () => {
+    expect(shouldBounceSignedInVisitorToApp({ ...base, host: "kuanlan.nebutra.com" })).toBe(false);
   });
 
   it("keeps marketing only when ?home is present", () => {
