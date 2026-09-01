@@ -145,9 +145,11 @@ describe("Better Auth trusted origins (cross-origin One Tap / OAuth)", () => {
     const origins = resolveBetterAuthTrustedOrigins();
     expect(origins).toContain("https://forge.nebutra.com");
     expect(origins).toContain("https://router.nebutra.com");
+    expect(origins).toContain("https://kuanlan.nebutra.com");
     expect(origins).toContain("https://app.nebutra.com");
     expect(origins).toContain("https://auth.nebutra.com");
     expect(origins).toContain("http://localhost:3105");
+    expect(origins).toContain("http://localhost:3120");
   });
 
   it("includes NEXT_PUBLIC_FORGE_URL even without AUTH_COOKIE_DOMAIN", () => {

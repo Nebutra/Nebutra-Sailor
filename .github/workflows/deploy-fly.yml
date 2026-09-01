@@ -157,6 +157,8 @@ jobs:
           NEXT_PUBLIC_API_URL: "https://api.nebutra.com"
           NEXT_PUBLIC_API_GATEWAY_URL: "https://api.nebutra.com"
           NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
+          NEXT_PUBLIC_AUTH_URL: "https://auth.nebutra.com"
+          BETTER_AUTH_URL: "https://auth.nebutra.com"
           DATABASE_URL: "postgresql://build-placeholder:placeholder@localhost:5432/build"
           REDIS_URL: "redis://localhost:6379"
         run: pnpm --filter ${{ matrix.package }} ${{ matrix.build_command }}
@@ -216,6 +218,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
         run: |
           set -euo pipefail
           args=()
@@ -223,6 +226,11 @@ jobs:
           [ -n "${CLOUDFLARE_ACCOUNT_ID:-}" ] && args+=(CLOUDFLARE_ACCOUNT_ID="$CLOUDFLARE_ACCOUNT_ID")
           [ -n "${R2_ACCESS_KEY_ID:-}" ] && args+=(R2_ACCESS_KEY_ID="$R2_ACCESS_KEY_ID")
           [ -n "${R2_SECRET_ACCESS_KEY:-}" ] && args+=(R2_SECRET_ACCESS_KEY="$R2_SECRET_ACCESS_KEY")
+          [ -n "${BETTER_AUTH_SECRET:-}" ] && args+=(BETTER_AUTH_SECRET="$BETTER_AUTH_SECRET")
+          args+=(NEXT_PUBLIC_AUTH_URL="https://auth.nebutra.com")
+          args+=(BETTER_AUTH_URL="https://auth.nebutra.com")
+          args+=(NEXT_PUBLIC_AUTH_PROVIDER="better-auth")
+          args+=(NEXT_PUBLIC_SITE_URL="https://kuanlan.nebutra.com")
           if [ "${#args[@]}" -eq 0 ]; then
             echo "::warning::No GitHub kuanlan secrets — relying on VM .env import."
             exit 0

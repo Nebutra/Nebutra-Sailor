@@ -26,7 +26,7 @@ It does not own shared Nebutra UI chrome or a new `packages/ai/*` package. Exact
 - `design/` — Linear-derived tokens applied as an editorial dark system
 - `src/app/` — routes and API
 
-Do not treat `.next/` or `public/` as consumption truth. Browser stills come from `https://cdn.nebutra.com/kuanlan/{orbit|skus|wardrobe}/…` on `nebutra-assets`. `public/` is only the seed tree. Compose 领证照 samples from `src/catalog/samples/` into `public/skus/`, then `pnpm --filter @nebutra/kuanlan assets:seed`. Moments write to `kuanlan/moments/id-photo/{id}.png` on `nebutra-uploads`.
+Do not treat `.next/` or `public/` as consumption truth. Browser stills come from `https://cdn.nebutra.com/kuanlan/{orbit|skus|wardrobe}/…` on `nebutra-assets`. `public/` is only the seed tree. Compose 领证照 samples from `src/catalog/samples/` into `public/skus/`, then `pnpm --filter @nebutra/kuanlan assets:seed`. Moments write to `kuanlan/moments/id-photo/{userId}/{id}.png` on `nebutra-uploads`. Identity is the Nebutra auth center (`auth.nebutra.com`); this app is an RP. Do not bounce into `app.nebutra.com`.
 
 ## Contract Boundaries
 

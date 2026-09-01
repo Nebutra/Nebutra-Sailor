@@ -52,18 +52,27 @@ export function wardrobeSampleSrc(id: string, base?: string): string {
   return publicAssetUrl(wardrobeSampleKey(id), base);
 }
 
+export function momentUserPrefix(userId: string): string {
+  if (!MOMENT_ID.test(userId)) {
+    throw new InvalidResourceKeyError("user_id");
+  }
+  return `${RESOURCE_ROOT}/moments/id-photo/${userId}/`;
+}
+
 export function momentObjectKey(input: {
   kind: "id-photo";
+  userId: string;
   id: string;
   part?: MomentObjectPart;
 }): string {
   if (!MOMENT_ID.test(input.id)) {
     throw new InvalidResourceKeyError("moment_id");
   }
+  const prefix = momentUserPrefix(input.userId);
   if (input.part === "source") {
-    return `${RESOURCE_ROOT}/moments/${input.kind}/${input.id}.source`;
+    return `${prefix}${input.id}.source`;
   }
-  return `${RESOURCE_ROOT}/moments/${input.kind}/${input.id}.png`;
+  return `${prefix}${input.id}.png`;
 }
 
 export function r2PublicBase(base?: string): string {

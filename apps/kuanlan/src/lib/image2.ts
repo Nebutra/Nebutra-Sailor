@@ -1,4 +1,4 @@
-import type { IdPhotoSku } from "@/catalog/skus";
+import type { GarmentId, IdPhotoSku } from "@/catalog/skus";
 
 export const DEFAULT_IMAGE2_BASE_URL = "https://router.nebutra.com/v1";
 export const DEFAULT_IMAGE2_MODEL = "gpt-image-2";
@@ -9,6 +9,7 @@ const BACKGROUND_COPY = {
   red: "标准证件照红底",
   smoke: "灰蓝烟雾底",
   light: "浅灰职业照背景",
+  studio: "质感蓝棚底",
 } as const;
 
 const ATTIRE_COPY = {
@@ -16,6 +17,20 @@ const ATTIRE_COPY = {
   knit: "fine-knit charcoal merino crewneck with a white shirt collar just visible at the neck",
   oxford: "navy oxford button-down shirt, top button undone, no jacket",
 } as const;
+
+function attireForSku(sku: IdPhotoSku): string {
+  const garment: GarmentId = sku.garmentId ?? "blazer";
+  if (sku.background === "studio") {
+    if (garment === "oxford") {
+      return "business-casual white shirt, minimalist, paired with a simple dark tie, no jacket";
+    }
+    if (garment === "knit") {
+      return ATTIRE_COPY.knit;
+    }
+    return "tailored navy blazer over a crisp white dress shirt, paired with a simple dark tie";
+  }
+  return ATTIRE_COPY[garment];
+}
 
 export class Image2UnavailableError extends Error {
   constructor(message = "image2_unconfigured") {
@@ -50,18 +65,30 @@ export function image2SizeForSku(sku: Pick<IdPhotoSku, "widthMm" | "heightMm">):
 /** Server-only SKU brief. Never send this string to the browser. */
 export function idPhotoShootBrief(sku: IdPhotoSku): string {
   if (sku.look === "linkedin") {
+    const studio = sku.background === "studio";
     return [
-      "Professional LinkedIn headshot of the same person in the reference photo.",
-      "Head-and-shoulders, camera at eye level, slight natural head tilt so it is not stiff.",
-      "Soft even studio lighting, realistic skin. Do not beautify.",
-      `Seamless ${BACKGROUND_COPY[sku.background]}, empty, no props, no watermark, no text.`,
-      `Attire: ${ATTIRE_COPY[sku.garmentId ?? "blazer"]}.`,
-      "Keep identity, face, hair, and glasses unchanged. Change clothes to the specified attire. Not a passport or official identification photo.",
+      studio
+        ? "American-style professional headshot of the same person in the reference photo."
+        : "Professional LinkedIn headshot of the same person in the reference photo.",
+      studio
+        ? "Half-body portrait, camera at eye level. Leave space above the crown. Do not crop the top of the hair."
+        : "Head-and-shoulders, camera at eye level, slight natural head tilt so it is not stiff.",
+      studio
+        ? "Soft natural studio lighting, realistic skin. Do not beautify."
+        : "Soft even studio lighting, realistic skin. Do not beautify.",
+      studio
+        ? `Textured ${BACKGROUND_COPY[sku.background]}, slight depth of field, empty, no props, no watermark, no text.`
+        : `Seamless ${BACKGROUND_COPY[sku.background]}, empty, no props, no watermark, no text.`,
+      `Attire: ${attireForSku(sku)}.`,
+      studio
+        ? "Expression relaxed and natural. Keep identity, face, hair, and glasses unchanged. Change clothes to the specified attire. Not a passport or official identification photo."
+        : "Keep identity, face, hair, and glasses unchanged. Change clothes to the specified attire. Not a passport or official identification photo.",
     ].join(" ");
   }
   return [
     "Official identification portrait of the same person in the reference photo.",
     "Front-facing head and shoulders, even studio lighting, both ears visible, natural expression.",
+    "Leave space above the crown. Do not crop the top of the hair.",
     `Plain ${BACKGROUND_COPY[sku.background]}, no props, no watermark, no text.`,
     "Keep identity, face shape, skin, hair, and glasses unchanged. Do not beautify.",
   ].join(" ");

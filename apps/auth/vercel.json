@@ -16,7 +16,7 @@
     "BETTER_AUTH_URL": "https://auth.nebutra.com",
     "AUTH_COOKIE_DOMAIN": ".nebutra.com",
     "AUTH_RETURN_ALLOWED_HOSTS": "forge.nebutra.com,router.nebutra.com,app.nebutra.com,nebutra.com,www.nebutra.com,auth.nebutra.com,kuanlan.nebutra.com",
-    "BETTER_AUTH_TRUSTED_ORIGINS": "https://forge.nebutra.com,https://router.nebutra.com,https://app.nebutra.com,https://nebutra.com,https://www.nebutra.com"
+    "BETTER_AUTH_TRUSTED_ORIGINS": "https://forge.nebutra.com,https://router.nebutra.com,https://app.nebutra.com,https://nebutra.com,https://www.nebutra.com,https://kuanlan.nebutra.com"
   },
   "headers": [
     {

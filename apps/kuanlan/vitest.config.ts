@@ -7,6 +7,9 @@ export default defineConfig({
     globals: true,
   },
   resolve: {
-    alias: { "@": path.resolve(__dirname, "./src") },
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+      "@nebutra/auth": path.resolve(__dirname, "../../packages/iam/auth/src/index.ts"),
+    },
   },
 });

@@ -20,7 +20,7 @@ export default async function CreatePage({
   const garment =
     listGarmentSkus().find((item) => item.id === pieceId) ??
     listGarmentSkus().find((item) => Boolean(query) && query.includes(item.title));
-  const wantsIdPhoto = /证照|护照|签证|一寸|二寸|领英|职业|灰蓝/.test(query);
+  const wantsIdPhoto = /证照|护照|签证|一寸|二寸|领英|职业|灰蓝|质感|美式/.test(query);
   const parent = idPhotoParentTile();
   const specs = listIdPhotoCreateTiles().filter((sku) => !garment || sku.garmentId === garment.id);
 

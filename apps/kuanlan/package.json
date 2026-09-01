@@ -20,6 +20,7 @@
     "assets:seed": "tsx scripts/seed-catalog-assets.ts"
   },
   "dependencies": {
+    "@nebutra/auth": "workspace:*",
     "@nebutra/storage": "workspace:*",
     "next": "catalog:",
     "react": "catalog:",

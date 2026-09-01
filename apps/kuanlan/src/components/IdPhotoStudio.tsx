@@ -15,6 +15,7 @@ export function IdPhotoStudio({ initialSkuId }: { initialSkuId?: string }) {
   const [resultUrl, setResultUrl] = useState<string | null>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [note, setNote] = useState("");
+  const [needsSignIn, setNeedsSignIn] = useState(false);
 
   const selected = skus.find((sku) => sku.id === skuId);
 
@@ -23,6 +24,7 @@ export function IdPhotoStudio({ initialSkuId }: { initialSkuId?: string }) {
     setResultUrl(null);
     setStatus("idle");
     setNote("");
+    setNeedsSignIn(false);
     setPreview(next ? URL.createObjectURL(next) : null);
   }
 
@@ -35,6 +37,7 @@ export function IdPhotoStudio({ initialSkuId }: { initialSkuId?: string }) {
 
     setStatus("shooting");
     setNote("");
+    setNeedsSignIn(false);
     const body = new FormData();
     body.set("skuId", skuId);
     body.set("file", file);
@@ -46,12 +49,15 @@ export function IdPhotoStudio({ initialSkuId }: { initialSkuId?: string }) {
       });
       if (!response.ok) {
         setStatus("error");
+        setNeedsSignIn(response.status === 401);
         setNote(
-          response.status === 404
-            ? "这一规格暂时不开放。"
-            : response.status === 503
-              ? "这一刻还存不进去。"
-              : "这张照片观澜看不清。",
+          response.status === 401
+            ? "先让观澜认识你。"
+            : response.status === 404
+              ? "这一规格暂时不开放。"
+              : response.status === 503
+                ? "这一刻还存不进去。"
+                : "这张照片观澜看不清。",
         );
         return;
       }
@@ -84,6 +90,7 @@ export function IdPhotoStudio({ initialSkuId }: { initialSkuId?: string }) {
                 setSkuId(sku.id);
                 setResultUrl(null);
                 setStatus("idle");
+                setNeedsSignIn(false);
               }}
             >
               <img
@@ -155,6 +162,12 @@ export function IdPhotoStudio({ initialSkuId }: { initialSkuId?: string }) {
       {note ? (
         <p className="note" data-tone={status === "error" ? "error" : undefined}>
           {note}
+          {needsSignIn ? (
+            <>
+              {" "}
+              <a href="/me">进入</a>
+            </>
+          ) : null}
         </p>
       ) : null}
 

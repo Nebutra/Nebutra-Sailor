@@ -16,11 +16,11 @@ KUANLAN 围绕「我如何出现、如何被看见」工作。它不是变美工
 
 1. 产品首页（品牌认知 + 开拍入口）
 2. Create（今天想怎么拍？）
-3. 领证照（领英灰蓝/浅灰职业照）+ 证件照规格（一寸/二寸/护照/美签），每规格有样例图
+3. 领证照（领英灰蓝/浅灰/质感蓝棚底职业照）+ 证件照规格（一寸/二寸/护照/美签），每规格有样例图
 4. 资源落在 Cloudflare R2。公开 stills（orbit / 开拍样例 / 衣柜）在 `nebutra-assets`，经 `https://cdn.nebutra.com/kuanlan/…` 消费。Moment 写入 `nebutra-uploads`。`public/` 只做种子，不给浏览器当源。
 5. 开拍：本应用后端封装 SKU 系统提示词，再打 `https://router.nebutra.com/v1` 的 `gpt-image-2`（New-API 中转 302.ai），最后由 sharp 裁到规格像素
 
-Wardrobe 挂的是件 SKU（西装 / 针织 / 衬衫），只出衣服不出人像。件静物是带 alpha 的 PNG，不见衣架；背景用 `--garment-ground` 换（paper / white / smoke / ink）。开拍 SKU 可以引用一件衣服；领证照是其中一条已开放的开拍路径，不是衣柜的理由。不假装已经认识用户自己的衣柜。Moments / Me 仍先占位。
+Wardrobe 挂的是件 SKU（西装 / 针织 / 衬衫），只出衣服不出人像。件静物是带 alpha 的 PNG，不见衣架；背景用 `--garment-ground` 换（paper / white / smoke / ink）。开拍 SKU 可以引用一件衣服；领证照是其中一条已开放的开拍路径，不是衣柜的理由。不假装已经认识用户自己的衣柜。进入走 `auth.nebutra.com`，回来停在观澜；开拍和 Moments 挂在这笔会话上。
 
 ## SKU 控制面
 
@@ -29,7 +29,7 @@ Wardrobe 挂的是件 SKU（西装 / 针织 / 衬衫），只出衣服不出人�
 - `enabled: true` 出现在对应表面：件进 Wardrobe，开拍进 Create / `GET /api/skus`
 - `enabled: false` 对用户不可见；compose 与 API 失败关闭
 - 领证照是通用规格模型，不是写死的单一尺寸
-- `look: "linkedin"` 是 8 月跑过的领英职业照（灰蓝/浅灰、头微侧；西装 / 针织 / 衬衫可换）
+- `look: "linkedin"` 是领英/职业领证照（灰蓝/浅灰/质感蓝棚底；西装 / 针织 / 衬衫可换）
 - `look: "id-card"` 是证件照（白底/蓝底、正脸）
 
 当前不开放：写真主题、旅游目的地、穿搭商品、商业套餐选品。

@@ -74,6 +74,8 @@ describe("catalog", () => {
   it("lets a shoot spec point at a garment without owning it", () => {
     expect(getEnabledSku("linkedin-smoke").garmentId).toBe("blazer");
     expect(getEnabledSku("linkedin-smoke-knit").garmentId).toBe("knit");
+    expect(getEnabledSku("linkedin-studio").garmentId).toBe("blazer");
+    expect(getEnabledSku("linkedin-studio").background).toBe("studio");
     expect(getEnabledSku("cn-1in-white").garmentId).toBeUndefined();
   });
 
@@ -86,6 +88,7 @@ describe("catalog", () => {
     expect(publicIds).toContain("linkedin-smoke-knit");
     expect(publicIds).toContain("linkedin-smoke-oxford");
     expect(publicIds).toContain("linkedin-light");
+    expect(publicIds).toContain("linkedin-studio");
     expect(publicIds).toContain("cn-1in-white");
     expect(publicIds).toContain("visa-us");
   });
@@ -178,6 +181,7 @@ describe("catalog", () => {
     expect(page).toContain("piece?");
     expect(page).toContain("pieceId");
     expect(page).toContain('label: "衣服"');
+    expect(page).toContain("质感|美式");
     expect(page).not.toContain("远方");
     expect(page).not.toMatch(/感觉(?!还在后面)/);
   });

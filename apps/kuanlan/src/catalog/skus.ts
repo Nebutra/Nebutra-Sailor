@@ -54,7 +54,7 @@ export type GarmentSpec = {
 };
 
 export type IdPhotoLook = "linkedin" | "id-card";
-export type IdPhotoBackground = "white" | "blue" | "red" | "smoke" | "light";
+export type IdPhotoBackground = "white" | "blue" | "red" | "smoke" | "light" | "studio";
 
 export type GarmentSku = SkuBrand & {
   id: GarmentId;
@@ -219,6 +219,20 @@ export const SKUS: readonly KuanlanSku[] = [
     background: "light",
     garmentId: "blazer",
     headRatio: 0.72,
+  }),
+  listed({
+    id: "linkedin-studio",
+    kind: ID_PHOTO_KIND,
+    look: "linkedin",
+    enabled: true,
+    title: "领证照",
+    subtitle: "质感蓝 · 西装",
+    widthMm: 40,
+    heightMm: 50,
+    dpi: 300,
+    background: "studio",
+    garmentId: "blazer",
+    headRatio: 0.62,
   }),
   listed({
     id: "cn-1in-white",

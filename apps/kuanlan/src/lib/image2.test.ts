@@ -52,6 +52,7 @@ describe("image2 consume", () => {
     const idCard = idPhotoShootBrief(getEnabledSku("cn-2in-blue"));
     expect(idCard).toContain("same person");
     expect(idCard).toContain("Official identification");
+    expect(idCard).toContain("Leave space above the crown");
     expect(idCard).toContain("标准证件照蓝底");
     expect(idCard).not.toMatch(/生成|Prompt|模型|KUANLAN|VLM/);
 
@@ -66,6 +67,16 @@ describe("image2 consume", () => {
     const knit = idPhotoShootBrief(getEnabledSku("linkedin-smoke-knit"));
     expect(knit).toContain("charcoal merino");
     expect(knit).not.toContain("navy blazer");
+
+    const studio = idPhotoShootBrief(getEnabledSku("linkedin-studio"));
+    expect(studio).toContain("American-style");
+    expect(studio).toContain("Half-body");
+    expect(studio).toContain("质感蓝棚底");
+    expect(studio).toContain("simple dark tie");
+    expect(studio).toContain("Leave space above the crown");
+    expect(studio).not.toContain("标准证件照蓝底");
+    expect(studio).not.toContain("Official identification");
+    expect(studio).not.toMatch(/生成|Prompt|模型|KUANLAN|VLM/);
   });
 
   it("reads b64 image bytes from the OpenAI-shaped response", () => {
@@ -116,6 +127,8 @@ describe("image2 consume", () => {
     );
     expect(studio).not.toMatch(/idPhotoShootBrief|@\/lib\/image2|api\.302|ROUTER_API_KEY/);
     expect(studio).toContain("/api/moments/id-photo");
+    expect(studio).toContain("401");
+    expect(studio).toContain("先让观澜认识你");
     expect(studio).toContain("skuId");
     expect(studio).toContain("sku.sample");
     expect(studio).toContain("sku-card");
