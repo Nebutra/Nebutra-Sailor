@@ -48,16 +48,23 @@ describe("composeIdPhoto", () => {
     expect(data[last]).toBe(67);
     expect(data[last + 1]).toBe(142);
     expect(data[last + 2]).toBe(219);
+  });
 
-    const studio = getEnabledSku("linkedin-studio");
-    const studioPrint = await composeIdPhoto({
+  it("prints 领证照 across the frame, not a stamp on the studio canvas", async () => {
+    const sku = getEnabledSku("linkedin-studio");
+    const result = await composeIdPhoto({
       source: await samplePortrait(),
-      sku: studio,
+      sku,
     });
-    const studioRaw = await sharp(studioPrint.png).raw().toBuffer({ resolveWithObject: true });
-    expect(studioRaw.data[0]).toBe(42);
-    expect(studioRaw.data[1]).toBe(64);
-    expect(studioRaw.data[2]).toBe(102);
+    const { data, info } = await sharp(result.png).raw().toBuffer({ resolveWithObject: true });
+    const inset =
+      (Math.floor(info.height / 2) * info.width + Math.floor(info.width * 0.08)) * info.channels;
+
+    expect(info.width).toBe(472);
+    expect(info.height).toBe(591);
+    expect(data[inset]).toBeGreaterThan(180);
+    expect(data[inset + 1]).toBeLessThan(80);
+    expect(data[inset + 2]).toBeLessThan(80);
   });
 
   it("places the portrait inside the frame", async () => {

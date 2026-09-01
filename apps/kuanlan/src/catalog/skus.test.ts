@@ -145,8 +145,9 @@ describe("catalog", () => {
   it("ships a sample still for every live spec", () => {
     const dir = join(dirname(fileURLToPath(import.meta.url)), "../../public/skus");
     for (const sku of listIdPhotoSkus()) {
+      const bust = sku.id === "linkedin-studio" ? "?v=2" : "";
       expect(toPublicIdPhoto(sku).sample).toBe(
-        `https://cdn.nebutra.com/kuanlan/skus/${sku.id}.jpg`,
+        `https://cdn.nebutra.com/kuanlan/skus/${sku.id}.jpg${bust}`,
       );
       expect(existsSync(join(dir, `${sku.id}.jpg`))).toBe(true);
     }
