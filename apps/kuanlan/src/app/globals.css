@@ -52,12 +52,37 @@ input {
   top: 0;
   z-index: 20;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(240px, 420px) minmax(0, 1fr);
+  grid-template-columns: 1fr auto;
   align-items: center;
   gap: 16px;
   padding: 18px 22px 10px;
   background: color-mix(in srgb, var(--canvas) 86%, transparent);
   backdrop-filter: blur(16px);
+}
+
+.chatbox {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  display: flex;
+  justify-content: center;
+  padding: 12px 22px calc(18px + env(safe-area-inset-bottom));
+  background: linear-gradient(
+    to top,
+    var(--canvas) 0%,
+    color-mix(in srgb, var(--canvas) 78%, transparent) 58%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.chatbox .search-pill {
+  pointer-events: auto;
+  width: min(680px, 100%);
+  height: 52px;
+  box-shadow: 0 10px 40px color-mix(in srgb, var(--ink) 10%, transparent);
 }
 
 .topbar-left,
@@ -298,7 +323,7 @@ input {
 .explore {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 12px 22px 80px;
+  padding: 12px 22px 120px;
 }
 
 .explore h1,
@@ -520,15 +545,6 @@ input {
 }
 
 @media (max-width: 960px) {
-  .topbar {
-    grid-template-columns: 1fr auto;
-  }
-
-  .topbar-search {
-    grid-column: 1 / -1;
-    order: 3;
-  }
-
   .masonry {
     columns: 2;
   }
