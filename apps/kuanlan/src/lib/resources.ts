@@ -3,6 +3,7 @@ export const DEFAULT_R2_PUBLIC_URL = "https://cdn.nebutra.com";
 
 const ORBIT_NAME = /^[0-9]{2}\.jpg$/;
 const MOMENT_ID = /^[a-zA-Z0-9_-]+$/;
+const SKU_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 export class ResourceStoreUnavailableError extends Error {
   constructor(message = "r2_unconfigured") {
@@ -25,6 +26,18 @@ export function orbitAssetKey(name: string): string {
     throw new InvalidResourceKeyError("orbit_name");
   }
   return `${RESOURCE_ROOT}/orbit/${name}`;
+}
+
+export function skuSampleKey(id: string): string {
+  if (!SKU_ID.test(id)) {
+    throw new InvalidResourceKeyError("sku_id");
+  }
+  return `${RESOURCE_ROOT}/skus/${id}.jpg`;
+}
+
+export function skuSampleSrc(id: string): string {
+  skuSampleKey(id);
+  return `/skus/${id}.jpg`;
 }
 
 export function momentObjectKey(input: {

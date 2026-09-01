@@ -1,4 +1,4 @@
-import { resolveOrbitSrc } from "./resources";
+import { resolveOrbitSrc, skuSampleSrc } from "./resources";
 
 export type OrbitTile = {
   name: string;
@@ -55,6 +55,7 @@ export const HOME_ORBIT = [
     blur: 0,
     href: "/create/id-photo",
     label: "领证照",
+    sampleSku: "cn-2in-white",
   },
   {
     name: "04.jpg",
@@ -159,4 +160,8 @@ export const HOME_ORBIT = [
 
 export function orbitSrc(name: string): string {
   return resolveOrbitSrc(name);
+}
+
+export function homeOrbitSrc(tile: { name: string; sampleSku?: string }): string {
+  return tile.sampleSku ? skuSampleSrc(tile.sampleSku) : orbitSrc(tile.name);
 }

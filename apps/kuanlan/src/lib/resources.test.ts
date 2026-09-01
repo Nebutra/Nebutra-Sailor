@@ -7,12 +7,20 @@ import {
   publicAssetUrl,
   RESOURCE_ROOT,
   ResourceStoreUnavailableError,
+  skuSampleKey,
+  skuSampleSrc,
 } from "./resources";
 
 describe("resource keys", () => {
   it("places public orbit stills under the kuanlan assets prefix", () => {
     expect(orbitAssetKey("01.jpg")).toBe("kuanlan/orbit/01.jpg");
     expect(orbitAssetKey("12.jpg")).toBe(`${RESOURCE_ROOT}/orbit/12.jpg`);
+  });
+
+  it("places 领证照 samples under the public skus prefix", () => {
+    expect(skuSampleKey("cn-2in-white")).toBe("kuanlan/skus/cn-2in-white.jpg");
+    expect(skuSampleSrc("visa-us")).toBe("/skus/visa-us.jpg");
+    expect(() => skuSampleSrc("../secret")).toThrow(InvalidResourceKeyError);
   });
 
   it("places 领证照 moments under the private uploads prefix", () => {

@@ -8,11 +8,12 @@ import {
 
 export const MAX_PORTRAIT_BYTES = 12 * 1024 * 1024;
 
-const BACKGROUNDS: Record<IdPhotoBackground, { r: number; g: number; b: number }> = {
-  white: { r: 255, g: 255, b: 255 },
-  blue: { r: 67, g: 142, b: 219 },
-  red: { r: 217, g: 0, b: 27 },
-};
+export const ID_PHOTO_BACKGROUNDS: Record<IdPhotoBackground, { r: number; g: number; b: number }> =
+  {
+    white: { r: 255, g: 255, b: 255 },
+    blue: { r: 67, g: 142, b: 219 },
+    red: { r: 217, g: 0, b: 27 },
+  };
 
 export class InvalidPortraitError extends Error {
   constructor(message = "invalid_portrait") {
@@ -49,7 +50,7 @@ export async function composeIdPhoto(input: {
   }
 
   const { width, height } = skuPixelSize(input.sku);
-  const background = BACKGROUNDS[input.sku.background];
+  const background = ID_PHOTO_BACKGROUNDS[input.sku.background];
   const box = subjectBox(width, height, input.sku.headRatio);
 
   try {

@@ -104,5 +104,8 @@ describe("image2 consume", () => {
     expect(studio).not.toMatch(/idPhotoShootBrief|@\/lib\/image2|api\.302|ROUTER_API_KEY/);
     expect(studio).toContain("/api/moments/id-photo");
     expect(studio).toContain("skuId");
+    expect(studio).toContain("sku.sample");
+    expect(studio).toContain("sku-card");
+    expect(studio).not.toContain('className="sku-row"');
   });
 });
