@@ -4,6 +4,7 @@ primary_region = "sin"
 [env]
   HOSTNAME = "0.0.0.0"
   PORT = "8080"
+  AUTH_ENABLED_OAUTH_PROVIDERS = "google,github"
 
 [http_service]
   internal_port = 8080
