@@ -100,6 +100,13 @@ jobs:
           REMOTE_HOST: carina-ecs
         run: bash infra/ops/scripts/deploy-carina-docs-ecs.sh
 
+      # Same box, same default-443 301. A later main nginx.conf upload that
+      # omitted this include sent kuanlan.nebutra.com to the marketing apex.
+      - name: Restore kuanlan nginx vhost
+        env:
+          REMOTE_HOST: carina-ecs
+        run: bash infra/ops/scripts/install-kuanlan-nginx-vhost.sh
+
       - name: Smoke public host
         run: |
           set -euo pipefail
