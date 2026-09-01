@@ -64,6 +64,7 @@ describe("carina domain closure", () => {
     const deploy = readFileSync(flyWf, "utf-8");
     expect(deploy).toContain("Nebutra/carina");
     expect(deploy).toContain("nebutra-carina");
+    expect(deploy).toContain("/var/www/nebutra/carina/current");
     expect(deploy).toContain("FLY_API_TOKEN");
 
     const ecsDeploy = readFileSync(ecsWf, "utf-8");

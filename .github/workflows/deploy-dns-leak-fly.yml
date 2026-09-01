@@ -61,28 +61,23 @@ jobs:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
           set -euo pipefail
-          ns_ip="$(flyctl ips list -a nebutra-dns-leak --json | python3 -c '
-          import json, sys
-          for ip in json.load(sys.stdin):
-              addr = ip.get("Address") or ip.get("address") or ""
-              fam = (ip.get("Family") or ip.get("family") or "").lower()
-              kind = (ip.get("Type") or ip.get("type") or "").lower()
-              if "." in addr and "v4" in fam and "shared" not in kind:
+          pick_v4() {
+            python3 -c '
+          import json, re, sys
+          raw = json.load(sys.stdin)
+          rows = raw if isinstance(raw, list) else raw.get("ips") or raw.get("Addresses") or raw.get("data") or []
+          for ip in rows:
+              addr = ip.get("Address") or ip.get("address") or ip.get("IP") or ip.get("ip") or ""
+              kind = str(ip.get("Type") or ip.get("type") or "").lower()
+              if re.match(r"^\d{1,3}(\.\d{1,3}){3}$", addr) and "shared" not in kind:
                   print(addr)
                   break
-          ')"
+          '
+          }
+          ns_ip="$(flyctl ips list -a nebutra-dns-leak --json | pick_v4)"
           if [ -z "$ns_ip" ]; then
             flyctl ips allocate-v4 -a nebutra-dns-leak --yes
-            ns_ip="$(flyctl ips list -a nebutra-dns-leak --json | python3 -c '
-          import json, sys
-          for ip in json.load(sys.stdin):
-              addr = ip.get("Address") or ip.get("address") or ""
-              fam = (ip.get("Family") or ip.get("family") or "").lower()
-              kind = (ip.get("Type") or ip.get("type") or "").lower()
-              if "." in addr and "v4" in fam and "shared" not in kind:
-                  print(addr)
-                  break
-          ')"
+            ns_ip="$(flyctl ips list -a nebutra-dns-leak --json | pick_v4)"
           fi
           test -n "$ns_ip"
           echo "ns_ip=$ns_ip" >> "$GITHUB_OUTPUT"

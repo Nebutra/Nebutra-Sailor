@@ -140,7 +140,7 @@ jobs:
           flyctl ssh sftp put -a nebutra-new-api \
             "$RUNNER_TEMP/new-api-data.tgz" /tmp/new-api-data.tgz
           flyctl ssh console -a nebutra-new-api --pty=false -C \
-            "tar -C /data -xzf /tmp/new-api-data.tgz && rm -f /tmp/new-api-data.tgz && ls /data | wc -l"
+            "sh -c 'tar -C /data -x -z -f /tmp/new-api-data.tgz && rm -f /tmp/new-api-data.tgz && ls /data'"
           rm -f "$RUNNER_TEMP/new-api-data.tgz"
           flyctl apps restart nebutra-new-api
 
