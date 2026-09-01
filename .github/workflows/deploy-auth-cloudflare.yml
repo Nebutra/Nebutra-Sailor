@@ -16,10 +16,12 @@ on:
       - "apps/auth/src/lib/auth-edge-cors.ts"
       - "apps/auth/src/lib/auth-edge-pool.ts"
       - "apps/auth/src/lib/auth-edge-oauth.ts"
+      - "apps/auth/src/lib/phone-login.ts"
       - "apps/auth/src/lib/session-hint.ts"
       - "apps/auth/wrangler.edge.jsonc"
       - "apps/auth/package.json"
       - "packages/iam/auth/**"
+      - "packages/integrations/sms/**"
       - ".github/workflows/deploy-auth-cloudflare.yml"
 
 permissions:
@@ -50,7 +52,7 @@ jobs:
       # `prepare`, so its dist/ does not exist here and esbuild fails to resolve
       # the subpath. Build what the bundle imports.
       - name: Build bundled workspace packages
-        run: pnpm turbo run build --filter=@nebutra/brand
+        run: pnpm turbo run build --filter=@nebutra/brand --filter=@nebutra/sms
 
       - name: Deploy auth-edge worker
         env:
@@ -89,6 +91,10 @@ jobs:
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           GITHUB_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID || secrets.GITHUB_CLIENT_ID }}
           GITHUB_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET || secrets.GITHUB_CLIENT_SECRET }}
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_VERIFY_SERVICE_SID: ${{ secrets.TWILIO_VERIFY_SERVICE_SID }}
+          TURNSTILE_SECRET: ${{ secrets.TURNSTILE_SECRET || secrets.TURNSTILE_SECRET_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
@@ -188,6 +194,10 @@ jobs:
           put GOOGLE_CLIENT_SECRET "${GOOGLE_CLIENT_SECRET:-}"
           put GITHUB_CLIENT_ID "${GITHUB_CLIENT_ID:-}"
           put GITHUB_CLIENT_SECRET "${GITHUB_CLIENT_SECRET:-}"
+          put TWILIO_ACCOUNT_SID "${TWILIO_ACCOUNT_SID:-}"
+          put TWILIO_AUTH_TOKEN "${TWILIO_AUTH_TOKEN:-}"
+          put TWILIO_VERIFY_SERVICE_SID "${TWILIO_VERIFY_SERVICE_SID:-}"
+          put TURNSTILE_SECRET "${TURNSTILE_SECRET:-}"
           put DATABASE_URL "${DATABASE_URL:-}"
           if [ -z "${BETTER_AUTH_SECRET:-}" ]; then
             echo "::warning::BETTER_AUTH_SECRET still unset — OAuth/session crypto will fail until set"
@@ -213,6 +223,18 @@ jobs:
             echo "::error::Auth edge health failed ($health_code)"
             exit 1
           fi
+          python3 <<'PY'
+          import json
+          with open("/tmp/ah.json", encoding="utf-8") as fh:
+              data = json.load(fh)
+          phone = ((data.get("features") or {}).get("phoneLogin") or {})
+          enabled = phone.get("enabled")
+          if not isinstance(enabled, bool):
+              raise SystemExit("health is missing features.phoneLogin.enabled")
+          if enabled and (phone.get("provider") != "twilio-verify" or phone.get("captcha") != "cloudflare-turnstile"):
+              raise SystemExit("phone login is enabled without the expected provider/captcha pair")
+          print(f"phone login enabled={str(enabled).lower()} (no SMS sent)")
+          PY
           ui_code="000"
           for i in 1 2 3 4 5 6 7 8; do
             ui_code=$(curl -sS -D /tmp/as.headers -o /tmp/as.html -w '%{http_code}' --max-time 30 \
