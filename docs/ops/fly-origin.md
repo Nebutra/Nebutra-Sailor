@@ -9,15 +9,21 @@ The Hono origin ships separately via
 because it is not a Next standalone image.
 
 Landing and Cloudflare Workers (gateway-edge + auth-edge) stay put.
-`sso` / `admin` / `docs` ship as Fly Next Machines. Shanghai ECS is
-rollback only until carina / New-API / leak DNS finish their own Fly
-apps. `deploy-ecs.yml` remains the rollback.
+`sso` / `admin` / `docs` ship as Fly Next Machines. Carina is a static
+nginx Machine (`deploy-carina-fly.yml`). New-API is a private Machine
+with no public IP (`deploy-new-api-fly.yml`); Router reaches it at
+`http://nebutra-new-api.internal:3000/v1`. Leak DNS is UDP/TCP 53 on a
+dedicated IPv4 (`deploy-dns-leak-fly.yml`); glue A stays DNS-only.
+Shanghai ECS is China-forward / rollback only. `deploy-ecs.yml` remains
+the rollback.
 
 ## Live traffic
 
-`forge` / `router` / `app` / `pebble` / `design` / `kuanlan` / `sso` / `admin` / `docs` are proxied CNAMEs to
-Fly Machines in `sin` (Let's Encrypt certs issued). Confirm with
-`via: 1.1 fly.io` on the product hostname.
+`forge` / `router` / `app` / `pebble` / `design` / `kuanlan` / `sso` /
+`admin` / `docs` / `carina` are proxied CNAMEs to Fly Machines in `sin`
+(Let's Encrypt certs issued). Confirm with `via: 1.1 fly.io` on the
+product hostname. `ns1.leak` is a grey-cloud A to the leak Machine's
+dedicated IPv4. New-API has no public DNS.
 
 The Hono origin is `nebutra-gateway` in `sin`. `api.nebutra.com` stays
 orange-cloud on `nebutra-gateway-edge`, which forwards to

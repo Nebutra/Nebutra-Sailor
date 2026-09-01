@@ -6,7 +6,8 @@ name: Deploy origin apps to Fly
 # The auth Next UI runs as a private origin behind auth-edge; its product DNS
 # must never be cut over directly to Fly.
 # SSO / admin / docs ship as Next Machines here. Carina, New-API, and
-# leak DNS are separate Fly apps (not this Next standalone matrix).
+# leak DNS are separate Fly apps (deploy-carina-fly.yml,
+# deploy-new-api-fly.yml, deploy-dns-leak-fly.yml).
 # This workflow deploys Machines; DNS cutover is a separate workflow_dispatch
 # input so a failed image cannot take production down.
 #

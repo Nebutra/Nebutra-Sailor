@@ -1,0 +1,175 @@
+name: Deploy New-API to Fly
+
+# Private channel hub. No public hostname. Router consume stays
+# https://router.nebutra.com/v1. Copies /data + SESSION_SECRET from the
+# Shanghai box, then points nebutra-router at 6PN.
+
+on:
+  workflow_dispatch:
+    inputs:
+      copy_data:
+        description: "Copy /var/www/nebutra/new-api/data from the VM onto the Fly volume"
+        required: false
+        default: "true"
+        type: boolean
+      point_router:
+        description: "Set nebutra-router NEW_API_BASE_URL to the Fly 6PN URL"
+        required: false
+        default: "true"
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-new-api-fly
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Fly new-api private
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require FLY_API_TOKEN
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          if [ -z "${FLY_API_TOKEN:-}" ]; then
+            echo "::error::Set repository secret FLY_API_TOKEN (deploy token)."
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      - name: Ensure Fly app and volume
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          FLY_ORG: ${{ vars.FLY_ORG }}
+        run: |
+          set -euo pipefail
+          org="$(bash infra/ops/scripts/resolve-fly-org.sh)"
+          echo "using Fly org $org"
+          if flyctl apps list --json | python3 -c "import json,sys; names={a.get('Name') or a.get('name') for a in json.load(sys.stdin)}; sys.exit(0 if 'nebutra-new-api' in names else 1)"; then
+            echo "app nebutra-new-api exists"
+          else
+            flyctl apps create nebutra-new-api --machines --org "$org" --yes
+          fi
+          if flyctl volumes list -a nebutra-new-api --json | python3 -c 'import json,sys; vols=json.load(sys.stdin); sys.exit(0 if any((v.get("Name") or v.get("name"))=="new_api_data" for v in vols) else 1)'; then
+            echo "volume new_api_data exists"
+          else
+            flyctl volumes create new_api_data -a nebutra-new-api --region sin --size 3 --yes
+          fi
+          # Drop any public IPv4/IPv6 so admin never has a hostname.
+          flyctl ips list -a nebutra-new-api --json | python3 -c '
+          import json, sys, subprocess
+          for ip in json.load(sys.stdin):
+              addr = ip.get("Address") or ip.get("address") or ""
+              kind = (ip.get("Type") or ip.get("type") or "").lower()
+              if not addr:
+                  continue
+              if "private" in kind or "privatenetwork" in kind or addr.startswith("fdaa:"):
+                  continue
+              print("releasing public", addr)
+              subprocess.check_call(["flyctl", "ips", "release", addr, "-a", "nebutra-new-api", "--yes"])
+          '
+
+      - name: Import SESSION_SECRET from VM
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          VM_HOST: ${{ vars.VM_HOST || vars.ECS_HOST }}
+          VM_USER: ${{ vars.VM_USER || vars.ECS_USER }}
+          VM_SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${VM_HOST:-}" ] || [ -z "${VM_SSH_PRIVATE_KEY:-}" ]; then
+            echo "::warning::No VM SSH — set SESSION_SECRET on nebutra-new-api by hand."
+            exit 0
+          fi
+          install -m 600 /dev/null "$RUNNER_TEMP/vm_key"
+          printf '%s\n' "$VM_SSH_PRIVATE_KEY" > "$RUNNER_TEMP/vm_key"
+          secret=""
+          if ssh -i "$RUNNER_TEMP/vm_key" -o StrictHostKeyChecking=accept-new \
+            "${VM_USER}@${VM_HOST}" "test -f /var/www/nebutra/new-api/session.secret"; then
+            secret="$(ssh -i "$RUNNER_TEMP/vm_key" -o StrictHostKeyChecking=accept-new \
+              "${VM_USER}@${VM_HOST}" "cat /var/www/nebutra/new-api/session.secret")"
+          fi
+          rm -f "$RUNNER_TEMP/vm_key"
+          if [ -z "$secret" ]; then
+            echo "::warning::No session.secret on VM — New-API will generate its own."
+            exit 0
+          fi
+          flyctl secrets set SESSION_SECRET="$secret" -a nebutra-new-api --stage
+          unset secret
+
+      - name: Deploy Machine
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          flyctl deploy \
+            --config "$GITHUB_WORKSPACE/infra/fly/new-api.toml" \
+            --image calciumion/new-api:v0.8.7.4 \
+            --ha=false \
+            --remote-only \
+            --yes
+
+      - name: Copy VM /data onto the volume
+        if: github.event.inputs.copy_data != 'false'
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          VM_HOST: ${{ vars.VM_HOST || vars.ECS_HOST }}
+          VM_USER: ${{ vars.VM_USER || vars.ECS_USER }}
+          VM_SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${VM_HOST:-}" ] || [ -z "${VM_SSH_PRIVATE_KEY:-}" ]; then
+            echo "::error::Need VM SSH to copy New-API data."
+            exit 1
+          fi
+          install -m 600 /dev/null "$RUNNER_TEMP/vm_key"
+          printf '%s\n' "$VM_SSH_PRIVATE_KEY" > "$RUNNER_TEMP/vm_key"
+          ssh -i "$RUNNER_TEMP/vm_key" -o StrictHostKeyChecking=accept-new \
+            "${VM_USER}@${VM_HOST}" \
+            "tar -C /var/www/nebutra/new-api/data -czf - ." \
+            > "$RUNNER_TEMP/new-api-data.tgz"
+          rm -f "$RUNNER_TEMP/vm_key"
+          test -s "$RUNNER_TEMP/new-api-data.tgz"
+          flyctl ssh sftp put -a nebutra-new-api \
+            "$RUNNER_TEMP/new-api-data.tgz" /tmp/new-api-data.tgz
+          flyctl ssh console -a nebutra-new-api --pty=false -C \
+            "tar -C /data -xzf /tmp/new-api-data.tgz && rm -f /tmp/new-api-data.tgz && ls /data | wc -l"
+          rm -f "$RUNNER_TEMP/new-api-data.tgz"
+          flyctl apps restart nebutra-new-api
+
+      - name: Smoke 6PN from this org
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6; do
+            if flyctl ssh console -a nebutra-new-api --pty=false -C \
+              "wget -qO- --timeout=5 http://127.0.0.1:3000/api/status || wget -qO- --timeout=5 http://127.0.0.1:3000/ || true" \
+              | tee "$RUNNER_TEMP/new-api-smoke.txt" | grep -q .; then
+              echo "new-api answered on try $i"
+              exit 0
+            fi
+            sleep 8
+          done
+          flyctl status -a nebutra-new-api || true
+          flyctl logs -a nebutra-new-api --no-tail || true
+          echo "::error::nebutra-new-api did not answer on :3000"
+          exit 1
+
+      - name: Point Fly router at 6PN
+        if: github.event.inputs.point_router != 'false'
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          flyctl secrets set \
+            NEW_API_BASE_URL=http://nebutra-new-api.internal:3000/v1 \
+            -a nebutra-router
+          echo "router now consumes New-API over 6PN"

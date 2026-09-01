@@ -66,8 +66,9 @@ on:
       - "packages/design/**"
       - "apps/forge/**"
       - "apps/router/**"
-      # kuanlan ships on Fly (deploy-fly.yml). Keep the VM bundle as rollback
-      # via workflow_dispatch; do not auto-push it here or DNS will steal Fly.
+      # kuanlan / idp / admin / sailor-docs ship on Fly (deploy-fly.yml).
+      # Keep the VM bundle as rollback via workflow_dispatch; do not auto-push
+      # them here or a later main push will steal DNS back to Shanghai.
       - "apps/pebble/**"
       - "backends/gateway/**"
       - "packages/ai/forge-runtime/**"

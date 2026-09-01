@@ -1,0 +1,28 @@
+# Channel hub. No public HTTP — Router reaches it on 6PN only.
+# Public consume stays https://router.nebutra.com/v1. The 302 key never leaves this Machine.
+app = "nebutra-new-api"
+primary_region = "sin"
+
+[build]
+  image = "calciumion/new-api:v0.8.7.4"
+
+[env]
+  TZ = "Asia/Shanghai"
+  PORT = "3000"
+
+# TCP without published ports = 6PN / .internal only.
+[[services]]
+  protocol = "tcp"
+  internal_port = 3000
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+[mounts]
+  source = "new_api_data"
+  destination = "/data"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "1gb"

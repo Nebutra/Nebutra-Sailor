@@ -45,6 +45,9 @@ jobs:
           - app: sailor-docs
             fly_app: nebutra-docs
             host: docs
+          - app: carina
+            fly_app: nebutra-carina
+            host: carina
           - app: gateway
             fly_app: nebutra-gateway
             host: origin
