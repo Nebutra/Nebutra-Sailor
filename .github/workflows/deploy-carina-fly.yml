@@ -1,0 +1,142 @@
+name: Deploy Carina docs to Fly
+
+# Builds Nebutra/carina apps/docs and ships the static dist as an nginx
+# Machine in sin. ECS rsync (deploy-carina-ecs.yml) stays rollback-only.
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Carina git ref to deploy"
+        required: true
+        default: main
+      cutover:
+        description: "After a healthy Fly URL, point Cloudflare DNS (grey first — use unique host + certs)"
+        required: false
+        default: "false"
+        type: boolean
+  push:
+    branches: [main]
+    paths:
+      - "infra/fly/carina.toml"
+      - "infra/fly/carina.nginx.conf"
+      - "infra/fly/Dockerfile.carina"
+      - ".github/workflows/deploy-carina-fly.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-carina-fly
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Fly carina static
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require FLY_API_TOKEN
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          if [ -z "${FLY_API_TOKEN:-}" ]; then
+            echo "::error::Set repository secret FLY_API_TOKEN (deploy token)."
+            exit 1
+          fi
+
+      - name: Checkout Sailor
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Checkout Carina
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: Nebutra/carina
+          ref: ${{ inputs.ref || 'main' }}
+          path: carina
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      - name: Ensure Fly app
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          FLY_ORG: ${{ vars.FLY_ORG }}
+        run: |
+          set -euo pipefail
+          org="$(bash infra/ops/scripts/resolve-fly-org.sh)"
+          echo "using Fly org $org"
+          if flyctl apps list --json | python3 -c "import json,sys; names={a.get('Name') or a.get('name') for a in json.load(sys.stdin)}; sys.exit(0 if 'nebutra-carina' in names else 1)"; then
+            echo "app nebutra-carina exists"
+          else
+            flyctl apps create nebutra-carina --machines --org "$org" --yes
+          fi
+
+      - name: Setup Node and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version: "24"
+          install: "false"
+
+      - name: Pin the pnpm version carina builds with
+        run: |
+          corepack enable
+          corepack prepare pnpm@11.13.1 --activate
+
+      - name: Build Carina docs
+        working-directory: carina/apps/docs
+        run: |
+          set -euo pipefail
+          pnpm install --frozen-lockfile
+          pnpm run build
+          test -f dist/index.html
+
+      - name: Assemble image context
+        run: |
+          set -euo pipefail
+          STAGE="$RUNNER_TEMP/stage-carina"
+          rm -rf "$STAGE"
+          mkdir -p "$STAGE/html"
+          cp -R carina/apps/docs/dist/. "$STAGE/html/"
+          cp infra/fly/Dockerfile.carina "$STAGE/Dockerfile"
+          cp infra/fly/carina.nginx.conf "$STAGE/nginx.conf"
+          echo "STAGE=$STAGE" >> "$GITHUB_ENV"
+
+      - name: Deploy Machine
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          flyctl deploy "$STAGE" \
+            --config "$GITHUB_WORKSPACE/infra/fly/carina.toml" \
+            --dockerfile "$STAGE/Dockerfile" \
+            --ha=false \
+            --remote-only \
+            --yes
+
+      - name: Smoke Fly URL
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          url="https://nebutra-carina.fly.dev/"
+          llms="https://nebutra-carina.fly.dev/llms.txt"
+          for i in 1 2 3 4 5 6; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "$url" || echo 000)
+            lcode=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "$llms" || echo 000)
+            echo "try $i home=$code llms=$lcode"
+            if [ "$code" = "200" ] && [ "$lcode" = "200" ]; then
+              exit 0
+            fi
+            sleep 10
+          done
+          flyctl status -a nebutra-carina || true
+          flyctl logs -a nebutra-carina --no-tail || true
+          echo "::error::$url is not healthy. DNS will not cut over."
+          exit 1
+
+      - name: Cut over Cloudflare DNS
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.cutover == 'true'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          HOST: carina
+          FLY_APP: nebutra-carina
+        run: bash infra/ops/scripts/point-host-dns-fly.sh

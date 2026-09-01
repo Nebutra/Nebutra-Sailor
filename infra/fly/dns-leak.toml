@@ -1,0 +1,48 @@
+# Authoritative UDP/TCP 53 for leak.nebutra.com. Glue A must stay DNS-only.
+# Control API is 6PN only — Forge uses http://nebutra-dns-leak.internal:3953.
+app = "nebutra-dns-leak"
+primary_region = "sin"
+
+[env]
+  FORGE_DNS_LEAK_ZONE = "leak.nebutra.com"
+  FORGE_DNS_LEAK_NS = "ns1.leak.nebutra.com"
+  FORGE_DNS_LEAK_ANSWER_IP = "127.0.0.1"
+  FORGE_DNS_LEAK_DNS_HOST = "0.0.0.0"
+  FORGE_DNS_LEAK_DNS_PORT = "53"
+  FORGE_DNS_LEAK_API_HOST = "0.0.0.0"
+  FORGE_DNS_LEAK_API_PORT = "3953"
+
+[[services]]
+  protocol = "udp"
+  internal_port = 53
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+  [[services.ports]]
+    port = 53
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 53
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+  [[services.ports]]
+    port = 53
+
+# Control API — no public ports. Reachable on 6PN :3953.
+[[services]]
+  protocol = "tcp"
+  internal_port = 3953
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"

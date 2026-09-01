@@ -95,6 +95,9 @@ const MUST_STRIP = [
   ".github/workflows/deploy-pebble-vercel.yml",
   ".github/workflows/point-forge-dns.yml",
   ".github/workflows/deploy-carina-ecs.yml",
+  ".github/workflows/deploy-carina-fly.yml",
+  ".github/workflows/deploy-new-api-fly.yml",
+  ".github/workflows/deploy-dns-leak-fly.yml",
   ".github/workflows/sync-subrepo-mirrors.yml",
 ];
 
