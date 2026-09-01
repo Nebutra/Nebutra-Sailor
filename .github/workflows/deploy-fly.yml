@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated: forge router web pebble design gateway). Empty = Next edges. gateway is the Hono origin, not standalone."
+        description: "Apps to deploy (space-separated: forge router web pebble design gateway cache). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin."
         required: false
         default: ""
       cutover:
@@ -50,6 +50,7 @@ jobs:
     outputs:
       apps: ${{ steps.resolve.outputs.apps }}
       want_gateway: ${{ steps.resolve.outputs.want_gateway }}
+      want_cache: ${{ steps.resolve.outputs.want_cache }}
     steps:
       - id: resolve
         env:
@@ -66,7 +67,7 @@ jobs:
             {"app":"design","package":"@nebutra/design","workspace":"apps/design","build_command":"build","fly_app":"nebutra-design","host":"design","site":"https://design.nebutra.com"},
           ]
           wanted = [w for w in os.environ.get("INPUT_APPS", "").split() if w]
-          known = {row["app"] for row in all_apps} | {"gateway"}
+          known = {row["app"] for row in all_apps} | {"gateway", "cache"}
           missing = set(wanted) - known
           if missing:
               raise SystemExit(f"unknown apps: {sorted(missing)}")
@@ -77,6 +78,7 @@ jobs:
               fh.write(json.dumps(apps))
               fh.write("\nEOF\n")
               fh.write(f"want_gateway={'true' if 'gateway' in wanted else 'false'}\n")
+              fh.write(f"want_cache={'true' if ('cache' in wanted or 'gateway' in wanted) else 'false'}\n")
           PY
 
   deploy:
@@ -269,6 +271,8 @@ jobs:
           VM_HOST: ${{ vars.VM_HOST || vars.ECS_HOST }}
           VM_USER: ${{ vars.VM_USER || vars.ECS_USER }}
           VM_SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
         run: |
           set -euo pipefail
           if [ -z "${VM_HOST:-}" ] || [ -z "${VM_SSH_PRIVATE_KEY:-}" ]; then
@@ -304,6 +308,16 @@ jobs:
           flyctl secrets unset HOSTNAME PORT HOST -a nebutra-gateway --stage \
             || echo "no leftover bind secrets"
           flyctl secrets set HOST=0.0.0.0 PORT=8080 -a nebutra-gateway --stage
+          if [ -n "${UPSTASH_REDIS_REST_URL:-}" ] && [ -n "${UPSTASH_REDIS_REST_TOKEN:-}" ]; then
+            flyctl secrets set \
+              UPSTASH_REDIS_REST_URL="$UPSTASH_REDIS_REST_URL" \
+              UPSTASH_REDIS_REST_TOKEN="$UPSTASH_REDIS_REST_TOKEN" \
+              UPSTASH_REDIS_URL="$UPSTASH_REDIS_REST_URL" \
+              UPSTASH_REDIS_TOKEN="$UPSTASH_REDIS_REST_TOKEN" \
+              -a nebutra-gateway --stage
+          else
+            echo "::warning::UPSTASH_REDIS_* secrets missing — origin cache stays degraded"
+          fi
 
       - name: Setup Node and pnpm
         uses: ./.github/actions/setup-node-pnpm
@@ -364,3 +378,30 @@ jobs:
           HOST: origin
           FLY_APP: nebutra-gateway
         run: bash infra/ops/scripts/point-origin-dns-fly.sh
+
+  sync-gateway-cache:
+    name: Fly origin cache (Upstash)
+    needs: matrix
+    if: needs.matrix.outputs.want_cache == 'true' && needs.matrix.outputs.want_gateway != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      - name: Point origin cache at Upstash
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${UPSTASH_REDIS_REST_URL:-}" ] || [ -z "${UPSTASH_REDIS_REST_TOKEN:-}" ]; then
+            echo "::error::UPSTASH_REDIS_REST_URL / TOKEN secrets are not set"
+            exit 1
+          fi
+          flyctl secrets set \
+            UPSTASH_REDIS_REST_URL="$UPSTASH_REDIS_REST_URL" \
+            UPSTASH_REDIS_REST_TOKEN="$UPSTASH_REDIS_REST_TOKEN" \
+            UPSTASH_REDIS_URL="$UPSTASH_REDIS_REST_URL" \
+            UPSTASH_REDIS_TOKEN="$UPSTASH_REDIS_REST_TOKEN" \
+            -a nebutra-gateway

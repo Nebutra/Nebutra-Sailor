@@ -210,6 +210,9 @@ describe("Deploy substrate governance", () => {
 
     const nextYml = read("deploy-fly.yml");
     expect(nextYml).toContain("want_gateway");
+    expect(nextYml).toContain("want_cache");
+    expect(nextYml).toContain("UPSTASH_REDIS_REST_URL");
+    expect(nextYml).toContain("UPSTASH_REDIS_REST_TOKEN");
     expect(nextYml).toContain("infra/runtime/docker/Dockerfile.gateway");
     expect(nextYml).toContain("assemble-next-standalone.sh");
     expect(nextYml.indexOf("assemble-next-standalone.sh")).toBeLessThan(
