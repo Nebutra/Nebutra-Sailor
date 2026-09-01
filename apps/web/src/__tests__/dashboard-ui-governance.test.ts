@@ -8,6 +8,7 @@ const WORKSPACE_PAGE = join(APP_ROOT, "src/app/(app)/workspace/page.tsx");
 const STARTUP_OS_PAGE = join(APP_ROOT, "src/app/(app)/startup-os/page.tsx");
 const SHELL = join(APP_ROOT, "src/app/providers/design-system-shell.tsx");
 const SKELETONS = join(APP_ROOT, "src/app/(app)/_dashboard-skeletons.tsx");
+const APP_LOADING = join(APP_ROOT, "src/app/(app)/loading.tsx");
 const GETTING_STARTED = join(APP_ROOT, "src/components/onboarding/getting-started.tsx");
 const TEAM_INVITE_FORM = join(APP_ROOT, "src/app/(app)/settings/team/InviteMemberForm.tsx");
 const SETTINGS_API_KEY_FORM = join(
@@ -63,6 +64,16 @@ describe("@nebutra/web dashboard UI governance", () => {
       expect(source).not.toMatch(/dark:(bg|border|text)-(black|white)(?:\b|\/|\[)/);
       expect(source).not.toMatch(/\bbg-(black|white)(?:\b|\/|\[)/);
     }
+  });
+
+  it("centers the app-route loading fallback in the content pane", () => {
+    const source = readFileSync(APP_LOADING, "utf8");
+
+    expect(source).toContain("w-full");
+    expect(source).toContain("items-center");
+    expect(source).toContain("justify-center");
+    expect(source).toContain("px-6");
+    expect(source).not.toMatch(/Loading dashboard data/);
   });
 
   it("aligns dashboard loading skeletons with the upgraded surfaces", () => {
