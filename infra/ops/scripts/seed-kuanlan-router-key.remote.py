@@ -2,9 +2,8 @@
 """Issue a New-API user token and write it to kuanlan ROUTER_API_KEY.
 
 The 302.ai channel key stays inside New-API. This process never prints tokens.
+Compatible with the Cloud VM's system Python 3.6.
 """
-
-from __future__ import annotations
 
 import json
 import os
@@ -18,18 +17,18 @@ channel_key = os.environ.get("CHANNEL_302_KEY", "")
 admin_token = os.environ.get("NEW_API_ACCESS_TOKEN", "")
 secrets_path = "/tmp/seed-kuanlan-secrets.json"
 if os.path.exists(secrets_path):
-    with open(secrets_path, encoding="utf-8") as handle:
+    with open(secrets_path) as handle:
         secrets = json.load(handle)
     os.remove(secrets_path)
     channel_key = secrets.get("CHANNEL_302_KEY") or channel_key
     admin_token = secrets.get("NEW_API_ACCESS_TOKEN") or admin_token
 
 
-def req(method: str, path: str, body=None, token: str | None = None):
+def req(method, path, body=None, token=None):
     data = None if body is None else json.dumps(body).encode()
     headers = {"Content-Type": "application/json"}
     if token:
-        headers["Authorization"] = f"Bearer {token}"
+        headers["Authorization"] = "Bearer " + token
         headers["New-Api-User"] = "1"
     request = urllib.request.Request(base + path, data=data, headers=headers, method=method)
     with urllib.request.urlopen(request, timeout=20) as response:
@@ -37,11 +36,11 @@ def req(method: str, path: str, body=None, token: str | None = None):
         return json.loads(raw) if raw else {}
 
 
-def ok(payload) -> bool:
+def ok(payload):
     return bool(payload) and payload.get("success", True) is not False
 
 
-def extract_token(payload) -> str:
+def extract_token(payload):
     data = payload.get("data") or {}
     if isinstance(data, str):
         return data
@@ -55,28 +54,30 @@ def extract_token(payload) -> str:
     )
 
 
-def replace_env(path: str, key: str, value: str) -> None:
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+def replace_env(path, key, value):
+    dirname = os.path.dirname(path)
+    if dirname and not os.path.isdir(dirname):
+        os.makedirs(dirname)
     try:
-        with open(path, encoding="utf-8") as handle:
+        with open(path) as handle:
             lines = handle.readlines()
-    except FileNotFoundError:
+    except IOError:
         lines = []
     written = False
     out = []
-    prefix = f"{key}="
+    prefix = key + "="
     for line in lines:
         if line.startswith(prefix):
-            out.append(f"{prefix}{value}\n")
+            out.append(prefix + value + "\n")
             written = True
         else:
             out.append(line)
     if not written:
         if out and not out[-1].endswith("\n"):
             out[-1] += "\n"
-        out.append(f"{prefix}{value}\n")
+        out.append(prefix + value + "\n")
     fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
-    with os.fdopen(fd, "w", encoding="utf-8") as handle:
+    with os.fdopen(fd, "w") as handle:
         handle.writelines(out)
 
 
@@ -99,7 +100,7 @@ if not admin_token:
             admin_token = extract_token(payload)
             if admin_token:
                 if candidate != password:
-                    print("used New-API default root password — rotate after issue", flush=True)
+                    print("used New-API default root password — rotate after issue")
                 break
         if admin_token:
             break
@@ -123,9 +124,9 @@ if channel_key:
             },
             admin_token,
         )
-        print("ensured New-API channel 302-image2", flush=True)
+        print("ensured New-API channel 302-image2")
     except urllib.error.HTTPError as error:
-        print(f"channel seed skipped ({error.code})", flush=True)
+        print("channel seed skipped (%s)" % error.code)
 
 token_payload = req(
     "POST",
@@ -137,9 +138,9 @@ user_token = extract_token(token_payload)
 if not user_token:
     raise SystemExit("New-API did not return a user token")
 
-env_path = f"{root}/kuanlan/.env"
+env_path = root + "/kuanlan/.env"
 replace_env(env_path, "ROUTER_API_KEY", user_token)
 # Same box as New-API. Public router.nebutra.com/v1 is still the Fly UI.
 replace_env(env_path, "IMAGE2_BASE_URL", "http://127.0.0.1:3301/v1")
 replace_env(env_path, "IMAGE2_MODEL", "gpt-image-2")
-print(f"issued consume key prefix={user_token[:7]}… → kuanlan ROUTER_API_KEY", flush=True)
+print("issued consume key prefix=%s… → kuanlan ROUTER_API_KEY" % user_token[:7])
