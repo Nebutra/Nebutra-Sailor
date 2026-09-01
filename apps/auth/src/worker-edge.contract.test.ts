@@ -49,5 +49,6 @@ describe("auth-edge worker contract", () => {
   it("smokes the sign-in HTML instead of relying on the edge-only health route", () => {
     expect(deployWorkflow).toContain("https://auth.nebutra.com/sign-in");
     expect(deployWorkflow).toContain("content-type");
+    expect(deployWorkflow.match(/for i in 1 2 3 4 5 6 7 8; do/gu)).toHaveLength(2);
   });
 });

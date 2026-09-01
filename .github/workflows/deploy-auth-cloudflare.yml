@@ -213,9 +213,16 @@ jobs:
             echo "::error::Auth edge health failed ($health_code)"
             exit 1
           fi
-          ui_code=$(curl -sS -D /tmp/as.headers -o /tmp/as.html -w '%{http_code}' --max-time 30 \
-            'https://auth.nebutra.com/sign-in?returnTo=https%3A%2F%2Fapp.nebutra.com%2Fworkspace' || echo 000)
-          echo "GET https://auth.nebutra.com/sign-in -> $ui_code"
+          ui_code="000"
+          for i in 1 2 3 4 5 6 7 8; do
+            ui_code=$(curl -sS -D /tmp/as.headers -o /tmp/as.html -w '%{http_code}' --max-time 30 \
+              'https://auth.nebutra.com/sign-in?returnTo=https%3A%2F%2Fapp.nebutra.com%2Fworkspace' || echo 000)
+            echo "try $i https://auth.nebutra.com/sign-in -> $ui_code"
+            if [ "$ui_code" = "200" ] && grep -qi '^content-type: text/html' /tmp/as.headers; then
+              break
+            fi
+            sleep 5
+          done
           if [ "$ui_code" != "200" ] || ! grep -qi '^content-type: text/html' /tmp/as.headers; then
             echo "::error::Auth sign-in UI is not healthy HTML"
             head -c 500 /tmp/as.html || true
