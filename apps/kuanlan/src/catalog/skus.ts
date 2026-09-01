@@ -348,6 +348,9 @@ export function getEnabledGarment(id: string): GarmentSku {
 
 export function toPublicSku(sku: GarmentSku): ReturnType<typeof toPublicGarment>;
 export function toPublicSku(sku: IdPhotoSku): ReturnType<typeof toPublicIdPhoto>;
+export function toPublicSku(
+  sku: KuanlanSku,
+): ReturnType<typeof toPublicGarment> | ReturnType<typeof toPublicIdPhoto>;
 export function toPublicSku(sku: KuanlanSku) {
   return isGarmentSku(sku) ? toPublicGarment(sku) : toPublicIdPhoto(sku);
 }
