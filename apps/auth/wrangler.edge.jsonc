@@ -31,6 +31,9 @@
     "DEPLOY_TARGET_AUTH": "cloudflare-workers"
   },
   // Secrets: BETTER_AUTH_SECRET, GOOGLE_*, GITHUB_*, optional DATABASE_URL fallback.
+  // Global phone auth additionally requires TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN,
+  // TWILIO_VERIFY_SERVICE_SID, and TURNSTILE_SECRET. Missing any one keeps the
+  // phone plugin unmounted.
   //
   // Custom domain is bound once in the Cloudflare dashboard:
   //   auth.nebutra.com → Worker nebutra-auth

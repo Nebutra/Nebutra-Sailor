@@ -17,7 +17,9 @@
  */
 
 import { brand } from "@nebutra/brand/metadata";
+import { createTwilioVerifyProvider } from "@nebutra/sms/twilio-verify";
 import { betterAuth } from "better-auth";
+import { captcha, phoneNumber } from "better-auth/plugins";
 import { Pool } from "pg";
 import { applyEdgeAuthCors } from "./lib/auth-edge-cors";
 import {
@@ -28,6 +30,12 @@ import {
   socialStartToRedirect,
 } from "./lib/auth-edge-oauth";
 import { attachPoolErrorGuard, isPgConnectFailure, withConnectRetry } from "./lib/auth-edge-pool";
+import {
+  isE164PhoneNumber,
+  phoneNumberTempEmail,
+  resolveTwilioVerifyConfig,
+  type TwilioVerifyConfig,
+} from "./lib/phone-login";
 import { applySessionHint } from "./lib/session-hint";
 
 interface HyperdriveBinding {
@@ -45,6 +53,11 @@ export interface AuthEdgeEnv {
   GOOGLE_CLIENT_SECRET?: string;
   GITHUB_CLIENT_ID?: string;
   GITHUB_CLIENT_SECRET?: string;
+  TWILIO_ACCOUNT_SID?: string;
+  TWILIO_AUTH_TOKEN?: string;
+  TWILIO_VERIFY_SERVICE_SID?: string;
+  TURNSTILE_SECRET?: string;
+  TURNSTILE_SECRET_KEY?: string;
   DATABASE_URL?: string;
   NEXT_PUBLIC_APP_URL?: string;
   NEXT_PUBLIC_SITE_URL?: string;
@@ -161,6 +174,28 @@ function requireAuthSecrets(env: AuthEdgeEnv): { secret: string; dbUrl: string }
   return { secret, dbUrl };
 }
 
+interface PhoneAuthConfig {
+  twilio: TwilioVerifyConfig;
+  turnstileSecret: string;
+}
+
+function resolvePhoneAuthConfig(env: AuthEdgeEnv): PhoneAuthConfig | null {
+  const twilio = resolveTwilioVerifyConfig({
+    TWILIO_ACCOUNT_SID: env.TWILIO_ACCOUNT_SID ?? process.env.TWILIO_ACCOUNT_SID,
+    TWILIO_AUTH_TOKEN: env.TWILIO_AUTH_TOKEN ?? process.env.TWILIO_AUTH_TOKEN,
+    TWILIO_VERIFY_SERVICE_SID:
+      env.TWILIO_VERIFY_SERVICE_SID ?? process.env.TWILIO_VERIFY_SERVICE_SID,
+  });
+  const turnstileSecret = (
+    env.TURNSTILE_SECRET ??
+    env.TURNSTILE_SECRET_KEY ??
+    process.env.TURNSTILE_SECRET ??
+    process.env.TURNSTILE_SECRET_KEY ??
+    ""
+  ).trim();
+  return twilio && turnstileSecret ? { twilio, turnstileSecret } : null;
+}
+
 /**
  * Physical table names match Prisma @@map on AuthUser/AuthSession/… so the
  * edge and the Node auth-center share one session store.
@@ -192,6 +227,36 @@ function createAuth(env: AuthEdgeEnv, database: PgDatabase, secret: string): Aut
     env.AUTH_COOKIE_DOMAIN?.trim() ||
     process.env.AUTH_COOKIE_DOMAIN?.trim() ||
     `.${brand.domains.landing}`;
+  const phoneAuth = resolvePhoneAuthConfig(env);
+  const plugins = [];
+  if (phoneAuth) {
+    const twilio = createTwilioVerifyProvider(phoneAuth.twilio);
+    plugins.push(
+      phoneNumber({
+        expiresIn: 300,
+        otpLength: 6,
+        allowedAttempts: 5,
+        phoneNumberValidator: isE164PhoneNumber,
+        sendOTP: async ({ phoneNumber: destination, code }) => {
+          if (!(await twilio.send(destination, code))) {
+            throw new Error("SMS verification could not be started");
+          }
+        },
+        verifyOTP: ({ phoneNumber: destination, code }) => twilio.verify(destination, code),
+        signUpOnVerification: {
+          getTempEmail: phoneNumberTempEmail,
+          getTempName: () => "Nebutra user",
+        },
+      }),
+      captcha({
+        provider: "cloudflare-turnstile",
+        secretKey: phoneAuth.turnstileSecret,
+        endpoints: ["/phone-number/send-otp"],
+        expectedAction: "turnstile-spin-v2",
+        allowedHostnames: [brand.domains.auth],
+      }),
+    );
+  }
 
   const instance = betterAuth({
     secret,
@@ -199,6 +264,7 @@ function createAuth(env: AuthEdgeEnv, database: PgDatabase, secret: string): Aut
     trustedOrigins: trustedOrigins(env),
     emailAndPassword: { enabled: true },
     socialProviders,
+    plugins,
     onAPIError: { errorURL: "/sign-in" },
     advanced: {
       crossSubDomainCookies: {
@@ -212,6 +278,8 @@ function createAuth(env: AuthEdgeEnv, database: PgDatabase, secret: string): Aut
       modelName: "auth_users",
       fields: {
         emailVerified: "email_verified",
+        phoneNumber: "phone",
+        phoneNumberVerified: "phone_verified",
         createdAt: "created_at",
         updatedAt: "updated_at",
       },
@@ -351,6 +419,7 @@ async function handleHealth(request: Request, env: AuthEdgeEnv): Promise<Respons
     env.NEXT_PUBLIC_AUTH_URL?.trim() ||
     `${url.protocol}//${url.host}`;
 
+  const phoneAuth = resolvePhoneAuthConfig(env);
   const body: Record<string, unknown> = {
     service: "nebutra-auth-center",
     status: "ok",
@@ -359,11 +428,16 @@ async function handleHealth(request: Request, env: AuthEdgeEnv): Promise<Respons
     role: "login-center-edge",
     deploy: "cloudflare-workers-edge",
     // Bump when shipping edge fixes so /health proves the new script is live.
-    edgeBuild: "2026-09-01-fly-ui-origin",
+    edgeBuild: "2026-09-01-global-phone-auth",
     features: {
       authApi: true,
       uiPassThrough: Boolean(env.ORIGIN_URL?.trim()),
       hyperdrive: Boolean(env.HYPERDRIVE?.connectionString),
+      phoneLogin: {
+        enabled: Boolean(phoneAuth),
+        provider: phoneAuth ? "twilio-verify" : null,
+        captcha: phoneAuth ? "cloudflare-turnstile" : null,
+      },
     },
     oauth: {
       providers: [
