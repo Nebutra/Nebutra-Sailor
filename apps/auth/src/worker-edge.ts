@@ -5,12 +5,12 @@
  *   Full Next OpenNext auth is ~8.5 MiB gzip → Free plan 3 MiB rejects it.
  *   Paying for Workers Paid to run a marketing panel at the edge is the wrong
  *   trade. Google OAuth token exchange + session DB is the only work that
- *   *must* leave China ECS; the sign-in UI can stay on origin.
+ *   must run at the edge; the sign-in UI can stay on a dedicated Next origin.
  *
  * Split (mirrors backends/gateway worker-edge):
  *   · /api/auth/*  → Better Auth + Hyperdrive→PlanetScale (overseas egress)
  *   · /health?probe=google → edge probe (proves Google reachability)
- *   · everything else → ECS origin via cf.resolveOverride (Host unchanged)
+ *   · everything else → the dedicated Fly auth UI origin
  *
  * Same BETTER_AUTH_SECRET + auth_* tables as the Node/Next auth-center so
  * sessions minted here are accepted by app RPs.
@@ -36,9 +36,7 @@ interface HyperdriveBinding {
 
 export interface AuthEdgeEnv {
   HYPERDRIVE?: HyperdriveBinding;
-  /** ECS origin IP for UI pass-through (HTTP). */
-  ORIGIN_IP?: string;
-  /** Optional full origin base, e.g. http://106.15.4.31 — preferred over ORIGIN_IP alone. */
+  /** Full origin base for the dedicated auth UI. */
   ORIGIN_URL?: string;
   BETTER_AUTH_SECRET?: string;
   BETTER_AUTH_URL?: string;
@@ -361,11 +359,10 @@ async function handleHealth(request: Request, env: AuthEdgeEnv): Promise<Respons
     role: "login-center-edge",
     deploy: "cloudflare-workers-edge",
     // Bump when shipping edge fixes so /health proves the new script is live.
-    edgeBuild: "2026-08-31-auth-cors",
+    edgeBuild: "2026-09-01-fly-ui-origin",
     features: {
       authApi: true,
-      // ORIGIN_URL is the preferred pass-through; ORIGIN_IP alone is legacy.
-      uiPassThrough: Boolean(env.ORIGIN_URL?.trim() || env.ORIGIN_IP?.trim()),
+      uiPassThrough: Boolean(env.ORIGIN_URL?.trim()),
       hyperdrive: Boolean(env.HYPERDRIVE?.connectionString),
     },
     oauth: {
@@ -547,21 +544,16 @@ async function handleAuthApi(request: Request, env: AuthEdgeEnv): Promise<Respon
 }
 
 /**
- * UI pass-through to ECS.
- *
- * Never self-fetch https://auth.nebutra.com (loops into this Worker → CF 522).
- * CF terminates TLS; origin is HTTP to ECS (same as Flexible SSL), with Host +
- * X-Forwarded-Proto so nginx can serve without 301→https bounce.
- *
- * ORIGIN_URL optional (e.g. http://106.15.4.31). Defaults to http://ORIGIN_IP.
- */
-/**
- * UI → ECS via grey-cloud origin.nebutra.com (gateway-edge pattern).
- * Never Host=auth.nebutra.com on fetch (CF 1003). Never self-fetch (522 loop).
- * Nginx routes X-Nebutra-Edge-Auth: 1 → nebutra_auth.
+ * UI pass-through to the dedicated auth origin.
+ * Never self-fetch https://auth.nebutra.com because that loops into this
+ * Worker. The auth UI must not share the gateway origin: moving that hostname
+ * between runtimes previously sent /sign-in to Hono and returned JSON 404s.
  */
 async function forwardToOrigin(request: Request, env: AuthEdgeEnv): Promise<Response> {
-  const originBase = env.ORIGIN_URL?.trim() || `https://${brand.domains.origin}`;
+  const originBase = env.ORIGIN_URL?.trim();
+  if (!originBase) {
+    return json({ error: "ORIGIN_URL is required" }, 502);
+  }
   let base: URL;
   try {
     base = new URL(originBase);

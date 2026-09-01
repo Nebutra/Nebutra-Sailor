@@ -1,7 +1,7 @@
 # Fly origin (product edges + Hono gateway)
 
 ECS PM2 is no longer the intended home for `forge` / `router` / `web` /
-`pebble` / `design` / the Node api-gateway. Next product edges ship as
+`pebble` / `design` / the auth UI / the Node api-gateway. Next product edges ship as
 standalone Machines in `sin` via
 [`.github/workflows/deploy-fly.yml`](../../.github/workflows/deploy-fly.yml).
 The Hono origin ships separately via
@@ -40,6 +40,11 @@ API origin cutover writes **grey-cloud** A/AAAA (or CNAME) for
 (`nebutra-gateway-edge`) forwards to `https://nebutra-gateway.fly.dev`
 so it never depends on that alias being live. Do not point `ORIGIN_URL`
 at `api.nebutra.com` — that loops back into the Worker.
+
+The auth Next UI is `nebutra-auth` in `sin`. `auth.nebutra.com` remains
+attached to `nebutra-auth` on Cloudflare Workers; UI requests are proxied to
+`https://nebutra-auth.fly.dev`. Never point the auth Worker at the shared
+`origin.nebutra.com`, because that alias is the Hono gateway.
 
 The GitHub `CLOUDFLARE_API_TOKEN` currently cannot write zone DNS
 (API 10000); cutover has to go through a token that has Zone DNS Edit,

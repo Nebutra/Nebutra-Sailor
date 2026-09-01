@@ -9,7 +9,7 @@ APP="${3:-}"
 
 rm -rf "$STAGE"
 mkdir -p "$STAGE"
-cp -r "$WS/.next/standalone/." "$STAGE/"
+cp -a "$WS/.next/standalone/." "$STAGE/"
 mkdir -p "$STAGE/$WS/.next"
 cp -r "$WS/.next/static" "$STAGE/$WS/.next/static"
 if [ -d "$WS/.next/node_modules" ]; then

@@ -13,6 +13,11 @@ users here with a safe `returnTo`, then receive the session cookie after login.
 | `app.nebutra.com/sign-up` | 307 → `auth.nebutra.com/sign-up?returnTo=…` |
 | `auth.nebutra.com/*` | Canonical Agent OS login UI |
 
+Production keeps `auth.nebutra.com` on the thin Cloudflare auth Worker. The
+Worker serves `/api/auth/*` at the edge and proxies UI routes to the dedicated
+`nebutra-auth` Fly Machine. The UI origin must not share the gateway's
+`origin.nebutra.com` hostname.
+
 Clerk is the only exception: when `NEXT_PUBLIC_AUTH_PROVIDER=clerk`, web keeps a local UI.
 
 ## OAuth redirect URIs (operator)

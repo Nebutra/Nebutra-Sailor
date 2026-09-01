@@ -3,6 +3,8 @@ name: Deploy origin apps to Fly
 # Replaces the Aliyun ECS PM2 product edges with Fly Machines (Singapore).
 # The Hono api-gateway is a different image — see deploy-fly-gateway.yml.
 # Landing, gateway-edge, auth-edge, SSO, and leak DNS stay where they are.
+# The auth Next UI runs as a private origin behind auth-edge; its product DNS
+# must never be cut over directly to Fly.
 # This workflow deploys Machines; DNS cutover is a separate workflow_dispatch
 # input so a failed image cannot take production down.
 #
@@ -13,7 +15,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated: forge router web pebble design gateway cache). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin."
+        description: "Apps to deploy (space-separated: forge router web pebble design auth gateway cache). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin."
         required: false
         default: ""
       cutover:
@@ -29,6 +31,7 @@ on:
       - "apps/web/**"
       - "apps/pebble/**"
       - "apps/design/**"
+      - "apps/auth/**"
       - "packages/ai/forge-runtime/**"
       - "packages/platform/router-supply/**"
       - "packages/design/**"
@@ -65,6 +68,7 @@ jobs:
             {"app":"web","package":"@nebutra/web","workspace":"apps/web","build_command":"build:next","fly_app":"nebutra-web","host":"app","site":"https://app.nebutra.com"},
             {"app":"pebble","package":"@nebutra/pebble-site","workspace":"apps/pebble","build_command":"build","fly_app":"nebutra-pebble","host":"pebble","site":"https://pebble.nebutra.com"},
             {"app":"design","package":"@nebutra/design","workspace":"apps/design","build_command":"build","fly_app":"nebutra-design","host":"design","site":"https://design.nebutra.com"},
+            {"app":"auth","package":"@nebutra/auth-center","workspace":"apps/auth","build_command":"build","fly_app":"nebutra-auth","host":"","site":"https://auth.nebutra.com"},
           ]
           wanted = [w for w in os.environ.get("INPUT_APPS", "").split() if w]
           known = {row["app"] for row in all_apps} | {"gateway", "cache"}
@@ -138,6 +142,14 @@ jobs:
           NEXT_PUBLIC_API_URL: "https://api.nebutra.com"
           NEXT_PUBLIC_API_GATEWAY_URL: "https://api.nebutra.com"
           NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
+          NEXT_PUBLIC_AUTH_URL: "https://auth.nebutra.com"
+          BETTER_AUTH_URL: "https://auth.nebutra.com"
+          NEXT_PUBLIC_AUTH_MAGIC_LINK: ${{ vars.NEXT_PUBLIC_AUTH_MAGIC_LINK || '0' }}
+          NEXT_PUBLIC_AUTH_PASSKEYS: ${{ vars.NEXT_PUBLIC_AUTH_PASSKEYS || '0' }}
+          NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.NEXT_PUBLIC_TURNSTILE_SITE_KEY || secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
+          PASSKEY_RP_ID: ${{ vars.PASSKEY_RP_ID || 'auth.nebutra.com' }}
+          PASSKEY_RP_NAME: ${{ vars.PASSKEY_RP_NAME || 'Nebutra' }}
+          PASSKEY_ORIGIN: ${{ vars.PASSKEY_ORIGIN || 'https://auth.nebutra.com' }}
           DATABASE_URL: "postgresql://build-placeholder:placeholder@localhost:5432/build"
           REDIS_URL: "redis://localhost:6379"
         run: pnpm --filter ${{ matrix.package }} ${{ matrix.build_command }}
@@ -160,6 +172,7 @@ jobs:
           env_path="/var/www/nebutra/${{ matrix.app }}/.env"
           if [ "${{ matrix.app }}" = "web" ]; then env_path="/var/www/nebutra/web/.env"; fi
           if [ "${{ matrix.app }}" = "design" ]; then env_path="/var/www/nebutra/design/.env"; fi
+          if [ "${{ matrix.app }}" = "auth" ]; then env_path="/var/www/nebutra/auth/current/.env"; fi
           install -m 600 /dev/null "$RUNNER_TEMP/vm_key"
           printf '%s\n' "$VM_SSH_PRIVATE_KEY" > "$RUNNER_TEMP/vm_key"
           if ssh -i "$RUNNER_TEMP/vm_key" -o StrictHostKeyChecking=accept-new \
@@ -206,7 +219,9 @@ jobs:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
           set -euo pipefail
-          url="https://${{ matrix.fly_app }}.fly.dev/"
+          path="/"
+          if [ "${{ matrix.app }}" = "auth" ]; then path="/sign-in"; fi
+          url="https://${{ matrix.fly_app }}.fly.dev${path}"
           code="000"
           for i in 1 2 3 4 5 6; do
             code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 -L "$url" || echo 000)
@@ -222,7 +237,7 @@ jobs:
           exit 1
 
       - name: Cut over Cloudflare DNS
-        if: github.event_name == 'workflow_dispatch' && github.event.inputs.cutover == 'true'
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.cutover == 'true' && matrix.host != ''
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           HOST: ${{ matrix.host }}
