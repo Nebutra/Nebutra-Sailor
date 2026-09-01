@@ -122,14 +122,12 @@ def reset_root_password(hash_value, plaintext):
         return False
     conn = sqlite3.connect(db_path)
     try:
-        conn.execute(
-            "UPDATE users SET password = ? WHERE username = ?",
-            (hash_value, "root"),
-        )
+        rows = list(conn.execute("SELECT id, username, role, status FROM users"))
+        print("new-api users: %s" % ",".join("%s(role=%s,status=%s)" % (row[1], row[2], row[3]) for row in rows))
+        conn.execute("UPDATE users SET password = ?, status = 1", (hash_value,))
         conn.commit()
         if conn.total_changes < 1:
-            tables = [row[0] for row in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")]
-            print("sqlite root row missing in %s tables=%s" % (db_path, ",".join(tables)))
+            print("sqlite users update matched 0 rows in %s" % db_path)
             return False
     finally:
         conn.close()
@@ -163,30 +161,43 @@ if admin_token:
     session_ok = True
 
 
-def try_admin_login(candidates):
+def try_admin_login(usernames, candidates):
     global session_ok, admin_token
-    for candidate in candidates:
-        if not candidate:
-            continue
-        payload = req("POST", "/api/user/login", {"username": "root", "password": candidate})
-        if not ok(payload):
-            print("admin /api/user/login: %s" % (payload.get("message") or payload.get("_message") or "rejected"))
-            continue
-        session_ok = True
-        admin_token = extract_token(payload) or admin_token
-        print("admin session via login (cookie=%s token=%s)" % (
-            "yes" if list(jar) else "no",
-            "yes" if admin_token else "no",
-        ))
-        return
+    for username in usernames:
+        for candidate in candidates:
+            if not candidate:
+                continue
+            payload = req("POST", "/api/user/login", {"username": username, "password": candidate})
+            if not ok(payload):
+                print("admin /api/user/login %s: %s" % (
+                    username,
+                    payload.get("message") or payload.get("_message") or "rejected",
+                ))
+                continue
+            session_ok = True
+            admin_token = extract_token(payload) or admin_token
+            print("admin session via %s (cookie=%s token=%s)" % (
+                username,
+                "yes" if list(jar) else "no",
+                "yes" if admin_token else "no",
+            ))
+            return
 
 
 if not session_ok:
-    try_admin_login([password, "123456"])
+    try_admin_login(["root"], [password, "123456"])
 
 if not session_ok and reset_password and reset_hash:
     if reset_root_password(reset_hash, reset_password):
-        try_admin_login([reset_password])
+        usernames = ["root"]
+        db_path = find_new_api_db()
+        if db_path:
+            conn = sqlite3.connect(db_path)
+            try:
+                usernames = [row[0] for row in conn.execute("SELECT username FROM users")] or usernames
+            finally:
+                conn.close()
+        try_admin_login(usernames, [reset_password])
 
 if session_ok and not admin_token:
     payload = req("GET", "/api/user/token", token=admin_token)
@@ -196,7 +207,76 @@ if session_ok and not admin_token:
     else:
         print("admin PAT skipped: %s" % (payload.get("message") or payload.get("_message") or "empty"))
 
+def sqlite_issue_token():
+    db_path = find_new_api_db()
+    if not db_path:
+        return ""
+    conn = sqlite3.connect(db_path)
+    try:
+        row = conn.execute(
+            "SELECT key FROM tokens WHERE status = 1 ORDER BY id DESC LIMIT 1"
+        ).fetchone()
+        if row and row[0]:
+            key = row[0]
+            print("reused existing New-API token from sqlite")
+        else:
+            key = os.urandom(24).hex()
+            user_row = conn.execute("SELECT id FROM users ORDER BY id LIMIT 1").fetchone()
+            user_id = user_row[0] if user_row else 1
+            now = int(time.time())
+            conn.execute(
+                "INSERT INTO tokens (user_id, key, status, name, created_time, accessed_time, expired_time, remain_quota, unlimited_quota, used_quota) "
+                "VALUES (?, ?, 1, 'kuanlan', ?, ?, -1, 0, 1, 0)",
+                (user_id, key, now, now),
+            )
+            conn.commit()
+            print("inserted New-API consume token in sqlite")
+        if channel_key:
+            existing = conn.execute(
+                "SELECT id FROM channels WHERE name = '302-image2' OR models LIKE '%gpt-image-2%'"
+            ).fetchone()
+            if existing:
+                conn.execute(
+                    "UPDATE channels SET key = ?, base_url = ?, models = ?, status = 1, type = 1 WHERE id = ?",
+                    (channel_key, "https://api.302.ai", "gpt-image-2", existing[0]),
+                )
+                channel_id = existing[0]
+            else:
+                now = int(time.time())
+                cur = conn.execute(
+                    "INSERT INTO channels (type, key, status, name, created_time, models, \"group\") "
+                    "VALUES (1, ?, 1, '302-image2', ?, 'gpt-image-2', 'default')",
+                    (channel_key, now),
+                )
+                channel_id = cur.lastrowid
+            ability = conn.execute(
+                "SELECT id FROM abilities WHERE channel_id = ? AND model = 'gpt-image-2'",
+                (channel_id,),
+            ).fetchone()
+            if not ability:
+                conn.execute(
+                    "INSERT INTO abilities (\"group\", model, channel_id, enabled, priority) "
+                    "VALUES ('default', 'gpt-image-2', ?, 1, 0)",
+                    (channel_id,),
+                )
+            conn.commit()
+            print("ensured 302-image2 channel in sqlite")
+        if key.startswith("sk-"):
+            return key
+        return "sk-" + key
+    finally:
+        conn.close()
+
+
 if not session_ok and not admin_token:
+    user_token = sqlite_issue_token()
+    if user_token:
+        env_path = root + "/kuanlan/.env"
+        replace_env(env_path, "ROUTER_API_KEY", user_token)
+        replace_env(env_path, "IMAGE2_BASE_URL", "http://127.0.0.1:3301/v1")
+        replace_env(env_path, "IMAGE2_MODEL", "gpt-image-2")
+        print("issued consume key prefix=%s… → kuanlan ROUTER_API_KEY" % user_token[:7])
+        raise SystemExit(0)
     raise SystemExit("no New-API admin session — cannot issue a consume key")
 
 if channel_key:
