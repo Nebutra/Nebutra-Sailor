@@ -245,7 +245,7 @@ function createAuth(env: AuthEdgeEnv, database: PgDatabase, secret: string): Aut
         verifyOTP: ({ phoneNumber: destination, code }) => twilio.verify(destination, code),
         signUpOnVerification: {
           getTempEmail: phoneNumberTempEmail,
-          getTempName: () => "Nebutra user",
+          getTempName: () => `${brand.name} user`,
         },
       }),
       captcha({
@@ -619,7 +619,7 @@ async function handleAuthApi(request: Request, env: AuthEdgeEnv): Promise<Respon
 
 /**
  * UI pass-through to the dedicated auth origin.
- * Never self-fetch https://auth.nebutra.com because that loops into this
+ * Never self-fetch the canonical auth domain (`brand.domains.auth`) because that loops into this
  * Worker. The auth UI must not share the gateway origin: moving that hostname
  * between runtimes previously sent /sign-in to Hono and returned JSON 404s.
  */
