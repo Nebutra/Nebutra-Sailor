@@ -21,7 +21,11 @@ install -m 0644 /tmp/router.nebutra.com.conf /etc/nginx/conf.d/router.nebutra.co
 nginx -t
 systemctl reload nginx || nginx -s reload
 
-nginx -T 2>/dev/null | grep -q 'nebutra_new_api' || {
+grep -q 'nebutra_new_api' /etc/nginx/conf.d/router.nebutra.com.conf || {
+  echo "ERROR: installed router vhost is missing the New-API upstream" >&2
+  exit 1
+}
+nginx -T 2>&1 | grep -q 'nebutra_new_api' || {
   echo "ERROR: /v1 New-API upstream not active after reload" >&2
   exit 1
 }
