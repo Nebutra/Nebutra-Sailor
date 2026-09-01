@@ -104,12 +104,14 @@
       "description": "This is how it shows up on invites and invoices.",
       "nameLabel": "Workspace name",
       "namePlaceholder": "e.g. Acme Corp",
+      "nameRequired": "Enter a workspace name.",
       "urlLabel": "Workspace URL",
       "slugPlaceholder": "my-workspace",
       "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
       "submit": "Create workspace",
       "submitting": "Creating…",
-      "error": "Could not create the workspace."
+      "error": "Could not create the workspace.",
+      "providerUnsupported": "This sign-in provider does not support workspaces."
     },
     "invite": {
       "title": "Invite the team",

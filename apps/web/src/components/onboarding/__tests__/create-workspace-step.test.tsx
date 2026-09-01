@@ -57,7 +57,11 @@ vi.mock("@nebutra/ui/primitives", () => ({
   ),
 }));
 
-import { CreateWorkspaceStep } from "../create-workspace-step";
+import {
+  CreateWorkspaceStep,
+  createWorkspaceSchema,
+  resolveWorkspaceSubmitError,
+} from "../create-workspace-step";
 
 describe("CreateWorkspaceStep", () => {
   afterEach(() => {
@@ -75,5 +79,43 @@ describe("CreateWorkspaceStep", () => {
     expect(
       screen.getByText("app.example.com/onboarding.workspace.slugPlaceholder"),
     ).toBeInTheDocument();
+  });
+
+  it("uses translated validation copy for an empty workspace name", () => {
+    const schema = createWorkspaceSchema({
+      nameRequired: "请输入工作空间名称。",
+      slugError: "工作空间地址格式不正确。",
+    });
+
+    const result = schema.safeParse({ name: "", slug: "valid-workspace" });
+
+    expect(result.error?.issues[0]?.message).toBe("请输入工作空间名称。");
+  });
+
+  it("maps provider errors to translated UI copy instead of exposing server English", () => {
+    expect(
+      resolveWorkspaceSubmitError(
+        {
+          code: "ORGANIZATIONS_NOT_ENABLED",
+          error: "Organizations are not enabled for this provider.",
+        },
+        {
+          error: "工作空间创建失败。",
+          providerUnsupported: "当前登录方式暂不支持创建工作空间。",
+        },
+      ),
+    ).toBe("当前登录方式暂不支持创建工作空间。");
+  });
+
+  it("uses translated generic copy for unknown API errors", () => {
+    expect(
+      resolveWorkspaceSubmitError(
+        { error: "Internal server error" },
+        {
+          error: "工作空间创建失败。",
+          providerUnsupported: "当前登录方式暂不支持创建工作空间。",
+        },
+      ),
+    ).toBe("工作空间创建失败。");
   });
 });

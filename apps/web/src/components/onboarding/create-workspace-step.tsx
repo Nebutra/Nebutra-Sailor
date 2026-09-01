@@ -18,6 +18,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { ORGANIZATION_ERROR_CODES } from "@/lib/organization-errors";
 
 interface CreateWorkspaceStepProps {
   onComplete: () => void;
@@ -37,19 +38,50 @@ type Values = {
   slug: string;
 };
 
+interface WorkspaceSchemaMessages {
+  nameRequired: string;
+  slugError: string;
+}
+
+interface WorkspaceSubmitErrorMessages {
+  error: string;
+  providerUnsupported: string;
+}
+
+export function createWorkspaceSchema(messages: WorkspaceSchemaMessages) {
+  return z.object({
+    name: z.string().min(1, { message: messages.nameRequired }),
+    slug: z
+      .string()
+      .refine((slug) => /^[a-z0-9][a-z0-9-]{1,46}[a-z0-9]$/.test(slug) || slug.length >= 3, {
+        message: messages.slugError,
+      }),
+  });
+}
+
+export function resolveWorkspaceSubmitError(
+  payload: unknown,
+  messages: WorkspaceSubmitErrorMessages,
+): string {
+  const code =
+    payload && typeof payload === "object" && "code" in payload
+      ? (payload as { code?: unknown }).code
+      : undefined;
+
+  return code === ORGANIZATION_ERROR_CODES.notEnabled
+    ? messages.providerUnsupported
+    : messages.error;
+}
+
 export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
   const t = useTranslations("onboarding.workspace");
   const router = useRouter();
 
   const schema = useMemo(
     () =>
-      z.object({
-        name: z.string().min(1),
-        slug: z
-          .string()
-          .refine((slug) => /^[a-z0-9][a-z0-9-]{1,46}[a-z0-9]$/.test(slug) || slug.length >= 3, {
-            message: t("slugError"),
-          }),
+      createWorkspaceSchema({
+        nameRequired: t("nameRequired"),
+        slugError: t("slugError"),
       }),
     [t],
   );
@@ -83,8 +115,13 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
       });
 
       if (!response.ok) {
-        const data = await response.json();
-        setError("root", { message: data.error || t("error") });
+        const data: unknown = await response.json().catch(() => null);
+        setError("root", {
+          message: resolveWorkspaceSubmitError(data, {
+            error: t("error"),
+            providerUnsupported: t("providerUnsupported"),
+          }),
+        });
         return;
       }
 
@@ -94,10 +131,8 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
       }
 
       onComplete();
-    } catch (err: unknown) {
-      setError("root", {
-        message: err instanceof Error ? err.message : t("error"),
-      });
+    } catch {
+      setError("root", { message: t("error") });
     }
   }
 
