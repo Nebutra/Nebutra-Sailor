@@ -33,6 +33,12 @@ describe("remaining Next edges on Fly", () => {
     }
 
     expect(fly).toContain('"build_command":"build:vm"');
+    expect(fly).toContain("want_carina");
+    expect(fly).toContain("want_new_api");
+    expect(fly).toContain("want_dns_leak");
+    expect(fly).toContain("nebutra-carina");
+    expect(fly).toContain("nebutra-new-api.internal:3000/v1");
+    expect(fly).toContain("nebutra-dns-leak");
     const idp = readFileSync(resolve(ROOT, "infra/fly/idp.toml"), "utf-8");
     expect(idp).toContain("https://sso.nebutra.com");
   });
