@@ -28,7 +28,7 @@ const spinnerSize = {
  */
 export function LoadingState({ message, size = "large" }: LoadingStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center py-10">
+    <div className="flex w-full flex-col items-center justify-center py-10">
       <span
         className={cn(
           "inline-block animate-spin rounded-full border-solid border-primary border-r-transparent align-[-0.125em]",
