@@ -94,6 +94,29 @@ jobs:
           EOF
           chmod 600 ~/.ssh/config
 
+      # Same box, same default-443 301. A later main nginx.conf upload that
+      # omitted this include sent kuanlan.nebutra.com to the marketing apex.
+      # Run before the Carina build so a docs failure cannot skip the vhost.
+      - name: Restore kuanlan nginx vhost
+        env:
+          REMOTE_HOST: carina-ecs
+        run: bash infra/ops/scripts/install-kuanlan-nginx-vhost.sh
+
+      - name: Smoke kuanlan host stays on itself
+        run: |
+          set -euo pipefail
+          for path in / /create /wardrobe /moments /me; do
+            loc=$(curl -sSI --max-time 15 "https://kuanlan.nebutra.com${path}" 2>/dev/null | tr -d '\r' | awk 'tolower($1)=="location:"{print $2; exit}')
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "https://kuanlan.nebutra.com${path}" || echo 000)
+            echo "path=$path code=$code location=${loc:-none}"
+            case "${loc:-}" in
+              https://nebutra.com|https://nebutra.com/*)
+                echo "::error::$path still 301s to nebutra.com"
+                exit 1
+                ;;
+            esac
+          done
+
       - name: Deploy
         env:
           CARINA_REPO_DIR: ${{ github.workspace }}/carina
