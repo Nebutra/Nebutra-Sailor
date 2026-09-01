@@ -14,7 +14,7 @@ describe("router nginx /v1 consume", () => {
   it("proxies /v1 to localhost New-API and leaves / on the router UI", () => {
     expect(existsSync(conf), conf).toBe(true);
     const body = readFileSync(conf, "utf-8");
-    expect(body).toContain("server_name router.nebutra.com");
+    expect(body).toContain("server_name router.nebutra.com router-origin.nebutra.com");
     expect(body).toContain("127.0.0.1:3106");
     expect(body).toContain("127.0.0.1:3301");
     expect(body).toContain("location ^~ /v1");
