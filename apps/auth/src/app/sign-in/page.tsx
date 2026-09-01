@@ -3,6 +3,7 @@ import { AuthSplitLayout } from "@/components/auth-split-layout";
 import { CredentialsForm } from "@/components/credentials-form";
 import { isAccessGateEnabled } from "@/lib/access-gate-mode";
 import { detectEnabledOAuthProviders } from "@/lib/oauth-providers";
+import { detectEnabledPhoneProviders } from "@/lib/phone-login";
 import { resolvePostLoginReturnTo } from "@/lib/return-to";
 
 export const dynamic = "force-dynamic";
@@ -22,6 +23,11 @@ export default async function SignInPage({
   const returnTo = resolvePostLoginReturnTo(raw);
   const enabledOAuthProviders = detectEnabledOAuthProviders();
   const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || undefined;
+  const accessGateEnabled = isAccessGateEnabled();
+  const phoneLoginEnabled =
+    !accessGateEnabled &&
+    Boolean(turnstileSiteKey) &&
+    detectEnabledPhoneProviders().includes("twilio");
   const oauthErrorCode =
     typeof query.error === "string" && query.error.trim() ? query.error.trim() : null;
   const [magicLinkEnabled, passkeyEnabled] = await Promise.all([
@@ -37,9 +43,10 @@ export default async function SignInPage({
         enabledOAuthProviders={enabledOAuthProviders}
         magicLinkEnabled={magicLinkEnabled}
         passkeyEnabled={passkeyEnabled}
+        phoneLoginEnabled={phoneLoginEnabled}
         turnstileSiteKey={turnstileSiteKey}
         oauthErrorCode={oauthErrorCode}
-        accessGateEnabled={isAccessGateEnabled()}
+        accessGateEnabled={accessGateEnabled}
         wechatAppId={process.env.NEXT_PUBLIC_WECHAT_APP_ID}
       />
     </AuthSplitLayout>

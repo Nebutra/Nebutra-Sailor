@@ -2,12 +2,19 @@
 
 import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
-import { Warning as AlertTriangle, Eye, EyeOff, Key, Envelope as Mail } from "@nebutra/icons";
+import {
+  Warning as AlertTriangle,
+  Eye,
+  EyeOff,
+  Key,
+  Envelope as Mail,
+  Phone,
+} from "@nebutra/icons";
 import { Button, Input } from "@nebutra/ui/primitives";
 import { AUTH_PRIMARY_CTA_CLASS } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { type AuthSignInOauthMessageKey, resolveOauthErrorMessageKey } from "@/lib/oauth-errors";
 import type { OAuthProvider } from "@/lib/oauth-providers";
@@ -44,6 +51,8 @@ interface CredentialsFormProps {
   magicLinkEnabled?: boolean;
   /** When true, show passkey alternate entry (feature flag). */
   passkeyEnabled?: boolean;
+  /** When true, expose the Turnstile-protected global phone entry. */
+  phoneLoginEnabled?: boolean;
   /** Cloudflare Turnstile site key — widget omitted when unset. */
   turnstileSiteKey?: string;
   /**
@@ -94,6 +103,7 @@ export function CredentialsForm({
   enabledOAuthProviders = [],
   magicLinkEnabled = false,
   passkeyEnabled = false,
+  phoneLoginEnabled = false,
   turnstileSiteKey,
   oauthErrorCode = null,
   accessGateEnabled = false,
@@ -103,6 +113,7 @@ export function CredentialsForm({
 }: CredentialsFormProps) {
   const tSignIn = useTranslations("auth.signIn");
   const tSignUp = useTranslations("auth.signUp");
+  const locale = useLocale();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -268,7 +279,8 @@ export function CredentialsForm({
   const altHref = mode === "sign-in" ? withReturnTo("/sign-up") : withReturnTo("/sign-in");
   const showOAuth = !accessGateEnabled && enabledOAuthProviders.length > 0;
   const showAltMethods =
-    mode === "sign-in" && (magicLinkEnabled || (passkeyEnabled && passkeyAvailable));
+    mode === "sign-in" &&
+    (phoneLoginEnabled || magicLinkEnabled || (passkeyEnabled && passkeyAvailable));
   const submitDisabled = loading || (mode === "sign-up" && accessGateEnabled && !inviteCode.trim());
 
   return (
@@ -495,6 +507,15 @@ export function CredentialsForm({
             >
               <Mail aria-hidden className="h-4 w-4" />
               {tSignIn("useMagicLink")}
+            </Link>
+          ) : null}
+          {phoneLoginEnabled ? (
+            <Link
+              href={withReturnTo("/sign-in/phone")}
+              className="inline-flex items-center justify-center gap-2 text-sm font-medium text-primary hover:text-primary"
+            >
+              <Phone aria-hidden className="h-4 w-4" />
+              {locale.toLowerCase().startsWith("zh") ? "使用手机号" : "Use phone number"}
             </Link>
           ) : null}
         </div>

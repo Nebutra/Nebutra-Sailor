@@ -25,7 +25,25 @@ describe("auth-edge worker contract", () => {
   });
 
   it("bumps edgeBuild when the request-path contract changes", () => {
-    expect(source).toContain('edgeBuild: "2026-09-01-fly-ui-origin"');
+    expect(source).toContain('edgeBuild: "2026-09-01-global-phone-auth"');
+  });
+
+  it("mounts global phone OTP only when Twilio Verify is fully configured", () => {
+    expect(source).toContain("resolveTwilioVerifyConfig");
+    expect(source).toContain("createTwilioVerifyProvider");
+    expect(source).toContain("phoneNumber({");
+    expect(source).toContain("phoneNumberValidator: isE164PhoneNumber");
+    expect(source).toContain("signUpOnVerification");
+    expect(source).toContain("verifyOTP");
+  });
+
+  it("protects SMS sends with Turnstile and syncs every provider secret", () => {
+    expect(source).toContain('"/phone-number/send-otp"');
+    expect(source).toContain("TURNSTILE_SECRET");
+    expect(deployWorkflow).toContain("TWILIO_ACCOUNT_SID");
+    expect(deployWorkflow).toContain("TWILIO_AUTH_TOKEN");
+    expect(deployWorkflow).toContain("TWILIO_VERIFY_SERVICE_SID");
+    expect(deployWorkflow).toContain("TURNSTILE_SECRET");
   });
 
   it("attaches first-party CORS to every /api/auth response, not only OPTIONS", () => {
