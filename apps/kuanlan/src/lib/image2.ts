@@ -7,6 +7,14 @@ const BACKGROUND_COPY = {
   white: "纯白背景",
   blue: "标准证件照蓝底",
   red: "标准证件照红底",
+  smoke: "灰蓝烟雾底",
+  light: "浅灰职业照背景",
+} as const;
+
+const ATTIRE_COPY = {
+  blazer: "tailored navy blazer over a crisp white open-collar dress shirt, no tie",
+  knit: "fine-knit charcoal merino crewneck with a white shirt collar just visible at the neck",
+  oxford: "navy oxford button-down shirt, top button undone, no jacket",
 } as const;
 
 export class Image2UnavailableError extends Error {
@@ -41,6 +49,16 @@ export function image2SizeForSku(sku: Pick<IdPhotoSku, "widthMm" | "heightMm">):
 
 /** Server-only SKU brief. Never send this string to the browser. */
 export function idPhotoShootBrief(sku: IdPhotoSku): string {
+  if (sku.look === "linkedin") {
+    return [
+      "Professional LinkedIn headshot of the same person in the reference photo.",
+      "Head-and-shoulders, camera at eye level, slight natural head tilt so it is not stiff.",
+      "Soft even studio lighting, realistic skin. Do not beautify.",
+      `Seamless ${BACKGROUND_COPY[sku.background]}, empty, no props, no watermark, no text.`,
+      `Attire: ${ATTIRE_COPY[sku.garmentId ?? "blazer"]}.`,
+      "Keep identity, face, hair, and glasses unchanged. Change clothes to the specified attire. Not a passport or official identification photo.",
+    ].join(" ");
+  }
   return [
     "Official identification portrait of the same person in the reference photo.",
     "Front-facing head and shoulders, even studio lighting, both ears visible, natural expression.",

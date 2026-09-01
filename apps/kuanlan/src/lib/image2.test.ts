@@ -49,10 +49,23 @@ describe("image2 consume", () => {
   });
 
   it("asks image2 to keep the same person on the specified background", () => {
-    const brief = idPhotoShootBrief(getEnabledSku("cn-2in-blue"));
-    expect(brief).toContain("same person");
-    expect(brief).toContain("标准证件照蓝底");
-    expect(brief).not.toMatch(/生成|Prompt|模型/);
+    const idCard = idPhotoShootBrief(getEnabledSku("cn-2in-blue"));
+    expect(idCard).toContain("same person");
+    expect(idCard).toContain("Official identification");
+    expect(idCard).toContain("标准证件照蓝底");
+    expect(idCard).not.toMatch(/生成|Prompt|模型|KUANLAN|VLM/);
+
+    const linkedin = idPhotoShootBrief(getEnabledSku("linkedin-smoke"));
+    expect(linkedin).toContain("LinkedIn");
+    expect(linkedin).toContain("灰蓝烟雾底");
+    expect(linkedin).toContain("navy blazer");
+    expect(linkedin).toContain("head tilt");
+    expect(linkedin).not.toContain("Official identification");
+    expect(linkedin).not.toMatch(/生成|Prompt|模型|KUANLAN|VLM/);
+
+    const knit = idPhotoShootBrief(getEnabledSku("linkedin-smoke-knit"));
+    expect(knit).toContain("charcoal merino");
+    expect(knit).not.toContain("navy blazer");
   });
 
   it("reads b64 image bytes from the OpenAI-shaped response", () => {
@@ -106,6 +119,7 @@ describe("image2 consume", () => {
     expect(studio).toContain("skuId");
     expect(studio).toContain("sku.sample");
     expect(studio).toContain("sku-card");
+    expect(studio).toContain("/wardrobe");
     expect(studio).not.toContain('className="sku-row"');
   });
 });

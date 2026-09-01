@@ -1,26 +1,28 @@
 import Image from "next/image";
 import Link from "next/link";
-import { idPhotoParentTile, listIdPhotoCreateTiles } from "@/catalog/skus";
+import { idPhotoParentTile, listGarmentSkus, listIdPhotoCreateTiles } from "@/catalog/skus";
 import { SiteNav } from "@/components/SiteNav";
 import { ORBIT_TILES, orbitSrc } from "@/lib/orbit";
 
 const FILTERS = [
   { id: "all", label: "全部", href: "/create" },
+  { id: "garment", label: "衣服", href: "/wardrobe" },
   { id: "id-photo", label: "领证照", href: "/create/id-photo" },
-  { id: "feel", label: "感觉", href: "/create" },
-  { id: "far", label: "远方", href: "/create" },
 ] as const;
 
 export default async function CreatePage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string; piece?: string }>;
 }) {
-  const { q } = await searchParams;
+  const { q, piece: pieceId } = await searchParams;
   const query = q?.trim() ?? "";
-  const wantsIdPhoto = /证照|护照|签证|一寸|二寸/.test(query);
+  const garment =
+    listGarmentSkus().find((item) => item.id === pieceId) ??
+    listGarmentSkus().find((item) => Boolean(query) && query.includes(item.title));
+  const wantsIdPhoto = /证照|护照|签证|一寸|二寸|领英|职业|灰蓝/.test(query);
   const parent = idPhotoParentTile();
-  const specs = listIdPhotoCreateTiles();
+  const specs = listIdPhotoCreateTiles().filter((sku) => !garment || sku.garmentId === garment.id);
 
   return (
     <div className="shell">
@@ -28,8 +30,12 @@ export default async function CreatePage({
       <main className="explore">
         <h1>今天想怎么拍？</h1>
         <p className="lede">
-          {query ? `“${query}”` : "告诉观澜，你想拍什么。"}
-          {wantsIdPhoto ? " 这一刻，先从领证照开始。" : ""}
+          {garment
+            ? `${garment.title}。现在可以这样拍。`
+            : query
+              ? `“${query}”`
+              : "告诉观澜，你想拍什么。"}
+          {wantsIdPhoto && !garment ? " 这一刻，先从领证照开始。" : ""}
         </p>
         <div className="filters">
           {FILTERS.map((filter) => (
@@ -37,28 +43,30 @@ export default async function CreatePage({
               key={filter.id}
               className="pill"
               href={filter.href}
-              data-active={filter.id === (wantsIdPhoto ? "id-photo" : "all")}
+              data-active={filter.id === (garment ? "garment" : wantsIdPhoto ? "id-photo" : "all")}
             >
               {filter.label}
             </Link>
           ))}
         </div>
         <div className="masonry">
-          <Link className="masonry-item" href={parent.href} data-live="true" data-kind="id-photo">
-            <figure>
-              <Image
-                className="tile-photo"
-                src={parent.sample}
-                alt="领证照样例"
-                width={parent.widthPx}
-                height={parent.heightPx}
-              />
-              <figcaption>
-                <span className="tile-title">{parent.title}</span>
-                <span className="tile-sub">{parent.subtitle}</span>
-              </figcaption>
-            </figure>
-          </Link>
+          {garment ? null : (
+            <Link className="masonry-item" href={parent.href} data-live="true" data-kind="id-photo">
+              <figure>
+                <Image
+                  className="tile-photo"
+                  src={parent.sample}
+                  alt="领证照样例"
+                  width={parent.widthPx}
+                  height={parent.heightPx}
+                />
+                <figcaption>
+                  <span className="tile-title">{parent.title}</span>
+                  <span className="tile-sub">{parent.subtitle}</span>
+                </figcaption>
+              </figure>
+            </Link>
+          )}
           {specs.map((sku) => (
             <Link
               key={sku.id}
@@ -87,7 +95,7 @@ export default async function CreatePage({
               </figure>
             </Link>
           ))}
-          {wantsIdPhoto
+          {wantsIdPhoto || garment
             ? null
             : ORBIT_TILES.filter((tile) => tile.href !== "/create/id-photo").map((tile) => (
                 <Link

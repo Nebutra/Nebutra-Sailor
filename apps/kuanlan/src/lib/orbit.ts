@@ -55,7 +55,7 @@ export const HOME_ORBIT = [
     blur: 0,
     href: "/create/id-photo",
     label: "领证照",
-    sampleSku: "cn-2in-white",
+    sampleSku: "linkedin-smoke",
   },
   {
     name: "04.jpg",

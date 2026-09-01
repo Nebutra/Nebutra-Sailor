@@ -9,6 +9,8 @@ import {
   ResourceStoreUnavailableError,
   skuSampleKey,
   skuSampleSrc,
+  wardrobeSampleKey,
+  wardrobeSampleSrc,
 } from "./resources";
 
 describe("resource keys", () => {
@@ -17,9 +19,15 @@ describe("resource keys", () => {
     expect(orbitAssetKey("12.jpg")).toBe(`${RESOURCE_ROOT}/orbit/12.jpg`);
   });
 
+  it("places wardrobe stills under the public wardrobe prefix as PNG", () => {
+    expect(wardrobeSampleKey("blazer")).toBe("kuanlan/wardrobe/blazer.png");
+    expect(wardrobeSampleSrc("knit")).toBe("https://cdn.nebutra.com/kuanlan/wardrobe/knit.png");
+    expect(() => wardrobeSampleSrc("../face")).toThrow(InvalidResourceKeyError);
+  });
+
   it("places 领证照 samples under the public skus prefix", () => {
     expect(skuSampleKey("cn-2in-white")).toBe("kuanlan/skus/cn-2in-white.jpg");
-    expect(skuSampleSrc("visa-us")).toBe("/skus/visa-us.jpg");
+    expect(skuSampleSrc("visa-us")).toBe("https://cdn.nebutra.com/kuanlan/skus/visa-us.jpg");
     expect(() => skuSampleSrc("../secret")).toThrow(InvalidResourceKeyError);
   });
 

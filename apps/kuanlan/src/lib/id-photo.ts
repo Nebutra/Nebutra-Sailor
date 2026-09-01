@@ -13,6 +13,8 @@ export const ID_PHOTO_BACKGROUNDS: Record<IdPhotoBackground, { r: number; g: num
     white: { r: 255, g: 255, b: 255 },
     blue: { r: 67, g: 142, b: 219 },
     red: { r: 217, g: 0, b: 27 },
+    smoke: { r: 126, g: 134, b: 145 },
+    light: { r: 179, g: 178, b: 179 },
   };
 
 export class InvalidPortraitError extends Error {

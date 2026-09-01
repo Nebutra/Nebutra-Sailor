@@ -16,7 +16,8 @@
     "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "samples:compose": "tsx scripts/compose-sku-samples.ts"
+    "samples:compose": "tsx scripts/compose-sku-samples.ts",
+    "assets:seed": "tsx scripts/seed-catalog-assets.ts"
   },
   "dependencies": {
     "@nebutra/storage": "workspace:*",
