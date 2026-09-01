@@ -1,6 +1,9 @@
+import { brand } from "@nebutra/brand/metadata";
 import createBundleAnalyzer from "@next/bundle-analyzer";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+
+const cdnOrigin = `https://${brand.domains.cdn}`;
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const withBundleAnalyzer = createBundleAnalyzer({ enabled: true });
@@ -38,10 +41,11 @@ function buildContentSecurityPolicy(): string {
       "https://images.unsplash.com",
       "https://avatars.githubusercontent.com",
       "https://api.dicebear.com",
+      cdnOrigin,
     ]),
     cspDirective("font-src", ["'self'", "data:"]),
     cspDirective("media-src", ["'self'", "https://d8j0ntlcm91z4.cloudfront.net"]),
-    cspDirective("connect-src", ["'self'", googleIdentityServices.connect]),
+    cspDirective("connect-src", ["'self'", googleIdentityServices.connect, cdnOrigin]),
     cspDirective("frame-src", [googleIdentityServices.frame]),
     cspDirective("frame-ancestors", ["'none'"]),
   ].join("; ");
@@ -186,6 +190,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "cdn.sanity.io", pathname: "/images/**" },
       // DiceBear avatars used in Waitlist social proof
       { protocol: "https", hostname: "api.dicebear.com" },
+      { protocol: "https", hostname: brand.domains.cdn },
     ],
   },
 };

@@ -1,5 +1,6 @@
 "use client";
 
+import { publicAssetUrl } from "@nebutra/brand/metadata-helpers";
 import type { ForgeToolSummary } from "@nebutra/forge-runtime";
 import { MagnifyingGlass } from "@nebutra/icons";
 import { Input } from "@nebutra/ui/primitives";
@@ -72,7 +73,7 @@ export function HomeSearch({ tools }: { tools: readonly ForgeToolSummary[] }) {
           role="status"
         >
           <img
-            src="/product/forge-empty.png"
+            src={publicAssetUrl("forge/product/forge-empty.png")}
             alt=""
             width={64}
             height={64}

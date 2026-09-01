@@ -6,7 +6,7 @@ import {
 } from "@nebutra/auth";
 import { AuthProvider } from "@nebutra/auth/react";
 import { brand } from "@nebutra/brand/metadata";
-import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+import { getBrandOrigin, publicAssetUrl } from "@nebutra/brand/metadata-helpers";
 import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 import { GeistMono } from "geist/font/mono";
@@ -64,13 +64,13 @@ export const metadata: Metadata = {
     title: forgeTitle,
     description: forgeDescription,
     url: "/",
-    images: [{ url: "/product/forge-anvil.png", alt: `${brand.name} Forge` }],
+    images: [{ url: publicAssetUrl("forge/product/forge-anvil.png"), alt: `${brand.name} Forge` }],
   },
   twitter: {
     card: "summary",
     title: forgeTitle,
     description: forgeDescription,
-    images: ["/product/forge-anvil.png"],
+    images: [publicAssetUrl("forge/product/forge-anvil.png")],
   },
   icons: {
     icon: [

@@ -1,10 +1,15 @@
 /**
  * Market center rail — 滚动图轴配置。
- * coverSrc 指向 /banners/*.png（generate-image DAG 产出）。
+ * coverSrc 指向 cdn.nebutra.com/router/banners/*.png（generate-image DAG 产出）。
  */
 
+import { publicAssetUrl } from "@nebutra/brand/metadata-helpers";
 import type { ListingModel, ListingProvider } from "@/lib/listing-catalog";
 import { resolveListingProvider } from "@/lib/listing-catalog";
+
+function bannerSrc(name: string): string {
+  return publicAssetUrl(`router/banners/${name}`);
+}
 
 export type MarketBanner = {
   id: string;
@@ -28,7 +33,7 @@ export const MODALITY_BANNERS: readonly MarketBanner[] = [
     href: "/models?cate=api&tag=chat",
     provider: "openai",
     publicModel: "llm",
-    coverSrc: "/banners/router-banner-llm.png",
+    coverSrc: bannerSrc("router-banner-llm.png"),
   },
   {
     id: "mod-image",
@@ -38,7 +43,7 @@ export const MODALITY_BANNERS: readonly MarketBanner[] = [
     href: "/models?cate=api&tag=image",
     provider: "google",
     publicModel: "image",
-    coverSrc: "/banners/router-banner-image.png",
+    coverSrc: bannerSrc("router-banner-image.png"),
   },
   {
     id: "mod-video",
@@ -48,7 +53,7 @@ export const MODALITY_BANNERS: readonly MarketBanner[] = [
     href: "/models?cate=api&tag=video",
     provider: "xai",
     publicModel: "video",
-    coverSrc: "/banners/router-banner-video.png",
+    coverSrc: bannerSrc("router-banner-video.png"),
   },
   {
     id: "mod-audio",
@@ -58,7 +63,7 @@ export const MODALITY_BANNERS: readonly MarketBanner[] = [
     href: "/models?cate=api&tag=audio",
     provider: "openai",
     publicModel: "audio",
-    coverSrc: "/banners/router-banner-audio.png",
+    coverSrc: bannerSrc("router-banner-audio.png"),
   },
   {
     id: "mod-data",
@@ -68,7 +73,7 @@ export const MODALITY_BANNERS: readonly MarketBanner[] = [
     href: "/models?cate=api&tag=data",
     provider: "cohere",
     publicModel: "data",
-    coverSrc: "/banners/router-banner-data.png",
+    coverSrc: bannerSrc("router-banner-data.png"),
   },
   {
     id: "mod-tools",
@@ -78,7 +83,7 @@ export const MODALITY_BANNERS: readonly MarketBanner[] = [
     href: "/models?cate=api&tag=tools",
     provider: "anthropic",
     publicModel: "tools",
-    coverSrc: "/banners/router-banner-tools.png",
+    coverSrc: bannerSrc("router-banner-tools.png"),
   },
 ] as const;
 

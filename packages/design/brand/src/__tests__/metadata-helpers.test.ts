@@ -21,6 +21,7 @@ import {
   getSiteMetadata,
   getSiteUrl,
   MARKETING_HOME_PARAM,
+  publicAssetUrl,
 } from "../metadata-helpers";
 
 describe("getSiteUrl", () => {
@@ -232,8 +233,30 @@ describe("getBrandOrigin / getBrandPublicUrls", () => {
     const u = getBrandPublicUrls();
     expect(u.authUrl).toBe(`https://${brand.domains.auth}`);
     expect(u.routerUrl).toBe(`https://${brand.domains.router}`);
+    expect(u.cdnUrl).toBe(`https://${brand.domains.cdn}`);
     expect(u.cookieDomain).toBe(`.${brand.domains.landing}`);
     expect(getBrandCookieDomain()).toBe(`.${brand.domains.landing}`);
+  });
+});
+
+describe("publicAssetUrl", () => {
+  beforeEach(() => {
+    vi.unstubAllEnvs();
+    vi.stubEnv("R2_PUBLIC_URL", "");
+    vi.stubEnv("NEXT_PUBLIC_R2_PUBLIC_URL", "");
+  });
+
+  it("resolves content keys on the brand CDN", () => {
+    expect(publicAssetUrl("landing/images/about/hero-premium.png")).toBe(
+      `https://${brand.domains.cdn}/landing/images/about/hero-premium.png`,
+    );
+    expect(publicAssetUrl("/brand/logo/logo-color.svg")).toBe(
+      `https://${brand.domains.cdn}/brand/logo/logo-color.svg`,
+    );
+  });
+
+  it("rejects traversal", () => {
+    expect(() => publicAssetUrl("../secret")).toThrow("invalid_public_asset_key");
   });
 });
 
