@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Issue a New-API user token and write it to kuanlan ROUTER_API_KEY.
 
-The 302.ai channel key stays inside New-API. This process never prints tokens.
+New-API v0.8 login puts the admin session in cookies and leaves
+access_token null. Keep a cookie jar, then mint the consume key.
 Compatible with the Cloud VM's system Python 3.6.
 """
 
+import http.cookiejar
 import json
 import os
 import sys
@@ -23,6 +25,9 @@ if os.path.exists(secrets_path):
     channel_key = secrets.get("CHANNEL_302_KEY") or channel_key
     admin_token = secrets.get("NEW_API_ACCESS_TOKEN") or admin_token
 
+jar = http.cookiejar.CookieJar()
+opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))
+
 
 def req(method, path, body=None, token=None):
     data = None if body is None else json.dumps(body).encode()
@@ -31,27 +36,40 @@ def req(method, path, body=None, token=None):
         headers["Authorization"] = "Bearer " + token
         headers["New-Api-User"] = "1"
     request = urllib.request.Request(base + path, data=data, headers=headers, method=method)
-    with urllib.request.urlopen(request, timeout=20) as response:
-        raw = response.read().decode()
-        return json.loads(raw) if raw else {}
+    try:
+        with opener.open(request, timeout=20) as response:
+            raw = response.read().decode()
+            return json.loads(raw) if raw else {}
+    except urllib.error.HTTPError as error:
+        raw = error.read().decode() if error.fp else ""
+        try:
+            payload = json.loads(raw) if raw else {}
+        except ValueError:
+            payload = {}
+        payload["_http"] = error.code
+        payload["_message"] = payload.get("message") or raw[:120]
+        return payload
 
 
 def ok(payload):
-    return bool(payload) and payload.get("success", True) is not False
+    return bool(payload) and payload.get("success", True) is not False and "_http" not in payload
 
 
 def extract_token(payload):
-    data = payload.get("data") or {}
-    if isinstance(data, str):
+    data = payload.get("data")
+    if isinstance(data, str) and data:
         return data
-    return (
-        data.get("access_token")
-        or data.get("token")
-        or data.get("key")
-        or payload.get("token")
-        or payload.get("key")
-        or ""
-    )
+    if not isinstance(data, dict):
+        data = {}
+    for key in ("access_token", "token", "key"):
+        value = data.get(key)
+        if value:
+            return value
+    for key in ("token", "key"):
+        value = payload.get(key)
+        if value:
+            return value
+    return ""
 
 
 def replace_env(path, key, value):
@@ -81,8 +99,14 @@ def replace_env(path, key, value):
         handle.writelines(out)
 
 
-if not admin_token:
-    candidates = [password] if password else []
+session_ok = False
+if admin_token:
+    session_ok = True
+
+if not session_ok:
+    candidates = []
+    if password:
+        candidates.append(password)
     if "123456" not in candidates:
         candidates.append("123456")
     for candidate in candidates:
@@ -91,52 +115,67 @@ if not admin_token:
             ("/api/user/register", {"username": "root", "password": candidate}),
             ("/api/setup", {"username": "root", "password": candidate}),
         ):
-            try:
-                payload = req("POST", path, body)
-            except urllib.error.HTTPError:
-                continue
+            payload = req("POST", path, body)
             if not ok(payload):
+                message = payload.get("message") or payload.get("_message") or "rejected"
+                print("admin %s: %s" % (path, message))
                 continue
-            admin_token = extract_token(payload)
-            if admin_token:
-                if candidate != password:
-                    print("used New-API default root password — rotate after issue")
-                break
-        if admin_token:
+            session_ok = True
+            admin_token = extract_token(payload) or admin_token
+            if candidate != password:
+                print("used New-API default root password — rotate after issue")
+            print("admin session via %s (cookie=%s token=%s)" % (
+                path,
+                "yes" if list(jar) else "no",
+                "yes" if admin_token else "no",
+            ))
+            break
+        if session_ok:
             break
 
-if not admin_token:
-    raise SystemExit("no New-API admin token — cannot issue a consume key")
+if session_ok and not admin_token:
+    payload = req("GET", "/api/user/token", token=admin_token)
+    admin_token = extract_token(payload)
+    if admin_token:
+        print("generated New-API admin PAT")
+    else:
+        print("admin PAT skipped: %s" % (payload.get("message") or payload.get("_message") or "empty"))
+
+if not session_ok and not admin_token:
+    raise SystemExit("no New-API admin session — cannot issue a consume key")
 
 if channel_key:
-    try:
-        req(
-            "POST",
-            "/api/channel/",
-            {
-                "type": 1,
-                "name": "302-image2",
-                "key": channel_key,
-                "base_url": "https://api.302.ai",
-                "models": "gpt-image-2",
-                "group": "default",
-                "status": 1,
-            },
-            admin_token,
-        )
+    payload = req(
+        "POST",
+        "/api/channel/",
+        {
+            "type": 1,
+            "name": "302-image2",
+            "key": channel_key,
+            "base_url": "https://api.302.ai",
+            "models": "gpt-image-2",
+            "group": "default",
+            "status": 1,
+        },
+        admin_token or None,
+    )
+    if ok(payload):
         print("ensured New-API channel 302-image2")
-    except urllib.error.HTTPError as error:
-        print("channel seed skipped (%s)" % error.code)
+    else:
+        print("channel seed skipped (%s)" % (payload.get("message") or payload.get("_http") or "rejected"))
 
 token_payload = req(
     "POST",
     "/api/token/",
     {"name": "kuanlan", "remain_quota": -1, "unlimited_quota": True},
-    admin_token,
+    admin_token or None,
 )
 user_token = extract_token(token_payload)
 if not user_token:
-    raise SystemExit("New-API did not return a user token")
+    raise SystemExit(
+        "New-API did not return a user token (%s)"
+        % (token_payload.get("message") or token_payload.get("_message") or "empty")
+    )
 
 env_path = root + "/kuanlan/.env"
 replace_env(env_path, "ROUTER_API_KEY", user_token)
