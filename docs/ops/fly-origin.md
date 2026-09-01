@@ -1,20 +1,21 @@
 # Fly origin (product edges + Hono gateway)
 
 ECS PM2 is no longer the intended home for `forge` / `router` / `web` /
-`pebble` / `design` / `kuanlan` / the Node api-gateway. Next product edges ship as
+`pebble` / `design` / `kuanlan` / `idp` / `admin` / `sailor-docs` / the Node api-gateway. Next product edges ship as
 standalone Machines in `sin` via
 [`.github/workflows/deploy-fly.yml`](../../.github/workflows/deploy-fly.yml).
 The Hono origin ships separately via
 [`.github/workflows/deploy-fly-gateway.yml`](../../.github/workflows/deploy-fly-gateway.yml)
 because it is not a Next standalone image.
 
-Landing, Cloudflare Workers (gateway-edge + auth-edge), `sso.nebutra.com`,
-and `leak.nebutra.com` stay put. Shanghai ECS is China transit and
-rollback only. `deploy-ecs.yml` remains the rollback.
+Landing and Cloudflare Workers (gateway-edge + auth-edge) stay put.
+`sso` / `admin` / `docs` ship as Fly Next Machines. Shanghai ECS is
+rollback only until carina / New-API / leak DNS finish their own Fly
+apps. `deploy-ecs.yml` remains the rollback.
 
 ## Live traffic
 
-`forge` / `router` / `app` / `pebble` / `design` / `kuanlan` are proxied CNAMEs to
+`forge` / `router` / `app` / `pebble` / `design` / `kuanlan` / `sso` / `admin` / `docs` are proxied CNAMEs to
 Fly Machines in `sin` (Let's Encrypt certs issued). Confirm with
 `via: 1.1 fly.io` on the product hostname.
 
@@ -27,8 +28,9 @@ New Machines still need `https://<app>.fly.dev` healthy **and**
 `fly certs add <host>.nebutra.com` before orange-cloud CNAME, or
 Cloudflare returns 525.
 
-SSO, leak DNS, and auth-edge stay on ECS / Cloudflare. Admin is
-staff-only and not in this slice.
+Auth-edge stays on Cloudflare. Admin is staff-only (Cloudflare Access
+in front of the Fly Machine). Leak DNS and New-API are not Next
+standalone images.
 
 Product-edge cutover writes a **proxied** CNAME
 `<host>.nebutra.com → <app>.fly.dev`. Issue

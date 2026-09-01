@@ -7,7 +7,7 @@
 ```text
 China + global browsers
   -> Cloudflare (proxied)
-    -> Fly Machines in sin     forge / router / web / pebble / design / kuanlan
+    -> Fly Machines in sin     forge / router / web / pebble / design / kuanlan / idp / admin / docs
     -> Fly Machines in sin     Hono api-gateway (nebutra-gateway)
     -> Cloudflare Workers      api.nebutra.com → nebutra-gateway.fly.dev
                                auth.nebutra.com /api/auth/*

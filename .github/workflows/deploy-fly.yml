@@ -2,7 +2,9 @@ name: Deploy origin apps to Fly
 
 # Replaces the Aliyun ECS PM2 product edges with Fly Machines (Singapore).
 # The Hono api-gateway is a different image — see deploy-fly-gateway.yml.
-# Landing, gateway-edge, auth-edge, SSO, and leak DNS stay where they are.
+# Landing, gateway-edge, and auth-edge stay where they are.
+# SSO / admin / docs ship as Next Machines here. Carina, New-API, and
+# leak DNS are separate Fly apps (not this Next standalone matrix).
 # This workflow deploys Machines; DNS cutover is a separate workflow_dispatch
 # input so a failed image cannot take production down.
 #
@@ -13,7 +15,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated: forge router web pebble design kuanlan gateway cache). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin."
+        description: "Apps to deploy (space-separated: forge router web pebble design kuanlan idp admin sailor-docs gateway cache). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin."
         required: false
         default: ""
       cutover:
@@ -30,6 +32,9 @@ on:
       - "apps/pebble/**"
       - "apps/design/**"
       - "apps/kuanlan/**"
+      - "apps/idp/**"
+      - "apps/admin/**"
+      - "apps/sailor-docs/**"
       - "packages/ai/forge-runtime/**"
       - "packages/platform/router-supply/**"
       - "packages/design/**"
@@ -67,6 +72,9 @@ jobs:
             {"app":"pebble","package":"@nebutra/pebble-site","workspace":"apps/pebble","build_command":"build","fly_app":"nebutra-pebble","host":"pebble","site":"https://pebble.nebutra.com"},
             {"app":"design","package":"@nebutra/design","workspace":"apps/design","build_command":"build","fly_app":"nebutra-design","host":"design","site":"https://design.nebutra.com"},
             {"app":"kuanlan","package":"@nebutra/kuanlan","workspace":"apps/kuanlan","build_command":"build","fly_app":"nebutra-kuanlan","host":"kuanlan","site":"https://kuanlan.nebutra.com"},
+            {"app":"idp","package":"@nebutra/idp","workspace":"apps/idp","build_command":"build","fly_app":"nebutra-idp","host":"sso","site":"https://sso.nebutra.com"},
+            {"app":"admin","package":"@nebutra/admin","workspace":"apps/admin","build_command":"build","fly_app":"nebutra-admin","host":"admin","site":"https://admin.nebutra.com"},
+            {"app":"sailor-docs","package":"@nebutra/sailor-docs","workspace":"apps/sailor-docs","build_command":"build:vm","fly_app":"nebutra-docs","host":"docs","site":"https://docs.nebutra.com"},
           ]
           wanted = [w for w in os.environ.get("INPUT_APPS", "").split() if w]
           known = {row["app"] for row in all_apps} | {"gateway", "cache"}
@@ -136,6 +144,8 @@ jobs:
           NEXT_TELEMETRY_DISABLED: "1"
           NEXT_OUTPUT: standalone
           NEXT_PUBLIC_SITE_URL: ${{ matrix.site }}
+          NEXT_PUBLIC_DOCS_ORIGIN_URL: ${{ matrix.site }}
+          OIDC_ISSUER: "https://sso.nebutra.com"
           NEXT_PUBLIC_APP_URL: "https://app.nebutra.com"
           NEXT_PUBLIC_API_URL: "https://api.nebutra.com"
           NEXT_PUBLIC_API_GATEWAY_URL: "https://api.nebutra.com"
