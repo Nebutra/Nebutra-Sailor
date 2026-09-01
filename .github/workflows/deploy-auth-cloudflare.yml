@@ -4,7 +4,7 @@ name: Deploy Auth Center (Cloudflare Workers)
 #
 # Hard-correct size strategy (Free plan 3 MiB):
 #   · /api/auth/*  → Better Auth + Hyperdrive (Google-reachable)
-#   · UI           → ECS origin via cf.resolveOverride
+#   · UI           → dedicated Next origin on Fly
 # Full Next OpenNext (~8.5 MiB gzip) is intentionally NOT deployed here.
 
 on:
@@ -197,17 +197,30 @@ jobs:
         run: |
           set -euo pipefail
           # No workers.dev — product host is the only public surface.
+          health_code="000"
           for i in 1 2 3 4 5 6 7 8; do
-            code=$(curl -sS -o /tmp/ah.json -w '%{http_code}' --max-time 30 \
+            health_code=$(curl -sS -o /tmp/ah.json -w '%{http_code}' --max-time 30 \
               https://auth.nebutra.com/health || echo 000)
-            echo "try $i https://auth.nebutra.com/health -> $code"
-            if [ "$code" = "200" ]; then
+            echo "try $i https://auth.nebutra.com/health -> $health_code"
+            if [ "$health_code" = "200" ]; then
               head -c 500 /tmp/ah.json || true
               echo
               break
             fi
             sleep 5
           done
+          if [ "$health_code" != "200" ]; then
+            echo "::error::Auth edge health failed ($health_code)"
+            exit 1
+          fi
+          ui_code=$(curl -sS -D /tmp/as.headers -o /tmp/as.html -w '%{http_code}' --max-time 30 \
+            'https://auth.nebutra.com/sign-in?returnTo=https%3A%2F%2Fapp.nebutra.com%2Fworkspace' || echo 000)
+          echo "GET https://auth.nebutra.com/sign-in -> $ui_code"
+          if [ "$ui_code" != "200" ] || ! grep -qi '^content-type: text/html' /tmp/as.headers; then
+            echo "::error::Auth sign-in UI is not healthy HTML"
+            head -c 500 /tmp/as.html || true
+            exit 1
+          fi
           code=$(curl -sS -o /tmp/ag.json -w '%{http_code}' --max-time 45 \
             'https://auth.nebutra.com/health?probe=google' || echo 000)
           echo "GET https://auth.nebutra.com/health?probe=google -> $code"

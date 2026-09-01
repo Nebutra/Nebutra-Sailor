@@ -183,7 +183,7 @@ describe("Deploy substrate governance", () => {
     const certs = readFileSync(resolve(WORKFLOWS, "issue-fly-certs.yml"), "utf-8");
     expect(certs).toContain("flyctl certs add");
     expect(certs).toContain("nebutra-forge");
-    for (const app of ["forge", "router", "web", "pebble", "design"]) {
+    for (const app of ["forge", "router", "web", "pebble", "design", "auth"]) {
       const toml = readFileSync(resolve(process.cwd(), "infra/fly", `${app}.toml`), "utf-8");
       expect(toml, app).toContain('primary_region = "sin"');
       expect(toml, app).toContain('HOSTNAME = "0.0.0.0"');
@@ -218,6 +218,11 @@ describe("Deploy substrate governance", () => {
     expect(nextYml.indexOf("assemble-next-standalone.sh")).toBeLessThan(
       nextYml.indexOf("infra/runtime/docker/Dockerfile.gateway"),
     );
+    const assembleNext = readFileSync(
+      resolve(process.cwd(), "infra/ops/scripts/assemble-next-standalone.sh"),
+      "utf-8",
+    );
+    expect(assembleNext).toContain('cp -a "$WS/.next/standalone/." "$STAGE/"');
 
     const toml = readFileSync(resolve(process.cwd(), "infra/fly/gateway.toml"), "utf-8");
     expect(toml).toContain('primary_region = "sin"');

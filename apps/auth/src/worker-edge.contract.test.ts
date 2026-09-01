@@ -3,6 +3,11 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 
 const source = readFileSync(path.join(__dirname, "worker-edge.ts"), "utf8");
+const edgeConfig = readFileSync(path.join(__dirname, "..", "wrangler.edge.jsonc"), "utf8");
+const deployWorkflow = readFileSync(
+  path.join(__dirname, "..", "..", "..", ".github", "workflows", "deploy-auth-cloudflare.yml"),
+  "utf8",
+);
 
 describe("auth-edge worker contract", () => {
   it("opens a max-1 pg Pool per request and ends it after Better Auth returns", () => {
@@ -20,7 +25,7 @@ describe("auth-edge worker contract", () => {
   });
 
   it("bumps edgeBuild when the request-path contract changes", () => {
-    expect(source).toContain('edgeBuild: "2026-08-31-auth-cors"');
+    expect(source).toContain('edgeBuild: "2026-09-01-fly-ui-origin"');
   });
 
   it("attaches first-party CORS to every /api/auth response, not only OPTIONS", () => {
@@ -33,5 +38,16 @@ describe("auth-edge worker contract", () => {
     expect(source).toContain("isOAuthCallbackPath");
     expect(source).toContain("applySessionHint");
     expect(source).toContain('prompt: "select_account"');
+  });
+
+  it("keeps UI pass-through on a dedicated auth origin", () => {
+    expect(edgeConfig).toContain('"ORIGIN_URL": "https://nebutra-auth.fly.dev"');
+    expect(edgeConfig).not.toMatch(/"ORIGIN_URL"\s*:\s*"https:\/\/origin\.nebutra\.com"/u);
+    expect(source).not.toContain("brand.domains.origin");
+  });
+
+  it("smokes the sign-in HTML instead of relying on the edge-only health route", () => {
+    expect(deployWorkflow).toContain("https://auth.nebutra.com/sign-in");
+    expect(deployWorkflow).toContain("content-type");
   });
 });

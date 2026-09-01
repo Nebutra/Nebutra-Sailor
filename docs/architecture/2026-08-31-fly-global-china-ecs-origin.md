@@ -8,9 +8,10 @@
 China + global browsers
   -> Cloudflare (proxied)
     -> Fly Machines in sin     forge / router / web / pebble / design
+    -> Fly Machine in sin      auth Next UI origin (not public DNS)
     -> Fly Machines in sin     Hono api-gateway (nebutra-gateway)
     -> Cloudflare Workers      api.nebutra.com → nebutra-gateway.fly.dev
-                               auth.nebutra.com /api/auth/*
+                               auth.nebutra.com /api/auth/* + UI proxy to Fly
     -> Vercel                  nebutra.com
     -> Shanghai ECS            China transit, sso, leak DNS, rollback
 ```
@@ -24,3 +25,6 @@ the Fly app URL, not `origin.nebutra.com` on ECS. Grey-cloud
 `origin.nebutra.com` may point grey-cloud A/AAAA at the same Fly app as an alias.
 
 Do not move `sso.nebutra.com` or `ns1.leak.nebutra.com` in this cutover.
+
+The auth Worker forwards UI requests to `https://nebutra-auth.fly.dev`.
+It must not reuse `origin.nebutra.com`, which is owned by the Hono gateway.
