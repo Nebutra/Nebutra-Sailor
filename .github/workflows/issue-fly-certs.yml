@@ -33,6 +33,9 @@ jobs:
           - app: design
             fly_app: nebutra-design
             host: design
+          - app: kuanlan
+            fly_app: nebutra-kuanlan
+            host: kuanlan
           - app: gateway
             fly_app: nebutra-gateway
             host: origin

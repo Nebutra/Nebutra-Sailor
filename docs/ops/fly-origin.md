@@ -1,7 +1,7 @@
 # Fly origin (product edges + Hono gateway)
 
 ECS PM2 is no longer the intended home for `forge` / `router` / `web` /
-`pebble` / `design` / the auth UI / the Node api-gateway. Next product edges ship as
+`pebble` / `design` / `kuanlan` / the auth UI / the Node api-gateway. Next product edges ship as
 standalone Machines in `sin` via
 [`.github/workflows/deploy-fly.yml`](../../.github/workflows/deploy-fly.yml).
 The Hono origin ships separately via
@@ -14,7 +14,7 @@ rollback only. `deploy-ecs.yml` remains the rollback.
 
 ## Live traffic
 
-`forge` / `router` / `app` / `pebble` / `design` are proxied CNAMEs to
+`forge` / `router` / `app` / `pebble` / `design` / `kuanlan` are proxied CNAMEs to
 Fly Machines in `sin` (Let's Encrypt certs issued). Confirm with
 `via: 1.1 fly.io` on the product hostname.
 

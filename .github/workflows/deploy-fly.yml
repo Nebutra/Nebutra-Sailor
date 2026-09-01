@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated: forge router web pebble design auth gateway cache). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin."
+        description: "Apps to deploy (space-separated: forge router web pebble design auth kuanlan gateway cache). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin."
         required: false
         default: ""
       cutover:
@@ -32,6 +32,7 @@ on:
       - "apps/pebble/**"
       - "apps/design/**"
       - "apps/auth/**"
+      - "apps/kuanlan/**"
       - "packages/ai/forge-runtime/**"
       - "packages/platform/router-supply/**"
       - "packages/design/**"
@@ -69,6 +70,7 @@ jobs:
             {"app":"pebble","package":"@nebutra/pebble-site","workspace":"apps/pebble","build_command":"build","fly_app":"nebutra-pebble","host":"pebble","site":"https://pebble.nebutra.com"},
             {"app":"design","package":"@nebutra/design","workspace":"apps/design","build_command":"build","fly_app":"nebutra-design","host":"design","site":"https://design.nebutra.com"},
             {"app":"auth","package":"@nebutra/auth-center","workspace":"apps/auth","build_command":"build","fly_app":"nebutra-auth","host":"","site":"https://auth.nebutra.com"},
+            {"app":"kuanlan","package":"@nebutra/kuanlan","workspace":"apps/kuanlan","build_command":"build","fly_app":"nebutra-kuanlan","host":"kuanlan","site":"https://kuanlan.nebutra.com"},
           ]
           wanted = [w for w in os.environ.get("INPUT_APPS", "").split() if w]
           known = {row["app"] for row in all_apps} | {"gateway", "cache"}
@@ -201,6 +203,27 @@ jobs:
           flyctl secrets unset HOSTNAME PORT HOST -a "${{ matrix.fly_app }}" --stage \
             || echo "no leftover bind secrets"
           flyctl secrets set HOSTNAME=0.0.0.0 PORT=8080 -a "${{ matrix.fly_app }}" --stage
+
+      - name: Set kuanlan consume secrets
+        if: matrix.app == 'kuanlan'
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          ROUTER_API_KEY: ${{ secrets.KUANLAN_ROUTER_API_KEY }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          set -euo pipefail
+          args=()
+          [ -n "${ROUTER_API_KEY:-}" ] && args+=(ROUTER_API_KEY="$ROUTER_API_KEY")
+          [ -n "${CLOUDFLARE_ACCOUNT_ID:-}" ] && args+=(CLOUDFLARE_ACCOUNT_ID="$CLOUDFLARE_ACCOUNT_ID")
+          [ -n "${R2_ACCESS_KEY_ID:-}" ] && args+=(R2_ACCESS_KEY_ID="$R2_ACCESS_KEY_ID")
+          [ -n "${R2_SECRET_ACCESS_KEY:-}" ] && args+=(R2_SECRET_ACCESS_KEY="$R2_SECRET_ACCESS_KEY")
+          if [ "${#args[@]}" -eq 0 ]; then
+            echo "::warning::No GitHub kuanlan secrets — relying on VM .env import."
+            exit 0
+          fi
+          flyctl secrets set "${args[@]}" -a nebutra-kuanlan --stage
 
       - name: Deploy Machine
         env:
