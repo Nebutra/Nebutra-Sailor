@@ -5,6 +5,7 @@ import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { setActiveOrganizationCookie } from "@/lib/active-organization";
+import { ORGANIZATION_ERROR_CODES } from "@/lib/organization-errors";
 
 const provider = getConfiguredAuthProvider();
 
@@ -36,6 +37,11 @@ function asRecord(value: unknown): Record<string, unknown> | null {
 
 function readString(value: unknown) {
   return typeof value === "string" ? value : "";
+}
+
+function canAttemptOrganizationOperations(capabilities: { organizations: boolean }) {
+  // Better Auth mounts and probes plugins lazily inside organization methods.
+  return provider === "better-auth" || capabilities.organizations;
 }
 
 function normalizeClerkOrganizations(input: unknown): OrganizationSummary[] {
@@ -79,7 +85,7 @@ async function getOrganizationsForRequest(request: Request): Promise<Organizatio
   const auth = await createAuth({ provider });
   const session = await auth.getSession(request);
   if (!session?.userId) return null;
-  if (!auth.capabilities.organizations) return [];
+  if (!canAttemptOrganizationOperations(auth.capabilities)) return [];
 
   const organizations = await auth.getUserOrganizations(session.userId, request);
   return organizations.map((organization) => ({
@@ -121,7 +127,7 @@ async function createOrganizationForRequest(
   const auth = await createAuth({ provider });
   const session = await auth.getSession(request);
   if (!session?.userId) return { status: "unauthenticated" };
-  if (!auth.capabilities.organizations) return { status: "unsupported" };
+  if (!canAttemptOrganizationOperations(auth.capabilities)) return { status: "unsupported" };
 
   const organization = await auth.createOrganization({
     name: input.name,
@@ -184,7 +190,10 @@ export async function POST(request: Request) {
 
     if (created.status === "unsupported") {
       return NextResponse.json(
-        { error: "Organizations are not enabled for this provider." },
+        {
+          code: ORGANIZATION_ERROR_CODES.notEnabled,
+          error: "Organizations are not enabled for this provider.",
+        },
         { status: 404 },
       );
     }
