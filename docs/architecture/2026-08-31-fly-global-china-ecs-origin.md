@@ -1,7 +1,7 @@
 # Fly product + Hono origin (Singapore), ECS kept for China transit / issuer / leak / rollback
 
 - **Date**: 2026-08-31
-- **Status**: Implemented substrate — product public DNS may still be ECS until Fly certs exist; Hono origin is Fly
+- **Status**: Product edges and Hono origin live on Fly `sin`; ECS keeps issuer / leak / China transit
 - **Runbook**: [fly-origin.md](../ops/fly-origin.md)
 
 ```text
@@ -21,6 +21,6 @@ and the hop for China transit / emergency rollback.
 
 `api.nebutra.com` stays orange-cloud on the edge Worker. `ORIGIN_URL` is
 the Fly app URL, not `origin.nebutra.com` on ECS. Grey-cloud
-`origin.nebutra.com` may CNAME to the same Fly app as an alias.
+`origin.nebutra.com` may point grey-cloud A/AAAA at the same Fly app as an alias.
 
 Do not move `sso.nebutra.com` or `ns1.leak.nebutra.com` in this cutover.
