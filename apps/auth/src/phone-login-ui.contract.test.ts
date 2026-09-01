@@ -31,4 +31,11 @@ describe("global phone login UI contract", () => {
     expect(form).toContain('"/api/auth/phone-number/verify"');
     expect(form).toContain("InputOTP");
   });
+
+  it("uses the design-system country selector", () => {
+    expect(form).not.toContain("<select");
+    expect(form).toContain("SelectTrigger");
+    expect(form).toContain("SelectContent");
+    expect(form).toContain("SelectItem");
+  });
 });

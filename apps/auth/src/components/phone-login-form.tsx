@@ -2,7 +2,18 @@
 
 import { Turnstile } from "@marsidev/react-turnstile";
 import { Phone } from "@nebutra/icons";
-import { Button, Input, InputOTP, InputOTPGroup, InputOTPSlot } from "@nebutra/ui/primitives";
+import {
+  Button,
+  Input,
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@nebutra/ui/primitives";
 import { AUTH_PRIMARY_CTA_CLASS } from "@nebutra/ui/utils";
 import { type CountryCode, getCountries, getCountryCallingCode } from "libphonenumber-js/min";
 import Link from "next/link";
@@ -145,6 +156,14 @@ export function PhoneLoginForm({ returnTo, turnstileSiteKey }: PhoneLoginFormPro
       name: names?.of(code) ?? code,
     })).sort((a, b) => a.name.localeCompare(b.name, locale));
   }, [displayNamesReady, locale]);
+  const countryItems = useMemo(
+    () =>
+      Object.fromEntries(
+        countryOptions.map((option) => [option.code, `${option.name} (+${option.callingCode})`]),
+      ),
+    [countryOptions],
+  );
+  const selectedCountryLabel = countryItems[country] ?? country;
 
   useEffect(() => setDisplayNamesReady(true), []);
 
@@ -331,18 +350,32 @@ export function PhoneLoginForm({ returnTo, turnstileSiteKey }: PhoneLoginFormPro
               <label htmlFor="phone-country" className="text-sm font-medium text-foreground">
                 {copy.country}
               </label>
-              <select
-                id="phone-country"
+              <Select
                 value={country}
-                onChange={(event) => setCountry(event.target.value as CountryCode)}
-                className="h-12 min-w-0 rounded-[var(--radius-md)] border border-border bg-background px-3 text-sm text-foreground shadow-none outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                onValueChange={(nextCountry) => {
+                  if (nextCountry && COUNTRY_CODE_SET.has(nextCountry)) {
+                    setCountry(nextCountry as CountryCode);
+                  }
+                }}
+                items={countryItems}
               >
-                {countryOptions.map((option) => (
-                  <option key={option.code} value={option.code}>
-                    {option.name} (+{option.callingCode})
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger
+                  id="phone-country"
+                  size="large"
+                  className="h-12 min-w-0 border-border bg-background text-foreground shadow-none"
+                >
+                  <SelectValue placeholder={selectedCountryLabel}>
+                    {() => selectedCountryLabel}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  {countryOptions.map((option) => (
+                    <SelectItem key={option.code} value={option.code}>
+                      {countryItems[option.code]}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="flex min-w-0 flex-col gap-1.5">
               <label htmlFor="phone-number" className="text-sm font-medium text-foreground">
