@@ -1,6 +1,5 @@
 import { getEnabledSku, SkuUnavailableError } from "@/catalog/skus";
 import { getSessionFromRequest } from "@/lib/auth";
-import { composeIdPhoto, InvalidPortraitError, MAX_PORTRAIT_BYTES } from "@/lib/id-photo";
 import {
   Image2UnavailableError,
   idPhotoShootBrief,
@@ -9,6 +8,9 @@ import {
 } from "@/lib/image2";
 import { InvalidResourceKeyError, ResourceStoreUnavailableError } from "@/lib/resources";
 import { listIdPhotoMoments, persistIdPhotoMoment } from "@/lib/resources.server";
+
+// Keep this number here so GET / unsigned POST never load sharp.
+const MAX_PORTRAIT_BYTES = 12 * 1024 * 1024;
 
 export const runtime = "nodejs";
 export const maxDuration = 180;
@@ -62,6 +64,7 @@ export async function POST(request: Request) {
   }
 
   try {
+    const { composeIdPhoto } = await import("@/lib/id-photo");
     const sku = getEnabledSku(skuId);
     const source = Buffer.from(await file.arrayBuffer());
     const shot = await shootWithImage2({
@@ -100,7 +103,7 @@ export async function POST(request: Request) {
     if (error instanceof SkuUnavailableError) {
       return Response.json({ error: "sku_unavailable" }, { status: 404 });
     }
-    if (error instanceof InvalidPortraitError) {
+    if (error instanceof Error && error.name === "InvalidPortraitError") {
       return Response.json({ error: "portrait_unreadable" }, { status: 400 });
     }
     if (error instanceof InvalidResourceKeyError) {
