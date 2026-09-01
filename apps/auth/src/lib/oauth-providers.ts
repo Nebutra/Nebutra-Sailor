@@ -13,13 +13,17 @@ export function isOAuthProvider(value: string | null | undefined): value is OAut
 export function detectEnabledOAuthProviders(
   env: Record<string, string | undefined> = process.env,
 ): readonly OAuthProvider[] {
-  const enabled: OAuthProvider[] = [];
-  if (env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET) enabled.push("google");
-  if (env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET) enabled.push("github");
-  if (env.APPLE_CLIENT_ID && env.APPLE_CLIENT_SECRET) enabled.push("apple");
-  if (env.MICROSOFT_CLIENT_ID && env.MICROSOFT_CLIENT_SECRET) enabled.push("microsoft");
-  if (env.FEISHU_APP_ID && env.FEISHU_APP_SECRET) enabled.push("feishu");
-  return enabled;
+  const enabled = new Set<OAuthProvider>();
+  for (const provider of env.AUTH_ENABLED_OAUTH_PROVIDERS?.split(",") ?? []) {
+    const candidate = provider.trim();
+    if (isOAuthProvider(candidate)) enabled.add(candidate);
+  }
+  if (env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET) enabled.add("google");
+  if (env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET) enabled.add("github");
+  if (env.APPLE_CLIENT_ID && env.APPLE_CLIENT_SECRET) enabled.add("apple");
+  if (env.MICROSOFT_CLIENT_ID && env.MICROSOFT_CLIENT_SECRET) enabled.add("microsoft");
+  if (env.FEISHU_APP_ID && env.FEISHU_APP_SECRET) enabled.add("feishu");
+  return OAUTH_PROVIDERS.filter((provider) => enabled.has(provider));
 }
 
 export function buildOAuthStartPath(provider: OAuthProvider, callbackURL: string): string {

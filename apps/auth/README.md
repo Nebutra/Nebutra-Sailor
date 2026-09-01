@@ -44,6 +44,7 @@ Feishu uses `FEISHU_REDIRECT_URI` when set; otherwise the same Better Auth callb
 | `TURNSTILE_SECRET_KEY` + `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Cloudflare Turnstile (`x-captcha-response`) |
 | `PASSKEY_RP_ID` / `PASSKEY_ORIGIN` | Override WebAuthn RP (default: auth host) |
 | `BETTER_AUTH_URL` | Must be `https://auth.nebutra.com` in production |
+| `AUTH_ENABLED_OAUTH_PROVIDERS` | Non-secret provider list for a UI-only origin, e.g. `google,github` |
 
 ## Local
 
