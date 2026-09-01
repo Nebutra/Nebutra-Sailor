@@ -67,7 +67,7 @@ describe("composeIdPhoto", () => {
 
   it("refuses a disabled spec even if the object is passed in", async () => {
     const closed = SKUS.find((sku) => sku.id === "cn-1in-blue");
-    if (!closed) {
+    if (!closed || closed.kind !== "id-photo") {
       throw new Error("cn-1in-blue must stay in the catalog as a closed spec");
     }
 
