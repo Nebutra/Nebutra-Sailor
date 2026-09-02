@@ -202,7 +202,7 @@
       "Never pure #000: Ink Black is #0d0d0d so the black warms against the cream.",
       "One radius: 16px on every container, button and input. 9999px only for the floating nav pill. 12px only for image tiles (app-local).",
       "Elevation is none. No shadows on cards, buttons or nav — flatness is the point.",
-      "Type is a single face at whisper weight 350 for display, 400 body, 500 buttons/labels. cosmosOracle is the original; Fraunces is the substitute DESIGN.md names.",
+      "Type is a single face at whisper weight 350 for display, 400 body, 500 buttons/labels. Fraunces is the shipped face and a settled choice, not a placeholder: DESIGN.md names cosmosOracle as the original and this class of face as its substitute, the original is not licensed here, and swapping to it is not pending work. Do not 'fix' this by reaching for cosmosOracle.",
       "destructive / success are state colours, not chrome — they are the only chroma the interface may show."
     ]
   }
