@@ -31,9 +31,12 @@ untrusted pull request code. The current allowlist is:
 `id-token: write` is only allowed for jobs that need OIDC by design. The current
 workflow allowlist is:
 
-- `.github/workflows/docker-build-push.yml`
 - `.github/workflows/release.yml`
 - `.github/workflows/scorecard.yml`
+
+(`docker-build-push.yml` held the third entry until it was retired on
+2026-09-02; a future image-publish workflow must be added back here and in the
+script before it may request `id-token: write`.)
 
 Any change to these allowlists must update
 `scripts/verify-supply-chain-policy.mjs` in the same PR.

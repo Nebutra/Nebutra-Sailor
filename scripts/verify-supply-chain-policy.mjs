@@ -31,7 +31,7 @@ const approvedBuildScripts = new Set([
   "workerd",
 ]);
 const pullRequestTargetAllowlist = new Set(["cla.yml", "labeler.yml"]);
-const oidcWriteAllowlist = new Set(["docker-build-push.yml", "release.yml", "scorecard.yml"]);
+const oidcWriteAllowlist = new Set(["release.yml", "scorecard.yml"]);
 const lockfileIndicators = [
   "@tanstack/setup",
   "github:tanstack/router#79ac49eedf774dd4b0cfa308722bc463cfe5885c",

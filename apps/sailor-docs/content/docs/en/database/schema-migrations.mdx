@@ -114,7 +114,7 @@ Migration files in `prisma/migrations/` are the authoritative record of every sc
 
 Migrations must be applied to the database before the new application code is deployed. Add this step to your pipeline:
 
-```yaml .github/workflows/deploy.yml
+```yaml .github/workflows/your-deploy.yml
 - name: Run database migrations
   run: pnpm db:migrate
   env:

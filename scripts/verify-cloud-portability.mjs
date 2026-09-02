@@ -102,24 +102,13 @@ for (const workflow of manifest.ci?.workflows ?? []) {
   );
 }
 
-const dockerWorkflow = readText(".github/workflows/docker-build-push.yml");
-includesAll(
-  dockerWorkflow,
-  [
-    "AWS_ECR_ROLE_ARN",
-    "aws-actions/configure-aws-credentials",
-    "aws-actions/amazon-ecr-login",
-    "GCP_PROJECT_ID",
-    "GCP_REGION",
-    "GCP_ARTIFACT_REPOSITORY",
-    "GCP_WORKLOAD_IDENTITY_PROVIDER",
-    "GCP_SERVICE_ACCOUNT",
-    "google-github-actions/auth@c200f3691d83b41bf9bbd8638997a462592937ed",
-    "token_format: access_token",
-    "oauth2accesstoken",
-    "-docker.pkg.dev",
-  ],
-  ".github/workflows/docker-build-push.yml",
+// docker-build-push.yml (GHCR + ECR + Artifact Registry publish) was retired on
+// 2026-09-02 after five months without a run. The registry adapters stay
+// described per provider above and provisioned by Terraform below; the manifest
+// must not point at a publish workflow that does not exist.
+assert(
+  !existsSync(resolve(root, ".github/workflows/docker-build-push.yml")),
+  "docker-build-push.yml was retired; a new image-publish workflow must be added to ci.workflows deliberately",
   failures,
 );
 

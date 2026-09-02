@@ -38,7 +38,10 @@ describe("open platform closure", () => {
     expect(existsSync(join(process.cwd(), "infra/ops/scripts/point-open-dns-vercel.sh"))).toBe(
       true,
     );
-    expect(existsSync(join(process.cwd(), ".github/workflows/point-open-dns.yml"))).toBe(true);
+    const pointDns = readFileSync(join(process.cwd(), ".github/workflows/point-dns.yml"), "utf-8");
+    expect(pointDns).toContain("open/vercel)");
+    expect(pointDns).toContain("point-open-dns-vercel.sh");
+    expect(pointDns).toContain("Attach open.nebutra.com on nebutra-landing");
   });
 
   it("is a Vercel landing alias, not an ECS surface", () => {

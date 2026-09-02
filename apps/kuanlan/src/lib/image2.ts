@@ -19,6 +19,21 @@ const ATTIRE_COPY = {
   oxford: "navy oxford button-down shirt, top button undone, no jacket",
 } as const;
 
+export function garmentStillBrief(garment: GarmentId, options?: { reference?: boolean }): string {
+  return [
+    options?.reference
+      ? "Ghost-mannequin product photograph of the same garment in the reference photo."
+      : "Ghost-mannequin product photograph of one garment only.",
+    "No person, no mannequin stand, no hanger, no face, no hands.",
+    "Front view, waist-up, centered. Even studio lighting.",
+    "The garment holds a hollow worn shape.",
+    "Seamless mid-grey cyclorama #7e8691.",
+    "One in-camera exposure. Empty, no props, no watermark, no text.",
+    "Do not cut out, mask, replace, or composite the background. no halo.",
+    `Attire: ${ATTIRE_COPY[garment]}.`,
+  ].join(" ");
+}
+
 function attireForSku(sku: Pick<IdPhotoSku, "background" | "garmentId">): string {
   const garment: GarmentId = sku.garmentId ?? "blazer";
   if (sku.background === "studio") {

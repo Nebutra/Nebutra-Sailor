@@ -19,9 +19,11 @@ describe("resource keys", () => {
     expect(orbitAssetKey("12.jpg")).toBe(`${RESOURCE_ROOT}/orbit/12.jpg`);
   });
 
-  it("places wardrobe stills under the public wardrobe prefix as PNG", () => {
-    expect(wardrobeSampleKey("blazer")).toBe("kuanlan/wardrobe/blazer.png");
-    expect(wardrobeSampleSrc("knit")).toBe("https://cdn.nebutra.com/kuanlan/wardrobe/knit.png");
+  it("places wardrobe stills under the public wardrobe prefix as JPEG", () => {
+    expect(wardrobeSampleKey("blazer")).toBe("kuanlan/wardrobe/blazer.jpg");
+    expect(wardrobeSampleSrc("knit")).toBe(
+      "https://cdn.nebutra.com/kuanlan/wardrobe/knit.jpg?v=incamera",
+    );
     expect(() => wardrobeSampleSrc("../face")).toThrow(InvalidResourceKeyError);
   });
 

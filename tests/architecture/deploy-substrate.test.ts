@@ -1,18 +1,28 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 /**
- * Legacy deploy-workflow governance.
+ * Deploy-workflow governance.
  *
- * The target contract now lives in `@nebutra/preset/deploy-target` and
+ * The target contract lives in `@nebutra/preset/deploy-target` and
  * `docs/architecture/2026-06-04-production-runtime-closure.md`: gateway defaults
- * to Cloudflare Workers but remains provider-switchable. This file only guards
- * the legacy Kubernetes auto-trigger while workflow migration is still in
- * progress. Manual `workflow_dispatch` may still override intentionally.
+ * to Cloudflare Workers but remains provider-switchable, and every adapter job
+ * is gated by its own per-service `DEPLOY_TARGET_*` selector.
  *
- * This test fails if someone removes the substrate gate and reintroduces the
- * double-deploy.
+ * Until 2026-09-02 the first test here guarded the Kubernetes deployer
+ * (`deploy.yml`: kustomize + kubectl, auto-triggered by `docker-build-push.yml`
+ * and gated on the global `vars.DEPLOY_TARGET == 'k8s'`). Neither workflow had
+ * run in five months and both were retired; `infra/iac/k8s/` stays on disk as
+ * an experimental implementation. The guard is now the negative: no workflow
+ * may deploy to Kubernetes on an automatic trigger, and the retired global gate
+ * may not come back. A `workflow_dispatch`-only k8s job would still pass — that
+ * is an operator decision, not a double-deploy.
+ *
+ * The retirement also orphaned `deploy-origin-ecs.yml`, whose `workflow_run`
+ * trigger named "Docker Build & Push" — GitHub never fires a `workflow_run` for
+ * a workflow that does not exist, and nothing reports it. The second test keeps
+ * every `workflow_run.workflows` entry pointing at a workflow that is present.
  */
 
 const WORKFLOWS = resolve(process.cwd(), ".github/workflows");
@@ -21,22 +31,154 @@ function read(file: string): string {
   return readFileSync(resolve(WORKFLOWS, file), "utf-8");
 }
 
+function workflowFiles(): string[] {
+  return readdirSync(WORKFLOWS)
+    .filter((file) => /\.ya?ml$/.test(file))
+    .sort();
+}
+
+/**
+ * Anything that pushes manifests or images at a Kubernetes cluster. Keys on the
+ * tooling, not the target name: a `k8s` choice in a `workflow_dispatch` input
+ * (deploy-origin-ecs.yml offers one) is a menu entry, not a deploy. As of
+ * 2026-09-02 no workflow matches, so this scan is a tripwire for the next one;
+ * the deploy.yml-absence and global-gate assertions carry the weight today.
+ */
+const K8S_DEPLOY = /\bkubectl\b|\bkustomize\b|infra\/iac\/k8s\//;
+
+/**
+ * Top-level trigger keys under `on:`. Handles the block form (`on:\n  push:`)
+ * and the inline forms (`on: push`, `on: [push, workflow_dispatch]`). No YAML
+ * library: the workflows here are hand-written with two-space indentation, and
+ * the arch tests carry no parser dependency — a key listing is not worth one.
+ */
+function triggers(yml: string): string[] {
+  const lines = yml.split("\n");
+  const start = lines.findIndex((line) => /^on:/.test(line));
+  if (start === -1) return [];
+
+  const inline = ((lines[start] as string).replace(/^on:/, "").split("#")[0] as string).trim();
+  if (inline) {
+    return inline
+      .replace(/^\[|\]$/g, "")
+      .split(",")
+      .map((token) => token.trim())
+      .filter(Boolean);
+  }
+
+  const keys: string[] = [];
+  for (let i = start + 1; i < lines.length; i += 1) {
+    const line = lines[i] as string;
+    if (/^[A-Za-z_"']/.test(line)) break; // next top-level key
+    const match = /^ {2}([A-Za-z_]+):/.exec(line);
+    if (match) keys.push(match[1] as string);
+  }
+  return keys;
+}
+
+function unquote(value: string): string {
+  return value.trim().replace(/^(["'])(.*)\1$/, "$2");
+}
+
+/** The `name:` a workflow registers under — what `workflow_run.workflows` matches. */
+function workflowName(yml: string): string | undefined {
+  const match = /^name:\s*(.+?)\s*$/m.exec(yml);
+  return match ? unquote(match[1] as string) : undefined;
+}
+
+/**
+ * Workflow names listed under `on.workflow_run.workflows`. Handles the inline
+ * list (`workflows: ["CI"]`) and the block list (`workflows:\n      - CI`).
+ */
+function workflowRunTargets(yml: string): string[] {
+  const lines = yml.split("\n");
+  const start = lines.findIndex((line) => /^ {2}workflow_run:/.test(line));
+  if (start === -1) return [];
+
+  const names: string[] = [];
+  for (let i = start + 1; i < lines.length; i += 1) {
+    const line = lines[i] as string;
+    if (line.trim() !== "" && !/^ {4}/.test(line)) break; // left the workflow_run block
+    const inline = /^ {4}workflows:\s*\[(.*)\]\s*$/.exec(line);
+    if (inline) {
+      names.push(...(inline[1] as string).split(",").map(unquote).filter(Boolean));
+      continue;
+    }
+    if (/^ {4}workflows:\s*$/.test(line)) {
+      for (let j = i + 1; j < lines.length; j += 1) {
+        const item = /^ {6}- (.+)$/.exec(lines[j] as string);
+        if (!item) break;
+        names.push(unquote(item[1] as string));
+      }
+    }
+  }
+  return names;
+}
+
 describe("Deploy substrate governance", () => {
-  it("k8s auto-deploy (deploy.yml) is gated behind DEPLOY_TARGET == 'k8s'", () => {
-    const yml = read("deploy.yml");
+  it("no workflow deploys to Kubernetes on an automatic trigger", () => {
+    // The trigger extractor must actually see something, or the loop below is
+    // vacuously green.
+    expect(triggers(read("deploy-web-vercel.yml"))).toContain("workflow_dispatch");
+    expect(triggers(read("ci.yml")).length).toBeGreaterThan(0);
 
-    // The deploy job's `if:` block governs when the substrate activates.
-    expect(yml).toContain("vars.DEPLOY_TARGET == 'k8s'");
-
-    // The automatic (workflow_run) path must be conjoined with the gate, not
-    // left unconditional. Assert the workflow_run branch and the gate co-occur
-    // on the same condition line so the gate cannot be trivially bypassed.
-    const gatedWorkflowRun =
-      /github\.event_name == 'workflow_run'[\s\S]{0,200}?vars\.DEPLOY_TARGET == 'k8s'/;
     expect(
-      gatedWorkflowRun.test(yml),
-      "deploy.yml workflow_run trigger must be gated by vars.DEPLOY_TARGET == 'k8s'",
-    ).toBe(true);
+      existsSync(resolve(WORKFLOWS, "deploy.yml")),
+      "deploy.yml (kustomize + kubectl deployer) was retired on 2026-09-02; a Kubernetes path comes back as a per-service gated workflow, not under this name",
+    ).toBe(false);
+
+    const autoDeploys: string[] = [];
+    const globalGate: string[] = [];
+    for (const file of workflowFiles()) {
+      const yml = read(file);
+      if (/vars\.DEPLOY_TARGET\s*==/.test(yml)) globalGate.push(file);
+      if (!K8S_DEPLOY.test(yml)) continue;
+      const automatic = triggers(yml).filter((trigger) => trigger !== "workflow_dispatch");
+      if (automatic.length > 0) autoDeploys.push(`${file} (${automatic.join(", ")})`);
+    }
+
+    expect(
+      autoDeploys,
+      `workflows that deploy to Kubernetes on an automatic trigger — gate them behind a per-service DEPLOY_TARGET_* selector or make them workflow_dispatch-only:\n${autoDeploys.join("\n")}`,
+    ).toEqual([]);
+    expect(
+      globalGate,
+      `the global vars.DEPLOY_TARGET gate was a compatibility bridge (ADR 2026-06-04) and left with deploy.yml; use the per-service DEPLOY_TARGET_* selectors:\n${globalGate.join("\n")}`,
+    ).toEqual([]);
+  });
+
+  it("every workflow_run trigger names a workflow that exists", () => {
+    // Non-vacuous: the extractor must see the one live workflow_run consumer,
+    // and must catch the shape that went stale on 2026-09-02, when
+    // deploy-origin-ecs.yml kept pointing at the retired "Docker Build & Push".
+    expect(workflowRunTargets(read("deploy-gateway.yml"))).toEqual(["CI"]);
+    expect(
+      workflowRunTargets(
+        'on:\n  workflow_dispatch:\n  workflow_run:\n    workflows: ["Docker Build & Push"]\n    branches: [main]\n\npermissions:\n',
+      ),
+    ).toEqual(["Docker Build & Push"]);
+    expect(
+      workflowRunTargets("on:\n  workflow_run:\n    workflows:\n      - CI\n      - 'Release'\n"),
+    ).toEqual(["CI", "Release"]);
+
+    const known = new Set<string>();
+    for (const file of workflowFiles()) {
+      // A nameless workflow is displayed under its path relative to the repo root.
+      known.add(workflowName(read(file)) ?? `.github/workflows/${file}`);
+    }
+    expect(known).toContain("CI");
+    expect(known).toContain("Deploy Cloud VM Origin");
+
+    const dangling: string[] = [];
+    for (const file of workflowFiles()) {
+      for (const target of workflowRunTargets(read(file))) {
+        if (!known.has(target)) dangling.push(`${file} -> "${target}"`);
+      }
+    }
+    expect(
+      dangling,
+      `workflow_run triggers that name a workflow which does not exist — GitHub never fires these and never says so; drop the trigger or point it at a live workflow name:\n${dangling.join("\n")}`,
+    ).toEqual([]);
   });
 
   it("legacy ECS PM2 workflow stays path-gated: product edges auto-push, rest manual", () => {
@@ -89,10 +231,8 @@ describe("Deploy substrate governance", () => {
 
   it("legacy ECS workflow no longer claims to be the default-active backend substrate", () => {
     const yml = read("deploy-ecs.yml");
-    const k8s = read("deploy.yml");
 
     expect(yml).not.toContain("DEFAULT-ACTIVE");
-    expect(k8s).not.toContain("DEFAULT-ACTIVE backend substrate");
     expect(yml).not.toContain("vars.DEPLOY_TARGET == 'ecs");
   });
 

@@ -84,7 +84,7 @@ Required env vars are validated at startup. Missing secrets should fail fast. At
 | `ci.yml` | lint → typecheck → build → test on PR/push |
 | `deploy-ecs.yml` | **Manual** fallback: Next standalone + gateway tarball → VM PM2 |
 | Vercel Git integration | Auto-deploy **landing** + **docs** (and optional web/auth projects) |
-| `deploy.yml` | Substrate-gated (e.g. k8s); not the default ECS path |
+| `deploy-gateway.yml` / `deploy-origin-ecs.yml` | Per-service adapters, gated by `DEPLOY_TARGET_GATEWAY` / `DEPLOY_TARGET_PYTHON_AI`; no workflow deploys to Kubernetes |
 
 Hobby Vercel has a **daily deployment quota** (~100 deployments/day; canceled/skipped can still count). Each linked project may open a deployment slot per push, so:
 

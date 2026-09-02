@@ -150,7 +150,7 @@ jobs:
             ".github/workflows/deploy-carina-fly.yml",
             ".github/workflows/deploy-new-api-fly.yml",
             ".github/workflows/deploy-dns-leak-fly.yml",
-            ".github/workflows/point-forge-dns.yml",
+            ".github/workflows/point-dns.yml",
             ".github/workflows/chromatic.yml",
             ".github/workflows/visual-acceptance.yml",
             "apps/forge",

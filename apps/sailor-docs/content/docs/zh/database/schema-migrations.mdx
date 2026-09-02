@@ -114,7 +114,7 @@ packages/platform/db/
 
 迁移必须在部署新应用程序代码之前应用到数据库。在流水线中添加此步骤：
 
-```yaml .github/workflows/deploy.yml
+```yaml .github/workflows/your-deploy.yml
 - name: 运行数据库迁移
   run: pnpm db:migrate
   env:

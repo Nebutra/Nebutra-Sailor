@@ -18,6 +18,8 @@
     "test:watch": "vitest",
     "samples:compose": "tsx scripts/compose-sku-samples.ts",
     "samples:shoot": "tsx scripts/shoot-sku-sample.ts",
+    "wardrobe:compose": "tsx scripts/compose-wardrobe-stills.ts",
+    "wardrobe:shoot": "tsx scripts/shoot-wardrobe-still.ts",
     "assets:seed": "tsx scripts/seed-catalog-assets.ts"
   },
   "dependencies": {

@@ -10,13 +10,13 @@
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "nebutra": "./dist/index.js"
+    "nebutra": "./bin/nebutra.js"
   },
   "files": [
+    "bin",
     "dist"
   ],
   "scripts": {
-    "prepare": "mkdir -p dist && test -f dist/index.js || echo '#!/usr/bin/env node' > dist/index.js",
     "dev": "tsup --watch",
     "build": "tsup",
     "start": "node dist/index.js",
