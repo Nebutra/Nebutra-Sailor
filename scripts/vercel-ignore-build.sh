@@ -23,11 +23,10 @@
 #   The old rule rebuilt every Vercel project on any package change and burned
 #   Hobby's ~100 deployments/day. Scope is intentional and per-app.
 #
-# Keep Git connected only for surfaces you want auto-deployed (today: kuanlan).
 # landing builds on GitHub and ships prebuilt via deploy-landing-vercel.yml, so
-# its Git integration is off too. web/auth/api production is not Vercel.
-# kuanlan stays Git-linked while it is launching: skip when the app dir is
-# missing so empty monorepo pushes do not burn a failed build. Do not Unlink.
+# its Git integration is off. web/auth/api production is not Vercel.
+# kuanlan stays Git-linked as a leftover project; production is Fly Singapore
+# (is_fly_primary=1) — skip Vercel auto-deploy unless opted in. Do not Unlink.
 
 set -euo pipefail
 
@@ -47,12 +46,12 @@ COMMIT_MSG="$(git -C "$REPO_ROOT" log -1 --pretty=%B 2>/dev/null || true)"
 echo "Repo root: $REPO_ROOT"
 echo "App scope root: $APP_DIR"
 
-# Launching product: the Vercel project is already Git-linked. Skip when the
-# app is not on this SHA. A leftover local directory without package.json
-# does not count as shipped.
+# Leftover Vercel project: skip when the app dir is missing so empty
+# monorepo pushes do not burn a failed build. When the app is present,
+# Fly-primary skip below owns the decision.
 if [ "$APP_DIR" = "apps/kuanlan" ] && [ ! -f "$REPO_ROOT/apps/kuanlan/package.json" ]; then
   echo "apps/kuanlan is not in this tree yet — skip."
-  echo "Keep the Git connection. Unpause / deploy when the app lands on main."
+  echo "Keep the Git connection. Production is Fly, not Vercel."
   exit 0
 fi
 
@@ -78,11 +77,13 @@ if [[ -n "$COMMIT_REF" && "$COMMIT_REF" != "main" ]]; then
   exit 0
 fi
 
-# --- ECS-primary surfaces: production is not Vercel; skip unless opted in ---
-# Opt-in: VERCEL_ALLOW_ECS_OPTIONAL=1 on the Vercel project, or commit tag.
+# --- ECS / Fly-primary surfaces: production is not Vercel; skip unless opted in ---
+# Opt-in: VERCEL_ALLOW_ECS_OPTIONAL=1 / VERCEL_ALLOW_FLY_OPTIONAL=1, or commit tag.
 is_ecs_optional=0
+is_fly_primary=0
 case "$APP_DIR" in
   apps/web|apps/auth|backends/gateway) is_ecs_optional=1 ;;
+  apps/kuanlan) is_fly_primary=1 ;;
 esac
 
 if [[ "$is_ecs_optional" -eq 1 ]]; then
@@ -93,6 +94,16 @@ if [[ "$is_ecs_optional" -eq 1 ]]; then
     exit 0
   fi
   echo "ECS-optional app allowed for this push."
+fi
+
+if [[ "$is_fly_primary" -eq 1 ]]; then
+  tag="[vercel:${APP_DIR}]"
+  if [[ "${VERCEL_ALLOW_FLY_OPTIONAL:-}" != "1" && "$COMMIT_MSG" != *"$tag"* && "$COMMIT_MSG" != *"[vercel:fly-optional]"* ]]; then
+    echo "Fly-primary app ($APP_DIR) — skip Vercel auto-deploy."
+    echo "  Opt in: set VERCEL_ALLOW_FLY_OPTIONAL=1 on the project, or commit with $tag"
+    exit 0
+  fi
+  echo "Fly-optional app allowed for this push."
 fi
 
 # --- Per-app path scopes (app + direct @nebutra workspace packages) ---

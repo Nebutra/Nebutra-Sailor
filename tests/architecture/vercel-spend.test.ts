@@ -19,7 +19,7 @@ function readText(rel: string): string {
   return readFileSync(resolve(repoRoot, rel), "utf8");
 }
 
-describe("Vercel spend: one build per commit, built on GitHub, kuanlan stays Git-linked", () => {
+describe("Vercel spend: landing ships prebuilt from GitHub, kuanlan is Fly-primary", () => {
   it("disables Git auto-deploy on every Vercel project that ships from CI", () => {
     expect(readJson("apps/web/vercel.json").git?.deploymentEnabled).toBe(false);
     expect(readJson("apps/auth/vercel.json").git?.deploymentEnabled).toBe(false);
@@ -71,23 +71,24 @@ describe("Vercel spend: one build per commit, built on GitHub, kuanlan stays Git
     expect(result).not.toContain("Building to avoid a false skip");
   });
 
-  it("does not treat kuanlan as an ECS-optional skip", () => {
+  it("treats kuanlan as Fly-primary, not an ECS-optional skip", () => {
     const script = readText("scripts/vercel-ignore-build.sh");
-    expect(script).toContain("apps/kuanlan");
+    expect(script).toContain("apps/kuanlan) is_fly_primary=1");
     expect(script).toMatch(/apps\/web\|apps\/auth\|backends\/gateway/);
     expect(script).not.toMatch(/apps\/kuanlan[^\n]*is_ecs_optional/);
     expect(script).not.toContain("apps/web|apps/auth|apps/kuanlan");
   });
 
-  it("keeps kuanlan on Git ignoreCommand and skips until package.json exists", () => {
+  it("keeps kuanlan on Git ignoreCommand and skips Vercel now that the app is on main", () => {
     const kuanlan = readJson("apps/kuanlan/vercel.json");
     expect(kuanlan.ignoreCommand).toBe("bash ../../scripts/vercel-ignore-build.sh apps/kuanlan");
     expect(kuanlan.git?.deploymentEnabled).not.toBe(false);
-    expect(existsSync(resolve(repoRoot, "apps/kuanlan/package.json"))).toBe(false);
+    expect(existsSync(resolve(repoRoot, "apps/kuanlan/package.json"))).toBe(true);
     const result = execFileSync("bash", ["scripts/vercel-ignore-build.sh", "apps/kuanlan"], {
       cwd: repoRoot,
       encoding: "utf8",
+      env: { ...process.env, VERCEL_GIT_COMMIT_REF: "main" },
     });
-    expect(result).toContain("apps/kuanlan is not in this tree yet — skip.");
+    expect(result).toContain("Fly-primary app (apps/kuanlan) — skip Vercel auto-deploy.");
   });
 });
