@@ -909,7 +909,7 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
       unitCount: 1,
       unitLabel: copy("backend", "后端"),
       sourceFiles: 95,
-      testFiles: 36,
+      testFiles: 37,
       readmes: 0,
     },
     title: copy("Typed API Gateway Boundary", "类型化 API 网关边界"),
