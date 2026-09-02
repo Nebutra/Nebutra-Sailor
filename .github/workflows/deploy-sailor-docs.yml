@@ -44,7 +44,10 @@ on:
       - "packages/design/brand/**"
       - "packages/design/icons/**"
       - "packages/design/tokens/**"
-      - "pnpm-lock.yaml"
+      # pnpm-lock.yaml is deliberately not a trigger: a lockfile-only bump on
+      # main was half of this workflow's runs, each a remote Vercel build of an
+      # unchanged site. A dependency change that matters to docs also touches a
+      # path above.
       - "apps/sailor-docs/vercel.json"
       - "apps/sailor-docs/wrangler.jsonc"
       - "apps/sailor-docs/open-next.config.ts"

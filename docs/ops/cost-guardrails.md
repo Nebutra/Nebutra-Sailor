@@ -106,11 +106,14 @@ headroom is a correctness property here, not only a cost one. Treat sustained
 
 ## Vercel
 
-One Git repo linked to several projects bills a deployment per project per
-push. Production web/auth is ECS — those projects must not auto-deploy
-(`git.deploymentEnabled: false`). `nebutra-kuanlan` stays Git-linked; the
-ignore script skips until `apps/kuanlan/package.json` exists. Playbook:
-[vercel-spend.md](./vercel-spend.md).
+Vercel meters build minutes. One Git repo linked to several projects opens a
+remote build per project per push, and a workflow that runs `vercel deploy` on
+the same commit opens a second one. Production web/auth is not Vercel — those
+projects must not auto-deploy (`git.deploymentEnabled: false`). `nebutra.com`
+is Vercel, but its build runs on GitHub's free runners and only the prebuilt
+output is uploaded, so it meters nothing; its Git integration is off for the
+same reason. `nebutra-kuanlan` stays Git-linked; the ignore script skips until
+`apps/kuanlan/package.json` exists. Playbook: [vercel-spend.md](./vercel-spend.md).
 
 ## Still open: AI token spend
 
