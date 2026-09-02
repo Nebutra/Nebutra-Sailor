@@ -85,7 +85,12 @@ jobs:
               "${VM_USER}@${VM_HOST}" "cat $env_path" \
               | python3 -c '
           import sys
-          skip = {"HOSTNAME", "PORT", "HOST", "PWD"}
+          # Bind vars are Fly's business. CACHE_BACKEND=ioredis and
+          # REDIS_URL=redis://127.0.0.1:6379 describe the VM's local Redis;
+          # imported onto a Machine that has none, every Redis call fails and
+          # every rate-limited route answers 500 while health stays 200
+          # (2026-09-02). Upstash REST is the origin's Redis here.
+          skip = {"HOSTNAME", "PORT", "HOST", "PWD", "CACHE_BACKEND", "REDIS_URL"}
           for line in sys.stdin:
               raw = line.strip()
               if not raw or raw.startswith("#"):
@@ -102,8 +107,8 @@ jobs:
             echo "No $env_path on VM — skip."
           fi
           rm -f "$RUNNER_TEMP/vm_key"
-          flyctl secrets unset HOSTNAME PORT HOST -a nebutra-gateway --stage \
-            || echo "no leftover bind secrets"
+          flyctl secrets unset HOSTNAME PORT HOST CACHE_BACKEND REDIS_URL -a nebutra-gateway --stage \
+            || echo "no leftover bind or local-Redis secrets"
           flyctl secrets set HOST=0.0.0.0 PORT=8080 -a nebutra-gateway --stage
 
       - name: Setup Node and pnpm
