@@ -68,10 +68,15 @@ function getServiceTargets(): ServiceTarget[] {
       url: withPath(env.NEXT_PUBLIC_APP_URL, "/sign-in"),
     },
     {
+      // /misc/ready, not /system/status: the status route answers 200
+      // "degraded" while the rate-limit store is down, which is what let the
+      // 2026-09-02 outage sit behind a green status page for two days. The
+      // readiness probe goes through the same Redis client the rate limiter
+      // uses and answers 503 the moment that path breaks.
       id: "api",
       name: "API gateway",
-      description: "Public API edge and dependency health contract.",
-      url: withPath(env.NEXT_PUBLIC_API_URL, "/system/status"),
+      description: "Public API edge and request-path readiness (database, rate-limit store).",
+      url: withPath(env.NEXT_PUBLIC_API_URL, "/misc/ready"),
     },
     {
       id: "docs",
@@ -89,16 +94,49 @@ function classifyHttpStatus(statusCode: number): ServiceState {
   return "unknown";
 }
 
-function normalizeApiState(payload: unknown, fallback: ServiceState): ServiceState {
-  if (!payload || typeof payload !== "object" || !("status" in payload)) {
-    return fallback;
+interface ApiReading {
+  state: ServiceState;
+  note: string | null;
+}
+
+function readinessFailures(payload: { failing?: unknown }): string[] {
+  return Array.isArray(payload.failing) ? payload.failing.map(String) : [];
+}
+
+/**
+ * Interpret the API probe body. Understands the readiness contract
+ * (`{ ready, failing }` from /misc/ready) and the older status contract
+ * (`{ status: healthy | degraded | unhealthy }`) so a redeploy that moves the
+ * probe target does not blank the status page.
+ */
+function readApiPayload(payload: unknown, fallback: ServiceState): ApiReading {
+  if (!payload || typeof payload !== "object") {
+    return { state: fallback, note: null };
   }
 
-  const status = String((payload as { status: unknown }).status);
-  if (status === "healthy") return "operational";
-  if (status === "degraded") return "degraded";
-  if (status === "unhealthy") return "outage";
-  return fallback;
+  if ("ready" in payload) {
+    const readiness = payload as { ready: unknown; failing?: unknown };
+    if (readiness.ready === true) {
+      return { state: "operational", note: "API ready" };
+    }
+    const failing = readinessFailures(readiness);
+    // No database means no request succeeds; a missing rate-limit store
+    // degrades to the per-instance bucket but still answers.
+    const state: ServiceState = failing.includes("database") ? "outage" : "degraded";
+    const note = failing.length > 0 ? `API not ready: ${failing.join(", ")}` : "API not ready";
+    return { state, note };
+  }
+
+  if ("status" in payload) {
+    const status = String((payload as { status: unknown }).status);
+    const note = `API reports ${status}`;
+    if (status === "healthy") return { state: "operational", note };
+    if (status === "degraded") return { state: "degraded", note };
+    if (status === "unhealthy") return { state: "outage", note };
+    return { state: fallback, note };
+  }
+
+  return { state: fallback, note: null };
 }
 
 async function probeService(target: ServiceTarget): Promise<ServiceProbe> {
@@ -121,10 +159,10 @@ async function probeService(target: ServiceTarget): Promise<ServiceProbe> {
 
     if (target.id === "api" && response.headers.get("content-type")?.includes("json")) {
       try {
-        const payload = await response.json();
-        state = normalizeApiState(payload, state);
-        if (payload && typeof payload === "object" && "status" in payload) {
-          note = `API reports ${(payload as { status: string }).status}`;
+        const reading = readApiPayload(await response.json(), state);
+        state = reading.state;
+        if (reading.note) {
+          note = reading.note;
         }
       } catch {
         note = "API responded, but status payload was not readable";
