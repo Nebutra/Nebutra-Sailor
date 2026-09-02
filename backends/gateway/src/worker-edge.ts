@@ -18,7 +18,8 @@
  *   · health and status — no dependencies, and answering them close to the
  *     caller is the point of a health check
  *   · CORS preflight — a static answer that never needs the origin
- *   · per-IP flood limiting — bounded by address alone, no key lookup, no plan
+ *   · per-IP flood limiting — bounded by address alone, no key lookup, no plan,
+ *     counted by Cloudflare's own rate limiting binding
  *
  * Anything keyed on who the caller is (API keys, plans, balances, quotas) stays
  * at the origin, where the logic already lives exactly once.
@@ -28,16 +29,21 @@
 // Worker serves and which one it forwards to. The forwarding target itself is ORIGIN_URL, a
 // wrangler var, precisely so it is not hardcoded here.
 
+/**
+ * Cloudflare's rate limiting binding, declared in wrangler.edge.toml under
+ * `[[ratelimits]]`. Typed here rather than via @cloudflare/workers-types: this
+ * file is the whole Worker and has no other reason to carry that dependency.
+ */
+interface RateLimitBinding {
+  limit(options: { key: string }): Promise<{ success: boolean }>;
+}
+
 interface EdgeEnv {
   /** Origin that is not routed to this Worker. Must not be api.nebutra.com. */
   ORIGIN_URL?: string;
-  /** Requests per minute per IP before shedding. */
-  EDGE_IP_RATE_LIMIT?: string;
-  UPSTASH_REDIS_REST_URL?: string;
-  UPSTASH_REDIS_REST_TOKEN?: string;
+  /** Per-IP flood limit. Limit and period live in wrangler.edge.toml. */
+  IP_LIMITER?: RateLimitBinding;
 }
-
-const DEFAULT_IP_RATE_LIMIT = 600;
 
 function json(body: unknown, status: number, extra?: HeadersInit): Response {
   return new Response(JSON.stringify(body), {
@@ -47,41 +53,30 @@ function json(body: unknown, status: number, extra?: HeadersInit): Response {
 }
 
 /**
- * Per-IP flood limit, counted in Redis so every colo shares one budget —
- * a per-isolate counter would let each edge location admit the full quota,
- * which is the opposite of a limit.
+ * Per-IP flood limit, counted by Cloudflare's rate limiting binding.
  *
- * Fails open. Redis being unreachable must not take the API down; the origin
- * still has its own per-key limiting, and this exists to shed floods, not to
- * be the only thing standing between the world and the backend.
+ * Until 2026-09-02 this was INCR+EXPIRE against Upstash on every request, so
+ * that every colo shared one budget. That was two billed Redis commands per
+ * request — scanners and bots included — plus a round trip to Redis's region
+ * before the origin fetch could start, and on the invoice it was the bulk of
+ * the Upstash line. The binding counts per Cloudflare location, is eventually
+ * consistent, and is not metered. For shedding floods that is the right trade:
+ * a per-colo limit still bounds any single source, and the per-key limit that
+ * actually protects tenants lives at the origin, where the plan is known.
+ *
+ * Fails open. A missing binding or a failing call must not take the API down;
+ * this sheds floods, it is not the only thing between the world and the backend.
  */
 async function underIpLimit(request: Request, env: EdgeEnv): Promise<boolean> {
-  const url = env.UPSTASH_REDIS_REST_URL;
-  const token = env.UPSTASH_REDIS_REST_TOKEN;
-  if (!url || !token) return true;
+  const limiter = env.IP_LIMITER;
+  if (!limiter) return true;
 
   const ip = request.headers.get("cf-connecting-ip");
   if (!ip) return true;
 
-  const limit = Number.parseInt(env.EDGE_IP_RATE_LIMIT ?? "", 10) || DEFAULT_IP_RATE_LIMIT;
-  const window = Math.floor(Date.now() / 60_000);
-  const key = `edge:ip:${ip}:${window}`;
-
   try {
-    // INCR then EXPIRE, pipelined into one round trip. The window key is
-    // short-lived by construction, so a missed EXPIRE costs one stale key.
-    const res = await fetch(`${url}/pipeline`, {
-      method: "POST",
-      headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
-      body: JSON.stringify([
-        ["INCR", key],
-        ["EXPIRE", key, "120"],
-      ]),
-    });
-    if (!res.ok) return true;
-    const parsed = (await res.json()) as Array<{ result?: number }>;
-    const count = parsed[0]?.result ?? 0;
-    return count <= limit;
+    const { success } = await limiter.limit({ key: ip });
+    return success;
   } catch {
     return true;
   }

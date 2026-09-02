@@ -155,21 +155,37 @@ describe("production runtime closure", () => {
     // no fix could reach it. api.nebutra.com is now served by
     // nebutra-gateway-edge, which forwards to the Fly Hono origin.
     //
-    // So the credentials this workflow needs are Cloudflare's plus Upstash, for
-    // the per-IP flood limit the edge shares across colos. It deliberately does
-    // NOT need AI_SERVICE_URL, SERVICE_SECRET or GATEWAY_SHARED_SECRET: every
-    // decision keyed on who the caller is stays at the origin, where the logic
-    // already lives exactly once. This test asserted those three until
-    // 2026-07-30 and had been failing since the split, which is also why nobody
-    // could tell that CI was red for a different reason entirely.
-    expect(workflow).toContain("UPSTASH_REDIS_REST_URL secret is not set");
-    expect(workflow).toContain("UPSTASH_REDIS_REST_TOKEN secret is not set");
+    // So the only credentials this workflow needs are Cloudflare's. It
+    // deliberately does NOT need AI_SERVICE_URL, SERVICE_SECRET or
+    // GATEWAY_SHARED_SECRET: every decision keyed on who the caller is stays
+    // at the origin, where the logic already lives exactly once. This test
+    // asserted those three until 2026-07-30 and had been failing since the
+    // split, which is also why nobody could tell that CI was red for a
+    // different reason entirely.
+    //
+    // Until 2026-09-02 it also needed Upstash, for a per-IP flood limit that
+    // ran INCR+EXPIRE on every request — two billed commands per hit, bots
+    // included, and the bulk of the Upstash invoice. That limit is now
+    // Cloudflare's rate limiting binding, declared in wrangler.edge.toml, so
+    // the edge carries no service credentials and the workflow syncs none.
+    expect(workflow).not.toContain("UPSTASH_REDIS_REST_URL");
+    expect(workflow).not.toContain("UPSTASH_REDIS_REST_TOKEN");
+    expect(workflow).not.toContain("secret bulk");
     expect(workflow).not.toContain("AI_SERVICE_URL");
     expect(workflow).not.toContain("GATEWAY_SHARED_SECRET");
 
-    expect(workflow).toContain("Prepare Worker runtime bindings");
-    expect(workflow).toContain("Sync Worker runtime bindings");
-    expect(workflow).toContain("secret bulk .wrangler-secrets.json --config wrangler.edge.toml");
+    const edgeConfig = readFileSync(
+      resolve(process.cwd(), "backends/gateway/wrangler.edge.toml"),
+      "utf8",
+    );
+    expect(edgeConfig).toMatch(/^\[\[ratelimits\]\]\s*\nname = "IP_LIMITER"/m);
+    expect(edgeConfig).not.toContain("EDGE_IP_RATE_LIMIT");
+    const edgeWorker = readFileSync(
+      resolve(process.cwd(), "backends/gateway/src/worker-edge.ts"),
+      "utf8",
+    );
+    expect(edgeWorker).not.toMatch(/UPSTASH|\/pipeline/);
+
     expect(workflow).toContain("deploy --config wrangler.edge.toml");
     expect(workflow).toContain("backends/gateway");
     expect(workflow).not.toContain("DEPLOY_TARGET == '");

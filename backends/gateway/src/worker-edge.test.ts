@@ -61,3 +61,83 @@ describe("gateway-edge fetch", () => {
     await expect(response.json()).resolves.toEqual({ status: "ok", layer: "edge" });
   });
 });
+
+describe("gateway-edge per-IP flood limit", () => {
+  const origin = "https://nebutra-gateway.fly.dev";
+  const fromIp = (ip: string) =>
+    new Request("https://api.nebutra.com/api/v1/things", {
+      headers: { "cf-connecting-ip": ip },
+    });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+  });
+
+  it("sheds with 429 when the Cloudflare rate limiting binding refuses the address", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    const limit = vi.fn(async () => ({ success: false }));
+
+    const response = await worker.fetch(fromIp("203.0.113.9"), {
+      ORIGIN_URL: origin,
+      IP_LIMITER: { limit },
+    });
+
+    expect(response.status).toBe(429);
+    expect(response.headers.get("retry-after")).toBe("60");
+    expect(limit).toHaveBeenCalledWith({ key: "203.0.113.9" });
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("forwards when the binding admits the address, without any Redis call", async () => {
+    const fetchMock = vi.fn(async () => new Response("ok", { status: 200 }));
+    vi.stubGlobal("fetch", fetchMock);
+    const limit = vi.fn(async () => ({ success: true }));
+
+    const response = await worker.fetch(fromIp("203.0.113.9"), {
+      ORIGIN_URL: origin,
+      IP_LIMITER: { limit },
+    });
+
+    expect(response.status).toBe(200);
+    expect(limit).toHaveBeenCalledOnce();
+    // The only outbound request is the origin forward. Before 2026-09-02 there
+    // was a second one here: INCR+EXPIRE to Upstash on every request.
+    expect(fetchMock).toHaveBeenCalledOnce();
+    const url = fetchMock.mock.calls[0]?.[0];
+    expect(String(url)).toBe(`${origin}/api/v1/things`);
+  });
+
+  it("fails open when the binding throws", async () => {
+    const fetchMock = vi.fn(async () => new Response("ok", { status: 200 }));
+    vi.stubGlobal("fetch", fetchMock);
+    const limit = vi.fn(async () => {
+      throw new Error("binding unavailable");
+    });
+
+    const response = await worker.fetch(fromIp("203.0.113.9"), {
+      ORIGIN_URL: origin,
+      IP_LIMITER: { limit },
+    });
+
+    expect(response.status).toBe(200);
+    expect(fetchMock).toHaveBeenCalledOnce();
+  });
+
+  it("does not consult the binding when there is no client address or no binding", async () => {
+    const fetchMock = vi.fn(async () => new Response("ok", { status: 200 }));
+    vi.stubGlobal("fetch", fetchMock);
+    const limit = vi.fn(async () => ({ success: false }));
+
+    const noIp = await worker.fetch(new Request("https://api.nebutra.com/api/v1/things"), {
+      ORIGIN_URL: origin,
+      IP_LIMITER: { limit },
+    });
+    expect(noIp.status).toBe(200);
+    expect(limit).not.toHaveBeenCalled();
+
+    const noBinding = await worker.fetch(fromIp("203.0.113.9"), { ORIGIN_URL: origin });
+    expect(noBinding.status).toBe(200);
+  });
+});
