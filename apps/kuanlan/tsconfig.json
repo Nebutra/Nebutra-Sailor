@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@nebutra/storage": ["../../packages/integrations/storage/src/index.ts"]
     }
   },
   "include": [

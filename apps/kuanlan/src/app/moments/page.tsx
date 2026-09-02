@@ -2,7 +2,6 @@ import { AuthGate } from "@/components/AuthGate";
 import { QuietPage } from "@/components/QuietPage";
 import { getServerSession } from "@/lib/auth";
 import { momentLabel } from "@/lib/moments";
-import { ResourceStoreUnavailableError } from "@/lib/resources";
 import { listIdPhotoMoments } from "@/lib/resources.server";
 import { formatDay } from "@/lib/when";
 
@@ -52,10 +51,7 @@ export default async function MomentsPage() {
         </ul>
       </QuietPage>
     );
-  } catch (error) {
-    if (error instanceof ResourceStoreUnavailableError) {
-      return <QuietPage active="/moments" title="Moments" line="这一刻还存不进去。" />;
-    }
-    throw error;
+  } catch {
+    return <QuietPage active="/moments" title="Moments" line="这一刻还存不进去。" />;
   }
 }
