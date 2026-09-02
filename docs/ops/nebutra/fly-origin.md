@@ -79,3 +79,14 @@ workflow now skips and unsets both. The queue provider is a separate choice:
 the Machine has no `QSTASH_TOKEN`, so with `REDIS_URL` gone it needs either a
 QStash token or `ALLOW_MEMORY_QUEUE_IN_PRODUCTION=true` as an explicit
 stop-gap, or the AI gateway routes do not mount.
+
+`/api/misc/health` is the Fly check (`infra/fly/gateway.toml`, every 15s) and
+stays 200 while a dependency is merely degraded on purpose: a 503 there
+restarts the Machine, which fixes nothing when Redis is the problem. So it is
+not a monitor. `/api/misc/ready` is — one `EVAL` through the same
+`@nebutra/cache` client the rate limiter uses plus a `SELECT 1`, answering 503
+with `{ "ready": false, "failing": [...] }` when either is down. The 30-minute
+job in `.github/workflows/public-url-check.yml` asserts it, the
+`X-RateLimit-Limit` header on a rate-limited route, and `"redis":"connected"`
+in `/api/system/status`; `status.nebutra.com` probes it as well. Do not point
+the Fly check at `/ready`.

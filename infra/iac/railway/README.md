@@ -1,5 +1,17 @@
 # Railway Deployment
 
+> **Status: experimental / not exercised by CI since 2026-04 (nor before: no
+> workflow has ever driven this directory); not part of the default
+> create-sailor template; validate before use.**
+>
+> No workflow, script or test reads this directory. `railway` survives as a
+> `DEPLOY_TARGET_*` enum value in `packages/ops/preset/src/deploy-target.ts`;
+> create-sailor's `railway` target writes its own `railway.toml` and does not
+> use this `railway.json`. The service list below names Python services
+> (`content`, `recsys`, `ecommerce`, `web3`) removed from `backends/python/` in
+> 2026-05 — only `backends/python/ai` remains. Closure-phase honesty layer:
+> [docs/architecture/2026-08-27-closure-phase.md](../../../docs/architecture/2026-08-27-closure-phase.md).
+
 [Railway](https://railway.app) configuration for deploying Python microservices.
 
 ## Overview

@@ -32,7 +32,7 @@ Do not treat `.next/` or `public/` as consumption truth. Browser stills come fro
 
 - Users are shooting Moments, not calling a generator.
 - Do not add Prompt / Generate / CFG / 模型 copy.
-- Wardrobe lists live `kind: "garment"` SKUs as ghost-mannequin PNGs with alpha, not portraits and not hangers. Swap the still ground with `--garment-ground` (`paper` / `white` / `smoke` / `ink`). Shoot SKUs may set `garmentId`. Do not derive the wardrobe from one shoot path. Do not invent garments or shoots that are not real. Do not pretend the user has a personal closet.
+- Wardrobe lists live `kind: "garment"` SKUs as ghost-mannequin stills shot in-camera on smoke, not portraits, not hangers, and not a CV cutout. The tile chrome may keep `--garment-ground` (`paper` / `white` / `smoke` / `ink`); the photograph already holds the wall. Shoot SKUs may set `garmentId`. Do not derive the wardrobe from one shoot path. Do not invent garments or shoots that are not real. Do not pretend the user has a personal closet.
 - Garment SKUs carry a cut spec: size, color, material, and centimetre measures (衣长 / 裤长 / 胸围 / 袖长 / 肩宽 / 腰围 / 臀围). Omit a measure when it does not apply. Do not invent bottoms just to fill 裤长.
 - Every SKU carries `origin` + `brand`. Platform-listed rows seal to `KUANLAN©️`. User-uploaded rows (not open) keep their own brand. Do not invent upload or VLM. Do not put the brand mark into shoot briefs.
 - Disabled SKUs fail closed. Public list and compose both require `enabled: true`.

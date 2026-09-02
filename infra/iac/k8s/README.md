@@ -1,6 +1,21 @@
 # Kubernetes Manifests
 
-Kubernetes deployment configurations for production microservices.
+> **Status: experimental / not exercised by CI since 2026-04; not part of the
+> default create-sailor template; validate before use.**
+>
+> The kustomize deployer (`.github/workflows/deploy.yml`) and the image publish
+> that triggered it (`.github/workflows/docker-build-push.yml`) were retired on
+> 2026-09-02 after five months without a run; nothing applies or lints these
+> overlays now. The manifests stay as an implementation, not a promise: the
+> `ecommerce-service` and `recsys-service` deployments name Python services
+> removed from `backends/python/` in 2026-05, and the layout sketched below
+> predates the current `base/` + `overlays/` split. Closure-phase honesty layer:
+> [docs/architecture/2026-08-27-closure-phase.md](../../../docs/architecture/2026-08-27-closure-phase.md).
+> The active topology is
+> [docs/architecture/2026-06-04-production-runtime-closure.md](../../../docs/architecture/2026-06-04-production-runtime-closure.md).
+
+Kubernetes manifests (kustomize base + per-environment overlays) for the
+Nebutra services.
 
 ## Prerequisites
 

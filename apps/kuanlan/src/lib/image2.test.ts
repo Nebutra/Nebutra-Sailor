@@ -6,6 +6,7 @@ import { getEnabledSku, resolveIdPhotoPrint } from "@/catalog/skus";
 import {
   DEFAULT_IMAGE2_BASE_URL,
   extractImage2Bytes,
+  garmentStillBrief,
   generateWithImage2,
   Image2UnavailableError,
   idPhotoCatalogBrief,
@@ -90,6 +91,32 @@ describe("image2 consume", () => {
     expect(catalog).not.toContain("same person");
     expect(catalog).not.toContain("reference photo");
     expect(catalog).not.toMatch(/生成|Prompt|模型|KUANLAN|VLM/);
+  });
+
+  it("shoots wardrobe stills on smoke in-camera, not a CV cutout", () => {
+    const blazer = garmentStillBrief("blazer");
+    expect(blazer).toContain("Ghost-mannequin");
+    expect(blazer).toContain("#7e8691");
+    expect(blazer).toContain("navy blazer");
+    expect(blazer).toContain("white");
+    expect(blazer).toContain("in-camera");
+    expect(blazer).toContain("Do not cut out");
+    expect(blazer).not.toContain("纯白背景");
+    expect(blazer).not.toMatch(/生成|Prompt|模型|KUANLAN|VLM|衣架/);
+
+    const knit = garmentStillBrief("knit");
+    expect(knit).toContain("charcoal merino");
+    expect(knit).toContain("#7e8691");
+    expect(knit).not.toContain("navy blazer");
+
+    const oxford = garmentStillBrief("oxford");
+    expect(oxford).toContain("navy oxford");
+    expect(oxford).not.toContain("navy blazer");
+
+    const fromRef = garmentStillBrief("blazer", { reference: true });
+    expect(fromRef).toContain("same garment");
+    expect(fromRef).toContain("reference photo");
+    expect(fromRef).toContain("#7e8691");
   });
 
   it("reads b64 image bytes from the OpenAI-shaped response", () => {

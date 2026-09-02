@@ -150,7 +150,7 @@ jobs:
             ".github/workflows/deploy-carina-fly.yml",
             ".github/workflows/deploy-new-api-fly.yml",
             ".github/workflows/deploy-dns-leak-fly.yml",
-            ".github/workflows/point-forge-dns.yml",
+            ".github/workflows/point-dns.yml",
             // Nebutra-instance homes and dormant kits (TEMPLATE.md "Instance vs product").
             "ops",
             "docs/ops/nebutra",
@@ -159,9 +159,7 @@ jobs:
             "infra/iac/railway",
             "infra/fly/gateway.toml",
             ".github/workflows/deploy-fly-gateway.yml",
-            ".github/workflows/deploy-kuanlan-vercel.yml",
             ".github/workflows/ops-vm-triage.yml",
-            ".github/workflows/point-kuanlan-dns.yml",
             ".github/workflows/chromatic.yml",
             ".github/workflows/visual-acceptance.yml",
             "apps/forge",

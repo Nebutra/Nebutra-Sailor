@@ -7,6 +7,8 @@ describe("shouldSkipGlobalRateLimit", () => {
     "/api/auth/sign-in/google",
     "/api/organizations/active",
     "/api/misc/health",
+    "/api/misc/ready",
+    "/misc/ready",
     "/api/system/status",
     "/api/webhooks/stripe",
     "/api/queue/delivery",
