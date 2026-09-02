@@ -10,16 +10,16 @@
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "create-sailor": "dist/index.js"
+    "create-sailor": "./bin/create-sailor.js"
   },
   "files": [
+    "bin",
     "dist",
     "templates",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
-    "prepare": "mkdir -p dist && test -f dist/index.js || echo '#!/usr/bin/env node' > dist/index.js",
     "dev": "tsup --watch",
     "build": "tsup",
     "prepublishOnly": "pnpm run build",
