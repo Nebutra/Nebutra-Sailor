@@ -135,6 +135,44 @@ output is uploaded, so it meters nothing; its Git integration is off for the
 same reason. `nebutra-kuanlan` stays Git-linked; the ignore script skips until
 `apps/kuanlan/package.json` exists. Playbook: [vercel-spend.md](./vercel-spend.md).
 
+## Settings only a dashboard can see
+
+Every guardrail above that says "only in the console" shares a failure mode:
+nothing in git knows the setting, so nothing notices when it changes. A build
+machine gets promoted by the provider's own heuristics; a variable gets flagged
+Sensitive by a click; a secret survives a copy from an old host; a token is
+re-issued with one scope fewer. Each of those was found by the bill or by a
+failed deploy, never by a check.
+
+`scripts/ops/platform-reconcile.mjs` closes that gap without writing anything.
+A JSON file per brand — `ops/<brand>/platform-expected.json`, schema in
+[`ops/README.md`](../../ops/README.md) — declares the settings that matter, and
+the engine asks each provider what it currently holds:
+
+| Provider | Declared | Read from |
+| --- | --- | --- |
+| Vercel | build machine type, project-level Ignored Build Step, whether a Git link exists, env keys that must not be Sensitive on a target | `GET /v9/projects/{name}`, `GET /v10/projects/{name}/env` |
+| Fly | secret names that must exist, secret names that must not | `flyctl secrets list --json` |
+| GitHub | repository variable values (deploy target selectors) | the workflow's own `vars` context, or `gh variable get` |
+| Cloudflare | a named Worker binding, optionally its type | `GET /workers/scripts/{name}/settings` |
+
+One row per expectation, four states: `ok`, `drift`, `skipped` (no token, tool
+missing, token lacks the scope), `error` (asked, no usable answer). Drift and
+error exit 1. Skipped exits 0 locally and 1 under `--strict`, which is how the
+scheduled run [`platform-reconcile.yml`](../../.github/workflows/platform-reconcile.yml)
+invokes it — so a repository secret that disappears fails the run instead of
+quietly shrinking what is checked. A failed scheduled run is the alert; GitHub
+notifies the author of the last commit that touched the workflow's cron line
+(not the repository owner), and the job summary carries the table.
+
+The engine prints names and types, never values: Fly digests are dropped on
+parse, the `value` field of a Vercel env entry is never read, and GitHub
+variables are non-secret configuration by definition. Fixing drift stays a
+human decision in the dashboard or the CLI; the check only says where.
+
+To add a guardrail, add a line to the declaration. The scaffold ships the same
+schema as `infra/ops/platform-expected.example.json`.
+
 ## Still open: AI token spend
 
 The balance guard in `packages/platform/gateway-core/src/auth/balance-guard.ts`
