@@ -237,6 +237,64 @@ describe("R2 configuration", () => {
     expect(moments[0]).toMatchObject({ skuId: "linkedin-smoke", sizeId: "linkedin" });
   });
 
+  it("maps an AccessDenied list into ResourceStoreUnavailableError so Moments can fail closed", async () => {
+    configureR2();
+
+    const { listIdPhotoMoments } = await import("./resources.server");
+    const denied = Object.assign(new Error("Access Denied"), {
+      name: "AccessDenied",
+      Code: "AccessDenied",
+    });
+
+    await expect(
+      listIdPhotoMoments("user_1", {
+        list: async () => {
+          throw denied;
+        },
+      }),
+    ).rejects.toMatchObject({ name: "ResourceStoreUnavailableError" });
+  });
+
+  it("keeps a bad user id as InvalidResourceKeyError, not a store outage", async () => {
+    configureR2();
+
+    const { persistIdPhotoMoment } = await import("./resources.server");
+    await expect(
+      persistIdPhotoMoment({
+        userId: "../escape",
+        skuId: "cn-1in-white",
+        print: Buffer.from("png"),
+        source: Buffer.from("jpg"),
+        sourceType: "image/jpeg",
+      }),
+    ).rejects.toMatchObject({ name: "InvalidResourceKeyError" });
+  });
+
+  it("maps a rejected put into ResourceStoreUnavailableError", async () => {
+    configureR2();
+
+    const { persistIdPhotoMoment } = await import("./resources.server");
+    const denied = Object.assign(new Error("Access Denied"), {
+      name: "AccessDenied",
+      Code: "AccessDenied",
+    });
+
+    await expect(
+      persistIdPhotoMoment(
+        {
+          userId: "user_1",
+          skuId: "cn-1in-white",
+          print: Buffer.from("png"),
+          source: Buffer.from("jpg"),
+          sourceType: "image/jpeg",
+        },
+        async () => {
+          throw denied;
+        },
+      ),
+    ).rejects.toMatchObject({ name: "ResourceStoreUnavailableError" });
+  });
+
   it("bounds head reads to the page while still counting everything", async () => {
     configureR2();
 

@@ -22,7 +22,7 @@ It does not own shared Nebutra UI chrome or a new `packages/ai/*` package. Exact
 
 - `PRODUCT.md` — product + brand contract for this surface
 - `src/catalog/skus.ts` — operator SKU control plane (`enabled` is the switch)
-- Cloudflare R2 — resource store (`nebutra-assets` public catalog, `nebutra-uploads` Moments)
+- Cloudflare R2 — resource store (`nebutra-assets` public catalog, `nebutra-uploads` Moments). The Fly S3 token must List/Get/Put `nebutra-uploads`; the shared GitHub `R2_*` seeder is assets-only. Mint via `ops-kuanlan-r2-uploads.yml`.
 - Cosmos Brand Package — `packages/design/tokens/brands/cosmos/` (`brand.json` is the
   SSOT, `DESIGN.md` is the human reference it was written from). Applied here by
   `html[data-brand="cosmos"]` in `src/app/layout.tsx`; the emitted skin arrives via

@@ -1,3 +1,6 @@
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { momentLabel, sortMomentsNewestFirst } from "./moments";
 
@@ -57,5 +60,16 @@ describe("moment label", () => {
   it("falls back rather than printing a raw id at a reader", () => {
     expect(momentLabel({ skuId: "gone-for-good" })).toBe("拍过的一张");
     expect(momentLabel({})).toBe("拍过的一张");
+  });
+});
+
+describe("moments page", () => {
+  it("fails closed when R2 denies the listing instead of throwing through SSR", () => {
+    const page = readFileSync(
+      join(dirname(fileURLToPath(import.meta.url)), "../app/moments/page.tsx"),
+      "utf8",
+    );
+    expect(page).toContain("这一刻还存不进去。");
+    expect(page).not.toContain("throw error");
   });
 });

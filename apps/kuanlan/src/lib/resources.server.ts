@@ -10,6 +10,7 @@ import {
 } from "@nebutra/storage";
 import { type IdPhotoMoment, type IdPhotoMomentPage, sortMomentsNewestFirst } from "./moments";
 import {
+  InvalidResourceKeyError,
   isR2Configured,
   momentObjectKey,
   momentUserPrefix,
@@ -30,6 +31,15 @@ export function requireR2(): void {
   }
 }
 
+function unavailableFrom(error: unknown): never {
+  if (error instanceof ResourceStoreUnavailableError || error instanceof InvalidResourceKeyError) {
+    throw error;
+  }
+  throw new ResourceStoreUnavailableError(
+    error instanceof Error ? error.message : "r2_unavailable",
+  );
+}
+
 export function portraitContentType(type: string): string {
   return ALLOWED_SOURCE_TYPES.has(type) ? type : "application/octet-stream";
 }
@@ -48,38 +58,42 @@ export async function persistIdPhotoMoment(
 ): Promise<{ id: string; key: string; url: string; sourceKey: string }> {
   requireR2();
 
-  const id = input.id ?? crypto.randomUUID();
-  const key = momentObjectKey({ kind: "id-photo", userId: input.userId, id });
-  const sourceKey = momentObjectKey({
-    kind: "id-photo",
-    userId: input.userId,
-    id,
-    part: "source",
-  });
-  const metadata = {
-    skuId: input.skuId,
-    ...(input.sizeId ? { sizeId: input.sizeId } : {}),
-    app: RESOURCE_APP,
-    userId: input.userId,
-  };
+  try {
+    const id = input.id ?? crypto.randomUUID();
+    const key = momentObjectKey({ kind: "id-photo", userId: input.userId, id });
+    const sourceKey = momentObjectKey({
+      kind: "id-photo",
+      userId: input.userId,
+      id,
+      part: "source",
+    });
+    const metadata = {
+      skuId: input.skuId,
+      ...(input.sizeId ? { sizeId: input.sizeId } : {}),
+      app: RESOURCE_APP,
+      userId: input.userId,
+    };
 
-  const stored = await put(key, input.print, {
-    bucket: "uploads",
-    contentType: "image/png",
-    metadata,
-  });
-  await put(sourceKey, input.source, {
-    bucket: "uploads",
-    contentType: portraitContentType(input.sourceType),
-    metadata,
-  });
+    const stored = await put(key, input.print, {
+      bucket: "uploads",
+      contentType: "image/png",
+      metadata,
+    });
+    await put(sourceKey, input.source, {
+      bucket: "uploads",
+      contentType: portraitContentType(input.sourceType),
+      metadata,
+    });
 
-  return {
-    id,
-    key: stored.key,
-    url: stored.url,
-    sourceKey,
-  };
+    return {
+      id,
+      key: stored.key,
+      url: stored.url,
+      sourceKey,
+    };
+  } catch (error) {
+    unavailableFrom(error);
+  }
 }
 
 /**
@@ -114,40 +128,45 @@ export async function listIdPhotoMoments(
   requireR2();
 
   const prefix = momentUserPrefix(userId);
-  const entries = await (io.list ?? listDetailed)(prefix, "uploads");
-  const sign = io.sign ?? ((key: string) => getSignedDownloadUrl(key, { bucket: "uploads" }));
-  const readHead = io.head ?? ((key: string) => head(key, "uploads"));
 
-  const ordered = sortMomentsNewestFirst(
-    entries
-      .filter((entry) => entry.key.endsWith(".png"))
-      .map((entry) => ({
-        id: entry.key.slice(prefix.length).replace(/\.png$/, ""),
-        key: entry.key,
-        ...(entry.lastModified ? { shotAt: entry.lastModified } : {}),
-      })),
-  );
+  try {
+    const entries = await (io.list ?? listDetailed)(prefix, "uploads");
+    const sign = io.sign ?? ((key: string) => getSignedDownloadUrl(key, { bucket: "uploads" }));
+    const readHead = io.head ?? ((key: string) => head(key, "uploads"));
 
-  const page = options.limit != null ? ordered.slice(0, options.limit) : ordered;
-  const moments: IdPhotoMoment[] = await Promise.all(
-    page.map(async (moment) => {
-      const [url, meta] = await Promise.all([sign(moment.key), readHead(moment.key)]);
-      const skuId = metaValue(meta?.metadata, "skuId");
-      const sizeId = metaValue(meta?.metadata, "sizeId");
-      return {
-        ...moment,
-        url,
-        ...(skuId ? { skuId } : {}),
-        ...(sizeId ? { sizeId } : {}),
-      };
-    }),
-  );
+    const ordered = sortMomentsNewestFirst(
+      entries
+        .filter((entry) => entry.key.endsWith(".png"))
+        .map((entry) => ({
+          id: entry.key.slice(prefix.length).replace(/\.png$/, ""),
+          key: entry.key,
+          ...(entry.lastModified ? { shotAt: entry.lastModified } : {}),
+        })),
+    );
 
-  return {
-    moments,
-    total: ordered.length,
-    ...(ordered[0]?.shotAt ? { latestAt: ordered[0].shotAt } : {}),
-  };
+    const page = options.limit != null ? ordered.slice(0, options.limit) : ordered;
+    const moments: IdPhotoMoment[] = await Promise.all(
+      page.map(async (moment) => {
+        const [url, meta] = await Promise.all([sign(moment.key), readHead(moment.key)]);
+        const skuId = metaValue(meta?.metadata, "skuId");
+        const sizeId = metaValue(meta?.metadata, "sizeId");
+        return {
+          ...moment,
+          url,
+          ...(skuId ? { skuId } : {}),
+          ...(sizeId ? { sizeId } : {}),
+        };
+      }),
+    );
+
+    return {
+      moments,
+      total: ordered.length,
+      ...(ordered[0]?.shotAt ? { latestAt: ordered[0].shotAt } : {}),
+    };
+  } catch (error) {
+    unavailableFrom(error);
+  }
 }
 
 const RESOURCE_APP = "kuanlan";
