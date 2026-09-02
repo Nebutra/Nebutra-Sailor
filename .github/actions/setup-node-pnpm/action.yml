@@ -10,6 +10,14 @@ inputs:
     description: Run the install command after setup.
     required: false
     default: "true"
+  cache:
+    description: >-
+      setup-node cache mode. Default caches the pnpm store. Pass "" in jobs that
+      never install: setup-node's post step fails the job when it tries to save
+      a store directory that no install created — which is exactly what happens
+      on the first run after any lockfile change, when no cache exists yet.
+    required: false
+    default: pnpm
   install-command:
     description: Dependency install command.
     required: false
@@ -42,7 +50,7 @@ runs:
       uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
       with:
         node-version: ${{ inputs.node-version }}
-        cache: pnpm
+        cache: ${{ inputs.cache }}
         registry-url: ${{ inputs.registry-url }}
         scope: ${{ inputs.scope }}
 
