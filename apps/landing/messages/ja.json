@@ -1242,23 +1242,6 @@
         "cta": "課金アーキテクチャを見る"
       }
     },
-    "productDemo": {
-      "badge": "インタラクティブデモ",
-      "title": "The local loop, end to end.",
-      "description": "コマンドラインインターフェース、Stripe Webhook トンネリング、ローカルマルチテナントデータベースプロビジョニングを体感してください。",
-      "analytics": {
-        "label": "ライブテレメトリ",
-        "desc": "本番利用データをターミナルに直接ストリーム。"
-      },
-      "billing": {
-        "label": "課金イベント",
-        "desc": "ローカルトンネリング経由で Stripe Webhook の実行を確認。"
-      },
-      "workspaces": {
-        "label": "ワークスペース初期化",
-        "desc": "隔離された B2B PostgreSQL スキーマを即座にプロビジョニング。"
-      }
-    },
     "workflow": {
       "badge": "速度",
       "title": "ゼロから本番環境へ、記録的なスピードで。",
@@ -1445,10 +1428,10 @@
       },
       "design": {
         "title": "先進的なデザインシステム & コンポーネントライブラリ",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with eight switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4 層トークンガバナンス",
-          "f2": "Seven design languages + Storybook"
+          "f2": "Eight design languages + Storybook"
         }
       },
       "edam": {

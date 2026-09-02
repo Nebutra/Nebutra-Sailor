@@ -1242,23 +1242,6 @@
         "cta": "Faturalandırma mimarisini gör"
       }
     },
-    "productDemo": {
-      "badge": "Etkileşimli Demo",
-      "title": "The local loop, end to end.",
-      "description": "Komut satırı arayüzü, Stripe webhook tünellemesi ve yerel çok kiracılı veritabanı sağlama hakkında bir fikir edinin.",
-      "analytics": {
-        "label": "Canlı Telemetri",
-        "desc": "Üretim kullanım verilerini doğrudan terminalinize aktarın."
-      },
-      "billing": {
-        "label": "Faturalama Olayları",
-        "desc": "Stripe webhooks'lerini yerel tünelleme ile çalıştırırken izleyin."
-      },
-      "workspaces": {
-        "label": "Çalışma Alanı Başlatma",
-        "desc": "İzole B2B PostgreSQL şemalarını anında hazırlayın."
-      }
-    },
     "workflow": {
       "badge": "Hız",
       "title": "Sıfırdan üretime rekor sürede.",
@@ -1445,10 +1428,10 @@
       },
       "design": {
         "title": "Önde Gelen Tasarim Sistemi ve Bileşen Kütüphanesi",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with eight switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4 Katmanlı Token Yönetimi",
-          "f2": "Seven design languages + Storybook"
+          "f2": "Eight design languages + Storybook"
         }
       },
       "edam": {

@@ -9,7 +9,7 @@ APP="${3:-}"
 
 rm -rf "$STAGE"
 mkdir -p "$STAGE"
-cp -r "$WS/.next/standalone/." "$STAGE/"
+cp -a "$WS/.next/standalone/." "$STAGE/"
 mkdir -p "$STAGE/$WS/.next"
 cp -r "$WS/.next/static" "$STAGE/$WS/.next/static"
 if [ -d "$WS/.next/node_modules" ]; then
@@ -30,4 +30,10 @@ fi
 if [ "$APP" = "forge" ]; then
   STAGE="$STAGE" node scripts/copy-forge-playwright-to-standalone.mjs
 fi
-cp infra/runtime/docker/Dockerfile.standalone "$STAGE/Dockerfile"
+# kuanlan loads sharp in the 开拍 route. CI traces the glibc native; Alpine
+# cannot open it, so the whole route module 500s before the 401 gate.
+if [ "$APP" = "kuanlan" ]; then
+  cp infra/runtime/docker/Dockerfile.standalone-glibc "$STAGE/Dockerfile"
+else
+  cp infra/runtime/docker/Dockerfile.standalone "$STAGE/Dockerfile"
+fi

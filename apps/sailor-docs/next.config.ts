@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve as resolvePath } from "node:path";
+import { brand } from "@nebutra/brand/metadata";
 import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 import { createMDX } from "fumadocs-mdx/next";
 import type { NextConfig } from "next";
@@ -204,6 +205,9 @@ const nextConfig: NextConfig = {
         destination: "/llms.mdx/docs/:path*",
       },
     ];
+  },
+  images: {
+    remotePatterns: [{ protocol: "https", hostname: brand.domains.cdn, pathname: "/brand/**" }],
   },
 };
 

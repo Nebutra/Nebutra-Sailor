@@ -1242,23 +1242,6 @@
         "cta": "Se faktureringsarkitektur"
       }
     },
-    "productDemo": {
-      "badge": "Interaktiv demo",
-      "title": "The local loop, end to end.",
-      "description": "Få en følelse av kommandolinjegrensesnittet, Stripe-webhook-tunneling og lokal multi-tenant database-provisioning.",
-      "analytics": {
-        "label": "Sanntidsmåling",
-        "desc": "Strøm produksjonsbruksdata direkte til terminalen din."
-      },
-      "billing": {
-        "label": "Faktureringshendelser",
-        "desc": "Se Stripe-webhooks utføres via lokal tunneling."
-      },
-      "workspaces": {
-        "label": "Arbeidsområde-initiering",
-        "desc": "Sett opp isolerte B2B PostgreSQL-skjemaer øyeblikkelig."
-      }
-    },
     "workflow": {
       "badge": "Hastighet",
       "title": "Fra null til produksjon på rekordtid.",
@@ -1445,10 +1428,10 @@
       },
       "design": {
         "title": "Førende designsystem og komponentbibliotek",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with eight switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4-lags token-styring",
-          "f2": "Seven design languages + Storybook"
+          "f2": "Eight design languages + Storybook"
         }
       },
       "edam": {

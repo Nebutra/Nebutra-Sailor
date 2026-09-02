@@ -1242,23 +1242,6 @@
         "cta": "Számlázási architektúra megtekintése"
       }
     },
-    "productDemo": {
-      "badge": "Interaktív demó",
-      "title": "The local loop, end to end.",
-      "description": "Érezd meg a parancssoros felületet, a Stripe webhook-alagutazást és a helyi több bérlős adatbázis-ellátást.",
-      "analytics": {
-        "label": "Élő telemetria",
-        "desc": "Áramoltasd a termelési használati adatokat közvetlenül a terminálodba."
-      },
-      "billing": {
-        "label": "Számlázási események",
-        "desc": "Figyeld a Stripe webhookok végrehajtását helyi tunnelinggel."
-      },
-      "workspaces": {
-        "label": "Munkaterület inicializálás",
-        "desc": "Azonnal létrehozni az izolált B2B PostgreSQL sémákat."
-      }
-    },
     "workflow": {
       "badge": "Sebesség",
       "title": "Nulláról éles környezetbe rekordidő alatt.",
@@ -1445,10 +1428,10 @@
       },
       "design": {
         "title": "Vezető dizájnrendszer és komponenskönyvtár",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with eight switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4 rétegű token-gazdálkodás",
-          "f2": "Seven design languages + Storybook"
+          "f2": "Eight design languages + Storybook"
         }
       },
       "edam": {

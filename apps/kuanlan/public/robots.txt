@@ -1,0 +1,7 @@
+# KUANLAN 观澜 — product surface (pre-launch)
+# Not yet a public indexable origin.
+
+User-agent: *
+Disallow: /
+
+# No sitemap — not a public surface

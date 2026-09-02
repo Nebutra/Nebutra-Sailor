@@ -1,8 +1,8 @@
 name: Deploy Carina docs (ECS)
 
-# Owner topology 2026-07-30: carina.nebutra.com is A → ECS (CF proxied), same
-# pattern as pebble — not Vercel. Builds Nebutra/carina apps/docs and rsyncs
-# static dist/ to the box; nginx serves /var/www/nebutra/carina/current.
+# Rollback only. Live carina.nebutra.com is Fly (deploy-carina-fly.yml).
+# Dispatch this to refresh the Shanghai nginx copy; it does not steal DNS
+# unless you also flip the A record by hand.
 
 on:
   workflow_dispatch:
@@ -11,13 +11,10 @@ on:
         description: "Carina git ref to deploy"
         required: true
         default: main
-  push:
-    branches: [main]
-    paths:
-      - "infra/ops/scripts/deploy-carina-docs-ecs.sh"
-      - "infra/runtime/nginx/conf.d/carina.nebutra.com.conf"
-      - "infra/runtime/nginx/nginx-ecs-current.conf"
-      - ".github/workflows/deploy-carina-ecs.yml"
+      reason:
+        description: "Must contain rollback-carina-ecs to confirm this is a rollback"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -29,6 +26,7 @@ concurrency:
 jobs:
   deploy:
     name: Build + rsync carina docs to ECS
+    if: contains(github.event.inputs.reason, 'rollback-carina-ecs')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Sailor (scripts + nginx)
@@ -93,6 +91,29 @@ jobs:
             StrictHostKeyChecking accept-new
           EOF
           chmod 600 ~/.ssh/config
+
+      # Same box, same default-443 301. A later main nginx.conf upload that
+      # omitted this include sent kuanlan.nebutra.com to the marketing apex.
+      # Run before the Carina build so a docs failure cannot skip the vhost.
+      - name: Restore kuanlan nginx vhost
+        env:
+          REMOTE_HOST: carina-ecs
+        run: bash infra/ops/scripts/install-kuanlan-nginx-vhost.sh
+
+      - name: Smoke kuanlan host stays on itself
+        run: |
+          set -euo pipefail
+          for path in / /create /wardrobe /moments /me; do
+            loc=$(curl -sSI --max-time 15 "https://kuanlan.nebutra.com${path}" 2>/dev/null | tr -d '\r' | awk 'tolower($1)=="location:"{print $2; exit}')
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "https://kuanlan.nebutra.com${path}" || echo 000)
+            echo "path=$path code=$code location=${loc:-none}"
+            case "${loc:-}" in
+              https://nebutra.com|https://nebutra.com/*)
+                echo "::error::$path still 301s to nebutra.com"
+                exit 1
+                ;;
+            esac
+          done
 
       - name: Deploy
         env:

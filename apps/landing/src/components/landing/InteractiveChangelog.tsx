@@ -30,6 +30,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
+import { landingPublicSrc } from "@/lib/public-assets";
 
 export interface Release {
   title: string;
@@ -61,7 +62,7 @@ const TAG_COLORS: Record<string, string> = {
   foundation: "var(--status-success)",
 };
 
-const FALLBACK_RELEASE_IMAGE = "/screenshots/demo-dashboard-command.webp";
+const FALLBACK_RELEASE_IMAGE = landingPublicSrc("screenshots/demo-dashboard-command.webp");
 
 export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) => {
   const [activeFilter, setActiveFilter] = React.useState<string | null>(null);

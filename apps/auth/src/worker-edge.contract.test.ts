@@ -3,6 +3,11 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 
 const source = readFileSync(path.join(__dirname, "worker-edge.ts"), "utf8");
+const edgeConfig = readFileSync(path.join(__dirname, "..", "wrangler.edge.jsonc"), "utf8");
+const deployWorkflow = readFileSync(
+  path.join(__dirname, "..", "..", "..", ".github", "workflows", "deploy-auth-cloudflare.yml"),
+  "utf8",
+);
 
 describe("auth-edge worker contract", () => {
   it("opens a max-1 pg Pool per request and ends it after Better Auth returns", () => {
@@ -20,7 +25,25 @@ describe("auth-edge worker contract", () => {
   });
 
   it("bumps edgeBuild when the request-path contract changes", () => {
-    expect(source).toContain('edgeBuild: "2026-08-31-auth-cors"');
+    expect(source).toContain('edgeBuild: "2026-09-01-global-phone-auth"');
+  });
+
+  it("mounts global phone OTP only when Twilio Verify is fully configured", () => {
+    expect(source).toContain("resolveTwilioVerifyConfig");
+    expect(source).toContain("createTwilioVerifyProvider");
+    expect(source).toContain("phoneNumber({");
+    expect(source).toContain("phoneNumberValidator: isE164PhoneNumber");
+    expect(source).toContain("signUpOnVerification");
+    expect(source).toContain("verifyOTP");
+  });
+
+  it("protects SMS sends with Turnstile and syncs every provider secret", () => {
+    expect(source).toContain('"/phone-number/send-otp"');
+    expect(source).toContain("TURNSTILE_SECRET");
+    expect(deployWorkflow).toContain("TWILIO_ACCOUNT_SID");
+    expect(deployWorkflow).toContain("TWILIO_AUTH_TOKEN");
+    expect(deployWorkflow).toContain("TWILIO_VERIFY_SERVICE_SID");
+    expect(deployWorkflow).toContain("TURNSTILE_SECRET");
   });
 
   it("attaches first-party CORS to every /api/auth response, not only OPTIONS", () => {
@@ -33,5 +56,17 @@ describe("auth-edge worker contract", () => {
     expect(source).toContain("isOAuthCallbackPath");
     expect(source).toContain("applySessionHint");
     expect(source).toContain('prompt: "select_account"');
+  });
+
+  it("keeps UI pass-through on a dedicated auth origin", () => {
+    expect(edgeConfig).toContain('"ORIGIN_URL": "https://nebutra-auth.fly.dev"');
+    expect(edgeConfig).not.toMatch(/"ORIGIN_URL"\s*:\s*"https:\/\/origin\.nebutra\.com"/u);
+    expect(source).not.toContain("brand.domains.origin");
+  });
+
+  it("smokes the sign-in HTML instead of relying on the edge-only health route", () => {
+    expect(deployWorkflow).toContain("https://auth.nebutra.com/sign-in");
+    expect(deployWorkflow).toContain("content-type");
+    expect(deployWorkflow.match(/for i in 1 2 3 4 5 6 7 8; do/gu)).toHaveLength(2);
   });
 });

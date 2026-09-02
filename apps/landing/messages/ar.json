@@ -1242,23 +1242,6 @@
         "cta": "عرض بنية الفواتير"
       }
     },
-    "productDemo": {
-      "badge": "عرض تفاعلي",
-      "title": "The local loop, end to end.",
-      "description": "احصل على فكرة عن واجهة سطر الأوامر، وتوجيه وكلاء الويب لـ Stripe، وتزويد قاعدة بيانات متعددة المستأجرين محليًا.",
-      "analytics": {
-        "label": "قياسات فورية",
-        "desc": "نقل بيانات استخدام الإنتاج مباشرة إلى جهازك الطرفي."
-      },
-      "billing": {
-        "label": "أحداث الفوترة",
-        "desc": "شاهد تنفيذ Webhooks الخاصة بـ Stripe عبر النفق المحلي."
-      },
-      "workspaces": {
-        "label": "تهيئة مساحة العمل",
-        "desc": "قم بتوفير مخططات PostgreSQL معزولة لـ B2B فوراً."
-      }
-    },
     "workflow": {
       "badge": "السرعة",
       "title": "من الصفر إلى الإنتاج في وقت قياسي.",
@@ -1445,10 +1428,10 @@
       },
       "design": {
         "title": "نظام تصميم ومكتبة مكونات رائدة",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with eight switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "حوكمة رموز على 4 طبقات",
-          "f2": "Seven design languages + Storybook"
+          "f2": "Eight design languages + Storybook"
         }
       },
       "edam": {

@@ -52,6 +52,8 @@ describe("auth center URL helpers", () => {
     });
     expect(hosts).toContain("app.nebutra.com");
     expect(hosts).toContain("auth.nebutra.com");
+    expect(hosts).toContain("kuanlan.nebutra.com");
+    expect(hosts).toContain("localhost:3120");
     expect(hosts).toContain("console.nebutra.com");
   });
 

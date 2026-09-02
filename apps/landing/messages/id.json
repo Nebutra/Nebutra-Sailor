@@ -1242,23 +1242,6 @@
         "cta": "Lihat arsitektur penagihan"
       }
     },
-    "productDemo": {
-      "badge": "Demo Interaktif",
-      "title": "The local loop, end to end.",
-      "description": "Rasakan antarmuka baris perintah, terowongan webhook Stripe, dan penyediaan database multi-tenant lokal.",
-      "analytics": {
-        "label": "Telemetri Langsung",
-        "desc": "Salurkan data penggunaan produksi langsung ke terminal Anda."
-      },
-      "billing": {
-        "label": "Event Penagihan",
-        "desc": "Amati eksekusi webhook Stripe melalui tunneling lokal."
-      },
-      "workspaces": {
-        "label": "Inisialisasi Workspace",
-        "desc": "Sediakan skema PostgreSQL B2B terisolasi secara instan."
-      }
-    },
     "workflow": {
       "badge": "Kecepatan",
       "title": "Dari nol ke produksi dalam waktu singkat.",
@@ -1445,10 +1428,10 @@
       },
       "design": {
         "title": "Sistem Desain & Perpustakaan Komponen Terkemuka",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with eight switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "Tata Kelola Token 4 Lapis",
-          "f2": "Seven design languages + Storybook"
+          "f2": "Eight design languages + Storybook"
         }
       },
       "edam": {

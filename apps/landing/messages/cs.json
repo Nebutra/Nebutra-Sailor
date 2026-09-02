@@ -1242,23 +1242,6 @@
         "cta": "Zobrazit architekturu fakturace"
       }
     },
-    "productDemo": {
-      "badge": "Interaktivní demo",
-      "title": "The local loop, end to end.",
-      "description": "Vyzkoušejte si rozhraní příkazového řádku, tunelování webhooků Stripe a místní poskytování vícenájemcové databáze.",
-      "analytics": {
-        "label": "Živé telemetrie",
-        "desc": "Přenos dat o produkční spotřebě přímo do vašeho terminálu."
-      },
-      "billing": {
-        "label": "Platební události",
-        "desc": "Sledujte, jak se Stripe webhooky spouštějí prostřednictvím místního tunelování."
-      },
-      "workspaces": {
-        "label": "Inicializace pracovního prostoru",
-        "desc": "Okamžitě připravte izolované B2B schémata PostgreSQL."
-      }
-    },
     "workflow": {
       "badge": "Rychlost",
       "title": "Od nuly k produkci v rekordním čase.",
@@ -1445,10 +1428,10 @@
       },
       "design": {
         "title": "Vedoucí designový systém a knihovna komponent",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with eight switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "Správa tokenů ve 4 vrstvách",
-          "f2": "Seven design languages + Storybook"
+          "f2": "Eight design languages + Storybook"
         }
       },
       "edam": {

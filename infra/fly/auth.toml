@@ -1,0 +1,26 @@
+app = "nebutra-auth"
+primary_region = "sin"
+
+[env]
+  HOSTNAME = "0.0.0.0"
+  PORT = "8080"
+  AUTH_ENABLED_OAUTH_PROVIDERS = "google,github"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+[[http_service.checks]]
+  grace_period = "45s"
+  interval = "15s"
+  method = "GET"
+  timeout = "8s"
+  path = "/sign-in"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "1gb"

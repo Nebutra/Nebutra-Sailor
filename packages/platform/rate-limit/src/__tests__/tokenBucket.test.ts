@@ -6,6 +6,9 @@ import {
   getApiWeight,
   getRateLimiter,
   PLAN_LIMITS,
+  RedisTokenBucket,
+  type RedisTokenBucketClient,
+  TOKEN_BUCKET_SCRIPT,
   TokenBucket,
 } from "../tokenBucket";
 
@@ -350,5 +353,97 @@ describe("getRateLimiter()", () => {
     const free = getRateLimiter("FREE");
     const enterprise = getRateLimiter("ENTERPRISE");
     expect(free).not.toBe(enterprise);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// RedisTokenBucket — one EVAL per consume, GET+SET only as a fallback
+// ---------------------------------------------------------------------------
+
+describe("RedisTokenBucket.consume()", () => {
+  const config = { maxTokens: 10, refillRate: 1, refillInterval: 1000 };
+
+  function fakeRedis(overrides: Partial<RedisTokenBucketClient> = {}) {
+    return {
+      get: vi.fn(async () => null as unknown),
+      set: vi.fn(async () => "OK" as unknown),
+      ...overrides,
+    };
+  }
+
+  it("issues a single EVAL and no GET/SET when the client can run scripts", async () => {
+    const evalFn = vi.fn(async () => [1, 7, Date.now()] as unknown);
+    const redis = fakeRedis({ eval: evalFn });
+
+    const result = await new RedisTokenBucket(config, redis).consume("org:user:ip", 3);
+
+    expect(result.allowed).toBe(true);
+    expect(result.remaining).toBe(7);
+    expect(evalFn).toHaveBeenCalledOnce();
+    expect(redis.get).not.toHaveBeenCalled();
+    expect(redis.set).not.toHaveBeenCalled();
+
+    const [script, keys, args] = evalFn.mock.calls[0] as unknown as [
+      string,
+      string[],
+      Array<string | number>,
+    ];
+    expect(script).toBe(TOKEN_BUCKET_SCRIPT);
+    expect(keys).toEqual([buildKey("org:user:ip")]);
+    // now, maxTokens, refillRate, refillInterval, cost, ttl
+    expect(args.slice(1)).toEqual([10, 1, 1000, 3, 3600]);
+  });
+
+  it("turns a denied script reply into retryAfter from the script's remaining tokens", async () => {
+    const redis = fakeRedis({ eval: vi.fn(async () => [0, 1, Date.now()] as unknown) });
+
+    const result = await new RedisTokenBucket(config, redis).consume("k", 4);
+
+    expect(result.allowed).toBe(false);
+    expect(result.remaining).toBe(1);
+    // 3 tokens short at 1 token/s → 3s
+    expect(result.retryAfter).toBe(3);
+  });
+
+  it("falls back to GET+SET when the client has no eval", async () => {
+    const redis = fakeRedis();
+
+    const result = await new RedisTokenBucket(config, redis).consume("k", 1);
+
+    expect(result.allowed).toBe(true);
+    expect(result.remaining).toBe(9);
+    expect(redis.get).toHaveBeenCalledOnce();
+    expect(redis.set).toHaveBeenCalledWith(buildKey("k"), expect.objectContaining({ tokens: 9 }), {
+      ex: 3600,
+    });
+  });
+
+  it("falls back to GET+SET when the script call fails or replies with garbage", async () => {
+    const failing = fakeRedis({
+      eval: vi.fn(async () => {
+        throw new Error("NOSCRIPT");
+      }),
+    });
+    await expect(new RedisTokenBucket(config, failing).consume("k")).resolves.toMatchObject({
+      allowed: true,
+      remaining: 9,
+    });
+    expect(failing.get).toHaveBeenCalledOnce();
+
+    const garbage = fakeRedis({ eval: vi.fn(async () => "not-an-array" as unknown) });
+    await expect(new RedisTokenBucket(config, garbage).consume("k")).resolves.toMatchObject({
+      allowed: true,
+      remaining: 9,
+    });
+    expect(garbage.get).toHaveBeenCalledOnce();
+  });
+
+  it("keeps the script's stored shape compatible with the JS fallback", () => {
+    // Both paths read and write {tokens, lastRefill}; the script must write
+    // exactly that JSON, with a TTL, in one SET.
+    expect(TOKEN_BUCKET_SCRIPT).toContain("redis.call('GET', KEYS[1])");
+    expect(TOKEN_BUCKET_SCRIPT.match(/redis\.call\('SET'/g)).toHaveLength(1);
+    expect(TOKEN_BUCKET_SCRIPT).toContain("cjson.encode({ tokens = tokens, lastRefill = last })");
+    expect(TOKEN_BUCKET_SCRIPT).toContain("'EX', ttl");
   });
 });

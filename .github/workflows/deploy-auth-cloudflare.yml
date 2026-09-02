@@ -4,7 +4,7 @@ name: Deploy Auth Center (Cloudflare Workers)
 #
 # Hard-correct size strategy (Free plan 3 MiB):
 #   · /api/auth/*  → Better Auth + Hyperdrive (Google-reachable)
-#   · UI           → ECS origin via cf.resolveOverride
+#   · UI           → dedicated Next origin on Fly
 # Full Next OpenNext (~8.5 MiB gzip) is intentionally NOT deployed here.
 
 on:
@@ -16,10 +16,12 @@ on:
       - "apps/auth/src/lib/auth-edge-cors.ts"
       - "apps/auth/src/lib/auth-edge-pool.ts"
       - "apps/auth/src/lib/auth-edge-oauth.ts"
+      - "apps/auth/src/lib/phone-login.ts"
       - "apps/auth/src/lib/session-hint.ts"
       - "apps/auth/wrangler.edge.jsonc"
       - "apps/auth/package.json"
       - "packages/iam/auth/**"
+      - "packages/integrations/sms/**"
       - ".github/workflows/deploy-auth-cloudflare.yml"
 
 permissions:
@@ -50,7 +52,7 @@ jobs:
       # `prepare`, so its dist/ does not exist here and esbuild fails to resolve
       # the subpath. Build what the bundle imports.
       - name: Build bundled workspace packages
-        run: pnpm turbo run build --filter=@nebutra/brand
+        run: pnpm turbo run build --filter=@nebutra/brand --filter=@nebutra/sms
 
       - name: Deploy auth-edge worker
         env:
@@ -89,6 +91,10 @@ jobs:
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           GITHUB_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID || secrets.GITHUB_CLIENT_ID }}
           GITHUB_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET || secrets.GITHUB_CLIENT_SECRET }}
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_VERIFY_SERVICE_SID: ${{ secrets.TWILIO_VERIFY_SERVICE_SID }}
+          TURNSTILE_SECRET: ${{ secrets.TURNSTILE_SECRET || secrets.TURNSTILE_SECRET_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
@@ -188,6 +194,10 @@ jobs:
           put GOOGLE_CLIENT_SECRET "${GOOGLE_CLIENT_SECRET:-}"
           put GITHUB_CLIENT_ID "${GITHUB_CLIENT_ID:-}"
           put GITHUB_CLIENT_SECRET "${GITHUB_CLIENT_SECRET:-}"
+          put TWILIO_ACCOUNT_SID "${TWILIO_ACCOUNT_SID:-}"
+          put TWILIO_AUTH_TOKEN "${TWILIO_AUTH_TOKEN:-}"
+          put TWILIO_VERIFY_SERVICE_SID "${TWILIO_VERIFY_SERVICE_SID:-}"
+          put TURNSTILE_SECRET "${TURNSTILE_SECRET:-}"
           put DATABASE_URL "${DATABASE_URL:-}"
           if [ -z "${BETTER_AUTH_SECRET:-}" ]; then
             echo "::warning::BETTER_AUTH_SECRET still unset — OAuth/session crypto will fail until set"
@@ -197,17 +207,49 @@ jobs:
         run: |
           set -euo pipefail
           # No workers.dev — product host is the only public surface.
+          health_code="000"
           for i in 1 2 3 4 5 6 7 8; do
-            code=$(curl -sS -o /tmp/ah.json -w '%{http_code}' --max-time 30 \
+            health_code=$(curl -sS -o /tmp/ah.json -w '%{http_code}' --max-time 30 \
               https://auth.nebutra.com/health || echo 000)
-            echo "try $i https://auth.nebutra.com/health -> $code"
-            if [ "$code" = "200" ]; then
+            echo "try $i https://auth.nebutra.com/health -> $health_code"
+            if [ "$health_code" = "200" ]; then
               head -c 500 /tmp/ah.json || true
               echo
               break
             fi
             sleep 5
           done
+          if [ "$health_code" != "200" ]; then
+            echo "::error::Auth edge health failed ($health_code)"
+            exit 1
+          fi
+          python3 <<'PY'
+          import json
+          with open("/tmp/ah.json", encoding="utf-8") as fh:
+              data = json.load(fh)
+          phone = ((data.get("features") or {}).get("phoneLogin") or {})
+          enabled = phone.get("enabled")
+          if not isinstance(enabled, bool):
+              raise SystemExit("health is missing features.phoneLogin.enabled")
+          if enabled and (phone.get("provider") != "twilio-verify" or phone.get("captcha") != "cloudflare-turnstile"):
+              raise SystemExit("phone login is enabled without the expected provider/captcha pair")
+          print(f"phone login enabled={str(enabled).lower()} (no SMS sent)")
+          PY
+          ui_code="000"
+          for i in 1 2 3 4 5 6 7 8; do
+            ui_code=$(curl -sS -D /tmp/as.headers -o /tmp/as.html -w '%{http_code}' --max-time 30 \
+              'https://auth.nebutra.com/sign-in?returnTo=https%3A%2F%2Fapp.nebutra.com%2Fworkspace' || echo 000)
+            echo "try $i https://auth.nebutra.com/sign-in -> $ui_code"
+            if [ "$ui_code" = "200" ] && grep -qi '^content-type: text/html' /tmp/as.headers; then
+              break
+            fi
+            sleep 5
+          done
+          if [ "$ui_code" != "200" ] || ! grep -qi '^content-type: text/html' /tmp/as.headers; then
+            echo "::error::Auth sign-in UI is not healthy HTML"
+            head -c 500 /tmp/as.html || true
+            exit 1
+          fi
           code=$(curl -sS -o /tmp/ag.json -w '%{http_code}' --max-time 45 \
             'https://auth.nebutra.com/health?probe=google' || echo 000)
           echo "GET https://auth.nebutra.com/health?probe=google -> $code"

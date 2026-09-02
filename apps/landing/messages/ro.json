@@ -1242,23 +1242,6 @@
         "cta": "Vezi arhitectura de facturare"
       }
     },
-    "productDemo": {
-      "badge": "Demo Interactiv",
-      "title": "The local loop, end to end.",
-      "description": "Simte interfața de linie de comandă, tunelarea webhook-urilor Stripe și provisionarea locală a bazei de date multi-tenant.",
-      "analytics": {
-        "label": "Telemetrie Live",
-        "desc": "Transmite datele de utilizare din producție direct în terminalul tău."
-      },
-      "billing": {
-        "label": "Evenimente de facturare",
-        "desc": "Urmărește execuția webhook-urilor Stripe prin tunelare locală."
-      },
-      "workspaces": {
-        "label": "Inițializare spațiu de lucru",
-        "desc": "Configurează instantaneu scheme PostgreSQL B2B izolate."
-      }
-    },
     "workflow": {
       "badge": "Viteză",
       "title": "De la zero la producție în timp record.",
@@ -1445,10 +1428,10 @@
       },
       "design": {
         "title": "Sistem de design și bibliotecă de componente de top",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with eight switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "Governanță tokeni în 4 straturi",
-          "f2": "Seven design languages + Storybook"
+          "f2": "Eight design languages + Storybook"
         }
       },
       "edam": {

@@ -1242,23 +1242,6 @@
         "cta": "ראה את ארכיטקטורת החיוב"
       }
     },
-    "productDemo": {
-      "badge": "הדגמה אינטראקטיבית",
-      "title": "The local loop, end to end.",
-      "description": "הרגש את ממשק שורת הפקודה, מנהור ווב-הוקים של Stripe ואספקת מסד נתונים רב-לקוח מקומי.",
-      "analytics": {
-        "label": "טלמטריה חיה",
-        "desc": "שדר נתוני שימוש מהייצור ישירות לטרמינל שלך."
-      },
-      "billing": {
-        "label": "אירועי חיוב",
-        "desc": "צפה בביצוע ווב-הוקים של Stripe באמצעות מנהרה מקומית."
-      },
-      "workspaces": {
-        "label": "אתחול מרחב עבודה",
-        "desc": "הקם מיד סכמות PostgreSQL מבודדות ל-B2B."
-      }
-    },
     "workflow": {
       "badge": "מהירות",
       "title": "מאפס לייצור בזמן שיא.",
@@ -1445,10 +1428,10 @@
       },
       "design": {
         "title": "מערכת עיצוב ומאגר רכיבים מוביל",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with eight switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "ממשל טוקנים ב-4 שכבות",
-          "f2": "Seven design languages + Storybook"
+          "f2": "Eight design languages + Storybook"
         }
       },
       "edam": {

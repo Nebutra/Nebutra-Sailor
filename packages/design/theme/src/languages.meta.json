@@ -66,6 +66,16 @@
         "decorative accents never product CTA"
       ],
       "tagline": "paper surfaces, muted ink"
+    },
+    "cosmos": {
+      "description": "Light-first gallery canvas; Ink pill CTA ≠ acid-lime brand-mark (spark only, never a fill); 14px tiles + 999px search/CTA; elevation=none.",
+      "proves": [
+        "action ≠ brand-mark (ink pill vs lime spark)",
+        "gallery canvas ≠ white chrome (paper vs pure white)",
+        "elevation=none + 14px tiles + 999px pills",
+        "dual-mode light-first (dark inverts the gallery)"
+      ],
+      "tagline": "images sit; chrome recedes"
     }
   }
 }

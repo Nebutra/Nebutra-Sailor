@@ -1242,23 +1242,6 @@
         "cta": "বিলিং আর্কিটেকচার দেখুন"
       }
     },
-    "productDemo": {
-      "badge": "ইন্টারঅ্যাক্টিভ ডেমো",
-      "title": "The local loop, end to end.",
-      "description": "কমান্ড-লাইন ইন্টারফেস, Stripe ওয়েবহুক টানেলিং এবং স্থানীয় মাল্টি-টেন্যান্ট ডেটাবেজ প্রভিশনিংয়ের অনুভূতি নিন।",
-      "analytics": {
-        "label": "লাইভ টেলিমেট্রি",
-        "desc": "প্রোডাকশন ব্যবহারের ডেটা সরাসরি আপনার টার্মিনালে স্ট্রিম করুন।"
-      },
-      "billing": {
-        "label": "বিলিং ইভেন্টস",
-        "desc": "লোকাল টানেলিংয়ের মাধ্যমে Stripe ওয়েবহুক এক্সিকিউট হতে দেখুন।"
-      },
-      "workspaces": {
-        "label": "ওয়ার্কস্পেস ইনিট",
-        "desc": "তাত্ক্ষণিকভাবে বিচ্ছিন্ন B2B PostgreSQL স্কিমা প্রভিশন করুন।"
-      }
-    },
     "workflow": {
       "badge": "ভেলোসিটি",
       "title": "রেকর্ড সময়ে শূন্য থেকে প্রোডাকশনে।",
@@ -1445,10 +1428,10 @@
       },
       "design": {
         "title": "নেতৃত্বদানকারী ডিজাইন সিস্টেম ও কম্পোনেন্ট লাইব্রেরি",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with eight switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4-স্তরের টোকেন গভর্ন্যান্স",
-          "f2": "Seven design languages + Storybook"
+          "f2": "Eight design languages + Storybook"
         }
       },
       "edam": {

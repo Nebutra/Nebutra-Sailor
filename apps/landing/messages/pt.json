@@ -1242,23 +1242,6 @@
         "cta": "Ver arquitetura de cobrança"
       }
     },
-    "productDemo": {
-      "badge": "Demo Interativo",
-      "title": "The local loop, end to end.",
-      "description": "Sinta a interface de linha de comando, o tunelamento de webhooks do Stripe e o provisionamento local de banco de dados multi-tenant.",
-      "analytics": {
-        "label": "Telemetria ao Vivo",
-        "desc": "Transmita dados de uso de produção diretamente para o seu terminal."
-      },
-      "billing": {
-        "label": "Eventos de Cobrança",
-        "desc": "Veja os webhooks do Stripe em execução via túnel local."
-      },
-      "workspaces": {
-        "label": "Inicialização do Workspace",
-        "desc": "Provisione esquemas PostgreSQL B2B isolados instantaneamente."
-      }
-    },
     "workflow": {
       "badge": "Velocidade",
       "title": "Do zero à produção em tempo recorde.",
@@ -1445,10 +1428,10 @@
       },
       "design": {
         "title": "Sistema de Design e Biblioteca de Componentes Líder",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with eight switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "Governança de Tokens em 4 Camadas",
-          "f2": "Seven design languages + Storybook"
+          "f2": "Eight design languages + Storybook"
         }
       },
       "edam": {

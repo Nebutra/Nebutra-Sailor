@@ -104,12 +104,14 @@
       "description": "邀請與帳單都會使用這個名稱。",
       "nameLabel": "工作空間名稱",
       "namePlaceholder": "例如：極光實驗室",
+      "nameRequired": "請輸入工作空間名稱。",
       "urlLabel": "工作空間網址",
       "slugPlaceholder": "my-workspace",
       "slugError": "3–48 個字元，僅限小寫字母、數字和連字號。",
       "submit": "建立工作空間",
       "submitting": "建立中…",
-      "error": "無法建立工作空間。"
+      "error": "無法建立工作空間。",
+      "providerUnsupported": "目前的登入方式暫不支援建立工作空間。"
     },
     "invite": {
       "title": "邀請團隊",

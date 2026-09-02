@@ -35,6 +35,24 @@ export function getBrandOrigin(service: BrandService): string {
 }
 
 /**
+ * Public object on `nebutra-assets` via `cdn.nebutra.com`.
+ * R2_PUBLIC_URL / NEXT_PUBLIC_R2_PUBLIC_URL may override the origin for dogfood.
+ */
+export function publicAssetUrl(key: string, base?: string): string {
+  const origin = (
+    base ||
+    process.env.NEXT_PUBLIC_R2_PUBLIC_URL ||
+    process.env.R2_PUBLIC_URL ||
+    getBrandOrigin("cdn")
+  ).replace(/\/+$/, "");
+  const path = key.replace(/^\/+/, "");
+  if (!path || path.includes("..") || path.includes("\\")) {
+    throw new Error("invalid_public_asset_key");
+  }
+  return `${origin}/${path}`;
+}
+
+/**
  * Bare query flag that keeps a signed-in visitor on the marketing homepage
  * (`?home`, no value). Apex `/` without it is a product launcher.
  */

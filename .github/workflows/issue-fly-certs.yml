@@ -33,6 +33,24 @@ jobs:
           - app: design
             fly_app: nebutra-design
             host: design
+          - app: kuanlan
+            fly_app: nebutra-kuanlan
+            host: kuanlan
+          - app: idp
+            fly_app: nebutra-idp
+            host: sso
+          - app: admin
+            fly_app: nebutra-admin
+            host: admin
+          - app: sailor-docs
+            fly_app: nebutra-docs
+            host: docs
+          - app: carina
+            fly_app: nebutra-carina
+            host: carina
+          - app: gateway
+            fly_app: nebutra-gateway
+            host: origin
     steps:
       - name: Setup flyctl
         uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1

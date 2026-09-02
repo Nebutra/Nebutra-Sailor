@@ -21,7 +21,7 @@ Forge Next.js       →  http://127.0.0.1:3953          (control API, localhost 
 
 | Record | Name | Content | Proxy |
 |--------|------|---------|-------|
-| A | `ns1.leak` | ECS public IP (`106.15.4.31`) | **DNS only** |
+| A | `ns1.leak` | Fly dedicated IPv4 (`FORGE_DNS_LEAK_NS_IP`) | **DNS only** |
 | NS | `leak` | `ns1.leak.nebutra.com` | n/a |
 
 Optional glue if registrar requires it. After delegation, dig:
@@ -55,7 +55,7 @@ sudo setcap 'cap_net_bind_service=+ep' "$(which node)"
 | `FORGE_DNS_LEAK_DNS_PORT` | `5353` |
 | `FORGE_DNS_LEAK_API_PORT` | `3953` |
 
-Forge app env: `FORGE_DNS_LEAK_URL=http://127.0.0.1:3953`
+Forge app env on Fly: `FORGE_DNS_LEAK_URL=http://nebutra-dns-leak.internal:3953`
 
 ## Security
 

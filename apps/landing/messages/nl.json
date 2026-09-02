@@ -1242,23 +1242,6 @@
         "cta": "Bekijk factureringsarchitectuur"
       }
     },
-    "productDemo": {
-      "badge": "Interactieve demo",
-      "title": "The local loop, end to end.",
-      "description": "Maak kennis met de commandoregelinterface, Stripe-webhooktunneling en lokaal multi-tenant databaseprovisioning.",
-      "analytics": {
-        "label": "Live telemetrie",
-        "desc": "Stroom productiegebruiksgegevens direct naar je terminal."
-      },
-      "billing": {
-        "label": "Factuurgebeurtenissen",
-        "desc": "Bekijk hoe Stripe-webhooks worden uitgevoerd via lokale tunneling."
-      },
-      "workspaces": {
-        "label": "Workspace-initialisatie",
-        "desc": "Stel geïsoleerde B2B-PostgreSQL-schema's direct in."
-      }
-    },
     "workflow": {
       "badge": "Snelheid",
       "title": "Van nul tot productie in recordtijd.",
@@ -1445,10 +1428,10 @@
       },
       "design": {
         "title": "Toonaangevend designsystem en componentenbibliotheek",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with eight switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4-laagse token-governance",
-          "f2": "Seven design languages + Storybook"
+          "f2": "Eight design languages + Storybook"
         }
       },
       "edam": {

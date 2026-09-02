@@ -1242,23 +1242,6 @@
         "cta": "Abrechnungsarchitektur ansehen"
       }
     },
-    "productDemo": {
-      "badge": "Interaktive Demo",
-      "title": "The local loop, end to end.",
-      "description": "Lernen Sie die Kommandozeilenschnittstelle, Stripe-Webhook-Tunneling und lokale Multi-Tenant-Datenbankbereitstellung kennen.",
-      "analytics": {
-        "label": "Live-Telemetrie",
-        "desc": "Produktions-Nutzungsdaten direkt ins Terminal streamen."
-      },
-      "billing": {
-        "label": "Billing-Events",
-        "desc": "Stripe-Webhooks per lokalem Tunneling in Echtzeit beobachten."
-      },
-      "workspaces": {
-        "label": "Workspace-Init",
-        "desc": "Isolierte B2B-PostgreSQL-Schemas sofort bereitstellen."
-      }
-    },
     "workflow": {
       "badge": "Geschwindigkeit",
       "title": "Von null in Rekordzeit in die Produktion.",
@@ -1445,10 +1428,10 @@
       },
       "design": {
         "title": "Leading Modern Component Library System",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with eight switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4-Layer Tokens",
-          "f2": "Seven design languages + Storybook"
+          "f2": "Eight design languages + Storybook"
         }
       },
       "edam": {

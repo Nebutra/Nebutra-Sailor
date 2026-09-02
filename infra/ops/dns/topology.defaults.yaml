@@ -9,23 +9,17 @@ mail:
     imap: "imap.qiye.aliyun.com"
     pop3: "pop.qiye.aliyun.com"
     smtp: "smtp.qiye.aliyun.com"
-# Pebble brand front is ECS (same A pattern as app/api) — owner topology 2026-07-30.
-# Brand product fronts on ECS (same A pattern as app/api) — owner 2026-07-30.
-# pebble: PM2 Next; carina: nginx static Astro from Nebutra/carina apps/docs.
-# design: PM2 design :3109 + nginx conf.d/design.nebutra.com.conf
+# Shanghai ECS is China-forward / rollback only. Product edges live on Fly sin.
+# carina: static Astro from Nebutra/carina apps/docs → nebutra-carina.
+# New-API: private Fly Machine (no public hostname). Leak DNS: dedicated IPv4.
 #
-# status: A → ECS. nginx conf.d/status.nebutra.com.conf reverse-proxies the
-# landing status surface (nebutra.com/status) so the host no longer falls
-# through to the default 443 block's 301 → nebutra.com. Long-term cutover to
-# pure Vercel (CNAME + nebutra-landing domain) is scripted in
-# point-status-dns-vercel.sh once CLOUDFLARE_API_TOKEN has Zone DNS Edit and
-# landing production deploys are green.
+# status: leftover A → ECS; landing already serves the page on Vercel.
 #
 # open: Vercel CNAME on the landing project (`point-open-dns-vercel.sh`).
 # Host alias — landing `/` on open.nebutra.com rewrites to `/open`.
 # Console stays on app `/settings/developers`. Do not add an ECS A or a
 # second Vercel project.
-ecs_surfaces: [app, auth, api, sso, router, forge, design, status, admin, pebble, carina]
+ecs_surfaces: []
 vercel_surfaces: [open]
 proxy:
   proxied:
@@ -44,6 +38,7 @@ proxy:
       admin,
       pebble,
       carina,
+      kuanlan,
       mail,
       imap,
       pop3,

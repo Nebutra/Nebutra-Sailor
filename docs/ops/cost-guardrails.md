@@ -69,7 +69,27 @@ in a transaction, connection use, and tables with no retention policy.
 ### What actually bills
 
 Commands, not gigabytes. `maxmemory` is 3 GB and enforced by the provider, so
-memory cannot run away — `total_commands_processed` is the meter.
+memory cannot run away — `total_commands_processed` is the meter. PING, INFO
+and the other operational commands are not charged, so health checks are free;
+everything on the request path is not.
+
+### Commands per request, and what was removed
+
+| Where | Commands | Since |
+| --- | --- | --- |
+| Edge Worker, every `api.nebutra.com` request | ~~INCR+EXPIRE = 2~~ → **0** | 2026-09-02: the per-IP flood limit is Cloudflare's rate limiting binding (`[[ratelimits]]` in `wrangler.edge.toml`), not metered, no Redis credentials at the edge |
+| Origin, authenticated `/api/v1/*` | ~~rate limit GET+SET = 2, metering INCR+EXPIRE = 2~~ → **2** | 2026-09-02: the token bucket is one atomic EVAL (`packages/platform/rate-limit`), and metering sets EXPIRE only on the increment that creates the month key |
+| Origin, each AI completion | +5 (api-key, balance ×2, pricing, spend EVAL) + 1 DEL, +2 EVAL per circuit-breaker call, +1 QStash message | `packages/platform/gateway-core` |
+
+Upstash documents that PING and INFO are free and that every other command is
+counted, but not how EVAL is metered. Read `total_commands_processed` before
+and after a deploy that changes the script paths rather than assuming.
+
+The edge line was the expensive one: it ran for scanners and bots as much as
+for customers, and each call was also a round trip to Redis's region before
+the origin fetch could start. The binding counts per Cloudflare location and
+is eventually consistent, which is the right shape for shedding floods; the
+per-key limit that protects tenants stays at the origin.
 
 Audit with:
 
@@ -106,11 +126,14 @@ headroom is a correctness property here, not only a cost one. Treat sustained
 
 ## Vercel
 
-One Git repo linked to several projects bills a deployment per project per
-push. Production web/auth is ECS — those projects must not auto-deploy
-(`git.deploymentEnabled: false`). `nebutra-kuanlan` stays Git-linked; the
-ignore script skips until `apps/kuanlan/package.json` exists. Playbook:
-[vercel-spend.md](./vercel-spend.md).
+Vercel meters build minutes. One Git repo linked to several projects opens a
+remote build per project per push, and a workflow that runs `vercel deploy` on
+the same commit opens a second one. Production web/auth is not Vercel — those
+projects must not auto-deploy (`git.deploymentEnabled: false`). `nebutra.com`
+is Vercel, but its build runs on GitHub's free runners and only the prebuilt
+output is uploaded, so it meters nothing; its Git integration is off for the
+same reason. `nebutra-kuanlan` stays Git-linked; the ignore script skips until
+`apps/kuanlan/package.json` exists. Playbook: [vercel-spend.md](./vercel-spend.md).
 
 ## Still open: AI token spend
 

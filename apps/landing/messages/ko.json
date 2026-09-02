@@ -1242,23 +1242,6 @@
         "cta": "결제 아키텍처 보기"
       }
     },
-    "productDemo": {
-      "badge": "인터랙티브 데모",
-      "title": "The local loop, end to end.",
-      "description": "커맨드라인 인터페이스, Stripe 웹훅 터널링, 로컬 멀티 테넌트 데이터베이스 프로비저닝을 직접 체험해 보십시오.",
-      "analytics": {
-        "label": "실시간 텔레메트리",
-        "desc": "프로덕션 사용 데이터를 곧바로 터미널로 스트리밍합니다."
-      },
-      "billing": {
-        "label": "결제 이벤트",
-        "desc": "Stripe 웹훅이 로컬 터널링을 통해 실행되는 과정을 확인하십시오."
-      },
-      "workspaces": {
-        "label": "워크스페이스 초기화",
-        "desc": "격리된 B2B PostgreSQL 스키마를 즉시 프로비저닝합니다."
-      }
-    },
     "workflow": {
       "badge": "속도",
       "title": "제로에서 프로덕션까지, 기록적인 시간 안에.",
@@ -1445,10 +1428,10 @@
       },
       "design": {
         "title": "Leading Modern Component Library System",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with eight switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4-Layer Tokens",
-          "f2": "Seven design languages + Storybook"
+          "f2": "Eight design languages + Storybook"
         }
       },
       "edam": {

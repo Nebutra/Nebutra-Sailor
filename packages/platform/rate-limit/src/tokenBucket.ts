@@ -167,6 +167,65 @@ export function getRateLimiter(plan: string): TokenBucket {
   return rateLimiters.get(plan) as TokenBucket;
 }
 
+/** Bucket state persisted in Redis, as JSON. Shared by the script and the JS fallback. */
+const BUCKET_TTL_SECONDS = 3600;
+
+/**
+ * Token bucket as one Lua script: read, refill, decide, write, in a single
+ * atomic command. Stores the same `{tokens, lastRefill}` JSON the JS fallback
+ * below reads and writes, so the two paths can serve the same key.
+ *
+ * KEYS[1] bucket key
+ * ARGV    now (ms), maxTokens, refillRate, refillInterval (ms), cost, ttl (s)
+ * returns {allowed (0|1), remainingTokens, lastRefill}
+ *
+ * Redis Lua truncates floats on return, which is fine: tokens are whole and
+ * lastRefill is a millisecond timestamp. cjson prints integers up to 14
+ * digits without an exponent, which covers millisecond timestamps until 5138.
+ */
+export const TOKEN_BUCKET_SCRIPT = `
+local raw = redis.call('GET', KEYS[1])
+local now = tonumber(ARGV[1])
+local max = tonumber(ARGV[2])
+local rate = tonumber(ARGV[3])
+local interval = tonumber(ARGV[4])
+local cost = tonumber(ARGV[5])
+local ttl = tonumber(ARGV[6])
+local tokens = max
+local last = now
+if raw then
+  local ok, bucket = pcall(cjson.decode, raw)
+  if ok and type(bucket) == 'table' and bucket.tokens ~= nil then
+    tokens = tonumber(bucket.tokens) or max
+    last = tonumber(bucket.lastRefill) or now
+  end
+end
+local refill = math.floor(((now - last) / interval) * rate)
+if refill > 0 then
+  tokens = math.min(max, tokens + refill)
+  last = now
+end
+local allowed = 0
+if tokens >= cost then
+  tokens = tokens - cost
+  allowed = 1
+end
+redis.call('SET', KEYS[1], cjson.encode({ tokens = tokens, lastRefill = last }), 'EX', ttl)
+return { allowed, tokens, last }
+`;
+
+export interface RedisTokenBucketClient {
+  get: (key: string) => Promise<unknown>;
+  set: (key: string, value: unknown, opts?: { ex?: number }) => Promise<unknown>;
+  /**
+   * When present, `consume` is one EVAL instead of GET+SET: atomic, so two
+   * concurrent requests cannot both read the same bucket and each write it
+   * back minus their own cost, and one billed command instead of two on
+   * Upstash's per-command meter. Without it the read-modify-write below runs.
+   */
+  eval?: (script: string, keys: string[], args: Array<string | number>) => Promise<unknown>;
+}
+
 /**
  * Redis-backed token bucket for distributed rate limiting.
  * Uses @nebutra/cache for Upstash Redis state.
@@ -176,10 +235,7 @@ export function getRateLimiter(plan: string): TokenBucket {
 export class RedisTokenBucket {
   constructor(
     private config: TokenBucketConfig,
-    private redis: {
-      get: (key: string) => Promise<unknown>;
-      set: (key: string, value: unknown, opts?: { ex?: number }) => Promise<unknown>;
-    },
+    private redis: RedisTokenBucketClient,
   ) {}
 
   get maxTokens(): number {
@@ -189,6 +245,28 @@ export class RedisTokenBucket {
   async consume(key: string, tokens: number = 1): Promise<RateLimitResult> {
     const namespacedKey = buildKey(key);
     const now = Date.now();
+
+    if (this.redis.eval) {
+      try {
+        const scripted = await this.redis.eval(
+          TOKEN_BUCKET_SCRIPT,
+          [namespacedKey],
+          [
+            now,
+            this.config.maxTokens,
+            this.config.refillRate,
+            this.config.refillInterval,
+            tokens,
+            BUCKET_TTL_SECONDS,
+          ],
+        );
+        const decided = this.fromScript(scripted, tokens, now);
+        if (decided) return decided;
+      } catch {
+        // Scripting unavailable or failed: the read-modify-write path below
+        // still answers, at the cost of a second command and the race.
+      }
+    }
 
     const raw = await this.redis.get(namespacedKey);
     let bucket: { tokens: number; lastRefill: number };
@@ -215,7 +293,7 @@ export class RedisTokenBucket {
     // Check if we have enough tokens
     if (bucket.tokens >= tokens) {
       const updated = { tokens: bucket.tokens - tokens, lastRefill: bucket.lastRefill };
-      await this.redis.set(namespacedKey, updated, { ex: 3600 });
+      await this.redis.set(namespacedKey, updated, { ex: BUCKET_TTL_SECONDS });
       return {
         allowed: true,
         remaining: updated.tokens,
@@ -224,16 +302,32 @@ export class RedisTokenBucket {
     }
 
     // Not enough tokens — persist current state and reject
-    await this.redis.set(namespacedKey, bucket, { ex: 3600 });
+    await this.redis.set(namespacedKey, bucket, { ex: BUCKET_TTL_SECONDS });
 
-    const tokensNeeded = tokens - bucket.tokens;
+    return this.denied(bucket.tokens, tokens, now);
+  }
+
+  /** Interpret the script's `{allowed, remaining, lastRefill}` reply; null if malformed. */
+  private fromScript(reply: unknown, cost: number, now: number): RateLimitResult | null {
+    if (!Array.isArray(reply) || reply.length < 2) return null;
+    const allowed = Number(reply[0]);
+    const remaining = Number(reply[1]);
+    if (!Number.isFinite(allowed) || !Number.isFinite(remaining)) return null;
+
+    if (allowed === 1) {
+      return { allowed: true, remaining, resetAt: now + this.config.refillInterval };
+    }
+    return this.denied(remaining, cost, now);
+  }
+
+  private denied(remaining: number, cost: number, now: number): RateLimitResult {
+    const tokensNeeded = cost - remaining;
     const waitTime = Math.ceil(
       (tokensNeeded / this.config.refillRate) * this.config.refillInterval,
     );
-
     return {
       allowed: false,
-      remaining: bucket.tokens,
+      remaining,
       resetAt: now + waitTime,
       retryAfter: Math.ceil(waitTime / 1000),
     };
@@ -255,10 +349,7 @@ export class RedisTokenBucket {
  */
 export function createRedisRateLimiter(
   config: TokenBucketConfig,
-  redis: {
-    get: (key: string) => Promise<unknown>;
-    set: (key: string, value: unknown, opts?: { ex?: number }) => Promise<unknown>;
-  },
+  redis: RedisTokenBucketClient,
 ): RedisTokenBucket {
   return new RedisTokenBucket(config, redis);
 }

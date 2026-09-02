@@ -1242,23 +1242,6 @@
         "cta": "Переглянути архітектуру розрахунків"
       }
     },
-    "productDemo": {
-      "badge": "Інтерактивна демонстрація",
-      "title": "The local loop, end to end.",
-      "description": "Ознайомтеся з інтерфейсом командного рядка, тунелюванням вебхуків Stripe та локальним налаштуванням багатокористувацької бази даних.",
-      "analytics": {
-        "label": "Телеметрія в реальному часі",
-        "desc": "Передавайте дані використання з виробничого середовища прямо в термінал."
-      },
-      "billing": {
-        "label": "Події билінгу",
-        "desc": "Спостерігайте за виконанням вебхуків Stripe через локальний тунель."
-      },
-      "workspaces": {
-        "label": "Ініціалізація робочої області",
-        "desc": "Миттєво створюйте ізольовані B2B схеми PostgreSQL."
-      }
-    },
     "workflow": {
       "badge": "Швидкість",
       "title": "Від нуля до продакшену за рекордний час.",
@@ -1445,10 +1428,10 @@
       },
       "design": {
         "title": "Провідна дизайн-система та бібліотека компонентів",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with eight switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4-рівневе управління токенами",
-          "f2": "Seven design languages + Storybook"
+          "f2": "Eight design languages + Storybook"
         }
       },
       "edam": {

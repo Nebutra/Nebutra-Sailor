@@ -1242,23 +1242,6 @@
         "cta": "Δείτε την αρχιτεκτονική χρέωσης"
       }
     },
-    "productDemo": {
-      "badge": "Διαδραστική Demo",
-      "title": "The local loop, end to end.",
-      "description": "Αισθανθείτε τη διεπαφή γραμμής εντολών, το tunneling webhook Stripe και την τοπική προμήθεια multi-tenant βάσης δεδομένων.",
-      "analytics": {
-        "label": "Ζωντανή Τηλεμετρία",
-        "desc": "Μεταδώστε δεδομένα χρήσης παραγωγής απευθείας στο terminal σας."
-      },
-      "billing": {
-        "label": "Συμβάντα Χρέωσης",
-        "desc": "Παρακολουθήστε την εκτέλεση Stripe webhooks μέσω τοπικής σήραγγας."
-      },
-      "workspaces": {
-        "label": "Εκκίνηση Χώρου Εργασίας",
-        "desc": "Διαμορφώστε απομονωμένα σχήματα PostgreSQL για B2B άμεσα."
-      }
-    },
     "workflow": {
       "badge": "Ταχύτητα",
       "title": "Από το μηδέν στην παραγωγή σε ρεκόρ χρόνο.",
@@ -1445,10 +1428,10 @@
       },
       "design": {
         "title": "Προηγούμενο Σύστημα Σχεδίασης & Βιβλιοθήκη Συνιστωσών",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with seven switchable design languages, Storybook docs, and visual regression testing.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with eight switchable design languages, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "Διακυβέρνηση Tokens 4 Επιπέδων",
-          "f2": "Seven design languages + Storybook"
+          "f2": "Eight design languages + Storybook"
         }
       },
       "edam": {

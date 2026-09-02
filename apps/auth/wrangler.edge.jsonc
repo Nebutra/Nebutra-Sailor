@@ -25,13 +25,15 @@
     "NEXT_PUBLIC_APP_URL": "https://app.nebutra.com",
     "NEXT_PUBLIC_SITE_URL": "https://nebutra.com",
     "AUTH_COOKIE_DOMAIN": ".nebutra.com",
-    // Grey-cloud origin (same host gateway-edge uses). Nginx routes
-    // X-Nebutra-Edge-Auth: 1 → auth app. Never Host=auth.nebutra.com on fetch.
-    "ORIGIN_IP": "106.15.4.31",
-    "ORIGIN_URL": "https://origin.nebutra.com",
+    // Dedicated Next UI origin. Do not reuse origin.nebutra.com: that hostname
+    // belongs to the Hono gateway and does not serve /sign-in.
+    "ORIGIN_URL": "https://nebutra-auth.fly.dev",
     "DEPLOY_TARGET_AUTH": "cloudflare-workers"
   },
   // Secrets: BETTER_AUTH_SECRET, GOOGLE_*, GITHUB_*, optional DATABASE_URL fallback.
+  // Global phone auth additionally requires TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN,
+  // TWILIO_VERIFY_SERVICE_SID, and TURNSTILE_SECRET. Missing any one keeps the
+  // phone plugin unmounted.
   //
   // Custom domain is bound once in the Cloudflare dashboard:
   //   auth.nebutra.com → Worker nebutra-auth

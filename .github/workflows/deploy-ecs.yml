@@ -44,7 +44,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated subset of: landing web api idp auth design pebble sailor-docs router forge admin). Empty = auto-detect."
+        description: "Apps to deploy (space-separated subset of: landing web api idp auth design pebble sailor-docs router kuanlan forge admin). Empty = auto-detect."
         required: false
         default: ""
       reason:
@@ -66,6 +66,9 @@ on:
       - "packages/design/**"
       - "apps/forge/**"
       - "apps/router/**"
+      # kuanlan / idp / admin / sailor-docs ship on Fly (deploy-fly.yml).
+      # Keep the VM bundle as rollback via workflow_dispatch; do not auto-push
+      # them here or a later main push will steal DNS back to Shanghai.
       - "apps/pebble/**"
       - "backends/gateway/**"
       - "packages/ai/forge-runtime/**"
@@ -115,6 +118,7 @@ jobs:
       pebble:      ${{ steps.resolve.outputs.pebble }}
       sailor-docs: ${{ steps.resolve.outputs['sailor-docs'] }}
       router:      ${{ steps.resolve.outputs.router }}
+      kuanlan:     ${{ steps.resolve.outputs.kuanlan }}
       forge:       ${{ steps.resolve.outputs.forge }}
       admin:       ${{ steps.resolve.outputs.admin }}
       any:         ${{ steps.resolve.outputs.any }}
@@ -227,6 +231,14 @@ jobs:
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
               - 'infra/runtime/nginx/**'
               - '.github/workflows/deploy-ecs.yml'
+            kuanlan:
+              - 'apps/kuanlan/**'
+              - 'packages/integrations/storage/**'
+              - 'pnpm-lock.yaml'
+              - 'infra/iac/ecs/**'
+              - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
+              - '.github/workflows/deploy-ecs.yml'
             router:
               - 'apps/router/**'
               - 'packages/platform/router-supply/**'
@@ -275,6 +287,7 @@ jobs:
           F_DESIGN:       ${{ steps.filter.outputs.design }}
           F_PEBBLE:       ${{ steps.filter.outputs.pebble }}
           F_SAILOR_DOCS:  ${{ steps.filter.outputs['sailor-docs'] }}
+          F_KUANLAN:      ${{ steps.filter.outputs.kuanlan }}
           F_ROUTER:       ${{ steps.filter.outputs.router }}
           F_FORGE:        ${{ steps.filter.outputs.forge }}
           F_ADMIN:        ${{ steps.filter.outputs.admin }}
@@ -305,6 +318,7 @@ jobs:
             if [ "$pebble" = "true" ]; then items+=('{"app":"pebble","package":"@nebutra/pebble-site","workspace":"apps/pebble","kind":"next-standalone","build_command":"build","site_url":"https://pebble.nebutra.com"}'); fi
             if [ "$sailor_docs" = "true" ]; then items+=('{"app":"sailor-docs","package":"@nebutra/sailor-docs","workspace":"apps/sailor-docs","kind":"next-standalone","build_command":"build:vm","site_url":"https://docs.nebutra.com"}'); fi
             if [ "$router" = "true" ]; then items+=('{"app":"router","package":"@nebutra/router","workspace":"apps/router","kind":"next-standalone","build_command":"build","site_url":"https://router.nebutra.com"}'); fi
+            if [ "${F_KUANLAN:-false}" = "true" ]; then items+=('{"app":"kuanlan","package":"@nebutra/kuanlan","workspace":"apps/kuanlan","kind":"next-standalone","build_command":"build","site_url":"https://kuanlan.nebutra.com"}'); fi
             if [ "$forge" = "true" ]; then items+=('{"app":"forge","package":"@nebutra/forge","workspace":"apps/forge","kind":"next-standalone","build_command":"build","site_url":"https://forge.nebutra.com"}'); fi
             if [ "$admin" = "true" ]; then items+=('{"app":"admin","package":"@nebutra/admin","workspace":"apps/admin","kind":"next-standalone","build_command":"build","site_url":"https://admin.nebutra.com"}'); fi
             local joined=""
@@ -329,18 +343,19 @@ jobs:
             api="${F_API_CORE:-false}"
             forge="${F_FORGE:-false}"
             router="${F_ROUTER:-false}"
+            kuanlan="${F_KUANLAN:-false}"
             pebble="${F_PEBBLE:-false}"
             # design is on the push list because it is the acceptance surface for
             # the token pipeline: when a token or a component changes, the page
             # that renders them is the thing that should show it. Its filter
             # includes packages/design/**, so that is exactly when it fires.
             design="${F_DESIGN:-false}"
-            if [ "$api" != "true" ] && [ "$forge" != "true" ] && [ "$router" != "true" ] && [ "$pebble" != "true" ] && [ "$design" != "true" ]; then
+            if [ "$api" != "true" ] && [ "$forge" != "true" ] && [ "$router" != "true" ] && [ "$kuanlan" != "true" ] && [ "$pebble" != "true" ] && [ "$design" != "true" ]; then
               # Shared deploy/nginx/workflow-only change: ship via forge so vhosts update.
               forge=true
             fi
             any=false
-            if [ "$api" = "true" ] || [ "$forge" = "true" ] || [ "$router" = "true" ] || [ "$pebble" = "true" ] || [ "$design" = "true" ]; then
+            if [ "$api" = "true" ] || [ "$forge" = "true" ] || [ "$router" = "true" ] || [ "$kuanlan" = "true" ] || [ "$pebble" = "true" ] || [ "$design" = "true" ]; then
               any=true
             fi
             {
@@ -353,12 +368,14 @@ jobs:
               echo "pebble=$pebble"
               echo "sailor-docs=false"
               echo "router=$router"
+              echo "kuanlan=$kuanlan"
               echo "forge=$forge"
               echo "admin=false"
               echo "any=$any"
+              export F_KUANLAN="$kuanlan"
               emit_next_matrix false false false false "$pebble" false "$router" "$forge" false "$design"
             } >> "$GITHUB_OUTPUT"
-            echo "Auto-CI push: api=$api forge=$forge router=$router pebble=$pebble design=$design any=$any"
+            echo "Auto-CI push: api=$api forge=$forge router=$router kuanlan=$kuanlan pebble=$pebble design=$design any=$any"
             exit 0
           fi
 
@@ -368,13 +385,13 @@ jobs:
             unknown_apps=""
             for app in $normalized_apps; do
               case "$app" in
-                landing|web|api|idp|auth|design|pebble|sailor-docs|router|forge|admin) ;;
+                landing|web|api|idp|auth|design|pebble|sailor-docs|router|kuanlan|forge|admin) ;;
                 *) unknown_apps="$unknown_apps $app" ;;
               esac
             done
 
             if [ -n "$unknown_apps" ]; then
-              echo "::error::Unsupported apps: $(echo "$unknown_apps" | xargs). Allowed: landing web api idp auth design pebble sailor-docs router forge admin"
+              echo "::error::Unsupported apps: $(echo "$unknown_apps" | xargs). Allowed: landing web api idp auth design pebble sailor-docs router kuanlan forge admin"
               exit 1
             fi
           fi
@@ -390,6 +407,7 @@ jobs:
               pebble=$(contains_app "$normalized_apps" pebble)
               sailor_docs=$(contains_app "$normalized_apps" sailor-docs)
               router=$(contains_app "$normalized_apps" router)
+              kuanlan=$(contains_app "$normalized_apps" kuanlan)
               forge=$(contains_app "$normalized_apps" forge)
               admin=$(contains_app "$normalized_apps" admin)
               echo "landing=$landing"
@@ -401,9 +419,11 @@ jobs:
               echo "pebble=$pebble"
               echo "sailor-docs=$sailor_docs"
               echo "router=$router"
+              echo "kuanlan=$kuanlan"
               echo "forge=$forge"
               echo "admin=$admin"
               echo "any=true"
+              export F_KUANLAN="$kuanlan"
               emit_next_matrix "$landing" "$web" "$idp" "$auth" "$pebble" "$sailor_docs" "$router" "$forge" "$admin" "$design"
             else
               echo "landing=$F_LANDING"
@@ -415,9 +435,10 @@ jobs:
               echo "pebble=$F_PEBBLE"
               echo "sailor-docs=$F_SAILOR_DOCS"
               echo "router=$F_ROUTER"
+              echo "kuanlan=$F_KUANLAN"
               echo "forge=$F_FORGE"
               echo "admin=$F_ADMIN"
-              echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_IDP" == "true" || "$F_AUTH" == "true" || "$F_PEBBLE" == "true" || "$F_SAILOR_DOCS" == "true" || "$F_ROUTER" == "true" || "$F_FORGE" == "true" || "$F_ADMIN" == "true" ]] && echo true || echo false)"
+              echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_IDP" == "true" || "$F_AUTH" == "true" || "$F_PEBBLE" == "true" || "$F_SAILOR_DOCS" == "true" || "$F_ROUTER" == "true" || "$F_KUANLAN" == "true" || "$F_FORGE" == "true" || "$F_ADMIN" == "true" ]] && echo true || echo false)"
               emit_next_matrix "$F_LANDING" "$F_WEB" "$F_IDP" "$F_AUTH" "$F_PEBBLE" "$F_SAILOR_DOCS" "$F_ROUTER" "$F_FORGE" "$F_ADMIN" "$F_DESIGN"
             fi
           } >> "$GITHUB_OUTPUT"
@@ -518,6 +539,7 @@ jobs:
           # `output: "standalone"` on this env so Vercel builds skip the trace
           # cost. This workflow needs the standalone bundle for assembly below.
           NEXT_OUTPUT: standalone
+          NEXT_PUBLIC_R2_PUBLIC_URL: ${{ vars.R2_PUBLIC_URL || 'https://cdn.nebutra.com' }}
           # Forge root metadata also reads these at build time. The deploy job
           # still writes them into the VM .env so request-time tags stay live.
           GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
@@ -696,8 +718,9 @@ jobs:
           # without anyone remembering to list it here — which is the same reason
           # the scp loop further down globs instead of enumerating hosts.
           sparse-checkout: |
-            infra/iac/ecs/ecosystem.config.cjs
-            infra/ops/scripts/ecs-deploy-remote.sh
+            infra/iac/ecs
+            infra/nebutra-router
+            infra/ops/scripts
             infra/runtime/nginx/nginx.conf
             infra/runtime/nginx/conf.d
 
@@ -764,6 +787,13 @@ jobs:
           name: bundle-router
           path: ${{ runner.temp }}/bundles
 
+      - name: Download kuanlan bundle
+        if: needs.detect-changes.outputs.kuanlan == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: bundle-kuanlan
+          path: ${{ runner.temp }}/bundles
+
       - name: Download forge bundle
         if: needs.detect-changes.outputs.forge == 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
@@ -821,6 +851,7 @@ jobs:
           if [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ]; then prune_apps="$prune_apps pebble"; fi
           if [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ]; then prune_apps="$prune_apps sailor-docs"; fi
           if [ "${{ needs.detect-changes.outputs.router }}" = "true" ]; then prune_apps="$prune_apps router"; fi
+          if [ "${{ needs.detect-changes.outputs.kuanlan }}" = "true" ]; then prune_apps="$prune_apps kuanlan"; fi
           if [ "${{ needs.detect-changes.outputs.forge }}" = "true" ]; then prune_apps="$prune_apps forge"; fi
           if [ "${{ needs.detect-changes.outputs.admin }}" = "true" ]; then prune_apps="$prune_apps admin"; fi
           prune_apps="$(echo "$prune_apps" | xargs)"
@@ -1058,6 +1089,7 @@ jobs:
           done
 
       - name: Run remote deploy
+        id: remote-deploy
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DIRECT_URL: ${{ secrets.DIRECT_URL }}
@@ -1263,6 +1295,13 @@ jobs:
           # names.
           INDEXNOW_KEY: ${{ vars.INDEXNOW_KEY }}
           INDEXNOW_HOST: ${{ vars.INDEXNOW_HOST }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          ROUTER_API_KEY: ${{ secrets.KUANLAN_ROUTER_API_KEY }}
+          IMAGE2_BASE_URL: ${{ vars.IMAGE2_BASE_URL || 'https://router.nebutra.com/v1' }}
+          IMAGE2_MODEL: ${{ vars.IMAGE2_MODEL || 'gpt-image-2' }}
+          NEXT_PUBLIC_R2_PUBLIC_URL: ${{ vars.R2_PUBLIC_URL || 'https://cdn.nebutra.com' }}
+          NEW_API_BASE_URL: ${{ vars.NEW_API_BASE_URL || 'http://127.0.0.1:3301/v1' }}
+          NEW_API_ACCESS_TOKEN: ${{ secrets.NEW_API_ACCESS_TOKEN }}
         run: |
           set -euo pipefail
           APPS=""
@@ -1275,6 +1314,7 @@ jobs:
           if [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ]; then APPS="$APPS pebble"; fi
           if [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ]; then APPS="$APPS sailor-docs"; fi
           if [ "${{ needs.detect-changes.outputs.router }}" = "true" ]; then APPS="$APPS router"; fi
+          if [ "${{ needs.detect-changes.outputs.kuanlan }}" = "true" ]; then APPS="$APPS kuanlan"; fi
           if [ "${{ needs.detect-changes.outputs.forge }}" = "true" ]; then APPS="$APPS forge"; fi
           if [ "${{ needs.detect-changes.outputs.admin }}" = "true" ]; then APPS="$APPS admin"; fi
           APPS="$(echo "$APPS" | xargs)"
@@ -1357,7 +1397,9 @@ jobs:
             INNGEST_EVENT_KEY INNGEST_SIGNING_KEY \
             SANITY_API_TOKEN NEXT_PUBLIC_SANITY_PROJECT_ID NEXT_PUBLIC_SANITY_DATASET NEXT_PUBLIC_SANITY_API_VERSION \
             SANITY_WEBHOOK_SECRET GOOGLE_SITE_VERIFICATION BING_SITE_VERIFICATION \
-            INDEXNOW_KEY INDEXNOW_HOST
+            INDEXNOW_KEY INDEXNOW_HOST \
+            CLOUDFLARE_ACCOUNT_ID ROUTER_API_KEY IMAGE2_BASE_URL IMAGE2_MODEL \
+            NEXT_PUBLIC_R2_PUBLIC_URL NEW_API_BASE_URL NEW_API_ACCESS_TOKEN
           REMOTE_CMD="${REMOTE_CMD} bash /tmp/ecs-deploy-remote.sh"
           ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
               -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
@@ -1365,7 +1407,47 @@ jobs:
               "${ECS_USER}@${ECS_HOST}" \
               "$REMOTE_CMD"
 
+      - name: Bootstrap New-API sidecar
+        if: needs.detect-changes.outputs.router == 'true' || needs.detect-changes.outputs.kuanlan == 'true'
+        continue-on-error: true
+        env:
+          ECS_HOST: ${{ vars.VM_HOST || vars.CLOUD_VM_HOST || vars.ECS_HOST }}
+          ECS_USER: ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
+          ECS_SSH_PORT: ${{ vars.VM_SSH_PORT || vars.CLOUD_VM_SSH_PORT || vars.ECS_SSH_PORT || '22' }}
+          ECS_DEPLOY_ROOT: ${{ vars.VM_DEPLOY_ROOT || vars.CLOUD_VM_DEPLOY_ROOT || vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}
+          CHANNEL_302_KEY: ${{ secrets.KUANLAN_IMAGE2_API_KEY }}
+        run: |
+          set -euo pipefail
+          SCP_OPTS=(-i ~/.ssh/id_deploy -P "${ECS_SSH_PORT}" -o StrictHostKeyChecking=yes -o IdentitiesOnly=yes)
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+              -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+              "${ECS_USER}@${ECS_HOST}" \
+              "mkdir -p ${ECS_DEPLOY_ROOT}/new-api"
+          scp "${SCP_OPTS[@]}" infra/nebutra-router/compose.ecs.yaml \
+            "${ECS_USER}@${ECS_HOST}:${ECS_DEPLOY_ROOT}/new-api/compose.ecs.yaml"
+          scp "${SCP_OPTS[@]}" infra/ops/scripts/ecs-bootstrap-new-api.sh \
+            "${ECS_USER}@${ECS_HOST}:/tmp/ecs-bootstrap-new-api.sh"
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+              -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+              "${ECS_USER}@${ECS_HOST}" \
+              "CHANNEL_302_KEY=$(printf '%q' "${CHANNEL_302_KEY:-}") ECS_DEPLOY_ROOT=$(printf '%q' "$ECS_DEPLOY_ROOT") bash /tmp/ecs-bootstrap-new-api.sh"
+
+      - name: Point kuanlan DNS to ECS
+        if: github.event_name == 'workflow_dispatch' && contains(github.event.inputs.reason, 'rollback-kuanlan-ecs') && needs.detect-changes.outputs.kuanlan == 'true'
+        continue-on-error: true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFLARE_WORKERS_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+          ECS_HOST: ${{ vars.ECS_HOST || vars.VM_HOST || '106.15.4.31' }}
+          CF_ZONE_NAME: nebutra.com
+        run: |
+          set -euo pipefail
+          test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::CLOUDFLARE_API_TOKEN secret missing"; exit 1; }
+          bash infra/ops/scripts/point-kuanlan-dns-ecs.sh
+
       - name: Smoke test public endpoints
+        id: smoke
+        if: always() && steps.remote-deploy.outcome == 'success'
         run: |
           set -euo pipefail
           declare -A targets=()
@@ -1379,11 +1461,13 @@ jobs:
           [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ] && targets[pebble]="https://pebble.nebutra.com"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && targets[sailor-docs]="https://docs.nebutra.com"
           [ "${{ needs.detect-changes.outputs.router }}"         = "true" ] && targets[router]="https://router.nebutra.com"
+          [ "${{ needs.detect-changes.outputs.kuanlan }}"        = "true" ] && targets[kuanlan]="https://kuanlan.nebutra.com"
           [ "${{ needs.detect-changes.outputs.forge }}"          = "true" ] && targets[forge]="https://forge.nebutra.com"
           # Origin fallback when public DNS is missing/broken (Host header on ECS IP).
           # Prevents rolling back a healthy PM2+nginx deploy solely because CF DNS is NXDOMAIN.
           declare -A origin_hosts=()
           [ "${{ needs.detect-changes.outputs.router }}" = "true" ] && origin_hosts[router]="router.nebutra.com"
+          [ "${{ needs.detect-changes.outputs.kuanlan }}" = "true" ] && origin_hosts[kuanlan]="kuanlan.nebutra.com"
           [ "${{ needs.detect-changes.outputs.forge }}"  = "true" ] && origin_hosts[forge]="forge.nebutra.com"
           [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ] && origin_hosts[pebble]="pebble.nebutra.com"
           ECS_ORIGIN_IP="${ECS_HOST:-${{ vars.ECS_HOST || vars.VM_HOST || '106.15.4.31' }}}"
@@ -1403,6 +1487,7 @@ jobs:
             # New PM2 apps (pebble) need extra headroom before the first 200.
             retries=5
             [ "$name" = "pebble" ] && retries=10
+            [ "$name" = "kuanlan" ] && retries=10
             for i in $(seq 1 "$retries"); do
               # The \n is load-bearing. curl -w emits no trailing newline, and
               # `read` returns 1 when it reaches EOF without one — under
@@ -1575,7 +1660,7 @@ jobs:
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && emit_deployment_verified sailor-docs "https://docs.nebutra.com"
 
       - name: Rollback Cloud VM on deploy or smoke failure
-        if: failure()
+        if: failure() && (steps.remote-deploy.outcome == 'failure' || steps.smoke.outcome == 'failure')
         env:
           ECS_HOST:          ${{ vars.VM_HOST || vars.CLOUD_VM_HOST || vars.ECS_HOST }}
           ECS_USER:          ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
@@ -1594,6 +1679,7 @@ jobs:
           if [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ]; then APPS="$APPS pebble"; fi
           if [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ]; then APPS="$APPS sailor-docs"; fi
           if [ "${{ needs.detect-changes.outputs.router }}" = "true" ]; then APPS="$APPS router"; fi
+          if [ "${{ needs.detect-changes.outputs.kuanlan }}" = "true" ]; then APPS="$APPS kuanlan"; fi
           if [ "${{ needs.detect-changes.outputs.forge }}" = "true" ]; then APPS="$APPS forge"; fi
           if [ "${{ needs.detect-changes.outputs.admin }}" = "true" ]; then APPS="$APPS admin"; fi
           APPS="$(echo "$APPS" | xargs)"

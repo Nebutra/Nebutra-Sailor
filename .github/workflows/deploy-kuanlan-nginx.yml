@@ -1,0 +1,120 @@
+name: Restore kuanlan nginx vhost
+
+# Injects kuanlan.nebutra.com.conf into the live Cloud VM nginx without
+# replacing nginx.conf or rebuilding any app. Unknown Host on this box
+# 301s to nebutra.com; this is the recovery for that fall-through.
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Reason (shown in run summary)"
+        required: false
+        default: "restore kuanlan.nebutra.com vhost"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-kuanlan-nginx
+  cancel-in-progress: true
+
+jobs:
+  inject:
+    name: Inject kuanlan vhost
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Configure SSH
+        env:
+          ECS_SSH_PRIVATE_KEY: ${{ secrets.ECS_SSH_PRIVATE_KEY || secrets.VM_SSH_PRIVATE_KEY }}
+          ECS_SSH_KNOWN_HOSTS: ${{ secrets.ECS_SSH_KNOWN_HOSTS || secrets.VM_SSH_KNOWN_HOSTS }}
+          ECS_HOST: ${{ vars.ECS_HOST || vars.VM_HOST || '106.15.4.31' }}
+          ECS_USER: ${{ vars.ECS_USER || vars.VM_USER || 'root' }}
+        run: |
+          set -euo pipefail
+          if [ -z "${ECS_SSH_PRIVATE_KEY:-}" ]; then
+            echo "::error::ECS_SSH_PRIVATE_KEY is not set"; exit 1
+          fi
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$ECS_SSH_PRIVATE_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          if [ -n "${ECS_SSH_KNOWN_HOSTS:-}" ]; then
+            printf '%s\n' "$ECS_SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          else
+            ssh-keyscan -H "$ECS_HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+          fi
+          cat >> ~/.ssh/config <<EOF
+          Host kuanlan-ecs
+            HostName ${ECS_HOST}
+            User ${ECS_USER}
+            IdentityFile ~/.ssh/id_deploy
+            StrictHostKeyChecking accept-new
+          EOF
+          chmod 600 ~/.ssh/config
+
+      - name: Install vhost
+        env:
+          REMOTE_HOST: kuanlan-ecs
+        run: bash infra/ops/scripts/install-kuanlan-nginx-vhost.sh
+
+      - name: Install router /v1 → New-API
+        env:
+          REMOTE_HOST: kuanlan-ecs
+        run: bash infra/ops/scripts/install-router-v1-nginx.sh
+
+      - name: Issue Router consume key for 观澜
+        env:
+          REMOTE_HOST: kuanlan-ecs
+          CHANNEL_302_KEY: ${{ secrets.KUANLAN_IMAGE2_API_KEY }}
+          NEW_API_ACCESS_TOKEN: ${{ secrets.NEW_API_ACCESS_TOKEN }}
+        run: bash infra/ops/scripts/seed-kuanlan-router-key.sh
+
+      - name: Smoke kuanlan consume is configured
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6 7 8; do
+            body=$(curl -fsS --max-time 20 https://kuanlan.nebutra.com/api/e2e/health || true)
+            echo "attempt $i $body"
+            case "$body" in
+              *'"configured":true'*) exit 0 ;;
+            esac
+            sleep 8
+          done
+          echo "::error::kuanlan consume still unconfigured"
+          exit 1
+
+      - name: Smoke kuanlan host stays on itself
+        run: |
+          set -euo pipefail
+          echo "reason: ${{ github.event.inputs.reason }}"
+          for path in / /create /wardrobe /moments /me; do
+            loc=""
+            code="000"
+            for i in 1 2 3 4 5 6; do
+              code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "https://kuanlan.nebutra.com${path}" || echo 000)
+              loc=$(curl -sSI --max-time 15 "https://kuanlan.nebutra.com${path}" 2>/dev/null | tr -d '\r' | awk 'tolower($1)=="location:"{print $2; exit}')
+              echo "attempt $i path=$path code=$code location=${loc:-none}"
+              case "${loc:-}" in
+                https://nebutra.com|https://nebutra.com/*|https://app.nebutra.com/*)
+                  echo "still redirecting to apex/app — retry"
+                  sleep 8
+                  continue
+                  ;;
+              esac
+              if [ "$code" != "000" ] && [ "$code" != "301" ] && [ "$code" != "302" ]; then
+                break
+              fi
+              sleep 8
+            done
+            case "${loc:-}" in
+              https://nebutra.com|https://nebutra.com/*)
+                echo "::error::$path still 301s to nebutra.com"
+                exit 1
+                ;;
+            esac
+          done

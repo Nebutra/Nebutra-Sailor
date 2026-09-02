@@ -9,16 +9,17 @@
  * registering every OpenAPI route at module scope.
  *
  * This entry does the work that genuinely belongs at the edge and forwards the
- * rest to ECS Origin. What it deliberately does NOT do is re-implement any
- * decision the origin already makes. Duplicated auth or quota logic that drifts
- * from the origin's is worse than the round trip it saves: the two would
+ * rest to the Fly Hono origin. What it deliberately does NOT do is re-implement
+ * any decision the origin already makes. Duplicated auth or quota logic that
+ * drifts from the origin's is worse than the round trip it saves: the two would
  * disagree, and the edge would be the one nobody is looking at.
  *
  * So the split is drawn at "needs no business state":
  *   · health and status — no dependencies, and answering them close to the
  *     caller is the point of a health check
  *   · CORS preflight — a static answer that never needs the origin
- *   · per-IP flood limiting — bounded by address alone, no key lookup, no plan
+ *   · per-IP flood limiting — bounded by address alone, no key lookup, no plan,
+ *     counted by Cloudflare's own rate limiting binding
  *
  * Anything keyed on who the caller is (API keys, plans, balances, quotas) stays
  * at the origin, where the logic already lives exactly once.
@@ -28,16 +29,21 @@
 // Worker serves and which one it forwards to. The forwarding target itself is ORIGIN_URL, a
 // wrangler var, precisely so it is not hardcoded here.
 
-interface EdgeEnv {
-  /** Non-proxied origin hostname. Must not be the hostname this Worker serves. */
-  ORIGIN_URL?: string;
-  /** Requests per minute per IP before shedding. */
-  EDGE_IP_RATE_LIMIT?: string;
-  UPSTASH_REDIS_REST_URL?: string;
-  UPSTASH_REDIS_REST_TOKEN?: string;
+/**
+ * Cloudflare's rate limiting binding, declared in wrangler.edge.toml under
+ * `[[ratelimits]]`. Typed here rather than via @cloudflare/workers-types: this
+ * file is the whole Worker and has no other reason to carry that dependency.
+ */
+interface RateLimitBinding {
+  limit(options: { key: string }): Promise<{ success: boolean }>;
 }
 
-const DEFAULT_IP_RATE_LIMIT = 600;
+interface EdgeEnv {
+  /** Origin that is not routed to this Worker. Must not be api.nebutra.com. */
+  ORIGIN_URL?: string;
+  /** Per-IP flood limit. Limit and period live in wrangler.edge.toml. */
+  IP_LIMITER?: RateLimitBinding;
+}
 
 function json(body: unknown, status: number, extra?: HeadersInit): Response {
   return new Response(JSON.stringify(body), {
@@ -47,41 +53,30 @@ function json(body: unknown, status: number, extra?: HeadersInit): Response {
 }
 
 /**
- * Per-IP flood limit, counted in Redis so every colo shares one budget —
- * a per-isolate counter would let each edge location admit the full quota,
- * which is the opposite of a limit.
+ * Per-IP flood limit, counted by Cloudflare's rate limiting binding.
  *
- * Fails open. Redis being unreachable must not take the API down; the origin
- * still has its own per-key limiting, and this exists to shed floods, not to
- * be the only thing standing between the world and the backend.
+ * Until 2026-09-02 this was INCR+EXPIRE against Upstash on every request, so
+ * that every colo shared one budget. That was two billed Redis commands per
+ * request — scanners and bots included — plus a round trip to Redis's region
+ * before the origin fetch could start, and on the invoice it was the bulk of
+ * the Upstash line. The binding counts per Cloudflare location, is eventually
+ * consistent, and is not metered. For shedding floods that is the right trade:
+ * a per-colo limit still bounds any single source, and the per-key limit that
+ * actually protects tenants lives at the origin, where the plan is known.
+ *
+ * Fails open. A missing binding or a failing call must not take the API down;
+ * this sheds floods, it is not the only thing between the world and the backend.
  */
 async function underIpLimit(request: Request, env: EdgeEnv): Promise<boolean> {
-  const url = env.UPSTASH_REDIS_REST_URL;
-  const token = env.UPSTASH_REDIS_REST_TOKEN;
-  if (!url || !token) return true;
+  const limiter = env.IP_LIMITER;
+  if (!limiter) return true;
 
   const ip = request.headers.get("cf-connecting-ip");
   if (!ip) return true;
 
-  const limit = Number.parseInt(env.EDGE_IP_RATE_LIMIT ?? "", 10) || DEFAULT_IP_RATE_LIMIT;
-  const window = Math.floor(Date.now() / 60_000);
-  const key = `edge:ip:${ip}:${window}`;
-
   try {
-    // INCR then EXPIRE, pipelined into one round trip. The window key is
-    // short-lived by construction, so a missed EXPIRE costs one stale key.
-    const res = await fetch(`${url}/pipeline`, {
-      method: "POST",
-      headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
-      body: JSON.stringify([
-        ["INCR", key],
-        ["EXPIRE", key, "120"],
-      ]),
-    });
-    if (!res.ok) return true;
-    const parsed = (await res.json()) as Array<{ result?: number }>;
-    const count = parsed[0]?.result ?? 0;
-    return count <= limit;
+    const { success } = await limiter.limit({ key: ip });
+    return success;
   } catch {
     return true;
   }
@@ -105,24 +100,54 @@ function corsPreflightResponse(request: Request): Response | null {
   });
 }
 
+const DROP_ON_FORWARD = new Set([
+  "host",
+  "connection",
+  "content-length",
+  "transfer-encoding",
+  "cf-connecting-ip",
+  "cf-ray",
+  "cf-visitor",
+  "cf-ipcountry",
+  "x-forwarded-proto",
+  "x-forwarded-for",
+  "x-real-ip",
+]);
+
+/**
+ * Copy caller headers for the origin fetch, except Host.
+ *
+ * Cloning `request.headers` keeps Host: api.nebutra.com. A same-zone
+ * subrequest with that Host is routed back into this Worker, Cloudflare
+ * detects the loop, and the client gets the HTML 502 page — not our JSON.
+ * Auth-edge already strips Host for the same reason. Do not set Host
+ * yourself either: workerd rejects it (Error 1101). fetch() takes Host
+ * from ORIGIN_URL, which must not be a hostname this Worker is routed on.
+ */
+export function buildForwardHeaders(request: Request): Headers {
+  const incoming = new URL(request.url);
+  const headers = new Headers();
+  request.headers.forEach((value, key) => {
+    if (DROP_ON_FORWARD.has(key.toLowerCase())) return;
+    headers.set(key, value);
+  });
+  headers.set("x-forwarded-host", incoming.host);
+  headers.set("x-forwarded-proto", incoming.protocol.replace(":", ""));
+  const clientIp = request.headers.get("cf-connecting-ip");
+  if (clientIp) headers.set("x-forwarded-for", clientIp);
+  return headers;
+}
+
 async function forward(request: Request, originUrl: string): Promise<Response> {
   const incoming = new URL(request.url);
   const target = new URL(originUrl);
   target.pathname = incoming.pathname;
   target.search = incoming.search;
 
-  const headers = new Headers(request.headers);
-  // The origin needs the caller's address and the original host; without these
-  // it sees every request as coming from Cloudflare, which breaks its own
-  // logging, rate limiting, and any host-based routing.
-  headers.set("x-forwarded-host", incoming.host);
-  headers.set("x-forwarded-proto", incoming.protocol.replace(":", ""));
-  const clientIp = request.headers.get("cf-connecting-ip");
-  if (clientIp) headers.set("x-forwarded-for", clientIp);
-
   return fetch(target.toString(), {
     method: request.method,
-    headers,
+    headers: buildForwardHeaders(request),
+    redirect: "manual",
     body: request.method === "GET" || request.method === "HEAD" ? undefined : request.body,
     // Required by workerd when a streaming body is forwarded.
     ...(request.body ? { duplex: "half" } : {}),

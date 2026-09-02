@@ -5,19 +5,21 @@
  *   Full Next OpenNext auth is ~8.5 MiB gzip → Free plan 3 MiB rejects it.
  *   Paying for Workers Paid to run a marketing panel at the edge is the wrong
  *   trade. Google OAuth token exchange + session DB is the only work that
- *   *must* leave China ECS; the sign-in UI can stay on origin.
+ *   must run at the edge; the sign-in UI can stay on a dedicated Next origin.
  *
  * Split (mirrors backends/gateway worker-edge):
  *   · /api/auth/*  → Better Auth + Hyperdrive→PlanetScale (overseas egress)
  *   · /health?probe=google → edge probe (proves Google reachability)
- *   · everything else → ECS origin via cf.resolveOverride (Host unchanged)
+ *   · everything else → the dedicated Fly auth UI origin
  *
  * Same BETTER_AUTH_SECRET + auth_* tables as the Node/Next auth-center so
  * sessions minted here are accepted by app RPs.
  */
 
 import { brand } from "@nebutra/brand/metadata";
+import { createTwilioVerifyProvider } from "@nebutra/sms/twilio-verify";
 import { betterAuth } from "better-auth";
+import { captcha, phoneNumber } from "better-auth/plugins";
 import { Pool } from "pg";
 import { applyEdgeAuthCors } from "./lib/auth-edge-cors";
 import {
@@ -28,6 +30,12 @@ import {
   socialStartToRedirect,
 } from "./lib/auth-edge-oauth";
 import { attachPoolErrorGuard, isPgConnectFailure, withConnectRetry } from "./lib/auth-edge-pool";
+import {
+  isE164PhoneNumber,
+  phoneNumberTempEmail,
+  resolveTwilioVerifyConfig,
+  type TwilioVerifyConfig,
+} from "./lib/phone-login";
 import { applySessionHint } from "./lib/session-hint";
 
 interface HyperdriveBinding {
@@ -36,9 +44,7 @@ interface HyperdriveBinding {
 
 export interface AuthEdgeEnv {
   HYPERDRIVE?: HyperdriveBinding;
-  /** ECS origin IP for UI pass-through (HTTP). */
-  ORIGIN_IP?: string;
-  /** Optional full origin base, e.g. http://106.15.4.31 — preferred over ORIGIN_IP alone. */
+  /** Full origin base for the dedicated auth UI. */
   ORIGIN_URL?: string;
   BETTER_AUTH_SECRET?: string;
   BETTER_AUTH_URL?: string;
@@ -47,6 +53,11 @@ export interface AuthEdgeEnv {
   GOOGLE_CLIENT_SECRET?: string;
   GITHUB_CLIENT_ID?: string;
   GITHUB_CLIENT_SECRET?: string;
+  TWILIO_ACCOUNT_SID?: string;
+  TWILIO_AUTH_TOKEN?: string;
+  TWILIO_VERIFY_SERVICE_SID?: string;
+  TURNSTILE_SECRET?: string;
+  TURNSTILE_SECRET_KEY?: string;
   DATABASE_URL?: string;
   NEXT_PUBLIC_APP_URL?: string;
   NEXT_PUBLIC_SITE_URL?: string;
@@ -84,6 +95,7 @@ const DEFAULT_TRUSTED = [
   `https://${brand.domains.auth}`,
   `https://${brand.domains.forge}`,
   `https://${brand.domains.router}`,
+  `https://${brand.domains.kuanlan}`,
 ] as const;
 
 function json(body: unknown, status = 200, extra?: HeadersInit): Response {
@@ -163,6 +175,28 @@ function requireAuthSecrets(env: AuthEdgeEnv): { secret: string; dbUrl: string }
   return { secret, dbUrl };
 }
 
+interface PhoneAuthConfig {
+  twilio: TwilioVerifyConfig;
+  turnstileSecret: string;
+}
+
+function resolvePhoneAuthConfig(env: AuthEdgeEnv): PhoneAuthConfig | null {
+  const twilio = resolveTwilioVerifyConfig({
+    TWILIO_ACCOUNT_SID: env.TWILIO_ACCOUNT_SID ?? process.env.TWILIO_ACCOUNT_SID,
+    TWILIO_AUTH_TOKEN: env.TWILIO_AUTH_TOKEN ?? process.env.TWILIO_AUTH_TOKEN,
+    TWILIO_VERIFY_SERVICE_SID:
+      env.TWILIO_VERIFY_SERVICE_SID ?? process.env.TWILIO_VERIFY_SERVICE_SID,
+  });
+  const turnstileSecret = (
+    env.TURNSTILE_SECRET ??
+    env.TURNSTILE_SECRET_KEY ??
+    process.env.TURNSTILE_SECRET ??
+    process.env.TURNSTILE_SECRET_KEY ??
+    ""
+  ).trim();
+  return twilio && turnstileSecret ? { twilio, turnstileSecret } : null;
+}
+
 /**
  * Physical table names match Prisma @@map on AuthUser/AuthSession/… so the
  * edge and the Node auth-center share one session store.
@@ -194,6 +228,36 @@ function createAuth(env: AuthEdgeEnv, database: PgDatabase, secret: string): Aut
     env.AUTH_COOKIE_DOMAIN?.trim() ||
     process.env.AUTH_COOKIE_DOMAIN?.trim() ||
     `.${brand.domains.landing}`;
+  const phoneAuth = resolvePhoneAuthConfig(env);
+  const plugins = [];
+  if (phoneAuth) {
+    const twilio = createTwilioVerifyProvider(phoneAuth.twilio);
+    plugins.push(
+      phoneNumber({
+        expiresIn: 300,
+        otpLength: 6,
+        allowedAttempts: 5,
+        phoneNumberValidator: isE164PhoneNumber,
+        sendOTP: async ({ phoneNumber: destination, code }) => {
+          if (!(await twilio.send(destination, code))) {
+            throw new Error("SMS verification could not be started");
+          }
+        },
+        verifyOTP: ({ phoneNumber: destination, code }) => twilio.verify(destination, code),
+        signUpOnVerification: {
+          getTempEmail: phoneNumberTempEmail,
+          getTempName: () => `${brand.name} user`,
+        },
+      }),
+      captcha({
+        provider: "cloudflare-turnstile",
+        secretKey: phoneAuth.turnstileSecret,
+        endpoints: ["/phone-number/send-otp"],
+        expectedAction: "turnstile-spin-v2",
+        allowedHostnames: [brand.domains.auth],
+      }),
+    );
+  }
 
   const instance = betterAuth({
     secret,
@@ -201,6 +265,7 @@ function createAuth(env: AuthEdgeEnv, database: PgDatabase, secret: string): Aut
     trustedOrigins: trustedOrigins(env),
     emailAndPassword: { enabled: true },
     socialProviders,
+    plugins,
     onAPIError: { errorURL: "/sign-in" },
     advanced: {
       crossSubDomainCookies: {
@@ -214,6 +279,8 @@ function createAuth(env: AuthEdgeEnv, database: PgDatabase, secret: string): Aut
       modelName: "auth_users",
       fields: {
         emailVerified: "email_verified",
+        phoneNumber: "phone",
+        phoneNumberVerified: "phone_verified",
         createdAt: "created_at",
         updatedAt: "updated_at",
       },
@@ -353,6 +420,7 @@ async function handleHealth(request: Request, env: AuthEdgeEnv): Promise<Respons
     env.NEXT_PUBLIC_AUTH_URL?.trim() ||
     `${url.protocol}//${url.host}`;
 
+  const phoneAuth = resolvePhoneAuthConfig(env);
   const body: Record<string, unknown> = {
     service: "nebutra-auth-center",
     status: "ok",
@@ -361,12 +429,16 @@ async function handleHealth(request: Request, env: AuthEdgeEnv): Promise<Respons
     role: "login-center-edge",
     deploy: "cloudflare-workers-edge",
     // Bump when shipping edge fixes so /health proves the new script is live.
-    edgeBuild: "2026-08-31-auth-cors",
+    edgeBuild: "2026-09-01-global-phone-auth",
     features: {
       authApi: true,
-      // ORIGIN_URL is the preferred pass-through; ORIGIN_IP alone is legacy.
-      uiPassThrough: Boolean(env.ORIGIN_URL?.trim() || env.ORIGIN_IP?.trim()),
+      uiPassThrough: Boolean(env.ORIGIN_URL?.trim()),
       hyperdrive: Boolean(env.HYPERDRIVE?.connectionString),
+      phoneLogin: {
+        enabled: Boolean(phoneAuth),
+        provider: phoneAuth ? "twilio-verify" : null,
+        captcha: phoneAuth ? "cloudflare-turnstile" : null,
+      },
     },
     oauth: {
       providers: [
@@ -547,21 +619,16 @@ async function handleAuthApi(request: Request, env: AuthEdgeEnv): Promise<Respon
 }
 
 /**
- * UI pass-through to ECS.
- *
- * Never self-fetch https://auth.nebutra.com (loops into this Worker → CF 522).
- * CF terminates TLS; origin is HTTP to ECS (same as Flexible SSL), with Host +
- * X-Forwarded-Proto so nginx can serve without 301→https bounce.
- *
- * ORIGIN_URL optional (e.g. http://106.15.4.31). Defaults to http://ORIGIN_IP.
- */
-/**
- * UI → ECS via grey-cloud origin.nebutra.com (gateway-edge pattern).
- * Never Host=auth.nebutra.com on fetch (CF 1003). Never self-fetch (522 loop).
- * Nginx routes X-Nebutra-Edge-Auth: 1 → nebutra_auth.
+ * UI pass-through to the dedicated auth origin.
+ * Never self-fetch the canonical auth domain (`brand.domains.auth`) because that loops into this
+ * Worker. The auth UI must not share the gateway origin: moving that hostname
+ * between runtimes previously sent /sign-in to Hono and returned JSON 404s.
  */
 async function forwardToOrigin(request: Request, env: AuthEdgeEnv): Promise<Response> {
-  const originBase = env.ORIGIN_URL?.trim() || `https://${brand.domains.origin}`;
+  const originBase = env.ORIGIN_URL?.trim();
+  if (!originBase) {
+    return json({ error: "ORIGIN_URL is required" }, 502);
+  }
   let base: URL;
   try {
     base = new URL(originBase);
