@@ -32,6 +32,7 @@ export const FONT_REGISTRY: Record<string, string> = {
   "inter tight": "--font-reg-inter-tight",
   "space grotesk": "--font-space-grotesk",
   "playfair display": "--font-playfair-display",
+  fraunces: "--font-reg-fraunces",
   "source serif 4": "--font-reg-source-serif-4",
   "jetbrains mono": "--font-jetbrains-mono",
   manrope: "--font-reg-manrope",

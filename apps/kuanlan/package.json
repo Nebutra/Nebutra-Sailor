@@ -25,7 +25,9 @@
   "dependencies": {
     "@nebutra/auth": "workspace:*",
     "@nebutra/brand": "workspace:*",
+    "@nebutra/fonts": "workspace:*",
     "@nebutra/storage": "workspace:*",
+    "@nebutra/tokens": "workspace:*",
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",

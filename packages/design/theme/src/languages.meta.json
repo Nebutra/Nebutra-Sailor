@@ -68,12 +68,13 @@
       "tagline": "paper surfaces, muted ink"
     },
     "cosmos": {
-      "description": "Light-first gallery canvas; Ink pill CTA ≠ acid-lime brand-mark (spark only, never a fill); 14px tiles + 999px search/CTA; elevation=none.",
+      "description": "Linen gallery canvas with a monochrome chrome: the filled Ink button and the brand mark are the same colour, there is no accent role at all. One 16px radius everywhere, zero elevation, serif display at weight 350.",
       "proves": [
-        "action ≠ brand-mark (ink pill vs lime spark)",
-        "gallery canvas ≠ white chrome (paper vs pure white)",
-        "elevation=none + 14px tiles + 999px pills",
-        "dual-mode light-first (dark inverts the gallery)"
+        "monochrome chrome (action ≡ brand-mark, no accent role)",
+        "single-radius system (16px everywhere; 9999px only for the floating nav)",
+        "elevation=none by contract (flat surfaces, contrast-only depth)",
+        "serif display below weight 400 (headingWeight 350)",
+        "light-first dual mode (dark inverts the gallery)"
       ],
       "tagline": "images sit; chrome recedes"
     }
