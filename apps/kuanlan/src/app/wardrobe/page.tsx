@@ -13,7 +13,7 @@ export default function WardrobePage() {
       line="衣柜里挂的是衣服。拍什么，是下一件事。"
     >
       {pieces.length ? (
-        <div className="masonry" data-ground="paper">
+        <div className="masonry" data-ground="smoke">
           {pieces.map((piece) => (
             <Link
               key={piece.id}
