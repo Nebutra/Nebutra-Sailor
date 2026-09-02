@@ -69,7 +69,23 @@ in a transaction, connection use, and tables with no retention policy.
 ### What actually bills
 
 Commands, not gigabytes. `maxmemory` is 3 GB and enforced by the provider, so
-memory cannot run away — `total_commands_processed` is the meter.
+memory cannot run away — `total_commands_processed` is the meter. PING, INFO
+and the other operational commands are not charged, so health checks are free;
+everything on the request path is not.
+
+### Commands per request, and what was removed
+
+| Where | Commands | Since |
+| --- | --- | --- |
+| Edge Worker, every `api.nebutra.com` request | ~~INCR+EXPIRE = 2~~ → **0** | 2026-09-02: the per-IP flood limit is Cloudflare's rate limiting binding (`[[ratelimits]]` in `wrangler.edge.toml`), not metered, no Redis credentials at the edge |
+| Origin, authenticated `/api/v1/*` | rate limit GET+SET = 2, metering INCR+EXPIRE = 2 | see `backends/gateway/src/middlewares/` |
+| Origin, each AI completion | +5 (api-key, balance ×2, pricing, spend EVAL) + 1 DEL, +2 EVAL per circuit-breaker call, +1 QStash message | `packages/platform/gateway-core` |
+
+The edge line was the expensive one: it ran for scanners and bots as much as
+for customers, and each call was also a round trip to Redis's region before
+the origin fetch could start. The binding counts per Cloudflare location and
+is eventually consistent, which is the right shape for shedding floods; the
+per-key limit that protects tenants stays at the origin.
 
 Audit with:
 
