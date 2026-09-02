@@ -55,6 +55,22 @@ describe("Vercel spend: one build per commit, built on GitHub, kuanlan stays Git
     expect(pushPaths?.[1]).not.toMatch(/^\s+- "pnpm-lock\.yaml"/m);
   });
 
+  it("skips a non-main branch when run the way Vercel runs it (inside the Root Directory, no git)", () => {
+    // Vercel executes the Ignored Build Step with cwd = the project's Root
+    // Directory and no usable git checkout. The script used to derive the repo
+    // root from `git rev-parse` with a `pwd` fallback, which resolved to
+    // apps/landing itself; "$REPO_ROOT/apps/landing" then did not exist and the
+    // unknown-directory branch built every deployment. Every Vercel build log
+    // from 2026-08-26 to 2026-09-02 carried "→ Building to avoid a false skip."
+    const result = execFileSync("bash", ["../../scripts/vercel-ignore-build.sh", "apps/landing"], {
+      cwd: resolve(repoRoot, "apps/landing"),
+      encoding: "utf8",
+      env: { ...process.env, GIT_DIR: "/nonexistent", VERCEL_GIT_COMMIT_REF: "feature/anything" },
+    });
+    expect(result).toContain("Non-main ref 'feature/anything' — skip");
+    expect(result).not.toContain("Building to avoid a false skip");
+  });
+
   it("does not treat kuanlan as an ECS-optional skip", () => {
     const script = readText("scripts/vercel-ignore-build.sh");
     expect(script).toContain("apps/kuanlan");

@@ -32,7 +32,14 @@
 set -euo pipefail
 
 APP_DIR="${1:?Usage: $0 <app-dir>  e.g. apps/web}"
-REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+# The repository root is this script's parent directory. It used to be
+# `git rev-parse --show-toplevel || pwd`; Vercel runs the Ignored Build Step
+# inside the project's Root Directory (apps/<name>) where that git call fails,
+# so REPO_ROOT became apps/<name>, "$REPO_ROOT/apps/<name>" did not exist, and
+# the unknown-directory branch below built every deployment — production and
+# every branch preview, on every project, from the day this file landed.
+# Every Vercel build log carried the line "→ Building to avoid a false skip."
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 COMMIT_REF="${VERCEL_GIT_COMMIT_REF:-}"
 AUTHOR_LOGIN="${VERCEL_GIT_COMMIT_AUTHOR_LOGIN:-}"
 COMMIT_MSG="$(git -C "$REPO_ROOT" log -1 --pretty=%B 2>/dev/null || true)"

@@ -8,6 +8,55 @@ All of this is owned in git. There is no Dashboard ritual.
 Fly tokens that appeared in chat were revoked. New Fly credentials, when the
 origin slice needs them, go in GitHub `FLY_API_TOKEN` or `fly auth` only.
 
+## What the invoices actually said (2026-09-02 audit)
+
+Read from `GET /v1/invoices` with the owner's CLI token. Two usage invoices
+in the period that started 2026-08-23, each cut when accrued usage crossed
+$100:
+
+| Invoice | Total | Build CPU Minutes | Everything else combined |
+| --- | --- | --- | --- |
+| 2026-08-28 | $100.05 | $99.39 (33,998 CPU-min cumulative) | $0.66 |
+| 2026-09-01 | $101.49 | $99.79 (62,510 CPU-min cumulative) | $1.70 |
+
+Web Analytics events, Speed Insights, functions, ISR, image optimization and
+bandwidth were pennies. One seat. No marketplace add-ons, stores or domains.
+The bill is build CPU minutes, at about $22 a day, and two things made it:
+
+1. **Turbo build machines.** Vercel's elastic machine selection promoted
+   `nebutra-landing` and `nebutra-web` to `turbo` (30 vCPU) on 2026-08-20/22
+   with reason `long-build-duration`. Build CPU minutes bill per vCPU, so a
+   turbo minute costs 7.5× a standard one. Of the ~45,000 CPU-minutes the
+   deployments API accounts for since 2026-08-19, 96% were those two projects.
+   The same minutes on `standard` would have been about $26 instead of $158.
+2. **The ignore script never skipped anything.** Every Vercel build log from
+   the day `scripts/vercel-ignore-build.sh` landed carried
+   `→ Building to avoid a false skip.` Vercel runs the Ignored Build Step
+   inside the Root Directory with no usable git checkout; the script derived
+   the repo root from `git rev-parse … || pwd`, got `apps/landing`, looked for
+   `apps/landing/apps/landing`, and took the fail-open branch. Every branch
+   push built a preview on every Git-linked project — 164 landing previews,
+   98 web, 101 auth in 30 days. Fixed on 2026-09-02: the root is now the
+   script's own parent directory, and the architecture test runs the script
+   the way Vercel does.
+
+Repo-side settings (`vercel.json`, the ignore script) only protect branches
+that contain them; a stale branch keeps the behaviour it was cut with. The
+project-level settings below apply to every branch and are the real lock:
+
+| Project | Build machine | Dashboard Ignored Build Step |
+| --- | --- | --- |
+| `nebutra-landing` | `standard` (builds run on GitHub anyway) | `exit 0` — ships only from the workflow |
+| `nebutra-web` | `standard` | `exit 0` — production is Fly |
+| `nebutra-auth` | `standard` | `exit 0` — production is the edge Worker + Fly |
+| `docs` | `standard` | script (CLI-only, not Git-linked) |
+| `nebutra-kuanlan` | `standard` | script — the only project meant to Git-deploy |
+
+Set them with `PATCH /v9/projects/{id}` (`resourceConfig.buildMachineType`,
+`commandForIgnoringBuildStep`) or in the dashboard. Re-check
+`resourceConfig.buildMachineSelection` after any long build: `elastic` means
+Vercel may promote the machine again.
+
 ## Why the bill moves
 
 Vercel meters build minutes. Two things spend them: a remote build the Git
