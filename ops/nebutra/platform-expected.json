@@ -1,0 +1,67 @@
+{
+  "$comment": "Provider state that lives only in a dashboard, declared so scripts/ops/platform-reconcile.mjs can check it daily. Schema: ops/README.md. Checked by .github/workflows/platform-reconcile.yml.",
+  "version": 1,
+  "vercel": {
+    "projects": [
+      {
+        "name": "nebutra-landing",
+        "buildMachineType": "standard",
+        "ignoreBuildStep": "exit 0",
+        "gitLinked": false,
+        "envNotSensitive": {
+          "production": ["NEXT_PUBLIC_SITE_URL", "DOCS_ORIGIN_URL", "NEXT_PUBLIC_API_URL"]
+        }
+      },
+      {
+        "name": "nebutra-web",
+        "buildMachineType": "standard",
+        "ignoreBuildStep": "exit 0"
+      },
+      {
+        "name": "nebutra-auth",
+        "buildMachineType": "standard",
+        "ignoreBuildStep": "exit 0"
+      },
+      {
+        "name": "docs",
+        "buildMachineType": "standard"
+      },
+      {
+        "name": "nebutra-kuanlan",
+        "buildMachineType": "standard"
+      }
+    ]
+  },
+  "fly": {
+    "apps": [
+      {
+        "name": "nebutra-gateway",
+        "secretsPresent": [
+          "QSTASH_TOKEN",
+          "QSTASH_CURRENT_SIGNING_KEY",
+          "QSTASH_NEXT_SIGNING_KEY",
+          "QUEUE_PROVIDER",
+          "QSTASH_CALLBACK_BASE_URL",
+          "UPSTASH_REDIS_REST_URL",
+          "UPSTASH_REDIS_REST_TOKEN"
+        ],
+        "secretsAbsent": ["CACHE_BACKEND", "REDIS_URL", "ALLOW_MEMORY_QUEUE_IN_PRODUCTION"]
+      }
+    ]
+  },
+  "github": {
+    "repo": "Nebutra/Nebutra-Sailor",
+    "variables": {
+      "DEPLOY_TARGET_SAILOR_DOCS": "fly",
+      "DEPLOY_TARGET_GATEWAY": "cloudflare-workers"
+    }
+  },
+  "cloudflare": {
+    "workers": [
+      {
+        "name": "nebutra-gateway-edge",
+        "bindings": [{ "name": "IP_LIMITER", "type": "ratelimit" }]
+      }
+    ]
+  }
+}

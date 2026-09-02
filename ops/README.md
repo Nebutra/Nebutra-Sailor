@@ -1,0 +1,147 @@
+# ops — declared provider state
+
+Some production settings live only in a provider dashboard: which build machine
+Vercel picked, whether an env var is flagged Sensitive, which secrets a Fly app
+carries, what a Cloudflare Worker is bound to, which deploy target a GitHub
+variable selects. Git cannot see them, so a change there is invisible until it
+costs money or breaks a deploy.
+
+This directory declares those settings per brand. A read-only engine compares
+the declaration with what each provider reports and exits non-zero on drift.
+
+```text
+ops/
+  README.md                          this file — the schema
+  <brand>/platform-expected.json     one declaration per brand
+scripts/ops/platform-reconcile.mjs   the engine (Node 22, no dependencies)
+.github/workflows/platform-reconcile.yml   runs it daily; a failed run is the alert
+```
+
+`ops/` sits at the repository root rather than under `infra/ops/` because it
+holds one directory per brand — what a brand expects from its providers — while
+`infra/ops/` holds scripts that act on infrastructure. A second brand adds
+`ops/<brand>/`, not a file among the scripts. The `create-sailor` scaffold has
+one brand and ships the example as `infra/ops/platform-expected.example.json`.
+
+## Run
+
+```bash
+node scripts/ops/platform-reconcile.mjs ops/<brand>/platform-expected.json
+node scripts/ops/platform-reconcile.mjs ops/<brand>/platform-expected.json --strict
+node scripts/ops/platform-reconcile.mjs ops/<brand>/platform-expected.json --only=vercel,fly --json
+```
+
+| Environment | Used for | Without it |
+| --- | --- | --- |
+| `VERCEL_TOKEN` + `VERCEL_ORG_ID` (or `VERCEL_TEAM_ID`) | Vercel projects and env types | Vercel rows are `skipped` |
+| `FLY_API_TOKEN` + `flyctl` on PATH | `flyctl secrets list --json` | Fly rows are `skipped` |
+| `PLATFORM_RECONCILE_GITHUB_VARS` (JSON object) or an authenticated `gh` | GitHub repository variables | GitHub rows are `skipped` |
+| `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` | Worker bindings via `GET /workers/scripts/{name}/settings` | Cloudflare rows are `skipped` |
+
+Every row ends in one of four states:
+
+| Status | Meaning | Exit code |
+| --- | --- | --- |
+| `ok` | provider agrees with the declaration | 0 |
+| `drift` | provider disagrees | 1 |
+| `skipped` | could not ask — no token, tool not installed, token lacks the scope | 0, or 1 with `--strict` |
+| `error` | asked and got no usable answer — network, unparseable output | 1 |
+
+The scheduled workflow runs with `--strict`, so a secret that vanishes from the
+repository is noticed the same way a changed setting is. Locally, without
+tokens, the engine prints every row as `skipped: no <TOKEN>` and exits 0.
+
+Inside GitHub Actions the engine also emits `::error::` annotations per drift
+and appends the table to the job summary.
+
+## What it never does
+
+- Write. Every call is a GET or a `list`. Fixing drift is a human decision made
+  in the dashboard or the CLI — the engine only says where.
+- Print a secret value. Fly returns names and digests; only names are kept.
+  Vercel env entries are read for `key`, `type` and `target`; the `value` field
+  is never touched. GitHub variables are configuration, not secrets, by
+  GitHub's own definition, and their values are compared and printed.
+
+## Schema
+
+`version` is `1`. Every provider section is optional; every check inside a
+target is optional. Declare what has bitten you and grow the file from there.
+
+```json
+{
+  "version": 1,
+  "vercel": {
+    "teamId": "team_…  (optional; VERCEL_ORG_ID / VERCEL_TEAM_ID otherwise)",
+    "projects": [
+      {
+        "name": "project-name",
+        "buildMachineType": "standard",
+        "ignoreBuildStep": "exit 0",
+        "gitLinked": false,
+        "envNotSensitive": { "production": ["NEXT_PUBLIC_SITE_URL"] }
+      }
+    ]
+  },
+  "fly": {
+    "apps": [
+      { "name": "app-name", "secretsPresent": ["QUEUE_PROVIDER"], "secretsAbsent": ["REDIS_URL"] }
+    ]
+  },
+  "github": {
+    "repo": "owner/name  (optional; GITHUB_REPOSITORY otherwise)",
+    "variables": { "DEPLOY_TARGET_GATEWAY": "cloudflare-workers" }
+  },
+  "cloudflare": {
+    "accountId": "(optional; CLOUDFLARE_ACCOUNT_ID otherwise)",
+    "workers": [
+      { "name": "worker-name", "bindings": [{ "name": "IP_LIMITER", "type": "ratelimit" }] }
+    ]
+  }
+}
+```
+
+### vercel.projects[]
+
+| Key | Compared with | Why declare it |
+| --- | --- | --- |
+| `buildMachineType` | `resourceConfig.buildMachineType` from `GET /v9/projects/{name}` | Vercel's elastic selection promotes a slow build to `turbo`, which bills 7.5× per minute. An unset value reports as `(unset)`, which is drift on purpose: unset means elastic. |
+| `ignoreBuildStep` | `commandForIgnoringBuildStep` | The project-level Ignored Build Step applies to every branch; `vercel.json` only protects branches that contain it. |
+| `gitLinked` | whether `link` is present | A Git link opens a remote build per push. Declare `false` for projects that ship prebuilt from CI, `true` for the ones that must stay linked. |
+| `envNotSensitive.<target>[]` | `type` of each listed key on that target from `GET /v10/projects/{name}/env` | A Sensitive variable cannot be pulled, so `vercel pull` writes it empty and a CI build dies on `new URL("")`. A key missing from the target is also drift. |
+
+### fly.apps[]
+
+| Key | Compared with | Why declare it |
+| --- | --- | --- |
+| `secretsPresent[]` | names from `flyctl secrets list -a <app> --json` | The runtime refuses to start, or falls back to something unsafe, without them. |
+| `secretsAbsent[]` | same | Secrets copied from an older host select a backend the app must not use. |
+
+### github.variables
+
+Name → expected value. In the workflow the engine reads the variables from
+`PLATFORM_RECONCILE_GITHUB_VARS`, which the workflow fills with `toJSON(vars)`,
+so no token needs permission on the Variables API. Locally it shells out to
+`gh variable get <name> -R <repo>`.
+
+### cloudflare.workers[]
+
+`bindings[]` names a binding that must exist on the deployed Worker; `type` is
+optional and, when given, must match (`ratelimit`, `kv_namespace`, `d1`, …). The
+token needs Workers Scripts read; with less it reports `skipped` and says so.
+
+## Adding a brand
+
+1. `mkdir ops/<brand>` and write `platform-expected.json` from the schema above.
+2. Run the engine locally with whatever tokens you hold; fix the declaration
+   until it matches reality, or fix reality.
+3. Point a scheduled workflow at the file with `--strict`.
+
+`packages/ops/create-sailor/templates/infra/ops/platform-expected.example.json`
+is the scaffold copy of this schema.
+
+The live declarations are the brand directories beside this file
+(`ops/<brand>/platform-expected.json`). They and the scheduled workflow stay in
+this repository: `.templateignore` strips them from the `create-sailor` mirror,
+so a scaffold starts from the example above rather than from another brand's
+names.

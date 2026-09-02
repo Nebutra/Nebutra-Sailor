@@ -99,6 +99,10 @@ const MUST_STRIP = [
   ".github/workflows/deploy-new-api-fly.yml",
   ".github/workflows/deploy-dns-leak-fly.yml",
   ".github/workflows/sync-subrepo-mirrors.yml",
+  // Declared provider state + its daily reconcile name Nebutra's projects/apps
+  "ops/nebutra",
+  ".github/workflows/platform-reconcile.yml",
+  "tests/architecture/platform-reconcile.test.ts",
 ];
 
 type Matcher = ReturnType<typeof ignore>;
