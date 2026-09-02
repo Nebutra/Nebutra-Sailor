@@ -1,0 +1,42 @@
+{
+  "name": "@nebutra/kuanlan",
+  "version": "0.1.0",
+  "private": true,
+  "description": "KUANLAN 观澜 — AI personal presence platform",
+  "nebutra": {
+    "status": "wip",
+    "graph": "labs",
+    "productionReady": false
+  },
+  "scripts": {
+    "dev": "next dev --port 3120",
+    "build": "next build",
+    "start": "next start --port 3120",
+    "lint": "biome check .",
+    "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "samples:compose": "tsx scripts/compose-sku-samples.ts",
+    "samples:shoot": "tsx scripts/shoot-sku-sample.ts",
+    "assets:seed": "tsx scripts/seed-catalog-assets.ts"
+  },
+  "dependencies": {
+    "@nebutra/auth": "workspace:*",
+    "@nebutra/brand": "workspace:*",
+    "@nebutra/storage": "workspace:*",
+    "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "sharp": "^0.35.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "license": "AGPL-3.0-only"
+}

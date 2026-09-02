@@ -4,6 +4,7 @@ import {
   getAuthCenterOrigin,
   getConfiguredAuthProvider,
 } from "@nebutra/auth";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { logger } from "@nebutra/logger";
 import type { NextFetchEvent, NextRequest } from "next/server";
 import { NextResponse } from "next/server";
@@ -89,7 +90,7 @@ function buildCsp(nonce: string): string {
     "default-src 'self'",
     `script-src ${scriptSrc}`,
     `style-src ${styleSrc}`,
-    `img-src 'self' data: blob: ${clerkImg.join(" ")}`,
+    `img-src 'self' data: blob: ${getBrandOrigin("cdn")} ${clerkImg.join(" ")}`,
     "font-src 'self' data:",
     `connect-src 'self' ${clerkConnect.join(" ")}`,
     `frame-src ${clerkFrame.join(" ") || "'none'"}`,

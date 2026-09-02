@@ -1,0 +1,8 @@
+FROM node:22-alpine@sha256:16e22a550f3863206a3f701448c45f7912c6896a62de43add43bb9c86130c3e2
+WORKDIR /app
+ENV NODE_ENV=production
+COPY package.json ./
+COPY src ./src
+# Port 53 needs root in the container (same as setcap on the ECS box).
+EXPOSE 53/udp 53/tcp
+CMD ["node", "--experimental-strip-types", "--no-warnings=ExperimentalWarning", "src/cli.ts"]

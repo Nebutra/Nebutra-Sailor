@@ -1,3 +1,4 @@
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import type { BlogPostWithSource, ResolvedBlogCover } from "./types";
 
 export type BlogCover = {
@@ -5,22 +6,31 @@ export type BlogCover = {
   src: string;
 };
 
-export const DEFAULT_BLOG_COVER = "/images/blog/covers/nebutra-default.png";
+function landingCoverSrc(file: string): string {
+  const origin = (
+    process.env.NEXT_PUBLIC_R2_PUBLIC_URL ||
+    process.env.R2_PUBLIC_URL ||
+    getBrandOrigin("cdn")
+  ).replace(/\/+$/, "");
+  return `${origin}/landing/images/blog/covers/${file}`;
+}
+
+export const DEFAULT_BLOG_COVER = landingCoverSrc("nebutra-default.png");
 
 export const BLOG_COVER_BY_TRANSLATION_KEY: Record<string, string> = {
-  "nebutra-sailor-why-exists": "/images/blog/covers/nebutra-sailor-exists.png",
-  "why-nebutra-sailor-exists": "/images/blog/covers/nebutra-sailor-exists.png",
-  "why-we-build-nebutra": "/images/blog/covers/why-we-build-nebutra.png",
-  "founder-top-design-nine-layers": "/images/blog/covers/founder-top-design-nine-layers.png",
+  "nebutra-sailor-why-exists": landingCoverSrc("nebutra-sailor-exists.png"),
+  "why-nebutra-sailor-exists": landingCoverSrc("nebutra-sailor-exists.png"),
+  "why-we-build-nebutra": landingCoverSrc("why-we-build-nebutra.png"),
+  "founder-top-design-nine-layers": landingCoverSrc("founder-top-design-nine-layers.png"),
 };
 
 export const BLOG_COVER_BY_SLUG: Record<string, string> = {
-  "why-nebutra-sailor-exists": "/images/blog/covers/nebutra-sailor-exists.png",
-  "why-nebutra-sailor-exists-zh": "/images/blog/covers/nebutra-sailor-exists.png",
-  "why-we-build-nebutra": "/images/blog/covers/why-we-build-nebutra.png",
-  "why-we-build-nebutra-zh": "/images/blog/covers/why-we-build-nebutra.png",
-  "founder-top-design-nine-layers": "/images/blog/covers/founder-top-design-nine-layers.png",
-  "founder-top-design-nine-layers-zh": "/images/blog/covers/founder-top-design-nine-layers.png",
+  "why-nebutra-sailor-exists": landingCoverSrc("nebutra-sailor-exists.png"),
+  "why-nebutra-sailor-exists-zh": landingCoverSrc("nebutra-sailor-exists.png"),
+  "why-we-build-nebutra": landingCoverSrc("why-we-build-nebutra.png"),
+  "why-we-build-nebutra-zh": landingCoverSrc("why-we-build-nebutra.png"),
+  "founder-top-design-nine-layers": landingCoverSrc("founder-top-design-nine-layers.png"),
+  "founder-top-design-nine-layers-zh": landingCoverSrc("founder-top-design-nine-layers.png"),
 };
 
 export function getFallbackBlogCover(

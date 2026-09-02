@@ -1,14 +1,15 @@
 /**
  * Router product sub-brand mark — raster asset (no hand-written SVG).
- * Source: apps/router/public/product/router-repeater.png (committed, not brand:sync).
+ * Seed: apps/router/public/product/router-repeater.png. Browser src is CDN.
  */
+import { publicAssetUrl } from "@nebutra/brand/metadata-helpers";
 import { cn } from "@nebutra/ui/utils";
 
 export function RouterMark({ className }: { className?: string }) {
   return (
     <span className={cn("inline-flex shrink-0 items-center", className)}>
       <img
-        src="/product/router-repeater.png"
+        src={publicAssetUrl("router/product/router-repeater.png")}
         alt=""
         width={256}
         height={256}

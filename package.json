@@ -81,6 +81,7 @@
     "clean": "turbo run clean && rm -rf node_modules",
     "clean:deps": "knip",
     "brand:sync": "pnpm --filter @nebutra/brand sync",
+    "assets:seed": "tsx scripts/seed-cdn-assets.ts",
     "brand:init": "tsx scripts/brand-init.ts",
     "brand:apply": "tsx scripts/brand-apply.ts",
     "brand:palette": "node scripts/generate-palette.mjs",

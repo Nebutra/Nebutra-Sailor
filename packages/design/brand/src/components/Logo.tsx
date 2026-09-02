@@ -1,6 +1,7 @@
 "use client";
 
 import { brand } from "../metadata";
+import { publicAssetUrl } from "../metadata-helpers";
 
 export type LogoVariant =
   | "color"
@@ -72,13 +73,16 @@ export interface LogoProps {
 }
 
 /**
- * Resolve the public path for a logo variant + edition combination.
+ * Resolve the CDN object for a logo variant + edition combination.
  * Mono combination variants always route to the compliant directory.
+ * `public/` copies from `pnpm brand:sync` stay as seed, not consumption.
  */
-function getLogoPath(variant: LogoVariant, edition: LogoEdition): string {
+export function logoPublicSrc(variant: LogoVariant, edition: LogoEdition): string {
   const dir =
-    edition === "compliant" || COMPLIANT_ONLY_VARIANTS.has(variant) ? "/brand-compliant" : "/brand";
-  return `${dir}/logo-${variant}.svg`;
+    edition === "compliant" || COMPLIANT_ONLY_VARIANTS.has(variant)
+      ? "brand/logo-compliant"
+      : "brand/logo";
+  return publicAssetUrl(`${dir}/logo-${variant}.svg`);
 }
 
 /**
@@ -106,7 +110,8 @@ const ASPECT_RATIOS: Record<LogoVariant, number> = {
  * Nebutra Logo Component
  *
  * Renders the official Nebutra brand logo from SVG assets (fixed VI fills).
- * Assets are synced to apps via `pnpm brand:sync`.
+ * Browser src is `https://cdn.nebutra.com/brand/logo{,-compliant}/…`.
+ * `pnpm brand:sync` still copies seed files into each app `public/`.
  *
  * For product chrome that must recolor with Brand Package skins (roles.brand),
  * prefer LogomarkSVG / LogoEnSVG with default `text-brand-mark` instead of
@@ -133,7 +138,7 @@ export function Logo({
 }: LogoProps) {
   const aspectRatio = ASPECT_RATIOS[variant];
   const height = Math.round(size / aspectRatio);
-  const src = getLogoPath(variant, edition);
+  const src = logoPublicSrc(variant, edition);
 
   // For dark backgrounds, invert black to white
   const filterStyle = inverted ? { filter: "brightness(0) invert(1)" } : {};
@@ -173,7 +178,7 @@ export function Logomark({
   edition?: LogoEdition;
   inverted?: boolean;
 }) {
-  const src = getLogoPath(variant, edition);
+  const src = logoPublicSrc(variant, edition);
 
   // For dark backgrounds, invert black to white (unless using "inverse" variant which is already white)
   const filterStyle =
@@ -212,7 +217,7 @@ export function Wordmark({
 }) {
   const aspectRatio = ASPECT_RATIOS[variant];
   const height = Math.round(size / aspectRatio);
-  const src = getLogoPath(variant, edition);
+  const src = logoPublicSrc(variant, edition);
 
   const filterStyle = inverted ? { filter: "brightness(0) invert(1)" } : {};
 

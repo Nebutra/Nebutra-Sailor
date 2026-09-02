@@ -170,6 +170,15 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     note: "Replaced design-docs at the design hostname. Deploy service id is still design-docs.",
   },
   {
+    id: "@nebutra/kuanlan",
+    label: "Kuanlan",
+    domainKey: "kuanlan",
+    pm2Name: "kuanlan",
+    port: 3120,
+    runtime: "ecs-pm2",
+    note: "观澜. Production is Fly Singapore; ECS PM2 is rollback only.",
+  },
+  {
     id: "@nebutra/typelens",
     label: "Type Lens",
     runtime: "vercel",

@@ -26,6 +26,8 @@ Use these files as the canonical source before editing behavior:
 - `next.config.ts` for app runtime configuration
 - `src/lib/landing-content` and other app-local content orchestrators for copy
   and marketing composition
+- `src/lib/public-assets.ts` for marketing stills. Browser URLs are
+  `https://cdn.nebutra.com/landing/…` on `nebutra-assets`. `public/` is seed.
 
 Do not treat `README.md`, `.next/`, or translated build output as implementation
 truth.

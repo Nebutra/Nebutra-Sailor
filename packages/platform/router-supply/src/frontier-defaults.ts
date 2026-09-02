@@ -14,6 +14,7 @@ export const ROUTER_PUBLIC_MODEL_IDS: readonly string[] = [
   "gpt-5.6-luna",
   "gpt-5.6-terra",
   "gpt-5.6-sol",
+  "gpt-image-2",
   "claude-sonnet-5",
   "claude-fable-5",
   "claude-opus-4.8",

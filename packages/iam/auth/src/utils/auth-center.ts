@@ -124,10 +124,12 @@ export function getAuthReturnAllowedHosts(
   hosts.add("localhost:3100");
   hosts.add("localhost:3106");
   hosts.add("localhost:3105");
+  hosts.add("localhost:3120");
   hosts.add("app.nebutra.com");
   hosts.add("auth.nebutra.com");
   hosts.add("router.nebutra.com");
   hosts.add("forge.nebutra.com");
+  hosts.add("kuanlan.nebutra.com");
   hosts.add("nebutra.com");
 
   return Array.from(hosts);

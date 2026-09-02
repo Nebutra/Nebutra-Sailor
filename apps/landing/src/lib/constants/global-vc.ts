@@ -5,6 +5,7 @@
  * same `<VcDirectory>` as the China directory.
  */
 
+import { landingPublicSrc } from "@/lib/public-assets";
 import profiles from "./global-vc-profiles.json";
 import type { VcOrg } from "./vc";
 
@@ -479,14 +480,14 @@ export const GLOBAL_VC_REGIONS = uniqueOrdered(
   GLOBAL_VC_ORGS.map((o) => o.region).filter((r): r is string => Boolean(r)),
 );
 
-/** Ids with a curated local logo at `/logos/vc-global/<id>.png`. */
+/** Ids with a curated logo on the public CDN. */
 export const GLOBAL_VC_LOGO_IDS: ReadonlySet<number> = new Set<number>([
   1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 21, 22, 23, 24, 26, 27, 28, 29,
   30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44,
 ]);
 
 export function globalVcLogoFor(org: VcOrg): string | null {
-  return GLOBAL_VC_LOGO_IDS.has(org.id) ? `/logos/vc-global/${org.id}.png` : null;
+  return GLOBAL_VC_LOGO_IDS.has(org.id) ? landingPublicSrc(`logos/vc-global/${org.id}.png`) : null;
 }
 
 const GLOBAL_BY_ID = new Map(GLOBAL_VC_ORGS.map((o) => [o.id, o]));
