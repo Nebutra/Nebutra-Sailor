@@ -1,0 +1,639 @@
+name: Deploy Vercel
+
+# Every Vercel-hosted app ships from this one workflow. The build runs here, on
+# GitHub's runners (free for this public repository), and Vercel receives the
+# finished `.vercel/output` through `vercel deploy --prebuilt`, so Vercel meters
+# no build minutes for any of them.
+#
+# The matrix is keyed by app. A push to main deploys `landing` only — its path
+# filter is below and nothing else auto-deploys; every other app is
+# workflow_dispatch with `app:` chosen by the operator. The per-app table lives
+# in the `plan` job: Vercel project names to resolve, Root Directory, the
+# domain to attach (if any), the production host that answers the smoke, and
+# for carina the external repository it builds from.
+#
+#   landing  nebutra.com          push + dispatch   production is Vercel
+#   web      app.nebutra.com      dispatch only     production DNS is ECS/Fly
+#   auth     auth.nebutra.com     dispatch only     production is CF Worker + Fly
+#   pebble   pebble.nebutra.com   dispatch only     production is ECS PM2
+#   kuanlan  kuanlan.nebutra.com  dispatch only     production is Fly sin
+#   carina   (Nebutra/carina)     dispatch only     production is Fly; legacy
+#   docs     (apps/sailor-docs)   dispatch only     production is Fly
+#
+# The Git integration is switched off on the projects that ship from here
+# (`git.deploymentEnabled: false` in the app's vercel.json). Before that, a
+# main push that touched packages/design/ui opened a remote build through the
+# Git integration *and* a second one from the landing workflow, and a nightly
+# unconditional redeploy — a retry left over from the Hobby daily cap —
+# rebuilt an unchanged site every evening. Those two were most of the landing
+# line on the Vercel bill. The ignoreCommand in each vercel.json stays for the
+# day the integration is re-enabled.
+#
+# History: the landing project's dashboard Root Directory once pointed at the
+# renamed apps/landing-page and every build failed before compiling; the cause
+# lived in Vercel, not the repository. The reconcile step still corrects that
+# setting from CI before deploying so the same drift cannot silently stop
+# deployments of any app.
+#
+# workflow_dispatch with `promote: false` builds and uploads a preview URL only.
+# By default that dry run still builds with the *production* environment
+# variables, so it rehearses exactly what the next promotion will ship;
+# `environment: preview` builds with the preview set instead.
+#
+# A refused upload fails the job for every app. The old per-app workflows let
+# web, auth, pebble and carina go green on a Hobby quota refusal; without a
+# nightly retry that is a silent loss, and an operator running a dispatch wants
+# to know nothing shipped.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/landing/**"
+      - "packages/commerce/marketing/**"
+      - "packages/design/ui/**"
+      - "packages/design/tokens/**"
+      - "packages/platform/i18n/**"
+      - ".github/workflows/deploy-vercel.yml"
+  workflow_dispatch:
+    inputs:
+      app:
+        description: "App to deploy (a push to main always deploys landing)"
+        type: choice
+        options: [landing, web, auth, pebble, kuanlan, carina, docs]
+        default: landing
+      promote:
+        description: "Promote to production. false = preview URL only"
+        type: boolean
+        default: true
+      environment:
+        description: "Env vars to build with when not promoting (a promotion always uses production)"
+        type: choice
+        options: [production, preview]
+        default: production
+      ref:
+        description: "carina only: Nebutra/carina git ref to deploy (branch, tag, or SHA)"
+        type: string
+        default: main
+
+permissions:
+  contents: read
+
+# One deploy per app at a time; a newer run of the same app cancels the older.
+concurrency:
+  group: deploy-vercel-${{ github.event_name == 'push' && 'landing' || inputs.app }}
+  cancel-in-progress: true
+
+jobs:
+  plan:
+    name: Select app
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      matrix: ${{ steps.select.outputs.matrix }}
+    steps:
+      - name: Build the one-entry matrix for the selected app
+        id: select
+        env:
+          # A push to main is landing. A manual run deploys the chosen app.
+          APP: ${{ github.event_name == 'push' && 'landing' || inputs.app }}
+        run: |
+          set -euo pipefail
+          echo "app=$APP event=${GITHUB_EVENT_NAME}"
+          python3 - "$APP" <<'PY' >> "$GITHUB_OUTPUT"
+          import json, sys
+
+          # project_candidates: Vercel project names tried in order when no
+          #   project id is configured. The first one is also the name used if
+          #   the project has to be created.
+          # project_id_var: repository secret/variable holding a project id
+          #   (prj_…); "" resolves by name only. landing deliberately resolves
+          #   by name: a stored id is one more thing that can go stale unnoticed.
+          # create: create the project when no candidate exists (pebble, kuanlan
+          #   and carina were bootstrapped this way); false fails instead.
+          # domain: attached to the project on every run (idempotent), or "".
+          # production_host: the host a promotion is smoked against; "" when
+          #   production DNS does not point at Vercel — the deployment URL is
+          #   smoked instead.
+          # repository / workdir: an external checkout, or "" / "." for this
+          #   monorepo.
+          APPS = {
+              "landing": {
+                  "project_candidates": "nebutra-landing landing nebutra-landing-page landing-page",
+                  "project_id_var": "",
+                  "root": "apps/landing",
+                  "framework": "nextjs",
+                  "create": False,
+                  "domain": "open.nebutra.com",
+                  "production_host": "nebutra.com",
+                  "repository": "",
+                  "workdir": ".",
+              },
+              "web": {
+                  "project_candidates": "nebutra-web",
+                  "project_id_var": "VERCEL_WEB_PROJECT_ID",
+                  "root": "apps/web",
+                  "framework": "nextjs",
+                  "create": False,
+                  "domain": "",
+                  "production_host": "app.nebutra.com",
+                  "repository": "",
+                  "workdir": ".",
+              },
+              "auth": {
+                  "project_candidates": "nebutra-auth",
+                  "project_id_var": "VERCEL_AUTH_PROJECT_ID",
+                  "root": "apps/auth",
+                  "framework": "nextjs",
+                  "create": False,
+                  "domain": "",
+                  "production_host": "auth.nebutra.com",
+                  "repository": "",
+                  "workdir": ".",
+              },
+              "pebble": {
+                  "project_candidates": "nebutra-pebble pebble pebble-site",
+                  "project_id_var": "",
+                  "root": "apps/pebble",
+                  "framework": "nextjs",
+                  "create": True,
+                  "domain": "pebble.nebutra.com",
+                  "production_host": "pebble.nebutra.com",
+                  "repository": "",
+                  "workdir": ".",
+              },
+              "kuanlan": {
+                  "project_candidates": "nebutra-kuanlan",
+                  "project_id_var": "",
+                  "root": "apps/kuanlan",
+                  "framework": "nextjs",
+                  "create": True,
+                  "domain": "kuanlan.nebutra.com",
+                  "production_host": "kuanlan.nebutra.com",
+                  "repository": "",
+                  "workdir": ".",
+              },
+              # Legacy: carina.nebutra.com is served by Fly (docs/DOMAINS.md) and
+              # the Carina repository has its own Vercel workflow for day-2 runs.
+              # Kept here so the Sailor VERCEL_* secrets can still bootstrap the
+              # project; it checks out Nebutra/carina at `inputs.ref`.
+              "carina": {
+                  "project_candidates": "nebutra-carina carina carina-docs",
+                  "project_id_var": "VERCEL_CARINA_PROJECT_ID",
+                  "root": "apps/docs",
+                  "framework": "astro",
+                  "create": True,
+                  "domain": "carina.nebutra.com",
+                  "production_host": "",
+                  "repository": "Nebutra/carina",
+                  "workdir": "carina",
+              },
+              # docs.nebutra.com is Fly (deploy-fly.yml app=sailor-docs); this
+              # entry keeps the Vercel project `docs` deployable on demand.
+              "docs": {
+                  "project_candidates": "docs nebutra-sailor-docs",
+                  "project_id_var": "VERCEL_DOCS_PROJECT_ID",
+                  "root": "apps/sailor-docs",
+                  "framework": "nextjs",
+                  "create": False,
+                  "domain": "",
+                  "production_host": "",
+                  "repository": "",
+                  "workdir": ".",
+              },
+          }
+          app = sys.argv[1]
+          if app not in APPS:
+              sys.exit("unknown app: " + app)
+          print("matrix=" + json.dumps({"include": [dict(app=app, **APPS[app])]}))
+          PY
+          grep '^matrix=' "$GITHUB_OUTPUT"
+
+  vercel:
+    name: "${{ matrix.app }}: build on GitHub, deploy prebuilt to Vercel"
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.plan.outputs.matrix) }}
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
+      # A push to main is always production. A manual run promotes unless the
+      # operator asked for a preview.
+      PROMOTE: ${{ github.event_name == 'push' || inputs.promote == true }}
+      BUILD_ENVIRONMENT: ${{ inputs.environment }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      # carina lives in another repository. The monorepo checkout above still
+      # supplies the composite setup action; the app is built from `carina/`.
+      - name: Checkout external repository
+        if: matrix.repository != ''
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: ${{ matrix.repository }}
+          ref: ${{ inputs.ref || 'main' }}
+          path: ${{ matrix.workdir }}
+
+      # `vercel build` runs the project's own installCommand, so only the
+      # toolchain is set up here; the pnpm store cache still applies.
+      - name: Setup pnpm + Node
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          install: "false"
+
+      - name: Resolve project and reconcile Root Directory
+        id: project
+        env:
+          APP: ${{ matrix.app }}
+          EXPECTED_ROOT: ${{ matrix.root }}
+          FRAMEWORK: ${{ matrix.framework }}
+          PROJECT_CANDIDATES: ${{ matrix.project_candidates }}
+          PROJECT_ID_VAR: ${{ matrix.project_id_var }}
+          KNOWN_PROJECT_ID: ${{ matrix.project_id_var != '' && (secrets[matrix.project_id_var] || vars[matrix.project_id_var]) || '' }}
+          CREATE_IF_MISSING: ${{ matrix.create }}
+          DOMAIN: ${{ matrix.domain }}
+        run: |
+          set -euo pipefail
+          if [ -z "${VERCEL_TOKEN:-}" ]; then
+            echo "::error::VERCEL_TOKEN is not set"; exit 1
+          fi
+          if [ -z "${VERCEL_ORG_ID:-}" ]; then
+            echo "::error::VERCEL_ORG_ID is not set"; exit 1
+          fi
+
+          api() {
+            curl -sS -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" "$@"
+          }
+
+          PROJECT_ID="${KNOWN_PROJECT_ID:-}"
+          CURRENT_ROOT="(missing)"
+          if [ -n "$PROJECT_ID" ]; then
+            meta=$(api "https://api.vercel.com/v9/projects/${PROJECT_ID}?teamId=${VERCEL_ORG_ID}" || true)
+            CURRENT_ROOT=$(echo "$meta" | python3 -c 'import json,sys; d=json.load(sys.stdin); print("(missing)" if "error" in d else (d.get("rootDirectory") or "(none)"))' 2>/dev/null || echo "(missing)")
+            if [ "$CURRENT_ROOT" = "(missing)" ]; then
+              echo "::warning::${PROJECT_ID_VAR}=${PROJECT_ID} did not resolve to a project; falling back to name lookup"
+              PROJECT_ID=""
+            else
+              echo "Using ${PROJECT_ID_VAR}=${PROJECT_ID} rootDirectory=${CURRENT_ROOT}"
+            fi
+          fi
+
+          if [ -z "$PROJECT_ID" ]; then
+            # Resolve by name rather than a stored id. The project this deploys is
+            # whichever one serves the app's host; hardcoding an id in repository
+            # variables is one more thing that can go stale unnoticed.
+            api "https://api.vercel.com/v9/projects?teamId=${VERCEL_ORG_ID}&limit=100" > projects.json
+            python3 - <<'PY' > resolved.env
+          import json, os, sys
+          data = json.load(open("projects.json"))
+          names = {p["name"]: p for p in data.get("projects", [])}
+          for candidate in os.environ["PROJECT_CANDIDATES"].split():
+              if candidate in names:
+                  p = names[candidate]
+                  print("PROJECT_ID=" + p["id"])
+                  print("CURRENT_ROOT=" + (p.get("rootDirectory") or "(none)"))
+                  break
+          else:
+              print("Projects found: " + ", ".join(sorted(names)), file=sys.stderr)
+              print("PROJECT_ID=")
+              print("CURRENT_ROOT=(missing)")
+          PY
+            cat resolved.env
+            set -a; . ./resolved.env; set +a
+          fi
+
+          if [ -z "${PROJECT_ID:-}" ]; then
+            PROJECT_NAME="${PROJECT_CANDIDATES%% *}"
+            if [ "$CREATE_IF_MISSING" != "true" ]; then
+              echo "::error::Could not find the ${APP} project by name (tried: ${PROJECT_CANDIDATES}) — see the list above"
+              exit 1
+            fi
+            echo "Creating Vercel project ${PROJECT_NAME}"
+            create=$(api -X POST "https://api.vercel.com/v10/projects?teamId=${VERCEL_ORG_ID}" \
+              -d "{\"name\":\"${PROJECT_NAME}\",\"framework\":\"${FRAMEWORK}\",\"rootDirectory\":\"${EXPECTED_ROOT}\"}")
+            echo "$create" | python3 -m json.tool | head -40
+            PROJECT_ID=$(echo "$create" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("id",""))')
+            [ -n "$PROJECT_ID" ] || { echo "::error::failed to create project ${PROJECT_NAME}"; exit 1; }
+            CURRENT_ROOT="$EXPECTED_ROOT"
+            if [ -n "${PROJECT_ID_VAR:-}" ]; then
+              echo "::notice::Created project id=${PROJECT_ID} — set vars.${PROJECT_ID_VAR}"
+            fi
+          fi
+          echo "project=$PROJECT_ID rootDirectory=$CURRENT_ROOT"
+          echo "id=$PROJECT_ID" >> "$GITHUB_OUTPUT"
+
+          if [ -n "${DOMAIN:-}" ]; then
+            echo "Attaching domain ${DOMAIN} (idempotent)"
+            api -X POST "https://api.vercel.com/v10/projects/${PROJECT_ID}/domains?teamId=${VERCEL_ORG_ID}" \
+              -d "{\"name\":\"${DOMAIN}\"}" > domain.json || true
+            python3 -c 'import json; d=json.load(open("domain.json")); print("domain", d.get("name") or d.get("error",{}).get("code"), d.get("verified", d.get("error")))' || true
+          fi
+
+          if [ "$CURRENT_ROOT" != "$EXPECTED_ROOT" ]; then
+            echo "::warning::Root Directory was '$CURRENT_ROOT', correcting to '$EXPECTED_ROOT'"
+            api -X PATCH "https://api.vercel.com/v9/projects/${PROJECT_ID}?teamId=${VERCEL_ORG_ID}" \
+              -d "{\"rootDirectory\":\"${EXPECTED_ROOT}\"}" > /dev/null
+          fi
+
+      # kuanlan's server routes read the router key and R2 credentials at
+      # runtime from the Vercel project, so the repository secrets are copied
+      # into the project's env before each deploy. Nothing else needs this.
+      - name: Sync kuanlan project env
+        if: matrix.app == 'kuanlan'
+        env:
+          PROJECT_ID: ${{ steps.project.outputs.id }}
+          IMAGE2_API_KEY: ${{ secrets.KUANLAN_ROUTER_API_KEY || secrets.KUANLAN_IMAGE2_API_KEY }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${IMAGE2_API_KEY:-}" ]; then
+            echo "::warning::No router product key yet — 开拍 will fail closed until KUANLAN_ROUTER_API_KEY is set"
+          fi
+          python3 - <<'PY'
+          import json, os, urllib.request
+
+          token = os.environ["VERCEL_TOKEN"]
+          team = os.environ["VERCEL_ORG_ID"]
+          project = os.environ["PROJECT_ID"]
+
+          def api(method, path, payload=None):
+              req = urllib.request.Request(
+                  f"https://api.vercel.com{path}",
+                  data=None if payload is None else json.dumps(payload).encode(),
+                  headers={
+                      "Authorization": f"Bearer {token}",
+                      "Content-Type": "application/json",
+                  },
+                  method=method,
+              )
+              try:
+                  with urllib.request.urlopen(req, timeout=45) as response:
+                      body = response.read().decode()
+                      return response.status, json.loads(body) if body else {}
+              except urllib.error.HTTPError as error:
+                  return error.code, json.loads(error.read().decode() or "{}")
+
+          status, existing = api("GET", f"/v10/projects/{project}/env?teamId={team}")
+          current = {item["key"]: item for item in existing.get("envs", [])} if status == 200 else {}
+          values = {
+              "ROUTER_API_KEY": os.environ.get("IMAGE2_API_KEY", ""),
+              "IMAGE2_API_KEY": os.environ.get("IMAGE2_API_KEY", ""),
+              "IMAGE2_BASE_URL": "https://router.nebutra.com/v1",
+              "IMAGE2_MODEL": "gpt-image-2",
+              "CLOUDFLARE_ACCOUNT_ID": os.environ.get("CLOUDFLARE_ACCOUNT_ID", ""),
+              "R2_ACCESS_KEY_ID": os.environ.get("R2_ACCESS_KEY_ID", ""),
+              "R2_SECRET_ACCESS_KEY": os.environ.get("R2_SECRET_ACCESS_KEY", ""),
+              "R2_BUCKET_ASSETS": "nebutra-assets",
+              "R2_BUCKET_UPLOADS": "nebutra-uploads",
+              "R2_PUBLIC_URL": "https://cdn.nebutra.com",
+              "NEXT_PUBLIC_R2_PUBLIC_URL": "https://cdn.nebutra.com",
+              "NEXT_PUBLIC_SITE_URL": "https://kuanlan.nebutra.com",
+              "NEXT_PUBLIC_APP_URL": "https://kuanlan.nebutra.com",
+          }
+          sensitive = {"ROUTER_API_KEY", "IMAGE2_API_KEY", "R2_ACCESS_KEY_ID", "R2_SECRET_ACCESS_KEY"}
+          for key, value in values.items():
+              if not value:
+                  print("skip_empty", key)
+                  continue
+              payload = {
+                  "value": value,
+                  "type": "sensitive" if key in sensitive else "plain",
+                  "target": ["production", "preview", "development"],
+              }
+              if key in current:
+                  status, _ = api("PATCH", f"/v9/projects/{project}/env/{current[key]['id']}?teamId={team}", payload)
+                  print("patch_env", key, status)
+              else:
+                  status, _ = api("POST", f"/v10/projects/{project}/env?teamId={team}", dict(key=key, **payload))
+                  print("add_env", key, status)
+          PY
+
+      - name: Build here, deploy prebuilt
+        id: deploy
+        working-directory: ${{ matrix.workdir }}
+        env:
+          VERCEL_PROJECT_ID: ${{ steps.project.outputs.id }}
+          APP_ROOT: ${{ matrix.root }}
+          PRODUCTION_HOST: ${{ matrix.production_host }}
+        run: |
+          set -euo pipefail
+          npm i -g vercel@56.5.0
+
+          # Link from the repository root: the project's Root Directory (just
+          # reconciled) selects the app directory, and the CLI runs the install
+          # and build commands from that directory's vercel.json inside it.
+          # Output lands in .vercel/output at the root, where `deploy --prebuilt`
+          # expects it.
+          mkdir -p .vercel
+          printf '{"projectId":"%s","orgId":"%s"}\n' "$VERCEL_PROJECT_ID" "${VERCEL_ORG_ID:-}" > .vercel/project.json
+
+          # A promotion always builds with the production environment. A dry
+          # run builds with production too unless asked for preview, so it
+          # rehearses exactly what the next promotion will ship.
+          if [ "$PROMOTE" = "true" ]; then
+            environment=production
+            prod_flag=--prod
+          else
+            environment="${BUILD_ENVIRONMENT:-production}"
+            prod_flag=
+          fi
+          echo "env=$environment promote=$PROMOTE"
+
+          vercel pull --yes --environment="$environment" --token="$VERCEL_TOKEN" --scope "${VERCEL_ORG_ID:-}"
+
+          # Variables marked Sensitive in the dashboard cannot be pulled; the
+          # CLI writes them with an empty value. On 2026-09-02 that made
+          # NEXT_PUBLIC_SITE_URL="" and the first production build of landing
+          # died in `new URL("")` while collecting /_not-found — production
+          # only, because preview never defined the variable and the code's own
+          # default applied. Drop the empties so defaults apply here as well.
+          envfile=".vercel/.env.${environment}.local"
+          if [ -f "$envfile" ]; then
+            empties=$(grep -cE "^[A-Za-z_][A-Za-z0-9_]*=(\"\"|''|)$" "$envfile" || true)
+            sed -i -E "/^[A-Za-z_][A-Za-z0-9_]*=(\"\"|''|)$/d" "$envfile"
+            echo "pulled ${envfile}: dropped ${empties} empty (Sensitive) entries"
+          fi
+
+          # The public URLs declared in the app's vercel.json `env` are what
+          # Vercel applies on its own builders. Exported here so the prebuilt
+          # output is built against the same values regardless of how the
+          # dashboard copies are flagged.
+          if [ -f "${APP_ROOT}/vercel.json" ]; then
+            while IFS='=' read -r key value; do
+              [ -n "$key" ] && export "$key=$value"
+            done < <(node -e '
+              const env = require(process.argv[1]).env ?? {};
+              for (const [k, v] of Object.entries(env)) console.log(`${k}=${v}`);
+            ' "$PWD/${APP_ROOT}/vercel.json")
+          fi
+          export VERCEL_ENV="$environment"
+
+          # Same builder Vercel would run remotely, on this runner.
+          # shellcheck disable=SC2086
+          vercel build $prod_flag --yes --token="$VERCEL_TOKEN"
+
+          # Upload only .vercel/output. --archive=tgz keeps the traced function
+          # bundles under the CLI's file-count limit as one tarball.
+          set +e
+          # shellcheck disable=SC2086
+          vercel deploy --prebuilt $prod_flag --yes --archive=tgz \
+            --token="$VERCEL_TOKEN" --scope "${VERCEL_ORG_ID:-}" \
+            > deploy-url.txt 2> deploy-log.txt
+          code=$?
+          set -e
+          cat deploy-log.txt
+          if [ "$code" -ne 0 ]; then
+            {
+              echo "### Not deployed"
+              echo
+              if [ "$PROMOTE" != "true" ]; then
+                echo "Vercel refused the preview upload."
+              elif [ -n "${PRODUCTION_HOST:-}" ]; then
+                echo "Vercel refused the upload, so **${PRODUCTION_HOST} still serves the previous build**."
+              else
+                echo "Vercel refused the production upload."
+              fi
+              echo "The build itself succeeded on this runner; see the log above for the reason."
+              echo
+              echo '```'
+              tail -5 deploy-log.txt
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "::error::vercel deploy --prebuilt failed (exit $code)"
+            exit "$code"
+          fi
+          url=$(tail -1 deploy-url.txt | tr -d '[:space:]')
+          echo "deployment=$url"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          {
+            echo "### Deployed ($environment)"
+            echo
+            echo "$url"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # ── Smoke ──────────────────────────────────────────────────────────────
+      # A preview, and a promotion of an app whose production DNS is not Vercel,
+      # smoke the deployment URL. Promotions of the others smoke their host.
+
+      - name: Smoke deployment URL
+        if: env.PROMOTE != 'true' || matrix.production_host == ''
+        env:
+          URL: ${{ steps.deploy.outputs.url }}
+        run: |
+          set -euo pipefail
+          # Deployments on a team may sit behind Vercel Authentication; 401
+          # there still proves the upload is live and routable.
+          code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 -L "$URL/?ci=${GITHUB_SHA}")
+          echo "$URL → HTTP $code"
+          case "$code" in
+            200|401) ;;
+            *) echo "::error::deployment did not answer"; exit 1 ;;
+          esac
+
+      - name: Smoke nebutra.com
+        if: env.PROMOTE == 'true' && matrix.app == 'landing'
+        run: |
+          set -euo pipefail
+          # Cache-busting path: the marketing pages are statically cached, so a
+          # plain request can return the previous build and look like success.
+          code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 "https://nebutra.com/?ci=${GITHUB_SHA}")
+          echo "nebutra.com → HTTP $code"
+          [ "$code" = "200" ]
+
+      - name: Smoke app.nebutra.com
+        if: env.PROMOTE == 'true' && matrix.app == 'web'
+        run: |
+          set -euo pipefail
+          code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 \
+            -L "https://app.nebutra.com/?ci=${GITHUB_SHA}" || echo 000)
+          echo "GET https://app.nebutra.com/ -> $code"
+          if [ "$code" != "200" ] && [ "$code" != "307" ] && [ "$code" != "302" ]; then
+            echo "::warning::app.nebutra.com not healthy yet (DNS may still point at ECS)."
+          fi
+
+      - name: Smoke auth Vercel alias + optional production host
+        if: env.PROMOTE == 'true' && matrix.app == 'auth'
+        run: |
+          set -euo pipefail
+          # Prefer project alias (always Vercel iad1) — production DNS may still be ECS.
+          for url in \
+            https://nebutra-auth.vercel.app/health \
+            https://auth.nebutra.com/health
+          do
+            code=$(curl -sS -o /tmp/auth-health.json -w '%{http_code}' --max-time 30 "$url" || echo 000)
+            echo "GET $url -> $code"
+            if [ "$code" = "200" ]; then
+              head -c 400 /tmp/auth-health.json || true
+              echo
+            fi
+          done
+          # Google pairing on Vercel alias (proves overseas egress for OAuth).
+          code=$(curl -sS -o /tmp/auth-g.json -w '%{http_code}' --max-time 40 \
+            'https://nebutra-auth.vercel.app/health?probe=google' || echo 000)
+          echo "GET nebutra-auth.vercel.app/health?probe=google -> $code"
+          if [ "$code" = "200" ]; then
+            python3 -c 'import json; d=json.load(open("/tmp/auth-g.json")); print(json.dumps((d.get("oauth") or {}).get("googlePairing"), indent=2))' || true
+            status=$(python3 -c 'import json; d=json.load(open("/tmp/auth-g.json")); print(((d.get("oauth") or {}).get("googlePairing") or {}).get("status") or "")' || true)
+            if [ "$status" = "pair_ok" ]; then
+              echo "Vercel origin can reach Google token endpoint — safe for DNS cutover."
+            elif [ "$status" = "network_error" ]; then
+              echo "::warning::Vercel alias still network_error (unexpected for iad1)."
+            elif [ "$status" = "invalid_client" ]; then
+              echo "::error::GOOGLE_CLIENT_SECRET on Vercel does not match GOOGLE_CLIENT_ID"
+              exit 1
+            elif [ -z "$status" ]; then
+              echo "::notice::probe endpoint not on this build yet (older deployment)."
+            fi
+          fi
+
+      - name: Smoke pebble.nebutra.com
+        if: env.PROMOTE == 'true' && matrix.app == 'pebble'
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6 7 8; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 25 "https://pebble.nebutra.com/?ci=${GITHUB_SHA}" || echo 000)
+            feed=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 25 "https://pebble.nebutra.com/whats-new/changelog.json" || echo 000)
+            docs=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 25 -L --max-redirs 0 "https://pebble.nebutra.com/docs/mobile" || echo 000)
+            echo "attempt $i home=$code changelog=$feed docs_redirect=$docs"
+            if [ "$code" = "200" ] && [ "$feed" = "200" ]; then
+              # docs should be a permanent redirect (3xx), not a rewrite
+              case "$docs" in
+                301|308|302|307) exit 0 ;;
+                000) exit 0 ;; # allow if curl -L --max-redirs 0 quirks
+              esac
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "pebble brand front not healthy after retries"
+          exit 1
+
+      - name: Smoke kuanlan.nebutra.com
+        if: env.PROMOTE == 'true' && matrix.app == 'kuanlan'
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6 7 8; do
+            home=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 25 "https://kuanlan.nebutra.com/" || echo 000)
+            health=$(curl -sS -o /tmp/kuanlan-health.json -w '%{http_code}' --max-time 25 "https://kuanlan.nebutra.com/api/e2e/health" || echo 000)
+            echo "attempt $i home=$home health=$health"
+            if [ "$home" = "200" ] && [ "$health" = "200" ]; then
+              python3 - <<'PY'
+          import json
+          body = json.load(open("/tmp/kuanlan-health.json"))
+          assert body.get("service") == "kuanlan"
+          assert body.get("consume", {}).get("provider") == "router"
+          assert body.get("consume", {}).get("model") == "gpt-image-2"
+          print("health_ok", body.get("consume"), body.get("storage"))
+          PY
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "kuanlan front not healthy after retries"
+          exit 1

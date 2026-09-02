@@ -71,25 +71,50 @@ of those builds actually run.
 
 | Project | Git | How it ships | Repo lock |
 | --- | --- | --- | --- |
-| `nebutra-landing` | connected, auto-deploy off | [`deploy-landing-vercel.yml`](../../.github/workflows/deploy-landing-vercel.yml): `vercel build` on the GitHub runner, then `vercel deploy --prebuilt` | [`apps/landing/vercel.json`](../../apps/landing/vercel.json) `git.deploymentEnabled: false`; `ignoreCommand` kept for the day Git is re-enabled |
-| `nebutra-kuanlan` | connected | Fly `nebutra-kuanlan` in `sin` via [`deploy-fly.yml`](../../.github/workflows/deploy-fly.yml) | [`apps/kuanlan/vercel.json`](../../apps/kuanlan/vercel.json) + Fly-primary skip |
-| `nebutra-web` | connected, auto-deploy off | [`deploy-web-vercel.yml`](../../.github/workflows/deploy-web-vercel.yml) `workflow_dispatch` | `git.deploymentEnabled: false` |
-| `nebutra-auth` | connected, auto-deploy off | [`deploy-auth-vercel.yml`](../../.github/workflows/deploy-auth-vercel.yml) `workflow_dispatch` | `git.deploymentEnabled: false` |
+| `nebutra-landing` | connected, auto-deploy off | [`deploy-vercel.yml`](../../.github/workflows/deploy-vercel.yml) `app=landing` (push to main + dispatch): `vercel build` on the GitHub runner, then `vercel deploy --prebuilt` | [`apps/landing/vercel.json`](../../apps/landing/vercel.json) `git.deploymentEnabled: false`; `ignoreCommand` kept for the day Git is re-enabled |
+| `nebutra-kuanlan` | connected | Fly `nebutra-kuanlan` in `sin` via [`deploy-fly.yml`](../../.github/workflows/deploy-fly.yml); `deploy-vercel.yml` `app=kuanlan` on demand | [`apps/kuanlan/vercel.json`](../../apps/kuanlan/vercel.json) + Fly-primary skip |
+| `nebutra-web` | connected, auto-deploy off | [`deploy-vercel.yml`](../../.github/workflows/deploy-vercel.yml) `app=web`, `workflow_dispatch` only | `git.deploymentEnabled: false` |
+| `nebutra-auth` | connected, auto-deploy off | [`deploy-vercel.yml`](../../.github/workflows/deploy-vercel.yml) `app=auth`, `workflow_dispatch` only | `git.deploymentEnabled: false` |
+| `nebutra-pebble` | not linked | `deploy-vercel.yml` `app=pebble`, `workflow_dispatch` only (production is ECS PM2) | — |
+| `docs` | not linked | `deploy-vercel.yml` `app=docs`, `workflow_dispatch` only (production is Fly) | — |
 | `nebutra-sailor-docs` | see [`deploy-sailor-docs.yml`](../../.github/workflows/deploy-sailor-docs.yml) | push job gated by `DEPLOY_TARGET_SAILOR_DOCS`; `pnpm-lock.yaml` is not a trigger | path filter in the workflow |
 
 Do not Unlink `nebutra-kuanlan`. Do not add web/auth push triggers back. Do
-not put a bare `vercel deploy` back into the landing workflow.
+not put a bare `vercel deploy` back into `deploy-vercel.yml`.
+
+## One workflow, every app prebuilt
+
+[`deploy-vercel.yml`](../../.github/workflows/deploy-vercel.yml) is the only
+path from this repository to Vercel. It is a matrix keyed by app — `landing`,
+`web`, `auth`, `pebble`, `kuanlan`, `carina`, `docs` — with the per-app table
+(project names to resolve, Root Directory, domain to attach, production host
+to smoke) in its `plan` job. Only `landing` has a push trigger, with its own
+path filter; every other app is `workflow_dispatch` with `app:` chosen by the
+operator. All seven use the same steps: resolve the project (by configured id
+or by name, creating pebble/kuanlan/carina if absent), reconcile Root
+Directory, attach the domain, `vercel pull` → `vercel build` →
+`vercel deploy --prebuilt`, then smoke. A refused upload fails the job for
+every app; the old per-app workflows let web, auth, pebble and carina go green
+on a Hobby quota refusal, which without a nightly retry was a silent loss.
+
+`carina` checks out `Nebutra/carina` at `inputs.ref` and builds `apps/docs`
+(Astro) from that checkout. Production `carina.nebutra.com` is Fly
+(docs/DOMAINS.md) and the Carina repository has its own Vercel workflow, so
+this entry only keeps the Sailor `VERCEL_*` secrets able to bootstrap the
+project. `docs` deploys `apps/sailor-docs` to the Vercel project `docs` on
+demand; `docs.nebutra.com` is Fly, and the push-gated Vercel job in
+`deploy-sailor-docs.yml` is unchanged.
 
 ## landing — build on GitHub, ship prebuilt
 
-The repository is public, so GitHub Actions minutes are free. The landing
-workflow runs `vercel pull` → `vercel build` → `vercel deploy --prebuilt` from
-the repository root; the CLI reads the project's Root Directory and runs the
+The repository is public, so GitHub Actions minutes are free. The workflow
+runs `vercel pull` → `vercel build` → `vercel deploy --prebuilt` from the
+repository root; the CLI reads the project's Root Directory and runs the
 install and build commands from `apps/landing/vercel.json` inside
 `apps/landing`, exactly as Vercel's builders would. Vercel receives only
 `.vercel/output`, so it meters no build minutes for landing. Hosting, ISR,
 `next/og`, and image optimization are unchanged: the output format is the
-same.
+same. The other apps take the identical path from their own `apps/<app>`.
 
 What was removed, and why:
 
@@ -114,7 +139,7 @@ Variables marked **Sensitive** in the Vercel dashboard cannot be pulled;
 `DOCS_ORIGIN_URL` and `NEXT_PUBLIC_API_URL` are flagged Sensitive on the
 production target — public URLs that gain nothing from the flag. The workflow
 now drops empty entries after the pull and exports the URLs declared in
-`apps/landing/vercel.json` `env`, the same values Vercel applies on its own
+`apps/<app>/vercel.json` `env`, the same values Vercel applies on its own
 builders. Un-flagging those three in the dashboard is still the tidy thing to
 do; the workflow no longer depends on it.
 

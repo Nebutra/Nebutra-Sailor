@@ -145,7 +145,7 @@ jobs:
             ".github/workflows/sync-subrepo-mirrors.yml",
             ".github/workflows/deploy-ecs.yml",
             ".github/workflows/deploy.yml",
-            ".github/workflows/deploy-pebble-vercel.yml",
+            ".github/workflows/deploy-vercel.yml",
             ".github/workflows/deploy-carina-ecs.yml",
             ".github/workflows/deploy-carina-fly.yml",
             ".github/workflows/deploy-new-api-fly.yml",

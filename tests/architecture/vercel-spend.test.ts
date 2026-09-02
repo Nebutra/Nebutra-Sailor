@@ -19,17 +19,41 @@ function readText(rel: string): string {
   return readFileSync(resolve(repoRoot, rel), "utf8");
 }
 
-describe("Vercel spend: landing ships prebuilt from GitHub, kuanlan is Fly-primary", () => {
+const VERCEL_WORKFLOW = ".github/workflows/deploy-vercel.yml";
+const VERCEL_APPS = ["landing", "web", "auth", "pebble", "kuanlan", "carina", "docs"];
+
+// Per-app Vercel workflows folded into deploy-vercel.yml. Each one that comes
+// back is a second path to the same project, and two of them ran a remote
+// build on Vercel's meter.
+const RETIRED_VERCEL_WORKFLOWS = [
+  "deploy-landing-vercel.yml",
+  "deploy-web-vercel.yml",
+  "deploy-auth-vercel.yml",
+  "deploy-pebble-vercel.yml",
+  "deploy-kuanlan-vercel.yml",
+  "deploy-carina-vercel.yml",
+  "tmp-vercel-git-deploy-docs.yml",
+];
+
+function pushPathsOf(workflow: string): string {
+  const block = workflow.match(
+    /^\s+push:\n\s+branches: \[main\]\n\s+paths:\n((?:\s+(?:#.*|- .*)\n)+)/m,
+  );
+  expect(block, "push.paths block").not.toBeNull();
+  return block?.[1] ?? "";
+}
+
+describe("Vercel spend: every app ships prebuilt from one workflow, kuanlan is Fly-primary", () => {
   it("disables Git auto-deploy on every Vercel project that ships from CI", () => {
     expect(readJson("apps/web/vercel.json").git?.deploymentEnabled).toBe(false);
     expect(readJson("apps/auth/vercel.json").git?.deploymentEnabled).toBe(false);
-    // landing is deployed by deploy-landing-vercel.yml; a live Git integration
-    // would open a second remote build of the same commit.
+    // landing is deployed by deploy-vercel.yml; a live Git integration would
+    // open a second remote build of the same commit.
     expect(readJson("apps/landing/vercel.json").git?.deploymentEnabled).toBe(false);
   });
 
-  it("builds landing on the GitHub runner and uploads prebuilt output", () => {
-    const workflow = readText(".github/workflows/deploy-landing-vercel.yml");
+  it("builds every app on the GitHub runner and uploads prebuilt output", () => {
+    const workflow = readText(VERCEL_WORKFLOW);
     expect(workflow).toMatch(/vercel pull /);
     expect(workflow).toMatch(/vercel build /);
     expect(workflow).toMatch(/vercel deploy --prebuilt/);
@@ -38,12 +62,53 @@ describe("Vercel spend: landing ships prebuilt from GitHub, kuanlan is Fly-prima
     expect(workflow).not.toMatch(/vercel deploy --prod/);
   });
 
-  it("does not redeploy landing on a schedule", () => {
+  it("keeps the landing-only push trigger; every other app is workflow_dispatch", () => {
+    const workflow = readText(VERCEL_WORKFLOW);
+    const paths = pushPathsOf(workflow);
+    expect(paths).toContain('- "apps/landing/**"');
+    expect(paths).toContain(`- "${VERCEL_WORKFLOW}"`);
+    for (const app of VERCEL_APPS.filter((a) => a !== "landing")) {
+      expect(paths, `${app} must not auto-deploy on push`).not.toContain(`apps/${app}/**`);
+    }
+    expect(paths).not.toContain("apps/sailor-docs/**");
+    // The plan job maps a push to landing and a dispatch to the chosen app.
+    expect(workflow).toContain(
+      "APP: $" + "{{ github.event_name == 'push' && 'landing' || inputs.app }}",
+    );
+  });
+
+  it("offers every Vercel app from the one dispatch and configures each in the plan table", () => {
+    const workflow = readText(VERCEL_WORKFLOW);
+    expect(workflow).toContain(`options: [${VERCEL_APPS.join(", ")}]`);
+    for (const app of VERCEL_APPS) {
+      expect(workflow, `plan table entry for ${app}`).toMatch(
+        new RegExp(`^\\s+"${app}": \\{$`, "m"),
+      );
+    }
+    expect(workflow).toContain("strategy:");
+    expect(workflow).toContain("matrix: $" + "{{ fromJson(needs.plan.outputs.matrix) }}");
+  });
+
+  it("drops empty Sensitive entries after vercel pull and exports the app's vercel.json env", () => {
+    const workflow = readText(VERCEL_WORKFLOW);
+    expect(workflow).toMatch(/envfile="\.vercel\/\.env\.\$\{environment\}\.local"/);
+    expect(workflow).toMatch(/dropped \$\{empties\} empty \(Sensitive\) entries/);
+    expect(workflow).toMatch(/if \[ -f "\$\{APP_ROOT\}\/vercel\.json" \]; then/);
+    expect(workflow).toMatch(/"\$PWD\/\$\{APP_ROOT\}\/vercel\.json"/);
+  });
+
+  it("does not redeploy on a schedule", () => {
     // The nightly retry existed for the Hobby daily deployment cap. Under
     // metered builds it rebuilt an unchanged site every evening.
-    const workflow = readText(".github/workflows/deploy-landing-vercel.yml");
+    const workflow = readText(VERCEL_WORKFLOW);
     expect(workflow).not.toMatch(/^\s*schedule:/m);
     expect(workflow).not.toMatch(/cron:/);
+  });
+
+  it("keeps the retired per-app Vercel workflows retired", () => {
+    for (const file of RETIRED_VERCEL_WORKFLOWS) {
+      expect(existsSync(resolve(repoRoot, ".github/workflows", file)), file).toBe(false);
+    }
   });
 
   it("does not rebuild sailor-docs for a lockfile-only change", () => {
