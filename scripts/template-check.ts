@@ -92,7 +92,7 @@ const MUST_STRIP = [
   "apps/landing/src/app/sitemap.ts",
   "apps/landing/src/app/sitemap-index.xml",
   // Product deploy / DNS (sample — globs cover the rest in .templateignore)
-  ".github/workflows/deploy-pebble-vercel.yml",
+  ".github/workflows/deploy-vercel.yml",
   ".github/workflows/point-forge-dns.yml",
   ".github/workflows/deploy-carina-ecs.yml",
   ".github/workflows/deploy-carina-fly.yml",

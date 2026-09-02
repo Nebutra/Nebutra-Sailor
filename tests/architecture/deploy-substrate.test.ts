@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -257,11 +257,23 @@ describe("Deploy substrate governance", () => {
     expect(certs).toContain("host: origin");
   });
 
-  it("web and auth Vercel workflows are workflow_dispatch only", () => {
+  it("web and auth reach Vercel only through deploy-vercel.yml workflow_dispatch", () => {
+    // The per-app workflows were folded into one matrix workflow. Its push
+    // trigger is landing's path filter; web and auth must stay off it.
     for (const file of ["deploy-web-vercel.yml", "deploy-auth-vercel.yml"]) {
-      const yml = read(file);
-      expect(yml).toContain("workflow_dispatch:");
-      expect(yml, `${file} must not auto-deploy on push`).not.toMatch(/^ {2}push:/m);
+      expect(existsSync(resolve(WORKFLOWS, file)), `${file} must stay retired`).toBe(false);
     }
+    const yml = read("deploy-vercel.yml");
+    expect(yml).toContain("workflow_dispatch:");
+    const pushPaths = yml.match(
+      /\n\s+push:\n\s+branches:\s*\[main\]\n\s+paths:\n((?:\s+(?:-|#)[^\n]+\n)+)/,
+    )?.[1];
+    expect(pushPaths, "deploy-vercel.yml must define on.push.paths for main").toBeTruthy();
+    expect(pushPaths).toContain("apps/landing/**");
+    expect(pushPaths).not.toContain("apps/web/**");
+    expect(pushPaths).not.toContain("apps/auth/**");
+    expect(yml).toContain(
+      "APP: $" + "{{ github.event_name == 'push' && 'landing' || inputs.app }}",
+    );
   });
 });
