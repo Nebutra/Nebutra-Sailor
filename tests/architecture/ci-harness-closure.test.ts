@@ -93,7 +93,7 @@ describe("ci harness dependency closure", () => {
     );
 
     expect(workflow).not.toContain(".github/actions/setup-node-pnpm/action.yml");
-    expect(workflow).toContain("uses: dorny/paths-filter@d1c1ffe0248fe513906c8e24db8ea791d46f8590");
+    expect(workflow).toContain("uses: dorny/paths-filter@0e4a8c6effa4802afeda77dc8d303f8176d7dfad");
     expect(workflow).toContain("visual-landing:");
     expect(workflow).toContain("if: needs.detect-changes.outputs.landing == 'true'");
     expect(workflow).toContain("pnpm visual:landing:ci");
