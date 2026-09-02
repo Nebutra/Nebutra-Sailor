@@ -54,6 +54,10 @@ export async function rateLimitMiddleware(c: Context, next: Next) {
       get: (key: string) => redisClient.get(key),
       set: (key: string, value: unknown, opts?: { ex?: number }) =>
         opts?.ex ? redisClient.set(key, value, { ex: opts.ex }) : redisClient.set(key, value),
+      // One atomic EVAL per request instead of GET+SET. Halves the billed
+      // commands on Upstash and closes the read-modify-write race.
+      eval: (script: string, keys: string[], args: Array<string | number>) =>
+        redisClient.eval(script, keys, args),
     };
     limiter = createRedisRateLimiter(PLAN_LIMITS[planKey], redisAdapter);
   } catch {

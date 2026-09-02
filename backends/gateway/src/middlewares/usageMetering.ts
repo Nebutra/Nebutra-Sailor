@@ -95,9 +95,14 @@ export async function usageMeteringMiddleware(c: Context, next: Next) {
       const r = await getRedisOptional();
       if (!r) return;
 
-      await r.incr(apiCallKey);
-      // Refresh TTL every call (cheap, idempotent)
-      await r.expire(apiCallKey, TTL_SECONDS);
+      // EXPIRE only on the write that creates the key. The key is scoped to a
+      // billing month, so the TTL set on its first increment already outlives
+      // the period; refreshing it on every call was a second billed command
+      // per request that changed nothing.
+      const calls = await r.incr(apiCallKey);
+      if (calls === 1) {
+        await r.expire(apiCallKey, TTL_SECONDS);
+      }
 
       // If the AI service returned a token count header, meter it too
       const tokensUsed = c.res.headers.get("X-Tokens-Used");
@@ -105,8 +110,12 @@ export async function usageMeteringMiddleware(c: Context, next: Next) {
         const tokenKey = `usage:${tenantId}:${period}:ai_tokens`;
         const count = parseInt(tokensUsed, 10);
         if (!Number.isNaN(count) && count > 0) {
-          await r.incrby(tokenKey, count);
-          await r.expire(tokenKey, TTL_SECONDS);
+          // INCRBY returns the new total; it equals `count` only when this
+          // call created the key.
+          const total = await r.incrby(tokenKey, count);
+          if (total === count) {
+            await r.expire(tokenKey, TTL_SECONDS);
+          }
         }
       }
     } catch (err) {
