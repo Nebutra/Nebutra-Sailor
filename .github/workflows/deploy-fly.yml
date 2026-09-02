@@ -227,8 +227,12 @@ jobs:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
           ROUTER_API_KEY: ${{ secrets.KUANLAN_ROUTER_API_KEY }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          # Moments List/Get/Put nebutra-uploads. Shared R2_* is the assets
+          # seeder and is AccessDenied on uploads — do not restage it here.
+          # Dedicated keys come from ops-kuanlan-r2-uploads.yml; if unset,
+          # Fly keeps the last working uploads token.
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_KUANLAN_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_KUANLAN_SECRET_ACCESS_KEY }}
           BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
         run: |
           set -euo pipefail
