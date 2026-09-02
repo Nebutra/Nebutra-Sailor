@@ -85,11 +85,13 @@ jobs:
               "${VM_USER}@${VM_HOST}" "cat $env_path" \
               | python3 -c '
           import sys
-          # Bind vars are Fly's business. CACHE_BACKEND=ioredis and
-          # REDIS_URL=redis://127.0.0.1:6379 describe the VM's local Redis;
+          # Bind vars belong to Fly. CACHE_BACKEND=ioredis and
+          # REDIS_URL=redis://127.0.0.1:6379 describe the local Redis on the VM;
           # imported onto a Machine that has none, every Redis call fails and
           # every rate-limited route answers 500 while health stays 200
-          # (2026-09-02). Upstash REST is the origin's Redis here.
+          # (2026-09-02). Upstash REST is the Redis of the origin here.
+          # No apostrophes in this block: it lives inside a single-quoted
+          # python -c string, and one ended it on the first run.
           skip = {"HOSTNAME", "PORT", "HOST", "PWD", "CACHE_BACKEND", "REDIS_URL"}
           for line in sys.stdin:
               raw = line.strip()
