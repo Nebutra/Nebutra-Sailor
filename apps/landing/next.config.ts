@@ -228,7 +228,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "cdn.sanity.io", pathname: "/images/**" },
       // DiceBear avatars used in Waitlist social proof
       { protocol: "https", hostname: "api.dicebear.com" },
-      { protocol: "https", hostname: brand.domains.cdn },
+      { protocol: "https", hostname: new URL(cdnOrigin).hostname },
     ],
   },
 };
