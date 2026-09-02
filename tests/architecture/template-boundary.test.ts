@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync } from "node:fs";
+import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, relative } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
@@ -142,8 +142,14 @@ function walkFiles(dir: string, visit: (abs: string, rel: string) => void): void
 const MAX_SCAN_BYTES = 8 * 1024 * 1024;
 
 function readText(abs: string): string | null {
-  if (statSync(abs).size > MAX_SCAN_BYTES) return null;
-  const buf = readFileSync(abs);
+  // Read first, then bound: a stat-then-read pair is a check/use race (CodeQL js/file-system-race).
+  let buf: Buffer;
+  try {
+    buf = readFileSync(abs);
+  } catch {
+    return null;
+  }
+  if (buf.length > MAX_SCAN_BYTES) return null;
   if (buf.subarray(0, 8192).includes(0)) return null; // binary
   return buf.toString("utf8");
 }
