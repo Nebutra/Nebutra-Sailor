@@ -227,13 +227,7 @@ tests/load/
 .github/workflows/ops-auth-console-setup.yml
 .github/workflows/ops-configure-pebble-r2.yml
 .github/workflows/ops-db-inventory.yml
-.github/workflows/point-auth-dns.yml
-.github/workflows/point-carina-dns.yml
-.github/workflows/point-docs-dns.yml
-.github/workflows/point-forge-dns.yml
-.github/workflows/point-pebble-dns.yml
-.github/workflows/point-router-dns.yml
-.github/workflows/point-www-dns.yml
+.github/workflows/point-dns.yml
 .github/workflows/tmp-vercel-git-deploy-docs.yml
 .github/workflows/public-url-check.yml
 .github/workflows/route-lastmod.yml

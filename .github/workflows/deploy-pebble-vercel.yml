@@ -1,8 +1,8 @@
 name: Deploy Pebble brand front (Vercel)
 
 # Creates/updates the nebutra-pebble Vercel project (root apps/pebble), attaches
-# pebble.nebutra.com, then deploys production. Complements point-pebble-dns.yml
-# which owns the Cloudflare CNAME.
+# pebble.nebutra.com, then deploys production. Complements point-dns.yml
+# (host=pebble, target=vercel), which owns the Cloudflare CNAME.
 
 on:
   # DOMAINS.md: pebble production is ECS PM2; Vercel is optional. Manual only

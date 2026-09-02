@@ -36,7 +36,7 @@
 | API keys / webhooks / provider keys | `app.nebutra.com/settings/{api-keys,webhooks,provider-keys}` |
 | Docs / API / SSO | `docs` / `api` / `sso` — existing hosts |
 
-Do not add `apps/open`, `api.open.*`, or a second Vercel project. Bring-up: land `/open` on landing, then run **Point open DNS to Vercel** (`point-open-dns.yml`) — it upserts the Cloudflare CNAME and attaches `open.nebutra.com` on `nebutra-landing`. Smoke `/` on the alias (must rewrite, must not 301 to apex).
+Do not add `apps/open`, `api.open.*`, or a second Vercel project. Bring-up: land `/open` on landing, then run **Point DNS** (`point-dns.yml`, host=`open`, target=`vercel`) — it upserts the Cloudflare CNAME and attaches `open.nebutra.com` on `nebutra-landing`. Smoke `/` on the alias (must rewrite, must not 301 to apex).
 
 Sign-in-with-Nebutra client registration is **not** self-serve yet. The catalog links the existing OIDC issuer and docs.
 
@@ -108,7 +108,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | `nebutra.com` / `www` | Vercel anycast / CNAME | **Vercel** landing | Marketing |
 | `docs.nebutra.com` | CNAME → Fly unique host **proxied** | **Fly** `nebutra-docs` | `deploy-fly.yml` app=`sailor-docs` |
 | `app.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `web` | Target: Vercel (`nebutra-web`) when builds are green |
-| `auth.nebutra.com` | Worker **custom domain** only (`workers_dev: false`) | **Auth edge**: `/api/auth/*` + Hyperdrive; UI → ECS. No `*.workers.dev` test URL. | Rollback: `point-auth-dns.yml` target=ecs; emergency Vercel only |
+| `auth.nebutra.com` | Worker **custom domain** only (`workers_dev: false`) | **Auth edge**: `/api/auth/*` + Hyperdrive; UI → ECS. No `*.workers.dev` test URL. | Rollback: `point-dns.yml` host=`auth` target=`ecs`; emergency Vercel only |
 | `api.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `api-gateway` | Stay on ECS origin |
 | `sso.nebutra.com` | CNAME → Fly unique host **proxied** | **Fly** `nebutra-idp` | **Permanent OIDC issuer** `https://sso.nebutra.com` |
 | `router.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `router` | Product edge :3106; Vercel project `nebutra-router` exists for future cutover |
@@ -119,7 +119,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | `pebble.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `pebble` :3017 | Brand front. Owner topology 2026-07-30: same ECS A pattern as app/api (not Vercel). nginx `conf.d/pebble.nebutra.com.conf`. Deploy: `deploy-ecs.yml` apps=`pebble`. Legacy `POST /v1/feedback` + `/diagnostics/*` reverse-proxy to api-gateway `/pebble/*`. |
 | `carina.nebutra.com` | CNAME → Fly unique host **proxied** | **Fly** `nebutra-carina` nginx static | Product docs (Astro) from `Nebutra/carina` `apps/docs`. Deploy: `deploy-carina-fly.yml`. ECS rsync is `rollback-carina-ecs` only. |
 | `status.nebutra.com` | A `106.15.4.31` proxied | **ECS nginx** reverse-proxy → landing `/status` | vhost `conf.d/status.nebutra.com.conf` (no 301 to apex). Content from Vercel landing. Future: pure Vercel CNAME when CF token has DNS Edit + landing prod green (`point-status-dns-vercel.sh`). |
-| `open.nebutra.com` | CNAME `cname.vercel-dns.com` **proxied** | **Vercel landing** host alias | Bind on project `nebutra-landing` (`point-open-dns.yml`). Rewrite `/` → `/open`. Console: `https://app.nebutra.com/settings/developers`. Do not add `apps/open` or `api.open.*`. |
+| `open.nebutra.com` | CNAME `cname.vercel-dns.com` **proxied** | **Vercel landing** host alias | Bind on project `nebutra-landing` (`point-dns.yml` host=`open` target=`vercel`). Rewrite `/` → `/open`. Console: `https://app.nebutra.com/settings/developers`. Do not add `apps/open` or `api.open.*`. |
 | `design.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `design-docs` :3004 | nginx `conf.d/design.nebutra.com.conf`. Deploy: `deploy-ecs.yml` apps=`design-docs`. Without PM2 → CF 502; without vhost → 301 apex. DNS: `point-design-dns-ecs.sh`. |
 
 ### Topology layers
