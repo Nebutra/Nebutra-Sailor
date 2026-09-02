@@ -165,18 +165,44 @@ the origin backend. It does not become a deployment target by itself.
 
 ## Migration State
 
-Current workflows still contain legacy ECS/k8s deployment paths. The accepted
-target is to migrate those paths behind per-service `DEPLOY_TARGET_*` selectors.
-The old global `DEPLOY_TARGET` gate is a temporary compatibility bridge only; it
-must not become the long-term DX contract.
+Updated 2026-09-02. The Kubernetes deployer (`.github/workflows/deploy.yml`:
+kustomize + kubectl, auto-triggered by the image publish and gated on the global
+`vars.DEPLOY_TARGET == 'k8s'`) and the container image publish
+(`.github/workflows/docker-build-push.yml`: GHCR + ECR + Artifact Registry,
+cosign, Trivy) were retired after five months without a run, together with the
+temporary `tmp-vercel-git-deploy-docs.yml`. With them went the last use of the
+global `DEPLOY_TARGET` gate, which was only ever a compatibility bridge. The
+per-service `DEPLOY_TARGET_*` selectors are the only gate;
+`tests/architecture/deploy-substrate.test.ts` fails if any workflow deploys to
+Kubernetes on an automatic trigger or reintroduces the global gate.
 
-Migration sequence:
+The same retirement orphaned the default origin path. `deploy-origin-ecs.yml`
+(`python-ai -> ecs-docker`) auto-triggered on `Docker Build & Push` completing
+and deployed the `ghcr.io/<owner>/nebutra-ai:sha-<sha>` image that workflow
+built — its only producer. A `workflow_run` trigger on a workflow that no
+longer exists never fires and nothing reports it, so the trigger was dropped
+rather than left as a promise: the origin deploy is `workflow_dispatch`-only
+until an image-publish workflow returns, and its `image_tag` input must name an
+image that was pushed by hand. The `DEPLOY_TARGET_PYTHON_AI` gate on the job
+stays as the re-activation seam. The automatic path had never run (zero runs as
+of 2026-09-02). `deploy-substrate.test.ts` also fails if any `workflow_run`
+trigger names a workflow that does not exist.
+
+`infra/iac/k8s/` and `infra/iac/railway/` stay on disk as implementations, not
+promises — experimental, not exercised by CI since 2026-04, not part of the
+default create-sailor template, validate before use; each README says so. The
+`k8s` and `railway` values remain in `@nebutra/preset/deploy-target` so a
+consumer can select them; selecting one is an operator decision that needs its
+own gated workflow. Legacy ECS paths (`deploy-ecs.yml`) remain as manual
+fallback.
+
+Remaining sequence:
 
 1. Use `@nebutra/preset/deploy-target` as the source of truth for target names,
    defaults, and env keys. Cloud portability is also governed by
    `infra/platforms/cloud-portability.json`.
 2. Gate each adapter job by the relevant per-service selector.
-3. Remove frontends from automatic VM/k8s deployment once Vercel projects and
+3. Remove frontends from automatic VM deployment once Vercel projects and
    env vars are verified.
 4. Add the Cloudflare Workers gateway adapter before flipping
    `DEPLOY_TARGET_GATEWAY=cloudflare-workers` in production.

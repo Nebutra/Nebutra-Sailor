@@ -124,3 +124,91 @@ healthRoutes.openapi(healthRoute, async (c) => {
 
   return c.json(body, statusCode as 200 | 503);
 });
+
+// ============================================
+// Readiness: GET /ready
+// ============================================
+//
+// /health is the liveness probe Fly hits every 15s (infra/fly/gateway.toml).
+// It has to stay 200 while a dependency is merely degraded, or Fly restarts a
+// machine that a restart cannot fix. That also means it cannot tell the truth
+// about the request path: on 2026-09-02 the Redis config behind the rate
+// limiter was broken for two days, every rate-limited route answered 500, and
+// /health reported 200 "degraded" the whole time.
+//
+// /ready is the honest one. It exercises the same dependencies a real request
+// does — an EVAL through the same @nebutra/cache client the rate limiter uses,
+// and a SELECT 1 through the system Prisma client — and answers 503 the moment
+// either fails. Point synthetic monitors and the public status page here;
+// leave Fly on /health.
+
+const READY_DEPENDENCIES = ["database", "redis"] as const;
+
+const readyChecksSchema = z.object({
+  database: dependencyStatusSchema,
+  redis: dependencyStatusSchema,
+});
+
+const readyRoute = createRoute({
+  method: "get",
+  path: "/ready",
+  tags: ["System"],
+  summary: "Readiness probe",
+  description:
+    "Exercises the real request-path dependencies — Redis through the rate-limit client and PostgreSQL — and returns 503 naming the failing ones when any is down. Not a liveness probe: do not point machine restarts at it.",
+  responses: {
+    200: {
+      description: "Every request-path dependency answered",
+      content: {
+        "application/json": {
+          schema: z.object({
+            ready: z.literal(true),
+            checks: readyChecksSchema,
+          }),
+        },
+      },
+    },
+    503: {
+      description: "At least one request-path dependency is down",
+      content: {
+        "application/json": {
+          schema: z.object({
+            ready: z.literal(false),
+            failing: z.array(z.enum(READY_DEPENDENCIES)),
+            checks: readyChecksSchema,
+          }),
+        },
+      },
+    },
+  },
+});
+
+function checkRedisRequestPath() {
+  // The rate limiter's store call is an EVAL through getRedis() — see
+  // middlewares/rateLimit.ts. A PING can succeed against a proxy or a
+  // misconfigured URL that EVAL then fails on, so probe with the same client
+  // and the same command family: this fails exactly when the limiter's store
+  // does.
+  return withTimeout(async () => {
+    const { getRedis } = await import("@nebutra/cache");
+    const redis = await getRedis();
+    const result = await redis.eval("return 1", [], []);
+    if (Number(result) !== 1) {
+      throw new Error(`Redis EVAL probe returned ${JSON.stringify(result)}`);
+    }
+  });
+}
+
+healthRoutes.openapi(readyRoute, async (c) => {
+  c.header("Cache-Control", "no-cache, no-store");
+
+  const [database, redis] = await Promise.all([checkDatabase(), checkRedisRequestPath()]);
+  const checks = { database, redis };
+  const failing = READY_DEPENDENCIES.filter((name) => checks[name].status === "down");
+
+  if (failing.length > 0) {
+    return c.json({ ready: false as const, failing, checks }, 503);
+  }
+
+  return c.json({ ready: true as const, checks }, 200);
+});

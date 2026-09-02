@@ -88,6 +88,85 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/misc/ready": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Readiness probe
+     * @description Exercises the real request-path dependencies — Redis through the rate-limit client and PostgreSQL — and returns 503 naming the failing ones when any is down. Not a liveness probe: do not point machine restarts at it.
+     */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Every request-path dependency answered */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              /** @enum {boolean} */
+              ready: true;
+              checks: {
+                database: {
+                  /** @enum {string} */
+                  status: "up" | "down";
+                  latencyMs: number;
+                };
+                redis: {
+                  /** @enum {string} */
+                  status: "up" | "down";
+                  latencyMs: number;
+                };
+              };
+            };
+          };
+        };
+        /** @description At least one request-path dependency is down */
+        503: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              /** @enum {boolean} */
+              ready: false;
+              failing: ("database" | "redis")[];
+              checks: {
+                database: {
+                  /** @enum {string} */
+                  status: "up" | "down";
+                  latencyMs: number;
+                };
+                redis: {
+                  /** @enum {string} */
+                  status: "up" | "down";
+                  latencyMs: number;
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/system/status": {
     parameters: {
       query?: never;
@@ -380,6 +459,85 @@ export interface paths {
                   latencyMs: number;
                 };
                 cache: {
+                  /** @enum {string} */
+                  status: "up" | "down";
+                  latencyMs: number;
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/misc/ready": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Readiness probe
+     * @description Exercises the real request-path dependencies — Redis through the rate-limit client and PostgreSQL — and returns 503 naming the failing ones when any is down. Not a liveness probe: do not point machine restarts at it.
+     */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Every request-path dependency answered */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              /** @enum {boolean} */
+              ready: true;
+              checks: {
+                database: {
+                  /** @enum {string} */
+                  status: "up" | "down";
+                  latencyMs: number;
+                };
+                redis: {
+                  /** @enum {string} */
+                  status: "up" | "down";
+                  latencyMs: number;
+                };
+              };
+            };
+          };
+        };
+        /** @description At least one request-path dependency is down */
+        503: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              /** @enum {boolean} */
+              ready: false;
+              failing: ("database" | "redis")[];
+              checks: {
+                database: {
+                  /** @enum {string} */
+                  status: "up" | "down";
+                  latencyMs: number;
+                };
+                redis: {
                   /** @enum {string} */
                   status: "up" | "down";
                   latencyMs: number;

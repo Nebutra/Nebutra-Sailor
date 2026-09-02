@@ -7,7 +7,7 @@
 #
 # After DNS:
 #   vercel domains add open.nebutra.com --project nebutra-landing --scope nebutra
-#   (or run .github/workflows/point-open-dns.yml, which attaches the domain)
+#   (or run .github/workflows/point-dns.yml host=open target=vercel, which attaches the domain)
 #
 # Body rules (match point-www / point-status / point-carina):
 # - Never include a `comment` field — some tokens return CF 10000 on write.

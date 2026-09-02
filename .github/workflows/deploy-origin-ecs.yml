@@ -16,13 +16,23 @@ on:
           - gcp
           - railway
       image_tag:
-        description: "Container tag to deploy for ghcr.io/<owner>/nebutra-ai"
+        description: "Container tag to deploy for ghcr.io/<owner>/nebutra-ai; the image must already exist in GHCR (no CI workflow publishes it)"
         required: false
         default: "latest"
-  workflow_run:
-    workflows: ["Docker Build & Push"]
-    branches: [main]
-    types: [completed]
+  # The automatic trigger was workflow_run on "Docker Build & Push"
+  # (docker-build-push.yml), the only producer of ghcr.io/<owner>/nebutra-ai.
+  # That workflow was retired on 2026-09-02 after five months without a run
+  # (ADR 2026-06-04, Migration State). A workflow_run trigger that names a
+  # workflow which does not exist never fires and nothing reports it, so the
+  # trigger left with the publisher instead of sitting here as a promise;
+  # tests/architecture/deploy-substrate.test.ts fails on any dangling
+  # workflow_run reference. This workflow is workflow_dispatch-only until an
+  # image-publish workflow returns. To re-activate, add back
+  #   workflow_run:
+  #     workflows: ["<the publish workflow name>"]
+  #     branches: [main]
+  #     types: [completed]
+  # and the workflow_run branch of the job if: below gates it again.
 
 permissions:
   contents: read
@@ -37,6 +47,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     environment: ecs-origin
+    # The workflow_run branch is the re-activation seam for an image-publish
+    # trigger (see the note under on: above); unreachable until one is restored.
     if: >-
       (github.event_name == 'workflow_dispatch' && (inputs.deploy_target == 'vm-docker' || inputs.deploy_target == 'ecs-docker')) ||
       (github.event_name == 'workflow_run' &&

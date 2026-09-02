@@ -1,0 +1,310 @@
+name: Point DNS
+
+# One parameterized DNS cutover for every nebutra.com host this monorepo owns.
+# Replaces the twelve one-shot point-<host>-dns.yml workflows. Each supported
+# (host, target) pair dispatches to the same infra/ops/scripts/point-*.sh the
+# one-shots called; nothing else is rewritten.
+#
+# Support matrix (anything else fails fast in the resolve step):
+#   auth      cloudflare-worker (production) | ecs (China fallback) | vercel (emergency only)
+#   docs      ecs (emergency default) | cloudflare-worker | vercel
+#   design, forge, kuanlan, router   ecs
+#   carina, open, pebble, status     vercel   (open also attaches the domain on nebutra-landing)
+#   www       apex           CNAME www → nebutra.com
+#   leak      authoritative  NS delegation + glue → ECS authoritative forge-dns-leak (DNS-only,
+#                            never orange-cloud ns1.leak — that hides recursive source IPs)
+
+on:
+  workflow_dispatch:
+    inputs:
+      host:
+        description: "Host label under nebutra.com"
+        required: true
+        type: choice
+        options:
+          - auth
+          - carina
+          - design
+          - docs
+          - forge
+          - kuanlan
+          - leak
+          - open
+          - pebble
+          - router
+          - status
+          - www
+      target:
+        description: "DNS target — see the support matrix at the top of point-dns.yml"
+        required: true
+        type: choice
+        options:
+          - cloudflare-worker
+          - ecs
+          - vercel
+          - apex
+          - authoritative
+
+permissions:
+  contents: read
+
+concurrency:
+  group: point-dns-${{ inputs.host }}
+  cancel-in-progress: false
+
+jobs:
+  dns:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      DNS_HOST: ${{ inputs.host }}
+      DNS_TARGET: ${{ inputs.target }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Resolve script for host/target
+        id: resolve
+        run: |
+          set -euo pipefail
+          case "${DNS_HOST}/${DNS_TARGET}" in
+            auth/cloudflare-worker) script=point-auth-dns-cloudflare-worker.sh ;;
+            auth/ecs)               script=point-auth-dns-ecs.sh ;;
+            auth/vercel)            script=point-auth-dns-vercel.sh ;;
+            carina/vercel)          script=point-carina-dns-vercel.sh ;;
+            design/ecs)             script=point-design-dns-ecs.sh ;;
+            docs/ecs)               script=point-docs-dns-ecs.sh ;;
+            docs/cloudflare-worker) script=point-docs-dns-cloudflare-worker.sh ;;
+            docs/vercel)            script=point-docs-dns-vercel.sh ;;
+            forge/ecs)              script=point-forge-dns-ecs.sh ;;
+            kuanlan/ecs)            script=point-kuanlan-dns-ecs.sh ;;
+            leak/authoritative)     script=point-leak-zone-dns.sh ;;
+            open/vercel)            script=point-open-dns-vercel.sh ;;
+            pebble/vercel)          script=point-pebble-dns-vercel.sh ;;
+            router/ecs)             script=point-router-dns-ecs.sh ;;
+            status/vercel)          script=point-status-dns-vercel.sh ;;
+            www/apex)               script=point-www-dns-apex.sh ;;
+            *)
+              case "$DNS_HOST" in
+                auth) supported="cloudflare-worker ecs vercel" ;;
+                docs) supported="ecs cloudflare-worker vercel" ;;
+                design|forge|kuanlan|router) supported="ecs" ;;
+                carina|open|pebble|status) supported="vercel" ;;
+                www) supported="apex" ;;
+                leak) supported="authoritative" ;;
+                *) supported="(none)" ;;
+              esac
+              echo "::error::unsupported combination host=${DNS_HOST} target=${DNS_TARGET} — ${DNS_HOST} supports: ${supported}"
+              exit 1
+              ;;
+          esac
+          test -f "infra/ops/scripts/${script}" || { echo "::error::infra/ops/scripts/${script} not found"; exit 1; }
+          echo "script=infra/ops/scripts/${script}" >> "$GITHUB_OUTPUT"
+          echo "${DNS_HOST}.nebutra.com -> ${DNS_TARGET} via infra/ops/scripts/${script}"
+
+      - name: Point ${{ inputs.host }}.nebutra.com → ${{ inputs.target }}
+        env:
+          # auth alone may fall back to the Workers token (its one-shot did); every
+          # other host requires the Zone DNS Edit token by name.
+          CLOUDFLARE_API_TOKEN: ${{ (inputs.host == 'auth' && (secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFLARE_WORKERS_API_TOKEN)) || secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+          CF_ZONE_ID: ${{ vars.CF_ZONE_ID || '' }}
+          ECS_HOST: ${{ vars.ECS_HOST || vars.VM_HOST || '106.15.4.31' }}
+          # leak only — point-leak-zone-dns.sh reads these two; every other script
+          # assigns its own ZONE_NAME / ORIGIN_IP and ignores them.
+          ZONE_NAME: nebutra.com
+          ORIGIN_IP: ${{ vars.ECS_HOST || vars.VM_HOST || '106.15.4.31' }}
+          SCRIPT: ${{ steps.resolve.outputs.script }}
+        run: |
+          set -euo pipefail
+          test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::CLOUDFLARE_API_TOKEN secret missing"; exit 1; }
+          bash "$SCRIPT"
+
+      - name: Attach open.nebutra.com on nebutra-landing
+        if: inputs.host == 'open'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
+        run: |
+          set -euo pipefail
+          if [ -z "${VERCEL_TOKEN:-}" ]; then
+            echo "::error::VERCEL_TOKEN is not set"; exit 1
+          fi
+          if [ -z "${VERCEL_ORG_ID:-}" ]; then
+            echo "::error::VERCEL_ORG_ID is not set"; exit 1
+          fi
+
+          api() {
+            curl -sS -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" "$@"
+          }
+
+          api "https://api.vercel.com/v9/projects?teamId=${VERCEL_ORG_ID}&limit=100" > projects.json
+          python3 - <<'PY' > resolved.env
+          import json
+          data = json.load(open("projects.json"))
+          names = {p["name"]: p for p in data.get("projects", [])}
+          for candidate in ("nebutra-landing", "landing", "nebutra-landing-page", "landing-page"):
+              if candidate in names:
+                  p = names[candidate]
+                  print("PROJECT_ID=" + p["id"])
+                  break
+          else:
+              raise SystemExit("landing project not found: " + ", ".join(sorted(names)))
+          PY
+          set -a
+          # shellcheck disable=SC1091
+          . ./resolved.env
+          set +a
+          echo "project=$PROJECT_ID"
+
+          echo "Attaching domain open.nebutra.com (idempotent)"
+          api -X POST "https://api.vercel.com/v10/projects/${PROJECT_ID}/domains?teamId=${VERCEL_ORG_ID}" \
+            -d '{"name":"open.nebutra.com"}' > domain.json || true
+          python3 -c 'import json; d=json.load(open("domain.json")); print("domain", d.get("name") or d.get("error",{}).get("code"), d.get("verified", d.get("error")))'
+
+      - name: Smoke ${{ inputs.host }}.nebutra.com
+        env:
+          ORIGIN_IP: ${{ vars.ECS_HOST || vars.VM_HOST || '106.15.4.31' }}
+        run: |
+          set -euo pipefail
+          host_of() { printf '%s' "$1" | sed -E 's#^https?://([^/]+).*#\1#'; }
+          case "$DNS_HOST" in
+            auth)
+              for i in 1 2 3 4 5 6 7 8; do
+                code=$(curl -sS -o /tmp/ah.json -w '%{http_code}' --max-time 25 https://auth.nebutra.com/health || echo 000)
+                echo "try $i health -> $code"
+                if [ "$code" = "200" ]; then
+                  head -c 500 /tmp/ah.json; echo
+                  break
+                fi
+                sleep 12
+              done
+              if [ "$DNS_TARGET" = "ecs" ]; then
+                echo "ECS origin: Google probe may network_error (expected in CN)."
+                exit 0
+              fi
+              echo "=== Google pairing probe (expect pair_ok on CF Worker / overseas) ==="
+              for i in 1 2 3 4 5 6; do
+                code=$(curl -sS -o /tmp/ag.json -w '%{http_code}' --max-time 40 \
+                  'https://auth.nebutra.com/health?probe=google' || echo 000)
+                echo "try $i probe -> $code"
+                if [ "$code" != "200" ]; then
+                  sleep 12
+                  continue
+                fi
+                status=$(python3 -c 'import json; d=json.load(open("/tmp/ag.json")); print(((d.get("oauth") or {}).get("googlePairing") or {}).get("status") or "")')
+                python3 -c 'import json; d=json.load(open("/tmp/ag.json")); print(json.dumps((d.get("oauth") or {}).get("googlePairing"), indent=2))'
+                case "$status" in
+                  pair_ok)
+                    echo "google pairing OK on auth.nebutra.com"
+                    exit 0
+                    ;;
+                  network_error)
+                    echo "still network_error — DNS may not have reached overseas origin yet"
+                    sleep 12
+                    ;;
+                  invalid_client)
+                    echo "::error::invalid_client — fix GOOGLE_CLIENT_SECRET on Worker secrets"
+                    exit 1
+                    ;;
+                  *)
+                    echo "status=$status (continuing)"
+                    sleep 8
+                    ;;
+                esac
+              done
+              echo "::warning::health ok but google probe not pair_ok yet"
+              exit 0
+              ;;
+            carina|pebble)
+              # Best-effort until the Vercel domain is attached.
+              for i in 1 2 3 4 5 6; do
+                code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "https://${DNS_HOST}.nebutra.com/" || echo 000)
+                echo "attempt $i ${DNS_HOST}=$code"
+                # 200 after deploy; 404/502 still prove DNS+TLS is live
+                if [ "$code" != "000" ] && [ "$code" != "000000" ]; then
+                  case "$code" in
+                    200|301|302|307|308|404|502|503) exit 0 ;;
+                  esac
+                fi
+                sleep 15
+              done
+              echo "${DNS_HOST} still unreachable after retries (DNS prop?)"
+              exit 1
+              ;;
+            design|open|status)
+              # Must answer 200 and stay on its own host (no 301 to apex).
+              for i in 1 2 3 4 5 6 7 8; do
+                read -r code final < <(curl -sSL -o /tmp/alias.html \
+                  -w '%{http_code} %{url_effective}\n' --max-time 25 "https://${DNS_HOST}.nebutra.com/" 2>/dev/null || echo "000 -")
+                echo "try $i -> $code $final"
+                if [ "$code" = "200" ] && [ "$(host_of "$final")" = "${DNS_HOST}.nebutra.com" ]; then
+                  head -c 400 /tmp/alias.html; echo
+                  exit 0
+                fi
+                if [ "$code" = "200" ]; then
+                  echo "::warning::${DNS_HOST} left its host: ended on $final"
+                fi
+                sleep 12
+              done
+              if [ "$DNS_HOST" = "design" ]; then
+                echo "::warning::DNS may be set but design-docs PM2 not healthy yet — deploy apps=design-docs"
+              else
+                echo "::warning::DNS may be set but Vercel domain binding not ready yet"
+              fi
+              curl -sSI --max-time 15 "https://${DNS_HOST}.nebutra.com/" || true
+              exit 0
+              ;;
+            docs)
+              echo "=== headers (no follow) ==="
+              curl -sSI --max-redirs 0 --max-time 20 https://docs.nebutra.com/en | head -25 || true
+              echo "=== body logo markers ==="
+              code=$(curl -sS -o /tmp/docs.html -w '%{http_code}' --max-time 30 -L https://docs.nebutra.com/en || echo 000)
+              echo "GET /en -> $code"
+              if [ "$code" = "200" ]; then
+                if grep -qE '535\.71|currentColor|text-brand-mark' /tmp/docs.html; then
+                  echo "logo: inline SVG markers present"
+                elif grep -qi 'logo-horizontal-en' /tmp/docs.html; then
+                  echo "::warning::still serving public/logo img path"
+                fi
+              fi
+              ;;
+            forge|kuanlan|router)
+              for i in 1 2 3 4 5 6 7 8; do
+                code=$(curl -sS -o /tmp/origin.html -w '%{http_code}' --max-time 25 "https://${DNS_HOST}.nebutra.com/" || echo 000)
+                echo "try $i -> $code"
+                if [ "$code" = "200" ] || [ "$code" = "307" ] || [ "$code" = "302" ]; then
+                  head -c 400 /tmp/origin.html; echo
+                  exit 0
+                fi
+                sleep 12
+              done
+              echo "::warning::DNS may be set but origin not ready yet"
+              curl -sSI --max-time 15 "https://${DNS_HOST}.nebutra.com/" || true
+              exit 0
+              ;;
+            leak)
+              echo "=== NS leak.nebutra.com ==="
+              dig NS leak.nebutra.com +short || true
+              echo "=== A ns1.leak.nebutra.com ==="
+              dig A ns1.leak.nebutra.com +short || true
+              echo "=== SOA @origin (may fail until forge-dns-leak listens on :53) ==="
+              dig @"$ORIGIN_IP" SOA leak.nebutra.com +norecurse +time=3 || true
+              ;;
+            www)
+              for i in 1 2 3 4 5; do
+                code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 https://www.nebutra.com/ || echo 000)
+                refer=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 'https://www.nebutra.com/refer?code=smoke' || echo 000)
+                echo "attempt $i apex-www=$code www-refer=$refer"
+                if [ "$code" = "200" ] && [ "$refer" = "200" ]; then
+                  exit 0
+                fi
+                sleep 15
+              done
+              echo "www still not healthy after retries (DNS prop?)"
+              exit 1
+              ;;
+            *)
+              echo "::error::no smoke defined for host=${DNS_HOST}"
+              exit 1
+              ;;
+          esac

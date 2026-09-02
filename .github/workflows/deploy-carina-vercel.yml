@@ -4,7 +4,7 @@ name: Deploy Carina docs (Vercel)
 # Checks out public Nebutra/carina (apps/docs), ensures Vercel project
 # nebutra-carina + domain + Git link, deploys production using Sailor VERCEL_*.
 # Day-2 deploys can also run from the Carina repo once it has the same secrets.
-# DNS: point-carina-dns.yml (this monorepo owns the nebutra.com zone).
+# DNS: point-dns.yml host=carina target=vercel (this monorepo owns the nebutra.com zone).
 #
 # Project id (optional var): VERCEL_CARINA_PROJECT_ID=prj_JN4csIJFkFiz1qoQCSYPXucmuJRx
 
@@ -134,7 +134,7 @@ jobs:
               echo "::warning::Vercel Hobby daily deploy quota exhausted or upload deferred."
               echo "::warning::Project ${PROJECT_NAME} (${PROJECT_ID}) and domain ${DOMAIN} are provisioned."
               echo "::warning::Re-run this workflow after the quota window resets (or upgrade the Vercel plan)."
-              echo "::notice::DNS is independent: run Point carina DNS to Vercel when CLOUDFLARE_API_TOKEN has Zone DNS Edit."
+              echo "::notice::DNS is independent: run Point DNS (host=carina, target=vercel) when CLOUDFLARE_API_TOKEN has Zone DNS Edit."
               # Soft-fail: provisioning succeeded; a full cap is not a config defect.
               exit 0
             fi
@@ -153,5 +153,5 @@ jobs:
             fi
             sleep 15
           done
-          echo "::error::carina.nebutra.com not healthy after deploy. Check DNS (point-carina-dns) and Vercel domain."
+          echo "::error::carina.nebutra.com not healthy after deploy. Check DNS (point-dns.yml host=carina) and Vercel domain."
           exit 1

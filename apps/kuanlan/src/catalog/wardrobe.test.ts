@@ -20,39 +20,53 @@ describe("wardrobe", () => {
     expect(
       pieces.every((piece) => piece.sample.startsWith("https://cdn.nebutra.com/kuanlan/wardrobe/")),
     ).toBe(true);
-    expect(pieces.every((piece) => piece.sample.endsWith(".png"))).toBe(true);
+    expect(pieces.every((piece) => piece.sample.endsWith(".jpg?v=incamera"))).toBe(true);
     expect(listPublicSkus().some((sku) => sku.kind === "garment")).toBe(true);
     expect(listPublicSkus().some((sku) => sku.kind === "id-photo")).toBe(true);
     expect(pieces.every((piece) => piece.origin === "platform")).toBe(true);
     expect(pieces.every((piece) => piece.brand === BRAND.skuMark)).toBe(true);
   });
 
-  it("ships an alpha PNG still for every piece, not a portrait", async () => {
+  it("ships an in-camera still for every piece, not a CV cutout or a portrait", async () => {
     const dir = join(dirname(fileURLToPath(import.meta.url)), "../../public/wardrobe");
+    const compose = readFileSync(
+      join(dirname(fileURLToPath(import.meta.url)), "../lib/garment-stills.ts"),
+      "utf8",
+    );
+    expect(compose).toMatch(/composeGarmentStill[\s\S]*jpeg/);
+    expect(compose).toMatch(/composeGarmentStill[\s\S]*return sharp/);
+    expect(compose).not.toMatch(/composeGarmentStill[\s\S]*matteConnectedBackground/);
+
     for (const piece of listWardrobePieces()) {
-      const file = join(dir, `${piece.id}.png`);
+      const file = join(dir, `${piece.id}.jpg`);
       expect(existsSync(file)).toBe(true);
-      const { data, info } = await sharp(file).ensureAlpha().raw().toBuffer({
+      const meta = await sharp(file).metadata();
+      const { data, info } = await sharp(file).raw().toBuffer({
         resolveWithObject: true,
       });
-      expect(info.channels).toBe(4);
-      let edge = 0;
-      let mid = 0;
-      let n = 0;
-      const alpha = (x: number, y: number) => data[(y * info.width + x) * info.channels + 3] ?? 0;
-      for (let y = 0; y < 12; y += 1) {
-        for (let x = 0; x < 12; x += 1) {
-          edge += alpha(x, y) + alpha(info.width - 1 - x, y);
-          n += 2;
+      expect(meta.format).toBe("jpeg");
+      const pixel = (x: number, y: number) => {
+        const i = (y * info.width + x) * info.channels;
+        return [data[i] ?? 0, data[i + 1] ?? 0, data[i + 2] ?? 0];
+      };
+      const luma = (rgb: number[]) => 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
+      const corner = luma(pixel(8, 8));
+      const body = luma(pixel(Math.floor(info.width * 0.35), Math.floor(info.height * 0.55)));
+      expect(corner).toBeGreaterThan(70);
+      expect(corner).toBeLessThan(180);
+      expect(body).toBeLessThan(80);
+      if (piece.id !== "oxford") {
+        let collar = 0;
+        for (let y = Math.floor(info.height * 0.12); y < Math.floor(info.height * 0.42); y += 1) {
+          for (let x = Math.floor(info.width * 0.35); x < Math.floor(info.width * 0.65); x += 1) {
+            const rgb = pixel(x, y);
+            if (luma(rgb) > 200 && Math.abs(rgb[0] - rgb[1]) < 24) {
+              collar += 1;
+            }
+          }
         }
+        expect(collar).toBeGreaterThan(80);
       }
-      for (let y = Math.floor(info.height / 2) - 6; y < Math.floor(info.height / 2) + 6; y += 1) {
-        for (let x = Math.floor(info.width / 2) - 6; x < Math.floor(info.width / 2) + 6; x += 1) {
-          mid += alpha(x, y);
-        }
-      }
-      expect(edge / n).toBeLessThan(8);
-      expect(mid / 144).toBeGreaterThan(200);
     }
   });
 
@@ -79,8 +93,30 @@ describe("wardrobe", () => {
     expect(page).toContain("tile-brand");
     expect(page).toContain("piece.brand");
     expect(page).toContain("tile-photo-garment");
-    expect(page).toContain('data-ground="paper"');
+    expect(page).toContain('data-ground="smoke"');
+    expect(page).not.toContain('data-ground="paper"');
     expect(page).toContain("piece.specIdentity");
     expect(page).not.toMatch(/VLM|识图|上传|衣架/);
+
+    const css = readFileSync(
+      join(dirname(fileURLToPath(import.meta.url)), "../app/globals.css"),
+      "utf8",
+    );
+    expect(css).toContain(".masonry-item img.tile-photo-garment");
+    expect(css).toContain("var(--garment-ground");
+  });
+
+  it("does not compose wardrobe stills with a CV matte", () => {
+    const compose = readFileSync(
+      join(dirname(fileURLToPath(import.meta.url)), "../../scripts/compose-wardrobe-stills.ts"),
+      "utf8",
+    );
+    const shoot = readFileSync(
+      join(dirname(fileURLToPath(import.meta.url)), "../../scripts/shoot-wardrobe-still.ts"),
+      "utf8",
+    );
+    expect(compose).not.toContain("matteConnectedBackground");
+    expect(shoot).not.toContain("matteConnectedBackground");
+    expect(compose).toContain("composeGarmentStill");
   });
 });
