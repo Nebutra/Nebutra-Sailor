@@ -60,13 +60,13 @@ do not let every `main` push open a second Vercel bill.
 | Control | Where |
 |---------|--------|
 | `workflow_dispatch` only | `deploy-web-vercel.yml`, `deploy-auth-vercel.yml` |
-| `git.deploymentEnabled: false` | `apps/web/vercel.json`, `apps/auth/vercel.json` |
+| `git.deploymentEnabled: false` | `apps/web/vercel.json`, `apps/auth/vercel.json`, `apps/landing/vercel.json` |
 | `cancel-in-progress: true` | all Vercel deploy workflows |
 | `vercel deploy --archive=tgz` | all CLI deploys (15k-file monorepo limit) |
 | Root `.vercelignore` | drop backends / typelens / storybook / research from upload |
 | Pebble Vercel = workflow_dispatch only | `deploy-pebble-vercel.yml` (ECS primary) |
-| Landing deferred retry cron | `deploy-landing-vercel.yml` `19:17` UTC only |
-| Quota soft-fail (job green, site unchanged) | all deploy workflows |
+| Landing builds on GitHub, uploads `--prebuilt` | `deploy-landing-vercel.yml` — no Vercel build minutes, no nightly cron (2026-09-02) |
+| Quota soft-fail (job green, site unchanged) | web/auth/docs emergency workflows only; landing fails loudly |
 | kuanlan stays Git-linked | [vercel-spend.md](./vercel-spend.md) — `ignoreCommand`, never Unlink |
 
 **Ship logo / web UI without Vercel:** production `app.nebutra.com` is ECS —
