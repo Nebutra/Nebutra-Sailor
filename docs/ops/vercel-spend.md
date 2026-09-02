@@ -103,11 +103,19 @@ What was removed, and why:
   so a refused upload now fails the job and the summary says nothing shipped.
 
 `workflow_dispatch` with `promote: false` builds and uploads a preview URL
-only. Use it after touching the workflow or the build command, before the
-next main push promotes to nebutra.com. Variables marked **Sensitive** in the
-Vercel dashboard cannot be pulled by `vercel pull`; if the build needs one it
-fails on the runner rather than shipping without it — un-mark it or move it to
-a GitHub secret.
+only. By default it builds with the **production** environment variables, so
+it rehearses exactly what the next main push will ship; use it after touching
+the workflow or the build command.
+
+Variables marked **Sensitive** in the Vercel dashboard cannot be pulled;
+`vercel pull` writes them with an empty value. The first production run
+(2026-09-02) died in `new URL("")` because `NEXT_PUBLIC_SITE_URL`,
+`DOCS_ORIGIN_URL` and `NEXT_PUBLIC_API_URL` are flagged Sensitive on the
+production target — public URLs that gain nothing from the flag. The workflow
+now drops empty entries after the pull and exports the URLs declared in
+`apps/landing/vercel.json` `env`, the same values Vercel applies on its own
+builders. Un-flagging those three in the dashboard is still the tidy thing to
+do; the workflow no longer depends on it.
 
 ## kuanlan — same path as landing
 
