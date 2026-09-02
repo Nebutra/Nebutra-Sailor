@@ -23,8 +23,8 @@
 #   The old rule rebuilt every Vercel project on any package change and burned
 #   Hobby's ~100 deployments/day. Scope is intentional and per-app.
 #
-# landing builds on GitHub and ships prebuilt via deploy-landing-vercel.yml, so
-# its Git integration is off. web/auth/api production is not Vercel.
+# landing builds on GitHub and ships prebuilt via deploy-vercel.yml (app=landing),
+# so its Git integration is off. web/auth/api production is not Vercel.
 # kuanlan stays Git-linked as a leftover project; production is Fly Singapore
 # (is_fly_primary=1) — skip Vercel auto-deploy unless opted in. Do not Unlink.
 
@@ -225,7 +225,9 @@ EOF
       ;;
     apps/web)
       # Broad product app — still narrower than entire packages/
-      # Keep in sync with .github/workflows/deploy-web-vercel.yml paths.
+      # CI deploys of web to Vercel are workflow_dispatch only
+      # (.github/workflows/deploy-vercel.yml, app=web); this list only governs
+      # the Git integration.
       cat <<'EOF'
 apps/web
 packages/commerce

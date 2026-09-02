@@ -92,8 +92,8 @@ at Vercel. The ECS nginx vhost + rsync script stay as
 **Deploy:** `deploy-carina-fly.yml` (checks out `Nebutra/carina`, builds
 `apps/docs`, ships `dist/` as `infra/fly/Dockerfile.carina`).
 
-Legacy Vercel experiment (`deploy-carina-vercel.yml`) and ECS rsync
-(`deploy-carina-ecs.yml`) are superseded.
+Legacy Vercel experiment (`deploy-vercel.yml` `app=carina`, dispatch only)
+and ECS rsync (`deploy-carina-ecs.yml`) are superseded.
 
 **Bring-up order:** (1) Fly Machine healthy on `nebutra-carina.fly.dev`
 (2) `fly certs add carina.nebutra.com` + ACME CNAME (3) grey CNAME then

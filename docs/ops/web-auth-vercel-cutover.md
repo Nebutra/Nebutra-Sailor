@@ -59,14 +59,14 @@ do not let every `main` push open a second Vercel bill.
 
 | Control | Where |
 |---------|--------|
-| `workflow_dispatch` only | `deploy-web-vercel.yml`, `deploy-auth-vercel.yml` |
+| `workflow_dispatch` only for web/auth | `deploy-vercel.yml` `app=web` / `app=auth`; only `app=landing` has a push trigger |
 | `git.deploymentEnabled: false` | `apps/web/vercel.json`, `apps/auth/vercel.json`, `apps/landing/vercel.json` |
-| `cancel-in-progress: true` | all Vercel deploy workflows |
-| `vercel deploy --archive=tgz` | all CLI deploys (15k-file monorepo limit) |
+| `cancel-in-progress: true` | `deploy-vercel.yml`, one concurrency group per app |
+| `vercel deploy --prebuilt --archive=tgz` | every app: build on the GitHub runner, upload only `.vercel/output` |
 | Root `.vercelignore` | drop backends / typelens / storybook / research from upload |
-| Pebble Vercel = workflow_dispatch only | `deploy-pebble-vercel.yml` (ECS primary) |
-| Landing builds on GitHub, uploads `--prebuilt` | `deploy-landing-vercel.yml` — no Vercel build minutes, no nightly cron (2026-09-02) |
-| Quota soft-fail (job green, site unchanged) | web/auth/docs emergency workflows only; landing fails loudly |
+| Pebble Vercel = workflow_dispatch only | `deploy-vercel.yml` `app=pebble` (ECS primary) |
+| Every app builds on GitHub, uploads `--prebuilt` | `deploy-vercel.yml` — no Vercel build minutes, no nightly cron (2026-09-02) |
+| Refused upload fails the job | every app; the step summary says nothing shipped (soft-fail removed with the consolidation) |
 | kuanlan stays Git-linked | [vercel-spend.md](./vercel-spend.md) — `ignoreCommand`, never Unlink |
 
 **Ship logo / web UI without Vercel:** production `app.nebutra.com` is ECS —
