@@ -130,7 +130,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | **Vercel** | Git-native frontends | landing, docs (+ web/auth when cut over) |
 | **ECS (slim)** | Origin processes | web*, auth*, api, sso/idp |
 
-\* web/auth currently origin on ECS; Vercel Git auto-deploy for those two is off in `vercel.json`. kuanlan stays Git-linked and is skipped until `package.json` lands — [vercel-spend.md](./ops/vercel-spend.md). Product-edge Fly Machines: [fly-origin.md](./ops/fly-origin.md) (DNS still ECS until `FLY_API_TOKEN` + cutover).
+\* web/auth currently origin on ECS; Vercel Git auto-deploy for those two is off in `vercel.json`. kuanlan stays Git-linked and is skipped until `package.json` lands — [vercel-spend.md](./ops/nebutra/vercel-spend.md). Product-edge Fly Machines: [fly-origin.md](./ops/nebutra/fly-origin.md) (DNS still ECS until `FLY_API_TOKEN` + cutover).
 
 ### Repo variables (no drift)
 
@@ -148,7 +148,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 
 `deploy-ecs.yml` remains the **manual fallback** for ECS apps (`web` `auth` `api` `idp`, and optionally `landing` / `sailor-docs` / `design-docs`). Prefer **Cloudflare Workers (OpenNext)** for docs (`docs.nebutra.com`); Vercel is quota-limited Hobby fallback. Marketing (`nebutra.com`) stays on Vercel. Do **not** point `docs.nebutra.com` DNS at ECS in steady state — ECS sailor-docs is emergency-only.
 
-PM2 release / preflight gotchas (sibling wipe, webpack `build:vm`, explicit `apps=`): [ops/ecs-pm2-release-lessons.md](./ops/ecs-pm2-release-lessons.md).
+PM2 release / preflight gotchas (sibling wipe, webpack `build:vm`, explicit `apps=`): [ops/ecs-pm2-release-lessons.md](./ops/nebutra/ecs-pm2-release-lessons.md).
 
 ## DNS records (reference)
 

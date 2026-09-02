@@ -601,7 +601,6 @@ Each component has its own README with setup instructions and API documentation:
 <td><strong>Infrastructure</strong></td>
 <td>
   <a href="infra/runtime/docker/">Docker</a> · 
-  <a href="infra/iac/k8s/">Kubernetes</a> · 
   <a href="infra/iac/terraform/">Terraform</a> · 
   <a href="workflows/inngest/">Inngest</a> · 
   <a href="workflows/n8n/">n8n</a> · 

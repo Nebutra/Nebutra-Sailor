@@ -77,6 +77,7 @@ packages/              # Shared TypeScript libraries — categorized layout: <ca
     ai-providers/      AI provider metadata (consumed by @nebutra/agents)
   (+ ~59 more under platform/, ai/, ops/)
 
+ops/                   # nebutra/ — Nebutra-instance-only config; stripped from the template (TEMPLATE.md)
 infra/                 # iac/ + runtime/ + data/ + ops/  (W2.2)
 workflows/             # inngest/ + n8n/ + pusher/  (W2.3)
 e2e/                   # smoke/ + golden/ + sleptons/ + 4 playwright configs  (W2.1)

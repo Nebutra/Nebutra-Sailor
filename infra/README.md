@@ -57,6 +57,10 @@ Experimental — not exercised by CI since 2026-04 and not part of the default
 create-sailor template. Read [iac/k8s/README.md](iac/k8s/README.md) and validate
 the overlays before applying anything.
 
+Source repo only: `infra/iac/k8s/` is a dormant deploy kit outside the default
+topology (ADR 2026-06-04) and is stripped from the Sailor template, as is
+`infra/iac/railway/` (see `TEMPLATE.md`, "Instance vs product").
+
 ```bash
 # Preview manifests
 kubectl kustomize infra/iac/k8s/overlays/prod
