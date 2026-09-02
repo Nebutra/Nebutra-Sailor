@@ -23,8 +23,9 @@
 #   The old rule rebuilt every Vercel project on any package change and burned
 #   Hobby's ~100 deployments/day. Scope is intentional and per-app.
 #
-# Keep Git connected only for surfaces you want auto-deployed (typically
-# landing + kuanlan). web/auth/api production is ECS — optional on Vercel.
+# Keep Git connected only for surfaces you want auto-deployed (today: kuanlan).
+# landing builds on GitHub and ships prebuilt via deploy-landing-vercel.yml, so
+# its Git integration is off too. web/auth/api production is not Vercel.
 # kuanlan stays Git-linked while it is launching: skip when the app dir is
 # missing so empty monorepo pushes do not burn a failed build. Do not Unlink.
 

@@ -15,15 +15,48 @@ function readJson(rel: string): {
   };
 }
 
-describe("Vercel spend: keep kuanlan, stop web/auth auto-deploy", () => {
-  it("disables Git auto-deploy on ECS-primary Vercel projects only", () => {
+function readText(rel: string): string {
+  return readFileSync(resolve(repoRoot, rel), "utf8");
+}
+
+describe("Vercel spend: one build per commit, built on GitHub, kuanlan stays Git-linked", () => {
+  it("disables Git auto-deploy on every Vercel project that ships from CI", () => {
     expect(readJson("apps/web/vercel.json").git?.deploymentEnabled).toBe(false);
     expect(readJson("apps/auth/vercel.json").git?.deploymentEnabled).toBe(false);
-    expect(readJson("apps/landing/vercel.json").git?.deploymentEnabled).not.toBe(false);
+    // landing is deployed by deploy-landing-vercel.yml; a live Git integration
+    // would open a second remote build of the same commit.
+    expect(readJson("apps/landing/vercel.json").git?.deploymentEnabled).toBe(false);
+  });
+
+  it("builds landing on the GitHub runner and uploads prebuilt output", () => {
+    const workflow = readText(".github/workflows/deploy-landing-vercel.yml");
+    expect(workflow).toMatch(/vercel pull /);
+    expect(workflow).toMatch(/vercel build /);
+    expect(workflow).toMatch(/vercel deploy --prebuilt/);
+    // A bare `vercel deploy` (no --prebuilt) would move the build back onto
+    // Vercel's meter.
+    expect(workflow).not.toMatch(/vercel deploy --prod/);
+  });
+
+  it("does not redeploy landing on a schedule", () => {
+    // The nightly retry existed for the Hobby daily deployment cap. Under
+    // metered builds it rebuilt an unchanged site every evening.
+    const workflow = readText(".github/workflows/deploy-landing-vercel.yml");
+    expect(workflow).not.toMatch(/^\s*schedule:/m);
+    expect(workflow).not.toMatch(/cron:/);
+  });
+
+  it("does not rebuild sailor-docs for a lockfile-only change", () => {
+    const workflow = readText(".github/workflows/deploy-sailor-docs.yml");
+    const pushPaths = workflow.match(
+      /^\s+push:\n\s+branches: \[main\]\n\s+paths:\n((?:\s+(?:#.*|- .*)\n)+)/m,
+    );
+    expect(pushPaths, "push.paths block").not.toBeNull();
+    expect(pushPaths?.[1]).not.toMatch(/^\s+- "pnpm-lock\.yaml"/m);
   });
 
   it("does not treat kuanlan as an ECS-optional skip", () => {
-    const script = readFileSync(resolve(repoRoot, "scripts/vercel-ignore-build.sh"), "utf8");
+    const script = readText("scripts/vercel-ignore-build.sh");
     expect(script).toContain("apps/kuanlan");
     expect(script).toMatch(/apps\/web\|apps\/auth\|backends\/gateway/);
     expect(script).not.toMatch(/apps\/kuanlan[^\n]*is_ecs_optional/);
