@@ -43,6 +43,33 @@ my-app/ contains only the reusable skeleton
 - **Build artifacts** — `artifacts/`, `playwright-report/`, `test-results/`
 - **Env + locks** — `.env*` (except `.env.example`), `openstatus.lock`
 
+## Instance vs product — the declared boundary
+
+The repo is also **one deployment** of the template: Nebutra's. Anything that
+is true only for that deployment — its Fly apps, its DNS zone, its Vercel team,
+its ECS host, its bills — is *instance* content, and it has three declared
+homes so the split is a directory rule rather than a growing file list:
+
+| Kind | Instance (stripped) | Product (shipped) |
+| --- | --- | --- |
+| Config | `ops/` ([`ops/nebutra/README.md`](./ops/nebutra/README.md)) | `infra/` |
+| Runbooks | `docs/ops/nebutra/` | `docs/ops/` |
+| Architecture tests | `tests/architecture/nebutra/` | `tests/architecture/` |
+
+Workflows and Fly manifests have no directory split, so `.templateignore`
+names them one by one. The rule: a workflow or manifest ships in the template
+only when it carries no Nebutra instance literal (a `nebutra.com` host, a
+`nebutra-*` Fly or Worker app, the ECS IP, the Vercel team id). Every
+`infra/fly/*.toml` whose `app` starts with `nebutra-` is listed; brand
+replacement does not rewrite Fly app names.
+
+`tests/architecture/template-boundary.test.ts` builds the template with
+`scripts/template-build.ts` and asserts the output has none of those
+directories, none of those workflows or manifests, and no instance identifier
+outside a shrink-only residue list. Adding a Nebutra host, IP or account id to
+a file that ships fails that test; the fix is to move the file into one of the
+three homes, not to widen the residue list.
+
 ## What is preserved
 
 - Every `packages/*` primitive (UI, tokens, queue, search, metering, vault, …)

@@ -260,3 +260,85 @@ backends/gateway/src/routes/agent-runtime/
 .templateignore
 TEMPLATE.md
 apps/sailor-docs/
+
+# ---------------------------------------------------------------------------
+# Nebutra-instance ops vs Sailor-product boundary
+# Nebutra-Sailor is one Nebutra deployment AND the Sailor template. Anything
+# true only for Nebutra's own instance — its Fly org, its DNS zone, its Vercel
+# team, its ECS host, its bills — lives in one of three declared homes and
+# never ships in the mirror (TEMPLATE.md "Instance vs product"):
+#   ops/                        instance-only config (ops/nebutra/README.md)
+#   docs/ops/nebutra/           instance runbooks (bills, cutovers, hosts)
+#   tests/architecture/nebutra/ tests that assert Nebutra-instance facts
+# Workflows and Fly manifests have no directory split, so they are listed.
+# The rule: a workflow ships in the template only when it carries no Nebutra
+# instance literal (nebutra.com host, nebutra-* Fly/Worker app, ECS IP,
+# Vercel team id). Guard: tests/architecture/template-boundary.test.ts builds
+# the template and scans the output; scripts/template-check.ts checks the
+# rules statically. `/ops/` is anchored on purpose — a bare `ops/` would also
+# match packages/ops/ and infra/ops/.
+# ---------------------------------------------------------------------------
+/ops/
+docs/ops/nebutra/
+tests/architecture/nebutra/
+# Workflows hard-wired to Nebutra hosts, Fly apps, the ECS IP or the Vercel team
+.github/workflows/bootstrap-forge-dns-leak.yml
+.github/workflows/carina-upstream-sync.yml
+.github/workflows/deploy-auth-cloudflare.yml
+.github/workflows/deploy-fly-gateway.yml
+.github/workflows/deploy-fly.yml
+.github/workflows/deploy-kuanlan-nginx.yml
+.github/workflows/deploy-kuanlan-vercel.yml
+.github/workflows/issue-fly-certs.yml
+.github/workflows/ops-cloudflare-whoami.yml
+.github/workflows/ops-sync-auth-vercel-db.yml
+.github/workflows/ops-vm-reclaim.yml
+.github/workflows/ops-vm-triage.yml
+.github/workflows/point-design-dns.yml
+.github/workflows/point-kuanlan-dns.yml
+.github/workflows/point-leak-dns.yml
+.github/workflows/point-open-dns.yml
+.github/workflows/point-status-dns.yml
+# Fly manifests: every `app = "nebutra-…"` names an app in Nebutra's Fly org.
+# Brand replacement does not rewrite Fly app names, so none is a template
+# default. The two Dockerfiles and the nginx conf exist only for carina /
+# dns-leak, whose deploy workflows are stripped above.
+infra/fly/admin.toml
+infra/fly/auth.toml
+infra/fly/carina.toml
+infra/fly/design.toml
+infra/fly/dns-leak.toml
+infra/fly/forge.toml
+infra/fly/gateway.toml
+infra/fly/idp.toml
+infra/fly/kuanlan.toml
+infra/fly/new-api.toml
+infra/fly/pebble.toml
+infra/fly/router.toml
+infra/fly/sailor-docs.toml
+infra/fly/web.toml
+infra/fly/Dockerfile.carina
+infra/fly/Dockerfile.dns-leak
+infra/fly/carina.nginx.conf
+# Dormant deploy kits — not part of the default topology (ADR 2026-06-04);
+# the k8s configmaps and ingress carry nebutra.com hosts.
+infra/iac/k8s/
+infra/iac/railway/
+# Nebutra DNS-pointing and product-host scripts, consumed only by the
+# workflows stripped above (they carry the ECS IP and nebutra.com records).
+infra/ops/scripts/point-*
+infra/ops/scripts/install-kuanlan-nginx-vhost.sh
+infra/ops/scripts/install-router-v1-nginx.sh
+infra/ops/scripts/seed-kuanlan-router-key.sh
+infra/ops/scripts/seed-kuanlan-router-key.remote.py
+infra/ops/scripts/deploy-carina-docs-ecs.sh
+infra/ops/scripts/deploy-sailor-docs-ecs.sh
+# Nebutra Vercel-team / ECS cutover scripts (team id and host baked in)
+scripts/provision-admin-access.ts
+scripts/preflight-web-auth-vercel.mjs
+scripts/redeploy-web-auth-vercel.mjs
+# Source-repo-only guards: they read paths stripped above (Fly manifests,
+# deploy workflows, .templateignore itself), so they cannot run in a scaffold.
+tests/architecture/deploy-substrate.test.ts
+tests/architecture/deployment-runtime-closure.test.ts
+tests/architecture/template-boundary.test.ts

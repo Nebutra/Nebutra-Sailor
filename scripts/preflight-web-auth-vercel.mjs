@@ -98,6 +98,6 @@ console.log(
   "Optional: after Hobby deploy quota resets, run `node scripts/redeploy-web-auth-vercel.mjs`",
 );
 console.log(
-  "DNS flip only after green Vercel production — see docs/ops/web-auth-vercel-cutover.md",
+  "DNS flip only after green Vercel production — see docs/ops/nebutra/web-auth-vercel-cutover.md",
 );
 console.log("Not blocked: keep shipping on ECS; Vercel cutover is optional.");

@@ -71,7 +71,7 @@ Source: `src/app/[lang]/layout.tsx`. Brand rationale and anti-patterns:
   standalone → `MODULE_NOT_FOUND` / 500 on every page).
 - Deploy with **explicit** `apps=sailor-docs` only when possible. Preflight
   release pruning must never wipe sibling apps — see
-  `docs/ops/ecs-pm2-release-lessons.md`.
+  `docs/ops/nebutra/ecs-pm2-release-lessons.md`.
 
 ## Validation
 

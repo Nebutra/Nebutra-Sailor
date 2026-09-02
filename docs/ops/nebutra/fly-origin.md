@@ -3,9 +3,9 @@
 ECS PM2 is no longer the intended home for `forge` / `router` / `web` /
 `pebble` / `design` / `kuanlan` / `idp` / `admin` / `sailor-docs` / the auth UI / the Node api-gateway. Next product edges ship as
 standalone Machines in `sin` via
-[`.github/workflows/deploy-fly.yml`](../../.github/workflows/deploy-fly.yml).
+[`.github/workflows/deploy-fly.yml`](../../../.github/workflows/deploy-fly.yml).
 The Hono origin ships separately via
-[`.github/workflows/deploy-fly-gateway.yml`](../../.github/workflows/deploy-fly-gateway.yml)
+[`.github/workflows/deploy-fly-gateway.yml`](../../../.github/workflows/deploy-fly-gateway.yml)
 because it is not a Next standalone image.
 
 Landing and Cloudflare Workers (gateway-edge + auth-edge) stay put.
@@ -58,7 +58,7 @@ The GitHub `CLOUDFLARE_API_TOKEN` currently cannot write zone DNS
 (API 10000); cutover has to go through a token that has Zone DNS Edit,
 or the Cloudflare account API.
 
-Rollback is [`point-forge-dns-ecs.sh`](../../infra/ops/scripts/point-forge-dns-ecs.sh)
+Rollback is [`point-forge-dns-ecs.sh`](../../../infra/ops/scripts/point-forge-dns-ecs.sh)
 (and the sibling ECS DNS scripts).
 
 ## Secrets

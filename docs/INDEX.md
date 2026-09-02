@@ -116,8 +116,9 @@ Complete navigation to all project documentation.
 | Document                            | Description          |
 | ----------------------------------- | -------------------- |
 | [DOMAINS](./DOMAINS.md)             | Domain configuration (includes `open.nebutra.com`) |
-| [Vercel spend](./ops/vercel-spend.md) | Repo-owned ignore + Git flags; kuanlan stays linked |
+| [Vercel spend](./ops/nebutra/vercel-spend.md) | Repo-owned ignore + Git flags; kuanlan stays linked |
 | [Fly / China origin](./architecture/2026-08-31-fly-global-china-ecs-origin.md) | Fly sin product edges; ECS issuer / leak / rollback |
-| [Fly origin runbook](./ops/fly-origin.md) | FLY_API_TOKEN → deploy-fly.yml → optional DNS cutover |
+| [Nebutra-instance runbooks](./ops/nebutra/README.md) | Bills, cutovers, hosts of Nebutra's own deployment — stripped from the template |
+| [Fly origin runbook](./ops/nebutra/fly-origin.md) | FLY_API_TOKEN → deploy-fly.yml → optional DNS cutover |
 | [changelog](../CHANGELOG.md)        | Version history      |
 | [Alibaba Cloud ECS](./阿里云ECS部署指南.md) | ECS deployment guide |

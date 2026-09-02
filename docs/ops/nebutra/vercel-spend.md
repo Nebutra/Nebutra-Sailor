@@ -11,18 +11,9 @@ origin slice needs them, go in GitHub `FLY_API_TOKEN` or `fly auth` only.
 
 ## What the invoices actually said (2026-09-02 audit)
 
-Read from `GET /v1/invoices` with the owner's CLI token. Two usage invoices
-in the period that started 2026-08-23, each cut when accrued usage crossed
-$100:
-
-| Invoice | Total | Build CPU Minutes | Everything else combined |
-| --- | --- | --- | --- |
-| 2026-08-28 | $100.05 | $99.39 (33,998 CPU-min cumulative) | $0.66 |
-| 2026-09-01 | $101.49 | $99.79 (62,510 CPU-min cumulative) | $1.70 |
-
-Web Analytics events, Speed Insights, functions, ISR, image optimization and
-bandwidth were pennies. One seat. No marketplace add-ons, stores or domains.
-The bill is build CPU minutes, at about $22 a day, and two things made it:
+The invoice lines themselves are in [cost-history.md](./cost-history.md).
+Everything other than build CPU minutes was pennies; the bill ran at about
+$22 a day, and two things made it:
 
 1. **Turbo build machines.** Vercel's elastic machine selection promoted
    `nebutra-landing` and `nebutra-web` to `turbo` (30 vCPU) on 2026-08-20/22
@@ -71,11 +62,11 @@ of those builds actually run.
 
 | Project | Git | How it ships | Repo lock |
 | --- | --- | --- | --- |
-| `nebutra-landing` | connected, auto-deploy off | [`deploy-landing-vercel.yml`](../../.github/workflows/deploy-landing-vercel.yml): `vercel build` on the GitHub runner, then `vercel deploy --prebuilt` | [`apps/landing/vercel.json`](../../apps/landing/vercel.json) `git.deploymentEnabled: false`; `ignoreCommand` kept for the day Git is re-enabled |
-| `nebutra-kuanlan` | connected | Fly `nebutra-kuanlan` in `sin` via [`deploy-fly.yml`](../../.github/workflows/deploy-fly.yml) | [`apps/kuanlan/vercel.json`](../../apps/kuanlan/vercel.json) + Fly-primary skip |
-| `nebutra-web` | connected, auto-deploy off | [`deploy-web-vercel.yml`](../../.github/workflows/deploy-web-vercel.yml) `workflow_dispatch` | `git.deploymentEnabled: false` |
-| `nebutra-auth` | connected, auto-deploy off | [`deploy-auth-vercel.yml`](../../.github/workflows/deploy-auth-vercel.yml) `workflow_dispatch` | `git.deploymentEnabled: false` |
-| `nebutra-sailor-docs` | see [`deploy-sailor-docs.yml`](../../.github/workflows/deploy-sailor-docs.yml) | push job gated by `DEPLOY_TARGET_SAILOR_DOCS`; `pnpm-lock.yaml` is not a trigger | path filter in the workflow |
+| `nebutra-landing` | connected, auto-deploy off | [`deploy-landing-vercel.yml`](../../../.github/workflows/deploy-landing-vercel.yml): `vercel build` on the GitHub runner, then `vercel deploy --prebuilt` | [`apps/landing/vercel.json`](../../../apps/landing/vercel.json) `git.deploymentEnabled: false`; `ignoreCommand` kept for the day Git is re-enabled |
+| `nebutra-kuanlan` | connected | Fly `nebutra-kuanlan` in `sin` via [`deploy-fly.yml`](../../../.github/workflows/deploy-fly.yml) | [`apps/kuanlan/vercel.json`](../../../apps/kuanlan/vercel.json) + Fly-primary skip |
+| `nebutra-web` | connected, auto-deploy off | [`deploy-web-vercel.yml`](../../../.github/workflows/deploy-web-vercel.yml) `workflow_dispatch` | `git.deploymentEnabled: false` |
+| `nebutra-auth` | connected, auto-deploy off | [`deploy-auth-vercel.yml`](../../../.github/workflows/deploy-auth-vercel.yml) `workflow_dispatch` | `git.deploymentEnabled: false` |
+| `nebutra-sailor-docs` | see [`deploy-sailor-docs.yml`](../../../.github/workflows/deploy-sailor-docs.yml) | push job gated by `DEPLOY_TARGET_SAILOR_DOCS`; `pnpm-lock.yaml` is not a trigger | path filter in the workflow |
 
 Do not Unlink `nebutra-kuanlan`. Do not add web/auth push triggers back. Do
 not put a bare `vercel deploy` back into the landing workflow.
@@ -120,7 +111,7 @@ do; the workflow no longer depends on it.
 
 ## kuanlan — Fly-primary, leftover Vercel project
 
-[`apps/kuanlan/vercel.json`](../../apps/kuanlan/vercel.json) stays Git-linked
+[`apps/kuanlan/vercel.json`](../../../apps/kuanlan/vercel.json) stays Git-linked
 so the Vercel project does not need a Dashboard ritual. The ignore script
 exits 0 for `apps/kuanlan` unless someone opts in with
 `VERCEL_ALLOW_FLY_OPTIONAL=1` or `[vercel:apps/kuanlan]`.
@@ -130,4 +121,4 @@ Do not put kuanlan on the ECS-optional list. Do not Unlink the project.
 ## Next slice
 
 Global Fly Machines + Shanghai ECS as the China origin (not an ECS→Fly
-proxy): [2026-08-31-fly-global-china-ecs-origin.md](../architecture/2026-08-31-fly-global-china-ecs-origin.md).
+proxy): [2026-08-31-fly-global-china-ecs-origin.md](../../architecture/2026-08-31-fly-global-china-ecs-origin.md).

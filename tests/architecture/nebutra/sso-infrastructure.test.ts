@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const root = resolve(__dirname, "../..");
+const root = resolve(__dirname, "../../..");
 
 function readText(relativePath: string): string {
   return readFileSync(join(root, relativePath), "utf8");
@@ -49,7 +49,7 @@ describe("Enterprise SSO infrastructure contract", () => {
       ".env.example",
       "apps/web/.env.example",
       "docs/DOMAINS.md",
-      "docs/ops/ecs-mvp-env.md",
+      "docs/ops/nebutra/ecs-mvp-env.md",
       "docs/ops/enterprise-sso.md",
       "apps/sailor-docs/content/docs/en/configuration/environment-variables.mdx",
       "apps/sailor-docs/content/docs/zh/configuration/environment-variables.mdx",
@@ -72,8 +72,8 @@ describe("Enterprise SSO infrastructure contract", () => {
     const rootEnv = readText(".env.example");
     const idpEnv = readText("apps/idp/.env.example");
     const domains = readText("docs/DOMAINS.md");
-    const runbook = readText("docs/ops/nebutra-owned-sso.md");
-    const ecsEnv = readText("docs/ops/ecs-mvp-env.md");
+    const runbook = readText("docs/ops/nebutra/nebutra-owned-sso.md");
+    const ecsEnv = readText("docs/ops/nebutra/ecs-mvp-env.md");
     const composeProd = readText("docker-compose.prod.yml");
     const nginx = readText("infra/runtime/nginx/nginx.conf");
     const nginxReadme = readText("infra/runtime/nginx/README.md");

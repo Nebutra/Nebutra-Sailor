@@ -44,6 +44,15 @@ const MUST_PRESERVE = [
   "apps/landing/package.json",
   "apps/landing/src/app/[lang]/layout.tsx",
   "backends/gateway/package.json",
+  // Generic ops surfaces that must survive the instance/product boundary rules.
+  // `/ops/` is anchored; packages/ops and infra/ops are product, not instance.
+  "packages/ops/create-sailor/package.json",
+  "infra/ops/scripts/check-env.ts",
+  "infra/ops/dns/topology.defaults.yaml",
+  "docs/ops/cost-guardrails.md",
+  "docs/ops/cloudflare-ci-token.md",
+  ".github/workflows/ci.yml",
+  "tests/architecture/dependency-flow.test.ts",
 ];
 
 // Must-strip files — Nebutra business content leaking into scaffold is a bug.
@@ -99,6 +108,21 @@ const MUST_STRIP = [
   ".github/workflows/deploy-new-api-fly.yml",
   ".github/workflows/deploy-dns-leak-fly.yml",
   ".github/workflows/sync-subrepo-mirrors.yml",
+  // Nebutra-instance ops vs Sailor-product boundary (TEMPLATE.md) — the three
+  // declared homes plus samples of the listed workflows / Fly manifests.
+  "ops",
+  "docs/ops/nebutra",
+  "tests/architecture/nebutra",
+  "infra/iac/k8s",
+  "infra/iac/railway",
+  "infra/fly/gateway.toml",
+  "infra/fly/web.toml",
+  ".github/workflows/deploy-fly-gateway.yml",
+  ".github/workflows/deploy-fly.yml",
+  ".github/workflows/ops-vm-triage.yml",
+  ".github/workflows/point-kuanlan-dns.yml",
+  "scripts/redeploy-web-auth-vercel.mjs",
+  "tests/architecture/template-boundary.test.ts",
 ];
 
 type Matcher = ReturnType<typeof ignore>;

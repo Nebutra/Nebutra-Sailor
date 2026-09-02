@@ -5,7 +5,7 @@ This runbook governs Enterprise SSO for `nebutra.com` and
 
 It does not govern Nebutra acting as an OIDC issuer. The self-hosted issuer
 served from `sso.nebutra.com` is documented separately in
-[`docs/ops/nebutra-owned-sso.md`](./nebutra-owned-sso.md).
+[`docs/ops/nebutra/nebutra-owned-sso.md`](./nebutra/nebutra-owned-sso.md).
 
 ## Current State
 
@@ -140,7 +140,7 @@ Run the focused checks before enabling a production domain:
 pnpm --filter @nebutra/web exec vitest run src/lib/auth/__tests__/oauth-providers.test.ts src/app/api/auth/sso/discovery/__tests__/route.test.ts src/components/auth/__tests__/clerk-enterprise-sso-handoff.test.tsx
 pnpm --filter @nebutra/auth test -- src/providers/better-auth.test.ts
 pnpm --filter @nebutra/web exec tsc --noEmit --pretty false
-pnpm test:arch -- tests/architecture/sso-infrastructure.test.ts
+pnpm test:arch -- tests/architecture/nebutra/sso-infrastructure.test.ts
 ```
 
 Manual smoke:

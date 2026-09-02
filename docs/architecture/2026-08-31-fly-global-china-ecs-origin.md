@@ -2,7 +2,7 @@
 
 - **Date**: 2026-08-31
 - **Status**: Product edges and Hono origin live on Fly `sin`; ECS keeps issuer / leak / China transit
-- **Runbook**: [fly-origin.md](../ops/fly-origin.md)
+- **Runbook**: [fly-origin.md](../ops/nebutra/fly-origin.md)
 
 ```text
 China + global browsers
