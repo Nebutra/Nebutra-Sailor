@@ -1,13 +1,26 @@
 name: Deploy Landing (Vercel)
 
-# The landing project had no deploy workflow, and its dashboard Root Directory
-# still pointed at apps/landing-page — renamed to apps/landing in 3182cbcb. Every
-# build since failed before compiling, so nothing shipped for days and the cause
-# was invisible from the repository: the stale value lives in Vercel, not here.
+# nebutra.com ships from this workflow only.
 #
-# This reconciles that setting from CI before deploying, so the same drift cannot
-# silently stop deployments again. Looking the project up by name also means
-# there is no project id to add to repository variables and later forget.
+# The build runs here, on GitHub's runners (free for this public repository),
+# and Vercel receives the finished `.vercel/output` through
+# `vercel deploy --prebuilt`. Vercel meters no build minutes for landing.
+#
+# The project's Git integration is switched off in apps/landing/vercel.json
+# (`git.deploymentEnabled: false`). Before that, a main push that touched
+# packages/design/ui opened a remote build through the Git integration *and* a
+# second one from this workflow, and a nightly unconditional redeploy — a
+# retry left over from the Hobby daily cap — rebuilt an unchanged site every
+# evening. Those two were most of the landing line on the Vercel bill. The
+# ignoreCommand in vercel.json stays for the day the integration is re-enabled.
+#
+# History: the project's dashboard Root Directory once pointed at the renamed
+# apps/landing-page and every build failed before compiling; the cause lived in
+# Vercel, not the repository. The reconcile step still corrects that setting
+# from CI before deploying so the same drift cannot silently stop deployments.
+#
+# workflow_dispatch with `promote: false` builds and uploads a preview URL only.
+# Use it to validate the prebuilt output before trusting it with production.
 
 on:
   push:
@@ -19,12 +32,12 @@ on:
       - "packages/design/tokens/**"
       - "packages/platform/i18n/**"
       - ".github/workflows/deploy-landing-vercel.yml"
-  # Retries a deploy that the daily cap refused. Without it a deferral is a
-  # silent loss: the commit is on main, the check is green, and the site keeps
-  # serving the previous build until someone happens to push again.
-  schedule:
-    - cron: "17 19 * * *"
   workflow_dispatch:
+    inputs:
+      promote:
+        description: "Promote to production (nebutra.com). false = preview URL only"
+        type: boolean
+        default: true
 
 permissions:
   contents: read
@@ -35,17 +48,29 @@ concurrency:
 
 jobs:
   vercel:
-    name: Deploy landing to Vercel
+    name: Build on GitHub, deploy prebuilt to Vercel
     runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
+      # A push to main is always production. A manual run promotes unless the
+      # operator asked for a preview.
+      PROMOTE: ${{ github.event_name == 'push' || inputs.promote == true }}
     steps:
       - name: Checkout
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
-      - name: Reconcile Root Directory and deploy
-        id: deploy
+      # `vercel build` runs the project's own installCommand, so only the
+      # toolchain is set up here; the pnpm store cache still applies.
+      - name: Setup pnpm + Node
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          install: "false"
+
+      - name: Resolve project and reconcile Root Directory
+        id: project
         env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
           EXPECTED_ROOT: apps/landing
         run: |
           set -euo pipefail
@@ -84,6 +109,7 @@ jobs:
             exit 1
           fi
           echo "project=$PROJECT_ID rootDirectory=$CURRENT_ROOT"
+          echo "id=$PROJECT_ID" >> "$GITHUB_OUTPUT"
 
           echo "Attaching domain open.nebutra.com (idempotent)"
           curl -sS -X POST -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" \
@@ -98,61 +124,97 @@ jobs:
               -d "{\"rootDirectory\":\"${EXPECTED_ROOT}\"}" > /dev/null
           fi
 
+      - name: Build here, deploy prebuilt
+        id: deploy
+        env:
+          VERCEL_PROJECT_ID: ${{ steps.project.outputs.id }}
+        run: |
+          set -euo pipefail
           npm i -g vercel@56.5.0
-          # Deploy from the repository root: the project's Root Directory (just
-          # reconciled above) selects apps/landing. Passing --cwd as well would
-          # double the path.
-          mkdir -p .vercel
-          printf '{"projectId":"%s","orgId":"%s"}\n' "$PROJECT_ID" "${VERCEL_ORG_ID:-}" > .vercel/project.json
-          # The CLI reads VERCEL_ORG_ID/VERCEL_PROJECT_ID from the environment in
-          # preference to .vercel/project.json, and refuses to run with only one
-          # of the pair set. VERCEL_ORG_ID comes from the step env, so the id
-          # resolved above has to be exported alongside it.
-          export VERCEL_PROJECT_ID="$PROJECT_ID"
 
+          # Link from the repository root: the project's Root Directory (just
+          # reconciled) selects apps/landing, and the CLI runs the install and
+          # build commands from apps/landing/vercel.json inside it. Output lands
+          # in .vercel/output at the root, where `deploy --prebuilt` expects it.
+          mkdir -p .vercel
+          printf '{"projectId":"%s","orgId":"%s"}\n' "$VERCEL_PROJECT_ID" "${VERCEL_ORG_ID:-}" > .vercel/project.json
+
+          if [ "$PROMOTE" = "true" ]; then
+            environment=production
+            prod_flag=--prod
+          else
+            environment=preview
+            prod_flag=
+          fi
+          echo "target=$environment"
+
+          # Project settings + env vars for this target. Variables marked
+          # Sensitive in the dashboard cannot be pulled; if the build needs one
+          # it fails here, visibly, rather than shipping a build without it.
+          vercel pull --yes --environment="$environment" --token="$VERCEL_TOKEN" --scope "${VERCEL_ORG_ID:-}"
+
+          # Same @vercel/next builder Vercel would run remotely, on this runner.
+          # shellcheck disable=SC2086
+          vercel build $prod_flag --yes --token="$VERCEL_TOKEN"
+
+          # Upload only .vercel/output. --archive=tgz keeps the traced function
+          # bundles under the CLI's file-count limit as one tarball.
           set +e
-          # --archive=tgz: one tarball upload (Hobby monorepo + 15k-file CLI limit).
-          out=$(vercel deploy --prod --yes --archive=tgz --token="$VERCEL_TOKEN" --scope "${VERCEL_ORG_ID:-}" 2>&1)
+          # shellcheck disable=SC2086
+          vercel deploy --prebuilt $prod_flag --yes --archive=tgz \
+            --token="$VERCEL_TOKEN" --scope "${VERCEL_ORG_ID:-}" \
+            > deploy-url.txt 2> deploy-log.txt
           code=$?
           set -e
-          echo "$out"
+          cat deploy-log.txt
           if [ "$code" -ne 0 ]; then
-            # The daily deployment cap is account-wide, so a busy day on any one
-            # project exhausts it for all of them. Deferring keeps main green,
-            # because a full quota is not a defect in the commit — but it must
-            # not read as a deploy. This branch used to claim "the Git
-            # integration still ships the same commit"; it does not, and a green
-            # check over an unchanged site cost an hour of chasing a fix that
-            # had never shipped. The run summary now says so outright, and the
-            # scheduled run retries once the cap resets.
-            if echo "$out" | grep -qiE 'api-deployments-free-per-day|Resource is limited|try again in 24 hours|Upload aborted'; then
-              echo "deployed=false" >> "$GITHUB_OUTPUT"
-              {
-                echo "### Not deployed"
-                echo
-                echo "Vercel refused the deployment, so **nebutra.com still serves the previous build**."
-                echo "This job is green because the commit is fine — but nothing shipped."
-                echo
-                echo '```'
-                echo "$out" | tail -3
-                echo '```'
-              } >> "$GITHUB_STEP_SUMMARY"
-              echo "::warning::Vercel deploy deferred — nebutra.com still serves the previous build"
-              exit 0
-            fi
+            {
+              echo "### Not deployed"
+              echo
+              if [ "$PROMOTE" = "true" ]; then
+                echo "Vercel refused the upload, so **nebutra.com still serves the previous build**."
+              else
+                echo "Vercel refused the preview upload."
+              fi
+              echo "The build itself succeeded on this runner; see the log above for the reason."
+              echo
+              echo '```'
+              tail -5 deploy-log.txt
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "::error::vercel deploy --prebuilt failed (exit $code)"
             exit "$code"
           fi
-          echo "deployed=true" >> "$GITHUB_OUTPUT"
+          url=$(tail -1 deploy-url.txt | tr -d '[:space:]')
+          echo "deployment=$url"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          {
+            echo "### Deployed ($environment)"
+            echo
+            echo "$url"
+          } >> "$GITHUB_STEP_SUMMARY"
 
-      # Skipped when the deploy was deferred: the check only asserts HTTP 200,
-      # which the build that is already live answers just as well, so running it
-      # would certify the previous release as this one.
       - name: Smoke nebutra.com
-        if: steps.deploy.outputs.deployed != 'false'
+        if: env.PROMOTE == 'true'
         run: |
           set -euo pipefail
           # Cache-busting path: the marketing pages are statically cached, so a
           # plain request can return the previous build and look like success.
-          code=$(curl -sS -o /dev/null -w '%{http_code}' "https://nebutra.com/?ci=${GITHUB_SHA}")
+          code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 "https://nebutra.com/?ci=${GITHUB_SHA}")
           echo "nebutra.com → HTTP $code"
           [ "$code" = "200" ]
+
+      - name: Smoke preview URL
+        if: env.PROMOTE != 'true'
+        env:
+          URL: ${{ steps.deploy.outputs.url }}
+        run: |
+          set -euo pipefail
+          # Preview deployments on a team may sit behind Vercel Authentication;
+          # 401 there still proves the upload is live and routable.
+          code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 -L "$URL/?ci=${GITHUB_SHA}")
+          echo "$URL → HTTP $code"
+          case "$code" in
+            200|401) ;;
+            *) echo "::error::preview did not answer"; exit 1 ;;
+          esac

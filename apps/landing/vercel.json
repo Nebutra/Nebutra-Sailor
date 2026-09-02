@@ -1,5 +1,8 @@
 {
   "framework": "nextjs",
+  "git": {
+    "deploymentEnabled": false
+  },
   "buildCommand": "pnpm --filter @nebutra/brand sync && pnpm turbo build --filter=@nebutra/landing",
   "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh apps/landing",
   "installCommand": "pnpm install --frozen-lockfile",
