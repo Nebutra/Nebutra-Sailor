@@ -221,6 +221,26 @@ module.exports = {
       listen_timeout: 10000,
     },
     {
+      name: "kuanlan",
+      cwd: "/var/www/nebutra/kuanlan/current",
+      script: "/var/www/nebutra/node-with-env.sh",
+      interpreter: "bash",
+      args: "apps/kuanlan/server.js",
+      env: {
+        NODE_ENV: "production",
+        PORT: 3120,
+        HOSTNAME: "127.0.0.1",
+        ENV_FILE: "/var/www/nebutra/kuanlan/.env",
+      },
+      max_memory_restart: "500M",
+      instances: 1,
+      exec_mode: "fork",
+      autorestart: true,
+      max_restarts: 10,
+      kill_timeout: 8000,
+      listen_timeout: 10000,
+    },
+    {
       // Internal ecosystem control plane. Staff-only, low traffic — sized well
       // below the product apps. Fronted by Cloudflare Access; nginx must not
       // expose it without that policy in place.

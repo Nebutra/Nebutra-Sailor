@@ -1,6 +1,8 @@
 import { brand } from "@nebutra/brand/metadata";
-import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+import { getBrandOrigin, publicAssetUrl } from "@nebutra/brand/metadata-helpers";
 import type { Metadata } from "next";
+
+const FORGE_OG_IMAGE = publicAssetUrl("forge/product/forge-anvil.png");
 
 const INDEXNOW_KEY_RE = /^[A-Za-z0-9_-]{8,128}$/;
 
@@ -79,13 +81,13 @@ export function buildForgePageMetadata(opts: {
       title,
       description: opts.description,
       url: path,
-      images: [{ url: "/product/forge-anvil.png", alt: siteName }],
+      images: [{ url: FORGE_OG_IMAGE, alt: siteName }],
     },
     twitter: {
       card: "summary",
       title,
       description: opts.description,
-      images: ["/product/forge-anvil.png"],
+      images: [FORGE_OG_IMAGE],
     },
   };
 }

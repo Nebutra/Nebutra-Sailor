@@ -1,0 +1,15 @@
+# ECS host overlay. Landing already owns :3001; host Redis owns :6379.
+# Bind New-API to localhost only. Do not publish this port on the internet.
+name: nebutra-new-api
+
+services:
+  new-api:
+    image: calciumion/new-api:v0.8.7.4
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3301:3000"
+    environment:
+      TZ: Asia/Shanghai
+      SESSION_SECRET: ${NEW_API_SESSION_SECRET:?set NEW_API_SESSION_SECRET}
+    volumes:
+      - /var/www/nebutra/new-api/data:/data

@@ -1,19 +1,31 @@
 {
-  "CORSRules": [
+  "rules": [
     {
-      "AllowedOrigins": [
-        "https://nebutra.com",
-        "https://www.nebutra.com",
-        "https://app.nebutra.com",
-        "https://studio.nebutra.com",
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://localhost:3003"
-      ],
-      "AllowedMethods": ["GET", "PUT", "POST", "DELETE", "HEAD"],
-      "AllowedHeaders": ["*"],
-      "ExposeHeaders": ["ETag", "Content-Length", "Content-Type", "x-amz-meta-*"],
-      "MaxAgeSeconds": 3600
+      "allowed": {
+        "origins": [
+          "https://nebutra.com",
+          "https://www.nebutra.com",
+          "https://app.nebutra.com",
+          "https://auth.nebutra.com",
+          "https://docs.nebutra.com",
+          "https://studio.nebutra.com",
+          "https://router.nebutra.com",
+          "https://forge.nebutra.com",
+          "https://pebble.nebutra.com",
+          "https://kuanlan.nebutra.com",
+          "http://localhost:3000",
+          "http://localhost:3001",
+          "http://localhost:3003",
+          "http://localhost:3017",
+          "http://localhost:3105",
+          "http://localhost:3106",
+          "http://localhost:3120"
+        ],
+        "methods": ["GET", "PUT", "POST", "DELETE", "HEAD"],
+        "headers": ["*"]
+      },
+      "exposeHeaders": ["ETag", "Content-Length", "Content-Type"],
+      "maxAgeSeconds": 3600
     }
   ]
 }

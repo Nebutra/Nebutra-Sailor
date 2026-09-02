@@ -34,12 +34,14 @@ export const MULTI_APP_SSO_DEFAULT_ORIGINS = [
   "https://auth.nebutra.com",
   "https://forge.nebutra.com",
   "https://router.nebutra.com",
+  "https://kuanlan.nebutra.com",
   "http://localhost:3000",
   "http://localhost:3001",
   "http://localhost:3100",
   "http://localhost:3101",
   "http://localhost:3105",
   "http://localhost:3106",
+  "http://localhost:3120",
 ] as const;
 
 function collectEnvOrigins(): string[] {

@@ -91,6 +91,20 @@ const res = await client.chat.completions.create({
                 对话补全（流式/非流）
               </TableCell>
             </TableRow>
+            <TableRow>
+              <TableCell alignment="start">POST</TableCell>
+              <TableCell alignment="start">{base}/images/generations</TableCell>
+              <TableCell alignment="start" className="font-sans text-[var(--neutral-11)]">
+                文生图（302.ai / OpenAI 同契约）
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell alignment="start">POST</TableCell>
+              <TableCell alignment="start">{base}/images/edits</TableCell>
+              <TableCell alignment="start" className="font-sans text-[var(--neutral-11)]">
+                图生图（multipart：image + prompt + model + size）
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </div>

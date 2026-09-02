@@ -28,7 +28,7 @@ describe("getFallbackBlogCover", () => {
       ),
     ).toMatchObject({
       alt: "为什么要做 Nebutra Sailor cover",
-      src: "/images/blog/covers/nebutra-sailor-exists.png",
+      src: "https://cdn.nebutra.com/landing/images/blog/covers/nebutra-sailor-exists.png",
     });
   });
 
@@ -43,7 +43,7 @@ describe("getFallbackBlogCover", () => {
       ),
     ).toMatchObject({
       alt: "为什么我们要做 Nebutra cover",
-      src: "/images/blog/covers/why-we-build-nebutra.png",
+      src: "https://cdn.nebutra.com/landing/images/blog/covers/why-we-build-nebutra.png",
     });
   });
 
@@ -58,13 +58,13 @@ describe("getFallbackBlogCover", () => {
       ),
     ).toMatchObject({
       alt: "Founder 顶层设计的九层结构 cover",
-      src: "/images/blog/covers/founder-top-design-nine-layers.png",
+      src: "https://cdn.nebutra.com/landing/images/blog/covers/founder-top-design-nine-layers.png",
     });
   });
 
   it("falls back to the generic Nebutra cover for unmapped posts", () => {
     expect(getFallbackBlogCover(makePost({ slug: "new-post" })).src).toBe(
-      "/images/blog/covers/nebutra-default.png",
+      "https://cdn.nebutra.com/landing/images/blog/covers/nebutra-default.png",
     );
   });
 });

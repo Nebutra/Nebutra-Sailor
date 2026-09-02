@@ -7,6 +7,7 @@
  * channel surfaced is each institution's official website. See
  * `docs/plans/2026-06-01-solutions-mega-menu-design.md`.
  */
+import { landingPublicSrc } from "@/lib/public-assets";
 import data from "./china-vc-data.json";
 import type { VcOrg } from "./vc";
 
@@ -23,7 +24,7 @@ export const CHINA_VC_COUNT = CHINA_VC_ORGS.length;
 export const CHINA_VC_TOTAL_DEALS = CHINA_VC_ORGS.reduce((sum, o) => sum + (o.total ?? 0), 0);
 
 /**
- * Ids of institutions with a curated local logo asset at `/logos/vc/<id>.png`.
+ * Ids of institutions with a curated logo asset on the public CDN.
  * Everything else renders a monogram. Long tail intentionally stays monogram;
  * marquee funds whose sites block automated fetch can be dropped in by id.
  */
@@ -34,7 +35,7 @@ export const CHINA_VC_LOGO_IDS: ReadonlySet<number> = new Set<number>([
 ]);
 
 export function chinaVcLogoFor(org: VcOrg): string | null {
-  return CHINA_VC_LOGO_IDS.has(org.id) ? `/logos/vc/${org.id}.png` : null;
+  return CHINA_VC_LOGO_IDS.has(org.id) ? landingPublicSrc(`logos/vc/${org.id}.png`) : null;
 }
 
 const CHINA_BY_ID = new Map(CHINA_VC_ORGS.map((o) => [o.id, o]));

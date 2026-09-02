@@ -1,4 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
+import { publicAssetUrl } from "@nebutra/brand/metadata-helpers";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { DOCS_BASE, GITHUB_REPO, STATUS_URL } from "@/lib/releases";
@@ -22,7 +23,14 @@ export const metadata: Metadata = {
     url: `https://${brand.domains.pebble}`,
     siteName: "Pebble",
     type: "website",
-    images: [{ url: "/assets/hero.jpg", width: 1600, height: 1000, alt: "Pebble desktop" }],
+    images: [
+      {
+        url: publicAssetUrl("pebble/assets/hero.jpg"),
+        width: 1600,
+        height: 1000,
+        alt: "Pebble desktop",
+      },
+    ],
   },
   alternates: {
     canonical: `https://${brand.domains.pebble}`,
@@ -35,7 +43,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <header className="nav">
           <a className="brand" href="/">
-            <img src="/assets/logo.svg" alt="" width={34} height={34} />
+            <img src={publicAssetUrl("pebble/assets/logo.svg")} alt="" width={34} height={34} />
             Pebble
             <span className="brand-zh">溪石</span>
           </a>

@@ -14,7 +14,7 @@ import { GeistSans } from "geist/font/sans";
 // build time. Declaring the whole set is cheap: a file is only fetched when an
 // element actually resolves to that variable, and skins.css names them via
 // var(--font-*), which is the ONLY way to reach next/font's hashed families.
-// Hand-declaring a subset here is what left four of the seven design languages
+// Hand-declaring a subset here is what left four of the eight design languages
 // pointing at variables no app defined.
 /**
  * Combined font CSS-variable classes applied to <html>. Shared by the two

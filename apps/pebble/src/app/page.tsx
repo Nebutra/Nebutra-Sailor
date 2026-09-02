@@ -1,4 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
+import { publicAssetUrl } from "@nebutra/brand/metadata-helpers";
 import { DOCS_BASE, DOWNLOADS, GITHUB_REPO } from "@/lib/releases";
 
 const features = [
@@ -56,14 +57,14 @@ export default function HomePage() {
         <div className="hero-visual">
           <div className="hero-frame">
             <img
-              src="/assets/hero.jpg"
+              src={publicAssetUrl("pebble/assets/hero.jpg")}
               alt="Pebble desktop running agents in parallel worktrees"
               width={1600}
               height={1000}
             />
           </div>
           <div className="hero-float" aria-hidden>
-            <img src="/assets/mark.png" alt="" width={320} height={320} />
+            <img src={publicAssetUrl("pebble/assets/mark.png")} alt="" width={320} height={320} />
           </div>
         </div>
       </section>

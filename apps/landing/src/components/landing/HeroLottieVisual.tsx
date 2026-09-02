@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { landingPublicSrc } from "@/lib/public-assets";
 
 const DotLottie = dynamic(
   async () => (await import("@lottiefiles/dotlottie-react")).DotLottieReact,
@@ -23,7 +24,12 @@ export function HeroLottieVisual() {
         }}
       />
       <div className="relative h-72 w-72">
-        <DotLottie src="/animations/hero.lottie" loop autoplay className="h-full w-full" />
+        <DotLottie
+          src={landingPublicSrc("animations/hero.lottie")}
+          loop
+          autoplay
+          className="h-full w-full"
+        />
       </div>
     </div>
   );

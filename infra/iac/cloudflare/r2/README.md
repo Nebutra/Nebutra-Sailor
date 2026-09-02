@@ -47,8 +47,8 @@ For `nebutra-assets` bucket:
 Apply `cors.json` to buckets that need browser access:
 
 ```bash
-wrangler r2 bucket cors put nebutra-assets --file=cors.json
-wrangler r2 bucket cors put nebutra-uploads --file=cors.json
+wrangler r2 bucket cors set nebutra-assets --file=cors.json --force
+wrangler r2 bucket cors set nebutra-uploads --file=cors.json --force
 ```
 
 ### 4. Generate API Tokens
@@ -104,10 +104,17 @@ const signedUrl = await getSignedUrl(r2, new GetObjectCommand({
 ## File Organization
 
 ```
-nebutra-assets/           # Public CDN
-├── images/
-├── fonts/
-└── static/
+nebutra-assets/           # Public CDN (cdn.nebutra.com)
+├── brand/logo/           # VI marks — Logo + docs
+├── brand/logo-compliant/
+├── kuanlan/{orbit,skus,wardrobe}/
+├── landing/{images,screenshots,animations,logos,dashboard}/
+├── router/{banners,product}/
+├── forge/product/
+└── pebble/assets/
+
+Seed: `pnpm assets:seed`. `public/` is the seed tree, not consumption.
+Favicons stay same-origin.
 
 nebutra-uploads/          # Private user uploads
 ├── {tenant_id}/

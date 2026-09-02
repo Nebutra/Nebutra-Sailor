@@ -9,6 +9,7 @@ import { SocialProofBar } from "@/components/landing/social-proof-bar";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { isZhUiLocale } from "@/lib/i18n/localized";
+import { landingPublicSrc } from "@/lib/public-assets";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 import {
@@ -41,10 +42,10 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
   type AboutTranslationKey = Parameters<typeof t>[0];
 
   const valueImages = [
-    "/images/about/agi-premium.png",
-    "/images/about/security-premium.png",
-    "/images/about/ergonomics-premium.png",
-    "/images/about/scale-premium.png",
+    landingPublicSrc("images/about/agi-premium.png"),
+    landingPublicSrc("images/about/security-premium.png"),
+    landingPublicSrc("images/about/ergonomics-premium.png"),
+    landingPublicSrc("images/about/scale-premium.png"),
   ];
   const valueCardIndices = [
     { id: "clarity", value: 0 },
@@ -95,7 +96,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                 style={{ boxShadow: "var(--ring-hairline)" }}
               >
                 <Image
-                  src="/images/about/hero-premium.png"
+                  src={landingPublicSrc("images/about/hero-premium.png")}
                   alt="Abstract Art"
                   fill
                   sizes="(min-width: 768px) 50vw, 100vw"
@@ -142,7 +143,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
             style={{ boxShadow: "var(--ring-hairline)" }}
           >
             <Image
-              src="/images/about/office.png"
+              src={landingPublicSrc("images/about/office.png")}
               alt="Office Collaboration"
               fill
               sizes="(min-width: 1024px) 1024px, 100vw"
@@ -417,7 +418,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                 style={{ boxShadow: "var(--ring-hairline)" }}
               >
                 <Image
-                  src="/images/about/landscape.png"
+                  src={landingPublicSrc("images/about/landscape.png")}
                   alt="Organization Philosophy"
                   fill
                   sizes="(min-width: 1024px) 50vw, 100vw"

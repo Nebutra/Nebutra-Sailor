@@ -1,6 +1,7 @@
-# Vercel spend (keep kuanlan launchable)
+# Vercel spend (keep kuanlan Git-linked, ship on Fly)
 
-Stop paying for monorepo noise. Do not close the kuanlan release channel.
+Stop paying for monorepo noise. Do not Unlink the leftover kuanlan Vercel
+project. Production for 观澜 is Fly Singapore, not Vercel.
 All of this is owned in git. There is no Dashboard ritual.
 
 ## Tokens
@@ -50,7 +51,7 @@ project-level settings below apply to every branch and are the real lock:
 | `nebutra-web` | `standard` | `exit 0` — production is Fly |
 | `nebutra-auth` | `standard` | `exit 0` — production is the edge Worker + Fly |
 | `docs` | `standard` | script (CLI-only, not Git-linked) |
-| `nebutra-kuanlan` | `standard` | script — the only project meant to Git-deploy |
+| `nebutra-kuanlan` | `standard` | script — leftover Git-linked project; Fly-primary skip |
 
 Applied 2026-09-02 with `PATCH /v9/projects/{id}` (`resourceConfig.buildMachineType`,
 `commandForIgnoringBuildStep`). Setting `buildMachineType` explicitly flips
@@ -71,7 +72,7 @@ of those builds actually run.
 | Project | Git | How it ships | Repo lock |
 | --- | --- | --- | --- |
 | `nebutra-landing` | connected, auto-deploy off | [`deploy-landing-vercel.yml`](../../.github/workflows/deploy-landing-vercel.yml): `vercel build` on the GitHub runner, then `vercel deploy --prebuilt` | [`apps/landing/vercel.json`](../../apps/landing/vercel.json) `git.deploymentEnabled: false`; `ignoreCommand` kept for the day Git is re-enabled |
-| `nebutra-kuanlan` | connected | Git, once `apps/kuanlan/package.json` is on `main` | [`apps/kuanlan/vercel.json`](../../apps/kuanlan/vercel.json) + ignore script |
+| `nebutra-kuanlan` | connected | Fly `nebutra-kuanlan` in `sin` via [`deploy-fly.yml`](../../.github/workflows/deploy-fly.yml) | [`apps/kuanlan/vercel.json`](../../apps/kuanlan/vercel.json) + Fly-primary skip |
 | `nebutra-web` | connected, auto-deploy off | [`deploy-web-vercel.yml`](../../.github/workflows/deploy-web-vercel.yml) `workflow_dispatch` | `git.deploymentEnabled: false` |
 | `nebutra-auth` | connected, auto-deploy off | [`deploy-auth-vercel.yml`](../../.github/workflows/deploy-auth-vercel.yml) `workflow_dispatch` | `git.deploymentEnabled: false` |
 | `nebutra-sailor-docs` | see [`deploy-sailor-docs.yml`](../../.github/workflows/deploy-sailor-docs.yml) | push job gated by `DEPLOY_TARGET_SAILOR_DOCS`; `pnpm-lock.yaml` is not a trigger | path filter in the workflow |
@@ -117,22 +118,14 @@ now drops empty entries after the pull and exports the URLs declared in
 builders. Un-flagging those three in the dashboard is still the tidy thing to
 do; the workflow no longer depends on it.
 
-## kuanlan — same path as landing
+## kuanlan — Fly-primary, leftover Vercel project
 
-[`apps/kuanlan/vercel.json`](../../apps/kuanlan/vercel.json) is the project
-root for Vercel (Root Directory `apps/kuanlan`). It only declares
-`ignoreCommand`. [`scripts/vercel-ignore-build.sh`](../../scripts/vercel-ignore-build.sh)
-exits 0 until `apps/kuanlan/package.json` exists, so monorepo pushes do not
-compile an app that is not on the SHA.
+[`apps/kuanlan/vercel.json`](../../apps/kuanlan/vercel.json) stays Git-linked
+so the Vercel project does not need a Dashboard ritual. The ignore script
+exits 0 for `apps/kuanlan` unless someone opts in with
+`VERCEL_ALLOW_FLY_OPTIONAL=1` or `[vercel:apps/kuanlan]`.
 
-Launch is a normal app PR:
-
-1. Land `package.json`, source, and a real `buildCommand` in the same
-   `vercel.json` (keep the `ignoreCommand`).
-2. Tighten the `apps/kuanlan` scope in the ignore script to the workspace
-   deps that PR actually adds. Do not put kuanlan on the ECS-optional list.
-3. Push to `main`. In-scope changes deploy. To force one ship, put
-   `[vercel-force]` in the commit message.
+Do not put kuanlan on the ECS-optional list. Do not Unlink the project.
 
 ## Next slice
 

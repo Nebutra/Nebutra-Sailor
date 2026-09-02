@@ -10,6 +10,7 @@ import { FooterMinimal, Navbar } from "@/components/landing";
 import { InteractiveChangelog, type Release } from "@/components/landing/InteractiveChangelog";
 import { type Locale, routing } from "@/i18n/routing";
 import { STATIC_CHANGELOG_RELEASES } from "@/lib/changelog-releases";
+import { landingPublicSrc } from "@/lib/public-assets";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export function generateStaticParams() {
@@ -51,7 +52,7 @@ const TAG_COLORS: Record<string, string> = {
   security: "var(--brand-accent)",
 };
 
-const FALLBACK_RELEASE_IMAGE = "/screenshots/demo-dashboard-command.webp";
+const FALLBACK_RELEASE_IMAGE = landingPublicSrc("screenshots/demo-dashboard-command.webp");
 
 interface PortableTextChild {
   text?: string;

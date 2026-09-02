@@ -266,7 +266,7 @@ describe("blog content helpers", () => {
       }),
     ).toEqual({
       alt: "Founder 顶层设计 cover",
-      src: "/images/blog/covers/founder-top-design-nine-layers.png",
+      src: "https://cdn.nebutra.com/landing/images/blog/covers/founder-top-design-nine-layers.png",
     });
   });
 
@@ -288,7 +288,8 @@ describe("blog content helpers", () => {
       alt: "Founder 顶层设计 cover",
       blurDataURL: expect.stringMatching(/^data:image\/svg\+xml/),
       fallbackAlt: "Founder 顶层设计 cover",
-      fallbackSrc: "/images/blog/covers/founder-top-design-nine-layers.png",
+      fallbackSrc:
+        "https://cdn.nebutra.com/landing/images/blog/covers/founder-top-design-nine-layers.png",
       src: "https://cdn.sanity.io/cover.webp",
       source: "sanity",
     });

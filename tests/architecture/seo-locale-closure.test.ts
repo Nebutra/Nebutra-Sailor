@@ -183,6 +183,7 @@ describe("per-app robots posture", () => {
     "auth",
     "design",
     "idp",
+    "kuanlan",
     "mail-preview",
     "sleptons",
     "studio",

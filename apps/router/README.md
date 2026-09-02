@@ -16,6 +16,17 @@ pnpm --filter @nebutra/router dev   # http://localhost:3106
 
 `/playground` redirects to `/use`.
 
+Public OpenAI-compatible edge (302.ai contract): `https://router.nebutra.com/v1`
+
+| Method | Path | Notes |
+| --- | --- | --- |
+| GET | `/v1/models` | New-API inventory |
+| POST | `/v1/chat/completions` | same body as 302.ai |
+| POST | `/v1/images/generations` | same body as 302.ai |
+| POST | `/v1/images/edits` | multipart `image` + `prompt` + `model` + `size` |
+
+Use a **router product key** (New-API user token). The 302.ai channel key stays in New-API.
+
 ## Model list maintenance (302-style sellable shelf)
 
 | Layer | Source | Role |
