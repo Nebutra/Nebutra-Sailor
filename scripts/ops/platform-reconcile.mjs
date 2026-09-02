@@ -666,7 +666,8 @@ export function renderTable(results) {
 }
 
 export function renderMarkdown(results, summary) {
-  const cell = (text) => text.replace(/\|/g, "\\|") || " ";
+  // Escape backslashes before pipes so a cell cannot break the table (CodeQL js/incomplete-sanitization).
+  const cell = (text) => String(text).replace(/\\/g, "\\\\").replace(/\|/g, "\\|") || " ";
   const lines = [
     "## Platform reconcile",
     "",
