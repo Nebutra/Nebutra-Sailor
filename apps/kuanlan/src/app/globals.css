@@ -412,6 +412,7 @@ a.auth-link:hover {
   --garment-ground: #111111;
 }
 
+.masonry-item img.tile-photo-garment,
 .tile-photo-garment {
   background: var(--garment-ground, var(--canvas));
 }
