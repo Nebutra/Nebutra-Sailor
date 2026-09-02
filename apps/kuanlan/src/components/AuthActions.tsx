@@ -8,7 +8,8 @@ export function AuthActions({
   variant = "nav",
 }: {
   signInHref?: string;
-  variant?: "nav" | "cta";
+  /** "leave" is the signed-in sign-out on its own — /me already is the account page. */
+  variant?: "nav" | "cta" | "leave";
 }) {
   const { user, isSignedIn, isLoaded, signOut } = useAuth();
   const [returnTo, setReturnTo] = useState<string | null>(null);
@@ -30,6 +31,19 @@ export function AuthActions({
   }, [returnTo, signInHref]);
 
   if (isLoaded && isSignedIn) {
+    if (variant === "leave") {
+      return (
+        <button
+          type="button"
+          className="pill pill-ghost"
+          onClick={() => {
+            void signOut();
+          }}
+        >
+          离开
+        </button>
+      );
+    }
     const label = user?.name ?? user?.email ?? "Me";
     return (
       <span className="auth-actions">
@@ -48,6 +62,10 @@ export function AuthActions({
       </span>
     );
   }
+
+  // The server already established the session for this variant, so a sign-in
+  // link here would only flash before the client auth state loads.
+  if (variant === "leave") return null;
 
   return (
     <a className={variant === "cta" ? "pill pill-ink" : "auth-link"} href={href}>

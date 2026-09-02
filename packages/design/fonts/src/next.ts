@@ -28,6 +28,7 @@ import {
   DM_Sans,
   Figtree,
   Fira_Code,
+  Fraunces,
   Inter,
   Inter_Tight,
   JetBrains_Mono,
@@ -62,6 +63,11 @@ const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-playfair-display",
+});
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-reg-fraunces",
 });
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -117,6 +123,7 @@ export const FONT_REGISTRY_FACES = [
   spaceGrotesk,
   playfairDisplay,
   sourceSerif4,
+  fraunces,
   jetbrainsMono,
   manrope,
   sora,

@@ -26,9 +26,9 @@ export async function GET(request: Request) {
   }
 
   try {
-    const moments = await listIdPhotoMoments(session.userId);
+    const { moments, total } = await listIdPhotoMoments(session.userId);
     return Response.json(
-      { moments },
+      { moments, total },
       {
         headers: {
           "Cache-Control": "no-store",

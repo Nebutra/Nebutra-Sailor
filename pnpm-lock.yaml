@@ -638,9 +638,15 @@ importers:
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/design/brand
+      '@nebutra/fonts':
+        specifier: workspace:*
+        version: link:../../packages/design/fonts
       '@nebutra/storage':
         specifier: workspace:*
         version: link:../../packages/integrations/storage
+      '@nebutra/tokens':
+        specifier: workspace:*
+        version: link:../../packages/design/tokens
       next:
         specifier: ^16.2.11
         version: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)

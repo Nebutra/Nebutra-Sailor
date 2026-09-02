@@ -150,32 +150,117 @@ describe("R2 configuration", () => {
     });
   });
 
-  it("lists only that person's prints", async () => {
+  function configureR2() {
     process.env.CLOUDFLARE_ACCOUNT_ID = "account";
     process.env.R2_ACCESS_KEY_ID = "key";
     process.env.R2_SECRET_ACCESS_KEY = "secret";
+  }
+
+  const prefix = "kuanlan/moments/id-photo/user_1/";
+  const entry = (name: string, iso?: string) => ({
+    key: `${prefix}${name}`,
+    size: 1,
+    ...(iso ? { lastModified: new Date(iso) } : {}),
+  });
+  const sign = async (key: string) => `https://signed.example/${key}`;
+
+  it("fails closed when the store is unconfigured, so /me can degrade to identity only", async () => {
+    // `= undefined` would set the string "undefined", which is truthy — the
+    // guard would pass and the client would reach the network.
+    delete process.env.CLOUDFLARE_ACCOUNT_ID;
+    delete process.env.R2_ACCESS_KEY_ID;
+    delete process.env.R2_SECRET_ACCESS_KEY;
 
     const { listIdPhotoMoments } = await import("./resources.server");
-    const moments = await listIdPhotoMoments("user_1", {
+    // Matched by name, not `instanceof`: `vi.resetModules()` in afterEach means
+    // the class this file imported at the top is a different module instance
+    // than the one the dynamic import throws.
+    await expect(listIdPhotoMoments("user_1")).rejects.toMatchObject({
+      name: "ResourceStoreUnavailableError",
+    });
+  });
+
+  it("lists only that person's prints", async () => {
+    configureR2();
+
+    const { listIdPhotoMoments } = await import("./resources.server");
+    const { moments, total } = await listIdPhotoMoments("user_1", {
       list: async () => [
-        "kuanlan/moments/id-photo/user_1/shot-1.png",
-        "kuanlan/moments/id-photo/user_1/shot-1.source",
-        "kuanlan/moments/id-photo/user_1/shot-2.png",
+        entry("shot-1.png", "2026-08-01T00:00:00Z"),
+        entry("shot-1.source", "2026-08-01T00:00:00Z"),
+        entry("shot-2.png", "2026-08-02T00:00:00Z"),
       ],
-      sign: async (key) => `https://signed.example/${key}`,
+      sign,
+      head: async () => null,
     });
 
-    expect(moments).toEqual([
+    expect(total).toBe(2);
+    expect(moments.map((m) => m.id)).toEqual(["shot-2", "shot-1"]);
+    expect(moments[0]?.url).toBe(`https://signed.example/${prefix}shot-2.png`);
+  });
+
+  it("orders newest first, and puts prints with no time last", async () => {
+    configureR2();
+
+    const { listIdPhotoMoments } = await import("./resources.server");
+    const { moments, latestAt } = await listIdPhotoMoments("user_1", {
+      // Deliberately not in time order: R2 lists lexicographically, and moment
+      // ids are UUIDs, so the store's own order carries no meaning.
+      list: async () => [
+        entry("b.png", "2026-08-01T00:00:00Z"),
+        entry("undated.png"),
+        entry("a.png", "2026-08-09T00:00:00Z"),
+      ],
+      sign,
+      head: async () => null,
+    });
+
+    expect(moments.map((m) => m.id)).toEqual(["a", "b", "undated"]);
+    expect(latestAt?.toISOString()).toBe("2026-08-09T00:00:00.000Z");
+  });
+
+  it("reads the SKU back from metadata, whatever case the store returns it in", async () => {
+    configureR2();
+
+    const { listIdPhotoMoments } = await import("./resources.server");
+    const { moments } = await listIdPhotoMoments("user_1", {
+      list: async () => [entry("shot-1.png", "2026-08-01T00:00:00Z")],
+      sign,
+      // S3 normalises metadata names to lower case on read.
+      head: async (key) => ({
+        key,
+        size: 1,
+        metadata: { skuid: "linkedin-smoke", sizeid: "linkedin" },
+      }),
+    });
+
+    expect(moments[0]).toMatchObject({ skuId: "linkedin-smoke", sizeId: "linkedin" });
+  });
+
+  it("bounds head reads to the page while still counting everything", async () => {
+    configureR2();
+
+    const heads: string[] = [];
+    const { listIdPhotoMoments } = await import("./resources.server");
+    const { moments, total } = await listIdPhotoMoments(
+      "user_1",
       {
-        id: "shot-1",
-        key: "kuanlan/moments/id-photo/user_1/shot-1.png",
-        url: "https://signed.example/kuanlan/moments/id-photo/user_1/shot-1.png",
+        list: async () => [
+          entry("a.png", "2026-08-01T00:00:00Z"),
+          entry("b.png", "2026-08-02T00:00:00Z"),
+          entry("c.png", "2026-08-03T00:00:00Z"),
+        ],
+        sign,
+        head: async (key) => {
+          heads.push(key);
+          return null;
+        },
       },
-      {
-        id: "shot-2",
-        key: "kuanlan/moments/id-photo/user_1/shot-2.png",
-        url: "https://signed.example/kuanlan/moments/id-photo/user_1/shot-2.png",
-      },
-    ]);
+      { limit: 1 },
+    );
+
+    expect(total).toBe(3);
+    expect(moments.map((m) => m.id)).toEqual(["c"]);
+    expect(heads).toEqual([`${prefix}c.png`]);
   });
 });
