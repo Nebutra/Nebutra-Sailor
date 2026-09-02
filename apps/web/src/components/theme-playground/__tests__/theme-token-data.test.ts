@@ -304,8 +304,19 @@ describe("getThemePreviewStyle", () => {
   it("Theme Registry can preview the Cosmos design language", () => {
     const style = asRecord(getThemePreviewStyle("cosmos", "light"));
     const factory = asRecord(getThemePreviewStyle("factory", "light"));
-    expect(style["--color-primary"]).toBe("hsl(0 0% 7%)");
-    expect(style["--color-background"]).toBe("hsl(60 10% 96%)");
+    // Ink Black #0d0d0d on Linen Canvas #f7f5f3 — the values in Cosmos's own
+    // style reference. v1.0.0 of the package carried #111111 / #f6f6f4, which
+    // were eyeballed off the KUANLAN app rather than read off the spec.
+    expect(style["--color-primary"]).toBe("hsl(0 0% 5%)");
+    expect(style["--color-background"]).toBe("hsl(30 20% 96%)");
     expect(style["--color-background"]).not.toBe(factory["--color-background"]);
+  });
+
+  it("Cosmos chrome carries no accent: the brand mark is the action colour", () => {
+    const style = asRecord(getThemePreviewStyle("cosmos", "light"));
+    // The system's own don't-list forbids accent colours in chrome. v1.0.0 had
+    // Linear's acid-lime (64 89% 54%) sitting in roles.brand.
+    expect(style["--color-primary"]).toBe(style["--brand-mark"] ?? style["--color-primary"]);
+    expect(JSON.stringify(style)).not.toContain("64 89% 54%");
   });
 });

@@ -1,10 +1,14 @@
 import {
   getSignedDownloadUrl,
-  list,
+  head,
+  listDetailed,
+  type ObjectEntry,
+  type ObjectHead,
   type UploadOptions,
   type UploadResult,
   upload,
 } from "@nebutra/storage";
+import { type IdPhotoMoment, type IdPhotoMomentPage, sortMomentsNewestFirst } from "./moments";
 import {
   isR2Configured,
   momentObjectKey,
@@ -78,28 +82,72 @@ export async function persistIdPhotoMoment(
   };
 }
 
+/**
+ * Object metadata comes back with lower-cased keys.
+ *
+ * S3 metadata names are case-insensitive and the SDK normalises them on read, so
+ * the `skuId` written at upload is `skuid` coming out. Reading only the camelCase
+ * form silently yields undefined and every Moment loses its caption.
+ */
+function metaValue(metadata: Record<string, string> | undefined, name: string): string | undefined {
+  if (!metadata) return undefined;
+  return metadata[name] ?? metadata[name.toLowerCase()];
+}
+
+/**
+ * A user's Moments, newest first.
+ *
+ * `limit` bounds the head requests, not the count: ordering and `total` come out
+ * of the single listing for free, and only the entries actually rendered pay a
+ * HeadObject to read back their SKU. Pass it wherever the surface shows a
+ * preview rather than the whole grid.
+ */
 export async function listIdPhotoMoments(
   userId: string,
   io: {
-    list?: (prefix: string, bucket?: "uploads") => Promise<string[]>;
+    list?: (prefix: string, bucket?: "uploads") => Promise<ObjectEntry[]>;
     sign?: (key: string) => Promise<string>;
+    head?: (key: string) => Promise<ObjectHead | null>;
   } = {},
-): Promise<Array<{ id: string; key: string; url: string }>> {
+  options: { limit?: number } = {},
+): Promise<IdPhotoMomentPage> {
   requireR2();
 
   const prefix = momentUserPrefix(userId);
-  const keys = await (io.list ?? list)(prefix, "uploads");
+  const entries = await (io.list ?? listDetailed)(prefix, "uploads");
   const sign = io.sign ?? ((key: string) => getSignedDownloadUrl(key, { bucket: "uploads" }));
+  const readHead = io.head ?? ((key: string) => head(key, "uploads"));
 
-  return Promise.all(
-    keys
-      .filter((key) => key.endsWith(".png"))
-      .map(async (key) => ({
-        id: key.slice(prefix.length).replace(/\.png$/, ""),
-        key,
-        url: await sign(key),
+  const ordered = sortMomentsNewestFirst(
+    entries
+      .filter((entry) => entry.key.endsWith(".png"))
+      .map((entry) => ({
+        id: entry.key.slice(prefix.length).replace(/\.png$/, ""),
+        key: entry.key,
+        ...(entry.lastModified ? { shotAt: entry.lastModified } : {}),
       })),
   );
+
+  const page = options.limit != null ? ordered.slice(0, options.limit) : ordered;
+  const moments: IdPhotoMoment[] = await Promise.all(
+    page.map(async (moment) => {
+      const [url, meta] = await Promise.all([sign(moment.key), readHead(moment.key)]);
+      const skuId = metaValue(meta?.metadata, "skuId");
+      const sizeId = metaValue(meta?.metadata, "sizeId");
+      return {
+        ...moment,
+        url,
+        ...(skuId ? { skuId } : {}),
+        ...(sizeId ? { sizeId } : {}),
+      };
+    }),
+  );
+
+  return {
+    moments,
+    total: ordered.length,
+    ...(ordered[0]?.shotAt ? { latestAt: ordered[0].shotAt } : {}),
+  };
 }
 
 const RESOURCE_APP = "kuanlan";

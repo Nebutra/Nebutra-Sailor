@@ -23,7 +23,10 @@ It does not own shared Nebutra UI chrome or a new `packages/ai/*` package. Exact
 - `PRODUCT.md` — product + brand contract for this surface
 - `src/catalog/skus.ts` — operator SKU control plane (`enabled` is the switch)
 - Cloudflare R2 — resource store (`nebutra-assets` public catalog, `nebutra-uploads` Moments)
-- `design/` — Linear-derived tokens applied as an editorial dark system
+- Cosmos Brand Package — `packages/design/tokens/brands/cosmos/` (`brand.json` is the
+  SSOT, `DESIGN.md` is the human reference it was written from). Applied here by
+  `html[data-brand="cosmos"]` in `src/app/layout.tsx`; the emitted skin arrives via
+  `@nebutra/tokens/skins/cosmos.css`
 - `src/app/` — routes and API
 
 Do not treat `.next/` or `public/` as consumption truth. Browser stills come from `https://cdn.nebutra.com/kuanlan/{orbit|skus|wardrobe}/…` on `nebutra-assets`. `public/` is only the seed tree. Compose 领证照 samples from `src/catalog/samples/` into `public/skus/`, then `pnpm --filter @nebutra/kuanlan assets:seed`. Moments write to `kuanlan/moments/id-photo/{userId}/{id}.png` on `nebutra-uploads`. Identity is the Nebutra auth center (`auth.nebutra.com`); this app is an RP. Do not bounce into `app.nebutra.com`.

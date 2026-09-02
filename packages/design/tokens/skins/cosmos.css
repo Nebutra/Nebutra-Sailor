@@ -1,5 +1,5 @@
 /**
- * Brand carrier skin: Cosmos (cosmos) v1.0.0
+ * Brand carrier skin: Cosmos (cosmos) v2.0.0
  * darkDefault=false dualMode=true button=solid
  * fonts=0 mode=global
  * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
@@ -8,91 +8,91 @@
 :root,
 html[data-brand="cosmos"] {
   /* ── Color roles (carrier) ── */
-  --role-canvas: 60 10% 96%;
-  --role-canvas-fg: 0 0% 7%;
+  --role-canvas: 30 20% 96%;
+  --role-canvas-fg: 0 0% 5%;
   --role-surface: 0 0% 100%;
-  --role-surface-fg: 0 0% 7%;
-  --role-action: 0 0% 7%;
-  --role-action-fg: 60 10% 96%;
-  --role-quiet: 60 10% 92%;
-  --role-quiet-fg: 0 0% 7%;
-  --role-muted: 60 10% 92%;
-  --role-muted-fg: 0 0% 54%;
-  --role-border: 60 6% 90%;
-  --role-input: 60 6% 90%;
-  --role-ring: 0 0% 7%;
-  --role-brand: 64 89% 54%;
-  --role-brand-fg: 0 0% 7%;
-  --brand-mark: 64 89% 54%;
-  --brand-mark-foreground: 0 0% 7%;
+  --role-surface-fg: 0 0% 5%;
+  --role-action: 0 0% 5%;
+  --role-action-fg: 30 20% 96%;
+  --role-quiet: 0 0% 100%;
+  --role-quiet-fg: 0 0% 5%;
+  --role-muted: 30 20% 96%;
+  --role-muted-fg: 12 2% 42%;
+  --role-border: 30 5% 85%;
+  --role-input: 30 5% 85%;
+  --role-ring: 0 0% 5%;
+  --role-brand: 0 0% 5%;
+  --role-brand-fg: 30 20% 96%;
+  --brand-mark: 0 0% 5%;
+  --brand-mark-foreground: 30 20% 96%;
 
   /* ── shadcn bridge (primary = action CTA) ── */
-  --background: 60 10% 96%;
-  --foreground: 0 0% 7%;
+  --background: 30 20% 96%;
+  --foreground: 0 0% 5%;
   --card: 0 0% 100%;
-  --card-foreground: 0 0% 7%;
+  --card-foreground: 0 0% 5%;
   --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 7%;
-  --primary: 0 0% 7%;
-  --primary-foreground: 60 10% 96%;
-  --secondary: 60 10% 92%;
-  --secondary-foreground: 0 0% 7%;
-  --muted: 60 10% 92%;
-  --muted-foreground: 0 0% 54%;
-  --accent: 64 89% 54%;
-  --accent-foreground: 0 0% 7%;
-  --destructive: 0 72% 51%;
+  --popover-foreground: 0 0% 5%;
+  --primary: 0 0% 5%;
+  --primary-foreground: 30 20% 96%;
+  --secondary: 0 0% 100%;
+  --secondary-foreground: 0 0% 5%;
+  --muted: 30 20% 96%;
+  --muted-foreground: 12 2% 42%;
+  --accent: 0 0% 5%;
+  --accent-foreground: 30 20% 96%;
+  --destructive: 4 76% 40%;
   --destructive-foreground: 0 0% 100%;
-  --border: 60 6% 90%;
-  --input: 60 6% 90%;
-  --ring: 0 0% 7%;
+  --border: 30 5% 85%;
+  --input: 30 5% 85%;
+  --ring: 0 0% 5%;
   --success: 134 62% 40%;
   --success-foreground: 0 0% 100%;
-  --info: 0 0% 54%;
+  --info: 12 2% 42%;
   --info-foreground: 0 0% 100%;
   --sidebar: 0 0% 100%;
-  --sidebar-foreground: 0 0% 7%;
-  --sidebar-primary: 0 0% 7%;
-  --sidebar-primary-foreground: 60 10% 96%;
-  --sidebar-accent: 64 89% 54%;
-  --sidebar-accent-foreground: 0 0% 7%;
-  --sidebar-border: 60 6% 90%;
-  --sidebar-ring: 0 0% 7%;
-  --brand-primary: hsl(64 89% 54%);
-  --brand-accent: hsl(0 0% 7%);
-  --brand-accent-foreground: hsl(60 10% 96%);
-  --brand-tertiary: hsl(0 0% 7%);
+  --sidebar-foreground: 0 0% 5%;
+  --sidebar-primary: 0 0% 5%;
+  --sidebar-primary-foreground: 30 20% 96%;
+  --sidebar-accent: 0 0% 5%;
+  --sidebar-accent-foreground: 30 20% 96%;
+  --sidebar-border: 30 5% 85%;
+  --sidebar-ring: 0 0% 5%;
+  --brand-primary: hsl(0 0% 5%);
+  --brand-accent: hsl(0 0% 5%);
+  --brand-accent-foreground: hsl(30 20% 96%);
+  --brand-tertiary: hsl(0 0% 5%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
 
   /* ── Neutral ramp, anchored on this language's roles ── */
-  --neutral-1: hsl(60 10% 96%);
+  --neutral-1: hsl(30 20% 96%);
   --neutral-2: hsl(0 0% 100%);
-  --neutral-3: color-mix(in oklab, hsl(60 6% 90%) 20%, hsl(0 0% 100%));
-  --neutral-4: color-mix(in oklab, hsl(60 6% 90%) 40%, hsl(0 0% 100%));
-  --neutral-5: color-mix(in oklab, hsl(60 6% 90%) 60%, hsl(0 0% 100%));
-  --neutral-6: color-mix(in oklab, hsl(60 6% 90%) 80%, hsl(0 0% 100%));
-  --neutral-7: hsl(60 6% 90%);
-  --neutral-8: color-mix(in oklab, hsl(0 0% 54%) 25%, hsl(60 6% 90%));
-  --neutral-9: color-mix(in oklab, hsl(0 0% 54%) 50%, hsl(60 6% 90%));
-  --neutral-10: color-mix(in oklab, hsl(0 0% 54%) 75%, hsl(60 6% 90%));
-  --neutral-11: hsl(0 0% 54%);
-  --neutral-12: hsl(0 0% 7%);
+  --neutral-3: color-mix(in oklab, hsl(30 5% 85%) 20%, hsl(0 0% 100%));
+  --neutral-4: color-mix(in oklab, hsl(30 5% 85%) 40%, hsl(0 0% 100%));
+  --neutral-5: color-mix(in oklab, hsl(30 5% 85%) 60%, hsl(0 0% 100%));
+  --neutral-6: color-mix(in oklab, hsl(30 5% 85%) 80%, hsl(0 0% 100%));
+  --neutral-7: hsl(30 5% 85%);
+  --neutral-8: color-mix(in oklab, hsl(12 2% 42%) 25%, hsl(30 5% 85%));
+  --neutral-9: color-mix(in oklab, hsl(12 2% 42%) 50%, hsl(30 5% 85%));
+  --neutral-10: color-mix(in oklab, hsl(12 2% 42%) 75%, hsl(30 5% 85%));
+  --neutral-11: hsl(12 2% 42%);
+  --neutral-12: hsl(0 0% 5%);
 
   /* Recipe (action language + free elev/radii) */
   /* Shape slots */
-  --btn-default-radius: 9999px;
-  --radius-button: 9999px;
-  --radius-buttons: 9999px;
-  --radius-md: min(9999px, 14px);
-  --radius-card: 14px;
-  --radius-lg: 14px;
-  --radius-badge: 9999px;
-  --badge-default-radius: 9999px;
-  --radius-inputs: 9999px;
-  --input-radius: 9999px;
+  --btn-default-radius: 16px;
+  --radius-button: 16px;
+  --radius-buttons: 16px;
+  --radius-md: min(16px, 16px);
+  --radius-card: 16px;
+  --radius-lg: 16px;
+  --radius-badge: 16px;
+  --badge-default-radius: 16px;
+  --radius-inputs: 16px;
+  --input-radius: 16px;
   --radius-pill: 9999px;
 
   /* Free elevation (carrier-provided CSS shadows) */
@@ -117,19 +117,19 @@ html[data-brand="cosmos"] {
 
   /* Typography */
   --font-sans:
-    var(--font-inter), "Inter", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC",
-    ui-sans-serif, system-ui, sans-serif;
+    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia,
+    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-serif, serif;
   --font-cn:
-    var(--font-inter), "Inter", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC",
-    ui-sans-serif, system-ui, sans-serif;
+    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia,
+    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-serif, serif;
   --font-heading:
-    var(--font-inter), "Inter", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC",
-    ui-sans-serif, system-ui, sans-serif;
+    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia,
+    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-serif, serif;
   --font-display:
-    var(--font-inter), "Inter", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC",
-    ui-sans-serif, system-ui, sans-serif;
+    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia,
+    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-serif, serif;
   --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
-  --font-weight-heading: 590;
+  --font-weight-heading: 350;
 
   /* Motion */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -148,91 +148,92 @@ html[data-brand="cosmos"] {
   /* Spacing */
   --space-source-xs: 0.5rem;
   --space-source-sm: 1rem;
-  --space-source-md: 1.5rem;
-  --space-source-lg: 2rem;
-  --space-source-xl: 3rem;
-  --space-source-2xl: 4rem;
+  --space-source-md: 1.25rem;
+  --space-source-lg: 1.5rem;
+  --space-source-xl: 2rem;
+  --space-source-2xl: 3rem;
 
   /* Taxonomy / decorative (not product CTA) */
-  --brand-category-brand: #e4f222;
-  --brand-category-ink: #111111;
-  --brand-category-canvas: #f6f6f4;
-  --brand-category-well: #ecece8;
+  --brand-category-linen-canvas: #f7f5f3;
+  --brand-category-ink-black: #0d0d0d;
+  --brand-category-paper-white: #ffffff;
+  --brand-category-stone: #6e6a69;
+  --brand-category-pebble: #9a9796;
 }
 
 .dark,
 html.dark[data-brand="cosmos"] {
   /* ── Color roles (carrier) ── */
-  --role-canvas: 60 5% 8%;
-  --role-canvas-fg: 60 10% 96%;
-  --role-surface: 60 4% 12%;
-  --role-surface-fg: 60 10% 96%;
-  --role-action: 60 10% 96%;
-  --role-action-fg: 0 0% 7%;
-  --role-quiet: 60 4% 16%;
-  --role-quiet-fg: 60 10% 96%;
-  --role-muted: 60 4% 16%;
-  --role-muted-fg: 0 0% 54%;
-  --role-border: 60 4% 20%;
-  --role-input: 60 4% 20%;
-  --role-ring: 60 10% 96%;
-  --role-brand: 64 89% 54%;
-  --role-brand-fg: 0 0% 7%;
-  --brand-mark: 64 89% 54%;
-  --brand-mark-foreground: 0 0% 7%;
+  --role-canvas: 0 0% 5%;
+  --role-canvas-fg: 30 20% 96%;
+  --role-surface: 0 0% 11%;
+  --role-surface-fg: 30 20% 96%;
+  --role-action: 30 20% 96%;
+  --role-action-fg: 0 0% 5%;
+  --role-quiet: 0 0% 14%;
+  --role-quiet-fg: 30 20% 96%;
+  --role-muted: 0 0% 11%;
+  --role-muted-fg: 15 2% 60%;
+  --role-border: 0 1% 18%;
+  --role-input: 0 1% 18%;
+  --role-ring: 30 20% 96%;
+  --role-brand: 30 20% 96%;
+  --role-brand-fg: 0 0% 5%;
+  --brand-mark: 30 20% 96%;
+  --brand-mark-foreground: 0 0% 5%;
 
   /* ── shadcn bridge (primary = action CTA) ── */
-  --background: 60 5% 8%;
-  --foreground: 60 10% 96%;
-  --card: 60 4% 12%;
-  --card-foreground: 60 10% 96%;
-  --popover: 60 4% 12%;
-  --popover-foreground: 60 10% 96%;
-  --primary: 60 10% 96%;
-  --primary-foreground: 0 0% 7%;
-  --secondary: 60 4% 16%;
-  --secondary-foreground: 60 10% 96%;
-  --muted: 60 4% 16%;
-  --muted-foreground: 0 0% 54%;
-  --accent: 64 89% 54%;
-  --accent-foreground: 0 0% 7%;
-  --destructive: 0 72% 51%;
+  --background: 0 0% 5%;
+  --foreground: 30 20% 96%;
+  --card: 0 0% 11%;
+  --card-foreground: 30 20% 96%;
+  --popover: 0 0% 11%;
+  --popover-foreground: 30 20% 96%;
+  --primary: 30 20% 96%;
+  --primary-foreground: 0 0% 5%;
+  --secondary: 0 0% 14%;
+  --secondary-foreground: 30 20% 96%;
+  --muted: 0 0% 11%;
+  --muted-foreground: 15 2% 60%;
+  --accent: 30 20% 96%;
+  --accent-foreground: 0 0% 5%;
+  --destructive: 4 76% 40%;
   --destructive-foreground: 0 0% 100%;
-  --border: 60 4% 20%;
-  --input: 60 4% 20%;
-  --ring: 60 10% 96%;
-  --success: 134 49% 40%;
+  --border: 0 1% 18%;
+  --input: 0 1% 18%;
+  --ring: 30 20% 96%;
+  --success: 134 62% 40%;
   --success-foreground: 0 0% 100%;
-  --info: 0 0% 70%;
-  --info-foreground: 0 0% 7%;
-  --sidebar: 60 4% 12%;
-  --sidebar-foreground: 60 10% 96%;
-  --sidebar-primary: 60 10% 96%;
-  --sidebar-primary-foreground: 0 0% 7%;
-  --sidebar-accent: 64 89% 54%;
-  --sidebar-accent-foreground: 0 0% 7%;
-  --sidebar-border: 60 4% 20%;
-  --sidebar-ring: 60 10% 96%;
-  --brand-primary: hsl(64 89% 54%);
-  --brand-accent: hsl(60 10% 96%);
-  --brand-accent-foreground: hsl(0 0% 7%);
-  --brand-tertiary: hsl(60 10% 96%);
+  --info: 12 2% 42%;
+  --info-foreground: 0 0% 100%;
+  --sidebar: 0 0% 11%;
+  --sidebar-foreground: 30 20% 96%;
+  --sidebar-primary: 30 20% 96%;
+  --sidebar-primary-foreground: 0 0% 5%;
+  --sidebar-accent: 30 20% 96%;
+  --sidebar-accent-foreground: 0 0% 5%;
+  --sidebar-border: 0 1% 18%;
+  --sidebar-ring: 30 20% 96%;
+  --brand-primary: hsl(30 20% 96%);
+  --brand-accent: hsl(30 20% 96%);
+  --brand-accent-foreground: hsl(0 0% 5%);
+  --brand-tertiary: hsl(30 20% 96%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
 
   /* ── Neutral ramp, anchored on this language's roles ── */
-  --neutral-1: hsl(60 5% 8%);
-  --neutral-2: hsl(60 4% 12%);
-  --neutral-3: color-mix(in oklab, hsl(60 4% 20%) 20%, hsl(60 4% 12%));
-  --neutral-4: color-mix(in oklab, hsl(60 4% 20%) 40%, hsl(60 4% 12%));
-  --neutral-5: color-mix(in oklab, hsl(60 4% 20%) 60%, hsl(60 4% 12%));
-  --neutral-6: color-mix(in oklab, hsl(60 4% 20%) 80%, hsl(60 4% 12%));
-  --neutral-7: hsl(60 4% 20%);
-  --neutral-8: color-mix(in oklab, hsl(0 0% 54%) 25%, hsl(60 4% 20%));
-  --neutral-9: color-mix(in oklab, hsl(0 0% 54%) 50%, hsl(60 4% 20%));
-  --neutral-10: color-mix(in oklab, hsl(0 0% 54%) 75%, hsl(60 4% 20%));
-  --neutral-11: hsl(0 0% 54%);
-  --neutral-12: hsl(60 10% 96%);
+  --neutral-1: hsl(0 0% 5%);
+  --neutral-2: hsl(0 0% 11%);
+  --neutral-3: color-mix(in oklab, hsl(0 1% 18%) 20%, hsl(0 0% 11%));
+  --neutral-4: color-mix(in oklab, hsl(0 1% 18%) 40%, hsl(0 0% 11%));
+  --neutral-5: color-mix(in oklab, hsl(0 1% 18%) 60%, hsl(0 0% 11%));
+  --neutral-6: color-mix(in oklab, hsl(0 1% 18%) 80%, hsl(0 0% 11%));
+  --neutral-7: hsl(0 1% 18%);
+  --neutral-8: color-mix(in oklab, hsl(15 2% 60%) 25%, hsl(0 1% 18%));
+  --neutral-9: color-mix(in oklab, hsl(15 2% 60%) 50%, hsl(0 1% 18%));
+  --neutral-10: color-mix(in oklab, hsl(15 2% 60%) 75%, hsl(0 1% 18%));
+  --neutral-11: hsl(15 2% 60%);
+  --neutral-12: hsl(30 20% 96%);
 }
