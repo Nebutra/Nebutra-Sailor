@@ -288,10 +288,14 @@ Route groups: `admin/`, `ai/`, `billing/`, `events/`, `legal/`, `webhooks/`
 
 GitHub Actions workflows live in `.github/workflows/`. The load-bearing ones:
 - `ci.yml` — Primary pipeline (lint → typecheck → build → test → e2e → coverage)
-- `deploy-*.yml` — per-surface deploys, each gated by its own `DEPLOY_TARGET_*`
-  selector (ADR 2026-06-04). No workflow deploys to Kubernetes or publishes
-  container images: `deploy.yml` and `docker-build-push.yml` were retired on
-  2026-09-02, and `infra/iac/k8s/` is experimental, not exercised by CI.
+- `deploy-*.yml` — per-surface deploys. The product surfaces (`deploy-gateway`,
+  `deploy-origin-ecs`, `deploy-web-vercel`, `deploy-auth-*`, `deploy-sailor-docs`)
+  are gated by their `DEPLOY_TARGET_*` selector (ADR 2026-06-04); the rest
+  (legacy ECS PM2 fallback, Fly, side-project surfaces) carry no selector. No
+  workflow deploys to Kubernetes or publishes container images: `deploy.yml` and
+  `docker-build-push.yml` were retired on 2026-09-02, so `deploy-origin-ecs` is
+  `workflow_dispatch`-only until an image publish returns, and `infra/iac/k8s/`
+  is experimental, not exercised by CI.
 - `security-scan.yml` — CodeQL + dependency scanning
 - `chromatic.yml` — Storybook visual regression
 - `lighthouse-dashboard.yml` — Performance monitoring

@@ -18,6 +18,11 @@ import { describe, expect, it } from "vitest";
  * may deploy to Kubernetes on an automatic trigger, and the retired global gate
  * may not come back. A `workflow_dispatch`-only k8s job would still pass — that
  * is an operator decision, not a double-deploy.
+ *
+ * The retirement also orphaned `deploy-origin-ecs.yml`, whose `workflow_run`
+ * trigger named "Docker Build & Push" — GitHub never fires a `workflow_run` for
+ * a workflow that does not exist, and nothing reports it. The second test keeps
+ * every `workflow_run.workflows` entry pointing at a workflow that is present.
  */
 
 const WORKFLOWS = resolve(process.cwd(), ".github/workflows");
@@ -32,7 +37,13 @@ function workflowFiles(): string[] {
     .sort();
 }
 
-/** Anything that pushes manifests or images at a Kubernetes cluster. */
+/**
+ * Anything that pushes manifests or images at a Kubernetes cluster. Keys on the
+ * tooling, not the target name: a `k8s` choice in a `workflow_dispatch` input
+ * (deploy-origin-ecs.yml offers one) is a menu entry, not a deploy. As of
+ * 2026-09-02 no workflow matches, so this scan is a tripwire for the next one;
+ * the deploy.yml-absence and global-gate assertions carry the weight today.
+ */
 const K8S_DEPLOY = /\bkubectl\b|\bkustomize\b|infra\/iac\/k8s\//;
 
 /**
@@ -65,6 +76,45 @@ function triggers(yml: string): string[] {
   return keys;
 }
 
+function unquote(value: string): string {
+  return value.trim().replace(/^(["'])(.*)\1$/, "$2");
+}
+
+/** The `name:` a workflow registers under — what `workflow_run.workflows` matches. */
+function workflowName(yml: string): string | undefined {
+  const match = /^name:\s*(.+?)\s*$/m.exec(yml);
+  return match ? unquote(match[1] as string) : undefined;
+}
+
+/**
+ * Workflow names listed under `on.workflow_run.workflows`. Handles the inline
+ * list (`workflows: ["CI"]`) and the block list (`workflows:\n      - CI`).
+ */
+function workflowRunTargets(yml: string): string[] {
+  const lines = yml.split("\n");
+  const start = lines.findIndex((line) => /^ {2}workflow_run:/.test(line));
+  if (start === -1) return [];
+
+  const names: string[] = [];
+  for (let i = start + 1; i < lines.length; i += 1) {
+    const line = lines[i] as string;
+    if (line.trim() !== "" && !/^ {4}/.test(line)) break; // left the workflow_run block
+    const inline = /^ {4}workflows:\s*\[(.*)\]\s*$/.exec(line);
+    if (inline) {
+      names.push(...(inline[1] as string).split(",").map(unquote).filter(Boolean));
+      continue;
+    }
+    if (/^ {4}workflows:\s*$/.test(line)) {
+      for (let j = i + 1; j < lines.length; j += 1) {
+        const item = /^ {6}- (.+)$/.exec(lines[j] as string);
+        if (!item) break;
+        names.push(unquote(item[1] as string));
+      }
+    }
+  }
+  return names;
+}
+
 describe("Deploy substrate governance", () => {
   it("no workflow deploys to Kubernetes on an automatic trigger", () => {
     // The trigger extractor must actually see something, or the loop below is
@@ -94,6 +144,40 @@ describe("Deploy substrate governance", () => {
     expect(
       globalGate,
       `the global vars.DEPLOY_TARGET gate was a compatibility bridge (ADR 2026-06-04) and left with deploy.yml; use the per-service DEPLOY_TARGET_* selectors:\n${globalGate.join("\n")}`,
+    ).toEqual([]);
+  });
+
+  it("every workflow_run trigger names a workflow that exists", () => {
+    // Non-vacuous: the extractor must see the one live workflow_run consumer,
+    // and must catch the shape that went stale on 2026-09-02, when
+    // deploy-origin-ecs.yml kept pointing at the retired "Docker Build & Push".
+    expect(workflowRunTargets(read("deploy-gateway.yml"))).toEqual(["CI"]);
+    expect(
+      workflowRunTargets(
+        'on:\n  workflow_dispatch:\n  workflow_run:\n    workflows: ["Docker Build & Push"]\n    branches: [main]\n\npermissions:\n',
+      ),
+    ).toEqual(["Docker Build & Push"]);
+    expect(
+      workflowRunTargets("on:\n  workflow_run:\n    workflows:\n      - CI\n      - 'Release'\n"),
+    ).toEqual(["CI", "Release"]);
+
+    const known = new Set<string>();
+    for (const file of workflowFiles()) {
+      // A nameless workflow is displayed under its path relative to the repo root.
+      known.add(workflowName(read(file)) ?? `.github/workflows/${file}`);
+    }
+    expect(known).toContain("CI");
+    expect(known).toContain("Deploy Cloud VM Origin");
+
+    const dangling: string[] = [];
+    for (const file of workflowFiles()) {
+      for (const target of workflowRunTargets(read(file))) {
+        if (!known.has(target)) dangling.push(`${file} -> "${target}"`);
+      }
+    }
+    expect(
+      dangling,
+      `workflow_run triggers that name a workflow which does not exist — GitHub never fires these and never says so; drop the trigger or point it at a live workflow name:\n${dangling.join("\n")}`,
     ).toEqual([]);
   });
 

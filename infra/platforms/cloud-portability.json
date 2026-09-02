@@ -14,7 +14,7 @@
   ],
   "providers": {
     "aws": {
-      "status": "ready-adapter",
+      "status": "dormant-adapter",
       "compute": ["ecs-fargate", "eks", "ec2"],
       "registry": {
         "kind": "ecr",

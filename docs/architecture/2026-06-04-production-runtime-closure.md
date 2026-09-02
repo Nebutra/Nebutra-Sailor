@@ -176,6 +176,18 @@ per-service `DEPLOY_TARGET_*` selectors are the only gate;
 `tests/architecture/deploy-substrate.test.ts` fails if any workflow deploys to
 Kubernetes on an automatic trigger or reintroduces the global gate.
 
+The same retirement orphaned the default origin path. `deploy-origin-ecs.yml`
+(`python-ai -> ecs-docker`) auto-triggered on `Docker Build & Push` completing
+and deployed the `ghcr.io/<owner>/nebutra-ai:sha-<sha>` image that workflow
+built — its only producer. A `workflow_run` trigger on a workflow that no
+longer exists never fires and nothing reports it, so the trigger was dropped
+rather than left as a promise: the origin deploy is `workflow_dispatch`-only
+until an image-publish workflow returns, and its `image_tag` input must name an
+image that was pushed by hand. The `DEPLOY_TARGET_PYTHON_AI` gate on the job
+stays as the re-activation seam. The automatic path had never run (zero runs as
+of 2026-09-02). `deploy-substrate.test.ts` also fails if any `workflow_run`
+trigger names a workflow that does not exist.
+
 `infra/iac/k8s/` and `infra/iac/railway/` stay on disk as implementations, not
 promises — experimental, not exercised by CI since 2026-04, not part of the
 default create-sailor template, validate before use; each README says so. The
