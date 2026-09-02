@@ -21,6 +21,22 @@ describe("kuanlan Fly origin", () => {
     expect(toml).toContain("https://router.nebutra.com/v1");
     expect(toml).not.toContain("302.ai");
     expect(fly).toContain("KUANLAN_ROUTER_API_KEY");
+    const consume = fly.slice(fly.indexOf("Set kuanlan consume secrets"));
+    expect(consume).toContain("R2_KUANLAN_ACCESS_KEY_ID");
+    expect(consume.includes("secrets.R2_ACCESS_KEY_ID")).toBe(false);
+
+    const mint = readFileSync(
+      resolve(ROOT, ".github/workflows/ops-kuanlan-r2-uploads.yml"),
+      "utf-8",
+    );
+    expect(mint).toContain("provision-kuanlan-r2-uploads-token.sh");
+    const script = readFileSync(
+      resolve(ROOT, "infra/ops/scripts/provision-kuanlan-r2-uploads-token.sh"),
+      "utf-8",
+    );
+    expect(script).toContain("nebutra-uploads");
+    expect(script).not.toContain('echo "$ACCESS_KEY_ID"');
+    expect(script).not.toContain('echo "$SECRET_ACCESS_KEY"');
 
     const certs = readFileSync(resolve(ROOT, ".github/workflows/issue-fly-certs.yml"), "utf-8");
     expect(certs).toContain("nebutra-kuanlan");
