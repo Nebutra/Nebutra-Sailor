@@ -105,6 +105,10 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm
         with:
           install: "false"
+          # No install here, so nothing to cache. With caching on, setup-node's
+          # post step fails this required check on the first run after any
+          # lockfile change (no cache to restore, no store to save).
+          cache: ""
 
       - name: Setup Python
         if: matrix.language == 'python' && needs.detect-languages.outputs.python == 'true'

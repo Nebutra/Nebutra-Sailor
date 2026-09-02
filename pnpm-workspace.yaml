@@ -34,6 +34,9 @@ trustPolicy: no-downgrade
 # next-auth@5.0.0-beta.32 patches critical Auth.js CVEs but ships without the
 # provenance attestation present on beta.31 (upstream CI change, not takeover).
 trustPolicyExclude:
+  # semver@6.3.1 is a 2023 backport published after 7.5.x had gained provenance;
+  # 6.x never carried it. Reached when @babel/core's subtree re-resolves.
+  - "semver@6.3.1"
   - "next-auth@5.0.0-beta.32"
   - "@auth/core@0.41.3"
   # chokidar@4.0.3 (via tsup) lost provenance attestation vs earlier 4.x — not a takeover.
@@ -132,6 +135,11 @@ catalog:
 
 # Settings that used to live in package.json#pnpm. Current pnpm reads them here.
 overrides:
+  # GHSA (2026-09-02): browserslist <=4.28.6 unbounded memory growth / prototype
+  # write via crafted queries; mysql2 <3.22.0 auth plugin downgrade. Both reach
+  # us transitively (Babel targets; better-auth's optional MySQL driver).
+  browserslist: ">=4.28.7"
+  mysql2: ">=3.22.0"
   "@actions/github>undici": ">=7.29.0 <8"
   "@actions/http-client>undici": ">=7.29.0 <8"
   "@babel/core": "7.29.6"
