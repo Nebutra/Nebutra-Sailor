@@ -53,6 +53,10 @@ terraform apply -var-file="environments/prod/terraform.tfvars"
 
 ### Kubernetes
 
+Experimental — not exercised by CI since 2026-04 and not part of the default
+create-sailor template. Read [iac/k8s/README.md](iac/k8s/README.md) and validate
+the overlays before applying anything.
+
 ```bash
 # Preview manifests
 kubectl kustomize infra/iac/k8s/overlays/prod

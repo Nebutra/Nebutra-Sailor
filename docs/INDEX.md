@@ -63,8 +63,8 @@ Complete navigation to all project documentation.
 | [infra](../infra/README.md)                               | Infrastructure overview              |
 | [iac/cloudflare](../infra/iac/cloudflare/README.md)       | Cloudflare configuration             |
 | [iac/cloudflare/r2](../infra/iac/cloudflare/r2/README.md) | R2 object storage                    |
-| [iac/k8s](../infra/iac/k8s/README.md)                     | Kubernetes manifests                 |
-| [iac/railway](../infra/iac/railway/README.md)             | Railway deployment                   |
+| [iac/k8s](../infra/iac/k8s/README.md)                     | Kubernetes manifests (experimental)  |
+| [iac/railway](../infra/iac/railway/README.md)             | Railway deployment (experimental)    |
 | [iac/terraform](../infra/iac/terraform/README.md)         | IaC definitions                      |
 | [runtime/docker](../infra/runtime/docker/README.md)       | Docker base images & compose configs |
 | [runtime/nginx](../infra/runtime/nginx/README.md)         | Nginx reverse proxy                  |
