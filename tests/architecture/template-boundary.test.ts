@@ -98,6 +98,15 @@ const NEBUTRA_ONLY_WORKFLOWS = [
   "tmp-vercel-git-deploy-docs.yml",
 ];
 
+/**
+ * Name patterns that mark a workflow as Nebutra-instance work even when it
+ * carries no forbidden literal (ops-kuanlan-r2-uploads.yml shipped to the
+ * mirror on 2026-09-02 that way). Anything matching must be listed in
+ * .templateignore. A generic kit gets a generic name; instance work says so.
+ */
+const INSTANCE_WORKFLOW_NAME_PATTERN =
+  /^(ops-|point-|bootstrap-|deploy-kuanlan|deploy-carina)|kuanlan|carina|forge|pebble|typelens|new-api|dns-leak/;
+
 /** Secret-free workflows a scaffolded project should keep. */
 const GENERIC_WORKFLOWS = [
   "ci.yml",
@@ -258,6 +267,10 @@ describe("template boundary — the built template", () => {
   it("ships no Nebutra-only workflow and every generic one", () => {
     const dir = join(out, ".github/workflows");
     const leaked = NEBUTRA_ONLY_WORKFLOWS.filter((w) => existsSync(join(dir, w)));
+    const byName = existsSync(dir)
+      ? readdirSync(dir).filter((w) => INSTANCE_WORKFLOW_NAME_PATTERN.test(w))
+      : [];
+    expect(byName, "instance-named workflows must be in .templateignore").toEqual([]);
     expect(leaked, `Nebutra-only workflows in the built template: ${leaked.join(", ")}`).toEqual(
       [],
     );
