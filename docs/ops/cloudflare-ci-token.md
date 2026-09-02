@@ -103,5 +103,5 @@ Ensure `docs.nebutra.com` DNS points at Vercel (`CNAME` → `cname.vercel-dns.co
 | Host | Needs |
 |------|--------|
 | `docs.nebutra.com` Worker | Workers Scripts **Edit** + Assets |
-| `point-pebble-dns` / DNS scripts | Zone DNS **Edit** |
+| `point-dns.yml` / DNS scripts | Zone DNS **Edit** |
 | Pebble brand front | Already on **ECS** (`A` → origin); no Workers token required |

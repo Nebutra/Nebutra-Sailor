@@ -75,7 +75,7 @@ default 443 `301 → nebutra.com`. Content still comes from Vercel landing.
 `nebutra-landing` once CF token has Zone DNS Edit and production deploys are
 green — see `point-status-dns-vercel.sh`. **open** is already a
 landing host alias: CNAME → `cname.vercel-dns.com` + bind on
-`nebutra-landing` via `point-open-dns.yml`. Design stays on ECS
+`nebutra-landing` via `point-dns.yml` (host=open, target=vercel). Design stays on ECS
 (`point-design-dns-ecs.sh`).
 
 The checked-in Sanity Studio deploy command targets Sanity-hosted
