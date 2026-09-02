@@ -58,11 +58,11 @@ export function wardrobeSampleKey(id: string): string {
   if (!WARDROBE_ID.test(id)) {
     throw new InvalidResourceKeyError("wardrobe_id");
   }
-  return `${RESOURCE_ROOT}/wardrobe/${id}.png`;
+  return `${RESOURCE_ROOT}/wardrobe/${id}.jpg`;
 }
 
 export function wardrobeSampleSrc(id: string, base?: string): string {
-  return publicAssetUrl(wardrobeSampleKey(id), base);
+  return `${publicAssetUrl(wardrobeSampleKey(id), base)}?v=incamera`;
 }
 
 export function momentUserPrefix(userId: string): string {

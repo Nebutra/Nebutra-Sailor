@@ -16,7 +16,7 @@ export type CatalogSeedObject = {
 const NAME: Record<CatalogKind, RegExp> = {
   orbit: /^[0-9]{2}\.jpg$/,
   skus: /^[a-z0-9]+(?:-[a-z0-9]+)*\.jpg$/,
-  wardrobe: /^[a-z0-9]+(?:-[a-z0-9]+)*\.png$/,
+  wardrobe: /^[a-z0-9]+(?:-[a-z0-9]+)*\.jpg$/,
 };
 
 export function catalogSeedObject(kind: CatalogKind, name: string): CatalogSeedObject {
@@ -37,8 +37,8 @@ export function catalogSeedObject(kind: CatalogKind, name: string): CatalogSeedO
   return {
     kind,
     name,
-    key: wardrobeSampleKey(name.replace(/\.png$/, "")),
-    contentType: "image/png",
+    key: wardrobeSampleKey(name.replace(/\.jpg$/, "")),
+    contentType: "image/jpeg",
   };
 }
 
