@@ -59,3 +59,15 @@ The Next workflow copies `/var/www/nebutra/<app>/.env` from the VM into
 `fly secrets import` when SSH vars exist. The Hono workflow copies
 `/var/www/nebutra/api/.env`. If that file is missing, set secrets on
 the Fly app before trusting the hostname.
+
+The VM file describes the VM. Two of its keys must never reach a Machine:
+`CACHE_BACKEND=ioredis` and `REDIS_URL=redis://127.0.0.1:6379` point at the
+VM's local Redis. Imported onto `nebutra-gateway` they made `@nebutra/cache`
+prefer ioredis over the valid Upstash REST credentials beside it, so every
+Redis call failed with `ECONNREFUSED`, BullMQ logged a worker error every two
+seconds, and every rate-limited route answered 500 while `/api/misc/health`
+stayed 200 with `cache: down` — from the cutover until 2026-09-02. The Hono
+workflow now skips and unsets both. The queue provider is a separate choice:
+the Machine has no `QSTASH_TOKEN`, so with `REDIS_URL` gone it needs either a
+QStash token or `ALLOW_MEMORY_QUEUE_IN_PRODUCTION=true` as an explicit
+stop-gap, or the AI gateway routes do not mount.
