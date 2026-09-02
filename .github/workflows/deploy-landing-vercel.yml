@@ -20,7 +20,9 @@ name: Deploy Landing (Vercel)
 # from CI before deploying so the same drift cannot silently stop deployments.
 #
 # workflow_dispatch with `promote: false` builds and uploads a preview URL only.
-# Use it to validate the prebuilt output before trusting it with production.
+# By default that dry run still builds with the *production* environment
+# variables, so it rehearses exactly what the next main push will ship;
+# `environment: preview` builds with the preview set instead.
 
 on:
   push:
@@ -38,6 +40,11 @@ on:
         description: "Promote to production (nebutra.com). false = preview URL only"
         type: boolean
         default: true
+      environment:
+        description: "Env vars to build with when not promoting (a promotion always uses production)"
+        type: choice
+        options: [production, preview]
+        default: production
 
 permissions:
   contents: read
@@ -57,6 +64,7 @@ jobs:
       # A push to main is always production. A manual run promotes unless the
       # operator asked for a preview.
       PROMOTE: ${{ github.event_name == 'push' || inputs.promote == true }}
+      BUILD_ENVIRONMENT: ${{ inputs.environment }}
     steps:
       - name: Checkout
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -139,19 +147,44 @@ jobs:
           mkdir -p .vercel
           printf '{"projectId":"%s","orgId":"%s"}\n' "$VERCEL_PROJECT_ID" "${VERCEL_ORG_ID:-}" > .vercel/project.json
 
+          # A promotion always builds with the production environment. A dry
+          # run builds with production too unless asked for preview, so it
+          # rehearses exactly what the next main push will ship.
           if [ "$PROMOTE" = "true" ]; then
             environment=production
             prod_flag=--prod
           else
-            environment=preview
+            environment="${BUILD_ENVIRONMENT:-production}"
             prod_flag=
           fi
-          echo "target=$environment"
+          echo "env=$environment promote=$PROMOTE"
 
-          # Project settings + env vars for this target. Variables marked
-          # Sensitive in the dashboard cannot be pulled; if the build needs one
-          # it fails here, visibly, rather than shipping a build without it.
           vercel pull --yes --environment="$environment" --token="$VERCEL_TOKEN" --scope "${VERCEL_ORG_ID:-}"
+
+          # Variables marked Sensitive in the dashboard cannot be pulled; the
+          # CLI writes them with an empty value. On 2026-09-02 that made
+          # NEXT_PUBLIC_SITE_URL="" and the first production build died in
+          # `new URL("")` while collecting /_not-found — production only,
+          # because preview never defined the variable and the code's own
+          # default applied. Drop the empties so defaults apply here as well.
+          envfile=".vercel/.env.${environment}.local"
+          if [ -f "$envfile" ]; then
+            empties=$(grep -cE "^[A-Za-z_][A-Za-z0-9_]*=(\"\"|''|)$" "$envfile" || true)
+            sed -i -E "/^[A-Za-z_][A-Za-z0-9_]*=(\"\"|''|)$/d" "$envfile"
+            echo "pulled ${envfile}: dropped ${empties} empty (Sensitive) entries"
+          fi
+
+          # The public URLs declared in apps/landing/vercel.json `env` are what
+          # Vercel applies on its own builders. Exported here so the prebuilt
+          # output is built against the same values regardless of how the
+          # dashboard copies are flagged.
+          while IFS='=' read -r key value; do
+            [ -n "$key" ] && export "$key=$value"
+          done < <(node -e '
+            const env = require("./apps/landing/vercel.json").env ?? {};
+            for (const [k, v] of Object.entries(env)) console.log(`${k}=${v}`);
+          ')
+          export VERCEL_ENV="$environment"
 
           # Same @vercel/next builder Vercel would run remotely, on this runner.
           # shellcheck disable=SC2086

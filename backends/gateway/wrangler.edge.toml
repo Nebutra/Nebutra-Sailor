@@ -41,7 +41,17 @@ head_sampling_rate = 1
 # than leaking anything. Must not be the hostname this Worker serves.
 ORIGIN_URL = "https://nebutra-gateway.fly.dev"
 
-# Requests per minute per IP before shedding. Set far above real usage — this
-# sheds floods, it is not the per-key limit, which stays at the origin where
-# the plan is known.
-EDGE_IP_RATE_LIMIT = "600"
+# Per-IP flood limit: requests per minute per address before shedding, set far
+# above real usage. Counted by Cloudflare's rate limiting binding — no Redis
+# round trip, no credentials at the edge, nothing on the Upstash meter. The
+# count is per Cloudflare location and eventually consistent; this sheds
+# floods, the per-key limit stays at the origin where the plan is known.
+# `period` must be 10 or 60. `namespace_id` is an account-unique id for this
+# counter; changing it starts the counts over.
+[[ratelimits]]
+name = "IP_LIMITER"
+namespace_id = "2609"
+
+  [ratelimits.simple]
+  limit = 600
+  period = 60
