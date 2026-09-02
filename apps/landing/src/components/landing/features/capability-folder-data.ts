@@ -508,7 +508,7 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
       unitLabel: copy("packages", "包"),
       sourceFiles: 1519,
       testFiles: 55,
-      readmes: 13,
+      readmes: 14,
     },
     title: copy("Design System Supply Chain", "设计系统供应链"),
     summary: copy(
