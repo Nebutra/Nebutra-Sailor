@@ -13,22 +13,22 @@ name = "nebutra-gateway-edge"
 main = "src/worker-edge.ts"
 compatibility_date = "2026-06-04"
 
-# Takes api.nebutra.com in front of the Fly Hono origin. The hostname is
-# already proxied by Cloudflare, so this changes only what runs before the
-# origin fetch — removing the route puts traffic straight back on whatever
-# api.nebutra.com resolves to.
+# This Worker serves api.nebutra.com in front of the Fly Hono origin through
+# the route `api.nebutra.com/*` on zone nebutra.com. The route is deliberately
+# NOT declared here: it was bound once and stays attached across deploys, and
+# the CI token has Workers Scripts:Edit but not Zone Workers Routes:Edit, so a
+# `routes` entry makes every `wrangler deploy` upload the new version and then
+# fail on the zone routes call — the job goes red while the Worker is already
+# live, which is how every deploy-gateway run since 2026-09-01 ended. auth-edge
+# and typelens deploy the same way for the same reason. To move or remove the
+# route, use the dashboard or a token with zone rights (docs/ops/cloudflare-ci-token.md).
 #
 # ORIGIN_URL must not be api.nebutra.com. The Fly app URL is outside this
 # zone's Worker routes, so it cannot loop. A grey-cloud origin.nebutra.com
 # alias is also safe; an orange-cloud same-zone name is not.
-routes = [
-  { pattern = "api.nebutra.com/*", zone_name = "nebutra.com" },
-]
 
-# Kept on alongside the route. Declaring `routes` makes wrangler disable the
-# workers.dev subdomain by default, which removes the only way to exercise this
-# Worker without sending production traffic at it — and if the route fails to
-# apply, that leaves no way to reach it at all.
+# The workers.dev subdomain is the only way to exercise this Worker without
+# sending production traffic at it.
 workers_dev = true
 
 [observability]
