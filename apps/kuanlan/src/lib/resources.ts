@@ -1,5 +1,7 @@
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+
 export const RESOURCE_ROOT = "kuanlan";
-export const DEFAULT_R2_PUBLIC_URL = "https://cdn.nebutra.com";
+export const DEFAULT_R2_PUBLIC_URL = getBrandOrigin("cdn");
 
 const ORBIT_NAME = /^[0-9]{2}\.jpg$/;
 const MOMENT_ID = /^[a-zA-Z0-9_-]+$/;

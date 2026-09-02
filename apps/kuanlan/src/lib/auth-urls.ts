@@ -1,9 +1,10 @@
 import { buildAuthCenterSignInUrl } from "@nebutra/auth";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 
 export function kuanlanOrigin(env: Record<string, string | undefined> = process.env): string {
   return (
     env.NEXT_PUBLIC_SITE_URL?.trim() ||
-    (env.NODE_ENV === "development" ? "http://localhost:3120" : "https://kuanlan.nebutra.com")
+    (env.NODE_ENV === "development" ? "http://localhost:3120" : getBrandOrigin("kuanlan"))
   ).replace(/\/+$/, "");
 }
 

@@ -255,6 +255,11 @@ export interface BrandConfig {
      * Local-first runtime — no `api.carina.*` origin. See docs/DOMAINS.md.
      */
     carina: string;
+    /**
+     * KUANLAN 观澜 product origin. Auth RP; stills on `cdn`. Consume goes
+     * through `router`. Production is Fly Singapore, not the app workspace.
+     */
+    kuanlan: string;
   };
 
   social: {
@@ -371,6 +376,7 @@ export const DEFAULT_BRAND: BrandConfig = {
     analytics: "analytics.nebutra.com",
     pebble: "pebble.nebutra.com",
     carina: "carina.nebutra.com",
+    kuanlan: "kuanlan.nebutra.com",
     origin: "origin.nebutra.com",
   },
   social: {

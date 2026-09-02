@@ -43,6 +43,6 @@ describe("kuanlan auth center URLs", () => {
     expect(actions).toContain("@nebutra/auth/client");
     expect(actions).not.toContain("app.nebutra.com");
     expect(layout).toContain("AuthProvider");
-    expect(layout).toContain("auth.nebutra.com");
+    expect(layout).toContain('getBrandOrigin("auth")');
   });
 });

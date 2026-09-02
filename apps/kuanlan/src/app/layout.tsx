@@ -1,5 +1,6 @@
 import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { AuthProvider } from "@nebutra/auth/react";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { Inter } from "next/font/google";
 import type { ReactNode } from "react";
 import { BRAND } from "@/lib/brand";
@@ -31,7 +32,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     authProviderConfig.apiUrl =
       process.env.NEXT_PUBLIC_AUTH_URL?.trim() ||
       process.env.BETTER_AUTH_URL?.trim() ||
-      "https://auth.nebutra.com";
+      getBrandOrigin("auth");
   }
 
   return (

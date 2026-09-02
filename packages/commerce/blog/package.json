@@ -17,6 +17,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
+    "@nebutra/brand": "workspace:*",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0"

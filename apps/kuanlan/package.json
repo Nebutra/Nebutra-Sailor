@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@nebutra/auth": "workspace:*",
+    "@nebutra/brand": "workspace:*",
     "@nebutra/storage": "workspace:*",
     "next": "catalog:",
     "react": "catalog:",

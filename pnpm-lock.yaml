@@ -635,6 +635,9 @@ importers:
       '@nebutra/auth':
         specifier: workspace:*
         version: link:../../packages/iam/auth
+      '@nebutra/brand':
+        specifier: workspace:*
+        version: link:../../packages/design/brand
       '@nebutra/storage':
         specifier: workspace:*
         version: link:../../packages/integrations/storage
@@ -3349,6 +3352,9 @@ importers:
 
   packages/commerce/blog:
     dependencies:
+      '@nebutra/brand':
+        specifier: workspace:*
+        version: link:../../design/brand
       remark:
         specifier: ^15.0.1
         version: 15.0.1

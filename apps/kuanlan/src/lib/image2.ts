@@ -1,6 +1,7 @@
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import type { GarmentId, IdPhotoSku } from "@/catalog/skus";
 
-export const DEFAULT_IMAGE2_BASE_URL = "https://router.nebutra.com/v1";
+export const DEFAULT_IMAGE2_BASE_URL = `${getBrandOrigin("router")}/v1`;
 export const DEFAULT_IMAGE2_MODEL = "gpt-image-2";
 
 const BACKGROUND_COPY = {

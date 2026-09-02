@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import type { NextConfig } from "next";
 
 const useStandalone =
@@ -6,11 +7,11 @@ const useStandalone =
 
 const nextConfig: NextConfig = {
   ...(useStandalone ? { output: "standalone" as const } : {}),
-  transpilePackages: ["@nebutra/auth", "@nebutra/storage"],
+  transpilePackages: ["@nebutra/auth", "@nebutra/brand", "@nebutra/storage"],
   serverExternalPackages: ["sharp"],
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "cdn.nebutra.com", pathname: "/kuanlan/**" },
+      { protocol: "https", hostname: brand.domains.cdn, pathname: "/kuanlan/**" },
       { protocol: "https", hostname: "**.r2.dev", pathname: "/kuanlan/**" },
     ],
   },

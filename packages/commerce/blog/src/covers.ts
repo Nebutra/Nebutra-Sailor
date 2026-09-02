@@ -1,3 +1,4 @@
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import type { BlogPostWithSource, ResolvedBlogCover } from "./types";
 
 export type BlogCover = {
@@ -9,7 +10,7 @@ function landingCoverSrc(file: string): string {
   const origin = (
     process.env.NEXT_PUBLIC_R2_PUBLIC_URL ||
     process.env.R2_PUBLIC_URL ||
-    "https://cdn.nebutra.com"
+    getBrandOrigin("cdn")
   ).replace(/\/+$/, "");
   return `${origin}/landing/images/blog/covers/${file}`;
 }
