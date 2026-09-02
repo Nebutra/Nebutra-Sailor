@@ -1,0 +1,50 @@
+name: Ops — Platform reconcile
+
+# State that lives only in a provider dashboard is declared in
+# ops/nebutra/platform-expected.json and compared with the live providers here
+# once a day. A failed run is the alert: GitHub mails the owner when a scheduled
+# workflow fails. The engine is read-only and prints no secret values — see
+# ops/README.md for the schema and scripts/ops/platform-reconcile.mjs for the
+# checks.
+#
+# The tokens are the ones the deploy workflows already hold. --strict makes a
+# missing token fail the run instead of skipping its provider, so a secret that
+# vanishes from the repository is noticed the same way a changed setting is.
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: platform-reconcile
+  cancel-in-progress: true
+
+jobs:
+  reconcile:
+    name: Compare declared provider state with live state
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node
+        uses: ./.github/actions/setup-node
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      - name: Reconcile
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID || secrets.VERCEL_ORG_ID }}
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+          # The workflow already sees every repository variable. Hand them to the
+          # engine so no token has to hold the Variables API permission.
+          PLATFORM_RECONCILE_GITHUB_VARS: ${{ toJSON(vars) }}
+        run: node scripts/ops/platform-reconcile.mjs ops/nebutra/platform-expected.json --strict
