@@ -56,39 +56,10 @@ jobs:
         run: |
           [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ] || { echo "::error::CLOUDFLARE_API_TOKEN secret is not set"; exit 1; }
           [ -n "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" ] || { echo "::error::CLOUDFLARE_ACCOUNT_ID secret is not set"; exit 1; }
-          # The edge Worker carries no business logic, so it needs none of the
-          # gateway's service credentials. Upstash is the one exception: the
-          # per-IP flood limit counts there so every colo shares one budget.
-          [ -n "${{ secrets.UPSTASH_REDIS_REST_URL }}" ] || { echo "::error::UPSTASH_REDIS_REST_URL secret is not set"; exit 1; }
-          [ -n "${{ secrets.UPSTASH_REDIS_REST_TOKEN }}" ] || { echo "::error::UPSTASH_REDIS_REST_TOKEN secret is not set"; exit 1; }
-
-      - name: Prepare Worker runtime bindings
-        env:
-          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
-          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
-        run: |
-          node <<'EOF'
-          const fs = require("node:fs");
-
-          // Only what the edge actually reads. ORIGIN_URL and the IP limit are
-          // vars in wrangler.edge.toml, not secrets — a hostname and a number
-          // belong in config where they are visible.
-          fs.writeFileSync(
-            "backends/gateway/.wrangler-secrets.json",
-            JSON.stringify({
-              UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
-              UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
-            }),
-          );
-          EOF
-
-      - name: Sync Worker runtime bindings
-        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          workingDirectory: backends/gateway
-          command: secret bulk .wrangler-secrets.json --config wrangler.edge.toml
+          # The edge Worker carries no business logic and, since 2026-09-02, no
+          # service credentials either: the per-IP flood limit is Cloudflare's
+          # rate limiting binding, declared in wrangler.edge.toml. ORIGIN_URL is
+          # a var there too — a hostname belongs in config where it is visible.
 
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
