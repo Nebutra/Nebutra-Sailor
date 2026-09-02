@@ -8,7 +8,7 @@
   },
   "principles": [
     "One active deploy target per service per environment",
-    "Container images are portable across GHCR, AWS ECR, and GCP Artifact Registry",
+    "Container registries (GHCR, AWS ECR, GCP Artifact Registry) are described per provider and provisioned by Terraform; no CI workflow publishes images since docker-build-push.yml was retired on 2026-09-02",
     "Cloud-specific credentials use OIDC or workload identity in CI whenever possible",
     "Provider adapters are dormant unless explicitly selected by DEPLOY_TARGET_*"
   ],
@@ -89,10 +89,6 @@
   "ci": {
     "doctor": "pnpm cloud:doctor",
     "verify": "pnpm cloud:verify",
-    "workflows": [
-      ".github/workflows/docker-build-push.yml",
-      ".github/workflows/deploy-gateway.yml",
-      ".github/workflows/deploy-origin-ecs.yml"
-    ]
+    "workflows": [".github/workflows/deploy-gateway.yml", ".github/workflows/deploy-origin-ecs.yml"]
   }
 }

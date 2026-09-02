@@ -43,23 +43,17 @@ describe("cloud platform portability contract", () => {
     );
   });
 
-  it("keeps container publishing portable across GHCR, AWS ECR, and GCP Artifact Registry", () => {
-    const workflow = readText(".github/workflows/docker-build-push.yml");
-
-    expect(workflow).toContain("AWS_ECR_ROLE_ARN");
-    expect(workflow).toContain("aws-actions/configure-aws-credentials");
-    expect(workflow).toContain("aws-actions/amazon-ecr-login");
-    expect(workflow).toContain("GCP_PROJECT_ID");
-    expect(workflow).toContain("GCP_REGION");
-    expect(workflow).toContain("GCP_ARTIFACT_REPOSITORY");
-    expect(workflow).toContain("GCP_WORKLOAD_IDENTITY_PROVIDER");
-    expect(workflow).toContain("GCP_SERVICE_ACCOUNT");
-    expect(workflow).toContain(
-      "google-github-actions/auth@c200f3691d83b41bf9bbd8638997a462592937ed",
-    );
-    expect(workflow).toContain("token_format: access_token");
-    expect(workflow).toContain("oauth2accesstoken");
-    expect(workflow).toContain("-docker.pkg.dev");
+  it("does not claim a CI image-publish path it no longer has", () => {
+    // docker-build-push.yml (GHCR + ECR + Artifact Registry, cosign, Trivy) was
+    // retired on 2026-09-02 after five months without a run. The registry
+    // adapters are still described per provider and provisioned by Terraform;
+    // the manifest must not list a publish workflow that does not exist, and a
+    // future one must be added back here deliberately.
+    expect(existsSync(join(root, ".github/workflows/docker-build-push.yml"))).toBe(false);
+    const manifest = JSON.parse(readText("infra/platforms/cloud-portability.json")) as {
+      principles?: string[];
+    };
+    expect(manifest.principles?.join("\n")).toContain("no CI workflow publishes images");
   });
 
   it("keeps GCP as a dormant deploy target without changing production defaults", () => {
@@ -117,7 +111,6 @@ describe("cloud platform portability contract", () => {
     expect(manifest.ci?.doctor).toBe("pnpm cloud:doctor");
     expect(manifest.ci?.verify).toBe("pnpm cloud:verify");
     expect(manifest.ci?.workflows ?? []).toEqual([
-      ".github/workflows/docker-build-push.yml",
       ".github/workflows/deploy-gateway.yml",
       ".github/workflows/deploy-origin-ecs.yml",
     ]);

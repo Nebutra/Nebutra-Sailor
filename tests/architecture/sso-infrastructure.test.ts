@@ -77,7 +77,6 @@ describe("Enterprise SSO infrastructure contract", () => {
     const composeProd = readText("docker-compose.prod.yml");
     const nginx = readText("infra/runtime/nginx/nginx.conf");
     const nginxReadme = readText("infra/runtime/nginx/README.md");
-    const dockerWorkflow = readText(".github/workflows/docker-build-push.yml");
     const deployWorkflow = readText(".github/workflows/deploy-ecs.yml");
     const pm2 = readText("infra/iac/ecs/ecosystem.config.cjs");
     const remoteDeploy = readText("infra/ops/scripts/ecs-deploy-remote.sh");
@@ -100,7 +99,9 @@ describe("Enterprise SSO infrastructure contract", () => {
     expect(nginx).toContain("proxy_pass http://nebutra_idp");
     expect(nginxReadme).toContain("-d sso.nebutra.com");
 
-    expect(dockerWorkflow).toContain("dockerfile: apps/idp/Dockerfile");
+    // docker-build-push.yml carried idp in its image matrix until it was retired
+    // on 2026-09-02; the Dockerfile is the durable claim that idp is containerisable.
+    expect(existsSync(join(root, "apps/idp/Dockerfile"))).toBe(true);
     // JSON matrix entry, not a YAML key — see emit_next_matrix.
     expect(deployWorkflow).toContain('"package":"@nebutra/idp"');
     expect(deployWorkflow).toContain("https://sso.nebutra.com/.well-known/openid-configuration");
