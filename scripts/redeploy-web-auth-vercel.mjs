@@ -133,4 +133,6 @@ await latestState(token, AUTH_PID, "nebutra-auth");
 
 if (!webOk || !authOk) process.exit(1);
 console.log("\nHooks accepted. Poll dashboard or re-run this script later to check READY.");
-console.log("DNS stays on ECS until both are green — see docs/ops/web-auth-vercel-cutover.md");
+console.log(
+  "DNS stays on ECS until both are green — see docs/ops/nebutra/web-auth-vercel-cutover.md",
+);

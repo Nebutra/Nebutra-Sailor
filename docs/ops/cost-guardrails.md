@@ -14,7 +14,7 @@ Ranked by how much damage a single bad day can do:
 | Risk | Ceiling | Enforced by |
 | --- | --- | --- |
 | AI token spend | none today | **open — see below** |
-| Vercel build minutes / on-demand | per-app ignore + Git auto-deploy flags | [vercel-spend.md](./vercel-spend.md) |
+| Vercel build minutes / on-demand | per-app ignore + Git auto-deploy flags | [Vercel](#vercel) below |
 | Postgres storage growth | retention windows | `retention.sql` + Cron Trigger |
 | Postgres runaway query CPU | 30s | role `statement_timeout` |
 | Postgres connection exhaustion | 50 | role `CONNECTION LIMIT` |
@@ -77,7 +77,7 @@ everything on the request path is not.
 
 | Where | Commands | Since |
 | --- | --- | --- |
-| Edge Worker, every `api.nebutra.com` request | ~~INCR+EXPIRE = 2~~ → **0** | 2026-09-02: the per-IP flood limit is Cloudflare's rate limiting binding (`[[ratelimits]]` in `wrangler.edge.toml`), not metered, no Redis credentials at the edge |
+| Edge Worker, every request on the API host | ~~INCR+EXPIRE = 2~~ → **0** | 2026-09-02: the per-IP flood limit is Cloudflare's rate limiting binding (`[[ratelimits]]` in `wrangler.edge.toml`), not metered, no Redis credentials at the edge |
 | Origin, authenticated `/api/v1/*` | ~~rate limit GET+SET = 2, metering INCR+EXPIRE = 2~~ → **2** | 2026-09-02: the token bucket is one atomic EVAL (`packages/platform/rate-limit`), and metering sets EXPIRE only on the increment that creates the month key |
 | Origin, each AI completion | +5 (api-key, balance ×2, pricing, spend EVAL) + 1 DEL, +2 EVAL per circuit-breaker call, +1 QStash message | `packages/platform/gateway-core` |
 
@@ -128,12 +128,23 @@ headroom is a correctness property here, not only a cost one. Treat sustained
 
 Vercel meters build minutes. One Git repo linked to several projects opens a
 remote build per project per push, and a workflow that runs `vercel deploy` on
-the same commit opens a second one. Production web/auth is not Vercel — those
-projects must not auto-deploy (`git.deploymentEnabled: false`). `nebutra.com`
-is Vercel, but its build runs on GitHub's free runners and only the prebuilt
-output is uploaded, so it meters nothing; its Git integration is off for the
-same reason. `nebutra-kuanlan` stays Git-linked; the ignore script skips until
-`apps/kuanlan/package.json` exists. Playbook: [vercel-spend.md](./vercel-spend.md).
+the same commit opens a second one. Two repo-side locks bound it:
+
+- `git.deploymentEnabled: false` in the project's `vercel.json` for every app
+  whose production is not Vercel — a push then opens no remote build at all.
+- For the apps that are Vercel, build on the GitHub runner and upload only the
+  output (`vercel build` → `vercel deploy --prebuilt`). Vercel receives
+  `.vercel/output` and meters no build minutes; hosting, ISR and image
+  optimization are unchanged.
+
+Repo-side settings protect only the branches that contain them. The
+project-level build machine type (`standard`, not elastic) and the Dashboard
+Ignored Build Step apply to every branch and are the real lock — a long build
+otherwise promotes the project to a 30 vCPU machine that bills 7.5× per minute.
+
+Which projects one deployment has Git-linked, what its invoices said and what
+was applied to close them is instance history, not guidance. Nebutra's own is
+kept out of the template in `docs/ops/nebutra/cost-history.md`.
 
 ## Settings only a dashboard can see
 

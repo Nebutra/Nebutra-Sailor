@@ -76,4 +76,4 @@ PEBBLE_DIAGNOSTICS_BUCKET=${BUCKET}
 EOF
 echo ""
 echo "Or: gh workflow run ops-configure-pebble-r2.yml  (after setting GH secrets R2_*)"
-echo "Docs: docs/ops/pebble-support-intake.md"
+echo "Docs: docs/ops/nebutra/pebble-support-intake.md (source repo only)"

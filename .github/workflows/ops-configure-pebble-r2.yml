@@ -64,7 +64,7 @@ jobs:
             echo "::error::Set repository secrets R2_ACCESS_KEY_ID and R2_SECRET_ACCESS_KEY (CF R2 S3 API token)."
             echo "Dashboard: https://dash.cloudflare.com → R2 → Manage R2 API Tokens"
             echo "Then: printf '%s' \"\$KEY\" | gh secret set R2_ACCESS_KEY_ID -R Nebutra/Nebutra-Sailor"
-            echo "Docs: docs/ops/pebble-support-intake.md"
+            echo "Docs: docs/ops/nebutra/pebble-support-intake.md"
             exit 1
           fi
 

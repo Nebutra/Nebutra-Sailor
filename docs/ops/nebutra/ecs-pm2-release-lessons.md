@@ -98,5 +98,5 @@ the intended app set for emergency restores and logo/docs-only ships.
 
 - Workflow: `.github/workflows/deploy-ecs.yml` (preflight + matrix `condition`)
 - Remote helper: `infra/ops/scripts/ecs-deploy-remote.sh`
-- Env contract: `docs/ops/ecs-mvp-env.md`
+- Env contract: `docs/ops/nebutra/ecs-mvp-env.md`
 - Brand nav logo decoupling (separate incident class): `packages/design/brand/README.md`

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_BRAND } from "../../scripts/brand-types";
-import { buildVercelEnvPatches } from "../../scripts/brand-vercel-env";
+import { DEFAULT_BRAND } from "../../../scripts/brand-types";
+import { buildVercelEnvPatches } from "../../../scripts/brand-vercel-env";
 
 describe("vercel env brand dogfood", () => {
   it("patches use brand.domains", () => {

@@ -11,7 +11,7 @@ Object storage for user uploads, static assets, and media files.
 | `nebutra-backups` | Database backups | ❌ No | Internal only |
 | `nebutra-pebble-diagnostics` | Pebble desktop diagnostic NDJSON | ❌ No | Server-side only |
 
-Pebble diagnostics: [docs/ops/pebble-support-intake.md](../../../../docs/ops/pebble-support-intake.md) ·  
+Pebble diagnostics: [docs/ops/nebutra/pebble-support-intake.md](../../../../docs/ops/nebutra/pebble-support-intake.md) (source repo only) ·  
 `infra/ops/scripts/provision-pebble-diagnostics-r2.sh` ·  
 `gh workflow run ops-configure-pebble-r2.yml`
 

@@ -1,12 +1,12 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { brand } from "../../packages/design/brand/src/metadata";
+import { brand } from "../../../packages/design/brand/src/metadata";
 import {
   getBrandOrigin,
   getBrandPublicUrls,
-} from "../../packages/design/brand/src/metadata-helpers";
-import { DEFAULT_BRAND } from "../../scripts/brand-types";
+} from "../../../packages/design/brand/src/metadata-helpers";
+import { DEFAULT_BRAND } from "../../../scripts/brand-types";
 
 /**
  * open.nebutra.com is a landing host alias + an app settings hub.

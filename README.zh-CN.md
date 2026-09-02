@@ -605,7 +605,6 @@ Nebutra-Sailor/
 <td><strong>基础设施</strong></td>
 <td>
   <a href="infra/runtime/docker/">Docker</a> · 
-  <a href="infra/iac/k8s/">Kubernetes</a> · 
   <a href="infra/iac/terraform/">Terraform</a> · 
   <a href="workflows/inngest/">Inngest</a> · 
   <a href="workflows/n8n/">n8n</a> · 

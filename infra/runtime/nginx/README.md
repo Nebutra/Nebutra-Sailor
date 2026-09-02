@@ -209,7 +209,8 @@ Proxy status: DNS only
 TTL: Auto
 ```
 
-Deploy from a local machine so the small ECS origin does not compile Next.js:
+Deploy from a local machine so the small ECS origin does not compile Next.js
+(the script is source repo only — it is stripped from the Sailor template):
 
 ```bash
 REMOTE_HOST=root@106.15.4.31 bash infra/ops/scripts/deploy-sailor-docs-ecs.sh
