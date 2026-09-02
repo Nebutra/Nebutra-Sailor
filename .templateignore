@@ -130,6 +130,9 @@ packages/commerce/license/src/handlers/
 # ---------------------------------------------------------------------------
 tests/architecture/docs-coverage.test.ts
 tests/architecture/lighthouse-ci.test.ts
+# Drives the reconcile engine with ops/nebutra/platform-expected.json (stripped
+# below) and pins backends/gateway/wrangler.edge.toml to Nebutra's worker name.
+tests/architecture/platform-reconcile.test.ts
 
 # ---------------------------------------------------------------------------
 # Internal planning/governance docs
@@ -211,28 +214,27 @@ tests/load/
 .github/workflows/ui-governance.yml
 .github/workflows/docker-build-push.yml
 # Product deploy targets + Nebutra DNS ops (secrets / account-bound)
-.github/workflows/deploy-auth-vercel.yml
 .github/workflows/deploy-carina-ecs.yml
 .github/workflows/deploy-carina-fly.yml
-.github/workflows/deploy-carina-vercel.yml
 .github/workflows/deploy-new-api-fly.yml
 .github/workflows/deploy-dns-leak-fly.yml
 .github/workflows/deploy-gateway.yml
-.github/workflows/deploy-landing-vercel.yml
 .github/workflows/deploy-origin-ecs.yml
-.github/workflows/deploy-pebble-vercel.yml
 .github/workflows/deploy-sailor-docs.yml
 .github/workflows/deploy-typelens.yml
-.github/workflows/deploy-web-vercel.yml
+.github/workflows/deploy-vercel.yml
 .github/workflows/ops-auth-console-setup.yml
 .github/workflows/ops-configure-pebble-r2.yml
 .github/workflows/ops-db-inventory.yml
 .github/workflows/point-dns.yml
-.github/workflows/tmp-vercel-git-deploy-docs.yml
 .github/workflows/public-url-check.yml
 .github/workflows/route-lastmod.yml
 .github/workflows/i18n-translate.yml
 .github/workflows/i18n-orphan-report.yml
+# Daily --strict reconcile against ops/nebutra/: without Nebutra's tokens every
+# row is skipped and strict exits 1; with a scaffold's own tokens it would check
+# Nebutra's project/app/worker names. Either way a scaffold gets a red run a day.
+.github/workflows/platform-reconcile.yml
 
 # ---------------------------------------------------------------------------
 # Nebutra product backends / infra (not a generic SaaS skeleton)
@@ -247,6 +249,14 @@ infra/platforms/
 backends/gateway/src/routes/pebble/
 backends/gateway/src/routes/startup-os/
 backends/gateway/src/routes/agent-runtime/
+
+# ---------------------------------------------------------------------------
+# Declared provider state, per brand (ops/<brand>/platform-expected.json).
+# Nebutra's Vercel/Fly/GitHub/Cloudflare names live here. The schema
+# (ops/README.md) and the engine (scripts/ops/platform-reconcile.mjs) stay;
+# scaffolds start from infra/ops/platform-expected.example.json instead.
+# ---------------------------------------------------------------------------
+ops/nebutra/
 
 # ---------------------------------------------------------------------------
 # Template meta files (strip the ignore file itself after apply)

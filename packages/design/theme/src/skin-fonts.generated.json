@@ -1,7 +1,8 @@
 {
   "cosmos": [
-    "var(--font-inter)",
-    "Inter",
+    "var(--font-reg-fraunces)",
+    "Fraunces",
+    "GT Super",
     "var(--font-noto-sans-sc",
     "Noto Sans SC\")",
     "PingFang SC",

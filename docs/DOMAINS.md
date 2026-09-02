@@ -15,7 +15,7 @@
 | `open.nebutra.com` | landing (host alias) | **云毓开放平台** — public catalog; `/` rewrites to `/open`. Console is `app` `/settings/developers` |
 | `docs.nebutra.com` | sailor-docs (Fly Next Machine) | Product/docs site |
 | `nebutra.sanity.studio` | studio | Canonical Sanity-hosted Studio |
-| `studio.nebutra.com` | studio | Optional branded Studio alias |
+| `studio.nebutra.com` | studio | Optional branded Studio alias — **not provisioned** (no DNS record as of 2026-09-02); canonical host is `nebutra.sanity.studio`. Not in the public URL sweep until it exists |
 | `router.nebutra.com` | router | **Nebutra Router** — model fabric / OpenAI-compatible product edge (ECS PM2) |
 | `forge.nebutra.com` | forge | **Nebutra Forge** — tool station + Agent tool API (Vercel; ECS PM2 fallback :3105) |
 | `leak.nebutra.com` | forge-dns-leak | **DNS leak authority zone** — NS → `ns1.leak.nebutra.com` (UDP/TCP 53 on Fly dedicated IPv4; DNS-only glue) |
@@ -92,8 +92,8 @@ at Vercel. The ECS nginx vhost + rsync script stay as
 **Deploy:** `deploy-carina-fly.yml` (checks out `Nebutra/carina`, builds
 `apps/docs`, ships `dist/` as `infra/fly/Dockerfile.carina`).
 
-Legacy Vercel experiment (`deploy-carina-vercel.yml`) and ECS rsync
-(`deploy-carina-ecs.yml`) are superseded.
+Legacy Vercel experiment (`deploy-vercel.yml` `app=carina`, dispatch only)
+and ECS rsync (`deploy-carina-ecs.yml`) are superseded.
 
 **Bring-up order:** (1) Fly Machine healthy on `nebutra-carina.fly.dev`
 (2) `fly certs add carina.nebutra.com` + ACME CNAME (3) grey CNAME then

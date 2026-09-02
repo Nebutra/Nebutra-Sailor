@@ -65,6 +65,19 @@ export interface UploadResult {
   size: number;
 }
 
+/** One row of a listing. `ListObjectsV2` carries this for free — it never costs an extra request. */
+export interface ObjectEntry {
+  key: string;
+  size: number;
+  lastModified?: Date;
+}
+
+/** A single object's full head, including the user metadata a listing cannot return. */
+export interface ObjectHead extends ObjectEntry {
+  contentType?: string;
+  metadata: Record<string, string>;
+}
+
 // ============================================
 // Operations
 // ============================================
@@ -157,20 +170,66 @@ export async function remove(key: string, bucket: Bucket = "uploads"): Promise<v
 }
 
 /**
- * Check if a file exists
+ * Read one object's head: size, content type, and the user metadata set at upload.
+ * `list` cannot return metadata, so this is the only way to read it back.
+ * Returns null when the object is absent.
  */
-export async function exists(key: string, bucket: Bucket = "uploads"): Promise<boolean> {
+export async function head(key: string, bucket: Bucket = "uploads"): Promise<ObjectHead | null> {
   try {
-    await r2Client.send(
+    const response = await r2Client.send(
       new HeadObjectCommand({
         Bucket: config.buckets[bucket],
         Key: key,
       }),
     );
-    return true;
+    return {
+      key,
+      size: response.ContentLength ?? 0,
+      ...(response.LastModified ? { lastModified: response.LastModified } : {}),
+      ...(response.ContentType ? { contentType: response.ContentType } : {}),
+      metadata: response.Metadata ?? {},
+    };
   } catch {
-    return false;
+    return null;
   }
+}
+
+/**
+ * Check if a file exists
+ */
+export async function exists(key: string, bucket: Bucket = "uploads"): Promise<boolean> {
+  return (await head(key, bucket)) !== null;
+}
+
+/**
+ * List a directory with the size and last-modified time R2 already returns.
+ * Callers that need objects in time order should use this rather than sorting keys —
+ * key order is lexicographic, which is meaningless for UUID-named objects.
+ */
+export async function listDetailed(
+  prefix: string,
+  bucket: Bucket = "uploads",
+  maxKeys = 1000,
+): Promise<ObjectEntry[]> {
+  const response = await r2Client.send(
+    new ListObjectsV2Command({
+      Bucket: config.buckets[bucket],
+      Prefix: prefix,
+      MaxKeys: maxKeys,
+    }),
+  );
+
+  return (response.Contents ?? []).flatMap((item) =>
+    item.Key
+      ? [
+          {
+            key: item.Key,
+            size: item.Size ?? 0,
+            ...(item.LastModified ? { lastModified: item.LastModified } : {}),
+          },
+        ]
+      : [],
+  );
 }
 
 /**
@@ -181,15 +240,7 @@ export async function list(
   bucket: Bucket = "uploads",
   maxKeys = 1000,
 ): Promise<string[]> {
-  const response = await r2Client.send(
-    new ListObjectsV2Command({
-      Bucket: config.buckets[bucket],
-      Prefix: prefix,
-      MaxKeys: maxKeys,
-    }),
-  );
-
-  return response.Contents?.map((item) => item.Key ?? "").filter(Boolean) ?? [];
+  return (await listDetailed(prefix, bucket, maxKeys)).map((entry) => entry.key);
 }
 
 /**
@@ -276,8 +327,10 @@ export default {
   uploadForTenant,
   download,
   remove,
+  head,
   exists,
   list,
+  listDetailed,
   copy,
   getSignedDownloadUrl,
   getSignedUploadUrl,

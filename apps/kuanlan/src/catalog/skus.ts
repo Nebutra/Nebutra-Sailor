@@ -39,9 +39,9 @@ export const GARMENT_MEASURE_LABELS: Record<GarmentMeasureKey, string> = {
 
 export const GARMENT_GROUNDS = {
   paper: "var(--canvas)",
-  white: "#ffffff",
-  smoke: "#7e8691",
-  ink: "#111111",
+  white: "var(--ground-white)",
+  smoke: "var(--ground-smoke)",
+  ink: "var(--ground-ink)",
 } as const;
 
 export type GarmentGround = keyof typeof GARMENT_GROUNDS;
@@ -360,6 +360,31 @@ function findIdPhotoSku(id: string): IdPhotoSku | undefined {
 
 function isLiveSize(sku: IdPhotoSku, sizeId: IdPhotoSizeId): boolean {
   return sku.sizes.includes(sizeId);
+}
+
+export type IdPhotoDescription = { title: string; detail: string };
+
+/**
+ * Name a shot that already happened, for a caption.
+ *
+ * Reads the raw catalog rather than `listPublicSkus()` on purpose: a Moment taken
+ * before its SKU was closed still has to be able to say what it is. Naming a past
+ * photo is not listing a SKU — `getEnabledSku` and compose keep their own
+ * `enabled` check, so a closed SKU stays unbuyable.
+ *
+ * Returns null when nothing in the catalog matches, so callers fall back rather
+ * than printing a raw id at a user.
+ */
+export function describeIdPhotoRef(skuId?: string, sizeId?: string): IdPhotoDescription | null {
+  if (!skuId) return null;
+  const ref = parseIdPhotoRef(skuId, sizeId);
+  const sku = findIdPhotoSku(ref.skuId);
+  if (!sku) return null;
+  const size = ref.sizeId ? ID_PHOTO_SIZES[ref.sizeId] : undefined;
+  return {
+    title: sku.title,
+    detail: [sku.subtitle, size?.label].filter(Boolean).join(" · "),
+  };
 }
 
 export function getEnabledSku(id: string): IdPhotoSku {

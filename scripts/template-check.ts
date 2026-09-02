@@ -101,7 +101,7 @@ const MUST_STRIP = [
   "apps/landing/src/app/sitemap.ts",
   "apps/landing/src/app/sitemap-index.xml",
   // Product deploy / DNS (sample — globs cover the rest in .templateignore)
-  ".github/workflows/deploy-pebble-vercel.yml",
+  ".github/workflows/deploy-vercel.yml",
   ".github/workflows/point-dns.yml",
   ".github/workflows/deploy-carina-ecs.yml",
   ".github/workflows/deploy-carina-fly.yml",
@@ -120,9 +120,12 @@ const MUST_STRIP = [
   ".github/workflows/deploy-fly-gateway.yml",
   ".github/workflows/deploy-fly.yml",
   ".github/workflows/ops-vm-triage.yml",
-  ".github/workflows/point-kuanlan-dns.yml",
   "scripts/redeploy-web-auth-vercel.mjs",
   "tests/architecture/template-boundary.test.ts",
+  // Declared provider state + its daily reconcile name Nebutra's projects/apps
+  "ops/nebutra",
+  ".github/workflows/platform-reconcile.yml",
+  "tests/architecture/platform-reconcile.test.ts",
 ];
 
 type Matcher = ReturnType<typeof ignore>;

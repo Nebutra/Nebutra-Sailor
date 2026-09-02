@@ -558,6 +558,7 @@ Sailor 是**与 Provider 无关**的：以下每个平台包都会从环境变�
 │   ├── runtime/           # nginx + docker + analytics + compose 文件
 │   ├── data/              # database (RLS) + clickhouse (init + dbt)
 │   └── ops/               # observability + 部署脚本
+├── ops/                       # 各品牌声明的平台状态，platform-reconcile 每日核对
 ├── workflows/                 # 事件驱动业务流（W2.3 抽离）
 │   ├── inngest/           # Serverless 后台任务 + 定时
 │   ├── n8n/               # 可视化工作流自动化

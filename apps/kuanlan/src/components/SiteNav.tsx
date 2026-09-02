@@ -12,6 +12,14 @@ const LINKS = [
   { href: "/me", label: "Me" },
 ] as const;
 
+/**
+ * One floating pill, on every page.
+ *
+ * Cosmos puts the mark, the links, a centred search and the account cluster in a
+ * single bar and says it never duplicates into a secondary one. This app had two:
+ * a sticky top bar plus a fixed bottom search bar that read "告诉观澜，你想拍什么"
+ * even on pages with nothing to search.
+ */
 export function SiteNav({
   active,
   query,
@@ -20,9 +28,9 @@ export function SiteNav({
   query?: string;
 }) {
   return (
-    <>
-      <header className="topbar">
-        <div className="topbar-left">
+    <header className="topbar">
+      <div className="navpill">
+        <div className="navpill-left">
           <Link href="/" className="brand" aria-label={BRAND.name}>
             <Mark />
           </Link>
@@ -34,16 +42,14 @@ export function SiteNav({
             ))}
           </nav>
         </div>
-        <div className="topbar-right">
+        <SearchBar defaultValue={query} />
+        <div className="navpill-right">
           <AuthGate />
           <Link className="pill pill-ink" href="/create">
             开拍
           </Link>
         </div>
-      </header>
-      <div className="chatbox">
-        <SearchBar defaultValue={query} />
       </div>
-    </>
+    </header>
   );
 }

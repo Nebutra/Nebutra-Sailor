@@ -133,12 +133,6 @@ const endpoints = [
     okStatuses: [200, 301, 302, 307, 308],
     alias: true,
   },
-  {
-    id: "studio-branded-alias",
-    url: "https://studio.nebutra.com",
-    okStatuses: [200, 301, 302, 307, 308],
-    alias: true,
-  },
 ];
 
 function parseArgs(argv) {
