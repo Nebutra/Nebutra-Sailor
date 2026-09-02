@@ -162,7 +162,8 @@ error exit 1. Skipped exits 0 locally and 1 under `--strict`, which is how the
 scheduled run [`platform-reconcile.yml`](../../.github/workflows/platform-reconcile.yml)
 invokes it — so a repository secret that disappears fails the run instead of
 quietly shrinking what is checked. A failed scheduled run is the alert; GitHub
-mails the repository owner, and the job summary carries the table.
+notifies the author of the last commit that touched the workflow's cron line
+(not the repository owner), and the job summary carries the table.
 
 The engine prints names and types, never values: Fly digests are dropped on
 parse, the `value` field of a Vercel env entry is never read, and GitHub

@@ -552,6 +552,7 @@ Nebutra-Sailor/
 │   ├── runtime/               # nginx + docker + analytics + compose files
 │   ├── data/                  # database (RLS) + clickhouse (init + dbt)
 │   └── ops/                   # observability + deployment scripts
+├── ops/                       # Declared provider state per brand, checked daily by platform-reconcile
 ├── workflows/                 # Event-driven business workflows (extracted in W2.3)
 │   ├── inngest/               # Serverless background jobs + cron
 │   ├── n8n/                   # Visual workflow automation

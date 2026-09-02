@@ -17,6 +17,12 @@ scripts/ops/platform-reconcile.mjs   the engine (Node 22, no dependencies)
 .github/workflows/platform-reconcile.yml   runs it daily; a failed run is the alert
 ```
 
+`ops/` sits at the repository root rather than under `infra/ops/` because it
+holds one directory per brand — what a brand expects from its providers — while
+`infra/ops/` holds scripts that act on infrastructure. A second brand adds
+`ops/<brand>/`, not a file among the scripts. The `create-sailor` scaffold has
+one brand and ships the example as `infra/ops/platform-expected.example.json`.
+
 ## Run
 
 ```bash
@@ -134,4 +140,8 @@ token needs Workers Scripts read; with less it reports `skipped` and says so.
 `packages/ops/create-sailor/templates/infra/ops/platform-expected.example.json`
 is the scaffold copy of this schema.
 
-Live declarations in this repository: [`nebutra/platform-expected.json`](./nebutra/platform-expected.json).
+The live declarations are the brand directories beside this file
+(`ops/<brand>/platform-expected.json`). They and the scheduled workflow stay in
+this repository: `.templateignore` strips them from the `create-sailor` mirror,
+so a scaffold starts from the example above rather than from another brand's
+names.

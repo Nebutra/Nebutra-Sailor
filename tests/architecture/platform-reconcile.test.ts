@@ -27,6 +27,43 @@ type Row = {
   detail: string;
 };
 type Summary = { ok: number; drift: number; skipped: number; error: number; total: number };
+type Declaration = {
+  vercel?: {
+    projects: Array<{
+      name: string;
+      buildMachineType?: string;
+      ignoreBuildStep?: string;
+      gitLinked?: boolean;
+      envNotSensitive?: Record<string, string[]>;
+    }>;
+  };
+  fly?: { apps: Array<{ name: string; secretsPresent?: string[]; secretsAbsent?: string[] }> };
+  github?: { repo?: string; variables?: Record<string, string> };
+  cloudflare?: { workers: Array<{ name: string; bindings: Array<{ name: string }> }> };
+};
+
+// When every provider answers, the engine emits one row per declared
+// expectation. Counting them from the declaration keeps these tests from
+// breaking when a line is added to ops/nebutra/platform-expected.json.
+function declaredChecks(doc: Declaration): number {
+  let count = 0;
+  for (const project of doc.vercel?.projects ?? []) {
+    count += Number(project.buildMachineType !== undefined);
+    count += Number(project.ignoreBuildStep !== undefined);
+    count += Number(project.gitLinked !== undefined);
+    for (const keys of Object.values(project.envNotSensitive ?? {})) count += keys.length;
+  }
+  for (const app of doc.fly?.apps ?? []) {
+    count += (app.secretsPresent?.length ?? 0) + (app.secretsAbsent?.length ?? 0);
+  }
+  count += declaredVariables(doc);
+  for (const worker of doc.cloudflare?.workers ?? []) count += worker.bindings.length;
+  return count;
+}
+
+function declaredVariables(doc: Declaration): number {
+  return Object.keys(doc.github?.variables ?? {}).length;
+}
 type ExecResult = { ok: boolean; stdout: string; stderr: string; missing: boolean };
 type FakeResponse = { ok: boolean; status: number; json: () => Promise<unknown> };
 type Engine = {
@@ -315,7 +352,8 @@ describe("platform-reconcile: engine", () => {
   it("reports every declared check as ok when the providers agree", async () => {
     const { reconcile, loadExpectations, exitCodeFor, renderTable } = await loadEngine();
     const providers = fakeProviders(greenWorld());
-    const { results, summary } = await reconcile(loadExpectations(nebutraPath), {
+    const declaration = loadExpectations(nebutraPath) as Declaration;
+    const { results, summary } = await reconcile(declaration, {
       env: { ...TOKENS, PLATFORM_RECONCILE_GITHUB_VARS: GITHUB_VARS },
       fetch: providers.fetch,
       exec: providers.exec,
@@ -327,9 +365,9 @@ describe("platform-reconcile: engine", () => {
     expect(summary.ok).toBe(summary.total);
     expect(exitCodeFor(summary, { strict: true })).toBe(0);
 
-    // One row per declared expectation: 5 machine types, 3 ignore steps, 1 git
-    // link, 3 env keys, 7 + 3 Fly secrets, 2 variables, 1 binding.
-    expect(summary.total).toBe(5 + 3 + 1 + 3 + 10 + 2 + 1);
+    // One row per declared expectation, counted from the declaration itself.
+    expect(summary.total).toBeGreaterThan(0);
+    expect(summary.total).toBe(declaredChecks(declaration));
     expect(find(results, "vercel", "nebutra-landing", "gitLinked").actual).toBe("false");
     expect(
       find(results, "vercel", "nebutra-landing", "env DOCS_ORIGIN_URL@production").actual,
@@ -467,7 +505,30 @@ describe("platform-reconcile: engine", () => {
       },
     );
 
-    expect(summary.drift).toBe(12);
+    // Exactly these rows drift: nothing the fixture left alone is flagged, and a
+    // line added to the declaration that the green world satisfies leaves this
+    // list unchanged.
+    const drifted = results
+      .filter((row) => row.status === STATUS.drift)
+      .map((row) => `${row.provider} ${row.target} ${row.check}`)
+      .sort();
+    expect(drifted).toEqual(
+      [
+        "vercel nebutra-landing buildMachineType",
+        "vercel nebutra-landing gitLinked",
+        "vercel nebutra-landing env NEXT_PUBLIC_SITE_URL@production",
+        "vercel nebutra-landing env DOCS_ORIGIN_URL@production",
+        "vercel nebutra-web buildMachineType",
+        "vercel nebutra-web ignoreBuildStep",
+        "vercel nebutra-kuanlan project",
+        "fly nebutra-gateway secret QSTASH_TOKEN",
+        "fly nebutra-gateway secret REDIS_URL",
+        "github Nebutra/Nebutra-Sailor variable DEPLOY_TARGET_SAILOR_DOCS",
+        "github Nebutra/Nebutra-Sailor variable DEPLOY_TARGET_GATEWAY",
+        "cloudflare nebutra-gateway-edge binding IP_LIMITER",
+      ].sort(),
+    );
+    expect(summary.drift).toBe(drifted.length);
     expect(summary.error).toBe(0);
     expect(exitCodeFor(summary)).toBe(1);
   });
@@ -508,7 +569,8 @@ describe("platform-reconcile: engine", () => {
   it("skips a provider cleanly when its token is missing and fails only under --strict", async () => {
     const { reconcile, loadExpectations, exitCodeFor, STATUS } = await loadEngine();
     let touched = 0;
-    const { results, summary } = await reconcile(loadExpectations(nebutraPath), {
+    const declaration = loadExpectations(nebutraPath) as Declaration;
+    const { results, summary } = await reconcile(declaration, {
       env: {},
       fetch: async () => {
         touched += 1;
@@ -533,8 +595,9 @@ describe("platform-reconcile: engine", () => {
     expect(
       find(results, "github", "Nebutra/Nebutra-Sailor", "variable DEPLOY_TARGET_GATEWAY").detail,
     ).toBe("skipped: gh is not installed");
-    // Without a token no provider is contacted; only the local `gh` probe ran.
-    expect(touched).toBe(2);
+    // Without a token no provider is contacted; only the local `gh` probe ran,
+    // once per declared variable.
+    expect(touched).toBe(declaredVariables(declaration));
     expect(summary.skipped).toBe(summary.total);
     expect(exitCodeFor(summary)).toBe(0);
     expect(exitCodeFor(summary, { strict: true })).toBe(1);
@@ -542,6 +605,7 @@ describe("platform-reconcile: engine", () => {
 
   it("reports a token that lacks scope as skipped with the reason, not as a pass", async () => {
     const { reconcile, loadExpectations, STATUS } = await loadEngine();
+    const declaration = loadExpectations(nebutraPath) as Declaration;
     const world = greenWorld();
     world.vercelStatus = 403;
     world.cloudflareStatus = 403;
@@ -550,7 +614,7 @@ describe("platform-reconcile: engine", () => {
       errors: [{ code: 10000, message: "Authentication error" }],
     };
     const providers = fakeProviders(world);
-    const { results, summary } = await reconcile(loadExpectations(nebutraPath), {
+    const { results, summary } = await reconcile(declaration, {
       env: { ...TOKENS, PLATFORM_RECONCILE_GITHUB_VARS: GITHUB_VARS },
       fetch: providers.fetch,
       exec: () => ({ ok: false, stdout: "", stderr: "flyctl: command not found", missing: true }),
@@ -568,7 +632,8 @@ describe("platform-reconcile: engine", () => {
     expect(find(results, "fly", "nebutra-gateway", "secrets").detail).toBe(
       "skipped: flyctl is not installed",
     );
-    expect(summary.ok).toBe(2); // the two GitHub variables still verified
+    // The GitHub variables, which need no provider token, are still verified.
+    expect(summary.ok).toBe(declaredVariables(declaration));
     expect(summary.drift).toBe(0);
   });
 
@@ -625,7 +690,8 @@ describe("platform-reconcile: engine", () => {
   });
 
   it("exposes a CLI that validates its arguments and prints the table", async () => {
-    const { main } = await loadEngine();
+    const { main, loadExpectations } = await loadEngine();
+    const declaration = loadExpectations(nebutraPath) as Declaration;
     const out: string[] = [];
     const err: string[] = [];
     const stdout = (text: string) => out.push(text);
@@ -651,7 +717,9 @@ describe("platform-reconcile: engine", () => {
     expect(code).toBe(0);
     const printed = out.join("");
     expect(printed).toContain("variable DEPLOY_TARGET_GATEWAY");
-    expect(printed).toContain("2 ok · 0 drift · 0 skipped · 0 error");
+    expect(printed).toContain(
+      `${declaredVariables(declaration)} ok · 0 drift · 0 skipped · 0 error`,
+    );
     expect(printed).not.toContain("vercel");
 
     out.length = 0;
