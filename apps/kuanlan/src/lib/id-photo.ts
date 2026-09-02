@@ -1,7 +1,7 @@
 import sharp from "sharp";
 import {
   type IdPhotoBackground,
-  type IdPhotoSku,
+  type IdPhotoPrint,
   SkuUnavailableError,
   skuPixelSize,
 } from "@/catalog/skus";
@@ -33,17 +33,7 @@ export type IdPhotoResult = {
   skuId: string;
 };
 
-function subjectBox(sku: IdPhotoSku, width: number, height: number) {
-  if (sku.look === "linkedin") {
-    return {
-      subjectWidth: width,
-      subjectHeight: height,
-      left: 0,
-      top: 0,
-      fit: "cover" as const,
-    };
-  }
-
+function subjectBox(sku: Pick<IdPhotoPrint, "headRatio">, width: number, height: number) {
   const subjectHeight = Math.round(height * sku.headRatio);
   const subjectWidth = Math.min(width, Math.round(subjectHeight * 0.78));
   const left = Math.round((width - subjectWidth) / 2);
@@ -97,7 +87,7 @@ async function fitSubject(
 
 export async function composeIdPhoto(input: {
   source: Buffer;
-  sku: IdPhotoSku;
+  sku: IdPhotoPrint;
 }): Promise<IdPhotoResult> {
   if (!input.sku.enabled || input.sku.kind !== "id-photo") {
     throw new SkuUnavailableError(input.sku.id);
@@ -108,9 +98,25 @@ export async function composeIdPhoto(input: {
 
   const { width, height } = skuPixelSize(input.sku);
   const background = ID_PHOTO_BACKGROUNDS[input.sku.background];
-  const box = subjectBox(input.sku, width, height);
 
   try {
+    if (input.sku.look === "linkedin") {
+      const png = await sharp(input.source)
+        .rotate()
+        .resize(width, height, { fit: "cover", position: "top" })
+        .withMetadata({ density: input.sku.dpi })
+        .png()
+        .toBuffer();
+      return {
+        png,
+        width,
+        height,
+        dpi: input.sku.dpi,
+        skuId: input.sku.id,
+      };
+    }
+
+    const box = subjectBox(input.sku, width, height);
     const subject = await fitSubject(input.source, box, background);
 
     const png = await sharp({

@@ -1,6 +1,11 @@
 import sharp from "sharp";
 import { describe, expect, it } from "vitest";
-import { getEnabledSku, SKUS, SkuUnavailableError, skuPixelSize } from "@/catalog/skus";
+import {
+  getEnabledSku,
+  resolveIdPhotoPrint,
+  SkuUnavailableError,
+  skuPixelSize,
+} from "@/catalog/skus";
 import { composeIdPhoto, InvalidPortraitError } from "./id-photo";
 
 async function samplePortrait() {
@@ -18,7 +23,7 @@ async function samplePortrait() {
 
 describe("composeIdPhoto", () => {
   it("prints an enabled spec at exact millimetre pixels", async () => {
-    const sku = getEnabledSku("cn-1in-white");
+    const sku = resolveIdPhotoPrint("id-white", "1in");
     const result = await composeIdPhoto({
       source: await samplePortrait(),
       sku,
@@ -34,7 +39,7 @@ describe("composeIdPhoto", () => {
   });
 
   it("keeps specified background on the canvas corners", async () => {
-    const sku = getEnabledSku("cn-2in-blue");
+    const sku = resolveIdPhotoPrint("id-blue", "2in");
     const result = await composeIdPhoto({
       source: await samplePortrait(),
       sku,
@@ -50,8 +55,42 @@ describe("composeIdPhoto", () => {
     expect(data[last + 2]).toBe(219);
   });
 
+  it("does not paint a CV studio canvas behind 领证照", async () => {
+    const red = await sharp({
+      create: {
+        width: 240,
+        height: 360,
+        channels: 4,
+        background: { r: 210, g: 48, b: 48, alpha: 1 },
+      },
+    })
+      .png()
+      .toBuffer();
+    const cutout = await sharp(red)
+      .extend({
+        top: 80,
+        bottom: 80,
+        left: 80,
+        right: 80,
+        background: { r: 0, g: 0, b: 0, alpha: 0 },
+      })
+      .png()
+      .toBuffer();
+    const result = await composeIdPhoto({
+      source: cutout,
+      sku: resolveIdPhotoPrint("linkedin-studio"),
+    });
+    const { data, info } = await sharp(result.png).raw().toBuffer({ resolveWithObject: true });
+    const corner = 0;
+
+    expect(info.width).toBe(472);
+    expect(data[corner]).not.toBe(42);
+    expect(data[corner + 1]).not.toBe(64);
+    expect(data[corner + 2]).not.toBe(102);
+  });
+
   it("prints 领证照 across the frame, not a stamp on the studio canvas", async () => {
-    const sku = getEnabledSku("linkedin-studio");
+    const sku = resolveIdPhotoPrint("linkedin-studio");
     const result = await composeIdPhoto({
       source: await samplePortrait(),
       sku,
@@ -68,7 +107,7 @@ describe("composeIdPhoto", () => {
   });
 
   it("places the portrait inside the frame", async () => {
-    const sku = getEnabledSku("visa-us");
+    const sku = resolveIdPhotoPrint("id-white", "visa");
     const result = await composeIdPhoto({
       source: await samplePortrait(),
       sku,
@@ -87,25 +126,16 @@ describe("composeIdPhoto", () => {
     expect(data[top + 2]).toBe(255);
   });
 
-  it("refuses a disabled spec even if the object is passed in", async () => {
-    const closed = SKUS.find((sku) => sku.id === "cn-1in-blue");
-    if (!closed || closed.kind !== "id-photo") {
-      throw new Error("cn-1in-blue must stay in the catalog as a closed spec");
-    }
-
-    await expect(
-      composeIdPhoto({
-        source: await samplePortrait(),
-        sku: closed,
-      }),
-    ).rejects.toBeInstanceOf(SkuUnavailableError);
+  it("refuses a closed size on a live SKU", () => {
+    expect(getEnabledSku("id-blue").closedSizes).toContain("1in");
+    expect(() => resolveIdPhotoPrint("id-blue", "1in")).toThrow(SkuUnavailableError);
   });
 
   it("refuses an unreadable portrait", async () => {
     await expect(
       composeIdPhoto({
         source: Buffer.from("not-an-image"),
-        sku: getEnabledSku("passport-cn"),
+        sku: resolveIdPhotoPrint("id-white", "passport"),
       }),
     ).rejects.toBeInstanceOf(InvalidPortraitError);
   });

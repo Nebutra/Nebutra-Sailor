@@ -1,15 +1,28 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { listIdPhotoSkus, toPublicIdPhoto } from "@/catalog/skus";
+import { listIdPhotoSkus, parseIdPhotoRef, toPublicIdPhoto } from "@/catalog/skus";
 
 type Status = "idle" | "shooting" | "ready" | "error";
 
-export function IdPhotoStudio({ initialSkuId }: { initialSkuId?: string }) {
-  const skus = useMemo(() => listIdPhotoSkus().map(toPublicIdPhoto), []);
+export function IdPhotoStudio({
+  initialSkuId,
+  initialSizeId,
+}: {
+  initialSkuId?: string;
+  initialSizeId?: string;
+}) {
+  const skus = useMemo(() => listIdPhotoSkus().map((sku) => toPublicIdPhoto(sku)), []);
+  const initial = parseIdPhotoRef(initialSkuId, initialSizeId);
   const [skuId, setSkuId] = useState(
-    () => (skus.some((sku) => sku.id === initialSkuId) ? initialSkuId : skus[0]?.id) ?? "",
+    () => (skus.some((sku) => sku.id === initial.skuId) ? initial.skuId : skus[0]?.id) ?? "",
   );
+  const [sizeId, setSizeId] = useState(() => {
+    const sku = skus.find((item) => item.id === (initial.skuId || skus[0]?.id));
+    return initial.sizeId && sku?.sizes.some((size) => size.id === initial.sizeId)
+      ? initial.sizeId
+      : (sku?.sizeId ?? "");
+  });
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [resultUrl, setResultUrl] = useState<string | null>(null);
@@ -18,6 +31,7 @@ export function IdPhotoStudio({ initialSkuId }: { initialSkuId?: string }) {
   const [needsSignIn, setNeedsSignIn] = useState(false);
 
   const selected = skus.find((sku) => sku.id === skuId);
+  const selectedSize = selected?.sizes.find((size) => size.id === sizeId) ?? selected?.sizes[0];
 
   function onPick(next: File | null) {
     setFile(next);
@@ -29,7 +43,7 @@ export function IdPhotoStudio({ initialSkuId }: { initialSkuId?: string }) {
   }
 
   async function shoot() {
-    if (!file || !skuId) {
+    if (!file || !skuId || !selectedSize) {
       setStatus("error");
       setNote("先选一张本人照片。");
       return;
@@ -40,6 +54,7 @@ export function IdPhotoStudio({ initialSkuId }: { initialSkuId?: string }) {
     setNeedsSignIn(false);
     const body = new FormData();
     body.set("skuId", skuId);
+    body.set("sizeId", selectedSize.id);
     body.set("file", file);
 
     try {
@@ -88,6 +103,7 @@ export function IdPhotoStudio({ initialSkuId }: { initialSkuId?: string }) {
               aria-pressed={sku.id === skuId}
               onClick={() => {
                 setSkuId(sku.id);
+                setSizeId(sku.sizeId);
                 setResultUrl(null);
                 setStatus("idle");
                 setNeedsSignIn(false);
@@ -107,17 +123,39 @@ export function IdPhotoStudio({ initialSkuId }: { initialSkuId?: string }) {
         ))}
       </ul>
 
-      {selected ? (
-        <p className="note">
-          {selected.widthMm} × {selected.heightMm} mm · {selected.dpi} dpi · {selected.widthPx} ×{" "}
-          {selected.heightPx}
-          {selected.garmentId ? (
-            <>
-              {" · "}
-              <a href="/wardrobe">衣柜</a>
-            </>
-          ) : null}
-        </p>
+      {selected && selectedSize ? (
+        <>
+          <fieldset className="size-row">
+            <legend>尺寸</legend>
+            {selected.sizes.map((size) => (
+              <button
+                key={size.id}
+                type="button"
+                className="pill"
+                data-size={size.id}
+                data-active={size.id === selectedSize.id}
+                aria-pressed={size.id === selectedSize.id}
+                onClick={() => {
+                  setSizeId(size.id);
+                  setResultUrl(null);
+                  setStatus("idle");
+                }}
+              >
+                {size.label}
+              </button>
+            ))}
+          </fieldset>
+          <p className="note">
+            {selectedSize.widthMm} × {selectedSize.heightMm} mm · {selectedSize.dpi} dpi ·{" "}
+            {selectedSize.widthPx} × {selectedSize.heightPx}
+            {selected.garmentId ? (
+              <>
+                {" · "}
+                <a href="/wardrobe">衣柜</a>
+              </>
+            ) : null}
+          </p>
+        </>
       ) : null}
 
       <label className="upload">
@@ -141,7 +179,11 @@ export function IdPhotoStudio({ initialSkuId }: { initialSkuId?: string }) {
         </button>
         {resultUrl ? (
           <>
-            <a className="pill pill-ghost" href={resultUrl} download={`kuanlan-${skuId}.png`}>
+            <a
+              className="pill pill-ghost"
+              href={resultUrl}
+              download={`kuanlan-${skuId}-${selectedSize?.id ?? "print"}.png`}
+            >
               留下这一张
             </a>
             <button

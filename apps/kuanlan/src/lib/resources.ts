@@ -35,9 +35,19 @@ export function skuSampleKey(id: string): string {
   return `${RESOURCE_ROOT}/skus/${id}.jpg`;
 }
 
+const SKU_SAMPLE_FILES: Record<string, string> = {
+  "id-white": "cn-1in-white",
+  "id-blue": "cn-2in-blue",
+};
+
+export function skuSampleFileId(id: string): string {
+  return SKU_SAMPLE_FILES[id] ?? id;
+}
+
 export function skuSampleSrc(id: string, base?: string): string {
-  const url = publicAssetUrl(skuSampleKey(id), base);
-  return id === "linkedin-studio" ? `${url}?v=2` : url;
+  const fileId = skuSampleFileId(id);
+  const url = publicAssetUrl(skuSampleKey(fileId), base);
+  return fileId === "linkedin-studio" ? `${url}?v=incamera` : url;
 }
 
 const WARDROBE_ID = SKU_ID;

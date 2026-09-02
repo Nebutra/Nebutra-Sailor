@@ -12,6 +12,8 @@ import {
   listIdPhotoCreateTiles,
   listIdPhotoSkus,
   listPublicSkus,
+  parseIdPhotoRef,
+  resolveIdPhotoPrint,
   SKUS,
   SkuUnavailableError,
   sealSkuBrand,
@@ -23,11 +25,13 @@ import {
 describe("catalog", () => {
   it("keeps garments and shoot specs in one SKU list", () => {
     const live = SKUS.filter((sku) => sku.enabled);
-    const closed = SKUS.filter((sku) => !sku.enabled);
+    const closedSizes = SKUS.flatMap((sku) =>
+      sku.kind === "id-photo" ? (sku.closedSizes ?? []) : [],
+    );
 
     expect(live.some((sku) => sku.kind === "garment")).toBe(true);
     expect(live.some((sku) => sku.kind === "id-photo")).toBe(true);
-    expect(closed.length).toBeGreaterThanOrEqual(1);
+    expect(closedSizes.length).toBeGreaterThanOrEqual(1);
     expect(listGarmentSkus().map((sku) => sku.id)).toEqual(["blazer", "knit", "oxford"]);
     expect(getEnabledGarment("blazer").kind).toBe("garment");
     expect(() => getEnabledSku("blazer")).toThrow(SkuUnavailableError);
@@ -40,7 +44,7 @@ describe("catalog", () => {
     expect(live.every((sku) => sku.brand === BRAND.skuMark)).toBe(true);
     expect(toPublicGarment(getEnabledGarment("blazer")).brand).toBe(BRAND.skuMark);
     expect(toPublicIdPhoto(getEnabledSku("linkedin-smoke")).brand).toBe(BRAND.skuMark);
-    expect(toPublicIdPhoto(getEnabledSku("cn-1in-white")).origin).toBe("platform");
+    expect(toPublicIdPhoto(getEnabledSku("id-white")).origin).toBe("platform");
 
     const spoofed = sealSkuBrand({
       origin: "platform" as const,
@@ -76,21 +80,35 @@ describe("catalog", () => {
     expect(getEnabledSku("linkedin-smoke-knit").garmentId).toBe("knit");
     expect(getEnabledSku("linkedin-studio").garmentId).toBe("blazer");
     expect(getEnabledSku("linkedin-studio").background).toBe("studio");
-    expect(getEnabledSku("cn-1in-white").garmentId).toBeUndefined();
+    expect(getEnabledSku("id-white").garmentId).toBeUndefined();
+    expect(getEnabledSku("linkedin-smoke").sizes).toEqual([
+      "linkedin",
+      "1in",
+      "2in",
+      "passport",
+      "visa",
+    ]);
+    expect(getEnabledSku("id-white").sizes).toEqual(["1in", "2in", "passport", "visa"]);
+    expect(getEnabledSku("id-blue").sizes).toEqual(["2in"]);
+    expect(getEnabledSku("id-blue").closedSizes).toEqual(["1in"]);
   });
 
   it("hides disabled specs from the public list", () => {
     const publicIds = listPublicSkus().map((sku) => sku.id);
 
     expect(publicIds).not.toContain("cn-1in-blue");
+    expect(publicIds).not.toContain("cn-1in-white");
+    expect(publicIds).not.toContain("cn-2in-white");
+    expect(publicIds).not.toContain("passport-cn");
+    expect(publicIds).not.toContain("visa-us");
     expect(publicIds).toContain("blazer");
     expect(publicIds).toContain("linkedin-smoke");
     expect(publicIds).toContain("linkedin-smoke-knit");
     expect(publicIds).toContain("linkedin-smoke-oxford");
     expect(publicIds).toContain("linkedin-light");
     expect(publicIds).toContain("linkedin-studio");
-    expect(publicIds).toContain("cn-1in-white");
-    expect(publicIds).toContain("visa-us");
+    expect(publicIds).toContain("id-white");
+    expect(publicIds).toContain("id-blue");
   });
 
   it("locks print pixels from millimetres and DPI", () => {
@@ -119,11 +137,14 @@ describe("catalog", () => {
   it("fails closed on unknown or disabled SKUs", () => {
     expect(() => getEnabledSku("cn-1in-blue")).toThrow(SkuUnavailableError);
     expect(() => getEnabledSku("not-a-sku")).toThrow(SkuUnavailableError);
-    expect(getEnabledSku("passport-cn").title).toBe("护照");
+    expect(() => resolveIdPhotoPrint("id-blue", "1in")).toThrow(SkuUnavailableError);
+    expect(getEnabledSku("cn-1in-white").id).toBe("id-white");
+    expect(resolveIdPhotoPrint("passport-cn").sizeLabel).toBe("护照");
+    expect(parseIdPhotoRef("cn-2in-blue")).toEqual({ skuId: "id-blue", sizeId: "2in" });
   });
 
   it("does not leak operator fields on the public projection", () => {
-    const sku = getEnabledSku("cn-2in-blue");
+    const sku = getEnabledSku("id-blue");
     const publicSku = toPublicIdPhoto(sku);
 
     expect(publicSku).not.toHaveProperty("enabled");
@@ -137,6 +158,8 @@ describe("catalog", () => {
     expect(publicSku.look).toBe("id-card");
     expect(publicSku.background).toBe("blue");
     expect(publicSku.sample).toBe("https://cdn.nebutra.com/kuanlan/skus/cn-2in-blue.jpg");
+    expect(publicSku.sizes.map((size) => size.id)).toEqual(["2in"]);
+    expect(publicSku.sizeLabel).toBe("二寸");
     expect(publicSku.origin).toBe("platform");
     expect(publicSku.brand).toBe(BRAND.skuMark);
     expect(JSON.stringify(publicSku)).not.toMatch(/VLM|识图/);
@@ -145,11 +168,13 @@ describe("catalog", () => {
   it("ships a sample still for every live spec", () => {
     const dir = join(dirname(fileURLToPath(import.meta.url)), "../../public/skus");
     for (const sku of listIdPhotoSkus()) {
-      const bust = sku.id === "linkedin-studio" ? "?v=2" : "";
+      const fileId =
+        sku.id === "id-white" ? "cn-1in-white" : sku.id === "id-blue" ? "cn-2in-blue" : sku.id;
+      const bust = fileId === "linkedin-studio" ? "?v=incamera" : "";
       expect(toPublicIdPhoto(sku).sample).toBe(
-        `https://cdn.nebutra.com/kuanlan/skus/${sku.id}.jpg${bust}`,
+        `https://cdn.nebutra.com/kuanlan/skus/${fileId}.jpg${bust}`,
       );
-      expect(existsSync(join(dir, `${sku.id}.jpg`))).toBe(true);
+      expect(existsSync(join(dir, `${fileId}.jpg`))).toBe(true);
     }
   });
 
@@ -163,8 +188,15 @@ describe("catalog", () => {
     expect(parent.title).toBe("领证照");
     expect(tiles.map((tile) => tile.id)).toEqual(listIdPhotoSkus().map((sku) => sku.id));
     expect(tiles[0]?.id).toBe("linkedin-smoke");
-    expect(tiles.some((tile) => tile.id === "cn-1in-white")).toBe(true);
+    expect(tiles.some((tile) => tile.id === "id-white")).toBe(true);
+    expect(tiles.some((tile) => tile.id === "id-blue")).toBe(true);
+    expect(tiles.some((tile) => tile.id === "cn-1in-white")).toBe(false);
     expect(tiles.every((tile) => tile.href.startsWith("/create/id-photo?sku="))).toBe(true);
+    expect(tiles.every((tile) => tile.sizes.length >= 1)).toBe(true);
+
+    const children = listIdPhotoCreateTiles({ excludeParent: true });
+    expect(children.some((tile) => tile.id === parent.id)).toBe(false);
+    expect(children.map((tile) => tile.sample)).not.toContain(parent.sample);
     expect(orbit && homeOrbitSrc(orbit)).toBe(
       "https://cdn.nebutra.com/kuanlan/skus/linkedin-smoke.jpg",
     );
@@ -178,6 +210,9 @@ describe("catalog", () => {
     expect(page).not.toMatch(/orbitSrc\("01\.jpg"\)/);
     expect(page).toContain("idPhotoParentTile");
     expect(page).toContain("listIdPhotoCreateTiles");
+    expect(page).toContain("excludeParent");
+    expect(page).toContain("sku.sizes");
+    expect(page).not.toContain("sku.widthMm");
     expect(page).toContain("sku.sample");
     expect(page).toContain("piece?");
     expect(page).toContain("pieceId");

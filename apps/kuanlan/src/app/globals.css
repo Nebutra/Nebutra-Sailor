@@ -468,6 +468,25 @@ a.auth-link:hover {
   list-style: none;
 }
 
+.size-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 12px;
+  border: 0;
+  padding: 0;
+  min-inline-size: 0;
+}
+
+.size-row legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
 .sku-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));

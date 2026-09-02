@@ -16,7 +16,7 @@ KUANLAN 围绕「我如何出现、如何被看见」工作。它不是变美工
 
 1. 产品首页（品牌认知 + 开拍入口）
 2. Create（今天想怎么拍？）
-3. 领证照（领英灰蓝/浅灰/质感蓝棚底职业照）+ 证件照规格（一寸/二寸/护照/美签），每规格有样例图
+3. 领证照（领英灰蓝/浅灰/质感蓝棚底职业照）+ 证件照（白底/蓝底）。一寸/二寸/护照/美签是尺寸，不是单独 SKU
 4. 资源落在 Cloudflare R2。公开 stills（orbit / 开拍样例 / 衣柜）在 `nebutra-assets`，经 `https://cdn.nebutra.com/kuanlan/…` 消费。Moment 写入 `nebutra-uploads`。`public/` 只做种子，不给浏览器当源。
 5. 开拍：本应用后端封装 SKU 系统提示词，再打 `https://router.nebutra.com/v1` 的 `gpt-image-2`（New-API 中转 302.ai），最后由 sharp 裁到规格像素
 
@@ -28,7 +28,7 @@ Wardrobe 挂的是件 SKU（西装 / 针织 / 衬衫），只出衣服不出人�
 
 - `enabled: true` 出现在对应表面：件进 Wardrobe，开拍进 Create / `GET /api/skus`
 - `enabled: false` 对用户不可见；compose 与 API 失败关闭
-- 领证照是通用规格模型，不是写死的单一尺寸
+- 领证照是通用规格模型。同一个 SKU 带多个尺寸，尺寸不单列 SKU
 - `look: "linkedin"` 是领英/职业领证照（灰蓝/浅灰/质感蓝棚底；西装 / 针织 / 衬衫可换）
 - `look: "id-card"` 是证件照（白底/蓝底、正脸）
 
@@ -39,7 +39,7 @@ Wardrobe 挂的是件 SKU（西装 / 针织 / 衬衫），只出衣服不出人�
 ```text
 件：id + kind: "garment" + origin + brand + title + line + door + slots
     + spec{ size, color, material, measures{衣长 裤长 胸围 袖长 肩宽 腰围 臀围} }
-开拍：id + kind: "id-photo" + origin + brand + look + mm/dpi + background + garmentId?
+开拍：id + kind: "id-photo" + origin + brand + look + sizes[] + background + garmentId?
 ```
 
 衣柜只列件。开拍规格可以引用一件衣服，也可以不引用。像素由毫米与 DPI 算出。开拍 brief 按 `look` 分叉；合成用 sharp 铺底 + cover。
