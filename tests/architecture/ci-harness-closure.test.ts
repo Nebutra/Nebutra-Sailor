@@ -334,7 +334,9 @@ describe("ci harness dependency closure", () => {
     expect(urlHarness).toContain("https://docs.nebutra.com");
     expect(urlHarness).toContain("https://nebutra.sanity.studio");
     expect(urlHarness).toContain("https://www.nebutra.com");
-    expect(urlHarness).toContain("https://studio.nebutra.com");
+    // studio.nebutra.com has no DNS record (2026-09-02); a target that can
+    // never pass turns the sweep into noise. Re-add it when the alias exists.
+    expect(urlHarness).not.toContain("https://studio.nebutra.com");
   });
 
   it("classifies known web release dependency warnings without suppressing new ones", async () => {

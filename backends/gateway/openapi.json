@@ -141,6 +141,120 @@
         }
       }
     },
+    "/api/misc/ready": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Readiness probe",
+        "description": "Exercises the real request-path dependencies — Redis through the rate-limit client and PostgreSQL — and returns 503 naming the failing ones when any is down. Not a liveness probe: do not point machine restarts at it.",
+        "responses": {
+          "200": {
+            "description": "Every request-path dependency answered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ready": {
+                      "type": "boolean",
+                      "enum": [true]
+                    },
+                    "checks": {
+                      "type": "object",
+                      "properties": {
+                        "database": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "enum": ["up", "down"]
+                            },
+                            "latencyMs": {
+                              "type": "number"
+                            }
+                          },
+                          "required": ["status", "latencyMs"]
+                        },
+                        "redis": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "enum": ["up", "down"]
+                            },
+                            "latencyMs": {
+                              "type": "number"
+                            }
+                          },
+                          "required": ["status", "latencyMs"]
+                        }
+                      },
+                      "required": ["database", "redis"]
+                    }
+                  },
+                  "required": ["ready", "checks"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "At least one request-path dependency is down",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ready": {
+                      "type": "boolean",
+                      "enum": [false]
+                    },
+                    "failing": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": ["database", "redis"]
+                      }
+                    },
+                    "checks": {
+                      "type": "object",
+                      "properties": {
+                        "database": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "enum": ["up", "down"]
+                            },
+                            "latencyMs": {
+                              "type": "number"
+                            }
+                          },
+                          "required": ["status", "latencyMs"]
+                        },
+                        "redis": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "enum": ["up", "down"]
+                            },
+                            "latencyMs": {
+                              "type": "number"
+                            }
+                          },
+                          "required": ["status", "latencyMs"]
+                        }
+                      },
+                      "required": ["database", "redis"]
+                    }
+                  },
+                  "required": ["ready", "failing", "checks"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/system/status": {
       "get": {
         "tags": ["System"],
@@ -510,6 +624,120 @@
                     }
                   },
                   "required": ["status", "version", "uptime", "timestamp", "dependencies"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/misc/ready": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Readiness probe",
+        "description": "Exercises the real request-path dependencies — Redis through the rate-limit client and PostgreSQL — and returns 503 naming the failing ones when any is down. Not a liveness probe: do not point machine restarts at it.",
+        "responses": {
+          "200": {
+            "description": "Every request-path dependency answered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ready": {
+                      "type": "boolean",
+                      "enum": [true]
+                    },
+                    "checks": {
+                      "type": "object",
+                      "properties": {
+                        "database": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "enum": ["up", "down"]
+                            },
+                            "latencyMs": {
+                              "type": "number"
+                            }
+                          },
+                          "required": ["status", "latencyMs"]
+                        },
+                        "redis": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "enum": ["up", "down"]
+                            },
+                            "latencyMs": {
+                              "type": "number"
+                            }
+                          },
+                          "required": ["status", "latencyMs"]
+                        }
+                      },
+                      "required": ["database", "redis"]
+                    }
+                  },
+                  "required": ["ready", "checks"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "At least one request-path dependency is down",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ready": {
+                      "type": "boolean",
+                      "enum": [false]
+                    },
+                    "failing": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": ["database", "redis"]
+                      }
+                    },
+                    "checks": {
+                      "type": "object",
+                      "properties": {
+                        "database": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "enum": ["up", "down"]
+                            },
+                            "latencyMs": {
+                              "type": "number"
+                            }
+                          },
+                          "required": ["status", "latencyMs"]
+                        },
+                        "redis": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "enum": ["up", "down"]
+                            },
+                            "latencyMs": {
+                              "type": "number"
+                            }
+                          },
+                          "required": ["status", "latencyMs"]
+                        }
+                      },
+                      "required": ["database", "redis"]
+                    }
+                  },
+                  "required": ["ready", "failing", "checks"]
                 }
               }
             }

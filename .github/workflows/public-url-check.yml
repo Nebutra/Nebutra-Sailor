@@ -9,30 +9,73 @@ name: Public URL Check
 # covers regressions introduced by a deploy. This covers the rest: a DNS record
 # edited in a console, a certificate expiring, an app that died between deploys.
 # Nothing in the repo changes when any of those happen, so only a clock finds them.
+#
+# Two cadences, one file. Fly polls /api/misc/health every 15s, but that probe
+# has to stay 200 while a dependency is degraded or Fly restarts the machine —
+# so on 2026-09-02 every rate-limited route answered 500 for two days and nothing
+# noticed. The `critical` job is the synthetic check for that class of failure:
+# every 30 minutes it hits the readiness probe, one rate-limited route (and
+# asserts the limiter's header), the system status body, and the console. A
+# failed scheduled run is the alert — GitHub emails the repository owner. The
+# `full` job keeps the daily sweep, DNS aliases included.
+#
+# The script needs only Node's global fetch, so neither job installs the
+# workspace; that is what makes a 30-minute cadence affordable.
 
 on:
   schedule:
-    # 01:30 UTC daily — well clear of the deploy window.
+    # Every 30 minutes — the request-path checks (`--critical-only`).
+    - cron: "*/30 * * * *"
+    # 01:30 UTC daily — the full sweep incl. aliases, clear of the deploy window.
     - cron: "30 1 * * *"
   workflow_dispatch:
 
 permissions:
   contents: read
 
-concurrency:
-  group: public-url-check
-  cancel-in-progress: true
-
 jobs:
-  check:
-    name: Check public endpoints
+  critical:
+    name: Check critical request-path endpoints
+    # Each cron expression triggers its own run and github.event.schedule
+    # carries the one that fired, so the 01:30 run of the daily cron does not
+    # also run this job. Manual dispatch runs both.
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '*/30 * * * *'
     runs-on: ubuntu-latest
+    concurrency:
+      group: public-url-check-critical
+      cancel-in-progress: true
     steps:
       - name: Checkout
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
-      - name: Setup Node and pnpm
+      - name: Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
+        with:
+          install: "false"
+          # No install here, so nothing to cache. With caching on, setup-node's
+          # post step fails the job on the first run after any lockfile change
+          # (no cache to restore, no store to save).
+          cache: ""
+
+      - name: Check critical request-path endpoints
+        run: node scripts/check-public-urls.mjs --critical-only
+
+  full:
+    name: Check public endpoints
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '30 1 * * *'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: public-url-check-full
+      cancel-in-progress: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          install: "false"
+          cache: ""
 
       - name: Check public endpoints
         run: node scripts/check-public-urls.mjs --include-aliases

@@ -3,6 +3,10 @@
 const DEFAULT_TIMEOUT_MS = 15_000;
 const DEFAULT_RETRIES = 3;
 
+// `critical: true` marks the request-path checks the 30-minute job runs
+// (.github/workflows/public-url-check.yml). Everything else is the daily sweep.
+// Hostnames are literal on purpose — this script has no dependencies so it can
+// run on a bare runner without installing the workspace.
 const endpoints = [
   {
     id: "landing",
@@ -18,8 +22,11 @@ const endpoints = [
     id: "app",
     url: "https://app.nebutra.com",
     okStatuses: [200],
+    critical: true,
   },
   {
+    // Liveness. Fly restarts the machine when this fails, so it stays 200
+    // "degraded" while a dependency is down — which is why it is not enough.
     id: "api-health",
     url: "https://api.nebutra.com/api/misc/health",
     okStatuses: [200],
@@ -28,6 +35,55 @@ const endpoints = [
       const database = payload?.database ?? payload?.dependencies?.database;
       if (database?.status !== "up") {
         return `expected database.status=up, got ${JSON.stringify(database)}`;
+      }
+      return null;
+    },
+  },
+  {
+    // Readiness. One EVAL through the rate limiter's Redis client and one
+    // SELECT 1; 503 the moment either is down. On 2026-09-02 every
+    // rate-limited route answered 500 for two days while /api/misc/health
+    // stayed 200 — this is the probe that would have said so.
+    id: "api-ready",
+    url: "https://api.nebutra.com/api/misc/ready",
+    okStatuses: [200],
+    critical: true,
+    validate: async (response) => {
+      const payload = await response.json();
+      if (payload?.ready !== true) {
+        return `expected ready=true, got ${JSON.stringify(payload)}`;
+      }
+      return null;
+    },
+  },
+  {
+    // A route that takes the real, rate-limited path end to end. The limiter
+    // writes X-RateLimit-Limit only after it ran, so a 200 without the header
+    // means the request was answered by something other than the gateway's
+    // request path (a cache, a redirect, a different origin).
+    id: "api-rate-limited-path",
+    url: "https://api.nebutra.com/api/v1/legal/documents",
+    okStatuses: [200],
+    critical: true,
+    validate: async (response) => {
+      await discardResponseBody(response);
+      if (!response.headers.get("x-ratelimit-limit")) {
+        return "expected an x-ratelimit-limit header; the rate limiter did not run on this request";
+      }
+      return null;
+    },
+  },
+  {
+    // The status body must say "redis":"connected". The status code alone is
+    // not a signal: this route answers 200 "degraded" with redis disconnected.
+    id: "api-system-status",
+    url: "https://api.nebutra.com/api/system/status",
+    okStatuses: [200],
+    critical: true,
+    validate: async (response) => {
+      const payload = await response.json();
+      if (payload?.redis !== "connected") {
+        return `expected "redis":"connected", got redis=${JSON.stringify(payload?.redis)}`;
       }
       return null;
     },
@@ -77,16 +133,11 @@ const endpoints = [
     okStatuses: [200, 301, 302, 307, 308],
     alias: true,
   },
-  {
-    id: "studio-branded-alias",
-    url: "https://studio.nebutra.com",
-    okStatuses: [200, 301, 302, 307, 308],
-    alias: true,
-  },
 ];
 
 function parseArgs(argv) {
   const options = {
+    criticalOnly: false,
     includeAliases: false,
     json: false,
     retries: DEFAULT_RETRIES,
@@ -95,6 +146,10 @@ function parseArgs(argv) {
 
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
+    if (arg === "--critical-only") {
+      options.criticalOnly = true;
+      continue;
+    }
     if (arg === "--include-aliases") {
       options.includeAliases = true;
       continue;
@@ -126,14 +181,26 @@ function parseArgs(argv) {
   if (!Number.isInteger(options.timeoutMs) || options.timeoutMs < 1000) {
     throw new Error("--timeout-ms must be an integer >= 1000");
   }
+  if (options.criticalOnly && options.includeAliases) {
+    throw new Error("--critical-only and --include-aliases are different sweeps; pick one");
+  }
 
   return options;
+}
+
+function selectEndpoints(options) {
+  if (options.criticalOnly) {
+    return endpoints.filter((endpoint) => endpoint.critical === true);
+  }
+  return endpoints.filter((endpoint) => options.includeAliases || !endpoint.alias);
 }
 
 function printHelp() {
   console.log(`Usage: node scripts/check-public-urls.mjs [options]
 
 Options:
+  --critical-only     Only the request-path checks the 30-minute job runs (console, API readiness,
+                      one rate-limited route, system status body).
   --include-aliases   Also check DNS/custom-domain aliases such as www and studio.nebutra.com.
   --json              Emit JSON instead of human-readable lines.
   --retries <n>       Attempts per endpoint. Default: ${DEFAULT_RETRIES}.
@@ -234,9 +301,7 @@ async function checkEndpoint(endpoint, options) {
 
 async function main() {
   const options = parseArgs(process.argv.slice(2));
-  const selectedEndpoints = endpoints.filter(
-    (endpoint) => options.includeAliases || !endpoint.alias,
-  );
+  const selectedEndpoints = selectEndpoints(options);
   const results = [];
 
   for (const endpoint of selectedEndpoints) {
